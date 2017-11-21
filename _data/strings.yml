@@ -1,0 +1,120 @@
+# Free version
+# ---------------------------------------------------------------------------------------
+home:                  Home
+pages:                 Pages
+posts:                 Posts
+about:                 About
+related_posts:         Related Posts
+other_projects:        Other Projects
+comments:              Comments
+jump_to:               Jump to
+navigation:            Navigation
+social:                Social
+links:                 Links
+pagination:            Pagination
+newer:                 Newer
+older:                 Older
+back:                  Back
+templates:             Templates (for web app)
+
+category_start:        'in '
+category_spearator:    ' / '
+tag_start:             'on '
+tag_separator:         ', '
+
+colon:                 ':'
+separator:             '|'
+
+loading:               Loading…
+redirecting:           Redirecting…
+
+date_formats:
+  post:                '%d %b %Y'
+  related_post:        '%d %b %Y'
+  list_group_by:       '%Y'
+  list_entry:          '%d %b'
+  project:             '%Y'
+  projects_group_by:   '%Y'
+  resume:              '%b %Y'
+
+continue_reading:      >
+  Continue reading <!--post_title-->
+
+not_found:
+  title:               '404: Page Not Found'
+  message:             |
+    Sorry, we've misplaced that URL or it's pointing to something that doesn't exist.
+    <!--home_link--> to try finding it again.
+  home_link:           Head back home
+
+error:
+  title:               Error
+  message:             |
+    Sorry, an error occurred while loading <!--link-->.
+
+# PRO Version
+# ---------------------------------------------------------------------------------------
+tinyletter:
+  title:               Commercial break
+  label:               Email
+  placeholder:         Enter your email address
+  button:              Subscribe
+  message:             |
+    Pay the *iron price* for this theme by adding yourself to the mailing list.
+    Receive development updates, advanced tutorials,
+    and anything else I can come up with as it relates to **Hydejack**.
+
+    <!--form-->
+
+    No 3rd party products, no spam. Emails handled by [Tinyletter](https://tinyletter.com/)
+    {:.faded}
+
+welcome:
+  selected_projects:   Selected Variations
+  selected_posts:      Selected Posts
+  recent_projects:     Recent Projects
+  recent_posts:        Recent Posts
+  more_projects:       See <!--projects_title--> for more
+  more_posts:          See <!--posts_title--> for more
+
+resume:
+  location:            Location
+  location_separator:  ', '
+  from_to_separator:   '–'
+  present:             present
+  email:               Email
+  phone:               Phone
+  website:             Website
+  work:                Experience
+  work_title:          <!--position--> at <!--company-->
+  highlights:          Highlights
+  volunteer:           Volunteer
+  volunteer_title:     <!--position--> at <!--organization-->
+  education:           Education
+  education_title:     <!--study_type--> in <!--area--> from <!--institution--> with GPA of <!--gpa-->
+  courses:             Courses
+  awards:              Awards
+  awards_title:        <!--title--> from <!--awarder-->
+  publications:        Publications
+  publications_title:  <!--name--> by <!--publisher-->
+  references:          References
+  languages:           Languages
+  fluency:             Fluency
+  skills:              Skills
+  level:               Level
+  interests:           Interests
+  keywords:            Keywords
+  icons:
+    location:          icon-location
+    email:             icon-envelop
+    phone:             icon-phone
+    website:           icon-link
+    work:              icon-briefcase
+    volunteer:         icon-earth
+    education:         icon-library
+    awards:            icon-trophy
+    publications:      icon-book
+    references:        icon-quotes-right
+    languages:         icon-bubbles
+    skills:            icon-wrench
+    interests:         icon-heart
