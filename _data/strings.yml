@@ -1,3 +1,13 @@
+# Strings
+# =======================================================================================
+# This file contains all soft-coded strings of the theme.
+# You can edit them here if you want to change the wording of certain phrases,
+# e.g. maybe you prefer "Fetching…" to "Loading…", etc.
+#
+# You can also use this to "translate" the theme into different langauges,
+# but note that this may not work in all situations,
+# especially for languages that differ significantly from English.
+
 # Free version
 # ---------------------------------------------------------------------------------------
 home:                  Home
@@ -17,25 +27,8 @@ older:                 Older
 back:                  Back
 templates:             Templates (for web app)
 
-category_start:        'in '
-category_spearator:    ' / '
-tag_start:             'on '
-tag_separator:         ', '
-
-colon:                 ':'
-separator:             '|'
-
 loading:               Loading…
 redirecting:           Redirecting…
-
-date_formats:
-  post:                '%d %b %Y'
-  related_post:        '%d %b %Y'
-  list_group_by:       '%Y'
-  list_entry:          '%d %b'
-  project:             '%Y'
-  projects_group_by:   '%Y'
-  resume:              '%b %Y'
 
 continue_reading:      >
   Continue reading <!--post_title-->
@@ -52,8 +45,31 @@ error:
   message:             |
     Sorry, an error occurred while loading <!--link-->.
 
+# Separators
+# ---------------------------------------------------------------------------------------
+colon:                 ':'
+separator:             '|'
+category_start:        'in '
+category_spearator:    ' / '
+tag_start:             'on '
+tag_separator:         ', '
+
+# Date formats
+# ---------------------------------------------------------------------------------------
+date_formats:
+  post:                '%d %b %Y'
+  related_post:        '%d %b %Y'
+  list_group_by:       '%Y'
+  list_entry:          '%d %b'
+  project:             '%Y'
+  projects_group_by:   '%Y'
+  resume:              '%b %Y'
+
+
 # PRO Version
 # ---------------------------------------------------------------------------------------
+# If you don't own the PRO version of Hydejack, modifying these will have no effect.
+
 tinyletter:
   title:               Commercial break
   label:               Email

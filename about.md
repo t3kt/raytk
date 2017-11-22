@@ -1,10 +1,17 @@
 ---
 layout: about
 title: About
+
+# Write a short (~150 characters) description of each blog post.
+# This description is used to preview the page on search engines, social media, etc.
 description: >
-  A short description (~150 chars) for search engines.
-  You can hide this on the page by setting `hide_description` to `true` in the front matter.
-hide_description: false
+  Lorem ipsum dolor sit amet, consectetur adipiscing elit,
+  sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+
+# You can hide the description and/or image from the output by setting:
+# hide_description: true
+
+# Setting `menu` will generate an entry in the sidebar.
 menu: true
 ---
 
