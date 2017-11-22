@@ -1,6 +1,6 @@
 # Hydejack Starter Kit
 
-A quicker way to get started blogging with [Hydejack](https://qwtel.com/hydejack/) and GitHub Pages.
+A quicker way to get started blogging with [Hydejack](https://qwtel.com/hydejack/) on GitHub Pages.
 
 
 ## Steps
@@ -9,7 +9,7 @@ A quicker way to get started blogging with [Hydejack](https://qwtel.com/hydejack
 3. Edit `_config.yml` (you can do this directly on GitHub)
     1. Change `url` to `https://<your github username>.github.io` (without the `<` `>`)
     2. Change `baseurl` to `''` (empty string)
-    3. COMMIT! (It's okay if you shout it out loud while pressing the button)
+    3. **Commit changes**!
 3. Go to **Settings** again, look for **GitHub Pages**, set **Source** to **master branch**.
 4. Click **Save** and wait for GitHub to set up your new blag.
 
