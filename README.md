@@ -1,6 +1,6 @@
 # Hydejack Starter Kit
 
-A quicker way to get started blogging with [Hydejack](https://qwtel.com/hydejack/) on GitHub Pages.
+A quicker, cleaner way to get started blogging with [Hydejack](https://qwtel.com/hydejack/).
 
 
 ## Steps
@@ -17,6 +17,3 @@ A quicker way to get started blogging with [Hydejack](https://qwtel.com/hydejack
 * Open source files and read the comments
 * Read the [docs](https://qwtel.com/hydejack/docs/)
 * Buy the [PRO version](https://qwtel.com/hydejack/download/) to get the project and resume layout, newsletter subscription box, custom forms, and more.
-
-## How?
-This is now possible thanks to [`jekyll-remote-theme`](https://github.com/benbalter/jekyll-remote-theme).
