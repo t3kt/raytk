@@ -24,7 +24,8 @@ lang:                  en
 # The title of your blog. Used in the sidebar and the browser tab.
 title:                 Hydejack Starter Kit
 
-# A short description of the page used for the meta description tag.
+# A short description (~150 chars) of the page used for the meta description tag.
+# Can use markdown, but no more than one paragraph (enforced by `>`)
 description:           >
   A Jekyll theme with JavaScript powers. "Best Theme by a Mile".
   Combines the best of static sites and modern web apps.

@@ -1,5 +1,8 @@
 ---
+# Posts need to have the `post` layout
 layout: post
+
+# The title of your post
 title: Example Content
 
 # (Optional) Write a short (~150 characters) description of each blog post.
@@ -13,12 +16,13 @@ description: >
 # The aspect ratio should be ~16:9.
 image: /assets/img/default.jpg
 
-# You can hide the description and/or image from the output by setting:
+# You can hide the description and/or image from the output
+# (only visible to search engines) by setting:
 # hide_description: true
 # hide_image: true
 
 # (Optional) Each post can have zero or more categories, and zero or more tags.
-# The difference is that categories show up in the URL, while tags will not.
+# The difference is that categories will be part of the URL, while tags will not.
 categories: [hydejack]
 tags: [example, content]
 # If you want a category or tag to have its own page,
@@ -225,10 +229,3 @@ Flip the table by adding the `flip-table` class to a table:
 | 9th line        |quux        | baz             | bar            | 9th line        |quux        | baz             | bar            | 9th line        |quux        | baz             | bar            | 9th line        |quux        | baz             | bar            |
 | 10th line       |quux        | baz             | bar            | 10th line       |quux        | baz             | bar            | 10th line       |quux        | baz             | bar            | 10th line       |quux        | baz             | bar            |
 {:.flip-table}
-
-[mm]: https://guides.github.com/features/mastering-markdown/
-[ksyn]: https://kramdown.gettalong.org/syntax.html
-[ksyntab]:https://kramdown.gettalong.org/syntax.html#tables
-[ksynmath]: https://kramdown.gettalong.org/syntax.html#math-blocks
-[katex]: https://khan.github.io/KaTeX/
-[rtable]: https://dbushell.com/2016/03/04/css-only-responsive-tables/
