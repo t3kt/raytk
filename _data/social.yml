@@ -1,4 +1,5 @@
-# This file contains meta data for various social media sites
+# This file contains meta data for various social media sites.
+# To add your own, see <https://qwtel.com/hydejack/docs/advanced/#adding-a-custom-social-media-icon>
 ---
   email:
     name: Email

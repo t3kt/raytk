@@ -8,9 +8,7 @@ title: Example Content
 # (Optional) Write a short (~150 characters) description of each blog post.
 # This description is used to preview the page on search engines, social media, etc.
 description: >
-  This is a normal paragraph following a header.
-  GitHub is a code hosting platform for version control and collaboration.
-  It lets you and others work together on projects from anywhere.
+  A page showing how regular markdown content is styled in Hydejack.
 
 # (Optional) Link to an image that represents your blog post.
 # The aspect ratio should be ~16:9.
@@ -23,19 +21,20 @@ image: /assets/img/default.jpg
 
 # (Optional) Each post can have zero or more categories, and zero or more tags.
 # The difference is that categories will be part of the URL, while tags will not.
+# E.g. the URL of this post is <site.baseurl>/hydejack/2017/11/23/example-content/
 categories: [hydejack]
 tags: [example, content]
 # If you want a category or tag to have its own page,
 # check out `_featured_categories` and `_featured_tags` respectively.
 ---
 
-Text can be **bold**, _italic_, or ~~strikethrough~~.
-
-[Link to another page](another-page).
+There should be whitespace between paragraphs. We recommend including a README, or a file with information about your project.
 
 There should be whitespace between paragraphs.
 
-There should be whitespace between paragraphs. We recommend including a README, or a file with information about your project.
+Text can be **bold**, _italic_, or ~~strikethrough~~.
+
+[Link to another page](404.html).
 
 # Header 1
 
