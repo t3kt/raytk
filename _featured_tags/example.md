@@ -10,8 +10,8 @@ slug: example
 
 # (Optional) Write a short (~150 characters) description of this featured tag.
 description: >
-  Lorem ipsum dolor sit amet, consectetur adipiscing elit,
-  sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+  This is a featured tag, which have their own page.
+  Check out `_featured_tags/example.md` to learn how to create your own.
 
 # Setting `menu` will generate an entry in the sidebar for this tag.
 # menu: true
