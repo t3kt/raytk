@@ -1,6 +1,6 @@
 # Hydejack Starter Kit
 
-A quicker way to get started blogging with [Hydejack](https://qwtel.com/hydejack/) on GitHub Pages.
+A quicker, cleaner way to get started blogging with [Hydejack](https://qwtel.com/hydejack/).
 
 ## Quick Start
 ### Running locally
