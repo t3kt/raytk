@@ -8,9 +8,7 @@ A quicker, cleaner way to get started blogging with [Hydejack](https://qwtel.com
 2. Open terminal, `cd` into root directory (where `_config.yml` is located)
 3. `bundle install` [^1]
 4. `bundle exec jekyll serve`
-5. Open <http://localhost:4000>
-
-Check out the Jekyll docs for [deployment methods](https://jekyllrb.com/docs/deployment-methods/).
+5. Open <http://localhost:4000/hydejack-starter-kit/>
 
 ### GitHub Pages
 1. Fork this repository.
