@@ -51,10 +51,18 @@ author:
   # twitter:             <username>
 
 # This text will appear in a `<small>` tag in the footer of every page.
-copyright:             © 2017. All rights reserved.
+copyright:             © 2018. All rights reserved.
+
+# Add links to the footer.
+# Typically you'll want to link to your impress, cookies or privacy policy, etc.
+# legal:
+#   - title:             Impress
+#     href:              /impress/
+#   - title:             Cookies Policy
+#     href:              /cookies-policy/
 
 # Format of the permalinks
-permalink:             pretty
+permalink:             /:categories/:year-:month-:day-:title/
 
 # Pagination configuration (used by the `blog` layout)
 paginate:              5
@@ -70,7 +78,7 @@ accent_color:          '#4fb1ba'
 
 # The string encoding which fonts to fetch from Google Fonts.
 # See: <https://qwtel.com/hydejack/docs/configuration/>
-google_fonts:          Roboto+Slab:700|Noto+Sans:400,400i,700,700i
+google_fonts:          Roboto+Slab:400|Noto+Sans:400,400i,700,700i
 
 # The text font. Expects a string that is a valid CSS font-family value.
 font:                  Noto Sans, Helvetica, Arial, sans-serif
@@ -136,17 +144,26 @@ hydejack:
   # Set to `true` when building with the `--lsi` option
   use_lsi:             false
 
+  # When using Google Analytics, set to `true` to display a cookie notice banner.
+  # When enabled, no user-related data will be stored until the user gives consent.
+  cookies_banner:      false
+
+  # ⚡️ DANGER ZONE ⚡️
+  # ----------------
+  offline:
+    enabled:           false
+    cache_version:     1
 
 # Collections
 # ========================================================================================
 
 collections:
   featured_categories:
-    permalink:         /category/:name/
+    permalink:         /:name/
     output:            true
 
   featured_tags:
-    permalink:         /tag/:name/
+    permalink:         /tag-:name/
     output:            true
 
   projects:
@@ -167,16 +184,13 @@ exclude:
 # ========================================================================================
 
 plugins:
-  - jekyll-avatar
   - jekyll-default-layout
   - jekyll-feed
-  - jekyll-gist
   - jekyll-optional-front-matter
   - jekyll-paginate
   - jekyll-readme-index
   - jekyll-redirect-from
   - jekyll-relative-links
-  - jekyll-remote-theme
   - jekyll-seo-tag
   - jekyll-sitemap
   - jekyll-titles-from-headings
@@ -184,8 +198,7 @@ plugins:
 # Theme
 # ---------------------------------------------------------------------------------------
 
-# theme: jekyll-theme-hydejack
-remote_theme: qwtel/hydejack@gem-7.5.1
+remote_theme: qwtel/hydejack@v8.0.0-beta.3
 
 
 # SEO Tag
@@ -226,6 +239,7 @@ optional_front_matter:
 
 readme_index:
   remove_originals:    true
+  with_frontmatter:    true
 
 relative_links:
   collections:         true

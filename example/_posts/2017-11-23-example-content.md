@@ -12,20 +12,12 @@ description: >
 
 # (Optional) Link to an image that represents your blog post.
 # The aspect ratio should be ~16:9.
-image: /assets/img/default.jpg
+image: /assets/img/hydejack-8.jpg
 
 # You can hide the description and/or image from the output
 # (only visible to search engines) by setting:
 # hide_description: true
 # hide_image: true
-
-# (Optional) Each post can have zero or more categories, and zero or more tags.
-# The difference is that categories will be part of the URL, while tags will not.
-# E.g. the URL of this post is <site.baseurl>/hydejack/2017/11/23/example-content/
-categories: [hydejack]
-tags: [example, content]
-# If you want a category or tag to have its own page,
-# check out `_featured_categories` and `_featured_tags` respectively.
 ---
 
 There should be whitespace between paragraphs. We recommend including a README, or a file with information about your project.
@@ -36,17 +28,16 @@ Text can be **bold**, _italic_, or ~~strikethrough~~.
 
 [Link to another page](404.html).
 
-# Header 1
+
+## Header 2
 
 This is a normal paragraph following a header. GitHub is a code hosting platform for version control and collaboration. It lets you and others work together on projects from anywhere.
 
-## Header 2
+### Header 3
 
 > This is a blockquote following a header.
 >
 > When something is important enough, you do it even if the odds are not in your favor.
-
-### Header 3
 
 ```js
 // Javascript code with syntax highlighting.

@@ -17,6 +17,7 @@ hide_description: true
 
 # Setting `menu` will generate an entry in the sidebar.
 menu: true
+order: 3
 ---
 
 **Hydejack** is the complete package for professionals on the web.
@@ -74,11 +75,7 @@ Both versions include these features:
 * Progressive enhancement — sacrifice features, not content
 * Google Analytics and Google Fonts support
 * Disqus comments
-* Print layout — Used to render Hydejack's [PDF documentation][pdf]
-* Blog layout via `jekyll-paginate` (optional)
-* SEO meta tags via `jekyll-seo-tag` (optional)
-* Github avatars via `jekyll-avatar` (optional)
-* Gist support via `jekyll-gist` (optional)
+* Print layout
 
 [^4]: Actual page load speed depends on your hosting provider, resolution of embedded images and usage of 3rd party plugins.  
 
@@ -136,30 +133,28 @@ built-in support for [Tinyletter], and from element styles so you can build arbi
 
 [^2]: Transactions secured by [Stripe](https://stripe.com). Downloads handled by [Simple Goods](https://simplegoods.co/).  
 
-[blog]: https://qwtel.com/hydejack/blog/
-[portfolio]: https://qwtel.com/hydejack/variations/
-[resume]: https://qwtel.com/hydejack/resume/
-[download]: https://qwtel.com/download/
-[welcome]: https://qwtel.com/hydejack/
-[forms]: https://qwtel.com/hydejack/forms-by-example/
+[blog]: https://hydejack.com/blog/
+[portfolio]: https://hydejack.com/variations/
+[resume]: https://hydejack.com/resume/
+[download]: https://hydejack.com/
+[welcome]: https://hydejack.com/
+[forms]: https://hydejack.com/forms-by-example/
 
 [feat]: #features
 [news]: #newsletter-subscription-box
 [syntax]: #syntax-highlighting
 [latex]: #latex-math-blocks
 
-[license]: https://qwtel.com/hydejack/LICENSE/
-[pro]: https://qwtel.com/hydejack/licenses/PRO/
-[docs]: https://qwtel.com/hydejack/docs/7.5.0/
+[license]: https://hydejack.com/LICENSE/
+[pro]: https://hydejack.com/licenses/PRO/
+[docs]: https://hydejack.com/docs/
 
-[kit]: https://github.com/qwtel/hydejack-starter-kit/archive/v7.5.0.zip
+[kit]: https://github.com/qwtel/hydejack-starter-kit/archive/v8.0.0-beta.2.zip
 [src]: https://github.com/qwtel/hydejack
 [gem]: https://rubygems.org/gems/jekyll-theme-hydejack
 [buy]: https://app.simplegoods.co/i/AQTTVBOE
 
 [gpss]: https://developers.google.com/speed/pagespeed/insights/?url=https%3A%2F%2Fqwtel.com%2Fhydejack%2F
-[wiki]: https://github.com/qwtel/hydejack/blob/master/docs/7.5.0/index.md
-[pdf]: https://github.com/qwtel/hydejack/releases/download/v7.5.0/Documentation._.Hydejack.pdf
 [hy-push-state]: https://qwtel.com/hy-push-state/
 [hy-drawer]: https://qwtel.com/hy-drawer/
 [rouge]: http://rouge.jneen.net
