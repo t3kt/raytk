@@ -1,184 +1,40 @@
 ---
-# Posts need to have the `post` layout
 layout: post
-
-# The title of your post
-title: Example Content
-
-# (Optional) Write a short (~150 characters) description of each blog post.
-# This description is used to preview the page on search engines, social media, etc.
+title: Example Content III
 description: >
-  A page showing how regular markdown content is styled in Hydejack.
-
-# (Optional) Link to an image that represents your blog post.
-# The aspect ratio should be ~16:9.
-image: /assets/img/hydejack-8.jpg
-
-# You can hide the description and/or image from the output
-# (only visible to search engines) by setting:
-# hide_description: true
-# hide_image: true
+  A page showing Hydejack-specific markdown content.
+image: /assets/img/example-content-iii.jpg
 ---
 
-There should be whitespace between paragraphs. We recommend including a README, or a file with information about your project.
-
-There should be whitespace between paragraphs.
-
-Text can be **bold**, _italic_, or ~~strikethrough~~.
-
-[Link to another page](404.html).
-
-
-## Header 2
-
-This is a normal paragraph following a header. GitHub is a code hosting platform for version control and collaboration. It lets you and others work together on projects from anywhere.
-
-### Header 3
-
-> This is a blockquote following a header.
->
-> When something is important enough, you do it even if the odds are not in your favor.
-
-```js
-// Javascript code with syntax highlighting.
-var fun = function lang(l) {
-  dateformat.i18n = require('./lang/' + l)
-  return true;
-}
-```
-
-```ruby
-# Ruby code with syntax highlighting
-GitHubPages::Dependencies.gems.each do |gem, version|
-  s.add_dependency(gem, "= #{version}")
-end
-```
-
-#### Header 4
-
-*   This is an unordered list following a header.
-*   This is an unordered list following a header.
-*   This is an unordered list following a header.
-
-##### Header 5
-
-1.  This is an ordered list following a header.
-2.  This is an ordered list following a header.
-3.  This is an ordered list following a header.
-
-###### Header 6
-
-| head1        | head two          | three |
-|:-------------|:------------------|:------|
-| ok           | good swedish fish | nice  |
-| out of stock | good and plenty   | nice  |
-| ok           | good `oreos`      | hmm   |
-| ok           | good `zoute` drop | yumm  |
-
-### There's a horizontal rule below this.
-
-* * *
-
-### Here is an unordered list:
-
-*   Item foo
-*   Item bar
-*   Item baz
-*   Item zip
-
-### And an ordered list:
-
-1.  Item one
-1.  Item two
-1.  Item three
-1.  Item four
-
-### And a nested list:
-
-- level 1 item
-  - level 2 item
-  - level 2 item
-    - level 3 item
-    - level 3 item
-- level 1 item
-  - level 2 item
-  - level 2 item
-  - level 2 item
-- level 1 item
-  - level 2 item
-  - level 2 item
-- level 1 item
-
-### Small image
-
-![](https://assets-cdn.github.com/images/icons/emoji/octocat.png)
-
-### Large image
-
-![](https://guides.github.com/activities/hello-world/branching.png)
-
-
-### Definition lists
-
-Name
-: Godzilla
-
-Born
-: 1952
-
-Birthplace
-: Japan
-
-Color
-: Green
-
-```
-Long, single-line code blocks should not wrap. They should horizontally scroll if they are too long. This line should be long enough to demonstrate this. Or is it?
-```
-
-```
-The final element.
-```
-
-## Hydejack Exclusives
 Hydejack offers a few additional features to markup your markdown.
-Don't worry, these are merely CSS classes added with kramdown's `{:.my-class}` syntax,
-so that your posts remain compatible with other Jekyll themes.
+Don't worry, these are merely CSS classes added with kramdown's `{:...}` syntax,
+so that your content remains compatible with other Jekyll themes.
 
-### Message Boxes
-You can add a message box by adding the `message` class to a paragraph.
+## Message boxes
+**NOTE**: You can add a message box.
 {:.message}
 
-### Faded text
-You can add gray text by adding the `faded` class.
-{:.faded}
-
-### Lead Paragraphs
-You can add large text by adding the `lead` class to a paragraph.
+## Large text
+You can add large text.
 {:.lead}
 
-### Lead Quotes
-> You can make a quote "pop out" by adding the `lead` class to a quote.
-{:.lead}
-
-### Lead Images
-You can make an image span the full width by adding the `lead` class:
-
+## Large images
 ![Full-width image](https://placehold.it/800x100){:.lead}
 
-## Tables
-Large (data) tables:
+## Captions to images
+![Full-width image](https://placehold.it/800x100){:.lead}
+A caption to an image.
+{:.figure}
 
-| Default aligned |Left aligned| Center aligned  | Right aligned  | Default aligned |Left aligned| Center aligned  | Right aligned  | Default aligned |Left aligned| Center aligned  | Right aligned  | Default aligned |Left aligned| Center aligned  | Right aligned  |
-|-----------------|:-----------|:---------------:|---------------:|-----------------|:-----------|:---------------:|---------------:|-----------------|:-----------|:---------------:|---------------:|-----------------|:-----------|:---------------:|---------------:|
-| First body part |Second cell | Third cell      | fourth cell    | First body part |Second cell | Third cell      | fourth cell    | First body part |Second cell | Third cell      | fourth cell    | First body part |Second cell | Third cell      | fourth cell    |
-| Second line     |foo         | **strong**      | baz            | Second line     |foo         | **strong**      | baz            | Second line     |foo         | **strong**      | baz            | Second line     |foo         | **strong**      | baz            |
-| Third line      |quux        | baz             | bar            | Third line      |quux        | baz             | bar            | Third line      |quux        | baz             | bar            | Third line      |quux        | baz             | bar            |
-| Second body     |            |                 |                | Second body     |            |                 |                | Second body     |            |                 |                | Second body     |            |                 |                |
-| 2 line          |            |                 |                | 2 line          |            |                 |                | 2 line          |            |                 |                | 2 line          |            |                 |                |
-| Footer row      |            |                 |                | Footer row      |            |                 |                | Footer row      |            |                 |                | Footer row      |            |                 |                |
+## Large quotes
+> You can make a quote "pop out".
+{:.lead}
 
-Prevent line breaks within cells by adding the `scroll-table` class to a table:
+## Faded text
+I'm faded, faded, faded.
+{:.faded}
+
+## Large Tables
 
 | Default aligned |Left aligned| Center aligned  | Right aligned  | Default aligned |Left aligned| Center aligned  | Right aligned  | Default aligned |Left aligned| Center aligned  | Right aligned  | Default aligned |Left aligned| Center aligned  | Right aligned  |
 |-----------------|:-----------|:---------------:|---------------:|-----------------|:-----------|:---------------:|---------------:|-----------------|:-----------|:---------------:|---------------:|-----------------|:-----------|:---------------:|---------------:|
@@ -190,7 +46,6 @@ Prevent line breaks within cells by adding the `scroll-table` class to a table:
 | Footer row      |            |                 |                | Footer row      |            |                 |                | Footer row      |            |                 |                | Footer row      |            |                 |                |
 {:.scroll-table}
 
-Flip the table by adding the `flip-table` class to a table:
 
 | Default aligned |Left aligned| Center aligned  | Right aligned  | Default aligned |Left aligned| Center aligned  | Right aligned  | Default aligned |Left aligned| Center aligned  | Right aligned  | Default aligned |Left aligned| Center aligned  | Right aligned  |
 |-----------------|:-----------|:---------------:|---------------:|-----------------|:-----------|:---------------:|---------------:|-----------------|:-----------|:---------------:|---------------:|-----------------|:-----------|:---------------:|---------------:|
@@ -206,8 +61,22 @@ Flip the table by adding the `flip-table` class to a table:
 | 10th line       |quux        | baz             | bar            | 10th line       |quux        | baz             | bar            | 10th line       |quux        | baz             | bar            | 10th line       |quux        | baz             | bar            |
 {:.flip-table}
 
-### Math
-Inline math $$ f(x) = x^2 $$ and math blocks:
+## Code blocks
+
+~~~js
+// Example can be run directly in your JavaScript console
+
+// Create a function that takes two arguments and returns the sum of those
+// arguments
+var adder = new Function("a", "b", "return a + b");
+
+// Call the function
+adder(2, 6);
+// > 8
+~~~
+
+## Math
+Lorem ipsum $$ f(x) = x^2 $$.
 
 $$
 \begin{aligned}
@@ -226,3 +95,11 @@ $$
                \end{array}\right)
 \end{aligned}
 $$
+
+
+[mm]: https://guides.github.com/features/mastering-markdown/
+[ksyn]: https://kramdown.gettalong.org/syntax.html
+[ksyntab]:https://kramdown.gettalong.org/syntax.html#tables
+[ksynmath]: https://kramdown.gettalong.org/syntax.html#math-blocks
+[katex]: https://khan.github.io/KaTeX/
+[rtable]: https://dbushell.com/2016/03/04/css-only-responsive-tables/
