@@ -229,7 +229,7 @@ plugins:
 # Theme
 # ---------------------------------------------------------------------------------------
 
-remote_theme: qwtel/hydejack@v8.0.0-beta.5
+remote_theme: qwtel/hydejack@v8.0.0-beta.6
 
 
 # SEO Tag
@@ -293,8 +293,3 @@ compress_html:
 
 sass:
   style:               compressed
-
-# If you are upgrading form v5 (or earlier), uncomment the lines below,
-# so that the location of the feed XML stays the same.
-# feed:
-#   path:                atom.xml
