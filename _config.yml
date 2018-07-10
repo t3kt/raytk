@@ -185,7 +185,7 @@ plugins:
 # ---------------------------------------------------------------------------------------
 
 # theme: jekyll-theme-hydejack
-remote_theme: qwtel/hydejack@gem-7.5.1
+remote_theme: qwtel/hydejack@v7.5.2
 
 
 # SEO Tag
