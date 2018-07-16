@@ -1,20 +1,17 @@
 # Config
 # ========================================================================================
 
-# IMPORTANT: Set the URL of your page.
+# IMPORTANT: Set the URL of your site.
 # Set to https://<username>.github.io when hosting on GitHub Pages
 # (unless you are using a custom domain).
 url:                   https://qwtel.com
 
 # IMPORTANT: Set The "base URL" of your site.
-#
-# When hosting your site in a subdirectory of a server, set to /<name of directory>
-# (with leading /, but without the < >)
+# When your site sits in a subdirectory, set to /<name of directory>
+# (with leading /, but without the < >).
 # Use the empty string '' otherwise.
-#
-# When using GitHub Pages, set to '' when hosting a user- or organization page,
-# i.e. when the name of the repository looks like <username>.github.io.
-# Otherwise, set to /<name of repository> (with leading /, but without the < >).
+# For GitHub project sites, this is usually the name of the project,
+# e.g. `/hydejack`.
 baseurl:               /hydejack-starter-kit
 
 # Language of your content in 2-letter code, e.g.: en, de.
@@ -33,7 +30,6 @@ description:           >
 
 # A shorter description for the sidebar.
 tagline:               >
-  A Jekyll theme with JavaScript powers.
   Open `_config.yml` to edit this text.
 
 # A list of keywords for your blog.
@@ -43,18 +39,28 @@ keywords:              []
 logo:                  /assets/icons/icon.png
 
 # This should be the same author as first entry in `_data/authors.yml`.
-# Duplication is necessary due to the `jekyll-feed`, `jekyll-seo-tag` plugin.
 author:
+  # Used by `jekyll-feed`:
   name:                <firstname> <lastname>
   email:               <mail@domain.tld>
   # Used by `jekyll-seo-tag`:
   # twitter:             <username>
 
 # This text will appear in a `<small>` tag in the footer of every page.
-copyright:             © 2017. All rights reserved.
+copyright:             >
+  © 2018. All rights reserved.
+  Open `_config.yml` to edit this text.
+
+# Add links to the footer.
+# Typically you'll want to link to your impress, cookies or privacy policy, etc.
+# legal:
+#   - title:             Impress
+#     href:              /impress/
+#   - title:             Cookies Policy
+#     href:              /cookies-policy/
 
 # Format of the permalinks
-permalink:             pretty
+permalink:             /:categories/:year-:month-:day-:title/
 
 # Pagination configuration (used by the `blog` layout)
 paginate:              5
@@ -66,28 +72,55 @@ paginate_path:         /page-:num/
 
 # Sidebar image and theme color of the site.
 accent_image:          /assets/img/sidebar-bg.jpg
-accent_color:          '#4fb1ba'
+accent_color:          rgb(79,177,186)
+
+# This is used for the `theme-color` meta tag,
+# which changes the background color of the browser UI in certain browsers.
+# Defaults to `accent_color`.
+theme_color:           rgb(25,55,71)
 
 # The string encoding which fonts to fetch from Google Fonts.
-# See: <https://qwtel.com/hydejack/docs/configuration/>
-google_fonts:          Roboto+Slab:700|Noto+Sans:400,400i,700,700i
+# See: <https://hydejack.com/docs/configuration/>
+google_fonts:          Roboto+Slab:400|Noto+Sans:400,400i,700,700i
 
 # The text font. Expects a string that is a valid CSS font-family value.
+# To change font-weight, see _sass/variables.scss
 font:                  Noto Sans, Helvetica, Arial, sans-serif
 
 # The font used for headings. Expects a string that is a valid CSS font-family value.
+# To change font-weight, see _sass/variables.scss
 font_heading:          Roboto Slab, Helvetica, Arial, sans-serif
+
+defaults:
+  # `jekyll-seo-tag` will mark collection outputs as `BlogPosting`,
+  # but we want them to be `WebPage`s:
+  - scope:
+      type:            projects
+    values:
+      seo:
+        type:          WebPage
+  - scope:
+      type:            featured_categories
+    values:
+      seo:
+        type:          WebPage
+  - scope:
+      type:            featured_tags
+    values:
+      seo:
+        type:          WebPage
+
 
 # 3rd Party Integrations
 # ----------------------------------------------------------------------------------------
 
-# Setting a disqus shortname will enable the comment section on
-# pages with `comments: true` in the front matter.
-# disqus:                <disqus_shortname>
-
 # Set your Google Analytics id to receive `pageview` events.
 # To remove Google Anaylics from your page, remove the line below.
 # google_analytics:      UA-XXXXXXXX-X
+
+# Setting a disqus shortname will enable the comment section on
+# pages with `comments: true` in the front matter.
+# disqus:                <disqus_shortname>
 
 # Setting a tinyletter username will enable the newsletter subscription box.
 # PRO version only!
@@ -117,6 +150,9 @@ hydejack:
   # Set to `true` if you want to disable the drawer
   no_drawer:           false
 
+  # Set to `true` to prevent usage of `hy-img` (lazy-loading images).
+  no_img:              true
+
   # Set to `true` if you do not want parts of the css inlined in <head/>
   # This *may* be benefitial when serving the site over HTTP/2.
   no_inline_css:       false
@@ -136,17 +172,29 @@ hydejack:
   # Set to `true` when building with the `--lsi` option
   use_lsi:             false
 
+  # When using Google Analytics, set to `true` to display a cookie notice banner.
+  # When enabled, no user-related data will be stored until the user gives consent.
+  cookies_banner:      false
+
+  # ⚡️ DANGER ZONE ⚡️
+  # ----------------
+  # This is an _experimental_ feature.
+  # Only use if you know what Service Workers are and how they can impact your site!
+  # Coding skills highly recommended.
+  offline:
+    enabled:           false
+    cache_version:     1
 
 # Collections
 # ========================================================================================
 
 collections:
   featured_categories:
-    permalink:         /category/:name/
+    permalink:         /:name/
     output:            true
 
   featured_tags:
-    permalink:         /tag/:name/
+    permalink:         /tag-:name/
     output:            true
 
   projects:
@@ -167,16 +215,13 @@ exclude:
 # ========================================================================================
 
 plugins:
-  - jekyll-avatar
   - jekyll-default-layout
   - jekyll-feed
-  - jekyll-gist
   - jekyll-optional-front-matter
   - jekyll-paginate
   - jekyll-readme-index
   - jekyll-redirect-from
   - jekyll-relative-links
-  - jekyll-remote-theme
   - jekyll-seo-tag
   - jekyll-sitemap
   - jekyll-titles-from-headings
@@ -184,8 +229,7 @@ plugins:
 # Theme
 # ---------------------------------------------------------------------------------------
 
-# theme: jekyll-theme-hydejack
-remote_theme: qwtel/hydejack@v7.5.2
+remote_theme: qwtel/hydejack@v8.0.0
 
 
 # SEO Tag
@@ -226,6 +270,7 @@ optional_front_matter:
 
 readme_index:
   remove_originals:    true
+  with_frontmatter:    true
 
 relative_links:
   collections:         true
@@ -248,8 +293,3 @@ compress_html:
 
 sass:
   style:               compressed
-
-# If you are upgrading form v5 (or earlier), uncomment the lines below,
-# so that the location of the feed XML stays the same.
-# feed:
-#   path:                atom.xml

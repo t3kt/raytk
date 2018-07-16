@@ -1,6 +1,6 @@
 # Hydejack Starter Kit
 
-A quicker, cleaner way to get started blogging with [Hydejack](https://qwtel.com/hydejack/).
+A quicker, cleaner way to get started blogging with [Hydejack](https://hydejack.com/).
 
 ## Quick Start
 ### Running locally
@@ -22,8 +22,8 @@ A quicker, cleaner way to get started blogging with [Hydejack](https://qwtel.com
 
 ## What's next?
 * Open files and read the comments
-* Read the [docs](https://qwtel.com/hydejack/docs/)
-* Buy the [PRO version](https://qwtel.com/hydejack/download/) to get the project and resume layout, newsletter subscription box, custom forms, and more.
+* Read the [docs](https://hydejack.com/docs/)
+* Buy the [PRO version](https://hydejack.com/download/) to get the project and resume layout, newsletter subscription box, custom forms, and more.
 
 [^1]: Requires Bundler. Install with `gem install bundler`.
 
