@@ -164,7 +164,7 @@ This table below shows what's included in each version:
 [pro]: https://hydejack.com/licenses/PRO/
 [docs]: https://hydejack.com/docs/8.0.0-beta.5/
 
-[kit]: https://github.com/qwtel/hydejack-starter-kit/archive/v8.0.0-beta.5.zip
+[kit]: https://github.com/qwtel/hy-starter-kit/archive/v8.0.0-beta.5.zip
 [src]: https://github.com/qwtel/hydejack
 [gem]: https://rubygems.org/gems/jekyll-theme-hydejack
 [buy]: https://app.simplegoods.co/i/NATYVLYT
