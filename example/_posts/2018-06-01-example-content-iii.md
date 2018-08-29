@@ -10,30 +10,6 @@ Hydejack offers a few additional features to markup your markdown.
 Don't worry, these are merely CSS classes added with kramdown's `{:...}` syntax,
 so that your content remains compatible with other Jekyll themes.
 
-## Message boxes
-**NOTE**: You can add a message box.
-{:.message}
-
-## Large text
-You can add large text.
-{:.lead}
-
-## Large images
-![Full-width image](https://placehold.it/800x100){:.lead}
-
-## Captions to images
-![Full-width image](https://placehold.it/800x100){:.lead}
-A caption to an image.
-{:.figure}
-
-## Large quotes
-> You can make a quote "pop out".
-{:.lead}
-
-## Faded text
-I'm faded, faded, faded.
-{:.faded}
-
 ## Large Tables
 
 | Default aligned |Left aligned| Center aligned  | Right aligned  | Default aligned |Left aligned| Center aligned  | Right aligned  | Default aligned |Left aligned| Center aligned  | Right aligned  | Default aligned |Left aligned| Center aligned  | Right aligned  |
@@ -46,20 +22,6 @@ I'm faded, faded, faded.
 | Footer row      |            |                 |                | Footer row      |            |                 |                | Footer row      |            |                 |                | Footer row      |            |                 |                |
 {:.scroll-table}
 
-
-| Default aligned |Left aligned| Center aligned  | Right aligned  | Default aligned |Left aligned| Center aligned  | Right aligned  | Default aligned |Left aligned| Center aligned  | Right aligned  | Default aligned |Left aligned| Center aligned  | Right aligned  |
-|-----------------|:-----------|:---------------:|---------------:|-----------------|:-----------|:---------------:|---------------:|-----------------|:-----------|:---------------:|---------------:|-----------------|:-----------|:---------------:|---------------:|
-| First body part |Second cell | Third cell      | fourth cell    | First body part |Second cell | Third cell      | fourth cell    | First body part |Second cell | Third cell      | fourth cell    | First body part |Second cell | Third cell      | fourth cell    |
-| Second line     |foo         | **strong**      | baz            | Second line     |foo         | **strong**      | baz            | Second line     |foo         | **strong**      | baz            | Second line     |foo         | **strong**      | baz            |
-| Third line      |quux        | baz             | bar            | Third line      |quux        | baz             | bar            | Third line      |quux        | baz             | bar            | Third line      |quux        | baz             | bar            |
-| 4th line        |quux        | baz             | bar            | 4th line        |quux        | baz             | bar            | 4th line        |quux        | baz             | bar            | 4th line        |quux        | baz             | bar            |
-| 5th line        |quux        | baz             | bar            | 5th line        |quux        | baz             | bar            | 5th line        |quux        | baz             | bar            | 5th line        |quux        | baz             | bar            |
-| 6th line        |quux        | baz             | bar            | 6th line        |quux        | baz             | bar            | 6th line        |quux        | baz             | bar            | 6th line        |quux        | baz             | bar            |
-| 7th line        |quux        | baz             | bar            | 7th line        |quux        | baz             | bar            | 7th line        |quux        | baz             | bar            | 7th line        |quux        | baz             | bar            |
-| 8th line        |quux        | baz             | bar            | 8th line        |quux        | baz             | bar            | 8th line        |quux        | baz             | bar            | 8th line        |quux        | baz             | bar            |
-| 9th line        |quux        | baz             | bar            | 9th line        |quux        | baz             | bar            | 9th line        |quux        | baz             | bar            | 9th line        |quux        | baz             | bar            |
-| 10th line       |quux        | baz             | bar            | 10th line       |quux        | baz             | bar            | 10th line       |quux        | baz             | bar            | 10th line       |quux        | baz             | bar            |
-{:.flip-table}
 
 ## Code blocks
 
@@ -74,6 +36,7 @@ var adder = new Function("a", "b", "return a + b");
 adder(2, 6);
 // > 8
 ~~~
+
 
 ## Math
 Lorem ipsum $$ f(x) = x^2 $$.
@@ -95,6 +58,31 @@ $$
                \end{array}\right)
 \end{aligned}
 $$
+
+
+## Message boxes
+**NOTE**: You can add a message box.
+{:.message}
+
+## Large text
+You can add large text.
+{:.lead}
+
+## Large images
+![Full-width image](https://placehold.it/800x100){:.lead data-width="800" data-height="100"}
+
+## Captions to images
+![Full-width image](https://placehold.it/800x100){:.lead data-width="800" data-height="100"}
+A caption to an image.
+{:.figure}
+
+## Large quotes
+> You can make a quote "pop out".
+{:.lead}
+
+## Faded text
+I'm faded, faded, faded.
+{:.faded}
 
 
 [mm]: https://guides.github.com/features/mastering-markdown/
