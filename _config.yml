@@ -229,7 +229,7 @@ plugins:
 # Theme
 # ---------------------------------------------------------------------------------------
 
-remote_theme: qwtel/hydejack@v8.3.0
+remote_theme: qwtel/hydejack@v8.3.1
 
 
 # SEO Tag
