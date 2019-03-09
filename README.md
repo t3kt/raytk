@@ -6,9 +6,9 @@ A quicker, cleaner way to get started blogging with [Hydejack](https://hydejack.
 ### Running locally
 1. Clone repository (git users), or [download] and unzip.
 2. Open terminal, `cd` into root directory (where `_config.yml` is located)
-3. `bundle install` [^1]
-4. `bundle exec jekyll serve`
-5. Open <http://localhost:4000/hy-starter-kit/>
+3. Run `bundle install` [^1]
+4. Run `bundle exec jekyll serve`
+5. Open <http://localhost:4000/>
 
 ### GitHub Pages
 1. Fork this repository.
@@ -27,4 +27,4 @@ A quicker, cleaner way to get started blogging with [Hydejack](https://hydejack.
 
 [^1]: Requires Bundler. Install with `gem install bundler`.
 
-[download]: https://github.com/qwtel/hy-starter-kit/archive/master.zip
+[download]: https://github.com/qwtel/hydejack-starter-kit/archive/master.zip
