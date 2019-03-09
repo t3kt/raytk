@@ -24,40 +24,49 @@ title:                 Hydejack Starter Kit
 # A short description (~150 chars) of the page used for the meta description tag.
 # Can use markdown, but no more than one paragraph (enforced by `>`)
 description:           >
-  A Jekyll theme with JavaScript powers. "Best Theme by a Mile".
-  Combines the best of static sites and modern web apps.
+  "Best Jekyll Theme by a Mile".
+  **Hydejack** is your presence on the web, featuring a blog, portfolio, and resume.
   Open `_config.yml` to edit this text.
 
 # A shorter description for the sidebar.
 tagline:               >
+  "Best Jekyll Theme by a Mile".
   Open `_config.yml` to edit this text.
 
-# A list of keywords for your blog.
+# A list of keywords for your blog
 keywords:              []
 
-# Used by jekyll-seo-tag.
+# A (square) logo for your site.
+# If provided, it will be shown at the top of the sidebar.
+# It also used by the `jekyll-seo-tag` plugin.
 logo:                  /assets/icons/icon.png
 
 # This should be the same author as first entry in `_data/authors.yml`.
 author:
-  # Used by `jekyll-feed`:
   name:                <firstname> <lastname>
   email:               <mail@domain.tld>
   # Used by `jekyll-seo-tag`:
   # twitter:             <username>
 
-# This text will appear in a `<small>` tag in the footer of every page.
-copyright:             >
-  © 2018. All rights reserved.
-  Open `_config.yml` to edit this text.
+# Add links to the sidebar.
+menu:
+  - title:             Example
+    url:               /example/
+  - title:             Documentation
+    url:               https://hydejack.com/docs/
+  - title:             About
+    url:               /about/
 
 # Add links to the footer.
-# Typically you'll want to link to your impress, cookies or privacy policy, etc.
+# Typically you'll want to link to your cookie- or privacy policy (if appliable), etc..
 # legal:
 #   - title:             Impress
-#     href:              /impress/
+#     url:               /impress/
 #   - title:             Cookies Policy
-#     href:              /cookies-policy/
+#     url:               /cookies-policy/
+
+# This text will appear in a `<small>` tag in the footer of every page.
+copyright:             © 2019. All rights reserved. Open `_config.yml` to edit this text.
 
 # Format of the permalinks
 permalink:             /:categories/:year-:month-:day-:title/
@@ -123,9 +132,7 @@ defaults:
 # disqus:                <disqus_shortname>
 
 # Setting a tinyletter username will enable the newsletter subscription box.
-# PRO version only!
 # tinyletter:            <tinyletter_username>
-
 
 # Hydejack Settings
 # ----------------------------------------------------------------------------------------
@@ -133,7 +140,7 @@ defaults:
 
 hydejack:
   # Configure the order of complementary content on blog posts
-  post_addons:         [about, newsletter, related]
+  post_addons:         [about, newsletter, related, random]
 
   # Configure the order of complementary content on project pages
   project_addons:      [about, newsletter, other]
@@ -142,7 +149,7 @@ hydejack:
   no_google_fonts:     false
 
   # Set to `true` if you don't want to show an icon indicating external links
-  no_mark_external:    false
+  no_mark_external:    true
 
   # Set to `true` if third party plugins fail to work with dynamically loaded pages
   no_push_state:       false
@@ -154,8 +161,12 @@ hydejack:
   no_img:              false
 
   # Set to `true` if you do not want parts of the css inlined in <head/>
-  # This *may* be benefitial when serving the site over HTTP/2.
+  # This will increase site build speed dramatically!
   no_inline_css:       false
+
+  # Set to `true` if you don't intend on changing the accent color on a per-page basis.
+  # This will increase site build speed!
+  no_page_style:       false
 
   # Code blocks and tables "break" the layout by spanning the full available width.
   # Set this to true if you want them to be the same width as other content.
@@ -170,20 +181,40 @@ hydejack:
   no_theme_color:      false
 
   # Set to `true` when building with the `--lsi` option
+  # This will increase site build speed!
   use_lsi:             false
 
   # When using Google Analytics, set to `true` to display a cookie notice banner.
   # When enabled, no user-related data will be stored until the user gives consent.
+  # Note that this works in the PRO version of Hydejack.
   cookies_banner:      false
+
+  # Set to `true` if you would like to add a "Powered by Hydejack" link in the footer.
+  # Note that this works in the PRO version of Hydejack.
+  advertise:           false
+
+  # Dark Mode for Hydejack
+  # Note that this works in the PRO version of Hydejack.
+  dark_mode:
+    # Set to `true` to always use the dark theme.
+    always:            false
+
+    # Set to `true` to use the dark theme based on visitors' local time.
+    dynamic:           true
+    sunrise:           6
+    sunset:            18
+
+    # Set to `true` to allow visitors to switch between light and dark mode.
+    icon:              true
 
   # ⚡️ DANGER ZONE ⚡️
   # ----------------
   # This is an _experimental_ feature.
   # Only use if you know what Service Workers are and how they can impact your site!
-  # Coding skills highly recommended.
   offline:
     enabled:           false
     cache_version:     1
+
 
 # Collections
 # ========================================================================================
@@ -209,9 +240,19 @@ exclude:
   - vendor
   - Gemfile
   - Gemfile.lock
+  - node_modules
+  - package.json
+  - package-lock.json
+  - webpack.config.js
+  - "*.gemspec"
+  - _js
+  - _plugins
+  - .sass-cache
+include:
+  - LICENSE.md
 
 
-# Plugins and Plugin Configuration
+# Plugins
 # ========================================================================================
 
 plugins:
@@ -229,8 +270,8 @@ plugins:
 # Theme
 # ---------------------------------------------------------------------------------------
 
+# theme: jekyll-theme-hydejack
 remote_theme: qwtel/hydejack@v8.4.0
-
 
 # SEO Tag
 # ---------------------------------------------------------------------------------------
@@ -246,7 +287,7 @@ remote_theme: qwtel/hydejack@v8.4.0
 
 # Used for Twitter cards
 # twitter:
-#   username:            <twitter handle>
+#   username:            <shortname>
 
 # Used for Facebook open graph
 # facebook:
@@ -287,9 +328,11 @@ kramdown:
     preview_as_code:   true
 
 compress_html:
-  comments:            ['<!-- ', ' -->']
+  comments:            ["<!-- ", " -->"]
   clippings:           all
   endings:             all
+  ignore:
+    envs:              [development]
 
 sass:
   style:               compressed

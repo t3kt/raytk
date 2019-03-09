@@ -12,8 +12,4 @@ slug: example
 description: >
   This is a featured category, which have their own page.
   Check out `_featured_tags/example.md` to learn how to create your own.
-
-# Setting `menu` will generate an entry in the sidebar for this tag.
-menu: true
-order: 1
 ---
