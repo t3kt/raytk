@@ -1,0 +1,1 @@
+_jekyll-theme-hydejack-pro/CHANGELOG.md
