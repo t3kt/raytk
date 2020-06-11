@@ -1,1 +1,1 @@
-_jekyll-theme-hydejack-pro/CHANGELOG.md
+./#jekyll-theme-hydejack-pro/CHANGELOG.md

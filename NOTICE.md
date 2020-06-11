@@ -1,1 +1,1 @@
-_jekyll-theme-hydejack-pro/NOTICE.md
+./#jekyll-theme-hydejack-pro/NOTICE.md

@@ -13,7 +13,7 @@ GIT
       jekyll (>= 3.3, < 5.0)
 
 PATH
-  remote: _jekyll-theme-hydejack-pro
+  remote: #jekyll-theme-hydejack-pro
   specs:
     jekyll-theme-hydejack-pro (9.0.0)
       jekyll (~> 4.1)

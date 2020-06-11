@@ -1,1 +1,1 @@
-_jekyll-theme-hydejack-pro/README.md
+./#jekyll-theme-hydejack-pro/README.md

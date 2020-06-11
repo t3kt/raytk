@@ -1,1 +1,1 @@
-_jekyll-theme-hydejack-pro/LICENSE.md
+./#jekyll-theme-hydejack-pro/LICENSE.md
