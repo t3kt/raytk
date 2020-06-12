@@ -3,6 +3,8 @@
 const { resolve } = require("path");
 const { readdir, readFile, writeFile } = require("fs").promises;
 
+const { re } = require("re-template-tag");
+
 const ENC = "utf-8";
 
 const FILES = [
@@ -22,6 +24,11 @@ const COPY_FILES = [
 
 const RE_ABC = /\{:[^}]*\}/g;
 const RE_TOC = /(\d+\.|\*) this list will be replaced by the toc/ig;
+
+const RE_FM_BEGIN = /^---/; // beginning front matter at beginning of file
+const RE_FM_END = /---/; // end of front matter
+const RE_CONTENT = /(.|\n)*?/; // arbitrary content, nongreedy (!), captured
+const FRONT_MATTER_REGEX = re`/${RE_FM_BEGIN}${RE_CONTENT}${RE_FM_END}/u`;
 
 // <https://stackoverflow.com/a/45130990/870615>
 async function getFiles(dir) {
@@ -70,7 +77,7 @@ async function getFiles(dir) {
       .map(f => [f, readFile(f, ENC)])
       .map(async ([f, p]) => {
         const content = await p;
-        const cleanContent = content.replace(RE_ABC, '').replace(RE_TOC, '');
+        const cleanContent = content.replace(RE_ABC, '').replace(RE_TOC, '').replace(FRONT_MATTER_REGEX, '');
         return writeFile(resolve('./#jekyll-theme-hydejack-pro', f), cleanContent, ENC);
       }));
 
