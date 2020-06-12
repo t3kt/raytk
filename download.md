@@ -61,7 +61,7 @@ Since I've built Hydejack, it's fair to say that I'm the world's expert on troub
 [docs]: docs/README.md
 [ofln]: docs/advanced.md#enabling-offline-support
 
-[kit]: https://github.com/hydecorp/hy-starter-kit/archive/v9.0.0-alpha.13.zip
+[kit]: https://github.com/hydecorp/hy-starter-kit/archive/v9.0.0-beta.0.zip
 [src]: https://github.com/hydecorp/hydejack
 [gem]: https://rubygems.org/gems/jekyll-theme-hydejack
 [buy]: https://app.simplegoods.co/i/NATYVLYT
