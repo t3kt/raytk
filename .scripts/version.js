@@ -22,7 +22,7 @@ const COPY_FILES = [
   "README.md",
 ];
 
-const RE_ABC = /\{:[^}]*\}/g;
+const RE_TAG = /\{[:%][^}]*\}/g;
 const RE_TOC = /(\d+\.|\*) this list will be replaced by the toc/ig;
 
 const RE_FM_BEGIN = /^---/; // beginning front matter at beginning of file
@@ -77,7 +77,7 @@ async function getFiles(dir) {
       .map(f => [f, readFile(f, ENC)])
       .map(async ([f, p]) => {
         const content = await p;
-        const cleanContent = content.replace(RE_ABC, '').replace(RE_TOC, '').replace(FRONT_MATTER_REGEX, '');
+        const cleanContent = content.replace(RE_TAG, '').replace(RE_TOC, '').replace(FRONT_MATTER_REGEX, '');
         return writeFile(resolve('./#jekyll-theme-hydejack-pro', f), cleanContent, ENC);
       }));
 
