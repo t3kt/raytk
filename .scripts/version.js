@@ -1,11 +1,7 @@
 #!/usr/bin/env node
 
 const { resolve } = require("path");
-const { readdir, rename, unlink, readFile, writeFile } = require("fs").promises;
-
-// TODO
-const vPrev = require("../.jekyll-theme-hydejack-pro/assets/version.json").version;
-const vNext = require("../.jekyll-theme-hydejack-pro/package.json").version;
+const { readdir, readFile, writeFile } = require("fs").promises;
 
 const ENC = "utf-8";
 
@@ -16,6 +12,16 @@ const FILES = [
   "./README.md",
   "./thank-you.md",
 ].map(f => resolve(f));
+
+const COPY_FILES = [
+  "CHANGELOG.md",
+  "LICENSE.md",
+  "NOTICE.md",
+  "README.md",
+];
+
+const RE_ABC = /\{:[^}]*\}/g;
+const RE_TOC = /(\d+\.|\*) this list will be replaced by the toc/ig;
 
 // <https://stackoverflow.com/a/45130990/870615>
 async function getFiles(dir) {
@@ -29,6 +35,11 @@ async function getFiles(dir) {
 
 (async function main() {
   try {
+    const {
+      version: vNext,
+      prevVersion: vPrev,
+    } = JSON.parse(await readFile("./#jekyll-theme-hydejack-pro/assets/version.json", ENC));
+
     const prev = vPrev.replace(/\./g, "\\.");
     const prevRegExp = new RegExp(prev, "g");
 
@@ -39,10 +50,8 @@ async function getFiles(dir) {
       getFiles("./docs"),
     ]);
       
-    const files = Array.prototype.concat.call(FILES, ...args);
-
-    const pFiles = Promise.all(
-      files
+    await Promise.all(
+      Array.prototype.concat.call(FILES, ...args)
         .filter(([f]) => !f.startsWith("."))
         .map(f => [f, readFile(f, ENC)])
         .map(async ([f, p]) => {
@@ -53,28 +62,17 @@ async function getFiles(dir) {
             return [f, content.replace(pattern, `$1${vNext}`)];
           }
 
-          return [f, content.replace(prevRegExp, vNext)];
-        })
-        .map(async p => {
-          const [f, content] = await p;
-          return writeFile(f, content, ENC);
-        })
-    );
+          const cleanContent = content.replace(prevRegExp, vNext);
+          return writeFile(f, cleanContent, ENC);
+        }));
 
-    await pFiles;
-
-    // const pUnlink = Promise.all(
-    //   (await getFiles('./assets/js'))
-    //     .filter(f => f.includes(vPrev))
-    //     .map(unlink)
-    // );
-
-    // const pJSCSS = rename(
-    //   resolve(`./assets/css/hydejack-${vPrev}.css`),
-    //   resolve(`./assets/css/hydejack-${vNext}.css`)
-    // );
-
-    // await Promise.all([pUnlink, pFiles, pJSCSS]);
+    await Promise.all(COPY_FILES
+      .map(f => [f, readFile(f, ENC)])
+      .map(async ([f, p]) => {
+        const content = await p;
+        const cleanContent = content.replace(RE_ABC, '').replace(RE_TOC, '');
+        return writeFile(resolve('./#jekyll-theme-hydejack-pro', f), cleanContent, ENC);
+      }));
 
     process.exit(0);
   } catch (e) {
