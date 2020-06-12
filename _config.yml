@@ -45,10 +45,10 @@ logo:                  /assets/icons/icon.png
 # This should be the same author as first entry in `_data/authors.yml`.
 author:
   # Used by `jekyll-feed`:
-  name:                Florian Klampfer
-  email:               mail@qwtel.com
-  # Used by `jekyll-seo-tag`:
-  twitter:             qwtel
+  name:                <firstname> <lastname>
+  email:               <mail@domain.tld>
+  # # Used by `jekyll-seo-tag`:
+  # twitter:             <username>
 
 # Add links to the sidebar.
 menu:
@@ -185,11 +185,11 @@ kramdown:
 
 # Setting a disqus shortname will enable the comment section on
 # pages with `comments: true` in the front matter.
-# disqus:                qwtel
+# disqus:                <username>
 
 # Setting a tinyletter username will enable the newsletter subscription box.
 # PRO version only!
-tinyletter:            qwtel
+# tinyletter:            <username>
 
 
 # Hydejack Settings
@@ -353,8 +353,8 @@ google_site_verification: kRoh_csFULhK6lxBJwZOxiWYQpvttOkFj0a3lWwQADc
 #   yandex:              <verification-id>
 
 # Used for twitter cards
-twitter:
-  username:            qwtel
+# twitter:
+#   username:            <username>
 
 # Used for facebook open graph
 # facebook:
