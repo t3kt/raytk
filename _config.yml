@@ -28,11 +28,11 @@ title:                 Hydejack
 # A short description (~150 chars) of the page used for the meta description tag.
 # Can use markdown, but no more than one paragraph (enforced by `>`)
 description:           >
-  "Best Jekyll Theme by a Mile".
-  **Hydejack** is your presence on the web, featuring a blog, portfolio, and resume.
+  Hydejack is a boutique Jekyll theme for hackers, nerds, and academics,
+  with a focus on personal sites that are meant to impress.
 
 # A shorter description for the sidebar.
-tagline:               '"Best Jekyll Theme by a Mile"'
+tagline:               A boutique Jekyll theme
 
 # A list of keywords for your blog
 keywords:              [jekyll, theme, hyde, sidebar, resume, markdown, code, math, portfolio, personal]
@@ -87,11 +87,11 @@ paginate_path:         /blog/:num/
 # ---------------------------------------------------------------------------------------
 
 theme: jekyll-theme-hydejack-pro
-# remote_theme: qwtel/hydejack
+# remote_theme: hydecorp/hydejack
 
 
 # Customizaton
-# ========================================================================================
+# ----------------------------------------------------------------------------------------
  
 # Sidebar image and theme color of the site.
 accent_image:          /assets/img/sidebar-bg.jpg

@@ -3,8 +3,8 @@ layout: home
 cover: true
 image: /assets/img/blog/hydejack-8.png
 description: >
-  "Best Jekyll Theme by a Mile".
-  **Hydejack** is your presence on the web, featuring a blog, portfolio, and resume.
+  Hydejack is a boutique Jekyll theme for hackers, nerds, and academics,
+  with a focus on personal sites that are meant to impress.
 hide_description: true
 selected_projects:
   - _projects/hy-drawer.md # Use path to the project
