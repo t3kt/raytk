@@ -91,7 +91,7 @@ remote_theme: hydecorp/hydejack@v9
 
 [ghp]: https://jekyllrb.com/docs/github-pages/
 
-To run this configuration locally, add the following to your `Gemfile`:
+To run this configuration locally, make sure the following is part of your `Gemfile`:
 
 ```ruby
 # file: `Gemfile`

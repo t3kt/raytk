@@ -338,7 +338,7 @@ There are a couple of things to know about this gem:
 Before you add math content, remember to run `bundle install` and restart Jekyll.
 
 Sadly, the old MathJax-to-KaTeX hack I've been using in previous
-versions of Hydejack doesn't seem to work with Jekyll 4.0 anymore.
+versions of Hydejack doesn't work with Jekyll 4.0 anymore.
 {:.note}
 
 
