@@ -306,20 +306,41 @@ You can read more about it [here](https://github.com/penibelst/jekyll-compress-h
 {:.note}
 
 ## Adding math
+
 Hydejack supports [math blocks][ksynmath] via [KaTeX][katex].
 
 Why KaTeX instead of MathJax? KaTeX is faster and more lightweight at the cost of having less features, but
 for the purpose of writing blog posts, this should be a favorable tradeoff.
+{:.note}
 
-Before you add math content, make sure you have the following in your config file:
+To enable math, add the following entries to your `Gemfile` and `_config.yml`:
+
+```ruby
+# file: `Gemfile`
+gem "kramdown-math-katex"
+```
 
 ```yml
+# file: `_config.yml`
 kramdown:
-  math_engine:         mathjax # this is not a typo
-  math_engine_opts:
-    preview:           true
-    preview_as_code:   true
+  math_engine:         katex
+  math_engine_opts:    {}
 ```
+
+There are a couple of things to know about this gem:
+*  It is not supported on GitHub Pages. 
+   You have to build the site on your machine before uploading to GitHub,
+   or use a more permissive cloud building tool such as Netlify.
+*  You need some kind of JavaScript runtime on your machine.
+   Usually installing [NodeJS](https://nodejs.org/en/download/) will suffice. 
+   For details, see <https://github.com/kramdown/math-katex#documentation>
+
+Before you add math content, remember to run `bundle install` and restart Jekyll.
+
+Sadly, the old MathJax-to-KaTeX hack I've been using in previous
+versions of Hydejack doesn't seem to work with Jekyll 4.0 anymore.
+{:.note}
+
 
 ### Inline
 Example:

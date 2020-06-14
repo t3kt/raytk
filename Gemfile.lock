@@ -17,6 +17,7 @@ PATH
   specs:
     jekyll-theme-hydejack (9.0.0)
       jekyll (~> 4.1)
+      jekyll-include-cache (~> 0.2)
 
 GEM
   remote: https://rubygems.org/
