@@ -32,10 +32,10 @@ description:           >
   with a focus on personal sites that are meant to impress.
 
 # A shorter description for the sidebar.
-tagline:               A boutique Jekyll theme
+tagline:               Change `tagline` in `_config.yml`
 
 # A list of keywords for your blog
-keywords:              [jekyll, theme, hyde, sidebar, resume, markdown, code, math, portfolio, personal]
+keywords:              []
 
 # A (square) logo for your site.
 # If provided, it will be shown at the top of the sidebar.
