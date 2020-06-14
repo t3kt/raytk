@@ -45,7 +45,7 @@ async function getFiles(dir) {
     const {
       version: vNext,
       prevVersion: vPrev,
-    } = JSON.parse(await readFile("./#jekyll-theme-hydejack-pro/assets/version.json", ENC));
+    } = JSON.parse(await readFile("./#jekyll-theme-hydejack/assets/version.json", ENC));
 
     const prev = vPrev.replace(/\./g, "\\.");
     const prevRegExp = new RegExp(prev, "g");
@@ -78,7 +78,7 @@ async function getFiles(dir) {
       .map(async ([f, p]) => {
         const content = await p;
         const cleanContent = content.replace(RE_TAG, '').replace(RE_TOC, '').replace(FRONT_MATTER_REGEX, '');
-        return writeFile(resolve('./#jekyll-theme-hydejack-pro', f), cleanContent, ENC);
+        return writeFile(resolve('./#jekyll-theme-hydejack', f), cleanContent, ENC);
       }));
 
     process.exit(0);

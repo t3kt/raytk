@@ -11,27 +11,27 @@ cd       _zip/hydejack-pro-$version
 
 # cp ../../~V9_PROMO_CODE.TXT .
 
-mkdir -p \#jekyll-theme-hydejack-pro
+mkdir -p \#jekyll-theme-hydejack
 mkdir -p starter-kit
 
 # Make Jekyll theme folder
 cp -r \
-  ../../\#jekyll-theme-hydejack-pro/assets \
-  ../../\#jekyll-theme-hydejack-pro/_includes \
-  ../../\#jekyll-theme-hydejack-pro/_layouts \
-  ../../\#jekyll-theme-hydejack-pro/_sass \
-  ../../\#jekyll-theme-hydejack-pro/_config.yml \
-  ../../\#jekyll-theme-hydejack-pro/README.md \
-  ../../\#jekyll-theme-hydejack-pro/LICENSE.md \
-  ../../\#jekyll-theme-hydejack-pro/NOTICE.md \
-  ../../\#jekyll-theme-hydejack-pro/CHANGELOG.md \
-  ../../\#jekyll-theme-hydejack-pro/*.gemspec \
-  \#jekyll-theme-hydejack-pro
+  ../../\#jekyll-theme-hydejack/assets \
+  ../../\#jekyll-theme-hydejack/_includes \
+  ../../\#jekyll-theme-hydejack/_layouts \
+  ../../\#jekyll-theme-hydejack/_sass \
+  ../../\#jekyll-theme-hydejack/_config.yml \
+  ../../\#jekyll-theme-hydejack/README.md \
+  ../../\#jekyll-theme-hydejack/LICENSE.md \
+  ../../\#jekyll-theme-hydejack/NOTICE.md \
+  ../../\#jekyll-theme-hydejack/CHANGELOG.md \
+  ../../\#jekyll-theme-hydejack/*.gemspec \
+  \#jekyll-theme-hydejack
 
 # Make Starter Kit folder
 cp -r \
   $(find ../.. \
-    -not -name \#jekyll-theme-hydejack-pro \
+    -not -name \#jekyll-theme-hydejack \
     -not -name .scripts \
     -not -name .sass-cache \
     -not -name .jekyll-cache \
@@ -47,7 +47,7 @@ cp -r \
     -mindepth 1 \
     -maxdepth 1) \
   starter-kit
-cp -r \#jekyll-theme-hydejack-pro starter-kit
+cp -r \#jekyll-theme-hydejack starter-kit
 
 find . -name '.DS_Store' -delete
 
