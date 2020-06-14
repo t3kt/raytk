@@ -24,7 +24,7 @@ gem "jekyll-theme-hydejack", path: "./#jekyll-theme-hydejack"
 #    For details, see <https://github.com/kramdown/math-katex#documentation>
 #
 # Sadly, the old MathJax-to-KaTeX hack I've been using in previous
-# versions of Hydejack doesn't seem to work with Jekyll 4.0 anymore.
+# versions of Hydejack doesn't work with Jekyll 4.0 anymore.
 # If you're not using math on your site feel free to remove the line below:
 gem "kramdown-math-katex"
 
