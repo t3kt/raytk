@@ -2,154 +2,105 @@
 layout: page
 title: Install
 description: >
-  There are multiple ways of installing Hydejack.
-  The easiest and cleanest way is via the Starter Kit.
-  Alternatively, you can use the Ruby gem.
+  How you install Hydejack depends on whether you start a new site,
+  or change the theme of an existing site.
 hide_description: true
 ---
 
-There are multiple ways of installing Hydejack.
-The easiest and cleanest way is [via the Starter Kit](#via-starter-kit).
-Alternatively, you can use the [Ruby gem](#via-gem).
-If you don't mind a cluttered source directory, you can use [the zip file](#via-zip).
-Finally, If you know what you are doing, you can [fork the git repository](#via-git).
-
-Buyers of the PRO version should [follow these steps](#pro-version).
+How you install Hydejack depends on whether you [start a new site](#new-sites), 
+or change the theme of [an existing site](#existing-sites).
 
 0. this unordered seed list will be replaced by toc as unordered list
 {:toc}
 
-## Via Starter Kit
-Using the Starter Kit has the advantage of not cluttering your blog repository.
-Additionally, it allows you to publish your site on GitHub Pages with a single `push`.
+## New sites
+For new sites, the best way to get started with Hydejack is via the Starter Kit. 
+It comes with a documented config file and example content that gets you started quickly.
 
-If you have a GitHub account, fork the [hy-starter-kit](https://github.com/hydecorp/hy-starter-kit) repository. Otherwise [download the source files][src] and unzip them somewhere on your machine.
+If you have a GitHub account, fork the [hy-starter-kit](https://github.com/hydecorp/hy-starter-kit) repository. 
+Otherwise [download the source files][src] and unzip them somewhere on your machine.
+
+If you bought the __PRO Version__ of Hydejack, use the contents of the `starter-kit` folder instead.
 
 In addition to the docs here, you can follow the quick start guide in the Starter Kit.
 {:.note}
 
-`cd` into the directory where `_config.yml` is located and follow the steps in [Running locally](#running-locally).
+You can now jump to [running locally](#running-locally).
 
-Alternatively, you can just [![Deploy to Netlify][dtn]][nfy]{:.no-hover.no-mark}.
+You can now also [![Deploy to Netlify][dtn]][nfy] directly.
+{:.note}
 
 [src]: https://github.com/hydecorp/hy-starter-kit/archive/v9.0.0-beta.0.zip
 [nfy]: https://app.netlify.com/start/deploy?repository=https://github.com/hydecorp/hydejack-starter-kit
 [dtn]: https://www.netlify.com/img/deploy/button.svg
 
-## Via gem
-Jekyll has [built-in support](https://jekyllrb.com/docs/themes/) for using themes that are hosted on RubyGems.  
 
-If you haven't already, create a new Jekyll site first:
-
-~~~bash
-$ jekyll new <PATH>
-~~~
-
-Your site's root dir should look something like this
-
-~~~
-├── _posts
-│   └── 2017-04-07-welcome-to-jekyll.markdown
-├── _config.yml
-├── about.md
-├── Gemfile
-├── Gemfile.lock
-└── index.md
-~~~
-
-Hydejack works with Jekyll's default `config.yml`, but it is recommended that you replace it with
-[Hydejack's default config file](https://github.com/hydecorp/hydejack/blob/v8/_config.yml).
-It contains the names of all config options known to Hydejack and provides sensible defaults (like minifying HTML and CSS in production builds).
-{:.note}
-
-Next, you'll want to add `jekyll-theme-hydejack` as a dependency by adding the following line to the `Gemfile`.
+## Existing sites
+If you have an existing site that you'd like to upgrade to Hydejack you can install the theme via bundler.
+Add the following to your `Gemfile`:
 
 ~~~ruby
+# file: `Gemfile`
 gem "jekyll-theme-hydejack"
 ~~~
 
-(You can also remove the old theme `jekyll-theme-minima` from the Gemfile)
+If you bought the __PRO Version__ of Hydejack, copy the `#jekyll-theme-hydejack` folder into the root folder of your site,
+and add the following to your `Gemfile` instead:
 
-Now you want to edit the `_config.yml` of your Jekyll site and set Hydejack as the theme.
-Look for the `theme` key and set its value to `jekyll-theme-hydejack`.
+~~~ruby
+# file: `Gemfile`
+gem "jekyll-theme-hydejack", path: "./#jekyll-theme-hydejack"
+~~~
+
+The folder is prefixed with a `#` to indicate that this folder is different from regular Jekyll content. 
+The `#` char was choosen specifically because it is on of the four characters ignored by Jekyll by default (`.`, `_` , `#`, `~`).
+{:.note}
+
+In your config file, change the `theme` to Hydejack:
 
 ~~~yml
+# file: `_config.yml`
 theme: jekyll-theme-hydejack
 ~~~
 
-For more information on gem-based themes, see the [Jekyll Documentation](http://jekyllrb.com/docs/themes/).
+Hydejack comes with a default configuration file that takes care most of the configuration,
+but it pays off to check out the example config file in the Starter Kit to see what's available.
 
-You can now continue with [running locally](#running-locally).
+You can now jump to [running locally](#running-locally).
 
-## Via zip
-If you downloaded the [extended zip](https://github.com/hydecorp/hydejack/releases),
-extract the contents somewhere on your machine.
-The high-level folder structure will look something like.
+### Troubleshooting
+If your existing site combines theme files with your content (as did previous verisons of Hydejack/PRO),
+make sure to delete the following folders:
 
-~~~
-├── _data
-├── _featured_categories
-├── _featured_tags
-├── _includes
-├── _js
-├── _layouts
-├── _posts
-├── _sass
-├── assets
-├── _config.yml
-├── 404.md
-├── about.md
-├── index.html
-└── posts.md
-~~~
+- `_layouts`
+- `_includes` 
+- `_sass` 
+- `assets`
 
-`cd` into the directory where `_config.yml` is located and follow the steps in [Running locally](#running-locally).
+The `assets` folder most likely includes theme files as well as your personal/content files. 
+Make sure to only delete files that belong to the old theme!
 
-## Via git
-If you are familiar with using git, you can add the [Hydejack repository](https://github.com/hydecorp/hydejack)
-as a remote, and merge its master branch into your working branch.
 
-~~~bash
-$ git remote add hydejack git@github.com:hydecorp/hydejack.git
-$ git pull hydejack master
-~~~
+## GitHub Pages
+If you want to use your site with [GitHub Pages][ghp] exclusively, you can instead set the `remote_theme` key as follows:
 
-You can also update Hydejack this way. The master branch will not contain work in progress,
-but will contain major (breaking) changes.
-This approach is recommended if you intend to customize Hydejack.
+```yml
+# file: `_config.yml`
+remote_theme: hydecorp/hydejack@v9
+```
 
-You can now continue with [running locally](#running-locally).
+[ghp]: https://jekyllrb.com/docs/github-pages/
 
-## PRO Version
-If you bought the PRO version, you've received a zip archive with the following contents:
+To run this configuration locally, add the following to your `Gemfile`:
 
-~~~
-├── install
-├── upgrade
-├── CHANGELOG.pdf
-├── Documentation.pdf
-├── NOTICE.pdf
-├── PRO License.pdf
-├── PRO–hy-drawer License.pdf
-├── PRO–hy-img License.pdf
-├── PRO–hy-push-state License.pdf
-└── .ssh
-~~~
+```ruby
+# file: `Gemfile`
+gem "github-pages", group: :jekyll_plugins
+```
 
-`install`
-: Contains all files and folders needed to create a new blog.
-
-`upgrade`
-: Contains only the files and folders needed for upgrading form an earlier version of Hydejack (6.0.0 or above). See [Upgrade]{:.heading.flip-title} for more.
-
-For new installations only the `install` folder is relevant.
-Unzip the archive somewhere on your machine, then `cd` *into* the `install` folder, e.g.
-
-~~~bash
-$ cd ~/Downloads/hydejack-pro-9.0.0-beta.0/install/
-~~~
-
-You can now continue with [Running locally](#running-locally).
+Note that Hydejack has a reduced feature set when built on GitHub Pages. 
+Specifically, using KaTeX math formulas doesn't work when built in this way.
+{:.note}
 
 
 ## Running locally

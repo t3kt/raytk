@@ -12,7 +12,7 @@ one that didn't look awful buy modern design standards, and one that felt snappy
 That and more is now Hydejack. I hope you enjoy it [as much as I do](https://qwtel.com/).
 
 ## First Steps
-Please start by reading the [Documentation]{:.heading.flip-title}.
+Start by reading the [Documentation]{:.heading.flip-title}.
 Specifically, the chapters below should be relevant now:
 
 * [Install]{:.heading.flip-title} --- How to install and run Hydejack.

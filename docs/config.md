@@ -512,6 +512,7 @@ Finally, setting `always` will cause dark mode to become the default theme at al
 Continue with [Basics](basics.md){:.heading.flip-title}
 {:.read-more}
 
+
 [blog]: https://hydejack.com/blog/
 [posts]: https://hydejack.com/posts/
 
