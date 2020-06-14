@@ -13,9 +13,9 @@ GIT
       jekyll (>= 3.3, < 5.0)
 
 PATH
-  remote: #jekyll-theme-hydejack-pro
+  remote: #jekyll-theme-hydejack
   specs:
-    jekyll-theme-hydejack-pro (9.0.0)
+    jekyll-theme-hydejack (9.0.0)
       jekyll (~> 4.1)
 
 GEM
@@ -117,7 +117,7 @@ DEPENDENCIES
   jekyll-relative-links
   jekyll-seo-tag!
   jekyll-sitemap
-  jekyll-theme-hydejack-pro!
+  jekyll-theme-hydejack!
   jekyll-titles-from-headings
   kramdown-math-katex
 
