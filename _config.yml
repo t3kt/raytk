@@ -316,7 +316,8 @@ collections:
 # ----------------------------------------------------------------------------------------
 
 exclude:
-  - '#jekyll-theme-hydejack'
+  - '#jekyll-theme-hydejack/node_modules'
+  - '#jekyll-theme-hydejack/.git'
   - .jekyll-cache
   - .sass-cache
   - vendor
