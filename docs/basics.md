@@ -393,7 +393,7 @@ If you want to organize your projects using categories or tags, similar to the w
 The default config file comes with one projects collection predefined, but we can easily add additional collections like so:
 
 ~~~yml
-# file: `config.yml`
+# file: `_config.yml`
 collections:
   # The default projects collection
   projects:
