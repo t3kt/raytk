@@ -49,24 +49,7 @@ The *PRO version* includes additional features for professionals, such as a [por
 
 The table below shows what's included in each version:
 
-|                        | Free           | PRO       | PRO+      |
-|:-----------------------|:--------------:|:---------:|:---------:|
-| Blog                   | &#x2714;       | &#x2714;  | &#x2714;  |
-| [Features]             | &#x2714;       | &#x2714;  | &#x2714;  |
-| [Portfolio]            |                | &#x2714;  | &#x2714;  |
-| Printable [Resume]     |                | &#x2714;  | &#x2714;  |
-| [Newsletter Box][news] |                | &#x2714;  | &#x2714;  |
-| [Custom Forms][forms]  |                | &#x2714;  | &#x2714;  |
-| [Dark Mode][darkm]     |                | &#x2714;  | &#x2714;  |
-| [Offline Support][ofln]|                | &#x2714;  | &#x2714;  |
-| Cookie Banner          |                | &#x2714;  | &#x2714;  |
-| No Hydejack Branding   |                | &#x2714;  | &#x2714;  |
-| [Troubleshooting]      |                |           | 1 hour    |
-| License                | [GPL-3.0][lic] | [PRO]     | [PRO]     |
-| Source                 | [GitHub][src]  | Included  | Included  |
-| **Price**              | **Free**       | **$69**   | **$169**  |
-| | [**Download**][kit] <br/>-- or --<br/> [**Deploy to Netlify**][nfy] | [**Buy PRO**][buy]{:.btn.btn-primary.btn-lg.heading} | [**Buy PRO+**][buy]{:.btn.btn-primary.btn-lg.heading} |
-{:.stretch-table.dl-table}
+{% include table.md %}
 
 
 ## A Free Blogging Theme
@@ -131,22 +114,10 @@ If you are using a different service like MailChimp, you can build a custom news
 
 
 ## Features
+
 An incomplete list of features included in all versions of **Hydejack**:
 
-* Full in-app page loading, powered by [hy-push-state]{:.external}
-* Customizable sidebar and touch-enabled drawer menu, powered by [hy-drawer]{:.external}
-* Advanced FLIP animations, inspired by Material Design
-* 99/100 [Google PageSpeed Score][gpss][^2]
-* [Syntax highlighting][syntax], powered by [Rouge]
-* [LaTeX math blocks][latex], powered by [KaTeX]
-* Change the wording of built-in strings and possibly translate in other languages
-* Support for categories and tags
-* Built-in icons for many social networks
-* Simple and semantic HTML
-* Structured Data for core entities
-* Author section below each article and support for multiple authors
-* Google Analytics and Google Fonts support
-
+{% include features.md %}
 
 ## Get It Now
 There are two versions of **Hydejack**: The *Free version* includes basic blogging functionality and most of Hydejack's [Features], such as dynamic page loading and advanced animations.
@@ -155,24 +126,7 @@ The *PRO version* includes additional features for professionals, such as a [por
 
 The table below shows what's included in each version:
 
-|                        | Free           | PRO       | PRO+      |
-|:-----------------------|:--------------:|:---------:|:---------:|
-| Blog                   | &#x2714;       | &#x2714;  | &#x2714;  |
-| [Features]             | &#x2714;       | &#x2714;  | &#x2714;  |
-| [Portfolio]            |                | &#x2714;  | &#x2714;  |
-| Printable [Resume]     |                | &#x2714;  | &#x2714;  |
-| [Newsletter Box][news] |                | &#x2714;  | &#x2714;  |
-| [Custom Forms][forms]  |                | &#x2714;  | &#x2714;  |
-| [Dark Mode][darkm]     |                | &#x2714;  | &#x2714;  |
-| [Offline Support][ofln]|                | &#x2714;  | &#x2714;  |
-| Cookie Banner          |                | &#x2714;  | &#x2714;  |
-| No Hydejack Branding   |                | &#x2714;  | &#x2714;  |
-| [Troubleshooting]      |                |           | 1 hour    |
-| License                | [GPL-3.0][lic] | [PRO]     | [PRO]     |
-| Source                 | [GitHub][src]  | Included  | Included  |
-| **Price**              | **Free**       | **$69**   | **$169**  |
-| | [**Download**][kit] <br/>-- or --<br/> [**Deploy to Netlify**][nfy] | [**Buy PRO**][buy]{:.btn.btn-primary.btn-lg.heading} | [**Buy PRO+**][buy]{:.btn.btn-primary.btn-lg.heading} |
-{:.stretch-table.dl-table}
+{% include table.md %}
 
 [^1]: You MAY open an issue on GitHub, but no response and/or fix is guaranteed.
       You understand that using Jekyll requires technical know-how and is not comparable to Wordpress in terms of ease of use. Please use the free version to confirm that Hydejack works for you. For details, see the [PRO] license.
@@ -189,9 +143,9 @@ The table below shows what's included in each version:
 [welcome]: README.md
 [forms]: forms-by-example.md
 
-[features]: #features
-[news]: #build-an-audience
-[syntax]: #syntax-highlighting
+[features]: README.md#features
+[news]: README.md#build-an-audience
+[syntax]: README.md#syntax-highlighting
 [latex]: hydejack/_posts/2018-06-01-example-content-iii.md#math
 [darkm]: hydejack/_posts/2018-09-01-introducing-dark-mode.md
 [troubleshooting]: download.md#troubleshooting
