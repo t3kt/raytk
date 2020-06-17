@@ -11,6 +11,6 @@ You probably found this super secret page because you've searched for one of the
 
 Thanks for trying out the search functionality. As a reward, have the promotion **EASTEREGG** to get 10% off:
 
-[**Buy PRO**][buy]{:.btn.btn-primary.btn-lg.heading}
+[Buy PRO][buy]{:.gumroad-button}
 
-[buy]: https://app.simplegoods.co/i/NATYVLYT
+[buy]: https://gum.co/nuOluY?wanted=true

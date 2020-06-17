@@ -14,24 +14,22 @@ qwtel:
     There are multiple versions of **Hydejack**.
     The table below shows what's included in each version:
 
-    |                        | Free           | PRO       | PRO+      |
-    |:-----------------------|:--------------:|:---------:|:---------:|
-    | [Features]             | &#x2714;       | &#x2714;  | &#x2714;  |
-    | [PRO Features][pro]    |                | &#x2714;  | &#x2714;  |
-    | [Troubleshooting]      |                |           | 1 hour    |
-    | **Price**              | **Free**       | **$69**   | **$169**  |
-    | | [**Download**][kit] <br/>-- or --<br/> [**Deploy to Netlify**][nfy] | [**Buy PRO**][buy]{:.btn.btn-primary.btn-lg.heading} | [**Buy PRO+**][buy]{:.btn.btn-primary.btn-lg.heading} |
+    |                               | Free           | PRO                 |
+    |:------------------------------|:--------------:|:-------------------:|
+    | [Features]                    | &#x2714;       | &#x2714;            |
+    | [PRO Features][pro]           |                | &#x2714;            |
+    | __Price__ / Upgrade           | __Free__       | __$79__ / $29 [^22] |
+    | | [__Download__][kit] <br/>-- or --<br/> [__Deploy to Netlify__][nfy] | [__Buy PRO__][buy]{:.gumroad-button} |
     {:.stretch-table.dl-table}
+
+    [^22]: Upgrades from v8: Find your discount code in the latest zip download.
 
     [features]:        /#features
     [pro]:             /download/
-    [troubleshooting]: /download/#troubleshooting
-
     [kit]: https://github.com/hydecorp/hydejack-starter-kit/archive/v9.0.0-beta.1.zip
-    [buy]: https://app.simplegoods.co/i/NATYVLYT
-    [buyp]: https://app.simplegoods.co/i/XWYOSSME
     [nfy]: https://app.netlify.com/start/deploy?repository=https://github.com/hydecorp/hydejack-starter-kit
     [dtn]: https://www.netlify.com/img/deploy/button.svg
+    [buy]: https://gum.co/nuOluY?wanted=true
 
   # This photo will be used in the about section
   picture:
