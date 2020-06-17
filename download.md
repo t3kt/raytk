@@ -35,7 +35,7 @@ image: /assets/img/blog/hydejack-8.png
 [docs]: docs/README.md
 [ofln]: docs/advanced.md#enabling-offline-support
 
-[kit]: https://github.com/hydecorp/hydejack-starter-kit/archive/v9.0.0-beta.1.zip
+[kit]: https://github.com/hydecorp/hydejack-starter-kit/archive/v9.0.0-beta.3.zip
 [src]: https://github.com/hydecorp/hydejack
 [gem]: https://rubygems.org/gems/jekyll-theme-hydejack
 [buy]: https://gum.co/nuOluY?wanted=true
