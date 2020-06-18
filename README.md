@@ -95,7 +95,7 @@ Code blocks can have a filename and a caption.
 
 
 ## Beautiful Math
-They say math is beautiful — and with **Hydejack**'s [math support][maths] it's guaranteed to also look beautiful on the web.
+They say math is beautiful — and with **Hydejack**'s [math support][maths] it's guaranteed to also look beautiful:
 
 $$
 \begin{aligned}
@@ -139,9 +139,19 @@ If you are using a different service like MailChimp, you can build a custom news
 {% include features.md %}
 
 
-## Get It Now
+## Comparison
 
 {% include table.md %}
+
+
+## Get It Now
+
+Use the the form below to purchase Hydejack PRO:
+
+<div class="gumroad-product-embed" data-gumroad-product-id="nuOluY"><a href="https://gumroad.com/l/nuOluY">Loading...</a></div>
+<script>
+  if ('GumroadEmbed' in window) window.GumroadEmbed.reload();
+</script>
 
 
 [blog]: /blog/
@@ -167,7 +177,7 @@ If you are using a different service like MailChimp, you can build a custom news
 [kit]: https://github.com/hydecorp/hydejack-starter-kit/archive/v9.0.0-beta.3.zip
 [src]: https://github.com/hydecorp/hydejack
 [gem]: https://rubygems.org/gems/jekyll-theme-hydejack
-[buy]: https://gum.co/nuOluY?wanted=true
+[buy]: https://gum.co/nuOluY
 [nfy]: https://app.netlify.com/start/deploy?repository=https://github.com/hydecorp/hydejack-starter-kit
 [dtn]: https://www.netlify.com/img/deploy/button.svg
 

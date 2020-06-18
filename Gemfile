@@ -23,9 +23,7 @@ gem "jekyll-theme-hydejack", path: "./#jekyll-theme-hydejack"
 #    Usually installing NodeJS will suffice. 
 #    For details, see <https://github.com/kramdown/math-katex#documentation>
 #
-# Sadly, the old MathJax-to-KaTeX hack I've been using in previous
-# versions of Hydejack doesn't work with Jekyll 4.0 anymore.
-# If you're not using math on your site feel free to remove the line below:
+# If you're using the MathJax math engine instead, free to remove the line below:
 gem "kramdown-math-katex"
 
 group :jekyll_plugins do

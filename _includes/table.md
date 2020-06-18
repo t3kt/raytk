@@ -17,13 +17,13 @@ The table below shows what's included in each version:
 | [Newsletter Box][news]        |                | &#x2714;            |
 | [Grid layout][grid]           |                | &#x2714;            |
 | [Offline Support][ofln]       |                | &#x2714;            |
-| Sticky Table of Contents[^21] |                | &#x2714;            |
+| Table of Contents[^21]        |                | &#x2714;            |
 | Cookie Banner                 |                | &#x2714;            |
 | No Hydejack Branding          |                | &#x2714;            |
 | License                       | [GPL-3.0][lic] | [PRO]               |
 | Source                        | [GitHub][src]  | Included            |
 | __Price__ / Upgrade           | __Free__       | __$79__ / $29 [^22] |
-| | [__Download__][kit] <br/>-- or --<br/> [__Deploy to Netlify__][nfy] | [__Buy PRO__][buy]{:.gumroad-button} |
+| | [__Download__][kit] <br/>-- or --<br/> [__Deploy to Netlify__][nfy] | [__Buy PRO__][buy]{:.gumroad-button data-gumroad-single-product="true"} |
 {:.stretch-table.dl-table}
 
 [^21]: Large screens (> 1664px width) only.
@@ -33,7 +33,19 @@ The table below shows what's included in each version:
   document.querySelectorAll('a[href="#_search-input"]').forEach(el => {
     if (!el.dataset.done) {
       el.addEventListener('click', () => document.getElementById('_search-input').focus());
-      el.dataset.done = true;
+      el.dataset.done = '';
+    }
+  });
+
+  document.querySelectorAll('a[href*="dark-mode"]').forEach(el => {
+    if (!el.dataset.done) {
+      el.addEventListener('click', () => {
+        if (!window._dark_mode) {
+          document.body.classList.add('dark-mode');
+          window._dark_mode = true;
+        }
+      });
+      el.dataset.done = '';
     }
   });
 </script>

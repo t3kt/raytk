@@ -306,46 +306,7 @@ You can read more about it [here](https://github.com/penibelst/jekyll-compress-h
 {:.note}
 
 ## Adding math
-
-Hydejack supports [math blocks][ksynmath] via [KaTeX][katex].
-
-Why KaTeX instead of MathJax? KaTeX is faster and more lightweight at the cost of having less features. 
-For the purpose of writing blog posts, this should be a favorable tradeoff.
-{:.note}
-
-To enable math, add the following entries to your `Gemfile` and `_config.yml`:
-
-```ruby
-# file: `Gemfile`
-gem "kramdown-math-katex"
-```
-
-```yml
-# file: `_config.yml`
-kramdown:
-  math_engine:         katex
-  math_engine_opts:    {}
-```
-
-There are a couple of things to know about this gem:
-*  It is not supported on GitHub Pages. 
-   You have to build the site on your machine before uploading to GitHub,
-   or use a more permissive cloud building tool such as Netlify. 
-   See [the section below](#mathjax) for an alternative.
-*  You need some kind of JavaScript runtime on your machine.
-   Usually installing [NodeJS](https://nodejs.org/en/download/) will suffice. 
-   For details, see <https://github.com/kramdown/math-katex#documentation>
-
-Before you add math content, remember to run `bundle install` and restart Jekyll.
-
-### MathJax
-Sadly, the MathJax-to-KaTeX trick I've been using in previous
-versions of Hydejack doesn't work with Jekyll 4 anymore. 
-If you really need math on GitHub Pages (and don't want to build locally),
-you can change the `math_engine` to `mathjax` and include the [MathJax library][jax] in `my-head.html`.
-
-[jax]: https://www.mathjax.org/#gettingstarted
-
+Before adding math blocks, make sure you've [set up math support](./config.md#enabling-math-blocks).
 
 ### Inline
 Example:
@@ -417,6 +378,4 @@ Continue with [Scripts](scripts.md){:.heading.flip-title}
 [mm]: https://guides.github.com/features/mastering-markdown/
 [ksyn]: https://kramdown.gettalong.org/syntax.html
 [ksyntab]:https://kramdown.gettalong.org/syntax.html#tables
-[ksynmath]: https://kramdown.gettalong.org/syntax.html#math-blocks
-[katex]: https://khan.github.io/KaTeX/
 [rtable]: https://dbushell.com/2016/03/04/css-only-responsive-tables/

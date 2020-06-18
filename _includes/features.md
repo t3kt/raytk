@@ -8,7 +8,7 @@ An incomplete list of features included in all versions of **Hydejack**:
 * 99/100 [Google PageSpeed Score][gpss][^11]
 * [Syntax highlighting][syntax], powered by [Rouge]
 * [LaTeX math blocks][latex], powered by [KaTeX][katex][^12]
-* Dynamic page reloading
+* Dynamic page loading
 * Soft-coded labels: Change wording or translate to other languages via a single file
 * Support for categories and tags
 * Author section below each article and support for multiple authors

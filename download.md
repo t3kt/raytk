@@ -14,6 +14,15 @@ image: /assets/img/blog/hydejack-8.png
 ## Features
 {% include features.md %}
 
+## Get It Now
+
+Use the the form below to purchase Hydejack PRO:
+
+<div class="gumroad-product-embed" data-gumroad-product-id="nuOluY"><a href="https://gumroad.com/l/nuOluY">Loading...</a></div>
+<script>
+  if ('GumroadEmbed' in window) window.GumroadEmbed.reload();
+</script>
+
 
 [blog]: /blog/
 [portfolio]: projects.md
@@ -38,7 +47,7 @@ image: /assets/img/blog/hydejack-8.png
 [kit]: https://github.com/hydecorp/hydejack-starter-kit/archive/v9.0.0-beta.3.zip
 [src]: https://github.com/hydecorp/hydejack
 [gem]: https://rubygems.org/gems/jekyll-theme-hydejack
-[buy]: https://gum.co/nuOluY?wanted=true
+[buy]: https://gum.co/nuOluY
 [nfy]: https://app.netlify.com/start/deploy?repository=https://github.com/hydecorp/hydejack-starter-kit
 [dtn]: https://www.netlify.com/img/deploy/button.svg
 

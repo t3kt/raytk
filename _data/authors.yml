@@ -16,20 +16,20 @@ qwtel:
 
     |                               | Free           | PRO                 |
     |:------------------------------|:--------------:|:-------------------:|
-    | [Features]                    | &#x2714;       | &#x2714;            |
+    | [Features][fea]               | &#x2714;       | &#x2714;            |
     | [PRO Features][pro]           |                | &#x2714;            |
     | __Price__ / Upgrade           | __Free__       | __$79__ / $29 [^22] |
-    | | [__Download__][kit] <br/>-- or --<br/> [__Deploy to Netlify__][nfy] | [__Buy PRO__][buy]{:.gumroad-button} |
+    | | [__Download__][kit] <br/>-- or --<br/> [__Deploy to Netlify__][nfy] | [__Buy PRO__][buy]{:.gumroad-button data-gumroad-single-product="true"} |
     {:.stretch-table.dl-table}
 
     [^22]: Upgrades from v8: Find your discount code in the latest zip download.
 
-    [features]:        /#features
-    [pro]:             /download/
+    [fea]: /#features
+    [pro]: /download/
     [kit]: https://github.com/hydecorp/hydejack-starter-kit/archive/v9.0.0-beta.3.zip
     [nfy]: https://app.netlify.com/start/deploy?repository=https://github.com/hydecorp/hydejack-starter-kit
     [dtn]: https://www.netlify.com/img/deploy/button.svg
-    [buy]: https://gum.co/nuOluY?wanted=true
+    [buy]: https://gum.co/nuOluY
 
   # This photo will be used in the about section
   picture:

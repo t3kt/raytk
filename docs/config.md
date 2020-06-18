@@ -417,6 +417,50 @@ legal:
 
 When using Hydejack's offline feature, the pages listed here will be downloaded and cached when loading the page for the first time.
 
+## Enabling math blocks
+
+Hydejack supports [math blocks][ksynmath] with either [KaTeX] or [MathJax]. 
+
+The _MathJax implementation_ comes with a client-side runtime and works on GitHub Pages. 
+It is the more heavy-weight of the two and doesn't work without JavaScript enabled. 
+Due to the size of the complete MathJax package, it only works partially with offline support enabled.
+
+The _KaTeX implementation_ pre-renders the KaTeX output during site building.
+It's more lightweight because it does not ship a client-side runtime and therefore works without JavaScript.
+In my opinion, it is the more elegant solution, but it requires a JavaScript runtime on the machine that builds the site,
+i.e. it does not work on GitHub Pages.
+
+You can switch between the two implementations by changing the `kramdown.math_engine` key to either `katex` or `mathjax` in your config file.
+
+```yml
+# file: `_config.yml`
+kramdown:
+  math_engine:         katex
+  math_engine_opts:    {}
+```
+
+The KaTeX implementation also requires the `kramdown-math-katex` gem in your `Gemfile`. 
+If you intend to use MathJax instead, this step is not required.
+
+```ruby
+# file: `Gemfile`
+gem "kramdown-math-katex"
+```
+
+There are a couple of things to know about this gem:
+*  It is not supported on GitHub Pages. 
+   You have to build the site on your machine before uploading to GitHub,
+   or use a more permissive cloud building tool such as Netlify. 
+   See [the section below](#mathjax) for an alternative.
+*  You need some kind of JavaScript runtime on your machine.
+   Usually installing [NodeJS](https://nodejs.org/en/download/) will suffice. 
+   For details, see <https://github.com/kramdown/math-katex#documentation>
+
+Before you add math content, remember to run `bundle install` and restart Jekyll.
+
+[ksynmath]: https://kramdown.gettalong.org/syntax.html#math-blocks
+[katex]: https://khan.github.io/KaTeX/
+[mathjax]: https://www.mathjax.org/
 
 ## Adding custom favicons and app icons
 By default, Hydejack includes its own favicon, as well as app icons for in five different resolutions.
