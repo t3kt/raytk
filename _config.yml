@@ -285,7 +285,7 @@ hydejack:
   # This is an _experimental_ feature.
   # Only use if you know what Service Workers are and how they can impact your site!
   offline:
-    enabled:           true
+    enabled:           false
     cache_version:     7
     precache_assets:
       - /assets/img/swipe.svg
