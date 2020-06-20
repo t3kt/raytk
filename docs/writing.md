@@ -76,7 +76,16 @@ You can add a note.
 {:.note}
 ~~~
 
-Edit the `note` key in `_data/strings.yml` to change the wording of the label.
+Edit the `note` key in `_data/strings.yml` to change the wording of the default label.
+To add a note with a specific label, add a `title` attribute:
+
+~~~markdown
+A custom label.
+{:.note title="Attention"}
+~~~
+
+A custom label.
+{:.note title="Attention"}
 
 ## Adding large text
 You can add large text by adding the `lead` class to the paragraph.

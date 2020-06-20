@@ -8,6 +8,9 @@ description: >
 
 Hydejack was designed with personal sites in mind, i.e. sites with around 100 pages. Because of this, build speed hasn't been a major concern during its development. When attempting to use Hydejack with thousands of pages this becomes very apparent, as build times go from seconds, to minutes, to hours. 
 
+__Starting with version 9, Hydejack is using caching techniques that should make most of the tips here obsolete!__
+{:.note title="Important"}
+
 * toc
 {:toc .large-only}
 

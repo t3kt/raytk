@@ -27,7 +27,7 @@ A boutique Jekyll theme for hackers, nerds, and academics.
 1. this list will be replaced by the toc
 {:toc .large-only}
 
-![Screenshot](assets/img/blog/hydejack-8.png){:.lead srcset="/assets/img/blog/hydejack-8.png 1920w, /assets/img/blog/hydejack-8@0,5x.png 960w, /assets/img/blog/hydejack-8@0,25x.png 480w" width="1920" height="1080"}
+![Screenshot](assets/img/blog/hydejack-8.png){:.lead srcset="/assets/img/blog/hydejack-8.png 1920w, /assets/img/blog/hydejack-8@0,5x.png 960w, /assets/img/blog/hydejack-8@0,25x.png 480w" width="1920" height="1080" loading="lazy"}
 
 Hydejack's cover page on a variety of screens.
 {:.figcaption}
