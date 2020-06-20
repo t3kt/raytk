@@ -515,6 +515,26 @@ resume:
 ---
 ~~~
 
+### Downloads
+By default, the resume layout will show buttons for printing, vCard and JSON Resume button. 
+To disable these buttons, add `no_buttons: true` to the front matter.
+
+The PDF download can't be generated automatically. Instead, place `Resume.pdf` in your `assets` folder:
+
+Downloads currently aren't supported when using multiple resumes. Use the `no_buttons` option to avoid confusion.
+{:.note}
+
+```
+├── assets
+│   └── Resume.pdf
+```
+
+You can generate the `Resume.pdf` from your resume page itself. 
+Use your browser's "Print to PDF" feature (Chrome works best). 
+For best results, check the following options in the print popup:
+
+![Uncheck Headers and footers, check Background graphics](/assets/img/docs/chrome-print.png){:width="299" height="588" loading="lazy"}
+
 
 Continue with [Writing](writing.md){:.heading.flip-title}
 {:.read-more}

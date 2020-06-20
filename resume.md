@@ -18,4 +18,5 @@ right_column:
   - interests
 no_language_icons: false
 no_skill_icons: false
+no_buttons: false
 ---

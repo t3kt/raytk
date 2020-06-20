@@ -138,6 +138,10 @@ resume:
   interests:           Interests
   summary:             Summary
   keywords:            Keywords
+  print:               Print
+  download_pdf:        PDF
+  download_vcf:        vCard
+  download_json:       JSON
   icons:
     fallback:          icon-link
     location:          icon-location
