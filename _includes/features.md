@@ -1,11 +1,11 @@
 An incomplete list of features included in all versions of **Hydejack**:
 
 * Responsive layout with unique design features for every screen size
-* Cover Pages for an impressive first-visit experience
+* Cover Pages for a stunning fist impression.
 * Customizable sidebar and touch-enabled drawer menu
 * Auto-hiding navbar
 * Advanced FLIP animations, inspired by Material Design
-* 99/100 [Google PageSpeed Score][gpss][^11]
+* Good [Google PageSpeed Score][gpss][^11]
 * [Syntax highlighting][syntax], powered by [Rouge]
 * [LaTeX math blocks][latex], powered by [KaTeX][katex][^12]
 * Dynamic page loading

@@ -57,7 +57,7 @@ See the [the migration guide][upgrade] for instructions on how to upgrade.
 
 ***
 
-[Get *JavaScripten* on GitHub](https://github.com/hydecorp/hydejack/releases/tag/v9.0.0-beta.3)
+[Get *JavaScripten* on GitHub](https://github.com/hydecorp/hydejack/releases/tag/v9.0.0-beta.5)
 
 [upgrade]: ../../docs/upgrade.md
 [writing]: ../../docs/writing.md
