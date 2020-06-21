@@ -1,14 +1,16 @@
 <link rel="dns-prefetch" href="https://assets.gumroad.com">
 <script type="module">
   let p;
+  const promisify = f => x => new Promise(r => f(x).addEventListener('load', r));
+  const loadJS = promisify(window.loadJS);
   document.querySelector('hy-push-state').addEventListener('load', () => {
     const io = new IntersectionObserver(async (entries) => {
-      if (Array.from(entries).some(x => x.isIntersecting)) {
-        p = p || new Promise(res => window.loadJS('https://gumroad.com/js/gumroad-embed.js', res));
+      if (entries.some(x => x.isIntersecting)) {
+        p = p || loadJS('https://gumroad.com/js/gumroad-embed.js');
         await p;
         await new Promise(r => setTimeout(r, 100));
         if (!window.GumroadEmbed && 'createGumroadEmbed' in window) window.createGumroadEmbed();
-        window.GumroadEmbed.reload();
+        if ('GumroadEmbed' in window) GumroadEmbed.reload();
       }
     }, { rootMargin: '1440px' });
     document.querySelectorAll('.gumroad-product-embed').forEach(el => io.observe(el));
@@ -16,12 +18,13 @@
 </script>
 <script type="module">
   let p;
+  const promisify = f => x => new Promise(r => f(x).addEventListener('load', r));
+  const loadJS = promisify(window.loadJS);
   document.querySelector('hy-push-state').addEventListener('load', () => {
     const io = new IntersectionObserver(async (entries) => {
-      if (Array.from(entries).some(x => x.isIntersecting)) {
-        p = p || new Promise(res => window.loadJS('https://gumroad.com/js/gumroad.js', res));
+      if (entries.some(x => x.isIntersecting)) {
+        p = p || loadJS('https://gumroad.com/js/gumroad.js');
         await p;
-        await new Promise(r => setTimeout(r, 100));
         if (!window.GumroadOverlay && 'createGumroadOverlay' in window) window.createGumroadOverlay();
       }
     }, { rootMargin: '300px' });

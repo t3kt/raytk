@@ -50,6 +50,7 @@ layout: page
     Most of the previous tips on [improving page build speed](hydejack/_posts/2019-02-18-improving-site-build-speed.md) should now be obsolete.
 
 ### Minor
+* Make certain features, such as sticky table of contents, work even when `hydejack.no_push_state` is enabled.
 * Added print and download buttons to `resume` layout. [Read more](docs/basics.md#downloads).
 * Linking to posts in the `home` and `post` layout now accept either paths or URLs. [Read more](docs/basics.md#adding-related-posts-to-a-post).
 * The star icons in the resume layout can now be disabled via `no_skill_icons` and `no_language_icons`.

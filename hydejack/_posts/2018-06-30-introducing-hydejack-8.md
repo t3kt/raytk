@@ -1,7 +1,7 @@
 ---
 layout: post
 title: Introducing Hydejack 8
-image: /assets/img/blog/hydejack-8.png
+image: /assets/img/blog/hydejack-9.jpg
 description: >
   Hydejack 8 is the best version of Hydejack yet.
   It introduces Cover Pages, Offline Support, and soon... Dark Mode.
