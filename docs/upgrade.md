@@ -43,7 +43,7 @@ and you have to apply them again. Make sure you've made a backup before overwrit
 When building on GitHub Pages, upgrading Hydejack is as simple as setting the `remote_theme` key in `_config.yml` to the desired version.
 
 ```yml
-remote_theme: hydecorp/hydejack@v9.0.0-beta.5
+remote_theme: hydecorp/hydejack@v9.0.0-beta.6
 ```
 
 To use the latest version on the `v9` branch on each build, you can use  `hydecorp/hydejack@v9`.
