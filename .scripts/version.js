@@ -1,11 +1,12 @@
 #!/usr/bin/env node
 
-const { resolve } = require("path");
+const path = require("path");
 const { readdir, readFile, writeFile } = require("fs").promises;
-
 const { re } = require("re-template-tag");
 
 const ENC = "utf-8";
+
+const resolve = (...args) => path.resolve(__dirname, '..', ...args);
 
 const FILES = [
   "./_data/authors.yml",
@@ -45,16 +46,18 @@ async function getFiles(dir) {
     const {
       version: vNext,
       prevVersion: vPrev,
-    } = JSON.parse(await readFile("./#jekyll-theme-hydejack/assets/version.json", ENC));
+    } = JSON.parse(await readFile(resolve("./#jekyll-theme-hydejack/assets/version.json"), ENC));
+
+    console.log(vNext, vPrev);
 
     const prev = vPrev.replace(/\./g, "\\.");
     const prevRegExp = new RegExp(prev, "g");
 
     const args = await Promise.all([
-      getFiles("./hyde/_posts"),
-      getFiles("./hydejack/_posts"),
-      getFiles("./_projects"),
-      getFiles("./docs"),
+      getFiles(resolve("./hyde/_posts")),
+      getFiles(resolve("./hydejack/_posts")),
+      getFiles(resolve("./_projects")),
+      getFiles(resolve("./docs")),
     ]);
       
     await Promise.all(
