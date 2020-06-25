@@ -118,15 +118,15 @@ font_heading:          Roboto Slab, Helvetica, Arial, sans-serif
 font_code:             Fira Code, Menlo, Monaco, Consolas, monospace;
 
 defaults:
-  # # You can use this to provide a default accent color and background for
-  # # all pages under a given path:
-  # - scope:
-  #     path:            hyde/
-  #   values:
-  #     accent_color:    rgb(38,139,210)
-  #     accent_image:
-  #       background:    rgb(32,32,32)
-  #       overlay:       false
+  # You can use this to provide a default accent color and background for
+  # all pages under a given path:
+  - scope:
+      path:            hyde/
+    values:
+      accent_color:    rgb(38,139,210)
+      accent_image:
+        background:    rgb(32,32,32)
+        overlay:       false
 
   # Don't include documents in assets in the sitemap
   - scope:
@@ -202,7 +202,7 @@ hydejack:
   project_addons:      [about, newsletter, other, comments]
 
   # Set to `true` if you don't want to show an icon indicating external links
-  no_mark_external:    true
+  no_mark_external:    false
 
   # Set to `true` if third party plugins fail to work with dynamically loaded pages
   no_push_state:       false
@@ -213,7 +213,7 @@ hydejack:
   # Set to `true` if you don't to use the auto-hiding (JavaScript based) navbar.
   # Note that this will not hide the navbar completely, only replace it with a static one.
   # Use custom css to hide completely, e.g. `#_navbar { display: none }`.
-  no_navbar:           false
+  no_navbar:           true
 
   # Set to true to disable the built-in search functionality.
   # Note that search is disabled during local use to save on build time.
@@ -272,10 +272,8 @@ hydejack:
     # Set to `true` to always use the dark theme.
     always:            false
 
-    # Set to `true` to use the dark theme based on visitors' local time.
+    # Set to `true` to use the dark theme based on visitors' preference (OS setting).
     dynamic:           true
-    sunrise:           6
-    sunset:            18
 
     # Set to `true` to allow visitors to switch between light and dark mode.
     icon:              true

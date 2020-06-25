@@ -85,8 +85,8 @@ The Hydejack blog, as seen by the text browser `w3m`.
 
 ```js
 // file: `example.js`
-document.querySelector("hy-push-state").addEventListener("hy-push-state-load", function() {
-  // <your init code>
+document.querySelector("hy-push-state").addEventListener("hy-push-state-load", () => {
+  const supportsCodeHighlights = true; //!!
 });
 ```
 
@@ -171,7 +171,7 @@ Use the the form below to purchase Hydejack PRO:
 [docs]: docs/README.md
 [ofln]: docs/advanced.md#enabling-offline-support
 
-[kit]: https://github.com/hydecorp/hydejack-starter-kit/archive/v9.0.0-beta.6.zip
+[kit]: https://github.com/hydecorp/hydejack-starter-kit/archive/v9.0.0-beta.7.zip
 [src]: https://github.com/hydecorp/hydejack
 [gem]: https://rubygems.org/gems/jekyll-theme-hydejack
 [buy]: https://gum.co/nuOluY
@@ -183,4 +183,5 @@ Use the the form below to purchase Hydejack PRO:
 [hy-drawer]: https://hydecorp.github.io/hy-drawer/
 [rouge]: http://rouge.jneen.net
 [katex]: https://khan.github.io/KaTeX/
+[mathjax]: https://www.mathjax.org/
 [tinyletter]: https://tinyletter.com/

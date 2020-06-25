@@ -194,7 +194,7 @@ In your config file, make sure the `paginate_path` matches the name of the subdi
 ~~~yml
 # file: `_config.yml`
 paginate:      10
-paginate_path: /my-blog/:num/
+paginate_path: /my-blog/:num/ #!!
 ~~~
 
 To add an entry in the sidebar to your blog directory, see [Adding an entry to the sidebar](./basics.md#adding-an-entry-to-the-sidebar).
@@ -329,7 +329,7 @@ author:
   social:
     email:    mail@qwtel.com
     rss:      {{ site.url }}{{ site.baseurl }}/feed.xml # make sure you provide an absolute URL
-    download: https://github.com/hydecorp/hydejack/archive/v9.0.0-beta.6.zip
+    download: https://github.com/hydecorp/hydejack/archive/v9.0.0-beta.7.zip
 ~~~
 
 

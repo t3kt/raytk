@@ -48,19 +48,19 @@ You can also create your table of contents as an ordered list (note the `1.` ins
 {:toc}
 ~~~
 
-In order for the table of contents to appear in the side bar a number of conditions has to be met:
-
-*  The width of the display has to be larger than 1665px. 
-*  The `hydejack.no_break_layout` option has to be enabled in the config file.
-   Otherwise, large code blocks or tables could overlap with the table of contents.
-
-If these conditions aren't met, the ToC will appear where the seed list is placed in the document.  
+The width of the display has to be larger than 1665px for the ToC to become sticky.
+Otherwise, the ToC will appear where the seed list is placed in the document.
 To show the table of contents only on large displays (> 1665px) use the following:
 
 ~~~md
 * this unordered seed list will be replaced by the toc 
 {:toc .large-only}
 ~~~
+
+A sticky table of contents will reduce the amount of space freed up by the `no_break_layout: false` setting.  
+This is necessary to ensure large code blocks or tables don't overlap with the ToC.
+{:.note}
+
 
 ## Adding notes
 You can add a note by adding the `note` class to a paragraph.

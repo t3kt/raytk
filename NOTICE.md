@@ -91,24 +91,6 @@ project, which is MIT licensed with the following copyright:
 
 A copy of the [MIT] license is provided as part of this distribution.
 
-### color
-This software also uses portions of the
-`Qix-/color`
-project, which is MIT licensed with the following copyright:
-
-> Copyright (c) 2012 Heather Arthur
-
-A copy of the [MIT] license is provided as part of this distribution.
-
-### elem-dataset
-This software also uses portions of the
-`awcross/elem-dataset`
-project, which is MIT licensed with the following copyright:
-
-> Copyright (c) Alex Cross (alexcross.io)
-
-A copy of the [MIT] license is provided as part of this distribution.
-
 ### Web Animations
 This software also uses portions of the
 `web-animations/web-animations-js`
@@ -225,15 +207,6 @@ project, which is MIT licensed with the following copyright:
 
 > Copyright (c) 2011-2018 Twitter, Inc.  
 > Copyright (c) 2011-2018 The Bootstrap Authors
-
-A copy of the [MIT] license is provided as part of this distribution.
-
-### Smooth Scroll behavior polyfill
-This software also uses portions of the
-`iamdustan/smoothscroll`
-project, which is MIT licensed with the following copyright:
-
-> Copyright (c) 2013 Dustan Kasten
 
 A copy of the [MIT] license is provided as part of this distribution.
 

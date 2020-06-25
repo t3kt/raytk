@@ -30,12 +30,12 @@ For the full patch notes, read on.
 
   ~~~yml
   gems:
-    - jekyll-default-layout # new
+    - jekyll-default-layout # !!
     - jekyll-feed
-    - jekyll-optional-front-matter # new
+    - jekyll-optional-front-matter # !!
     - jekyll-paginate
     - jekyll-redirect-from
-    - jekyll-relative-links # new
+    - jekyll-relative-links # !!
     - jekyll-sitemap
   ~~~
 
@@ -50,7 +50,7 @@ For the full patch notes, read on.
     social:
       github: https://github.com/hydecorp/hydejack
       npm: https://www.npmjs.com/package/hydejack
-      download: https://github.com/hydecorp/hydejack/archive/v9.0.0-beta.6.zip
+      download: https://github.com/hydecorp/hydejack/archive/v9.0.0-beta.7.zip
 
   data_social:
     github:

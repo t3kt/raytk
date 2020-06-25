@@ -59,7 +59,7 @@ In addition to the docs here, you can follow the quick start guide in the Starte
 
 Alternatively, you can just [![Deploy to Netlify][dtn]][nfy]{:.no-hover.no-mark}.
 
-[src]: https://github.com/hydecorp/hy-starter-kit/archive/v9.0.0-beta.6.zip
+[src]: https://github.com/hydecorp/hy-starter-kit/archive/v9.0.0-beta.7.zip
 [nfy]: https://app.netlify.com/start/deploy?repository=https://github.com/hydecorp/hydejack-starter-kit
 [dtn]: https://www.netlify.com/img/deploy/button.svg
 
@@ -173,7 +173,7 @@ For new installations only the `install` folder is relevant.
 Unzip the archive somewhere on your machine, then `cd` *into* the `install` folder, e.g.
 
 ~~~bash
-$ cd ~/Downloads/hydejack-pro-9.0.0-beta.6/install/
+$ cd ~/Downloads/hydejack-pro-9.0.0-beta.7/install/
 ~~~
 
 You can now continue with [Running locally](#running-locally).
@@ -225,7 +225,7 @@ especially the part about the [license change](../CHANGELOG.md#license-change)!
 When using the Starter Kit, upgrading Hydejack is as simple as setting the `remote_theme` key in `config.yml` to the desired version.
 
 ```yml
-remote_theme: hydecorp/hydejack@v9.0.0-beta.6
+remote_theme: hydecorp/hydejack@v9.0.0-beta.7
 ```
 
 To use the latest version on the `v8` branch on each build, you can use  `hydecorp/hydejack@v8`.
@@ -589,7 +589,7 @@ author:
   social:
     email:    mail@qwtel.com
     rss:      {{ site.url }}{{ site.baseurl }}/feed.xml # make sure you provide an absolute URL
-    download: https://github.com/hydecorp/hydejack/archive/v9.0.0-beta.6.zip
+    download: https://github.com/hydecorp/hydejack/archive/v9.0.0-beta.7.zip
 ~~~
 
 

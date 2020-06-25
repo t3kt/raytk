@@ -12,22 +12,6 @@ This chapter covers the basics of content creation with Hydejack.
 {:toc}
 
 
-## Adding a page
-You can add generic pages that support markdown content but aren't blog posts.
-For example, this documentation is written in markdown, consisting of several generic pages.
-
-To add a page, create a new markdown file and put `layout: page` in a front matter
-
-~~~yml
----
-layout: page
-title:  Documentation
----
-~~~
-
-Now you can add content as you would in a blog post.
-
-
 ## Adding an entry to the sidebar
 To add links to the sidebar, populate the `menu` entry in `_config.yml` with a list of `title`-`url` pairs, e.g.:
 
@@ -177,6 +161,15 @@ Some content
 Hydejack 8 introduces cover pages, i.e. pages witht he sidebar opened, so that it spans the entire screen. This feature is intended for landing pages. To enable it on a page, simply add `cover: true` to the front matter.
 
 ![Cover page example](../assets/img/blog/hydejack-8@0,5x.png){:width="960" height="540"}
+
+~~~yml
+# file: `index.md`
+---
+layout: welcome
+title:  Welcome
+cover:  true #!! Add this
+---
+~~~
 
 ## Adding related posts to a post
 You can choose which posts will appear in the "Related Posts" section below a post by adding the `related_posts` key to the front matter of a post
@@ -417,7 +410,7 @@ This is enough to render the project pages. To render them all on a single page,
 ---
 layout: projects
 title: Other Projects*
-show_collection: other_projects # !!
+show_collection: other_projects #!!
 ---
 ```
 

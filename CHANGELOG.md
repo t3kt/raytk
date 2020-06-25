@@ -28,7 +28,7 @@ layout: page
     Adding a table of contents is part of kramdown and can be done in all versions of Hydejack. 
     However, v9 adds a dynamic version that will stick to the 3rd column on large screens and highlight the current section. 
    
-    Note that the `hydejack.no_break_layout` option has to be set to enable this (otherwise the ToC would overlap with code blocks, math blocks, etc).
+    Note that this will reduce the amount of space freed up by the `no_break_layout: false` setting (otherwise the ToC would overlap with code blocks, math blocks, etc).
 
 *   Added a scroll-linked navbar that disappears when scrolling down and re-appears when scrolling up.
 
@@ -50,6 +50,8 @@ layout: page
     Most of the previous tips on [improving page build speed](hydejack/_posts/2019-02-18-improving-site-build-speed.md) should now be obsolete.
 
 ### Minor
+* 
+* Drastically simplified various aspects of Hydejack.
 * Make certain features, such as sticky table of contents, work even when `hydejack.no_push_state` is enabled.
 * Added print and download buttons to `resume` layout. [Read more](docs/basics.md#downloads).
 * Linking to posts in the `home` and `post` layout now accept either paths or URLs. [Read more](docs/basics.md#adding-related-posts-to-a-post).
