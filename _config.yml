@@ -213,7 +213,7 @@ hydejack:
   # Set to `true` if you don't to use the auto-hiding (JavaScript based) navbar.
   # Note that this will not hide the navbar completely, only replace it with a static one.
   # Use custom css to hide completely, e.g. `#_navbar { display: none }`.
-  no_navbar:           true
+  no_navbar:           false
 
   # Set to true to disable the built-in search functionality.
   # Note that search is disabled during local use to save on build time.
