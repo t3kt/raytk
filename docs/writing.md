@@ -267,7 +267,7 @@ To add a code block without syntax highlighting, simply indent 4 spaces (regular
 For code blocks with code highlighting, use `~~~<language>`. This syntax is also supported by GitHub.
 For more information and a list of supported languages, see [Rouge](http://rouge.jneen.net/).
 
-You can give each code block a title, by making the first line in the block a comment of the form `Title: "<my title>"`.
+<!-- You can give each code block a title, by making the first line in the block a comment of the form `Title: "<my title>"`. -->
 
 Example:
 

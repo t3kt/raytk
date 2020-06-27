@@ -41,7 +41,7 @@ Use the the form below to purchase Hydejack PRO:
 [docs]: docs/README.md
 [ofln]: docs/advanced.md#enabling-offline-support
 
-[kit]: https://github.com/hydecorp/hydejack-starter-kit/archive/v9.0.0-beta.7.zip
+[kit]: https://github.com/hydecorp/hydejack-starter-kit/archive/v9.0.0-rc.0.zip
 [src]: https://github.com/hydecorp/hydejack
 [gem]: https://rubygems.org/gems/jekyll-theme-hydejack
 [buy]: https://gum.co/nuOluY

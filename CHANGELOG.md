@@ -50,8 +50,7 @@ layout: page
     Most of the previous tips on [improving page build speed](hydejack/_posts/2019-02-18-improving-site-build-speed.md) should now be obsolete.
 
 ### Minor
-* 
-* Drastically simplified various aspects of Hydejack.
+* CSS variables are now configurable via `_data/variables.yml`. While there are other ways to change them, this has the broadest reach across HTML (`img[sizes]` attribute!), CSS and JS.
 * Make certain features, such as sticky table of contents, work even when `hydejack.no_push_state` is enabled.
 * Added print and download buttons to `resume` layout. [Read more](docs/basics.md#downloads).
 * Linking to posts in the `home` and `post` layout now accept either paths or URLs. [Read more](docs/basics.md#adding-related-posts-to-a-post).
