@@ -98,7 +98,6 @@ layout: page
 * The menu icon is now hidden when the drawer is disabled.
 * Using `no_drawer: true` is now working properly on cover pages when `no_push_state: false` is set.
 * Reduced the amount of pixels cached by the `will-change` optimization and fixed the corresponding warning in Firefox.
-* Improved IE 11 compatibility
 
 
 ## v8.5.2
