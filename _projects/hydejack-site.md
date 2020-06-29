@@ -5,8 +5,12 @@ caption: Dogfooding Hydejack to sell Hydejack.
 description: >
   While Hydejack is built for personal sites, it's versatility allows it to be used a product page as well.
 date: '01-01-2016'
-image: /assets/img/projects/hydejack-site.jpg
-screenshot: /assets/img/projects/hydejack-site.jpg
+image: 
+  path: assets/img/projects/hydejack-site.jpg
+  srcset: 
+    2560w: assets/img/projects/hydejack-site.jpg
+    1280w: assets/img/projects/hydejack-site@0,5x.jpg
+    640w: assets/img/projects/hydejack-site@0,25x.jpg
 links:
   - title: Link
     url: https://hydejack.com/

@@ -6,7 +6,6 @@ description: >
   Using the Free Version of Hydejack as a product page on GitHub Pages.
 date: 1 Jan 2016
 image: /assets/img/projects/hy-push-state.svg
-screenshot: /assets/img/projects/hy-push-state.svg
 links:
   - title: hy-drawer
     url: https://hydecorp.github.io/drawer/

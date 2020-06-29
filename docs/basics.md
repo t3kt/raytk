@@ -330,8 +330,8 @@ A project's front matter should look like:
 layout:      project
 title:       Hyde v2*
 date:        2 Jan 2014
-screenshot:
-  src:       /assets/img/projects/hyde-v2@0,25x.jpg
+image:
+  path:       /assets/img/projects/hyde-v2@0,25x.jpg
   srcset:
     1920w:   /assets/img/projects/hyde-v2.jpg
     960w:    /assets/img/projects/hyde-v2@0,5x.jpg
@@ -355,12 +355,12 @@ featured:    false
 `date`
 : Providing a year is the minimum requirement. Used to sort the projects.
 
-`screenshot`
-: A 16:9 screenshot of the project.
+`image`
+: A 16:9 image of the project.
 
   You can pass an URL to an image, but it is recommended that you provide a `src`-`srcset` pair (see example above).
 
-  Hydejack will show the screenshot in various sizes, depending on the screen width, so that no specific size will fit all. Instead, it is recommended that you use a [mipmap]-like approach, providing the image in multiple sizes, each image half the width of the previous one.
+  Hydejack will show the image in various sizes, depending on the screen width, so that no specific size will fit all. Instead, it is recommended that you use a [mipmap]-like approach, providing the image in multiple sizes, each image half the width of the previous one.
   The `src` key is a fallback image for browsers that don't support the `srcset` attribute. The keys of the `srcset` hash will be used as descriptors.
 
   For more information on `srcset`, see the [documentation at MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/img#attr-srcset), or [this article from CSS-Tricks](https://css-tricks.com/responsive-images-youre-just-changing-resolutions-use-srcset/).
@@ -369,7 +369,7 @@ featured:    false
 : A short description, shown as part of each "project card" in the `projects` layout.
 
 `description`
-: A medium-length description, used on the project's detail page as meta description and shown as message box below the screenshot.
+: A medium-length description, used on the project's detail page as meta description and shown as message box below the image.
 
 `links`
 : A list of `title`-`url` pairs that link to external resources related to this project.

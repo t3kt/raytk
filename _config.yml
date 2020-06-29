@@ -310,8 +310,8 @@ collections:
 # ----------------------------------------------------------------------------------------
 
 exclude:
-  - '#jekyll-theme-hydejack/node_modules'
-  - '#jekyll-theme-hydejack/.git'
+  - './#jekyll-theme-hydejack/node_modules'
+  - './#jekyll-theme-hydejack/.git'
   - .jekyll-cache
   - .sass-cache
   - vendor
