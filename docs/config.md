@@ -6,7 +6,8 @@ description: >
 hide_description: true
 ---
 
-Once Jekyll is running, you can start with basic configuration by adding various entries to `_config.yml`. Besides these descriptions, you can also read the [annotated config file](https://github.com/hydecorp/hydejack/blob/v8/_config.yml).
+Once Jekyll is running, you can start with basic configuration by adding various entries to `_config.yml`. 
+Besides the documentation here, you can also read the [annotated config file][config].
 
 When making changes to `_config.yml`, it is necessary to restart the Jekyll process for changes to take effect.
 {:.note}
@@ -102,8 +103,7 @@ font_heading: Roboto Slab, Helvetica, Arial, sans-serif
 google_fonts: Roboto+Slab:700|Noto+Sans:400,400i,700,700i
 ~~~
 
-`font` and `font_heading` must be valid CSS `font-family` values. When using Google Fonts make sure they consist of at least two fonts
-(everything except the first entry will be used as a fallback until the fonts have completed loading).
+`font` and `font_heading` must be valid CSS `font-family` values. When using Google Fonts make sure to provide at least one fallback.
 
 The `google_fonts` key is the string necessary to fetch the fonts from Google.
 You can get it from the download page at [Google Fonts](https://fonts.google.com) after you've selected one or more fonts:
@@ -120,16 +120,21 @@ The `no_google_fonts` parameter has been removed in v9 and no longer has any eff
 
 
 ## Choosing a blog layout
-Hydejack features two layouts for showing your blog posts.
+Hydejack features three layouts for showing your blog posts.
 
 * The [`list` layout][posts] only shows the title and groups the posts by year of publication.
+* The [`grid` layout][grid]\* is exclusive to the PRO Version and will show a content card (with `image`) for each post.
 * The [`blog` layout][blog] is a traditional paginated layout and shows the title and an excerpt of each post.
 
-In order to use the `list` layout add the following front-matter to a new markdown file:
+[blog]: https://hydejack.com/blog/
+[posts]: https://hydejack.com/posts/
+[grid]: https://hydejack.com/blog/hydejack/
+
+In order to use the `list` or `grid` layout add the following front-matter to a new markdown file:
 
 ~~~yml
 ---
-layout: list
+layout: list # or `grid`
 title:  Home
 ---
 ~~~
@@ -277,7 +282,7 @@ The keys of the `srcset` hash will be used as image descriptors. For more inform
 ### Adding social media icons
 Hydejack supports a variety of social media icons out of the box. These are defined on a per-author basis, so make sure you've followed the steps in [Adding an author](#adding-an-author).
 
-If you are using the gem-based version of Hydejack, download [`social.yml`](https://github.com/hydecorp/hydejack/blob/v8/_data/social.yml) and put it into `_data` in the root directory. This is necessary because gem-based themes do not support including `_data`.
+If you are using the gem-based version of Hydejack, download [`social.yml`][social] and put it into `_data` in the root directory. This is necessary because gem-based themes do not support including `_data`.
 {:.note}
 
 You can add a link to a social network by adding an entry to the `social` key in to an author.
@@ -291,7 +296,7 @@ author:
     github:  qwtel
 ~~~
 
-Check out [`authors.yml`](https://github.com/hydecorp/hydejack/blob/v8/_data/authors.yml) to see which networks are available.
+Check out [`authors.yml`][authors] to see which networks are available.
 You can also follow the steps [here](advanced.md) to add your own social media icons.
 
 You can change the order in which the icons appear by moving lines up or down, e.g.
@@ -305,7 +310,7 @@ author:
 ~~~
 
 To get an overview of which networks are available and how a typical username in that network looks like,
-see the included [`authors.yml`](https://github.com/hydecorp/hydejack/blob/v8/_data/authors.yml).
+see the included [`authors.yml`][authors].
 
 Should providing a username not produce a correct link for some reason, you can provide a complete URL instead, e.g.
 
@@ -316,7 +321,7 @@ author:
     youtube: https://www.youtube.com/channel/UCu0PYX_kVANdmgIZ4bw6_kA
 ~~~
 
-You can add any platform, even if it's not defined in [`social.yml`](https://github.com/hydecorp/hydejack/blob/v8/_data/social.yml), by providing a complete URL. However, a fallback icon <span class="icon-link"></span> will be used when no icon is available. Supplying your own icons is an [advanced topic](advanced.md).
+You can add any platform, even if it's not defined in [`social.yml`][social], by providing a complete URL. However, a fallback icon <span class="icon-link"></span> will be used when no icon is available. Supplying your own icons is an [advanced topic](advanced.md).
 {:.note}
 
 
@@ -374,18 +379,17 @@ Enabling Google Analytics is as simple as setting the `google_analytics` key.
 google_analytics: UA-XXXXXXXX-X
 ~~~
 
-Conversely, if you want to disable it, you only have to remove the `google_analytics` key and no GA code will be part of the generated site.
+To remove Google Analytics and all associated code from the site, set the `google_analytics` key to `false`.
 
 
 ### Using a custom analytics provider
-If you want to use a different analytics provider, e.g. [Matomo](https://matomo.org/), you can add its code snippet to `_includes/my-body.html` (create if it doesn't exist).
-The [default file](https://github.com/hydecorp/hydejack/blob/v8/_includes/my-body.html) contains example code for using Matomo.
-
+If you want to use a different analytics provider such as [Matomo](https://matomo.org/), you can add its code snippet to `_includes/my-body.html` (create if it doesn't exist).
+The [default file][mybody] contains an example.
 
 ## Changing built-in strings
 You can change the wording of built-in strings like "Related Posts" or "Read more" in `_data/strings.yml`.
 
-If you are using the gem-based version the file doesn't exist, but you can get the default file [here](https://github.com/hydecorp/hydejack/blob/v8/_data/strings.yml).
+If you are using the gem-based version the file doesn't exist, but you can get the default file [here][strings].
 
 You will frequently find markers like `<!--post_title-->`.
 You can place them freely within your string and they will be replaced with the content they refer to.
@@ -557,8 +561,11 @@ Continue with [Basics](basics.md){:.heading.flip-title}
 {:.read-more}
 
 
-[blog]: https://hydejack.com/blog/
-[posts]: https://hydejack.com/posts/
+[config]: https://github.com/hydecorp/hydejack-site/blob/master/_config.yml
+[social]: https://github.com/hydecorp/hydejack-site/blob/master/_data/social.yml
+[authors]: https://github.com/hydecorp/hydejack-site/blob/master/_data/authors.yml
+[strings]: https://github.com/hydecorp/hydejack-site/blob/master/_data/strings.yml
+[mybody]: https://github.com/hydecorp/hydejack/blob/v9/_includes/my-body.html
 
 *[FOIT]: Flash of Invisible Text
 *[GA]: Google Analytics

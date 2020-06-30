@@ -21,15 +21,13 @@ Enabling this feature requires that your content meets the following criteria:
 * The site is mostly self-contained, i.e. assets are served from the same domain (offline support will not download assets form external sites by default)
 * The site is served via HTTPS (this is a Service Worker requirement)
 
-To enable this feature, create the [`sw.js`][sw] file in the root of your project and add the following content:
+To enable this feature, create a `sw.js` file in the root of your project and add the following content:
 
 ```js
 ---
 ---
 importScripts("{% raw %}{{ '/assets/js/service-worker.js' | relative_url }}?t={{ site.time | date_to_xmlschema }}{% endraw %}");
 ```
-
-[sw]: https://github.com/hydecorp/hydejack/blob/v8/sw.js
 
 This will load the main service worker script from Hydejack's assets. The `site.time` part is necessary to make the service worker "byte different" every time you create a new build of your site, which triggers an update.
 

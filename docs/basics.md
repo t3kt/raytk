@@ -12,6 +12,46 @@ This chapter covers the basics of content creation with Hydejack.
 {:toc}
 
 
+## Adding images
+Adding good images is key to a engaging blog experience. You can provide an `image` attribute in in the front matter of posts, pages, and projects* that will be used by Hydejack in a variety of ways, 
+such as header image in the `blog` and `post` layout, social media previews, cards in the `gird` and `projects` layout\*, thumbnails in the search dropdown\*, etc.
+
+The `image` attribute will accept an URL to an image, but it is recommended that you provide a `path` / `srcset` hash instead, e.g. 
+
+```yml
+image:
+  path:    /assets/img/projects/hyde-v2.jpg
+  srcset:
+    1920w: /assets/img/projects/hyde-v2.jpg
+    960w:  /assets/img/projects/hyde-v2@0,5x.jpg
+    480w:  /assets/img/projects/hyde-v2@0,25x.jpg
+```
+
+Hydejack will show the image in various sizes depending on available screen width so that no specific size will fit all. 
+Instead, I recommend using a [mipmap]-like approach, providing the image in multiple sizes, each image half the width of the previous one.
+Since Hydejack provides an appropriate [`sizes` attribute][mdn-sizes], the browser can chose the best image from the provided source set.
+
+If you have [ImageMagick] installed, you can use the following commands to create images at 50%, 25%, and 12.5% of the original image. 
+Other image tools will provide similar capabilities.
+
+    convert your-image.jpg -resize 50% -sampling-factor 4:2:0 -strip -quality 85 -interlace JPEG -colorspace RGB your-image@0,5x.jpg
+    convert your-image.jpg -resize 25% -sampling-factor 4:2:0 -strip -quality 85 -interlace JPEG -colorspace RGB your-image@0,25x.jpg
+    convert your-image.jpg -resize 12.5% -sampling-factor 4:2:0 -strip -quality 85 -interlace JPEG -colorspace RGB your-image@0,125x.jpg
+
+Note that the keys in the `srcset` hash have to be valid "descriptors" (as defined [here][mdn-srcset]). In practice this means the width in pixels followed by `w`.
+
+The `path` key is a fallback image for browsers that don't support the `srcset` attribute. It's also used by `jekyll-seo-tag` for social media previews.
+
+For more information on `srcset`, see the [documentation at MDN][mdn-srcset], or [this article from CSS-Tricks][csstricks].
+
+[imagemagick]: https://imagemagick.org/index.php
+[mipmap]: https://en.wikipedia.org/wiki/Mipmap
+[mdn-srcset]: https://developer.mozilla.org/en-US/docs/Web/HTML/Element/img#attr-srcset
+[mdn-sizes]: https://developer.mozilla.org/en-US/docs/Web/HTML/Element/img#attr-sizes
+[csstricks]: https://css-tricks.com/responsive-images-youre-just-changing-resolutions-use-srcset/
+
+
+
 ## Adding an entry to the sidebar
 To add links to the sidebar, populate the `menu` entry in `_config.yml` with a list of `title`-`url` pairs, e.g.:
 
@@ -38,7 +78,7 @@ menu:
 ``` 
 
 ## Adding a category or tag
-Hydejack allows you to use the `list` layout to show all posts of a particular category or tag.
+Hydejack allows you to use the `list` or `grid`\* layout to show all posts of a particular category or tag.
 
 Before you start, make sure your config files contains the `features_categories` and `featured_tags` collections:
 
@@ -99,7 +139,7 @@ Tags       | Welcome to Jekyll¬ 07 Apr 2017 **on** Jekyll, Update
 Both       | Welcome to Jekyll¬ 07 Apr 2017 **in** Jekyll / Update **on** Jekyll, Update
 {:.scroll-table-small}
 
-You can adjust these in [`_data/string.yml`](https://github.com/hydecorp/hydejack/blob/v8/_data/strings.yml).
+You can adjust these in [`_data/string.yml`][strings].
 
 ### Creating a new category or tag
 By default, categories and tags are rendered as plain text. Further steps are necessary if you want them to link to a page that contains a list of all posts that belong to that category or tag.
@@ -121,7 +161,7 @@ description: >
 ~~~
 
 `layout`
-: Must be `list`
+: Must either `list` or `grid`\*
 
 `title`
 : Used as title of the page, as well as name of the category or tag as part of the line below a blog post's title. Can be different from the name of the tag or category, as long as `slug` is identical to the name.
@@ -356,14 +396,7 @@ featured:    false
 : Providing a year is the minimum requirement. Used to sort the projects.
 
 `image`
-: A 16:9 image of the project.
-
-  You can pass an URL to an image, but it is recommended that you provide a `src`-`srcset` pair (see example above).
-
-  Hydejack will show the image in various sizes, depending on the screen width, so that no specific size will fit all. Instead, it is recommended that you use a [mipmap]-like approach, providing the image in multiple sizes, each image half the width of the previous one.
-  The `src` key is a fallback image for browsers that don't support the `srcset` attribute. The keys of the `srcset` hash will be used as descriptors.
-
-  For more information on `srcset`, see the [documentation at MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/img#attr-srcset), or [this article from CSS-Tricks](https://css-tricks.com/responsive-images-youre-just-changing-resolutions-use-srcset/).
+: A 16:9 image of the project. See [Adding images](#adding-images) for details.
 
 `caption`
 : A short description, shown as part of each "project card" in the `projects` layout.
@@ -379,6 +412,7 @@ featured:    false
 
 `featured`
 : Optional. When `true`, the project preview will span the full content width. You can use this for projects that should receive more attention. You can set/override this for an entire page, by setting `featured` in the front matter (applies to the `projects` and `welcome` layout).
+
 
 ### Organizing Projects
 If you want to organize your projects using categories or tags, similar to the way you do with posts, the best way is to achieve this is via multiple collections. Categories and tags are reserved for posts, and adding them to collections has no effect.
@@ -416,13 +450,14 @@ show_collection: other_projects #!!
 
 Note that the file name matches the `other-projects` path in the `permalink` we've defined above. This is to ensure that the directories match up.
 
+
 ## Adding a resume*
 Hydejack's PRO version features a generalized resume layout.
 [Demo][resume].
 
 It generates the resume page from a valid [JSON Resume](https://jsonresume.org/), which is good news if you already have a JSON resume. Otherwise, there are various ways of obtaining one:
 
-* You can edit the [example `resume.yml`](https://github.com/hydecorp/hydejack/blob/v8/_data/resume.yml) in `_data` directly. It contains example entries for each type of entry.
+* You can edit the [example `resume.yml`][resumeyml] in `_data` directly. It contains example entries for each type of entry.
 * You can use the visual [JSON Resume Editor](http://registry.jsonresume.org/).
 * If you have a LinkedIn profile, you can try [LinkedIn to Json Résumé](https://jmperezperez.com/linkedin-to-json-resume/).
 
@@ -537,4 +572,5 @@ Continue with [Writing](writing.md){:.heading.flip-title}
 [projects]: https://hydejack.com/projects/
 [project]: https://hydejack.com/projects/default/
 
-[mipmap]: https://en.wikipedia.org/wiki/Mipmap
+[strings]: https://github.com/hydecorp/hydejack-site/blob/master/_data/strings.yml
+[resumeyml]: https://github.com/hydecorp/hydejack-site/blob/master/_data/resume.yml
