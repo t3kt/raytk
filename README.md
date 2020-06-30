@@ -11,7 +11,7 @@ selected_projects:
   - /projects/hydejack-site/ # or the URL
 projects_page: examples.md
 selected_posts:
-  - hydejack/_posts/2019-07-31-8.5.0.md
+  - hydejack/_posts/2019-07-31-service-release-8.5.0.md
   - /blog/hydejack/2018-09-01-introducing-dark-mode/
   - hydejack/_posts/2018-06-30-introducing-hydejack-8.md
   - hydejack/_posts/2018-06-01-example-content-iii.md

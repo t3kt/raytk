@@ -1,9 +1,16 @@
 ---
 layout: post
 title: Service Release 8.5
-image: /assets/img/blog/louis-hansel.jpg
+image: 
+  path: /assets/img/blog/louis-hansel.jpg
+  srcset: 
+    1920w: /assets/img/blog/louis-hansel.jpg
+    960w:  /assets/img/blog/louis-hansel@0,5x.jpg
+    480w:  /assets/img/blog/louis-hansel@0,25x.jpg
 description: >
   Service release 8.5 includes a number of obvious improvements made possible by changes in the way the web works.
+redirect_from:
+  - /2019-07-31-8.5.0/
 ---
 
 Service release 8.5 includes a number of obvious improvements made possible by changes in the way the web works.
