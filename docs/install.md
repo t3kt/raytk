@@ -30,7 +30,7 @@ You can now jump to [running locally](#running-locally).
 You can now also [![Deploy to Netlify][dtn]][nfy]{:.no-mark-external} directly.
 {:.note}
 
-[src]: https://github.com/hydecorp/hy-starter-kit/archive/v9.0.0-rc.2.zip
+[src]: https://github.com/hydecorp/hy-starter-kit/archive/v9.0.0-rc.3.zip
 [nfy]: https://app.netlify.com/start/deploy?repository=https://github.com/hydecorp/hydejack-starter-kit
 [dtn]: https://www.netlify.com/img/deploy/button.svg
 
