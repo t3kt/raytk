@@ -31,7 +31,7 @@ You can now also [![Deploy to Netlify][dtn]][nfy]{:.no-mark-external} directly.
 {:.note}
 
 [hsc]: https://github.com/hydecorp/hydejack-starter-kit
-[src]: https://github.com/hydecorp/hydejack-starter-kit/archive/v9.0.0-rc.6.zip
+[src]: https://github.com/hydecorp/hydejack-starter-kit/archive/v9.0.0-rc.7.zip
 [nfy]: https://app.netlify.com/start/deploy?repository=https://github.com/hydecorp/hydejack-starter-kit
 [dtn]: https://www.netlify.com/img/deploy/button.svg
 
@@ -87,7 +87,7 @@ If you want to use your site with [GitHub Pages][ghp] exclusively, you can inste
 
 ```yml
 # file: `_config.yml`
-remote_theme: hydecorp/hydejack@v9.0.0-rc.6
+remote_theme: hydecorp/hydejack@v9.0.0-rc.7
 ```
 
 [ghp]: https://jekyllrb.com/docs/github-pages/
