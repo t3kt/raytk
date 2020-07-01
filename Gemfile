@@ -8,9 +8,9 @@ source "https://rubygems.org"
 #
 # This will help ensure the proper Jekyll version is running.
 # Happy Jekylling!
-gem "jekyll", "~> 4.1"
+gem "jekyll", "~> 3.8"
 
-gem "jekyll-theme-hydejack", path: "./#jekyll-theme-hydejack"
+# gem "jekyll-theme-hydejack"
 
 # IMPORTANT: The followign gem is used to compile math formulas to 
 # KaTeX during site building.
@@ -24,9 +24,10 @@ gem "jekyll-theme-hydejack", path: "./#jekyll-theme-hydejack"
 #    For details, see <https://github.com/kramdown/math-katex#documentation>
 #
 # If you're using the MathJax math engine instead, free to remove the line below:
-gem "kramdown-math-katex"
+# gem "kramdown-math-katex"
 
 group :jekyll_plugins do
+  gem "jekyll-default-layout"
   gem "jekyll-feed"
   gem "jekyll-optional-front-matter"
   gem "jekyll-paginate"
@@ -37,6 +38,8 @@ group :jekyll_plugins do
   gem "jekyll-sitemap"
   gem "jekyll-titles-from-headings"
   gem "jekyll-include-cache", git: "https://github.com/hydecorp/jekyll-include-cache"
+
+  gem "jekyll-remote-theme"
 end
 
 gem 'wdm' if Gem.win_platform?
