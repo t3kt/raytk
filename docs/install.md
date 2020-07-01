@@ -17,8 +17,8 @@ or change the theme of [an existing site](#existing-sites).
 For new sites, the best way to get started with Hydejack is via the Starter Kit. 
 It comes with a documented config file and example content that gets you started quickly.
 
-If you have a GitHub account, fork the [hy-starter-kit](https://github.com/hydecorp/hy-starter-kit) repository. 
-Otherwise [download the source files][src] and unzip them somewhere on your machine.
+If you have a GitHub account, fork the [Hydejack Starter Kit][hsc] repository. 
+Otherwise [download the Starter Kit][src] and unzip them somewhere on your machine.
 
 If you bought the __PRO Version__ of Hydejack, use the contents of the `starter-kit` folder instead.
 
@@ -30,7 +30,8 @@ You can now jump to [running locally](#running-locally).
 You can now also [![Deploy to Netlify][dtn]][nfy]{:.no-mark-external} directly.
 {:.note}
 
-[src]: https://github.com/hydecorp/hy-starter-kit/archive/v9.0.0-rc.3.zip
+[hsc]: https://github.com/hydecorp/hydejack-starter-kit
+[src]: https://github.com/hydecorp/hydejack-starter-kit/archive/v9.0.0-rc.6.zip
 [nfy]: https://app.netlify.com/start/deploy?repository=https://github.com/hydecorp/hydejack-starter-kit
 [dtn]: https://www.netlify.com/img/deploy/button.svg
 
@@ -86,7 +87,7 @@ If you want to use your site with [GitHub Pages][ghp] exclusively, you can inste
 
 ```yml
 # file: `_config.yml`
-remote_theme: hydecorp/hydejack@v9
+remote_theme: hydecorp/hydejack@v9.0.0-rc.6
 ```
 
 [ghp]: https://jekyllrb.com/docs/github-pages/

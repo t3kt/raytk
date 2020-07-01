@@ -334,7 +334,7 @@ author:
   social:
     email:    mail@qwtel.com
     rss:      {{ site.url }}{{ site.baseurl }}/feed.xml # make sure you provide an absolute URL
-    download: https://github.com/hydecorp/hydejack/archive/v9.0.0-rc.3.zip
+    download: https://github.com/hydecorp/hydejack/archive/v9.0.0-rc.6.zip
 ~~~
 
 
@@ -561,10 +561,10 @@ Continue with [Basics](basics.md){:.heading.flip-title}
 {:.read-more}
 
 
-[config]: https://github.com/hydecorp/hydejack-site/blob/master/_config.yml
-[social]: https://github.com/hydecorp/hydejack-site/blob/master/_data/social.yml
-[authors]: https://github.com/hydecorp/hydejack-site/blob/master/_data/authors.yml
-[strings]: https://github.com/hydecorp/hydejack-site/blob/master/_data/strings.yml
+[config]: https://github.com/hydecorp/hydejack-starter-kit/blob/v9/_config.yml
+[social]: https://github.com/hydecorp/hydejack-starter-kit/blob/v9/_data/social.yml
+[authors]: https://github.com/hydecorp/hydejack-starter-kit/blob/v9/_data/authors.yml
+[strings]: https://github.com/hydecorp/hydejack-starter-kit/blob/v9/_data/strings.yml
 [mybody]: https://github.com/hydecorp/hydejack/blob/v9/_includes/my-body.html
 
 *[FOIT]: Flash of Invisible Text
