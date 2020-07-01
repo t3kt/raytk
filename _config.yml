@@ -337,10 +337,10 @@ plugins:
 # ---------------------------------------------------------------------------------------
 
 # Where you proof that you own this site (used by jekyll-seo-tag)
-google_site_verification: kRoh_csFULhK6lxBJwZOxiWYQpvttOkFj0a3lWwQADc
+# google_site_verification: <verification-id>
 # -- or --
 # webmaster_verifications:
-#   google:              xlwWRCmc8tMoEuhrBFFj3r-r75zd0zVlHvQYBwGcCQU
+#   google:              <verification-id>
 #   bing:                <verification-id>
 #   alexa:               <verification-id>
 #   yandex:              <verification-id>
@@ -357,10 +357,10 @@ google_site_verification: kRoh_csFULhK6lxBJwZOxiWYQpvttOkFj0a3lWwQADc
 
 # Used on index and about sites
 # social:
-#   name:                Florian Klampfer
+#   name:                <firstname> <lastname>
 #   links:
-#     - https://twitter.com/qwtel
-#     - https://github.com/qwtel
+#     - https://twitter.com/<username>
+#     - https://github.com/<username>
 
 
 # Plugin Configs
