@@ -1,5 +1,5 @@
 ---
-# Featured tags need to have the `list` layout.
+# Featured tags need to have either the `list` or `grid` layout (PRO only).
 layout: list
 
 # The title of the tag's page.
@@ -12,4 +12,7 @@ slug: example
 description: >
   This is a featured category, which have their own page.
   Check out `_featured_tags/example.md` to learn how to create your own.
+
+# (Optional) You can disable grouping posts by date.
+# no_groups: true
 ---

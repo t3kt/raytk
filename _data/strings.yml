@@ -24,11 +24,17 @@ links:                 Links
 pagination:            Pagination
 newer:                 Newer
 older:                 Older
+forward:               Forward
 back:                  Back
 permalink:             Permalink
-permalink_icon:        icon-link
+permalink_icon:        content-hash
 templates:             Templates (for web app)
 present:               present
+toc:                   Table of Contents
+note:                  Note
+description:           Description
+search:                Search
+search_placeholder:    Type something…
 
 loading:               Loading…
 redirecting:           Redirecting…
@@ -48,6 +54,13 @@ not_found:
     <!--home_link--> to try finding it again.
   home_link:           Head back home
 
+offline:
+  title:               'You are Offline'
+  message:             |
+    Sorry, but you appear to be offline and this page has not been prepared for offline viewing.
+    <!--home_link--> to try finding another page.
+  home_link:           Head back home
+
 error:
   title:               Error
   message:             |
@@ -55,6 +68,7 @@ error:
 
 # Separators
 # ---------------------------------------------------------------------------------------
+posted:                'Posted'
 colon:                 ':'
 separator:             '|'
 category_start:        'in '
@@ -122,11 +136,19 @@ resume:
   skills:              Skills
   level:               Level
   interests:           Interests
+  summary:             Summary
   keywords:            Keywords
+  print:               Print
+  download_pdf:        PDF
+  download_vcf:        vCard
+  download_json:       JSON
   icons:
     fallback:          icon-link
     location:          icon-location
-    email:             icon-mail2
+    born:              icon-quill
+    citizenship:       icon-flag
+    maritalStatus:     icon-man-woman
+    email:             icon-envelop
     phone:             icon-phone
     website:           icon-home3
     work:              icon-briefcase

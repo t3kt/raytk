@@ -1,1 +1,14 @@
-// You can add CSS rules here that will be inlucded in Hydejack's CSS file
+.dl-table {
+  a {
+    @supports ((text-decoration-thickness: initial) and (text-underline-offset: initial)) {
+      text-underline-offset: .7rem;
+    }
+    @supports not ((text-decoration-thickness: initial) and (text-underline-offset: initial)) {
+      padding-bottom: .3rem;
+    }
+  }
+
+  .btn {
+    margin: 1.5rem 0;
+  }
+}
