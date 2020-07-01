@@ -565,7 +565,7 @@ Continue with [Basics](basics.md){:.heading.flip-title}
 [social]: https://github.com/hydecorp/hydejack-starter-kit/blob/v9/_data/social.yml
 [authors]: https://github.com/hydecorp/hydejack-starter-kit/blob/v9/_data/authors.yml
 [strings]: https://github.com/hydecorp/hydejack-starter-kit/blob/v9/_data/strings.yml
-[mybody]: https://github.com/hydecorp/hydejack/blob/v9/_includes/my-body.html
+[mybody]: https://github.com/hydecorp/hydejack-starter-kit/blob/v9/_includes/my-body.html
 
 *[FOIT]: Flash of Invisible Text
 *[GA]: Google Analytics
