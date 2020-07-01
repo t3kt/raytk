@@ -101,7 +101,7 @@ collections:
 # ---------------------------------------------------------------------------------------
 
 # theme: jekyll-theme-hydejack
-remote_theme: hydecorp/hydejack@v9.0.0-rc.4
+remote_theme: hydecorp/hydejack@v9.0.0-rc.5
 
 
 # Customizaton
