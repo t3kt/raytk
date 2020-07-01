@@ -52,12 +52,8 @@ author:
 
 # Add links to the sidebar.
 menu:
-  - title:             Blog
-    url:               /blog/
-  - title:             Examples
-    url:               /examples/
-  - title:             Résumé*
-    url:               /resume/
+  - title:             Example
+    url:               /example/
   - title:             Documentation
     url:               /docs/
   - title:             Download
@@ -77,11 +73,28 @@ legal:
 copyright:             © 2020. All rights reserved.
 
 # Format of the permalinks
-permalink:             /blog/:categories/:year-:month-:day-:title/
+permalink:             /:categories/:year-:month-:day-:title/
 
 # Pagination configuration (used by the `blog` layout)
 paginate:              10
-paginate_path:         /blog/:num/
+paginate_path:         /:num/
+
+
+# Collections
+# ----------------------------------------------------------------------------------------
+
+collections:
+  featured_categories:
+    permalink:         /:name/
+    output:            true
+
+  featured_tags:
+    permalink:         /tag-:name/
+    output:            true
+
+  projects:
+    permalink:         /projects/:path/
+    output:            true
 
 
 # Theme
@@ -288,23 +301,6 @@ hydejack:
     cache_version:     7
     precache_assets:
       - /assets/img/swipe.svg
-
-
-# Collections
-# ----------------------------------------------------------------------------------------
-
-collections:
-  featured_categories:
-    permalink:         /blog/:name/
-    output:            true
-
-  featured_tags:
-    permalink:         /tag-:name/
-    output:            true
-
-  projects:
-    permalink:         /projects/:path/
-    output:            true
 
 
 # File inclusion/exclusion
