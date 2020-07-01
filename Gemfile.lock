@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/hydecorp/jekyll-include-cache
-  revision: 1567ce6446e4186f106f7827ffdc944404b471bd
+  revision: 2168263a7c88101f92557e6fe015a276267d8274
   specs:
     jekyll-include-cache (0.2.0)
       jekyll (>= 3.7, < 5.0)
@@ -16,7 +16,7 @@ PATH
   remote: #jekyll-theme-hydejack
   specs:
     jekyll-theme-hydejack (9.0.0)
-      jekyll (~> 4.1)
+      jekyll (>= 3.8)
       jekyll-include-cache (~> 0.2)
 
 GEM
@@ -38,7 +38,7 @@ GEM
     http_parser.rb (0.6.0)
     i18n (1.8.3)
       concurrent-ruby (~> 1.0)
-    jekyll (4.1.0)
+    jekyll (4.1.1)
       addressable (~> 2.4)
       colorator (~> 1.0)
       em-websocket (~> 0.5)
@@ -53,7 +53,7 @@ GEM
       rouge (~> 3.0)
       safe_yaml (~> 1.0)
       terminal-table (~> 1.8)
-    jekyll-feed (0.13.0)
+    jekyll-feed (0.14.0)
       jekyll (>= 3.7, < 5.0)
     jekyll-optional-front-matter (0.3.2)
       jekyll (>= 3.0, < 5.0)
@@ -74,7 +74,7 @@ GEM
       listen (~> 3.0)
     katex (0.6.0)
       execjs (~> 2.7)
-    kramdown (2.2.1)
+    kramdown (2.3.0)
       rexml
     kramdown-math-katex (1.0.1)
       katex (~> 0.4)
