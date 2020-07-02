@@ -11,7 +11,7 @@
   font_weight_bold: 700 #=bold
   font_weight_heading: 700 #=bold
 
-  content_width: 38 #rem
+  content_width: 42 #rem
   content_width_2: 48 #rem
   content_width_5: 54 #rem
 
