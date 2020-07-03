@@ -9,6 +9,9 @@ layout: page
 {:toc .large-only}
 
 ## v9.0.0
+July 3 2020
+{:.heading.post-date}
+
 ### Major
 *   Added Built-In Search Functionality
 
