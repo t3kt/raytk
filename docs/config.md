@@ -334,7 +334,7 @@ author:
   social:
     email:    mail@qwtel.com
     rss:      {{ site.url }}{{ site.baseurl }}/feed.xml # make sure you provide an absolute URL
-    download: https://github.com/hydecorp/hydejack/archive/v9.0.0.zip
+    download: https://github.com/hydecorp/hydejack/archive/v9.0.1.zip
 ~~~
 
 
@@ -467,34 +467,29 @@ Before you add math content, remember to run `bundle install` and restart Jekyll
 [mathjax]: https://www.mathjax.org/
 
 ## Adding custom favicons and app icons
-By default, Hydejack includes its own favicon, as well as app icons for in five different resolutions.
+By default, Hydejack includes its own favicon, as well as app icons in 8 different resolutions.
 
-To change the favicon, place your own `favicon.ico` into `assets/icons/` (create the folder if it doesn't exist).
+| Name               | Resolution |
+|:-------------------|-----------:|
+| `icon-512x512.png` |  `512x512` |
+| `icon-384x384.png` |  `384x384` |
+| `icon-192x192.png` |  `192x192` |
+| `icon-152x152.png` |  `152x152` |
+| `icon-144x144.png` |  `144x144` |
+| `icon-128x128.png` |  `128x128` |
+| `icon-96x96.png`   |    `96x96` |
+| `icon-72x72.png`   |    `72x72` |
 
-To use your own app icons, you need to prepare five square PNG files in the following resolutions, and put them into `assets/icons/` (create the folder if it doesn't exist):
+To change the default icons you have to replce all of them. To make this manageable, I recommend using the following tools:
 
-| Name             | Pixels    |
-|:-----------------|----------:|
-| `icon@3x.png`    | `576x576` |
-| `icon@2x.png`    | `384x384` |
-| `icon.png`       | `192x192` |
-| `icon@0,75x.png` | `144x144` |
-| `icon@0,5x.png`  |   `96x96` |
-| `icon@0,25x.png` |   `48x48` |
+First, use the [Maskable.app Editor](https://maskable.app/editor) to confine your logo/picture to the "minimum safe area". More on maskable app icons, see [this article on web.dev](https://web.dev/maskable-icon). 
+Make sure the base image is at least 512x512 pixels in size.
 
-Additionally, you can provide tiles for Window 10:
+Then use the [Web App Manifest Generator](https://app-manifest.firebaseapp.com/) to automatically resize the icons. 
+Upload the icon downloaded from Maskable.app and then click "Generate .zip". 
+In the zip, ignore the `manifest.json` and look for the `icons` folder. Copy it into the `assets` folder of your site.
 
-| Name              | Pixels    |
-|:------------------|----------:|
-| `tile-large.png`  | `558x588` |
-| `tile-medium.png` | `270x270` |
-| `tile-small.png`  |   `70x70` |
-| `tile-wide.png`   | `558x270` |
-
-If you don't want to use PNGs, or want to use different resolutions, you have to provide your own `assets/manifest.json` (and `assets/ieconfig.xml` when supporting Window 10). For more on web app manifests, see [MDN](https://developer.mozilla.org/en-US/Add-ons/WebExtensions/manifest.json).
-
-In any case, Hydejack expects a `assets/icons/icon.png` file for use as `apple-touch-icon` and a `assets/icons/favicon.ico` for use as `shortcut icon`.
-{:.note}
+To change the favicon, place your own `favicon.ico` (32x32, PNG) into `assets/icons`.
 
 
 ## Adding a cookies banner*

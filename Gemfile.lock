@@ -15,8 +15,8 @@ GIT
 PATH
   remote: #jekyll-theme-hydejack
   specs:
-    jekyll-theme-hydejack (9.0.0)
-      jekyll (>= 3.8)
+    jekyll-theme-hydejack (9.0.1)
+      jekyll (>= 3.8, < 5.0)
       jekyll-include-cache (~> 0.2)
 
 GEM
@@ -57,6 +57,9 @@ GEM
       jekyll (>= 3.7, < 5.0)
     jekyll-feed (0.14.0)
       jekyll (>= 3.7, < 5.0)
+    jekyll-last-modified-at (1.1.0)
+      jekyll (>= 3.7, < 5.0)
+      posix-spawn (~> 0.3.9)
     jekyll-optional-front-matter (0.3.2)
       jekyll (>= 3.0, < 5.0)
     jekyll-paginate (1.1.0)
@@ -90,6 +93,7 @@ GEM
     mercenary (0.4.0)
     pathutil (0.16.2)
       forwardable-extended (~> 2.6)
+    posix-spawn (0.3.13)
     public_suffix (4.0.5)
     rb-fsevent (0.10.4)
     rb-inotify (0.10.1)
@@ -114,6 +118,7 @@ DEPENDENCIES
   jekyll-compose
   jekyll-feed
   jekyll-include-cache!
+  jekyll-last-modified-at
   jekyll-optional-front-matter
   jekyll-paginate
   jekyll-readme-index
