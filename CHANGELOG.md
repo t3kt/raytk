@@ -8,6 +8,17 @@ layout: page
 * this list will be replaced by the toc
 {:toc .large-only}
 
+## v9.0.1
+July 6 2020
+{:.heading.post-date}
+
+* Changing app icons has been revamped. See [this section](./docs/config.md#adding-custom-favicons-and-app-icons) in the docs.
+* Changed default icons
+* Changed default sidebar background
+* Added `jekyll-compose` defaults to config file
+* Slightly adjusted dark mode colors
+* Fixed resume layout breakpoint
+
 ## v9.0.0
 July 3 2020
 {:.heading.post-date}
