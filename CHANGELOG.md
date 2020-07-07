@@ -8,6 +8,15 @@ layout: page
 * this list will be replaced by the toc
 {:toc .large-only}
 
+## v9.0.2
+July 7 2020
+{:.heading.post-date}
+
+* Fixed a bug that prevented the search from updating when offline is enabled
+* Fixed a bug that caused search terms to get lost during initialization
+* Fixed a bug that prevented `site.legal` from getting stored for offline during service worker installation
+* Added support to for `no-cache` param to service worker.
+
 ## v9.0.1
 July 6 2020
 {:.heading.post-date}
