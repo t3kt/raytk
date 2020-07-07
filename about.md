@@ -163,7 +163,7 @@ Use the the form below to purchase Hydejack PRO:
 [ofln]: docs/advanced.md#enabling-offline-support
 [math]: docs/writing.md#adding-math
 
-[kit]: https://github.com/hydecorp/hydejack-starter-kit/archive/v9.0.1.zip
+[kit]: https://github.com/hydecorp/hydejack-starter-kit/archive/v9.0.2.zip
 [src]: https://github.com/hydecorp/hydejack
 [gem]: https://rubygems.org/gems/jekyll-theme-hydejack
 [buy]: https://gum.co/nuOluY
