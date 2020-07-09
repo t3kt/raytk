@@ -3,7 +3,7 @@
   root_font_size_medium: 16 #px
   root_font_size_large: 17 #px
 
-  root_font_size_print: 9 #pt
+  root_font_size_print: 8 #pt
 
   root_line_height: 1.75
 
