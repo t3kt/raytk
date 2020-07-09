@@ -1,4 +1,11 @@
 GIT
+  remote: https://github.com/benbalter/jekyll-default-layout
+  revision: 11054b8af659382223d9afe0a26f1627869a6abb
+  specs:
+    jekyll-default-layout (0.1.4)
+      jekyll (>= 3.0, < 5.0)
+
+GIT
   remote: https://github.com/hydecorp/jekyll-include-cache
   revision: 2168263a7c88101f92557e6fe015a276267d8274
   specs:
@@ -116,6 +123,7 @@ PLATFORMS
 DEPENDENCIES
   jekyll (~> 4.1)
   jekyll-compose
+  jekyll-default-layout!
   jekyll-feed
   jekyll-include-cache!
   jekyll-last-modified-at

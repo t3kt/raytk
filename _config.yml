@@ -154,16 +154,6 @@ defaults:
   #   values:
   #     comments:        true
 
-  # Force page layout on docs/ and licensees/ folder.
-  - scope:
-      path:            docs/
-    values:
-      layout:          page
-  - scope:
-      path:            licenses/
-    values:
-      layout:          page
-
   # `jekyll-seo-tag` will mark collection outputs as `BlogPosting`,
   # but we want them to be `WebPage`s:
   - scope:
@@ -323,6 +313,7 @@ include:
 # ----------------------------------------------------------------------------------------
 
 plugins:
+  - jekyll-default-layout
   - jekyll-feed
   - jekyll-optional-front-matter
   - jekyll-paginate
