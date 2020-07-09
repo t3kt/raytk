@@ -1,6 +1,6 @@
 ---
 layout: about
-image: /assets/img/blog/hydejack-8.jpg
+image: /assets/img/blog/hydejack-9.jpg
 description: >
   Hydejack is a boutique Jekyll theme for hackers, nerds, and academics,
   with a focus on personal sites that are meant to impress.
@@ -21,7 +21,7 @@ A boutique Jekyll theme for hackers, nerds, and academics.
 1. this list will be replaced by the toc
 {:toc .large-only}
 
-![Screenshot](assets/img/blog/hydejack-8.jpg){:.lead width="1920" height="1080" loading="lazy"}
+![Screenshot](assets/img/blog/hydejack-9.jpg){:.lead width="1920" height="1080" loading="lazy"}
 
 Hydejack's cover page on a variety of screens.
 {:.figcaption}
@@ -163,7 +163,7 @@ Use the the form below to purchase Hydejack PRO:
 [ofln]: docs/advanced.md#enabling-offline-support
 [math]: docs/writing.md#adding-math
 
-[kit]: https://github.com/hydecorp/hydejack-starter-kit/archive/v9.0.2.zip
+[kit]: https://github.com/hydecorp/hydejack-starter-kit/archive/v9.0.3.zip
 [src]: https://github.com/hydecorp/hydejack
 [gem]: https://rubygems.org/gems/jekyll-theme-hydejack
 [buy]: https://gum.co/nuOluY

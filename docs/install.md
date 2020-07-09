@@ -31,7 +31,7 @@ You can now also [![Deploy to Netlify][dtn]][nfy]{:.no-mark-external} directly.
 {:.note}
 
 [hsc]: https://github.com/hydecorp/hydejack-starter-kit
-[src]: https://github.com/hydecorp/hydejack-starter-kit/archive/v9.0.2.zip
+[src]: https://github.com/hydecorp/hydejack-starter-kit/archive/v9.0.3.zip
 [nfy]: https://app.netlify.com/start/deploy?repository=https://github.com/hydecorp/hydejack-starter-kit
 [dtn]: https://www.netlify.com/img/deploy/button.svg
 
@@ -83,20 +83,33 @@ Make sure to only delete files that belong to the old theme!
 
 
 ## GitHub Pages
-If you want to use your site with [GitHub Pages][ghp] exclusively, you can instead set the `remote_theme` key as follows:
+If you want to build your site on [GitHub Pages][ghp], check out the [`gh-pages` branch][gpb] in the Hydejack Starter Kit repo.
+
+[ghp]: https://jekyllrb.com/docs/github-pages/
+[gpb]: https://github.com/hydecorp/hydejack-starter-kit/tree/gh-pages
+
+For existing sites, you can instead set the `remote_theme` key as follows:
 
 ```yml
 # file: `_config.yml`
-remote_theme: hydecorp/hydejack@v9.0.2
+remote_theme: hydecorp/hydejack@v9.0.3
 ```
 
-[ghp]: https://jekyllrb.com/docs/github-pages/
+Make sure the `plugins` list contains `jekyll-include-cache` (create if it doesn't exist):
+{:.note title="Important"}
+
+```yml
+# file: `_config.yml`
+plugins:
+  - jekyll-include-cache
+```
 
 To run this configuration locally, make sure the following is part of your `Gemfile`:
 
 ```ruby
 # file: `Gemfile`
 gem "github-pages", group: :jekyll_plugins
+gem "jekyll-include-cache", group: :jekyll_plugins
 ```
 
 Note that Hydejack has a reduced feature set when built on GitHub Pages. 
