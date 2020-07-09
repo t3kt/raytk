@@ -8,6 +8,16 @@ layout: page
 * this list will be replaced by the toc
 {:toc .large-only}
 
+## v9.0.3
+July 9 2020
+{:.heading.post-date}
+
+* Updated print resume style  
+* Updated docs for GitHub Pages
+* Slightly decreased size of dark mode icon
+* Fixed a bug that caused a GitHub Pages build to fail with an empty configuration file
+* Changed default icon so that it less resembles slashdot.org\~\~ 
+
 ## v9.0.2
 July 7 2020
 {:.heading.post-date}
