@@ -294,7 +294,7 @@ featured: false
   Either a path relative to the main directory with no leading `./`,
   or a URL according to the schema defined in `permalink`.
 
-`selected_projects`
+`selected_posts`
 : A list of paths to blog posts that should be featured in the `<!--posts-->` or `<!--posts_list-->` marker.
   Either provide paths relative to the main directory with no leading `/`,
   or URLs according to the schema defined in `permalink`.
