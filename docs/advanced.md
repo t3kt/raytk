@@ -16,7 +16,7 @@ Hydejack v8 introduces experimental "cache as you go" offline support. This is i
 
 Enabling this feature requires that your content meets the following criteria:
 
-* Content doesn't change between between deploys (e.g. manually adding things to `_site` etc.)
+* Content doesn't change between deploys (e.g. manually adding things to `_site` etc.)
 * All assets in `assets` are immutable, i.e. they never change (when changing a file in assets, it needs to have a new name and links need to point to the new file).
 * The site is mostly self-contained, i.e. assets are served from the same domain (offline support will not download assets form external sites by default)
 * The site is served via HTTPS (this is a Service Worker requirement)
@@ -102,7 +102,7 @@ deviantart:
 ~~~
 
 `name`
-: The name of the network. Used for for the title attribute and screen readers.
+: The name of the network. Used for the title attribute and screen readers.
 
 `icon`
 : The icon CSS class. Can be chosen during the IcoMoon creation process.
