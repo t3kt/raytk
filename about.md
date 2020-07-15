@@ -170,9 +170,7 @@ Use the the form below to purchase Hydejack PRO:
 [nfy]: https://app.netlify.com/start/deploy?repository=https://github.com/hydecorp/hydejack-starter-kit
 [dtn]: https://www.netlify.com/img/deploy/button.svg
 
-[gpss]: https://developers.google.com/speed/pagespeed/insights/?url=https://hydejack.com/
-[hy-push-state]: https://hydecorp.github.io/hy-push-state/
-[hy-drawer]: https://hydecorp.github.io/hy-drawer/
+[gpss]: https://developers.google.com/speed/pagespeed/insights/?url=https%3A%2F%2Fhydejack.com%2Fdocs%2F
 [rouge]: http://rouge.jneen.net
 [katex]: https://khan.github.io/KaTeX/
 [mathjax]: https://www.mathjax.org/

@@ -37,16 +37,4 @@ The table below shows what's included in each version:
       el.dataset.done = '';
     }
   });
-
-  document.querySelectorAll('a[href*="dark-mode"]').forEach(el => {
-    if (!el.dataset.done) {
-      el.addEventListener('click', () => {
-        if (!window._dark_mode) {
-          document.body.classList.add('dark-mode');
-          window._dark_mode = true;
-        }
-      });
-      el.dataset.done = '';
-    }
-  });
 </script>
