@@ -24,3 +24,21 @@ def evaluateTypeProperty(par: 'Par', fieldName: str):
 	if par != 'useinput':
 		return str(par)
 	raise NotImplementedError()
+
+def extractInputNames(dat: 'DAT', inDats: List['DAT']):
+	dat.clear()
+	for inDat in inDats:
+		name = str(inDat[1, 'name'] or '')
+		dat.appendRow([f'inputName{inDat.digits}', name])
+
+def mergeInputDefs(dat: 'DAT', inDats: List['DAT']):
+	dat.clear()
+	for inDat in inDats:
+		if inDat.numRows < 2:
+			continue
+		if dat.numRows == 0:
+			dat.appendRow(inDat.row(0))
+		for row in range(1, inDat.numRows):
+			# skip rows already added in an earlier input
+			if dat[inDat[row, 0], 0] is None:
+				dat.appendRow(inDat.row(row))
