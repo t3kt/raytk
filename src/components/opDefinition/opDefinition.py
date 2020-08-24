@@ -126,3 +126,20 @@ def buildParamTupletAliases(dat: 'DAT', paramTable: 'DAT'):
 					for j in range(size)
 				]))
 			])
+
+def substituteWords(dat: 'DAT'):
+	if not dat.inputs:
+		dat.text = ''
+		return
+	dat.copy(dat.inputs[0])
+	text = dat.text
+	for repls in dat.inputs[1:]:
+		if repls.numRows == 0:
+			continue
+		if repls[0, 0] == 'before' and repls[0, 1] == 'after':
+			startRow = 1
+		else:
+			startRow = 0
+		for row in range(startRow, repls.numRows):
+			text = re.sub(r'\b' + repls[row, 0].val + r'\b', repls[row, 1].val, text)
+	dat.text = text
