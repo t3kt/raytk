@@ -558,7 +558,7 @@ class OP:
 	def fetch(self, key, default=None, search=True, storeDefault=False): pass
 	def fetchOwner(self, key) -> '_AnyOpT': pass
 
-	def addScriptErrors(self, msg): pass
+	def addScriptError(self, msg): pass
 	def addError(self, msg): pass
 	def addWarning(self, msg): pass
 	def errors(self, recurse=False) -> str: pass
