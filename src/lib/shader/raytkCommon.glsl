@@ -25,3 +25,9 @@ Sdf createSdf(float dist) {
 struct Context {
 	float dummy;
 };
+
+Context createDefaultContext() {
+	Context ctx;
+	ctx.dummy = 0;
+	return ctx;
+}
