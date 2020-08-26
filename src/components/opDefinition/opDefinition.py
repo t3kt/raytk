@@ -1,5 +1,4 @@
 import re
-from typing import Dict, List, Union
 
 # noinspection PyUnreachableCode
 if False:
@@ -30,13 +29,13 @@ def evaluateTypeProperty(par: 'Par', fieldName: str, defVal: str):
 			return str(val)
 	return defVal
 
-def extractInputNames(dat: 'DAT', inDats: List['DAT']):
+def extractInputNames(dat: 'DAT', inDats: 'List[DAT]'):
 	dat.clear()
 	for inDat in inDats:
 		name = str(inDat[1, 'name'] or '')
 		dat.appendRow([f'inputName{inDat.digits}', name])
 
-def mergeInputDefs(dat: 'DAT', inDats: List['DAT']):
+def mergeInputDefs(dat: 'DAT', inDats: 'List[DAT]'):
 	dat.clear()
 	for inDat in inDats:
 		if inDat.numRows < 2:
@@ -106,7 +105,7 @@ def buildParamDetailTable(dat: 'DAT'):
 		if parts:
 			addSpecial()
 
-def _getTupletName(parts: List[str]):
+def _getTupletName(parts: 'List[str]'):
 	if len(parts) <= 1 or len(parts[0]) <= 1:
 		return None
 	prefix = parts[0][:-1]
