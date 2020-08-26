@@ -39,3 +39,15 @@ def _getParamAliases(paramDetails: 'DAT') -> List[Tuple[str, str]]:
 					partAliases.append((str(name), f'vecParams[{i}].{suffix}'))
 	return partAliases + mainAliases
 
+def buildMaterialBlock(materialTable: 'DAT'):
+	if materialTable.numRows < 2:
+		return ''
+	output = ''
+	for nameCell, pathCell in materialTable.rows()[1:]:
+		if not nameCell:
+			continue
+		codeDat = op(pathCell)
+		materialCode = codeDat.text if codeDat else ''
+		output += f'else if(m == {nameCell.val}) {{\n'
+		output += materialCode + '\n}'
+	return output

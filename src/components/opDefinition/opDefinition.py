@@ -18,7 +18,7 @@ def buildName():
 	name = re.sub('_+', '_', name)
 	if name.startswith('_'):
 		name = 'o_' + name
-	return name
+	return 'RTK_' + name
 
 def evaluateTypeProperty(par: 'Par', fieldName: str, defVal: str):
 	if par != 'useinput':

@@ -1,4 +1,5 @@
 layout (location = 0) out vec4 sdfOut;
+layout (location = 1) out vec4 colorOut;
 
 Sdf map(vec3 p) {
 	Sdf res = thismap(p, createDefaultContext());
@@ -6,6 +7,19 @@ Sdf map(vec3 p) {
 	return res;
 }
 
+
+vec4 getColor(Sdf res, vec3 p) {
+	int m = int(res.material);
+	vec4 col;
+	if (false) {
+		return vec4(0);
+	}
+	// #include <materialParagraph>
+	else {
+		return vec4(0);
+	}
+	return col;
+}
 
 void main() {
 	vec2 resolution = uTDOutputInfo.res.zw;
@@ -19,5 +33,11 @@ void main() {
 	vec3 p = posAndExists.xyz;
 	Sdf res = map(p);
 
-	sdfOut = vec4(res.x, res.x, res.x, 1);
+	colorOut = getColor(res, p);
+
+	sdfOut = vec4(
+		res.x,
+		res.material,
+		res.material2,
+		res.interpolant);
 }
