@@ -244,7 +244,7 @@ class Monitor:
 	scaledBottom: int
 	refreshRate: float
 
-class Monitors:
+class Monitors(_ABC, _T.Sequence[Monitor]):
 	primary: Monitor
 	width: 0
 	height: 0
@@ -260,9 +260,6 @@ class Monitors:
 	@staticmethod
 	def refresh():
 		pass
-
-	def __len__(self):
-		return 0
 
 monitors:  Monitors
 
