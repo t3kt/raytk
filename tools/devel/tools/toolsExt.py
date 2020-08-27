@@ -48,16 +48,25 @@ class Tools:
 		comp = pane.owner
 		if comp is self.ownerComp or comp.path.startswith(self.ownerComp.path + '/'):
 			return None
-		rop = _getROP(comp)
-		if rop:
-			return rop
-		rop = _getROP(comp.currentChild)
+		rop = _getROP(comp) or _getROP(comp.currentChild)
 		if rop:
 			return rop
 		for child in comp.selectedChildren:
 			rop = _getROP(child, checkParents=False)
 			if rop:
 				return rop
+
+	def SaveROP(self, incrementVersion=False):
+		rop = self.GetCurrentROP()
+		if not rop:
+			# TODO: warning?
+			return
+		opDef = getOpDef(rop)
+		if incrementVersion:
+			opDef.par.Opversion += 1
+		tox = rop.par.externaltox.eval()
+		rop.save(tox)
+		ui.status = f'Saved TOX {tox} (version: {opDef.par.Opversion})'
 
 def _getROP(comp: 'COMP', checkParents=True):
 	if not comp or comp is root:
