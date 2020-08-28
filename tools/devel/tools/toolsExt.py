@@ -9,7 +9,7 @@ class Tools:
 
 	def UpdateOpType(self, comp: 'COMP' = None):
 		if comp is None:
-			comp = self.GetCurrentROp()
+			comp = self.GetCurrentROP()
 		if not comp:
 			return
 		toolkit = comp.parent.raytk
