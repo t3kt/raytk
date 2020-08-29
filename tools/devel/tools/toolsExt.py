@@ -1,23 +1,90 @@
+import re
+from typing import Union
+
 # noinspection PyUnreachableCode
 if False:
 	# noinspection PyUnresolvedReferences
 	from _stubs import *
 
+class Version:
+	pattern = re.compile(r'([0-9])+(?:\.([0-9]+))?')
+
+	def __init__(self, majorOrString: Union[str, int] = None, minor: int = None):
+		if isinstance(majorOrString, str):
+			s = majorOrString  # type: str
+			if minor is not None:
+				raise Exception('Cannot specify both string and major/minor')
+			match = Version.pattern.match(s)
+			if not match:
+				raise Exception(f'Invalid version string: {s!r}')
+			majorPart = match.group(1)
+			minorPart = match.group(2)
+			major = int(majorPart)
+			minor = int(minorPart) if minorPart else 0
+		else:
+			major = majorOrString
+		if major is None:
+			raise Exception('Must specify either string or `major`')
+		self.major = major
+		self.minor = minor or 0
+
+	def __str__(self):
+		return f'{self.major}.{self.minor}'
+
+	def __repr__(self):
+		return f'Version({self.major}, {self.minor})'
+
 class Tools:
 	def __init__(self, ownerComp: 'COMP'):
 		self.ownerComp = ownerComp
+
+	@staticmethod
+	def getToolkit() -> 'COMP':
+		return op.raytk
+
+	def getToolkitVersion(self):
+		toolkit = self.getToolkit()
+		par = toolkit.par['Raytkversion']
+		return Version(str(par or '0.1'))
+
+	def setToolkitVersion(self, version: Version):
+		toolkit = self.getToolkit()
+		toolkit.par.Raytkversion = str(version)
 
 	def UpdateOpType(self, comp: 'COMP' = None):
 		if comp is None:
 			comp = self.GetCurrentROP()
 		if not comp:
 			return
-		toolkit = comp.parent.raytk
+		opDef = getOpDef(comp)
+		opDef.par.Optype = self.generateROPType(comp)
+
+	def generateROPType(self, comp: 'COMP'):
+		if not comp:
+			return
+		toolkit = self.getToolkit()
 		path = toolkit.relativePath(comp)
 		if path.startswith('./'):
 			path = path[2:]
-		opDef = getOpDef(comp)
-		opDef.par.Optype = 'raytk.' + path.replace('/', '.')
+		return 'raytk.' + path.replace('/', '.')
+
+	def UpdateROPMetadata(self, comp: 'COMP' = None):
+		if comp is None:
+			comp = self.GetCurrentROP()
+		if not comp:
+			return
+		page = comp.appendCustomPage('Metadata')
+		p = page.appendStr('Raytkoptype', label='OP Type')[0]
+		p.default = p.val = self.generateROPType(comp)
+		p.readOnly = True
+		versionPar = comp.par['Raytkopversion']
+		currentVersion = int(versionPar) if versionPar is not None else 0
+		p = page.appendStr('Raytkopversion', label='OP Version')[0]
+		p.default = p.val = currentVersion
+		p.readOnly = True
+		p = page.appendStr('Raytkversion', label='RayTK Version')[0]
+		p.default = p.val = str(self.getToolkitVersion())
+		p.readOnly = True
 
 	def FillMonitorHeight(self, usePrimary=True):
 		height = _getMonitorHeight(usePrimary)
@@ -61,12 +128,12 @@ class Tools:
 		if not rop:
 			# TODO: warning?
 			return
-		opDef = getOpDef(rop)
+		self.UpdateROPMetadata(rop)
 		if incrementVersion:
-			opDef.par.Opversion += 1
+			rop.par.Raytkopversion += 1
 		tox = rop.par.externaltox.eval()
 		rop.save(tox)
-		ui.status = f'Saved TOX {tox} (version: {opDef.par.Opversion})'
+		ui.status = f'Saved TOX {tox} (version: {rop.par.Raytkopversion})'
 
 def _getROP(comp: 'COMP', checkParents=True):
 	if not comp or comp is root:
