@@ -1,68 +1,29 @@
-import re
-from typing import Union
+from develCommon import *
 
 # noinspection PyUnreachableCode
 if False:
 	# noinspection PyUnresolvedReferences
 	from _stubs import *
 
-class Version:
-	pattern = re.compile(r'([0-9])+(?:\.([0-9]+))?')
-
-	def __init__(self, majorOrString: Union[str, int] = None, minor: int = None):
-		if isinstance(majorOrString, str):
-			s = majorOrString  # type: str
-			if minor is not None:
-				raise Exception('Cannot specify both string and major/minor')
-			match = Version.pattern.match(s)
-			if not match:
-				raise Exception(f'Invalid version string: {s!r}')
-			majorPart = match.group(1)
-			minorPart = match.group(2)
-			major = int(majorPart)
-			minor = int(minorPart) if minorPart else 0
-		else:
-			major = majorOrString
-		if major is None:
-			raise Exception('Must specify either string or `major`')
-		self.major = major
-		self.minor = minor or 0
-
-	def __str__(self):
-		return f'{self.major}.{self.minor}'
-
-	def __repr__(self):
-		return f'Version({self.major}, {self.minor})'
-
 class Tools:
 	def __init__(self, ownerComp: 'COMP'):
 		self.ownerComp = ownerComp
 
 	@staticmethod
-	def getToolkit() -> 'COMP':
-		return op.raytk
+	def IncrementMajor():
+		version = getToolkitVersion()
+		setToolkitVersion(Version(version.major + 1, 0))
 
-	def getToolkitVersion(self):
-		toolkit = self.getToolkit()
-		par = toolkit.par['Raytkversion']
-		return Version(str(par or '0.1'))
+	@staticmethod
+	def IncrementMinor():
+		version = getToolkitVersion()
+		setToolkitVersion(Version(version.major, version.minor + 1))
 
-	def setToolkitVersion(self, version: Version):
-		toolkit = self.getToolkit()
-		toolkit.par.Raytkversion = str(version)
-
-	def UpdateOpType(self, comp: 'COMP' = None):
-		if comp is None:
-			comp = self.GetCurrentROP()
+	@staticmethod
+	def generateROPType(comp: 'COMP'):
 		if not comp:
 			return
-		opDef = getOpDef(comp)
-		opDef.par.Optype = self.generateROPType(comp)
-
-	def generateROPType(self, comp: 'COMP'):
-		if not comp:
-			return
-		toolkit = self.getToolkit()
+		toolkit = getToolkit()
 		path = toolkit.relativePath(comp)
 		if path.startswith('./'):
 			path = path[2:]
@@ -83,7 +44,7 @@ class Tools:
 		p.default = p.val = currentVersion
 		p.readOnly = True
 		p = page.appendStr('Raytkversion', label='RayTK Version')[0]
-		p.default = p.val = str(self.getToolkitVersion())
+		p.default = p.val = str(getToolkitVersion())
 		p.readOnly = True
 
 	def FillMonitorHeight(self, usePrimary=True):
@@ -156,7 +117,11 @@ def _getMonitorHeight(usePrimary=True):
 	for m in monitors:
 		return m.height
 
-def getOpDef(comp: 'COMP'):
-	return comp and comp.op('opDefinition')
-
-
+def setToolkitVersion(version: Version):
+	toolkit = getToolkit()
+	if toolkit.par['Raytkversion'] is None:
+		page = toolkit.appendCustomPage('RayTK')
+		page.appendStr('Raytkversion', label='RayTK Version')
+	par = toolkit.par.Raytkversion
+	par.val = str(version)
+	par.readOnly = True
