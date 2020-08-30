@@ -20,6 +20,10 @@ class Tools:
 		setToolkitVersion(Version(version.major, version.minor + 1))
 
 	@staticmethod
+	def ShowLibraryParams():
+		getToolkit().openParameters()
+
+	@staticmethod
 	def generateROPType(comp: 'COMP'):
 		if not comp:
 			return
@@ -95,6 +99,19 @@ class Tools:
 		tox = rop.par.externaltox.eval()
 		rop.save(tox)
 		ui.status = f'Saved TOX {tox} (version: {rop.par.Raytkopversion})'
+
+	def ShowCreateNewRopTypeDialog(self):
+		# noinspection PyUnresolvedReferences
+		self.ownerComp.op('newRopTypeDialog').ShowDialog()
+
+	def OnCreateNewRopTypeAccept(self, info: dict):
+		name = info['opName']
+		category = info['opCategory']
+		dest = getToolkit().op('operators/' + category)
+		if not dest:
+			raise Exception(f'Invalid ROP category: {category!r}')
+		
+		pass
 
 def _getROP(comp: 'COMP', checkParents=True):
 	if not comp or comp is root:
