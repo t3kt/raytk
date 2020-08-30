@@ -95,7 +95,7 @@ class Tools:
 			return
 		self.UpdateROPMetadata(rop)
 		if incrementVersion:
-			rop.par.Raytkopversion += 1
+			rop.par.Raytkopversion = int(rop.par.Raytkopversion or 0) + 1
 		tox = rop.par.externaltox.eval()
 		rop.save(tox)
 		ui.status = f'Saved TOX {tox} (version: {rop.par.Raytkopversion})'
@@ -110,7 +110,7 @@ class Tools:
 		dest = getToolkit().op('operators/' + category)
 		if not dest:
 			raise Exception(f'Invalid ROP category: {category!r}')
-		
+
 		pass
 
 def _getROP(comp: 'COMP', checkParents=True):
