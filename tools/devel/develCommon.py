@@ -43,3 +43,26 @@ def getToolkitVersion():
 	toolkit = getToolkit()
 	par = toolkit.par['Raytkversion']
 	return Version(str(par or '0.1'))
+
+def updateROPMetadata(comp: 'COMP'):
+	page = comp.appendCustomPage('Metadata')
+	p = page.appendStr('Raytkoptype', label='OP Type')[0]
+	p.default = p.val = generateROPType(comp)
+	p.readOnly = True
+	versionPar = comp.par['Raytkopversion']
+	currentVersion = int(versionPar) if versionPar is not None else 0
+	p = page.appendStr('Raytkopversion', label='OP Version')[0]
+	p.default = p.val = currentVersion
+	p.readOnly = True
+	p = page.appendStr('Raytkversion', label='RayTK Version')[0]
+	p.default = p.val = str(getToolkitVersion())
+	p.readOnly = True
+
+def generateROPType(comp: 'COMP'):
+	if not comp:
+		return
+	toolkit = getToolkit()
+	path = toolkit.relativePath(comp)
+	if path.startswith('./'):
+		path = path[2:]
+	return 'raytk.' + path.replace('/', '.')

@@ -23,33 +23,12 @@ class Tools:
 	def ShowLibraryParams():
 		getToolkit().openParameters()
 
-	@staticmethod
-	def generateROPType(comp: 'COMP'):
-		if not comp:
-			return
-		toolkit = getToolkit()
-		path = toolkit.relativePath(comp)
-		if path.startswith('./'):
-			path = path[2:]
-		return 'raytk.' + path.replace('/', '.')
-
 	def UpdateROPMetadata(self, comp: 'COMP' = None):
 		if comp is None:
 			comp = self.GetCurrentROP()
 		if not comp:
 			return
-		page = comp.appendCustomPage('Metadata')
-		p = page.appendStr('Raytkoptype', label='OP Type')[0]
-		p.default = p.val = self.generateROPType(comp)
-		p.readOnly = True
-		versionPar = comp.par['Raytkopversion']
-		currentVersion = int(versionPar) if versionPar is not None else 0
-		p = page.appendStr('Raytkopversion', label='OP Version')[0]
-		p.default = p.val = currentVersion
-		p.readOnly = True
-		p = page.appendStr('Raytkversion', label='RayTK Version')[0]
-		p.default = p.val = str(getToolkitVersion())
-		p.readOnly = True
+		updateROPMetadata(comp)
 
 	def FillMonitorHeight(self, usePrimary=True):
 		height = _getMonitorHeight(usePrimary)
