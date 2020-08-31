@@ -88,8 +88,9 @@ class Tools:
 			if rop:
 				return rop
 
-	def SaveROP(self, incrementVersion=False):
-		rop = self.GetCurrentROP()
+	def SaveROP(self, incrementVersion=False, rop: 'COMP' = None):
+		if not rop:
+			rop = self.GetCurrentROP()
 		if not rop:
 			# TODO: warning?
 			return
@@ -110,8 +111,23 @@ class Tools:
 		dest = getToolkit().op('operators/' + category)
 		if not dest:
 			raise Exception(f'Invalid ROP category: {category!r}')
-
-		pass
+		template = dest.op('_template')
+		if not template:
+			raise Exception(f'No template available for category {category!r}')
+		newOp = dest.copy(template, name=name)
+		newOp.par.clone = newOp.path
+		newOp.par.externaltox = f'src/operators/{category}/{name}.tox'
+		self.UpdateROPMetadata(newOp)
+		newOp.par.Raytkopversion = 0
+		self.SaveROP(rop=newOp)
+		newOp.selected = True
+		newOp.nodeX = 0
+		newOp.nodeY = -300
+		opDef = newOp.op('opDefinition')
+		codeDat = opDef.par.Functemplate.eval()
+		if codeDat and codeDat.par['file'] is not None:
+			codeDat.par.file = f'src/operators/{category}/{name}.glsl'
+		self.NavigateTo(dest)
 
 def _getROP(comp: 'COMP', checkParents=True):
 	if not comp or comp is root:
