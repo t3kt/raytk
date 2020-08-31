@@ -1,5 +1,6 @@
 from develCommon import *
 from datetime import datetime
+from typing import List
 
 # noinspection PyUnreachableCode
 if False:
@@ -18,40 +19,83 @@ class BuildManager:
 	def RunBuild(self):
 		self.logTable.clear()
 		self.log('Starting build')
-		toolkit = getToolkit()
-		toolkit.par.Devel = False
-		toolkit.par.Devel.readOnly = True
-		toolkit.par.externaltox = ''
-		toolkit.par.enablecloning = False
-		toolkit.par.savebackup = True
-		toolkit.par.reloadtoxonstart = True
-		toolkit.par.reloadcustom = True
-		toolkit.par.reloadbuiltin = True
-		components = toolkit.op('components')
-		self.processComponents(components)
-		operators = toolkit.op('operators')
-		self.processOperators(operators)
-		version = getToolkitVersion()
-		text = f'RayTK v{version}\nBuilt {datetime.now().isoformat(sep=" ")}'
-		toolkit.op('version').text = text
-		toxFile = f'build/RayTK-{version}.tox'
-		self.log('Exporting TOX to ' + toxFile)
-		toolkit.save(toxFile)
-		self.log('Build completed!')
+		self.queueMethodCall('runBuild_stage', 0)
 
-	def processComponents(self, components: 'COMP'):
+	def runBuild_stage(self, stage: int):
+		toolkit = getToolkit()
+		if stage == 0:
+			components = toolkit.op('components')
+			self.processComponents(components, thenRun='runBuild_stage', runArgs=[stage + 1])
+		elif stage == 1:
+			operators = toolkit.op('operators')
+			self.processOperators(operators, thenRun='runBuild_stage', runArgs=[stage + 1])
+		elif stage == 2:
+			version = getToolkitVersion()
+			text = f'RayTK v{version}\nBuilt {datetime.now().isoformat(sep=" ")}'
+			toolkit.op('version').text = text
+			self.queueMethodCall('runBuild_stage', stage + 1)
+		elif stage == 3:
+			toolkit.par.Devel = False
+			toolkit.par.Devel.readOnly = True
+			toolkit.par.externaltox = ''
+			toolkit.par.enablecloning = False
+			toolkit.par.savebackup = True
+			toolkit.par.reloadtoxonstart = True
+			toolkit.par.reloadcustom = True
+			toolkit.par.reloadbuiltin = True
+			self.queueMethodCall('runBuild_stage', stage + 1)
+		elif stage == 4:
+			version = getToolkitVersion()
+			toxFile = f'build/RayTK-{version}.tox'
+			self.log('Exporting TOX to ' + toxFile)
+			toolkit.save(toxFile)
+			self.log('Build completed!')
+			ui.messageBox('Build completed!', f'Exported tox file: {toxFile}!')
+
+	def processComponents(self, components: 'COMP', thenRun: str = None, runArgs: list = None):
 		self.log(f'Processing components {components}')
 		self.detachTox(components)
 		comps = getChildComps(components)
-		for comp in comps:
+		self.queueMethodCall('processComponents_stage', comps, thenRun, runArgs)
+
+	def processComponents_stage(self, components: List['COMP'], thenRun: str = None, runArgs: list = None):
+		if components:
+			comp = components.pop()
 			self.detachTox(comp)
 			self.detachDats(comp)
+			if components:
+				self.queueMethodCall('processComponents_stage', components, thenRun, runArgs)
+				return
+		if thenRun:
+			self.queueMethodCall(thenRun, *(runArgs or []))
 
-	def processOperators(self, comp: 'COMP'):
+	def processOperators(self, comp: 'COMP', thenRun: str = None, runArgs: list = None):
 		self.log(f'Processing operators {comp}')
 		self.detachTox(comp)
-		for child in comp.findChildren(type=COMP):
-			self.processOperator(child)
+		categories = comp.findChildren(type=baseCOMP)
+		self.queueMethodCall('processOperatorCategories_stage', categories, thenRun, runArgs)
+
+	def processOperatorCategories_stage(self, categories: List['COMP'], thenRun: str = None, runArgs: list = None):
+		if categories:
+			category = categories.pop()
+			self.processOperatorCategory(category, thenRun='processOperatorCategories_stage', runArgs=[categories, thenRun, runArgs])
+		elif thenRun:
+			self.queueMethodCall(thenRun, *(runArgs or []))
+
+	def processOperatorCategory(self, category: 'COMP', thenRun: str = None, runArgs: list = None):
+		self.log(f'Processing operator category {category.name}')
+		comps = category.findChildren(type=baseCOMP)
+		self.queueMethodCall('processOperatorCategory_stage', comps, thenRun, runArgs)
+
+	def processOperatorCategory_stage(self, components: List['COMP'], thenRun: str = None, runArgs: list = None):
+		if components:
+			comp = components.pop()
+			self.processOperator(comp)
+			if components:
+				self.queueMethodCall('processOperatorCategory_stage', components, thenRun, runArgs)
+				return
+		if thenRun:
+			self.queueMethodCall(thenRun, *(runArgs or []))
 
 	def processOperator(self, comp: 'COMP'):
 		self.log(f'Processing operator {comp}')
@@ -76,7 +120,7 @@ class BuildManager:
 			self.detachDat(dat)
 
 	def detachDat(self, dat: 'DAT'):
-		if not dat.par.file and dat.par.mode == ParMode.CONSTANT:
+		if not dat.par.file and dat.par.file.mode == ParMode.CONSTANT:
 			return
 		self.log(f'Detaching DAT {dat}')
 		dat.par.syncfile = False
@@ -100,6 +144,12 @@ class BuildManager:
 	def log(self, message: str):
 		print(message)
 		self.logTable.appendRow([message])
+
+	def queueMethodCall(self, method: str, *args):
+		if '.' in method:
+			run(method, *args, delayFrames=5, delayRef=root)
+		else:
+			run(f'args[0].{method}(*(args[1:]))', self, *args, delayFrames=5, delayRef=root)
 
 def getChildComps(comp: 'COMP'):
 	return comp.findChildren(type=COMP, maxDepth=1) if comp else []
