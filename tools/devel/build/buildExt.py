@@ -30,11 +30,14 @@ class BuildManager:
 			operators = toolkit.op('operators')
 			self.processOperators(operators, thenRun='runBuild_stage', runArgs=[stage + 1])
 		elif stage == 2:
+			self.freezeOperatorTable(toolkit)
+			self.queueMethodCall('runBuild_stage', stage + 1)
+		elif stage == 3:
 			version = getToolkitVersion()
 			text = f'RayTK v{version}\nBuilt {datetime.now().isoformat(sep=" ")}'
 			toolkit.op('version').text = text
 			self.queueMethodCall('runBuild_stage', stage + 1)
-		elif stage == 3:
+		elif stage == 4:
 			toolkit.par.Devel = False
 			toolkit.par.Devel.readOnly = True
 			toolkit.par.externaltox = ''
@@ -44,7 +47,7 @@ class BuildManager:
 			toolkit.par.reloadcustom = True
 			toolkit.par.reloadbuiltin = True
 			self.queueMethodCall('runBuild_stage', stage + 1)
-		elif stage == 4:
+		elif stage == 5:
 			version = getToolkitVersion()
 			toxFile = f'build/RayTK-{version}.tox'
 			self.log('Exporting TOX to ' + toxFile)
@@ -74,6 +77,12 @@ class BuildManager:
 		self.detachTox(comp)
 		categories = comp.findChildren(type=baseCOMP)
 		self.queueMethodCall('processOperatorCategories_stage', categories, thenRun, runArgs)
+
+	def freezeOperatorTable(self, toolkit: 'COMP'):
+		self.log('Freezing operator table')
+		table = toolkit.op('opTable')
+		if table:
+			table.lock = True
 
 	def processOperatorCategories_stage(self, categories: List['COMP'], thenRun: str = None, runArgs: list = None):
 		if categories:
