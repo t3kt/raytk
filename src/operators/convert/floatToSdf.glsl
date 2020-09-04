@@ -1,0 +1,1 @@
+#define thismap(p, ctx) createSdf(inputOp1(p, ctx))
