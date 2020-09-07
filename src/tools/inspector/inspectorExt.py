@@ -17,6 +17,8 @@ if False:
 			Returntype: str
 			Coordtype: str
 			Contexttype: str
+			Selectedview: 'Union[str, Par]'
+			Selectedbodytab: 'Union[str, Par]'
 
 class TargetTypes:
 	none = 'none'
@@ -64,11 +66,15 @@ class CoordTypes:
 		vec3,
 	]
 
-def updateTargetMenus():
+def updateStateMenus():
 	p = ipar.inspectorState.Targettype  # type: Par
 	p.menuNames = p.menuLabels = TargetTypes.values
 	p = ipar.inspectorState.Visualizertype
 	p.menuNames = p.menuLabels = VisualizerTypes.values
+	p = ipar.inspectorState.Selectedbodytab
+	table = op('body_tabs')
+	p.menuNames = table.col('name')[1:]
+	p.menuLabels = table.col('label')[1:]
 
 class Inspector:
 	def __init__(self, ownerComp: 'COMP'):
@@ -123,17 +129,25 @@ class Inspector:
 		self.state.Hasownviewer = isOutput
 		self.updateVisualizerType()
 
+	# noinspection PyTypeChecker
 	def updateVisualizerType(self):
 		self.state.Visualizertype = VisualizerTypes.none
-		if not self.state.Hastarget:
-			return
-		if self.state.Returntype == ReturnTypes.Sdf:
-			if self.state.Coordtype == CoordTypes.vec2:
-				self.state.Visualizertype = VisualizerTypes.render2d
-			elif self.state.Coordtype == CoordTypes.vec3:
-				self.state.Visualizertype = VisualizerTypes.render3d
-		elif self.state.Returntype in [ReturnTypes.float, ReturnTypes.vec4]:
-			self.state.Visualizertype = VisualizerTypes.field
+		if self.state.Hastarget:
+			if self.state.Returntype == ReturnTypes.Sdf:
+				if self.state.Coordtype == CoordTypes.vec2:
+					self.state.Visualizertype = VisualizerTypes.render2d
+				elif self.state.Coordtype == CoordTypes.vec3:
+					self.state.Visualizertype = VisualizerTypes.render3d
+			elif self.state.Returntype in [ReturnTypes.float, ReturnTypes.vec4]:
+				self.state.Visualizertype = VisualizerTypes.field
+		views = self.ownerComp.op('available_views')
+		p = self.state.Selectedview
+		p.menuNames = ['none'] + views.row(1)
+		p.menuLabels = ['None'] + views.row(0)
+		if len(p.menuNames) > 1:
+			p.val = p.menuNames[1]
+		else:
+			p.val = 'none'
 
 def _pathOrEmpty(o: Optional['OP']):
 	return o.path if o else ''
