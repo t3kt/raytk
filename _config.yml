@@ -363,6 +363,33 @@ plugins:
 #     - https://github.com/<username>
 
 
+# Plugin Configs
+# ---------------------------------------------------------------------------------------
+optional_front_matter:
+  remove_originals:    true
+
+readme_index:
+  remove_originals:    true
+  with_frontmatter:    true
+
+relative_links:
+  collections:         true
+
+titles_from_headings:
+  strip_title:         true
+  collections:         true
+
+compress_html:
+  comments:            ["<!-- ", " -->"]
+  clippings:           all
+  endings:             all
+  ignore:
+    envs:              [development]
+
+sass:
+  style:               compressed
+
+
 # Jekyll Compose Defaults
 # ---------------------------------------------------------------------------------------
 
