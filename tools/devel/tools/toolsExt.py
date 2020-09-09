@@ -73,12 +73,19 @@ class Tools:
 		if not rop:
 			# TODO: warning?
 			return
+		self.updateROPParams(rop)
 		self.UpdateROPMetadata(rop)
 		if incrementVersion:
 			rop.par.Raytkopversion = int(rop.par.Raytkopversion or 0) + 1
 		tox = rop.par.externaltox.eval()
 		rop.save(tox)
 		ui.status = f'Saved TOX {tox} (version: {rop.par.Raytkopversion})'
+
+	@staticmethod
+	def updateROPParams(rop: 'COMP'):
+		if rop.par['Inspect'] is None:
+			p = rop.customPages[0].appendPulse('Inspect')[0]
+			p.startSection = True
 
 	def ShowCreateNewRopTypeDialog(self):
 		# noinspection PyUnresolvedReferences

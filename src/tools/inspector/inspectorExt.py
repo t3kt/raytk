@@ -81,6 +81,9 @@ class Inspector:
 		self.ownerComp = ownerComp
 		self.state = ipar.inspectorState
 
+	def Openwindow(self, _=None):
+		self.ownerComp.op('window').par.winopen.pulse()
+
 	def Reset(self, _=None):
 		self.state.Hastarget = False
 		self.state.Targettype = TargetTypes.none
@@ -115,6 +118,7 @@ class Inspector:
 		self.state.Hastarget = True
 		self.state.Hasownviewer = False
 		self.updateVisualizerType()
+		self.Openwindow()
 
 	def inspectComp(self, comp: 'COMP'):
 		self.state.Rawtarget = _pathOrEmpty(comp)
@@ -128,6 +132,7 @@ class Inspector:
 		self.state.Hastarget = True
 		self.state.Hasownviewer = isOutput
 		self.updateVisualizerType()
+		self.Openwindow()
 
 	# noinspection PyTypeChecker
 	def updateVisualizerType(self):
