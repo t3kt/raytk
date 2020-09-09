@@ -1,9 +1,10 @@
 uniform vec3 camPos;
 uniform vec3 camRot;
+uniform vec3 lightPos1;
 
 #define MAX_STEPS 100
 #define MAX_DIST 100.0
-#define SURF_DIST 0.001
+#define SURF_DIST 0.01
 
 Sdf map(vec3 q)
 {
@@ -13,16 +14,19 @@ Sdf map(vec3 q)
 }
 
 Sdf castRay(vec3 rayOrigin, vec3 rayDir, float maxDist) {
-	float dist;
+	float dist = 0;
 	for (int i = 0; i < MAX_STEPS; i++) {
 		vec3 p = rayOrigin + rayDir * dist;
 		Sdf res = map(p);
 		dist += res.x;
-		if (dist > maxDist || dist < SURF_DIST) {
+		if (dist < SURF_DIST) {
 			return res;
 		}
+		if (dist > maxDist) {
+			break;
+		}
 	}
-	return createSdf(0);
+	return createSdf(dist);
 }
 
 vec3 calcNormal(in vec3 pos)
@@ -36,7 +40,18 @@ vec3 calcNormal(in vec3 pos)
 }
 
 float getLight(vec3 p) {
-	return 0;
+	vec3 lightPos = lightPos1;
+	vec3 lightVec = normalize(lightPos - p);
+	vec3 n = calcNormal(p);
+
+	float diffuse = clamp(dot(n, lightVec), 0., 1.);
+
+	float shadowDist = castRay(p+n * SURF_DIST*2., lightVec, MAX_DIST).x;
+	if (shadowDist < length(lightPos - p)) {
+		diffuse *= .1;
+	}
+
+	return diffuse;
 }
 
 layout (location = 0) out vec4 colorOut;
@@ -68,11 +83,14 @@ void main()
 	vec3 col = vec3(0);
 	// raymarch
 	Sdf res = castRay(rayOrigin, rayDir, MAX_DIST);
+	vec3 p = rayOrigin + rayDir * res.x;
+
 	sdfOut = TDOutputSwizzle(vec4(res.x, res.x, res.x, 1));
 //	depthOut = TDOutputSwizzle(vec4(vec3(min(res.x, renderDepth)), 1));
 	//depthOut = TDOutputSwizzle(vec4(vec3(res.x)))
 
-	col = vec3(res.x / 50);
+	float diffuse = getLight(p);
+	col = vec3(diffuse);
 
 	colorOut = TDOutputSwizzle(vec4(col, 1));
 }
