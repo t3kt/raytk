@@ -36,8 +36,8 @@ Sdf opSimpleUnion(Sdf res1, Sdf res2){
 	return (res1.x<res2.x)? res1:res2;
 }
 
-Sdf opSimpleUnion(float res1, float res2) {
-	return fOpSimpleUnion(res1, res2);
+float opSimpleUnion(float res1, float res2) {
+	return min(res1, res2);
 }
 
 Sdf opSmoothUnionM(Sdf d1, Sdf d2, float k) {
