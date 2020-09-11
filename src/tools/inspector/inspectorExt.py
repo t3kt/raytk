@@ -51,16 +51,25 @@ class Inspector:
 
 	def Inspect(self, o: 'Union[OP, DAT, COMP, str]'):
 		self.core.Inspect(o)
-		views = self.ownerComp.op('available_views')
-		p = self.state.Selectedview
-		p.menuNames = ['none'] + views.row(1) or []
-		p.menuLabels = ['None'] + views.row(0) or []
-		if len(p.menuNames) > 1:
-			p.val = p.menuNames[1]
-		else:
-			p.val = 'none'
+		if self.core.par.Hastarget:
+			visualizers = self.ownerComp.op('visualizers')
+			visualizerType = self.core.par.Visualizertype.eval()
+			if self.core.par.Targettype != 'outputOp':
+				outputOp = op(visualizers[visualizerType, 'outputOp'])
+				self.core.AttachOutputComp(outputOp)
+		self.updateViewMenu()
 		if self.core.par.Hastarget:
 			self.Openwindow()
+
+	def updateViewMenu(self):
+		viewPar = self.state.Selectedview
+		if not self.core.par.Hastarget:
+			viewPar.menuNames = ['none']
+			viewPar.menuLabels = ['None']
+		else:
+			outputTable = self.ownerComp.op('output_table')
+			viewPar.menuNames = ['none'] + outputTable.col('name')[1:]
+			viewPar.menuLabels = ['None'] + outputTable.col('label')[1:]
 
 def _pathOrEmpty(o: Optional['OP']):
 	return o.path if o else ''

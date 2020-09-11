@@ -12,6 +12,7 @@ if False:
 		Rawtarget: 'Union[str, OP, DAT, COMP]'
 		Definitiontable: 'Union[str, DAT]'
 		Targetcomp: 'Union[str, COMP]'
+		Outputcomp: 'Union[str, COMP]'
 		Returntype: str
 		Coordtype: str
 		Contexttype: str
@@ -95,6 +96,7 @@ class InspectorCore:
 		self.state.Targettype = TargetTypes.none
 		self.state.Rawtarget = ''
 		self.state.Targetcomp = ''
+		self.state.Outputcomp = ''
 		self.state.Definitiontable = ''
 		self.state.Visualizertype = VisualizerTypes.none
 
@@ -120,10 +122,12 @@ class InspectorCore:
 		self.state.Rawtarget = dat
 		self.state.Targettype = TargetTypes.definitionTable
 		self.state.Definitiontable = _pathOrEmpty(dat)
-		self.state.Targetcomp = _pathOrEmpty(op(dat[1, 'path']))
+		comp = op(dat[1, 'path'])
+		self.state.Targetcomp = _pathOrEmpty(comp)
 		self.state.Hastarget = True
 		self.state.Hasownviewer = False
 		self.updateVisualizerType()
+		self.AttachOutputComp(comp if comp and 'raytkOutput' in comp.tags else None)
 
 	def inspectComp(self, comp: 'COMP'):
 		self.state.Rawtarget = _pathOrEmpty(comp)
@@ -137,6 +141,7 @@ class InspectorCore:
 		self.state.Hastarget = True
 		self.state.Hasownviewer = isOutput
 		self.updateVisualizerType()
+		self.AttachOutputComp(comp if isOutput else None)
 
 	# noinspection PyTypeChecker
 	def updateVisualizerType(self):
@@ -149,6 +154,9 @@ class InspectorCore:
 					self.state.Visualizertype = VisualizerTypes.render3d
 			elif self.state.Returntype in [ReturnTypes.float, ReturnTypes.vec4]:
 				self.state.Visualizertype = VisualizerTypes.field
+
+	def AttachOutputComp(self, o: 'COMP'):
+		self.state.Outputcomp = _pathOrEmpty(o)
 
 def _pathOrEmpty(o: Optional['OP']):
 	return o.path if o else ''
