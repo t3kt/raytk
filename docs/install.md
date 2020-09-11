@@ -32,7 +32,7 @@ You can now also [![Deploy to Netlify][dtn]][nfy]{:.no-mark-external} directly.
 {:.note}
 
 [hsc]: https://github.com/hydecorp/hydejack-starter-kit
-[src]: https://github.com/hydecorp/hydejack-starter-kit/archive/v9.0.3.zip
+[src]: https://github.com/hydecorp/hydejack-starter-kit/archive/v9.0.5.zip
 [nfy]: https://app.netlify.com/start/deploy?repository=https://github.com/hydecorp/hydejack-starter-kit
 [dtn]: https://www.netlify.com/img/deploy/button.svg
 
@@ -93,7 +93,7 @@ For existing sites, you can instead set the `remote_theme` key as follows:
 
 ```yml
 # file: `_config.yml`
-remote_theme: hydecorp/hydejack@v9.0.3
+remote_theme: hydecorp/hydejack@v9.0.5
 ```
 
 Make sure the `plugins` list contains `jekyll-include-cache` (create if it doesn't exist):
