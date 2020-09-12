@@ -24,12 +24,12 @@ class Tools:
 	def ShowLibraryParams():
 		getToolkit().openParameters()
 
-	def UpdateROPMetadata(self, comp: 'COMP' = None):
+	def UpdateROPMetadata(self, comp: 'COMP' = None, incrementVersion=False):
 		if comp is None:
 			comp = self.GetCurrentROP()
 		if not comp:
 			return
-		updateROPMetadata(comp)
+		updateROPMetadata(comp, incrementVersion=incrementVersion)
 
 	def FillMonitorHeight(self, usePrimary=True):
 		height = _getMonitorHeight(usePrimary)
@@ -75,12 +75,10 @@ class Tools:
 			# TODO: warning?
 			return
 		self.updateROPParams(rop)
-		self.UpdateROPMetadata(rop)
-		if incrementVersion:
-			rop.par.Raytkopversion = int(rop.par.Raytkopversion or 0) + 1
+		self.UpdateROPMetadata(rop, incrementVersion=incrementVersion)
 		tox = rop.par.externaltox.eval()
 		rop.save(tox)
-		ui.status = f'Saved TOX {tox} (version: {rop.par.Raytkopversion})'
+		ui.status = f'Saved TOX {tox} (version: {rop.op("opDefinition").par.Raytkopversion})'
 
 	@staticmethod
 	def updateROPParams(rop: 'COMP'):
@@ -105,7 +103,6 @@ class Tools:
 		newOp.par.clone = newOp.path
 		newOp.par.externaltox = f'src/operators/{category}/{name}.tox'
 		self.UpdateROPMetadata(newOp)
-		newOp.par.Raytkopversion = 0
 		self.SaveROP(rop=newOp)
 		newOp.selected = True
 		newOp.nodeX = 0

@@ -44,7 +44,7 @@ def getToolkitVersion():
 	par = toolkit.par['Raytkversion']
 	return Version(str(par or '0.1'))
 
-def updateROPMetadata(comp: 'COMP'):
+def updateROPMetadata(comp: 'COMP', incrementVersion=False):
 	opDef = comp.op('opDefinition')
 	opDef.par.enablecloningpulse.pulse()
 	currentOpType = str(opDef.par['Raytkoptype'] or '')
@@ -61,6 +61,8 @@ def updateROPMetadata(comp: 'COMP'):
 		versionVal = 0
 	else:
 		versionVal = currentOpVersion
+		if incrementVersion:
+			versionVal += 1
 	p = page.appendStr('Raytkopversion', label='OP Version')[0]
 	p.default = p.val = versionVal
 	p.readOnly = True
