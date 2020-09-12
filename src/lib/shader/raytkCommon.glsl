@@ -23,12 +23,12 @@ Sdf createSdf(float dist) {
 }
 
 struct Context {
-	float dummy;
+	vec4 iteration;
 };
 
 Context createDefaultContext() {
 	Context ctx;
-	ctx.dummy = 0;
+	ctx.iteration = vec4(0);
 	return ctx;
 }
 
@@ -43,15 +43,14 @@ float opSimpleUnion(float res1, float res2) {
 Sdf opSmoothUnionM(Sdf d1, Sdf d2, float k) {
 	float h = clamp(0.5 + 0.5*(d2.x-d1.x)/k, 0.0, 1.0);
 	float resx = mix(d2.x, d1.x, h) - k*h*(1.0-h);
-	Sdf res;
+	Sdf res = d1;
 	res.x = resx;
 	res.material = d2.material;
 	res.material2 = d1.material;
 	res.interpolant = h;
-	res.ior = d1.ior;
 	res.refract = d1.refract || d2.refract;
 	res.reflect = d1.reflect || d2.reflect;
-	return res;//vec2(resx, resy); }
+	return res;
 }
 
 float opSmoothUnionM(float d1, float d2, float k) {
