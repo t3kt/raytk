@@ -46,7 +46,12 @@ class CreateMenu:
 		if not pane:
 			return master
 		dest = pane.owner
-		primarySelected = dest.currentChild if _isRop(dest.currentChild) else None
+		if not dest:
+			return
+		try:
+			primarySelected = dest.currentChild if dest and _isRop(dest.currentChild) else None
+		except:
+			primarySelected = None
 		inputOps = [
 			o
 			for o in dest.selectedChildren
