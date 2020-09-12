@@ -37,11 +37,11 @@ class CreateMenu:
 		self.ownerComp.op('window').par.winclose.pulse()
 
 	def Show(self, _=None):
-		self.clearFilter()
+		self.ClearFilter()
 		self.ownerComp.op('window').par.winopen.pulse()
 
 	@staticmethod
-	def clearFilter():
+	def ClearFilter():
 		ipar.createMenuState.Filtertext = ''
 
 	def CreateOp(self, masterPath: str):
