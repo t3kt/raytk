@@ -40,6 +40,24 @@ float opSimpleUnion(float res1, float res2) {
 	return min(res1, res2);
 }
 
+Sdf opSimpleIntersect(Sdf res1, Sdf res2) {
+	return (res1.x>res2.x) ? res1 : res2;
+}
+
+float opSimpleIntersect(float res1, float res2) {
+	return max(res1, res2);
+}
+
+Sdf opSimpleDiff(Sdf res1, Sdf res2) {
+	Sdf res = res1;
+	res.x = max(-res1.x, res2.x);
+	return res;
+}
+
+float opSimpleDiff(float res1, float res2) {
+	return max(-res1, res2);
+}
+
 Sdf opSmoothUnionM(Sdf d1, Sdf d2, float k) {
 	float h = clamp(0.5 + 0.5*(d2.x-d1.x)/k, 0.0, 1.0);
 	float resx = mix(d2.x, d1.x, h) - k*h*(1.0-h);
