@@ -45,14 +45,23 @@ def getToolkitVersion():
 	return Version(str(par or '0.1'))
 
 def updateROPMetadata(comp: 'COMP'):
-	page = comp.appendCustomPage('Metadata')
+	opDef = comp.op('opDefinition')
+	currentOpType = str(opDef.par['Raytkoptype'] or '')
+	currentOpVersion = str(opDef.par['Raytkopversion'] or '')
+	page = opDef.appendCustomPage('Metadata')
+	newType = generateROPType(comp)
+	# don't update op type if this is not the master of the ROP
+	if comp.par.clone.eval() != comp:
+		newType = currentOpType
 	p = page.appendStr('Raytkoptype', label='OP Type')[0]
-	p.default = p.val = generateROPType(comp)
+	p.default = p.val = newType
 	p.readOnly = True
-	versionPar = comp.par['Raytkopversion']
-	currentVersion = int(versionPar) if versionPar is not None else 0
+	if not currentOpVersion or not currentOpType or currentOpType != newType:
+		versionVal = 0
+	else:
+		versionVal = currentOpVersion
 	p = page.appendStr('Raytkopversion', label='OP Version')[0]
-	p.default = p.val = currentVersion
+	p.default = p.val = versionVal
 	p.readOnly = True
 	p = page.appendStr('Raytkversion', label='RayTK Version')[0]
 	p.default = p.val = str(getToolkitVersion())
