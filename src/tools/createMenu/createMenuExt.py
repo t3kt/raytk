@@ -1,7 +1,11 @@
+import re
+
 # noinspection PyUnreachableCode
 if False:
 	# noinspection PyUnresolvedReferences
 	from _stubs import *
+	from typing import Any
+	ipar.createMenuState = Any()
 
 class CreateMenu:
 	def __init__(self, ownerComp: 'COMP'):
@@ -33,7 +37,12 @@ class CreateMenu:
 		self.ownerComp.op('window').par.winclose.pulse()
 
 	def Show(self, _=None):
+		self.clearFilter()
 		self.ownerComp.op('window').par.winopen.pulse()
+
+	@staticmethod
+	def clearFilter():
+		ipar.createMenuState.Filtertext = ''
 
 	def CreateOp(self, masterPath: str):
 		if not masterPath:
@@ -66,11 +75,13 @@ class CreateMenu:
 			posY = primarySelected.nodeY
 		else:
 			posX, posY = pane.x, pane.y
+		ui.undo.startBlock(f'Create ROP {master.name}')
 		newOp = dest.copy(
 			master,
 			name=master.name + ('1' if tdu.digits(master.name) is None else ''))  # type: COMP
 		newOp.nodeX = posX
 		newOp.nodeY = posY
+		ui.undo.endBlock()
 		# if inputOps and len(newOp.inputConnectors):
 		# 	datInputs = [
 		# 		conn
@@ -83,6 +94,23 @@ class CreateMenu:
 		# 			datInput.connect(inputOps[i])
 		print(self.ownerComp, f'Created OP: {newOp} from {master}')
 		return newOp
+
+	@staticmethod
+	def filterOpTable(dat: 'DAT', inDat: 'DAT', filterText: str):
+		if not filterText or filterText == '*':
+			dat.copy(inDat)
+			return
+		dat.clear()
+		dat.appendRow(inDat.row(0))
+		if re.match(r'^\w+$', filterText):
+			test = lambda val: filterText.lower() in val.lower()
+		elif re.match(r'^[\w\*\?]+$', filterText):
+			test = lambda val: bool(tdu.match(filterText, [val], caseSensitive=False))
+		else:
+			test = lambda val: filterText.lower() in val.lower()
+		for i in range(1, inDat.numRows):
+			if inDat[i, 'type'] == 'category' or test(inDat[i, 'path'].val):
+				dat.appendRow(inDat.row(i))
 
 # noinspection PyTypeChecker
 def _getActiveEditor() -> 'NetworkEditor':
