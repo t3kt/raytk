@@ -1,11 +1,12 @@
 from develCommon import *
-from datetime import datetime
 from typing import List
 
 # noinspection PyUnreachableCode
 if False:
 	# noinspection PyUnresolvedReferences
 	from _stubs import *
+	from tools.createMenu.createMenuExt import CreateMenu
+	from tools.inspector.inspectorExt import Inspector
 
 class BuildManager:
 	def __init__(self, ownerComp: 'COMP'):
@@ -36,15 +37,18 @@ class BuildManager:
 			self.freezeOperatorTable(toolkit)
 			self.queueMethodCall('runBuild_stage', stage + 1)
 		elif stage == 4:
-			self.finalizeToolkitPars(toolkit)
+			self.processTools(toolkit.op('tools'))
 			self.queueMethodCall('runBuild_stage', stage + 1)
 		elif stage == 5:
-			self.updateBuildInfo(toolkit)
+			self.finalizeToolkitPars(toolkit)
 			self.queueMethodCall('runBuild_stage', stage + 1)
 		elif stage == 6:
-			self.removeBuildExcludeOps(toolkit)
+			self.updateBuildInfo(toolkit)
 			self.queueMethodCall('runBuild_stage', stage + 1)
 		elif stage == 7:
+			self.removeBuildExcludeOps(toolkit)
+			self.queueMethodCall('runBuild_stage', stage + 1)
+		elif stage == 8:
 			version = getToolkitVersion()
 			toxFile = f'build/RayTK-{version}.tox'
 			self.log('Exporting TOX to ' + toxFile)
@@ -95,7 +99,7 @@ class BuildManager:
 	def processOperators(self, comp: 'COMP', thenRun: str = None, runArgs: list = None):
 		self.log(f'Processing operators {comp}')
 		self.detachTox(comp)
-		categories = comp.findChildren(type=baseCOMP)
+		categories = comp.findChildren(type=baseCOMP, maxDepth=1)
 		self.queueMethodCall('processOperatorCategories_stage', categories, thenRun, runArgs)
 
 	def freezeOperatorTable(self, toolkit: 'COMP'):
@@ -112,10 +116,11 @@ class BuildManager:
 
 	def processOperatorCategory(self, category: 'COMP', thenRun: str = None, runArgs: list = None):
 		self.log(f'Processing operator category {category.name}')
+		self.detachTox(category)
 		template = category.op('__template')
 		if template:
 			template.destroy()
-		comps = category.findChildren(type=baseCOMP)
+		comps = category.findChildren(type=baseCOMP, tags=['raytkOP'], maxDepth=1)
 		self.queueMethodCall('processOperatorCategory_stage', comps, thenRun, runArgs)
 
 	def processOperatorCategory_stage(self, components: List['COMP'], thenRun: str = None, runArgs: list = None):
@@ -130,9 +135,19 @@ class BuildManager:
 
 	def processOperator(self, comp: 'COMP'):
 		self.log(f'Processing operator {comp}')
+		comp.par.enablecloning = False
 		self.detachTox(comp)
 		self.detachDats(comp)
+		for child in comp.findChildren(type=COMP):
+			if 'raytkOP' in child.tags:
+				self.processOperator(child)
+			else:
+				self.processOperatorSubComp(child)
 		updateROPMetadata(comp)
+
+	def processOperatorSubComp(self, comp: 'COMP'):
+		comp.par.enablecloning = False
+		self.detachTox(comp)
 
 	def detachTox(self, comp: 'COMP'):
 		if not comp.par.externaltox and comp.par.externaltox.mode == ParMode.CONSTANT:
@@ -164,7 +179,15 @@ class BuildManager:
 		self.log(f'Processing ROP category {comp}')
 		self.removeTestingOps(comp)
 
-		pass
+	def processTools(self, comp: 'COMP'):
+		self.log(f'Processing tools {comp}')
+		self.detachTox(comp)
+		createMenu = comp.op('createMenu')  # type: Union[COMP, CreateMenu]
+		createMenu.ClearFilter()
+		self.detachTox(createMenu)
+		inspector = comp.op('inspector')  # type: Union[COMP, Inspector]
+		inspector.Reset()
+		self.detachTox(inspector)
 
 	def removeTestingOps(self, comp: 'COMP'):
 		self.log(f'Removing testing ops from {comp}')

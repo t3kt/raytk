@@ -46,6 +46,7 @@ def getToolkitVersion():
 
 def updateROPMetadata(comp: 'COMP'):
 	opDef = comp.op('opDefinition')
+	opDef.par.enablecloningpulse.pulse()
 	currentOpType = str(opDef.par['Raytkoptype'] or '')
 	currentOpVersion = str(opDef.par['Raytkopversion'] or '')
 	page = opDef.appendCustomPage('Metadata')
