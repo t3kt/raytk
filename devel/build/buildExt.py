@@ -24,36 +24,56 @@ class BuildManager:
 	def runBuild_stage(self, stage: int):
 		toolkit = getToolkit()
 		if stage == 0:
+			self.reloadToolkit(toolkit)
+			self.queueMethodCall('runBuild_stage', stage + 1)
+		elif stage == 1:
 			components = toolkit.op('components')
 			self.processComponents(components, thenRun='runBuild_stage', runArgs=[stage + 1])
-		elif stage == 1:
+		elif stage == 2:
 			operators = toolkit.op('operators')
 			self.processOperators(operators, thenRun='runBuild_stage', runArgs=[stage + 1])
-		elif stage == 2:
+		elif stage == 3:
 			self.freezeOperatorTable(toolkit)
 			self.queueMethodCall('runBuild_stage', stage + 1)
-		elif stage == 3:
-			version = getToolkitVersion()
-			text = f'RayTK v{version}\nBuilt {datetime.now().isoformat(sep=" ")}'
-			toolkit.op('version').text = text
-			self.queueMethodCall('runBuild_stage', stage + 1)
 		elif stage == 4:
-			toolkit.par.Devel = False
-			toolkit.par.Devel.readOnly = True
-			toolkit.par.externaltox = ''
-			toolkit.par.enablecloning = False
-			toolkit.par.savebackup = True
-			toolkit.par.reloadtoxonstart = True
-			toolkit.par.reloadcustom = True
-			toolkit.par.reloadbuiltin = True
+			self.finalizeToolkitPars(toolkit)
 			self.queueMethodCall('runBuild_stage', stage + 1)
 		elif stage == 5:
+			self.updateBuildInfo(toolkit)
+			self.queueMethodCall('runBuild_stage', stage + 1)
+		elif stage == 6:
+			self.removeBuildExcludeOps(toolkit)
+			self.queueMethodCall('runBuild_stage', stage + 1)
+		elif stage == 7:
 			version = getToolkitVersion()
 			toxFile = f'build/RayTK-{version}.tox'
 			self.log('Exporting TOX to ' + toxFile)
+			toolkit.op('buildLog').copy(self.logTable)
 			toolkit.save(toxFile)
 			self.log('Build completed!')
 			ui.messageBox('Build completed!', f'Exported tox file: {toxFile}!')
+
+	def reloadToolkit(self, toolkit: 'COMP'):
+		self.log('Reloading toolkit')
+		toolkit.par.externaltox = 'src/raytk.tox'
+		toolkit.par.reinitnet.pulse()
+
+	def finalizeToolkitPars(self, toolkit: 'COMP'):
+		self.log('Finalizing toolkit parameters')
+		toolkit.par.Devel = False
+		toolkit.par.Devel.readOnly = True
+		toolkit.par.externaltox = ''
+		toolkit.par.enablecloning = False
+		toolkit.par.savebackup = True
+		toolkit.par.reloadtoxonstart = True
+		toolkit.par.reloadcustom = True
+		toolkit.par.reloadbuiltin = True
+
+	def updateBuildInfo(self, toolkit: 'COMP'):
+		self.log('Updating build info')
+		toolkit.op('eval_build_info').cook(force=True)
+		for o in toolkit.ops('buildInfo', 'info'):
+			o.lock = True
 
 	def processComponents(self, components: 'COMP', thenRun: str = None, runArgs: list = None):
 		self.log(f'Processing components {components}')
@@ -80,8 +100,7 @@ class BuildManager:
 
 	def freezeOperatorTable(self, toolkit: 'COMP'):
 		self.log('Freezing operator table')
-		table = toolkit.op('opTable')
-		if table:
+		for table in toolkit.ops('opTable', 'opCategoryTable'):
 			table.lock = True
 
 	def processOperatorCategories_stage(self, categories: List['COMP'], thenRun: str = None, runArgs: list = None):
@@ -93,6 +112,9 @@ class BuildManager:
 
 	def processOperatorCategory(self, category: 'COMP', thenRun: str = None, runArgs: list = None):
 		self.log(f'Processing operator category {category.name}')
+		template = category.op('__template')
+		if template:
+			template.destroy()
 		comps = category.findChildren(type=baseCOMP)
 		self.queueMethodCall('processOperatorCategory_stage', comps, thenRun, runArgs)
 
@@ -147,6 +169,12 @@ class BuildManager:
 	def removeTestingOps(self, comp: 'COMP'):
 		self.log(f'Removing testing ops from {comp}')
 		toRemove = list(comp.ops('__test_*'))
+		for o in toRemove:
+			o.destroy()
+
+	def removeBuildExcludeOps(self, comp: 'COMP'):
+		self.log(f'Removing build excluded ops from {comp}')
+		toRemove = list(comp.findChildren(tags=['buildExclude'], maxDepth=1))
 		for o in toRemove:
 			o.destroy()
 
