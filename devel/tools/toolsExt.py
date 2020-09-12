@@ -1,4 +1,5 @@
 from develCommon import *
+import popMenu
 
 # noinspection PyUnreachableCode
 if False:
@@ -114,6 +115,21 @@ class Tools:
 		if codeDat and codeDat.par['file'] is not None:
 			codeDat.par.file = f'src/operators/{category}/{name}.glsl'
 		self.NavigateTo(dest)
+
+	def OnOperatorsShortcutRightClick(self, button: 'COMP'):
+		def goToItem(name, path):
+			return popMenu.Item(
+				name,
+				callback=lambda: self.NavigateTo(op(path)),
+			)
+
+		categoryTable = self.ownerComp.op('rop_categories')
+		popMenu.fromButton(button, h='Right', v='Top').Show(
+			[
+				goToItem(categoryTable[i, 'name'].val, categoryTable[i, 'path'])
+				for i in range(1, categoryTable.numRows)
+			]
+		)
 
 def _getROP(comp: 'COMP', checkParents=True):
 	if not comp or comp is root:
