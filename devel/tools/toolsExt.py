@@ -82,9 +82,12 @@ class Tools:
 
 	@staticmethod
 	def updateROPParams(rop: 'COMP'):
-		if rop.par['Inspect'] is None:
-			p = rop.customPages[0].appendPulse('Inspect')[0]
-			p.startSection = True
+		inspectPar = rop.par['Inspect']
+		page = rop.customPages[0]
+		if inspectPar is None:
+			inspectPar = page.appendPulse('Inspect')[0]
+		inspectPar.startSection = True
+		inspectPar.order = 99999
 
 	def ShowCreateNewRopTypeDialog(self):
 		# noinspection PyUnresolvedReferences
