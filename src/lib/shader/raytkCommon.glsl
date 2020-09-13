@@ -83,27 +83,66 @@ mat3 rotateMatrix(vec3 r) {
 }
 
 int quadrantIndex(ivec2 cell) {
-		/*
-		[0] -1, 1    [1] 1, 1
-		[2] -1, -1   [3] 1, -1
-		*/
-		return (((cell.y + 1) / 2) * 2) + ((cell.x + 1) / 2);
+	/*
+	[0] -1, 1    [1] 1, 1
+	[2] -1, -1   [3] 1, -1
+	*/
+	return (((cell.y + 1) / 2) * 2) + ((cell.x + 1) / 2);
 }
 
 // https://github.com/msfeldstein/glsl-map/blob/master/index.glsl
 
 float mapRange(float value, float inMin, float inMax, float outMin, float outMax) {
-  return outMin + (outMax - outMin) * (value - inMin) / (inMax - inMin);
+	return outMin + (outMax - outMin) * (value - inMin) / (inMax - inMin);
 }
 
 vec2 mapRange(vec2 value, vec2 inMin, vec2 inMax, vec2 outMin, vec2 outMax) {
-  return outMin + (outMax - outMin) * (value - inMin) / (inMax - inMin);
+	return outMin + (outMax - outMin) * (value - inMin) / (inMax - inMin);
 }
 
 vec3 mapRange(vec3 value, vec3 inMin, vec3 inMax, vec3 outMin, vec3 outMax) {
-  return outMin + (outMax - outMin) * (value - inMin) / (inMax - inMin);
+	return outMin + (outMax - outMin) * (value - inMin) / (inMax - inMin);
 }
 
 vec4 mapRange(vec4 value, vec4 inMin, vec4 inMax, vec4 outMin, vec4 outMax) {
-  return outMin + (outMax - outMin) * (value - inMin) / (inMax - inMin);
+	return outMin + (outMax - outMin) * (value - inMin) / (inMax - inMin);
+}
+
+float modZigZag(float p) {
+	float modded = mod(p, 2.);
+	if (modded > 1) {
+		return 2 - modded;
+	}
+	return modded;
+}
+
+vec4 modZigZag(vec4 p) {
+	vec4 modded = mod(p, 2.);
+	return vec4(
+		modded.x > 1 ? (2 - modded.x) : modded.x,
+		modded.y > 1 ? (2 - modded.y) : modded.y,
+		modded.z > 1 ? (2 - modded.z) : modded.z,
+		modded.w > 1 ? (2 - modded.w) : modded.w);
+}
+
+float modZigZag(float p, float low, float high) {
+	p -= low;
+	float range = high - low;
+	float modded = mod(p, range * 2.);
+	if (modded > range) {
+		return low + (range * 2. - modded);
+	}
+	return low + modded;
+}
+
+vec4 modZigZag(vec4 p, vec4 low, vec4 high) {
+	p -= low;
+	vec4 range = high - low;
+	vec4 range2 = range * 2.;
+	vec4 modded = mod(p, range2);
+	return low + vec4(
+		modded.x > range.x ? (range2.x - modded.x): modded.x,
+		modded.y > range.y ? (range2.y - modded.y): modded.y,
+		modded.z > range.z ? (range2.z - modded.z): modded.z,
+		modded.w > range.w ? (range2.w - modded.w): modded.w);
 }
