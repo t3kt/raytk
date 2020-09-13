@@ -36,6 +36,9 @@ class CreateMenu:
 		self.CreateOp(path)
 		self.ownerComp.op('window').par.winclose.pulse()
 
+	def Close(self):
+		self.ownerComp.op('window').par.winclose.pulse()
+
 	def Show(self, _=None):
 		self.ClearFilter()
 		self.ownerComp.op('window').par.winopen.pulse()
@@ -129,7 +132,7 @@ class CreateMenu:
 		timer = self.ownerComp.op('close_timer')
 		timer.par.initialize.pulse()
 		timer.par.active = False
-		self.ownerComp.op('window').par.winclose.pulse()
+		self.Close()
 
 # noinspection PyTypeChecker
 def _getActiveEditor() -> 'NetworkEditor':
