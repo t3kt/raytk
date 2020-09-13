@@ -1,3 +1,5 @@
+#ifdef THIS_RETURN_TYPE_Sdf
+
 #define thismap inputOp1
 
 vec4 getColor(Sdf res) {
@@ -12,3 +14,11 @@ vec4 getColor(Sdf res) {
 	}
 	return color;
 }
+
+#else
+
+ReturnT thismap(CoordT p, ContextT ctx) {
+	return inputOp1(p, ctx);
+}
+
+#endif

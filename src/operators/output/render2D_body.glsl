@@ -1,6 +1,7 @@
 layout (location = 0) out vec4 colorOut;
 layout (location = 1) out vec4 sdfOut;
 
+#ifdef THIS_RETURN_TYPE_Sdf
 Sdf map(vec2 q)
 {
 	Sdf res = thismap(q, createDefaultContext());
@@ -8,14 +9,30 @@ Sdf map(vec2 q)
 	return res;
 }
 
+#else
+vec4 map(vec2 q) {
+	#ifdef THIS_RETURN_TYPE_vec4
+	return thismap(q, createDefaultContext());
+	#else
+	return vec4(thismap(q, createDefaultContext()));
+	#endif
+}
+#endif
+
 void main()
 {
 	vec2 resolution = uTDOutputInfo.res.zw;
 	vec2 fragCoord = vUV.st;//*resolution;
 	fragCoord.x *= uTDOutputInfo.res.z/uTDOutputInfo.res.w;
+	vec2 p = fragCoord*2. - vec2(1.);
 
-	Sdf res = map(fragCoord*2.0 - vec2(1));
+#ifdef THIS_RETURN_TYPE_Sdf
+	Sdf res = map(p);
 
 	colorOut = getColor(res);
 	sdfOut = vec4(res.x);
+#else
+	colorOut = map(p);
+	sdfOut = vec4(0);
+#endif
 }
