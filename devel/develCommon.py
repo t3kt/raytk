@@ -62,7 +62,7 @@ def updateROPMetadata(comp: 'COMP', incrementVersion=False):
 	else:
 		versionVal = currentOpVersion
 		if incrementVersion:
-			versionVal += 1
+			versionVal = int(versionVal) + 1
 	p = page.appendStr('Raytkopversion', label='OP Version')[0]
 	p.default = p.val = versionVal
 	p.readOnly = True
