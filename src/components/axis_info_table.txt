@@ -1,0 +1,4 @@
+axis	plane	planePart1	planePart2	axisVec
+x	yz	y	z	vec3(1,0,0)
+y	zx	z	x	vec3(0,1,0)
+z	xy	x	y	vec3(0,0,1)
