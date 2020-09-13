@@ -81,3 +81,11 @@ mat3 rotateMatrix(vec3 r) {
 		TDRotateOnAxis(r.y, vec3(0, 1, 0)) *
 		TDRotateOnAxis(r.z, vec3(0, 0, 1));
 }
+
+int quadrantIndex(ivec2 cell) {
+		/*
+		[0] -1, 1    [1] 1, 1
+		[2] -1, -1   [3] 1, -1
+		*/
+		return (((cell.y + 1) / 2) * 2) + ((cell.x + 1) / 2);
+}
