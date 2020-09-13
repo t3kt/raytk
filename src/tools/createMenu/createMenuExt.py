@@ -39,6 +39,9 @@ class CreateMenu:
 	def Show(self, _=None):
 		self.ClearFilter()
 		self.ownerComp.op('window').par.winopen.pulse()
+		field = self.ownerComp.op('filterText_textfield/stringField0/field')  # type: fieldCOMP
+		run('args[0].ClearFilter()', self, delayFrames=3)
+		run('args[0].setKeyboardFocus()', field, delayFrames=5)
 
 	@staticmethod
 	def ClearFilter():
@@ -108,9 +111,25 @@ class CreateMenu:
 			test = lambda val: bool(tdu.match(filterText, [val], caseSensitive=False))
 		else:
 			test = lambda val: filterText.lower() in val.lower()
+		ignorePrefix = op.raytk.path + '/operators/'
 		for i in range(1, inDat.numRows):
-			if inDat[i, 'type'] == 'category' or test(inDat[i, 'path'].val):
+			if inDat[i, 'type'] == 'category' or test(inDat[i, 'path'].val.replace(ignorePrefix, '')):
 				dat.appendRow(inDat.row(i))
+	
+	def onMouseOverChange(self, value):
+		timer = self.ownerComp.op('close_timer')
+		if value:
+			timer.par.initialize.pulse()
+			timer.par.active = False
+		else:
+			timer.par.active = True
+			timer.par.start.pulse()
+	
+	def onCloseTimerDone(self):
+		timer = self.ownerComp.op('close_timer')
+		timer.par.initialize.pulse()
+		timer.par.active = False
+		self.ownerComp.op('window').par.winclose.pulse()
 
 # noinspection PyTypeChecker
 def _getActiveEditor() -> 'NetworkEditor':
