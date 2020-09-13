@@ -147,11 +147,10 @@ class InspectorCore:
 	def updateVisualizerType(self):
 		self.state.Visualizertype = VisualizerTypes.none
 		if self.state.Hastarget:
-			if self.state.Returntype == ReturnTypes.Sdf:
-				if self.state.Coordtype == CoordTypes.vec2:
-					self.state.Visualizertype = VisualizerTypes.render2d
-				elif self.state.Coordtype == CoordTypes.vec3:
-					self.state.Visualizertype = VisualizerTypes.render3d
+			if self.state.Coordtype == CoordTypes.vec2:
+				self.state.Visualizertype = VisualizerTypes.render2d
+			elif self.state.Returntype == ReturnTypes.Sdf:
+				self.state.Visualizertype = VisualizerTypes.render3d
 			elif self.state.Returntype in [ReturnTypes.float, ReturnTypes.vec4]:
 				self.state.Visualizertype = VisualizerTypes.field
 
