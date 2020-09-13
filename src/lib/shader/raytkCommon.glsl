@@ -32,6 +32,11 @@ Context createDefaultContext() {
 	return ctx;
 }
 
+struct MaterialContext {
+	Sdf result;
+	Context context;
+};
+
 Sdf opSimpleUnion(Sdf res1, Sdf res2){
 	return (res1.x<res2.x)? res1:res2;
 }
