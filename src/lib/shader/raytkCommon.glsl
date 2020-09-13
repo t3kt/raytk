@@ -75,3 +75,9 @@ float opSmoothUnionM(float d1, float d2, float k) {
 	float h = clamp(0.5 + 0.5*(d2-d1)/k, 0.0, 1.0);
 	return mix(d2, d1, h) - k*h*(1.0-h);
 }
+
+mat3 rotateMatrix(vec3 r) {
+	return TDRotateOnAxis(r.x, vec3(1, 0, 0)) *
+		TDRotateOnAxis(r.y, vec3(0, 1, 0)) *
+		TDRotateOnAxis(r.z, vec3(0, 0, 1));
+}

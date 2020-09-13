@@ -1,5 +1,6 @@
 uniform vec3 camPos;
-uniform vec3 camRot;
+uniform vec3 camRot;  // in radians
+uniform float camFov;  // in radians
 uniform vec3 lightPos1;
 
 #define MAX_STEPS 100
@@ -54,28 +55,42 @@ float getLight(vec3 p) {
 	return diffuse;
 }
 
+vec3 getRayDir() {
+	vec2 resolution = uTDOutputInfo.res.zw;
+	vec2 fragCoord = vUV.st*resolution;
+	vec2 p = (-resolution+2.0*fragCoord.xy)/resolution.y;
+
+	float aspect = resolution.x/resolution.y;
+	float screenWidth = 2*(aspect);
+	float distanceToScreen = (screenWidth/2)/tan(camFov/2)*1;
+
+	vec3 ro = camPos*1;
+	ro.x +=0.0;
+	ro.y +=0.;
+
+	vec3 ta = camPos+vec3(0, 0, -1);//camLookAt;
+
+	// camera matrix
+	vec3 ww = normalize(ta - ro);
+	vec3 uu = normalize(cross(ww, vec3(0.0, 1, 0.0)));
+	vec3 vv = normalize(cross(uu, ww));
+	// create view ray
+	vec3 rd = normalize(p.x*uu + p.y*vv + distanceToScreen*ww) *rotateMatrix(camRot);
+	return rd;
+}
+
 layout (location = 0) out vec4 colorOut;
 layout (location = 1) out vec4 sdfOut;
 layout (location = 2) out vec4 depthOut;
 
 void main()
 {
-	vec2 resolution = uTDOutputInfo.res.zw;
-	vec2 fragCoord = vUV.st*resolution;
-	vec2 rayTarget = (-resolution+2.0*fragCoord.xy)/resolution.y;
-
-//	vec2 uv = (fragCoord-.5*resolution.xy) / resolution.y;
-
-//	vec2 q = vUV.st;
-//	float renderDepth = texture(sTD2DInputs[0], vUV.st).r;
-
 	//-----------------------------------------------------
 	// camera
 	//-----------------------------------------------------
 
 	vec3 rayOrigin = camPos;
-	vec3 rayDir = normalize(vec3(rayTarget, 1));
-//vec3 rayDir = normalize(vec3(uv.x, uv.y, 1));
+	vec3 rayDir = getRayDir();
 	//-----------------------------------------------------
 	// render
 	//-----------------------------------------------------
