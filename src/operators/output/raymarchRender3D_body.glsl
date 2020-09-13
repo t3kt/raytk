@@ -1,7 +1,8 @@
-uniform vec3 camPos;
-uniform vec3 camRot;  // in radians
-uniform float camFov;  // in radians
-uniform vec3 lightPos1;
+uniform vec3 uCamPos;
+uniform vec3 uCamRot;  // in radians
+uniform float uCamFov;  // in radians
+uniform vec3 uLightPos1;
+uniform float uUseRenderDepth;
 
 #define MAX_STEPS 100
 #define MAX_DIST 100.0
@@ -41,7 +42,7 @@ vec3 calcNormal(in vec3 pos)
 }
 
 float getLight(vec3 p) {
-	vec3 lightPos = lightPos1;
+	vec3 lightPos = uLightPos1;
 	vec3 lightVec = normalize(lightPos - p);
 	vec3 n = calcNormal(p);
 
@@ -62,20 +63,20 @@ vec3 getRayDir() {
 
 	float aspect = resolution.x/resolution.y;
 	float screenWidth = 2*(aspect);
-	float distanceToScreen = (screenWidth/2)/tan(camFov/2)*1;
+	float distanceToScreen = (screenWidth/2)/tan(uCamFov/2)*1;
 
-	vec3 ro = camPos*1;
+	vec3 ro = uCamPos*1;
 	ro.x +=0.0;
 	ro.y +=0.;
 
-	vec3 ta = camPos+vec3(0, 0, -1);//camLookAt;
+	vec3 ta = uCamPos+vec3(0, 0, -1);//camLookAt;
 
 	// camera matrix
 	vec3 ww = normalize(ta - ro);
 	vec3 uu = normalize(cross(ww, vec3(0.0, 1, 0.0)));
 	vec3 vv = normalize(cross(uu, ww));
 	// create view ray
-	vec3 rd = normalize(p.x*uu + p.y*vv + distanceToScreen*ww) *rotateMatrix(camRot);
+	vec3 rd = normalize(p.x*uu + p.y*vv + distanceToScreen*ww) *rotateMatrix(uCamRot);
 	return rd;
 }
 
@@ -89,23 +90,34 @@ void main()
 	// camera
 	//-----------------------------------------------------
 
-	vec3 rayOrigin = camPos;
+	vec3 rayOrigin = uCamPos;
 	vec3 rayDir = getRayDir();
 	//-----------------------------------------------------
 	// render
 	//-----------------------------------------------------
 
+	float renderDepth = uUseRenderDepth > 0 ? min(texture(sTD2DInputs[0], vUV.st).r, MAX_DIST) : MAX_DIST;
+
 	vec3 col = vec3(0);
 	// raymarch
-	Sdf res = castRay(rayOrigin, rayDir, MAX_DIST);
-	vec3 p = rayOrigin + rayDir * res.x;
+	Sdf res = castRay(rayOrigin, rayDir, renderDepth);
+	float outDepth = min(res.x, renderDepth);
+	depthOut = TDOutputSwizzle(vec4(vec3(outDepth), 1));
 
-	sdfOut = TDOutputSwizzle(vec4(res.x, res.x, res.x, 1));
-//	depthOut = TDOutputSwizzle(vec4(vec3(min(res.x, renderDepth)), 1));
-	//depthOut = TDOutputSwizzle(vec4(vec3(res.x)))
+	if (res.x > 0.0 && res.x < renderDepth) {
+		vec3 p = rayOrigin + rayDir * res.x;
 
-	float diffuse = getLight(p);
-	col = vec3(diffuse);
+		sdfOut = TDOutputSwizzle(vec4(res.x, res.x, res.x, 1));
+	//	depthOut = TDOutputSwizzle(vec4(vec3(min(res.x, renderDepth)), 1));
+		//depthOut = TDOutputSwizzle(vec4(vec3(res.x)))
 
-	colorOut = TDOutputSwizzle(vec4(col, 1));
+		float diffuse = getLight(p);
+		col = vec3(diffuse);
+
+		colorOut = TDOutputSwizzle(vec4(col, 1));
+	} else {
+		sdfOut = vec4(0);
+		colorOut = vec4(0);
+	}
+
 }
