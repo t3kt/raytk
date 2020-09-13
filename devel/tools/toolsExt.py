@@ -24,12 +24,10 @@ class Tools:
 	def ShowLibraryParams():
 		getToolkit().openParameters()
 
-	def UpdateROPMetadata(self, comp: 'COMP' = None, incrementVersion=False):
-		if comp is None:
-			comp = self.GetCurrentROP()
-		if not comp:
-			return
-		updateROPMetadata(comp, incrementVersion=incrementVersion)
+	def UpdateCurrentROPsMetadata(self, incrementVersion=False):
+		rops = self.getCurrentROPs(primaryOnly=False)
+		for rop in rops:
+			updateROPMetadata(rop, incrementVersion=incrementVersion)
 
 	def FillMonitorHeight(self, usePrimary=True):
 		height = _getMonitorHeight(usePrimary)
@@ -54,19 +52,34 @@ class Tools:
 				return pane
 
 	def GetCurrentROP(self):
+		rops = self.getCurrentROPs(primaryOnly=True)
+		return rops[0] if rops else None
+
+	def getCurrentROPs(self, primaryOnly=False):
 		pane = self.GetActiveEditor()
 		if not pane:
-			return None
+			return []
 		comp = pane.owner
 		if comp is self.ownerComp or comp.path.startswith(self.ownerComp.path + '/'):
 			return None
 		rop = _getROP(comp) or _getROP(comp.currentChild)
-		if rop:
-			return rop
+		if rop and primaryOnly:
+			return [rop]
+		rops = [rop]
 		for child in comp.selectedChildren:
 			rop = _getROP(child, checkParents=False)
 			if rop:
-				return rop
+				rops.append(rop)
+		return rops
+
+	def SaveCurrentROPs(self, incrementVersion=False):
+		rops = self.getCurrentROPs(primaryOnly=False)
+		if not rops:
+			return
+		for rop in rops:
+			self.SaveROP(incrementVersion=incrementVersion, rop=rop)
+		if len(rops) > 1:
+			ui.status = f'Saved {len(rops)} ROP TOXs'
 
 	def SaveROP(self, incrementVersion=False, rop: 'COMP' = None):
 		if not rop:
@@ -75,7 +88,7 @@ class Tools:
 			# TODO: warning?
 			return
 		self.updateROPParams(rop)
-		self.UpdateROPMetadata(rop, incrementVersion=incrementVersion)
+		updateROPMetadata(rop, incrementVersion=incrementVersion)
 		tox = rop.par.externaltox.eval()
 		rop.save(tox)
 		ui.status = f'Saved TOX {tox} (version: {rop.op("opDefinition").par.Raytkopversion})'
@@ -105,7 +118,7 @@ class Tools:
 		newOp = dest.copy(template, name=name)
 		newOp.par.clone = newOp.path
 		newOp.par.externaltox = f'src/operators/{category}/{name}.tox'
-		self.UpdateROPMetadata(newOp)
+		updateROPMetadata(newOp)
 		self.SaveROP(rop=newOp)
 		newOp.selected = True
 		newOp.nodeX = 0
