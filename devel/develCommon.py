@@ -69,6 +69,10 @@ def updateROPMetadata(comp: 'COMP', incrementVersion=False):
 	p = page.appendStr('Raytkversion', label='RayTK Version')[0]
 	p.default = p.val = str(getToolkitVersion())
 	p.readOnly = True
+	for page in comp.customPages:
+		if page.name == 'Metadata':
+			page.destroy()
+			break
 
 def generateROPType(comp: 'COMP'):
 	if not comp:
