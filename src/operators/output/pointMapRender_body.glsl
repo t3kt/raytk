@@ -12,7 +12,7 @@ Sdf map(vec3 p) {
 vec4 getColor(Sdf res, vec3 p) {
 	int m = int(res.material);
 	vec4 col;
-	if (false) {
+	if (res.x > 0) {
 		return vec4(0);
 	}
 	// #include <materialParagraph>
