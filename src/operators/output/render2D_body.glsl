@@ -1,6 +1,3 @@
-layout (location = 0) out vec4 colorOut;
-layout (location = 1) out vec4 sdfOut;
-
 #ifdef THIS_RETURN_TYPE_Sdf
 Sdf map(vec2 q)
 {
@@ -29,10 +26,18 @@ void main()
 #ifdef THIS_RETURN_TYPE_Sdf
 	Sdf res = map(p);
 
+	#ifdef OUTPUT_COLOR
 	colorOut = getColor(res);
+	#endif
+	#ifdef OUTPUT_SDF
 	sdfOut = vec4(res.x);
+	#endif
 #else
+	#ifdef OUTPUT_COLOR
 	colorOut = map(p);
+	#endif
+	#ifdef OUTPUT_SDF
 	sdfOut = vec4(0);
+	#endif
 #endif
 }
