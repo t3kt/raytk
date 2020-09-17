@@ -80,10 +80,6 @@ vec3 getRayDir() {
 	return rd;
 }
 
-layout (location = 0) out vec4 colorOut;
-layout (location = 1) out vec4 sdfOut;
-layout (location = 2) out vec4 depthOut;
-
 void main()
 {
 	//-----------------------------------------------------
@@ -102,22 +98,34 @@ void main()
 	// raymarch
 	Sdf res = castRay(rayOrigin, rayDir, renderDepth);
 	float outDepth = min(res.x, renderDepth);
+	#ifdef OUTPUT_DEPTH
 	depthOut = TDOutputSwizzle(vec4(vec3(outDepth), 1));
+	#endif
 
 	if (res.x > 0.0 && res.x < renderDepth) {
 		vec3 p = rayOrigin + rayDir * res.x;
 
+		#ifdef OUTPUT_SDF
 		sdfOut = TDOutputSwizzle(vec4(res.x, res.x, res.x, 1));
+		#endif
+//		#ifdef OUTPUT_DEPTH
 	//	depthOut = TDOutputSwizzle(vec4(vec3(min(res.x, renderDepth)), 1));
 		//depthOut = TDOutputSwizzle(vec4(vec3(res.x)))
+//		#endif
 
 		float diffuse = getLight(p);
 		col = vec3(diffuse);
 
+		#ifdef OUTPUT_COLOR
 		colorOut = TDOutputSwizzle(vec4(col, 1));
+		#endif
 	} else {
+		#ifdef OUTPUT_SDF
 		sdfOut = vec4(0);
+		#endif
+		#ifdef OUTPUT_COLOR
 		colorOut = vec4(0);
+		#endif
 	}
 
 }
