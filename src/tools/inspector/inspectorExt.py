@@ -47,6 +47,7 @@ class Inspector:
 
 	def Reset(self, _=None):
 		self.core.Reset()
+		self.UpdateOutputBufferSampleTable(None, None)
 
 	def Inspect(self, o: 'Union[OP, DAT, COMP, str]'):
 		self.core.Inspect(o)
@@ -56,8 +57,33 @@ class Inspector:
 			if self.core.par.Targettype != 'outputOp':
 				outputOp = op(visualizers[visualizerType, 'outputOp'])
 				self.core.AttachOutputComp(outputOp)
-		if self.core.par.Hastarget:
+			self.UpdateOutputBufferSampleTable(None, None)
 			self.Openwindow()
+
+	def UpdateOutputBufferSampleTable(self, u: Optional[float], v: Optional[float]):
+		dat = self.ownerComp.op('set_output_sample')
+		dat.clear()
+		if u is None or v is None:
+			return
+		outputs = self.ownerComp.op('output_table')
+		for i in range(1, outputs.numRows):
+			top = op(outputs[i, 'path'] or '')  # type: TOP
+			if not top:
+				continue
+			value = top.sample(u=u, v=v)
+			if not value:
+				dat.appendRow([
+					outputs[i, 'label'],
+					'', '', '', '',
+				])
+			else:
+				dat.appendRow([
+					outputs[i, 'label'],
+					round(value[0], 2),
+					round(value[1], 2),
+					round(value[2], 2),
+					round(value[3], 2),
+				])
 
 def _pathOrEmpty(o: Optional['OP']):
 	return o.path if o else ''
