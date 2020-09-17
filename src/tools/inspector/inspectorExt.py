@@ -8,7 +8,6 @@ if False:
 
 	class ipar:
 		class inspectorState:
-			Selectedview: 'Union[str, Par]'
 			Selectedbodytab: 'Union[str, Par]'
 
 class ReturnTypes:
@@ -57,19 +56,8 @@ class Inspector:
 			if self.core.par.Targettype != 'outputOp':
 				outputOp = op(visualizers[visualizerType, 'outputOp'])
 				self.core.AttachOutputComp(outputOp)
-		self.updateViewMenu()
 		if self.core.par.Hastarget:
 			self.Openwindow()
-
-	def updateViewMenu(self):
-		viewPar = self.state.Selectedview
-		if not self.core.par.Hastarget:
-			viewPar.menuNames = ['none']
-			viewPar.menuLabels = ['None']
-		else:
-			outputTable = self.ownerComp.op('output_table')
-			viewPar.menuNames = ['none'] + outputTable.col('name')[1:]
-			viewPar.menuLabels = ['None'] + outputTable.col('label')[1:]
 
 def _pathOrEmpty(o: Optional['OP']):
 	return o.path if o else ''

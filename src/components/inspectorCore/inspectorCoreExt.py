@@ -1,5 +1,4 @@
 from typing import Optional, Union
-import re
 
 # noinspection PyUnreachableCode
 if False:
@@ -155,30 +154,8 @@ class InspectorCore:
 			elif self.state.Returntype in [ReturnTypes.float, ReturnTypes.vec4]:
 				self.state.Visualizertype = VisualizerTypes.field
 
-	@staticmethod
-	def parseShaderBuffers(code: str, table: 'DAT'):
-		table.clear()
-		table.appendRow(['index', 'name'])
-		if not code:
-			return
-		maxPos = -1
-		for match in _outputBufferPattern.finditer(code):
-			pos = match.group(1)
-			if pos is None:
-				pos = maxPos + 1
-			else:
-				pos = int(pos)
-			if pos > maxPos:
-				maxPos = pos
-			name = match.group(2)
-			if name.endswith('Out'):
-				name = name[:-3]
-			table.appendRow([pos, name])
-
 	def AttachOutputComp(self, o: 'COMP'):
 		self.state.Outputcomp = _pathOrEmpty(o)
-
-_outputBufferPattern = re.compile(r'(?:layout\s*\(location\s*=\s*(\d+)\)\s*)?out\s+vec4\s*(\w+)\s*;')
 
 
 def _pathOrEmpty(o: Optional['OP']):
