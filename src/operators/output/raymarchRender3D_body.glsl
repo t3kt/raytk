@@ -101,12 +101,12 @@ void main()
 	#ifdef OUTPUT_DEPTH
 	depthOut = TDOutputSwizzle(vec4(vec3(outDepth), 1));
 	#endif
-	#ifdef OUTPUT_WORLDPOS
-	worldPosOut = vec4(rayOrigin + (rayDir * outDepth), 1);
-	#endif
 
 	if (res.x > 0.0 && res.x < renderDepth) {
 		vec3 p = rayOrigin + rayDir * res.x;
+		#ifdef OUTPUT_WORLDPOS
+		worldPosOut = vec4(p, 1);
+		#endif
 
 		#ifdef OUTPUT_SDF
 		sdfOut = TDOutputSwizzle(vec4(res.x, res.x, res.x, 1));
@@ -123,6 +123,10 @@ void main()
 		colorOut = TDOutputSwizzle(vec4(col, 1));
 		#endif
 	} else {
+		#ifdef OUTPUT_WORLDPOS
+//		worldPosOut = vec4(rayOrigin + rayDir * outDepth, 0);
+		worldPosOut = vec4(0);
+		#endif
 		#ifdef OUTPUT_SDF
 		sdfOut = vec4(0);
 		#endif
