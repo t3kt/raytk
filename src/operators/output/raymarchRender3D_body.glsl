@@ -101,6 +101,9 @@ void main()
 	#ifdef OUTPUT_DEPTH
 	depthOut = TDOutputSwizzle(vec4(vec3(outDepth), 1));
 	#endif
+	#ifdef OUTPUT_WORLDPOS
+	worldPosOut = vec4(rayOrigin + (rayDir * outDepth), 1);
+	#endif
 
 	if (res.x > 0.0 && res.x < renderDepth) {
 		vec3 p = rayOrigin + rayDir * res.x;
