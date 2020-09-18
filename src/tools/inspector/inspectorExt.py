@@ -9,6 +9,9 @@ if False:
 	class ipar:
 		class inspectorState:
 			Selectedbodytab: 'Union[str, Par]'
+			Showpointsampling: 'Union[bool, Par]'
+			Samplepointu: 'Union[float, Par]'
+			Samplepointv: 'Union[float, Par]'
 
 class ReturnTypes:
 	Sdf = 'Sdf'
@@ -47,7 +50,7 @@ class Inspector:
 
 	def Reset(self, _=None):
 		self.core.Reset()
-		self.UpdateOutputBufferSampleTable(None, None)
+		self.clearOutputBufferSampleTable()
 
 	def Inspect(self, o: 'Union[OP, DAT, COMP, str]'):
 		self.core.Inspect(o)
@@ -57,15 +60,32 @@ class Inspector:
 			if self.core.par.Targettype != 'outputOp':
 				outputOp = op(visualizers[visualizerType, 'outputOp'])
 				self.core.AttachOutputComp(outputOp)
-			self.UpdateOutputBufferSampleTable(None, None)
+			self.clearOutputBufferSampleTable()
 			self.Openwindow()
 
-	def UpdateOutputBufferSampleTable(self, u: Optional[float], v: Optional[float]):
+	def onRightClickPreview(self, previewPanel: 'PanelCOMP'):
+		# noinspection PyUnresolvedReferences
+		u, v = previewPanel.panel.u, previewPanel.panel.v
+		ipar.inspectorState.Samplepointu = u
+		ipar.inspectorState.Samplepointv = v
+		ipar.inspectorState.Showpointsampling = True
+		self.fillOutputBufferSampleTable()
+
+	def onCloseOnBufferSampleClick(self):
+		print('omg onCloseOnBufferSampleClick')
+		ipar.inspectorState.Showpointsampling = False
+		self.clearOutputBufferSampleTable()
+
+	def clearOutputBufferSampleTable(self):
 		dat = self.ownerComp.op('set_output_sample')
 		dat.clear()
-		if u is None or v is None:
-			return
+
+	def fillOutputBufferSampleTable(self):
+		dat = self.ownerComp.op('set_output_sample')
+		dat.clear()
+		u, v = ipar.inspectorState.Samplepointu, ipar.inspectorState.Samplepointv
 		outputs = self.ownerComp.op('output_table')
+		dat.appendRow(['UV', u, v, '', ''])
 		for i in range(1, outputs.numRows):
 			top = op(outputs[i, 'path'] or '')  # type: TOP
 			if not top:
@@ -79,10 +99,10 @@ class Inspector:
 			else:
 				dat.appendRow([
 					outputs[i, 'label'],
-					round(value[0], 2),
-					round(value[1], 2),
-					round(value[2], 2),
-					round(value[3], 2),
+					value[0],
+					value[1],
+					value[2],
+					value[3],
 				])
 
 def _pathOrEmpty(o: Optional['OP']):
