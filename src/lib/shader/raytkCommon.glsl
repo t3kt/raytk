@@ -81,6 +81,16 @@ float opSmoothUnionM(float d1, float d2, float k) {
 	return mix(d2, d1, h) - k*h*(1.0-h);
 }
 
+float sdBoundingBox( vec3 p, vec3 b, float e )
+{
+	p = abs(p)-b;
+	vec3 q = abs(p+e)-e;
+	return min(min(
+		length(max(vec3(p.x,q.y,q.z),0.0))+min(max(p.x,max(q.y,q.z)),0.0),
+		length(max(vec3(q.x,p.y,q.z),0.0))+min(max(q.x,max(p.y,q.z)),0.0)),
+		length(max(vec3(q.x,q.y,p.z),0.0))+min(max(q.x,max(q.y,p.z)),0.0));
+}
+
 mat3 rotateMatrix(vec3 r) {
 	return TDRotateOnAxis(r.x, vec3(1, 0, 0)) *
 		TDRotateOnAxis(r.y, vec3(0, 1, 0)) *
