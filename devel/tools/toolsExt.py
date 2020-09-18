@@ -95,8 +95,22 @@ class Tools:
 
 	@staticmethod
 	def updateROPParams(rop: 'COMP'):
+		if rop.customPages:
+			page = rop.customPages[0]
+		else:
+			page = rop.appendCustomPage('Settings')
+		opDef = rop.op('opDefinition')
+		if rop.ops('definition_1', 'definition_2', 'definition_3', 'definition_4'):
+			enablePar = rop.par['Enable']
+			if enablePar is None:
+				enablePar = page.appendToggle('Enable')[0]
+				enablePar.val = True
+			enablePar.order = -1
+			enablePar.default = True
+			if not opDef.par.Enable.expr:
+				opDef.par.Enable.expr = "op('..').par.Enable"
+
 		inspectPar = rop.par['Inspect']
-		page = rop.customPages[0]
 		if inspectPar is None:
 			inspectPar = page.appendPulse('Inspect')[0]
 		inspectPar.startSection = True
