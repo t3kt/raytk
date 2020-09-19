@@ -8,3 +8,4 @@ none	None	0	0	1
 Context	Context	0	0	1
 MaterialContext	Material Context	0	0	1
 Ray	Ray	1	0	0
+CameraContext	Camera Context	0	0	1

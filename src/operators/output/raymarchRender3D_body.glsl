@@ -61,6 +61,8 @@ float getLight(vec3 p) {
 	return diffuse;
 }
 
+#ifndef THIS_USE_CAM_FUNC
+
 Ray getViewRay() {
 	vec3 pos = uCamPos;
 	vec2 resolution = uTDOutputInfo.res.zw;
@@ -85,6 +87,8 @@ Ray getViewRay() {
 	vec3 rd = normalize(p.x*uu + p.y*vv + distanceToScreen*ww) *rotateMatrix(uCamRot);
 	return Ray(pos, rd);
 }
+
+#endif
 
 void main()
 {

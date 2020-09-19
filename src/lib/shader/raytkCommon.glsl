@@ -41,6 +41,10 @@ struct MaterialContext {
 	Context context;
 };
 
+struct CameraContext {
+	vec2 resolution;
+};
+
 Sdf opSimpleUnion(Sdf res1, Sdf res2){
 	return (res1.x<res2.x)? res1:res2;
 }
@@ -171,4 +175,24 @@ vec4 modZigZag(vec4 p, vec4 low, vec4 high) {
 		modded.y > range.y ? (range2.y - modded.y): modded.y,
 		modded.z > range.z ? (range2.z - modded.z): modded.z,
 		modded.w > range.w ? (range2.w - modded.w): modded.w);
+}
+
+/**
+ * Return a transform matrix that will transform a ray from view space
+ * to world coordinates, given the eye point, the camera target, and an up vector.
+ *
+ * This assumes that the center of the camera is aligned with the negative z axis in
+ * view space when calculating the ray marching direction. See rayDirection.
+ */
+mat4 lookAtViewMatrix(vec3 eye, vec3 center, vec3 up) {
+	// Based on gluLookAt man page
+	vec3 f = normalize(center - eye);
+	vec3 s = normalize(cross(f, up));
+	vec3 u = cross(s, f);
+	return mat4(
+	vec4(s, 0.0),
+	vec4(u, 0.0),
+	vec4(-f, 0.0),
+	vec4(0.0, 0.0, 0.0, 1)
+	);
 }
