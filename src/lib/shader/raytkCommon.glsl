@@ -1,7 +1,11 @@
 // raytkCommon.glsl
 
-struct Sdf
-{
+struct Ray {
+	vec3 pos;
+	vec3 dir;
+};
+
+struct Sdf {
 	float x; // distance
 	float material; // material ID
 	float material2; // in case of interpolating, the second material

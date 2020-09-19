@@ -15,10 +15,10 @@ Sdf map(vec3 q)
 	return res;
 }
 
-Sdf castRay(vec3 rayOrigin, vec3 rayDir, float maxDist) {
+Sdf castRay(Ray ray, float maxDist) {
 	float dist = 0;
 	for (int i = 0; i < MAX_STEPS; i++) {
-		vec3 p = rayOrigin + rayDir * dist;
+		vec3 p = ray.pos + ray.dir * dist;
 		Sdf res = map(p);
 		dist += res.x;
 		if (dist < SURF_DIST) {
@@ -52,7 +52,8 @@ float getLight(vec3 p) {
 
 	float diffuse = clamp(dot(n, lightVec), 0., 1.);
 
-	float shadowDist = castRay(p+n * SURF_DIST*2., lightVec, MAX_DIST).x;
+	Ray shadowRay = Ray(p+n * SURF_DIST*2., lightVec);
+	float shadowDist = castRay(shadowRay, MAX_DIST).x;
 	if (shadowDist < length(lightPos - p)) {
 		diffuse *= .1;
 	}
@@ -60,7 +61,8 @@ float getLight(vec3 p) {
 	return diffuse;
 }
 
-vec3 getRayDir() {
+Ray getViewRay() {
+	vec3 pos = uCamPos;
 	vec2 resolution = uTDOutputInfo.res.zw;
 	vec2 fragCoord = vUV.st*resolution;
 	vec2 p = (-resolution+2.0*fragCoord.xy)/resolution.y;
@@ -69,11 +71,11 @@ vec3 getRayDir() {
 	float screenWidth = 2*(aspect);
 	float distanceToScreen = (screenWidth/2)/tan(uCamFov/2)*1;
 
-	vec3 ro = uCamPos*1;
+	vec3 ro = pos*1;
 	ro.x +=0.0;
 	ro.y +=0.;
 
-	vec3 ta = uCamPos+vec3(0, 0, -1);//camLookAt;
+	vec3 ta = pos+vec3(0, 0, -1);//camLookAt;
 
 	// camera matrix
 	vec3 ww = normalize(ta - ro);
@@ -81,7 +83,7 @@ vec3 getRayDir() {
 	vec3 vv = normalize(cross(uu, ww));
 	// create view ray
 	vec3 rd = normalize(p.x*uu + p.y*vv + distanceToScreen*ww) *rotateMatrix(uCamRot);
-	return rd;
+	return Ray(pos, rd);
 }
 
 void main()
@@ -90,8 +92,7 @@ void main()
 	// camera
 	//-----------------------------------------------------
 
-	vec3 rayOrigin = uCamPos;
-	vec3 rayDir = getRayDir();
+	Ray ray = getViewRay();
 	//-----------------------------------------------------
 	// render
 	//-----------------------------------------------------
@@ -100,14 +101,14 @@ void main()
 
 	vec3 col = vec3(0);
 	// raymarch
-	Sdf res = castRay(rayOrigin, rayDir, renderDepth);
+	Sdf res = castRay(ray, renderDepth);
 	float outDepth = min(res.x, renderDepth);
 	#ifdef OUTPUT_DEPTH
 	depthOut = TDOutputSwizzle(vec4(vec3(outDepth), 1));
 	#endif
 
 	if (res.x > 0.0 && res.x < renderDepth) {
-		vec3 p = rayOrigin + rayDir * res.x;
+		vec3 p = ray.pos + ray.dir * res.x;
 		#ifdef OUTPUT_WORLDPOS
 		worldPosOut = vec4(p, 1);
 		#endif
@@ -128,7 +129,7 @@ void main()
 		#endif
 	} else {
 		#ifdef OUTPUT_WORLDPOS
-//		worldPosOut = vec4(rayOrigin + rayDir * outDepth, 0);
+//		worldPosOut = vec4(ray.pos + ray.dir * outDepth, 0);
 		worldPosOut = vec4(0);
 		#endif
 		#ifdef OUTPUT_SDF
