@@ -105,6 +105,20 @@ mat3 rotateMatrix(vec3 r) {
 		TDRotateOnAxis(r.z, vec3(0, 0, 1));
 }
 
+
+void pRotateOnXYZ(inout vec3 p, vec3 rotation) {
+	vec2 temp;
+	temp = p.xy;
+	pR(temp, rotation.z);
+	p.xy = temp;
+	temp = p.xz;
+	pR(temp, rotation.y);
+	p.xz = temp;
+	temp = p.yz;
+	pR(temp, rotation.x);
+	p.yz = temp;
+}
+
 int quadrantIndex(ivec2 cell) {
 	/*
 	[0] -1, 1    [1] 1, 1

@@ -7,6 +7,7 @@ Ray thismap(vec2 p, CameraContext ctx) {
 	vec3 viewDir = normalize(vec3(xy, -z));
 	mat4 viewToWorld = lookAtViewMatrix(ray.pos, THIS_Lookatpos, THIS_Camup);
 	vec3 worldDir = (viewToWorld * vec4(viewDir, 0)).xyz;
+	pRotateOnXYZ(worldDir, THIS_Camrot);
 	ray.dir = worldDir;
 	return ray;
 }
