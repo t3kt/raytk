@@ -46,6 +46,10 @@ float getLight(vec3 p) {
 	vec3 lightVec = normalize(lightPos - p);
 	vec3 n = calcNormal(p);
 
+	#ifdef OUTPUT_NORMAL
+	normalOut = vec4(n, 0);
+	#endif
+
 	float diffuse = clamp(dot(n, lightVec), 0., 1.);
 
 	float shadowDist = castRay(p+n * SURF_DIST*2., lightVec, MAX_DIST).x;
@@ -132,6 +136,9 @@ void main()
 		#endif
 		#ifdef OUTPUT_COLOR
 		colorOut = vec4(0);
+		#endif
+		#ifdef OUTPUT_NORMAL
+		normalOut = vec4(0);
 		#endif
 	}
 
