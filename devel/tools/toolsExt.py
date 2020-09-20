@@ -100,7 +100,7 @@ class Tools:
 		else:
 			page = rop.appendCustomPage('Settings')
 		opDef = rop.op('opDefinition')
-		if rop.ops('definition_1', 'definition_2', 'definition_3', 'definition_4'):
+		if rop.ops('definition_1', 'definition_2', 'definition_3', 'definition_4') and 'raytkOutput' not in rop.tags:
 			enablePar = rop.par['Enable']
 			if enablePar is None:
 				enablePar = page.appendToggle('Enable')[0]
