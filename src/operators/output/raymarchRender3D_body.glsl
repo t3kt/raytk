@@ -137,6 +137,9 @@ void main()
 		#ifdef OUTPUT_COLOR
 		colorOut = TDOutputSwizzle(vec4(col, 1));
 		#endif
+		#ifdef OUTPUT_ORBIT
+		orbitOut = res.orbit;
+		#endif
 	} else {
 		#ifdef OUTPUT_WORLDPOS
 //		worldPosOut = vec4(ray.pos + ray.dir * outDepth, 0);
@@ -150,6 +153,9 @@ void main()
 		#endif
 		#ifdef OUTPUT_NORMAL
 		normalOut = vec4(0);
+		#endif
+		#ifdef OUTPUT_ORBIT
+		orbitOut = vec4(0);
 		#endif
 	}
 

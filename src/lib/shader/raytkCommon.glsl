@@ -13,6 +13,10 @@ struct Sdf {
 	float ior; // index of refraction in case of refraction
 	bool reflect; // do reflection for this?
 	bool refract; // do refraction for this?
+
+	#ifdef RAYTK_ORBIT_IN_SDF
+	vec4 orbit;  // orbit trap value for fractals
+	#endif
 };
 
 Sdf createSdf(float dist) {
@@ -23,6 +27,9 @@ Sdf createSdf(float dist) {
 	res.refract = false;
 	res.material2 = 0.;
 	res.interpolant = 0.;
+	#ifdef RAYTK_ORBIT_IN_SDF
+	res.orbit = vec4(0);
+	#endif
 	return res;
 }
 
@@ -210,3 +217,25 @@ mat4 lookAtViewMatrix(vec3 eye, vec3 center, vec3 up) {
 	vec4(0.0, 0.0, 0.0, 1)
 	);
 }
+
+#ifdef RAYTK_USE_APOLLONIAN
+// https://www.shadertoy.com/view/4ds3zn
+float sdApollonian(vec3 p, float s, float scale, out vec4 orb) {
+	orb = vec4(1000.0);
+
+	for (int i=0; i<8; i++)
+	{
+		p = -1.0 + 2.0*fract(0.5*p+0.5);
+
+		float r2 = dot(p, p);
+
+		orb = min(orb, vec4(abs(p), r2));
+
+		float k = s/r2;
+		p *= k;
+		scale *= k;
+	}
+
+	return 0.25*abs(p.y)/scale;
+}
+#endif// RTK_USE_APOLLONIAN
