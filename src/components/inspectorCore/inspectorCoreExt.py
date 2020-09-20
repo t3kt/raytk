@@ -12,7 +12,7 @@ if False:
 		Rawtarget: 'Union[str, OP, DAT, COMP]'
 		Definitiontable: 'Union[str, DAT]'
 		Targetcomp: 'Union[str, COMP]'
-		Outputcomp: 'Union[str, COMP]'
+		Outputcomp: 'Union[str, COMP, Par]'
 		Returntype: str
 		Coordtype: str
 		Contexttype: str
@@ -153,6 +153,14 @@ class InspectorCore:
 				self.state.Visualizertype = VisualizerTypes.render3d
 			elif self.state.Returntype in [ReturnTypes.float, ReturnTypes.vec4]:
 				self.state.Visualizertype = VisualizerTypes.field
+
+	def findCameraComp(self):
+		outputComp = self.state.Outputcomp.eval()  # type: COMP
+		if not outputComp:
+			return None
+		if outputComp.par['Usecamerafunc']:
+			pass
+		pass
 
 	def AttachOutputComp(self, o: 'COMP'):
 		self.state.Outputcomp = _pathOrEmpty(o)
