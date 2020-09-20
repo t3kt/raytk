@@ -154,14 +154,6 @@ class InspectorCore:
 			elif self.state.Returntype in [ReturnTypes.float, ReturnTypes.vec4]:
 				self.state.Visualizertype = VisualizerTypes.field
 
-	def findCameraComp(self):
-		outputComp = self.state.Outputcomp.eval()  # type: COMP
-		if not outputComp:
-			return None
-		if outputComp.par['Usecamerafunc']:
-			pass
-		pass
-
 	def AttachOutputComp(self, o: 'COMP'):
 		self.state.Outputcomp = _pathOrEmpty(o)
 
