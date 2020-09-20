@@ -89,7 +89,7 @@ class BuildManager:
 		if components:
 			comp = components.pop()
 			self.detachTox(comp)
-			self.detachDats(comp)
+			self.detachDats(comp, recursive=True)
 			if components:
 				self.queueMethodCall('processComponents_stage', components, thenRun, runArgs)
 				return
@@ -137,7 +137,7 @@ class BuildManager:
 		self.log(f'Processing operator {comp}')
 		comp.par.enablecloning = False
 		self.detachTox(comp)
-		self.detachDats(comp)
+		self.detachDats(comp, recursive=True)
 		for child in comp.findChildren(type=COMP):
 			if 'raytkOP' in child.tags:
 				self.processOperator(child)
@@ -158,11 +158,11 @@ class BuildManager:
 		comp.par.externaltox.expr = ''
 		comp.par.externaltox.val = ''
 
-	def detachDats(self, comp: 'COMP'):
+	def detachDats(self, comp: 'COMP', recursive=False):
 		self.log(f'Detaching DATs in {comp}')
-		for dat in comp.findChildren(type=textDAT):
+		for dat in comp.findChildren(type=textDAT, maxDepth=None if recursive else 1):
 			self.detachDat(dat)
-		for dat in comp.findChildren(type=tableDAT):
+		for dat in comp.findChildren(type=tableDAT, maxDepth=None if recursive else 1):
 			self.detachDat(dat)
 
 	def detachDat(self, dat: 'DAT'):
@@ -182,6 +182,7 @@ class BuildManager:
 	def processTools(self, comp: 'COMP'):
 		self.log(f'Processing tools {comp}')
 		self.detachTox(comp)
+		self.detachDats(comp, recursive=True)
 		createMenu = comp.op('createMenu')  # type: Union[COMP, CreateMenu]
 		createMenu.ClearFilter()
 		self.detachTox(createMenu)
