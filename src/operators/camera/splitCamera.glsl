@@ -1,35 +1,45 @@
 Ray thismap(vec2 p, CameraContext ctx) {
+	Ray ray;
 	vec2 size = ctx.resolution;
 	vec2 uv = ((-ctx.resolution+ 2.0 * p) / ctx.resolution.y) / size;
-	#ifdef THIS_RESCALE
-	#ifdef THIS_SPLIT_X
-	ctx.resolution.x *= 0.5;
-	#endif
-	#ifdef THIS_SPLIT_Y
-	ctx.resolution.y *= 0.5;
-	#endif
-	#endif
-	#if defined(THIS_LAYOUT_horzsplit)
-	#ifdef THIS_RESCALE
-	ctx.resolution.x *= 0.5;
-	#endif
-	if (uv.x <= 0.5) {
-		return inputOp1((localUV * vec2(0.5, 1)) * ctx.resolution, ctx);
-	} else {
-		return inputOp2(((localUV-0.5) * vec2(0.5, 1)) * ctx.resolution, ctx);
-	}
-	#elif defined(THIS_LAYOUT_vertsplit)
-	#ifdef THIS_RESCALE
-	ctx.resolution.y *= 0.5;
-	#endif
-	if (uv.y>= 0.5) {
-		return inputOp1(((uv-0.5) * vec2(1, 0.5)) * ctx.resolution, ctx);
-	} else {
-		return inputOp2((uv * vec2(1, 0.5)) * ctx.resolution, ctx);
-	}
-	#elif defined(THIS_LAYOUT_quads)
-	
+
+	#if defined(THIS_LAYOUT_grid)
+		#ifdef THIS_RESCALE
+		ctx.resolution /= 2.0;
+		p = mod(p, ctx.resolution);
+		#endif
+		if (uv.x > 0.) {
+			if (uv.y > 0.) {
+				return inputOp2(p, ctx);
+			} else {
+				return inputOp4(p, ctx);
+			}
+		} else {
+			if (uv.y > 0.) {
+				return inputOp1(p, ctx);
+			} else {
+				return inputOp3(p, ctx);
+			}
+		}
+	#elif defined(THIS_LAYOUT_horz)
+		#ifdef THIS_RESCALE
+			ctx.resolution.x /= 2.0;
+			p.x = mod(p.x, ctx.resolution.x);
+		#endif
+		if (uv.x > 0.) {
+			return inputOp2(p, ctx);
+		} else {
+			return inputOp1(p, ctx);
+		}
 	#else
-	return inputOp1(
+		#ifdef THIS_RESCALE
+			ctx.resolution.y /= 2.0;
+			p.y = mod(p.y, ctx.resolution.y);
+		#endif
+		if (uv.y < 0.) {
+			return inputOp2(p, ctx);
+		} else {
+			return inputOp1(p, ctx);
+		}
 	#endif
 }
