@@ -97,6 +97,12 @@ void main()
 	//-----------------------------------------------------
 
 	Ray ray = getViewRay();
+	#ifdef OUTPUT_RAYDIR
+	rayDirOut = vec4(ray.dir, 0);
+	#endif
+	#ifdef OUTPUT_RAYORIGIN
+	rayOriginOut = vec4(ray.pos, 0);
+	#endif
 	//-----------------------------------------------------
 	// render
 	//-----------------------------------------------------
