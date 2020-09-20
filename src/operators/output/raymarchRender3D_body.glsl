@@ -17,9 +17,10 @@ Sdf map(vec3 q)
 
 Sdf castRay(Ray ray, float maxDist) {
 	float dist = 0;
+	Sdf res;
 	for (int i = 0; i < MAX_STEPS; i++) {
 		vec3 p = ray.pos + ray.dir * dist;
-		Sdf res = map(p);
+		res = map(p);
 		dist += res.x;
 		if (dist < SURF_DIST) {
 			return res;
@@ -28,7 +29,8 @@ Sdf castRay(Ray ray, float maxDist) {
 			break;
 		}
 	}
-	return createSdf(dist);
+	res.x = dist;
+	return res;
 }
 
 vec3 calcNormal(in vec3 pos)
