@@ -169,9 +169,9 @@ class BuildManager:
 		if not dat.par.file and dat.par.file.mode == ParMode.CONSTANT:
 			return
 		self.log(f'Detaching DAT {dat}')
-		dat.par.syncfile = False
-		dat.par.loadonstart = False
-		dat.par.write = False
+		for par in dat.pars('syncfile', 'loadonstart', 'loadonstartpulse', 'write', 'writepulse'):
+			par.expr = ''
+			par.val = False
 		dat.par.file.expr = ''
 		dat.par.file.val = ''
 
