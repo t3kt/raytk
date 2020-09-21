@@ -4,9 +4,6 @@ uniform float uCamFov;  // in radians
 uniform vec3 uLightPos1;
 uniform float uUseRenderDepth;
 
-#define MAX_STEPS 100
-#define MAX_DIST 100.0
-#define SURF_DIST 0.01
 
 Sdf map(vec3 q)
 {
@@ -43,9 +40,62 @@ vec3 calcNormal(in vec3 pos)
 		e.xxx*map(pos + e.xxx).x);
 }
 
-//vec3 phongContribForLight(
-//	vec3 diffColor, vec3 specColor, float alpha, vec3 p, vec3 eye,
-//	vec3 lightPos, vec3 lightIntensity, vec3 norm, float occ)
+// Soft shadow code from http://iquilezles.org/www/articles/rmshadows/rmshadows.htm
+//float softShadow(vec3 p, MaterialContext matCtx)
+//{
+////	float mint = uShadow.x;
+////	float maxt = uShadow.y;
+////	float k = uShadow.z;
+//	float mint = 0.1;
+//	float maxt = 2.0;
+//	float k = 0.5;  // hardness
+//	float res = 1.0;
+//	float ph = 1e20;
+//	for (float t=mint; t<maxt;)
+//	{
+//		float h = map(p + matCtx.ray.pos*t).x;
+//		if (h<0.001)
+//		return 0.0;
+//		float y = h*h/(2.0*ph);
+//		float d = sqrt(h*h-y*y);
+//		res = min(res, k*d/max(0.0, t-y));
+//		ph = h;
+//		t += h;
+//	}
+//	return res;
+//}
+
+float calcShadow(in vec3 p, MaterialContext matCtx) {
+	vec3 lightVec = normalize(matCtx.lightPos1 - p);
+	Ray shadowRay = Ray(p+matCtx.normal * SURF_DIST*2., lightVec);
+	float shadowDist = castRay(shadowRay, MAX_DIST).x;
+	if (shadowDist < length(matCtx.lightPos1 - p)) {
+		return 0.1;
+	}
+	return 1.0;
+}
+
+// compute ambient occlusion value at given position/normal
+// Source - https://www.shadertoy.com/view/lsKcDD
+float calcAO( in vec3 pos, in vec3 nor )
+{
+//	float occ = uAO.x;
+//	float sca = uAO.y;
+	float occ = 0.0;
+	float sca = 1.0;
+	// int n = int(uAO.z);
+	int n = 4;
+	for( int i=0; i<n; i++ )
+	{
+		float hr = 0.01 + 0.12*float(i)/4.0;
+		vec3 aopos =  nor * hr + pos;
+		Sdf res = map(aopos);
+		float dd = res.x;
+		occ += -(dd-hr)*sca;
+		sca *= 0.95;
+	}
+	return clamp( 1.0 - 3.0*occ, 0.0, 1.0 );
+}
 
 vec3 getColorDefault(vec3 p, MaterialContext matCtx) {
 	vec3 color = vec3(0.5);  // ambient color
@@ -63,23 +113,22 @@ vec3 getColorDefault(vec3 p, MaterialContext matCtx) {
 	vec3 lightVec = normalize(matCtx.lightPos1 - p);
 	float diffuse = clamp(dot(matCtx.normal, lightVec), 0., 1.);
 	color = vec3(diffuse);
-	Ray shadowRay = Ray(p+matCtx.normal * SURF_DIST*2., lightVec);
-	float shadowDist = castRay(shadowRay, MAX_DIST).x;
-	if (shadowDist < length(matCtx.lightPos1 - p)) {
-		color *= .1;
-	}
+	color *= calcShadow(p, matCtx);
 	return color;
 }
 
 vec3 getColor(vec3 p, MaterialContext matCtx) {
 	vec3 col = vec3(0);
-	float m = matCtx.result.material;
+	int m = int(matCtx.result.material);
 	// TODO: material blending
 
 	if (false) {}
 	// #include <materialParagraph>
 
-	return getColorDefault(p, matCtx);
+	else {
+		col = getColorDefault(p, matCtx);
+	}
+	return col;
 }
 
 #ifndef THIS_USE_CAM_FUNC
