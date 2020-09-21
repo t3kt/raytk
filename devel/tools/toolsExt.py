@@ -158,6 +158,51 @@ class Tools:
 			]
 		)
 
+	def SetSelectedBuildExclude(self):
+		self.setBuildExcludeStateOnSelected(True)
+
+	def ClearSelectedBuildExclude(self):
+		self.setBuildExcludeStateOnSelected(False)
+
+	def setBuildExcludeStateOnSelected(self, state: bool):
+		if state:
+			color = (
+				self.ownerComp.par.Buildexcludecolorr,
+				self.ownerComp.par.Buildexcludecolorg,
+				self.ownerComp.par.Buildexcludecolorb
+			)
+		else:
+			color = (
+				self.ownerComp.par.Defaultcolorr,
+				self.ownerComp.par.Defaultcolorg,
+				self.ownerComp.par.Defaultcolorb
+			)
+
+		def _action(o: 'OP'):
+			if state:
+				if 'buildExclude' not in o.tags:
+					o.tags.add('buildExclude')
+			else:
+				if 'buildExclude' in o.tags:
+					o.tags.remove('buildExclude')
+			o.color = color
+
+		self.forEachSelected(_action)
+
+	def DestroySelectedCustomPars(self):
+		def _action(o: 'OP'):
+			print('OMG destroy pars', o)
+			if hasattr(o, 'destroyCustomPars'):
+				o.destroyCustomPars()
+		self.forEachSelected(_action)
+
+	def forEachSelected(self, action):
+		editor = self.GetActiveEditor()
+		if not editor:
+			return
+		for o in editor.owner.selectedChildren:
+			action(o)
+
 def _getROP(comp: 'COMP', checkParents=True):
 	if not comp or comp is root:
 		return None
