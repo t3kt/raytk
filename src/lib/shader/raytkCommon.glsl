@@ -46,6 +46,9 @@ Context createDefaultContext() {
 struct MaterialContext {
 	Sdf result;
 	Context context;
+	Ray ray;
+	vec3 lightPos1;
+	vec3 normal;
 };
 
 struct CameraContext {

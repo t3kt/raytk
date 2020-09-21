@@ -43,24 +43,43 @@ vec3 calcNormal(in vec3 pos)
 		e.xxx*map(pos + e.xxx).x);
 }
 
-float getLight(vec3 p) {
-	vec3 lightPos = uLightPos1;
-	vec3 lightVec = normalize(lightPos - p);
-	vec3 n = calcNormal(p);
+//vec3 phongContribForLight(
+//	vec3 diffColor, vec3 specColor, float alpha, vec3 p, vec3 eye,
+//	vec3 lightPos, vec3 lightIntensity, vec3 norm, float occ)
 
-	#ifdef OUTPUT_NORMAL
-	normalOut = vec4(n, 0);
-	#endif
-
-	float diffuse = clamp(dot(n, lightVec), 0., 1.);
-
-	Ray shadowRay = Ray(p+n * SURF_DIST*2., lightVec);
+vec3 getColorDefault(vec3 p, MaterialContext matCtx) {
+	vec3 color = vec3(0.5);  // ambient color
+	color += phongContribForLight(
+		vec3(0.5), // diff
+		vec3(0.7), // spec
+		1.,
+		p,
+		matCtx.ray.pos,
+		matCtx.lightPos1,
+		vec3(1),  // light color
+		matCtx.normal,
+		0  // occlusion
+	);
+	vec3 lightVec = normalize(matCtx.lightPos1 - p);
+	float diffuse = clamp(dot(matCtx.normal, lightVec), 0., 1.);
+	color = vec3(diffuse);
+	Ray shadowRay = Ray(p+matCtx.normal * SURF_DIST*2., lightVec);
 	float shadowDist = castRay(shadowRay, MAX_DIST).x;
-	if (shadowDist < length(lightPos - p)) {
-		diffuse *= .1;
+	if (shadowDist < length(matCtx.lightPos1 - p)) {
+		color *= .1;
 	}
+	return color;
+}
 
-	return diffuse;
+vec3 getColor(vec3 p, MaterialContext matCtx) {
+	vec3 col = vec3(0);
+	float m = matCtx.result.material;
+	// TODO: material blending
+
+	if (false) {}
+	// #include <materialParagraph>
+
+	return getColorDefault(p, matCtx);
 }
 
 #ifndef THIS_USE_CAM_FUNC
@@ -119,6 +138,12 @@ void main()
 	depthOut = TDOutputSwizzle(vec4(vec3(outDepth), 1));
 	#endif
 
+	MaterialContext matCtx;
+	matCtx.result = res;
+	matCtx.context = createDefaultContext();
+	matCtx.lightPos1 = uLightPos1;
+	matCtx.ray= ray;
+
 	if (res.x > 0.0 && res.x < renderDepth) {
 		vec3 p = ray.pos + ray.dir * res.x;
 		#ifdef OUTPUT_WORLDPOS
@@ -133,9 +158,12 @@ void main()
 		//depthOut = TDOutputSwizzle(vec4(vec3(res.x)))
 //		#endif
 
-		float diffuse = getLight(p);
-		col = vec3(diffuse);
+		matCtx.normal = calcNormal(p);
+		col = getColor(p, matCtx);
 
+		#ifdef OUTPUT_NORMAL
+		normalOut = vec4(matCtx.normal, 0);
+		#endif
 		#ifdef OUTPUT_COLOR
 		colorOut = TDOutputSwizzle(vec4(col, 1));
 		#endif
@@ -160,5 +188,4 @@ void main()
 		orbitOut = vec4(0);
 		#endif
 	}
-
 }
