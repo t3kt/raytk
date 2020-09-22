@@ -189,3 +189,9 @@ float sdCrossSmooth(vec3 p, vec3 size, float r)
 	float dc = fBox2(p.zx,size.zx);
 	return fOpUnionRound(da,fOpUnionRound(db,dc,r), r);
 }
+
+float sdLink( vec3 p, float len, float radius, float thick )
+{
+	vec3 q = vec3(p.x, max(abs(p.y)-len,0.0), p.z);
+	return length(vec2(length(q.xy)-radius,q.z)) - thick;
+}
