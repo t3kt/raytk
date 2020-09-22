@@ -56,9 +56,7 @@ struct CameraContext {
 };
 
 mat3 rotateMatrix(vec3 r) {
-	return TDRotateOnAxis(r.x, vec3(1, 0, 0)) *
-		TDRotateOnAxis(r.y, vec3(0, 1, 0)) *
-		TDRotateOnAxis(r.z, vec3(0, 0, 1));
+	return TDRotateX(r.x) * TDRotateY(r.y) * TDRotateZ(r.z);
 }
 
 
