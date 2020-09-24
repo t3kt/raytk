@@ -25,3 +25,21 @@ vec3 phongContribForLight(
 	}
 	return lightIntensity * (diffColor * dotLN + specColor * pow(dotRV, alpha)) *sqrt(occ);
 }
+
+// http://iquilezles.org/www/articles/checkerfiltering/checkerfiltering.htm
+float checkersGradBox(in vec2 p)
+{
+	// filter kernel
+	vec2 w = fwidth(p) + 0.001;
+	// analytical integral (box filter)
+	vec2 i = 2.0*(abs(fract((p-0.5*w)*0.5)-0.5)-abs(fract((p+0.5*w)*0.5)-0.5))/w;
+
+	// xor pattern
+	// return 0.5 - 0.5*i.x*i.y+smoothstep(fract(p.x), 0.0, 0.1)-smoothstep(fract(p.x), 0.2, 1);
+	p*= 1.;
+	float coarse = step(fract(p.x), 0.55)-step(fract(p.x), 0.5)+step(fract(p.y), 0.55)-step(fract(p.y), 0.5);
+	p*= 3;
+	float fine = step(fract(p.x), 0.55)-step(fract(p.x), 0.5)+step(fract(p.y), 0.55)-step(fract(p.y), 0.5);
+
+	return coarse+fine*0.5;//step(fract(p.x), 0.55)-step(fract(p.x), 0.5)+step(fract(p.y), 0.55)-step(fract(p.y), 0.5);
+}

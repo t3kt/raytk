@@ -41,29 +41,29 @@ vec3 calcNormal(in vec3 pos)
 }
 
 // Soft shadow code from http://iquilezles.org/www/articles/rmshadows/rmshadows.htm
-//float softShadow(vec3 p, MaterialContext matCtx)
-//{
-////	float mint = uShadow.x;
-////	float maxt = uShadow.y;
-////	float k = uShadow.z;
-//	float mint = 0.1;
-//	float maxt = 2.0;
-//	float k = 0.5;  // hardness
-//	float res = 1.0;
-//	float ph = 1e20;
-//	for (float t=mint; t<maxt;)
-//	{
-//		float h = map(p + matCtx.ray.pos*t).x;
-//		if (h<0.001)
-//		return 0.0;
-//		float y = h*h/(2.0*ph);
-//		float d = sqrt(h*h-y*y);
-//		res = min(res, k*d/max(0.0, t-y));
-//		ph = h;
-//		t += h;
-//	}
-//	return res;
-//}
+float softShadow(vec3 p, MaterialContext matCtx)
+{
+//	float mint = uShadow.x;
+//	float maxt = uShadow.y;
+//	float k = uShadow.z;
+	float mint = 0.1;
+	float maxt = 2.0;
+	float k = 0.5;  // hardness
+	float res = 1.0;
+	float ph = 1e20;
+	for (float t=mint; t<maxt;)
+	{
+		float h = map(p + matCtx.ray.pos*t).x;
+		if (h<0.001)
+		return 0.0;
+		float y = h*h/(2.0*ph);
+		float d = sqrt(h*h-y*y);
+		res = min(res, k*d/max(0.0, t-y));
+		ph = h;
+		t += h;
+	}
+	return res;
+}
 
 float calcShadow(in vec3 p, MaterialContext matCtx) {
 	vec3 lightVec = normalize(matCtx.lightPos1 - p);
@@ -113,13 +113,17 @@ vec3 getColorDefault(vec3 p, MaterialContext matCtx) {
 	vec3 lightVec = normalize(matCtx.lightPos1 - p);
 	float diffuse = clamp(dot(matCtx.normal, lightVec), 0., 1.);
 	color = vec3(diffuse);
-	color *= calcShadow(p, matCtx);
+//	color *= calcShadow(p, matCtx);
+	color *= softShadow(p, matCtx);
 	return color;
 }
 
 vec3 getColor(vec3 p, MaterialContext matCtx) {
 	vec3 col = vec3(0);
 	int m = int(matCtx.result.material);
+	#ifdef OUTPUT_DEBUG
+	debugOut.x = m;
+	#endif
 	// TODO: material blending
 
 	if (false) {}

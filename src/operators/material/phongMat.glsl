@@ -5,7 +5,7 @@ Sdf thismap(CoordT p, ContextT ctx) {
 }
 
 vec3 THIS_getColor(vec3 p, MaterialContext matCtx) {
-	vec3 col = vec3(0);
+	vec3 col = vec3(0.5);
 	vec3 lightVec = normalize(matCtx.lightPos1 - p);
 	col += phongContribForLight(
 		THIS_Diffusecolor,
@@ -20,6 +20,7 @@ vec3 THIS_getColor(vec3 p, MaterialContext matCtx) {
 	);
 
 	vec3 lightDir = normalize(matCtx.lightPos1-p);
-	col *= calcShadow(p, matCtx);
+//	col *= calcShadow(p, matCtx);
+	col *= softShadow(p, matCtx);
 	return col;
 }
