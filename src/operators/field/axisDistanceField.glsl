@@ -1,0 +1,1 @@
+#define thismap(p, ctx)  length(p.THIS_AXIS - THIS_Center)
