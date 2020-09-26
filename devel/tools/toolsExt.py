@@ -1,4 +1,5 @@
 from develCommon import *
+from typing import Callable, Tuple
 import popMenu
 
 # noinspection PyUnreachableCode
@@ -165,29 +166,38 @@ class Tools:
 		self.setBuildExcludeStateOnSelected(False)
 
 	def setBuildExcludeStateOnSelected(self, state: bool):
-		if state:
-			color = (
-				self.ownerComp.par.Buildexcludecolorr,
-				self.ownerComp.par.Buildexcludecolorg,
-				self.ownerComp.par.Buildexcludecolorb
-			)
-		else:
-			color = (
-				self.ownerComp.par.Defaultcolorr,
-				self.ownerComp.par.Defaultcolorg,
-				self.ownerComp.par.Defaultcolorb
-			)
+		self.setTagAndColorOnSelected(
+			'buildExclude', state,
+			self.getColorPar('Buildexcludecolor' if state else 'Defaultcolor'))
 
+	def SetSelectedFileSync(self):
+		self.setFileSyncOnSelected(True)
+
+	def ClearSelectedFileSync(self):
+		self.setFileSyncOnSelected(False)
+
+	def setFileSyncOnSelected(self, state: bool):
+		self.setTagAndColorOnSelected(
+			'fileSync', state,
+			self.getColorPar('Filesynccolor' if state else 'Defaultcolor'),
+			update=lambda o: _updateFileSyncPars(o, state))
+
+	def setTagAndColorOnSelected(
+			self, tag: str, state: bool, color: Tuple[float, float, float],
+			update: Callable = None):
 		def _action(o: 'OP'):
-			if state:
-				if 'buildExclude' not in o.tags:
-					o.tags.add('buildExclude')
-			else:
-				if 'buildExclude' in o.tags:
-					o.tags.remove('buildExclude')
+			_toggleTag(o, tag, state)
 			o.color = color
-
+			if update:
+				update(o)
 		self.forEachSelected(_action)
+
+	def getColorPar(self, name: str):
+		return (
+			float(self.ownerComp.par[name + 'r']),
+			float(self.ownerComp.par[name + 'g']),
+			float(self.ownerComp.par[name + 'b']),
+		)
 
 	def DestroySelectedCustomPars(self):
 		def _action(o: 'OP'):
@@ -202,6 +212,32 @@ class Tools:
 			return
 		for o in editor.owner.selectedChildren:
 			action(o)
+
+def _updateFileSyncPars(o: 'OP', state: bool):
+	if o.isDAT:
+		par = o.par['syncfile']
+		if par is not None:
+			par.expr = ''
+			par.val = state
+			if not state:
+				for par in o.pars('loadonstart', 'loadonstartpulse', 'write', 'writepulse'):
+					par.expr = ''
+					par.val = False
+		else:
+			for par in o.pars('loadonstart', 'loadonstartpulse', 'write', 'writepulse'):
+				par.expr = ''
+				par.val = state
+	else:
+		# TODO: support for other types of OPs
+		raise Exception(f'updateFileSyncPars does not yet support op: {o}')
+
+def _toggleTag(o: 'OP', tag: str, state: bool):
+	if not o:
+		return
+	if state:
+		o.tags.add(tag)
+	elif tag in o.tags:
+		o.tags.remove(tag)
 
 def _getROP(comp: 'COMP', checkParents=True):
 	if not comp or comp is root:
