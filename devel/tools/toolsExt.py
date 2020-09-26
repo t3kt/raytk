@@ -93,6 +93,8 @@ class Tools:
 		tox = rop.par.externaltox.eval()
 		rop.save(tox)
 		ui.status = f'Saved TOX {tox} (version: {rop.op("opDefinition").par.Raytkopversion})'
+		for dat in getToolkit().ops('opfind_rops', 'opCategoryTable'):
+			dat.cook(force=True)
 
 	@staticmethod
 	def updateROPParams(rop: 'COMP'):
