@@ -2,6 +2,7 @@ uniform vec3 uCamPos;
 uniform vec3 uCamRot;  // in radians
 uniform float uCamFov;  // in radians
 uniform vec3 uLightPos1;
+uniform vec3 uLightColor1 = vec3(1);
 uniform float uUseRenderDepth;
 
 
@@ -215,6 +216,7 @@ void main()
 	matCtx.result = res;
 	matCtx.context = createDefaultContext();
 	matCtx.lightPos1 = uLightPos1;
+	matCtx.lightColor1 = uLightColor1;
 	matCtx.ray= ray;
 
 	if (res.x > 0.0 && res.x < renderDepth) {

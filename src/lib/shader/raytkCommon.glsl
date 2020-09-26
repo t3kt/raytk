@@ -48,6 +48,7 @@ struct MaterialContext {
 	Context context;
 	Ray ray;
 	vec3 lightPos1;
+	vec3 lightColor1;
 	vec3 normal;
 };
 
