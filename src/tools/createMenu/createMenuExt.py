@@ -4,14 +4,16 @@ import re
 if False:
 	# noinspection PyUnresolvedReferences
 	from _stubs import *
-	from typing import Any
+	from _stubs.ListerExt import ListerExt
+	from typing import Any, Union, Optional
 	ipar.createMenuState = Any()
 
 class CreateMenu:
 	def __init__(self, ownerComp: 'COMP'):
 		self.ownerComp = ownerComp
 		self.opTable = self.ownerComp.op('opTable')
-		# print(info)
+		self.lister = self.ownerComp.op('lister')  # type: Union[COMP, ListerExt]
+		self.window = self.ownerComp.op('window')  # type: windowCOMP
 
 	@staticmethod
 	def buildListTable(dat: 'DAT', opTable: 'DAT'):
@@ -26,29 +28,67 @@ class CreateMenu:
 					dat.appendRow(['    ' + name, name, opTable[name, 'path'], 'op'])
 
 	def onItemClick(self, info: dict):
-		print(self.ownerComp, 'OMG onItemClick', repr(info))
 		rowData = info.get('rowData')
 		rowObject = rowData and rowData.get('rowObject')
 		path = rowObject and rowObject.get('path')
-		print(' .... path: ', repr(path))
 		if not path:
 			return
 		self.CreateOp(path)
-		self.ownerComp.op('window').par.winclose.pulse()
+		self.Close()
+
+	def onFilterFieldKey(self, key: str):
+		table = self.ownerComp.op('prepared_op_table')
+		if table.numRows < 2:
+			return
+		selectedRows = self.lister.SelectedRows
+		if selectedRows:
+			selPath = str(table[selectedRows[0]+1, 'path'] or '')
+		else:
+			selPath = None
+		if key == 'enter':
+			if selPath:
+				self.CreateOp(selPath)
+				self.Close()
+		elif key in ['up', 'down']:
+			if not selectedRows:
+				if key == 'down':
+					selRow = 0
+				else:
+					selRow = table.numRows - 2
+			else:
+				offset = 1 if key == 'down' else -1
+				selRow = selectedRows[0] + offset
+				if selRow >= table.numRows - 1:
+					selRow = 0
+				elif selRow < 0:
+					selRow = table.numRows - 2
+			for row in selectedRows:
+				self.lister.DeselectRow(row)
+			self.lister.SelectRow(selRow)
+
+	def updateRowSelection(self, selRow: 'Optional[int]'):
+		for row in self.lister.SelectedRows:
+			self.lister.DeselectRow(row)
+		if selRow is not None:
+			self.lister.SelectRow(selRow)
 
 	def Close(self):
-		self.ownerComp.op('window').par.winclose.pulse()
+		self.window.par.winclose.pulse()
 
 	def Show(self, _=None):
 		self.ClearFilter()
-		self.ownerComp.op('window').par.winopen.pulse()
-		field = self.ownerComp.op('filterText_textfield/stringField0/field')  # type: fieldCOMP
+		self.window.par.winopen.pulse()
 		run('args[0].ClearFilter()', self, delayFrames=3)
-		run('args[0].setKeyboardFocus()', field, delayFrames=5)
+		field = self.ownerComp.op('filterText_textfield/stringField0/field')  # type: fieldCOMP
+		if field:
+			run('args[0].setKeyboardFocus()', field, delayFrames=5)
 
-	@staticmethod
-	def ClearFilter():
-		ipar.createMenuState.Filtertext = ''
+	def ClearFilter(self):
+		self.setFilter('')
+
+	def setFilter(self, val: str):
+		ipar.createMenuState.Filtertext = val
+		self.updateRowSelection(None)
 
 	def CreateOp(self, masterPath: str):
 		if not masterPath:
