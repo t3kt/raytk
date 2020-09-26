@@ -118,19 +118,36 @@ vec3 getColorDefault(vec3 p, MaterialContext matCtx) {
 	return color;
 }
 
+vec3 getColorDefault2(vec3 p, MaterialContext matCtx) {
+	vec3 sunDir = normalize(matCtx.lightPos1);
+	float occ = calcAO(p, matCtx.normal);
+	vec3 mate = vec3(0.28);
+	vec3 sunColor = vec3(5.8, 4.0, 3.5);
+	vec3 skyColor = vec3(0.5, 0.8, 0.9);
+	float sunDiffuse = clamp(dot(matCtx.normal, sunDir), 0, 1.);
+	float sunShadow = calcShadow(p+matCtx.normal*0.001, matCtx);
+	float skyDiffuse = clamp(0.5+0.5*dot(matCtx.normal, vec3(0, 1, 0)), 0, 1);
+	float sunSpec = pow(max(dot(-matCtx.ray.dir, matCtx.normal), 0.), 5) * 0.5;
+	vec3 col = mate * sunColor * sunDiffuse * sunShadow;
+	col += mate * skyColor * skyDiffuse;
+	col += mate * sunColor * sunSpec;
+	col *= mix(vec3(0.5), vec3(1.5), occ);
+	return col;
+}
+
 vec3 getColor(vec3 p, MaterialContext matCtx) {
 	vec3 col = vec3(0);
 	int m = int(matCtx.result.material);
-	#ifdef OUTPUT_DEBUG
-	debugOut.x = m;
-	#endif
+//	#ifdef OUTPUT_DEBUG
+//	debugOut.x = m;
+//	#endif
 	// TODO: material blending
 
 	if (false) {}
 	// #include <materialParagraph>
 
 	else {
-		col = getColorDefault(p, matCtx);
+		col = getColorDefault2(p, matCtx);
 	}
 	return col;
 }
