@@ -121,8 +121,10 @@ class Tools:
 
 	def editCurrentROPMaster(self):
 		rop = self.GetCurrentROP()
-		if rop and rop.par.clone:
-			self.NavigateTo(rop.par.clone.eval())
+		if not rop:
+			return
+		rop = rop.par.clone.eval() or rop
+		self.NavigateTo(rop.par.clone.eval())
 
 	def ShowCreateNewRopTypeDialog(self):
 		# noinspection PyUnresolvedReferences
