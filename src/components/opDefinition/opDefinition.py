@@ -4,6 +4,7 @@ import re
 if False:
 	# noinspection PyUnresolvedReferences
 	from _stubs import *
+	from typing import Dict, List
 
 def buildName():
 	host = parent().par.Hostop.eval()
@@ -64,14 +65,17 @@ def buildParamDetailTable(dat: 'DAT'):
 	name = parent().par.Name.eval()
 	params = _getRegularParams()
 	if params:
-		processedTupletNames = set()
+		paramsByTuplet = {}  # type: Dict[str, List[Par]]
 		for par in params:
-			if par.tupletName in processedTupletNames:
-				continue
+			if par.tupletName in paramsByTuplet:
+				paramsByTuplet[par.tupletName].append(par)
+			else:
+				paramsByTuplet[par.tupletName] = [par]
+		for tupletName, tupletPars in paramsByTuplet.items():
+			tupletPars.sort(key=lambda p: p.vecIndex)
 			dat.appendRow(
-				[f'{name}_{par.tupletName}', 'param', len(par.tuplet)] + [
-					f'{name}_{p.name}' for p in par.tuplet])
-			processedTupletNames.add(par.tupletName)
+				[f'{name}_{tupletName}', 'param', len(tupletPars)] + [
+					f'{name}_{p.name}' for p in tupletPars])
 	specialNames = _getSpecialParamNames()
 	if specialNames:
 		parts = []
