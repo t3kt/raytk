@@ -119,6 +119,11 @@ class Tools:
 		inspectPar.startSection = True
 		inspectPar.order = 99999
 
+	def editCurrentROPMaster(self):
+		rop = self.GetCurrentROP()
+		if rop and rop.par.clone:
+			self.NavigateTo(rop.par.clone.eval())
+
 	def ShowCreateNewRopTypeDialog(self):
 		# noinspection PyUnresolvedReferences
 		self.ownerComp.op('newRopTypeDialog').ShowDialog()
