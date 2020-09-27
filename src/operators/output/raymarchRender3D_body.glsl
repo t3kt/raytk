@@ -16,11 +16,15 @@ Sdf map(vec3 q)
 Sdf castRay(Ray ray, float maxDist) {
 	float dist = 0;
 	Sdf res;
-	for (int i = 0; i < MAX_STEPS; i++) {
+	int i;
+	for (i = 0; i < MAX_STEPS; i++) {
 		vec3 p = ray.pos + ray.dir * dist;
 		res = map(p);
 		dist += res.x;
 		if (dist < SURF_DIST) {
+			#ifdef RAYTK_STEPS_IN_SDF
+			res.steps = i + 1;
+			#endif
 			return res;
 		}
 		if (dist > maxDist) {
@@ -28,6 +32,9 @@ Sdf castRay(Ray ray, float maxDist) {
 		}
 	}
 	res.x = dist;
+	#ifdef RAYTK_STEPS_IN_SDF
+	res.steps = i + 1;
+	#endif
 	return res;
 }
 
