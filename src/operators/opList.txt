@@ -44,7 +44,7 @@ sampledPointMat	/raytk/operators/material/sampledPointMat	/raytk/operators/mater
 customFilter	/raytk/operators/misc/customFilter	/raytk/operators/misc		raytkOP	misc	misc/customFilter	0
 customGen	/raytk/operators/misc/customGen	/raytk/operators/misc		raytkOP	misc	misc/customGen	1
 pointMapRender	/raytk/operators/output/pointMapRender	/raytk/operators/output		raytkOP raytkOutput	output	output/pointMapRender	4
-raymarchRender3D	/raytk/operators/output/raymarchRender3D	/raytk/operators/output		raytkOP raytkOutput	output	output/raymarchRender3D	13
+raymarchRender3D	/raytk/operators/output/raymarchRender3D	/raytk/operators/output		raytkOP raytkOutput	output	output/raymarchRender3D	15
 render2D	/raytk/operators/output/render2D	/raytk/operators/output		raytkOP raytkOutput	output	output/render2D	4
 apollonianSdf	/raytk/operators/sdf/apollonianSdf	/raytk/operators/sdf		raytkOP	sdf	sdf/apollonianSdf	0
 boxFrameSdf	/raytk/operators/sdf/boxFrameSdf	/raytk/operators/sdf		raytkOP	sdf	sdf/boxFrameSdf	0

@@ -99,27 +99,6 @@ float calcAO( in vec3 pos, in vec3 nor )
 }
 
 vec3 getColorDefault(vec3 p, MaterialContext matCtx) {
-	vec3 color = vec3(0.5);  // ambient color
-	color += phongContribForLight(
-		vec3(0.5), // diff
-		vec3(0.7), // spec
-		1.,
-		p,
-		matCtx.ray.pos,
-		matCtx.lightPos1,
-		vec3(1),  // light color
-		matCtx.normal,
-		0  // occlusion
-	);
-	vec3 lightVec = normalize(matCtx.lightPos1 - p);
-	float diffuse = clamp(dot(matCtx.normal, lightVec), 0., 1.);
-	color = vec3(diffuse);
-//	color *= calcShadow(p, matCtx);
-	color *= softShadow(p, matCtx);
-	return color;
-}
-
-vec3 getColorDefault2(vec3 p, MaterialContext matCtx) {
 	vec3 sunDir = normalize(matCtx.lightPos1);
 	float occ = calcAO(p, matCtx.normal);
 	vec3 mate = vec3(0.28);
@@ -136,21 +115,35 @@ vec3 getColorDefault2(vec3 p, MaterialContext matCtx) {
 	return col;
 }
 
-vec3 getColor(vec3 p, MaterialContext matCtx) {
+vec3 getColorInner(vec3 p, MaterialContext matCtx, int m) {
 	vec3 col = vec3(0);
-	int m = int(matCtx.result.material);
 //	#ifdef OUTPUT_DEBUG
 //	debugOut.x = m;
 //	#endif
-	// TODO: material blending
 
 	if (false) {}
 	// #include <materialParagraph>
 
 	else {
-		col = getColorDefault2(p, matCtx);
+		col = getColorDefault(p, matCtx);
 	}
 	return col;
+}
+
+vec3 getColor(vec3 p, MaterialContext matCtx) {
+	vec3 col = vec3(0);
+	float ratio = matCtx.result.interpolant;
+	int m1 = int(matCtx.result.material);
+	int m2 = int(matCtx.result.material2);
+	if (ratio <= 0) {
+		return getColorInner(p, matCtx, m1);
+	} else if (ratio >= 1) {
+		return getColorInner(p, matCtx, m2);
+	} else {
+		vec3 col1 = getColorInner(p, matCtx, m1);
+		vec3 col2 = getColorInner(p, matCtx, m2);
+		return mix(col1, col2, ratio);
+	}
 }
 
 #ifndef THIS_USE_CAM_FUNC
