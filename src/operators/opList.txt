@@ -30,7 +30,7 @@ modulo1D	/raytk/operators/filter/modulo1D	/raytk/operators/filter		raytkOP	filte
 modulo2D	/raytk/operators/filter/modulo2D	/raytk/operators/filter		raytkOP	filter	filter/modulo2D	1
 modulo3D	/raytk/operators/filter/modulo3D	/raytk/operators/filter		raytkOP	filter	filter/modulo3D	1
 reflect	/raytk/operators/filter/reflect	/raytk/operators/filter		raytkOP	filter	filter/reflect	1
-rotate	/raytk/operators/filter/rotate	/raytk/operators/filter		raytkOP	filter	filter/rotate	2
+rotate	/raytk/operators/filter/rotate	/raytk/operators/filter		raytkOP	filter	filter/rotate	3
 round	/raytk/operators/filter/round	/raytk/operators/filter		raytkOP	filter	filter/round	1
 scale	/raytk/operators/filter/scale	/raytk/operators/filter		raytkOP	filter	filter/scale	2
 transform	/raytk/operators/filter/transform	/raytk/operators/filter		raytkOP	filter	filter/transform	0
