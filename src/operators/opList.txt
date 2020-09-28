@@ -2,12 +2,14 @@ name	path	parentPath	wirePath	tags	category	fullName	opVersion
 lookAtCamera	/raytk/operators/camera/lookAtCamera	/raytk/operators/camera		raytkOP	camera	camera/lookAtCamera	0
 orthoCamera	/raytk/operators/camera/orthoCamera	/raytk/operators/camera		raytkOP	camera	camera/orthoCamera	0
 splitCamera	/raytk/operators/camera/splitCamera	/raytk/operators/camera		raytkOP	camera	camera/splitCamera	0
+blend	/raytk/operators/combine/blend	/raytk/operators/combine		raytkOP	combine	combine/blend	0
 combineFields	/raytk/operators/combine/combineFields	/raytk/operators/combine		raytkOP	combine	combine/combineFields	2
 iterationSwitch	/raytk/operators/combine/iterationSwitch	/raytk/operators/combine		raytkOP	combine	combine/iterationSwitch	1
 simpleDiff	/raytk/operators/combine/simpleDiff	/raytk/operators/combine		raytkOP	combine	combine/simpleDiff	0
 simpleIntersect	/raytk/operators/combine/simpleIntersect	/raytk/operators/combine		raytkOP	combine	combine/simpleIntersect	1
 simpleUnion	/raytk/operators/combine/simpleUnion	/raytk/operators/combine		raytkOP	combine	combine/simpleUnion	2
 smoothUnion	/raytk/operators/combine/smoothUnion	/raytk/operators/combine		raytkOP	combine	combine/smoothUnion	2
+switch	/raytk/operators/combine/switch	/raytk/operators/combine		raytkOP	combine	combine/switch	0
 coordTo2D	/raytk/operators/convert/coordTo2D	/raytk/operators/convert		raytkOP	convert	convert/coordTo2D	1
 coordTo3D	/raytk/operators/convert/coordTo3D	/raytk/operators/convert		raytkOP	convert	convert/coordTo3D	1
 floatToSdf	/raytk/operators/convert/floatToSdf	/raytk/operators/convert		raytkOP	convert	convert/floatToSdf	1
