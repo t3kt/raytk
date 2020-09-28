@@ -54,6 +54,7 @@ boxSdf	/raytk/operators/sdf/boxSdf	/raytk/operators/sdf		raytkOP	sdf	sdf/boxSdf	
 crossSdf	/raytk/operators/sdf/crossSdf	/raytk/operators/sdf		raytkOP	sdf	sdf/crossSdf	0
 cylinderSdf	/raytk/operators/sdf/cylinderSdf	/raytk/operators/sdf		raytkOP	sdf	sdf/cylinderSdf	0
 linkSdf	/raytk/operators/sdf/linkSdf	/raytk/operators/sdf		raytkOP	sdf	sdf/linkSdf	0
+mandelboxSdf	/raytk/operators/sdf/mandelboxSdf	/raytk/operators/sdf		raytkOP	sdf	sdf/mandelboxSdf	0
 mandelbulbSdf	/raytk/operators/sdf/mandelbulbSdf	/raytk/operators/sdf		raytkOP	sdf	sdf/mandelbulbSdf	0
 mengerSpongeSdf	/raytk/operators/sdf/mengerSpongeSdf	/raytk/operators/sdf		raytkOP	sdf	sdf/mengerSpongeSdf	0
 planeSdf	/raytk/operators/sdf/planeSdf	/raytk/operators/sdf		raytkOP	sdf	sdf/planeSdf	1
