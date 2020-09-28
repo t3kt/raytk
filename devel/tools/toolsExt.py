@@ -126,6 +126,16 @@ class Tools:
 		rop = rop.par.clone.eval() or rop
 		self.NavigateTo(rop.par.clone.eval())
 
+	def setCurrentROPBeta(self, beta: bool):
+		rops = self.getCurrentROPs()
+		color = self.getColorPar('Betacolor' if beta else 'Defaultcolor')
+		for rop in rops:
+			opDef = rop.op('opDefinition')
+			if opDef:
+				_toggleTag(opDef, 'raytkBeta', beta)
+				opDef.color = color
+			rop.color = color
+
 	def ShowCreateNewRopTypeDialog(self):
 		# noinspection PyUnresolvedReferences
 		self.ownerComp.op('newRopTypeDialog').ShowDialog()
@@ -168,22 +178,10 @@ class Tools:
 			]
 		)
 
-	def SetSelectedBuildExclude(self):
-		self.setBuildExcludeStateOnSelected(True)
-
-	def ClearSelectedBuildExclude(self):
-		self.setBuildExcludeStateOnSelected(False)
-
 	def setBuildExcludeStateOnSelected(self, state: bool):
 		self.setTagAndColorOnSelected(
 			'buildExclude', state,
 			self.getColorPar('Buildexcludecolor' if state else 'Defaultcolor'))
-
-	def SetSelectedFileSync(self):
-		self.setFileSyncOnSelected(True)
-
-	def ClearSelectedFileSync(self):
-		self.setFileSyncOnSelected(False)
 
 	def setFileSyncOnSelected(self, state: bool):
 		self.setTagAndColorOnSelected(
