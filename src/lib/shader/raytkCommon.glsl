@@ -210,3 +210,10 @@ vec4 quantize(vec4 p, vec4 size, vec4 offset, vec4 smoothing) {
 	p = (p + offset) / size;
 	return ((floor(p) + quantizeGain(fract(p), smoothing)) * size) - offset;
 }
+
+float onion(float d, float thickness) {
+	return abs(d)-thickness;
+}
+vec4 onion(vec4 d, float thickness) {
+	return abs(d)-thickness;
+}

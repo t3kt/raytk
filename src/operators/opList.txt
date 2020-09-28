@@ -30,6 +30,7 @@ limitField	/raytk/operators/filter/limitField	/raytk/operators/filter	raytkOP	fi
 modulo1D	/raytk/operators/filter/modulo1D	/raytk/operators/filter	raytkOP	filter	filter/modulo1D	1	
 modulo2D	/raytk/operators/filter/modulo2D	/raytk/operators/filter	raytkOP	filter	filter/modulo2D	1	
 modulo3D	/raytk/operators/filter/modulo3D	/raytk/operators/filter	raytkOP	filter	filter/modulo3D	1	
+onion	/raytk/operators/filter/onion	/raytk/operators/filter	raytkOP	filter	filter/onion	0	
 quantizeCoords	/raytk/operators/filter/quantizeCoords	/raytk/operators/filter	raytkOP	filter	filter/quantizeCoords	0	
 quantizeValue	/raytk/operators/filter/quantizeValue	/raytk/operators/filter	raytkOP	filter	filter/quantizeValue	0	
 reflect	/raytk/operators/filter/reflect	/raytk/operators/filter	raytkOP	filter	filter/reflect	1	
