@@ -15,6 +15,10 @@ class CreateMenu:
 		self.lister = self.ownerComp.op('lister')  # type: Union[COMP, ListerExt]
 		self.window = self.ownerComp.op('window')  # type: windowCOMP
 
+	@property
+	def develEnabled(self):
+		return bool(self.ownerComp.par['Devel'])
+
 	@staticmethod
 	def buildListTable(dat: 'DAT', opTable: 'DAT'):
 		categoryNames = list(set(c.val for c in opTable.col('category')[1:]))
@@ -127,6 +131,9 @@ class CreateMenu:
 			name=master.name + ('1' if tdu.digits(master.name) is None else ''))  # type: COMP
 		newOp.nodeX = posX
 		newOp.nodeY = posY
+		enableCloning = newOp.par.enablecloning  # type: Par
+		enableCloning.expr = ''
+		enableCloning.val = bool(self.develEnabled)
 		ui.undo.endBlock()
 		# if inputOps and len(newOp.inputConnectors):
 		# 	datInputs = [

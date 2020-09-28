@@ -185,6 +185,10 @@ class BuildManager:
 		self.detachDats(comp, recursive=True)
 		createMenu = comp.op('createMenu')  # type: Union[COMP, CreateMenu]
 		createMenu.ClearFilter()
+		par = createMenu.par['Devel']
+		if par is not None:
+			par.expr = ''
+			par.val = False
 		self.detachTox(createMenu)
 		inspector = comp.op('inspector')  # type: Union[COMP, Inspector]
 		inspector.Reset()
