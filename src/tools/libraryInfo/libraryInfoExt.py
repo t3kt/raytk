@@ -1,3 +1,5 @@
+from raytkUtil import ROPInfo, RaytkTag
+
 # noinspection PyUnreachableCode
 if False:
 	# noinspection PyUnresolvedReferences
@@ -14,17 +16,17 @@ class LibraryInfoBuilder:
 		dat.clear()
 		opsRoot = parent.raytk.op('operators')
 		rops = opsRoot and opsRoot.findChildren(type=COMP, tags=['raytk*'], depth=2, maxDepth=2)  # type: List[COMP]
-		dat.appendRow(['name', 'path', 'parentPath', 'tags', 'category', 'fullName', 'opVersion', 'status'])
+		dat.appendRow(['name', 'path', 'parentPath', 'tags', 'category', 'fullName', 'opType', 'opVersion', 'status'])
 		if not rops:
 			return
 		rops.sort(key=lambda o: o.path.lower())
 		for rop in rops:
-			if 'buildExclude' in rop.tags or rop.name.startswith('_'):
+			if RaytkTag.buildExclude in rop.tags or rop.name.startswith('_'):
+				continue
+			ropInfo = ROPInfo(rop)
+			if not ropInfo.isMaster:
 				continue
 			category = rop.parent()
-			opDef = rop.op('opDefinition')
-			version = opDef and opDef.par['Raytkopversion']
-			beta = bool(opDef and 'raytkBeta' in opDef.tags)
 			dat.appendRow([
 				rop.name,
 				rop.path,
@@ -32,8 +34,9 @@ class LibraryInfoBuilder:
 				' '.join(rop.tags),
 				category.name,
 				f'{category.name}/{rop.name}',
-				version if version is not None else '',
-				'beta' if beta else '',
+				ropInfo.opType,
+				ropInfo.opVersion,
+				'beta' if ropInfo.isBeta else '',
 			])
 
 	@staticmethod

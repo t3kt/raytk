@@ -1,4 +1,6 @@
 from typing import Optional, Union
+from raytkUtil import InspectorTargetTypes, VisualizerTypes, ReturnTypes, CoordTypes, ContextTypes
+from raytkUtil import isROP, isROPDef, isOutputROP
 
 # noinspection PyUnreachableCode
 if False:
@@ -18,64 +20,9 @@ if False:
 		Contexttype: str
 		Visualizertype: str
 
-class TargetTypes:
-	none = 'none'
-	rop = 'rop'
-	outputOp = 'outputOp'
-	definitionTable = 'definitionTable'
-
-	values = [
-		none,
-		rop,
-		outputOp,
-		definitionTable,
-	]
-
-class VisualizerTypes:
-	none = 'none'
-	field = 'field'
-	render2d = 'render2d'
-	render3d = 'render3d'
-
-	values = [
-		none,
-		field,
-		render2d,
-		render3d,
-	]
-
-class ReturnTypes:
-	Sdf = 'Sdf'
-	vec4 = 'vec4'
-	float = 'float'
-
-	values = [
-		Sdf,
-		vec4,
-		float,
-	]
-
-class CoordTypes:
-	vec2 = 'vec2'
-	vec3 = 'vec3'
-
-	values = [
-		vec2,
-		vec3,
-	]
-
-class ContextTypes:
-	Context = 'Context'
-	none = 'none'
-
-	values = [
-		Context,
-		none,
-	]
-
 def updateStateMenus():
 	p = parent().par.Targettype  # type: Par
-	p.menuNames = p.menuLabels = TargetTypes.values
+	p.menuNames = p.menuLabels = InspectorTargetTypes.values
 	p = parent().par.Returntype
 	p.menuNames = p.menuLabels = ReturnTypes.values
 	p = parent().par.Coordtype
@@ -93,7 +40,7 @@ class InspectorCore:
 
 	def Reset(self, _=None):
 		self.state.Hastarget = False
-		self.state.Targettype = TargetTypes.none
+		self.state.Targettype = InspectorTargetTypes.none
 		self.state.Rawtarget = ''
 		self.state.Targetcomp = ''
 		self.state.Outputcomp = ''
@@ -105,38 +52,38 @@ class InspectorCore:
 		if not o:
 			self.Reset()
 			return
-		if o.isCOMP and o.name == 'opDefinition' and o.par['Hostop']:
+		if isROPDef(o) and o.par['Hostop']:
 			o = o.par.Hostop.eval()
 		if o.isDAT and o.isTable and o.numRows > 1:
 			self.inspectDefinitionTable(o)
-		elif o.isCOMP and 'raytkOP' in o.tags:
+		elif isROP(o):
 			self.inspectComp(o)
 		else:
 			# TODO: better error handling
 			raise Exception(f'Unsupported OP: {o!r}')
 
 	def inspectDefinitionTable(self, dat: 'DAT'):
-		if 'raytkOP' in dat.parent().tags and dat.name == 'definition' and dat[1, 'path'] == dat.parent().path:
+		if isROP(dat.parent()) and dat.name == 'definition' and dat[1, 'path'] == dat.parent().path:
 			self.inspectComp(dat.parent())
 			return
 		self.state.Rawtarget = dat
-		self.state.Targettype = TargetTypes.definitionTable
+		self.state.Targettype = InspectorTargetTypes.definitionTable
 		self.state.Definitiontable = _pathOrEmpty(dat)
 		comp = op(dat[1, 'path'])
 		self.state.Targetcomp = _pathOrEmpty(comp)
 		self.state.Hastarget = True
 		self.state.Hasownviewer = False
 		self.updateVisualizerType()
-		self.AttachOutputComp(comp if comp and 'raytkOutput' in comp.tags else None)
+		self.AttachOutputComp(comp if isOutputROP(comp) else None)
 
 	def inspectComp(self, comp: 'COMP'):
 		self.state.Rawtarget = _pathOrEmpty(comp)
 		self.state.Targetcomp = _pathOrEmpty(comp)
-		isOutput = 'raytkOutput' in comp.tags
+		isOutput = isOutputROP(comp)
 		if isOutput:
-			self.state.Targettype = TargetTypes.outputOp
+			self.state.Targettype = InspectorTargetTypes.outputOp
 		else:
-			self.state.Targettype = TargetTypes.rop
+			self.state.Targettype = InspectorTargetTypes.rop
 		self.state.Definitiontable = _pathOrEmpty(comp.op('definition'))
 		self.state.Hastarget = True
 		self.state.Hasownviewer = isOutput

@@ -1,4 +1,5 @@
 import re
+from raytkUtil import isROP, getToolkit, getActiveEditor
 
 # noinspection PyUnreachableCode
 if False:
@@ -101,20 +102,20 @@ class CreateMenu:
 		master = op(masterPath)
 		if not master:
 			return None
-		pane = _getActiveEditor()
+		pane = getActiveEditor()
 		if not pane:
 			return master
 		dest = pane.owner
 		if not dest:
 			return
 		try:
-			primarySelected = dest.currentChild if dest and _isRop(dest.currentChild) else None
+			primarySelected = dest.currentChild if dest and isROP(dest.currentChild) else None
 		except:
 			primarySelected = None
 		inputOps = [
 			o
 			for o in dest.selectedChildren
-			if _isRop(o)
+			if isROP(o)
 		]
 		if inputOps and not primarySelected:
 			inputOps.sort(key=lambda o: -o.nodeX)
@@ -161,7 +162,7 @@ class CreateMenu:
 			test = lambda val: bool(tdu.match(filterText, [val], caseSensitive=False))
 		else:
 			test = lambda val: filterText.lower() in val.lower()
-		ignorePrefix = op.raytk.path + '/operators/'
+		ignorePrefix = getToolkit().path + '/operators/'
 		for i in range(1, inDat.numRows):
 			if inDat[i, 'type'] == 'category' or test(inDat[i, 'path'].val.replace(ignorePrefix, '')):
 				dat.appendRow(inDat.row(i))
@@ -180,15 +181,3 @@ class CreateMenu:
 		timer.par.initialize.pulse()
 		timer.par.active = False
 		self.Close()
-
-# noinspection PyTypeChecker
-def _getActiveEditor() -> 'NetworkEditor':
-	pane = ui.panes.current
-	if pane.type == PaneType.NETWORKEDITOR:
-		return pane
-	for pane in ui.panes:
-		if pane.type == PaneType.NETWORKEDITOR:
-			return pane
-
-def _isRop(o: OP):
-	return bool(o) and o.isCOMP and 'raytkOP' in o.tags

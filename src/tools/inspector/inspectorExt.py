@@ -1,4 +1,5 @@
 from typing import Optional, Union
+from raytkUtil import InspectorTargetTypes
 
 # noinspection PyUnreachableCode
 if False:
@@ -12,26 +13,6 @@ if False:
 			Showpointsampling: 'Union[bool, Par]'
 			Samplepointu: 'Union[float, Par]'
 			Samplepointv: 'Union[float, Par]'
-
-class ReturnTypes:
-	Sdf = 'Sdf'
-	vec4 = 'vec4'
-	float = 'float'
-
-	values = [
-		Sdf,
-		vec4,
-		float,
-	]
-
-class CoordTypes:
-	vec2 = 'vec2'
-	vec3 = 'vec3'
-
-	values = [
-		vec2,
-		vec3,
-	]
 
 def updateStateMenus():
 	p = ipar.inspectorState.Selectedbodytab
@@ -57,8 +38,8 @@ class Inspector:
 		if self.core.par.Hastarget:
 			visualizers = self.ownerComp.op('visualizers')
 			visualizerType = self.core.par.Visualizertype.eval()
-			if self.core.par.Targettype != 'outputOp':
-				outputOp = op(visualizers[visualizerType, 'outputOp'])
+			if self.core.par.Targettype != InspectorTargetTypes.outputOp:
+				outputOp = op(visualizers[visualizerType, InspectorTargetTypes.outputOp])
 				self.core.AttachOutputComp(outputOp)
 			self.clearOutputBufferSampleTable()
 			self.Openwindow()
@@ -72,7 +53,6 @@ class Inspector:
 		self.fillOutputBufferSampleTable()
 
 	def onCloseOnBufferSampleClick(self):
-		print('omg onCloseOnBufferSampleClick')
 		ipar.inspectorState.Showpointsampling = False
 		self.clearOutputBufferSampleTable()
 
@@ -104,6 +84,3 @@ class Inspector:
 					value[2],
 					value[3],
 				])
-
-def _pathOrEmpty(o: Optional['OP']):
-	return o.path if o else ''

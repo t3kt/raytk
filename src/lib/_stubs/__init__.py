@@ -102,8 +102,8 @@ _RgbTupletT = _T.Tuple[float, float, float]
 class Colors(_T.Mapping[str, _RgbTupletT], _ABC):
 	def resetToDefaults(self): pass
 
-class Panes(_T.Iterable['Pane'], _T.Iterator['Pane'], _T.Sized):
-	def __getitem__(self, key: _T.Union[int, str]) -> 'Pane': pass
+class Panes(_T.Iterable['_AnyPaneT'], _T.Iterator['_AnyPaneT'], _T.Sized):
+	def __getitem__(self, key: _T.Union[int, str]) -> '_AnyPaneT': pass
 	# noinspection PyShadowingBuiltins
 	def createFloating(
 			self,
@@ -113,7 +113,7 @@ class Panes(_T.Iterable['Pane'], _T.Iterator['Pane'], _T.Sized):
 			monitorSpanWidth=0.9, monitorSpanHeight=0.9,
 	) -> 'Pane': pass
 
-	current: 'Pane'
+	current: '_AnyPaneT'
 
 class Coords(_T.NamedTuple):
 	x: int
@@ -122,13 +122,13 @@ class Coords(_T.NamedTuple):
 	v: float
 
 class Pane:
-	def changeType(self, paneType: 'PaneType') -> 'Pane': pass
+	def changeType(self, paneType: 'PaneType') -> '_AnyPaneT': pass
 	def close(self): pass
-	def floatingCopy(self) -> 'Pane': pass
-	def splitBottom(self) -> 'Pane': pass
-	def splitLeft(self) -> 'Pane': pass
-	def splitRight(self) -> 'Pane': pass
-	def splitTop(self) -> 'Pane': pass
+	def floatingCopy(self) -> '_AnyPaneT': pass
+	def splitBottom(self) -> '_AnyPaneT': pass
+	def splitLeft(self) -> '_AnyPaneT': pass
+	def splitRight(self) -> '_AnyPaneT': pass
+	def splitTop(self) -> '_AnyPaneT': pass
 	def tearAway(self) -> bool: pass
 
 	bottomLeft: 'Coords'
@@ -164,6 +164,8 @@ class NetworkEditor(Pane):
 	def homeSelected(self, zoom=True) -> None: pass
 
 	def placeOPs(self, listOfOPs, inputIndex=None, outputIndex=None, delOP=None, undoName='Operators') -> None: pass
+
+_AnyPaneT = Union['Pane', 'NetworkEditor']
 
 class Undo:
 	globalState: bool
