@@ -4,7 +4,7 @@ from raytkUtil import ROPInfo, RaytkTag
 if False:
 	# noinspection PyUnresolvedReferences
 	from _stubs import *
-	from typing import List
+	from typing import List, Optional
 	parent.raytk = COMP()
 
 class LibraryInfoBuilder:
@@ -49,3 +49,32 @@ class LibraryInfoBuilder:
 				path.rsplit('/', maxsplit=1)[-1],
 				path,
 			])
+
+	def buildROPHelpTable(self, dat: 'tableDAT', opTable: 'DAT'):
+		dat.clear()
+		dat.appendRow(['path', 'opType', 'category', 'summary', 'helpPath'])
+		for row in range(1, opTable.numRows):
+			path = opTable[row, 'path']
+			ropInfo = ROPInfo(path)
+			helpDAT = ropInfo.helpDAT
+			dat.appendRow([
+				path,
+				ropInfo.opType,
+				opTable[row, 'category'],
+				self.extractHelpSummary(ropInfo),
+				helpDAT.path if helpDAT else '',
+			])
+
+	@staticmethod
+	def extractHelpSummary(ropInfo: ROPInfo):
+		dat = ropInfo.helpDAT
+		if not dat or not dat.text:
+			return ''
+		for line in dat.text.splitlines():
+			line = line.strip()
+			if not line:
+				continue
+			if line.startswith('# '):
+				continue
+			return line
+		return ''

@@ -14,13 +14,15 @@ class _OpDefPars:
 	Raytkoptype: 'Union[Par, str]'
 	Raytkopversion: 'Union[Par, str, int]'
 	Raytkversion: 'Union[Par, str]'
+	Help: 'Union[Par, DAT, str]'
 
 class ROPInfo:
 	rop: 'Optional[OP]'
 	opDef: 'Optional[OP]'
 	opDefPar: 'Optional[_OpDefPars]'
 
-	def __init__(self, o: 'OP'):
+	def __init__(self, o: 'Union[OP, str, Cell]'):
+		o = op(o)
 		if not o:
 			return
 		if isROP(o):
@@ -63,6 +65,19 @@ class ROPInfo:
 		if toolkit.op('operators') and toolkit.op('operators').path in self.rop.parent().path:
 			return True
 		return False
+
+	@property
+	def helpDAT(self) -> 'Optional[DAT]':
+		dat = op(self.opDefPar.Help)
+		if dat:
+			return dat
+		dat = self.rop.op('help')
+		if dat and dat.isDAT:
+			return dat
+
+	@helpDAT.setter
+	def helpDAT(self, dat: 'Optional[DAT]'):
+		self.opDefPar.Help = dat or ''
 
 def isROP(o: 'OP'):
 	return bool(o) and o.isCOMP and RaytkTag.raytkOP in o.tags
