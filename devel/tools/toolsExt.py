@@ -136,6 +136,34 @@ class Tools:
 				opDef.color = color
 			rop.color = color
 
+	def setUpCurrentROPHelp(self):
+		rops = self.getCurrentROPs()
+		for rop in rops:
+			self.setUpROPHelp(rop)
+
+	def setUpROPHelp(self, rop: 'COMP'):
+		opDef = rop.op('opDefinition')
+		if not opDef:
+			return
+		par = opDef.par.Help
+		dat = par.eval()
+		ui.undo.startBlock('Set up ROP help for ' + rop.path)
+		try:
+			if not dat:
+				dat = rop.create(textDAT, 'help')
+				dat.nodeY = opDef.nodeY + 500
+				dat.nodeWidth = 350
+				dat.nodeHeight = 175
+				par.val = dat.name
+			if not dat.par.file:
+				dat.par.file = rop.par.externaltox.eval().replace('.tox', '.md')
+			self.setFileSyncOn(dat, True)
+			if not dat.text:
+				dat.text = '# ' + opDef.par.Raytkoptype.eval() + '\n'
+			dat.viewer = True
+		finally:
+			ui.undo.endBlock()
+
 	def ShowCreateNewRopTypeDialog(self):
 		# noinspection PyUnresolvedReferences
 		self.ownerComp.op('newRopTypeDialog').ShowDialog()
@@ -188,6 +216,11 @@ class Tools:
 			'fileSync', state,
 			self.getColorPar('Filesynccolor' if state else 'Defaultcolor'),
 			update=lambda o: _updateFileSyncPars(o, state))
+
+	def setFileSyncOn(self, o: 'DAT', state: bool):
+		_toggleTag(o, 'fileSync', state)
+		o.color = self.getColorPar('Filesynccolor' if state else 'Defaultcolor')
+		_updateFileSyncPars(o, state)
 
 	def setTagAndColorOnSelected(
 			self, tag: str, state: bool, color: Tuple[float, float, float],
