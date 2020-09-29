@@ -600,7 +600,7 @@ class td:
 	Monitors = Monitors
 	Attribute = Attribute
 	me: 'OP'
-	absTime: _T.Any #absTime
+	absTime: 'AbsTime'
 	app: 'App'
 	ext: _T.Any
 	families: dict
@@ -1661,7 +1661,13 @@ class bulletsolverCOMP(COMP):
 def debug(*args):
 	pass
 
+class AbsTime:
+	frame: float
+	seconds: float
+	step: float
+	stepSeconds: float
+
 root = baseCOMP()
-absTime = timeCOMP()
+absTime = AbsTime()
 
 me = None  # type: _AnyOpT
