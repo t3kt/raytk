@@ -1,6 +1,7 @@
 from develCommon import *
 from typing import Callable, Tuple
 import popMenu
+from raytkUtil import RaytkTag, ROPInfo
 
 # noinspection PyUnreachableCode
 if False:
@@ -102,8 +103,9 @@ class Tools:
 			page = rop.customPages[0]
 		else:
 			page = rop.appendCustomPage('Settings')
+		ropInfo = ROPInfo(rop)
 		opDef = rop.op('opDefinition')
-		if rop.ops('definition_1', 'definition_2', 'definition_3', 'definition_4') and 'raytkOutput' not in rop.tags:
+		if ropInfo.hasROPInputs and not ropInfo.isOutput:
 			enablePar = rop.par['Enable']
 			if enablePar is None:
 				enablePar = page.appendToggle('Enable')[0]
@@ -132,7 +134,7 @@ class Tools:
 		for rop in rops:
 			opDef = rop.op('opDefinition')
 			if opDef:
-				_toggleTag(opDef, 'raytkBeta', beta)
+				_toggleTag(opDef, RaytkTag.raytkBeta, beta)
 				opDef.color = color
 			rop.color = color
 

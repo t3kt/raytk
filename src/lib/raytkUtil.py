@@ -18,7 +18,7 @@ class _OpDefPars:
 
 class ROPInfo:
 	rop: 'Optional[OP]'
-	opDef: 'Optional[OP]'
+	opDef: 'Optional[COMP]'
 	opDefPar: 'Optional[_OpDefPars]'
 
 	def __init__(self, o: 'Union[OP, str, Cell]'):
@@ -79,11 +79,19 @@ class ROPInfo:
 	def helpDAT(self, dat: 'Optional[DAT]'):
 		self.opDefPar.Help = dat or ''
 
+	@property
+	def hasROPInputs(self):
+		for conn in self.opDef.inputConnectors:
+			if conn.connections and conn.inOP.isDAT:
+				return True
+		return False
+
+	@property
+	def isOutput(self):
+		return self.rop and RaytkTag.raytkOutput in self.rop.tags
+
 def isROP(o: 'OP'):
 	return bool(o) and o.isCOMP and RaytkTag.raytkOP in o.tags
-
-def isOutputROP(o: 'OP'):
-	return isROP(o) and RaytkTag.raytkOutput in o.tags
 
 def isROPDef(o: 'OP'):
 	return bool(o) and o.isCOMP and o.name == 'opDefinition'

@@ -1,6 +1,6 @@
 from typing import Optional, Union
 from raytkUtil import InspectorTargetTypes, VisualizerTypes, ReturnTypes, CoordTypes, ContextTypes
-from raytkUtil import isROP, isROPDef, isOutputROP
+from raytkUtil import isROP, isROPDef, ROPInfo
 
 # noinspection PyUnreachableCode
 if False:
@@ -73,22 +73,23 @@ class InspectorCore:
 		self.state.Targetcomp = _pathOrEmpty(comp)
 		self.state.Hastarget = True
 		self.state.Hasownviewer = False
+		ropInfo = ROPInfo(comp)
 		self.updateVisualizerType()
-		self.AttachOutputComp(comp if isOutputROP(comp) else None)
+		self.AttachOutputComp(comp if ropInfo.isOutput else None)
 
 	def inspectComp(self, comp: 'COMP'):
 		self.state.Rawtarget = _pathOrEmpty(comp)
 		self.state.Targetcomp = _pathOrEmpty(comp)
-		isOutput = isOutputROP(comp)
-		if isOutput:
+		ropInfo = ROPInfo(comp)
+		if ropInfo.isOutput:
 			self.state.Targettype = InspectorTargetTypes.outputOp
 		else:
 			self.state.Targettype = InspectorTargetTypes.rop
 		self.state.Definitiontable = _pathOrEmpty(comp.op('definition'))
 		self.state.Hastarget = True
-		self.state.Hasownviewer = isOutput
+		self.state.Hasownviewer = ropInfo.isOutput
 		self.updateVisualizerType()
-		self.AttachOutputComp(comp if isOutput else None)
+		self.AttachOutputComp(comp if ropInfo.isOutput else None)
 
 	# noinspection PyTypeChecker
 	def updateVisualizerType(self):
