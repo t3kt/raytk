@@ -159,7 +159,7 @@ class Tools:
 				dat.par.file = rop.par.externaltox.eval().replace('.tox', '.md')
 			self.setFileSyncOn(dat, True)
 			if not dat.text:
-				dat.text = '# ' + opDef.par.Raytkoptype.eval() + '\n'
+				dat.text = f'# {rop.name} ({rop.parent().name})\n\n'
 			dat.viewer = True
 		finally:
 			ui.undo.endBlock()
