@@ -62,7 +62,7 @@ mandelbulbSdf	/raytk/operators/sdf/mandelbulbSdf	/raytk/operators/sdf	raytkOP	sd
 mengerSpongeSdf	/raytk/operators/sdf/mengerSpongeSdf	/raytk/operators/sdf	raytkOP	sdf	sdf/mengerSpongeSdf	1	
 planeSdf	/raytk/operators/sdf/planeSdf	/raytk/operators/sdf	raytkOP	sdf	sdf/planeSdf	2	
 sierpinskiTetrahedronSdf	/raytk/operators/sdf/sierpinskiTetrahedronSdf	/raytk/operators/sdf	raytkOP	sdf	sdf/sierpinskiTetrahedronSdf	1	beta
-sphereSdf	/raytk/operators/sdf/sphereSdf	/raytk/operators/sdf	raytkOP	sdf	sdf/sphereSdf	1	
+sphereSdf	/raytk/operators/sdf/sphereSdf	/raytk/operators/sdf	raytkOP	sdf	sdf/sphereSdf	2	
 tetrahedronSdf	/raytk/operators/sdf/tetrahedronSdf	/raytk/operators/sdf	raytkOP	sdf	sdf/tetrahedronSdf	1	
 torusSdf	/raytk/operators/sdf/torusSdf	/raytk/operators/sdf	raytkOP	sdf	sdf/torusSdf	1	
 circleSdf	/raytk/operators/sdf2d/circleSdf	/raytk/operators/sdf2d	raytkOP	sdf2d	sdf2d/circleSdf	1	
