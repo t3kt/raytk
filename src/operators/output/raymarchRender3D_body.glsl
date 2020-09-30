@@ -13,7 +13,7 @@ uniform float uUseRenderDepth;
 Sdf map(vec3 q)
 {
 	Sdf res = thismap(q, createDefaultContext());
-//	res.x *= 0.5;
+	res.x *= 0.5;
 	return res;
 }
 
