@@ -212,12 +212,14 @@ class ReturnTypes:
 	vec4 = 'vec4'
 	float = 'float'
 	Ray = 'Ray'
+	Light = 'Light'
 
 	values = [
 		Sdf,
 		vec4,
 		float,
 		Ray,
+		Light,
 	]
 
 class CoordTypes:

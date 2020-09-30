@@ -50,12 +50,21 @@ Context createDefaultContext() {
 	return ctx;
 }
 
+struct Light {
+	vec3 pos;
+	vec3 color;  // Includes brightness. May be determined specific to a particular point in space (such as attentuation).
+};
+
+struct LightContext {
+	Sdf result;
+	vec3 normal;
+};
+
 struct MaterialContext {
 	Sdf result;
 	Context context;
 	Ray ray;
-	vec3 lightPos1;
-	vec3 lightColor1;
+	Light light;
 	vec3 normal;
 };
 

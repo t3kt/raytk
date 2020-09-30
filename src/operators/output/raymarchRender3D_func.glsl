@@ -10,3 +10,11 @@ Ray getViewRay() {
 }
 
 #endif
+
+#ifdef THIS_USE_LIGHT_FUNC
+
+Light getLight(vec3 p, LightContext ctx) {
+	return inputOp3(p, ctx);
+}
+
+#endif

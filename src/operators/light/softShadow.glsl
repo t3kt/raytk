@@ -11,7 +11,7 @@ float thismap(vec3 p, MaterialContext ctx) {
 	// Something about this is very broken
 	for (float t=mint; t<maxt;)
 	{
-		float h = map(p + ctx.lightPos1*t).x;
+		float h = map(p + ctx.light.pos*t).x;
 		if (h<0.001)
 		return 0.0;
 		res = min(res, k*h/t);

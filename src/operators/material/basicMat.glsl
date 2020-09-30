@@ -5,10 +5,10 @@ Sdf thismap(CoordT p, ContextT ctx) {
 }
 
 vec3 THIS_getColor(vec3 p, MaterialContext matCtx) {
-	vec3 sunDir = normalize(matCtx.lightPos1);
+	vec3 sunDir = normalize(matCtx.light.pos);
 	float occ = calcAO(p, matCtx.normal);
 	vec3 mate = THIS_Basecolor;
-	vec3 sunColor = matCtx.lightColor1;
+	vec3 sunColor = matCtx.light.color;
 	vec3 skyColor = THIS_Skycolor;
 	float sunDiffuse = clamp(dot(matCtx.normal, sunDir), 0, 1.);
 	float sunShadow = 1.;

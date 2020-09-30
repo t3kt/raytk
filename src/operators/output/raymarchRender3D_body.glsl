@@ -1,8 +1,12 @@
 uniform vec3 uCamPos;
 uniform vec3 uCamRot;  // in radians
 uniform float uCamFov;  // in radians
+
+#ifndef THIS_USE_LIGHT_FUNC
 uniform vec3 uLightPos1;
 uniform vec3 uLightColor1 = vec3(1);
+#endif
+
 uniform float uUseRenderDepth;
 
 
@@ -74,10 +78,10 @@ float softShadow(vec3 p, MaterialContext matCtx)
 }
 
 float calcShadow(in vec3 p, MaterialContext matCtx) {
-	vec3 lightVec = normalize(matCtx.lightPos1 - p);
+	vec3 lightVec = normalize(matCtx.light.pos - p);
 	Ray shadowRay = Ray(p+matCtx.normal * SURF_DIST*2., lightVec);
 	float shadowDist = castRay(shadowRay, MAX_DIST).x;
-	if (shadowDist < length(matCtx.lightPos1 - p)) {
+	if (shadowDist < length(matCtx.light.pos - p)) {
 		return 0.1;
 	}
 	return 1.0;
@@ -106,7 +110,7 @@ float calcAO( in vec3 pos, in vec3 nor )
 }
 
 vec3 getColorDefault(vec3 p, MaterialContext matCtx) {
-	vec3 sunDir = normalize(matCtx.lightPos1);
+	vec3 sunDir = normalize(matCtx.light.pos);
 	float occ = calcAO(p, matCtx.normal);
 	vec3 mate = vec3(0.28);
 	vec3 sunColor = vec3(5.8, 4.0, 3.5);
@@ -182,6 +186,15 @@ Ray getViewRay() {
 
 #endif
 
+#ifndef THIS_USE_LIGHT_FUNC
+Light getLight(vec3 p, LightContext lightCtx) {
+	Light light;
+	light.pos = uLightPos1;
+	light.color = uLightColor1;
+	return light;
+}
+#endif
+
 void main()
 {
 	#ifdef OUTPUT_DEBUG
@@ -215,8 +228,6 @@ void main()
 	MaterialContext matCtx;
 	matCtx.result = res;
 	matCtx.context = createDefaultContext();
-	matCtx.lightPos1 = uLightPos1;
-	matCtx.lightColor1 = uLightColor1;
 	matCtx.ray= ray;
 
 	if (res.x > 0.0 && res.x < renderDepth) {
@@ -234,6 +245,10 @@ void main()
 //		#endif
 
 		matCtx.normal = calcNormal(p);
+		LightContext lightCtx;
+		lightCtx.result = res;
+		lightCtx.normal = matCtx.normal;
+		matCtx.light = getLight(p, lightCtx);
 		col = getColor(p, matCtx);
 
 		#ifdef OUTPUT_NORMAL
