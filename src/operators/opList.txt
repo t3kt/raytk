@@ -39,7 +39,7 @@ rotate	/raytk/operators/filter/rotate	/raytk/operators/filter	raytkOP	filter	fil
 round	/raytk/operators/filter/round	/raytk/operators/filter	raytkOP	filter	filter/round	raytk.operators.filter.round	2	
 scale	/raytk/operators/filter/scale	/raytk/operators/filter	raytkOP	filter	filter/scale	raytk.operators.filter.scale	3	
 transform	/raytk/operators/filter/transform	/raytk/operators/filter	raytkOP	filter	filter/transform	raytk.operators.filter.transform	1	
-translate	/raytk/operators/filter/translate	/raytk/operators/filter	raytkOP	filter	filter/translate	raytk.operators.filter.translate	2	
+translate	/raytk/operators/filter/translate	/raytk/operators/filter	raytkOP	filter	filter/translate	raytk.operators.filter.translate	3	
 hardShadow	/raytk/operators/light/hardShadow	/raytk/operators/light	raytkOP	light	light/hardShadow	raytk.operators.light.hardShadow	1	
 pointLight	/raytk/operators/light/pointLight	/raytk/operators/light	raytkOP	light	light/pointLight	raytk.operators.light.pointLight	0	
 softShadow	/raytk/operators/light/softShadow	/raytk/operators/light	raytkOP	light	light/softShadow	raytk.operators.light.softShadow	1	
@@ -53,18 +53,18 @@ pointMapRender	/raytk/operators/output/pointMapRender	/raytk/operators/output	ra
 raymarchRender3D	/raytk/operators/output/raymarchRender3D	/raytk/operators/output	raytkOP raytkOutput	output	output/raymarchRender3D	raytk.operators.output.raymarchRender3D	17	
 render2D	/raytk/operators/output/render2D	/raytk/operators/output	raytkOP raytkOutput	output	output/render2D	raytk.operators.output.render2D	5	
 apollonianSdf	/raytk/operators/sdf/apollonianSdf	/raytk/operators/sdf	raytkOP	sdf	sdf/apollonianSdf	raytk.operators.sdf.apollonianSdf	1	
-boxFrameSdf	/raytk/operators/sdf/boxFrameSdf	/raytk/operators/sdf	raytkOP	sdf	sdf/boxFrameSdf	raytk.operators.sdf.boxFrameSdf	1	
-boxSdf	/raytk/operators/sdf/boxSdf	/raytk/operators/sdf	raytkOP	sdf	sdf/boxSdf	raytk.operators.sdf.boxSdf	2	
+boxFrameSdf	/raytk/operators/sdf/boxFrameSdf	/raytk/operators/sdf	raytkOP	sdf	sdf/boxFrameSdf	raytk.operators.sdf.boxFrameSdf	2	
+boxSdf	/raytk/operators/sdf/boxSdf	/raytk/operators/sdf	raytkOP	sdf	sdf/boxSdf	raytk.operators.sdf.boxSdf	3	
 crossSdf	/raytk/operators/sdf/crossSdf	/raytk/operators/sdf	raytkOP	sdf	sdf/crossSdf	raytk.operators.sdf.crossSdf	1	
-cylinderSdf	/raytk/operators/sdf/cylinderSdf	/raytk/operators/sdf	raytkOP	sdf	sdf/cylinderSdf	raytk.operators.sdf.cylinderSdf	1	
+cylinderSdf	/raytk/operators/sdf/cylinderSdf	/raytk/operators/sdf	raytkOP	sdf	sdf/cylinderSdf	raytk.operators.sdf.cylinderSdf	2	
 linkSdf	/raytk/operators/sdf/linkSdf	/raytk/operators/sdf	raytkOP	sdf	sdf/linkSdf	raytk.operators.sdf.linkSdf	1	
 mandelboxSdf	/raytk/operators/sdf/mandelboxSdf	/raytk/operators/sdf	raytkOP	sdf	sdf/mandelboxSdf	raytk.operators.sdf.mandelboxSdf	1	beta
 mandelbulbSdf	/raytk/operators/sdf/mandelbulbSdf	/raytk/operators/sdf	raytkOP	sdf	sdf/mandelbulbSdf	raytk.operators.sdf.mandelbulbSdf	1	
 mengerSpongeSdf	/raytk/operators/sdf/mengerSpongeSdf	/raytk/operators/sdf	raytkOP	sdf	sdf/mengerSpongeSdf	raytk.operators.sdf.mengerSpongeSdf	1	
-planeSdf	/raytk/operators/sdf/planeSdf	/raytk/operators/sdf	raytkOP	sdf	sdf/planeSdf	raytk.operators.sdf.planeSdf	2	
+planeSdf	/raytk/operators/sdf/planeSdf	/raytk/operators/sdf	raytkOP	sdf	sdf/planeSdf	raytk.operators.sdf.planeSdf	3	
 sierpinskiTetrahedronSdf	/raytk/operators/sdf/sierpinskiTetrahedronSdf	/raytk/operators/sdf	raytkOP	sdf	sdf/sierpinskiTetrahedronSdf	raytk.operators.sdf.sierpinskiTetrahedronSdf	1	beta
 sphereSdf	/raytk/operators/sdf/sphereSdf	/raytk/operators/sdf	raytkOP	sdf	sdf/sphereSdf	raytk.operators.sdf.sphereSdf	2	
 tetrahedronSdf	/raytk/operators/sdf/tetrahedronSdf	/raytk/operators/sdf	raytkOP	sdf	sdf/tetrahedronSdf	raytk.operators.sdf.tetrahedronSdf	1	
-torusSdf	/raytk/operators/sdf/torusSdf	/raytk/operators/sdf	raytkOP	sdf	sdf/torusSdf	raytk.operators.sdf.torusSdf	1	
+torusSdf	/raytk/operators/sdf/torusSdf	/raytk/operators/sdf	raytkOP	sdf	sdf/torusSdf	raytk.operators.sdf.torusSdf	2	
 circleSdf	/raytk/operators/sdf2d/circleSdf	/raytk/operators/sdf2d	raytkOP	sdf2d	sdf2d/circleSdf	raytk.operators.sdf2d.circleSdf	1	
 rectangleSdf	/raytk/operators/sdf2d/rectangleSdf	/raytk/operators/sdf2d	raytkOP	sdf2d	sdf2d/rectangleSdf	raytk.operators.sdf2d.rectangleSdf	1	
