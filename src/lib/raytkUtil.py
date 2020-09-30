@@ -1,4 +1,3 @@
-from dataclasses import dataclass
 from typing import Callable, Union, Optional, Tuple
 
 # noinspection PyUnreachableCode
@@ -91,7 +90,7 @@ class ROPInfo:
 		return RaytkTags.raytkOutput.isOn(self.rop)
 
 def isROP(o: 'OP'):
-	return bool(o) and o.isCOMP and RaytkTags.raytkOP.isOn(o.tags)
+	return bool(o) and o.isCOMP and RaytkTags.raytkOP.isOn(o)
 
 def isROPDef(o: 'OP'):
 	return bool(o) and o.isCOMP and o.name == 'opDefinition'
@@ -110,6 +109,7 @@ _defaultNodeColor = 0.545, 0.545, 0.545
 _buildExcludeColor = 0.1, 0.1, 0.1
 _fileSyncColor = 0.65, 0.5, 1
 _betaColor = 1, 0, 0.5
+_buildLockColor = 0, 0.68, 0.543
 
 class Tag:
 	def __init__(
@@ -122,18 +122,24 @@ class Tag:
 		self.update = update
 
 	def apply(self, o: 'OP', state: bool):
+		"""
+		Add/remove the tag on an OP, and update the color (if applicable), and apply the update function (if applicable)
+		"""
 		self.applyTag(o, state)
-		if self.color:
-			self.applyColor(o, state)
-		if self.update:
-			self.applyUpdate(o, state)
+		self.applyColor(o, state)
+		self.applyUpdate(o, state)
 
 	def applyUpdate(self, o: 'OP', state: bool):
-		assert(self.update is not None)
-		if o:
+		"""
+		Apply the tag's update function to an OP, performing tag-specific changes.
+		"""
+		if o and self.update:
 			self.update(o, state)
 
 	def applyTag(self, o: 'OP', state: bool):
+		"""
+		Add/remove the tag on an OP
+		"""
 		if not o:
 			return
 		if state:
@@ -142,7 +148,11 @@ class Tag:
 			o.tags.remove(self.name)
 
 	def applyColor(self, o: 'OP', state: bool):
-		o.color = self.color if state else _defaultNodeColor
+		"""
+		If applicable, set the color of an OP to either the tag's color or the default color.
+		"""
+		if self.color:
+			o.color = self.color if state else _defaultNodeColor
 
 	def __str__(self):
 		return self.name
@@ -172,6 +182,7 @@ class RaytkTags:
 	raytkOP = Tag('raytkOP')
 	raytkOutput = Tag('raytkOutput')
 	buildExclude = Tag('buildExclude', _buildExcludeColor)
+	buildLock = Tag('buildLock', _buildLockColor)
 	fileSync = Tag('fileSync', _fileSyncColor, _updateFileSyncPars)
 	beta = Tag('raytkBeta', _betaColor)
 

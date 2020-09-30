@@ -1,6 +1,6 @@
 from develCommon import *
 import popMenu
-from raytkUtil import RaytkTags, ROPInfo
+from raytkUtil import RaytkTags, ROPInfo, Tag
 
 # noinspection PyUnreachableCode
 if False:
@@ -207,16 +207,22 @@ class Tools:
 		)
 
 	def setBuildExcludeStateOnSelected(self, state: bool):
-		self.forEachSelected(lambda o: RaytkTags.buildExclude.apply(o, state))
+		self.applyTagToSelected(RaytkTags.buildExclude, state)
+
+	def setBuildLockOnSelected(self, state: bool):
+		self.applyTagToSelected(RaytkTags.buildLock, state)
 
 	def setFileSyncOnSelected(self, state: bool):
-		self.forEachSelected(lambda o: RaytkTags.fileSync.apply(o, state))
+		self.applyTagToSelected(RaytkTags.fileSync, state)
 
 	def DestroySelectedCustomPars(self):
 		def _action(o: 'OP'):
 			if hasattr(o, 'destroyCustomPars'):
 				o.destroyCustomPars()
 		self.forEachSelected(_action)
+
+	def applyTagToSelected(self, tag: 'Tag', state: bool):
+		self.forEachSelected(lambda o: tag.apply(o, state))
 
 	def forEachSelected(self, action):
 		editor = self.GetActiveEditor()

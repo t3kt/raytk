@@ -43,7 +43,7 @@ class BuildManager:
 			self.finalizeToolkitPars(toolkit)
 			self.queueMethodCall('runBuild_stage', stage + 1)
 		elif stage == 6:
-			self.updateBuildInfo(toolkit)
+			self.updateLibraryInfo(toolkit)
 			self.queueMethodCall('runBuild_stage', stage + 1)
 		elif stage == 7:
 			self.removeBuildExcludeOps(toolkit)
@@ -73,11 +73,10 @@ class BuildManager:
 		toolkit.par.reloadcustom = True
 		toolkit.par.reloadbuiltin = True
 
-	def updateBuildInfo(self, toolkit: 'COMP'):
-		self.log('Updating build info')
-		toolkit.op('eval_build_info').cook(force=True)
-		for o in toolkit.ops('buildInfo', 'info'):
-			o.lock = True
+	def updateLibraryInfo(self, toolkit: 'COMP'):
+		self.log('Updating library info')
+		toolkit.op('libraryInfo').par.Forcebuild.pulse()
+		self.lockBuildLockOps(toolkit)
 
 	def processComponents(self, components: 'COMP', thenRun: str = None, runArgs: list = None):
 		self.log(f'Processing components {components}')
@@ -205,6 +204,12 @@ class BuildManager:
 		toRemove = list(comp.findChildren(tags=['buildExclude'], maxDepth=1))
 		for o in toRemove:
 			o.destroy()
+
+	def lockBuildLockOps(self, comp: 'COMP'):
+		self.log(f'Locking build locked ops in {comp}')
+		toLock = list(comp.findChildren(tags=['buildLock'], maxDepth=1))
+		for o in toLock:
+			o.lock = True
 
 	def log(self, message: str):
 		print(message)

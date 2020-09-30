@@ -11,11 +11,18 @@ class LibraryInfoBuilder:
 	def __init__(self, ownerComp: 'COMP'):
 		self.ownerComp = ownerComp
 
+	def Forcebuild(self, _=None):
+		for o in self.ownerComp.ops('build_opTable', 'build_categoryTable', 'build_opHelpTable', 'eval_build_info'):
+			o.cook(force=True)
+		self.ownerComp.op('opTable_writeFile').par.write.pulse()
+
 	@staticmethod
 	def buildROPTable(dat: 'tableDAT'):
 		dat.clear()
 		opsRoot = parent.raytk.op('operators')
-		rops = opsRoot and opsRoot.findChildren(type=COMP, tags=['raytk*'], depth=2, maxDepth=2)  # type: List[COMP]
+		rops = []  # type: List[COMP]
+		if opsRoot:
+			rops = opsRoot.findChildren(type=COMP, tags=['raytk*'], depth=2, maxDepth=2)
 		dat.appendRow(['name', 'path', 'parentPath', 'tags', 'category', 'fullName', 'opType', 'opVersion', 'status'])
 		if not rops:
 			return
