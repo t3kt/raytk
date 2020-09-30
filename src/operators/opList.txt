@@ -33,7 +33,7 @@ modulo2D	/raytk/operators/filter/modulo2D	/raytk/operators/filter	raytkOP	filter
 modulo3D	/raytk/operators/filter/modulo3D	/raytk/operators/filter	raytkOP	filter	filter/modulo3D	raytk.operators.filter.modulo3D	2	
 onion	/raytk/operators/filter/onion	/raytk/operators/filter	raytkOP	filter	filter/onion	raytk.operators.filter.onion	1	
 quantizeCoords	/raytk/operators/filter/quantizeCoords	/raytk/operators/filter	raytkOP	filter	filter/quantizeCoords	raytk.operators.filter.quantizeCoords	1	
-quantizeValue	/raytk/operators/filter/quantizeValue	/raytk/operators/filter	raytkOP	filter	filter/quantizeValue	raytk.operators.filter.quantizeValue	1	
+quantizeValue	/raytk/operators/filter/quantizeValue	/raytk/operators/filter	raytkOP	filter	filter/quantizeValue	raytk.operators.filter.quantizeValue	2	
 reflect	/raytk/operators/filter/reflect	/raytk/operators/filter	raytkOP	filter	filter/reflect	raytk.operators.filter.reflect	2	
 rescaleField	/raytk/operators/filter/rescaleField	/raytk/operators/filter	raytkOP	filter	filter/rescaleField	raytk.operators.filter.rescaleField	2	
 rotate	/raytk/operators/filter/rotate	/raytk/operators/filter	raytkOP	filter	filter/rotate	raytk.operators.filter.rotate	4	
