@@ -103,7 +103,7 @@ class InspectorCore:
 				self.state.Visualizertype = VisualizerTypes.field
 
 	def ShowTargetInEditor(self, popup=False):
-		navigateTo(self.state.Rawtarget.eval(), popup=popup)
+		navigateTo(self.state.Rawtarget.eval(), popup=popup, goInto=False)
 
 	def AttachOutputComp(self, o: 'COMP'):
 		self.state.Outputcomp = _pathOrEmpty(o)

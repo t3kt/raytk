@@ -211,16 +211,19 @@ def getEditorPane(name: Optional[str] = None, popup=False):
 	else:
 		return ui.panes.createFloating(type=PaneType.NETWORKEDITOR, name=name)
 
-def navigateTo(o: 'OP', name: Optional[str] = None, popup=False):
+def navigateTo(o: 'OP', name: Optional[str] = None, popup=False, goInto=True):
 	if not o:
 		return
 	pane = getEditorPane(name, popup)
 	if not pane:
 		return
-	pane.owner = o.parent()
-	o.current = True
-	o.selected = True
-	pane.homeSelected(zoom=False)
+	if goInto and o.isCOMP:
+		pane.owner = o
+	else:
+		pane.owner = o.parent()
+		o.current = True
+		o.selected = True
+		pane.homeSelected(zoom=False)
 
 class VisualizerTypes:
 	none = 'none'
