@@ -1,6 +1,6 @@
 from typing import Optional, Union
 from raytkUtil import InspectorTargetTypes, VisualizerTypes, ReturnTypes, CoordTypes, ContextTypes
-from raytkUtil import isROP, isROPDef, ROPInfo
+from raytkUtil import isROP, isROPDef, ROPInfo, navigateTo
 
 # noinspection PyUnreachableCode
 if False:
@@ -11,7 +11,7 @@ if False:
 		Hastarget: bool
 		Hasownviewer: bool
 		Targettype: 'Union[str, Par]'
-		Rawtarget: 'Union[str, OP, DAT, COMP]'
+		Rawtarget: 'Union[str, OP, DAT, COMP, Par]'
 		Definitiontable: 'Union[str, DAT]'
 		Targetcomp: 'Union[str, COMP]'
 		Outputcomp: 'Union[str, COMP, Par]'
@@ -101,6 +101,9 @@ class InspectorCore:
 				self.state.Visualizertype = VisualizerTypes.render3d
 			elif self.state.Returntype in [ReturnTypes.float, ReturnTypes.vec4]:
 				self.state.Visualizertype = VisualizerTypes.field
+
+	def ShowTargetInEditor(self, popup=False):
+		navigateTo(self.state.Rawtarget.eval(), popup=popup)
 
 	def AttachOutputComp(self, o: 'COMP'):
 		self.state.Outputcomp = _pathOrEmpty(o)

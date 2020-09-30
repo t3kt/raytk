@@ -194,6 +194,34 @@ def getActiveEditor() -> 'NetworkEditor':
 		if pane.type == PaneType.NETWORKEDITOR:
 			return pane
 
+def getPaneByName(name: str):
+	for pane in ui.panes:
+		if pane.name == name:
+			return pane
+
+def getEditorPane(name: Optional[str] = None, popup=False):
+	if name:
+		pane = getPaneByName(name)
+	else:
+		pane = getActiveEditor()
+	if pane:
+		if popup:
+			return pane.floatingCopy()
+		return pane
+	else:
+		return ui.panes.createFloating(type=PaneType.NETWORKEDITOR, name=name)
+
+def navigateTo(o: 'OP', name: Optional[str] = None, popup=False):
+	if not o:
+		return
+	pane = getEditorPane(name, popup)
+	if not pane:
+		return
+	pane.owner = o.parent()
+	o.current = True
+	o.selected = True
+	pane.homeSelected(zoom=False)
+
 class VisualizerTypes:
 	none = 'none'
 	field = 'field'

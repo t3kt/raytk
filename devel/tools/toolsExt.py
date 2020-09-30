@@ -1,6 +1,6 @@
 from develCommon import *
 import popMenu
-from raytkUtil import RaytkTags, ROPInfo, Tag
+from raytkUtil import RaytkTags, ROPInfo, Tag, getActiveEditor, navigateTo
 
 # noinspection PyUnreachableCode
 if False:
@@ -35,29 +35,16 @@ class Tools:
 		height -= 270
 		self.ownerComp.par.h = height
 
-	def NavigateTo(self, comp: 'COMP'):
-		if not comp:
-			return
-		pane = self.GetActiveEditor()
-		if not pane:
-			return
-		pane.owner = comp
-
 	@staticmethod
-	def GetActiveEditor():
-		pane = ui.panes.current
-		if pane.type == PaneType.NETWORKEDITOR:
-			return pane
-		for pane in ui.panes:
-			if pane.type == PaneType.NETWORKEDITOR:
-				return pane
+	def NavigateTo(comp: 'COMP'):
+		navigateTo(comp)
 
 	def GetCurrentROP(self):
 		rops = self.getCurrentROPs(primaryOnly=True)
 		return rops[0] if rops else None
 
 	def getCurrentROPs(self, primaryOnly=False):
-		pane = self.GetActiveEditor()
+		pane = getActiveEditor()
 		if not pane:
 			return []
 		comp = pane.owner
@@ -224,8 +211,9 @@ class Tools:
 	def applyTagToSelected(self, tag: 'Tag', state: bool):
 		self.forEachSelected(lambda o: tag.apply(o, state))
 
-	def forEachSelected(self, action):
-		editor = self.GetActiveEditor()
+	@staticmethod
+	def forEachSelected(action):
+		editor = getActiveEditor()
 		if not editor:
 			return
 		for o in editor.owner.selectedChildren:
