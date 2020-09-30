@@ -32,14 +32,30 @@ class CreateMenu:
 				if opTable[name, 'category'] == categoryName:
 					dat.appendRow(['    ' + name, name, opTable[name, 'path'], 'op'])
 
-	def onItemClick(self, info: dict):
+	@staticmethod
+	def getEventPath(info: dict):
 		rowData = info.get('rowData')
 		rowObject = rowData and rowData.get('rowObject')
 		path = rowObject and rowObject.get('path')
+		return path
+
+	def onItemClick(self, info: dict):
+		path = self.getEventPath(info)
 		if not path:
 			return
 		self.CreateOp(path)
 		self.Close()
+
+	def onSelectRow(self, info: dict):
+		path = self.getEventPath(info)
+		ipar.createMenuState.Helpoppath = path or ''
+
+	def onRollover(self, info: dict):
+		row = info.get('row')
+		if row not in (None, -1):
+			table = self.ownerComp.op('prepared_op_table')
+			cell = table[row + 1, 'path']
+			ipar.createMenuState.Helpoppath = cell or ''
 
 	def onFilterFieldKey(self, key: str):
 		table = self.ownerComp.op('prepared_op_table')
@@ -78,10 +94,12 @@ class CreateMenu:
 			self.lister.SelectRow(selRow)
 
 	def Close(self):
+		ipar.createMenuState.Helpoppath = ''
 		self.window.par.winclose.pulse()
 
 	def Show(self, _=None):
 		self.ClearFilter()
+		ipar.createMenuState.Helpoppath = ''
 		self.window.par.winopen.pulse()
 		run('args[0].ClearFilter()', self, delayFrames=3)
 		field = self.ownerComp.op('filterText_textfield/stringField0/field')  # type: fieldCOMP
