@@ -328,3 +328,18 @@ const vec3 vd = vec3( -1.0, -1.0, -0.57735 );
 
 
 #endif  // RAYTK_USE_SIERPINSKI_TETRAHEDRON
+
+float fOpUnionStairs(float a, float b, float r, float n, float o) {
+	float s = r/n;
+	float u = b-r;
+	return min(min(a,b), 0.5 * (u + a + abs ((mod (u - a + s + o, 2 * s)) - s)));
+}
+
+// We can just call Union since stairs are symmetric.
+float fOpIntersectionStairs(float a, float b, float r, float n, float o) {
+	return -fOpUnionStairs(-a, -b, r, n, o);
+}
+
+float fOpDifferenceStairs(float a, float b, float r, float n, float o) {
+	return -fOpUnionStairs(-a, b, r, n, o);
+}

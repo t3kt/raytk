@@ -4,6 +4,7 @@ orthoCamera	/raytk/operators/camera/orthoCamera	/raytk/operators/camera	raytkOP	
 splitCamera	/raytk/operators/camera/splitCamera	/raytk/operators/camera	raytkOP	camera	camera/splitCamera	raytk.operators.camera.splitCamera	1	
 blend	/raytk/operators/combine/blend	/raytk/operators/combine	raytkOP	combine	combine/blend	raytk.operators.combine.blend	1	beta
 combineFields	/raytk/operators/combine/combineFields	/raytk/operators/combine	raytkOP	combine	combine/combineFields	raytk.operators.combine.combineFields	3	
+combineStairs	/raytk/operators/combine/combineStairs	/raytk/operators/combine	raytkOP	combine	combine/combineStairs	raytk.operators.combine.combineStairs	0	
 iterationSwitch	/raytk/operators/combine/iterationSwitch	/raytk/operators/combine	raytkOP	combine	combine/iterationSwitch	raytk.operators.combine.iterationSwitch	2	
 simpleDiff	/raytk/operators/combine/simpleDiff	/raytk/operators/combine	raytkOP	combine	combine/simpleDiff	raytk.operators.combine.simpleDiff	1	
 simpleIntersect	/raytk/operators/combine/simpleIntersect	/raytk/operators/combine	raytkOP	combine	combine/simpleIntersect	raytk.operators.combine.simpleIntersect	2	
