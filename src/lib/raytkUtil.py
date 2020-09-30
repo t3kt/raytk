@@ -1,5 +1,5 @@
 from dataclasses import dataclass
-from typing import Union, Optional, Tuple
+from typing import Callable, Union, Optional, Tuple
 
 # noinspection PyUnreachableCode
 if False:
@@ -115,14 +115,23 @@ class Tag:
 	def __init__(
 			self,
 			name: str,
-			color: Tuple[float, float, float] = None):
+			color: Tuple[float, float, float] = None,
+			update: Callable[['OP', bool], None] = None):
 		self.name = name
 		self.color = color
+		self.update = update
 
 	def apply(self, o: 'OP', state: bool):
 		self.applyTag(o, state)
 		if self.color:
 			self.applyColor(o, state)
+		if self.update:
+			self.applyUpdate(o, state)
+
+	def applyUpdate(self, o: 'OP', state: bool):
+		assert(self.update is not None)
+		if o:
+			self.update(o, state)
 
 	def applyTag(self, o: 'OP', state: bool):
 		if not o:
@@ -133,7 +142,6 @@ class Tag:
 			o.tags.remove(self.name)
 
 	def applyColor(self, o: 'OP', state: bool):
-		assert(self.color is not None)
 		o.color = self.color if state else _defaultNodeColor
 
 	def __str__(self):
@@ -142,11 +150,29 @@ class Tag:
 	def isOn(self, o: 'OP'):
 		return bool(o) and self.name in o.tags
 
+def _updateFileSyncPars(o: 'OP', state: bool):
+	if o.isDAT:
+		par = o.par['syncfile']
+		if par is not None:
+			par.expr = ''
+			par.val = state
+			if not state:
+				for par in o.pars('loadonstart', 'loadonstartpulse', 'write', 'writepulse'):
+					par.expr = ''
+					par.val = False
+		else:
+			for par in o.pars('loadonstart', 'loadonstartpulse', 'write', 'writepulse'):
+				par.expr = ''
+				par.val = state
+	else:
+		# TODO: support for other types of OPs
+		raise Exception(f'updateFileSyncPars does not yet support op: {o}')
+
 class RaytkTags:
 	raytkOP = Tag('raytkOP')
 	raytkOutput = Tag('raytkOutput')
 	buildExclude = Tag('buildExclude', _buildExcludeColor)
-	fileSync = Tag('fileSync', _fileSyncColor)
+	fileSync = Tag('fileSync', _fileSyncColor, _updateFileSyncPars)
 	beta = Tag('raytkBeta', _betaColor)
 
 def getActiveEditor() -> 'NetworkEditor':

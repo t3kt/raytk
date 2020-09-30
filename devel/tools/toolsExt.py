@@ -140,7 +140,8 @@ class Tools:
 		for rop in rops:
 			self.setUpROPHelp(rop)
 
-	def setUpROPHelp(self, rop: 'COMP'):
+	@staticmethod
+	def setUpROPHelp(rop: 'COMP'):
 		opDef = rop.op('opDefinition')
 		if not opDef:
 			return
@@ -156,7 +157,7 @@ class Tools:
 				par.val = dat.name
 			if not dat.par.file:
 				dat.par.file = rop.par.externaltox.eval().replace('.tox', '.md')
-			self.setFileSyncOn(dat, True)
+			RaytkTags.fileSync.apply(dat, True)
 			if not dat.text:
 				dat.text = f'# {rop.name} ({rop.parent().name})\n\n'
 			dat.viewer = True
@@ -209,19 +210,10 @@ class Tools:
 		self.forEachSelected(lambda o: RaytkTags.buildExclude.apply(o, state))
 
 	def setFileSyncOnSelected(self, state: bool):
-		def _action(o: 'OP'):
-			RaytkTags.fileSync.apply(o, state)
-			_updateFileSyncPars(o, state)
-		self.forEachSelected(_action)
-
-	@staticmethod
-	def setFileSyncOn(o: 'DAT', state: bool):
-		RaytkTags.fileSync.apply(o, state)
-		_updateFileSyncPars(o, state)
+		self.forEachSelected(lambda o: RaytkTags.fileSync.apply(o, state))
 
 	def DestroySelectedCustomPars(self):
 		def _action(o: 'OP'):
-			print('OMG destroy pars', o)
 			if hasattr(o, 'destroyCustomPars'):
 				o.destroyCustomPars()
 		self.forEachSelected(_action)
@@ -232,24 +224,6 @@ class Tools:
 			return
 		for o in editor.owner.selectedChildren:
 			action(o)
-
-def _updateFileSyncPars(o: 'OP', state: bool):
-	if o.isDAT:
-		par = o.par['syncfile']
-		if par is not None:
-			par.expr = ''
-			par.val = state
-			if not state:
-				for par in o.pars('loadonstart', 'loadonstartpulse', 'write', 'writepulse'):
-					par.expr = ''
-					par.val = False
-		else:
-			for par in o.pars('loadonstart', 'loadonstartpulse', 'write', 'writepulse'):
-				par.expr = ''
-				par.val = state
-	else:
-		# TODO: support for other types of OPs
-		raise Exception(f'updateFileSyncPars does not yet support op: {o}')
 
 def _getROP(comp: 'COMP', checkParents=True):
 	if not comp or comp is root:
