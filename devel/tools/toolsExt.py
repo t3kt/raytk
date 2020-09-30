@@ -1,7 +1,6 @@
 from develCommon import *
-from typing import Callable, Tuple
 import popMenu
-from raytkUtil import RaytkTag, ROPInfo
+from raytkUtil import RaytkTags, ROPInfo
 
 # noinspection PyUnreachableCode
 if False:
@@ -130,13 +129,11 @@ class Tools:
 
 	def setCurrentROPBeta(self, beta: bool):
 		rops = self.getCurrentROPs()
-		color = self.getColorPar('Betacolor' if beta else 'Defaultcolor')
 		for rop in rops:
 			opDef = rop.op('opDefinition')
 			if opDef:
-				_toggleTag(opDef, RaytkTag.raytkBeta, beta)
-				opDef.color = color
-			rop.color = color
+				RaytkTags.beta.apply(opDef, beta)
+			RaytkTags.beta.applyColor(rop, beta)
 
 	def setUpCurrentROPHelp(self):
 		rops = self.getCurrentROPs()
@@ -209,37 +206,18 @@ class Tools:
 		)
 
 	def setBuildExcludeStateOnSelected(self, state: bool):
-		self.setTagAndColorOnSelected(
-			'buildExclude', state,
-			self.getColorPar('Buildexcludecolor' if state else 'Defaultcolor'))
+		self.forEachSelected(lambda o: RaytkTags.buildExclude.apply(o, state))
 
 	def setFileSyncOnSelected(self, state: bool):
-		self.setTagAndColorOnSelected(
-			'fileSync', state,
-			self.getColorPar('Filesynccolor' if state else 'Defaultcolor'),
-			update=lambda o: _updateFileSyncPars(o, state))
-
-	def setFileSyncOn(self, o: 'DAT', state: bool):
-		_toggleTag(o, 'fileSync', state)
-		o.color = self.getColorPar('Filesynccolor' if state else 'Defaultcolor')
-		_updateFileSyncPars(o, state)
-
-	def setTagAndColorOnSelected(
-			self, tag: str, state: bool, color: Tuple[float, float, float],
-			update: Callable = None):
 		def _action(o: 'OP'):
-			_toggleTag(o, tag, state)
-			o.color = color
-			if update:
-				update(o)
+			RaytkTags.fileSync.apply(o, state)
+			_updateFileSyncPars(o, state)
 		self.forEachSelected(_action)
 
-	def getColorPar(self, name: str):
-		return (
-			float(self.ownerComp.par[name + 'r']),
-			float(self.ownerComp.par[name + 'g']),
-			float(self.ownerComp.par[name + 'b']),
-		)
+	@staticmethod
+	def setFileSyncOn(o: 'DAT', state: bool):
+		RaytkTags.fileSync.apply(o, state)
+		_updateFileSyncPars(o, state)
 
 	def DestroySelectedCustomPars(self):
 		def _action(o: 'OP'):
@@ -272,14 +250,6 @@ def _updateFileSyncPars(o: 'OP', state: bool):
 	else:
 		# TODO: support for other types of OPs
 		raise Exception(f'updateFileSyncPars does not yet support op: {o}')
-
-def _toggleTag(o: 'OP', tag: str, state: bool):
-	if not o:
-		return
-	if state:
-		o.tags.add(tag)
-	elif tag in o.tags:
-		o.tags.remove(tag)
 
 def _getROP(comp: 'COMP', checkParents=True):
 	if not comp or comp is root:

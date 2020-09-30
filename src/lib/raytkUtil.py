@@ -1,5 +1,5 @@
 from dataclasses import dataclass
-from typing import Union, Optional
+from typing import Union, Optional, Tuple
 
 # noinspection PyUnreachableCode
 if False:
@@ -53,7 +53,7 @@ class ROPInfo:
 
 	@property
 	def isBeta(self):
-		return RaytkTag.raytkBeta in self.opDef.tags
+		return RaytkTags.beta.isOn(self.opDef)
 
 	@property
 	def isMaster(self):
@@ -88,10 +88,10 @@ class ROPInfo:
 
 	@property
 	def isOutput(self):
-		return self.rop and RaytkTag.raytkOutput in self.rop.tags
+		return RaytkTags.raytkOutput.isOn(self.rop)
 
 def isROP(o: 'OP'):
-	return bool(o) and o.isCOMP and RaytkTag.raytkOP in o.tags
+	return bool(o) and o.isCOMP and RaytkTags.raytkOP.isOn(o.tags)
 
 def isROPDef(o: 'OP'):
 	return bool(o) and o.isCOMP and o.name == 'opDefinition'
@@ -106,12 +106,48 @@ def getROPVersion(o: 'OP'):
 	opDef = getROPDef(o)
 	return opDef and str(opDef.par['Raytkopversion'] or '')
 
-class RaytkTag:
-	raytkOP = 'raytkOP'
-	raytkOutput = 'raytkOutput'
-	buildExclude = 'buildExclude'
-	fileSync = 'fileSync'
-	raytkBeta = 'raytkBeta'
+_defaultNodeColor = 0.545, 0.545, 0.545
+_buildExcludeColor = 0.1, 0.1, 0.1
+_fileSyncColor = 0.65, 0.5, 1
+_betaColor = 1, 0, 0.5
+
+class Tag:
+	def __init__(
+			self,
+			name: str,
+			color: Tuple[float, float, float] = None):
+		self.name = name
+		self.color = color
+
+	def apply(self, o: 'OP', state: bool):
+		self.applyTag(o, state)
+		if self.color:
+			self.applyColor(o, state)
+
+	def applyTag(self, o: 'OP', state: bool):
+		if not o:
+			return
+		if state:
+			o.tags.add(self.name)
+		elif self.name in o.tags:
+			o.tags.remove(self.name)
+
+	def applyColor(self, o: 'OP', state: bool):
+		assert(self.color is not None)
+		o.color = self.color if state else _defaultNodeColor
+
+	def __str__(self):
+		return self.name
+
+	def isOn(self, o: 'OP'):
+		return bool(o) and self.name in o.tags
+
+class RaytkTags:
+	raytkOP = Tag('raytkOP')
+	raytkOutput = Tag('raytkOutput')
+	buildExclude = Tag('buildExclude', _buildExcludeColor)
+	fileSync = Tag('fileSync', _fileSyncColor)
+	beta = Tag('raytkBeta', _betaColor)
 
 def getActiveEditor() -> 'NetworkEditor':
 	pane = ui.panes.current

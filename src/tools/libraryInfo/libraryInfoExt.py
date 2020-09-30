@@ -1,4 +1,4 @@
-from raytkUtil import ROPInfo, RaytkTag
+from raytkUtil import ROPInfo, RaytkTags
 
 # noinspection PyUnreachableCode
 if False:
@@ -21,7 +21,7 @@ class LibraryInfoBuilder:
 			return
 		rops.sort(key=lambda o: o.path.lower())
 		for rop in rops:
-			if RaytkTag.buildExclude in rop.tags or rop.name.startswith('_'):
+			if RaytkTags.buildExclude.isOn(rop) or rop.name.startswith('_'):
 				continue
 			ropInfo = ROPInfo(rop)
 			if not ropInfo.isMaster:

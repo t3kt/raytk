@@ -1,3 +1,5 @@
+from raytkUtil import RaytkTags
+
 # noinspection PyUnreachableCode
 if False:
 	# noinspection PyUnresolvedReferences
@@ -16,7 +18,7 @@ class TestManager:
 
 	def RunTestCase(self, testCase: 'COMP', thenRun: str = None, runArgs: list = None):
 		self.log(f'Running test case {testCase}')
-		outputs = testCase.findChildren(tags=['raytkOutput'], maxDepth=1)
+		outputs = testCase.findChildren(tags=[RaytkTags.raytkOutput.name], maxDepth=1)
 		for output in outputs:
 			shaderTop = output.par.Shadertop.eval()  # type: TOP
 			if not shaderTop:
