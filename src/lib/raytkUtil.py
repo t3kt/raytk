@@ -95,6 +95,18 @@ def isROP(o: 'OP'):
 def isROPDef(o: 'OP'):
 	return bool(o) and o.isCOMP and o.name == 'opDefinition'
 
+def getROP(comp: 'COMP', checkParents=True):
+	if not comp or comp is root:
+		return None
+	if isROP(comp):
+		return comp
+	if isROPDef(comp):
+		host = comp.par.Hostop.eval()
+		if isROP(host):
+			return host
+	if checkParents:
+		return getROP(comp.parent(), checkParents=checkParents)
+
 def getROPDef(o: 'OP') -> 'Optional[OP]':
 	if isROPDef(o):
 		return o

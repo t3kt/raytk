@@ -1,6 +1,7 @@
 from develCommon import *
 import popMenu
-from raytkUtil import RaytkTags, ROPInfo, Tag, getActiveEditor, navigateTo
+from raytkUtil import RaytkTags, ROPInfo, Tag, getActiveEditor, navigateTo, getROP
+from typing import Tuple, List
 
 # noinspection PyUnreachableCode
 if False:
@@ -50,12 +51,12 @@ class Tools:
 		comp = pane.owner
 		if comp is self.ownerComp or comp.path.startswith(self.ownerComp.path + '/'):
 			return None
-		rop = _getROP(comp) or _getROP(comp.currentChild)
+		rop = getROP(comp) or getROP(comp.currentChild)
 		if rop and primaryOnly:
 			return [rop]
 		rops = [rop]
 		for child in comp.selectedChildren:
-			rop = _getROP(child, checkParents=False)
+			rop = getROP(child, checkParents=False)
 			if rop:
 				rops.append(rop)
 		return rops
@@ -202,6 +203,43 @@ class Tools:
 	def setFileSyncOnSelected(self, state: bool):
 		self.applyTagToSelected(RaytkTags.fileSync, state)
 
+	def getTypeNamesAndLabels(self, filterColumn: str) -> 'Tuple[List[str], List[str]]':
+		names = []
+		labels = []
+		table = self.ownerComp.op('typeTable')  # type: DAT
+		for row in range(1, table.numRows):
+			if table[row, filterColumn] != '1':
+				continue
+			names.append(table[row, 'name'].val)
+			labels.append(table[row, 'label'].val)
+		return names, labels
+
+	def updateTypeParsOn(self, comp: 'COMP'):
+		self.updateTypePar(comp, 'Coordtype', 'isCoordType')
+		self.updateTypePar(comp, 'Contexttype', 'isContextType')
+		self.updateTypePar(comp, 'Returntype', 'isReturnType')
+
+	def updateTypeParsOnSelected(self):
+		self.forEachSelected(self.updateTypeParsOn)
+
+	def updateTypePar(self, comp: 'COMP', parName: str, filterColumn: str):
+		if not comp:
+			return
+		par = comp.par[parName]
+		if par is None:
+			return
+		currentVal = par.eval()
+		hasUseInput = 'useinput' in par.menuNames
+		names, labels = self.getTypeNamesAndLabels(filterColumn)
+		if hasUseInput:
+			names = ['useinput'] + names
+			labels = ['Use Input'] + labels
+		ui.undo.startBlock(f'Updating type parameter {par.owner} {par.name} has useinput: {hasUseInput}')
+		par.menuNames = names
+		par.menuLabels = labels
+		par.val = currentVal
+		ui.undo.endBlock()
+
 	def DestroySelectedCustomPars(self):
 		def _action(o: 'OP'):
 			if hasattr(o, 'destroyCustomPars'):
@@ -218,18 +256,6 @@ class Tools:
 			return
 		for o in editor.owner.selectedChildren:
 			action(o)
-
-def _getROP(comp: 'COMP', checkParents=True):
-	if not comp or comp is root:
-		return None
-	if 'raytkOP' in comp.tags:
-		return comp
-	if comp.name == 'opDefinition':
-		host = comp.par.Hostop.eval()
-		if host and 'raytkOP' in host.tags:
-			return host
-	if checkParents:
-		return _getROP(comp.parent())
 
 def _getMonitorHeight(usePrimary=True):
 	if usePrimary:
