@@ -18,6 +18,7 @@ Sept 8 2020
 * JavaScript source files now included in PRO zip again
 * Updated default config file
 * Changed default code font
+* Improved fallback image in dark mode
 
 ## v9.0.4
 July 15 2020

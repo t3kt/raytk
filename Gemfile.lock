@@ -22,7 +22,7 @@ GIT
 PATH
   remote: #jekyll-theme-hydejack
   specs:
-    jekyll-theme-hydejack (9.0.3)
+    jekyll-theme-hydejack (9.0.5)
       jekyll (>= 3.8, < 5.0)
       jekyll-include-cache (~> 0.2)
 

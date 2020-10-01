@@ -27,6 +27,9 @@ The `url` is the domain of your site, including the protocol (`http` or `https`)
 url: https://qwtel.com
 ~~~
 
+You don't need to provide this property when hosting on GitHub Pages or Netlify.
+{:.note}
+
 If your entire Jekyll blog is hosted in a subdirectory of your page, provide the path in `baseurl` with a leading `/`, but no trailing `/`,
 e.g.
 
@@ -37,6 +40,8 @@ baseurl: /hydejack
 
 Otherwise, provide the empty string `''`
 
+You don't need to provide this property when hosting on GitHub Pages or Netlify.
+{:.note}
 
 ### GitHub Pages
 When hosting on [GitHub Pages](https://pages.github.com/) the `url` is `https://<username>.github.io`
