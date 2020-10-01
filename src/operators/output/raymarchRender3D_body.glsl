@@ -23,6 +23,11 @@ Sdf castRay(Ray ray, float maxDist) {
 	int i;
 	for (i = 0; i < RAYTK_MAX_STEPS; i++) {
 		vec3 p = ray.pos + ray.dir * dist;
+		if (!checkLimit(p)) {
+			res = createSdf(RAYTK_MAX_DIST);
+			res.material = -1;
+			return res;
+		}
 		res = map(p);
 		dist += res.x;
 		if (dist < RAYTK_SURF_DIST) {
