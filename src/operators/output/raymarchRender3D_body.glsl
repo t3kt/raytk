@@ -25,7 +25,7 @@ Sdf castRay(Ray ray, float maxDist) {
 		vec3 p = ray.pos + ray.dir * dist;
 		res = map(p);
 		dist += res.x;
-		if (dist < SURF_DIST) {
+		if (dist < RAYTK_SURF_DIST) {
 			#ifdef RAYTK_STEPS_IN_SDF
 			res.steps = i + 1;
 			#endif
@@ -79,8 +79,8 @@ float softShadow(vec3 p, MaterialContext matCtx)
 
 float calcShadow(in vec3 p, MaterialContext matCtx) {
 	vec3 lightVec = normalize(matCtx.light.pos - p);
-	Ray shadowRay = Ray(p+matCtx.normal * SURF_DIST*2., lightVec);
-	float shadowDist = castRay(shadowRay, MAX_DIST).x;
+	Ray shadowRay = Ray(p+matCtx.normal * RAYTK_SURF_DIST*2., lightVec);
+	float shadowDist = castRay(shadowRay, RAYTK_MAX_DIST).x;
 	if (shadowDist < length(matCtx.light.pos - p)) {
 		return 0.1;
 	}
@@ -215,7 +215,7 @@ void main()
 	// render
 	//-----------------------------------------------------
 
-	float renderDepth = uUseRenderDepth > 0 ? min(texture(sTD2DInputs[0], vUV.st).r, MAX_DIST) : MAX_DIST;
+	float renderDepth = uUseRenderDepth > 0 ? min(texture(sTD2DInputs[0], vUV.st).r, RAYTK_MAX_DIST) : RAYTK_MAX_DIST;
 
 	vec3 col = vec3(0);
 	// raymarch
