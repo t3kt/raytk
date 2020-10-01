@@ -4,7 +4,7 @@ from raytkUtil import ROPInfo, RaytkTags
 if False:
 	# noinspection PyUnresolvedReferences
 	from _stubs import *
-	from typing import List, Optional
+	from typing import List
 	parent.raytk = COMP()
 
 class LibraryInfoBuilder:
@@ -12,7 +12,8 @@ class LibraryInfoBuilder:
 		self.ownerComp = ownerComp
 
 	def Forcebuild(self, _=None):
-		for o in self.ownerComp.ops('build_opTable', 'build_categoryTable', 'build_opHelpTable', 'eval_build_info'):
+		for o in self.ownerComp.ops(
+				'build_opTable', 'build_categoryTable', 'build_opHelpTable', 'eval_build_info', 'eval_info_text_exprs'):
 			o.cook(force=True)
 		self.ownerComp.op('opTable_writeFile').par.write.pulse()
 
