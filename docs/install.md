@@ -32,7 +32,7 @@ You can now also [![Deploy to Netlify][dtn]][nfy]{:.no-mark-external} directly.
 {:.note}
 
 [hsc]: https://github.com/hydecorp/hydejack-starter-kit
-[src]: https://github.com/hydecorp/hydejack-starter-kit/archive/v9.0.3.zip
+[src]: https://github.com/hydecorp/hydejack-starter-kit/archive/v9.0.5.zip
 [nfy]: https://app.netlify.com/start/deploy?repository=https://github.com/hydecorp/hydejack-starter-kit
 [dtn]: https://www.netlify.com/img/deploy/button.svg
 
@@ -85,19 +85,24 @@ Make sure to only delete files that belong to the old theme!
 
 ## GitHub Pages
 If you want to build your site on [GitHub Pages][ghp], check out the [`gh-pages` branch][gpb] in the Hydejack Starter Kit repo.
+For **PRO users**, find the `starter-kit-gh-pages` folder in the downloaded zip.
+
+Note that Hydejack has a reduced feature set when built on GitHub Pages. 
+Specifically, using KaTeX math formulas doesn't work when built in this way.
+{:.note}
 
 [ghp]: https://jekyllrb.com/docs/github-pages/
 [gpb]: https://github.com/hydecorp/hydejack-starter-kit/tree/gh-pages
 
-For existing sites, you can instead set the `remote_theme` key as follows:
+### GH Pages + Free Version
+For existing sites to use the _Free Version_, you can instead set the `remote_theme` key as follows:
 
 ```yml
 # file: `_config.yml`
-remote_theme: hydecorp/hydejack@v9.0.3
+remote_theme: hydecorp/hydejack@v9.0.5
 ```
 
 Make sure the `plugins` list contains `jekyll-include-cache` (create if it doesn't exist):
-{:.note title="Important"}
 
 ```yml
 # file: `_config.yml`
@@ -113,9 +118,64 @@ gem "github-pages", group: :jekyll_plugins
 gem "jekyll-include-cache", group: :jekyll_plugins
 ```
 
-Note that Hydejack has a reduced feature set when built on GitHub Pages. 
-Specifically, using KaTeX math formulas doesn't work when built in this way.
-{:.note}
+### GH Pages + PRO Version
+For existing sites to use the _PRO Version_ several steps are necessary, because GitHub Pages does not support keeping theme files in a separate folder. 
+
+If it's possible, use the `starter-kit-gh-pages` in the downloaded zip. 
+It's often easier to copy your content into the starter kit than the reverse.
+
+To use Hydejack PRO on GitHub Pages with an existing repository, copy the following files form `#jekyll-theme-hydejack` into the root of your repo.
+
+- `_layouts`
+- `_includes`
+- `_sass`
+- `assets`
+
+You should also copy `_data` from either of the starter kits. 
+
+If possible, use the `_config.yml` from the starter kit. Otherwise do the following:
+
+Make sure the `plugins` list contains `jekyll-include-cache` (create if it doesn't exist):
+
+```yml
+# file: `_config.yml`
+plugins:
+  - jekyll-include-cache
+```
+
+Make sure neither `theme` nor `remote_theme` is present. 
+For local testing make sure `math_engine` is set to `mathjax`.
+
+Finally, copy the following (plugin) configurations:
+
+```yml
+# file: `_config.yml`
+# Plugin Configs
+# ---------------------------------------------------------------------------------------
+optional_front_matter:
+  remove_originals:    true
+
+readme_index:
+  remove_originals:    true
+  with_frontmatter:    true
+
+relative_links:
+  collections:         true
+
+titles_from_headings:
+  strip_title:         true
+  collections:         true
+
+compress_html:
+  comments:            ["<!-- ", " -->"]
+  clippings:           all
+  endings:             all
+  ignore:
+    envs:              [development]
+
+sass:
+  style:               compressed
+```
 
 
 ## Running locally

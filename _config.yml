@@ -1,18 +1,15 @@
 # Config
 # ========================================================================================
 
-# IMPORTANT: Set the URL of your site.
-# Set to https://<username>.github.io when hosting on GitHub Pages
-# (unless you are using a custom domain).
-url:                   https://hydecorp.github.io
+# Uncomment and set the URL of your site (with protocol, e.g. `https://`)
+# NOTE: You don't need to provide this property when hosting on GitHub Pages or Netlify.
+# url:                   https://username.github.io
 
-# IMPORTANT: Set The "base URL" of your site.
-# When your site sits in a subdirectory, set to /<name of directory>
-# (with leading /, but without the < >).
-# Use the empty string '' otherwise.
-# For GitHub project sites, this is usually the name of the project,
-# e.g. `/hydejack`.
-baseurl:               '/hydejack-starter-kit'
+# Uncomment and set the "base URL" of your site.
+# When your site is in a subdirectory, set to `/<name of directory>`,
+# with a leading `/` but no trailing `/`. Use the empty string '' otherwise.
+# NOTE: You don't need to provide this property when hosting on GitHub Pages or Netlify.
+# baseurl:               '/hydejack-starter-kit'
 
 
 # General settings
@@ -387,7 +384,6 @@ compress_html:
 sass:
   style:               compressed
 
-  
 # Jekyll Compose Defaults
 # ---------------------------------------------------------------------------------------
 
