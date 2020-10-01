@@ -21,7 +21,7 @@ Sdf castRay(Ray ray, float maxDist) {
 	float dist = 0;
 	Sdf res;
 	int i;
-	for (i = 0; i < MAX_STEPS; i++) {
+	for (i = 0; i < RAYTK_MAX_STEPS; i++) {
 		vec3 p = ray.pos + ray.dir * dist;
 		res = map(p);
 		dist += res.x;

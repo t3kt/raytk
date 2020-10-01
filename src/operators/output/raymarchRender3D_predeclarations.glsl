@@ -1,5 +1,3 @@
-
-#define MAX_STEPS 100
 #define MAX_DIST 100.0
 #define SURF_DIST 0.01
 
