@@ -19,6 +19,7 @@ floatToVector	/raytk/operators/convert/floatToVector	/raytk/operators/convert	ra
 sdfToFloat	/raytk/operators/convert/sdfToFloat	/raytk/operators/convert	raytkOP	convert	convert/sdfToFloat	raytk.operators.convert.sdfToFloat	2	
 vectorToFloat	/raytk/operators/convert/vectorToFloat	/raytk/operators/convert	raytkOP	convert	convert/vectorToFloat	raytk.operators.convert.vectorToFloat	2	
 axisDistanceField	/raytk/operators/field/axisDistanceField	/raytk/operators/field	raytkOP	field	field/axisDistanceField	raytk.operators.field.axisDistanceField	3	
+chopField	/raytk/operators/field/chopField	/raytk/operators/field	raytkOP	field	field/chopField	raytk.operators.field.chopField	0	
 constantField	/raytk/operators/field/constantField	/raytk/operators/field	raytkOP	field	field/constantField	raytk.operators.field.constantField	3	
 iterationFieldSwitch	/raytk/operators/field/iterationFieldSwitch	/raytk/operators/field	raytkOP	field	field/iterationFieldSwitch	raytk.operators.field.iterationFieldSwitch	3	
 pointDistanceField	/raytk/operators/field/pointDistanceField	/raytk/operators/field	raytkOP	field	field/pointDistanceField	raytk.operators.field.pointDistanceField	3	
