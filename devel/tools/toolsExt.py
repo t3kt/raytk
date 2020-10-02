@@ -57,7 +57,7 @@ class Tools:
 		rops = [rop]
 		for child in comp.selectedChildren:
 			rop = getROP(child, checkParents=False)
-			if rop:
+			if rop and rop not in rops:
 				rops.append(rop)
 		return rops
 
