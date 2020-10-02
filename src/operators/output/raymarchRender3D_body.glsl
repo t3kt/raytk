@@ -242,7 +242,13 @@ void main()
 		#endif
 
 		#ifdef OUTPUT_SDF
-		sdfOut = TDOutputSwizzle(vec4(res.x, res.x, res.x, 1));
+		#ifdef RAYTK_STEPS_IN_SDF
+		sdfOut = TDOutputSwizzle(vec4(res.x, res.material, res.steps, 1));
+		#else
+		// the raymarch ROP always switches on RAYTK_STEPS_IN_SDF if it's outputting
+		// SDF data, so this case never actually occurs.
+		sdfOut = TDOutputSwizzle(vec4(res.x, res.material, 0, 1));
+		#endif
 		#endif
 //		#ifdef OUTPUT_DEPTH
 	//	depthOut = TDOutputSwizzle(vec4(vec3(min(res.x, renderDepth)), 1));
