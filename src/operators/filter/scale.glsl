@@ -1,9 +1,10 @@
 ReturnT thismap(CoordT p, ContextT ctx) {
-	ReturnT res = inputOp1(p / THIS_Scale, ctx);
+	CoordT scale = THIS_GET_SCALE();
+	ReturnT res = inputOp1(p / scale, ctx);
 	#ifdef THIS_RETURN_TYPE_float
-	res /= length(THIS_Scale);
+	res /= length(scale);
 	#else
-	res.x /= length(THIS_Scale);
+	res.x /= length(scale);
 	#endif
 	return res;
 }

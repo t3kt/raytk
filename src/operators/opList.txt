@@ -19,7 +19,7 @@ floatToVector	/raytk/operators/convert/floatToVector	/raytk/operators/convert	ra
 sdfToFloat	/raytk/operators/convert/sdfToFloat	/raytk/operators/convert	raytkOP	convert	convert/sdfToFloat	raytk.operators.convert.sdfToFloat	2	
 vectorToFloat	/raytk/operators/convert/vectorToFloat	/raytk/operators/convert	raytkOP	convert	convert/vectorToFloat	raytk.operators.convert.vectorToFloat	2	
 axisDistanceField	/raytk/operators/field/axisDistanceField	/raytk/operators/field	raytkOP	field	field/axisDistanceField	raytk.operators.field.axisDistanceField	3	
-chopField	/raytk/operators/field/chopField	/raytk/operators/field	raytkOP	field	field/chopField	raytk.operators.field.chopField	0	
+chopField	/raytk/operators/field/chopField	/raytk/operators/field	raytkOP	field	field/chopField	raytk.operators.field.chopField	0	beta
 constantField	/raytk/operators/field/constantField	/raytk/operators/field	raytkOP	field	field/constantField	raytk.operators.field.constantField	3	
 iterationFieldSwitch	/raytk/operators/field/iterationFieldSwitch	/raytk/operators/field	raytkOP	field	field/iterationFieldSwitch	raytk.operators.field.iterationFieldSwitch	3	
 pointDistanceField	/raytk/operators/field/pointDistanceField	/raytk/operators/field	raytkOP	field	field/pointDistanceField	raytk.operators.field.pointDistanceField	3	
@@ -41,7 +41,7 @@ reflect	/raytk/operators/filter/reflect	/raytk/operators/filter	raytkOP	filter	f
 rescaleField	/raytk/operators/filter/rescaleField	/raytk/operators/filter	raytkOP	filter	filter/rescaleField	raytk.operators.filter.rescaleField	2	
 rotate	/raytk/operators/filter/rotate	/raytk/operators/filter	raytkOP	filter	filter/rotate	raytk.operators.filter.rotate	4	
 round	/raytk/operators/filter/round	/raytk/operators/filter	raytkOP	filter	filter/round	raytk.operators.filter.round	2	
-scale	/raytk/operators/filter/scale	/raytk/operators/filter	raytkOP	filter	filter/scale	raytk.operators.filter.scale	3	
+scale	/raytk/operators/filter/scale	/raytk/operators/filter	raytkOP	filter	filter/scale	raytk.operators.filter.scale	4	beta
 transform	/raytk/operators/filter/transform	/raytk/operators/filter	raytkOP	filter	filter/transform	raytk.operators.filter.transform	1	
 translate	/raytk/operators/filter/translate	/raytk/operators/filter	raytkOP	filter	filter/translate	raytk.operators.filter.translate	3	
 hardShadow	/raytk/operators/light/hardShadow	/raytk/operators/light	raytkOP	light	light/hardShadow	raytk.operators.light.hardShadow	1	
