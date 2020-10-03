@@ -1,24 +1,41 @@
 // based on https://www.shadertoy.com/view/MtV3Dd
 
-
-/// incomplete!
-
 Ray thismap(vec2 p, CameraContext ctx) {
 	vec2 size = ctx.resolution;
-	vec2 xy = p - size / 2.0;
-	float z = size.y / tan(THIS_Camfov / 2.0);
+	// fragment coords remapped to -1,1 range
+	vec2 screenPos = -1.0 + 2.0 * p / size;
+	// aspect correct
+	screenPos.x *= size.x / size.y;
+	
+	
 	Ray ray;
 	ray.pos = THIS_Campos;
+	// Calculate ray direction
 	vec3 up = THIS_Camup;
 	vec3 lookAt = THIS_Lookatpos;
 	vec3 camForward = normalize(lookAt - ray.pos);
 	vec3 camRight = normalize(cross(camForward, up));
 	vec3 camUp = cross(camForward, camRight);
 	mat3 camOrient = mat3(camRight, camUp, camForward);
+	float aperture = THIS_Aperture * 2.0 * PI;
+	float f = 1.0 / aperture;
+	float r = length(screenPos);
+	float phi = atan(screenPos.y, screenPos.x);
+	float theta;
 	
-	vec3 viewDir = normalize(vec3(xy, -z));
-	mat4 viewToWorld = lookAtViewMatrix(ray.pos, THIS_Lookatpos, THIS_Camup);
-	vec3 worldDir = (viewToWorld * vec4(viewDir, 0)).xyz;
+    #if defined(THIS_MODE_pinhole)
+    	theta = atan(r/f);
+    #elif defined(THIS_MODE_stereographic)
+    	theta = atan(r/(2.0*f))*2.0;
+    #elif defined(THIS_MODE_equiangular)
+    	theta = r/f;
+    #elif defined(THIS_MODE_equisolidangle)
+    	theta = asin(r/(2.0*f))*2.0;
+    #elif defined(THIS_MODE_orthographicfisheye)
+    	theta = asin(r/f);
+    #endif
+    vec3 worldDir = camOrient * vec3(sin(theta)*cos(phi), sin(theta)*sin(phi), cos(theta));
+    
 	pRotateOnXYZ(worldDir, THIS_Camrot);
 	ray.dir = worldDir;
 	return ray;

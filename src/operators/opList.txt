@@ -1,5 +1,5 @@
 name	path	parentPath	tags	category	fullName	opType	opVersion	status
-fisheyeCamera	/raytk/operators/camera/fisheyeCamera	/raytk/operators/camera	raytkOP	camera	camera/fisheyeCamera	raytk.operators.camera.fisheyeCamera	0	beta
+fisheyeCamera	/raytk/operators/camera/fisheyeCamera	/raytk/operators/camera	raytkOP	camera	camera/fisheyeCamera	raytk.operators.camera.fisheyeCamera	0	
 lookAtCamera	/raytk/operators/camera/lookAtCamera	/raytk/operators/camera	raytkOP	camera	camera/lookAtCamera	raytk.operators.camera.lookAtCamera	1	
 orthoCamera	/raytk/operators/camera/orthoCamera	/raytk/operators/camera	raytkOP	camera	camera/orthoCamera	raytk.operators.camera.orthoCamera	1	
 splitCamera	/raytk/operators/camera/splitCamera	/raytk/operators/camera	raytkOP	camera	camera/splitCamera	raytk.operators.camera.splitCamera	1	
