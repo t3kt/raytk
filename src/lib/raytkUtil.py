@@ -118,8 +118,8 @@ def getROPVersion(o: 'OP'):
 	return opDef and str(opDef.par['Raytkopversion'] or '')
 
 def recloneComp(o: 'COMP'):
-	if o and o.par['Enablecloningpulse'] is not None:
-		o.par.Enablecloningpulse.pulse()
+	if o and o.par['enablecloningpulse'] is not None:
+		o.par.enablecloningpulse.pulse()
 
 _defaultNodeColor = 0.545, 0.545, 0.545
 _buildExcludeColor = 0.1, 0.1, 0.1
