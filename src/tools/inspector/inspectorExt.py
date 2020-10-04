@@ -1,4 +1,4 @@
-from typing import Optional, Union
+from typing import Union
 from raytkUtil import InspectorTargetTypes
 
 # noinspection PyUnreachableCode
@@ -13,6 +13,8 @@ if False:
 			Showpointsampling: 'Union[bool, Par]'
 			Samplepointu: 'Union[float, Par]'
 			Samplepointv: 'Union[float, Par]'
+	from src.components.bufferInspector.bufferInspectorExt import BufferInspector
+	iop.bufferInspector = BufferInspector(COMP())
 
 def updateStateMenus():
 	p = ipar.inspectorState.Selectedbodytab
@@ -31,7 +33,7 @@ class Inspector:
 
 	def Reset(self, _=None):
 		self.core.Reset()
-		self.clearOutputBufferSampleTable()
+		iop.bufferInspector.Clear()
 
 	def Inspect(self, o: 'Union[OP, DAT, COMP, str]'):
 		self.core.Inspect(o)
@@ -41,46 +43,11 @@ class Inspector:
 			if self.core.par.Targettype != InspectorTargetTypes.outputOp:
 				outputOp = op(visualizers[visualizerType, InspectorTargetTypes.outputOp])
 				self.core.AttachOutputComp(outputOp)
-			self.clearOutputBufferSampleTable()
+			iop.bufferInspector.Clear()
 			self.Openwindow()
 
-	def onRightClickPreview(self, previewPanel: 'PanelCOMP'):
+	@staticmethod
+	def onRightClickPreview(previewPanel: 'PanelCOMP'):
 		# noinspection PyUnresolvedReferences
 		u, v = previewPanel.panel.u, previewPanel.panel.v
-		ipar.inspectorState.Samplepointu = u
-		ipar.inspectorState.Samplepointv = v
-		ipar.inspectorState.Showpointsampling = True
-		self.fillOutputBufferSampleTable()
-
-	def onCloseOnBufferSampleClick(self):
-		ipar.inspectorState.Showpointsampling = False
-		self.clearOutputBufferSampleTable()
-
-	def clearOutputBufferSampleTable(self):
-		dat = self.ownerComp.op('set_output_sample')
-		dat.clear()
-
-	def fillOutputBufferSampleTable(self):
-		dat = self.ownerComp.op('set_output_sample')
-		dat.clear()
-		u, v = ipar.inspectorState.Samplepointu, ipar.inspectorState.Samplepointv
-		outputs = self.ownerComp.op('output_table')
-		dat.appendRow(['UV', u, v, '', ''])
-		for i in range(1, outputs.numRows):
-			top = op(outputs[i, 'path'] or '')  # type: TOP
-			if not top:
-				continue
-			value = top.sample(u=u, v=v)
-			if not value:
-				dat.appendRow([
-					outputs[i, 'label'],
-					'', '', '', '',
-				])
-			else:
-				dat.appendRow([
-					outputs[i, 'label'],
-					value[0],
-					value[1],
-					value[2],
-					value[3],
-				])
+		iop.bufferInspector.Sample(u, v)
