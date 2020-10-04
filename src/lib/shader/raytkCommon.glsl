@@ -21,6 +21,11 @@ struct Sdf {
 	#ifdef RAYTK_STEPS_IN_SDF
 	int steps;
 	#endif
+
+	#ifdef RAYTK_NEAR_HITS_IN_SDF
+	int nearHitCount;
+	float nearHitAmount;
+	#endif
 };
 
 Sdf createSdf(float dist) {
@@ -36,6 +41,10 @@ Sdf createSdf(float dist) {
 	#endif
 	#ifdef RAYTK_STEPS_IN_SDF
 	res.steps = 0;
+	#endif
+	#ifdef RAYTK_NEAR_HITS_IN_SDF
+	res.nearHitCount = 0;
+	res.nearHitAmount = 0.;
 	#endif
 	return res;
 }

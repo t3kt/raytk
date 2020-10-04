@@ -21,6 +21,11 @@ Sdf castRay(Ray ray, float maxDist) {
 	float dist = 0;
 	Sdf res;
 	int i;
+	#ifdef RAYTK_NEAR_HITS_IN_SDF
+	int nearHitCount = 0;
+	float nearHit = 0;
+	float nearHitLimit = 0.02;
+	#endif
 	for (i = 0; i < RAYTK_MAX_STEPS; i++) {
 		vec3 p = ray.pos + ray.dir * dist;
 		if (!checkLimit(p)) {
@@ -29,6 +34,13 @@ Sdf castRay(Ray ray, float maxDist) {
 			return res;
 		}
 		res = map(p);
+		#ifdef RAYTK_NEAR_HITS_IN_SDF
+		float nearHitAmount = checkNearHit(res.x);
+		if (nearHitLimit > 0.) {
+			nearHitCount++;
+			nearHit += nearHitAmount;
+		}
+		#endif
 		dist += res.x;
 		if (dist < RAYTK_SURF_DIST) {
 			#ifdef RAYTK_STEPS_IN_SDF
@@ -43,6 +55,10 @@ Sdf castRay(Ray ray, float maxDist) {
 	res.x = dist;
 	#ifdef RAYTK_STEPS_IN_SDF
 	res.steps = i + 1;
+	#endif
+	#ifdef RAYTK_NEAR_HITS_IN_SDF
+	res.nearHitCount = nearHitCount;
+	res.nearHitAmount = nearHit;
 	#endif
 	return res;
 }
@@ -254,6 +270,9 @@ void main()
 	//	depthOut = TDOutputSwizzle(vec4(vec3(min(res.x, renderDepth)), 1));
 		//depthOut = TDOutputSwizzle(vec4(vec3(res.x)))
 //		#endif
+		#if defined(OUTPUT_NEARHIT) && defined(RAYTK_NEAR_HITS_IN_SDF)
+		nearHitOut = TDOutputSwizzle(vec4(res.nearHitAmount, float(res.nearHitCount), 0, 1));
+		#endif
 
 		matCtx.normal = calcNormal(p);
 		LightContext lightCtx;
@@ -287,6 +306,9 @@ void main()
 		#endif
 		#ifdef OUTPUT_ORBIT
 		orbitOut = vec4(0);
+		#endif
+		#if defined(OUTPUT_NEARHIT) && defined(RAYTK_NEAR_HITS_IN_SDF)
+		nearHitOut = vec4(0);
 		#endif
 	}
 }
