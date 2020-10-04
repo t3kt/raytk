@@ -39,7 +39,7 @@ class LibraryInfoBuilder:
 				rop.name,
 				rop.path,
 				category.path,
-				' '.join(rop.tags),
+				' '.join(sorted(rop.tags)),
 				category.name,
 				f'{category.name}/{rop.name}',
 				ropInfo.opType,
