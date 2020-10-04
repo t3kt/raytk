@@ -28,25 +28,25 @@ class BuildManager:
 			self.reloadToolkit(toolkit)
 			self.queueMethodCall('runBuild_stage', stage + 1)
 		elif stage == 1:
-			components = toolkit.op('components')
-			self.processComponents(components, thenRun='runBuild_stage', runArgs=[stage + 1])
-		elif stage == 2:
-			operators = toolkit.op('operators')
-			self.processOperators(operators, thenRun='runBuild_stage', runArgs=[stage + 1])
-		elif stage == 3:
-			self.freezeOperatorTable(toolkit)
-			self.queueMethodCall('runBuild_stage', stage + 1)
-		elif stage == 4:
-			self.processTools(toolkit.op('tools'))
-			self.queueMethodCall('runBuild_stage', stage + 1)
-		elif stage == 5:
-			self.finalizeToolkitPars(toolkit)
-			self.queueMethodCall('runBuild_stage', stage + 1)
-		elif stage == 6:
 			self.updateLibraryInfo(toolkit)
 			self.queueMethodCall('runBuild_stage', stage + 1)
-		elif stage == 7:
+		elif stage == 2:
+			self.lockBuildLockOps(toolkit)
+			self.queueMethodCall('runBuild_stage', stage + 1)
+		elif stage == 3:
 			self.removeBuildExcludeOps(toolkit)
+			self.queueMethodCall('runBuild_stage', stage + 1)
+		elif stage == 4:
+			components = toolkit.op('components')
+			self.processComponents(components, thenRun='runBuild_stage', runArgs=[stage + 1])
+		elif stage == 5:
+			operators = toolkit.op('operators')
+			self.processOperators(operators, thenRun='runBuild_stage', runArgs=[stage + 1])
+		elif stage == 6:
+			self.processTools(toolkit.op('tools'))
+			self.queueMethodCall('runBuild_stage', stage + 1)
+		elif stage == 7:
+			self.finalizeToolkitPars(toolkit)
 			self.queueMethodCall('runBuild_stage', stage + 1)
 		elif stage == 8:
 			version = getToolkitVersion()
@@ -81,7 +81,7 @@ class BuildManager:
 	def processComponents(self, components: 'COMP', thenRun: str = None, runArgs: list = None):
 		self.log(f'Processing components {components}')
 		self.detachTox(components)
-		comps = getChildComps(components)
+		comps = components.findChildren(type=COMP, maxDepth=1)
 		self.queueMethodCall('processComponents_stage', comps, thenRun, runArgs)
 
 	def processComponents_stage(self, components: List['COMP'], thenRun: str = None, runArgs: list = None):
@@ -100,11 +100,6 @@ class BuildManager:
 		self.detachTox(comp)
 		categories = comp.findChildren(type=baseCOMP, maxDepth=1)
 		self.queueMethodCall('processOperatorCategories_stage', categories, thenRun, runArgs)
-
-	def freezeOperatorTable(self, toolkit: 'COMP'):
-		self.log('Freezing operator table')
-		for table in toolkit.ops('opTable', 'opCategoryTable'):
-			table.lock = True
 
 	def processOperatorCategories_stage(self, categories: List['COMP'], thenRun: str = None, runArgs: list = None):
 		if categories:
@@ -174,10 +169,6 @@ class BuildManager:
 		dat.par.file.expr = ''
 		dat.par.file.val = ''
 
-	def processRopCategory(self, comp: 'COMP'):
-		self.log(f'Processing ROP category {comp}')
-		self.removeTestingOps(comp)
-
 	def processTools(self, comp: 'COMP'):
 		self.log(f'Processing tools {comp}')
 		self.detachTox(comp)
@@ -193,22 +184,18 @@ class BuildManager:
 		inspector.Reset()
 		self.detachTox(inspector)
 
-	def removeTestingOps(self, comp: 'COMP'):
-		self.log(f'Removing testing ops from {comp}')
-		toRemove = list(comp.ops('__test_*'))
-		for o in toRemove:
-			o.destroy()
-
 	def removeBuildExcludeOps(self, comp: 'COMP'):
 		self.log(f'Removing build excluded ops from {comp}')
-		toRemove = list(comp.findChildren(tags=['buildExclude'], maxDepth=1))
+		toRemove = list(comp.findChildren(tags=['buildExclude']))
 		for o in toRemove:
+			self.log(f'Removing {o}')
 			o.destroy()
 
 	def lockBuildLockOps(self, comp: 'COMP'):
 		self.log(f'Locking build locked ops in {comp}')
-		toLock = list(comp.findChildren(tags=['buildLock'], maxDepth=1))
+		toLock = comp.findChildren(tags=['buildLock'])
 		for o in toLock:
+			self.log(f'Locking {o}')
 			o.lock = True
 
 	def log(self, message: str):
@@ -220,6 +207,3 @@ class BuildManager:
 			run(method, *args, delayFrames=5, delayRef=root)
 		else:
 			run(f'args[0].{method}(*(args[1:]))', self, *args, delayFrames=5, delayRef=root)
-
-def getChildComps(comp: 'COMP'):
-	return comp.findChildren(type=COMP, maxDepth=1) if comp else []
