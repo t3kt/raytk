@@ -1,6 +1,6 @@
 from develCommon import *
 import popMenu
-from raytkUtil import RaytkTags, ROPInfo, Tag, getActiveEditor, navigateTo, getROP
+from raytkUtil import RaytkTags, ROPInfo, Tag, getActiveEditor, navigateTo, getROP, recloneComp
 from typing import Tuple, List
 
 # noinspection PyUnreachableCode
@@ -202,6 +202,9 @@ class Tools:
 
 	def setFileSyncOnSelected(self, state: bool):
 		self.applyTagToSelected(RaytkTags.fileSync, state)
+
+	def recloneSelected(self):
+		self.forEachSelected(recloneComp)
 
 	def getTypeNamesAndLabels(self, filterColumn: str) -> 'Tuple[List[str], List[str]]':
 		names = []
