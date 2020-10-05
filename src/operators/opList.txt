@@ -12,8 +12,8 @@ simpleIntersect	/raytk/operators/combine/simpleIntersect	/raytk/operators/combin
 simpleUnion	/raytk/operators/combine/simpleUnion	/raytk/operators/combine	raytkOP	combine	combine/simpleUnion	raytk.operators.combine.simpleUnion	3	
 smoothUnion	/raytk/operators/combine/smoothUnion	/raytk/operators/combine	raytkOP	combine	combine/smoothUnion	raytk.operators.combine.smoothUnion	3	
 switch	/raytk/operators/combine/switch	/raytk/operators/combine	raytkOP	combine	combine/switch	raytk.operators.combine.switch	1	
-coordTo2D	/raytk/operators/convert/coordTo2D	/raytk/operators/convert	raytkOP	convert	convert/coordTo2D	raytk.operators.convert.coordTo2D	2	
-coordTo3D	/raytk/operators/convert/coordTo3D	/raytk/operators/convert	raytkOP	convert	convert/coordTo3D	raytk.operators.convert.coordTo3D	2	
+coordTo2D	/raytk/operators/convert/coordTo2D	/raytk/operators/convert	raytkOP	convert	convert/coordTo2D	raytk.operators.convert.coordTo2D	4	
+coordTo3D	/raytk/operators/convert/coordTo3D	/raytk/operators/convert	raytkOP	convert	convert/coordTo3D	raytk.operators.convert.coordTo3D	4	
 floatToSdf	/raytk/operators/convert/floatToSdf	/raytk/operators/convert	raytkOP	convert	convert/floatToSdf	raytk.operators.convert.floatToSdf	2	
 floatToVector	/raytk/operators/convert/floatToVector	/raytk/operators/convert	raytkOP	convert	convert/floatToVector	raytk.operators.convert.floatToVector	3	
 sdfToFloat	/raytk/operators/convert/sdfToFloat	/raytk/operators/convert	raytkOP	convert	convert/sdfToFloat	raytk.operators.convert.sdfToFloat	2	
@@ -22,6 +22,7 @@ axisDistanceField	/raytk/operators/field/axisDistanceField	/raytk/operators/fiel
 chopField	/raytk/operators/field/chopField	/raytk/operators/field	raytkOP	field	field/chopField	raytk.operators.field.chopField	0	beta
 constantField	/raytk/operators/field/constantField	/raytk/operators/field	raytkOP	field	field/constantField	raytk.operators.field.constantField	3	
 iterationFieldSwitch	/raytk/operators/field/iterationFieldSwitch	/raytk/operators/field	raytkOP	field	field/iterationFieldSwitch	raytk.operators.field.iterationFieldSwitch	3	
+noiseField	/raytk/operators/field/noiseField	/raytk/operators/field	raytkOP	field	field/noiseField	raytk.operators.field.noiseField	1	
 pointDistanceField	/raytk/operators/field/pointDistanceField	/raytk/operators/field	raytkOP	field	field/pointDistanceField	raytk.operators.field.pointDistanceField	3	
 positionField	/raytk/operators/field/positionField	/raytk/operators/field	raytkOP	field	field/positionField	raytk.operators.field.positionField	2	
 textureField	/raytk/operators/field/textureField	/raytk/operators/field	raytkOP	field	field/textureField	raytk.operators.field.textureField	4	

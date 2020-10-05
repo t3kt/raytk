@@ -17,6 +17,8 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 		q.xyz = p;
 		#endif
 	#endif
+	q -= THIS_Translate;
+	q /= THIS_Scale;
 
 	return THIS_FUNCTION(q);
 }
