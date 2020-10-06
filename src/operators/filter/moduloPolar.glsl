@@ -5,8 +5,8 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 	pR(q, THIS_Prerotate);
 	p.THIS_PLANE = q - THIS_Offset;
 	#ifdef THIS_ITERATE_CELLS
-	ctx.iteration.x = clamp(cell, 0, 1);
-	ctx.iteration.y = 2;
+	ctx.iteration.x = cell;
+	ctx.iteration.y = THIS_Repetitions;
 	#endif
 	return inputOp1(p, ctx);
 }
