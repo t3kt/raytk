@@ -1,1 +1,3 @@
-#define thismap(p, ctx)  length(p - THIS_Center)
+float thismap(CoordT p, ContextT ctx) {
+	return length(p - THIS_Center);
+}
