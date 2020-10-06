@@ -26,6 +26,10 @@ struct Sdf {
 	int nearHitCount;
 	float nearHitAmount;
 	#endif
+
+	#ifdef RAYTK_ITERATION_IN_SDF
+	vec4 iteration;
+	#endif
 };
 
 Sdf createSdf(float dist) {
@@ -45,6 +49,9 @@ Sdf createSdf(float dist) {
 	#ifdef RAYTK_NEAR_HITS_IN_SDF
 	res.nearHitCount = 0;
 	res.nearHitAmount = 0.;
+	#endif
+	#ifdef RAYTK_ITERATION_IN_SDF
+	res.iteration = vec4(0);
 	#endif
 	return res;
 }

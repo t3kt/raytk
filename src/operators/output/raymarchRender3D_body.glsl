@@ -290,6 +290,11 @@ void main()
 		#ifdef OUTPUT_ORBIT
 		orbitOut = res.orbit;
 		#endif
+		#ifdef OUTPUT_ITERATION
+		// implies RAYTK_ITERATION_IN_SDF
+		iterationOut = res.iteration;
+		iterationOut.w = 1;
+		#endif
 	} else {
 		#ifdef OUTPUT_WORLDPOS
 //		worldPosOut = vec4(ray.pos + ray.dir * outDepth, 0);
@@ -307,8 +312,11 @@ void main()
 		#ifdef OUTPUT_ORBIT
 		orbitOut = vec4(0);
 		#endif
-		#if defined(OUTPUT_NEARHIT) && defined(RAYTK_NEAR_HITS_IN_SDF)
+		#if defined(OUTPUT_NEARHIT)
 		nearHitOut = vec4(0);
+		#endif
+		#ifdef OUTPUT_ITERATION
+		iterationOut = vec4(0);
 		#endif
 	}
 }
