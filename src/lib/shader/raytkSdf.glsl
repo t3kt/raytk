@@ -26,16 +26,22 @@ float opSimpleDiff(float res1, float res2) {
 	return max(-res1, res2);
 }
 
-Sdf opSmoothUnionM(Sdf d1, Sdf d2, float k) {
-	float h = clamp(0.5 + 0.5*(d2.x-d1.x)/k, 0.0, 1.0);
-	float resx = mix(d2.x, d1.x, h) - k*h*(1.0-h);
-	Sdf res = d1;
+Sdf opSmoothUnionM(Sdf res1, Sdf res2, float k) {
+	float h = clamp(0.5 + 0.5*(res2.x-res1.x)/k, 0.0, 1.0);
+	float resx = mix(res2.x, res1.x, h) - k*h*(1.0-h);
+	Sdf res = res1;
 	res.x = resx;
-	res.material = d2.material;
-	res.material2 = d1.material;
+	res.material = res2.material;
+	res.material2 = res1.material;
 	res.interpolant = h;
-	res.refract = d1.refract || d2.refract;
-	res.reflect = d1.reflect || d2.reflect;
+	res.refract = res1.refract || res2.refract;
+	res.reflect = res1.reflect || res2.reflect;
+	#ifdef RAYTK_OBJECT_ID_IN_SDF
+	if (res2.objectId.x != 0.) {
+		res.objectId.y = res2.objectId.x;
+		res.objectId.z = h;
+	}
+	#endif
 	return res;
 }
 

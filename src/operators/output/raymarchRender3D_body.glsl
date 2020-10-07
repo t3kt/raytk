@@ -250,6 +250,9 @@ void main()
 	matCtx.result = res;
 	matCtx.context = createDefaultContext();
 	matCtx.ray= ray;
+	#ifdef OUTPUT_OBJECTID
+	objectIdOut = vec4(0);
+	#endif
 
 	if (res.x > 0.0 && res.x < renderDepth) {
 		vec3 p = ray.pos + ray.dir * res.x;
@@ -294,6 +297,9 @@ void main()
 		// implies RAYTK_ITERATION_IN_SDF
 		iterationOut = res.iteration;
 		iterationOut.w = 1;
+		#endif
+		#if defined(OUTPUT_OBJECTID) && defined(RAYTK_OBJECT_ID_IN_SDF)
+		objectIdOut = res.objectId;
 		#endif
 	} else {
 		#ifdef OUTPUT_WORLDPOS

@@ -30,6 +30,14 @@ struct Sdf {
 	#ifdef RAYTK_ITERATION_IN_SDF
 	vec4 iteration;
 	#endif
+
+	#ifdef RAYTK_OBJECT_ID_IN_SDF
+	// x: Primary object id number
+	// y: Secondary object id number (or zero)
+	// z: Interpolant between primary and secondary
+	// w: unused
+	vec4 objectId;
+	#endif
 };
 
 Sdf createSdf(float dist) {
@@ -52,6 +60,9 @@ Sdf createSdf(float dist) {
 	#endif
 	#ifdef RAYTK_ITERATION_IN_SDF
 	res.iteration = vec4(0);
+	#endif
+	#ifdef RAYTK_OBJECT_ID_IN_SDF
+	res.objectId = vec4(0);
 	#endif
 	return res;
 }
