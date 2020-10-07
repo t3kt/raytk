@@ -75,14 +75,14 @@ class LibraryInfoBuilder:
 
 	def buildCategoryHelpTable(self, dat: 'tableDAT', categoryTable: 'DAT'):
 		dat.clear()
-		dat.appendRow(['path', 'category', 'summary', 'helpPath'])
+		dat.appendRow(['category', 'path', 'summary', 'helpPath'])
 		for row in range(1, categoryTable.numRows):
 			path = categoryTable[row, 'path']
 			category = op(path)
 			helpDAT = category.op('help')
 			dat.appendRow([
-				path,
 				categoryTable[row, 'category'],
+				path,
 				self.extractHelpSummary(helpDAT),
 				helpDAT.path if helpDAT else '',
 			])
