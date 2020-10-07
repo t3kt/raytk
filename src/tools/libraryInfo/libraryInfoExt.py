@@ -69,13 +69,26 @@ class LibraryInfoBuilder:
 				path,
 				ropInfo.opType,
 				opTable[row, 'category'],
-				self.extractHelpSummary(ropInfo),
+				self.extractHelpSummary(helpDAT),
+				helpDAT.path if helpDAT else '',
+			])
+
+	def buildCategoryHelpTable(self, dat: 'tableDAT', categoryTable: 'DAT'):
+		dat.clear()
+		dat.appendRow(['path', 'category', 'summary', 'helpPath'])
+		for row in range(1, categoryTable.numRows):
+			path = categoryTable[row, 'path']
+			category = op(path)
+			helpDAT = category.op('help')
+			dat.appendRow([
+				path,
+				categoryTable[row, 'category'],
+				self.extractHelpSummary(helpDAT),
 				helpDAT.path if helpDAT else '',
 			])
 
 	@staticmethod
-	def extractHelpSummary(ropInfo: ROPInfo):
-		dat = ropInfo.helpDAT
+	def extractHelpSummary(dat: 'DAT'):
 		if not dat or not dat.text:
 			return ''
 		for line in dat.text.splitlines():
