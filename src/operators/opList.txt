@@ -21,6 +21,7 @@ vectorToFloat	/raytk/operators/convert/vectorToFloat	/raytk/operators/convert	ra
 axisDistanceField	/raytk/operators/field/axisDistanceField	/raytk/operators/field	raytkOP	field	field/axisDistanceField	raytk.operators.field.axisDistanceField	4	
 chopField	/raytk/operators/field/chopField	/raytk/operators/field	raytkOP	field	field/chopField	raytk.operators.field.chopField	0	beta
 constantField	/raytk/operators/field/constantField	/raytk/operators/field	raytkOP	field	field/constantField	raytk.operators.field.constantField	4	
+iterationField	/raytk/operators/field/iterationField	/raytk/operators/field	raytkOP	field	field/iterationField	raytk.operators.field.iterationField	0	
 noiseField	/raytk/operators/field/noiseField	/raytk/operators/field	raytkOP	field	field/noiseField	raytk.operators.field.noiseField	2	
 pointDistanceField	/raytk/operators/field/pointDistanceField	/raytk/operators/field	raytkOP	field	field/pointDistanceField	raytk.operators.field.pointDistanceField	4	
 positionField	/raytk/operators/field/positionField	/raytk/operators/field	raytkOP	field	field/positionField	raytk.operators.field.positionField	3	
