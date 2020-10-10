@@ -140,6 +140,7 @@ class BuildManager:
 		updateROPMetadata(comp)
 
 	def processOperatorSubComp(self, comp: 'COMP'):
+		comp.par.enablecloning.expr = ''
 		comp.par.enablecloning = False
 		self.detachTox(comp)
 

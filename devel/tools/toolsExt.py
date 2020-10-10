@@ -1,6 +1,6 @@
 from develCommon import *
 import popMenu
-from raytkUtil import RaytkTags, ROPInfo, Tag, getActiveEditor, navigateTo, getROP, recloneComp
+from raytkUtil import RaytkTags, ROPInfo, Tag, getActiveEditor, navigateTo, getROP, recloneComp, RaytkContext
 from typing import Tuple, List
 
 # noinspection PyUnreachableCode
@@ -45,21 +45,9 @@ class Tools:
 		return rops[0] if rops else None
 
 	def getCurrentROPs(self, primaryOnly=False):
-		pane = getActiveEditor()
-		if not pane:
-			return []
-		comp = pane.owner
-		if comp is self.ownerComp or comp.path.startswith(self.ownerComp.path + '/'):
-			return None
-		rop = getROP(comp) or getROP(comp.currentChild)
-		if rop and primaryOnly:
-			return [rop]
-		rops = [rop]
-		for child in comp.selectedChildren:
-			rop = getROP(child, checkParents=False)
-			if rop and rop not in rops:
-				rops.append(rop)
-		return rops
+		return RaytkContext.currentROPs(
+			primaryOnly=primaryOnly,
+			exclude=lambda c: c is self.ownerComp or c.path.startswith(self.ownerComp.path + '/'))
 
 	def SaveCurrentROPs(self, incrementVersion=False):
 		rops = self.getCurrentROPs(primaryOnly=False)

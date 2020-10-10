@@ -303,3 +303,40 @@ class InspectorTargetTypes:
 		outputOp,
 		definitionTable,
 	]
+
+class RaytkContext:
+	def __init__(self):
+		pass
+
+	@staticmethod
+	def activeEditor():
+		return getActiveEditor()
+
+	@staticmethod
+	def currentROPs(
+			primaryOnly=False,
+			exclude: Callable[['COMP'], None] = None,
+			masterOnly=False,
+	):
+		pane = getActiveEditor()
+		if not pane:
+			return []
+		comp = pane.owner
+		if exclude and exclude(comp):
+			return None
+		rop = getROP(comp) or getROP(comp.currentChild)
+		if masterOnly and not _isMaster(rop):
+			rop = None
+		if rop and primaryOnly:
+			return [rop]
+		rops = [rop]
+		for child in comp.selectedChildren:
+			rop = getROP(child, checkParents=False)
+			if masterOnly and not _isMaster(rop):
+				continue
+			if rop and rop not in rops:
+				rops.append(rop)
+		return rops
+
+def _isMaster(o: 'COMP'):
+	return o and o.par['clone'] is not None and (o.par.clone.eval() or o.par.clone.expr)
