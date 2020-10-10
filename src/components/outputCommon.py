@@ -23,3 +23,10 @@ def updateTextureInputs(
 			parent().addScriptError(f'texerr: Too many texture sources (failed on #{i})')
 			return
 		texSelect.outputConnectors[0].connect(glslTop)
+
+def resetInfoParams(comp: 'COMP'):
+	for page in comp.customPages:
+		if page.name == 'Info':
+			for par in page.pars:
+				if not par.readOnly and not par:
+					par.val = par.default
