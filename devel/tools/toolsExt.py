@@ -2,6 +2,7 @@ from develCommon import *
 import popMenu
 from raytkUtil import RaytkTags, ROPInfo, Tag, getActiveEditor, navigateTo, getROP, recloneComp, RaytkContext
 from typing import Tuple, List
+from pathlib import Path
 
 # noinspection PyUnreachableCode
 if False:
@@ -239,6 +240,78 @@ class Tools:
 
 	def applyTagToSelected(self, tag: 'Tag', state: bool):
 		self.forEachSelected(lambda o: tag.apply(o, state))
+
+	def addFolderAutoLoadParsOnSelected(self):
+		self.forEachSelected(self.addFolderAutoLoadPars)
+
+	@staticmethod
+	def addFolderAutoLoadPars(comp: 'COMP'):
+		if not comp:
+			return
+		tox = comp.par.externaltox.eval()
+		if not tox:
+			ui.status = f'Component does not have a tox, so auto-load does not apply: {comp}'
+			return
+		ui.undo.startBlock(f'Add auto-load parameters to {comp}')
+		page = comp.appendCustomPage('Auto Load')
+		par = page.appendFolder('Autoloadfolder', 'Auto Load Folder')[0]
+		if not par.eval():
+			path = Path(tox)
+			par.val = path.parent.as_posix()
+		if comp.par['Autoloaddeletemissing'] is None:
+			page.appendToggle('Autoloaddeletemissing', 'Delete Missing Components')
+		if comp.par['Autoloadalwaysreloadall'] is None:
+			page.appendToggle('Autoloadalwaysreloadall', 'Always Reload All')
+		ui.undo.endBlock()
+
+	def applyAutoLoad(self, comp: 'COMP'):
+		if not comp.par['Autoloadfolder']:
+			return
+		folder = comp.par.Autoloadfolder.eval()
+		folderPath = Path(folder)
+		if not folderPath.exists() or not folderPath.is_dir():
+			raise Exception(f'Invalid auto-load folder: {folder!r}')
+		parentToxPath = Path(comp.par.externaltox.eval()).as_posix()
+		deleteMissing = bool(comp.par['Autoloaddeletemissing'])
+		alwaysReload = bool(comp.par['Autoloadalwaysreloadall'])
+
+		currentComps = [
+			c
+			for c in comp.findChildren(type=COMP, maxDepth=1)
+			if c.par.externaltox
+		]
+		currentCompsByTox = {
+			Path(c.par.externaltox.eval()).as_posix(): c
+			for c in comp.findChildren(type=COMP, maxDepth=1)
+			if c.par.externaltox
+		}
+
+		toxPaths = [
+			p.as_posix()
+			for p in sorted(folderPath.glob('*.tox'))
+			if p.as_posix() != parentToxPath
+		]
+
+		toDelete = []  # type: List[COMP]
+		toLoad = []  # type: List[str]
+
+		if alwaysReload:
+			toDelete = list(currentCompsByTox.values())
+		elif deleteMissing:
+			toDelete = [
+				c
+				for c in currentComps
+				if Path(c.par.externaltox.eval()).as_posix() not in toxPaths
+			]
+
+		for child in currentComps:
+			if alwaysReload or (deleteMissing and child.par.externaltox.eval() not in toxPaths):
+				try:
+					child.destroy()
+				except:
+					pass
+
+		#TODO: COMPLETE THIS
 
 	@staticmethod
 	def forEachSelected(action):
