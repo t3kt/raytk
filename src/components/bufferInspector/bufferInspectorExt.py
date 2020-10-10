@@ -80,7 +80,7 @@ class BufferInspector:
 		dat = self.ownerComp.op('set_sample_table')
 		dat.clear()
 		u, v = ipar.bufInsp.Samplepointu, ipar.bufInsp.Samplepointv
-		buffers = self.ownerComp.op('bufferTable')
+		buffers = self.ownerComp.op('output_table')
 		dat.appendRow(['UV', u, v, '', ''])
 		for i in range(1, buffers.numRows):
 			top = op(buffers[i, 'path'] or '')  # type: TOP
