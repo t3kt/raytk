@@ -15,6 +15,7 @@ if False:
 		Definitiontable: 'Union[str, DAT]'
 		Targetcomp: 'Union[str, COMP]'
 		Outputcomp: 'Union[str, COMP, Par]'
+		Shaderbuilder: 'Union[str, COMP, Par]'
 		Returntype: str
 		Coordtype: str
 		Contexttype: str
@@ -44,6 +45,7 @@ class InspectorCore:
 		self.state.Rawtarget = ''
 		self.state.Targetcomp = ''
 		self.state.Outputcomp = ''
+		self.state.Shaderbuilder = ''
 		self.state.Definitiontable = ''
 		self.state.Visualizertype = VisualizerTypes.none
 
@@ -107,6 +109,9 @@ class InspectorCore:
 
 	def AttachOutputComp(self, o: 'COMP'):
 		self.state.Outputcomp = _pathOrEmpty(o)
+		self.state.Shaderbuilder = ''
+		if o and o.par['Shaderbuilder']:
+			self.state.Shaderbuilder = _pathOrEmpty(o.par.Shaderbuilder.eval())
 
 
 def _pathOrEmpty(o: Optional['OP']):
