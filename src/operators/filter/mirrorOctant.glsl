@@ -1,7 +1,7 @@
 ReturnT thismap(CoordT p, ContextT ctx) {
 	vec2 q = p.THIS_PLANE;
-	pR(q, THIS_Rotateaxis);
 	vec2 cell = pMirrorOctant(q, THIS_Size);
+	pR(q, THIS_Rotateaxis);
 	p.THIS_PLANE = q - THIS_Offset;
 	#ifdef THIS_ITERATE_CELLS
 	ctx.iteration.x = quadrantIndex(ivec2(cell));
