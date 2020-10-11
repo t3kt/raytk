@@ -55,11 +55,11 @@ basicMat	/raytk/operators/material/basicMat	/raytk/operators/material	raytkOP	ma
 checkerboardMat	/raytk/operators/material/checkerboardMat	/raytk/operators/material	raytkOP	material	material/checkerboardMat	raytk.operators.material.checkerboardMat	2	
 phongMat	/raytk/operators/material/phongMat	/raytk/operators/material	raytkOP	material	material/phongMat	raytk.operators.material.phongMat	2	
 sampledPointMat	/raytk/operators/material/sampledPointMat	/raytk/operators/material	raytkOP	material	material/sampledPointMat	raytk.operators.material.sampledPointMat	4	
-customFilter	/raytk/operators/misc/customFilter	/raytk/operators/misc	raytkOP	misc	misc/customFilter	raytk.operators.misc.customFilter	0	
-customGen	/raytk/operators/misc/customGen	/raytk/operators/misc	raytkOP	misc	misc/customGen	raytk.operators.misc.customGen	1	
-pointMapRender	/raytk/operators/output/pointMapRender	/raytk/operators/output	raytkOP raytkOutput	output	output/pointMapRender	raytk.operators.output.pointMapRender	8	
-raymarchRender3D	/raytk/operators/output/raymarchRender3D	/raytk/operators/output	raytkOP raytkOutput	output	output/raymarchRender3D	raytk.operators.output.raymarchRender3D	29	
-render2D	/raytk/operators/output/render2D	/raytk/operators/output	raytkOP raytkOutput	output	output/render2D	raytk.operators.output.render2D	8	
+customFilter	/raytk/operators/misc/customFilter	/raytk/operators/misc	raytkOP	misc	misc/customFilter	raytk.operators.misc.customFilter	1	
+customGen	/raytk/operators/misc/customGen	/raytk/operators/misc	raytkOP	misc	misc/customGen	raytk.operators.misc.customGen	2	
+pointMapRender	/raytk/operators/output/pointMapRender	/raytk/operators/output	raytkOP raytkOutput	output	output/pointMapRender	raytk.operators.output.pointMapRender	9	
+raymarchRender3D	/raytk/operators/output/raymarchRender3D	/raytk/operators/output	raytkOP raytkOutput	output	output/raymarchRender3D	raytk.operators.output.raymarchRender3D	30	
+render2D	/raytk/operators/output/render2D	/raytk/operators/output	raytkOP raytkOutput	output	output/render2D	raytk.operators.output.render2D	9	
 apollonianSdf	/raytk/operators/sdf/apollonianSdf	/raytk/operators/sdf	raytkOP	sdf	sdf/apollonianSdf	raytk.operators.sdf.apollonianSdf	2	
 boxFrameSdf	/raytk/operators/sdf/boxFrameSdf	/raytk/operators/sdf	raytkOP	sdf	sdf/boxFrameSdf	raytk.operators.sdf.boxFrameSdf	3	
 boxSdf	/raytk/operators/sdf/boxSdf	/raytk/operators/sdf	raytkOP	sdf	sdf/boxSdf	raytk.operators.sdf.boxSdf	4	
@@ -75,5 +75,5 @@ tetrahedronSdf	/raytk/operators/sdf/tetrahedronSdf	/raytk/operators/sdf	raytkOP	
 torusSdf	/raytk/operators/sdf/torusSdf	/raytk/operators/sdf	raytkOP	sdf	sdf/torusSdf	raytk.operators.sdf.torusSdf	3	
 circleSdf	/raytk/operators/sdf2d/circleSdf	/raytk/operators/sdf2d	raytkOP	sdf2d	sdf2d/circleSdf	raytk.operators.sdf2d.circleSdf	2	
 rectangleSdf	/raytk/operators/sdf2d/rectangleSdf	/raytk/operators/sdf2d	raytkOP	sdf2d	sdf2d/rectangleSdf	raytk.operators.sdf2d.rectangleSdf	2	
-extractIteration	/raytk/operators/utility/extractIteration	/raytk/operators/utility	raytkOP	utility	utility/extractIteration	raytk.operators.utility.extractIteration	0	
-injectObjectId	/raytk/operators/utility/injectObjectId	/raytk/operators/utility	raytkOP	utility	utility/injectObjectId	raytk.operators.utility.injectObjectId	0	
+extractIteration	/raytk/operators/utility/extractIteration	/raytk/operators/utility	raytkOP	utility	utility/extractIteration	raytk.operators.utility.extractIteration	1	
+injectObjectId	/raytk/operators/utility/injectObjectId	/raytk/operators/utility	raytkOP	utility	utility/injectObjectId	raytk.operators.utility.injectObjectId	1	
