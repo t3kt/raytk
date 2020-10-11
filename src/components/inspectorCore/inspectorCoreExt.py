@@ -109,8 +109,7 @@ class InspectorCore:
 
 	def AttachOutputComp(self, o: 'COMP'):
 		self.state.Outputcomp = _pathOrEmpty(o)
-		self.state.Shaderbuilder = ''
-		if o and o.par['Shaderbuilder']:
+		if o and o.par['Shaderbuilder'] is not None:
 			self.state.Shaderbuilder = _pathOrEmpty(o.par.Shaderbuilder.eval())
 
 
