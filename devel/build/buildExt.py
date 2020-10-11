@@ -1,4 +1,5 @@
 from develCommon import *
+from raytkUtil import RaytkTags
 from typing import List
 
 # noinspection PyUnreachableCode
@@ -17,6 +18,10 @@ class BuildManager:
 	def GetToolkitVersion():
 		return getToolkitVersion()
 
+	def ReloadToolkit(self):
+		self.logTable.clear()
+		self.reloadToolkit(getToolkit())
+
 	def RunBuild(self):
 		self.logTable.clear()
 		self.log('Starting build')
@@ -28,34 +33,37 @@ class BuildManager:
 			self.reloadToolkit(toolkit)
 			self.queueMethodCall('runBuild_stage', stage + 1)
 		elif stage == 1:
-			self.updateLibraryInfo(toolkit)
+			self.detachAllFileSyncDats(toolkit)
 			self.queueMethodCall('runBuild_stage', stage + 1)
 		elif stage == 2:
-			self.lockBuildLockOps(toolkit)
+			self.updateLibraryInfo(toolkit)
 			self.queueMethodCall('runBuild_stage', stage + 1)
 		elif stage == 3:
-			self.removeBuildExcludeOps(toolkit)
+			self.lockBuildLockOps(toolkit)
 			self.queueMethodCall('runBuild_stage', stage + 1)
 		elif stage == 4:
+			self.removeBuildExcludeOps(toolkit)
+			self.queueMethodCall('runBuild_stage', stage + 1)
+		elif stage == 5:
 			components = toolkit.op('components')
 			self.processComponents(components, thenRun='runBuild_stage', runArgs=[stage + 1])
-		elif stage == 5:
+		elif stage == 6:
 			operators = toolkit.op('operators')
 			self.processOperators(operators, thenRun='runBuild_stage', runArgs=[stage + 1])
-		elif stage == 6:
+		elif stage == 7:
 			self.processTools(toolkit.op('tools'))
 			self.queueMethodCall('runBuild_stage', stage + 1)
-		elif stage == 7:
+		elif stage == 8:
 			self.finalizeToolkitPars(toolkit)
 			self.queueMethodCall('runBuild_stage', stage + 1)
-		elif stage == 8:
+		elif stage == 9:
 			version = getToolkitVersion()
 			toxFile = f'build/RayTK-{version}.tox'
 			self.log('Exporting TOX to ' + toxFile)
 			toolkit.op('buildLog').copy(self.logTable)
 			toolkit.save(toxFile)
 			self.log('Build completed!')
-			ui.messageBox('Build completed!', f'Exported tox file: {toxFile}!')
+			self.log(f'Exported tox file: {toxFile}')
 
 	def reloadToolkit(self, toolkit: 'COMP'):
 		self.log('Reloading toolkit')
@@ -64,7 +72,7 @@ class BuildManager:
 
 	def finalizeToolkitPars(self, toolkit: 'COMP'):
 		self.log('Finalizing toolkit parameters')
-		toolkit.par.Devel = False
+		# toolkit.par.Devel = False
 		toolkit.par.Devel.readOnly = True
 		toolkit.par.externaltox = ''
 		toolkit.par.enablecloning = False
@@ -76,7 +84,6 @@ class BuildManager:
 	def updateLibraryInfo(self, toolkit: 'COMP'):
 		self.log('Updating library info')
 		toolkit.op('libraryInfo').par.Forcebuild.pulse()
-		self.lockBuildLockOps(toolkit)
 
 	def processComponents(self, components: 'COMP', thenRun: str = None, runArgs: list = None):
 		self.log(f'Processing components {components}')
@@ -88,7 +95,6 @@ class BuildManager:
 		if components:
 			comp = components.pop()
 			self.detachTox(comp)
-			self.detachDats(comp, recursive=True)
 			if components:
 				self.queueMethodCall('processComponents_stage', components, thenRun, runArgs)
 				return
@@ -131,7 +137,6 @@ class BuildManager:
 		self.log(f'Processing operator {comp}')
 		comp.par.enablecloning = False
 		self.detachTox(comp)
-		self.detachDats(comp, recursive=True)
 		for child in comp.findChildren(type=COMP):
 			if 'raytkOP' in child.tags:
 				self.processOperator(child)
@@ -153,13 +158,6 @@ class BuildManager:
 		comp.par.externaltox.expr = ''
 		comp.par.externaltox.val = ''
 
-	def detachDats(self, comp: 'COMP', recursive=False):
-		self.log(f'Detaching DATs in {comp}')
-		for dat in comp.findChildren(type=textDAT, maxDepth=None if recursive else 1):
-			self.detachDat(dat)
-		for dat in comp.findChildren(type=tableDAT, maxDepth=None if recursive else 1):
-			self.detachDat(dat)
-
 	def detachDat(self, dat: 'DAT'):
 		if not dat.par.file and dat.par.file.mode == ParMode.CONSTANT:
 			return
@@ -170,10 +168,14 @@ class BuildManager:
 		dat.par.file.expr = ''
 		dat.par.file.val = ''
 
+	def detachAllFileSyncDats(self, toolkit: 'COMP'):
+		self.log('Detaching all fileSync DATs')
+		for o in toolkit.findChildren(tags=[RaytkTags.fileSync.name], type=DAT):
+			self.detachDat(o)
+
 	def processTools(self, comp: 'COMP'):
 		self.log(f'Processing tools {comp}')
 		self.detachTox(comp)
-		self.detachDats(comp, recursive=True)
 		createMenu = comp.op('createMenu')  # type: Union[COMP, CreateMenu]
 		createMenu.ClearFilter()
 		par = createMenu.par['Devel']
