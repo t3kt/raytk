@@ -3,16 +3,16 @@ fisheyeCamera	/raytk/operators/camera/fisheyeCamera	/raytk/operators/camera	rayt
 lookAtCamera	/raytk/operators/camera/lookAtCamera	/raytk/operators/camera	raytkOP	camera	camera/lookAtCamera	raytk.operators.camera.lookAtCamera	1	
 orthoCamera	/raytk/operators/camera/orthoCamera	/raytk/operators/camera	raytkOP	camera	camera/orthoCamera	raytk.operators.camera.orthoCamera	1	
 splitCamera	/raytk/operators/camera/splitCamera	/raytk/operators/camera	raytkOP	camera	camera/splitCamera	raytk.operators.camera.splitCamera	1	
-blend	/raytk/operators/combine/blend	/raytk/operators/combine	raytkOP	combine	combine/blend	raytk.operators.combine.blend	1	beta
-combineColumns	/raytk/operators/combine/combineColumns	/raytk/operators/combine	raytkOP	combine	combine/combineColumns	raytk.operators.combine.combineColumns	0	
-combineFields	/raytk/operators/combine/combineFields	/raytk/operators/combine	raytkOP	combine	combine/combineFields	raytk.operators.combine.combineFields	4	
-combineStairs	/raytk/operators/combine/combineStairs	/raytk/operators/combine	raytkOP	combine	combine/combineStairs	raytk.operators.combine.combineStairs	0	
-iterationSwitch	/raytk/operators/combine/iterationSwitch	/raytk/operators/combine	raytkOP	combine	combine/iterationSwitch	raytk.operators.combine.iterationSwitch	3	
-simpleDiff	/raytk/operators/combine/simpleDiff	/raytk/operators/combine	raytkOP	combine	combine/simpleDiff	raytk.operators.combine.simpleDiff	2	
-simpleIntersect	/raytk/operators/combine/simpleIntersect	/raytk/operators/combine	raytkOP	combine	combine/simpleIntersect	raytk.operators.combine.simpleIntersect	3	
-simpleUnion	/raytk/operators/combine/simpleUnion	/raytk/operators/combine	raytkOP	combine	combine/simpleUnion	raytk.operators.combine.simpleUnion	4	
-smoothUnion	/raytk/operators/combine/smoothUnion	/raytk/operators/combine	raytkOP	combine	combine/smoothUnion	raytk.operators.combine.smoothUnion	4	
-switch	/raytk/operators/combine/switch	/raytk/operators/combine	raytkOP	combine	combine/switch	raytk.operators.combine.switch	2	
+blend	/raytk/operators/combine/blend	/raytk/operators/combine	raytkOP	combine	combine/blend	raytk.operators.combine.blend	2	beta
+combineColumns	/raytk/operators/combine/combineColumns	/raytk/operators/combine	raytkOP	combine	combine/combineColumns	raytk.operators.combine.combineColumns	1	
+combineFields	/raytk/operators/combine/combineFields	/raytk/operators/combine	raytkOP	combine	combine/combineFields	raytk.operators.combine.combineFields	5	
+combineStairs	/raytk/operators/combine/combineStairs	/raytk/operators/combine	raytkOP	combine	combine/combineStairs	raytk.operators.combine.combineStairs	1	
+iterationSwitch	/raytk/operators/combine/iterationSwitch	/raytk/operators/combine	raytkOP	combine	combine/iterationSwitch	raytk.operators.combine.iterationSwitch	4	
+simpleDiff	/raytk/operators/combine/simpleDiff	/raytk/operators/combine	raytkOP	combine	combine/simpleDiff	raytk.operators.combine.simpleDiff	3	
+simpleIntersect	/raytk/operators/combine/simpleIntersect	/raytk/operators/combine	raytkOP	combine	combine/simpleIntersect	raytk.operators.combine.simpleIntersect	4	
+simpleUnion	/raytk/operators/combine/simpleUnion	/raytk/operators/combine	raytkOP	combine	combine/simpleUnion	raytk.operators.combine.simpleUnion	5	
+smoothUnion	/raytk/operators/combine/smoothUnion	/raytk/operators/combine	raytkOP	combine	combine/smoothUnion	raytk.operators.combine.smoothUnion	5	
+switch	/raytk/operators/combine/switch	/raytk/operators/combine	raytkOP	combine	combine/switch	raytk.operators.combine.switch	3	
 coordTo2D	/raytk/operators/convert/coordTo2D	/raytk/operators/convert	raytkOP	convert	convert/coordTo2D	raytk.operators.convert.coordTo2D	4	
 coordTo3D	/raytk/operators/convert/coordTo3D	/raytk/operators/convert	raytkOP	convert	convert/coordTo3D	raytk.operators.convert.coordTo3D	4	
 floatToSdf	/raytk/operators/convert/floatToSdf	/raytk/operators/convert	raytkOP	convert	convert/floatToSdf	raytk.operators.convert.floatToSdf	2	
