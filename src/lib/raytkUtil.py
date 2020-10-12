@@ -1,5 +1,4 @@
-from dataclasses import dataclass, field
-from typing import Callable, List, Union, Optional, Tuple
+from typing import Callable, Union, Optional, Tuple
 
 # noinspection PyUnreachableCode
 if False:
@@ -117,12 +116,6 @@ def getROPDef(o: 'OP') -> 'Optional[OP]':
 def getROPVersion(o: 'OP'):
 	opDef = getROPDef(o)
 	return opDef and str(opDef.par['Raytkopversion'] or '')
-
-@dataclass
-class ROPSignature:
-	returnTypes: List[str] = field(default_factory=list)
-	coordTypes: List[str] = field(default_factory=list)
-	contextTypes: List[str] = field(default_factory=list)
 
 def recloneComp(o: 'COMP'):
 	if o and o.par['enablecloningpulse'] is not None:
