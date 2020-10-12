@@ -43,7 +43,7 @@ quantizeCoords	/raytk/operators/filter/quantizeCoords	/raytk/operators/filter	ra
 quantizeValue	/raytk/operators/filter/quantizeValue	/raytk/operators/filter	raytkOP	filter	filter/quantizeValue	raytk.operators.filter.quantizeValue	3	
 radialClone	/raytk/operators/filter/radialClone	/raytk/operators/filter	raytkOP	filter	filter/radialClone	raytk.operators.filter.radialClone	2	
 reflect	/raytk/operators/filter/reflect	/raytk/operators/filter	raytkOP	filter	filter/reflect	raytk.operators.filter.reflect	3	
-rescaleField	/raytk/operators/filter/rescaleField	/raytk/operators/filter	raytkOP	filter	filter/rescaleField	raytk.operators.filter.rescaleField	3	
+rescaleField	/raytk/operators/filter/rescaleField	/raytk/operators/filter	raytkOP	filter	filter/rescaleField	raytk.operators.filter.rescaleField	4	
 rotate	/raytk/operators/filter/rotate	/raytk/operators/filter	raytkOP	filter	filter/rotate	raytk.operators.filter.rotate	5	
 round	/raytk/operators/filter/round	/raytk/operators/filter	raytkOP	filter	filter/round	raytk.operators.filter.round	3	
 scale	/raytk/operators/filter/scale	/raytk/operators/filter	raytkOP	filter	filter/scale	raytk.operators.filter.scale	5	beta
