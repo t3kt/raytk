@@ -1,0 +1,3 @@
+name	label	contextType	returnType	expr
+iteration	Iteration	Context	vec4	ctx.iteration
+resultorbit	SDF Result Orbit Trap	MaterialContext	vec4	ctx.result.orbit
