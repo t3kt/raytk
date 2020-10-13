@@ -58,9 +58,9 @@ phongMat	/raytk/operators/material/phongMat	/raytk/operators/material	raytkOP	ma
 sampledPointMat	/raytk/operators/material/sampledPointMat	/raytk/operators/material	raytkOP	material	material/sampledPointMat	raytk.operators.material.sampledPointMat	4	
 customFilter	/raytk/operators/misc/customFilter	/raytk/operators/misc	raytkOP	misc	misc/customFilter	raytk.operators.misc.customFilter	1	
 customGen	/raytk/operators/misc/customGen	/raytk/operators/misc	raytkOP	misc	misc/customGen	raytk.operators.misc.customGen	2	
-pointMapRender	/raytk/operators/output/pointMapRender	/raytk/operators/output	raytkOP raytkOutput	output	output/pointMapRender	raytk.operators.output.pointMapRender	9	
-raymarchRender3D	/raytk/operators/output/raymarchRender3D	/raytk/operators/output	raytkOP raytkOutput	output	output/raymarchRender3D	raytk.operators.output.raymarchRender3D	30	
-render2D	/raytk/operators/output/render2D	/raytk/operators/output	raytkOP raytkOutput	output	output/render2D	raytk.operators.output.render2D	10	
+pointMapRender	/raytk/operators/output/pointMapRender	/raytk/operators/output	raytkOP raytkOutput	output	output/pointMapRender	raytk.operators.output.pointMapRender	10	
+raymarchRender3D	/raytk/operators/output/raymarchRender3D	/raytk/operators/output	raytkOP raytkOutput	output	output/raymarchRender3D	raytk.operators.output.raymarchRender3D	31	
+render2D	/raytk/operators/output/render2D	/raytk/operators/output	raytkOP raytkOutput	output	output/render2D	raytk.operators.output.render2D	11	
 apollonianSdf	/raytk/operators/sdf/apollonianSdf	/raytk/operators/sdf	raytkOP	sdf	sdf/apollonianSdf	raytk.operators.sdf.apollonianSdf	2	
 boxFrameSdf	/raytk/operators/sdf/boxFrameSdf	/raytk/operators/sdf	raytkOP	sdf	sdf/boxFrameSdf	raytk.operators.sdf.boxFrameSdf	3	
 boxSdf	/raytk/operators/sdf/boxSdf	/raytk/operators/sdf	raytkOP	sdf	sdf/boxSdf	raytk.operators.sdf.boxSdf	4	

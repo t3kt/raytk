@@ -1,9 +1,29 @@
-from typing import List, Tuple
+from typing import List, Tuple, Union
 
 # noinspection PyUnreachableCode
 if False:
 	# noinspection PyUnresolvedReferences
 	from _stubs import *
+
+	class _OwnerCompPar:
+		Globalprefix: 'Union[DAT, str, Par]'
+		Predeclarations: 'Union[DAT, str, Par]'
+		Textureindexoffset: 'Union[int, Par]'
+		Globalmacrotable: 'Union[DAT, str, Par]'
+		Libraries: 'Union[str, Par]'
+		Bodytemplate: 'Union[DAT, str, Par]'
+		Useoutputbuffertable: 'Union[bool, Par]'
+		Outputbuffertable: 'Union[DAT, str, Par]'
+		Parammode: 'Union[str, Par]'
+		Inlineparameteraliases: 'Union[bool, Par]'
+		Simplifynames: 'Union[bool, Par]'
+
+	class _OwnerComp(COMP):
+		par: '_OwnerCompPar'
+
+class ShaderBuilder:
+	def __init__(self, ownerComp: '_OwnerComp'):
+		self.ownerComp = ownerComp
 
 def buildParamAliasMacros(dat: 'DAT', paramDetails: 'DAT'):
 	dat.clear()
