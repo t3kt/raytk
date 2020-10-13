@@ -918,6 +918,7 @@ class DAT(OP):
 			rows: _T.Optional[_NamesOrIndices] = None,
 			cols: _T.Optional[_NamesOrIndices] = None,
 			valuePattern=True, rowPattern=True, colPattern=True, caseSensitive=False) -> _T.List[Cell]: pass
+	def write(self, **args) -> str: pass
 	module: _T.Any
 	numRows: int
 	numCols: int
