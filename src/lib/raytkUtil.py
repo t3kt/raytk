@@ -1,4 +1,4 @@
-from typing import Callable, Union, Optional, Tuple
+from typing import Callable, List, Union, Optional, Tuple
 
 # noinspection PyUnreachableCode
 if False:
@@ -340,3 +340,32 @@ class RaytkContext:
 
 def _isMaster(o: 'COMP'):
 	return o and o.par['clone'] is not None and (o.par.clone.eval() or o.par.clone.expr)
+
+def simplifyNames(fullNames: List[Union[str, 'Cell']]):
+	if not fullNames:
+		return []
+	fullNames = [str(n) for n in fullNames]
+	if len(fullNames) != 1 and not any('_' not in n for n in fullNames):
+		prefixes = [
+			n.rsplit('_', maxsplit=1)[0] + '_'
+			for n in fullNames
+		]
+		commonPrefix = _longestCommonPrefix(prefixes)
+		if commonPrefix and not commonPrefix.endswith('_'):
+			commonPrefix = commonPrefix.rsplit('_', maxsplit=1)[0] + '_'
+		if commonPrefix:
+			prefixLen = len(commonPrefix)
+			return [
+				n[prefixLen:]
+				for n in fullNames
+			]
+	return fullNames
+
+def _longestCommonPrefix(strs):
+	if not strs:
+		return []
+	for i, letter_group in enumerate(zip(*strs)):
+		if len(set(letter_group)) > 1:
+			return strs[0][:i]
+	else:
+		return min(strs)
