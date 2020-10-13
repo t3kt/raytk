@@ -363,7 +363,7 @@ class Par:
 	def evalNorm(self) -> _ValueT: pass
 	def evalExpression(self) -> _ValueT: pass
 	def evalExport(self) -> _ValueT: pass
-	def evalOPs(self) -> list: pass
+	def evalOPs(self) -> '_T.List[_AnyOpT]': pass
 	def pulse(self, value, frames=0, seconds=0) -> None: pass
 	def destroy(self) -> None: pass
 

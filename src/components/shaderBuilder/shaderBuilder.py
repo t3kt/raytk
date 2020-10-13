@@ -25,6 +25,42 @@ class ShaderBuilder:
 	def __init__(self, ownerComp: '_OwnerComp'):
 		self.ownerComp = ownerComp
 
+	def definitionTable(self):
+		# in reverse order (aka declaration order)
+		return self.ownerComp.op('definitions')
+
+	def buildGlobalPrefix(self):
+		return wrapCodeSection(self.ownerComp.par.Globalprefix.eval(), 'globalPrefix')
+
+	def buildGlobalDeclarations(self):
+		defs = self.definitionTable()
+		if defs.numRows < 2:
+			code = '#error No input definition'
+		else:
+			paramDetailTable = self.ownerComp.op('param_details')
+			paramCount = max(1, paramDetailTable.numRows - 1)
+			mainName = defs[defs.numRows - 1, 'name']
+			code = '\n'.join([
+				f'uniform vec4 vecParams[{paramCount}];',
+				f'#define thismap {mainName}'
+			])
+		return wrapCodeSection(code, 'globals')
+
+	def buildLibraryIncludes(self):
+		libraries = self.ownerComp.par.Libraries.evalOPs()
+		if not libraries:
+			return ''
+		includes = [
+			f'#include <{lib.path}>'
+			for lib in libraries
+		]
+		return wrapCodeSection(
+			'\n'.join(includes),
+			'libraries')
+
+	def buildPredeclarations(self):
+		return wrapCodeSection(self.ownerComp.par.Predeclarations.eval(), 'predeclarations')
+
 def buildParamAliasMacros(dat: 'DAT', paramDetails: 'DAT'):
 	dat.clear()
 	for name, expr in _getParamAliases(paramDetails):
@@ -71,5 +107,7 @@ def buildMaterialBlock(materialTable: 'DAT'):
 		output += materialCode + '\n}'
 	return output
 
-def wrapCodeSection(code: str, name: str):
+def wrapCodeSection(code: 'Union[str, DAT]', name: str):
+	if isinstance(code, DAT):
+		code = code.text
 	return f'///----BEGIN {name}\n{code}\n///----END {name}' if code else ''
