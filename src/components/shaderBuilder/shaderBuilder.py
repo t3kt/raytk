@@ -1,4 +1,3 @@
-import re
 from typing import List, Tuple
 
 # noinspection PyUnreachableCode
@@ -6,7 +5,7 @@ if False:
 	# noinspection PyUnresolvedReferences
 	from _stubs import *
 
-def buildParamAliaseMacros(dat: 'DAT', paramDetails: 'DAT'):
+def buildParamAliasMacros(dat: 'DAT', paramDetails: 'DAT'):
 	dat.clear()
 	for name, expr in _getParamAliases(paramDetails):
 		dat.appendRow([f'#define {name} {expr}'])
@@ -51,3 +50,6 @@ def buildMaterialBlock(materialTable: 'DAT'):
 		output += f'else if(m == {nameCell.val}) {{\n'
 		output += materialCode + '\n}'
 	return output
+
+def wrapCodeSection(code: str, name: str):
+	return f'///----BEGIN {name}\n{code}\n///----END {name}' if code else ''
