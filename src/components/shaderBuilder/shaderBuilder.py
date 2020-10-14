@@ -14,6 +14,7 @@ if False:
 		Bodytemplate: 'Union[DAT, str, Par]'
 		Useoutputbuffertable: 'Union[bool, Par]'
 		Outputbuffertable: 'Union[DAT, str, Par]'
+		Supportmaterials: 'Union[bool, Par]'
 		Parammode: 'Union[str, Par]'
 		Inlineparameteraliases: 'Union[bool, Par]'
 		Simplifynames: 'Union[bool, Par]'
@@ -25,46 +26,120 @@ class ShaderBuilder:
 	def __init__(self, ownerComp: '_OwnerComp'):
 		self.ownerComp = ownerComp
 
-	def definitionTable(self):
+	def definitionTable(self) -> 'DAT':
 		# in reverse order (aka declaration order)
 		return self.ownerComp.op('definitions')
+
+	def parameterDetailTable(self) -> 'DAT':
+		return self.ownerComp.op('param_details')
+
+	def outputBufferTable(self) -> 'DAT':
+		return self.ownerComp.op('output_buffer_table')
 
 	def buildGlobalPrefix(self):
 		return wrapCodeSection(self.ownerComp.par.Globalprefix.eval(), 'globalPrefix')
 
 	def buildGlobalDeclarations(self):
-		defs = self.definitionTable()
-		if defs.numRows < 2:
-			code = '#error No input definition'
+		defsTable = self.definitionTable()
+		if defsTable.numRows < 2:
+			code = ['#error No input definition']
 		else:
-			paramDetailTable = self.ownerComp.op('param_details')
+			paramDetailTable = self.parameterDetailTable()
 			paramCount = max(1, paramDetailTable.numRows - 1)
-			mainName = defs[defs.numRows - 1, 'name']
-			code = '\n'.join([
+			mainName = defsTable[defsTable.numRows - 1, 'name']
+			code = [
 				f'uniform vec4 vecParams[{paramCount}];',
 				f'#define thismap {mainName}'
-			])
+			]
 		return wrapCodeSection(code, 'globals')
+
+	def buildMacroBlock(self):
+		defsTable = self.definitionTable()
+		tables = [self.ownerComp.par.Globalmacrotable.eval()]
+		if defsTable.col('macroTable'):
+			tables += [
+				op(cell) for cell in defsTable.col('macroTable')[1:]
+			]
+		decls = []
+		for table in tables:
+			if not table:
+				continue
+			for row in range(table.numRows):
+				if table.numCols == 3:
+					if table[row, 0].val in ('0', 'False'):
+						continue
+					name = table[row, 1].val
+					value = table[row, 2].val
+				else:
+					name = table[row, 0].val
+					if table.numCols > 1:
+						value = table[row, 1].val
+					else:
+						value = ''
+				if value:
+					value = ' ' + value
+				if not name.strip():
+					continue
+				if name.startswith('#define'):
+					decls.append(name + value)
+				else:
+					decls.append(f'#define {name} {value}')
+		outputBuffers = self.outputBufferTable()
+		if outputBuffers.numRows > 1 and outputBuffers.col('macro'):
+			for cell in outputBuffers.col('macro')[1:]:
+				if cell.val:
+					decls.append(f'#define {cell.val}')
+		return wrapCodeSection(decls, 'macros')
 
 	def buildLibraryIncludes(self):
 		libraries = self.ownerComp.par.Libraries.evalOPs()
-		if not libraries:
-			return ''
 		includes = [
 			f'#include <{lib.path}>'
 			for lib in libraries
 		]
-		return wrapCodeSection(
-			'\n'.join(includes),
-			'libraries')
+		return wrapCodeSection(includes, 'libraries')
 
 	def buildPredeclarations(self):
 		return wrapCodeSection(self.ownerComp.par.Predeclarations.eval(), 'predeclarations')
 
-def buildParamAliasMacros(dat: 'DAT', paramDetails: 'DAT'):
-	dat.clear()
-	for name, expr in _getParamAliases(paramDetails):
-		dat.appendRow([f'#define {name} {expr}'])
+	def buildParameterAliases(self):
+		paramDetailTable = self.parameterDetailTable()
+		decls = []
+		for name, expr in _getParamAliases(paramDetailTable):
+			decls.append(f'#define {name} {expr}')
+		return wrapCodeSection(decls, 'paramAliases')
+
+	def buildTextureDeclarations(self):
+		textureTable = self.ownerComp.op('texture_table')
+		offset = int(self.ownerComp.par.Textureindexoffset)
+		decls = [
+			f'#define {cell.val} sTD2DInputs[{offset + cell.row - 1}]'
+			for cell in textureTable.col('name')[1:]
+		]
+		return wrapCodeSection(decls, 'textures')
+
+	def buildMaterialDeclarations(self):
+		if not self.ownerComp.par.Supportmaterials:
+			return ' '
+		materialTable = self.ownerComp.op('material_table')
+		if materialTable.numRows < 2:
+			return ' '
+		i = 1001
+		decls = []
+		for name in materialTable.col('material')[1:]:
+			decls.append(f'#define {name} {i}')
+			i += 1
+		return wrapCodeSection(decls, 'materials')
+
+	def buildOutputBufferDeclarations(self):
+		if not self.ownerComp.par.Useoutputbuffertable:
+			return ' '
+		outputBuffers = self.outputBufferTable()
+		decls = [
+			f'layout(location = {cell.row - 1}) out vec4 {cell.val};'
+			for cell in outputBuffers.col('name')[1:]
+		]
+		return wrapCodeSection(decls, 'outputBuffers')
 
 def buildParamAliasTable(dat: 'DAT', paramDetails: 'DAT'):
 	dat.clear()
@@ -107,7 +182,19 @@ def buildMaterialBlock(materialTable: 'DAT'):
 		output += materialCode + '\n}'
 	return output
 
-def wrapCodeSection(code: 'Union[str, DAT]', name: str):
-	if isinstance(code, DAT):
-		code = code.text
-	return f'///----BEGIN {name}\n{code}\n///----END {name}' if code else ''
+def _stringify(val: 'Union[str, DAT]'):
+	if val is None:
+		return ''
+	if isinstance(val, DAT):
+		return val.text
+	return str(val)
+
+def wrapCodeSection(code: 'Union[str, DAT, List[Union[str, DAT]]]', name: str):
+	if isinstance(code, list):
+		code = '\n'.join(_stringify(s) for s in code)
+	else:
+		code = _stringify(code)
+	if not code:
+		# return a non-empty string in order to force DATs to be text when using dat.write()
+		return ' '
+	return f'///----BEGIN {name}\n{code}\n///----END {name}'
