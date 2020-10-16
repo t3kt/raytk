@@ -20,6 +20,8 @@ Drag the tox file into your project. It's a good idea to put it in the *root* ne
 
 To create your first ROP, use the keyboard shortcut `alt + r` to open up the editor tools popup. It will show a list of available ROPs, organized into categories. You can search by typing a name. This popup is like the main TouchDesigner "OP Create Dialog" (using `tab`), but it shows the available ROPs rather than the standard TouchDesigner OPs.
 
+![Create OP Menu](docs/img/intro-createOpMenu.png)
+
 1. Choose a `boxFrameSdf`, and a new COMP will be created in the network editor.
 1. Create a `raymarchRender3d` and connect its input to the output of your `boxFrameSdf`.
 1. Create a `Camera COMP`, and drag it onto the `raymarchRender3d`'s `Camera` parameter.
@@ -27,6 +29,8 @@ To create your first ROP, use the keyboard shortcut `alt + r` to open up the edi
 1. Play around with the parameters of the `boxFrameSdf`.
 
 You've just created your first RayTK network!
+
+![Basic RayTK Network](docs/img/intro-basicNetwork.png)
 
 The `boxFrameSdf` is an `SDF` operator, which is how you define geometry. It's equivalent to `SOP`s like `Sphere`, `Box`, etc.
 
