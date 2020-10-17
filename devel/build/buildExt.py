@@ -1,6 +1,7 @@
 from develCommon import *
 from raytkUtil import RaytkTags
-from typing import List
+from raytkBuild import BuildContext
+from typing import List, Optional
 
 # noinspection PyUnreachableCode
 if False:
@@ -13,6 +14,7 @@ class BuildManager:
 	def __init__(self, ownerComp: 'COMP'):
 		self.ownerComp = ownerComp
 		self.logTable = ownerComp.op('log')
+		self.context = None  # type: Optional[BuildContext]
 
 	@staticmethod
 	def GetToolkitVersion():
@@ -25,6 +27,7 @@ class BuildManager:
 	def RunBuild(self):
 		self.logTable.clear()
 		self.log('Starting build')
+		self.context = BuildContext(self.log)
 		self.queueMethodCall('runBuild_stage', 0)
 
 	def runBuild_stage(self, stage: int):
@@ -39,19 +42,18 @@ class BuildManager:
 			self.updateLibraryInfo(toolkit)
 			self.queueMethodCall('runBuild_stage', stage + 1)
 		elif stage == 3:
-			self.lockBuildLockOps(toolkit)
-			self.queueMethodCall('runBuild_stage', stage + 1)
-		elif stage == 4:
-			self.removeBuildExcludeOps(toolkit)
-			self.queueMethodCall('runBuild_stage', stage + 1)
-		elif stage == 5:
 			components = toolkit.op('components')
 			self.processComponents(components, thenRun='runBuild_stage', runArgs=[stage + 1])
-		elif stage == 6:
+		elif stage == 4:
 			operators = toolkit.op('operators')
 			self.processOperators(operators, thenRun='runBuild_stage', runArgs=[stage + 1])
+		elif stage == 5:
+			self.processTools(toolkit.op('tools'), thenRun='runBuild_stage', runArgs=[stage + 1])
+		elif stage == 6:
+			self.lockBuildLockOps(toolkit)
+			self.queueMethodCall('runBuild_stage', stage + 1)
 		elif stage == 7:
-			self.processTools(toolkit.op('tools'))
+			self.removeBuildExcludeOps(toolkit)
 			self.queueMethodCall('runBuild_stage', stage + 1)
 		elif stage == 8:
 			self.finalizeToolkitPars(toolkit)
@@ -150,6 +152,8 @@ class BuildManager:
 		self.detachTox(comp)
 
 	def detachTox(self, comp: 'COMP'):
+		if not comp or comp.par['externaltox'] is None:
+			return
 		if not comp.par.externaltox and comp.par.externaltox.mode == ParMode.CONSTANT:
 			return
 		self.log(f'Detaching tox from {comp}')
@@ -173,19 +177,14 @@ class BuildManager:
 		for o in toolkit.findChildren(tags=[RaytkTags.fileSync.name], type=DAT):
 			self.detachDat(o)
 
-	def processTools(self, comp: 'COMP'):
+	def processTools(self, comp: 'COMP', thenRun: str = None, runArgs: list = None):
 		self.log(f'Processing tools {comp}')
-		self.detachTox(comp)
-		createMenu = comp.op('createMenu')  # type: Union[COMP, CreateMenu]
-		createMenu.ClearFilter()
-		par = createMenu.par['Devel']
-		if par is not None:
-			par.expr = ''
-			par.val = False
-		self.detachTox(createMenu)
-		inspector = comp.op('inspector')  # type: Union[COMP, Inspector]
-		inspector.Reset()
-		self.detachTox(inspector)
+		self.context.reloadTox(comp)
+		self.context.detachTox(comp)
+		self.context.runBuildScript(
+			comp.op('BUILD'),
+			thenRun=lambda: self.queueMethodCall(thenRun, *(runArgs or [])),
+			runArgs=[])
 
 	def removeBuildExcludeOps(self, comp: 'COMP'):
 		self.log(f'Removing build excluded ops from {comp}')
