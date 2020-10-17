@@ -107,6 +107,13 @@ def getROP(comp: 'COMP', checkParents=True):
 	if checkParents:
 		return getROP(comp.parent(), checkParents=checkParents)
 
+def getChildROPs(comp: 'COMP'):
+	rops = []
+	for o in comp.children:
+		if isROP(o):
+			rops.append(o)
+	return rops
+
 def getROPDef(o: 'OP') -> 'Optional[OP]':
 	if isROPDef(o):
 		return o
@@ -337,6 +344,22 @@ class RaytkContext:
 			if rop and rop not in rops:
 				rops.append(rop)
 		return rops
+
+	@staticmethod
+	def currentCategories():
+		pane = getActiveEditor()
+		if not pane:
+			return None
+		comp = pane.owner
+		if comp.parent() == getToolkit().op('operators'):
+			return [comp]
+		if comp != getToolkit().op('operators'):
+			return []
+		cats = []
+		for child in comp.selectedChildren:
+			if child.isCOMP:
+				cats.append(child)
+		return cats
 
 def _isMaster(o: 'COMP'):
 	return o and o.par['clone'] is not None and (o.par.clone.eval() or o.par.clone.expr)

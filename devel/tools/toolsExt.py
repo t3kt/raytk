@@ -1,6 +1,6 @@
 from develCommon import *
 import popMenu
-from raytkUtil import RaytkTags, ROPInfo, Tag, getActiveEditor, navigateTo, getROP, recloneComp, RaytkContext
+from raytkUtil import RaytkTags, ROPInfo, Tag, getActiveEditor, navigateTo, getChildROPs, recloneComp, RaytkContext
 from typing import Tuple, List
 from pathlib import Path
 
@@ -320,6 +320,21 @@ class Tools:
 			return
 		for o in editor.owner.selectedChildren:
 			action(o)
+
+	def organizeCurrentCategory(self):
+		categories = RaytkContext().currentCategories()
+		for cat in categories:
+			self.organizeCategory(cat)
+
+	@staticmethod
+	def organizeCategory(comp: 'COMP'):
+		rops = getChildROPs(comp)
+		if not rops:
+			return
+		rops.sort(key=lambda r: r.name)
+		for i, rop in enumerate(rops):
+			rop.nodeY = -int(i / 10) * 150
+			rop.nodeX = int(i % 10) * 200
 
 def _getMonitorHeight(usePrimary=True):
 	if usePrimary:
