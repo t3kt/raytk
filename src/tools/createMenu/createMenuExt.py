@@ -25,12 +25,12 @@ class CreateMenu:
 		categoryNames = list(set(c.val for c in opTable.col('category')[1:]))
 		opNames = [c.val for c in opTable.col('name')[1:]]
 		dat.clear()
-		dat.appendRow(['indentedName', 'name', 'path', 'type'])
+		dat.appendRow(['indentedName', 'name', 'path', 'type', 'status'])
 		for categoryName in sorted(categoryNames):
-			dat.appendRow([categoryName, categoryName, '', 'category'])
+			dat.appendRow([categoryName, categoryName, '', 'category', ''])
 			for name in opNames:
 				if opTable[name, 'category'] == categoryName:
-					dat.appendRow(['    ' + name, name, opTable[name, 'path'], 'op'])
+					dat.appendRow(['    ' + name, name, opTable[name, 'path'], 'op', opTable[name, 'status']])
 
 	@staticmethod
 	def getEventPath(info: dict):
@@ -169,20 +169,29 @@ class CreateMenu:
 
 	@staticmethod
 	def filterOpTable(dat: 'DAT', inDat: 'DAT', filterText: str):
-		if not filterText or filterText == '*':
-			dat.copy(inDat)
-			return
 		dat.clear()
 		dat.appendRow(inDat.row(0))
-		if re.match(r'^\w+$', filterText):
-			test = lambda val: filterText.lower() in val.lower()
+		showBeta = ipar.createMenuState.Showbeta
+		if not filterText or filter == '*':
+			def testText(val): return True
+		elif re.match(r'^\w+$', filterText):
+			def testText(val: str):
+				return filterText.lower() in val.lower()
 		elif re.match(r'^[\w\*\?]+$', filterText):
-			test = lambda val: bool(tdu.match(filterText, [val], caseSensitive=False))
+			def testText(val: str):
+				return bool(tdu.match(filterText, [val], caseSensitive=False))
 		else:
-			test = lambda val: filterText.lower() in val.lower()
+			def testText(val: str):
+				return filterText.lower() in val.lower()
 		ignorePrefix = getToolkit().path + '/operators/'
 		for i in range(1, inDat.numRows):
-			if inDat[i, 'type'] == 'category' or test(inDat[i, 'path'].val.replace(ignorePrefix, '')):
+			if inDat[i, 'type'] == 'category':
+				dat.appendRow(inDat.row(i))
+			else:
+				if not testText(inDat[i, 'path'].val.replace(ignorePrefix, '')):
+					continue
+				if not showBeta and 'beta' in inDat[i, 'status'].val:
+					continue
 				dat.appendRow(inDat.row(i))
 	
 	def onMouseOverChange(self, value):
