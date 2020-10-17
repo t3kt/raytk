@@ -195,6 +195,11 @@ class Tools:
 	def recloneSelected(self):
 		self.forEachSelected(recloneComp)
 
+	def setShowCustomOnlyOnSelected(self, state: bool):
+		def _action(o: 'COMP'):
+			o.showCustomOnly = state
+		self.forEachSelected(_action)
+
 	def getTypeNamesAndLabels(self, filterColumn: str) -> 'Tuple[List[str], List[str]]':
 		names = []
 		labels = []
