@@ -89,14 +89,14 @@ class BuildManager:
 
 	def processComponents(self, components: 'COMP', thenRun: str = None, runArgs: list = None):
 		self.log(f'Processing components {components}')
-		self.detachTox(components)
+		self.context.detachTox(components)
 		comps = components.findChildren(type=COMP, maxDepth=1)
 		self.queueMethodCall('processComponents_stage', comps, thenRun, runArgs)
 
 	def processComponents_stage(self, components: List['COMP'], thenRun: str = None, runArgs: list = None):
 		if components:
 			comp = components.pop()
-			self.detachTox(comp)
+			self.context.detachTox(comp)
 			if components:
 				self.queueMethodCall('processComponents_stage', components, thenRun, runArgs)
 				return
@@ -105,7 +105,7 @@ class BuildManager:
 
 	def processOperators(self, comp: 'COMP', thenRun: str = None, runArgs: list = None):
 		self.log(f'Processing operators {comp}')
-		self.detachTox(comp)
+		self.context.detachTox(comp)
 		categories = comp.findChildren(type=baseCOMP, maxDepth=1)
 		self.queueMethodCall('processOperatorCategories_stage', categories, thenRun, runArgs)
 
@@ -118,7 +118,7 @@ class BuildManager:
 
 	def processOperatorCategory(self, category: 'COMP', thenRun: str = None, runArgs: list = None):
 		self.log(f'Processing operator category {category.name}')
-		self.detachTox(category)
+		self.context.detachTox(category)
 		template = category.op('__template')
 		if template:
 			template.destroy()
@@ -137,8 +137,8 @@ class BuildManager:
 
 	def processOperator(self, comp: 'COMP'):
 		self.log(f'Processing operator {comp}')
-		comp.par.enablecloning = False
-		self.detachTox(comp)
+		self.context.disableCloning(comp)
+		self.context.detachTox(comp)
 		for child in comp.findChildren(type=COMP):
 			if 'raytkOP' in child.tags:
 				self.processOperator(child)
@@ -147,35 +147,13 @@ class BuildManager:
 		updateROPMetadata(comp)
 
 	def processOperatorSubComp(self, comp: 'COMP'):
-		comp.par.enablecloning.expr = ''
-		comp.par.enablecloning = False
-		self.detachTox(comp)
-
-	def detachTox(self, comp: 'COMP'):
-		if not comp or comp.par['externaltox'] is None:
-			return
-		if not comp.par.externaltox and comp.par.externaltox.mode == ParMode.CONSTANT:
-			return
-		self.log(f'Detaching tox from {comp}')
-		comp.par.reloadtoxonstart.expr = ''
-		comp.par.reloadtoxonstart.val = False
-		comp.par.externaltox.expr = ''
-		comp.par.externaltox.val = ''
-
-	def detachDat(self, dat: 'DAT'):
-		if not dat.par.file and dat.par.file.mode == ParMode.CONSTANT:
-			return
-		self.log(f'Detaching DAT {dat}')
-		for par in dat.pars('syncfile', 'loadonstart', 'loadonstartpulse', 'write', 'writepulse'):
-			par.expr = ''
-			par.val = False
-		dat.par.file.expr = ''
-		dat.par.file.val = ''
+		self.context.disableCloning(comp)
+		self.context.detachTox(comp)
 
 	def detachAllFileSyncDats(self, toolkit: 'COMP'):
 		self.log('Detaching all fileSync DATs')
 		for o in toolkit.findChildren(tags=[RaytkTags.fileSync.name], type=DAT):
-			self.detachDat(o)
+			self.context.detachDat(o)
 
 	def processTools(self, comp: 'COMP', thenRun: str = None, runArgs: list = None):
 		self.log(f'Processing tools {comp}')
