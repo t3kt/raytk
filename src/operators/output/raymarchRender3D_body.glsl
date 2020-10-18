@@ -301,6 +301,9 @@ void main()
 		#if defined(OUTPUT_OBJECTID) && defined(RAYTK_OBJECT_ID_IN_SDF)
 		objectIdOut = res.objectId;
 		#endif
+		#if defined(OUTPUT_STEPS) && defined(RAYTK_STEPS_IN_SDF)
+		stepsOut = vec4(res.steps, float(res.steps)/float(RAYTK_MAX_STEPS), 0, 1);
+		#endif
 	} else {
 		#ifdef OUTPUT_WORLDPOS
 //		worldPosOut = vec4(ray.pos + ray.dir * outDepth, 0);
@@ -323,6 +326,9 @@ void main()
 		#endif
 		#ifdef OUTPUT_ITERATION
 		iterationOut = vec4(0);
+		#endif
+		#ifdef OUTPUT_STEPS
+		stepsOut = vec4(RAYTK_MAX_STEPS, 0, 0, 0);
 		#endif
 	}
 }
