@@ -74,7 +74,9 @@ linkSdf	/raytk/operators/sdf/linkSdf	/raytk/operators/sdf	raytkOP	sdf	sdf/linkSd
 mandelbulbSdf	/raytk/operators/sdf/mandelbulbSdf	/raytk/operators/sdf	raytkOP	sdf	sdf/mandelbulbSdf	raytk.operators.sdf.mandelbulbSdf	2	
 mengerSpongeSdf	/raytk/operators/sdf/mengerSpongeSdf	/raytk/operators/sdf	raytkOP	sdf	sdf/mengerSpongeSdf	raytk.operators.sdf.mengerSpongeSdf	2	
 planeSdf	/raytk/operators/sdf/planeSdf	/raytk/operators/sdf	raytkOP	sdf	sdf/planeSdf	raytk.operators.sdf.planeSdf	4	
+prismSdf	/raytk/operators/sdf/prismSdf	/raytk/operators/sdf	raytkOP	sdf	sdf/prismSdf	raytk.operators.sdf.prismSdf	0	
 sierpinskiTetrahedronSdf	/raytk/operators/sdf/sierpinskiTetrahedronSdf	/raytk/operators/sdf	raytkOP	sdf	sdf/sierpinskiTetrahedronSdf	raytk.operators.sdf.sierpinskiTetrahedronSdf	2	beta
+solidAngleSdf	/raytk/operators/sdf/solidAngleSdf	/raytk/operators/sdf	raytkOP	sdf	sdf/solidAngleSdf	raytk.operators.sdf.solidAngleSdf	0	
 sphereSdf	/raytk/operators/sdf/sphereSdf	/raytk/operators/sdf	raytkOP	sdf	sdf/sphereSdf	raytk.operators.sdf.sphereSdf	3	
 tetrahedronSdf	/raytk/operators/sdf/tetrahedronSdf	/raytk/operators/sdf	raytkOP	sdf	sdf/tetrahedronSdf	raytk.operators.sdf.tetrahedronSdf	2	
 torusSdf	/raytk/operators/sdf/torusSdf	/raytk/operators/sdf	raytkOP	sdf	sdf/torusSdf	raytk.operators.sdf.torusSdf	3	

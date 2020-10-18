@@ -349,3 +349,33 @@ float fOpIntersectionStairs(float a, float b, float r, float n, float o) {
 float fOpDifferenceStairs(float a, float b, float r, float n, float o) {
 	return -fOpUnionStairs(-a, b, r, n, o);
 }
+
+float sdTriPrism( vec3 p, vec2 h )
+{
+	vec3 q = abs(p);
+	return max(q.z-h.y,max(q.x*0.866025+p.y*0.5,-p.y)-h.x*0.5);
+}
+
+float sdHexPrism( vec3 p, vec2 h )
+{
+	const vec3 k = vec3(-0.8660254, 0.5, 0.57735);
+	p = abs(p);
+	p.xy -= 2.0*min(dot(k.xy, p.xy), 0.0)*k.xy;
+	vec2 d = vec2(
+		length(p.xy-vec2(clamp(p.x,-k.z*h.x,k.z*h.x), h.x))*sign(p.y-h.x),
+		p.z-h.y );
+	return min(max(d.x,d.y),0.0) + length(max(d,0.0));
+}
+
+float sdSquarePrism(vec3 p, vec2 h) {
+	return fBox(p, h.xxy);
+}
+
+float sdSolidAngle(vec3 p, vec2 c, float ra)
+{
+	// c is the sin/cos of the angle
+	vec2 q = vec2( length(p.xz), p.y );
+	float l = length(q) - ra;
+	float m = length(q - c*clamp(dot(q,c),0.0,ra) );
+	return max(l,m*sign(c.y*q.x-c.x*q.y));
+}
