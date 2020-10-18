@@ -46,7 +46,7 @@ reflect	/raytk/operators/filter/reflect	/raytk/operators/filter	raytkOP	filter	f
 rescaleField	/raytk/operators/filter/rescaleField	/raytk/operators/filter	raytkOP	filter	filter/rescaleField	raytk.operators.filter.rescaleField	5	
 rotate	/raytk/operators/filter/rotate	/raytk/operators/filter	raytkOP	filter	filter/rotate	raytk.operators.filter.rotate	5	
 round	/raytk/operators/filter/round	/raytk/operators/filter	raytkOP	filter	filter/round	raytk.operators.filter.round	3	
-scale	/raytk/operators/filter/scale	/raytk/operators/filter	raytkOP	filter	filter/scale	raytk.operators.filter.scale	5	beta
+scale	/raytk/operators/filter/scale	/raytk/operators/filter	raytkOP	filter	filter/scale	raytk.operators.filter.scale	6	
 transform	/raytk/operators/filter/transform	/raytk/operators/filter	raytkOP	filter	filter/transform	raytk.operators.filter.transform	2	
 translate	/raytk/operators/filter/translate	/raytk/operators/filter	raytkOP	filter	filter/translate	raytk.operators.filter.translate	4	
 hardShadow	/raytk/operators/light/hardShadow	/raytk/operators/light	raytkOP	light	light/hardShadow	raytk.operators.light.hardShadow	2	
