@@ -44,4 +44,15 @@ An `SDF` on its own is just a chunk of data. It needs to be sent to a special "O
 
 Each regular (non-output) `ROP` produces a single output, a `DAT` containing a data table describing that `ROP` and all of its inputs. They are known as "Definitions". Unless you are developing the core of the RayTK library itself, you will never need to deal directly with the contents of the definitions. They should be treated as an opaque data type. They're just the "thing" that comes out of a `ROP`.
 
+### Data Types
 
+There are several types of data that a `ROP` function can return, including:
+* `Sdf`: An SDF result, including surface distance, material settings, and other properties.
+* `float`: A single floating point value. These can be used to drive the parameters of other `ROP`s, such as applying different amounts of rotation for different points in space.
+* `vec4`: A 4-part vector value. These can be used to drive the parameters of other `ROP`s, such as applying colors based on position in space.
+* `Ray`: A position and direction. These are returned by camera `ROP`s, to determine what direction the ray should march for each pixel of the output.
+* `Light`: A point in space, and an amount of color. These are returned by light `ROP`s.
+
+There are several types of coordinates that a `ROP` can use:
+* `vec3`: 3D coordinates, which are the main coordinate type for SDFs and raymarching.
+* `vec2`: 2D coordinates, which are used in 2D SDFs, texture lookups, and screen UV coordinates. 
