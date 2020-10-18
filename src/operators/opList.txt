@@ -29,6 +29,7 @@ pointDistanceField	/raytk/operators/field/pointDistanceField	/raytk/operators/fi
 positionField	/raytk/operators/field/positionField	/raytk/operators/field	raytkOP	field	field/positionField	raytk.operators.field.positionField	4	
 textureField	/raytk/operators/field/textureField	/raytk/operators/field	raytkOP	field	field/textureField	raytk.operators.field.textureField	6	
 fieldExpr	/raytk/operators/filter/fieldExpr	/raytk/operators/filter	raytkOP	filter	filter/fieldExpr	raytk.operators.filter.fieldExpr	2	
+flip	/raytk/operators/filter/flip	/raytk/operators/filter	raytkOP	filter	filter/flip	raytk.operators.filter.flip	0	
 invert	/raytk/operators/filter/invert	/raytk/operators/filter	raytkOP	filter	filter/invert	raytk.operators.filter.invert	2	
 iteratedTransform	/raytk/operators/filter/iteratedTransform	/raytk/operators/filter	raytkOP	filter	filter/iteratedTransform	raytk.operators.filter.iteratedTransform	3	
 knife	/raytk/operators/filter/knife	/raytk/operators/filter	raytkOP	filter	filter/knife	raytk.operators.filter.knife	3	
