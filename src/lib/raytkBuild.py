@@ -33,7 +33,7 @@ class BuildContext:
 		comp.par.enablecloning.expr = ''
 		comp.par.enablecloning = False
 
-	def detachDat(self, dat: 'DAT'):
+	def detachDat(self, dat: 'DAT', reloadFirst=False):
 		if not dat or dat.par['file'] is None:
 			return
 		if not dat.par.file and dat.par.file.mode == ParMode.CONSTANT:
@@ -42,6 +42,8 @@ class BuildContext:
 		for par in dat.pars('syncfile', 'loadonstart', 'loadonstartpulse', 'write', 'writepulse'):
 			par.expr = ''
 			par.val = False
+		if reloadFirst and dat.par['loadonstartpulse'] is not None:
+			dat.par.loadonstartpulse.pulse()
 		dat.par.file.expr = ''
 		dat.par.file.val = ''
 

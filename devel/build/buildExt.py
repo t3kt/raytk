@@ -153,7 +153,7 @@ class BuildManager:
 	def detachAllFileSyncDats(self, toolkit: 'COMP'):
 		self.log('Detaching all fileSync DATs')
 		for o in toolkit.findChildren(tags=[RaytkTags.fileSync.name], type=DAT):
-			self.context.detachDat(o)
+			self.context.detachDat(o, reloadFirst=True)
 
 	def processTools(self, comp: 'COMP', thenRun: str = None, runArgs: list = None):
 		self.log(f'Processing tools {comp}')
