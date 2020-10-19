@@ -78,6 +78,7 @@ gyroidSdf	/raytk/operators/sdf/gyroidSdf	/raytk/operators/sdf	raytkOP	sdf	sdf/gy
 linkSdf	/raytk/operators/sdf/linkSdf	/raytk/operators/sdf	raytkOP	sdf	sdf/linkSdf	raytk.operators.sdf.linkSdf	3	
 mandelbulbSdf	/raytk/operators/sdf/mandelbulbSdf	/raytk/operators/sdf	raytkOP	sdf	sdf/mandelbulbSdf	raytk.operators.sdf.mandelbulbSdf	2	
 mengerSpongeSdf	/raytk/operators/sdf/mengerSpongeSdf	/raytk/operators/sdf	raytkOP	sdf	sdf/mengerSpongeSdf	raytk.operators.sdf.mengerSpongeSdf	2	
+mobiusRingSdf	/raytk/operators/sdf/mobiusRingSdf	/raytk/operators/sdf	raytkOP	sdf	sdf/mobiusRingSdf	raytk.operators.sdf.mobiusRingSdf	0	
 octahedronSdf	/raytk/operators/sdf/octahedronSdf	/raytk/operators/sdf	raytkOP	sdf	sdf/octahedronSdf	raytk.operators.sdf.octahedronSdf	0	
 planeSdf	/raytk/operators/sdf/planeSdf	/raytk/operators/sdf	raytkOP	sdf	sdf/planeSdf	raytk.operators.sdf.planeSdf	4	
 prismSdf	/raytk/operators/sdf/prismSdf	/raytk/operators/sdf	raytkOP	sdf	sdf/prismSdf	raytk.operators.sdf.prismSdf	0	

@@ -420,3 +420,36 @@ float sdPyramid( vec3 p, float h)
 
 	return sqrt( (d2+q.z*q.z)/m2 ) * sign(max(q.z,-p.y));
 }
+
+float sdMobiusRing(vec3 p, float radius, float thickness, float rounding, float twist, float twistPhase)
+{
+	vec3 q = vec3(length(p.xz) - radius, 0., p.y);
+	float a = atan (p.z, p.x) + twistPhase * PI;
+	pR(q.zx, twist * a);
+	return 0.5 * (length(max(abs(q.xz) - thickness, 0.)) - rounding);
+}
+
+// https://www.shadertoy.com/view/XsGXR1
+//float sdMobiusRingStepped(vec3 p, float radius, float thickness, float rounding, float twist, float steps)
+//{
+//	float d, a, na, aq;
+//	vec3 q = vec3(length(p.xz) - radius, 0., p.y);
+//	a = atan (p.z, p.x);
+//	pR(q.zx, twist * a);
+//	d = length(max(abs(q.xz) - thickness, 0.)) - rounding;
+//	q = p;
+//	na = floor(steps * atan(q.z, - q.x) / (2. * PI));
+//	aq = 2. * PI * (na + 0.5) / steps;
+//	pR(q.zx, aq);
+//	q.x += radius;
+//	pR(q.yx, 0.5 * aq);
+//	d = max(
+//		d,
+//		- max(
+//				fBox(q, vec3 (1.1, 1.1, 0.18) * thickness)
+//				,
+//				-fBox2(q.xy, vec2 (0.5, 0.5) * thickness)
+//		)
+//	);
+//	return 0.5 * d;
+//}
