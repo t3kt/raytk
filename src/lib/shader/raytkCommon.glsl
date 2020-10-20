@@ -273,3 +273,6 @@ float pModPolarMirror(inout vec2 p, float repetitions) {
 	if (abs(c) >= (repetitions/2)) c = abs(c);
 	return c;
 }
+
+// https://www.shadertoy.com/view/XdXcRB
+float ndot(vec2 a, vec2 b ) { return a.x*b.x - a.y*b.y; }
