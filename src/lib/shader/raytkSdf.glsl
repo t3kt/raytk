@@ -461,3 +461,63 @@ float sdRhombus(in vec2 p, in vec2 b)
 	float d = length( q - 0.5*b*vec2(1.0-h,1.0+h) );
 	return d * sign( q.x*b.y + q.y*b.x - b.x*b.y );
 }
+
+float sdEquilateralTriangle( in vec2 p )
+{
+	const float k = sqrt(3.0);
+	p.x = abs(p.x) - 1.0;
+	p.y = p.y + 1.0/k;
+	if( p.x+k*p.y>0.0 ) p = vec2(p.x-k*p.y,-k*p.x-p.y)/2.0;
+	p.x -= clamp( p.x, -2.0, 0.0 );
+	return -length(p)*sign(p.y);
+}
+
+float sdPentagon( in vec2 p, in float r )
+{
+	const vec3 k = vec3(0.809016994,0.587785252,0.726542528);
+	p.x = abs(p.x);
+	p -= 2.0*min(dot(vec2(-k.x,k.y),p),0.0)*vec2(-k.x,k.y);
+	p -= 2.0*min(dot(vec2( k.x,k.y),p),0.0)*vec2( k.x,k.y);
+	p -= vec2(clamp(p.x,-r*k.z,r*k.z),r);
+	return length(p)*sign(p.y);
+}
+float sdHexagon(in vec2 p, in float r)
+{
+	const vec3 k = vec3(-0.866025404, 0.5, 0.577350269);
+	p = abs(p);
+	p -= 2.0*min(dot(k.xy, p), 0.0)*k.xy;
+	p -= vec2(clamp(p.x, -k.z*r, k.z*r), r);
+	return length(p)*sign(p.y);
+}
+float sdOctogon(in vec2 p, in float r)
+{
+	const vec3 k = vec3(-0.9238795325, 0.3826834323, 0.4142135623);
+	p = abs(p);
+	p -= 2.0*min(dot(vec2(k.x, k.y), p), 0.0)*vec2(k.x, k.y);
+	p -= 2.0*min(dot(vec2(-k.x, k.y), p), 0.0)*vec2(-k.x, k.y);
+	p -= vec2(clamp(p.x, -k.z*r, k.z*r), r);
+	return length(p)*sign(p.y);
+}
+float sdHexagram(in vec2 p, in float r)
+{
+	const vec4 k = vec4(-0.5, 0.8660254038, 0.5773502692, 1.7320508076);
+	p = abs(p);
+	p -= 2.0*min(dot(k.xy, p), 0.0)*k.xy;
+	p -= 2.0*min(dot(k.yx, p), 0.0)*k.yx;
+	p -= vec2(clamp(p.x, r*k.z, r*k.w), r);
+	return length(p)*sign(p.y);
+}
+float sdStar(in vec2 p, in float r, in float n, in float m)
+{
+	// next 4 lines can be precomputed for a given shape
+	float an = PI/n;
+	float en = PI/m;  // m is between 2 and n
+	vec2  acs = vec2(cos(an),sin(an));
+	vec2  ecs = vec2(cos(en),sin(en)); // ecs=vec2(0,1) for regular polygon,
+
+	float bn = mod(atan(p.x,p.y),2.0*an) - an;
+	p = length(p)*vec2(cos(bn),abs(sin(bn)));
+	p -= r*acs;
+	p += ecs*clamp( -dot(p,ecs), 0.0, r*acs.y/ecs.y);
+	return length(p)*sign(p.x);
+}
