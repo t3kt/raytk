@@ -521,3 +521,16 @@ float sdStar(in vec2 p, in float r, in float n, in float m)
 	p += ecs*clamp( -dot(p,ecs), 0.0, r*acs.y/ecs.y);
 	return length(p)*sign(p.x);
 }
+float sdParabola(in vec2 pos, in float k)
+{
+	pos.x = abs(pos.x);
+	float ik = 1.0/k;
+	float p = ik*(pos.y - 0.5*ik)/3.0;
+	float q = 0.25*ik*ik*pos.x;
+	float h = q*q - p*p*p;
+	float r = sqrt(abs(h));
+	float x = (h>0.0) ?
+	pow(q+r, 1.0/3.0) - pow(abs(q-r), 1.0/3.0)*sign(r-q) :
+	2.0*cos(atan(r, q)/3.0)*sqrt(p);
+	return length(pos-vec2(x, k*x*x)) * sign(pos.x-x);
+}
