@@ -16,6 +16,7 @@ smoothUnion	/raytk/operators/combine/smoothUnion	/raytk/operators/combine	raytkO
 switch	/raytk/operators/combine/switch	/raytk/operators/combine	raytkOP	combine	combine/switch	raytk.operators.combine.switch	3	
 coordTo2D	/raytk/operators/convert/coordTo2D	/raytk/operators/convert	raytkOP	convert	convert/coordTo2D	raytk.operators.convert.coordTo2D	5	
 coordTo3D	/raytk/operators/convert/coordTo3D	/raytk/operators/convert	raytkOP	convert	convert/coordTo3D	raytk.operators.convert.coordTo3D	6	
+extrude	/raytk/operators/convert/extrude	/raytk/operators/convert	raytkOP	convert	convert/extrude	raytk.operators.convert.extrude	0	
 floatToSdf	/raytk/operators/convert/floatToSdf	/raytk/operators/convert	raytkOP	convert	convert/floatToSdf	raytk.operators.convert.floatToSdf	3	
 floatToVector	/raytk/operators/convert/floatToVector	/raytk/operators/convert	raytkOP	convert	convert/floatToVector	raytk.operators.convert.floatToVector	4	
 revolve	/raytk/operators/convert/revolve	/raytk/operators/convert	raytkOP	convert	convert/revolve	raytk.operators.convert.revolve	0	
