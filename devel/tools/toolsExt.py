@@ -141,6 +141,34 @@ class Tools:
 		finally:
 			ui.undo.endBlock()
 
+	def addCurrentROPMacroTable(self):
+		rop = self.GetCurrentROP()
+		if rop:
+			self.addMacroTableToROP(rop)
+
+	@staticmethod
+	def addMacroTableToROP(rop: 'COMP'):
+		opDef = rop.op('opDefinition')
+		if not opDef:
+			return
+		dat = op(opDef.par.Macrotable)
+		if dat:
+			return
+		ui.undo.startBlock('Add macro table to ' + rop.path)
+		try:
+			exprTable = rop.create(tableDAT, 'macro_exprs')
+			exprTable.clear()
+			exprTable.appendRow(['', ''])
+			evalTable = rop.create(evaluateDAT, 'eval_macros')
+			evalTable.inputConnectors[0].connect(exprTable)
+			opDef.par.Macrotable = evalTable
+			exprTable.nodeY = evalTable.nodeY = opDef.nodeY - 250
+			evalTable.nodeCenterX = opDef.nodeCenterX
+			exprTable.nodeX = evalTable.nodeX - 150
+			exprTable.viewer = evalTable.viewer = True
+		finally:
+			ui.undo.endBlock()
+
 	def ShowCreateNewRopTypeDialog(self):
 		# noinspection PyUnresolvedReferences
 		self.ownerComp.op('newRopTypeDialog').ShowDialog()
