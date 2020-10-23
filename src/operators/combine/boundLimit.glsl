@@ -4,15 +4,15 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 	#elif defined(THIS_INPUT_2_RETURN_float)
 	float lim = inputOp2(p, ctx).x;
 	#else
-	#error unsupported input 2 type
+	#error unsupportedInput2Type
 	#endif
-	if (lim < RAYTK_SURF_DIST) {
-		#if defined(THIS_INPUT_1_RETURN_Sdf)
+	if (lim > RAYTK_SURF_DIST) {
+		#if defined(THIS_RETURN_TYPE_Sdf)
 		return createSdf(RAYTK_SURF_DIST);
-		#elif defined(THIS_INPUT_1_RETURN_float)
+		#elif defined(THIS_RETURN_TYPE_float)
 		return RAYTK_SURF_DIST;
 		#else
-		#error unspported input 1 type
+		#error unspportedInput1Type
 		#endif
 	}
 	return inputOp1(p, ctx);
