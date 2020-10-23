@@ -196,6 +196,15 @@ float sdCrossSmooth(vec3 p, vec3 size, float r)
 	return fOpUnionRound(da,fOpUnionRound(db,dc,r), r);
 }
 
+float sdCross(vec2 p, vec2 b, float r)
+{
+	p = abs(p); p = (p.y>p.x) ? p.yx : p.xy;
+	vec2  q = p - b;
+	float k = max(q.y,q.x);
+	vec2  w = (k>0.0) ? q : vec2(b.y-p.x,-k);
+	return sign(k)*length(max(w,0.0)) + r;
+}
+
 float sdLink( vec3 p, float len, float radius, float thick )
 {
 	vec3 q = vec3(p.x, max(abs(p.y)-len,0.0), p.z);
@@ -533,4 +542,12 @@ float sdParabola(in vec2 pos, in float k)
 	pow(q+r, 1.0/3.0) - pow(abs(q-r), 1.0/3.0)*sign(r-q) :
 	2.0*cos(atan(r, q)/3.0)*sqrt(p);
 	return length(pos-vec2(x, k*x*x)) * sign(pos.x-x);
+}
+
+float sdPie( in vec2 p, in vec2 c, in float r )
+{
+	p.x = abs(p.x);
+	float l = length(p) - r;
+	float m = length(p-c*clamp(dot(p,c),0.0,r)); // c = sin/cos of the aperture
+	return max(l,m*sign(c.y*p.x-c.x*p.y));
 }
