@@ -49,7 +49,7 @@ void main() {
 }
 #endif
 
-#ifdef THIS_RETURN_TYPE_vec4
+#if defined(THIS_RETURN_TYPE_vec4) || defined(THIS_RETURN_TYPE_float)
 void main() {
 	vec2 resolution = uTDOutputInfo.res.zw;
 	vec2 fragCoord = vUV.st;
@@ -63,7 +63,7 @@ void main() {
 	}
 	vec3 p = posAndExists.xyz;
 	#ifdef OUTPUT_VALUE
-	valueOut = thismap(p, createDefaultContext());
+	valueOut = vec4(thismap(p, createDefaultContext()));
 	#endif
 }
 #endif
