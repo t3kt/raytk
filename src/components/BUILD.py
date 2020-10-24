@@ -14,7 +14,8 @@ def clean():
 	for o in parent().findChildren(type=DAT, maxDepth=1):
 		if o is me:
 			continue
-		context.detachDat(o)
+		context.log(f'Removing {o}')
+		o.destroy()
 
 def runStage(stage: int):
 	if stage == 0:

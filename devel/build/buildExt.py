@@ -22,6 +22,13 @@ class BuildManager:
 	def OpenToolkitNetwork():
 		navigateTo(getToolkit(), name='toolkit', popup=True, goInto=True)
 
+	def OpenLog(self):
+		dat = self.ownerComp.op('full_log_text')
+		dat.openViewer()
+
+	def ClearLog(self):
+		self.logTable.clear()
+
 	def ReloadToolkit(self):
 		self.logTable.clear()
 		self.reloadToolkit(getToolkit())
@@ -67,6 +74,8 @@ class BuildManager:
 			toolkit.save(toxFile)
 			self.log('Build completed!')
 			self.log(f'Exported tox file: {toxFile}')
+			logFile = toxFile.replace('.tox', '-buildLog.txt')
+			self.logTable.save(logFile)
 
 	def reloadToolkit(self, toolkit: 'COMP'):
 		self.log('Reloading toolkit')
