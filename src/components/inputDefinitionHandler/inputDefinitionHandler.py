@@ -14,12 +14,14 @@ def checkInputDefinition(dat: 'DAT'):
 	coordType = dat[1, 'coordType'].val
 	returnType = dat[1, 'returnType'].val
 	contextType = dat[1, 'contextType'].val
-	supportedCoordTypes = tdu.split(parent().par.Supportedcoordtypes)
+	supportedCoordTypes = tdu.split(parent().par['Supportcoordtypes'] or '')
+	supportedReturnTypes = tdu.split(parent().par['Supportreturntypes'] or '')
+	supportedContextTypes = tdu.split(parent().par['Supportcontexttypes'] or '')
 	if not parent().par['Supportcoordtype' + coordType.lower()] and coordType not in supportedCoordTypes:
 		reportError('Input does not support coordType ' + coordType)
-	if not parent().par['Supportreturntype' + returnType.lower()]:
+	if not parent().par['Supportreturntype' + returnType.lower()] and coordType not in supportedReturnTypes:
 		reportError('Input does not support returnType ' + returnType)
-	if not parent().par['Supportcontexttype' + contextType.lower()]:
+	if not parent().par['Supportcontexttype' + contextType.lower()] and coordType not in supportedContextTypes:
 		reportError('Input does not support contextType ' + contextType)
 
 def reportError(message: str):
