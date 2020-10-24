@@ -8,10 +8,10 @@ context = args[0]  # type: BuildTaskContext
 
 def clean():
 	context.log('Cleaning unecessary OPs')
-	for o in parent().findChildren(type=COMP):
+	for o in parent().findChildren(type=COMP, maxDepth=1):
 		context.disableCloning(o)
 		context.detachTox(o)
-	for o in parent().findChildren(type=DAT):
+	for o in parent().findChildren(type=DAT, maxDepth=1):
 		if o is me:
 			continue
 		context.detachDat(o)
