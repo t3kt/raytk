@@ -74,8 +74,6 @@ class BuildManager:
 			toolkit.save(toxFile)
 			self.log('Build completed!')
 			self.log(f'Exported tox file: {toxFile}')
-			logFile = toxFile.replace('.tox', '-buildLog.txt')
-			self.logTable.save(logFile)
 
 	def reloadToolkit(self, toolkit: 'COMP'):
 		self.log('Reloading toolkit')
