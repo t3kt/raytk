@@ -1,0 +1,1432 @@
+Starting build
+Reloading toolkit
+Detaching all fileSync DATs
+Detaching DAT /raytk/tools/BUILD
+Detaching DAT /raytk/tools/inspector/BUILD
+Detaching DAT /raytk/tools/inspector/render2D/opDefinition/opDefinition
+Detaching DAT /raytk/tools/inspector/render2D/outputCommon
+Detaching DAT /raytk/tools/inspector/render2D/shaderBuilder/raytkUtil
+Detaching DAT /raytk/tools/inspector/render2D/shaderBuilder/shaderBuilder
+Detaching DAT /raytk/tools/inspector/render2D/shaderLibraries/hg_sdf
+Detaching DAT /raytk/tools/inspector/render2D/shaderLibraries/raytkSdf
+Detaching DAT /raytk/tools/inspector/render2D/shaderLibraries/raytkCommon
+Detaching DAT /raytk/tools/inspector/render2D/shaderLibraries/raytkMaterial
+Detaching DAT /raytk/tools/inspector/render2D/functionTemplate
+Detaching DAT /raytk/tools/inspector/render2D/set_render2D_body
+Detaching DAT /raytk/tools/inspector/render2D/uniformExportGenerator/uniformExportGenerator
+Detaching DAT /raytk/tools/inspector/render2D/inputDefinitionHandler_1/typeTable
+Detaching DAT /raytk/tools/inspector/render2D/inputDefinitionHandler_1/inputDefinitionHandler
+Detaching DAT /raytk/tools/inspector/raytkUtil
+Detaching DAT /raytk/tools/inspector/axisHelper/axis_info_table
+Detaching DAT /raytk/tools/inspector/orthoCamera/help
+Detaching DAT /raytk/tools/inspector/orthoCamera/axisHelper/axis_info_table
+Detaching DAT /raytk/tools/inspector/orthoCamera/opDefinition/opDefinition
+Detaching DAT /raytk/tools/inspector/orthoCamera/functionTemplate
+Detaching DAT /raytk/tools/inspector/orthoCamera/set_ortho_direction_table
+Detaching DAT /raytk/tools/inspector/inspectorExt
+Detaching DAT /raytk/tools/inspector/lookAtCamera/help
+Detaching DAT /raytk/tools/inspector/lookAtCamera/opDefinition/opDefinition
+Detaching DAT /raytk/tools/inspector/lookAtCamera/functionTemplate
+Detaching DAT /raytk/tools/inspector/inspectorCore/raytkUtil
+Detaching DAT /raytk/tools/inspector/inspectorCore/inspectorCoreExt
+Detaching DAT /raytk/tools/inspector/bufferInspector/bufferInspectorExt
+Detaching DAT /raytk/tools/inspector/fieldVisualizer/pointMapRender/opDefinition/opDefinition
+Detaching DAT /raytk/tools/inspector/fieldVisualizer/pointMapRender/outputCommon
+Detaching DAT /raytk/tools/inspector/fieldVisualizer/pointMapRender/shaderBuilder/raytkUtil
+Detaching DAT /raytk/tools/inspector/fieldVisualizer/pointMapRender/shaderBuilder/shaderBuilder
+Detaching DAT /raytk/tools/inspector/fieldVisualizer/pointMapRender/shaderLibraries/hg_sdf
+Detaching DAT /raytk/tools/inspector/fieldVisualizer/pointMapRender/shaderLibraries/raytkSdf
+Detaching DAT /raytk/tools/inspector/fieldVisualizer/pointMapRender/shaderLibraries/raytkCommon
+Detaching DAT /raytk/tools/inspector/fieldVisualizer/pointMapRender/shaderLibraries/raytkMaterial
+Detaching DAT /raytk/tools/inspector/fieldVisualizer/pointMapRender/uniformExportGenerator/uniformExportGenerator
+Detaching DAT /raytk/tools/inspector/fieldVisualizer/pointMapRender/pointMapRender_body_raw
+Detaching DAT /raytk/tools/inspector/fieldVisualizer/pointMapRender/inputDefinitionHandler_1/typeTable
+Detaching DAT /raytk/tools/inspector/fieldVisualizer/pointMapRender/inputDefinitionHandler_1/inputDefinitionHandler
+Detaching DAT /raytk/tools/inspector/raymarchRender3D/opDefinition/opDefinition
+Detaching DAT /raytk/tools/inspector/raymarchRender3D/outputCommon
+Detaching DAT /raytk/tools/inspector/raymarchRender3D/shaderBuilder/raytkUtil
+Detaching DAT /raytk/tools/inspector/raymarchRender3D/shaderBuilder/shaderBuilder
+Detaching DAT /raytk/tools/inspector/raymarchRender3D/shaderLibraries/hg_sdf
+Detaching DAT /raytk/tools/inspector/raymarchRender3D/shaderLibraries/raytkSdf
+Detaching DAT /raytk/tools/inspector/raymarchRender3D/shaderLibraries/raytkCommon
+Detaching DAT /raytk/tools/inspector/raymarchRender3D/shaderLibraries/raytkMaterial
+Detaching DAT /raytk/tools/inspector/raymarchRender3D/functionTemplate
+Detaching DAT /raytk/tools/inspector/raymarchRender3D/set_predeclarations
+Detaching DAT /raytk/tools/inspector/raymarchRender3D/uniformExportGenerator/uniformExportGenerator
+Detaching DAT /raytk/tools/inspector/raymarchRender3D/inputDefinitionHandler_1/typeTable
+Detaching DAT /raytk/tools/inspector/raymarchRender3D/inputDefinitionHandler_1/inputDefinitionHandler
+Detaching DAT /raytk/tools/inspector/raymarchRender3D/inputDefinitionHandler_2/typeTable
+Detaching DAT /raytk/tools/inspector/raymarchRender3D/inputDefinitionHandler_2/inputDefinitionHandler
+Detaching DAT /raytk/tools/inspector/raymarchRender3D/inputDefinitionHandler_3/typeTable
+Detaching DAT /raytk/tools/inspector/raymarchRender3D/inputDefinitionHandler_3/inputDefinitionHandler
+Detaching DAT /raytk/tools/inspector/raymarchRender3D/set_raymarchRender3D_body
+Detaching DAT /raytk/tools/createMenu/BUILD
+Detaching DAT /raytk/tools/createMenu/raytkUtil
+Detaching DAT /raytk/tools/createMenu/createMenuExt
+Detaching DAT /raytk/operators/sdf/help
+Detaching DAT /raytk/operators/sdf/boxSdf/help
+Detaching DAT /raytk/operators/sdf/boxSdf/axisHelper/axis_info_table
+Detaching DAT /raytk/operators/sdf/boxSdf/opDefinition/opDefinition
+Detaching DAT /raytk/operators/sdf/boxSdf/functionTemplate
+Detaching DAT /raytk/operators/sdf/coneSdf/opDefinition/opDefinition
+Detaching DAT /raytk/operators/sdf/coneSdf/functionTemplate
+Detaching DAT /raytk/operators/sdf/discSdf/opDefinition/opDefinition
+Detaching DAT /raytk/operators/sdf/discSdf/functionTemplate
+Detaching DAT /raytk/operators/sdf/linkSdf/help
+Detaching DAT /raytk/operators/sdf/linkSdf/opDefinition/opDefinition
+Detaching DAT /raytk/operators/sdf/linkSdf/functionTemplate
+Detaching DAT /raytk/operators/sdf/crossSdf/help
+Detaching DAT /raytk/operators/sdf/crossSdf/opDefinition/opDefinition
+Detaching DAT /raytk/operators/sdf/crossSdf/functionTemplate
+Detaching DAT /raytk/operators/sdf/planeSdf/help
+Detaching DAT /raytk/operators/sdf/planeSdf/axisHelper/axis_info_table
+Detaching DAT /raytk/operators/sdf/planeSdf/opDefinition/opDefinition
+Detaching DAT /raytk/operators/sdf/planeSdf/functionTemplate
+Detaching DAT /raytk/operators/sdf/prismSdf/opDefinition/opDefinition
+Detaching DAT /raytk/operators/sdf/prismSdf/functionTemplate
+Detaching DAT /raytk/operators/sdf/torusSdf/help
+Detaching DAT /raytk/operators/sdf/torusSdf/opDefinition/opDefinition
+Detaching DAT /raytk/operators/sdf/torusSdf/functionTemplate
+Detaching DAT /raytk/operators/sdf/gyroidSdf/opDefinition/opDefinition
+Detaching DAT /raytk/operators/sdf/gyroidSdf/functionTemplate
+Detaching DAT /raytk/operators/sdf/sphereSdf/help
+Detaching DAT /raytk/operators/sdf/sphereSdf/opDefinition/opDefinition
+Detaching DAT /raytk/operators/sdf/sphereSdf/functionTemplate
+Detaching DAT /raytk/operators/sdf/capsuleSdf/opDefinition/opDefinition
+Detaching DAT /raytk/operators/sdf/capsuleSdf/functionTemplate
+Detaching DAT /raytk/operators/sdf/pyramidSdf/opDefinition/opDefinition
+Detaching DAT /raytk/operators/sdf/pyramidSdf/functionTemplate
+Detaching DAT /raytk/operators/sdf/boxFrameSdf/help
+Detaching DAT /raytk/operators/sdf/boxFrameSdf/opDefinition/opDefinition
+Detaching DAT /raytk/operators/sdf/boxFrameSdf/functionTemplate
+Detaching DAT /raytk/operators/sdf/cylinderSdf/help
+Detaching DAT /raytk/operators/sdf/cylinderSdf/opDefinition/opDefinition
+Detaching DAT /raytk/operators/sdf/cylinderSdf/functionTemplate
+Detaching DAT /raytk/operators/sdf/apollonianSdf/opDefinition/opDefinition
+Detaching DAT /raytk/operators/sdf/apollonianSdf/functionTemplate
+Detaching DAT /raytk/operators/sdf/mandelbulbSdf/opDefinition/opDefinition
+Detaching DAT /raytk/operators/sdf/mandelbulbSdf/functionTemplate
+Detaching DAT /raytk/operators/sdf/mobiusRingSdf/help
+Detaching DAT /raytk/operators/sdf/mobiusRingSdf/opDefinition/opDefinition
+Detaching DAT /raytk/operators/sdf/mobiusRingSdf/functionTemplate
+Detaching DAT /raytk/operators/sdf/octahedronSdf/opDefinition/opDefinition
+Detaching DAT /raytk/operators/sdf/octahedronSdf/functionTemplate
+Detaching DAT /raytk/operators/sdf/solidAngleSdf/opDefinition/opDefinition
+Detaching DAT /raytk/operators/sdf/solidAngleSdf/functionTemplate
+Detaching DAT /raytk/operators/sdf/tetrahedronSdf/opDefinition/opDefinition
+Detaching DAT /raytk/operators/sdf/tetrahedronSdf/functionTemplate
+Detaching DAT /raytk/operators/sdf/mengerSpongeSdf/opDefinition/opDefinition
+Detaching DAT /raytk/operators/sdf/mengerSpongeSdf/functionTemplate
+Detaching DAT /raytk/operators/sdf/kaliGeneratorSdf/help
+Detaching DAT /raytk/operators/sdf/kaliGeneratorSdf/opDefinition/opDefinition
+Detaching DAT /raytk/operators/sdf/kaliGeneratorSdf/functionTemplate
+Detaching DAT /raytk/operators/sdf/sierpinskiTetrahedronSdf/opDefinition/opDefinition
+Detaching DAT /raytk/operators/sdf/sierpinskiTetrahedronSdf/functionTemplate
+Detaching DAT /raytk/operators/misc/help
+Detaching DAT /raytk/operators/misc/customGen/opDefinition/opDefinition
+Detaching DAT /raytk/operators/misc/customFilter/opDefinition/opDefinition
+Detaching DAT /raytk/operators/misc/customFilter/inputDefinitionHandler_1/typeTable
+Detaching DAT /raytk/operators/misc/customFilter/inputDefinitionHandler_1/inputDefinitionHandler
+Detaching DAT /raytk/operators/misc/customFilter/inputDefinitionHandler_2/typeTable
+Detaching DAT /raytk/operators/misc/customFilter/inputDefinitionHandler_2/inputDefinitionHandler
+Detaching DAT /raytk/operators/misc/customFilter/inputDefinitionHandler_3/typeTable
+Detaching DAT /raytk/operators/misc/customFilter/inputDefinitionHandler_3/inputDefinitionHandler
+Detaching DAT /raytk/operators/misc/customFilter/inputDefinitionHandler_4/typeTable
+Detaching DAT /raytk/operators/misc/customFilter/inputDefinitionHandler_4/inputDefinitionHandler
+Detaching DAT /raytk/operators/field/help
+Detaching DAT /raytk/operators/field/chopField/opDefinition/opDefinition
+Detaching DAT /raytk/operators/field/chopField/functionTemplate
+Detaching DAT /raytk/operators/field/noiseField/help
+Detaching DAT /raytk/operators/field/noiseField/axisHelper/axis_info_table
+Detaching DAT /raytk/operators/field/noiseField/opDefinition/opDefinition
+Detaching DAT /raytk/operators/field/noiseField/functionTemplate
+Detaching DAT /raytk/operators/field/textureField/help
+Detaching DAT /raytk/operators/field/textureField/axisHelper/axis_info_table
+Detaching DAT /raytk/operators/field/textureField/opDefinition/opDefinition
+Detaching DAT /raytk/operators/field/textureField/functionTemplate
+Detaching DAT /raytk/operators/field/cellTileField/help
+Detaching DAT /raytk/operators/field/cellTileField/opDefinition/opDefinition
+Detaching DAT /raytk/operators/field/cellTileField/functionTemplate
+Detaching DAT /raytk/operators/field/constantField/help
+Detaching DAT /raytk/operators/field/constantField/opDefinition/opDefinition
+Detaching DAT /raytk/operators/field/constantField/functionTemplate
+Detaching DAT /raytk/operators/field/positionField/help
+Detaching DAT /raytk/operators/field/positionField/opDefinition/opDefinition
+Detaching DAT /raytk/operators/field/positionField/functionTemplate
+Detaching DAT /raytk/operators/field/iterationField/help
+Detaching DAT /raytk/operators/field/iterationField/opDefinition/opDefinition
+Detaching DAT /raytk/operators/field/iterationField/functionTemplate
+Detaching DAT /raytk/operators/field/axisDistanceField/help
+Detaching DAT /raytk/operators/field/axisDistanceField/axisHelper/axis_info_table
+Detaching DAT /raytk/operators/field/axisDistanceField/opDefinition/opDefinition
+Detaching DAT /raytk/operators/field/axisDistanceField/functionTemplate
+Detaching DAT /raytk/operators/field/contextValueField/help
+Detaching DAT /raytk/operators/field/contextValueField/opDefinition/opDefinition
+Detaching DAT /raytk/operators/field/contextValueField/context_fields
+Detaching DAT /raytk/operators/field/contextValueField/functionTemplate
+Detaching DAT /raytk/operators/field/pointDistanceField/help
+Detaching DAT /raytk/operators/field/pointDistanceField/opDefinition/opDefinition
+Detaching DAT /raytk/operators/field/pointDistanceField/functionTemplate
+Detaching DAT /raytk/operators/light/help
+Detaching DAT /raytk/operators/light/hardShadow/help
+Detaching DAT /raytk/operators/light/hardShadow/opDefinition/opDefinition
+Detaching DAT /raytk/operators/light/hardShadow/functionTemplate
+Detaching DAT /raytk/operators/light/pointLight/help
+Detaching DAT /raytk/operators/light/pointLight/opDefinition/opDefinition
+Detaching DAT /raytk/operators/light/pointLight/functionTemplate
+Detaching DAT /raytk/operators/light/softShadow/help
+Detaching DAT /raytk/operators/light/softShadow/opDefinition/opDefinition
+Detaching DAT /raytk/operators/light/softShadow/functionTemplate
+Detaching DAT /raytk/operators/sdf2d/help
+Detaching DAT /raytk/operators/sdf2d/pieSdf2d/opDefinition/opDefinition
+Detaching DAT /raytk/operators/sdf2d/pieSdf2d/functionTemplate
+Detaching DAT /raytk/operators/sdf2d/circleSdf/opDefinition/opDefinition
+Detaching DAT /raytk/operators/sdf2d/circleSdf/functionTemplate
+Detaching DAT /raytk/operators/sdf2d/starSdf2d/opDefinition/opDefinition
+Detaching DAT /raytk/operators/sdf2d/starSdf2d/functionTemplate
+Detaching DAT /raytk/operators/sdf2d/crossSdf2d/opDefinition/opDefinition
+Detaching DAT /raytk/operators/sdf2d/crossSdf2d/functionTemplate
+Detaching DAT /raytk/operators/sdf2d/vesicaSdf2d/opDefinition/opDefinition
+Detaching DAT /raytk/operators/sdf2d/vesicaSdf2d/functionTemplate
+Detaching DAT /raytk/operators/sdf2d/polygonSdf2d/opDefinition/opDefinition
+Detaching DAT /raytk/operators/sdf2d/polygonSdf2d/functionTemplate
+Detaching DAT /raytk/operators/sdf2d/rectangleSdf/opDefinition/opDefinition
+Detaching DAT /raytk/operators/sdf2d/rectangleSdf/functionTemplate
+Detaching DAT /raytk/operators/sdf2d/rhombusSdf2d/opDefinition/opDefinition
+Detaching DAT /raytk/operators/sdf2d/rhombusSdf2d/functionTemplate
+Detaching DAT /raytk/operators/sdf2d/parabolaSdf2d/opDefinition/opDefinition
+Detaching DAT /raytk/operators/sdf2d/parabolaSdf2d/functionTemplate
+Detaching DAT /raytk/operators/sdf2d/triangleSdf2d/opDefinition/opDefinition
+Detaching DAT /raytk/operators/sdf2d/triangleSdf2d/functionTemplate
+Detaching DAT /raytk/operators/sdf2d/roundedRectangleSdf2d/opDefinition/opDefinition
+Detaching DAT /raytk/operators/sdf2d/roundedRectangleSdf2d/functionTemplate
+Detaching DAT /raytk/operators/camera/help
+Detaching DAT /raytk/operators/camera/orthoCamera/help
+Detaching DAT /raytk/operators/camera/orthoCamera/axisHelper/axis_info_table
+Detaching DAT /raytk/operators/camera/orthoCamera/opDefinition/opDefinition
+Detaching DAT /raytk/operators/camera/orthoCamera/functionTemplate
+Detaching DAT /raytk/operators/camera/orthoCamera/set_ortho_direction_table
+Detaching DAT /raytk/operators/camera/splitCamera/help
+Detaching DAT /raytk/operators/camera/splitCamera/opDefinition/opDefinition
+Detaching DAT /raytk/operators/camera/splitCamera/functionTemplate
+Detaching DAT /raytk/operators/camera/splitCamera/inputDefinitionHandler_1/typeTable
+Detaching DAT /raytk/operators/camera/splitCamera/inputDefinitionHandler_1/inputDefinitionHandler
+Detaching DAT /raytk/operators/camera/splitCamera/inputDefinitionHandler_2/typeTable
+Detaching DAT /raytk/operators/camera/splitCamera/inputDefinitionHandler_2/inputDefinitionHandler
+Detaching DAT /raytk/operators/camera/splitCamera/inputDefinitionHandler_3/typeTable
+Detaching DAT /raytk/operators/camera/splitCamera/inputDefinitionHandler_3/inputDefinitionHandler
+Detaching DAT /raytk/operators/camera/splitCamera/inputDefinitionHandler_4/typeTable
+Detaching DAT /raytk/operators/camera/splitCamera/inputDefinitionHandler_4/inputDefinitionHandler
+Detaching DAT /raytk/operators/camera/lookAtCamera/help
+Detaching DAT /raytk/operators/camera/lookAtCamera/opDefinition/opDefinition
+Detaching DAT /raytk/operators/camera/lookAtCamera/functionTemplate
+Detaching DAT /raytk/operators/camera/fisheyeCamera/help
+Detaching DAT /raytk/operators/camera/fisheyeCamera/opDefinition/opDefinition
+Detaching DAT /raytk/operators/camera/fisheyeCamera/functionTemplate
+Detaching DAT /raytk/operators/filter/flip/function
+Detaching DAT /raytk/operators/filter/flip/axisHelper/axis_info_table
+Detaching DAT /raytk/operators/filter/flip/opDefinition/opDefinition
+Detaching DAT /raytk/operators/filter/flip/inputDefinitionHandler_1/typeTable
+Detaching DAT /raytk/operators/filter/flip/inputDefinitionHandler_1/inputDefinitionHandler
+Detaching DAT /raytk/operators/filter/help
+Detaching DAT /raytk/operators/filter/knife/help
+Detaching DAT /raytk/operators/filter/knife/function
+Detaching DAT /raytk/operators/filter/knife/opDefinition/opDefinition
+Detaching DAT /raytk/operators/filter/knife/inputDefinitionHandler_1/typeTable
+Detaching DAT /raytk/operators/filter/knife/inputDefinitionHandler_1/inputDefinitionHandler
+Detaching DAT /raytk/operators/filter/onion/function
+Detaching DAT /raytk/operators/filter/onion/opDefinition/opDefinition
+Detaching DAT /raytk/operators/filter/onion/inputDefinitionHandler_1/typeTable
+Detaching DAT /raytk/operators/filter/onion/inputDefinitionHandler_1/inputDefinitionHandler
+Detaching DAT /raytk/operators/filter/round/help
+Detaching DAT /raytk/operators/filter/round/function
+Detaching DAT /raytk/operators/filter/round/opDefinition/opDefinition
+Detaching DAT /raytk/operators/filter/round/inputDefinitionHandler_1/typeTable
+Detaching DAT /raytk/operators/filter/round/inputDefinitionHandler_1/inputDefinitionHandler
+Detaching DAT /raytk/operators/filter/round/inputDefinitionHandler_2/typeTable
+Detaching DAT /raytk/operators/filter/round/inputDefinitionHandler_2/inputDefinitionHandler
+Detaching DAT /raytk/operators/filter/scale/function
+Detaching DAT /raytk/operators/filter/scale/opDefinition/opDefinition
+Detaching DAT /raytk/operators/filter/scale/inputDefinitionHandler_1/typeTable
+Detaching DAT /raytk/operators/filter/scale/inputDefinitionHandler_1/inputDefinitionHandler
+Detaching DAT /raytk/operators/filter/scale/inputDefinitionHandler_2/typeTable
+Detaching DAT /raytk/operators/filter/scale/inputDefinitionHandler_2/inputDefinitionHandler
+Detaching DAT /raytk/operators/filter/slice/function
+Detaching DAT /raytk/operators/filter/slice/axisHelper/axis_info_table
+Detaching DAT /raytk/operators/filter/slice/opDefinition/opDefinition
+Detaching DAT /raytk/operators/filter/slice/inputDefinitionHandler_1/typeTable
+Detaching DAT /raytk/operators/filter/slice/inputDefinitionHandler_1/inputDefinitionHandler
+Detaching DAT /raytk/operators/filter/invert/help
+Detaching DAT /raytk/operators/filter/invert/function
+Detaching DAT /raytk/operators/filter/invert/opDefinition/opDefinition
+Detaching DAT /raytk/operators/filter/invert/inputDefinitionHandler_1/typeTable
+Detaching DAT /raytk/operators/filter/invert/inputDefinitionHandler_1/inputDefinitionHandler
+Detaching DAT /raytk/operators/filter/rotate/function
+Detaching DAT /raytk/operators/filter/rotate/opDefinition/opDefinition
+Detaching DAT /raytk/operators/filter/rotate/inputDefinitionHandler_1/typeTable
+Detaching DAT /raytk/operators/filter/rotate/inputDefinitionHandler_1/inputDefinitionHandler
+Detaching DAT /raytk/operators/filter/rotate/inputDefinitionHandler_2/typeTable
+Detaching DAT /raytk/operators/filter/rotate/inputDefinitionHandler_2/inputDefinitionHandler
+Detaching DAT /raytk/operators/filter/reflect/help
+Detaching DAT /raytk/operators/filter/reflect/function
+Detaching DAT /raytk/operators/filter/reflect/opDefinition/opDefinition
+Detaching DAT /raytk/operators/filter/reflect/inputDefinitionHandler_1/typeTable
+Detaching DAT /raytk/operators/filter/reflect/inputDefinitionHandler_1/inputDefinitionHandler
+Detaching DAT /raytk/operators/filter/modulo1D/function
+Detaching DAT /raytk/operators/filter/modulo1D/opDefinition/opDefinition
+Detaching DAT /raytk/operators/filter/modulo1D/inputDefinitionHandler_1/typeTable
+Detaching DAT /raytk/operators/filter/modulo1D/inputDefinitionHandler_1/inputDefinitionHandler
+Detaching DAT /raytk/operators/filter/modulo2D/help
+Detaching DAT /raytk/operators/filter/modulo2D/function
+Detaching DAT /raytk/operators/filter/modulo2D/axisHelper/axis_info_table
+Detaching DAT /raytk/operators/filter/modulo2D/opDefinition/opDefinition
+Detaching DAT /raytk/operators/filter/modulo2D/inputDefinitionHandler_1/typeTable
+Detaching DAT /raytk/operators/filter/modulo2D/inputDefinitionHandler_1/inputDefinitionHandler
+Detaching DAT /raytk/operators/filter/modulo3D/help
+Detaching DAT /raytk/operators/filter/modulo3D/function
+Detaching DAT /raytk/operators/filter/modulo3D/opDefinition/opDefinition
+Detaching DAT /raytk/operators/filter/modulo3D/inputDefinitionHandler_1/typeTable
+Detaching DAT /raytk/operators/filter/modulo3D/inputDefinitionHandler_1/inputDefinitionHandler
+Detaching DAT /raytk/operators/filter/fieldExpr/opDefinition/opDefinition
+Detaching DAT /raytk/operators/filter/fieldExpr/functionTemplate
+Detaching DAT /raytk/operators/filter/fieldExpr/inputDefinitionHandler_1/typeTable
+Detaching DAT /raytk/operators/filter/fieldExpr/inputDefinitionHandler_1/inputDefinitionHandler
+Detaching DAT /raytk/operators/filter/fieldExpr/inputDefinitionHandler_2/typeTable
+Detaching DAT /raytk/operators/filter/fieldExpr/inputDefinitionHandler_2/inputDefinitionHandler
+Detaching DAT /raytk/operators/filter/fieldExpr/inputDefinitionHandler_3/typeTable
+Detaching DAT /raytk/operators/filter/fieldExpr/inputDefinitionHandler_3/inputDefinitionHandler
+Detaching DAT /raytk/operators/filter/fieldExpr/inputDefinitionHandler_4/typeTable
+Detaching DAT /raytk/operators/filter/fieldExpr/inputDefinitionHandler_4/inputDefinitionHandler
+Detaching DAT /raytk/operators/filter/transform/help
+Detaching DAT /raytk/operators/filter/transform/opDefinition/opDefinition
+Detaching DAT /raytk/operators/filter/transform/function_template
+Detaching DAT /raytk/operators/filter/transform/inputDefinitionHandler_1/typeTable
+Detaching DAT /raytk/operators/filter/transform/inputDefinitionHandler_1/inputDefinitionHandler
+Detaching DAT /raytk/operators/filter/translate/help
+Detaching DAT /raytk/operators/filter/translate/function
+Detaching DAT /raytk/operators/filter/translate/opDefinition/opDefinition
+Detaching DAT /raytk/operators/filter/translate/inputDefinitionHandler_1/typeTable
+Detaching DAT /raytk/operators/filter/translate/inputDefinitionHandler_1/inputDefinitionHandler
+Detaching DAT /raytk/operators/filter/translate/inputDefinitionHandler_2/typeTable
+Detaching DAT /raytk/operators/filter/translate/inputDefinitionHandler_2/inputDefinitionHandler
+Detaching DAT /raytk/operators/filter/limitField/opDefinition/opDefinition
+Detaching DAT /raytk/operators/filter/limitField/functionTemplate
+Detaching DAT /raytk/operators/filter/limitField/inputDefinitionHandler_1/typeTable
+Detaching DAT /raytk/operators/filter/limitField/inputDefinitionHandler_1/inputDefinitionHandler
+Detaching DAT /raytk/operators/filter/moduloPolar/help
+Detaching DAT /raytk/operators/filter/moduloPolar/function
+Detaching DAT /raytk/operators/filter/moduloPolar/axisHelper/axis_info_table
+Detaching DAT /raytk/operators/filter/moduloPolar/opDefinition/opDefinition
+Detaching DAT /raytk/operators/filter/moduloPolar/inputDefinitionHandler_1/typeTable
+Detaching DAT /raytk/operators/filter/moduloPolar/inputDefinitionHandler_1/inputDefinitionHandler
+Detaching DAT /raytk/operators/filter/radialClone/help
+Detaching DAT /raytk/operators/filter/radialClone/function
+Detaching DAT /raytk/operators/filter/radialClone/axisHelper/axis_info_table
+Detaching DAT /raytk/operators/filter/radialClone/opDefinition/opDefinition
+Detaching DAT /raytk/operators/filter/radialClone/inputDefinitionHandler_1/typeTable
+Detaching DAT /raytk/operators/filter/radialClone/inputDefinitionHandler_1/inputDefinitionHandler
+Detaching DAT /raytk/operators/filter/mirrorOctant/help
+Detaching DAT /raytk/operators/filter/mirrorOctant/function
+Detaching DAT /raytk/operators/filter/mirrorOctant/axisHelper/axis_info_table
+Detaching DAT /raytk/operators/filter/mirrorOctant/opDefinition/opDefinition
+Detaching DAT /raytk/operators/filter/mirrorOctant/inputDefinitionHandler_1/typeTable
+Detaching DAT /raytk/operators/filter/mirrorOctant/inputDefinitionHandler_1/inputDefinitionHandler
+Detaching DAT /raytk/operators/filter/rescaleField/opDefinition/opDefinition
+Detaching DAT /raytk/operators/filter/rescaleField/functionTemplate
+Detaching DAT /raytk/operators/filter/rescaleField/inputDefinitionHandler_1/typeTable
+Detaching DAT /raytk/operators/filter/rescaleField/inputDefinitionHandler_1/inputDefinitionHandler
+Detaching DAT /raytk/operators/filter/quantizeValue/function
+Detaching DAT /raytk/operators/filter/quantizeValue/opDefinition/opDefinition
+Detaching DAT /raytk/operators/filter/quantizeValue/inputDefinitionHandler_1/typeTable
+Detaching DAT /raytk/operators/filter/quantizeValue/inputDefinitionHandler_1/inputDefinitionHandler
+Detaching DAT /raytk/operators/filter/quantizeCoords/help
+Detaching DAT /raytk/operators/filter/quantizeCoords/function
+Detaching DAT /raytk/operators/filter/quantizeCoords/opDefinition/opDefinition
+Detaching DAT /raytk/operators/filter/quantizeCoords/inputDefinitionHandler_1/typeTable
+Detaching DAT /raytk/operators/filter/quantizeCoords/inputDefinitionHandler_1/inputDefinitionHandler
+Detaching DAT /raytk/operators/filter/iteratedTransform/help
+Detaching DAT /raytk/operators/filter/iteratedTransform/opDefinition/opDefinition
+Detaching DAT /raytk/operators/filter/iteratedTransform/function_template
+Detaching DAT /raytk/operators/filter/iteratedTransform/inputDefinitionHandler_1/typeTable
+Detaching DAT /raytk/operators/filter/iteratedTransform/inputDefinitionHandler_1/inputDefinitionHandler
+Detaching DAT /raytk/operators/output/help
+Detaching DAT /raytk/operators/output/render2D/opDefinition/opDefinition
+Detaching DAT /raytk/operators/output/render2D/outputCommon
+Detaching DAT /raytk/operators/output/render2D/shaderBuilder/raytkUtil
+Detaching DAT /raytk/operators/output/render2D/shaderBuilder/shaderBuilder
+Detaching DAT /raytk/operators/output/render2D/shaderLibraries/hg_sdf
+Detaching DAT /raytk/operators/output/render2D/shaderLibraries/raytkSdf
+Detaching DAT /raytk/operators/output/render2D/shaderLibraries/raytkCommon
+Detaching DAT /raytk/operators/output/render2D/shaderLibraries/raytkMaterial
+Detaching DAT /raytk/operators/output/render2D/functionTemplate
+Detaching DAT /raytk/operators/output/render2D/set_render2D_body
+Detaching DAT /raytk/operators/output/render2D/uniformExportGenerator/uniformExportGenerator
+Detaching DAT /raytk/operators/output/render2D/inputDefinitionHandler_1/typeTable
+Detaching DAT /raytk/operators/output/render2D/inputDefinitionHandler_1/inputDefinitionHandler
+Detaching DAT /raytk/operators/output/pointMapRender/opDefinition/opDefinition
+Detaching DAT /raytk/operators/output/pointMapRender/outputCommon
+Detaching DAT /raytk/operators/output/pointMapRender/shaderBuilder/raytkUtil
+Detaching DAT /raytk/operators/output/pointMapRender/shaderBuilder/shaderBuilder
+Detaching DAT /raytk/operators/output/pointMapRender/shaderLibraries/hg_sdf
+Detaching DAT /raytk/operators/output/pointMapRender/shaderLibraries/raytkSdf
+Detaching DAT /raytk/operators/output/pointMapRender/shaderLibraries/raytkCommon
+Detaching DAT /raytk/operators/output/pointMapRender/shaderLibraries/raytkMaterial
+Detaching DAT /raytk/operators/output/pointMapRender/uniformExportGenerator/uniformExportGenerator
+Detaching DAT /raytk/operators/output/pointMapRender/pointMapRender_body_raw
+Detaching DAT /raytk/operators/output/pointMapRender/inputDefinitionHandler_1/typeTable
+Detaching DAT /raytk/operators/output/pointMapRender/inputDefinitionHandler_1/inputDefinitionHandler
+Detaching DAT /raytk/operators/output/raymarchRender3D/opDefinition/opDefinition
+Detaching DAT /raytk/operators/output/raymarchRender3D/outputCommon
+Detaching DAT /raytk/operators/output/raymarchRender3D/shaderBuilder/raytkUtil
+Detaching DAT /raytk/operators/output/raymarchRender3D/shaderBuilder/shaderBuilder
+Detaching DAT /raytk/operators/output/raymarchRender3D/shaderLibraries/hg_sdf
+Detaching DAT /raytk/operators/output/raymarchRender3D/shaderLibraries/raytkSdf
+Detaching DAT /raytk/operators/output/raymarchRender3D/shaderLibraries/raytkCommon
+Detaching DAT /raytk/operators/output/raymarchRender3D/shaderLibraries/raytkMaterial
+Detaching DAT /raytk/operators/output/raymarchRender3D/functionTemplate
+Detaching DAT /raytk/operators/output/raymarchRender3D/set_predeclarations
+Detaching DAT /raytk/operators/output/raymarchRender3D/uniformExportGenerator/uniformExportGenerator
+Detaching DAT /raytk/operators/output/raymarchRender3D/inputDefinitionHandler_1/typeTable
+Detaching DAT /raytk/operators/output/raymarchRender3D/inputDefinitionHandler_1/inputDefinitionHandler
+Detaching DAT /raytk/operators/output/raymarchRender3D/inputDefinitionHandler_2/typeTable
+Detaching DAT /raytk/operators/output/raymarchRender3D/inputDefinitionHandler_2/inputDefinitionHandler
+Detaching DAT /raytk/operators/output/raymarchRender3D/inputDefinitionHandler_3/typeTable
+Detaching DAT /raytk/operators/output/raymarchRender3D/inputDefinitionHandler_3/inputDefinitionHandler
+Detaching DAT /raytk/operators/output/raymarchRender3D/set_raymarchRender3D_body
+Detaching DAT /raytk/operators/combine/help
+Detaching DAT /raytk/operators/combine/blend/function
+Detaching DAT /raytk/operators/combine/blend/opDefinition/opDefinition
+Detaching DAT /raytk/operators/combine/blend/inputDefinitionHandler_1/typeTable
+Detaching DAT /raytk/operators/combine/blend/inputDefinitionHandler_1/inputDefinitionHandler
+Detaching DAT /raytk/operators/combine/blend/inputDefinitionHandler_2/typeTable
+Detaching DAT /raytk/operators/combine/blend/inputDefinitionHandler_2/inputDefinitionHandler
+Detaching DAT /raytk/operators/combine/blend/inputDefinitionHandler_3/typeTable
+Detaching DAT /raytk/operators/combine/blend/inputDefinitionHandler_3/inputDefinitionHandler
+Detaching DAT /raytk/operators/combine/blend/inputDefinitionHandler_4/typeTable
+Detaching DAT /raytk/operators/combine/blend/inputDefinitionHandler_4/inputDefinitionHandler
+Detaching DAT /raytk/operators/combine/switch/help
+Detaching DAT /raytk/operators/combine/switch/function
+Detaching DAT /raytk/operators/combine/switch/opDefinition/opDefinition
+Detaching DAT /raytk/operators/combine/switch/inputDefinitionHandler_1/typeTable
+Detaching DAT /raytk/operators/combine/switch/inputDefinitionHandler_1/inputDefinitionHandler
+Detaching DAT /raytk/operators/combine/switch/inputDefinitionHandler_2/typeTable
+Detaching DAT /raytk/operators/combine/switch/inputDefinitionHandler_2/inputDefinitionHandler
+Detaching DAT /raytk/operators/combine/switch/inputDefinitionHandler_3/typeTable
+Detaching DAT /raytk/operators/combine/switch/inputDefinitionHandler_3/inputDefinitionHandler
+Detaching DAT /raytk/operators/combine/switch/inputDefinitionHandler_4/typeTable
+Detaching DAT /raytk/operators/combine/switch/inputDefinitionHandler_4/inputDefinitionHandler
+Detaching DAT /raytk/operators/combine/boundLimit/function
+Detaching DAT /raytk/operators/combine/boundLimit/opDefinition/opDefinition
+Detaching DAT /raytk/operators/combine/boundLimit/inputDefinitionHandler_1/typeTable
+Detaching DAT /raytk/operators/combine/boundLimit/inputDefinitionHandler_1/inputDefinitionHandler
+Detaching DAT /raytk/operators/combine/boundLimit/inputDefinitionHandler_2/typeTable
+Detaching DAT /raytk/operators/combine/boundLimit/inputDefinitionHandler_2/inputDefinitionHandler
+Detaching DAT /raytk/operators/combine/simpleDiff/help
+Detaching DAT /raytk/operators/combine/simpleDiff/function
+Detaching DAT /raytk/operators/combine/simpleDiff/opDefinition/opDefinition
+Detaching DAT /raytk/operators/combine/simpleDiff/inputDefinitionHandler_1/typeTable
+Detaching DAT /raytk/operators/combine/simpleDiff/inputDefinitionHandler_1/inputDefinitionHandler
+Detaching DAT /raytk/operators/combine/simpleDiff/inputDefinitionHandler_2/typeTable
+Detaching DAT /raytk/operators/combine/simpleDiff/inputDefinitionHandler_2/inputDefinitionHandler
+Detaching DAT /raytk/operators/combine/simpleUnion/help
+Detaching DAT /raytk/operators/combine/simpleUnion/function
+Detaching DAT /raytk/operators/combine/simpleUnion/opDefinition/opDefinition
+Detaching DAT /raytk/operators/combine/simpleUnion/inputDefinitionHandler_1/typeTable
+Detaching DAT /raytk/operators/combine/simpleUnion/inputDefinitionHandler_1/inputDefinitionHandler
+Detaching DAT /raytk/operators/combine/simpleUnion/inputDefinitionHandler_2/typeTable
+Detaching DAT /raytk/operators/combine/simpleUnion/inputDefinitionHandler_2/inputDefinitionHandler
+Detaching DAT /raytk/operators/combine/simpleUnion/inputDefinitionHandler_3/typeTable
+Detaching DAT /raytk/operators/combine/simpleUnion/inputDefinitionHandler_3/inputDefinitionHandler
+Detaching DAT /raytk/operators/combine/simpleUnion/inputDefinitionHandler_4/typeTable
+Detaching DAT /raytk/operators/combine/simpleUnion/inputDefinitionHandler_4/inputDefinitionHandler
+Detaching DAT /raytk/operators/combine/smoothUnion/help
+Detaching DAT /raytk/operators/combine/smoothUnion/function
+Detaching DAT /raytk/operators/combine/smoothUnion/opDefinition/opDefinition
+Detaching DAT /raytk/operators/combine/smoothUnion/inputDefinitionHandler_1/typeTable
+Detaching DAT /raytk/operators/combine/smoothUnion/inputDefinitionHandler_1/inputDefinitionHandler
+Detaching DAT /raytk/operators/combine/smoothUnion/inputDefinitionHandler_2/typeTable
+Detaching DAT /raytk/operators/combine/smoothUnion/inputDefinitionHandler_2/inputDefinitionHandler
+Detaching DAT /raytk/operators/combine/smoothUnion/inputDefinitionHandler_3/typeTable
+Detaching DAT /raytk/operators/combine/smoothUnion/inputDefinitionHandler_3/inputDefinitionHandler
+Detaching DAT /raytk/operators/combine/combineFields/help
+Detaching DAT /raytk/operators/combine/combineFields/function
+Detaching DAT /raytk/operators/combine/combineFields/opDefinition/opDefinition
+Detaching DAT /raytk/operators/combine/combineFields/inputDefinitionHandler_1/typeTable
+Detaching DAT /raytk/operators/combine/combineFields/inputDefinitionHandler_1/inputDefinitionHandler
+Detaching DAT /raytk/operators/combine/combineFields/inputDefinitionHandler_2/typeTable
+Detaching DAT /raytk/operators/combine/combineFields/inputDefinitionHandler_2/inputDefinitionHandler
+Detaching DAT /raytk/operators/combine/combineStairs/help
+Detaching DAT /raytk/operators/combine/combineStairs/function
+Detaching DAT /raytk/operators/combine/combineStairs/opDefinition/opDefinition
+Detaching DAT /raytk/operators/combine/combineStairs/inputDefinitionHandler_1/typeTable
+Detaching DAT /raytk/operators/combine/combineStairs/inputDefinitionHandler_1/inputDefinitionHandler
+Detaching DAT /raytk/operators/combine/combineStairs/inputDefinitionHandler_2/typeTable
+Detaching DAT /raytk/operators/combine/combineStairs/inputDefinitionHandler_2/inputDefinitionHandler
+Detaching DAT /raytk/operators/combine/combineStairs/inputDefinitionHandler_3/typeTable
+Detaching DAT /raytk/operators/combine/combineStairs/inputDefinitionHandler_3/inputDefinitionHandler
+Detaching DAT /raytk/operators/combine/combineStairs/inputDefinitionHandler_4/typeTable
+Detaching DAT /raytk/operators/combine/combineStairs/inputDefinitionHandler_4/inputDefinitionHandler
+Detaching DAT /raytk/operators/combine/combineColumns/help
+Detaching DAT /raytk/operators/combine/combineColumns/function
+Detaching DAT /raytk/operators/combine/combineColumns/opDefinition/opDefinition
+Detaching DAT /raytk/operators/combine/combineColumns/inputDefinitionHandler_1/typeTable
+Detaching DAT /raytk/operators/combine/combineColumns/inputDefinitionHandler_1/inputDefinitionHandler
+Detaching DAT /raytk/operators/combine/combineColumns/inputDefinitionHandler_2/typeTable
+Detaching DAT /raytk/operators/combine/combineColumns/inputDefinitionHandler_2/inputDefinitionHandler
+Detaching DAT /raytk/operators/combine/combineColumns/inputDefinitionHandler_3/typeTable
+Detaching DAT /raytk/operators/combine/combineColumns/inputDefinitionHandler_3/inputDefinitionHandler
+Detaching DAT /raytk/operators/combine/iterationSwitch/opDefinition/opDefinition
+Detaching DAT /raytk/operators/combine/iterationSwitch/functionTemplate
+Detaching DAT /raytk/operators/combine/iterationSwitch/inputDefinitionHandler_1/typeTable
+Detaching DAT /raytk/operators/combine/iterationSwitch/inputDefinitionHandler_1/inputDefinitionHandler
+Detaching DAT /raytk/operators/combine/iterationSwitch/inputDefinitionHandler_2/typeTable
+Detaching DAT /raytk/operators/combine/iterationSwitch/inputDefinitionHandler_2/inputDefinitionHandler
+Detaching DAT /raytk/operators/combine/simpleIntersect/help
+Detaching DAT /raytk/operators/combine/simpleIntersect/function
+Detaching DAT /raytk/operators/combine/simpleIntersect/opDefinition/opDefinition
+Detaching DAT /raytk/operators/combine/simpleIntersect/inputDefinitionHandler_1/typeTable
+Detaching DAT /raytk/operators/combine/simpleIntersect/inputDefinitionHandler_1/inputDefinitionHandler
+Detaching DAT /raytk/operators/combine/simpleIntersect/inputDefinitionHandler_2/typeTable
+Detaching DAT /raytk/operators/combine/simpleIntersect/inputDefinitionHandler_2/inputDefinitionHandler
+Detaching DAT /raytk/operators/combine/simpleIntersect/inputDefinitionHandler_3/typeTable
+Detaching DAT /raytk/operators/combine/simpleIntersect/inputDefinitionHandler_3/inputDefinitionHandler
+Detaching DAT /raytk/operators/combine/simpleIntersect/inputDefinitionHandler_4/typeTable
+Detaching DAT /raytk/operators/combine/simpleIntersect/inputDefinitionHandler_4/inputDefinitionHandler
+Detaching DAT /raytk/operators/convert/help
+Detaching DAT /raytk/operators/convert/extrude/function
+Detaching DAT /raytk/operators/convert/extrude/axisHelper/axis_info_table
+Detaching DAT /raytk/operators/convert/extrude/opDefinition/opDefinition
+Detaching DAT /raytk/operators/convert/extrude/inputDefinitionHandler_1/typeTable
+Detaching DAT /raytk/operators/convert/extrude/inputDefinitionHandler_1/inputDefinitionHandler
+Detaching DAT /raytk/operators/convert/revolve/function
+Detaching DAT /raytk/operators/convert/revolve/axisHelper/axis_info_table
+Detaching DAT /raytk/operators/convert/revolve/opDefinition/opDefinition
+Detaching DAT /raytk/operators/convert/revolve/inputDefinitionHandler_1/typeTable
+Detaching DAT /raytk/operators/convert/revolve/inputDefinitionHandler_1/inputDefinitionHandler
+Detaching DAT /raytk/operators/convert/coordTo2D/function
+Detaching DAT /raytk/operators/convert/coordTo2D/opDefinition/opDefinition
+Detaching DAT /raytk/operators/convert/coordTo2D/inputDefinitionHandler_1/typeTable
+Detaching DAT /raytk/operators/convert/coordTo2D/inputDefinitionHandler_1/inputDefinitionHandler
+Detaching DAT /raytk/operators/convert/coordTo3D/function
+Detaching DAT /raytk/operators/convert/coordTo3D/opDefinition/opDefinition
+Detaching DAT /raytk/operators/convert/coordTo3D/inputDefinitionHandler_1/typeTable
+Detaching DAT /raytk/operators/convert/coordTo3D/inputDefinitionHandler_1/inputDefinitionHandler
+Detaching DAT /raytk/operators/convert/floatToSdf/function
+Detaching DAT /raytk/operators/convert/floatToSdf/opDefinition/opDefinition
+Detaching DAT /raytk/operators/convert/floatToSdf/inputDefinitionHandler_1/typeTable
+Detaching DAT /raytk/operators/convert/floatToSdf/inputDefinitionHandler_1/inputDefinitionHandler
+Detaching DAT /raytk/operators/convert/sdfToFloat/function
+Detaching DAT /raytk/operators/convert/sdfToFloat/opDefinition/opDefinition
+Detaching DAT /raytk/operators/convert/sdfToFloat/inputDefinitionHandler_1/typeTable
+Detaching DAT /raytk/operators/convert/sdfToFloat/inputDefinitionHandler_1/inputDefinitionHandler
+Detaching DAT /raytk/operators/convert/floatToVector/function
+Detaching DAT /raytk/operators/convert/floatToVector/opDefinition/opDefinition
+Detaching DAT /raytk/operators/convert/floatToVector/inputDefinitionHandler_1/typeTable
+Detaching DAT /raytk/operators/convert/floatToVector/inputDefinitionHandler_1/inputDefinitionHandler
+Detaching DAT /raytk/operators/convert/floatToVector/inputDefinitionHandler_2/typeTable
+Detaching DAT /raytk/operators/convert/floatToVector/inputDefinitionHandler_2/inputDefinitionHandler
+Detaching DAT /raytk/operators/convert/floatToVector/inputDefinitionHandler_3/typeTable
+Detaching DAT /raytk/operators/convert/floatToVector/inputDefinitionHandler_3/inputDefinitionHandler
+Detaching DAT /raytk/operators/convert/floatToVector/inputDefinitionHandler_4/typeTable
+Detaching DAT /raytk/operators/convert/floatToVector/inputDefinitionHandler_4/inputDefinitionHandler
+Detaching DAT /raytk/operators/convert/vectorToFloat/function
+Detaching DAT /raytk/operators/convert/vectorToFloat/opDefinition/opDefinition
+Detaching DAT /raytk/operators/convert/vectorToFloat/inputDefinitionHandler_1/typeTable
+Detaching DAT /raytk/operators/convert/vectorToFloat/inputDefinitionHandler_1/inputDefinitionHandler
+Detaching DAT /raytk/operators/utility/help
+Detaching DAT /raytk/operators/utility/injectObjectId/help
+Detaching DAT /raytk/operators/utility/injectObjectId/function
+Detaching DAT /raytk/operators/utility/injectObjectId/opDefinition/opDefinition
+Detaching DAT /raytk/operators/utility/injectObjectId/inputDefinitionHandler_1/typeTable
+Detaching DAT /raytk/operators/utility/injectObjectId/inputDefinitionHandler_1/inputDefinitionHandler
+Detaching DAT /raytk/operators/utility/extractIteration/help
+Detaching DAT /raytk/operators/utility/extractIteration/function
+Detaching DAT /raytk/operators/utility/extractIteration/opDefinition/opDefinition
+Detaching DAT /raytk/operators/utility/extractIteration/inputDefinitionHandler_1/typeTable
+Detaching DAT /raytk/operators/utility/extractIteration/inputDefinitionHandler_1/inputDefinitionHandler
+Detaching DAT /raytk/operators/utility/extractDebugValues/function
+Detaching DAT /raytk/operators/utility/extractDebugValues/opDefinition/opDefinition
+Detaching DAT /raytk/operators/utility/extractDebugValues/inputDefinitionHandler_1/typeTable
+Detaching DAT /raytk/operators/utility/extractDebugValues/inputDefinitionHandler_1/inputDefinitionHandler
+Detaching DAT /raytk/operators/material/help
+Detaching DAT /raytk/operators/material/basicMat/function
+Detaching DAT /raytk/operators/material/basicMat/material
+Detaching DAT /raytk/operators/material/basicMat/opDefinition/opDefinition
+Detaching DAT /raytk/operators/material/basicMat/inputDefinitionHandler_1/typeTable
+Detaching DAT /raytk/operators/material/basicMat/inputDefinitionHandler_1/inputDefinitionHandler
+Detaching DAT /raytk/operators/material/basicMat/inputDefinitionHandler_2/typeTable
+Detaching DAT /raytk/operators/material/basicMat/inputDefinitionHandler_2/inputDefinitionHandler
+Detaching DAT /raytk/operators/material/basicMat/inputDefinitionHandler_3/typeTable
+Detaching DAT /raytk/operators/material/basicMat/inputDefinitionHandler_3/inputDefinitionHandler
+Detaching DAT /raytk/operators/material/fieldMat/help
+Detaching DAT /raytk/operators/material/fieldMat/function
+Detaching DAT /raytk/operators/material/fieldMat/material
+Detaching DAT /raytk/operators/material/fieldMat/opDefinition/opDefinition
+Detaching DAT /raytk/operators/material/fieldMat/inputDefinitionHandler_1/typeTable
+Detaching DAT /raytk/operators/material/fieldMat/inputDefinitionHandler_1/inputDefinitionHandler
+Detaching DAT /raytk/operators/material/fieldMat/inputDefinitionHandler_2/typeTable
+Detaching DAT /raytk/operators/material/fieldMat/inputDefinitionHandler_2/inputDefinitionHandler
+Detaching DAT /raytk/operators/material/phongMat/function
+Detaching DAT /raytk/operators/material/phongMat/material
+Detaching DAT /raytk/operators/material/phongMat/opDefinition/opDefinition
+Detaching DAT /raytk/operators/material/phongMat/inputDefinitionHandler_1/typeTable
+Detaching DAT /raytk/operators/material/phongMat/inputDefinitionHandler_1/inputDefinitionHandler
+Detaching DAT /raytk/operators/material/checkerboardMat/function
+Detaching DAT /raytk/operators/material/checkerboardMat/material
+Detaching DAT /raytk/operators/material/checkerboardMat/opDefinition/opDefinition
+Detaching DAT /raytk/operators/material/checkerboardMat/inputDefinitionHandler_1/typeTable
+Detaching DAT /raytk/operators/material/checkerboardMat/inputDefinitionHandler_1/inputDefinitionHandler
+Detaching DAT /raytk/operators/material/sampledPointMat/function
+Detaching DAT /raytk/operators/material/sampledPointMat/material
+Detaching DAT /raytk/operators/material/sampledPointMat/opDefinition/opDefinition
+Detaching DAT /raytk/operators/material/sampledPointMat/inputDefinitionHandler_1/typeTable
+Detaching DAT /raytk/operators/material/sampledPointMat/inputDefinitionHandler_1/inputDefinitionHandler
+Detaching DAT /raytk/components/BUILD
+Detaching DAT /raytk/components/raytkUtil
+Detaching DAT /raytk/components/typeTable
+Detaching DAT /raytk/components/axisHelper/axis_info_table
+Detaching DAT /raytk/components/opDefinition/opDefinition
+Detaching DAT /raytk/components/outputCommon
+Detaching DAT /raytk/components/inspectorCore/raytkUtil
+Detaching DAT /raytk/components/inspectorCore/inspectorCoreExt
+Detaching DAT /raytk/components/shaderBuilder/raytkUtil
+Detaching DAT /raytk/components/shaderBuilder/shaderBuilder
+Detaching DAT /raytk/components/axis_info_table
+Detaching DAT /raytk/components/bufferInspector/bufferInspectorExt
+Detaching DAT /raytk/components/fieldVisualizer/pointMapRender/shaderLibraries/hg_sdf
+Detaching DAT /raytk/components/fieldVisualizer/pointMapRender/shaderLibraries/raytkSdf
+Detaching DAT /raytk/components/fieldVisualizer/pointMapRender/shaderLibraries/raytkCommon
+Detaching DAT /raytk/components/fieldVisualizer/pointMapRender/shaderLibraries/raytkMaterial
+Detaching DAT /raytk/components/fieldVisualizer/pointMapRender/uniformExportGenerator/uniformExportGenerator
+Detaching DAT /raytk/components/fieldVisualizer/pointMapRender/inputDefinitionHandler_1/typeTable
+Detaching DAT /raytk/components/fieldVisualizer/pointMapRender/inputDefinitionHandler_1/inputDefinitionHandler
+Detaching DAT /raytk/components/shaderLibraries/hg_sdf
+Detaching DAT /raytk/components/shaderLibraries/raytkSdf
+Detaching DAT /raytk/components/shaderLibraries/raytkCommon
+Detaching DAT /raytk/components/shaderLibraries/raytkMaterial
+Detaching DAT /raytk/components/ortho_direction_table
+Detaching DAT /raytk/components/inputDefinitionHandler/typeTable
+Detaching DAT /raytk/components/inputDefinitionHandler/inputDefinitionHandler
+Detaching DAT /raytk/components/uniformExportGenerator/uniformExportGenerator
+Detaching DAT /raytk/libraryInfo/raytkUtil
+Detaching DAT /raytk/libraryInfo/libraryInfoExt
+Updating library info
+Processing operators /raytk/operators
+Detaching tox from /raytk/operators
+Processing operator category material
+Detaching tox from /raytk/operators/material
+Processing operator /raytk/operators/material/sampledPointMat
+Disabling cloning on /raytk/operators/material/sampledPointMat
+Detaching tox from /raytk/operators/material/sampledPointMat
+Disabling cloning on /raytk/operators/material/sampledPointMat/opDefinition
+Disabling cloning on /raytk/operators/material/sampledPointMat/inputDefinitionHandler_1
+Processing operator /raytk/operators/material/checkerboardMat
+Disabling cloning on /raytk/operators/material/checkerboardMat
+Detaching tox from /raytk/operators/material/checkerboardMat
+Disabling cloning on /raytk/operators/material/checkerboardMat/opDefinition
+Disabling cloning on /raytk/operators/material/checkerboardMat/inputDefinitionHandler_1
+Processing operator /raytk/operators/material/phongMat
+Disabling cloning on /raytk/operators/material/phongMat
+Detaching tox from /raytk/operators/material/phongMat
+Disabling cloning on /raytk/operators/material/phongMat/opDefinition
+Disabling cloning on /raytk/operators/material/phongMat/inputDefinitionHandler_1
+Processing operator /raytk/operators/material/fieldMat
+Disabling cloning on /raytk/operators/material/fieldMat
+Detaching tox from /raytk/operators/material/fieldMat
+Disabling cloning on /raytk/operators/material/fieldMat/opDefinition
+Disabling cloning on /raytk/operators/material/fieldMat/inputDefinitionHandler_1
+Disabling cloning on /raytk/operators/material/fieldMat/inputDefinitionHandler_2
+Processing operator /raytk/operators/material/basicMat
+Disabling cloning on /raytk/operators/material/basicMat
+Detaching tox from /raytk/operators/material/basicMat
+Disabling cloning on /raytk/operators/material/basicMat/opDefinition
+Disabling cloning on /raytk/operators/material/basicMat/inputDefinitionHandler_1
+Disabling cloning on /raytk/operators/material/basicMat/inputDefinitionHandler_2
+Disabling cloning on /raytk/operators/material/basicMat/inputDefinitionHandler_3
+Processing operator category utility
+Detaching tox from /raytk/operators/utility
+Processing operator /raytk/operators/utility/extractDebugValues
+Disabling cloning on /raytk/operators/utility/extractDebugValues
+Detaching tox from /raytk/operators/utility/extractDebugValues
+Disabling cloning on /raytk/operators/utility/extractDebugValues/opDefinition
+Disabling cloning on /raytk/operators/utility/extractDebugValues/inputDefinitionHandler_1
+Processing operator /raytk/operators/utility/extractIteration
+Disabling cloning on /raytk/operators/utility/extractIteration
+Detaching tox from /raytk/operators/utility/extractIteration
+Disabling cloning on /raytk/operators/utility/extractIteration/opDefinition
+Disabling cloning on /raytk/operators/utility/extractIteration/inputDefinitionHandler_1
+Processing operator /raytk/operators/utility/injectObjectId
+Disabling cloning on /raytk/operators/utility/injectObjectId
+Detaching tox from /raytk/operators/utility/injectObjectId
+Disabling cloning on /raytk/operators/utility/injectObjectId/opDefinition
+Disabling cloning on /raytk/operators/utility/injectObjectId/inputDefinitionHandler_1
+Processing operator category convert
+Detaching tox from /raytk/operators/convert
+Processing operator /raytk/operators/convert/vectorToFloat
+Disabling cloning on /raytk/operators/convert/vectorToFloat
+Detaching tox from /raytk/operators/convert/vectorToFloat
+Disabling cloning on /raytk/operators/convert/vectorToFloat/opDefinition
+Disabling cloning on /raytk/operators/convert/vectorToFloat/inputDefinitionHandler_1
+Processing operator /raytk/operators/convert/floatToVector
+Disabling cloning on /raytk/operators/convert/floatToVector
+Detaching tox from /raytk/operators/convert/floatToVector
+Disabling cloning on /raytk/operators/convert/floatToVector/opDefinition
+Disabling cloning on /raytk/operators/convert/floatToVector/inputDefinitionHandler_1
+Disabling cloning on /raytk/operators/convert/floatToVector/inputDefinitionHandler_2
+Disabling cloning on /raytk/operators/convert/floatToVector/inputDefinitionHandler_3
+Disabling cloning on /raytk/operators/convert/floatToVector/inputDefinitionHandler_4
+Processing operator /raytk/operators/convert/sdfToFloat
+Disabling cloning on /raytk/operators/convert/sdfToFloat
+Detaching tox from /raytk/operators/convert/sdfToFloat
+Disabling cloning on /raytk/operators/convert/sdfToFloat/opDefinition
+Disabling cloning on /raytk/operators/convert/sdfToFloat/inputDefinitionHandler_1
+Processing operator /raytk/operators/convert/floatToSdf
+Disabling cloning on /raytk/operators/convert/floatToSdf
+Detaching tox from /raytk/operators/convert/floatToSdf
+Disabling cloning on /raytk/operators/convert/floatToSdf/opDefinition
+Disabling cloning on /raytk/operators/convert/floatToSdf/inputDefinitionHandler_1
+Processing operator /raytk/operators/convert/coordTo3D
+Disabling cloning on /raytk/operators/convert/coordTo3D
+Detaching tox from /raytk/operators/convert/coordTo3D
+Disabling cloning on /raytk/operators/convert/coordTo3D/opDefinition
+Disabling cloning on /raytk/operators/convert/coordTo3D/inputDefinitionHandler_1
+Processing operator /raytk/operators/convert/coordTo2D
+Disabling cloning on /raytk/operators/convert/coordTo2D
+Detaching tox from /raytk/operators/convert/coordTo2D
+Disabling cloning on /raytk/operators/convert/coordTo2D/opDefinition
+Disabling cloning on /raytk/operators/convert/coordTo2D/inputDefinitionHandler_1
+Processing operator /raytk/operators/convert/revolve
+Disabling cloning on /raytk/operators/convert/revolve
+Detaching tox from /raytk/operators/convert/revolve
+Disabling cloning on /raytk/operators/convert/revolve/axisHelper
+Disabling cloning on /raytk/operators/convert/revolve/opDefinition
+Disabling cloning on /raytk/operators/convert/revolve/inputDefinitionHandler_1
+Processing operator /raytk/operators/convert/extrude
+Disabling cloning on /raytk/operators/convert/extrude
+Detaching tox from /raytk/operators/convert/extrude
+Disabling cloning on /raytk/operators/convert/extrude/axisHelper
+Disabling cloning on /raytk/operators/convert/extrude/opDefinition
+Disabling cloning on /raytk/operators/convert/extrude/inputDefinitionHandler_1
+Processing operator category combine
+Detaching tox from /raytk/operators/combine
+Processing operator /raytk/operators/combine/simpleIntersect
+Disabling cloning on /raytk/operators/combine/simpleIntersect
+Detaching tox from /raytk/operators/combine/simpleIntersect
+Disabling cloning on /raytk/operators/combine/simpleIntersect/opDefinition
+Disabling cloning on /raytk/operators/combine/simpleIntersect/inputDefinitionHandler_1
+Detaching tox from /raytk/operators/combine/simpleIntersect/inputDefinitionHandler_1
+Disabling cloning on /raytk/operators/combine/simpleIntersect/inputDefinitionHandler_2
+Detaching tox from /raytk/operators/combine/simpleIntersect/inputDefinitionHandler_2
+Disabling cloning on /raytk/operators/combine/simpleIntersect/inputDefinitionHandler_3
+Detaching tox from /raytk/operators/combine/simpleIntersect/inputDefinitionHandler_3
+Disabling cloning on /raytk/operators/combine/simpleIntersect/inputDefinitionHandler_4
+Detaching tox from /raytk/operators/combine/simpleIntersect/inputDefinitionHandler_4
+Processing operator /raytk/operators/combine/iterationSwitch
+Disabling cloning on /raytk/operators/combine/iterationSwitch
+Detaching tox from /raytk/operators/combine/iterationSwitch
+Disabling cloning on /raytk/operators/combine/iterationSwitch/opDefinition
+Disabling cloning on /raytk/operators/combine/iterationSwitch/inputDefinitionHandler_1
+Detaching tox from /raytk/operators/combine/iterationSwitch/inputDefinitionHandler_1
+Disabling cloning on /raytk/operators/combine/iterationSwitch/inputDefinitionHandler_2
+Detaching tox from /raytk/operators/combine/iterationSwitch/inputDefinitionHandler_2
+Processing operator /raytk/operators/combine/combineColumns
+Disabling cloning on /raytk/operators/combine/combineColumns
+Detaching tox from /raytk/operators/combine/combineColumns
+Disabling cloning on /raytk/operators/combine/combineColumns/opDefinition
+Disabling cloning on /raytk/operators/combine/combineColumns/inputDefinitionHandler_1
+Detaching tox from /raytk/operators/combine/combineColumns/inputDefinitionHandler_1
+Disabling cloning on /raytk/operators/combine/combineColumns/inputDefinitionHandler_2
+Detaching tox from /raytk/operators/combine/combineColumns/inputDefinitionHandler_2
+Disabling cloning on /raytk/operators/combine/combineColumns/inputDefinitionHandler_3
+Detaching tox from /raytk/operators/combine/combineColumns/inputDefinitionHandler_3
+Processing operator /raytk/operators/combine/combineStairs
+Disabling cloning on /raytk/operators/combine/combineStairs
+Detaching tox from /raytk/operators/combine/combineStairs
+Disabling cloning on /raytk/operators/combine/combineStairs/opDefinition
+Disabling cloning on /raytk/operators/combine/combineStairs/inputDefinitionHandler_1
+Detaching tox from /raytk/operators/combine/combineStairs/inputDefinitionHandler_1
+Disabling cloning on /raytk/operators/combine/combineStairs/inputDefinitionHandler_2
+Detaching tox from /raytk/operators/combine/combineStairs/inputDefinitionHandler_2
+Disabling cloning on /raytk/operators/combine/combineStairs/inputDefinitionHandler_3
+Detaching tox from /raytk/operators/combine/combineStairs/inputDefinitionHandler_3
+Disabling cloning on /raytk/operators/combine/combineStairs/inputDefinitionHandler_4
+Detaching tox from /raytk/operators/combine/combineStairs/inputDefinitionHandler_4
+Processing operator /raytk/operators/combine/combineFields
+Disabling cloning on /raytk/operators/combine/combineFields
+Detaching tox from /raytk/operators/combine/combineFields
+Disabling cloning on /raytk/operators/combine/combineFields/opDefinition
+Disabling cloning on /raytk/operators/combine/combineFields/inputDefinitionHandler_1
+Detaching tox from /raytk/operators/combine/combineFields/inputDefinitionHandler_1
+Disabling cloning on /raytk/operators/combine/combineFields/inputDefinitionHandler_2
+Detaching tox from /raytk/operators/combine/combineFields/inputDefinitionHandler_2
+Processing operator /raytk/operators/combine/smoothUnion
+Disabling cloning on /raytk/operators/combine/smoothUnion
+Detaching tox from /raytk/operators/combine/smoothUnion
+Disabling cloning on /raytk/operators/combine/smoothUnion/opDefinition
+Disabling cloning on /raytk/operators/combine/smoothUnion/inputDefinitionHandler_1
+Detaching tox from /raytk/operators/combine/smoothUnion/inputDefinitionHandler_1
+Disabling cloning on /raytk/operators/combine/smoothUnion/inputDefinitionHandler_2
+Detaching tox from /raytk/operators/combine/smoothUnion/inputDefinitionHandler_2
+Disabling cloning on /raytk/operators/combine/smoothUnion/inputDefinitionHandler_3
+Detaching tox from /raytk/operators/combine/smoothUnion/inputDefinitionHandler_3
+Processing operator /raytk/operators/combine/simpleUnion
+Disabling cloning on /raytk/operators/combine/simpleUnion
+Detaching tox from /raytk/operators/combine/simpleUnion
+Disabling cloning on /raytk/operators/combine/simpleUnion/opDefinition
+Disabling cloning on /raytk/operators/combine/simpleUnion/inputDefinitionHandler_1
+Detaching tox from /raytk/operators/combine/simpleUnion/inputDefinitionHandler_1
+Disabling cloning on /raytk/operators/combine/simpleUnion/inputDefinitionHandler_2
+Detaching tox from /raytk/operators/combine/simpleUnion/inputDefinitionHandler_2
+Disabling cloning on /raytk/operators/combine/simpleUnion/inputDefinitionHandler_3
+Detaching tox from /raytk/operators/combine/simpleUnion/inputDefinitionHandler_3
+Disabling cloning on /raytk/operators/combine/simpleUnion/inputDefinitionHandler_4
+Detaching tox from /raytk/operators/combine/simpleUnion/inputDefinitionHandler_4
+Processing operator /raytk/operators/combine/simpleDiff
+Disabling cloning on /raytk/operators/combine/simpleDiff
+Detaching tox from /raytk/operators/combine/simpleDiff
+Disabling cloning on /raytk/operators/combine/simpleDiff/opDefinition
+Disabling cloning on /raytk/operators/combine/simpleDiff/inputDefinitionHandler_1
+Detaching tox from /raytk/operators/combine/simpleDiff/inputDefinitionHandler_1
+Disabling cloning on /raytk/operators/combine/simpleDiff/inputDefinitionHandler_2
+Detaching tox from /raytk/operators/combine/simpleDiff/inputDefinitionHandler_2
+Processing operator /raytk/operators/combine/boundLimit
+Disabling cloning on /raytk/operators/combine/boundLimit
+Detaching tox from /raytk/operators/combine/boundLimit
+Disabling cloning on /raytk/operators/combine/boundLimit/opDefinition
+Disabling cloning on /raytk/operators/combine/boundLimit/inputDefinitionHandler_1
+Detaching tox from /raytk/operators/combine/boundLimit/inputDefinitionHandler_1
+Disabling cloning on /raytk/operators/combine/boundLimit/inputDefinitionHandler_2
+Detaching tox from /raytk/operators/combine/boundLimit/inputDefinitionHandler_2
+Processing operator /raytk/operators/combine/switch
+Disabling cloning on /raytk/operators/combine/switch
+Detaching tox from /raytk/operators/combine/switch
+Disabling cloning on /raytk/operators/combine/switch/opDefinition
+Disabling cloning on /raytk/operators/combine/switch/inputDefinitionHandler_1
+Detaching tox from /raytk/operators/combine/switch/inputDefinitionHandler_1
+Disabling cloning on /raytk/operators/combine/switch/inputDefinitionHandler_2
+Detaching tox from /raytk/operators/combine/switch/inputDefinitionHandler_2
+Disabling cloning on /raytk/operators/combine/switch/inputDefinitionHandler_3
+Detaching tox from /raytk/operators/combine/switch/inputDefinitionHandler_3
+Disabling cloning on /raytk/operators/combine/switch/inputDefinitionHandler_4
+Detaching tox from /raytk/operators/combine/switch/inputDefinitionHandler_4
+Processing operator /raytk/operators/combine/blend
+Disabling cloning on /raytk/operators/combine/blend
+Detaching tox from /raytk/operators/combine/blend
+Disabling cloning on /raytk/operators/combine/blend/opDefinition
+Disabling cloning on /raytk/operators/combine/blend/inputDefinitionHandler_1
+Detaching tox from /raytk/operators/combine/blend/inputDefinitionHandler_1
+Disabling cloning on /raytk/operators/combine/blend/inputDefinitionHandler_2
+Detaching tox from /raytk/operators/combine/blend/inputDefinitionHandler_2
+Disabling cloning on /raytk/operators/combine/blend/inputDefinitionHandler_3
+Detaching tox from /raytk/operators/combine/blend/inputDefinitionHandler_3
+Disabling cloning on /raytk/operators/combine/blend/inputDefinitionHandler_4
+Detaching tox from /raytk/operators/combine/blend/inputDefinitionHandler_4
+Processing operator category output
+Detaching tox from /raytk/operators/output
+Processing operator /raytk/operators/output/raymarchRender3D
+Disabling cloning on /raytk/operators/output/raymarchRender3D
+Detaching tox from /raytk/operators/output/raymarchRender3D
+Disabling cloning on /raytk/operators/output/raymarchRender3D/opDefinition
+Disabling cloning on /raytk/operators/output/raymarchRender3D/shaderBuilder
+Disabling cloning on /raytk/operators/output/raymarchRender3D/shaderBuilder/textInjector_material_block
+Disabling cloning on /raytk/operators/output/raymarchRender3D/shaderLibraries
+Disabling cloning on /raytk/operators/output/raymarchRender3D/uniformExportGenerator
+Disabling cloning on /raytk/operators/output/raymarchRender3D/inputDefinitionHandler_1
+Disabling cloning on /raytk/operators/output/raymarchRender3D/inputDefinitionHandler_2
+Disabling cloning on /raytk/operators/output/raymarchRender3D/inputDefinitionHandler_3
+Processing operator /raytk/operators/output/pointMapRender
+Disabling cloning on /raytk/operators/output/pointMapRender
+Detaching tox from /raytk/operators/output/pointMapRender
+Disabling cloning on /raytk/operators/output/pointMapRender/opDefinition
+Disabling cloning on /raytk/operators/output/pointMapRender/shaderBuilder
+Disabling cloning on /raytk/operators/output/pointMapRender/shaderBuilder/textInjector_material_block
+Disabling cloning on /raytk/operators/output/pointMapRender/shaderLibraries
+Disabling cloning on /raytk/operators/output/pointMapRender/uniformExportGenerator
+Disabling cloning on /raytk/operators/output/pointMapRender/inputDefinitionHandler_1
+Processing operator /raytk/operators/output/render2D
+Disabling cloning on /raytk/operators/output/render2D
+Detaching tox from /raytk/operators/output/render2D
+Disabling cloning on /raytk/operators/output/render2D/opDefinition
+Disabling cloning on /raytk/operators/output/render2D/shaderBuilder
+Disabling cloning on /raytk/operators/output/render2D/shaderBuilder/textInjector_material_block
+Disabling cloning on /raytk/operators/output/render2D/shaderLibraries
+Disabling cloning on /raytk/operators/output/render2D/uniformExportGenerator
+Disabling cloning on /raytk/operators/output/render2D/inputDefinitionHandler_1
+Processing operator category filter
+Detaching tox from /raytk/operators/filter
+Processing operator /raytk/operators/filter/iteratedTransform
+Disabling cloning on /raytk/operators/filter/iteratedTransform
+Detaching tox from /raytk/operators/filter/iteratedTransform
+Disabling cloning on /raytk/operators/filter/iteratedTransform/opDefinition
+Disabling cloning on /raytk/operators/filter/iteratedTransform/transformCodeGenerator
+Disabling cloning on /raytk/operators/filter/iteratedTransform/inputDefinitionHandler_1
+Processing operator /raytk/operators/filter/quantizeCoords
+Disabling cloning on /raytk/operators/filter/quantizeCoords
+Detaching tox from /raytk/operators/filter/quantizeCoords
+Disabling cloning on /raytk/operators/filter/quantizeCoords/opDefinition
+Disabling cloning on /raytk/operators/filter/quantizeCoords/inputDefinitionHandler_1
+Processing operator /raytk/operators/filter/quantizeValue
+Disabling cloning on /raytk/operators/filter/quantizeValue
+Detaching tox from /raytk/operators/filter/quantizeValue
+Disabling cloning on /raytk/operators/filter/quantizeValue/opDefinition
+Disabling cloning on /raytk/operators/filter/quantizeValue/inputDefinitionHandler_1
+Processing operator /raytk/operators/filter/rescaleField
+Disabling cloning on /raytk/operators/filter/rescaleField
+Detaching tox from /raytk/operators/filter/rescaleField
+Disabling cloning on /raytk/operators/filter/rescaleField/opDefinition
+Disabling cloning on /raytk/operators/filter/rescaleField/inputDefinitionHandler_1
+Processing operator /raytk/operators/filter/mirrorOctant
+Disabling cloning on /raytk/operators/filter/mirrorOctant
+Detaching tox from /raytk/operators/filter/mirrorOctant
+Disabling cloning on /raytk/operators/filter/mirrorOctant/axisHelper
+Disabling cloning on /raytk/operators/filter/mirrorOctant/opDefinition
+Disabling cloning on /raytk/operators/filter/mirrorOctant/inputDefinitionHandler_1
+Processing operator /raytk/operators/filter/radialClone
+Disabling cloning on /raytk/operators/filter/radialClone
+Detaching tox from /raytk/operators/filter/radialClone
+Disabling cloning on /raytk/operators/filter/radialClone/axisHelper
+Disabling cloning on /raytk/operators/filter/radialClone/opDefinition
+Disabling cloning on /raytk/operators/filter/radialClone/inputDefinitionHandler_1
+Processing operator /raytk/operators/filter/moduloPolar
+Disabling cloning on /raytk/operators/filter/moduloPolar
+Detaching tox from /raytk/operators/filter/moduloPolar
+Disabling cloning on /raytk/operators/filter/moduloPolar/axisHelper
+Disabling cloning on /raytk/operators/filter/moduloPolar/opDefinition
+Disabling cloning on /raytk/operators/filter/moduloPolar/inputDefinitionHandler_1
+Processing operator /raytk/operators/filter/limitField
+Disabling cloning on /raytk/operators/filter/limitField
+Detaching tox from /raytk/operators/filter/limitField
+Disabling cloning on /raytk/operators/filter/limitField/opDefinition
+Disabling cloning on /raytk/operators/filter/limitField/inputDefinitionHandler_1
+Processing operator /raytk/operators/filter/translate
+Disabling cloning on /raytk/operators/filter/translate
+Detaching tox from /raytk/operators/filter/translate
+Disabling cloning on /raytk/operators/filter/translate/opDefinition
+Disabling cloning on /raytk/operators/filter/translate/inputDefinitionHandler_1
+Disabling cloning on /raytk/operators/filter/translate/inputDefinitionHandler_2
+Processing operator /raytk/operators/filter/transform
+Disabling cloning on /raytk/operators/filter/transform
+Detaching tox from /raytk/operators/filter/transform
+Disabling cloning on /raytk/operators/filter/transform/opDefinition
+Disabling cloning on /raytk/operators/filter/transform/transformCodeGenerator
+Disabling cloning on /raytk/operators/filter/transform/inputDefinitionHandler_1
+Processing operator /raytk/operators/filter/fieldExpr
+Disabling cloning on /raytk/operators/filter/fieldExpr
+Detaching tox from /raytk/operators/filter/fieldExpr
+Disabling cloning on /raytk/operators/filter/fieldExpr/opDefinition
+Disabling cloning on /raytk/operators/filter/fieldExpr/inputDefinitionHandler_1
+Disabling cloning on /raytk/operators/filter/fieldExpr/inputDefinitionHandler_2
+Disabling cloning on /raytk/operators/filter/fieldExpr/inputDefinitionHandler_3
+Disabling cloning on /raytk/operators/filter/fieldExpr/inputDefinitionHandler_4
+Processing operator /raytk/operators/filter/modulo3D
+Disabling cloning on /raytk/operators/filter/modulo3D
+Detaching tox from /raytk/operators/filter/modulo3D
+Disabling cloning on /raytk/operators/filter/modulo3D/opDefinition
+Disabling cloning on /raytk/operators/filter/modulo3D/inputDefinitionHandler_1
+Processing operator /raytk/operators/filter/modulo2D
+Disabling cloning on /raytk/operators/filter/modulo2D
+Detaching tox from /raytk/operators/filter/modulo2D
+Disabling cloning on /raytk/operators/filter/modulo2D/axisHelper
+Disabling cloning on /raytk/operators/filter/modulo2D/opDefinition
+Disabling cloning on /raytk/operators/filter/modulo2D/inputDefinitionHandler_1
+Processing operator /raytk/operators/filter/modulo1D
+Disabling cloning on /raytk/operators/filter/modulo1D
+Detaching tox from /raytk/operators/filter/modulo1D
+Disabling cloning on /raytk/operators/filter/modulo1D/opDefinition
+Disabling cloning on /raytk/operators/filter/modulo1D/inputDefinitionHandler_1
+Processing operator /raytk/operators/filter/reflect
+Disabling cloning on /raytk/operators/filter/reflect
+Detaching tox from /raytk/operators/filter/reflect
+Disabling cloning on /raytk/operators/filter/reflect/opDefinition
+Disabling cloning on /raytk/operators/filter/reflect/inputDefinitionHandler_1
+Processing operator /raytk/operators/filter/rotate
+Disabling cloning on /raytk/operators/filter/rotate
+Detaching tox from /raytk/operators/filter/rotate
+Disabling cloning on /raytk/operators/filter/rotate/opDefinition
+Disabling cloning on /raytk/operators/filter/rotate/inputDefinitionHandler_1
+Disabling cloning on /raytk/operators/filter/rotate/inputDefinitionHandler_2
+Processing operator /raytk/operators/filter/invert
+Disabling cloning on /raytk/operators/filter/invert
+Detaching tox from /raytk/operators/filter/invert
+Disabling cloning on /raytk/operators/filter/invert/opDefinition
+Disabling cloning on /raytk/operators/filter/invert/inputDefinitionHandler_1
+Processing operator /raytk/operators/filter/slice
+Disabling cloning on /raytk/operators/filter/slice
+Detaching tox from /raytk/operators/filter/slice
+Disabling cloning on /raytk/operators/filter/slice/axisHelper
+Disabling cloning on /raytk/operators/filter/slice/opDefinition
+Disabling cloning on /raytk/operators/filter/slice/inputDefinitionHandler_1
+Processing operator /raytk/operators/filter/scale
+Disabling cloning on /raytk/operators/filter/scale
+Detaching tox from /raytk/operators/filter/scale
+Disabling cloning on /raytk/operators/filter/scale/opDefinition
+Disabling cloning on /raytk/operators/filter/scale/inputDefinitionHandler_1
+Disabling cloning on /raytk/operators/filter/scale/inputDefinitionHandler_2
+Processing operator /raytk/operators/filter/round
+Disabling cloning on /raytk/operators/filter/round
+Detaching tox from /raytk/operators/filter/round
+Disabling cloning on /raytk/operators/filter/round/opDefinition
+Disabling cloning on /raytk/operators/filter/round/inputDefinitionHandler_1
+Disabling cloning on /raytk/operators/filter/round/inputDefinitionHandler_2
+Processing operator /raytk/operators/filter/onion
+Disabling cloning on /raytk/operators/filter/onion
+Detaching tox from /raytk/operators/filter/onion
+Disabling cloning on /raytk/operators/filter/onion/opDefinition
+Disabling cloning on /raytk/operators/filter/onion/inputDefinitionHandler_1
+Processing operator /raytk/operators/filter/knife
+Disabling cloning on /raytk/operators/filter/knife
+Detaching tox from /raytk/operators/filter/knife
+Disabling cloning on /raytk/operators/filter/knife/opDefinition
+Disabling cloning on /raytk/operators/filter/knife/inputDefinitionHandler_1
+Processing operator /raytk/operators/filter/flip
+Disabling cloning on /raytk/operators/filter/flip
+Detaching tox from /raytk/operators/filter/flip
+Disabling cloning on /raytk/operators/filter/flip/axisHelper
+Disabling cloning on /raytk/operators/filter/flip/opDefinition
+Disabling cloning on /raytk/operators/filter/flip/inputDefinitionHandler_1
+Processing operator category camera
+Detaching tox from /raytk/operators/camera
+Processing operator /raytk/operators/camera/fisheyeCamera
+Disabling cloning on /raytk/operators/camera/fisheyeCamera
+Detaching tox from /raytk/operators/camera/fisheyeCamera
+Disabling cloning on /raytk/operators/camera/fisheyeCamera/opDefinition
+Processing operator /raytk/operators/camera/lookAtCamera
+Disabling cloning on /raytk/operators/camera/lookAtCamera
+Detaching tox from /raytk/operators/camera/lookAtCamera
+Disabling cloning on /raytk/operators/camera/lookAtCamera/opDefinition
+Processing operator /raytk/operators/camera/splitCamera
+Disabling cloning on /raytk/operators/camera/splitCamera
+Detaching tox from /raytk/operators/camera/splitCamera
+Disabling cloning on /raytk/operators/camera/splitCamera/opDefinition
+Disabling cloning on /raytk/operators/camera/splitCamera/inputDefinitionHandler_1
+Disabling cloning on /raytk/operators/camera/splitCamera/inputDefinitionHandler_2
+Disabling cloning on /raytk/operators/camera/splitCamera/inputDefinitionHandler_3
+Disabling cloning on /raytk/operators/camera/splitCamera/inputDefinitionHandler_4
+Processing operator /raytk/operators/camera/orthoCamera
+Disabling cloning on /raytk/operators/camera/orthoCamera
+Detaching tox from /raytk/operators/camera/orthoCamera
+Disabling cloning on /raytk/operators/camera/orthoCamera/axisHelper
+Disabling cloning on /raytk/operators/camera/orthoCamera/opDefinition
+Processing operator category sdf2d
+Detaching tox from /raytk/operators/sdf2d
+Processing operator /raytk/operators/sdf2d/roundedRectangleSdf2d
+Disabling cloning on /raytk/operators/sdf2d/roundedRectangleSdf2d
+Detaching tox from /raytk/operators/sdf2d/roundedRectangleSdf2d
+Disabling cloning on /raytk/operators/sdf2d/roundedRectangleSdf2d/opDefinition
+Processing operator /raytk/operators/sdf2d/triangleSdf2d
+Disabling cloning on /raytk/operators/sdf2d/triangleSdf2d
+Detaching tox from /raytk/operators/sdf2d/triangleSdf2d
+Disabling cloning on /raytk/operators/sdf2d/triangleSdf2d/opDefinition
+Processing operator /raytk/operators/sdf2d/parabolaSdf2d
+Disabling cloning on /raytk/operators/sdf2d/parabolaSdf2d
+Detaching tox from /raytk/operators/sdf2d/parabolaSdf2d
+Disabling cloning on /raytk/operators/sdf2d/parabolaSdf2d/opDefinition
+Processing operator /raytk/operators/sdf2d/rhombusSdf2d
+Disabling cloning on /raytk/operators/sdf2d/rhombusSdf2d
+Detaching tox from /raytk/operators/sdf2d/rhombusSdf2d
+Disabling cloning on /raytk/operators/sdf2d/rhombusSdf2d/opDefinition
+Processing operator /raytk/operators/sdf2d/rectangleSdf
+Disabling cloning on /raytk/operators/sdf2d/rectangleSdf
+Detaching tox from /raytk/operators/sdf2d/rectangleSdf
+Disabling cloning on /raytk/operators/sdf2d/rectangleSdf/opDefinition
+Processing operator /raytk/operators/sdf2d/polygonSdf2d
+Disabling cloning on /raytk/operators/sdf2d/polygonSdf2d
+Detaching tox from /raytk/operators/sdf2d/polygonSdf2d
+Disabling cloning on /raytk/operators/sdf2d/polygonSdf2d/opDefinition
+Processing operator /raytk/operators/sdf2d/vesicaSdf2d
+Disabling cloning on /raytk/operators/sdf2d/vesicaSdf2d
+Detaching tox from /raytk/operators/sdf2d/vesicaSdf2d
+Disabling cloning on /raytk/operators/sdf2d/vesicaSdf2d/opDefinition
+Processing operator /raytk/operators/sdf2d/crossSdf2d
+Disabling cloning on /raytk/operators/sdf2d/crossSdf2d
+Detaching tox from /raytk/operators/sdf2d/crossSdf2d
+Disabling cloning on /raytk/operators/sdf2d/crossSdf2d/opDefinition
+Processing operator /raytk/operators/sdf2d/starSdf2d
+Disabling cloning on /raytk/operators/sdf2d/starSdf2d
+Detaching tox from /raytk/operators/sdf2d/starSdf2d
+Disabling cloning on /raytk/operators/sdf2d/starSdf2d/opDefinition
+Processing operator /raytk/operators/sdf2d/circleSdf
+Disabling cloning on /raytk/operators/sdf2d/circleSdf
+Detaching tox from /raytk/operators/sdf2d/circleSdf
+Disabling cloning on /raytk/operators/sdf2d/circleSdf/opDefinition
+Processing operator /raytk/operators/sdf2d/pieSdf2d
+Disabling cloning on /raytk/operators/sdf2d/pieSdf2d
+Detaching tox from /raytk/operators/sdf2d/pieSdf2d
+Disabling cloning on /raytk/operators/sdf2d/pieSdf2d/opDefinition
+Processing operator category light
+Detaching tox from /raytk/operators/light
+Processing operator /raytk/operators/light/softShadow
+Disabling cloning on /raytk/operators/light/softShadow
+Detaching tox from /raytk/operators/light/softShadow
+Disabling cloning on /raytk/operators/light/softShadow/opDefinition
+Processing operator /raytk/operators/light/pointLight
+Disabling cloning on /raytk/operators/light/pointLight
+Detaching tox from /raytk/operators/light/pointLight
+Disabling cloning on /raytk/operators/light/pointLight/opDefinition
+Processing operator /raytk/operators/light/hardShadow
+Disabling cloning on /raytk/operators/light/hardShadow
+Detaching tox from /raytk/operators/light/hardShadow
+Disabling cloning on /raytk/operators/light/hardShadow/opDefinition
+Processing operator category field
+Detaching tox from /raytk/operators/field
+Processing operator /raytk/operators/field/pointDistanceField
+Disabling cloning on /raytk/operators/field/pointDistanceField
+Detaching tox from /raytk/operators/field/pointDistanceField
+Disabling cloning on /raytk/operators/field/pointDistanceField/opDefinition
+Processing operator /raytk/operators/field/contextValueField
+Disabling cloning on /raytk/operators/field/contextValueField
+Detaching tox from /raytk/operators/field/contextValueField
+Disabling cloning on /raytk/operators/field/contextValueField/opDefinition
+Processing operator /raytk/operators/field/axisDistanceField
+Disabling cloning on /raytk/operators/field/axisDistanceField
+Detaching tox from /raytk/operators/field/axisDistanceField
+Disabling cloning on /raytk/operators/field/axisDistanceField/axisHelper
+Disabling cloning on /raytk/operators/field/axisDistanceField/opDefinition
+Processing operator /raytk/operators/field/iterationField
+Disabling cloning on /raytk/operators/field/iterationField
+Detaching tox from /raytk/operators/field/iterationField
+Disabling cloning on /raytk/operators/field/iterationField/opDefinition
+Processing operator /raytk/operators/field/positionField
+Disabling cloning on /raytk/operators/field/positionField
+Detaching tox from /raytk/operators/field/positionField
+Disabling cloning on /raytk/operators/field/positionField/opDefinition
+Processing operator /raytk/operators/field/constantField
+Disabling cloning on /raytk/operators/field/constantField
+Detaching tox from /raytk/operators/field/constantField
+Disabling cloning on /raytk/operators/field/constantField/opDefinition
+Processing operator /raytk/operators/field/cellTileField
+Disabling cloning on /raytk/operators/field/cellTileField
+Detaching tox from /raytk/operators/field/cellTileField
+Disabling cloning on /raytk/operators/field/cellTileField/opDefinition
+Processing operator /raytk/operators/field/textureField
+Disabling cloning on /raytk/operators/field/textureField
+Detaching tox from /raytk/operators/field/textureField
+Disabling cloning on /raytk/operators/field/textureField/axisHelper
+Disabling cloning on /raytk/operators/field/textureField/opDefinition
+Processing operator /raytk/operators/field/noiseField
+Disabling cloning on /raytk/operators/field/noiseField
+Detaching tox from /raytk/operators/field/noiseField
+Disabling cloning on /raytk/operators/field/noiseField/axisHelper
+Disabling cloning on /raytk/operators/field/noiseField/opDefinition
+Processing operator /raytk/operators/field/chopField
+Disabling cloning on /raytk/operators/field/chopField
+Detaching tox from /raytk/operators/field/chopField
+Disabling cloning on /raytk/operators/field/chopField/opDefinition
+Processing operator category misc
+Detaching tox from /raytk/operators/misc
+Processing operator /raytk/operators/misc/customFilter
+Disabling cloning on /raytk/operators/misc/customFilter
+Detaching tox from /raytk/operators/misc/customFilter
+Disabling cloning on /raytk/operators/misc/customFilter/opDefinition
+Disabling cloning on /raytk/operators/misc/customFilter/inputDefinitionHandler_1
+Disabling cloning on /raytk/operators/misc/customFilter/inputDefinitionHandler_2
+Disabling cloning on /raytk/operators/misc/customFilter/inputDefinitionHandler_3
+Disabling cloning on /raytk/operators/misc/customFilter/inputDefinitionHandler_4
+Processing operator /raytk/operators/misc/customGen
+Disabling cloning on /raytk/operators/misc/customGen
+Detaching tox from /raytk/operators/misc/customGen
+Disabling cloning on /raytk/operators/misc/customGen/opDefinition
+Processing operator category sdf
+Detaching tox from /raytk/operators/sdf
+Processing operator /raytk/operators/sdf/sierpinskiTetrahedronSdf
+Disabling cloning on /raytk/operators/sdf/sierpinskiTetrahedronSdf
+Detaching tox from /raytk/operators/sdf/sierpinskiTetrahedronSdf
+Disabling cloning on /raytk/operators/sdf/sierpinskiTetrahedronSdf/opDefinition
+Processing operator /raytk/operators/sdf/kaliGeneratorSdf
+Disabling cloning on /raytk/operators/sdf/kaliGeneratorSdf
+Detaching tox from /raytk/operators/sdf/kaliGeneratorSdf
+Disabling cloning on /raytk/operators/sdf/kaliGeneratorSdf/opDefinition
+Processing operator /raytk/operators/sdf/mengerSpongeSdf
+Disabling cloning on /raytk/operators/sdf/mengerSpongeSdf
+Detaching tox from /raytk/operators/sdf/mengerSpongeSdf
+Disabling cloning on /raytk/operators/sdf/mengerSpongeSdf/opDefinition
+Processing operator /raytk/operators/sdf/tetrahedronSdf
+Disabling cloning on /raytk/operators/sdf/tetrahedronSdf
+Detaching tox from /raytk/operators/sdf/tetrahedronSdf
+Disabling cloning on /raytk/operators/sdf/tetrahedronSdf/opDefinition
+Processing operator /raytk/operators/sdf/solidAngleSdf
+Disabling cloning on /raytk/operators/sdf/solidAngleSdf
+Detaching tox from /raytk/operators/sdf/solidAngleSdf
+Disabling cloning on /raytk/operators/sdf/solidAngleSdf/opDefinition
+Processing operator /raytk/operators/sdf/octahedronSdf
+Disabling cloning on /raytk/operators/sdf/octahedronSdf
+Detaching tox from /raytk/operators/sdf/octahedronSdf
+Disabling cloning on /raytk/operators/sdf/octahedronSdf/opDefinition
+Processing operator /raytk/operators/sdf/mobiusRingSdf
+Disabling cloning on /raytk/operators/sdf/mobiusRingSdf
+Detaching tox from /raytk/operators/sdf/mobiusRingSdf
+Disabling cloning on /raytk/operators/sdf/mobiusRingSdf/opDefinition
+Processing operator /raytk/operators/sdf/mandelbulbSdf
+Disabling cloning on /raytk/operators/sdf/mandelbulbSdf
+Detaching tox from /raytk/operators/sdf/mandelbulbSdf
+Disabling cloning on /raytk/operators/sdf/mandelbulbSdf/opDefinition
+Processing operator /raytk/operators/sdf/apollonianSdf
+Disabling cloning on /raytk/operators/sdf/apollonianSdf
+Detaching tox from /raytk/operators/sdf/apollonianSdf
+Disabling cloning on /raytk/operators/sdf/apollonianSdf/opDefinition
+Processing operator /raytk/operators/sdf/cylinderSdf
+Disabling cloning on /raytk/operators/sdf/cylinderSdf
+Detaching tox from /raytk/operators/sdf/cylinderSdf
+Disabling cloning on /raytk/operators/sdf/cylinderSdf/opDefinition
+Processing operator /raytk/operators/sdf/boxFrameSdf
+Disabling cloning on /raytk/operators/sdf/boxFrameSdf
+Detaching tox from /raytk/operators/sdf/boxFrameSdf
+Disabling cloning on /raytk/operators/sdf/boxFrameSdf/opDefinition
+Processing operator /raytk/operators/sdf/pyramidSdf
+Disabling cloning on /raytk/operators/sdf/pyramidSdf
+Detaching tox from /raytk/operators/sdf/pyramidSdf
+Disabling cloning on /raytk/operators/sdf/pyramidSdf/opDefinition
+Processing operator /raytk/operators/sdf/capsuleSdf
+Disabling cloning on /raytk/operators/sdf/capsuleSdf
+Detaching tox from /raytk/operators/sdf/capsuleSdf
+Disabling cloning on /raytk/operators/sdf/capsuleSdf/opDefinition
+Processing operator /raytk/operators/sdf/sphereSdf
+Disabling cloning on /raytk/operators/sdf/sphereSdf
+Detaching tox from /raytk/operators/sdf/sphereSdf
+Disabling cloning on /raytk/operators/sdf/sphereSdf/opDefinition
+Processing operator /raytk/operators/sdf/gyroidSdf
+Disabling cloning on /raytk/operators/sdf/gyroidSdf
+Detaching tox from /raytk/operators/sdf/gyroidSdf
+Disabling cloning on /raytk/operators/sdf/gyroidSdf/opDefinition
+Processing operator /raytk/operators/sdf/torusSdf
+Disabling cloning on /raytk/operators/sdf/torusSdf
+Detaching tox from /raytk/operators/sdf/torusSdf
+Disabling cloning on /raytk/operators/sdf/torusSdf/opDefinition
+Processing operator /raytk/operators/sdf/prismSdf
+Disabling cloning on /raytk/operators/sdf/prismSdf
+Detaching tox from /raytk/operators/sdf/prismSdf
+Disabling cloning on /raytk/operators/sdf/prismSdf/opDefinition
+Processing operator /raytk/operators/sdf/planeSdf
+Disabling cloning on /raytk/operators/sdf/planeSdf
+Detaching tox from /raytk/operators/sdf/planeSdf
+Disabling cloning on /raytk/operators/sdf/planeSdf/axisHelper
+Disabling cloning on /raytk/operators/sdf/planeSdf/opDefinition
+Processing operator /raytk/operators/sdf/crossSdf
+Disabling cloning on /raytk/operators/sdf/crossSdf
+Detaching tox from /raytk/operators/sdf/crossSdf
+Disabling cloning on /raytk/operators/sdf/crossSdf/opDefinition
+Processing operator /raytk/operators/sdf/linkSdf
+Disabling cloning on /raytk/operators/sdf/linkSdf
+Detaching tox from /raytk/operators/sdf/linkSdf
+Disabling cloning on /raytk/operators/sdf/linkSdf/opDefinition
+Processing operator /raytk/operators/sdf/discSdf
+Disabling cloning on /raytk/operators/sdf/discSdf
+Detaching tox from /raytk/operators/sdf/discSdf
+Disabling cloning on /raytk/operators/sdf/discSdf/opDefinition
+Processing operator /raytk/operators/sdf/coneSdf
+Disabling cloning on /raytk/operators/sdf/coneSdf
+Detaching tox from /raytk/operators/sdf/coneSdf
+Disabling cloning on /raytk/operators/sdf/coneSdf/opDefinition
+Processing operator /raytk/operators/sdf/boxSdf
+Disabling cloning on /raytk/operators/sdf/boxSdf
+Detaching tox from /raytk/operators/sdf/boxSdf
+Disabling cloning on /raytk/operators/sdf/boxSdf/axisHelper
+Disabling cloning on /raytk/operators/sdf/boxSdf/opDefinition
+Processing tools /raytk/tools
+Detaching tox from /raytk/tools
+Running build script: /raytk/tools/BUILD
+Running build script: /raytk/tools/createMenu/BUILD
+Resetting pars on /raytk/tools/createMenu/iparcreateMenuState
+Detaching tox from /raytk/tools/createMenu
+Finished running build script: /raytk/tools/createMenu/BUILD
+Running build script: /raytk/tools/inspector/BUILD
+Disabling cloning on /raytk/tools/inspector/render2D
+Disabling cloning on /raytk/tools/inspector/orthoCamera
+Disabling cloning on /raytk/tools/inspector/lookAtCamera
+Disabling cloning on /raytk/tools/inspector/raymarchRender3D
+Disabling cloning on /raytk/tools/inspector/fieldVisualizer
+Disabling cloning on /raytk/tools/inspector/inspectorCore
+Disabling cloning on /raytk/tools/inspector/bufferInspector
+Disabling cloning on /raytk/tools/inspector/axisHelper
+Detaching tox from /raytk/tools/inspector
+Finished running build script: /raytk/tools/inspector/BUILD
+Finished running build script: /raytk/tools/BUILD
+Locking build locked ops in /raytk
+Locking /raytk/info
+Locking /raytk/opTable
+Locking /raytk/buildInfo
+Locking /raytk/opHelpTable
+Locking /raytk/opCategoryTable
+Locking /raytk/opCategoryHelpTable
+Processing components /raytk/components
+Running build script: /raytk/components/BUILD
+Cleaning unecessary OPs
+Disabling cloning on /raytk/components/axisHelper
+Detaching tox from /raytk/components/axisHelper
+Disabling cloning on /raytk/components/opDefinition
+Detaching tox from /raytk/components/opDefinition
+Disabling cloning on /raytk/components/outputSelect
+Detaching tox from /raytk/components/outputSelect
+Disabling cloning on /raytk/components/textInjector
+Detaching tox from /raytk/components/textInjector
+Disabling cloning on /raytk/components/inspectorCore
+Detaching tox from /raytk/components/inspectorCore
+Disabling cloning on /raytk/components/shaderBuilder
+Detaching tox from /raytk/components/shaderBuilder
+Disabling cloning on /raytk/components/bufferInspector
+Detaching tox from /raytk/components/bufferInspector
+Disabling cloning on /raytk/components/fieldVisualizer
+Detaching tox from /raytk/components/fieldVisualizer
+Disabling cloning on /raytk/components/imageNormalizer
+Detaching tox from /raytk/components/imageNormalizer
+Disabling cloning on /raytk/components/shaderLibraries
+Detaching tox from /raytk/components/shaderLibraries
+Disabling cloning on /raytk/components/inputDefinitionHandler
+Detaching tox from /raytk/components/inputDefinitionHandler
+Disabling cloning on /raytk/components/transformCodeGenerator
+Detaching tox from /raytk/components/transformCodeGenerator
+Disabling cloning on /raytk/components/uniformExportGenerator
+Detaching tox from /raytk/components/uniformExportGenerator
+Removing /raytk/components/null1
+Removing /raytk/components/raytkUtil
+Removing /raytk/components/typeTable
+Removing /raytk/components/__TEST_null1
+Removing /raytk/components/outputCommon
+Removing /raytk/components/output_table2
+Removing /raytk/components/__test_select1
+Removing /raytk/components/__test_uniforms
+Removing /raytk/components/axis_info_table
+Removing /raytk/components/__test_input_def_1
+Removing /raytk/components/__test_input_def_2
+Removing /raytk/components/__test_input_def_3
+Removing /raytk/components/ortho_direction_table
+Finished running build script: /raytk/components/BUILD
+Removing build excluded ops from /raytk
+Removing /raytk/tools/BUILD
+Removing /raytk/tools/inspector/BUILD
+Removing /raytk/tools/inspector/text1
+Removing /raytk/tools/inspector/render2D/opDefinition/update_library_menu
+Removing /raytk/tools/inspector/render2D/shaderBuilder/update_library_menu
+Removing /raytk/tools/inspector/orthoCamera/opDefinition/update_library_menu
+Removing /raytk/tools/inspector/orthoCamera/update_param_on_table_change
+Removing /raytk/tools/inspector/lookAtCamera/opDefinition/update_library_menu
+Removing /raytk/tools/inspector/fieldVisualizer/pointMapRender/opDefinition/update_library_menu
+Removing /raytk/tools/inspector/fieldVisualizer/pointMapRender/shaderBuilder/update_library_menu
+Removing /raytk/tools/inspector/raymarchRender3D/opDefinition/update_library_menu
+Removing /raytk/tools/inspector/raymarchRender3D/shaderBuilder/update_library_menu
+Removing /raytk/tools/createMenu/BUILD
+Removing /raytk/operators/sdf/boxSdf/opDefinition/update_library_menu
+Removing /raytk/operators/sdf/coneSdf/opDefinition/update_library_menu
+Removing /raytk/operators/sdf/discSdf/opDefinition/update_library_menu
+Removing /raytk/operators/sdf/linkSdf/opDefinition/update_library_menu
+Removing /raytk/operators/sdf/crossSdf/opDefinition/update_library_menu
+Removing /raytk/operators/sdf/planeSdf/opDefinition/update_library_menu
+Removing /raytk/operators/sdf/prismSdf/opDefinition/update_library_menu
+Removing /raytk/operators/sdf/torusSdf/opDefinition/update_library_menu
+Removing /raytk/operators/sdf/gyroidSdf/opDefinition/update_library_menu
+Removing /raytk/operators/sdf/sphereSdf/opDefinition/update_library_menu
+Removing /raytk/operators/sdf/capsuleSdf/opDefinition/update_library_menu
+Removing /raytk/operators/sdf/pyramidSdf/opDefinition/update_library_menu
+Removing /raytk/operators/sdf/boxFrameSdf/opDefinition/update_library_menu
+Removing /raytk/operators/sdf/cylinderSdf/opDefinition/update_library_menu
+Removing /raytk/operators/sdf/apollonianSdf/opDefinition/update_library_menu
+Removing /raytk/operators/sdf/mandelbulbSdf/opDefinition/update_library_menu
+Removing /raytk/operators/sdf/mobiusRingSdf/opDefinition/update_library_menu
+Removing /raytk/operators/sdf/octahedronSdf/opDefinition/update_library_menu
+Removing /raytk/operators/sdf/solidAngleSdf/opDefinition/update_library_menu
+Removing /raytk/operators/sdf/tetrahedronSdf/opDefinition/update_library_menu
+Removing /raytk/operators/sdf/mengerSpongeSdf/opDefinition/update_library_menu
+Removing /raytk/operators/sdf/kaliGeneratorSdf/opDefinition/update_library_menu
+Removing /raytk/operators/sdf/sierpinskiTetrahedronSdf/opDefinition/update_library_menu
+Removing /raytk/operators/misc/customGen/opDefinition/update_library_menu
+Removing /raytk/operators/misc/customFilter/opDefinition/update_library_menu
+Removing /raytk/operators/field/chopField/opDefinition/update_library_menu
+Removing /raytk/operators/field/noiseField/opDefinition/update_library_menu
+Removing /raytk/operators/field/textureField/opDefinition/update_library_menu
+Removing /raytk/operators/field/cellTileField/opDefinition/update_library_menu
+Removing /raytk/operators/field/constantField/opDefinition/update_library_menu
+Removing /raytk/operators/field/positionField/opDefinition/update_library_menu
+Removing /raytk/operators/field/iterationField/opDefinition/update_library_menu
+Removing /raytk/operators/field/axisDistanceField/opDefinition/update_library_menu
+Removing /raytk/operators/field/contextValueField/opDefinition/update_library_menu
+Removing /raytk/operators/field/pointDistanceField/opDefinition/update_library_menu
+Removing /raytk/operators/light/hardShadow/opDefinition/update_library_menu
+Removing /raytk/operators/light/pointLight/opDefinition/update_library_menu
+Removing /raytk/operators/light/softShadow/opDefinition/update_library_menu
+Removing /raytk/operators/sdf2d/pieSdf2d/opDefinition/update_library_menu
+Removing /raytk/operators/sdf2d/circleSdf/opDefinition/update_library_menu
+Removing /raytk/operators/sdf2d/starSdf2d/opDefinition/update_library_menu
+Removing /raytk/operators/sdf2d/crossSdf2d/opDefinition/update_library_menu
+Removing /raytk/operators/sdf2d/vesicaSdf2d/opDefinition/update_library_menu
+Removing /raytk/operators/sdf2d/polygonSdf2d/datexec1
+Removing /raytk/operators/sdf2d/polygonSdf2d/opDefinition/update_library_menu
+Removing /raytk/operators/sdf2d/rectangleSdf/opDefinition/update_library_menu
+Removing /raytk/operators/sdf2d/rhombusSdf2d/opDefinition/update_library_menu
+Removing /raytk/operators/sdf2d/parabolaSdf2d/opDefinition/update_library_menu
+Removing /raytk/operators/sdf2d/triangleSdf2d/opDefinition/update_library_menu
+Removing /raytk/operators/sdf2d/roundedRectangleSdf2d/opDefinition/update_library_menu
+Removing /raytk/operators/camera/orthoCamera/opDefinition/update_library_menu
+Removing /raytk/operators/camera/orthoCamera/update_param_on_table_change
+Removing /raytk/operators/camera/splitCamera/opDefinition/update_library_menu
+Removing /raytk/operators/camera/lookAtCamera/opDefinition/update_library_menu
+Removing /raytk/operators/camera/fisheyeCamera/opDefinition/update_library_menu
+Removing /raytk/operators/filter/flip/opDefinition/update_library_menu
+Removing /raytk/operators/filter/knife/opDefinition/update_library_menu
+Removing /raytk/operators/filter/onion/opDefinition/update_library_menu
+Removing /raytk/operators/filter/round/opDefinition/update_library_menu
+Removing /raytk/operators/filter/scale/opDefinition/update_library_menu
+Removing /raytk/operators/filter/slice/opDefinition/update_library_menu
+Removing /raytk/operators/filter/invert/opDefinition/update_library_menu
+Removing /raytk/operators/filter/rotate/opDefinition/update_library_menu
+Removing /raytk/operators/filter/reflect/opDefinition/update_library_menu
+Removing /raytk/operators/filter/modulo1D/opDefinition/update_library_menu
+Removing /raytk/operators/filter/modulo2D/opDefinition/update_library_menu
+Removing /raytk/operators/filter/modulo3D/opDefinition/update_library_menu
+Removing /raytk/operators/filter/fieldExpr/opDefinition/update_library_menu
+Removing /raytk/operators/filter/fieldExpr/sample_expressions
+Removing /raytk/operators/filter/fieldExpr/set_sample_expressions
+Removing /raytk/operators/filter/fieldExpr/update_menu_on_table_change
+Removing /raytk/operators/filter/transform/opDefinition/update_library_menu
+Removing /raytk/operators/filter/translate/opDefinition/update_library_menu
+Removing /raytk/operators/filter/limitField/opDefinition/update_library_menu
+Removing /raytk/operators/filter/moduloPolar/opDefinition/update_library_menu
+Removing /raytk/operators/filter/radialClone/opDefinition/update_library_menu
+Removing /raytk/operators/filter/mirrorOctant/opDefinition/update_library_menu
+Removing /raytk/operators/filter/rescaleField/opDefinition/update_library_menu
+Removing /raytk/operators/filter/quantizeValue/opDefinition/update_library_menu
+Removing /raytk/operators/filter/quantizeCoords/opDefinition/update_library_menu
+Removing /raytk/operators/filter/iteratedTransform/opDefinition/update_library_menu
+Removing /raytk/operators/output/render2D/opDefinition/update_library_menu
+Removing /raytk/operators/output/render2D/shaderBuilder/update_library_menu
+Removing /raytk/operators/output/pointMapRender/opDefinition/update_library_menu
+Removing /raytk/operators/output/pointMapRender/shaderBuilder/update_library_menu
+Removing /raytk/operators/output/raymarchRender3D/opDefinition/update_library_menu
+Removing /raytk/operators/output/raymarchRender3D/shaderBuilder/update_library_menu
+Removing /raytk/operators/combine/blend/opDefinition/update_library_menu
+Removing /raytk/operators/combine/switch/opDefinition/update_library_menu
+Removing /raytk/operators/combine/boundLimit/opDefinition/update_library_menu
+Removing /raytk/operators/combine/simpleDiff/opDefinition/update_library_menu
+Removing /raytk/operators/combine/simpleUnion/opDefinition/update_library_menu
+Removing /raytk/operators/combine/smoothUnion/opDefinition/update_library_menu
+Removing /raytk/operators/combine/combineFields/opDefinition/update_library_menu
+Removing /raytk/operators/combine/combineFields/_DEVEL_update_par_menu_on_table_change
+Removing /raytk/operators/combine/combineStairs/opDefinition/update_library_menu
+Removing /raytk/operators/combine/combineColumns/opDefinition/update_library_menu
+Removing /raytk/operators/combine/iterationSwitch/opDefinition/update_library_menu
+Removing /raytk/operators/combine/simpleIntersect/opDefinition/update_library_menu
+Removing /raytk/operators/convert/extrude/opDefinition/update_library_menu
+Removing /raytk/operators/convert/revolve/opDefinition/update_library_menu
+Removing /raytk/operators/convert/coordTo2D/opDefinition/update_library_menu
+Removing /raytk/operators/convert/coordTo3D/opDefinition/update_library_menu
+Removing /raytk/operators/convert/floatToSdf/opDefinition/update_library_menu
+Removing /raytk/operators/convert/sdfToFloat/opDefinition/update_library_menu
+Removing /raytk/operators/convert/floatToVector/opDefinition/update_library_menu
+Removing /raytk/operators/convert/vectorToFloat/opDefinition/update_library_menu
+Removing /raytk/operators/utility/injectObjectId/opDefinition/update_library_menu
+Removing /raytk/operators/utility/extractIteration/opDefinition/update_library_menu
+Removing /raytk/operators/utility/extractDebugValues/opDefinition/update_library_menu
+Removing /raytk/operators/material/basicMat/opDefinition/update_library_menu
+Removing /raytk/operators/material/fieldMat/opDefinition/update_library_menu
+Removing /raytk/operators/material/phongMat/opDefinition/update_library_menu
+Removing /raytk/operators/material/checkerboardMat/opDefinition/update_library_menu
+Removing /raytk/operators/material/sampledPointMat/opDefinition/update_library_menu
+Removing /raytk/components/BUILD
+Removing /raytk/components/opDefinition/update_library_menu
+Removing /raytk/components/shaderBuilder/update_library_menu
+Removing /raytk/components/fieldVisualizer/pointMapRender/opDefinition/update_library_menu
+Removing /raytk/components/fieldVisualizer/pointMapRender/shaderBuilder/update_library_menu
+Removing /raytk/libraryInfo
+Finalizing toolkit parameters
+Exporting TOX to build/RayTK-0.6.tox
+Build completed!
+Exported tox file: build/RayTK-0.6.tox
