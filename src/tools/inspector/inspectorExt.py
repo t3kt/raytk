@@ -44,6 +44,10 @@ class Inspector:
 				outputOp = op(visualizers[visualizerType, InspectorTargetTypes.outputOp])
 				self.core.AttachOutputComp(outputOp)
 			iop.bufferInspector.Clear()
+
+			# this should not be necessary...
+			self.ownerComp.op('target_comp_parameters').cook(force=True)
+
 			self.Openwindow()
 
 	@staticmethod
