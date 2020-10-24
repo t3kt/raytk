@@ -22,3 +22,10 @@ It consists of a structure of a set of "apps" (launchable .toe projects) that se
 
 * `raytk-development.toe`: This is used for most development activities, including making changes to ROPs or the related infrastructure.
 * `raytk-build.toe`: This is used to run the build process to create a new release.
+
+## Releasing a Build
+
+1. Make sure you're on the current version's branch (such as "0.6").
+1. Open `raytk-build.toe`.
+1. Click "Build Toolkit".
+1. Use git to commit the generated tox file.

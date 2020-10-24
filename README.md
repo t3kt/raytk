@@ -55,4 +55,12 @@ There are several types of data that a `ROP` function can return, including:
 
 There are several types of coordinates that a `ROP` can use:
 * `vec3`: 3D coordinates, which are the main coordinate type for SDFs and raymarching.
-* `vec2`: 2D coordinates, which are used in 2D SDFs, texture lookups, and screen UV coordinates. 
+* `vec2`: 2D coordinates, which are used in 2D SDFs, texture lookups, and screen UV coordinates.
+
+### Execution Chain
+
+The shader that an Output `ROP` generates will execute the functions provided as inputs to the `ROP`.
+
+In the case of `render2d` (when using a vector field input `ROP`), it calls the input function once per pixel, to determine the color of that pixel.
+
+In the case of `raymarchRender3d`, the main scene input is executed once per each step of the rays. In addition to the scene input, `raymarchRender3d` has an input for a camera function, which called for each pixel of output to determine where the ray goes.
