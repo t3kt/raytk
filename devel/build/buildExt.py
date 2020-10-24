@@ -1,5 +1,5 @@
 from develCommon import *
-from raytkUtil import RaytkTags
+from raytkUtil import RaytkTags, navigateTo
 from raytkBuild import BuildContext
 from typing import List, Optional
 
@@ -7,8 +7,6 @@ from typing import List, Optional
 if False:
 	# noinspection PyUnresolvedReferences
 	from _stubs import *
-	from tools.createMenu.createMenuExt import CreateMenu
-	from tools.inspector.inspectorExt import Inspector
 
 class BuildManager:
 	def __init__(self, ownerComp: 'COMP'):
@@ -19,6 +17,10 @@ class BuildManager:
 	@staticmethod
 	def GetToolkitVersion():
 		return getToolkitVersion()
+
+	@staticmethod
+	def OpenToolkitNetwork():
+		navigateTo(getToolkit(), name='toolkit', popup=True, goInto=True)
 
 	def ReloadToolkit(self):
 		self.logTable.clear()
@@ -62,7 +64,6 @@ class BuildManager:
 			version = getToolkitVersion()
 			toxFile = f'build/RayTK-{version}.tox'
 			self.log('Exporting TOX to ' + toxFile)
-			toolkit.op('buildLog').copy(self.logTable)
 			toolkit.save(toxFile)
 			self.log('Build completed!')
 			self.log(f'Exported tox file: {toxFile}')
