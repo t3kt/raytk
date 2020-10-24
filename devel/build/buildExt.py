@@ -42,16 +42,16 @@ class BuildManager:
 			self.updateLibraryInfo(toolkit)
 			self.queueMethodCall('runBuild_stage', stage + 1)
 		elif stage == 3:
-			components = toolkit.op('components')
-			self.processComponents(components, thenRun='runBuild_stage', runArgs=[stage + 1])
-		elif stage == 4:
 			operators = toolkit.op('operators')
 			self.processOperators(operators, thenRun='runBuild_stage', runArgs=[stage + 1])
-		elif stage == 5:
+		elif stage == 4:
 			self.processTools(toolkit.op('tools'), thenRun='runBuild_stage', runArgs=[stage + 1])
-		elif stage == 6:
+		elif stage == 5:
 			self.lockBuildLockOps(toolkit)
 			self.queueMethodCall('runBuild_stage', stage + 1)
+		elif stage == 6:
+			components = toolkit.op('components')
+			self.processComponents(components, thenRun='runBuild_stage', runArgs=[stage + 1])
 		elif stage == 7:
 			self.removeBuildExcludeOps(toolkit)
 			self.queueMethodCall('runBuild_stage', stage + 1)
@@ -89,19 +89,10 @@ class BuildManager:
 
 	def processComponents(self, components: 'COMP', thenRun: str = None, runArgs: list = None):
 		self.log(f'Processing components {components}')
-		self.context.detachTox(components)
-		comps = components.findChildren(type=COMP, maxDepth=1)
-		self.queueMethodCall('processComponents_stage', comps, thenRun, runArgs)
-
-	def processComponents_stage(self, components: List['COMP'], thenRun: str = None, runArgs: list = None):
-		if components:
-			comp = components.pop()
-			self.context.detachTox(comp)
-			if components:
-				self.queueMethodCall('processComponents_stage', components, thenRun, runArgs)
-				return
-		if thenRun:
-			self.queueMethodCall(thenRun, *(runArgs or []))
+		self.context.runBuildScript(
+			components.op('BUILD'),
+			thenRun=lambda: self.queueMethodCall(thenRun, *(runArgs or [])),
+			runArgs=[])
 
 	def processOperators(self, comp: 'COMP', thenRun: str = None, runArgs: list = None):
 		self.log(f'Processing operators {comp}')
@@ -166,14 +157,14 @@ class BuildManager:
 
 	def removeBuildExcludeOps(self, comp: 'COMP'):
 		self.log(f'Removing build excluded ops from {comp}')
-		toRemove = list(comp.findChildren(tags=['buildExclude']))
+		toRemove = list(comp.findChildren(tags=[RaytkTags.buildExclude.name]))
 		for o in toRemove:
 			self.log(f'Removing {o}')
 			o.destroy()
 
 	def lockBuildLockOps(self, comp: 'COMP'):
 		self.log(f'Locking build locked ops in {comp}')
-		toLock = comp.findChildren(tags=['buildLock'])
+		toLock = comp.findChildren(tags=[RaytkTags.buildLock.name])
 		for o in toLock:
 			self.log(f'Locking {o}')
 			o.lock = True
