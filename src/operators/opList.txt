@@ -25,6 +25,7 @@ vectorToFloat	/raytk/operators/convert/vectorToFloat	/raytk/operators/convert	ra
 axisDistanceField	/raytk/operators/field/axisDistanceField	/raytk/operators/field	raytkOP	field	field/axisDistanceField	raytk.operators.field.axisDistanceField	5	
 cellTileField	/raytk/operators/field/cellTileField	/raytk/operators/field	raytkOP	field	field/cellTileField	raytk.operators.field.cellTileField	0	
 chopField	/raytk/operators/field/chopField	/raytk/operators/field	raytkOP	field	field/chopField	raytk.operators.field.chopField	1	beta
+constantColorField	/raytk/operators/field/constantColorField	/raytk/operators/field	raytkOP	field	field/constantColorField	raytk.operators.field.constantColorField	0	
 constantField	/raytk/operators/field/constantField	/raytk/operators/field	raytkOP	field	field/constantField	raytk.operators.field.constantField	7	
 contextValueField	/raytk/operators/field/contextValueField	/raytk/operators/field	raytkOP	field	field/contextValueField	raytk.operators.field.contextValueField	1	
 iterationField	/raytk/operators/field/iterationField	/raytk/operators/field	raytkOP	field	field/iterationField	raytk.operators.field.iterationField	1	
