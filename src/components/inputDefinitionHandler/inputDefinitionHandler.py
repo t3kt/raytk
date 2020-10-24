@@ -1,3 +1,5 @@
+from raytkUtil import TypeTableHelper
+
 # noinspection PyUnreachableCode
 if False:
 	# noinspection PyUnresolvedReferences
@@ -12,7 +14,8 @@ def checkInputDefinition(dat: 'DAT'):
 	coordType = dat[1, 'coordType'].val
 	returnType = dat[1, 'returnType'].val
 	contextType = dat[1, 'contextType'].val
-	if not parent().par['Supportcoordtype' + coordType.lower()]:
+	supportedCoordTypes = tdu.split(parent().par.Supportedcoordtypes)
+	if not parent().par['Supportcoordtype' + coordType.lower()] and coordType not in supportedCoordTypes:
 		reportError('Input does not support coordType ' + coordType)
 	if not parent().par['Supportreturntype' + returnType.lower()]:
 		reportError('Input does not support returnType ' + returnType)
@@ -24,3 +27,9 @@ def reportError(message: str):
 
 def clearInputTypeErrors():
 	parent().clearScriptErrors(error='Input does not support *')
+
+def updateTypeParMenus():
+	helper = TypeTableHelper(op('typeTable'))
+	helper.updateCoordTypePar(parent().par.Supportcoordtypes)
+	helper.updateReturnTypePar(parent().par.Supportreturntypes)
+	helper.updateContextTypePar(parent().par.Supportcontexttypes)

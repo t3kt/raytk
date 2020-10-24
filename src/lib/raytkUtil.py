@@ -311,6 +311,56 @@ class InspectorTargetTypes:
 		definitionTable,
 	]
 
+class TypeTableHelper:
+	def __init__(self, table: 'DAT'):
+		self.table = table
+
+	def getTypeNamesAndLabels(self, filterColumn: str) -> 'Tuple[List[str], List[str]]':
+		names = []
+		labels = []
+		for row in range(1, self.table.numRows):
+			if self.table[row, filterColumn] != '1':
+				continue
+			names.append(self.table[row, 'name'].val)
+			labels.append(self.table[row, 'label'].val)
+		return names, labels
+
+	def updateTypePar(
+			self,
+			par: 'Par',
+			filterColumn: str,
+			hasUseInput: Optional[bool] = None):
+		currentVal = par.eval()
+		if hasUseInput is None:
+			hasUseInput = 'useinput' in par.menuNames
+		names, labels = self.getTypeNamesAndLabels(filterColumn)
+		if hasUseInput:
+			names = ['useinput'] + names
+			labels = ['Use Input'] + labels
+		ui.undo.startBlock(f'Updating type parameter {par.owner} {par.name} hasUseInput: {hasUseInput}')
+		par.menuNames = names
+		par.menuLabels = labels
+		par.val = currentVal
+		ui.undo.endBlock()
+
+	def updateCoordTypePar(
+			self,
+			par: 'Par',
+			hasUseInput: Optional[bool] = None):
+		self.updateTypePar(par, 'isCoordType', hasUseInput=hasUseInput)
+
+	def updateContextTypePar(
+			self,
+			par: 'Par',
+			hasUseInput: Optional[bool] = None):
+		self.updateTypePar(par, 'isContextType', hasUseInput=hasUseInput)
+
+	def updateReturnTypePar(
+			self,
+			par: 'Par',
+			hasUseInput: Optional[bool] = None):
+		self.updateTypePar(par, 'isReturnType', hasUseInput=hasUseInput)
+
 class RaytkContext:
 	def __init__(self):
 		pass

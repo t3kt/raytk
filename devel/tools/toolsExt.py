@@ -1,6 +1,6 @@
 from develCommon import *
 import popMenu
-from raytkUtil import RaytkTags, ROPInfo, Tag, getActiveEditor, navigateTo, getChildROPs, recloneComp, RaytkContext
+from raytkUtil import RaytkTags, ROPInfo, Tag, getActiveEditor, navigateTo, getChildROPs, recloneComp, RaytkContext, TypeTableHelper
 from typing import Tuple, List
 from pathlib import Path
 
@@ -240,30 +240,21 @@ class Tools:
 		return names, labels
 
 	def updateTypeParsOn(self, comp: 'COMP'):
-		self.updateTypePar(comp, 'Coordtype', 'isCoordType')
-		self.updateTypePar(comp, 'Contexttype', 'isContextType')
-		self.updateTypePar(comp, 'Returntype', 'isReturnType')
+		if not comp:
+			return
+		helper = TypeTableHelper(self.ownerComp.op('typeTable'))
+		par = comp.par['Coordtype']
+		if par is not None:
+			helper.updateCoordTypePar(par, hasUseInput=None)
+		par = comp.par['Contexttype']
+		if par is not None:
+			helper.updateContextTypePar(par, hasUseInput=None)
+		par = comp.par['Returntype']
+		if par is not None:
+			helper.updateReturnTypePar(par, hasUseInput=None)
 
 	def updateTypeParsOnSelected(self):
 		self.forEachSelected(self.updateTypeParsOn)
-
-	def updateTypePar(self, comp: 'COMP', parName: str, filterColumn: str):
-		if not comp:
-			return
-		par = comp.par[parName]
-		if par is None:
-			return
-		currentVal = par.eval()
-		hasUseInput = 'useinput' in par.menuNames
-		names, labels = self.getTypeNamesAndLabels(filterColumn)
-		if hasUseInput:
-			names = ['useinput'] + names
-			labels = ['Use Input'] + labels
-		ui.undo.startBlock(f'Updating type parameter {par.owner} {par.name} has useinput: {hasUseInput}')
-		par.menuNames = names
-		par.menuLabels = labels
-		par.val = currentVal
-		ui.undo.endBlock()
 
 	def DestroySelectedCustomPars(self):
 		def _action(o: 'OP'):
