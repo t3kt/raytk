@@ -1,4 +1,4 @@
-from typing import List, Tuple, Union
+from typing import Callable, List, Tuple, Union
 
 # noinspection PyUnreachableCode
 if False:
@@ -91,8 +91,39 @@ class ShaderBuilder:
 					decls.append(f'#define {cell.val}')
 		return wrapCodeSection(decls, 'macros')
 
-	def buildLibraryIncludes(self):
-		libraries = self.ownerComp.par.Libraries.evalOPs()
+	def getLibraryDats(self, onWarning: Callable[[str], None] = None):
+		requiredLibNames = parent().par.Librarynames.eval().strip().split(' ')  # type: List[str]
+		requiredLibNames = [n for n in requiredLibNames if n]
+		defsTable = self.definitionTable()
+		if defsTable[0, 'libraryNames']:
+			for cell in defsTable.col('libraryNames')[1:]:
+				if not cell.val:
+					continue
+				for name in cell.val.split(' '):
+					if name not in requiredLibNames:
+						requiredLibNames.append(name)
+		libraryOps = self.ownerComp.par.Libraries.evalOPs()
+		dats = []  # type: List[DAT]
+		for libraryOp in libraryOps:
+			if libraryOp.isDAT:
+				if libraryOp not in dats:
+					dats.append(libraryOp)
+			elif libraryOp.isCOMP:
+				namesToRemove = []
+				for name in requiredLibNames:
+					dat = libraryOp.op(name)
+					if not dat:
+						continue
+					dats.append(dat)
+					namesToRemove.append(name)
+				for name in namesToRemove:
+					requiredLibNames.remove(name)
+		if requiredLibNames and onWarning:
+			onWarning('Missing libraries: ' + repr(requiredLibNames))
+		return dats
+
+	def buildLibraryIncludes(self, onWarning: Callable[[str], None] = None):
+		libraries = self.getLibraryDats(onWarning)
 		includes = [
 			f'#include <{lib.path}>'
 			for lib in libraries
@@ -198,3 +229,9 @@ def wrapCodeSection(code: 'Union[str, DAT, List[Union[str, DAT]]]', name: str):
 		# return a non-empty string in order to force DATs to be text when using dat.write()
 		return ' '
 	return f'///----BEGIN {name}\n{code}\n///----END {name}'
+
+def updateLibraryMenuPar(libsComp: 'COMP'):
+	p = parent().par.Librarynames  # type: Par
+	libs = libsComp.findChildren(type=DAT, maxDepth=1, tags=['library'])
+	libs.sort(key=lambda l: -l.nodeY)
+	p.menuNames = [lib.name for lib in libs]

@@ -134,3 +134,9 @@ def substituteWords(dat: 'DAT'):
 		for row in range(startRow, repls.numRows):
 			text = re.sub(r'\b' + repls[row, 0].val + r'\b', repls[row, 1].val, text)
 	dat.text = text
+
+def updateLibraryMenuPar(libsComp: 'COMP'):
+	p = parent().par.Librarynames  # type: Par
+	libs = libsComp.findChildren(type=DAT, maxDepth=1, tags=['library'])
+	libs.sort(key=lambda l: -l.nodeY)
+	p.menuNames = [lib.name for lib in libs]
