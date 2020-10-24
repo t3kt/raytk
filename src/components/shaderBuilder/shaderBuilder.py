@@ -53,13 +53,24 @@ class ShaderBuilder:
 			]
 		return wrapCodeSection(code, 'globals')
 
-	def buildMacroBlock(self):
+	def getOpsFromDefinitionColumn(self, column: str):
 		defsTable = self.definitionTable()
+		if defsTable.numRows < 2 or not defsTable[1, column]:
+			return []
+		results = []
+		for cell in defsTable.col(column)[1:]:
+			if not cell.val.strip():
+				continue
+			paths = cell.val.strip().split(' ')
+			for path in paths:
+				o = op(path)
+				if o:
+					results.append(o)
+		return results
+
+	def buildMacroBlock(self):
 		tables = [self.ownerComp.par.Globalmacrotable.eval()]
-		if defsTable.col('macroTable'):
-			tables += [
-				op(cell) for cell in defsTable.col('macroTable')[1:]
-			]
+		tables += self.getOpsFromDefinitionColumn('macroTable')
 		decls = []
 		for table in tables:
 			if not table:
