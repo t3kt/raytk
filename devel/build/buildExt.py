@@ -31,7 +31,9 @@ class BuildManager:
 
 	def ReloadToolkit(self):
 		self.logTable.clear()
-		self.reloadToolkit(getToolkit())
+		self.log('Reloading toolkit')
+		toolkit = getToolkit()
+		self.queueMethodCall('reloadToolkit', toolkit)
 
 	def RunBuild(self):
 		self.logTable.clear()
@@ -41,6 +43,7 @@ class BuildManager:
 
 	def runBuild_stage(self, stage: int):
 		toolkit = getToolkit()
+		self.log('Reloading toolkit')
 		if stage == 0:
 			self.reloadToolkit(toolkit)
 			self.queueMethodCall('runBuild_stage', stage + 1)
@@ -75,8 +78,8 @@ class BuildManager:
 			self.log('Build completed!')
 			self.log(f'Exported tox file: {toxFile}')
 
-	def reloadToolkit(self, toolkit: 'COMP'):
-		self.log('Reloading toolkit')
+	@staticmethod
+	def reloadToolkit(toolkit: 'COMP'):
 		toolkit.par.externaltox = 'src/raytk.tox'
 		toolkit.par.reinitnet.pulse()
 
