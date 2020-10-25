@@ -25,6 +25,7 @@ vectorToFloat	/raytk/operators/convert/vectorToFloat	/raytk/operators/convert	ra
 axisDistanceField	/raytk/operators/field/axisDistanceField	/raytk/operators/field	raytkOP	field	field/axisDistanceField	raytk.operators.field.axisDistanceField	5	
 cellTileField	/raytk/operators/field/cellTileField	/raytk/operators/field	raytkOP	field	field/cellTileField	raytk.operators.field.cellTileField	0	
 chopField	/raytk/operators/field/chopField	/raytk/operators/field	raytkOP	field	field/chopField	raytk.operators.field.chopField	1	beta
+colorRampField	/raytk/operators/field/colorRampField	/raytk/operators/field	raytkOP	field	field/colorRampField	raytk.operators.field.colorRampField	0	
 constantColorField	/raytk/operators/field/constantColorField	/raytk/operators/field	raytkOP	field	field/constantColorField	raytk.operators.field.constantColorField	0	
 constantField	/raytk/operators/field/constantField	/raytk/operators/field	raytkOP	field	field/constantField	raytk.operators.field.constantField	7	
 contextValueField	/raytk/operators/field/contextValueField	/raytk/operators/field	raytkOP	field	field/contextValueField	raytk.operators.field.contextValueField	1	
@@ -38,7 +39,7 @@ flip	/raytk/operators/filter/flip	/raytk/operators/filter	raytkOP	filter	filter/
 invert	/raytk/operators/filter/invert	/raytk/operators/filter	raytkOP	filter	filter/invert	raytk.operators.filter.invert	2	
 iteratedTransform	/raytk/operators/filter/iteratedTransform	/raytk/operators/filter	raytkOP	filter	filter/iteratedTransform	raytk.operators.filter.iteratedTransform	3	
 knife	/raytk/operators/filter/knife	/raytk/operators/filter	raytkOP	filter	filter/knife	raytk.operators.filter.knife	3	
-limitField	/raytk/operators/filter/limitField	/raytk/operators/filter	raytkOP	filter	filter/limitField	raytk.operators.filter.limitField	2	
+limitField	/raytk/operators/filter/limitField	/raytk/operators/filter	raytkOP	filter	filter/limitField	raytk.operators.filter.limitField	3	
 mirrorOctant	/raytk/operators/filter/mirrorOctant	/raytk/operators/filter	raytkOP	filter	filter/mirrorOctant	raytk.operators.filter.mirrorOctant	2	
 modulo1D	/raytk/operators/filter/modulo1D	/raytk/operators/filter	raytkOP	filter	filter/modulo1D	raytk.operators.filter.modulo1D	4	
 modulo2D	/raytk/operators/filter/modulo2D	/raytk/operators/filter	raytkOP	filter	filter/modulo2D	raytk.operators.filter.modulo2D	2	
