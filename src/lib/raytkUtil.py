@@ -446,3 +446,21 @@ def _longestCommonPrefix(strs):
 			return strs[0][:i]
 	else:
 		return min(strs)
+
+# see https://forum.derivative.ca/t/active-current-page-of-parameter-comp-as-a-chop-value/10458
+def focusCustomParameterPage(o: 'COMP', page: 'Union[str, int, Page]'):
+	if not o or not o.customPages:
+		return
+	customIndex = None
+	if isinstance(page, int):
+		customIndex = page
+	elif isinstance(page, str):
+		for pg in o.customPages:
+			if pg.name == page:
+				customIndex = pg.index
+				break
+	elif isinstance(page, Page):
+		customIndex = page.index
+	if customIndex is not None:
+		o.par.stdswitcher1 = len(o.pages) + customIndex
+		o.cook(force=True)

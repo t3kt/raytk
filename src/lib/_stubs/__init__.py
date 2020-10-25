@@ -444,6 +444,7 @@ class OP:
 	ext: _T.Any
 	mod: _T.Any
 	par: ParCollection
+	pages: _T.List['Page']
 	customPars: _T.List['Par']
 	customPages: _T.List['Page']
 	customTuplets: _T.List[_ParTupletT]
