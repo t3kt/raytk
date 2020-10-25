@@ -18,6 +18,7 @@ if False:
 		Parammode: 'Union[str, Par]'
 		Inlineparameteraliases: 'Union[bool, Par]'
 		Simplifynames: 'Union[bool, Par]'
+		Generatetypedefs: 'Union[bool, Par]'
 
 	class _OwnerComp(COMP):
 		par: '_OwnerCompPar'
@@ -140,6 +141,33 @@ class ShaderBuilder:
 			for lib in libraries
 		]
 		return wrapCodeSection(includes, 'libraries')
+
+	def buildOpDataTypedefBlock(self):
+		if not self.ownerComp.par.Generatetypedefs:
+			return ' '
+		defsTable = self.definitionTable()
+		typedefs = []
+		macros = []
+		for row in range(1, defsTable.numRows):
+			name = str(defsTable[row, 'name'])
+			coordType = str(defsTable[row, 'coordType'])
+			contextType = str(defsTable[row, 'contextType'])
+			returnType = str(defsTable[row, 'returnType'])
+			typedefs += [
+				f'#define {name}_CoordT    {coordType}',
+				f'#define {name}_ContextT  {contextType}',
+				f'#define {name}_ReturnT   {returnType}',
+			]
+			macros += [
+				f'#define {name}_COORD_TYPE_{coordType}',
+				f'#define {name}_CONTEXT_TYPE_{contextType}',
+				f'#define {name}_RETURN_TYPE_{returnType}',
+			]
+		if typedefs:
+			lines = typedefs + [''] + macros
+		else:
+			lines = []
+		return wrapCodeSection(lines, 'opDataTypedefs')
 
 	def buildPredeclarations(self):
 		return wrapCodeSection(self.ownerComp.par.Predeclarations.eval(), 'predeclarations')
