@@ -277,10 +277,12 @@ class ReturnTypes:
 	]
 
 class CoordTypes:
+	float = 'float'
 	vec2 = 'vec2'
 	vec3 = 'vec3'
 
 	values = [
+		float,
 		vec2,
 		vec3,
 	]
@@ -289,6 +291,7 @@ class ContextTypes:
 	Context = 'Context'
 	MaterialContext = 'MaterialContext'
 	CameraContext = 'CameraContext'
+	LightContext = 'LightContext'
 	none = 'none'
 
 	values = [
@@ -296,6 +299,7 @@ class ContextTypes:
 		none,
 		MaterialContext,
 		CameraContext,
+		LightContext,
 	]
 
 class InspectorTargetTypes:
