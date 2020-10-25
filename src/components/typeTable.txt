@@ -1,5 +1,5 @@
 name	label	isReturnType	isCoordType	isContextType	vectorLength	vectorParts
-float	Float	1	0	0	1	x
+float	Float	1	1	0	1	x
 vec2	2D	0	1	0	2	xy
 vec3	3D	0	1	0	3	xyz
 vec4	Vector	1	0	0	4	xyzw
