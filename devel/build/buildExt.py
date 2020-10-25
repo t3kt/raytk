@@ -1,5 +1,5 @@
 from develCommon import *
-from raytkUtil import RaytkTags, navigateTo
+from raytkUtil import RaytkTags, navigateTo, focusCustomParameterPage
 from raytkBuild import BuildContext
 from typing import List, Optional
 
@@ -141,6 +141,7 @@ class BuildManager:
 		self.log(f'Processing operator {comp}')
 		self.context.disableCloning(comp)
 		self.context.detachTox(comp)
+		focusCustomParameterPage(comp, 0)
 		for child in comp.findChildren(type=COMP):
 			if 'raytkOP' in child.tags:
 				self.processOperator(child)
