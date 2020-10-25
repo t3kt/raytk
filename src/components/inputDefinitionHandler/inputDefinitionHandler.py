@@ -23,7 +23,7 @@ def checkType(dat: 'DAT', typeCategory: str):
 	supported = tdu.split(parent().par['Support' + typeCategory.lower() + 's'] or '')
 	if '*' in supported or typeName in supported:
 		return
-	if parent().par['Support' + typeCategory.lower() + typeName]:
+	if parent().par['Support' + typeCategory.lower() + typeName.lower()]:
 		return
 	reportError(f'Input does not support {typeCategory} {typeName}')
 
