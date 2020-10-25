@@ -11,18 +11,21 @@ def checkInputDefinition(dat: 'DAT'):
 	clearInputTypeErrors()
 	if dat.numRows < 2:
 		return
-	coordType = dat[1, 'coordType'].val
-	returnType = dat[1, 'returnType'].val
-	contextType = dat[1, 'contextType'].val
-	supportedCoordTypes = tdu.split(parent().par['Supportcoordtypes'] or '')
-	supportedReturnTypes = tdu.split(parent().par['Supportreturntypes'] or '')
-	supportedContextTypes = tdu.split(parent().par['Supportcontexttypes'] or '')
-	if not parent().par['Supportcoordtype' + coordType.lower()] and coordType not in supportedCoordTypes:
-		reportError('Input does not support coordType ' + coordType)
-	if not parent().par['Supportreturntype' + returnType.lower()] and coordType not in supportedReturnTypes:
-		reportError('Input does not support returnType ' + returnType)
-	if not parent().par['Supportcontexttype' + contextType.lower()] and coordType not in supportedContextTypes:
-		reportError('Input does not support contextType ' + contextType)
+	checkType(dat, 'coordType')
+	checkType(dat, 'contextType')
+	checkType(dat, 'returnType')
+
+def checkType(dat: 'DAT', typeCategory: str):
+	typeName = str(dat[1, typeCategory] or '')
+	if not typeName:
+		reportError(f'Invalid input {typeCategory}: {typeName!r}')
+		return
+	supported = tdu.split(parent().par['Support' + typeCategory.lower() + 's'] or '')
+	if '*' in supported or typeName in supported:
+		return
+	if parent().par['Support' + typeCategory.lower() + typeName]:
+		return
+	reportError(f'Input does not support {typeCategory} {typeName}')
 
 def reportError(message: str):
 	parent().addScriptError(message)
