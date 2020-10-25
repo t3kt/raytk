@@ -76,17 +76,15 @@ vec3 calcNormal(in vec3 pos)
 // Soft shadow code from http://iquilezles.org/www/articles/rmshadows/rmshadows.htm
 float softShadow(vec3 p, MaterialContext matCtx)
 {
-//	float mint = uShadow.x;
-//	float maxt = uShadow.y;
-//	float k = uShadow.z;
-	float mint = 0.1;
-	float maxt = 2.0;
+	float mint = RAYTK_SURF_DIST;
+	float maxt = RAYTK_MAX_DIST;
 	float k = 0.5;  // hardness
+	Ray ray = Ray(p + matCtx.normal + RAYTK_SURF_DIST*2., normalize(matCtx.light.pos - p));
 	float res = 1.0;
 	float ph = 1e20;
 	for (float t=mint; t<maxt;)
 	{
-		float h = map(p + matCtx.ray.pos*t).x;
+		float h = map(ray.pos + ray.dir *t).x;
 		if (h<0.001)
 		return 0.0;
 		float y = h*h/(2.0*ph);
