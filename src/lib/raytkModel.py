@@ -1,3 +1,4 @@
+from raytkUtil import CoordTypes, ContextTypes, ReturnTypes
 from dataclasses import dataclass, field
 import re
 from typing import Dict, List, Optional
@@ -12,6 +13,9 @@ class TypeSpec:
 	"""
 	isAll: bool = False
 	types: List[str] = field(default_factory=list)
+
+	def isSingle(self):
+		return not self.isAll and len(self.types) == 1
 
 	def __str__(self):
 		if self.isAll:
@@ -76,41 +80,21 @@ class FunctionSignature:
 			returnType=TypeSpec.parse(returnType),
 		)
 
-@dataclass
-class ROPInputSpec:
-	name: str = None
-	inputDAT: str = None
-	returnTypes: List[str] = field(default_factory=list)
-	coordTypes: List[str] = field(default_factory=list)
-	contextTypes: List[str] = field(default_factory=list)
+	def isSingle(self):
+		return self.coordType.isSingle() and self.contextType.isSingle() and self.returnType.isSingle()
 
-	@classmethod
-	def fromJsDict(cls, obj: dict):
-		return cls(
-			returnTypes=obj['returnTypes'].split(' ') if obj['returnTypes'] else [],
-			coordTypes=obj['coordTypes'].split(' ') if obj['coordTypes'] else [],
-			contextTypes=obj['contextTypes'].split(' ') if obj['contextTypes'] else [],
-		)
-
-	def toJsDict(self):
-		return cleanDict({
-			'name': self.name,
-			'inputDAT': self.inputDAT,
-			'returnTypes': ' '.join(self.returnTypes),
-			'coordTypes': ' '.join(self.coordTypes),
-			'contextTypes': ' '.join(self.contextTypes),
-		})
-
-	@classmethod
-	def parseFromText(cls, text: str):
-		obj = _parseTextObject(text)
-		return cls(
-			name=_getSingleString(obj.get('input')),
-			inputDAT=_getSingleString(obj.get('inputDAT')),
-			returnTypes=obj.get('return') or [],
-			coordTypes=obj.get('coord') or [],
-			contextTypes=obj.get('context') or [],
-		)
+	def expandAll(self) -> List['FunctionSignature']:
+		coordTypes = self.coordType.expand(CoordTypes.values)
+		contextTypes = self.contextType.expand(ContextTypes.values)
+		returnTypes = self.returnType.expand(ReturnTypes.values)
+		if self.isSingle():
+			return [self]
+		return [
+			FunctionSignature.create(coord, ctx, ret)
+			for ret in returnTypes
+			for ctx in contextTypes
+			for coord in coordTypes
+		]
 
 @dataclass
 class ROPParamHelp:
