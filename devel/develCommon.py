@@ -160,6 +160,8 @@ class AutoLoader:
 		# print('and will load:')
 		# print('\n'.join(toxsToLoad))
 
+		ui.undo.startBlock(f'Applying auto load in {self.folderComp}')
+
 		for child in toDelete:
 			print(f'Auto load is removing {child}')
 			try:
@@ -171,4 +173,6 @@ class AutoLoader:
 			print(f'Auto load is loading {tox}')
 			comp = self.folderComp.loadTox(tox)
 			comp.nodeY = 500 - i * 150
+
+		ui.undo.endBlock()
 
