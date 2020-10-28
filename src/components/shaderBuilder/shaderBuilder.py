@@ -101,6 +101,7 @@ class ShaderBuilder:
 			for cell in outputBuffers.col('macro')[1:]:
 				if cell.val:
 					decls.append(f'#define {cell.val}')
+		decls = _uniqueList(decls)
 		return wrapCodeSection(decls, 'macros')
 
 	def getLibraryDats(self, onWarning: Callable[[str], None] = None):
@@ -274,3 +275,10 @@ def updateLibraryMenuPar(libsComp: 'COMP'):
 	libs = libsComp.findChildren(type=DAT, maxDepth=1, tags=['library'])
 	libs.sort(key=lambda l: -l.nodeY)
 	p.menuNames = [lib.name for lib in libs]
+
+def _uniqueList(items: list):
+	results = []
+	for item in items:
+		if item not in results:
+			results.append(item)
+	return results
