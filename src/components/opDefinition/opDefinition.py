@@ -61,7 +61,7 @@ def buildParamTable(dat: 'DAT'):
 
 def buildParamDetailTable(dat: 'DAT'):
 	dat.clear()
-	dat.appendRow(['tuplet', 'source', 'size', 'part1', 'part2', 'part3', 'part4'])
+	dat.appendRow(['tuplet', 'source', 'size', 'part1', 'part2', 'part3', 'part4', 'status'])
 	name = parent().par.Name.eval()
 	params = _getRegularParams()
 	if params:
@@ -73,9 +73,16 @@ def buildParamDetailTable(dat: 'DAT'):
 				paramsByTuplet[par.tupletName] = [par]
 		for tupletName, tupletPars in paramsByTuplet.items():
 			tupletPars.sort(key=lambda p: p.vecIndex)
+			row = dat.numRows
 			dat.appendRow(
-				[f'{name}_{tupletName}', 'param', len(tupletPars)] + [
-					f'{name}_{p.name}' for p in tupletPars])
+				[
+					f'{name}_{tupletName}',
+					'param',
+					len(tupletPars)
+				])
+			for i, p in enumerate(tupletPars):
+				dat[row, 'part' + str(i + 1)] = f'{name}_{p.name}'
+			dat[row, 'status'] = 'readOnly' if _canBeReadOnlyTuplet(tupletPars) else ''
 	specialNames = _getSpecialParamNames()
 	if specialNames:
 		parts = []
@@ -96,6 +103,14 @@ def buildParamDetailTable(dat: 'DAT'):
 				specialIndex += 1
 		if parts:
 			addSpecial()
+
+def _canBeReadOnlyTuplet(pars: 'List[Par]'):
+	if not pars[0].readOnly:
+		return False
+	for par in pars:
+		if par.mode != ParMode.CONSTANT:
+			return False
+	return True
 
 def _getTupletName(parts: 'List[str]'):
 	if len(parts) <= 1 or len(parts[0]) <= 1:
