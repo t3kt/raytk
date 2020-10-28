@@ -1,6 +1,10 @@
 ReturnT thismap(CoordT p, ContextT ctx) {
 	float q = p.THIS_AXIS + THIS_Shift;
-	float cell = THIS_MIRROR_FUNC(q, THIS_Size);
+	#ifdef THIS_USE_LIMIT
+	float cell = THIS_FUNC(q, THIS_Size, THIS_Limitstart, THIS_Limitstop);
+	#else
+	float cell = THIS_FUNC(q, THIS_Size);
+	#endif
 	p.THIS_AXIS = q - THIS_Offset;
 	#ifdef THIS_ITERATE_CELLS
 	ctx.iteration.x = cell;

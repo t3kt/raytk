@@ -585,3 +585,20 @@ float sdVesica(vec2 p, float r, float d)
 	float b = sqrt(r*r-d*d);
 	return ((p.y-b)*d>p.x*b) ? length(p-vec2(0.0,b)) : length(p-vec2(-d,0.0))-r;
 }
+
+// Repeat only a few times: from indices <start> to <stop> (similar to above, but more flexible)
+float pModIntervalMirror1(inout float p, float size, float start, float stop) {
+	float halfsize = size*0.5;
+	float c = floor((p + halfsize)/size);
+	p = mod(p+halfsize, size) - halfsize;
+	p *= mod(c, 2.0)*2 - 1;
+	if (c > stop) { //yes, this might not be the best thing numerically.
+		p += size*(c - stop);
+		c = stop;
+	}
+	if (c <start) {
+		p += size*(c - start);
+		c = start;
+	}
+	return c;
+}
