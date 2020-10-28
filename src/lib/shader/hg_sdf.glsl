@@ -341,7 +341,7 @@ float fCone(vec3 p, float radius, float height) {
 	return d;
 }
 
-#ifdef RTK_USE_GDF
+#ifdef RAYTK_USE_GDF
 
 //
 // "Generalized Distance Functions" by Akleman and Chen.
