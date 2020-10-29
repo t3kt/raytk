@@ -12,7 +12,6 @@ if False:
 		Globalmacrotable: 'Union[DAT, str, Par]'
 		Libraries: 'Union[str, Par]'
 		Bodytemplate: 'Union[DAT, str, Par]'
-		Useoutputbuffertable: 'Union[bool, Par]'
 		Outputbuffertable: 'Union[DAT, str, Par]'
 		Supportmaterials: 'Union[bool, Par]'
 		Parammode: 'Union[str, Par]'
@@ -203,9 +202,9 @@ class ShaderBuilder:
 		return wrapCodeSection(decls, 'materials')
 
 	def buildOutputBufferDeclarations(self):
-		if not self.ownerComp.par.Useoutputbuffertable:
-			return ' '
 		outputBuffers = self.outputBufferTable()
+		if outputBuffers.numRows < 2:
+			return ' '
 		decls = [
 			f'layout(location = {cell.row - 1}) out vec4 {cell.val};'
 			for cell in outputBuffers.col('name')[1:]
