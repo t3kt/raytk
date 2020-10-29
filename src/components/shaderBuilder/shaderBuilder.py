@@ -184,7 +184,7 @@ class ShaderBuilder:
 		suffixes = 'xyzw'
 		partAliases = []  # type: List[Tuple[str, Union[str, float]]]
 		mainAliases = []  # type: List[Tuple[str, Union[str, float]]]
-		inlineReadOnly = self.ownerComp.par.Inlinereadonlyparameters.eval()
+		inlineReadOnly = bool(self.ownerComp.par['Inlinereadonlyparameters'])
 		paramVals = self.allParamVals()
 		paramTuplets = _ParamTupletSpec.fromTableRows(paramDetails)
 		for i, paramTuplet in enumerate(paramTuplets):
@@ -216,6 +216,12 @@ class ShaderBuilder:
 		for name, expr in self._buildParameterExprs():
 			decls.append(f'#define {name} {expr}')
 		return wrapCodeSection(decls, 'paramAliasesV2')
+
+	def buildParamAliasTable(self, dat: 'DAT'):
+		dat.clear()
+		dat.appendRow(['before', 'after'])
+		for name, expr in self._buildParameterExprs():
+			dat.appendRow([name, expr])
 
 	def buildTextureDeclarations(self):
 		textureTable = self.ownerComp.op('texture_table')
@@ -249,34 +255,6 @@ class ShaderBuilder:
 		]
 		return wrapCodeSection(decls, 'outputBuffers')
 
-def buildParamAliasTable(dat: 'DAT', paramDetails: 'DAT'):
-	dat.clear()
-	dat.appendRow(['before', 'after'])
-	for name, expr in _getParamAliases(paramDetails):
-		dat.appendRow([name, expr])
-
-def _getParamAliases(paramDetails: 'DAT') -> List[Tuple[str, str]]:
-	suffixes = 'xyzw'
-	partAliases = []
-	mainAliases = []
-	for i in range(paramDetails.numRows - 1):
-		tupletName = paramDetails[i + 1, 'tuplet']
-		size = int(paramDetails[i + 1, 'size'])
-		if size == 1:
-			name = paramDetails[i + 1, 'part1']
-			mainAliases.append((str(name), f'vecParams[{i}].x'))
-		else:
-			if size == 4:
-				mainAliases.append((str(tupletName), f'vecParams[{i}]'))
-			else:
-				mainAliases.append((str(tupletName), f'vec{size}(vecParams[{i}].{suffixes[:size]})'))
-			for partI in range(1, 5):
-				name = paramDetails[i + 1, f'part{partI}']
-				if name:
-					suffix = suffixes[partI - 1]
-					partAliases.append((str(name), f'vecParams[{i}].{suffix}'))
-	return partAliases + mainAliases
-
 @dataclass
 class _ParamTupletSpec:
 	tuplet: str
@@ -297,7 +275,7 @@ class _ParamTupletSpec:
 		return cls(
 			tuplet=str(dat[row, 'tuplet']),
 			parts=tuple(parts),
-			isReadOnly='readOnly' in dat[row, 'status'].val,
+			isReadOnly='readOnly' in str(dat[row, 'status'] or ''),
 		)
 
 	@classmethod
