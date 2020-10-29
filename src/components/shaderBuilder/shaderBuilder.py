@@ -1,3 +1,4 @@
+from dataclasses import dataclass
 from typing import Callable, List, Tuple, Union
 
 # noinspection PyUnreachableCode
@@ -16,6 +17,7 @@ if False:
 		Supportmaterials: 'Union[bool, Par]'
 		Parammode: 'Union[str, Par]'
 		Inlineparameteraliases: 'Union[bool, Par]'
+		Inlinereadonlyparameters: 'Union[bool, Par]'
 		Simplifynames: 'Union[bool, Par]'
 		Generatetypedefs: 'Union[bool, Par]'
 
@@ -35,6 +37,9 @@ class ShaderBuilder:
 
 	def outputBufferTable(self) -> 'DAT':
 		return self.ownerComp.op('output_buffer_table')
+
+	def allParamVals(self) -> 'CHOP':
+		return self.ownerComp.op('all_param_vals')
 
 	def buildGlobalPrefix(self):
 		return wrapCodeSection(self.ownerComp.par.Globalprefix.eval(), 'globalPrefix')
@@ -172,12 +177,45 @@ class ShaderBuilder:
 	def buildPredeclarations(self):
 		return wrapCodeSection(self.ownerComp.par.Predeclarations.eval(), 'predeclarations')
 
+	def _buildParameterExprs(self) -> 'List[Tuple[str, Union[str, float]]]':
+		paramDetails = self.parameterDetailTable()
+		if paramDetails.numRows < 2:
+			return []
+		suffixes = 'xyzw'
+		partAliases = []  # type: List[Tuple[str, Union[str, float]]]
+		mainAliases = []  # type: List[Tuple[str, Union[str, float]]]
+		inlineReadOnly = self.ownerComp.par.Inlinereadonlyparameters.eval()
+		paramVals = self.allParamVals()
+		paramTuplets = _ParamTupletSpec.fromTableRows(paramDetails)
+		for i, paramTuplet in enumerate(paramTuplets):
+			shouldInline = inlineReadOnly and paramTuplet.isReadOnly and paramTuplet.isPresentInChop(paramVals)
+			size = len(paramTuplet.parts)
+			if size == 1:
+				if shouldInline:
+					mainAliases.append((paramTuplet.parts[0], float(paramVals[paramTuplet.parts[0]])))
+				else:
+					mainAliases.append((paramTuplet.parts[0], f'vecParams[{i}].x'))
+			else:
+				if shouldInline:
+					partVals = [float(paramVals[part]) for part in paramTuplet.parts]
+					valsExpr = ','.join(str(v) for v in partVals)
+					mainAliases.append((paramTuplet.tuplet, f'vec{size}({valsExpr})'))
+					for partI, partVal in enumerate(partVals):
+						partAliases.append((paramTuplet.parts[partI], partVal))
+				else:
+					if size == 4:
+						mainAliases.append((paramTuplet.tuplet, f'vecParams[{i}]'))
+					else:
+						mainAliases.append((paramTuplet.tuplet, f'vec{size}(vecParams[{i}].{suffixes[:size]})'))
+					for partI, partName in enumerate(paramTuplet.parts):
+						partAliases.append((partName, f'vecParams[{i}].{suffixes[partI]}'))
+		return partAliases + mainAliases
+
 	def buildParameterAliases(self):
-		paramDetailTable = self.parameterDetailTable()
 		decls = []
-		for name, expr in _getParamAliases(paramDetailTable):
+		for name, expr in self._buildParameterExprs():
 			decls.append(f'#define {name} {expr}')
-		return wrapCodeSection(decls, 'paramAliases')
+		return wrapCodeSection(decls, 'paramAliasesV2')
 
 	def buildTextureDeclarations(self):
 		textureTable = self.ownerComp.op('texture_table')
@@ -238,6 +276,36 @@ def _getParamAliases(paramDetails: 'DAT') -> List[Tuple[str, str]]:
 					suffix = suffixes[partI - 1]
 					partAliases.append((str(name), f'vecParams[{i}].{suffix}'))
 	return partAliases + mainAliases
+
+@dataclass
+class _ParamTupletSpec:
+	tuplet: str
+	parts: Tuple[str]
+	isReadOnly: bool
+
+	def isPresentInChop(self, chop: 'CHOP'):
+		return any([chop[part] is not None for part in self.parts])
+
+	@classmethod
+	def fromRow(cls, dat: 'DAT', row: int):
+		parts = []
+		for i in range(1, 5):
+			cell = dat[row, 'part' + str(i)]
+			if not cell.val:
+				break
+			parts.append(cell.val)
+		return cls(
+			tuplet=str(dat[row, 'tuplet']),
+			parts=tuple(parts),
+			isReadOnly='readOnly' in dat[row, 'status'].val,
+		)
+
+	@classmethod
+	def fromTableRows(cls, dat: 'DAT') -> 'List[_ParamTupletSpec]':
+		return [
+			cls.fromRow(dat, row)
+			for row in range(1, dat.numRows)
+		]
 
 def buildMaterialBlock(materialTable: 'DAT'):
 	if materialTable.numRows < 2:
