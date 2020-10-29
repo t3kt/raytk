@@ -29,7 +29,7 @@ cellTileField	/raytk/operators/field/cellTileField	/raytk/operators/field	raytkO
 chopField	/raytk/operators/field/chopField	/raytk/operators/field	raytkOP	field	field/chopField	raytk.operators.field.chopField	1	beta
 colorRampField	/raytk/operators/field/colorRampField	/raytk/operators/field	raytkOP	field	field/colorRampField	raytk.operators.field.colorRampField	1	
 constantColorField	/raytk/operators/field/constantColorField	/raytk/operators/field	raytkOP	field	field/constantColorField	raytk.operators.field.constantColorField	0	
-constantField	/raytk/operators/field/constantField	/raytk/operators/field	raytkOP	field	field/constantField	raytk.operators.field.constantField	7	
+constantField	/raytk/operators/field/constantField	/raytk/operators/field	raytkOP	field	field/constantField	raytk.operators.field.constantField	8	
 contextValueField	/raytk/operators/field/contextValueField	/raytk/operators/field	raytkOP	field	field/contextValueField	raytk.operators.field.contextValueField	1	
 iterationField	/raytk/operators/field/iterationField	/raytk/operators/field	raytkOP	field	field/iterationField	raytk.operators.field.iterationField	1	
 noiseField	/raytk/operators/field/noiseField	/raytk/operators/field	raytkOP	field	field/noiseField	raytk.operators.field.noiseField	3	
@@ -59,6 +59,7 @@ scale	/raytk/operators/filter/scale	/raytk/operators/filter	raytkOP	filter	filte
 slice	/raytk/operators/filter/slice	/raytk/operators/filter	raytkOP	filter	filter/slice	raytk.operators.filter.slice	0	
 transform	/raytk/operators/filter/transform	/raytk/operators/filter	raytkOP	filter	filter/transform	raytk.operators.filter.transform	2	
 translate	/raytk/operators/filter/translate	/raytk/operators/filter	raytkOP	filter	filter/translate	raytk.operators.filter.translate	4	
+almostIdentityFn	/raytk/operators/function/almostIdentityFn	/raytk/operators/function	raytkOP	function	function/almostIdentityFn	raytk.operators.function.almostIdentityFn	0	
 hardShadow	/raytk/operators/light/hardShadow	/raytk/operators/light	raytkOP	light	light/hardShadow	raytk.operators.light.hardShadow	2	
 pointLight	/raytk/operators/light/pointLight	/raytk/operators/light	raytkOP	light	light/pointLight	raytk.operators.light.pointLight	2	
 softShadow	/raytk/operators/light/softShadow	/raytk/operators/light	raytkOP	light	light/softShadow	raytk.operators.light.softShadow	3	
