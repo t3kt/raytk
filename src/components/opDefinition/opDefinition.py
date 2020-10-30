@@ -26,7 +26,7 @@ def evaluateTypeProperty(par: 'Par', fieldName: str, defVal: str):
 	inputDef = op('input_def_1')
 	if inputDef.numRows > 1:
 		val = inputDef[1, fieldName]
-		if val and val != 'useinput' and str(val) in par.menuNames:
+		if val and val != 'useinput':
 			return str(val)
 	return defVal
 
