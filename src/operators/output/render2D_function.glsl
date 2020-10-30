@@ -1,7 +1,4 @@
 #ifdef THIS_RETURN_TYPE_Sdf
-
-#define thismap inputOp1
-
 vec4 getColor(Sdf res) {
 	vec4 color = mix(
 		mix(THIS_Outsidecolor1, THIS_Outsidecolor2, 0.5 + 0.5*cos(res.x/THIS_Outsideperiod)),
@@ -14,11 +11,8 @@ vec4 getColor(Sdf res) {
 	}
 	return color;
 }
-
-#else
+#endif
 
 ReturnT thismap(CoordT p, ContextT ctx) {
 	return inputOp1(p, ctx);
 }
-
-#endif

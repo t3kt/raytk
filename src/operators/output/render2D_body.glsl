@@ -1,17 +1,29 @@
+#if defined(THIS_COORD_TYPE_float)
+float prepCoord(vec2 p) {
+	return p.x;
+}
+#elif defined(THIS_COORD_TYPE_vec2)
+vec2 prepCoord(vec2 p) {
+	return p;
+}
+#else
+#error invalidCoordType
+#endif
+
 #ifdef THIS_RETURN_TYPE_Sdf
-Sdf map(vec2 q)
+Sdf map(vec2 p)
 {
-	Sdf res = thismap(q, createDefaultContext());
+	Sdf res = thismap(prepCoord(p), createDefaultContext());
 	res.x *= 0.5;
 	return res;
 }
 
 #else
-vec4 map(vec2 q) {
+vec4 map(vec2 p) {
 	#ifdef THIS_RETURN_TYPE_vec4
-	return thismap(q, createDefaultContext());
+	return thismap(prepCoord(p), createDefaultContext());
 	#else
-	return vec4(thismap(q, createDefaultContext()));
+	return vec4(thismap(prepCoord(p), createDefaultContext()));
 	#endif
 }
 #endif
