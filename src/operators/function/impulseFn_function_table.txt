@@ -1,0 +1,5 @@
+name	label	function	params
+exponential	Exponential Impulse	expImpulse	Attack
+sustained	Sustained Impulse	expSustainedImpulse	Attack Release
+quad	Quad Impulse	quaImpulse	Falloff
+poly	Polynomial Impulse	polyImpulse	Polydegree Falloff
