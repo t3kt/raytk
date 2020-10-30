@@ -1,0 +1,64 @@
+{
+  "workspace": {
+    "Name": "prototypes",
+    "Exposesubcomps": true,
+    "Subcomptags": "raytkOP",
+    "Folderlayout": "flat",
+    "Savethumbnails": false
+  },
+  "recorder": {
+    "Folder": "",
+    "Basename": "",
+    "Includedate": true,
+    "Datetype": "today",
+    "Customdate": "",
+    "Suffix": "",
+    "Addresolutionsuffix": false,
+    "Addvcodecsuffix": false,
+    "Addacodecsuffix": false,
+    "Addfpssuffix": false,
+    "Outputresolution": "useinput",
+    "Resolution1": 3840,
+    "Resolution2": 2160,
+    "Videocodec": "hap",
+    "Videotype": "movie",
+    "Audiocodec": "alac",
+    "Imagefiletype": "tiff",
+    "Audiobitrate": "b128",
+    "Quality": 1.0,
+    "Fps": 30,
+    "Audioenabled": false,
+    "Moviepixelformat": "rgb",
+    "Bitratemode": "variable",
+    "Entropymode": "autoselect",
+    "Hapsecondarycompression": true,
+    "Profile": "autoselect",
+    "Avgbitrate": 8000,
+    "Peakbitrate": 10000,
+    "Keyframeinterval": 15
+  },
+  "libraryLoader": {
+    "Libraries": {
+      "$": "None"
+    }
+  },
+  "editorUIState": {
+    "Selectedview": "preview_panel",
+    "Selectedleftpanel": "component_picker",
+    "Selectedrightpanel": "workspace_settings",
+    "Previewshowaudio": false,
+    "Previewshowvideo": true,
+    "Previewshowvideoinfo": false,
+    "Previewshowfps": false,
+    "Previewshowframeguide": false
+  },
+  "editorViews": {
+    "Customviews": {
+      "$": "None"
+    }
+  },
+  "editorTools": {
+    "Customtoolscriptfile": "",
+    "Customtoolscript": null
+  }
+}
