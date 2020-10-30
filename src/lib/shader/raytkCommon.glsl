@@ -314,3 +314,10 @@ float polyImpulse(float x, float n, float k)
 {
 	return (n/(n-1.0))*pow((n-1.0)*k, 1.0/n) * x/(1.0+k*pow(x, n));
 }
+
+// k: number of bounces
+float sinc(float x, float k)
+{
+	float a = PI*(k*x-1.0);
+	return sin(a)/a;
+}

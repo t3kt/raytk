@@ -61,6 +61,7 @@ transform	/raytk/operators/filter/transform	/raytk/operators/filter	raytkOP	filt
 translate	/raytk/operators/filter/translate	/raytk/operators/filter	raytkOP	filter	filter/translate	raytk.operators.filter.translate	4	
 almostIdentityFn	/raytk/operators/function/almostIdentityFn	/raytk/operators/function	raytkOP	function	function/almostIdentityFn	raytk.operators.function.almostIdentityFn	0	
 impulseFn	/raytk/operators/function/impulseFn	/raytk/operators/function	raytkOP	function	function/impulseFn	raytk.operators.function.impulseFn	0	
+sincCurveFn	/raytk/operators/function/sincCurveFn	/raytk/operators/function	raytkOP	function	function/sincCurveFn	raytk.operators.function.sincCurveFn	0	
 hardShadow	/raytk/operators/light/hardShadow	/raytk/operators/light	raytkOP	light	light/hardShadow	raytk.operators.light.hardShadow	2	
 pointLight	/raytk/operators/light/pointLight	/raytk/operators/light	raytkOP	light	light/pointLight	raytk.operators.light.pointLight	2	
 softShadow	/raytk/operators/light/softShadow	/raytk/operators/light	raytkOP	light	light/softShadow	raytk.operators.light.softShadow	3	
