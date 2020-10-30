@@ -321,3 +321,12 @@ float sinc(float x, float k)
 	float a = PI*(k*x-1.0);
 	return sin(a)/a;
 }
+
+// k: amount
+vec3 opCheapBendPos(vec3 p, float k)
+{
+	float c = cos(k*p.x);
+	float s = sin(k*p.x);
+	mat2  m = mat2(c, -s, s, c);
+	return vec3(m*p.xy, p.z);
+}
