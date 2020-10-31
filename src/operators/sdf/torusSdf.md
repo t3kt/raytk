@@ -1,3 +1,3 @@
 # torusSdf (sdf)
 
-SDF for a torus.
+SDF for a torus or partial torus with end caps.
