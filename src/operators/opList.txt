@@ -36,7 +36,7 @@ noiseField	/raytk/operators/field/noiseField	/raytk/operators/field	raytkOP	fiel
 pointDistanceField	/raytk/operators/field/pointDistanceField	/raytk/operators/field	raytkOP	field	field/pointDistanceField	raytk.operators.field.pointDistanceField	5	
 positionField	/raytk/operators/field/positionField	/raytk/operators/field	raytkOP	field	field/positionField	raytk.operators.field.positionField	4	
 textureField	/raytk/operators/field/textureField	/raytk/operators/field	raytkOP	field	field/textureField	raytk.operators.field.textureField	6	
-bend	/raytk/operators/filter/bend	/raytk/operators/filter	raytkOP	filter	filter/bend	raytk.operators.filter.bend	0	
+bend	/raytk/operators/filter/bend	/raytk/operators/filter	raytkOP	filter	filter/bend	raytk.operators.filter.bend	1	
 fieldExpr	/raytk/operators/filter/fieldExpr	/raytk/operators/filter	raytkOP	filter	filter/fieldExpr	raytk.operators.filter.fieldExpr	2	
 flip	/raytk/operators/filter/flip	/raytk/operators/filter	raytkOP	filter	filter/flip	raytk.operators.filter.flip	0	
 invert	/raytk/operators/filter/invert	/raytk/operators/filter	raytkOP	filter	filter/invert	raytk.operators.filter.invert	2	
@@ -60,6 +60,7 @@ scale	/raytk/operators/filter/scale	/raytk/operators/filter	raytkOP	filter	filte
 slice	/raytk/operators/filter/slice	/raytk/operators/filter	raytkOP	filter	filter/slice	raytk.operators.filter.slice	0	
 transform	/raytk/operators/filter/transform	/raytk/operators/filter	raytkOP	filter	filter/transform	raytk.operators.filter.transform	2	
 translate	/raytk/operators/filter/translate	/raytk/operators/filter	raytkOP	filter	filter/translate	raytk.operators.filter.translate	4	
+twist	/raytk/operators/filter/twist	/raytk/operators/filter	raytkOP	filter	filter/twist	raytk.operators.filter.twist	0	
 almostIdentityFn	/raytk/operators/function/almostIdentityFn	/raytk/operators/function	raytkOP	function	function/almostIdentityFn	raytk.operators.function.almostIdentityFn	0	
 impulseFn	/raytk/operators/function/impulseFn	/raytk/operators/function	raytkOP	function	function/impulseFn	raytk.operators.function.impulseFn	0	
 sincCurveFn	/raytk/operators/function/sincCurveFn	/raytk/operators/function	raytkOP	function	function/sincCurveFn	raytk.operators.function.sincCurveFn	0	
