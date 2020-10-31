@@ -60,28 +60,6 @@ float sdBoundingBox( vec3 p, vec3 b, float e )
 		length(max(vec3(q.x,q.y,p.z),0.0))+min(max(q.x,max(q.y,p.z)),0.0));
 }
 
-#ifdef RAYTK_USE_APOLLONIAN
-// https://www.shadertoy.com/view/4ds3zn
-float sdApollonian(vec3 p, float s, float scale, out vec4 orb) {
-	orb = vec4(1000.0);
-
-	for (int i=0; i<8; i++)
-	{
-		p = -1.0 + 2.0*fract(0.5*p+0.5);
-
-		float r2 = dot(p, p);
-
-		orb = min(orb, vec4(abs(p), r2));
-
-		float k = s/r2;
-		p *= k;
-		scale *= k;
-	}
-
-	return 0.25*abs(p.y)/scale;
-}
-#endif// RAYTK_USE_APOLLONIAN
-
 #ifdef RAYTK_USE_MANDELBULB
 #define __MANDELBULB_V2
 float sdMandelbulb(vec3 p, float power, vec2 shiftThetaPhi, out vec4 trap)
