@@ -300,6 +300,20 @@ class Tools:
 			rop.nodeY = -int(i / 10) * 150
 			rop.nodeX = int(i % 10) * 200
 
+	def openPrototypeEditor(self):
+		self.openEditorWorkspace('devel/prototypes/')
+		pass
+
+	def openTestCaseEditor(self):
+		self.openEditorWorkspace('tests/testCases/')
+
+	@staticmethod
+	def openEditorWorkspace(workspaceFolder: str):
+		editor = op('/editor')
+		# noinspection PyUnresolvedReferences
+		editor.Workspace.LoadWorkspaceFolder(workspaceFolder)
+		editor.par.Openwindow.pulse()
+
 def _getMonitorHeight(usePrimary=True):
 	if usePrimary:
 		return monitors.primary.height
