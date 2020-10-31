@@ -337,3 +337,11 @@ vec3 opTwistPos(vec3 p, float k)
 	mat2  m = mat2(c,-s,s,c);
 	return vec3(m*p.xz,p.y);
 }
+
+// Returns xyz: new pos, w: value to add to surface distance (which may not work correctly)
+vec4 opElongate(in vec3 p, in vec3 h)
+{
+	//return vec4( p-clamp(p,-h,h), 0.0 ); // faster, but produces zero in the interior elongated box
+	vec3 q = abs(p)-h;
+	return vec4(max(q,0.0), min(max(q.x,max(q.y,q.z)),0.0));
+}
