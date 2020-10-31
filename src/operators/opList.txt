@@ -78,7 +78,7 @@ customGen	/raytk/operators/misc/customGen	/raytk/operators/misc	raytkOP	misc	mis
 pointMapRender	/raytk/operators/output/pointMapRender	/raytk/operators/output	raytkOP raytkOutput	output	output/pointMapRender	raytk.operators.output.pointMapRender	12	
 raymarchRender3D	/raytk/operators/output/raymarchRender3D	/raytk/operators/output	raytkOP raytkOutput	output	output/raymarchRender3D	raytk.operators.output.raymarchRender3D	34	
 render2D	/raytk/operators/output/render2D	/raytk/operators/output	raytkOP raytkOutput	output	output/render2D	raytk.operators.output.render2D	13	
-apollonianSdf	/raytk/operators/sdf/apollonianSdf	/raytk/operators/sdf	raytkOP	sdf	sdf/apollonianSdf	raytk.operators.sdf.apollonianSdf	3	
+apollonianSdf	/raytk/operators/sdf/apollonianSdf	/raytk/operators/sdf	raytkOP	sdf	sdf/apollonianSdf	raytk.operators.sdf.apollonianSdf	4	
 boxFrameSdf	/raytk/operators/sdf/boxFrameSdf	/raytk/operators/sdf	raytkOP	sdf	sdf/boxFrameSdf	raytk.operators.sdf.boxFrameSdf	3	
 boxSdf	/raytk/operators/sdf/boxSdf	/raytk/operators/sdf	raytkOP	sdf	sdf/boxSdf	raytk.operators.sdf.boxSdf	4	
 capsuleSdf	/raytk/operators/sdf/capsuleSdf	/raytk/operators/sdf	raytkOP	sdf	sdf/capsuleSdf	raytk.operators.sdf.capsuleSdf	0	
@@ -90,7 +90,7 @@ generalizedPolyhedronSdf	/raytk/operators/sdf/generalizedPolyhedronSdf	/raytk/op
 gyroidSdf	/raytk/operators/sdf/gyroidSdf	/raytk/operators/sdf	raytkOP	sdf	sdf/gyroidSdf	raytk.operators.sdf.gyroidSdf	0	
 kaliGeneratorSdf	/raytk/operators/sdf/kaliGeneratorSdf	/raytk/operators/sdf	raytkOP	sdf	sdf/kaliGeneratorSdf	raytk.operators.sdf.kaliGeneratorSdf	0	
 linkSdf	/raytk/operators/sdf/linkSdf	/raytk/operators/sdf	raytkOP	sdf	sdf/linkSdf	raytk.operators.sdf.linkSdf	3	
-mandelbulbSdf	/raytk/operators/sdf/mandelbulbSdf	/raytk/operators/sdf	raytkOP	sdf	sdf/mandelbulbSdf	raytk.operators.sdf.mandelbulbSdf	2	
+mandelbulbSdf	/raytk/operators/sdf/mandelbulbSdf	/raytk/operators/sdf	raytkOP	sdf	sdf/mandelbulbSdf	raytk.operators.sdf.mandelbulbSdf	3	
 mengerSpongeSdf	/raytk/operators/sdf/mengerSpongeSdf	/raytk/operators/sdf	raytkOP	sdf	sdf/mengerSpongeSdf	raytk.operators.sdf.mengerSpongeSdf	2	
 mobiusRingSdf	/raytk/operators/sdf/mobiusRingSdf	/raytk/operators/sdf	raytkOP	sdf	sdf/mobiusRingSdf	raytk.operators.sdf.mobiusRingSdf	0	
 octahedronSdf	/raytk/operators/sdf/octahedronSdf	/raytk/operators/sdf	raytkOP	sdf	sdf/octahedronSdf	raytk.operators.sdf.octahedronSdf	0	
