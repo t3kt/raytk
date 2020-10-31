@@ -1,9 +1,9 @@
 #define thismap inputOp1
 #ifdef THIS_USE_CAM_FUNC
 
-Ray getViewRay() {
+Ray getViewRay(vec2 shift) {
 	vec2 resolution = uTDOutputInfo.res.zw;
-	vec2 fragCoord = vUV.st*resolution;
+	vec2 fragCoord = vUV.st*resolution + shift;
 	CameraContext ctx;
 	ctx.resolution = resolution;
 	return inputOp2(fragCoord, ctx);

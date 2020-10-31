@@ -178,10 +178,10 @@ vec3 getColor(vec3 p, MaterialContext matCtx) {
 
 #ifndef THIS_USE_CAM_FUNC
 
-Ray getViewRay() {
+Ray getViewRay(vec2 shift) {
 	vec3 pos = uCamPos;
 	vec2 resolution = uTDOutputInfo.res.zw;
-	vec2 fragCoord = vUV.st*resolution;
+	vec2 fragCoord = vUV.st*resolution + shift;
 	vec2 p = (-resolution+2.0*fragCoord.xy)/resolution.y;
 
 	float aspect = resolution.x/resolution.y;
@@ -219,114 +219,167 @@ void main()
 	#ifdef OUTPUT_DEBUG
 	debugOut = vec4(0);
 	#endif
-	//-----------------------------------------------------
-	// camera
-	//-----------------------------------------------------
-
-	Ray ray = getViewRay();
 	#ifdef OUTPUT_RAYDIR
-	rayDirOut = vec4(ray.dir, 0);
+	rayDirOut = vec4(0);
 	#endif
 	#ifdef OUTPUT_RAYORIGIN
-	rayOriginOut = vec4(ray.pos, 0);
+	rayOriginOut = vec4(0);
 	#endif
-	//-----------------------------------------------------
-	// render
-	//-----------------------------------------------------
-
-	float renderDepth = uUseRenderDepth > 0 ? min(texture(sTD2DInputs[0], vUV.st).r, RAYTK_MAX_DIST) : RAYTK_MAX_DIST;
-
-	vec3 col = vec3(0);
-	// raymarch
-	Sdf res = castRay(ray, renderDepth);
-	float outDepth = min(res.x, renderDepth);
-	#ifdef OUTPUT_DEPTH
-	depthOut = TDOutputSwizzle(vec4(vec3(outDepth), 1));
-	#endif
-
-	MaterialContext matCtx;
-	matCtx.result = res;
-	matCtx.context = createDefaultContext();
-	matCtx.ray= ray;
 	#ifdef OUTPUT_OBJECTID
 	objectIdOut = vec4(0);
 	#endif
+	#ifdef OUTPUT_WORLDPOS
+	worldPosOut = vec4(0);
+	#endif
+	#ifdef OUTPUT_NORMAL
+	normalOut = vec4(0);
+	#endif
+	#ifdef OUTPUT_ORBIT
+	orbitOut = vec4(0);
+	#endif
+	#if defined(OUTPUT_NEARHIT)
+	nearHitOut = vec4(0);
+	#endif
+	#ifdef OUTPUT_ITERATION
+	iterationOut = vec4(0);
+	#endif
+	#ifdef OUTPUT_SDF
+	sdfOut = vec4(0);
+	#endif
+	#ifdef OUTPUT_COLOR
+	colorOut = vec4(0);
+	#endif
+	#if defined(OUTPUT_STEPS)
+	stepsOut = vec4(0);
+	#endif
+	MaterialContext matCtx;
+	matCtx.context = createDefaultContext();
 
-	if (res.x > 0.0 && res.x < renderDepth) {
-		vec3 p = ray.pos + ray.dir * res.x;
-		#ifdef OUTPUT_WORLDPOS
-		worldPosOut = vec4(p, 1);
+
+	#if THIS_ANTI_ALIAS > 1
+	vec2 shiftStart = vec2(-float(THIS_ANTI_ALIAS) / 2.0);
+	vec2 shiftStep = vec2(1.0 / float(THIS_ANTI_ALIAS));
+	for (int j=0; j < THIS_ANTI_ALIAS; j++)
+	for (int i=0; i < THIS_ANTI_ALIAS; i++)
+	{
+	vec2 shift = shiftStart + shiftStep * vec2(i, j);
+	#else
+	vec2 shift = vec2(0);
+	#endif
+		float renderDepth = uUseRenderDepth > 0 ?
+			min(texture(sTD2DInputs[0], vUV.st + shift).r, RAYTK_MAX_DIST) :
+			RAYTK_MAX_DIST;
+		//-----------------------------------------------------
+		// camera
+		//-----------------------------------------------------
+
+		Ray ray = getViewRay(shift);
+		#ifdef OUTPUT_RAYDIR
+		rayDirOut += vec4(ray.dir, 0);
+		#endif
+		#ifdef OUTPUT_RAYORIGIN
+		rayOriginOut += vec4(ray.pos, 0);
+		#endif
+		//-----------------------------------------------------
+		// render
+		//-----------------------------------------------------
+
+		// raymarch
+		Sdf res = castRay(ray, renderDepth);
+		#ifdef OUTPUT_DEPTH
+		depthOut += vec4(vec3(min(res.x, renderDepth)), 1);
 		#endif
 
-		#ifdef OUTPUT_SDF
-		#ifdef RAYTK_STEPS_IN_SDF
-		sdfOut = TDOutputSwizzle(vec4(res.x, res.material, res.steps, 1));
-		#else
-		// the raymarch ROP always switches on RAYTK_STEPS_IN_SDF if it's outputting
-		// SDF data, so this case never actually occurs.
-		sdfOut = TDOutputSwizzle(vec4(res.x, res.material, 0, 1));
-		#endif
-		#endif
-//		#ifdef OUTPUT_DEPTH
-	//	depthOut = TDOutputSwizzle(vec4(vec3(min(res.x, renderDepth)), 1));
-		//depthOut = TDOutputSwizzle(vec4(vec3(res.x)))
-//		#endif
-		#if defined(OUTPUT_NEARHIT) && defined(RAYTK_NEAR_HITS_IN_SDF)
-		nearHitOut = TDOutputSwizzle(vec4(res.nearHitAmount, float(res.nearHitCount), 0, 1));
-		#endif
+		if (res.x > 0.0 && res.x < renderDepth) {
+			vec3 p = ray.pos + ray.dir * res.x;
+			#ifdef OUTPUT_WORLDPOS
+			worldPosOut += vec4(p, 1);
+			#endif
 
-		matCtx.normal = calcNormal(p);
-		LightContext lightCtx;
-		lightCtx.result = res;
-		lightCtx.normal = matCtx.normal;
-		matCtx.light = getLight(p, lightCtx);
-		col = getColor(p, matCtx);
+			#ifdef OUTPUT_SDF
+			#ifdef RAYTK_STEPS_IN_SDF
+			sdfOut += vec4(res.x, res.material, res.steps, 1);
+			#else
+			// the raymarch ROP always switches on RAYTK_STEPS_IN_SDF if it's outputting
+			// SDF data, so this case never actually occurs.
+			sdfOut += vec4(res.x, res.material, 0, 1);
+			#endif
+			#endif
+	//		#ifdef OUTPUT_DEPTH
+		//	depthOut = TDOutputSwizzle(vec4(vec3(min(res.x, renderDepth)), 1));
+			//depthOut = TDOutputSwizzle(vec4(vec3(res.x)))
+	//		#endif
+			#if defined(OUTPUT_NEARHIT) && defined(RAYTK_NEAR_HITS_IN_SDF)
+			nearHitOut += TDOutputSwizzle(vec4(res.nearHitAmount, float(res.nearHitCount), 0, 1));
+			#endif
 
-		#ifdef OUTPUT_NORMAL
-		normalOut = vec4(matCtx.normal, 0);
-		#endif
-		#ifdef OUTPUT_COLOR
-		colorOut = TDOutputSwizzle(vec4(col, 1));
-		#endif
-		#ifdef OUTPUT_ORBIT
-		orbitOut = res.orbit;
-		#endif
-		#ifdef OUTPUT_ITERATION
-		// implies RAYTK_ITERATION_IN_SDF
-		iterationOut = res.iteration;
-		iterationOut.w = 1;
-		#endif
-		#if defined(OUTPUT_OBJECTID) && defined(RAYTK_OBJECT_ID_IN_SDF)
-		objectIdOut = res.objectId;
-		#endif
-		#if defined(OUTPUT_STEPS) && defined(RAYTK_STEPS_IN_SDF)
-		stepsOut = vec4(res.steps, float(res.steps)/float(RAYTK_MAX_STEPS), 0, 1);
-		#endif
-	} else {
-		#ifdef OUTPUT_WORLDPOS
-//		worldPosOut = vec4(ray.pos + ray.dir * outDepth, 0);
-		worldPosOut = vec4(0);
-		#endif
-		#ifdef OUTPUT_SDF
-		sdfOut = vec4(0);
-		#endif
-		#ifdef OUTPUT_COLOR
-		colorOut = vec4(0);
-		#endif
-		#ifdef OUTPUT_NORMAL
-		normalOut = vec4(0);
-		#endif
-		#ifdef OUTPUT_ORBIT
-		orbitOut = vec4(0);
-		#endif
-		#if defined(OUTPUT_NEARHIT)
-		nearHitOut = vec4(0);
-		#endif
-		#ifdef OUTPUT_ITERATION
-		iterationOut = vec4(0);
-		#endif
-		#ifdef OUTPUT_STEPS
-		stepsOut = vec4(RAYTK_MAX_STEPS, 0, 0, 0);
-		#endif
+			matCtx.result = res;
+			matCtx.ray = ray;
+			matCtx.normal = calcNormal(p);
+			LightContext lightCtx;
+			lightCtx.result = res;
+			lightCtx.normal = matCtx.normal;
+			matCtx.light = getLight(p, lightCtx);
+
+			#ifdef OUTPUT_NORMAL
+			normalOut += vec4(matCtx.normal, 0);
+			#endif
+			#ifdef OUTPUT_COLOR
+			colorOut += vec4(getColor(p, matCtx), 1);
+			#endif
+			#ifdef OUTPUT_ORBIT
+			orbitOut += res.orbit;
+			#endif
+			#ifdef OUTPUT_ITERATION
+			// implies RAYTK_ITERATION_IN_SDF
+			iterationOut += vec4(res.iteration.xyz, 1);
+			#endif
+			#if defined(OUTPUT_OBJECTID) && defined(RAYTK_OBJECT_ID_IN_SDF)
+			objectIdOut += res.objectId;
+			#endif
+			#if defined(OUTPUT_STEPS) && defined(RAYTK_STEPS_IN_SDF)
+			stepsOut += vec4(res.steps, float(res.steps)/float(RAYTK_MAX_STEPS), 0, 1);
+			#endif
+		} else {
+			#ifdef OUTPUT_STEPS
+			stepsOut += vec4(RAYTK_MAX_STEPS, 0, 0, 0);
+			#endif
+		}
+	#if THIS_ANTI_ALIAS > 1
 	}
+	#endif
+	float aa = 1.0 / float(THIS_ANTI_ALIAS*THIS_ANTI_ALIAS);
+	#ifdef OUTPUT_RAYDIR
+	rayDirOut *= aa;
+	#endif
+	#ifdef OUTPUT_RAYORIGIN
+	rayOriginOut *= aa;
+	#endif
+	#ifdef OUTPUT_OBJECTID
+	objectIdOut *= aa;
+	#endif
+	#ifdef OUTPUT_WORLDPOS
+	worldPosOut *= aa;
+	#endif
+	#ifdef OUTPUT_NORMAL
+	normalOut *= aa;
+	#endif
+	#ifdef OUTPUT_ORBIT
+	orbitOut *= aa;
+	#endif
+	#if defined(OUTPUT_NEARHIT)
+	nearHitOut *= aa;
+	#endif
+	#ifdef OUTPUT_ITERATION
+	iterationOut *= aa;
+	#endif
+	#ifdef OUTPUT_SDF
+	sdfOut *= aa;
+	#endif
+	#ifdef OUTPUT_COLOR
+	colorOut *= aa;
+	#endif
+	#if defined(OUTPUT_STEPS)
+	stepsOut *= aa;
+	#endif
 }
