@@ -38,7 +38,7 @@ positionField	/raytk/operators/field/positionField	/raytk/operators/field	raytkO
 textureField	/raytk/operators/field/textureField	/raytk/operators/field	raytkOP	field	field/textureField	raytk.operators.field.textureField	6	
 bend	/raytk/operators/filter/bend	/raytk/operators/filter	raytkOP	filter	filter/bend	raytk.operators.filter.bend	1	
 elongate	/raytk/operators/filter/elongate	/raytk/operators/filter	raytkOP	filter	filter/elongate	raytk.operators.filter.elongate	0	
-fieldExpr	/raytk/operators/filter/fieldExpr	/raytk/operators/filter	raytkOP	filter	filter/fieldExpr	raytk.operators.filter.fieldExpr	3	
+fieldExpr	/raytk/operators/filter/fieldExpr	/raytk/operators/filter	raytkOP	filter	filter/fieldExpr	raytk.operators.filter.fieldExpr	4	
 flip	/raytk/operators/filter/flip	/raytk/operators/filter	raytkOP	filter	filter/flip	raytk.operators.filter.flip	0	
 invert	/raytk/operators/filter/invert	/raytk/operators/filter	raytkOP	filter	filter/invert	raytk.operators.filter.invert	2	
 iteratedTransform	/raytk/operators/filter/iteratedTransform	/raytk/operators/filter	raytkOP	filter	filter/iteratedTransform	raytk.operators.filter.iteratedTransform	3	
@@ -75,6 +75,7 @@ phongMat	/raytk/operators/material/phongMat	/raytk/operators/material	raytkOP	ma
 sampledPointMat	/raytk/operators/material/sampledPointMat	/raytk/operators/material	raytkOP	material	material/sampledPointMat	raytk.operators.material.sampledPointMat	4	
 customFilter	/raytk/operators/misc/customFilter	/raytk/operators/misc	raytkOP	misc	misc/customFilter	raytk.operators.misc.customFilter	1	
 customGen	/raytk/operators/misc/customGen	/raytk/operators/misc	raytkOP	misc	misc/customGen	raytk.operators.misc.customGen	2	
+functionGraphRender	/raytk/operators/output/functionGraphRender	/raytk/operators/output	raytkOP raytkOutput	output	output/functionGraphRender	raytk.operators.output.functionGraphRender	0	
 pointMapRender	/raytk/operators/output/pointMapRender	/raytk/operators/output	raytkOP raytkOutput	output	output/pointMapRender	raytk.operators.output.pointMapRender	12	
 raymarchRender3D	/raytk/operators/output/raymarchRender3D	/raytk/operators/output	raytkOP raytkOutput	output	output/raymarchRender3D	raytk.operators.output.raymarchRender3D	35	
 render2D	/raytk/operators/output/render2D	/raytk/operators/output	raytkOP raytkOutput	output	output/render2D	raytk.operators.output.render2D	13	
