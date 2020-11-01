@@ -93,16 +93,18 @@ class InspectorCore:
 		self.updateVisualizerType()
 		self.AttachOutputComp(comp if ropInfo.isOutput else None)
 
-	# noinspection PyTypeChecker
 	def updateVisualizerType(self):
 		self.state.Visualizertype = VisualizerTypes.none
-		if self.state.Hastarget:
-			if self.state.Coordtype == CoordTypes.vec2:
-				self.state.Visualizertype = VisualizerTypes.render2d
-			elif self.state.Returntype == ReturnTypes.Sdf:
-				self.state.Visualizertype = VisualizerTypes.render3d
-			elif self.state.Returntype in [ReturnTypes.float, ReturnTypes.vec4]:
-				self.state.Visualizertype = VisualizerTypes.field
+		if not self.state.Hastarget:
+			return
+		if self.state.Coordtype == CoordTypes.float:
+			self.state.Visualizertype = VisualizerTypes.functionGraph
+		elif self.state.Coordtype == CoordTypes.vec2:
+			self.state.Visualizertype = VisualizerTypes.render2d
+		elif self.state.Returntype == ReturnTypes.Sdf:
+			self.state.Visualizertype = VisualizerTypes.render3d
+		elif self.state.Returntype in [ReturnTypes.float, ReturnTypes.vec4]:
+			self.state.Visualizertype = VisualizerTypes.field
 
 	def ShowTargetInEditor(self, popup=False):
 		navigateTo(self.state.Rawtarget.eval(), popup=popup, goInto=False)

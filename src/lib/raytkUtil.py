@@ -253,12 +253,14 @@ class VisualizerTypes:
 	field = 'field'
 	render2d = 'render2d'
 	render3d = 'render3d'
+	functionGraph = 'functionGraph'
 
 	values = [
 		none,
 		field,
 		render2d,
 		render3d,
+		functionGraph,
 	]
 
 class ReturnTypes:
