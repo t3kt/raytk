@@ -171,8 +171,13 @@ class BuildManager:
 		self.log(f'Removing build excluded ops from {comp}')
 		toRemove = list(comp.findChildren(tags=[RaytkTags.buildExclude.name]))
 		for o in toRemove:
+			if not o.valid:
+				continue
 			self.log(f'Removing {o}')
-			o.destroy()
+			try:
+				o.destroy()
+			except:
+				self.log(f'Ignoring error destroying {o}')
 
 	def lockBuildLockOps(self, comp: 'COMP'):
 		self.log(f'Locking build locked ops in {comp}')
