@@ -1,5 +1,5 @@
 import re
-from raytkUtil import isROP, getToolkit, getActiveEditor
+from raytkUtil import getToolkit, getActiveEditor, detachTox, focusCustomParameterPage
 
 # noinspection PyUnreachableCode
 if False:
@@ -126,28 +126,18 @@ class CreateMenu:
 		dest = pane.owner
 		if not dest:
 			return
-		try:
-			primarySelected = dest.currentChild if dest and isROP(dest.currentChild) else None
-		except:
-			primarySelected = None
-		inputOps = [
-			o
-			for o in dest.selectedChildren
-			if isROP(o)
-		]
-		if inputOps and not primarySelected:
-			inputOps.sort(key=lambda o: -o.nodeX)
-			primarySelected = inputOps[0]
 		ui.undo.startBlock(f'Create ROP {master.name}')
 		newOp = dest.copy(
 			master,
 			name=master.name + ('1' if tdu.digits(master.name) is None else ''))  # type: COMP
 		newOp.nodeCenterX = pane.x
 		newOp.nodeCenterY = pane.y
+		detachTox(newOp)
 		pane.placeOPs([newOp])
 		enableCloning = newOp.par.enablecloning  # type: Par
 		enableCloning.expr = ''
 		enableCloning.val = bool(self.develEnabled)
+		focusCustomParameterPage(newOp, 0)
 		ui.undo.endBlock()
 		print(self.ownerComp, f'Created OP: {newOp} from {master}')
 		return newOp

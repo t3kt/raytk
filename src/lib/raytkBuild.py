@@ -1,4 +1,5 @@
 from typing import Callable
+from raytkUtil import detachTox
 
 # noinspection PyUnreachableCode
 if False:
@@ -15,10 +16,7 @@ class BuildContext:
 		if not comp.par.externaltox and comp.par.externaltox.mode == ParMode.CONSTANT:
 			return
 		self.log(f'Detaching tox from {comp}')
-		comp.par.reloadtoxonstart.expr = ''
-		comp.par.reloadtoxonstart.val = False
-		comp.par.externaltox.expr = ''
-		comp.par.externaltox.val = ''
+		detachTox(comp)
 
 	def reclone(self, comp: 'COMP'):
 		if not comp or not comp.par['enablecloningpulse'] or not comp.par['clone']:
