@@ -36,7 +36,7 @@ noiseField	/raytk/operators/field/noiseField	/raytk/operators/field	raytkOP	fiel
 pointDistanceField	/raytk/operators/field/pointDistanceField	/raytk/operators/field	raytkOP	field	field/pointDistanceField	raytk.operators.field.pointDistanceField	6	
 positionField	/raytk/operators/field/positionField	/raytk/operators/field	raytkOP	field	field/positionField	raytk.operators.field.positionField	4	
 textureField	/raytk/operators/field/textureField	/raytk/operators/field	raytkOP	field	field/textureField	raytk.operators.field.textureField	6	
-waveField	/raytk/operators/field/waveField	/raytk/operators/field	raytkOP	field	field/waveField	raytk.operators.field.waveField	0	beta
+waveField	/raytk/operators/field/waveField	/raytk/operators/field	raytkOP	field	field/waveField	raytk.operators.field.waveField	1	
 bend	/raytk/operators/filter/bend	/raytk/operators/filter	raytkOP	filter	filter/bend	raytk.operators.filter.bend	2	
 elongate	/raytk/operators/filter/elongate	/raytk/operators/filter	raytkOP	filter	filter/elongate	raytk.operators.filter.elongate	0	
 fieldExpr	/raytk/operators/filter/fieldExpr	/raytk/operators/filter	raytkOP	filter	filter/fieldExpr	raytk.operators.filter.fieldExpr	4	
