@@ -138,32 +138,17 @@ class CreateMenu:
 		if inputOps and not primarySelected:
 			inputOps.sort(key=lambda o: -o.nodeX)
 			primarySelected = inputOps[0]
-		inputOps.sort(key=lambda o: -o.nodeY)
-		if primarySelected:
-			posX = primarySelected.nodeX + primarySelected.nodeWidth + 150
-			posY = primarySelected.nodeY
-		else:
-			posX, posY = pane.x, pane.y
 		ui.undo.startBlock(f'Create ROP {master.name}')
 		newOp = dest.copy(
 			master,
 			name=master.name + ('1' if tdu.digits(master.name) is None else ''))  # type: COMP
-		newOp.nodeX = posX
-		newOp.nodeY = posY
+		newOp.nodeCenterX = pane.x
+		newOp.nodeCenterY = pane.y
+		pane.placeOPs([newOp])
 		enableCloning = newOp.par.enablecloning  # type: Par
 		enableCloning.expr = ''
 		enableCloning.val = bool(self.develEnabled)
 		ui.undo.endBlock()
-		# if inputOps and len(newOp.inputConnectors):
-		# 	datInputs = [
-		# 		conn
-		# 		for conn in newOp.inputConnectors
-		# 		if conn.inOP and conn.inOP.isDAT
-		# 	]
-		# 	for i, datInput in enumerate(datInputs):
-		# 		if i < len(inputOps):
-		# 			datInput.disconnect()
-		# 			datInput.connect(inputOps[i])
 		print(self.ownerComp, f'Created OP: {newOp} from {master}')
 		return newOp
 
@@ -173,7 +158,7 @@ class CreateMenu:
 		dat.appendRow(inDat.row(0))
 		showBeta = ipar.createMenuState.Showbeta
 		if not filterText or filter == '*':
-			def testText(val): return True
+			def testText(_): return True
 		elif re.match(r'^\w+$', filterText):
 			def testText(val: str):
 				return filterText.lower() in val.lower()
