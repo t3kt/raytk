@@ -1,6 +1,6 @@
 from develCommon import *
 import popMenu
-from raytkUtil import RaytkTags, ROPInfo, Tag, getActiveEditor, navigateTo, getChildROPs, recloneComp, RaytkContext, TypeTableHelper
+from raytkUtil import RaytkTags, ROPInfo, Tag, getActiveEditor, navigateTo, getChildROPs, recloneComp, RaytkContext, TypeTableHelper, focusCustomParameterPage
 from typing import Tuple, List
 from pathlib import Path
 
@@ -67,6 +67,7 @@ class Tools:
 			return
 		self.updateROPParams(rop)
 		updateROPMetadata(rop, incrementVersion=incrementVersion)
+		focusCustomParameterPage(rop, 0)
 		tox = rop.par.externaltox.eval()
 		rop.save(tox)
 		ui.status = f'Saved TOX {tox} (version: {rop.op("opDefinition").par.Raytkopversion})'
