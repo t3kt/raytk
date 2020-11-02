@@ -66,6 +66,7 @@ twist	/raytk/operators/filter/twist	/raytk/operators/filter	raytkOP	filter	filte
 almostIdentityFn	/raytk/operators/function/almostIdentityFn	/raytk/operators/function	raytkOP	function	function/almostIdentityFn	raytk.operators.function.almostIdentityFn	0	
 chopFn	/raytk/operators/function/chopFn	/raytk/operators/function	raytkOP	function	function/chopFn	raytk.operators.function.chopFn	0	
 cubicPulseFn	/raytk/operators/function/cubicPulseFn	/raytk/operators/function	raytkOP	function	function/cubicPulseFn	raytk.operators.function.cubicPulseFn	0	
+easeFn	/raytk/operators/function/easeFn	/raytk/operators/function	raytkOP	function	function/easeFn	raytk.operators.function.easeFn	0	
 flipFn	/raytk/operators/function/flipFn	/raytk/operators/function	raytkOP	function	function/flipFn	raytk.operators.function.flipFn	0	
 gainFn	/raytk/operators/function/gainFn	/raytk/operators/function	raytkOP	function	function/gainFn	raytk.operators.function.gainFn	0	
 impulseFn	/raytk/operators/function/impulseFn	/raytk/operators/function	raytkOP	function	function/impulseFn	raytk.operators.function.impulseFn	0	
