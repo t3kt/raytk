@@ -1,0 +1,6 @@
+name	label	expr
+none	None	inputOp1(p,ctx)
+flipdomain	Flip Domain	inputOp1(-p, ctx)
+fliprange	Flip Range	-inputOp1(p, ctx)
+mirrorposdomain	Mirror Positive Domain	inputOp1(abs(p), ctx)
+flipnegdomain	Flip Negative Domain	sign(p) * inputOp1(abs(p), ctx)

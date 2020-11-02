@@ -322,6 +322,21 @@ float sinc(float x, float k)
 	return sin(a)/a;
 }
 
+// c: phase/shift, w: width
+float cubicPulse( float x, float c, float w )
+{
+	x = abs(x - c);
+	if (x>w) return 0.0;
+	x /= w;
+	return 1.0 - x*x*(3.0-2.0*x);
+}
+
+float gain(float x, float k)
+{
+	float a = 0.5*pow(2.0*((x<0.5)?x:1.0-x), k);
+	return (x<0.5)?a:1.0-a;
+}
+
 vec3 opCheapBendPos(vec3 p, float k)
 {
 	float c = cos(k*p.x);
