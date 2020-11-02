@@ -337,6 +337,11 @@ float gain(float x, float k)
 	return (x<0.5)?a:1.0-a;
 }
 
+float parabola(float x, float k)
+{
+	return pow(4.0*x*(1.0-x), k);
+}
+
 vec3 opCheapBendPos(vec3 p, float k)
 {
 	float c = cos(k*p.x);
