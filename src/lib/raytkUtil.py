@@ -3,17 +3,18 @@ from typing import Callable, List, Union, Optional, Tuple
 # noinspection PyUnreachableCode
 if False:
 	# noinspection PyUnresolvedReferences
-	from _stubs import *
+	from _typeAliases import *
 	op.raytk = COMP()
 
 def getToolkit() -> 'COMP':
 	return op.raytk
 
 class _OpDefPars:
-	Raytkoptype: 'Union[Par, str]'
-	Raytkopversion: 'Union[Par, str, int]'
-	Raytkversion: 'Union[Par, str]'
-	Help: 'Union[Par, DAT, str]'
+	Raytkoptype: 'StrParamT'
+	Raytkopversion: 'IntParamT'
+	Raytkversion: 'StrParamT'
+	Help: 'DatParamT'
+	Functemplate: 'DatParamT'
 
 class ROPInfo:
 	rop: 'Optional[OP]'
@@ -79,6 +80,10 @@ class ROPInfo:
 		self.opDefPar.Help = dat or ''
 
 	@property
+	def functionDAT(self) -> 'Optional[DAT]':
+		return self.opDefPar.Functemplate.eval()
+
+	@property
 	def hasROPInputs(self):
 		for conn in self.opDef.inputConnectors:
 			if conn.connections and conn.inOP.isDAT:
@@ -88,6 +93,10 @@ class ROPInfo:
 	@property
 	def isOutput(self):
 		return RaytkTags.raytkOutput.isOn(self.rop)
+
+	@property
+	def toxFile(self) -> 'Optional[str]':
+		return self.rop.par.externaltox.eval() or None
 
 def isROP(o: 'OP'):
 	return bool(o) and o.isCOMP and RaytkTags.raytkOP.isOn(o)
