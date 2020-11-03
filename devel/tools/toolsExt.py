@@ -315,6 +315,11 @@ class Tools:
 		editor.Workspace.LoadWorkspaceFolder(workspaceFolder)
 		editor.par.Openwindow.pulse()
 
+	def toggleCustomOnlyOnSelected(self):
+		def _action(o: 'COMP'):
+			o.showCustomOnly = not o.showCustomOnly
+		self.forEachSelected(_action)
+
 def _getMonitorHeight(usePrimary=True):
 	if usePrimary:
 		return monitors.primary.height
