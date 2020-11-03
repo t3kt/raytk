@@ -340,6 +340,9 @@ class TypeTableHelper:
 			labels.append(self.table[row, 'label'].val)
 		return names, labels
 
+	def isTypeAvailableForCategory(self, typeName: str, filterColumn: str):
+		return self.table[typeName, filterColumn] == '1'
+
 	def updateTypePar(
 			self,
 			par: 'Par',

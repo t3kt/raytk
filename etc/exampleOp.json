@@ -1,0 +1,60 @@
+{
+  "paramPages": {
+    "Filter": {
+      "Enable": {
+        "name": "Enable",
+        "label": "Enable",
+        "page": "Filter",
+        "style": "Toggle",
+        "default": true,
+        "enable": true,
+        "startSection": false,
+        "readOnly": false,
+        "enableExpr": null
+      },
+      "Amount": {
+        "name": "Amount",
+        "label": "Amount",
+        "page": "Filter",
+        "style": "Float",
+        "size": 1,
+        "default": 0.0,
+        "enable": true,
+        "startSection": false,
+        "readOnly": false,
+        "enableExpr": null,
+        "min": 0.0,
+        "max": 1.0,
+        "normMin": -1.0,
+        "normMax": 1.0,
+        "clampMin": false,
+        "clampMax": false
+      },
+      "Usefield": {
+        "name": "Usefield",
+        "label": "Use Field",
+        "page": "Filter",
+        "style": "Toggle",
+        "default": false,
+        "enable": true,
+        "startSection": false,
+        "readOnly": false,
+        "enableExpr": null
+      },
+      "Inspect": {
+        "name": "Inspect",
+        "label": "Inspect",
+        "page": "Filter",
+        "style": "Pulse",
+        "default": false,
+        "enable": true,
+        "startSection": true,
+        "readOnly": false,
+        "enableExpr": null
+      }
+    }
+  },
+  "functionFile": "exampleOp.glsl",
+  "useParams": ["Amount"],
+  "helpFile": "exampleOp.md"
+}

@@ -1,7 +1,16 @@
-from raytkUtil import CoordTypes, ContextTypes, ReturnTypes
-from dataclasses import dataclass, field
+from raytkUtil import CoordTypes, ContextTypes, ReturnTypes, ROPInfo
+from dataclasses import dataclass, field, asdict
 import re
 from typing import Dict, List, Optional
+
+# noinspection PyUnreachableCode
+if False:
+	# noinspection PyUnresolvedReferences
+	from _stubs import *
+	import _stubs.TDJSON as TDJSON
+else:
+	# noinspection PyUnresolvedReferences
+	TDJSON = op.TDModules.mod.TDJSON
 
 @dataclass
 class TypeSpec:
@@ -29,6 +38,10 @@ class TypeSpec:
 		if s == '*':
 			return cls(isAll=True)
 		return cls(types=s.split('|'))
+
+	@classmethod
+	def all(cls):
+		return cls(isAll=True)
 
 	def expand(self, allTypes: List[str]):
 		if self.isAll:
@@ -73,11 +86,33 @@ class FunctionSignature:
 		)
 
 	@classmethod
+	def parseOptional(cls, s: Optional[str]):
+		return cls.parse(s) if s else None
+
+	@classmethod
 	def create(cls, coordType: str, contextType: str, returnType: str):
 		return cls(
 			coordType=TypeSpec.parse(coordType),
 			contextType=TypeSpec.parse(contextType),
 			returnType=TypeSpec.parse(returnType),
+		)
+
+	@classmethod
+	def all(cls):
+		return cls(
+			coordType=TypeSpec.all(),
+			contextType=TypeSpec.all(),
+			returnType=TypeSpec.all())
+
+	@classmethod
+	def extractFromHandler(cls, inputHandler: 'COMP'):
+		table = inputHandler.op('supported_type_table')
+		if not table:
+			return cls.all()
+		return cls(
+			coordType=TypeSpec.parse(str(table['coordType', 1] or '*')),
+			contextType=TypeSpec.parse(str(table['contextType', 1] or '*')),
+			returnType=TypeSpec.parse(str(table['returnType', 1] or '*')),
 		)
 
 	def isSingle(self):
@@ -95,6 +130,79 @@ class FunctionSignature:
 			for ctx in contextTypes
 			for coord in coordTypes
 		]
+
+@dataclass
+class ROPInputSpec:
+	name: Optional[str] = None
+	label: Optional[str] = None
+	signature: Optional[FunctionSignature] = None
+
+	def toDict(self):
+		return cleanDict({
+			'name': self.name,
+			'label': self.label,
+			'signature': str(self.signature) if self.signature else None,
+		})
+
+	@classmethod
+	def fromDict(cls, obj: dict):
+		sig = obj.get('signature')
+		return cls(
+			name=obj.get('name'),
+			label=obj.get('label'),
+			signature=FunctionSignature.parse(sig) if sig else None,
+		)
+
+	@classmethod
+	def fromDicts(cls, objs: Optional[List[dict]]):
+		return [cls.fromDict(o) for o in objs] if objs else []
+
+	@classmethod
+	def extractFromHandler(cls, inputHandler: 'COMP'):
+		inDat = inputHandler.inputs[0]  # type DAT
+		labelPar = inDat.par.label  # type: Par
+		spec = cls(
+			name=inDat.name,
+			label=labelPar.eval() if (labelPar.mode == ParMode.EXPRESSION and labelPar.expr == 'me.name') else None,
+		)
+		pass
+
+@dataclass
+class ROPDefinition:
+	paramPages: Dict[str, Dict[str, dict]] = field(default_factory=list)
+	functionFile: Optional[str] = None
+	useParams: List[str] = field(default_factory=list)
+	helpFile: Optional[str] = None
+	inputs: List[ROPInputSpec] = field(default_factory=list)
+
+	def toDict(self):
+		return cleanDict({
+			'paramPages': self.paramPages,
+			'functionFile': self.functionFile,
+			'useParams': self.useParams,
+			'helpFile': self.helpFile,
+			'inputs': [i.toDict() for i in self.inputs] if self.inputs else None,
+		})
+
+	@classmethod
+	def fromDict(cls, obj: dict):
+		return cls(
+			inputs=ROPInputSpec.fromDicts(obj.get('inputs')),
+			**excludeKeys(obj, ['inputs']))
+
+	@classmethod
+	def extractFromROP(cls, rop: 'COMP'):
+		info = ROPInfo(rop)
+		return cls(
+			paramPages=TDJSON.opToJSONOp(rop, includeCustomPages=True, includeBuiltInPages=False),
+			helpFile=_fileFromDat(info.helpDAT),
+			functionFile=_fileFromDat(info.functionDAT),
+		)
+
+def _fileFromDat(dat: 'DAT'):
+	if not dat or not dat.par['file']:
+		return None
+	return str(dat.par.file)
 
 @dataclass
 class ROPParamHelp:
@@ -166,3 +274,12 @@ def mergeDicts(*parts):
 		if part:
 			x.update(part)
 	return x
+
+def excludeKeys(d, keys):
+	if not d:
+		return {}
+	return {
+		key: val
+		for key, val in d.items()
+		if key not in keys
+	}
