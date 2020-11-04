@@ -379,11 +379,6 @@ class ROPDefinition:
 			],
 		)
 
-def _fileFromDat(dat: 'DAT'):
-	if not dat or not dat.par['file']:
-		return None
-	return str(dat.par.file)
-
 @dataclass
 class ROPParamHelp:
 	name: Optional[str] = None
