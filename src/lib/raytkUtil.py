@@ -15,6 +15,9 @@ class _OpDefPars:
 	Raytkversion: 'StrParamT'
 	Help: 'DatParamT'
 	Functemplate: 'DatParamT'
+	Macrotable: 'DatParamT'
+	Params: 'StrParamT'
+	Specialparams: 'StrParamT'
 
 class ROPInfo:
 	rop: 'Optional[OP]'
@@ -78,10 +81,6 @@ class ROPInfo:
 	@helpDAT.setter
 	def helpDAT(self, dat: 'Optional[DAT]'):
 		self.opDefPar.Help = dat or ''
-
-	@property
-	def functionDAT(self) -> 'Optional[DAT]':
-		return self.opDefPar.Functemplate.eval()
 
 	@property
 	def hasROPInputs(self):

@@ -1,15 +1,16 @@
 from raytkUtil import CoordTypes, ContextTypes, ReturnTypes, ROPInfo
-from dataclasses import dataclass, field, asdict
+from dataclasses import dataclass, field
 import re
-from typing import Dict, List, Optional
+from typing import Dict, List, Optional, Union
 
 # noinspection PyUnreachableCode
 if False:
 	# noinspection PyUnresolvedReferences
 	from _stubs import *
 	import _stubs.TDJSON as TDJSON
+	from _typeAliases import *
 else:
-	# noinspection PyUnresolvedReferences
+	# noinspection PyUnresolvedReferences,PyUnboundLocalVariable
 	TDJSON = op.TDModules.mod.TDJSON
 
 @dataclass
@@ -131,13 +132,15 @@ class FunctionSignature:
 			for coord in coordTypes
 		]
 
+TableDataT = List[List[str]]
+
 @dataclass
 class ROPInputSpec:
 	name: Optional[str] = None
 	label: Optional[str] = None
 	signature: Optional[FunctionSignature] = None
 
-	def toDict(self):
+	def toObj(self):
 		return cleanDict({
 			'name': self.name,
 			'label': self.label,
@@ -145,7 +148,7 @@ class ROPInputSpec:
 		})
 
 	@classmethod
-	def fromDict(cls, obj: dict):
+	def fromObj(cls, obj: dict):
 		sig = obj.get('signature')
 		return cls(
 			name=obj.get('name'),
@@ -154,49 +157,226 @@ class ROPInputSpec:
 		)
 
 	@classmethod
-	def fromDicts(cls, objs: Optional[List[dict]]):
-		return [cls.fromDict(o) for o in objs] if objs else []
+	def fromObjs(cls, objs: Optional[List[dict]]):
+		return [cls.fromObj(o) for o in objs] if objs else []
 
 	@classmethod
 	def extractFromHandler(cls, inputHandler: 'COMP'):
 		inDat = inputHandler.inputs[0]  # type DAT
 		labelPar = inDat.par.label  # type: Par
-		spec = cls(
+		supportedTypeTable = inputHandler.op('supported_type_table')
+		return cls(
 			name=inDat.name,
 			label=labelPar.eval() if (labelPar.mode == ParMode.EXPRESSION and labelPar.expr == 'me.name') else None,
+			signature=FunctionSignature.create(
+				str(supportedTypeTable['coordType', 1] or ''),
+				str(supportedTypeTable['contextType', 1] or ''),
+				str(supportedTypeTable['returnType', 1] or ''),
+			) if supportedTypeTable else None
 		)
-		pass
+
+@dataclass
+class ValueOrExpr:
+	value: Union[str, int, float, List[Union[str, int, float]]] = None
+	expr: Optional[str] = None
+	bind: Optional[str] = None
+
+	def toObj(self):
+		if self.bind:
+			return {'@': self.bind}
+		if self.expr:
+			return {'$': self.expr}
+		return self.value
+
+	@classmethod
+	def fromObj(cls, obj):
+		if not obj:
+			return None
+		if isinstance(obj, dict):
+			if '@' in obj:
+				return cls(bind=obj['@'])
+			if '$' in obj:
+				return cls(expr=obj['$'])
+		return cls(value=obj)
+
+	@classmethod
+	def fromPar(cls, par: 'Par'):
+		if par.mode == ParMode.BIND:
+			return cls(bind=par.bindExpr)
+		if par.mode == ParMode.EXPRESSION:
+			return cls(expr=par.expr)
+		if par.mode == ParMode.CONSTANT:
+			return cls(value=par.eval())
+		raise ValueError(f'Unsupported par {par!r}')
+
+@dataclass
+class TableSpec:
+	file: Optional[ValueOrExpr] = None
+	data: Union[str, TableDataT] = None
+	isExpr: bool = False
+	isText: bool = False
+
+	def toObj(self):
+		return cleanDict({
+			'file': toObjIfPossible(self.file),
+			'data': self.data,
+			'isExpr': self.isExpr or None,
+			'isText': self.isText or None,
+		})
+
+	@classmethod
+	def fromObj(cls, obj: dict):
+		if not obj:
+			return None
+		return cls(
+			file=ValueOrExpr.fromObj(obj.get('file')),
+			**excludeKeys(obj, ['file']))
+
+	@classmethod
+	def extractFromDAT(cls, dat: 'DAT'):
+		if not dat:
+			return None
+		if not dat.inputs:
+			mainDat = dat
+			isExpr = False
+		else:
+			mainDat = dat.inputs[0]
+			if mainDat.inputs:
+				raise ValueError(f'Unsupported dat {dat} with input {mainDat}')
+			isExpr = isinstance(dat, evaluateDAT)
+		if mainDat.par['file']:
+			return cls(
+				file=ValueOrExpr.fromPar(mainDat.par.file),
+				isExpr=isExpr)
+		if mainDat.isText:
+			return cls(
+				data=mainDat.text,
+				isText=True,
+			)
+		return cls(
+			data=[
+				[cell.val for cell in row]
+				for row in mainDat.rows()
+			],
+			isExpr=isExpr)
+
+def parseSpecOrValueOrExpr(obj: Union[dict, str, List[str]]) -> 'Optional[ValueOrExprOrTable]':
+	if not obj:
+		return None
+	if isinstance(obj, list) or isinstance(obj, str):
+		return ValueOrExpr(obj)
+	if not isinstance(obj, dict):
+		raise ValueError(f'Unsupported type {obj!r}')
+	if '@' in obj or '$' in obj:
+		return ValueOrExpr.fromObj(obj)
+	if 'file' in obj or 'data' in obj or 'isExpr' in obj:
+		return TableSpec.fromObj(obj)
+	return ValueOrExpr.fromObj(obj)
+
+def getParValuesFromCellsExpr(datName: str):
+	return f"' '.join([str(c) for c in op('{datName}').cells()])"
+
+valuesFromCellsExprPattern = re.compile(r"' '\.join\(\[str\(c\) for c in op\('(\w+)'\).cells\(\)\]\)")
+
+def specOrValueOrExprFromPar(par: 'Par'):
+	if par.mode == ParMode.EXPRESSION and par.isString:
+		match = valuesFromCellsExprPattern.fullmatch(par.expr)
+		if match and match.group(1):
+			dat = par.owner.op(match.group(1))
+			if dat and dat.isDAT:
+				return TableSpec.extractFromDAT(dat)
+	return ValueOrExpr.fromPar(par)
+
+def toObjIfPossible(obj):
+	if obj and hasattr(obj, 'toObj'):
+		return obj.toObj()
+	return obj
+
+ValueOrExprOrTable = Union[ValueOrExpr, TableSpec]
+
+def cleanParamSpecObj(obj: dict):
+	if not obj:
+		return None
+	if 'page' in obj:
+		del obj['page']
+	defaultVals = {
+		'enable': True,
+		'startSection': False,
+		'readOnly': False,
+		'enableExpr': None,
+	}
+	for key, defVal in defaultVals.items():
+		if key in obj and obj[key] == defVal:
+			del obj[key]
+	return obj
+
+def clearParamPageSpecObj(obj: dict):
+	if not obj:
+		return None
+	return {
+		param: cleanParamSpecObj(paramObj)
+		for param, paramObj in obj.items()
+	}
+
+def clearParamPageSpecsObj(obj: dict):
+	if not obj:
+		return None
+	return {
+		page: clearParamPageSpecObj(paramsObj)
+		for page, paramsObj in obj.items()
+	}
 
 @dataclass
 class ROPDefinition:
 	paramPages: Dict[str, Dict[str, dict]] = field(default_factory=list)
-	functionFile: Optional[str] = None
-	useParams: List[str] = field(default_factory=list)
-	helpFile: Optional[str] = None
+	function: Optional[TableSpec] = None
+	useParams: ValueOrExprOrTable = None
+	specialParams: ValueOrExprOrTable = None
+	macros: Optional[TableSpec] = None
+	help: ValueOrExprOrTable = None
 	inputs: List[ROPInputSpec] = field(default_factory=list)
 
-	def toDict(self):
+	def toObj(self):
 		return cleanDict({
-			'paramPages': self.paramPages,
-			'functionFile': self.functionFile,
-			'useParams': self.useParams,
-			'helpFile': self.helpFile,
-			'inputs': [i.toDict() for i in self.inputs] if self.inputs else None,
+			'paramPages': clearParamPageSpecsObj(self.paramPages),
+			'function': toObjIfPossible(self.function),
+			'useParams': toObjIfPossible(self.useParams),
+			'specialParams': toObjIfPossible(self.specialParams),
+			'macros': toObjIfPossible(self.macros),
+			'help': toObjIfPossible(self.help),
+			'inputs': [i.toObj() for i in self.inputs] if self.inputs else None,
 		})
 
 	@classmethod
-	def fromDict(cls, obj: dict):
+	def fromObj(cls, obj: dict):
 		return cls(
-			inputs=ROPInputSpec.fromDicts(obj.get('inputs')),
-			**excludeKeys(obj, ['inputs']))
+			inputs=ROPInputSpec.fromObjs(obj.get('inputs')),
+			useParams=parseSpecOrValueOrExpr(obj.get('useParams')),
+			specialParams=parseSpecOrValueOrExpr(obj.get('specialParams')),
+			macros=TableSpec.fromObj(obj.get('macros')),
+			function=parseSpecOrValueOrExpr(obj.get('function')),
+			help=parseSpecOrValueOrExpr(obj.get('help')),
+			**excludeKeys(obj, [
+				'inputs', 'useParams', 'specialParams', 'macros', 'function'
+			]))
 
 	@classmethod
 	def extractFromROP(cls, rop: 'COMP'):
 		info = ROPInfo(rop)
+		inputHandlers = rop.ops('inputDefinitionHandler_*')
+		# top to bottom
+		inputHandlers.sort(key=lambda o: -o.nodeY)
 		return cls(
 			paramPages=TDJSON.opToJSONOp(rop, includeCustomPages=True, includeBuiltInPages=False),
-			helpFile=_fileFromDat(info.helpDAT),
-			functionFile=_fileFromDat(info.functionDAT),
+			help=TableSpec.extractFromDAT(info.opDefPar.Help.eval()),
+			function=TableSpec.extractFromDAT(info.opDefPar.Functemplate.eval()),
+			macros=TableSpec.extractFromDAT(info.opDefPar.Macrotable.eval()),
+			useParams=specOrValueOrExprFromPar(info.opDefPar.Params),
+			specialParams=specOrValueOrExprFromPar(info.opDefPar.Specialparams),
+			inputs=[
+				ROPInputSpec.extractFromHandler(inputHandler)
+				for inputHandler in inputHandlers
+			],
 		)
 
 def _fileFromDat(dat: 'DAT'):
@@ -227,37 +407,12 @@ class ROPParamHelp:
 		text = text[2:]
 		pass
 
-# _paramHelpPattern = re.compile(r'\*\s+([\w\s\d]+)\s+\(([A-Z][a-z0-9]*)\):\s+()?')
-
 @dataclass
 class ROPHelp:
 	name: Optional[str] = None
 	summary: Optional[str] = None
 	detail: Optional[str] = None
 	parameters: List[ROPParamHelp] = field(default_factory=list)
-
-def _getSingleString(vals: List[str]):
-	if not vals:
-		return None
-	if len(vals) > 1:
-		return ' '.join(vals)
-	return vals[0]
-
-def _parseTextObject(text: str) -> Dict[str, List[str]]:
-	obj = {}
-	for line in text.splitlines():
-		line = line.strip()
-		if not line.startswith('@'):
-			continue
-		parts = re.split(r'\W+', line[1:])
-		key = parts[0]
-		vals = parts[1:]
-		if not vals:
-			continue
-		if key not in obj:
-			obj[key] = []
-		obj[key] += vals
-	return obj
 
 def cleanDict(d):
 	if not d:

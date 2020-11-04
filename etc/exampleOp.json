@@ -1,60 +1,66 @@
 {
-  "paramPages": {
-    "Filter": {
-      "Enable": {
-        "name": "Enable",
-        "label": "Enable",
-        "page": "Filter",
-        "style": "Toggle",
-        "default": true,
-        "enable": true,
-        "startSection": false,
-        "readOnly": false,
-        "enableExpr": null
-      },
-      "Amount": {
-        "name": "Amount",
-        "label": "Amount",
-        "page": "Filter",
-        "style": "Float",
-        "size": 1,
-        "default": 0.0,
-        "enable": true,
-        "startSection": false,
-        "readOnly": false,
-        "enableExpr": null,
-        "min": 0.0,
-        "max": 1.0,
-        "normMin": -1.0,
-        "normMax": 1.0,
-        "clampMin": false,
-        "clampMax": false
-      },
-      "Usefield": {
-        "name": "Usefield",
-        "label": "Use Field",
-        "page": "Filter",
-        "style": "Toggle",
-        "default": false,
-        "enable": true,
-        "startSection": false,
-        "readOnly": false,
-        "enableExpr": null
-      },
-      "Inspect": {
-        "name": "Inspect",
-        "label": "Inspect",
-        "page": "Filter",
-        "style": "Pulse",
-        "default": false,
-        "enable": true,
-        "startSection": true,
-        "readOnly": false,
-        "enableExpr": null
-      }
-    }
-  },
-  "functionFile": "exampleOp.glsl",
-  "useParams": ["Amount"],
-  "helpFile": "exampleOp.md"
+	"paramPages": {
+		"Filter": {
+			"Enable": {
+				"name": "Enable",
+				"label": "Enable",
+				"style": "Toggle",
+				"default": true
+			},
+			"Amount": {
+				"name": "Amount",
+				"label": "Amount",
+				"style": "Float",
+				"size": 1,
+				"default": 0.0,
+				"min": 0.0,
+				"max": 1.0,
+				"normMin": -1.0,
+				"normMax": 1.0,
+				"clampMin": false,
+				"clampMax": false
+			},
+			"Usefield": {
+				"name": "Usefield",
+				"label": "Use Field",
+				"style": "Toggle",
+				"default": false
+			},
+			"Inspect": {
+				"name": "Inspect",
+				"label": "Inspect",
+				"style": "Pulse",
+				"default": false,
+				"startSection": true
+			}
+		}
+	},
+	"function": {
+		"file": "src/operators/filter/round.glsl"
+	},
+	"useParams": "Amount",
+	"macros": {
+		"data": [
+			[
+				"'THIS_GET_AMOUNT()'",
+				"'(THIS_Amount * inputOp2(p, ctx))' if parent().par.Usefield and op('definition_2').numRows > 1 else 'THIS_Amount'"
+			]
+		],
+		"isExpr": true
+	},
+	"help": {
+		"file": "src/operators/filter/round.md"
+	},
+	"inputs": [
+		{
+			"name": "definition_in",
+			"label": "definition_in",
+			"signature": "(vec2 vec3, none Context)->float vec4 Sdf"
+		},
+		{
+			"name": "definition_in_2",
+			"label": "definition_in_2",
+			"signature": "(vec2 vec3, none Context)->float"
+		}
+	]
 }
