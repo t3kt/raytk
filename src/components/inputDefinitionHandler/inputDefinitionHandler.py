@@ -58,7 +58,7 @@ def buildSupportedTypeTable(dat: 'DAT'):
 					[
 						name
 						for name in allNames
-						if helper.isTypeAvailableForCategory(name, filterColumn) and checkType(name, category)
+						if helper.isTypeAvailableForCategory(name, filterColumn) and checkType(name, category, silent=True)
 					]),
 			])
 
