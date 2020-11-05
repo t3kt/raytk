@@ -931,6 +931,16 @@ class DAT(OP):
 	isText: bool
 	locals: _T.Dict[str, _T.Any]
 
+class evaluateDAT(DAT):
+	exprCell: 'Cell'
+	exprCol: int
+	exprRow: int
+	exprTable: 'DAT'
+	inputCell: 'Cell'
+	inputCol: int
+	inputRow: int
+	inputTable: 'DAT'
+
 class oscoutDAT(DAT):
 	def sendBytes(self, *messages) -> int: pass
 
@@ -1431,7 +1441,7 @@ _AnyOpT = _T.Union[OP, DAT, COMP, CHOP, SOP, TOP, MAT, '_AnyCompT']
 
 baseCOMP = COMP
 panelCOMP = PanelCOMP
-evaluateDAT = mergeDAT = nullDAT = parameterexecuteDAT = parameterDAT = tableDAT = textDAT = scriptDAT = DAT
+mergeDAT = nullDAT = parameterexecuteDAT = parameterDAT = tableDAT = textDAT = scriptDAT = DAT
 parameterCHOP = nullCHOP = selectCHOP = inCHOP = outCHOP = CHOP
 inTOP = outTOP = TOP
 importselectSOP = SOP
