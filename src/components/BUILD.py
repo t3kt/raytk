@@ -14,8 +14,13 @@ def clean():
 	for o in parent().findChildren(type=DAT, maxDepth=1):
 		if o is me:
 			continue
+		if not o.valid:
+			continue
 		context.log(f'Removing {o}')
-		o.destroy()
+		try:
+			o.destroy()
+		except Exception as e:
+			context.log(f'Error attempting to remove op: {e}')
 
 def runStage(stage: int):
 	if stage == 0:
