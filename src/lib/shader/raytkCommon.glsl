@@ -392,3 +392,13 @@ vec4 opElongate(in vec3 p, in vec3 h)
 #define wave_tri(x)  (abs(4.*fract(x)-2.)-1.)
 #define wave_square(x) (2.*step(fract(x), 0.5)-1.)
 #define wave_ramp(x)  fract(x)
+
+
+vec4 qsqr(in vec4 a)// square a quaterion
+{
+	return vec4(
+		a.x*a.x - a.y*a.y - a.z*a.z - a.w*a.w,
+		2.0*a.x*a.y,
+		2.0*a.x*a.z,
+		2.0*a.x*a.w);
+}
