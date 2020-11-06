@@ -919,7 +919,7 @@ class DAT(OP):
 			rows: _T.Optional[_NamesOrIndices] = None,
 			cols: _T.Optional[_NamesOrIndices] = None,
 			valuePattern=True, rowPattern=True, colPattern=True, caseSensitive=False) -> _T.List[Cell]: pass
-	def write(self, **args) -> str: pass
+	def write(self, *args, **kwargs) -> str: pass
 	def run(
 			self, *args, endFrame=False, fromOP: 'OP' = None, asParameter=False, group=None, delayFrames=0,
 			delayMilliSeconds=0, delayRef: 'OP' = None) -> Run: pass
@@ -1519,7 +1519,7 @@ class udpinDAT(DAT):
 	def sendOSC(
 			self, address: str, *values, asBundle=False, useNonStandardTypes=True, use64BitPrecision=False) -> int: pass
 	def send(self, *messages: str, terminator='') -> int: pass
-oscinDAT = udpinDAT
+
 udtinDAT = udpinDAT
 
 class tcpipDAT(DAT):
@@ -1685,4 +1685,4 @@ class AbsTime:
 root = baseCOMP()
 absTime = AbsTime()
 
-me = None  # type: _AnyOpT
+me = OP()  # type: _AnyOpT
