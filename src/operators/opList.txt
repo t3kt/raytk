@@ -90,10 +90,10 @@ phongMat	/raytk/operators/material/phongMat	/raytk/operators/material	raytkOP	ma
 sampledPointMat	/raytk/operators/material/sampledPointMat	/raytk/operators/material	raytkOP	material	material/sampledPointMat	raytk.operators.material.sampledPointMat	4	
 customFilter	/raytk/operators/misc/customFilter	/raytk/operators/misc	raytkOP	misc	misc/customFilter	raytk.operators.misc.customFilter	1	
 customGen	/raytk/operators/misc/customGen	/raytk/operators/misc	raytkOP	misc	misc/customGen	raytk.operators.misc.customGen	2	
-functionGraphRender	/raytk/operators/output/functionGraphRender	/raytk/operators/output	raytkOP raytkOutput	output	output/functionGraphRender	raytk.operators.output.functionGraphRender	2	
-pointMapRender	/raytk/operators/output/pointMapRender	/raytk/operators/output	raytkOP raytkOutput	output	output/pointMapRender	raytk.operators.output.pointMapRender	12	
-raymarchRender3D	/raytk/operators/output/raymarchRender3D	/raytk/operators/output	raytkOP raytkOutput	output	output/raymarchRender3D	raytk.operators.output.raymarchRender3D	35	
-render2D	/raytk/operators/output/render2D	/raytk/operators/output	raytkOP raytkOutput	output	output/render2D	raytk.operators.output.render2D	13	
+functionGraphRender	/raytk/operators/output/functionGraphRender	/raytk/operators/output	raytkOP raytkOutput	output	output/functionGraphRender	raytk.operators.output.functionGraphRender	3	
+pointMapRender	/raytk/operators/output/pointMapRender	/raytk/operators/output	raytkOP raytkOutput	output	output/pointMapRender	raytk.operators.output.pointMapRender	13	
+raymarchRender3D	/raytk/operators/output/raymarchRender3D	/raytk/operators/output	raytkOP raytkOutput	output	output/raymarchRender3D	raytk.operators.output.raymarchRender3D	36	
+render2D	/raytk/operators/output/render2D	/raytk/operators/output	raytkOP raytkOutput	output	output/render2D	raytk.operators.output.render2D	14	
 apollonianSdf	/raytk/operators/sdf/apollonianSdf	/raytk/operators/sdf	raytkOP	sdf	sdf/apollonianSdf	raytk.operators.sdf.apollonianSdf	4	
 boxFrameSdf	/raytk/operators/sdf/boxFrameSdf	/raytk/operators/sdf	raytkOP	sdf	sdf/boxFrameSdf	raytk.operators.sdf.boxFrameSdf	3	
 boxSdf	/raytk/operators/sdf/boxSdf	/raytk/operators/sdf	raytkOP	sdf	sdf/boxSdf	raytk.operators.sdf.boxSdf	4	
