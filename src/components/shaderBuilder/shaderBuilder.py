@@ -6,7 +6,14 @@ if False:
 	# noinspection PyUnresolvedReferences
 	from _stubs import *
 
-	class _OwnerCompPar:
+	class _ConfigPar(ParCollection):
+		Parammode: 'Union[str, Par]'
+		Inlineparameteraliases: 'Union[bool, Par]'
+		Inlinereadonlyparameters: 'Union[bool, Par]'
+		Simplifynames: 'Union[bool, Par]'
+		Generatetypedefs: 'Union[bool, Par]'
+
+	class _OwnerCompPar(_ConfigPar):
 		Globalprefix: 'Union[DAT, str, Par]'
 		Predeclarations: 'Union[DAT, str, Par]'
 		Textureindexoffset: 'Union[int, Par]'
@@ -15,18 +22,26 @@ if False:
 		Bodytemplate: 'Union[DAT, str, Par]'
 		Outputbuffertable: 'Union[DAT, str, Par]'
 		Supportmaterials: 'Union[bool, Par]'
-		Parammode: 'Union[str, Par]'
-		Inlineparameteraliases: 'Union[bool, Par]'
-		Inlinereadonlyparameters: 'Union[bool, Par]'
-		Simplifynames: 'Union[bool, Par]'
-		Generatetypedefs: 'Union[bool, Par]'
+		Shaderbuilderconfig: 'Union[COMP, str, Par]'
 
 	class _OwnerComp(COMP):
 		par: '_OwnerCompPar'
 
+	class _ConfigComp(COMP):
+		par: '_ConfigPar'
+
 class ShaderBuilder:
 	def __init__(self, ownerComp: '_OwnerComp'):
 		self.ownerComp = ownerComp
+
+	def configPar(self) -> '_ConfigPar':
+		p = self.ownerComp.par['Shaderbuilderconfig']
+		if p:
+			o = op(p)
+			if o:
+				# noinspection PyTypeChecker
+				return o.par
+		return self.ownerComp.par
 
 	def definitionTable(self) -> 'DAT':
 		# in reverse order (aka declaration order)
@@ -148,7 +163,7 @@ class ShaderBuilder:
 		return wrapCodeSection(includes, 'libraries')
 
 	def buildOpDataTypedefBlock(self):
-		if not self.ownerComp.par.Generatetypedefs:
+		if not self.configPar().Generatetypedefs:
 			return ' '
 		defsTable = self.definitionTable()
 		typedefs = []
@@ -184,7 +199,7 @@ class ShaderBuilder:
 		suffixes = 'xyzw'
 		partAliases = []  # type: List[Tuple[str, Union[str, float]]]
 		mainAliases = []  # type: List[Tuple[str, Union[str, float]]]
-		inlineReadOnly = bool(self.ownerComp.par['Inlinereadonlyparameters'])
+		inlineReadOnly = bool(self.configPar()['Inlinereadonlyparameters'])
 		paramVals = self.allParamVals()
 		paramTuplets = _ParamTupletSpec.fromTableRows(paramDetails)
 		for i, paramTuplet in enumerate(paramTuplets):
