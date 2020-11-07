@@ -59,16 +59,26 @@ class ShaderBuilder:
 	def buildGlobalPrefix(self):
 		return wrapCodeSection(self.ownerComp.par.Globalprefix.eval(), 'globalPrefix')
 
+	def _createParamProcessor(self):
+		mode = self.configPar().Parammode.eval()
+		if mode == 'uniformarray':
+			return _VectorArrayParameterProcessor(
+				self.parameterDetailTable(),
+				self.allParamVals(),
+				self.configPar(),
+			)
+		else:
+			raise NotImplementedError(f'Parameter processor not available for mode: {mode!r}')
+
 	def buildGlobalDeclarations(self):
 		defsTable = self.definitionTable()
 		if defsTable.numRows < 2:
 			code = ['#error No input definition']
 		else:
-			paramDetailTable = self.parameterDetailTable()
-			paramCount = max(1, paramDetailTable.numRows - 1)
 			mainName = defsTable[defsTable.numRows - 1, 'name']
-			code = [
-				f'uniform vec4 vecParams[{paramCount}];',
+			paramProcessor = self._createParamProcessor()
+			code = paramProcessor.globalDeclarations()
+			code += [
 				f'#define thismap {mainName}'
 			]
 		return wrapCodeSection(code, 'globals')
@@ -227,16 +237,13 @@ class ShaderBuilder:
 		return partAliases + mainAliases
 
 	def buildParameterAliases(self):
-		decls = []
-		for name, expr in self._buildParameterExprs():
-			decls.append(f'#define {name} {expr}')
-		return wrapCodeSection(decls, 'paramAliasesV2')
+		paramProcessor = self._createParamProcessor()
+		decls = paramProcessor.paramAliases()
+		return wrapCodeSection(decls, 'paramAliases')
 
-	def buildParamAliasTable(self, dat: 'DAT'):
-		dat.clear()
-		dat.appendRow(['before', 'after'])
-		for name, expr in self._buildParameterExprs():
-			dat.appendRow([name, expr])
+	def processParametersInCode(self, code: str):
+		paramProcessor = self._createParamProcessor()
+		return paramProcessor.processCodeBlock(code)
 
 	def buildTextureDeclarations(self):
 		textureTable = self.ownerComp.op('texture_table')
@@ -295,10 +302,83 @@ class _ParamTupletSpec:
 
 	@classmethod
 	def fromTableRows(cls, dat: 'DAT') -> 'List[_ParamTupletSpec]':
+		if not dat or dat.numRows < 2:
+			return []
 		return [
 			cls.fromRow(dat, row)
 			for row in range(1, dat.numRows)
 		]
+
+@dataclass
+class _ParamExpr:
+	name: str
+	expr: Union[str, float]
+
+class _VectorArrayParameterProcessor:
+	def __init__(
+			self,
+			paramDetailTable: 'DAT',
+			paramVals: 'CHOP',
+			configPar: '_ConfigPar',
+	):
+		self.paramDetailTable = paramDetailTable
+		self.hasParams = paramDetailTable.numRows > 1
+		self.useConstantReadOnly = configPar.Inlinereadonlyparameters
+		self.inlineAliases = configPar.Inlineparameteraliases
+		self.paramVals = paramVals
+
+	def globalDeclarations(self) -> List[str]:
+		paramCount = max(1, self.paramDetailTable.numRows - 1)
+		return [
+			f'uniform vec4 vecParams[{paramCount}];',
+		]
+
+	def _generateParamExprs(self) -> List[_ParamExpr]:
+		paramExprs = []  # type: List[_ParamExpr]
+		suffixes = 'xyzw'
+		paramTuplets = _ParamTupletSpec.fromTableRows(self.paramDetailTable)
+		for i, paramTuplet in enumerate(paramTuplets):
+			useConstant = self.useConstantReadOnly and paramTuplet.isReadOnly and paramTuplet.isPresentInChop(self.paramVals)
+			size = len(paramTuplet.parts)
+			if size == 1:
+				name = paramTuplet.parts[0]
+				if useConstant:
+					paramExprs.append(_ParamExpr(name, float(self.paramVals[name])))
+				else:
+					paramExprs.append(_ParamExpr(name, f'vecParams[{i}].x'))
+			else:
+				if useConstant:
+					partVals = [float(self.paramVals[part]) for part in paramTuplet.parts]
+					valsExpr = ','.join(str(v) for v in partVals)
+					paramExprs.append(_ParamExpr(paramTuplet.tuplet, f'vec{size}({valsExpr})'))
+					for partI, partVal in enumerate(partVals):
+						paramExprs.append(_ParamExpr(paramTuplet.parts[partI], partVal))
+				else:
+					if size == 4:
+						paramExprs.append(_ParamExpr(paramTuplet.tuplet, f'vecParams[{i}]'))
+					else:
+						paramExprs.append(_ParamExpr(paramTuplet.tuplet, f'vec{size}(vecParams[{i}].{suffixes[:size]})'))
+					for partI, partName in enumerate(paramTuplet.parts):
+						paramExprs.append(_ParamExpr(partName, f'vecParams[{i}].{suffixes[partI]}'))
+		return paramExprs
+
+	def paramAliases(self) -> List[str]:
+		if not self.hasParams:
+			return []
+		if self.inlineAliases:
+			return []
+		return [
+			f'#define {paramExpr.name} {paramExpr.expr}'
+			for paramExpr in self._generateParamExprs()
+		]
+
+	def processCodeBlock(self, code: str) -> str:
+		if not self.inlineAliases or not code:
+			return code
+		for paramExpr in self._generateParamExprs():
+			code = code.replace(paramExpr.name, paramExpr.expr)
+		return code
+
 
 def buildMaterialBlock(materialTable: 'DAT'):
 	if materialTable.numRows < 2:
