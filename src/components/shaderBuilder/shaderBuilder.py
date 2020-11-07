@@ -59,7 +59,7 @@ class ShaderBuilder:
 	def buildGlobalPrefix(self):
 		return wrapCodeSection(self.ownerComp.par.Globalprefix.eval(), 'globalPrefix')
 
-	def _createParamProcessor(self):
+	def _createParamProcessor(self) -> '_ParameterProcessor':
 		mode = self.configPar().Parammode.eval()
 		if mode == 'uniformarray':
 			return _VectorArrayParameterProcessor(
@@ -314,7 +314,7 @@ class _ParamExpr:
 	name: str
 	expr: Union[str, float]
 
-class _VectorArrayParameterProcessor:
+class _ParameterProcessor:
 	def __init__(
 			self,
 			paramDetailTable: 'DAT',
@@ -327,6 +327,19 @@ class _VectorArrayParameterProcessor:
 		self.inlineAliases = configPar.Inlineparameteraliases
 		self.paramVals = paramVals
 
+	def globalDeclarations(self) -> List[str]:
+		raise NotImplementedError()
+
+	def _generateParamExprs(self) -> List[_ParamExpr]:
+		raise NotImplementedError()
+
+	def paramAliases(self) -> List[str]:
+		raise NotImplementedError()
+
+	def processCodeBlock(self, code: str) -> str:
+		raise NotImplementedError()
+
+class _VectorArrayParameterProcessor(_ParameterProcessor):
 	def globalDeclarations(self) -> List[str]:
 		paramCount = max(1, self.paramDetailTable.numRows - 1)
 		return [
