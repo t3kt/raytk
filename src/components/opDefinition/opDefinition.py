@@ -140,7 +140,7 @@ def substituteWords(dat: 'DAT'):
 	dat.copy(dat.inputs[0])
 	text = dat.text
 	for repls in dat.inputs[1:]:
-		if repls.numRows == 0:
+		if repls.numRows == 0 or repls.numCols < 2:
 			continue
 		if repls[0, 0] == 'before' and repls[0, 1] == 'after':
 			startRow = 1

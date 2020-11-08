@@ -367,7 +367,7 @@ class _VectorArrayParameterProcessor(_ParameterProcessor):
 				name = paramTuplet.parts[0]
 				paramExprs.append(_ParamExpr(
 					name,
-					float(self.paramVals[name]) if useConstant else f'vecParams[{i}].x',
+					repr(float(self.paramVals[name])) if useConstant else f'vecParams[{i}].x',
 					'float'
 				))
 			else:
