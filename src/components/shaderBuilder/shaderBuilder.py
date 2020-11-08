@@ -131,7 +131,11 @@ class ShaderBuilder:
 				if cell.val:
 					decls.append(f'#define {cell.val}')
 		decls = _uniqueList(decls)
-		return wrapCodeSection(decls, 'macros')
+		code = wrapCodeSection(decls, 'macros')
+		# if self.configPar().Inlineparameteraliases:
+		# 	processor = self._createParamProcessor()
+		# 	return processor.processCodeBlock(code)
+		return code
 
 	def getLibraryDats(self, onWarning: Callable[[str], None] = None):
 		requiredLibNames = parent().par.Librarynames.eval().strip().split(' ')  # type: List[str]
@@ -391,8 +395,8 @@ class _VectorArrayParameterProcessor(_ParameterProcessor):
 	def paramAliases(self) -> List[str]:
 		if not self.hasParams:
 			return []
-		if self.inlineAliases:
-			return []
+		# if self.inlineAliases:
+		# 	return []
 		if self.aliasMode == 'globalvar':
 			return [
 				f'{paramExpr.type} {paramExpr.name} = {paramExpr.expr};'
