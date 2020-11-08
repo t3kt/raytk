@@ -32,7 +32,7 @@ class LibraryInfoBuilder:
 			if RaytkTags.buildExclude.isOn(rop) or rop.name.startswith('_'):
 				continue
 			ropInfo = ROPInfo(rop)
-			if not ropInfo.isMaster:
+			if not ropInfo or not ropInfo.isMaster:
 				continue
 			category = rop.parent()
 			dat.appendRow([

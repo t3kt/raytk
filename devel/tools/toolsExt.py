@@ -2,7 +2,6 @@ from develCommon import *
 import popMenu
 from raytkUtil import RaytkTags, ROPInfo, Tag, getActiveEditor, navigateTo, getChildROPs, recloneComp, RaytkContext, TypeTableHelper, focusCustomParameterPage
 from typing import Tuple, List
-from pathlib import Path
 
 # noinspection PyUnreachableCode
 if False:

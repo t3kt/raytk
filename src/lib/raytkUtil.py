@@ -9,10 +9,12 @@ if False:
 def getToolkit() -> 'COMP':
 	return op.raytk
 
-class _OpDefPars:
+class _OpMetaPars:
 	Raytkoptype: 'StrParamT'
 	Raytkopversion: 'IntParamT'
 	Raytkversion: 'StrParamT'
+
+class _OpDefPars(_OpMetaPars):
 	Help: 'DatParamT'
 	Functemplate: 'DatParamT'
 	Macrotable: 'DatParamT'
@@ -34,8 +36,16 @@ class ROPInfo:
 		elif isROPDef(o):
 			self.rop = o.par.Hostop.eval()
 			self.opDef = o
+		elif _isRComp(o):
+			self.rop = o
+			self.opDef = o.op('compDefinition')
+		elif _isRCompDef(o):
+			self.rop = o.par.Hostop.eval()
+			self.opDef = o
 		else:
-			return
+			self.rop = None
+			self.opDef = None
+			self.opDefPar = None
 		# noinspection PyTypeChecker
 		self.opDefPar = self.opDef.par
 
@@ -53,6 +63,14 @@ class ROPInfo:
 	@property
 	def opType(self):
 		return str(self.opDefPar.Raytkoptype or '')
+
+	@property
+	def isROP(self):
+		return isROP(self.rop)
+
+	@property
+	def isRComp(self):
+		return _isRComp(self.rop)
 
 	@property
 	def isBeta(self):
@@ -100,37 +118,33 @@ class ROPInfo:
 def isROP(o: 'OP'):
 	return bool(o) and o.isCOMP and RaytkTags.raytkOP.isOn(o)
 
+def _isRComp(o: 'OP'):
+	return bool(o) and o.isCOMP and RaytkTags.raytkComp.isOn(o)
+
 def isROPDef(o: 'OP'):
 	return bool(o) and o.isCOMP and o.name == 'opDefinition'
 
-def getROP(comp: 'COMP', checkParents=True):
+def _isRCompDef(o: 'OP'):
+	return bool(o) and o.isCOMP and o.name == 'compDefinition'
+
+def _getROP(comp: 'COMP', checkParents=True):
 	if not comp or comp is root:
 		return None
-	if isROP(comp):
+	if isROP(comp) or _isRComp(comp):
 		return comp
-	if isROPDef(comp):
+	if isROPDef(comp) or _isRCompDef(comp):
 		host = comp.par.Hostop.eval()
-		if isROP(host):
+		if isROP(host) or _isRComp(host):
 			return host
 	if checkParents:
-		return getROP(comp.parent(), checkParents=checkParents)
+		return _getROP(comp.parent(), checkParents=checkParents)
 
 def getChildROPs(comp: 'COMP'):
 	rops = []
 	for o in comp.children:
-		if isROP(o):
+		if isROP(o) or _isRComp(o):
 			rops.append(o)
 	return rops
-
-def getROPDef(o: 'OP') -> 'Optional[OP]':
-	if isROPDef(o):
-		return o
-	if isROP(o):
-		return o.op('opDefinition')
-
-def getROPVersion(o: 'OP'):
-	opDef = getROPDef(o)
-	return opDef and str(opDef.par['Raytkopversion'] or '')
 
 def recloneComp(o: 'COMP'):
 	if o and o.par['enablecloningpulse'] is not None:
@@ -211,6 +225,7 @@ def _updateFileSyncPars(o: 'OP', state: bool):
 
 class RaytkTags:
 	raytkOP = Tag('raytkOP')
+	raytkComp = Tag('raytkComp')
 	raytkOutput = Tag('raytkOutput')
 	buildExclude = Tag('buildExclude', _buildExcludeColor)
 	buildLock = Tag('buildLock', _buildLockColor)
@@ -397,15 +412,15 @@ class RaytkContext:
 			return []
 		comp = pane.owner
 		if exclude and exclude(comp):
-			return None
-		rop = getROP(comp) or getROP(comp.currentChild)
+			return []
+		rop = _getROP(comp) or _getROP(comp.currentChild)
 		if masterOnly and not _isMaster(rop):
 			rop = None
 		if rop and primaryOnly:
 			return [rop]
-		rops = [rop]
+		rops = [rop] if rop else []
 		for child in comp.selectedChildren:
-			rop = getROP(child, checkParents=False)
+			rop = _getROP(child, checkParents=False)
 			if masterOnly and not _isMaster(rop):
 				continue
 			if rop and rop not in rops:
@@ -418,9 +433,10 @@ class RaytkContext:
 		if not pane:
 			return None
 		comp = pane.owner
-		if comp.parent() == getToolkit().op('operators'):
+		operators = getToolkit().op('operators')
+		if comp.parent() == operators:
 			return [comp]
-		if comp != getToolkit().op('operators'):
+		if comp != operators:
 			return []
 		cats = []
 		for child in comp.selectedChildren:
