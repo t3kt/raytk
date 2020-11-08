@@ -80,22 +80,22 @@ class Tools:
 		else:
 			page = rop.appendCustomPage('Settings')
 		ropInfo = ROPInfo(rop)
-		opDef = rop.op('opDefinition')
-		if ropInfo.hasROPInputs and not ropInfo.isOutput:
+		if ropInfo.isROP and ropInfo.hasROPInputs and not ropInfo.isOutput:
 			enablePar = rop.par['Enable']
 			if enablePar is None:
 				enablePar = page.appendToggle('Enable')[0]
 				enablePar.val = True
 			enablePar.order = -1
 			enablePar.default = True
-			if not opDef.par.Enable.expr:
-				opDef.par.Enable.expr = "op('..').par.Enable"
+			if ropInfo.opDefPar and not ropInfo.opDefPar.Enable.expr:
+				ropInfo.opDefPar.Enable.expr = "op('..').par.Enable"
 
-		inspectPar = rop.par['Inspect']
-		if inspectPar is None:
-			inspectPar = page.appendPulse('Inspect')[0]
-		inspectPar.startSection = True
-		inspectPar.order = 99999
+		if ropInfo.isROP:
+			inspectPar = rop.par['Inspect']
+			if inspectPar is None:
+				inspectPar = page.appendPulse('Inspect')[0]
+			inspectPar.startSection = True
+			inspectPar.order = 99999
 
 	def editCurrentROPMaster(self):
 		rop = self.GetCurrentROP()
