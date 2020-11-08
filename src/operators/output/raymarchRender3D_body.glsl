@@ -252,6 +252,9 @@ void main()
 	#if defined(OUTPUT_STEPS)
 	stepsOut = vec4(0);
 	#endif
+	#ifdef OUTPUT_DEPTH
+	depthOut = vec4(0);
+	#endif
 	MaterialContext matCtx;
 	matCtx.context = createDefaultContext();
 
