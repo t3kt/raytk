@@ -313,6 +313,11 @@ class _ParamTupletSpec:
 class _ParamExpr:
 	name: str
 	expr: Union[str, float]
+	type: str
+
+@dataclass
+class _UniformSpec:
+	pass
 
 class _ParameterProcessor:
 	def __init__(
@@ -326,6 +331,7 @@ class _ParameterProcessor:
 		self.useConstantReadOnly = configPar.Inlinereadonlyparameters
 		self.inlineAliases = configPar.Inlineparameteraliases
 		self.paramVals = paramVals
+		self.aliasMode = str(configPar['Paramaliasmode'] or 'macro')
 
 	def globalDeclarations(self) -> List[str]:
 		raise NotImplementedError()
@@ -355,24 +361,31 @@ class _VectorArrayParameterProcessor(_ParameterProcessor):
 			size = len(paramTuplet.parts)
 			if size == 1:
 				name = paramTuplet.parts[0]
-				if useConstant:
-					paramExprs.append(_ParamExpr(name, float(self.paramVals[name])))
-				else:
-					paramExprs.append(_ParamExpr(name, f'vecParams[{i}].x'))
+				paramExprs.append(_ParamExpr(
+					name,
+					float(self.paramVals[name]) if useConstant else f'vecParams[{i}].x',
+					'float'
+				))
 			else:
 				if useConstant:
 					partVals = [float(self.paramVals[part]) for part in paramTuplet.parts]
 					valsExpr = ','.join(str(v) for v in partVals)
-					paramExprs.append(_ParamExpr(paramTuplet.tuplet, f'vec{size}({valsExpr})'))
+					parType = f'vec{size}'
+					paramExprs.append(_ParamExpr(paramTuplet.tuplet, f'{parType}({valsExpr})', parType))
 					for partI, partVal in enumerate(partVals):
-						paramExprs.append(_ParamExpr(paramTuplet.parts[partI], partVal))
+						paramExprs.append(_ParamExpr(paramTuplet.parts[partI], partVal, 'float'))
 				else:
 					if size == 4:
-						paramExprs.append(_ParamExpr(paramTuplet.tuplet, f'vecParams[{i}]'))
+						paramExprs.append(_ParamExpr(paramTuplet.tuplet, f'vecParams[{i}]', 'vec4'))
 					else:
-						paramExprs.append(_ParamExpr(paramTuplet.tuplet, f'vec{size}(vecParams[{i}].{suffixes[:size]})'))
+						parType = f'vec{size}'
+						paramExprs.append(_ParamExpr(
+							paramTuplet.tuplet,
+							f'{parType}(vecParams[{i}].{suffixes[:size]})',
+							parType
+						))
 					for partI, partName in enumerate(paramTuplet.parts):
-						paramExprs.append(_ParamExpr(partName, f'vecParams[{i}].{suffixes[partI]}'))
+						paramExprs.append(_ParamExpr(partName, f'vecParams[{i}].{suffixes[partI]}', 'float'))
 		return paramExprs
 
 	def paramAliases(self) -> List[str]:
@@ -380,10 +393,16 @@ class _VectorArrayParameterProcessor(_ParameterProcessor):
 			return []
 		if self.inlineAliases:
 			return []
-		return [
-			f'#define {paramExpr.name} {paramExpr.expr}'
-			for paramExpr in self._generateParamExprs()
-		]
+		if self.aliasMode == 'globalvar':
+			return [
+				f'{paramExpr.type} {paramExpr.name} = {paramExpr.expr};'
+				for paramExpr in self._generateParamExprs()
+			]
+		else:
+			return [
+				f'#define {paramExpr.name} {paramExpr.expr}'
+				for paramExpr in self._generateParamExprs()
+			]
 
 	def processCodeBlock(self, code: str) -> str:
 		if not self.inlineAliases or not code:
