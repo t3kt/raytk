@@ -7,16 +7,18 @@
     "Savethumbnails": false
   },
   "recorder": {
-    "Folder": "",
-    "Basename": "",
+    "Folder": "S:/output/raytk",
+    "Basename": "raytk-test-output",
     "Includedate": true,
     "Datetype": "today",
     "Customdate": "",
-    "Suffix": "",
-    "Addresolutionsuffix": false,
-    "Addvcodecsuffix": false,
-    "Addacodecsuffix": false,
-    "Addfpssuffix": false,
+    "Suffix": {
+      "$": "ipar.editorState.Name or ''"
+    },
+    "Addresolutionsuffix": true,
+    "Addvcodecsuffix": true,
+    "Addacodecsuffix": true,
+    "Addfpssuffix": true,
     "Outputresolution": "useinput",
     "Resolution1": 3840,
     "Resolution2": 2160,
@@ -45,7 +47,7 @@
   "editorUIState": {
     "Selectedview": "preview_panel",
     "Selectedleftpanel": "component_picker",
-    "Selectedrightpanel": "workspace_settings",
+    "Selectedrightpanel": "recorder",
     "Previewshowaudio": false,
     "Previewshowvideo": true,
     "Previewshowvideoinfo": false,
