@@ -108,7 +108,7 @@ discSdf	/raytk/operators/sdf/discSdf	/raytk/operators/sdf	raytkOP	sdf	sdf/discSd
 generalizedPolyhedronSdf	/raytk/operators/sdf/generalizedPolyhedronSdf	/raytk/operators/sdf	raytkOP	sdf	sdf/generalizedPolyhedronSdf	raytk.operators.sdf.generalizedPolyhedronSdf	0	
 gyroidSdf	/raytk/operators/sdf/gyroidSdf	/raytk/operators/sdf	raytkOP	sdf	sdf/gyroidSdf	raytk.operators.sdf.gyroidSdf	0	
 juliaSdf	/raytk/operators/sdf/juliaSdf	/raytk/operators/sdf	raytkOP	sdf	sdf/juliaSdf	raytk.operators.sdf.juliaSdf	0	
-kaliGeneratorSdf	/raytk/operators/sdf/kaliGeneratorSdf	/raytk/operators/sdf	raytkOP	sdf	sdf/kaliGeneratorSdf	raytk.operators.sdf.kaliGeneratorSdf	0	
+kaliGeneratorSdf	/raytk/operators/sdf/kaliGeneratorSdf	/raytk/operators/sdf	raytkOP	sdf	sdf/kaliGeneratorSdf	raytk.operators.sdf.kaliGeneratorSdf	1	
 linkSdf	/raytk/operators/sdf/linkSdf	/raytk/operators/sdf	raytkOP	sdf	sdf/linkSdf	raytk.operators.sdf.linkSdf	3	
 mandelbulbSdf	/raytk/operators/sdf/mandelbulbSdf	/raytk/operators/sdf	raytkOP	sdf	sdf/mandelbulbSdf	raytk.operators.sdf.mandelbulbSdf	3	
 mengerSpongeSdf	/raytk/operators/sdf/mengerSpongeSdf	/raytk/operators/sdf	raytkOP	sdf	sdf/mengerSpongeSdf	raytk.operators.sdf.mengerSpongeSdf	2	
