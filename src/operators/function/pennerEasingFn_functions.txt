@@ -1,0 +1,32 @@
+name	label	function
+backInOut	Back In Out	ease_backInOut
+backIn	Back In	ease_backIn
+backOut	Back Out	ease_backOut
+bounceOut	Bounce Out	ease_bounceOut
+bounceIn	Bounce In	ease_bounceIn
+bounceInOut	Bounce In Out	ease_bounceInOut
+circularInOut	Circular In Out	ease_circularInOut
+circularIn	Circular In	ease_circularIn
+circularOut	Circular Out	ease_circularOut
+cubicInOut	Cubic In Out	ease_cubicInOut
+cubicIn	Cubic In	ease_cubicIn
+cubicOut	Cubic Out	ease_cubicOut
+elasticInOut	Elastic In Out	ease_elasticInOut
+elasticIn	Elastic In	ease_elasticIn
+elasticOut	Elastic Out	ease_elasticOut
+exponentialInOut	Exponential In Out	ease_exponentialInOut
+exponentialIn	Exponential In	ease_exponentialIn
+exponentialOut	Exponential Out	ease_exponentialOut
+linear	Linear 	ease_linear
+quadraticInOut	Quadratic In Out	ease_quadraticInOut
+quadraticIn	Quadratic In	ease_quadraticIn
+quadraticOut	Quadratic Out	ease_quadraticOut
+quarticInOut	Quartic In Out	ease_quarticInOut
+quarticIn	Quartic In	ease_quarticIn
+quarticOut	Quartic Out	ease_quarticOut
+qinticInOut	Qintic In Out	ease_qinticInOut
+qinticIn	Qintic In	ease_qinticIn
+qinticOut	Qintic Out	ease_qinticOut
+sineInOut	Sine In Out	ease_sineInOut
+sineIn	Sine In	ease_sineIn
+sineOut	Sine Out	ease_sineOut

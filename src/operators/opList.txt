@@ -78,6 +78,7 @@ impulseFn	/raytk/operators/function/impulseFn	/raytk/operators/function	raytkOP	
 modulateFn	/raytk/operators/function/modulateFn	/raytk/operators/function	raytkOP	function	function/modulateFn	raytk.operators.function.modulateFn	0	
 multiplyFn	/raytk/operators/function/multiplyFn	/raytk/operators/function	raytkOP	function	function/multiplyFn	raytk.operators.function.multiplyFn	0	
 parabolaFn	/raytk/operators/function/parabolaFn	/raytk/operators/function	raytkOP	function	function/parabolaFn	raytk.operators.function.parabolaFn	0	
+pennerEasingFn	/raytk/operators/function/pennerEasingFn	/raytk/operators/function	raytkOP	function	function/pennerEasingFn	raytk.operators.function.pennerEasingFn	0	
 powerCurveFn	/raytk/operators/function/powerCurveFn	/raytk/operators/function	raytkOP	function	function/powerCurveFn	raytk.operators.function.powerCurveFn	0	
 sincCurveFn	/raytk/operators/function/sincCurveFn	/raytk/operators/function	raytkOP	function	function/sincCurveFn	raytk.operators.function.sincCurveFn	0	
 hardShadow	/raytk/operators/light/hardShadow	/raytk/operators/light	raytkOP	light	light/hardShadow	raytk.operators.light.hardShadow	2	
