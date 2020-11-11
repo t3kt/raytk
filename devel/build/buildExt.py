@@ -124,7 +124,7 @@ class BuildManager:
 		template = category.op('__template')
 		if template:
 			template.destroy()
-		comps = category.findChildren(type=baseCOMP, tags=['raytkOP'], maxDepth=1)
+		comps = category.findChildren(type=baseCOMP, tags=[RaytkTags.raytkOP, RaytkTags.raytkComp], maxDepth=1)
 		self.queueMethodCall('processOperatorCategory_stage', comps, thenRun, runArgs)
 
 	def processOperatorCategory_stage(self, components: List['COMP'], thenRun: str = None, runArgs: list = None):
