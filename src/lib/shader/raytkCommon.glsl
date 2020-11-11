@@ -67,6 +67,29 @@ Sdf createSdf(float dist) {
 	return res;
 }
 
+void blendInSdf(inout Sdf res1, in Sdf res2, in float amt) {
+	res1.material2 = res2.material;
+	res1.interpolant = amt;
+	res1.refract = res1.refract || res2.refract;
+	res1.reflect = res1.reflect || res2.reflect;
+
+	#ifdef RAYTK_ORBIT_SDF
+	res1.orbit = mix(res1.orbit, res2.orbit, amt);
+	#endif
+
+	#ifdef RAYTK_NEAR_HITS_IN_SDF
+	res1.nearHitCount = int(round(mix(float(res1.nearHitCount), float(res2.nearHitCount), amt)));
+	res1.nearHitAmount = mix(res1.nearHitAmount, res2.nearHitAmount, amt);
+	#endif
+
+	#ifdef RAYTK_OBJECT_ID_IN_SDF
+	if (res2.objectId.x != 0.) {
+		res1.objectId.y = res2.objectId.x;
+		res1.objectId.z = amt;
+	}
+	#endif
+}
+
 struct Context {
 	vec4 iteration;
 };

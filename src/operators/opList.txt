@@ -5,10 +5,10 @@ orthoCamera	/raytk/operators/camera/orthoCamera	/raytk/operators/camera	raytkOP	
 splitCamera	/raytk/operators/camera/splitCamera	/raytk/operators/camera	raytkOP	camera	camera/splitCamera	raytk.operators.camera.splitCamera	2	
 blend	/raytk/operators/combine/blend	/raytk/operators/combine	raytkOP	combine	combine/blend	raytk.operators.combine.blend	2	beta
 boundLimit	/raytk/operators/combine/boundLimit	/raytk/operators/combine	raytkOP	combine	combine/boundLimit	raytk.operators.combine.boundLimit	0	beta
-combineChamfer	/raytk/operators/combine/combineChamfer	/raytk/operators/combine	raytkOP	combine	combine/combineChamfer	raytk.operators.combine.combineChamfer	0	
-combineColumns	/raytk/operators/combine/combineColumns	/raytk/operators/combine	raytkOP	combine	combine/combineColumns	raytk.operators.combine.combineColumns	1	
+combineChamfer	/raytk/operators/combine/combineChamfer	/raytk/operators/combine	raytkOP	combine	combine/combineChamfer	raytk.operators.combine.combineChamfer	1	
+combineColumns	/raytk/operators/combine/combineColumns	/raytk/operators/combine	raytkOP	combine	combine/combineColumns	raytk.operators.combine.combineColumns	2	
 combineFields	/raytk/operators/combine/combineFields	/raytk/operators/combine	raytkOP	combine	combine/combineFields	raytk.operators.combine.combineFields	5	
-combineStairs	/raytk/operators/combine/combineStairs	/raytk/operators/combine	raytkOP	combine	combine/combineStairs	raytk.operators.combine.combineStairs	1	
+combineStairs	/raytk/operators/combine/combineStairs	/raytk/operators/combine	raytkOP	combine	combine/combineStairs	raytk.operators.combine.combineStairs	2	
 edgeEngrave	/raytk/operators/combine/edgeEngrave	/raytk/operators/combine	raytkOP	combine	combine/edgeEngrave	raytk.operators.combine.edgeEngrave	0	
 edgeGroove	/raytk/operators/combine/edgeGroove	/raytk/operators/combine	raytkOP	combine	combine/edgeGroove	raytk.operators.combine.edgeGroove	0	
 edgePipe	/raytk/operators/combine/edgePipe	/raytk/operators/combine	raytkOP	combine	combine/edgePipe	raytk.operators.combine.edgePipe	0	
@@ -16,7 +16,7 @@ iterationSwitch	/raytk/operators/combine/iterationSwitch	/raytk/operators/combin
 simpleDiff	/raytk/operators/combine/simpleDiff	/raytk/operators/combine	raytkOP	combine	combine/simpleDiff	raytk.operators.combine.simpleDiff	3	
 simpleIntersect	/raytk/operators/combine/simpleIntersect	/raytk/operators/combine	raytkOP	combine	combine/simpleIntersect	raytk.operators.combine.simpleIntersect	4	
 simpleUnion	/raytk/operators/combine/simpleUnion	/raytk/operators/combine	raytkOP	combine	combine/simpleUnion	raytk.operators.combine.simpleUnion	6	
-smoothUnion	/raytk/operators/combine/smoothUnion	/raytk/operators/combine	raytkOP	combine	combine/smoothUnion	raytk.operators.combine.smoothUnion	5	
+smoothUnion	/raytk/operators/combine/smoothUnion	/raytk/operators/combine	raytkOP	combine	combine/smoothUnion	raytk.operators.combine.smoothUnion	6	
 switch	/raytk/operators/combine/switch	/raytk/operators/combine	raytkOP	combine	combine/switch	raytk.operators.combine.switch	3	
 coordTo2D	/raytk/operators/convert/coordTo2D	/raytk/operators/convert	raytkOP	convert	convert/coordTo2D	raytk.operators.convert.coordTo2D	5	
 coordTo3D	/raytk/operators/convert/coordTo3D	/raytk/operators/convert	raytkOP	convert	convert/coordTo3D	raytk.operators.convert.coordTo3D	6	
