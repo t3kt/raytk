@@ -127,17 +127,22 @@ class CreateMenu:
 		if not dest:
 			return
 		ui.undo.startBlock(f'Create ROP {master.name}')
-		newOp = dest.copy(
+		if op('/sys/quiet'):
+			bufferArea = op('/sys/quiet').create(baseCOMP)
+		else:
+			bufferArea = dest
+		newOp = bufferArea.copy(
 			master,
 			name=master.name + ('1' if tdu.digits(master.name) is None else ''))  # type: COMP
+		pane.placeOPs([newOp])
 		newOp.nodeCenterX = pane.x
 		newOp.nodeCenterY = pane.y
 		detachTox(newOp)
-		pane.placeOPs([newOp])
 		enableCloning = newOp.par.enablecloning  # type: Par
 		enableCloning.expr = ''
 		enableCloning.val = bool(self.develEnabled)
 		focusCustomParameterPage(newOp, 0)
+		newOp.allowCooking = True
 		ui.undo.endBlock()
 		print(self.ownerComp, f'Created OP: {newOp} from {master}')
 		return newOp

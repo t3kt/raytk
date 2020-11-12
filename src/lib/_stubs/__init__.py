@@ -1015,7 +1015,7 @@ class COMP(OP):
 			key: _T.Callable[['_AnyOpT'], bool] = None,
 	) -> '_T.List[_AnyOpT]': pass
 	def copy(self, o: '_AnyOpT', name=None) -> 'op': pass
-	def create(self, OPtype: _T.Union[str, _T.Type['_AnyOpT']], name: str, initialize=True) -> '_AnyOpT': pass
+	def create(self, OPtype: _T.Union[str, _T.Type['_AnyOpT']], name: _T.Optional[str] = None, initialize=True) -> '_AnyOpT': pass
 	def collapseSelected(self): pass
 	def copyOPs(self, listOfOPs: _T.List['_AnyOpT']) -> _T.List['_AnyOpT']: pass
 	def initializeExtensions(self, index: int = None) -> _T.Any: pass
