@@ -10,9 +10,15 @@ struct Sdf {
 	float material; // material ID
 	float material2; // in case of interpolating, the second material
 	float interpolant; // in case of interpolating, the interpolation value
+
+	#ifdef RAYTK_REFRACT_IN_SDF
 	float ior; // index of refraction in case of refraction
-	bool reflect; // do reflection for this?
 	bool refract; // do refraction for this?
+	#endif
+
+	#ifdef RAYTK_REFLECT_IN_SDF
+	bool reflect; // do reflection for this?
+	#endif
 
 	#ifdef RAYTK_ORBIT_IN_SDF
 	vec4 orbit;  // orbit trap value for fractals
@@ -44,8 +50,12 @@ Sdf createSdf(float dist) {
 	Sdf res;
 	res.x = dist;
 	res.material = 2;
+	#ifdef RAYTK_REFLECT_IN_SDF
 	res.reflect = false;
+	#endif
+	#ifdef RAYTK_REFRACT_IN_SDF
 	res.refract = false;
+	#endif
 	res.material2 = 0.;
 	res.interpolant = 0.;
 	#ifdef RAYTK_ORBIT_IN_SDF
@@ -70,8 +80,12 @@ Sdf createSdf(float dist) {
 void blendInSdf(inout Sdf res1, in Sdf res2, in float amt) {
 	res1.material2 = res2.material;
 	res1.interpolant = amt;
+	#ifdef RAYTK_REFRACT_IN_SDF
 	res1.refract = res1.refract || res2.refract;
+	#endif
+	#ifdef RAYTK_REFLECT_IN_SDF
 	res1.reflect = res1.reflect || res2.reflect;
+	#endif
 
 	#ifdef RAYTK_ORBIT_SDF
 	res1.orbit = mix(res1.orbit, res2.orbit, amt);
