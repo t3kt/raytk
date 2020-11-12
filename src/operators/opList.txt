@@ -44,6 +44,7 @@ bend	/raytk/operators/filter/bend	/raytk/operators/filter	raytkOP	filter	filter/
 elongate	/raytk/operators/filter/elongate	/raytk/operators/filter	raytkOP	filter	filter/elongate	raytk.operators.filter.elongate	0	
 fieldExpr	/raytk/operators/filter/fieldExpr	/raytk/operators/filter	raytkOP	filter	filter/fieldExpr	raytk.operators.filter.fieldExpr	4	
 flip	/raytk/operators/filter/flip	/raytk/operators/filter	raytkOP	filter	filter/flip	raytk.operators.filter.flip	0	
+fold	/raytk/operators/filter/fold	/raytk/operators/filter	raytkOP	filter	filter/fold	raytk.operators.filter.fold	0	
 invert	/raytk/operators/filter/invert	/raytk/operators/filter	raytkOP	filter	filter/invert	raytk.operators.filter.invert	2	
 iteratedTransform	/raytk/operators/filter/iteratedTransform	/raytk/operators/filter	raytkOP	filter	filter/iteratedTransform	raytk.operators.filter.iteratedTransform	3	
 knife	/raytk/operators/filter/knife	/raytk/operators/filter	raytkOP	filter	filter/knife	raytk.operators.filter.knife	3	
