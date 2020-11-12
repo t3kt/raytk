@@ -144,7 +144,8 @@ class CreateMenu:
 		focusCustomParameterPage(newOp, 0)
 		newOp.allowCooking = True
 		ui.undo.endBlock()
-		print(self.ownerComp, f'Created OP: {newOp} from {master}')
+		# newOp.path will still return the temporary path because place may not have completed yet
+		print(self.ownerComp, f'Created OP: {dest.path}/{newOp.name} from {master}')
 		return newOp
 
 	@staticmethod
