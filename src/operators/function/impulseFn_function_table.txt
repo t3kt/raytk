@@ -1,5 +1,5 @@
-name	label	function	params
-exponential	Exponential Impulse	expImpulse	Attack
-sustained	Sustained Impulse	expSustainedImpulse	Attack Release
-quad	Quad Impulse	quaImpulse	Falloff
-poly	Polynomial Impulse	polyImpulse	Polydegree Falloff
+name	label	expr
+exponential	Exponential Impulse	expImpulse(p, THIS_Attack)
+sustained	Sustained Impulse	expSustainedImpulse(p, THIS_Attack, THIS_Release)
+quad	Quad Impulse	quaImpulse(p, THIS_Falloff)
+poly	Polynomial Impulse	polyImpulse(p, THIS_Polydegree, THIS_Falloff)

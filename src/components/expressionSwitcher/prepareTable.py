@@ -10,14 +10,14 @@ _paramNamePattern = re.compile(r'[A-Z][a-z0-9]*')
 
 def onCook(dat: 'scriptDAT'):
 	dat.clear()
-	rawTable = op(parent().par.Table)
+	rawTable = dat.inputs[0]
 	otherCols = [
 		c.val
 		for c in rawTable.row(0)
-		if c.val not in ('name', 'label', 'expr')
-	] if rawTable else []
+		if c.val not in ('name', 'label', 'expr', 'params')
+	] if rawTable.numRows > 0 else []
 	dat.appendRow(['name', 'label', 'expr', 'allArgs', 'params', 'otherArgs'] + otherCols)
-	if not rawTable:
+	if rawTable.numRows < 2:
 		return
 	for row in range(1, rawTable.numRows):
 		expr = str(rawTable[row, 'expr'] or '')
