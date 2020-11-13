@@ -1,1 +1,3 @@
-#define thismap(p, ctx) THIS_FUNC(p)
+float thismap(float p, ContextT ctx) {
+	return THIS_EXPR;
+}

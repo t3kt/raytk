@@ -73,13 +73,13 @@ chopFn	/raytk/operators/function/chopFn	/raytk/operators/function	raytkOP	functi
 crossFn	/raytk/operators/function/crossFn	/raytk/operators/function	raytkOP	function	function/crossFn	raytk.operators.function.crossFn	0	
 cubicPulseFn	/raytk/operators/function/cubicPulseFn	/raytk/operators/function	raytkOP	function	function/cubicPulseFn	raytk.operators.function.cubicPulseFn	0	
 easeFn	/raytk/operators/function/easeFn	/raytk/operators/function	raytkOP	function	function/easeFn	raytk.operators.function.easeFn	0	
-flipFn	/raytk/operators/function/flipFn	/raytk/operators/function	raytkOP	function	function/flipFn	raytk.operators.function.flipFn	0	
+flipFn	/raytk/operators/function/flipFn	/raytk/operators/function	raytkOP	function	function/flipFn	raytk.operators.function.flipFn	1	
 gainFn	/raytk/operators/function/gainFn	/raytk/operators/function	raytkOP	function	function/gainFn	raytk.operators.function.gainFn	0	
 impulseFn	/raytk/operators/function/impulseFn	/raytk/operators/function	raytkOP	function	function/impulseFn	raytk.operators.function.impulseFn	1	
 modulateFn	/raytk/operators/function/modulateFn	/raytk/operators/function	raytkOP	function	function/modulateFn	raytk.operators.function.modulateFn	0	
 multiplyFn	/raytk/operators/function/multiplyFn	/raytk/operators/function	raytkOP	function	function/multiplyFn	raytk.operators.function.multiplyFn	0	
 parabolaFn	/raytk/operators/function/parabolaFn	/raytk/operators/function	raytkOP	function	function/parabolaFn	raytk.operators.function.parabolaFn	0	
-pennerEasingFn	/raytk/operators/function/pennerEasingFn	/raytk/operators/function	raytkOP	function	function/pennerEasingFn	raytk.operators.function.pennerEasingFn	0	
+pennerEasingFn	/raytk/operators/function/pennerEasingFn	/raytk/operators/function	raytkOP	function	function/pennerEasingFn	raytk.operators.function.pennerEasingFn	1	
 powerCurveFn	/raytk/operators/function/powerCurveFn	/raytk/operators/function	raytkOP	function	function/powerCurveFn	raytk.operators.function.powerCurveFn	0	
 sincCurveFn	/raytk/operators/function/sincCurveFn	/raytk/operators/function	raytkOP	function	function/sincCurveFn	raytk.operators.function.sincCurveFn	0	
 hardShadow	/raytk/operators/light/hardShadow	/raytk/operators/light	raytkOP	light	light/hardShadow	raytk.operators.light.hardShadow	2	
