@@ -19,6 +19,9 @@ vec4 getColor(Sdf res, vec3 p) {
 }
 
 void main() {
+	#ifdef RAYTK_HAS_INIT
+	init();
+	#endif
 	vec2 resolution = uTDOutputInfo.res.zw;
 	vec2 fragCoord = vUV.st;
 	vec4 posAndExists = texture(sTD2DInputs[0], fragCoord);
@@ -51,6 +54,9 @@ void main() {
 
 #if defined(THIS_RETURN_TYPE_vec4) || defined(THIS_RETURN_TYPE_float)
 void main() {
+	#ifdef RAYTK_HAS_INIT
+	init();
+	#endif
 	vec2 resolution = uTDOutputInfo.res.zw;
 	vec2 fragCoord = vUV.st;
 	vec4 posAndExists = texture(sTD2DInputs[0], fragCoord);

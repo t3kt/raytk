@@ -5,6 +5,9 @@ vec4 map(vec2 p)
 
 void main()
 {
+	#ifdef RAYTK_HAS_INIT
+	init();
+	#endif
 	vec4 color = map(vUV.st);
 
 	#ifdef OUTPUT_COLOR

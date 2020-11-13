@@ -216,6 +216,10 @@ Light getLight(vec3 p, LightContext lightCtx) {
 
 void main()
 {
+	#ifdef RAYTK_HAS_INIT
+	init();
+	#endif
+
 	#ifdef OUTPUT_DEBUG
 	debugOut = vec4(0);
 	#endif

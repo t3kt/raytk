@@ -30,6 +30,10 @@ vec4 map(vec2 p) {
 
 void main()
 {
+	#ifdef RAYTK_HAS_INIT
+	init();
+	#endif
+
 	vec2 resolution = uTDOutputInfo.res.zw;
 	vec2 fragCoord = vUV.st;//*resolution;
 	fragCoord.x *= uTDOutputInfo.res.z/uTDOutputInfo.res.w;

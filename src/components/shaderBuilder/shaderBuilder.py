@@ -281,6 +281,52 @@ class ShaderBuilder:
 		]
 		return wrapCodeSection(decls, 'outputBuffers')
 
+	def buildOpGlobalsBlock(self):
+		dats = self.getOpsFromDefinitionColumn('opGlobalsPath')
+		return wrapCodeSection(dats, 'opGlobals')
+
+	def buildInitBlock(self):
+		dats = self.getOpsFromDefinitionColumn('initPath')
+		code = _combineCode(dats)
+		if not code.strip():
+			return ' '
+		return wrapCodeSection([
+			'#define RAYTK_HAS_INIT',
+			'void init() {',
+			code,
+			'}',
+		], 'init')
+
+	def buildFunctionsBlock(self):
+		dats = self.getOpsFromDefinitionColumn('functionPath')
+		return wrapCodeSection(dats, 'functions')
+
+	def buildBodyBlock(self, materialTable: 'DAT'):
+		bodyDat = self.ownerComp.par.Bodytemplate.eval()
+		code = bodyDat.text if bodyDat else ''
+		if not code:
+			return ' '
+		if _materialParagraphPlaceholder in code:
+			materialBlock = self._buildMaterialBlock(materialTable)
+			code = code.replace(_materialParagraphPlaceholder, materialBlock, 1)
+		return wrapCodeSection(code, 'body')
+
+	@staticmethod
+	def _buildMaterialBlock(materialTable: 'DAT'):
+		if materialTable.numRows < 2:
+			return ''
+		output = ''
+		for nameCell, pathCell in materialTable.rows()[1:]:
+			if not nameCell:
+				continue
+			codeDat = op(pathCell)
+			materialCode = codeDat.text if codeDat else ''
+			output += f'else if(m == {nameCell.val}) {{\n'
+			output += materialCode + '\n}'
+		return output
+
+_materialParagraphPlaceholder = '// #include <materialParagraph>'
+
 @dataclass
 class _ParamTupletSpec:
 	tuplet: str
@@ -415,20 +461,6 @@ class _VectorArrayParameterProcessor(_ParameterProcessor):
 			code = code.replace(paramExpr.name, paramExpr.expr)
 		return code
 
-
-def buildMaterialBlock(materialTable: 'DAT'):
-	if materialTable.numRows < 2:
-		return ''
-	output = ''
-	for nameCell, pathCell in materialTable.rows()[1:]:
-		if not nameCell:
-			continue
-		codeDat = op(pathCell)
-		materialCode = codeDat.text if codeDat else ''
-		output += f'else if(m == {nameCell.val}) {{\n'
-		output += materialCode + '\n}'
-	return output
-
 def _stringify(val: 'Union[str, DAT]'):
 	if val is None:
 		return ''
@@ -436,11 +468,14 @@ def _stringify(val: 'Union[str, DAT]'):
 		return val.text
 	return str(val)
 
-def wrapCodeSection(code: 'Union[str, DAT, List[Union[str, DAT]]]', name: str):
+def _combineCode(code: 'Union[str, DAT, List[Union[str, DAT]]]'):
 	if isinstance(code, list):
-		code = '\n'.join(_stringify(s) for s in code)
+		return '\n'.join(_stringify(s) for s in code)
 	else:
-		code = _stringify(code)
+		return _stringify(code)
+
+def wrapCodeSection(code: 'Union[str, DAT, List[Union[str, DAT]]]', name: str):
+	code = _combineCode(code)
 	if not code:
 		# return a non-empty string in order to force DATs to be text when using dat.write()
 		return ' '
