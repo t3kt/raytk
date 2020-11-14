@@ -499,3 +499,11 @@ float sdCappedTorus(in vec3 p, in vec2 sc, in float ra, in float rb)
 	float k = (sc.y*p.x>sc.x*p.y) ? dot(p.xy, sc) : length(p.xy);
 	return sqrt(dot(p, p) + ra*ra - 2.0*ra*k) - rb;
 }
+
+float fCone(vec3 p, float radius, float height, vec3 direction, float offset) {
+	p -= direction * offset;
+	p = reflect(p, normalize(mix(vec3(0,1,0), -direction, .5)));
+	//p -= vec3(0,height,0);
+	return fCone(p, radius, height);
+}
+

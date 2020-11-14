@@ -456,3 +456,16 @@ vec3 mengerFold(vec3 p) {
 	p.z += a;
 	return p;
 }
+
+// Barycentric to Cartesian
+vec3 bToC(vec3 A, vec3 B, vec3 C, vec3 barycentric) {
+	return barycentric.x * A + barycentric.y * B + barycentric.z * C;
+}
+
+// Normal for the perpendicular bisector plane of two points
+vec3 bisector(vec3 a, vec3 b) {
+	return normalize(cross(
+		mix(a, b, .5),
+		cross(a, b)
+	));
+}
