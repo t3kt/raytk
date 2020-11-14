@@ -97,30 +97,28 @@ vec3 THIS_pDodecahedron(inout vec3 p, int subdivisions) {
 	return GEODESIC_pbc;
 }
 
-float THIS_face(vec3 p, vec3 n, float s) {
-	float d = RAYTK_MAX_DIST;
+ReturnT thismap(CoordT p, ContextT ctx) {
+	float s = THIS_Divisions;
+	#if defined(THIS_SHAPE_dodecahedron)
+	vec3 n = THIS_pDodecahedron(p, int(s));
+	#elif defined(THIS_SHAPE_icosahedron)
+	vec3 n = THIS_pIcosahedron(p, int(s));
+	#else
+	#error invalidShape
+	#endif
 
+	float d = RAYTK_MAX_DIST;
 	#ifdef THIS_SPIKES
 	float spikeSize = .08 + (2. - s) * THIS_Spikeradius;
 	d = min(d, fCone(p, spikeSize, THIS_Spikelength, n, THIS_Spikeoffset));
 	#endif
-
 	#ifdef THIS_FACES
 	d = min(d, fPlane(p, n, -THIS_Faceoffset));
 	#endif
-
-	return d;
-}
-
-ReturnT thismap(CoordT p, ContextT ctx) {
-	float u = THIS_Divisions;
-	#if defined(THIS_SHAPE_dodecahedron)
-	vec3 n = THIS_pDodecahedron(p, int(u));
-	#elif defined(THIS_SHAPE_icosahedron)
-	vec3 n = THIS_pIcosahedron(p, int(u));
-	#else
-	#error invalidShape
+	#ifdef THIS_USE_INPUT
+	p -= n * (THIS_Spikeoffset + THIS_Spikelength);
+	p = reflect(p, normalize(mix(vec3(0,1,0), -n, .5)));
+	d = min(d, inputOp1(p, ctx).x);
 	#endif
-	float d = THIS_face(p, n, u);
 	return createSdf(d);
 }
