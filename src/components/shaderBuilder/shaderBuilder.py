@@ -85,7 +85,7 @@ class ShaderBuilder:
 
 	def getOpsFromDefinitionColumn(self, column: str):
 		defsTable = self.definitionTable()
-		if defsTable.numRows < 2 or not defsTable[1, column]:
+		if defsTable.numRows < 2 or not defsTable[0, column]:
 			return []
 		results = []
 		for cell in defsTable.col(column)[1:]:
@@ -470,7 +470,12 @@ def _stringify(val: 'Union[str, DAT]'):
 
 def _combineCode(code: 'Union[str, DAT, List[Union[str, DAT]]]'):
 	if isinstance(code, list):
-		return '\n'.join(_stringify(s) for s in code)
+		combined = ''
+		for item in code:
+			val = _stringify(item)
+			if val:
+				combined += val + '\n'
+		return combined
 	else:
 		return _stringify(code)
 
