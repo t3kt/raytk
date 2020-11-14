@@ -110,6 +110,7 @@ crossSdf	/raytk/operators/sdf/crossSdf	/raytk/operators/sdf	raytkOP	sdf	sdf/cros
 cylinderSdf	/raytk/operators/sdf/cylinderSdf	/raytk/operators/sdf	raytkOP	sdf	sdf/cylinderSdf	raytk.operators.sdf.cylinderSdf	3	
 discSdf	/raytk/operators/sdf/discSdf	/raytk/operators/sdf	raytkOP	sdf	sdf/discSdf	raytk.operators.sdf.discSdf	0	
 generalizedPolyhedronSdf	/raytk/operators/sdf/generalizedPolyhedronSdf	/raytk/operators/sdf	raytkOP	sdf	sdf/generalizedPolyhedronSdf	raytk.operators.sdf.generalizedPolyhedronSdf	0	
+geodesicSdf	/raytk/operators/sdf/geodesicSdf	/raytk/operators/sdf	raytkOP	sdf	sdf/geodesicSdf	raytk.operators.sdf.geodesicSdf	0	
 gyroidSdf	/raytk/operators/sdf/gyroidSdf	/raytk/operators/sdf	raytkOP	sdf	sdf/gyroidSdf	raytk.operators.sdf.gyroidSdf	0	
 juliaSdf	/raytk/operators/sdf/juliaSdf	/raytk/operators/sdf	raytkOP	sdf	sdf/juliaSdf	raytk.operators.sdf.juliaSdf	0	
 kaliGeneratorSdf	/raytk/operators/sdf/kaliGeneratorSdf	/raytk/operators/sdf	raytkOP	sdf	sdf/kaliGeneratorSdf	raytk.operators.sdf.kaliGeneratorSdf	1	
