@@ -1,0 +1,7 @@
+name	label	expr	returnType
+seconds	Seconds	time_seconds()	float
+frame	Frame	time_frame()	float
+begin	Begin Frame	time_begin()	float
+end	End Frame	time_end()	float
+fraction	Fraction	time_fraction()	float
+all	All	uTime	vec4
