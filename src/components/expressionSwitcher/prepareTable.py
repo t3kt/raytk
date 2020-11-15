@@ -40,4 +40,7 @@ def onCook(dat: 'scriptDAT'):
 			' '.join(allArgs),
 			' '.join(params),
 			' '.join(otherArgs),
+		] + [
+			rawTable[row, c]
+			for c in otherCols
 		])

@@ -1,8 +1,7 @@
 def onValueChange(par, prev):
 	allParams = op('allParams').col(0)
-	
 	currentParams = str(op('currentExpr')[1, 'params'] or '').split(' ')
-	if not currentParams:
+	if not currentParams or not allParams:
 		return
 	pars = par.owner.pars(*allParams)
 	if not pars:
