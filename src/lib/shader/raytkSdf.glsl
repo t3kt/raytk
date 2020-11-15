@@ -491,6 +491,10 @@ float sdVesica(vec2 p, float r, float d)
 	return ((p.y-b)*d>p.x*b) ? length(p-vec2(0.0,b)) : length(p-vec2(-d,0.0))-r;
 }
 
+float sdSuperQuad(vec2 p, float e) {
+	return pow(pow(p.x,e)+pow(p.y,e),1./e);
+}
+
 // Repeat only a few times: from indices <start> to <stop> (similar to above, but more flexible)
 float pModIntervalMirror1(inout float p, float size, float start, float stop) {
 	float halfsize = size*0.5;

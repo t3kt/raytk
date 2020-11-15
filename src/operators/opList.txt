@@ -138,6 +138,7 @@ rectangleSdf	/raytk/operators/sdf2d/rectangleSdf	/raytk/operators/sdf2d	raytkOP	
 rhombusSdf2d	/raytk/operators/sdf2d/rhombusSdf2d	/raytk/operators/sdf2d	raytkOP	sdf2d	sdf2d/rhombusSdf2d	raytk.operators.sdf2d.rhombusSdf2d	1	
 roundedRectangleSdf2d	/raytk/operators/sdf2d/roundedRectangleSdf2d	/raytk/operators/sdf2d	raytkOP	sdf2d	sdf2d/roundedRectangleSdf2d	raytk.operators.sdf2d.roundedRectangleSdf2d	1	
 starSdf2d	/raytk/operators/sdf2d/starSdf2d	/raytk/operators/sdf2d	raytkOP	sdf2d	sdf2d/starSdf2d	raytk.operators.sdf2d.starSdf2d	0	
+superQuadSdf2d	/raytk/operators/sdf2d/superQuadSdf2d	/raytk/operators/sdf2d	raytkOP	sdf2d	sdf2d/superQuadSdf2d	raytk.operators.sdf2d.superQuadSdf2d	0	
 triangleSdf2d	/raytk/operators/sdf2d/triangleSdf2d	/raytk/operators/sdf2d	raytkOP	sdf2d	sdf2d/triangleSdf2d	raytk.operators.sdf2d.triangleSdf2d	0	
 vesicaSdf2d	/raytk/operators/sdf2d/vesicaSdf2d	/raytk/operators/sdf2d	raytkOP	sdf2d	sdf2d/vesicaSdf2d	raytk.operators.sdf2d.vesicaSdf2d	0	
 extractDebugValues	/raytk/operators/utility/extractDebugValues	/raytk/operators/utility	raytkOP	utility	utility/extractDebugValues	raytk.operators.utility.extractDebugValues	0	
