@@ -12,7 +12,11 @@ uniform float uUseRenderDepth;
 
 Sdf map(vec3 q)
 {
-	Sdf res = thismap(q, createDefaultContext());
+	Context ctx = createDefaultContext();
+	#ifdef RAYTK_GLOBAL_POS_IN_CONTEXT
+	ctx.globalPos = q;
+	#endif
+	Sdf res = thismap(q, ctx);
 	res.x *= 0.5;
 	return res;
 }

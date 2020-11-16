@@ -106,11 +106,18 @@ void blendInSdf(inout Sdf res1, in Sdf res2, in float amt) {
 
 struct Context {
 	vec4 iteration;
+
+	#ifdef RAYTK_GLOBAL_POS_IN_CONTEXT
+	vec3 globalPos;
+	#endif
 };
 
 Context createDefaultContext() {
 	Context ctx;
 	ctx.iteration = vec4(0);
+	#ifdef RAYTK_GLOBAL_POS_IN_CONTEXT
+	ctx.globalPos = vec3(0);
+	#endif
 	return ctx;
 }
 
