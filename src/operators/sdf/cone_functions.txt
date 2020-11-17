@@ -1,0 +1,3 @@
+name	label	expr	params
+cone	Cone	fCone(p - THIS_Translate, THIS_Radius, THIS_Height)	Translatex Translatey Translatez Radius Height
+cappedcone	Capped Cone	sdCappedCone(p - THIS_Translate - vec3(0., THIS_Height*0.5, 0.), THIS_Height*0.5, THIS_Radius, THIS_Radius2)	Translatex Translatey Translatez Radius Radius2 Height

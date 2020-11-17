@@ -485,3 +485,6 @@ float smin(float a, float b, float k){
 float smax(float a, float b, float k) {
 	return -smin(-a, -b, k);
 }
+
+float dot2( in vec2 v ) { return dot(v,v); }
+float dot2( in vec3 v ) { return dot(v,v); }
