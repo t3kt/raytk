@@ -87,7 +87,7 @@ void blendInSdf(inout Sdf res1, in Sdf res2, in float amt) {
 	res1.reflect = res1.reflect || res2.reflect;
 	#endif
 
-	#ifdef RAYTK_ORBIT_SDF
+	#ifdef RAYTK_ORBIT_IN_SDF
 	res1.orbit = mix(res1.orbit, res2.orbit, amt);
 	#endif
 
