@@ -5,8 +5,7 @@ if False:
 	# noinspection PyUnresolvedReferences
 	from _stubs import *
 
-_argPattern = re.compile(r'\bTHIS_([\w]+)\b')
-_paramNamePattern = re.compile(r'[A-Z][a-z0-9]*')
+_paramPattern = re.compile(r'\bTHIS_([A-Z][a-z0-9]*)\b')
 
 def onCook(dat: 'scriptDAT'):
 	dat.clear()
@@ -16,30 +15,23 @@ def onCook(dat: 'scriptDAT'):
 		for c in rawTable.row(0)
 		if c.val not in ('name', 'label', 'expr', 'params')
 	] if rawTable.numRows > 0 else []
-	dat.appendRow(['name', 'label', 'expr', 'allArgs', 'params', 'otherArgs'] + otherCols)
+	dat.appendRow(['name', 'label', 'expr', 'params'] + otherCols)
 	if rawTable.numRows < 2:
 		return
 	for row in range(1, rawTable.numRows):
 		expr = str(rawTable[row, 'expr'] or '')
-		allArgs = []
-		params = []
-		otherArgs = []
-		if 'THIS_' in expr:
-			allArgs = _argPattern.findall(expr)
+		paramsCell = rawTable[row, 'params']
+		if paramsCell is not None:
+			params = paramsCell.val.split(' ') if paramsCell.val else []
+		else:
 			params = []
-			otherArgs = []
-			for arg in allArgs:
-				if _paramNamePattern.fullmatch(arg):
-					params.append(arg)
-				else:
-					otherArgs.append(arg)
+			if 'THIS_' in expr:
+				params = _paramPattern.findall(expr) or []
 		dat.appendRow([
 			rawTable[row, 'name'],
 			rawTable[row, 'label'] or rawTable[row, 'name'],
 			expr,
-			' '.join(allArgs),
 			' '.join(params),
-			' '.join(otherArgs),
 		] + [
 			rawTable[row, c]
 			for c in otherCols
