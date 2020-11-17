@@ -48,7 +48,7 @@ fieldExpr	/raytk/operators/filter/fieldExpr	/raytk/operators/filter	raytkOP	filt
 flip	/raytk/operators/filter/flip	/raytk/operators/filter	raytkOP	filter	filter/flip	raytk.operators.filter.flip	0	
 fold	/raytk/operators/filter/fold	/raytk/operators/filter	raytkOP	filter	filter/fold	raytk.operators.filter.fold	0	
 invert	/raytk/operators/filter/invert	/raytk/operators/filter	raytkOP	filter	filter/invert	raytk.operators.filter.invert	2	
-iteratedTransform	/raytk/operators/filter/iteratedTransform	/raytk/operators/filter	raytkOP	filter	filter/iteratedTransform	raytk.operators.filter.iteratedTransform	3	
+iteratedTransform	/raytk/operators/filter/iteratedTransform	/raytk/operators/filter	raytkOP	filter	filter/iteratedTransform	raytk.operators.filter.iteratedTransform	4	
 knife	/raytk/operators/filter/knife	/raytk/operators/filter	raytkOP	filter	filter/knife	raytk.operators.filter.knife	3	
 limitField	/raytk/operators/filter/limitField	/raytk/operators/filter	raytkOP	filter	filter/limitField	raytk.operators.filter.limitField	3	
 mirrorOctant	/raytk/operators/filter/mirrorOctant	/raytk/operators/filter	raytkOP	filter	filter/mirrorOctant	raytk.operators.filter.mirrorOctant	2	

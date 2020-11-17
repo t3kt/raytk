@@ -13,6 +13,7 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 		orb = min(orb, vec4(abs(q - p), length(p)));
 	#endif
 		TRANSFORM_CODE();
+		CUSTOM_CODE();
 	}
 	ReturnT res = inputOp1(p, ctx);
 #ifdef RAYTK_ORBIT_IN_SDF
