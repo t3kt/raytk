@@ -41,7 +41,7 @@ positionField	/raytk/operators/field/positionField	/raytk/operators/field	raytkO
 reorderField	/raytk/operators/field/reorderField	/raytk/operators/field	raytkOP	field	field/reorderField	raytk.operators.field.reorderField	0	
 textureField	/raytk/operators/field/textureField	/raytk/operators/field	raytkOP	field	field/textureField	raytk.operators.field.textureField	6	
 timeField	/raytk/operators/field/timeField	/raytk/operators/field	raytkOP	field	field/timeField	raytk.operators.field.timeField	0	
-waveField	/raytk/operators/field/waveField	/raytk/operators/field	raytkOP	field	field/waveField	raytk.operators.field.waveField	1	
+waveField	/raytk/operators/field/waveField	/raytk/operators/field	raytkOP	field	field/waveField	raytk.operators.field.waveField	2	
 bend	/raytk/operators/filter/bend	/raytk/operators/filter	raytkOP	filter	filter/bend	raytk.operators.filter.bend	2	
 elongate	/raytk/operators/filter/elongate	/raytk/operators/filter	raytkOP	filter	filter/elongate	raytk.operators.filter.elongate	0	
 fieldExpr	/raytk/operators/filter/fieldExpr	/raytk/operators/filter	raytkOP	filter	filter/fieldExpr	raytk.operators.filter.fieldExpr	4	
@@ -85,6 +85,7 @@ pennerEasingFn	/raytk/operators/function/pennerEasingFn	/raytk/operators/functio
 powerCurveFn	/raytk/operators/function/powerCurveFn	/raytk/operators/function	raytkOP	function	function/powerCurveFn	raytk.operators.function.powerCurveFn	0	
 sincCurveFn	/raytk/operators/function/sincCurveFn	/raytk/operators/function	raytkOP	function	function/sincCurveFn	raytk.operators.function.sincCurveFn	0	
 stepFn	/raytk/operators/function/stepFn	/raytk/operators/function	raytkOP	function	function/stepFn	raytk.operators.function.stepFn	0	
+waveFn	/raytk/operators/function/waveFn	/raytk/operators/function	raytkOP	function	function/waveFn	raytk.operators.function.waveFn	0	
 hardShadow	/raytk/operators/light/hardShadow	/raytk/operators/light	raytkOP	light	light/hardShadow	raytk.operators.light.hardShadow	2	
 pointLight	/raytk/operators/light/pointLight	/raytk/operators/light	raytkOP	light	light/pointLight	raytk.operators.light.pointLight	2	
 softShadow	/raytk/operators/light/softShadow	/raytk/operators/light	raytkOP	light	light/softShadow	raytk.operators.light.softShadow	3	
