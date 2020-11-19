@@ -923,7 +923,7 @@ class DAT(OP):
 	def run(
 			self, *args, endFrame=False, fromOP: 'OP' = None, asParameter=False, group=None, delayFrames=0,
 			delayMilliSeconds=0, delayRef: 'OP' = None) -> Run: pass
-	module: _T.Any
+	module: 'MOD'
 	numRows: int
 	numCols: int
 	text: str

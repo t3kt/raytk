@@ -1,5 +1,5 @@
 import re
-from raytkUtil import getToolkit, getActiveEditor, detachTox, focusCustomParameterPage
+from raytkUtil import getToolkit, getActiveEditor, detachTox, focusCustomParameterPage, ROPInfo
 
 # noinspection PyUnreachableCode
 if False:
@@ -143,9 +143,12 @@ class CreateMenu:
 		enableCloning.val = bool(self.develEnabled)
 		focusCustomParameterPage(newOp, 0)
 		newOp.allowCooking = True
+		ropInfo = ROPInfo(newOp)
+		ropInfo.invokeCallback('onCreate', master=master)
 		ui.undo.endBlock()
 		# newOp.path will still return the temporary path because place may not have completed yet
 		print(self.ownerComp, f'Created OP: {dest.path}/{newOp.name} from {master}')
+		# print(self.ownerComp, f'Created OP: {newOp.path} from {master}')
 		return newOp
 
 	@staticmethod

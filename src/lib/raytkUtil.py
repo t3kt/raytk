@@ -20,6 +20,7 @@ class _OpDefPars(_OpMetaPars):
 	Macrotable: 'DatParamT'
 	Params: 'StrParamT'
 	Specialparams: 'StrParamT'
+	Callbacks: 'DatParamT'
 
 class ROPInfo:
 	rop: 'Optional[OP]'
@@ -114,6 +115,20 @@ class ROPInfo:
 	@property
 	def toxFile(self) -> 'Optional[str]':
 		return self.rop.par.externaltox.eval() or None
+
+	@property
+	def callbacks(self) -> 'Optional[MOD]':
+		if not self.opDefPar or not self.opDefPar['Callbacks']:
+			return None
+		dat = self.opDefPar.Callbacks.eval()
+		if not dat:
+			return None
+		return dat.module
+
+	def invokeCallback(self, name: str, **kwargs):
+		cb = self.callbacks
+		if cb and hasattr(cb, name):
+			getattr(cb, name)(**kwargs)
 
 def isROP(o: 'OP'):
 	return bool(o) and o.isCOMP and RaytkTags.raytkOP.isOn(o)
