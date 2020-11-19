@@ -109,7 +109,7 @@ apollonianSdf	/raytk/operators/sdf/apollonianSdf	/raytk/operators/sdf	raytkOP	sd
 boxFrameSdf	/raytk/operators/sdf/boxFrameSdf	/raytk/operators/sdf	raytkOP	sdf	sdf/boxFrameSdf	raytk.operators.sdf.boxFrameSdf	3	
 boxSdf	/raytk/operators/sdf/boxSdf	/raytk/operators/sdf	raytkOP	sdf	sdf/boxSdf	raytk.operators.sdf.boxSdf	4	
 capsuleSdf	/raytk/operators/sdf/capsuleSdf	/raytk/operators/sdf	raytkOP	sdf	sdf/capsuleSdf	raytk.operators.sdf.capsuleSdf	0	
-coneSdf	/raytk/operators/sdf/coneSdf	/raytk/operators/sdf	raytkOP	sdf	sdf/coneSdf	raytk.operators.sdf.coneSdf	1	
+coneSdf	/raytk/operators/sdf/coneSdf	/raytk/operators/sdf	raytkOP	sdf	sdf/coneSdf	raytk.operators.sdf.coneSdf	2	
 crossSdf	/raytk/operators/sdf/crossSdf	/raytk/operators/sdf	raytkOP	sdf	sdf/crossSdf	raytk.operators.sdf.crossSdf	3	
 cylinderSdf	/raytk/operators/sdf/cylinderSdf	/raytk/operators/sdf	raytkOP	sdf	sdf/cylinderSdf	raytk.operators.sdf.cylinderSdf	3	
 discSdf	/raytk/operators/sdf/discSdf	/raytk/operators/sdf	raytkOP	sdf	sdf/discSdf	raytk.operators.sdf.discSdf	0	
