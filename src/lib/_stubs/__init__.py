@@ -320,7 +320,7 @@ class Par:
 
 	startSection: bool
 	readOnly: bool
-	tuplet: '_ParTupletT'
+	tuplet: 'ParTupletT'
 	tupletName: str
 	min: _ValueT
 	max: _ValueT
@@ -371,7 +371,7 @@ class Par:
 	def __float__(self) -> float: pass
 	def __str__(self) -> str: pass
 
-_ParTupletT = _T.Union[
+ParTupletT = _T.Union[
 	_T.Tuple['Par'], _T.Tuple['Par', 'Par'], _T.Tuple['Par', 'Par', 'Par'], _T.Tuple['Par', 'Par', 'Par', 'Par']]
 
 class ParCollection:
@@ -385,13 +385,13 @@ class ParCollection:
 class Page:
 	name: str
 	owner: 'OP'
-	parTuplets: _T.List[_ParTupletT]
+	parTuplets: _T.List[ParTupletT]
 	pars: _T.List['Par']
 	index: int
 	isCustom: bool
 
-	def _appendSized(self, name, label=None, size=1, order=None, replace=True) -> _ParTupletT: pass
-	def _appendBasic(self, name, label=None, order=None, replace=True) -> _ParTupletT: pass
+	def _appendSized(self, name, label=None, size=1, order=None, replace=True) -> ParTupletT: pass
+	def _appendBasic(self, name, label=None, order=None, replace=True) -> ParTupletT: pass
 
 	appendInt = _appendSized
 	appendFloat = _appendSized
@@ -426,7 +426,7 @@ class Page:
 	appendMomentary = _appendBasic
 	appendHeader = _appendBasic
 
-	def appendPar(self, name: str, par: 'Par' = None, label=None, order=None, replace=True) -> _ParTupletT: pass
+	def appendPar(self, name: str, par: 'Par' = None, label=None, order=None, replace=True) -> ParTupletT: pass
 
 	def sort(self, *parameters: str): pass
 	def destroy(self): pass
@@ -447,7 +447,7 @@ class OP:
 	pages: _T.List['Page']
 	customPars: _T.List['Par']
 	customPages: _T.List['Page']
-	customTuplets: _T.List[_ParTupletT]
+	customTuplets: _T.List[ParTupletT]
 	replicator: _T.Optional['OP']
 	storage: _T.Dict[str, _T.Any]
 	tags: _T.Set[str]
