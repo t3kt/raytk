@@ -155,3 +155,27 @@ def updateLibraryMenuPar(libsComp: 'COMP'):
 	libs = libsComp.findChildren(type=DAT, maxDepth=1, tags=['library'])
 	libs.sort(key=lambda l: -l.nodeY)
 	p.menuNames = [lib.name for lib in libs]
+
+def prepareMacroTable(dat: 'scriptDAT', typeTable: 'DAT'):
+	dat.clear()
+	# 'THIS_' + me.inputCell.val.replace('Type', '').upper() + '_TYPE_' + me.inputCell.offset(0, 1)
+	for kind, typeName in typeTable.rows():
+		dat.appendRow([
+			'',
+			f'THIS_{kind.val.replace("Type", "").upper()}_TYPE_{typeName.val}',
+			'',
+		])
+	macros = parent().par.Macrotable.eval()  # type: DAT
+	if macros:
+		if macros.numCols == 2:
+			dat.appendRows([
+				[''] + [c.val for c in cells]
+				for cells in macros.rows()
+			])
+		elif macros.numCols == 1:
+			dat.appendRows([
+				['', c.val, '']
+				for c in macros.col(0)
+			])
+		else:
+			dat.appendRows(macros.rows())
