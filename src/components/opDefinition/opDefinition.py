@@ -23,18 +23,48 @@ def buildName():
 def evaluateTypeProperty(par: 'Par', fieldName: str, defVal: str):
 	if par != 'useinput':
 		return str(par)
-	inputDef = op('input_def_1')
+	inputDef = op('input_defs')
 	if inputDef.numRows > 1:
 		val = inputDef[1, fieldName]
 		if val and val != 'useinput':
 			return str(val)
 	return defVal
 
-def extractInputNames(dat: 'DAT', inDats: 'List[DAT]'):
+def buildInputTable(dat: 'DAT', inDats: 'List[DAT]'):
 	dat.clear()
-	for inDat in inDats:
-		name = str(inDat[1, 'name'] or '')
-		dat.appendRow([f'inputName{inDat.digits}', name])
+	dat.appendRow(['slot', 'inputFunc', 'name'])
+	for i, inDat in enumerate(inDats):
+		slot = f'inputName{i + 1}'
+		if inDat.numRows < 2 or not inDat[1, 'name'].val:
+			dat.appendRow([slot])
+		else:
+			dat.appendRow([
+				slot,
+				f'inputOp{i + 1}',
+				inDat[1, 'name'],
+			])
+
+def combineInputDefinitions(dat: 'DAT', inDats: 'List[DAT]'):
+	dat.clear()
+	if not inDats:
+		return
+	for d in inDats:
+		if d.numRows > 0:
+			dat.appendRow(d.row(0))
+			break
+	inDats = [d for d in inDats if d.numRows > 1]
+	if not inDats:
+		return
+	usedNames = set()
+	for d in reversed(inDats):
+		insertRow = 0
+		for cells in d.rows()[1:]:
+			name = cells[0].val
+			if not name or name in usedNames:
+				continue
+			usedNames.add(name)
+			dat.appendRow(cells, insertRow)
+			insertRow += 1
 
 def _getRegularParams() -> 'List[Par]':
 	host = parent().par.Hostop.eval()
