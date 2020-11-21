@@ -25,10 +25,10 @@ class CustomOp:
 
 	def Installinhost(self, _=None):
 		host = self.host()
-		page = host.appendCustomPage('Actions')
+		page = host.appendCustomPage('Tools')
 		for par in self.ownerComp.pars(
 				'Create*', 'Removeunusedparams'):
-			page.appendPulse(par.name, par.label)
+			page.appendPulse(par.name, label=par.label)
 
 	def Createopglobals(self, _=None):
 		host = self.host()
@@ -56,7 +56,7 @@ class CustomOp:
 			self.ownerComp.par.Defaultfunction.eval() or self.ownerComp.op('defaultFunctionTemplate'),
 			'_function',
 			0)
-		host.par.Functemplate = dat
+		host.par.Function = dat
 
 	def Creatematerial(self, _=None):
 		host = self.host()
@@ -77,8 +77,10 @@ class CustomOp:
 
 	def _updateParams(self, removeUnused: bool, createMissing: bool):
 		host = self.host()
+		print(f'Updating params for {host}')
 		referencedNames = self._allReferencedParamNames()
 		specs = self._paramSpecsFromCode()
+		print(f'  found specs: {specs!r}')
 
 		TDJSON.addParametersFromJSONDict(
 			host,
@@ -89,10 +91,19 @@ class CustomOp:
 			fixParNames=False,
 		)
 
-		if createMissing:
+		if createMissing and referencedNames:
+			page = host.appendCustomPage('Parameters')
+			host.sortCustomPages(*(['Parameters'] + [pg.name for pg in host.customPages if pg.name != 'Parameters']))
+			knownTupletNames = [
+				parTuplet[0].tupletName
+				for parTuplet in host.customTuplets
+			]
 			for name in referencedNames:
+				# attempting to check host.par[tupletName] throws an exception instead of just returning none,
+				# so avoid doing that
+				if name in knownTupletNames:
+					continue
 				if host.par[name] is None:
-					page = host.appendCustomPage('Parameters')
 					page.appendFloat(name)
 
 		if removeUnused:
@@ -106,22 +117,28 @@ class CustomOp:
 					continue
 				parTuplet[0].destroy()
 
-		opDef = self.opDef()
-		if opDef:
-			par = opDef.par.Params
-			if par.mode == ParMode.CONSTANT:
-				names = set(referencedNames)
-				names.update({
-					spec['name']
-					for spec in specs.values()
-					if spec.get('name')
-				})
-				par.val = ' '.join(names)
+		paramTable = self.ownerComp.par.Paramnametable.eval()  # type: DAT
+		if paramTable:
+			paramTable.clear()
+			names = []
+			tupletNames = {
+				parTuplet[0].tupletName: [p.name for p in parTuplet]
+				for parTuplet in self._hostParamTuplets()
+			}
+			for name in list(referencedNames) + [spec['name'] for spec in specs.values() if spec.get('name')]:
+				if name not in tupletNames:
+					if name not in names:
+						names.append(name)
+				else:
+					for partName in tupletNames[name]:
+						if partName not in names:
+							names.append(partName)
+			paramTable.appendRow([' '.join(names)])
 
 	def _allCodeBlocks(self) -> 'List[str]':
 		return [
 			par.eval().text
-			for par in self.host().pars('Opglobals', 'Initcode', 'Functemplate', 'Materialcode')
+			for par in self.host().pars('Opglobals', 'Initcode', 'Function', 'Materialcode')
 			if par.eval()
 		]
 
