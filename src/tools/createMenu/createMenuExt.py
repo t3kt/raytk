@@ -148,7 +148,6 @@ class CreateMenu:
 		ui.undo.endBlock()
 		# newOp.path will still return the temporary path because place may not have completed yet
 		print(self.ownerComp, f'Created OP: {dest.path}/{newOp.name} from {master}')
-		# print(self.ownerComp, f'Created OP: {newOp.path} from {master}')
 		return newOp
 
 	@staticmethod
