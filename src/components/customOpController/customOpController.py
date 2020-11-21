@@ -70,7 +70,6 @@ class CustomOp:
 
 	def Createmissingparams(self, _=None):
 		self._updateParams(removeUnused=False, createMissing=True)
-		pass
 
 	def Removeunusedparams(self, _=None):
 		self._updateParams(removeUnused=True, createMissing=False)
@@ -80,13 +79,12 @@ class CustomOp:
 		print(f'Updating params for {host}')
 		referencedNames = self._allReferencedParamNames()
 		specs = self._paramSpecsFromCode()
-		print(f'  found specs: {specs!r}')
 
 		TDJSON.addParametersFromJSONDict(
 			host,
 			specs,
 			replace=True,
-			setValues=False,
+			setValues=True,
 			ignoreAttrErrors=True,
 			fixParNames=False,
 		)
@@ -137,7 +135,13 @@ class CustomOp:
 
 	def _allCodeBlocks(self) -> 'List[str]':
 		return [
-			par.eval().text
+			dat.text
+			for dat in self.codeDats()
+		]
+
+	def codeDats(self) -> 'List[DAT]':
+		return [
+			par.eval()
 			for par in self.host().pars('Opglobals', 'Initcode', 'Function', 'Materialcode')
 			if par.eval()
 		]
