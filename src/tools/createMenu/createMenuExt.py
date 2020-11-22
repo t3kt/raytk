@@ -127,14 +127,10 @@ class CreateMenu:
 		if not dest:
 			return
 		ui.undo.startBlock(f'Create ROP {master.name}')
-		if op('/sys/quiet'):
-			bufferArea = op('/sys/quiet').create(baseCOMP)
-		else:
-			bufferArea = dest
+		bufferArea = dest
 		newOp = bufferArea.copy(
 			master,
 			name=master.name + ('1' if tdu.digits(master.name) is None else ''))  # type: COMP
-		pane.placeOPs([newOp])
 		newOp.nodeCenterX = pane.x
 		newOp.nodeCenterY = pane.y
 		detachTox(newOp)
@@ -146,8 +142,7 @@ class CreateMenu:
 		ropInfo = ROPInfo(newOp)
 		ropInfo.invokeCallback('onCreate', master=master)
 		ui.undo.endBlock()
-		# newOp.path will still return the temporary path because place may not have completed yet
-		print(self.ownerComp, f'Created OP: {dest.path}/{newOp.name} from {master}')
+		print(self.ownerComp, f'Created OP: {newOp} from {master}')
 		return newOp
 
 	@staticmethod
