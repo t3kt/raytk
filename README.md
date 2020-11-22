@@ -32,7 +32,25 @@ You've just created your first RayTK network!
 
 ![Basic RayTK Network](docs/img/intro-basicNetwork.png)
 
-The `boxFrameSdf` is an `SDF` operator, which is how you define geometry. It's equivalent to `SOP`s like `Sphere`, `Box`, etc.
+The `boxFrameSdf` is an `SDF` (signed distance function) operator, which is how you define geometry. It's equivalent to `SOP`s like `Sphere`, `Box`, etc.
+
+### Add to Your Network
+
+Now that you have a complete render setup, you can start to add to and change your scene.
+
+1. Add a `rotate` between the `boxFrameSdf` and the `raymarchRender3d`.
+2. Adjust the "Rotate XYZ" parameters and watch the box rotate in the output.
+
+![Basic RayTK Network](docs/img/intro-basicNetwork2.png)
+
+You've just created your first "filter" ROP! It modifies the behavior of another ROP.
+
+3. Add a `basicMat` between the `rotate` and the `raymarchRender3d`.
+4. Try out different color settings.
+
+![Basic RayTK Network](docs/img/intro-basicNetwork3.png)
+
+You've just created your first "material" ROP. It assigns a material to a ROP, which is used to determine what colors it should use.
 
 ## How RayTK works
 
