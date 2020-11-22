@@ -488,3 +488,7 @@ float smax(float a, float b, float k) {
 
 float dot2( in vec2 v ) { return dot(v,v); }
 float dot2( in vec3 v ) { return dot(v,v); }
+
+float map01(float value, float inMin, float inMax) {
+	return (value - inMin) / (inMax - inMin);
+}
