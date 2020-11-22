@@ -56,6 +56,7 @@ There are several types of data that a `ROP` function can return, including:
 There are several types of coordinates that a `ROP` can use:
 * `vec3`: 3D coordinates, which are the main coordinate type for SDFs and raymarching.
 * `vec2`: 2D coordinates, which are used in 2D SDFs, texture lookups, and screen UV coordinates.
+* `float`: 1D coordinates, which can be used for 1D vector fields.
 
 ### Execution Chain
 
