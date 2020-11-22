@@ -1,6 +1,6 @@
 # RayTK
 
-RayTK is a library of TouchDesigner components that construct raymarching shaders (and other types of shaders) using networks of COMPs the TouchDesigner network editor.
+RayTK is a library of TouchDesigner components that construct raymarching shaders (and other types of shaders) with networks of COMPs using the TouchDesigner network editor.
 
 RayTK consists of a set of operator (ROP) components, and a set of tools for working with them.
 
@@ -24,7 +24,7 @@ To create your first ROP, use the keyboard shortcut `alt + r` to open up the edi
 
 1. Choose a `boxFrameSdf`, and a new COMP will be created in the network editor.
 1. Create a `raymarchRender3d` and connect its input to the output of your `boxFrameSdf`.
-1. Create a `Camera COMP`, and drag it onto the `raymarchRender3d`'s `Camera` parameter.
+1. Create a `lookAtCamera` and connect it to the "camera" input on the `raymarchRender3d`.
 1. Connect a `Null TOP` to the first output of `raymarchRender3d`.
 1. Play around with the parameters of the `boxFrameSdf`.
 
@@ -67,3 +67,9 @@ Each type of Output ROP has a block of GLSL called the "body", which contains th
 In the case of `render2d` (when using a vector field input ROP), it calls the input function once per pixel, to determine the color of that pixel.
 
 In the case of `raymarchRender3d`, the main scene input is executed once per each step of the rays. In addition to the scene input, `raymarchRender3d` has an input for a camera function, which called for each pixel of output to determine where the ray goes, and a light function that is called by materials to determine colors.
+
+## How and Why Was This Created
+
+The goal of RayTK is to allow artists without a strong knowledge of GLSL to render raymarched scenes, using the familiar elements of the TouchDesigner network editor. Raymarching has been around for a long time, but it is very different from traditional rendering, and it requires a strong knowledge of GLSL and vector math.
+ 
+RayTK is a ground-up rewrite of a previous similar [project](https://github.com/t3kt/raymarching), which was based on Patrik Lechner's [TDRaymarchToolkit](https://github.com/hrtlacek/TDraymarchToolkit), which was based on [hg_sdf](http://mercury.sexy/hg_sdf/) and the work of [Inigo Quilez](https://iquilezles.org/www/articles/distfunctions/distfunctions.htm).
