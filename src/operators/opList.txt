@@ -4,7 +4,7 @@ fisheyeCamera	/raytk/operators/camera/fisheyeCamera	/raytk/operators/camera	rayt
 lookAtCamera	/raytk/operators/camera/lookAtCamera	/raytk/operators/camera	raytkOP	camera	camera/lookAtCamera	raytk.operators.camera.lookAtCamera	2	
 orthoCamera	/raytk/operators/camera/orthoCamera	/raytk/operators/camera	raytkOP	camera	camera/orthoCamera	raytk.operators.camera.orthoCamera	2	
 splitCamera	/raytk/operators/camera/splitCamera	/raytk/operators/camera	raytkOP	camera	camera/splitCamera	raytk.operators.camera.splitCamera	2	
-blend	/raytk/operators/combine/blend	/raytk/operators/combine	raytkOP	combine	combine/blend	raytk.operators.combine.blend	2	beta
+blend	/raytk/operators/combine/blend	/raytk/operators/combine	raytkOP	combine	combine/blend	raytk.operators.combine.blend	3	
 boundLimit	/raytk/operators/combine/boundLimit	/raytk/operators/combine	raytkOP	combine	combine/boundLimit	raytk.operators.combine.boundLimit	0	beta
 combineChamfer	/raytk/operators/combine/combineChamfer	/raytk/operators/combine	raytkOP	combine	combine/combineChamfer	raytk.operators.combine.combineChamfer	1	
 combineColumns	/raytk/operators/combine/combineColumns	/raytk/operators/combine	raytkOP	combine	combine/combineColumns	raytk.operators.combine.combineColumns	2	

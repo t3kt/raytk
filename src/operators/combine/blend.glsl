@@ -5,6 +5,8 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 		#else
 			return ReturnT(0);
 		#endif
+	#elif THIS_INPUT_COUNT == 1
+		return THIS_INPUT_1(p, ctx);
 	#else
 		float blend = clamp(THIS_Blend, 0, THIS_INPUT_COUNT-1);
 		if (blend == 0) {
@@ -26,29 +28,38 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 			}
 		#endif
 
-
-		float ratio = fract(blend);
 		int iA = int(blend);
-
 		ReturnT resA;
 		ReturnT resB;
-		#if THIS_INPUT_COUNT > 3
-			if (blend == 1.0) {
-				return THIS_INPUT_2(p, ctx);
+		#if THIS_INPUT_COUNT == 2
+			resA = THIS_INPUT_1(p, ctx);
+			resB = THIS_INPUT_2(p, ctx);
+		#else
+			if (iA == 0) {
+				resA = THIS_INPUT_1(p, ctx);
+				resB = THIS_INPUT_2(p, ctx);
 			}
-			if (blend < 1.0) {
-
-			}
-			ReturnT res4 = THIS_INPUT_4(p, ctx);
+			#if THIS_INPUT_COUNT > 2
+				else if (iA == 1) {
+					resA = THIS_INPUT_2(p, ctx);
+					resB = THIS_INPUT_3(p, ctx);
+				}
+				#if THIS_INPUT_COUNT > 3
+					else if (iA == 2) {
+						resA = THIS_INPUT_2(p, ctx);
+						resB = THIS_INPUT_3(p, ctx);
+					}
+				#endif
+			#endif
 		#endif
 
-		ReturnT res1 = THIS_INPUT_1(p, ctx);
-		#if THIS_INPUT_COUNT > 1
-			ReturnT res2 = THIS_INPUT_2(p, ctx);
+		float ratio = fract(blend);
+		#if defined(THIS_RETURN_TYPE_Sdf)
+		resA.x = mix(resA.x, resB.x, ratio);
+		blendInSdf(resA, resB, ratio);
+		return resA;
+		#else
+		return mix(resA, resB, ratio);
 		#endif
-		#if THIS_INPUT_COUNT > 2
-			ReturnT res3 = THIS_INPUT_3(p, ctx);
-		#endif
-		return res;
 	#endif
 }
