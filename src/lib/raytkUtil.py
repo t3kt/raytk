@@ -170,6 +170,7 @@ _buildExcludeColor = 0.1, 0.1, 0.1
 _fileSyncColor = 0.65, 0.5, 1
 _betaColor = 1, 0, 0.5
 _buildLockColor = 0, 0.68, 0.543
+_validationColor = 1, 0.95, 0.45
 
 class Tag:
 	def __init__(
@@ -246,6 +247,7 @@ class RaytkTags:
 	buildLock = Tag('buildLock', _buildLockColor)
 	fileSync = Tag('fileSync', _fileSyncColor, _updateFileSyncPars)
 	beta = Tag('raytkBeta', _betaColor)
+	validation = Tag('raytkValidation', _validationColor)
 
 def getActiveEditor() -> 'NetworkEditor':
 	pane = ui.panes.current

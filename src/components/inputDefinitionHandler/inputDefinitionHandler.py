@@ -4,6 +4,7 @@ from raytkUtil import TypeTableHelper
 if False:
 	# noinspection PyUnresolvedReferences
 	from _stubs import *
+	from typing import Callable, Optional
 
 def checkInputDefinition(dat: 'DAT'):
 	dat.clear()
@@ -11,26 +12,26 @@ def checkInputDefinition(dat: 'DAT'):
 	clearInputTypeErrors()
 	if dat.numRows < 2:
 		return
-	checkType(str(dat[1, 'coordType'] or ''), 'coordType')
-	checkType(str(dat[1, 'contextType'] or ''), 'contextType')
-	checkType(str(dat[1, 'returnType'] or ''), 'returnType')
+	_checkTableTypes(dat, parent().addScriptError)
 
-def checkType(typeName: str, typeCategory: str, silent=False):
+def _checkType(typeName: str, typeCategory: str, onError: 'Optional[Callable[[str], None]]'):
 	if not typeName:
-		if not silent:
-			reportError(f'Invalid input {typeCategory}: {typeName!r}')
+		if onError:
+			onError(f'Invalid input {typeCategory}: {typeName!r}')
 		return False
 	supported = tdu.split(parent().par['Support' + typeCategory.lower() + 's'] or '')
 	if '*' in supported or typeName in supported:
 		return True
 	if parent().par['Support' + typeCategory.lower() + typeName.lower()]:
 		return True
-	if not silent:
-		reportError(f'Input does not support {typeCategory} {typeName}')
+	if onError:
+		onError(f'Input does not support {typeCategory} {typeName}')
 	return False
 
-def reportError(message: str):
-	parent().addScriptError(message)
+def _checkTableTypes(dat: 'DAT', onError: 'Optional[Callable[[str], None]]'):
+	_checkType(str(dat[1, 'coordType'] or ''), 'coordType', onError)
+	_checkType(str(dat[1, 'contextType'] or ''), 'contextType', onError)
+	_checkType(str(dat[1, 'returnType'] or ''), 'returnType', onError)
 
 def clearInputTypeErrors():
 	parent().clearScriptErrors(error='Input does not support *')
@@ -58,8 +59,16 @@ def buildSupportedTypeTable(dat: 'DAT'):
 					[
 						name
 						for name in allNames
-						if helper.isTypeAvailableForCategory(name, filterColumn) and checkType(name, category, silent=True)
+						if helper.isTypeAvailableForCategory(name, filterColumn) and _checkType(name, category, onError=None)
 					]),
 			])
 
+def buildValidationErrors(dat: 'DAT', inputDef: 'DAT'):
+	dat.clear()
 
+	def _addError(msg):
+		if not dat.numRows:
+			dat.appendRow(['path', 'level', 'message'])
+		dat.appendRow([parent().path, 'error', msg])
+
+	_checkTableTypes(inputDef, _addError)

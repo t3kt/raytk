@@ -220,6 +220,9 @@ class Tools:
 	def setFileSyncOnSelected(self, state: bool):
 		self.applyTagToSelected(RaytkTags.fileSync, state)
 
+	def setValidationOnSelected(self, state: bool):
+		self.applyTagToSelected(RaytkTags.validation, state)
+
 	def recloneSelected(self):
 		self.forEachSelected(recloneComp)
 
