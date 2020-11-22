@@ -60,8 +60,10 @@ There are several types of coordinates that a ROP can use:
 
 ### Execution Chain
 
-The shader that an Output ROP generates will execute the functions provided as inputs to the ROP.
+The Output ROP at the end of a chain of ROPs generates a shader along with things like uniforms, textures, etc. It then runs that shader in a `GLSL TOP` and outputs the results.
+
+Each type of Output ROP has a block of GLSL called the "body", which contains the `main()` function. The body code will call functions from input ROPs for various purposes.
 
 In the case of `render2d` (when using a vector field input ROP), it calls the input function once per pixel, to determine the color of that pixel.
 
-In the case of `raymarchRender3d`, the main scene input is executed once per each step of the rays. In addition to the scene input, `raymarchRender3d` has an input for a camera function, which called for each pixel of output to determine where the ray goes.
+In the case of `raymarchRender3d`, the main scene input is executed once per each step of the rays. In addition to the scene input, `raymarchRender3d` has an input for a camera function, which called for each pixel of output to determine where the ray goes, and a light function that is called by materials to determine colors.
