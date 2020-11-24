@@ -14,7 +14,7 @@ Note that there are many of files in the repository itself, but these are only n
 
 ### Load the Library
 
-Drag the tox file into your project. It's a good idea to put it in the *root* network (`/` rather than `/project1`), but not strictly necessary.
+Drag the tox file into the *root* network (`/` rather than `/project1`). There is a bug in the library that currently requires it to be placed at the root for the "Create" menu to work properly. This will be addressed in the next release.
 
 ### Creating a Network
 
