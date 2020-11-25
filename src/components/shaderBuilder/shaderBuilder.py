@@ -12,6 +12,7 @@ if False:
 		Inlinereadonlyparameters: 'Union[bool, Par]'
 		Simplifynames: 'Union[bool, Par]'
 		Generatetypedefs: 'Union[bool, Par]'
+		Includemode: 'Union[str, Par]'
 
 	class _OwnerCompPar(_ConfigPar):
 		Globalprefix: 'Union[DAT, str, Par]'
@@ -137,8 +138,8 @@ class ShaderBuilder:
 		# 	return processor.processCodeBlock(code)
 		return code
 
-	def getLibraryDats(self, onWarning: Callable[[str], None] = None):
-		requiredLibNames = parent().par.Librarynames.eval().strip().split(' ')  # type: List[str]
+	def getLibraryDats(self, onWarning: Callable[[str], None] = None) -> 'List[DAT]':
+		requiredLibNames = self.ownerComp.par.Librarynames.eval().strip().split(' ')  # type: List[str]
 		requiredLibNames = [n for n in requiredLibNames if n]
 		defsTable = self.definitionTable()
 		if defsTable[0, 'libraryNames']:
@@ -169,12 +170,21 @@ class ShaderBuilder:
 		return dats
 
 	def buildLibraryIncludes(self, onWarning: Callable[[str], None] = None):
+		mode = str(self.configPar()['Includemode'] or 'includelibs')
+		print(self.ownerComp, 'INLINE MODE: ', mode)
+		inlineAll = mode == 'inlineall'
 		libraries = self.getLibraryDats(onWarning)
-		includes = [
-			f'#include <{lib.path}>'
-			for lib in libraries
-		]
-		return wrapCodeSection(includes, 'libraries')
+		if inlineAll:
+			libBlocks = [
+				f'// Library: <{lib.path}>\n{lib.text}'
+				for lib in libraries
+			]
+		else:
+			libBlocks = [
+				f'#include <{lib.path}>'
+				for lib in libraries
+			]
+		return wrapCodeSection(libBlocks, 'libraries')
 
 	def buildOpDataTypedefBlock(self):
 		if not self.configPar().Generatetypedefs:
