@@ -2,3 +2,4 @@
 CrashAutoSave.*
 *.dmp
 *.ngfx-proj
+build/*.tox
