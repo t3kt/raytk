@@ -7,6 +7,7 @@ if False:
 	from _stubs import *
 	from _stubs.ListerExt import ListerExt
 	from typing import Any, Union, Optional
+
 	ipar.createMenuState = Any()
 
 class CreateMenu:
@@ -63,7 +64,7 @@ class CreateMenu:
 			return
 		selectedRows = self.lister.SelectedRows
 		if selectedRows:
-			selPath = str(table[selectedRows[0]+1, 'path'] or '')
+			selPath = str(table[selectedRows[0] + 1, 'path'] or '')
 		else:
 			selPath = None
 		if key == 'enter':
@@ -113,16 +114,29 @@ class CreateMenu:
 		ipar.createMenuState.Filtertext = val
 		self.updateRowSelection(None)
 
+	@staticmethod
+	def getMaster(path: str):
+		if not path:
+			return
+		if not path.startswith('/raytk/'):
+			return op(path)
+		path = path.replace('/raytk/', '')
+		if hasattr(parent, 'raytk'):
+			return parent.raytk.op(path)
+		if hasattr(op, 'raytk'):
+			return op.raytk.op(path)
+
 	def CreateOp(self, masterPath: str):
 		if not masterPath:
 			return
-		print(self.ownerComp, 'Creating OP from', masterPath)
-		master = op(masterPath)
+		master = self.getMaster(masterPath)
 		if not master:
-			return None
+			print(self.ownerComp, f'Unable to find master for path: {masterPath!r}')
+			return
+		print(self.ownerComp, 'Creating OP from', master)
 		pane = getActiveEditor()
 		if not pane:
-			return master
+			return
 		dest = pane.owner
 		if not dest:
 			return
@@ -151,7 +165,8 @@ class CreateMenu:
 		dat.appendRow(inDat.row(0))
 		showBeta = ipar.createMenuState.Showbeta
 		if not filterText or filter == '*':
-			def testText(_): return True
+			def testText(_):
+				return True
 		elif re.match(r'^\w+$', filterText):
 			def testText(val: str):
 				return filterText.lower() in val.lower()
@@ -171,7 +186,7 @@ class CreateMenu:
 				if not showBeta and 'beta' in inDat[i, 'status'].val:
 					continue
 				dat.appendRow(inDat.row(i))
-	
+
 	def onMouseOverChange(self, value):
 		timer = self.ownerComp.op('close_timer')
 		if value:
@@ -180,7 +195,7 @@ class CreateMenu:
 		else:
 			timer.par.active = True
 			timer.par.start.pulse()
-	
+
 	def onCloseTimerDone(self):
 		timer = self.ownerComp.op('close_timer')
 		timer.par.initialize.pulse()
