@@ -14,7 +14,7 @@ Note that there are many of files in the repository itself, but these are only n
 
 ### Load the Library
 
-Drag the tox file into your project. It's a good idea to put it in the *root* network (`/` rather than `/project1`), but not strictly necessary.
+Drag the tox file into the *root* network (`/` rather than `/project1`). There is a bug in the library that currently requires it to be placed at the root for the "Create" menu to work properly. This will be addressed in the next release.
 
 ### Creating a Network
 
@@ -23,8 +23,8 @@ To create your first ROP, use the keyboard shortcut `alt + r` to open up the edi
 ![Create OP Menu](docs/img/intro-createOpMenu.png)
 
 1. Choose a `boxFrameSdf`, and a new COMP will be created in the network editor.
-1. Create a `raymarchRender3d` and connect its input to the output of your `boxFrameSdf`.
-1. Create a `lookAtCamera` and connect it to the "camera" input on the `raymarchRender3d`.
+1. Create a `raymarchRender3d` and connect the output of your `boxFrameSdf` to the input of the `raymarchRender3d`.
+1. Create a `lookAtCamera` and connect it to the second input ("camera_definition_in") on the `raymarchRender3d`.
 1. Connect a `Null TOP` to the first output of `raymarchRender3d`.
 1. Play around with the parameters of the `boxFrameSdf`.
 
