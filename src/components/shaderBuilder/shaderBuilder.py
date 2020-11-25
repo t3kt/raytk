@@ -171,8 +171,11 @@ class ShaderBuilder:
 
 	def buildLibraryIncludes(self, onWarning: Callable[[str], None] = None):
 		mode = str(self.configPar()['Includemode'] or 'includelibs')
-		print(self.ownerComp, 'INLINE MODE: ', mode)
-		inlineAll = mode == 'inlineall'
+		supportsInclude = self.ownerComp.op('support_table')['include', 1] == '1'
+		if mode == 'includelibs' and not supportsInclude:
+			inlineAll = True
+		else:
+			inlineAll = mode == 'inlineall'
 		libraries = self.getLibraryDats(onWarning)
 		if inlineAll:
 			libBlocks = [

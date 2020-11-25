@@ -1400,6 +1400,11 @@ class CUDAMemory:
 	ptr: _T.Any
 	size: int
 
+class glslTOP(TOP):
+	compileResult: str
+
+glslmultiTOP = glslTOP
+
 class textTOP(TOP):
 	curText: str
 	cursorEnd: int
