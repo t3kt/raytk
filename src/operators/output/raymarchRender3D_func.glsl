@@ -1,4 +1,4 @@
-#ifdef inputOp1
+#ifdef THIS_HAS_INPUT_1
 
 #define thismap inputOp1
 
