@@ -186,13 +186,21 @@ def updateLibraryMenuPar(libsComp: 'COMP'):
 	libs.sort(key=lambda l: -l.nodeY)
 	p.menuNames = [lib.name for lib in libs]
 
-def prepareMacroTable(dat: 'scriptDAT', typeTable: 'DAT'):
+def prepareMacroTable(dat: 'scriptDAT', typeTable: 'DAT', inputTable: 'DAT'):
 	dat.clear()
 	# 'THIS_' + me.inputCell.val.replace('Type', '').upper() + '_TYPE_' + me.inputCell.offset(0, 1)
 	for kind, typeName in typeTable.rows():
 		dat.appendRow([
 			'',
 			f'THIS_{kind.val.replace("Type", "").upper()}_TYPE_{typeName.val}',
+			'',
+		])
+	for cell in inputTable.col('inputFunc')[1:]:
+		if not cell.val:
+			continue
+		dat.appendRow([
+			'',
+			f'THIS_HAS_INPUT_{tdu.digits(cell.val)}',
 			'',
 		])
 	macros = parent().par.Macrotable.eval()  # type: DAT
