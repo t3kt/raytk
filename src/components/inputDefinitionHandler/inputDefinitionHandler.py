@@ -12,10 +12,12 @@ def checkInputDefinition(dat: 'DAT'):
 	clearInputTypeErrors()
 	if dat.numRows < 2:
 		return
-	_checkTableTypes(dat, parent().addScriptError)
+	_checkTableTypes(dat, parent().addScriptError, ignoreEmpty=False)
 
-def _checkType(typeName: str, typeCategory: str, onError: 'Optional[Callable[[str], None]]'):
+def _checkType(typeName: str, typeCategory: str, onError: 'Optional[Callable[[str], None]]', ignoreEmpty: bool):
 	if not typeName:
+		if ignoreEmpty:
+			return True
 		if onError:
 			onError(f'Invalid input {typeCategory}: {typeName!r}')
 		return False
@@ -28,10 +30,10 @@ def _checkType(typeName: str, typeCategory: str, onError: 'Optional[Callable[[st
 		onError(f'Input does not support {typeCategory} {typeName}')
 	return False
 
-def _checkTableTypes(dat: 'DAT', onError: 'Optional[Callable[[str], None]]'):
-	_checkType(str(dat[1, 'coordType'] or ''), 'coordType', onError)
-	_checkType(str(dat[1, 'contextType'] or ''), 'contextType', onError)
-	_checkType(str(dat[1, 'returnType'] or ''), 'returnType', onError)
+def _checkTableTypes(dat: 'DAT', onError: 'Optional[Callable[[str], None]]', ignoreEmpty: bool):
+	_checkType(str(dat[1, 'coordType'] or ''), 'coordType', onError, ignoreEmpty)
+	_checkType(str(dat[1, 'contextType'] or ''), 'contextType', onError, ignoreEmpty)
+	_checkType(str(dat[1, 'returnType'] or ''), 'returnType', onError, ignoreEmpty)
 
 def clearInputTypeErrors():
 	parent().clearScriptErrors(error='Input does not support *')
@@ -59,7 +61,7 @@ def buildSupportedTypeTable(dat: 'DAT'):
 					[
 						name
 						for name in allNames
-						if helper.isTypeAvailableForCategory(name, filterColumn) and _checkType(name, category, onError=None)
+						if helper.isTypeAvailableForCategory(name, filterColumn) and _checkType(name, category, onError=None, ignoreEmpty=True)
 					]),
 			])
 
@@ -71,4 +73,4 @@ def buildValidationErrors(dat: 'DAT', inputDef: 'DAT'):
 			dat.appendRow(['path', 'level', 'message'])
 		dat.appendRow([parent().path, 'error', msg])
 
-	_checkTableTypes(inputDef, _addError)
+	_checkTableTypes(inputDef, _addError, ignoreEmpty=True)
