@@ -16,6 +16,9 @@ class DocManager:
 	def opHelpTable(self) -> 'DAT':
 		return self.ownerComp.op('opHelpTable')
 
+	def opTable(self) -> 'DAT':
+		return self.ownerComp.op('opTableByType')
+
 	def buildCombinedOpDocs(self, dat: 'DAT'):
 		categoryHelpTable = self.categoryHelpTable()
 		dat.clear()
@@ -32,9 +35,11 @@ class DocManager:
 			textParts += self.getCategoryOpDocs(categoryName)
 
 		dat.write('\n\n'.join(textParts))
+		dat.write('\n')
 
 	def getCategoryOpDocs(self, category: str):
 		opHelpTable = self.opHelpTable()
+		opTable = self.opTable()
 		textParts = []
 		for i in range(1, opHelpTable.numRows):
 			if opHelpTable[i, 'category'] != category:
@@ -45,12 +50,12 @@ class DocManager:
 			if helpText:
 				helpText = _stripFirstHeader(helpText)
 				helpText = _incrementHeaders(helpText)
+			status = str(opTable[opType, 'status'])
+			statusSuffix = f' `{status.upper()}`' if status else ''
 			textParts.append(
-				f'## {shortName} ({category})\n\n' + helpText
+				f'## {shortName}{statusSuffix}\n\n' + helpText
 			)
 		return textParts
-
-_mainHeaderFullPattern = re.compile(r'^# .*\n')
 
 _headerPattern = re.compile(r'^#', re.MULTILINE)
 
