@@ -135,8 +135,16 @@ class Tools:
 			if not dat.par.file:
 				dat.par.file = rop.par.externaltox.eval().replace('.tox', '.md')
 			RaytkTags.fileSync.apply(dat, True)
-			if not dat.text:
-				dat.text = f'# {rop.name} ({rop.parent().name})\n\n'
+			if not dat.text.strip():
+				text = f'# {rop.name}\n\n'
+				for parTuplet in rop.customTuplets:
+					if parTuplet[0].name in ('Inspect',):
+						continue
+					text += f'* `{parTuplet[0].label}` - '
+					if parTuplet[0].name == 'Enable':
+						text += 'Enables or disables the op.'
+					text += '\n'
+				dat.text = text
 			dat.viewer = True
 		finally:
 			ui.undo.endBlock()
