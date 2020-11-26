@@ -1,4 +1,15 @@
+#ifdef inputOp1
+
 #define thismap inputOp1
+
+#else
+
+Sdf thismap(vec3 p, Context ctx) {
+	return createSdf(RAYTK_MAX_DIST);
+}
+
+#endif
+
 #ifdef THIS_USE_CAM_FUNC
 
 Ray getViewRay(vec2 shift) {
