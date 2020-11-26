@@ -22,15 +22,14 @@ class DocManager:
 	def buildCombinedOpDocs(self, dat: 'DAT'):
 		categoryHelpTable = self.categoryHelpTable()
 		dat.clear()
-
-		textParts = []
-
+		textParts = ['# Operators']
 		for categoryI in range(1, categoryHelpTable.numRows):
 			categoryName = str(categoryHelpTable[categoryI, 'category'])
 			helpText = _datText(categoryHelpTable[categoryI, 'helpPath'])
-			textParts.append(f'# {categoryName.capitalize()} category\n')
+			textParts.append(f'## {categoryName.capitalize()} category\n')
 			if helpText:
 				helpText = _stripFirstHeader(helpText)
+				helpText = _incrementHeaders(helpText, 1)
 				textParts.append(helpText)
 			textParts += self.getCategoryOpDocs(categoryName)
 
@@ -49,11 +48,11 @@ class DocManager:
 			helpText = _datText(opHelpTable[i, 'helpPath'])
 			if helpText:
 				helpText = _stripFirstHeader(helpText)
-				helpText = _incrementHeaders(helpText)
+				helpText = _incrementHeaders(helpText, 2)
 			status = str(opTable[opType, 'status'])
 			statusSuffix = f' `{status.upper()}`' if status else ''
 			textParts.append(
-				f'## {shortName}{statusSuffix}\n\n' + helpText
+				f'### {shortName}{statusSuffix}\n\n' + helpText
 			)
 		return textParts
 
@@ -66,10 +65,10 @@ def _stripFirstHeader(text: str):
 		return text
 	return text.split('\n', 1)[1].strip()
 
-def _incrementHeaders(text: str):
+def _incrementHeaders(text: str, steps: int):
 	if not text:
 		return ''
-	return _headerPattern.sub('##', text)
+	return _headerPattern.sub('#' + ('#' * steps), text)
 
 def _datText(path: 'Union[str, Cell]'):
 	dat = op(path)
