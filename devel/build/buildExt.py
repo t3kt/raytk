@@ -1,6 +1,7 @@
 from develCommon import *
-from raytkUtil import RaytkTags, navigateTo, focusCustomParameterPage
-from raytkBuild import BuildContext
+from pathlib import Path
+from raytkUtil import RaytkTags, navigateTo, focusCustomParameterPage, CategoryInfo
+from raytkBuild import BuildContext, DocProcessor
 from typing import List, Optional
 
 # noinspection PyUnreachableCode
@@ -13,10 +14,31 @@ class BuildManager:
 		self.ownerComp = ownerComp
 		self.logTable = ownerComp.op('log')
 		self.context = None  # type: Optional[BuildContext]
+		self.docProcessor = None  # type: Optional[DocProcessor]
+
+	def OnInit(self):
+		field = self.ownerComp.op('docSiteFolder_field')
+		field.par.Value0 = self.GetDefaultDocSitePath() or ''
 
 	@staticmethod
 	def GetToolkitVersion():
 		return getToolkitVersion()
+
+	@staticmethod
+	def GetDefaultDocSitePath():
+		folder = Path('../raytk-site')
+		if folder.exists():
+			return folder.as_posix()
+		return ''
+
+	def getDocSitePath(self):
+		field = self.ownerComp.op('docSiteFolder_field')
+		if not field.par.Value0:
+			return None
+		folder = Path(field.par.Value0.eval())
+		if not folder.exists():
+			return None
+		return folder
 
 	@staticmethod
 	def OpenToolkitNetwork():
@@ -39,6 +61,11 @@ class BuildManager:
 		self.logTable.clear()
 		self.log('Starting build')
 		self.context = BuildContext(self.log)
+		docFolder = self.getDocSitePath()
+		if docFolder:
+			self.docProcessor = DocProcessor(self.context, docFolder / 'reference')
+		else:
+			self.docProcessor = None
 		self.queueMethodCall('runBuild_stage', 0)
 
 	def runBuild_stage(self, stage: int):
@@ -109,22 +136,28 @@ class BuildManager:
 		self.log(f'Processing operators {comp}')
 		self.context.detachTox(comp)
 		categories = comp.findChildren(type=baseCOMP, maxDepth=1)
+		if self.docProcessor:
+			self.docProcessor.writeCategoryListPage(categories)
 		self.queueMethodCall('processOperatorCategories_stage', categories, thenRun, runArgs)
 
 	def processOperatorCategories_stage(self, categories: List['COMP'], thenRun: str = None, runArgs: list = None):
 		if categories:
 			category = categories.pop()
-			self.processOperatorCategory(category, thenRun='processOperatorCategories_stage', runArgs=[categories, thenRun, runArgs])
+			self.processOperatorCategory(
+				category, thenRun='processOperatorCategories_stage', runArgs=[categories, thenRun, runArgs])
 		elif thenRun:
 			self.queueMethodCall(thenRun, *(runArgs or []))
 
 	def processOperatorCategory(self, category: 'COMP', thenRun: str = None, runArgs: list = None):
+		categoryInfo = CategoryInfo(category)
 		self.log(f'Processing operator category {category.name}')
 		self.context.detachTox(category)
 		template = category.op('__template')
 		if template:
 			template.destroy()
-		comps = category.findChildren(type=baseCOMP, tags=[RaytkTags.raytkOP, RaytkTags.raytkComp], maxDepth=1)
+		if self.docProcessor:
+			self.docProcessor.processOpCategory(category)
+		comps = categoryInfo.operators
 		self.queueMethodCall('processOperatorCategory_stage', comps, thenRun, runArgs)
 
 	def processOperatorCategory_stage(self, components: List['COMP'], thenRun: str = None, runArgs: list = None):
@@ -143,11 +176,10 @@ class BuildManager:
 		self.context.detachTox(comp)
 		focusCustomParameterPage(comp, 0)
 		for child in comp.findChildren(type=COMP):
-			if 'raytkOP' in child.tags:
-				self.processOperator(child)
-			else:
-				self.processOperatorSubComp(child)
+			self.processOperatorSubComp(child)
 		updateROPMetadata(comp)
+		if self.docProcessor:
+			self.docProcessor.processOp(comp)
 
 	def processOperatorSubComp(self, comp: 'COMP'):
 		self.context.disableCloning(comp)

@@ -1,10 +1,9 @@
-import re
+from raytkUtil import datText, incrementMarkdownHeaders, stripFirstMarkdownHeader
 
 # noinspection PyUnreachableCode
 if False:
 	# noinspection PyUnresolvedReferences
 	from _stubs import *
-	from typing import Union
 
 class DocManager:
 	def __init__(self, ownerComp: 'COMP'):
@@ -25,11 +24,11 @@ class DocManager:
 		textParts = ['# Operators']
 		for categoryI in range(1, categoryHelpTable.numRows):
 			categoryName = str(categoryHelpTable[categoryI, 'category'])
-			helpText = _datText(categoryHelpTable[categoryI, 'helpPath'])
+			helpText = datText(categoryHelpTable[categoryI, 'helpPath'])
 			textParts.append(f'## {categoryName.capitalize()} category\n')
 			if helpText:
-				helpText = _stripFirstHeader(helpText)
-				helpText = _incrementHeaders(helpText, 1)
+				helpText = stripFirstMarkdownHeader(helpText)
+				helpText = incrementMarkdownHeaders(helpText, 1)
 				textParts.append(helpText)
 			textParts += self.getCategoryOpDocs(categoryName)
 
@@ -45,10 +44,10 @@ class DocManager:
 				continue
 			opType = str(opHelpTable[i, 'opType'])
 			shortName = opType.rsplit('.', 1)[1]
-			helpText = _datText(opHelpTable[i, 'helpPath'])
+			helpText = datText(opHelpTable[i, 'helpPath'])
 			if helpText:
-				helpText = _stripFirstHeader(helpText)
-				helpText = _incrementHeaders(helpText, 2)
+				helpText = stripFirstMarkdownHeader(helpText)
+				helpText = incrementMarkdownHeaders(helpText, 2)
 			status = str(opTable[opType, 'status'])
 			statusSuffix = f' `{status.upper()}`' if status else ''
 			textParts.append(
@@ -56,20 +55,13 @@ class DocManager:
 			)
 		return textParts
 
-_headerPattern = re.compile(r'^#', re.MULTILINE)
-
-def _stripFirstHeader(text: str):
-	if not text:
-		return ''
-	if not text.startswith('# '):
-		return text
-	return text.split('\n', 1)[1].strip()
-
-def _incrementHeaders(text: str, steps: int):
-	if not text:
-		return ''
-	return _headerPattern.sub('#' + ('#' * steps), text)
-
-def _datText(path: 'Union[str, Cell]'):
-	dat = op(path)
-	return dat.text.strip() if dat else ''
+	# def docTextForCategory(self, category: str):
+	# 	categoryHelpTable = self.categoryHelpTable()
+	# 	helpText = datText(categoryHelpTable[category, 'helpPath'])
+	# 	textParts = [f'# {category.capitalize()} category\n']
+	# 	if helpText:
+	# 		helpText = stripFirstMarkdownHeader(helpText)
+	# 		helpText = incrementMarkdownHeaders(helpText, 1)
+	# 		textParts.append(helpText)
+	#
+	# 	pass

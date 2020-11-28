@@ -1,10 +1,12 @@
+from pathlib import Path
 from typing import Callable
-from raytkUtil import detachTox
+from raytkUtil import detachTox, CategoryInfo, ROPInfo, getToolkit, stripFirstMarkdownHeader
 
 # noinspection PyUnreachableCode
 if False:
 	# noinspection PyUnresolvedReferences
 	from _stubs import *
+	from typing import List, Optional, Union
 
 class BuildContext:
 	def __init__(self, log: Callable[[str], None]):
@@ -95,3 +97,110 @@ class BuildTaskContext(BuildContext):
 
 	def finishTask(self):
 		self.finish()
+
+class DocProcessor:
+	def __init__(self, context: 'BuildContext', outputFolder: 'Union[str, Path]'):
+		self.context = context
+		self.outputFolder = Path(outputFolder)
+		self.toolkit = getToolkit()
+
+	def processOp(self, rop: 'COMP'):
+		self.context.log(f'Processing docs for op {rop}')
+		ropInfo = ROPInfo(rop)
+		if not ropInfo or not ropInfo.isMaster:
+			self.context.log(f'Invalid rop for docs {rop}')
+			return
+		dat = ropInfo.helpDAT
+		docText = dat.text if dat else None
+		if not docText:
+			docText = self._generateDefaultOpDoc(ropInfo)
+			if not dat:
+				dat = ropInfo.rop.create(textDAT, 'help')
+				ropInfo.helpDAT = dat
+			dat.text = docText
+		docText = f'''---
+layout: page
+title: {ropInfo.shortName} ({ropInfo.categoryName})
+---
+
+{stripFirstMarkdownHeader(docText)}
+'''
+		self._writeDocs(
+			Path(self.toolkit.relativePath(rop).replace('./', '') + '.md'),
+			docText)
+
+	@staticmethod
+	def _generateDefaultOpDoc(ropInfo: 'ROPInfo'):
+		parts = [
+			f'# {ropInfo.shortName}',
+			f'Category: {ropInfo.categoryName}',
+			f'OP Type: {ropInfo.opType}',
+			f'## Parameters',
+			'\n'.join([
+				f'* `{parTuplet[0].label}` - '
+				for parTuplet in ropInfo.rop.customTuplets
+				if not parTuplet[0].isPulse and not parTuplet[0].readOnly
+			])
+		]
+		return '\n\n'.join(parts)
+
+	def _writeDocs(self, relativePath: 'Path', docText: str):
+		outFile = self.outputFolder / relativePath
+		outFile.parent.mkdir(parents=True, exist_ok=True)
+		self.context.log(f'Writing docs to {outFile}')
+		with outFile.open('w') as f:
+			f.write(docText)
+
+	def processOpCategory(self, categoryOp: 'COMP'):
+		self.context.log(f'Processing docs for category {categoryOp}')
+		categoryInfo = CategoryInfo(categoryOp)
+		dat = categoryInfo.helpDAT
+		parts = [
+			f'# {categoryOp.name} Operators',
+			stripFirstMarkdownHeader(dat.text) if dat else '',
+			'\n'.join([
+				f'* [`{ropInfo.shortName}`]({ropInfo.shortName}/) - {_extractSummary(ropInfo.helpDAT)}'
+				for ropInfo in categoryInfo.operatorInfos
+			])
+		]
+		docText = '\n\n'.join(parts)
+		if not dat:
+			dat = categoryOp.create(textDAT, 'help')
+		dat.text = docText
+		docText = f'''---
+layout: page
+title: {categoryOp.name.capitalize()} Operators
+---
+
+{stripFirstMarkdownHeader(docText)}
+'''
+		self._writeDocs(
+			Path(self.toolkit.relativePath(categoryOp).replace('./', '') + '/index.md'),
+			docText)
+
+	def writeCategoryListPage(self, categories: 'List[COMP]'):
+		self.context.log('Writing category list page')
+		docText = '''---
+layout: page
+title: Operator Categories
+---
+
+'''
+		categoryInfos = [
+			CategoryInfo(o)
+			for o in sorted(categories, key=lambda o: o.name)
+		]
+		docText += '\n'.join([
+			f'* [{categoryInfo.categoryName.capitalize()}]({categoryInfo.categoryName}/) - {_extractSummary(categoryInfo.helpDAT)}'
+			for categoryInfo in categoryInfos
+		])
+		self._writeDocs(Path('operators/index.md'), docText)
+
+def _extractSummary(dat: 'Optional[DAT]'):
+	if not dat or not dat.text:
+		return ''
+	for block in dat.text.split('\n\n'):
+		if block and not block.startswith('#'):
+			return block
+	return ''
+

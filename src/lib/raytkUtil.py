@@ -1,3 +1,4 @@
+import re
 from typing import Callable, List, Union, Optional, Tuple
 
 # noinspection PyUnreachableCode
@@ -14,8 +15,10 @@ class _OpMetaPars:
 	Raytkopversion: 'IntParamT'
 	Raytkversion: 'StrParamT'
 
-class _OpDefPars(_OpMetaPars):
+class _CompDefPars(_OpMetaPars):
 	Help: 'DatParamT'
+
+class _OpDefPars(_CompDefPars):
 	Functemplate: 'DatParamT'
 	Macrotable: 'DatParamT'
 	Params: 'StrParamT'
@@ -23,7 +26,7 @@ class _OpDefPars(_OpMetaPars):
 	Callbacks: 'DatParamT'
 
 class ROPInfo:
-	rop: 'Optional[OP]'
+	rop: 'Optional[Union[OP, COMP]]'
 	opDef: 'Optional[COMP]'
 	opDefPar: 'Optional[_OpDefPars]'
 
@@ -102,6 +105,27 @@ class ROPInfo:
 			return True
 		return False
 
+	def toMaster(self):
+		if not self or self.isMaster:
+			return self
+		return ROPInfo(self.rop.par.clone.eval())
+
+	@property
+	def categoryName(self):
+		if not self:
+			return None
+		if self.isMaster:
+			return self.rop.parent().name
+		elif self.rop.par.clone:
+			return self.rop.par.clone.eval().rop.parent().name
+
+	@property
+	def shortName(self):
+		t = self.opType
+		if not t:
+			return None
+		return t.rsplit('.', 1)[-1]
+
 	@property
 	def helpDAT(self) -> 'Optional[DAT]':
 		dat = op(self.opDefPar.Help)
@@ -143,6 +167,42 @@ class ROPInfo:
 		cb = self.callbacks
 		if cb and hasattr(cb, name):
 			getattr(cb, name)(**kwargs)
+
+class CategoryInfo:
+	category: COMP
+
+	def __init__(self, o: 'Union[OP, str, Cell]'):
+		o = op(o)
+		if not o:
+			return
+		self.category = o
+
+	@property
+	def categoryName(self):
+		return self.category.name if self.category else None
+
+	@property
+	def helpDAT(self) -> 'Optional[DAT]':
+		return self.category and self.category.op('help')
+
+	@property
+	def operators(self) -> 'List[COMP]':
+		if not self.category:
+			return []
+		return list(sorted([
+			o
+			for o in self.category.findChildren(
+				type=COMP, tags=[RaytkTags.raytkOP.name, RaytkTags.raytkComp.name], maxDepth=1)
+			if not o.name.startswith('__')], key=lambda o: o.path))
+
+	@property
+	def operatorInfos(self) -> 'List[ROPInfo]':
+		infos = []
+		for rop in self.operators:
+			info = ROPInfo(rop)
+			if info:
+				infos.append(info)
+		return infos
 
 def isROP(o: 'OP'):
 	return bool(o) and o.isCOMP and RaytkTags.raytkOP.isOn(o)
@@ -537,3 +597,20 @@ def detachTox(comp: 'COMP'):
 	comp.par.reloadtoxonstart.val = False
 	comp.par.externaltox.expr = ''
 	comp.par.externaltox.val = ''
+
+def stripFirstMarkdownHeader(text: str):
+	if not text:
+		return ''
+	if not text.startswith('# '):
+		return text
+	return text.split('\n', 1)[1].strip()
+
+_headerPattern = re.compile(r'^#', re.MULTILINE)
+def incrementMarkdownHeaders(text: str, steps: int):
+	if not text:
+		return ''
+	return _headerPattern.sub('#' + ('#' * steps), text)
+
+def datText(path: 'Union[str, Cell]'):
+	dat = op(path)
+	return dat.text.strip() if dat else ''
