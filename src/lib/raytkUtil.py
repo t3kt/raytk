@@ -34,21 +34,27 @@ class ROPInfo:
 		if isROP(o):
 			self.rop = o
 			self.opDef = o.op('opDefinition')
+			# noinspection PyTypeChecker
+			self.opDefPar = self.opDef.par
 		elif isROPDef(o):
 			self.rop = o.par.Hostop.eval()
 			self.opDef = o
+			# noinspection PyTypeChecker
+			self.opDefPar = self.opDef.par
 		elif _isRComp(o):
 			self.rop = o
 			self.opDef = o.op('compDefinition')
+			# noinspection PyTypeChecker
+			self.opDefPar = self.opDef.par
 		elif _isRCompDef(o):
 			self.rop = o.par.Hostop.eval()
 			self.opDef = o
+			# noinspection PyTypeChecker
+			self.opDefPar = self.opDef.par
 		else:
 			self.rop = None
 			self.opDef = None
 			self.opDefPar = None
-		# noinspection PyTypeChecker
-		self.opDefPar = self.opDef.par
 
 	def __bool__(self):
 		return bool(self.rop)
@@ -60,6 +66,14 @@ class ROPInfo:
 	@opVersion.setter
 	def opVersion(self, val):
 		self.opDefPar.Raytkopversion = val if val is not None else ''
+
+	@property
+	def toolkitVersion(self):
+		return str(self.opDefPar.Raytkversion or '')
+
+	@toolkitVersion.setter
+	def toolkitVersion(self, val):
+		self.opDefPar.Raytkversion = val if val is not None else ''
 
 	@property
 	def opType(self):

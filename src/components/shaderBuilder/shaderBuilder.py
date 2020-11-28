@@ -1,5 +1,6 @@
 from dataclasses import dataclass
 from typing import Callable, List, Tuple, Union
+from raytkUtil import ROPInfo
 
 # noinspection PyUnreachableCode
 if False:
@@ -337,6 +338,20 @@ class ShaderBuilder:
 			output += f'else if(m == {nameCell.val}) {{\n'
 			output += materialCode + '\n}'
 		return output
+
+	def buildValidationErrors(self, dat: 'DAT'):
+		dat.clear()
+		toolkitVersions = {}
+		rops = self.getOpsFromDefinitionColumn('path')
+		for rop in rops:
+			info = ROPInfo(rop)
+			version = info.toolkitVersion if info else ''
+			if version != '':
+				toolkitVersions[version] = 1 + toolkitVersions.get(version, 0)
+		if len(rops) > 1:
+			error = f'Toolkit version mismatch ({", ".join(list(toolkitVersions.keys()))})'
+			dat.appendRow(['path', 'level', 'message'])
+			dat.appendRow([parent().path, 'warning', error])
 
 _materialParagraphPlaceholder = '// #include <materialParagraph>'
 
