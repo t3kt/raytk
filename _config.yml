@@ -55,7 +55,7 @@ theme: "just-the-docs"
 #   - vendor/gems/
 #   - vendor/ruby/
 
-color_scheme: dark
+color_scheme: custom_dark
 
 collections:
   guide:
