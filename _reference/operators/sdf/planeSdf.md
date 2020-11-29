@@ -2,7 +2,7 @@
 layout: page
 title: planeSdf
 parent: Sdf Operators
-grand_parent: Operator Categories
+grand_parent: Operators
 ---
 
 An infinite plane on the x, y, or z axis.

@@ -2,7 +2,7 @@
 layout: page
 title: injectObjectId
 parent: Utility Operators
-grand_parent: Operator Categories
+grand_parent: Operators
 ---
 
 Assigns an arbitrary value to the objectId field of an SDF, which can later

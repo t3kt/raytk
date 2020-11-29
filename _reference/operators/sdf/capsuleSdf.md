@@ -2,7 +2,7 @@
 layout: page
 title: capsuleSdf
 parent: Sdf Operators
-grand_parent: Operator Categories
+grand_parent: Operators
 ---
 
 Category: sdf

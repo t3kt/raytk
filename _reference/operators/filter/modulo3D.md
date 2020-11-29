@@ -2,7 +2,7 @@
 layout: page
 title: modulo3D
 parent: Filter Operators
-grand_parent: Operator Categories
+grand_parent: Operators
 ---
 
 Repeats space along all 3 axes.

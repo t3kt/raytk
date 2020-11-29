@@ -2,7 +2,7 @@
 layout: page
 title: linkSdf
 parent: Sdf Operators
-grand_parent: Operator Categories
+grand_parent: Operators
 ---
 
 SDF for a chain link shape (an elongated loop).

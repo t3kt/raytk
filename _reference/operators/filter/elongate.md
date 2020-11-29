@@ -2,7 +2,7 @@
 layout: page
 title: elongate
 parent: Filter Operators
-grand_parent: Operator Categories
+grand_parent: Operators
 ---
 
 Splits a shape into pieces, moves them apart, and connects them.

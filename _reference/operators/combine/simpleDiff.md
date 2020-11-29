@@ -2,7 +2,7 @@
 layout: page
 title: simpleDiff
 parent: Combine Operators
-grand_parent: Operator Categories
+grand_parent: Operators
 ---
 
 Combines two SDFs using the difference operator.

@@ -2,7 +2,7 @@
 layout: page
 title: injectGlobalPosition
 parent: Utility Operators
-grand_parent: Operator Categories
+grand_parent: Operators
 ---
 
 Calls its input using the untransformed global position.

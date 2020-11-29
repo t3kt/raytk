@@ -2,7 +2,7 @@
 layout: page
 title: coneSdf
 parent: Sdf Operators
-grand_parent: Operator Categories
+grand_parent: Operators
 ---
 
 Defines a cone or capped cone shape.

@@ -2,7 +2,7 @@
 layout: page
 title: softShadow
 parent: Light Operators
-grand_parent: Operator Categories
+grand_parent: Operators
 ---
 
 A soft-edged shadow.

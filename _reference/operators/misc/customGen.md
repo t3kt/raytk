@@ -2,7 +2,7 @@
 layout: page
 title: customGen
 parent: Misc Operators
-grand_parent: Operator Categories
+grand_parent: Operators
 ---
 
 Category: misc

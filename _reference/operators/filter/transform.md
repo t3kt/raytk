@@ -2,7 +2,7 @@
 layout: page
 title: transform
 parent: Filter Operators
-grand_parent: Operator Categories
+grand_parent: Operators
 ---
 
 Transform the coordinates of the input, with rotation, scaling, and translation.

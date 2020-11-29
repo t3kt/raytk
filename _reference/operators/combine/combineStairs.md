@@ -2,7 +2,7 @@
 layout: page
 title: combineStairs
 parent: Combine Operators
-grand_parent: Operator Categories
+grand_parent: Operators
 ---
 
 Stair SDF combine, producing steps along the blend region.

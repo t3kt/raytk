@@ -2,7 +2,7 @@
 layout: page
 title: waveFn
 parent: Function Operators
-grand_parent: Operator Categories
+grand_parent: Operators
 ---
 
 A function that uses a periodic wave, with the position as the parameter.

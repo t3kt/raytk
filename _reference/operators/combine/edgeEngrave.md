@@ -2,7 +2,7 @@
 layout: page
 title: edgeEngrave
 parent: Combine Operators
-grand_parent: Operator Categories
+grand_parent: Operators
 ---
 
 Category: combine

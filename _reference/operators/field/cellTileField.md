@@ -2,7 +2,7 @@
 layout: page
 title: cellTileField
 parent: Field Operators
-grand_parent: Operator Categories
+grand_parent: Operators
 ---
 
 A value field that provides an approximation of repeating cellular (voronoi) noise.

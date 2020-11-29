@@ -2,7 +2,7 @@
 layout: page
 title: depthMap
 parent: Post Operators
-grand_parent: Operator Categories
+grand_parent: Operators
 ---
 
 Category: post

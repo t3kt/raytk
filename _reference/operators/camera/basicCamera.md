@@ -2,7 +2,7 @@
 layout: page
 title: basicCamera
 parent: Camera Operators
-grand_parent: Operator Categories
+grand_parent: Operators
 ---
 
 Category: camera

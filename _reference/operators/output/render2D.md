@@ -2,7 +2,7 @@
 layout: page
 title: render2D
 parent: Output Operators
-grand_parent: Operator Categories
+grand_parent: Operators
 ---
 
 Category: output

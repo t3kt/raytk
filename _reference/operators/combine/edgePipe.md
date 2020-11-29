@@ -2,7 +2,7 @@
 layout: page
 title: edgePipe
 parent: Combine Operators
-grand_parent: Operator Categories
+grand_parent: Operators
 ---
 
 Produces a cylindrical pipe along the blend region, replacing the input shapes entirely.

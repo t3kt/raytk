@@ -2,7 +2,7 @@
 layout: page
 title: mengerSpongeSdf
 parent: Sdf Operators
-grand_parent: Operator Categories
+grand_parent: Operators
 ---
 
 Category: sdf

@@ -2,7 +2,7 @@
 layout: page
 title: revolve
 parent: Convert Operators
-grand_parent: Operator Categories
+grand_parent: Operators
 ---
 
 Category: convert

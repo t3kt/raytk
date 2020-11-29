@@ -2,7 +2,7 @@
 layout: page
 title: gridSdf
 parent: Sdf Operators
-grand_parent: Operator Categories
+grand_parent: Operators
 ---
 
 An infinite grid shape, along two axes.

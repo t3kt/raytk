@@ -2,7 +2,7 @@
 layout: page
 title: crossSdf
 parent: Sdf Operators
-grand_parent: Operator Categories
+grand_parent: Operators
 ---
 
 An SDF for a 3D cross of infinite length along each axis.

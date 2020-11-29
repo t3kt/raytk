@@ -2,7 +2,7 @@
 layout: page
 title: waveField
 parent: Field Operators
-grand_parent: Operator Categories
+grand_parent: Operators
 ---
 
 A field that uses a periodic wave.

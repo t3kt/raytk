@@ -2,7 +2,7 @@
 layout: page
 title: fieldMat
 parent: Material Operators
-grand_parent: Operator Categories
+grand_parent: Operators
 ---
 
 A material that uses a vector field input to determine

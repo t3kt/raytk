@@ -2,7 +2,7 @@
 layout: page
 title: stepFn
 parent: Function Operators
-grand_parent: Operator Categories
+grand_parent: Operators
 ---
 
 Category: function

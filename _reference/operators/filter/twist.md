@@ -2,7 +2,7 @@
 layout: page
 title: twist
 parent: Filter Operators
-grand_parent: Operator Categories
+grand_parent: Operators
 ---
 
 Category: filter

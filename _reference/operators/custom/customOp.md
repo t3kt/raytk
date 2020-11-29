@@ -2,7 +2,7 @@
 layout: page
 title: customOp
 parent: Custom Operators
-grand_parent: Operator Categories
+grand_parent: Operators
 ---
 
 Category: custom

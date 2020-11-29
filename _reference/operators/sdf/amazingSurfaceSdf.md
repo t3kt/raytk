@@ -2,7 +2,7 @@
 layout: page
 title: amazingSurfaceSdf
 parent: Sdf Operators
-grand_parent: Operator Categories
+grand_parent: Operators
 ---
 
 Category: sdf

@@ -2,7 +2,7 @@
 layout: page
 title: flip
 parent: Filter Operators
-grand_parent: Operator Categories
+grand_parent: Operators
 ---
 
 Category: filter

@@ -2,7 +2,7 @@
 layout: page
 title: reorderField
 parent: Field Operators
-grand_parent: Operator Categories
+grand_parent: Operators
 ---
 
 Category: field

@@ -2,7 +2,7 @@
 layout: page
 title: noiseField
 parent: Field Operators
-grand_parent: Operator Categories
+grand_parent: Operators
 ---
 
 A float or vector field that uses one of several noise functions.

@@ -2,7 +2,7 @@
 layout: page
 title: vesicaSdf2d
 parent: Sdf2d Operators
-grand_parent: Operator Categories
+grand_parent: Operators
 ---
 
 Category: sdf2d

@@ -2,7 +2,7 @@
 layout: page
 title: simpleIntersect
 parent: Combine Operators
-grand_parent: Operator Categories
+grand_parent: Operators
 ---
 
 Combines SDFs using the intersect operator.

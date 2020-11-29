@@ -2,7 +2,7 @@
 layout: page
 title: timeField
 parent: Field Operators
-grand_parent: Operator Categories
+grand_parent: Operators
 ---
 
 Category: field

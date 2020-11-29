@@ -2,7 +2,7 @@
 layout: page
 title: moduloPolar
 parent: Filter Operators
-grand_parent: Operator Categories
+grand_parent: Operators
 ---
 
 Repeats space radially, like a kaleidoscope.

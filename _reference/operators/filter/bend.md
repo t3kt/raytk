@@ -2,7 +2,7 @@
 layout: page
 title: bend
 parent: Filter Operators
-grand_parent: Operator Categories
+grand_parent: Operators
 ---
 
 Bends space, along a main axis, towards a second axis.

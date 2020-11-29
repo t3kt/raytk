@@ -2,7 +2,7 @@
 layout: page
 title: juliaSdf
 parent: Sdf Operators
-grand_parent: Operator Categories
+grand_parent: Operators
 ---
 
 Category: sdf

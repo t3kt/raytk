@@ -2,7 +2,7 @@
 layout: page
 title: basicMat
 parent: Material Operators
-grand_parent: Operator Categories
+grand_parent: Operators
 ---
 
 Category: material

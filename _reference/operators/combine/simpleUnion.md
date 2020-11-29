@@ -2,7 +2,7 @@
 layout: page
 title: simpleUnion
 parent: Combine Operators
-grand_parent: Operator Categories
+grand_parent: Operators
 ---
 
 Combines several SDFs using the union operator.

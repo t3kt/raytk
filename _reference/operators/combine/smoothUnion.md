@@ -2,7 +2,7 @@
 layout: page
 title: smoothUnion
 parent: Combine Operators
-grand_parent: Operator Categories
+grand_parent: Operators
 ---
 
 Combines SDFs using a smooth union operator.

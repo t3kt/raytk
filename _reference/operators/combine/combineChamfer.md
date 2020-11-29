@@ -2,7 +2,7 @@
 layout: page
 title: combineChamfer
 parent: Combine Operators
-grand_parent: Operator Categories
+grand_parent: Operators
 ---
 
 Chamfer SDF combine, producing a flat surface at a 45 degree angle along the blend region.

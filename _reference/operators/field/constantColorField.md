@@ -2,7 +2,7 @@
 layout: page
 title: constantColorField
 parent: Field Operators
-grand_parent: Operator Categories
+grand_parent: Operators
 ---
 
 A vector field that evaluates to a constant color value.

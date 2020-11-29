@@ -2,7 +2,7 @@
 layout: page
 title: radialClone
 parent: Filter Operators
-grand_parent: Operator Categories
+grand_parent: Operators
 ---
 
 Repeats an SDF radially around an axis, combining the resulting shapes.

@@ -2,7 +2,7 @@
 layout: page
 title: hardShadow
 parent: Light Operators
-grand_parent: Operator Categories
+grand_parent: Operators
 ---
 
 A simple hard-edged shadow.
