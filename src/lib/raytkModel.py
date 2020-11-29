@@ -1,7 +1,7 @@
 from raytkUtil import CoordTypes, ContextTypes, ReturnTypes, ROPInfo
 from dataclasses import dataclass, field
 import re
-from typing import Dict, List, Optional, Union
+from typing import Dict, Iterable, List, Optional, Union
 
 # noinspection PyUnreachableCode
 if False:
@@ -407,7 +407,56 @@ class ROPHelp:
 	name: Optional[str] = None
 	summary: Optional[str] = None
 	detail: Optional[str] = None
+	opType: Optional[str] = None
+	category: Optional[str] = None
 	parameters: List[ROPParamHelp] = field(default_factory=list)
+
+	@classmethod
+	def extractFromROP(cls, rop: 'COMP'):
+		info = ROPInfo(rop)
+		parHelps = []
+		for parTuplet in rop.customTuplets:
+			par = parTuplet[0]
+			if par.isPulse or par.readOnly:
+				continue
+			pass
+
+		pass
+
+	def formatAsMarkdown(self, headerOffset: int = 0):
+		headerPrefix = '#' * headerOffset
+		parts = [
+			f'{headerPrefix}# {self.name}',
+			self.summary,
+			self.detail,
+			'\n'.join([
+				parHelp.formatMarkdownListItem()
+				for parHelp in self.parameters
+			])
+		]
+		return _mergeMarkdownChunks(parts)
+
+@dataclass
+class CategoryHelp:
+	name: Optional[str] = None
+	summary: Optional[str] = None
+	detail: Optional[str] = None
+	operators: List[ROPHelp] = field(default_factory=list)
+
+	def formatAsPage(self):
+		parts = [
+			f'# {self.name}',
+			self.summary,
+			self.detail,
+		]
+		parts += [
+			opHelp.formatAsMarkdown(headerOffset=1)
+			for opHelp in self.operators
+		]
+		return _mergeMarkdownChunks(parts)
+
+def _mergeMarkdownChunks(parts: Iterable[str]):
+	return '\n\n'.join([p for p in parts if p])
 
 def cleanDict(d):
 	if not d:

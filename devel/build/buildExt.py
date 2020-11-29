@@ -63,7 +63,7 @@ class BuildManager:
 		self.context = BuildContext(self.log)
 		docFolder = self.getDocSitePath()
 		if docFolder:
-			self.docProcessor = DocProcessor(self.context, docFolder / 'reference')
+			self.docProcessor = DocProcessor(self.context, docFolder / '_reference')
 		else:
 			self.docProcessor = None
 		self.queueMethodCall('runBuild_stage', 0)

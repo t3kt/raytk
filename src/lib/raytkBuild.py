@@ -118,10 +118,23 @@ class DocProcessor:
 				dat = ropInfo.rop.create(textDAT, 'help')
 				ropInfo.helpDAT = dat
 			dat.text = docText
+		if ropInfo.isBeta:
+			betaLabel = '''
+Beta
+{: .label .label-yellow }'''
+		else:
+			betaLabel = ''
 		docText = f'''---
 layout: page
-title: {ropInfo.shortName} ({ropInfo.categoryName})
+title: {ropInfo.shortName}
+parent: {ropInfo.categoryName.capitalize()} Operators
+grand_parent: Operators
+permalink: /reference/operators/{ropInfo.categoryName}/{ropInfo.shortName}
 ---
+
+# {ropInfo.shortName}
+
+{betaLabel}
 
 {stripFirstMarkdownHeader(docText)}
 '''
@@ -134,7 +147,7 @@ title: {ropInfo.shortName} ({ropInfo.categoryName})
 		parts = [
 			f'# {ropInfo.shortName}',
 			f'Category: {ropInfo.categoryName}',
-			f'OP Type: {ropInfo.opType}',
+			f'OP Type: `{ropInfo.opType}`',
 			f'## Parameters',
 			'\n'.join([
 				f'* `{parTuplet[0].label}` - '
@@ -169,8 +182,14 @@ title: {ropInfo.shortName} ({ropInfo.categoryName})
 		dat.text = docText
 		docText = f'''---
 layout: page
-title: {categoryOp.name.capitalize()} Operators
+title: {categoryInfo.categoryName.capitalize()} Operators
+parent: Operators
+has_children: true
+has_toc: false
+permalink: /reference/operators/{categoryInfo.categoryName}/
 ---
+
+# {categoryInfo.categoryName.capitalize()} Operators
 
 {stripFirstMarkdownHeader(docText)}
 '''
@@ -182,9 +201,14 @@ title: {categoryOp.name.capitalize()} Operators
 		self.context.log('Writing category list page')
 		docText = '''---
 layout: page
-title: Operator Categories
+title: Operators
+nav_order: 3
+has_children: true
+has_toc: false
+permalink: /reference/operators/
 ---
 
+# Operator Categories
 '''
 		categoryInfos = [
 			CategoryInfo(o)
