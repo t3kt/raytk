@@ -22,18 +22,18 @@ title: RayTK
 email: tekt@immerse.studio
 description: >- # this means to ignore newlines until "baseurl:"
   RayTK is a TouchDesigner library for creating raymarching scenes.
-#baseurl: "/raytk" # the subpath of your site, e.g. /blog
-#url: "https://t3kt.github.io" # the base hostname & protocol for your site, e.g. http://example.com
+baseurl: "/raytk" # the subpath of your site, e.g. /blog
+url: "https://t3kt.github.io" # the base hostname & protocol for your site, e.g. http://example.com
 twitter_username: int3kt
 github_username:  t3kt
 
 # Build settings
 #theme: minima
-theme: "just-the-docs"
+#theme: "just-the-docs"
 #plugins:
 #  - jekyll-feed
 
-#remote_theme: pmarsceill/just-the-docs
+remote_theme: pmarsceill/just-the-docs
 
 # Exclude from processing.
 # The following items will not be processed, by default.
