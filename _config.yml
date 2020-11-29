@@ -61,10 +61,17 @@ collections:
   guide:
     permalink: "/:collection/:path/"
     output: true
+  reference:
+    permalink: "/:collection/:path/"
+    output: true
 
 just_the_docs:
   collections:
     guide:
       name: Guide
+      nav_exclude: false
+      search_exclude: false
+    reference:
+      name: Reference
       nav_exclude: false
       search_exclude: false
