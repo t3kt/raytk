@@ -6,9 +6,13 @@ grand_parent: Operators
 permalink: /reference/operators/convert/floatToSdf
 ---
 
+# floatToSdf
+
+
+
 Category: convert
 
-OP Type: raytk.operators.convert.floatToSdf
+OP Type: `raytk.operators.convert.floatToSdf`
 
 ## Parameters
 

@@ -7,6 +7,8 @@ has_toc: false
 permalink: /reference/operators/camera/
 ---
 
+# Camera Operators
+
 Operators that are used in raymarching to determine which
 direction rays should travel, effectively behaving as cameras.
 

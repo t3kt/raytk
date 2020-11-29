@@ -7,6 +7,8 @@ has_toc: false
 permalink: /reference/operators/misc/
 ---
 
+# Misc Operators
+
 Assorted operators that don't fit into other categories.
 
 * [`customFilter`](customFilter/) - 

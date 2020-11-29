@@ -6,5 +6,9 @@ grand_parent: Operators
 permalink: /reference/operators/utility/extractIteration
 ---
 
+# extractIteration
+
+
+
 A field that returns the current iteration, from a downstream
 operator.

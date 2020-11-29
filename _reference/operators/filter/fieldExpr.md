@@ -6,9 +6,13 @@ grand_parent: Operators
 permalink: /reference/operators/filter/fieldExpr
 ---
 
+# fieldExpr
+
+
+
 Category: filter
 
-OP Type: raytk.operators.filter.fieldExpr
+OP Type: `raytk.operators.filter.fieldExpr`
 
 ## Parameters
 

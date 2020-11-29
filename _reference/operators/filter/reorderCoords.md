@@ -6,9 +6,13 @@ grand_parent: Operators
 permalink: /reference/operators/filter/reorderCoords
 ---
 
+# reorderCoords
+
+
+
 Category: filter
 
-OP Type: raytk.operators.filter.reorderCoords
+OP Type: `raytk.operators.filter.reorderCoords`
 
 ## Parameters
 

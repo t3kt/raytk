@@ -6,4 +6,8 @@ grand_parent: Operators
 permalink: /reference/operators/camera/splitCamera
 ---
 
+# splitCamera
+
+
+
 A camera that splits the viewport into several zones, each using a separate camera.

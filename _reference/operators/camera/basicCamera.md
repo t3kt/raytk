@@ -6,9 +6,13 @@ grand_parent: Operators
 permalink: /reference/operators/camera/basicCamera
 ---
 
+# basicCamera
+
+
+
 Category: camera
 
-OP Type: raytk.operators.camera.basicCamera
+OP Type: `raytk.operators.camera.basicCamera`
 
 ## Parameters
 

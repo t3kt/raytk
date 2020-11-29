@@ -6,6 +6,10 @@ grand_parent: Operators
 permalink: /reference/operators/sdf/discSdf
 ---
 
+# discSdf
+
+
+
 A flat disc facing the Y axis.
 
 Because the disc is infinitely thin, it will only appear as a line when viewed from the side.

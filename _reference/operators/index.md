@@ -7,6 +7,7 @@ has_toc: false
 permalink: /reference/operators/
 ---
 
+# Operator Categories
 * [Camera](camera/) - Operators that are used in raymarching to determine which
 direction rays should travel, effectively behaving as cameras.
 * [Combine](combine/) - Operators that take two or more inputs and combine them into a single

@@ -6,9 +6,13 @@ grand_parent: Operators
 permalink: /reference/operators/material/sampledPointMat
 ---
 
+# sampledPointMat
+
+
+
 Category: material
 
-OP Type: raytk.operators.material.sampledPointMat
+OP Type: `raytk.operators.material.sampledPointMat`
 
 ## Parameters
 

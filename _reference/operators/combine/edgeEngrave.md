@@ -6,9 +6,13 @@ grand_parent: Operators
 permalink: /reference/operators/combine/edgeEngrave
 ---
 
+# edgeEngrave
+
+
+
 Category: combine
 
-OP Type: raytk.operators.combine.edgeEngrave
+OP Type: `raytk.operators.combine.edgeEngrave`
 
 ## Parameters
 

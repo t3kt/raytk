@@ -6,4 +6,8 @@ grand_parent: Operators
 permalink: /reference/operators/filter/knife
 ---
 
+# knife
+
+
+
 Cuts off an SDF along a plane.

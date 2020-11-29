@@ -6,9 +6,13 @@ grand_parent: Operators
 permalink: /reference/operators/sdf/spiralSdf
 ---
 
+# spiralSdf
+
+
+
 Category: sdf
 
-OP Type: raytk.operators.sdf.spiralSdf
+OP Type: `raytk.operators.sdf.spiralSdf`
 
 ## Parameters
 

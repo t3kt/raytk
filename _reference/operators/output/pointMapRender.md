@@ -6,9 +6,13 @@ grand_parent: Operators
 permalink: /reference/operators/output/pointMapRender
 ---
 
+# pointMapRender
+
+
+
 Category: output
 
-OP Type: raytk.operators.output.pointMapRender
+OP Type: `raytk.operators.output.pointMapRender`
 
 ## Parameters
 

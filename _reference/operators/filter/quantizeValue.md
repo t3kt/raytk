@@ -6,9 +6,13 @@ grand_parent: Operators
 permalink: /reference/operators/filter/quantizeValue
 ---
 
+# quantizeValue
+
+
+
 Category: filter
 
-OP Type: raytk.operators.filter.quantizeValue
+OP Type: `raytk.operators.filter.quantizeValue`
 
 ## Parameters
 

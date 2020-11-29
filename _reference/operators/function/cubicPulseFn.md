@@ -6,9 +6,13 @@ grand_parent: Operators
 permalink: /reference/operators/function/cubicPulseFn
 ---
 
+# cubicPulseFn
+
+
+
 Category: function
 
-OP Type: raytk.operators.function.cubicPulseFn
+OP Type: `raytk.operators.function.cubicPulseFn`
 
 ## Parameters
 

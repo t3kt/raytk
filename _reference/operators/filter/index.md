@@ -7,6 +7,8 @@ has_toc: false
 permalink: /reference/operators/filter/
 ---
 
+# Filter Operators
+
 Operators that take an input and modify it.
 
 Many of these are spatial transformations (scale, rotate, translate), which

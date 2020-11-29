@@ -6,6 +6,10 @@ grand_parent: Operators
 permalink: /reference/operators/filter/round
 ---
 
+# round
+
+
+
 Adds to (or subtracts from) the size of an SDF, which has the effect of rounding it out or shrinking it.
 
 Based on [code](https://iquilezles.org/www/articles/distfunctions/distfunctions.htm) from Inigo Quilez.

@@ -6,4 +6,8 @@ grand_parent: Operators
 permalink: /reference/operators/light/softShadow
 ---
 
+# softShadow
+
+
+
 A soft-edged shadow.

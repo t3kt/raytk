@@ -7,4 +7,6 @@ has_toc: false
 permalink: /reference/operators/custom/
 ---
 
+# Custom Operators
+
 * [`customOp`](customOp/) -

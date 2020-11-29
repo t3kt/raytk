@@ -6,6 +6,10 @@ grand_parent: Operators
 permalink: /reference/operators/field/waveField
 ---
 
+# waveField
+
+
+
 A field that uses a periodic wave.
 
 If there is an input, that rop is used to get the coordinate that is fed into the wave function.

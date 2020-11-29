@@ -6,6 +6,10 @@ grand_parent: Operators
 permalink: /reference/operators/filter/transform
 ---
 
+# transform
+
+
+
 Transform the coordinates of the input, with rotation, scaling, and translation.
 
 Various parts of the transform can be switched off to improve performance, and the sequence of transform steps can be reordered.

@@ -7,6 +7,8 @@ has_toc: false
 permalink: /reference/operators/utility/
 ---
 
+# Utility Operators
+
 Advanced operators that change how ROP chains behave.
 
 * [`extractDebugValues`](extractDebugValues/) - 

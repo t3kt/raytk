@@ -6,9 +6,13 @@ grand_parent: Operators
 permalink: /reference/operators/combine/edgeGroove
 ---
 
+# edgeGroove
+
+
+
 Category: combine
 
-OP Type: raytk.operators.combine.edgeGroove
+OP Type: `raytk.operators.combine.edgeGroove`
 
 ## Parameters
 

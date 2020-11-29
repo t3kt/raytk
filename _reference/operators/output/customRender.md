@@ -6,9 +6,15 @@ grand_parent: Operators
 permalink: /reference/operators/output/customRender
 ---
 
+# customRender
+
+
+Beta
+{: .label .label-yellow }
+
 Category: output
 
-OP Type: raytk.operators.output.customRender
+OP Type: `raytk.operators.output.customRender`
 
 ## Parameters
 

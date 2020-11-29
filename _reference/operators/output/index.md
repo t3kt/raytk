@@ -7,6 +7,8 @@ has_toc: false
 permalink: /reference/operators/output/
 ---
 
+# Output Operators
+
 Outputs are a special category of operator that takes in one or more
 chains of OPs, generate a shader, and run it to produce some sort of
 output.

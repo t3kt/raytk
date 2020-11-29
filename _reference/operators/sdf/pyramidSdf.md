@@ -6,9 +6,13 @@ grand_parent: Operators
 permalink: /reference/operators/sdf/pyramidSdf
 ---
 
+# pyramidSdf
+
+
+
 Category: sdf
 
-OP Type: raytk.operators.sdf.pyramidSdf
+OP Type: `raytk.operators.sdf.pyramidSdf`
 
 ## Parameters
 

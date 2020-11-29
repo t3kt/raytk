@@ -6,9 +6,13 @@ grand_parent: Operators
 permalink: /reference/operators/sdf/geodesicSdf
 ---
 
+# geodesicSdf
+
+
+
 Category: sdf
 
-OP Type: raytk.operators.sdf.geodesicSdf
+OP Type: `raytk.operators.sdf.geodesicSdf`
 
 ## Parameters
 

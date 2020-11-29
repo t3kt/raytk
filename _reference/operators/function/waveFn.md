@@ -6,4 +6,8 @@ grand_parent: Operators
 permalink: /reference/operators/function/waveFn
 ---
 
+# waveFn
+
+
+
 A function that uses a periodic wave, with the position as the parameter.

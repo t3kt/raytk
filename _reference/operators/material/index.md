@@ -7,6 +7,8 @@ has_toc: false
 permalink: /reference/operators/material/
 ---
 
+# Material Operators
+
 Material operators that are used by renderers to determine the
 color of points on the surface of geometry.
 

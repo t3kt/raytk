@@ -6,9 +6,13 @@ grand_parent: Operators
 permalink: /reference/operators/sdf2d/superQuadSdf2d
 ---
 
+# superQuadSdf2d
+
+
+
 Category: sdf2d
 
-OP Type: raytk.operators.sdf2d.superQuadSdf2d
+OP Type: `raytk.operators.sdf2d.superQuadSdf2d`
 
 ## Parameters
 

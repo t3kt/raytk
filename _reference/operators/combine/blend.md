@@ -6,9 +6,13 @@ grand_parent: Operators
 permalink: /reference/operators/combine/blend
 ---
 
+# blend
+
+
+
 Category: combine
 
-OP Type: raytk.operators.combine.blend
+OP Type: `raytk.operators.combine.blend`
 
 ## Parameters
 

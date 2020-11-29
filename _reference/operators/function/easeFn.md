@@ -6,9 +6,13 @@ grand_parent: Operators
 permalink: /reference/operators/function/easeFn
 ---
 
+# easeFn
+
+
+
 Category: function
 
-OP Type: raytk.operators.function.easeFn
+OP Type: `raytk.operators.function.easeFn`
 
 ## Parameters
 

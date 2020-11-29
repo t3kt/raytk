@@ -7,6 +7,8 @@ has_toc: false
 permalink: /reference/operators/light/
 ---
 
+# Light Operators
+
 Operators that are used in raymarching to define the behavior of light, including
 light sources and shadow behaviors.
 

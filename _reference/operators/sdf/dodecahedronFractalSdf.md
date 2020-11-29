@@ -6,9 +6,15 @@ grand_parent: Operators
 permalink: /reference/operators/sdf/dodecahedronFractalSdf
 ---
 
+# dodecahedronFractalSdf
+
+
+Beta
+{: .label .label-yellow }
+
 Category: sdf
 
-OP Type: raytk.operators.sdf.dodecahedronFractalSdf
+OP Type: `raytk.operators.sdf.dodecahedronFractalSdf`
 
 ## Parameters
 

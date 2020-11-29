@@ -6,9 +6,13 @@ grand_parent: Operators
 permalink: /reference/operators/sdf/mandelbulbSdf
 ---
 
+# mandelbulbSdf
+
+
+
 Category: sdf
 
-OP Type: raytk.operators.sdf.mandelbulbSdf
+OP Type: `raytk.operators.sdf.mandelbulbSdf`
 
 ## Parameters
 

@@ -6,9 +6,13 @@ grand_parent: Operators
 permalink: /reference/operators/sdf/amazingSurfaceSdf
 ---
 
+# amazingSurfaceSdf
+
+
+
 Category: sdf
 
-OP Type: raytk.operators.sdf.amazingSurfaceSdf
+OP Type: `raytk.operators.sdf.amazingSurfaceSdf`
 
 ## Parameters
 

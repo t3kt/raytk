@@ -7,6 +7,8 @@ has_toc: false
 permalink: /reference/operators/sdf2d/
 ---
 
+# Sdf2d Operators
+
 Signed distances functions which define geometry in 2D space, by calculating
 the distance from the edge of the shape at any given point.
 

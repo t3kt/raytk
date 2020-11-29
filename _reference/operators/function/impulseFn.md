@@ -6,9 +6,13 @@ grand_parent: Operators
 permalink: /reference/operators/function/impulseFn
 ---
 
+# impulseFn
+
+
+
 Category: function
 
-OP Type: raytk.operators.function.impulseFn
+OP Type: `raytk.operators.function.impulseFn`
 
 ## Parameters
 

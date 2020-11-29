@@ -7,6 +7,8 @@ has_toc: false
 permalink: /reference/operators/combine/
 ---
 
+# Combine Operators
+
 Operators that take two or more inputs and combine them into a single
 output.
 

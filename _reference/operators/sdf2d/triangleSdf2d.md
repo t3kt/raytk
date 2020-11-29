@@ -6,9 +6,13 @@ grand_parent: Operators
 permalink: /reference/operators/sdf2d/triangleSdf2d
 ---
 
+# triangleSdf2d
+
+
+
 Category: sdf2d
 
-OP Type: raytk.operators.sdf2d.triangleSdf2d
+OP Type: `raytk.operators.sdf2d.triangleSdf2d`
 
 ## Parameters
 

@@ -6,9 +6,13 @@ grand_parent: Operators
 permalink: /reference/operators/misc/customGen
 ---
 
+# customGen
+
+
+
 Category: misc
 
-OP Type: raytk.operators.misc.customGen
+OP Type: `raytk.operators.misc.customGen`
 
 ## Parameters
 

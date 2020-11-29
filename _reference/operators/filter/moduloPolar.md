@@ -6,6 +6,10 @@ grand_parent: Operators
 permalink: /reference/operators/filter/moduloPolar
 ---
 
+# moduloPolar
+
+
+
 Repeats space radially, like a kaleidoscope.
 
 * `Axis` - The axis around which space is sliced.

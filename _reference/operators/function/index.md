@@ -7,6 +7,8 @@ has_toc: false
 permalink: /reference/operators/function/
 ---
 
+# Function Operators
+
 * [`addFn`](addFn/) - 
 * [`almostIdentityFn`](almostIdentityFn/) - 
 * [`chopFn`](chopFn/) - 

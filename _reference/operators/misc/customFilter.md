@@ -6,9 +6,13 @@ grand_parent: Operators
 permalink: /reference/operators/misc/customFilter
 ---
 
+# customFilter
+
+
+
 Category: misc
 
-OP Type: raytk.operators.misc.customFilter
+OP Type: `raytk.operators.misc.customFilter`
 
 ## Parameters
 

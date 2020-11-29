@@ -7,6 +7,8 @@ has_toc: false
 permalink: /reference/operators/sdf/
 ---
 
+# Sdf Operators
+
 Signed distances functions which define geometry in 3D space, by calculating
 the distance from the surface of the shape at any given point.
 

@@ -6,6 +6,10 @@ grand_parent: Operators
 permalink: /reference/operators/filter/bend
 ---
 
+# bend
+
+
+
 Bends space, along a main axis, towards a second axis.
 
 For example, bends sideways (towards X) depending on the vertical position (along Y).

@@ -6,9 +6,13 @@ grand_parent: Operators
 permalink: /reference/operators/post/worldPosMap
 ---
 
+# worldPosMap
+
+
+
 Category: post
 
-OP Type: raytk.operators.post.worldPosMap
+OP Type: `raytk.operators.post.worldPosMap`
 
 ## Parameters
 

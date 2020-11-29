@@ -6,6 +6,10 @@ grand_parent: Operators
 permalink: /reference/operators/sdf/generalizedPolyhedronSdf
 ---
 
+# generalizedPolyhedronSdf
+
+
+
 Generates one of several different types of polyhedra.
 
 Based on ["Generalized Distance Functions"](http://people.tamu.edu/~ergun/research/implicitmodeling/papers/sm99.pdf) by Akleman and Chen.

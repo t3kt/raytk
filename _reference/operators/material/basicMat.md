@@ -6,9 +6,13 @@ grand_parent: Operators
 permalink: /reference/operators/material/basicMat
 ---
 
+# basicMat
+
+
+
 Category: material
 
-OP Type: raytk.operators.material.basicMat
+OP Type: `raytk.operators.material.basicMat`
 
 ## Parameters
 

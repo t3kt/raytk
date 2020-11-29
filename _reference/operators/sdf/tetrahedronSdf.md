@@ -6,9 +6,13 @@ grand_parent: Operators
 permalink: /reference/operators/sdf/tetrahedronSdf
 ---
 
+# tetrahedronSdf
+
+
+
 Category: sdf
 
-OP Type: raytk.operators.sdf.tetrahedronSdf
+OP Type: `raytk.operators.sdf.tetrahedronSdf`
 
 ## Parameters
 

@@ -6,6 +6,10 @@ grand_parent: Operators
 permalink: /reference/operators/combine/edgePipe
 ---
 
+# edgePipe
+
+
+
 Produces a cylindrical pipe along the blend region, replacing the input shapes entirely.
 
 Creates an entirely new SDF result, removing any materials and other settings from the inputs.

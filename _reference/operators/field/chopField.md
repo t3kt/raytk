@@ -6,9 +6,15 @@ grand_parent: Operators
 permalink: /reference/operators/field/chopField
 ---
 
+# chopField
+
+
+Beta
+{: .label .label-yellow }
+
 Category: field
 
-OP Type: raytk.operators.field.chopField
+OP Type: `raytk.operators.field.chopField`
 
 ## Parameters
 

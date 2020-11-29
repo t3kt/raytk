@@ -6,9 +6,13 @@ grand_parent: Operators
 permalink: /reference/operators/output/functionGraphRender
 ---
 
+# functionGraphRender
+
+
+
 Category: output
 
-OP Type: raytk.operators.output.functionGraphRender
+OP Type: `raytk.operators.output.functionGraphRender`
 
 ## Parameters
 

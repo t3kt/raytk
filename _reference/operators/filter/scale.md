@@ -6,9 +6,13 @@ grand_parent: Operators
 permalink: /reference/operators/filter/scale
 ---
 
+# scale
+
+
+
 Category: filter
 
-OP Type: raytk.operators.filter.scale
+OP Type: `raytk.operators.filter.scale`
 
 ## Parameters
 

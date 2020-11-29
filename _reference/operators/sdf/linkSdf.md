@@ -6,4 +6,8 @@ grand_parent: Operators
 permalink: /reference/operators/sdf/linkSdf
 ---
 
+# linkSdf
+
+
+
 SDF for a chain link shape (an elongated loop).

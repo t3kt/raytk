@@ -6,6 +6,10 @@ grand_parent: Operators
 permalink: /reference/operators/sdf/octahedronSdf
 ---
 
+# octahedronSdf
+
+
+
 An octahedron, with its corners facing the axes.
 
 * `Translate` - shifts the center of the shape.

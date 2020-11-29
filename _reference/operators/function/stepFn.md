@@ -6,9 +6,13 @@ grand_parent: Operators
 permalink: /reference/operators/function/stepFn
 ---
 
+# stepFn
+
+
+
 Category: function
 
-OP Type: raytk.operators.function.stepFn
+OP Type: `raytk.operators.function.stepFn`
 
 ## Parameters
 

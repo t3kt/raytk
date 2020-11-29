@@ -6,9 +6,13 @@ grand_parent: Operators
 permalink: /reference/operators/function/parabolaFn
 ---
 
+# parabolaFn
+
+
+
 Category: function
 
-OP Type: raytk.operators.function.parabolaFn
+OP Type: `raytk.operators.function.parabolaFn`
 
 ## Parameters
 

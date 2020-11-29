@@ -6,6 +6,10 @@ grand_parent: Operators
 permalink: /reference/operators/combine/combineStairs
 ---
 
+# combineStairs
+
+
+
 Stair SDF combine, producing steps along the blend region.
 
 Number is the number of steps.

@@ -6,6 +6,10 @@ grand_parent: Operators
 permalink: /reference/operators/sdf/planeSdf
 ---
 
+# planeSdf
+
+
+
 An infinite plane on the x, y, or z axis.
 
 * `Axis` - chooses which axis the plane faces.

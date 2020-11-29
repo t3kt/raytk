@@ -6,9 +6,13 @@ grand_parent: Operators
 permalink: /reference/operators/function/chopFn
 ---
 
+# chopFn
+
+
+
 Category: function
 
-OP Type: raytk.operators.function.chopFn
+OP Type: `raytk.operators.function.chopFn`
 
 ## Parameters
 

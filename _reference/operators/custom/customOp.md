@@ -6,9 +6,13 @@ grand_parent: Operators
 permalink: /reference/operators/custom/customOp
 ---
 
+# customOp
+
+
+
 Category: custom
 
-OP Type: raytk.operators.custom.customOp
+OP Type: `raytk.operators.custom.customOp`
 
 ## Parameters
 

@@ -6,9 +6,15 @@ grand_parent: Operators
 permalink: /reference/operators/sdf/sierpinskiTetrahedronSdf
 ---
 
+# sierpinskiTetrahedronSdf
+
+
+Beta
+{: .label .label-yellow }
+
 Category: sdf
 
-OP Type: raytk.operators.sdf.sierpinskiTetrahedronSdf
+OP Type: `raytk.operators.sdf.sierpinskiTetrahedronSdf`
 
 ## Parameters
 

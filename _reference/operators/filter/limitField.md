@@ -6,9 +6,13 @@ grand_parent: Operators
 permalink: /reference/operators/filter/limitField
 ---
 
+# limitField
+
+
+
 Category: filter
 
-OP Type: raytk.operators.filter.limitField
+OP Type: `raytk.operators.filter.limitField`
 
 ## Parameters
 
