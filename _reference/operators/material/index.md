@@ -1,7 +1,7 @@
 ---
 layout: page
 title: Material Operators
-parent: Operator Categories
+parent: Operators
 has_children: true
 has_toc: false
 ---

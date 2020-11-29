@@ -1,7 +1,7 @@
 ---
 layout: page
 title: Filter Operators
-parent: Operator Categories
+parent: Operators
 has_children: true
 has_toc: false
 ---

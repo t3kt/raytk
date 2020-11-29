@@ -1,6 +1,6 @@
 ---
 layout: page
-title: Operator Categories
+title: Operators
 nav_order: 3
 has_children: true
 has_toc: false
