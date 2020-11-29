@@ -3,6 +3,7 @@ layout: page
 title: reorderCoords
 parent: Filter Operators
 grand_parent: Operators
+permalink: /reference/operators/filter/reorderCoords
 ---
 
 Category: filter

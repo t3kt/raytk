@@ -3,6 +3,7 @@ layout: page
 title: edgeGroove
 parent: Combine Operators
 grand_parent: Operators
+permalink: /reference/operators/combine/edgeGroove
 ---
 
 Category: combine

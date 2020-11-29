@@ -3,6 +3,7 @@ layout: page
 title: planeSdf
 parent: Sdf Operators
 grand_parent: Operators
+permalink: /reference/operators/sdf/planeSdf
 ---
 
 An infinite plane on the x, y, or z axis.

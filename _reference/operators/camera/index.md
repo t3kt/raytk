@@ -4,6 +4,7 @@ title: Camera Operators
 parent: Operators
 has_children: true
 has_toc: false
+permalink: /reference/operators/camera/
 ---
 
 Operators that are used in raymarching to determine which

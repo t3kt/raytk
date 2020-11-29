@@ -3,6 +3,7 @@ layout: page
 title: impulseFn
 parent: Function Operators
 grand_parent: Operators
+permalink: /reference/operators/function/impulseFn
 ---
 
 Category: function

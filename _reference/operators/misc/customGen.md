@@ -3,6 +3,7 @@ layout: page
 title: customGen
 parent: Misc Operators
 grand_parent: Operators
+permalink: /reference/operators/misc/customGen
 ---
 
 Category: misc

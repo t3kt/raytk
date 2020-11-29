@@ -3,6 +3,7 @@ layout: page
 title: gridSdf
 parent: Sdf Operators
 grand_parent: Operators
+permalink: /reference/operators/sdf/gridSdf
 ---
 
 An infinite grid shape, along two axes.

@@ -3,6 +3,7 @@ layout: page
 title: simpleDiff
 parent: Combine Operators
 grand_parent: Operators
+permalink: /reference/operators/combine/simpleDiff
 ---
 
 Combines two SDFs using the difference operator.

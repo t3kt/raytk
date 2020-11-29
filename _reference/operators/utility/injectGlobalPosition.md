@@ -3,6 +3,7 @@ layout: page
 title: injectGlobalPosition
 parent: Utility Operators
 grand_parent: Operators
+permalink: /reference/operators/utility/injectGlobalPosition
 ---
 
 Calls its input using the untransformed global position.

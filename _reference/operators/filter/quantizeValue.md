@@ -3,6 +3,7 @@ layout: page
 title: quantizeValue
 parent: Filter Operators
 grand_parent: Operators
+permalink: /reference/operators/filter/quantizeValue
 ---
 
 Category: filter

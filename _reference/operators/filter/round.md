@@ -3,6 +3,7 @@ layout: page
 title: round
 parent: Filter Operators
 grand_parent: Operators
+permalink: /reference/operators/filter/round
 ---
 
 Adds to (or subtracts from) the size of an SDF, which has the effect of rounding it out or shrinking it.

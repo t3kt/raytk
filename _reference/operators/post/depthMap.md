@@ -3,6 +3,7 @@ layout: page
 title: depthMap
 parent: Post Operators
 grand_parent: Operators
+permalink: /reference/operators/post/depthMap
 ---
 
 Category: post

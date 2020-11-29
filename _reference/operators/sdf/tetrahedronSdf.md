@@ -3,6 +3,7 @@ layout: page
 title: tetrahedronSdf
 parent: Sdf Operators
 grand_parent: Operators
+permalink: /reference/operators/sdf/tetrahedronSdf
 ---
 
 Category: sdf

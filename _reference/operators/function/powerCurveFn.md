@@ -3,6 +3,7 @@ layout: page
 title: powerCurveFn
 parent: Function Operators
 grand_parent: Operators
+permalink: /reference/operators/function/powerCurveFn
 ---
 
 Category: function

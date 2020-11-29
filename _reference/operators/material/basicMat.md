@@ -3,6 +3,7 @@ layout: page
 title: basicMat
 parent: Material Operators
 grand_parent: Operators
+permalink: /reference/operators/material/basicMat
 ---
 
 Category: material

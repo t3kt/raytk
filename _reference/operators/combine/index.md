@@ -4,6 +4,7 @@ title: Combine Operators
 parent: Operators
 has_children: true
 has_toc: false
+permalink: /reference/operators/combine/
 ---
 
 Operators that take two or more inputs and combine them into a single

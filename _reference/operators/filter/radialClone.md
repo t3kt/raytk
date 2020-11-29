@@ -3,6 +3,7 @@ layout: page
 title: radialClone
 parent: Filter Operators
 grand_parent: Operators
+permalink: /reference/operators/filter/radialClone
 ---
 
 Repeats an SDF radially around an axis, combining the resulting shapes.

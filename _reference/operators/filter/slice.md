@@ -3,6 +3,7 @@ layout: page
 title: slice
 parent: Filter Operators
 grand_parent: Operators
+permalink: /reference/operators/filter/slice
 ---
 
 Category: filter

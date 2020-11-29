@@ -3,6 +3,7 @@ layout: page
 title: rotate
 parent: Filter Operators
 grand_parent: Operators
+permalink: /reference/operators/filter/rotate
 ---
 
 Category: filter

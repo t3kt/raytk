@@ -3,6 +3,7 @@ layout: page
 title: reflect
 parent: Filter Operators
 grand_parent: Operators
+permalink: /reference/operators/filter/reflect
 ---
 
 Reflects space across a plane.

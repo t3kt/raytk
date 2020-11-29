@@ -3,6 +3,7 @@ layout: page
 title: revolve
 parent: Convert Operators
 grand_parent: Operators
+permalink: /reference/operators/convert/revolve
 ---
 
 Category: convert

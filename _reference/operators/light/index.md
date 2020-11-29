@@ -4,6 +4,7 @@ title: Light Operators
 parent: Operators
 has_children: true
 has_toc: false
+permalink: /reference/operators/light/
 ---
 
 Operators that are used in raymarching to define the behavior of light, including

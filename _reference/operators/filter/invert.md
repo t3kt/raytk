@@ -3,6 +3,7 @@ layout: page
 title: invert
 parent: Filter Operators
 grand_parent: Operators
+permalink: /reference/operators/filter/invert
 ---
 
 Invert an SDF, so that the inside is the outside.

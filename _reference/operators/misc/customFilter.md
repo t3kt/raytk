@@ -3,6 +3,7 @@ layout: page
 title: customFilter
 parent: Misc Operators
 grand_parent: Operators
+permalink: /reference/operators/misc/customFilter
 ---
 
 Category: misc

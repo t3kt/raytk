@@ -3,6 +3,7 @@ layout: page
 title: fieldMat
 parent: Material Operators
 grand_parent: Operators
+permalink: /reference/operators/material/fieldMat
 ---
 
 A material that uses a vector field input to determine

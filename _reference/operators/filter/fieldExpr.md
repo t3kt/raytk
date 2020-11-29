@@ -3,6 +3,7 @@ layout: page
 title: fieldExpr
 parent: Filter Operators
 grand_parent: Operators
+permalink: /reference/operators/filter/fieldExpr
 ---
 
 Category: filter

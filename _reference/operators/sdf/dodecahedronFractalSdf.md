@@ -3,6 +3,7 @@ layout: page
 title: dodecahedronFractalSdf
 parent: Sdf Operators
 grand_parent: Operators
+permalink: /reference/operators/sdf/dodecahedronFractalSdf
 ---
 
 Category: sdf

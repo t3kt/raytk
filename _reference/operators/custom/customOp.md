@@ -3,6 +3,7 @@ layout: page
 title: customOp
 parent: Custom Operators
 grand_parent: Operators
+permalink: /reference/operators/custom/customOp
 ---
 
 Category: custom

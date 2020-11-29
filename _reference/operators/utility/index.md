@@ -4,6 +4,7 @@ title: Utility Operators
 parent: Operators
 has_children: true
 has_toc: false
+permalink: /reference/operators/utility/
 ---
 
 Advanced operators that change how ROP chains behave.

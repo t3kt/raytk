@@ -3,6 +3,7 @@ layout: page
 title: geodesicSdf
 parent: Sdf Operators
 grand_parent: Operators
+permalink: /reference/operators/sdf/geodesicSdf
 ---
 
 Category: sdf

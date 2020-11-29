@@ -3,6 +3,7 @@ layout: page
 title: spiralSdf
 parent: Sdf Operators
 grand_parent: Operators
+permalink: /reference/operators/sdf/spiralSdf
 ---
 
 Category: sdf

@@ -4,6 +4,7 @@ title: Sdf2d Operators
 parent: Operators
 has_children: true
 has_toc: false
+permalink: /reference/operators/sdf2d/
 ---
 
 Signed distances functions which define geometry in 2D space, by calculating

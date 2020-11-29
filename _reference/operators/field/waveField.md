@@ -3,6 +3,7 @@ layout: page
 title: waveField
 parent: Field Operators
 grand_parent: Operators
+permalink: /reference/operators/field/waveField
 ---
 
 A field that uses a periodic wave.

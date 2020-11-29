@@ -3,6 +3,7 @@ layout: page
 title: amazingSurfaceSdf
 parent: Sdf Operators
 grand_parent: Operators
+permalink: /reference/operators/sdf/amazingSurfaceSdf
 ---
 
 Category: sdf

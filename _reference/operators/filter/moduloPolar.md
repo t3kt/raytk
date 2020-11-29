@@ -3,6 +3,7 @@ layout: page
 title: moduloPolar
 parent: Filter Operators
 grand_parent: Operators
+permalink: /reference/operators/filter/moduloPolar
 ---
 
 Repeats space radially, like a kaleidoscope.

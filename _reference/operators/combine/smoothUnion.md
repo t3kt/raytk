@@ -3,6 +3,7 @@ layout: page
 title: smoothUnion
 parent: Combine Operators
 grand_parent: Operators
+permalink: /reference/operators/combine/smoothUnion
 ---
 
 Combines SDFs using a smooth union operator.

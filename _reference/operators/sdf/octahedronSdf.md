@@ -3,6 +3,7 @@ layout: page
 title: octahedronSdf
 parent: Sdf Operators
 grand_parent: Operators
+permalink: /reference/operators/sdf/octahedronSdf
 ---
 
 An octahedron, with its corners facing the axes.

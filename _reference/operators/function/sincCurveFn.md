@@ -3,6 +3,7 @@ layout: page
 title: sincCurveFn
 parent: Function Operators
 grand_parent: Operators
+permalink: /reference/operators/function/sincCurveFn
 ---
 
 Category: function

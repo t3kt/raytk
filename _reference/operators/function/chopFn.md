@@ -3,6 +3,7 @@ layout: page
 title: chopFn
 parent: Function Operators
 grand_parent: Operators
+permalink: /reference/operators/function/chopFn
 ---
 
 Category: function

@@ -3,6 +3,7 @@ layout: page
 title: gyroidSdf
 parent: Sdf Operators
 grand_parent: Operators
+permalink: /reference/operators/sdf/gyroidSdf
 ---
 
 Category: sdf

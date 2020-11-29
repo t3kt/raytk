@@ -3,6 +3,7 @@ layout: page
 title: cellTileField
 parent: Field Operators
 grand_parent: Operators
+permalink: /reference/operators/field/cellTileField
 ---
 
 A value field that provides an approximation of repeating cellular (voronoi) noise.

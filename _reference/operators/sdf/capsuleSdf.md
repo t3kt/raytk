@@ -3,6 +3,7 @@ layout: page
 title: capsuleSdf
 parent: Sdf Operators
 grand_parent: Operators
+permalink: /reference/operators/sdf/capsuleSdf
 ---
 
 Category: sdf

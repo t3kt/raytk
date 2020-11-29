@@ -3,6 +3,7 @@ layout: page
 title: limitField
 parent: Filter Operators
 grand_parent: Operators
+permalink: /reference/operators/filter/limitField
 ---
 
 Category: filter

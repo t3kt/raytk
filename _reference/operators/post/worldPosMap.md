@@ -3,6 +3,7 @@ layout: page
 title: worldPosMap
 parent: Post Operators
 grand_parent: Operators
+permalink: /reference/operators/post/worldPosMap
 ---
 
 Category: post

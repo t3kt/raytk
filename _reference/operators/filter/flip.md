@@ -3,6 +3,7 @@ layout: page
 title: flip
 parent: Filter Operators
 grand_parent: Operators
+permalink: /reference/operators/filter/flip
 ---
 
 Category: filter

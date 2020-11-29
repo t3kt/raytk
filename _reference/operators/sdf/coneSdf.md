@@ -3,6 +3,7 @@ layout: page
 title: coneSdf
 parent: Sdf Operators
 grand_parent: Operators
+permalink: /reference/operators/sdf/coneSdf
 ---
 
 Defines a cone or capped cone shape.

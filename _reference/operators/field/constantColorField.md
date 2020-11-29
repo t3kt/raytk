@@ -3,6 +3,7 @@ layout: page
 title: constantColorField
 parent: Field Operators
 grand_parent: Operators
+permalink: /reference/operators/field/constantColorField
 ---
 
 A vector field that evaluates to a constant color value.

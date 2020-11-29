@@ -4,6 +4,7 @@ title: Material Operators
 parent: Operators
 has_children: true
 has_toc: false
+permalink: /reference/operators/material/
 ---
 
 Material operators that are used by renderers to determine the

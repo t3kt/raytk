@@ -3,6 +3,7 @@ layout: page
 title: generalizedPolyhedronSdf
 parent: Sdf Operators
 grand_parent: Operators
+permalink: /reference/operators/sdf/generalizedPolyhedronSdf
 ---
 
 Generates one of several different types of polyhedra.

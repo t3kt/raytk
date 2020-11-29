@@ -3,6 +3,7 @@ layout: page
 title: petalSdf
 parent: Sdf Operators
 grand_parent: Operators
+permalink: /reference/operators/sdf/petalSdf
 ---
 
 Category: sdf

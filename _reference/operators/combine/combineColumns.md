@@ -3,6 +3,7 @@ layout: page
 title: combineColumns
 parent: Combine Operators
 grand_parent: Operators
+permalink: /reference/operators/combine/combineColumns
 ---
 
 Columns SDF combine, producing n-1 circular columns at a 45 degree angles along the blend region.

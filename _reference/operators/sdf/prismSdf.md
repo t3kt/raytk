@@ -3,6 +3,7 @@ layout: page
 title: prismSdf
 parent: Sdf Operators
 grand_parent: Operators
+permalink: /reference/operators/sdf/prismSdf
 ---
 
 Category: sdf

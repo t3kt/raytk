@@ -3,6 +3,7 @@ layout: page
 title: translate
 parent: Filter Operators
 grand_parent: Operators
+permalink: /reference/operators/filter/translate
 ---
 
 Translates coordinates of the input ROP.

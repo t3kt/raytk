@@ -3,6 +3,7 @@ layout: page
 title: simpleUnion
 parent: Combine Operators
 grand_parent: Operators
+permalink: /reference/operators/combine/simpleUnion
 ---
 
 Combines several SDFs using the union operator.

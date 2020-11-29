@@ -3,6 +3,7 @@ layout: page
 title: render2D
 parent: Output Operators
 grand_parent: Operators
+permalink: /reference/operators/output/render2D
 ---
 
 Category: output

@@ -3,6 +3,7 @@ layout: page
 title: renderSelect
 parent: Output Operators
 grand_parent: Operators
+permalink: /reference/operators/output/renderSelect
 ---
 
 Category: output

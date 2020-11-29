@@ -3,6 +3,7 @@ layout: page
 title: coordTo3D
 parent: Convert Operators
 grand_parent: Operators
+permalink: /reference/operators/convert/coordTo3D
 ---
 
 Category: convert

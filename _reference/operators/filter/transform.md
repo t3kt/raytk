@@ -3,6 +3,7 @@ layout: page
 title: transform
 parent: Filter Operators
 grand_parent: Operators
+permalink: /reference/operators/filter/transform
 ---
 
 Transform the coordinates of the input, with rotation, scaling, and translation.

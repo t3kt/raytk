@@ -3,6 +3,7 @@ layout: page
 title: chopField
 parent: Field Operators
 grand_parent: Operators
+permalink: /reference/operators/field/chopField
 ---
 
 Category: field

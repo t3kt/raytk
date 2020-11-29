@@ -3,6 +3,7 @@ layout: page
 title: functionGraphRender
 parent: Output Operators
 grand_parent: Operators
+permalink: /reference/operators/output/functionGraphRender
 ---
 
 Category: output

@@ -3,6 +3,7 @@ layout: page
 title: bend
 parent: Filter Operators
 grand_parent: Operators
+permalink: /reference/operators/filter/bend
 ---
 
 Bends space, along a main axis, towards a second axis.

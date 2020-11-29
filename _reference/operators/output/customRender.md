@@ -3,6 +3,7 @@ layout: page
 title: customRender
 parent: Output Operators
 grand_parent: Operators
+permalink: /reference/operators/output/customRender
 ---
 
 Category: output

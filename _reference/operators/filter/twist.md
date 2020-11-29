@@ -3,6 +3,7 @@ layout: page
 title: twist
 parent: Filter Operators
 grand_parent: Operators
+permalink: /reference/operators/filter/twist
 ---
 
 Category: filter

@@ -4,6 +4,7 @@ title: Sdf Operators
 parent: Operators
 has_children: true
 has_toc: false
+permalink: /reference/operators/sdf/
 ---
 
 Signed distances functions which define geometry in 3D space, by calculating

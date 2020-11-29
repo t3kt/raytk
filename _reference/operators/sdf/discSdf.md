@@ -3,6 +3,7 @@ layout: page
 title: discSdf
 parent: Sdf Operators
 grand_parent: Operators
+permalink: /reference/operators/sdf/discSdf
 ---
 
 A flat disc facing the Y axis.

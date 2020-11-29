@@ -3,6 +3,7 @@ layout: page
 title: solidAngleSdf
 parent: Sdf Operators
 grand_parent: Operators
+permalink: /reference/operators/sdf/solidAngleSdf
 ---
 
 Category: sdf

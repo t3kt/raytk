@@ -3,6 +3,7 @@ layout: page
 title: magnet
 parent: Filter Operators
 grand_parent: Operators
+permalink: /reference/operators/filter/magnet
 ---
 
 Category: filter

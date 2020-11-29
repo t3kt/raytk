@@ -4,6 +4,7 @@ title: Filter Operators
 parent: Operators
 has_children: true
 has_toc: false
+permalink: /reference/operators/filter/
 ---
 
 Operators that take an input and modify it.

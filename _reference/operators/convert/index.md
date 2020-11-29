@@ -4,6 +4,7 @@ title: Convert Operators
 parent: Operators
 has_children: true
 has_toc: false
+permalink: /reference/operators/convert/
 ---
 
 Operators that convert between different types of coordinates and

@@ -3,6 +3,7 @@ layout: page
 title: reorderField
 parent: Field Operators
 grand_parent: Operators
+permalink: /reference/operators/field/reorderField
 ---
 
 Category: field

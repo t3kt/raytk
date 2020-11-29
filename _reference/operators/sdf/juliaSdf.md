@@ -3,6 +3,7 @@ layout: page
 title: juliaSdf
 parent: Sdf Operators
 grand_parent: Operators
+permalink: /reference/operators/sdf/juliaSdf
 ---
 
 Category: sdf

@@ -4,6 +4,7 @@ title: Operators
 nav_order: 3
 has_children: true
 has_toc: false
+permalink: /reference/operators/
 ---
 
 * [Camera](camera/) - Operators that are used in raymarching to determine which

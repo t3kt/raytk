@@ -3,6 +3,7 @@ layout: page
 title: elongate
 parent: Filter Operators
 grand_parent: Operators
+permalink: /reference/operators/filter/elongate
 ---
 
 Splits a shape into pieces, moves them apart, and connects them.

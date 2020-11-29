@@ -4,6 +4,7 @@ title: Custom Operators
 parent: Operators
 has_children: true
 has_toc: false
+permalink: /reference/operators/custom/
 ---
 
 * [`customOp`](customOp/) -

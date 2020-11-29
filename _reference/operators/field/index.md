@@ -4,6 +4,7 @@ title: Field Operators
 parent: Operators
 has_children: true
 has_toc: false
+permalink: /reference/operators/field/
 ---
 
 Float or vector fields, which provide values for the requested coordinates.

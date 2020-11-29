@@ -4,6 +4,7 @@ title: Output Operators
 parent: Operators
 has_children: true
 has_toc: false
+permalink: /reference/operators/output/
 ---
 
 Outputs are a special category of operator that takes in one or more

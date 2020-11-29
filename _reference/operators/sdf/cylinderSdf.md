@@ -3,6 +3,7 @@ layout: page
 title: cylinderSdf
 parent: Sdf Operators
 grand_parent: Operators
+permalink: /reference/operators/sdf/cylinderSdf
 ---
 
 SDF for a cylinder along the Y axis, centered at the origin.
