@@ -62,7 +62,7 @@ collections:
     permalink: "/:collection/:path/"
     output: true
   reference:
-    permalink: "/:collection/:path/"
+    permalink: "/:collection/:name/"
     output: true
 
 just_the_docs:
@@ -75,3 +75,9 @@ just_the_docs:
       name: Reference
       nav_exclude: false
       search_exclude: false
+
+heading_anchors: true
+
+aux_links:
+  "View on GitHub":
+    - "//github.com/t3kt/raytk"
