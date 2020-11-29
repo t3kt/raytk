@@ -1,6 +1,7 @@
 ---
 layout: page
 title: Concepts
+nav_order: 2
 ---
 
 RayTK is a collection of several types of components, which can be placed into scenes, and a set of tools for working with those components.

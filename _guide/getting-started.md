@@ -1,6 +1,7 @@
 ---
 layout: page
 title: Getting Started With RayTK
+nav_order: 1
 ---
 
 ## Download the Library
