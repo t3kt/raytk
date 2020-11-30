@@ -58,7 +58,7 @@ mirrorOctant	/raytk/operators/filter/mirrorOctant	/raytk/operators/filter	raytkO
 modulo1D	/raytk/operators/filter/modulo1D	/raytk/operators/filter	raytkOP	filter	filter/modulo1D	raytk.operators.filter.modulo1D	5	
 modulo2D	/raytk/operators/filter/modulo2D	/raytk/operators/filter	raytkOP	filter	filter/modulo2D	raytk.operators.filter.modulo2D	2	
 modulo3D	/raytk/operators/filter/modulo3D	/raytk/operators/filter	raytkOP	filter	filter/modulo3D	raytk.operators.filter.modulo3D	3	
-moduloDistance	/raytk/operators/filter/moduloDistance	/raytk/operators/filter	raytkOP	filter	filter/moduloDistance	raytk.operators.filter.moduloDistance	0	beta
+moduloDistance	/raytk/operators/filter/moduloDistance	/raytk/operators/filter	raytkOP	filter	filter/moduloDistance	raytk.operators.filter.moduloDistance	1	beta
 moduloPolar	/raytk/operators/filter/moduloPolar	/raytk/operators/filter	raytkOP	filter	filter/moduloPolar	raytk.operators.filter.moduloPolar	4	
 onion	/raytk/operators/filter/onion	/raytk/operators/filter	raytkOP	filter	filter/onion	raytk.operators.filter.onion	2	
 quantizeCoords	/raytk/operators/filter/quantizeCoords	/raytk/operators/filter	raytkOP	filter	filter/quantizeCoords	raytk.operators.filter.quantizeCoords	2	

@@ -1,6 +1,7 @@
 ReturnT thismap(CoordT p, ContextT ctx) {
 	#if defined(THIS_COORD_TYPE_vec2)
-	p -= THIS_Offset;
+	p -= THIS_Preoffset;
+	p -= THIS_Center;
 	float d = length(p);
 	#elif defined(THIS_MODE_spherical)
 	p -= THIS_Center;
@@ -19,6 +20,7 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 	#if defined(THIS_COORD_TYPE_vec2)
 	float a = atan(p.y, p.x);
 	p = d * vec2(cos(a), sin(a));
+	p += THIS_Center;
 	#elif defined(THIS_MODE_spherical)
 	float alpha = atan(p.y, p.x);
 	float polar = atan(p.x, p.z);
