@@ -1,0 +1,5 @@
+name	label
+xaxis	X Axis
+yaxis	Y Axis
+zaxis	Z Axis
+spherical	Spherical
