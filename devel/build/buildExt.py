@@ -175,6 +175,7 @@ class BuildManager:
 		self.context.disableCloning(comp)
 		self.context.detachTox(comp)
 		focusCustomParameterPage(comp, 0)
+		comp.showCustomOnly = True
 		for child in comp.findChildren(type=COMP):
 			self.processOperatorSubComp(child)
 		updateROPMetadata(comp)
