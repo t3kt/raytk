@@ -1,0 +1,7 @@
+name	label	expr	useField	params
+simpleUnion	Simple Union	opSimpleUnion(res1, res2)	0	
+simpleIntersect	Simple Intersect	opSimpleIntersect(res1, res2)	0	
+simpleDiff	Simple Difference	opSimpleDiff(res1, res2)	0	Swapinputs
+roundUnion	Round Union	opRoundUnion(res1, res2, THIS_GET_RADIUS())	1	Radius
+roundIntersect	Round Intersect	opRoundIntersect(res1, res2, THIS_GET_RADIUS())	1	Radius
+roundDiff	Round Difference	opRoundDiff(res1, res2, THIS_GET_RADIUS())	1	Swapinputs Radius
