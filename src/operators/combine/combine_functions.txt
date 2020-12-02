@@ -1,7 +1,13 @@
-name	label	expr	useField	params
-simpleUnion	Simple Union	opSimpleUnion(res1, res2)	0	
-simpleIntersect	Simple Intersect	opSimpleIntersect(res1, res2)	0	
-simpleDiff	Simple Difference	opSimpleDiff(res1, res2)	0	Swapinputs
-roundUnion	Round Union	opRoundUnion(res1, res2, THIS_GET_RADIUS())	1	Radius
-roundIntersect	Round Intersect	opRoundIntersect(res1, res2, THIS_GET_RADIUS())	1	Radius
-roundDiff	Round Difference	opRoundDiff(res1, res2, THIS_GET_RADIUS())	1	Swapinputs Radius
+name	label	expr	useField	blend	params
+simpleUnion	Simple Union	opSimpleUnion(res1.x, res2.x)	0	0
+simpleIntersect	Simple Intersect	opSimpleIntersect(res1.x, res2.x)	0	0
+simpleDiff	Simple Difference	opSimpleDiff(res1.x, res2.x)	0	0	Swapinputs
+roundUnion	Round Union	fOpUnionRound(res1.x, res2.x, THIS_GET_RADIUS())	1	1	Radius
+roundIntersect	Round Intersect	fOpIntersectionRound(res1.x, res2.x, THIS_GET_RADIUS())	1	1	Radius
+roundDiff	Round Difference	fOpDifferenceRound(res1.x, res2.x, THIS_GET_RADIUS())	1	1	Swapinputs Radius
+chamferUnion	Chamfer Union	fOpUnionChamfer(res1.x, res2.x, THIS_GET_RADIUS())	1	1	Radius
+chamferIntersect	Chamfer Intersect	fOpIntersectionChamfer(res1.x, res2.x, THIS_GET_RADIUS())	1	1	Radius
+chamferDiff	Chamfer Difference	fOpDifferenceChamfer(res1.x, res2.x, THIS_GET_RADIUS())	1	1	Swapinputs Radius
+stairUnion	Stair Union	fOpUnionStairs(res1.x, res2.x, THIS_GET_RADIUS(), THIS_Number)	1	1	Radius Number
+stairIntersect	Stair Intersect	fOpIntersectionStairs(res1.x, res2.x, THIS_GET_RADIUS(), THIS_Number)	1	1	Radius Number
+stairDiff	Stair Difference	fOpDifferenceStairs(res1.x, res2.x, THIS_GET_RADIUS(), THIS_Number)	1	1	Swapinputs Radius Number

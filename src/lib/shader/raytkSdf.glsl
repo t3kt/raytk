@@ -43,41 +43,6 @@ float opSmoothUnionM(float d1, float d2, float k) {
 	return mix(d2, d1, h) - k*h*(1.0-h);
 }
 
-Sdf opSmoothDiff(Sdf res1, Sdf res2, float k) {
-	float h = smoothBlendRatio(res1.x, res2.x, k);
-	res1.x = mix(res2.x, -res1.x, h) + k*h*(1.0-h);
-	blendInSdf(res1, res2, h);
-	return res1;
-}
-
-Sdf opSmoothIntersect(Sdf res1, Sdf res2, float k) {
-	float h = smoothBlendRatio(res1.x, res2.x, k);
-	res1.x = mix(res2.x, res1.x, h) + k*h*(1.0-h);
-	blendInSdf(res1, res2, h);
-	return res1;
-}
-
-Sdf opRoundUnion(Sdf res1, Sdf res2, float r) {
-	float h = smoothBlendRatio(res1.x, res2.x, r);
-	res1.x = fOpUnionRound(res1.x, res2.x, r);
-	blendInSdf(res1, res2, h);
-	return res1;
-}
-
-Sdf opRoundIntersect(Sdf res1, Sdf res2, float r) {
-	float h = smoothBlendRatio(res1.x, res2.x, r);
-	res1.x = fOpIntersectionRound(res1.x, res2.x, r);
-	blendInSdf(res1, res2, h);
-	return res1;
-}
-
-Sdf opRoundDiff(Sdf res1, Sdf res2, float r) {
-	float h = smoothBlendRatio(res1.x, res2.x, r);
-	res1.x = fOpDifferenceRound(res1.x, res2.x, r);
-	blendInSdf(res1, res2, h);
-	return res1;
-}
-
 float sdBoundingBox( vec3 p, vec3 b, float e )
 {
 	p = abs(p)-b;
