@@ -11,3 +11,6 @@ chamferDiff	Chamfer Difference	fOpDifferenceChamfer(res1.x, res2.x, THIS_GET_RAD
 stairUnion	Stair Union	fOpUnionStairs(res1.x, res2.x, THIS_GET_RADIUS(), THIS_Number)	1	1	Radius Number
 stairIntersect	Stair Intersect	fOpIntersectionStairs(res1.x, res2.x, THIS_GET_RADIUS(), THIS_Number)	1	1	Radius Number
 stairDiff	Stair Difference	fOpDifferenceStairs(res1.x, res2.x, THIS_GET_RADIUS(), THIS_Number)	1	1	Swapinputs Radius Number
+columnUnion	Column Union	fOpUnionColumns(res1.x, res2.x, THIS_GET_RADIUS(), THIS_Number)	1	1	Radius Number
+columnIntersect	Column Intersect	fOpIntersectionColumns(res1.x, res2.x, THIS_GET_RADIUS(), THIS_Number)	1	1	Radius Number
+columnDiff	Column Difference	fOpDifferenceColumns(res1.x, res2.x, THIS_GET_RADIUS(), THIS_Number)	1	1	Swapinputs Radius Number
