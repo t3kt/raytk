@@ -104,13 +104,11 @@ class Tools:
 		rop = rop.par.clone.eval() or rop
 		self.NavigateTo(rop.par.clone.eval())
 
-	def setCurrentROPBeta(self, beta: bool):
-		rops = self.getCurrentROPs()
-		for rop in rops:
-			opDef = rop.op('opDefinition')
-			if opDef:
-				RaytkTags.beta.apply(opDef, beta)
-			RaytkTags.beta.applyColor(rop, beta)
+	def setCurrentROPBeta(self, state: bool):
+		self.applyTagToCurrentROPs(RaytkTags.beta, state)
+
+	def setCurrentROPAlpha(self, state: bool):
+		self.applyTagToCurrentROPs(RaytkTags.alpha, state)
 
 	def setUpCurrentROPHelp(self):
 		rops = self.getCurrentROPs()
@@ -275,6 +273,10 @@ class Tools:
 
 	def applyTagToSelected(self, tag: 'Tag', state: bool):
 		self.forEachSelected(lambda o: tag.apply(o, state))
+
+	def applyTagToCurrentROPs(self, tag: 'Tag', state: bool):
+		for rop in self.getCurrentROPs():
+			tag.apply(rop, state)
 
 	def setUpAutoLoadOnSelected(self):
 		def _action(comp):

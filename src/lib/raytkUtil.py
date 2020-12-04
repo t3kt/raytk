@@ -242,6 +242,7 @@ def recloneComp(o: 'COMP'):
 _defaultNodeColor = 0.545, 0.545, 0.545
 _buildExcludeColor = 0.1, 0.1, 0.1
 _fileSyncColor = 0.65, 0.5, 1
+_alphaColor = 1, 0.55, 0
 _betaColor = 1, 0, 0.5
 _buildLockColor = 0, 0.68, 0.543
 _validationColor = 1, 0.95, 0.45
@@ -295,6 +296,16 @@ class Tag:
 	def isOn(self, o: 'OP'):
 		return bool(o) and self.name in o.tags
 
+class _OpStatusTag(Tag):
+	def apply(self, o: 'OP', state: bool):
+		info = ROPInfo(o)
+		print(f'TAG({self}) applying to {o!r}, opDef: {info.opDef!r}')
+		if info.opDef:
+			self.applyTag(info.opDef, state)
+			self.applyColor(info.opDef, state)
+		self.applyColor(o, state)
+		self.applyUpdate(info.opDef, state)
+
 def _updateFileSyncPars(o: 'OP', state: bool):
 	if o.isDAT:
 		par = o.par['syncfile']
@@ -320,7 +331,8 @@ class RaytkTags:
 	buildExclude = Tag('buildExclude', _buildExcludeColor)
 	buildLock = Tag('buildLock', _buildLockColor)
 	fileSync = Tag('fileSync', _fileSyncColor, _updateFileSyncPars)
-	beta = Tag('raytkBeta', _betaColor)
+	alpha = _OpStatusTag('raytkAlpha', _alphaColor)
+	beta = _OpStatusTag('raytkBeta', _betaColor)
 	validation = Tag('raytkValidation', _validationColor)
 
 def getActiveEditor() -> 'NetworkEditor':
