@@ -35,6 +35,12 @@ class LibraryInfoBuilder:
 			if not ropInfo or not ropInfo.isMaster:
 				continue
 			category = rop.parent()
+			if ropInfo.isAlpha:
+				status = 'alpha'
+			elif ropInfo.isBeta:
+				status = 'beta'
+			else:
+				status = ''
 			dat.appendRow([
 				rop.name,
 				rop.path,
@@ -44,7 +50,7 @@ class LibraryInfoBuilder:
 				f'{category.name}/{rop.name}',
 				ropInfo.opType,
 				ropInfo.opVersion,
-				'beta' if ropInfo.isBeta else '',
+				status,
 			])
 
 	@staticmethod

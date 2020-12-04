@@ -155,9 +155,17 @@ class BuildManager:
 		template = category.op('__template')
 		if template:
 			template.destroy()
+		comps = categoryInfo.operators
+		for o in comps:
+			if RaytkTags.alpha.isOn(o):
+				self.log(f'Removing alpha op: {o}')
+				try:
+					o.destroy()
+				except:
+					self.log(f'Error removing op: {o}')
+		comps = categoryInfo.operators
 		if self.docProcessor:
 			self.docProcessor.processOpCategory(category)
-		comps = categoryInfo.operators
 		self.queueMethodCall('processOperatorCategory_stage', comps, thenRun, runArgs)
 
 	def processOperatorCategory_stage(self, components: List['COMP'], thenRun: str = None, runArgs: list = None):

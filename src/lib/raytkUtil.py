@@ -92,7 +92,11 @@ class ROPInfo:
 
 	@property
 	def isBeta(self):
-		return RaytkTags.beta.isOn(self.opDef)
+		return RaytkTags.beta.isOn(self.rop)
+
+	@property
+	def isAlpha(self):
+		return RaytkTags.alpha.isOn(self.rop)
 
 	@property
 	def isMaster(self):
@@ -299,12 +303,15 @@ class Tag:
 class _OpStatusTag(Tag):
 	def apply(self, o: 'OP', state: bool):
 		info = ROPInfo(o)
-		print(f'TAG({self}) applying to {o!r}, opDef: {info.opDef!r}')
 		if info.opDef:
 			self.applyTag(info.opDef, state)
 			self.applyColor(info.opDef, state)
 		self.applyColor(o, state)
 		self.applyUpdate(info.opDef, state)
+
+	def isOn(self, o: 'OP'):
+		opDef = ROPInfo(o).opDef
+		return super().isOn(o) or super().isOn(opDef)
 
 def _updateFileSyncPars(o: 'OP', state: bool):
 	if o.isDAT:
