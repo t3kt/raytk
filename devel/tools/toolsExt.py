@@ -1,6 +1,7 @@
-from develCommon import *
+from develCommon import updateROPMetadata, AutoLoader
 import popMenu
 from raytkUtil import RaytkTags, ROPInfo, Tag, getActiveEditor, navigateTo, getChildROPs, recloneComp, RaytkContext, TypeTableHelper, focusCustomParameterPage
+from raytkUtil import getToolkit, getToolkitVersion, Version
 from typing import Tuple, List
 
 # noinspection PyUnreachableCode
@@ -95,7 +96,7 @@ class Tools:
 			if inspectPar is None:
 				inspectPar = page.appendPulse('Inspect')[0]
 			inspectPar.startSection = True
-			inspectPar.order = 99999
+			inspectPar.order = 99999 
 
 	def editCurrentROPMaster(self):
 		rop = self.GetCurrentROP()
