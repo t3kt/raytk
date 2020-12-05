@@ -1,0 +1,9 @@
+name	label	expr
+none	None	
+xyz	XYZ	p = abs(p)
+x	X	p.x = abs(p.x)
+y	Y	p.y = abs(p.y)
+z	Z	p.z = abs(p.z)
+xy	XY	p.xy = abs(p.xy)
+yz	YZ	p.yz = abs(p.yz)
+zx	ZX	p.zx = abs(p.zx)
