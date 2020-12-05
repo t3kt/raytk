@@ -5,6 +5,7 @@ lookAtCamera	/raytk/operators/camera/lookAtCamera	/raytk/operators/camera	raytkO
 orthoCamera	/raytk/operators/camera/orthoCamera	/raytk/operators/camera	raytkOP	camera	camera/orthoCamera	raytk.operators.camera.orthoCamera	2	
 splitCamera	/raytk/operators/camera/splitCamera	/raytk/operators/camera	raytkOP	camera	camera/splitCamera	raytk.operators.camera.splitCamera	2	
 blend	/raytk/operators/combine/blend	/raytk/operators/combine	raytkOP	combine	combine/blend	raytk.operators.combine.blend	3	
+boundLimit	/raytk/operators/combine/boundLimit	/raytk/operators/combine	raytkOP	combine	combine/boundLimit	raytk.operators.combine.boundLimit	1	alpha
 combine	/raytk/operators/combine/combine	/raytk/operators/combine	raytkOP	combine	combine/combine	raytk.operators.combine.combine	2	
 combineChamfer	/raytk/operators/combine/combineChamfer	/raytk/operators/combine	raytkOP	combine	combine/combineChamfer	raytk.operators.combine.combineChamfer	1	
 combineColumns	/raytk/operators/combine/combineColumns	/raytk/operators/combine	raytkOP	combine	combine/combineColumns	raytk.operators.combine.combineColumns	2	
@@ -103,6 +104,7 @@ phongMat	/raytk/operators/material/phongMat	/raytk/operators/material	raytkOP	ma
 sampledPointMat	/raytk/operators/material/sampledPointMat	/raytk/operators/material	raytkOP	material	material/sampledPointMat	raytk.operators.material.sampledPointMat	4	
 customFilter	/raytk/operators/misc/customFilter	/raytk/operators/misc	raytkOP	misc	misc/customFilter	raytk.operators.misc.customFilter	3	
 customGen	/raytk/operators/misc/customGen	/raytk/operators/misc	raytkOP	misc	misc/customGen	raytk.operators.misc.customGen	4	
+customRender	/raytk/operators/output/customRender	/raytk/operators/output	raytkOP raytkOutput	output	output/customRender	raytk.operators.output.customRender	4	alpha
 functionGraphRender	/raytk/operators/output/functionGraphRender	/raytk/operators/output	raytkOP raytkOutput	output	output/functionGraphRender	raytk.operators.output.functionGraphRender	6	
 pointMapRender	/raytk/operators/output/pointMapRender	/raytk/operators/output	raytkOP raytkOutput	output	output/pointMapRender	raytk.operators.output.pointMapRender	18	
 raymarchRender3D	/raytk/operators/output/raymarchRender3D	/raytk/operators/output	raytkOP raytkOutput	output	output/raymarchRender3D	raytk.operators.output.raymarchRender3D	44	
@@ -135,6 +137,7 @@ petalSdf	/raytk/operators/sdf/petalSdf	/raytk/operators/sdf	raytkOP	sdf	sdf/peta
 planeSdf	/raytk/operators/sdf/planeSdf	/raytk/operators/sdf	raytkOP	sdf	sdf/planeSdf	raytk.operators.sdf.planeSdf	4	
 prismSdf	/raytk/operators/sdf/prismSdf	/raytk/operators/sdf	raytkOP	sdf	sdf/prismSdf	raytk.operators.sdf.prismSdf	2	
 pyramidSdf	/raytk/operators/sdf/pyramidSdf	/raytk/operators/sdf	raytkOP	sdf	sdf/pyramidSdf	raytk.operators.sdf.pyramidSdf	1	
+sierpinskiTetrahedronSdf	/raytk/operators/sdf/sierpinskiTetrahedronSdf	/raytk/operators/sdf	raytkOP	sdf	sdf/sierpinskiTetrahedronSdf	raytk.operators.sdf.sierpinskiTetrahedronSdf	3	alpha
 solidAngleSdf	/raytk/operators/sdf/solidAngleSdf	/raytk/operators/sdf	raytkOP	sdf	sdf/solidAngleSdf	raytk.operators.sdf.solidAngleSdf	0	
 sphereSdf	/raytk/operators/sdf/sphereSdf	/raytk/operators/sdf	raytkOP	sdf	sdf/sphereSdf	raytk.operators.sdf.sphereSdf	3	
 spiralSdf	/raytk/operators/sdf/spiralSdf	/raytk/operators/sdf	raytkOP	sdf	sdf/spiralSdf	raytk.operators.sdf.spiralSdf	0	
