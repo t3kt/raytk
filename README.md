@@ -91,3 +91,7 @@ In the case of `raymarchRender3d`, the main scene input is executed once per eac
 The goal of RayTK is to allow artists without a strong knowledge of GLSL to render raymarched scenes, using the familiar elements of the TouchDesigner network editor. Raymarching has been around for a long time, but it is very different from traditional rendering, and it requires a strong knowledge of GLSL and vector math.
  
 RayTK is a ground-up rewrite of a previous similar [project](https://github.com/t3kt/raymarching), which was based on Patrik Lechner's [TDRaymarchToolkit](https://github.com/hrtlacek/TDraymarchToolkit), which was based on [hg_sdf](http://mercury.sexy/hg_sdf/) and the work of [Inigo Quilez](https://iquilezles.org/www/articles/distfunctions/distfunctions.htm).
+
+## License
+
+<p xmlns:dct="http://purl.org/dc/terms/" xmlns:cc="http://creativecommons.org/ns#" class="license-text"><a rel="cc:attributionURL" property="dct:title" href="https://github.com/t3kt">RayTK</a> by <a rel="cc:attributionURL dct:creator" property="cc:attributionName" href="https://t3kt.net">tekt (Tommy Etkin)</a> is licensed under <a rel="license" href="https://creativecommons.org/licenses/by/4.0">CC BY 4.0<img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/cc.svg?ref=chooser-v1" /><img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/by.svg?ref=chooser-v1" /></a></p>
