@@ -57,7 +57,7 @@ class UI:
 	# noinspection PyShadowingNames
 	def pasteOPs(self, COMP, x=None, y=None): pass
 	# noinspection PyDefaultArgument
-	def messageBox(self, title, message, buttons=['Ok'])-> int: pass
+	def messageBox(self, title, message, buttons=['Ok']) -> int: pass
 	def refresh(self): pass
 	def chooseFile(self, load=True, start=None, fileTypes=None, title=None, asExpression=False) -> _T.Optional[str]: pass
 	def chooseFolder(self, title='Select Folder', start=None, asExpression=False) -> _T.Optional[str]: pass
@@ -76,6 +76,7 @@ class UI:
 	def openKeyManager(self): pass
 	def openMIDIDeviceMapper(self): pass
 	def openNewProject(self): pass
+	# noinspection PyShadowingBuiltins
 	def openOperatorSnippets(self, family=None, type=None, example=None): pass
 	def openPaletteBrowser(self): pass
 	def openPerformanceMonitor(self): pass
@@ -159,6 +160,7 @@ class NetworkEditor(Pane):
 
 	def fitHeight(self, height) -> None: pass
 
+	# noinspection PyShadowingNames
 	def home(self, zoom=True, op=None) -> None: pass
 
 	def homeSelected(self, zoom=True) -> None: pass
@@ -335,6 +337,7 @@ class Par:
 	order: int
 	page: 'Page'
 	password: bool
+	help: str
 
 	mode: 'ParMode'
 	prevMode: 'ParMode'
@@ -358,6 +361,10 @@ class Par:
 	isToggle: bool
 	style: str
 
+	collapser: bool
+	collapsable: bool
+	sequence: None
+
 	def copy(self, par: 'Par') -> None: pass
 	def eval(self) -> _T.Union[_ValueT, '_AnyOpT']: pass
 	def evalNorm(self) -> _ValueT: pass
@@ -371,8 +378,50 @@ class Par:
 	def __float__(self) -> float: pass
 	def __str__(self) -> str: pass
 
+class Sequence:
+	owner: 'OP'
+	numBlocks: int
+	maxBlocks: int
+	blocks: _T.List['ParTupletT']
+
 ParTupletT = _T.Union[
 	_T.Tuple['Par'], _T.Tuple['Par', 'Par'], _T.Tuple['Par', 'Par', 'Par'], _T.Tuple['Par', 'Par', 'Par', 'Par']]
+
+class ParTuple(ParTupletT):
+	bindRange: bool
+	collapsable: bool
+	collapser: bool
+	enable: bool
+	enableExpr: str
+	help: str
+	label: str
+	name: str
+	order: int
+	page: 'Page'
+	password: bool
+	readOnly: bool
+	sequence: '_T.Optional[set]'
+	startSection: bool
+	style: str
+	valid: bool
+	index: int
+
+	isDefault: bool
+	isCustom: bool
+	isPulse: bool
+	isMomentary: bool
+	isMenu: bool
+	isNumber: bool
+	isFloat: bool
+	isInt: bool
+	isOP: bool
+	isPython: bool
+	isString: bool
+	isToggle: bool
+
+	def copy(self, parTuple: 'ParTuple') -> None: pass
+	def destroy(self) -> None: pass
+	def eval(self) -> _T.Any: pass
 
 class ParCollection:
 	owner: 'OP'
@@ -380,6 +429,14 @@ class ParCollection:
 	def __getattr__(self, item) -> Par: pass
 	def __setattr__(self, key, value: _T.Any): pass
 	def __getitem__(self, item) -> Par: pass
+	def __setitem__(self, key, value: _T.Any): pass
+
+class ParTupleCollection:
+	owner: 'OP'
+
+	def __getattr__(self, item) -> ParTuple: pass
+	def __setattr__(self, key, value: _T.Any): pass
+	def __getitem__(self, item) -> ParTuple: pass
 	def __setitem__(self, key, value: _T.Any): pass
 
 class Page:
@@ -444,6 +501,7 @@ class OP:
 	ext: _T.Any
 	mod: _T.Any
 	par: ParCollection
+	parTuple: ParTupleCollection
 	pages: _T.List['Page']
 	customPars: _T.List['Par']
 	customPages: _T.List['Page']
@@ -568,6 +626,7 @@ class OP:
 
 	TDResources = _Expando()
 
+# noinspection PyUnusedLocal
 def op(path) -> '_AnyOpT': pass
 
 op.TDResources = _Expando()
@@ -576,8 +635,10 @@ op.TDResources.op = op
 iop = _Expando()  # type: _T.Any
 ipar = _Expando()  # type: _T.Any
 
+# noinspection PyUnusedLocal
 def ops(*paths) -> _T.List['_AnyOpT']: pass
 
+# noinspection PyUnusedLocal
 def var(name) -> str: pass
 
 class Run:
@@ -605,7 +666,7 @@ class td:
 	app: 'App'
 	ext: _T.Any
 	families: dict
-	licenses: _T.Any #licenses
+	licenses: 'Licenses'
 	mod: mod
 	monitors: 'Monitors'
 	op: 'OP'
@@ -867,6 +928,7 @@ class ParMode(_E.Enum):
 
 ExpandoStub = _Expando
 
+# noinspection PyAbstractClass
 class Cell(_T.SupportsInt, _T.SupportsAbs, _T.SupportsFloat, _T.SupportsBytes):
 	val: str
 	row: int
@@ -976,7 +1038,7 @@ class COMP(OP):
 	extensionsReady: bool
 	clones: _T.List['COMP']
 	componentCloneImmune: bool
-	vfs: '_VFS'
+	vfs: 'VFS'
 	dirty: bool
 	externalTimeStamp: int
 	currentChild: '_AnyOpT'
@@ -998,6 +1060,7 @@ class COMP(OP):
 	def destroyCustomPars(self): pass
 	def sortCustomPages(self, *pages): pass
 	def appendCustomPage(self, name: str) -> 'Page': pass
+	# noinspection PyShadowingBuiltins
 	def findChildren(
 			self,
 			type: _T.Type = None,
@@ -1356,6 +1419,7 @@ class SOP(OP):
 	prims: Prims
 	numPoints: int
 	numPrims: int
+	numVertices: int
 	pointAttribs: Attributes
 	primAttribs: Attributes
 	vertexAttribs: Attributes
@@ -1391,7 +1455,7 @@ class TOP(OP):
 	curPass: int
 
 	def sample(self, x: int = None, y: int = None, u: float = None, v: float = None) -> _Color: pass
-	def numpyArray(self, delayed=False, writable=False) -> 'numpy.array': pass
+	def numpyArray(self, delayed=False, writable=False, neverNone=False) -> 'numpy.array': pass
 	def save(self, filepath, asynchronous=False, createFolders=False) -> 'str': pass
 	def saveByteArray(self, filetype) -> bytearray: pass
 	def cudaMemory(self) -> 'CUDAMemory': pass
@@ -1399,6 +1463,13 @@ class TOP(OP):
 class CUDAMemory:
 	ptr: _T.Any
 	size: int
+	shape: 'CUDAMemoryShape'
+
+class CUDAMemoryShape:
+	width: int
+	height: int
+	numComps: int
+	dataType: _T.Any  # numpy data type e.g. numpy.uint8, numpy.float32
 
 class glslTOP(TOP):
 	compileResult: str
@@ -1440,7 +1511,8 @@ class TextLine:
 	origin: 'tdu.Position'
 	lineWidth: float
 
-class MAT(OP): pass
+class MAT(OP):
+	pass
 
 _AnyOpT = _T.Union[OP, DAT, COMP, CHOP, SOP, TOP, MAT, '_AnyCompT']
 
@@ -1678,6 +1750,7 @@ class Actors(_T.List[actorCOMP]):
 class bulletsolverCOMP(COMP):
 	actors: Actors
 
+# noinspection PyUnusedLocal
 def debug(*args):
 	pass
 
