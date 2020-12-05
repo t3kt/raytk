@@ -1,3 +1,4 @@
+
 # This file and all related intellectual property rights are
 # owned by Derivative Inc. ("Derivative").  The use and modification
 # of this file is governed by, and only permitted under, the terms
@@ -333,9 +334,9 @@ class DependDict(DependMixin, MutableMapping):
 				return
 			else:
 				self.myItems[key].modified()
-		self.myMainDep.modified()
 		newv = makeDependable(self, item, raw)
 		self.myItems[key] = newv
+		self.myMainDep.modified()
 
 	def clear(self):
 		try:
@@ -343,16 +344,17 @@ class DependDict(DependMixin, MutableMapping):
 				i.modified()
 		except:
 			pass
-		self.myMainDep.modified()
 		self.myItems.clear()
+		self.myMainDep.modified()
 
 	# def update(self, *args, **kwargs):
 	# 	self.myItems.update(*args, **kwargs)
 
 	def __delitem__(self, key):
-		self.myMainDep.modified()
 		self.myItems[key].modified()
 		del self.myItems[key]
+		self.myMainDep.modified()
+		
 
 
 class DependList(DependMixin, MutableSequence):
@@ -392,11 +394,11 @@ class DependList(DependMixin, MutableSequence):
 		self.insert(len(self.myItems), value, raw)
 
 	def insert(self, index, item, raw=False):
+		newitem = makeDependable(self, item, raw)
+		self.myItems.insert(index, newitem)
 		for i in range(index, len(self.myItems)):
 			self.myItems[i].modified()
 		self.myMainDep.modified()
-		newitem = makeDependable(self, item, raw)
-		self.myItems.insert(index, newitem)
 
 	def __getitem__(self, index):
 		try:
@@ -410,6 +412,8 @@ class DependList(DependMixin, MutableSequence):
 		self.setItem(index, item)
 
 	def setItem(self, index, item, raw=False):
+		newv = makeDependable(self, item, raw)
+		self.myItems[index] = newv
 		if 0 <= index < len(self.myItems):
 			if raw or isImmutable(item):
 				self.myItems[index].val = item
@@ -417,8 +421,6 @@ class DependList(DependMixin, MutableSequence):
 			else:
 				self.myItems[index].modified()
 		self.myMainDep.modified()
-		newv = makeDependable(self, item, raw)
-		self.myItems[index] = newv
 
 	def getDependency(self, index):
 		return self.myItems[index]
@@ -427,15 +429,15 @@ class DependList(DependMixin, MutableSequence):
 		self.myMainDep.val  # dummy for dependency
 		return iter([i.val for i in self.myItems])
 
-	def clear(self):
-		self.myMainDep.modified()
+	def clear(self):		
 		self.myItems.clear()
+		self.myMainDep.modified()
 
 	def __delitem__(self, index):
+		del self.myItems[index]
 		for i in range(index, len(self.myItems)):
 			self.myItems[i].modified()
 		self.myMainDep.modified()
-		del self.myItems[index]
 
 	# def pop(self, *args, **kwargs):
 	# 	self.myMainDep.modified()
@@ -471,23 +473,37 @@ class DependSet(DependMixin, MutableSet):
 	def add(self, item):
 		if item in self.myItems:
 			return
-		self.myMainDep.modified()
 		self.myItems.add(item)
+		self.myMainDep.modified()
 
 	def discard(self, item):
 		if item not in self.myItems:
 			return
-		self.myMainDep.modified()
 		self.myItems.discard(item)
+		self.myMainDep.modified()
 
 	def update(self, *args, **kwargs):
-		self.myMainDep.modified()
 		self.myItems.update(*args, **kwargs)
+		self.myMainDep.modified()
 
 	def clear(self):
 		self.myItems.clear()
 		self.myMainDep.modified()
 
+	def union(self, *args):
+		return self.myItems.union(*args)
+
+	def difference(self, *args):
+		return self.myItems.difference(*args)
+
+	def intersection(self, *args):
+		return self.myItems.intersection(*args)
+
+	def symmetric_difference(self, *args):
+		return self.myItems.symmetric_difference(*args)
+
+	def issuperset(self, *args):
+		return self.myItems.issuperset(*args)
 
 def isImmutable(item):
 	if item is None:
