@@ -1,3 +1,4 @@
+from functools import total_ordering
 import re
 from typing import Callable, List, Union, Optional, Tuple
 
@@ -10,10 +11,13 @@ if False:
 def getToolkit() -> 'COMP':
 	return op.raytk
 
+@total_ordering
 class Version:
 	pattern = re.compile(r'([0-9])+(?:\.([0-9]+))?')
 
-	def __init__(self, majorOrString: Union[str, int] = None, minor: int = None):
+	def __init__(self, majorOrString: Union[str, int, Cell, Par] = None, minor: int = None):
+		if isinstance(majorOrString, (Cell, Par)):
+			majorOrString = str(majorOrString)
 		if isinstance(majorOrString, str):
 			s = majorOrString  # type: str
 			if minor is not None:
@@ -37,6 +41,20 @@ class Version:
 
 	def __repr__(self):
 		return f'Version({self.major}, {self.minor})'
+
+	def __eq__(self, other: 'Version'):
+		return self.major == other.major and self.minor == self.minor
+
+	def __ne__(self, other: 'Version'):
+		return not (self == other)
+
+	def __lt__(self, other: 'Version'):
+		if self.major < other.major:
+			return True
+		elif self.major == other.major:
+			return self.minor < other.minor
+		else:
+			return False
 
 def getToolkitVersion():
 	toolkit = getToolkit()

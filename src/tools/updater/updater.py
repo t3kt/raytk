@@ -1,6 +1,6 @@
 from dataclasses import dataclass, field
-from typing import Callable, List
-from raytkUtil import getToolkit, ROPInfo, RaytkContext
+from typing import Dict, List
+from raytkUtil import getToolkit, ROPInfo, RaytkContext, Version
 
 # noinspection PyUnreachableCode
 if False:
@@ -10,12 +10,34 @@ if False:
 class Updater:
 	def __init__(self, ownerComp: 'COMP'):
 		self.ownerComp = ownerComp
+		self.mappings = []   # type: List[Mapping]
+		self.currentOpTypes = {}  # type: Dict[str, COMP]
+
+	def loadSettings(self):
+		migrations = self.ownerComp.op('opMigrations')
+		self.mappings = [
+			Mapping(
+				str(migrations[i, 'fromOpType']),
+				int(migrations[i, 'fromOpVersion']),
+				Version(migrations[i, 'fromToolkitVersion']),
+				str(migrations[i, 'toOpType']),
+				int(migrations[i, 'toOpVersion']),
+				Version(migrations[i, 'toToolkitVersion']),
+			)
+			for i in range(1, migrations.numRows)
+		]
+		opTypes = self.ownerComp.op('opTable')
+		self.currentOpTypes = {
+			str(opTypes[i, 'opType']): op(opTypes[i, 'path'])
+			for i in range(1, opTypes.numRows)
+		}
 
 	@staticmethod
 	def getSelectedOps() -> 'List[COMP]':
 		return RaytkContext.currentROPs()
 
 	def runMigration(self, validate=True, perform=False):
+		self.loadSettings()
 		rops = self.getSelectedOps()
 		if not rops:
 			return
@@ -26,17 +48,27 @@ class Updater:
 		valid = True
 		if validate:
 			for o in rops:
-				if not self.checkOp(o, migration):
+				if not self.processOp(o, migration, validate=True, update=False):
 					valid = False
 		if perform and (valid or not validate):
 			for o in rops:
-				self.updateOp(o, migration)
+				self.processOp(o, migration, validate=False, update=True)
 
-	def checkOp(self, o: 'OP', migration: 'Migration') -> bool:
+	def processOp(self, o: 'OP', migration: 'Migration', validate: bool, update: bool) -> bool:
+		ropInfo = ROPInfo(o)
+		t = ropInfo.opType
+		v = int(ropInfo.opVersion)
+		master = self.currentOpTypes.get(t)
 		pass
 
-	def updateOp(self, o: 'OP', migration: 'Migration'):
-		pass
+@dataclass
+class Mapping:
+	fromOpType: str
+	fromOpVersion: int
+	fromToolkitVersion: Version
+	toOpType: str
+	toOpVersion: int
+	toToolkitVersion: Version
 
 @dataclass
 class Migration:
@@ -47,4 +79,9 @@ class Migration:
 	validate: bool = True
 	perform: bool = False
 
-MigrationHandler = Callable[['COMP', Migration], bool]
+class MigrationHandler:
+	def check(self, ropInfo: ROPInfo, migration: 'Migration') -> bool:
+		pass
+
+	def update(self, ropInfo: ROPInfo, migration: 'Migration'):
+		pass
