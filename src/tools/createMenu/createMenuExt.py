@@ -6,9 +6,18 @@ if False:
 	# noinspection PyUnresolvedReferences
 	from _stubs import *
 	from _stubs.ListerExt import ListerExt
+	from _typeAliases import StrParamT, BoolParamT
 	from typing import Any, Union, Optional
 
-	ipar.createMenuState = Any()
+	class _StatePar:
+		Filtertext: 'StrParamT'
+		Showhelp: 'BoolParamT'
+		Helpoppath: 'StrParamT'
+		Showbeta: 'BoolParamT'
+		Showalpha: 'BoolParamT'
+
+	class ipar:
+		createMenuState: _StatePar
 
 class CreateMenu:
 	def __init__(self, ownerComp: 'COMP'):
@@ -172,6 +181,7 @@ class CreateMenu:
 		dat.clear()
 		dat.appendRow(inDat.row(0))
 		showBeta = ipar.createMenuState.Showbeta
+		showAlpha = ipar.createMenuState.Showalpha
 		if not filterText or filter == '*':
 			def testText(_):
 				return True
@@ -192,6 +202,8 @@ class CreateMenu:
 				if not testText(inDat[i, 'path'].val.replace(ignorePrefix, '')):
 					continue
 				if not showBeta and 'beta' in inDat[i, 'status'].val:
+					continue
+				if not showAlpha and 'alpha' in inDat[i, 'status'].val:
 					continue
 				pathsToInclude.add(inDat[i, 'path'].val)
 				categoriesToInclude.add(inDat[i, 'category'].val)
