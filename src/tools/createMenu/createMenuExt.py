@@ -26,12 +26,20 @@ class CreateMenu:
 		categoryNames = list(set(c.val for c in opTable.col('category')[1:]))
 		opNames = [c.val for c in opTable.col('name')[1:]]
 		dat.clear()
-		dat.appendRow(['indentedName', 'name', 'path', 'type', 'status'])
+		dat.appendRow(['indentedName', 'name', 'path', 'type', 'status', 'category'])
 		for categoryName in sorted(categoryNames):
-			dat.appendRow([categoryName, categoryName, '', 'category', ''])
+			dat.appendRow([categoryName, categoryName, '', 'category', '', categoryName])
 			for name in opNames:
 				if opTable[name, 'category'] == categoryName:
-					dat.appendRow(['    ' + name, name, opTable[name, 'path'], 'op', opTable[name, 'status']])
+					dat.appendRow(
+						[
+							'    ' + name,
+							name,
+							opTable[name, 'path'],
+							'op',
+							opTable[name, 'status'],
+							opTable[name, 'category']
+						])
 
 	@staticmethod
 	def getEventPath(info: dict):
@@ -177,15 +185,23 @@ class CreateMenu:
 			def testText(val: str):
 				return filterText.lower() in val.lower()
 		ignorePrefix = getToolkit().path + '/operators/'
+		pathsToInclude = set()
+		categoriesToInclude = set()
 		for i in range(1, inDat.numRows):
-			if inDat[i, 'type'] == 'category':
-				dat.appendRow(inDat.row(i))
-			else:
+			if inDat[i, 'type'] != 'category':
 				if not testText(inDat[i, 'path'].val.replace(ignorePrefix, '')):
 					continue
 				if not showBeta and 'beta' in inDat[i, 'status'].val:
 					continue
-				dat.appendRow(inDat.row(i))
+				pathsToInclude.add(inDat[i, 'path'].val)
+				categoriesToInclude.add(inDat[i, 'category'].val)
+		for i in range(1, inDat.numRows):
+			if inDat[i, 'type'] == 'category':
+				if inDat[i, 'name'].val in categoriesToInclude:
+					dat.appendRow(inDat.row(i))
+			else:
+				if inDat[i, 'path'].val in pathsToInclude:
+					dat.appendRow(inDat.row(i))
 
 	def onMouseOverChange(self, value):
 		timer = self.ownerComp.op('close_timer')
