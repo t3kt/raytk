@@ -19,6 +19,7 @@ float/vector fields, etc). Some only support a limited set of return types.
 
 * [`bend`](bend/) - Bends space, along a main axis, towards a second axis.
 * [`elongate`](elongate/) - Splits a shape into pieces, moves them apart, and connects them.
+* [`extend`](extend/) - 
 * [`fieldExpr`](fieldExpr/) - 
 * [`flip`](flip/) - 
 * [`fold`](fold/) - 
@@ -31,6 +32,7 @@ float/vector fields, etc). Some only support a limited set of return types.
 * [`modulo1D`](modulo1D/) - 
 * [`modulo2D`](modulo2D/) - Repeats space along 2 axes.
 * [`modulo3D`](modulo3D/) - Repeats space along all 3 axes.
+* [`moduloDistance`](moduloDistance/) - 
 * [`moduloPolar`](moduloPolar/) - Repeats space radially, like a kaleidoscope.
 * [`onion`](onion/) - 
 * [`quantizeCoords`](quantizeCoords/) - Quantize coordinates to a 3D grid, which is sort of like "voxelizing" the space.

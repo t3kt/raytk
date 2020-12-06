@@ -17,8 +17,7 @@ The most common one is `raymarchRender3d`, which takes in a chain of OPs
 that produces an SDF in 3D space, and applies raymarching to render an
 image.
 
-* [`customRender`](customRender/) - 
-* [`functionGraphRender`](functionGraphRender/) - 
+* [`functionGraphRender`](functionGraphRender/) - Visualizes the graph of a function operator.
 * [`pointMapRender`](pointMapRender/) - 
 * [`raymarchRender3D`](raymarchRender3D/) - 
 * [`render2D`](render2D/) - 

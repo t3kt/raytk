@@ -41,7 +41,6 @@ often the first operator in a chain that ends with a `raymarchRender3d`.
 * [`planeSdf`](planeSdf/) - An infinite plane on the x, y, or z axis.
 * [`prismSdf`](prismSdf/) - 
 * [`pyramidSdf`](pyramidSdf/) - 
-* [`sierpinskiTetrahedronSdf`](sierpinskiTetrahedronSdf/) - 
 * [`solidAngleSdf`](solidAngleSdf/) - 
 * [`sphereSdf`](sphereSdf/) - SDF in 3D space for a uniform sphere.
 
