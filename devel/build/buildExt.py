@@ -73,6 +73,9 @@ class BuildManager:
 		self.log('Reloading toolkit')
 		if stage == 0:
 			self.reloadToolkit(toolkit)
+			# Do this early since it switches off things like automatically writing to the opList.txt file.
+			# See https://github.com/t3kt/raytk/issues/95
+			toolkit.par.Devel = False
 			self.queueMethodCall('runBuild_stage', stage + 1)
 		elif stage == 1:
 			self.detachAllFileSyncDats(toolkit)
