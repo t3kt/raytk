@@ -9,6 +9,8 @@ if False:
 	op.raytk = COMP()
 
 def getToolkit() -> 'COMP':
+	if hasattr(parent, 'raytk'):
+		return parent.raytk
 	return op.raytk
 
 @total_ordering
@@ -558,9 +560,20 @@ class TypeTableHelper:
 			hasUseInput: Optional[bool] = None):
 		self.updateTypePar(par, 'isReturnType', hasUseInput=hasUseInput)
 
-class RaytkContext:
+class _RaytkContext:
 	def __init__(self):
 		pass
+
+	@staticmethod
+	def toolkit():
+		return getToolkit()
+
+	@staticmethod
+	def toolkitVersion():
+		return getToolkitVersion()
+
+	def operatorsRoot(self):
+		return self.toolkit().op('operators')
 
 	@staticmethod
 	def activeEditor():
@@ -594,13 +607,12 @@ class RaytkContext:
 				rops.append(rop)
 		return rops
 
-	@staticmethod
-	def currentCategories():
+	def currentCategories(self):
 		pane = getActiveEditor()
 		if not pane:
 			return None
 		comp = pane.owner
-		operators = getToolkit().op('operators')
+		operators = self.operatorsRoot()
 		if comp.parent() == operators:
 			return [comp]
 		if comp != operators:
@@ -610,6 +622,15 @@ class RaytkContext:
 			if child.isCOMP:
 				cats.append(child)
 		return cats
+
+	def allCategories(self):
+		return [
+			child
+			for child in self.operatorsRoot().children
+			if child.isCOMP
+		]
+
+RaytkContext = _RaytkContext()
 
 def _isMaster(o: 'COMP'):
 	return o and o.par['clone'] is not None and (o.par.clone.eval() or o.par.clone.expr)
