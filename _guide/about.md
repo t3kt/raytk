@@ -2,6 +2,7 @@
 layout: page
 title: About RayTK
 nav_order: 0
+permalink: /
 ---
 
 RayTK is a library of TouchDesigner components that construct raymarching shaders (and other types of shaders) with networks of COMPs using the TouchDesigner network editor.
