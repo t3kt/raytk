@@ -69,18 +69,21 @@ class _OpMetaPars:
 class _CompDefPars(_OpMetaPars):
 	Help: 'DatParamT'
 
-class _OpDefPars(_CompDefPars):
+class OpDefParsT(_CompDefPars):
+	Hostop: 'OPParamT'
+	Name: 'StrParamT'
 	Enable: 'BoolParamT'
 	Functemplate: 'DatParamT'
 	Macrotable: 'DatParamT'
 	Params: 'StrParamT'
 	Specialparams: 'StrParamT'
 	Callbacks: 'DatParamT'
+	Librarynames: 'StrParamT'
 
 class ROPInfo:
 	rop: 'Optional[Union[OP, COMP]]'
 	opDef: 'Optional[COMP]'
-	opDefPar: 'Optional[_OpDefPars]'
+	opDefPar: 'Optional[OpDefParsT]'
 
 	def __init__(self, o: 'Union[OP, str, Cell]'):
 		o = op(o)
