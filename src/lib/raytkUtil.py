@@ -560,10 +560,7 @@ class TypeTableHelper:
 			hasUseInput: Optional[bool] = None):
 		self.updateTypePar(par, 'isReturnType', hasUseInput=hasUseInput)
 
-class _RaytkContext:
-	def __init__(self):
-		pass
-
+class RaytkContext:
 	@staticmethod
 	def toolkit():
 		return getToolkit()
@@ -629,8 +626,6 @@ class _RaytkContext:
 			for child in self.operatorsRoot().children
 			if child.isCOMP
 		]
-
-RaytkContext = _RaytkContext()
 
 def _isMaster(o: 'COMP'):
 	return o and o.par['clone'] is not None and (o.par.clone.eval() or o.par.clone.expr)

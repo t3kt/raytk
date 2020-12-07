@@ -34,7 +34,7 @@ class Updater:
 
 	@staticmethod
 	def getSelectedOps() -> 'List[COMP]':
-		return RaytkContext.currentROPs()
+		return RaytkContext().currentROPs()
 
 	def runMigration(self, validate=True, perform=False):
 		self.loadSettings()

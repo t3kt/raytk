@@ -25,7 +25,7 @@ class LibraryInfoBuilder:
 	@staticmethod
 	def buildVersionTable(dat: 'tableDAT'):
 		dat.clear()
-		dat.appendRow(['toolkitVersion', RaytkContext.toolkitVersion()])
+		dat.appendRow(['toolkitVersion', RaytkContext().toolkitVersion()])
 		dat.appendRow(['touchDesignerVersion', app.version])
 		dat.appendRow(['touchDesignerBuild', app.build])
 
@@ -38,7 +38,7 @@ class LibraryInfoBuilder:
 	@staticmethod
 	def buildROPTable(dat: 'tableDAT'):
 		dat.clear()
-		opsRoot = RaytkContext.operatorsRoot()
+		opsRoot = RaytkContext().operatorsRoot()
 		rops = []  # type: List[COMP]
 		if opsRoot:
 			rops = opsRoot.findChildren(type=COMP, tags=['raytk*'], depth=2, maxDepth=2)

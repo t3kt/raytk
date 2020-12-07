@@ -46,7 +46,7 @@ class Tools:
 		return rops[0] if rops else None
 
 	def getCurrentROPs(self, primaryOnly=False):
-		return RaytkContext.currentROPs(
+		return RaytkContext().currentROPs(
 			primaryOnly=primaryOnly,
 			exclude=lambda c: c is self.ownerComp or c.path.startswith(self.ownerComp.path + '/'))
 
