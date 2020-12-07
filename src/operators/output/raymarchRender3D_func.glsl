@@ -51,3 +51,12 @@ float checkNearHit(float d) {
 }
 
 #endif
+
+#ifdef THIS_USE_RAYMOD_FUNC
+void modifyRay(inout Ray ray) {
+	RayContext rCtx;
+	rCtx.ray = ray;
+	ray = inputOp4(ray.pos, rCtx);
+	ray.dir = normalize(ray.dir);
+}
+#endif

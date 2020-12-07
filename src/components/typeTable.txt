@@ -11,3 +11,4 @@ Context	Context	0	0	1
 MaterialContext	Material Context	0	0	1		
 CameraContext	Camera Context	0	0	1		
 LightContext	Light Context	0	0	1		
+RayContext	Ray Context	0	0	1		

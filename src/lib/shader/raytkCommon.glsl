@@ -148,6 +148,10 @@ struct CameraContext {
 	vec2 resolution;
 };
 
+struct RayContext {
+	Ray ray;
+};
+
 mat3 rotateMatrix(vec3 r) {
 	return TDRotateX(r.x) * TDRotateY(r.y) * TDRotateZ(r.z);
 }

@@ -484,6 +484,7 @@ class ContextTypes:
 	MaterialContext = 'MaterialContext'
 	CameraContext = 'CameraContext'
 	LightContext = 'LightContext'
+	RayContext = 'RayContext'
 	none = 'none'
 
 	values = [
@@ -492,6 +493,7 @@ class ContextTypes:
 		MaterialContext,
 		CameraContext,
 		LightContext,
+		RayContext,
 	]
 
 class InspectorTargetTypes:
