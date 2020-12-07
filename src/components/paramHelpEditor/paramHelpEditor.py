@@ -20,6 +20,19 @@ class ParamHelpEditor:
 				for name in dat.col(0)
 			])
 
+	def prepareTable(self, dat: 'DAT'):
+		if not dat.numRows:
+			return
+		dat.appendCol([])
+		host = self.ownerComp.par.Op.eval()
+		if not host:
+			return
+		pars = [host.par[name] for name in dat.col(0)]
+		pars.sort(key=lambda p: (p.page.index * 1000) + p.order)
+		for i, par in enumerate(pars):
+			dat[i, 0] = par.name
+			dat[i, 1] = par.help
+
 	def Reload(self, _=None):
 		if self.status == 'write':
 			return
@@ -32,12 +45,14 @@ class ParamHelpEditor:
 	def Writetopars(self, _=None):
 		if self.status == 'read':
 			return
+		table = self.ownerComp.op('editable_table')
+		if not table.numRows:
+			return
 		host = self.ownerComp.par.Op.eval()
+		if not host:
+			return
 		try:
-			table = self.ownerComp.op('editable_table')
 			invalid = []
-			if not host:
-				return
 			ui.undo.startBlock(f'Update param help for {host}')
 			for name in table.col(0):
 				p = host.par[name]
@@ -51,4 +66,4 @@ class ParamHelpEditor:
 			ui.undo.endBlock()
 		finally:
 			self.status = ''
-		self.ownerComp.op('add_help_to_param_table').cook(force=True)
+		self.ownerComp.op('prepare_table').cook(force=True)
