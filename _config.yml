@@ -64,6 +64,9 @@ collections:
   reference:
     permalink: "/:collection/:name/"
     output: true
+  development:
+    permalink: "/:collection/:name/"
+    output: true
 
 just_the_docs:
   collections:
@@ -73,6 +76,10 @@ just_the_docs:
       search_exclude: false
     reference:
       name: Reference
+      nav_exclude: false
+      search_exclude: false
+    development:
+      name: Development
       nav_exclude: false
       search_exclude: false
 
