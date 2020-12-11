@@ -1,7 +1,8 @@
-from raytkUtil import CoordTypes, ContextTypes, ReturnTypes, ROPInfo
+from raytkUtil import CoordTypes, ContextTypes, ReturnTypes, ROPInfo, stripFirstMarkdownHeader, stripFrontMatter, \
+	CategoryInfo
 from dataclasses import dataclass, field
 import re
-from typing import Dict, Iterable, List, Optional, Union
+from typing import Dict, Iterable, List, Optional, Tuple, Union
 
 # noinspection PyUnreachableCode
 if False:
@@ -379,28 +380,27 @@ class ROPDefinition:
 			],
 		)
 
+_defaultParamHelp = 'Help not available.'
+
 @dataclass
 class ROPParamHelp:
 	name: Optional[str] = None
 	label: Optional[str] = None
 	summary: Optional[str] = None
-	detail: Optional[str] = None
 
 	def formatMarkdownListItem(self):
 		text = f'* {self.label} (`{self.name}`)'
 		if self.summary:
 			text += f': {self.summary}'
-		if self.detail:
-			text += f'\n  {self.detail}'
 		return text
 
 	@classmethod
-	def parseMarkdownListItem(cls, text: str):
-		obj = ROPParamHelp()
-		if not text.startswith('* '):
-			raise ValueError(f'Invalid param markdown list item: {text!r}')
-		text = text[2:]
-		pass
+	def extractFromPar(cls, par: 'Par'):
+		return cls(
+			par.tupletName,
+			par.label,
+			par.help if par.help != _defaultParamHelp else None,
+		)
 
 @dataclass
 class ROPHelp:
@@ -414,14 +414,23 @@ class ROPHelp:
 	@classmethod
 	def extractFromROP(cls, rop: 'COMP'):
 		info = ROPInfo(rop)
-		parHelps = []
-		for parTuplet in rop.customTuplets:
-			par = parTuplet[0]
-			if par.isPulse or par.readOnly:
-				continue
-			pass
-
-		pass
+		parTuples = [
+			pt
+			for pt in rop.customTuplets
+			if not pt[0].readOnly
+		]
+		parTuples.sort(key=lambda pt: (pt[0].page.index * 1000) + pt[0].order)
+		ropHelp = cls(
+			name=info.shortName,
+			opType=info.opType,
+			category=info.categoryName,
+			parameters=[
+				ROPParamHelp.extractFromPar(pt[0])
+				for pt in parTuples
+			],
+		)
+		ropHelp.summary, ropHelp.detail = _extractHelpSummaryAndDetail(info.helpDAT)
+		return ropHelp
 
 	def formatAsMarkdown(self, headerOffset: int = 0):
 		headerPrefix = '#' * headerOffset
@@ -429,11 +438,15 @@ class ROPHelp:
 			f'{headerPrefix}# {self.name}',
 			self.summary,
 			self.detail,
-			'\n'.join([
-				parHelp.formatMarkdownListItem()
-				for parHelp in self.parameters
-			])
 		]
+		if self.parameters:
+			parts += [
+				'## Parameters',
+				'\n'.join([
+					parHelp.formatMarkdownListItem()
+					for parHelp in self.parameters
+				])
+			]
 		return _mergeMarkdownChunks(parts)
 
 @dataclass
@@ -443,7 +456,18 @@ class CategoryHelp:
 	detail: Optional[str] = None
 	operators: List[ROPHelp] = field(default_factory=list)
 
-	def formatAsPage(self):
+	@classmethod
+	def extractFromComp(cls, comp: 'COMP'):
+		info = CategoryInfo(comp)
+		catHelp = cls(
+			name=info.categoryName,
+		)
+		catHelp.summary, catHelp.detail = _extractHelpSummaryAndDetail(info.helpDAT)
+		for rop in info.operators:
+			catHelp.operators.append(ROPHelp.extractFromROP(rop))
+		return catHelp
+
+	def formatAsMarkdown(self):
 		parts = [
 			f'# {self.name}',
 			self.summary,
@@ -454,6 +478,21 @@ class CategoryHelp:
 			for opHelp in self.operators
 		]
 		return _mergeMarkdownChunks(parts)
+
+def _extractHelpSummaryAndDetail(dat: 'DAT') -> 'Tuple[str, str]':
+	docText = (dat.text if dat else '').strip()
+	docText = stripFrontMatter(docText).strip()
+	docText = stripFirstMarkdownHeader(docText)
+	if not docText:
+		return '', ''
+	parts = docText.split('\n\n', maxsplit=1)
+	summary = parts[0]
+	detail = ''
+	if len(parts) > 1:
+		detail = parts[1]
+		if '## Parameters' in detail:
+			detail = detail.split('## Parameters', maxsplit=1)[0]
+	return summary, detail
 
 def _mergeMarkdownChunks(parts: Iterable[str]):
 	return '\n\n'.join([p for p in parts if p])

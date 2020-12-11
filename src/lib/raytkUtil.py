@@ -178,7 +178,7 @@ class ROPInfo:
 		if self.isMaster:
 			return self.rop.parent().name
 		elif self.rop.par.clone:
-			return self.rop.par.clone.eval().rop.parent().name
+			return self.rop.par.clone.eval().parent().name
 
 	@property
 	def shortName(self):
@@ -704,6 +704,11 @@ def incrementMarkdownHeaders(text: str, steps: int):
 	if not text:
 		return ''
 	return _headerPattern.sub('#' + ('#' * steps), text)
+
+def stripFrontMatter(text: str):
+	if not text or not text.startswith('---'):
+		return text or ''
+	return text.split('---\n', maxsplit=2)[-1]
 
 def datText(path: 'Union[str, Cell]'):
 	dat = op(path)
