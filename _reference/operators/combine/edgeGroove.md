@@ -8,17 +8,12 @@ permalink: /reference/operators/combine/edgeGroove
 
 # edgeGroove
 
-
-
-Category: combine
-
-OP Type: `raytk.operators.combine.edgeGroove`
-
 ## Parameters
 
-* `Enable` - 
-* `Function` - 
-* `Swap Inputs` - 
-* `Depth` - 
-* `Width` - 
-* `Use Radius Field` -
+* Enable (`Enable`)
+* Function (`Function`)
+* Swap Inputs (`Swapinputs`)
+* Depth (`Depth`)
+* Width (`Width`)
+* Use Radius Field (`Useradiusfield`)
+* Inspect (`Inspect`)

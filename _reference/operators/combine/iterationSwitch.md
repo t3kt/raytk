@@ -8,14 +8,9 @@ permalink: /reference/operators/combine/iterationSwitch
 
 # iterationSwitch
 
-
-
-Category: combine
-
-OP Type: `raytk.operators.combine.iterationSwitch`
-
 ## Parameters
 
-* `Enable` - 
-* `Scaling` - 
-* `Extend` -
+* Enable (`Enable`)
+* Scaling (`Scaling`)
+* Extend (`Extend`)
+* Inspect (`Inspect`)

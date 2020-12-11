@@ -8,16 +8,11 @@ permalink: /reference/operators/sdf/mandelbulbSdf
 
 # mandelbulbSdf
 
-
-
-Category: sdf
-
-OP Type: `raytk.operators.sdf.mandelbulbSdf`
-
 ## Parameters
 
-* `Translate` - 
-* `Power` - 
-* `Theta Shift` - 
-* `Phi Shift` - 
-* `Iterations` -
+* Translate (`Translate`)
+* Power (`Power`)
+* Theta Shift (`Thetashift`)
+* Phi Shift (`Phishift`)
+* Iterations (`Iterations`)
+* Inspect (`Inspect`)

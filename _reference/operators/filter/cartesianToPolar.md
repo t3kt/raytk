@@ -1,16 +1,15 @@
 ---
 layout: page
-title: scale
+title: cartesianToPolar
 parent: Filter Operators
 grand_parent: Operators
-permalink: /reference/operators/filter/scale
+permalink: /reference/operators/filter/cartesianToPolar
 ---
 
-# scale
+# cartesianToPolar
 
 ## Parameters
 
 * Enable (`Enable`)
-* Scale (`Scale`)
-* Use Field (`Usefield`)
+* Conversion (`Conversion`)
 * Inspect (`Inspect`)

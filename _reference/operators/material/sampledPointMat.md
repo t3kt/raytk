@@ -8,14 +8,9 @@ permalink: /reference/operators/material/sampledPointMat
 
 # sampledPointMat
 
-
-
-Category: material
-
-OP Type: `raytk.operators.material.sampledPointMat`
-
 ## Parameters
 
-* `Enable` - 
-* `Fill Color` - 
-* `Blending` -
+* Enable (`Enable`)
+* Fill Color (`Fillcolor`)
+* Blending (`Blending`)
+* Inspect (`Inspect`)

@@ -8,6 +8,11 @@ permalink: /reference/operators/sdf/boxFrameSdf
 
 # boxFrameSdf
 
-
-
 SDF for the squared frame of the edges of a box.
+
+## Parameters
+
+* Translate (`Translate`)
+* Scale (`Scale`)
+* Thickness (`Thickness`)
+* Inspect (`Inspect`)

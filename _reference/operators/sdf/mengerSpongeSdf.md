@@ -8,16 +8,11 @@ permalink: /reference/operators/sdf/mengerSpongeSdf
 
 # mengerSpongeSdf
 
-
-
-Category: sdf
-
-OP Type: `raytk.operators.sdf.mengerSpongeSdf`
-
 ## Parameters
 
-* `Translate` - 
-* `Steps` - 
-* `Scale` - 
-* `Box Scale` - 
-* `Cross Scale` -
+* Translate (`Translate`)
+* Steps (`Steps`)
+* Scale (`Scale`)
+* Box Scale (`Boxscale`)
+* Cross Scale (`Crossscale`)
+* Inspect (`Inspect`)

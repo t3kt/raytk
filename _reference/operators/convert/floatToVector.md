@@ -8,16 +8,11 @@ permalink: /reference/operators/convert/floatToVector
 
 # floatToVector
 
-
-
-Category: convert
-
-OP Type: `raytk.operators.convert.floatToVector`
-
 ## Parameters
 
-* `Enable` - 
-* `Part Source X` - 
-* `Part Source Y` - 
-* `Part Source Z` - 
-* `Part Source W` -
+* Enable (`Enable`)
+* Part Source X (`Partsourcex`)
+* Part Source Y (`Partsourcey`)
+* Part Source Z (`Partsourcez`)
+* Part Source W (`Partsourcew`)
+* Inspect (`Inspect`)

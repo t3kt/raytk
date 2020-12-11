@@ -8,6 +8,14 @@ permalink: /reference/operators/filter/quantizeCoords
 
 # quantizeCoords
 
-
-
 Quantize coordinates to a 3D grid, which is sort of like "voxelizing" the space.
+
+## Parameters
+
+* Enable (`Enable`)
+* Size (`Size`)
+* Size Multiplier (`Sizemult`)
+* Offset (`Offset`)
+* Smoothing (`Smoothing`)
+* Smoothing Multiplier (`Smoothingmult`)
+* Inspect (`Inspect`)

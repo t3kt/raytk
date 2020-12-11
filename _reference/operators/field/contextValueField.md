@@ -8,6 +8,10 @@ permalink: /reference/operators/field/contextValueField
 
 # contextValueField
 
-
-
 Field that returns various fields from the context, from a downstream OP.
+
+## Parameters
+
+* Coord Type (`Coordtype`)
+* Context Field (`Contextfield`)
+* Inspect (`Inspect`)

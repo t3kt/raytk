@@ -8,14 +8,8 @@ permalink: /reference/operators/output/renderSelect
 
 # renderSelect
 
-
-
-Category: output
-
-OP Type: `raytk.operators.output.renderSelect`
-
 ## Parameters
 
-* `Output OP` - 
-* `Output Buffer` - 
-* `Lock Buffer Menu` -
+* Output OP (`Outputop`)
+* Output Buffer (`Outputbuffer`)
+* Lock Buffer Menu (`Lockbuffermenu`)

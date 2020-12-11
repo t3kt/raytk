@@ -8,8 +8,6 @@ permalink: /reference/operators/sdf/gridSdf
 
 # gridSdf
 
-
-
 An infinite grid shape, along two axes.
 
 * `Coord Type` - allows the shape to be used in a 2D context.
@@ -20,3 +18,15 @@ An infinite grid shape, along two axes.
 * `Offset` - shifts the grid along its plane.
 * `Thickness` - the thickness of the bars.
 * `Context Type` - advanced parameter that should usually just be set to `Context`
+
+## Parameters
+
+* Coord Type (`Coordtype`)
+* Cross Section Shape (`Crosssectionshape`)
+* Axis (`Axis`)
+* Spacing (`Spacing`)
+* Axis Offset (`Axisoffset`)
+* Offset (`Offset`)
+* Thickness (`Thickness`)
+* Context Type (`Contexttype`)
+* Inspect (`Inspect`)

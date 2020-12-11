@@ -8,15 +8,10 @@ permalink: /reference/operators/sdf/apollonianSdf
 
 # apollonianSdf
 
-
-
-Category: sdf
-
-OP Type: `raytk.operators.sdf.apollonianSdf`
-
 ## Parameters
 
-* `Translate` - 
-* `Scale` - 
-* `S` - 
-* `Iterations` -
+* Translate (`Translate`)
+* Scale (`Scale`)
+* S (`S`)
+* Iterations (`Iterations`)
+* Inspect (`Inspect`)

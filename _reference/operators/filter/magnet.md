@@ -8,18 +8,13 @@ permalink: /reference/operators/filter/magnet
 
 # magnet
 
-
-
-Category: filter
-
-OP Type: `raytk.operators.filter.magnet`
-
 ## Parameters
 
-* `Enable` - 
-* `Amount` - 
-* `Center` - 
-* `Radius` - 
-* `Fade` - 
-* `Scale` - 
-* `Rotate` -
+* Enable (`Enable`)
+* Amount (`Amount`)
+* Center (`Center`)
+* Radius (`Radius`)
+* Fade (`Fade`)
+* Scale (`Scale`)
+* Rotate (`Rotate`)
+* Inspect (`Inspect`)

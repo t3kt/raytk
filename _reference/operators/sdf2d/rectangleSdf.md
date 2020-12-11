@@ -8,13 +8,8 @@ permalink: /reference/operators/sdf2d/rectangleSdf
 
 # rectangleSdf
 
-
-
-Category: sdf2d
-
-OP Type: `raytk.operators.sdf2d.rectangleSdf`
-
 ## Parameters
 
-* `Translate` - 
-* `Scale` -
+* Translate (`Translate`)
+* Scale (`Scale`)
+* Inspect (`Inspect`)

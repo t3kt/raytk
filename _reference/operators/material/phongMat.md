@@ -8,14 +8,9 @@ permalink: /reference/operators/material/phongMat
 
 # phongMat
 
-
-
-Category: material
-
-OP Type: `raytk.operators.material.phongMat`
-
 ## Parameters
 
-* `Enable` - 
-* `Diffuse Color` - 
-* `Specular Color` -
+* Enable (`Enable`)
+* Diffuse Color (`Diffusecolor`)
+* Specular Color (`Specularcolor`)
+* Inspect (`Inspect`)

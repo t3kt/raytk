@@ -8,6 +8,10 @@ permalink: /reference/operators/field/positionField
 
 # positionField
 
-
-
 A vector field that evaluates to the coordinates in space.
+
+## Parameters
+
+* Coord Type (`Coordtype`)
+* Context Type (`Contexttype`)
+* Inspect (`Inspect`)

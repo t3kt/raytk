@@ -8,14 +8,9 @@ permalink: /reference/operators/field/timeField
 
 # timeField
 
-
-
-Category: field
-
-OP Type: `raytk.operators.field.timeField`
-
 ## Parameters
 
-* `Part` - 
-* `Coord Type` - 
-* `Context Type` -
+* Part (`Part`)
+* Coord Type (`Coordtype`)
+* Context Type (`Contexttype`)
+* Inspect (`Inspect`)

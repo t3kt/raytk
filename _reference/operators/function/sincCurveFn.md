@@ -8,13 +8,8 @@ permalink: /reference/operators/function/sincCurveFn
 
 # sincCurveFn
 
-
-
-Category: function
-
-OP Type: `raytk.operators.function.sincCurveFn`
-
 ## Parameters
 
-* `Bounces` - 
-* `Context Type` -
+* Bounces (`Bounces`)
+* Context Type (`Contexttype`)
+* Inspect (`Inspect`)

@@ -8,8 +8,6 @@ permalink: /reference/operators/filter/bend
 
 # bend
 
-
-
 Bends space, along a main axis, towards a second axis.
 
 For example, bends sideways (towards X) depending on the vertical position (along Y).
@@ -18,3 +16,11 @@ For example, bends sideways (towards X) depending on the vertical position (alon
 * `Direction` - Chooses the axis to bend along and the axis to bend towards.
 * `Amount` - Amount of bending.
 * `Shift` - Shifts the center of the bending along the main axis.
+
+## Parameters
+
+* Enable (`Enable`)
+* Direction (`Direction`)
+* Amount (`Amount`)
+* Shift (`Shift`)
+* Inspect (`Inspect`)

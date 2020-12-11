@@ -8,16 +8,11 @@ permalink: /reference/operators/filter/rescaleField
 
 # rescaleField
 
-
-
-Category: filter
-
-OP Type: `raytk.operators.filter.rescaleField`
-
 ## Parameters
 
-* `Enable` - 
-* `Input Low` - 
-* `Input High` - 
-* `Output Low` - 
-* `Output High` -
+* Enable (`Enable`)
+* Input Low (`Inputlow`)
+* Input High (`Inputhigh`)
+* Output Low (`Outputlow`)
+* Output High (`Outputhigh`)
+* Inspect (`Inspect`)

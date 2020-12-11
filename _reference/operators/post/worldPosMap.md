@@ -8,15 +8,10 @@ permalink: /reference/operators/post/worldPosMap
 
 # worldPosMap
 
-
-
-Category: post
-
-OP Type: `raytk.operators.post.worldPosMap`
-
 ## Parameters
 
-* `Range X` - 
-* `Range Y` - 
-* `Range Z` - 
-* `Output OP` -
+* Range X (`Rangex`)
+* Range Y (`Rangey`)
+* Range Z (`Rangez`)
+* Snapshot Range (`Snapshotrange`)
+* Output OP (`Outputop`)

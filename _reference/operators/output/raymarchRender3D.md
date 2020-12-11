@@ -8,39 +8,34 @@ permalink: /reference/operators/output/raymarchRender3D
 
 # raymarchRender3D
 
-
-
-Category: output
-
-OP Type: `raytk.operators.output.raymarchRender3D`
-
 ## Parameters
 
-* `Resolution` - 
-* `Anti Alias` - 
-* `Camera` - 
-* `Light` - 
-* `Use Render Depth` - 
-* `Overlay Render` - 
-* `Render TOP` - 
-* `Max Steps` - 
-* `Surface Distance` - 
-* `Max Distance` - 
-* `Near Hit Range` - 
-* `Time Reference Operator` - 
-* `Use Limit Box` - 
-* `Limit Box Minimum` - 
-* `Limit Box Maximum` - 
-* `Shader Builder Config` - 
-* `Enable Depth Output` - 
-* `Enable SDF Output` - 
-* `Enable World Pos Output` - 
-* `Enable Normal Output` - 
-* `Enable Ray Direction Output` - 
-* `Enable Ray Origin Output` - 
-* `Enable Orbit Trap Output` - 
-* `Enable Near Hit Output` - 
-* `Enable Step Output` - 
-* `Enable Iteration Output` - 
-* `Enable Object Id Output` - 
-* `Enable Debug Output` -
+* Resolution (`Res`)
+* Anti Alias (`Antialias`)
+* Camera (`Camera`)
+* Light (`Light1`)
+* Use Render Depth (`Userenderdepth`)
+* Overlay Render (`Overlayrender`)
+* Render TOP (`Rendertop`)
+* Max Steps (`Maxsteps`)
+* Surface Distance (`Surfdist`)
+* Max Distance (`Maxdist`)
+* Near Hit Range (`Nearhitrange`)
+* Time Reference Operator (`Timerefop`)
+* Use Limit Box (`Uselimitbox`)
+* Limit Box Minimum (`Limitboxmin`)
+* Limit Box Maximum (`Limitboxmax`)
+* Shader Builder Config (`Shaderbuilderconfig`)
+* Enable Depth Output (`Enabledepthoutput`)
+* Enable SDF Output (`Enablesdfoutput`)
+* Enable World Pos Output (`Enableworldposoutput`)
+* Enable Normal Output (`Enablenormaloutput`)
+* Enable Ray Direction Output (`Enableraydiroutput`)
+* Enable Ray Origin Output (`Enablerayoriginoutput`)
+* Enable Orbit Trap Output (`Enableorbitoutput`)
+* Enable Near Hit Output (`Enablenearhitoutput`)
+* Enable Step Output (`Enablestepoutput`)
+* Enable Iteration Output (`Enableiterationoutput`)
+* Enable Object Id Output (`Enableobjectidoutput`)
+* Enable Debug Output (`Enabledebugoutput`)
+* Inspect (`Inspect`)

@@ -8,8 +8,6 @@ permalink: /reference/operators/filter/elongate
 
 # elongate
 
-
-
 Splits a shape into pieces, moves them apart, and connects them.
 
 For example, a capsule is an elongated version of a sphere.
@@ -19,3 +17,9 @@ See [example](https://www.shadertoy.com/view/Ml3fWj).
 
 * `Enable` - Enables or disables the op.
 * `Size` - The distance that that parts are pushed apart from the origin.
+
+## Parameters
+
+* Enable (`Enable`)
+* Size (`Size`)
+* Inspect (`Inspect`)

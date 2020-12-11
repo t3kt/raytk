@@ -8,13 +8,8 @@ permalink: /reference/operators/sdf/tetrahedronSdf
 
 # tetrahedronSdf
 
-
-
-Category: sdf
-
-OP Type: `raytk.operators.sdf.tetrahedronSdf`
-
 ## Parameters
 
-* `Translate` - 
-* `Scale` -
+* Translate (`Translate`)
+* Scale (`Scale`)
+* Inspect (`Inspect`)

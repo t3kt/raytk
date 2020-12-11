@@ -8,15 +8,10 @@ permalink: /reference/operators/sdf/prismSdf
 
 # prismSdf
 
-
-
-Category: sdf
-
-OP Type: `raytk.operators.sdf.prismSdf`
-
 ## Parameters
 
-* `Prism Type` - 
-* `Translate` - 
-* `Radius` - 
-* `Height` -
+* Prism Type (`Prismtype`)
+* Translate (`Translate`)
+* Radius (`Radius`)
+* Height (`Height`)
+* Inspect (`Inspect`)

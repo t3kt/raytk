@@ -8,13 +8,8 @@ permalink: /reference/operators/function/gainFn
 
 # gainFn
 
-
-
-Category: function
-
-OP Type: `raytk.operators.function.gainFn`
-
 ## Parameters
 
-* `Exponent` - 
-* `Context Type` -
+* Exponent (`Exponent`)
+* Context Type (`Contexttype`)
+* Inspect (`Inspect`)

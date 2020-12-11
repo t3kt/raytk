@@ -8,16 +8,11 @@ permalink: /reference/operators/combine/layoutGrid
 
 # layoutGrid
 
-
-
-Category: combine
-
-OP Type: `raytk.operators.combine.layoutGrid`
-
 ## Parameters
 
-* `Enable` - 
-* `Layout` - 
-* `Plane` - 
-* `Size` - 
-* `Pre Scale` -
+* Enable (`Enable`)
+* Layout (`Layout`)
+* Plane (`Axis`)
+* Size (`Size`)
+* Pre Scale (`Prescale`)
+* Inspect (`Inspect`)

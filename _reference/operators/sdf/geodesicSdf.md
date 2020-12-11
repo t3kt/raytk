@@ -8,20 +8,15 @@ permalink: /reference/operators/sdf/geodesicSdf
 
 # geodesicSdf
 
-
-
-Category: sdf
-
-OP Type: `raytk.operators.sdf.geodesicSdf`
-
 ## Parameters
 
-* `Enable` - 
-* `Shape` - 
-* `Divisions` - 
-* `Enable Faces` - 
-* `Face Offset` - 
-* `Enable Spikes` - 
-* `Spike Length` - 
-* `Spike Offset` - 
-* `Spike Radius` -
+* Enable (`Enable`)
+* Shape (`Shape`)
+* Divisions (`Divisions`)
+* Enable Faces (`Enablefaces`)
+* Face Offset (`Faceoffset`)
+* Enable Spikes (`Enablespikes`)
+* Spike Length (`Spikelength`)
+* Spike Offset (`Spikeoffset`)
+* Spike Radius (`Spikeradius`)
+* Inspect (`Inspect`)

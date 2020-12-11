@@ -8,8 +8,6 @@ permalink: /reference/operators/sdf/generalizedPolyhedronSdf
 
 # generalizedPolyhedronSdf
 
-
-
 Generates one of several different types of polyhedra.
 
 Based on ["Generalized Distance Functions"](http://people.tamu.edu/~ergun/research/implicitmodeling/papers/sm99.pdf) by Akleman and Chen.
@@ -21,3 +19,14 @@ Based on ["Generalized Distance Functions"](http://people.tamu.edu/~ergun/resear
 * `Radius` - the size of the shape.
 * `Use Exponent` - enables the use of the `Exponent`, which controls the sharpness of the edges. When this is switched off, the shape will have sharp edges.
 * `Exponent` - controls the sharpness or smoothness of the edges.
+
+## Parameters
+
+* Shape (`Shape`)
+* Begin (`Begin`)
+* End (`End`)
+* Translate (`Translate`)
+* Radius (`Radius`)
+* Use Exponent (`Useexponent`)
+* Exponent (`Exponent`)
+* Inspect (`Inspect`)

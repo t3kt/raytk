@@ -8,13 +8,8 @@ permalink: /reference/operators/output/pointMapRender
 
 # pointMapRender
 
-
-
-Category: output
-
-OP Type: `raytk.operators.output.pointMapRender`
-
 ## Parameters
 
-* `Time Reference Operator` - 
-* `Shader Builder Config` -
+* Time Reference Operator (`Timerefop`)
+* Shader Builder Config (`Shaderbuilderconfig`)
+* Inspect (`Inspect`)

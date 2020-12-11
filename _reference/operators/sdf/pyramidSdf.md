@@ -8,14 +8,9 @@ permalink: /reference/operators/sdf/pyramidSdf
 
 # pyramidSdf
 
-
-
-Category: sdf
-
-OP Type: `raytk.operators.sdf.pyramidSdf`
-
 ## Parameters
 
-* `Translate` - 
-* `Height` - 
-* `Width` -
+* Translate (`Translate`)
+* Height (`Height`)
+* Width (`Width`)
+* Inspect (`Inspect`)

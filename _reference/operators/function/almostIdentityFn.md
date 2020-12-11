@@ -8,14 +8,9 @@ permalink: /reference/operators/function/almostIdentityFn
 
 # almostIdentityFn
 
-
-
-Category: function
-
-OP Type: `raytk.operators.function.almostIdentityFn`
-
 ## Parameters
 
-* `Context Type` - 
-* `Threshold` - 
-* `Base Value` -
+* Context Type (`Contexttype`)
+* Threshold (`Threshold`)
+* Base Value (`Basevalue`)
+* Inspect (`Inspect`)

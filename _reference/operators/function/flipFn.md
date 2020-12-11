@@ -8,15 +8,10 @@ permalink: /reference/operators/function/flipFn
 
 # flipFn
 
-
-
-Category: function
-
-OP Type: `raytk.operators.function.flipFn`
-
 ## Parameters
 
-* `Enable` - 
-* `Flip Type` - 
-* `Return Type` - 
-* `Context Type` -
+* Enable (`Enable`)
+* Flip Type (`Fliptype`)
+* Return Type (`Returntype`)
+* Context Type (`Contexttype`)
+* Inspect (`Inspect`)

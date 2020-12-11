@@ -8,13 +8,8 @@ permalink: /reference/operators/combine/blend
 
 # blend
 
-
-
-Category: combine
-
-OP Type: `raytk.operators.combine.blend`
-
 ## Parameters
 
-* `Enable` - 
-* `Blend` -
+* Enable (`Enable`)
+* Blend (`Blend`)
+* Inspect (`Inspect`)

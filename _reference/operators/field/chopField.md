@@ -8,21 +8,17 @@ permalink: /reference/operators/field/chopField
 
 # chopField
 
-
 Beta
 {: .label .label-yellow }
 
-Category: field
-
-OP Type: `raytk.operators.field.chopField`
-
 ## Parameters
 
-* `Coord Type` - 
-* `Return Type` - 
-* `Context Type` - 
-* `Axis` - 
-* `Translate` - 
-* `Scale` - 
-* `CHOP` - 
-* `Extend Mode` -
+* Coord Type (`Coordtype`)
+* Return Type (`Returntype`)
+* Context Type (`Contexttype`)
+* Axis (`Axis`)
+* Translate (`Translate`)
+* Scale (`Scale`)
+* CHOP (`Chop`)
+* Extend Mode (`Extendmode`)
+* Inspect (`Inspect`)

@@ -8,27 +8,28 @@ permalink: /reference/operators/custom/customOp
 
 # customOp
 
-
-
-Category: custom
-
-OP Type: `raytk.operators.custom.customOp`
-
 ## Parameters
 
-* `Enable` - 
-* `Code` - 
-* `Op Globals` - 
-* `Init Code` - 
-* `Function` - 
-* `Material Code` - 
-* `Settings` - 
-* `Macro Table` - 
-* `Buffer Table` - 
-* `Texture Table` - 
-* `Library Names` - 
-* `Types` - 
-* `Coord Type` - 
-* `Return Type` - 
-* `Context Type` - 
-* `Auto Create Missing Params` -
+* Enable (`Enable`)
+* Code (`Codeheader`)
+* Op Globals (`Opglobals`)
+* Init Code (`Initcode`)
+* Function (`Function`)
+* Material Code (`Materialcode`)
+* Settings (`Settingsheader`)
+* Macro Table (`Macrotable`)
+* Buffer Table (`Buffertable`)
+* Texture Table (`Texturetable`)
+* Library Names (`Librarynames`)
+* Types (`Typesheader`)
+* Coord Type (`Coordtype`)
+* Return Type (`Returntype`)
+* Context Type (`Contexttype`)
+* Create Op Globals (`Createopglobals`)
+* Create Init (`Createinit`)
+* Create Function (`Createfunction`)
+* Create Material (`Creatematerial`)
+* Create Missing Params (`Createmissingparams`)
+* Remove Unused Params (`Removeunusedparams`)
+* Auto Create Missing Params (`Autocreatemissingparams`)
+* Inspect (`Inspect`)

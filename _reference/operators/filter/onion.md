@@ -8,13 +8,8 @@ permalink: /reference/operators/filter/onion
 
 # onion
 
-
-
-Category: filter
-
-OP Type: `raytk.operators.filter.onion`
-
 ## Parameters
 
-* `Enable` - 
-* `Thickness` -
+* Enable (`Enable`)
+* Thickness (`Thickness`)
+* Inspect (`Inspect`)

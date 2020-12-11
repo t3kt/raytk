@@ -8,13 +8,8 @@ permalink: /reference/operators/function/parabolaFn
 
 # parabolaFn
 
-
-
-Category: function
-
-OP Type: `raytk.operators.function.parabolaFn`
-
 ## Parameters
 
-* `Exponent` - 
-* `Context Type` -
+* Exponent (`Exponent`)
+* Context Type (`Contexttype`)
+* Inspect (`Inspect`)

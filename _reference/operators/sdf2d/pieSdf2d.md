@@ -8,13 +8,8 @@ permalink: /reference/operators/sdf2d/pieSdf2d
 
 # pieSdf2d
 
-
-
-Category: sdf2d
-
-OP Type: `raytk.operators.sdf2d.pieSdf2d`
-
 ## Parameters
 
-* `Radius` - 
-* `Angle` -
+* Radius (`Radius`)
+* Angle (`Angle`)
+* Inspect (`Inspect`)

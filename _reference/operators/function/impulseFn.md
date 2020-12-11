@@ -8,17 +8,12 @@ permalink: /reference/operators/function/impulseFn
 
 # impulseFn
 
-
-
-Category: function
-
-OP Type: `raytk.operators.function.impulseFn`
-
 ## Parameters
 
-* `Function` - 
-* `Attack` - 
-* `Release` - 
-* `Falloff` - 
-* `Polynomial Degree` - 
-* `Context Type` -
+* Function (`Function`)
+* Attack (`Attack`)
+* Release (`Release`)
+* Falloff (`Falloff`)
+* Polynomial Degree (`Polydegree`)
+* Context Type (`Contexttype`)
+* Inspect (`Inspect`)

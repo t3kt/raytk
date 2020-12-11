@@ -8,15 +8,10 @@ permalink: /reference/operators/function/stepFn
 
 # stepFn
 
-
-
-Category: function
-
-OP Type: `raytk.operators.function.stepFn`
-
 ## Parameters
 
-* `Function` - 
-* `Edge` - 
-* `Blend` - 
-* `Context Type` -
+* Function (`Function`)
+* Edge (`Edge`)
+* Blend (`Blend`)
+* Context Type (`Contexttype`)
+* Inspect (`Inspect`)

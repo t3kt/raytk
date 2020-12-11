@@ -8,18 +8,13 @@ permalink: /reference/operators/filter/rotate
 
 # rotate
 
-
-
-Category: filter
-
-OP Type: `raytk.operators.filter.rotate`
-
 ## Parameters
 
-* `Enable` - 
-* `Rotate Mode` - 
-* `Axis` - 
-* `Rotate` - 
-* `Rotate Order` - 
-* `Rotate XYZ` - 
-* `Use Field` -
+* Enable (`Enable`)
+* Rotate Mode (`Rotatemode`)
+* Axis (`Axis`)
+* Rotate (`Rotate`)
+* Rotate Order (`Rord`)
+* Rotate XYZ (`Rot`)
+* Use Field (`Usefield`)
+* Inspect (`Inspect`)

@@ -8,14 +8,9 @@ permalink: /reference/operators/sdf/solidAngleSdf
 
 # solidAngleSdf
 
-
-
-Category: sdf
-
-OP Type: `raytk.operators.sdf.solidAngleSdf`
-
 ## Parameters
 
-* `Translate` - 
-* `Angle` - 
-* `Radius` -
+* Translate (`Translate`)
+* Angle (`Angle`)
+* Radius (`Radius`)
+* Inspect (`Inspect`)

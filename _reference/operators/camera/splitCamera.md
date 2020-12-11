@@ -8,6 +8,11 @@ permalink: /reference/operators/camera/splitCamera
 
 # splitCamera
 
-
-
 A camera that splits the viewport into several zones, each using a separate camera.
+
+## Parameters
+
+* Enable (`Enable`)
+* Layout (`Layout`)
+* Rescale (`Rescale`)
+* Inspect (`Inspect`)

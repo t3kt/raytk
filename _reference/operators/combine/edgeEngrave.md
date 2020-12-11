@@ -8,15 +8,10 @@ permalink: /reference/operators/combine/edgeEngrave
 
 # edgeEngrave
 
-
-
-Category: combine
-
-OP Type: `raytk.operators.combine.edgeEngrave`
-
 ## Parameters
 
-* `Enable` - 
-* `Swap Inputs` - 
-* `Radius` - 
-* `Use Radius Field` -
+* Enable (`Enable`)
+* Swap Inputs (`Swapinputs`)
+* Radius (`Radius`)
+* Use Radius Field (`Useradiusfield`)
+* Inspect (`Inspect`)

@@ -8,15 +8,10 @@ permalink: /reference/operators/function/chopFn
 
 # chopFn
 
-
-
-Category: function
-
-OP Type: `raytk.operators.function.chopFn`
-
 ## Parameters
 
-* `Context Type` - 
-* `Chop` - 
-* `Extend Mode` - 
-* `Range` -
+* Context Type (`Contexttype`)
+* Chop (`Chop`)
+* Extend Mode (`Extendmode`)
+* Range (`Range`)
+* Inspect (`Inspect`)

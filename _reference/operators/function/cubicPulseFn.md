@@ -8,14 +8,9 @@ permalink: /reference/operators/function/cubicPulseFn
 
 # cubicPulseFn
 
-
-
-Category: function
-
-OP Type: `raytk.operators.function.cubicPulseFn`
-
 ## Parameters
 
-* `Context Type` - 
-* `Width` - 
-* `Phase` -
+* Context Type (`Contexttype`)
+* Width (`Width`)
+* Phase (`Phase`)
+* Inspect (`Inspect`)

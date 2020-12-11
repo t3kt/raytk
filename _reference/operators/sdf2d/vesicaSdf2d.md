@@ -8,13 +8,8 @@ permalink: /reference/operators/sdf2d/vesicaSdf2d
 
 # vesicaSdf2d
 
-
-
-Category: sdf2d
-
-OP Type: `raytk.operators.sdf2d.vesicaSdf2d`
-
 ## Parameters
 
-* `Radius` - 
-* `Distance` -
+* Radius (`Radius`)
+* Distance (`Distance`)
+* Inspect (`Inspect`)

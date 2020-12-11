@@ -8,16 +8,11 @@ permalink: /reference/operators/sdf/petalSdf
 
 # petalSdf
 
-
-
-Category: sdf
-
-OP Type: `raytk.operators.sdf.petalSdf`
-
 ## Parameters
 
-* `Thickness` - 
-* `Width` - 
-* `Wrap` - 
-* `Radius` - 
-* `Rotate` -
+* Thickness (`Thickness`)
+* Width (`Width`)
+* Wrap (`Wrap`)
+* Radius (`Radius`)
+* Rotate (`Rotate`)
+* Inspect (`Inspect`)

@@ -8,15 +8,10 @@ permalink: /reference/operators/filter/limitField
 
 # limitField
 
-
-
-Category: filter
-
-OP Type: `raytk.operators.filter.limitField`
-
 ## Parameters
 
-* `Enable` - 
-* `Limit Type` - 
-* `Input Low` - 
-* `Input High` -
+* Enable (`Enable`)
+* Limit Type (`Limittype`)
+* Input Low (`Low`)
+* Input High (`High`)
+* Inspect (`Inspect`)

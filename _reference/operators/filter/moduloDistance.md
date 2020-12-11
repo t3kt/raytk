@@ -8,20 +8,16 @@ permalink: /reference/operators/filter/moduloDistance
 
 # moduloDistance
 
-
 Beta
 {: .label .label-yellow }
 
-Category: filter
-
-OP Type: `raytk.operators.filter.moduloDistance`
-
 ## Parameters
 
-* `Enable` - 
-* `Distance Mode` - 
-* `Mirror Type` - 
-* `Length` - 
-* `Pre Offset` - 
-* `Center` - 
-* `Iterate On Rings` -
+* Enable (`Enable`)
+* Distance Mode (`Distancemode`)
+* Mirror Type (`Mirrortype`)
+* Length (`Length`)
+* Pre Offset (`Preoffset`)
+* Center (`Center`)
+* Iterate On Rings (`Iterateonrings`)
+* Inspect (`Inspect`)

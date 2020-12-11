@@ -8,23 +8,18 @@ permalink: /reference/operators/sdf/gyroidSdf
 
 # gyroidSdf
 
-
-
-Category: sdf
-
-OP Type: `raytk.operators.sdf.gyroidSdf`
-
 ## Parameters
 
-* `Coord Type` - 
-* `Context Type` - 
-* `Translate` - 
-* `Scale` - 
-* `Enable Period` - 
-* `Period 1` - 
-* `Period 2` - 
-* `Enable Phase` - 
-* `Phase 1` - 
-* `Phase 2` - 
-* `Bias` - 
-* `Thickness` -
+* Coord Type (`Coordtype`)
+* Context Type (`Contexttype`)
+* Translate (`Translate`)
+* Scale (`Scale`)
+* Enable Period (`Enableperiod`)
+* Period 1 (`Period1`)
+* Period 2 (`Period2`)
+* Enable Phase (`Enablephase`)
+* Phase 1 (`Phase1`)
+* Phase 2 (`Phase2`)
+* Bias (`Bias`)
+* Thickness (`Thickness`)
+* Inspect (`Inspect`)

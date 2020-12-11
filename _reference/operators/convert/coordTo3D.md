@@ -8,14 +8,9 @@ permalink: /reference/operators/convert/coordTo3D
 
 # coordTo3D
 
-
-
-Category: convert
-
-OP Type: `raytk.operators.convert.coordTo3D`
-
 ## Parameters
 
-* `Enable` - 
-* `Part X` - 
-* `Part Y` -
+* Enable (`Enable`)
+* Part X (`Partx`)
+* Part Y (`Party`)
+* Inspect (`Inspect`)

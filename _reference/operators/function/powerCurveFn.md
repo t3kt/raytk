@@ -8,16 +8,11 @@ permalink: /reference/operators/function/powerCurveFn
 
 # powerCurveFn
 
-
-
-Category: function
-
-OP Type: `raytk.operators.function.powerCurveFn`
-
 ## Parameters
 
-* `Balance` - 
-* `Slope` - 
-* `Normalize Scale` - 
-* `Scale` - 
-* `Context Type` -
+* Balance (`Balance`)
+* Slope (`Slope`)
+* Normalize Scale (`Normalizescale`)
+* Scale (`Scale`)
+* Context Type (`Contexttype`)
+* Inspect (`Inspect`)
