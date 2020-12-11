@@ -1,6 +1,7 @@
 from pathlib import Path
 from typing import Callable
 from raytkUtil import detachTox, CategoryInfo, ROPInfo, getToolkit, stripFirstMarkdownHeader
+from raytkModel import CategoryHelp, ROPHelp
 
 # noinspection PyUnreachableCode
 if False:
@@ -110,20 +111,14 @@ class DocProcessor:
 		if not ropInfo or not ropInfo.isMaster:
 			self.context.log(f'Invalid rop for docs {rop}')
 			return
+		ropHelp = ROPHelp.extractFromROP(rop)
 		dat = ropInfo.helpDAT
-		docText = dat.text if dat else None
-		if not docText:
-			docText = self._generateDefaultOpDoc(ropInfo)
-			if not dat:
-				dat = ropInfo.rop.create(textDAT, 'help')
-				ropInfo.helpDAT = dat
-			dat.text = docText
-		if ropInfo.isBeta:
-			betaLabel = '''
-Beta
-{: .label .label-yellow }'''
-		else:
-			betaLabel = ''
+		if not dat:
+			dat = ropInfo.rop.create(textDAT, 'help')
+			ropInfo.helpDAT = dat
+		docText = ropHelp.formatAsMarkdown()
+		dat.clear()
+		dat.write(docText)
 		docText = f'''---
 layout: page
 title: {ropInfo.shortName}
@@ -132,11 +127,7 @@ grand_parent: Operators
 permalink: /reference/operators/{ropInfo.categoryName}/{ropInfo.shortName}
 ---
 
-# {ropInfo.shortName}
-
-{betaLabel}
-
-{stripFirstMarkdownHeader(docText)}
+{docText}
 '''
 		self._writeDocs(
 			Path(self.toolkit.relativePath(rop).replace('./', '') + '.md'),

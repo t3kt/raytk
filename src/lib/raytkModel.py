@@ -410,6 +410,8 @@ class ROPHelp:
 	opType: Optional[str] = None
 	category: Optional[str] = None
 	parameters: List[ROPParamHelp] = field(default_factory=list)
+	isAlpha: bool = False
+	isBeta: bool = False
 
 	@classmethod
 	def extractFromROP(cls, rop: 'COMP'):
@@ -424,6 +426,8 @@ class ROPHelp:
 			name=info.shortName,
 			opType=info.opType,
 			category=info.categoryName,
+			isAlpha=info.isAlpha,
+			isBeta=info.isBeta,
 			parameters=[
 				ROPParamHelp.extractFromPar(pt[0])
 				for pt in parTuples
@@ -436,6 +440,12 @@ class ROPHelp:
 		headerPrefix = '#' * headerOffset
 		parts = [
 			f'{headerPrefix}# {self.name}',
+		]
+		if self.isAlpha:
+			parts.append('Alpha\n{: .label .label-purple }')
+		elif self.isBeta:
+			parts.append('Beta\n{: .label .label-yellow }')
+		parts += [
 			self.summary,
 			self.detail,
 		]
