@@ -65,12 +65,13 @@ class Tools:
 		if not rop:
 			# TODO: warning?
 			return
+		ropInfo = ROPInfo(rop)
 		self.updateROPParams(rop)
 		updateROPMetadata(rop, incrementVersion=incrementVersion)
 		focusCustomParameterPage(rop, 0)
 		tox = rop.par.externaltox.eval()
 		rop.save(tox)
-		ui.status = f'Saved TOX {tox} (version: {rop.op("opDefinition").par.Raytkopversion})'
+		ui.status = f'Saved TOX {tox} (version: {ropInfo.opVersion})'
 		for dat in getToolkit().ops('opfind_rops', 'opCategoryTable'):
 			dat.cook(force=True)
 
