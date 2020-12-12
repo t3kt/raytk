@@ -1,6 +1,7 @@
-from develCommon import *
+from develCommon import updateROPMetadata, AutoLoader
 import popMenu
 from raytkUtil import RaytkTags, ROPInfo, Tag, getActiveEditor, navigateTo, getChildROPs, recloneComp, RaytkContext, TypeTableHelper, focusCustomParameterPage
+from raytkUtil import getToolkit, getToolkitVersion, Version
 from typing import Tuple, List
 
 # noinspection PyUnreachableCode
@@ -45,7 +46,7 @@ class Tools:
 		return rops[0] if rops else None
 
 	def getCurrentROPs(self, primaryOnly=False):
-		return RaytkContext.currentROPs(
+		return RaytkContext().currentROPs(
 			primaryOnly=primaryOnly,
 			exclude=lambda c: c is self.ownerComp or c.path.startswith(self.ownerComp.path + '/'))
 
@@ -64,12 +65,13 @@ class Tools:
 		if not rop:
 			# TODO: warning?
 			return
+		ropInfo = ROPInfo(rop)
 		self.updateROPParams(rop)
 		updateROPMetadata(rop, incrementVersion=incrementVersion)
 		focusCustomParameterPage(rop, 0)
 		tox = rop.par.externaltox.eval()
 		rop.save(tox)
-		ui.status = f'Saved TOX {tox} (version: {rop.op("opDefinition").par.Raytkopversion})'
+		ui.status = f'Saved TOX {tox} (version: {ropInfo.opVersion})'
 		for dat in getToolkit().ops('opfind_rops', 'opCategoryTable'):
 			dat.cook(force=True)
 
@@ -90,12 +92,12 @@ class Tools:
 			if ropInfo.opDefPar and not ropInfo.opDefPar.Enable.expr:
 				ropInfo.opDefPar.Enable.expr = "op('..').par.Enable"
 
-		if ropInfo.isROP:
+		if ropInfo.isROP or ropInfo.subROPs:
 			inspectPar = rop.par['Inspect']
 			if inspectPar is None:
 				inspectPar = page.appendPulse('Inspect')[0]
 			inspectPar.startSection = True
-			inspectPar.order = 99999
+			inspectPar.order = 99999 
 
 	def editCurrentROPMaster(self):
 		rop = self.GetCurrentROP()
@@ -104,13 +106,11 @@ class Tools:
 		rop = rop.par.clone.eval() or rop
 		self.NavigateTo(rop.par.clone.eval())
 
-	def setCurrentROPBeta(self, beta: bool):
-		rops = self.getCurrentROPs()
-		for rop in rops:
-			opDef = rop.op('opDefinition')
-			if opDef:
-				RaytkTags.beta.apply(opDef, beta)
-			RaytkTags.beta.applyColor(rop, beta)
+	def setCurrentROPBeta(self, state: bool):
+		self.applyTagToCurrentROPs(RaytkTags.beta, state)
+
+	def setCurrentROPAlpha(self, state: bool):
+		self.applyTagToCurrentROPs(RaytkTags.alpha, state)
 
 	def setUpCurrentROPHelp(self):
 		rops = self.getCurrentROPs()
@@ -135,8 +135,16 @@ class Tools:
 			if not dat.par.file:
 				dat.par.file = rop.par.externaltox.eval().replace('.tox', '.md')
 			RaytkTags.fileSync.apply(dat, True)
-			if not dat.text:
-				dat.text = f'# {rop.name} ({rop.parent().name})\n\n'
+			if not dat.text.strip():
+				text = f'# {rop.name}\n\n'
+				for parTuplet in rop.customTuplets:
+					if parTuplet[0].name in ('Inspect',):
+						continue
+					text += f'* `{parTuplet[0].label}` - '
+					if parTuplet[0].name == 'Enable':
+						text += 'Enables or disables the op.'
+					text += '\n'
+				dat.text = text
 			dat.viewer = True
 		finally:
 			ui.undo.endBlock()
@@ -268,6 +276,10 @@ class Tools:
 	def applyTagToSelected(self, tag: 'Tag', state: bool):
 		self.forEachSelected(lambda o: tag.apply(o, state))
 
+	def applyTagToCurrentROPs(self, tag: 'Tag', state: bool):
+		for rop in self.getCurrentROPs():
+			tag.apply(rop, state)
+
 	def setUpAutoLoadOnSelected(self):
 		def _action(comp):
 			if comp:
@@ -316,11 +328,6 @@ class Tools:
 		# noinspection PyUnresolvedReferences
 		editor.Workspace.LoadWorkspaceFolder(workspaceFolder)
 		editor.par.Openwindow.pulse()
-
-	def toggleCustomOnlyOnSelected(self):
-		def _action(o: 'COMP'):
-			o.showCustomOnly = not o.showCustomOnly
-		self.forEachSelected(_action)
 
 def _getMonitorHeight(usePrimary=True):
 	if usePrimary:

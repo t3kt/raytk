@@ -1,0 +1,5 @@
+name	label	plane
+xaxis	X Axis	yz
+yaxis	Y Axis	zx
+zaxis	Z Axis	xy
+spherical	Spherical	xyz

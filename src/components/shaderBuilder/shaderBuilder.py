@@ -1,5 +1,6 @@
 from dataclasses import dataclass
 from typing import Callable, List, Tuple, Union
+from raytkUtil import ROPInfo
 
 # noinspection PyUnreachableCode
 if False:
@@ -12,6 +13,7 @@ if False:
 		Inlinereadonlyparameters: 'Union[bool, Par]'
 		Simplifynames: 'Union[bool, Par]'
 		Generatetypedefs: 'Union[bool, Par]'
+		Includemode: 'Union[str, Par]'
 
 	class _OwnerCompPar(_ConfigPar):
 		Globalprefix: 'Union[DAT, str, Par]'
@@ -137,8 +139,8 @@ class ShaderBuilder:
 		# 	return processor.processCodeBlock(code)
 		return code
 
-	def getLibraryDats(self, onWarning: Callable[[str], None] = None):
-		requiredLibNames = parent().par.Librarynames.eval().strip().split(' ')  # type: List[str]
+	def getLibraryDats(self, onWarning: Callable[[str], None] = None) -> 'List[DAT]':
+		requiredLibNames = self.ownerComp.par.Librarynames.eval().strip().split(' ')  # type: List[str]
 		requiredLibNames = [n for n in requiredLibNames if n]
 		defsTable = self.definitionTable()
 		if defsTable[0, 'libraryNames']:
@@ -169,12 +171,24 @@ class ShaderBuilder:
 		return dats
 
 	def buildLibraryIncludes(self, onWarning: Callable[[str], None] = None):
+		mode = str(self.configPar()['Includemode'] or 'includelibs')
+		supportsInclude = self.ownerComp.op('support_table')['include', 1] == '1'
+		if mode == 'includelibs' and not supportsInclude:
+			inlineAll = True
+		else:
+			inlineAll = mode == 'inlineall'
 		libraries = self.getLibraryDats(onWarning)
-		includes = [
-			f'#include <{lib.path}>'
-			for lib in libraries
-		]
-		return wrapCodeSection(includes, 'libraries')
+		if inlineAll:
+			libBlocks = [
+				f'// Library: <{lib.path}>\n{lib.text}'
+				for lib in libraries
+			]
+		else:
+			libBlocks = [
+				f'#include <{lib.path}>'
+				for lib in libraries
+			]
+		return wrapCodeSection(libBlocks, 'libraries')
 
 	def buildOpDataTypedefBlock(self):
 		if not self.configPar().Generatetypedefs:
@@ -324,6 +338,20 @@ class ShaderBuilder:
 			output += f'else if(m == {nameCell.val}) {{\n'
 			output += materialCode + '\n}'
 		return output
+
+	def buildValidationErrors(self, dat: 'DAT'):
+		dat.clear()
+		toolkitVersions = {}
+		rops = self.getOpsFromDefinitionColumn('path')
+		for rop in rops:
+			info = ROPInfo(rop)
+			version = info.toolkitVersion if info else ''
+			if version != '':
+				toolkitVersions[version] = 1 + toolkitVersions.get(version, 0)
+		if len(rops) > 1:
+			error = f'Toolkit version mismatch ({", ".join(list(toolkitVersions.keys()))})'
+			dat.appendRow(['path', 'level', 'message'])
+			dat.appendRow([parent().path, 'warning', error])
 
 _materialParagraphPlaceholder = '// #include <materialParagraph>'
 

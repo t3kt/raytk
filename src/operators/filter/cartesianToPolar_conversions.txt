@@ -1,0 +1,5 @@
+name	label	expr
+spherical	Spherical	vec3(length(p), atan(p.y, p.x), acos(p.z / length(p)))
+cylindricalx	Cylindrical X	vec3(p.x, length(p.yz), atan(p.z, p.y))
+cylindricaly	Cylindrical Y	vec3(atan(p.x, p.z), p.y, length(p.xz))
+cylindricalz	Cylindrical Z	vec3(length(p.xy), atan(p.y, p.x), p.z)

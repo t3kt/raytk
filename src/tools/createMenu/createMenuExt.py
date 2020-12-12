@@ -6,8 +6,18 @@ if False:
 	# noinspection PyUnresolvedReferences
 	from _stubs import *
 	from _stubs.ListerExt import ListerExt
+	from _typeAliases import StrParamT, BoolParamT
 	from typing import Any, Union, Optional
-	ipar.createMenuState = Any()
+
+	class _StatePar:
+		Filtertext: 'StrParamT'
+		Showhelp: 'BoolParamT'
+		Helpoppath: 'StrParamT'
+		Showbeta: 'BoolParamT'
+		Showalpha: 'BoolParamT'
+
+	class ipar:
+		createMenuState: _StatePar
 
 class CreateMenu:
 	def __init__(self, ownerComp: 'COMP'):
@@ -25,12 +35,20 @@ class CreateMenu:
 		categoryNames = list(set(c.val for c in opTable.col('category')[1:]))
 		opNames = [c.val for c in opTable.col('name')[1:]]
 		dat.clear()
-		dat.appendRow(['indentedName', 'name', 'path', 'type', 'status'])
+		dat.appendRow(['indentedName', 'name', 'path', 'type', 'status', 'category'])
 		for categoryName in sorted(categoryNames):
-			dat.appendRow([categoryName, categoryName, '', 'category', ''])
+			dat.appendRow([categoryName, categoryName, '', 'category', '', categoryName])
 			for name in opNames:
 				if opTable[name, 'category'] == categoryName:
-					dat.appendRow(['    ' + name, name, opTable[name, 'path'], 'op', opTable[name, 'status']])
+					dat.appendRow(
+						[
+							'    ' + name,
+							name,
+							opTable[name, 'path'],
+							'op',
+							opTable[name, 'status'],
+							opTable[name, 'category']
+						])
 
 	@staticmethod
 	def getEventPath(info: dict):
@@ -63,7 +81,7 @@ class CreateMenu:
 			return
 		selectedRows = self.lister.SelectedRows
 		if selectedRows:
-			selPath = str(table[selectedRows[0]+1, 'path'] or '')
+			selPath = str(table[selectedRows[0] + 1, 'path'] or '')
 		else:
 			selPath = None
 		if key == 'enter':
@@ -113,16 +131,29 @@ class CreateMenu:
 		ipar.createMenuState.Filtertext = val
 		self.updateRowSelection(None)
 
+	@staticmethod
+	def getMaster(path: str):
+		if not path:
+			return
+		if not path.startswith('/raytk/'):
+			return op(path)
+		path = path.replace('/raytk/', '')
+		if hasattr(parent, 'raytk'):
+			return parent.raytk.op(path)
+		if hasattr(op, 'raytk'):
+			return op.raytk.op(path)
+
 	def CreateOp(self, masterPath: str):
 		if not masterPath:
 			return
-		print(self.ownerComp, 'Creating OP from', masterPath)
-		master = op(masterPath)
+		master = self.getMaster(masterPath)
 		if not master:
-			return None
+			print(self.ownerComp, f'Unable to find master for path: {masterPath!r}')
+			return
+		print(self.ownerComp, 'Creating OP from', master)
 		pane = getActiveEditor()
 		if not pane:
-			return master
+			return
 		dest = pane.owner
 		if not dest:
 			return
@@ -150,8 +181,10 @@ class CreateMenu:
 		dat.clear()
 		dat.appendRow(inDat.row(0))
 		showBeta = ipar.createMenuState.Showbeta
+		showAlpha = ipar.createMenuState.Showalpha
 		if not filterText or filter == '*':
-			def testText(_): return True
+			def testText(_):
+				return True
 		elif re.match(r'^\w+$', filterText):
 			def testText(val: str):
 				return filterText.lower() in val.lower()
@@ -162,16 +195,26 @@ class CreateMenu:
 			def testText(val: str):
 				return filterText.lower() in val.lower()
 		ignorePrefix = getToolkit().path + '/operators/'
+		pathsToInclude = set()
+		categoriesToInclude = set()
 		for i in range(1, inDat.numRows):
-			if inDat[i, 'type'] == 'category':
-				dat.appendRow(inDat.row(i))
-			else:
+			if inDat[i, 'type'] != 'category':
 				if not testText(inDat[i, 'path'].val.replace(ignorePrefix, '')):
 					continue
 				if not showBeta and 'beta' in inDat[i, 'status'].val:
 					continue
-				dat.appendRow(inDat.row(i))
-	
+				if not showAlpha and 'alpha' in inDat[i, 'status'].val:
+					continue
+				pathsToInclude.add(inDat[i, 'path'].val)
+				categoriesToInclude.add(inDat[i, 'category'].val)
+		for i in range(1, inDat.numRows):
+			if inDat[i, 'type'] == 'category':
+				if inDat[i, 'name'].val in categoriesToInclude:
+					dat.appendRow(inDat.row(i))
+			else:
+				if inDat[i, 'path'].val in pathsToInclude:
+					dat.appendRow(inDat.row(i))
+
 	def onMouseOverChange(self, value):
 		timer = self.ownerComp.op('close_timer')
 		if value:
@@ -180,7 +223,7 @@ class CreateMenu:
 		else:
 			timer.par.active = True
 			timer.par.start.pulse()
-	
+
 	def onCloseTimerDone(self):
 		timer = self.ownerComp.op('close_timer')
 		timer.par.initialize.pulse()

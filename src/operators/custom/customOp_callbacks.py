@@ -1,3 +1,3 @@
 def onCreate(master=None, **kwargs):
 	# detach clone, even in devel
-	parent().par.enablecloning = Falses
+	parent().par.enablecloning = False

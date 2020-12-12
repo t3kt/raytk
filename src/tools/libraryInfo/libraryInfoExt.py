@@ -1,4 +1,5 @@
-from raytkUtil import ROPInfo, RaytkTags
+from datetime import datetime
+from raytkUtil import ROPInfo, RaytkTags, RaytkContext
 
 # noinspection PyUnreachableCode
 if False:
@@ -13,14 +14,31 @@ class LibraryInfoBuilder:
 
 	def Forcebuild(self, _=None):
 		for o in self.ownerComp.ops(
-				'build_opTable', 'build_categoryTable', 'build_opHelpTable', 'eval_build_info', 'eval_info_text_exprs'):
+				'build_opTable',
+				'build_categoryTable',
+				'build_opHelpTable',
+				'build_versionInfo',
+				'build_buildInfo',
+				'eval_info_text_exprs'):
 			o.cook(force=True)
-		self.ownerComp.op('opTable_writeFile').par.write.pulse()
+
+	@staticmethod
+	def buildVersionTable(dat: 'tableDAT'):
+		dat.clear()
+		dat.appendRow(['toolkitVersion', RaytkContext().toolkitVersion()])
+		dat.appendRow(['touchDesignerVersion', app.version])
+		dat.appendRow(['touchDesignerBuild', app.build])
+
+	def buildBuildInfoTable(self, dat: 'tableDAT'):
+		self.buildVersionTable(dat)
+		dat.insertRow(['toolkitBuildDate', datetime.now().isoformat(sep=' ')], 'touchDesignerVersion')
+		dat.appendRow(['buildOsName', app.osName])
+		dat.appendRow(['buildOsVersion', app.osVersion])
 
 	@staticmethod
 	def buildROPTable(dat: 'tableDAT'):
 		dat.clear()
-		opsRoot = parent.raytk.op('operators')
+		opsRoot = RaytkContext().operatorsRoot()
 		rops = []  # type: List[COMP]
 		if opsRoot:
 			rops = opsRoot.findChildren(type=COMP, tags=['raytk*'], depth=2, maxDepth=2)
@@ -35,6 +53,12 @@ class LibraryInfoBuilder:
 			if not ropInfo or not ropInfo.isMaster:
 				continue
 			category = rop.parent()
+			if ropInfo.isAlpha:
+				status = 'alpha'
+			elif ropInfo.isBeta:
+				status = 'beta'
+			else:
+				status = ''
 			dat.appendRow([
 				rop.name,
 				rop.path,
@@ -44,7 +68,7 @@ class LibraryInfoBuilder:
 				f'{category.name}/{rop.name}',
 				ropInfo.opType,
 				ropInfo.opVersion,
-				'beta' if ropInfo.isBeta else '',
+				status,
 			])
 
 	@staticmethod

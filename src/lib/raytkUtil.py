@@ -1,3 +1,5 @@
+from functools import total_ordering
+import re
 from typing import Callable, List, Union, Optional, Tuple
 
 # noinspection PyUnreachableCode
@@ -7,25 +9,86 @@ if False:
 	op.raytk = COMP()
 
 def getToolkit() -> 'COMP':
+	if hasattr(parent, 'raytk'):
+		return parent.raytk
 	return op.raytk
+
+@total_ordering
+class Version:
+	pattern = re.compile(r'([0-9])+(?:\.([0-9]+))?')
+
+	def __init__(self, majorOrString: Union[str, int, Cell, Par] = None, minor: int = None):
+		if isinstance(majorOrString, (Cell, Par)):
+			majorOrString = str(majorOrString)
+		if isinstance(majorOrString, str):
+			s = majorOrString  # type: str
+			if minor is not None:
+				raise Exception('Cannot specify both string and major/minor')
+			match = Version.pattern.match(s)
+			if not match:
+				raise Exception(f'Invalid version string: {s!r}')
+			majorPart = match.group(1)
+			minorPart = match.group(2)
+			major = int(majorPart)
+			minor = int(minorPart) if minorPart else 0
+		else:
+			major = majorOrString
+		if major is None:
+			raise Exception('Must specify either string or `major`')
+		self.major = major
+		self.minor = minor or 0
+
+	def __str__(self):
+		return f'{self.major}.{self.minor}'
+
+	def __repr__(self):
+		return f'Version({self.major}, {self.minor})'
+
+	def __eq__(self, other: 'Version'):
+		return self.major == other.major and self.minor == self.minor
+
+	def __ne__(self, other: 'Version'):
+		return not (self == other)
+
+	def __lt__(self, other: 'Version'):
+		if self.major < other.major:
+			return True
+		elif self.major == other.major:
+			return self.minor < other.minor
+		else:
+			return False
+
+def getToolkitVersion():
+	toolkit = getToolkit()
+	par = toolkit.par['Raytkversion']
+	return Version(str(par or '0.1'))
 
 class _OpMetaPars:
 	Raytkoptype: 'StrParamT'
 	Raytkopversion: 'IntParamT'
 	Raytkversion: 'StrParamT'
 
-class _OpDefPars(_OpMetaPars):
+class CompDefParsT(_OpMetaPars):
 	Help: 'DatParamT'
+	Rops: 'StrParamT'
+
+class OpDefParsT(_OpMetaPars):
+	Hostop: 'OPParamT'
+	Name: 'StrParamT'
+	Enable: 'BoolParamT'
 	Functemplate: 'DatParamT'
 	Macrotable: 'DatParamT'
 	Params: 'StrParamT'
 	Specialparams: 'StrParamT'
 	Callbacks: 'DatParamT'
+	Librarynames: 'StrParamT'
+	Help: 'DatParamT'
+	Disableinspect: 'BoolParamT'
 
 class ROPInfo:
-	rop: 'Optional[OP]'
+	rop: 'Optional[Union[OP, COMP]]'
 	opDef: 'Optional[COMP]'
-	opDefPar: 'Optional[_OpDefPars]'
+	opDefPar: 'Optional[Union[OpDefParsT, CompDefParsT]]'
 
 	def __init__(self, o: 'Union[OP, str, Cell]'):
 		o = op(o)
@@ -34,21 +97,27 @@ class ROPInfo:
 		if isROP(o):
 			self.rop = o
 			self.opDef = o.op('opDefinition')
+			# noinspection PyTypeChecker
+			self.opDefPar = self.opDef.par
 		elif isROPDef(o):
 			self.rop = o.par.Hostop.eval()
 			self.opDef = o
+			# noinspection PyTypeChecker
+			self.opDefPar = self.opDef.par
 		elif _isRComp(o):
 			self.rop = o
 			self.opDef = o.op('compDefinition')
+			# noinspection PyTypeChecker
+			self.opDefPar = self.opDef.par
 		elif _isRCompDef(o):
 			self.rop = o.par.Hostop.eval()
 			self.opDef = o
+			# noinspection PyTypeChecker
+			self.opDefPar = self.opDef.par
 		else:
 			self.rop = None
 			self.opDef = None
 			self.opDefPar = None
-		# noinspection PyTypeChecker
-		self.opDefPar = self.opDef.par
 
 	def __bool__(self):
 		return bool(self.rop)
@@ -60,6 +129,14 @@ class ROPInfo:
 	@opVersion.setter
 	def opVersion(self, val):
 		self.opDefPar.Raytkopversion = val if val is not None else ''
+
+	@property
+	def toolkitVersion(self):
+		return str(self.opDefPar.Raytkversion or '')
+
+	@toolkitVersion.setter
+	def toolkitVersion(self, val):
+		self.opDefPar.Raytkversion = val if val is not None else ''
 
 	@property
 	def opType(self):
@@ -75,7 +152,11 @@ class ROPInfo:
 
 	@property
 	def isBeta(self):
-		return RaytkTags.beta.isOn(self.opDef)
+		return RaytkTags.beta.isOn(self.rop)
+
+	@property
+	def isAlpha(self):
+		return RaytkTags.alpha.isOn(self.rop)
 
 	@property
 	def isMaster(self):
@@ -87,6 +168,33 @@ class ROPInfo:
 		if toolkit.op('operators') and toolkit.op('operators').path in self.rop.parent().path:
 			return True
 		return False
+
+	def toMaster(self):
+		if not self or self.isMaster:
+			return self
+		return ROPInfo(self.rop.par.clone.eval())
+
+	@property
+	def categoryName(self):
+		if not self:
+			return None
+		if self.isMaster:
+			return self.rop.parent().name
+		elif self.rop.par.clone:
+			return self.rop.par.clone.eval().parent().name
+
+	@property
+	def shortName(self):
+		t = self.opType
+		if not t:
+			return None
+		return t.rsplit('.', 1)[-1]
+
+	@property
+	def subROPs(self):
+		if not self or not self.isRComp or not self.opDefPar['Rops']:
+			return []
+		return self.opDefPar.Rops.evalOPs()
 
 	@property
 	def helpDAT(self) -> 'Optional[DAT]':
@@ -117,8 +225,20 @@ class ROPInfo:
 		return self.rop.par.externaltox.eval() or None
 
 	@property
+	def supportsInspect(self):
+		if not self:
+			return False
+		if self.isROP:
+			return not self.opDefPar.Disableinspect
+		for sub in self.subROPs:
+			subInfo = ROPInfo(sub)
+			if subInfo.supportsInspect:
+				return True
+		return False
+
+	@property
 	def callbacks(self) -> 'Optional[MOD]':
-		if not self.opDefPar or not self.opDefPar['Callbacks']:
+		if not self.opDefPar or not self.opDefPar.Callbacks:
 			return None
 		dat = self.opDefPar.Callbacks.eval()
 		if not dat:
@@ -129,6 +249,42 @@ class ROPInfo:
 		cb = self.callbacks
 		if cb and hasattr(cb, name):
 			getattr(cb, name)(**kwargs)
+
+class CategoryInfo:
+	category: COMP
+
+	def __init__(self, o: 'Union[OP, str, Cell]'):
+		o = op(o)
+		if not o:
+			return
+		self.category = o
+
+	@property
+	def categoryName(self):
+		return self.category.name if self.category else None
+
+	@property
+	def helpDAT(self) -> 'Optional[DAT]':
+		return self.category and self.category.op('help')
+
+	@property
+	def operators(self) -> 'List[COMP]':
+		if not self.category:
+			return []
+		return list(sorted([
+			o
+			for o in self.category.findChildren(
+				type=COMP, tags=[RaytkTags.raytkOP.name, RaytkTags.raytkComp.name], maxDepth=1)
+			if not o.name.startswith('__')], key=lambda o: o.path))
+
+	@property
+	def operatorInfos(self) -> 'List[ROPInfo]':
+		infos = []
+		for rop in self.operators:
+			info = ROPInfo(rop)
+			if info:
+				infos.append(info)
+		return infos
 
 def isROP(o: 'OP'):
 	return bool(o) and o.isCOMP and RaytkTags.raytkOP.isOn(o)
@@ -168,6 +324,7 @@ def recloneComp(o: 'COMP'):
 _defaultNodeColor = 0.545, 0.545, 0.545
 _buildExcludeColor = 0.1, 0.1, 0.1
 _fileSyncColor = 0.65, 0.5, 1
+_alphaColor = 1, 0.55, 0
 _betaColor = 1, 0, 0.5
 _buildLockColor = 0, 0.68, 0.543
 _validationColor = 1, 0.95, 0.45
@@ -221,6 +378,19 @@ class Tag:
 	def isOn(self, o: 'OP'):
 		return bool(o) and self.name in o.tags
 
+class _OpStatusTag(Tag):
+	def apply(self, o: 'OP', state: bool):
+		info = ROPInfo(o)
+		if info.opDef:
+			self.applyTag(info.opDef, state)
+			self.applyColor(info.opDef, state)
+		self.applyColor(o, state)
+		self.applyUpdate(info.opDef, state)
+
+	def isOn(self, o: 'OP'):
+		opDef = ROPInfo(o).opDef
+		return super().isOn(o) or super().isOn(opDef)
+
 def _updateFileSyncPars(o: 'OP', state: bool):
 	if o.isDAT:
 		par = o.par['syncfile']
@@ -246,7 +416,8 @@ class RaytkTags:
 	buildExclude = Tag('buildExclude', _buildExcludeColor)
 	buildLock = Tag('buildLock', _buildLockColor)
 	fileSync = Tag('fileSync', _fileSyncColor, _updateFileSyncPars)
-	beta = Tag('raytkBeta', _betaColor)
+	alpha = _OpStatusTag('raytkAlpha', _alphaColor)
+	beta = _OpStatusTag('raytkBeta', _betaColor)
 	validation = Tag('raytkValidation', _validationColor)
 
 def getActiveEditor() -> 'NetworkEditor':
@@ -334,6 +505,7 @@ class ContextTypes:
 	MaterialContext = 'MaterialContext'
 	CameraContext = 'CameraContext'
 	LightContext = 'LightContext'
+	RayContext = 'RayContext'
 	none = 'none'
 
 	values = [
@@ -342,6 +514,7 @@ class ContextTypes:
 		MaterialContext,
 		CameraContext,
 		LightContext,
+		RayContext,
 	]
 
 class InspectorTargetTypes:
@@ -411,8 +584,16 @@ class TypeTableHelper:
 		self.updateTypePar(par, 'isReturnType', hasUseInput=hasUseInput)
 
 class RaytkContext:
-	def __init__(self):
-		pass
+	@staticmethod
+	def toolkit():
+		return getToolkit()
+
+	@staticmethod
+	def toolkitVersion():
+		return getToolkitVersion()
+
+	def operatorsRoot(self):
+		return self.toolkit().op('operators')
 
 	@staticmethod
 	def activeEditor():
@@ -428,6 +609,8 @@ class RaytkContext:
 		if not pane:
 			return []
 		comp = pane.owner
+		if not comp:
+			return []
 		if exclude and exclude(comp):
 			return []
 		rop = _getROP(comp) or _getROP(comp.currentChild)
@@ -444,13 +627,12 @@ class RaytkContext:
 				rops.append(rop)
 		return rops
 
-	@staticmethod
-	def currentCategories():
+	def currentCategories(self):
 		pane = getActiveEditor()
 		if not pane:
 			return None
 		comp = pane.owner
-		operators = getToolkit().op('operators')
+		operators = self.operatorsRoot()
 		if comp.parent() == operators:
 			return [comp]
 		if comp != operators:
@@ -460,6 +642,13 @@ class RaytkContext:
 			if child.isCOMP:
 				cats.append(child)
 		return cats
+
+	def allCategories(self):
+		return [
+			child
+			for child in self.operatorsRoot().children
+			if child.isCOMP
+		]
 
 def _isMaster(o: 'COMP'):
 	return o and o.par['clone'] is not None and (o.par.clone.eval() or o.par.clone.expr)
@@ -508,9 +697,7 @@ def focusCustomParameterPage(o: 'COMP', page: 'Union[str, int, Page]'):
 	elif isinstance(page, Page):
 		customIndex = page.index
 	if customIndex is not None:
-		# sometimes pages exist but are empty (such the "Base" page on baseCOMP), so skip those, but
-		# add the offset of the number of other built-in pages, because the hidden ones don't seem to count
-		customIndex += len([pg for pg in o.pages if pg.parTuplets and not pg.isCustom])
+		customIndex += len(o.pages)
 		o.par.stdswitcher1 = customIndex
 		o.cook(force=True)
 
@@ -523,3 +710,25 @@ def detachTox(comp: 'COMP'):
 	comp.par.reloadtoxonstart.val = False
 	comp.par.externaltox.expr = ''
 	comp.par.externaltox.val = ''
+
+def stripFirstMarkdownHeader(text: str):
+	if not text:
+		return ''
+	if not text.startswith('# '):
+		return text
+	return text.split('\n', 1)[1].strip()
+
+_headerPattern = re.compile(r'^#', re.MULTILINE)
+def incrementMarkdownHeaders(text: str, steps: int):
+	if not text:
+		return ''
+	return _headerPattern.sub('#' + ('#' * steps), text)
+
+def stripFrontMatter(text: str):
+	if not text or not text.startswith('---'):
+		return text or ''
+	return text.split('---\n', maxsplit=2)[-1]
+
+def datText(path: 'Union[str, Cell]'):
+	dat = op(path)
+	return dat.text.strip() if dat else ''

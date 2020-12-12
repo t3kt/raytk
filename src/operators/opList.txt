@@ -1,11 +1,12 @@
 name	path	parentPath	tags	category	fullName	opType	opVersion	status
-basicCamera	/raytk/operators/camera/basicCamera	/raytk/operators/camera	raytkOP	camera	camera/basicCamera	raytk.operators.camera.basicCamera	0	
-fisheyeCamera	/raytk/operators/camera/fisheyeCamera	/raytk/operators/camera	raytkOP	camera	camera/fisheyeCamera	raytk.operators.camera.fisheyeCamera	1	
-lookAtCamera	/raytk/operators/camera/lookAtCamera	/raytk/operators/camera	raytkOP	camera	camera/lookAtCamera	raytk.operators.camera.lookAtCamera	2	
-orthoCamera	/raytk/operators/camera/orthoCamera	/raytk/operators/camera	raytkOP	camera	camera/orthoCamera	raytk.operators.camera.orthoCamera	2	
-splitCamera	/raytk/operators/camera/splitCamera	/raytk/operators/camera	raytkOP	camera	camera/splitCamera	raytk.operators.camera.splitCamera	2	
+basicCamera	/raytk/operators/camera/basicCamera	/raytk/operators/camera	raytkOP	camera	camera/basicCamera	raytk.operators.camera.basicCamera	1	
+fisheyeCamera	/raytk/operators/camera/fisheyeCamera	/raytk/operators/camera	raytkOP	camera	camera/fisheyeCamera	raytk.operators.camera.fisheyeCamera	2	
+lookAtCamera	/raytk/operators/camera/lookAtCamera	/raytk/operators/camera	raytkOP	camera	camera/lookAtCamera	raytk.operators.camera.lookAtCamera	3	
+orthoCamera	/raytk/operators/camera/orthoCamera	/raytk/operators/camera	raytkOP	camera	camera/orthoCamera	raytk.operators.camera.orthoCamera	3	
+splitCamera	/raytk/operators/camera/splitCamera	/raytk/operators/camera	raytkOP	camera	camera/splitCamera	raytk.operators.camera.splitCamera	3	
 blend	/raytk/operators/combine/blend	/raytk/operators/combine	raytkOP	combine	combine/blend	raytk.operators.combine.blend	3	
-boundLimit	/raytk/operators/combine/boundLimit	/raytk/operators/combine	raytkOP	combine	combine/boundLimit	raytk.operators.combine.boundLimit	0	beta
+boundLimit	/raytk/operators/combine/boundLimit	/raytk/operators/combine	raytkOP	combine	combine/boundLimit	raytk.operators.combine.boundLimit	1	alpha
+combine	/raytk/operators/combine/combine	/raytk/operators/combine	raytkOP	combine	combine/combine	raytk.operators.combine.combine	4	
 combineChamfer	/raytk/operators/combine/combineChamfer	/raytk/operators/combine	raytkOP	combine	combine/combineChamfer	raytk.operators.combine.combineChamfer	1	
 combineColumns	/raytk/operators/combine/combineColumns	/raytk/operators/combine	raytkOP	combine	combine/combineColumns	raytk.operators.combine.combineColumns	2	
 combineFields	/raytk/operators/combine/combineFields	/raytk/operators/combine	raytkOP	combine	combine/combineFields	raytk.operators.combine.combineFields	5	
@@ -14,6 +15,7 @@ edgeEngrave	/raytk/operators/combine/edgeEngrave	/raytk/operators/combine	raytkO
 edgeGroove	/raytk/operators/combine/edgeGroove	/raytk/operators/combine	raytkOP	combine	combine/edgeGroove	raytk.operators.combine.edgeGroove	0	
 edgePipe	/raytk/operators/combine/edgePipe	/raytk/operators/combine	raytkOP	combine	combine/edgePipe	raytk.operators.combine.edgePipe	0	
 iterationSwitch	/raytk/operators/combine/iterationSwitch	/raytk/operators/combine	raytkOP	combine	combine/iterationSwitch	raytk.operators.combine.iterationSwitch	4	
+layoutGrid	/raytk/operators/combine/layoutGrid	/raytk/operators/combine	raytkOP	combine	combine/layoutGrid	raytk.operators.combine.layoutGrid	1	
 simpleDiff	/raytk/operators/combine/simpleDiff	/raytk/operators/combine	raytkOP	combine	combine/simpleDiff	raytk.operators.combine.simpleDiff	3	
 simpleIntersect	/raytk/operators/combine/simpleIntersect	/raytk/operators/combine	raytkOP	combine	combine/simpleIntersect	raytk.operators.combine.simpleIntersect	4	
 simpleUnion	/raytk/operators/combine/simpleUnion	/raytk/operators/combine	raytkOP	combine	combine/simpleUnion	raytk.operators.combine.simpleUnion	6	
@@ -23,11 +25,11 @@ coordTo2D	/raytk/operators/convert/coordTo2D	/raytk/operators/convert	raytkOP	co
 coordTo3D	/raytk/operators/convert/coordTo3D	/raytk/operators/convert	raytkOP	convert	convert/coordTo3D	raytk.operators.convert.coordTo3D	6	
 extrude	/raytk/operators/convert/extrude	/raytk/operators/convert	raytkOP	convert	convert/extrude	raytk.operators.convert.extrude	0	
 floatToSdf	/raytk/operators/convert/floatToSdf	/raytk/operators/convert	raytkOP	convert	convert/floatToSdf	raytk.operators.convert.floatToSdf	3	
-floatToVector	/raytk/operators/convert/floatToVector	/raytk/operators/convert	raytkOP	convert	convert/floatToVector	raytk.operators.convert.floatToVector	4	
+floatToVector	/raytk/operators/convert/floatToVector	/raytk/operators/convert	raytkOP	convert	convert/floatToVector	raytk.operators.convert.floatToVector	5	
 revolve	/raytk/operators/convert/revolve	/raytk/operators/convert	raytkOP	convert	convert/revolve	raytk.operators.convert.revolve	0	
 sdfToFloat	/raytk/operators/convert/sdfToFloat	/raytk/operators/convert	raytkOP	convert	convert/sdfToFloat	raytk.operators.convert.sdfToFloat	3	
-vectorToFloat	/raytk/operators/convert/vectorToFloat	/raytk/operators/convert	raytkOP	convert	convert/vectorToFloat	raytk.operators.convert.vectorToFloat	4	
-customOp	/raytk/operators/custom/customOp	/raytk/operators/custom	raytkOP	custom	custom/customOp	raytk.operators.custom.customOp	2	
+vectorToFloat	/raytk/operators/convert/vectorToFloat	/raytk/operators/convert	raytkOP	convert	convert/vectorToFloat	raytk.operators.convert.vectorToFloat	5	
+customOp	/raytk/operators/custom/customOp	/raytk/operators/custom	raytkOP	custom	custom/customOp	raytk.operators.custom.customOp	3	
 axisDistanceField	/raytk/operators/field/axisDistanceField	/raytk/operators/field	raytkOP	field	field/axisDistanceField	raytk.operators.field.axisDistanceField	5	
 cellTileField	/raytk/operators/field/cellTileField	/raytk/operators/field	raytkOP	field	field/cellTileField	raytk.operators.field.cellTileField	0	
 chopField	/raytk/operators/field/chopField	/raytk/operators/field	raytkOP	field	field/chopField	raytk.operators.field.chopField	1	beta
@@ -38,39 +40,42 @@ contextValueField	/raytk/operators/field/contextValueField	/raytk/operators/fiel
 iterationField	/raytk/operators/field/iterationField	/raytk/operators/field	raytkOP	field	field/iterationField	raytk.operators.field.iterationField	1	
 multiPointDistanceField	/raytk/operators/field/multiPointDistanceField	/raytk/operators/field	raytkOP	field	field/multiPointDistanceField	raytk.operators.field.multiPointDistanceField	0	
 noiseField	/raytk/operators/field/noiseField	/raytk/operators/field	raytkOP	field	field/noiseField	raytk.operators.field.noiseField	3	
-pointDistanceField	/raytk/operators/field/pointDistanceField	/raytk/operators/field	raytkOP	field	field/pointDistanceField	raytk.operators.field.pointDistanceField	6	
-positionField	/raytk/operators/field/positionField	/raytk/operators/field	raytkOP	field	field/positionField	raytk.operators.field.positionField	4	
+pointDistanceField	/raytk/operators/field/pointDistanceField	/raytk/operators/field	raytkOP	field	field/pointDistanceField	raytk.operators.field.pointDistanceField	7	
+positionField	/raytk/operators/field/positionField	/raytk/operators/field	raytkOP	field	field/positionField	raytk.operators.field.positionField	5	
 reorderField	/raytk/operators/field/reorderField	/raytk/operators/field	raytkOP	field	field/reorderField	raytk.operators.field.reorderField	0	
 textureField	/raytk/operators/field/textureField	/raytk/operators/field	raytkOP	field	field/textureField	raytk.operators.field.textureField	6	
 timeField	/raytk/operators/field/timeField	/raytk/operators/field	raytkOP	field	field/timeField	raytk.operators.field.timeField	0	
 waveField	/raytk/operators/field/waveField	/raytk/operators/field	raytkOP	field	field/waveField	raytk.operators.field.waveField	2	
 bend	/raytk/operators/filter/bend	/raytk/operators/filter	raytkOP	filter	filter/bend	raytk.operators.filter.bend	2	
-elongate	/raytk/operators/filter/elongate	/raytk/operators/filter	raytkOP	filter	filter/elongate	raytk.operators.filter.elongate	0	
-fieldExpr	/raytk/operators/filter/fieldExpr	/raytk/operators/filter	raytkOP	filter	filter/fieldExpr	raytk.operators.filter.fieldExpr	4	
-flip	/raytk/operators/filter/flip	/raytk/operators/filter	raytkOP	filter	filter/flip	raytk.operators.filter.flip	0	
+cartesianToPolar	/raytk/operators/filter/cartesianToPolar	/raytk/operators/filter	raytkOP	filter	filter/cartesianToPolar	raytk.operators.filter.cartesianToPolar	0	
+elongate	/raytk/operators/filter/elongate	/raytk/operators/filter	raytkOP	filter	filter/elongate	raytk.operators.filter.elongate	1	
+extend	/raytk/operators/filter/extend	/raytk/operators/filter	raytkOP	filter	filter/extend	raytk.operators.filter.extend	0	
+fieldExpr	/raytk/operators/filter/fieldExpr	/raytk/operators/filter	raytkOP	filter	filter/fieldExpr	raytk.operators.filter.fieldExpr	5	
+flip	/raytk/operators/filter/flip	/raytk/operators/filter	raytkOP	filter	filter/flip	raytk.operators.filter.flip	1	
 fold	/raytk/operators/filter/fold	/raytk/operators/filter	raytkOP	filter	filter/fold	raytk.operators.filter.fold	0	
 invert	/raytk/operators/filter/invert	/raytk/operators/filter	raytkOP	filter	filter/invert	raytk.operators.filter.invert	2	
-iteratedTransform	/raytk/operators/filter/iteratedTransform	/raytk/operators/filter	raytkOP	filter	filter/iteratedTransform	raytk.operators.filter.iteratedTransform	4	
+iteratedTransform	/raytk/operators/filter/iteratedTransform	/raytk/operators/filter	raytkOP	filter	filter/iteratedTransform	raytk.operators.filter.iteratedTransform	5	
 knife	/raytk/operators/filter/knife	/raytk/operators/filter	raytkOP	filter	filter/knife	raytk.operators.filter.knife	3	
 limitField	/raytk/operators/filter/limitField	/raytk/operators/filter	raytkOP	filter	filter/limitField	raytk.operators.filter.limitField	3	
 magnet	/raytk/operators/filter/magnet	/raytk/operators/filter	raytkOP	filter	filter/magnet	raytk.operators.filter.magnet	0	
 mirrorOctant	/raytk/operators/filter/mirrorOctant	/raytk/operators/filter	raytkOP	filter	filter/mirrorOctant	raytk.operators.filter.mirrorOctant	2	
-modulo1D	/raytk/operators/filter/modulo1D	/raytk/operators/filter	raytkOP	filter	filter/modulo1D	raytk.operators.filter.modulo1D	5	
+modulo1D	/raytk/operators/filter/modulo1D	/raytk/operators/filter	raytkOP	filter	filter/modulo1D	raytk.operators.filter.modulo1D	6	
 modulo2D	/raytk/operators/filter/modulo2D	/raytk/operators/filter	raytkOP	filter	filter/modulo2D	raytk.operators.filter.modulo2D	2	
 modulo3D	/raytk/operators/filter/modulo3D	/raytk/operators/filter	raytkOP	filter	filter/modulo3D	raytk.operators.filter.modulo3D	3	
-moduloPolar	/raytk/operators/filter/moduloPolar	/raytk/operators/filter	raytkOP	filter	filter/moduloPolar	raytk.operators.filter.moduloPolar	3	
+moduloDistance	/raytk/operators/filter/moduloDistance	/raytk/operators/filter	raytkOP	filter	filter/moduloDistance	raytk.operators.filter.moduloDistance	1	beta
+moduloPolar	/raytk/operators/filter/moduloPolar	/raytk/operators/filter	raytkOP	filter	filter/moduloPolar	raytk.operators.filter.moduloPolar	4	
 onion	/raytk/operators/filter/onion	/raytk/operators/filter	raytkOP	filter	filter/onion	raytk.operators.filter.onion	2	
 quantizeCoords	/raytk/operators/filter/quantizeCoords	/raytk/operators/filter	raytkOP	filter	filter/quantizeCoords	raytk.operators.filter.quantizeCoords	2	
 quantizeValue	/raytk/operators/filter/quantizeValue	/raytk/operators/filter	raytkOP	filter	filter/quantizeValue	raytk.operators.filter.quantizeValue	3	
-radialClone	/raytk/operators/filter/radialClone	/raytk/operators/filter	raytkOP	filter	filter/radialClone	raytk.operators.filter.radialClone	2	
-reflect	/raytk/operators/filter/reflect	/raytk/operators/filter	raytkOP	filter	filter/reflect	raytk.operators.filter.reflect	4	
+radialClone	/raytk/operators/filter/radialClone	/raytk/operators/filter	raytkOP	filter	filter/radialClone	raytk.operators.filter.radialClone	3	
+reflect	/raytk/operators/filter/reflect	/raytk/operators/filter	raytkOP	filter	filter/reflect	raytk.operators.filter.reflect	5	
 reorderCoords	/raytk/operators/filter/reorderCoords	/raytk/operators/filter	raytkOP	filter	filter/reorderCoords	raytk.operators.filter.reorderCoords	0	
-rescaleField	/raytk/operators/filter/rescaleField	/raytk/operators/filter	raytkOP	filter	filter/rescaleField	raytk.operators.filter.rescaleField	6	
-rotate	/raytk/operators/filter/rotate	/raytk/operators/filter	raytkOP	filter	filter/rotate	raytk.operators.filter.rotate	6	
+rescaleField	/raytk/operators/filter/rescaleField	/raytk/operators/filter	raytkOP	filter	filter/rescaleField	raytk.operators.filter.rescaleField	7	
+rotate	/raytk/operators/filter/rotate	/raytk/operators/filter	raytkOP	filter	filter/rotate	raytk.operators.filter.rotate	7	
 round	/raytk/operators/filter/round	/raytk/operators/filter	raytkOP	filter	filter/round	raytk.operators.filter.round	3	
 scale	/raytk/operators/filter/scale	/raytk/operators/filter	raytkOP	filter	filter/scale	raytk.operators.filter.scale	6	
-slice	/raytk/operators/filter/slice	/raytk/operators/filter	raytkOP	filter	filter/slice	raytk.operators.filter.slice	0	
-transform	/raytk/operators/filter/transform	/raytk/operators/filter	raytkOP	filter	filter/transform	raytk.operators.filter.transform	2	
+slice	/raytk/operators/filter/slice	/raytk/operators/filter	raytkOP	filter	filter/slice	raytk.operators.filter.slice	1	
+transform	/raytk/operators/filter/transform	/raytk/operators/filter	raytkOP	filter	filter/transform	raytk.operators.filter.transform	3	
 translate	/raytk/operators/filter/translate	/raytk/operators/filter	raytkOP	filter	filter/translate	raytk.operators.filter.translate	4	
 twist	/raytk/operators/filter/twist	/raytk/operators/filter	raytkOP	filter	filter/twist	raytk.operators.filter.twist	0	
 addFn	/raytk/operators/function/addFn	/raytk/operators/function	raytkOP	function	function/addFn	raytk.operators.function.addFn	0	
@@ -90,9 +95,10 @@ powerCurveFn	/raytk/operators/function/powerCurveFn	/raytk/operators/function	ra
 sincCurveFn	/raytk/operators/function/sincCurveFn	/raytk/operators/function	raytkOP	function	function/sincCurveFn	raytk.operators.function.sincCurveFn	0	
 stepFn	/raytk/operators/function/stepFn	/raytk/operators/function	raytkOP	function	function/stepFn	raytk.operators.function.stepFn	0	
 waveFn	/raytk/operators/function/waveFn	/raytk/operators/function	raytkOP	function	function/waveFn	raytk.operators.function.waveFn	0	
+bendRay	/raytk/operators/light/bendRay	/raytk/operators/light	raytkOP	light	light/bendRay	raytk.operators.light.bendRay	0	alpha
 hardShadow	/raytk/operators/light/hardShadow	/raytk/operators/light	raytkOP	light	light/hardShadow	raytk.operators.light.hardShadow	2	
-pointLight	/raytk/operators/light/pointLight	/raytk/operators/light	raytkOP	light	light/pointLight	raytk.operators.light.pointLight	2	
-softShadow	/raytk/operators/light/softShadow	/raytk/operators/light	raytkOP	light	light/softShadow	raytk.operators.light.softShadow	3	
+pointLight	/raytk/operators/light/pointLight	/raytk/operators/light	raytkOP	light	light/pointLight	raytk.operators.light.pointLight	3	
+softShadow	/raytk/operators/light/softShadow	/raytk/operators/light	raytkOP	light	light/softShadow	raytk.operators.light.softShadow	4	
 basicMat	/raytk/operators/material/basicMat	/raytk/operators/material	raytkOP	material	material/basicMat	raytk.operators.material.basicMat	7	
 checkerboardMat	/raytk/operators/material/checkerboardMat	/raytk/operators/material	raytkOP	material	material/checkerboardMat	raytk.operators.material.checkerboardMat	2	
 fieldMat	/raytk/operators/material/fieldMat	/raytk/operators/material	raytkOP	material	material/fieldMat	raytk.operators.material.fieldMat	1	
@@ -100,14 +106,15 @@ phongMat	/raytk/operators/material/phongMat	/raytk/operators/material	raytkOP	ma
 sampledPointMat	/raytk/operators/material/sampledPointMat	/raytk/operators/material	raytkOP	material	material/sampledPointMat	raytk.operators.material.sampledPointMat	4	
 customFilter	/raytk/operators/misc/customFilter	/raytk/operators/misc	raytkOP	misc	misc/customFilter	raytk.operators.misc.customFilter	3	
 customGen	/raytk/operators/misc/customGen	/raytk/operators/misc	raytkOP	misc	misc/customGen	raytk.operators.misc.customGen	4	
-customRender	/raytk/operators/output/customRender	/raytk/operators/output	raytkOP raytkOutput	output	output/customRender	raytk.operators.output.customRender	3	beta
+customRender	/raytk/operators/output/customRender	/raytk/operators/output	raytkOP raytkOutput	output	output/customRender	raytk.operators.output.customRender	4	alpha
+fieldRender	/raytk/operators/output/fieldRender	/raytk/operators/output	raytkComp	output	output/fieldRender	raytk.operators.output.fieldRender	2	alpha
 functionGraphRender	/raytk/operators/output/functionGraphRender	/raytk/operators/output	raytkOP raytkOutput	output	output/functionGraphRender	raytk.operators.output.functionGraphRender	6	
-pointMapRender	/raytk/operators/output/pointMapRender	/raytk/operators/output	raytkOP raytkOutput	output	output/pointMapRender	raytk.operators.output.pointMapRender	16	
-raymarchRender3D	/raytk/operators/output/raymarchRender3D	/raytk/operators/output	raytkOP raytkOutput	output	output/raymarchRender3D	raytk.operators.output.raymarchRender3D	41	
+pointMapRender	/raytk/operators/output/pointMapRender	/raytk/operators/output	raytkOP raytkOutput	output	output/pointMapRender	raytk.operators.output.pointMapRender	18	
+raymarchRender3D	/raytk/operators/output/raymarchRender3D	/raytk/operators/output	raytkOP raytkOutput	output	output/raymarchRender3D	raytk.operators.output.raymarchRender3D	46	
 render2D	/raytk/operators/output/render2D	/raytk/operators/output	raytkOP raytkOutput	output	output/render2D	raytk.operators.output.render2D	17	
 renderSelect	/raytk/operators/output/renderSelect	/raytk/operators/output	raytkComp	output	output/renderSelect	raytk.operators.output.renderSelect	0	
-depthMap	/raytk/operators/post/depthMap	/raytk/operators/post	raytkComp	post	post/depthMap	raytk.operators.post.depthMap	2	
-worldPosMap	/raytk/operators/post/worldPosMap	/raytk/operators/post	raytkComp	post	post/worldPosMap	raytk.operators.post.worldPosMap	0	
+depthMap	/raytk/operators/post/depthMap	/raytk/operators/post	raytkComp	post	post/depthMap	raytk.operators.post.depthMap	3	
+worldPosMap	/raytk/operators/post/worldPosMap	/raytk/operators/post	raytkComp	post	post/worldPosMap	raytk.operators.post.worldPosMap	1	
 amazingSurfaceSdf	/raytk/operators/sdf/amazingSurfaceSdf	/raytk/operators/sdf	raytkOP	sdf	sdf/amazingSurfaceSdf	raytk.operators.sdf.amazingSurfaceSdf	0	
 apollonianSdf	/raytk/operators/sdf/apollonianSdf	/raytk/operators/sdf	raytkOP	sdf	sdf/apollonianSdf	raytk.operators.sdf.apollonianSdf	4	
 boxFrameSdf	/raytk/operators/sdf/boxFrameSdf	/raytk/operators/sdf	raytkOP	sdf	sdf/boxFrameSdf	raytk.operators.sdf.boxFrameSdf	3	
@@ -118,10 +125,10 @@ crossSdf	/raytk/operators/sdf/crossSdf	/raytk/operators/sdf	raytkOP	sdf	sdf/cros
 cylinderSdf	/raytk/operators/sdf/cylinderSdf	/raytk/operators/sdf	raytkOP	sdf	sdf/cylinderSdf	raytk.operators.sdf.cylinderSdf	3	
 discSdf	/raytk/operators/sdf/discSdf	/raytk/operators/sdf	raytkOP	sdf	sdf/discSdf	raytk.operators.sdf.discSdf	0	
 dodecahedronFractalSdf	/raytk/operators/sdf/dodecahedronFractalSdf	/raytk/operators/sdf	raytkOP	sdf	sdf/dodecahedronFractalSdf	raytk.operators.sdf.dodecahedronFractalSdf	0	beta
-generalizedPolyhedronSdf	/raytk/operators/sdf/generalizedPolyhedronSdf	/raytk/operators/sdf	raytkOP	sdf	sdf/generalizedPolyhedronSdf	raytk.operators.sdf.generalizedPolyhedronSdf	0	
+generalizedPolyhedronSdf	/raytk/operators/sdf/generalizedPolyhedronSdf	/raytk/operators/sdf	raytkOP	sdf	sdf/generalizedPolyhedronSdf	raytk.operators.sdf.generalizedPolyhedronSdf	1	
 geodesicSdf	/raytk/operators/sdf/geodesicSdf	/raytk/operators/sdf	raytkOP	sdf	sdf/geodesicSdf	raytk.operators.sdf.geodesicSdf	1	
-gridSdf	/raytk/operators/sdf/gridSdf	/raytk/operators/sdf	raytkOP	sdf	sdf/gridSdf	raytk.operators.sdf.gridSdf	0	
-gyroidSdf	/raytk/operators/sdf/gyroidSdf	/raytk/operators/sdf	raytkOP	sdf	sdf/gyroidSdf	raytk.operators.sdf.gyroidSdf	0	
+gridSdf	/raytk/operators/sdf/gridSdf	/raytk/operators/sdf	raytkOP	sdf	sdf/gridSdf	raytk.operators.sdf.gridSdf	1	
+gyroidSdf	/raytk/operators/sdf/gyroidSdf	/raytk/operators/sdf	raytkOP	sdf	sdf/gyroidSdf	raytk.operators.sdf.gyroidSdf	1	
 juliaSdf	/raytk/operators/sdf/juliaSdf	/raytk/operators/sdf	raytkOP	sdf	sdf/juliaSdf	raytk.operators.sdf.juliaSdf	0	
 kaliGeneratorSdf	/raytk/operators/sdf/kaliGeneratorSdf	/raytk/operators/sdf	raytkOP	sdf	sdf/kaliGeneratorSdf	raytk.operators.sdf.kaliGeneratorSdf	1	
 linkSdf	/raytk/operators/sdf/linkSdf	/raytk/operators/sdf	raytkOP	sdf	sdf/linkSdf	raytk.operators.sdf.linkSdf	3	
@@ -131,14 +138,14 @@ mobiusRingSdf	/raytk/operators/sdf/mobiusRingSdf	/raytk/operators/sdf	raytkOP	sd
 octahedronSdf	/raytk/operators/sdf/octahedronSdf	/raytk/operators/sdf	raytkOP	sdf	sdf/octahedronSdf	raytk.operators.sdf.octahedronSdf	0	
 petalSdf	/raytk/operators/sdf/petalSdf	/raytk/operators/sdf	raytkOP	sdf	sdf/petalSdf	raytk.operators.sdf.petalSdf	0	
 planeSdf	/raytk/operators/sdf/planeSdf	/raytk/operators/sdf	raytkOP	sdf	sdf/planeSdf	raytk.operators.sdf.planeSdf	4	
-prismSdf	/raytk/operators/sdf/prismSdf	/raytk/operators/sdf	raytkOP	sdf	sdf/prismSdf	raytk.operators.sdf.prismSdf	1	
-pyramidSdf	/raytk/operators/sdf/pyramidSdf	/raytk/operators/sdf	raytkOP	sdf	sdf/pyramidSdf	raytk.operators.sdf.pyramidSdf	0	
-sierpinskiTetrahedronSdf	/raytk/operators/sdf/sierpinskiTetrahedronSdf	/raytk/operators/sdf	raytkOP	sdf	sdf/sierpinskiTetrahedronSdf	raytk.operators.sdf.sierpinskiTetrahedronSdf	2	beta
+prismSdf	/raytk/operators/sdf/prismSdf	/raytk/operators/sdf	raytkOP	sdf	sdf/prismSdf	raytk.operators.sdf.prismSdf	2	
+pyramidSdf	/raytk/operators/sdf/pyramidSdf	/raytk/operators/sdf	raytkOP	sdf	sdf/pyramidSdf	raytk.operators.sdf.pyramidSdf	1	
+sierpinskiTetrahedronSdf	/raytk/operators/sdf/sierpinskiTetrahedronSdf	/raytk/operators/sdf	raytkOP	sdf	sdf/sierpinskiTetrahedronSdf	raytk.operators.sdf.sierpinskiTetrahedronSdf	3	alpha
 solidAngleSdf	/raytk/operators/sdf/solidAngleSdf	/raytk/operators/sdf	raytkOP	sdf	sdf/solidAngleSdf	raytk.operators.sdf.solidAngleSdf	0	
 sphereSdf	/raytk/operators/sdf/sphereSdf	/raytk/operators/sdf	raytkOP	sdf	sdf/sphereSdf	raytk.operators.sdf.sphereSdf	3	
 spiralSdf	/raytk/operators/sdf/spiralSdf	/raytk/operators/sdf	raytkOP	sdf	sdf/spiralSdf	raytk.operators.sdf.spiralSdf	0	
 tetrahedronSdf	/raytk/operators/sdf/tetrahedronSdf	/raytk/operators/sdf	raytkOP	sdf	sdf/tetrahedronSdf	raytk.operators.sdf.tetrahedronSdf	2	
-torusSdf	/raytk/operators/sdf/torusSdf	/raytk/operators/sdf	raytkOP	sdf	sdf/torusSdf	raytk.operators.sdf.torusSdf	4	
+torusSdf	/raytk/operators/sdf/torusSdf	/raytk/operators/sdf	raytkOP	sdf	sdf/torusSdf	raytk.operators.sdf.torusSdf	5	
 circleSdf	/raytk/operators/sdf2d/circleSdf	/raytk/operators/sdf2d	raytkOP	sdf2d	sdf2d/circleSdf	raytk.operators.sdf2d.circleSdf	2	
 crossSdf2d	/raytk/operators/sdf2d/crossSdf2d	/raytk/operators/sdf2d	raytkOP	sdf2d	sdf2d/crossSdf2d	raytk.operators.sdf2d.crossSdf2d	0	
 parabolaSdf2d	/raytk/operators/sdf2d/parabolaSdf2d	/raytk/operators/sdf2d	raytkOP	sdf2d	sdf2d/parabolaSdf2d	raytk.operators.sdf2d.parabolaSdf2d	0	
@@ -149,7 +156,7 @@ rhombusSdf2d	/raytk/operators/sdf2d/rhombusSdf2d	/raytk/operators/sdf2d	raytkOP	
 roundedRectangleSdf2d	/raytk/operators/sdf2d/roundedRectangleSdf2d	/raytk/operators/sdf2d	raytkOP	sdf2d	sdf2d/roundedRectangleSdf2d	raytk.operators.sdf2d.roundedRectangleSdf2d	1	
 starSdf2d	/raytk/operators/sdf2d/starSdf2d	/raytk/operators/sdf2d	raytkOP	sdf2d	sdf2d/starSdf2d	raytk.operators.sdf2d.starSdf2d	0	
 superQuadSdf2d	/raytk/operators/sdf2d/superQuadSdf2d	/raytk/operators/sdf2d	raytkOP	sdf2d	sdf2d/superQuadSdf2d	raytk.operators.sdf2d.superQuadSdf2d	0	
-triangleSdf2d	/raytk/operators/sdf2d/triangleSdf2d	/raytk/operators/sdf2d	raytkOP	sdf2d	sdf2d/triangleSdf2d	raytk.operators.sdf2d.triangleSdf2d	0	
+triangleSdf2d	/raytk/operators/sdf2d/triangleSdf2d	/raytk/operators/sdf2d	raytkOP	sdf2d	sdf2d/triangleSdf2d	raytk.operators.sdf2d.triangleSdf2d	1	
 vesicaSdf2d	/raytk/operators/sdf2d/vesicaSdf2d	/raytk/operators/sdf2d	raytkOP	sdf2d	sdf2d/vesicaSdf2d	raytk.operators.sdf2d.vesicaSdf2d	0	
 extractDebugValues	/raytk/operators/utility/extractDebugValues	/raytk/operators/utility	raytkOP	utility	utility/extractDebugValues	raytk.operators.utility.extractDebugValues	0	
 extractIteration	/raytk/operators/utility/extractIteration	/raytk/operators/utility	raytkOP	utility	utility/extractIteration	raytk.operators.utility.extractIteration	2	

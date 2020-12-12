@@ -1,4 +1,15 @@
+#ifdef THIS_HAS_INPUT_1
+
 #define thismap inputOp1
+
+#else
+
+Sdf thismap(vec3 p, Context ctx) {
+	return createSdf(RAYTK_MAX_DIST);
+}
+
+#endif
+
 #ifdef THIS_USE_CAM_FUNC
 
 Ray getViewRay(vec2 shift) {
@@ -39,4 +50,13 @@ float checkNearHit(float d) {
 	return smoothstep(RAYTK_SURF_DIST, THIS_Nearhitrange, d);
 }
 
+#endif
+
+#ifdef THIS_USE_RAYMOD_FUNC
+void modifyRay(inout Ray ray) {
+	RayContext rCtx;
+	rCtx.ray = ray;
+	ray = inputOp4(ray.pos, rCtx);
+//	ray.dir = normalize(ray.dir);
+}
 #endif

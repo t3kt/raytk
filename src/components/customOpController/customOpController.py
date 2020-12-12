@@ -84,7 +84,7 @@ class CustomOp:
 			host,
 			specs,
 			replace=True,
-			setValues=True,
+			setValues=False,
 			ignoreAttrErrors=True,
 			fixParNames=False,
 		)

@@ -1,0 +1,3 @@
+name	label
+scale	Scale
+color	Color

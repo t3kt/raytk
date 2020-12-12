@@ -1,0 +1,3 @@
+name	label	exprFull	exprInterval
+none	None	pModPolar(q, THIS_Repetitions)	pModPolarInterval(q, THIS_Repetitions, THIS_Limitlow, THIS_Limithigh)
+mirror	Mirror	pModPolarMirror(q, THIS_Repetitions)	pModPolarIntervalMirror(q, THIS_Repetitions, THIS_Limitlow, THIS_Limithigh)

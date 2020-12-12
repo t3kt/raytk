@@ -4,7 +4,11 @@ import re
 if False:
 	# noinspection PyUnresolvedReferences
 	from _stubs import *
-	from typing import Dict, List
+	from typing import Union
+	from raytkUtil import CompDefParsT
+
+def parentPar() -> 'Union[ParCollection, CompDefParsT]':
+	return parent().par
 
 def buildName():
 	host = parent().par.Hostop.eval()
@@ -19,3 +23,10 @@ def buildName():
 	if name.startswith('_'):
 		name = 'o_' + name
 	return 'RTK_' + name
+
+def inspect():
+	for o in parentPar().Rops.evalOPs():
+		par = o.par['Inspect']
+		if par is not None:
+			par.pulse()
+			return

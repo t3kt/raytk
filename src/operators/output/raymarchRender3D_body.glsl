@@ -31,13 +31,17 @@ Sdf castRay(Ray ray, float maxDist) {
 	float nearHitLimit = 0.02;
 	#endif
 	for (i = 0; i < RAYTK_MAX_STEPS; i++) {
-		vec3 p = ray.pos + ray.dir * dist;
-		if (!checkLimit(p)) {
+		#ifdef THIS_USE_RAYMOD_FUNC
+		modifyRay(ray);
+		#endif
+		if (!checkLimit(ray.pos)) {
 			res = createSdf(RAYTK_MAX_DIST);
 			res.material = -1;
 			return res;
 		}
-		res = map(p);
+		res = map(ray.pos);
+		dist += res.x;
+		ray.pos += ray.dir * res.x;
 		#ifdef RAYTK_NEAR_HITS_IN_SDF
 		float nearHitAmount = checkNearHit(res.x);
 		if (nearHitLimit > 0.) {
@@ -45,7 +49,6 @@ Sdf castRay(Ray ray, float maxDist) {
 			nearHit += nearHitAmount;
 		}
 		#endif
-		dist += res.x;
 		if (dist < RAYTK_SURF_DIST) {
 			#ifdef RAYTK_STEPS_IN_SDF
 			res.steps = i + 1;
@@ -192,14 +195,10 @@ Ray getViewRay(vec2 shift) {
 	float screenWidth = 2*(aspect);
 	float distanceToScreen = (screenWidth/2)/tan(uCamFov/2)*1;
 
-	vec3 ro = pos*1;
-	ro.x +=0.0;
-	ro.y +=0.;
-
 	vec3 ta = pos+vec3(0, 0, -1);//camLookAt;
 
 	// camera matrix
-	vec3 ww = normalize(ta - ro);
+	vec3 ww = normalize(ta - pos);
 	vec3 uu = normalize(cross(ww, vec3(0.0, 1, 0.0)));
 	vec3 vv = normalize(cross(uu, ww));
 	// create view ray
