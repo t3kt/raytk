@@ -6,9 +6,10 @@ if False:
 	from _stubs import *
 	from typing import Dict, List, Union
 	from raytkUtil import OpDefParsT
+	from _stubs.PopDialogExt import PopDialogExt
 
 
-def parentPar() -> 'OpDefParsT':
+def parentPar() -> 'Union[ParCollection, OpDefParsT]':
 	return parent().par
 
 def buildName():
@@ -238,3 +239,17 @@ def prepareMacroTable(dat: 'scriptDAT', typeTable: 'DAT', inputTable: 'DAT', mac
 			])
 		else:
 			dat.appendRows(macros.rows())
+
+def inspect(rop: 'COMP'):
+	if hasattr(op, 'raytk'):
+		inspector = op.raytk.op('tools/inspector')
+		if inspector and hasattr(inspector, 'Inspect'):
+			inspector.Inspect(rop)
+			return
+	# noinspection PyUnresolvedReferences
+	dialog = op.TDResources.op('popDialog')  # type: PopDialogExt
+	dialog.Open(
+		title='Warning',
+		text='The RayTK inspector is only available when the main toolkit tox has been loaded.',
+		escOnClickAway=True,
+	)

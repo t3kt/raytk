@@ -107,7 +107,7 @@ sampledPointMat	/raytk/operators/material/sampledPointMat	/raytk/operators/mater
 customFilter	/raytk/operators/misc/customFilter	/raytk/operators/misc	raytkOP	misc	misc/customFilter	raytk.operators.misc.customFilter	3	
 customGen	/raytk/operators/misc/customGen	/raytk/operators/misc	raytkOP	misc	misc/customGen	raytk.operators.misc.customGen	4	
 customRender	/raytk/operators/output/customRender	/raytk/operators/output	raytkOP raytkOutput	output	output/customRender	raytk.operators.output.customRender	4	alpha
-fieldRender	/raytk/operators/output/fieldRender	/raytk/operators/output	raytkComp	output	output/fieldRender	raytk.operators.output.fieldRender	1	alpha
+fieldRender	/raytk/operators/output/fieldRender	/raytk/operators/output	raytkComp	output	output/fieldRender	raytk.operators.output.fieldRender	2	alpha
 functionGraphRender	/raytk/operators/output/functionGraphRender	/raytk/operators/output	raytkOP raytkOutput	output	output/functionGraphRender	raytk.operators.output.functionGraphRender	6	
 pointMapRender	/raytk/operators/output/pointMapRender	/raytk/operators/output	raytkOP raytkOutput	output	output/pointMapRender	raytk.operators.output.pointMapRender	18	
 raymarchRender3D	/raytk/operators/output/raymarchRender3D	/raytk/operators/output	raytkOP raytkOutput	output	output/raymarchRender3D	raytk.operators.output.raymarchRender3D	46	

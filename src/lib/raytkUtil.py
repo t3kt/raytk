@@ -68,10 +68,11 @@ class _OpMetaPars:
 	Raytkopversion: 'IntParamT'
 	Raytkversion: 'StrParamT'
 
-class _CompDefPars(_OpMetaPars):
+class CompDefParsT(_OpMetaPars):
 	Help: 'DatParamT'
+	Rops: 'StrParamT'
 
-class OpDefParsT(_CompDefPars):
+class OpDefParsT(_OpMetaPars):
 	Hostop: 'OPParamT'
 	Name: 'StrParamT'
 	Enable: 'BoolParamT'
@@ -81,11 +82,12 @@ class OpDefParsT(_CompDefPars):
 	Specialparams: 'StrParamT'
 	Callbacks: 'DatParamT'
 	Librarynames: 'StrParamT'
+	Help: 'DatParamT'
 
 class ROPInfo:
 	rop: 'Optional[Union[OP, COMP]]'
 	opDef: 'Optional[COMP]'
-	opDefPar: 'Optional[OpDefParsT]'
+	opDefPar: 'Optional[Union[OpDefParsT, CompDefParsT]]'
 
 	def __init__(self, o: 'Union[OP, str, Cell]'):
 		o = op(o)
@@ -186,6 +188,12 @@ class ROPInfo:
 		if not t:
 			return None
 		return t.rsplit('.', 1)[-1]
+
+	@property
+	def subROPs(self):
+		if not self or not self.isRComp or not self.opDefPar['Rops']:
+			return []
+		return self.opDefPar.Rops.evalOPs()
 
 	@property
 	def helpDAT(self) -> 'Optional[DAT]':

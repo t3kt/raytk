@@ -371,7 +371,7 @@ class Par:
 	def evalExpression(self) -> _ValueT: pass
 	def evalExport(self) -> _ValueT: pass
 	def evalOPs(self) -> '_T.List[_AnyOpT]': pass
-	def pulse(self, value, frames=0, seconds=0) -> None: pass
+	def pulse(self, value=None, frames=0, seconds=0) -> None: pass
 	def destroy(self) -> None: pass
 
 	def __int__(self) -> int: pass

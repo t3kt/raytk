@@ -92,7 +92,7 @@ class Tools:
 			if ropInfo.opDefPar and not ropInfo.opDefPar.Enable.expr:
 				ropInfo.opDefPar.Enable.expr = "op('..').par.Enable"
 
-		if ropInfo.isROP:
+		if ropInfo.isROP or ropInfo.subROPs:
 			inspectPar = rop.par['Inspect']
 			if inspectPar is None:
 				inspectPar = page.appendPulse('Inspect')[0]
