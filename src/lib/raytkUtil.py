@@ -83,6 +83,7 @@ class OpDefParsT(_OpMetaPars):
 	Callbacks: 'DatParamT'
 	Librarynames: 'StrParamT'
 	Help: 'DatParamT'
+	Disableinspect: 'BoolParamT'
 
 class ROPInfo:
 	rop: 'Optional[Union[OP, COMP]]'
@@ -224,8 +225,20 @@ class ROPInfo:
 		return self.rop.par.externaltox.eval() or None
 
 	@property
+	def supportsInspect(self):
+		if not self:
+			return False
+		if self.isROP:
+			return not self.opDefPar.Disableinspect
+		for sub in self.subROPs:
+			subInfo = ROPInfo(sub)
+			if subInfo.supportsInspect:
+				return True
+		return False
+
+	@property
 	def callbacks(self) -> 'Optional[MOD]':
-		if not self.opDefPar or not self.opDefPar['Callbacks']:
+		if not self.opDefPar or not self.opDefPar.Callbacks:
 			return None
 		dat = self.opDefPar.Callbacks.eval()
 		if not dat:

@@ -1,9 +1,9 @@
 name	path	parentPath	tags	category	fullName	opType	opVersion	status
-basicCamera	/raytk/operators/camera/basicCamera	/raytk/operators/camera	raytkOP	camera	camera/basicCamera	raytk.operators.camera.basicCamera	0	
-fisheyeCamera	/raytk/operators/camera/fisheyeCamera	/raytk/operators/camera	raytkOP	camera	camera/fisheyeCamera	raytk.operators.camera.fisheyeCamera	1	
-lookAtCamera	/raytk/operators/camera/lookAtCamera	/raytk/operators/camera	raytkOP	camera	camera/lookAtCamera	raytk.operators.camera.lookAtCamera	2	
-orthoCamera	/raytk/operators/camera/orthoCamera	/raytk/operators/camera	raytkOP	camera	camera/orthoCamera	raytk.operators.camera.orthoCamera	2	
-splitCamera	/raytk/operators/camera/splitCamera	/raytk/operators/camera	raytkOP	camera	camera/splitCamera	raytk.operators.camera.splitCamera	2	
+basicCamera	/raytk/operators/camera/basicCamera	/raytk/operators/camera	raytkOP	camera	camera/basicCamera	raytk.operators.camera.basicCamera	1	
+fisheyeCamera	/raytk/operators/camera/fisheyeCamera	/raytk/operators/camera	raytkOP	camera	camera/fisheyeCamera	raytk.operators.camera.fisheyeCamera	2	
+lookAtCamera	/raytk/operators/camera/lookAtCamera	/raytk/operators/camera	raytkOP	camera	camera/lookAtCamera	raytk.operators.camera.lookAtCamera	3	
+orthoCamera	/raytk/operators/camera/orthoCamera	/raytk/operators/camera	raytkOP	camera	camera/orthoCamera	raytk.operators.camera.orthoCamera	3	
+splitCamera	/raytk/operators/camera/splitCamera	/raytk/operators/camera	raytkOP	camera	camera/splitCamera	raytk.operators.camera.splitCamera	3	
 blend	/raytk/operators/combine/blend	/raytk/operators/combine	raytkOP	combine	combine/blend	raytk.operators.combine.blend	3	
 boundLimit	/raytk/operators/combine/boundLimit	/raytk/operators/combine	raytkOP	combine	combine/boundLimit	raytk.operators.combine.boundLimit	1	alpha
 combine	/raytk/operators/combine/combine	/raytk/operators/combine	raytkOP	combine	combine/combine	raytk.operators.combine.combine	4	
