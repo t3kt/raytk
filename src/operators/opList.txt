@@ -6,7 +6,7 @@ orthoCamera	/raytk/operators/camera/orthoCamera	/raytk/operators/camera	raytkOP	
 splitCamera	/raytk/operators/camera/splitCamera	/raytk/operators/camera	raytkOP	camera	camera/splitCamera	raytk.operators.camera.splitCamera	2	
 blend	/raytk/operators/combine/blend	/raytk/operators/combine	raytkOP	combine	combine/blend	raytk.operators.combine.blend	3	
 boundLimit	/raytk/operators/combine/boundLimit	/raytk/operators/combine	raytkOP	combine	combine/boundLimit	raytk.operators.combine.boundLimit	1	alpha
-combine	/raytk/operators/combine/combine	/raytk/operators/combine	raytkOP	combine	combine/combine	raytk.operators.combine.combine	4	beta
+combine	/raytk/operators/combine/combine	/raytk/operators/combine	raytkOP	combine	combine/combine	raytk.operators.combine.combine	4	
 combineChamfer	/raytk/operators/combine/combineChamfer	/raytk/operators/combine	raytkOP	combine	combine/combineChamfer	raytk.operators.combine.combineChamfer	1	
 combineColumns	/raytk/operators/combine/combineColumns	/raytk/operators/combine	raytkOP	combine	combine/combineColumns	raytk.operators.combine.combineColumns	2	
 combineFields	/raytk/operators/combine/combineFields	/raytk/operators/combine	raytkOP	combine	combine/combineFields	raytk.operators.combine.combineFields	5	

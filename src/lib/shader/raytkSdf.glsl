@@ -52,10 +52,6 @@ Sdf opSmoothIntersect(Sdf res1, Sdf res2, float k) {
 	res.x = mix(res2.x, res1.x, h) + k*h*(1.0-h);
 	blendInSdf(res1, res2, h);
 	return res;
-//	float h = smoothBlendRatio(res1.x, res2.x, k);
-//	res1.x = mix( res2.x, res1.x, h ) - k*h*(1.0-h);
-//	blendInSdf(res1, res2, 1. - h);
-//	return res1;
 }
 
 Sdf opSmoothUnionM(Sdf res1, Sdf res2, float k) {

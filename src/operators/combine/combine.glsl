@@ -9,11 +9,7 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 	#elif defined(THIS_GET_RADIUS)
 			float h = smoothBlendRatio(res1.x, res2.x, r);
 			res1.x = THIS_EXPR;
-		#ifdef THIS_REVERSE_BLEND
 			blendInSdf(res1, res2, 1.0 - h);
-		#else
-			blendInSdf(res1, res2, h);
-		#endif
 	#else
 		res1.x = THIS_EXPR;
 	#endif
