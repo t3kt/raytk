@@ -1,5 +1,11 @@
 // raytkSdf.glsl
 
+void swapDist(inout Sdf res1, inout Sdf res2) {
+	float d = res1.x;
+	res1.x = res2.x;
+	res2.x = d;
+}
+
 Sdf opSimpleUnion(Sdf res1, Sdf res2){
 	return (res1.x<res2.x)? res1:res2;
 }
@@ -38,6 +44,18 @@ float opSmoothDiff(float res1, float res2, float k) {
 float opSmoothIntersect(float res1, float res2, float k) {
 	float h = smoothBlendRatio(res1, res2, k);
 	return mix(res2, res1, h) + k*h*(1.0-h);
+}
+
+Sdf opSmoothIntersect(Sdf res1, Sdf res2, float k) {
+	Sdf res = res1;
+	float h = clamp(0.5 - 0.5*(res2.x-res1.x)/k, 0., 1.);
+	res.x = mix(res2.x, res1.x, h) + k*h*(1.0-h);
+	blendInSdf(res1, res2, h);
+	return res;
+//	float h = smoothBlendRatio(res1.x, res2.x, k);
+//	res1.x = mix( res2.x, res1.x, h ) - k*h*(1.0-h);
+//	blendInSdf(res1, res2, 1. - h);
+//	return res1;
 }
 
 Sdf opSmoothUnionM(Sdf res1, Sdf res2, float k) {
