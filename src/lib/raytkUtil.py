@@ -676,9 +676,7 @@ def focusCustomParameterPage(o: 'COMP', page: 'Union[str, int, Page]'):
 	elif isinstance(page, Page):
 		customIndex = page.index
 	if customIndex is not None:
-		# sometimes pages exist but are empty (such the "Base" page on baseCOMP), so skip those, but
-		# add the offset of the number of other built-in pages, because the hidden ones don't seem to count
-		customIndex += len([pg for pg in o.pages if pg.parTuplets and not pg.isCustom])
+		customIndex += len(o.pages)
 		o.par.stdswitcher1 = customIndex
 		o.cook(force=True)
 
