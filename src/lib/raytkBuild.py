@@ -1,7 +1,7 @@
 from pathlib import Path
 from typing import Callable
 from raytkUtil import detachTox, CategoryInfo, ROPInfo, getToolkit, stripFirstMarkdownHeader
-from raytkDocs import ROPHelp
+from raytkDocs import CategoryHelp, ROPHelp
 
 # noinspection PyUnreachableCode
 if False:
@@ -119,16 +119,7 @@ class DocProcessor:
 		docText = ropHelp.formatAsMarkdown()
 		dat.clear()
 		dat.write(docText)
-		docText = f'''---
-layout: page
-title: {ropInfo.shortName}
-parent: {ropInfo.categoryName.capitalize()} Operators
-grand_parent: Operators
-permalink: /reference/operators/{ropInfo.categoryName}/{ropInfo.shortName}
----
-
-{docText}
-'''
+		docText = ropHelp.formatAsFullPage()
 		self._writeDocs(
 			Path(self.toolkit.relativePath(rop).replace('./', '') + '.md'),
 			docText)
@@ -158,32 +149,13 @@ permalink: /reference/operators/{ropInfo.categoryName}/{ropInfo.shortName}
 	def processOpCategory(self, categoryOp: 'COMP'):
 		self.context.log(f'Processing docs for category {categoryOp}')
 		categoryInfo = CategoryInfo(categoryOp)
+		catHelp = CategoryHelp.extractFromComp(categoryOp)
 		dat = categoryInfo.helpDAT
-		parts = [
-			f'# {categoryOp.name} Operators',
-			stripFirstMarkdownHeader(dat.text) if dat else '',
-			'\n'.join([
-				f'* [`{ropInfo.shortName}`]({ropInfo.shortName}/) - {_extractSummary(ropInfo.helpDAT)}'
-				for ropInfo in categoryInfo.operatorInfos
-			])
-		]
-		docText = '\n\n'.join(parts)
+		docText = catHelp.formatAsList()
 		if not dat:
 			dat = categoryOp.create(textDAT, 'help')
 		dat.text = docText
-		docText = f'''---
-layout: page
-title: {categoryInfo.categoryName.capitalize()} Operators
-parent: Operators
-has_children: true
-has_toc: false
-permalink: /reference/operators/{categoryInfo.categoryName}/
----
-
-# {categoryInfo.categoryName.capitalize()} Operators
-
-{stripFirstMarkdownHeader(docText)}
-'''
+		docText = catHelp.formatAsListPage()
 		self._writeDocs(
 			Path(self.toolkit.relativePath(categoryOp).replace('./', '') + '/index.md'),
 			docText)

@@ -39,6 +39,7 @@ class ROPParamHelp:
 
 @dataclass
 class ROPHelp:
+	ropInfo: Optional[ROPInfo] = None
 	name: Optional[str] = None
 	summary: Optional[str] = None
 	detail: Optional[str] = None
@@ -58,6 +59,7 @@ class ROPHelp:
 		]
 		parTuples.sort(key=lambda pt: (pt[0].page.index * 1000) + pt[0].order)
 		ropHelp = cls(
+			ropInfo=info,
 			name=info.shortName,
 			opType=info.opType,
 			category=info.categoryName,
@@ -94,8 +96,25 @@ class ROPHelp:
 			]
 		return _mergeMarkdownChunks(parts)
 
+	def formatAsFullPage(self):
+		ropInfo = self.ropInfo
+		docText = self.formatAsMarkdown()
+		docText = f'''---
+layout: page
+title: {ropInfo.shortName}
+parent: {ropInfo.categoryName.capitalize()} Operators
+grand_parent: Operators
+permalink: /reference/operators/{ropInfo.categoryName}/{ropInfo.shortName}
+---
+
+{docText}
+'''
+		return docText
+
+
 @dataclass
 class CategoryHelp:
+	catInfo: Optional[CategoryInfo] = None
 	name: Optional[str] = None
 	summary: Optional[str] = None
 	detail: Optional[str] = None
@@ -105,6 +124,7 @@ class CategoryHelp:
 	def extractFromComp(cls, comp: 'COMP'):
 		info = CategoryInfo(comp)
 		catHelp = cls(
+			info,
 			name=info.categoryName,
 		)
 		catHelp.summary, catHelp.detail = _extractHelpSummaryAndDetail(info.helpDAT)
@@ -123,6 +143,34 @@ class CategoryHelp:
 			for opHelp in self.operators
 		]
 		return _mergeMarkdownChunks(parts)
+
+	def formatAsList(self):
+		name = self.catInfo.categoryName
+		parts = [
+			f'# {name.capitalize()} Operators',
+			self.summary,
+			self.detail,
+			'\n'.join([
+				f'* [`{ropHelp.ropInfo.shortName}`]({ropHelp.ropInfo.shortName}/) - {ropHelp.summary or ""}'
+				for ropHelp in self.operators
+			])
+		]
+		return _mergeMarkdownChunks(parts)
+
+	def formatAsListPage(self):
+		name = self.catInfo.categoryName
+		parts = [
+			f'''---
+layout: page
+title: {name.capitalize()} Operators
+parent: Operators
+has_children: true
+has_toc: false
+permalink: /reference/operators/{name}/
+---''',
+			self.formatAsList(),
+		]
+		return _mergeMarkdownChunks(parts) + '\n'
 
 def _extractHelpSummaryAndDetail(dat: 'DAT') -> 'Tuple[str, str]':
 	docText = (dat.text if dat else '').strip()
