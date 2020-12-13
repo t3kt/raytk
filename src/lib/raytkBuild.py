@@ -1,7 +1,7 @@
 from pathlib import Path
 from typing import Callable
 from raytkUtil import detachTox, CategoryInfo, ROPInfo, getToolkit, stripFirstMarkdownHeader
-from raytkModel import CategoryHelp, ROPHelp
+from raytkDocs import ROPHelp
 
 # noinspection PyUnreachableCode
 if False:
