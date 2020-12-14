@@ -63,6 +63,19 @@ class BuildContext:
 		self.log(f'Reloading {comp.par.externaltox} for {comp}')
 		comp.par.reinitnet.pulse()
 
+	def safeDestroyOp(self, o: 'OP'):
+		if not o or not o.valid:
+			return
+		self.log(f'Removing {o}')
+		try:
+			o.destroy()
+		except Exception as e:
+			self.log(f'Ignoring error removing {o}: {e}')
+
+	def safeDestroyOps(self, os: 'List[OP]'):
+		for o in os:
+			self.safeDestroyOp(o)
+
 	@staticmethod
 	def queueAction(action: Callable, *args):
 		run(f'args[0](*(args[1:]))', action, *args, delayFrames=5, delayRef=root)

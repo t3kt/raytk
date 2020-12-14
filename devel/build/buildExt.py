@@ -78,19 +78,16 @@ class BuildManager:
 			self.detachAllFileSyncDats(toolkit)
 			self.queueMethodCall('runBuild_stage', stage + 1)
 		elif stage == 2:
-			self.updateLibraryInfo(toolkit)
-			self.queueMethodCall('runBuild_stage', stage + 1)
+			self.updateLibraryInfo(toolkit, thenRun='runBuild_stage', runArgs=[stage + 1])
 		elif stage == 3:
-			operators = toolkit.op('operators')
-			self.processOperators(operators, thenRun='runBuild_stage', runArgs=[stage + 1])
+			self.processOperators(toolkit.op('operators'), thenRun='runBuild_stage', runArgs=[stage + 1])
 		elif stage == 4:
 			self.processTools(toolkit.op('tools'), thenRun='runBuild_stage', runArgs=[stage + 1])
 		elif stage == 5:
 			self.lockBuildLockOps(toolkit)
 			self.queueMethodCall('runBuild_stage', stage + 1)
 		elif stage == 6:
-			components = toolkit.op('components')
-			self.processComponents(components, thenRun='runBuild_stage', runArgs=[stage + 1])
+			self.processComponents(toolkit.op('components'), thenRun='runBuild_stage', runArgs=[stage + 1])
 		elif stage == 7:
 			self.removeBuildExcludeOps(toolkit)
 			self.queueMethodCall('runBuild_stage', stage + 1)
@@ -125,9 +122,14 @@ class BuildManager:
 		toolkit.par.reloadbuiltin = True
 		focusCustomParameterPage(toolkit, 'RayTK')
 
-	def updateLibraryInfo(self, toolkit: 'COMP'):
+	def updateLibraryInfo(self, toolkit: 'COMP', thenRun: str = None, runArgs: list = None):
 		self.log('Updating library info')
 		toolkit.op('libraryInfo').par.Forcebuild.pulse()
+		libraryInfo = toolkit.op('libraryInfo')
+		self.context.runBuildScript(
+			libraryInfo.op('BUILD'),
+			thenRun=lambda: self.queueMethodCall(thenRun, *(runArgs or [])),
+			runArgs=[])
 
 	def processComponents(self, components: 'COMP', thenRun: str = None, runArgs: list = None):
 		self.log(f'Processing components {components}')
@@ -228,14 +230,7 @@ class BuildManager:
 	def removeBuildExcludeOps(self, comp: 'COMP'):
 		self.log(f'Removing build excluded ops from {comp}')
 		toRemove = list(comp.findChildren(tags=[RaytkTags.buildExclude.name]))
-		for o in toRemove:
-			if not o.valid:
-				continue
-			self.log(f'Removing {o}')
-			try:
-				o.destroy()
-			except:
-				self.log(f'Ignoring error destroying {o}')
+		self.context.safeDestroyOps(toRemove)
 
 	def lockBuildLockOps(self, comp: 'COMP'):
 		self.log(f'Locking build locked ops in {comp}')
