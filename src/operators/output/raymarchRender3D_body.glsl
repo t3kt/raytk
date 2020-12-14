@@ -315,10 +315,6 @@ void main()
 			sdfOut += vec4(res.x, res.material, 0, 1);
 			#endif
 			#endif
-	//		#ifdef OUTPUT_DEPTH
-		//	depthOut = TDOutputSwizzle(vec4(vec3(min(res.x, renderDepth)), 1));
-			//depthOut = TDOutputSwizzle(vec4(vec3(res.x)))
-	//		#endif
 			#if defined(OUTPUT_NEARHIT) && defined(RAYTK_NEAR_HITS_IN_SDF)
 			nearHitOut += TDOutputSwizzle(vec4(res.nearHitAmount, float(res.nearHitCount), 0, 1));
 			#endif
@@ -359,6 +355,9 @@ void main()
 	}
 	#endif
 	float aa = 1.0 / float(THIS_ANTI_ALIAS*THIS_ANTI_ALIAS);
+	#ifdef OUTPUT_DEPTH
+	depthOut *= aa;
+	#endif
 	#ifdef OUTPUT_RAYDIR
 	rayDirOut *= aa;
 	#endif
