@@ -76,6 +76,11 @@ class BuildContext:
 		for o in os:
 			self.safeDestroyOp(o)
 
+	def lockOps(self, os: 'List[OP]'):
+		for o in os:
+			self.log(f'Locking {o}')
+			o.lock = True
+
 	@staticmethod
 	def queueAction(action: Callable, *args):
 		run(f'args[0](*(args[1:]))', action, *args, delayFrames=5, delayRef=root)

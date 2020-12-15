@@ -164,11 +164,7 @@ class BuildManager:
 		comps = categoryInfo.operators
 		for o in comps:
 			if RaytkTags.alpha.isOn(o):
-				self.log(f'Removing alpha op: {o}')
-				try:
-					o.destroy()
-				except:
-					self.log(f'Error removing op: {o}')
+				self.context.safeDestroyOp(o)
 		comps = categoryInfo.operators
 		if self.docProcessor:
 			self.docProcessor.processOpCategory(category)
@@ -235,9 +231,7 @@ class BuildManager:
 	def lockBuildLockOps(self, comp: 'COMP'):
 		self.log(f'Locking build locked ops in {comp}')
 		toLock = comp.findChildren(tags=[RaytkTags.buildLock.name])
-		for o in toLock:
-			self.log(f'Locking {o}')
-			o.lock = True
+		self.context.lockOps(toLock)
 
 	def log(self, message: str):
 		print(message)
