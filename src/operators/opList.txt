@@ -147,7 +147,7 @@ spiralSdf	/raytk/operators/sdf/spiralSdf	/raytk/operators/sdf	raytkOP	sdf	sdf/sp
 tetrahedronSdf	/raytk/operators/sdf/tetrahedronSdf	/raytk/operators/sdf	raytkOP	sdf	sdf/tetrahedronSdf	raytk.operators.sdf.tetrahedronSdf	2	
 torusSdf	/raytk/operators/sdf/torusSdf	/raytk/operators/sdf	raytkOP	sdf	sdf/torusSdf	raytk.operators.sdf.torusSdf	5	
 circleSdf	/raytk/operators/sdf2d/circleSdf	/raytk/operators/sdf2d	raytkOP	sdf2d	sdf2d/circleSdf	raytk.operators.sdf2d.circleSdf	2	
-crossSdf2d	/raytk/operators/sdf2d/crossSdf2d	/raytk/operators/sdf2d	raytkOP	sdf2d	sdf2d/crossSdf2d	raytk.operators.sdf2d.crossSdf2d	0	
+crossSdf2d	/raytk/operators/sdf2d/crossSdf2d	/raytk/operators/sdf2d	raytkOP	sdf2d	sdf2d/crossSdf2d	raytk.operators.sdf2d.crossSdf2d	1	
 parabolaSdf2d	/raytk/operators/sdf2d/parabolaSdf2d	/raytk/operators/sdf2d	raytkOP	sdf2d	sdf2d/parabolaSdf2d	raytk.operators.sdf2d.parabolaSdf2d	0	
 pieSdf2d	/raytk/operators/sdf2d/pieSdf2d	/raytk/operators/sdf2d	raytkOP	sdf2d	sdf2d/pieSdf2d	raytk.operators.sdf2d.pieSdf2d	0	
 polygonSdf2d	/raytk/operators/sdf2d/polygonSdf2d	/raytk/operators/sdf2d	raytkOP	sdf2d	sdf2d/polygonSdf2d	raytk.operators.sdf2d.polygonSdf2d	0	
