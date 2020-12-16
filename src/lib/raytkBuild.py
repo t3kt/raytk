@@ -137,7 +137,7 @@ class DocProcessor:
 		docText = ropHelp.formatAsMarkdown()
 		dat.clear()
 		dat.write(docText)
-		docText = ropHelp.formatAsFullPage()
+		docText = ropHelp.formatAsFullPage(ropInfo)
 		self._writeDocs(
 			Path(self.toolkit.relativePath(rop).replace('./', '') + '.md'),
 			docText)
