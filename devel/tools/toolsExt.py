@@ -1,5 +1,6 @@
 from develCommon import updateROPMetadata, AutoLoader
 import popMenu
+from raytkDocs import OpDocManager
 from raytkUtil import RaytkTags, ROPInfo, Tag, getActiveEditor, navigateTo, getChildROPs, recloneComp, RaytkContext, TypeTableHelper, focusCustomParameterPage
 from raytkUtil import getToolkit, getToolkitVersion, Version
 from typing import Tuple, List
@@ -117,35 +118,31 @@ class Tools:
 		for rop in rops:
 			self.setUpROPHelp(rop)
 
+	def reloadCurrentROPHelp(self):
+		for rop in self.getCurrentROPs():
+			self.reloadROPHelp(rop)
+
 	@staticmethod
 	def setUpROPHelp(rop: 'COMP'):
-		opDef = rop.op('opDefinition')
-		if not opDef:
+		info = ROPInfo(rop)
+		if not info:
 			return
-		par = opDef.par.Help
-		dat = par.eval()
+		manager = OpDocManager(info)
 		ui.undo.startBlock('Set up ROP help for ' + rop.path)
 		try:
-			if not dat:
-				dat = rop.create(textDAT, 'help')
-				dat.nodeY = opDef.nodeY + 500
-				dat.nodeWidth = 350
-				dat.nodeHeight = 175
-				par.val = dat.name
-			if not dat.par.file:
-				dat.par.file = rop.par.externaltox.eval().replace('.tox', '.md')
-			RaytkTags.fileSync.apply(dat, True)
-			if not dat.text.strip():
-				text = f'# {rop.name}\n\n'
-				for parTuplet in rop.customTuplets:
-					if parTuplet[0].name in ('Inspect',):
-						continue
-					text += f'* `{parTuplet[0].label}` - '
-					if parTuplet[0].name == 'Enable':
-						text += 'Enables or disables the op.'
-					text += '\n'
-				dat.text = text
-			dat.viewer = True
+			manager.setUpMissingParts()
+		finally:
+			ui.undo.endBlock()
+
+	@staticmethod
+	def reloadROPHelp(rop: 'COMP'):
+		info = ROPInfo(rop)
+		if not info:
+			return
+		manager = OpDocManager(info)
+		ui.undo.startBlock('Apply ROP help to params for ' + rop.path)
+		try:
+			manager.pushToParams()
 		finally:
 			ui.undo.endBlock()
 

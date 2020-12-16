@@ -3,7 +3,7 @@ import re
 from typing import Dict, Iterable, List, Optional, Tuple
 
 from raytkUtil import ROPInfo, stripFirstMarkdownHeader, stripFrontMatter, \
-	CategoryInfo
+	CategoryInfo, RaytkTags
 
 # noinspection PyUnreachableCode
 if False:
@@ -205,9 +205,15 @@ def _mergeMarkdownChunks(parts: Iterable[str]):
 	return '\n\n'.join([p for p in parts if p])
 
 class OpDocManager:
-	def __init__(self, rop: 'COMP'):
-		self.rop = rop
-		self.info = ROPInfo(rop)
+	def __init__(self, rop: 'Union[ROPInfo, OP, str]'):
+		if isinstance(rop, str):
+			rop = op(rop)
+		if isinstance(rop, ROPInfo):
+			self.rop = rop.rop
+			self.info = rop
+		else:
+			self.info = ROPInfo(rop)
+			self.rop = self.info.rop
 
 	def _parseDAT(self):
 		ropHelp = ROPHelp.fromInfoOnly(self.info)
@@ -229,10 +235,6 @@ class OpDocManager:
 		return ropHelp
 
 	def _writeToDAT(self, ropHelp: 'ROPHelp'):
-		dat = self.info.helpDAT
-		if not dat:
-			dat = self.rop.create(textDAT, 'help')
-			self.info.helpDAT = dat
 		parts = [
 			ropHelp.summary,
 			ropHelp.detail,
@@ -245,7 +247,19 @@ class OpDocManager:
 					for parHelp in ropHelp.parameters
 				])
 			]
-		dat.text = _mergeMarkdownChunks(parts)
+		text = _mergeMarkdownChunks(parts)
+		dat = self.info.helpDAT
+		if not dat:
+			dat = self.rop.create(textDAT, 'help')
+			dat.nodeY = self.info.opDef.nodeY + 500
+			dat.nodeWidth = 350
+			dat.nodeHeight = 175
+			self.info.helpDAT = dat
+			if not dat.par.file and self.rop.par.externaltox:
+				dat.par.file = self.rop.par.externaltox.eval().replace('.tox', '.md')
+			RaytkTags.fileSync.apply(dat, True)
+			dat.viewer = True
+		dat.text = text
 
 	@staticmethod
 	def _parseParamListInto(ropHelp: 'ROPHelp', paramsText: str):
@@ -280,10 +294,13 @@ class OpDocManager:
 			paramHelp = paramHelps.get(name) or ROPParamHelp(name)
 			if helpText and not paramHelp.summary:
 				paramHelp.summary = helpText
+			paramHelps[name] = paramHelp
+		ropHelp.parameters = list(paramHelps.values())
 
-	def loadMissingParts(self):
+	def setUpMissingParts(self):
 		ropHelp = self._parseDAT()
 		self._pullFromMissingParamsInto(ropHelp)
+		print('Parsed help as: ', mod.dataclasses.asdict(ropHelp))
 		self._writeToDAT(ropHelp)
 
 	def pushToParams(self):
