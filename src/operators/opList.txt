@@ -30,7 +30,7 @@ revolve	/raytk/operators/convert/revolve	/raytk/operators/convert	raytkOP	conver
 sdfToFloat	/raytk/operators/convert/sdfToFloat	/raytk/operators/convert	raytkOP	convert	convert/sdfToFloat	raytk.operators.convert.sdfToFloat	3	
 vectorToFloat	/raytk/operators/convert/vectorToFloat	/raytk/operators/convert	raytkOP	convert	convert/vectorToFloat	raytk.operators.convert.vectorToFloat	5	
 customOp	/raytk/operators/custom/customOp	/raytk/operators/custom	raytkOP	custom	custom/customOp	raytk.operators.custom.customOp	3	
-axisDistanceField	/raytk/operators/field/axisDistanceField	/raytk/operators/field	raytkOP	field	field/axisDistanceField	raytk.operators.field.axisDistanceField	5	
+axisDistanceField	/raytk/operators/field/axisDistanceField	/raytk/operators/field	raytkOP	field	field/axisDistanceField	raytk.operators.field.axisDistanceField	6	
 cellTileField	/raytk/operators/field/cellTileField	/raytk/operators/field	raytkOP	field	field/cellTileField	raytk.operators.field.cellTileField	0	
 chopField	/raytk/operators/field/chopField	/raytk/operators/field	raytkOP	field	field/chopField	raytk.operators.field.chopField	1	beta
 colorRampField	/raytk/operators/field/colorRampField	/raytk/operators/field	raytkOP	field	field/colorRampField	raytk.operators.field.colorRampField	1	
@@ -134,7 +134,7 @@ kaliGeneratorSdf	/raytk/operators/sdf/kaliGeneratorSdf	/raytk/operators/sdf	rayt
 linkSdf	/raytk/operators/sdf/linkSdf	/raytk/operators/sdf	raytkOP	sdf	sdf/linkSdf	raytk.operators.sdf.linkSdf	3	
 mandelbulbSdf	/raytk/operators/sdf/mandelbulbSdf	/raytk/operators/sdf	raytkOP	sdf	sdf/mandelbulbSdf	raytk.operators.sdf.mandelbulbSdf	3	
 mengerSpongeSdf	/raytk/operators/sdf/mengerSpongeSdf	/raytk/operators/sdf	raytkOP	sdf	sdf/mengerSpongeSdf	raytk.operators.sdf.mengerSpongeSdf	2	
-mobiusRingSdf	/raytk/operators/sdf/mobiusRingSdf	/raytk/operators/sdf	raytkOP	sdf	sdf/mobiusRingSdf	raytk.operators.sdf.mobiusRingSdf	0	
+mobiusRingSdf	/raytk/operators/sdf/mobiusRingSdf	/raytk/operators/sdf	raytkOP	sdf	sdf/mobiusRingSdf	raytk.operators.sdf.mobiusRingSdf	1	
 octahedronSdf	/raytk/operators/sdf/octahedronSdf	/raytk/operators/sdf	raytkOP	sdf	sdf/octahedronSdf	raytk.operators.sdf.octahedronSdf	0	
 petalSdf	/raytk/operators/sdf/petalSdf	/raytk/operators/sdf	raytkOP	sdf	sdf/petalSdf	raytk.operators.sdf.petalSdf	0	
 planeSdf	/raytk/operators/sdf/planeSdf	/raytk/operators/sdf	raytkOP	sdf	sdf/planeSdf	raytk.operators.sdf.planeSdf	4	
