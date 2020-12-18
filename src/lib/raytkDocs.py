@@ -80,6 +80,40 @@ class ROPParamHelp:
 		return par
 
 @dataclass
+class InputHelp:
+	name: Optional[str] = None
+	label: Optional[str] = None
+	summary: Optional[str] = None
+
+	def formatMarkdownListItem(self, includeLabel=False):
+		text = f'* `{self.name}`'
+		if includeLabel and self.label:
+			text += f' *{self.label}*'
+		if self.summary:
+			text += f': {self.summary}'
+		return text
+
+	@classmethod
+	def extractFromInputHandler(cls, inputHandler: 'COMP'):
+		dat = inputHandler.inputs[0]
+		if not isinstance(dat, inDAT):
+			inHelp = cls(
+				name=inputHandler.name.replace('inputDefinitionHandler_', 'definition_in_'),
+			)
+		else:
+			inHelp = cls(
+				name=dat.name
+			)
+			p = dat.par.label  # type: Par
+			if not p.isDefault:
+				# noinspection PyBroadException
+				try:
+					inHelp.label = p.eval()
+				except Exception:
+					pass
+		return inHelp
+
+@dataclass
 class ROPHelp:
 	name: Optional[str] = None
 	summary: Optional[str] = None
@@ -87,6 +121,7 @@ class ROPHelp:
 	opType: Optional[str] = None
 	category: Optional[str] = None
 	parameters: List[ROPParamHelp] = field(default_factory=list)
+	inputs: List[InputHelp] = field(default_factory=list)
 	isAlpha: bool = False
 	isBeta: bool = False
 
@@ -156,6 +191,14 @@ class ROPHelp:
 					for parHelp in self.parameters
 				])
 			]
+		if self.inputs:
+			parts += [
+				'## Inputs',
+				'\n'.join([
+					inHelp.formatMarkdownListItem()
+					for inHelp in self.inputs
+				])
+			]
 		return _mergeMarkdownChunks(parts)
 
 	def formatAsFullPage(self, ropInfo: 'ROPInfo'):
@@ -183,6 +226,14 @@ Category: {ropInfo.categoryName}
 				'\n'.join([
 					parHelp.formatMarkdownListItem(includeLabel=True)
 					for parHelp in self.parameters
+				])
+			]
+		if self.inputs:
+			parts += [
+				'## Inputs',
+				'\n'.join([
+					inHelp.formatMarkdownListItem(includeLabel=True)
+					for inHelp in self.inputs
 				])
 			]
 		return _mergeMarkdownChunks(parts)
@@ -268,6 +319,8 @@ def _extractHelpSummaryAndDetail(docText: str) -> 'Tuple[str, str]':
 		detail = parts[1]
 		if '## Parameters' in detail:
 			detail = detail.split('## Parameters', maxsplit=1)[0]
+		elif '## Inputs' in detail:
+			detail = detail.split('## Inputs', maxsplit=1)[0]
 	return summary, detail
 
 def _mergeMarkdownChunks(parts: Iterable[str]):
@@ -300,7 +353,7 @@ class OpDocManager:
 			self._parseParamListInto(ropHelp, sections['Parameters'])
 			pass
 		if 'Inputs' in sections:
-			raise NotImplementedError('Inputs section not yet supported')
+			self._parseInputListInto(ropHelp, sections['Inputs'])
 		return ropHelp
 
 	def _writeToDAT(self, ropHelp: 'ROPHelp'):
@@ -335,29 +388,24 @@ class OpDocManager:
 		return _mergeMarkdownChunks(parts)
 
 	@staticmethod
-	def _parseParamListInto(ropHelp: 'ROPHelp', paramsText: str):
-		paramsText = paramsText.strip()
-		if not paramsText:
+	def _parseParamListInto(ropHelp: 'ROPHelp', text: str):
+		text = text.strip()
+		if not text:
 			return
-		if '*' not in paramsText:
+		if '*' not in text:
 			raise Exception('Invalid params section')
-		items = _parseMarkdownListItems(paramsText)
+		items = _parseMarkdownListItems(text)
 		for item in items:
-			print(f'parsing item: {item!r}')
 			name, label, desc = _parseNamedListItem(item)
 			if not name:
 				raise Exception(f'Invalid param list item: {item!r}')
 			if ' ' in name:
 				name = name.replace(' ', '').capitalize()
 			menuOpts = []
-			print(f'desc: {desc!r}')
 			if '\n  * ' in desc:
-				print(' found menu option separator !')
 				desc, optionsText = desc.split('\n  * ', maxsplit=1)
 				optionsText = '* ' + optionsText.replace('\n  * ', '\n* ')
-				print(f'optionsText: {optionsText!r}')
 				subItems = _parseMarkdownListItems(optionsText)
-				print(f' found subItems: {subItems}')
 				for subItem in subItems:
 					optName, optLabel, optDesc = _parseNamedListItem(subItem)
 					menuOpts.append(
@@ -374,6 +422,27 @@ class OpDocManager:
 				menuOptions=menuOpts,
 			)
 			ropHelp.replaceOrAddParam(name, paramHelp)
+
+	@staticmethod
+	def _parseInputListInto(ropHelp: 'ROPHelp', text: str):
+		text = text.strip()
+		ropHelp.inputs.clear()
+		if not text:
+			return
+		if '*' not in text:
+			raise Exception('Invalid inputs section')
+		items = _parseMarkdownListItems(text)
+		for item in items:
+			name, label, desc = _parseNamedListItem(item)
+			if not name:
+				raise Exception(f'Invalid param list item: {item!r}')
+			if ' ' in name:
+				name = name.replace(' ', '').capitalize()
+			ropHelp.inputs.append(InputHelp(
+				name,
+				label,
+				desc,
+			))
 
 	def _pullFromMissingParamsInto(self, ropHelp: 'ROPHelp'):
 		paramHelps = {
@@ -396,13 +465,29 @@ class OpDocManager:
 			paramHelps[name] = paramHelp
 		ropHelp.parameters = list(paramHelps.values())
 
+	def _pullFromMissingInputsInto(self, ropHelp: 'ROPHelp'):
+		inHelps = ropHelp.inputs
+		handlers = self.rop.ops('inputDefinitionHandler_*')
+		handlers.sort(key=lambda o: o.nodeY, reverse=True)
+		for i, handler in enumerate(handlers):
+			extractedHelp = InputHelp.extractFromInputHandler(handler)
+			if i < len(inHelps):
+				inHelp = inHelps[i]
+				if inHelp.name != extractedHelp.name:
+					inHelp.name = extractedHelp.name
+				if extractedHelp.label and not inHelp.label:
+					inHelp.label = extractedHelp.label
+			else:
+				inHelps.append(extractedHelp)
+
 	def setUpMissingParts(self):
 		ropHelp = self._parseDAT()
 		self._pullFromMissingParamsInto(ropHelp)
+		self._pullFromMissingInputsInto(ropHelp)
 		print('Parsed help as: ', TDJSON.jsonToText(mod.dataclasses.asdict(ropHelp)))
 		self._writeToDAT(ropHelp)
 
-	def pushToParams(self):
+	def pushToParamsAndInputs(self):
 		ropHelp = self._parseDAT()
 		print('Parsed help as: ', TDJSON.jsonToText(mod.dataclasses.asdict(ropHelp)))
 		for parHelp in ropHelp.parameters:
@@ -411,10 +496,17 @@ class OpDocManager:
 			parTuple = self.rop.parTuple[parHelp.name]
 			if parTuple is not None:
 				parTuple.help = parHelp.summary
+		for inHelp in ropHelp.inputs:
+			if not inHelp.label:
+				continue
+			inOp = self.rop.op(inHelp.name)
+			if inOp:
+				inOp.par.label = inHelp.label
 
 	def formatForBuild(self) -> str:
 		ropHelp = self._parseDAT()
 		self._pullFromMissingParamsInto(ropHelp)
+		self._pullFromMissingInputsInto(ropHelp)
 		return ropHelp.formatAsFullPage(self.info)
 
 def _parseMarkdownSections(text: str) -> 'Dict[str, str]':
@@ -453,7 +545,7 @@ def _parseMarkdownListItems(text: str) -> 'List[str]':
 	return _listItemsPattern.findall(text)
 
 _namedListItemPattern = re.compile(
-	r'^\s*\* `(?P<name>[\w ]+)`\s*(\*(?P<label>[\w\s]+)\*)?\s*([:-]\s+(?P<desc>.*))?', re.DOTALL)
+	r'^\s*\* `(?P<name>[\w ]+)`\s*(\*(?P<label>[\w\s]+)\*)?\s*([:-]\s+(?P<desc>.*)?)?', re.DOTALL)
 def _parseNamedListItem(itemText: str) -> 'Tuple[str, str, str]':
 	match = _namedListItemPattern.match(itemText)
 	if not match:

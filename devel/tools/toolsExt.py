@@ -142,7 +142,7 @@ class Tools:
 		manager = OpDocManager(info)
 		ui.undo.startBlock('Apply ROP help to params for ' + rop.path)
 		try:
-			manager.pushToParams()
+			manager.pushToParamsAndInputs()
 		finally:
 			ui.undo.endBlock()
 
