@@ -131,6 +131,7 @@ class DocProcessor:
 			return
 		docManager = OpDocManager(ropInfo)
 		docManager.setUpMissingParts()
+		docManager.pushToParamsAndInputs()
 		docText = docManager.formatForBuild()
 		self._writeDocs(
 			Path(self.toolkit.relativePath(rop).replace('./', '') + '.md'),

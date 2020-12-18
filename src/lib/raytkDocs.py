@@ -484,12 +484,10 @@ class OpDocManager:
 		ropHelp = self._parseDAT()
 		self._pullFromMissingParamsInto(ropHelp)
 		self._pullFromMissingInputsInto(ropHelp)
-		print('Parsed help as: ', TDJSON.jsonToText(mod.dataclasses.asdict(ropHelp)))
 		self._writeToDAT(ropHelp)
 
 	def pushToParamsAndInputs(self):
 		ropHelp = self._parseDAT()
-		print('Parsed help as: ', TDJSON.jsonToText(mod.dataclasses.asdict(ropHelp)))
 		for parHelp in ropHelp.parameters:
 			if not parHelp.summary:
 				continue

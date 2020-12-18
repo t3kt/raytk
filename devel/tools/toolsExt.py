@@ -69,6 +69,8 @@ class Tools:
 		ropInfo = ROPInfo(rop)
 		self.updateROPParams(rop)
 		updateROPMetadata(rop, incrementVersion=incrementVersion)
+		docManager = OpDocManager(ropInfo)
+		docManager.pushToParamsAndInputs()
 		focusCustomParameterPage(rop, 0)
 		tox = rop.par.externaltox.eval()
 		rop.save(tox)
