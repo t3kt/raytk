@@ -1,6 +1,20 @@
-# combineColumns (combine)
+Columns SDF combine, producing n-1 circular columns/ridges at a 45 degree angles along the blend region.
 
-Columns SDF combine, producing n-1 circular columns at a 45 degree angles along the blend region.
+## Parameters
 
-Number is the number of columns.
-Radius is the size of the blend region.
+* `Enable`
+* `Operation`: The type of combine operation.
+  * `union`: Produces the combined area of both inputs.
+  * `intersect`: Produces the area where both inputs overlap.
+  * `diff`: Subtracts the second input from the first.
+* `Swapinputs`: Swaps the order of the inputs. This is only used for the `diff` mode.
+* `Number`: The number of columns in the blending region.
+* `Radius`: The size of the blending region.
+* `Useradiusfield`
+* `Inspect`
+
+## Inputs
+
+* `definition_in_1`
+* `definition_in_2`
+* `radius_definition_in` *Radius Field*: Value field that can be used to vary the radius of the blend region at different points in space.
