@@ -1,3 +1,15 @@
 .search-input {
   color: $body-text-color;
 }
+
+::-webkit-scrollbar {
+  width: 12px;
+}
+
+::-webkit-scrollbar-track {
+  outline: 1px solid $border-color;
+}
+
+::-webkit-scrollbar-thumb {
+  background: $body-text-color;
+}
