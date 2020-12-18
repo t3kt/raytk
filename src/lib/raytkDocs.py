@@ -83,9 +83,9 @@ class ROPHelp:
 			f'{headerPrefix}# {self.name}',
 		]
 		if self.isAlpha:
-			parts.append('Alpha\n{: .label .label-purple }')
+			parts.append('alpha\n{: .label .status-alpha }')
 		elif self.isBeta:
-			parts.append('Beta\n{: .label .label-yellow }')
+			parts.append('beta\n{: .label .status-beta }')
 		parts += [
 			self.summary,
 			self.detail,
@@ -100,9 +100,23 @@ class ROPHelp:
 			]
 		return _mergeMarkdownChunks(parts)
 
+	def formatMainText(self):
+		parts = [
+			self.summary,
+			self.detail,
+		]
+		if self.parameters:
+			parts += [
+				'## Parameters',
+				'\n'.join([
+					parHelp.formatMarkdownListItem()
+					for parHelp in self.parameters
+				])
+			]
+		return _mergeMarkdownChunks(parts)
+
 	def formatAsFullPage(self, ropInfo: 'ROPInfo'):
-		docText = self.formatAsMarkdown()
-		docText = f'''---
+		header = f'''---
 layout: page
 title: {ropInfo.shortName}
 parent: {ropInfo.categoryName.capitalize()} Operators
@@ -110,9 +124,33 @@ grand_parent: Operators
 permalink: /reference/operators/{ropInfo.categoryName}/{ropInfo.shortName}
 ---
 
-{docText}
+# {ropInfo.shortName}
+
+Category: {ropInfo.categoryName}
+
 '''
-		return docText
+		parts = [
+			header,
+			self.summary,
+			self.detail,
+		]
+		if self.parameters:
+			parts += [
+				'## Parameters',
+				'\n'.join([
+					parHelp.formatMarkdownListItem()
+					for parHelp in self.parameters
+				])
+			]
+		return _mergeMarkdownChunks(parts)
+
+	def formatAsListItem(self):
+		text = f'* [`{self.name}`]({self.name}/) - {self.summary or ""}'
+		if self.isAlpha:
+			text += ' *alpha*{: .label .status-alpha }'
+		elif self.isBeta:
+			text += ' *beta*{: .label .status-beta }'
+		return text
 
 	def replaceOrAddParam(self, name: str, paramHelp: 'Optional[ROPParamHelp]'):
 		for i in range(len(self.parameters)):
@@ -146,25 +184,13 @@ class CategoryHelp:
 			catHelp.operators.append(ROPHelp.extractFromROP(rop))
 		return catHelp
 
-	def formatAsMarkdown(self):
-		parts = [
-			f'# {self.name}',
-			self.summary,
-			self.detail,
-		]
-		parts += [
-			opHelp.formatAsMarkdown(headerOffset=1)
-			for opHelp in self.operators
-		]
-		return _mergeMarkdownChunks(parts)
-
 	def formatAsList(self):
 		parts = [
 			f'# {self.name.capitalize()} Operators',
 			self.summary,
 			self.detail,
 			'\n'.join([
-				f'* [`{ropHelp.name}`]({ropHelp.name}/) - {ropHelp.summary or ""}'
+				ropHelp.formatAsListItem()
 				for ropHelp in self.operators
 			])
 		]
@@ -235,19 +261,7 @@ class OpDocManager:
 		return ropHelp
 
 	def _writeToDAT(self, ropHelp: 'ROPHelp'):
-		parts = [
-			ropHelp.summary,
-			ropHelp.detail,
-		]
-		if ropHelp.parameters:
-			parts += [
-				'## Parameters',
-				'\n'.join([
-					parHelp.formatMarkdownListItem()
-					for parHelp in ropHelp.parameters
-				])
-			]
-		text = _mergeMarkdownChunks(parts)
+		text = ropHelp.formatMainText()
 		dat = self.info.helpDAT
 		if not dat:
 			dat = self.rop.create(textDAT, 'help')
@@ -262,6 +276,22 @@ class OpDocManager:
 		dat.text = text
 
 	@staticmethod
+	def _formatMainText(ropHelp: 'ROPHelp'):
+		parts = [
+			ropHelp.summary,
+			ropHelp.detail,
+		]
+		if ropHelp.parameters:
+			parts += [
+				'## Parameters',
+				'\n'.join([
+					parHelp.formatMarkdownListItem()
+					for parHelp in ropHelp.parameters
+				])
+			]
+		return _mergeMarkdownChunks(parts)
+
+	@staticmethod
 	def _parseParamListInto(ropHelp: 'ROPHelp', paramsText: str):
 		paramsText = paramsText.strip()
 		if not paramsText:
@@ -273,6 +303,8 @@ class OpDocManager:
 			name, desc = _extractNameAndDescriptionFromListItem(item)
 			if not name:
 				raise Exception(f'Invalid param list item: {item!r}')
+			if ' ' in name:
+				name = name.replace(' ', '').capitalize()
 			paramHelp = ROPParamHelp(
 				name=name,
 				summary=desc,
@@ -352,7 +384,7 @@ def _parseMarkdownListItems(text: str) -> 'List[str]':
 		return []
 	return _listItemsPattern.findall(text)
 
-_namedListItemPattern = re.compile(r'^\* `(?P<name>\w+)`(:\s+(?P<desc>.*))?', re.DOTALL)
+_namedListItemPattern = re.compile(r'^\* `(?P<name>[\w ]+)`(:\s+(?P<desc>.*))?', re.DOTALL)
 def _extractNameAndDescriptionFromListItem(itemText: str):
 	match = _namedListItemPattern.match(itemText)
 	if not match:

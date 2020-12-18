@@ -1,7 +1,7 @@
 from pathlib import Path
 from typing import Callable
 from raytkUtil import detachTox, CategoryInfo, ROPInfo, getToolkit, stripFirstMarkdownHeader
-from raytkDocs import CategoryHelp, ROPHelp
+from raytkDocs import CategoryHelp, ROPHelp, OpDocManager
 
 # noinspection PyUnreachableCode
 if False:
@@ -129,33 +129,12 @@ class DocProcessor:
 		if not ropInfo or not ropInfo.isMaster:
 			self.context.log(f'Invalid rop for docs {rop}')
 			return
-		ropHelp = ROPHelp.extractFromROP(rop)
-		dat = ropInfo.helpDAT
-		if not dat:
-			dat = ropInfo.rop.create(textDAT, 'help')
-			ropInfo.helpDAT = dat
-		docText = ropHelp.formatAsMarkdown()
-		dat.clear()
-		dat.write(docText)
-		docText = ropHelp.formatAsFullPage(ropInfo)
+		docManager = OpDocManager(ropInfo)
+		docManager.setUpMissingParts()
+		docText = docManager.formatForBuild()
 		self._writeDocs(
 			Path(self.toolkit.relativePath(rop).replace('./', '') + '.md'),
 			docText)
-
-	@staticmethod
-	def _generateDefaultOpDoc(ropInfo: 'ROPInfo'):
-		parts = [
-			f'# {ropInfo.shortName}',
-			f'Category: {ropInfo.categoryName}',
-			f'OP Type: `{ropInfo.opType}`',
-			f'## Parameters',
-			'\n'.join([
-				f'* `{parTuplet[0].label}` - '
-				for parTuplet in ropInfo.rop.customTuplets
-				if not parTuplet[0].isPulse and not parTuplet[0].readOnly
-			])
-		]
-		return '\n\n'.join(parts)
 
 	def _writeDocs(self, relativePath: 'Path', docText: str):
 		outFile = self.outputFolder / relativePath
