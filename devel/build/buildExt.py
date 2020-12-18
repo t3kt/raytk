@@ -26,7 +26,7 @@ class BuildManager:
 
 	@staticmethod
 	def GetDefaultDocSitePath():
-		folder = Path('../raytk-site')
+		folder = Path('docs')
 		if folder.exists():
 			return folder.as_posix()
 		return ''
