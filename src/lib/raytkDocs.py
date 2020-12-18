@@ -380,19 +380,17 @@ class OpDocManager:
 			paramHelp.name: paramHelp
 			for paramHelp in ropHelp.parameters
 		}
-		print('DEBUG _pullFromMissingParamsInto()')
 		for parTuplet in self.rop.customTuplets:
 			if parTuplet[0].readOnly:
 				continue
 			name = parTuplet[0].tupletName
-			print(f'DEBUG _pullFromMissingParamsInto()   {name}')
 			helpText = parTuplet[0].help
 			if helpText == _defaultParamHelp:
 				helpText = ''
 			paramHelp = paramHelps.get(name) or ROPParamHelp(name)
+			paramHelp.label = parTuplet[0].label
 			if helpText and not paramHelp.summary:
 				paramHelp.summary = helpText
-			print(f'DEBUG _pullFromMissingParamsInto   isMenu: {parTuplet[0].isMenu}')
 			if parTuplet[0].isMenu:
 				paramHelp.pullOptionsFromPar(parTuplet[0])
 			paramHelps[name] = paramHelp
