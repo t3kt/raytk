@@ -8,6 +8,11 @@ permalink: /reference/operators/output/raymarchRender3D
 
 # raymarchRender3D
 
+Category: output
+OP Type: raytk.operators.output.raymarchRender3D
+
+
+
 ## Parameters
 
 * `Res`
@@ -17,6 +22,7 @@ permalink: /reference/operators/output/raymarchRender3D
 * `Userenderdepth`
 * `Overlayrender`
 * `Rendertop`
+* `Inspect`
 * `Maxsteps`
 * `Surfdist`
 * `Maxdist`
@@ -38,4 +44,3 @@ permalink: /reference/operators/output/raymarchRender3D
 * `Enableiterationoutput`
 * `Enableobjectidoutput`
 * `Enabledebugoutput`
-* `Inspect`

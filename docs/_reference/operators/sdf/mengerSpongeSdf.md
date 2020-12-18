@@ -8,6 +8,11 @@ permalink: /reference/operators/sdf/mengerSpongeSdf
 
 # mengerSpongeSdf
 
+Category: sdf
+OP Type: raytk.operators.sdf.mengerSpongeSdf
+
+
+
 ## Parameters
 
 * `Translate`

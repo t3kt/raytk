@@ -8,6 +8,11 @@ permalink: /reference/operators/light/pointLight
 
 # pointLight
 
+Category: light
+OP Type: raytk.operators.light.pointLight
+
+
+
 Light eminating from a single point in space, with optional distance attentuation.
 
 ## Parameters

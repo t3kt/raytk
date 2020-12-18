@@ -8,6 +8,11 @@ permalink: /reference/operators/filter/moduloDistance
 
 # moduloDistance
 
+Category: filter
+OP Type: raytk.operators.filter.moduloDistance
+
+
+
 ## Parameters
 
 * `Enable`

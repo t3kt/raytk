@@ -24,7 +24,7 @@ often the first operator in a chain that ends with a `raymarchRender3d`.
 * [`crossSdf`](crossSdf/) - An SDF for a 3D cross of infinite length along each axis.
 * [`cylinderSdf`](cylinderSdf/) - SDF for a cylinder along the Y axis, centered at the origin.
 * [`discSdf`](discSdf/) - A flat disc facing the Y axis.
-* [`dodecahedronFractalSdf`](dodecahedronFractalSdf/) - 
+* [`dodecahedronFractalSdf`](dodecahedronFractalSdf/) -  *beta*{: .label .status-beta }
 * [`generalizedPolyhedronSdf`](generalizedPolyhedronSdf/) - Generates one of several different types of polyhedra.
 * [`geodesicSdf`](geodesicSdf/) - 
 * [`gridSdf`](gridSdf/) - An infinite grid shape, along two axes.

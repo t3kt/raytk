@@ -8,6 +8,11 @@ permalink: /reference/operators/utility/extractDebugValues
 
 # extractDebugValues
 
+Category: utility
+OP Type: raytk.operators.utility.extractDebugValues
+
+
+
 ## Parameters
 
 * `Enable`

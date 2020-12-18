@@ -8,6 +8,11 @@ permalink: /reference/operators/sdf/planeSdf
 
 # planeSdf
 
+Category: sdf
+OP Type: raytk.operators.sdf.planeSdf
+
+
+
 An infinite plane on the x, y, or z axis.
 
 * `Axis` - chooses which axis the plane faces.

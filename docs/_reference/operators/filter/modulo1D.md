@@ -8,6 +8,11 @@ permalink: /reference/operators/filter/modulo1D
 
 # modulo1D
 
+Category: filter
+OP Type: raytk.operators.filter.modulo1D
+
+
+
 ## Parameters
 
 * `Enable`

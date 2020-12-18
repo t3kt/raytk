@@ -8,6 +8,11 @@ permalink: /reference/operators/function/easeFn
 
 # easeFn
 
+Category: function
+OP Type: raytk.operators.function.easeFn
+
+
+
 ## Parameters
 
 * `Exponent`

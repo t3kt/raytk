@@ -8,6 +8,11 @@ permalink: /reference/operators/sdf2d/crossSdf2d
 
 # crossSdf2d
 
+Category: sdf2d
+OP Type: raytk.operators.sdf2d.crossSdf2d
+
+
+
 2D cross shape SDF, with 4 arms and option rounding of the intersections.
 
 ## Parameters

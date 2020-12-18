@@ -8,6 +8,11 @@ permalink: /reference/operators/utility/injectObjectId
 
 # injectObjectId
 
+Category: utility
+OP Type: raytk.operators.utility.injectObjectId
+
+
+
 Assigns an arbitrary value to the objectId field of an SDF, which can later
 be extracted from rendered output.
 

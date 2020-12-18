@@ -8,6 +8,11 @@ permalink: /reference/operators/filter/scale
 
 # scale
 
+Category: filter
+OP Type: raytk.operators.filter.scale
+
+
+
 ## Parameters
 
 * `Enable`

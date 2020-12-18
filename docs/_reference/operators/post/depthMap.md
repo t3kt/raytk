@@ -8,6 +8,11 @@ permalink: /reference/operators/post/depthMap
 
 # depthMap
 
+Category: post
+OP Type: raytk.operators.post.depthMap
+
+
+
 ## Parameters
 
 * `Inputrange`

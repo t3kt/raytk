@@ -8,6 +8,11 @@ permalink: /reference/operators/convert/coordTo2D
 
 # coordTo2D
 
+Category: convert
+OP Type: raytk.operators.convert.coordTo2D
+
+
+
 ## Parameters
 
 * `Enable`

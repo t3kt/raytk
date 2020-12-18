@@ -8,6 +8,11 @@ permalink: /reference/operators/combine/layoutGrid
 
 # layoutGrid
 
+Category: combine
+OP Type: raytk.operators.combine.layoutGrid
+
+
+
 ## Parameters
 
 * `Enable`

@@ -8,6 +8,11 @@ permalink: /reference/operators/filter/limitField
 
 # limitField
 
+Category: filter
+OP Type: raytk.operators.filter.limitField
+
+
+
 ## Parameters
 
 * `Enable`

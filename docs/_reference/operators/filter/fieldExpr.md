@@ -8,6 +8,11 @@ permalink: /reference/operators/filter/fieldExpr
 
 # fieldExpr
 
+Category: filter
+OP Type: raytk.operators.filter.fieldExpr
+
+
+
 ## Parameters
 
 * `Enable`

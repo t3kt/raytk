@@ -8,6 +8,11 @@ permalink: /reference/operators/filter/elongate
 
 # elongate
 
+Category: filter
+OP Type: raytk.operators.filter.elongate
+
+
+
 Splits a shape into pieces, moves them apart, and connects them.
 
 For example, a capsule is an elongated version of a sphere.

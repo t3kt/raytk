@@ -8,6 +8,11 @@ permalink: /reference/operators/sdf/octahedronSdf
 
 # octahedronSdf
 
+Category: sdf
+OP Type: raytk.operators.sdf.octahedronSdf
+
+
+
 An octahedron, with its corners facing the axes.
 
 * `Translate` - shifts the center of the shape.

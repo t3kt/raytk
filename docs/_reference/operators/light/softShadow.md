@@ -8,6 +8,11 @@ permalink: /reference/operators/light/softShadow
 
 # softShadow
 
+Category: light
+OP Type: raytk.operators.light.softShadow
+
+
+
 A soft-edged shadow.
 
 ## Parameters

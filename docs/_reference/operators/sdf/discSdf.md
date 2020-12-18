@@ -8,6 +8,11 @@ permalink: /reference/operators/sdf/discSdf
 
 # discSdf
 
+Category: sdf
+OP Type: raytk.operators.sdf.discSdf
+
+
+
 A flat disc facing the Y axis.
 
 Because the disc is infinitely thin, it will only appear as a line when viewed from the side.

@@ -8,6 +8,11 @@ permalink: /reference/operators/combine/combine
 
 # combine
 
+Category: combine
+OP Type: raytk.operators.combine.combine
+
+
+
 ## Parameters
 
 * `Enable`

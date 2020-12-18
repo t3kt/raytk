@@ -8,6 +8,11 @@ permalink: /reference/operators/sdf/torusSdf
 
 # torusSdf
 
+Category: sdf
+OP Type: raytk.operators.sdf.torusSdf
+
+
+
 SDF for a torus or partial torus with end caps.
 
 ## Parameters

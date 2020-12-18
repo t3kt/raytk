@@ -8,6 +8,11 @@ permalink: /reference/operators/filter/moduloPolar
 
 # moduloPolar
 
+Category: filter
+OP Type: raytk.operators.filter.moduloPolar
+
+
+
 Repeats space radially, like a kaleidoscope.
 
 * `Axis` - The axis around which space is sliced.

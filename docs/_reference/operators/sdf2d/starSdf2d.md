@@ -8,6 +8,11 @@ permalink: /reference/operators/sdf2d/starSdf2d
 
 # starSdf2d
 
+Category: sdf2d
+OP Type: raytk.operators.sdf2d.starSdf2d
+
+
+
 ## Parameters
 
 * `Radius`

@@ -8,6 +8,11 @@ permalink: /reference/operators/post/worldPosMap
 
 # worldPosMap
 
+Category: post
+OP Type: raytk.operators.post.worldPosMap
+
+
+
 ## Parameters
 
 * `Rangex`

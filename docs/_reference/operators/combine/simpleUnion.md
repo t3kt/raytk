@@ -8,6 +8,11 @@ permalink: /reference/operators/combine/simpleUnion
 
 # simpleUnion
 
+Category: combine
+OP Type: raytk.operators.combine.simpleUnion
+
+
+
 Combines several SDFs using the union operator.
 The resulting shape is the combined areas of each of the inputs.
 

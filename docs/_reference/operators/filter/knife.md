@@ -8,6 +8,11 @@ permalink: /reference/operators/filter/knife
 
 # knife
 
+Category: filter
+OP Type: raytk.operators.filter.knife
+
+
+
 Cuts off an SDF along a plane.
 
 ## Parameters

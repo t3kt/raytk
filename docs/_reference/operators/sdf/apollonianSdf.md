@@ -8,6 +8,11 @@ permalink: /reference/operators/sdf/apollonianSdf
 
 # apollonianSdf
 
+Category: sdf
+OP Type: raytk.operators.sdf.apollonianSdf
+
+
+
 ## Parameters
 
 * `Translate`

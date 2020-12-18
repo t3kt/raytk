@@ -8,6 +8,11 @@ permalink: /reference/operators/convert/extrude
 
 # extrude
 
+Category: convert
+OP Type: raytk.operators.convert.extrude
+
+
+
 ## Parameters
 
 * `Enable`

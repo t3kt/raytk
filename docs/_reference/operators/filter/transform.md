@@ -8,6 +8,11 @@ permalink: /reference/operators/filter/transform
 
 # transform
 
+Category: filter
+OP Type: raytk.operators.filter.transform
+
+
+
 Transform the coordinates of the input, with rotation, scaling, and translation.
 
 Various parts of the transform can be switched off to improve performance, and the sequence of transform steps can be reordered.

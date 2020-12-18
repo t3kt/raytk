@@ -8,6 +8,11 @@ permalink: /reference/operators/combine/combineColumns
 
 # combineColumns
 
+Category: combine
+OP Type: raytk.operators.combine.combineColumns
+
+
+
 Columns SDF combine, producing n-1 circular columns at a 45 degree angles along the blend region.
 
 Number is the number of columns.

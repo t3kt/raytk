@@ -8,6 +8,11 @@ permalink: /reference/operators/sdf2d/rhombusSdf2d
 
 # rhombusSdf2d
 
+Category: sdf2d
+OP Type: raytk.operators.sdf2d.rhombusSdf2d
+
+
+
 ## Parameters
 
 * `Scale`

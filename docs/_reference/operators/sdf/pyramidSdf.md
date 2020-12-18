@@ -8,6 +8,11 @@ permalink: /reference/operators/sdf/pyramidSdf
 
 # pyramidSdf
 
+Category: sdf
+OP Type: raytk.operators.sdf.pyramidSdf
+
+
+
 ## Parameters
 
 * `Translate`

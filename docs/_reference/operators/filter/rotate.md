@@ -8,6 +8,11 @@ permalink: /reference/operators/filter/rotate
 
 # rotate
 
+Category: filter
+OP Type: raytk.operators.filter.rotate
+
+
+
 ## Parameters
 
 * `Enable`

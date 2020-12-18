@@ -8,6 +8,11 @@ permalink: /reference/operators/filter/slice
 
 # slice
 
+Category: filter
+OP Type: raytk.operators.filter.slice
+
+
+
 ## Parameters
 
 * `Enable`

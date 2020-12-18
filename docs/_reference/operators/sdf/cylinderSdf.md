@@ -8,6 +8,11 @@ permalink: /reference/operators/sdf/cylinderSdf
 
 # cylinderSdf
 
+Category: sdf
+OP Type: raytk.operators.sdf.cylinderSdf
+
+
+
 SDF for a cylinder along the Y axis, centered at the origin.
 
 * `Translate` - shifts the center of the cylinder.

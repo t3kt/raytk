@@ -8,6 +8,11 @@ permalink: /reference/operators/sdf/generalizedPolyhedronSdf
 
 # generalizedPolyhedronSdf
 
+Category: sdf
+OP Type: raytk.operators.sdf.generalizedPolyhedronSdf
+
+
+
 Generates one of several different types of polyhedra.
 
 Based on ["Generalized Distance Functions"](http://people.tamu.edu/~ergun/research/implicitmodeling/papers/sm99.pdf) by Akleman and Chen.

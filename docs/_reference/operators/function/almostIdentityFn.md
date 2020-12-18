@@ -8,6 +8,11 @@ permalink: /reference/operators/function/almostIdentityFn
 
 # almostIdentityFn
 
+Category: function
+OP Type: raytk.operators.function.almostIdentityFn
+
+
+
 ## Parameters
 
 * `Contexttype`

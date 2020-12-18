@@ -8,6 +8,11 @@ permalink: /reference/operators/filter/fold
 
 # fold
 
+Category: filter
+OP Type: raytk.operators.filter.fold
+
+
+
 ## Parameters
 
 * `Enable`

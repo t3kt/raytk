@@ -8,6 +8,11 @@ permalink: /reference/operators/convert/vectorToFloat
 
 # vectorToFloat
 
+Category: convert
+OP Type: raytk.operators.convert.vectorToFloat
+
+
+
 ## Parameters
 
 * `Enable`

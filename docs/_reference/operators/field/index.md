@@ -17,7 +17,7 @@ texture.
 
 * [`axisDistanceField`](axisDistanceField/) - A float field that provides the distance from a specific point along a single axis.
 * [`cellTileField`](cellTileField/) - A value field that provides an approximation of repeating cellular (voronoi) noise.
-* [`chopField`](chopField/) - 
+* [`chopField`](chopField/) -  *beta*{: .label .status-beta }
 * [`colorRampField`](colorRampField/) - A vector field that maps an input field to values from a range of colors.
 * [`constantColorField`](constantColorField/) - A vector field that evaluates to a constant color value.
 * [`constantField`](constantField/) - A float or vector field that evaluates to a constant value.

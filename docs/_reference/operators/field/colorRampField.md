@@ -8,6 +8,11 @@ permalink: /reference/operators/field/colorRampField
 
 # colorRampField
 
+Category: field
+OP Type: raytk.operators.field.colorRampField
+
+
+
 A vector field that maps an input field to values from a range of colors.
 
 ## Parameters

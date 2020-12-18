@@ -8,6 +8,11 @@ permalink: /reference/operators/function/powerCurveFn
 
 # powerCurveFn
 
+Category: function
+OP Type: raytk.operators.function.powerCurveFn
+
+
+
 ## Parameters
 
 * `Balance`

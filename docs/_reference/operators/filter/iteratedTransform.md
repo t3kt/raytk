@@ -8,6 +8,11 @@ permalink: /reference/operators/filter/iteratedTransform
 
 # iteratedTransform
 
+Category: filter
+OP Type: raytk.operators.filter.iteratedTransform
+
+
+
 Performs a transform multiple times, optionally reflecting across axes in between the steps.
 
 This can be used to create KIFS fractals (kaleidoscopic iterated function systems).
@@ -27,6 +32,7 @@ This can be used to create KIFS fractals (kaleidoscopic iterated function system
 * `Pivot`
 * `Transformorder`
 * `Rotateorder`
+* `Inspect`
 * `Customcode`
 * `Floatparam1`
 * `Floatparam2`
@@ -36,4 +42,3 @@ This can be used to create KIFS fractals (kaleidoscopic iterated function system
 * `Vecparam2`
 * `Vecparam3`
 * `Vecparam4`
-* `Inspect`

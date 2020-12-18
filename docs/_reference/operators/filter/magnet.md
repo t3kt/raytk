@@ -8,6 +8,11 @@ permalink: /reference/operators/filter/magnet
 
 # magnet
 
+Category: filter
+OP Type: raytk.operators.filter.magnet
+
+
+
 ## Parameters
 
 * `Enable`

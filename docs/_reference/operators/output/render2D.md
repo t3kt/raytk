@@ -8,6 +8,11 @@ permalink: /reference/operators/output/render2D
 
 # render2D
 
+Category: output
+OP Type: raytk.operators.output.render2D
+
+
+
 ## Parameters
 
 * `Res`

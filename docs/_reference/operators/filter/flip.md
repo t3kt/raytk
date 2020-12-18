@@ -8,6 +8,11 @@ permalink: /reference/operators/filter/flip
 
 # flip
 
+Category: filter
+OP Type: raytk.operators.filter.flip
+
+
+
 ## Parameters
 
 * `Enable`

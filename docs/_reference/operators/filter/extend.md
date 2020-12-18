@@ -8,6 +8,11 @@ permalink: /reference/operators/filter/extend
 
 # extend
 
+Category: filter
+OP Type: raytk.operators.filter.extend
+
+
+
 ## Parameters
 
 * `Enable`

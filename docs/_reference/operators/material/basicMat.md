@@ -8,6 +8,11 @@ permalink: /reference/operators/material/basicMat
 
 # basicMat
 
+Category: material
+OP Type: raytk.operators.material.basicMat
+
+
+
 ## Parameters
 
 * `Enable`

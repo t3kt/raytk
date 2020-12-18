@@ -8,6 +8,11 @@ permalink: /reference/operators/field/multiPointDistanceField
 
 # multiPointDistanceField
 
+Category: field
+OP Type: raytk.operators.field.multiPointDistanceField
+
+
+
 A vector field that provides the distance from 4 specific points in space (one for each part of the vector).
 
 ## Parameters

@@ -8,6 +8,11 @@ permalink: /reference/operators/sdf/crossSdf
 
 # crossSdf
 
+Category: sdf
+OP Type: raytk.operators.sdf.crossSdf
+
+
+
 An SDF for a 3D cross of infinite length along each axis.
 
 * `Translate` - shifts the center of the cross.

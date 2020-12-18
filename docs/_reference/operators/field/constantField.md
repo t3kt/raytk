@@ -8,6 +8,11 @@ permalink: /reference/operators/field/constantField
 
 # constantField
 
+Category: field
+OP Type: raytk.operators.field.constantField
+
+
+
 A float or vector field that evaluates to a constant value.
 
 ## Parameters

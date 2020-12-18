@@ -8,6 +8,11 @@ permalink: /reference/operators/field/reorderField
 
 # reorderField
 
+Category: field
+OP Type: raytk.operators.field.reorderField
+
+
+
 ## Parameters
 
 * `Enable`

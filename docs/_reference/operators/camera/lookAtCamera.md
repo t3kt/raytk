@@ -8,6 +8,11 @@ permalink: /reference/operators/camera/lookAtCamera
 
 # lookAtCamera
 
+Category: camera
+OP Type: raytk.operators.camera.lookAtCamera
+
+
+
 A camera that focuses on a specific point in space.
 
 ## Parameters

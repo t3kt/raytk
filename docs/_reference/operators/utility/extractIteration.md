@@ -8,6 +8,11 @@ permalink: /reference/operators/utility/extractIteration
 
 # extractIteration
 
+Category: utility
+OP Type: raytk.operators.utility.extractIteration
+
+
+
 A field that returns the current iteration, from a downstream
 operator.
 

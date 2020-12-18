@@ -8,6 +8,11 @@ permalink: /reference/operators/sdf/gridSdf
 
 # gridSdf
 
+Category: sdf
+OP Type: raytk.operators.sdf.gridSdf
+
+
+
 An infinite grid shape, along two axes.
 
 * `Coord Type` - allows the shape to be used in a 2D context.

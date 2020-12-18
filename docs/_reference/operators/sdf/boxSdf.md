@@ -8,6 +8,11 @@ permalink: /reference/operators/sdf/boxSdf
 
 # boxSdf
 
+Category: sdf
+OP Type: raytk.operators.sdf.boxSdf
+
+
+
 SDF for a box, optionally infinite one one axis.
 
 ## Parameters

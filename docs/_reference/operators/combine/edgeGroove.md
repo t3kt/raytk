@@ -8,6 +8,11 @@ permalink: /reference/operators/combine/edgeGroove
 
 # edgeGroove
 
+Category: combine
+OP Type: raytk.operators.combine.edgeGroove
+
+
+
 ## Parameters
 
 * `Enable`

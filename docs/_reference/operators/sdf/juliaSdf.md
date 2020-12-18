@@ -8,6 +8,11 @@ permalink: /reference/operators/sdf/juliaSdf
 
 # juliaSdf
 
+Category: sdf
+OP Type: raytk.operators.sdf.juliaSdf
+
+
+
 ## Parameters
 
 * `C1`

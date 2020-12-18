@@ -8,6 +8,11 @@ permalink: /reference/operators/field/textureField
 
 # textureField
 
+Category: field
+OP Type: raytk.operators.field.textureField
+
+
+
 A float or vector field that looks up values from a texture.
 
 ## Parameters

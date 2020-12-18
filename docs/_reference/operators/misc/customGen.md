@@ -8,6 +8,11 @@ permalink: /reference/operators/misc/customGen
 
 # customGen
 
+Category: misc
+OP Type: raytk.operators.misc.customGen
+
+
+
 ## Parameters
 
 * `Vecparam1`

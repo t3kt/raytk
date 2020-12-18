@@ -8,6 +8,11 @@ permalink: /reference/operators/convert/revolve
 
 # revolve
 
+Category: convert
+OP Type: raytk.operators.convert.revolve
+
+
+
 ## Parameters
 
 * `Enable`

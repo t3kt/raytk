@@ -8,6 +8,11 @@ permalink: /reference/operators/sdf/boxFrameSdf
 
 # boxFrameSdf
 
+Category: sdf
+OP Type: raytk.operators.sdf.boxFrameSdf
+
+
+
 SDF for the squared frame of the edges of a box.
 
 ## Parameters

@@ -8,6 +8,11 @@ permalink: /reference/operators/function/flipFn
 
 # flipFn
 
+Category: function
+OP Type: raytk.operators.function.flipFn
+
+
+
 Function that flips its input in one of several different modes.
 
 ## Parameters

@@ -8,6 +8,11 @@ permalink: /reference/operators/output/functionGraphRender
 
 # functionGraphRender
 
+Category: output
+OP Type: raytk.operators.output.functionGraphRender
+
+
+
 Visualizes the graph of a function operator.
 
 This is intended primarily for use in the Inspector, though there may be other uses.
@@ -17,11 +22,9 @@ It provides several outputs:
 * Color - The rendered graph line.
 * GUI - The graph line along with axes and range markers.
 
-
-
 ## Parameters
 
-* `Res`
+* `Resolution`
 * `Domainlow`
 * `Domainhigh`
 * `Rangelow`
@@ -29,6 +32,13 @@ It provides several outputs:
 * `Linethickness`
 * `Lineblending`
 * `Showaxislabels`
-* `Timerefop`
+* `Timereferenceoperator`
 * `Shaderbuilderconfig`
+* `Shaderinfo`
+* `Shadercode`
+* `Shadertop`
+* `Outputtable`
+* `Shaderbuilder`
+* `Res`
+* `Timerefop`
 * `Inspect`

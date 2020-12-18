@@ -8,8 +8,10 @@ permalink: /reference/operators/sdf/dodecahedronFractalSdf
 
 # dodecahedronFractalSdf
 
-Beta
-{: .label .label-yellow }
+Category: sdf
+OP Type: raytk.operators.sdf.dodecahedronFractalSdf
+
+
 
 ## Parameters
 

@@ -8,6 +8,11 @@ permalink: /reference/operators/function/addFn
 
 # addFn
 
+Category: function
+OP Type: raytk.operators.function.addFn
+
+
+
 ## Parameters
 
 * `Enable`

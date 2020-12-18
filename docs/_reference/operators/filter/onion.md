@@ -8,6 +8,11 @@ permalink: /reference/operators/filter/onion
 
 # onion
 
+Category: filter
+OP Type: raytk.operators.filter.onion
+
+
+
 ## Parameters
 
 * `Enable`

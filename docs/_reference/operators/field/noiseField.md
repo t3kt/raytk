@@ -8,6 +8,11 @@ permalink: /reference/operators/field/noiseField
 
 # noiseField
 
+Category: field
+OP Type: raytk.operators.field.noiseField
+
+
+
 A float or vector field that uses one of several noise functions.
 
 ## Parameters

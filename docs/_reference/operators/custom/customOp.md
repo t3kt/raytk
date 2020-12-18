@@ -8,6 +8,11 @@ permalink: /reference/operators/custom/customOp
 
 # customOp
 
+Category: custom
+OP Type: raytk.operators.custom.customOp
+
+
+
 ## Parameters
 
 * `Enable`
@@ -25,6 +30,7 @@ permalink: /reference/operators/custom/customOp
 * `Coordtype`
 * `Returntype`
 * `Contexttype`
+* `Inspect`
 * `Createopglobals`
 * `Createinit`
 * `Createfunction`
@@ -32,4 +38,3 @@ permalink: /reference/operators/custom/customOp
 * `Createmissingparams`
 * `Removeunusedparams`
 * `Autocreatemissingparams`
-* `Inspect`

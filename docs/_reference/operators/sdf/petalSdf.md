@@ -8,6 +8,11 @@ permalink: /reference/operators/sdf/petalSdf
 
 # petalSdf
 
+Category: sdf
+OP Type: raytk.operators.sdf.petalSdf
+
+
+
 ## Parameters
 
 * `Thickness`

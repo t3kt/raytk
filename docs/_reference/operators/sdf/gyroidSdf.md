@@ -8,6 +8,11 @@ permalink: /reference/operators/sdf/gyroidSdf
 
 # gyroidSdf
 
+Category: sdf
+OP Type: raytk.operators.sdf.gyroidSdf
+
+
+
 ## Parameters
 
 * `Coordtype`

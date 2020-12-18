@@ -8,6 +8,11 @@ permalink: /reference/operators/sdf/coneSdf
 
 # coneSdf
 
+Category: sdf
+OP Type: raytk.operators.sdf.coneSdf
+
+
+
 Defines a cone or capped cone shape.
 
 * `Shape` - choose between a regular cone and a capped cone without a tip.
