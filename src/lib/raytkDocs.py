@@ -19,22 +19,65 @@ else:
 _defaultParamHelp = 'Help not available.'
 
 @dataclass
+class MenuOptionHelp:
+	name: Optional[str] = None
+	label: Optional[str] = None
+	description: Optional[str] = None
+
+	def formatMarkdownListItem(self, includeLabel=False):
+		text = f'* `{self.name}`'
+		if self.label and includeLabel:
+			text += f' *{self.label}*'
+		if self.description:
+			text += ': ' + self.description
+		return text
+
+@dataclass
 class ROPParamHelp:
 	name: Optional[str] = None
+	label: Optional[str] = None
 	summary: Optional[str] = None
+	menuOptions: List[MenuOptionHelp] = field(default_factory=list)
 
-	def formatMarkdownListItem(self):
+	def formatMarkdownListItem(self, includeLabel=False):
 		text = f'* `{self.name}`'
+		if includeLabel and self.label:
+			text += f' *{self.label}*'
 		if self.summary:
 			text += f': {self.summary}'
+		if self.menuOptions:
+			text += '\n'.join([''] + [
+				'  ' + option.formatMarkdownListItem(includeLabel)
+				for option in self.menuOptions
+			])
 		return text
+
+	def pullOptionsFromPar(self, par: 'Par'):
+		if not par.isMenu:
+			return
+		descriptions = {
+			o.name: o.description
+			for o in self.menuOptions
+		}
+		self.menuOptions = [
+			MenuOptionHelp(
+				name,
+				label,
+				descriptions.get(name)
+			)
+			for name, label in zip(par.menuNames, par.menuLabels)
+		]
 
 	@classmethod
 	def extractFromPar(cls, par: 'Par'):
-		return cls(
-			par.tupletName,
-			par.help if par.help != _defaultParamHelp else None,
+		parHelp = cls(
+			name=par.tupletName,
+			label=par.label,
+			summary=par.help if par.help != _defaultParamHelp else None,
 		)
+		if par.isMenu:
+			parHelp.pullOptionsFromPar(par)
+		return par
 
 @dataclass
 class ROPHelp:
@@ -138,7 +181,7 @@ Category: {ropInfo.categoryName}
 			parts += [
 				'## Parameters',
 				'\n'.join([
-					parHelp.formatMarkdownListItem()
+					parHelp.formatMarkdownListItem(includeLabel=True)
 					for parHelp in self.parameters
 				])
 			]
@@ -300,14 +343,35 @@ class OpDocManager:
 			raise Exception('Invalid params section')
 		items = _parseMarkdownListItems(paramsText)
 		for item in items:
-			name, desc = _extractNameAndDescriptionFromListItem(item)
+			print(f'parsing item: {item!r}')
+			name, label, desc = _parseNamedListItem(item)
 			if not name:
 				raise Exception(f'Invalid param list item: {item!r}')
 			if ' ' in name:
 				name = name.replace(' ', '').capitalize()
+			menuOpts = []
+			print(f'desc: {desc!r}')
+			if '\n  * ' in desc:
+				print(' found menu option separator !')
+				desc, optionsText = desc.split('\n  * ', maxsplit=1)
+				optionsText = '* ' + optionsText.replace('\n  * ', '\n* ')
+				print(f'optionsText: {optionsText!r}')
+				subItems = _parseMarkdownListItems(optionsText)
+				print(f' found subItems: {subItems}')
+				for subItem in subItems:
+					optName, optLabel, optDesc = _parseNamedListItem(subItem)
+					menuOpts.append(
+						MenuOptionHelp(
+							optName,
+							optLabel,
+							optDesc,
+						)
+					)
 			paramHelp = ROPParamHelp(
 				name=name,
+				label=label,
 				summary=desc,
+				menuOptions=menuOpts,
 			)
 			ropHelp.replaceOrAddParam(name, paramHelp)
 
@@ -316,27 +380,33 @@ class OpDocManager:
 			paramHelp.name: paramHelp
 			for paramHelp in ropHelp.parameters
 		}
+		print('DEBUG _pullFromMissingParamsInto()')
 		for parTuplet in self.rop.customTuplets:
 			if parTuplet[0].readOnly:
 				continue
 			name = parTuplet[0].tupletName
+			print(f'DEBUG _pullFromMissingParamsInto()   {name}')
 			helpText = parTuplet[0].help
 			if helpText == _defaultParamHelp:
 				helpText = ''
 			paramHelp = paramHelps.get(name) or ROPParamHelp(name)
 			if helpText and not paramHelp.summary:
 				paramHelp.summary = helpText
+			print(f'DEBUG _pullFromMissingParamsInto   isMenu: {parTuplet[0].isMenu}')
+			if parTuplet[0].isMenu:
+				paramHelp.pullOptionsFromPar(parTuplet[0])
 			paramHelps[name] = paramHelp
 		ropHelp.parameters = list(paramHelps.values())
 
 	def setUpMissingParts(self):
 		ropHelp = self._parseDAT()
 		self._pullFromMissingParamsInto(ropHelp)
-		print('Parsed help as: ', mod.dataclasses.asdict(ropHelp))
+		print('Parsed help as: ', TDJSON.jsonToText(mod.dataclasses.asdict(ropHelp)))
 		self._writeToDAT(ropHelp)
 
 	def pushToParams(self):
 		ropHelp = self._parseDAT()
+		print('Parsed help as: ', TDJSON.jsonToText(mod.dataclasses.asdict(ropHelp)))
 		for parHelp in ropHelp.parameters:
 			if not parHelp.summary:
 				continue
@@ -384,9 +454,10 @@ def _parseMarkdownListItems(text: str) -> 'List[str]':
 		return []
 	return _listItemsPattern.findall(text)
 
-_namedListItemPattern = re.compile(r'^\* `(?P<name>[\w ]+)`(:\s+(?P<desc>.*))?', re.DOTALL)
-def _extractNameAndDescriptionFromListItem(itemText: str):
+_namedListItemPattern = re.compile(
+	r'^\s*\* `(?P<name>[\w ]+)`\s*(\*(?P<label>[\w\s]+)\*)?\s*([:-]\s+(?P<desc>.*))?', re.DOTALL)
+def _parseNamedListItem(itemText: str) -> 'Tuple[str, str, str]':
 	match = _namedListItemPattern.match(itemText)
 	if not match:
-		return '', itemText.lstrip('* ')
-	return match.group('name'), match.group('desc') or ''
+		return '', '', itemText.lstrip('* ')
+	return match.group('name'), match.group('label') or '', match.group('desc') or ''
