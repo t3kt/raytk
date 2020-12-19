@@ -4,6 +4,8 @@ title: combineChamfer
 parent: Combine Operators
 grand_parent: Operators
 permalink: /reference/operators/combine/combineChamfer
+redirect_from:
+  - /reference/opType/raytk.operators.combine.combineChamfer/
 ---
 
 # combineChamfer
@@ -25,6 +27,7 @@ Chamfer SDF combine, producing a flat surface at a 45 degree angle along the ble
 * `Radius` *Radius*: The size of the blending region.
 * `Useradiusfield` *Use Radius Field*
 * `Inspect` *Inspect*
+* `Help` *Help*
 
 ## Inputs
 

@@ -4,6 +4,8 @@ title: transform
 parent: Filter Operators
 grand_parent: Operators
 permalink: /reference/operators/filter/transform
+redirect_from:
+  - /reference/opType/raytk.operators.filter.transform/
 ---
 
 # transform
@@ -43,6 +45,7 @@ It either uses the origin (0,0,0) as the pivot point, or can use another pivot p
   * `zxy` *Rz Rx Ry*
   * `zyx` *Rz Ry Rx*
 * `Inspect` *Inspect*
+* `Help` *Help*
 
 ## Inputs
 

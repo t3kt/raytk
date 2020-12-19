@@ -4,6 +4,8 @@ title: fisheyeCamera
 parent: Camera Operators
 grand_parent: Operators
 permalink: /reference/operators/camera/fisheyeCamera
+redirect_from:
+  - /reference/opType/raytk.operators.camera.fisheyeCamera/
 ---
 
 # fisheyeCamera
@@ -27,3 +29,4 @@ A 360 fisheye camera, that shows all directions from a specific point in space.
 * `Camrot` *Rotate*
 * `Lookatpos` *Look At Position*
 * `Camup` *Up Vector*
+* `Help` *Help*

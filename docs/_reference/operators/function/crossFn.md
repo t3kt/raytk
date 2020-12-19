@@ -4,6 +4,8 @@ title: crossFn
 parent: Function Operators
 grand_parent: Operators
 permalink: /reference/operators/function/crossFn
+redirect_from:
+  - /reference/opType/raytk.operators.function.crossFn/
 ---
 
 # crossFn
@@ -17,6 +19,7 @@ Category: function
 * `Enable` *Enable*
 * `Mix` *Mix*
 * `Inspect` *Inspect*
+* `Help` *Help*
 
 ## Inputs
 

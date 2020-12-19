@@ -4,6 +4,8 @@ title: translate
 parent: Filter Operators
 grand_parent: Operators
 permalink: /reference/operators/filter/translate
+redirect_from:
+  - /reference/opType/raytk.operators.filter.translate/
 ---
 
 # translate
@@ -23,6 +25,7 @@ If a field is used, the field values are added to the Translate XYZ parameter.
 * `Translate` *Translate*
 * `Usefield` *Use Field*
 * `Inspect` *Inspect*
+* `Help` *Help*
 
 ## Inputs
 

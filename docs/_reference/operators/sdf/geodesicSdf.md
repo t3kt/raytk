@@ -4,6 +4,8 @@ title: geodesicSdf
 parent: Sdf Operators
 grand_parent: Operators
 permalink: /reference/operators/sdf/geodesicSdf
+redirect_from:
+  - /reference/opType/raytk.operators.sdf.geodesicSdf/
 ---
 
 # geodesicSdf
@@ -30,6 +32,7 @@ Based on [Geodesic domain manipulation](https://www.shadertoy.com/view/4tG3zW) b
 * `Spikeoffset` *Spike Offset*: The distance from the center point of the base of each spike.
 * `Spikeradius` *Spike Radius*: The base radius of each spike.
 * `Inspect` *Inspect*
+* `Help` *Help*
 
 ## Inputs
 

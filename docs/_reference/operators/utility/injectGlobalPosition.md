@@ -4,6 +4,8 @@ title: injectGlobalPosition
 parent: Utility Operators
 grand_parent: Operators
 permalink: /reference/operators/utility/injectGlobalPosition
+redirect_from:
+  - /reference/opType/raytk.operators.utility.injectGlobalPosition/
 ---
 
 # injectGlobalPosition
@@ -20,6 +22,7 @@ This can be used for fields that are passed to other ops that are using downstre
 
 * `Enable` *Enable*
 * `Inspect` *Inspect*
+* `Help` *Help*
 
 ## Inputs
 

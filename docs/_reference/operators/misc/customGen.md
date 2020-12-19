@@ -4,6 +4,8 @@ title: customGen
 parent: Misc Operators
 grand_parent: Operators
 permalink: /reference/operators/misc/customGen
+redirect_from:
+  - /reference/opType/raytk.operators.misc.customGen/
 ---
 
 # customGen
@@ -46,3 +48,4 @@ Category: misc
   * `raytkSdf` *raytkSdf*
   * `raytkMaterial` *raytkMaterial*
 * `Inspect` *Inspect*
+* `Help` *Help*

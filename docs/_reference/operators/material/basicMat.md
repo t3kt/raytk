@@ -4,6 +4,8 @@ title: basicMat
 parent: Material Operators
 grand_parent: Operators
 permalink: /reference/operators/material/basicMat
+redirect_from:
+  - /reference/opType/raytk.operators.material.basicMat/
 ---
 
 # basicMat
@@ -23,6 +25,7 @@ Category: material
 * `Specularexp` *Specular Exponent*
 * `Enableshadow` *Enable Shadow*
 * `Inspect` *Inspect*
+* `Help` *Help*
 
 ## Inputs
 

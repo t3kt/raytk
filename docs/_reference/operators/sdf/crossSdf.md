@@ -4,6 +4,8 @@ title: crossSdf
 parent: Sdf Operators
 grand_parent: Operators
 permalink: /reference/operators/sdf/crossSdf
+redirect_from:
+  - /reference/opType/raytk.operators.sdf.crossSdf/
 ---
 
 # crossSdf
@@ -20,3 +22,4 @@ An SDF for a 3D cross of infinite length along each axis.
 * `Size` *Size*: The width of the arms of the cross.
 * `Smoothradius` *Smooth Radius*: Smoothing applied to the intersections of the arms.
 * `Inspect` *Inspect*
+* `Help` *Help*

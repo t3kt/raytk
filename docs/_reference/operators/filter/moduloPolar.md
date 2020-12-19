@@ -4,6 +4,8 @@ title: moduloPolar
 parent: Filter Operators
 grand_parent: Operators
 permalink: /reference/operators/filter/moduloPolar
+redirect_from:
+  - /reference/opType/raytk.operators.filter.moduloPolar/
 ---
 
 # moduloPolar
@@ -46,6 +48,7 @@ Repeats space radially, like a kaleidoscope.
 * `Limithigh` *Limit High*
 * `Iterateoncells` *Iterate On Cells*
 * `Inspect` *Inspect*
+* `Help` *Help*
 
 ## Inputs
 

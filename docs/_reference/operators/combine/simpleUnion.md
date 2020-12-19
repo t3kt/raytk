@@ -4,6 +4,8 @@ title: simpleUnion
 parent: Combine Operators
 grand_parent: Operators
 permalink: /reference/operators/combine/simpleUnion
+redirect_from:
+  - /reference/opType/raytk.operators.combine.simpleUnion/
 ---
 
 # simpleUnion
@@ -20,6 +22,7 @@ The resulting shape is the combined areas of all of the inputs.
 
 * `Enable` *Enable*
 * `Inspect` *Inspect*
+* `Help` *Help*
 
 ## Inputs
 

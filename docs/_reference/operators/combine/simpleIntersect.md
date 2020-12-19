@@ -4,6 +4,8 @@ title: simpleIntersect
 parent: Combine Operators
 grand_parent: Operators
 permalink: /reference/operators/combine/simpleIntersect
+redirect_from:
+  - /reference/opType/raytk.operators.combine.simpleIntersect/
 ---
 
 # simpleIntersect
@@ -20,6 +22,7 @@ Produces the areas where all input shapes overlap.
 
 * `Enable` *Enable*
 * `Inspect` *Inspect*
+* `Help` *Help*
 
 ## Inputs
 

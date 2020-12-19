@@ -4,6 +4,8 @@ title: prismSdf
 parent: Sdf Operators
 grand_parent: Operators
 permalink: /reference/operators/sdf/prismSdf
+redirect_from:
+  - /reference/opType/raytk.operators.sdf.prismSdf/
 ---
 
 # prismSdf
@@ -25,3 +27,4 @@ A prism shape, like a cylinder but with flat sides, along the z axis.
 * `Radius` *Radius*: The radius of the prism.
 * `Height` *Height*: The height / length of the prism.
 * `Inspect` *Inspect*
+* `Help` *Help*

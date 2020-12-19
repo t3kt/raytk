@@ -4,6 +4,8 @@ title: multiplyFn
 parent: Function Operators
 grand_parent: Operators
 permalink: /reference/operators/function/multiplyFn
+redirect_from:
+  - /reference/opType/raytk.operators.function.multiplyFn/
 ---
 
 # multiplyFn
@@ -17,6 +19,7 @@ Category: function
 * `Enable` *Enable*
 * `Multiply` *Multiply*
 * `Inspect` *Inspect*
+* `Help` *Help*
 
 ## Inputs
 

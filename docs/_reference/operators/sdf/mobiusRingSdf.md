@@ -4,6 +4,8 @@ title: mobiusRingSdf
 parent: Sdf Operators
 grand_parent: Operators
 permalink: /reference/operators/sdf/mobiusRingSdf
+redirect_from:
+  - /reference/opType/raytk.operators.sdf.mobiusRingSdf/
 ---
 
 # mobiusRingSdf
@@ -24,6 +26,7 @@ SDF for a squared mobius ring, which is like a rectangular bar twisted and then 
 * `Twist` *Twist*: The number of times to twist the ring. Fractional numbers will create a discontinuity in the ring where it starts/ends.
 * `Twistphase` *Twist Phase*: Shift applied to the twisting of the ring.
 * `Inspect` *Inspect*
+* `Help` *Help*
 
 ## Inputs
 

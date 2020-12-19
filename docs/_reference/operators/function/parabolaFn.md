@@ -4,6 +4,8 @@ title: parabolaFn
 parent: Function Operators
 grand_parent: Operators
 permalink: /reference/operators/function/parabolaFn
+redirect_from:
+  - /reference/opType/raytk.operators.function.parabolaFn/
 ---
 
 # parabolaFn
@@ -22,3 +24,4 @@ Category: function
   * `CameraContext` *Camera Context*
   * `LightContext` *Light Context*
 * `Inspect` *Inspect*
+* `Help` *Help*

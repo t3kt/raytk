@@ -4,6 +4,8 @@ title: polygonSdf2d
 parent: Sdf2d Operators
 grand_parent: Operators
 permalink: /reference/operators/sdf2d/polygonSdf2d
+redirect_from:
+  - /reference/opType/raytk.operators.sdf2d.polygonSdf2d/
 ---
 
 # polygonSdf2d
@@ -21,3 +23,4 @@ Category: sdf2d
   * `hexagram` *Hexagram*
 * `Radius` *Radius*
 * `Inspect` *Inspect*
+* `Help` *Help*

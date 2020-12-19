@@ -4,6 +4,8 @@ title: juliaSdf
 parent: Sdf Operators
 grand_parent: Operators
 permalink: /reference/operators/sdf/juliaSdf
+redirect_from:
+  - /reference/opType/raytk.operators.sdf.juliaSdf/
 ---
 
 # juliaSdf
@@ -20,3 +22,4 @@ Category: sdf
 * `C4` *C 4*
 * `Iterations` *Iterations*
 * `Inspect` *Inspect*
+* `Help` *Help*

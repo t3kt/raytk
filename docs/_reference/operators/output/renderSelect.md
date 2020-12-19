@@ -4,6 +4,8 @@ title: renderSelect
 parent: Output Operators
 grand_parent: Operators
 permalink: /reference/operators/output/renderSelect
+redirect_from:
+  - /reference/opType/raytk.operators.output.renderSelect/
 ---
 
 # renderSelect
@@ -30,3 +32,4 @@ Category: output
   * `objectIdOut` *Object Id*
   * `debugOut` *Debug*
 * `Lockbuffermenu` *Lock Buffer Menu*
+* `Help` *Help*

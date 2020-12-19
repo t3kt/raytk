@@ -4,6 +4,8 @@ title: depthMap
 parent: Post Operators
 grand_parent: Operators
 permalink: /reference/operators/post/depthMap
+redirect_from:
+  - /reference/opType/raytk.operators.post.depthMap/
 ---
 
 # depthMap
@@ -24,3 +26,4 @@ Category: post
   * `powe` *Input ^ Exponent*
 * `Expval` *Exponent Value*
 * `Outputop` *Output OP*
+* `Help` *Help*

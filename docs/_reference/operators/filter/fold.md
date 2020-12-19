@@ -4,6 +4,8 @@ title: fold
 parent: Filter Operators
 grand_parent: Operators
 permalink: /reference/operators/filter/fold
+redirect_from:
+  - /reference/opType/raytk.operators.filter.fold/
 ---
 
 # fold
@@ -20,6 +22,7 @@ Category: filter
   * `mengerfold` *Menger Fold*
 * `Distance` *Distance*
 * `Inspect` *Inspect*
+* `Help` *Help*
 
 ## Inputs
 

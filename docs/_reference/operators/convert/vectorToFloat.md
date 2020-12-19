@@ -4,6 +4,8 @@ title: vectorToFloat
 parent: Convert Operators
 grand_parent: Operators
 permalink: /reference/operators/convert/vectorToFloat
+redirect_from:
+  - /reference/opType/raytk.operators.convert.vectorToFloat/
 ---
 
 # vectorToFloat
@@ -23,6 +25,7 @@ Category: convert
   * `lengthxyz` *Length(XYZ)*
   * `lengthxyzw` *Length(xyzw)*
 * `Inspect` *Inspect*
+* `Help` *Help*
 
 ## Inputs
 

@@ -4,6 +4,8 @@ title: layoutGrid
 parent: Combine Operators
 grand_parent: Operators
 permalink: /reference/operators/combine/layoutGrid
+redirect_from:
+  - /reference/opType/raytk.operators.combine.layoutGrid/
 ---
 
 # layoutGrid
@@ -31,6 +33,7 @@ The input shapes are shifted to the center of their cell.
 * `Size` *Size*: The size of the cells
 * `Prescale` *Pre Scale*: Scales the inputs within their cells.
 * `Inspect` *Inspect*
+* `Help` *Help*
 
 ## Inputs
 

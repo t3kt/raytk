@@ -4,6 +4,8 @@ title: combineFields
 parent: Combine Operators
 grand_parent: Operators
 permalink: /reference/operators/combine/combineFields
+redirect_from:
+  - /reference/opType/raytk.operators.combine.combineFields/
 ---
 
 # combineFields
@@ -28,6 +30,7 @@ Combines float or vector fields using one of several mathematical operations.
   * `max` *Maximum*
 * `Swaporder` *Swap Order*
 * `Inspect` *Inspect*
+* `Help` *Help*
 
 ## Inputs
 

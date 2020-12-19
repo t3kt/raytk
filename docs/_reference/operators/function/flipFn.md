@@ -4,6 +4,8 @@ title: flipFn
 parent: Function Operators
 grand_parent: Operators
 permalink: /reference/operators/function/flipFn
+redirect_from:
+  - /reference/opType/raytk.operators.function.flipFn/
 ---
 
 # flipFn
@@ -36,6 +38,7 @@ Function that flips its input in one of several different modes.
   * `CameraContext` *Camera Context*
   * `LightContext` *Light Context*
 * `Inspect` *Inspect*
+* `Help` *Help*
 
 ## Inputs
 

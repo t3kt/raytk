@@ -4,6 +4,8 @@ title: combineStairs
 parent: Combine Operators
 grand_parent: Operators
 permalink: /reference/operators/combine/combineStairs
+redirect_from:
+  - /reference/opType/raytk.operators.combine.combineStairs/
 ---
 
 # combineStairs
@@ -28,6 +30,7 @@ Stair SDF combine, producing steps along the blend region.
 * `Offset` *Offset*: Shifts the steps along the blend region, with 0 being no shift, and 1 being a full shift of the total number of steps.
 * `Useoffsetfield` *Use Offset Field*
 * `Inspect` *Inspect*
+* `Help` *Help*
 
 ## Inputs
 

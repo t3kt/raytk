@@ -4,6 +4,8 @@ title: softShadow
 parent: Light Operators
 grand_parent: Operators
 permalink: /reference/operators/light/softShadow
+redirect_from:
+  - /reference/opType/raytk.operators.light.softShadow/
 ---
 
 # softShadow
@@ -22,3 +24,4 @@ A soft-edged shadow.
 * `Overridemaxdist` *Override Maximum Distance*
 * `Maxdist` *Maximum Distance*
 * `Inspect` *Inspect*
+* `Help` *Help*

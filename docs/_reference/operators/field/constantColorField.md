@@ -4,6 +4,8 @@ title: constantColorField
 parent: Field Operators
 grand_parent: Operators
 permalink: /reference/operators/field/constantColorField
+redirect_from:
+  - /reference/opType/raytk.operators.field.constantColorField/
 ---
 
 # constantColorField
@@ -30,3 +32,4 @@ This is the same as `constantField`, but the parameter is specified as a color i
 * `Color` *Color*
 * `Alpha` *Alpha*
 * `Inspect` *Inspect*
+* `Help` *Help*

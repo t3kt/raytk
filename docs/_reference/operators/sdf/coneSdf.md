@@ -4,6 +4,8 @@ title: coneSdf
 parent: Sdf Operators
 grand_parent: Operators
 permalink: /reference/operators/sdf/coneSdf
+redirect_from:
+  - /reference/opType/raytk.operators.sdf.coneSdf/
 ---
 
 # coneSdf
@@ -25,6 +27,7 @@ Defines a cone or capped cone shape.
 * `Radius` *Radius*: The radius of the base of the cone.
 * `Radius2` *Radius 2*: The radius of the top of the cone, if using a capped cone.
 * `Inspect` *Inspect*
+* `Help` *Help*
 
 ## Inputs
 

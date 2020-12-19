@@ -4,6 +4,8 @@ title: superQuadSdf2d
 parent: Sdf2d Operators
 grand_parent: Operators
 permalink: /reference/operators/sdf2d/superQuadSdf2d
+redirect_from:
+  - /reference/opType/raytk.operators.sdf2d.superQuadSdf2d/
 ---
 
 # superQuadSdf2d
@@ -17,3 +19,4 @@ Category: sdf2d
 * `Radius` *Radius*
 * `Exponent` *Exponent*
 * `Inspect` *Inspect*
+* `Help` *Help*

@@ -4,6 +4,8 @@ title: sdfToFloat
 parent: Convert Operators
 grand_parent: Operators
 permalink: /reference/operators/convert/sdfToFloat
+redirect_from:
+  - /reference/opType/raytk.operators.convert.sdfToFloat/
 ---
 
 # sdfToFloat
@@ -16,6 +18,7 @@ Category: convert
 
 * `Enable` *Enable*
 * `Inspect` *Inspect*
+* `Help` *Help*
 
 ## Inputs
 

@@ -4,6 +4,8 @@ title: constantField
 parent: Field Operators
 grand_parent: Operators
 permalink: /reference/operators/field/constantField
+redirect_from:
+  - /reference/opType/raytk.operators.field.constantField/
 ---
 
 # constantField
@@ -31,3 +33,4 @@ A float or vector field that evaluates to a constant value.
   * `LightContext` *Light Context*
 * `Value` *Value*
 * `Inspect` *Inspect*
+* `Help` *Help*

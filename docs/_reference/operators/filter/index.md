@@ -28,7 +28,7 @@ float/vector fields, etc). Some only support a limited set of return types.
 * [`iteratedTransform`](iteratedTransform/) - Performs a transform multiple times, optionally reflecting across axes in between the steps.
 * [`knife`](knife/) - Cuts off an SDF along a plane.
 * [`limitField`](limitField/) - 
-* [`magnet`](magnet/) - 
+* [`magnet`](magnet/) - Pulls or twists space within an area.
 * [`mirrorOctant`](mirrorOctant/) - Mirror coordinates across two axes and the diagonals.
 * [`modulo1D`](modulo1D/) - 
 * [`modulo2D`](modulo2D/) - Repeats space along 2 axes.

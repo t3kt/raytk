@@ -4,6 +4,8 @@ title: modulo1D
 parent: Filter Operators
 grand_parent: Operators
 permalink: /reference/operators/filter/modulo1D
+redirect_from:
+  - /reference/opType/raytk.operators.filter.modulo1D/
 ---
 
 # modulo1D
@@ -31,6 +33,7 @@ Category: filter
 * `Limitoffset` *Limit Offset*
 * `Iterateoncells` *Iterate On Cells*
 * `Inspect` *Inspect*
+* `Help` *Help*
 
 ## Inputs
 

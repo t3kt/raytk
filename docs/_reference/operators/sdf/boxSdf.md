@@ -4,6 +4,8 @@ title: boxSdf
 parent: Sdf Operators
 grand_parent: Operators
 permalink: /reference/operators/sdf/boxSdf
+redirect_from:
+  - /reference/opType/raytk.operators.sdf.boxSdf/
 ---
 
 # boxSdf
@@ -28,3 +30,4 @@ SDF for a box, optionally infinite one one axis.
 * `Scale` *Scale*: The size of the box in each dimension.
 * `Uniformscale` *Uniform Scale*: Scaling applied to all dimensions of the `Scale`.
 * `Inspect` *Inspect*
+* `Help` *Help*

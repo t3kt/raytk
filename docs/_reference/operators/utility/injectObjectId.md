@@ -4,6 +4,8 @@ title: injectObjectId
 parent: Utility Operators
 grand_parent: Operators
 permalink: /reference/operators/utility/injectObjectId
+redirect_from:
+  - /reference/opType/raytk.operators.utility.injectObjectId/
 ---
 
 # injectObjectId
@@ -23,6 +25,7 @@ the output.
 * `Enable` *Enable*
 * `Objectid` *Object Id*
 * `Inspect` *Inspect*
+* `Help` *Help*
 
 ## Inputs
 

@@ -4,6 +4,8 @@ title: round
 parent: Filter Operators
 grand_parent: Operators
 permalink: /reference/operators/filter/round
+redirect_from:
+  - /reference/opType/raytk.operators.filter.round/
 ---
 
 # round
@@ -26,6 +28,7 @@ See [example](https://www.shadertoy.com/view/Mt3BDj).
 * `Amount` *Amount*
 * `Usefield` *Use Field*
 * `Inspect` *Inspect*
+* `Help` *Help*
 
 ## Inputs
 

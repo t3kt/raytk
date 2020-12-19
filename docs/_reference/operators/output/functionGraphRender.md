@@ -4,6 +4,8 @@ title: functionGraphRender
 parent: Output Operators
 grand_parent: Operators
 permalink: /reference/operators/output/functionGraphRender
+redirect_from:
+  - /reference/opType/raytk.operators.output.functionGraphRender/
 ---
 
 # functionGraphRender
@@ -41,6 +43,7 @@ It provides several outputs:
 * `Res` *Resolution*
 * `Timerefop` *Time Reference Operator*
 * `Inspect` *Inspect*
+* `Help` *Help*
 
 ## Inputs
 

@@ -4,6 +4,8 @@ title: gyroidSdf
 parent: Sdf Operators
 grand_parent: Operators
 permalink: /reference/operators/sdf/gyroidSdf
+redirect_from:
+  - /reference/opType/raytk.operators.sdf.gyroidSdf/
 ---
 
 # gyroidSdf
@@ -39,3 +41,4 @@ See [wikipedia](https://en.wikipedia.org/wiki/Gyroid) for more information.
 * `Bias` *Bias*
 * `Thickness` *Thickness*: Expands the surfaces producing thicker shapes.
 * `Inspect` *Inspect*
+* `Help` *Help*

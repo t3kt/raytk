@@ -4,6 +4,8 @@ title: modulo3D
 parent: Filter Operators
 grand_parent: Operators
 permalink: /reference/operators/filter/modulo3D
+redirect_from:
+  - /reference/opType/raytk.operators.filter.modulo3D/
 ---
 
 # modulo3D
@@ -21,6 +23,7 @@ Repeats space along all 3 axes.
 * `Offset` *Offset*
 * `Shift` *Shift*
 * `Inspect` *Inspect*
+* `Help` *Help*
 
 ## Inputs
 

@@ -4,6 +4,8 @@ title: discSdf
 parent: Sdf Operators
 grand_parent: Operators
 permalink: /reference/operators/sdf/discSdf
+redirect_from:
+  - /reference/opType/raytk.operators.sdf.discSdf/
 ---
 
 # discSdf
@@ -21,3 +23,4 @@ Because the disc is infinitely thin, it will only appear as a line when viewed f
 * `Translate` *Translate*: Shifts the center of the disc.
 * `Radius` *Radius*: The radius of the disc.
 * `Inspect` *Inspect*
+* `Help` *Help*

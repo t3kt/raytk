@@ -4,6 +4,8 @@ title: customOp
 parent: Custom Operators
 grand_parent: Operators
 permalink: /reference/operators/custom/customOp
+redirect_from:
+  - /reference/opType/raytk.operators.custom.customOp/
 ---
 
 # customOp
@@ -50,6 +52,7 @@ Category: custom
   * `CameraContext` *Camera Context*
   * `LightContext` *Light Context*
 * `Inspect` *Inspect*
+* `Help` *Help*
 * `Createopglobals` *Create Op Globals*
 * `Createinit` *Create Init*
 * `Createfunction` *Create Function*

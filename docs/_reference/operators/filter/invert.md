@@ -4,6 +4,8 @@ title: invert
 parent: Filter Operators
 grand_parent: Operators
 permalink: /reference/operators/filter/invert
+redirect_from:
+  - /reference/opType/raytk.operators.filter.invert/
 ---
 
 # invert
@@ -20,6 +22,7 @@ If used on a box, this can create an empty room with the shape filling all the s
 
 * `Enable` *Enable*
 * `Inspect` *Inspect*
+* `Help` *Help*
 
 ## Inputs
 

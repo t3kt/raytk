@@ -4,6 +4,8 @@ title: spiralSdf
 parent: Sdf Operators
 grand_parent: Operators
 permalink: /reference/operators/sdf/spiralSdf
+redirect_from:
+  - /reference/opType/raytk.operators.sdf.spiralSdf/
 ---
 
 # spiralSdf
@@ -25,6 +27,7 @@ Based on [Spiral Tiling](https://www.shadertoy.com/view/ls2GRz) by Knightly.
 * `Thickness` *Thickness*: Thickness of the arms of the spiral.
 * `Exponent` *Exponent*
 * `Inspect` *Inspect*
+* `Help` *Help*
 
 ## Inputs
 

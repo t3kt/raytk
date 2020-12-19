@@ -4,6 +4,8 @@ title: floatToVector
 parent: Convert Operators
 grand_parent: Operators
 permalink: /reference/operators/convert/floatToVector
+redirect_from:
+  - /reference/opType/raytk.operators.convert.floatToVector/
 ---
 
 # floatToVector
@@ -44,6 +46,7 @@ Category: convert
   * `zero` *Zero*
   * `one` *One*
 * `Inspect` *Inspect*
+* `Help` *Help*
 
 ## Inputs
 

@@ -4,6 +4,8 @@ title: extractIteration
 parent: Utility Operators
 grand_parent: Operators
 permalink: /reference/operators/utility/extractIteration
+redirect_from:
+  - /reference/opType/raytk.operators.utility.extractIteration/
 ---
 
 # extractIteration
@@ -19,6 +21,7 @@ operator.
 
 * `Enable` *Enable*
 * `Inspect` *Inspect*
+* `Help` *Help*
 
 ## Inputs
 

@@ -4,6 +4,8 @@ title: mirrorOctant
 parent: Filter Operators
 grand_parent: Operators
 permalink: /reference/operators/filter/mirrorOctant
+redirect_from:
+  - /reference/opType/raytk.operators.filter.mirrorOctant/
 ---
 
 # mirrorOctant
@@ -26,6 +28,7 @@ Mirror coordinates across two axes and the diagonals.
 * `Rotateaxis` *Rotate Axis*
 * `Iterateoncells` *Iterate On Cells*
 * `Inspect` *Inspect*
+* `Help` *Help*
 
 ## Inputs
 

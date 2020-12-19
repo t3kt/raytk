@@ -4,6 +4,8 @@ title: raymarchRender3D
 parent: Output Operators
 grand_parent: Operators
 permalink: /reference/operators/output/raymarchRender3D
+redirect_from:
+  - /reference/opType/raytk.operators.output.raymarchRender3D/
 ---
 
 # raymarchRender3D
@@ -45,6 +47,7 @@ Renders a scene using 3D raymarching.
 * `Enableiterationoutput` *Enable Iteration Output*: Advance feature, not ready for use.
 * `Enableobjectidoutput` *Enable Object Id Output*: Advance feature, not ready for use.
 * `Enabledebugoutput` *Enable Debug Output*: Advance feature, not ready for use.
+* `Help` *Help*
 
 ## Inputs
 

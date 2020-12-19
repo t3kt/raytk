@@ -4,6 +4,8 @@ title: flip
 parent: Filter Operators
 grand_parent: Operators
 permalink: /reference/operators/filter/flip
+redirect_from:
+  - /reference/opType/raytk.operators.filter.flip/
 ---
 
 # flip
@@ -28,6 +30,7 @@ Category: filter
 * `Mergeradius` *Merge Radius*
 * `Iterateonsides` *Iterate On Size*
 * `Inspect` *Inspect*
+* `Help` *Help*
 
 ## Inputs
 

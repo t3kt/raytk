@@ -4,6 +4,8 @@ title: cubicPulseFn
 parent: Function Operators
 grand_parent: Operators
 permalink: /reference/operators/function/cubicPulseFn
+redirect_from:
+  - /reference/opType/raytk.operators.function.cubicPulseFn/
 ---
 
 # cubicPulseFn
@@ -23,3 +25,4 @@ Category: function
 * `Width` *Width*
 * `Phase` *Phase*
 * `Inspect` *Inspect*
+* `Help` *Help*

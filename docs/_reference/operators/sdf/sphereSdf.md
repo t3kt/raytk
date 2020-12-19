@@ -4,6 +4,8 @@ title: sphereSdf
 parent: Sdf Operators
 grand_parent: Operators
 permalink: /reference/operators/sdf/sphereSdf
+redirect_from:
+  - /reference/opType/raytk.operators.sdf.sphereSdf/
 ---
 
 # sphereSdf
@@ -19,3 +21,4 @@ SDF in 3D space for a uniform sphere.
 * `Translate` *Translate*: Moves the center of the sphere.
 * `Radius` *Radius*: The radius of the sphere.
 * `Inspect` *Inspect*
+* `Help` *Help*

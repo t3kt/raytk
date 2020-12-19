@@ -4,6 +4,8 @@ title: impulseFn
 parent: Function Operators
 grand_parent: Operators
 permalink: /reference/operators/function/impulseFn
+redirect_from:
+  - /reference/opType/raytk.operators.function.impulseFn/
 ---
 
 # impulseFn
@@ -30,3 +32,4 @@ Category: function
   * `CameraContext` *Camera Context*
   * `LightContext` *Light Context*
 * `Inspect` *Inspect*
+* `Help` *Help*

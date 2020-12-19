@@ -4,6 +4,8 @@ title: combineColumns
 parent: Combine Operators
 grand_parent: Operators
 permalink: /reference/operators/combine/combineColumns
+redirect_from:
+  - /reference/opType/raytk.operators.combine.combineColumns/
 ---
 
 # combineColumns
@@ -26,6 +28,7 @@ Columns SDF combine, producing n-1 circular columns/ridges at a 45 degree angles
 * `Radius` *Radius*: The size of the blending region.
 * `Useradiusfield` *Use Radius Field*
 * `Inspect` *Inspect*
+* `Help` *Help*
 
 ## Inputs
 

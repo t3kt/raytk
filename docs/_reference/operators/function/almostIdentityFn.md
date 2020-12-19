@@ -4,6 +4,8 @@ title: almostIdentityFn
 parent: Function Operators
 grand_parent: Operators
 permalink: /reference/operators/function/almostIdentityFn
+redirect_from:
+  - /reference/opType/raytk.operators.function.almostIdentityFn/
 ---
 
 # almostIdentityFn
@@ -23,3 +25,4 @@ Category: function
 * `Threshold` *Threshold*
 * `Basevalue` *Base Value*
 * `Inspect` *Inspect*
+* `Help` *Help*

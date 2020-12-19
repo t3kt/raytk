@@ -4,6 +4,8 @@ title: moduloDistance
 parent: Filter Operators
 grand_parent: Operators
 permalink: /reference/operators/filter/moduloDistance
+redirect_from:
+  - /reference/opType/raytk.operators.filter.moduloDistance/
 ---
 
 # moduloDistance
@@ -27,6 +29,7 @@ Category: filter
 * `Center` *Center*
 * `Iterateonrings` *Iterate On Rings*
 * `Inspect` *Inspect*
+* `Help` *Help*
 
 ## Inputs
 

@@ -4,6 +4,8 @@ title: boxFrameSdf
 parent: Sdf Operators
 grand_parent: Operators
 permalink: /reference/operators/sdf/boxFrameSdf
+redirect_from:
+  - /reference/opType/raytk.operators.sdf.boxFrameSdf/
 ---
 
 # boxFrameSdf
@@ -20,3 +22,4 @@ SDF for the squared frame of the edges of a box.
 * `Scale` *Scale*: The size of the box.
 * `Thickness` *Thickness*: The thickness of the bars of the box.
 * `Inspect` *Inspect*
+* `Help` *Help*
