@@ -1,7 +1,8 @@
-# crossSdf (sdf)
-
 An SDF for a 3D cross of infinite length along each axis.
 
-* `Translate` - shifts the center of the cross.
-* `Size` - the width of the arms of the cross.
-* `Smooth Radius` - smooths the intersections between the arms.
+## Parameters
+
+* `Translate`: Moves the center of the cross.
+* `Size`: The width of the arms of the cross.
+* `Smoothradius`: Smoothing applied to the intersections of the arms.
+* `Inspect`
