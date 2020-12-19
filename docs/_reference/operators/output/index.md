@@ -19,6 +19,6 @@ image.
 
 * [`functionGraphRender`](functionGraphRender/) - Visualizes the graph of a function operator.
 * [`pointMapRender`](pointMapRender/) - 
-* [`raymarchRender3D`](raymarchRender3D/) - 
+* [`raymarchRender3D`](raymarchRender3D/) - Renders a scene using 3D raymarching.
 * [`render2D`](render2D/) - 
 * [`renderSelect`](renderSelect/) - 
