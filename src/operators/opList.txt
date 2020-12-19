@@ -144,7 +144,7 @@ sierpinskiTetrahedronSdf	/raytk/operators/sdf/sierpinskiTetrahedronSdf	/raytk/op
 solidAngleSdf	/raytk/operators/sdf/solidAngleSdf	/raytk/operators/sdf	raytkOP	sdf	sdf/solidAngleSdf	raytk.operators.sdf.solidAngleSdf	1	
 sphereSdf	/raytk/operators/sdf/sphereSdf	/raytk/operators/sdf	raytkOP	sdf	sdf/sphereSdf	raytk.operators.sdf.sphereSdf	4	
 spiralSdf	/raytk/operators/sdf/spiralSdf	/raytk/operators/sdf	raytkOP	sdf	sdf/spiralSdf	raytk.operators.sdf.spiralSdf	1	
-tetrahedronSdf	/raytk/operators/sdf/tetrahedronSdf	/raytk/operators/sdf	raytkOP	sdf	sdf/tetrahedronSdf	raytk.operators.sdf.tetrahedronSdf	2	
+tetrahedronSdf	/raytk/operators/sdf/tetrahedronSdf	/raytk/operators/sdf	raytkOP	sdf	sdf/tetrahedronSdf	raytk.operators.sdf.tetrahedronSdf	3	
 torusSdf	/raytk/operators/sdf/torusSdf	/raytk/operators/sdf	raytkOP	sdf	sdf/torusSdf	raytk.operators.sdf.torusSdf	5	
 circleSdf	/raytk/operators/sdf2d/circleSdf	/raytk/operators/sdf2d	raytkOP	sdf2d	sdf2d/circleSdf	raytk.operators.sdf2d.circleSdf	2	
 crossSdf2d	/raytk/operators/sdf2d/crossSdf2d	/raytk/operators/sdf2d	raytkOP	sdf2d	sdf2d/crossSdf2d	raytk.operators.sdf2d.crossSdf2d	1	
