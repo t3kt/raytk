@@ -9,7 +9,6 @@ permalink: /reference/operators/camera/fisheyeCamera
 # fisheyeCamera
 
 Category: camera
-OP Type: raytk.operators.camera.fisheyeCamera
 
 
 
@@ -17,9 +16,14 @@ A 360 fisheye camera, that shows all directions from a specific point in space.
 
 ## Parameters
 
-* `Fisheyemode`
-* `Aperture`
-* `Campos`
-* `Camrot`
-* `Lookatpos`
-* `Camup`
+* `Fisheyemode` *Fisheye Mode*
+  * `pinhole` *pinhole*
+  * `stereographic` *stereographic*
+  * `equiangular` *equirectangular*
+  * `equisolidangle` *equisolidangle*
+  * `orthographicfisheye` *orthographicfisheye*
+* `Aperture` *Aperture*
+* `Campos` *Position*
+* `Camrot` *Rotate*
+* `Lookatpos` *Look At Position*
+* `Camup` *Up Vector*

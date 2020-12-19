@@ -9,7 +9,6 @@ permalink: /reference/operators/sdf/torusSdf
 # torusSdf
 
 Category: sdf
-OP Type: raytk.operators.sdf.torusSdf
 
 
 
@@ -17,10 +16,10 @@ SDF for a torus or partial torus with end caps.
 
 ## Parameters
 
-* `Translate`
-* `Radius`
-* `Thickness`
-* `Enablecaps`
-* `Startangle`
-* `Endangle`
-* `Inspect`
+* `Translate` *Translate*
+* `Radius` *Radius*
+* `Thickness` *Thickness*
+* `Enablecaps` *Enable Caps*
+* `Startangle` *Start Angle*
+* `Endangle` *End Angle*
+* `Inspect` *Inspect*

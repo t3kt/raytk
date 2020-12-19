@@ -9,17 +9,30 @@ permalink: /reference/operators/filter/rotate
 # rotate
 
 Category: filter
-OP Type: raytk.operators.filter.rotate
 
 
 
 ## Parameters
 
-* `Enable`
-* `Rotatemode`
-* `Axis`
-* `Rotate`
-* `Rord`
-* `Rot`
-* `Usefield`
-* `Inspect`
+* `Enable` *Enable*
+* `Rotatemode` *Rotate Mode*
+  * `axis` *Axis*
+  * `euler` *Euler*
+  * `2d` *2D*
+* `Axis` *Axis*
+* `Rotate` *Rotate*
+* `Rord` *Rotate Order*
+  * `xyz` *Rx Ry Rz*
+  * `xzy` *Rx Rz Ry*
+  * `yxz` *Ry Rx Rz*
+  * `yzx` *Ry Rz Rx*
+  * `zxy` *Rz Rx Ry*
+  * `zyx` *Rz Ry Rx*
+* `Rot` *Rotate XYZ*
+* `Usefield` *Use Field*
+* `Inspect` *Inspect*
+
+## Inputs
+
+* `definition_in`
+* `definition_in_2`

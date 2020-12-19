@@ -9,7 +9,6 @@ permalink: /reference/operators/filter/knife
 # knife
 
 Category: filter
-OP Type: raytk.operators.filter.knife
 
 
 
@@ -17,8 +16,14 @@ Cuts off an SDF along a plane.
 
 ## Parameters
 
-* `Enable`
-* `Side`
-* `Offset`
-* `Rotateplane`
-* `Inspect`
+* `Enable` *Enable*
+* `Side` *Keep Side*
+  * `above` *Above Plane*
+  * `below` *Below Plane*
+* `Offset` *Offset*
+* `Rotateplane` *Rotate Plane*
+* `Inspect` *Inspect*
+
+## Inputs
+
+* `definition_in`

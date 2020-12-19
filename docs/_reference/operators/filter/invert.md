@@ -9,7 +9,6 @@ permalink: /reference/operators/filter/invert
 # invert
 
 Category: filter
-OP Type: raytk.operators.filter.invert
 
 
 
@@ -19,5 +18,9 @@ If used on a box, this can create an empty room with the shape filling all the s
 
 ## Parameters
 
-* `Enable`
-* `Inspect`
+* `Enable` *Enable*
+* `Inspect` *Inspect*
+
+## Inputs
+
+* `definition_in`

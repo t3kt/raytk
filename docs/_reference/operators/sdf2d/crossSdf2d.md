@@ -9,7 +9,6 @@ permalink: /reference/operators/sdf2d/crossSdf2d
 # crossSdf2d
 
 Category: sdf2d
-OP Type: raytk.operators.sdf2d.crossSdf2d
 
 
 
@@ -17,7 +16,7 @@ OP Type: raytk.operators.sdf2d.crossSdf2d
 
 ## Parameters
 
-* `Outersize`: The length of the arms.
-* `Innersize`: Thickness of the arms.
-* `Roundness`: How much to round out the intersection corners.
-* `Inspect`
+* `Outersize` *Outer Size*: The length of the arms.
+* `Innersize` *Inner Size*: Thickness of the arms.
+* `Roundness` *Roundness*: How much to round out the intersection corners.
+* `Inspect` *Inspect*

@@ -9,13 +9,17 @@ permalink: /reference/operators/filter/scale
 # scale
 
 Category: filter
-OP Type: raytk.operators.filter.scale
 
 
 
 ## Parameters
 
-* `Enable`
-* `Scale`
-* `Usefield`
-* `Inspect`
+* `Enable` *Enable*
+* `Scale` *Scale*
+* `Usefield` *Use Field*
+* `Inspect` *Inspect*
+
+## Inputs
+
+* `definition_in`
+* `definition_in_2`

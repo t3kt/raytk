@@ -9,7 +9,6 @@ permalink: /reference/operators/camera/orthoCamera
 # orthoCamera
 
 Category: camera
-OP Type: raytk.operators.camera.orthoCamera
 
 
 
@@ -17,6 +16,12 @@ An orthographic (non-perspective) camera, which can be used for flattened front/
 
 ## Parameters
 
-* `Direction`
-* `Campos`
-* `Rotate`
+* `Direction` *Direction*
+  * `xpos` *Left (X+)*
+  * `xneg` *Right (X-)*
+  * `ypos` *Bottom (Y+)*
+  * `yneg` *Top (Y-)*
+  * `zpos` *Back (Z+)*
+  * `zneg` *Front (Z-)*
+* `Campos` *Position*
+* `Rotate` *Rotate*

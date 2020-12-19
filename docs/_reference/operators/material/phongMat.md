@@ -9,13 +9,16 @@ permalink: /reference/operators/material/phongMat
 # phongMat
 
 Category: material
-OP Type: raytk.operators.material.phongMat
 
 
 
 ## Parameters
 
-* `Enable`
-* `Diffusecolor`
-* `Specularcolor`
-* `Inspect`
+* `Enable` *Enable*
+* `Diffusecolor` *Diffuse Color*
+* `Specularcolor` *Specular Color*
+* `Inspect` *Inspect*
+
+## Inputs
+
+* `definition_in`

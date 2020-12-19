@@ -9,7 +9,6 @@ permalink: /reference/operators/filter/radialClone
 # radialClone
 
 Category: filter
-OP Type: raytk.operators.filter.radialClone
 
 
 
@@ -19,13 +18,25 @@ Note that this runs its input multiple times, which can lead to performance issu
 
 ## Parameters
 
-* `Enable`
-* `Axis`
-* `Count`
-* `Anglerange`
-* `Angleoffset`
-* `Radiusoffset`
-* `Mergetype`
-* `Mergeradius`
-* `Iterationtype`
-* `Inspect`
+* `Enable` *Enable*
+* `Axis` *Axis*
+  * `x` *X*
+  * `y` *Y*
+  * `z` *Z*
+* `Count` *Count*
+* `Anglerange` *Angle Range*
+* `Angleoffset` *Angle Offset*
+* `Radiusoffset` *Radius Offset*
+* `Mergetype` *Merge Type*
+  * `union` *Union*
+  * `smoothunion` *Smooth Union*
+* `Mergeradius` *Merge Radius*
+* `Iterationtype` *Iteration Type*
+  * `none` *None*
+  * `index` *Clone Index*
+  * `scaled` *Scaled Clone Index*
+* `Inspect` *Inspect*
+
+## Inputs
+
+* `definition_in`

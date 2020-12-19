@@ -9,14 +9,20 @@ permalink: /reference/operators/filter/twist
 # twist
 
 Category: filter
-OP Type: raytk.operators.filter.twist
 
 
 
 ## Parameters
 
-* `Enable`
-* `Axis`
-* `Amount`
-* `Shift`
-* `Inspect`
+* `Enable` *Enable*
+* `Axis` *Axis*
+  * `x` *X*
+  * `y` *Y*
+  * `z` *Z*
+* `Amount` *Amount*
+* `Shift` *Shift*
+* `Inspect` *Inspect*
+
+## Inputs
+
+* `definition_in`

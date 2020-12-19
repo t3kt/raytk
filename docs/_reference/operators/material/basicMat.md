@@ -9,18 +9,23 @@ permalink: /reference/operators/material/basicMat
 # basicMat
 
 Category: material
-OP Type: raytk.operators.material.basicMat
 
 
 
 ## Parameters
 
-* `Enable`
-* `Basecolor`
-* `Skycolor`
-* `Skyamount`
-* `Skydir`
-* `Specularamount`
-* `Specularexp`
-* `Enableshadow`
-* `Inspect`
+* `Enable` *Enable*
+* `Basecolor` *Base Color*
+* `Skycolor` *Sky Color*
+* `Skyamount` *Sky Amount*
+* `Skydir` *Sky Direction*
+* `Specularamount` *Specular Amount*
+* `Specularexp` *Specular Exponent*
+* `Enableshadow` *Enable Shadow*
+* `Inspect` *Inspect*
+
+## Inputs
+
+* `definition_in`
+* `shadow_definition_in`
+* `baseColor_definition_in`

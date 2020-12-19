@@ -9,7 +9,6 @@ permalink: /reference/operators/combine/switch
 # switch
 
 Category: combine
-OP Type: raytk.operators.combine.switch
 
 
 
@@ -17,6 +16,13 @@ Switches between several inputs, without the need to rebuild the shader, allowin
 
 ## Parameters
 
-* `Enable`
-* `Source`
-* `Inspect`
+* `Enable` *Enable*
+* `Source` *Source*
+* `Inspect` *Inspect*
+
+## Inputs
+
+* `definition_in_1`
+* `definition_in_2`
+* `definition_in_3`
+* `definition_in_4`

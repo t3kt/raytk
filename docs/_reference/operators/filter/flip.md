@@ -9,17 +9,26 @@ permalink: /reference/operators/filter/flip
 # flip
 
 Category: filter
-OP Type: raytk.operators.filter.flip
 
 
 
 ## Parameters
 
-* `Enable`
-* `Axis`
-* `Offset`
-* `Shift`
-* `Mergetype`
-* `Mergeradius`
-* `Iterateonsides`
-* `Inspect`
+* `Enable` *Enable*
+* `Axis` *Axis*
+  * `x` *X*
+  * `y` *Y*
+  * `z` *Z*
+* `Offset` *Offset*
+* `Shift` *Shift*
+* `Mergetype` *Merge Type*
+  * `none` *None*
+  * `union` *Union*
+  * `smoothUnion` *Smooth Union*
+* `Mergeradius` *Merge Radius*
+* `Iterateonsides` *Iterate On Size*
+* `Inspect` *Inspect*
+
+## Inputs
+
+* `definition_in`

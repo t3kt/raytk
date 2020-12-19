@@ -9,13 +9,18 @@ permalink: /reference/operators/filter/fold
 # fold
 
 Category: filter
-OP Type: raytk.operators.filter.fold
 
 
 
 ## Parameters
 
-* `Enable`
-* `Function`
-* `Distance`
-* `Inspect`
+* `Enable` *Enable*
+* `Function` *Function*
+  * `boxfold` *Box Fold*
+  * `mengerfold` *Menger Fold*
+* `Distance` *Distance*
+* `Inspect` *Inspect*
+
+## Inputs
+
+* `definition_in`

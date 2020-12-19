@@ -9,18 +9,33 @@ permalink: /reference/operators/field/chopField
 # chopField
 
 Category: field
-OP Type: raytk.operators.field.chopField
 
 
 
 ## Parameters
 
-* `Coordtype`
-* `Returntype`
-* `Contexttype`
-* `Axis`
-* `Translate`
-* `Scale`
-* `Chop`
-* `Extendmode`
-* `Inspect`
+* `Coordtype` *Coord Type*
+  * `vec2` *2D*
+  * `vec3` *3D*
+* `Returntype` *Return Type*
+  * `float` *Float*
+  * `vec4` *Vector*
+* `Contexttype` *Context Type*
+  * `none` *None*
+  * `Context` *Context*
+  * `MaterialContext` *Material Context*
+  * `CameraContext` *Camera Context*
+  * `LightContext` *Light Context*
+* `Axis` *Axis*
+  * `x` *X*
+  * `y` *Y*
+  * `z` *Z*
+* `Translate` *Translate*
+* `Scale` *Scale*
+* `Chop` *CHOP*
+* `Extendmode` *Extend Mode*
+  * `hold` *Hold*
+  * `zero` *Zero*
+  * `repeat` *Repeat*
+  * `mirror` *Mirror*
+* `Inspect` *Inspect*

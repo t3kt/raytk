@@ -9,7 +9,6 @@ permalink: /reference/operators/field/cellTileField
 # cellTileField
 
 Category: field
-OP Type: raytk.operators.field.cellTileField
 
 
 
@@ -21,8 +20,16 @@ It isn't perfect but it is low cost.
 
 ## Parameters
 
-* `Translate`
-* `Scale`
-* `Cellstyle`
-* `Contexttype`
-* `Inspect`
+* `Translate` *Translate*
+* `Scale` *Scale*
+* `Cellstyle` *Cell Style*
+  * `beveledvoronoi` *Beveled Voronoi*
+  * `cellular` *Cellular*
+  * `raw` *Raw*
+* `Contexttype` *Context Type*
+  * `none` *None*
+  * `Context` *Context*
+  * `MaterialContext` *Material Context*
+  * `CameraContext` *Camera Context*
+  * `LightContext` *Light Context*
+* `Inspect` *Inspect*

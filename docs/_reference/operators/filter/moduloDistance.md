@@ -9,16 +9,25 @@ permalink: /reference/operators/filter/moduloDistance
 # moduloDistance
 
 Category: filter
-OP Type: raytk.operators.filter.moduloDistance
 
 
 
 ## Parameters
 
-* `Enable`
-* `Distancemode`
-* `Mirrortype`
-* `Length`
-* `Center`
-* `Iterateonrings`
-* `Inspect`
+* `Enable` *Enable*
+* `Distancemode` *Distance Mode*
+  * `xaxis` *X Axis*
+  * `yaxis` *Y Axis*
+  * `zaxis` *Z Axis*
+  * `spherical` *Spherical*
+* `Mirrortype` *Mirror Type*
+  * `none` *None*
+  * `mirror` *Mirror*
+* `Length` *Length*
+* `Center` *Center*
+* `Iterateonrings` *Iterate On Rings*
+* `Inspect` *Inspect*
+
+## Inputs
+
+* `definition_in`

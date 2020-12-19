@@ -9,19 +9,18 @@ permalink: /reference/operators/sdf/dodecahedronFractalSdf
 # dodecahedronFractalSdf
 
 Category: sdf
-OP Type: raytk.operators.sdf.dodecahedronFractalSdf
 
 
 
 ## Parameters
 
-* `Scale`
-* `Phi`
-* `Bailout`
-* `Rotate1`
-* `Rotateaxis1`
-* `Rotate2`
-* `Rotateaxis2`
-* `Offset`
-* `Iterations`
-* `Inspect`
+* `Scale` *Scale*
+* `Phi` *Phi*
+* `Bailout` *Bailout*
+* `Rotate1` *Rotate 1*
+* `Rotateaxis1` *Rotate Axis 1*
+* `Rotate2` *Rotate 2*
+* `Rotateaxis2` *Rotate Axis 2*
+* `Offset` *Offset*
+* `Iterations` *Iterations*
+* `Inspect` *Inspect*

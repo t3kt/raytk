@@ -9,7 +9,6 @@ permalink: /reference/operators/filter/transform
 # transform
 
 Category: filter
-OP Type: raytk.operators.filter.transform
 
 
 
@@ -20,15 +19,31 @@ It either uses the origin (0,0,0) as the pivot point, or can use another pivot p
 
 ## Parameters
 
-* `Enable`
-* `Enabletranslate`
-* `Enablerotate`
-* `Enablescale`
-* `Enablepivot`
-* `Translate`
-* `Rotate`
-* `Scale`
-* `Pivot`
-* `Transformorder`
-* `Rotateorder`
-* `Inspect`
+* `Enable` *Enable*
+* `Enabletranslate` *Enable Translate*
+* `Enablerotate` *Enable Rotate*
+* `Enablescale` *Enable Scale*
+* `Enablepivot` *Enable Pivot*
+* `Translate` *Translate*
+* `Rotate` *Rotate*
+* `Scale` *Scale*
+* `Pivot` *Pivot*
+* `Transformorder` *Transform Order*
+  * `srt` *Scale Rotate Translate*
+  * `str` *Scale Translate Rotate*
+  * `rst` *Rotate Scale Translate*
+  * `rts` *Rotate Translate Scale*
+  * `tsr` *Translate Scale Rotate*
+  * `trs` *Translate Rotate Scale*
+* `Rotateorder` *Rotate Order*
+  * `xyz` *Rx Ry Rz*
+  * `xzy` *Rx Rz Ry*
+  * `yxz` *Ry Rx Rz*
+  * `yzx` *Ry Rz Rx*
+  * `zxy` *Rz Rx Ry*
+  * `zyx` *Rz Ry Rx*
+* `Inspect` *Inspect*
+
+## Inputs
+
+* `definition_in`

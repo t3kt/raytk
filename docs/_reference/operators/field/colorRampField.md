@@ -9,7 +9,6 @@ permalink: /reference/operators/field/colorRampField
 # colorRampField
 
 Category: field
-OP Type: raytk.operators.field.colorRampField
 
 
 
@@ -17,10 +16,14 @@ A vector field that maps an input field to values from a range of colors.
 
 ## Parameters
 
-* `Enable`
-* `Color1`
-* `Color2`
-* `Alpha1`
-* `Alpha2`
-* `Clamprange`
-* `Inspect`
+* `Enable` *Enable*
+* `Color1` *Color 1*
+* `Color2` *Color 2*
+* `Alpha1` *Alpha 1*
+* `Alpha2` *Alpha 2*
+* `Clamprange` *Clamp Range*
+* `Inspect` *Inspect*
+
+## Inputs
+
+* `definition_in`

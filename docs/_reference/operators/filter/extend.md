@@ -9,13 +9,16 @@ permalink: /reference/operators/filter/extend
 # extend
 
 Category: filter
-OP Type: raytk.operators.filter.extend
 
 
 
 ## Parameters
 
-* `Enable`
-* `Center`
-* `Size`
-* `Inspect`
+* `Enable` *Enable*
+* `Center` *Center*
+* `Size` *Size*
+* `Inspect` *Inspect*
+
+## Inputs
+
+* `definition_in`

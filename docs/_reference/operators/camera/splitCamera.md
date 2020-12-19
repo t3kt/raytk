@@ -9,7 +9,6 @@ permalink: /reference/operators/camera/splitCamera
 # splitCamera
 
 Category: camera
-OP Type: raytk.operators.camera.splitCamera
 
 
 
@@ -17,6 +16,16 @@ A camera that splits the viewport into several zones, each using a separate came
 
 ## Parameters
 
-* `Enable`
-* `Layout`
-* `Rescale`
+* `Enable` *Enable*
+* `Layout` *Layout*
+  * `horz` *Horizontal*
+  * `vert` *Vertical*
+  * `grid` *Grid*
+* `Rescale` *Rescale*
+
+## Inputs
+
+* `definition_in_1`
+* `definition_in_2`
+* `definition_in_3`
+* `definition_in_4`

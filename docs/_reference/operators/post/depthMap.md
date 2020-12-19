@@ -9,16 +9,18 @@ permalink: /reference/operators/post/depthMap
 # depthMap
 
 Category: post
-OP Type: raytk.operators.post.depthMap
 
 
 
 ## Parameters
 
-* `Inputrange`
-* `Snapshotrange`
-* `Gamma`
-* `Clamp`
-* `Function`
-* `Expval`
-* `Outputop`
+* `Inputrange` *Input Range*
+* `Snapshotrange` *Snapshot Range*
+* `Gamma` *Gamma*
+* `Clamp` *Clamp to [0-1]*
+* `Function` *Function*
+  * `input` *None*
+  * `sqrt` *Square Root*
+  * `powe` *Input ^ Exponent*
+* `Expval` *Exponent Value*
+* `Outputop` *Output OP*

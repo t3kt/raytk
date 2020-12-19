@@ -9,7 +9,6 @@ permalink: /reference/operators/field/iterationField
 # iterationField
 
 Category: field
-OP Type: raytk.operators.field.iterationField
 
 
 
@@ -17,7 +16,17 @@ Field that returns the current iteration, from a downstream OP.
 
 ## Parameters
 
-* `Coordtype`
-* `Contexttype`
-* `Iterationmode`
-* `Inspect`
+* `Coordtype` *Coord Type*
+  * `vec2` *2D*
+  * `vec3` *3D*
+* `Contexttype` *Context Type*
+  * `none` *None*
+  * `Context` *Context*
+  * `MaterialContext` *Material Context*
+  * `CameraContext` *Camera Context*
+  * `LightContext` *Light Context*
+* `Iterationmode` *Iteration Mode*
+  * `index` *Index*
+  * `scaledindex` *Scaled Index*
+  * `full` *Full Data*
+* `Inspect` *Inspect*

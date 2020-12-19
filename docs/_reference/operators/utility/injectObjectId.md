@@ -9,7 +9,6 @@ permalink: /reference/operators/utility/injectObjectId
 # injectObjectId
 
 Category: utility
-OP Type: raytk.operators.utility.injectObjectId
 
 
 
@@ -21,6 +20,10 @@ the output.
 
 ## Parameters
 
-* `Enable`
-* `Objectid`
-* `Inspect`
+* `Enable` *Enable*
+* `Objectid` *Object Id*
+* `Inspect` *Inspect*
+
+## Inputs
+
+* `definition_in`

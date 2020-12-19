@@ -9,11 +9,14 @@ permalink: /reference/operators/utility/extractDebugValues
 # extractDebugValues
 
 Category: utility
-OP Type: raytk.operators.utility.extractDebugValues
 
 
 
 ## Parameters
 
-* `Enable`
-* `Inspect`
+* `Enable` *Enable*
+* `Inspect` *Inspect*
+
+## Inputs
+
+* `definition_in`

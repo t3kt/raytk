@@ -9,12 +9,11 @@ permalink: /reference/operators/sdf2d/superQuadSdf2d
 # superQuadSdf2d
 
 Category: sdf2d
-OP Type: raytk.operators.sdf2d.superQuadSdf2d
 
 
 
 ## Parameters
 
-* `Radius`
-* `Exponent`
-* `Inspect`
+* `Radius` *Radius*
+* `Exponent` *Exponent*
+* `Inspect` *Inspect*

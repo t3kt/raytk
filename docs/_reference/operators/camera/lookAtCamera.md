@@ -9,7 +9,6 @@ permalink: /reference/operators/camera/lookAtCamera
 # lookAtCamera
 
 Category: camera
-OP Type: raytk.operators.camera.lookAtCamera
 
 
 
@@ -17,9 +16,9 @@ A camera that focuses on a specific point in space.
 
 ## Parameters
 
-* `Camera`
-* `Camfov`
-* `Campos`
-* `Camrot`
-* `Lookatpos`
-* `Camup`
+* `Camera` *Camera*
+* `Camfov` *FOV Angle*
+* `Campos` *Position*
+* `Camrot` *Rotate*
+* `Lookatpos` *Look At Position*
+* `Camup` *Up Vector*

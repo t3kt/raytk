@@ -9,7 +9,6 @@ permalink: /reference/operators/field/positionField
 # positionField
 
 Category: field
-OP Type: raytk.operators.field.positionField
 
 
 
@@ -17,6 +16,14 @@ A vector field that evaluates to the coordinates in space.
 
 ## Parameters
 
-* `Coordtype`
-* `Contexttype`
-* `Inspect`
+* `Coordtype` *Coord Type*
+  * `vec2` *2D*
+  * `vec3` *3D*
+* `Contexttype` *Context Type*
+  * `none` *None*
+  * `Context` *Context*
+  * `MaterialContext` *Material Context*
+  * `CameraContext` *Camera Context*
+  * `LightContext` *Light Context*
+  * `RayContext` *Ray Context*
+* `Inspect` *Inspect*

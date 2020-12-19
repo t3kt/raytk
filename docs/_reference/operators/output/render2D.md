@@ -9,23 +9,26 @@ permalink: /reference/operators/output/render2D
 # render2D
 
 Category: output
-OP Type: raytk.operators.output.render2D
 
 
 
 ## Parameters
 
-* `Res`
-* `Enableedge`
-* `Edgethickness`
-* `Edgeblending`
-* `Edgecolor`
-* `Insideperiod`
-* `Insidecolor1`
-* `Insidecolor2`
-* `Outsideperiod`
-* `Outsidecolor1`
-* `Outsidecolor2`
-* `Timerefop`
-* `Shaderbuilderconfig`
-* `Inspect`
+* `Res` *Resolution*
+* `Enableedge` *Enable Edge*
+* `Edgethickness` *Edge Thickness*
+* `Edgeblending` *Edge Blending*
+* `Edgecolor` *Edge Color*
+* `Insideperiod` *Inside Period*
+* `Insidecolor1` *Inside Color 1*
+* `Insidecolor2` *Inside Color 2*
+* `Outsideperiod` *Outside Period*
+* `Outsidecolor1` *Outside Color 1*
+* `Outsidecolor2` *Outside Color 2*
+* `Timerefop` *Time Reference Operator*
+* `Shaderbuilderconfig` *Shader Builder Config*
+* `Inspect` *Inspect*
+
+## Inputs
+
+* `definition_in`

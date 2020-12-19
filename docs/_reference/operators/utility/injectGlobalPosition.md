@@ -9,7 +9,6 @@ permalink: /reference/operators/utility/injectGlobalPosition
 # injectGlobalPosition
 
 Category: utility
-OP Type: raytk.operators.utility.injectGlobalPosition
 
 
 
@@ -19,5 +18,9 @@ This can be used for fields that are passed to other ops that are using downstre
 
 ## Parameters
 
-* `Enable`
-* `Inspect`
+* `Enable` *Enable*
+* `Inspect` *Inspect*
+
+## Inputs
+
+* `definition_in`

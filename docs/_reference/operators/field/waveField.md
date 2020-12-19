@@ -9,7 +9,6 @@ permalink: /reference/operators/field/waveField
 # waveField
 
 Category: field
-OP Type: raytk.operators.field.waveField
 
 
 
@@ -20,13 +19,34 @@ Without an input, the Axis is used to run the wave function on the position alon
 
 ## Parameters
 
-* `Enable`
-* `Function`
-* `Axis`
-* `Coordtype`
-* `Contexttype`
-* `Period`
-* `Phase`
-* `Amplitude`
-* `Offset`
-* `Inspect`
+* `Enable` *Enable*
+* `Function` *Wave*
+  * `sin` *Sine*
+  * `cos` *Cosine*
+  * `tri` *Triangle*
+  * `ramp` *Ramp*
+  * `square` *Square*
+* `Axis` *Axis*
+  * `x` *X*
+  * `y` *Y*
+  * `z` *Z*
+* `Coordtype` *Coord Type*
+  * `float` *1D*
+  * `vec2` *2D*
+  * `vec3` *3D*
+* `Contexttype` *Context Type*
+  * `useinput` *Use Input*
+  * `none` *None*
+  * `Context` *Context*
+  * `MaterialContext` *Material Context*
+  * `CameraContext` *Camera Context*
+  * `LightContext` *Light Context*
+* `Period` *Period*
+* `Phase` *Phase*
+* `Amplitude` *Amplitude*
+* `Offset` *Offset*
+* `Inspect` *Inspect*
+
+## Inputs
+
+* `definition_in`

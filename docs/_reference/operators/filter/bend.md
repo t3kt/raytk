@@ -9,7 +9,6 @@ permalink: /reference/operators/filter/bend
 # bend
 
 Category: filter
-OP Type: raytk.operators.filter.bend
 
 
 
@@ -24,8 +23,19 @@ For example, bends sideways (towards X) depending on the vertical position (alon
 
 ## Parameters
 
-* `Enable`
-* `Direction`
-* `Amount`
-* `Shift`
-* `Inspect`
+* `Enable` *Enable*
+* `Direction` *Direction*
+  * `xyz` *Along X Toward Y*
+  * `xzy` *Along X Toward Z*
+  * `yxz` *Along Y Toward X*
+  * `yzx` *Along Y Toward Z*
+  * `zxy` *Along Z Toward X*
+  * `zyx` *Along Z Toward Y*
+* `Amount` *Amount*
+* `Shift` *Shift*
+* `Inspect` *Inspect*
+
+## Inputs
+
+* `definition_in`
+* `definition_in_2`

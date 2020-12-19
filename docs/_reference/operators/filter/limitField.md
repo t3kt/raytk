@@ -9,14 +9,21 @@ permalink: /reference/operators/filter/limitField
 # limitField
 
 Category: filter
-OP Type: raytk.operators.filter.limitField
 
 
 
 ## Parameters
 
-* `Enable`
-* `Limittype`
-* `Low`
-* `High`
-* `Inspect`
+* `Enable` *Enable*
+* `Limittype` *Limit Type*
+  * `off` *Off*
+  * `clamp` *Clamp*
+  * `loop` *Loop*
+  * `zigzag` *Zig-Zag*
+* `Low` *Input Low*
+* `High` *Input High*
+* `Inspect` *Inspect*
+
+## Inputs
+
+* `definition_in`

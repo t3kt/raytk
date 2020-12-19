@@ -9,7 +9,6 @@ permalink: /reference/operators/field/constantColorField
 # constantColorField
 
 Category: field
-OP Type: raytk.operators.field.constantColorField
 
 
 
@@ -19,8 +18,15 @@ This is the same as `constantField`, but the parameter is specified as a color i
 
 ## Parameters
 
-* `Coordtype`
-* `Contexttype`
-* `Color`
-* `Alpha`
-* `Inspect`
+* `Coordtype` *Coord Type*
+  * `vec2` *2D*
+  * `vec3` *3D*
+* `Contexttype` *Context Type*
+  * `none` *None*
+  * `Context` *Context*
+  * `MaterialContext` *Material Context*
+  * `CameraContext` *Camera Context*
+  * `LightContext` *Light Context*
+* `Color` *Color*
+* `Alpha` *Alpha*
+* `Inspect` *Inspect*

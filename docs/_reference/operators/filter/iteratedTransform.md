@@ -9,7 +9,6 @@ permalink: /reference/operators/filter/iteratedTransform
 # iteratedTransform
 
 Category: filter
-OP Type: raytk.operators.filter.iteratedTransform
 
 
 
@@ -19,26 +18,50 @@ This can be used to create KIFS fractals (kaleidoscopic iterated function system
 
 ## Parameters
 
-* `Enable`
-* `Iterations`
-* `Reflectmode`
-* `Enabletranslate`
-* `Enablerotate`
-* `Enablescale`
-* `Enablepivot`
-* `Translate`
-* `Rotate`
-* `Scale`
-* `Pivot`
-* `Transformorder`
-* `Rotateorder`
-* `Inspect`
-* `Customcode`
-* `Floatparam1`
-* `Floatparam2`
-* `Floatparam3`
-* `Floatparam4`
-* `Vecparam1`
-* `Vecparam2`
-* `Vecparam3`
-* `Vecparam4`
+* `Enable` *Enable*
+* `Iterations` *Iterations*
+* `Reflectmode` *Reflect Mode*
+  * `none` *None*
+  * `xyz` *XYZ*
+  * `x` *X*
+  * `y` *Y*
+  * `z` *Z*
+  * `xy` *XY*
+  * `yz` *YZ*
+  * `zx` *ZX*
+* `Enabletranslate` *Enable Translate*
+* `Enablerotate` *Enable Rotate*
+* `Enablescale` *Enable Scale*
+* `Enablepivot` *Enable Pivot*
+* `Translate` *Translate*
+* `Rotate` *Rotate XYZ*
+* `Scale` *Scale*
+* `Pivot` *Pivot*
+* `Transformorder` *Transform Order*
+  * `srt` *Scale Rotate Translate*
+  * `str` *Scale Translate Rotate*
+  * `rst` *Rotate Scale Translate*
+  * `rts` *Rotate Translate Scale*
+  * `tsr` *Translate Scale Rotate*
+  * `trs` *Translate Rotate Scale*
+* `Rotateorder` *Rotate Order*
+  * `xyz` *Rx Ry Rz*
+  * `xzy` *Rx Rz Ry*
+  * `yxz` *Ry Rx Rz*
+  * `yzx` *Ry Rz Rx*
+  * `zxy` *Rz Rx Ry*
+  * `zyx` *Rz Ry Rx*
+* `Inspect` *Inspect*
+* `Customcode` *Custom Code*
+* `Floatparam1` *Float Param 1*
+* `Floatparam2` *Float Param 2*
+* `Floatparam3` *Float Param 3*
+* `Floatparam4` *Float Param 4*
+* `Vecparam1` *Vec Param 1*
+* `Vecparam2` *Vec Param 2*
+* `Vecparam3` *Vec Param 3*
+* `Vecparam4` *Vec Param 4*
+
+## Inputs
+
+* `definition_in`

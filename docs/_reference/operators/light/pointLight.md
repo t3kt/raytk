@@ -9,7 +9,6 @@ permalink: /reference/operators/light/pointLight
 # pointLight
 
 Category: light
-OP Type: raytk.operators.light.pointLight
 
 
 
@@ -17,10 +16,10 @@ Light eminating from a single point in space, with optional distance attentuatio
 
 ## Parameters
 
-* `Position`
-* `Intensity`
-* `Color`
-* `Enableattenuation`
-* `Attenuationstart`
-* `Attenuationend`
-* `Inspect`
+* `Position` *Position*
+* `Intensity` *Intensity*
+* `Color` *Color*
+* `Enableattenuation` *Attenuated*
+* `Attenuationstart` *Attenuation Start*
+* `Attenuationend` *Attenuation End*
+* `Inspect` *Inspect*

@@ -9,12 +9,18 @@ permalink: /reference/operators/function/multiplyFn
 # multiplyFn
 
 Category: function
-OP Type: raytk.operators.function.multiplyFn
 
 
 
 ## Parameters
 
-* `Enable`
-* `Multiply`
-* `Inspect`
+* `Enable` *Enable*
+* `Multiply` *Multiply*
+* `Inspect` *Inspect*
+
+## Inputs
+
+* `definition_in`
+* `definition_in_2`
+* `definition_in_3`
+* `definition_in_4`

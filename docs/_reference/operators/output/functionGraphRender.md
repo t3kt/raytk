@@ -9,7 +9,6 @@ permalink: /reference/operators/output/functionGraphRender
 # functionGraphRender
 
 Category: output
-OP Type: raytk.operators.output.functionGraphRender
 
 
 
@@ -24,21 +23,28 @@ It provides several outputs:
 
 ## Parameters
 
-* `Resolution`
-* `Domainlow`
-* `Domainhigh`
-* `Rangelow`
-* `Rangehigh`
-* `Linethickness`
-* `Lineblending`
-* `Showaxislabels`
+* `Resolution`: The rendering resolution.
+* `Domainlow` *Domain Low*: The low bound of the domain (x axis).
+* `Domainhigh` *Domain High*: The high bound of the domain (x axis).
+* `Rangelow` *Range Low*: The low bound of the range (y axis).
+* `Rangehigh` *Range High*: The high bound of the range (y axis).
+* `Linethickness` *Line Thickness*: Thickness of the graph line.
+* `Lineblending` *Line Blending*: Amount of blending applied to the edges of the graph line.
+* `Showaxislabels` *Show Axis Labels*: Whether to show axis labels in the GUI output.
 * `Timereferenceoperator`
-* `Shaderbuilderconfig`
+* `Shaderbuilderconfig` *Shader Builder Config*
 * `Shaderinfo`
 * `Shadercode`
 * `Shadertop`
 * `Outputtable`
 * `Shaderbuilder`
-* `Res`
-* `Timerefop`
-* `Inspect`
+* `Res` *Resolution*
+* `Timerefop` *Time Reference Operator*
+* `Inspect` *Inspect*
+
+## Inputs
+
+* `definition_in_1`
+* `definition_in_2`
+* `definition_in_3`
+* `definition_in_4`

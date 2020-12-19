@@ -9,15 +9,14 @@ permalink: /reference/operators/camera/basicCamera
 # basicCamera
 
 Category: camera
-OP Type: raytk.operators.camera.basicCamera
 
 
 
 ## Parameters
 
-* `Camera`
-* `Camfov`
-* `Campos`
-* `Camrot`
-* `Lookatpos`
-* `Camup`
+* `Camera` *Camera*
+* `Camfov` *FOV Angle*
+* `Campos` *Position*
+* `Camrot` *Rotate*
+* `Lookatpos` *Look At Position*
+* `Camup` *Up Vector*

@@ -9,12 +9,16 @@ permalink: /reference/operators/function/easeFn
 # easeFn
 
 Category: function
-OP Type: raytk.operators.function.easeFn
 
 
 
 ## Parameters
 
-* `Exponent`
-* `Contexttype`
-* `Inspect`
+* `Exponent` *Exponent*
+* `Contexttype` *Context Type*
+  * `none` *None*
+  * `Context` *Context*
+  * `MaterialContext` *Material Context*
+  * `CameraContext` *Camera Context*
+  * `LightContext` *Light Context*
+* `Inspect` *Inspect*

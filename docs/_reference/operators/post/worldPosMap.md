@@ -9,14 +9,13 @@ permalink: /reference/operators/post/worldPosMap
 # worldPosMap
 
 Category: post
-OP Type: raytk.operators.post.worldPosMap
 
 
 
 ## Parameters
 
-* `Rangex`
-* `Rangey`
-* `Rangez`
-* `Snapshotrange`
-* `Outputop`
+* `Rangex` *Range X*
+* `Rangey` *Range Y*
+* `Rangez` *Range Z*
+* `Snapshotrange` *Snapshot Range*
+* `Outputop` *Output OP*

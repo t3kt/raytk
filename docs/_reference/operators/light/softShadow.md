@@ -9,7 +9,6 @@ permalink: /reference/operators/light/softShadow
 # softShadow
 
 Category: light
-OP Type: raytk.operators.light.softShadow
 
 
 
@@ -17,9 +16,9 @@ A soft-edged shadow.
 
 ## Parameters
 
-* `Hardness`
-* `Overridemindist`
-* `Mindist`
-* `Overridemaxdist`
-* `Maxdist`
-* `Inspect`
+* `Hardness` *Hardness*
+* `Overridemindist` *Override Minimum Distance*
+* `Mindist` *Minimum Dist*
+* `Overridemaxdist` *Override Maximum Distance*
+* `Maxdist` *Maximum Distance*
+* `Inspect` *Inspect*

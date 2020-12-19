@@ -9,12 +9,16 @@ permalink: /reference/operators/function/sincCurveFn
 # sincCurveFn
 
 Category: function
-OP Type: raytk.operators.function.sincCurveFn
 
 
 
 ## Parameters
 
-* `Bounces`
-* `Contexttype`
-* `Inspect`
+* `Bounces` *Bounces*
+* `Contexttype` *Context Type*
+  * `none` *None*
+  * `Context` *Context*
+  * `MaterialContext` *Material Context*
+  * `CameraContext` *Camera Context*
+  * `LightContext` *Light Context*
+* `Inspect` *Inspect*

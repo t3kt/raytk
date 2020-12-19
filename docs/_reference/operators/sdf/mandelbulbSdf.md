@@ -9,15 +9,16 @@ permalink: /reference/operators/sdf/mandelbulbSdf
 # mandelbulbSdf
 
 Category: sdf
-OP Type: raytk.operators.sdf.mandelbulbSdf
 
 
+
+Mandelbulb fractal.
 
 ## Parameters
 
-* `Translate`
-* `Power`
-* `Thetashift`
-* `Phishift`
-* `Iterations`
-* `Inspect`
+* `Translate` *Translate*: Moves the center of the shape.
+* `Power` *Power*: The number of repetitions around the z axis.
+* `Thetashift` *Theta Shift*: Offset the theta rotation.
+* `Phishift` *Phi Shift*: Offset the phi rotation.
+* `Iterations` *Iterations*: The number of steps used when refining the fractal.
+* `Inspect` *Inspect*

@@ -9,11 +9,14 @@ permalink: /reference/operators/convert/floatToSdf
 # floatToSdf
 
 Category: convert
-OP Type: raytk.operators.convert.floatToSdf
 
 
 
 ## Parameters
 
-* `Enable`
-* `Inspect`
+* `Enable` *Enable*
+* `Inspect` *Inspect*
+
+## Inputs
+
+* `definition_in`

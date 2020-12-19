@@ -9,12 +9,13 @@ permalink: /reference/operators/sdf/tetrahedronSdf
 # tetrahedronSdf
 
 Category: sdf
-OP Type: raytk.operators.sdf.tetrahedronSdf
 
 
+
+Tetrahedron shape.
 
 ## Parameters
 
-* `Translate`
-* `Scale`
-* `Inspect`
+* `Translate` *Translate*: Moves the center of the shape.
+* `Scale` *Scale*: The size of the shape.
+* `Inspect` *Inspect*

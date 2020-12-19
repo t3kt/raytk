@@ -9,21 +9,26 @@ permalink: /reference/operators/combine/combineColumns
 # combineColumns
 
 Category: combine
-OP Type: raytk.operators.combine.combineColumns
 
 
 
-Columns SDF combine, producing n-1 circular columns at a 45 degree angles along the blend region.
-
-Number is the number of columns.
-Radius is the size of the blend region.
+Columns SDF combine, producing n-1 circular columns/ridges at a 45 degree angles along the blend region.
 
 ## Parameters
 
-* `Enable`
-* `Operation`
-* `Swapinputs`
-* `Number`
-* `Radius`
-* `Useradiusfield`
-* `Inspect`
+* `Enable` *Enable*
+* `Operation` *Operation*: The type of combine operation.
+  * `union` *Union*: Produces the combined area of both inputs.
+  * `intersect` *Intersect*: Produces the area where both inputs overlap.
+  * `diff` *Difference*: Subtracts the second input from the first.
+* `Swapinputs` *Swap Inputs*: Swaps the order of the inputs. This is only used for the `diff` mode.
+* `Number` *Number*: The number of columns in the blending region.
+* `Radius` *Radius*: The size of the blending region.
+* `Useradiusfield` *Use Radius Field*
+* `Inspect` *Inspect*
+
+## Inputs
+
+* `definition_in_1`
+* `definition_in_2`
+* `radius_definition_in` *Radius Field*: Value field that can be used to vary the radius of the blend region at different points in space.

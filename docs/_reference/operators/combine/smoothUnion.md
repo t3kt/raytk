@@ -9,18 +9,22 @@ permalink: /reference/operators/combine/smoothUnion
 # smoothUnion
 
 Category: combine
-OP Type: raytk.operators.combine.smoothUnion
 
 
 
 Combines SDFs using a smooth union operator.
-Produces the combined areas of the input shapes, blended to smooth out the intersections.
 
-Can use an additional float field input to provide variable amounts of smoothing for different positions in space.
+Produces the combined areas of the input shapes, blended to smooth out the intersections.
 
 ## Parameters
 
-* `Enable`
-* `Amount`
-* `Usefield`
-* `Inspect`
+* `Enable` *Enable*
+* `Amount` *Amount*: Size of the blending region.
+* `Inspect` *Inspect*
+* `Usefield` *Use Field*
+
+## Inputs
+
+* `definition_in_1`: The first SDF to combine.
+* `definition_in_2`: The second SDF to combine.
+* `definition_in_3` *Radius Field*: Float value field that can vary the amount of blending at different points in space.

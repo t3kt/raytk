@@ -9,21 +9,29 @@ permalink: /reference/operators/filter/modulo1D
 # modulo1D
 
 Category: filter
-OP Type: raytk.operators.filter.modulo1D
 
 
 
 ## Parameters
 
-* `Enable`
-* `Axis`
-* `Size`
-* `Offset`
-* `Shift`
-* `Mirrortype`
-* `Uselimit`
-* `Limitstart`
-* `Limitstop`
-* `Limitoffset`
-* `Iterateoncells`
-* `Inspect`
+* `Enable` *Enable*
+* `Axis` *Axis*
+  * `x` *X*
+  * `y` *Y*
+  * `z` *Z*
+* `Size` *Size*
+* `Offset` *Offset*
+* `Shift` *Shift*
+* `Mirrortype` *Mirror Type*
+  * `none` *None*
+  * `mirror` *Mirror*
+* `Uselimit` *Use Limit*
+* `Limitstart` *Limit Start*
+* `Limitstop` *Limit Stop*
+* `Limitoffset` *Limit Offset*
+* `Iterateoncells` *Iterate On Cells*
+* `Inspect` *Inspect*
+
+## Inputs
+
+* `definition_in`

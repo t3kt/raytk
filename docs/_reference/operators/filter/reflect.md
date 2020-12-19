@@ -9,7 +9,6 @@ permalink: /reference/operators/filter/reflect
 # reflect
 
 Category: filter
-OP Type: raytk.operators.filter.reflect
 
 
 
@@ -19,10 +18,22 @@ Can optionally expose which side of the plane a point is on as an iteration valu
 
 ## Parameters
 
-* `Enable`
-* `Direction`
-* `Planenormal`
-* `Offset`
-* `Shift`
-* `Exposeiteration`
-* `Inspect`
+* `Enable` *Enable*
+* `Direction` *Direction*
+  * `custom` *Custom*
+  * `xpos` *X+*
+  * `xneg` *X-*
+  * `ypos` *Y+*
+  * `yneg` *Y-*
+  * `zpos` *Z+*
+  * `zneg` *Z-*
+* `Planenormal` *Plane Normal*
+* `Offset` *Offset*
+* `Shift` *Shift*
+* `Exposeiteration` *Expose Iteration*
+* `Inspect` *Inspect*
+
+## Inputs
+
+* `definition_in`
+* `definition_in_1`

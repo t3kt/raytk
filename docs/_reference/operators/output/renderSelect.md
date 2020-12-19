@@ -9,12 +9,24 @@ permalink: /reference/operators/output/renderSelect
 # renderSelect
 
 Category: output
-OP Type: raytk.operators.output.renderSelect
 
 
 
 ## Parameters
 
-* `Outputop`
-* `Outputbuffer`
-* `Lockbuffermenu`
+* `Outputop` *Output OP*
+* `Outputbuffer` *Output Buffer*
+  * `colorOut` *Color*
+  * `sdfOut` *SDF Result*
+  * `depthOut` *Depth*
+  * `worldPosOut` *World Position*
+  * `normalOut` *Normal*
+  * `rayDirOut` *Ray Direction*
+  * `rayOriginOut` *Ray Origin*
+  * `orbitOut` *Orbit Trap*
+  * `nearHitOut` *Near Hit*
+  * `stepsOut` *Step Count*
+  * `iterationOut` *Iteration*
+  * `objectIdOut` *Object Id*
+  * `debugOut` *Debug*
+* `Lockbuffermenu` *Lock Buffer Menu*

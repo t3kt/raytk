@@ -9,7 +9,6 @@ permalink: /reference/operators/filter/moduloPolar
 # moduloPolar
 
 Category: filter
-OP Type: raytk.operators.filter.moduloPolar
 
 
 
@@ -29,16 +28,25 @@ Repeats space radially, like a kaleidoscope.
 
 ## Parameters
 
-* `Enable`
-* `Axis`
-* `Repetitions`
-* `Roundtointeger`
-* `Prerotate`
-* `Rotate`
-* `Mirrortype`
-* `Offset`
-* `Uselimit`
-* `Limitlow`
-* `Limithigh`
-* `Iterateoncells`
-* `Inspect`
+* `Enable` *Enable*
+* `Axis` *Axis*
+  * `x` *X*
+  * `y` *Y*
+  * `z` *Z*
+* `Repetitions` *Repetitions*
+* `Roundtointeger` *Round To Integer*
+* `Prerotate` *Pre Rotate*
+* `Rotate` *Rotate*
+* `Mirrortype` *Mirror Type*
+  * `none` *None*
+  * `mirror` *Mirror*
+* `Offset` *Offset*
+* `Uselimit` *Use Limit*
+* `Limitlow` *Limit Low*
+* `Limithigh` *Limit High*
+* `Iterateoncells` *Iterate On Cells*
+* `Inspect` *Inspect*
+
+## Inputs
+
+* `definition_in`

@@ -9,14 +9,20 @@ permalink: /reference/operators/convert/revolve
 # revolve
 
 Category: convert
-OP Type: raytk.operators.convert.revolve
 
 
 
 ## Parameters
 
-* `Enable`
-* `Axis`
-* `Radialoffset`
-* `Axisoffset`
-* `Inspect`
+* `Enable` *Enable*
+* `Axis` *Axis*
+  * `x` *X*
+  * `y` *Y*
+  * `z` *Z*
+* `Radialoffset` *Radial Offset*
+* `Axisoffset` *Axis Offset*
+* `Inspect` *Inspect*
+
+## Inputs
+
+* `definition_in`

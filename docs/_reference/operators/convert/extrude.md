@@ -9,14 +9,20 @@ permalink: /reference/operators/convert/extrude
 # extrude
 
 Category: convert
-OP Type: raytk.operators.convert.extrude
 
 
 
 ## Parameters
 
-* `Enable`
-* `Axis`
-* `Height`
-* `Offset`
-* `Inspect`
+* `Enable` *Enable*
+* `Axis` *Axis*
+  * `x` *X*
+  * `y` *Y*
+  * `z` *Z*
+* `Height` *Height*
+* `Offset` *Offset*
+* `Inspect` *Inspect*
+
+## Inputs
+
+* `definition_in`

@@ -9,13 +9,14 @@ permalink: /reference/operators/sdf/pyramidSdf
 # pyramidSdf
 
 Category: sdf
-OP Type: raytk.operators.sdf.pyramidSdf
 
 
+
+A pyramid with four sides.
 
 ## Parameters
 
-* `Translate`
-* `Height`
-* `Width`
-* `Inspect`
+* `Translate` *Translate*: Moves the center of the base of the pyramid.
+* `Height` *Height*: The height of the pyramid.
+* `Width` *Width*: The width of the base of the pyramid.
+* `Inspect` *Inspect*

@@ -9,7 +9,6 @@ permalink: /reference/operators/field/textureField
 # textureField
 
 Category: field
-OP Type: raytk.operators.field.textureField
 
 
 
@@ -17,12 +16,28 @@ A float or vector field that looks up values from a texture.
 
 ## Parameters
 
-* `Coordtype`
-* `Returntype`
-* `Contexttype`
-* `Axis`
-* `Translate`
-* `Scale`
-* `Texture`
-* `Extendmode`
-* `Inspect`
+* `Coordtype` *Coord Type*
+  * `vec2` *2D*
+  * `vec3` *3D*
+* `Returntype` *Return Type*
+  * `float` *Float*
+  * `vec4` *Vector*
+* `Contexttype` *Context Type*
+  * `none` *None*
+  * `Context` *Context*
+  * `MaterialContext` *Material Context*
+  * `CameraContext` *Camera Context*
+  * `LightContext` *Light Context*
+* `Axis` *Plane*
+  * `x` *YZ*
+  * `y` *ZX*
+  * `z` *XY*
+* `Translate` *Translate*
+* `Scale` *Scale*
+* `Texture` *Texture*
+* `Extendmode` *Extend Mode*
+  * `hold` *Hold*
+  * `zero` *Zero*
+  * `repeat` *Repeat*
+  * `mirror` *Mirror*
+* `Inspect` *Inspect*

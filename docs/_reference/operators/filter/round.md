@@ -9,7 +9,6 @@ permalink: /reference/operators/filter/round
 # round
 
 Category: filter
-OP Type: raytk.operators.filter.round
 
 
 
@@ -23,7 +22,12 @@ See [example](https://www.shadertoy.com/view/Mt3BDj).
 
 ## Parameters
 
-* `Enable`
-* `Amount`
-* `Usefield`
-* `Inspect`
+* `Enable` *Enable*
+* `Amount` *Amount*
+* `Usefield` *Use Field*
+* `Inspect` *Inspect*
+
+## Inputs
+
+* `definition_in`
+* `definition_in_2`

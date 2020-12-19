@@ -9,11 +9,14 @@ permalink: /reference/operators/material/checkerboardMat
 # checkerboardMat
 
 Category: material
-OP Type: raytk.operators.material.checkerboardMat
 
 
 
 ## Parameters
 
-* `Enable`
-* `Inspect`
+* `Enable` *Enable*
+* `Inspect` *Inspect*
+
+## Inputs
+
+* `definition_in`

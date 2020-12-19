@@ -9,24 +9,29 @@ permalink: /reference/operators/combine/combineStairs
 # combineStairs
 
 Category: combine
-OP Type: raytk.operators.combine.combineStairs
 
 
 
 Stair SDF combine, producing steps along the blend region.
 
-Number is the number of steps.
-Radius is the size of the blend region.
-Offset shifts the steps along the blend region, with 0 being no shift, and 1 being a full shift of the total number of steps.
-
 ## Parameters
 
-* `Enable`
-* `Operation`
-* `Swapinputs`
-* `Number`
-* `Radius`
-* `Useradiusfield`
-* `Offset`
-* `Useoffsetfield`
-* `Inspect`
+* `Enable` *Enable*
+* `Operation` *Operation*: The type of combine operation.
+  * `union` *Union*: Produces the combined area of both inputs.
+  * `intersect` *Intersect*: Produces the area where both inputs overlap.
+  * `diff` *Difference*: Subtracts the second input from the first.
+* `Swapinputs` *Swap Inputs*: Swaps the order of the inputs. This is only used for the `diff` mode.
+* `Number` *Number*: The number of steps in the blending region.
+* `Radius` *Radius*: The size of the blending region.
+* `Useradiusfield` *Use Radius Field*
+* `Offset` *Offset*: Shifts the steps along the blend region, with 0 being no shift, and 1 being a full shift of the total number of steps.
+* `Useoffsetfield` *Use Offset Field*
+* `Inspect` *Inspect*
+
+## Inputs
+
+* `definition_in_1`
+* `definition_in_2`
+* `radius_definition_in` *Radius Field*: Value field that can be used to vary the radius of the blend region at different points in space.
+* `offset_definition_in` *Offset Field*: Value field that can be used to vary the offset of the stairs at different points in space.

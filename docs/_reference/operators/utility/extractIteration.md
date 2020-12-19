@@ -9,7 +9,6 @@ permalink: /reference/operators/utility/extractIteration
 # extractIteration
 
 Category: utility
-OP Type: raytk.operators.utility.extractIteration
 
 
 
@@ -18,5 +17,9 @@ operator.
 
 ## Parameters
 
-* `Enable`
-* `Inspect`
+* `Enable` *Enable*
+* `Inspect` *Inspect*
+
+## Inputs
+
+* `definition_in`

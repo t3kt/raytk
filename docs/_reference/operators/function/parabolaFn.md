@@ -9,12 +9,16 @@ permalink: /reference/operators/function/parabolaFn
 # parabolaFn
 
 Category: function
-OP Type: raytk.operators.function.parabolaFn
 
 
 
 ## Parameters
 
-* `Exponent`
-* `Contexttype`
-* `Inspect`
+* `Exponent` *Exponent*
+* `Contexttype` *Context Type*
+  * `none` *None*
+  * `Context` *Context*
+  * `MaterialContext` *Material Context*
+  * `CameraContext` *Camera Context*
+  * `LightContext` *Light Context*
+* `Inspect` *Inspect*

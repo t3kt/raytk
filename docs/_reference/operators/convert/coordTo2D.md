@@ -9,14 +9,26 @@ permalink: /reference/operators/convert/coordTo2D
 # coordTo2D
 
 Category: convert
-OP Type: raytk.operators.convert.coordTo2D
 
 
 
 ## Parameters
 
-* `Enable`
-* `Partx`
-* `Party`
-* `Partz`
-* `Inspect`
+* `Enable` *Enable*
+* `Partx` *Part X*
+  * `x` *X*
+  * `y` *Y*
+  * `zero` *Zero*
+* `Party` *Part Y*
+  * `x` *X*
+  * `y` *Y*
+  * `zero` *Zero*
+* `Partz` *Part Z*
+  * `x` *X*
+  * `y` *Y*
+  * `zero` *Zero*
+* `Inspect` *Inspect*
+
+## Inputs
+
+* `definition_in`

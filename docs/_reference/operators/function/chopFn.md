@@ -9,14 +9,22 @@ permalink: /reference/operators/function/chopFn
 # chopFn
 
 Category: function
-OP Type: raytk.operators.function.chopFn
 
 
 
 ## Parameters
 
-* `Contexttype`
-* `Chop`
-* `Extendmode`
-* `Range`
-* `Inspect`
+* `Contexttype` *Context Type*
+  * `none` *None*
+  * `Context` *Context*
+  * `MaterialContext` *Material Context*
+  * `CameraContext` *Camera Context*
+  * `LightContext` *Light Context*
+* `Chop` *Chop*
+* `Extendmode` *Extend Mode*
+  * `hold` *Hold*
+  * `zero` *Zero*
+  * `repeat` *Repeat*
+  * `mirror` *Mirror*
+* `Range` *Range*
+* `Inspect` *Inspect*

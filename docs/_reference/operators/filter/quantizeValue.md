@@ -9,16 +9,19 @@ permalink: /reference/operators/filter/quantizeValue
 # quantizeValue
 
 Category: filter
-OP Type: raytk.operators.filter.quantizeValue
 
 
 
 ## Parameters
 
-* `Enable`
-* `Size`
-* `Sizemult`
-* `Offset`
-* `Smoothing`
-* `Smoothingmult`
-* `Inspect`
+* `Enable` *Enable*
+* `Size` *Size*
+* `Sizemult` *Size Multiplier*
+* `Offset` *Offset*
+* `Smoothing` *Smoothing*
+* `Smoothingmult` *Smoothing Multiplier*
+* `Inspect` *Inspect*
+
+## Inputs
+
+* `definition_in`

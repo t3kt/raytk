@@ -9,12 +9,19 @@ permalink: /reference/operators/filter/cartesianToPolar
 # cartesianToPolar
 
 Category: filter
-OP Type: raytk.operators.filter.cartesianToPolar
 
 
 
 ## Parameters
 
-* `Enable`
-* `Conversion`
-* `Inspect`
+* `Enable` *Enable*
+* `Conversion` *Conversion*
+  * `spherical` *Spherical*
+  * `cylindricalx` *Cylindrical X*
+  * `cylindricaly` *Cylindrical Y*
+  * `cylindricalz` *Cylindrical Z*
+* `Inspect` *Inspect*
+
+## Inputs
+
+* `definition_in`

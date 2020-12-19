@@ -9,12 +9,16 @@ permalink: /reference/operators/function/modulateFn
 # modulateFn
 
 Category: function
-OP Type: raytk.operators.function.modulateFn
 
 
 
 ## Parameters
 
-* `Enable`
-* `Mix`
-* `Inspect`
+* `Enable` *Enable*
+* `Mix` *Mix*
+* `Inspect` *Inspect*
+
+## Inputs
+
+* `definition_in`
+* `definition_in_2`

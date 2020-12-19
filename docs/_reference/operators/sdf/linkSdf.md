@@ -9,7 +9,6 @@ permalink: /reference/operators/sdf/linkSdf
 # linkSdf
 
 Category: sdf
-OP Type: raytk.operators.sdf.linkSdf
 
 
 
@@ -17,8 +16,8 @@ SDF for a chain link shape (an elongated loop).
 
 ## Parameters
 
-* `Translate`
-* `Length`
-* `Radius`
-* `Thickness`
-* `Inspect`
+* `Translate` *Translate*: Moves the center of the shape.
+* `Length` *Length*: The length of the chain link.
+* `Radius` *Radius*: The radius or width of the chain shape as a whole.
+* `Thickness` *Thickness*: The thickness of the link.
+* `Inspect` *Inspect*

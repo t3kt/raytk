@@ -9,7 +9,6 @@ permalink: /reference/operators/filter/quantizeCoords
 # quantizeCoords
 
 Category: filter
-OP Type: raytk.operators.filter.quantizeCoords
 
 
 
@@ -17,10 +16,14 @@ Quantize coordinates to a 3D grid, which is sort of like "voxelizing" the space.
 
 ## Parameters
 
-* `Enable`
-* `Size`
-* `Sizemult`
-* `Offset`
-* `Smoothing`
-* `Smoothingmult`
-* `Inspect`
+* `Enable` *Enable*
+* `Size` *Size*
+* `Sizemult` *Size Multiplier*
+* `Offset` *Offset*
+* `Smoothing` *Smoothing*
+* `Smoothingmult` *Smoothing Multiplier*
+* `Inspect` *Inspect*
+
+## Inputs
+
+* `definition_in`

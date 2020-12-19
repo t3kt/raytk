@@ -9,13 +9,17 @@ permalink: /reference/operators/function/almostIdentityFn
 # almostIdentityFn
 
 Category: function
-OP Type: raytk.operators.function.almostIdentityFn
 
 
 
 ## Parameters
 
-* `Contexttype`
-* `Threshold`
-* `Basevalue`
-* `Inspect`
+* `Contexttype` *Context Type*
+  * `none` *None*
+  * `Context` *Context*
+  * `MaterialContext` *Material Context*
+  * `CameraContext` *Camera Context*
+  * `LightContext` *Light Context*
+* `Threshold` *Threshold*
+* `Basevalue` *Base Value*
+* `Inspect` *Inspect*

@@ -9,17 +9,22 @@ permalink: /reference/operators/filter/magnet
 # magnet
 
 Category: filter
-OP Type: raytk.operators.filter.magnet
 
 
 
 ## Parameters
 
-* `Enable`
-* `Amount`
-* `Center`
-* `Radius`
-* `Fade`
-* `Scale`
-* `Rotate`
-* `Inspect`
+* `Enable` *Enable*
+* `Amount` *Amount*
+* `Center` *Center*
+* `Radius` *Radius*
+* `Fade` *Fade*
+* `Scale` *Scale*
+* `Rotate` *Rotate*
+* `Inspect` *Inspect*
+
+## Inputs
+
+* `definition_in`
+* `magnet_definition_in`
+* `easing_definition_in`

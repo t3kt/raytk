@@ -9,14 +9,17 @@ permalink: /reference/operators/sdf/capsuleSdf
 # capsuleSdf
 
 Category: sdf
-OP Type: raytk.operators.sdf.capsuleSdf
 
 
+
+A cylinder with rounded ends, between two points.
+
+With a small `Radius`, this can be used to create a line segment.
 
 ## Parameters
 
-* `Translate`
-* `Endpoint1`
-* `Endpoint2`
-* `Radius`
-* `Inspect`
+* `Translate` *Translate*: Moves the center of the capsule.
+* `Endpoint1` *End Point 1*: Distance of the first end from the center position.
+* `Endpoint2` *End Point 2*: Distance of the second end from the center position.
+* `Radius` *Radius*: The thickness of the capsule.
+* `Inspect` *Inspect*

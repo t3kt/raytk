@@ -9,7 +9,6 @@ permalink: /reference/operators/filter/translate
 # translate
 
 Category: filter
-OP Type: raytk.operators.filter.translate
 
 
 
@@ -20,7 +19,12 @@ If a field is used, the field values are added to the Translate XYZ parameter.
 
 ## Parameters
 
-* `Enable`
-* `Translate`
-* `Usefield`
-* `Inspect`
+* `Enable` *Enable*
+* `Translate` *Translate*
+* `Usefield` *Use Field*
+* `Inspect` *Inspect*
+
+## Inputs
+
+* `definition_in`
+* `definition_in_2`

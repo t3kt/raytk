@@ -9,15 +9,16 @@ permalink: /reference/operators/sdf/mengerSpongeSdf
 # mengerSpongeSdf
 
 Category: sdf
-OP Type: raytk.operators.sdf.mengerSpongeSdf
 
 
+
+Menger sponge fractal, made of boxes with holes cut through each axis.
 
 ## Parameters
 
-* `Translate`
-* `Steps`
-* `Scale`
-* `Boxscale`
-* `Crossscale`
-* `Inspect`
+* `Translate` *Translate*: Moves the center of the shape.
+* `Steps` *Steps*: Number of levels of detail.
+* `Scale` *Scale*
+* `Boxscale` *Box Scale*: The scale of the boxes used at each step.
+* `Crossscale` *Cross Scale*: The size of the holes cut through the boxes at each step.
+* `Inspect` *Inspect*

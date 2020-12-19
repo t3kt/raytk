@@ -9,14 +9,26 @@ permalink: /reference/operators/filter/reorderCoords
 # reorderCoords
 
 Category: filter
-OP Type: raytk.operators.filter.reorderCoords
 
 
 
 ## Parameters
 
-* `Enable`
-* `Axisx`
-* `Axisy`
-* `Axisz`
-* `Inspect`
+* `Enable` *Enable*
+* `Axisx` *X Axis*
+  * `x` *X*
+  * `y` *Y*
+  * `z` *Z*
+* `Axisy` *Y Axis*
+  * `x` *X*
+  * `y` *Y*
+  * `z` *Z*
+* `Axisz` *Z Axis*
+  * `x` *X*
+  * `y` *Y*
+  * `z` *Z*
+* `Inspect` *Inspect*
+
+## Inputs
+
+* `definition_in`

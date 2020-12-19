@@ -9,15 +9,14 @@ permalink: /reference/operators/sdf/juliaSdf
 # juliaSdf
 
 Category: sdf
-OP Type: raytk.operators.sdf.juliaSdf
 
 
 
 ## Parameters
 
-* `C1`
-* `C2`
-* `C3`
-* `C4`
-* `Iterations`
-* `Inspect`
+* `C1` *C 1*
+* `C2` *C 2*
+* `C3` *C 3*
+* `C4` *C 4*
+* `Iterations` *Iterations*
+* `Inspect` *Inspect*

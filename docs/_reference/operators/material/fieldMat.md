@@ -9,7 +9,6 @@ permalink: /reference/operators/material/fieldMat
 # fieldMat
 
 Category: material
-OP Type: raytk.operators.material.fieldMat
 
 
 
@@ -19,5 +18,10 @@ field to a material, with no other features.
 
 ## Parameters
 
-* `Enable`
-* `Inspect`
+* `Enable` *Enable*
+* `Inspect` *Inspect*
+
+## Inputs
+
+* `definition_in`
+* `color_definition_in`

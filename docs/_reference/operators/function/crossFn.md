@@ -9,12 +9,17 @@ permalink: /reference/operators/function/crossFn
 # crossFn
 
 Category: function
-OP Type: raytk.operators.function.crossFn
 
 
 
 ## Parameters
 
-* `Enable`
-* `Mix`
-* `Inspect`
+* `Enable` *Enable*
+* `Mix` *Mix*
+* `Inspect` *Inspect*
+
+## Inputs
+
+* `definition_in`
+* `definition_in_2`
+* `mix_definition_in` *mix definition in*

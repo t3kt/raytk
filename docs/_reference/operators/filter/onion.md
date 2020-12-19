@@ -9,12 +9,15 @@ permalink: /reference/operators/filter/onion
 # onion
 
 Category: filter
-OP Type: raytk.operators.filter.onion
 
 
 
 ## Parameters
 
-* `Enable`
-* `Thickness`
-* `Inspect`
+* `Enable` *Enable*
+* `Thickness` *Thickness*
+* `Inspect` *Inspect*
+
+## Inputs
+
+* `definition_in`

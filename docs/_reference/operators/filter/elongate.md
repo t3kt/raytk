@@ -9,7 +9,6 @@ permalink: /reference/operators/filter/elongate
 # elongate
 
 Category: filter
-OP Type: raytk.operators.filter.elongate
 
 
 
@@ -25,6 +24,10 @@ See [example](https://www.shadertoy.com/view/Ml3fWj).
 
 ## Parameters
 
-* `Enable`
-* `Size`
-* `Inspect`
+* `Enable` *Enable*
+* `Size` *Size*
+* `Inspect` *Inspect*
+
+## Inputs
+
+* `definition_in`

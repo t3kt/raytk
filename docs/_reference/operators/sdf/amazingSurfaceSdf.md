@@ -9,14 +9,13 @@ permalink: /reference/operators/sdf/amazingSurfaceSdf
 # amazingSurfaceSdf
 
 Category: sdf
-OP Type: raytk.operators.sdf.amazingSurfaceSdf
 
 
 
 ## Parameters
 
-* `Steps`
-* `Steptranslate`
-* `Steprotate`
-* `Stepclamprange`
-* `Inspect`
+* `Steps` *Steps*
+* `Steptranslate` *Step Translate*
+* `Steprotate` *Step Rotate*
+* `Stepclamprange` *Step Clamp Range*
+* `Inspect` *Inspect*

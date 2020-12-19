@@ -9,17 +9,23 @@ permalink: /reference/operators/filter/slice
 # slice
 
 Category: filter
-OP Type: raytk.operators.filter.slice
 
 
 
 ## Parameters
 
-* `Enable`
-* `Axis`
-* `Offset`
-* `Thickness`
-* `Enablesmoothing`
-* `Smoothradius`
-* `Enablemirror`
-* `Inspect`
+* `Enable` *Enable*
+* `Axis` *Axis*
+  * `x` *X*
+  * `y` *Y*
+  * `z` *Z*
+* `Offset` *Offset*
+* `Thickness` *Thickness*
+* `Enablesmoothing` *Enable Smoothing*
+* `Smoothradius` *Smooth Radius*
+* `Enablemirror` *Enable Mirror*
+* `Inspect` *Inspect*
+
+## Inputs
+
+* `definition_in`

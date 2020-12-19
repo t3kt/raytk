@@ -9,7 +9,6 @@ permalink: /reference/operators/sdf/kaliGeneratorSdf
 # kaliGeneratorSdf
 
 Category: sdf
-OP Type: raytk.operators.sdf.kaliGeneratorSdf
 
 
 
@@ -17,9 +16,9 @@ Fractal SDF based on "Generators" by Kali (https://www.shadertoy.com/view/Xtf3Rn
 
 ## Parameters
 
-* `Steps`
-* `Steptranslate`
-* `Fractalangle`
-* `Boxsize`
-* `Boxround`
-* `Inspect`
+* `Steps` *Steps*
+* `Steptranslate` *Step Translate*
+* `Fractalangle` *Fractal Angle*
+* `Boxsize` *Box Size*
+* `Boxround` *Box Round*
+* `Inspect` *Inspect*

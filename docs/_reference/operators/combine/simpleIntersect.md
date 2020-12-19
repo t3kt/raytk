@@ -9,14 +9,21 @@ permalink: /reference/operators/combine/simpleIntersect
 # simpleIntersect
 
 Category: combine
-OP Type: raytk.operators.combine.simpleIntersect
 
 
 
 Combines SDFs using the intersect operator.
+
 Produces the areas where all input shapes overlap.
 
 ## Parameters
 
-* `Enable`
-* `Inspect`
+* `Enable` *Enable*
+* `Inspect` *Inspect*
+
+## Inputs
+
+* `definition_in_1`
+* `definition_in_2`
+* `definition_in_3`
+* `definition_in_4`

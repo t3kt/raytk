@@ -9,11 +9,10 @@ permalink: /reference/operators/sdf2d/parabolaSdf2d
 # parabolaSdf2d
 
 Category: sdf2d
-OP Type: raytk.operators.sdf2d.parabolaSdf2d
 
 
 
 ## Parameters
 
-* `Width`
-* `Inspect`
+* `Width` *Width*
+* `Inspect` *Inspect*

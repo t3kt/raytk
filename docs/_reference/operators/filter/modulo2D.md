@@ -9,7 +9,6 @@ permalink: /reference/operators/filter/modulo2D
 # modulo2D
 
 Category: filter
-OP Type: raytk.operators.filter.modulo2D
 
 
 
@@ -17,11 +16,21 @@ Repeats space along 2 axes.
 
 ## Parameters
 
-* `Enable`
-* `Axis`
-* `Size`
-* `Offset`
-* `Shift`
-* `Mirrortype`
-* `Iterateoncells`
-* `Inspect`
+* `Enable` *Enable*
+* `Axis` *Axis*
+  * `x` *YZ*
+  * `y` *ZX*
+  * `z` *XY*
+* `Size` *Size*
+* `Offset` *Offset*
+* `Shift` *Shift*
+* `Mirrortype` *Mirror Type*
+  * `none` *None*
+  * `mirror` *Mirror*
+  * `grid` *Grid*
+* `Iterateoncells` *Iterate On Cells*
+* `Inspect` *Inspect*
+
+## Inputs
+
+* `definition_in`

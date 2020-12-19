@@ -9,17 +9,19 @@ permalink: /reference/operators/sdf2d/triangleSdf2d
 # triangleSdf2d
 
 Category: sdf2d
-OP Type: raytk.operators.sdf2d.triangleSdf2d
 
 
 
 ## Parameters
 
-* `Shape`
-* `Radius`
-* `Height`
-* `Width`
-* `Point1`
-* `Point2`
-* `Point3`
-* `Inspect`
+* `Shape` *Shape*
+  * `equilateral` *Equilateral Triangle*
+  * `isosceles` *Isosceles Triangle*
+  * `arbitrary` *Abritrary Triangle*
+* `Radius` *Radius*
+* `Height` *Height*
+* `Width` *Width*
+* `Point1` *Point 1*
+* `Point2` *Point 2*
+* `Point3` *Point 3*
+* `Inspect` *Inspect*
