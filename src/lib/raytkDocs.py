@@ -208,6 +208,8 @@ title: {ropInfo.shortName}
 parent: {ropInfo.categoryName.capitalize()} Operators
 grand_parent: Operators
 permalink: /reference/operators/{ropInfo.categoryName}/{ropInfo.shortName}
+redirect_from:
+  - /reference/opType/{ropInfo.opType}/
 ---
 
 # {ropInfo.shortName}

@@ -1,7 +1,8 @@
-from develCommon import updateROPMetadata, AutoLoader
+from develCommon import AutoLoader
 import popMenu
 from raytkDocs import OpDocManager
-from raytkUtil import RaytkTags, ROPInfo, Tag, getActiveEditor, navigateTo, getChildROPs, recloneComp, RaytkContext, TypeTableHelper, focusCustomParameterPage
+from raytkTools import RaytkTools
+from raytkUtil import RaytkTags, ROPInfo, Tag, getActiveEditor, navigateTo, getChildROPs, recloneComp, RaytkContext, TypeTableHelper
 from raytkUtil import getToolkit, getToolkitVersion, Version
 from typing import Tuple, List
 
@@ -30,8 +31,9 @@ class Tools:
 
 	def UpdateCurrentROPsMetadata(self, incrementVersion=False):
 		rops = self.getCurrentROPs(primaryOnly=False)
+		tools = RaytkTools()
 		for rop in rops:
-			updateROPMetadata(rop, incrementVersion=incrementVersion)
+			tools.updateROPMetadata(rop, incrementVersion=incrementVersion)
 
 	def FillMonitorHeight(self, usePrimary=True):
 		height = _getMonitorHeight(usePrimary)
@@ -63,20 +65,7 @@ class Tools:
 	def SaveROP(self, incrementVersion=False, rop: 'COMP' = None):
 		if not rop:
 			rop = self.GetCurrentROP()
-		if not rop:
-			# TODO: warning?
-			return
-		ropInfo = ROPInfo(rop)
-		self.updateROPParams(rop)
-		updateROPMetadata(rop, incrementVersion=incrementVersion)
-		docManager = OpDocManager(ropInfo)
-		docManager.pushToParamsAndInputs()
-		focusCustomParameterPage(rop, 0)
-		tox = rop.par.externaltox.eval()
-		rop.save(tox)
-		ui.status = f'Saved TOX {tox} (version: {ropInfo.opVersion})'
-		for dat in getToolkit().ops('opfind_rops', 'opCategoryTable'):
-			dat.cook(force=True)
+		RaytkTools().saveROP(rop, incrementVersion)
 
 	@staticmethod
 	def updateROPParams(rop: 'COMP'):
@@ -192,7 +181,7 @@ class Tools:
 		newOp = dest.copy(template, name=name)
 		newOp.par.clone = newOp.path
 		newOp.par.externaltox = f'src/operators/{category}/{name}.tox'
-		updateROPMetadata(newOp)
+		RaytkTools().updateROPMetadata(newOp)
 		self.SaveROP(rop=newOp)
 		newOp.selected = True
 		newOp.nodeX = 0
