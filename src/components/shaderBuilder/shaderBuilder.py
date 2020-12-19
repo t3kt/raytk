@@ -272,6 +272,20 @@ class ShaderBuilder:
 		]
 		return wrapCodeSection(decls, 'textures')
 
+	def buildBufferDeclarations(self):
+		bufferTable = self.ownerComp.op('buffer_table')
+		decls = []
+		for i in range(1, bufferTable.numRows):
+			name = bufferTable[i, 'name']
+			dataType = bufferTable[i, 'type']
+			uniType = bufferTable[i, 'uniformType']
+			n = int(bufferTable[i, 'length'])
+			if uniType == 'uniformarray':
+				decls.append(f'uniform {dataType} {name}[{n}];')
+			elif uniType == 'texturebuffer':
+				decls.append(f'uniform samplerBuffer {name};')
+		return wrapCodeSection(decls, 'buffers')
+
 	def buildMaterialDeclarations(self):
 		if not self.ownerComp.par.Supportmaterials:
 			return ' '
