@@ -77,7 +77,7 @@ class ROPParamHelp:
 		)
 		if par.isMenu:
 			parHelp.pullOptionsFromPar(par)
-		return par
+		return parHelp
 
 @dataclass
 class InputHelp:
