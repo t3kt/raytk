@@ -4,6 +4,8 @@ title: chopFn
 parent: Function Operators
 grand_parent: Operators
 permalink: /reference/operators/function/chopFn
+redirect_from:
+  - /reference/opType/raytk.operators.function.chopFn/
 ---
 
 # chopFn
@@ -28,3 +30,4 @@ Category: function
   * `mirror` *Mirror*
 * `Range` *Range*
 * `Inspect` *Inspect*
+* `Help` *Help*

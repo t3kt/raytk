@@ -4,6 +4,8 @@ title: reorderField
 parent: Field Operators
 grand_parent: Operators
 permalink: /reference/operators/field/reorderField
+redirect_from:
+  - /reference/opType/raytk.operators.field.reorderField/
 ---
 
 # reorderField
@@ -68,6 +70,7 @@ Category: field
   * `zero` *Zero*
   * `one` *One*
 * `Inspect` *Inspect*
+* `Help` *Help*
 
 ## Inputs
 

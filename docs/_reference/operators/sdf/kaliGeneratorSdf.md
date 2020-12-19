@@ -4,6 +4,8 @@ title: kaliGeneratorSdf
 parent: Sdf Operators
 grand_parent: Operators
 permalink: /reference/operators/sdf/kaliGeneratorSdf
+redirect_from:
+  - /reference/opType/raytk.operators.sdf.kaliGeneratorSdf/
 ---
 
 # kaliGeneratorSdf
@@ -22,3 +24,4 @@ Fractal SDF based on "Generators" by Kali (https://www.shadertoy.com/view/Xtf3Rn
 * `Boxsize` *Box Size*
 * `Boxround` *Box Round*
 * `Inspect` *Inspect*
+* `Help` *Help*

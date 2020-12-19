@@ -4,6 +4,8 @@ title: generalizedPolyhedronSdf
 parent: Sdf Operators
 grand_parent: Operators
 permalink: /reference/operators/sdf/generalizedPolyhedronSdf
+redirect_from:
+  - /reference/opType/raytk.operators.sdf.generalizedPolyhedronSdf/
 ---
 
 # generalizedPolyhedronSdf
@@ -32,3 +34,4 @@ Based on ["Generalized Distance Functions"](http://people.tamu.edu/~ergun/resear
 * `Useexponent` *Use Exponent*: Enables the use of the `Exponent`, which controls the sharpness of the edges. When this is switched off, the shape will have sharp edges.
 * `Exponent` *Exponent*: Controls the sharpness or smoothness of the edges.
 * `Inspect` *Inspect*
+* `Help` *Help*

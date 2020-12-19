@@ -4,6 +4,8 @@ title: blend
 parent: Combine Operators
 grand_parent: Operators
 permalink: /reference/operators/combine/blend
+redirect_from:
+  - /reference/opType/raytk.operators.combine.blend/
 ---
 
 # blend
@@ -21,6 +23,7 @@ The blend index only considers inputs that are connected, so if you connect the 
 * `Enable` *Enable*
 * `Blend` *Blend*: Which input or combination of inputs to use. If this value is 0, the first connected input is used. 0.5 is half way between the first and second connected inputs, etc.
 * `Inspect` *Inspect*
+* `Help` *Help*
 
 ## Inputs
 

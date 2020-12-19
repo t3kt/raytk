@@ -4,6 +4,8 @@ title: chopField
 parent: Field Operators
 grand_parent: Operators
 permalink: /reference/operators/field/chopField
+redirect_from:
+  - /reference/opType/raytk.operators.field.chopField/
 ---
 
 # chopField
@@ -39,3 +41,4 @@ Category: field
   * `repeat` *Repeat*
   * `mirror` *Mirror*
 * `Inspect` *Inspect*
+* `Help` *Help*

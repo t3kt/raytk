@@ -4,6 +4,8 @@ title: pointDistanceField
 parent: Field Operators
 grand_parent: Operators
 permalink: /reference/operators/field/pointDistanceField
+redirect_from:
+  - /reference/opType/raytk.operators.field.pointDistanceField/
 ---
 
 # pointDistanceField
@@ -29,3 +31,4 @@ A float field that provides the distance from a specific point in space.
   * `LightContext` *Light Context*
   * `RayContext` *Ray Context*
 * `Inspect` *Inspect*
+* `Help` *Help*

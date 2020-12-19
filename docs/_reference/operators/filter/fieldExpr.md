@@ -4,6 +4,8 @@ title: fieldExpr
 parent: Filter Operators
 grand_parent: Operators
 permalink: /reference/operators/filter/fieldExpr
+redirect_from:
+  - /reference/opType/raytk.operators.filter.fieldExpr/
 ---
 
 # fieldExpr
@@ -60,6 +62,7 @@ Category: filter
   * `LightContext` *Light Context*
   * `RayContext` *Ray Context*
 * `Inspect` *Inspect*
+* `Help` *Help*
 
 ## Inputs
 

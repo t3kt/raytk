@@ -4,6 +4,8 @@ title: edgeEngrave
 parent: Combine Operators
 grand_parent: Operators
 permalink: /reference/operators/combine/edgeEngrave
+redirect_from:
+  - /reference/opType/raytk.operators.combine.edgeEngrave/
 ---
 
 # edgeEngrave
@@ -19,6 +21,7 @@ Category: combine
 * `Radius` *Radius*
 * `Useradiusfield` *Use Radius Field*
 * `Inspect` *Inspect*
+* `Help` *Help*
 
 ## Inputs
 

@@ -4,6 +4,8 @@ title: coordTo2D
 parent: Convert Operators
 grand_parent: Operators
 permalink: /reference/operators/convert/coordTo2D
+redirect_from:
+  - /reference/opType/raytk.operators.convert.coordTo2D/
 ---
 
 # coordTo2D
@@ -28,6 +30,7 @@ Category: convert
   * `y` *Y*
   * `zero` *Zero*
 * `Inspect` *Inspect*
+* `Help` *Help*
 
 ## Inputs
 

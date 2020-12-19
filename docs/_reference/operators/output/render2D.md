@@ -4,6 +4,8 @@ title: render2D
 parent: Output Operators
 grand_parent: Operators
 permalink: /reference/operators/output/render2D
+redirect_from:
+  - /reference/opType/raytk.operators.output.render2D/
 ---
 
 # render2D
@@ -28,6 +30,7 @@ Category: output
 * `Timerefop` *Time Reference Operator*
 * `Shaderbuilderconfig` *Shader Builder Config*
 * `Inspect` *Inspect*
+* `Help` *Help*
 
 ## Inputs
 

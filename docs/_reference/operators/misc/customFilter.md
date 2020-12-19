@@ -4,6 +4,8 @@ title: customFilter
 parent: Misc Operators
 grand_parent: Operators
 permalink: /reference/operators/misc/customFilter
+redirect_from:
+  - /reference/opType/raytk.operators.misc.customFilter/
 ---
 
 # customFilter
@@ -50,6 +52,7 @@ Category: misc
   * `raytkSdf` *raytkSdf*
   * `raytkMaterial` *raytkMaterial*
 * `Inspect` *Inspect*
+* `Help` *Help*
 
 ## Inputs
 

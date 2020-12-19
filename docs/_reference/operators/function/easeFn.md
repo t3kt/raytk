@@ -4,6 +4,8 @@ title: easeFn
 parent: Function Operators
 grand_parent: Operators
 permalink: /reference/operators/function/easeFn
+redirect_from:
+  - /reference/opType/raytk.operators.function.easeFn/
 ---
 
 # easeFn
@@ -22,3 +24,4 @@ Category: function
   * `CameraContext` *Camera Context*
   * `LightContext` *Light Context*
 * `Inspect` *Inspect*
+* `Help` *Help*

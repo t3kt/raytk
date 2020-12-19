@@ -4,6 +4,8 @@ title: bend
 parent: Filter Operators
 grand_parent: Operators
 permalink: /reference/operators/filter/bend
+redirect_from:
+  - /reference/opType/raytk.operators.filter.bend/
 ---
 
 # bend
@@ -34,6 +36,7 @@ For example, bends sideways (towards X) depending on the vertical position (alon
 * `Amount` *Amount*
 * `Shift` *Shift*
 * `Inspect` *Inspect*
+* `Help` *Help*
 
 ## Inputs
 

@@ -4,6 +4,8 @@ title: iteratedTransform
 parent: Filter Operators
 grand_parent: Operators
 permalink: /reference/operators/filter/iteratedTransform
+redirect_from:
+  - /reference/opType/raytk.operators.filter.iteratedTransform/
 ---
 
 # iteratedTransform
@@ -52,6 +54,7 @@ This can be used to create KIFS fractals (kaleidoscopic iterated function system
   * `zxy` *Rz Rx Ry*
   * `zyx` *Rz Ry Rx*
 * `Inspect` *Inspect*
+* `Help` *Help*
 * `Customcode` *Custom Code*
 * `Floatparam1` *Float Param 1*
 * `Floatparam2` *Float Param 2*

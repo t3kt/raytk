@@ -4,6 +4,8 @@ title: rotate
 parent: Filter Operators
 grand_parent: Operators
 permalink: /reference/operators/filter/rotate
+redirect_from:
+  - /reference/opType/raytk.operators.filter.rotate/
 ---
 
 # rotate
@@ -31,6 +33,7 @@ Category: filter
 * `Rot` *Rotate XYZ*
 * `Usefield` *Use Field*
 * `Inspect` *Inspect*
+* `Help` *Help*
 
 ## Inputs
 

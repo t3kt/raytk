@@ -4,6 +4,8 @@ title: waveField
 parent: Field Operators
 grand_parent: Operators
 permalink: /reference/operators/field/waveField
+redirect_from:
+  - /reference/opType/raytk.operators.field.waveField/
 ---
 
 # waveField
@@ -46,6 +48,7 @@ Without an input, the Axis is used to run the wave function on the position alon
 * `Amplitude` *Amplitude*
 * `Offset` *Offset*
 * `Inspect` *Inspect*
+* `Help` *Help*
 
 ## Inputs
 

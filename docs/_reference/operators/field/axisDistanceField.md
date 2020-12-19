@@ -4,6 +4,8 @@ title: axisDistanceField
 parent: Field Operators
 grand_parent: Operators
 permalink: /reference/operators/field/axisDistanceField
+redirect_from:
+  - /reference/opType/raytk.operators.field.axisDistanceField/
 ---
 
 # axisDistanceField
@@ -33,3 +35,4 @@ A float field that provides the distance from a specific point along a single ax
   * `CameraContext` *Camera Context*
   * `LightContext` *Light Context*
 * `Inspect` *Inspect*
+* `Help` *Help*

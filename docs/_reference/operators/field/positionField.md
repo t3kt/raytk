@@ -4,6 +4,8 @@ title: positionField
 parent: Field Operators
 grand_parent: Operators
 permalink: /reference/operators/field/positionField
+redirect_from:
+  - /reference/opType/raytk.operators.field.positionField/
 ---
 
 # positionField
@@ -27,3 +29,4 @@ A vector field that evaluates to the coordinates in space.
   * `LightContext` *Light Context*
   * `RayContext` *Ray Context*
 * `Inspect` *Inspect*
+* `Help` *Help*

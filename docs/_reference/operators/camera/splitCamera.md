@@ -4,6 +4,8 @@ title: splitCamera
 parent: Camera Operators
 grand_parent: Operators
 permalink: /reference/operators/camera/splitCamera
+redirect_from:
+  - /reference/opType/raytk.operators.camera.splitCamera/
 ---
 
 # splitCamera
@@ -22,6 +24,7 @@ A camera that splits the viewport into several zones, each using a separate came
   * `vert` *Vertical*
   * `grid` *Grid*
 * `Rescale` *Rescale*
+* `Help` *Help*
 
 ## Inputs
 

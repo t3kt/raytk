@@ -4,6 +4,8 @@ title: reflect
 parent: Filter Operators
 grand_parent: Operators
 permalink: /reference/operators/filter/reflect
+redirect_from:
+  - /reference/opType/raytk.operators.filter.reflect/
 ---
 
 # reflect
@@ -32,6 +34,7 @@ Can optionally expose which side of the plane a point is on as an iteration valu
 * `Shift` *Shift*
 * `Exposeiteration` *Expose Iteration*
 * `Inspect` *Inspect*
+* `Help` *Help*
 
 ## Inputs
 

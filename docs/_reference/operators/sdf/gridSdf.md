@@ -4,6 +4,8 @@ title: gridSdf
 parent: Sdf Operators
 grand_parent: Operators
 permalink: /reference/operators/sdf/gridSdf
+redirect_from:
+  - /reference/opType/raytk.operators.sdf.gridSdf/
 ---
 
 # gridSdf
@@ -37,3 +39,4 @@ An infinite grid shape, along two axes.
   * `CameraContext` *Camera Context*
   * `LightContext` *Light Context*
 * `Inspect` *Inspect*
+* `Help` *Help*

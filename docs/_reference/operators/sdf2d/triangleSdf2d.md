@@ -4,6 +4,8 @@ title: triangleSdf2d
 parent: Sdf2d Operators
 grand_parent: Operators
 permalink: /reference/operators/sdf2d/triangleSdf2d
+redirect_from:
+  - /reference/opType/raytk.operators.sdf2d.triangleSdf2d/
 ---
 
 # triangleSdf2d
@@ -25,3 +27,4 @@ Category: sdf2d
 * `Point2` *Point 2*
 * `Point3` *Point 3*
 * `Inspect` *Inspect*
+* `Help` *Help*

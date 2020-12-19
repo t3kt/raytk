@@ -4,6 +4,8 @@ title: iterationSwitch
 parent: Combine Operators
 grand_parent: Operators
 permalink: /reference/operators/combine/iterationSwitch
+redirect_from:
+  - /reference/opType/raytk.operators.combine.iterationSwitch/
 ---
 
 # iterationSwitch
@@ -22,6 +24,7 @@ Category: combine
   * `clamp` *Clamp*
   * `loop` *Loop*
 * `Inspect` *Inspect*
+* `Help` *Help*
 
 ## Inputs
 

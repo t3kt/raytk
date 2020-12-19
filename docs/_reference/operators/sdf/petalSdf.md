@@ -4,6 +4,8 @@ title: petalSdf
 parent: Sdf Operators
 grand_parent: Operators
 permalink: /reference/operators/sdf/petalSdf
+redirect_from:
+  - /reference/opType/raytk.operators.sdf.petalSdf/
 ---
 
 # petalSdf
@@ -24,3 +26,4 @@ Based on [Echeveria](https://www.shadertoy.com/view/wlVGRz) by tdhooper.
 * `Radius` *Radius*: The radius of the sphere that the petal is based on.
 * `Rotate` *Rotate*: Rotates the petal around the y axis.
 * `Inspect` *Inspect*
+* `Help` *Help*

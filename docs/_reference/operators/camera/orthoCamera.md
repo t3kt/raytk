@@ -4,6 +4,8 @@ title: orthoCamera
 parent: Camera Operators
 grand_parent: Operators
 permalink: /reference/operators/camera/orthoCamera
+redirect_from:
+  - /reference/opType/raytk.operators.camera.orthoCamera/
 ---
 
 # orthoCamera
@@ -25,3 +27,4 @@ An orthographic (non-perspective) camera, which can be used for flattened front/
   * `zneg` *Front (Z-)*
 * `Campos` *Position*
 * `Rotate` *Rotate*
+* `Help` *Help*

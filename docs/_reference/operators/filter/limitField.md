@@ -4,6 +4,8 @@ title: limitField
 parent: Filter Operators
 grand_parent: Operators
 permalink: /reference/operators/filter/limitField
+redirect_from:
+  - /reference/opType/raytk.operators.filter.limitField/
 ---
 
 # limitField
@@ -23,6 +25,7 @@ Category: filter
 * `Low` *Input Low*
 * `High` *Input High*
 * `Inspect` *Inspect*
+* `Help` *Help*
 
 ## Inputs
 

@@ -4,6 +4,8 @@ title: revolve
 parent: Convert Operators
 grand_parent: Operators
 permalink: /reference/operators/convert/revolve
+redirect_from:
+  - /reference/opType/raytk.operators.convert.revolve/
 ---
 
 # revolve
@@ -22,6 +24,7 @@ Category: convert
 * `Radialoffset` *Radial Offset*
 * `Axisoffset` *Axis Offset*
 * `Inspect` *Inspect*
+* `Help` *Help*
 
 ## Inputs
 

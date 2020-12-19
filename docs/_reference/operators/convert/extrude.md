@@ -4,6 +4,8 @@ title: extrude
 parent: Convert Operators
 grand_parent: Operators
 permalink: /reference/operators/convert/extrude
+redirect_from:
+  - /reference/opType/raytk.operators.convert.extrude/
 ---
 
 # extrude
@@ -22,6 +24,7 @@ Category: convert
 * `Height` *Height*
 * `Offset` *Offset*
 * `Inspect` *Inspect*
+* `Help` *Help*
 
 ## Inputs
 

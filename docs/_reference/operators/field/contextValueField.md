@@ -4,6 +4,8 @@ title: contextValueField
 parent: Field Operators
 grand_parent: Operators
 permalink: /reference/operators/field/contextValueField
+redirect_from:
+  - /reference/opType/raytk.operators.field.contextValueField/
 ---
 
 # contextValueField
@@ -32,3 +34,4 @@ Field that returns various fields from the context, from a downstream OP.
   * `lightiteration` *Iteration (Light)*
   * `lightobjectid` *Object ID (Light)*
 * `Inspect` *Inspect*
+* `Help` *Help*

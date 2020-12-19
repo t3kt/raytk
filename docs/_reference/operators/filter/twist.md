@@ -4,6 +4,8 @@ title: twist
 parent: Filter Operators
 grand_parent: Operators
 permalink: /reference/operators/filter/twist
+redirect_from:
+  - /reference/opType/raytk.operators.filter.twist/
 ---
 
 # twist
@@ -22,6 +24,7 @@ Category: filter
 * `Amount` *Amount*
 * `Shift` *Shift*
 * `Inspect` *Inspect*
+* `Help` *Help*
 
 ## Inputs
 

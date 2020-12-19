@@ -4,6 +4,8 @@ title: smoothUnion
 parent: Combine Operators
 grand_parent: Operators
 permalink: /reference/operators/combine/smoothUnion
+redirect_from:
+  - /reference/opType/raytk.operators.combine.smoothUnion/
 ---
 
 # smoothUnion
@@ -22,6 +24,7 @@ Produces the combined areas of the input shapes, blended to smooth out the inter
 * `Amount` *Amount*: Size of the blending region.
 * `Inspect` *Inspect*
 * `Usefield` *Use Field*
+* `Help` *Help*
 
 ## Inputs
 

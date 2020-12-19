@@ -4,6 +4,8 @@ title: pyramidSdf
 parent: Sdf Operators
 grand_parent: Operators
 permalink: /reference/operators/sdf/pyramidSdf
+redirect_from:
+  - /reference/opType/raytk.operators.sdf.pyramidSdf/
 ---
 
 # pyramidSdf
@@ -20,3 +22,4 @@ A pyramid with four sides.
 * `Height` *Height*: The height of the pyramid.
 * `Width` *Width*: The width of the base of the pyramid.
 * `Inspect` *Inspect*
+* `Help` *Help*

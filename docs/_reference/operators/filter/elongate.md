@@ -4,6 +4,8 @@ title: elongate
 parent: Filter Operators
 grand_parent: Operators
 permalink: /reference/operators/filter/elongate
+redirect_from:
+  - /reference/opType/raytk.operators.filter.elongate/
 ---
 
 # elongate
@@ -27,6 +29,7 @@ See [example](https://www.shadertoy.com/view/Ml3fWj).
 * `Enable` *Enable*
 * `Size` *Size*
 * `Inspect` *Inspect*
+* `Help` *Help*
 
 ## Inputs
 

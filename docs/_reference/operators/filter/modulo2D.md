@@ -4,6 +4,8 @@ title: modulo2D
 parent: Filter Operators
 grand_parent: Operators
 permalink: /reference/operators/filter/modulo2D
+redirect_from:
+  - /reference/opType/raytk.operators.filter.modulo2D/
 ---
 
 # modulo2D
@@ -30,6 +32,7 @@ Repeats space along 2 axes.
   * `grid` *Grid*
 * `Iterateoncells` *Iterate On Cells*
 * `Inspect` *Inspect*
+* `Help` *Help*
 
 ## Inputs
 

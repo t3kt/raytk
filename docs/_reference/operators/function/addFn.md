@@ -4,6 +4,8 @@ title: addFn
 parent: Function Operators
 grand_parent: Operators
 permalink: /reference/operators/function/addFn
+redirect_from:
+  - /reference/opType/raytk.operators.function.addFn/
 ---
 
 # addFn
@@ -17,6 +19,7 @@ Category: function
 * `Enable` *Enable*
 * `Add` *Add*
 * `Inspect` *Inspect*
+* `Help` *Help*
 
 ## Inputs
 

@@ -4,6 +4,8 @@ title: slice
 parent: Filter Operators
 grand_parent: Operators
 permalink: /reference/operators/filter/slice
+redirect_from:
+  - /reference/opType/raytk.operators.filter.slice/
 ---
 
 # slice
@@ -25,6 +27,7 @@ Category: filter
 * `Smoothradius` *Smooth Radius*
 * `Enablemirror` *Enable Mirror*
 * `Inspect` *Inspect*
+* `Help` *Help*
 
 ## Inputs
 

@@ -4,6 +4,8 @@ title: powerCurveFn
 parent: Function Operators
 grand_parent: Operators
 permalink: /reference/operators/function/powerCurveFn
+redirect_from:
+  - /reference/opType/raytk.operators.function.powerCurveFn/
 ---
 
 # powerCurveFn
@@ -25,3 +27,4 @@ Category: function
   * `CameraContext` *Camera Context*
   * `LightContext` *Light Context*
 * `Inspect` *Inspect*
+* `Help` *Help*

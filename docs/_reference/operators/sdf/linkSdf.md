@@ -4,6 +4,8 @@ title: linkSdf
 parent: Sdf Operators
 grand_parent: Operators
 permalink: /reference/operators/sdf/linkSdf
+redirect_from:
+  - /reference/opType/raytk.operators.sdf.linkSdf/
 ---
 
 # linkSdf
@@ -21,3 +23,4 @@ SDF for a chain link shape (an elongated loop).
 * `Radius` *Radius*: The radius or width of the chain shape as a whole.
 * `Thickness` *Thickness*: The thickness of the link.
 * `Inspect` *Inspect*
+* `Help` *Help*

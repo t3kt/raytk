@@ -4,6 +4,8 @@ title: radialClone
 parent: Filter Operators
 grand_parent: Operators
 permalink: /reference/operators/filter/radialClone
+redirect_from:
+  - /reference/opType/raytk.operators.filter.radialClone/
 ---
 
 # radialClone
@@ -36,6 +38,7 @@ Note that this runs its input multiple times, which can lead to performance issu
   * `index` *Clone Index*
   * `scaled` *Scaled Clone Index*
 * `Inspect` *Inspect*
+* `Help` *Help*
 
 ## Inputs
 

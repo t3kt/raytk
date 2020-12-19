@@ -4,6 +4,8 @@ title: noiseField
 parent: Field Operators
 grand_parent: Operators
 permalink: /reference/operators/field/noiseField
+redirect_from:
+  - /reference/opType/raytk.operators.field.noiseField/
 ---
 
 # noiseField
@@ -39,3 +41,4 @@ A float or vector field that uses one of several noise functions.
 * `Translate` *Translate*
 * `Scale` *Scale*
 * `Inspect` *Inspect*
+* `Help` *Help*

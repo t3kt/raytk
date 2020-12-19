@@ -4,6 +4,8 @@ title: reorderCoords
 parent: Filter Operators
 grand_parent: Operators
 permalink: /reference/operators/filter/reorderCoords
+redirect_from:
+  - /reference/opType/raytk.operators.filter.reorderCoords/
 ---
 
 # reorderCoords
@@ -28,6 +30,7 @@ Category: filter
   * `y` *Y*
   * `z` *Z*
 * `Inspect` *Inspect*
+* `Help` *Help*
 
 ## Inputs
 

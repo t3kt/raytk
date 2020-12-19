@@ -4,6 +4,8 @@ title: textureField
 parent: Field Operators
 grand_parent: Operators
 permalink: /reference/operators/field/textureField
+redirect_from:
+  - /reference/opType/raytk.operators.field.textureField/
 ---
 
 # textureField
@@ -41,3 +43,4 @@ A float or vector field that looks up values from a texture.
   * `repeat` *Repeat*
   * `mirror` *Mirror*
 * `Inspect` *Inspect*
+* `Help` *Help*

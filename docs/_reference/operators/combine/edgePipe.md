@@ -4,6 +4,8 @@ title: edgePipe
 parent: Combine Operators
 grand_parent: Operators
 permalink: /reference/operators/combine/edgePipe
+redirect_from:
+  - /reference/opType/raytk.operators.combine.edgePipe/
 ---
 
 # edgePipe
@@ -23,6 +25,7 @@ Radius is the size of the blend region. This can alternately be controlled by a 
 * `Radius` *Radius*
 * `Useradiusfield` *Use Radius Field*
 * `Inspect` *Inspect*
+* `Help` *Help*
 
 ## Inputs
 

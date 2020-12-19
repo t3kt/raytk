@@ -4,6 +4,8 @@ title: mandelbulbSdf
 parent: Sdf Operators
 grand_parent: Operators
 permalink: /reference/operators/sdf/mandelbulbSdf
+redirect_from:
+  - /reference/opType/raytk.operators.sdf.mandelbulbSdf/
 ---
 
 # mandelbulbSdf
@@ -22,3 +24,4 @@ Mandelbulb fractal.
 * `Phishift` *Phi Shift*: Offset the phi rotation.
 * `Iterations` *Iterations*: The number of steps used when refining the fractal.
 * `Inspect` *Inspect*
+* `Help` *Help*

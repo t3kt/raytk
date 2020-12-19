@@ -4,6 +4,8 @@ title: timeField
 parent: Field Operators
 grand_parent: Operators
 permalink: /reference/operators/field/timeField
+redirect_from:
+  - /reference/opType/raytk.operators.field.timeField/
 ---
 
 # timeField
@@ -32,3 +34,4 @@ Category: field
   * `CameraContext` *Camera Context*
   * `LightContext` *Light Context*
 * `Inspect` *Inspect*
+* `Help` *Help*

@@ -4,6 +4,8 @@ title: iterationField
 parent: Field Operators
 grand_parent: Operators
 permalink: /reference/operators/field/iterationField
+redirect_from:
+  - /reference/opType/raytk.operators.field.iterationField/
 ---
 
 # iterationField
@@ -30,3 +32,4 @@ Field that returns the current iteration, from a downstream OP.
   * `scaledindex` *Scaled Index*
   * `full` *Full Data*
 * `Inspect` *Inspect*
+* `Help` *Help*

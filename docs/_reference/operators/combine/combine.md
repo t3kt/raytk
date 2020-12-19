@@ -4,6 +4,8 @@ title: combine
 parent: Combine Operators
 grand_parent: Operators
 permalink: /reference/operators/combine/combine
+redirect_from:
+  - /reference/opType/raytk.operators.combine.combine/
 ---
 
 # combine
@@ -44,6 +46,7 @@ To combine more than two SDFs, use one of the specialized operators like `simple
 * `Radius` *Radius*: The size of the blending region.
 * `Number` *Number*: For stair and column modes, this controls how many steps are used in the blending regions.
 * `Inspect` *Inspect*
+* `Help` *Help*
 
 ## Inputs
 

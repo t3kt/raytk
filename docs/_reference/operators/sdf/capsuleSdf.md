@@ -4,6 +4,8 @@ title: capsuleSdf
 parent: Sdf Operators
 grand_parent: Operators
 permalink: /reference/operators/sdf/capsuleSdf
+redirect_from:
+  - /reference/opType/raytk.operators.sdf.capsuleSdf/
 ---
 
 # capsuleSdf
@@ -23,3 +25,4 @@ With a small `Radius`, this can be used to create a line segment.
 * `Endpoint2` *End Point 2*: Distance of the second end from the center position.
 * `Radius` *Radius*: The thickness of the capsule.
 * `Inspect` *Inspect*
+* `Help` *Help*

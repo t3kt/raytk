@@ -4,6 +4,8 @@ title: waveFn
 parent: Function Operators
 grand_parent: Operators
 permalink: /reference/operators/function/waveFn
+redirect_from:
+  - /reference/opType/raytk.operators.function.waveFn/
 ---
 
 # waveFn
@@ -37,3 +39,4 @@ A function that uses a periodic wave, with the position as the parameter.
 * `Amplitude` *Amplitude*
 * `Offset` *Offset*
 * `Inspect` *Inspect*
+* `Help` *Help*

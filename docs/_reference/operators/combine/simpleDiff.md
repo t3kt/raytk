@@ -4,6 +4,8 @@ title: simpleDiff
 parent: Combine Operators
 grand_parent: Operators
 permalink: /reference/operators/combine/simpleDiff
+redirect_from:
+  - /reference/opType/raytk.operators.combine.simpleDiff/
 ---
 
 # simpleDiff
@@ -21,6 +23,7 @@ Produces the area of the first shape minus any areas overlapped by the second (o
 * `Enable` *Enable*
 * `Swaporder` *Swap Order*: Swaps the two inputs, subtracting the first from the second.
 * `Inspect` *Inspect*
+* `Help` *Help*
 
 ## Inputs
 

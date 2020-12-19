@@ -4,6 +4,8 @@ title: octahedronSdf
 parent: Sdf Operators
 grand_parent: Operators
 permalink: /reference/operators/sdf/octahedronSdf
+redirect_from:
+  - /reference/opType/raytk.operators.sdf.octahedronSdf/
 ---
 
 # octahedronSdf
@@ -22,3 +24,4 @@ An octahedron, with its corners facing the axes.
   * `exact` *Exact*: Provides more accuracy but can produce roughness around the edges.
   * `bound` *Bound (Not Exact)*: Less accurate but less rough around the edges.
 * `Inspect` *Inspect*
+* `Help` *Help*

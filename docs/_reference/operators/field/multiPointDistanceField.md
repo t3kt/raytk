@@ -4,6 +4,8 @@ title: multiPointDistanceField
 parent: Field Operators
 grand_parent: Operators
 permalink: /reference/operators/field/multiPointDistanceField
+redirect_from:
+  - /reference/opType/raytk.operators.field.multiPointDistanceField/
 ---
 
 # multiPointDistanceField
@@ -31,3 +33,4 @@ A vector field that provides the distance from 4 specific points in space (one f
   * `CameraContext` *Camera Context*
   * `LightContext` *Light Context*
 * `Inspect` *Inspect*
+* `Help` *Help*

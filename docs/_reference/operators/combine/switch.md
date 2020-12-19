@@ -4,6 +4,8 @@ title: switch
 parent: Combine Operators
 grand_parent: Operators
 permalink: /reference/operators/combine/switch
+redirect_from:
+  - /reference/opType/raytk.operators.combine.switch/
 ---
 
 # switch
@@ -19,6 +21,7 @@ Switches between several inputs, without the need to rebuild the shader, allowin
 * `Enable` *Enable*
 * `Source` *Source*
 * `Inspect` *Inspect*
+* `Help` *Help*
 
 ## Inputs
 

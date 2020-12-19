@@ -4,6 +4,8 @@ title: pennerEasingFn
 parent: Function Operators
 grand_parent: Operators
 permalink: /reference/operators/function/pennerEasingFn
+redirect_from:
+  - /reference/opType/raytk.operators.function.pennerEasingFn/
 ---
 
 # pennerEasingFn
@@ -53,3 +55,4 @@ Category: function
   * `CameraContext` *Camera Context*
   * `LightContext` *Light Context*
 * `Inspect` *Inspect*
+* `Help` *Help*

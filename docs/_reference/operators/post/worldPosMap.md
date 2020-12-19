@@ -4,6 +4,8 @@ title: worldPosMap
 parent: Post Operators
 grand_parent: Operators
 permalink: /reference/operators/post/worldPosMap
+redirect_from:
+  - /reference/opType/raytk.operators.post.worldPosMap/
 ---
 
 # worldPosMap
@@ -19,3 +21,4 @@ Category: post
 * `Rangez` *Range Z*
 * `Snapshotrange` *Snapshot Range*
 * `Outputop` *Output OP*
+* `Help` *Help*

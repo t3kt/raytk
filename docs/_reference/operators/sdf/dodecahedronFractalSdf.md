@@ -4,6 +4,8 @@ title: dodecahedronFractalSdf
 parent: Sdf Operators
 grand_parent: Operators
 permalink: /reference/operators/sdf/dodecahedronFractalSdf
+redirect_from:
+  - /reference/opType/raytk.operators.sdf.dodecahedronFractalSdf/
 ---
 
 # dodecahedronFractalSdf
@@ -24,3 +26,4 @@ Category: sdf
 * `Offset` *Offset*
 * `Iterations` *Iterations*
 * `Inspect` *Inspect*
+* `Help` *Help*

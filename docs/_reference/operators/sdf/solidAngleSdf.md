@@ -4,6 +4,8 @@ title: solidAngleSdf
 parent: Sdf Operators
 grand_parent: Operators
 permalink: /reference/operators/sdf/solidAngleSdf
+redirect_from:
+  - /reference/opType/raytk.operators.sdf.solidAngleSdf/
 ---
 
 # solidAngleSdf
@@ -22,3 +24,4 @@ Similar to `coneSdf` but with the base rounded.
 * `Angle` *Angle*: The angle width of the slice.
 * `Radius` *Radius*: The radius of the sphere that the shape is based one, equivalent to the distance from the tip to the base.
 * `Inspect` *Inspect*
+* `Help` *Help*

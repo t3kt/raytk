@@ -4,6 +4,8 @@ title: stepFn
 parent: Function Operators
 grand_parent: Operators
 permalink: /reference/operators/function/stepFn
+redirect_from:
+  - /reference/opType/raytk.operators.function.stepFn/
 ---
 
 # stepFn
@@ -26,3 +28,4 @@ Category: function
   * `CameraContext` *Camera Context*
   * `LightContext` *Light Context*
 * `Inspect` *Inspect*
+* `Help` *Help*

@@ -4,6 +4,8 @@ title: fieldMat
 parent: Material Operators
 grand_parent: Operators
 permalink: /reference/operators/material/fieldMat
+redirect_from:
+  - /reference/opType/raytk.operators.material.fieldMat/
 ---
 
 # fieldMat
@@ -20,6 +22,7 @@ field to a material, with no other features.
 
 * `Enable` *Enable*
 * `Inspect` *Inspect*
+* `Help` *Help*
 
 ## Inputs
 

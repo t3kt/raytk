@@ -4,6 +4,8 @@ title: quantizeValue
 parent: Filter Operators
 grand_parent: Operators
 permalink: /reference/operators/filter/quantizeValue
+redirect_from:
+  - /reference/opType/raytk.operators.filter.quantizeValue/
 ---
 
 # quantizeValue
@@ -21,6 +23,7 @@ Category: filter
 * `Smoothing` *Smoothing*
 * `Smoothingmult` *Smoothing Multiplier*
 * `Inspect` *Inspect*
+* `Help` *Help*
 
 ## Inputs
 
