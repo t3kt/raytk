@@ -30,3 +30,15 @@ def inspect():
 		if par is not None:
 			par.pulse()
 			return
+
+def _useLocalHelp():
+	return hasattr(op, 'raytk') and bool(op.raytk.par['Devel'])
+
+def launchHelp():
+	url = parentPar().Helpurl.eval()
+	if not url:
+		return
+	if _useLocalHelp():
+		url = url.replace('https://t3kt.github.io/raytk/', 'http://localhost:4000/raytk/')
+	if url:
+		ui.viewFile(url)

@@ -30,7 +30,8 @@ github_username:  t3kt
 # Build settings
 #theme: minima
 #theme: "just-the-docs"
-#plugins:
+plugins:
+  - jekyll-redirect-from
 #  - jekyll-feed
 
 remote_theme: pmarsceill/just-the-docs
@@ -88,3 +89,6 @@ heading_anchors: true
 aux_links:
   "View on GitHub":
     - "//github.com/t3kt/raytk"
+
+whitelist:
+  - jekyll-redirect-from

@@ -1,5 +1,5 @@
-from develCommon import updateROPMetadata
 from pathlib import Path
+from raytkTools import RaytkTools
 from raytkUtil import RaytkTags, navigateTo, focusCustomParameterPage, CategoryInfo, getToolkit, getToolkitVersion, ROPInfo
 from raytkBuild import BuildContext, DocProcessor
 from typing import List, Optional
@@ -184,24 +184,12 @@ class BuildManager:
 		self.log(f'Processing operator {comp}')
 		self.context.disableCloning(comp)
 		self.context.detachTox(comp)
-		focusCustomParameterPage(comp, 0)
 		comp.showCustomOnly = True
 		for child in comp.findChildren(type=COMP):
 			self.processOperatorSubComp(child)
-		info = ROPInfo(comp)
-		inspectPar = comp.par['Inspect']
-		if info.supportsInspect:
-			if inspectPar is None:
-				if comp.customPages:
-					page = comp.customPages[0]
-				else:
-					page = comp.appendCustomPage('Settings')
-				inspectPar = page.appendPulse('Inspect')[0]
-			inspectPar.startSection = True
-			inspectPar.order = 99999
-		elif inspectPar is not None:
-			inspectPar.destroy()
-		updateROPMetadata(comp)
+		tools = RaytkTools()
+		tools.updateROPMetadata(comp)
+		tools.updateROPParams(comp)
 		if self.docProcessor:
 			self.docProcessor.processOp(comp)
 

@@ -1,53 +1,11 @@
-from typing import List, Union
-import re
+from typing import List
 from pathlib import Path
-from raytkUtil import getToolkit, Version
 
 # noinspection PyUnreachableCode
 if False:
 	# noinspection PyUnresolvedReferences
 	from _stubs import *
 	op.raytk = COMP()
-
-def getToolkitVersion():
-	toolkit = getToolkit()
-	par = toolkit.par['Raytkversion']
-	return Version(str(par or '0.1'))
-
-def updateROPMetadata(comp: 'COMP', incrementVersion=False):
-	opDef = comp.op('opDefinition') or comp.op('compDefinition')
-	opDef.par.enablecloningpulse.pulse()
-	currentOpType = str(opDef.par['Raytkoptype'] or '')
-	currentOpVersion = str(opDef.par['Raytkopversion'] or '')
-	page = opDef.appendCustomPage('Metadata')
-	newType = generateROPType(comp)
-	# don't update op type if this is not the master of the ROP
-	if comp.par.clone.eval() != comp:
-		newType = currentOpType
-	p = page.appendStr('Raytkoptype', label='OP Type')[0]
-	p.default = p.val = newType
-	p.readOnly = True
-	if not currentOpVersion or not currentOpType or currentOpType != newType:
-		versionVal = 0
-	else:
-		versionVal = currentOpVersion
-		if incrementVersion:
-			versionVal = int(versionVal) + 1
-	p = page.appendStr('Raytkopversion', label='OP Version')[0]
-	p.default = p.val = versionVal
-	p.readOnly = True
-	p = page.appendStr('Raytkversion', label='RayTK Version')[0]
-	p.default = p.val = str(getToolkitVersion())
-	p.readOnly = True
-
-def generateROPType(comp: 'COMP'):
-	if not comp:
-		return
-	toolkit = getToolkit()
-	path = toolkit.relativePath(comp)
-	if path.startswith('./'):
-		path = path[2:]
-	return 'raytk.' + path.replace('/', '.')
 
 class AutoLoader:
 	def __init__(self, folderComp: 'COMP'):

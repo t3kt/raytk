@@ -64,12 +64,14 @@ def getToolkitVersion():
 	return Version(str(par or '0.1'))
 
 class _OpMetaPars:
+	enablecloningpulse: 'Par'
 	Raytkoptype: 'StrParamT'
 	Raytkopversion: 'IntParamT'
 	Raytkversion: 'StrParamT'
 
 class CompDefParsT(_OpMetaPars):
 	Help: 'DatParamT'
+	Helpurl: 'StrParamT'
 	Rops: 'StrParamT'
 
 class OpDefParsT(_OpMetaPars):
@@ -83,6 +85,7 @@ class OpDefParsT(_OpMetaPars):
 	Callbacks: 'DatParamT'
 	Librarynames: 'StrParamT'
 	Help: 'DatParamT'
+	Helpurl: 'StrParamT'
 	Disableinspect: 'BoolParamT'
 
 class ROPInfo:
@@ -141,6 +144,18 @@ class ROPInfo:
 	@property
 	def opType(self):
 		return str(self.opDefPar.Raytkoptype or '')
+
+	@opType.setter
+	def opType(self, val: str):
+		self.opDefPar.Raytkoptype = val
+
+	@property
+	def helpUrl(self):
+		return str(self.opDefPar.Helpurl or '')
+
+	@helpUrl.setter
+	def helpUrl(self, val):
+		self.opDefPar.Helpurl = val
 
 	@property
 	def isROP(self):
