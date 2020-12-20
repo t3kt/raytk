@@ -10,6 +10,17 @@ uniform vec3 uLightColor1 = vec3(1);
 uniform float uUseRenderDepth;
 
 
+
+float hash1( float n )
+{
+	return fract(sin(n)*43758.5453123);
+}
+
+float hash1( in vec2 f )
+{
+	return fract(sin(f.x+131.1*f.y)*43758.5453123);
+}
+
 Sdf map(vec3 q)
 {
 	Context ctx = createDefaultContext();
@@ -331,7 +342,12 @@ void main()
 			normalOut += vec4(matCtx.normal, 0);
 			#endif
 			#ifdef OUTPUT_COLOR
-			colorOut += vec4(getColor(p, matCtx), 1);
+			{
+				vec3 col = getColor(p, matCtx);
+				vec2 fragCoord = vUV.st*uTDOutputInfo.res.zw;
+				col += (1.0/255.0)*hash1(fragCoord);
+				colorOut += vec4(col, 1);
+			}
 			#endif
 			#ifdef OUTPUT_ORBIT
 			orbitOut += res.orbit;
