@@ -45,13 +45,13 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 			if (cell < 3) {
 				return withAdjustedScale(inputOp3(p, ctx), scaleMult);
 			}
+			#if THIS_INPUT_COUNT > 3
+				return withAdjustedScale(inputOp4(p, ctx), scaleMult);
+			#else
+				return withAdjustedScale(inputOp3(p, ctx), scaleMult);
+			#endif
 		#else
 			return withAdjustedScale(inputOp2(p, ctx), scaleMult);
-		#endif
-		#if THIS_INPUT_COUNT > 3
-			return withAdjustedScale(inputOp4(p, ctx), scaleMult);
-		#else
-			return withAdjustedScale(inputOp3(p, ctx), scaleMult);
 		#endif
 	#endif
 }
