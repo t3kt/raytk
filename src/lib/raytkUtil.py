@@ -598,6 +598,18 @@ class TypeTableHelper:
 			hasUseInput: Optional[bool] = None):
 		self.updateTypePar(par, 'isReturnType', hasUseInput=hasUseInput)
 
+	def coordTypes(self):
+		types, _ = self.getTypeNamesAndLabels('isCoordType')
+		return types
+
+	def contextTypes(self):
+		types, _ = self.getTypeNamesAndLabels('isContextType')
+		return types
+
+	def returnTypes(self):
+		types, _ = self.getTypeNamesAndLabels('isReturnType')
+		return types
+
 class RaytkContext:
 	@staticmethod
 	def toolkit():

@@ -1,4 +1,4 @@
-from raytkUtil import CoordTypes, ContextTypes, ReturnTypes, ROPInfo
+from raytkUtil import CoordTypes, ContextTypes, ReturnTypes, ROPInfo, TypeTableHelper
 from dataclasses import dataclass, field
 import re
 from typing import Dict, Iterable, List, Optional, Tuple, Union
@@ -37,7 +37,7 @@ class TypeSpec:
 		if not s:
 			return cls()
 		if s == '*':
-			return cls(isAll=True)
+			return cls.all()
 		return cls(types=s.split('|'))
 
 	@classmethod
