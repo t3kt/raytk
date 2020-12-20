@@ -12,4 +12,13 @@ Other operators use fields to control behavior depending on where a point is in 
 
 For example, you can recreate what the [`twist`](/reference/filter/twist) operator does using a [`rotate`](/reference/filter/rotate) with a value field controlling the `Rotate` parameter, applying different amounts of rotation at different coordinates along the axis.
 
+![Rotate and axisDistanceField as twist](/raytk/assets/images/guide/fields-rotateAsTwist.png)
+
+## Field Types
+
+There are two different kinds of data that a field can produce:
+* `Float`: a single numeric value.
+* `Vector`: 4 numeric values.
+
+ROPs that use fields may support one or both of those types.
 
