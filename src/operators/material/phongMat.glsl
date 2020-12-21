@@ -5,14 +5,17 @@ Sdf thismap(CoordT p, ContextT ctx) {
 }
 
 vec3 THIS_getColor(vec3 p, MaterialContext matCtx) {
-	const vec3 ambientLight = vec3(0.5);
-	vec3 ambientColor = vec3(0.5);
-	vec3 col = ambientLight * ambientColor;
-	float shine = 4.0;
-	col += phongContribForLight(
-		THIS_Diffusecolor,
-		THIS_Specularcolor,
-		shine,
+
+	float sunShadow = 1.;
+	#if defined(THIS_SHADOW_FUNC)
+	sunShadow = THIS_SHADOW_FUNC(p+matCtx.normal*0.001, matCtx);
+	#elif defined(THIS_USE_SHADOW_DEFAULT)
+	sunShadow = calcShadow(p + matCtx.normal*0.001, matCtx);
+	#endif
+	vec3 col = THIS_Ambientcolor + phongContribForLight(
+		THIS_Diffusecolor * sunShadow,
+		THIS_Specularcolor * sunShadow,
+		THIS_Shine,
 		p,
 		matCtx.ray.pos,
 		matCtx.light.pos,
@@ -23,6 +26,6 @@ vec3 THIS_getColor(vec3 p, MaterialContext matCtx) {
 
 	vec3 lightDir = normalize(matCtx.light.pos-p);
 //	col *= calcShadow(p, matCtx);
-	col *= softShadow(p, matCtx);
+//	col *= softShadow(p, matCtx);
 	return col;
 }
