@@ -191,8 +191,6 @@ class ShaderBuilder:
 		return wrapCodeSection(libBlocks, 'libraries')
 
 	def buildOpDataTypedefBlock(self):
-		if not self.configPar().Generatetypedefs:
-			return ' '
 		defsTable = self.definitionTable()
 		typedefs = []
 		macros = []
