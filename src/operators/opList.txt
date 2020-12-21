@@ -38,6 +38,7 @@ constantColorField	/raytk/operators/field/constantColorField	/raytk/operators/fi
 constantField	/raytk/operators/field/constantField	/raytk/operators/field	raytkOP	field	field/constantField	raytk.operators.field.constantField	8	
 contextValueField	/raytk/operators/field/contextValueField	/raytk/operators/field	raytkOP	field	field/contextValueField	raytk.operators.field.contextValueField	1	
 iterationField	/raytk/operators/field/iterationField	/raytk/operators/field	raytkOP	field	field/iterationField	raytk.operators.field.iterationField	1	
+metaballField	/raytk/operators/field/metaballField	/raytk/operators/field	raytkOP	field	field/metaballField	raytk.operators.field.metaballField	0	
 multiPointDistanceField	/raytk/operators/field/multiPointDistanceField	/raytk/operators/field	raytkOP	field	field/multiPointDistanceField	raytk.operators.field.multiPointDistanceField	0	
 noiseField	/raytk/operators/field/noiseField	/raytk/operators/field	raytkOP	field	field/noiseField	raytk.operators.field.noiseField	3	
 pointDistanceField	/raytk/operators/field/pointDistanceField	/raytk/operators/field	raytkOP	field	field/pointDistanceField	raytk.operators.field.pointDistanceField	7	
