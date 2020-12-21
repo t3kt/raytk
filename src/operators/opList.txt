@@ -102,7 +102,7 @@ softShadow	/raytk/operators/light/softShadow	/raytk/operators/light	raytkOP	ligh
 basicMat	/raytk/operators/material/basicMat	/raytk/operators/material	raytkOP	material	material/basicMat	raytk.operators.material.basicMat	7	
 checkerboardMat	/raytk/operators/material/checkerboardMat	/raytk/operators/material	raytkOP	material	material/checkerboardMat	raytk.operators.material.checkerboardMat	2	
 fieldMat	/raytk/operators/material/fieldMat	/raytk/operators/material	raytkOP	material	material/fieldMat	raytk.operators.material.fieldMat	1	
-phongMat	/raytk/operators/material/phongMat	/raytk/operators/material	raytkOP	material	material/phongMat	raytk.operators.material.phongMat	3	
+phongMat	/raytk/operators/material/phongMat	/raytk/operators/material	raytkOP	material	material/phongMat	raytk.operators.material.phongMat	4	
 sampledPointMat	/raytk/operators/material/sampledPointMat	/raytk/operators/material	raytkOP	material	material/sampledPointMat	raytk.operators.material.sampledPointMat	4	
 customFilter	/raytk/operators/misc/customFilter	/raytk/operators/misc	raytkOP	misc	misc/customFilter	raytk.operators.misc.customFilter	3	
 customGen	/raytk/operators/misc/customGen	/raytk/operators/misc	raytkOP	misc	misc/customGen	raytk.operators.misc.customGen	4	
