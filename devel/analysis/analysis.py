@@ -45,7 +45,7 @@ def buildOpDefParamTable(dat: 'DAT'):
 			if par.mode == ParMode.CONSTANT:
 				dat[path, pn] = par.val
 			elif par.mode == ParMode.EXPRESSION:
-				dat[path, pn] = f'$: {par.expr}'
+				dat[path, pn] = f'#: {par.expr}'
 			elif par.mode == ParMode.BIND:
 				dat[path, pn] = f'@: {par.bindExpr}'
 			elif par.mode == ParMode.EXPORT:
