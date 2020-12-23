@@ -2,7 +2,7 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 	vec2 q = p.THIS_PLANE + THIS_Shift;
 	vec2 cell = THIS_MIRROR_FUNC(q, THIS_Size);
 	p.THIS_PLANE = q - THIS_Offset;
-	#ifdef THIS_ITERATE_CELLS
+	#ifdef THIS_Iterateoncells
 	ctx.iteration.x = quadrantIndex(ivec2(cell));
 	ctx.iteration.y = 4;
 	#endif

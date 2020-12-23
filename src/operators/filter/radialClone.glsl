@@ -10,9 +10,9 @@ Sdf thismap(CoordT p, ContextT ctx) {
 	pR(q.THIS_PLANE, rot);
 	q.THIS_RADIUS_AXIS -= THIS_Radiusoffset;
 #endif
-#if defined(THIS_ITERATION_TYPE_index)
+#if defined(THIS_Iterationtype_index)
 	ctx.iteration = vec4(0, n, 0, 0);
-#elif defined(THIS_ITERATION_TYPE_scaled)
+#elif defined(THIS_Iterationtype_scaled)
 	ctx.iteration = vec4(0, 1, 0, 0);
 	float iterScale = 1 / max(1, float(n - 1));
 #endif
@@ -27,15 +27,15 @@ Sdf thismap(CoordT p, ContextT ctx) {
 			pR(q.THIS_PLANE, rot);
 			q.THIS_RADIUS_AXIS -= THIS_Radiusoffset;
 		#endif
-		#if defined(THIS_ITERATION_TYPE_index)
+		#if defined(THIS_Iterationtype_index)
 			ctx.iteration = vec4(float(i), n, 0, 0);
-		#elif defined(THIS_ITERATION_TYPE_scaled)
+		#elif defined(THIS_Iterationtype_scaled)
 			ctx.iteration = vec4(float(i) * iterScale, 1, 0, 0);
 		#endif
 		Sdf res = inputOp1(q, ctx);
-		#if defined(THIS_MERGE_smoothunion)
+		#if defined(THIS_Mergetype_smoothunion)
 		merged = opSmoothUnionM(merged, res, THIS_Mergeradius);
-		#elif defined(THIS_MERGE_union)
+		#elif defined(THIS_Mergetype_union)
 		merged = opSimpleUnion(merged, res);
 		#endif
 	}
