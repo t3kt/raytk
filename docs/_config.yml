@@ -92,3 +92,5 @@ aux_links:
 
 whitelist:
   - jekyll-redirect-from
+
+ga_tracking: G-2MR97RZP0E
