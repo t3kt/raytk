@@ -24,6 +24,7 @@ def buildMacros(dat: 'DAT', partTable: 'DAT'):
 	if len(set(sources)) == 1 and sources[0] > 0 and all([p in 'xyzw' for p in parts]):
 		src = sources[0]
 		dat.appendRow([
+			'',
 			'THIS_EXPR',
 			f'inputOp{src}(p, ctx).' + ''.join(parts),
 		])
@@ -37,6 +38,7 @@ def buildMacros(dat: 'DAT', partTable: 'DAT'):
 				continue
 			returnType = op(f'definition_{i}')[1, 'returnType']
 			dat.appendRow([
+				'',
 				f'THIS_DECL_{i}',
 				f'{returnType} val{i} = inputOp{i}(p, ctx)'
 			])
@@ -54,7 +56,7 @@ def buildMacros(dat: 'DAT', partTable: 'DAT'):
 				else:
 					exprParts.append(f'val{src}.{part}')
 		dat.appendRow([
+			'',
 			'THIS_EXPR',
 			'vec4(' + ','.join(exprParts) + ')',
 		])
-	pass

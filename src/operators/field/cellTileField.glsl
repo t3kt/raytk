@@ -18,9 +18,9 @@ float thismap(vec3 p, ContextT ctx) {
 
 	v.xy = min(d.xz, d.yw), v.z = min(max(d.x, d.y), max(d.z, d.w)), v.w = max(v.x, v.y);
 
-	#if defined(THIS_CELL_STYLE_beveledvoronoi)
+	#if defined(THIS_Cellstyle_beveledvoronoi)
 	d.x =  min(v.z, v.w) - min(v.x, v.y);// First minus second order, for that beveled Voronoi look. Range [0, 1].
-	#elif defined(THIS_CELL_STYLE_cellular)
+	#elif defined(THIS_Cellstyle_cellular)
 	d.x =  min(v.x, v.y); // Minimum, for the cellular look.
 	#endif
 
