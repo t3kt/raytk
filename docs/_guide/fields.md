@@ -10,7 +10,7 @@ Fields are operators that are similar to SDFs, but instead of producing hits on 
 
 Other operators use fields to control behavior depending on where a point is in space.
 
-For example, you can recreate what the [`twist`](/reference/filter/twist) operator does using a [`rotate`](/reference/filter/rotate) with a value field controlling the `Rotate` parameter, applying different amounts of rotation at different coordinates along the axis.
+For example, you can recreate what the [`twist`](/raytk/reference/operators/filter/twist) operator does using a [`rotate`](/raytk/reference/operators/filter/rotate) with a value field controlling the `Rotate` parameter, applying different amounts of rotation at different coordinates along the axis.
 
 ![Rotate and axisDistanceField as twist](/raytk/assets/images/guide/fields-rotateAsTwist.png)
 
