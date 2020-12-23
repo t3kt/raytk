@@ -14,24 +14,24 @@ def buildExportTable(dat: 'DAT', uniformTable: 'DAT'):
 		if uniType == 'vector':
 			_addVector(
 				dat,
-				path,
-				str(uniformTable[row, 'name']),
-				vectorIndex,
-				uniformTable[row, 'expr1'] or '0',
-				uniformTable[row, 'expr2'] or '0',
-				uniformTable[row, 'expr3'] or '0',
-				uniformTable[row, 'expr4'] or '0',
+				path=path,
+				i=vectorIndex,
+				name=str(uniformTable[row, 'name']),
+				expr1=uniformTable[row, 'expr1'] or '0',
+				expr2=uniformTable[row, 'expr2'] or '0',
+				expr3=uniformTable[row, 'expr3'] or '0',
+				expr4=uniformTable[row, 'expr4'] or '0',
 			)
 			arrayIndex += 1
 		else:
 			_addArray(
 				dat,
-				path,
-				arrayIndex,
-				uniformTable[row, 'name'].val,
-				uniformTable[row, 'chop'].val,
-				uniformTable[row, 'type'].val,
-				uniType,
+				path=path,
+				i=arrayIndex,
+				name=uniformTable[row, 'name'].val,
+				chop=uniformTable[row, 'chop'].val,
+				unitType=uniformTable[row, 'type'].val,
+				mode=uniType,
 			)
 			arrayIndex += 1
 

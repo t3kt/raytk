@@ -100,10 +100,10 @@ class ShaderBuilder:
 					results.append(o)
 		return results
 
-	def buildMacroBlock(self):
+	def _getMacros(self) -> 'List[Tuple[str, str]]':
 		tables = [self.ownerComp.par.Globalmacrotable.eval()]
 		tables += self.getOpsFromDefinitionColumn('macroTable')
-		decls = []
+		namesAndVals = []
 		for table in tables:
 			if not table:
 				continue
@@ -123,15 +123,28 @@ class ShaderBuilder:
 					value = ' ' + value
 				if not name.strip():
 					continue
-				if name.startswith('#define'):
-					decls.append(name + value)
-				else:
-					decls.append(f'#define {name} {value}')
+				namesAndVals.append((name, value))
 		outputBuffers = self.outputBufferTable()
 		if outputBuffers.numRows > 1 and outputBuffers.col('macro'):
 			for cell in outputBuffers.col('macro')[1:]:
 				if cell.val:
-					decls.append(f'#define {cell.val}')
+					namesAndVals.append((cell.val, ''))
+		return namesAndVals
+
+	def buildMacroTable(self, dat: 'DAT'):
+		dat.clear()
+		dat.appendRows([
+			[name, value]
+			for name, value in self._getMacros()
+		])
+
+	def buildMacroBlock(self):
+		decls = []
+		for name, value in self._getMacros():
+			if name.startswith('#define'):
+				decls.append(name + value)
+			else:
+				decls.append(f'#define {name} {value}')
 		decls = _uniqueList(decls)
 		code = wrapCodeSection(decls, 'macros')
 		# if self.configPar().Inlineparameteraliases:
