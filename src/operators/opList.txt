@@ -45,7 +45,6 @@ pointDistanceField	/raytk/operators/field/pointDistanceField	/raytk/operators/fi
 positionField	/raytk/operators/field/positionField	/raytk/operators/field	raytkOP	field	field/positionField	raytk.operators.field.positionField	5	
 reorderField	/raytk/operators/field/reorderField	/raytk/operators/field	raytkOP	field	field/reorderField	raytk.operators.field.reorderField	0	
 textureField	/raytk/operators/field/textureField	/raytk/operators/field	raytkOP	field	field/textureField	raytk.operators.field.textureField	6	
-timeField	/raytk/operators/field/timeField	/raytk/operators/field	raytkOP	field	field/timeField	raytk.operators.field.timeField	0	
 waveField	/raytk/operators/field/waveField	/raytk/operators/field	raytkOP	field	field/waveField	raytk.operators.field.waveField	3	
 bend	/raytk/operators/filter/bend	/raytk/operators/filter	raytkOP	filter	filter/bend	raytk.operators.filter.bend	3	
 cartesianToPolar	/raytk/operators/filter/cartesianToPolar	/raytk/operators/filter	raytkOP	filter	filter/cartesianToPolar	raytk.operators.filter.cartesianToPolar	0	
@@ -159,6 +158,7 @@ starSdf2d	/raytk/operators/sdf2d/starSdf2d	/raytk/operators/sdf2d	raytkOP	sdf2d	
 superQuadSdf2d	/raytk/operators/sdf2d/superQuadSdf2d	/raytk/operators/sdf2d	raytkOP	sdf2d	sdf2d/superQuadSdf2d	raytk.operators.sdf2d.superQuadSdf2d	0	
 triangleSdf2d	/raytk/operators/sdf2d/triangleSdf2d	/raytk/operators/sdf2d	raytkOP	sdf2d	sdf2d/triangleSdf2d	raytk.operators.sdf2d.triangleSdf2d	1	
 vesicaSdf2d	/raytk/operators/sdf2d/vesicaSdf2d	/raytk/operators/sdf2d	raytkOP	sdf2d	sdf2d/vesicaSdf2d	raytk.operators.sdf2d.vesicaSdf2d	0	
+timeField	/raytk/operators/time/timeField	/raytk/operators/time	raytkOP	time	time/timeField	raytk.operators.time.timeField	0	beta
 extractDebugValues	/raytk/operators/utility/extractDebugValues	/raytk/operators/utility	raytkOP	utility	utility/extractDebugValues	raytk.operators.utility.extractDebugValues	0	
 extractIteration	/raytk/operators/utility/extractIteration	/raytk/operators/utility	raytkOP	utility	utility/extractIteration	raytk.operators.utility.extractIteration	2	
 injectGlobalPosition	/raytk/operators/utility/injectGlobalPosition	/raytk/operators/utility	raytkOP	utility	utility/injectGlobalPosition	raytk.operators.utility.injectGlobalPosition	0	
