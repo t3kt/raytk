@@ -677,6 +677,12 @@ class RaytkContext:
 			if child.isCOMP
 		]
 
+	def allMasterOperators(self):
+		results = []
+		for catComp in self.allCategories():
+			results += CategoryInfo(catComp).operators
+		return results
+
 def _isMaster(o: 'COMP'):
 	return o and o.par['clone'] is not None and (o.par.clone.eval() or o.par.clone.expr)
 
