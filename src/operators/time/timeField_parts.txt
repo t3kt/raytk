@@ -1,7 +1,10 @@
 name	label	expr	returnType
 seconds	Seconds	time_seconds()	float
 frame	Frame	time_frame()	float
-begin	Begin Frame	time_begin()	float
+start	Start Frame	time_start()	float
 end	End Frame	time_end()	float
 fraction	Fraction	time_fraction()	float
-all	All	uTime	vec4
+rate	Frame Rate	time_rate()	float
+bpm	BPM	time_bpm()	float
+absFrame	Absolute Frame	time_fraction()	float
+absSeconds	Absolute Seconds	time_absSeconds()	float

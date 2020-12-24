@@ -22,7 +22,7 @@ def buildExportTable(dat: 'DAT', uniformTable: 'DAT'):
 				expr3=uniformTable[row, 'expr3'] or '0',
 				expr4=uniformTable[row, 'expr4'] or '0',
 			)
-			arrayIndex += 1
+			vectorIndex += 1
 		else:
 			_addArray(
 				dat,
