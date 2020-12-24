@@ -13,15 +13,6 @@ Time getGlobalTime() {
 	Time contextTime(RayContext ctx) { return ctx.time; }
 #endif
 
-float time_seconds() { return getGlobalTime().seconds; }
-float time_frame() { return getGlobalTime().frame; }
-float time_start() { return getGlobalTime().start; }
-float time_end() { return getGlobalTime().end; }
-float time_rate() { return getGlobalTime().rate; }
-float time_bpm() { return getGlobalTime().bpm; }
-float time_absFrame() { return getGlobalTime().absFrame; }
-float time_absSeconds() { return getGlobalTime().absSeconds; }
-
 float time_fraction(Time t) {
 	if (t.end == t.start) return 0.;
 	return (t.frame - t.start) / (t.end - t.start);

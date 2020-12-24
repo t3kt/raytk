@@ -1,0 +1,3 @@
+name	label	expr	macro
+global	Global	getGlobalTime()	
+context	Context	contextTime(ctx)	RAYTK_TIME_IN_CONTEXT
