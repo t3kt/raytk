@@ -91,7 +91,7 @@ class OpDefParsT(_OpMetaPars):
 class ROPInfo:
 	rop: 'Optional[Union[OP, COMP]]'
 	opDef: 'Optional[COMP]'
-	opDefPar: 'Optional[Union[OpDefParsT, CompDefParsT]]'
+	opDefPar: 'Optional[Union[ParCollection, OpDefParsT, CompDefParsT]]'
 
 	def __init__(self, o: 'Union[OP, str, Cell]'):
 		o = op(o)
@@ -172,6 +172,15 @@ class ROPInfo:
 	@property
 	def isAlpha(self):
 		return RaytkTags.alpha.isOn(self.rop)
+
+	@property
+	def statusLabel(self):
+		if self.isAlpha:
+			return 'alpha'
+		elif self.isBeta:
+			return 'beta'
+		else:
+			return ''
 
 	@property
 	def isMaster(self):
