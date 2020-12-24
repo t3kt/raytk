@@ -158,7 +158,7 @@ starSdf2d	/raytk/operators/sdf2d/starSdf2d	/raytk/operators/sdf2d	raytkOP	sdf2d	
 superQuadSdf2d	/raytk/operators/sdf2d/superQuadSdf2d	/raytk/operators/sdf2d	raytkOP	sdf2d	sdf2d/superQuadSdf2d	raytk.operators.sdf2d.superQuadSdf2d	0	
 triangleSdf2d	/raytk/operators/sdf2d/triangleSdf2d	/raytk/operators/sdf2d	raytkOP	sdf2d	sdf2d/triangleSdf2d	raytk.operators.sdf2d.triangleSdf2d	1	
 vesicaSdf2d	/raytk/operators/sdf2d/vesicaSdf2d	/raytk/operators/sdf2d	raytkOP	sdf2d	sdf2d/vesicaSdf2d	raytk.operators.sdf2d.vesicaSdf2d	0	
-timeField	/raytk/operators/time/timeField	/raytk/operators/time	raytkOP	time	time/timeField	raytk.operators.time.timeField	2	beta
+timeField	/raytk/operators/time/timeField	/raytk/operators/time	raytkOP	time	time/timeField	raytk.operators.time.timeField	3	
 extractDebugValues	/raytk/operators/utility/extractDebugValues	/raytk/operators/utility	raytkOP	utility	utility/extractDebugValues	raytk.operators.utility.extractDebugValues	0	
 extractIteration	/raytk/operators/utility/extractIteration	/raytk/operators/utility	raytkOP	utility	utility/extractIteration	raytk.operators.utility.extractIteration	2	
 injectGlobalPosition	/raytk/operators/utility/injectGlobalPosition	/raytk/operators/utility	raytkOP	utility	utility/injectGlobalPosition	raytk.operators.utility.injectGlobalPosition	0	

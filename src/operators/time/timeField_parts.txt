@@ -1,10 +1,10 @@
 name	label	expr	returnType
-seconds	Seconds	time_seconds()	float
-frame	Frame	time_frame()	float
-start	Start Frame	time_start()	float
-end	End Frame	time_end()	float
-fraction	Fraction	time_fraction()	float
-rate	Frame Rate	time_rate()	float
-bpm	BPM	time_bpm()	float
-absFrame	Absolute Frame	time_fraction()	float
-absSeconds	Absolute Seconds	time_absSeconds()	float
+seconds	Seconds	time.seconds	float
+frame	Frame	time.frame	float
+start	Start Frame	time.start	float
+end	End Frame	time.end	float
+fraction	Fraction	time_fraction(time)	float
+rate	Frame Rate	time.rate	float
+bpm	BPM	time.bpm	float
+absFrame	Absolute Frame	time.absFrame	float
+absSeconds	Absolute Seconds	time.absSeconds	float

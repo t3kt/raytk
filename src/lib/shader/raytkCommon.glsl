@@ -109,11 +109,30 @@ Sdf withAdjustedScale(in Sdf res, float scaleMult) {
 	return res;
 }
 
+#ifdef RAYTK_USE_TIME
+struct Time {
+	float frame;
+	float seconds;
+	float start;
+	float end;
+	float rate;
+	float bpm;
+	float absFrame;
+	float absSeconds;
+};
+
+Time getGlobalTime();
+#endif
+
 struct Context {
 	vec4 iteration;
 
 	#ifdef RAYTK_GLOBAL_POS_IN_CONTEXT
 	vec3 globalPos;
+	#endif
+
+	#if defined(RAYTK_TIME_IN_CONTEXT) || defined(RAYTK_USE_TIME)
+	Time time;
 	#endif
 };
 
@@ -122,6 +141,9 @@ Context createDefaultContext() {
 	ctx.iteration = vec4(0);
 	#ifdef RAYTK_GLOBAL_POS_IN_CONTEXT
 	ctx.globalPos = vec3(0);
+	#endif
+	#if defined(RAYTK_TIME_IN_CONTEXT) || defined(RAYTK_USE_TIME)
+	ctx.time = getGlobalTime();
 	#endif
 	return ctx;
 }
@@ -134,6 +156,10 @@ struct Light {
 struct LightContext {
 	Sdf result;
 	vec3 normal;
+
+	#if defined(RAYTK_TIME_IN_CONTEXT) || defined(RAYTK_USE_TIME)
+	Time time;
+	#endif
 };
 
 struct MaterialContext {
@@ -146,10 +172,18 @@ struct MaterialContext {
 
 struct CameraContext {
 	vec2 resolution;
+
+	#if defined(RAYTK_TIME_IN_CONTEXT) || defined(RAYTK_USE_TIME)
+	Time time;
+	#endif
 };
 
 struct RayContext {
 	Ray ray;
+
+	#if defined(RAYTK_TIME_IN_CONTEXT) || defined(RAYTK_USE_TIME)
+	Time time;
+	#endif
 };
 
 mat3 rotateMatrix(vec3 r) {
