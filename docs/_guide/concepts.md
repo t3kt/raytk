@@ -45,7 +45,14 @@ In the case of `render2d` (when using a vector field input ROP), it calls the in
 
 In the case of `raymarchRender3d`, the main scene input is executed once per each step of the rays. In addition to the scene input, `raymarchRender3d` has an input for a camera function, which called for each pixel of output to determine where the ray goes, and a light function that is called by materials to determine colors.
 
-## Data Types
+## Coordinate Types
+
+There are several types of coordinates that a ROP can use:
+* `float`: 1D coordinates, which can be used for 1D vector fields.
+* `vec2`: 2D coordinates, which are used in 2D SDFs, texture lookups, and screen UV coordinates.
+* `vec3`: 3D coordinates, which are the main coordinate type for SDFs and raymarching.
+
+## Return Types
 
 There are several types of data that a ROP function can return, including:
 * `Sdf`: An SDF result, including surface distance, material settings, and other properties.
@@ -54,7 +61,21 @@ There are several types of data that a ROP function can return, including:
 * `Ray`: A position and direction. These are returned by camera ROPs, to determine what direction the ray should march for each pixel of the output.
 * `Light`: A point in space, and an amount of color. These are returned by light ROPs.
 
-There are several types of coordinates that a ROP can use:
-* `float`: 1D coordinates, which can be used for 1D vector fields.
-* `vec2`: 2D coordinates, which are used in 2D SDFs, texture lookups, and screen UV coordinates.
-* `vec3`: 3D coordinates, which are the main coordinate type for SDFs and raymarching.
+## Context Types
+
+Contexts are a secondary package of information that can be passed to ROPs along with the coordinates. Certain special operators access and use this information for a variety of purposes.
+
+Each type of context is used in different scenarios during the shader's rendering process.
+
+* `Context`: This is the default type. It is used when evaluating SDFs in raymarching (basically anything hooked up to the first input), and when choosing the pixel color in a 2D renderer. Many of the other context types include a copy of this along with other info.
+* `MaterialContext`: Used by material ROPs when deciding what color to choose for a point on the surface of a shape. It includes:
+  * The `Sdf` surface hit
+  * The surface normal.
+  * The `Context` used when producing that hit.
+  * The `Ray` from the camera that hit the surface.
+  * The `Light` that the material should use.
+* `CameraContext`: Used in raymarching when deciding where the camera ray should point for a pixel of output. It includes:
+  * The resolution of the output.
+* `LightContext`: Used in raymarching when deciding where the light is and what color it emits. It includes:
+  * The `Sdf` surface hit
+  * The surface normal.
