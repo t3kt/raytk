@@ -6,20 +6,6 @@ if False:
 	# noinspection PyUnresolvedReferences
 	from _stubs import *
 
-def buildOpDefParamTable(dat: 'DAT'):
-	dat.clear()
-	dat.appendRow(['path'] + _opDefParamNames)
-	context = RaytkContext()
-	for rop in context.allMasterOperators():
-		info = ROPInfo(rop)
-		path = rop.path
-		if not info.opDef:
-			continue
-		dat.appendRow([path])
-		for pn in _opDefParamNames:
-			dat[path, pn] = _formatPar(info.opDef.par[pn])
-
-
 _opDefParamNames = [
 	'Coordtype',
 	'Returntype',
