@@ -169,6 +169,15 @@ class CreateMenu:
 		enableCloning.expr = ''
 		enableCloning.val = bool(self.develEnabled)
 		focusCustomParameterPage(newOp, 0)
+		for par in newOp.customPars:
+			if par.readOnly or par.isPulse or par.isMomentary or par.isDefault:
+				continue
+			if par.mode in (ParMode.EXPORT, ParMode.BIND):
+				continue
+			if par.defaultExpr and par.defaultExpr != par.default:
+				par.expr = par.defaultExpr
+			else:
+				par.val = par.default
 		newOp.allowCooking = True
 		ropInfo = ROPInfo(newOp)
 		ropInfo.invokeCallback('onCreate', master=master)
