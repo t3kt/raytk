@@ -1,4 +1,4 @@
-from typing import Union, Optional
+from typing import Union, Optional, List
 from raytkUtil import ROPInfo
 
 # noinspection PyUnreachableCode

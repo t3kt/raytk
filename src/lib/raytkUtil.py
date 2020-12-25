@@ -78,7 +78,10 @@ class OpDefParsT(_OpMetaPars):
 	Hostop: 'OPParamT'
 	Name: 'StrParamT'
 	Enable: 'BoolParamT'
+	Opglobals: 'DatParamT'
+	Initcode: 'DatParamT'
 	Functemplate: 'DatParamT'
+	Materialcode: 'DatParamT'
 	Macrotable: 'DatParamT'
 	Params: 'StrParamT'
 	Specialparams: 'StrParamT'
@@ -261,10 +264,14 @@ class ROPInfo:
 		return False
 
 	@property
-	def callbacks(self) -> 'Optional[MOD]':
+	def callbacksDAT(self) -> 'Optional[DAT]':
 		if not self.opDefPar or not self.opDefPar.Callbacks:
 			return None
-		dat = self.opDefPar.Callbacks.eval()
+		return self.opDefPar.Callbacks.eval()
+
+	@property
+	def callbacks(self) -> 'Optional[MOD]':
+		dat = self.callbacksDAT
 		if not dat:
 			return None
 		return dat.module
