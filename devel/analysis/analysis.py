@@ -54,7 +54,9 @@ def buildOpInfoTable(dat: 'DAT'):
 			'hasHelp',
 			'hasInputs',
 			'hasSubRops',
-		] + _opDefParamNames
+		] + _opDefParamNames + [
+			'macroCols',
+		]
 	)
 	context = RaytkContext()
 	for rop in context.allMasterOperators():
@@ -79,3 +81,7 @@ def buildOpInfoTable(dat: 'DAT'):
 		])
 		for pn in _opDefParamNames:
 			dat[rop.path, pn] = _formatPar(info.opDefPar[pn])
+		if info.isROP:
+			macros = info.opDefPar.Macrotable.eval()
+			if macros:
+				dat[rop.path, 'macroCols'] = macros.numCols
