@@ -12,5 +12,8 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 	#error invalidIntervalType
 	#endif
 	t = fract((t + THIS_Phase*THIS_Period)/ THIS_Period);
+	#ifdef THIS_HAS_INPUT_1
+	t = inputOp1(t, ctx);
+	#endif
 	return THIS_Offset + (t * THIS_Amplitude);
 }
