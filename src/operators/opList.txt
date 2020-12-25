@@ -94,7 +94,7 @@ pennerEasingFn	/raytk/operators/function/pennerEasingFn	/raytk/operators/functio
 powerCurveFn	/raytk/operators/function/powerCurveFn	/raytk/operators/function	raytkOP	function	function/powerCurveFn	raytk.operators.function.powerCurveFn	0	
 sincCurveFn	/raytk/operators/function/sincCurveFn	/raytk/operators/function	raytkOP	function	function/sincCurveFn	raytk.operators.function.sincCurveFn	0	
 stepFn	/raytk/operators/function/stepFn	/raytk/operators/function	raytkOP	function	function/stepFn	raytk.operators.function.stepFn	0	
-waveFn	/raytk/operators/function/waveFn	/raytk/operators/function	raytkOP	function	function/waveFn	raytk.operators.function.waveFn	0	
+waveFn	/raytk/operators/function/waveFn	/raytk/operators/function	raytkOP	function	function/waveFn	raytk.operators.function.waveFn	1	
 bendRay	/raytk/operators/light/bendRay	/raytk/operators/light	raytkOP	light	light/bendRay	raytk.operators.light.bendRay	0	alpha
 hardShadow	/raytk/operators/light/hardShadow	/raytk/operators/light	raytkOP	light	light/hardShadow	raytk.operators.light.hardShadow	2	
 pointLight	/raytk/operators/light/pointLight	/raytk/operators/light	raytkOP	light	light/pointLight	raytk.operators.light.pointLight	3	
