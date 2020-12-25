@@ -276,6 +276,10 @@ vec4 modZigZag(vec4 p, vec4 low, vec4 high) {
 		modded.w > range.w ? (range2.w - modded.w): modded.w);
 }
 
+float wrapRange(float value, float low, float high) {
+	return low + mod(value - low, high - low);
+}
+
 /**
  * Return a transform matrix that will transform a ray from view space
  * to world coordinates, given the eye point, the camera target, and an up vector.
