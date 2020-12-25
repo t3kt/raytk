@@ -6,7 +6,7 @@ if False:
 def onCook(dat: 'DAT'):
 	dat.clear()
 	for table in dat.inputs:
-		if table.numCols == 0:
+		if table.numCols == 0 or table.numRows == 0:
 			continue
 		elif table.numCols == 3:
 			dat.appendRows(table.rows())
