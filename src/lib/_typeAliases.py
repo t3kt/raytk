@@ -5,5 +5,6 @@ from _stubs import *
 StrParamT = Union[Par, str]
 IntParamT = Union[Par, str, int]
 DatParamT = Union[Par, str, DAT]
+CompParamT = Union[Par, str, COMP]
 BoolParamT = Union[Par, bool, int]
-OPParamT = Union[Par, OP, COMP, DAT, SOP, TOP, CHOP]
+OPParamT = Union[Par, OP, COMP, DAT, SOP, TOP, CHOP, str]

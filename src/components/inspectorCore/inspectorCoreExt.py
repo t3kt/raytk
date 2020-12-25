@@ -6,20 +6,21 @@ from raytkUtil import isROP, isROPDef, ROPInfo, navigateTo
 if False:
 	# noinspection PyUnresolvedReferences
 	from _stubs import *
+	from _typeAliases import *
 
-	class _state:
-		Hastarget: bool
-		Hasownviewer: bool
-		Targettype: 'Union[str, Par]'
-		Rawtarget: 'Union[str, OP, DAT, COMP, Par]'
-		Definitiontable: 'Union[str, DAT]'
-		Targetcomp: 'Union[str, COMP]'
-		Outputcomp: 'Union[str, COMP, Par]'
-		Shaderbuilder: 'Union[str, COMP, Par]'
-		Returntype: str
-		Coordtype: str
-		Contexttype: str
-		Visualizertype: str
+	class _state(ParCollection):
+		Hastarget: 'BoolParamT'
+		Hasownviewer: 'BoolParamT'
+		Targettype: 'StrParamT'
+		Rawtarget: 'OPParamT'
+		Definitiontable: 'DatParamT'
+		Targetcomp: 'CompParamT'
+		Outputcomp: 'CompParamT'
+		Shaderbuilder: 'CompParamT'
+		Returntype: 'StrParamT'
+		Coordtype: 'StrParamT'
+		Contexttype: 'StrParamT'
+		Visualizertype: 'StrParamT'
 
 def updateStateMenus():
 	p = parent().par.Targettype  # type: Par
@@ -113,6 +114,10 @@ class InspectorCore:
 		self.state.Outputcomp = _pathOrEmpty(o)
 		if o and o.par['Shaderbuilder'] is not None:
 			self.state.Shaderbuilder = _pathOrEmpty(o.par.Shaderbuilder.eval())
+
+	@property
+	def TargetComp(self) -> 'Optional[COMP]':
+		return self.state.Targetcomp.eval()
 
 
 def _pathOrEmpty(o: Optional['OP']):
