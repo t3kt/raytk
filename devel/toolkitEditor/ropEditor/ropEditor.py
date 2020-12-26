@@ -1,5 +1,5 @@
 from typing import Union, Optional, List
-from raytkUtil import ROPInfo
+from raytkUtil import ROPInfo, navigateTo
 
 # noinspection PyUnreachableCode
 if False:
@@ -24,3 +24,13 @@ class ROPEditor:
 	@property
 	def ROPInfo(self):
 		return ROPInfo(self.ROP)
+
+	def ShowInEditor(self, popup=False):
+		rop = self.ROP
+		if rop:
+			navigateTo(rop, goInto=True, popup=popup)
+
+	def CustomizeParameters(self):
+		rop = self.ROP
+		if rop:
+			ui.openCOMPEditor(rop)
