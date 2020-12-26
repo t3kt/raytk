@@ -7,3 +7,6 @@ if False:
 class ToolkitEditor:
 	def __init__(self, ownerComp: 'COMP'):
 		self.ownerComp = ownerComp
+	
+	def Open(self, _=None):
+		op('window').par.winopen.pulse()

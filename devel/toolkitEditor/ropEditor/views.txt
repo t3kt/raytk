@@ -3,8 +3,6 @@ ropParams	ROP Params	params_panel	ext.ropEditor.ROP or ''
 opDefParams	opDefinition	params_panel	ext.ropEditor.ROPInfo.opDef or ''
 code	Code	codePanel	
 paramConfig	Param Config		
-macros	Macros		
-textures	Textures		
-buffers	Buffers		
+tables	Tables	tablePanel	
 callbacks	Callbacks	opViewer_panel	ext.ropEditor.ROPInfo.callbacksDAT or ''
 help	Help	opViewer_panel	ext.ropEditor.ROPInfo.helpDAT or ''
