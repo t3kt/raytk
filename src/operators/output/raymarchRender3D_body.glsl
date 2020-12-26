@@ -194,31 +194,6 @@ vec3 getColor(vec3 p, MaterialContext matCtx) {
 	}
 }
 
-#ifndef THIS_USE_CAM_FUNC
-
-Ray getViewRay(vec2 shift) {
-	vec3 pos = uCamPos;
-	vec2 resolution = uTDOutputInfo.res.zw;
-	vec2 fragCoord = vUV.st*resolution + shift;
-	vec2 p = (-resolution+2.0*fragCoord.xy)/resolution.y;
-
-	float aspect = resolution.x/resolution.y;
-	float screenWidth = 2*(aspect);
-	float distanceToScreen = (screenWidth/2)/tan(uCamFov/2)*1;
-
-	vec3 ta = pos+vec3(0, 0, -1);//camLookAt;
-
-	// camera matrix
-	vec3 ww = normalize(ta - pos);
-	vec3 uu = normalize(cross(ww, vec3(0.0, 1, 0.0)));
-	vec3 vv = normalize(cross(uu, ww));
-	// create view ray
-	vec3 rd = normalize(p.x*uu + p.y*vv + distanceToScreen*ww) *rotateMatrix(uCamRot);
-	return Ray(pos, rd);
-}
-
-#endif
-
 #ifndef THIS_USE_LIGHT_FUNC
 Light getLight(vec3 p, LightContext lightCtx) {
 	Light light;
