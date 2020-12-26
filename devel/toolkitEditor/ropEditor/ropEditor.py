@@ -14,7 +14,7 @@ class ROPEditor:
 		self.ownerComp = ownerComp
 
 	@staticmethod
-	def loadROP(o: 'Union[OP, DAT, COMP, str]'):
+	def LoadROP(o: 'Union[OP, DAT, COMP, str]'):
 		iop.inspectorCore.Inspect(o)
 
 	@property
