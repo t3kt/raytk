@@ -1,0 +1,5 @@
+name	label	fileSuffix
+Opglobals	Op Globals	
+Initcode	Init Code	
+Functemplate	Function	
+Materialcode	Material	
