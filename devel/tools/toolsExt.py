@@ -104,6 +104,9 @@ class Tools:
 	def setCurrentROPAlpha(self, state: bool):
 		self.applyTagToCurrentROPs(RaytkTags.alpha, state)
 
+	def setCurrentROPDeprecated(self, state: bool):
+		self.applyTagToCurrentROPs(RaytkTags.deprecated, state)
+
 	def setUpCurrentROPHelp(self):
 		rops = self.getCurrentROPs()
 		for rop in rops:

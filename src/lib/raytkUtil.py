@@ -359,6 +359,7 @@ _alphaColor = 1, 0.55, 0
 _betaColor = 1, 0, 0.5
 _buildLockColor = 0, 0.68, 0.543
 _validationColor = 1, 0.95, 0.45
+_deprecatedColor = 0.2, 0.2, 0.2
 
 class Tag:
 	def __init__(
@@ -450,6 +451,7 @@ class RaytkTags:
 	alpha = _OpStatusTag('raytkAlpha', _alphaColor)
 	beta = _OpStatusTag('raytkBeta', _betaColor)
 	validation = Tag('raytkValidation', _validationColor)
+	deprecated = Tag('raytkDeprecated', _deprecatedColor)
 
 def getActiveEditor() -> 'NetworkEditor':
 	pane = ui.panes.current
