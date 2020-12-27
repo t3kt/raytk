@@ -177,8 +177,14 @@ class ROPInfo:
 		return RaytkTags.alpha.isOn(self.rop)
 
 	@property
+	def isDeprecated(self):
+		return RaytkTags.deprecated.isOn(self.rop)
+
+	@property
 	def statusLabel(self):
-		if self.isAlpha:
+		if self.isDeprecated:
+			return 'deprecated'
+		elif self.isAlpha:
 			return 'alpha'
 		elif self.isBeta:
 			return 'beta'

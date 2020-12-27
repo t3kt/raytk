@@ -1160,15 +1160,15 @@ widgetCOMP = containerCOMP
 
 class listCOMP(PanelCOMP):
 	attribs: 'ListAttributes'
-	cellAttribs: 'ListAttributes'
-	colAttribs: 'ListAttributes'
+	cellAttribs: '_ListAttributesGrid'
+	colAttribs: '_ListAttributesList'
 	focusCol: int
 	focusRow: int
 	radioCol: int
 	radioRow: int
 	rolloverCol: int
 	rolloverRow: int
-	rowAttribs: 'ListAttributes'
+	rowAttribs: '_ListAttributesList'
 	selectCol: int
 	selectRow: int
 	selectionBorderColor: _Color
@@ -1177,6 +1177,13 @@ class listCOMP(PanelCOMP):
 
 	def scroll(self, row, col): pass
 	def setKeyboardFocus(self, row, col, selectAll=False): pass
+
+# used for listCOMP callbacks
+class XYUVTuple(_T.NamedTuple):
+	x: float
+	y: float
+	u: float
+	v: float
 
 class opviewerCOMP(PanelCOMP):
 	def isViewable(self, path: str) -> bool: pass
@@ -1232,6 +1239,13 @@ class ListAttributes:
 	topBorderInColor: _Color
 	topBorderOutColor: _Color
 	wordWrap: bool
+
+class _ListAttributesList(_T.Sized, _ABC):
+	def __getitem__(self, item: int) -> _T.Optional[ListAttributes]:
+		pass
+class _ListAttributesGrid(_T.Sized, _ABC):
+	def __getitem__(self, rowCol: _T.Tuple[int, int]) -> _T.Optional[ListAttributes]:
+		pass
 
 class windowCOMP(COMP):
 	scalingMonitorIndex: int

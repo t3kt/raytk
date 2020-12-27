@@ -105,8 +105,8 @@ checkerboardMat	/raytk/operators/material/checkerboardMat	/raytk/operators/mater
 fieldMat	/raytk/operators/material/fieldMat	/raytk/operators/material	raytkOP	material	material/fieldMat	raytk.operators.material.fieldMat	1	
 phongMat	/raytk/operators/material/phongMat	/raytk/operators/material	raytkOP	material	material/phongMat	raytk.operators.material.phongMat	4	
 sampledPointMat	/raytk/operators/material/sampledPointMat	/raytk/operators/material	raytkOP	material	material/sampledPointMat	raytk.operators.material.sampledPointMat	4	
-customFilter	/raytk/operators/misc/customFilter	/raytk/operators/misc	raytkDeprecated raytkOP	misc	misc/customFilter	raytk.operators.misc.customFilter	4	
-customGen	/raytk/operators/misc/customGen	/raytk/operators/misc	raytkDeprecated raytkOP	misc	misc/customGen	raytk.operators.misc.customGen	5	
+customFilter	/raytk/operators/misc/customFilter	/raytk/operators/misc	raytkDeprecated raytkOP	misc	misc/customFilter	raytk.operators.misc.customFilter	4	deprecated
+customGen	/raytk/operators/misc/customGen	/raytk/operators/misc	raytkDeprecated raytkOP	misc	misc/customGen	raytk.operators.misc.customGen	5	deprecated
 customRender	/raytk/operators/output/customRender	/raytk/operators/output	raytkOP raytkOutput	output	output/customRender	raytk.operators.output.customRender	5	alpha
 fieldRender	/raytk/operators/output/fieldRender	/raytk/operators/output	raytkComp	output	output/fieldRender	raytk.operators.output.fieldRender	2	alpha
 functionGraphRender	/raytk/operators/output/functionGraphRender	/raytk/operators/output	raytkOP raytkOutput	output	output/functionGraphRender	raytk.operators.output.functionGraphRender	9	
