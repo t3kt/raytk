@@ -209,10 +209,10 @@ class Palette:
 		# if prevRow >= 0:
 		# 	color = 0, 0, 0, 0
 		# 	self._setRowHighlight(prevRow, color)
-		# if row >= 0:
-		# 	# color = ipar.listConfig.Rolloverhighlightcolorr, ipar.listConfig.Rolloverhighlightcolorg, ipar.listConfig.Rolloverhighlightcolorb, 1
-		# 	# self._setRowHighlight(row, color)
-		# 	self.SelectedItem = self.itemLibrary.itemForRow(row)
+		if row >= 0:
+			# color = ipar.listConfig.Rolloverhighlightcolorr, ipar.listConfig.Rolloverhighlightcolorg, ipar.listConfig.Rolloverhighlightcolorb, 1
+			# self._setRowHighlight(row, color)
+			self.SelectedItem = self.itemLibrary.itemForRow(row)
 		pass
 
 	def onSelect(
