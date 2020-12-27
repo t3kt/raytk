@@ -1,6 +1,5 @@
 from dataclasses import dataclass, field
 from typing import Dict, List, Union, Optional
-from raytkUtil import RaytkTags
 
 # noinspection PyUnreachableCode
 if False:
@@ -32,7 +31,14 @@ if False:
 		Rolloverhighlightcolorr: 'FloatParamT'
 		Rolloverhighlightcolorg: 'FloatParamT'
 		Rolloverhighlightcolorb: 'FloatParamT'
+
+	class _UIStatePar(ParCollection):
+		Showalpha: 'BoolParamT'
+		Showbeta: 'BoolParamT'
+		Showdeprecated: 'BoolParamT'
+
 	ipar.listConfig = _ListConfigPar()
+	ipar.uiState = _UIStatePar()
 
 # columns:
 #  name
@@ -41,8 +47,9 @@ if False:
 class Palette:
 	def __init__(self, ownerComp: 'COMP'):
 		self.ownerComp = ownerComp
-		self.itemLibrary = None  # type: Optional[_ItemLibrary]
+		self.itemLibrary = _ItemLibrary()
 		self.selItem = tdu.Dependency()  # value type _AnyItemT
+		self.filterText = ''
 		self.loadItems()
 
 	@property
@@ -50,31 +57,41 @@ class Palette:
 		return self.ownerComp.op('list')
 
 	@property
-	def SelectedItem(self) -> 'Optional[_Item]':
+	def SelectedItem(self) -> 'Optional[_AnyItemT]':
 		return self.selItem.val
 
 	@SelectedItem.setter
-	def SelectedItem(self, val: 'Optional[_Item]'):
+	def SelectedItem(self, val: 'Optional[_AnyItemT]'):
 		oldItem = self.selItem.val  # type: Optional[_AnyItemT]
 		if oldItem:
-			self._setRowHighlight(oldItem.row, (0, 0, 0, 0))
-		print(self.ownerComp, f'setting selected item to: {val!r}')
+			row = self.itemLibrary.rowForItem(oldItem)
+			self._setRowHighlight(row, (0, 0, 0, 0))
+		# print(self.ownerComp, f'setting selected item to: {val!r}')
 		self.selItem.val = val
 		if val:
 			color = ipar.listConfig.Rolloverhighlightcolorr, ipar.listConfig.Rolloverhighlightcolorg, ipar.listConfig.Rolloverhighlightcolorb, 1
-			self._setRowHighlight(val.row, color)
-			self.listComp.scroll(val.row, 0)
+			row = self.itemLibrary.rowForItem(val)
+			self._setRowHighlight(row, color)
+			# self.listComp.scroll(row, 0)
 
 	def loadItems(self):
-		listComp = self.listComp
 		opTable = self.ownerComp.op('opTable')  # type: DAT
 		opHelpTable = self.ownerComp.op('opHelpTable')  # type: DAT
-		self.itemLibrary = _ItemLibrary()
 		self.itemLibrary.loadTables(opTable, opHelpTable)
-		listComp.par.rows = len(self.itemLibrary.allItems)
+		self.refreshList()
+		self.SelectedItem = None
+
+	def refreshList(self):
+		listComp = self.listComp
+		listComp.par.rows = self.itemLibrary.currentItemCount
 		listComp.par.cols = 2
 		listComp.par.reset.pulse()
+
+	def resetState(self):
+		self.refreshList()
 		self.SelectedItem = None
+		self.filterText = ''
+		self.ownerComp.op('filterText_textfield').par.Value0 = ''
 
 	def _resolveRow(self, row: int) -> 'Optional[_AnyItemT]':
 		if not self.itemLibrary:
@@ -89,14 +106,34 @@ class Palette:
 			return
 		item = self.SelectedItem
 		if item:
-			row = item.row + offset
+			row = self.itemLibrary.rowForItem(item)
+			if row == -1:
+				row = offset
+			else:
+				row += offset
 		else:
 			row = offset
-		row = row % len(self.itemLibrary.allItems)
-		self.SelectedItem = self._resolveRow(row)
+		self.SelectedItem = self.itemLibrary.itemForRow(row % self.itemLibrary.currentItemCount)
+
+	def setFilterText(self, text: str):
+		self.filterText = (text or '').strip()
+		self._applyFilter()
+
+	def _applyFilter(self):
+		filt = _Filter(
+			self.filterText,
+			alpha=ipar.uiState.Showalpha.eval(),
+			beta=ipar.uiState.Showbeta.eval(),
+			deprecated=ipar.uiState.Showdeprecated.eval(),
+		)
+		self.itemLibrary.applyFilter(filt)
+		self.refreshList()
+
+	def onFilterSettingChange(self):
+		self._applyFilter()
 
 	def onKeyboardShortcut(self, shortcutName: str):
-		print(self.ownerComp, 'onKeyboardShortcut', shortcutName)
+		# print(self.ownerComp, 'onKeyboardShortcut', shortcutName)
 		if shortcutName == 'up':
 			self._offsetSelection(-1)
 		elif shortcutName == 'down':
@@ -106,7 +143,7 @@ class Palette:
 		# print(self.ownerComp, 'onKey', key, 'time: ', time, 'state: ', state)
 		pass
 
-	def onInitCell(self, listComp: 'listCOMP', row: int, col: int, attribs: 'ListAttributes'):
+	def onInitCell(self, row: int, col: int, attribs: 'ListAttributes'):
 		item = self._resolveRow(row)
 		if not item:
 			return
@@ -125,7 +162,7 @@ class Palette:
 				elif item.isDeprecated:
 					attribs.top = self.ownerComp.op('deprecatedIcon')
 
-	def onInitRow(self, listComp: 'listCOMP', row: int, attribs: 'ListAttributes'):
+	def onInitRow(self, row: int, attribs: 'ListAttributes'):
 		item = self._resolveRow(row)
 		if not item:
 			return
@@ -138,14 +175,14 @@ class Palette:
 		elif item.isDeprecated:
 			attribs.textColor = ipar.listConfig.Deprecatedcolorr, ipar.listConfig.Deprecatedcolorg, ipar.listConfig.Deprecatedcolorb
 
-	def onInitCol(self, listComp: 'listCOMP', col: int, attribs: 'ListAttributes'):
+	def onInitCol(self, col: int, attribs: 'ListAttributes'):
 		if col == 0:
 			attribs.colStretch = True
 		elif col == 1:
 			attribs.colWidth = 30
 
 
-	def onInitTable(self, listComp: 'listCOMP', attribs: 'ListAttributes'):
+	def onInitTable(self, attribs: 'ListAttributes'):
 		attribs.rowHeight = 26
 		attribs.bgColor = ipar.listConfig.Bgcolorr, ipar.listConfig.Bgcolorg, ipar.listConfig.Bgcolorb
 		attribs.textColor = ipar.listConfig.Textcolorr, ipar.listConfig.Textcolorg, ipar.listConfig.Textcolorb
@@ -167,7 +204,6 @@ class Palette:
 
 	def onRollover(
 			self,
-			listComp: 'listCOMP',
 			row: int, col: int, coords: 'XYUVTuple',
 			prevRow: int, prevCol: int, prevCoords: 'XYUVTuple'):
 		# if prevRow >= 0:
@@ -176,30 +212,23 @@ class Palette:
 		# if row >= 0:
 		# 	# color = ipar.listConfig.Rolloverhighlightcolorr, ipar.listConfig.Rolloverhighlightcolorg, ipar.listConfig.Rolloverhighlightcolorb, 1
 		# 	# self._setRowHighlight(row, color)
-		# 	self.SelectedItem = self._resolveRow(row)
+		# 	self.SelectedItem = self.itemLibrary.itemForRow(row)
 		pass
 
 	def onSelect(
 			self,
-			listComp: 'listCOMP',
 			startRow: int, startCol: int, startCoords: 'XYUVTuple',
 			endRow: int, endCol: int, endCoords: 'XYUVTuple',
 			start, end):
-		item = self._resolveRow(endRow)
+		item = self.itemLibrary.itemForRow(endRow)
 		# print(self.ownerComp, f'SELECT startRC: {startRow},{startCol}, endRC: {endRow},{endCol}, start: {start}, end: {end} \n{item}')
 		self.SelectedItem = item
 		pass
 
-	def onRadio(
-			self,
-			listComp: 'listCOMP',
-			row: int, col: int, prevRow: int, prevCol: int):
+	def onRadio(self, row: int, col: int, prevRow: int, prevCol: int):
 		pass
 
-	def onFocus(
-			self,
-			listComp: 'listCOMP',
-			row: int, col: int, prevRow: int, prevCol: int):
+	def onFocus(self, row: int, col: int, prevRow: int, prevCol: int):
 		pass
 
 @dataclass
@@ -213,7 +242,6 @@ class _Item:
 	path: Optional[str] = None
 	opType: Optional[str] = None
 	categoryName: Optional[str] = None
-	row: Optional[int] = None
 
 @dataclass
 class _CategoryItem(_Item):
@@ -221,24 +249,55 @@ class _CategoryItem(_Item):
 
 @dataclass
 class _OpItem(_Item):
-	pass
+	def matches(self, filt: '_Filter'):
+		if self.isAlpha and not filt.alpha:
+			return False
+		if self.isBeta and not filt.beta:
+			return False
+		if self.isDeprecated and not filt.deprecated:
+			return False
+		if not filt.text:
+			return True
+		if filt.text in self.shortName.lower():
+			return True
+		# if filt.text in self.categoryName.lower():
+		# 	return True
+		return False
 
 _AnyItemT = Union[_CategoryItem, _OpItem]
 
+@dataclass
+class _Filter:
+	text: Optional[str] = None
+	alpha: bool = False
+	beta: bool = False
+	deprecated: bool = False
+
+	def __bool__(self):
+		return bool(self.text or not self.alpha or not self.beta or not self.deprecated)
+
 class _ItemLibrary:
 	allItems: List[_AnyItemT]
-	categories: Dict[str, _CategoryItem]
-	ops: List[_OpItem]
+	categories: List[_CategoryItem]
+	filteredItems: Optional[List[_AnyItemT]]
 
 	def __init__(self):
 		self.allItems = []
-		self.categories = {}
-		self.ops = []
+		self.categories = []
+		self.filteredItems = None
+
+	@property
+	def _currentItemList(self):
+		return self.filteredItems if self.filteredItems is not None else self.allItems
+
+	@property
+	def currentItemCount(self):
+		return len(self._currentItemList)
 
 	def loadTables(self, opTable: 'DAT', opHelpTable: 'DAT'):
-		self.allItems = []
-		self.categories = {}
-		self.ops = []
+		self.categories = []
+		self.filteredItems = None
+		categoriesByName = {}  # type: Dict[str, _CategoryItem]
 
 		for row in range(1, opTable.numRows):
 			path = str(opTable[row, 'path'])
@@ -255,27 +314,57 @@ class _ItemLibrary:
 				isDeprecated=status == 'deprecated',
 				helpSummary=str(opHelpTable[path, 'summary'] or ''),
 			)
-			if categoryName in self.categories:
-				self.categories[categoryName].ops.append(opItem)
+			if categoryName in categoriesByName:
+				categoriesByName[categoryName].ops.append(opItem)
 			else:
-				self.categories[categoryName] = _CategoryItem(
+				categoriesByName[categoryName] = _CategoryItem(
 					shortName=categoryName, ops=[opItem])
-			self.ops.append(opItem)
 
-		self.ops.sort(key=lambda o: o.path)
-		for categoryName in sorted(self.categories.keys()):
-			category = self.categories[categoryName]
-			category.row = len(self.allItems)
-			self.allItems.append(category)
+		for categoryName in sorted(categoriesByName.keys()):
+			category = categoriesByName[categoryName]
+			self.categories.append(category)
 			category.ops.sort(key=lambda o: o.path)
 			category.isAlpha = all([o.isAlpha for o in category.ops])
 			category.isBeta = all([o.isBeta for o in category.ops])
 			category.isDeprecated = all([o.isDeprecated for o in category.ops])
-			for o in category.ops:
-				o.row = len(self.allItems)
-				self.allItems.append(o)
+
+		self.allItems = self._buildFlatList(None)
+
+	def _buildFlatList(self, filt: 'Optional[_Filter]') -> 'List[_AnyItemT]':
+		flatItems = []
+		for category in self.categories:
+			if not filt:
+				matchedOps = category.ops
+			else:
+				matchedOps = [
+					o
+					for o in category.ops
+					if o.matches(filt)
+				]
+			if matchedOps:
+				flatItems.append(category)
+				flatItems += matchedOps
+		return flatItems
 
 	def itemForRow(self, row: int) -> 'Optional[_AnyItemT]':
-		if row < 0 or row >= len(self.allItems):
+		items = self._currentItemList
+		if not items or row < 0 or row >= len(items):
 			return None
-		return self.allItems[row]
+		return items[row]
+
+	def rowForItem(self, item: 'Optional[_AnyItemT]') -> int:
+		if not item:
+			return -1
+		items = self._currentItemList
+		if not items:
+			return -1
+		try:
+			return items.index(item)
+		except ValueError:
+			return -1
+
+	def applyFilter(self, filt: 'Optional[_Filter]'):
+		if not filt:
+			self.filteredItems = None
+		else:
+			self.filteredItems = self._buildFlatList(filt)

@@ -65,13 +65,13 @@ if False:
 # called when Reset parameter is pulsed, or on load
 
 def onInitCell(comp, row, col, attribs):
-	ext.palette.onInitCell(comp, row, col, attribs)
+	ext.palette.onInitCell(row, col, attribs)
 def onInitRow(comp, row, attribs):
-	ext.palette.onInitRow(comp, row, attribs)
+	ext.palette.onInitRow(row, attribs)
 def onInitCol(comp, col, attribs):
-	ext.palette.onInitCol(comp, col, attribs)
+	ext.palette.onInitCol(col, attribs)
 def onInitTable(comp, attribs):
-	ext.palette.onInitTable(comp, attribs)
+	ext.palette.onInitTable(attribs)
 
 # called during specific events
 #
@@ -82,16 +82,16 @@ def onInitTable(comp, attribs):
 #   v
 
 def onRollover(comp, row, col, coords, prevRow, prevCol, prevCoords):
-	ext.palette.onRollover(comp, row, col, coords, prevRow, prevCol, prevCoords)
+	ext.palette.onRollover(row, col, coords, prevRow, prevCol, prevCoords)
 
 def onSelect(comp, startRow, startCol, startCoords, endRow, endCol, endCoords, start, end):
-	ext.palette.onSelect(comp, startRow, startCol, startCoords, endRow, endCol, endCoords, start, end)
+	ext.palette.onSelect(startRow, startCol, startCoords, endRow, endCol, endCoords, start, end)
 
 def onRadio(comp, row, col, prevRow, prevCol):
-	ext.palette.onRadio(comp, row, col, prevRow, prevCol)
+	ext.palette.onRadio(row, col, prevRow, prevCol)
 
 def onFocus(comp, row, col, prevRow, prevCol):
-	ext.palette.onFocus(comp, row, col, prevRow, prevCol)
+	ext.palette.onFocus(row, col, prevRow, prevCol)
 
 def onEdit(comp, row, col, val):
 	return

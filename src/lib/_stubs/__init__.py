@@ -1101,7 +1101,7 @@ class COMP(OP):
 class PanelValue(_T.SupportsFloat, _ABC):
 	name: str
 	owner: OP
-	val: float
+	val: _T.Union[float, int, str]
 	valid: bool
 
 class Panel:
