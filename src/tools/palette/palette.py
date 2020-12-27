@@ -32,6 +32,14 @@ if False:
 		Rolloverhighlightcolorg: 'FloatParamT'
 		Rolloverhighlightcolorb: 'FloatParamT'
 
+		Categorybgcolorr: 'FloatParamT'
+		Categorybgcolorg: 'FloatParamT'
+		Categorybgcolorb: 'FloatParamT'
+
+		Categorytextcolorr: 'FloatParamT'
+		Categorytextcolorg: 'FloatParamT'
+		Categorytextcolorb: 'FloatParamT'
+
 	class _UIStatePar(ParCollection):
 		Showalpha: 'BoolParamT'
 		Showbeta: 'BoolParamT'
@@ -90,16 +98,7 @@ class Palette:
 	def resetState(self):
 		self.refreshList()
 		self.SelectedItem = None
-		self.filterText = ''
-		self.ownerComp.op('filterText_textfield').par.Value0 = ''
-
-	def _resolveRow(self, row: int) -> 'Optional[_AnyItemT]':
-		if not self.itemLibrary:
-			return None
-		item = self.itemLibrary.itemForRow(row)
-		if not item:
-			print(self.ownerComp, f'Unable to find item for row: {row!r}')
-		return item
+		self.clearFilterText()
 
 	def _offsetSelection(self, offset: int):
 		if not self.itemLibrary:
@@ -117,6 +116,11 @@ class Palette:
 
 	def setFilterText(self, text: str):
 		self.filterText = (text or '').strip()
+		self._applyFilter()
+
+	def clearFilterText(self):
+		self.filterText = ''
+		self.ownerComp.op('filterText_textfield').par.Value0 = ''
 		self._applyFilter()
 
 	def _applyFilter(self):
@@ -144,12 +148,14 @@ class Palette:
 		pass
 
 	def onInitCell(self, row: int, col: int, attribs: 'ListAttributes'):
-		item = self._resolveRow(row)
+		item = self.itemLibrary.itemForRow(row)
 		if not item:
 			return
 		if col == 0:
 			attribs.text = item.shortName
 		if isinstance(item, _CategoryItem):
+			if col == 0:
+				attribs.textOffsetX = 5
 			pass
 		elif isinstance(item, _OpItem):
 			if col == 0:
@@ -163,11 +169,14 @@ class Palette:
 					attribs.top = self.ownerComp.op('deprecatedIcon')
 
 	def onInitRow(self, row: int, attribs: 'ListAttributes'):
-		item = self._resolveRow(row)
+		item = self.itemLibrary.itemForRow(row)
 		if not item:
 			return
 		if item.isAlpha or item.isBeta or item.isDeprecated:
 			attribs.fontItalic = True
+		if isinstance(item, _CategoryItem):
+			attribs.textColor = ipar.listConfig.Categorytextcolorr, ipar.listConfig.Categorytextcolorg, ipar.listConfig.Categorytextcolorb, 1
+			attribs.bgColor = ipar.listConfig.Categorybgcolorr, ipar.listConfig.Categorybgcolorg, ipar.listConfig.Categorybgcolorb, 1
 		if item.isAlpha:
 			attribs.textColor = ipar.listConfig.Alphacolorr, ipar.listConfig.Alphacolorg, ipar.listConfig.Alphacolorb
 		elif item.isBeta:
