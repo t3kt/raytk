@@ -130,6 +130,11 @@ class ROPInfo:
 		return bool(self.rop)
 
 	@property
+	def path(self):
+		if self:
+			return self.rop.path
+
+	@property
 	def opVersion(self):
 		return str(self.opDefPar.Raytkopversion or '')
 

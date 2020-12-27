@@ -63,17 +63,9 @@ def buildOpInfoTable(dat: 'DAT'):
 		info = ROPInfo(rop)
 		if not info:
 			continue
-		if info.isOutput:
-			kind = 'ROutput'
-		elif info.isROP:
-			kind = 'ROP'
-		elif info.isRComp:
-			kind = 'RComp'
-		else:
-			kind = ''
 		dat.appendRow([
 			rop.path,
-			kind,
+			_ropKind(info),
 			info.statusLabel,
 			bool(info.helpDAT),
 			info.hasROPInputs,
@@ -85,3 +77,32 @@ def buildOpInfoTable(dat: 'DAT'):
 			macros = info.opDefPar.Macrotable.eval()
 			if macros:
 				dat[rop.path, 'macroCols'] = macros.numCols
+
+def _ropKind(info: 'ROPInfo'):
+	if info.isOutput:
+		return 'ROutput'
+	elif info.isROP:
+		return 'ROP'
+	elif info.isRComp:
+		return 'RComp'
+	else:
+		return ''
+
+def buildOpParamsTable(dat: 'DAT'):
+	dat.clear()
+	dat.appendRow(['path', 'kind'])
+	for rop in RaytkContext().allMasterOperators():
+		info = ROPInfo(rop)
+		if not info:
+			continue
+		dat.appendRow([
+			info.path,
+			_ropKind(info)
+		])
+		for tuplet in info.rop.customTuplets:
+			par = tuplet[0]
+			cell = dat[info.path, par.tupletName]
+			if cell is None:
+				dat.appendCol([par.tupletName])
+				cell = dat[info.path, par.tupletName]
+			cell.val = par.style
