@@ -11,7 +11,8 @@ if False:
 def getToolkit() -> 'COMP':
 	if hasattr(parent, 'raytk'):
 		return parent.raytk
-	return op.raytk
+	if hasattr(op, 'raytk'):
+		return op.raytk
 
 @total_ordering
 class Version:

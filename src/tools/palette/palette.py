@@ -1,11 +1,17 @@
 from dataclasses import dataclass, field
 from typing import Dict, List, Union, Optional
+from raytkUtil import RaytkContext, detachTox, focusCustomParameterPage, ROPInfo
 
 # noinspection PyUnreachableCode
 if False:
 	# noinspection PyUnresolvedReferences
 	from _stubs import *
 	from _typeAliases import *
+
+	class _Par(ParCollection):
+		Devel: 'BoolParamT'
+	class _COMP(panelCOMP):
+		par: _Par
 
 	class _ListConfigPar(ParCollection):
 		Bgcolorr: 'FloatParamT'
@@ -44,6 +50,8 @@ if False:
 		Showalpha: 'BoolParamT'
 		Showbeta: 'BoolParamT'
 		Showdeprecated: 'BoolParamT'
+		Showhelp: 'BoolParamT'
+		Pinopen: 'BoolParamT'
 
 	ipar.listConfig = _ListConfigPar()
 	ipar.uiState = _UIStatePar()
@@ -54,15 +62,21 @@ if False:
 
 class Palette:
 	def __init__(self, ownerComp: 'COMP'):
-		self.ownerComp = ownerComp
+		self.ownerComp = ownerComp  # type: _COMP
 		self.itemLibrary = _ItemLibrary()
 		self.selItem = tdu.Dependency()  # value type _AnyItemT
 		self.filterText = ''
+		self.isOpen = tdu.Dependency(False)
 		self.loadItems()
 
 	@property
-	def listComp(self) -> 'listCOMP':
+	def _listComp(self) -> 'listCOMP':
 		return self.ownerComp.op('list')
+
+	@property
+	def _closeTimer(self) -> 'timerCHOP':
+		# noinspection PyTypeChecker
+		return self.ownerComp.op('closeTimer')
 
 	@property
 	def SelectedItem(self) -> 'Optional[_AnyItemT]':
@@ -82,6 +96,44 @@ class Palette:
 			self._setRowHighlight(row, color)
 			# self.listComp.scroll(row, 0)
 
+	def Show(self, _=None):
+		self.open()
+
+	def open(self):
+		self._resetCloseTimer()
+		self.ownerComp.op('window').par.winopen.pulse()
+		self._resetState()
+		self.isOpen.val = True
+		ipar.uiState.Pinopen = False
+
+	def close(self):
+		self._resetCloseTimer()
+		self.ownerComp.op('window').par.winclose.pulse()
+		self.isOpen.val = False
+		ipar.uiState.Pinopen = False
+
+	def onCloseTimerComplete(self):
+		if ipar.uiState.Pinopen:
+			self._resetCloseTimer()
+			return
+		self.close()
+
+	def _resetCloseTimer(self):
+		timer = self._closeTimer
+		timer.par.initialize.pulse()
+		timer.par.active = False
+
+	def _startCloseTimer(self):
+		timer = self._closeTimer
+		timer.par.active = True
+		timer.par.start.pulse()
+
+	def onPanelInsideChange(self, val: bool):
+		if val:
+			self._resetCloseTimer()
+		else:
+			self._startCloseTimer()
+
 	def loadItems(self):
 		opTable = self.ownerComp.op('opTable')  # type: DAT
 		opHelpTable = self.ownerComp.op('opHelpTable')  # type: DAT
@@ -90,15 +142,16 @@ class Palette:
 		self.SelectedItem = None
 
 	def refreshList(self):
-		listComp = self.listComp
+		listComp = self._listComp
 		listComp.par.rows = self.itemLibrary.currentItemCount
 		listComp.par.cols = 2
 		listComp.par.reset.pulse()
 
-	def resetState(self):
+	def _resetState(self):
 		self.refreshList()
 		self.SelectedItem = None
 		self.clearFilterText()
+		self.isOpen.val = False
 
 	def _offsetSelection(self, offset: int):
 		if not self.itemLibrary:
@@ -137,15 +190,78 @@ class Palette:
 		self._applyFilter()
 
 	def onKeyboardShortcut(self, shortcutName: str):
-		# print(self.ownerComp, 'onKeyboardShortcut', shortcutName)
 		if shortcutName == 'up':
 			self._offsetSelection(-1)
 		elif shortcutName == 'down':
 			self._offsetSelection(1)
+		elif shortcutName == 'enter':
+			self.createSelectedItem()
+		elif shortcutName == 'esc':
+			self.close()
 
-	def onKey(self, key: str, time, state):
-		# print(self.ownerComp, 'onKey', key, 'time: ', time, 'state: ', state)
-		pass
+	def createSelectedItem(self):
+		item = self.SelectedItem
+		if not item:
+			return
+		if isinstance(item, _CategoryItem):
+			# TODO: maybe expand/collapse?
+			return
+		template = self._getTemplate(item)
+		if not template:
+			self._printAndStatus(f'Unable to find template for path: {item.path}')
+			return
+		context = RaytkContext()
+		pane = context.activeEditor()
+		dest = pane.owner if pane else None
+		if not dest:
+			self._printAndStatus('Unable to find active network editor pane')
+			return
+		ui.undo.startBlock(f'Create ROP {item.shortName}')
+		bufferArea = dest
+		newOp = bufferArea.copy(
+			template,
+			name=template.name + ('1' if tdu.digits(template.name) is None else ''),
+		)  # type: COMP
+		newOp.nodeCenterX = pane.x
+		newOp.nodeCenterY = pane.y
+		detachTox(newOp)
+		enableCloning = newOp.par.enablecloning  # type: Par
+		enableCloning.expr = ''
+		enableCloning.val = bool(self.ownerComp.par.Devel)
+		focusCustomParameterPage(newOp, 0)
+		for par in newOp.customPars:
+			if par.readOnly or par.isPulse or par.isMomentary or par.isDefault:
+				continue
+			if par.mode in (ParMode.EXPORT, ParMode.BIND):
+				continue
+			if par.defaultExpr and par.defaultExpr != par.default:
+				par.expr = par.defaultExpr
+			else:
+				par.val = par.default
+		newOp.allowCooking = True
+		ropInfo = ROPInfo(newOp)
+		ropInfo.invokeCallback('onCreate', master=template)
+		ui.undo.endBlock()
+		self._printAndStatus(f'Created OP: {newOp} from {template}')
+		if not ipar.uiState.Pinopen:
+			self.close()
+
+	def _printAndStatus(self, msg):
+		print(self.ownerComp, msg)
+		ui.status = msg
+
+	@staticmethod
+	def _getTemplate(item: '_Item'):
+		if not item or not isinstance(item, _OpItem):
+			return
+		path = item.path
+		if not path.startswith('/raytk/'):
+			return op(path)
+		context = RaytkContext()
+		toolkit = context.toolkit()
+		if not toolkit:
+			return
+		return toolkit.op(path.replace('/raytk/', '', 1))
 
 	def onInitCell(self, row: int, col: int, attribs: 'ListAttributes'):
 		item = self.itemLibrary.itemForRow(row)
@@ -202,7 +318,7 @@ class Palette:
 	def _setRowHighlight(self, row: int, color: tuple):
 		if row < 0:
 			return
-		listComp = self.listComp
+		listComp = self._listComp
 		rowAttribs = listComp.rowAttribs[row]
 		rowAttribs.topBorderInColor = color
 		rowAttribs.bottomBorderInColor = color
@@ -230,9 +346,10 @@ class Palette:
 			endRow: int, endCol: int, endCoords: 'XYUVTuple',
 			start, end):
 		item = self.itemLibrary.itemForRow(endRow)
-		# print(self.ownerComp, f'SELECT startRC: {startRow},{startCol}, endRC: {endRow},{endCol}, start: {start}, end: {end} \n{item}')
+		print(self.ownerComp, f'SELECT startRC: {startRow},{startCol}, endRC: {endRow},{endCol}, start: {start}, end: {end} \n{item}')
 		self.SelectedItem = item
-		pass
+		if end:
+			self.createSelectedItem()
 
 	def onRadio(self, row: int, col: int, prevRow: int, prevCol: int):
 		pass
@@ -258,6 +375,8 @@ class _CategoryItem(_Item):
 
 @dataclass
 class _OpItem(_Item):
+	words: List[str] = field(default_factory=list)
+
 	def matches(self, filt: '_Filter'):
 		if self.isAlpha and not filt.alpha:
 			return False
@@ -269,8 +388,9 @@ class _OpItem(_Item):
 			return True
 		if filt.text in self.shortName.lower():
 			return True
-		# if filt.text in self.categoryName.lower():
-		# 	return True
+		if filt.text in self.categoryName.lower():
+			return True
+		# TODO: filter using word initials
 		return False
 
 _AnyItemT = Union[_CategoryItem, _OpItem]
@@ -309,11 +429,12 @@ class _ItemLibrary:
 		categoriesByName = {}  # type: Dict[str, _CategoryItem]
 
 		for row in range(1, opTable.numRows):
+			shortName = str(opTable[row, 'name'])
 			path = str(opTable[row, 'path'])
 			status = str(opTable[row, 'status'])
 			categoryName = str(opTable[row, 'category'])
 			opItem = _OpItem(
-				shortName=str(opTable[row, 'name']),
+				shortName=shortName,
 				path=path,
 				opType=str(opTable[row, 'opType']),
 				categoryName=categoryName,
@@ -323,6 +444,8 @@ class _ItemLibrary:
 				isDeprecated=status == 'deprecated',
 				helpSummary=str(opHelpTable[path, 'summary'] or ''),
 			)
+			words = _splitCamelCase(shortName) + _splitCamelCase(categoryName)
+			opItem.words = [w.lower() for w in words]
 			if categoryName in categoriesByName:
 				categoriesByName[categoryName].ops.append(opItem)
 			else:
@@ -377,3 +500,11 @@ class _ItemLibrary:
 			self.filteredItems = None
 		else:
 			self.filteredItems = self._buildFlatList(filt)
+
+def _splitCamelCase(s: str):
+	splits = [i for i, e in enumerate(s) if e.isupper()] + [len(s)]
+	if not splits:
+		return [s]
+	splits = [0] + splits
+	return [s[x:y] for x, y in zip(splits, splits[1:])]
+
