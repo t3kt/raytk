@@ -1,11 +1,14 @@
-Produces a cylindrical pipe along the blend region, replacing the input shapes entirely.
-
-Creates an entirely new SDF result, removing any materials and other settings from the inputs.
+Creates a raised bar or indented groove where the second input intersects with the first.
 
 ## Parameters
 
 * `Enable`
-* `Radius`: The width of the pipe.
+* `Function`
+  * `groove`
+  * `tongue`
+* `Swapinputs`
+* `Depth`: The depth/height of the bar/groove.
+* `Radius`: The width of the bar/groove.
 * `Inspect`
 * `Help`
 

@@ -1,6 +1,6 @@
 ReturnT thismap(CoordT p, ContextT ctx) {
-	#ifdef THIS_USE_RADIUS_FIELD
-		float radius = inputOp3(p, ctx);
+	#ifdef THIS_HAS_INPUT_3
+		float radius = THIS_Radius * inputOp3(p, ctx);
 	#else
 		float radius = THIS_Radius;
 	#endif
