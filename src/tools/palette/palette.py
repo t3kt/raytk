@@ -62,6 +62,7 @@ if False:
 
 class Palette:
 	def __init__(self, ownerComp: 'COMP'):
+		# noinspection PyTypeChecker
 		self.ownerComp = ownerComp  # type: _COMP
 		self.itemLibrary = _ItemLibrary()
 		self.selItem = tdu.Dependency()  # value type _AnyItemT
@@ -79,22 +80,31 @@ class Palette:
 		return self.ownerComp.op('closeTimer')
 
 	@property
+	def _filterTextWidget(self) -> 'widgetCOMP':
+		return self.ownerComp.op('filterText_textfield')
+
+	@property
+	def _filterTextField(self) -> 'fieldCOMP':
+		widget = self._filterTextWidget
+		if widget:
+			return op(widget.par.Stringfield0).op('./field')
+
+	@property
 	def SelectedItem(self) -> 'Optional[_AnyItemT]':
 		return self.selItem.val
 
-	@SelectedItem.setter
-	def SelectedItem(self, val: 'Optional[_AnyItemT]'):
+	def _selectItem(self, item: 'Optional[_AnyItemT]', scroll=False):
 		oldItem = self.selItem.val  # type: Optional[_AnyItemT]
 		if oldItem:
 			row = self.itemLibrary.rowForItem(oldItem)
-			self._setRowHighlight(row, (0, 0, 0, 0))
-		# print(self.ownerComp, f'setting selected item to: {val!r}')
-		self.selItem.val = val
-		if val:
-			color = ipar.listConfig.Rolloverhighlightcolorr, ipar.listConfig.Rolloverhighlightcolorg, ipar.listConfig.Rolloverhighlightcolorb, 1
-			row = self.itemLibrary.rowForItem(val)
-			self._setRowHighlight(row, color)
-			# self.listComp.scroll(row, 0)
+			self._setRowHighlight(row, False)
+		# print(self.ownerComp, f'setting selected item to: {item!r}')
+		self.selItem.val = item
+		if item:
+			row = self.itemLibrary.rowForItem(item)
+			self._setRowHighlight(row, True)
+			if scroll:
+				self._listComp.scroll(row, 0)
 
 	def Show(self, _=None):
 		self.open()
@@ -105,6 +115,9 @@ class Palette:
 		self._resetState()
 		self.isOpen.val = True
 		ipar.uiState.Pinopen = False
+		filterField = self._filterTextField
+		if filterField:
+			run('args[0]()', filterField.setKeyboardFocus, delayFrames=10)
 
 	def close(self):
 		self._resetCloseTimer()
@@ -139,7 +152,7 @@ class Palette:
 		opHelpTable = self.ownerComp.op('opHelpTable')  # type: DAT
 		self.itemLibrary.loadTables(opTable, opHelpTable)
 		self.refreshList()
-		self.SelectedItem = None
+		self._selectItem(None)
 
 	def refreshList(self):
 		listComp = self._listComp
@@ -149,7 +162,7 @@ class Palette:
 
 	def _resetState(self):
 		self.refreshList()
-		self.SelectedItem = None
+		self._selectItem(None)
 		self.clearFilterText()
 		self.isOpen.val = False
 
@@ -165,7 +178,7 @@ class Palette:
 				row += offset
 		else:
 			row = offset
-		self.SelectedItem = self.itemLibrary.itemForRow(row % self.itemLibrary.currentItemCount)
+		self._selectItem(self.itemLibrary.itemForRow(row % self.itemLibrary.currentItemCount), scroll=True)
 
 	def setFilterText(self, text: str):
 		self.filterText = (text or '').strip()
@@ -173,10 +186,11 @@ class Palette:
 
 	def clearFilterText(self):
 		self.filterText = ''
-		self.ownerComp.op('filterText_textfield').par.Value0 = ''
+		self._filterTextWidget.par.Value0 = ''
 		self._applyFilter()
 
 	def _applyFilter(self):
+		item = self.SelectedItem
 		filt = _Filter(
 			self.filterText,
 			alpha=ipar.uiState.Showalpha.eval(),
@@ -184,6 +198,12 @@ class Palette:
 			deprecated=ipar.uiState.Showdeprecated.eval(),
 		)
 		self.itemLibrary.applyFilter(filt)
+		if item:
+			row = self.itemLibrary.rowForItem(item)
+			if row < 0:
+				self._selectItem(None)
+			else:
+				self._setRowHighlight(row, True)
 		self.refreshList()
 
 	def onFilterSettingChange(self):
@@ -315,9 +335,13 @@ class Palette:
 		attribs.fontSizeX = 18
 		attribs.textJustify = JustifyType.CENTERLEFT
 
-	def _setRowHighlight(self, row: int, color: tuple):
+	def _setRowHighlight(self, row: int, selected: bool):
 		if row < 0:
 			return
+		if selected:
+			color = ipar.listConfig.Rolloverhighlightcolorr, ipar.listConfig.Rolloverhighlightcolorg, ipar.listConfig.Rolloverhighlightcolorb, 1
+		else:
+			color = 0, 0, 0, 0
 		listComp = self._listComp
 		rowAttribs = listComp.rowAttribs[row]
 		rowAttribs.topBorderInColor = color
@@ -331,14 +355,8 @@ class Palette:
 			self,
 			row: int, col: int, coords: 'XYUVTuple',
 			prevRow: int, prevCol: int, prevCoords: 'XYUVTuple'):
-		# if prevRow >= 0:
-		# 	color = 0, 0, 0, 0
-		# 	self._setRowHighlight(prevRow, color)
 		if row >= 0:
-			# color = ipar.listConfig.Rolloverhighlightcolorr, ipar.listConfig.Rolloverhighlightcolorg, ipar.listConfig.Rolloverhighlightcolorb, 1
-			# self._setRowHighlight(row, color)
-			self.SelectedItem = self.itemLibrary.itemForRow(row)
-		pass
+			self._selectItem(self.itemLibrary.itemForRow(row))
 
 	def onSelect(
 			self,
@@ -347,7 +365,7 @@ class Palette:
 			start, end):
 		item = self.itemLibrary.itemForRow(endRow)
 		print(self.ownerComp, f'SELECT startRC: {startRow},{startCol}, endRC: {endRow},{endCol}, start: {start}, end: {end} \n{item}')
-		self.SelectedItem = item
+		self._selectItem(item)
 		if end:
 			self.createSelectedItem()
 
