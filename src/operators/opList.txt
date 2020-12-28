@@ -161,8 +161,8 @@ triangleSdf2d	/raytk/operators/sdf2d/triangleSdf2d	/raytk/operators/sdf2d	raytkO
 vesicaSdf2d	/raytk/operators/sdf2d/vesicaSdf2d	/raytk/operators/sdf2d	raytkOP	sdf2d	sdf2d/vesicaSdf2d	raytk.operators.sdf2d.vesicaSdf2d	0	
 lfoField	/raytk/operators/time/lfoField	/raytk/operators/time	raytkOP	time	time/lfoField	raytk.operators.time.lfoField	2	
 timeField	/raytk/operators/time/timeField	/raytk/operators/time	raytkOP	time	time/timeField	raytk.operators.time.timeField	4	
-timeShift	/raytk/operators/time/timeShift	/raytk/operators/time	raytkOP	time	time/timeShift	raytk.operators.time.timeShift	0	alpha
-extractDebugValues	/raytk/operators/utility/extractDebugValues	/raytk/operators/utility	raytkOP	utility	utility/extractDebugValues	raytk.operators.utility.extractDebugValues	0	
-extractIteration	/raytk/operators/utility/extractIteration	/raytk/operators/utility	raytkOP	utility	utility/extractIteration	raytk.operators.utility.extractIteration	2	
-injectGlobalPosition	/raytk/operators/utility/injectGlobalPosition	/raytk/operators/utility	raytkOP	utility	utility/injectGlobalPosition	raytk.operators.utility.injectGlobalPosition	0	
-injectObjectId	/raytk/operators/utility/injectObjectId	/raytk/operators/utility	raytkOP	utility	utility/injectObjectId	raytk.operators.utility.injectObjectId	2	
+timeShift	/raytk/operators/time/timeShift	/raytk/operators/time	raytkOP	time	time/timeShift	raytk.operators.time.timeShift	1	alpha
+extractDebugValues	/raytk/operators/utility/extractDebugValues	/raytk/operators/utility	raytkOP	utility	utility/extractDebugValues	raytk.operators.utility.extractDebugValues	1	alpha
+extractIteration	/raytk/operators/utility/extractIteration	/raytk/operators/utility	raytkOP	utility	utility/extractIteration	raytk.operators.utility.extractIteration	3	beta
+injectGlobalPosition	/raytk/operators/utility/injectGlobalPosition	/raytk/operators/utility	raytkOP	utility	utility/injectGlobalPosition	raytk.operators.utility.injectGlobalPosition	1	
+injectObjectId	/raytk/operators/utility/injectObjectId	/raytk/operators/utility	raytkOP	utility	utility/injectObjectId	raytk.operators.utility.injectObjectId	3	beta
