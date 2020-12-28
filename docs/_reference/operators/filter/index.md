@@ -44,7 +44,7 @@ float/vector fields, etc). Some only support a limited set of return types.
 * [`rescaleField`](rescaleField/) - 
 * [`rotate`](rotate/) - 
 * [`round`](round/) - Adds to (or subtracts from) the size of an SDF, which has the effect of rounding it out or shrinking it.
-* [`scale`](scale/) - 
+* [`scale`](scale/) - Scales space.
 * [`slice`](slice/) - 
 * [`transform`](transform/) - Transform the coordinates of the input, with rotation, scaling, and translation.
 * [`translate`](translate/) - Translates coordinates of the input ROP.

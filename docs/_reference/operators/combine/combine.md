@@ -50,6 +50,6 @@ To combine more than two SDFs, use one of the specialized operators like `simple
 
 ## Inputs
 
-* `definition_in_1`
-* `definition_in_2`
-* `radius_field_definition_in`
+* `definition_in_1`: 
+* `definition_in_2`: 
+* `radius_field_definition_in`: 

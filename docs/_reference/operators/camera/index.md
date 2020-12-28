@@ -18,6 +18,7 @@ or other OPs.
 
 * [`basicCamera`](basicCamera/) - 
 * [`fisheyeCamera`](fisheyeCamera/) - A 360 fisheye camera, that shows all directions from a specific point in space.
+* [`linkedCamera`](linkedCamera/) - A camera that is linked to an existing TD Camera COMP.
 * [`lookAtCamera`](lookAtCamera/) - A camera that focuses on a specific point in space.
 * [`orthoCamera`](orthoCamera/) - An orthographic (non-perspective) camera, which can be used for flattened front/side/etc views.
 * [`splitCamera`](splitCamera/) - A camera that splits the viewport into several zones, each using a separate camera.

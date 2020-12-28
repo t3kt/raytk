@@ -18,13 +18,14 @@ An orthographic (non-perspective) camera, which can be used for flattened front/
 
 ## Parameters
 
-* `Direction` *Direction*
+* `Direction` *Direction*: Direction that the camera faces.
   * `xpos` *Left (X+)*
   * `xneg` *Right (X-)*
   * `ypos` *Bottom (Y+)*
   * `yneg` *Top (Y-)*
   * `zpos` *Back (Z+)*
   * `zneg` *Front (Z-)*
-* `Campos` *Position*
-* `Rotate` *Rotate*
+* `Campos` *Position*: Position of the camera.
+* `Rotate` *Rotate*: Rotation of the camera view on the axis facing the camera.
+* `Inspect`
 * `Help` *Help*

@@ -23,11 +23,11 @@ texture.
 * [`constantField`](constantField/) - A float or vector field that evaluates to a constant value.
 * [`contextValueField`](contextValueField/) - Field that returns various fields from the context, from a downstream OP.
 * [`iterationField`](iterationField/) - Field that returns the current iteration, from a downstream OP.
+* [`metaballField`](metaballField/) - Metaball value field.
 * [`multiPointDistanceField`](multiPointDistanceField/) - A vector field that provides the distance from 4 specific points in space (one for each part of the vector).
 * [`noiseField`](noiseField/) - A float or vector field that uses one of several noise functions.
 * [`pointDistanceField`](pointDistanceField/) - A float field that provides the distance from a specific point in space.
 * [`positionField`](positionField/) - A vector field that evaluates to the coordinates in space.
 * [`reorderField`](reorderField/) - 
 * [`textureField`](textureField/) - A float or vector field that looks up values from a texture.
-* [`timeField`](timeField/) - 
 * [`waveField`](waveField/) - A field that uses a periodic wave.

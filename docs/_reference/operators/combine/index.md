@@ -21,8 +21,8 @@ well as more generic things like switches and cross-fade blending.
 * [`combineColumns`](combineColumns/) - Columns SDF combine, producing n-1 circular columns/ridges at a 45 degree angles along the blend region.
 * [`combineFields`](combineFields/) - Combines float or vector fields using one of several mathematical operations.
 * [`combineStairs`](combineStairs/) - Stair SDF combine, producing steps along the blend region.
-* [`edgeEngrave`](edgeEngrave/) - 
-* [`edgeGroove`](edgeGroove/) - 
+* [`edgeEngrave`](edgeEngrave/) - Carves a v-shaped groove where the second input intersects with the first.
+* [`edgeGroove`](edgeGroove/) - Creates a raised bar or indented groove where the second input intersects with the first.
 * [`edgePipe`](edgePipe/) - Produces a cylindrical pipe along the blend region, replacing the input shapes entirely.
 * [`iterationSwitch`](iterationSwitch/) - 
 * [`layoutGrid`](layoutGrid/) - Slices space into a grid, and places each input in a separate cell.

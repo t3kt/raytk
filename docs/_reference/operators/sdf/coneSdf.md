@@ -31,5 +31,5 @@ Defines a cone or capped cone shape.
 
 ## Inputs
 
-* `height_field_definition_in` *Height Field*: Value field that can be used to vary the height of the cone.
-* `radius_field_definition_in` *Radius Field*: Value field that can be used to vary the radius (both base and top) of the cone.
+* `height_field_definition_in` *Height Field*:  Value field that can be used to vary the height of the cone.
+* `radius_field_definition_in` *Radius Field*:  Value field that can be used to vary the radius (both base and top) of the cone.

@@ -25,5 +25,5 @@ and may not support being fed through other OPs like filters.
 * [`fieldMat`](fieldMat/) - A material that uses a vector field input to determine
 the color. Essentially this is a conversion from a
 field to a material, with no other features.
-* [`phongMat`](phongMat/) - 
+* [`phongMat`](phongMat/) - Material that uses phong shading.
 * [`sampledPointMat`](sampledPointMat/) - 

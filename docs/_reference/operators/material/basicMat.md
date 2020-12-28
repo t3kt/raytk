@@ -29,6 +29,6 @@ Category: material
 
 ## Inputs
 
-* `definition_in`
-* `shadow_definition_in`
-* `baseColor_definition_in`
+* `definition_in`: 
+* `shadow_definition_in`: 
+* `baseColor_definition_in`: 

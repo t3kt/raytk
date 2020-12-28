@@ -31,4 +31,4 @@ Based on [Spiral Tiling](https://www.shadertoy.com/view/ls2GRz) by Knightly.
 
 ## Inputs
 
-* `definition_in_1` *Cross Section Shape*: 2D SDF used as the cross section shape of the arms instead of the default rounded square.
+* `definition_in_1` *Cross Section Shape*:  2D SDF used as the cross section shape of the arms instead of the default rounded square.

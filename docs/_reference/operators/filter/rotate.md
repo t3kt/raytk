@@ -31,11 +31,10 @@ Category: filter
   * `zxy` *Rz Rx Ry*
   * `zyx` *Rz Ry Rx*
 * `Rot` *Rotate XYZ*
-* `Usefield` *Use Field*
 * `Inspect` *Inspect*
 * `Help` *Help*
 
 ## Inputs
 
-* `definition_in`
-* `definition_in_2`
+* `definition_in`: 
+* `definition_in_2`: 

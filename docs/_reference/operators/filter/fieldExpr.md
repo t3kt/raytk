@@ -66,7 +66,7 @@ Category: filter
 
 ## Inputs
 
-* `definition_in`
-* `definition_in1`
-* `definition_in2`
-* `definition_in3`
+* `definition_in`: 
+* `definition_in1`: 
+* `definition_in2`: 
+* `definition_in3`: 

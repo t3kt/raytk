@@ -28,10 +28,10 @@ Category: filter
   * `union` *Union*
   * `smoothUnion` *Smooth Union*
 * `Mergeradius` *Merge Radius*
-* `Iterateonsides` *Iterate On Size*
+* `Iterateonsides` *Iterate On Sides*
 * `Inspect` *Inspect*
 * `Help` *Help*
 
 ## Inputs
 
-* `definition_in`
+* `definition_in`: 

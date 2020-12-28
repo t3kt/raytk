@@ -26,15 +26,13 @@ Stair SDF combine, producing steps along the blend region.
 * `Swapinputs` *Swap Inputs*: Swaps the order of the inputs. This is only used for the `diff` mode.
 * `Number` *Number*: The number of steps in the blending region.
 * `Radius` *Radius*: The size of the blending region.
-* `Useradiusfield` *Use Radius Field*
 * `Offset` *Offset*: Shifts the steps along the blend region, with 0 being no shift, and 1 being a full shift of the total number of steps.
-* `Useoffsetfield` *Use Offset Field*
 * `Inspect` *Inspect*
 * `Help` *Help*
 
 ## Inputs
 
-* `definition_in_1`
-* `definition_in_2`
-* `radius_definition_in` *Radius Field*: Value field that can be used to vary the radius of the blend region at different points in space.
-* `offset_definition_in` *Offset Field*: Value field that can be used to vary the offset of the stairs at different points in space.
+* `definition_in_1`: 
+* `definition_in_2`: 
+* `radius_definition_in` *Radius Field*:  Value field that can be used to vary the radius of the blend region at different points in space, by *multiplying* the value of the `Radius` parameter.
+* `offset_definition_in` *Offset Field*:  Value field that can be used to vary the offset of the stairs at different points in space, by *adding* to the value of the `Offset` parameter.

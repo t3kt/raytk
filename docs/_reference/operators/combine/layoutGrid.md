@@ -37,7 +37,7 @@ The input shapes are shifted to the center of their cell.
 
 ## Inputs
 
-* `definition_in_1`
-* `definition_in_2`
-* `definition_in_3`
-* `definition_in_4`
+* `definition_in_1`: 
+* `definition_in_2`: 
+* `definition_in_3`: 
+* `definition_in_4`: 

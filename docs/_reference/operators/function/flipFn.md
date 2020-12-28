@@ -42,4 +42,4 @@ Function that flips its input in one of several different modes.
 
 ## Inputs
 
-* `definition_in`
+* `definition_in`: 

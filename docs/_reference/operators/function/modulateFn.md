@@ -23,5 +23,5 @@ Category: function
 
 ## Inputs
 
-* `definition_in`
-* `definition_in_2`
+* `definition_in`: 
+* `definition_in_2`: 

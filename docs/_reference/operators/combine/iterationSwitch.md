@@ -28,5 +28,5 @@ Category: combine
 
 ## Inputs
 
-* `definition_in_1`
-* `definition_in_2`
+* `definition_in_1`: 
+* `definition_in_2`: 

@@ -18,10 +18,10 @@ A camera that focuses on a specific point in space.
 
 ## Parameters
 
-* `Camera` *Camera*
-* `Camfov` *FOV Angle*
-* `Campos` *Position*
-* `Camrot` *Rotate*
-* `Lookatpos` *Look At Position*
-* `Camup` *Up Vector*
+* `Camfov` *FOV Angle*: FOV angle.
+* `Campos` *Position*: Position of the camera.
+* `Camrot` *Rotate*: Rotation of the camera in XYZ.
+* `Lookatpos` *Look At Position*: Position that the camera faces.
+* `Camup` *Up Vector*: Up vector (used to interpret the `Lookatpos`).
+* `Inspect`
 * `Help` *Help*

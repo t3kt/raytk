@@ -25,7 +25,7 @@ Switches between several inputs, without the need to rebuild the shader, allowin
 
 ## Inputs
 
-* `definition_in_1`
-* `definition_in_2`
-* `definition_in_3`
-* `definition_in_4`
+* `definition_in_1`: 
+* `definition_in_2`: 
+* `definition_in_3`: 
+* `definition_in_4`: 

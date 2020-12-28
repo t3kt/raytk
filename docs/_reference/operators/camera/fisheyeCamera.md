@@ -25,8 +25,9 @@ A 360 fisheye camera, that shows all directions from a specific point in space.
   * `equisolidangle` *equisolidangle*
   * `orthographicfisheye` *orthographicfisheye*
 * `Aperture` *Aperture*
-* `Campos` *Position*
-* `Camrot` *Rotate*
-* `Lookatpos` *Look At Position*
+* `Campos` *Position*: Position of the camera.
+* `Camrot` *Rotate*: Rotates the camera in XYZ.
+* `Lookatpos` *Look At Position*: Coordinates that the camera should face.
 * `Camup` *Up Vector*
+* `Inspect`
 * `Help` *Help*

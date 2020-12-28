@@ -31,4 +31,5 @@ output.
 the distance from the surface of the shape at any given point.
 * [Sdf2d](sdf2d/) - Signed distances functions which define geometry in 2D space, by calculating
 the distance from the edge of the shape at any given point.
+* [Time](time/) - Operators that do time-based calculations.
 * [Utility](utility/) - Advanced operators that change how ROP chains behave.

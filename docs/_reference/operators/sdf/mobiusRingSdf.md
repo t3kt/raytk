@@ -30,4 +30,4 @@ SDF for a squared mobius ring, which is like a rectangular bar twisted and then 
 
 ## Inputs
 
-* `thickness_field_definition_in` *Thickness Field*: Value field that can be used to vary the thickness of the ring. A 1D field will use the angle of the ring as the coordinate, scaled to a 0..1 range. A 3D field will use the absolute XYZ coordinates.
+* `thickness_field_definition_in` *Thickness Field*:  Value field that can be used to vary the thickness of the ring. A 1D field will use the angle of the ring as the coordinate, scaled to a 0..1 range. A 3D field will use the absolute XYZ coordinates.
