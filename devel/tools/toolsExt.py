@@ -306,9 +306,12 @@ class Tools:
 			rop.nodeY = -int(i / 10) * 150
 			rop.nodeX = int(i % 10) * 200
 
+	@staticmethod
+	def openToolkitEditor():
+		op('/toolkitEditor').par.Open.pulse()
+
 	def openPrototypeEditor(self):
 		self.openEditorWorkspace('devel/prototypes/')
-		pass
 
 	def openTestCaseEditor(self):
 		self.openEditorWorkspace('tests/testCases/')
