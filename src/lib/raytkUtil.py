@@ -428,6 +428,9 @@ class _OpStatusTag(Tag):
 		if info.opDef:
 			self.applyTag(info.opDef, state)
 			self.applyColor(info.opDef, state)
+		if not state:
+			# clear it off the main op if it's there instead of / in addition to on opDef
+			self.applyTag(o, False)
 		self.applyColor(o, state)
 		self.applyUpdate(info.opDef, state)
 
@@ -462,8 +465,8 @@ class RaytkTags:
 	fileSync = Tag('fileSync', _fileSyncColor, _updateFileSyncPars)
 	alpha = _OpStatusTag('raytkAlpha', _alphaColor)
 	beta = _OpStatusTag('raytkBeta', _betaColor)
+	deprecated = _OpStatusTag('raytkDeprecated', _deprecatedColor)
 	validation = Tag('raytkValidation', _validationColor)
-	deprecated = Tag('raytkDeprecated', _deprecatedColor)
 
 def getActiveEditor() -> 'NetworkEditor':
 	pane = ui.panes.current
