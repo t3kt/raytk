@@ -82,13 +82,13 @@ twist	/raytk/operators/filter/twist	/raytk/operators/filter	raytkOP	filter	filte
 addFn	/raytk/operators/function/addFn	/raytk/operators/function	raytkOP	function	function/addFn	raytk.operators.function.addFn	1	
 almostIdentityFn	/raytk/operators/function/almostIdentityFn	/raytk/operators/function	raytkOP	function	function/almostIdentityFn	raytk.operators.function.almostIdentityFn	0	
 chopFn	/raytk/operators/function/chopFn	/raytk/operators/function	raytkOP	function	function/chopFn	raytk.operators.function.chopFn	1	
-crossFn	/raytk/operators/function/crossFn	/raytk/operators/function	raytkOP	function	function/crossFn	raytk.operators.function.crossFn	2	
+crossFn	/raytk/operators/function/crossFn	/raytk/operators/function	raytkOP	function	function/crossFn	raytk.operators.function.crossFn	3	
 cubicPulseFn	/raytk/operators/function/cubicPulseFn	/raytk/operators/function	raytkOP	function	function/cubicPulseFn	raytk.operators.function.cubicPulseFn	0	
 easeFn	/raytk/operators/function/easeFn	/raytk/operators/function	raytkOP	function	function/easeFn	raytk.operators.function.easeFn	0	
 flipFn	/raytk/operators/function/flipFn	/raytk/operators/function	raytkOP	function	function/flipFn	raytk.operators.function.flipFn	2	
 gainFn	/raytk/operators/function/gainFn	/raytk/operators/function	raytkOP	function	function/gainFn	raytk.operators.function.gainFn	0	
 impulseFn	/raytk/operators/function/impulseFn	/raytk/operators/function	raytkOP	function	function/impulseFn	raytk.operators.function.impulseFn	1	
-modulateFn	/raytk/operators/function/modulateFn	/raytk/operators/function	raytkOP	function	function/modulateFn	raytk.operators.function.modulateFn	1	
+modulateFn	/raytk/operators/function/modulateFn	/raytk/operators/function	raytkOP	function	function/modulateFn	raytk.operators.function.modulateFn	2	
 multiplyFn	/raytk/operators/function/multiplyFn	/raytk/operators/function	raytkOP	function	function/multiplyFn	raytk.operators.function.multiplyFn	1	
 parabolaFn	/raytk/operators/function/parabolaFn	/raytk/operators/function	raytkOP	function	function/parabolaFn	raytk.operators.function.parabolaFn	0	
 pennerEasingFn	/raytk/operators/function/pennerEasingFn	/raytk/operators/function	raytkOP	function	function/pennerEasingFn	raytk.operators.function.pennerEasingFn	1	
@@ -96,23 +96,23 @@ powerCurveFn	/raytk/operators/function/powerCurveFn	/raytk/operators/function	ra
 sincCurveFn	/raytk/operators/function/sincCurveFn	/raytk/operators/function	raytkOP	function	function/sincCurveFn	raytk.operators.function.sincCurveFn	0	
 stepFn	/raytk/operators/function/stepFn	/raytk/operators/function	raytkOP	function	function/stepFn	raytk.operators.function.stepFn	0	
 waveFn	/raytk/operators/function/waveFn	/raytk/operators/function	raytkOP	function	function/waveFn	raytk.operators.function.waveFn	1	
-bendRay	/raytk/operators/light/bendRay	/raytk/operators/light	raytkOP	light	light/bendRay	raytk.operators.light.bendRay	0	alpha
+bendRay	/raytk/operators/light/bendRay	/raytk/operators/light	raytkOP	light	light/bendRay	raytk.operators.light.bendRay	1	alpha
 hardShadow	/raytk/operators/light/hardShadow	/raytk/operators/light	raytkOP	light	light/hardShadow	raytk.operators.light.hardShadow	2	
 pointLight	/raytk/operators/light/pointLight	/raytk/operators/light	raytkOP	light	light/pointLight	raytk.operators.light.pointLight	3	
 softShadow	/raytk/operators/light/softShadow	/raytk/operators/light	raytkOP	light	light/softShadow	raytk.operators.light.softShadow	4	
-basicMat	/raytk/operators/material/basicMat	/raytk/operators/material	raytkOP	material	material/basicMat	raytk.operators.material.basicMat	7	
-checkerboardMat	/raytk/operators/material/checkerboardMat	/raytk/operators/material	raytkOP	material	material/checkerboardMat	raytk.operators.material.checkerboardMat	2	
-fieldMat	/raytk/operators/material/fieldMat	/raytk/operators/material	raytkOP	material	material/fieldMat	raytk.operators.material.fieldMat	1	
-phongMat	/raytk/operators/material/phongMat	/raytk/operators/material	raytkOP	material	material/phongMat	raytk.operators.material.phongMat	4	
-sampledPointMat	/raytk/operators/material/sampledPointMat	/raytk/operators/material	raytkOP	material	material/sampledPointMat	raytk.operators.material.sampledPointMat	4	
+basicMat	/raytk/operators/material/basicMat	/raytk/operators/material	raytkOP	material	material/basicMat	raytk.operators.material.basicMat	8	
+checkerboardMat	/raytk/operators/material/checkerboardMat	/raytk/operators/material	raytkOP	material	material/checkerboardMat	raytk.operators.material.checkerboardMat	3	
+fieldMat	/raytk/operators/material/fieldMat	/raytk/operators/material	raytkOP	material	material/fieldMat	raytk.operators.material.fieldMat	2	
+phongMat	/raytk/operators/material/phongMat	/raytk/operators/material	raytkOP	material	material/phongMat	raytk.operators.material.phongMat	5	
+sampledPointMat	/raytk/operators/material/sampledPointMat	/raytk/operators/material	raytkOP	material	material/sampledPointMat	raytk.operators.material.sampledPointMat	5	
 customFilter	/raytk/operators/misc/customFilter	/raytk/operators/misc	raytkDeprecated raytkOP	misc	misc/customFilter	raytk.operators.misc.customFilter	4	deprecated
 customGen	/raytk/operators/misc/customGen	/raytk/operators/misc	raytkDeprecated raytkOP	misc	misc/customGen	raytk.operators.misc.customGen	5	deprecated
-customRender	/raytk/operators/output/customRender	/raytk/operators/output	raytkOP raytkOutput	output	output/customRender	raytk.operators.output.customRender	5	alpha
+customRender	/raytk/operators/output/customRender	/raytk/operators/output	raytkOP raytkOutput	output	output/customRender	raytk.operators.output.customRender	6	alpha
 fieldRender	/raytk/operators/output/fieldRender	/raytk/operators/output	raytkComp	output	output/fieldRender	raytk.operators.output.fieldRender	2	alpha
 functionGraphRender	/raytk/operators/output/functionGraphRender	/raytk/operators/output	raytkOP raytkOutput	output	output/functionGraphRender	raytk.operators.output.functionGraphRender	9	
-pointMapRender	/raytk/operators/output/pointMapRender	/raytk/operators/output	raytkOP raytkOutput	output	output/pointMapRender	raytk.operators.output.pointMapRender	21	
-raymarchRender3D	/raytk/operators/output/raymarchRender3D	/raytk/operators/output	raytkOP raytkOutput	output	output/raymarchRender3D	raytk.operators.output.raymarchRender3D	52	
-render2D	/raytk/operators/output/render2D	/raytk/operators/output	raytkOP raytkOutput	output	output/render2D	raytk.operators.output.render2D	20	
+pointMapRender	/raytk/operators/output/pointMapRender	/raytk/operators/output	raytkOP raytkOutput	output	output/pointMapRender	raytk.operators.output.pointMapRender	22	
+raymarchRender3D	/raytk/operators/output/raymarchRender3D	/raytk/operators/output	raytkOP raytkOutput	output	output/raymarchRender3D	raytk.operators.output.raymarchRender3D	53	
+render2D	/raytk/operators/output/render2D	/raytk/operators/output	raytkOP raytkOutput	output	output/render2D	raytk.operators.output.render2D	21	
 renderSelect	/raytk/operators/output/renderSelect	/raytk/operators/output	raytkComp	output	output/renderSelect	raytk.operators.output.renderSelect	0	
 depthMap	/raytk/operators/post/depthMap	/raytk/operators/post	raytkComp	post	post/depthMap	raytk.operators.post.depthMap	3	
 worldPosMap	/raytk/operators/post/worldPosMap	/raytk/operators/post	raytkComp	post	post/worldPosMap	raytk.operators.post.worldPosMap	1	
