@@ -7,6 +7,10 @@ if False:
 	# noinspection PyUnresolvedReferences
 	from _stubs import *
 	from _typeAliases import *
+	from devel.toolkitEditor.toolkitEditor import ToolkitEditor
+
+	# noinspection PyTypeHints
+	op.raytkDevelEditor = ToolkitEditor(COMP())  # type: Optional[Union[ToolkitEditor, COMP]]
 
 	class _Par(ParCollection):
 		Devel: 'BoolParamT'
@@ -45,6 +49,14 @@ if False:
 		Categorytextcolorr: 'FloatParamT'
 		Categorytextcolorg: 'FloatParamT'
 		Categorytextcolorb: 'FloatParamT'
+
+		Buttonbgcolorr: 'FloatParamT'
+		Buttonbgcolorg: 'FloatParamT'
+		Buttonbgcolorb: 'FloatParamT'
+
+		Buttonrolloverbgcolorr: 'FloatParamT'
+		Buttonrolloverbgcolorg: 'FloatParamT'
+		Buttonrolloverbgcolorb: 'FloatParamT'
 
 	class _UIStatePar(ParCollection):
 		Showalpha: 'BoolParamT'
@@ -88,6 +100,10 @@ class Palette:
 		widget = self._filterTextWidget
 		if widget:
 			return op(widget.par.Stringfield0).op('./field')
+
+	@property
+	def _develMode(self):
+		return bool(self.ownerComp.par.Devel)
 
 	@property
 	def SelectedItem(self) -> 'Optional[_AnyItemT]':
@@ -157,7 +173,7 @@ class Palette:
 	def refreshList(self):
 		listComp = self._listComp
 		listComp.par.rows = self.itemLibrary.currentItemCount
-		listComp.par.cols = 2
+		listComp.par.cols = 3 if self._develMode else 2
 		listComp.par.reset.pulse()
 
 	def _resetState(self):
@@ -247,7 +263,7 @@ class Palette:
 		detachTox(newOp)
 		enableCloning = newOp.par.enablecloning  # type: Par
 		enableCloning.expr = ''
-		enableCloning.val = bool(self.ownerComp.par.Devel)
+		enableCloning.val = self._develMode
 		focusCustomParameterPage(newOp, 0)
 		for par in newOp.customPars:
 			if par.readOnly or par.isPulse or par.isMomentary or par.isDefault:
@@ -265,6 +281,16 @@ class Palette:
 		self._printAndStatus(f'Created OP: {newOp} from {template}')
 		if not ipar.uiState.Pinopen:
 			self.close()
+
+	def editSelectedItem(self):
+		item = self.SelectedItem
+		if not item or not isinstance(item, _OpItem):
+			return
+		if not hasattr(op, 'raytkDevelEditor'):
+			return
+		template = self._getTemplate(item)
+		if template:
+			op.raytkDevelEditor.EditROP(template)
 
 	def _printAndStatus(self, msg):
 		print(self.ownerComp, msg)
@@ -292,7 +318,6 @@ class Palette:
 		if isinstance(item, _CategoryItem):
 			if col == 0:
 				attribs.textOffsetX = 5
-			pass
 		elif isinstance(item, _OpItem):
 			if col == 0:
 				attribs.textOffsetX = 20
@@ -303,6 +328,9 @@ class Palette:
 					attribs.top = self.ownerComp.op('betaIcon')
 				elif item.isDeprecated:
 					attribs.top = self.ownerComp.op('deprecatedIcon')
+			elif col == 2:
+				attribs.top = self.ownerComp.op('editIcon')
+				attribs.bgColor = ipar.listConfig.Buttonbgcolorr, ipar.listConfig.Buttonbgcolorg, ipar.listConfig.Buttonbgcolorb, 1
 
 	def onInitRow(self, row: int, attribs: 'ListAttributes'):
 		item = self.itemLibrary.itemForRow(row)
@@ -325,7 +353,8 @@ class Palette:
 			attribs.colStretch = True
 		elif col == 1:
 			attribs.colWidth = 30
-
+		elif col == 2:
+			attribs.colWidth = 26
 
 	def onInitTable(self, attribs: 'ListAttributes'):
 		attribs.rowHeight = 26
@@ -334,6 +363,18 @@ class Palette:
 		attribs.fontFace = 'Roboto'
 		attribs.fontSizeX = 18
 		attribs.textJustify = JustifyType.CENTERLEFT
+
+	def _setButtonHighlight(self, row: int, col: int, highlight: bool):
+		if row < 0 or col < 0:
+			return
+		attribs = self._listComp.cellAttribs[row, col]
+		if not attribs:
+			return
+		if highlight:
+			color = ipar.listConfig.Buttonrolloverbgcolorr, ipar.listConfig.Buttonrolloverbgcolorg, ipar.listConfig.Buttonrolloverbgcolorb, 1
+		else:
+			color = ipar.listConfig.Buttonbgcolorr, ipar.listConfig.Buttonbgcolorg, ipar.listConfig.Buttonbgcolorb, 1
+		attribs.bgColor = color
 
 	def _setRowHighlight(self, row: int, selected: bool):
 		if row < 0:
@@ -344,30 +385,46 @@ class Palette:
 			color = 0, 0, 0, 0
 		listComp = self._listComp
 		rowAttribs = listComp.rowAttribs[row]
-		rowAttribs.topBorderInColor = color
-		rowAttribs.bottomBorderInColor = color
+		if rowAttribs:
+			rowAttribs.topBorderOutColor = color
+			rowAttribs.bottomBorderOutColor = color
 		cellAttribs = listComp.cellAttribs[row, 0]
-		cellAttribs.leftBorderInColor = color
-		cellAttribs = listComp.cellAttribs[row, 1]
-		cellAttribs.rightBorderInColor = color
+		if cellAttribs:
+			cellAttribs.leftBorderInColor = color
+		cellAttribs = listComp.cellAttribs[row, 2 if self._develMode else 1]
+		if cellAttribs:
+			cellAttribs.rightBorderOutColor = color
 
 	def onRollover(
 			self,
-			row: int, col: int, coords: 'XYUVTuple',
-			prevRow: int, prevCol: int, prevCoords: 'XYUVTuple'):
+			row: int, col: int,
+			prevRow: int, prevCol: int):
+		# note for performance: this gets called frequently as the mouse moves even within a single cell
+		if row == prevRow and col == prevCol:
+			return
 		if row >= 0:
-			self._selectItem(self.itemLibrary.itemForRow(row))
+			item = self.itemLibrary.itemForRow(row)
+			self._selectItem(item)
+			if col == 2 and isinstance(item, _OpItem):
+				self._setButtonHighlight(row, col, True)
+		if prevRow >= 0 and prevCol == 2:
+			item = self.itemLibrary.itemForRow(prevRow)
+			if isinstance(item, _OpItem):
+				self._setButtonHighlight(prevRow, prevCol, False)
 
 	def onSelect(
 			self,
-			startRow: int, startCol: int, startCoords: 'XYUVTuple',
-			endRow: int, endCol: int, endCoords: 'XYUVTuple',
-			start, end):
+			startRow: int, startCol: int,
+			endRow: int, endCol: int,
+			start: bool, end: bool):
 		item = self.itemLibrary.itemForRow(endRow)
-		print(self.ownerComp, f'SELECT startRC: {startRow},{startCol}, endRC: {endRow},{endCol}, start: {start}, end: {end} \n{item}')
+		# print(self.ownerComp, f'SELECT startRC: {startRow},{startCol}, endRC: {endRow},{endCol}, start: {start}, end: {end} \n{item}')
 		self._selectItem(item)
 		if end:
-			self.createSelectedItem()
+			if endCol == 2 and self._develMode:
+				self.editSelectedItem()
+			else:
+				self.createSelectedItem()
 
 	def onRadio(self, row: int, col: int, prevRow: int, prevCol: int):
 		pass

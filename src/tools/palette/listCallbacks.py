@@ -82,10 +82,10 @@ def onInitTable(comp, attribs):
 #   v
 
 def onRollover(comp, row, col, coords, prevRow, prevCol, prevCoords):
-	ext.palette.onRollover(row, col, coords, prevRow, prevCol, prevCoords)
+	ext.palette.onRollover(row, col, prevRow, prevCol)
 
 def onSelect(comp, startRow, startCol, startCoords, endRow, endCol, endCoords, start, end):
-	ext.palette.onSelect(startRow, startCol, startCoords, endRow, endCol, endCoords, start, end)
+	ext.palette.onSelect(startRow, startCol, endRow, endCol, start, end)
 
 def onRadio(comp, row, col, prevRow, prevCol):
 	ext.palette.onRadio(row, col, prevRow, prevCol)
