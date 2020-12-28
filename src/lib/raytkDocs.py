@@ -84,13 +84,17 @@ class InputHelp:
 	name: Optional[str] = None
 	label: Optional[str] = None
 	summary: Optional[str] = None
+	required: bool = False
 
-	def formatMarkdownListItem(self, includeLabel=False):
+	def formatMarkdownListItem(self, forBuild=False):
 		text = f'* `{self.name}`'
-		if includeLabel and self.label:
+		if forBuild and self.label:
 			text += f' *{self.label}*'
+		text += ': '
+		if forBuild and self.required:
+			text += ' **(Required)**'
 		if self.summary:
-			text += f': {self.summary}'
+			text += f' {self.summary}'
 		return text
 
 	@classmethod
@@ -111,6 +115,7 @@ class InputHelp:
 					inHelp.label = p.eval()
 				except Exception:
 					pass
+		inHelp.required = inputHandler.par.Required.eval()
 		return inHelp
 
 @dataclass
@@ -234,7 +239,7 @@ Category: {ropInfo.categoryName}
 			parts += [
 				'## Inputs',
 				'\n'.join([
-					inHelp.formatMarkdownListItem(includeLabel=True)
+					inHelp.formatMarkdownListItem(forBuild=True)
 					for inHelp in self.inputs
 				])
 			]
@@ -479,6 +484,7 @@ class OpDocManager:
 					inHelp.name = extractedHelp.name
 				if extractedHelp.label and not inHelp.label:
 					inHelp.label = extractedHelp.label
+				inHelp.required = extractedHelp.required
 			else:
 				inHelps.append(extractedHelp)
 

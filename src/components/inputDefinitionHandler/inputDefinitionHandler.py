@@ -73,4 +73,6 @@ def buildValidationErrors(dat: 'DAT', inputDef: 'DAT'):
 			dat.appendRow(['path', 'level', 'message'])
 		dat.appendRow([parent().path, 'error', msg])
 
+	if parent().par.Required and inputDef.numRows < 2:
+		_addError('Required input is missing')
 	_checkTableTypes(inputDef, _addError, ignoreEmpty=True)
