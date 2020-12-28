@@ -101,6 +101,8 @@ def buildOpParamsTable(dat: 'DAT'):
 		])
 		for tuplet in info.rop.customTuplets:
 			par = tuplet[0]
+			if par.name in ('Inspect', 'Help'):
+				continue
 			cell = dat[info.path, par.tupletName]
 			if cell is None:
 				dat.appendCol([par.tupletName])
