@@ -305,9 +305,11 @@ class Palette:
 			return op(path)
 		context = RaytkContext()
 		toolkit = context.toolkit()
+		if toolkit and toolkit.path == '/raytk':
+			return op(path)
 		if not toolkit:
-			return
-		return toolkit.op(path.replace('/raytk/', '', 1))
+			return op(path)
+		return op(path.replace('/raytk/', f'/{toolkit.path}/', 1))
 
 	def onInitCell(self, row: int, col: int, attribs: 'ListAttributes'):
 		item = self.itemLibrary.itemForRow(row)
