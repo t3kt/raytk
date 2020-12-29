@@ -129,6 +129,7 @@ class ROPHelp:
 	inputs: List[InputHelp] = field(default_factory=list)
 	isAlpha: bool = False
 	isBeta: bool = False
+	isDeprecated: bool = False
 
 	@classmethod
 	def extractFromROP(cls, rop: 'COMP'):
@@ -158,6 +159,7 @@ class ROPHelp:
 			category=info.categoryName,
 			isAlpha=info.isAlpha,
 			isBeta=info.isBeta,
+			isDeprecated=info.isDeprecated,
 		)
 
 	def formatAsMarkdown(self, headerOffset: int = 0):
@@ -169,6 +171,8 @@ class ROPHelp:
 			parts.append('alpha\n{: .label .status-alpha }')
 		elif self.isBeta:
 			parts.append('beta\n{: .label .status-beta }')
+		elif self.isDeprecated:
+			parts.append('deprecated\n{: .label .status-deprecated }')
 		parts += [
 			self.summary,
 			self.detail,
@@ -251,6 +255,8 @@ Category: {ropInfo.categoryName}
 			text += ' *alpha*{: .label .status-alpha }'
 		elif self.isBeta:
 			text += ' *beta*{: .label .status-beta }'
+		elif self.isDeprecated:
+			text += ' *deprecated*{: .label .status-deprecated }'
 		return text
 
 	def replaceOrAddParam(self, name: str, paramHelp: 'Optional[ROPParamHelp]'):
