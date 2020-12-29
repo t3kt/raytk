@@ -1,6 +1,6 @@
 from pathlib import Path
 from typing import Callable
-from raytkUtil import detachTox, CategoryInfo, ROPInfo, getToolkit, stripFirstMarkdownHeader
+from raytkUtil import detachTox, CategoryInfo, ROPInfo, getToolkit, stripFirstMarkdownHeader, RaytkTags
 from raytkDocs import CategoryHelp, ROPHelp, OpDocManager
 
 # noinspection PyUnreachableCode
@@ -80,6 +80,11 @@ class BuildContext:
 		for o in os:
 			self.log(f'Locking {o}')
 			o.lock = True
+
+	def lockBuildLockOps(self, comp: 'COMP'):
+		self.log(f'Locking build locked ops in {comp}')
+		toLock = comp.findChildren(tags=[RaytkTags.buildLock.name])
+		self.lockOps(toLock)
 
 	@staticmethod
 	def queueAction(action: Callable, *args):

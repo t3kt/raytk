@@ -141,6 +141,10 @@ class Palette:
 		self.isOpen.val = False
 		ipar.uiState.Pinopen = False
 
+	def resetState(self):
+		self._resetCloseTimer()
+		self._resetState()
+
 	def onCloseTimerComplete(self):
 		if ipar.uiState.Pinopen:
 			self._resetCloseTimer()

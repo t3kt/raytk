@@ -15,6 +15,11 @@ def runStage(stage: int):
 	elif stage == 1:
 		context.runBuildScript(
 			op('inspector/BUILD'),
+			thenRun=runStage,
+			runArgs=[stage + 1])
+	elif stage == 2:
+		context.runBuildScript(
+			op('palette/BUILD'),
 			thenRun=context.finishTask,
 			runArgs=[])
 
