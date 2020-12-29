@@ -26,5 +26,5 @@ field to a material, with no other features.
 
 ## Inputs
 
-* `definition_in`: 
-* `color_definition_in`: 
+* `definition_in`:  **(Required)**
+* `color_definition_in`:  **(Required)**

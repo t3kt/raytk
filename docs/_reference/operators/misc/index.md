@@ -11,5 +11,5 @@ permalink: /reference/operators/misc/
 
 Assorted operators that don't fit into other categories.
 
-* [`customFilter`](customFilter/) - 
-* [`customGen`](customGen/) - 
+* [`customFilter`](customFilter/) -  *deprecated*{: .label .status-deprecated }
+* [`customGen`](customGen/) -  *deprecated*{: .label .status-deprecated }

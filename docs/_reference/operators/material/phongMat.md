@@ -29,5 +29,5 @@ Material that uses phong shading.
 
 ## Inputs
 
-* `definition_in`: 
+* `definition_in`:  **(Required)**
 * `shadow_definition_in` *Shadow Definition*:  Used to customize the behavior of shadows for the material. Only used if `Enableshadow` is on.

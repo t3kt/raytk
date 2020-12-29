@@ -23,6 +23,6 @@ Category: function
 
 ## Inputs
 
-* `definition_in`: 
-* `definition_in_2`: 
+* `definition_in`:  **(Required)**
+* `definition_in_2`:  **(Required)**
 * `mix_definition_in` *mix definition in*: 

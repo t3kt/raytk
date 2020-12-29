@@ -29,4 +29,4 @@ the output.
 
 ## Inputs
 
-* `definition_in`: 
+* `definition_in`:  **(Required)**

@@ -31,4 +31,4 @@ Category: filter
 
 ## Inputs
 
-* `definition_in`: 
+* `definition_in`:  **(Required)**

@@ -67,4 +67,4 @@ This can be used to create KIFS fractals (kaleidoscopic iterated function system
 
 ## Inputs
 
-* `definition_in`: 
+* `definition_in`:  **(Required)**

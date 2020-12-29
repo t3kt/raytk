@@ -42,4 +42,4 @@ Note that this runs its input multiple times, which can lead to performance issu
 
 ## Inputs
 
-* `definition_in`: 
+* `definition_in`:  **(Required)**

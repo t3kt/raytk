@@ -29,5 +29,5 @@ If a field is used, the field values are added to the Translate XYZ parameter.
 
 ## Inputs
 
-* `definition_in`: 
+* `definition_in`:  **(Required)**
 * `translate_field_definition_in` *Translate Field*:  If provided, this field is used to control the amount of translation at each point in space. If the field returns a float (or SDF), the `Translate` parameter is *multiplied* by that value. If it returns a vec4, the parts are *added* to the `Translate` parameter parts.

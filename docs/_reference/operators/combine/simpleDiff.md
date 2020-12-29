@@ -27,5 +27,5 @@ Produces the area of the first shape minus any areas overlapped by the second (o
 
 ## Inputs
 
-* `definition_in_1`:  The first SDF, which has the second removed from it (unless `Swaporder` is used).
-* `definition_in_2`:  The second SDF, which is removed from the first (unless `Swaporder` is used).
+* `definition_in_1`:  **(Required)** The first SDF, which has the second removed from it (unless `Swaporder` is used).
+* `definition_in_2`:  **(Required)** The second SDF, which is removed from the first (unless `Swaporder` is used).

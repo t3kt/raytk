@@ -29,4 +29,4 @@ A vector field that maps an input field to values from a range of colors.
 
 ## Inputs
 
-* `definition_in`: 
+* `definition_in`:  **(Required)**

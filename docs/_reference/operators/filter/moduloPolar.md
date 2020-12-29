@@ -52,4 +52,4 @@ Repeats space radially, like a kaleidoscope.
 
 ## Inputs
 
-* `definition_in`: 
+* `definition_in`:  **(Required)**

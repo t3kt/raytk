@@ -29,5 +29,5 @@ See [example](https://www.shadertoy.com/view/Mt3BDj).
 
 ## Inputs
 
-* `definition_in`: 
+* `definition_in`:  **(Required)**
 * `amount_field_definition_in`: 

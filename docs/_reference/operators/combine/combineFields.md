@@ -34,5 +34,5 @@ Combines float or vector fields using one of several mathematical operations.
 
 ## Inputs
 
-* `definition_in_1`: 
-* `definition_in_2`: 
+* `definition_in_1`:  **(Required)**
+* `definition_in_2`:  **(Required)**

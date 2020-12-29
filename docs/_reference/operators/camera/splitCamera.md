@@ -31,7 +31,7 @@ Important note that when the horizontal and vertical layouts currently only use 
 
 ## Inputs
 
-* `definition_in_1` *Camera Input 1*: 
+* `definition_in_1` *Camera Input 1*:  **(Required)**
 * `definition_in_2` *Camera Input 2*: 
 * `definition_in_3` *Camera Input 3*:  This is only used by the grid layout.
 * `definition_in_4` *Camera Input 4*:  This is only used by the grid layout.

@@ -32,4 +32,4 @@ Mirror coordinates across two axes and the diagonals.
 
 ## Inputs
 
-* `definition_in`: 
+* `definition_in`:  **(Required)**

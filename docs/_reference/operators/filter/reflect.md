@@ -38,5 +38,5 @@ Can optionally expose which side of the plane a point is on as an iteration valu
 
 ## Inputs
 
-* `definition_in`: 
-* `definition_in_1`: 
+* `definition_in`:  **(Required)**
+* `blend_func_definition_in`: 

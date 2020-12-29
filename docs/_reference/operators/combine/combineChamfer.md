@@ -30,6 +30,6 @@ Chamfer SDF combine, producing a flat surface at a 45 degree angle along the ble
 
 ## Inputs
 
-* `definition_in_1`: 
-* `definition_in_2`: 
+* `definition_in_1`:  **(Required)**
+* `definition_in_2`:  **(Required)**
 * `radius_definition_in` *Radius Field*:  Value field that can be used to vary the radius of the blend region at different points in space, by *multiplying* the value of the `Radius` parameter.
