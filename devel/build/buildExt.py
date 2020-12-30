@@ -19,6 +19,7 @@ class BuildManager:
 	def OnInit(self):
 		field = self.ownerComp.op('docSiteFolder_field')
 		field.par.Value0 = self.GetDefaultDocSitePath() or ''
+		self.ClearLog()
 
 	@staticmethod
 	def GetToolkitVersion():
