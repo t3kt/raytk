@@ -87,7 +87,7 @@ class ROPParamHelp:
 
 	def writeFrontMatterData(self, writer: '_IndentedWriter'):
 		with writer.block(f'- name: {self.name}'):
-			writer.writeField('label', self.label)
+			writer.writeField('label', self.label or self.name)
 			writer.writeMultiLineStringField('summary', self.summary)
 			if self.menuOptions:
 				with writer.block('menuOptions:'):
@@ -135,7 +135,7 @@ class InputHelp:
 
 	def writeFrontMatterData(self, writer: '_IndentedWriter'):
 		with writer.block(f'- name: {self.name}'):
-			writer.writeField('label', self.label)
+			writer.writeField('label', self.label or self.name)
 			writer.writeField('required', self.required)
 			writer.writeMultiLineStringField('summary', self.summary)
 
@@ -236,7 +236,7 @@ class ROPHelp:
 		self.writeFrontMatterData(writer)
 		frontMatterData = writer.getValue()
 		header = f'''---
-layout: page
+layout: operator
 title: {ropInfo.shortName}
 parent: {ropInfo.categoryName.capitalize()} Operators
 grand_parent: Operators
@@ -256,22 +256,6 @@ Category: {ropInfo.categoryName}
 			self.summary,
 			self.detail,
 		]
-		if self.parameters:
-			parts += [
-				'## Parameters',
-				'\n'.join([
-					parHelp.formatMarkdownListItem(includeLabel=True)
-					for parHelp in self.parameters
-				])
-			]
-		if self.inputs:
-			parts += [
-				'## Inputs',
-				'\n'.join([
-					inHelp.formatMarkdownListItem(forBuild=True)
-					for inHelp in self.inputs
-				])
-			]
 		return _mergeMarkdownChunks(parts)
 
 	def writeFrontMatterData(self, writer: '_IndentedWriter'):
