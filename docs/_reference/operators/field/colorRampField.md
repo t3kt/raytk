@@ -1,11 +1,39 @@
 ---
-layout: page
+layout: operator
 title: colorRampField
 parent: Field Operators
 grand_parent: Operators
 permalink: /reference/operators/field/colorRampField
 redirect_from:
   - /reference/opType/raytk.operators.field.colorRampField/
+op:
+  name: colorRampField
+  summary: |
+    A vector field that maps an input field to values from a range of colors.
+  opType: raytk.operators.field.colorRampField
+  category: field
+  inputs:
+    - name: definition_in
+      label: definition_in
+      required: true
+  parameters:
+    - name: Enable
+      label: Enable
+    - name: Color1
+      label: Color 1
+    - name: Color2
+      label: Color 2
+    - name: Alpha1
+      label: Alpha 1
+    - name: Alpha2
+      label: Alpha 2
+    - name: Clamprange
+      label: Clamp Range
+    - name: Inspect
+      label: Inspect
+    - name: Help
+      label: Help
+
 ---
 
 # colorRampField
@@ -15,18 +43,3 @@ Category: field
 
 
 A vector field that maps an input field to values from a range of colors.
-
-## Parameters
-
-* `Enable` *Enable*
-* `Color1` *Color 1*
-* `Color2` *Color 2*
-* `Alpha1` *Alpha 1*
-* `Alpha2` *Alpha 2*
-* `Clamprange` *Clamp Range*
-* `Inspect` *Inspect*
-* `Help` *Help*
-
-## Inputs
-
-* `definition_in`:  **(Required)**

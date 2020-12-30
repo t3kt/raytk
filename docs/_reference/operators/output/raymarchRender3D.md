@@ -1,11 +1,156 @@
 ---
-layout: page
+layout: operator
 title: raymarchRender3D
 parent: Output Operators
 grand_parent: Operators
 permalink: /reference/operators/output/raymarchRender3D
 redirect_from:
   - /reference/opType/raytk.operators.output.raymarchRender3D/
+op:
+  name: raymarchRender3D
+  summary: |
+    Renders a scene using 3D raymarching.
+  opType: raytk.operators.output.raymarchRender3D
+  category: output
+  inputs:
+    - name: definition_in
+      label: SDF Scene
+      required: true
+      summary: |
+        SDF definition the shapes in the scene.
+    - name: camera_definition_in
+      label: Camera
+      required: false
+      summary: |
+        Camera used for render frame.
+    - name: light_definition_in
+      label: Light
+      required: false
+      summary: |
+        Light definition that can be used by supporting materials.
+    - name: rayModifier_definition_in
+      label: Ray Modifier
+      required: false
+      summary: |
+        Advanced feature, not ready for use.
+  parameters:
+    - name: Res
+      label: Resolution
+      summary: |
+        Rendering resolution
+    - name: Antialias
+      label: Anti Alias
+      summary: |
+        Number of antialiasing steps. Increasing this improves render quality but can be costly.
+    - name: Camera
+      label: Camera
+      summary: |
+        Standard TD Camera COMP, used if the `Camera` input isn't connected. This camera is not yet fully functional.
+    - name: Light1
+      label: Light
+      summary: |
+        Standard TD Light COMP, used if the `Light` input isn't connected. Only point lights work, and they don't yet support distance attenuation (though the `pointLight` ROP does).
+    - name: Userenderdepth
+      label: Use Render Depth
+      summary: |
+        Whether to use the provided Render TOP for a base depth. Not ready for use.
+    - name: Overlayrender
+      label: Overlay Render
+      summary: |
+        Whether to mix the provided Render TOP with the scene using depth. Not ready for use.
+    - name: Rendertop
+      label: Render TOP
+      summary: |
+        Connect a Render TOP to mix with the scene based on depth. Not ready for use.
+    - name: Inspect
+      label: Inspect
+    - name: Maxsteps
+      label: Max Steps
+      summary: |
+        Maximum number of marching steps.
+    - name: Surfdist
+      label: Surface Distance
+      summary: |
+        Minimum surface distance. Smaller values increase accuracy at the cost of performance.
+    - name: Maxdist
+      label: Max Distance
+      summary: |
+        Maximum distance. Rays that don't hit anything will stop at this distance. If this is too high, rays that don't hit anything will continue for a long time, causing a performance drain.
+    - name: Nearhitrange
+      label: Near Hit Range
+      summary: |
+        Advanced feature, not ready for use.
+    - name: Timerefop
+      label: Time Reference Operator
+      summary: |
+        COMP to use to determine the time. Only relevant if using a time field.
+    - name: Uselimitbox
+      label: Use Limit Box
+      summary: |
+        Whether to limit the space of the scene to a box, for performance improvements.
+    - name: Limitboxmin
+      label: Limit Box Minimum
+      summary: |
+        Minimum bounds of the scene limit box.
+    - name: Limitboxmax
+      label: Limit Box Maximum
+      summary: |
+        Maximum bounds of the scene limit box.
+    - name: Shaderbuilderconfig
+      label: Shader Builder Config
+      summary: |
+        Advanced configuration for the shader.
+    - name: Enabledepthoutput
+      label: Enable Depth Output
+      summary: |
+        Enables the depth output buffer.
+    - name: Enablesdfoutput
+      label: Enable SDF Output
+      summary: |
+        Enables the SDF data output buffer.
+    - name: Enableworldposoutput
+      label: Enable World Pos Output
+      summary: |
+        Enables the world xyz position output buffer.
+    - name: Enablenormaloutput
+      label: Enable Normal Output
+      summary: |
+        Enables the surface normals output buffer.
+    - name: Enableraydiroutput
+      label: Enable Ray Direction Output
+      summary: |
+        Enables the ray direction output buffer.
+    - name: Enablerayoriginoutput
+      label: Enable Ray Origin Output
+      summary: |
+        Enables the ray origin (camera position) output buffer.
+    - name: Enableorbitoutput
+      label: Enable Orbit Trap Output
+      summary: |
+        Enables the fractal orbit trap output buffer (only supported for certain SDFs).
+    - name: Enablenearhitoutput
+      label: Enable Near Hit Output
+      summary: |
+        Advance feature, not ready for use.
+    - name: Enablestepoutput
+      label: Enable Step Output
+      summary: |
+        Advance feature, not ready for use.
+    - name: Enableiterationoutput
+      label: Enable Iteration Output
+      summary: |
+        Advance feature, not ready for use.
+    - name: Enableobjectidoutput
+      label: Enable Object Id Output
+      summary: |
+        Advance feature, not ready for use.
+    - name: Enabledebugoutput
+      label: Enable Debug Output
+      summary: |
+        Advance feature, not ready for use.
+    - name: Help
+      label: Help
+
 ---
 
 # raymarchRender3D
@@ -15,43 +160,3 @@ Category: output
 
 
 Renders a scene using 3D raymarching.
-
-## Parameters
-
-* `Res` *Resolution*: Rendering resolution
-* `Antialias` *Anti Alias*: Number of antialiasing steps. Increasing this improves render quality but can be costly.
-* `Camera` *Camera*: Standard TD Camera COMP, used if the `Camera` input isn't connected. This camera is not yet fully functional.
-* `Light1` *Light*: Standard TD Light COMP, used if the `Light` input isn't connected. Only point lights work, and they don't yet support distance attenuation (though the `pointLight` ROP does).
-* `Userenderdepth` *Use Render Depth*: Whether to use the provided Render TOP for a base depth. Not ready for use.
-* `Overlayrender` *Overlay Render*: Whether to mix the provided Render TOP with the scene using depth. Not ready for use.
-* `Rendertop` *Render TOP*: Connect a Render TOP to mix with the scene based on depth. Not ready for use.
-* `Inspect` *Inspect*
-* `Maxsteps` *Max Steps*: Maximum number of marching steps.
-* `Surfdist` *Surface Distance*: Minimum surface distance. Smaller values increase accuracy at the cost of performance.
-* `Maxdist` *Max Distance*: Maximum distance. Rays that don't hit anything will stop at this distance. If this is too high, rays that don't hit anything will continue for a long time, causing a performance drain.
-* `Nearhitrange` *Near Hit Range*: Advanced feature, not ready for use.
-* `Timerefop` *Time Reference Operator*: COMP to use to determine the time. Only relevant if using a time field.
-* `Uselimitbox` *Use Limit Box*: Whether to limit the space of the scene to a box, for performance improvements.
-* `Limitboxmin` *Limit Box Minimum*: Minimum bounds of the scene limit box.
-* `Limitboxmax` *Limit Box Maximum*: Maximum bounds of the scene limit box.
-* `Shaderbuilderconfig` *Shader Builder Config*: Advanced configuration for the shader.
-* `Enabledepthoutput` *Enable Depth Output*: Enables the depth output buffer.
-* `Enablesdfoutput` *Enable SDF Output*: Enables the SDF data output buffer.
-* `Enableworldposoutput` *Enable World Pos Output*: Enables the world xyz position output buffer.
-* `Enablenormaloutput` *Enable Normal Output*: Enables the surface normals output buffer.
-* `Enableraydiroutput` *Enable Ray Direction Output*: Enables the ray direction output buffer.
-* `Enablerayoriginoutput` *Enable Ray Origin Output*: Enables the ray origin (camera position) output buffer.
-* `Enableorbitoutput` *Enable Orbit Trap Output*: Enables the fractal orbit trap output buffer (only supported for certain SDFs).
-* `Enablenearhitoutput` *Enable Near Hit Output*: Advance feature, not ready for use.
-* `Enablestepoutput` *Enable Step Output*: Advance feature, not ready for use.
-* `Enableiterationoutput` *Enable Iteration Output*: Advance feature, not ready for use.
-* `Enableobjectidoutput` *Enable Object Id Output*: Advance feature, not ready for use.
-* `Enabledebugoutput` *Enable Debug Output*: Advance feature, not ready for use.
-* `Help` *Help*
-
-## Inputs
-
-* `definition_in` *SDF Scene*:  **(Required)** SDF definition the shapes in the scene.
-* `camera_definition_in` *Camera*:  Camera used for render frame.
-* `light_definition_in` *Light*:  Light definition that can be used by supporting materials.
-* `rayModifier_definition_in` *Ray Modifier*:  Advanced feature, not ready for use.

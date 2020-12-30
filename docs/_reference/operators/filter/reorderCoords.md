@@ -1,37 +1,57 @@
 ---
-layout: page
+layout: operator
 title: reorderCoords
 parent: Filter Operators
 grand_parent: Operators
 permalink: /reference/operators/filter/reorderCoords
 redirect_from:
   - /reference/opType/raytk.operators.filter.reorderCoords/
+op:
+  name: reorderCoords
+  opType: raytk.operators.filter.reorderCoords
+  category: filter
+  inputs:
+    - name: definition_in
+      label: definition_in
+      required: true
+  parameters:
+    - name: Enable
+      label: Enable
+    - name: Axisx
+      label: X Axis
+      menuOptions:
+        - name: x
+          label: X
+        - name: y
+          label: Y
+        - name: z
+          label: Z
+    - name: Axisy
+      label: Y Axis
+      menuOptions:
+        - name: x
+          label: X
+        - name: y
+          label: Y
+        - name: z
+          label: Z
+    - name: Axisz
+      label: Z Axis
+      menuOptions:
+        - name: x
+          label: X
+        - name: y
+          label: Y
+        - name: z
+          label: Z
+    - name: Inspect
+      label: Inspect
+    - name: Help
+      label: Help
+
 ---
 
 # reorderCoords
 
 Category: filter
 
-
-
-## Parameters
-
-* `Enable` *Enable*
-* `Axisx` *X Axis*
-  * `x` *X*
-  * `y` *Y*
-  * `z` *Z*
-* `Axisy` *Y Axis*
-  * `x` *X*
-  * `y` *Y*
-  * `z` *Z*
-* `Axisz` *Z Axis*
-  * `x` *X*
-  * `y` *Y*
-  * `z` *Z*
-* `Inspect` *Inspect*
-* `Help` *Help*
-
-## Inputs
-
-* `definition_in`:  **(Required)**

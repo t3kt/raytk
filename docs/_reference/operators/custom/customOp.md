@@ -1,69 +1,125 @@
 ---
-layout: page
+layout: operator
 title: customOp
 parent: Custom Operators
 grand_parent: Operators
 permalink: /reference/operators/custom/customOp
 redirect_from:
   - /reference/opType/raytk.operators.custom.customOp/
+op:
+  name: customOp
+  opType: raytk.operators.custom.customOp
+  category: custom
+  inputs:
+    - name: definition_in
+      label: definition_in
+      required: false
+    - name: definition_in1
+      label: definition_in1
+      required: false
+    - name: definition_in2
+      label: definition_in2
+      required: false
+    - name: definition_in3
+      label: definition_in3
+      required: false
+  parameters:
+    - name: Enable
+      label: Enable
+    - name: Codeheader
+      label: Code
+    - name: Opglobals
+      label: Op Globals
+    - name: Initcode
+      label: Init Code
+    - name: Function
+      label: Function
+    - name: Materialcode
+      label: Material Code
+    - name: Settingsheader
+      label: Settings
+    - name: Macrotable
+      label: Macro Table
+    - name: Buffertable
+      label: Buffer Table
+    - name: Texturetable
+      label: Texture Table
+    - name: Librarynames
+      label: Library Names
+      menuOptions:
+        - name: hg_sdf
+          label: hg_sdf
+        - name: raytkCommon
+          label: raytkCommon
+        - name: raytkSdf
+          label: raytkSdf
+        - name: raytkMaterial
+          label: raytkMaterial
+    - name: Typesheader
+      label: Types
+    - name: Coordtype
+      label: Coord Type
+      menuOptions:
+        - name: useinput
+          label: Use Input
+        - name: float
+          label: 1D
+        - name: vec3
+          label: 3D
+        - name: vec2
+          label: 2D
+    - name: Returntype
+      label: Return Type
+      menuOptions:
+        - name: useinput
+          label: Use Input
+        - name: Sdf
+          label: SDF Result
+        - name: float
+          label: Float
+        - name: vec4
+          label: Vector4
+        - name: Ray
+          label: Ray
+        - name: Light
+          label: Light
+    - name: Contexttype
+      label: Context Type
+      menuOptions:
+        - name: useinput
+          label: Use Input
+        - name: none
+          label: None
+        - name: Context
+          label: Context
+        - name: MaterialContext
+          label: Material Context
+        - name: CameraContext
+          label: Camera Context
+        - name: LightContext
+          label: Light Context
+    - name: Inspect
+      label: Inspect
+    - name: Help
+      label: Help
+    - name: Createopglobals
+      label: Create Op Globals
+    - name: Createinit
+      label: Create Init
+    - name: Createfunction
+      label: Create Function
+    - name: Creatematerial
+      label: Create Material
+    - name: Createmissingparams
+      label: Create Missing Params
+    - name: Removeunusedparams
+      label: Remove Unused Params
+    - name: Autocreatemissingparams
+      label: Auto Create Missing Params
+
 ---
 
 # customOp
 
 Category: custom
 
-
-
-## Parameters
-
-* `Enable` *Enable*
-* `Codeheader` *Code*
-* `Opglobals` *Op Globals*
-* `Initcode` *Init Code*
-* `Function` *Function*
-* `Materialcode` *Material Code*
-* `Settingsheader` *Settings*
-* `Macrotable` *Macro Table*
-* `Buffertable` *Buffer Table*
-* `Texturetable` *Texture Table*
-* `Librarynames` *Library Names*
-  * `hg_sdf` *hg_sdf*
-  * `raytkCommon` *raytkCommon*
-  * `raytkSdf` *raytkSdf*
-  * `raytkMaterial` *raytkMaterial*
-* `Typesheader` *Types*
-* `Coordtype` *Coord Type*
-  * `useinput` *Use Input*
-  * `float` *1D*
-  * `vec3` *3D*
-  * `vec2` *2D*
-* `Returntype` *Return Type*
-  * `useinput` *Use Input*
-  * `Sdf` *SDF Result*
-  * `float` *Float*
-  * `vec4` *Vector4*
-  * `Ray` *Ray*
-  * `Light` *Light*
-* `Contexttype` *Context Type*
-  * `useinput` *Use Input*
-  * `none` *None*
-  * `Context` *Context*
-  * `MaterialContext` *Material Context*
-  * `CameraContext` *Camera Context*
-  * `LightContext` *Light Context*
-* `Inspect` *Inspect*
-* `Help` *Help*
-* `Createopglobals` *Create Op Globals*
-* `Createinit` *Create Init*
-* `Createfunction` *Create Function*
-* `Creatematerial` *Create Material*
-* `Createmissingparams` *Create Missing Params*
-* `Removeunusedparams` *Remove Unused Params*
-* `Autocreatemissingparams` *Auto Create Missing Params*
-
-## Inputs
-
-* `definition_in`: 
-* `definition_in1`: 
-* `definition_in2`: 
-* `definition_in3`: 

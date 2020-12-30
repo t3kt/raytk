@@ -1,11 +1,116 @@
 ---
-layout: page
+layout: operator
 title: iteratedTransform
 parent: Filter Operators
 grand_parent: Operators
 permalink: /reference/operators/filter/iteratedTransform
 redirect_from:
   - /reference/opType/raytk.operators.filter.iteratedTransform/
+op:
+  name: iteratedTransform
+  summary: |
+    Performs a transform multiple times, optionally reflecting across axes in between the steps.
+  detail: |
+    This can be used to create KIFS fractals (kaleidoscopic iterated function systems).
+  opType: raytk.operators.filter.iteratedTransform
+  category: filter
+  inputs:
+    - name: definition_in
+      label: definition_in
+      required: true
+  parameters:
+    - name: Enable
+      label: Enable
+    - name: Iterations
+      label: Iterations
+    - name: Reflectmode
+      label: Reflect Mode
+      menuOptions:
+        - name: none
+          label: None
+        - name: xyz
+          label: XYZ
+        - name: x
+          label: X
+        - name: y
+          label: Y
+        - name: z
+          label: Z
+        - name: xy
+          label: XY
+        - name: yz
+          label: YZ
+        - name: zx
+          label: ZX
+    - name: Enabletranslate
+      label: Enable Translate
+    - name: Enablerotate
+      label: Enable Rotate
+    - name: Enablescale
+      label: Enable Scale
+    - name: Enablepivot
+      label: Enable Pivot
+    - name: Translate
+      label: Translate
+    - name: Rotate
+      label: Rotate XYZ
+    - name: Scale
+      label: Scale
+    - name: Pivot
+      label: Pivot
+    - name: Transformorder
+      label: Transform Order
+      menuOptions:
+        - name: srt
+          label: Scale Rotate Translate
+        - name: str
+          label: Scale Translate Rotate
+        - name: rst
+          label: Rotate Scale Translate
+        - name: rts
+          label: Rotate Translate Scale
+        - name: tsr
+          label: Translate Scale Rotate
+        - name: trs
+          label: Translate Rotate Scale
+    - name: Rotateorder
+      label: Rotate Order
+      menuOptions:
+        - name: xyz
+          label: Rx Ry Rz
+        - name: xzy
+          label: Rx Rz Ry
+        - name: yxz
+          label: Ry Rx Rz
+        - name: yzx
+          label: Ry Rz Rx
+        - name: zxy
+          label: Rz Rx Ry
+        - name: zyx
+          label: Rz Ry Rx
+    - name: Inspect
+      label: Inspect
+    - name: Help
+      label: Help
+    - name: Customcode
+      label: Custom Code
+    - name: Floatparam1
+      label: Float Param 1
+    - name: Floatparam2
+      label: Float Param 2
+    - name: Floatparam3
+      label: Float Param 3
+    - name: Floatparam4
+      label: Float Param 4
+    - name: Vecparam1
+      label: Vec Param 1
+    - name: Vecparam2
+      label: Vec Param 2
+    - name: Vecparam3
+      label: Vec Param 3
+    - name: Vecparam4
+      label: Vec Param 4
+
 ---
 
 # iteratedTransform
@@ -17,54 +122,3 @@ Category: filter
 Performs a transform multiple times, optionally reflecting across axes in between the steps.
 
 This can be used to create KIFS fractals (kaleidoscopic iterated function systems).
-
-## Parameters
-
-* `Enable` *Enable*
-* `Iterations` *Iterations*
-* `Reflectmode` *Reflect Mode*
-  * `none` *None*
-  * `xyz` *XYZ*
-  * `x` *X*
-  * `y` *Y*
-  * `z` *Z*
-  * `xy` *XY*
-  * `yz` *YZ*
-  * `zx` *ZX*
-* `Enabletranslate` *Enable Translate*
-* `Enablerotate` *Enable Rotate*
-* `Enablescale` *Enable Scale*
-* `Enablepivot` *Enable Pivot*
-* `Translate` *Translate*
-* `Rotate` *Rotate XYZ*
-* `Scale` *Scale*
-* `Pivot` *Pivot*
-* `Transformorder` *Transform Order*
-  * `srt` *Scale Rotate Translate*
-  * `str` *Scale Translate Rotate*
-  * `rst` *Rotate Scale Translate*
-  * `rts` *Rotate Translate Scale*
-  * `tsr` *Translate Scale Rotate*
-  * `trs` *Translate Rotate Scale*
-* `Rotateorder` *Rotate Order*
-  * `xyz` *Rx Ry Rz*
-  * `xzy` *Rx Rz Ry*
-  * `yxz` *Ry Rx Rz*
-  * `yzx` *Ry Rz Rx*
-  * `zxy` *Rz Rx Ry*
-  * `zyx` *Rz Ry Rx*
-* `Inspect` *Inspect*
-* `Help` *Help*
-* `Customcode` *Custom Code*
-* `Floatparam1` *Float Param 1*
-* `Floatparam2` *Float Param 2*
-* `Floatparam3` *Float Param 3*
-* `Floatparam4` *Float Param 4*
-* `Vecparam1` *Vec Param 1*
-* `Vecparam2` *Vec Param 2*
-* `Vecparam3` *Vec Param 3*
-* `Vecparam4` *Vec Param 4*
-
-## Inputs
-
-* `definition_in`:  **(Required)**
