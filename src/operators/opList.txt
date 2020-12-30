@@ -108,9 +108,9 @@ sampledPointMat	/raytk/operators/material/sampledPointMat	/raytk/operators/mater
 customFilter	/raytk/operators/misc/customFilter	/raytk/operators/misc	raytkDeprecated raytkOP	misc	misc/customFilter	raytk.operators.misc.customFilter	4	deprecated
 customGen	/raytk/operators/misc/customGen	/raytk/operators/misc	raytkDeprecated raytkOP	misc	misc/customGen	raytk.operators.misc.customGen	5	deprecated
 customRender	/raytk/operators/output/customRender	/raytk/operators/output	raytkOP raytkOutput	output	output/customRender	raytk.operators.output.customRender	6	alpha
-fieldRender	/raytk/operators/output/fieldRender	/raytk/operators/output	raytkComp	output	output/fieldRender	raytk.operators.output.fieldRender	2	alpha
+fieldRender	/raytk/operators/output/fieldRender	/raytk/operators/output	raytkComp	output	output/fieldRender	raytk.operators.output.fieldRender	3	alpha
 functionGraphRender	/raytk/operators/output/functionGraphRender	/raytk/operators/output	raytkOP raytkOutput	output	output/functionGraphRender	raytk.operators.output.functionGraphRender	9	
-pointMapRender	/raytk/operators/output/pointMapRender	/raytk/operators/output	raytkOP raytkOutput	output	output/pointMapRender	raytk.operators.output.pointMapRender	22	
+pointMapRender	/raytk/operators/output/pointMapRender	/raytk/operators/output	raytkOP raytkOutput	output	output/pointMapRender	raytk.operators.output.pointMapRender	23	beta
 raymarchRender3D	/raytk/operators/output/raymarchRender3D	/raytk/operators/output	raytkOP raytkOutput	output	output/raymarchRender3D	raytk.operators.output.raymarchRender3D	53	
 render2D	/raytk/operators/output/render2D	/raytk/operators/output	raytkOP raytkOutput	output	output/render2D	raytk.operators.output.render2D	21	
 renderSelect	/raytk/operators/output/renderSelect	/raytk/operators/output	raytkComp	output	output/renderSelect	raytk.operators.output.renderSelect	0	

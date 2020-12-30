@@ -1,11 +1,11 @@
-#ifdef THIS_RETURN_TYPE_Sdf
-Sdf map(vec3 p) {
+#if defined(THIS_RETURN_TYPE_Sdf)
+Sdf map(THIS_CoordT p) {
 	Sdf res = thismap(p, createDefaultContext());
 	res.x *= 0.5;
 	return res;
 }
 
-vec4 getColor(Sdf res, vec3 p) {
+vec4 getColor(Sdf res, THIS_CoordT p) {
 	int m = int(res.material);
 	vec4 col;
 	if (res.x > 0) {
@@ -35,7 +35,13 @@ void main() {
 		#endif
 		return;
 	}
+	#if defined(THIS_COORD_TYPE_vec3)
 	vec3 p = posAndExists.xyz;
+	#elif defined(THIS_COORD_TYPE_vec2)
+	vec2 p = posAndExists.xy;
+	#else
+	#error invalidCoordType
+	#endif
 	Sdf res = map(p);
 
 	#ifdef OUTPUT_COLOR
@@ -50,9 +56,7 @@ void main() {
 		res.interpolant);
 	#endif
 }
-#endif
-
-#if defined(THIS_RETURN_TYPE_vec4) || defined(THIS_RETURN_TYPE_float)
+#elif defined(THIS_RETURN_TYPE_vec4) || defined(THIS_RETURN_TYPE_float)
 void main() {
 	#ifdef RAYTK_HAS_INIT
 	init();
@@ -67,9 +71,18 @@ void main() {
 		#endif
 		return;
 	}
+	#if defined(THIS_COORD_TYPE_vec3)
 	vec3 p = posAndExists.xyz;
+	#elif defined(THIS_COORD_TYPE_vec2)
+	vec2 p = posAndExists.xy;
+	#else
+	#error invalidCoordType
+	#endif
 	#ifdef OUTPUT_VALUE
 	valueOut = vec4(thismap(p, createDefaultContext()));
 	#endif
 }
+
+#else
+	#error invalidReturnType
 #endif
