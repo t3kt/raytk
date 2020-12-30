@@ -1,6 +1,7 @@
 from dataclasses import dataclass, field
 import re
 from typing import Dict, Iterable, List, Optional, Tuple
+from io import StringIO
 
 from raytkUtil import ROPInfo, stripFirstMarkdownHeader, stripFrontMatter, \
 	CategoryInfo, RaytkTags
@@ -31,6 +32,11 @@ class MenuOptionHelp:
 		if self.description:
 			text += ': ' + self.description
 		return text
+
+	def writeFrontMatterData(self, writer: '_IndentedWriter'):
+		with writer.block(f'- name: {self.name}'):
+			writer.writeField('label', self.label)
+			writer.writeMultiLineStringField('description', self.description)
 
 @dataclass
 class ROPParamHelp:
@@ -79,6 +85,15 @@ class ROPParamHelp:
 			parHelp.pullOptionsFromPar(par)
 		return parHelp
 
+	def writeFrontMatterData(self, writer: '_IndentedWriter'):
+		with writer.block(f'- name: {self.name}'):
+			writer.writeField('label', self.label)
+			writer.writeMultiLineStringField('summary', self.summary)
+			if self.menuOptions:
+				with writer.block('menuOptions:'):
+					for opt in self.menuOptions:
+						opt.writeFrontMatterData(writer)
+
 @dataclass
 class InputHelp:
 	name: Optional[str] = None
@@ -117,6 +132,12 @@ class InputHelp:
 					pass
 		inHelp.required = inputHandler.par.Required.eval()
 		return inHelp
+
+	def writeFrontMatterData(self, writer: '_IndentedWriter'):
+		with writer.block(f'- name: {self.name}'):
+			writer.writeField('label', self.label)
+			writer.writeField('required', self.required)
+			writer.writeMultiLineStringField('summary', self.summary)
 
 @dataclass
 class ROPHelp:
@@ -211,6 +232,9 @@ class ROPHelp:
 		return _mergeMarkdownChunks(parts)
 
 	def formatAsFullPage(self, ropInfo: 'ROPInfo'):
+		writer = _IndentedWriter()
+		self.writeFrontMatterData(writer)
+		frontMatterData = writer.getValue()
 		header = f'''---
 layout: page
 title: {ropInfo.shortName}
@@ -219,6 +243,7 @@ grand_parent: Operators
 permalink: /reference/operators/{ropInfo.categoryName}/{ropInfo.shortName}
 redirect_from:
   - /reference/opType/{ropInfo.opType}/
+{frontMatterData}
 ---
 
 # {ropInfo.shortName}
@@ -249,6 +274,28 @@ Category: {ropInfo.categoryName}
 			]
 		return _mergeMarkdownChunks(parts)
 
+	def writeFrontMatterData(self, writer: '_IndentedWriter'):
+		with writer.block('op:'):
+			writer.writeField('name', self.name)
+			writer.writeMultiLineStringField('summary', self.summary)
+			writer.writeMultiLineStringField('detail', self.detail)
+			writer.writeField('opType', self.opType)
+			writer.writeField('category', self.category)
+			if self.isDeprecated:
+				writer.writeField('status', 'deprecated')
+			elif self.isAlpha:
+				writer.writeField('status', 'alpha')
+			elif self.isBeta:
+				writer.writeField('status', 'beta')
+			if self.inputs:
+				with writer.block('inputs:'):
+					for inHelp in self.inputs:
+						inHelp.writeFrontMatterData(writer)
+			if self.parameters:
+				with writer.block('parameters:'):
+					for parHelp in self.parameters:
+						parHelp.writeFrontMatterData(writer)
+
 	def formatAsListItem(self):
 		text = f'* [`{self.name}`]({self.name}/) - {self.summary or ""}'
 		if self.isAlpha:
@@ -269,6 +316,55 @@ Category: {ropInfo.categoryName}
 				return
 		self.parameters.append(paramHelp)
 
+class _IndentedWriter:
+	def __init__(self):
+		self.indentStr = ''
+		self.buf = StringIO()
+
+	def indent(self):
+		self.indentStr += '  '
+
+	def unindent(self):
+		self.indentStr = self.indentStr[:-2]
+
+	def writeLine(self, val):
+		self.buf.write(f'{self.indentStr}{val}\n')
+
+	def block(self, name: str):
+		return _IndentedWriterBlock(self, name)
+
+	def writeField(self, name: str, val):
+		if val is None or val == '':
+			return
+		self.writeLine(f'{name}: {self._formatValue(val)}')
+
+	def writeMultiLineStringField(self, name: str, val: str):
+		if not val:
+			return
+		with self.block(f'{name}: |'):
+			for line in val.splitlines():
+				self.writeLine(line)
+
+	@staticmethod
+	def _formatValue(val):
+		if isinstance(val, bool):
+			return 'true' if val else 'false'
+		return val
+
+	def getValue(self):
+		return self.buf.getvalue()
+
+class _IndentedWriterBlock:
+	def __init__(self, writer: _IndentedWriter, label: str):
+		self.writer = writer
+		self.label = label
+
+	def __enter__(self):
+		self.writer.writeLine(self.label)
+		self.writer.indent()
+
+	def __exit__(self, exc_type, exc_val, exc_tb):
+		self.writer.unindent()
 
 @dataclass
 class CategoryHelp:
