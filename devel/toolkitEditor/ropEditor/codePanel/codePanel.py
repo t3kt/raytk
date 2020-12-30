@@ -40,6 +40,11 @@ class CodePanel:
 		# TODO: create block
 		pass
 
+	def editCurrentBlock(self):
+		dat = self.currentBlockDat()
+		if dat and dat.par['edit'] is not None:
+			dat.par.edit.pulse()
+
 	def deleteCurrentBlock(self):
 		name = self.ownerComp.par.Selectedblock.eval()
 		info = ext.ropEditor.ROPInfo
