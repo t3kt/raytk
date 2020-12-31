@@ -19,3 +19,7 @@
 .breadcrumb-nav-custom {
   margin-left: -1.5rem;
 }
+
+.input-types-item:not(:last-of-type)::after {
+  content: ', ';
+}

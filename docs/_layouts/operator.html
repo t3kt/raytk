@@ -53,6 +53,26 @@ layout: page
 					<span class="input-optional">(optional)</span>
 				{% endif %}
 				<span class="input-summary">{{ input.summary }}</span>
+				<ul class="input-types">
+					<li>
+						<em>Coordinate Types</em>:
+						{% for t in input.coordTypes %}
+							<span class="input-types-item"><code>{{t}}</code></span>
+						{% endfor %}
+					</li>
+					<li>
+						<em>Context Types</em>:
+						{% for t in input.contextTypes %}
+							<span class="input-types-item"><code>{{t}}</code></span>
+						{% endfor %}
+					</li>
+					<li>
+						<em>Return Types</em>:
+						{% for t in input.returnTypes %}
+							<span class="input-types-item"><code>{{t}}</code></span>
+						{% endfor %}
+					</li>
+				</ul>
 			</li>
 		{% endfor %}
 	</ul>

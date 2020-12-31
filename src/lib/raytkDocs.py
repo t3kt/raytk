@@ -100,6 +100,9 @@ class InputHelp:
 	label: Optional[str] = None
 	summary: Optional[str] = None
 	required: bool = False
+	coordTypes: List[str] = field(default_factory=list)
+	contextTypes: List[str] = field(default_factory=list)
+	returnTypes: List[str] = field(default_factory=list)
 
 	def formatMarkdownListItem(self, forBuild=False):
 		text = f'* `{self.name}`'
@@ -131,12 +134,29 @@ class InputHelp:
 				except Exception:
 					pass
 		inHelp.required = inputHandler.par.Required.eval()
+		supportedTypeTable = inputHandler.op('supported_type_table')
+		inHelp.coordTypes = tdu.split(supportedTypeTable['coordType', 1])
+		inHelp.contextTypes = tdu.split(supportedTypeTable['contextType', 1])
+		inHelp.returnTypes = tdu.split(supportedTypeTable['returnType', 1])
 		return inHelp
+
+	def mergeFrom(self, other: 'InputHelp'):
+		if self.name != other.name:
+			self.name = other.name
+		if other.label and not self.label:
+			self.label = other.label
+		self.required = other.required
+		self.coordTypes = other.coordTypes
+		self.contextTypes = other.contextTypes
+		self.returnTypes = other.returnTypes
 
 	def writeFrontMatterData(self, writer: '_IndentedWriter'):
 		with writer.block(f'- name: {self.name}'):
 			writer.writeField('label', self.label or self.name)
 			writer.writeField('required', self.required)
+			writer.writeListField('coordTypes', self.coordTypes)
+			writer.writeListField('contextTypes', self.contextTypes)
+			writer.writeListField('returnTypes', self.returnTypes)
 			writer.writeMultiLineStringField('summary', self.summary)
 
 @dataclass
@@ -325,6 +345,11 @@ class _IndentedWriter:
 			return
 		self.writeLine(f'{name}: {self._formatValue(val)}')
 
+	def writeListField(self, name: str, vals: list):
+		if not vals:
+			return
+		self.writeField(name, '[' + (','.join([self._formatValue(v) for v in vals])) + ']')
+
 	def writeMultiLineStringField(self, name: str, val: str):
 		if val:
 			val = val.strip()
@@ -338,7 +363,7 @@ class _IndentedWriter:
 	def _formatValue(val):
 		if isinstance(val, bool):
 			return 'true' if val else 'false'
-		return val
+		return str(val)
 
 	def getValue(self):
 		return self.buf.getvalue()
@@ -585,12 +610,7 @@ class OpDocManager:
 		for i, handler in enumerate(handlers):
 			extractedHelp = InputHelp.extractFromInputHandler(handler)
 			if i < len(inHelps):
-				inHelp = inHelps[i]
-				if inHelp.name != extractedHelp.name:
-					inHelp.name = extractedHelp.name
-				if extractedHelp.label and not inHelp.label:
-					inHelp.label = extractedHelp.label
-				inHelp.required = extractedHelp.required
+				inHelps[i].mergeFrom(extractedHelp)
 			else:
 				inHelps.append(extractedHelp)
 
