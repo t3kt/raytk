@@ -233,7 +233,7 @@ class ROPHelp:
 
 	def formatAsFullPage(self, ropInfo: 'ROPInfo'):
 		writer = _IndentedWriter()
-		self.writeFrontMatterData(writer)
+		self.writeFrontMatterData(writer, full=True)
 		frontMatterData = writer.getValue()
 		header = f'''---
 layout: operator
@@ -258,27 +258,30 @@ Category: {ropInfo.categoryName}
 		]
 		return _mergeMarkdownChunks(parts)
 
-	def writeFrontMatterData(self, writer: '_IndentedWriter'):
-		with writer.block('op:'):
+	def writeFrontMatterData(self, writer: '_IndentedWriter', full: bool):
+		with writer.block('op:' if full else '- op:'):
 			writer.writeField('name', self.name)
-			writer.writeMultiLineStringField('summary', self.summary)
-			writer.writeMultiLineStringField('detail', self.detail)
-			writer.writeField('opType', self.opType)
-			writer.writeField('category', self.category)
+			if self.summary:
+				writer.writeField('summary', self.summary.replace('\n', ' '))
+			if full:
+				writer.writeMultiLineStringField('detail', self.detail)
+				writer.writeField('opType', self.opType)
+				writer.writeField('category', self.category)
 			if self.isDeprecated:
 				writer.writeField('status', 'deprecated')
 			elif self.isAlpha:
 				writer.writeField('status', 'alpha')
 			elif self.isBeta:
 				writer.writeField('status', 'beta')
-			if self.inputs:
-				with writer.block('inputs:'):
-					for inHelp in self.inputs:
-						inHelp.writeFrontMatterData(writer)
-			if self.parameters:
-				with writer.block('parameters:'):
-					for parHelp in self.parameters:
-						parHelp.writeFrontMatterData(writer)
+			if full:
+				if self.inputs:
+					with writer.block('inputs:'):
+						for inHelp in self.inputs:
+							inHelp.writeFrontMatterData(writer)
+				if self.parameters:
+					with writer.block('parameters:'):
+						for parHelp in self.parameters:
+							parHelp.writeFrontMatterData(writer)
 
 	def formatAsListItem(self):
 		text = f'* [`{self.name}`]({self.name}/) - {self.summary or ""}'
@@ -323,6 +326,8 @@ class _IndentedWriter:
 		self.writeLine(f'{name}: {self._formatValue(val)}')
 
 	def writeMultiLineStringField(self, name: str, val: str):
+		if val:
+			val = val.strip()
 		if not val:
 			return
 		with self.block(f'{name}: |'):
@@ -384,18 +389,33 @@ class CategoryHelp:
 		return _mergeMarkdownChunks(parts)
 
 	def formatAsListPage(self):
+		writer = _IndentedWriter()
+		self.writeFrontMatterData(writer)
+		frontMatterData = writer.getValue()
 		parts = [
 			f'''---
-layout: page
+layout: operatorCategory
 title: {self.name.capitalize()} Operators
 parent: Operators
 has_children: true
 has_toc: false
 permalink: /reference/operators/{self.name}/
+{frontMatterData}
 ---''',
-			self.formatAsList(),
+			f'# {self.name.capitalize()} Operators',
+			self.summary,
+			self.detail,
 		]
 		return _mergeMarkdownChunks(parts) + '\n'
+
+	def writeFrontMatterData(self, writer: '_IndentedWriter'):
+		with writer.block('cat:'):
+			writer.writeField('name', self.name)
+			writer.writeMultiLineStringField('summary', self.summary)
+			writer.writeMultiLineStringField('detail', self.detail)
+			with writer.block('operators:'):
+				for opHelp in self.operators:
+					opHelp.writeFrontMatterData(writer, full=False)
 
 def _extractHelpSummaryAndDetail(docText: str) -> 'Tuple[str, str]':
 	if not docText:
