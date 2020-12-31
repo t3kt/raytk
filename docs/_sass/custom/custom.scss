@@ -13,3 +13,9 @@
 ::-webkit-scrollbar-thumb {
   background: $body-text-color;
 }
+
+.breadcrumb-nav:not(.breadcrumb-nav-custom) { display: none; }
+
+.breadcrumb-nav-custom {
+  margin-left: -1.5rem;
+}

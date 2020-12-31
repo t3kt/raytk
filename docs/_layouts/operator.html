@@ -2,6 +2,20 @@
 layout: page
 ---
 
+<nav aria-label="Breadcrumb" class="breadcrumb-nav breadcrumb-nav-custom">
+	<ol class="breadcrumb-nav-list">
+		<li class="breadcrumb-nav-list-item">
+			<a href="/raytk/reference/operators/">Operators</a>
+		</li>
+		<li class="breadcrumb-nav-list-item">
+			<a href="/raytk/reference/operators/{{page.op.category}}/">{{ page.op.category | capitalize }} Operators</a>
+		</li>
+		<li class="breadcrumb-nav-list-item">
+			<span>{{page.title}}</span>
+		</li>
+	</ol>
+</nav>
+
 {{ content }}
 
 {% if page.op.parameters %}
