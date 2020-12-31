@@ -32,6 +32,7 @@ github_username:  t3kt
 #theme: "just-the-docs"
 plugins:
   - jekyll-redirect-from
+  - jemoji
 #  - jekyll-feed
 
 remote_theme: pmarsceill/just-the-docs

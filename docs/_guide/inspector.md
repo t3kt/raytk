@@ -1,7 +1,7 @@
 ---
 layout: page
 title: The Inspector
-nav_order: 4
+nav_order: 5
 ---
 
 # The Inspector
@@ -56,3 +56,7 @@ The side bar shows a list of all the available output buffers, such as color, de
 The shader tab shows the full text of the generated shader, and the compiler results, including any errors or warnings.
 
 If there are errors, the inspector will show a red bar with an error message. Clicking it will open the shader tab, which will show details about the errors.
+
+## Tutorial
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/OmqMKuX7wdc" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
