@@ -35,19 +35,12 @@ class DatEditorPanel:
 		graph = self._currentItemGraph
 		return graph and graph.sourceDat
 
-	def _callbackInfo(self, **kwargs):
-		info = {
-			'parName': self.ownerComp.par.Selecteditem.eval(),
-			'endDat': '',
-		}
-		pass
-
 	@property
-	def _currentItemGraph(self) -> 'Optional[_ItemGraph]':
+	def _currentItemGraph(self) -> 'Optional[EditorItemGraph]':
 		par = self._currentItemPar
 		if par is None:
 			return
-		graph = _ItemGraph.fromPar(par)
+		graph = EditorItemGraph.fromPar(par)
 		if graph.supported:
 			return graph
 
@@ -55,6 +48,16 @@ class DatEditorPanel:
 	def _currentItemFilePar(self) -> 'Optional[Par]':
 		graph = self._currentItemGraph
 		return graph and graph.file
+
+	@property
+	def externalizeEnabled(self):
+		graph = self._currentItemGraph
+		return graph and bool(graph.sourceDat) and graph.file is not None and not bool(graph.file.eval())
+
+	@property
+	def fileParameterVisible(self):
+		graph = self._currentItemGraph
+		return graph and graph.file is not None
 
 	def buildItemGraphInfo(self, dat: 'DAT'):
 		dat.clear()
@@ -77,10 +80,28 @@ class DatEditorPanel:
 		dat['supported', 1] = 1
 		dat['file', 1] = graph.file or ''
 
+	def _doCallback(self, name: str):
+		graph = self._currentItemGraph
+		if graph:
+			ext.callbacks.DoCallback(name, {'item': graph})
+
+	def onCreateClick(self):
+		self._doCallback('onCreateItem')
+
+	def onDeleteClick(self):
+		self._doCallback('onDeleteItem')
+
+	def onExternalizeClick(self):
+		self._doCallback('onExternalizeItem')
+
+	def onExternalEditClick(self):
+		graph = self._currentItemGraph
+		if graph and graph.sourceDat and graph.sourceDat.par['edit'] is not None:
+			graph.sourceDat.par.edit.pulse()
 
 
 @dataclass
-class _ItemGraph:
+class EditorItemGraph:
 	par: 'Par'
 	endDat: 'Optional[DAT]' = None
 	sourceDat: 'Optional[DAT]' = None

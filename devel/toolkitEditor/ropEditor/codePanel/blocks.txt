@@ -1,5 +1,6 @@
 name	label	fileSuffix
-Opglobals	Op Globals	
-Initcode	Init Code	
-Functemplate	Function	
-Materialcode	Material	
+Opglobals	Op Globals	_globals.glsl
+Initcode	Init Code	_init.glsl
+Functemplate	Function	.glsl
+Materialcode	Material	_material.glsl
+Callbacks	Callbacks	_callbacks.py
