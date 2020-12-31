@@ -8,8 +8,7 @@ redirect_from:
   - /reference/opType/raytk.operators.combine.simpleUnion/
 op:
   name: simpleUnion
-  summary: |
-    Combines several SDFs using the union operator.
+  summary: Combines several SDFs using the union operator.
   detail: |
     The resulting shape is the combined areas of all of the inputs.
   opType: raytk.operators.combine.simpleUnion

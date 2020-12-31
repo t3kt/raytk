@@ -8,8 +8,7 @@ redirect_from:
   - /reference/opType/raytk.operators.combine.edgeEngrave/
 op:
   name: edgeEngrave
-  summary: |
-    Carves a v-shaped groove where the second input intersects with the first.
+  summary: Carves a v-shaped groove where the second input intersects with the first.
   opType: raytk.operators.combine.edgeEngrave
   category: combine
   inputs:

@@ -8,8 +8,7 @@ redirect_from:
   - /reference/opType/raytk.operators.sdf.pyramidSdf/
 op:
   name: pyramidSdf
-  summary: |
-    A pyramid with four sides.
+  summary: A pyramid with four sides.
   opType: raytk.operators.sdf.pyramidSdf
   category: sdf
   parameters:

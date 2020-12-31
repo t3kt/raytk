@@ -8,8 +8,7 @@ redirect_from:
   - /reference/opType/raytk.operators.sdf.generalizedPolyhedronSdf/
 op:
   name: generalizedPolyhedronSdf
-  summary: |
-    Generates one of several different types of polyhedra.
+  summary: Generates one of several different types of polyhedra.
   detail: |
     Based on ["Generalized Distance Functions"](http://people.tamu.edu/~ergun/research/implicitmodeling/papers/sm99.pdf) by Akleman and Chen.
   opType: raytk.operators.sdf.generalizedPolyhedronSdf

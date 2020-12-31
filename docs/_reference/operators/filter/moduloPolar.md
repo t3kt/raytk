@@ -8,8 +8,7 @@ redirect_from:
   - /reference/opType/raytk.operators.filter.moduloPolar/
 op:
   name: moduloPolar
-  summary: |
-    Repeats space radially, like a kaleidoscope.
+  summary: Repeats space radially, like a kaleidoscope.
   opType: raytk.operators.filter.moduloPolar
   category: filter
   inputs:

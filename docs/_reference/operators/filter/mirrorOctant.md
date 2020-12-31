@@ -8,8 +8,7 @@ redirect_from:
   - /reference/opType/raytk.operators.filter.mirrorOctant/
 op:
   name: mirrorOctant
-  summary: |
-    Mirror coordinates across two axes and the diagonals.
+  summary: Mirror coordinates across two axes and the diagonals.
   opType: raytk.operators.filter.mirrorOctant
   category: filter
   inputs:

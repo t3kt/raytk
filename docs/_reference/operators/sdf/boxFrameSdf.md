@@ -8,8 +8,7 @@ redirect_from:
   - /reference/opType/raytk.operators.sdf.boxFrameSdf/
 op:
   name: boxFrameSdf
-  summary: |
-    SDF for the squared frame of the edges of a box.
+  summary: SDF for the squared frame of the edges of a box.
   opType: raytk.operators.sdf.boxFrameSdf
   category: sdf
   parameters:

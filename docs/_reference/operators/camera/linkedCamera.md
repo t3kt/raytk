@@ -8,8 +8,7 @@ redirect_from:
   - /reference/opType/raytk.operators.camera.linkedCamera/
 op:
   name: linkedCamera
-  summary: |
-    A camera that is linked to an existing TD Camera COMP.
+  summary: A camera that is linked to an existing TD Camera COMP.
   detail: |
     The camera will match the view of the TD camera, including local and world transformations, FOV settings, etc.
     It can be used to combine a raymarchRender3d with a traditional TD render TOP.

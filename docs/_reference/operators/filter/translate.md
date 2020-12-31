@@ -8,8 +8,7 @@ redirect_from:
   - /reference/opType/raytk.operators.filter.translate/
 op:
   name: translate
-  summary: |
-    Translates coordinates of the input ROP.
+  summary: Translates coordinates of the input ROP.
   detail: |
     Translate can be used in 2D or 3D.
     It can optionally use a vector field to apply variable amounts of translation based on coordinates.

@@ -8,8 +8,7 @@ redirect_from:
   - /reference/opType/raytk.operators.sdf.planeSdf/
 op:
   name: planeSdf
-  summary: |
-    An infinite plane on the x, y, or z axis.
+  summary: An infinite plane on the x, y, or z axis.
   opType: raytk.operators.sdf.planeSdf
   category: sdf
   parameters:

@@ -8,8 +8,7 @@ redirect_from:
   - /reference/opType/raytk.operators.filter.magnet/
 op:
   name: magnet
-  summary: |
-    Pulls or twists space within an area.
+  summary: Pulls or twists space within an area.
   detail: |
     If the magnet definition input is connected, that operator is used to determine how much transformation to apply at each point in space.
     If there is no magnet definition connected, the magnet is based around a center point with a radius, and a blending region.

@@ -8,8 +8,7 @@ redirect_from:
   - /reference/opType/raytk.operators.field.pointDistanceField/
 op:
   name: pointDistanceField
-  summary: |
-    A float field that provides the distance from a specific point in space.
+  summary: A float field that provides the distance from a specific point in space.
   opType: raytk.operators.field.pointDistanceField
   category: field
   parameters:

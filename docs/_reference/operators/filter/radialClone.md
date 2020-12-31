@@ -8,8 +8,7 @@ redirect_from:
   - /reference/opType/raytk.operators.filter.radialClone/
 op:
   name: radialClone
-  summary: |
-    Repeats an SDF radially around an axis, combining the resulting shapes.
+  summary: Repeats an SDF radially around an axis, combining the resulting shapes.
   detail: |
     Note that this runs its input multiple times, which can lead to performance issues.
   opType: raytk.operators.filter.radialClone

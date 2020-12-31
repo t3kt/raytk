@@ -8,8 +8,7 @@ redirect_from:
   - /reference/opType/raytk.operators.sdf.octahedronSdf/
 op:
   name: octahedronSdf
-  summary: |
-    An octahedron, with its corners facing the axes.
+  summary: An octahedron, with its corners facing the axes.
   opType: raytk.operators.sdf.octahedronSdf
   category: sdf
   parameters:

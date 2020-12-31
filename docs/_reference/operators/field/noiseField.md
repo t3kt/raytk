@@ -8,8 +8,7 @@ redirect_from:
   - /reference/opType/raytk.operators.field.noiseField/
 op:
   name: noiseField
-  summary: |
-    A float or vector field that uses one of several noise functions.
+  summary: A float or vector field that uses one of several noise functions.
   opType: raytk.operators.field.noiseField
   category: field
   parameters:

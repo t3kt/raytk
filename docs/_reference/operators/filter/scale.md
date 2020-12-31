@@ -8,8 +8,7 @@ redirect_from:
   - /reference/opType/raytk.operators.filter.scale/
 op:
   name: scale
-  summary: |
-    Scales space.
+  summary: Scales space.
   detail: |
     Scaling works for either 3D or 2D inputs.
   opType: raytk.operators.filter.scale

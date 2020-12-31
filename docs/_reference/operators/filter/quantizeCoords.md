@@ -8,8 +8,7 @@ redirect_from:
   - /reference/opType/raytk.operators.filter.quantizeCoords/
 op:
   name: quantizeCoords
-  summary: |
-    Quantize coordinates to a 3D grid, which is sort of like "voxelizing" the space.
+  summary: Quantize coordinates to a 3D grid, which is sort of like "voxelizing" the space.
   opType: raytk.operators.filter.quantizeCoords
   category: filter
   inputs:

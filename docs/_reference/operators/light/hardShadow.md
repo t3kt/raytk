@@ -8,8 +8,7 @@ redirect_from:
   - /reference/opType/raytk.operators.light.hardShadow/
 op:
   name: hardShadow
-  summary: |
-    A simple hard-edged shadow.
+  summary: A simple hard-edged shadow.
   opType: raytk.operators.light.hardShadow
   category: light
   parameters:

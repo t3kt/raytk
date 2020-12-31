@@ -8,8 +8,7 @@ redirect_from:
   - /reference/opType/raytk.operators.combine.smoothUnion/
 op:
   name: smoothUnion
-  summary: |
-    Combines SDFs using a smooth union operator.
+  summary: Combines SDFs using a smooth union operator.
   detail: |
     Produces the combined areas of the input shapes, blended to smooth out the intersections.
   opType: raytk.operators.combine.smoothUnion

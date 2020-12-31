@@ -8,8 +8,7 @@ redirect_from:
   - /reference/opType/raytk.operators.sdf.coneSdf/
 op:
   name: coneSdf
-  summary: |
-    Defines a cone or capped cone shape.
+  summary: Defines a cone or capped cone shape.
   opType: raytk.operators.sdf.coneSdf
   category: sdf
   inputs:

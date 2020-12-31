@@ -8,8 +8,7 @@ redirect_from:
   - /reference/opType/raytk.operators.sdf.linkSdf/
 op:
   name: linkSdf
-  summary: |
-    SDF for a chain link shape (an elongated loop).
+  summary: SDF for a chain link shape (an elongated loop).
   opType: raytk.operators.sdf.linkSdf
   category: sdf
   parameters:

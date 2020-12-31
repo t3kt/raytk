@@ -8,8 +8,7 @@ redirect_from:
   - /reference/opType/raytk.operators.combine.switch/
 op:
   name: switch
-  summary: |
-    Switches between several inputs, without the need to rebuild the shader, allowing for fast switching.
+  summary: Switches between several inputs, without the need to rebuild the shader, allowing for fast switching.
   opType: raytk.operators.combine.switch
   category: combine
   inputs:

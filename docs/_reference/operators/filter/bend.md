@@ -8,8 +8,7 @@ redirect_from:
   - /reference/opType/raytk.operators.filter.bend/
 op:
   name: bend
-  summary: |
-    Bends space, along a main axis, towards a second axis.
+  summary: Bends space, along a main axis, towards a second axis.
   detail: |
     For example, bends sideways (towards X) depending on the vertical position (along Y).
   opType: raytk.operators.filter.bend

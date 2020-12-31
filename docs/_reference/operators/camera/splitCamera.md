@@ -8,8 +8,7 @@ redirect_from:
   - /reference/opType/raytk.operators.camera.splitCamera/
 op:
   name: splitCamera
-  summary: |
-    A camera that splits the viewport into several zones, each using a separate camera.
+  summary: A camera that splits the viewport into several zones, each using a separate camera.
   detail: |
     Important note that when the horizontal and vertical layouts currently only use the first two inputs.
   opType: raytk.operators.camera.splitCamera

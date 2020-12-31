@@ -8,8 +8,7 @@ redirect_from:
   - /reference/opType/raytk.operators.sdf.kaliGeneratorSdf/
 op:
   name: kaliGeneratorSdf
-  summary: |
-    Fractal SDF based on "Generators" by Kali (https://www.shadertoy.com/view/Xtf3Rn).
+  summary: Fractal SDF based on "Generators" by Kali (https://www.shadertoy.com/view/Xtf3Rn).
   opType: raytk.operators.sdf.kaliGeneratorSdf
   category: sdf
   parameters:

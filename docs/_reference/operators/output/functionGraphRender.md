@@ -8,8 +8,7 @@ redirect_from:
   - /reference/opType/raytk.operators.output.functionGraphRender/
 op:
   name: functionGraphRender
-  summary: |
-    Visualizes the graph of a function operator.
+  summary: Visualizes the graph of a function operator.
   detail: |
     This is intended primarily for use in the Inspector, though there may be other uses.
     It can take in multiple function inputs, which it will visualize with different colors of lines in the same graph.

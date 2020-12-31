@@ -8,8 +8,7 @@ redirect_from:
   - /reference/opType/raytk.operators.sdf.cylinderSdf/
 op:
   name: cylinderSdf
-  summary: |
-    SDF for a cylinder along the Y axis, centered at the origin.
+  summary: SDF for a cylinder along the Y axis, centered at the origin.
   opType: raytk.operators.sdf.cylinderSdf
   category: sdf
   parameters:

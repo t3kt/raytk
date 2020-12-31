@@ -8,8 +8,7 @@ redirect_from:
   - /reference/opType/raytk.operators.filter.reflect/
 op:
   name: reflect
-  summary: |
-    Reflects space across a plane.
+  summary: Reflects space across a plane.
   detail: |
     Can optionally expose which side of the plane a point is on as an iteration value for upstream ops.
   opType: raytk.operators.filter.reflect

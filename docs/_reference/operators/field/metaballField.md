@@ -8,8 +8,7 @@ redirect_from:
   - /reference/opType/raytk.operators.field.metaballField/
 op:
   name: metaballField
-  summary: |
-    Metaball value field.
+  summary: Metaball value field.
   opType: raytk.operators.field.metaballField
   category: field
   parameters:

@@ -8,8 +8,7 @@ redirect_from:
   - /reference/opType/raytk.operators.filter.round/
 op:
   name: round
-  summary: |
-    Adds to (or subtracts from) the size of an SDF, which has the effect of rounding it out or shrinking it.
+  summary: Adds to (or subtracts from) the size of an SDF, which has the effect of rounding it out or shrinking it.
   detail: |
     Based on [code](https://iquilezles.org/www/articles/distfunctions/distfunctions.htm) from Inigo Quilez.
     See [example](https://www.shadertoy.com/view/Mt3BDj).

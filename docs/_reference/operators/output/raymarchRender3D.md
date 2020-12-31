@@ -8,8 +8,7 @@ redirect_from:
   - /reference/opType/raytk.operators.output.raymarchRender3D/
 op:
   name: raymarchRender3D
-  summary: |
-    Renders a scene using 3D raymarching.
+  summary: Renders a scene using 3D raymarching.
   opType: raytk.operators.output.raymarchRender3D
   category: output
   inputs:

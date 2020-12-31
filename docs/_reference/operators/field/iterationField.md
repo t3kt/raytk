@@ -8,8 +8,7 @@ redirect_from:
   - /reference/opType/raytk.operators.field.iterationField/
 op:
   name: iterationField
-  summary: |
-    Field that returns the current iteration, from a downstream OP.
+  summary: Field that returns the current iteration, from a downstream OP.
   opType: raytk.operators.field.iterationField
   category: field
   parameters:

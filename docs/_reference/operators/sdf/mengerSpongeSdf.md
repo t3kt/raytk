@@ -8,8 +8,7 @@ redirect_from:
   - /reference/opType/raytk.operators.sdf.mengerSpongeSdf/
 op:
   name: mengerSpongeSdf
-  summary: |
-    Menger sponge fractal, made of boxes with holes cut through each axis.
+  summary: Menger sponge fractal, made of boxes with holes cut through each axis.
   opType: raytk.operators.sdf.mengerSpongeSdf
   category: sdf
   parameters:

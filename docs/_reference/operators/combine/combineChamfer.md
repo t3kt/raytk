@@ -8,8 +8,7 @@ redirect_from:
   - /reference/opType/raytk.operators.combine.combineChamfer/
 op:
   name: combineChamfer
-  summary: |
-    Chamfer SDF combine, producing a flat surface at a 45 degree angle along the blend region.
+  summary: Chamfer SDF combine, producing a flat surface at a 45 degree angle along the blend region.
   opType: raytk.operators.combine.combineChamfer
   category: combine
   inputs:

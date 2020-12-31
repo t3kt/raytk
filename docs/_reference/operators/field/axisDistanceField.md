@@ -8,8 +8,7 @@ redirect_from:
   - /reference/opType/raytk.operators.field.axisDistanceField/
 op:
   name: axisDistanceField
-  summary: |
-    A float field that provides the distance from a specific point along a single axis.
+  summary: A float field that provides the distance from a specific point along a single axis.
   opType: raytk.operators.field.axisDistanceField
   category: field
   parameters:

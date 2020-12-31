@@ -8,8 +8,7 @@ redirect_from:
   - /reference/opType/raytk.operators.combine.combine/
 op:
   name: combine
-  summary: |
-    Combines SDFs in various ways.
+  summary: Combines SDFs in various ways.
   detail: |
     Depending on which `Combine` option is selected, different parameters will be enabled.
     This operator only supports two input SDFs (along with a value field to control blending).

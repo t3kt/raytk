@@ -8,8 +8,7 @@ redirect_from:
   - /reference/opType/raytk.operators.sdf.solidAngleSdf/
 op:
   name: solidAngleSdf
-  summary: |
-    A conical slice of a sphere.
+  summary: A conical slice of a sphere.
   detail: |
     Similar to `coneSdf` but with the base rounded.
   opType: raytk.operators.sdf.solidAngleSdf

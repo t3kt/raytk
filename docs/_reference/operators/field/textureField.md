@@ -8,8 +8,7 @@ redirect_from:
   - /reference/opType/raytk.operators.field.textureField/
 op:
   name: textureField
-  summary: |
-    A float or vector field that looks up values from a texture.
+  summary: A float or vector field that looks up values from a texture.
   opType: raytk.operators.field.textureField
   category: field
   parameters:

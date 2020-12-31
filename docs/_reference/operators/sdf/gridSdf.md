@@ -8,8 +8,7 @@ redirect_from:
   - /reference/opType/raytk.operators.sdf.gridSdf/
 op:
   name: gridSdf
-  summary: |
-    An infinite grid shape, along two axes.
+  summary: An infinite grid shape, along two axes.
   opType: raytk.operators.sdf.gridSdf
   category: sdf
   parameters:

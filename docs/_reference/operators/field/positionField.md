@@ -8,8 +8,7 @@ redirect_from:
   - /reference/opType/raytk.operators.field.positionField/
 op:
   name: positionField
-  summary: |
-    A vector field that evaluates to the coordinates in space.
+  summary: A vector field that evaluates to the coordinates in space.
   opType: raytk.operators.field.positionField
   category: field
   parameters:

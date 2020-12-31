@@ -8,8 +8,7 @@ redirect_from:
   - /reference/opType/raytk.operators.sdf.discSdf/
 op:
   name: discSdf
-  summary: |
-    A flat disc facing the Y axis.
+  summary: A flat disc facing the Y axis.
   detail: |
     Because the disc is infinitely thin, it will only appear as a line when viewed from the side.
   opType: raytk.operators.sdf.discSdf

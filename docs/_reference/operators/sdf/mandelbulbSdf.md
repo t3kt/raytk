@@ -8,8 +8,7 @@ redirect_from:
   - /reference/opType/raytk.operators.sdf.mandelbulbSdf/
 op:
   name: mandelbulbSdf
-  summary: |
-    Mandelbulb fractal.
+  summary: Mandelbulb fractal.
   opType: raytk.operators.sdf.mandelbulbSdf
   category: sdf
   parameters:

@@ -8,8 +8,7 @@ redirect_from:
   - /reference/opType/raytk.operators.filter.invert/
 op:
   name: invert
-  summary: |
-    Invert an SDF, so that the inside is the outside.
+  summary: Invert an SDF, so that the inside is the outside.
   detail: |
     If used on a box, this can create an empty room with the shape filling all the space outside the room.
   opType: raytk.operators.filter.invert

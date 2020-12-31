@@ -8,8 +8,7 @@ redirect_from:
   - /reference/opType/raytk.operators.filter.elongate/
 op:
   name: elongate
-  summary: |
-    Splits a shape into pieces, moves them apart, and connects them.
+  summary: Splits a shape into pieces, moves them apart, and connects them.
   detail: |
     For example, a capsule is an elongated version of a sphere.
     

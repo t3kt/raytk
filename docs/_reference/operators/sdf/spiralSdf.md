@@ -8,8 +8,7 @@ redirect_from:
   - /reference/opType/raytk.operators.sdf.spiralSdf/
 op:
   name: spiralSdf
-  summary: |
-    A tapering spiral squared tube.
+  summary: A tapering spiral squared tube.
   detail: |
     Based on [Spiral Tiling](https://www.shadertoy.com/view/ls2GRz) by Knightly.
   opType: raytk.operators.sdf.spiralSdf

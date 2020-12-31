@@ -8,8 +8,7 @@ redirect_from:
   - /reference/opType/raytk.operators.sdf.crossSdf/
 op:
   name: crossSdf
-  summary: |
-    An SDF for a 3D cross of infinite length along each axis.
+  summary: An SDF for a 3D cross of infinite length along each axis.
   opType: raytk.operators.sdf.crossSdf
   category: sdf
   parameters:

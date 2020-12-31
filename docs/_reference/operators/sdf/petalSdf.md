@@ -8,8 +8,7 @@ redirect_from:
   - /reference/opType/raytk.operators.sdf.petalSdf/
 op:
   name: petalSdf
-  summary: |
-    A flower petal or leaf shape.
+  summary: A flower petal or leaf shape.
   detail: |
     Based on [Echeveria](https://www.shadertoy.com/view/wlVGRz) by tdhooper.
   opType: raytk.operators.sdf.petalSdf

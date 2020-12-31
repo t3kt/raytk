@@ -8,8 +8,7 @@ redirect_from:
   - /reference/opType/raytk.operators.combine.edgeGroove/
 op:
   name: edgeGroove
-  summary: |
-    Creates a raised bar or indented groove where the second input intersects with the first.
+  summary: Creates a raised bar or indented groove where the second input intersects with the first.
   opType: raytk.operators.combine.edgeGroove
   category: combine
   inputs:

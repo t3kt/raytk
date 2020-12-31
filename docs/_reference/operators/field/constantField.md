@@ -8,8 +8,7 @@ redirect_from:
   - /reference/opType/raytk.operators.field.constantField/
 op:
   name: constantField
-  summary: |
-    A float or vector field that evaluates to a constant value.
+  summary: A float or vector field that evaluates to a constant value.
   opType: raytk.operators.field.constantField
   category: field
   parameters:

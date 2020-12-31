@@ -8,8 +8,7 @@ redirect_from:
   - /reference/opType/raytk.operators.sdf.tetrahedronSdf/
 op:
   name: tetrahedronSdf
-  summary: |
-    Tetrahedron shape.
+  summary: Tetrahedron shape.
   opType: raytk.operators.sdf.tetrahedronSdf
   category: sdf
   parameters:

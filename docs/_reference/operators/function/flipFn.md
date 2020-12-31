@@ -8,8 +8,7 @@ redirect_from:
   - /reference/opType/raytk.operators.function.flipFn/
 op:
   name: flipFn
-  summary: |
-    Function that flips its input in one of several different modes.
+  summary: Function that flips its input in one of several different modes.
   opType: raytk.operators.function.flipFn
   category: function
   inputs:

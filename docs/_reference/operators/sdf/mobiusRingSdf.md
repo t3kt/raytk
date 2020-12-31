@@ -8,8 +8,7 @@ redirect_from:
   - /reference/opType/raytk.operators.sdf.mobiusRingSdf/
 op:
   name: mobiusRingSdf
-  summary: |
-    SDF for a squared mobius ring, which is like a rectangular bar twisted and then bent into a ring.
+  summary: SDF for a squared mobius ring, which is like a rectangular bar twisted and then bent into a ring.
   opType: raytk.operators.sdf.mobiusRingSdf
   category: sdf
   inputs:

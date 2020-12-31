@@ -8,10 +8,7 @@ redirect_from:
   - /reference/opType/raytk.operators.material.fieldMat/
 op:
   name: fieldMat
-  summary: |
-    A material that uses a vector field input to determine
-    the color. Essentially this is a conversion from a
-    field to a material, with no other features.
+  summary: A material that uses a vector field input to determine the color. Essentially this is a conversion from a field to a material, with no other features.
   opType: raytk.operators.material.fieldMat
   category: material
   inputs:

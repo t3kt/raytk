@@ -8,8 +8,7 @@ redirect_from:
   - /reference/opType/raytk.operators.light.softShadow/
 op:
   name: softShadow
-  summary: |
-    A soft-edged shadow.
+  summary: A soft-edged shadow.
   opType: raytk.operators.light.softShadow
   category: light
   parameters:

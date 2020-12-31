@@ -8,8 +8,7 @@ redirect_from:
   - /reference/opType/raytk.operators.combine.simpleIntersect/
 op:
   name: simpleIntersect
-  summary: |
-    Combines SDFs using the intersect operator.
+  summary: Combines SDFs using the intersect operator.
   detail: |
     Produces the areas where all input shapes overlap.
   opType: raytk.operators.combine.simpleIntersect

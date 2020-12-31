@@ -8,8 +8,7 @@ redirect_from:
   - /reference/opType/raytk.operators.sdf.gyroidSdf/
 op:
   name: gyroidSdf
-  summary: |
-    Gyroid shape, which is an infinitely connected periodic surface.
+  summary: Gyroid shape, which is an infinitely connected periodic surface.
   detail: |
     The Gyroid is constructed using overlapping sine and cosine waves.
     See [wikipedia](https://en.wikipedia.org/wiki/Gyroid) for more information.

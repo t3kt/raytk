@@ -8,9 +8,7 @@ redirect_from:
   - /reference/opType/raytk.operators.utility.extractIteration/
 op:
   name: extractIteration
-  summary: |
-    A field that returns the current iteration, from a downstream
-    operator.
+  summary: A field that returns the current iteration, from a downstream operator.
   opType: raytk.operators.utility.extractIteration
   category: utility
   status: beta

@@ -8,8 +8,7 @@ redirect_from:
   - /reference/opType/raytk.operators.camera.fisheyeCamera/
 op:
   name: fisheyeCamera
-  summary: |
-    A 360 fisheye camera, that shows all directions from a specific point in space.
+  summary: A 360 fisheye camera, that shows all directions from a specific point in space.
   opType: raytk.operators.camera.fisheyeCamera
   category: camera
   parameters:

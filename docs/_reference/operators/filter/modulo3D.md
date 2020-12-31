@@ -8,8 +8,7 @@ redirect_from:
   - /reference/opType/raytk.operators.filter.modulo3D/
 op:
   name: modulo3D
-  summary: |
-    Repeats space along all 3 axes.
+  summary: Repeats space along all 3 axes.
   opType: raytk.operators.filter.modulo3D
   category: filter
   inputs:

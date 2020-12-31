@@ -8,8 +8,7 @@ redirect_from:
   - /reference/opType/raytk.operators.combine.layoutGrid/
 op:
   name: layoutGrid
-  summary: |
-    Slices space into a grid, and places each input in a separate cell.
+  summary: Slices space into a grid, and places each input in a separate cell.
   detail: |
     This is useful to see several different variations of a shape.
     The input shapes are shifted to the center of their cell.

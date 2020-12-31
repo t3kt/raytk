@@ -8,8 +8,7 @@ redirect_from:
   - /reference/opType/raytk.operators.combine.blend/
 op:
   name: blend
-  summary: |
-    Smoothly blends/morphs between up to 4 SDFs.
+  summary: Smoothly blends/morphs between up to 4 SDFs.
   detail: |
     The blend index only considers inputs that are connected, so if you connect the second and fourth inputs, it will treat the second as 0 and the fourth as 1.
   opType: raytk.operators.combine.blend

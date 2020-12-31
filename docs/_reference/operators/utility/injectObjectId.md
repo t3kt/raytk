@@ -8,9 +8,7 @@ redirect_from:
   - /reference/opType/raytk.operators.utility.injectObjectId/
 op:
   name: injectObjectId
-  summary: |
-    Assigns an arbitrary value to the objectId field of an SDF, which can later
-    be extracted from rendered output.
+  summary: Assigns an arbitrary value to the objectId field of an SDF, which can later be extracted from rendered output.
   detail: |
     This can be used to identify which object is shown at any given pixel in
     the output.

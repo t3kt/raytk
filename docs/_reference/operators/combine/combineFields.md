@@ -8,8 +8,7 @@ redirect_from:
   - /reference/opType/raytk.operators.combine.combineFields/
 op:
   name: combineFields
-  summary: |
-    Combines float or vector fields using one of several mathematical operations.
+  summary: Combines float or vector fields using one of several mathematical operations.
   opType: raytk.operators.combine.combineFields
   category: combine
   inputs:

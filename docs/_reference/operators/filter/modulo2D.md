@@ -8,8 +8,7 @@ redirect_from:
   - /reference/opType/raytk.operators.filter.modulo2D/
 op:
   name: modulo2D
-  summary: |
-    Repeats space along 2 axes.
+  summary: Repeats space along 2 axes.
   opType: raytk.operators.filter.modulo2D
   category: filter
   inputs:

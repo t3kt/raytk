@@ -8,8 +8,7 @@ redirect_from:
   - /reference/opType/raytk.operators.camera.lookAtCamera/
 op:
   name: lookAtCamera
-  summary: |
-    A camera that focuses on a specific point in space.
+  summary: A camera that focuses on a specific point in space.
   opType: raytk.operators.camera.lookAtCamera
   category: camera
   parameters:

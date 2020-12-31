@@ -8,8 +8,7 @@ redirect_from:
   - /reference/opType/raytk.operators.sdf.prismSdf/
 op:
   name: prismSdf
-  summary: |
-    A prism shape, like a cylinder but with flat sides, along the z axis.
+  summary: A prism shape, like a cylinder but with flat sides, along the z axis.
   opType: raytk.operators.sdf.prismSdf
   category: sdf
   parameters:

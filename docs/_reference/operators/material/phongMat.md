@@ -8,8 +8,7 @@ redirect_from:
   - /reference/opType/raytk.operators.material.phongMat/
 op:
   name: phongMat
-  summary: |
-    Material that uses phong shading.
+  summary: Material that uses phong shading.
   opType: raytk.operators.material.phongMat
   category: material
   inputs:

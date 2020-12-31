@@ -8,8 +8,7 @@ redirect_from:
   - /reference/opType/raytk.operators.sdf.boxSdf/
 op:
   name: boxSdf
-  summary: |
-    SDF for a box, optionally infinite one one axis.
+  summary: SDF for a box, optionally infinite one one axis.
   opType: raytk.operators.sdf.boxSdf
   category: sdf
   parameters:

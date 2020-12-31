@@ -8,8 +8,7 @@ redirect_from:
   - /reference/opType/raytk.operators.field.constantColorField/
 op:
   name: constantColorField
-  summary: |
-    A vector field that evaluates to a constant color value.
+  summary: A vector field that evaluates to a constant color value.
   detail: |
     This is the same as `constantField`, but the parameter is specified as a color instead of arbitrary float values.
   opType: raytk.operators.field.constantColorField

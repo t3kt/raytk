@@ -8,8 +8,7 @@ redirect_from:
   - /reference/opType/raytk.operators.sdf.capsuleSdf/
 op:
   name: capsuleSdf
-  summary: |
-    A cylinder with rounded ends, between two points.
+  summary: A cylinder with rounded ends, between two points.
   detail: |
     With a small `Radius`, this can be used to create a line segment.
   opType: raytk.operators.sdf.capsuleSdf

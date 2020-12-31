@@ -8,8 +8,7 @@ redirect_from:
   - /reference/opType/raytk.operators.combine.simpleDiff/
 op:
   name: simpleDiff
-  summary: |
-    Combines two SDFs using the difference operator.
+  summary: Combines two SDFs using the difference operator.
   detail: |
     Produces the area of the first shape minus any areas overlapped by the second (or vice versa).
   opType: raytk.operators.combine.simpleDiff

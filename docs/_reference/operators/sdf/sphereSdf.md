@@ -8,8 +8,7 @@ redirect_from:
   - /reference/opType/raytk.operators.sdf.sphereSdf/
 op:
   name: sphereSdf
-  summary: |
-    SDF in 3D space for a uniform sphere.
+  summary: SDF in 3D space for a uniform sphere.
   opType: raytk.operators.sdf.sphereSdf
   category: sdf
   parameters:

@@ -8,8 +8,7 @@ redirect_from:
   - /reference/opType/raytk.operators.camera.orthoCamera/
 op:
   name: orthoCamera
-  summary: |
-    An orthographic (non-perspective) camera, which can be used for flattened front/side/etc views.
+  summary: An orthographic (non-perspective) camera, which can be used for flattened front/side/etc views.
   opType: raytk.operators.camera.orthoCamera
   category: camera
   parameters:

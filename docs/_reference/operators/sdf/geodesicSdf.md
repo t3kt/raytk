@@ -8,8 +8,7 @@ redirect_from:
   - /reference/opType/raytk.operators.sdf.geodesicSdf/
 op:
   name: geodesicSdf
-  summary: |
-    A geodesic polyhedron, optionally with a spike on each face.
+  summary: A geodesic polyhedron, optionally with a spike on each face.
   detail: |
     Based on [Geodesic domain manipulation](https://www.shadertoy.com/view/4tG3zW) by tdhooper.
   opType: raytk.operators.sdf.geodesicSdf

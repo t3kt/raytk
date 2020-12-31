@@ -8,8 +8,7 @@ redirect_from:
   - /reference/opType/raytk.operators.combine.combineStairs/
 op:
   name: combineStairs
-  summary: |
-    Stair SDF combine, producing steps along the blend region.
+  summary: Stair SDF combine, producing steps along the blend region.
   opType: raytk.operators.combine.combineStairs
   category: combine
   inputs:

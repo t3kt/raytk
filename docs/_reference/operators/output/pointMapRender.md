@@ -10,6 +10,7 @@ op:
   name: pointMapRender
   opType: raytk.operators.output.pointMapRender
   category: output
+  status: beta
   inputs:
     - name: definition_in
       label: definition_in

@@ -8,8 +8,7 @@ redirect_from:
   - /reference/opType/raytk.operators.light.pointLight/
 op:
   name: pointLight
-  summary: |
-    Light eminating from a single point in space, with optional distance attentuation.
+  summary: Light eminating from a single point in space, with optional distance attentuation.
   opType: raytk.operators.light.pointLight
   category: light
   parameters:

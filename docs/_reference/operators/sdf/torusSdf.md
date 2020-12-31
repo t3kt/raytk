@@ -8,8 +8,7 @@ redirect_from:
   - /reference/opType/raytk.operators.sdf.torusSdf/
 op:
   name: torusSdf
-  summary: |
-    SDF for a torus or partial torus with end caps.
+  summary: SDF for a torus or partial torus with end caps.
   opType: raytk.operators.sdf.torusSdf
   category: sdf
   parameters:

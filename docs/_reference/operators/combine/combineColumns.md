@@ -8,8 +8,7 @@ redirect_from:
   - /reference/opType/raytk.operators.combine.combineColumns/
 op:
   name: combineColumns
-  summary: |
-    Columns SDF combine, producing n-1 circular columns/ridges at a 45 degree angles along the blend region.
+  summary: Columns SDF combine, producing n-1 circular columns/ridges at a 45 degree angles along the blend region.
   opType: raytk.operators.combine.combineColumns
   category: combine
   inputs:

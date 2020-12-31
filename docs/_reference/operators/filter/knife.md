@@ -8,8 +8,7 @@ redirect_from:
   - /reference/opType/raytk.operators.filter.knife/
 op:
   name: knife
-  summary: |
-    Cuts off an SDF along a plane.
+  summary: Cuts off an SDF along a plane.
   opType: raytk.operators.filter.knife
   category: filter
   inputs:

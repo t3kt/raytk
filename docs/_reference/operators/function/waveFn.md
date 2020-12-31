@@ -8,8 +8,7 @@ redirect_from:
   - /reference/opType/raytk.operators.function.waveFn/
 op:
   name: waveFn
-  summary: |
-    A function that uses a periodic wave, with the position as the parameter.
+  summary: A function that uses a periodic wave, with the position as the parameter.
   opType: raytk.operators.function.waveFn
   category: function
   parameters:

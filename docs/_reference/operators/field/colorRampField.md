@@ -8,8 +8,7 @@ redirect_from:
   - /reference/opType/raytk.operators.field.colorRampField/
 op:
   name: colorRampField
-  summary: |
-    A vector field that maps an input field to values from a range of colors.
+  summary: A vector field that maps an input field to values from a range of colors.
   opType: raytk.operators.field.colorRampField
   category: field
   inputs:

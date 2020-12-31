@@ -8,8 +8,7 @@ redirect_from:
   - /reference/opType/raytk.operators.filter.transform/
 op:
   name: transform
-  summary: |
-    Transform the coordinates of the input, with rotation, scaling, and translation.
+  summary: Transform the coordinates of the input, with rotation, scaling, and translation.
   detail: |
     Various parts of the transform can be switched off to improve performance, and the sequence of transform steps can be reordered.
     It either uses the origin (0,0,0) as the pivot point, or can use another pivot point.

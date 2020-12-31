@@ -8,8 +8,7 @@ redirect_from:
   - /reference/opType/raytk.operators.field.contextValueField/
 op:
   name: contextValueField
-  summary: |
-    Field that returns various fields from the context, from a downstream OP.
+  summary: Field that returns various fields from the context, from a downstream OP.
   opType: raytk.operators.field.contextValueField
   category: field
   parameters:
