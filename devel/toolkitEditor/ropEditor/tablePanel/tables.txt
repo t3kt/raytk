@@ -1,4 +1,0 @@
-name	label	fileSuffix
-Macrotable	Macros	_macros.txt
-Texturetable	Textures	_textures.txt
-Buffertable	Buffers	_buffers.txt

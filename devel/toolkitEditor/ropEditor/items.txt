@@ -1,0 +1,10 @@
+name	label	category	fileSuffix
+Opglobals	Op Globals	code	_globals.glsl
+Initcode	Init Code	code	_init.glsl
+Functemplate	Function	code	.glsl
+Materialcode	Material	code	_material.glsl
+Callbacks	Callbacks	code	_callbacks.py
+Macrotable	Macros	table	_macros.txt
+Texturetable	Textures	table	_textures.txt
+Buffertable	Buffers	table	_buffers.txt
+Help	Help	help	.md

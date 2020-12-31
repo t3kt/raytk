@@ -1,4 +1,5 @@
 from dataclasses import dataclass
+from pathlib import Path
 from typing import Optional
 
 # noinspection PyUnreachableCode
@@ -6,12 +7,10 @@ if False:
 	# noinspection PyUnresolvedReferences
 	from _stubs import *
 	from _typeAliases import *
-	from _stubs.TDCallbacksExt import CallbacksExt
-
-	ext.callbacks = CallbacksExt(COMP())
+	from devel.toolkitEditor.ropEditor.ropEditor import ROPEditor
+	ext.ropEditor = ROPEditor(COMP())
 
 	class _Pars(ParCollection):
-		Targetop: 'OPParamT'
 		Selecteditem: 'StrParamT'
 
 	class _COMP(COMP):
@@ -22,13 +21,20 @@ class DatEditorPanel:
 		self.ownerComp = ownerComp
 
 	@property
+	def opDef(self) -> 'Optional[COMP]':
+		info = ext.ropEditor.ROPInfo
+		return info and info.opDef
+
+	@property
 	def _currentItemPar(self) -> 'Optional[Par]':
-		o = self.ownerComp.par.Targetop.eval()
-		if not o:
+		if not hasattr(ext, 'ropEditor'):
+			return
+		info = ext.ropEditor.ROPInfo
+		if not info or not info.opDef:
 			return
 		name = self.ownerComp.par.Selecteditem.eval()
 		if name:
-			return o.par[name]
+			return info.opDef.par[name]
 
 	@property
 	def currentSourceDat(self) -> 'Optional[DAT]':
@@ -45,17 +51,14 @@ class DatEditorPanel:
 			return graph
 
 	@property
-	def _currentItemFilePar(self) -> 'Optional[Par]':
-		graph = self._currentItemGraph
-		return graph and graph.file
-
-	@property
 	def externalizeEnabled(self):
 		graph = self._currentItemGraph
 		return graph and bool(graph.sourceDat) and graph.file is not None and not bool(graph.file.eval())
 
 	@property
 	def fileParameterVisible(self):
+		if not self.ownerComp.par.Showfile:
+			return False
 		graph = self._currentItemGraph
 		return graph and graph.file is not None
 
@@ -80,25 +83,66 @@ class DatEditorPanel:
 		dat['supported', 1] = 1
 		dat['file', 1] = graph.file or ''
 
-	def _doCallback(self, name: str):
-		graph = self._currentItemGraph
-		if graph:
-			ext.callbacks.DoCallback(name, {'item': graph})
-
 	def onCreateClick(self):
-		self._doCallback('onCreateItem')
+		# TODO: implement create
+		pass
 
 	def onDeleteClick(self):
-		self._doCallback('onDeleteItem')
+		info = ext.ropEditor.ROPInfo
+		itemGraph = self._currentItemGraph
+		if not info or not itemGraph or not self._confirmDelete(itemGraph):
+			return
+		ui.undo.startBlock(f'Delete {itemGraph.par.label} from {info.rop.path}')
+		try:
+			if itemGraph.file:
+				file = Path(itemGraph.file.eval())
+				file.unlink(missing_ok=True)
+				itemGraph.file.val = ''
+			itemGraph.par.val = ''
+			if itemGraph.endDat and itemGraph.endDat.valid:
+				itemGraph.endDat.destroy()
+			if itemGraph.sourceDat and itemGraph.sourceDat.valid:
+				itemGraph.sourceDat.destroy()
+		finally:
+			ui.undo.endBlock()
 
 	def onExternalizeClick(self):
-		self._doCallback('onExternalizeItem')
+		info = ext.ropEditor.ROPInfo
+		itemGraph = self._currentItemGraph
+		if not info or not itemGraph or not itemGraph.sourceDat or itemGraph.file is None or itemGraph.file.eval():
+			return
+		if itemGraph.file is None:
+			ui.status = f'Unable to externalize, no file parameter on {itemGraph.sourceDat}!'
+			return
+		if itemGraph.file.eval():
+			ui.status = f'No need to externalize, already have external file: {itemGraph.file}'
+			return
+		tox = info.toxFile
+		if not tox:
+			ui.status = f'Unable to externalize, no tox file for {itemGraph.par.name}'
+			return
+		suffix = str(self.ownerComp.op('itemTable')[itemGraph.par.name, 'fileSuffix'] or '')
+		if not suffix:
+			ui.status = f'Unable to externalize, no file suffix found for {itemGraph.par.name}'
+			return
+		file = Path(tox.replace('.tox', suffix))
+		file.touch(exist_ok=True)
+		itemGraph.file.val = file.as_posix()
+		ui.status = f'Externalized {itemGraph.sourceDat} to file {file.as_posix()}'
 
 	def onExternalEditClick(self):
 		graph = self._currentItemGraph
 		if graph and graph.sourceDat and graph.sourceDat.par['edit'] is not None:
 			graph.sourceDat.par.edit.pulse()
 
+	@staticmethod
+	def _confirmDelete(itemGraph: 'EditorItemGraph'):
+		info = ext.ropEditor.ROPInfo
+		return ui.messageBox(
+			f'Delete {itemGraph.par.label}?',
+			f'Are you sure you want to delete the {itemGraph.par.label} of {info.rop.path}?',
+			buttons=['Cancel', 'Delete'],
+		)
 
 @dataclass
 class EditorItemGraph:
