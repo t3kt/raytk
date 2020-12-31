@@ -15,6 +15,9 @@ op:
     - name: thickness_field_definition_in
       label: Thickness Field
       required: false
+      coordTypes: [float,vec3]
+      contextTypes: [none,Context,MaterialContext,CameraContext,LightContext,RayContext]
+      returnTypes: [float]
       summary: |
         Value field that can be used to vary the thickness of the ring. A 1D field will use the angle of the ring as the coordinate, scaled to a 0..1 range. A 3D field will use the absolute XYZ coordinates.
   parameters:

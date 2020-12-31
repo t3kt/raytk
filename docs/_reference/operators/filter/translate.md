@@ -19,9 +19,15 @@ op:
     - name: definition_in
       label: definition_in
       required: true
+      coordTypes: [vec2,vec3]
+      contextTypes: [none,Context,MaterialContext,CameraContext,LightContext,RayContext]
+      returnTypes: [float,vec4,Sdf,Ray,Light]
     - name: translate_field_definition_in
       label: Translate Field
       required: false
+      coordTypes: [vec2,vec3]
+      contextTypes: [none,Context,MaterialContext,CameraContext,LightContext,RayContext]
+      returnTypes: [float,vec4,Sdf]
       summary: |
         If provided, this field is used to control the amount of translation at each point in space. If the field returns a float (or SDF), the `Translate` parameter is *multiplied* by that value. If it returns a vec4, the parts are *added* to the `Translate` parameter parts.
   parameters:

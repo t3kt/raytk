@@ -14,6 +14,9 @@ op:
     - name: definition_in
       label: definition_in
       required: true
+      coordTypes: [float,vec2,vec3]
+      contextTypes: [none,Context,MaterialContext,CameraContext,LightContext,RayContext]
+      returnTypes: [vec4]
   parameters:
     - name: Enable
       label: Enable

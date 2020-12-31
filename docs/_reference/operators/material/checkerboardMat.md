@@ -14,6 +14,9 @@ op:
     - name: definition_in
       label: definition_in
       required: true
+      coordTypes: [vec3]
+      contextTypes: [none,Context]
+      returnTypes: [Sdf]
   parameters:
     - name: Enable
       label: Enable

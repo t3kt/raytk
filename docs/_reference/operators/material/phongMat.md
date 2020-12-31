@@ -15,9 +15,15 @@ op:
     - name: definition_in
       label: definition_in
       required: true
+      coordTypes: [vec3]
+      contextTypes: [none,Context]
+      returnTypes: [Sdf]
     - name: shadow_definition_in
       label: Shadow Definition
       required: false
+      coordTypes: [vec3]
+      contextTypes: [MaterialContext]
+      returnTypes: [float]
       summary: |
         Used to customize the behavior of shadows for the material. Only used if `Enableshadow` is on.
   parameters:

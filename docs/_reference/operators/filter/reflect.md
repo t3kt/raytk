@@ -17,9 +17,15 @@ op:
     - name: definition_in
       label: definition_in
       required: true
+      coordTypes: [vec3]
+      contextTypes: [none,Context,MaterialContext,CameraContext,LightContext]
+      returnTypes: [float,vec4,Sdf]
     - name: blend_func_definition_in
       label: blend_func_definition_in
       required: false
+      coordTypes: [float]
+      contextTypes: [none,Context,MaterialContext,CameraContext,LightContext,RayContext]
+      returnTypes: [float]
   parameters:
     - name: Enable
       label: Enable

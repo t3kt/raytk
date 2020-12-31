@@ -19,12 +19,21 @@ op:
     - name: definition_in_1
       label: definition_in_1
       required: true
+      coordTypes: [float,vec2,vec3]
+      contextTypes: [none,Context,MaterialContext,CameraContext,LightContext,RayContext]
+      returnTypes: [Sdf]
     - name: definition_in_2
       label: definition_in_2
       required: true
+      coordTypes: [float,vec2,vec3]
+      contextTypes: [none,Context,MaterialContext,CameraContext,LightContext,RayContext]
+      returnTypes: [Sdf]
     - name: radius_field_definition_in
       label: radius_field_definition_in
       required: false
+      coordTypes: [float,vec2,vec3]
+      contextTypes: [none,Context,MaterialContext,CameraContext,LightContext,RayContext]
+      returnTypes: [float,Sdf]
   parameters:
     - name: Enable
       label: Enable

@@ -17,6 +17,9 @@ op:
     - name: definition_in_1
       label: Spike Tip Shape
       required: false
+      coordTypes: [vec3]
+      contextTypes: [Context]
+      returnTypes: [Sdf]
       summary: |
         Optional SDF that is placed at the tip of each spike.
   parameters:

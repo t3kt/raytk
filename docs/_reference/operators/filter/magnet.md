@@ -18,14 +18,23 @@ op:
     - name: definition_in
       label: definition_in
       required: true
+      coordTypes: [vec2,vec3]
+      contextTypes: [none,Context,MaterialContext,CameraContext,LightContext,RayContext]
+      returnTypes: [float,vec4,Sdf,Ray,Light]
     - name: magnet_definition_in
       label: Magnet
       required: false
+      coordTypes: [vec2,vec3]
+      contextTypes: [none,Context,MaterialContext,CameraContext,LightContext,RayContext]
+      returnTypes: [float,vec4,Sdf]
       summary: |
         Magnet definition used to determine how much transformation to apply at each point. If this is an operator that produces an SDF or float value, that value is used to decide how far each point is from the magnet. If it returns a vec4, it is used to determine where the magnet center position is relative to each point.
     - name: easing_definition_in
       label: Easing
       required: false
+      coordTypes: [float]
+      contextTypes: [none,Context,MaterialContext,CameraContext,LightContext,RayContext]
+      returnTypes: [float]
       summary: |
         Easing function used to control how the blending region is smoothed.
   parameters:

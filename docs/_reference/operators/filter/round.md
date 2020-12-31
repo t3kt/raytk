@@ -18,9 +18,15 @@ op:
     - name: definition_in
       label: definition_in
       required: true
+      coordTypes: [float,vec2,vec3]
+      contextTypes: [none,Context,MaterialContext,CameraContext,LightContext,RayContext]
+      returnTypes: [float,vec4,Sdf]
     - name: amount_field_definition_in
       label: amount_field_definition_in
       required: false
+      coordTypes: [float,vec2,vec3]
+      contextTypes: [none,Context,MaterialContext,CameraContext,LightContext,RayContext]
+      returnTypes: [float]
   parameters:
     - name: Amount
       label: Amount

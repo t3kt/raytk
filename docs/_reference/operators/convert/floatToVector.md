@@ -14,15 +14,27 @@ op:
     - name: definition_in_1
       label: definition_in_1
       required: false
+      coordTypes: [vec2,vec3]
+      contextTypes: [none,Context,MaterialContext,CameraContext,LightContext,RayContext]
+      returnTypes: [float]
     - name: definition_in_2
       label: definition_in_2
       required: false
+      coordTypes: [vec2,vec3]
+      contextTypes: [none,Context,MaterialContext,CameraContext,LightContext,RayContext]
+      returnTypes: [float]
     - name: definition_in_3
       label: definition_in_3
       required: false
+      coordTypes: [vec2,vec3]
+      contextTypes: [none,Context,MaterialContext,CameraContext,LightContext,RayContext]
+      returnTypes: [float]
     - name: definition_in_4
       label: definition_in_4
       required: false
+      coordTypes: [vec2,vec3]
+      contextTypes: [none,Context,MaterialContext,CameraContext,LightContext,RayContext]
+      returnTypes: [float]
   parameters:
     - name: Enable
       label: Enable

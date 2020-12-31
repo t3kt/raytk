@@ -15,6 +15,9 @@ op:
     - name: definition_in
       label: definition_in
       required: true
+      coordTypes: [vec2,vec3]
+      contextTypes: [Context]
+      returnTypes: [float,vec4,Sdf]
   parameters:
     - name: Timerefop
       label: Time Reference Operator

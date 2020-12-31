@@ -18,6 +18,9 @@ op:
     - name: definition_in
       label: Wave Coordinate Source
       required: false
+      coordTypes: [float,vec2,vec3]
+      contextTypes: [none,Context,MaterialContext,CameraContext,LightContext,RayContext]
+      returnTypes: [float,vec4,Sdf]
       summary: |
         If attached, the wave will use this to determine the numbers that it passes to the wave function (instead of using the position along the chosen `Axis`).
   parameters:

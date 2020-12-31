@@ -17,17 +17,29 @@ op:
     - name: definition_in_1
       label: Camera Input 1
       required: true
+      coordTypes: [vec2]
+      contextTypes: [CameraContext]
+      returnTypes: [Ray]
     - name: definition_in_2
       label: Camera Input 2
       required: false
+      coordTypes: [vec2]
+      contextTypes: [CameraContext]
+      returnTypes: [Ray]
     - name: definition_in_3
       label: Camera Input 3
       required: false
+      coordTypes: [vec2]
+      contextTypes: [CameraContext]
+      returnTypes: [Ray]
       summary: |
         This is only used by the grid layout.
     - name: definition_in_4
       label: Camera Input 4
       required: false
+      coordTypes: [vec2]
+      contextTypes: [CameraContext]
+      returnTypes: [Ray]
       summary: |
         This is only used by the grid layout.
   parameters:

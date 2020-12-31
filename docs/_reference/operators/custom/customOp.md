@@ -14,15 +14,27 @@ op:
     - name: definition_in
       label: definition_in
       required: false
+      coordTypes: [vec2,vec3]
+      contextTypes: [none,Context]
+      returnTypes: [float,vec4,Sdf]
     - name: definition_in1
       label: definition_in1
       required: false
+      coordTypes: [vec2,vec3]
+      contextTypes: [none,Context]
+      returnTypes: [float,vec4,Sdf]
     - name: definition_in2
       label: definition_in2
       required: false
+      coordTypes: [vec2,vec3]
+      contextTypes: [none,Context]
+      returnTypes: [float,vec4,Sdf]
     - name: definition_in3
       label: definition_in3
       required: false
+      coordTypes: [vec2,vec3]
+      contextTypes: [none,Context]
+      returnTypes: [float,vec4,Sdf]
   parameters:
     - name: Enable
       label: Enable

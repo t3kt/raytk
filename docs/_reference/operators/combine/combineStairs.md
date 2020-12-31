@@ -15,17 +15,29 @@ op:
     - name: definition_in_1
       label: definition_in_1
       required: true
+      coordTypes: [vec2,vec3]
+      contextTypes: [none,Context,MaterialContext,CameraContext,LightContext,RayContext]
+      returnTypes: [Sdf]
     - name: definition_in_2
       label: definition_in_2
       required: true
+      coordTypes: [vec2,vec3]
+      contextTypes: [none,Context,MaterialContext,CameraContext,LightContext,RayContext]
+      returnTypes: [Sdf]
     - name: radius_definition_in
       label: Radius Field
       required: false
+      coordTypes: [vec2,vec3]
+      contextTypes: [none,Context,MaterialContext,CameraContext,LightContext,RayContext]
+      returnTypes: [float]
       summary: |
         Value field that can be used to vary the radius of the blend region at different points in space, by *multiplying* the value of the `Radius` parameter.
     - name: offset_definition_in
       label: Offset Field
       required: false
+      coordTypes: [vec2,vec3]
+      contextTypes: [none,Context,MaterialContext,CameraContext,LightContext,RayContext]
+      returnTypes: [float]
       summary: |
         Value field that can be used to vary the offset of the stairs at different points in space, by *adding* to the value of the `Offset` parameter.
   parameters:

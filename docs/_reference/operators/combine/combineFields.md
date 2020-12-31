@@ -15,9 +15,15 @@ op:
     - name: definition_in_1
       label: definition_in_1
       required: true
+      coordTypes: [vec2,vec3]
+      contextTypes: [Context]
+      returnTypes: [float,vec4]
     - name: definition_in_2
       label: definition_in_2
       required: true
+      coordTypes: [vec2,vec3]
+      contextTypes: [Context]
+      returnTypes: [float,vec4]
   parameters:
     - name: Enable
       label: Enable

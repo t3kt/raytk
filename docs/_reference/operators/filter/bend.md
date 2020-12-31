@@ -17,9 +17,15 @@ op:
     - name: definition_in
       label: definition_in
       required: true
+      coordTypes: [vec2,vec3]
+      contextTypes: [none,Context,MaterialContext,CameraContext,LightContext,RayContext]
+      returnTypes: [float,vec4,Sdf,Ray,Light]
     - name: definition_in_2
       label: Bend Field
       required: false
+      coordTypes: [float,vec2,vec3]
+      contextTypes: [none,Context,MaterialContext,CameraContext,LightContext,RayContext]
+      returnTypes: [float,Sdf]
       summary: |
         Value field that determines how much to bend. If this accepts 1D coords, it is passed the position along the bend axis. For 2D coords, both the bend axis and the bend direction are passed. For 3D coords, the relative XYZ position is passed.
   parameters:

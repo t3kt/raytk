@@ -15,11 +15,17 @@ op:
     - name: height_field_definition_in
       label: Height Field
       required: false
+      coordTypes: [vec3]
+      contextTypes: [Context]
+      returnTypes: [float]
       summary: |
         Value field that can be used to vary the height of the cone.
     - name: radius_field_definition_in
       label: Radius Field
       required: false
+      coordTypes: [vec3]
+      contextTypes: [Context]
+      returnTypes: [float]
       summary: |
         Value field that can be used to vary the radius (both base and top) of the cone.
   parameters:

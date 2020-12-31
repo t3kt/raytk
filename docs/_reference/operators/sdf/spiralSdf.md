@@ -17,6 +17,9 @@ op:
     - name: definition_in_1
       label: Cross Section Shape
       required: false
+      coordTypes: [vec2]
+      contextTypes: [none,Context,MaterialContext,CameraContext,LightContext]
+      returnTypes: [float,Sdf]
       summary: |
         2D SDF used as the cross section shape of the arms instead of the default rounded square.
   parameters:

@@ -14,6 +14,9 @@ op:
     - name: wave_definition_in
       label: wave_definition_in
       required: false
+      coordTypes: [float]
+      contextTypes: [none,Context,MaterialContext,CameraContext,LightContext,RayContext]
+      returnTypes: [float]
   parameters:
     - name: Enable
       label: Enable

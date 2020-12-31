@@ -14,6 +14,9 @@ op:
     - name: definition_in
       label: definition_in
       required: true
+      coordTypes: [float,vec2]
+      contextTypes: [Context]
+      returnTypes: [float,vec4,Sdf]
   parameters:
     - name: Res
       label: Resolution

@@ -14,12 +14,21 @@ op:
     - name: definition_in
       label: definition_in
       required: true
+      coordTypes: [float,vec2,vec3]
+      contextTypes: [none,Context,MaterialContext,CameraContext,LightContext,RayContext]
+      returnTypes: [float,vec4]
     - name: definition_in_2
       label: definition_in_2
       required: true
+      coordTypes: [float,vec2,vec3]
+      contextTypes: [none,Context,MaterialContext,CameraContext,LightContext,RayContext]
+      returnTypes: [float,vec4]
     - name: mix_definition_in
       label: mix definition in
       required: false
+      coordTypes: [float,vec2,vec3]
+      contextTypes: [none,Context,MaterialContext,CameraContext,LightContext,RayContext]
+      returnTypes: [float,vec4]
   parameters:
     - name: Enable
       label: Enable

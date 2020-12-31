@@ -15,21 +15,33 @@ op:
     - name: definition_in
       label: SDF Scene
       required: true
+      coordTypes: [vec3]
+      contextTypes: [Context]
+      returnTypes: [Sdf]
       summary: |
         SDF definition the shapes in the scene.
     - name: camera_definition_in
       label: Camera
       required: false
+      coordTypes: [vec2]
+      contextTypes: [CameraContext]
+      returnTypes: [Ray]
       summary: |
         Camera used for render frame.
     - name: light_definition_in
       label: Light
       required: false
+      coordTypes: [vec3]
+      contextTypes: [LightContext]
+      returnTypes: [Light]
       summary: |
         Light definition that can be used by supporting materials.
     - name: rayModifier_definition_in
       label: Ray Modifier
       required: false
+      coordTypes: [vec3]
+      contextTypes: [RayContext]
+      returnTypes: [Ray]
       summary: |
         Advanced feature, not ready for use.
   parameters:

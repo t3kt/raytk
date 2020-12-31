@@ -15,9 +15,15 @@ op:
     - name: definition_in
       label: definition_in
       required: true
+      coordTypes: [vec3]
+      contextTypes: [none,Context]
+      returnTypes: [Sdf]
     - name: color_definition_in
       label: color_definition_in
       required: true
+      coordTypes: [vec3]
+      contextTypes: [MaterialContext]
+      returnTypes: [vec4]
   parameters:
     - name: Enable
       label: Enable

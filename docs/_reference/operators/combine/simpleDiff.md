@@ -17,11 +17,17 @@ op:
     - name: definition_in_1
       label: definition_in_1
       required: true
+      coordTypes: [vec2,vec3]
+      contextTypes: [none,Context,MaterialContext,CameraContext,LightContext]
+      returnTypes: [float,Sdf]
       summary: |
         The first SDF, which has the second removed from it (unless `Swaporder` is used).
     - name: definition_in_2
       label: definition_in_2
       required: true
+      coordTypes: [vec2,vec3]
+      contextTypes: [none,Context,MaterialContext,CameraContext,LightContext]
+      returnTypes: [float,Sdf]
       summary: |
         The second SDF, which is removed from the first (unless `Swaporder` is used).
   parameters:
