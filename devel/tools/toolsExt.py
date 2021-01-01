@@ -3,12 +3,13 @@ import popMenu
 from raytkTools import RaytkTools
 from raytkUtil import RaytkTags, Tag, getActiveEditor, navigateTo, getChildROPs, recloneComp, RaytkContext, TypeTableHelper
 from raytkUtil import getToolkit, getToolkitVersion, Version
-from typing import Tuple, List
+from typing import List, Tuple, Union
 
 # noinspection PyUnreachableCode
 if False:
 	# noinspection PyUnresolvedReferences
 	from _stubs import *
+	from devel.toolkitEditor.toolkitEditor import ToolkitEditor
 
 class Tools:
 	def __init__(self, ownerComp: 'COMP'):
@@ -72,6 +73,7 @@ class Tools:
 			return
 		rop = rop.par.clone.eval() or rop
 		self.NavigateTo(rop.par.clone.eval())
+		self.toolkitEditor().EditROP(rop)
 
 	def setCurrentROPBeta(self, state: bool):
 		self.applyTagToCurrentROPs(RaytkTags.beta, state)
@@ -258,9 +260,12 @@ class Tools:
 			rop.nodeY = -int(i / 10) * 150
 			rop.nodeX = int(i % 10) * 200
 
+	def openToolkitEditor(self):
+		self.toolkitEditor().par.Open.pulse()
+
 	@staticmethod
-	def openToolkitEditor():
-		op('/toolkitEditor').par.Open.pulse()
+	def toolkitEditor() -> 'Union[ToolkitEditor, COMP]':
+		return op('/toolkitEditor')
 
 	def openPrototypeEditor(self):
 		self.openEditorWorkspace('devel/prototypes/')
