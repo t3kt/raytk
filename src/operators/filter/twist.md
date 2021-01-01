@@ -1,16 +1,17 @@
-Twists around an axis.
+Twists space around an axis.
 
 ## Parameters
 
 * `Enable`
-* `Axis`
+* `Axis`: The axis around which to twist.
   * `x`
   * `y`
   * `z`
-* `Amount`: How much twisting to apply.
-* `Shift`: Offsets the twisting along the axis, effectively rotating all space around it.
+* `Amount`: The amount of twisting to apply.
+* `Shift`: Offsets the twisting along the axis, effectively rotating everything equally around it.
 * `Inspect`
+* `Help`
 
 ## Inputs
 
-* `definition_in`
+* `definition_in`: 
