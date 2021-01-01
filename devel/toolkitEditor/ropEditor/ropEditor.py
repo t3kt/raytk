@@ -1,4 +1,6 @@
 from typing import Union, Optional, List
+
+from raytkDocs import OpDocManager
 from raytkUtil import ROPInfo, navigateTo, RaytkTags
 
 # noinspection PyUnreachableCode
@@ -53,12 +55,34 @@ class ROPEditor:
 	def ROPInfo(self):
 		return ROPInfo(self.ROP)
 
-	def ShowInEditor(self, popup=False):
+	def showInEditor(self, popup=False):
 		rop = self.ROP
 		if rop:
 			navigateTo(rop, goInto=True, popup=popup)
 
-	def CustomizeParameters(self):
+	def customizeParameters(self):
 		rop = self.ROP
 		if rop:
 			ui.openCOMPEditor(rop)
+
+	def setUpHelp(self):
+		info = self.ROPInfo
+		if not info:
+			return
+		manager = OpDocManager(info.rop)
+		ui.undo.startBlock('Set up ROP help for ' + info.rop.path)
+		try:
+			manager.setUpMissingParts()
+		finally:
+			ui.undo.endBlock()
+
+	def reloadHelp(self):
+		info = self.ROPInfo
+		if not info:
+			return
+		manager = OpDocManager(info.rop)
+		ui.undo.startBlock('Apply ROP help to params for ' + rop.path)
+		try:
+			manager.pushToParamsAndInputs()
+		finally:
+			ui.undo.endBlock()
