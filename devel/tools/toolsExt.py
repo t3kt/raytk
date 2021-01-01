@@ -1,8 +1,7 @@
 from develCommon import AutoLoader
 import popMenu
-from raytkDocs import OpDocManager
 from raytkTools import RaytkTools
-from raytkUtil import RaytkTags, ROPInfo, Tag, getActiveEditor, navigateTo, getChildROPs, recloneComp, RaytkContext, TypeTableHelper
+from raytkUtil import RaytkTags, Tag, getActiveEditor, navigateTo, getChildROPs, recloneComp, RaytkContext, TypeTableHelper
 from raytkUtil import getToolkit, getToolkitVersion, Version
 from typing import Tuple, List
 
@@ -67,30 +66,6 @@ class Tools:
 			rop = self.GetCurrentROP()
 		RaytkTools().saveROP(rop, incrementVersion)
 
-	@staticmethod
-	def updateROPParams(rop: 'COMP'):
-		if rop.customPages:
-			page = rop.customPages[0]
-		else:
-			page = rop.appendCustomPage('Settings')
-		ropInfo = ROPInfo(rop)
-		if ropInfo.isROP and ropInfo.hasROPInputs and not ropInfo.isOutput:
-			enablePar = rop.par['Enable']
-			if enablePar is None:
-				enablePar = page.appendToggle('Enable')[0]
-				enablePar.val = True
-			enablePar.order = -1
-			enablePar.default = True
-			if ropInfo.opDefPar and not ropInfo.opDefPar.Enable.expr:
-				ropInfo.opDefPar.Enable.expr = "op('..').par.Enable"
-
-		if ropInfo.isROP or ropInfo.subROPs:
-			inspectPar = rop.par['Inspect']
-			if inspectPar is None:
-				inspectPar = page.appendPulse('Inspect')[0]
-			inspectPar.startSection = True
-			inspectPar.order = 99999 
-
 	def editCurrentROPMaster(self):
 		rop = self.GetCurrentROP()
 		if not rop:
@@ -108,37 +83,14 @@ class Tools:
 		self.applyTagToCurrentROPs(RaytkTags.deprecated, state)
 
 	def setUpCurrentROPHelp(self):
-		rops = self.getCurrentROPs()
-		for rop in rops:
-			self.setUpROPHelp(rop)
+		tools = RaytkTools()
+		for rop in self.getCurrentROPs():
+			tools.setUpHelp(rop)
 
 	def reloadCurrentROPHelp(self):
+		tools = RaytkTools()
 		for rop in self.getCurrentROPs():
-			self.reloadROPHelp(rop)
-
-	@staticmethod
-	def setUpROPHelp(rop: 'COMP'):
-		info = ROPInfo(rop)
-		if not info:
-			return
-		manager = OpDocManager(info)
-		ui.undo.startBlock('Set up ROP help for ' + rop.path)
-		try:
-			manager.setUpMissingParts()
-		finally:
-			ui.undo.endBlock()
-
-	@staticmethod
-	def reloadROPHelp(rop: 'COMP'):
-		info = ROPInfo(rop)
-		if not info:
-			return
-		manager = OpDocManager(info)
-		ui.undo.startBlock('Apply ROP help to params for ' + rop.path)
-		try:
-			manager.pushToParamsAndInputs()
-		finally:
-			ui.undo.endBlock()
+			tools.reloadHelp(rop)
 
 	def addCurrentROPMacroTable(self):
 		rop = self.GetCurrentROP()

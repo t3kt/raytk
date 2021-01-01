@@ -239,6 +239,7 @@ class ROPHelp:
 				'\n'.join([
 					parHelp.formatMarkdownListItem()
 					for parHelp in self.parameters
+					if parHelp.name not in ('Help', 'Inspect')
 				])
 			]
 		if self.inputs:

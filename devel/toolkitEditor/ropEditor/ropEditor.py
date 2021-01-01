@@ -1,6 +1,7 @@
 from typing import Union, Optional, List
 
 from raytkDocs import OpDocManager
+from raytkTools import RaytkTools
 from raytkUtil import ROPInfo, navigateTo, RaytkTags
 
 # noinspection PyUnreachableCode
@@ -67,22 +68,15 @@ class ROPEditor:
 
 	def setUpHelp(self):
 		info = self.ROPInfo
-		if not info:
-			return
-		manager = OpDocManager(info.rop)
-		ui.undo.startBlock('Set up ROP help for ' + info.rop.path)
-		try:
-			manager.setUpMissingParts()
-		finally:
-			ui.undo.endBlock()
+		if info:
+			RaytkTools().setUpHelp(info.rop)
 
 	def reloadHelp(self):
 		info = self.ROPInfo
-		if not info:
-			return
-		manager = OpDocManager(info.rop)
-		ui.undo.startBlock('Apply ROP help to params for ' + rop.path)
-		try:
-			manager.pushToParamsAndInputs()
-		finally:
-			ui.undo.endBlock()
+		if info:
+			RaytkTools().reloadHelp(info.rop)
+
+	def saveROP(self, incrementVersion: bool):
+		info = self.ROPInfo
+		if info:
+			RaytkTools().saveROP(info.rop, incrementVersion)

@@ -89,4 +89,26 @@ class RaytkTools(RaytkContext):
 		rop.save(tox)
 		ui.status = f'Saved TOX {tox} (version: {info.opVersion})'
 
+	@staticmethod
+	def setUpHelp(rop: 'COMP'):
+		info = ROPInfo(rop)
+		if not info or not info.isMaster:
+			return
+		manager = OpDocManager(info.rop)
+		ui.undo.startBlock('Set up ROP help for ' + info.rop.path)
+		try:
+			manager.setUpMissingParts()
+		finally:
+			ui.undo.endBlock()
 
+	@staticmethod
+	def reloadHelp(rop: 'COMP'):
+		info = ROPInfo(rop)
+		if not info or not info.isMaster:
+			return
+		manager = OpDocManager(info.rop)
+		ui.undo.startBlock('Apply ROP help to params for ' + info.rop.path)
+		try:
+			manager.pushToParamsAndInputs()
+		finally:
+			ui.undo.endBlock()
