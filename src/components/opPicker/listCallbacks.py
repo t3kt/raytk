@@ -2,8 +2,8 @@
 if False:
 	# noinspection PyUnresolvedReferences
 	from _stubs import *
-	from .palette import Palette
-	ext.palette = Palette(COMP())
+	from .opPicker import OpPicker
+	ext.opPicker = OpPicker(COMP())
 
 # me - this DAT
 # 
@@ -65,13 +65,13 @@ if False:
 # called when Reset parameter is pulsed, or on load
 
 def onInitCell(comp, row, col, attribs):
-	ext.palette.onInitCell(row, col, attribs)
+	ext.opPicker.onInitCell(row, col, attribs)
 def onInitRow(comp, row, attribs):
-	ext.palette.onInitRow(row, attribs)
+	ext.opPicker.onInitRow(row, attribs)
 def onInitCol(comp, col, attribs):
-	ext.palette.onInitCol(col, attribs)
+	ext.opPicker.onInitCol(col, attribs)
 def onInitTable(comp, attribs):
-	ext.palette.onInitTable(attribs)
+	ext.opPicker.onInitTable(attribs)
 
 # called during specific events
 #
@@ -82,16 +82,16 @@ def onInitTable(comp, attribs):
 #   v
 
 def onRollover(comp, row, col, coords, prevRow, prevCol, prevCoords):
-	ext.palette.onRollover(row, col, prevRow, prevCol)
+	ext.opPicker.onRollover(row, col, prevRow, prevCol)
 
 def onSelect(comp, startRow, startCol, startCoords, endRow, endCol, endCoords, start, end):
-	ext.palette.onSelect(startRow, startCol, endRow, endCol, start, end)
+	ext.opPicker.onSelect(startRow, startCol, endRow, endCol, start, end)
 
 def onRadio(comp, row, col, prevRow, prevCol):
-	ext.palette.onRadio(row, col, prevRow, prevCol)
+	ext.opPicker.onRadio(row, col, prevRow, prevCol)
 
 def onFocus(comp, row, col, prevRow, prevCol):
-	ext.palette.onFocus(row, col, prevRow, prevCol)
+	ext.opPicker.onFocus(row, col, prevRow, prevCol)
 
 def onEdit(comp, row, col, val):
 	return
