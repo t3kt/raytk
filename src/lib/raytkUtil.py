@@ -659,6 +659,14 @@ class RaytkContext:
 	def activeEditor():
 		return getActiveEditor()
 
+	def opTable(self) -> 'Optional[DAT]':
+		toolkit = self.toolkit()
+		return toolkit and toolkit.op('opTable')
+
+	def opHelpTable(self) -> 'Optional[DAT]':
+		toolkit = self.toolkit()
+		return toolkit and toolkit.op('opHelpTable')
+
 	@staticmethod
 	def currentROPs(
 			primaryOnly=False,

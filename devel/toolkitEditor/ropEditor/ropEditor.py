@@ -9,6 +9,7 @@ if False:
 	# noinspection PyUnresolvedReferences
 	from _stubs import *
 	from components.inspectorCore.inspectorCoreExt import InspectorCore
+	from components.opPicker.opPicker import PickerItem
 	# noinspection PyTypeHints
 	iop.inspectorCore = InspectorCore(COMP())  # type: Union[COMP, InspectorCore]
 
@@ -80,3 +81,11 @@ class ROPEditor:
 		info = self.ROPInfo
 		if info:
 			RaytkTools().saveROP(info.rop, incrementVersion)
+
+	def onEditItem(self, item: 'PickerItem'):
+		if not item or not item.isOP:
+			return
+		self.LoadROP(item.path)
+
+	def onKeyboardShortcut(self, shorcutName: str):
+		pass

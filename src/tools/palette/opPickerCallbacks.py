@@ -2,7 +2,7 @@
 if False:
 	# noinspection PyUnresolvedReferences
 	from _stubs import *
-	from.palette import Palette
+	from .palette import Palette
 
 	ext.palette = Palette(COMP())
 
@@ -14,6 +14,3 @@ def onPickItem(info: dict):
 
 def onEditItem(info: dict):
 	ext.palette.onEditItem(info.get('item'))
-
-def onSelectionChange(info: dict):
-	ext.palette.onSelectionChange(info.get('item'))

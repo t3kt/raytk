@@ -176,6 +176,3 @@ class Palette:
 		template = self._getTemplate(item)
 		if template:
 			op.raytkDevelEditor.EditROP(template)
-
-	def onSelectionChange(self, item: 'Optional[PickerItem]'):
-		pass

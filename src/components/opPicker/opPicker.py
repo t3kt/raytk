@@ -1,5 +1,6 @@
 from dataclasses import dataclass, field
 from typing import Dict, List, Union, Optional
+from raytkUtil import RaytkContext
 
 # noinspection PyUnreachableCode
 if False:
@@ -76,6 +77,14 @@ class OpPicker:
 		self.Loaditems()
 
 	@property
+	def opTable(self) -> 'Optional[DAT]':
+		return RaytkContext().opTable()
+
+	@property
+	def opHelpTable(self) -> 'Optional[DAT]':
+		return RaytkContext().opHelpTable()
+
+	@property
 	def _listComp(self) -> 'listCOMP':
 		return self.ownerComp.op('list')
 
@@ -111,7 +120,6 @@ class OpPicker:
 			self._setRowHighlight(row, True)
 			if scroll:
 				self._listComp.scroll(row, 0)
-		self.onSelectionChange()
 
 	def FocusFilterField(self):
 		filterField = self._filterTextField
@@ -202,9 +210,6 @@ class OpPicker:
 			return
 		ext.callbacks.DoCallback('onEditItem', {'item': item})
 
-	def onSelectionChange(self):
-		ext.callbacks.DoCallback('onSelectionChange', {'item': self.SelectedItem})
-
 	def _printAndStatus(self, msg):
 		print(self.ownerComp, msg)
 		ui.status = msg
@@ -248,7 +253,8 @@ class OpPicker:
 		elif item.isDeprecated:
 			attribs.textColor = ipar.listConfig.Deprecatedcolorr, ipar.listConfig.Deprecatedcolorg, ipar.listConfig.Deprecatedcolorb
 
-	def onInitCol(self, col: int, attribs: 'ListAttributes'):
+	@staticmethod
+	def onInitCol(col: int, attribs: 'ListAttributes'):
 		if col == 0:
 			attribs.colStretch = True
 		elif col == 1:
@@ -256,7 +262,8 @@ class OpPicker:
 		elif col == 2:
 			attribs.colWidth = 26
 
-	def onInitTable(self, attribs: 'ListAttributes'):
+	@staticmethod
+	def onInitTable(attribs: 'ListAttributes'):
 		attribs.rowHeight = 26
 		attribs.bgColor = ipar.listConfig.Bgcolorr, ipar.listConfig.Bgcolorg, ipar.listConfig.Bgcolorb
 		attribs.textColor = ipar.listConfig.Textcolorr, ipar.listConfig.Textcolorg, ipar.listConfig.Textcolorb
@@ -489,5 +496,3 @@ def _splitCamelCase(s: str):
 		return [s]
 	splits = [0] + splits
 	return [s[x:y] for x, y in zip(splits, splits[1:])]
-
-

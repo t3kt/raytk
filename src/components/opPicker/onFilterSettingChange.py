@@ -2,8 +2,8 @@
 if False:
 	# noinspection PyUnresolvedReferences
 	from _stubs import *
-	from .palette import Palette
-	ext.palette = Palette(COMP())
+	from .opPicker import OpPicker
+	ext.opPicker = OpPicker(COMP())
 
 def onValueChange(par, prev):
-	ext.palette.onFilterSettingChange()
+	ext.opPicker.onFilterSettingChange()
