@@ -127,7 +127,7 @@ cylinderSdf	/raytk/operators/sdf/cylinderSdf	/raytk/operators/sdf	raytkOP	sdf	sd
 discSdf	/raytk/operators/sdf/discSdf	/raytk/operators/sdf	raytkOP	sdf	sdf/discSdf	raytk.operators.sdf.discSdf	1	
 dodecahedronFractalSdf	/raytk/operators/sdf/dodecahedronFractalSdf	/raytk/operators/sdf	raytkOP	sdf	sdf/dodecahedronFractalSdf	raytk.operators.sdf.dodecahedronFractalSdf	0	beta
 generalizedPolyhedronSdf	/raytk/operators/sdf/generalizedPolyhedronSdf	/raytk/operators/sdf	raytkOP	sdf	sdf/generalizedPolyhedronSdf	raytk.operators.sdf.generalizedPolyhedronSdf	2	
-geodesicSdf	/raytk/operators/sdf/geodesicSdf	/raytk/operators/sdf	raytkOP	sdf	sdf/geodesicSdf	raytk.operators.sdf.geodesicSdf	3	
+geodesicSdf	/raytk/operators/sdf/geodesicSdf	/raytk/operators/sdf	raytkOP	sdf	sdf/geodesicSdf	raytk.operators.sdf.geodesicSdf	4	
 gridSdf	/raytk/operators/sdf/gridSdf	/raytk/operators/sdf	raytkOP	sdf	sdf/gridSdf	raytk.operators.sdf.gridSdf	2	
 gyroidSdf	/raytk/operators/sdf/gyroidSdf	/raytk/operators/sdf	raytkOP	sdf	sdf/gyroidSdf	raytk.operators.sdf.gyroidSdf	2	
 juliaSdf	/raytk/operators/sdf/juliaSdf	/raytk/operators/sdf	raytkOP	sdf	sdf/juliaSdf	raytk.operators.sdf.juliaSdf	0	

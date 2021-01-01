@@ -108,7 +108,7 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 	#endif
 
 	float d = RAYTK_MAX_DIST;
-	#if defined(THIS_Enablespikes) || defined(THIS_HAS_INPUT_1)
+	#if defined(THIS_Enablespikes)
 	float spikeSize = .08 + (2. - s) * THIS_Spikeradius;
 	d = min(d, fCone(p, spikeSize, THIS_Spikelength, n, THIS_Spikeoffset));
 	#endif

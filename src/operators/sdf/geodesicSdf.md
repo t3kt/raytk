@@ -15,8 +15,7 @@ Based on [Geodesic domain manipulation](https://www.shadertoy.com/view/4tG3zW) b
 * `Spikelength`: The length of the spikes.
 * `Spikeoffset`: The distance from the center point of the base of each spike.
 * `Spikeradius`: The base radius of each spike.
-* `Inspect`
 
 ## Inputs
 
-* `definition_in_1` *Spike Tip Shape*: Optional SDF that is placed at the tip of each spike.
+* `definition_in_1`:  Optional SDF that is placed at the tip of each spike.
