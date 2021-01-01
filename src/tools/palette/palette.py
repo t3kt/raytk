@@ -58,6 +58,7 @@ class Palette:
 		self._resetState()
 		self.isOpen.val = True
 		ipar.uiState.Pinopen = False
+		ext.opPicker.Loaditems()
 		ext.opPicker.FocusFilterField()
 
 	def close(self):

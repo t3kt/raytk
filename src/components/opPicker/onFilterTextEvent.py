@@ -2,8 +2,8 @@
 if False:
 	# noinspection PyUnresolvedReferences
 	from _stubs import *
-	from .palette import Palette
-	ext.palette = Palette(COMP())
+	from .opPicker import OpPicker
+	ext.opPicker = OpPicker(COMP())
 
 def onValueChange(panelValue: 'PanelValue', prev):
-	ext.palette.setFilterText(panelValue.val)
+	ext.opPicker.setFilterText(panelValue.val)
