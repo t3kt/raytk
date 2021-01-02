@@ -4,7 +4,7 @@ from typing import Dict, Iterable, List, Optional, Tuple
 from io import StringIO
 
 from raytkUtil import ROPInfo, stripFirstMarkdownHeader, stripFrontMatter, \
-	CategoryInfo, RaytkTags
+	CategoryInfo, RaytkTags, inputHandlerNameAndLabel
 
 # noinspection PyUnreachableCode
 if False:
@@ -117,22 +117,11 @@ class InputHelp:
 
 	@classmethod
 	def extractFromInputHandler(cls, inputHandler: 'COMP'):
-		dat = inputHandler.inputs[0]
-		if not isinstance(dat, inDAT):
-			inHelp = cls(
-				name=inputHandler.name.replace('inputDefinitionHandler_', 'definition_in_'),
-			)
-		else:
-			inHelp = cls(
-				name=dat.name
-			)
-			p = dat.par.label  # type: Par
-			if not p.isDefault:
-				# noinspection PyBroadException
-				try:
-					inHelp.label = p.eval()
-				except Exception:
-					pass
+		name, label = inputHandlerNameAndLabel(inputHandler)
+		inHelp = cls(
+			name=name,
+			label=label,
+		)
 		inHelp.required = inputHandler.par.Required.eval()
 		supportedTypeTable = inputHandler.op('supported_type_table')
 		inHelp.coordTypes = tdu.split(supportedTypeTable['coordType', 1])
@@ -606,9 +595,7 @@ class OpDocManager:
 
 	def _pullFromMissingInputsInto(self, ropHelp: 'ROPHelp'):
 		inHelps = ropHelp.inputs
-		handlers = self.rop.ops('inputDefinitionHandler_*')
-		handlers.sort(key=lambda o: o.nodeY, reverse=True)
-		for i, handler in enumerate(handlers):
+		for i, handler in enumerate(self.info.inputHandlers):
 			extractedHelp = InputHelp.extractFromInputHandler(handler)
 			if i < len(inHelps):
 				inHelps[i].mergeFrom(extractedHelp)

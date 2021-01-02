@@ -97,7 +97,7 @@ class ROPInfo:
 	opDef: 'Optional[COMP]'
 	opDefPar: 'Optional[Union[ParCollection, OpDefParsT, CompDefParsT]]'
 
-	def __init__(self, o: 'Union[OP, str, Cell]'):
+	def __init__(self, o: 'Union[OP, str, Cell, Par]'):
 		o = op(o)
 		if not o:
 			return
@@ -256,6 +256,19 @@ class ROPInfo:
 		return False
 
 	@property
+	def inputHandlers(self) -> 'List[COMP]':
+		if not self:
+			return []
+		handlers = self.rop.ops('inputDefinitionHandler_*')
+		handlers.sort(key=lambda o: o.nodeY, reverse=True)
+		return handlers
+
+	@property
+	def multiInputHandler(self) -> 'Optional[COMP]':
+		if self:
+			return self.rop.op('multiInputHandler')
+
+	@property
 	def isOutput(self):
 		return RaytkTags.raytkOutput.isOn(self.rop)
 
@@ -292,6 +305,23 @@ class ROPInfo:
 		cb = self.callbacks
 		if cb and hasattr(cb, name):
 			getattr(cb, name)(**kwargs)
+
+def inputHandlerNameAndLabel(inputHandler: 'COMP') -> 'Tuple[str, str]':
+	if not inputHandler:
+		return '', ''
+	dat = inputHandler.inputs[0]
+	if not isinstance(dat, inDAT):
+		return inputHandler.name.replace('inputDefinitionHandler_', 'definition_in_'), ''
+	name = dat.name
+	label = ''
+	p = dat.par.label  # type: Par
+	if not p.isDefault:
+		# noinspection PyBroadException
+		try:
+			label = p.eval()
+		except Exception:
+			pass
+	return name, label
 
 class CategoryInfo:
 	category: COMP
