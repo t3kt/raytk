@@ -119,6 +119,8 @@ struct Time {
 	float bpm;
 	float absFrame;
 	float absSeconds;
+	float absStepFrames;
+	float absStepSeconds;
 };
 
 Time getGlobalTime();

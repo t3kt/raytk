@@ -1,10 +1,12 @@
-name	label	expr	returnType
-seconds	Seconds	time.seconds	float
-frame	Frame	time.frame	float
-start	Start Frame	time.start	float
-end	End Frame	time.end	float
-fraction	Fraction	time_fraction(time)	float
-rate	Frame Rate	time.rate	float
-bpm	BPM	time.bpm	float
-absFrame	Absolute Frame	time.absFrame	float
-absSeconds	Absolute Seconds	time.absSeconds	float
+name	label	expr	returnType	absolute
+seconds	Seconds	time.seconds	float	0
+frame	Frame	time.frame	float	0
+start	Start Frame	time.start	float	0
+end	End Frame	time.end	float	0
+fraction	Fraction	time_fraction(time)	float	0
+rate	Frame Rate	time.rate	float	0
+bpm	BPM	time.bpm	float	0
+absFrame	Absolute Frame	time.absFrame	float	1
+absSeconds	Absolute Seconds	time.absSeconds	float	1
+absStepFrames	Absolute Step Frames	time.absStepFrames	float	1
+absStepSeconds	Absolute Step Seconds	time.absStepSeconds	float	1
