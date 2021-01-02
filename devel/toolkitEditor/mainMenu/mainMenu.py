@@ -93,7 +93,6 @@ def _parToggler(
 		par = getPar()
 		par.val = not par.val
 
-	p = getPar()
 	return _MenuItem(
 		name,
 		label,
