@@ -144,6 +144,7 @@ prismSdf	/raytk/operators/sdf/prismSdf	/raytk/operators/sdf	raytkOP	sdf	sdf/pris
 pyramidSdf	/raytk/operators/sdf/pyramidSdf	/raytk/operators/sdf	raytkOP	sdf	sdf/pyramidSdf	raytk.operators.sdf.pyramidSdf	2	
 sierpinskiTetrahedronSdf	/raytk/operators/sdf/sierpinskiTetrahedronSdf	/raytk/operators/sdf	raytkOP	sdf	sdf/sierpinskiTetrahedronSdf	raytk.operators.sdf.sierpinskiTetrahedronSdf	3	alpha
 solidAngleSdf	/raytk/operators/sdf/solidAngleSdf	/raytk/operators/sdf	raytkOP	sdf	sdf/solidAngleSdf	raytk.operators.sdf.solidAngleSdf	1	
+sphereFbmSdf	/raytk/operators/sdf/sphereFbmSdf	/raytk/operators/sdf	raytkOP	sdf	sdf/sphereFbmSdf	raytk.operators.sdf.sphereFbmSdf	0	
 sphereSdf	/raytk/operators/sdf/sphereSdf	/raytk/operators/sdf	raytkOP	sdf	sdf/sphereSdf	raytk.operators.sdf.sphereSdf	4	
 spiralSdf	/raytk/operators/sdf/spiralSdf	/raytk/operators/sdf	raytkOP	sdf	sdf/spiralSdf	raytk.operators.sdf.spiralSdf	1	
 tetrahedronSdf	/raytk/operators/sdf/tetrahedronSdf	/raytk/operators/sdf	raytkOP	sdf	sdf/tetrahedronSdf	raytk.operators.sdf.tetrahedronSdf	3	
