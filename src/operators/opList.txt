@@ -102,10 +102,10 @@ hardShadow	/raytk/operators/light/hardShadow	/raytk/operators/light	raytkOP	ligh
 pointLight	/raytk/operators/light/pointLight	/raytk/operators/light	raytkOP	light	light/pointLight	raytk.operators.light.pointLight	3	
 softShadow	/raytk/operators/light/softShadow	/raytk/operators/light	raytkOP	light	light/softShadow	raytk.operators.light.softShadow	4	
 basicMat	/raytk/operators/material/basicMat	/raytk/operators/material	raytkOP	material	material/basicMat	raytk.operators.material.basicMat	8	
-checkerboardMat	/raytk/operators/material/checkerboardMat	/raytk/operators/material	raytkOP	material	material/checkerboardMat	raytk.operators.material.checkerboardMat	3	
+checkerboardMat	/raytk/operators/material/checkerboardMat	/raytk/operators/material	raytkOP	material	material/checkerboardMat	raytk.operators.material.checkerboardMat	4	beta
 fieldMat	/raytk/operators/material/fieldMat	/raytk/operators/material	raytkOP	material	material/fieldMat	raytk.operators.material.fieldMat	2	
 phongMat	/raytk/operators/material/phongMat	/raytk/operators/material	raytkOP	material	material/phongMat	raytk.operators.material.phongMat	5	
-sampledPointMat	/raytk/operators/material/sampledPointMat	/raytk/operators/material	raytkOP	material	material/sampledPointMat	raytk.operators.material.sampledPointMat	5	
+sampledPointMat	/raytk/operators/material/sampledPointMat	/raytk/operators/material	raytkOP	material	material/sampledPointMat	raytk.operators.material.sampledPointMat	6	beta
 customFilter	/raytk/operators/misc/customFilter	/raytk/operators/misc	raytkDeprecated raytkOP	misc	misc/customFilter	raytk.operators.misc.customFilter	4	deprecated
 customGen	/raytk/operators/misc/customGen	/raytk/operators/misc	raytkDeprecated raytkOP	misc	misc/customGen	raytk.operators.misc.customGen	5	deprecated
 customRender	/raytk/operators/output/customRender	/raytk/operators/output	raytkOP raytkOutput	output	output/customRender	raytk.operators.output.customRender	6	alpha
