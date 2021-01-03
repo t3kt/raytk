@@ -1,0 +1,6 @@
+{
+  "meta": {
+    "opType": "raytk.operators.sdf.generalizedPolyhedronSdf",
+    "opVersion": 2
+  }
+}

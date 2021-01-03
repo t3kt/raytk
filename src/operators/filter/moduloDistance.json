@@ -1,0 +1,6 @@
+{
+  "meta": {
+    "opType": "raytk.operators.filter.moduloDistance",
+    "opVersion": 3
+  }
+}
