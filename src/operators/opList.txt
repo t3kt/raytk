@@ -8,10 +8,10 @@ splitCamera	/raytk/operators/camera/splitCamera	/raytk/operators/camera	raytkOP	
 blend	/raytk/operators/combine/blend	/raytk/operators/combine	raytkOP	combine	combine/blend	raytk.operators.combine.blend	5	
 boundLimit	/raytk/operators/combine/boundLimit	/raytk/operators/combine	raytkOP	combine	combine/boundLimit	raytk.operators.combine.boundLimit	3	alpha
 combine	/raytk/operators/combine/combine	/raytk/operators/combine	raytkOP	combine	combine/combine	raytk.operators.combine.combine	7	
-combineChamfer	/raytk/operators/combine/combineChamfer	/raytk/operators/combine	raytkOP	combine	combine/combineChamfer	raytk.operators.combine.combineChamfer	4	
-combineColumns	/raytk/operators/combine/combineColumns	/raytk/operators/combine	raytkOP	combine	combine/combineColumns	raytk.operators.combine.combineColumns	8	
+combineChamfer	/raytk/operators/combine/combineChamfer	/raytk/operators/combine	raytkOP	combine	combine/combineChamfer	raytk.operators.combine.combineChamfer	5	
+combineColumns	/raytk/operators/combine/combineColumns	/raytk/operators/combine	raytkOP	combine	combine/combineColumns	raytk.operators.combine.combineColumns	9	
 combineFields	/raytk/operators/combine/combineFields	/raytk/operators/combine	raytkOP	combine	combine/combineFields	raytk.operators.combine.combineFields	6	
-combineStairs	/raytk/operators/combine/combineStairs	/raytk/operators/combine	raytkOP	combine	combine/combineStairs	raytk.operators.combine.combineStairs	6	
+combineStairs	/raytk/operators/combine/combineStairs	/raytk/operators/combine	raytkOP	combine	combine/combineStairs	raytk.operators.combine.combineStairs	7	
 edgeEngrave	/raytk/operators/combine/edgeEngrave	/raytk/operators/combine	raytkOP	combine	combine/edgeEngrave	raytk.operators.combine.edgeEngrave	2	
 edgeGroove	/raytk/operators/combine/edgeGroove	/raytk/operators/combine	raytkOP	combine	combine/edgeGroove	raytk.operators.combine.edgeGroove	2	
 edgePipe	/raytk/operators/combine/edgePipe	/raytk/operators/combine	raytkOP	combine	combine/edgePipe	raytk.operators.combine.edgePipe	2	

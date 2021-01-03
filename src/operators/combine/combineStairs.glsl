@@ -12,7 +12,7 @@ Sdf thismap(CoordT p, ContextT ctx) {
 	Sdf res1 = THIS_INPUT_1(p, ctx);
 	Sdf res2 = THIS_INPUT_2(p, ctx);
 	res1.x = THIS_FUNC(res1.x, res2.x, radius, THIS_Number, offset * radius);
-	float h = clamp(0.5 - 0.5*(res2.x+res1.x)/radius, 0., 1.);
+	float h = smoothBlendRatio(res1.x, res2.x, radius);
 	blendInSdf(res1, res2, h);
 	return res1;
 }
