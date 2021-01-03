@@ -25,6 +25,10 @@ class Tools:
 		version = context.toolkitVersion()
 		setToolkitVersion(Version(version.major, version.minor + 1))
 
+	@property
+	def toolkitVersion(self):
+		return RaytkContext().toolkitVersion()
+
 	@staticmethod
 	def ShowLibraryParams():
 		RaytkContext().toolkit().openParameters()
