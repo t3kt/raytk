@@ -142,7 +142,7 @@ class OpPicker:
 	def refreshList(self):
 		listComp = self._listComp
 		listComp.par.rows = self.itemLibrary.currentItemCount
-		listComp.par.cols = 3 if self._showEdit else 2
+		listComp.par.cols = 4 if self._showEdit else 3
 		listComp.par.reset.pulse()
 
 	def _offsetSelection(self, offset: int):
@@ -218,22 +218,28 @@ class OpPicker:
 		item = self.itemLibrary.itemForRow(row)
 		if not item:
 			return
-		if col == 0:
+		if col == 1:
 			attribs.text = item.shortName
 		if isinstance(item, PickerCategoryItem):
 			if col == 0:
+				if item.collapsed:
+					attribs.top = self.ownerComp.op('expandIcon')
+				else:
+					attribs.top = self.ownerComp.op('collapseIcon')
+				attribs.bgColor = ipar.listConfig.Buttonbgcolorr, ipar.listConfig.Buttonbgcolorg, ipar.listConfig.Buttonbgcolorb, 1
+			elif col == 1:
 				attribs.textOffsetX = 5
 		elif isinstance(item, PickerOpItem):
-			if col == 0:
+			if col == 1:
 				attribs.textOffsetX = 20
-			elif col == 1:
+			elif col == 2:
 				if item.isAlpha:
 					attribs.top = self.ownerComp.op('alphaIcon')
 				elif item.isBeta:
 					attribs.top = self.ownerComp.op('betaIcon')
 				elif item.isDeprecated:
 					attribs.top = self.ownerComp.op('deprecatedIcon')
-			elif col == 2:
+			elif col == 3:
 				attribs.top = self.ownerComp.op('editIcon')
 				attribs.bgColor = ipar.listConfig.Buttonbgcolorr, ipar.listConfig.Buttonbgcolorg, ipar.listConfig.Buttonbgcolorb, 1
 
@@ -256,10 +262,12 @@ class OpPicker:
 	@staticmethod
 	def onInitCol(col: int, attribs: 'ListAttributes'):
 		if col == 0:
-			attribs.colStretch = True
+			attribs.colWidth = 26
 		elif col == 1:
-			attribs.colWidth = 30
+			attribs.colStretch = True
 		elif col == 2:
+			attribs.colWidth = 30
+		elif col == 3:
 			attribs.colWidth = 26
 
 	@staticmethod
@@ -286,6 +294,7 @@ class OpPicker:
 	def _setRowHighlight(self, row: int, selected: bool):
 		if row < 0:
 			return
+		# print(self.ownerComp, f'setRowHighlight(row: {row!r}, sel: {selected!r})')
 		if selected:
 			color = ipar.listConfig.Rolloverhighlightcolorr, ipar.listConfig.Rolloverhighlightcolorg, ipar.listConfig.Rolloverhighlightcolorb, 1
 		else:
@@ -298,7 +307,7 @@ class OpPicker:
 		cellAttribs = listComp.cellAttribs[row, 0]
 		if cellAttribs:
 			cellAttribs.leftBorderInColor = color
-		cellAttribs = listComp.cellAttribs[row, 2 if self._showEdit else 1]
+		cellAttribs = listComp.cellAttribs[row, 3 if self._showEdit else 2]
 		if cellAttribs:
 			cellAttribs.rightBorderOutColor = color
 
@@ -312,12 +321,20 @@ class OpPicker:
 		if row >= 0:
 			item = self.itemLibrary.itemForRow(row)
 			self._selectItem(item)
-			if col == 2 and isinstance(item, PickerOpItem):
+			if col == 3 and isinstance(item, PickerOpItem):
 				self._setButtonHighlight(row, col, True)
-		if prevRow >= 0 and prevCol == 2:
+		if prevRow >= 0 and prevCol == 3:
 			item = self.itemLibrary.itemForRow(prevRow)
 			if isinstance(item, PickerOpItem):
 				self._setButtonHighlight(prevRow, prevCol, False)
+
+	def _toggleCategoryExpansion(self, item: 'PickerCategoryItem'):
+		item.collapsed = not item.collapsed
+		self._applyFilter()
+		if item.collapsed:
+			self._selectItem(item, scroll=False)
+		elif item.ops:
+			self._selectItem(item.ops[0], scroll=False)
 
 	def onSelect(
 			self,
@@ -328,7 +345,9 @@ class OpPicker:
 		# print(self.ownerComp, f'SELECT startRC: {startRow},{startCol}, endRC: {endRow},{endCol}, start: {start}, end: {end} \n{item}')
 		self._selectItem(item)
 		if end:
-			if endCol == 2 and self._showEdit:
+			if item.isCategory:
+				self._toggleCategoryExpansion(item)
+			elif endCol == 3 and self._showEdit:
 				self.onEditItem()
 			else:
 				self.onPickItem()
@@ -357,6 +376,7 @@ class PickerItem:
 @dataclass
 class PickerCategoryItem(PickerItem):
 	ops: List['PickerOpItem'] = field(default_factory=list)
+	collapsed = False
 	isOP = False
 	isCategory = True
 
@@ -464,7 +484,8 @@ class _ItemLibrary:
 				]
 			if matchedOps:
 				flatItems.append(category)
-				flatItems += matchedOps
+				if not category.collapsed:
+					flatItems += matchedOps
 		return flatItems
 
 	def itemForRow(self, row: int) -> 'Optional[_AnyItemT]':
