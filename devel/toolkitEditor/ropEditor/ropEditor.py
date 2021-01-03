@@ -1,6 +1,5 @@
-from typing import Union, Optional, List
+from typing import Union, Optional
 
-from raytkDocs import OpDocManager
 from raytkTools import RaytkTools
 from raytkUtil import ROPInfo, navigateTo, RaytkTags
 

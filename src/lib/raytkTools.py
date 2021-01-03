@@ -1,4 +1,3 @@
-import json
 from pathlib import Path
 from raytkDocs import OpDocManager
 from raytkModel import OpDefMeta, OpSpec
