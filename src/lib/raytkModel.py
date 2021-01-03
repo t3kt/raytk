@@ -56,6 +56,8 @@ def toJson(obj, minify=True):
 	)
 
 def _parseJson(jsonStr: str):
+	if jsonStr:
+		jsonStr = jsonStr.strip()
 	return json.loads(jsonStr) if jsonStr else {}
 
 @dataclass
@@ -493,3 +495,33 @@ def excludeKeys(d, keys):
 		for key, val in d.items()
 		if key not in keys
 	}
+
+@dataclass
+class OpDefMeta(DataObject):
+	opType: Optional[str] = None
+	opVersion: Optional[int] = None
+
+	def toObj(self):
+		return cleanDict({
+			'opType': self.opType,
+			'opVersion': self.opVersion,
+		})
+
+	@classmethod
+	def fromObj(cls, obj: dict):
+		return cls(**obj)
+
+@dataclass
+class OpSpec(DataObject):
+	meta: Optional[OpDefMeta] = None
+
+	def toObj(self):
+		return cleanDict({
+			'meta': OpDefMeta.toOptionalObj(self.meta),
+		})
+
+	@classmethod
+	def fromObj(cls, obj: dict):
+		return cls(
+			meta=OpDefMeta.fromOptionalObj(obj.get('meta')),
+		)

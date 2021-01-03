@@ -1,5 +1,9 @@
+import json
+from pathlib import Path
 from raytkDocs import OpDocManager
+from raytkModel import OpDefMeta, OpSpec
 from raytkUtil import RaytkContext, ROPInfo, focusCustomParameterPage
+from typing import Optional
 
 # noinspection PyUnreachableCode
 if False:
@@ -83,6 +87,7 @@ class RaytkTools(RaytkContext):
 			return
 		self.updateROPMetadata(rop, incrementVersion)
 		self.updateROPParams(rop)
+		self.saveROPSpec(rop)
 		OpDocManager(info).pushToParamsAndInputs()
 		focusCustomParameterPage(rop, 0)
 		tox = info.toxFile
@@ -112,3 +117,57 @@ class RaytkTools(RaytkContext):
 			manager.pushToParamsAndInputs()
 		finally:
 			ui.undo.endBlock()
+
+	def _loadROPSpec(self, rop: 'COMP', useFile: bool, usePars: bool) -> 'Optional[OpSpec]':
+		info = ROPInfo(rop)
+		if not info or not info.isMaster:
+			return
+		spec = None
+		if useFile:
+			specFile = self._getROPSpecFile(rop, checkExists=True)
+			if specFile:
+				text = specFile.read_text()
+				spec = OpSpec.parseJsonStr(text)
+		if not spec:
+			spec = OpSpec()
+		if not spec.meta:
+			spec.meta = OpDefMeta()
+		if usePars:
+			if not spec.meta.opType:
+				spec.meta.opType = info.opType or self.generateROPType(info.rop)
+			if spec.meta.opVersion is None:
+				v = info.opVersion
+				spec.meta.opVersion = int(v) if v else 0
+		return spec
+
+	@staticmethod
+	def _getROPSpecFile(rop: 'COMP', checkExists: bool) -> 'Optional[Path]':
+		info = ROPInfo(rop)
+		if not info or not info.isMaster:
+			return
+		tox = info.toxFile
+		if not tox:
+			return
+		file = Path(tox.replace('.tox', '.json'))
+		if checkExists and not file.exists():
+			return
+		return file
+
+	def reloadROPSpec(self, rop: 'COMP'):
+		info = ROPInfo(rop)
+		if not info:
+			return
+		spec = self._loadROPSpec(rop, useFile=True, usePars=True)
+		if not spec or not spec.meta:
+			return
+		info.opType = spec.meta.opType
+		info.opVersion = spec.meta.opVersion
+
+	def saveROPSpec(self, rop: 'COMP'):
+		info = ROPInfo(rop)
+		if not info:
+			return
+		spec = self._loadROPSpec(rop, useFile=False, usePars=True)
+		specFile = self._getROPSpecFile(rop, checkExists=False)
+		if specFile and spec:
+			specFile.write_text(spec.toJsonStr(minify=False))
