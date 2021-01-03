@@ -1,7 +1,7 @@
 from pathlib import Path
 from typing import Callable
-from raytkUtil import detachTox, CategoryInfo, ROPInfo, getToolkit, stripFirstMarkdownHeader, RaytkTags
-from raytkDocs import CategoryHelp, ROPHelp, OpDocManager
+from raytkUtil import detachTox, CategoryInfo, ROPInfo, RaytkTags, RaytkContext
+from raytkDocs import CategoryHelp, OpDocManager
 
 # noinspection PyUnreachableCode
 if False:
@@ -126,7 +126,7 @@ class DocProcessor:
 	def __init__(self, context: 'BuildContext', outputFolder: 'Union[str, Path]'):
 		self.context = context
 		self.outputFolder = Path(outputFolder)
-		self.toolkit = getToolkit()
+		self.toolkit = RaytkContext().toolkit()
 
 	def processOp(self, rop: 'COMP'):
 		self.context.log(f'Processing docs for op {rop}')

@@ -1,8 +1,7 @@
 from develCommon import AutoLoader
 import popMenu
 from raytkTools import RaytkTools
-from raytkUtil import RaytkTags, Tag, getActiveEditor, navigateTo, getChildROPs, recloneComp, RaytkContext, TypeTableHelper
-from raytkUtil import getToolkit, getToolkitVersion, Version
+from raytkUtil import RaytkTags, Tag, navigateTo, recloneComp, RaytkContext, TypeTableHelper, CategoryInfo, Version
 from typing import List, Tuple, Union
 
 # noinspection PyUnreachableCode
@@ -17,17 +16,18 @@ class Tools:
 
 	@staticmethod
 	def IncrementMajor():
-		version = getToolkitVersion()
+		version = RaytkContext().toolkitVersion()
 		setToolkitVersion(Version(version.major + 1, 0))
 
 	@staticmethod
 	def IncrementMinor():
-		version = getToolkitVersion()
+		context = RaytkContext()
+		version = context.toolkitVersion()
 		setToolkitVersion(Version(version.major, version.minor + 1))
 
 	@staticmethod
 	def ShowLibraryParams():
-		getToolkit().openParameters()
+		RaytkContext().toolkit().openParameters()
 
 	def UpdateCurrentROPsMetadata(self, incrementVersion=False):
 		rops = self.getCurrentROPs(primaryOnly=False)
@@ -129,7 +129,7 @@ class Tools:
 	def OnCreateNewRopTypeAccept(self, info: dict):
 		name = info['opName']
 		category = info['opCategory']
-		dest = getToolkit().op('operators/' + category)
+		dest = RaytkContext().operatorsRoot().op(category)
 		if not dest:
 			raise Exception(f'Invalid ROP category: {category!r}')
 		template = dest.op('_template')
@@ -239,7 +239,7 @@ class Tools:
 
 	@staticmethod
 	def forEachSelected(action):
-		editor = getActiveEditor()
+		editor = RaytkContext().activeEditor()
 		if not editor:
 			return
 		for o in editor.owner.selectedChildren:
@@ -252,7 +252,8 @@ class Tools:
 
 	@staticmethod
 	def organizeCategory(comp: 'COMP'):
-		rops = getChildROPs(comp)
+		catInfo = CategoryInfo(comp)
+		rops = catInfo.operators
 		if not rops:
 			return
 		rops.sort(key=lambda r: r.name)
@@ -290,7 +291,8 @@ def _getMonitorHeight(usePrimary=True):
 		return m.height
 
 def setToolkitVersion(version: Version):
-	toolkit = getToolkit()
+	context = RaytkContext()
+	toolkit = context.toolkit()
 	if toolkit.par['Raytkversion'] is None:
 		page = toolkit.appendCustomPage('RayTK')
 		page.appendStr('Raytkversion', label='RayTK Version')

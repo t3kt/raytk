@@ -1,6 +1,6 @@
 from dataclasses import dataclass, field
 from typing import Dict, List
-from raytkUtil import getToolkit, ROPInfo, RaytkContext, Version
+from raytkUtil import ROPInfo, RaytkContext, Version
 
 # noinspection PyUnreachableCode
 if False:
@@ -42,7 +42,7 @@ class Updater:
 		if not rops:
 			return
 		migration = Migration(
-			getToolkit(), rops,
+			RaytkContext().toolkit(), rops,
 			validate=validate, perform=perform,
 		)
 		valid = True

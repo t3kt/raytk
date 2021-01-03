@@ -1,6 +1,6 @@
 from pathlib import Path
 from raytkTools import RaytkTools
-from raytkUtil import RaytkTags, navigateTo, focusCustomParameterPage, CategoryInfo, getToolkit, getToolkitVersion, ROPInfo
+from raytkUtil import RaytkTags, navigateTo, focusCustomParameterPage, CategoryInfo, RaytkContext
 from raytkBuild import BuildContext, DocProcessor
 from typing import List, Optional
 
@@ -23,7 +23,7 @@ class BuildManager:
 
 	@staticmethod
 	def GetToolkitVersion():
-		return getToolkitVersion()
+		return RaytkContext().toolkitVersion()
 
 	@staticmethod
 	def GetDefaultDocSitePath():
@@ -43,7 +43,7 @@ class BuildManager:
 
 	@staticmethod
 	def OpenToolkitNetwork():
-		navigateTo(getToolkit(), name='toolkit', popup=True, goInto=True)
+		navigateTo(RaytkContext().toolkit(), name='toolkit', popup=True, goInto=True)
 
 	def OpenLog(self):
 		dat = self.ownerComp.op('full_log_text')
@@ -55,7 +55,7 @@ class BuildManager:
 	def ReloadToolkit(self):
 		self.logTable.clear()
 		self.log('Reloading toolkit')
-		toolkit = getToolkit()
+		toolkit = RaytkContext().toolkit()
 		self.queueMethodCall('reloadToolkit', toolkit)
 
 	def RunBuild(self):
@@ -70,7 +70,7 @@ class BuildManager:
 		self.queueMethodCall('runBuild_stage', 0)
 
 	def runBuild_stage(self, stage: int):
-		toolkit = getToolkit()
+		toolkit = RaytkContext().toolkit()
 		self.log('Reloading toolkit')
 		if stage == 0:
 			self.reloadToolkit(toolkit)
@@ -96,7 +96,7 @@ class BuildManager:
 			self.finalizeToolkitPars(toolkit)
 			self.queueMethodCall('runBuild_stage', stage + 1)
 		elif stage == 9:
-			version = getToolkitVersion()
+			version = RaytkContext().toolkitVersion()
 			toxFile = f'build/RayTK-{version}.tox'
 			self.log('Exporting TOX to ' + toxFile)
 			toolkit.save(toxFile)

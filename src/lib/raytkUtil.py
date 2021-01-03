@@ -8,12 +8,6 @@ if False:
 	from _typeAliases import *
 	op.raytk = COMP()
 
-def getToolkit() -> 'COMP':
-	if hasattr(parent, 'raytk'):
-		return parent.raytk
-	if hasattr(op, 'raytk'):
-		return op.raytk
-
 @total_ordering
 class Version:
 	pattern = re.compile(r'([0-9])+(?:\.([0-9]+))?')
@@ -58,11 +52,6 @@ class Version:
 			return self.minor < other.minor
 		else:
 			return False
-
-def getToolkitVersion():
-	toolkit = getToolkit()
-	par = toolkit.par['Raytkversion']
-	return Version(str(par or '0.1'))
 
 class _OpMetaPars:
 	enablecloningpulse: 'Par'
@@ -234,7 +223,7 @@ class ROPInfo:
 		if not self:
 			return []
 		if not self.isRComp or self.opDefPar['Rops'] is None:
-			return _findROPOrRCompChildren(self.rop, maxDepth=1)
+			return _getChildROPs(self.rop)
 		return self.opDefPar.Rops.evalOPs()
 
 	@property
@@ -325,9 +314,6 @@ def inputHandlerNameAndLabel(inputHandler: 'COMP') -> 'Tuple[str, str]':
 			pass
 	return name, label
 
-def _findROPOrRCompChildren(o: 'COMP', maxDepth=None):
-	return o.findChildren(type=COMP, tags=[RaytkTags.raytkOP.name, RaytkTags.raytkComp.name], maxDepth=maxDepth)
-
 class CategoryInfo:
 	category: COMP
 
@@ -351,7 +337,7 @@ class CategoryInfo:
 			return []
 		return list(sorted([
 			o
-			for o in _findROPOrRCompChildren(self.category, maxDepth=1)
+			for o in _getChildROPs(self.category)
 			if not o.name.startswith('__')], key=lambda o: o.path))
 
 	@property
@@ -387,12 +373,8 @@ def _getROP(comp: 'COMP', checkParents=True):
 	if checkParents:
 		return _getROP(comp.parent(), checkParents=checkParents)
 
-def getChildROPs(comp: 'COMP'):
-	rops = []
-	for o in comp.children:
-		if isROP(o) or _isRComp(o):
-			rops.append(o)
-	return rops
+def _getChildROPs(comp: 'COMP'):
+	return comp.findChildren(type=COMP, tags=[RaytkTags.raytkOP.name, RaytkTags.raytkComp.name], maxDepth=1)
 
 def recloneComp(o: 'COMP'):
 	if o and o.par['enablecloningpulse'] is not None:
@@ -502,7 +484,7 @@ class RaytkTags:
 	deprecated = _OpStatusTag('raytkDeprecated', _deprecatedColor)
 	validation = Tag('raytkValidation', _validationColor)
 
-def getActiveEditor() -> 'NetworkEditor':
+def _getActiveEditor() -> 'NetworkEditor':
 	pane = ui.panes.current
 	if pane.type == PaneType.NETWORKEDITOR:
 		return pane
@@ -510,16 +492,16 @@ def getActiveEditor() -> 'NetworkEditor':
 		if pane.type == PaneType.NETWORKEDITOR:
 			return pane
 
-def getPaneByName(name: str):
+def _getPaneByName(name: str):
 	for pane in ui.panes:
 		if pane.name == name:
 			return pane
 
-def getEditorPane(name: Optional[str] = None, popup=False):
+def _getEditorPane(name: Optional[str] = None, popup=False):
 	if name:
-		pane = getPaneByName(name)
+		pane = _getPaneByName(name)
 	else:
-		pane = getActiveEditor()
+		pane = _getActiveEditor()
 	if pane:
 		if popup:
 			return pane.floatingCopy()
@@ -530,7 +512,7 @@ def getEditorPane(name: Optional[str] = None, popup=False):
 def navigateTo(o: 'OP', name: Optional[str] = None, popup=False, goInto=True):
 	if not o:
 		return
-	pane = getEditorPane(name, popup)
+	pane = _getEditorPane(name, popup)
 	if not pane:
 		return
 	if goInto and o.isCOMP:
@@ -680,18 +662,22 @@ class TypeTableHelper:
 class RaytkContext:
 	@staticmethod
 	def toolkit():
-		return getToolkit()
+		if hasattr(parent, 'raytk'):
+			return parent.raytk
+		if hasattr(op, 'raytk'):
+			return op.raytk
 
-	@staticmethod
-	def toolkitVersion():
-		return getToolkitVersion()
+	def toolkitVersion(self):
+		toolkit = self.toolkit()
+		par = toolkit.par['Raytkversion']
+		return Version(str(par or '0.1'))
 
 	def operatorsRoot(self):
 		return self.toolkit().op('operators')
 
 	@staticmethod
 	def activeEditor():
-		return getActiveEditor()
+		return _getActiveEditor()
 
 	def opTable(self) -> 'Optional[DAT]':
 		toolkit = self.toolkit()
@@ -707,7 +693,7 @@ class RaytkContext:
 			exclude: Callable[['COMP'], None] = None,
 			masterOnly=False,
 	):
-		pane = getActiveEditor()
+		pane = _getActiveEditor()
 		if not pane:
 			return []
 		comp = pane.owner
@@ -730,7 +716,7 @@ class RaytkContext:
 		return rops
 
 	def currentCategories(self):
-		pane = getActiveEditor()
+		pane = _getActiveEditor()
 		if not pane:
 			return None
 		comp = pane.owner
@@ -818,25 +804,3 @@ def detachTox(comp: 'COMP'):
 	comp.par.reloadtoxonstart.val = False
 	comp.par.externaltox.expr = ''
 	comp.par.externaltox.val = ''
-
-def stripFirstMarkdownHeader(text: str):
-	if not text:
-		return ''
-	if not text.startswith('# '):
-		return text
-	return text.split('\n', 1)[1].strip()
-
-_headerPattern = re.compile(r'^#', re.MULTILINE)
-def incrementMarkdownHeaders(text: str, steps: int):
-	if not text:
-		return ''
-	return _headerPattern.sub('#' + ('#' * steps), text)
-
-def stripFrontMatter(text: str):
-	if not text or not text.startswith('---'):
-		return text or ''
-	return text.split('---\n', maxsplit=2)[-1]
-
-def datText(path: 'Union[str, Cell]'):
-	dat = op(path)
-	return dat.text.strip() if dat else ''

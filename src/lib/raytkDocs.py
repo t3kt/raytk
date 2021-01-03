@@ -3,8 +3,7 @@ import re
 from typing import Dict, Iterable, List, Optional, Tuple
 from io import StringIO
 
-from raytkUtil import ROPInfo, stripFirstMarkdownHeader, stripFrontMatter, \
-	CategoryInfo, RaytkTags, inputHandlerNameAndLabel
+from raytkUtil import ROPInfo, CategoryInfo, RaytkTags, inputHandlerNameAndLabel
 
 # noinspection PyUnreachableCode
 if False:
@@ -436,8 +435,8 @@ def _extractHelpSummaryAndDetail(docText: str) -> 'Tuple[str, str]':
 	if not docText:
 		return '', ''
 	docText = docText.strip()
-	docText = stripFrontMatter(docText).strip()
-	docText = stripFirstMarkdownHeader(docText)
+	docText = _stripFrontMatter(docText).strip()
+	docText = _stripFirstMarkdownHeader(docText)
 	if not docText:
 		return '', ''
 	parts = docText.split('\n\n', maxsplit=1)
@@ -472,8 +471,8 @@ class OpDocManager:
 			return ropHelp
 		docText = dat.text
 		docText = docText.strip()
-		docText = stripFrontMatter(docText).strip()
-		docText = stripFirstMarkdownHeader(docText)
+		docText = _stripFrontMatter(docText).strip()
+		docText = _stripFirstMarkdownHeader(docText)
 		sections = _parseMarkdownSections(docText)
 		if '' in sections:
 			ropHelp.summary, ropHelp.detail = _extractHelpSummaryAndDetail(sections[''])
@@ -671,3 +670,15 @@ def _parseNamedListItem(itemText: str) -> 'Tuple[str, str, str]':
 	if not match:
 		return '', '', itemText.lstrip('* ')
 	return match.group('name'), match.group('label') or '', match.group('desc') or ''
+
+def _stripFirstMarkdownHeader(text: str):
+	if not text:
+		return ''
+	if not text.startswith('# '):
+		return text
+	return text.split('\n', 1)[1].strip()
+
+def _stripFrontMatter(text: str):
+	if not text or not text.startswith('---'):
+		return text or ''
+	return text.split('---\n', maxsplit=2)[-1]
