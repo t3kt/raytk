@@ -1,3 +1,4 @@
-none	pMod2
-mirror	pModMirror2
-grid	pModGrid2
+name	label	function
+none	None	pMod2
+mirror	Mirror	pModMirror2
+grid	Grid	pModGrid2
