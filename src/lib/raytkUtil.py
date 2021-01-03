@@ -231,8 +231,10 @@ class ROPInfo:
 
 	@property
 	def subROPs(self):
-		if not self or not self.isRComp or not self.opDefPar['Rops']:
+		if not self:
 			return []
+		if not self.isRComp or self.opDefPar['Rops'] is None:
+			return _findROPOrRCompChildren(self.rop, maxDepth=1)
 		return self.opDefPar.Rops.evalOPs()
 
 	@property
@@ -323,6 +325,9 @@ def inputHandlerNameAndLabel(inputHandler: 'COMP') -> 'Tuple[str, str]':
 			pass
 	return name, label
 
+def _findROPOrRCompChildren(o: 'COMP', maxDepth=None):
+	return o.findChildren(type=COMP, tags=[RaytkTags.raytkOP.name, RaytkTags.raytkComp.name], maxDepth=maxDepth)
+
 class CategoryInfo:
 	category: COMP
 
@@ -346,8 +351,7 @@ class CategoryInfo:
 			return []
 		return list(sorted([
 			o
-			for o in self.category.findChildren(
-				type=COMP, tags=[RaytkTags.raytkOP.name, RaytkTags.raytkComp.name], maxDepth=1)
+			for o in _findROPOrRCompChildren(self.category, maxDepth=1)
 			if not o.name.startswith('__')], key=lambda o: o.path))
 
 	@property

@@ -3,3 +3,5 @@ CrashAutoSave.*
 *.dmp
 *.ngfx-proj
 build/*.tox
+raytk-op-params.csv
+raytk-op-analysis.csv
