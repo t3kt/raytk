@@ -1,7 +1,9 @@
-from raytkUtil import CoordTypes, ContextTypes, ReturnTypes, ROPInfo, TypeTableHelper
-from dataclasses import dataclass, field
+from raytkUtil import CoordTypes, ContextTypes, ReturnTypes, ROPInfo
+from dataclasses import dataclass
+import dataclasses
+import json
 import re
-from typing import Dict, Iterable, List, Optional, Tuple, Union
+from typing import Dict, Iterable, List, Optional, Union
 
 # noinspection PyUnreachableCode
 if False:
@@ -13,8 +15,51 @@ else:
 	# noinspection PyUnresolvedReferences,PyUnboundLocalVariable
 	TDJSON = op.TDModules.mod.TDJSON
 
+@dataclasses.dataclass
+class DataObject:
+	def toObj(self):
+		raise NotImplementedError()
+
+	@classmethod
+	def fromObj(cls, obj):
+		raise NotImplementedError()
+
+	@classmethod
+	def fromObjs(cls, objs: List[Dict]):
+		return [cls.fromObj(obj) for obj in objs] if objs else []
+
+	@classmethod
+	def fromOptionalObj(cls, obj, default=None):
+		return cls.fromObj(obj) if obj else default
+
+	@classmethod
+	def toObjs(cls, nodes: 'Optional[Iterable[DataObject]]'):
+		return [n.toObj() for n in nodes] if nodes else []
+
+	@classmethod
+	def toOptionalObj(cls, obj: 'DataObject'):
+		return obj.toObj() if obj is not None else None
+
+	@classmethod
+	def parseJsonStr(cls, jsonStr: str):
+		return cls.fromObj(_parseJson(jsonStr))
+
+	def toJsonStr(self, minify=True):
+		return toJson(self.toObj(), minify=minify)
+
+def toJson(obj, minify=True):
+	return '{}' if not obj else json.dumps(
+		obj,
+		indent=None if minify else '  ',
+		separators=(',', ':') if minify else (',', ': '),
+		sort_keys=True,
+	)
+
+def _parseJson(jsonStr: str):
+	return json.loads(jsonStr) if jsonStr else {}
+
 @dataclass
-class TypeSpec:
+class TypeSpec(DataObject):
 	"""
 	One or several possible data types.
 	`*` is equivalent to all available types.
@@ -22,7 +67,7 @@ class TypeSpec:
 	`foo|bar|baz` is equivalent to one of a list of possible types.
 	"""
 	isAll: bool = False
-	types: List[str] = field(default_factory=list)
+	types: List[str] = dataclasses.field(default_factory=list)
 
 	def isSingle(self):
 		return not self.isAll and len(self.types) == 1
@@ -55,12 +100,19 @@ class TypeSpec:
 	def supports(self, typeName: str):
 		return self.isAll or typeName in self.types
 
+	def toObj(self):
+		return str(self)
+
+	@classmethod
+	def fromObj(cls, obj):
+		return cls.parse(obj)
+
 typeSpecPatternPart = r'([\*\w|]+)'
 signaturePattern = re.compile(
 	fr'\(\s*{typeSpecPatternPart}\s*,\s*{typeSpecPatternPart}\s*\)\s*->\s*{typeSpecPatternPart}')
 
 @dataclass
-class FunctionSignature:
+class FunctionSignature(DataObject):
 	"""
 	Parameter and return types for a function.
 	Can either be a single specific signature, or a collection of possible signatures.
@@ -132,10 +184,17 @@ class FunctionSignature:
 			for coord in coordTypes
 		]
 
+	def toObj(self):
+		return str(self)
+
+	@classmethod
+	def fromObj(cls, obj):
+		return cls.parse(obj)
+
 TableDataT = List[List[str]]
 
 @dataclass
-class ROPInputSpec:
+class ROPInputSpec(DataObject):
 	name: Optional[str] = None
 	label: Optional[str] = None
 	signature: Optional[FunctionSignature] = None
@@ -157,10 +216,6 @@ class ROPInputSpec:
 		)
 
 	@classmethod
-	def fromObjs(cls, objs: Optional[List[dict]]):
-		return [cls.fromObj(o) for o in objs] if objs else []
-
-	@classmethod
 	def extractFromHandler(cls, inputHandler: 'COMP'):
 		inDat = inputHandler.inputs[0]  # type DAT
 		labelPar = inDat.par.label  # type: Par
@@ -176,7 +231,7 @@ class ROPInputSpec:
 		)
 
 @dataclass
-class ValueOrExpr:
+class ValueOrExpr(DataObject):
 	value: Union[str, int, float, List[Union[str, int, float]]] = None
 	expr: Optional[str] = None
 	bind: Optional[str] = None
@@ -206,11 +261,13 @@ class ValueOrExpr:
 		if par.mode == ParMode.EXPRESSION:
 			return cls(expr=par.expr)
 		if par.mode == ParMode.CONSTANT:
+			if par.isOP and par.eval():
+				return cls(value=par.eval().path)
 			return cls(value=par.eval())
 		raise ValueError(f'Unsupported par {par!r}')
 
 @dataclass
-class TableSpec:
+class DATSpec(DataObject):
 	file: Optional[ValueOrExpr] = None
 	data: Union[str, TableDataT] = None
 	isExpr: bool = False
@@ -260,19 +317,6 @@ class TableSpec:
 			],
 			isExpr=isExpr)
 
-def parseSpecOrValueOrExpr(obj: Union[dict, str, List[str]]) -> 'Optional[ValueOrExprOrTable]':
-	if not obj:
-		return None
-	if isinstance(obj, list) or isinstance(obj, str):
-		return ValueOrExpr(obj)
-	if not isinstance(obj, dict):
-		raise ValueError(f'Unsupported type {obj!r}')
-	if '@' in obj or '$' in obj:
-		return ValueOrExpr.fromObj(obj)
-	if 'file' in obj or 'data' in obj or 'isExpr' in obj:
-		return TableSpec.fromObj(obj)
-	return ValueOrExpr.fromObj(obj)
-
 def getParValuesFromCellsExpr(datName: str):
 	return f"' '.join([str(c) for c in op('{datName}').cells()])"
 
@@ -284,7 +328,7 @@ def specOrValueOrExprFromPar(par: 'Par'):
 		if match and match.group(1):
 			dat = par.owner.op(match.group(1))
 			if dat and dat.isDAT:
-				return TableSpec.extractFromDAT(dat)
+				return DATSpec.extractFromDAT(dat)
 	return ValueOrExpr.fromPar(par)
 
 def toObjIfPossible(obj):
@@ -292,7 +336,33 @@ def toObjIfPossible(obj):
 		return obj.toObj()
 	return obj
 
-ValueOrExprOrTable = Union[ValueOrExpr, TableSpec]
+@dataclass
+class ValueOrExprOrTable(DataObject):
+	value: Optional[ValueOrExpr] = None
+	table: Optional[DATSpec] = None
+
+	def toObj(self):
+		if self.table is not None:
+			return self.table.toObj()
+		if self.value is not None:
+			return self.value.toObj()
+		return {}
+
+	@classmethod
+	def fromObj(cls, obj):
+		if isinstance(obj, (list, str)):
+			return cls(value=ValueOrExpr.fromObj(obj))
+		if not isinstance(obj, dict):
+			raise ValueError(f'Unsupported type: {obj!r}')
+		if '@' in obj or '$' in obj:
+			return cls(value=ValueOrExpr.fromObj(obj))
+		if 'file' in obj or 'data':
+			return cls(table=DATSpec.fromObj(obj))
+		return cls(value=ValueOrExpr.fromObj(obj))
+
+	@classmethod
+	def extractFromPar(cls, par: 'Par'):
+		pass
 
 def cleanParamSpecObj(obj: dict):
 	if not obj:
@@ -318,7 +388,7 @@ def clearParamPageSpecObj(obj: dict):
 		for param, paramObj in obj.items()
 	}
 
-def clearParamPageSpecsObj(obj: dict):
+def cleanParamPageSpecsObj(obj: dict):
 	if not obj:
 		return None
 	return {
@@ -327,35 +397,55 @@ def clearParamPageSpecsObj(obj: dict):
 	}
 
 @dataclass
-class ROPDefinition:
-	paramPages: Dict[str, Dict[str, dict]] = field(default_factory=list)
-	function: Optional[TableSpec] = None
+class ROPDefinition(DataObject):
+	paramPages: Dict[str, Dict[str, dict]] = dataclasses.field(default_factory=list)
+	"""Definitions of the parameter pages, in the format expected by TDJSON."""
+
+	function: Optional[DATSpec] = None
+	"""Function code."""
+
 	useParams: ValueOrExprOrTable = None
+	"""Spec for names of ROP Pars to use."""
+
 	specialParams: ValueOrExprOrTable = None
-	macros: Optional[TableSpec] = None
+	"""Spec for names of special parameters handled with CHOP input to opDef."""
+
+	angleParams: ValueOrExpr = None
+	"""Spec for names of ROP Pars that should be converted to radians."""
+
+	macroParams: ValueOrExpr = None
+	"""Spec for names of ROP Pars that should be made available as macros."""
+
+	macros: Optional[DATSpec] = None
+	"""Macro table spec."""
+
 	help: ValueOrExprOrTable = None
-	inputs: List[ROPInputSpec] = field(default_factory=list)
+	"""Help text or file."""
+
+	inputs: List[ROPInputSpec] = dataclasses.field(default_factory=list)
+	"""Specs for ROP inputs."""
 
 	def toObj(self):
 		return cleanDict({
-			'paramPages': clearParamPageSpecsObj(self.paramPages),
-			'function': toObjIfPossible(self.function),
-			'useParams': toObjIfPossible(self.useParams),
-			'specialParams': toObjIfPossible(self.specialParams),
-			'macros': toObjIfPossible(self.macros),
-			'help': toObjIfPossible(self.help),
-			'inputs': [i.toObj() for i in self.inputs] if self.inputs else None,
+			'paramPages': cleanParamPageSpecsObj(self.paramPages),
+			'function': DATSpec.toOptionalObj(self.function),
+			'useParams': ValueOrExprOrTable.toOptionalObj(self.useParams),
+			'specialParams': ValueOrExpr.toOptionalObj(self.specialParams),
+			'macroParams': ValueOrExpr.toOptionalObj(self.macroParams),
+			'macros': ValueOrExprOrTable.toOptionalObj(self.macros),
+			'help': ValueOrExprOrTable.toOptionalObj(self.help),
+			'inputs': ROPInputSpec.toObjs(self.inputs),
 		})
 
 	@classmethod
 	def fromObj(cls, obj: dict):
 		return cls(
 			inputs=ROPInputSpec.fromObjs(obj.get('inputs')),
-			useParams=parseSpecOrValueOrExpr(obj.get('useParams')),
-			specialParams=parseSpecOrValueOrExpr(obj.get('specialParams')),
-			macros=TableSpec.fromObj(obj.get('macros')),
-			function=parseSpecOrValueOrExpr(obj.get('function')),
-			help=parseSpecOrValueOrExpr(obj.get('help')),
+			useParams=ValueOrExpr.fromOptionalObj(obj.get('useParams')),
+			specialParams=ValueOrExpr.fromOptionalObj(obj.get('specialParams')),
+			macros=DATSpec.fromOptionalObj(obj.get('macros')),
+			function=DATSpec.fromOptionalObj(obj.get('function')),
+			help=ValueOrExprOrTable.fromOptionalObj(obj.get('help')),
 			**excludeKeys(obj, [
 				'inputs', 'useParams', 'specialParams', 'macros', 'function'
 			]))
@@ -368,11 +458,11 @@ class ROPDefinition:
 		inputHandlers.sort(key=lambda o: -o.nodeY)
 		return cls(
 			paramPages=TDJSON.opToJSONOp(rop, includeCustomPages=True, includeBuiltInPages=False),
-			help=TableSpec.extractFromDAT(info.opDefPar.Help.eval()),
-			function=TableSpec.extractFromDAT(info.opDefPar.Functemplate.eval()),
-			macros=TableSpec.extractFromDAT(info.opDefPar.Macrotable.eval()),
-			useParams=specOrValueOrExprFromPar(info.opDefPar.Params),
-			specialParams=specOrValueOrExprFromPar(info.opDefPar.Specialparams),
+			# help=DATSpec.extractFromDAT(info.opDefPar.Help.eval()),
+			function=DATSpec.extractFromDAT(info.opDefPar.Functemplate.eval()),
+			macros=DATSpec.extractFromDAT(info.opDefPar.Macrotable.eval()),
+			# useParams=specOrValueOrExprFromPar(info.opDefPar.Params),
+			# specialParams=specOrValueOrExprFromPar(info.opDefPar.Specialparams),
 			inputs=[
 				ROPInputSpec.extractFromHandler(inputHandler)
 				for inputHandler in inputHandlers
