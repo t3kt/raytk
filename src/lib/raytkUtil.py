@@ -73,6 +73,7 @@ class OpDefParsT(_OpMetaPars):
 	Functemplate: 'DatParamT'
 	Materialcode: 'DatParamT'
 	Macrotable: 'DatParamT'
+	Generatedmacrotables: 'StrParamT'
 	Params: 'StrParamT'
 	Specialparams: 'StrParamT'
 	Callbacks: 'DatParamT'
