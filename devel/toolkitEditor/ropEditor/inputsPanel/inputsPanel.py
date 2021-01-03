@@ -1,4 +1,4 @@
-from raytkUtil import ROPInfo, inputHandlerNameAndLabel
+from raytkUtil import ROPInfo, InputInfo
 
 # noinspection PyUnreachableCode
 if False:
@@ -23,19 +23,11 @@ class InputsPanel:
 		info = ROPInfo(ipar.inspectorCore.Targetcomp)
 		if not info:
 			return
-		multiHandler = info.multiInputHandler
 		for handler in info.inputHandlers:
-			name, label = inputHandlerNameAndLabel(handler)
-			multi = False
-			if multiHandler:
-				output = handler.outputs[0]
-				if output.isDAT:
-					output = output.outputs[0]
-				if output.isCOMP and output.name == 'multiInputHandler':
-					multi = True
+			inInfo = InputInfo(handler)
 			dat.appendRow([
-				name,
-				label,
+				inInfo.name,
+				inInfo.label,
 				handler.path,
-				multiHandler.path if multi else '',
+				inInfo.multiHandler or '',
 			])

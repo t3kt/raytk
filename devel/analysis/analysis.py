@@ -1,4 +1,5 @@
-from raytkUtil import RaytkContext, ROPInfo
+from raytkDocs import InputHelp
+from raytkUtil import RaytkContext, ROPInfo, inputHandlerMultiHandler, InputInfo
 from typing import Optional
 
 # noinspection PyUnreachableCode
@@ -108,3 +109,38 @@ def buildOpParamsTable(dat: 'DAT'):
 				dat.appendCol([par.tupletName])
 				cell = dat[info.path, par.tupletName]
 			cell.val = par.style
+
+def buildOpInputsTable(dat: 'DAT'):
+	dat.clear()
+	dat.appendRow([
+		'path',
+		'index',
+		'handler',
+		'name',
+		'label',
+		'required',
+		'multi',
+		'coordTypes',
+		'contextTypes',
+		'returnTypes',
+		'hasExprs',
+	])
+	for rop in RaytkContext().allMasterOperators():
+		info = ROPInfo(rop)
+		if not rop:
+			continue
+		for i, handler in enumerate(info.inputHandlers):
+			inInfo = InputInfo(handler)
+			dat.appendRow([
+				rop.path,
+				i + 1,
+				handler.name,
+				inInfo.name or '',
+				inInfo.label or '',
+				inInfo.required,
+				bool(inInfo.multiHandler),
+				' '.join(inInfo.supportedCoordTypes),
+				' '.join(inInfo.supportedContextTypes),
+				' '.join(inInfo.supportedReturnTypes),
+				any([p.mode != ParMode.CONSTANT for p in handler.customPars]),
+			])

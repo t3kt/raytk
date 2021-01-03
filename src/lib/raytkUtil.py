@@ -297,22 +297,92 @@ class ROPInfo:
 		if cb and hasattr(cb, name):
 			getattr(cb, name)(**kwargs)
 
-def inputHandlerNameAndLabel(inputHandler: 'COMP') -> 'Tuple[str, str]':
-	if not inputHandler:
-		return '', ''
-	dat = inputHandler.inputs[0]
-	if not isinstance(dat, inDAT):
-		return inputHandler.name.replace('inputDefinitionHandler_', 'definition_in_'), ''
-	name = dat.name
-	label = ''
-	p = dat.par.label  # type: Par
-	if not p.isDefault:
-		# noinspection PyBroadException
-		try:
-			label = p.eval()
-		except Exception:
-			pass
-	return name, label
+class InputInfo:
+	handler: 'Optional[COMP]'
+	rop: 'Optional[COMP]'
+
+	def __init__(self, handler: 'Union[OP, str, Cell, Par]'):
+		handler = op(handler)
+		if not handler:
+			return
+		self.handler = handler
+		self.rop = handler.parent()
+
+	def __bool__(self):
+		return bool(self.handler)
+
+	def _inDat(self) -> 'Optional[inDAT]':
+		if not self.handler or not self.handler.inputs:
+			return
+		dat = self.handler.inputs[0]
+		if isinstance(dat, inDAT):
+			return dat
+
+	@property
+	def name(self) -> 'Optional[str]':
+		dat = self._inDat()
+		if dat:
+			return dat.name
+		if self.handler:
+			return self.handler.name.replace('inputDefinitionHandler_', 'definition_in_')
+
+	@property
+	def label(self) -> 'Optional[str]':
+		dat = self._inDat()
+		if not dat:
+			return
+		p = dat.par.label  # type: Par
+		if not p.isDefault:
+			# noinspection PyBroadException
+			try:
+				return p.eval()
+			except Exception:
+				pass
+
+	@property
+	def multiHandler(self) -> 'Optional[COMP]':
+		if not self.handler or not self.handler.outputs:
+			return
+		output = self.handler.outputs[0]
+		if output.isDAT and output.outputs:
+			output = output.outputs[0]
+		if output and output.isCOMP and output.name == 'multiInputHandler':
+			return output
+
+	@property
+	def required(self):
+		return bool(self.handler and self.handler.par.Required)
+
+	def _supportedTypeTable(self) -> 'Optional[DAT]':
+		return self.handler and self.handler.op('./supported_type_table')
+
+	@property
+	def supportedCoordTypes(self):
+		table = self._supportedTypeTable()
+		return tdu.split(table['coordType', 1]) if table else []
+
+	@property
+	def supportedContextTypes(self):
+		table = self._supportedTypeTable()
+		return tdu.split(table['contextType', 1]) if table else []
+
+	@property
+	def supportedReturnTypes(self):
+		table = self._supportedTypeTable()
+		return tdu.split(table['returnType', 1]) if table else []
+
+def inputHandlerMultiHandler(inputHandler: 'COMP') -> 'Optional[COMP]':
+	if not inputHandler or not inputHandler.outputs:
+		return
+	ropInfo = ROPInfo(inputHandler.parent())
+	multiHandler = ropInfo.multiInputHandler
+	if not multiHandler:
+		return
+	output = inputHandler.outputs[0]
+	if output.isDAT:
+		output = output.outputs[0]
+	if output.isCOMP and output is multiHandler:
+		return multiHandler
 
 class CategoryInfo:
 	category: COMP

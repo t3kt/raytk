@@ -3,7 +3,7 @@ import re
 from typing import Dict, Iterable, List, Optional, Tuple
 from io import StringIO
 
-from raytkUtil import ROPInfo, CategoryInfo, RaytkTags, inputHandlerNameAndLabel
+from raytkUtil import ROPInfo, CategoryInfo, RaytkTags, InputInfo
 
 # noinspection PyUnreachableCode
 if False:
@@ -116,17 +116,15 @@ class InputHelp:
 
 	@classmethod
 	def extractFromInputHandler(cls, inputHandler: 'COMP'):
-		name, label = inputHandlerNameAndLabel(inputHandler)
-		inHelp = cls(
-			name=name,
-			label=label,
+		info = InputInfo(inputHandler)
+		return cls(
+			name=info.name,
+			label=info.label,
+			required=info.required,
+			coordTypes=info.supportedCoordTypes,
+			contextTypes=info.supportedContextTypes,
+			returnTypes=info.supportedReturnTypes,
 		)
-		inHelp.required = inputHandler.par.Required.eval()
-		supportedTypeTable = inputHandler.op('supported_type_table')
-		inHelp.coordTypes = tdu.split(supportedTypeTable['coordType', 1])
-		inHelp.contextTypes = tdu.split(supportedTypeTable['contextType', 1])
-		inHelp.returnTypes = tdu.split(supportedTypeTable['returnType', 1])
-		return inHelp
 
 	def mergeFrom(self, other: 'InputHelp'):
 		if self.name != other.name:

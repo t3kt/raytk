@@ -5,3 +5,4 @@ CrashAutoSave.*
 build/*.tox
 raytk-op-params.csv
 raytk-op-analysis.csv
+raytk-op-inputs.csv
