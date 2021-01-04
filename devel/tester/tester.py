@@ -124,23 +124,33 @@ class TestManager:
 		queue.deleteRow(0)
 		self.log(f'Running test {name}...')
 		self.currentTestName.val = name
-		tox = self._testTable[name, 'tox']
-		if not tox:
-			raise Exception(f'Unable to find tox for test {name!r}')
-		self.loadTestTox(str(tox))
-		self._processTest()
-		result = self._buildTestCaseResult()
-		if result.hasError:
-			self.log(f'Test {name} resulted in ERROR')
-		elif result.hasWarning:
-			self.log(f'Test {name} resulted in WARNING')
-		else:
-			self.log(f'Test {name} resulted in SUCCESS')
-		self._addResult(result)
-		self._unloadTestCase()
-		self.log(f'Finished running test {name}')
-		if continueAfter:
-			self._queueCall(self._runNextTest, True)
+		self._queueCall(self._runNextTest_stage, 0, name, continueAfter)
+
+	def _runNextTest_stage(self, stage: int, name: str, continueAfter: bool):
+		if stage == 0:
+			tox = self._testTable[name, 'tox']
+			if not tox:
+				raise Exception(f'Unable to find tox for test {name!r}')
+			self.loadTestTox(str(tox))
+			self._queueCall(self._runNextTest_stage, stage + 1, name, continueAfter)
+		elif stage == 1:
+			self._processTest()
+			self._queueCall(self._runNextTest_stage, stage + 1, name, continueAfter)
+		elif stage == 2:
+			result = self._buildTestCaseResult()
+			if result.hasError:
+				self.log(f'Test {name} resulted in ERROR')
+			elif result.hasWarning:
+				self.log(f'Test {name} resulted in WARNING')
+			else:
+				self.log(f'Test {name} resulted in SUCCESS')
+			self._addResult(result)
+			self._queueCall(self._runNextTest_stage, stage + 1, name, continueAfter)
+		elif stage == 3:
+			self._unloadTestCase()
+			self.log(f'Finished running test {name}')
+			if continueAfter:
+				self._queueCall(self._runNextTest, True)
 
 	def _onQueueFinished(self):
 		self.log('Finished running queued tests')
