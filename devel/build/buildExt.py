@@ -2,7 +2,7 @@ from pathlib import Path
 from raytkTools import RaytkTools
 from raytkUtil import RaytkTags, navigateTo, focusCustomParameterPage, CategoryInfo, RaytkContext
 from raytkBuild import BuildContext, DocProcessor
-from typing import List, Optional
+from typing import Callable, List, Optional, Union
 
 # noinspection PyUnreachableCode
 if False:
@@ -56,7 +56,7 @@ class BuildManager:
 		self.logTable.clear()
 		self.log('Reloading toolkit')
 		toolkit = RaytkContext().toolkit()
-		self.queueMethodCall('reloadToolkit', toolkit)
+		self.queueMethodCall(self.reloadToolkit, toolkit)
 
 	def RunBuild(self):
 		self.logTable.clear()
@@ -67,34 +67,34 @@ class BuildManager:
 			self.docProcessor = DocProcessor(self.context, docFolder / '_reference')
 		else:
 			self.docProcessor = None
-		self.queueMethodCall('runBuild_stage', 0)
+		self.queueMethodCall(self.runBuild_stage, 0)
 
 	def runBuild_stage(self, stage: int):
 		toolkit = RaytkContext().toolkit()
 		self.log('Reloading toolkit')
 		if stage == 0:
 			self.reloadToolkit(toolkit)
-			self.queueMethodCall('runBuild_stage', stage + 1)
+			self.queueMethodCall(self.runBuild_stage, stage + 1)
 		elif stage == 1:
 			self.detachAllFileSyncDats(toolkit)
-			self.queueMethodCall('runBuild_stage', stage + 1)
+			self.queueMethodCall(self.runBuild_stage, stage + 1)
 		elif stage == 2:
 			self.updateLibraryInfo(toolkit, thenRun='runBuild_stage', runArgs=[stage + 1])
 		elif stage == 3:
 			self.processOperators(toolkit.op('operators'), thenRun='runBuild_stage', runArgs=[stage + 1])
 		elif stage == 4:
 			self.context.lockBuildLockOps(toolkit)
-			self.queueMethodCall('runBuild_stage', stage + 1)
+			self.queueMethodCall(self.runBuild_stage, stage + 1)
 		elif stage == 5:
 			self.processTools(toolkit.op('tools'), thenRun='runBuild_stage', runArgs=[stage + 1])
 		elif stage == 6:
 			self.processComponents(toolkit.op('components'), thenRun='runBuild_stage', runArgs=[stage + 1])
 		elif stage == 7:
 			self.removeBuildExcludeOps(toolkit)
-			self.queueMethodCall('runBuild_stage', stage + 1)
+			self.queueMethodCall(self.runBuild_stage, stage + 1)
 		elif stage == 8:
 			self.finalizeToolkitPars(toolkit)
-			self.queueMethodCall('runBuild_stage', stage + 1)
+			self.queueMethodCall(self.runBuild_stage, stage + 1)
 		elif stage == 9:
 			version = RaytkContext().toolkitVersion()
 			toxFile = f'build/RayTK-{version}.tox'
@@ -169,14 +169,14 @@ class BuildManager:
 		comps = categoryInfo.operators
 		if self.docProcessor:
 			self.docProcessor.processOpCategory(category)
-		self.queueMethodCall('processOperatorCategory_stage', comps, thenRun, runArgs)
+		self.queueMethodCall(self.processOperatorCategory_stage, comps, thenRun, runArgs)
 
 	def processOperatorCategory_stage(self, components: List['COMP'], thenRun: str = None, runArgs: list = None):
 		if components:
 			comp = components.pop()
 			self.processOperator(comp)
 			if components:
-				self.queueMethodCall('processOperatorCategory_stage', components, thenRun, runArgs)
+				self.queueMethodCall(self.processOperatorCategory_stage, components, thenRun, runArgs)
 				return
 		if thenRun:
 			self.queueMethodCall(thenRun, *(runArgs or []))
@@ -226,8 +226,10 @@ class BuildManager:
 		print(message)
 		self.logTable.appendRow([message])
 
-	def queueMethodCall(self, method: str, *args):
-		if '.' in method:
+	def queueMethodCall(self, method: Union[str, Callable], *args):
+		if callable(method):
+			run('args[0](*(args[1:]))', method, *args, delayFrames=5, delayRef=root)
+		elif '.' in method:
 			run(method, *args, delayFrames=5, delayRef=root)
 		else:
 			run(f'args[0].{method}(*(args[1:]))', self, *args, delayFrames=5, delayRef=root)

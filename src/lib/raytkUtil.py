@@ -372,19 +372,6 @@ class InputInfo:
 		table = self._supportedTypeTable()
 		return tdu.split(table['returnType', 1]) if table else []
 
-def inputHandlerMultiHandler(inputHandler: 'COMP') -> 'Optional[COMP]':
-	if not inputHandler or not inputHandler.outputs:
-		return
-	ropInfo = ROPInfo(inputHandler.parent())
-	multiHandler = ropInfo.multiInputHandler
-	if not multiHandler:
-		return
-	output = inputHandler.outputs[0]
-	if output.isDAT:
-		output = output.outputs[0]
-	if output.isCOMP and output is multiHandler:
-		return multiHandler
-
 class CategoryInfo:
 	category: COMP
 
