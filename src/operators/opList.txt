@@ -59,7 +59,7 @@ iteratedTransform	/raytk/operators/filter/iteratedTransform	/raytk/operators/fil
 knife	/raytk/operators/filter/knife	/raytk/operators/filter	raytkOP	filter	filter/knife	raytk.operators.filter.knife	4	
 limitField	/raytk/operators/filter/limitField	/raytk/operators/filter	raytkOP	filter	filter/limitField	raytk.operators.filter.limitField	4	
 linkedTransform	/raytk/operators/filter/linkedTransform	/raytk/operators/filter	raytkOP	filter	filter/linkedTransform	raytk.operators.filter.linkedTransform	0	alpha
-magnet	/raytk/operators/filter/magnet	/raytk/operators/filter	raytkOP	filter	filter/magnet	raytk.operators.filter.magnet	3	
+magnet	/raytk/operators/filter/magnet	/raytk/operators/filter	raytkOP	filter	filter/magnet	raytk.operators.filter.magnet	4	
 mirrorOctant	/raytk/operators/filter/mirrorOctant	/raytk/operators/filter	raytkOP	filter	filter/mirrorOctant	raytk.operators.filter.mirrorOctant	4	
 modulo1D	/raytk/operators/filter/modulo1D	/raytk/operators/filter	raytkOP	filter	filter/modulo1D	raytk.operators.filter.modulo1D	7	
 modulo2D	/raytk/operators/filter/modulo2D	/raytk/operators/filter	raytkOP	filter	filter/modulo2D	raytk.operators.filter.modulo2D	4	
