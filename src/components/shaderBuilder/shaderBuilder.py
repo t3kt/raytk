@@ -373,7 +373,7 @@ class ShaderBuilder:
 			version = info.toolkitVersion if info else ''
 			if version != '':
 				toolkitVersions[version] = 1 + toolkitVersions.get(version, 0)
-		if len(rops) > 1:
+		if len(toolkitVersions) > 1:
 			error = f'Toolkit version mismatch ({", ".join(list(toolkitVersions.keys()))})'
 			dat.appendRow(['path', 'level', 'message'])
 			dat.appendRow([parent().path, 'warning', error])

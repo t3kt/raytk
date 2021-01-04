@@ -3,6 +3,7 @@ from enum import Enum
 from pathlib import Path
 from typing import Callable, Dict, List, Union, Optional
 import re
+from raytkUtil import RaytkContext, recloneComp
 
 # noinspection PyUnreachableCode
 if False:
@@ -127,6 +128,7 @@ class TestManager:
 		if not tox:
 			raise Exception(f'Unable to find tox for test {name!r}')
 		self.loadTestTox(str(tox))
+		self._processTest()
 		result = self._buildTestCaseResult()
 		if result.hasError:
 			self.log(f'Test {name} resulted in ERROR')
@@ -163,10 +165,19 @@ class TestManager:
 		host.loadTox(toxPath)
 		self.log(f'Finished loading {toxPath}')
 
-	def _buildTestCaseResult(self) -> 'Optional[_TestCaseResult]':
+	def _processTest(self):
 		comp = self._testComp
 		if not comp:
 			return
+		for rop in RaytkContext().ropChildrenOf(comp):
+			recloneComp(rop)
+		for rop in RaytkContext().ropOutputChildrenOf(comp):
+			rop.outputs[0].cook(force=True)
+
+	def _buildTestCaseResult(self) -> 'Optional[_TestCaseResult]':
+		comp = self._testComp
+		if not comp:
+			raise Exception('No test loaded!')
 		name = self.currentTestName.val
 		result = _TestCaseResult(name=name)
 		validationErrors = self.ownerComp.op('validationErrors')

@@ -170,3 +170,10 @@ class RaytkTools(RaytkContext):
 		specFile = self._getROPSpecFile(rop, checkExists=False)
 		if specFile and spec:
 			specFile.write_text(spec.toJsonStr(minify=False))
+
+	def updateAllROPToolkitVersions(self):
+		version = self.toolkitVersion()
+		for rop in self.allMasterOperators():
+			info = ROPInfo(rop)
+			if info:
+				info.toolkitVersion = version

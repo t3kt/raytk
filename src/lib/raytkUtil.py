@@ -434,6 +434,9 @@ def _getROP(comp: 'COMP', checkParents=True):
 def _getChildROPs(comp: 'COMP'):
 	return comp.findChildren(type=COMP, tags=[RaytkTags.raytkOP.name, RaytkTags.raytkComp.name], maxDepth=1)
 
+def _getChildOutputROPs(comp: 'COMP'):
+	return comp.findChildren(type=COMP, tags=[RaytkTags.raytkOutput.name], maxDepth=1)
+
 def recloneComp(o: 'COMP'):
 	if o and o.par['enablecloningpulse'] is not None:
 		o.par.enablecloningpulse.pulse()
@@ -801,6 +804,14 @@ class RaytkContext:
 		for catComp in self.allCategories():
 			results += CategoryInfo(catComp).operators
 		return results
+
+	@staticmethod
+	def ropChildrenOf(comp: 'COMP'):
+		return _getChildROPs(comp) if comp else []
+
+	@staticmethod
+	def ropOutputChildrenOf(comp: 'COMP'):
+		return _getChildOutputROPs(comp) if comp else []
 
 def _isMaster(o: 'COMP'):
 	return o and o.par['clone'] is not None and (o.par.clone.eval() or o.par.clone.expr)

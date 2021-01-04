@@ -14,6 +14,9 @@ class Tools:
 	def __init__(self, ownerComp: 'COMP'):
 		self.ownerComp = ownerComp
 
+	def onInit(self):
+		self.updateAllROPToolkitVersions()
+
 	@staticmethod
 	def IncrementMajor():
 		version = RaytkContext().toolkitVersion()
@@ -264,6 +267,10 @@ class Tools:
 		for i, rop in enumerate(rops):
 			rop.nodeY = -int(i / 10) * 150
 			rop.nodeX = int(i % 10) * 200
+
+	@staticmethod
+	def updateAllROPToolkitVersions():
+		RaytkTools().updateAllROPToolkitVersions()
 
 	def openToolkitEditor(self):
 		self.toolkitEditor().par.Open.pulse()
