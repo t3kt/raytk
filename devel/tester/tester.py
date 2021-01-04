@@ -206,6 +206,14 @@ class TestManager:
 			return [_FindingStatus.error.name, _FindingStatus.warning.name]
 		return ['*']
 
+	def openLog(self):
+		self.ownerComp.op('full_log_text').openViewer(unique=True)
+
+	def resetAll(self):
+		self.clearLog()
+		self.clearResults()
+		self.reloadTestQueue()
+
 	@staticmethod
 	def _queueCall(method: Callable, *args):
 		run('args[0](*(args[1:]))', method, *args, delayFrames=5, delayRef=root)
