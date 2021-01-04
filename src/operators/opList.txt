@@ -70,7 +70,7 @@ onion	/raytk/operators/filter/onion	/raytk/operators/filter	raytkOP	filter	filte
 quantizeCoords	/raytk/operators/filter/quantizeCoords	/raytk/operators/filter	raytkOP	filter	filter/quantizeCoords	raytk.operators.filter.quantizeCoords	3	
 quantizeValue	/raytk/operators/filter/quantizeValue	/raytk/operators/filter	raytkOP	filter	filter/quantizeValue	raytk.operators.filter.quantizeValue	4	
 radialClone	/raytk/operators/filter/radialClone	/raytk/operators/filter	raytkOP	filter	filter/radialClone	raytk.operators.filter.radialClone	6	
-reflect	/raytk/operators/filter/reflect	/raytk/operators/filter	raytkOP	filter	filter/reflect	raytk.operators.filter.reflect	6	
+reflect	/raytk/operators/filter/reflect	/raytk/operators/filter	raytkOP	filter	filter/reflect	raytk.operators.filter.reflect	7	
 reorderCoords	/raytk/operators/filter/reorderCoords	/raytk/operators/filter	raytkOP	filter	filter/reorderCoords	raytk.operators.filter.reorderCoords	1	
 rescaleField	/raytk/operators/filter/rescaleField	/raytk/operators/filter	raytkOP	filter	filter/rescaleField	raytk.operators.filter.rescaleField	8	
 rotate	/raytk/operators/filter/rotate	/raytk/operators/filter	raytkOP	filter	filter/rotate	raytk.operators.filter.rotate	10	
