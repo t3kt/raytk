@@ -1,7 +1,7 @@
 from dataclasses import dataclass, field
 from enum import Enum
 from pathlib import Path
-from typing import Callable, List, Union, Optional
+from typing import Callable, Dict, List, Union, Optional
 import re
 
 # noinspection PyUnreachableCode
@@ -16,13 +16,17 @@ if False:
 	class _COMP(COMP):
 		par: _Pars
 
+	class _UiStatePars:
+		Resultlevelfilter: 'StrParamT'
+	ipar.uiState = _UiStatePars()
+
 class TestManager:
 	def __init__(self, ownerComp: 'COMP'):
 		# noinspection PyTypeChecker
 		self.ownerComp = ownerComp  # type: _COMP
 		self.logTable = ownerComp.op('log')  # type: DAT
-		self._currentTestName = None  # type: Optional[str]
-		self._currentTestTox = None  # type: Optional[str]
+		self.currentTestName = tdu.Dependency()
+		self._caseResults = {}  # type: Dict[str, _TestCaseResult]
 
 	@property
 	def _testHost(self) -> 'COMP':
@@ -33,8 +37,20 @@ class TestManager:
 		for o in self._testHost.children:
 			return o
 
+	@property
+	def _testTable(self) -> 'DAT':
+		return self.ownerComp.op('testTable')
+
+	@property
+	def _testQueue(self) -> 'DAT':
+		return self.ownerComp.op('testQueue')
+
+	@property
+	def _resultTable(self) -> 'DAT':
+		return self.ownerComp.op('resultTable')
+
 	def reloadTestTable(self):
-		self.ownerComp.op('tests_folder').par.refreshpulse.pulse()
+		self.ownerComp.op('test_folder').par.refreshpulse.pulse()
 
 	def buildTestTable(self, dat: 'DAT', fileTable: 'DAT'):
 		dat.clear()
@@ -51,7 +67,86 @@ class TestManager:
 				toxFile.as_posix(),
 			])
 
-	def unloadTestCase(self):
+	def reloadTestQueue(self):
+		self.reloadTestTable()
+		queue = self._testQueue
+		queue.clear()
+		queue.appendCol(self._testTable.col('name')[1:])
+
+	def clearResults(self):
+		table = self._resultTable
+		table.clear()
+		table.appendRow(['case', 'path', 'status', 'source', 'message'])
+		self._caseResults = {}
+
+	def _addResult(self, result: '_TestCaseResult'):
+		self._caseResults[result.name] = result
+		table = self._resultTable
+		if not result.findings:
+			table.appendRow([
+				result.name,
+				'',
+				_FindingStatus.success.name,
+				'',
+				f'No findings for case {result.name}',
+			])
+			return
+		basePath = self._testComp.path + '/'
+		for finding in result.findings:
+			table.appendRow([
+				result.name,
+				finding.path.replace(basePath, '') if finding.path and basePath else (finding.path or ''),
+				finding.status.name,
+				finding.source.name,
+				finding.message,
+			])
+
+	def runQueuedTests(self):
+		queue = self._testQueue
+		if queue.numRows < 1:
+			raise Exception('No tests queued!')
+		self.clearLog()
+		self.log(f'Running {queue.numRows} queued tests...')
+		self.clearResults()
+		self._runNextTest(continueAfter=True)
+
+	def runAllTests(self):
+		self.reloadTestQueue()
+		self.runQueuedTests()
+
+	def _runNextTest(self, continueAfter=True):
+		queue = self._testQueue
+		if queue.numRows < 1:
+			self._onQueueFinished()
+			return
+		name = str(queue[0, 0])
+		queue.deleteRow(0)
+		self.log(f'Running test {name}...')
+		self.currentTestName.val = name
+		tox = self._testTable[name, 'tox']
+		if not tox:
+			raise Exception(f'Unable to find tox for test {name!r}')
+		self.loadTestTox(str(tox))
+		result = self._buildTestCaseResult()
+		if result.hasError:
+			self.log(f'Test {name} resulted in ERROR')
+		elif result.hasWarning:
+			self.log(f'Test {name} resulted in WARNING')
+		else:
+			self.log(f'Test {name} resulted in SUCCESS')
+		self._addResult(result)
+		self._unloadTestCase()
+		self.log(f'Finished running test {name}')
+		if continueAfter:
+			self._queueCall(self._runNextTest, True)
+
+	def _onQueueFinished(self):
+		self.log('Finished running queued tests')
+		# TODO: ??
+		pass
+
+	def _unloadTestCase(self):
+		self.currentTestName.val = None
 		host = self._testHost
 		for o in list(host.children):
 			if not o.valid:
@@ -72,40 +167,33 @@ class TestManager:
 		comp = self._testComp
 		if not comp:
 			return
-		result = _TestCaseResult(
-			name=self._currentTestName,
-			tox=self._currentTestTox,
-		)
+		name = self.currentTestName.val
+		result = _TestCaseResult(name=name)
 		validationErrors = self.ownerComp.op('validationErrors')
-		result.findings += _Finding.fromValidationTable(validationErrors)
+		result.findings += _Finding.fromValidationTable(name, validationErrors)
 		result.findings += _Finding.parseErrorLines(
-			comp.scriptErrors(recurse=True), _FindingSource.scriptError, _FindingStatus.error)
+			name, comp.scriptErrors(recurse=True), _FindingSource.scriptError, _FindingStatus.error)
 		result.findings += _Finding.parseErrorLines(
-			comp.warnings(recurse=True), _FindingSource.opWarning, _FindingStatus.warning)
+			name, comp.warnings(recurse=True), _FindingSource.opWarning, _FindingStatus.warning)
 		result.findings += _Finding.parseErrorLines(
-			comp.errors(recurse=True), _FindingSource.opError, _FindingStatus.error)
+			name, comp.errors(recurse=True), _FindingSource.opError, _FindingStatus.error)
 		return result
 
-	def buildTestCaseResultTable(self, dat: 'DAT'):
-		dat.clear()
-		dat.appendRow(['path', 'status', 'source', 'message'])
-		result = self._buildTestCaseResult()
-		if not result:
-			return
-		for finding in result.findings:
-			dat.appendRow([
-				finding.path,
-				finding.status.name,
-				finding.source.name,
-				finding.message,
-			])
-
-	def ClearLog(self):
+	def clearLog(self):
 		self.logTable.clear()
 
 	def log(self, message: str):
 		print(message)
 		self.logTable.appendRow([message])
+
+	@staticmethod
+	def resultLevelFilterValues():
+		level = ipar.uiState.Resultlevelfilter.eval()
+		if level == 'error':
+			return [_FindingStatus.error.name]
+		if level == 'warning':
+			return [_FindingStatus.error.name, _FindingStatus.warning.name]
+		return ['*']
 
 	@staticmethod
 	def _queueCall(method: Callable, *args):
@@ -114,8 +202,15 @@ class TestManager:
 @dataclass
 class _TestCaseResult:
 	name: Optional[str] = None
-	tox: Optional[str] = None
 	findings: List['_Finding'] = field(default_factory=list)
+
+	@property
+	def hasError(self):
+		return any([finding.isError for finding in self.findings])
+
+	@property
+	def hasWarning(self):
+		return any([finding.isWarning for finding in self.findings])
 
 class _FindingStatus(Enum):
 	success = 'success'
@@ -144,21 +239,31 @@ class _FindingSource(Enum):
 
 @dataclass
 class _Finding:
+	case: str
 	status: _FindingStatus
 	source: _FindingSource
 	path: Optional[str] = None
 	message: Optional[str] = None
 
+	@property
+	def isError(self):
+		return self.status == _FindingStatus.error
+
+	@property
+	def isWarning(self):
+		return self.status in (_FindingStatus.warning, _FindingStatus.unknown)
+
 	@classmethod
-	def fromValidationTable(cls, dat: 'DAT'):
+	def fromValidationTable(cls, case: str, dat: 'DAT'):
 		return [
-			cls.fromValidationRow(dat, row)
+			cls.fromValidationRow(case, dat, row)
 			for row in range(1, dat.numRows)
 		]
 
 	@classmethod
-	def fromValidationRow(cls, dat: 'DAT', row: int):
+	def fromValidationRow(cls, case: str, dat: 'DAT', row: int):
 		return _Finding(
+			case=case,
 			path=str(dat[row, 'path']),
 			message=str(dat[row, 'message']),
 			status=_FindingStatus.parse(dat[row, 'level']),
@@ -166,18 +271,18 @@ class _Finding:
 		)
 
 	@classmethod
-	def parseErrorLines(cls, text: str, source: '_FindingSource', status: '_FindingStatus') -> 'List[_Finding]':
+	def parseErrorLines(cls, case: str, text: str, source: '_FindingSource', status: '_FindingStatus') -> 'List[_Finding]':
 		if not text:
 			return []
 		results = []
 		for line in text.splitlines():
 			line = line.strip()
 			if line:
-				results.append(cls.parseErrorLine(line, source, status))
+				results.append(cls.parseErrorLine(case, line, source, status))
 		return results
 
 	@classmethod
-	def parseErrorLine(cls, line: str, source: '_FindingSource', status: '_FindingStatus'):
+	def parseErrorLine(cls, case: str, line: str, source: '_FindingSource', status: '_FindingStatus'):
 		line = line.strip()
 		match = _opErrorPattern.fullmatch(line)
 		if match:
@@ -194,12 +299,14 @@ class _Finding:
 			if o and isinstance(o, (glslTOP, glslmultiTOP)):
 				status = _FindingStatus.error
 			return cls(
+				case=case,
 				path=path,
 				status=status,
 				source=source,
 				message=message,
 			)
 		return cls(
+			case=case,
 			status=status,
 			source=source,
 			message=line,
