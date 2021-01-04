@@ -27,6 +27,9 @@ class TestManager:
 		self.ownerComp = ownerComp  # type: _COMP
 		self.logTable = ownerComp.op('log')  # type: DAT
 		self.currentTestName = tdu.Dependency()
+		self.successCount = tdu.Dependency(0)
+		self.warningCount = tdu.Dependency(0)
+		self.errorCount = tdu.Dependency(0)
 		self._caseResults = {}  # type: Dict[str, _TestCaseResult]
 
 	@property
@@ -79,6 +82,13 @@ class TestManager:
 		table.clear()
 		table.appendRow(['case', 'path', 'status', 'source', 'message'])
 		self._caseResults = {}
+		self.successCount.val = 0
+		self.warningCount.val = 0
+		self.errorCount.val = 0
+
+	@property
+	def hasResultCounts(self):
+		return self.successCount.val > 0 or self.warningCount.val > 0 or self.errorCount.val > 0
 
 	def _addResult(self, result: '_TestCaseResult'):
 		self._caseResults[result.name] = result
@@ -91,8 +101,15 @@ class TestManager:
 				'',
 				f'No findings for case {result.name}',
 			])
+			self.successCount.val += 1
 			return
 		basePath = self._testComp.path + '/'
+		if result.hasError:
+			self.errorCount.val += 1
+		elif result.hasWarning:
+			self.warningCount.val += 1
+		else:
+			self.successCount.val += 1
 		for finding in result.findings:
 			table.appendRow([
 				result.name,
@@ -107,8 +124,8 @@ class TestManager:
 		if queue.numRows < 1:
 			raise Exception('No tests queued!')
 		self.clearLog()
-		self.log(f'Running {queue.numRows} queued tests...')
 		self.clearResults()
+		self.log(f'Running {queue.numRows} queued tests...')
 		self._runNextTest(continueAfter=True)
 
 	def runAllTests(self):
@@ -207,8 +224,8 @@ class TestManager:
 		print(message)
 		self.logTable.appendRow([message])
 
-	@staticmethod
-	def resultLevelFilterValues():
+	@property
+	def resultLevelFilterValues(self):
 		level = ipar.uiState.Resultlevelfilter.eval()
 		if level == 'error':
 			return [_FindingStatus.error.name]
