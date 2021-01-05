@@ -6,7 +6,7 @@ lookAtCamera	/raytk/operators/camera/lookAtCamera	/raytk/operators/camera	raytkO
 orthoCamera	/raytk/operators/camera/orthoCamera	/raytk/operators/camera	raytkOP	camera	camera/orthoCamera	raytk.operators.camera.orthoCamera	5	
 splitCamera	/raytk/operators/camera/splitCamera	/raytk/operators/camera	raytkOP	camera	camera/splitCamera	raytk.operators.camera.splitCamera	5	
 blend	/raytk/operators/combine/blend	/raytk/operators/combine	raytkOP	combine	combine/blend	raytk.operators.combine.blend	5	
-boundLimit	/raytk/operators/combine/boundLimit	/raytk/operators/combine	raytkOP	combine	combine/boundLimit	raytk.operators.combine.boundLimit	3	alpha
+boundLimit	/raytk/operators/combine/boundLimit	/raytk/operators/combine	raytkOP	combine	combine/boundLimit	raytk.operators.combine.boundLimit	4	alpha
 combine	/raytk/operators/combine/combine	/raytk/operators/combine	raytkOP	combine	combine/combine	raytk.operators.combine.combine	7	
 combineChamfer	/raytk/operators/combine/combineChamfer	/raytk/operators/combine	raytkOP	combine	combine/combineChamfer	raytk.operators.combine.combineChamfer	5	
 combineColumns	/raytk/operators/combine/combineColumns	/raytk/operators/combine	raytkOP	combine	combine/combineColumns	raytk.operators.combine.combineColumns	9	
@@ -24,7 +24,7 @@ smoothUnion	/raytk/operators/combine/smoothUnion	/raytk/operators/combine	raytkO
 switch	/raytk/operators/combine/switch	/raytk/operators/combine	raytkOP	combine	combine/switch	raytk.operators.combine.switch	4	
 coordTo2D	/raytk/operators/convert/coordTo2D	/raytk/operators/convert	raytkOP	convert	convert/coordTo2D	raytk.operators.convert.coordTo2D	7	
 coordTo3D	/raytk/operators/convert/coordTo3D	/raytk/operators/convert	raytkOP	convert	convert/coordTo3D	raytk.operators.convert.coordTo3D	8	
-extrude	/raytk/operators/convert/extrude	/raytk/operators/convert	raytkOP	convert	convert/extrude	raytk.operators.convert.extrude	2	
+extrude	/raytk/operators/convert/extrude	/raytk/operators/convert	raytkOP	convert	convert/extrude	raytk.operators.convert.extrude	3	
 floatToSdf	/raytk/operators/convert/floatToSdf	/raytk/operators/convert	raytkOP	convert	convert/floatToSdf	raytk.operators.convert.floatToSdf	4	
 floatToVector	/raytk/operators/convert/floatToVector	/raytk/operators/convert	raytkOP	convert	convert/floatToVector	raytk.operators.convert.floatToVector	5	
 revolve	/raytk/operators/convert/revolve	/raytk/operators/convert	raytkOP	convert	convert/revolve	raytk.operators.convert.revolve	2	
@@ -162,7 +162,7 @@ superQuadSdf2d	/raytk/operators/sdf2d/superQuadSdf2d	/raytk/operators/sdf2d	rayt
 triangleSdf2d	/raytk/operators/sdf2d/triangleSdf2d	/raytk/operators/sdf2d	raytkOP	sdf2d	sdf2d/triangleSdf2d	raytk.operators.sdf2d.triangleSdf2d	1	
 vesicaSdf2d	/raytk/operators/sdf2d/vesicaSdf2d	/raytk/operators/sdf2d	raytkOP	sdf2d	sdf2d/vesicaSdf2d	raytk.operators.sdf2d.vesicaSdf2d	0	
 lfoField	/raytk/operators/time/lfoField	/raytk/operators/time	raytkOP	time	time/lfoField	raytk.operators.time.lfoField	3	
-timeField	/raytk/operators/time/timeField	/raytk/operators/time	raytkOP	time	time/timeField	raytk.operators.time.timeField	6	
+timeField	/raytk/operators/time/timeField	/raytk/operators/time	raytkOP	time	time/timeField	raytk.operators.time.timeField	7	
 timeShift	/raytk/operators/time/timeShift	/raytk/operators/time	raytkOP	time	time/timeShift	raytk.operators.time.timeShift	2	alpha
 extractDebugValues	/raytk/operators/utility/extractDebugValues	/raytk/operators/utility	raytkOP	utility	utility/extractDebugValues	raytk.operators.utility.extractDebugValues	1	alpha
 extractIteration	/raytk/operators/utility/extractIteration	/raytk/operators/utility	raytkOP	utility	utility/extractIteration	raytk.operators.utility.extractIteration	3	beta
