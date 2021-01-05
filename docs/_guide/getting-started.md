@@ -22,7 +22,12 @@ To create your first ROP, use the keyboard shortcut `alt + r` to open up the edi
 
 1. Choose a `boxFrameSdf`, and a new COMP will be created in the network editor.
 1. Create a `raymarchRender3d` and connect the output of your `boxFrameSdf` to the input of the `raymarchRender3d`.
-1. Create a `lookAtCamera` and connect it to the second input ("camera_definition_in") on the `raymarchRender3d`.
+1. From the TD Palette, under "Tools" drag a `camera` component into the network.
+    ![TD Palette Camera](/raytk/assets/images/guide/intro-tdPaletteCamera.png)
+1. Select the new camera and drag it into the `raymarchRender3d` and choose "Parm: Camera".
+    ![Drag camera onto render](/raytk/assets/images/guide/intro-dropCameraOntoRender.png)
+    :information_source: The camera by default is aimed in slightly the wrong direction. To correct it, open the viewer of the camera, left click, and drag a bit to the left.
+1. Create a regular TD light, drag it onto the `raymarchRender3d` and choose "Parm: Light".
 1. Connect a `Null TOP` to the first output of `raymarchRender3d`.
 1. Play around with the parameters of the `boxFrameSdf`.
 
@@ -36,15 +41,16 @@ The `boxFrameSdf` is an `SDF` (signed distance function) operator, which is how 
 
 Now that you have a complete render setup, you can start to add to and change your scene.
 
-1. Add a `rotate` between the `boxFrameSdf` and the `raymarchRender3d`.
-2. Adjust the "Rotate XYZ" parameters and watch the box rotate in the output.
+1. Add a `twist` between the `boxFrameSdf` and the `raymarchRender3d`.
+2. Change the "Axis" to "Y".
+3. Adjust the "Amount" parameter and watch the box twist in the output.
 
 ![Basic RayTK Network](/raytk/assets/images/guide/intro-basicNetwork2.png)
 
 You've just created your first "filter" ROP! It modifies the behavior of another ROP.
 
-3. Add a `basicMat` between the `rotate` and the `raymarchRender3d`.
-4. Try out different color settings.
+4. Add a `basicMat` between the `twist` and the `raymarchRender3d`.
+5. Try out different color settings.
 
 ![Basic RayTK Network](/raytk/assets/images/guide/intro-basicNetwork3.png)
 
