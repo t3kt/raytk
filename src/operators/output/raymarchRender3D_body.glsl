@@ -10,6 +10,17 @@ uniform vec3 uLightColor1 = vec3(1);
 uniform float uUseRenderDepth;
 
 
+
+float hash1( float n )
+{
+	return fract(sin(n)*43758.5453123);
+}
+
+float hash1( in vec2 f )
+{
+	return fract(sin(f.x+131.1*f.y)*43758.5453123);
+}
+
 Sdf map(vec3 q)
 {
 	Context ctx = createDefaultContext();
@@ -183,31 +194,6 @@ vec3 getColor(vec3 p, MaterialContext matCtx) {
 	}
 }
 
-#ifndef THIS_USE_CAM_FUNC
-
-Ray getViewRay(vec2 shift) {
-	vec3 pos = uCamPos;
-	vec2 resolution = uTDOutputInfo.res.zw;
-	vec2 fragCoord = vUV.st*resolution + shift;
-	vec2 p = (-resolution+2.0*fragCoord.xy)/resolution.y;
-
-	float aspect = resolution.x/resolution.y;
-	float screenWidth = 2*(aspect);
-	float distanceToScreen = (screenWidth/2)/tan(uCamFov/2)*1;
-
-	vec3 ta = pos+vec3(0, 0, -1);//camLookAt;
-
-	// camera matrix
-	vec3 ww = normalize(ta - pos);
-	vec3 uu = normalize(cross(ww, vec3(0.0, 1, 0.0)));
-	vec3 vv = normalize(cross(uu, ww));
-	// create view ray
-	vec3 rd = normalize(p.x*uu + p.y*vv + distanceToScreen*ww) *rotateMatrix(uCamRot);
-	return Ray(pos, rd);
-}
-
-#endif
-
 #ifndef THIS_USE_LIGHT_FUNC
 Light getLight(vec3 p, LightContext lightCtx) {
 	Light light;
@@ -315,10 +301,6 @@ void main()
 			sdfOut += vec4(res.x, res.material, 0, 1);
 			#endif
 			#endif
-	//		#ifdef OUTPUT_DEPTH
-		//	depthOut = TDOutputSwizzle(vec4(vec3(min(res.x, renderDepth)), 1));
-			//depthOut = TDOutputSwizzle(vec4(vec3(res.x)))
-	//		#endif
 			#if defined(OUTPUT_NEARHIT) && defined(RAYTK_NEAR_HITS_IN_SDF)
 			nearHitOut += TDOutputSwizzle(vec4(res.nearHitAmount, float(res.nearHitCount), 0, 1));
 			#endif
@@ -335,7 +317,12 @@ void main()
 			normalOut += vec4(matCtx.normal, 0);
 			#endif
 			#ifdef OUTPUT_COLOR
-			colorOut += vec4(getColor(p, matCtx), 1);
+			{
+				vec3 col = getColor(p, matCtx);
+				vec2 fragCoord = vUV.st*uTDOutputInfo.res.zw;
+				col += (1.0/255.0)*hash1(fragCoord);
+				colorOut += vec4(col, 1);
+			}
 			#endif
 			#ifdef OUTPUT_ORBIT
 			orbitOut += res.orbit;
@@ -359,6 +346,9 @@ void main()
 	}
 	#endif
 	float aa = 1.0 / float(THIS_ANTI_ALIAS*THIS_ANTI_ALIAS);
+	#ifdef OUTPUT_DEPTH
+	depthOut *= aa;
+	#endif
 	#ifdef OUTPUT_RAYDIR
 	rayDirOut *= aa;
 	#endif

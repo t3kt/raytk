@@ -19,6 +19,11 @@ subComps += ops('fieldVisualizer', 'inspectorCore', 'bufferInspector', 'axisHelp
 for comp in subComps:
 	context.reclone(comp)
 	context.disableCloning(comp)
+	context.detachTox(comp)
+	for c in comp.findChildren(type=COMP):
+		context.reclone(c)
+		context.disableCloning(c)
+		context.detachTox(c)
 
 context.detachTox(inspector)
 context.finishTask()

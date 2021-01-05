@@ -1,0 +1,79 @@
+---
+layout: page
+---
+
+<nav aria-label="Breadcrumb" class="breadcrumb-nav breadcrumb-nav-custom">
+	<ol class="breadcrumb-nav-list">
+		<li class="breadcrumb-nav-list-item">
+			<a href="/raytk/reference/operators/">Operators</a>
+		</li>
+		<li class="breadcrumb-nav-list-item">
+			<a href="/raytk/reference/operators/{{page.op.category}}/">{{ page.op.category | capitalize }} Operators</a>
+		</li>
+		<li class="breadcrumb-nav-list-item">
+			<span>{{page.title}}</span>
+		</li>
+	</ol>
+</nav>
+
+{{ content }}
+
+{% if page.op.parameters %}
+	<h2>Parameters</h2>
+
+	<ul>
+		{% for param in page.op.parameters %}
+		<li>
+			<code class="param-name" title="{{ param.name }}">{{ param.label }}</code>:
+			<span class="param-desc">{{ param.summary }}</span>
+			{% if param.menuOptions %}
+			<ul>
+				{% for opt in param.menuOptions %}
+				<li>
+					<em class="menu-opt-name" title="{{ opt.name }}">{{ opt.label }}</em>
+					<span class="menu-opt-summary">{{ opt.summary }}</span>
+				</li>
+				{% endfor %}
+			</ul>
+			{% endif %}
+		</li>
+		{% endfor %}
+	</ul>
+{% endif %}
+
+{% if page.op.inputs %}
+	<h2>Inputs</h2>
+	<ul>
+		{% for input in page.op.inputs %}
+			<li>
+				<code class="input-name" title="{{ input.name }}">{{ input.label }}</code>:
+				{% if input.required %}
+					<span class="input-required">(required)</span>
+				{% else %}
+					<span class="input-optional">(optional)</span>
+				{% endif %}
+				<span class="input-summary">{{ input.summary }}</span>
+				<ul class="input-types">
+					<li>
+						<em>Coordinate Types</em>:
+						{% for t in input.coordTypes %}
+							<span class="input-types-item"><code>{{t}}</code></span>
+						{% endfor %}
+					</li>
+					<li>
+						<em>Context Types</em>:
+						{% for t in input.contextTypes %}
+							<span class="input-types-item"><code>{{t}}</code></span>
+						{% endfor %}
+					</li>
+					<li>
+						<em>Return Types</em>:
+						{% for t in input.returnTypes %}
+							<span class="input-types-item"><code>{{t}}</code></span>
+						{% endfor %}
+					</li>
+				</ul>
+			</li>
+		{% endfor %}
+	</ul>
+{% endif %}

@@ -10,8 +10,6 @@ Sdf thismap(vec3 p, Context ctx) {
 
 #endif
 
-#ifdef THIS_USE_CAM_FUNC
-
 Ray getViewRay(vec2 shift) {
 	vec2 resolution = uTDOutputInfo.res.zw;
 	vec2 fragCoord = vUV.st*resolution + shift;
@@ -19,8 +17,6 @@ Ray getViewRay(vec2 shift) {
 	ctx.resolution = resolution;
 	return inputOp2(fragCoord, ctx);
 }
-
-#endif
 
 #ifdef THIS_USE_LIGHT_FUNC
 

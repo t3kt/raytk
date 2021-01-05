@@ -109,11 +109,32 @@ Sdf withAdjustedScale(in Sdf res, float scaleMult) {
 	return res;
 }
 
+#ifdef RAYTK_USE_TIME
+struct Time {
+	float frame;
+	float seconds;
+	float start;
+	float end;
+	float rate;
+	float bpm;
+	float absFrame;
+	float absSeconds;
+	float absStepFrames;
+	float absStepSeconds;
+};
+
+Time getGlobalTime();
+#endif
+
 struct Context {
 	vec4 iteration;
 
 	#ifdef RAYTK_GLOBAL_POS_IN_CONTEXT
 	vec3 globalPos;
+	#endif
+
+	#if defined(RAYTK_TIME_IN_CONTEXT) || defined(RAYTK_USE_TIME)
+	Time time;
 	#endif
 };
 
@@ -122,6 +143,9 @@ Context createDefaultContext() {
 	ctx.iteration = vec4(0);
 	#ifdef RAYTK_GLOBAL_POS_IN_CONTEXT
 	ctx.globalPos = vec3(0);
+	#endif
+	#if defined(RAYTK_TIME_IN_CONTEXT) || defined(RAYTK_USE_TIME)
+	ctx.time = getGlobalTime();
 	#endif
 	return ctx;
 }
@@ -134,6 +158,10 @@ struct Light {
 struct LightContext {
 	Sdf result;
 	vec3 normal;
+
+	#if defined(RAYTK_TIME_IN_CONTEXT) || defined(RAYTK_USE_TIME)
+	Time time;
+	#endif
 };
 
 struct MaterialContext {
@@ -146,10 +174,18 @@ struct MaterialContext {
 
 struct CameraContext {
 	vec2 resolution;
+
+	#if defined(RAYTK_TIME_IN_CONTEXT) || defined(RAYTK_USE_TIME)
+	Time time;
+	#endif
 };
 
 struct RayContext {
 	Ray ray;
+
+	#if defined(RAYTK_TIME_IN_CONTEXT) || defined(RAYTK_USE_TIME)
+	Time time;
+	#endif
 };
 
 mat3 rotateMatrix(vec3 r) {
@@ -240,6 +276,10 @@ vec4 modZigZag(vec4 p, vec4 low, vec4 high) {
 		modded.y > range.y ? (range2.y - modded.y): modded.y,
 		modded.z > range.z ? (range2.z - modded.z): modded.z,
 		modded.w > range.w ? (range2.w - modded.w): modded.w);
+}
+
+float wrapRange(float value, float low, float high) {
+	return low + mod(value - low, high - low);
 }
 
 /**
@@ -467,14 +507,6 @@ vec3 opCheapBendPos(vec3 p, float k)
 	float s = sin(k*p.x);
 	mat2  m = mat2(c, -s, s, c);
 	return vec3(m*p.xy, p.z);
-}
-
-vec3 opTwistPos(vec3 p, float k)
-{
-	float c = cos(k*p.y);
-	float s = sin(k*p.y);
-	mat2  m = mat2(c,-s,s,c);
-	return vec3(m*p.xz,p.y);
 }
 
 // Returns xyz: new pos, w: value to add to surface distance (which may not work correctly)

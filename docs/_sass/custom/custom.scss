@@ -1,0 +1,25 @@
+.search-input {
+  color: $body-text-color;
+}
+
+::-webkit-scrollbar {
+  width: 12px;
+}
+
+::-webkit-scrollbar-track {
+  outline: 1px solid $border-color;
+}
+
+::-webkit-scrollbar-thumb {
+  background: $body-text-color;
+}
+
+.breadcrumb-nav:not(.breadcrumb-nav-custom) { display: none; }
+
+.breadcrumb-nav-custom {
+  margin-left: -1.5rem;
+}
+
+.input-types-item:not(:last-of-type)::after {
+  content: ', ';
+}

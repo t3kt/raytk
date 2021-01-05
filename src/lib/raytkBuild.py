@@ -1,7 +1,7 @@
 from pathlib import Path
 from typing import Callable
-from raytkUtil import detachTox, CategoryInfo, ROPInfo, getToolkit, stripFirstMarkdownHeader
-from raytkModel import CategoryHelp, ROPHelp
+from raytkUtil import detachTox, CategoryInfo, ROPInfo, RaytkTags, RaytkContext
+from raytkDocs import CategoryHelp, OpDocManager
 
 # noinspection PyUnreachableCode
 if False:
@@ -63,6 +63,29 @@ class BuildContext:
 		self.log(f'Reloading {comp.par.externaltox} for {comp}')
 		comp.par.reinitnet.pulse()
 
+	def safeDestroyOp(self, o: 'OP'):
+		if not o or not o.valid:
+			return
+		self.log(f'Removing {o}')
+		try:
+			o.destroy()
+		except Exception as e:
+			self.log(f'Ignoring error removing {o}: {e}')
+
+	def safeDestroyOps(self, os: 'List[OP]'):
+		for o in os:
+			self.safeDestroyOp(o)
+
+	def lockOps(self, os: 'List[OP]'):
+		for o in os:
+			self.log(f'Locking {o}')
+			o.lock = True
+
+	def lockBuildLockOps(self, comp: 'COMP'):
+		self.log(f'Locking build locked ops in {comp}')
+		toLock = comp.findChildren(tags=[RaytkTags.buildLock.name])
+		self.lockOps(toLock)
+
 	@staticmethod
 	def queueAction(action: Callable, *args):
 		run(f'args[0](*(args[1:]))', action, *args, delayFrames=5, delayRef=root)
@@ -103,7 +126,7 @@ class DocProcessor:
 	def __init__(self, context: 'BuildContext', outputFolder: 'Union[str, Path]'):
 		self.context = context
 		self.outputFolder = Path(outputFolder)
-		self.toolkit = getToolkit()
+		self.toolkit = RaytkContext().toolkit()
 
 	def processOp(self, rop: 'COMP'):
 		self.context.log(f'Processing docs for op {rop}')
@@ -111,42 +134,13 @@ class DocProcessor:
 		if not ropInfo or not ropInfo.isMaster:
 			self.context.log(f'Invalid rop for docs {rop}')
 			return
-		ropHelp = ROPHelp.extractFromROP(rop)
-		dat = ropInfo.helpDAT
-		if not dat:
-			dat = ropInfo.rop.create(textDAT, 'help')
-			ropInfo.helpDAT = dat
-		docText = ropHelp.formatAsMarkdown()
-		dat.clear()
-		dat.write(docText)
-		docText = f'''---
-layout: page
-title: {ropInfo.shortName}
-parent: {ropInfo.categoryName.capitalize()} Operators
-grand_parent: Operators
-permalink: /reference/operators/{ropInfo.categoryName}/{ropInfo.shortName}
----
-
-{docText}
-'''
+		docManager = OpDocManager(ropInfo)
+		docManager.setUpMissingParts()
+		docManager.pushToParamsAndInputs()
+		docText = docManager.formatForBuild()
 		self._writeDocs(
 			Path(self.toolkit.relativePath(rop).replace('./', '') + '.md'),
 			docText)
-
-	@staticmethod
-	def _generateDefaultOpDoc(ropInfo: 'ROPInfo'):
-		parts = [
-			f'# {ropInfo.shortName}',
-			f'Category: {ropInfo.categoryName}',
-			f'OP Type: `{ropInfo.opType}`',
-			f'## Parameters',
-			'\n'.join([
-				f'* `{parTuplet[0].label}` - '
-				for parTuplet in ropInfo.rop.customTuplets
-				if not parTuplet[0].isPulse and not parTuplet[0].readOnly
-			])
-		]
-		return '\n\n'.join(parts)
 
 	def _writeDocs(self, relativePath: 'Path', docText: str):
 		outFile = self.outputFolder / relativePath
@@ -158,32 +152,13 @@ permalink: /reference/operators/{ropInfo.categoryName}/{ropInfo.shortName}
 	def processOpCategory(self, categoryOp: 'COMP'):
 		self.context.log(f'Processing docs for category {categoryOp}')
 		categoryInfo = CategoryInfo(categoryOp)
+		catHelp = CategoryHelp.extractFromComp(categoryOp)
 		dat = categoryInfo.helpDAT
-		parts = [
-			f'# {categoryOp.name} Operators',
-			stripFirstMarkdownHeader(dat.text) if dat else '',
-			'\n'.join([
-				f'* [`{ropInfo.shortName}`]({ropInfo.shortName}/) - {_extractSummary(ropInfo.helpDAT)}'
-				for ropInfo in categoryInfo.operatorInfos
-			])
-		]
-		docText = '\n\n'.join(parts)
+		docText = catHelp.formatAsList()
 		if not dat:
 			dat = categoryOp.create(textDAT, 'help')
 		dat.text = docText
-		docText = f'''---
-layout: page
-title: {categoryInfo.categoryName.capitalize()} Operators
-parent: Operators
-has_children: true
-has_toc: false
-permalink: /reference/operators/{categoryInfo.categoryName}/
----
-
-# {categoryInfo.categoryName.capitalize()} Operators
-
-{stripFirstMarkdownHeader(docText)}
-'''
+		docText = catHelp.formatAsListPage()
 		self._writeDocs(
 			Path(self.toolkit.relativePath(categoryOp).replace('./', '') + '/index.md'),
 			docText)

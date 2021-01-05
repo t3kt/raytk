@@ -23,15 +23,15 @@ Ray thismap(vec2 p, CameraContext ctx) {
 	float phi = atan(screenPos.y, screenPos.x);
 	float theta;
 	
-    #if defined(THIS_MODE_pinhole)
+    #if defined(THIS_Fisheyemode_pinhole)
     	theta = atan(r/f);
-    #elif defined(THIS_MODE_stereographic)
+    #elif defined(THIS_Fisheyemode_stereographic)
     	theta = atan(r/(2.0*f))*2.0;
-    #elif defined(THIS_MODE_equiangular)
+    #elif defined(THIS_Fisheyemode_equiangular)
     	theta = r/f;
-    #elif defined(THIS_MODE_equisolidangle)
+    #elif defined(THIS_Fisheyemode_equisolidangle)
     	theta = asin(r/(2.0*f))*2.0;
-    #elif defined(THIS_MODE_orthographicfisheye)
+    #elif defined(THIS_Fisheyemode_orthographicfisheye)
     	theta = asin(r/f);
     #endif
     vec3 worldDir = camOrient * vec3(sin(theta)*cos(phi), sin(theta)*sin(phi), cos(theta));

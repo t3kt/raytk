@@ -1,0 +1,4 @@
+name	label
+none	None
+union	Union
+smoothUnion	Smooth Union

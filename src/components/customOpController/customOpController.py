@@ -174,6 +174,8 @@ def _createCodeDat(host: 'COMP', template: 'Optional[DAT]', nameSuffix: str, off
 	dat.nodeY = host.nodeY - host.nodeHeight - 120
 	dat.dock = host
 	host.showDocked = True
+	dat.viewer = True
+	dat.activeViewer = True
 	return dat
 
 _paramPattern = re.compile(r'\bTHIS_([A-Z][a-z0-9]*)\b')

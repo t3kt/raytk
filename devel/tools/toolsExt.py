@@ -1,36 +1,46 @@
-from develCommon import updateROPMetadata, AutoLoader
+from develCommon import AutoLoader
 import popMenu
-from raytkUtil import RaytkTags, ROPInfo, Tag, getActiveEditor, navigateTo, getChildROPs, recloneComp, RaytkContext, TypeTableHelper, focusCustomParameterPage
-from raytkUtil import getToolkit, getToolkitVersion, Version
-from typing import Tuple, List
+from raytkTools import RaytkTools
+from raytkUtil import RaytkTags, Tag, navigateTo, recloneComp, RaytkContext, TypeTableHelper, CategoryInfo, Version
+from typing import List, Tuple, Union
 
 # noinspection PyUnreachableCode
 if False:
 	# noinspection PyUnresolvedReferences
 	from _stubs import *
+	from devel.toolkitEditor.toolkitEditor import ToolkitEditor
 
 class Tools:
 	def __init__(self, ownerComp: 'COMP'):
 		self.ownerComp = ownerComp
 
+	def onInit(self):
+		self.updateAllROPToolkitVersions()
+
 	@staticmethod
 	def IncrementMajor():
-		version = getToolkitVersion()
+		version = RaytkContext().toolkitVersion()
 		setToolkitVersion(Version(version.major + 1, 0))
 
 	@staticmethod
 	def IncrementMinor():
-		version = getToolkitVersion()
+		context = RaytkContext()
+		version = context.toolkitVersion()
 		setToolkitVersion(Version(version.major, version.minor + 1))
+
+	@property
+	def toolkitVersion(self):
+		return RaytkContext().toolkitVersion()
 
 	@staticmethod
 	def ShowLibraryParams():
-		getToolkit().openParameters()
+		RaytkContext().toolkit().openParameters()
 
 	def UpdateCurrentROPsMetadata(self, incrementVersion=False):
 		rops = self.getCurrentROPs(primaryOnly=False)
+		tools = RaytkTools()
 		for rop in rops:
-			updateROPMetadata(rop, incrementVersion=incrementVersion)
+			tools.updateROPMetadata(rop, incrementVersion=incrementVersion)
 
 	def FillMonitorHeight(self, usePrimary=True):
 		height = _getMonitorHeight(usePrimary)
@@ -62,42 +72,7 @@ class Tools:
 	def SaveROP(self, incrementVersion=False, rop: 'COMP' = None):
 		if not rop:
 			rop = self.GetCurrentROP()
-		if not rop:
-			# TODO: warning?
-			return
-		ropInfo = ROPInfo(rop)
-		self.updateROPParams(rop)
-		updateROPMetadata(rop, incrementVersion=incrementVersion)
-		focusCustomParameterPage(rop, 0)
-		tox = rop.par.externaltox.eval()
-		rop.save(tox)
-		ui.status = f'Saved TOX {tox} (version: {ropInfo.opVersion})'
-		for dat in getToolkit().ops('opfind_rops', 'opCategoryTable'):
-			dat.cook(force=True)
-
-	@staticmethod
-	def updateROPParams(rop: 'COMP'):
-		if rop.customPages:
-			page = rop.customPages[0]
-		else:
-			page = rop.appendCustomPage('Settings')
-		ropInfo = ROPInfo(rop)
-		if ropInfo.isROP and ropInfo.hasROPInputs and not ropInfo.isOutput:
-			enablePar = rop.par['Enable']
-			if enablePar is None:
-				enablePar = page.appendToggle('Enable')[0]
-				enablePar.val = True
-			enablePar.order = -1
-			enablePar.default = True
-			if ropInfo.opDefPar and not ropInfo.opDefPar.Enable.expr:
-				ropInfo.opDefPar.Enable.expr = "op('..').par.Enable"
-
-		if ropInfo.isROP or ropInfo.subROPs:
-			inspectPar = rop.par['Inspect']
-			if inspectPar is None:
-				inspectPar = page.appendPulse('Inspect')[0]
-			inspectPar.startSection = True
-			inspectPar.order = 99999 
+		RaytkTools().saveROP(rop, incrementVersion)
 
 	def editCurrentROPMaster(self):
 		rop = self.GetCurrentROP()
@@ -105,6 +80,7 @@ class Tools:
 			return
 		rop = rop.par.clone.eval() or rop
 		self.NavigateTo(rop.par.clone.eval())
+		self.toolkitEditor().EditROP(rop)
 
 	def setCurrentROPBeta(self, state: bool):
 		self.applyTagToCurrentROPs(RaytkTags.beta, state)
@@ -112,42 +88,18 @@ class Tools:
 	def setCurrentROPAlpha(self, state: bool):
 		self.applyTagToCurrentROPs(RaytkTags.alpha, state)
 
-	def setUpCurrentROPHelp(self):
-		rops = self.getCurrentROPs()
-		for rop in rops:
-			self.setUpROPHelp(rop)
+	def setCurrentROPDeprecated(self, state: bool):
+		self.applyTagToCurrentROPs(RaytkTags.deprecated, state)
 
-	@staticmethod
-	def setUpROPHelp(rop: 'COMP'):
-		opDef = rop.op('opDefinition')
-		if not opDef:
-			return
-		par = opDef.par.Help
-		dat = par.eval()
-		ui.undo.startBlock('Set up ROP help for ' + rop.path)
-		try:
-			if not dat:
-				dat = rop.create(textDAT, 'help')
-				dat.nodeY = opDef.nodeY + 500
-				dat.nodeWidth = 350
-				dat.nodeHeight = 175
-				par.val = dat.name
-			if not dat.par.file:
-				dat.par.file = rop.par.externaltox.eval().replace('.tox', '.md')
-			RaytkTags.fileSync.apply(dat, True)
-			if not dat.text.strip():
-				text = f'# {rop.name}\n\n'
-				for parTuplet in rop.customTuplets:
-					if parTuplet[0].name in ('Inspect',):
-						continue
-					text += f'* `{parTuplet[0].label}` - '
-					if parTuplet[0].name == 'Enable':
-						text += 'Enables or disables the op.'
-					text += '\n'
-				dat.text = text
-			dat.viewer = True
-		finally:
-			ui.undo.endBlock()
+	def setUpCurrentROPHelp(self):
+		tools = RaytkTools()
+		for rop in self.getCurrentROPs():
+			tools.setUpHelp(rop)
+
+	def reloadCurrentROPHelp(self):
+		tools = RaytkTools()
+		for rop in self.getCurrentROPs():
+			tools.reloadHelp(rop)
 
 	def addCurrentROPMacroTable(self):
 		rop = self.GetCurrentROP()
@@ -184,7 +136,7 @@ class Tools:
 	def OnCreateNewRopTypeAccept(self, info: dict):
 		name = info['opName']
 		category = info['opCategory']
-		dest = getToolkit().op('operators/' + category)
+		dest = RaytkContext().operatorsRoot().op(category)
 		if not dest:
 			raise Exception(f'Invalid ROP category: {category!r}')
 		template = dest.op('_template')
@@ -193,7 +145,7 @@ class Tools:
 		newOp = dest.copy(template, name=name)
 		newOp.par.clone = newOp.path
 		newOp.par.externaltox = f'src/operators/{category}/{name}.tox'
-		updateROPMetadata(newOp)
+		RaytkTools().updateROPMetadata(newOp)
 		self.SaveROP(rop=newOp)
 		newOp.selected = True
 		newOp.nodeX = 0
@@ -294,7 +246,7 @@ class Tools:
 
 	@staticmethod
 	def forEachSelected(action):
-		editor = getActiveEditor()
+		editor = RaytkContext().activeEditor()
 		if not editor:
 			return
 		for o in editor.owner.selectedChildren:
@@ -307,7 +259,8 @@ class Tools:
 
 	@staticmethod
 	def organizeCategory(comp: 'COMP'):
-		rops = getChildROPs(comp)
+		catInfo = CategoryInfo(comp)
+		rops = catInfo.operators
 		if not rops:
 			return
 		rops.sort(key=lambda r: r.name)
@@ -315,9 +268,19 @@ class Tools:
 			rop.nodeY = -int(i / 10) * 150
 			rop.nodeX = int(i % 10) * 200
 
+	@staticmethod
+	def updateAllROPToolkitVersions():
+		RaytkTools().updateAllROPToolkitVersions()
+
+	def openToolkitEditor(self):
+		self.toolkitEditor().par.Open.pulse()
+
+	@staticmethod
+	def toolkitEditor() -> 'Union[ToolkitEditor, COMP]':
+		return op('/toolkitEditor')
+
 	def openPrototypeEditor(self):
 		self.openEditorWorkspace('devel/prototypes/')
-		pass
 
 	def openTestCaseEditor(self):
 		self.openEditorWorkspace('tests/testCases/')
@@ -339,7 +302,8 @@ def _getMonitorHeight(usePrimary=True):
 		return m.height
 
 def setToolkitVersion(version: Version):
-	toolkit = getToolkit()
+	context = RaytkContext()
+	toolkit = context.toolkit()
 	if toolkit.par['Raytkversion'] is None:
 		page = toolkit.appendCustomPage('RayTK')
 		page.appendStr('Raytkversion', label='RayTK Version')

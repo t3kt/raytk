@@ -1,0 +1,8 @@
+name	label	axisVec	dir
+custom	Custom	THIS_Planenormal	1
+xpos	X+	vec3(1, 0, 0)	1
+xneg	X-	vec3(-1, 0, 0)	-1
+ypos	Y+	vec3(0, 1, 0)	1
+yneg	Y-	vec3(0, -1, 0)	-1
+zpos	Z+	vec3(0, 0, 1)	1
+zneg	Z-	vec3(0, 0, -1)	-1

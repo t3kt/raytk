@@ -1,6 +1,6 @@
 ReturnT thismap(CoordT p, ContextT ctx) {
-	#ifdef THIS_USE_RADIUS_FIELD
-	float radius = inputOp3(p, ctx);
+	#ifdef THIS_HAS_INPUT_3
+	float radius = THIS_Radius * inputOp3(p, ctx);
 	#else
 	float radius = THIS_Radius;
 	#endif
@@ -10,7 +10,7 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 	return THIS_FUNC(res1, res2, radius);
 	#else
 	res1.x = THIS_FUNC(res1.x, res2.x, radius);
-	float h = clamp(0.5 - 0.5*(res2.x+res1.x)/radius, 0., 1.);
+	float h = smoothBlendRatio(res1.x, res2.x, radius);
 	blendInSdf(res1, res2, h);
 	return res1;
 	#endif

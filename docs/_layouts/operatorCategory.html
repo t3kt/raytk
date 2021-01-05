@@ -1,0 +1,29 @@
+---
+layout: page
+---
+
+<nav aria-label="Breadcrumb" class="breadcrumb-nav breadcrumb-nav-custom">
+	<ol class="breadcrumb-nav-list">
+		<li class="breadcrumb-nav-list-item">
+			<a href="/raytk/reference/operators/">Operators</a>
+		</li>
+		<li class="breadcrumb-nav-list-item">
+			<span>{{page.title}}</span>
+		</li>
+	</ol>
+</nav>
+
+{{ content }}
+
+<h2>Operators</h2>
+
+<ul>
+	{% for op in page.cat.operators %}
+	<li>
+		<code class="op-name">
+			<a href="/raytk/reference/operators/{{page.cat.name}}/{{op.name}}/" title="{{ op.name }}">{{ op.name }}</a>
+		</code>:
+		<span class="op-desc">{{ op.summary }}</span>
+	</li>
+	{% endfor %}
+</ul>

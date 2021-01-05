@@ -1,0 +1,4 @@
+name	label	function
+union	Union	fOpUnionStairs
+intersect	Intersect	fOpIntersectionStairs
+diff	Difference	fOpDifferenceStairs

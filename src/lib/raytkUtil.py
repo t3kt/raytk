@@ -8,11 +8,6 @@ if False:
 	from _typeAliases import *
 	op.raytk = COMP()
 
-def getToolkit() -> 'COMP':
-	if hasattr(parent, 'raytk'):
-		return parent.raytk
-	return op.raytk
-
 @total_ordering
 class Version:
 	pattern = re.compile(r'([0-9])+(?:\.([0-9]+))?')
@@ -58,39 +53,41 @@ class Version:
 		else:
 			return False
 
-def getToolkitVersion():
-	toolkit = getToolkit()
-	par = toolkit.par['Raytkversion']
-	return Version(str(par or '0.1'))
-
 class _OpMetaPars:
+	enablecloningpulse: 'Par'
 	Raytkoptype: 'StrParamT'
 	Raytkopversion: 'IntParamT'
 	Raytkversion: 'StrParamT'
 
 class CompDefParsT(_OpMetaPars):
 	Help: 'DatParamT'
+	Helpurl: 'StrParamT'
 	Rops: 'StrParamT'
 
 class OpDefParsT(_OpMetaPars):
 	Hostop: 'OPParamT'
 	Name: 'StrParamT'
 	Enable: 'BoolParamT'
+	Opglobals: 'DatParamT'
+	Initcode: 'DatParamT'
 	Functemplate: 'DatParamT'
+	Materialcode: 'DatParamT'
 	Macrotable: 'DatParamT'
+	Generatedmacrotables: 'StrParamT'
 	Params: 'StrParamT'
 	Specialparams: 'StrParamT'
 	Callbacks: 'DatParamT'
 	Librarynames: 'StrParamT'
 	Help: 'DatParamT'
+	Helpurl: 'StrParamT'
 	Disableinspect: 'BoolParamT'
 
 class ROPInfo:
 	rop: 'Optional[Union[OP, COMP]]'
 	opDef: 'Optional[COMP]'
-	opDefPar: 'Optional[Union[OpDefParsT, CompDefParsT]]'
+	opDefPar: 'Optional[Union[ParCollection, OpDefParsT, CompDefParsT]]'
 
-	def __init__(self, o: 'Union[OP, str, Cell]'):
+	def __init__(self, o: 'Union[OP, str, Cell, Par]'):
 		o = op(o)
 		if not o:
 			return
@@ -123,6 +120,11 @@ class ROPInfo:
 		return bool(self.rop)
 
 	@property
+	def path(self):
+		if self:
+			return self.rop.path
+
+	@property
 	def opVersion(self):
 		return str(self.opDefPar.Raytkopversion or '')
 
@@ -142,6 +144,18 @@ class ROPInfo:
 	def opType(self):
 		return str(self.opDefPar.Raytkoptype or '')
 
+	@opType.setter
+	def opType(self, val: str):
+		self.opDefPar.Raytkoptype = val
+
+	@property
+	def helpUrl(self):
+		return str(self.opDefPar.Helpurl or '')
+
+	@helpUrl.setter
+	def helpUrl(self, val):
+		self.opDefPar.Helpurl = val
+
 	@property
 	def isROP(self):
 		return isROP(self.rop)
@@ -157,6 +171,21 @@ class ROPInfo:
 	@property
 	def isAlpha(self):
 		return RaytkTags.alpha.isOn(self.rop)
+
+	@property
+	def isDeprecated(self):
+		return RaytkTags.deprecated.isOn(self.rop)
+
+	@property
+	def statusLabel(self):
+		if self.isDeprecated:
+			return 'deprecated'
+		elif self.isAlpha:
+			return 'alpha'
+		elif self.isBeta:
+			return 'beta'
+		else:
+			return ''
 
 	@property
 	def isMaster(self):
@@ -192,8 +221,10 @@ class ROPInfo:
 
 	@property
 	def subROPs(self):
-		if not self or not self.isRComp or not self.opDefPar['Rops']:
+		if not self:
 			return []
+		if not self.isRComp or self.opDefPar['Rops'] is None:
+			return _getChildROPs(self.rop)
 		return self.opDefPar.Rops.evalOPs()
 
 	@property
@@ -217,6 +248,19 @@ class ROPInfo:
 		return False
 
 	@property
+	def inputHandlers(self) -> 'List[COMP]':
+		if not self:
+			return []
+		handlers = self.rop.ops('inputDefinitionHandler_*')
+		handlers.sort(key=lambda o: o.nodeY, reverse=True)
+		return handlers
+
+	@property
+	def multiInputHandler(self) -> 'Optional[COMP]':
+		if self:
+			return self.rop.op('multiInputHandler')
+
+	@property
 	def isOutput(self):
 		return RaytkTags.raytkOutput.isOn(self.rop)
 
@@ -237,10 +281,14 @@ class ROPInfo:
 		return False
 
 	@property
-	def callbacks(self) -> 'Optional[MOD]':
+	def callbacksDAT(self) -> 'Optional[DAT]':
 		if not self.opDefPar or not self.opDefPar.Callbacks:
 			return None
-		dat = self.opDefPar.Callbacks.eval()
+		return self.opDefPar.Callbacks.eval()
+
+	@property
+	def callbacks(self) -> 'Optional[MOD]':
+		dat = self.callbacksDAT
 		if not dat:
 			return None
 		return dat.module
@@ -249,6 +297,80 @@ class ROPInfo:
 		cb = self.callbacks
 		if cb and hasattr(cb, name):
 			getattr(cb, name)(**kwargs)
+
+class InputInfo:
+	handler: 'Optional[COMP]'
+	rop: 'Optional[COMP]'
+
+	def __init__(self, handler: 'Union[OP, str, Cell, Par]'):
+		handler = op(handler)
+		if not handler:
+			return
+		self.handler = handler
+		self.rop = handler.parent()
+
+	def __bool__(self):
+		return bool(self.handler)
+
+	def _inDat(self) -> 'Optional[inDAT]':
+		if not self.handler or not self.handler.inputs:
+			return
+		dat = self.handler.inputs[0]
+		if isinstance(dat, inDAT):
+			return dat
+
+	@property
+	def name(self) -> 'Optional[str]':
+		dat = self._inDat()
+		if dat:
+			return dat.name
+		if self.handler:
+			return self.handler.name.replace('inputDefinitionHandler_', 'definition_in_')
+
+	@property
+	def label(self) -> 'Optional[str]':
+		dat = self._inDat()
+		if not dat:
+			return
+		p = dat.par.label  # type: Par
+		if not p.isDefault:
+			# noinspection PyBroadException
+			try:
+				return p.eval()
+			except Exception:
+				pass
+
+	@property
+	def multiHandler(self) -> 'Optional[COMP]':
+		if not self.handler or not self.handler.outputs:
+			return
+		output = self.handler.outputs[0]
+		if output.isDAT and output.outputs:
+			output = output.outputs[0]
+		if output and output.isCOMP and output.name == 'multiInputHandler':
+			return output
+
+	@property
+	def required(self):
+		return bool(self.handler and self.handler.par.Required)
+
+	def _supportedTypeTable(self) -> 'Optional[DAT]':
+		return self.handler and self.handler.op('./supported_type_table')
+
+	@property
+	def supportedCoordTypes(self):
+		table = self._supportedTypeTable()
+		return tdu.split(table['coordType', 1]) if table else []
+
+	@property
+	def supportedContextTypes(self):
+		table = self._supportedTypeTable()
+		return tdu.split(table['contextType', 1]) if table else []
+
+	@property
+	def supportedReturnTypes(self):
+		table = self._supportedTypeTable()
+		return tdu.split(table['returnType', 1]) if table else []
 
 class CategoryInfo:
 	category: COMP
@@ -273,8 +395,7 @@ class CategoryInfo:
 			return []
 		return list(sorted([
 			o
-			for o in self.category.findChildren(
-				type=COMP, tags=[RaytkTags.raytkOP.name, RaytkTags.raytkComp.name], maxDepth=1)
+			for o in _getChildROPs(self.category)
 			if not o.name.startswith('__')], key=lambda o: o.path))
 
 	@property
@@ -310,12 +431,11 @@ def _getROP(comp: 'COMP', checkParents=True):
 	if checkParents:
 		return _getROP(comp.parent(), checkParents=checkParents)
 
-def getChildROPs(comp: 'COMP'):
-	rops = []
-	for o in comp.children:
-		if isROP(o) or _isRComp(o):
-			rops.append(o)
-	return rops
+def _getChildROPs(comp: 'COMP'):
+	return comp.findChildren(type=COMP, tags=[RaytkTags.raytkOP.name, RaytkTags.raytkComp.name], maxDepth=1)
+
+def _getChildOutputROPs(comp: 'COMP'):
+	return comp.findChildren(type=COMP, tags=[RaytkTags.raytkOutput.name], maxDepth=1)
 
 def recloneComp(o: 'COMP'):
 	if o and o.par['enablecloningpulse'] is not None:
@@ -328,6 +448,7 @@ _alphaColor = 1, 0.55, 0
 _betaColor = 1, 0, 0.5
 _buildLockColor = 0, 0.68, 0.543
 _validationColor = 1, 0.95, 0.45
+_deprecatedColor = 0.2, 0.2, 0.2
 
 class Tag:
 	def __init__(
@@ -384,6 +505,9 @@ class _OpStatusTag(Tag):
 		if info.opDef:
 			self.applyTag(info.opDef, state)
 			self.applyColor(info.opDef, state)
+		if not state:
+			# clear it off the main op if it's there instead of / in addition to on opDef
+			self.applyTag(o, False)
 		self.applyColor(o, state)
 		self.applyUpdate(info.opDef, state)
 
@@ -418,9 +542,10 @@ class RaytkTags:
 	fileSync = Tag('fileSync', _fileSyncColor, _updateFileSyncPars)
 	alpha = _OpStatusTag('raytkAlpha', _alphaColor)
 	beta = _OpStatusTag('raytkBeta', _betaColor)
+	deprecated = _OpStatusTag('raytkDeprecated', _deprecatedColor)
 	validation = Tag('raytkValidation', _validationColor)
 
-def getActiveEditor() -> 'NetworkEditor':
+def _getActiveEditor() -> 'NetworkEditor':
 	pane = ui.panes.current
 	if pane.type == PaneType.NETWORKEDITOR:
 		return pane
@@ -428,16 +553,16 @@ def getActiveEditor() -> 'NetworkEditor':
 		if pane.type == PaneType.NETWORKEDITOR:
 			return pane
 
-def getPaneByName(name: str):
+def _getPaneByName(name: str):
 	for pane in ui.panes:
 		if pane.name == name:
 			return pane
 
-def getEditorPane(name: Optional[str] = None, popup=False):
+def _getEditorPane(name: Optional[str] = None, popup=False):
 	if name:
-		pane = getPaneByName(name)
+		pane = _getPaneByName(name)
 	else:
-		pane = getActiveEditor()
+		pane = _getActiveEditor()
 	if pane:
 		if popup:
 			return pane.floatingCopy()
@@ -448,7 +573,7 @@ def getEditorPane(name: Optional[str] = None, popup=False):
 def navigateTo(o: 'OP', name: Optional[str] = None, popup=False, goInto=True):
 	if not o:
 		return
-	pane = getEditorPane(name, popup)
+	pane = _getEditorPane(name, popup)
 	if not pane:
 		return
 	if goInto and o.isCOMP:
@@ -583,21 +708,45 @@ class TypeTableHelper:
 			hasUseInput: Optional[bool] = None):
 		self.updateTypePar(par, 'isReturnType', hasUseInput=hasUseInput)
 
+	def coordTypes(self):
+		types, _ = self.getTypeNamesAndLabels('isCoordType')
+		return types
+
+	def contextTypes(self):
+		types, _ = self.getTypeNamesAndLabels('isContextType')
+		return types
+
+	def returnTypes(self):
+		types, _ = self.getTypeNamesAndLabels('isReturnType')
+		return types
+
 class RaytkContext:
 	@staticmethod
 	def toolkit():
-		return getToolkit()
+		if hasattr(parent, 'raytk'):
+			return parent.raytk
+		if hasattr(op, 'raytk'):
+			return op.raytk
 
-	@staticmethod
-	def toolkitVersion():
-		return getToolkitVersion()
+	def toolkitVersion(self):
+		toolkit = self.toolkit()
+		par = toolkit.par['Raytkversion']
+		return Version(str(par or '0.1'))
 
 	def operatorsRoot(self):
 		return self.toolkit().op('operators')
 
 	@staticmethod
 	def activeEditor():
-		return getActiveEditor()
+		return _getActiveEditor()
+
+	def opTable(self) -> 'Optional[DAT]':
+		toolkit = self.toolkit()
+		return toolkit and toolkit.op('opTable')
+
+	def opHelpTable(self) -> 'Optional[DAT]':
+		toolkit = self.toolkit()
+		return toolkit and toolkit.op('opHelpTable')
 
 	@staticmethod
 	def currentROPs(
@@ -605,7 +754,7 @@ class RaytkContext:
 			exclude: Callable[['COMP'], None] = None,
 			masterOnly=False,
 	):
-		pane = getActiveEditor()
+		pane = _getActiveEditor()
 		if not pane:
 			return []
 		comp = pane.owner
@@ -628,7 +777,7 @@ class RaytkContext:
 		return rops
 
 	def currentCategories(self):
-		pane = getActiveEditor()
+		pane = _getActiveEditor()
 		if not pane:
 			return None
 		comp = pane.owner
@@ -649,6 +798,20 @@ class RaytkContext:
 			for child in self.operatorsRoot().children
 			if child.isCOMP
 		]
+
+	def allMasterOperators(self):
+		results = []
+		for catComp in self.allCategories():
+			results += CategoryInfo(catComp).operators
+		return results
+
+	@staticmethod
+	def ropChildrenOf(comp: 'COMP'):
+		return _getChildROPs(comp) if comp else []
+
+	@staticmethod
+	def ropOutputChildrenOf(comp: 'COMP'):
+		return _getChildOutputROPs(comp) if comp else []
 
 def _isMaster(o: 'COMP'):
 	return o and o.par['clone'] is not None and (o.par.clone.eval() or o.par.clone.expr)
@@ -710,25 +873,3 @@ def detachTox(comp: 'COMP'):
 	comp.par.reloadtoxonstart.val = False
 	comp.par.externaltox.expr = ''
 	comp.par.externaltox.val = ''
-
-def stripFirstMarkdownHeader(text: str):
-	if not text:
-		return ''
-	if not text.startswith('# '):
-		return text
-	return text.split('\n', 1)[1].strip()
-
-_headerPattern = re.compile(r'^#', re.MULTILINE)
-def incrementMarkdownHeaders(text: str, steps: int):
-	if not text:
-		return ''
-	return _headerPattern.sub('#' + ('#' * steps), text)
-
-def stripFrontMatter(text: str):
-	if not text or not text.startswith('---'):
-		return text or ''
-	return text.split('---\n', maxsplit=2)[-1]
-
-def datText(path: 'Union[str, Cell]'):
-	dat = op(path)
-	return dat.text.strip() if dat else ''

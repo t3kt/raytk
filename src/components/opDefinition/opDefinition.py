@@ -219,26 +219,31 @@ def prepareMacroTable(dat: 'scriptDAT', typeTable: 'DAT', inputTable: 'DAT', mac
 				f'THIS_{name}_{val}',
 				'',
 			])
+		elif style == 'Toggle':
+			if val:
+				dat.appendRow(['', f'THIS_{name}', ''])
 		else:
-			dat.appendRow([
-				'',
-				f'THIS_{name}',
-				val,
-			])
-	macros = parentPar().Macrotable.eval()  # type: DAT
-	if macros:
-		if macros.numCols == 2:
+			dat.appendRow(['', f'THIS_{name}', val])
+	for table in [op(parentPar().Macrotable)] + parentPar().Generatedmacrotables.evalOPs():
+		if not table or table.numCols == 0 or table.numRows == 0:
+			continue
+		elif table.numCols == 3:
+			dat.appendRows(table.rows())
+		elif table.numCols == 1:
 			dat.appendRows([
-				[''] + [c.val for c in cells]
-				for cells in macros.rows()
+				[''] + [c.val] + ['']
+				for c in table.col(0)
 			])
-		elif macros.numCols == 1:
+		elif table.numCols == 2:
 			dat.appendRows([
-				['', c.val, '']
-				for c in macros.col(0)
+				['', cells[0], cells[1]]
+				for cells in table.rows()
 			])
 		else:
-			dat.appendRows(macros.rows())
+			dat.appendRows([
+				[cells[0], cells[1], ' '.join([c.val for c in cells[2:]])]
+				for cells in table.rows()
+			])
 
 def inspect(rop: 'COMP'):
 	if hasattr(op, 'raytk'):
@@ -253,3 +258,15 @@ def inspect(rop: 'COMP'):
 		text='The RayTK inspector is only available when the main toolkit tox has been loaded.',
 		escOnClickAway=True,
 	)
+
+def _useLocalHelp():
+	return hasattr(op, 'raytk') and bool(op.raytk.par['Devel'])
+
+def launchHelp():
+	url = parentPar().Helpurl.eval()
+	if not url:
+		return
+	if _useLocalHelp():
+		url = url.replace('https://t3kt.github.io/raytk/', 'http://localhost:4000/raytk/')
+	if url:
+		ui.viewFile(url)

@@ -1,12 +1,12 @@
 float thismap(float p, ContextT ctx) {
 	p = mapRange(p, THIS_Range1, THIS_Range2, 0., 1.);
-	#if defined(THIS_EXTEND_hold)
+	#if defined(THIS_Extendmode_hold)
 	p = clamp(p, 0., 1.);
-	#elif defined(THIS_EXTEND_repeat)
+	#elif defined(THIS_Extendmode_repeat)
 	p = fract(p);
-	#elif defined(THIS_EXTEND_mirror)
+	#elif defined(THIS_Extendmode_mirror)
 	pModMirror1(p, 1.);
-	#elif defined(THIS_EXTEND_zero)
+	#elif defined(THIS_Extendmode_zero)
 	if (p < 0. || p >= 1.) {
 		return 0.;
 	}

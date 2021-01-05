@@ -100,10 +100,10 @@ class ShaderBuilder:
 					results.append(o)
 		return results
 
-	def buildMacroBlock(self):
+	def _getMacros(self) -> 'List[Tuple[str, str]]':
 		tables = [self.ownerComp.par.Globalmacrotable.eval()]
 		tables += self.getOpsFromDefinitionColumn('macroTable')
-		decls = []
+		namesAndVals = []
 		for table in tables:
 			if not table:
 				continue
@@ -123,15 +123,28 @@ class ShaderBuilder:
 					value = ' ' + value
 				if not name.strip():
 					continue
-				if name.startswith('#define'):
-					decls.append(name + value)
-				else:
-					decls.append(f'#define {name} {value}')
+				namesAndVals.append((name, value))
 		outputBuffers = self.outputBufferTable()
 		if outputBuffers.numRows > 1 and outputBuffers.col('macro'):
 			for cell in outputBuffers.col('macro')[1:]:
 				if cell.val:
-					decls.append(f'#define {cell.val}')
+					namesAndVals.append((cell.val, ''))
+		return namesAndVals
+
+	def buildMacroTable(self, dat: 'DAT'):
+		dat.clear()
+		dat.appendRows([
+			[name, value]
+			for name, value in self._getMacros()
+		])
+
+	def buildMacroBlock(self):
+		decls = []
+		for name, value in self._getMacros():
+			if name.startswith('#define'):
+				decls.append(name + value)
+			else:
+				decls.append(f'#define {name} {value}')
 		decls = _uniqueList(decls)
 		code = wrapCodeSection(decls, 'macros')
 		# if self.configPar().Inlineparameteraliases:
@@ -191,8 +204,6 @@ class ShaderBuilder:
 		return wrapCodeSection(libBlocks, 'libraries')
 
 	def buildOpDataTypedefBlock(self):
-		if not self.configPar().Generatetypedefs:
-			return ' '
 		defsTable = self.definitionTable()
 		typedefs = []
 		macros = []
@@ -272,6 +283,20 @@ class ShaderBuilder:
 		]
 		return wrapCodeSection(decls, 'textures')
 
+	def buildBufferDeclarations(self):
+		bufferTable = self.ownerComp.op('buffer_table')
+		decls = []
+		for i in range(1, bufferTable.numRows):
+			name = bufferTable[i, 'name']
+			dataType = bufferTable[i, 'type']
+			uniType = bufferTable[i, 'uniformType']
+			n = int(bufferTable[i, 'length'])
+			if uniType == 'uniformarray':
+				decls.append(f'uniform {dataType} {name}[{n}];')
+			elif uniType == 'texturebuffer':
+				decls.append(f'uniform samplerBuffer {name};')
+		return wrapCodeSection(decls, 'buffers')
+
 	def buildMaterialDeclarations(self):
 		if not self.ownerComp.par.Supportmaterials:
 			return ' '
@@ -348,7 +373,7 @@ class ShaderBuilder:
 			version = info.toolkitVersion if info else ''
 			if version != '':
 				toolkitVersions[version] = 1 + toolkitVersions.get(version, 0)
-		if len(rops) > 1:
+		if len(toolkitVersions) > 1:
 			error = f'Toolkit version mismatch ({", ".join(list(toolkitVersions.keys()))})'
 			dat.appendRow(['path', 'level', 'message'])
 			dat.appendRow([parent().path, 'warning', error])

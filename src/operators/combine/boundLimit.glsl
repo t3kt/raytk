@@ -1,7 +1,7 @@
 ReturnT thismap(CoordT p, ContextT ctx) {
-	#if defined(THIS_INPUT_2_RETURN_Sdf)
+	#if defined(inputOp2_RETURN_TYPE_Sdf)
 	float lim = inputOp2(p, ctx).x;
-	#elif defined(THIS_INPUT_2_RETURN_float)
+	#elif defined(inputOp2_RETURN_TYPE_float)
 	float lim = inputOp2(p, ctx).x;
 	#else
 	#error unsupportedInput2Type

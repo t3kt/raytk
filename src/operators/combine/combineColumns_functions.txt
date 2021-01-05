@@ -1,0 +1,4 @@
+name	label	function
+union	Union	fOpUnionColumns
+intersect	Intersect	fOpIntersectionColumns
+diff	Difference	fOpDifferenceColumns

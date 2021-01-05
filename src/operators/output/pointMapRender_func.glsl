@@ -1,6 +1,8 @@
 #ifdef THIS_HAS_INPUT_1
 
-#define thismap inputOp1
+ReturnT thismap(CoordT p, ContextT ctx) {
+	return inputOp1(p, ctx);
+}
 
 #else
 
