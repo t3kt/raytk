@@ -41,8 +41,6 @@ op:
         Coordinates that the camera should face.
     - name: Camup
       label: Up Vector
-    - name: Inspect
-      label: Inspect
     - name: Help
       label: Help
 

@@ -23,6 +23,7 @@ cat:
       name: basicMat
     - op:
       name: checkerboardMat
+      status: beta
     - op:
       name: fieldMat
       summary: A material that uses a vector field input to determine the color. Essentially this is a conversion from a field to a material, with no other features.
@@ -31,6 +32,7 @@ cat:
       summary: Material that uses phong shading.
     - op:
       name: sampledPointMat
+      status: beta
 
 ---
 

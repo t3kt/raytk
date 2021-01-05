@@ -14,15 +14,15 @@ op:
     - name: definition_in
       label: definition_in
       required: true
-      coordTypes: [vec3]
+      coordTypes: [vec2,vec3]
       contextTypes: [none,Context,MaterialContext,CameraContext,LightContext]
       returnTypes: [float,vec4,Sdf,Ray,Light]
     - name: definition_in_2
       label: definition_in_2
       required: false
-      coordTypes: [vec3]
+      coordTypes: [vec2,vec3]
       contextTypes: [none,Context,MaterialContext,CameraContext,LightContext]
-      returnTypes: [vec4,Sdf]
+      returnTypes: [float,vec4,Sdf]
   parameters:
     - name: Enable
       label: Enable
@@ -33,8 +33,6 @@ op:
           label: Axis
         - name: euler
           label: Euler
-        - name: 2d
-          label: 2D
     - name: Axis
       label: Axis
     - name: Rotate

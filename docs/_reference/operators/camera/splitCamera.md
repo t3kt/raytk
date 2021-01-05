@@ -66,8 +66,6 @@ op:
       label: Rescale
       summary: |
         Whether to rescale each camera to fit each zone. When switched off, if using a grid, you will only see the top right corner of the first camera, the top left of the second, etc. When switched on, you see the full view that each camera would normally get.
-    - name: Inspect
-      label: Inspect
     - name: Help
       label: Help
 

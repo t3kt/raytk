@@ -29,6 +29,8 @@ op:
           label: Y
         - name: z
           label: Z
+    - name: Infiniteheight
+      label: Infinite Height
     - name: Height
       label: Height
     - name: Offset

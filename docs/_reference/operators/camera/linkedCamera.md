@@ -19,6 +19,14 @@ op:
       label: Camera
       summary: |
         The camera to match. This can either be a Camera COMP, or an arcBallCamera, or the `camera` from the palette.
+    - name: Createcamera
+      label: Create Camera
+      summary: |
+        Creates and attaches an instance of the `camera` palette component.
+    - name: Createbasiccamera
+      label: Create Basic Camera
+      summary: |
+        Creates and attaches a standard Camera COMP.
     - name: Help
       label: Help
 

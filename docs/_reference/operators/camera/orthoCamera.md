@@ -37,8 +37,6 @@ op:
       label: Rotate
       summary: |
         Rotation of the camera view on the axis facing the camera.
-    - name: Inspect
-      label: Inspect
     - name: Help
       label: Help
 

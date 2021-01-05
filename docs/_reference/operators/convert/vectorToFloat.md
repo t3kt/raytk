@@ -34,7 +34,7 @@ op:
         - name: lengthxyz
           label: Length(XYZ)
         - name: lengthxyzw
-          label: Length(xyzw)
+          label: Length(XYZW)
     - name: Inspect
       label: Inspect
     - name: Help

@@ -110,10 +110,6 @@ op:
           label: Camera Context
         - name: LightContext
           label: Light Context
-    - name: Inspect
-      label: Inspect
-    - name: Help
-      label: Help
     - name: Createopglobals
       label: Create Op Globals
     - name: Createinit
@@ -128,6 +124,10 @@ op:
       label: Remove Unused Params
     - name: Autocreatemissingparams
       label: Auto Create Missing Params
+    - name: Inspect
+      label: Inspect
+    - name: Help
+      label: Help
 
 ---
 

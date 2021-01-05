@@ -73,8 +73,6 @@ op:
       label: Render TOP
       summary: |
         Connect a Render TOP to mix with the scene based on depth. Not ready for use.
-    - name: Inspect
-      label: Inspect
     - name: Maxsteps
       label: Max Steps
       summary: |
@@ -159,6 +157,8 @@ op:
       label: Enable Debug Output
       summary: |
         Advance feature, not ready for use.
+    - name: Inspect
+      label: Inspect
     - name: Help
       label: Help
 

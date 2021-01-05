@@ -90,10 +90,6 @@ op:
           label: Rz Rx Ry
         - name: zyx
           label: Rz Ry Rx
-    - name: Inspect
-      label: Inspect
-    - name: Help
-      label: Help
     - name: Customcode
       label: Custom Code
     - name: Floatparam1
@@ -112,6 +108,10 @@ op:
       label: Vec Param 3
     - name: Vecparam4
       label: Vec Param 4
+    - name: Inspect
+      label: Inspect
+    - name: Help
+      label: Help
 
 ---
 

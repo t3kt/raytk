@@ -32,8 +32,6 @@ op:
       label: Up Vector
       summary: |
         Up vector (used to interpret the `Lookatpos`).
-    - name: Inspect
-      label: Inspect
     - name: Help
       label: Help
 

@@ -9,8 +9,6 @@ redirect_from:
 op:
   name: reflect
   summary: Reflects space across a plane.
-  detail: |
-    Can optionally expose which side of the plane a point is on as an iteration value for upstream ops.
   opType: raytk.operators.filter.reflect
   category: filter
   inputs:
@@ -21,11 +19,13 @@ op:
       contextTypes: [none,Context,MaterialContext,CameraContext,LightContext]
       returnTypes: [float,vec4,Sdf]
     - name: blend_func_definition_in
-      label: blend_func_definition_in
+      label: Blend Function
       required: false
       coordTypes: [float]
       contextTypes: [none,Context,MaterialContext,CameraContext,LightContext,RayContext]
       returnTypes: [float]
+      summary: |
+        Function used to control blending across the reflection plane.
   parameters:
     - name: Enable
       label: Enable
@@ -48,12 +48,20 @@ op:
           label: Z-
     - name: Planenormal
       label: Plane Normal
+      summary: |
+        Vector that the cut plane faces. Note that this is only a direction and not a position in space.
     - name: Offset
       label: Offset
+      summary: |
+        Moves the reflection plane along the normal that it faces.
     - name: Shift
       label: Shift
+      summary: |
+        Moves the whole resulting shape along the normal.
     - name: Exposeiteration
       label: Expose Iteration
+      summary: |
+        Whether to expose which side of the plane a point is on as an iteration value for upstream ops.
     - name: Inspect
       label: Inspect
     - name: Help
@@ -68,5 +76,3 @@ Category: filter
 
 
 Reflects space across a plane.
-
-Can optionally expose which side of the plane a point is on as an iteration value for upstream ops.

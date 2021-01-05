@@ -32,6 +32,10 @@ op:
           label: Absolute Frame
         - name: absSeconds
           label: Absolute Seconds
+        - name: absStepFrames
+          label: Absolute Step Frames
+        - name: absStepSeconds
+          label: Absolute Step Seconds
     - name: Timesource
       label: Time Source
       menuOptions:

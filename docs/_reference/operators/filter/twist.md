@@ -8,6 +8,7 @@ redirect_from:
   - /reference/opType/raytk.operators.filter.twist/
 op:
   name: twist
+  summary: Twists space around an axis.
   opType: raytk.operators.filter.twist
   category: filter
   inputs:
@@ -22,6 +23,8 @@ op:
       label: Enable
     - name: Axis
       label: Axis
+      summary: |
+        The axis around which to twist.
       menuOptions:
         - name: x
           label: X
@@ -31,8 +34,12 @@ op:
           label: Z
     - name: Amount
       label: Amount
+      summary: |
+        The amount of twisting to apply.
     - name: Shift
       label: Shift
+      summary: |
+        Offsets the twisting along the axis, effectively rotating everything equally around it.
     - name: Inspect
       label: Inspect
     - name: Help
@@ -44,3 +51,6 @@ op:
 
 Category: filter
 
+
+
+Twists space around an axis.

@@ -97,6 +97,7 @@ cat:
       summary: Translates coordinates of the input ROP.
     - op:
       name: twist
+      summary: Twists space around an axis.
 
 ---
 

@@ -10,6 +10,7 @@ op:
   name: checkerboardMat
   opType: raytk.operators.material.checkerboardMat
   category: material
+  status: beta
   inputs:
     - name: definition_in
       label: definition_in

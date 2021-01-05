@@ -90,6 +90,8 @@ cat:
       name: solidAngleSdf
       summary: A conical slice of a sphere.
     - op:
+      name: sphereFbmSdf
+    - op:
       name: sphereSdf
       summary: SDF in 3D space for a uniform sphere.
     - op:

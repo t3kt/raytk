@@ -10,6 +10,7 @@ op:
   name: sampledPointMat
   opType: raytk.operators.material.sampledPointMat
   category: material
+  status: beta
   inputs:
     - name: definition_in
       label: definition_in
