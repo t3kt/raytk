@@ -46,6 +46,7 @@ pointDistanceField	/raytk/operators/field/pointDistanceField	/raytk/operators/fi
 positionField	/raytk/operators/field/positionField	/raytk/operators/field	raytkOP	field	field/positionField	raytk.operators.field.positionField	5	
 reorderField	/raytk/operators/field/reorderField	/raytk/operators/field	raytkOP	field	field/reorderField	raytk.operators.field.reorderField	0	
 textureField	/raytk/operators/field/textureField	/raytk/operators/field	raytkOP	field	field/textureField	raytk.operators.field.textureField	7	
+valuePointsField	/raytk/operators/field/valuePointsField	/raytk/operators/field	raytkOP	field	field/valuePointsField	raytk.operators.field.valuePointsField	0	alpha
 waveField	/raytk/operators/field/waveField	/raytk/operators/field	raytkOP	field	field/waveField	raytk.operators.field.waveField	3	
 bend	/raytk/operators/filter/bend	/raytk/operators/filter	raytkOP	filter	filter/bend	raytk.operators.filter.bend	4	
 cartesianToPolar	/raytk/operators/filter/cartesianToPolar	/raytk/operators/filter	raytkOP	filter	filter/cartesianToPolar	raytk.operators.filter.cartesianToPolar	2	
