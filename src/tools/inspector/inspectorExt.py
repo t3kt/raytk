@@ -1,5 +1,5 @@
-from typing import List, Union
-from raytkUtil import InspectorTargetTypes, simplifyNames
+from typing import Union
+from raytkUtil import InspectorTargetTypes
 
 # noinspection PyUnreachableCode
 if False:
@@ -55,11 +55,3 @@ class Inspector:
 		# noinspection PyUnresolvedReferences
 		u, v = previewPanel.panel.u, previewPanel.panel.v
 		iop.bufferInspector.Sample(u, v)
-
-	@staticmethod
-	def buildSimplifiedNames(dat: 'DAT', inDat: 'DAT'):
-		dat.clear()
-		fullNames = inDat.col('name')[1:]
-		simplifiedNames = simplifyNames(fullNames)
-		dat.appendCol(fullNames)
-		dat.appendCol(simplifiedNames)

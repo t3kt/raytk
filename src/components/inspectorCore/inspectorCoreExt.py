@@ -135,14 +135,6 @@ class InspectorCore:
 					o.name,
 				])
 
-	@property
-	def ShaderIncludeTable(self) -> 'DAT':
-		return self.ownerComp.op('./shader_includes')
-
-	@property
-	def Definition(self) -> 'DAT':
-		return self.ownerComp.op('./definition')
-
 
 def _pathOrEmpty(o: Optional['OP']):
 	return o.path if o else ''
