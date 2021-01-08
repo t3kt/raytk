@@ -1,0 +1,15 @@
+name	label	macro	special	enable	path	buffer
+colorOut	Color	OUTPUT_COLOR		1	parent().path + '/render_glsl'	me.inputCell.row - 1
+sdfOut	SDF Result	OUTPUT_SDF		int(parent().par.Enablesdfoutput)	parent().path + '/render_glsl'	me.inputCell.row - 1
+depthOut	Depth	OUTPUT_DEPTH		int(parent().par.Enabledepthoutput)	parent().path + '/render_glsl'	me.inputCell.row - 1
+worldPosOut	World Position	OUTPUT_WORLDPOS		int(parent().par.Enableworldposoutput)	parent().path + '/render_glsl'	me.inputCell.row - 1
+normalOut	Normal	OUTPUT_NORMAL		int(parent().par.Enablenormaloutput)	parent().path + '/render_glsl'	me.inputCell.row - 1
+rayDirOut	Ray Direction	OUTPUT_RAYDIR		int(parent().par.Enableraydiroutput)	parent().path + '/render_glsl'	me.inputCell.row - 1
+rayOriginOut	Ray Origin	OUTPUT_RAYORIGIN		int(parent().par.Enablerayoriginoutput)	parent().path + '/render_glsl'	me.inputCell.row - 1
+orbitOut	Orbit Trap	OUTPUT_ORBIT		int(parent().par.Enableorbitoutput)	parent().path + '/render_glsl'	me.inputCell.row - 1
+nearHitOut	Near Hit	OUTPUT_NEARHIT		int(parent().par.Enablenearhitoutput)	parent().path + '/render_glsl'	me.inputCell.row - 1
+stepsOut	Step Count	OUTPUT_STEPS		int(parent().par.Enablestepoutput)	parent().path + '/render_glsl'	me.inputCell.row - 1
+iterationOut	Iteration	OUTPUT_ITERATION		int(parent().par.Enableiterationoutput)	parent().path + '/render_glsl'	me.inputCell.row - 1
+objectIdOut	Object Id	OUTPUT_OBJECTID		int(parent().par.Enableobjectidoutput)	parent().path + '/render_glsl'	me.inputCell.row - 1
+debugOut	Debug	OUTPUT_DEBUG		int(parent().par.Enabledebugoutput)	parent().path + '/render_glsl'	me.inputCell.row - 1
+finalOut	Final Output		1	1	parent().path + '/render_glsl'	me.inputCell.row - 1

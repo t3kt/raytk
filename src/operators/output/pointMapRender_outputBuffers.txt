@@ -1,0 +1,4 @@
+name	label	returnType	macro
+sdfOut	SDF Result	Sdf	OUTPUT_SDF
+colorOut	Color	Sdf	OUTPUT_COLOR
+valueOut	Value	vec4 float	OUTPUT_VALUE
