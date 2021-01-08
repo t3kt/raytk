@@ -1,6 +1,7 @@
 from typing import Optional, Union
 from raytkUtil import InspectorTargetTypes, VisualizerTypes, ReturnTypes, CoordTypes, ContextTypes
 from raytkUtil import isROP, isROPDef, ROPInfo, navigateTo
+import re
 
 # noinspection PyUnreachableCode
 if False:
@@ -118,6 +119,29 @@ class InspectorCore:
 	@property
 	def TargetComp(self) -> 'Optional[COMP]':
 		return self.state.Targetcomp.eval()
+
+	@staticmethod
+	def buildShaderIncludes(dat: 'DAT', shaderCode: str):
+		dat.clear()
+		dat.appendRow(['path', 'name'])
+		if not shaderCode:
+			return
+		for match in re.finditer(r'#include\s+<([\w\/_]+)>', shaderCode):
+			path = match.group(1)
+			o = op(path)
+			if o:
+				dat.appendRow([
+					o.path,
+					o.name,
+				])
+
+	@property
+	def ShaderIncludeTable(self) -> 'DAT':
+		return self.ownerComp.op('./shader_includes')
+
+	@property
+	def Definition(self) -> 'DAT':
+		return self.ownerComp.op('./definition')
 
 
 def _pathOrEmpty(o: Optional['OP']):
