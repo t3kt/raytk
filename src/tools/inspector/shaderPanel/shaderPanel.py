@@ -10,7 +10,7 @@ if False:
 
 	class _StatePar(ParCollection):
 		Simplifynames: 'BoolParamT'
-	ipar.shaderPanelState = _StatePar()
+	ipar.inspectorState = _StatePar()
 
 class ShaderPanel:
 	def __init__(self, ownerComp: 'COMP'):
@@ -19,7 +19,7 @@ class ShaderPanel:
 	@staticmethod
 	def prepareCode(dat: 'DAT', definition: 'DAT'):
 		code = dat.text
-		if not ipar.shaderPanelState.Simplifynames or not code or definition.numRows < 2:
+		if not ipar.inspectorState.Simplifynames or not code or definition.numRows < 2:
 			return
 		rawNames = [str(c) for c in definition.col('name')[1:]]
 		names = simplifyNames(rawNames)
