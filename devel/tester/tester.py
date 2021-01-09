@@ -20,6 +20,9 @@ if False:
 
 	class _UiStatePars:
 		Resultlevelfilter: 'StrParamT'
+		Includealpha: 'BoolParamT'
+		Includebeta: 'BoolParamT'
+		Includedeprecated: 'BoolParamT'
 	ipar.uiState = _UiStatePars()
 
 class TestManager:
@@ -57,15 +60,28 @@ class TestManager:
 	def reloadTestTable(self):
 		self.ownerComp.op('test_folder').par.refreshpulse.pulse()
 
-	def buildTestTable(self, dat: 'DAT', fileTable: 'DAT'):
+	def buildTestTable(self, dat: 'DAT', fileTable: 'DAT', opTable: 'DAT'):
 		dat.clear()
 		dat.appendRow([
 			'name',
 			'tox',
 		])
+		alpha = ipar.uiState.Includealpha
+		beta = ipar.uiState.Includebeta
+		deprecated = ipar.uiState.Includedeprecated
 		casesFolder = Path(self.ownerComp.par.Testcasefolder.eval())
 		for row in range(1, fileTable.numRows):
-			relFile = Path(str(fileTable[row, 'relpath']))
+			baseName = str(fileTable[row, 'basename'])
+			relPath = str(fileTable[row, 'relpath'])
+			if 'operators/' in relPath:
+				status = opTable[baseName.split('_', 1)[0], 'status']
+				if status == 'alpha' and not alpha:
+					continue
+				elif status == 'beta' and not beta:
+					continue
+				elif status == 'deprecated' and not deprecated:
+					continue
+			relFile = Path(relPath)
 			toxFile = casesFolder / relFile
 			dat.appendRow([
 				relFile.with_suffix('').as_posix(),
