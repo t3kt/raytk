@@ -23,6 +23,7 @@ if False:
 		Includealpha: 'BoolParamT'
 		Includebeta: 'BoolParamT'
 		Includedeprecated: 'BoolParamT'
+		Running: 'BoolParamT'
 	ipar.uiState = _UiStatePars()
 
 class TestManager:
@@ -35,6 +36,9 @@ class TestManager:
 		self.warningCount = tdu.Dependency(0)
 		self.errorCount = tdu.Dependency(0)
 		self._caseResults = {}  # type: Dict[str, _TestCaseResult]
+
+	def onInit(self):
+		self.resetAll()
 
 	@property
 	def _testHost(self) -> 'COMP':
@@ -182,6 +186,7 @@ class TestManager:
 		self.clearLog()
 		self.clearResults()
 		self.log(f'Running {queue.numRows} queued tests...')
+		ipar.uiState.Running = True
 		self._runNextTest(continueAfter=True)
 
 	def runAllTests(self):
@@ -227,8 +232,8 @@ class TestManager:
 
 	def _onQueueFinished(self):
 		self.log('Finished running queued tests')
-		# TODO: ??
-		pass
+		ipar.uiState.Running = False
+		ui.messageBox('Tests completed', 'Finished running tests!')
 
 	def _unloadTestCase(self):
 		self.currentTestName.val = None
@@ -296,6 +301,7 @@ class TestManager:
 		self.clearLog()
 		self.clearResults()
 		self.reloadTestQueue()
+		ipar.uiState.Running = False
 
 	@staticmethod
 	def onCountLabelClick(label: 'COMP'):
