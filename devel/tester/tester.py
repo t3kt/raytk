@@ -78,7 +78,10 @@ class TestManager:
 			baseName = str(fileTable[row, 'basename'])
 			relPath = str(fileTable[row, 'relpath'])
 			if 'operators/' in relPath:
-				status = opTable[baseName.split('_', 1)[0], 'status']
+				opName = baseName.split('_', 1)[0]
+				if not opTable[opName, 'name']:
+					continue
+				status = opTable[opName, 'status']
 				if status == 'alpha' and not alpha:
 					continue
 				elif status == 'beta' and not beta:
