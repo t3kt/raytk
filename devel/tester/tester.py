@@ -282,6 +282,14 @@ class TestManager:
 		self.reloadTestQueue()
 
 	@staticmethod
+	def onCountLabelClick(label: 'COMP'):
+		name = label.name.split('_')[0]
+		if name == 'success':
+			ipar.uiState.Resultlevelfilter = 'all'
+		else:
+			ipar.uiState.Resultlevelfilter = name
+
+	@staticmethod
 	def _queueCall(method: Callable, *args):
 		run('args[0](*(args[1:]))', method, *args, delayFrames=5, delayRef=root)
 
