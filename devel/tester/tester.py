@@ -3,7 +3,7 @@ from enum import Enum
 from pathlib import Path
 from typing import Callable, Dict, List, Union, Optional
 import re
-from raytkUtil import RaytkContext, recloneComp
+from raytkUtil import RaytkContext, recloneComp, Version
 
 # noinspection PyUnreachableCode
 if False:
@@ -13,6 +13,7 @@ if False:
 
 	class _Pars(ParCollection):
 		Testcasefolder: 'StrParamT'
+		Buildfolder: 'StrParamT'
 
 	class _COMP(COMP):
 		par: _Pars
@@ -70,6 +71,45 @@ class TestManager:
 				relFile.with_suffix('').as_posix(),
 				toxFile.as_posix(),
 			])
+
+	def buildToolkitVersionTable(self, dat: 'DAT', fileTable: 'DAT'):
+		dat.clear()
+		dat.appendRow(['name', 'label', 'version', 'tox'])
+		dat.appendRow(['src', 'Current Source', '(current)', 'src/raytk.tox'])
+		buildFolder = Path(self.ownerComp.par.Buildfolder.eval())
+		for row in range(1, fileTable.numRows):
+			relFile = Path(str(fileTable[row, 'relpath']))
+			toxFile = buildFolder / relFile
+			versionStr = toxFile.stem
+			if '-' in versionStr:
+				versionStr = versionStr.split('-', 1)[1]
+			try:
+				version = Version(versionStr)
+			except ValueError:
+				version = None
+			dat.appendRow([
+				toxFile.stem,
+				f'Build {version}' if version else toxFile.stem,
+				version or '',
+				toxFile.as_posix(),
+			])
+
+	def loadToolkitTox(self, toxPath: str):
+		self.log(f'Loading toolkit tox {toxPath}')
+		self._queueCall(self._loadToolkitTox, toxPath)
+
+	def _loadToolkitTox(self, toxPath: str):
+		toolkit = RaytkContext().toolkit()
+		if toolkit:
+			toolkit.par.externaltox = toxPath
+			toolkit.par.reinitnet.pulse()
+		else:
+			toolkit = root.loadTox(toxPath)
+			toolkit.name = 'raytk'
+		# Do this early since it switches off things like automatically writing to the opList.txt file.
+		# See https://github.com/t3kt/raytk/issues/95
+		toolkit.par.Devel = False
+		self.log('Finished loading toolkit')
 
 	def reloadTestQueue(self):
 		self.reloadTestTable()

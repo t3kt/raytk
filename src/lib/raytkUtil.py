@@ -18,10 +18,10 @@ class Version:
 		if isinstance(majorOrString, str):
 			s = majorOrString  # type: str
 			if minor is not None:
-				raise Exception('Cannot specify both string and major/minor')
+				raise ValueError('Cannot specify both string and major/minor')
 			match = Version.pattern.match(s)
 			if not match:
-				raise Exception(f'Invalid version string: {s!r}')
+				raise ValueError(f'Invalid version string: {s!r}')
 			majorPart = match.group(1)
 			minorPart = match.group(2)
 			major = int(majorPart)
@@ -29,7 +29,7 @@ class Version:
 		else:
 			major = majorOrString
 		if major is None:
-			raise Exception('Must specify either string or `major`')
+			raise ValueError('Must specify either string or `major`')
 		self.major = major
 		self.minor = minor or 0
 
