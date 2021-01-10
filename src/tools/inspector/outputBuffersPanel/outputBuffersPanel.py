@@ -53,9 +53,14 @@ class OutputBuffersPanel:
 			item.par.Localname = table[name, 'localName']
 			item.par.Label = table[name, 'localLabel']
 			item.par.Optype = table[name, 'opType']
-			item.par.Enablepar = table[name, 'enablePar']
+			parName = str(table[name, 'enablePar'])
+			if parName:
+				item.par.Hasenable.expr = f'me.par.Targetop and me.par.Targetop.eval().par[{parName!r}] is not None'
+				item.par.Enable.bindExpr = f"me.par.Targetop.eval().par[{parName!r}] if me.par.Hasenable else op('./nothing').par.Enable"
+			else:
+				item.par.Enable = True
 			item.par.display = True
 
 	def onSelectItem(self, item: 'COMP'):
-		print(self.ownerComp, f'SET BUFFER TO {item.par.Name}')
-		self.ownerComp.par.Selectedbuffer = item.par.Name
+		par = self.ownerComp.par.Selectedbuffer
+		par.val = item.par.Name.eval()
