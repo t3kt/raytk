@@ -282,7 +282,7 @@ class ROPInfo:
 
 	@property
 	def callbacksDAT(self) -> 'Optional[DAT]':
-		if not self.opDefPar or not self.opDefPar.Callbacks:
+		if not self.opDefPar or not self.opDefPar['Callbacks']:
 			return None
 		return self.opDefPar.Callbacks.eval()
 
