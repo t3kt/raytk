@@ -3,9 +3,12 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 	#if defined(THIS_COORD_TYPE_vec2)
 		#if defined(THIS_NOISE_COORD_vec2)
 		q = p;
+		#elif defined(THIS_NOISE_COORD_vec3)
+		q = vec3(p, 0);
+		#elif defined(THIS_NOISE_COORD_vec4)
+		q = vec4(p, 0., 0.);
 		#else
-		q = THIS_NOISE_COORD_TYPE(0);
-		q.THIS_PLANE = p;
+		#error invalidNoiseCoordType
 		#endif
 	#elif defined(THIS_COORD_TYPE_vec3)
 		#if defined(THIS_NOISE_COORD_vec2)

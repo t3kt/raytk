@@ -14,7 +14,19 @@ inspector = parent()  # type: Union[COMP, Inspector]
 inspector.Reset()
 
 subComps = inspector.findChildren(type=COMP, tags=[RaytkTags.raytkOP.name], maxDepth=1)
-subComps += ops('fieldVisualizer', 'inspectorCore', 'bufferInspector', 'axisHelper')
+subComps += ops(
+	'fieldVisualizer',
+	'inspectorCore',
+	'bufferInspector',
+	'axisHelper',
+	'opBasicInfoPanel',
+	'shaderBuilderConfig',
+	'shaderPanel',
+	'*Camera',
+	'functionGraphRender',
+	'render2D',
+	'raymarchRender3D',
+)
 
 for comp in subComps:
 	context.reclone(comp)

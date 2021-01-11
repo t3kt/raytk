@@ -189,6 +189,7 @@ class OpPicker:
 		self._applyFilter()
 
 	def onKeyboardShortcut(self, shortcutName: str):
+		print(self.ownerComp, f'onKeyboardShortcut: {shortcutName}')
 		if shortcutName == 'up':
 			self._offsetSelection(-1)
 		elif shortcutName == 'down':
@@ -201,7 +202,11 @@ class OpPicker:
 	def onPickItem(self):
 		item = self.SelectedItem
 		if not item:
-			return
+			item = self.itemLibrary.firstOpItem
+			if not item:
+				return
+			else:
+				self._selectItem(item)
 		ext.callbacks.DoCallback('onPickItem', {'item': item})
 
 	def onEditItem(self):
@@ -431,6 +436,12 @@ class _ItemLibrary:
 	@property
 	def currentItemCount(self):
 		return len(self._currentItemList)
+
+	@property
+	def firstOpItem(self) -> 'Optional[PickerOpItem]':
+		for item in self._currentItemList:
+			if item.isOP:
+				return item
 
 	def loadTables(self, opTable: 'DAT', opHelpTable: 'DAT'):
 		self.categories = []

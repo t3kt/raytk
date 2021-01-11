@@ -3,7 +3,7 @@ from enum import Enum
 from pathlib import Path
 from typing import Callable, Dict, List, Union, Optional
 import re
-from raytkUtil import RaytkContext, recloneComp
+from raytkUtil import RaytkContext, recloneComp, Version
 
 # noinspection PyUnreachableCode
 if False:
@@ -13,12 +13,17 @@ if False:
 
 	class _Pars(ParCollection):
 		Testcasefolder: 'StrParamT'
+		Buildfolder: 'StrParamT'
 
 	class _COMP(COMP):
 		par: _Pars
 
 	class _UiStatePars:
 		Resultlevelfilter: 'StrParamT'
+		Includealpha: 'BoolParamT'
+		Includebeta: 'BoolParamT'
+		Includedeprecated: 'BoolParamT'
+		Running: 'BoolParamT'
 	ipar.uiState = _UiStatePars()
 
 class TestManager:
@@ -31,6 +36,9 @@ class TestManager:
 		self.warningCount = tdu.Dependency(0)
 		self.errorCount = tdu.Dependency(0)
 		self._caseResults = {}  # type: Dict[str, _TestCaseResult]
+
+	def onInit(self):
+		self.resetAll()
 
 	@property
 	def _testHost(self) -> 'COMP':
@@ -56,20 +64,75 @@ class TestManager:
 	def reloadTestTable(self):
 		self.ownerComp.op('test_folder').par.refreshpulse.pulse()
 
-	def buildTestTable(self, dat: 'DAT', fileTable: 'DAT'):
+	def buildTestTable(self, dat: 'DAT', fileTable: 'DAT', opTable: 'DAT'):
 		dat.clear()
 		dat.appendRow([
 			'name',
 			'tox',
 		])
+		alpha = ipar.uiState.Includealpha
+		beta = ipar.uiState.Includebeta
+		deprecated = ipar.uiState.Includedeprecated
 		casesFolder = Path(self.ownerComp.par.Testcasefolder.eval())
 		for row in range(1, fileTable.numRows):
-			relFile = Path(str(fileTable[row, 'relpath']))
+			baseName = str(fileTable[row, 'basename'])
+			relPath = str(fileTable[row, 'relpath'])
+			if 'operators/' in relPath:
+				opName = baseName.split('_', 1)[0]
+				if not opTable[opName, 'name']:
+					continue
+				status = opTable[opName, 'status']
+				if status == 'alpha' and not alpha:
+					continue
+				elif status == 'beta' and not beta:
+					continue
+				elif status == 'deprecated' and not deprecated:
+					continue
+			relFile = Path(relPath)
 			toxFile = casesFolder / relFile
 			dat.appendRow([
 				relFile.with_suffix('').as_posix(),
 				toxFile.as_posix(),
 			])
+
+	def buildToolkitVersionTable(self, dat: 'DAT', fileTable: 'DAT'):
+		dat.clear()
+		dat.appendRow(['name', 'label', 'version', 'tox'])
+		dat.appendRow(['src', 'Current Source', '(current)', 'src/raytk.tox'])
+		buildFolder = Path(self.ownerComp.par.Buildfolder.eval())
+		for row in range(1, fileTable.numRows):
+			relFile = Path(str(fileTable[row, 'relpath']))
+			toxFile = buildFolder / relFile
+			versionStr = toxFile.stem
+			if '-' in versionStr:
+				versionStr = versionStr.split('-', 1)[1]
+			try:
+				version = Version(versionStr)
+			except ValueError:
+				version = None
+			dat.appendRow([
+				toxFile.stem,
+				f'Build {version}' if version else toxFile.stem,
+				version or '',
+				toxFile.as_posix(),
+			])
+
+	def loadToolkitTox(self, toxPath: str):
+		self.log(f'Loading toolkit tox {toxPath}')
+		self._queueCall(self._loadToolkitTox, toxPath)
+
+	def _loadToolkitTox(self, toxPath: str):
+		toolkit = RaytkContext().toolkit()
+		if toolkit:
+			toolkit.par.externaltox = toxPath
+			toolkit.par.reinitnet.pulse()
+		else:
+			toolkit = root.loadTox(toxPath)
+			toolkit.name = 'raytk'
+		# Do this early since it switches off things like automatically writing to the opList.txt file.
+		# See https://github.com/t3kt/raytk/issues/95
+		toolkit.par.Devel = False
+		self.log('Finished loading toolkit')
 
 	def reloadTestQueue(self):
 		self.reloadTestTable()
@@ -126,6 +189,7 @@ class TestManager:
 		self.clearLog()
 		self.clearResults()
 		self.log(f'Running {queue.numRows} queued tests...')
+		ipar.uiState.Running = True
 		self._runNextTest(continueAfter=True)
 
 	def runAllTests(self):
@@ -171,8 +235,8 @@ class TestManager:
 
 	def _onQueueFinished(self):
 		self.log('Finished running queued tests')
-		# TODO: ??
-		pass
+		ipar.uiState.Running = False
+		ui.messageBox('Tests completed', 'Finished running tests!')
 
 	def _unloadTestCase(self):
 		self.currentTestName.val = None
@@ -240,6 +304,15 @@ class TestManager:
 		self.clearLog()
 		self.clearResults()
 		self.reloadTestQueue()
+		ipar.uiState.Running = False
+
+	@staticmethod
+	def onCountLabelClick(label: 'COMP'):
+		name = label.name.split('_')[0]
+		if name == 'success':
+			ipar.uiState.Resultlevelfilter = 'all'
+		else:
+			ipar.uiState.Resultlevelfilter = name
 
 	@staticmethod
 	def _queueCall(method: Callable, *args):

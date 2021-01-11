@@ -30,7 +30,7 @@ floatToVector	/raytk/operators/convert/floatToVector	/raytk/operators/convert	ra
 revolve	/raytk/operators/convert/revolve	/raytk/operators/convert	raytkOP	convert	convert/revolve	raytk.operators.convert.revolve	2	
 sdfToFloat	/raytk/operators/convert/sdfToFloat	/raytk/operators/convert	raytkOP	convert	convert/sdfToFloat	raytk.operators.convert.sdfToFloat	4	
 vectorToFloat	/raytk/operators/convert/vectorToFloat	/raytk/operators/convert	raytkOP	convert	convert/vectorToFloat	raytk.operators.convert.vectorToFloat	7	
-customOp	/raytk/operators/custom/customOp	/raytk/operators/custom	raytkOP	custom	custom/customOp	raytk.operators.custom.customOp	4	
+customOp	/raytk/operators/custom/customOp	/raytk/operators/custom	raytkOP	custom	custom/customOp	raytk.operators.custom.customOp	5	beta
 axisDistanceField	/raytk/operators/field/axisDistanceField	/raytk/operators/field	raytkOP	field	field/axisDistanceField	raytk.operators.field.axisDistanceField	7	
 cellTileField	/raytk/operators/field/cellTileField	/raytk/operators/field	raytkOP	field	field/cellTileField	raytk.operators.field.cellTileField	0	
 chopField	/raytk/operators/field/chopField	/raytk/operators/field	raytkOP	field	field/chopField	raytk.operators.field.chopField	1	beta
@@ -41,11 +41,12 @@ contextValueField	/raytk/operators/field/contextValueField	/raytk/operators/fiel
 iterationField	/raytk/operators/field/iterationField	/raytk/operators/field	raytkOP	field	field/iterationField	raytk.operators.field.iterationField	2	
 metaballField	/raytk/operators/field/metaballField	/raytk/operators/field	raytkOP	field	field/metaballField	raytk.operators.field.metaballField	0	
 multiPointDistanceField	/raytk/operators/field/multiPointDistanceField	/raytk/operators/field	raytkOP	field	field/multiPointDistanceField	raytk.operators.field.multiPointDistanceField	0	
-noiseField	/raytk/operators/field/noiseField	/raytk/operators/field	raytkOP	field	field/noiseField	raytk.operators.field.noiseField	5	
+noiseField	/raytk/operators/field/noiseField	/raytk/operators/field	raytkOP	field	field/noiseField	raytk.operators.field.noiseField	6	
 pointDistanceField	/raytk/operators/field/pointDistanceField	/raytk/operators/field	raytkOP	field	field/pointDistanceField	raytk.operators.field.pointDistanceField	7	
 positionField	/raytk/operators/field/positionField	/raytk/operators/field	raytkOP	field	field/positionField	raytk.operators.field.positionField	5	
 reorderField	/raytk/operators/field/reorderField	/raytk/operators/field	raytkOP	field	field/reorderField	raytk.operators.field.reorderField	0	
 textureField	/raytk/operators/field/textureField	/raytk/operators/field	raytkOP	field	field/textureField	raytk.operators.field.textureField	7	
+valuePointsField	/raytk/operators/field/valuePointsField	/raytk/operators/field	raytkOP	field	field/valuePointsField	raytk.operators.field.valuePointsField	0	alpha
 waveField	/raytk/operators/field/waveField	/raytk/operators/field	raytkOP	field	field/waveField	raytk.operators.field.waveField	3	
 bend	/raytk/operators/filter/bend	/raytk/operators/filter	raytkOP	filter	filter/bend	raytk.operators.filter.bend	4	
 cartesianToPolar	/raytk/operators/filter/cartesianToPolar	/raytk/operators/filter	raytkOP	filter	filter/cartesianToPolar	raytk.operators.filter.cartesianToPolar	2	
@@ -68,7 +69,7 @@ moduloDistance	/raytk/operators/filter/moduloDistance	/raytk/operators/filter	ra
 moduloPolar	/raytk/operators/filter/moduloPolar	/raytk/operators/filter	raytkOP	filter	filter/moduloPolar	raytk.operators.filter.moduloPolar	6	
 onion	/raytk/operators/filter/onion	/raytk/operators/filter	raytkOP	filter	filter/onion	raytk.operators.filter.onion	3	
 quantizeCoords	/raytk/operators/filter/quantizeCoords	/raytk/operators/filter	raytkOP	filter	filter/quantizeCoords	raytk.operators.filter.quantizeCoords	3	
-quantizeValue	/raytk/operators/filter/quantizeValue	/raytk/operators/filter	raytkOP	filter	filter/quantizeValue	raytk.operators.filter.quantizeValue	4	
+quantizeValue	/raytk/operators/filter/quantizeValue	/raytk/operators/filter	raytkOP	filter	filter/quantizeValue	raytk.operators.filter.quantizeValue	5	beta
 radialClone	/raytk/operators/filter/radialClone	/raytk/operators/filter	raytkOP	filter	filter/radialClone	raytk.operators.filter.radialClone	6	
 reflect	/raytk/operators/filter/reflect	/raytk/operators/filter	raytkOP	filter	filter/reflect	raytk.operators.filter.reflect	7	
 reorderCoords	/raytk/operators/filter/reorderCoords	/raytk/operators/filter	raytkOP	filter	filter/reorderCoords	raytk.operators.filter.reorderCoords	1	
@@ -110,10 +111,10 @@ customFilter	/raytk/operators/misc/customFilter	/raytk/operators/misc	raytkDepre
 customGen	/raytk/operators/misc/customGen	/raytk/operators/misc	raytkDeprecated raytkOP	misc	misc/customGen	raytk.operators.misc.customGen	5	deprecated
 customRender	/raytk/operators/output/customRender	/raytk/operators/output	raytkOP raytkOutput	output	output/customRender	raytk.operators.output.customRender	6	alpha
 fieldRender	/raytk/operators/output/fieldRender	/raytk/operators/output	raytkComp	output	output/fieldRender	raytk.operators.output.fieldRender	3	alpha
-functionGraphRender	/raytk/operators/output/functionGraphRender	/raytk/operators/output	raytkOP raytkOutput	output	output/functionGraphRender	raytk.operators.output.functionGraphRender	9	
-pointMapRender	/raytk/operators/output/pointMapRender	/raytk/operators/output	raytkOP raytkOutput	output	output/pointMapRender	raytk.operators.output.pointMapRender	23	beta
-raymarchRender3D	/raytk/operators/output/raymarchRender3D	/raytk/operators/output	raytkOP raytkOutput	output	output/raymarchRender3D	raytk.operators.output.raymarchRender3D	54	
-render2D	/raytk/operators/output/render2D	/raytk/operators/output	raytkOP raytkOutput	output	output/render2D	raytk.operators.output.render2D	21	
+functionGraphRender	/raytk/operators/output/functionGraphRender	/raytk/operators/output	raytkOP raytkOutput	output	output/functionGraphRender	raytk.operators.output.functionGraphRender	10	
+pointMapRender	/raytk/operators/output/pointMapRender	/raytk/operators/output	raytkOP raytkOutput	output	output/pointMapRender	raytk.operators.output.pointMapRender	24	beta
+raymarchRender3D	/raytk/operators/output/raymarchRender3D	/raytk/operators/output	raytkOP raytkOutput	output	output/raymarchRender3D	raytk.operators.output.raymarchRender3D	57	
+render2D	/raytk/operators/output/render2D	/raytk/operators/output	raytkOP raytkOutput	output	output/render2D	raytk.operators.output.render2D	22	
 renderSelect	/raytk/operators/output/renderSelect	/raytk/operators/output	raytkComp	output	output/renderSelect	raytk.operators.output.renderSelect	0	
 depthMap	/raytk/operators/post/depthMap	/raytk/operators/post	raytkComp	post	post/depthMap	raytk.operators.post.depthMap	3	
 worldPosMap	/raytk/operators/post/worldPosMap	/raytk/operators/post	raytkComp	post	post/worldPosMap	raytk.operators.post.worldPosMap	1	

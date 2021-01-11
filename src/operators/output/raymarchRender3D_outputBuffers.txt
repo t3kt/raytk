@@ -1,0 +1,15 @@
+name	label	macro	special	enable	path	buffer
+colorOut	Color	OUTPUT_COLOR			parent().path + '/render_glsl'	me.inputCell.row - 1
+sdfOut	SDF Result	OUTPUT_SDF		Enablesdfoutput	parent().path + '/render_glsl'	me.inputCell.row - 1
+depthOut	Depth	OUTPUT_DEPTH		Enabledepthoutput	parent().path + '/render_glsl'	me.inputCell.row - 1
+worldPosOut	World Position	OUTPUT_WORLDPOS		Enableworldposoutput	parent().path + '/render_glsl'	me.inputCell.row - 1
+normalOut	Normal	OUTPUT_NORMAL		Enablenormaloutput	parent().path + '/render_glsl'	me.inputCell.row - 1
+rayDirOut	Ray Direction	OUTPUT_RAYDIR		Enableraydiroutput	parent().path + '/render_glsl'	me.inputCell.row - 1
+rayOriginOut	Ray Origin	OUTPUT_RAYORIGIN		Enablerayoriginoutput	parent().path + '/render_glsl'	me.inputCell.row - 1
+orbitOut	Orbit Trap	OUTPUT_ORBIT		Enableorbitoutput	parent().path + '/render_glsl'	me.inputCell.row - 1
+nearHitOut	Near Hit	OUTPUT_NEARHIT		Enablenearhitoutput	parent().path + '/render_glsl'	me.inputCell.row - 1
+stepsOut	Step Count	OUTPUT_STEPS		Enablestepoutput	parent().path + '/render_glsl'	me.inputCell.row - 1
+iterationOut	Iteration	OUTPUT_ITERATION		Enableiterationoutput	parent().path + '/render_glsl'	me.inputCell.row - 1
+objectIdOut	Object Id	OUTPUT_OBJECTID		Enableobjectidoutput	parent().path + '/render_glsl'	me.inputCell.row - 1
+debugOut	Debug	OUTPUT_DEBUG		Enabledebugoutput	parent().path + '/render_glsl'	me.inputCell.row - 1
+finalOut	Final Output		1		parent().path + '/render_glsl'	me.inputCell.row - 1
