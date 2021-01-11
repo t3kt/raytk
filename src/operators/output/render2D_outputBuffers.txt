@@ -1,0 +1,3 @@
+name	label	macro
+sdfOut	SDF Result	OUTPUT_SDF
+colorOut	Color	OUTPUT_COLOR

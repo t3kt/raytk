@@ -268,5 +268,5 @@ def launchHelp():
 		return
 	if _useLocalHelp():
 		url = url.replace('https://t3kt.github.io/raytk/', 'http://localhost:4000/raytk/')
-	if url:
-		ui.viewFile(url)
+	url += '?utm_source=raytkLaunch'
+	ui.viewFile(url)

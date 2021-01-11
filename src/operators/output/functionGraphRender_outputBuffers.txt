@@ -1,0 +1,3 @@
+name	label	special	path	buffer	macro
+guiOut	GUI	1	op('gui_out')		
+colorOut	Color		op('render_glsl').path	me.inputCell.row - 2	OUTPUT_COLOR

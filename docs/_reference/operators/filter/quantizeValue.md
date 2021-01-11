@@ -10,6 +10,7 @@ op:
   name: quantizeValue
   opType: raytk.operators.filter.quantizeValue
   category: filter
+  status: beta
   inputs:
     - name: definition_in
       label: definition_in

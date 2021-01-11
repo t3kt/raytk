@@ -1,0 +1,4 @@
+name	label
+nearest	Nearest
+linearweight	Linear Weight
+linearnearest	Linear Nearest

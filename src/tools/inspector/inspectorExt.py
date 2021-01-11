@@ -1,4 +1,4 @@
-from typing import List, Union
+from typing import Union
 from raytkUtil import InspectorTargetTypes, simplifyNames
 
 # noinspection PyUnreachableCode

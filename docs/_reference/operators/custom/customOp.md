@@ -10,6 +10,7 @@ op:
   name: customOp
   opType: raytk.operators.custom.customOp
   category: custom
+  status: beta
   inputs:
     - name: definition_in
       label: definition_in
