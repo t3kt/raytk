@@ -30,7 +30,7 @@ floatToVector	/raytk/operators/convert/floatToVector	/raytk/operators/convert	ra
 revolve	/raytk/operators/convert/revolve	/raytk/operators/convert	raytkOP	convert	convert/revolve	raytk.operators.convert.revolve	2	
 sdfToFloat	/raytk/operators/convert/sdfToFloat	/raytk/operators/convert	raytkOP	convert	convert/sdfToFloat	raytk.operators.convert.sdfToFloat	4	
 vectorToFloat	/raytk/operators/convert/vectorToFloat	/raytk/operators/convert	raytkOP	convert	convert/vectorToFloat	raytk.operators.convert.vectorToFloat	7	
-customOp	/raytk/operators/custom/customOp	/raytk/operators/custom	raytkOP	custom	custom/customOp	raytk.operators.custom.customOp	4	
+customOp	/raytk/operators/custom/customOp	/raytk/operators/custom	raytkOP	custom	custom/customOp	raytk.operators.custom.customOp	5	beta
 axisDistanceField	/raytk/operators/field/axisDistanceField	/raytk/operators/field	raytkOP	field	field/axisDistanceField	raytk.operators.field.axisDistanceField	7	
 cellTileField	/raytk/operators/field/cellTileField	/raytk/operators/field	raytkOP	field	field/cellTileField	raytk.operators.field.cellTileField	0	
 chopField	/raytk/operators/field/chopField	/raytk/operators/field	raytkOP	field	field/chopField	raytk.operators.field.chopField	1	beta

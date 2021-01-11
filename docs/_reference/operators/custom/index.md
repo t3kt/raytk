@@ -12,6 +12,7 @@ cat:
   operators:
     - op:
       name: customOp
+      status: beta
 
 ---
 
