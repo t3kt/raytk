@@ -47,7 +47,7 @@ Sdf castRay(Ray ray, float maxDist) {
 		#endif
 		if (!checkLimit(ray.pos)) {
 			res = createSdf(RAYTK_MAX_DIST);
-			res.material = -1;
+			assignMaterial(res, -1);
 			return res;
 		}
 		res = map(ray.pos);
