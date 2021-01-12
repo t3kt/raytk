@@ -104,6 +104,12 @@ void blendInSdf(inout Sdf res1, in Sdf res2, in float amt) {
 	#endif
 }
 
+void assignMaterial(inout Sdf res, int materialId) {
+	res.material = materialId;
+	res.material2 = 0;
+	res.interpolant = 0.;
+}
+
 Sdf withAdjustedScale(in Sdf res, float scaleMult) {
 	res.x *= scaleMult;
 	return res;
