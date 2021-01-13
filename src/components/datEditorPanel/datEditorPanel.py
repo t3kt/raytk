@@ -1,6 +1,7 @@
 from dataclasses import dataclass
 from pathlib import Path
 from typing import Optional
+from raytkUtil import RaytkTags
 
 # noinspection PyUnreachableCode
 if False:
@@ -62,6 +63,10 @@ class DatEditorPanel:
 		graph = self._currentItemGraph
 		return graph and graph.file is not None
 
+	@property
+	def _itemTable(self) -> 'DAT':
+		return self.ownerComp.op('itemTable')
+
 	def buildItemGraphInfo(self, dat: 'DAT'):
 		dat.clear()
 		dat.appendCol([
@@ -84,8 +89,26 @@ class DatEditorPanel:
 		dat['file', 1] = graph.file or ''
 
 	def onCreateClick(self):
-		# TODO: implement create
-		pass
+		info = ext.ropEditor.ROPInfo
+		itemGraph = self._currentItemGraph
+		if not info or not itemGraph or itemGraph.file:
+			return
+		datType = self._itemTable[itemGraph.par.name, 'type'] or 'text'
+		if datType == 'table':
+			dat = info.rop.create(tableDAT)
+		elif datType == 'text':
+			dat = info.rop.create(textDAT)
+		else:
+			ui.status = f'Unsupported DAT type: {datType}'
+			return
+		name = self._itemTable[itemGraph.par.name, 'datName']
+		if name:
+			dat.name = name
+		ui.undo.startBlock(f'Creating {dat}')
+		try:
+			self._externalize(itemGraph, dat)
+		finally:
+			ui.undo.endBlock()
 
 	def onDeleteClick(self):
 		info = ext.ropEditor.ROPInfo
@@ -111,6 +134,17 @@ class DatEditorPanel:
 		itemGraph = self._currentItemGraph
 		if not info or not itemGraph or not itemGraph.sourceDat or itemGraph.file is None or itemGraph.file.eval():
 			return
+		dat = itemGraph.sourceDat
+		ui.undo.startBlock(f'Externalizing {dat}')
+		try:
+			self._externalize(itemGraph, dat)
+		finally:
+			ui.undo.endBlock()
+
+	def _externalize(self, itemGraph: 'EditorItemGraph', dat: 'DAT'):
+		info = ext.ropEditor.ROPInfo
+		if not info or not itemGraph or not itemGraph.sourceDat:
+			return
 		if itemGraph.file is None:
 			ui.status = f'Unable to externalize, no file parameter on {itemGraph.sourceDat}!'
 			return
@@ -121,13 +155,14 @@ class DatEditorPanel:
 		if not tox:
 			ui.status = f'Unable to externalize, no tox file for {itemGraph.par.name}'
 			return
-		suffix = str(self.ownerComp.op('itemTable')[itemGraph.par.name, 'fileSuffix'] or '')
+		suffix = str(self._itemTable[itemGraph.par.name, 'fileSuffix'] or '')
 		if not suffix:
 			ui.status = f'Unable to externalize, no file suffix found for {itemGraph.par.name}'
 			return
 		file = Path(tox.replace('.tox', suffix))
 		file.touch(exist_ok=True)
 		itemGraph.file.val = file.as_posix()
+		RaytkTags.fileSync.apply(dat, True)
 		ui.status = f'Externalized {itemGraph.sourceDat} to file {file.as_posix()}'
 
 	def onExternalEditClick(self):
