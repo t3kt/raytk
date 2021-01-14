@@ -139,7 +139,7 @@ struct Context {
 	vec3 globalPos;
 	#endif
 
-	#if defined(RAYTK_TIME_IN_CONTEXT) || defined(RAYTK_USE_TIME)
+	#if defined(RAYTK_USE_TIME)
 	Time time;
 	#endif
 };
