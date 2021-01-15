@@ -1,6 +1,5 @@
-from develCommon import AutoLoader
 import popMenu
-from raytkTools import RaytkTools
+from raytkTools import RaytkTools, AutoLoader
 from raytkUtil import RaytkTags, Tag, navigateTo, recloneComp, RaytkContext, TypeTableHelper, CategoryInfo, Version
 from typing import List, Tuple, Union
 
