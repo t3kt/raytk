@@ -14,6 +14,8 @@ cat:
       name: lfoField
     - op:
       name: timeField
+    - op:
+      name: timeShift
 
 ---
 

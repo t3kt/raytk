@@ -20,6 +20,19 @@ op:
   parameters:
     - name: Enable
       label: Enable
+    - name: Wavetype
+      label: Wave Type
+      menuOptions:
+        - name: sin
+          label: Sine
+        - name: cos
+          label: Cosine
+        - name: tri
+          label: Triangle
+        - name: ramp
+          label: Ramp
+        - name: square
+          label: Square
     - name: Period
       label: Period
     - name: Intervaltype
