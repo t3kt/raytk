@@ -164,7 +164,7 @@ triangleSdf2d	/raytk/operators/sdf2d/triangleSdf2d	/raytk/operators/sdf2d	raytkO
 vesicaSdf2d	/raytk/operators/sdf2d/vesicaSdf2d	/raytk/operators/sdf2d	raytkOP	sdf2d	sdf2d/vesicaSdf2d	raytk.operators.sdf2d.vesicaSdf2d	0	
 lfoField	/raytk/operators/time/lfoField	/raytk/operators/time	raytkOP	time	time/lfoField	raytk.operators.time.lfoField	3	
 timeField	/raytk/operators/time/timeField	/raytk/operators/time	raytkOP	time	time/timeField	raytk.operators.time.timeField	7	
-timeShift	/raytk/operators/time/timeShift	/raytk/operators/time	raytkOP	time	time/timeShift	raytk.operators.time.timeShift	2	alpha
+timeShift	/raytk/operators/time/timeShift	/raytk/operators/time	raytkOP	time	time/timeShift	raytk.operators.time.timeShift	3	
 extractDebugValues	/raytk/operators/utility/extractDebugValues	/raytk/operators/utility	raytkOP	utility	utility/extractDebugValues	raytk.operators.utility.extractDebugValues	1	alpha
 extractIteration	/raytk/operators/utility/extractIteration	/raytk/operators/utility	raytkOP	utility	utility/extractIteration	raytk.operators.utility.extractIteration	3	beta
 injectGlobalPosition	/raytk/operators/utility/injectGlobalPosition	/raytk/operators/utility	raytkOP	utility	utility/injectGlobalPosition	raytk.operators.utility.injectGlobalPosition	1	

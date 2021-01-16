@@ -6,11 +6,11 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 		shift += inputOp2(p, ctx);
 		#endif
 		Time time = contextTime(ctx);
-		#if defined(THIS_Intervaltype_frame)
+		#if defined(THIS_Intervaltype_frames)
 			time_setFrame(time, wrapRange(time.frame + shift, time.start, time.end));
 		#elif defined(THIS_Intervaltype_seconds)
 			time_setSeconds(time, wrapRange(time.seconds + shift, (time.start-1)*time.rate, (time.end-1)*time.rate));
-		#elif defined(THIS_Intervaltype_absframe)
+		#elif defined(THIS_Intervaltype_absframes)
 			time_setAbsFrame(time, time.absFrame + shift);
 		#elif defined(THIS_Intervaltype_absseconds)
 			time_setAbsSeconds(time, time.absSeconds + shift);

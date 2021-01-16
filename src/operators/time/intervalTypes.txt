@@ -2,4 +2,4 @@ name	label
 seconds	Seconds (Timeline)
 frames	Frames (Timeline)
 absseconds	Seconds (Absolute)
-frames	Frames (Absolute)
+absframes	Frames (Absolute)
