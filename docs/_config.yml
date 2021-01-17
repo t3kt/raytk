@@ -69,6 +69,9 @@ collections:
   development:
     permalink: "/:collection/:name/"
     output: true
+  community:
+    permalink: "/:collection/:name/"
+    output: true
 
 just_the_docs:
   collections:
@@ -84,6 +87,10 @@ just_the_docs:
       name: Development
       nav_exclude: false
       search_exclude: false
+    community:
+      name: Community
+      nav_exclude: false
+      search_exclude: true
 
 heading_anchors: true
 
