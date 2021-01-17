@@ -11,6 +11,9 @@ if False:
 
 	class _UiStatePar(ParCollection):
 		Showroppicker: 'BoolParamT'
+		Showscenepicker: 'BoolParamT'
+		Showsceneeditor: 'BoolParamT'
+		Showropeditor: 'BoolParamT'
 
 	class _UiStateComp(COMP):
 		par: _UiStatePar
@@ -45,7 +48,28 @@ class MainMenu:
 					menuName='View',
 					checked='ipar.uiState.Showroppicker',
 					getPar=lambda: ipar.uiState.Showroppicker,
-				)
+				),
+				_parToggler(
+					'showRopEditor',
+					'ROP Editor',
+					menuName='View',
+					checked='ipar.uiState.Showropeditor',
+					getPar=lambda: ipar.uiState.Showropeditor,
+				),
+				_parToggler(
+					'showSceneEditor',
+					'Scene Editor',
+					menuName='View',
+					checked='ipar.uiState.Showsceneeditor',
+					getPar=lambda: ipar.uiState.Showsceneeditor,
+				),
+				_parToggler(
+					'showScenePicker',
+					'Scene Picker',
+					menuName='View',
+					checked='ipar.uiState.Showscenepicker',
+					getPar=lambda: ipar.uiState.Showscenepicker,
+				),
 			],
 		}
 

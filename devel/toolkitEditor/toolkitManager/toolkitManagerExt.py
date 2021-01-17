@@ -27,7 +27,7 @@ class ToolkitManager:
 	def prepareSceneTable(self, dat: 'DAT', inDat: 'DAT', opTable: 'DAT'):
 		dat.clear()
 		dat.appendRow([
-			'name', 'label', 'scenePath', 'opType',
+			'name', 'label', 'filePath', 'opType',
 		])
 		for i in range(1, inDat.numRows):
 			baseName = str(inDat[i, 'basename'])
@@ -38,7 +38,7 @@ class ToolkitManager:
 			relPath = str(inDat[i, 'relpath'])
 			opType = ''
 			if group == 'test':
-				opType = str(opTable[baseName.replace('_test', ''), 'opType'] or '')
+				opType = str(opTable[baseName.split('_')[0], 'opType'] or '')
 			dat.appendRow([
 				(rootFolder / relPath).as_posix(),
 				f'{group}: {relPath.replace(".tox", "")}',
