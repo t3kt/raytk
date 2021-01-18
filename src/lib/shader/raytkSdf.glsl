@@ -24,12 +24,12 @@ float opSimpleIntersect(float res1, float res2) {
 
 Sdf opSimpleDiff(Sdf res1, Sdf res2) {
 	Sdf res = res1;
-	res.x = max(-res1.x, res2.x);
+	res.x = max(-res2.x, res1.x);
 	return res;
 }
 
 float opSimpleDiff(float res1, float res2) {
-	return max(-res1, res2);
+	return max(-res2, res1);
 }
 
 float smoothBlendRatio(float a, float b, float k) {
