@@ -9,8 +9,11 @@ if False:
 	from _stubs import *
 	from components.inspectorCore.inspectorCoreExt import InspectorCore
 	from components.opPicker.opPicker import PickerItem
+	from ..testEditor.testEditor import TestEditor
 	# noinspection PyTypeHints
 	iop.inspectorCore = InspectorCore(COMP())  # type: Union[COMP, InspectorCore]
+	# noinspection PyTypeChecker,PyTypeHints
+	iop.testEditor = TestEditor(COMP())  # type: Union[COMP, TestEditor]
 
 class ROPEditor:
 	def __init__(self, ownerComp: 'COMP'):
@@ -24,6 +27,7 @@ class ROPEditor:
 		iop.inspectorCore.Inspect(o)
 		info = self.ROPInfo
 		self._statusDropMenu.par.Value0 = info.statusLabel or 'default'
+		iop.testEditor.UnloadTest()
 
 	def onStatusDropMenuChange(self):
 		info = self.ROPInfo

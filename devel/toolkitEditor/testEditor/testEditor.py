@@ -20,6 +20,8 @@ if False:
 class TestEditor:
 	def __init__(self, ownerComp: '_COMP'):
 		self.ownerComp = ownerComp
+		self._currentTestName = tdu.Dependency()
+		self._currentTestTox = tdu.Dependency()
 
 	@property
 	def _container(self):
@@ -30,7 +32,17 @@ class TestEditor:
 		for o in self._container.children:
 			return o
 
+	@property
+	def currentTestName(self):
+		return self._currentTestName.val
+
+	@property
+	def currentTestTox(self):
+		return self._currentTestTox.val
+
 	def _unloadTest(self):
+		self._currentTestName.val = ''
+		self._currentTestTox.val = ''
 		comp = self.hostedComponent
 		if comp and comp.valid:
 			# noinspection PyBroadException
@@ -38,6 +50,16 @@ class TestEditor:
 				comp.destroy()
 			except:
 				pass
+
+	def UnloadTest(self):
+		self._unloadTest()
+
+	def _loadTest(self, name: str, toxPath: Path):
+		container = self._container
+		comp = container.create(baseCOMP, 'component')
+		self._currentTestName.val = name
+		self._currentTestTox.val = toxPath.as_posix()
+		comp.save(toxPath.as_posix(), createFolders=True)
 
 	@staticmethod
 	def prepareTestTable(dat: 'DAT', inDat: 'DAT', opTable: 'DAT'):
@@ -88,6 +110,18 @@ class TestEditor:
 		toxPath = Path(self.ownerComp.par.Testcasefolder.eval()) / 'operators' / info.categoryName / (name + '_test.tox')
 		print(self.ownerComp, f'name: {name!r} toxPath: {toxPath!r}')
 		self._unloadTest()
-		container = self._container
-		comp = container.create(baseCOMP, name=name)
-		comp.save(toxPath.as_posix(), createFolders=True)
+		self._loadTest(name, toxPath)
+
+	def listOnSelectRow(self, info: dict):
+		# rowData = info['rowData']
+		# print(self.ownerComp, 'listOnSelectRow', mod.json.dumps(rowData, indent='  '))
+		pass
+
+	def listOnClick(self, info: dict):
+		rowData = info.get('rowData')
+		rowObj = rowData and rowData.get('rowObject')
+		print(self.ownerComp, 'listOnClick', mod.json.dumps(rowData, indent='  '))
+		if not rowObj:
+			return
+		self._unloadTest()
+		self._loadTest(rowObj['name'], Path(rowObj['path']))
