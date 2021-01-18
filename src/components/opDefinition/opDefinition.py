@@ -219,6 +219,11 @@ def prepareMacroTable(dat: 'scriptDAT', typeTable: 'DAT', inputTable: 'DAT', mac
 				f'THIS_{name}_{val}',
 				'',
 			])
+			dat.appendRow([
+				'',
+				f'THIS_{name}',
+				val,
+			])
 		elif style == 'Toggle':
 			if val:
 				dat.appendRow(['', f'THIS_{name}', ''])
