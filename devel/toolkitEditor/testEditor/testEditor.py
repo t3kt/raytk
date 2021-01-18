@@ -59,7 +59,12 @@ class TestEditor:
 		comp = container.create(baseCOMP, 'component')
 		self._currentTestName.val = name
 		self._currentTestTox.val = toxPath.as_posix()
-		comp.save(toxPath.as_posix(), createFolders=True)
+		if toxPath.exists():
+			comp.par.externaltox = toxPath.as_posix()
+			comp.par.reinitnet.pulse()
+		else:
+			comp.par.externaltox = toxPath.as_posix()
+			comp.save(toxPath.as_posix(), createFolders=True)
 
 	@staticmethod
 	def prepareTestTable(dat: 'DAT', inDat: 'DAT', opTable: 'DAT'):
@@ -107,6 +112,8 @@ class TestEditor:
 		name = name.replace(' ', '_')
 		if name.endswith('.tox'):
 			name = name.replace('.tox', '')
+		if name.endswith('_test'):
+			name = name.replace('_test', '')
 		toxPath = Path(self.ownerComp.par.Testcasefolder.eval()) / 'operators' / info.categoryName / (name + '_test.tox')
 		print(self.ownerComp, f'name: {name!r} toxPath: {toxPath!r}')
 		self._unloadTest()
