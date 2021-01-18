@@ -214,16 +214,8 @@ def prepareMacroTable(dat: 'scriptDAT', typeTable: 'DAT', inputTable: 'DAT', mac
 		val = macroParamTable[row, 'value']
 		style = macroParamTable[row, 'style']
 		if style in ('Menu', 'Str', 'StrMenu'):
-			dat.appendRow([
-				'',
-				f'THIS_{name}_{val}',
-				'',
-			])
-			dat.appendRow([
-				'',
-				f'THIS_{name}',
-				val,
-			])
+			dat.appendRow(['', f'THIS_{name}_{val}', ''])
+			dat.appendRow(['', f'THIS_{name}', val])
 		elif style == 'Toggle':
 			if val:
 				dat.appendRow(['', f'THIS_{name}', ''])
@@ -236,7 +228,7 @@ def prepareMacroTable(dat: 'scriptDAT', typeTable: 'DAT', inputTable: 'DAT', mac
 			dat.appendRows(table.rows())
 		elif table.numCols == 1:
 			dat.appendRows([
-				[''] + [c.val] + ['']
+				['', c.val, '']
 				for c in table.col(0)
 			])
 		elif table.numCols == 2:
