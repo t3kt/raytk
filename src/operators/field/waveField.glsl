@@ -15,6 +15,8 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 		#endif
 	#elif defined(THIS_COORD_TYPE_float)
 		float q = p;
+	#elif defined(THIS_Axis_dist)
+		float q = length(p);
 	#else
 		float q = p.THIS_Axis;
 	#endif
