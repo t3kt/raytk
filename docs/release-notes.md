@@ -1,5 +1,25 @@
 # Release Notes
 
+## v0.11
+
+* Improvements / additions
+  * Feature guide (#192)
+  * Rotate axis field input for mirrorOctant (#201)
+  * Added wave type parameter to lfoField (#205)
+  * Added joinFn
+  * Added offset and amplitude parameters to noiseField (#215)
+  * Axis parameters for cylinderSdf and coneSdf (#209, #210)
+  * Added period field input to waveField (#218)
+  * Added origin distance mode to waveField (#212)
+  * Added directional light (#48)
+* Changes
+  * 
+* Fixes
+  * Fix issues in timeField (#202, #203)
+  * Fix parameter enable states in noiseField (#216)
+* Infrastructure / development
+  * New development editor system (#151)
+
 ## v0.10
 
 * Improvements / additions
