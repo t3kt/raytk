@@ -6,6 +6,8 @@ from typing import Callable, List, Union, Optional, Tuple
 if False:
 	# noinspection PyUnresolvedReferences
 	from _typeAliases import *
+	from _stubs.PopDialogExt import PopDialogExt
+
 	op.raytk = COMP()
 
 @total_ordering
@@ -877,3 +879,32 @@ def detachTox(comp: 'COMP'):
 	comp.par.reloadtoxonstart.val = False
 	comp.par.externaltox.expr = ''
 	comp.par.externaltox.val = ''
+
+def showPromptDialog(
+		title=None,
+		text=None,
+		default='',
+		textEntry=True,
+		okText='OK',
+		cancelText='Cancel',
+		ok: Callable = None,
+		cancel: Callable = None,
+):
+	def _callback(info: dict):
+		if info['buttonNum'] == 1:
+			if ok:
+				if not textEntry:
+					ok()
+				else:
+					ok(info.get('enteredText'))
+		elif info['buttonNum'] == 2:
+			if cancel:
+				cancel()
+	dialog = op.TDResources.op('popDialog')  # type: PopDialogExt
+	dialog.Open(
+		title=title,
+		text=text,
+		textEntry=False if not textEntry else (default or ''),
+		buttons=[okText, cancelText],
+		enterButton=1, escButton=2, escOnClickAway=True,
+		callback=_callback)
