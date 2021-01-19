@@ -13,9 +13,9 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 	float gridXY = min(floor1, floor2);
 	#if defined(THIS_COORD_TYPE_vec2)
 		float d = gridXY - THIS_Thickness;
-	#elif defined(THIS_SHAPE_circle)
+	#elif defined(THIS_Crosssectionshape_circle)
 		float d = sqrt(gridXY * gridXY + p.THIS_AXIS * p.THIS_AXIS) - THIS_Thickness;
-	#elif defined(THIS_SHAPE_diamond)
+	#elif defined(THIS_Crosssectionshape_diamond)
 		float d = gridXY + p.THIS_AXIS - THIS_Thickness;
 	#else
 		#error unsupportedCrossSectionShape
