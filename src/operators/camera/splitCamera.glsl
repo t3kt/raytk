@@ -4,7 +4,7 @@ Ray thismap(vec2 p, CameraContext ctx) {
 	vec2 uv = ((-ctx.resolution+ 2.0 * p) / ctx.resolution.y) / size;
 
 	#if defined(THIS_Layout_grid)
-		#ifdef THIS_RESCALE
+		#ifdef THIS_Rescale
 		ctx.resolution /= 2.0;
 		p = mod(p, ctx.resolution);
 		#endif
@@ -22,7 +22,7 @@ Ray thismap(vec2 p, CameraContext ctx) {
 			}
 		}
 	#elif defined(THIS_Layout_horz)
-		#ifdef THIS_RESCALE
+		#ifdef THIS_Rescale
 			ctx.resolution.x /= 2.0;
 			p.x = mod(p.x, ctx.resolution.x);
 		#endif
@@ -32,7 +32,7 @@ Ray thismap(vec2 p, CameraContext ctx) {
 			return inputOp1(p, ctx);
 		}
 	#else
-		#ifdef THIS_RESCALE
+		#ifdef THIS_Rescale
 			ctx.resolution.y /= 2.0;
 			p.y = mod(p.y, ctx.resolution.y);
 		#endif
