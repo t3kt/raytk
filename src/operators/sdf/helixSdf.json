@@ -1,6 +1,6 @@
 {
   "meta": {
     "opType": "raytk.operators.sdf.helixSdf",
-    "opVersion": 0
+    "opVersion": 1
   }
 }
