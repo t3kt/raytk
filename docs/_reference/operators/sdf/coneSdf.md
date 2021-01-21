@@ -56,6 +56,15 @@ op:
       label: Radius 2
       summary: |
         The radius of the top of the cone, if using a capped cone.
+    - name: Axis
+      label: Axis
+      menuOptions:
+        - name: x
+          label: X
+        - name: y
+          label: Y
+        - name: z
+          label: Z
     - name: Inspect
       label: Inspect
     - name: Help

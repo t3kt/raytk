@@ -16,13 +16,21 @@ op:
   category: field
   inputs:
     - name: definition_in
-      label: Wave Coordinate Source
+      label: Coordinate Field
       required: false
       coordTypes: [float,vec2,vec3]
       contextTypes: [none,Context,MaterialContext,CameraContext,LightContext,RayContext]
-      returnTypes: [float,vec4,Sdf]
+      returnTypes: [float,vec4]
       summary: |
         If attached, the wave will use this to determine the numbers that it passes to the wave function (instead of using the position along the chosen `Axis`).
+    - name: period_field_definition_in
+      label: Period Field
+      required: false
+      coordTypes: [float,vec2,vec3]
+      contextTypes: [none,Context,MaterialContext,CameraContext,LightContext,RayContext]
+      returnTypes: [float]
+      summary: |
+        If attached, the wave will use this field to multiply the `Period` parameter, which can be used for frequency modulation.
   parameters:
     - name: Enable
       label: Enable
@@ -52,6 +60,8 @@ op:
           label: Y
         - name: z
           label: Z
+        - name: dist
+          label: Distance From Origin
     - name: Coordtype
       label: Coord Type
       menuOptions:
@@ -61,21 +71,6 @@ op:
           label: 2D
         - name: vec3
           label: 3D
-    - name: Contexttype
-      label: Context Type
-      menuOptions:
-        - name: useinput
-          label: Use Input
-        - name: none
-          label: None
-        - name: Context
-          label: Context
-        - name: MaterialContext
-          label: Material Context
-        - name: CameraContext
-          label: Camera Context
-        - name: LightContext
-          label: Light Context
     - name: Period
       label: Period
       summary: |
@@ -92,6 +87,21 @@ op:
       label: Offset
       summary: |
         Adds to the values produced by the wave. If this is set to 0.5 (and `Amplitude` is set to 1), a ramp wave will produce values from 0.5 to 1.5.
+    - name: Contexttype
+      label: Context Type
+      menuOptions:
+        - name: useinput
+          label: Use Input
+        - name: none
+          label: None
+        - name: Context
+          label: Context
+        - name: MaterialContext
+          label: Material Context
+        - name: CameraContext
+          label: Camera Context
+        - name: LightContext
+          label: Light Context
     - name: Inspect
       label: Inspect
     - name: Help

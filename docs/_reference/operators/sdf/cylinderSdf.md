@@ -8,7 +8,7 @@ redirect_from:
   - /reference/opType/raytk.operators.sdf.cylinderSdf/
 op:
   name: cylinderSdf
-  summary: SDF for a cylinder along the Y axis, centered at the origin.
+  summary: SDF for a cylinder.
   opType: raytk.operators.sdf.cylinderSdf
   category: sdf
   parameters:
@@ -23,7 +23,16 @@ op:
     - name: Height
       label: Height
       summary: |
-        The height of the cylinder, which extends above and below the origin.
+        The height of the cylinder, along the selected axis.
+    - name: Axis
+      label: Axis
+      menuOptions:
+        - name: x
+          label: X
+        - name: y
+          label: Y
+        - name: z
+          label: Z
     - name: Inspect
       label: Inspect
     - name: Help
@@ -37,4 +46,4 @@ Category: sdf
 
 
 
-SDF for a cylinder along the Y axis, centered at the origin.
+SDF for a cylinder.

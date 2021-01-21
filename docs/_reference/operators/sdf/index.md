@@ -35,7 +35,7 @@ cat:
       summary: An SDF for a 3D cross of infinite length along each axis.
     - op:
       name: cylinderSdf
-      summary: SDF for a cylinder along the Y axis, centered at the origin.
+      summary: SDF for a cylinder.
     - op:
       name: discSdf
       summary: A flat disc facing the Y axis.
@@ -54,6 +54,9 @@ cat:
     - op:
       name: gyroidSdf
       summary: Gyroid shape, which is an infinitely connected periodic surface.
+    - op:
+      name: helixSdf
+      summary: ## Parameters
     - op:
       name: juliaSdf
     - op:
@@ -102,7 +105,7 @@ cat:
       summary: Tetrahedron shape.
     - op:
       name: torusSdf
-      summary: SDF for a torus or partial torus with end caps.
+      summary: SDF for a torus.
 
 ---
 

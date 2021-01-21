@@ -60,6 +60,10 @@ op:
       label: Translate
     - name: Scale
       label: Scale
+    - name: Amplitude
+      label: Amplitude
+    - name: Offset
+      label: Offset
     - name: Inspect
       label: Inspect
     - name: Help

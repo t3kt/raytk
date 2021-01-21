@@ -34,6 +34,8 @@ cat:
     - op:
       name: impulseFn
     - op:
+      name: joinFn
+    - op:
       name: modulateFn
     - op:
       name: multiplyFn

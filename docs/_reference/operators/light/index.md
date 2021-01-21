@@ -15,6 +15,9 @@ cat:
     and may not support being fed through other OPs like filters.
   operators:
     - op:
+      name: directionalLight
+      status: beta
+    - op:
       name: hardShadow
       summary: A simple hard-edged shadow.
     - op:

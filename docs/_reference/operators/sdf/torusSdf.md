@@ -8,16 +8,25 @@ redirect_from:
   - /reference/opType/raytk.operators.sdf.torusSdf/
 op:
   name: torusSdf
-  summary: SDF for a torus or partial torus with end caps.
+  summary: SDF for a torus.
   opType: raytk.operators.sdf.torusSdf
   category: sdf
   parameters:
-    - name: Translate
-      label: Translate
+    - name: Axis
+      label: Axis
+      menuOptions:
+        - name: x
+          label: X
+        - name: y
+          label: Y
+        - name: z
+          label: Z
     - name: Radius
       label: Radius
     - name: Thickness
       label: Thickness
+    - name: Translate
+      label: Translate
     - name: Enablecaps
       label: Enable Caps
     - name: Startangle
@@ -37,4 +46,4 @@ Category: sdf
 
 
 
-SDF for a torus or partial torus with end caps.
+SDF for a torus.
