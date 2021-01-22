@@ -11,16 +11,16 @@ op:
   opType: raytk.operators.sdf.helixSdf
   category: sdf
   inputs:
-    - name: radius_field_definition_in
-      label: Radius Field
+    - name: thickness_field_definition_in
+      label: Thickness Field
       required: false
       coordTypes: [float,vec2,vec3]
       contextTypes: [none,Context,MaterialContext,CameraContext,LightContext,RayContext]
       returnTypes: [float]
       summary: |
         Field used to multiply the `Radius` parameter. If it uses 1D coordinates, it is provided the position along the axis. If it uses 3D coordinates, it uses the absolute position.
-    - name: thickness_field_definition_in
-      label: Thickness Field
+    - name: radius_field_definition_in
+      label: Radius Field
       required: false
       coordTypes: [float,vec3]
       contextTypes: [none,Context,MaterialContext,CameraContext,LightContext,RayContext]
