@@ -11,7 +11,8 @@ def updateTextureInputs(
 		textureTable: 'DAT',
 		fixedInputs: 'List[TOP]' = None):
 	for conn in glslTop.inputConnectors:
-		conn.disconnect()
+		while conn.connections:
+			conn.disconnect()
 	if fixedInputs:
 		for inputTop in fixedInputs:
 			if inputTop:
