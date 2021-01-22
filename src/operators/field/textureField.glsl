@@ -1,23 +1,29 @@
 ReturnT thismap(CoordT p, ContextT ctx) {
-	vec2 uv = (p.THIS_PLANE - THIS_Translate) / THIS_Scale;
-	#if defined(THIS_Extend_hold)
+	#if defined(THIS_HAS_INPUT_1)
+	vec2 uv = inputOp1(p, ctx).xy;
+	#elif defined(THIS_COORD_TYPE_float)
+	vec2 uv = vec2(p, 0);
+	#elif defined(THIS_COORD_TYPE_vec2)
+	vec2 uv = p;
+	#else
+	vec2 uv = p.THIS_PLANE;
+	#endif
+	uv = (uv - THIS_Translate) / THIS_Scale;
+	#if defined(THIS_Extendmode_hold)
 	uv = clamp(uv, 0, 1);
-	#elif defined(THIS_Extend_repeat)
+	#elif defined(THIS_Extendmode_repeat)
 	uv = fract(uv);
-	#elif defined(THIS_Extend_mirror)
+	#elif defined(THIS_Extendmode_mirror)
 	uv = modZigZag(uv);
-	#elif defined(THIS_Extend_zero)
+	#elif defined(THIS_Extendmode_zero)
 		if (uv.x < 0 || uv.x > 1 || uv.y < 0 || uv.y > 1) {
 			#if defined(THIS_RETURN_TYPE_float)
 			return 0;
-			#elif defined(THIS_RETURN_TYPE_Sdf)
-			return createSdf(0);
 			#else
 			return vec4(0);
 			#endif
 		}
 	#endif
-	
 	vec4 value = texture(THIS_texture, uv);
 	#ifdef THIS_RETURN_TYPE_float
 	return value.x;
