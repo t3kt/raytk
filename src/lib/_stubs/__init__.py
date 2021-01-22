@@ -1556,6 +1556,10 @@ class cameraCOMP(objectCOMP):
 	def projectionInverse(self, x, y) -> _Matrix: pass
 	def projection(self, x, y) -> _Matrix: pass
 
+class lightCOMP(objectCOMP):
+	def projectionInverse(self, x, y) -> _Matrix: pass
+	def projection(self, x, y) -> _Matrix: pass
+
 class scriptCHOP(CHOP):
 	def destroyCustomPars(self): pass
 	def sortCustomPages(self, *pages): pass
