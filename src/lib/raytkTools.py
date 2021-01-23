@@ -48,17 +48,6 @@ class RaytkTools(RaytkContext):
 		else:
 			page = rop.appendCustomPage('Settings')
 
-		# Set up Enable par
-		if info.isROP and info.hasROPInputs and not info.isOutput:
-			enablePar = rop.par['Enable']
-			if enablePar is None:
-				enablePar = page.appendToggle('Enable')[0]
-				enablePar.val = True
-			enablePar.order = -1
-			enablePar.default = True
-			if info.opDefPar and not info.opDefPar.Enable.expr:
-				info.opDefPar.Enable.expr = "op('..').par.Enable"
-
 		# Set up inspect par
 		inspectPar = rop.par['Inspect']
 		if info.supportsInspect:
