@@ -113,7 +113,9 @@ class TestEditor:
 		self._reloadOutputs()
 
 	def _reloadOutputs(self):
-		run('args[0].cook(force=True)', self.ownerComp.op('layout_test_outputs'), delayFrames=2, delayRef=root)
+		def reload():
+			self.ownerComp.op('layout_test_outputs').cook(force=True)
+		run('args[0]()', reload, delayFrames=5, delayRef=root)
 
 	def listOnSelectRow(self, info: dict):
 		# rowData = info['rowData']
@@ -126,7 +128,7 @@ class TestEditor:
 		print(self.ownerComp, 'listOnClick', mod.json.dumps(rowData, indent='  '))
 		if not rowObj:
 			return
-		self.UnloadTest()
+		self.unloadTest()
 		self._loadTest(rowObj['name'], Path(rowObj['path']))
 
 	@staticmethod
