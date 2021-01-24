@@ -1,5 +1,5 @@
 from pathlib import Path
-from raytkUtil import showPromptDialog
+from raytkUtil import showPromptDialog, navigateTo
 
 # noinspection PyUnreachableCode
 if False:
@@ -7,7 +7,10 @@ if False:
 	from _stubs import *
 	from _typeAliases import *
 	from ..ropEditor.ropEditor import ROPEditor
+	from editor.componentLoader.componentLoader import ComponentLoader
 	ext.ropEditor = ROPEditor(COMP())
+	# noinspection PyTypeHints
+	iop.loader = ComponentLoader(COMP())
 
 	class _Par(ParCollection):
 		Selectedrop: 'CompParamT'
@@ -20,51 +23,37 @@ if False:
 class TestEditor:
 	def __init__(self, ownerComp: '_COMP'):
 		self.ownerComp = ownerComp
-		self._currentTestName = tdu.Dependency()
-		self._currentTestTox = tdu.Dependency()
-
-	@property
-	def _container(self):
-		return self.ownerComp.op('componentHost')
 
 	@property
 	def hostedComponent(self) -> 'Optional[COMP]':
-		for o in self._container.children:
-			return o
+		return iop.loader.Component
 
 	@property
 	def currentTestName(self):
-		return self._currentTestName.val
+		return iop.loader.ComponentName
+
+	@property
+	def formattedTestName(self):
+		name = self.currentTestName
+		if name:
+			name = name.replace('_test', '').replace('_', ' ')
+		return name
 
 	@property
 	def currentTestTox(self):
-		return self._currentTestTox.val
+		return iop.loader.ComponentTox
 
-	def _unloadTest(self):
-		self._currentTestName.val = ''
-		self._currentTestTox.val = ''
-		comp = self.hostedComponent
-		if comp and comp.valid:
-			# noinspection PyBroadException
-			try:
-				comp.destroy()
-			except:
-				pass
-
-	def UnloadTest(self):
-		self._unloadTest()
+	def unloadTest(self):
+		iop.loader.UnloadComponent()
+		self._reloadOutputs()
 
 	def _loadTest(self, name: str, toxPath: Path):
-		container = self._container
-		comp = container.create(baseCOMP, 'component')
-		self._currentTestName.val = name
-		self._currentTestTox.val = toxPath.as_posix()
-		if toxPath.exists():
-			comp.par.externaltox = toxPath.as_posix()
-			comp.par.reinitnet.pulse()
-		else:
-			comp.par.externaltox = toxPath.as_posix()
-			comp.save(toxPath.as_posix(), createFolders=True)
+		if name:
+			name = name.replace(' ', '_')
+			if not name.endswith('_test'):
+				name += '_test'
+		iop.loader.LoadComponent(tox=toxPath, name=name)
+		self._reloadOutputs()
 
 	@staticmethod
 	def prepareTestTable(dat: 'DAT', inDat: 'DAT', opTable: 'DAT'):
@@ -112,12 +101,19 @@ class TestEditor:
 		name = name.replace(' ', '_')
 		if name.endswith('.tox'):
 			name = name.replace('.tox', '')
-		if name.endswith('_test'):
-			name = name.replace('_test', '')
+		if not name.endswith('_test'):
+			name += '_test'
 		toxPath = Path(self.ownerComp.par.Testcasefolder.eval()) / 'operators' / info.categoryName / (name + '_test.tox')
 		print(self.ownerComp, f'name: {name!r} toxPath: {toxPath!r}')
-		self._unloadTest()
-		self._loadTest(name, toxPath)
+		iop.loader.CreateNewComponent(
+			tox=toxPath,
+			name=name,
+			autoSave=True,
+		)
+		self._reloadOutputs()
+
+	def _reloadOutputs(self):
+		run('args[0].cook(force=True)', self.ownerComp.op('layout_test_outputs'), delayFrames=2, delayRef=root)
 
 	def listOnSelectRow(self, info: dict):
 		# rowData = info['rowData']
@@ -130,5 +126,12 @@ class TestEditor:
 		print(self.ownerComp, 'listOnClick', mod.json.dumps(rowData, indent='  '))
 		if not rowObj:
 			return
-		self._unloadTest()
+		self.UnloadTest()
 		self._loadTest(rowObj['name'], Path(rowObj['path']))
+
+	@staticmethod
+	def showInEditor():
+		comp = iop.loader.Component
+		if not comp:
+			return
+		navigateTo(comp, goInto=True)
