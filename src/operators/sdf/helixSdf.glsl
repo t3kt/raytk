@@ -19,6 +19,26 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 	radius *= inputOp2(p, ctx);
 	#endif
 	#endif
-	return createSdf(sdHelix(
-		p, radius, thickness, THIS_Spread, THIS_Dualspread * radius));
+	vec2 q = sdHelixCoords(p, radius, THIS_Spread, THIS_Dualspread * radius);
+	#if !defined(THIS_HAS_INPUT_3)
+	return createSdf(length(q) - thickness);
+	#elif defined(inputOp3_RETURN_TYPE_Sdf)
+		#if defined(THIS_RETURN_TYPE_Sdf)
+			return inputOp3(q, ctx);
+		#elif defined(THIS_RETURN_TYPE_float)
+			return createSdf(inputOp3(q, ctx));
+		#else
+			#error invalidShapeReturnType
+		#endif
+	#elif defined(inputOp3_RETURN_TYPE_float)
+		#if defined(THIS_RETURN_TYPE_float)
+			return inputOp3(q, ctx);
+		#elif defined(THIS_RETURN_TYPE_Sdf)
+			return inputOp3(q, ctx).x;
+		#else
+			#error invalidShapeReturnType
+		#endif
+	#else
+	return createSdf(length(q) - thickness);
+	#endif
 }
