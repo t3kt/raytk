@@ -2,6 +2,7 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import Optional
 from raytkUtil import RaytkTags
+import subprocess
 
 # noinspection PyUnreachableCode
 if False:
@@ -168,6 +169,10 @@ class DatEditorPanel:
 	def onExternalEditClick(self):
 		graph = self._currentItemGraph
 		if graph and graph.sourceDat and graph.sourceDat.par['edit'] is not None:
+			binPath = Path(r'C:\Users\tekt\AppData\Local\JetBrains\Toolbox\apps\PyCharm-P\ch-0\202.7660.27\bin\pycharm64.exe')
+			if binPath.exists():
+				subprocess.Popen([str(binPath), graph.file.val])
+				return
 			graph.sourceDat.par.edit.pulse()
 
 	@staticmethod
