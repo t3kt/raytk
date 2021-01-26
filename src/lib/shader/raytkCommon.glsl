@@ -110,6 +110,12 @@ void assignMaterial(inout Sdf res, int materialId) {
 	res.interpolant = 0.;
 }
 
+Sdf createNonHitSdf() {
+	Sdf res = createSdf(RAYTK_MAX_DIST);
+	assignMaterial(res, -1);
+	return res;
+}
+
 Sdf withAdjustedScale(in Sdf res, float scaleMult) {
 	res.x *= scaleMult;
 	return res;
@@ -176,6 +182,7 @@ struct MaterialContext {
 	Ray ray;
 	Light light;
 	vec3 normal;
+	vec3 reflectColor;
 };
 
 struct CameraContext {

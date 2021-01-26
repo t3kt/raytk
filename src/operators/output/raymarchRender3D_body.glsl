@@ -46,9 +46,7 @@ Sdf castRay(Ray ray, float maxDist) {
 		modifyRay(ray);
 		#endif
 		if (!checkLimit(ray.pos)) {
-			res = createSdf(RAYTK_MAX_DIST);
-			assignMaterial(res, -1);
-			return res;
+			return createNonHitSdf();
 		}
 		res = map(ray.pos);
 		dist += res.x;
@@ -78,6 +76,28 @@ Sdf castRay(Ray ray, float maxDist) {
 	res.nearHitCount = nearHitCount;
 	res.nearHitAmount = nearHit;
 	#endif
+	return res;
+}
+
+Sdf castRayBasic(Ray ray, float maxDist) {
+	float dist = 0;
+	Sdf res;
+	int i;
+	for (i = 0; i < RAYTK_MAX_STEPS; i++) {
+		if (!checkLimit(ray.pos)) {
+			return createNonHitSdf();
+		}
+		res = map(ray.pos);
+		dist += res.x;
+		ray.pos += ray.dir * res.x;
+		if (dist < RAYTK_SURF_DIST) {
+			return res;
+		}
+		if (dist > maxDist) {
+			break;
+		}
+	}
+	res.x = dist;
 	return res;
 }
 
@@ -117,7 +137,7 @@ float softShadow(vec3 p, MaterialContext matCtx)
 float calcShadow(in vec3 p, MaterialContext matCtx) {
 	vec3 lightVec = normalize(matCtx.light.pos - p);
 	Ray shadowRay = Ray(p+matCtx.normal * RAYTK_SURF_DIST*2., lightVec);
-	float shadowDist = castRay(shadowRay, RAYTK_MAX_DIST).x;
+	float shadowDist = castRayBasic(shadowRay, RAYTK_MAX_DIST).x;
 	if (shadowDist < length(matCtx.light.pos - p)) {
 		return 0.1;
 	}
@@ -318,6 +338,21 @@ void main()
 			#endif
 			#ifdef OUTPUT_COLOR
 			{
+				matCtx.reflectColor = vec3(0);
+				#if defined(RAYTK_USE_REFLECTION) && defined(THIS_Enablereflection)
+				MaterialContext reflectMatCtx = matCtx;
+				for (int k = 0; k < THIS_Reflectionpasses; k++) {
+					if (reflectMatCtx.result.reflect) {
+						reflectMatCtx.ray.dir = reflect(reflectMatCtx.ray.dir, reflectMatCtx.normal);
+						reflectMatCtx.ray.pos += reflectMatCtx.normal * 0.0001;
+						reflectMatCtx.result = castRayBasic(reflectMatCtx.ray, RAYTK_MAX_DIST);
+						vec3 reflectPos = reflectMatCtx.ray.pos + reflectMatCtx.ray.dir * reflectMatCtx.result.x;
+						reflectMatCtx.normal = calcNormal(reflectPos);
+						matCtx.reflectColor += getColor(reflectPos, reflectMatCtx);
+					}
+				}
+				#endif
+
 				vec3 col = getColor(p, matCtx);
 				vec2 fragCoord = vUV.st*uTDOutputInfo.res.zw;
 				col += (1.0/255.0)*hash1(fragCoord);
