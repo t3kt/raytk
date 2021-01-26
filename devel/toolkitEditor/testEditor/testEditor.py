@@ -103,7 +103,7 @@ class TestEditor:
 			name = name.replace('.tox', '')
 		if not name.endswith('_test'):
 			name += '_test'
-		toxPath = Path(self.ownerComp.par.Testcasefolder.eval()) / 'operators' / info.categoryName / (name + '_test.tox')
+		toxPath = Path(self.ownerComp.par.Testcasefolder.eval()) / 'operators' / info.categoryName / (name + '.tox')
 		print(self.ownerComp, f'name: {name!r} toxPath: {toxPath!r}')
 		iop.loader.CreateNewComponent(
 			tox=toxPath,
