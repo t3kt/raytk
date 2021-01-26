@@ -43,7 +43,7 @@ class TestEditor:
 	def currentTestTox(self):
 		return iop.loader.ComponentTox
 
-	def unloadTest(self):
+	def UnloadTest(self):
 		iop.loader.UnloadComponent()
 		self._reloadOutputs()
 
@@ -128,7 +128,7 @@ class TestEditor:
 		print(self.ownerComp, 'listOnClick', mod.json.dumps(rowData, indent='  '))
 		if not rowObj:
 			return
-		self.unloadTest()
+		self.UnloadTest()
 		self._loadTest(rowObj['name'], Path(rowObj['path']))
 
 	@staticmethod
