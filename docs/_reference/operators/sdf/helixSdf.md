@@ -27,6 +27,12 @@ op:
       returnTypes: [float]
       summary: |
         Field used to multiply the `Thickness` parameter. If it uses 1D coordinates, it is provided the position along the axis. If it uses 3D coordinates, it uses the absolute position.
+    - name: cross_section_definition_in
+      label: Cross Section Shape
+      required: false
+      coordTypes: [vec2]
+      contextTypes: [none,Context,MaterialContext,CameraContext,LightContext,RayContext]
+      returnTypes: [float,Sdf]
   parameters:
     - name: Enable
       label: Enable

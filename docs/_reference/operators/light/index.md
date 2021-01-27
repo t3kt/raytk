@@ -21,6 +21,9 @@ cat:
       name: hardShadow
       summary: A simple hard-edged shadow.
     - op:
+      name: linkedLight
+      status: beta
+    - op:
       name: pointLight
       summary: Light eminating from a single point in space, with optional distance attentuation.
     - op:

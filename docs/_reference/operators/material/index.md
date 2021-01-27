@@ -31,6 +31,9 @@ cat:
       name: phongMat
       summary: Material that uses phong shading.
     - op:
+      name: reflectMat
+      status: beta
+    - op:
       name: sampledPointMat
       status: beta
 

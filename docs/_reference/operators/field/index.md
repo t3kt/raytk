@@ -59,6 +59,9 @@ cat:
       name: textureField
       summary: A float or vector field that looks up values from a texture.
     - op:
+      name: triPlanarTextureField
+      status: beta
+    - op:
       name: waveField
       summary: A field that uses a periodic wave.
 

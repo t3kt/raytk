@@ -214,6 +214,10 @@ op:
           label: 16-bit float (Mono+Alpha)
         - name: monoalpha32float
           label: 32-bit float (Mono+Alpha)
+    - name: Enablereflection
+      label: Enable Reflection
+    - name: Reflectionpasses
+      label: Reflection Passes
     - name: Inspect
       label: Inspect
     - name: Help

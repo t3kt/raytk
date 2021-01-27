@@ -11,10 +11,21 @@ op:
   summary: A float or vector field that looks up values from a texture.
   opType: raytk.operators.field.textureField
   category: field
+  inputs:
+    - name: uv_field_definition_in
+      label: UV Field
+      required: false
+      coordTypes: [float,vec2,vec3]
+      contextTypes: [none,Context,MaterialContext,CameraContext,LightContext,RayContext]
+      returnTypes: [vec4]
   parameters:
+    - name: Enable
+      label: Enable
     - name: Coordtype
       label: Coord Type
       menuOptions:
+        - name: float
+          label: 1D
         - name: vec2
           label: 2D
         - name: vec3
