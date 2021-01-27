@@ -126,6 +126,14 @@ class Palette:
 		newOp.nodeCenterX = pane.x
 		newOp.nodeCenterY = pane.y
 		detachTox(newOp)
+		img = newOp.op('*Definition/opImage')
+		if img:
+			detachTox(img)
+			enableCloning = img.par.enablecloning  # type: Par
+			enableCloning.expr = ''
+			enableCloning.val = self._develMode
+			newOp.par.opviewer.val = img
+			newOp.viewer = True
 		enableCloning = newOp.par.enablecloning  # type: Par
 		enableCloning.expr = ''
 		enableCloning.val = self._develMode

@@ -68,6 +68,15 @@ class RaytkTools(RaytkContext):
 		elif helpPar is not None:
 			helpPar.destroy()
 
+	@staticmethod
+	def updateOPImage(rop: 'COMP'):
+		img = rop.op('./*Definition/opImage')
+		if not img:
+			return
+		rop.par.opviewer.val = img
+		rop.viewer = True
+		return img
+
 	def saveROP(self, rop: 'COMP', incrementVersion=False):
 		info = ROPInfo(rop)
 		if not info or not info.isMaster:

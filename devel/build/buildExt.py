@@ -191,6 +191,9 @@ class BuildManager:
 		tools = RaytkTools()
 		tools.updateROPMetadata(comp)
 		tools.updateROPParams(comp)
+		img = tools.updateOPImage(comp)
+		if img:
+			self.context.lockBuildLockOps(img)
 		if self.docProcessor:
 			self.docProcessor.processOp(comp)
 
