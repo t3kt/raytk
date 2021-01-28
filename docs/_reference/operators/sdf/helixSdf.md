@@ -7,58 +7,85 @@ permalink: /reference/operators/sdf/helixSdf
 redirect_from:
   - /reference/opType/raytk.operators.sdf.helixSdf/
 op:
-  name: helixSdf
-  opType: raytk.operators.sdf.helixSdf
   category: sdf
   inputs:
-    - name: thickness_field_definition_in
-      label: Thickness Field
-      required: false
-      coordTypes: [float,vec2,vec3]
-      contextTypes: [none,Context,MaterialContext,CameraContext,LightContext,RayContext]
-      returnTypes: [float]
-      summary: |
-        Field used to multiply the `Radius` parameter. If it uses 1D coordinates, it is provided the position along the axis. If it uses 3D coordinates, it uses the absolute position.
-    - name: radius_field_definition_in
-      label: Radius Field
-      required: false
-      coordTypes: [float,vec3]
-      contextTypes: [none,Context,MaterialContext,CameraContext,LightContext,RayContext]
-      returnTypes: [float]
-      summary: |
-        Field used to multiply the `Thickness` parameter. If it uses 1D coordinates, it is provided the position along the axis. If it uses 3D coordinates, it uses the absolute position.
-    - name: cross_section_definition_in
-      label: Cross Section Shape
-      required: false
-      coordTypes: [vec2]
-      contextTypes: [none,Context,MaterialContext,CameraContext,LightContext,RayContext]
-      returnTypes: [float,Sdf]
+  - contextTypes:
+    - none
+    - Context
+    - MaterialContext
+    - CameraContext
+    - LightContext
+    - RayContext
+    coordTypes:
+    - float
+    - vec2
+    - vec3
+    label: Thickness Field
+    name: thickness_field_definition_in
+    returnTypes:
+    - float
+    summary: Field used to multiply the `Radius` parameter. If it uses 1D coordinates,
+      it is provided the position along the axis. If it uses 3D coordinates, it uses
+      the absolute position.
+  - contextTypes:
+    - none
+    - Context
+    - MaterialContext
+    - CameraContext
+    - LightContext
+    - RayContext
+    coordTypes:
+    - float
+    - vec3
+    label: Radius Field
+    name: radius_field_definition_in
+    returnTypes:
+    - float
+    summary: Field used to multiply the `Thickness` parameter. If it uses 1D coordinates,
+      it is provided the position along the axis. If it uses 3D coordinates, it uses
+      the absolute position.
+  - contextTypes:
+    - none
+    - Context
+    - MaterialContext
+    - CameraContext
+    - LightContext
+    - RayContext
+    coordTypes:
+    - vec2
+    label: Cross Section Shape
+    name: cross_section_definition_in
+    returnTypes:
+    - float
+    - Sdf
+  name: helixSdf
+  opType: raytk.operators.sdf.helixSdf
   parameters:
-    - name: Enable
-      label: Enable
-    - name: Axis
-      label: Axis
-      menuOptions:
-        - name: x
-          label: X
-        - name: y
-          label: Y
-        - name: z
-          label: Z
-    - name: Translate
-      label: Translate
-    - name: Radius
-      label: Radius
-    - name: Thickness
-      label: Thickness
-    - name: Spread
-      label: Spread
-    - name: Dualspread
-      label: Dual Spread
-    - name: Inspect
-      label: Inspect
-    - name: Help
-      label: Help
+  - label: Enable
+    name: Enable
+  - label: Axis
+    menuOptions:
+    - label: X
+      name: x
+    - label: Y
+      name: y
+    - label: Z
+      name: z
+    name: Axis
+  - label: Translate
+    name: Translate
+  - label: Radius
+    name: Radius
+  - label: Thickness
+    name: Thickness
+  - label: Spread
+    name: Spread
+  - label: Dual Spread
+    name: Dualspread
+  - label: Inspect
+    name: Inspect
+  - label: Help
+    name: Help
 
 ---
 

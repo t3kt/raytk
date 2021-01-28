@@ -7,28 +7,33 @@ permalink: /reference/operators/material/sampledPointMat
 redirect_from:
   - /reference/opType/raytk.operators.material.sampledPointMat/
 op:
+  category: material
+  inputs:
+  - contextTypes:
+    - none
+    - Context
+    coordTypes:
+    - vec2
+    - vec3
+    label: definition_in
+    name: definition_in
+    required: true
+    returnTypes:
+    - Sdf
   name: sampledPointMat
   opType: raytk.operators.material.sampledPointMat
-  category: material
-  status: beta
-  inputs:
-    - name: definition_in
-      label: definition_in
-      required: true
-      coordTypes: [vec2,vec3]
-      contextTypes: [none,Context]
-      returnTypes: [Sdf]
   parameters:
-    - name: Enable
-      label: Enable
-    - name: Fillcolor
-      label: Fill Color
-    - name: Blending
-      label: Blending
-    - name: Inspect
-      label: Inspect
-    - name: Help
-      label: Help
+  - label: Enable
+    name: Enable
+  - label: Fill Color
+    name: Fillcolor
+  - label: Blending
+    name: Blending
+  - label: Inspect
+    name: Inspect
+  - label: Help
+    name: Help
+  status: beta
 
 ---
 

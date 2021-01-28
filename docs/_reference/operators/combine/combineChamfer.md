@@ -7,63 +7,89 @@ permalink: /reference/operators/combine/combineChamfer
 redirect_from:
   - /reference/opType/raytk.operators.combine.combineChamfer/
 op:
-  name: combineChamfer
-  summary: Chamfer SDF combine, producing a flat surface at a 45 degree angle along the blend region.
-  opType: raytk.operators.combine.combineChamfer
   category: combine
   inputs:
-    - name: definition_in_1
-      label: definition_in_1
-      required: true
-      coordTypes: [float,vec2,vec3]
-      contextTypes: [none,Context,MaterialContext,CameraContext,LightContext,RayContext]
-      returnTypes: [float,Sdf]
-    - name: definition_in_2
-      label: definition_in_2
-      required: true
-      coordTypes: [float,vec2,vec3]
-      contextTypes: [none,Context,MaterialContext,CameraContext,LightContext,RayContext]
-      returnTypes: [float,Sdf]
-    - name: radius_definition_in
-      label: Radius Field
-      required: false
-      coordTypes: [float,vec2,vec3]
-      contextTypes: [none,Context,MaterialContext,CameraContext,LightContext,RayContext]
-      returnTypes: [float]
-      summary: |
-        Value field that can be used to vary the radius of the blend region at different points in space, by *multiplying* the value of the `Radius` parameter.
+  - contextTypes:
+    - none
+    - Context
+    - MaterialContext
+    - CameraContext
+    - LightContext
+    - RayContext
+    coordTypes:
+    - float
+    - vec2
+    - vec3
+    label: definition_in_1
+    name: definition_in_1
+    required: true
+    returnTypes:
+    - float
+    - Sdf
+  - contextTypes:
+    - none
+    - Context
+    - MaterialContext
+    - CameraContext
+    - LightContext
+    - RayContext
+    coordTypes:
+    - float
+    - vec2
+    - vec3
+    label: definition_in_2
+    name: definition_in_2
+    required: true
+    returnTypes:
+    - float
+    - Sdf
+  - contextTypes:
+    - none
+    - Context
+    - MaterialContext
+    - CameraContext
+    - LightContext
+    - RayContext
+    coordTypes:
+    - float
+    - vec2
+    - vec3
+    label: Radius Field
+    name: radius_definition_in
+    returnTypes:
+    - float
+    summary: Value field that can be used to vary the radius of the blend region at
+      different points in space, by *multiplying* the value of the `Radius` parameter.
+  name: combineChamfer
+  opType: raytk.operators.combine.combineChamfer
   parameters:
-    - name: Enable
-      label: Enable
-    - name: Operation
-      label: Operation
-      summary: |
-        The type of combine operation.
-      menuOptions:
-        - name: union
-          label: Union
-          description: |
-            Produces the combined area of both inputs.
-        - name: intersect
-          label: Intersect
-          description: |
-            Produces the area where both inputs overlap.
-        - name: diff
-          label: Difference
-          description: |
-            Subtracts the second input from the first.
-    - name: Swapinputs
-      label: Swap Inputs
-      summary: |
-        Swaps the order of the inputs. This is only used for the `diff` mode.
-    - name: Radius
-      label: Radius
-      summary: |
-        The size of the blending region.
-    - name: Inspect
-      label: Inspect
-    - name: Help
-      label: Help
+  - label: Enable
+    name: Enable
+  - label: Operation
+    menuOptions:
+    - description: Produces the combined area of both inputs.
+      label: Union
+      name: union
+    - description: Produces the area where both inputs overlap.
+      label: Intersect
+      name: intersect
+    - description: Subtracts the second input from the first.
+      label: Difference
+      name: diff
+    name: Operation
+    summary: The type of combine operation.
+  - label: Swap Inputs
+    name: Swapinputs
+    summary: Swaps the order of the inputs. This is only used for the `diff` mode.
+  - label: Radius
+    name: Radius
+    summary: The size of the blending region.
+  - label: Inspect
+    name: Inspect
+  - label: Help
+    name: Help
+  summary: Chamfer SDF combine, producing a flat surface at a 45 degree angle along
+    the blend region.
 
 ---
 

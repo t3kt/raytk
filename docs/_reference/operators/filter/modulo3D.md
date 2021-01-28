@@ -7,30 +7,37 @@ permalink: /reference/operators/filter/modulo3D
 redirect_from:
   - /reference/opType/raytk.operators.filter.modulo3D/
 op:
-  name: modulo3D
-  summary: Repeats space along all 3 axes.
-  opType: raytk.operators.filter.modulo3D
   category: filter
   inputs:
-    - name: definition_in
-      label: definition_in
-      required: true
-      coordTypes: [vec3]
-      contextTypes: [Context]
-      returnTypes: [float,vec4,Sdf,Ray,Light]
+  - contextTypes:
+    - Context
+    coordTypes:
+    - vec3
+    label: definition_in
+    name: definition_in
+    required: true
+    returnTypes:
+    - float
+    - vec4
+    - Sdf
+    - Ray
+    - Light
+  name: modulo3D
+  opType: raytk.operators.filter.modulo3D
   parameters:
-    - name: Enable
-      label: Enable
-    - name: Size
-      label: Size
-    - name: Offset
-      label: Offset
-    - name: Shift
-      label: Shift
-    - name: Inspect
-      label: Inspect
-    - name: Help
-      label: Help
+  - label: Enable
+    name: Enable
+  - label: Size
+    name: Size
+  - label: Offset
+    name: Offset
+  - label: Shift
+    name: Shift
+  - label: Inspect
+    name: Inspect
+  - label: Help
+    name: Help
+  summary: Repeats space along all 3 axes.
 
 ---
 

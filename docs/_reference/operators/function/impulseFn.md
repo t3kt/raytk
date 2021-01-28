@@ -7,46 +7,46 @@ permalink: /reference/operators/function/impulseFn
 redirect_from:
   - /reference/opType/raytk.operators.function.impulseFn/
 op:
+  category: function
   name: impulseFn
   opType: raytk.operators.function.impulseFn
-  category: function
   parameters:
-    - name: Function
-      label: Function
-      menuOptions:
-        - name: exponential
-          label: Exponential Impulse
-        - name: sustained
-          label: Sustained Impulse
-        - name: quad
-          label: Quad Impulse
-        - name: poly
-          label: Polynomial Impulse
-    - name: Attack
-      label: Attack
-    - name: Release
-      label: Release
-    - name: Falloff
-      label: Falloff
-    - name: Polydegree
-      label: Polynomial Degree
-    - name: Contexttype
-      label: Context Type
-      menuOptions:
-        - name: none
-          label: None
-        - name: Context
-          label: Context
-        - name: MaterialContext
-          label: Material Context
-        - name: CameraContext
-          label: Camera Context
-        - name: LightContext
-          label: Light Context
-    - name: Inspect
-      label: Inspect
-    - name: Help
-      label: Help
+  - label: Function
+    menuOptions:
+    - label: Exponential Impulse
+      name: exponential
+    - label: Sustained Impulse
+      name: sustained
+    - label: Quad Impulse
+      name: quad
+    - label: Polynomial Impulse
+      name: poly
+    name: Function
+  - label: Attack
+    name: Attack
+  - label: Release
+    name: Release
+  - label: Falloff
+    name: Falloff
+  - label: Polynomial Degree
+    name: Polydegree
+  - label: Context Type
+    menuOptions:
+    - label: None
+      name: none
+    - label: Context
+      name: Context
+    - label: Material Context
+      name: MaterialContext
+    - label: Camera Context
+      name: CameraContext
+    - label: Light Context
+      name: LightContext
+    name: Contexttype
+  - label: Inspect
+    name: Inspect
+  - label: Help
+    name: Help
 
 ---
 

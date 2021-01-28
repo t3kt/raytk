@@ -7,22 +7,22 @@ permalink: /reference/operators/sdf/apollonianSdf
 redirect_from:
   - /reference/opType/raytk.operators.sdf.apollonianSdf/
 op:
+  category: sdf
   name: apollonianSdf
   opType: raytk.operators.sdf.apollonianSdf
-  category: sdf
   parameters:
-    - name: Translate
-      label: Translate
-    - name: Scale
-      label: Scale
-    - name: S
-      label: S
-    - name: Iterations
-      label: Iterations
-    - name: Inspect
-      label: Inspect
-    - name: Help
-      label: Help
+  - label: Translate
+    name: Translate
+  - label: Scale
+    name: Scale
+  - label: S
+    name: S
+  - label: Iterations
+    name: Iterations
+  - label: Inspect
+    name: Inspect
+  - label: Help
+    name: Help
 
 ---
 

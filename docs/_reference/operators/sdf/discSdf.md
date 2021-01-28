@@ -7,25 +7,23 @@ permalink: /reference/operators/sdf/discSdf
 redirect_from:
   - /reference/opType/raytk.operators.sdf.discSdf/
 op:
-  name: discSdf
-  summary: A flat disc facing the Y axis.
-  detail: |
-    Because the disc is infinitely thin, it will only appear as a line when viewed from the side.
-  opType: raytk.operators.sdf.discSdf
   category: sdf
+  detail: Because the disc is infinitely thin, it will only appear as a line when
+    viewed from the side.
+  name: discSdf
+  opType: raytk.operators.sdf.discSdf
   parameters:
-    - name: Translate
-      label: Translate
-      summary: |
-        Shifts the center of the disc.
-    - name: Radius
-      label: Radius
-      summary: |
-        The radius of the disc.
-    - name: Inspect
-      label: Inspect
-    - name: Help
-      label: Help
+  - label: Translate
+    name: Translate
+    summary: Shifts the center of the disc.
+  - label: Radius
+    name: Radius
+    summary: The radius of the disc.
+  - label: Inspect
+    name: Inspect
+  - label: Help
+    name: Help
+  summary: A flat disc facing the Y axis.
 
 ---
 

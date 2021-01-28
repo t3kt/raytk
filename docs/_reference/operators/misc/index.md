@@ -7,15 +7,12 @@ has_toc: false
 permalink: /reference/operators/misc/
 cat:
   name: misc
-  summary: |
-    Assorted operators that don't fit into other categories.
   operators:
-    - op:
-      name: customFilter
-      status: deprecated
-    - op:
-      name: customGen
-      status: deprecated
+  - name: customFilter
+    status: deprecated
+  - name: customGen
+    status: deprecated
+  summary: Assorted operators that don't fit into other categories.
 
 ---
 

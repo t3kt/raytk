@@ -7,43 +7,83 @@ permalink: /reference/operators/function/joinFn
 redirect_from:
   - /reference/opType/raytk.operators.function.joinFn/
 op:
-  name: joinFn
-  opType: raytk.operators.function.joinFn
   category: function
   inputs:
-    - name: definition_in
-      label: definition_in
-      required: false
-      coordTypes: [float,vec2,vec3]
-      contextTypes: [none,Context,MaterialContext,CameraContext,LightContext,RayContext]
-      returnTypes: [float,vec4]
-    - name: definition_in_2
-      label: definition_in_2
-      required: false
-      coordTypes: [float,vec2,vec3]
-      contextTypes: [none,Context,MaterialContext,CameraContext,LightContext,RayContext]
-      returnTypes: [float,vec4]
-    - name: definition_in_3
-      label: definition_in_3
-      required: false
-      coordTypes: [float,vec2,vec3]
-      contextTypes: [none,Context,MaterialContext,CameraContext,LightContext,RayContext]
-      returnTypes: [float,vec4]
-    - name: definition_in_4
-      label: definition_in_4
-      required: false
-      coordTypes: [float,vec2,vec3]
-      contextTypes: [none,Context,MaterialContext,CameraContext,LightContext,RayContext]
-      returnTypes: [float,vec4]
+  - contextTypes:
+    - none
+    - Context
+    - MaterialContext
+    - CameraContext
+    - LightContext
+    - RayContext
+    coordTypes:
+    - float
+    - vec2
+    - vec3
+    label: definition_in
+    name: definition_in
+    returnTypes:
+    - float
+    - vec4
+  - contextTypes:
+    - none
+    - Context
+    - MaterialContext
+    - CameraContext
+    - LightContext
+    - RayContext
+    coordTypes:
+    - float
+    - vec2
+    - vec3
+    label: definition_in_2
+    name: definition_in_2
+    returnTypes:
+    - float
+    - vec4
+  - contextTypes:
+    - none
+    - Context
+    - MaterialContext
+    - CameraContext
+    - LightContext
+    - RayContext
+    coordTypes:
+    - float
+    - vec2
+    - vec3
+    label: definition_in_3
+    name: definition_in_3
+    returnTypes:
+    - float
+    - vec4
+  - contextTypes:
+    - none
+    - Context
+    - MaterialContext
+    - CameraContext
+    - LightContext
+    - RayContext
+    coordTypes:
+    - float
+    - vec2
+    - vec3
+    label: definition_in_4
+    name: definition_in_4
+    returnTypes:
+    - float
+    - vec4
+  name: joinFn
+  opType: raytk.operators.function.joinFn
   parameters:
-    - name: Enable
-      label: Enable
-    - name: Multiply
-      label: Multiply
-    - name: Inspect
-      label: Inspect
-    - name: Help
-      label: Help
+  - label: Enable
+    name: Enable
+  - label: Multiply
+    name: Multiply
+  - label: Inspect
+    name: Inspect
+  - label: Help
+    name: Help
 
 ---
 

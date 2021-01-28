@@ -7,27 +7,24 @@ permalink: /reference/operators/sdf/boxFrameSdf
 redirect_from:
   - /reference/opType/raytk.operators.sdf.boxFrameSdf/
 op:
-  name: boxFrameSdf
-  summary: SDF for the squared frame of the edges of a box.
-  opType: raytk.operators.sdf.boxFrameSdf
   category: sdf
+  name: boxFrameSdf
+  opType: raytk.operators.sdf.boxFrameSdf
   parameters:
-    - name: Translate
-      label: Translate
-      summary: |
-        Move the center of the shape.
-    - name: Scale
-      label: Scale
-      summary: |
-        The size of the box.
-    - name: Thickness
-      label: Thickness
-      summary: |
-        The thickness of the bars of the box.
-    - name: Inspect
-      label: Inspect
-    - name: Help
-      label: Help
+  - label: Translate
+    name: Translate
+    summary: Move the center of the shape.
+  - label: Scale
+    name: Scale
+    summary: The size of the box.
+  - label: Thickness
+    name: Thickness
+    summary: The thickness of the bars of the box.
+  - label: Inspect
+    name: Inspect
+  - label: Help
+    name: Help
+  summary: SDF for the squared frame of the edges of a box.
 
 ---
 

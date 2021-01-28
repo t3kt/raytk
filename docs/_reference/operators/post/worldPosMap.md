@@ -7,22 +7,22 @@ permalink: /reference/operators/post/worldPosMap
 redirect_from:
   - /reference/opType/raytk.operators.post.worldPosMap/
 op:
+  category: post
   name: worldPosMap
   opType: raytk.operators.post.worldPosMap
-  category: post
   parameters:
-    - name: Rangex
-      label: Range X
-    - name: Rangey
-      label: Range Y
-    - name: Rangez
-      label: Range Z
-    - name: Snapshotrange
-      label: Snapshot Range
-    - name: Outputop
-      label: Output OP
-    - name: Help
-      label: Help
+  - label: Range X
+    name: Rangex
+  - label: Range Y
+    name: Rangey
+  - label: Range Z
+    name: Rangez
+  - label: Snapshot Range
+    name: Snapshotrange
+  - label: Output OP
+    name: Outputop
+  - label: Help
+    name: Help
 
 ---
 

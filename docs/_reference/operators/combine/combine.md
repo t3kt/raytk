@@ -7,113 +7,134 @@ permalink: /reference/operators/combine/combine
 redirect_from:
   - /reference/opType/raytk.operators.combine.combine/
 op:
-  name: combine
-  summary: Combines SDFs in various ways.
-  detail: |
-    Depending on which `Combine` option is selected, different parameters will be enabled.
-    This operator only supports two input SDFs (along with a value field to control blending).
-    To combine more than two SDFs, use one of the specialized operators like `simpleUnion`.
-  opType: raytk.operators.combine.combine
   category: combine
+  detail: 'Depending on which `Combine` option is selected, different parameters will
+    be enabled.
+
+    This operator only supports two input SDFs (along with a value field to control
+    blending).
+
+    To combine more than two SDFs, use one of the specialized operators like `simpleUnion`.'
   inputs:
-    - name: definition_in_1
-      label: definition_in_1
-      required: true
-      coordTypes: [float,vec2,vec3]
-      contextTypes: [none,Context,MaterialContext,CameraContext,LightContext,RayContext]
-      returnTypes: [Sdf]
-    - name: definition_in_2
-      label: definition_in_2
-      required: true
-      coordTypes: [float,vec2,vec3]
-      contextTypes: [none,Context,MaterialContext,CameraContext,LightContext,RayContext]
-      returnTypes: [Sdf]
-    - name: radius_field_definition_in
-      label: radius_field_definition_in
-      required: false
-      coordTypes: [float,vec2,vec3]
-      contextTypes: [none,Context,MaterialContext,CameraContext,LightContext,RayContext]
-      returnTypes: [float,Sdf]
+  - contextTypes:
+    - none
+    - Context
+    - MaterialContext
+    - CameraContext
+    - LightContext
+    - RayContext
+    coordTypes:
+    - float
+    - vec2
+    - vec3
+    label: definition_in_1
+    name: definition_in_1
+    required: true
+    returnTypes:
+    - Sdf
+  - contextTypes:
+    - none
+    - Context
+    - MaterialContext
+    - CameraContext
+    - LightContext
+    - RayContext
+    coordTypes:
+    - float
+    - vec2
+    - vec3
+    label: definition_in_2
+    name: definition_in_2
+    required: true
+    returnTypes:
+    - Sdf
+  - contextTypes:
+    - none
+    - Context
+    - MaterialContext
+    - CameraContext
+    - LightContext
+    - RayContext
+    coordTypes:
+    - float
+    - vec2
+    - vec3
+    label: radius_field_definition_in
+    name: radius_field_definition_in
+    returnTypes:
+    - float
+    - Sdf
+  name: combine
+  opType: raytk.operators.combine.combine
   parameters:
-    - name: Enable
-      label: Enable
-    - name: Combine
-      label: Combine
-      summary: |
-        The type of combination operation to perform.
-      menuOptions:
-        - name: simpleUnion
-          label: Simple Union
-          description: |
-            The combined areas of each of the inputs.
-        - name: simpleIntersect
-          label: Simple Intersect
-          description: |
-            The overlapping areas of each of the inputs.
-        - name: simpleDiff
-          label: Simple Difference
-          description: |
-            The first input with the second input removed from it.
-        - name: smoothUnion
-          label: Smooth Union
-          description: |
-            Like `simpleUnion` but with the intersecting edges rounded out.
-        - name: smoothIntersect
-          label: Smooth Intersect
-          description: |
-            Like `simpleIntersect` but with the intersecting edges rounded out.
-        - name: smoothDiff
-          label: Smooth Difference
-          description: |
-            Like `simpleDiff` but with the intersecting edges rounded out.
-        - name: roundUnion
-          label: Round Union
-          description: |
-            Uses a quarter circle blending area along the edges.
-        - name: roundIntersect
-          label: Round Intersect
-        - name: roundDiff
-          label: Round Difference
-        - name: chamferUnion
-          label: Chamfer Union
-          description: |
-            Uses a 45 degree flat slope to blend along the edges.
-        - name: chamferIntersect
-          label: Chamfer Intersect
-        - name: chamferDiff
-          label: Chamfer Difference
-        - name: stairUnion
-          label: Stair Union
-          description: |
-            Uses vertical and horizontal stairs to blend along the edges.
-        - name: stairIntersect
-          label: Stair Intersect
-        - name: stairDiff
-          label: Stair Difference
-        - name: columnUnion
-          label: Column Union
-          description: |
-            Uses multiple circular tubes to blend along the edges.
-        - name: columnIntersect
-          label: Column Intersect
-        - name: columnDiff
-          label: Column Difference
-    - name: Swapinputs
-      label: Swap Inputs
-      summary: |
-        Swaps the order of the inputs. This is only relevant for "diff" modes.
-    - name: Radius
-      label: Radius
-      summary: |
-        The size of the blending region.
-    - name: Number
-      label: Number
-      summary: |
-        For stair and column modes, this controls how many steps are used in the blending regions.
-    - name: Inspect
-      label: Inspect
-    - name: Help
-      label: Help
+  - label: Enable
+    name: Enable
+  - label: Combine
+    menuOptions:
+    - description: The combined areas of each of the inputs.
+      label: Simple Union
+      name: simpleUnion
+    - description: The overlapping areas of each of the inputs.
+      label: Simple Intersect
+      name: simpleIntersect
+    - description: The first input with the second input removed from it.
+      label: Simple Difference
+      name: simpleDiff
+    - description: Like `simpleUnion` but with the intersecting edges rounded out.
+      label: Smooth Union
+      name: smoothUnion
+    - description: Like `simpleIntersect` but with the intersecting edges rounded
+        out.
+      label: Smooth Intersect
+      name: smoothIntersect
+    - description: Like `simpleDiff` but with the intersecting edges rounded out.
+      label: Smooth Difference
+      name: smoothDiff
+    - description: Uses a quarter circle blending area along the edges.
+      label: Round Union
+      name: roundUnion
+    - label: Round Intersect
+      name: roundIntersect
+    - label: Round Difference
+      name: roundDiff
+    - description: Uses a 45 degree flat slope to blend along the edges.
+      label: Chamfer Union
+      name: chamferUnion
+    - label: Chamfer Intersect
+      name: chamferIntersect
+    - label: Chamfer Difference
+      name: chamferDiff
+    - description: Uses vertical and horizontal stairs to blend along the edges.
+      label: Stair Union
+      name: stairUnion
+    - label: Stair Intersect
+      name: stairIntersect
+    - label: Stair Difference
+      name: stairDiff
+    - description: Uses multiple circular tubes to blend along the edges.
+      label: Column Union
+      name: columnUnion
+    - label: Column Intersect
+      name: columnIntersect
+    - label: Column Difference
+      name: columnDiff
+    name: Combine
+    summary: The type of combination operation to perform.
+  - label: Swap Inputs
+    name: Swapinputs
+    summary: Swaps the order of the inputs. This is only relevant for "diff" modes.
+  - label: Radius
+    name: Radius
+    summary: The size of the blending region.
+  - label: Number
+    name: Number
+    summary: For stair and column modes, this controls how many steps are used in
+      the blending regions.
+  - label: Inspect
+    name: Inspect
+  - label: Help
+    name: Help
+  summary: Combines SDFs in various ways.
 
 ---
 

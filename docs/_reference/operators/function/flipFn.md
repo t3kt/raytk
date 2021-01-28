@@ -7,73 +7,85 @@ permalink: /reference/operators/function/flipFn
 redirect_from:
   - /reference/opType/raytk.operators.function.flipFn/
 op:
-  name: flipFn
-  summary: Function that flips its input in one of several different modes.
-  opType: raytk.operators.function.flipFn
   category: function
   inputs:
-    - name: definition_in
-      label: definition_in
-      required: false
-      coordTypes: [float,vec2,vec3]
-      contextTypes: [none,Context,MaterialContext,CameraContext,LightContext,RayContext]
-      returnTypes: [float,vec4]
+  - contextTypes:
+    - none
+    - Context
+    - MaterialContext
+    - CameraContext
+    - LightContext
+    - RayContext
+    coordTypes:
+    - float
+    - vec2
+    - vec3
+    label: definition_in
+    name: definition_in
+    returnTypes:
+    - float
+    - vec4
+  name: flipFn
+  opType: raytk.operators.function.flipFn
   parameters:
-    - name: Enable
-      label: Enable
-    - name: Fliptype
-      label: Flip Type
-      summary: |
-        The type of flipping to apply.
-      menuOptions:
-        - name: flipdomain
-          label: Flip Domain
-          description: |
-            Negates the coordinate passed to the input function, flipping the x axis of a function graph across the y axis.
-        - name: fliprange
-          label: Flip Range
-          description: |
-            Negates the input function's return value, flipping the y axis of a function graph across the x axis.
-        - name: mirrorposdomain
-          label: Mirror Positive Domain
-          description: |
-            Mirrors the coordinate so only the positive half is used, reflecting the positive side of a function graph across the y axis replacing the negative side.
-        - name: flipnegdomain
-          label: Flip Negative Domain
-          description: |
-            Mirrors the coordinate so only the positive half is used, but also flips the return value when on the negative side, reflecting the positive side of a function graph across the y axis but then also flipping that side upside down.
-    - name: Returntype
-      label: Return Type
-      menuOptions:
-        - name: useinput
-          label: Use Input
-        - name: Sdf
-          label: SDF Result
-        - name: float
-          label: Float
-        - name: vec4
-          label: Vector4
-        - name: Ray
-          label: Ray
-        - name: Light
-          label: Light
-    - name: Contexttype
-      label: Context Type
-      menuOptions:
-        - name: none
-          label: None
-        - name: Context
-          label: Context
-        - name: MaterialContext
-          label: Material Context
-        - name: CameraContext
-          label: Camera Context
-        - name: LightContext
-          label: Light Context
-    - name: Inspect
-      label: Inspect
-    - name: Help
-      label: Help
+  - label: Enable
+    name: Enable
+  - label: Flip Type
+    menuOptions:
+    - description: Negates the coordinate passed to the input function, flipping the
+        x axis of a function graph across the y axis.
+      label: Flip Domain
+      name: flipdomain
+    - description: Negates the input function's return value, flipping the y axis
+        of a function graph across the x axis.
+      label: Flip Range
+      name: fliprange
+    - description: Mirrors the coordinate so only the positive half is used, reflecting
+        the positive side of a function graph across the y axis replacing the negative
+        side.
+      label: Mirror Positive Domain
+      name: mirrorposdomain
+    - description: Mirrors the coordinate so only the positive half is used, but also
+        flips the return value when on the negative side, reflecting the positive
+        side of a function graph across the y axis but then also flipping that side
+        upside down.
+      label: Flip Negative Domain
+      name: flipnegdomain
+    name: Fliptype
+    summary: The type of flipping to apply.
+  - label: Return Type
+    menuOptions:
+    - label: Use Input
+      name: useinput
+    - label: SDF Result
+      name: Sdf
+    - label: Float
+      name: float
+    - label: Vector4
+      name: vec4
+    - label: Ray
+      name: Ray
+    - label: Light
+      name: Light
+    name: Returntype
+  - label: Context Type
+    menuOptions:
+    - label: None
+      name: none
+    - label: Context
+      name: Context
+    - label: Material Context
+      name: MaterialContext
+    - label: Camera Context
+      name: CameraContext
+    - label: Light Context
+      name: LightContext
+    name: Contexttype
+  - label: Inspect
+    name: Inspect
+  - label: Help
+    name: Help
+  summary: Function that flips its input in one of several different modes.
 
 ---
 

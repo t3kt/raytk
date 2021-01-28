@@ -7,38 +7,38 @@ permalink: /reference/operators/function/stepFn
 redirect_from:
   - /reference/opType/raytk.operators.function.stepFn/
 op:
+  category: function
   name: stepFn
   opType: raytk.operators.function.stepFn
-  category: function
   parameters:
-    - name: Function
-      label: Function
-      menuOptions:
-        - name: step
-          label: Step
-        - name: smoothstep
-          label: Smoothstep
-    - name: Edge
-      label: Edge
-    - name: Blend
-      label: Blend
-    - name: Contexttype
-      label: Context Type
-      menuOptions:
-        - name: none
-          label: None
-        - name: Context
-          label: Context
-        - name: MaterialContext
-          label: Material Context
-        - name: CameraContext
-          label: Camera Context
-        - name: LightContext
-          label: Light Context
-    - name: Inspect
-      label: Inspect
-    - name: Help
-      label: Help
+  - label: Function
+    menuOptions:
+    - label: Step
+      name: step
+    - label: Smoothstep
+      name: smoothstep
+    name: Function
+  - label: Edge
+    name: Edge
+  - label: Blend
+    name: Blend
+  - label: Context Type
+    menuOptions:
+    - label: None
+      name: none
+    - label: Context
+      name: Context
+    - label: Material Context
+      name: MaterialContext
+    - label: Camera Context
+      name: CameraContext
+    - label: Light Context
+      name: LightContext
+    name: Contexttype
+  - label: Inspect
+    name: Inspect
+  - label: Help
+    name: Help
 
 ---
 

@@ -7,67 +7,67 @@ permalink: /reference/operators/field/noiseField
 redirect_from:
   - /reference/opType/raytk.operators.field.noiseField/
 op:
-  name: noiseField
-  summary: A float or vector field that uses one of several noise functions.
-  opType: raytk.operators.field.noiseField
   category: field
+  name: noiseField
+  opType: raytk.operators.field.noiseField
   parameters:
-    - name: Noisetype
-      label: Noise Type
-      menuOptions:
-        - name: TDSimplexNoise2d
-          label: Simplex 2D
-        - name: TDSimplexNoise3d
-          label: Simplex 3D
-        - name: TDSimplexNoise4d
-          label: Simplex 4D
-        - name: TDPerlinNoise2d
-          label: Perlin 2D
-        - name: TDPerlinNoise3d
-          label: Perlin 3D
-        - name: TDPerlinNoise4d
-          label: Perlin 4D
-    - name: Coordtype
-      label: Coord Type
-      menuOptions:
-        - name: vec2
-          label: 2D
-        - name: vec3
-          label: 3D
-    - name: Contexttype
-      label: Context Type
-      menuOptions:
-        - name: none
-          label: None
-        - name: Context
-          label: Context
-        - name: MaterialContext
-          label: Material Context
-        - name: CameraContext
-          label: Camera Context
-        - name: LightContext
-          label: Light Context
-    - name: Axis
-      label: Axis
-      menuOptions:
-        - name: x
-          label: X
-        - name: y
-          label: Y
-        - name: z
-          label: Z
-    - name: Translate
-      label: Translate
-    - name: Scale
-      label: Scale
-    - name: Amplitude
-      label: Amplitude
-    - name: Offset
-      label: Offset
-    - name: Inspect
-      label: Inspect
-    - name: Help
-      label: Help
+  - label: Noise Type
+    menuOptions:
+    - label: Simplex 2D
+      name: TDSimplexNoise2d
+    - label: Simplex 3D
+      name: TDSimplexNoise3d
+    - label: Simplex 4D
+      name: TDSimplexNoise4d
+    - label: Perlin 2D
+      name: TDPerlinNoise2d
+    - label: Perlin 3D
+      name: TDPerlinNoise3d
+    - label: Perlin 4D
+      name: TDPerlinNoise4d
+    name: Noisetype
+  - label: Coord Type
+    menuOptions:
+    - label: 2D
+      name: vec2
+    - label: 3D
+      name: vec3
+    name: Coordtype
+  - label: Context Type
+    menuOptions:
+    - label: None
+      name: none
+    - label: Context
+      name: Context
+    - label: Material Context
+      name: MaterialContext
+    - label: Camera Context
+      name: CameraContext
+    - label: Light Context
+      name: LightContext
+    name: Contexttype
+  - label: Axis
+    menuOptions:
+    - label: X
+      name: x
+    - label: Y
+      name: y
+    - label: Z
+      name: z
+    name: Axis
+  - label: Translate
+    name: Translate
+  - label: Scale
+    name: Scale
+  - label: Amplitude
+    name: Amplitude
+  - label: Offset
+    name: Offset
+  - label: Inspect
+    name: Inspect
+  - label: Help
+    name: Help
+  summary: A float or vector field that uses one of several noise functions.
 
 ---
 

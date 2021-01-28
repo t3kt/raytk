@@ -7,33 +7,33 @@ permalink: /reference/operators/sdf/dodecahedronFractalSdf
 redirect_from:
   - /reference/opType/raytk.operators.sdf.dodecahedronFractalSdf/
 op:
+  category: sdf
   name: dodecahedronFractalSdf
   opType: raytk.operators.sdf.dodecahedronFractalSdf
-  category: sdf
-  status: beta
   parameters:
-    - name: Scale
-      label: Scale
-    - name: Phi
-      label: Phi
-    - name: Bailout
-      label: Bailout
-    - name: Rotate1
-      label: Rotate 1
-    - name: Rotateaxis1
-      label: Rotate Axis 1
-    - name: Rotate2
-      label: Rotate 2
-    - name: Rotateaxis2
-      label: Rotate Axis 2
-    - name: Offset
-      label: Offset
-    - name: Iterations
-      label: Iterations
-    - name: Inspect
-      label: Inspect
-    - name: Help
-      label: Help
+  - label: Scale
+    name: Scale
+  - label: Phi
+    name: Phi
+  - label: Bailout
+    name: Bailout
+  - label: Rotate 1
+    name: Rotate1
+  - label: Rotate Axis 1
+    name: Rotateaxis1
+  - label: Rotate 2
+    name: Rotate2
+  - label: Rotate Axis 2
+    name: Rotateaxis2
+  - label: Offset
+    name: Offset
+  - label: Iterations
+    name: Iterations
+  - label: Inspect
+    name: Inspect
+  - label: Help
+    name: Help
+  status: beta
 
 ---
 

@@ -7,25 +7,25 @@ permalink: /reference/operators/light/softShadow
 redirect_from:
   - /reference/opType/raytk.operators.light.softShadow/
 op:
-  name: softShadow
-  summary: A soft-edged shadow.
-  opType: raytk.operators.light.softShadow
   category: light
+  name: softShadow
+  opType: raytk.operators.light.softShadow
   parameters:
-    - name: Hardness
-      label: Hardness
-    - name: Overridemindist
-      label: Override Minimum Distance
-    - name: Mindist
-      label: Minimum Dist
-    - name: Overridemaxdist
-      label: Override Maximum Distance
-    - name: Maxdist
-      label: Maximum Distance
-    - name: Inspect
-      label: Inspect
-    - name: Help
-      label: Help
+  - label: Hardness
+    name: Hardness
+  - label: Override Minimum Distance
+    name: Overridemindist
+  - label: Minimum Dist
+    name: Mindist
+  - label: Override Maximum Distance
+    name: Overridemaxdist
+  - label: Maximum Distance
+    name: Maxdist
+  - label: Inspect
+    name: Inspect
+  - label: Help
+    name: Help
+  summary: A soft-edged shadow.
 
 ---
 

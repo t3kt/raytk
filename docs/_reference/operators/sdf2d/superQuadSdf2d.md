@@ -7,18 +7,18 @@ permalink: /reference/operators/sdf2d/superQuadSdf2d
 redirect_from:
   - /reference/opType/raytk.operators.sdf2d.superQuadSdf2d/
 op:
+  category: sdf2d
   name: superQuadSdf2d
   opType: raytk.operators.sdf2d.superQuadSdf2d
-  category: sdf2d
   parameters:
-    - name: Radius
-      label: Radius
-    - name: Exponent
-      label: Exponent
-    - name: Inspect
-      label: Inspect
-    - name: Help
-      label: Help
+  - label: Radius
+    name: Radius
+  - label: Exponent
+    name: Exponent
+  - label: Inspect
+    name: Inspect
+  - label: Help
+    name: Help
 
 ---
 

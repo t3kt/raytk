@@ -7,42 +7,65 @@ permalink: /reference/operators/time/timeShift
 redirect_from:
   - /reference/opType/raytk.operators.time.timeShift/
 op:
-  name: timeShift
-  opType: raytk.operators.time.timeShift
   category: time
   inputs:
-    - name: definition_in
-      label: definition_in
-      required: true
-      coordTypes: [float,vec2,vec3]
-      contextTypes: [none,Context,MaterialContext,CameraContext,LightContext,RayContext]
-      returnTypes: [float,vec4,Sdf,Ray,Light]
-    - name: shift_definition_in
-      label: shift_definition_in
-      required: false
-      coordTypes: [float,vec2,vec3]
-      contextTypes: [none,Context,MaterialContext,CameraContext,LightContext,RayContext]
-      returnTypes: [float]
+  - contextTypes:
+    - none
+    - Context
+    - MaterialContext
+    - CameraContext
+    - LightContext
+    - RayContext
+    coordTypes:
+    - float
+    - vec2
+    - vec3
+    label: definition_in
+    name: definition_in
+    required: true
+    returnTypes:
+    - float
+    - vec4
+    - Sdf
+    - Ray
+    - Light
+  - contextTypes:
+    - none
+    - Context
+    - MaterialContext
+    - CameraContext
+    - LightContext
+    - RayContext
+    coordTypes:
+    - float
+    - vec2
+    - vec3
+    label: shift_definition_in
+    name: shift_definition_in
+    returnTypes:
+    - float
+  name: timeShift
+  opType: raytk.operators.time.timeShift
   parameters:
-    - name: Enable
-      label: Enable
-    - name: Shift
-      label: Shift
-    - name: Intervaltype
-      label: Interval Type
-      menuOptions:
-        - name: seconds
-          label: Seconds (Timeline)
-        - name: frames
-          label: Frames (Timeline)
-        - name: absseconds
-          label: Seconds (Absolute)
-        - name: absframes
-          label: Frames (Absolute)
-    - name: Inspect
-      label: Inspect
-    - name: Help
-      label: Help
+  - label: Enable
+    name: Enable
+  - label: Shift
+    name: Shift
+  - label: Interval Type
+    menuOptions:
+    - label: Seconds (Timeline)
+      name: seconds
+    - label: Frames (Timeline)
+      name: frames
+    - label: Seconds (Absolute)
+      name: absseconds
+    - label: Frames (Absolute)
+      name: absframes
+    name: Intervaltype
+  - label: Inspect
+    name: Inspect
+  - label: Help
+    name: Help
 
 ---
 

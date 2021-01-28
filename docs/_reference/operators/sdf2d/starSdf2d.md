@@ -7,20 +7,20 @@ permalink: /reference/operators/sdf2d/starSdf2d
 redirect_from:
   - /reference/opType/raytk.operators.sdf2d.starSdf2d/
 op:
+  category: sdf2d
   name: starSdf2d
   opType: raytk.operators.sdf2d.starSdf2d
-  category: sdf2d
   parameters:
-    - name: Radius
-      label: Radius
-    - name: Points
-      label: Points
-    - name: Tightness
-      label: Tightness
-    - name: Inspect
-      label: Inspect
-    - name: Help
-      label: Help
+  - label: Radius
+    name: Radius
+  - label: Points
+    name: Points
+  - label: Tightness
+    name: Tightness
+  - label: Inspect
+    name: Inspect
+  - label: Help
+    name: Help
 
 ---
 

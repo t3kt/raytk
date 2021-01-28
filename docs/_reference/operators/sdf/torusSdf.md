@@ -7,36 +7,36 @@ permalink: /reference/operators/sdf/torusSdf
 redirect_from:
   - /reference/opType/raytk.operators.sdf.torusSdf/
 op:
-  name: torusSdf
-  summary: SDF for a torus.
-  opType: raytk.operators.sdf.torusSdf
   category: sdf
+  name: torusSdf
+  opType: raytk.operators.sdf.torusSdf
   parameters:
-    - name: Axis
-      label: Axis
-      menuOptions:
-        - name: x
-          label: X
-        - name: y
-          label: Y
-        - name: z
-          label: Z
-    - name: Radius
-      label: Radius
-    - name: Thickness
-      label: Thickness
-    - name: Translate
-      label: Translate
-    - name: Enablecaps
-      label: Enable Caps
-    - name: Startangle
-      label: Start Angle
-    - name: Endangle
-      label: End Angle
-    - name: Inspect
-      label: Inspect
-    - name: Help
-      label: Help
+  - label: Axis
+    menuOptions:
+    - label: X
+      name: x
+    - label: Y
+      name: y
+    - label: Z
+      name: z
+    name: Axis
+  - label: Radius
+    name: Radius
+  - label: Thickness
+    name: Thickness
+  - label: Translate
+    name: Translate
+  - label: Enable Caps
+    name: Enablecaps
+  - label: Start Angle
+    name: Startangle
+  - label: End Angle
+    name: Endangle
+  - label: Inspect
+    name: Inspect
+  - label: Help
+    name: Help
+  summary: SDF for a torus.
 
 ---
 

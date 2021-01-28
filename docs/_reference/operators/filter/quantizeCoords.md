@@ -7,34 +7,49 @@ permalink: /reference/operators/filter/quantizeCoords
 redirect_from:
   - /reference/opType/raytk.operators.filter.quantizeCoords/
 op:
-  name: quantizeCoords
-  summary: Quantize coordinates to a 3D grid, which is sort of like "voxelizing" the space.
-  opType: raytk.operators.filter.quantizeCoords
   category: filter
   inputs:
-    - name: definition_in
-      label: definition_in
-      required: true
-      coordTypes: [float,vec2,vec3]
-      contextTypes: [none,Context,MaterialContext,CameraContext,LightContext,RayContext]
-      returnTypes: [float,vec4,Sdf,Ray,Light]
+  - contextTypes:
+    - none
+    - Context
+    - MaterialContext
+    - CameraContext
+    - LightContext
+    - RayContext
+    coordTypes:
+    - float
+    - vec2
+    - vec3
+    label: definition_in
+    name: definition_in
+    required: true
+    returnTypes:
+    - float
+    - vec4
+    - Sdf
+    - Ray
+    - Light
+  name: quantizeCoords
+  opType: raytk.operators.filter.quantizeCoords
   parameters:
-    - name: Enable
-      label: Enable
-    - name: Size
-      label: Size
-    - name: Sizemult
-      label: Size Multiplier
-    - name: Offset
-      label: Offset
-    - name: Smoothing
-      label: Smoothing
-    - name: Smoothingmult
-      label: Smoothing Multiplier
-    - name: Inspect
-      label: Inspect
-    - name: Help
-      label: Help
+  - label: Enable
+    name: Enable
+  - label: Size
+    name: Size
+  - label: Size Multiplier
+    name: Sizemult
+  - label: Offset
+    name: Offset
+  - label: Smoothing
+    name: Smoothing
+  - label: Smoothing Multiplier
+    name: Smoothingmult
+  - label: Inspect
+    name: Inspect
+  - label: Help
+    name: Help
+  summary: Quantize coordinates to a 3D grid, which is sort of like "voxelizing" the
+    space.
 
 ---
 

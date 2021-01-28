@@ -7,30 +7,28 @@ permalink: /reference/operators/sdf/planeSdf
 redirect_from:
   - /reference/opType/raytk.operators.sdf.planeSdf/
 op:
-  name: planeSdf
-  summary: An infinite plane on the x, y, or z axis.
-  opType: raytk.operators.sdf.planeSdf
   category: sdf
+  name: planeSdf
+  opType: raytk.operators.sdf.planeSdf
   parameters:
-    - name: Axis
-      label: Axis
-      summary: |
-        Which axis the plane faces.
-      menuOptions:
-        - name: x
-          label: X
-        - name: y
-          label: Y
-        - name: z
-          label: Z
-    - name: Offset
-      label: Offset
-      summary: |
-        Shifts the plane forwards or backwards along the axis that it faces.
-    - name: Inspect
-      label: Inspect
-    - name: Help
-      label: Help
+  - label: Axis
+    menuOptions:
+    - label: X
+      name: x
+    - label: Y
+      name: y
+    - label: Z
+      name: z
+    name: Axis
+    summary: Which axis the plane faces.
+  - label: Offset
+    name: Offset
+    summary: Shifts the plane forwards or backwards along the axis that it faces.
+  - label: Inspect
+    name: Inspect
+  - label: Help
+    name: Help
+  summary: An infinite plane on the x, y, or z axis.
 
 ---
 

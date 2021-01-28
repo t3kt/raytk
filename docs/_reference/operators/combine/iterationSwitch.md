@@ -7,43 +7,61 @@ permalink: /reference/operators/combine/iterationSwitch
 redirect_from:
   - /reference/opType/raytk.operators.combine.iterationSwitch/
 op:
-  name: iterationSwitch
-  opType: raytk.operators.combine.iterationSwitch
   category: combine
   inputs:
-    - name: definition_in_1
-      label: definition_in_1
-      required: true
-      coordTypes: [float,vec2,vec3]
-      contextTypes: [Context]
-      returnTypes: [float,vec4,Sdf,Ray,Light]
-    - name: definition_in_2
-      label: definition_in_2
-      required: true
-      coordTypes: [float,vec2,vec3]
-      contextTypes: [Context]
-      returnTypes: [float,vec4,Sdf,Ray,Light]
+  - contextTypes:
+    - Context
+    coordTypes:
+    - float
+    - vec2
+    - vec3
+    label: definition_in_1
+    name: definition_in_1
+    required: true
+    returnTypes:
+    - float
+    - vec4
+    - Sdf
+    - Ray
+    - Light
+  - contextTypes:
+    - Context
+    coordTypes:
+    - float
+    - vec2
+    - vec3
+    label: definition_in_2
+    name: definition_in_2
+    required: true
+    returnTypes:
+    - float
+    - vec4
+    - Sdf
+    - Ray
+    - Light
+  name: iterationSwitch
+  opType: raytk.operators.combine.iterationSwitch
   parameters:
-    - name: Enable
-      label: Enable
-    - name: Scaling
-      label: Scaling
-      menuOptions:
-        - name: raw
-          label: Raw
-        - name: scaled
-          label: Scaled to Total Iterations
-    - name: Extend
-      label: Extend
-      menuOptions:
-        - name: clamp
-          label: Clamp
-        - name: loop
-          label: Loop
-    - name: Inspect
-      label: Inspect
-    - name: Help
-      label: Help
+  - label: Enable
+    name: Enable
+  - label: Scaling
+    menuOptions:
+    - label: Raw
+      name: raw
+    - label: Scaled to Total Iterations
+      name: scaled
+    name: Scaling
+  - label: Extend
+    menuOptions:
+    - label: Clamp
+      name: clamp
+    - label: Loop
+      name: loop
+    name: Extend
+  - label: Inspect
+    name: Inspect
+  - label: Help
+    name: Help
 
 ---
 

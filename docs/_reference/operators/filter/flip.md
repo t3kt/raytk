@@ -7,49 +7,58 @@ permalink: /reference/operators/filter/flip
 redirect_from:
   - /reference/opType/raytk.operators.filter.flip/
 op:
-  name: flip
-  opType: raytk.operators.filter.flip
   category: filter
   inputs:
-    - name: definition_in
-      label: definition_in
-      required: true
-      coordTypes: [vec2,vec3]
-      contextTypes: [none,Context,MaterialContext,CameraContext,LightContext,RayContext]
-      returnTypes: [Sdf]
+  - contextTypes:
+    - none
+    - Context
+    - MaterialContext
+    - CameraContext
+    - LightContext
+    - RayContext
+    coordTypes:
+    - vec2
+    - vec3
+    label: definition_in
+    name: definition_in
+    required: true
+    returnTypes:
+    - Sdf
+  name: flip
+  opType: raytk.operators.filter.flip
   parameters:
-    - name: Enable
-      label: Enable
-    - name: Axis
-      label: Axis
-      menuOptions:
-        - name: x
-          label: X
-        - name: y
-          label: Y
-        - name: z
-          label: Z
-    - name: Offset
-      label: Offset
-    - name: Shift
-      label: Shift
-    - name: Mergetype
-      label: Merge Type
-      menuOptions:
-        - name: none
-          label: None
-        - name: union
-          label: Union
-        - name: smoothUnion
-          label: Smooth Union
-    - name: Mergeradius
-      label: Merge Radius
-    - name: Iterateonsides
-      label: Iterate On Sides
-    - name: Inspect
-      label: Inspect
-    - name: Help
-      label: Help
+  - label: Enable
+    name: Enable
+  - label: Axis
+    menuOptions:
+    - label: X
+      name: x
+    - label: Y
+      name: y
+    - label: Z
+      name: z
+    name: Axis
+  - label: Offset
+    name: Offset
+  - label: Shift
+    name: Shift
+  - label: Merge Type
+    menuOptions:
+    - label: None
+      name: none
+    - label: Union
+      name: union
+    - label: Smooth Union
+      name: smoothUnion
+    name: Mergetype
+  - label: Merge Radius
+    name: Mergeradius
+  - label: Iterate On Sides
+    name: Iterateonsides
+  - label: Inspect
+    name: Inspect
+  - label: Help
+    name: Help
 
 ---
 

@@ -7,51 +7,61 @@ permalink: /reference/operators/combine/combineFields
 redirect_from:
   - /reference/opType/raytk.operators.combine.combineFields/
 op:
-  name: combineFields
-  summary: Combines float or vector fields using one of several mathematical operations.
-  opType: raytk.operators.combine.combineFields
   category: combine
   inputs:
-    - name: definition_in_1
-      label: definition_in_1
-      required: true
-      coordTypes: [vec2,vec3]
-      contextTypes: [Context]
-      returnTypes: [float,vec4]
-    - name: definition_in_2
-      label: definition_in_2
-      required: true
-      coordTypes: [vec2,vec3]
-      contextTypes: [Context]
-      returnTypes: [float,vec4]
+  - contextTypes:
+    - Context
+    coordTypes:
+    - vec2
+    - vec3
+    label: definition_in_1
+    name: definition_in_1
+    required: true
+    returnTypes:
+    - float
+    - vec4
+  - contextTypes:
+    - Context
+    coordTypes:
+    - vec2
+    - vec3
+    label: definition_in_2
+    name: definition_in_2
+    required: true
+    returnTypes:
+    - float
+    - vec4
+  name: combineFields
+  opType: raytk.operators.combine.combineFields
   parameters:
-    - name: Enable
-      label: Enable
-    - name: Operation
-      label: Operation
-      menuOptions:
-        - name: off
-          label: Off
-        - name: add
-          label: Add
-        - name: sub
-          label: Subtract
-        - name: mul
-          label: Multiply
-        - name: div
-          label: Divide
-        - name: avg
-          label: Average
-        - name: min
-          label: Minimum
-        - name: max
-          label: Maximum
-    - name: Swaporder
-      label: Swap Order
-    - name: Inspect
-      label: Inspect
-    - name: Help
-      label: Help
+  - label: Enable
+    name: Enable
+  - label: Operation
+    menuOptions:
+    - label: 'Off'
+      name: 'off'
+    - label: Add
+      name: add
+    - label: Subtract
+      name: sub
+    - label: Multiply
+      name: mul
+    - label: Divide
+      name: div
+    - label: Average
+      name: avg
+    - label: Minimum
+      name: min
+    - label: Maximum
+      name: max
+    name: Operation
+  - label: Swap Order
+    name: Swaporder
+  - label: Inspect
+    name: Inspect
+  - label: Help
+    name: Help
+  summary: Combines float or vector fields using one of several mathematical operations.
 
 ---
 

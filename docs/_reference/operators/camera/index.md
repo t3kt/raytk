@@ -6,32 +6,30 @@ has_children: true
 has_toc: false
 permalink: /reference/operators/camera/
 cat:
-  name: camera
-  summary: |
-    Operators that are used in raymarching to determine which
-    direction rays should travel, effectively behaving as cameras.
-  detail: |
-    These operators are generally specialized for use in the raymarching
+  detail: 'These operators are generally specialized for use in the raymarching
+
     `CameraContext`, and may not support being fed through filters
-    or other OPs.
+
+    or other OPs.'
+  name: camera
   operators:
-    - op:
-      name: basicCamera
-    - op:
-      name: fisheyeCamera
-      summary: A 360 fisheye camera, that shows all directions from a specific point in space.
-    - op:
-      name: linkedCamera
-      summary: A camera that is linked to an existing TD Camera COMP.
-    - op:
-      name: lookAtCamera
-      summary: A camera that focuses on a specific point in space.
-    - op:
-      name: orthoCamera
-      summary: An orthographic (non-perspective) camera, which can be used for flattened front/side/etc views.
-    - op:
-      name: splitCamera
-      summary: A camera that splits the viewport into several zones, each using a separate camera.
+  - name: basicCamera
+  - name: fisheyeCamera
+    summary: A 360 fisheye camera, that shows all directions from a specific point
+      in space.
+  - name: linkedCamera
+    summary: A camera that is linked to an existing TD Camera COMP.
+  - name: lookAtCamera
+    summary: A camera that focuses on a specific point in space.
+  - name: orthoCamera
+    summary: An orthographic (non-perspective) camera, which can be used for flattened
+      front/side/etc views.
+  - name: splitCamera
+    summary: A camera that splits the viewport into several zones, each using a separate
+      camera.
+  summary: 'Operators that are used in raymarching to determine which
+
+    direction rays should travel, effectively behaving as cameras.'
 
 ---
 

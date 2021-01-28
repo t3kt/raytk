@@ -7,34 +7,47 @@ permalink: /reference/operators/filter/cartesianToPolar
 redirect_from:
   - /reference/opType/raytk.operators.filter.cartesianToPolar/
 op:
-  name: cartesianToPolar
-  opType: raytk.operators.filter.cartesianToPolar
   category: filter
   inputs:
-    - name: definition_in
-      label: definition_in
-      required: true
-      coordTypes: [vec2,vec3]
-      contextTypes: [none,Context,MaterialContext,CameraContext,LightContext,RayContext]
-      returnTypes: [float,vec4,Sdf,Ray,Light]
+  - contextTypes:
+    - none
+    - Context
+    - MaterialContext
+    - CameraContext
+    - LightContext
+    - RayContext
+    coordTypes:
+    - vec2
+    - vec3
+    label: definition_in
+    name: definition_in
+    required: true
+    returnTypes:
+    - float
+    - vec4
+    - Sdf
+    - Ray
+    - Light
+  name: cartesianToPolar
+  opType: raytk.operators.filter.cartesianToPolar
   parameters:
-    - name: Enable
-      label: Enable
-    - name: Conversion
-      label: Conversion
-      menuOptions:
-        - name: spherical
-          label: Spherical
-        - name: cylindricalx
-          label: Cylindrical X
-        - name: cylindricaly
-          label: Cylindrical Y
-        - name: cylindricalz
-          label: Cylindrical Z
-    - name: Inspect
-      label: Inspect
-    - name: Help
-      label: Help
+  - label: Enable
+    name: Enable
+  - label: Conversion
+    menuOptions:
+    - label: Spherical
+      name: spherical
+    - label: Cylindrical X
+      name: cylindricalx
+    - label: Cylindrical Y
+      name: cylindricaly
+    - label: Cylindrical Z
+      name: cylindricalz
+    name: Conversion
+  - label: Inspect
+    name: Inspect
+  - label: Help
+    name: Help
 
 ---
 

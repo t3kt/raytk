@@ -7,57 +7,78 @@ permalink: /reference/operators/filter/rotate
 redirect_from:
   - /reference/opType/raytk.operators.filter.rotate/
 op:
-  name: rotate
-  opType: raytk.operators.filter.rotate
   category: filter
   inputs:
-    - name: definition_in
-      label: definition_in
-      required: true
-      coordTypes: [vec2,vec3]
-      contextTypes: [none,Context,MaterialContext,CameraContext,LightContext]
-      returnTypes: [float,vec4,Sdf,Ray,Light]
-    - name: definition_in_2
-      label: definition_in_2
-      required: false
-      coordTypes: [vec2,vec3]
-      contextTypes: [none,Context,MaterialContext,CameraContext,LightContext]
-      returnTypes: [float,vec4,Sdf]
+  - contextTypes:
+    - none
+    - Context
+    - MaterialContext
+    - CameraContext
+    - LightContext
+    coordTypes:
+    - vec2
+    - vec3
+    label: definition_in
+    name: definition_in
+    required: true
+    returnTypes:
+    - float
+    - vec4
+    - Sdf
+    - Ray
+    - Light
+  - contextTypes:
+    - none
+    - Context
+    - MaterialContext
+    - CameraContext
+    - LightContext
+    coordTypes:
+    - vec2
+    - vec3
+    label: definition_in_2
+    name: definition_in_2
+    returnTypes:
+    - float
+    - vec4
+    - Sdf
+  name: rotate
+  opType: raytk.operators.filter.rotate
   parameters:
-    - name: Enable
-      label: Enable
-    - name: Rotatemode
-      label: Rotate Mode
-      menuOptions:
-        - name: axis
-          label: Axis
-        - name: euler
-          label: Euler
-    - name: Axis
-      label: Axis
-    - name: Rotate
-      label: Rotate
-    - name: Rord
-      label: Rotate Order
-      menuOptions:
-        - name: xyz
-          label: Rx Ry Rz
-        - name: xzy
-          label: Rx Rz Ry
-        - name: yxz
-          label: Ry Rx Rz
-        - name: yzx
-          label: Ry Rz Rx
-        - name: zxy
-          label: Rz Rx Ry
-        - name: zyx
-          label: Rz Ry Rx
-    - name: Rot
-      label: Rotate XYZ
-    - name: Inspect
-      label: Inspect
-    - name: Help
-      label: Help
+  - label: Enable
+    name: Enable
+  - label: Rotate Mode
+    menuOptions:
+    - label: Axis
+      name: axis
+    - label: Euler
+      name: euler
+    name: Rotatemode
+  - label: Axis
+    name: Axis
+  - label: Rotate
+    name: Rotate
+  - label: Rotate Order
+    menuOptions:
+    - label: Rx Ry Rz
+      name: xyz
+    - label: Rx Rz Ry
+      name: xzy
+    - label: Ry Rx Rz
+      name: yxz
+    - label: Ry Rz Rx
+      name: yzx
+    - label: Rz Rx Ry
+      name: zxy
+    - label: Rz Ry Rx
+      name: zyx
+    name: Rord
+  - label: Rotate XYZ
+    name: Rot
+  - label: Inspect
+    name: Inspect
+  - label: Help
+    name: Help
 
 ---
 

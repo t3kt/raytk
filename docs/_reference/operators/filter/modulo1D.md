@@ -7,55 +7,63 @@ permalink: /reference/operators/filter/modulo1D
 redirect_from:
   - /reference/opType/raytk.operators.filter.modulo1D/
 op:
-  name: modulo1D
-  opType: raytk.operators.filter.modulo1D
   category: filter
   inputs:
-    - name: definition_in
-      label: definition_in
-      required: true
-      coordTypes: [vec2,vec3]
-      contextTypes: [Context]
-      returnTypes: [float,vec4,Sdf,Ray,Light]
+  - contextTypes:
+    - Context
+    coordTypes:
+    - vec2
+    - vec3
+    label: definition_in
+    name: definition_in
+    required: true
+    returnTypes:
+    - float
+    - vec4
+    - Sdf
+    - Ray
+    - Light
+  name: modulo1D
+  opType: raytk.operators.filter.modulo1D
   parameters:
-    - name: Enable
-      label: Enable
-    - name: Axis
-      label: Axis
-      menuOptions:
-        - name: x
-          label: X
-        - name: y
-          label: Y
-        - name: z
-          label: Z
-    - name: Size
-      label: Size
-    - name: Offset
-      label: Offset
-    - name: Shift
-      label: Shift
-    - name: Mirrortype
-      label: Mirror Type
-      menuOptions:
-        - name: none
-          label: None
-        - name: mirror
-          label: Mirror
-    - name: Uselimit
-      label: Use Limit
-    - name: Limitstart
-      label: Limit Start
-    - name: Limitstop
-      label: Limit Stop
-    - name: Limitoffset
-      label: Limit Offset
-    - name: Iterateoncells
-      label: Iterate On Cells
-    - name: Inspect
-      label: Inspect
-    - name: Help
-      label: Help
+  - label: Enable
+    name: Enable
+  - label: Axis
+    menuOptions:
+    - label: X
+      name: x
+    - label: Y
+      name: y
+    - label: Z
+      name: z
+    name: Axis
+  - label: Size
+    name: Size
+  - label: Offset
+    name: Offset
+  - label: Shift
+    name: Shift
+  - label: Mirror Type
+    menuOptions:
+    - label: None
+      name: none
+    - label: Mirror
+      name: mirror
+    name: Mirrortype
+  - label: Use Limit
+    name: Uselimit
+  - label: Limit Start
+    name: Limitstart
+  - label: Limit Stop
+    name: Limitstop
+  - label: Limit Offset
+    name: Limitoffset
+  - label: Iterate On Cells
+    name: Iterateoncells
+  - label: Inspect
+    name: Inspect
+  - label: Help
+    name: Help
 
 ---
 

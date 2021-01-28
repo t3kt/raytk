@@ -7,31 +7,53 @@ permalink: /reference/operators/function/modulateFn
 redirect_from:
   - /reference/opType/raytk.operators.function.modulateFn/
 op:
-  name: modulateFn
-  opType: raytk.operators.function.modulateFn
   category: function
   inputs:
-    - name: definition_in
-      label: definition_in
-      required: true
-      coordTypes: [float,vec2,vec3]
-      contextTypes: [none,Context,MaterialContext,CameraContext,LightContext,RayContext]
-      returnTypes: [float,vec4]
-    - name: definition_in_2
-      label: definition_in_2
-      required: true
-      coordTypes: [float,vec2,vec3]
-      contextTypes: [none,Context,MaterialContext,CameraContext,LightContext,RayContext]
-      returnTypes: [float,vec4]
+  - contextTypes:
+    - none
+    - Context
+    - MaterialContext
+    - CameraContext
+    - LightContext
+    - RayContext
+    coordTypes:
+    - float
+    - vec2
+    - vec3
+    label: definition_in
+    name: definition_in
+    required: true
+    returnTypes:
+    - float
+    - vec4
+  - contextTypes:
+    - none
+    - Context
+    - MaterialContext
+    - CameraContext
+    - LightContext
+    - RayContext
+    coordTypes:
+    - float
+    - vec2
+    - vec3
+    label: definition_in_2
+    name: definition_in_2
+    required: true
+    returnTypes:
+    - float
+    - vec4
+  name: modulateFn
+  opType: raytk.operators.function.modulateFn
   parameters:
-    - name: Enable
-      label: Enable
-    - name: Mix
-      label: Mix
-    - name: Inspect
-      label: Inspect
-    - name: Help
-      label: Help
+  - label: Enable
+    name: Enable
+  - label: Mix
+    name: Mix
+  - label: Inspect
+    name: Inspect
+  - label: Help
+    name: Help
 
 ---
 

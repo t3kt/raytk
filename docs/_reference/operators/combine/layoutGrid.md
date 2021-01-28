@@ -7,81 +7,107 @@ permalink: /reference/operators/combine/layoutGrid
 redirect_from:
   - /reference/opType/raytk.operators.combine.layoutGrid/
 op:
-  name: layoutGrid
-  summary: Slices space into a grid, and places each input in a separate cell.
-  detail: |
-    This is useful to see several different variations of a shape.
-    The input shapes are shifted to the center of their cell.
-  opType: raytk.operators.combine.layoutGrid
   category: combine
+  detail: 'This is useful to see several different variations of a shape.
+
+    The input shapes are shifted to the center of their cell.'
   inputs:
-    - name: definition_in_1
-      label: definition_in_1
-      required: false
-      coordTypes: [vec2,vec3]
-      contextTypes: [none,Context,MaterialContext,CameraContext,LightContext]
-      returnTypes: [float,Sdf]
-    - name: definition_in_2
-      label: definition_in_2
-      required: false
-      coordTypes: [vec2,vec3]
-      contextTypes: [none,Context,MaterialContext,CameraContext,LightContext]
-      returnTypes: [float,Sdf]
-    - name: definition_in_3
-      label: definition_in_3
-      required: false
-      coordTypes: [vec2,vec3]
-      contextTypes: [none,Context,MaterialContext,CameraContext,LightContext]
-      returnTypes: [float,Sdf]
-    - name: definition_in_4
-      label: definition_in_4
-      required: false
-      coordTypes: [vec2,vec3]
-      contextTypes: [none,Context,MaterialContext,CameraContext,LightContext]
-      returnTypes: [float,Sdf]
+  - contextTypes:
+    - none
+    - Context
+    - MaterialContext
+    - CameraContext
+    - LightContext
+    coordTypes:
+    - vec2
+    - vec3
+    label: definition_in_1
+    name: definition_in_1
+    returnTypes:
+    - float
+    - Sdf
+  - contextTypes:
+    - none
+    - Context
+    - MaterialContext
+    - CameraContext
+    - LightContext
+    coordTypes:
+    - vec2
+    - vec3
+    label: definition_in_2
+    name: definition_in_2
+    returnTypes:
+    - float
+    - Sdf
+  - contextTypes:
+    - none
+    - Context
+    - MaterialContext
+    - CameraContext
+    - LightContext
+    coordTypes:
+    - vec2
+    - vec3
+    label: definition_in_3
+    name: definition_in_3
+    returnTypes:
+    - float
+    - Sdf
+  - contextTypes:
+    - none
+    - Context
+    - MaterialContext
+    - CameraContext
+    - LightContext
+    coordTypes:
+    - vec2
+    - vec3
+    label: definition_in_4
+    name: definition_in_4
+    returnTypes:
+    - float
+    - Sdf
+  name: layoutGrid
+  opType: raytk.operators.combine.layoutGrid
   parameters:
-    - name: Enable
-      label: Enable
-    - name: Layout
-      label: Layout
-      summary: |
-        How to arrange the cells.
-      menuOptions:
-        - name: row
-          label: Row
-          description: |
-            Slice space into cells horizontally. The first cell extends off infinitely to the left and the last cell extends infinitely off to the right.
-        - name: column
-          label: Column
-          description: |
-            Slice space into cells vertically.
-        - name: gridrow
-          label: Grid Rows
-          description: |
-            Slice space into 4 cells arranged in a grid.
-    - name: Axis
-      label: Plane
-      summary: |
-        The plane along which to arrange the cells.
-      menuOptions:
-        - name: x
-          label: YZ
-        - name: y
-          label: ZX
-        - name: z
-          label: XY
-    - name: Size
-      label: Size
-      summary: |
-        The size of the cells
-    - name: Prescale
-      label: Pre Scale
-      summary: |
-        Scales the inputs within their cells.
-    - name: Inspect
-      label: Inspect
-    - name: Help
-      label: Help
+  - label: Enable
+    name: Enable
+  - label: Layout
+    menuOptions:
+    - description: Slice space into cells horizontally. The first cell extends off
+        infinitely to the left and the last cell extends infinitely off to the right.
+      label: Row
+      name: row
+    - description: Slice space into cells vertically.
+      label: Column
+      name: column
+    - description: Slice space into 4 cells arranged in a grid.
+      label: Grid Rows
+      name: gridrow
+    name: Layout
+    summary: How to arrange the cells.
+  - label: Plane
+    menuOptions:
+    - label: YZ
+      name: x
+    - label: ZX
+      name: y
+    - label: XY
+      name: z
+    name: Axis
+    summary: The plane along which to arrange the cells.
+  - label: Size
+    name: Size
+    summary: The size of the cells
+  - label: Pre Scale
+    name: Prescale
+    summary: Scales the inputs within their cells.
+  - label: Inspect
+    name: Inspect
+  - label: Help
+    name: Help
+  summary: Slices space into a grid, and places each input in a separate cell.
 
 ---
 

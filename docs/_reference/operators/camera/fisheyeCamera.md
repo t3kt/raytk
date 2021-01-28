@@ -7,42 +7,40 @@ permalink: /reference/operators/camera/fisheyeCamera
 redirect_from:
   - /reference/opType/raytk.operators.camera.fisheyeCamera/
 op:
-  name: fisheyeCamera
-  summary: A 360 fisheye camera, that shows all directions from a specific point in space.
-  opType: raytk.operators.camera.fisheyeCamera
   category: camera
+  name: fisheyeCamera
+  opType: raytk.operators.camera.fisheyeCamera
   parameters:
-    - name: Fisheyemode
-      label: Fisheye Mode
-      menuOptions:
-        - name: pinhole
-          label: pinhole
-        - name: stereographic
-          label: stereographic
-        - name: equiangular
-          label: equirectangular
-        - name: equisolidangle
-          label: equisolidangle
-        - name: orthographicfisheye
-          label: orthographicfisheye
-    - name: Aperture
-      label: Aperture
-    - name: Campos
-      label: Position
-      summary: |
-        Position of the camera.
-    - name: Camrot
-      label: Rotate
-      summary: |
-        Rotates the camera in XYZ.
-    - name: Lookatpos
-      label: Look At Position
-      summary: |
-        Coordinates that the camera should face.
-    - name: Camup
-      label: Up Vector
-    - name: Help
-      label: Help
+  - label: Fisheye Mode
+    menuOptions:
+    - label: pinhole
+      name: pinhole
+    - label: stereographic
+      name: stereographic
+    - label: equirectangular
+      name: equiangular
+    - label: equisolidangle
+      name: equisolidangle
+    - label: orthographicfisheye
+      name: orthographicfisheye
+    name: Fisheyemode
+  - label: Aperture
+    name: Aperture
+  - label: Position
+    name: Campos
+    summary: Position of the camera.
+  - label: Rotate
+    name: Camrot
+    summary: Rotates the camera in XYZ.
+  - label: Look At Position
+    name: Lookatpos
+    summary: Coordinates that the camera should face.
+  - label: Up Vector
+    name: Camup
+  - label: Help
+    name: Help
+  summary: A 360 fisheye camera, that shows all directions from a specific point in
+    space.
 
 ---
 

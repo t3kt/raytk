@@ -7,79 +7,88 @@ permalink: /reference/operators/field/textureField
 redirect_from:
   - /reference/opType/raytk.operators.field.textureField/
 op:
-  name: textureField
-  summary: A float or vector field that looks up values from a texture.
-  opType: raytk.operators.field.textureField
   category: field
   inputs:
-    - name: uv_field_definition_in
-      label: UV Field
-      required: false
-      coordTypes: [float,vec2,vec3]
-      contextTypes: [none,Context,MaterialContext,CameraContext,LightContext,RayContext]
-      returnTypes: [vec4]
+  - contextTypes:
+    - none
+    - Context
+    - MaterialContext
+    - CameraContext
+    - LightContext
+    - RayContext
+    coordTypes:
+    - float
+    - vec2
+    - vec3
+    label: UV Field
+    name: uv_field_definition_in
+    returnTypes:
+    - vec4
+  name: textureField
+  opType: raytk.operators.field.textureField
   parameters:
-    - name: Enable
-      label: Enable
-    - name: Coordtype
-      label: Coord Type
-      menuOptions:
-        - name: float
-          label: 1D
-        - name: vec2
-          label: 2D
-        - name: vec3
-          label: 3D
-    - name: Returntype
-      label: Return Type
-      menuOptions:
-        - name: float
-          label: Float
-        - name: vec4
-          label: Vector
-    - name: Contexttype
-      label: Context Type
-      menuOptions:
-        - name: none
-          label: None
-        - name: Context
-          label: Context
-        - name: MaterialContext
-          label: Material Context
-        - name: CameraContext
-          label: Camera Context
-        - name: LightContext
-          label: Light Context
-    - name: Axis
-      label: Plane
-      menuOptions:
-        - name: x
-          label: YZ
-        - name: y
-          label: ZX
-        - name: z
-          label: XY
-    - name: Translate
-      label: Translate
-    - name: Scale
-      label: Scale
-    - name: Texture
-      label: Texture
-    - name: Extendmode
-      label: Extend Mode
-      menuOptions:
-        - name: hold
-          label: Hold
-        - name: zero
-          label: Zero
-        - name: repeat
-          label: Repeat
-        - name: mirror
-          label: Mirror
-    - name: Inspect
-      label: Inspect
-    - name: Help
-      label: Help
+  - label: Enable
+    name: Enable
+  - label: Coord Type
+    menuOptions:
+    - label: 1D
+      name: float
+    - label: 2D
+      name: vec2
+    - label: 3D
+      name: vec3
+    name: Coordtype
+  - label: Return Type
+    menuOptions:
+    - label: Float
+      name: float
+    - label: Vector
+      name: vec4
+    name: Returntype
+  - label: Context Type
+    menuOptions:
+    - label: None
+      name: none
+    - label: Context
+      name: Context
+    - label: Material Context
+      name: MaterialContext
+    - label: Camera Context
+      name: CameraContext
+    - label: Light Context
+      name: LightContext
+    name: Contexttype
+  - label: Plane
+    menuOptions:
+    - label: YZ
+      name: x
+    - label: ZX
+      name: y
+    - label: XY
+      name: z
+    name: Axis
+  - label: Translate
+    name: Translate
+  - label: Scale
+    name: Scale
+  - label: Texture
+    name: Texture
+  - label: Extend Mode
+    menuOptions:
+    - label: Hold
+      name: hold
+    - label: Zero
+      name: zero
+    - label: Repeat
+      name: repeat
+    - label: Mirror
+      name: mirror
+    name: Extendmode
+  - label: Inspect
+    name: Inspect
+  - label: Help
+    name: Help
+  summary: A float or vector field that looks up values from a texture.
 
 ---
 

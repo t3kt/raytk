@@ -7,16 +7,16 @@ permalink: /reference/operators/sdf2d/parabolaSdf2d
 redirect_from:
   - /reference/opType/raytk.operators.sdf2d.parabolaSdf2d/
 op:
+  category: sdf2d
   name: parabolaSdf2d
   opType: raytk.operators.sdf2d.parabolaSdf2d
-  category: sdf2d
   parameters:
-    - name: Width
-      label: Width
-    - name: Inspect
-      label: Inspect
-    - name: Help
-      label: Help
+  - label: Width
+    name: Width
+  - label: Inspect
+    name: Inspect
+  - label: Help
+    name: Help
 
 ---
 

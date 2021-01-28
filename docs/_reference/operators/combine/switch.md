@@ -7,44 +7,89 @@ permalink: /reference/operators/combine/switch
 redirect_from:
   - /reference/opType/raytk.operators.combine.switch/
 op:
-  name: switch
-  summary: Switches between several inputs, without the need to rebuild the shader, allowing for fast switching.
-  opType: raytk.operators.combine.switch
   category: combine
   inputs:
-    - name: definition_in_1
-      label: definition_in_1
-      required: false
-      coordTypes: [vec2,vec3]
-      contextTypes: [none,Context,MaterialContext,CameraContext,LightContext]
-      returnTypes: [float,vec4,Sdf,Ray,Light]
-    - name: definition_in_2
-      label: definition_in_2
-      required: false
-      coordTypes: [vec2,vec3]
-      contextTypes: [none,Context,MaterialContext,CameraContext,LightContext]
-      returnTypes: [float,vec4,Sdf,Ray,Light]
-    - name: definition_in_3
-      label: definition_in_3
-      required: false
-      coordTypes: [vec2,vec3]
-      contextTypes: [none,Context,MaterialContext,CameraContext,LightContext]
-      returnTypes: [float,vec4,Sdf,Ray,Light]
-    - name: definition_in_4
-      label: definition_in_4
-      required: false
-      coordTypes: [vec2,vec3]
-      contextTypes: [none,Context,MaterialContext,CameraContext,LightContext]
-      returnTypes: [float,vec4,Sdf,Ray,Light]
+  - contextTypes:
+    - none
+    - Context
+    - MaterialContext
+    - CameraContext
+    - LightContext
+    coordTypes:
+    - vec2
+    - vec3
+    label: definition_in_1
+    name: definition_in_1
+    returnTypes:
+    - float
+    - vec4
+    - Sdf
+    - Ray
+    - Light
+  - contextTypes:
+    - none
+    - Context
+    - MaterialContext
+    - CameraContext
+    - LightContext
+    coordTypes:
+    - vec2
+    - vec3
+    label: definition_in_2
+    name: definition_in_2
+    returnTypes:
+    - float
+    - vec4
+    - Sdf
+    - Ray
+    - Light
+  - contextTypes:
+    - none
+    - Context
+    - MaterialContext
+    - CameraContext
+    - LightContext
+    coordTypes:
+    - vec2
+    - vec3
+    label: definition_in_3
+    name: definition_in_3
+    returnTypes:
+    - float
+    - vec4
+    - Sdf
+    - Ray
+    - Light
+  - contextTypes:
+    - none
+    - Context
+    - MaterialContext
+    - CameraContext
+    - LightContext
+    coordTypes:
+    - vec2
+    - vec3
+    label: definition_in_4
+    name: definition_in_4
+    returnTypes:
+    - float
+    - vec4
+    - Sdf
+    - Ray
+    - Light
+  name: switch
+  opType: raytk.operators.combine.switch
   parameters:
-    - name: Enable
-      label: Enable
-    - name: Source
-      label: Source
-    - name: Inspect
-      label: Inspect
-    - name: Help
-      label: Help
+  - label: Enable
+    name: Enable
+  - label: Source
+    name: Source
+  - label: Inspect
+    name: Inspect
+  - label: Help
+    name: Help
+  summary: Switches between several inputs, without the need to rebuild the shader,
+    allowing for fast switching.
 
 ---
 

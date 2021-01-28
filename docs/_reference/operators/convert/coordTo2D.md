@@ -7,50 +7,62 @@ permalink: /reference/operators/convert/coordTo2D
 redirect_from:
   - /reference/opType/raytk.operators.convert.coordTo2D/
 op:
-  name: coordTo2D
-  opType: raytk.operators.convert.coordTo2D
   category: convert
   inputs:
-    - name: definition_in
-      label: definition_in
-      required: true
-      coordTypes: [vec3]
-      contextTypes: [none,Context,MaterialContext,CameraContext,LightContext,RayContext]
-      returnTypes: [float,vec4,Sdf,Ray,Light]
+  - contextTypes:
+    - none
+    - Context
+    - MaterialContext
+    - CameraContext
+    - LightContext
+    - RayContext
+    coordTypes:
+    - vec3
+    label: definition_in
+    name: definition_in
+    required: true
+    returnTypes:
+    - float
+    - vec4
+    - Sdf
+    - Ray
+    - Light
+  name: coordTo2D
+  opType: raytk.operators.convert.coordTo2D
   parameters:
-    - name: Enable
-      label: Enable
-    - name: Partx
-      label: Part X
-      menuOptions:
-        - name: x
-          label: X
-        - name: y
-          label: Y
-        - name: zero
-          label: Zero
-    - name: Party
-      label: Part Y
-      menuOptions:
-        - name: x
-          label: X
-        - name: y
-          label: Y
-        - name: zero
-          label: Zero
-    - name: Partz
-      label: Part Z
-      menuOptions:
-        - name: x
-          label: X
-        - name: y
-          label: Y
-        - name: zero
-          label: Zero
-    - name: Inspect
-      label: Inspect
-    - name: Help
-      label: Help
+  - label: Enable
+    name: Enable
+  - label: Part X
+    menuOptions:
+    - label: X
+      name: x
+    - label: Y
+      name: y
+    - label: Zero
+      name: zero
+    name: Partx
+  - label: Part Y
+    menuOptions:
+    - label: X
+      name: x
+    - label: Y
+      name: y
+    - label: Zero
+      name: zero
+    name: Party
+  - label: Part Z
+    menuOptions:
+    - label: X
+      name: x
+    - label: Y
+      name: y
+    - label: Zero
+      name: zero
+    name: Partz
+  - label: Inspect
+    name: Inspect
+  - label: Help
+    name: Help
 
 ---
 

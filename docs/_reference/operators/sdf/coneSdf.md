@@ -7,68 +7,66 @@ permalink: /reference/operators/sdf/coneSdf
 redirect_from:
   - /reference/opType/raytk.operators.sdf.coneSdf/
 op:
-  name: coneSdf
-  summary: Defines a cone or capped cone shape.
-  opType: raytk.operators.sdf.coneSdf
   category: sdf
   inputs:
-    - name: height_field_definition_in
-      label: Height Field
-      required: false
-      coordTypes: [vec3]
-      contextTypes: [Context]
-      returnTypes: [float]
-      summary: |
-        Value field that can be used to vary the height of the cone.
-    - name: radius_field_definition_in
-      label: Radius Field
-      required: false
-      coordTypes: [vec3]
-      contextTypes: [Context]
-      returnTypes: [float]
-      summary: |
-        Value field that can be used to vary the radius (both base and top) of the cone.
+  - contextTypes:
+    - Context
+    coordTypes:
+    - vec3
+    label: Height Field
+    name: height_field_definition_in
+    returnTypes:
+    - float
+    summary: Value field that can be used to vary the height of the cone.
+  - contextTypes:
+    - Context
+    coordTypes:
+    - vec3
+    label: Radius Field
+    name: radius_field_definition_in
+    returnTypes:
+    - float
+    summary: Value field that can be used to vary the radius (both base and top) of
+      the cone.
+  name: coneSdf
+  opType: raytk.operators.sdf.coneSdf
   parameters:
-    - name: Enable
-      label: Enable
-    - name: Shape
-      label: Shape
-      summary: |
-        Choose between a regular cone and a capped cone without a tip.
-      menuOptions:
-        - name: cone
-          label: Cone
-        - name: cappedcone
-          label: Capped Cone
-    - name: Translate
-      label: Translate
-      summary: |
-        Move the center of the shape.
-    - name: Height
-      label: Height
-      summary: |
-        The height of the cone.
-    - name: Radius
-      label: Radius
-      summary: |
-        The radius of the base of the cone.
-    - name: Radius2
-      label: Radius 2
-      summary: |
-        The radius of the top of the cone, if using a capped cone.
-    - name: Axis
-      label: Axis
-      menuOptions:
-        - name: x
-          label: X
-        - name: y
-          label: Y
-        - name: z
-          label: Z
-    - name: Inspect
-      label: Inspect
-    - name: Help
-      label: Help
+  - label: Enable
+    name: Enable
+  - label: Shape
+    menuOptions:
+    - label: Cone
+      name: cone
+    - label: Capped Cone
+      name: cappedcone
+    name: Shape
+    summary: Choose between a regular cone and a capped cone without a tip.
+  - label: Translate
+    name: Translate
+    summary: Move the center of the shape.
+  - label: Height
+    name: Height
+    summary: The height of the cone.
+  - label: Radius
+    name: Radius
+    summary: The radius of the base of the cone.
+  - label: Radius 2
+    name: Radius2
+    summary: The radius of the top of the cone, if using a capped cone.
+  - label: Axis
+    menuOptions:
+    - label: X
+      name: x
+    - label: Y
+      name: y
+    - label: Z
+      name: z
+    name: Axis
+  - label: Inspect
+    name: Inspect
+  - label: Help
+    name: Help
+  summary: Defines a cone or capped cone shape.
 
 ---
 

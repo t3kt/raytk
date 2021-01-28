@@ -7,38 +7,50 @@ permalink: /reference/operators/filter/limitField
 redirect_from:
   - /reference/opType/raytk.operators.filter.limitField/
 op:
-  name: limitField
-  opType: raytk.operators.filter.limitField
   category: filter
   inputs:
-    - name: definition_in
-      label: definition_in
-      required: true
-      coordTypes: [float,vec2,vec3]
-      contextTypes: [none,Context,MaterialContext,CameraContext,LightContext,RayContext]
-      returnTypes: [float,vec4,Sdf]
+  - contextTypes:
+    - none
+    - Context
+    - MaterialContext
+    - CameraContext
+    - LightContext
+    - RayContext
+    coordTypes:
+    - float
+    - vec2
+    - vec3
+    label: definition_in
+    name: definition_in
+    required: true
+    returnTypes:
+    - float
+    - vec4
+    - Sdf
+  name: limitField
+  opType: raytk.operators.filter.limitField
   parameters:
-    - name: Enable
-      label: Enable
-    - name: Limittype
-      label: Limit Type
-      menuOptions:
-        - name: off
-          label: Off
-        - name: clamp
-          label: Clamp
-        - name: loop
-          label: Loop
-        - name: zigzag
-          label: Zig-Zag
-    - name: Low
-      label: Input Low
-    - name: High
-      label: Input High
-    - name: Inspect
-      label: Inspect
-    - name: Help
-      label: Help
+  - label: Enable
+    name: Enable
+  - label: Limit Type
+    menuOptions:
+    - label: 'Off'
+      name: 'off'
+    - label: Clamp
+      name: clamp
+    - label: Loop
+      name: loop
+    - label: Zig-Zag
+      name: zigzag
+    name: Limittype
+  - label: Input Low
+    name: Low
+  - label: Input High
+    name: High
+  - label: Inspect
+    name: Inspect
+  - label: Help
+    name: Help
 
 ---
 

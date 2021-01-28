@@ -7,68 +7,68 @@ permalink: /reference/operators/field/chopField
 redirect_from:
   - /reference/opType/raytk.operators.field.chopField/
 op:
+  category: field
   name: chopField
   opType: raytk.operators.field.chopField
-  category: field
-  status: beta
   parameters:
-    - name: Coordtype
-      label: Coord Type
-      menuOptions:
-        - name: vec2
-          label: 2D
-        - name: vec3
-          label: 3D
-    - name: Returntype
-      label: Return Type
-      menuOptions:
-        - name: float
-          label: Float
-        - name: vec4
-          label: Vector
-    - name: Contexttype
-      label: Context Type
-      menuOptions:
-        - name: none
-          label: None
-        - name: Context
-          label: Context
-        - name: MaterialContext
-          label: Material Context
-        - name: CameraContext
-          label: Camera Context
-        - name: LightContext
-          label: Light Context
-    - name: Axis
-      label: Axis
-      menuOptions:
-        - name: x
-          label: X
-        - name: y
-          label: Y
-        - name: z
-          label: Z
-    - name: Translate
-      label: Translate
-    - name: Scale
-      label: Scale
-    - name: Chop
-      label: CHOP
-    - name: Extendmode
-      label: Extend Mode
-      menuOptions:
-        - name: hold
-          label: Hold
-        - name: zero
-          label: Zero
-        - name: repeat
-          label: Repeat
-        - name: mirror
-          label: Mirror
-    - name: Inspect
-      label: Inspect
-    - name: Help
-      label: Help
+  - label: Coord Type
+    menuOptions:
+    - label: 2D
+      name: vec2
+    - label: 3D
+      name: vec3
+    name: Coordtype
+  - label: Return Type
+    menuOptions:
+    - label: Float
+      name: float
+    - label: Vector
+      name: vec4
+    name: Returntype
+  - label: Context Type
+    menuOptions:
+    - label: None
+      name: none
+    - label: Context
+      name: Context
+    - label: Material Context
+      name: MaterialContext
+    - label: Camera Context
+      name: CameraContext
+    - label: Light Context
+      name: LightContext
+    name: Contexttype
+  - label: Axis
+    menuOptions:
+    - label: X
+      name: x
+    - label: Y
+      name: y
+    - label: Z
+      name: z
+    name: Axis
+  - label: Translate
+    name: Translate
+  - label: Scale
+    name: Scale
+  - label: CHOP
+    name: Chop
+  - label: Extend Mode
+    menuOptions:
+    - label: Hold
+      name: hold
+    - label: Zero
+      name: zero
+    - label: Repeat
+      name: repeat
+    - label: Mirror
+      name: mirror
+    name: Extendmode
+  - label: Inspect
+    name: Inspect
+  - label: Help
+    name: Help
+  status: beta
 
 ---
 

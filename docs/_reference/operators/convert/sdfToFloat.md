@@ -7,23 +7,33 @@ permalink: /reference/operators/convert/sdfToFloat
 redirect_from:
   - /reference/opType/raytk.operators.convert.sdfToFloat/
 op:
-  name: sdfToFloat
-  opType: raytk.operators.convert.sdfToFloat
   category: convert
   inputs:
-    - name: definition_in
-      label: definition_in
-      required: true
-      coordTypes: [float,vec2,vec3]
-      contextTypes: [none,Context,MaterialContext,CameraContext,LightContext,RayContext]
-      returnTypes: [Sdf]
+  - contextTypes:
+    - none
+    - Context
+    - MaterialContext
+    - CameraContext
+    - LightContext
+    - RayContext
+    coordTypes:
+    - float
+    - vec2
+    - vec3
+    label: definition_in
+    name: definition_in
+    required: true
+    returnTypes:
+    - Sdf
+  name: sdfToFloat
+  opType: raytk.operators.convert.sdfToFloat
   parameters:
-    - name: Enable
-      label: Enable
-    - name: Inspect
-      label: Inspect
-    - name: Help
-      label: Help
+  - label: Enable
+    name: Enable
+  - label: Inspect
+    name: Inspect
+  - label: Help
+    name: Help
 
 ---
 

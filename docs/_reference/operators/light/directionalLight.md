@@ -7,21 +7,21 @@ permalink: /reference/operators/light/directionalLight
 redirect_from:
   - /reference/opType/raytk.operators.light.directionalLight/
 op:
+  category: light
   name: directionalLight
   opType: raytk.operators.light.directionalLight
-  category: light
-  status: beta
   parameters:
-    - name: Direction
-      label: Direction
-    - name: Intensity
-      label: Intensity
-    - name: Color
-      label: Color
-    - name: Inspect
-      label: Inspect
-    - name: Help
-      label: Help
+  - label: Direction
+    name: Direction
+  - label: Intensity
+    name: Intensity
+  - label: Color
+    name: Color
+  - label: Inspect
+    name: Inspect
+  - label: Help
+    name: Help
+  status: beta
 
 ---
 

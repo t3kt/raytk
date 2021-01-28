@@ -7,34 +7,46 @@ permalink: /reference/operators/filter/quantizeValue
 redirect_from:
   - /reference/opType/raytk.operators.filter.quantizeValue/
 op:
+  category: filter
+  inputs:
+  - contextTypes:
+    - none
+    - Context
+    - MaterialContext
+    - CameraContext
+    - LightContext
+    - RayContext
+    coordTypes:
+    - float
+    - vec2
+    - vec3
+    label: definition_in
+    name: definition_in
+    required: true
+    returnTypes:
+    - float
+    - vec4
+    - Sdf
   name: quantizeValue
   opType: raytk.operators.filter.quantizeValue
-  category: filter
-  status: beta
-  inputs:
-    - name: definition_in
-      label: definition_in
-      required: true
-      coordTypes: [float,vec2,vec3]
-      contextTypes: [none,Context,MaterialContext,CameraContext,LightContext,RayContext]
-      returnTypes: [float,vec4,Sdf]
   parameters:
-    - name: Enable
-      label: Enable
-    - name: Size
-      label: Size
-    - name: Sizemult
-      label: Size Multiplier
-    - name: Offset
-      label: Offset
-    - name: Smoothing
-      label: Smoothing
-    - name: Smoothingmult
-      label: Smoothing Multiplier
-    - name: Inspect
-      label: Inspect
-    - name: Help
-      label: Help
+  - label: Enable
+    name: Enable
+  - label: Size
+    name: Size
+  - label: Size Multiplier
+    name: Sizemult
+  - label: Offset
+    name: Offset
+  - label: Smoothing
+    name: Smoothing
+  - label: Smoothing Multiplier
+    name: Smoothingmult
+  - label: Inspect
+    name: Inspect
+  - label: Help
+    name: Help
+  status: beta
 
 ---
 

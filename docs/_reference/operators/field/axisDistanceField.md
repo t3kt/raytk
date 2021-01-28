@@ -7,50 +7,51 @@ permalink: /reference/operators/field/axisDistanceField
 redirect_from:
   - /reference/opType/raytk.operators.field.axisDistanceField/
 op:
-  name: axisDistanceField
-  summary: A float field that provides the distance from a specific point along a single axis.
-  opType: raytk.operators.field.axisDistanceField
   category: field
+  name: axisDistanceField
+  opType: raytk.operators.field.axisDistanceField
   parameters:
-    - name: Axis
-      label: Axis
-      menuOptions:
-        - name: x
-          label: X
-        - name: y
-          label: Y
-        - name: z
-          label: Z
-    - name: Center
-      label: Center
-    - name: Coordtype
-      label: Coord Type
-      menuOptions:
-        - name: float
-          label: 1D
-        - name: vec2
-          label: 2D
-        - name: vec3
-          label: 3D
-    - name: Contexttype
-      label: Context Type
-      menuOptions:
-        - name: useinput
-          label: Use Input
-        - name: none
-          label: None
-        - name: Context
-          label: Context
-        - name: MaterialContext
-          label: Material Context
-        - name: CameraContext
-          label: Camera Context
-        - name: LightContext
-          label: Light Context
-    - name: Inspect
-      label: Inspect
-    - name: Help
-      label: Help
+  - label: Axis
+    menuOptions:
+    - label: X
+      name: x
+    - label: Y
+      name: y
+    - label: Z
+      name: z
+    name: Axis
+  - label: Center
+    name: Center
+  - label: Coord Type
+    menuOptions:
+    - label: 1D
+      name: float
+    - label: 2D
+      name: vec2
+    - label: 3D
+      name: vec3
+    name: Coordtype
+  - label: Context Type
+    menuOptions:
+    - label: Use Input
+      name: useinput
+    - label: None
+      name: none
+    - label: Context
+      name: Context
+    - label: Material Context
+      name: MaterialContext
+    - label: Camera Context
+      name: CameraContext
+    - label: Light Context
+      name: LightContext
+    name: Contexttype
+  - label: Inspect
+    name: Inspect
+  - label: Help
+    name: Help
+  summary: A float field that provides the distance from a specific point along a
+    single axis.
 
 ---
 

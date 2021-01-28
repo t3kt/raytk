@@ -7,26 +7,38 @@ permalink: /reference/operators/filter/invert
 redirect_from:
   - /reference/opType/raytk.operators.filter.invert/
 op:
-  name: invert
-  summary: Invert an SDF, so that the inside is the outside.
-  detail: |
-    If used on a box, this can create an empty room with the shape filling all the space outside the room.
-  opType: raytk.operators.filter.invert
   category: filter
+  detail: If used on a box, this can create an empty room with the shape filling all
+    the space outside the room.
   inputs:
-    - name: definition_in
-      label: definition_in
-      required: true
-      coordTypes: [float,vec2,vec3]
-      contextTypes: [none,Context,MaterialContext,CameraContext,LightContext,RayContext]
-      returnTypes: [float,vec4,Sdf]
+  - contextTypes:
+    - none
+    - Context
+    - MaterialContext
+    - CameraContext
+    - LightContext
+    - RayContext
+    coordTypes:
+    - float
+    - vec2
+    - vec3
+    label: definition_in
+    name: definition_in
+    required: true
+    returnTypes:
+    - float
+    - vec4
+    - Sdf
+  name: invert
+  opType: raytk.operators.filter.invert
   parameters:
-    - name: Enable
-      label: Enable
-    - name: Inspect
-      label: Inspect
-    - name: Help
-      label: Help
+  - label: Enable
+    name: Enable
+  - label: Inspect
+    name: Inspect
+  - label: Help
+    name: Help
+  summary: Invert an SDF, so that the inside is the outside.
 
 ---
 

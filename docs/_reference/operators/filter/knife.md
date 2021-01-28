@@ -7,41 +7,49 @@ permalink: /reference/operators/filter/knife
 redirect_from:
   - /reference/opType/raytk.operators.filter.knife/
 op:
-  name: knife
-  summary: Cuts off an SDF along a plane.
-  opType: raytk.operators.filter.knife
   category: filter
   inputs:
-    - name: definition_in
-      label: definition_in
-      required: true
-      coordTypes: [vec2,vec3]
-      contextTypes: [none,Context,MaterialContext,CameraContext,LightContext,RayContext]
-      returnTypes: [float,vec4,Sdf]
+  - contextTypes:
+    - none
+    - Context
+    - MaterialContext
+    - CameraContext
+    - LightContext
+    - RayContext
+    coordTypes:
+    - vec2
+    - vec3
+    label: definition_in
+    name: definition_in
+    required: true
+    returnTypes:
+    - float
+    - vec4
+    - Sdf
+  name: knife
+  opType: raytk.operators.filter.knife
   parameters:
-    - name: Enable
-      label: Enable
-    - name: Side
-      label: Keep Side
-      summary: |
-        Which side of the cut to keep.
-      menuOptions:
-        - name: above
-          label: Above Plane
-        - name: below
-          label: Below Plane
-    - name: Offset
-      label: Offset
-      summary: |
-        Shifts the cut plane along the axis that it faces.
-    - name: Rotateplane
-      label: Rotate Plane
-      summary: |
-        Rotate the cut plane in XYZ.
-    - name: Inspect
-      label: Inspect
-    - name: Help
-      label: Help
+  - label: Enable
+    name: Enable
+  - label: Keep Side
+    menuOptions:
+    - label: Above Plane
+      name: above
+    - label: Below Plane
+      name: below
+    name: Side
+    summary: Which side of the cut to keep.
+  - label: Offset
+    name: Offset
+    summary: Shifts the cut plane along the axis that it faces.
+  - label: Rotate Plane
+    name: Rotateplane
+    summary: Rotate the cut plane in XYZ.
+  - label: Inspect
+    name: Inspect
+  - label: Help
+    name: Help
+  summary: Cuts off an SDF along a plane.
 
 ---
 

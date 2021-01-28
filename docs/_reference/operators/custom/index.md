@@ -7,12 +7,11 @@ has_toc: false
 permalink: /reference/operators/custom/
 cat:
   name: custom
-  summary: |
-    Custom operators can be used to write custom GLSL code and run it in the context of a RayTK scene.
   operators:
-    - op:
-      name: customOp
-      status: beta
+  - name: customOp
+    status: beta
+  summary: Custom operators can be used to write custom GLSL code and run it in the
+    context of a RayTK scene.
 
 ---
 

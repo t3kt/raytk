@@ -7,27 +7,27 @@ permalink: /reference/operators/sdf2d/polygonSdf2d
 redirect_from:
   - /reference/opType/raytk.operators.sdf2d.polygonSdf2d/
 op:
+  category: sdf2d
   name: polygonSdf2d
   opType: raytk.operators.sdf2d.polygonSdf2d
-  category: sdf2d
   parameters:
-    - name: Shape
-      label: Shape
-      menuOptions:
-        - name: pentagon
-          label: Pentagon
-        - name: hexagon
-          label: Hexagon
-        - name: octogon
-          label: Octogon
-        - name: hexagram
-          label: Hexagram
-    - name: Radius
-      label: Radius
-    - name: Inspect
-      label: Inspect
-    - name: Help
-      label: Help
+  - label: Shape
+    menuOptions:
+    - label: Pentagon
+      name: pentagon
+    - label: Hexagon
+      name: hexagon
+    - label: Octogon
+      name: octogon
+    - label: Hexagram
+      name: hexagram
+    name: Shape
+  - label: Radius
+    name: Radius
+  - label: Inspect
+    name: Inspect
+  - label: Help
+    name: Help
 
 ---
 

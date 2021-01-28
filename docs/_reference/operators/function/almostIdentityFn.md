@@ -7,31 +7,31 @@ permalink: /reference/operators/function/almostIdentityFn
 redirect_from:
   - /reference/opType/raytk.operators.function.almostIdentityFn/
 op:
+  category: function
   name: almostIdentityFn
   opType: raytk.operators.function.almostIdentityFn
-  category: function
   parameters:
-    - name: Contexttype
-      label: Context Type
-      menuOptions:
-        - name: none
-          label: None
-        - name: Context
-          label: Context
-        - name: MaterialContext
-          label: Material Context
-        - name: CameraContext
-          label: Camera Context
-        - name: LightContext
-          label: Light Context
-    - name: Threshold
-      label: Threshold
-    - name: Basevalue
-      label: Base Value
-    - name: Inspect
-      label: Inspect
-    - name: Help
-      label: Help
+  - label: Context Type
+    menuOptions:
+    - label: None
+      name: none
+    - label: Context
+      name: Context
+    - label: Material Context
+      name: MaterialContext
+    - label: Camera Context
+      name: CameraContext
+    - label: Light Context
+      name: LightContext
+    name: Contexttype
+  - label: Threshold
+    name: Threshold
+  - label: Base Value
+    name: Basevalue
+  - label: Inspect
+    name: Inspect
+  - label: Help
+    name: Help
 
 ---
 

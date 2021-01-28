@@ -7,33 +7,28 @@ permalink: /reference/operators/camera/lookAtCamera
 redirect_from:
   - /reference/opType/raytk.operators.camera.lookAtCamera/
 op:
-  name: lookAtCamera
-  summary: A camera that focuses on a specific point in space.
-  opType: raytk.operators.camera.lookAtCamera
   category: camera
+  name: lookAtCamera
+  opType: raytk.operators.camera.lookAtCamera
   parameters:
-    - name: Camfov
-      label: FOV Angle
-      summary: |
-        FOV angle.
-    - name: Campos
-      label: Position
-      summary: |
-        Position of the camera.
-    - name: Camrot
-      label: Rotate
-      summary: |
-        Rotation of the camera in XYZ.
-    - name: Lookatpos
-      label: Look At Position
-      summary: |
-        Position that the camera faces.
-    - name: Camup
-      label: Up Vector
-      summary: |
-        Up vector (used to interpret the `Lookatpos`).
-    - name: Help
-      label: Help
+  - label: FOV Angle
+    name: Camfov
+    summary: FOV angle.
+  - label: Position
+    name: Campos
+    summary: Position of the camera.
+  - label: Rotate
+    name: Camrot
+    summary: Rotation of the camera in XYZ.
+  - label: Look At Position
+    name: Lookatpos
+    summary: Position that the camera faces.
+  - label: Up Vector
+    name: Camup
+    summary: Up vector (used to interpret the `Lookatpos`).
+  - label: Help
+    name: Help
+  summary: A camera that focuses on a specific point in space.
 
 ---
 

@@ -7,48 +7,53 @@ permalink: /reference/operators/material/reflectMat
 redirect_from:
   - /reference/opType/raytk.operators.material.reflectMat/
 op:
+  category: material
+  inputs:
+  - contextTypes:
+    - none
+    - Context
+    coordTypes:
+    - vec3
+    label: definition_in
+    name: definition_in
+    required: true
+    returnTypes:
+    - Sdf
+  - contextTypes:
+    - MaterialContext
+    coordTypes:
+    - vec3
+    label: Shadow Definition
+    name: shadow_definition_in
+    returnTypes:
+    - float
   name: reflectMat
   opType: raytk.operators.material.reflectMat
-  category: material
-  status: beta
-  inputs:
-    - name: definition_in
-      label: definition_in
-      required: true
-      coordTypes: [vec3]
-      contextTypes: [none,Context]
-      returnTypes: [Sdf]
-    - name: shadow_definition_in
-      label: Shadow Definition
-      required: false
-      coordTypes: [vec3]
-      contextTypes: [MaterialContext]
-      returnTypes: [float]
   parameters:
-    - name: Enable
-      label: Enable
-    - name: Color
-      label: Color
-      summary: |
-        Base color applied to the surface regardless of lights.
-    - name: Ks
-      label: Ks
-    - name: Reflectionamount
-      label: Reflection Amount
-    - name: Fresnel
-      label: Fresnel
-    - name: Shine
-      label: Shine
-      summary: |
-        Specular exponent, which adjusts the light curve of specular highlights.
-    - name: Enableshadow
-      label: Enable Shadow
-      summary: |
-        Whether to use shadows. When enabled, if the *Shadow Definition* input is provided, that will be used. Otherwise a default shadow function will be used.
-    - name: Inspect
-      label: Inspect
-    - name: Help
-      label: Help
+  - label: Enable
+    name: Enable
+  - label: Color
+    name: Color
+    summary: Base color applied to the surface regardless of lights.
+  - label: Ks
+    name: Ks
+  - label: Reflection Amount
+    name: Reflectionamount
+  - label: Fresnel
+    name: Fresnel
+  - label: Shine
+    name: Shine
+    summary: Specular exponent, which adjusts the light curve of specular highlights.
+  - label: Enable Shadow
+    name: Enableshadow
+    summary: Whether to use shadows. When enabled, if the *Shadow Definition* input
+      is provided, that will be used. Otherwise a default shadow function will be
+      used.
+  - label: Inspect
+    name: Inspect
+  - label: Help
+    name: Help
+  status: beta
 
 ---
 

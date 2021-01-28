@@ -7,45 +7,45 @@ permalink: /reference/operators/output/renderSelect
 redirect_from:
   - /reference/opType/raytk.operators.output.renderSelect/
 op:
+  category: output
   name: renderSelect
   opType: raytk.operators.output.renderSelect
-  category: output
   parameters:
-    - name: Outputop
-      label: Output OP
-    - name: Outputbuffer
-      label: Output Buffer
-      menuOptions:
-        - name: colorOut
-          label: Color
-        - name: sdfOut
-          label: SDF Result
-        - name: depthOut
-          label: Depth
-        - name: worldPosOut
-          label: World Position
-        - name: normalOut
-          label: Normal
-        - name: rayDirOut
-          label: Ray Direction
-        - name: rayOriginOut
-          label: Ray Origin
-        - name: orbitOut
-          label: Orbit Trap
-        - name: nearHitOut
-          label: Near Hit
-        - name: stepsOut
-          label: Step Count
-        - name: iterationOut
-          label: Iteration
-        - name: objectIdOut
-          label: Object Id
-        - name: debugOut
-          label: Debug
-    - name: Lockbuffermenu
-      label: Lock Buffer Menu
-    - name: Help
-      label: Help
+  - label: Output OP
+    name: Outputop
+  - label: Output Buffer
+    menuOptions:
+    - label: Color
+      name: colorOut
+    - label: SDF Result
+      name: sdfOut
+    - label: Depth
+      name: depthOut
+    - label: World Position
+      name: worldPosOut
+    - label: Normal
+      name: normalOut
+    - label: Ray Direction
+      name: rayDirOut
+    - label: Ray Origin
+      name: rayOriginOut
+    - label: Orbit Trap
+      name: orbitOut
+    - label: Near Hit
+      name: nearHitOut
+    - label: Step Count
+      name: stepsOut
+    - label: Iteration
+      name: iterationOut
+    - label: Object Id
+      name: objectIdOut
+    - label: Debug
+      name: debugOut
+    name: Outputbuffer
+  - label: Lock Buffer Menu
+    name: Lockbuffermenu
+  - label: Help
+    name: Help
 
 ---
 

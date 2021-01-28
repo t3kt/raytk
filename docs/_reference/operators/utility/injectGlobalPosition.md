@@ -7,26 +7,36 @@ permalink: /reference/operators/utility/injectGlobalPosition
 redirect_from:
   - /reference/opType/raytk.operators.utility.injectGlobalPosition/
 op:
-  name: injectGlobalPosition
-  summary: Calls its input using the untransformed global position.
-  detail: |
-    This can be used for fields that are passed to other ops that are using downstream transforms to have the field use the raw global position while being used on an op that is transformed.
-  opType: raytk.operators.utility.injectGlobalPosition
   category: utility
+  detail: This can be used for fields that are passed to other ops that are using
+    downstream transforms to have the field use the raw global position while being
+    used on an op that is transformed.
   inputs:
-    - name: definition_in
-      label: definition_in
-      required: true
-      coordTypes: [float,vec2,vec3]
-      contextTypes: [Context]
-      returnTypes: [float,vec4,Sdf,Ray,Light]
+  - contextTypes:
+    - Context
+    coordTypes:
+    - float
+    - vec2
+    - vec3
+    label: definition_in
+    name: definition_in
+    required: true
+    returnTypes:
+    - float
+    - vec4
+    - Sdf
+    - Ray
+    - Light
+  name: injectGlobalPosition
+  opType: raytk.operators.utility.injectGlobalPosition
   parameters:
-    - name: Enable
-      label: Enable
-    - name: Inspect
-      label: Inspect
-    - name: Help
-      label: Help
+  - label: Enable
+    name: Enable
+  - label: Inspect
+    name: Inspect
+  - label: Help
+    name: Help
+  summary: Calls its input using the untransformed global position.
 
 ---
 

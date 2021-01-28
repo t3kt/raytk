@@ -7,33 +7,28 @@ permalink: /reference/operators/sdf/capsuleSdf
 redirect_from:
   - /reference/opType/raytk.operators.sdf.capsuleSdf/
 op:
-  name: capsuleSdf
-  summary: A cylinder with rounded ends, between two points.
-  detail: |
-    With a small `Radius`, this can be used to create a line segment.
-  opType: raytk.operators.sdf.capsuleSdf
   category: sdf
+  detail: With a small `Radius`, this can be used to create a line segment.
+  name: capsuleSdf
+  opType: raytk.operators.sdf.capsuleSdf
   parameters:
-    - name: Translate
-      label: Translate
-      summary: |
-        Moves the center of the capsule.
-    - name: Endpoint1
-      label: End Point 1
-      summary: |
-        Distance of the first end from the center position.
-    - name: Endpoint2
-      label: End Point 2
-      summary: |
-        Distance of the second end from the center position.
-    - name: Radius
-      label: Radius
-      summary: |
-        The thickness of the capsule.
-    - name: Inspect
-      label: Inspect
-    - name: Help
-      label: Help
+  - label: Translate
+    name: Translate
+    summary: Moves the center of the capsule.
+  - label: End Point 1
+    name: Endpoint1
+    summary: Distance of the first end from the center position.
+  - label: End Point 2
+    name: Endpoint2
+    summary: Distance of the second end from the center position.
+  - label: Radius
+    name: Radius
+    summary: The thickness of the capsule.
+  - label: Inspect
+    name: Inspect
+  - label: Help
+    name: Help
+  summary: A cylinder with rounded ends, between two points.
 
 ---
 

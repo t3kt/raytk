@@ -7,17 +7,17 @@ permalink: /reference/operators/light/hardShadow
 redirect_from:
   - /reference/opType/raytk.operators.light.hardShadow/
 op:
-  name: hardShadow
-  summary: A simple hard-edged shadow.
-  opType: raytk.operators.light.hardShadow
   category: light
+  name: hardShadow
+  opType: raytk.operators.light.hardShadow
   parameters:
-    - name: Shadowlevel
-      label: Shadow Level
-    - name: Inspect
-      label: Inspect
-    - name: Help
-      label: Help
+  - label: Shadow Level
+    name: Shadowlevel
+  - label: Inspect
+    name: Inspect
+  - label: Help
+    name: Help
+  summary: A simple hard-edged shadow.
 
 ---
 

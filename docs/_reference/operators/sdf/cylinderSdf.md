@@ -7,36 +7,33 @@ permalink: /reference/operators/sdf/cylinderSdf
 redirect_from:
   - /reference/opType/raytk.operators.sdf.cylinderSdf/
 op:
-  name: cylinderSdf
-  summary: SDF for a cylinder.
-  opType: raytk.operators.sdf.cylinderSdf
   category: sdf
+  name: cylinderSdf
+  opType: raytk.operators.sdf.cylinderSdf
   parameters:
-    - name: Translate
-      label: Translate
-      summary: |
-        Shifts the center of the cylinder.
-    - name: Radius
-      label: Radius
-      summary: |
-        The radius of the cylinder.
-    - name: Height
-      label: Height
-      summary: |
-        The height of the cylinder, along the selected axis.
-    - name: Axis
-      label: Axis
-      menuOptions:
-        - name: x
-          label: X
-        - name: y
-          label: Y
-        - name: z
-          label: Z
-    - name: Inspect
-      label: Inspect
-    - name: Help
-      label: Help
+  - label: Translate
+    name: Translate
+    summary: Shifts the center of the cylinder.
+  - label: Radius
+    name: Radius
+    summary: The radius of the cylinder.
+  - label: Height
+    name: Height
+    summary: The height of the cylinder, along the selected axis.
+  - label: Axis
+    menuOptions:
+    - label: X
+      name: x
+    - label: Y
+      name: y
+    - label: Z
+      name: z
+    name: Axis
+  - label: Inspect
+    name: Inspect
+  - label: Help
+    name: Help
+  summary: SDF for a cylinder.
 
 ---
 
