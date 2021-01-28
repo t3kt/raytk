@@ -474,11 +474,16 @@ class ROPDefinition(DataObject):
 def cleanDict(d):
 	if not d:
 		return None
-	return {
-		key: val
-		for key, val in d.items()
-		if not (val is None or (isinstance(val, (str, list, dict, tuple)) and len(val) == 0))
-	}
+	result = {}
+	for key, val in d.items():
+		if val is None:
+			continue
+		if isinstance(val, dict):
+			val = cleanDict(val)
+		if isinstance(val, (str, list, dict, tuple)) and len(val) == 0:
+			continue
+		result[key] = val
+	return result
 
 def mergeDicts(*parts):
 	x = {}
