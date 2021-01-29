@@ -23,6 +23,7 @@ cat:
   - name: basicMat
   - name: checkerboardMat
     status: beta
+  - name: colorizeSdf2d
   - name: fieldMat
     summary: 'A material that uses a vector field input to determine
 

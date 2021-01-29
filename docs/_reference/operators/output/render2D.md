@@ -83,6 +83,8 @@ op:
     - label: 32-bit float (Mono+Alpha)
       name: monoalpha32float
     name: Format
+  - label: Max Distance
+    name: Maxdist
   - label: Enable Edge
     name: Enableedge
   - label: Edge Thickness
