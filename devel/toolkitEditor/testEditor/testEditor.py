@@ -47,6 +47,12 @@ class TestEditor:
 		iop.loader.UnloadComponent()
 		self._reloadOutputs()
 
+	def SaveTest(self):
+		iop.loader.SaveComponent()
+		msg = f'Saved test to {self.currentTestTox}'
+		print(msg)
+		ui.status = msg
+
 	def _loadTest(self, name: str, toxPath: Path):
 		if name:
 			name = name.replace(' ', '_')
