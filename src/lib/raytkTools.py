@@ -68,6 +68,13 @@ class RaytkTools(RaytkContext):
 		elif helpPar is not None:
 			helpPar.destroy()
 
+		# Set up update op par
+		updatePar = rop.par['Updateop']
+		if updatePar is None:
+			updatePar = page.appendPulse('Updateop', label='Update OP')[0]
+		updatePar.startSection = True
+		updatePar.order = 1111
+
 	@staticmethod
 	def updateOPImage(rop: 'COMP'):
 		img = rop.op('./*Definition/opImage')

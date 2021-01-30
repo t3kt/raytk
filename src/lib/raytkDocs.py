@@ -150,6 +150,8 @@ class InputHelp:
 			'summary': self.summary,
 		})
 
+_ignorePars = 'Help', 'Inspect', 'Updateop'
+
 @dataclass
 class ROPHelp:
 	name: Optional[str] = None
@@ -176,6 +178,7 @@ class ROPHelp:
 		ropHelp.parameters = [
 			ROPParamHelp.extractFromPar(pt[0])
 			for pt in parTuples
+			if pt[0].name not in _ignorePars
 		]
 		dat = info.helpDAT
 		if dat:
@@ -230,7 +233,7 @@ class ROPHelp:
 				'\n'.join([
 					parHelp.formatMarkdownListItem()
 					for parHelp in self.parameters
-					if parHelp.name not in ('Help', 'Inspect')
+					if parHelp.name not in _ignorePars
 				])
 			]
 		if self.inputs:
@@ -298,6 +301,7 @@ Category: {ropInfo.categoryName}
 				'parameters': [
 					parHelp.toFrontMatterData()
 					for parHelp in self.parameters
+					if parHelp.name not in _ignorePars
 				],
 			} if full else None,
 		))
