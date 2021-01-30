@@ -1,0 +1,6 @@
+{
+  "meta": {
+    "opType": "raytk.operators.field.waveletNoiseField",
+    "opVersion": 0
+  }
+}
