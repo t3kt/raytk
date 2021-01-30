@@ -242,15 +242,17 @@ def prepareMacroTable(dat: 'scriptDAT', typeTable: 'DAT', inputTable: 'DAT', mac
 				for cells in table.rows()
 			])
 
+def _popDialog() -> 'PopDialogExt':
+	# noinspection PyUnresolvedReferences
+	return op.TDResources.op('popDialog')
+
 def inspect(rop: 'COMP'):
 	if hasattr(op, 'raytk'):
 		inspector = op.raytk.op('tools/inspector')
 		if inspector and hasattr(inspector, 'Inspect'):
 			inspector.Inspect(rop)
 			return
-	# noinspection PyUnresolvedReferences
-	dialog = op.TDResources.op('popDialog')  # type: PopDialogExt
-	dialog.Open(
+	_popDialog().Open(
 		title='Warning',
 		text='The RayTK inspector is only available when the main toolkit tox has been loaded.',
 		escOnClickAway=True,
@@ -267,3 +269,24 @@ def launchHelp():
 		url = url.replace('https://t3kt.github.io/raytk/', 'http://localhost:4000/raytk/')
 	url += '?utm_source=raytkLaunch'
 	ui.viewFile(url)
+
+def updateOP():
+	if not hasattr(op, 'raytk'):
+		_popDialog().Open(
+			title='Warning',
+			text='Unable to update OP because RayTK toolkit is not available.',
+			escOnClickAway=True,
+		)
+		return
+	host = parentPar().Hostop.eval()
+	if not host:
+		return
+	if not host.par.clone:
+		_popDialog().Open(
+			title='Warning',
+			text='Unable to update OP because master is not found in the loaded toolkit.',
+			escOnClickAway=True,
+		)
+		return
+	if host and host.par.clone:
+		host.par.enablecloningpulse.pulse()
