@@ -61,10 +61,6 @@ op:
     - label: Scaled Clone Index
       name: scaled
     name: Iterationtype
-  - label: Inspect
-    name: Inspect
-  - label: Help
-    name: Help
   summary: Repeats an SDF radially around an axis, combining the resulting shapes.
 
 ---

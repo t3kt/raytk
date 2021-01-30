@@ -21,10 +21,6 @@ op:
     name: C4
   - label: Iterations
     name: Iterations
-  - label: Inspect
-    name: Inspect
-  - label: Help
-    name: Help
 
 ---
 

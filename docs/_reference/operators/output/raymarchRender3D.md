@@ -205,10 +205,6 @@ op:
     name: Enablereflection
   - label: Reflection Passes
     name: Reflectionpasses
-  - label: Inspect
-    name: Inspect
-  - label: Help
-    name: Help
   summary: Renders a scene using 3D raymarching.
 
 ---

@@ -1,16 +1,16 @@
 ---
 layout: operator
-title: solidAngleSdf
+title: bunnySdf
 parent: Sdf Operators
 grand_parent: Operators
-permalink: /reference/operators/sdf/solidAngleSdf
+permalink: /reference/operators/sdf/bunnySdf
 redirect_from:
-  - /reference/opType/raytk.operators.sdf.solidAngleSdf/
+  - /reference/opType/raytk.operators.sdf.bunnySdf/
 op:
   category: sdf
   detail: Similar to `coneSdf` but with the base rounded.
-  name: solidAngleSdf
-  opType: raytk.operators.sdf.solidAngleSdf
+  name: bunnySdf
+  opType: raytk.operators.sdf.bunnySdf
   parameters:
   - label: Translate
     name: Translate
@@ -26,7 +26,7 @@ op:
 
 ---
 
-# solidAngleSdf
+# bunnySdf
 
 Category: sdf
 

@@ -57,10 +57,6 @@ op:
   - label: Scale
     name: Scale
     summary: Scale to apply to each axis. If input is 2D only X and Y are used.
-  - label: Inspect
-    name: Inspect
-  - label: Help
-    name: Help
   summary: Scales space.
 
 ---

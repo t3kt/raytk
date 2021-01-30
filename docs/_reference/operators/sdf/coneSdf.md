@@ -62,10 +62,6 @@ op:
     - label: Z
       name: z
     name: Axis
-  - label: Inspect
-    name: Inspect
-  - label: Help
-    name: Help
   summary: Defines a cone or capped cone shape.
 
 ---

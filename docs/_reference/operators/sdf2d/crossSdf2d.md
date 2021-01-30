@@ -20,10 +20,6 @@ op:
   - label: Roundness
     name: Roundness
     summary: How much to round out the intersection corners.
-  - label: Inspect
-    name: Inspect
-  - label: Help
-    name: Help
   summary: 2D cross shape SDF, with 4 arms and option rounding of the intersections.
 
 ---

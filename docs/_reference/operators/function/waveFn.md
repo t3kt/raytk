@@ -54,10 +54,6 @@ op:
     name: Amplitude
   - label: Offset
     name: Offset
-  - label: Inspect
-    name: Inspect
-  - label: Help
-    name: Help
   summary: A function that uses a periodic wave, with the position as the parameter.
 
 ---

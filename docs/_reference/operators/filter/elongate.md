@@ -47,10 +47,6 @@ op:
     name: Enable
   - label: Size
     name: Size
-  - label: Inspect
-    name: Inspect
-  - label: Help
-    name: Help
   summary: Splits a shape into pieces, moves them apart, and connects them.
 
 ---

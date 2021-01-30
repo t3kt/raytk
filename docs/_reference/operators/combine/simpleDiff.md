@@ -53,10 +53,6 @@ op:
   - label: Swap Order
     name: Swaporder
     summary: Swaps the two inputs, subtracting the first from the second.
-  - label: Inspect
-    name: Inspect
-  - label: Help
-    name: Help
   summary: Combines two SDFs using the difference operator.
 
 ---

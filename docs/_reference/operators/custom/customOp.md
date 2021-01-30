@@ -148,10 +148,6 @@ op:
     name: Removeunusedparams
   - label: Auto Create Missing Params
     name: Autocreatemissingparams
-  - label: Inspect
-    name: Inspect
-  - label: Help
-    name: Help
   status: beta
 
 ---

@@ -25,8 +25,6 @@ op:
   - label: Create Basic Camera
     name: Createbasiccamera
     summary: Creates and attaches a standard Camera COMP.
-  - label: Help
-    name: Help
   summary: A camera that is linked to an existing TD Camera COMP.
 
 ---

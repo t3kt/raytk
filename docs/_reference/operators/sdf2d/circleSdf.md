@@ -15,10 +15,6 @@ op:
     name: Translate
   - label: Radius
     name: Radius
-  - label: Inspect
-    name: Inspect
-  - label: Help
-    name: Help
 
 ---
 

@@ -44,10 +44,6 @@ op:
     name: Smoothing
   - label: Smoothing Multiplier
     name: Smoothingmult
-  - label: Inspect
-    name: Inspect
-  - label: Help
-    name: Help
   summary: Quantize coordinates to a 3D grid, which is sort of like "voxelizing" the
     space.
 

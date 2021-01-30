@@ -32,10 +32,6 @@ op:
   - label: Height
     name: Height
     summary: The height / length of the prism.
-  - label: Inspect
-    name: Inspect
-  - label: Help
-    name: Help
   summary: A prism shape, like a cylinder but with flat sides, along the z axis.
 
 ---

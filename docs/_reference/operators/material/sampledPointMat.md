@@ -29,10 +29,6 @@ op:
     name: Fillcolor
   - label: Blending
     name: Blending
-  - label: Inspect
-    name: Inspect
-  - label: Help
-    name: Help
   status: beta
 
 ---

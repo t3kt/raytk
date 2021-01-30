@@ -50,10 +50,6 @@ op:
     name: Shift
     summary: Offsets the twisting along the axis, effectively rotating everything
       equally around it.
-  - label: Inspect
-    name: Inspect
-  - label: Help
-    name: Help
   summary: Twists space around an axis.
 
 ---

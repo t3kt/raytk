@@ -32,10 +32,6 @@ op:
     name: Startangle
   - label: End Angle
     name: Endangle
-  - label: Inspect
-    name: Inspect
-  - label: Help
-    name: Help
   summary: SDF for a torus.
 
 ---

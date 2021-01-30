@@ -17,6 +17,8 @@ cat:
     summary: SDF for the squared frame of the edges of a box.
   - name: boxSdf
     summary: SDF for a box, optionally infinite one one axis.
+  - name: bunnySdf
+    summary: A conical slice of a sphere.
   - name: capsuleSdf
     summary: A cylinder with rounded ends, between two points.
   - name: coneSdf

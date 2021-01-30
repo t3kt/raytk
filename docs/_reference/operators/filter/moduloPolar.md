@@ -79,10 +79,6 @@ op:
       ops.
   - label: Enable
     name: Enable
-  - label: Inspect
-    name: Inspect
-  - label: Help
-    name: Help
   summary: Repeats space radially, like a kaleidoscope.
 
 ---

@@ -32,10 +32,6 @@ op:
     name: Point2
   - label: Point 3
     name: Point3
-  - label: Inspect
-    name: Inspect
-  - label: Help
-    name: Help
 
 ---
 

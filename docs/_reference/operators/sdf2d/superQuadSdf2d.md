@@ -15,10 +15,6 @@ op:
     name: Radius
   - label: Exponent
     name: Exponent
-  - label: Inspect
-    name: Inspect
-  - label: Help
-    name: Help
 
 ---
 

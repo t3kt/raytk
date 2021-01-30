@@ -74,8 +74,6 @@ op:
       camera would normally get.
   - label: Camera Map
     name: Cameramap
-  - label: Help
-    name: Help
   summary: A camera that splits the viewport into several zones, each using a separate
     camera.
 

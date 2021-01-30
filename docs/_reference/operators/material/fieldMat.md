@@ -33,10 +33,6 @@ op:
   parameters:
   - label: Enable
     name: Enable
-  - label: Inspect
-    name: Inspect
-  - label: Help
-    name: Help
   summary: 'A material that uses a vector field input to determine
 
     the color. Essentially this is a conversion from a

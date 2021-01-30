@@ -17,10 +17,6 @@ op:
   - label: Scale
     name: Scale
     summary: The size of the shape.
-  - label: Inspect
-    name: Inspect
-  - label: Help
-    name: Help
   summary: Tetrahedron shape.
 
 ---

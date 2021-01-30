@@ -15,10 +15,6 @@ op:
     name: Translate
   - label: Scale
     name: Scale
-  - label: Inspect
-    name: Inspect
-  - label: Help
-    name: Help
 
 ---
 

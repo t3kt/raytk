@@ -40,10 +40,6 @@ op:
     name: Alpha2
   - label: Clamp Range
     name: Clamprange
-  - label: Inspect
-    name: Inspect
-  - label: Help
-    name: Help
   summary: A vector field that maps an input field to values from a range of colors.
 
 ---

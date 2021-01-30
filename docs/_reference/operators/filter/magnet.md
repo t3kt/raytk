@@ -92,10 +92,6 @@ op:
   - label: Rotate
     name: Rotate
     summary: Rotation to be applied within the magnet area.
-  - label: Inspect
-    name: Inspect
-  - label: Help
-    name: Help
   summary: Pulls or twists space within an area.
 
 ---

@@ -29,10 +29,6 @@ op:
   parameters:
   - label: Enable
     name: Enable
-  - label: Inspect
-    name: Inspect
-  - label: Help
-    name: Help
   status: beta
   summary: 'A field that returns the current iteration, from a downstream
 

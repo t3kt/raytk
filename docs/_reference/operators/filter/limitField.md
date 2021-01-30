@@ -47,10 +47,6 @@ op:
     name: Low
   - label: Input High
     name: High
-  - label: Inspect
-    name: Inspect
-  - label: Help
-    name: Help
 
 ---
 

@@ -62,10 +62,6 @@ op:
   - label: Translate
     name: Translate
     summary: Amount of translation along each axis. For 2D, only X and Y are used.
-  - label: Inspect
-    name: Inspect
-  - label: Help
-    name: Help
   summary: Translates coordinates of the input ROP.
 
 ---

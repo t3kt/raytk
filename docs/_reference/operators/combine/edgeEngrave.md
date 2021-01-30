@@ -70,10 +70,6 @@ op:
   - label: Radius
     name: Radius
     summary: Width of the groove.
-  - label: Inspect
-    name: Inspect
-  - label: Help
-    name: Help
   summary: Carves a v-shaped groove where the second input intersects with the first.
 
 ---

@@ -15,10 +15,6 @@ op:
     name: Radius
   - label: Angle
     name: Angle
-  - label: Inspect
-    name: Inspect
-  - label: Help
-    name: Help
 
 ---
 

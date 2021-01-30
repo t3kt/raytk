@@ -190,10 +190,6 @@ op:
     - label: One
       name: one
     name: Part4
-  - label: Inspect
-    name: Inspect
-  - label: Help
-    name: Help
 
 ---
 

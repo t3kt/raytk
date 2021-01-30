@@ -27,10 +27,6 @@ op:
       name: bound
     name: Shapetype
     summary: Advanced parameter that chooses between different types of calculations.
-  - label: Inspect
-    name: Inspect
-  - label: Help
-    name: Help
   summary: An octahedron, with its corners facing the axes.
 
 ---

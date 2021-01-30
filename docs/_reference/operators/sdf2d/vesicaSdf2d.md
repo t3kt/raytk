@@ -15,10 +15,6 @@ op:
     name: Radius
   - label: Distance
     name: Distance
-  - label: Inspect
-    name: Inspect
-  - label: Help
-    name: Help
 
 ---
 

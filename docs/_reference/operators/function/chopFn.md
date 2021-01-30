@@ -39,10 +39,6 @@ op:
     name: Extendmode
   - label: Range
     name: Range
-  - label: Inspect
-    name: Inspect
-  - label: Help
-    name: Help
 
 ---
 

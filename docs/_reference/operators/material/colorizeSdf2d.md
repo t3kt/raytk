@@ -46,10 +46,6 @@ op:
     name: Outsidecolor1
   - label: Outside Color 2
     name: Outsidecolor2
-  - label: Inspect
-    name: Inspect
-  - label: Help
-    name: Help
 
 ---
 

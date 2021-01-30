@@ -19,10 +19,6 @@ op:
   - label: Radius
     name: Radius
     summary: The radius of the disc.
-  - label: Inspect
-    name: Inspect
-  - label: Help
-    name: Help
   summary: A flat disc facing the Y axis.
 
 ---

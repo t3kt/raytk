@@ -28,10 +28,6 @@ op:
     name: Timerefop
   - label: Shader Builder Config
     name: Shaderbuilderconfig
-  - label: Inspect
-    name: Inspect
-  - label: Help
-    name: Help
   status: beta
 
 ---

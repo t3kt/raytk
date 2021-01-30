@@ -57,10 +57,6 @@ op:
     name: Center
   - label: Iterate On Rings
     name: Iterateonrings
-  - label: Inspect
-    name: Inspect
-  - label: Help
-    name: Help
 
 ---
 

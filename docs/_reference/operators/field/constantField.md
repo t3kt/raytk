@@ -42,10 +42,6 @@ op:
     name: Contexttype
   - label: Value
     name: Value
-  - label: Inspect
-    name: Inspect
-  - label: Help
-    name: Help
   summary: A float or vector field that evaluates to a constant value.
 
 ---

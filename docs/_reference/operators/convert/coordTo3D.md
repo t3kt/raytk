@@ -50,10 +50,6 @@ op:
     - label: Zero
       name: zero
     name: Party
-  - label: Inspect
-    name: Inspect
-  - label: Help
-    name: Help
 
 ---
 

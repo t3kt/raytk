@@ -19,10 +19,6 @@ op:
     name: Steprotate
   - label: Step Clamp Range
     name: Stepclamprange
-  - label: Inspect
-    name: Inspect
-  - label: Help
-    name: Help
 
 ---
 

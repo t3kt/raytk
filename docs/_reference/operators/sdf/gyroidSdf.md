@@ -65,10 +65,6 @@ op:
   - label: Thickness
     name: Thickness
     summary: Expands the surfaces producing thicker shapes.
-  - label: Inspect
-    name: Inspect
-  - label: Help
-    name: Help
   summary: Gyroid shape, which is an infinitely connected periodic surface.
 
 ---

@@ -90,10 +90,6 @@ op:
     summary: Which input or combination of inputs to use. If this value is 0, the
       first connected input is used. 0.5 is half way between the first and second
       connected inputs, etc.
-  - label: Inspect
-    name: Inspect
-  - label: Help
-    name: Help
   summary: Smoothly blends/morphs between up to 4 SDFs.
 
 ---

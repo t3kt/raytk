@@ -51,10 +51,6 @@ op:
     - label: Ray Context
       name: RayContext
     name: Contexttype
-  - label: Inspect
-    name: Inspect
-  - label: Help
-    name: Help
   summary: Metaball value field.
 
 ---

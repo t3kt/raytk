@@ -66,10 +66,6 @@ op:
       name: LightContext
     name: Contexttype
     summary: advanced parameter that should usually just be set to `Context`
-  - label: Inspect
-    name: Inspect
-  - label: Help
-    name: Help
   summary: An infinite grid shape, along two axes.
 
 ---

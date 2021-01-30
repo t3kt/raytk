@@ -46,10 +46,6 @@ op:
   - label: Uniform Scale
     name: Uniformscale
     summary: Scaling applied to all dimensions of the `Scale`.
-  - label: Inspect
-    name: Inspect
-  - label: Help
-    name: Help
   summary: SDF for a box, optionally infinite one one axis.
 
 ---

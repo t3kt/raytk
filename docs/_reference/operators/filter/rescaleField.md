@@ -40,10 +40,6 @@ op:
     name: Outputlow
   - label: Output High
     name: Outputhigh
-  - label: Inspect
-    name: Inspect
-  - label: Help
-    name: Help
 
 ---
 

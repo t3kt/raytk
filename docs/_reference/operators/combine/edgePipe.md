@@ -70,10 +70,6 @@ op:
   - label: Radius
     name: Radius
     summary: The width of the pipe.
-  - label: Inspect
-    name: Inspect
-  - label: Help
-    name: Help
   summary: Produces a cylindrical pipe along the blend region, replacing the input
     shapes entirely.
 

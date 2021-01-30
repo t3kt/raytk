@@ -20,10 +20,6 @@ op:
   - label: Thickness
     name: Thickness
     summary: The thickness of the bars of the box.
-  - label: Inspect
-    name: Inspect
-  - label: Help
-    name: Help
   summary: SDF for the squared frame of the edges of a box.
 
 ---

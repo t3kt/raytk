@@ -32,8 +32,6 @@ op:
     name: Expval
   - label: Output OP
     name: Outputop
-  - label: Help
-    name: Help
 
 ---
 

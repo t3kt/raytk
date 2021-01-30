@@ -37,10 +37,6 @@ op:
     - label: Ray Context
       name: RayContext
     name: Contexttype
-  - label: Inspect
-    name: Inspect
-  - label: Help
-    name: Help
   summary: A float field that provides the distance from a specific point in space.
 
 ---

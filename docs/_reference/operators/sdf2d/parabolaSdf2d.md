@@ -13,10 +13,6 @@ op:
   parameters:
   - label: Width
     name: Width
-  - label: Inspect
-    name: Inspect
-  - label: Help
-    name: Help
 
 ---
 

@@ -73,10 +73,6 @@ op:
   - label: Amount
     name: Amount
     summary: Size of the blending region.
-  - label: Inspect
-    name: Inspect
-  - label: Help
-    name: Help
   summary: Combines SDFs using a smooth union operator.
 
 ---

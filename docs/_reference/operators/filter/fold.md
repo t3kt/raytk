@@ -41,10 +41,6 @@ op:
     name: Function
   - label: Distance
     name: Distance
-  - label: Inspect
-    name: Inspect
-  - label: Help
-    name: Help
 
 ---
 

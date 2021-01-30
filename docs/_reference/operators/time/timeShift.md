@@ -62,10 +62,6 @@ op:
     - label: Frames (Absolute)
       name: absframes
     name: Intervaltype
-  - label: Inspect
-    name: Inspect
-  - label: Help
-    name: Help
 
 ---
 

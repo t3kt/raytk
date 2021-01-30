@@ -23,8 +23,6 @@ op:
     name: Lookatpos
   - label: Up Vector
     name: Camup
-  - label: Help
-    name: Help
 
 ---
 

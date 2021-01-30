@@ -63,10 +63,6 @@ op:
     name: Amplitude
   - label: Offset
     name: Offset
-  - label: Inspect
-    name: Inspect
-  - label: Help
-    name: Help
   summary: A float or vector field that uses one of several noise functions.
 
 ---

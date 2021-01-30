@@ -35,10 +35,6 @@ op:
     name: Enable
   - label: Object Id
     name: Objectid
-  - label: Inspect
-    name: Inspect
-  - label: Help
-    name: Help
   status: beta
   summary: 'Assigns an arbitrary value to the objectId field of an SDF, which can
     later

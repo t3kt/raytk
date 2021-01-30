@@ -130,10 +130,6 @@ op:
     name: Number
     summary: For stair and column modes, this controls how many steps are used in
       the blending regions.
-  - label: Inspect
-    name: Inspect
-  - label: Help
-    name: Help
   summary: Combines SDFs in various ways.
 
 ---

@@ -37,10 +37,6 @@ op:
     name: Color
   - label: Alpha
     name: Alpha
-  - label: Inspect
-    name: Inspect
-  - label: Help
-    name: Help
   summary: A vector field that evaluates to a constant color value.
 
 ---

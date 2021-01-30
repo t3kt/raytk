@@ -29,10 +29,6 @@ op:
   - label: Rotate
     name: Rotate
     summary: Rotates the petal around the y axis.
-  - label: Inspect
-    name: Inspect
-  - label: Help
-    name: Help
   summary: A flower petal or leaf shape.
 
 ---

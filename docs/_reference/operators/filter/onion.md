@@ -34,10 +34,6 @@ op:
     name: Enable
   - label: Thickness
     name: Thickness
-  - label: Inspect
-    name: Inspect
-  - label: Help
-    name: Help
 
 ---
 

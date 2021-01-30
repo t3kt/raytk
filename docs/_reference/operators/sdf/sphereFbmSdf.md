@@ -20,10 +20,6 @@ op:
     - label: Simplex
       name: simplex
     name: Noisetype
-  - label: Inspect
-    name: Inspect
-  - label: Help
-    name: Help
 
 ---
 

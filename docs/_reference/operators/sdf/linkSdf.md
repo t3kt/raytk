@@ -23,10 +23,6 @@ op:
   - label: Thickness
     name: Thickness
     summary: The thickness of the link.
-  - label: Inspect
-    name: Inspect
-  - label: Help
-    name: Help
   summary: SDF for a chain link shape (an elongated loop).
 
 ---

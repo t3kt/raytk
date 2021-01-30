@@ -84,10 +84,6 @@ op:
   - label: Radius
     name: Radius
     summary: The size of the blending region.
-  - label: Inspect
-    name: Inspect
-  - label: Help
-    name: Help
   summary: Chamfer SDF combine, producing a flat surface at a 45 degree angle along
     the blend region.
 

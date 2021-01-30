@@ -58,10 +58,6 @@ op:
     - label: Loop
       name: loop
     name: Extend
-  - label: Inspect
-    name: Inspect
-  - label: Help
-    name: Help
 
 ---
 

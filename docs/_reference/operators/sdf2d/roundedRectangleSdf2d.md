@@ -15,10 +15,6 @@ op:
     name: Scale
   - label: Roundness
     name: Roundness
-  - label: Inspect
-    name: Inspect
-  - label: Help
-    name: Help
 
 ---
 

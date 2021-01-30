@@ -74,10 +74,6 @@ op:
     name: Exposeiteration
     summary: Whether to expose which side of the plane a point is on as an iteration
       value for upstream ops.
-  - label: Inspect
-    name: Inspect
-  - label: Help
-    name: Help
   summary: Reflects space across a plane.
 
 ---

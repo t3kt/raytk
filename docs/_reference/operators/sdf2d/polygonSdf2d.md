@@ -24,10 +24,6 @@ op:
     name: Shape
   - label: Radius
     name: Radius
-  - label: Inspect
-    name: Inspect
-  - label: Help
-    name: Help
 
 ---
 

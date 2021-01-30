@@ -28,10 +28,6 @@ op:
     name: Threshold
   - label: Base Value
     name: Basevalue
-  - label: Inspect
-    name: Inspect
-  - label: Help
-    name: Help
 
 ---
 

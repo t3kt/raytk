@@ -19,10 +19,6 @@ op:
     name: S
   - label: Iterations
     name: Iterations
-  - label: Inspect
-    name: Inspect
-  - label: Help
-    name: Help
 
 ---
 

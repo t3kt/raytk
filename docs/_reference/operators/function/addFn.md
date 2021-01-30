@@ -80,10 +80,6 @@ op:
     name: Enable
   - label: Add
     name: Add
-  - label: Inspect
-    name: Inspect
-  - label: Help
-    name: Help
 
 ---
 

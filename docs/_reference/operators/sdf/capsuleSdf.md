@@ -24,10 +24,6 @@ op:
   - label: Radius
     name: Radius
     summary: The thickness of the capsule.
-  - label: Inspect
-    name: Inspect
-  - label: Help
-    name: Help
   summary: A cylinder with rounded ends, between two points.
 
 ---

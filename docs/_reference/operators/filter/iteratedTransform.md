@@ -118,10 +118,6 @@ op:
     name: Vecparam3
   - label: Vec Param 4
     name: Vecparam4
-  - label: Inspect
-    name: Inspect
-  - label: Help
-    name: Help
   summary: Performs a transform multiple times, optionally reflecting across axes
     in between the steps.
 

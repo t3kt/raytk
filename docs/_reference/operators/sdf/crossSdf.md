@@ -20,10 +20,6 @@ op:
   - label: Smooth Radius
     name: Smoothradius
     summary: Smoothing applied to the intersections of the arms.
-  - label: Inspect
-    name: Inspect
-  - label: Help
-    name: Help
   summary: An SDF for a 3D cross of infinite length along each axis.
 
 ---

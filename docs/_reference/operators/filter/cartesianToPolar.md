@@ -44,10 +44,6 @@ op:
     - label: Cylindrical Z
       name: cylindricalz
     name: Conversion
-  - label: Inspect
-    name: Inspect
-  - label: Help
-    name: Help
 
 ---
 

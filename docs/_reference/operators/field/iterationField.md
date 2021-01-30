@@ -40,10 +40,6 @@ op:
     - label: Full Data
       name: full
     name: Iterationmode
-  - label: Inspect
-    name: Inspect
-  - label: Help
-    name: Help
   summary: Field that returns the current iteration, from a downstream OP.
 
 ---

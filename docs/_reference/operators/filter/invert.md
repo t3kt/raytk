@@ -34,10 +34,6 @@ op:
   parameters:
   - label: Enable
     name: Enable
-  - label: Inspect
-    name: Inspect
-  - label: Help
-    name: Help
   summary: Invert an SDF, so that the inside is the outside.
 
 ---

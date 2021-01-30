@@ -45,10 +45,6 @@ op:
     - label: Length(XYZW)
       name: lengthxyzw
     name: Usepart
-  - label: Inspect
-    name: Inspect
-  - label: Help
-    name: Help
 
 ---
 

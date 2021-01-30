@@ -26,8 +26,6 @@ op:
   - label: Up Vector
     name: Camup
     summary: Up vector (used to interpret the `Lookatpos`).
-  - label: Help
-    name: Help
   summary: A camera that focuses on a specific point in space.
 
 ---

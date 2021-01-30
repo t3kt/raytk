@@ -21,10 +21,6 @@ op:
     name: Overridemaxdist
   - label: Maximum Distance
     name: Maxdist
-  - label: Inspect
-    name: Inspect
-  - label: Help
-    name: Help
   summary: A soft-edged shadow.
 
 ---

@@ -13,10 +13,6 @@ op:
   parameters:
   - label: Scale
     name: Scale
-  - label: Inspect
-    name: Inspect
-  - label: Help
-    name: Help
 
 ---
 

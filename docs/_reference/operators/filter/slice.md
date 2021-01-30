@@ -48,10 +48,6 @@ op:
     name: Smoothradius
   - label: Enable Mirror
     name: Enablemirror
-  - label: Inspect
-    name: Inspect
-  - label: Help
-    name: Help
 
 ---
 

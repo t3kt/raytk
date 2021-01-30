@@ -13,10 +13,6 @@ op:
   parameters:
   - label: Shadow Level
     name: Shadowlevel
-  - label: Inspect
-    name: Inspect
-  - label: Help
-    name: Help
   summary: A simple hard-edged shadow.
 
 ---

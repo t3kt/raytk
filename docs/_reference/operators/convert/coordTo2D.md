@@ -59,10 +59,6 @@ op:
     - label: Zero
       name: zero
     name: Partz
-  - label: Inspect
-    name: Inspect
-  - label: Help
-    name: Help
 
 ---
 

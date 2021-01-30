@@ -29,10 +29,6 @@ op:
     - label: Z
       name: z
     name: Axis
-  - label: Inspect
-    name: Inspect
-  - label: Help
-    name: Help
   summary: SDF for a cylinder.
 
 ---

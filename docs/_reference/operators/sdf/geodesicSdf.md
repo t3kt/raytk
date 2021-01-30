@@ -55,10 +55,6 @@ op:
   - label: Spike Radius
     name: Spikeradius
     summary: The base radius of each spike.
-  - label: Inspect
-    name: Inspect
-  - label: Help
-    name: Help
   summary: A geodesic polyhedron, optionally with a spike on each face.
 
 ---

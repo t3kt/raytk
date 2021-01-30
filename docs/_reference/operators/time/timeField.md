@@ -63,10 +63,6 @@ op:
     - label: Light Context
       name: LightContext
     name: Contexttype
-  - label: Inspect
-    name: Inspect
-  - label: Help
-    name: Help
 
 ---
 

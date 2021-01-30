@@ -61,10 +61,6 @@ op:
     - label: Z
       name: z
     name: Axisz
-  - label: Inspect
-    name: Inspect
-  - label: Help
-    name: Help
 
 ---
 

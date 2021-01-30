@@ -20,10 +20,6 @@ op:
   - label: Width
     name: Width
     summary: The width of the base of the pyramid.
-  - label: Inspect
-    name: Inspect
-  - label: Help
-    name: Help
   summary: A pyramid with four sides.
 
 ---

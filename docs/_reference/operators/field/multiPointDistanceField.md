@@ -41,10 +41,6 @@ op:
     - label: Light Context
       name: LightContext
     name: Contexttype
-  - label: Inspect
-    name: Inspect
-  - label: Help
-    name: Help
   summary: A vector field that provides the distance from 4 specific points in space
     (one for each part of the vector).
 

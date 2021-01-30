@@ -71,10 +71,6 @@ op:
   parameters:
   - label: Enable
     name: Enable
-  - label: Inspect
-    name: Inspect
-  - label: Help
-    name: Help
   summary: Combines SDFs using the intersect operator.
 
 ---

@@ -84,10 +84,6 @@ op:
   - label: Radius
     name: Radius
     summary: The size of the blending region.
-  - label: Inspect
-    name: Inspect
-  - label: Help
-    name: Help
   summary: Columns SDF combine, producing n-1 circular columns/ridges at a 45 degree
     angles along the blend region.
 

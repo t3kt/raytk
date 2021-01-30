@@ -54,10 +54,6 @@ op:
     name: Specularexp
   - label: Enable Shadow
     name: Enableshadow
-  - label: Inspect
-    name: Inspect
-  - label: Help
-    name: Help
 
 ---
 

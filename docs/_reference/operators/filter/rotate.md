@@ -75,10 +75,6 @@ op:
     name: Rord
   - label: Rotate XYZ
     name: Rot
-  - label: Inspect
-    name: Inspect
-  - label: Help
-    name: Help
 
 ---
 

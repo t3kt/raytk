@@ -17,10 +17,6 @@ op:
     name: Intensity
   - label: Color
     name: Color
-  - label: Inspect
-    name: Inspect
-  - label: Help
-    name: Help
   status: beta
 
 ---

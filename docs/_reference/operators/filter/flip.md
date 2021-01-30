@@ -55,10 +55,6 @@ op:
     name: Mergeradius
   - label: Iterate On Sides
     name: Iterateonsides
-  - label: Inspect
-    name: Inspect
-  - label: Help
-    name: Help
 
 ---
 

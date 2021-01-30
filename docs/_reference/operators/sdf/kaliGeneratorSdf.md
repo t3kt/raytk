@@ -21,10 +21,6 @@ op:
     name: Boxsize
   - label: Box Round
     name: Boxround
-  - label: Inspect
-    name: Inspect
-  - label: Help
-    name: Help
   summary: Fractal SDF based on "Generators" by Kali (https://www.shadertoy.com/view/Xtf3Rn).
 
 ---

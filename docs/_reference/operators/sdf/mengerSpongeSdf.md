@@ -25,10 +25,6 @@ op:
   - label: Cross Scale
     name: Crossscale
     summary: The size of the holes cut through the boxes at each step.
-  - label: Inspect
-    name: Inspect
-  - label: Help
-    name: Help
   summary: Menger sponge fractal, made of boxes with holes cut through each axis.
 
 ---

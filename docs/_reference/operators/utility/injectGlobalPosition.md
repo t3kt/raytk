@@ -32,10 +32,6 @@ op:
   parameters:
   - label: Enable
     name: Enable
-  - label: Inspect
-    name: Inspect
-  - label: Help
-    name: Help
   summary: Calls its input using the untransformed global position.
 
 ---

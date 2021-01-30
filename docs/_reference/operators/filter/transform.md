@@ -82,10 +82,6 @@ op:
     - label: Rz Ry Rx
       name: zyx
     name: Rotateorder
-  - label: Inspect
-    name: Inspect
-  - label: Help
-    name: Help
   summary: Transform the coordinates of the input, with rotation, scaling, and translation.
 
 ---

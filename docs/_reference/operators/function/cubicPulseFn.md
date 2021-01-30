@@ -28,10 +28,6 @@ op:
     name: Width
   - label: Phase
     name: Phase
-  - label: Inspect
-    name: Inspect
-  - label: Help
-    name: Help
 
 ---
 

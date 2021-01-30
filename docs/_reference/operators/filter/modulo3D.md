@@ -33,10 +33,6 @@ op:
     name: Offset
   - label: Shift
     name: Shift
-  - label: Inspect
-    name: Inspect
-  - label: Help
-    name: Help
   summary: Repeats space along all 3 axes.
 
 ---

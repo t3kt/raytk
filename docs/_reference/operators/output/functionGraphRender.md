@@ -148,10 +148,6 @@ op:
     name: Format
   - label: Time Reference Operator
     name: Timerefop
-  - label: Inspect
-    name: Inspect
-  - label: Help
-    name: Help
   summary: Visualizes the graph of a function operator.
 
 ---

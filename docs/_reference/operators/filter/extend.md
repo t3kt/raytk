@@ -38,10 +38,6 @@ op:
     name: Center
   - label: Size
     name: Size
-  - label: Inspect
-    name: Inspect
-  - label: Help
-    name: Help
 
 ---
 

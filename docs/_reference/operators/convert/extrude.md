@@ -43,10 +43,6 @@ op:
     name: Height
   - label: Offset
     name: Offset
-  - label: Inspect
-    name: Inspect
-  - label: Help
-    name: Help
 
 ---
 

@@ -43,10 +43,6 @@ op:
     - label: Object ID (Light)
       name: lightobjectid
     name: Contextfield
-  - label: Inspect
-    name: Inspect
-  - label: Help
-    name: Help
   summary: Field that returns various fields from the context, from a downstream OP.
 
 ---

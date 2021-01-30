@@ -45,10 +45,6 @@ op:
     name: Radialoffset
   - label: Axis Offset
     name: Axisoffset
-  - label: Inspect
-    name: Inspect
-  - label: Help
-    name: Help
 
 ---
 

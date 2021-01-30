@@ -84,10 +84,6 @@ op:
     - label: Mirror
       name: mirror
     name: Extendmode
-  - label: Inspect
-    name: Inspect
-  - label: Help
-    name: Help
   summary: A float or vector field that looks up values from a texture.
 
 ---

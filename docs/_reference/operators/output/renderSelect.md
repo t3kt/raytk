@@ -44,8 +44,6 @@ op:
     name: Outputbuffer
   - label: Lock Buffer Menu
     name: Lockbuffermenu
-  - label: Help
-    name: Help
 
 ---
 

@@ -71,10 +71,6 @@ op:
     name: Iterateoncells
     summary: Enables upstream operators to check which cell in the reflection grid
       a point is in.
-  - label: Inspect
-    name: Inspect
-  - label: Help
-    name: Help
   summary: Mirror coordinates across two axes and the diagonals.
 
 ---

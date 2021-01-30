@@ -17,10 +17,6 @@ op:
     name: Points
   - label: Tightness
     name: Tightness
-  - label: Inspect
-    name: Inspect
-  - label: Help
-    name: Help
 
 ---
 

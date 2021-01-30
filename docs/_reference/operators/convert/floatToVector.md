@@ -130,10 +130,6 @@ op:
     - label: One
       name: one
     name: Partsourcew
-  - label: Inspect
-    name: Inspect
-  - label: Help
-    name: Help
 
 ---
 

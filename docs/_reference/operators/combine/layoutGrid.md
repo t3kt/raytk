@@ -103,10 +103,6 @@ op:
   - label: Pre Scale
     name: Prescale
     summary: Scales the inputs within their cells.
-  - label: Inspect
-    name: Inspect
-  - label: Help
-    name: Help
   summary: Slices space into a grid, and places each input in a separate cell.
 
 ---

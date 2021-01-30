@@ -66,10 +66,6 @@ op:
     name: Enable
   - label: Mix
     name: Mix
-  - label: Inspect
-    name: Inspect
-  - label: Help
-    name: Help
 
 ---
 

@@ -57,10 +57,6 @@ op:
     name: Operation
   - label: Swap Order
     name: Swaporder
-  - label: Inspect
-    name: Inspect
-  - label: Help
-    name: Help
   summary: Combines float or vector fields using one of several mathematical operations.
 
 ---

@@ -23,10 +23,6 @@ op:
     name: Attenuationstart
   - label: Attenuation End
     name: Attenuationend
-  - label: Inspect
-    name: Inspect
-  - label: Help
-    name: Help
   summary: Light eminating from a single point in space, with optional distance attentuation.
 
 ---

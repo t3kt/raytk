@@ -54,10 +54,6 @@ op:
     name: Mirrortype
   - label: Iterate On Cells
     name: Iterateoncells
-  - label: Inspect
-    name: Inspect
-  - label: Help
-    name: Help
   summary: Repeats space along 2 axes.
 
 ---

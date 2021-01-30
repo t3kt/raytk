@@ -50,10 +50,6 @@ op:
   - label: Exponent
     name: Exponent
     summary: Controls the sharpness or smoothness of the edges.
-  - label: Inspect
-    name: Inspect
-  - label: Help
-    name: Help
   summary: Generates one of several different types of polyhedra.
 
 ---

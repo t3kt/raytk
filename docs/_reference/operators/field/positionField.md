@@ -33,10 +33,6 @@ op:
     - label: Ray Context
       name: RayContext
     name: Contexttype
-  - label: Inspect
-    name: Inspect
-  - label: Help
-    name: Help
   summary: A vector field that evaluates to the coordinates in space.
 
 ---

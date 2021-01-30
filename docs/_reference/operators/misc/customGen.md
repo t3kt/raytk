@@ -77,10 +77,6 @@ op:
     - label: raytkMaterial
       name: raytkMaterial
     name: Librarynames
-  - label: Inspect
-    name: Inspect
-  - label: Help
-    name: Help
   status: deprecated
 
 ---

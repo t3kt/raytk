@@ -26,10 +26,6 @@ op:
   - label: Iterations
     name: Iterations
     summary: The number of steps used when refining the fractal.
-  - label: Inspect
-    name: Inspect
-  - label: Help
-    name: Help
   summary: Mandelbulb fractal.
 
 ---

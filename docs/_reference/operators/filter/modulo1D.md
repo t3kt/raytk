@@ -60,10 +60,6 @@ op:
     name: Limitoffset
   - label: Iterate On Cells
     name: Iterateoncells
-  - label: Inspect
-    name: Inspect
-  - label: Help
-    name: Help
 
 ---
 

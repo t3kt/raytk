@@ -77,10 +77,6 @@ op:
   - label: Shift
     name: Shift
     summary: Shifts the axis to bend along and the axis to bend towards.
-  - label: Inspect
-    name: Inspect
-  - label: Help
-    name: Help
   summary: Bends space, along a main axis, towards a second axis.
 
 ---

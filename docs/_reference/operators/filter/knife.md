@@ -45,10 +45,6 @@ op:
   - label: Rotate Plane
     name: Rotateplane
     summary: Rotate the cut plane in XYZ.
-  - label: Inspect
-    name: Inspect
-  - label: Help
-    name: Help
   summary: Cuts off an SDF along a plane.
 
 ---

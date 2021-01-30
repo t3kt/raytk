@@ -42,10 +42,6 @@ op:
     name: Smoothing
   - label: Smoothing Multiplier
     name: Smoothingmult
-  - label: Inspect
-    name: Inspect
-  - label: Help
-    name: Help
   status: beta
 
 ---

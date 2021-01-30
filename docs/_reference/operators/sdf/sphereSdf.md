@@ -17,10 +17,6 @@ op:
   - label: Radius
     name: Radius
     summary: The radius of the sphere.
-  - label: Inspect
-    name: Inspect
-  - label: Help
-    name: Help
   summary: SDF in 3D space for a uniform sphere.
 
 ---

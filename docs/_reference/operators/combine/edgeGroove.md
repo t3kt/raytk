@@ -80,10 +80,6 @@ op:
   - label: Radius
     name: Radius
     summary: The width of the bar/groove.
-  - label: Inspect
-    name: Inspect
-  - label: Help
-    name: Help
   summary: Creates a raised bar or indented groove where the second input intersects
     with the first.
 

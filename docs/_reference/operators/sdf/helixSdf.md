@@ -82,10 +82,6 @@ op:
     name: Spread
   - label: Dual Spread
     name: Dualspread
-  - label: Inspect
-    name: Inspect
-  - label: Help
-    name: Help
 
 ---
 

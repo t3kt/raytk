@@ -18,8 +18,6 @@ op:
   - label: Create Light
     name: Createlight
     summary: Creates and attaches an instance of the `camera` palette component.
-  - label: Help
-    name: Help
   status: beta
 
 ---
