@@ -116,6 +116,10 @@ Sdf createNonHitSdf() {
 	return res;
 }
 
+bool isNonHitSdf(Sdf res) {
+	return res.x >= RAYTK_MAX_DIST;
+}
+
 Sdf withAdjustedScale(in Sdf res, float scaleMult) {
 	res.x *= scaleMult;
 	return res;

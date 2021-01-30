@@ -199,6 +199,7 @@ vec3 getColorInner(vec3 p, MaterialContext matCtx, int m) {
 }
 
 vec3 getColor(vec3 p, MaterialContext matCtx) {
+	if (isNonHitSdf(matCtx.result)) return vec3(0.);
 	vec3 col = vec3(0);
 	float ratio = matCtx.result.interpolant;
 	int m1 = int(matCtx.result.material);
@@ -346,6 +347,7 @@ void main()
 						reflectMatCtx.ray.dir = reflect(reflectMatCtx.ray.dir, reflectMatCtx.normal);
 						reflectMatCtx.ray.pos += reflectMatCtx.normal * 0.0001;
 						reflectMatCtx.result = castRayBasic(reflectMatCtx.ray, RAYTK_MAX_DIST);
+						if (isNonHitSdf(reflectMatCtx.result)) break;
 						vec3 reflectPos = reflectMatCtx.ray.pos + reflectMatCtx.ray.dir * reflectMatCtx.result.x;
 						reflectMatCtx.normal = calcNormal(reflectPos);
 						matCtx.reflectColor += getColor(reflectPos, reflectMatCtx);
