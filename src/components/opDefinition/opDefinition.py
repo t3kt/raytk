@@ -76,7 +76,7 @@ def _getRegularParams() -> 'List[Par]':
 	host = parentPar().Hostop.eval()
 	if not host:
 		return []
-	paramNames = parentPar().Params.eval().strip().split(' ')
+	paramNames = tdu.expand(parentPar().Params.eval().strip())
 	return [
 			p
 			for p in host.pars(*[pn.strip() for pn in paramNames])
