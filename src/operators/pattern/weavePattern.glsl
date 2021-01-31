@@ -1,3 +1,5 @@
+// weaving 4 by FabriceNeyret2
+// https://www.shadertoy.com/view/llfyDn
 #define THIS_S(x,y)   abs(fract(x)-.5) < THIS_Thickness  ? .7 + .3* sin(3.14* (y + ceil(x) )) : 0.
 
 ReturnT thismap(CoordT p, ContextT ctx) {
