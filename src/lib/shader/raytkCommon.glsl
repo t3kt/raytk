@@ -634,3 +634,8 @@ vec2 spiralZoom(vec2 p, vec2 offs, float n, float spiral, float zoom, vec2 phase
 	float d = log(length(p));
 	return vec2(a*n + d*spiral, -d*zoom + a) + phase;
 }
+// Standard Mobius transform: f(z) = (az + b)/(cz + d). Slightly obfuscated.
+vec2 mobiusTransform(vec2 p, vec2 z1, vec2 z2) {
+	z1 = p - z1; p -= z2;
+	return vec2(dot(z1, p), z1.y*p.x - z1.x*p.y) / dot(p, p);
+}
