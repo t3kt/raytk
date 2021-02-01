@@ -625,3 +625,12 @@ float dot2( in vec3 v ) { return dot(v,v); }
 float map01(float value, float inMin, float inMax) {
 	return (value - inMin) / (inMax - inMin);
 }
+
+// from Logarithmic Mobius Transform by Shane
+// https://www.shadertoy.com/view/4dcSWs
+vec2 spiralZoom(vec2 p, vec2 offs, float n, float spiral, float zoom, vec2 phase) {
+	p -= offs;
+	float a = atan(p.y, p.x)/6.283;
+	float d = log(length(p));
+	return vec2(a*n + d*spiral, -d*zoom + a) + phase;
+}
