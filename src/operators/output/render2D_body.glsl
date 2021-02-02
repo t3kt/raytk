@@ -36,8 +36,17 @@ void main()
 
 	vec2 resolution = uTDOutputInfo.res.zw;
 	vec2 fragCoord = vUV.st;//*resolution;
+
+	#if defined(THIS_Alignment_bottomleft)
+	vec2 p = fragCoord;
+	#elif defined(THIS_Alignment_center)
+	vec2 p = fragCoord - vec2(0.5);
+	#elif defined(THIS_Alignment_legacy)
 	fragCoord.x *= uTDOutputInfo.res.z/uTDOutputInfo.res.w;
 	vec2 p = fragCoord*2. - vec2(1.);
+	#else
+	#error invalidAlignment
+	#endif
 
 #ifdef THIS_RETURN_TYPE_Sdf
 	Sdf res = map(p);
