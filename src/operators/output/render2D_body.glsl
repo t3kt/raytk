@@ -43,7 +43,7 @@ void main()
 	Sdf res = map(p);
 
 	#ifdef OUTPUT_COLOR
-	colorOut = getColor(res);
+	colorOut = vec4(res.x);
 	#endif
 	#ifdef OUTPUT_SDF
 	sdfOut = vec4(res.x);
