@@ -12,7 +12,7 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 
 	q = mobiusTransform(
 		q,
-		THIS_Zoom,
+		THIS_Point,
 		THIS_Center);
 
 	#if defined(THIS_COORD_TYPE_vec2)
