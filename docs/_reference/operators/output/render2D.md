@@ -83,28 +83,26 @@ op:
     - label: 32-bit float (Mono+Alpha)
       name: monoalpha32float
     name: Format
+  - label: Alignment
+    menuOptions:
+    - label: Legacy
+      name: legacy
+    - label: Bottom Left
+      name: bottomleft
+    - label: Center
+      name: center
+    name: Alignment
+  - label: Scaling
+    menuOptions:
+    - label: Fill
+      name: fill
+    - label: Fit Inside
+      name: fitinside
+    - label: Fit Outside
+      name: fitoutside
+    name: Scaling
   - label: Max Distance
     name: Maxdist
-  - label: Enable Edge
-    name: Enableedge
-  - label: Edge Thickness
-    name: Edgethickness
-  - label: Edge Blending
-    name: Edgeblending
-  - label: Edge Color
-    name: Edgecolor
-  - label: Inside Period
-    name: Insideperiod
-  - label: Inside Color 1
-    name: Insidecolor1
-  - label: Inside Color 2
-    name: Insidecolor2
-  - label: Outside Period
-    name: Outsideperiod
-  - label: Outside Color 1
-    name: Outsidecolor1
-  - label: Outside Color 2
-    name: Outsidecolor2
   - label: Time Reference Operator
     name: Timerefop
   - label: Shader Builder Config

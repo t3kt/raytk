@@ -50,6 +50,15 @@ op:
   - label: Twist Phase
     name: Twistphase
     summary: Shift applied to the twisting of the ring.
+  - label: Axis
+    menuOptions:
+    - label: X
+      name: x
+    - label: Y
+      name: y
+    - label: Z
+      name: z
+    name: Axis
   summary: SDF for a squared mobius ring, which is like a rectangular bar twisted
     and then bent into a ring.
 

@@ -15,6 +15,7 @@ cat:
   - name: circleSdf
   - name: crossSdf2d
     summary: 2D cross shape SDF, with 4 arms and option rounding of the intersections.
+  - name: dogBoneSdf2d
   - name: parabolaSdf2d
   - name: pieSdf2d
   - name: polygonSdf2d

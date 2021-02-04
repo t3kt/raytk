@@ -51,6 +51,7 @@ cat:
     status: beta
   - name: waveField
     summary: A field that uses a periodic wave.
+  - name: waveletNoiseField
   summary: Float or vector fields, which provide values for the requested coordinates.
 
 ---

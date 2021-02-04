@@ -37,6 +37,7 @@ cat:
     summary: Pulls or twists space within an area.
   - name: mirrorOctant
     summary: Mirror coordinates across two axes and the diagonals.
+  - name: mobiusTransform
   - name: modulo1D
   - name: modulo2D
     summary: Repeats space along 2 axes.
@@ -64,6 +65,8 @@ cat:
   - name: scale
     summary: Scales space.
   - name: slice
+  - name: spiralZoom
+    status: beta
   - name: transform
     summary: Transform the coordinates of the input, with rotation, scaling, and translation.
   - name: translate
