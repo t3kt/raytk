@@ -1,5 +1,0 @@
-name	label	expr
-tri	Triangle	sdTriPrism(p - THIS_Translate, vec2(THIS_Radius, THIS_Height))
-square	Square	sdSquarePrism(p - THIS_Translate, vec2(THIS_Radius, THIS_Height))
-hex	Hexagon	sdHexPrism(p - THIS_Translate, vec2(THIS_Radius, THIS_Height))
-octogon	Octogon	sdOctogonPrism(p - THIS_Translate, THIS_Radius, THIS_Height)
