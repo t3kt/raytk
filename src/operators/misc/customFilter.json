@@ -1,5 +1,6 @@
 {
   "meta": {
+    "opStatus": "deprecated",
     "opType": "raytk.operators.misc.customFilter",
     "opVersion": 4
   }

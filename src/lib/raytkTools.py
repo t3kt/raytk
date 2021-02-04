@@ -1,7 +1,7 @@
 from pathlib import Path
 from raytkDocs import OpDocManager
 from raytkModel import OpDefMeta, OpSpec
-from raytkUtil import RaytkContext, ROPInfo, focusCustomParameterPage
+from raytkUtil import RaytkContext, ROPInfo, focusCustomParameterPage, RaytkTags
 from typing import List, Optional
 
 # noinspection PyUnreachableCode
@@ -142,7 +142,31 @@ class RaytkTools(RaytkContext):
 			if spec.meta.opVersion is None:
 				v = info.opVersion
 				spec.meta.opVersion = int(v) if v else 0
+			spec.meta.opStatus = info.statusLabel
 		return spec
+
+	@staticmethod
+	def setROPStatus(rop: 'COMP', status: Optional[str]):
+		info = ROPInfo(rop)
+		if not info or not info.isMaster:
+			return
+		# note: since applying with status false resets the color, the false ones have to be done before the true one
+		if status == 'alpha':
+			RaytkTags.beta.apply(info.rop, False)
+			RaytkTags.deprecated.apply(info.rop, False)
+			RaytkTags.alpha.apply(info.rop, True)
+		elif status == 'beta':
+			RaytkTags.alpha.apply(info.rop, False)
+			RaytkTags.deprecated.apply(info.rop, False)
+			RaytkTags.beta.apply(info.rop, True)
+		elif status == 'deprecated':
+			RaytkTags.alpha.apply(info.rop, False)
+			RaytkTags.beta.apply(info.rop, False)
+			RaytkTags.deprecated.apply(info.rop, True)
+		else:
+			RaytkTags.alpha.apply(info.rop, False)
+			RaytkTags.beta.apply(info.rop, False)
+			RaytkTags.deprecated.apply(info.rop, False)
 
 	@staticmethod
 	def _getROPSpecFile(rop: 'COMP', checkExists: bool) -> 'Optional[Path]':
@@ -166,6 +190,7 @@ class RaytkTools(RaytkContext):
 			return
 		info.opType = spec.meta.opType
 		info.opVersion = spec.meta.opVersion
+		self.setROPStatus(rop, spec.meta.opStatus)
 
 	def saveROPSpec(self, rop: 'COMP'):
 		info = ROPInfo(rop)

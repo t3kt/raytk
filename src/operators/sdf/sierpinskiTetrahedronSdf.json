@@ -1,5 +1,6 @@
 {
   "meta": {
+    "opStatus": "alpha",
     "opType": "raytk.operators.sdf.sierpinskiTetrahedronSdf",
     "opVersion": 3
   }

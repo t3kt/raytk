@@ -1,5 +1,6 @@
 {
   "meta": {
+    "opStatus": "beta",
     "opType": "raytk.operators.field.triPlanarTextureField",
     "opVersion": 0
   }

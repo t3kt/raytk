@@ -505,11 +505,13 @@ def excludeKeys(d, keys):
 class OpDefMeta(DataObject):
 	opType: Optional[str] = None
 	opVersion: Optional[int] = None
+	opStatus: Optional[str] = None
 
 	def toObj(self):
 		return cleanDict({
 			'opType': self.opType,
 			'opVersion': self.opVersion,
+			'opStatus': self.opStatus,
 		})
 
 	@classmethod

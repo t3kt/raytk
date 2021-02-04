@@ -1,5 +1,6 @@
 {
   "meta": {
+    "opStatus": "alpha",
     "opType": "raytk.operators.utility.extractDebugValues",
     "opVersion": 1
   }

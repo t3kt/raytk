@@ -34,23 +34,7 @@ class ROPEditor:
 		if not info:
 			return
 		status = self._statusDropMenu.par.Value0.eval()
-		# note: since applying with status false resets the color, the false ones have to be done before the true one
-		if status == 'alpha':
-			RaytkTags.beta.apply(info.rop, False)
-			RaytkTags.deprecated.apply(info.rop, False)
-			RaytkTags.alpha.apply(info.rop, True)
-		elif status == 'beta':
-			RaytkTags.alpha.apply(info.rop, False)
-			RaytkTags.deprecated.apply(info.rop, False)
-			RaytkTags.beta.apply(info.rop, True)
-		elif status == 'deprecated':
-			RaytkTags.alpha.apply(info.rop, False)
-			RaytkTags.beta.apply(info.rop, False)
-			RaytkTags.deprecated.apply(info.rop, True)
-		else:
-			RaytkTags.alpha.apply(info.rop, False)
-			RaytkTags.beta.apply(info.rop, False)
-			RaytkTags.deprecated.apply(info.rop, False)
+		RaytkTools().setROPStatus(info.rop, status)
 
 	@property
 	def ROP(self) -> 'Optional[COMP]':
