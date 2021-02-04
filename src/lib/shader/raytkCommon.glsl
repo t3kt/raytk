@@ -110,6 +110,10 @@ void assignMaterial(inout Sdf res, int materialId) {
 	res.interpolant = 0.;
 }
 
+#ifndef RAYTK_MAX_DIST
+	#define RAYTK_MAX_DIST 99999
+#endif
+
 Sdf createNonHitSdf() {
 	Sdf res = createSdf(RAYTK_MAX_DIST);
 	assignMaterial(res, -1);
