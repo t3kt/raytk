@@ -1,0 +1,3 @@
+name	label	params
+separate	Separate XYZ	Scalex Scaley Scalez
+uniform	Uniform	Uniformscale
