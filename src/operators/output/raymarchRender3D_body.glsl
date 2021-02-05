@@ -58,10 +58,11 @@ Sdf castRay(Ray ray, float maxDist) {
 			nearHit += nearHitAmount;
 		}
 		#endif
-		if (dist < RAYTK_SURF_DIST) {
+		if (res.x < RAYTK_SURF_DIST) {
 			#ifdef RAYTK_STEPS_IN_SDF
 			res.steps = i + 1;
 			#endif
+			res.x = dist;
 			return res;
 		}
 		if (dist > maxDist) {
@@ -269,6 +270,9 @@ void main()
 	#ifdef OUTPUT_DEPTH
 	depthOut = vec4(0);
 	#endif
+	#ifdef OUTPUT_DEBUG
+	debugOut = vec4(0, 0, 0, 1);
+	#endif
 	MaterialContext matCtx;
 	matCtx.context = createDefaultContext();
 
@@ -371,14 +375,10 @@ void main()
 			#if defined(OUTPUT_OBJECTID) && defined(RAYTK_OBJECT_ID_IN_SDF)
 			objectIdOut += res.objectId;
 			#endif
-			#if defined(OUTPUT_STEPS) && defined(RAYTK_STEPS_IN_SDF)
-			stepsOut += vec4(res.steps, float(res.steps)/float(RAYTK_MAX_STEPS), 0, 1);
-			#endif
-		} else {
-			#ifdef OUTPUT_STEPS
-			stepsOut += vec4(RAYTK_MAX_STEPS, 0, 0, 0);
-			#endif
 		}
+		#if defined(OUTPUT_STEPS) && defined(RAYTK_STEPS_IN_SDF)
+		stepsOut += vec4(res.steps, float(res.steps)/float(RAYTK_MAX_STEPS), 0, 1);
+		#endif
 	#if THIS_ANTI_ALIAS > 1
 	}
 	#endif
