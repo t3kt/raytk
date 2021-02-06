@@ -42,8 +42,8 @@ bool checkLimit(vec3 p) {
 #ifdef THIS_USE_NEAR_HIT
 
 float checkNearHit(float d) {
-	if (d > THIS_Nearhitrange) { return 0; }
-	return smoothstep(RAYTK_SURF_DIST, THIS_Nearhitrange, d);
+	if (d > THIS_Nearhitrange + THIS_Nearhitfade) { return 0; }
+	return smoothstep(RAYTK_SURF_DIST, THIS_Nearhitfade, d - THIS_Nearhitrange);
 }
 
 #endif
