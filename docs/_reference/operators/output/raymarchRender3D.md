@@ -205,6 +205,8 @@ op:
     name: Enablereflection
   - label: Reflection Passes
     name: Reflectionpasses
+  - label: Near Hit Fade
+    name: Nearhitfade
   summary: Renders a scene using 3D raymarching.
 
 ---

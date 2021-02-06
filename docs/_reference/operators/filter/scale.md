@@ -57,6 +57,15 @@ op:
   - label: Scale
     name: Scale
     summary: Scale to apply to each axis. If input is 2D only X and Y are used.
+  - label: Scale Type
+    menuOptions:
+    - label: Separate XYZ
+      name: separate
+    - label: Uniform
+      name: uniform
+    name: Scaletype
+  - label: Uniform Scale
+    name: Uniformscale
   summary: Scales space.
 
 ---
