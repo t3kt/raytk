@@ -5,7 +5,7 @@ import re
 from typing import Dict, Iterable, List, Optional, Union
 import yaml
 
-from raytkUtil import CoordTypes, ContextTypes, ReturnTypes, cleanDict, ROPInfo, InputInfo
+from raytkUtil import CoordTypes, ContextTypes, ReturnTypes, cleanDict, ROPInfo, InputInfo, RaytkTags
 
 # noinspection PyUnreachableCode
 if False:
@@ -305,7 +305,7 @@ class TextData(ModelObject):
 	text: Optional[str] = None
 
 @dataclass
-class OpMeta(ModelObject):
+class ROPMeta(ModelObject):
 	yaml_tag = u'!meta'
 
 	opType: str
@@ -357,7 +357,7 @@ class MultiInputSpec(ModelObject):
 	minimumInputs: Optional[int] = None
 
 @dataclass
-class OpDef(ModelObject):
+class ROPDef(ModelObject):
 	# noinspection PyUnresolvedReferences
 	"""Definition for a ROP.
 
@@ -455,26 +455,26 @@ def _cleanParamSpecObj(obj: dict):
 			del obj[key]
 
 @dataclass
-class OpSpec(ModelObject):
-	yaml_tag = u'!opSpec'
+class ROPSpec(ModelObject):
+	yaml_tag = u'!rop'
 
-	meta: Optional[OpMeta] = None
-	opDef: OpDef = field(default_factory=OpDef)
+	meta: Optional[ROPMeta] = None
+	opDef: ROPDef = field(default_factory=ROPDef)
 
 	paramPages: List[ParamPage] = field(default_factory=dict)
 
 	multiInput: Optional[MultiInputSpec] = None
 	inputs: Optional[List[InputSpec]] = field(default_factory=list)
 
-def extractOpSpec(rop: 'COMP') -> OpSpec:
+def extractOpSpec(rop: 'COMP') -> ROPSpec:
 	info = ROPInfo(rop)
-	spec = OpSpec(
-		meta=OpMeta(
+	spec = ROPSpec(
+		meta=ROPMeta(
 			opType=info.opType,
 			opVersion=info.opVersion,
 			opStatus=info.statusLabel,
 		),
-		opDef=OpDef(
+		opDef=ROPDef(
 			coordType=_valueOrExprFromPar(info.opDefPar.Coordtype),
 			returnType=_valueOrExprFromPar(info.opDefPar.Returntype),
 			contextType=_valueOrExprFromPar(info.opDefPar.Contexttype),
@@ -640,3 +640,158 @@ class EditorItemGraph:
 				file=dat.par['file'],
 			)
 		return cls(par, supported=False)
+
+class ROPSpecLoader:
+	def __init__(self, rop: 'COMP', spec: ROPSpec):
+		self.rop = rop
+		self.info = ROPInfo(rop)
+		self.spec = spec
+
+	def loadSpec(self):
+		self._removeGeneratedOps()
+		self._loadMeta()
+		self._loadParamPages()
+		self._loadOpDefSettings()
+		self._loadOpDefTextBlocks()
+		self._loadOpDefTables()
+		self._loadInputs()
+
+	def _removeGeneratedOps(self):
+		for o in self.rop.children:
+			if o.valid and RaytkTags.generated.name in o.tags:
+				try:
+					o.destroy()
+				except:
+					pass
+
+	def _loadMeta(self):
+		meta = self.spec.meta
+		if not meta:
+			return
+		self.info.opVersion = meta.opVersion
+		self.info.opType = meta.opType
+
+	def _loadParamPages(self):
+		newNames = [pageSpec.name for pageSpec in self.spec.paramPages]
+		for page in list(self.rop.customPages):
+			if page.name not in newNames:
+				page.destroy()
+		for pageSpec in self.spec.paramPages:
+			TDJSON.addParametersFromJSONList(self.rop, pageSpec.pars.values())
+
+	def _loadInputs(self):
+		raise NotImplementedError()
+
+	def _loadOpDefSettings(self):
+		p = self.info.opDefPar
+		d = self.spec.opDef
+		_updatePar(p.Coordtype, d.coordType)
+		_updatePar(p.Returntype, d.returnType)
+		_updatePar(p.Contexttype, d.contextType)
+		_updatePar(p.Disableinspect, d.disableInspect)
+
+		_updatePar(p.Params, d.useParams)
+		_updatePar(p.Specialparams, d.specialParams)
+		_updatePar(p.Angleparams, d.angleParams)
+		_updatePar(p.Macroparams, d.macroParams)
+		_updatePar(p.Librarynames, d.libraryNames)
+
+	def _loadOpDefTextBlocks(self):
+		p = self.info.opDefPar
+		d = self.spec.opDef
+		x = -100
+		y = -500
+		self._loadTextSetting(p.Functemplate, d.function, defaultName='function', x=x, y=200)
+		self._loadTextSetting(p.Opglobals, d.opGlobals, defaultName='globals', x=x, y=y)
+		y -= 150
+		self._loadTextSetting(p.Initcode, d.initCode, defaultName='init', x=x, y=y)
+		y -= 150
+		self._loadTextSetting(p.Materialcode, d.material, defaultName='material', x=x, y=y)
+		self._loadTextSetting(p.Callbacks, d.callbacks, defaultName='callbacks', x=200, y=200)
+		self._loadTextSetting(p.Help, d.help, defaultName='help', x=0, y=400)
+
+	def _loadOpDefTables(self):
+		p = self.info.opDefPar
+		d = self.spec.opDef
+		x = -400
+		y = -100
+		self._loadTableSetting(p.Macrotable, d.macroTable, defaultName='macros', x=x, y=y)
+		y -= 150
+		self._loadTableSetting(p.Buffertable, d.bufferTable, defaultName='buffers', x=x, y=y)
+		y -= 150
+		self._loadTableSetting(p.Texturetable, d.textureTable, defaultName='textures', x=x, y=y)
+
+	def _loadTextSetting(
+			self,
+			par: 'Par',
+			val: Optional[TextData],
+			defaultName: str,
+			x: int, y: int):
+		if val is None:
+			_setParVal(par, '')
+			return
+		srcDat = self.rop.create(textDAT, val.name or defaultName)
+		srcDat.nodeX = x
+		srcDat.nodeY = y
+		RaytkTags.generated.apply(srcDat, True)
+		if val.file:
+			srcDat.par.file = val.file
+			srcDat.par.loadonstartpulse.pulse()
+			RaytkTags.fileSync.apply(srcDat, True)
+		else:
+			srcDat.text = val.text or ''
+		_setParVal(par, srcDat)
+
+	def _loadTableSetting(
+			self,
+			par: 'Par',
+			val: Optional[TableData],
+			defaultName: str,
+			x: int, y: int):
+		if val is None:
+			_setParVal(par, '')
+			return
+		srcDat = self.rop.create(tableDAT, val.name or defaultName)
+		srcDat.nodeX = x
+		srcDat.nodeY = y
+		RaytkTags.generated.apply(srcDat, True)
+		if val.file:
+			srcDat.par.file = val.file
+			srcDat.par.loadonstartpulse.pulse()
+			RaytkTags.fileSync.apply(srcDat, True)
+		else:
+			srcDat.clear()
+			for row in val.rows:
+				srcDat.appendRow(row)
+		if not val.evaluate:
+			_setParVal(par, srcDat)
+		else:
+			evalDat = self.rop.create(evaluateDAT, 'eval_' + srcDat.name)
+			RaytkTags.generated.apply(evalDat, True)
+			evalDat.nodeX = srcDat.nodeX + 150
+			evalDat.nodeY = srcDat.nodeY
+			evalDat.inputConnectors[0].connect(srcDat)
+			_setParVal(par, evalDat)
+
+def _updatePar(par: 'Par', val: ValueOrListOrExprT):
+	if val is None:
+		_setParVal(par, par.default)
+	elif isinstance(val, Expr):
+		if not val.expr:
+			_setParVal(par, '')
+		else:
+			_setParExpr(par, val.expr)
+	elif isinstance(val, list):
+		_setParVal(par, ' '.join(val))
+	else:
+		_setParVal(par, val)
+
+def _setParVal(par: 'Par', val):
+	par.val = val if val is not None else ''
+	par.expr = ''
+	par.mode = ParMode.CONSTANT
+
+def _setParExpr(par: 'Par', expr: str):
+	par.val = ''
+	par.expr = expr
+	par.mode = ParMode.EXPRESSION

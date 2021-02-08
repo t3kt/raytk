@@ -76,7 +76,7 @@ class OpDefParsT(_OpMetaPars):
 	Materialcode: 'DatParamT'
 	Macrotable: 'DatParamT'
 	Buffertable: 'DatParamT'
-	Texturetabel: 'DatParamT'
+	Texturetable: 'DatParamT'
 	Generatedmacrotables: 'StrParamT'
 	Params: 'StrParamT'
 	Specialparams: 'StrParamT'
@@ -565,6 +565,7 @@ class RaytkTags:
 	guide = Tag('raytkGuide', _guideColor)
 	guideHeader = Tag('raytkGuideHeader', _guideColor)
 	guideContent = Tag('raytkGuideContent', _guideColor)
+	generated = Tag('raytkGenerated')
 
 def _getActiveEditor() -> 'NetworkEditor':
 	pane = ui.panes.current
