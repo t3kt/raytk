@@ -1,6 +1,6 @@
 from pathlib import Path
 from typing import Optional
-from raytkTools import EditorItemGraph
+from raytkModel import EditorItemGraph
 from raytkUtil import RaytkTags
 import subprocess
 

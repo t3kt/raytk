@@ -265,33 +265,16 @@ yaml.add_implicit_resolver(Expr.yaml_tag, regexp=re.compile(r'^\$.*$'))
 ValueOrExprT = Union[Expr, str, int, float, bool, None]
 ValueOrListOrExprT = Union[ValueOrExprT, List[str]]
 
-@dataclass
-class File(ModelObject):
-	# noinspection PyUnresolvedReferences
-	"""Spec for a DAT corresponding to an external file.
-
-		Attributes:
-			file: Path to the file, relative to the OP tox.
-			name: Name of the associated DAT.
-			evaluate: Whether the contents of the file should be evaluated
-				as expressions.
-	"""
-
-	yaml_tag = u'!file'
-
-	file: str
-	name: Optional[str] = None
-	evaluate: Optional[bool] = None
-
 CellValueT = Union[str, int, float, bool]
 
 @dataclass
 class TableData(ModelObject):
 	# noinspection PyUnresolvedReferences
-	"""Spec for an table DAT with inline content in the spec.
+	"""Spec for an table DAT with either inline content or an external file.
 
 		Attributes:
 			name: Name of the associated DAT.
+			file: Path to the file, relative to the project root.
 			rows: List of rows, where each row is a list of cells.
 			evaluate: Whether the contents of the table should be evaluated
 				as expressions.
@@ -299,6 +282,7 @@ class TableData(ModelObject):
 
 	yaml_tag = u'!table'
 
+	file: Optional[str] = None
 	name: Optional[str] = None
 	rows: List[List[CellValueT]] = field(default_factory=list)
 	evaluate: Optional[bool] = None
@@ -306,21 +290,19 @@ class TableData(ModelObject):
 @dataclass
 class TextData(ModelObject):
 	# noinspection PyUnresolvedReferences
-	"""Spec for a text DAT with inline content in the spec.
+	"""Spec for a text DAT with either inline content or an external file.
 
-			Attributes:
-				name: Name of the associated DAT.
-				text: Text for the DAT.
+		Attributes:
+			name: Name of the associated DAT.
+			file: Path to the file, relative to the project root.
+			text: Text for the DAT.
 	"""
 
 	yaml_tag = u'!text'
 
+	file: Optional[str] = None
 	name: Optional[str] = None
 	text: Optional[str] = None
-
-
-TableSetting = Union[File, TableData, None]
-TextSetting = Union[File, TextData, None]
 
 @dataclass
 class OpMeta(ModelObject):
@@ -387,8 +369,8 @@ class OpDef(ModelObject):
 			disableInspect: Whether the ROP should disable the "Inspect" feature.
 
 			opGlobals: Code block for global declarations used by the ROP.
-				This can either be a Text object with inline content, a File
-				object referring to an external file.
+				This is a TextData object with either inline content or a reference to
+				an external file.
 			initCode: Code block for initialization code that the ROP needs to run.
 			function: Code block for the ROP's primary function.
 			material: Code block for the ROP's material block.
@@ -420,10 +402,10 @@ class OpDef(ModelObject):
 
 	disableInspect: bool = False
 
-	opGlobals: TextSetting = None
-	initCode: TextSetting = None
-	function: TextSetting = None
-	material: TextSetting = None
+	opGlobals: Optional[TextData] = None
+	initCode: Optional[TextData] = None
+	function: Optional[TextData] = None
+	material: Optional[TextData] = None
 
 	useParams: ValueOrListOrExprT = None
 	specialParams: ValueOrListOrExprT = None
@@ -431,12 +413,12 @@ class OpDef(ModelObject):
 	macroParams: ValueOrListOrExprT = None
 	libraryNames: ValueOrListOrExprT = None
 
-	bufferTable: TableSetting = None
-	textureTable: TableSetting = None
-	macroTable: TableSetting = None
+	bufferTable: Optional[TableData] = None
+	textureTable: Optional[TableData] = None
+	macroTable: Optional[TableData] = None
 
-	help: TextSetting = None
-	callbacks: TextSetting = None
+	help: Optional[TextData] = None
+	callbacks: Optional[TextData] = None
 
 @dataclass
 class ParamPage(ModelObject):
@@ -502,14 +484,14 @@ def extractOpSpec(rop: 'COMP') -> OpSpec:
 			angleParams=_valueOrExprFromPar(info.opDefPar.Angleparams),
 			macroParams=_valueOrExprFromPar(info.opDefPar.Macroparams),
 			libraryNames=_valueOrExprFromPar(info.opDefPar.Librarynames),
-			opGlobals=_extractDatSetting(info.opDefPar.Opglobals),
-			initCode=_extractDatSetting(info.opDefPar.Initcode),
-			function=_extractDatSetting(info.opDefPar.Functemplate),
-			help=_extractDatSetting(info.opDefPar.Help),
-			callbacks=_extractDatSetting(info.opDefPar.Callbacks),
-			bufferTable=_extractDatSetting(info.opDefPar.Buffertable),
-			macroTable=_extractDatSetting(info.opDefPar.Macrotable),
-			textureTable=_extractDatSetting(info.opDefPar.Texturetable),
+			opGlobals=_extractDatSetting(info.opDefPar.Opglobals, isText=True),
+			initCode=_extractDatSetting(info.opDefPar.Initcode, isText=True),
+			function=_extractDatSetting(info.opDefPar.Functemplate, isText=True),
+			help=_extractDatSetting(info.opDefPar.Help, isText=True),
+			callbacks=_extractDatSetting(info.opDefPar.Callbacks, isText=True),
+			bufferTable=_extractDatSetting(info.opDefPar.Buffertable, isText=False),
+			macroTable=_extractDatSetting(info.opDefPar.Macrotable, isText=False),
+			textureTable=_extractDatSetting(info.opDefPar.Texturetable, isText=False),
 		),
 	)
 	spec.paramPages = [
@@ -573,43 +555,88 @@ def _valueOrExprFromPar(par: Optional['Par']) -> ValueOrExprT:
 		return Expr(par.expr)
 	raise Exception(f'Parameter mode {par.mode} not supported for {par!r}')
 
-def _extractDatSetting(par: Optional['Par']) -> Union[TextSetting, TableSetting]:
+def _extractDatSetting(par: Optional['Par'], isText: bool) -> Union[TextData, TableData, None]:
 	if par is None:
 		return None
 	if par.mode != ParMode.CONSTANT:
 		raise Exception(f'Parameter mode {par.mode} not supported for {par!r}')
 	if not par:
 		return None
-	from raytkTools import EditorItemGraph
 	graph = EditorItemGraph.fromPar(par)
 	if not graph.supported:
 		raise Exception(f'DAT setup not supported for {par!r}')
 	if graph.file:
-		return File(
-			graph.file.eval(),
+		if isText:
+			return TextData(
+				file=graph.file.eval(),
+				name=graph.sourceDat.name,
+			)
+		else:
+			return TableData(
+				file=graph.file.eval(),
+				name=graph.sourceDat.name,
+				evaluate=graph.hasEval or None,
+			)
+	if graph.endDat.isTable:
+		return TableData(
 			name=graph.sourceDat.name,
+			rows=[
+				[cell.val for cell in row]
+				for row in graph.sourceDat.rows()
+			],
 			evaluate=graph.hasEval or None,
 		)
-	if graph.endDat.isTable:
-		return _extractTableData(
-			graph.sourceDat,
-			hasEval=graph.hasEval,
-		)
 	else:
-		return _extractTextData(graph.sourceDat)
+		return TextData(
+			name=graph.sourceDat.name,
+			text=graph.sourceDat.text,
+		)
 
-def _extractTableData(dat: 'DAT', hasEval: bool = False):
-	return TableData(
-		name=dat.name,
-		rows=[
-			[cell.val for cell in row]
-			for row in dat.rows()
-		],
-		evaluate=hasEval or None,
-	)
+@dataclass
+class EditorItemGraph:
+	par: 'Par'
+	endDat: 'Optional[DAT]' = None
+	sourceDat: 'Optional[DAT]' = None
+	hasEval: bool = False
+	hasMerge: bool = False
+	supported: bool = False
+	file: 'Optional[Par]' = None
 
-def _extractTextData(dat: 'DAT'):
-	return TextData(
-		name=dat.name,
-		text=dat.text,
-	)
+	@classmethod
+	def fromPar(cls, par: 'Par'):
+		endDat = par.eval()  # type: Optional[DAT]
+		if not endDat:
+			return cls(par, supported=True)
+		if isinstance(endDat, (tableDAT, textDAT)):
+			return cls(
+				par,
+				endDat=endDat,
+				sourceDat=endDat,
+				hasEval=False,
+				hasMerge=False,
+				supported=True,
+				file=endDat.par['file'],
+			)
+		dat = endDat
+		if isinstance(dat, nullDAT):
+			if not dat.inputs:
+				return cls(par, supported=False)
+			dat = dat.inputs[0]
+		hasEval = False
+		hasMerge = False
+		if isinstance(dat, evaluateDAT):
+			if not dat.inputs:
+				return cls(par, endDat=endDat, supported=False)
+			hasEval = True
+			dat = dat.inputs[0]
+		if isinstance(dat, (tableDAT, textDAT)):
+			return cls(
+				par,
+				endDat=endDat,
+				sourceDat=dat,
+				hasMerge=hasMerge,
+				hasEval=hasEval,
+				supported=True,
+				file=dat.par['file'],
+			)
+		return cls(par, supported=False)
