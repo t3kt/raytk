@@ -3,8 +3,7 @@ import re
 from typing import Dict, Iterable, List, Optional, Tuple
 import yaml
 
-from raytkModel import mergeDicts, cleanDict
-from raytkUtil import ROPInfo, CategoryInfo, RaytkTags, InputInfo
+from raytkUtil import ROPInfo, CategoryInfo, RaytkTags, InputInfo, cleanDict, mergeDicts
 
 # noinspection PyUnreachableCode
 if False:

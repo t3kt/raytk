@@ -75,14 +75,21 @@ class OpDefParsT(_OpMetaPars):
 	Functemplate: 'DatParamT'
 	Materialcode: 'DatParamT'
 	Macrotable: 'DatParamT'
+	Buffertable: 'DatParamT'
+	Texturetabel: 'DatParamT'
 	Generatedmacrotables: 'StrParamT'
 	Params: 'StrParamT'
 	Specialparams: 'StrParamT'
+	Angleparams: 'StrParamT'
+	Macroparams: 'StrParamT'
 	Callbacks: 'DatParamT'
 	Librarynames: 'StrParamT'
 	Help: 'DatParamT'
 	Helpurl: 'StrParamT'
 	Disableinspect: 'BoolParamT'
+	Coordtype: 'StrParamT'
+	Returntype: 'StrParamT'
+	Contexttype: 'StrParamT'
 
 class ROPInfo:
 	rop: 'Optional[Union[OP, COMP]]'
@@ -300,15 +307,23 @@ class ROPInfo:
 		if cb and hasattr(cb, name):
 			getattr(cb, name)(**kwargs)
 
+class _InputHandlerParsT:
+	Required: 'BoolParamT'
+	Supportcoordtypes: 'StrParamT'
+	Supportreturntypes: 'StrParamT'
+	Supportcontexttypes: 'StrParamT'
+
 class InputInfo:
 	handler: 'Optional[COMP]'
 	rop: 'Optional[COMP]'
+	handlerPar: 'Union[_InputHandlerParsT, ParCollection]'
 
 	def __init__(self, handler: 'Union[OP, str, Cell, Par]'):
 		handler = op(handler)
 		if not handler:
 			return
 		self.handler = handler
+		self.handlerPar = handler.par
 		self.rop = handler.parent()
 
 	def __bool__(self):
@@ -908,3 +923,33 @@ def showPromptDialog(
 		buttons=[okText, cancelText],
 		enterButton=1, escButton=2, escOnClickAway=True,
 		callback=_callback)
+
+def cleanDict(d):
+	if not d:
+		return None
+	result = {}
+	for key, val in d.items():
+		if val is None:
+			continue
+		if isinstance(val, dict):
+			val = cleanDict(val)
+		if isinstance(val, (str, list, dict, tuple)) and len(val) == 0:
+			continue
+		result[key] = val
+	return result
+
+def mergeDicts(*parts):
+	x = {}
+	for part in parts:
+		if part:
+			x.update(part)
+	return x
+
+def excludeKeys(d, keys):
+	if not d:
+		return {}
+	return {
+		key: val
+		for key, val in d.items()
+		if key not in keys
+	}

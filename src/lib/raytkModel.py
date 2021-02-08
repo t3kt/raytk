@@ -1,22 +1,24 @@
-from raytkUtil import CoordTypes, ContextTypes, ReturnTypes, ROPInfo
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 import dataclasses
 import json
 import re
 from typing import Dict, Iterable, List, Optional, Union
+import yaml
+
+from raytkUtil import CoordTypes, ContextTypes, ReturnTypes, cleanDict, ROPInfo, InputInfo
 
 # noinspection PyUnreachableCode
 if False:
 	# noinspection PyUnresolvedReferences
 	from _stubs import *
-	import _stubs.TDJSON as TDJSON
 	from _typeAliases import *
+	import _stubs.TDJSON as TDJSON
 else:
 	# noinspection PyUnresolvedReferences,PyUnboundLocalVariable
 	TDJSON = op.TDModules.mod.TDJSON
 
 @dataclasses.dataclass
-class DataObject:
+class _DataObject_OLD:
 	def toObj(self):
 		raise NotImplementedError()
 
@@ -33,11 +35,11 @@ class DataObject:
 		return cls.fromObj(obj) if obj else default
 
 	@classmethod
-	def toObjs(cls, nodes: 'Optional[Iterable[DataObject]]'):
+	def toObjs(cls, nodes: 'Optional[Iterable[_DataObject_OLD]]'):
 		return [n.toObj() for n in nodes] if nodes else []
 
 	@classmethod
-	def toOptionalObj(cls, obj: 'DataObject'):
+	def toOptionalObj(cls, obj: '_DataObject_OLD'):
 		return obj.toObj() if obj is not None else None
 
 	@classmethod
@@ -45,9 +47,9 @@ class DataObject:
 		return cls.fromObj(_parseJson(jsonStr))
 
 	def toJsonStr(self, minify=True):
-		return toJson(self.toObj(), minify=minify)
+		return _toJson(self.toObj(), minify=minify)
 
-def toJson(obj, minify=True):
+def _toJson(obj, minify=True):
 	return '{}' if not obj else json.dumps(
 		obj,
 		indent=None if minify else '  ',
@@ -61,7 +63,7 @@ def _parseJson(jsonStr: str):
 	return json.loads(jsonStr) if jsonStr else {}
 
 @dataclass
-class TypeSpec(DataObject):
+class TypeSpec(_DataObject_OLD):
 	"""
 	One or several possible data types.
 	`*` is equivalent to all available types.
@@ -109,12 +111,12 @@ class TypeSpec(DataObject):
 	def fromObj(cls, obj):
 		return cls.parse(obj)
 
-typeSpecPatternPart = r'([\*\w|]+)'
-signaturePattern = re.compile(
-	fr'\(\s*{typeSpecPatternPart}\s*,\s*{typeSpecPatternPart}\s*\)\s*->\s*{typeSpecPatternPart}')
+_typeSpecPatternPart = r'([\*\w|]+)'
+_signaturePattern = re.compile(
+	fr'\(\s*{_typeSpecPatternPart}\s*,\s*{_typeSpecPatternPart}\s*\)\s*->\s*{_typeSpecPatternPart}')
 
 @dataclass
-class FunctionSignature(DataObject):
+class FunctionSignature(_DataObject_OLD):
 	"""
 	Parameter and return types for a function.
 	Can either be a single specific signature, or a collection of possible signatures.
@@ -131,7 +133,7 @@ class FunctionSignature(DataObject):
 
 	@classmethod
 	def parse(cls, s: str):
-		match = signaturePattern.fullmatch(s.strip())
+		match = _signaturePattern.fullmatch(s.strip())
 		if not match:
 			raise ValueError('Invalid signature: ' + repr(s))
 		return cls(
@@ -193,316 +195,8 @@ class FunctionSignature(DataObject):
 	def fromObj(cls, obj):
 		return cls.parse(obj)
 
-TableDataT = List[List[str]]
-
 @dataclass
-class ROPInputSpec(DataObject):
-	name: Optional[str] = None
-	label: Optional[str] = None
-	signature: Optional[FunctionSignature] = None
-
-	def toObj(self):
-		return cleanDict({
-			'name': self.name,
-			'label': self.label,
-			'signature': str(self.signature) if self.signature else None,
-		})
-
-	@classmethod
-	def fromObj(cls, obj: dict):
-		sig = obj.get('signature')
-		return cls(
-			name=obj.get('name'),
-			label=obj.get('label'),
-			signature=FunctionSignature.parse(sig) if sig else None,
-		)
-
-	@classmethod
-	def extractFromHandler(cls, inputHandler: 'COMP'):
-		inDat = inputHandler.inputs[0]  # type DAT
-		labelPar = inDat.par.label  # type: Par
-		supportedTypeTable = inputHandler.op('supported_type_table')
-		return cls(
-			name=inDat.name,
-			label=labelPar.eval() if (labelPar.mode == ParMode.EXPRESSION and labelPar.expr == 'me.name') else None,
-			signature=FunctionSignature.create(
-				str(supportedTypeTable['coordType', 1] or ''),
-				str(supportedTypeTable['contextType', 1] or ''),
-				str(supportedTypeTable['returnType', 1] or ''),
-			) if supportedTypeTable else None
-		)
-
-@dataclass
-class ValueOrExpr(DataObject):
-	value: Union[str, int, float, List[Union[str, int, float]]] = None
-	expr: Optional[str] = None
-	bind: Optional[str] = None
-
-	def toObj(self):
-		if self.bind:
-			return {'@': self.bind}
-		if self.expr:
-			return {'$': self.expr}
-		return self.value
-
-	@classmethod
-	def fromObj(cls, obj):
-		if not obj:
-			return None
-		if isinstance(obj, dict):
-			if '@' in obj:
-				return cls(bind=obj['@'])
-			if '$' in obj:
-				return cls(expr=obj['$'])
-		return cls(value=obj)
-
-	@classmethod
-	def fromPar(cls, par: 'Par'):
-		if par.mode == ParMode.BIND:
-			return cls(bind=par.bindExpr)
-		if par.mode == ParMode.EXPRESSION:
-			return cls(expr=par.expr)
-		if par.mode == ParMode.CONSTANT:
-			if par.isOP and par.eval():
-				return cls(value=par.eval().path)
-			return cls(value=par.eval())
-		raise ValueError(f'Unsupported par {par!r}')
-
-@dataclass
-class DATSpec(DataObject):
-	file: Optional[ValueOrExpr] = None
-	data: Union[str, TableDataT] = None
-	isExpr: bool = False
-	isText: bool = False
-
-	def toObj(self):
-		return cleanDict({
-			'file': toObjIfPossible(self.file),
-			'data': self.data,
-			'isExpr': self.isExpr or None,
-			'isText': self.isText or None,
-		})
-
-	@classmethod
-	def fromObj(cls, obj: dict):
-		if not obj:
-			return None
-		return cls(
-			file=ValueOrExpr.fromObj(obj.get('file')),
-			**excludeKeys(obj, ['file']))
-
-	@classmethod
-	def extractFromDAT(cls, dat: 'DAT'):
-		if not dat:
-			return None
-		if not dat.inputs:
-			mainDat = dat
-			isExpr = False
-		else:
-			mainDat = dat.inputs[0]
-			if mainDat.inputs:
-				raise ValueError(f'Unsupported dat {dat} with input {mainDat}')
-			isExpr = isinstance(dat, evaluateDAT)
-		if mainDat.par['file']:
-			return cls(
-				file=ValueOrExpr.fromPar(mainDat.par.file),
-				isExpr=isExpr)
-		if mainDat.isText:
-			return cls(
-				data=mainDat.text,
-				isText=True,
-			)
-		return cls(
-			data=[
-				[cell.val for cell in row]
-				for row in mainDat.rows()
-			],
-			isExpr=isExpr)
-
-def getParValuesFromCellsExpr(datName: str):
-	return f"' '.join([str(c) for c in op('{datName}').cells()])"
-
-valuesFromCellsExprPattern = re.compile(r"' '\.join\(\[str\(c\) for c in op\('(\w+)'\).cells\(\)\]\)")
-
-def specOrValueOrExprFromPar(par: 'Par'):
-	if par.mode == ParMode.EXPRESSION and par.isString:
-		match = valuesFromCellsExprPattern.fullmatch(par.expr)
-		if match and match.group(1):
-			dat = par.owner.op(match.group(1))
-			if dat and dat.isDAT:
-				return DATSpec.extractFromDAT(dat)
-	return ValueOrExpr.fromPar(par)
-
-def toObjIfPossible(obj):
-	if obj and hasattr(obj, 'toObj'):
-		return obj.toObj()
-	return obj
-
-@dataclass
-class ValueOrExprOrTable(DataObject):
-	value: Optional[ValueOrExpr] = None
-	table: Optional[DATSpec] = None
-
-	def toObj(self):
-		if self.table is not None:
-			return self.table.toObj()
-		if self.value is not None:
-			return self.value.toObj()
-		return {}
-
-	@classmethod
-	def fromObj(cls, obj):
-		if isinstance(obj, (list, str)):
-			return cls(value=ValueOrExpr.fromObj(obj))
-		if not isinstance(obj, dict):
-			raise ValueError(f'Unsupported type: {obj!r}')
-		if '@' in obj or '$' in obj:
-			return cls(value=ValueOrExpr.fromObj(obj))
-		if 'file' in obj or 'data':
-			return cls(table=DATSpec.fromObj(obj))
-		return cls(value=ValueOrExpr.fromObj(obj))
-
-	@classmethod
-	def extractFromPar(cls, par: 'Par'):
-		pass
-
-def cleanParamSpecObj(obj: dict):
-	if not obj:
-		return None
-	if 'page' in obj:
-		del obj['page']
-	defaultVals = {
-		'enable': True,
-		'startSection': False,
-		'readOnly': False,
-		'enableExpr': None,
-	}
-	for key, defVal in defaultVals.items():
-		if key in obj and obj[key] == defVal:
-			del obj[key]
-	return obj
-
-def clearParamPageSpecObj(obj: dict):
-	if not obj:
-		return None
-	return {
-		param: cleanParamSpecObj(paramObj)
-		for param, paramObj in obj.items()
-	}
-
-def cleanParamPageSpecsObj(obj: dict):
-	if not obj:
-		return None
-	return {
-		page: clearParamPageSpecObj(paramsObj)
-		for page, paramsObj in obj.items()
-	}
-
-@dataclass
-class ROPDefinition(DataObject):
-	paramPages: Dict[str, Dict[str, dict]] = dataclasses.field(default_factory=list)
-	"""Definitions of the parameter pages, in the format expected by TDJSON."""
-
-	function: Optional[DATSpec] = None
-	"""Function code."""
-
-	useParams: ValueOrExprOrTable = None
-	"""Spec for names of ROP Pars to use."""
-
-	specialParams: ValueOrExprOrTable = None
-	"""Spec for names of special parameters handled with CHOP input to opDef."""
-
-	angleParams: ValueOrExpr = None
-	"""Spec for names of ROP Pars that should be converted to radians."""
-
-	macroParams: ValueOrExpr = None
-	"""Spec for names of ROP Pars that should be made available as macros."""
-
-	macros: Optional[DATSpec] = None
-	"""Macro table spec."""
-
-	help: ValueOrExprOrTable = None
-	"""Help text or file."""
-
-	inputs: List[ROPInputSpec] = dataclasses.field(default_factory=list)
-	"""Specs for ROP inputs."""
-
-	def toObj(self):
-		return cleanDict({
-			'paramPages': cleanParamPageSpecsObj(self.paramPages),
-			'function': DATSpec.toOptionalObj(self.function),
-			'useParams': ValueOrExprOrTable.toOptionalObj(self.useParams),
-			'specialParams': ValueOrExpr.toOptionalObj(self.specialParams),
-			'macroParams': ValueOrExpr.toOptionalObj(self.macroParams),
-			'macros': ValueOrExprOrTable.toOptionalObj(self.macros),
-			'help': ValueOrExprOrTable.toOptionalObj(self.help),
-			'inputs': ROPInputSpec.toObjs(self.inputs),
-		})
-
-	@classmethod
-	def fromObj(cls, obj: dict):
-		return cls(
-			inputs=ROPInputSpec.fromObjs(obj.get('inputs')),
-			useParams=ValueOrExpr.fromOptionalObj(obj.get('useParams')),
-			specialParams=ValueOrExpr.fromOptionalObj(obj.get('specialParams')),
-			macros=DATSpec.fromOptionalObj(obj.get('macros')),
-			function=DATSpec.fromOptionalObj(obj.get('function')),
-			help=ValueOrExprOrTable.fromOptionalObj(obj.get('help')),
-			**excludeKeys(obj, [
-				'inputs', 'useParams', 'specialParams', 'macros', 'function'
-			]))
-
-	@classmethod
-	def extractFromROP(cls, rop: 'COMP'):
-		info = ROPInfo(rop)
-		inputHandlers = rop.ops('inputDefinitionHandler_*')
-		# top to bottom
-		inputHandlers.sort(key=lambda o: -o.nodeY)
-		return cls(
-			paramPages=TDJSON.opToJSONOp(rop, includeCustomPages=True, includeBuiltInPages=False),
-			# help=DATSpec.extractFromDAT(info.opDefPar.Help.eval()),
-			function=DATSpec.extractFromDAT(info.opDefPar.Functemplate.eval()),
-			macros=DATSpec.extractFromDAT(info.opDefPar.Macrotable.eval()),
-			# useParams=specOrValueOrExprFromPar(info.opDefPar.Params),
-			# specialParams=specOrValueOrExprFromPar(info.opDefPar.Specialparams),
-			inputs=[
-				ROPInputSpec.extractFromHandler(inputHandler)
-				for inputHandler in inputHandlers
-			],
-		)
-
-def cleanDict(d):
-	if not d:
-		return None
-	result = {}
-	for key, val in d.items():
-		if val is None:
-			continue
-		if isinstance(val, dict):
-			val = cleanDict(val)
-		if isinstance(val, (str, list, dict, tuple)) and len(val) == 0:
-			continue
-		result[key] = val
-	return result
-
-def mergeDicts(*parts):
-	x = {}
-	for part in parts:
-		if part:
-			x.update(part)
-	return x
-
-def excludeKeys(d, keys):
-	if not d:
-		return {}
-	return {
-		key: val
-		for key, val in d.items()
-		if key not in keys
-	}
-
-@dataclass
-class OpDefMeta(DataObject):
+class OpDefMeta_OLD(_DataObject_OLD):
 	opType: Optional[str] = None
 	opVersion: Optional[int] = None
 	opStatus: Optional[str] = None
@@ -519,16 +213,403 @@ class OpDefMeta(DataObject):
 		return cls(**obj)
 
 @dataclass
-class OpSpec(DataObject):
-	meta: Optional[OpDefMeta] = None
+class OpSpec_OLD(_DataObject_OLD):
+	meta: Optional[OpDefMeta_OLD] = None
 
 	def toObj(self):
 		return cleanDict({
-			'meta': OpDefMeta.toOptionalObj(self.meta),
+			'meta': OpDefMeta_OLD.toOptionalObj(self.meta),
 		})
 
 	@classmethod
 	def fromObj(cls, obj: dict):
 		return cls(
-			meta=OpDefMeta.fromOptionalObj(obj.get('meta')),
+			meta=OpDefMeta_OLD.fromOptionalObj(obj.get('meta')),
 		)
+
+@dataclass
+class ModelObject(yaml.YAMLObject):
+	@classmethod
+	def to_yaml(cls, dumper: 'yaml.Dumper', data):
+		return dumper.represent_mapping(cls.yaml_tag, data.toYamlDict())
+
+	def toYamlDict(self):
+		d = {}
+		for f in dataclasses.fields(self):
+			val = getattr(self, f.name)
+			if _shouldInclude(val) and val != f.default:
+				d[f.name] = val
+		return d
+
+def _shouldInclude(val):
+	if val is None or val == '':
+		return False
+	if isinstance(val, (list, dict)) and not val:
+		return False
+	return True
+
+@dataclass
+class Expr(ModelObject):
+	"""A Python parameter expression."""
+
+	yaml_tag = u'!expr'
+
+	expr: str
+
+def _exprRepresenter(dumper: 'yaml.Dumper', data: 'Expr'):
+	return dumper.represent_scalar(Expr.yaml_tag, data.expr, style='')
+
+yaml.add_representer(Expr, _exprRepresenter)
+yaml.add_implicit_resolver(Expr.yaml_tag, regexp=re.compile(r'^\$.*$'))
+
+ValueOrExprT = Union[Expr, str, int, float, bool, None]
+ValueOrListOrExprT = Union[ValueOrExprT, List[str]]
+
+@dataclass
+class File(ModelObject):
+	# noinspection PyUnresolvedReferences
+	"""Spec for a DAT corresponding to an external file.
+
+		Attributes:
+			file: Path to the file, relative to the OP tox.
+			name: Name of the associated DAT.
+			evaluate: Whether the contents of the file should be evaluated
+				as expressions.
+	"""
+
+	yaml_tag = u'!file'
+
+	file: str
+	name: Optional[str] = None
+	evaluate: Optional[bool] = None
+
+CellValueT = Union[str, int, float, bool]
+
+@dataclass
+class TableData(ModelObject):
+	# noinspection PyUnresolvedReferences
+	"""Spec for an table DAT with inline content in the spec.
+
+		Attributes:
+			name: Name of the associated DAT.
+			rows: List of rows, where each row is a list of cells.
+			evaluate: Whether the contents of the table should be evaluated
+				as expressions.
+	"""
+
+	yaml_tag = u'!table'
+
+	name: Optional[str] = None
+	rows: List[List[CellValueT]] = field(default_factory=list)
+	evaluate: Optional[bool] = None
+
+@dataclass
+class TextData(ModelObject):
+	# noinspection PyUnresolvedReferences
+	"""Spec for a text DAT with inline content in the spec.
+
+			Attributes:
+				name: Name of the associated DAT.
+				text: Text for the DAT.
+	"""
+
+	yaml_tag = u'!text'
+
+	name: Optional[str] = None
+	text: Optional[str] = None
+
+
+TableSetting = Union[File, TableData, None]
+TextSetting = Union[File, TextData, None]
+
+@dataclass
+class OpMeta(ModelObject):
+	yaml_tag = u'!meta'
+
+	opType: str
+	opVersion: int
+	opStatus: Optional[str] = None
+
+@dataclass
+class InputSpec(ModelObject):
+	# noinspection PyUnresolvedReferences
+	"""Specification for a ROP definition input.
+
+		Attributes:
+			name: Locally unique name for the input.
+			label: User-friendly label for the input.
+			required: Whether the input must be connected for the containing ROP to
+				function properly.
+			coordTypes: Coordinate types supported by the input.
+				This is a string with space-separated names of types, or the literal
+				'*' (meaning all types). Or it can be an Expr that evaluates to such a
+				string.
+			returnTypes: Return types supported by the input.
+			contextTypes: Context types supported by the input.
+	"""
+
+	yaml_tag = u'!input'
+
+	name: str
+	label: Optional[str] = None
+
+	required: bool = False
+
+	coordTypes: ValueOrExprT = '*'
+	returnTypes: ValueOrExprT = '*'
+	contextTypes: ValueOrExprT = '*'
+
+@dataclass
+class MultiInputSpec(ModelObject):
+	# noinspection PyUnresolvedReferences
+	"""Specification for a ROP multi-input.
+
+		Attributes:
+			inputs: Specs for potential inputs.
+			minimumInputs: Minimum number of inputs required for the ROP to function
+				properly.
+	"""
+	yaml_tag = u'!multiInput'
+
+	inputs: List[InputSpec] = field(default_factory=list)
+	minimumInputs: Optional[int] = None
+
+@dataclass
+class OpDef(ModelObject):
+	# noinspection PyUnresolvedReferences
+	"""Definition for a ROP.
+
+		Attributes:
+			coordType: Name of the coordinate type or expression that produces it.
+			returnType: Name of the return type or expression that produces it.
+			contextType: Name of the context type or expression that produces it.
+
+			disableInspect: Whether the ROP should disable the "Inspect" feature.
+
+			opGlobals: Code block for global declarations used by the ROP.
+				This can either be a Text object with inline content, a File
+				object referring to an external file.
+			initCode: Code block for initialization code that the ROP needs to run.
+			function: Code block for the ROP's primary function.
+			material: Code block for the ROP's material block.
+
+			useParams: Spec for the names of ROP Pars that should be fed into the
+				shader and made available to the ROP.
+			specialParams: Spec for the names of values that come from a CHOP input
+				and are made available to the ROP.
+			angleParams: Spec for names of ROP Pars that should be converted to
+				radians before being passed to the shader.
+			macroParams: Spec for names of ROP Pars that should be made available to
+				the ROP as preprocessor definitions.
+			libraryNames: Spec for names of shared libraries that the ROP depends on.
+
+			bufferTable: Spec for a table of CHOP-based buffers passed to the shader.
+			textureTable: Spec for a table of TOP-based textures passed to the shader.
+			macroTable: Spec for a table of macros generated for the ROP.
+
+			help: Spec for help text for the ROP.
+
+			callbacks: Code block of Python callback functions used by the ROP.
+		"""
+
+	yaml_tag = u'!def'
+
+	coordType: ValueOrExprT = 'useinput'
+	returnType: ValueOrExprT = 'useinput'
+	contextType: ValueOrExprT = 'useinput'
+
+	disableInspect: bool = False
+
+	opGlobals: TextSetting = None
+	initCode: TextSetting = None
+	function: TextSetting = None
+	material: TextSetting = None
+
+	useParams: ValueOrListOrExprT = None
+	specialParams: ValueOrListOrExprT = None
+	angleParams: ValueOrListOrExprT = None
+	macroParams: ValueOrListOrExprT = None
+	libraryNames: ValueOrListOrExprT = None
+
+	bufferTable: TableSetting = None
+	textureTable: TableSetting = None
+	macroTable: TableSetting = None
+
+	help: TextSetting = None
+	callbacks: TextSetting = None
+
+@dataclass
+class ParamPage(ModelObject):
+	# noinspection PyUnresolvedReferences
+	"""Specification for a page of OP parameters.
+
+		Attributes:
+			name: Name of the page
+			pars: Dict of parameter specs in the format supported by TDJSON.
+	"""
+
+	yaml_tag = '!page'
+
+	name: str
+	pars: Dict[str, dict] = field(default_factory=list)
+
+	def __post_init__(self):
+		for parObj in self.pars.values():
+			_cleanParamSpecObj(parObj)
+
+def _cleanParamSpecObj(obj: dict):
+	if not obj:
+		return
+	if 'page' in obj:
+		del obj['page']
+	defaultVals = {
+		'enable': True,
+		'startSection': False,
+		'readOnly': False,
+		'enableExpr': None,
+	}
+	for key, defVal in defaultVals.items():
+		if key in obj and obj[key] == defVal:
+			del obj[key]
+
+@dataclass
+class OpSpec(ModelObject):
+	yaml_tag = u'!opSpec'
+
+	meta: Optional[OpMeta] = None
+	opDef: OpDef = field(default_factory=OpDef)
+
+	paramPages: List[ParamPage] = field(default_factory=dict)
+
+	multiInput: Optional[MultiInputSpec] = None
+	inputs: Optional[List[InputSpec]] = field(default_factory=list)
+
+def extractOpSpec(rop: 'COMP') -> OpSpec:
+	info = ROPInfo(rop)
+	spec = OpSpec(
+		meta=OpMeta(
+			opType=info.opType,
+			opVersion=info.opVersion,
+			opStatus=info.statusLabel,
+		),
+		opDef=OpDef(
+			coordType=_valueOrExprFromPar(info.opDefPar.Coordtype),
+			returnType=_valueOrExprFromPar(info.opDefPar.Returntype),
+			contextType=_valueOrExprFromPar(info.opDefPar.Contexttype),
+			disableInspect=info.opDefPar.Disableinspect.eval(),
+			useParams=_valueOrExprFromPar(info.opDefPar.Params),
+			specialParams=_valueOrExprFromPar(info.opDefPar.Specialparams),
+			angleParams=_valueOrExprFromPar(info.opDefPar.Angleparams),
+			macroParams=_valueOrExprFromPar(info.opDefPar.Macroparams),
+			libraryNames=_valueOrExprFromPar(info.opDefPar.Librarynames),
+			opGlobals=_extractDatSetting(info.opDefPar.Opglobals),
+			initCode=_extractDatSetting(info.opDefPar.Initcode),
+			function=_extractDatSetting(info.opDefPar.Functemplate),
+			help=_extractDatSetting(info.opDefPar.Help),
+			callbacks=_extractDatSetting(info.opDefPar.Callbacks),
+			bufferTable=_extractDatSetting(info.opDefPar.Buffertable),
+			macroTable=_extractDatSetting(info.opDefPar.Macrotable),
+			textureTable=_extractDatSetting(info.opDefPar.Texturetable),
+		),
+	)
+	spec.paramPages = [
+		_extractParamPage(page)
+		for page in rop.customPages
+	]
+	multiHandler = info.multiInputHandler
+	if multiHandler:
+		spec.multiInput = MultiInputSpec(
+			minimumInputs=multiHandler.par.Minimuminputs.eval() if multiHandler.par.Minimuminputs > 0 else None,
+		)
+	for inputHandler in info.inputHandlers:
+		inputInfo = InputInfo(inputHandler)
+		if inputInfo.multiHandler:
+			spec.multiInput.inputs.append(_extractInputSpec(inputHandler))
+		else:
+			spec.inputs.append(_extractInputSpec(inputHandler))
+	return spec
+
+_ignorePars = 'Help', 'Inspect', 'Updateop'
+
+def _extractParamPage(page: 'Page') -> ParamPage:
+	return ParamPage(
+		name=page.name,
+		pars={
+			parTuplet[0].tupletName: dict(TDJSON.parameterToJSONPar(parTuplet[0]))
+			for parTuplet in page.parTuplets
+			if parTuplet[0].tupletName not in _ignorePars
+		},
+	)
+
+def _extractInputSpec(handler: 'COMP') -> InputSpec:
+	info = InputInfo(handler)
+	return InputSpec(
+		name=info.name,
+		label=info.label,
+		required=info.required,
+		coordTypes=_extractInputSupportSetting(info.handlerPar.Supportcoordtypes, info.supportedCoordTypes),
+		returnTypes=_extractInputSupportSetting(info.handlerPar.Supportreturntypes, info.supportedReturnTypes),
+		contextTypes=_extractInputSupportSetting(info.handlerPar.Supportcontexttypes, info.supportedContextTypes),
+	)
+
+def _extractInputSupportSetting(par: 'Par', expandedList: List[str]) -> ValueOrExprT:
+	if par.mode == ParMode.EXPRESSION:
+		return Expr(par.expr)
+	elif par.mode == ParMode.CONSTANT:
+		if par.val == '*':
+			return '*'
+		return ' '.join(expandedList)
+	else:
+		raise Exception(f'Unsupported input supported type parameter mode {par.mode} for {par!r}')
+
+def _valueOrExprFromPar(par: Optional['Par']) -> ValueOrExprT:
+	if par is None:
+		return None
+	if par.mode == ParMode.CONSTANT:
+		if par.val == '':
+			return None
+		return par.val
+	if par.mode == ParMode.EXPRESSION:
+		return Expr(par.expr)
+	raise Exception(f'Parameter mode {par.mode} not supported for {par!r}')
+
+def _extractDatSetting(par: Optional['Par']) -> Union[TextSetting, TableSetting]:
+	if par is None:
+		return None
+	if par.mode != ParMode.CONSTANT:
+		raise Exception(f'Parameter mode {par.mode} not supported for {par!r}')
+	if not par:
+		return None
+	from raytkTools import EditorItemGraph
+	graph = EditorItemGraph.fromPar(par)
+	if not graph.supported:
+		raise Exception(f'DAT setup not supported for {par!r}')
+	if graph.file:
+		return File(
+			graph.file.eval(),
+			name=graph.sourceDat.name,
+			evaluate=graph.hasEval or None,
+		)
+	if graph.endDat.isTable:
+		return _extractTableData(
+			graph.sourceDat,
+			hasEval=graph.hasEval,
+		)
+	else:
+		return _extractTextData(graph.sourceDat)
+
+def _extractTableData(dat: 'DAT', hasEval: bool = False):
+	return TableData(
+		name=dat.name,
+		rows=[
+			[cell.val for cell in row]
+			for row in dat.rows()
+		],
+		evaluate=hasEval or None,
+	)
+
+def _extractTextData(dat: 'DAT'):
+	return TextData(
+		name=dat.name,
+		text=dat.text,
+	)

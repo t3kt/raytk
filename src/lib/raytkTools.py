@@ -1,6 +1,7 @@
+from dataclasses import dataclass
 from pathlib import Path
 from raytkDocs import OpDocManager
-from raytkModel import OpDefMeta, OpSpec
+from raytkModel import OpDefMeta_OLD, OpSpec_OLD
 from raytkUtil import RaytkContext, ROPInfo, focusCustomParameterPage, RaytkTags
 from typing import List, Optional
 
@@ -122,7 +123,7 @@ class RaytkTools(RaytkContext):
 		finally:
 			ui.undo.endBlock()
 
-	def _loadROPSpec(self, rop: 'COMP', useFile: bool, usePars: bool) -> 'Optional[OpSpec]':
+	def _loadROPSpec(self, rop: 'COMP', useFile: bool, usePars: bool) -> 'Optional[OpSpec_OLD]':
 		info = ROPInfo(rop)
 		if not info or not info.isMaster:
 			return
@@ -131,11 +132,11 @@ class RaytkTools(RaytkContext):
 			specFile = self._getROPSpecFile(rop, checkExists=True)
 			if specFile:
 				text = specFile.read_text()
-				spec = OpSpec.parseJsonStr(text)
+				spec = OpSpec_OLD.parseJsonStr(text)
 		if not spec:
-			spec = OpSpec()
+			spec = OpSpec_OLD()
 		if not spec.meta:
-			spec.meta = OpDefMeta()
+			spec.meta = OpDefMeta_OLD()
 		if usePars:
 			if not spec.meta.opType:
 				spec.meta.opType = info.opType or self.generateROPType(info.rop)
@@ -298,3 +299,52 @@ class AutoLoader:
 			comp.nodeY = 500 - i * 150
 
 		ui.undo.endBlock()
+
+@dataclass
+class EditorItemGraph:
+	par: 'Par'
+	endDat: 'Optional[DAT]' = None
+	sourceDat: 'Optional[DAT]' = None
+	hasEval: bool = False
+	hasMerge: bool = False
+	supported: bool = False
+	file: 'Optional[Par]' = None
+
+	@classmethod
+	def fromPar(cls, par: 'Par'):
+		endDat = par.eval()  # type: Optional[DAT]
+		if not endDat:
+			return cls(par, supported=True)
+		if isinstance(endDat, (tableDAT, textDAT)):
+			return cls(
+				par,
+				endDat=endDat,
+				sourceDat=endDat,
+				hasEval=False,
+				hasMerge=False,
+				supported=True,
+				file=endDat.par['file'],
+			)
+		dat = endDat
+		if isinstance(dat, nullDAT):
+			if not dat.inputs:
+				return cls(par, supported=False)
+			dat = dat.inputs[0]
+		hasEval = False
+		hasMerge = False
+		if isinstance(dat, evaluateDAT):
+			if not dat.inputs:
+				return cls(par, endDat=endDat, supported=False)
+			hasEval = True
+			dat = dat.inputs[0]
+		if isinstance(dat, (tableDAT, textDAT)):
+			return cls(
+				par,
+				endDat=endDat,
+				sourceDat=dat,
+				hasMerge=hasMerge,
+				hasEval=hasEval,
+				supported=True,
+				file=dat.par['file'],
+			)
+		return cls(par, supported=False)
