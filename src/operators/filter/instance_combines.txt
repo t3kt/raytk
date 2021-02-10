@@ -1,0 +1,13 @@
+name	label	expr	params	exprIsSdf
+simpleUnion	Simple Union	opSimpleUnion(res1, res2)		1
+simpleIntersect	Simple Intersect	opSimpleIntersect(res1, res2)		1
+simpleDiff	Simple Difference	opSimpleDiff(res1, res2)	Swapinputs	1
+smoothUnion	Smooth Union	opSmoothUnionM(res1.x, res2.x, r)	Radius	
+smoothIntersect	Smooth Intersect	opSmoothIntersect(res1, res2, r)	Radius	1
+smoothDiff	Smooth Difference	opSmoothDiff(res1.x, res2.x, r)	Radius	
+roundUnion	Round Union	fOpUnionRound(res1.x, res2.x, r)	Radius	
+roundIntersect	Round Intersect	fOpIntersectionRound(res1.x, res2.x, r)	Radius	
+roundDiff	Round Difference	fOpDifferenceRound(res1.x, res2.x, r)	Radius	
+chamferUnion	Chamfer Union	fOpUnionChamfer(res1.x, res2.x, r)	Radius	
+chamferIntersect	Chamfer Intersect	fOpIntersectionChamfer(res1.x, res2.x, r)	Radius	
+chamferDiff	Chamfer Difference	fOpDifferenceChamfer(res1.x, res2.x, r)	Radius	
