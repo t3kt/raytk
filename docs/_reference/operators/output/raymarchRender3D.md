@@ -205,6 +205,10 @@ op:
     name: Enablereflection
   - label: Reflection Passes
     name: Reflectionpasses
+  - label: Enable Near Hit Minimum Dist
+    name: Enablenearhitmindist
+  - label: Near Hit Minimum Distance
+    name: Nearhitmindist
   - label: Near Hit Fade
     name: Nearhitfade
   summary: Renders a scene using 3D raymarching.

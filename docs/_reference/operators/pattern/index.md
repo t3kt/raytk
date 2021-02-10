@@ -12,7 +12,9 @@ cat:
   - name: checkerPattern
   - name: hexagonalGridPattern
   - name: hexagonalTruchetPattern
+  - name: hexagonalWeavePattern
   - name: rosettePattern
+  - name: spiralPattern
   - name: triangleCheckerPattern
   - name: weavePattern
   summary: '2D pattern generators, which can be used for things like textures.

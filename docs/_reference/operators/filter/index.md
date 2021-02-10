@@ -25,6 +25,8 @@ cat:
   - name: fieldExpr
   - name: flip
   - name: fold
+  - name: instance
+    status: beta
   - name: invert
     summary: Invert an SDF, so that the inside is the outside.
   - name: iteratedTransform
