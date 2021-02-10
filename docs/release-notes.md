@@ -12,13 +12,44 @@
   * Added period field input to waveField (#218)
   * Added origin distance mode to waveField (#212)
   * Added directional light (#48)
+  * Added axis parameters to various SDFs (#219, #246, #263)
+  * Added helixSdf (#222, #223)
+  * Texture-based camera switching in splitCamera (#144)
+  * Pixel format settings for renderers (#230)
+  * LinkedLight, still in beta (#183)
+  * UV field input for textureField (#2)
+  * Triplanar texture mapping (#233)
+  * Reflection support, *still in beta* (#9)
+  * bunnySdf! (#241)
+  * waveletNoiseField (#243)
+  * dogBoneSdf2d (#253)
+  * Added a new category of 2D pattern generators (#254, #255, #256, #277, #278)
+  * spiralZoom *still in beta* (#258)
+  * mobiusTransform *still in beta* (#259)
+  * Added coordinate controls in render2D *still in beta* (#179, #260)
+  * More documentation for value fields (#35)
+  * Added uniform scale option in scale operator, which preserves SDF properties (#267)
+  * More controls for behavior of raymarch near hit output (#268)
+  * cornerSdf2d
+  * Added instance op *still in beta* (#279)
 * Changes
-  * 
+  * Colorization settings have been removed from render2D. To use that feature, insert the new colorizeSdf2d operator
+    before the render2D. (#18)
+  * Fix swapping issue in simpleDiff (#220) - this could be a breaking change if relying on the old behavior.
 * Fixes
   * Fix issues in timeField (#202, #203)
   * Fix parameter enable states in noiseField (#216)
+  * Fix rescaling in splitCamera (#224)
+  * Fix resolution issues (#230)
+  * Fix raymarch step count output (#72)
+  * Fix raymarch near hit output (#268, #11)
 * Infrastructure / development
   * New development editor system (#151)
+  * New component test editor system (#151)
+  * Ability to set minimum required inputs for multi-input ops (#225)
+  * Added op icons for viewers in networks (#235, #41)
+  * Added "Update OP" parameter to ops, that can be used to upgrade ops to a newer toolkit version. *still in beta* (#19)
+  * Added macros tab in inspector (#248)
 
 ## v0.10
 
