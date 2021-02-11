@@ -7,92 +7,88 @@ permalink: /reference/operators/function/pennerEasingFn
 redirect_from:
   - /reference/opType/raytk.operators.function.pennerEasingFn/
 op:
+  category: function
   name: pennerEasingFn
   opType: raytk.operators.function.pennerEasingFn
-  category: function
   parameters:
-    - name: Function
-      label: Function
-      menuOptions:
-        - name: backInOut
-          label: Back In Out
-        - name: backIn
-          label: Back In
-        - name: backOut
-          label: Back Out
-        - name: bounceOut
-          label: Bounce Out
-        - name: bounceIn
-          label: Bounce In
-        - name: bounceInOut
-          label: Bounce In Out
-        - name: circularInOut
-          label: Circular In Out
-        - name: circularIn
-          label: Circular In
-        - name: circularOut
-          label: Circular Out
-        - name: cubicInOut
-          label: Cubic In Out
-        - name: cubicIn
-          label: Cubic In
-        - name: cubicOut
-          label: Cubic Out
-        - name: elasticInOut
-          label: Elastic In Out
-        - name: elasticIn
-          label: Elastic In
-        - name: elasticOut
-          label: Elastic Out
-        - name: exponentialInOut
-          label: Exponential In Out
-        - name: exponentialIn
-          label: Exponential In
-        - name: exponentialOut
-          label: Exponential Out
-        - name: linear
-          label: Linear 
-        - name: quadraticInOut
-          label: Quadratic In Out
-        - name: quadraticIn
-          label: Quadratic In
-        - name: quadraticOut
-          label: Quadratic Out
-        - name: quarticInOut
-          label: Quartic In Out
-        - name: quarticIn
-          label: Quartic In
-        - name: quarticOut
-          label: Quartic Out
-        - name: qinticInOut
-          label: Qintic In Out
-        - name: qinticIn
-          label: Qintic In
-        - name: qinticOut
-          label: Qintic Out
-        - name: sineInOut
-          label: Sine In Out
-        - name: sineIn
-          label: Sine In
-        - name: sineOut
-          label: Sine Out
-    - name: Contexttype
-      label: Context Type
-      menuOptions:
-        - name: none
-          label: None
-        - name: Context
-          label: Context
-        - name: MaterialContext
-          label: Material Context
-        - name: CameraContext
-          label: Camera Context
-        - name: LightContext
-          label: Light Context
-    - name: Inspect
-      label: Inspect
-    - name: Help
-      label: Help
+  - label: Function
+    menuOptions:
+    - label: Back In Out
+      name: backInOut
+    - label: Back In
+      name: backIn
+    - label: Back Out
+      name: backOut
+    - label: Bounce Out
+      name: bounceOut
+    - label: Bounce In
+      name: bounceIn
+    - label: Bounce In Out
+      name: bounceInOut
+    - label: Circular In Out
+      name: circularInOut
+    - label: Circular In
+      name: circularIn
+    - label: Circular Out
+      name: circularOut
+    - label: Cubic In Out
+      name: cubicInOut
+    - label: Cubic In
+      name: cubicIn
+    - label: Cubic Out
+      name: cubicOut
+    - label: Elastic In Out
+      name: elasticInOut
+    - label: Elastic In
+      name: elasticIn
+    - label: Elastic Out
+      name: elasticOut
+    - label: Exponential In Out
+      name: exponentialInOut
+    - label: Exponential In
+      name: exponentialIn
+    - label: Exponential Out
+      name: exponentialOut
+    - label: 'Linear '
+      name: linear
+    - label: Quadratic In Out
+      name: quadraticInOut
+    - label: Quadratic In
+      name: quadraticIn
+    - label: Quadratic Out
+      name: quadraticOut
+    - label: Quartic In Out
+      name: quarticInOut
+    - label: Quartic In
+      name: quarticIn
+    - label: Quartic Out
+      name: quarticOut
+    - label: Qintic In Out
+      name: qinticInOut
+    - label: Qintic In
+      name: qinticIn
+    - label: Qintic Out
+      name: qinticOut
+    - label: Sine In Out
+      name: sineInOut
+    - label: Sine In
+      name: sineIn
+    - label: Sine Out
+      name: sineOut
+    name: Function
+  - label: Context Type
+    menuOptions:
+    - label: None
+      name: none
+    - label: Context
+      name: Context
+    - label: Material Context
+      name: MaterialContext
+    - label: Camera Context
+      name: CameraContext
+    - label: Light Context
+      name: LightContext
+    name: Contexttype
 
 ---
 

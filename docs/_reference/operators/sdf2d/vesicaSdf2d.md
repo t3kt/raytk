@@ -7,18 +7,14 @@ permalink: /reference/operators/sdf2d/vesicaSdf2d
 redirect_from:
   - /reference/opType/raytk.operators.sdf2d.vesicaSdf2d/
 op:
+  category: sdf2d
   name: vesicaSdf2d
   opType: raytk.operators.sdf2d.vesicaSdf2d
-  category: sdf2d
   parameters:
-    - name: Radius
-      label: Radius
-    - name: Distance
-      label: Distance
-    - name: Inspect
-      label: Inspect
-    - name: Help
-      label: Help
+  - label: Radius
+    name: Radius
+  - label: Distance
+    name: Distance
 
 ---
 

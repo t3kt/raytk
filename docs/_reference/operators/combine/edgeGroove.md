@@ -7,55 +7,81 @@ permalink: /reference/operators/combine/edgeGroove
 redirect_from:
   - /reference/opType/raytk.operators.combine.edgeGroove/
 op:
-  name: edgeGroove
-  summary: Creates a raised bar or indented groove where the second input intersects with the first.
-  opType: raytk.operators.combine.edgeGroove
   category: combine
   inputs:
-    - name: definition_in_1
-      label: definition_in_1
-      required: true
-      coordTypes: [float,vec2,vec3]
-      contextTypes: [none,Context,MaterialContext,CameraContext,LightContext,RayContext]
-      returnTypes: [float,Sdf]
-    - name: definition_in_2
-      label: definition_in_2
-      required: true
-      coordTypes: [float,vec2,vec3]
-      contextTypes: [none,Context,MaterialContext,CameraContext,LightContext,RayContext]
-      returnTypes: [float,Sdf]
-    - name: radius_definition_in
-      label: Radius Field
-      required: false
-      coordTypes: [float,vec2,vec3]
-      contextTypes: [none,Context,MaterialContext,CameraContext,LightContext,RayContext]
-      returnTypes: [float]
-      summary: |
-        Value field that can be used to vary the radius of the blend region at different points in space, by *multiplying* the value of the `Radius` parameter.
+  - contextTypes:
+    - none
+    - Context
+    - MaterialContext
+    - CameraContext
+    - LightContext
+    - RayContext
+    coordTypes:
+    - float
+    - vec2
+    - vec3
+    label: definition_in_1
+    name: definition_in_1
+    required: true
+    returnTypes:
+    - float
+    - Sdf
+  - contextTypes:
+    - none
+    - Context
+    - MaterialContext
+    - CameraContext
+    - LightContext
+    - RayContext
+    coordTypes:
+    - float
+    - vec2
+    - vec3
+    label: definition_in_2
+    name: definition_in_2
+    required: true
+    returnTypes:
+    - float
+    - Sdf
+  - contextTypes:
+    - none
+    - Context
+    - MaterialContext
+    - CameraContext
+    - LightContext
+    - RayContext
+    coordTypes:
+    - float
+    - vec2
+    - vec3
+    label: Radius Field
+    name: radius_definition_in
+    returnTypes:
+    - float
+    summary: Value field that can be used to vary the radius of the blend region at
+      different points in space, by *multiplying* the value of the `Radius` parameter.
+  name: edgeGroove
+  opType: raytk.operators.combine.edgeGroove
   parameters:
-    - name: Enable
-      label: Enable
-    - name: Function
-      label: Function
-      menuOptions:
-        - name: groove
-          label: Groove
-        - name: tongue
-          label: Tongue
-    - name: Swapinputs
-      label: Swap Inputs
-    - name: Depth
-      label: Depth
-      summary: |
-        The depth/height of the bar/groove.
-    - name: Radius
-      label: Radius
-      summary: |
-        The width of the bar/groove.
-    - name: Inspect
-      label: Inspect
-    - name: Help
-      label: Help
+  - label: Enable
+    name: Enable
+  - label: Function
+    menuOptions:
+    - label: Groove
+      name: groove
+    - label: Tongue
+      name: tongue
+    name: Function
+  - label: Swap Inputs
+    name: Swapinputs
+  - label: Depth
+    name: Depth
+    summary: The depth/height of the bar/groove.
+  - label: Radius
+    name: Radius
+    summary: The width of the bar/groove.
+  summary: Creates a raised bar or indented groove where the second input intersects
+    with the first.
 
 ---
 

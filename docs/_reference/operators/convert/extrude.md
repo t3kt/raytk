@@ -7,38 +7,42 @@ permalink: /reference/operators/convert/extrude
 redirect_from:
   - /reference/opType/raytk.operators.convert.extrude/
 op:
-  name: extrude
-  opType: raytk.operators.convert.extrude
   category: convert
   inputs:
-    - name: definition_in
-      label: definition_in
-      required: true
-      coordTypes: [vec2]
-      contextTypes: [none,Context,MaterialContext,CameraContext,LightContext,RayContext]
-      returnTypes: [Sdf]
+  - contextTypes:
+    - none
+    - Context
+    - MaterialContext
+    - CameraContext
+    - LightContext
+    - RayContext
+    coordTypes:
+    - vec2
+    label: definition_in
+    name: definition_in
+    required: true
+    returnTypes:
+    - Sdf
+  name: extrude
+  opType: raytk.operators.convert.extrude
   parameters:
-    - name: Enable
-      label: Enable
-    - name: Axis
-      label: Axis
-      menuOptions:
-        - name: x
-          label: X
-        - name: y
-          label: Y
-        - name: z
-          label: Z
-    - name: Infiniteheight
-      label: Infinite Height
-    - name: Height
-      label: Height
-    - name: Offset
-      label: Offset
-    - name: Inspect
-      label: Inspect
-    - name: Help
-      label: Help
+  - label: Enable
+    name: Enable
+  - label: Axis
+    menuOptions:
+    - label: X
+      name: x
+    - label: Y
+      name: y
+    - label: Z
+      name: z
+    name: Axis
+  - label: Infinite Height
+    name: Infiniteheight
+  - label: Height
+    name: Height
+  - label: Offset
+    name: Offset
 
 ---
 

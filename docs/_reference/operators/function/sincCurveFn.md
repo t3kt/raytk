@@ -7,29 +7,25 @@ permalink: /reference/operators/function/sincCurveFn
 redirect_from:
   - /reference/opType/raytk.operators.function.sincCurveFn/
 op:
+  category: function
   name: sincCurveFn
   opType: raytk.operators.function.sincCurveFn
-  category: function
   parameters:
-    - name: Bounces
-      label: Bounces
-    - name: Contexttype
-      label: Context Type
-      menuOptions:
-        - name: none
-          label: None
-        - name: Context
-          label: Context
-        - name: MaterialContext
-          label: Material Context
-        - name: CameraContext
-          label: Camera Context
-        - name: LightContext
-          label: Light Context
-    - name: Inspect
-      label: Inspect
-    - name: Help
-      label: Help
+  - label: Bounces
+    name: Bounces
+  - label: Context Type
+    menuOptions:
+    - label: None
+      name: none
+    - label: Context
+      name: Context
+    - label: Material Context
+      name: MaterialContext
+    - label: Camera Context
+      name: CameraContext
+    - label: Light Context
+      name: LightContext
+    name: Contexttype
 
 ---
 

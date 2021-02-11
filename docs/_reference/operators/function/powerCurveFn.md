@@ -7,35 +7,31 @@ permalink: /reference/operators/function/powerCurveFn
 redirect_from:
   - /reference/opType/raytk.operators.function.powerCurveFn/
 op:
+  category: function
   name: powerCurveFn
   opType: raytk.operators.function.powerCurveFn
-  category: function
   parameters:
-    - name: Balance
-      label: Balance
-    - name: Slope
-      label: Slope
-    - name: Normalizescale
-      label: Normalize Scale
-    - name: Scale
-      label: Scale
-    - name: Contexttype
-      label: Context Type
-      menuOptions:
-        - name: none
-          label: None
-        - name: Context
-          label: Context
-        - name: MaterialContext
-          label: Material Context
-        - name: CameraContext
-          label: Camera Context
-        - name: LightContext
-          label: Light Context
-    - name: Inspect
-      label: Inspect
-    - name: Help
-      label: Help
+  - label: Balance
+    name: Balance
+  - label: Slope
+    name: Slope
+  - label: Normalize Scale
+    name: Normalizescale
+  - label: Scale
+    name: Scale
+  - label: Context Type
+    menuOptions:
+    - label: None
+      name: none
+    - label: Context
+      name: Context
+    - label: Material Context
+      name: MaterialContext
+    - label: Camera Context
+      name: CameraContext
+    - label: Light Context
+      name: LightContext
+    name: Contexttype
 
 ---
 

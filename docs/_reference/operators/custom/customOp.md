@@ -7,128 +7,148 @@ permalink: /reference/operators/custom/customOp
 redirect_from:
   - /reference/opType/raytk.operators.custom.customOp/
 op:
+  category: custom
+  inputs:
+  - contextTypes:
+    - none
+    - Context
+    coordTypes:
+    - vec2
+    - vec3
+    label: definition_in
+    name: definition_in
+    returnTypes:
+    - float
+    - vec4
+    - Sdf
+  - contextTypes:
+    - none
+    - Context
+    coordTypes:
+    - vec2
+    - vec3
+    label: definition_in1
+    name: definition_in1
+    returnTypes:
+    - float
+    - vec4
+    - Sdf
+  - contextTypes:
+    - none
+    - Context
+    coordTypes:
+    - vec2
+    - vec3
+    label: definition_in2
+    name: definition_in2
+    returnTypes:
+    - float
+    - vec4
+    - Sdf
+  - contextTypes:
+    - none
+    - Context
+    coordTypes:
+    - vec2
+    - vec3
+    label: definition_in3
+    name: definition_in3
+    returnTypes:
+    - float
+    - vec4
+    - Sdf
   name: customOp
   opType: raytk.operators.custom.customOp
-  category: custom
-  status: beta
-  inputs:
-    - name: definition_in
-      label: definition_in
-      required: false
-      coordTypes: [vec2,vec3]
-      contextTypes: [none,Context]
-      returnTypes: [float,vec4,Sdf]
-    - name: definition_in1
-      label: definition_in1
-      required: false
-      coordTypes: [vec2,vec3]
-      contextTypes: [none,Context]
-      returnTypes: [float,vec4,Sdf]
-    - name: definition_in2
-      label: definition_in2
-      required: false
-      coordTypes: [vec2,vec3]
-      contextTypes: [none,Context]
-      returnTypes: [float,vec4,Sdf]
-    - name: definition_in3
-      label: definition_in3
-      required: false
-      coordTypes: [vec2,vec3]
-      contextTypes: [none,Context]
-      returnTypes: [float,vec4,Sdf]
   parameters:
-    - name: Enable
-      label: Enable
-    - name: Codeheader
-      label: Code
-    - name: Opglobals
-      label: Op Globals
-    - name: Initcode
-      label: Init Code
-    - name: Function
-      label: Function
-    - name: Materialcode
-      label: Material Code
-    - name: Settingsheader
-      label: Settings
-    - name: Macrotable
-      label: Macro Table
-    - name: Buffertable
-      label: Buffer Table
-    - name: Texturetable
-      label: Texture Table
-    - name: Librarynames
-      label: Library Names
-      menuOptions:
-        - name: hg_sdf
-          label: hg_sdf
-        - name: raytkCommon
-          label: raytkCommon
-        - name: raytkSdf
-          label: raytkSdf
-        - name: raytkMaterial
-          label: raytkMaterial
-    - name: Typesheader
-      label: Types
-    - name: Coordtype
-      label: Coord Type
-      menuOptions:
-        - name: useinput
-          label: Use Input
-        - name: float
-          label: 1D
-        - name: vec3
-          label: 3D
-        - name: vec2
-          label: 2D
-    - name: Returntype
-      label: Return Type
-      menuOptions:
-        - name: useinput
-          label: Use Input
-        - name: Sdf
-          label: SDF Result
-        - name: float
-          label: Float
-        - name: vec4
-          label: Vector4
-        - name: Ray
-          label: Ray
-        - name: Light
-          label: Light
-    - name: Contexttype
-      label: Context Type
-      menuOptions:
-        - name: useinput
-          label: Use Input
-        - name: none
-          label: None
-        - name: Context
-          label: Context
-        - name: MaterialContext
-          label: Material Context
-        - name: CameraContext
-          label: Camera Context
-        - name: LightContext
-          label: Light Context
-    - name: Createopglobals
-      label: Create Op Globals
-    - name: Createinit
-      label: Create Init
-    - name: Createfunction
-      label: Create Function
-    - name: Creatematerial
-      label: Create Material
-    - name: Createmissingparams
-      label: Create Missing Params
-    - name: Removeunusedparams
-      label: Remove Unused Params
-    - name: Autocreatemissingparams
-      label: Auto Create Missing Params
-    - name: Inspect
-      label: Inspect
-    - name: Help
-      label: Help
+  - label: Enable
+    name: Enable
+  - label: Code
+    name: Codeheader
+  - label: Op Globals
+    name: Opglobals
+  - label: Init Code
+    name: Initcode
+  - label: Function
+    name: Function
+  - label: Material Code
+    name: Materialcode
+  - label: Settings
+    name: Settingsheader
+  - label: Macro Table
+    name: Macrotable
+  - label: Buffer Table
+    name: Buffertable
+  - label: Texture Table
+    name: Texturetable
+  - label: Library Names
+    menuOptions:
+    - label: hg_sdf
+      name: hg_sdf
+    - label: raytkCommon
+      name: raytkCommon
+    - label: raytkSdf
+      name: raytkSdf
+    - label: raytkMaterial
+      name: raytkMaterial
+    name: Librarynames
+  - label: Types
+    name: Typesheader
+  - label: Coord Type
+    menuOptions:
+    - label: Use Input
+      name: useinput
+    - label: 1D
+      name: float
+    - label: 3D
+      name: vec3
+    - label: 2D
+      name: vec2
+    name: Coordtype
+  - label: Return Type
+    menuOptions:
+    - label: Use Input
+      name: useinput
+    - label: SDF Result
+      name: Sdf
+    - label: Float
+      name: float
+    - label: Vector4
+      name: vec4
+    - label: Ray
+      name: Ray
+    - label: Light
+      name: Light
+    name: Returntype
+  - label: Context Type
+    menuOptions:
+    - label: Use Input
+      name: useinput
+    - label: None
+      name: none
+    - label: Context
+      name: Context
+    - label: Material Context
+      name: MaterialContext
+    - label: Camera Context
+      name: CameraContext
+    - label: Light Context
+      name: LightContext
+    name: Contexttype
+  - label: Create Op Globals
+    name: Createopglobals
+  - label: Create Init
+    name: Createinit
+  - label: Create Function
+    name: Createfunction
+  - label: Create Material
+    name: Creatematerial
+  - label: Create Missing Params
+    name: Createmissingparams
+  - label: Remove Unused Params
+    name: Removeunusedparams
+  - label: Auto Create Missing Params
+    name: Autocreatemissingparams
+  status: beta
 
 ---
 

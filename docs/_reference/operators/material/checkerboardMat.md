@@ -7,24 +7,24 @@ permalink: /reference/operators/material/checkerboardMat
 redirect_from:
   - /reference/opType/raytk.operators.material.checkerboardMat/
 op:
+  category: material
+  inputs:
+  - contextTypes:
+    - none
+    - Context
+    coordTypes:
+    - vec3
+    label: definition_in
+    name: definition_in
+    required: true
+    returnTypes:
+    - Sdf
   name: checkerboardMat
   opType: raytk.operators.material.checkerboardMat
-  category: material
-  status: beta
-  inputs:
-    - name: definition_in
-      label: definition_in
-      required: true
-      coordTypes: [vec3]
-      contextTypes: [none,Context]
-      returnTypes: [Sdf]
   parameters:
-    - name: Enable
-      label: Enable
-    - name: Inspect
-      label: Inspect
-    - name: Help
-      label: Help
+  - label: Enable
+    name: Enable
+  status: beta
 
 ---
 

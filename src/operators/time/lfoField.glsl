@@ -1,19 +1,21 @@
 ReturnT thismap(CoordT p, ContextT ctx) {
 	Time time = THIS_TIME;
 	#if defined(THIS_Intervaltype_seconds)
-	float t = time.seconds;
+	float x = time.seconds;
 	#elif defined(THIS_Intervaltype_frames)
-	float t = time.frame;
+	float x = time.frame;
 	#elif defined(THIS_Intervaltype_absseconds)
-	float t = time.absSeconds;
+	float x = time.absSeconds;
 	#elif defined(THIS_Intervaltype_absframes)
-	float t = time.absFrame;
+	float x = time.absFrame;
 	#else
 	#error invalidIntervalType
 	#endif
-	t = fract((t + THIS_Phase*THIS_Period)/ THIS_Period);
+	x = fract((x + THIS_Phase*THIS_Period)/ THIS_Period);
 	#ifdef THIS_HAS_INPUT_1
-	t = inputOp1(t, ctx);
+	x = inputOp1(x, ctx);
+	#else
+	x = THIS_WAVE_EXPR;
 	#endif
-	return THIS_Offset + (t * THIS_Amplitude);
+	return THIS_Offset + (x * THIS_Amplitude);
 }

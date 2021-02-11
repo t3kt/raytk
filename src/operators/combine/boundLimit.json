@@ -1,5 +1,6 @@
 {
   "meta": {
+    "opStatus": "alpha",
     "opType": "raytk.operators.combine.boundLimit",
     "opVersion": 4
   }

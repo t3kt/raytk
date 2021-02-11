@@ -7,34 +7,40 @@ permalink: /reference/operators/field/colorRampField
 redirect_from:
   - /reference/opType/raytk.operators.field.colorRampField/
 op:
-  name: colorRampField
-  summary: A vector field that maps an input field to values from a range of colors.
-  opType: raytk.operators.field.colorRampField
   category: field
   inputs:
-    - name: definition_in
-      label: definition_in
-      required: true
-      coordTypes: [float,vec2,vec3]
-      contextTypes: [none,Context,MaterialContext,CameraContext,LightContext,RayContext]
-      returnTypes: [float]
+  - contextTypes:
+    - none
+    - Context
+    - MaterialContext
+    - CameraContext
+    - LightContext
+    - RayContext
+    coordTypes:
+    - float
+    - vec2
+    - vec3
+    label: definition_in
+    name: definition_in
+    required: true
+    returnTypes:
+    - float
+  name: colorRampField
+  opType: raytk.operators.field.colorRampField
   parameters:
-    - name: Enable
-      label: Enable
-    - name: Color1
-      label: Color 1
-    - name: Color2
-      label: Color 2
-    - name: Alpha1
-      label: Alpha 1
-    - name: Alpha2
-      label: Alpha 2
-    - name: Clamprange
-      label: Clamp Range
-    - name: Inspect
-      label: Inspect
-    - name: Help
-      label: Help
+  - label: Enable
+    name: Enable
+  - label: Color 1
+    name: Color1
+  - label: Color 2
+    name: Color2
+  - label: Alpha 1
+    name: Alpha1
+  - label: Alpha 2
+    name: Alpha2
+  - label: Clamp Range
+    name: Clamprange
+  summary: A vector field that maps an input field to values from a range of colors.
 
 ---
 

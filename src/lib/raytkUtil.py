@@ -6,6 +6,8 @@ from typing import Callable, List, Union, Optional, Tuple
 if False:
 	# noinspection PyUnresolvedReferences
 	from _typeAliases import *
+	from _stubs.PopDialogExt import PopDialogExt
+
 	op.raytk = COMP()
 
 @total_ordering
@@ -73,14 +75,21 @@ class OpDefParsT(_OpMetaPars):
 	Functemplate: 'DatParamT'
 	Materialcode: 'DatParamT'
 	Macrotable: 'DatParamT'
+	Buffertable: 'DatParamT'
+	Texturetable: 'DatParamT'
 	Generatedmacrotables: 'StrParamT'
 	Params: 'StrParamT'
 	Specialparams: 'StrParamT'
+	Angleparams: 'StrParamT'
+	Macroparams: 'StrParamT'
 	Callbacks: 'DatParamT'
 	Librarynames: 'StrParamT'
 	Help: 'DatParamT'
 	Helpurl: 'StrParamT'
 	Disableinspect: 'BoolParamT'
+	Coordtype: 'StrParamT'
+	Returntype: 'StrParamT'
+	Contexttype: 'StrParamT'
 
 class ROPInfo:
 	rop: 'Optional[Union[OP, COMP]]'
@@ -298,15 +307,23 @@ class ROPInfo:
 		if cb and hasattr(cb, name):
 			getattr(cb, name)(**kwargs)
 
+class _InputHandlerParsT:
+	Required: 'BoolParamT'
+	Supportcoordtypes: 'StrParamT'
+	Supportreturntypes: 'StrParamT'
+	Supportcontexttypes: 'StrParamT'
+
 class InputInfo:
 	handler: 'Optional[COMP]'
 	rop: 'Optional[COMP]'
+	handlerPar: 'Union[_InputHandlerParsT, ParCollection]'
 
 	def __init__(self, handler: 'Union[OP, str, Cell, Par]'):
 		handler = op(handler)
 		if not handler:
 			return
 		self.handler = handler
+		self.handlerPar = handler.par
 		self.rop = handler.parent()
 
 	def __bool__(self):
@@ -449,6 +466,7 @@ _betaColor = 1, 0, 0.5
 _buildLockColor = 0, 0.68, 0.543
 _validationColor = 1, 0.95, 0.45
 _deprecatedColor = 0.2, 0.2, 0.2
+_guideColor = 0.0477209, 0.816, 0.816
 
 class Tag:
 	def __init__(
@@ -540,10 +558,14 @@ class RaytkTags:
 	buildExclude = Tag('buildExclude', _buildExcludeColor)
 	buildLock = Tag('buildLock', _buildLockColor)
 	fileSync = Tag('fileSync', _fileSyncColor, _updateFileSyncPars)
-	alpha = _OpStatusTag('raytkAlpha', _alphaColor)
-	beta = _OpStatusTag('raytkBeta', _betaColor)
-	deprecated = _OpStatusTag('raytkDeprecated', _deprecatedColor)
+	alpha = _OpStatusTag('raytkAlpha')
+	beta = _OpStatusTag('raytkBeta')
+	deprecated = _OpStatusTag('raytkDeprecated')
 	validation = Tag('raytkValidation', _validationColor)
+	guide = Tag('raytkGuide', _guideColor)
+	guideHeader = Tag('raytkGuideHeader', _guideColor)
+	guideContent = Tag('raytkGuideContent', _guideColor)
+	generated = Tag('raytkGenerated')
 
 def _getActiveEditor() -> 'NetworkEditor':
 	pane = ui.panes.current
@@ -570,7 +592,7 @@ def _getEditorPane(name: Optional[str] = None, popup=False):
 	else:
 		return ui.panes.createFloating(type=PaneType.NETWORKEDITOR, name=name)
 
-def navigateTo(o: 'OP', name: Optional[str] = None, popup=False, goInto=True):
+def navigateTo(o: 'Union[OP, COMP]', name: Optional[str] = None, popup=False, goInto=True):
 	if not o:
 		return
 	pane = _getEditorPane(name, popup)
@@ -873,3 +895,62 @@ def detachTox(comp: 'COMP'):
 	comp.par.reloadtoxonstart.val = False
 	comp.par.externaltox.expr = ''
 	comp.par.externaltox.val = ''
+
+def showPromptDialog(
+		title=None,
+		text=None,
+		default='',
+		textEntry=True,
+		okText='OK',
+		cancelText='Cancel',
+		ok: Callable = None,
+		cancel: Callable = None,
+):
+	def _callback(info: dict):
+		if info['buttonNum'] == 1:
+			if ok:
+				if not textEntry:
+					ok()
+				else:
+					ok(info.get('enteredText'))
+		elif info['buttonNum'] == 2:
+			if cancel:
+				cancel()
+	dialog = op.TDResources.op('popDialog')  # type: PopDialogExt
+	dialog.Open(
+		title=title,
+		text=text,
+		textEntry=False if not textEntry else (default or ''),
+		buttons=[okText, cancelText],
+		enterButton=1, escButton=2, escOnClickAway=True,
+		callback=_callback)
+
+def cleanDict(d):
+	if not d:
+		return None
+	result = {}
+	for key, val in d.items():
+		if val is None:
+			continue
+		if isinstance(val, dict):
+			val = cleanDict(val)
+		if isinstance(val, (str, list, dict, tuple)) and len(val) == 0:
+			continue
+		result[key] = val
+	return result
+
+def mergeDicts(*parts):
+	x = {}
+	for part in parts:
+		if part:
+			x.update(part)
+	return x
+
+def excludeKeys(d, keys):
+	if not d:
+		return {}
+	return {
+		key: val
+		for key, val in d.items()
+		if key not in keys
+	}

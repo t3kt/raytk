@@ -191,6 +191,13 @@ class BuildManager:
 		tools = RaytkTools()
 		tools.updateROPMetadata(comp)
 		tools.updateROPParams(comp)
+		self.log(f'Updating OP image for {comp}')
+		img = tools.updateOPImage(comp)
+		if img:
+			self.context.disableCloning(img)
+			self.context.detachTox(img)
+			self.context.lockBuildLockOps(img)
+		comp.color = 0.0477209, 0.111349, 0.114
 		if self.docProcessor:
 			self.docProcessor.processOp(comp)
 

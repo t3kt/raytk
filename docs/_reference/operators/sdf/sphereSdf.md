@@ -7,23 +7,17 @@ permalink: /reference/operators/sdf/sphereSdf
 redirect_from:
   - /reference/opType/raytk.operators.sdf.sphereSdf/
 op:
-  name: sphereSdf
-  summary: SDF in 3D space for a uniform sphere.
-  opType: raytk.operators.sdf.sphereSdf
   category: sdf
+  name: sphereSdf
+  opType: raytk.operators.sdf.sphereSdf
   parameters:
-    - name: Translate
-      label: Translate
-      summary: |
-        Moves the center of the sphere.
-    - name: Radius
-      label: Radius
-      summary: |
-        The radius of the sphere.
-    - name: Inspect
-      label: Inspect
-    - name: Help
-      label: Help
+  - label: Translate
+    name: Translate
+    summary: Moves the center of the sphere.
+  - label: Radius
+    name: Radius
+    summary: The radius of the sphere.
+  summary: SDF in 3D space for a uniform sphere.
 
 ---
 

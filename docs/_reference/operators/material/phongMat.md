@@ -7,52 +7,51 @@ permalink: /reference/operators/material/phongMat
 redirect_from:
   - /reference/opType/raytk.operators.material.phongMat/
 op:
-  name: phongMat
-  summary: Material that uses phong shading.
-  opType: raytk.operators.material.phongMat
   category: material
   inputs:
-    - name: definition_in
-      label: definition_in
-      required: true
-      coordTypes: [vec3]
-      contextTypes: [none,Context]
-      returnTypes: [Sdf]
-    - name: shadow_definition_in
-      label: Shadow Definition
-      required: false
-      coordTypes: [vec3]
-      contextTypes: [MaterialContext]
-      returnTypes: [float]
-      summary: |
-        Used to customize the behavior of shadows for the material. Only used if `Enableshadow` is on.
+  - contextTypes:
+    - none
+    - Context
+    coordTypes:
+    - vec3
+    label: definition_in
+    name: definition_in
+    required: true
+    returnTypes:
+    - Sdf
+  - contextTypes:
+    - MaterialContext
+    coordTypes:
+    - vec3
+    label: Shadow Definition
+    name: shadow_definition_in
+    returnTypes:
+    - float
+    summary: Used to customize the behavior of shadows for the material. Only used
+      if `Enableshadow` is on.
+  name: phongMat
+  opType: raytk.operators.material.phongMat
   parameters:
-    - name: Enable
-      label: Enable
-    - name: Ambientcolor
-      label: Ambient Color
-      summary: |
-        Base color applied to the surface regardless of lights.
-    - name: Diffusecolor
-      label: Diffuse Color
-      summary: |
-        Color reflected by matte surfaces.
-    - name: Specularcolor
-      label: Specular Color
-      summary: |
-        Color reflected by glossy surfaces.
-    - name: Shine
-      label: Shine
-      summary: |
-        Specular exponent, which adjusts the light curve of specular highlights.
-    - name: Enableshadow
-      label: Enable Shadow
-      summary: |
-        Whether to use shadows. When enabled, if the *Shadow Definition* input is provided, that will be used. Otherwise a default shadow function will be used.
-    - name: Inspect
-      label: Inspect
-    - name: Help
-      label: Help
+  - label: Enable
+    name: Enable
+  - label: Ambient Color
+    name: Ambientcolor
+    summary: Base color applied to the surface regardless of lights.
+  - label: Diffuse Color
+    name: Diffusecolor
+    summary: Color reflected by matte surfaces.
+  - label: Specular Color
+    name: Specularcolor
+    summary: Color reflected by glossy surfaces.
+  - label: Shine
+    name: Shine
+    summary: Specular exponent, which adjusts the light curve of specular highlights.
+  - label: Enable Shadow
+    name: Enableshadow
+    summary: Whether to use shadows. When enabled, if the *Shadow Definition* input
+      is provided, that will be used. Otherwise a default shadow function will be
+      used.
+  summary: Material that uses phong shading.
 
 ---
 

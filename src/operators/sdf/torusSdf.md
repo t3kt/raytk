@@ -1,3 +1,14 @@
-# torusSdf (sdf)
+SDF for a torus.
 
-SDF for a torus or partial torus with end caps.
+## Parameters
+
+* `Axis`
+  * `x`
+  * `y`
+  * `z`
+* `Radius`
+* `Thickness`
+* `Translate`
+* `Enablecaps`
+* `Startangle`
+* `Endangle`

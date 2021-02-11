@@ -7,23 +7,19 @@ permalink: /reference/operators/sdf/sphereFbmSdf
 redirect_from:
   - /reference/opType/raytk.operators.sdf.sphereFbmSdf/
 op:
+  category: sdf
   name: sphereFbmSdf
   opType: raytk.operators.sdf.sphereFbmSdf
-  category: sdf
   parameters:
-    - name: Translate
-      label: Translate
-    - name: Noisetype
-      label: Noise Type
-      menuOptions:
-        - name: lattice
-          label: Lattice
-        - name: simplex
-          label: Simplex
-    - name: Inspect
-      label: Inspect
-    - name: Help
-      label: Help
+  - label: Translate
+    name: Translate
+  - label: Noise Type
+    menuOptions:
+    - label: Lattice
+      name: lattice
+    - label: Simplex
+      name: simplex
+    name: Noisetype
 
 ---
 

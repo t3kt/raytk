@@ -7,27 +7,23 @@ permalink: /reference/operators/light/pointLight
 redirect_from:
   - /reference/opType/raytk.operators.light.pointLight/
 op:
-  name: pointLight
-  summary: Light eminating from a single point in space, with optional distance attentuation.
-  opType: raytk.operators.light.pointLight
   category: light
+  name: pointLight
+  opType: raytk.operators.light.pointLight
   parameters:
-    - name: Position
-      label: Position
-    - name: Intensity
-      label: Intensity
-    - name: Color
-      label: Color
-    - name: Enableattenuation
-      label: Attenuated
-    - name: Attenuationstart
-      label: Attenuation Start
-    - name: Attenuationend
-      label: Attenuation End
-    - name: Inspect
-      label: Inspect
-    - name: Help
-      label: Help
+  - label: Position
+    name: Position
+  - label: Intensity
+    name: Intensity
+  - label: Color
+    name: Color
+  - label: Attenuated
+    name: Enableattenuation
+  - label: Attenuation Start
+    name: Attenuationstart
+  - label: Attenuation End
+    name: Attenuationend
+  summary: Light eminating from a single point in space, with optional distance attentuation.
 
 ---
 

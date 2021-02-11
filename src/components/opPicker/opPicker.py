@@ -517,10 +517,7 @@ class _ItemLibrary:
 			return -1
 
 	def applyFilter(self, filt: 'Optional[_Filter]'):
-		if not filt:
-			self.filteredItems = None
-		else:
-			self.filteredItems = self._buildFlatList(filt)
+		self.filteredItems = self._buildFlatList(filt)
 
 def _splitCamelCase(s: str):
 	splits = [i for i, e in enumerate(s) if e.isupper()] + [len(s)]

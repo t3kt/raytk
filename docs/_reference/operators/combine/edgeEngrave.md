@@ -7,44 +7,70 @@ permalink: /reference/operators/combine/edgeEngrave
 redirect_from:
   - /reference/opType/raytk.operators.combine.edgeEngrave/
 op:
-  name: edgeEngrave
-  summary: Carves a v-shaped groove where the second input intersects with the first.
-  opType: raytk.operators.combine.edgeEngrave
   category: combine
   inputs:
-    - name: definition_in_1
-      label: definition_in_1
-      required: true
-      coordTypes: [float,vec2,vec3]
-      contextTypes: [none,Context,MaterialContext,CameraContext,LightContext,RayContext]
-      returnTypes: [float,Sdf]
-    - name: definition_in_2
-      label: definition_in_2
-      required: true
-      coordTypes: [float,vec2,vec3]
-      contextTypes: [none,Context,MaterialContext,CameraContext,LightContext,RayContext]
-      returnTypes: [float,Sdf]
-    - name: radius_definition_in
-      label: Radius Field
-      required: false
-      coordTypes: [float,vec2,vec3]
-      contextTypes: [none,Context,MaterialContext,CameraContext,LightContext,RayContext]
-      returnTypes: [float]
-      summary: |
-        Value field that can be used to vary the radius of the groove at different points in space, by *multiplying* the value of the `Radius` parameter.
+  - contextTypes:
+    - none
+    - Context
+    - MaterialContext
+    - CameraContext
+    - LightContext
+    - RayContext
+    coordTypes:
+    - float
+    - vec2
+    - vec3
+    label: definition_in_1
+    name: definition_in_1
+    required: true
+    returnTypes:
+    - float
+    - Sdf
+  - contextTypes:
+    - none
+    - Context
+    - MaterialContext
+    - CameraContext
+    - LightContext
+    - RayContext
+    coordTypes:
+    - float
+    - vec2
+    - vec3
+    label: definition_in_2
+    name: definition_in_2
+    required: true
+    returnTypes:
+    - float
+    - Sdf
+  - contextTypes:
+    - none
+    - Context
+    - MaterialContext
+    - CameraContext
+    - LightContext
+    - RayContext
+    coordTypes:
+    - float
+    - vec2
+    - vec3
+    label: Radius Field
+    name: radius_definition_in
+    returnTypes:
+    - float
+    summary: Value field that can be used to vary the radius of the groove at different
+      points in space, by *multiplying* the value of the `Radius` parameter.
+  name: edgeEngrave
+  opType: raytk.operators.combine.edgeEngrave
   parameters:
-    - name: Enable
-      label: Enable
-    - name: Swapinputs
-      label: Swap Inputs
-    - name: Radius
-      label: Radius
-      summary: |
-        Width of the groove.
-    - name: Inspect
-      label: Inspect
-    - name: Help
-      label: Help
+  - label: Enable
+    name: Enable
+  - label: Swap Inputs
+    name: Swapinputs
+  - label: Radius
+    name: Radius
+    summary: Width of the groove.
+  summary: Carves a v-shaped groove where the second input intersects with the first.
 
 ---
 

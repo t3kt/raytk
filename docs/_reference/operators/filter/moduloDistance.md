@@ -7,47 +7,56 @@ permalink: /reference/operators/filter/moduloDistance
 redirect_from:
   - /reference/opType/raytk.operators.filter.moduloDistance/
 op:
-  name: moduloDistance
-  opType: raytk.operators.filter.moduloDistance
   category: filter
   inputs:
-    - name: definition_in
-      label: definition_in
-      required: true
-      coordTypes: [vec2,vec3]
-      contextTypes: [none,Context,MaterialContext,CameraContext,LightContext,RayContext]
-      returnTypes: [float,vec4,Sdf,Ray,Light]
+  - contextTypes:
+    - none
+    - Context
+    - MaterialContext
+    - CameraContext
+    - LightContext
+    - RayContext
+    coordTypes:
+    - vec2
+    - vec3
+    label: definition_in
+    name: definition_in
+    required: true
+    returnTypes:
+    - float
+    - vec4
+    - Sdf
+    - Ray
+    - Light
+  name: moduloDistance
+  opType: raytk.operators.filter.moduloDistance
   parameters:
-    - name: Enable
-      label: Enable
-    - name: Distancemode
-      label: Distance Mode
-      menuOptions:
-        - name: xaxis
-          label: X Axis
-        - name: yaxis
-          label: Y Axis
-        - name: zaxis
-          label: Z Axis
-        - name: spherical
-          label: Spherical
-    - name: Mirrortype
-      label: Mirror Type
-      menuOptions:
-        - name: none
-          label: None
-        - name: mirror
-          label: Mirror
-    - name: Length
-      label: Length
-    - name: Center
-      label: Center
-    - name: Iterateonrings
-      label: Iterate On Rings
-    - name: Inspect
-      label: Inspect
-    - name: Help
-      label: Help
+  - label: Enable
+    name: Enable
+  - label: Distance Mode
+    menuOptions:
+    - label: X Axis
+      name: xaxis
+    - label: Y Axis
+      name: yaxis
+    - label: Z Axis
+      name: zaxis
+    - label: Spherical
+      name: spherical
+    name: Distancemode
+  - label: Mirror Type
+    menuOptions:
+    - label: None
+      name: none
+    - label: Mirror
+      name: mirror
+    name: Mirrortype
+  - label: Length
+    name: Length
+  - label: Center
+    name: Center
+  - label: Iterate On Rings
+    name: Iterateonrings
 
 ---
 

@@ -7,66 +7,62 @@ permalink: /reference/operators/time/timeField
 redirect_from:
   - /reference/opType/raytk.operators.time.timeField/
 op:
+  category: time
   name: timeField
   opType: raytk.operators.time.timeField
-  category: time
   parameters:
-    - name: Part
-      label: Part
-      menuOptions:
-        - name: seconds
-          label: Seconds
-        - name: frame
-          label: Frame
-        - name: start
-          label: Start Frame
-        - name: end
-          label: End Frame
-        - name: fraction
-          label: Fraction
-        - name: rate
-          label: Frame Rate
-        - name: bpm
-          label: BPM
-        - name: absFrame
-          label: Absolute Frame
-        - name: absSeconds
-          label: Absolute Seconds
-        - name: absStepFrames
-          label: Absolute Step Frames
-        - name: absStepSeconds
-          label: Absolute Step Seconds
-    - name: Timesource
-      label: Time Source
-      menuOptions:
-        - name: global
-          label: Global
-        - name: context
-          label: Context
-    - name: Coordtype
-      label: Coord Type
-      menuOptions:
-        - name: float
-          label: 1D
-        - name: vec2
-          label: 2D
-        - name: vec3
-          label: 3D
-    - name: Contexttype
-      label: Context Type
-      menuOptions:
-        - name: Context
-          label: Context
-        - name: MaterialContext
-          label: Material Context
-        - name: CameraContext
-          label: Camera Context
-        - name: LightContext
-          label: Light Context
-    - name: Inspect
-      label: Inspect
-    - name: Help
-      label: Help
+  - label: Part
+    menuOptions:
+    - label: Seconds
+      name: seconds
+    - label: Frame
+      name: frame
+    - label: Start Frame
+      name: start
+    - label: End Frame
+      name: end
+    - label: Fraction
+      name: fraction
+    - label: Frame Rate
+      name: rate
+    - label: BPM
+      name: bpm
+    - label: Absolute Frame
+      name: absFrame
+    - label: Absolute Seconds
+      name: absSeconds
+    - label: Absolute Step Frames
+      name: absStepFrames
+    - label: Absolute Step Seconds
+      name: absStepSeconds
+    name: Part
+  - label: Time Source
+    menuOptions:
+    - label: Global
+      name: global
+    - label: Context
+      name: context
+    name: Timesource
+  - label: Coord Type
+    menuOptions:
+    - label: 1D
+      name: float
+    - label: 2D
+      name: vec2
+    - label: 3D
+      name: vec3
+    name: Coordtype
+  - label: Context Type
+    menuOptions:
+    - label: Context
+      name: Context
+    - label: Material Context
+      name: MaterialContext
+    - label: Camera Context
+      name: CameraContext
+    - label: Light Context
+      name: LightContext
+    name: Contexttype
 
 ---
 

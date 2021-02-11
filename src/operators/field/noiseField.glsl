@@ -23,5 +23,6 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 	q -= THIS_Translate;
 	q /= THIS_Scale;
 
-	return THIS_FUNCTION(q);
+	ReturnT val = THIS_FUNCTION(q);
+	return (val * THIS_Amplitude) + THIS_Offset;
 }

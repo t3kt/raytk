@@ -7,25 +7,21 @@ permalink: /reference/operators/sdf/kaliGeneratorSdf
 redirect_from:
   - /reference/opType/raytk.operators.sdf.kaliGeneratorSdf/
 op:
-  name: kaliGeneratorSdf
-  summary: Fractal SDF based on "Generators" by Kali (https://www.shadertoy.com/view/Xtf3Rn).
-  opType: raytk.operators.sdf.kaliGeneratorSdf
   category: sdf
+  name: kaliGeneratorSdf
+  opType: raytk.operators.sdf.kaliGeneratorSdf
   parameters:
-    - name: Steps
-      label: Steps
-    - name: Steptranslate
-      label: Step Translate
-    - name: Fractalangle
-      label: Fractal Angle
-    - name: Boxsize
-      label: Box Size
-    - name: Boxround
-      label: Box Round
-    - name: Inspect
-      label: Inspect
-    - name: Help
-      label: Help
+  - label: Steps
+    name: Steps
+  - label: Step Translate
+    name: Steptranslate
+  - label: Fractal Angle
+    name: Fractalangle
+  - label: Box Size
+    name: Boxsize
+  - label: Box Round
+    name: Boxround
+  summary: Fractal SDF based on "Generators" by Kali (https://www.shadertoy.com/view/Xtf3Rn).
 
 ---
 

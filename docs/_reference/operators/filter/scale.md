@@ -7,38 +7,66 @@ permalink: /reference/operators/filter/scale
 redirect_from:
   - /reference/opType/raytk.operators.filter.scale/
 op:
-  name: scale
-  summary: Scales space.
-  detail: |
-    Scaling works for either 3D or 2D inputs.
-  opType: raytk.operators.filter.scale
   category: filter
+  detail: Scaling works for either 3D or 2D inputs.
   inputs:
-    - name: definition_in
-      label: definition_in
-      required: true
-      coordTypes: [vec2,vec3]
-      contextTypes: [none,Context,MaterialContext,CameraContext,LightContext,RayContext]
-      returnTypes: [float,vec4,Sdf,Ray,Light]
-    - name: scale_field_definition_in
-      label: Scale Field
-      required: false
-      coordTypes: [vec2,vec3]
-      contextTypes: [none,Context,MaterialContext,CameraContext,LightContext,RayContext]
-      returnTypes: [float,vec4,Sdf]
-      summary: |
-        If provided, this field is used to modify the scaling at different points in space. If the field returns float values, the value of all the `Scale` parameters are multiplied by that value. If it returns vec4 values, each part of the `Scale` parameter is multiplied by the corresponding value in the vec4.
+  - contextTypes:
+    - none
+    - Context
+    - MaterialContext
+    - CameraContext
+    - LightContext
+    - RayContext
+    coordTypes:
+    - vec2
+    - vec3
+    label: definition_in
+    name: definition_in
+    required: true
+    returnTypes:
+    - float
+    - vec4
+    - Sdf
+    - Ray
+    - Light
+  - contextTypes:
+    - none
+    - Context
+    - MaterialContext
+    - CameraContext
+    - LightContext
+    - RayContext
+    coordTypes:
+    - vec2
+    - vec3
+    label: Scale Field
+    name: scale_field_definition_in
+    returnTypes:
+    - float
+    - vec4
+    - Sdf
+    summary: If provided, this field is used to modify the scaling at different points
+      in space. If the field returns float values, the value of all the `Scale` parameters
+      are multiplied by that value. If it returns vec4 values, each part of the `Scale`
+      parameter is multiplied by the corresponding value in the vec4.
+  name: scale
+  opType: raytk.operators.filter.scale
   parameters:
-    - name: Enable
-      label: Enable
-    - name: Scale
-      label: Scale
-      summary: |
-        Scale to apply to each axis. If input is 2D only X and Y are used.
-    - name: Inspect
-      label: Inspect
-    - name: Help
-      label: Help
+  - label: Enable
+    name: Enable
+  - label: Scale
+    name: Scale
+    summary: Scale to apply to each axis. If input is 2D only X and Y are used.
+  - label: Scale Type
+    menuOptions:
+    - label: Separate XYZ
+      name: separate
+    - label: Uniform
+      name: uniform
+    name: Scaletype
+  - label: Uniform Scale
+    name: Uniformscale
+  summary: Scales space.
 
 ---
 

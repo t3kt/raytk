@@ -24,9 +24,7 @@ struct Sdf {
 	vec4 orbit;  // orbit trap value for fractals
 	#endif
 
-	#ifdef RAYTK_STEPS_IN_SDF
 	int steps;
-	#endif
 
 	#ifdef RAYTK_NEAR_HITS_IN_SDF
 	int nearHitCount;
@@ -61,9 +59,7 @@ Sdf createSdf(float dist) {
 	#ifdef RAYTK_ORBIT_IN_SDF
 	res.orbit = vec4(0);
 	#endif
-	#ifdef RAYTK_STEPS_IN_SDF
 	res.steps = 0;
-	#endif
 	#ifdef RAYTK_NEAR_HITS_IN_SDF
 	res.nearHitCount = 0;
 	res.nearHitAmount = 0.;
@@ -110,6 +106,20 @@ void assignMaterial(inout Sdf res, int materialId) {
 	res.interpolant = 0.;
 }
 
+#ifndef RAYTK_MAX_DIST
+	#define RAYTK_MAX_DIST 99999
+#endif
+
+Sdf createNonHitSdf() {
+	Sdf res = createSdf(RAYTK_MAX_DIST);
+	assignMaterial(res, -1);
+	return res;
+}
+
+bool isNonHitSdf(Sdf res) {
+	return res.x >= RAYTK_MAX_DIST;
+}
+
 Sdf withAdjustedScale(in Sdf res, float scaleMult) {
 	res.x *= scaleMult;
 	return res;
@@ -139,7 +149,7 @@ struct Context {
 	vec3 globalPos;
 	#endif
 
-	#if defined(RAYTK_TIME_IN_CONTEXT) || defined(RAYTK_USE_TIME)
+	#if defined(RAYTK_USE_TIME)
 	Time time;
 	#endif
 };
@@ -176,6 +186,7 @@ struct MaterialContext {
 	Ray ray;
 	Light light;
 	vec3 normal;
+	vec3 reflectColor;
 };
 
 struct CameraContext {
@@ -613,4 +624,18 @@ float dot2( in vec3 v ) { return dot(v,v); }
 
 float map01(float value, float inMin, float inMax) {
 	return (value - inMin) / (inMax - inMin);
+}
+
+// from Logarithmic Mobius Transform by Shane
+// https://www.shadertoy.com/view/4dcSWs
+vec2 spiralZoom(vec2 p, vec2 offs, float n, float spiral, float zoom, vec2 phase) {
+	p -= offs;
+	float a = atan(p.y, p.x)/6.283;
+	float d = log(length(p));
+	return vec2(a*n + d*spiral, -d*zoom + a) + phase;
+}
+// Standard Mobius transform: f(z) = (az + b)/(cz + d). Slightly obfuscated.
+vec2 mobiusTransform(vec2 p, vec2 z1, vec2 z2) {
+	z1 = p - z1; p -= z2;
+	return vec2(dot(z1, p), z1.y*p.x - z1.x*p.y) / dot(p, p);
 }

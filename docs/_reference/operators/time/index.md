@@ -7,13 +7,11 @@ has_toc: false
 permalink: /reference/operators/time/
 cat:
   name: time
-  summary: |
-    Operators that do time-based calculations.
   operators:
-    - op:
-      name: lfoField
-    - op:
-      name: timeField
+  - name: lfoField
+  - name: timeField
+  - name: timeShift
+  summary: Operators that do time-based calculations.
 
 ---
 

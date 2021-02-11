@@ -7,47 +7,43 @@ permalink: /reference/operators/field/contextValueField
 redirect_from:
   - /reference/opType/raytk.operators.field.contextValueField/
 op:
-  name: contextValueField
-  summary: Field that returns various fields from the context, from a downstream OP.
-  opType: raytk.operators.field.contextValueField
   category: field
+  name: contextValueField
+  opType: raytk.operators.field.contextValueField
   parameters:
-    - name: Coordtype
-      label: Coord Type
-      menuOptions:
-        - name: vec2
-          label: 2D
-        - name: vec3
-          label: 3D
-    - name: Contextfield
-      label: Context Field
-      menuOptions:
-        - name: iteration
-          label: Iteration
-        - name: matorbit
-          label: Orbit Trap (Material)
-        - name: matsteps
-          label: Step Count (Material)
-        - name: matnearhits
-          label: Near Hits (Material)
-        - name: matiteration
-          label: Iteration (Material)
-        - name: matobjectid
-          label: Object ID (Material)
-        - name: lightorbit
-          label: Orbit Trap (Light)
-        - name: lightsteps
-          label: Step Count (Light)
-        - name: lightnearhits
-          label: Near Hits (Light)
-        - name: lightiteration
-          label: Iteration (Light)
-        - name: lightobjectid
-          label: Object ID (Light)
-    - name: Inspect
-      label: Inspect
-    - name: Help
-      label: Help
+  - label: Coord Type
+    menuOptions:
+    - label: 2D
+      name: vec2
+    - label: 3D
+      name: vec3
+    name: Coordtype
+  - label: Context Field
+    menuOptions:
+    - label: Iteration
+      name: iteration
+    - label: Orbit Trap (Material)
+      name: matorbit
+    - label: Step Count (Material)
+      name: matsteps
+    - label: Near Hits (Material)
+      name: matnearhits
+    - label: Iteration (Material)
+      name: matiteration
+    - label: Object ID (Material)
+      name: matobjectid
+    - label: Orbit Trap (Light)
+      name: lightorbit
+    - label: Step Count (Light)
+      name: lightsteps
+    - label: Near Hits (Light)
+      name: lightnearhits
+    - label: Iteration (Light)
+      name: lightiteration
+    - label: Object ID (Light)
+      name: lightobjectid
+    name: Contextfield
+  summary: Field that returns various fields from the context, from a downstream OP.
 
 ---
 

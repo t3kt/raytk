@@ -24,12 +24,12 @@ float opSimpleIntersect(float res1, float res2) {
 
 Sdf opSimpleDiff(Sdf res1, Sdf res2) {
 	Sdf res = res1;
-	res.x = max(-res1.x, res2.x);
+	res.x = max(-res2.x, res1.x);
 	return res;
 }
 
 float opSimpleDiff(float res1, float res2) {
-	return max(-res1, res2);
+	return max(-res2, res1);
 }
 
 float smoothBlendRatio(float a, float b, float k) {
@@ -565,3 +565,20 @@ float sdCappedCone(vec3 p, float h, float r1, float r2)
 	return s*sqrt( min(dot2(ca),dot2(cb)) );
 }
 
+//Eiffie
+vec2 sdHelixCoords(vec3 p, float r1, float m, float dualSpread) {
+	float halfm = m*.5,
+	b = mod(p.y, PI*m) - PI*halfm,
+	a = abs(atan(p.x, p.z) * halfm - b);
+	if (a > PI*halfm) a = PI*m - a;
+
+	//optimisation from Shane
+	p.xy = vec2(length(p.xz) - r1, a);
+	p.x = abs(p.x) - dualSpread;
+	return p.xy;
+}
+
+float sdHelix(vec3 p, float r1, float r2, float m, float dualSpread) {
+	vec2 q = sdHelixCoords(p, r1, m, dualSpread);
+	return length(q) - r2;
+}

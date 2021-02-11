@@ -9,8 +9,11 @@ if False:
 	from _stubs import *
 	from components.inspectorCore.inspectorCoreExt import InspectorCore
 	from components.opPicker.opPicker import PickerItem
+	from ..testEditor.testEditor import TestEditor
 	# noinspection PyTypeHints
 	iop.inspectorCore = InspectorCore(COMP())  # type: Union[COMP, InspectorCore]
+	# noinspection PyTypeChecker,PyTypeHints
+	iop.testEditor = TestEditor(COMP())  # type: Union[COMP, TestEditor]
 
 class ROPEditor:
 	def __init__(self, ownerComp: 'COMP'):
@@ -24,29 +27,14 @@ class ROPEditor:
 		iop.inspectorCore.Inspect(o)
 		info = self.ROPInfo
 		self._statusDropMenu.par.Value0 = info.statusLabel or 'default'
+		iop.testEditor.UnloadTest()
 
 	def onStatusDropMenuChange(self):
 		info = self.ROPInfo
 		if not info:
 			return
 		status = self._statusDropMenu.par.Value0.eval()
-		# note: since applying with status false resets the color, the false ones have to be done before the true one
-		if status == 'alpha':
-			RaytkTags.beta.apply(info.rop, False)
-			RaytkTags.deprecated.apply(info.rop, False)
-			RaytkTags.alpha.apply(info.rop, True)
-		elif status == 'beta':
-			RaytkTags.alpha.apply(info.rop, False)
-			RaytkTags.deprecated.apply(info.rop, False)
-			RaytkTags.beta.apply(info.rop, True)
-		elif status == 'deprecated':
-			RaytkTags.alpha.apply(info.rop, False)
-			RaytkTags.beta.apply(info.rop, False)
-			RaytkTags.deprecated.apply(info.rop, True)
-		else:
-			RaytkTags.alpha.apply(info.rop, False)
-			RaytkTags.beta.apply(info.rop, False)
-			RaytkTags.deprecated.apply(info.rop, False)
+		RaytkTools().setROPStatus(info.rop, status)
 
 	@property
 	def ROP(self) -> 'Optional[COMP]':
@@ -55,6 +43,12 @@ class ROPEditor:
 	@property
 	def ROPInfo(self):
 		return ROPInfo(self.ROP)
+
+	@property
+	def ROPType(self):
+		info = self.ROPInfo
+		if info:
+			return info.opType
 
 	def showInEditor(self, popup=False):
 		rop = self.ROP

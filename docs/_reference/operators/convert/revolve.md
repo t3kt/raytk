@@ -7,36 +7,44 @@ permalink: /reference/operators/convert/revolve
 redirect_from:
   - /reference/opType/raytk.operators.convert.revolve/
 op:
-  name: revolve
-  opType: raytk.operators.convert.revolve
   category: convert
   inputs:
-    - name: definition_in
-      label: definition_in
-      required: true
-      coordTypes: [vec2]
-      contextTypes: [none,Context,MaterialContext,CameraContext,LightContext,RayContext]
-      returnTypes: [float,vec4,Sdf,Ray,Light]
+  - contextTypes:
+    - none
+    - Context
+    - MaterialContext
+    - CameraContext
+    - LightContext
+    - RayContext
+    coordTypes:
+    - vec2
+    label: definition_in
+    name: definition_in
+    required: true
+    returnTypes:
+    - float
+    - vec4
+    - Sdf
+    - Ray
+    - Light
+  name: revolve
+  opType: raytk.operators.convert.revolve
   parameters:
-    - name: Enable
-      label: Enable
-    - name: Axis
-      label: Axis
-      menuOptions:
-        - name: x
-          label: X
-        - name: y
-          label: Y
-        - name: z
-          label: Z
-    - name: Radialoffset
-      label: Radial Offset
-    - name: Axisoffset
-      label: Axis Offset
-    - name: Inspect
-      label: Inspect
-    - name: Help
-      label: Help
+  - label: Enable
+    name: Enable
+  - label: Axis
+    menuOptions:
+    - label: X
+      name: x
+    - label: Y
+      name: y
+    - label: Z
+      name: z
+    name: Axis
+  - label: Radial Offset
+    name: Radialoffset
+  - label: Axis Offset
+    name: Axisoffset
 
 ---
 

@@ -1,5 +1,6 @@
 {
   "meta": {
+    "opStatus": "beta",
     "opType": "raytk.operators.material.sampledPointMat",
     "opVersion": 7
   }

@@ -26,6 +26,10 @@ color of points on the surface of geometry.
 * [Output](output/) - Outputs are a special category of operator that takes in one or more
 chains of OPs, generate a shader, and run it to produce some sort of
 output.
+* [Pattern](pattern/) - 2D pattern generators, which can be used for things like textures.
+Pattern operators are essentially a sub-category of field operators that focus
+on producing value or color patterns using 2D coordinates.
+
 * [Post](post/) - 
 * [Sdf](sdf/) - Signed distances functions which define geometry in 3D space, by calculating
 the distance from the surface of the shape at any given point.

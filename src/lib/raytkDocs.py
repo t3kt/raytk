@@ -1,9 +1,9 @@
 from dataclasses import dataclass, field
 import re
 from typing import Dict, Iterable, List, Optional, Tuple
-from io import StringIO
+import yaml
 
-from raytkUtil import ROPInfo, CategoryInfo, RaytkTags, InputInfo
+from raytkUtil import ROPInfo, CategoryInfo, RaytkTags, InputInfo, cleanDict, mergeDicts
 
 # noinspection PyUnreachableCode
 if False:
@@ -13,8 +13,6 @@ if False:
 else:
 	# noinspection PyUnresolvedReferences,PyUnboundLocalVariable
 	TDJSON = op.TDModules.mod.TDJSON
-
-
 
 _defaultParamHelp = 'Help not available.'
 
@@ -32,10 +30,12 @@ class MenuOptionHelp:
 			text += ': ' + self.description
 		return text
 
-	def writeFrontMatterData(self, writer: '_IndentedWriter'):
-		with writer.block(f'- name: {self.name}'):
-			writer.writeField('label', self.label)
-			writer.writeMultiLineStringField('description', self.description)
+	def toFrontMatterData(self):
+		return cleanDict({
+			'name': self.name,
+			'label': self.label,
+			'description': self.description,
+		})
 
 @dataclass
 class ROPParamHelp:
@@ -84,14 +84,16 @@ class ROPParamHelp:
 			parHelp.pullOptionsFromPar(par)
 		return parHelp
 
-	def writeFrontMatterData(self, writer: '_IndentedWriter'):
-		with writer.block(f'- name: {self.name}'):
-			writer.writeField('label', self.label or self.name)
-			writer.writeMultiLineStringField('summary', self.summary)
-			if self.menuOptions:
-				with writer.block('menuOptions:'):
-					for opt in self.menuOptions:
-						opt.writeFrontMatterData(writer)
+	def toFrontMatterData(self):
+		return cleanDict({
+			'name': self.name,
+			'label': self.label,
+			'summary': self.summary,
+			'menuOptions': [
+				opt.toFrontMatterData()
+				for opt in self.menuOptions
+			],
+		})
 
 @dataclass
 class InputHelp:
@@ -136,14 +138,18 @@ class InputHelp:
 		self.contextTypes = other.contextTypes
 		self.returnTypes = other.returnTypes
 
-	def writeFrontMatterData(self, writer: '_IndentedWriter'):
-		with writer.block(f'- name: {self.name}'):
-			writer.writeField('label', self.label or self.name)
-			writer.writeField('required', self.required)
-			writer.writeListField('coordTypes', self.coordTypes)
-			writer.writeListField('contextTypes', self.contextTypes)
-			writer.writeListField('returnTypes', self.returnTypes)
-			writer.writeMultiLineStringField('summary', self.summary)
+	def toFrontMatterData(self):
+		return cleanDict({
+			'name': self.name,
+			'label': self.label or self.name,
+			'required': self.required or None,
+			'coordTypes': self.coordTypes,
+			'contextTypes': self.contextTypes,
+			'returnTypes': self.returnTypes,
+			'summary': self.summary,
+		})
+
+_ignorePars = 'Help', 'Inspect', 'Updateop'
 
 @dataclass
 class ROPHelp:
@@ -171,6 +177,7 @@ class ROPHelp:
 		ropHelp.parameters = [
 			ROPParamHelp.extractFromPar(pt[0])
 			for pt in parTuples
+			if pt[0].name not in _ignorePars
 		]
 		dat = info.helpDAT
 		if dat:
@@ -225,7 +232,7 @@ class ROPHelp:
 				'\n'.join([
 					parHelp.formatMarkdownListItem()
 					for parHelp in self.parameters
-					if parHelp.name not in ('Help', 'Inspect')
+					if parHelp.name not in _ignorePars
 				])
 			]
 		if self.inputs:
@@ -239,9 +246,7 @@ class ROPHelp:
 		return _mergeMarkdownChunks(parts)
 
 	def formatAsFullPage(self, ropInfo: 'ROPInfo'):
-		writer = _IndentedWriter()
-		self.writeFrontMatterData(writer, full=True)
-		frontMatterData = writer.getValue()
+		frontMatterData = _dumpYaml(cleanDict(self.toFrontMatterData(full=True)))
 		header = f'''---
 layout: operator
 title: {ropInfo.shortName}
@@ -265,30 +270,43 @@ Category: {ropInfo.categoryName}
 		]
 		return _mergeMarkdownChunks(parts)
 
-	def writeFrontMatterData(self, writer: '_IndentedWriter', full: bool):
-		with writer.block('op:' if full else '- op:'):
-			writer.writeField('name', self.name)
-			if self.summary:
-				writer.writeField('summary', self.summary.replace('\n', ' '))
-			if full:
-				writer.writeMultiLineStringField('detail', self.detail)
-				writer.writeField('opType', self.opType)
-				writer.writeField('category', self.category)
-			if self.isDeprecated:
-				writer.writeField('status', 'deprecated')
-			elif self.isAlpha:
-				writer.writeField('status', 'alpha')
-			elif self.isBeta:
-				writer.writeField('status', 'beta')
-			if full:
-				if self.inputs:
-					with writer.block('inputs:'):
-						for inHelp in self.inputs:
-							inHelp.writeFrontMatterData(writer)
-				if self.parameters:
-					with writer.block('parameters:'):
-						for parHelp in self.parameters:
-							parHelp.writeFrontMatterData(writer)
+	def toFrontMatterData(self, full: bool):
+		if self.isDeprecated:
+			status = 'deprecated'
+		elif self.isAlpha:
+			status = 'alpha'
+		elif self.isBeta:
+			status = 'beta'
+		else:
+			status = None
+		obj = cleanDict(mergeDicts(
+			{
+				'name': self.name,
+				'summary': self.summary,
+			},
+			{
+				'detail': self.detail,
+				'opType': self.opType,
+				'category': self.category,
+			} if full else None,
+			{
+				'status': status,
+			},
+			{
+				'inputs': [
+					inHelp.toFrontMatterData()
+					for inHelp in self.inputs
+				],
+				'parameters': [
+					parHelp.toFrontMatterData()
+					for parHelp in self.parameters
+					if parHelp.name not in _ignorePars
+				],
+			} if full else None,
+		))
+		if full:
+			return {'op': obj}
+		return obj
 
 	def formatAsListItem(self):
 		text = f'* [`{self.name}`]({self.name}/) - {self.summary or ""}'
@@ -309,63 +327,6 @@ Category: {ropInfo.categoryName}
 					del self.parameters[i]
 				return
 		self.parameters.append(paramHelp)
-
-class _IndentedWriter:
-	def __init__(self):
-		self.indentStr = ''
-		self.buf = StringIO()
-
-	def indent(self):
-		self.indentStr += '  '
-
-	def unindent(self):
-		self.indentStr = self.indentStr[:-2]
-
-	def writeLine(self, val):
-		self.buf.write(f'{self.indentStr}{val}\n')
-
-	def block(self, name: str):
-		return _IndentedWriterBlock(self, name)
-
-	def writeField(self, name: str, val):
-		if val is None or val == '':
-			return
-		self.writeLine(f'{name}: {self._formatValue(val)}')
-
-	def writeListField(self, name: str, vals: list):
-		if not vals:
-			return
-		self.writeField(name, '[' + (','.join([self._formatValue(v) for v in vals])) + ']')
-
-	def writeMultiLineStringField(self, name: str, val: str):
-		if val:
-			val = val.strip()
-		if not val:
-			return
-		with self.block(f'{name}: |'):
-			for line in val.splitlines():
-				self.writeLine(line)
-
-	@staticmethod
-	def _formatValue(val):
-		if isinstance(val, bool):
-			return 'true' if val else 'false'
-		return str(val)
-
-	def getValue(self):
-		return self.buf.getvalue()
-
-class _IndentedWriterBlock:
-	def __init__(self, writer: _IndentedWriter, label: str):
-		self.writer = writer
-		self.label = label
-
-	def __enter__(self):
-		self.writer.writeLine(self.label)
-		self.writer.indent()
-
-	def __exit__(self, exc_type, exc_val, exc_tb):
-		self.writer.unindent()
 
 @dataclass
 class CategoryHelp:
@@ -401,9 +362,7 @@ class CategoryHelp:
 		return _mergeMarkdownChunks(parts)
 
 	def formatAsListPage(self):
-		writer = _IndentedWriter()
-		self.writeFrontMatterData(writer)
-		frontMatterData = writer.getValue()
+		frontMatterData = _dumpYaml(self.toFrontMatterData())
 		parts = [
 			f'''---
 layout: operatorCategory
@@ -420,14 +379,18 @@ permalink: /reference/operators/{self.name}/
 		]
 		return _mergeMarkdownChunks(parts) + '\n'
 
-	def writeFrontMatterData(self, writer: '_IndentedWriter'):
-		with writer.block('cat:'):
-			writer.writeField('name', self.name)
-			writer.writeMultiLineStringField('summary', self.summary)
-			writer.writeMultiLineStringField('detail', self.detail)
-			with writer.block('operators:'):
-				for opHelp in self.operators:
-					opHelp.writeFrontMatterData(writer, full=False)
+	def toFrontMatterData(self):
+		return {
+			'cat': cleanDict({
+				'name': self.name,
+				'summary': self.summary,
+				'detail': self.detail,
+				'operators': [
+					opHelp.toFrontMatterData(full=False)
+					for opHelp in self.operators
+				],
+			})
+		}
 
 def _extractHelpSummaryAndDetail(docText: str) -> 'Tuple[str, str]':
 	if not docText:
@@ -680,3 +643,7 @@ def _stripFrontMatter(text: str):
 	if not text or not text.startswith('---'):
 		return text or ''
 	return text.split('---\n', maxsplit=2)[-1]
+
+def _dumpYaml(obj):
+	return yaml.dump(obj)
+	# return mod.json.dumps(obj, indent='  ')

@@ -7,28 +7,25 @@ permalink: /reference/operators/camera/linkedCamera
 redirect_from:
   - /reference/opType/raytk.operators.camera.linkedCamera/
 op:
-  name: linkedCamera
-  summary: A camera that is linked to an existing TD Camera COMP.
-  detail: |
-    The camera will match the view of the TD camera, including local and world transformations, FOV settings, etc.
-    It can be used to combine a raymarchRender3d with a traditional TD render TOP.
-  opType: raytk.operators.camera.linkedCamera
   category: camera
+  detail: 'The camera will match the view of the TD camera, including local and world
+    transformations, FOV settings, etc.
+
+    It can be used to combine a raymarchRender3d with a traditional TD render TOP.'
+  name: linkedCamera
+  opType: raytk.operators.camera.linkedCamera
   parameters:
-    - name: Camera
-      label: Camera
-      summary: |
-        The camera to match. This can either be a Camera COMP, or an arcBallCamera, or the `camera` from the palette.
-    - name: Createcamera
-      label: Create Camera
-      summary: |
-        Creates and attaches an instance of the `camera` palette component.
-    - name: Createbasiccamera
-      label: Create Basic Camera
-      summary: |
-        Creates and attaches a standard Camera COMP.
-    - name: Help
-      label: Help
+  - label: Camera
+    name: Camera
+    summary: The camera to match. This can either be a Camera COMP, or an arcBallCamera,
+      or the `camera` from the palette.
+  - label: Create Camera
+    name: Createcamera
+    summary: Creates and attaches an instance of the `camera` palette component.
+  - label: Create Basic Camera
+    name: Createbasiccamera
+    summary: Creates and attaches a standard Camera COMP.
+  summary: A camera that is linked to an existing TD Camera COMP.
 
 ---
 

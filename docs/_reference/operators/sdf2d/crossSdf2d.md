@@ -7,27 +7,20 @@ permalink: /reference/operators/sdf2d/crossSdf2d
 redirect_from:
   - /reference/opType/raytk.operators.sdf2d.crossSdf2d/
 op:
-  name: crossSdf2d
-  summary: 2D cross shape SDF, with 4 arms and option rounding of the intersections.
-  opType: raytk.operators.sdf2d.crossSdf2d
   category: sdf2d
+  name: crossSdf2d
+  opType: raytk.operators.sdf2d.crossSdf2d
   parameters:
-    - name: Outersize
-      label: Outer Size
-      summary: |
-        The length of the arms.
-    - name: Innersize
-      label: Inner Size
-      summary: |
-        Thickness of the arms.
-    - name: Roundness
-      label: Roundness
-      summary: |
-        How much to round out the intersection corners.
-    - name: Inspect
-      label: Inspect
-    - name: Help
-      label: Help
+  - label: Outer Size
+    name: Outersize
+    summary: The length of the arms.
+  - label: Inner Size
+    name: Innersize
+    summary: Thickness of the arms.
+  - label: Roundness
+    name: Roundness
+    summary: How much to round out the intersection corners.
+  summary: 2D cross shape SDF, with 4 arms and option rounding of the intersections.
 
 ---
 

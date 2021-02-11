@@ -6,7 +6,7 @@ Time getGlobalTime() {
 	return Time(uTime1.x, uTime1.y, uTime1.z, uTime1.w, uTime2.x, uTime2.y, uTime2.z, uTime2.w, uTime3.x, uTime3.y);
 }
 
-#if defined(RAYTK_TIME_IN_CONTEXT)
+//#if defined(RAYTK_TIME_IN_CONTEXT)
 	Time contextTime(Context ctx) { return ctx.time; }
 	Time contextTime(LightContext ctx) { return ctx.time; }
 	Time contextTime(MaterialContext ctx) { return ctx.context.time; }
@@ -18,7 +18,7 @@ Time getGlobalTime() {
 	void setContextTime(inout MaterialContext ctx, Time time) { ctx.context.time = time; }
 	void setContextTime(inout CameraContext ctx, Time time) { ctx.time = time; }
 	void setContextTime(inout RayContext ctx, Time time) { ctx.time = time; }
-#endif
+//#endif
 
 float time_fraction(Time t) {
 	if (t.end == t.start) return 0.;

@@ -7,18 +7,14 @@ permalink: /reference/operators/sdf2d/rectangleSdf
 redirect_from:
   - /reference/opType/raytk.operators.sdf2d.rectangleSdf/
 op:
+  category: sdf2d
   name: rectangleSdf
   opType: raytk.operators.sdf2d.rectangleSdf
-  category: sdf2d
   parameters:
-    - name: Translate
-      label: Translate
-    - name: Scale
-      label: Scale
-    - name: Inspect
-      label: Inspect
-    - name: Help
-      label: Help
+  - label: Translate
+    name: Translate
+  - label: Scale
+    name: Scale
 
 ---
 

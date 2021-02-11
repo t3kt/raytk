@@ -7,41 +7,37 @@ permalink: /reference/operators/field/constantColorField
 redirect_from:
   - /reference/opType/raytk.operators.field.constantColorField/
 op:
-  name: constantColorField
-  summary: A vector field that evaluates to a constant color value.
-  detail: |
-    This is the same as `constantField`, but the parameter is specified as a color instead of arbitrary float values.
-  opType: raytk.operators.field.constantColorField
   category: field
+  detail: This is the same as `constantField`, but the parameter is specified as a
+    color instead of arbitrary float values.
+  name: constantColorField
+  opType: raytk.operators.field.constantColorField
   parameters:
-    - name: Coordtype
-      label: Coord Type
-      menuOptions:
-        - name: vec2
-          label: 2D
-        - name: vec3
-          label: 3D
-    - name: Contexttype
-      label: Context Type
-      menuOptions:
-        - name: none
-          label: None
-        - name: Context
-          label: Context
-        - name: MaterialContext
-          label: Material Context
-        - name: CameraContext
-          label: Camera Context
-        - name: LightContext
-          label: Light Context
-    - name: Color
-      label: Color
-    - name: Alpha
-      label: Alpha
-    - name: Inspect
-      label: Inspect
-    - name: Help
-      label: Help
+  - label: Coord Type
+    menuOptions:
+    - label: 2D
+      name: vec2
+    - label: 3D
+      name: vec3
+    name: Coordtype
+  - label: Context Type
+    menuOptions:
+    - label: None
+      name: none
+    - label: Context
+      name: Context
+    - label: Material Context
+      name: MaterialContext
+    - label: Camera Context
+      name: CameraContext
+    - label: Light Context
+      name: LightContext
+    name: Contexttype
+  - label: Color
+    name: Color
+  - label: Alpha
+    name: Alpha
+  summary: A vector field that evaluates to a constant color value.
 
 ---
 

@@ -1,6 +1,6 @@
-name	label	function	expr
-sin	Sine	wave_sin	wave_sin(x)
-cos	Cosine	wave_cos	wave_cos(x)
-tri	Triangle	wave_tri	wave_tri(x)
-ramp	Ramp	wave_ramp	wave_ramp(x)
-square	Square	wave_square	wave_square(x)
+name	label	expr
+sin	Sine	wave_sin
+cos	Cosine	wave_cos
+tri	Triangle	wave_tri
+ramp	Ramp	wave_ramp
+square	Square	wave_square

@@ -7,27 +7,37 @@ permalink: /reference/operators/filter/extend
 redirect_from:
   - /reference/opType/raytk.operators.filter.extend/
 op:
-  name: extend
-  opType: raytk.operators.filter.extend
   category: filter
   inputs:
-    - name: definition_in
-      label: definition_in
-      required: true
-      coordTypes: [float,vec2,vec3]
-      contextTypes: [none,Context,MaterialContext,CameraContext,LightContext,RayContext]
-      returnTypes: [float,vec4,Sdf,Ray,Light]
+  - contextTypes:
+    - none
+    - Context
+    - MaterialContext
+    - CameraContext
+    - LightContext
+    - RayContext
+    coordTypes:
+    - float
+    - vec2
+    - vec3
+    label: definition_in
+    name: definition_in
+    required: true
+    returnTypes:
+    - float
+    - vec4
+    - Sdf
+    - Ray
+    - Light
+  name: extend
+  opType: raytk.operators.filter.extend
   parameters:
-    - name: Enable
-      label: Enable
-    - name: Center
-      label: Center
-    - name: Size
-      label: Size
-    - name: Inspect
-      label: Inspect
-    - name: Help
-      label: Help
+  - label: Enable
+    name: Enable
+  - label: Center
+    name: Center
+  - label: Size
+    name: Size
 
 ---
 

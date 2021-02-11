@@ -1,8 +1,8 @@
 from pathlib import Path
 from raytkDocs import OpDocManager
-from raytkModel import OpDefMeta, OpSpec
-from raytkUtil import RaytkContext, ROPInfo, focusCustomParameterPage
-from typing import Optional
+from raytkModel import OpDefMeta_OLD, OpSpec_OLD
+from raytkUtil import RaytkContext, ROPInfo, focusCustomParameterPage, RaytkTags
+from typing import List, Optional
 
 # noinspection PyUnreachableCode
 if False:
@@ -48,17 +48,6 @@ class RaytkTools(RaytkContext):
 		else:
 			page = rop.appendCustomPage('Settings')
 
-		# Set up Enable par
-		if info.isROP and info.hasROPInputs and not info.isOutput:
-			enablePar = rop.par['Enable']
-			if enablePar is None:
-				enablePar = page.appendToggle('Enable')[0]
-				enablePar.val = True
-			enablePar.order = -1
-			enablePar.default = True
-			if info.opDefPar and not info.opDefPar.Enable.expr:
-				info.opDefPar.Enable.expr = "op('..').par.Enable"
-
 		# Set up inspect par
 		inspectPar = rop.par['Inspect']
 		if info.supportsInspect:
@@ -78,6 +67,22 @@ class RaytkTools(RaytkContext):
 			helpPar.order = 999
 		elif helpPar is not None:
 			helpPar.destroy()
+
+		# Set up update op par
+		updatePar = rop.par['Updateop']
+		if updatePar is None:
+			updatePar = page.appendPulse('Updateop', label='Update OP')[0]
+		updatePar.startSection = True
+		updatePar.order = 1111
+
+	@staticmethod
+	def updateOPImage(rop: 'COMP'):
+		img = rop.op('./*Definition/opImage')
+		if not img:
+			return
+		rop.par.opviewer.val = img
+		rop.viewer = True
+		return img
 
 	def saveROP(self, rop: 'COMP', incrementVersion=False):
 		info = ROPInfo(rop)
@@ -117,7 +122,7 @@ class RaytkTools(RaytkContext):
 		finally:
 			ui.undo.endBlock()
 
-	def _loadROPSpec(self, rop: 'COMP', useFile: bool, usePars: bool) -> 'Optional[OpSpec]':
+	def _loadROPSpec(self, rop: 'COMP', useFile: bool, usePars: bool) -> 'Optional[OpSpec_OLD]':
 		info = ROPInfo(rop)
 		if not info or not info.isMaster:
 			return
@@ -126,18 +131,42 @@ class RaytkTools(RaytkContext):
 			specFile = self._getROPSpecFile(rop, checkExists=True)
 			if specFile:
 				text = specFile.read_text()
-				spec = OpSpec.parseJsonStr(text)
+				spec = OpSpec_OLD.parseJsonStr(text)
 		if not spec:
-			spec = OpSpec()
+			spec = OpSpec_OLD()
 		if not spec.meta:
-			spec.meta = OpDefMeta()
+			spec.meta = OpDefMeta_OLD()
 		if usePars:
 			if not spec.meta.opType:
 				spec.meta.opType = info.opType or self.generateROPType(info.rop)
 			if spec.meta.opVersion is None:
 				v = info.opVersion
 				spec.meta.opVersion = int(v) if v else 0
+			spec.meta.opStatus = info.statusLabel
 		return spec
+
+	@staticmethod
+	def setROPStatus(rop: 'COMP', status: Optional[str]):
+		info = ROPInfo(rop)
+		if not info or not info.isMaster:
+			return
+		# note: since applying with status false resets the color, the false ones have to be done before the true one
+		if status == 'alpha':
+			RaytkTags.beta.apply(info.rop, False)
+			RaytkTags.deprecated.apply(info.rop, False)
+			RaytkTags.alpha.apply(info.rop, True)
+		elif status == 'beta':
+			RaytkTags.alpha.apply(info.rop, False)
+			RaytkTags.deprecated.apply(info.rop, False)
+			RaytkTags.beta.apply(info.rop, True)
+		elif status == 'deprecated':
+			RaytkTags.alpha.apply(info.rop, False)
+			RaytkTags.beta.apply(info.rop, False)
+			RaytkTags.deprecated.apply(info.rop, True)
+		else:
+			RaytkTags.alpha.apply(info.rop, False)
+			RaytkTags.beta.apply(info.rop, False)
+			RaytkTags.deprecated.apply(info.rop, False)
 
 	@staticmethod
 	def _getROPSpecFile(rop: 'COMP', checkExists: bool) -> 'Optional[Path]':
@@ -161,6 +190,7 @@ class RaytkTools(RaytkContext):
 			return
 		info.opType = spec.meta.opType
 		info.opVersion = spec.meta.opVersion
+		self.setROPStatus(rop, spec.meta.opStatus)
 
 	def saveROPSpec(self, rop: 'COMP'):
 		info = ROPInfo(rop)
@@ -177,3 +207,94 @@ class RaytkTools(RaytkContext):
 			info = ROPInfo(rop)
 			if info:
 				info.toolkitVersion = version
+
+class AutoLoader:
+	def __init__(self, folderComp: 'COMP'):
+		self.folderComp = folderComp
+
+	def setUpParameters(self):
+		if not self.folderComp.par.externaltox:
+			ui.status = f'Component does not have a tox, so auto-load does not apply: {self.folderComp}'
+			return
+		ui.undo.startBlock(f'Add auto-load parameters to {self.folderComp}')
+		page = self.folderComp.appendCustomPage('Auto Load')
+		if not self.folderComp.par['Autoloadfolder']:
+			p = page.appendFolder('Autoloadfolder', label='Auto Load Folder')[0]
+			toxPath = self.folderComp.par.externaltox.eval()
+			if toxPath:
+				p.val = Path(toxPath).parent.as_posix() + '/'
+		if self.folderComp.par['Autoloaddeletemissing'] is None:
+			page.appendToggle('Autoloaddeletemissing', label='Delete Missing Components')
+		if self.folderComp.par['Autoloadalwaysreloadall'] is None:
+			page.appendToggle('Autoloadalwaysreloadall', label='Always Reload All')
+		ui.undo.endBlock()
+
+	def applyAutoLoad(self):
+		print(f'Applying auto load to {self.folderComp}')
+		if not self.folderComp.par['Autoloadfolder']:
+			return
+		folder = self.folderComp.par.Autoloadfolder.eval()
+		folderPath = Path(folder)
+		if not folderPath.exists() or not folderPath.is_dir():
+			raise Exception(f'Invalid auto-load folder: {folder!r}')
+		parentToxPath = Path(self.folderComp.par.externaltox.eval()).as_posix()
+		deleteMissing = bool(self.folderComp.par['Autoloaddeletemissing'])
+		alwaysReload = bool(self.folderComp.par['Autoloadalwaysreloadall'])
+
+		currentCompsByTox = {
+			Path(c.par.externaltox.eval()).as_posix(): c
+			for c in self.folderComp.findChildren(type=COMP, maxDepth=1)
+			if c.par.externaltox
+		}
+
+		toxPaths = [
+			p.as_posix()
+			for p in sorted(folderPath.glob('*.tox'))
+			if p.as_posix() != parentToxPath
+		]
+		print(f'Auto load found current comps:')
+		for t, c in currentCompsByTox.items():
+			print(f'   {c} : {t}')
+		print(f'Auto load found toxes:')
+		for t in toxPaths:
+			print(f'   {t}')
+
+		toDelete = []  # type: List[COMP]
+		toxsToLoad = []  # type: List[str]
+
+		if alwaysReload:
+			toDelete = list(currentCompsByTox.values())
+			toxsToLoad = list(toxPaths)
+		else:
+			if deleteMissing:
+				toDelete = [
+					comp
+					for tox, comp in currentCompsByTox.items()
+					if tox not in toxPaths
+				]
+			toxsToLoad = [
+				tox
+				for tox in toxPaths
+				if tox not in currentCompsByTox
+			]
+
+		# print(f'Auto load for {self.folderComp} will destroy:')
+		# print('\n'.join([c.name for c in toDelete]))
+		# print('and will load:')
+		# print('\n'.join(toxsToLoad))
+
+		ui.undo.startBlock(f'Applying auto load in {self.folderComp}')
+
+		for child in toDelete:
+			print(f'Auto load is removing {child}')
+			try:
+				child.destroy()
+			except:
+				pass
+
+		for i, tox in enumerate(toxsToLoad):
+			print(f'Auto load is loading {tox}')
+			comp = self.folderComp.loadTox(tox)
+			comp.nodeY = 500 - i * 150
+
+		ui.undo.endBlock()

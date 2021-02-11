@@ -7,36 +7,27 @@ permalink: /reference/operators/sdf/octahedronSdf
 redirect_from:
   - /reference/opType/raytk.operators.sdf.octahedronSdf/
 op:
-  name: octahedronSdf
-  summary: An octahedron, with its corners facing the axes.
-  opType: raytk.operators.sdf.octahedronSdf
   category: sdf
+  name: octahedronSdf
+  opType: raytk.operators.sdf.octahedronSdf
   parameters:
-    - name: Translate
-      label: Translate
-      summary: |
-        Shifts the center of the shape.
-    - name: Radius
-      label: Radius
-      summary: |
-        The size of the shape.
-    - name: Shapetype
-      label: Shape Type
-      summary: |
-        Advanced parameter that chooses between different types of calculations.
-      menuOptions:
-        - name: exact
-          label: Exact
-          description: |
-            Provides more accuracy but can produce roughness around the edges.
-        - name: bound
-          label: Bound (Not Exact)
-          description: |
-            Less accurate but less rough around the edges.
-    - name: Inspect
-      label: Inspect
-    - name: Help
-      label: Help
+  - label: Translate
+    name: Translate
+    summary: Shifts the center of the shape.
+  - label: Radius
+    name: Radius
+    summary: The size of the shape.
+  - label: Shape Type
+    menuOptions:
+    - description: Provides more accuracy but can produce roughness around the edges.
+      label: Exact
+      name: exact
+    - description: Less accurate but less rough around the edges.
+      label: Bound (Not Exact)
+      name: bound
+    name: Shapetype
+    summary: Advanced parameter that chooses between different types of calculations.
+  summary: An octahedron, with its corners facing the axes.
 
 ---
 

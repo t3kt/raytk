@@ -7,69 +7,85 @@ permalink: /reference/operators/time/lfoField
 redirect_from:
   - /reference/opType/raytk.operators.time.lfoField/
 op:
-  name: lfoField
-  opType: raytk.operators.time.lfoField
   category: time
   inputs:
-    - name: wave_definition_in
-      label: wave_definition_in
-      required: false
-      coordTypes: [float]
-      contextTypes: [none,Context,MaterialContext,CameraContext,LightContext,RayContext]
-      returnTypes: [float]
+  - contextTypes:
+    - none
+    - Context
+    - MaterialContext
+    - CameraContext
+    - LightContext
+    - RayContext
+    coordTypes:
+    - float
+    label: wave_definition_in
+    name: wave_definition_in
+    returnTypes:
+    - float
+  name: lfoField
+  opType: raytk.operators.time.lfoField
   parameters:
-    - name: Enable
-      label: Enable
-    - name: Period
-      label: Period
-    - name: Intervaltype
-      label: Interval Type
-      menuOptions:
-        - name: seconds
-          label: Seconds (Timeline)
-        - name: frames
-          label: Frames (Timeline)
-        - name: absseconds
-          label: Seconds (Absolute)
-        - name: frames
-          label: Frames (Absolute)
-    - name: Timesource
-      label: Time Source
-      menuOptions:
-        - name: global
-          label: Global
-        - name: context
-          label: Context
-    - name: Phase
-      label: Phase (Fraction)
-    - name: Amplitude
-      label: Amplitude
-    - name: Offset
-      label: Offset
-    - name: Coordtype
-      label: Coord Type
-      menuOptions:
-        - name: float
-          label: 1D
-        - name: vec2
-          label: 2D
-        - name: vec3
-          label: 3D
-    - name: Contexttype
-      label: Context Type
-      menuOptions:
-        - name: Context
-          label: Context
-        - name: MaterialContext
-          label: Material Context
-        - name: CameraContext
-          label: Camera Context
-        - name: LightContext
-          label: Light Context
-    - name: Inspect
-      label: Inspect
-    - name: Help
-      label: Help
+  - label: Enable
+    name: Enable
+  - label: Wave Type
+    menuOptions:
+    - label: Sine
+      name: sin
+    - label: Cosine
+      name: cos
+    - label: Triangle
+      name: tri
+    - label: Ramp
+      name: ramp
+    - label: Square
+      name: square
+    name: Wavetype
+  - label: Period
+    name: Period
+  - label: Interval Type
+    menuOptions:
+    - label: Seconds (Timeline)
+      name: seconds
+    - label: Frames (Timeline)
+      name: frames
+    - label: Seconds (Absolute)
+      name: absseconds
+    - label: Frames (Absolute)
+      name: frames
+    name: Intervaltype
+  - label: Time Source
+    menuOptions:
+    - label: Global
+      name: global
+    - label: Context
+      name: context
+    name: Timesource
+  - label: Phase (Fraction)
+    name: Phase
+  - label: Amplitude
+    name: Amplitude
+  - label: Offset
+    name: Offset
+  - label: Coord Type
+    menuOptions:
+    - label: 1D
+      name: float
+    - label: 2D
+      name: vec2
+    - label: 3D
+      name: vec3
+    name: Coordtype
+  - label: Context Type
+    menuOptions:
+    - label: Context
+      name: Context
+    - label: Material Context
+      name: MaterialContext
+    - label: Camera Context
+      name: CameraContext
+    - label: Light Context
+      name: LightContext
+    name: Contexttype
 
 ---
 

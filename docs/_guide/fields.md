@@ -38,3 +38,22 @@ Most filters that are used for SDFs can also work for fields that use positions.
 [`positionField`]: /raytk/reference/operators/field/positionField
 [`pointDistanceField`]: /raytk/reference/operators/field/pointDistanceField
 [`translate`]: /raytk/reference/operators/filter/translate
+
+## Non-Position Fields
+
+While fields make use of the parameters that are passed to them, they don't necessarily have to. Some operators like [`lfoField`] ignore the provided coordinates and use other sources of data to produce values. In the case of `lfoField`, it uses the current time from either the global application time or from the associated timeline.
+
+[`lfoField`]: /raytk/reference/operators/time/lfoField
+
+## Ways That Coordinates are Passed to Fields
+
+When an operator is using a field input, it provides some form of coordinates to that field. The most common case of this is to just pass along the position where that operator is being evaluated. In most (or all) cases where the field accepts the same type of coordinates as the operator that is using it, that same position is being passed along.
+
+In other cases, an operator might accept a field that takes a different type of coordinates than what the operator uses. These operators will provide the field with some other type of value as the coordinates. Each operator that does this handles it differently. For example, if a field using 1D coordinates is passed into [`mobiusRingSdf`], it will give it the angle of the current point around the axis of the ring. This can be used with a [`waveField`] to vary the thickness of the ring with a sine wave that wraps around the ring's axis.
+
+![mobiusRingSdf using angle as coordinate for thickness field](/raytk/assets/images/guide/fields-mobiusRingWaveCoords.png)
+
+Operators that support these types of inputs will document which types of coordinates they support and what kind of values they use for each type.
+
+[`mobiusRingSdf`]: /raytk/reference/operators/sdf/mobiusRingSdf
+[`waveField`]: /raytk/reference/operators/field/waveField

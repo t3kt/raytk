@@ -8,10 +8,8 @@ permalink: /reference/operators/post/
 cat:
   name: post
   operators:
-    - op:
-      name: depthMap
-    - op:
-      name: worldPosMap
+  - name: depthMap
+  - name: worldPosMap
 
 ---
 

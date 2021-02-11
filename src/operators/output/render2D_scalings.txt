@@ -1,0 +1,4 @@
+name	label
+fill	Fill
+fitinside	Fit Inside
+fitoutside	Fit Outside

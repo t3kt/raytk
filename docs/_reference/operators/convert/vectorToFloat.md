@@ -7,38 +7,44 @@ permalink: /reference/operators/convert/vectorToFloat
 redirect_from:
   - /reference/opType/raytk.operators.convert.vectorToFloat/
 op:
-  name: vectorToFloat
-  opType: raytk.operators.convert.vectorToFloat
   category: convert
   inputs:
-    - name: definition_in
-      label: definition_in
-      required: true
-      coordTypes: [float,vec2,vec3]
-      contextTypes: [none,Context,MaterialContext,CameraContext,LightContext,RayContext]
-      returnTypes: [vec4]
+  - contextTypes:
+    - none
+    - Context
+    - MaterialContext
+    - CameraContext
+    - LightContext
+    - RayContext
+    coordTypes:
+    - float
+    - vec2
+    - vec3
+    label: definition_in
+    name: definition_in
+    required: true
+    returnTypes:
+    - vec4
+  name: vectorToFloat
+  opType: raytk.operators.convert.vectorToFloat
   parameters:
-    - name: Enable
-      label: Enable
-    - name: Usepart
-      label: Use Part
-      menuOptions:
-        - name: x
-          label: X
-        - name: y
-          label: Y
-        - name: z
-          label: Z
-        - name: w
-          label: W
-        - name: lengthxyz
-          label: Length(XYZ)
-        - name: lengthxyzw
-          label: Length(XYZW)
-    - name: Inspect
-      label: Inspect
-    - name: Help
-      label: Help
+  - label: Enable
+    name: Enable
+  - label: Use Part
+    menuOptions:
+    - label: X
+      name: x
+    - label: Y
+      name: y
+    - label: Z
+      name: z
+    - label: W
+      name: w
+    - label: Length(XYZ)
+      name: lengthxyz
+    - label: Length(XYZW)
+      name: lengthxyzw
+    name: Usepart
 
 ---
 

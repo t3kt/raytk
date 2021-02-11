@@ -1,5 +1,6 @@
 {
   "meta": {
+    "opStatus": "beta",
     "opType": "raytk.operators.filter.quantizeValue",
     "opVersion": 5
   }

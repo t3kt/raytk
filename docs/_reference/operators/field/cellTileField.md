@@ -7,45 +7,44 @@ permalink: /reference/operators/field/cellTileField
 redirect_from:
   - /reference/opType/raytk.operators.field.cellTileField/
 op:
-  name: cellTileField
-  summary: A value field that provides an approximation of repeating cellular (voronoi) noise.
-  detail: |
-    Based on Biomine by Shane (https://www.shadertoy.com/view/4lyGzR).
-    Uses a minimum blend at various 3D locations on a cubic tile. Make the tile wrappable by ensuring the objects wrap around the edges.
-    It isn't perfect but it is low cost.
-  opType: raytk.operators.field.cellTileField
   category: field
+  detail: 'Based on Biomine by Shane (https://www.shadertoy.com/view/4lyGzR).
+
+    Uses a minimum blend at various 3D locations on a cubic tile. Make the tile wrappable
+    by ensuring the objects wrap around the edges.
+
+    It isn''t perfect but it is low cost.'
+  name: cellTileField
+  opType: raytk.operators.field.cellTileField
   parameters:
-    - name: Translate
-      label: Translate
-    - name: Scale
-      label: Scale
-    - name: Cellstyle
-      label: Cell Style
-      menuOptions:
-        - name: beveledvoronoi
-          label: Beveled Voronoi
-        - name: cellular
-          label: Cellular
-        - name: raw
-          label: Raw
-    - name: Contexttype
-      label: Context Type
-      menuOptions:
-        - name: none
-          label: None
-        - name: Context
-          label: Context
-        - name: MaterialContext
-          label: Material Context
-        - name: CameraContext
-          label: Camera Context
-        - name: LightContext
-          label: Light Context
-    - name: Inspect
-      label: Inspect
-    - name: Help
-      label: Help
+  - label: Translate
+    name: Translate
+  - label: Scale
+    name: Scale
+  - label: Cell Style
+    menuOptions:
+    - label: Beveled Voronoi
+      name: beveledvoronoi
+    - label: Cellular
+      name: cellular
+    - label: Raw
+      name: raw
+    name: Cellstyle
+  - label: Context Type
+    menuOptions:
+    - label: None
+      name: none
+    - label: Context
+      name: Context
+    - label: Material Context
+      name: MaterialContext
+    - label: Camera Context
+      name: CameraContext
+    - label: Light Context
+      name: LightContext
+    name: Contexttype
+  summary: A value field that provides an approximation of repeating cellular (voronoi)
+    noise.
 
 ---
 

@@ -7,65 +7,55 @@ permalink: /reference/operators/sdf/geodesicSdf
 redirect_from:
   - /reference/opType/raytk.operators.sdf.geodesicSdf/
 op:
-  name: geodesicSdf
-  summary: A geodesic polyhedron, optionally with a spike on each face.
-  detail: |
-    Based on [Geodesic domain manipulation](https://www.shadertoy.com/view/4tG3zW) by tdhooper.
-  opType: raytk.operators.sdf.geodesicSdf
   category: sdf
+  detail: Based on [Geodesic domain manipulation](https://www.shadertoy.com/view/4tG3zW)
+    by tdhooper.
   inputs:
-    - name: definition_in_1
-      label: Spike Tip Shape
-      required: false
-      coordTypes: [vec3]
-      contextTypes: [Context]
-      returnTypes: [Sdf]
-      summary: |
-        Optional SDF that is placed at the tip of each spike.
+  - contextTypes:
+    - Context
+    coordTypes:
+    - vec3
+    label: Spike Tip Shape
+    name: definition_in_1
+    returnTypes:
+    - Sdf
+    summary: Optional SDF that is placed at the tip of each spike.
+  name: geodesicSdf
+  opType: raytk.operators.sdf.geodesicSdf
   parameters:
-    - name: Enable
-      label: Enable
-    - name: Shape
-      label: Shape
-      summary: |
-        The type of polyhedron.
-      menuOptions:
-        - name: icosahedron
-          label: Icosahedron
-        - name: dodecahedron
-          label: Dodecahedron
-    - name: Divisions
-      label: Divisions
-      summary: |
-        Number of divisions of the faces. Increasing this will result in more sides on the shape.
-    - name: Enablefaces
-      label: Enable Faces
-      summary: |
-        Whether to include the flat surfaces on each face.
-    - name: Faceoffset
-      label: Face Offset
-      summary: |
-        Distance of the faces from the center point.
-    - name: Enablespikes
-      label: Enable Spikes
-      summary: |
-        Whether to include a spike on each face.
-    - name: Spikelength
-      label: Spike Length
-      summary: |
-        The length of the spikes.
-    - name: Spikeoffset
-      label: Spike Offset
-      summary: |
-        The distance from the center point of the base of each spike.
-    - name: Spikeradius
-      label: Spike Radius
-      summary: |
-        The base radius of each spike.
-    - name: Inspect
-      label: Inspect
-    - name: Help
-      label: Help
+  - label: Enable
+    name: Enable
+  - label: Shape
+    menuOptions:
+    - label: Icosahedron
+      name: icosahedron
+    - label: Dodecahedron
+      name: dodecahedron
+    name: Shape
+    summary: The type of polyhedron.
+  - label: Divisions
+    name: Divisions
+    summary: Number of divisions of the faces. Increasing this will result in more
+      sides on the shape.
+  - label: Enable Faces
+    name: Enablefaces
+    summary: Whether to include the flat surfaces on each face.
+  - label: Face Offset
+    name: Faceoffset
+    summary: Distance of the faces from the center point.
+  - label: Enable Spikes
+    name: Enablespikes
+    summary: Whether to include a spike on each face.
+  - label: Spike Length
+    name: Spikelength
+    summary: The length of the spikes.
+  - label: Spike Offset
+    name: Spikeoffset
+    summary: The distance from the center point of the base of each spike.
+  - label: Spike Radius
+    name: Spikeradius
+    summary: The base radius of each spike.
+  summary: A geodesic polyhedron, optionally with a spike on each face.
 
 ---
 

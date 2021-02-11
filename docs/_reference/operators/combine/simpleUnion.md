@@ -7,44 +7,71 @@ permalink: /reference/operators/combine/simpleUnion
 redirect_from:
   - /reference/opType/raytk.operators.combine.simpleUnion/
 op:
-  name: simpleUnion
-  summary: Combines several SDFs using the union operator.
-  detail: |
-    The resulting shape is the combined areas of all of the inputs.
-  opType: raytk.operators.combine.simpleUnion
   category: combine
+  detail: The resulting shape is the combined areas of all of the inputs.
   inputs:
-    - name: definition_in_1
-      label: definition_in_1
-      required: false
-      coordTypes: [vec2,vec3]
-      contextTypes: [none,Context,MaterialContext,CameraContext,LightContext]
-      returnTypes: [float,Sdf]
-    - name: definition_in_2
-      label: definition_in_2
-      required: false
-      coordTypes: [vec2,vec3]
-      contextTypes: [none,Context,MaterialContext,CameraContext,LightContext]
-      returnTypes: [float,Sdf]
-    - name: definition_in_3
-      label: definition_in_3
-      required: false
-      coordTypes: [vec2,vec3]
-      contextTypes: [none,Context,MaterialContext,CameraContext,LightContext]
-      returnTypes: [float,Sdf]
-    - name: definition_in_4
-      label: definition_in_4
-      required: false
-      coordTypes: [vec2,vec3]
-      contextTypes: [none,Context,MaterialContext,CameraContext,LightContext]
-      returnTypes: [float,Sdf]
+  - contextTypes:
+    - none
+    - Context
+    - MaterialContext
+    - CameraContext
+    - LightContext
+    coordTypes:
+    - vec2
+    - vec3
+    label: definition_in_1
+    name: definition_in_1
+    returnTypes:
+    - float
+    - Sdf
+  - contextTypes:
+    - none
+    - Context
+    - MaterialContext
+    - CameraContext
+    - LightContext
+    coordTypes:
+    - vec2
+    - vec3
+    label: definition_in_2
+    name: definition_in_2
+    returnTypes:
+    - float
+    - Sdf
+  - contextTypes:
+    - none
+    - Context
+    - MaterialContext
+    - CameraContext
+    - LightContext
+    coordTypes:
+    - vec2
+    - vec3
+    label: definition_in_3
+    name: definition_in_3
+    returnTypes:
+    - float
+    - Sdf
+  - contextTypes:
+    - none
+    - Context
+    - MaterialContext
+    - CameraContext
+    - LightContext
+    coordTypes:
+    - vec2
+    - vec3
+    label: definition_in_4
+    name: definition_in_4
+    returnTypes:
+    - float
+    - Sdf
+  name: simpleUnion
+  opType: raytk.operators.combine.simpleUnion
   parameters:
-    - name: Enable
-      label: Enable
-    - name: Inspect
-      label: Inspect
-    - name: Help
-      label: Help
+  - label: Enable
+    name: Enable
+  summary: Combines several SDFs using the union operator.
 
 ---
 

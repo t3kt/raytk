@@ -7,46 +7,42 @@ permalink: /reference/operators/field/constantField
 redirect_from:
   - /reference/opType/raytk.operators.field.constantField/
 op:
-  name: constantField
-  summary: A float or vector field that evaluates to a constant value.
-  opType: raytk.operators.field.constantField
   category: field
+  name: constantField
+  opType: raytk.operators.field.constantField
   parameters:
-    - name: Coordtype
-      label: Coord Type
-      menuOptions:
-        - name: float
-          label: 1D
-        - name: vec2
-          label: 2D
-        - name: vec3
-          label: 3D
-    - name: Returntype
-      label: Return Type
-      menuOptions:
-        - name: float
-          label: Float
-        - name: vec4
-          label: Vector
-    - name: Contexttype
-      label: Context Type
-      menuOptions:
-        - name: none
-          label: None
-        - name: Context
-          label: Context
-        - name: MaterialContext
-          label: Material Context
-        - name: CameraContext
-          label: Camera Context
-        - name: LightContext
-          label: Light Context
-    - name: Value
-      label: Value
-    - name: Inspect
-      label: Inspect
-    - name: Help
-      label: Help
+  - label: Coord Type
+    menuOptions:
+    - label: 1D
+      name: float
+    - label: 2D
+      name: vec2
+    - label: 3D
+      name: vec3
+    name: Coordtype
+  - label: Return Type
+    menuOptions:
+    - label: Float
+      name: float
+    - label: Vector
+      name: vec4
+    name: Returntype
+  - label: Context Type
+    menuOptions:
+    - label: None
+      name: none
+    - label: Context
+      name: Context
+    - label: Material Context
+      name: MaterialContext
+    - label: Camera Context
+      name: CameraContext
+    - label: Light Context
+      name: LightContext
+    name: Contexttype
+  - label: Value
+    name: Value
+  summary: A float or vector field that evaluates to a constant value.
 
 ---
 

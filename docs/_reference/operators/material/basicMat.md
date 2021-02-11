@@ -7,49 +7,53 @@ permalink: /reference/operators/material/basicMat
 redirect_from:
   - /reference/opType/raytk.operators.material.basicMat/
 op:
-  name: basicMat
-  opType: raytk.operators.material.basicMat
   category: material
   inputs:
-    - name: definition_in
-      label: definition_in
-      required: true
-      coordTypes: [vec3]
-      contextTypes: [none,Context]
-      returnTypes: [Sdf]
-    - name: shadow_definition_in
-      label: shadow_definition_in
-      required: false
-      coordTypes: [vec3]
-      contextTypes: [MaterialContext]
-      returnTypes: [float]
-    - name: baseColor_definition_in
-      label: baseColor_definition_in
-      required: false
-      coordTypes: [vec3]
-      contextTypes: [MaterialContext]
-      returnTypes: [vec4]
+  - contextTypes:
+    - none
+    - Context
+    coordTypes:
+    - vec3
+    label: definition_in
+    name: definition_in
+    required: true
+    returnTypes:
+    - Sdf
+  - contextTypes:
+    - MaterialContext
+    coordTypes:
+    - vec3
+    label: shadow_definition_in
+    name: shadow_definition_in
+    returnTypes:
+    - float
+  - contextTypes:
+    - MaterialContext
+    coordTypes:
+    - vec3
+    label: baseColor_definition_in
+    name: baseColor_definition_in
+    returnTypes:
+    - vec4
+  name: basicMat
+  opType: raytk.operators.material.basicMat
   parameters:
-    - name: Enable
-      label: Enable
-    - name: Basecolor
-      label: Base Color
-    - name: Skycolor
-      label: Sky Color
-    - name: Skyamount
-      label: Sky Amount
-    - name: Skydir
-      label: Sky Direction
-    - name: Specularamount
-      label: Specular Amount
-    - name: Specularexp
-      label: Specular Exponent
-    - name: Enableshadow
-      label: Enable Shadow
-    - name: Inspect
-      label: Inspect
-    - name: Help
-      label: Help
+  - label: Enable
+    name: Enable
+  - label: Base Color
+    name: Basecolor
+  - label: Sky Color
+    name: Skycolor
+  - label: Sky Amount
+    name: Skyamount
+  - label: Sky Direction
+    name: Skydir
+  - label: Specular Amount
+    name: Specularamount
+  - label: Specular Exponent
+    name: Specularexp
+  - label: Enable Shadow
+    name: Enableshadow
 
 ---
 

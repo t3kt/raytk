@@ -7,42 +7,47 @@ permalink: /reference/operators/filter/slice
 redirect_from:
   - /reference/opType/raytk.operators.filter.slice/
 op:
-  name: slice
-  opType: raytk.operators.filter.slice
   category: filter
   inputs:
-    - name: definition_in
-      label: definition_in
-      required: true
-      coordTypes: [vec2,vec3]
-      contextTypes: [none,Context,MaterialContext,CameraContext,LightContext,RayContext]
-      returnTypes: [Sdf]
+  - contextTypes:
+    - none
+    - Context
+    - MaterialContext
+    - CameraContext
+    - LightContext
+    - RayContext
+    coordTypes:
+    - vec2
+    - vec3
+    label: definition_in
+    name: definition_in
+    required: true
+    returnTypes:
+    - Sdf
+  name: slice
+  opType: raytk.operators.filter.slice
   parameters:
-    - name: Enable
-      label: Enable
-    - name: Axis
-      label: Axis
-      menuOptions:
-        - name: x
-          label: X
-        - name: y
-          label: Y
-        - name: z
-          label: Z
-    - name: Offset
-      label: Offset
-    - name: Thickness
-      label: Thickness
-    - name: Enablesmoothing
-      label: Enable Smoothing
-    - name: Smoothradius
-      label: Smooth Radius
-    - name: Enablemirror
-      label: Enable Mirror
-    - name: Inspect
-      label: Inspect
-    - name: Help
-      label: Help
+  - label: Enable
+    name: Enable
+  - label: Axis
+    menuOptions:
+    - label: X
+      name: x
+    - label: Y
+      name: y
+    - label: Z
+      name: z
+    name: Axis
+  - label: Offset
+    name: Offset
+  - label: Thickness
+    name: Thickness
+  - label: Enable Smoothing
+    name: Enablesmoothing
+  - label: Smooth Radius
+    name: Smoothradius
+  - label: Enable Mirror
+    name: Enablemirror
 
 ---
 

@@ -7,16 +7,12 @@ permalink: /reference/operators/sdf2d/rhombusSdf2d
 redirect_from:
   - /reference/opType/raytk.operators.sdf2d.rhombusSdf2d/
 op:
+  category: sdf2d
   name: rhombusSdf2d
   opType: raytk.operators.sdf2d.rhombusSdf2d
-  category: sdf2d
   parameters:
-    - name: Scale
-      label: Scale
-    - name: Inspect
-      label: Inspect
-    - name: Help
-      label: Help
+  - label: Scale
+    name: Scale
 
 ---
 
