@@ -8,7 +8,6 @@ redirect_from:
   - /reference/opType/raytk.operators.sdf.bunnySdf/
 op:
   category: sdf
-  detail: Similar to `coneSdf` but with the base rounded.
   name: bunnySdf
   opType: raytk.operators.sdf.bunnySdf
   parameters:
@@ -22,7 +21,6 @@ op:
     name: Radius
     summary: The radius of the sphere that the shape is based one, equivalent to the
       distance from the tip to the base.
-  summary: A conical slice of a sphere.
 
 ---
 
@@ -30,8 +28,3 @@ op:
 
 Category: sdf
 
-
-
-A conical slice of a sphere.
-
-Similar to `coneSdf` but with the base rounded.
