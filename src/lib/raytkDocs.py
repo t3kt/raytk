@@ -568,14 +568,25 @@ class OpDocManager:
 		self._pullFromMissingInputsInto(ropHelp)
 		self._writeToDAT(ropHelp)
 
+	def _getRopParByTupletName(self, tupletName: str) -> 'Optional[Par]':
+		for parTuple in self.rop.customTuplets:
+			if parTuple[0].tupletName == tupletName:
+				return parTuple[0]
+
 	def pushToParamsAndInputs(self):
 		ropHelp = self._parseDAT()
 		for parHelp in ropHelp.parameters:
 			if not parHelp.summary:
 				continue
-			parTuple = self.rop.parTuple[parHelp.name]
-			if parTuple is not None:
-				parTuple.help = parHelp.summary
+			# Some TD builds don't yet support op.parTuple
+			if hasattr(self.rop, 'parTuple'):
+				parTuple = self.rop.parTuple[parHelp.name]
+				if parTuple is not None:
+					parTuple.help = parHelp.summary
+			else:
+				par = self._getRopParByTupletName(parHelp.name)
+				if par is not None:
+					par.help = parHelp.summary
 		for inHelp in ropHelp.inputs:
 			if not inHelp.label:
 				continue
