@@ -1,4 +1,4 @@
-from raytkUtil import ROPInfo
+from raytkUtil import ROPInfo, IconColors
 
 # noinspection PyUnreachableCode
 if False:
@@ -16,27 +16,17 @@ def onCook(dat: 'DAT'):
 		dat.appendRow(['category', info.categoryName or ''])
 	if info and info.isDeprecated:
 		dat.appendRow(['statusIcon', '\uFB7E'])
-		dat.appendRow(['fg'] + list(_deprecatedFgColor))
-		dat.appendRow(['bg'] + list(_deprecatedBgColor))
+		dat.appendRow(['fg'] + list(IconColors.deprecatedFgColor))
+		dat.appendRow(['bg'] + list(IconColors.deprecatedBgColor))
 	elif info and info.isAlpha:
 		dat.appendRow(['statusIcon', '\uF02B'])
-		dat.appendRow(['fg'] + list(_alphaFgColor))
-		dat.appendRow(['bg'] + list(_alphaBgColor))
+		dat.appendRow(['fg'] + list(IconColors.alphaFgColor))
+		dat.appendRow(['bg'] + list(IconColors.alphaBgColor))
 	elif info and info.isBeta:
 		dat.appendRow(['statusIcon', '\uF0A1'])
-		dat.appendRow(['fg'] + list(_betaFgColor))
-		dat.appendRow(['bg'] + list(_betaBgColor))
+		dat.appendRow(['fg'] + list(IconColors.betaFgColor))
+		dat.appendRow(['bg'] + list(IconColors.betaBgColor))
 	else:
 		dat.appendRow(['statusIcon', ''])
-		dat.appendRow(['fg'] + list(_defaultFgColor))
-		dat.appendRow(['bg'] + list(_defaultBgColor))
-
-_defaultBgColor = 0.0477209, 0.111349, 0.114
-_defaultFgColor = 0.135166, 0.816, 0.816
-_alphaBgColor = 0.24, 0.306, 0.405
-_alphaFgColor = _defaultFgColor
-_betaBgColor = 0.1, 0.155, 0.238
-_betaFgColor = _defaultFgColor
-_deprecatedBgColor = 0.185, 0.21, 0.21
-_deprecatedFgColor = 0.635, 0.816, 0.816
-
+		dat.appendRow(['fg'] + list(IconColors.defaultFgColor))
+		dat.appendRow(['bg'] + list(IconColors.defaultBgColor))

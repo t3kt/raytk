@@ -468,6 +468,18 @@ _validationColor = 1, 0.95, 0.45
 _deprecatedColor = 0.2, 0.2, 0.2
 _guideColor = 0.0477209, 0.816, 0.816
 
+
+class IconColors:
+	defaultBgColor = 0.0477209, 0.111349, 0.114
+	defaultFgColor = 0.135166, 0.816, 0.816
+	alphaBgColor = 0.24, 0.306, 0.405
+	alphaFgColor = defaultFgColor
+	betaBgColor = 0.1, 0.155, 0.238
+	betaFgColor = defaultFgColor
+	deprecatedBgColor = 0.185, 0.21, 0.21
+	deprecatedFgColor = 0.635, 0.816, 0.816
+
+
 class Tag:
 	def __init__(
 			self,
@@ -754,6 +766,9 @@ class RaytkContext:
 		toolkit = self.toolkit()
 		par = toolkit.par['Raytkversion']
 		return Version(str(par or '0.1'))
+
+	def develMode(self):
+		return bool(self.toolkit().par['Devel'])
 
 	def operatorsRoot(self):
 		return self.toolkit().op('operators')

@@ -121,6 +121,14 @@ class BuildManager:
 		toolkit.par.reloadtoxonstart = True
 		toolkit.par.reloadcustom = True
 		toolkit.par.reloadbuiltin = True
+		image = toolkit.op('./libraryImage')
+		if image:
+			toolkit.par.opviewer.val = image
+			toolkit.par.opviewer.readOnly = True
+			toolkit.viewer = True
+		else:
+			toolkit.par.opviewer.val = ''
+			toolkit.viewer = False
 		focusCustomParameterPage(toolkit, 'RayTK')
 
 	def updateLibraryInfo(self, toolkit: 'COMP', thenRun: str = None, runArgs: list = None):
