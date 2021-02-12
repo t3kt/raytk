@@ -97,6 +97,8 @@ heading_anchors: true
 aux_links:
   "View on GitHub":
     - "//github.com/t3kt/raytk"
+  "Downloads":
+    - "//github.com/t3kt/raytk/releases"
 
 whitelist:
   - jekyll-redirect-from
