@@ -466,7 +466,7 @@ class ROPSpec(ModelObject):
 	multiInput: Optional[MultiInputSpec] = None
 	inputs: Optional[List[InputSpec]] = field(default_factory=list)
 
-def extractOpSpec(rop: 'COMP') -> ROPSpec:
+def extractOpSpec(rop: 'COMP', skipParams=False) -> ROPSpec:
 	info = ROPInfo(rop)
 	spec = ROPSpec(
 		meta=ROPMeta(
@@ -494,10 +494,11 @@ def extractOpSpec(rop: 'COMP') -> ROPSpec:
 			textureTable=_extractDatSetting(info.opDefPar.Texturetable, isText=False),
 		),
 	)
-	spec.paramPages = [
-		_extractParamPage(page)
-		for page in rop.customPages
-	]
+	if not skipParams:
+		spec.paramPages = [
+			_extractParamPage(page)
+			for page in rop.customPages
+		]
 	multiHandler = info.multiInputHandler
 	if multiHandler:
 		spec.multiInput = MultiInputSpec(
