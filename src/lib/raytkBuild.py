@@ -10,6 +10,10 @@ if False:
 	from typing import List, Optional, Union
 
 class BuildContext:
+	"""
+	Utility that is passed through parts of the build process to provide common tools.
+	"""
+
 	def __init__(self, log: Callable[[str], None]):
 		self.log = log
 
@@ -123,6 +127,9 @@ class BuildTaskContext(BuildContext):
 		self.finish()
 
 class DocProcessor:
+	"""
+	Tool used to extract and process documentation for ROPs.
+	"""
 	def __init__(self, context: 'BuildContext', outputFolder: 'Union[str, Path]'):
 		self.context = context
 		self.outputFolder = Path(outputFolder)

@@ -10,6 +10,10 @@ if False:
 	from _stubs import *
 
 class RaytkTools(RaytkContext):
+	"""
+	Utility that provides tools used to modify the toolkit, for use in development tools.
+	"""
+
 	def generateROPType(self, comp: 'COMP'):
 		info = ROPInfo(comp)
 		if not info.isMaster:
@@ -208,6 +212,7 @@ class RaytkTools(RaytkContext):
 			if info:
 				info.toolkitVersion = version
 
+# INCOMPLETE AND UNTESTED
 class AutoLoader:
 	def __init__(self, folderComp: 'COMP'):
 		self.folderComp = folderComp
