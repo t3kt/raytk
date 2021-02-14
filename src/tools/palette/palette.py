@@ -60,6 +60,9 @@ class Palette:
 		ipar.uiState.Pinopen = False
 		ext.opPicker.Loaditems()
 		ext.opPicker.FocusFilterField()
+		image = RaytkContext().libraryImage()
+		if image and image.par['Showshortcut'] is not None:
+			image.par.Showshortcut = False
 
 	def close(self):
 		self._resetCloseTimer()

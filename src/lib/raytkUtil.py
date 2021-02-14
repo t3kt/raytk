@@ -905,6 +905,10 @@ class RaytkContext:
 	def ropOutputChildrenOf(comp: 'COMP'):
 		return _getChildOutputROPs(comp) if comp else []
 
+	def libraryImage(self) -> 'Optional[COMP]':
+		toolkit = self.toolkit()
+		return toolkit and toolkit.op('./libraryImage')
+
 def _isMaster(o: 'COMP'):
 	return o and o.par['clone'] is not None and (o.par.clone.eval() or o.par.clone.expr)
 

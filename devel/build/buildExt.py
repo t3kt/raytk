@@ -81,21 +81,23 @@ class BuildManager:
 		elif stage == 2:
 			self.updateLibraryInfo(toolkit, thenRun='runBuild_stage', runArgs=[stage + 1])
 		elif stage == 3:
-			self.processOperators(toolkit.op('operators'), thenRun='runBuild_stage', runArgs=[stage + 1])
+			self.updateLibraryImage(toolkit, thenRun='runBuild_stage', runArgs=[stage + 1])
 		elif stage == 4:
+			self.processOperators(toolkit.op('operators'), thenRun='runBuild_stage', runArgs=[stage + 1])
+		elif stage == 5:
 			self.context.lockBuildLockOps(toolkit)
 			self.queueMethodCall(self.runBuild_stage, stage + 1)
-		elif stage == 5:
-			self.processTools(toolkit.op('tools'), thenRun='runBuild_stage', runArgs=[stage + 1])
 		elif stage == 6:
-			self.processComponents(toolkit.op('components'), thenRun='runBuild_stage', runArgs=[stage + 1])
+			self.processTools(toolkit.op('tools'), thenRun='runBuild_stage', runArgs=[stage + 1])
 		elif stage == 7:
+			self.processComponents(toolkit.op('components'), thenRun='runBuild_stage', runArgs=[stage + 1])
+		elif stage == 8:
 			self.removeBuildExcludeOps(toolkit)
 			self.queueMethodCall(self.runBuild_stage, stage + 1)
-		elif stage == 8:
+		elif stage == 9:
 			self.finalizeToolkitPars(toolkit)
 			self.queueMethodCall(self.runBuild_stage, stage + 1)
-		elif stage == 9:
+		elif stage == 10:
 			version = RaytkContext().toolkitVersion()
 			toxFile = f'build/RayTK-{version}.tox'
 			self.log('Exporting TOX to ' + toxFile)
@@ -121,15 +123,23 @@ class BuildManager:
 		toolkit.par.reloadtoxonstart = True
 		toolkit.par.reloadcustom = True
 		toolkit.par.reloadbuiltin = True
-		image = toolkit.op('./libraryImage')
+		focusCustomParameterPage(toolkit, 'RayTK')
+
+	def updateLibraryImage(self, toolkit: 'COMP', thenRun: str = None, runArgs: list = None):
+		self.log('Updating library image')
+		image = RaytkContext().libraryImage()
 		if image:
+			self.context.detachTox(image)
+			self.context.lockBuildLockOps(image)
+			image.par.Showshortcut = True
 			toolkit.par.opviewer.val = image
 			toolkit.par.opviewer.readOnly = True
 			toolkit.viewer = True
 		else:
 			toolkit.par.opviewer.val = ''
 			toolkit.viewer = False
-		focusCustomParameterPage(toolkit, 'RayTK')
+		if thenRun:
+			self.queueMethodCall(thenRun, *(runArgs or []))
 
 	def updateLibraryInfo(self, toolkit: 'COMP', thenRun: str = None, runArgs: list = None):
 		self.log('Updating library info')
