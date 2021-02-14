@@ -1,6 +1,5 @@
-from pathlib import Path
 from raytkTools import RaytkTools
-from raytkUtil import RaytkTags, navigateTo, focusCustomParameterPage, CategoryInfo, RaytkContext
+from raytkUtil import RaytkTags, navigateTo, focusCustomParameterPage, CategoryInfo, RaytkContext, IconColors
 from raytkBuild import BuildContext, DocProcessor
 from typing import Callable, List, Optional, Union
 
@@ -17,29 +16,11 @@ class BuildManager:
 		self.docProcessor = None  # type: Optional[DocProcessor]
 
 	def OnInit(self):
-		field = self.ownerComp.op('docSiteFolder_field')
-		field.par.Value0 = self.GetDefaultDocSitePath() or ''
 		self.ClearLog()
 
 	@staticmethod
 	def GetToolkitVersion():
 		return RaytkContext().toolkitVersion()
-
-	@staticmethod
-	def GetDefaultDocSitePath():
-		folder = Path('docs')
-		if folder.exists():
-			return folder.as_posix()
-		return ''
-
-	def getDocSitePath(self):
-		field = self.ownerComp.op('docSiteFolder_field')
-		if not field.par.Value0:
-			return None
-		folder = Path(field.par.Value0.eval())
-		if not folder.exists():
-			return None
-		return folder
 
 	@staticmethod
 	def OpenToolkitNetwork():
@@ -62,11 +43,7 @@ class BuildManager:
 		self.logTable.clear()
 		self.log('Starting build')
 		self.context = BuildContext(self.log)
-		docFolder = self.getDocSitePath()
-		if docFolder:
-			self.docProcessor = DocProcessor(self.context, docFolder / '_reference')
-		else:
-			self.docProcessor = None
+		self.docProcessor = DocProcessor(self.context, 'docs/_reference')
 		self.queueMethodCall(self.runBuild_stage, 0)
 
 	def runBuild_stage(self, stage: int):
@@ -92,7 +69,7 @@ class BuildManager:
 		elif stage == 7:
 			self.processComponents(toolkit.op('components'), thenRun='runBuild_stage', runArgs=[stage + 1])
 		elif stage == 8:
-			self.removeBuildExcludeOps(toolkit)
+			self.context.removeBuildExcludeOps(toolkit)
 			self.queueMethodCall(self.runBuild_stage, stage + 1)
 		elif stage == 9:
 			self.finalizeToolkitPars(toolkit)
@@ -143,8 +120,8 @@ class BuildManager:
 
 	def updateLibraryInfo(self, toolkit: 'COMP', thenRun: str = None, runArgs: list = None):
 		self.log('Updating library info')
-		toolkit.op('libraryInfo').par.Forcebuild.pulse()
 		libraryInfo = toolkit.op('libraryInfo')
+		libraryInfo.par.Forcebuild.pulse()
 		self.context.runBuildScript(
 			libraryInfo.op('BUILD'),
 			thenRun=lambda: self.queueMethodCall(thenRun, *(runArgs or [])),
@@ -160,9 +137,8 @@ class BuildManager:
 	def processOperators(self, comp: 'COMP', thenRun: str = None, runArgs: list = None):
 		self.log(f'Processing operators {comp}')
 		self.context.detachTox(comp)
-		categories = comp.findChildren(type=baseCOMP, maxDepth=1)
-		if self.docProcessor:
-			self.docProcessor.writeCategoryListPage(categories)
+		categories = RaytkContext().allCategories()
+		self.docProcessor.writeCategoryListPage(categories)
 		self.queueMethodCall('processOperatorCategories_stage', categories, thenRun, runArgs)
 
 	def processOperatorCategories_stage(self, categories: List['COMP'], thenRun: str = None, runArgs: list = None):
@@ -215,7 +191,7 @@ class BuildManager:
 			self.context.disableCloning(img)
 			self.context.detachTox(img)
 			self.context.lockBuildLockOps(img)
-		comp.color = 0.0477209, 0.111349, 0.114
+		comp.color = IconColors.defaultBgColor
 		if self.docProcessor:
 			self.docProcessor.processOp(comp)
 
@@ -236,16 +212,6 @@ class BuildManager:
 			comp.op('BUILD'),
 			thenRun=lambda: self.queueMethodCall(thenRun, *(runArgs or [])),
 			runArgs=[])
-
-	def removeBuildExcludeOps(self, comp: 'COMP'):
-		self.log(f'Removing build excluded ops from {comp}')
-		toRemove = list(comp.findChildren(tags=[RaytkTags.buildExclude.name]))
-		self.context.safeDestroyOps(toRemove)
-
-	def lockBuildLockOps(self, comp: 'COMP'):
-		self.log(f'Locking build locked ops in {comp}')
-		toLock = comp.findChildren(tags=[RaytkTags.buildLock.name])
-		self.context.lockOps(toLock)
 
 	def log(self, message: str):
 		print(message)

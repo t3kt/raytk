@@ -82,6 +82,8 @@ class BuildContext:
 
 	def lockOps(self, os: 'List[OP]'):
 		for o in os:
+			if o.lock:
+				continue
 			self.log(f'Locking {o}')
 			o.lock = True
 
@@ -89,6 +91,11 @@ class BuildContext:
 		self.log(f'Locking build locked ops in {comp}')
 		toLock = comp.findChildren(tags=[RaytkTags.buildLock.name])
 		self.lockOps(toLock)
+
+	def removeBuildExcludeOps(self, comp: 'COMP'):
+		self.log(f'Removing build excluded ops from {comp}')
+		toRemove = list(comp.findChildren(tags=[RaytkTags.buildExclude.name]))
+		self.safeDestroyOps(toRemove)
 
 	@staticmethod
 	def queueAction(action: Callable, *args):
