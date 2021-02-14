@@ -31,6 +31,8 @@ cat:
   - name: contextValueField
     summary: Field that returns various fields from the context, from a downstream
       OP.
+  - name: curlNoiseField
+    summary: Curl noise field.
   - name: iterationField
     summary: Field that returns the current iteration, from a downstream OP.
   - name: metaballField

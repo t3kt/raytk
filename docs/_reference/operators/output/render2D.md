@@ -101,6 +101,8 @@ op:
     - label: Fit Outside
       name: fitoutside
     name: Scaling
+  - label: UV Map
+    name: Uvmap
   - label: Max Distance
     name: Maxdist
   - label: Time Reference Operator

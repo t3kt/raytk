@@ -25,6 +25,18 @@ op:
       name: TDPerlinNoise3d
     - label: Perlin 4D
       name: TDPerlinNoise4d
+    - label: Classic Perlin 2D
+      name: classicperlin2d
+    - label: Classic Perlin 3D
+      name: classicperlin3d
+    - label: Classic Perlin 4D
+      name: classicperlin4d
+    - label: Simplex 2D
+      name: simplex2d
+    - label: Simplex 3D
+      name: simplex3d
+    - label: Simplex 4D
+      name: simplex4d
     name: Noisetype
   - label: Coord Type
     menuOptions:
