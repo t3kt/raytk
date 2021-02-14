@@ -1,4 +1,5 @@
-name	label	returnType	macro
-sdfOut	SDF Result	Sdf	OUTPUT_SDF
-colorOut	Color	Sdf	OUTPUT_COLOR
-valueOut	Value	vec4 float	OUTPUT_VALUE
+name	label	returnType	macro	enable
+sdfOut	SDF Result	Sdf	OUTPUT_SDF	
+colorOut	Color	Sdf	OUTPUT_COLOR	
+valueOut	Value	vec4 float	OUTPUT_VALUE	
+normalOut	Normal	Sdf	OUTPUT_NORMAL	Enablenormaloutput
