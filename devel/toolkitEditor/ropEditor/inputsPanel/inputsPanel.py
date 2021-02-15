@@ -27,7 +27,7 @@ class InputsPanel:
 			inInfo = InputInfo(handler)
 			dat.appendRow([
 				inInfo.name,
-				inInfo.label,
+				inInfo.label or '',
 				handler.path,
 				inInfo.multiHandler or '',
 			])
