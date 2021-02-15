@@ -73,7 +73,7 @@ Each ROP can define several groups of macros. These are specified in DATs with 3
 | | `'THIS_STUFF'` | `'vec2(0.3, 0.1)'` |
 | | `'THIS_FOO 3.5'` |
 
-Equivalent to:
+Evaluates to:
 
 | 0  | 1 | 2 |
 | --- | --- | --- |
@@ -90,6 +90,10 @@ Generates:
 ```
 
 Each ROP can have one explicitly defined macro table, and some number of generated tables produced by various helper subcomponents.
+
+### Global Macros
+
+ROPs can also define a table of "global" macros. These differ from ROP-specific macros in that they are included earlier in the shader before library includes. They are intended to enable features within shared libraries. For example, `RAYTK_STEPS_IN_SDF` enables the `steps` field in the `Sdf` struct, and is used by ops that depend on it, allowing that field to be omitted if nothing is using it.
 
 ## Types
 
@@ -115,3 +119,132 @@ Sdf res = inputOp1(p.xy, ctx);
 Sdf res = inputOp1(p, ctx);
 #endif
 ```
+
+## Textures
+
+A ROP can define a table of textures, each of which have a name and a path to a TOP. Each one will generate a prefixed macro like `THIS_textureName`. The output OP will use `select TOP`s to pull from the provided TOPs and feed them into the `glsl TOP` as inputs. The generated macros refer to the input textures by the index of the attached input.
+
+Generated macro:
+```glsl
+#define PREFIX_texture sTD2DInputs[3]
+``` 
+
+Usage in ROP function:
+```glsl
+ReturnT thismap(CoordT p, ContextT ctx) {
+  return texture(THIS_texture, p.xy).r;
+}
+```
+
+## Buffers
+
+## Materials
+
+ROPs that define materials provide the "Material" code block. These OPs automatically generate a unique integer material identifier, which is made available to the ROP as `THISMAT`. SDF operators set the `material` (and/or `material2` field in the `Sdf` struct), which then gets passed along to the ouput shader's `map()` function return value. The output shader then inserts the provided code snippet into a generated switch block, which is run when the result's material id matches the generated material id for the ROP.
+
+Typically ROPs will define a prefixed function in their "Function" block and then call it within the "Material" snippet.
+
+Function block:
+```glsl
+ReturnT thismap(CoordT p, ContextT ctx) {
+  Sdf res = inputOp1(p, ctx);
+  assignMaterial(res, THISMAT);
+  return res;
+}
+
+vec3 THIS_getColor(CoordT p, MaterialContext matCtx) {
+  return THIS_Color; // ....
+}
+```
+
+Material snippet:
+```glsl
+col.rgb = THIS_getColor(p, matCtx);
+```
+
+That snippet is inserted into a function like:
+
+```glsl
+vec3 getColor(vec3 p, MaterialContext matCtx, int m) {
+  vec3 col = vec3(0.);
+  if (m == MAT_PREFIX_1_ETC) {
+    col.rgb = PREFIX_1_getColor(p, matCtx);
+  } else if (m == MAT_PREFIX_2_ABC) {
+    col.rgb = PREFIX_2_getColor(p, matCtx);
+  }
+  //...
+  return col;
+}
+```
+
+## Contexts
+
+ROP functions are called with two parameters: a coordinate `p`, and a secondary context value `ctx`. The context value contains information about the context for which the function is being called. This includes both fixed global values and values that are modified or provided by one ROP and passed to the input ROPs that it calls.
+
+There are several different types of contexts, each used for different reasons that a ROP is being called by the output OP's shader.
+
+### Default Context
+
+The `Context` type is used for the primary call made by the shader to evaluate the scene result. For raymarching, this is for the call at each marching step to evaluate the scene SDF. For 2D rendering, this is for the call made for each pixel to determine the output values.
+
+#### Context Iteration
+
+The `Context` type includes an `iteration` field which certain ROPs populate with different values depending on how/where it's calling an input. The value is a `vec4`, where the first value is an "index" and the second is a "total count". The third and fourth are not yet used.
+
+Example ROPs that provide iteration values:
+ 
+* The `reflect` ROP sets a value of `vec4(0, 2, 0, 0)` when calling the input if it is one one side of the reflection plane and a value of 1 when calling the input on the other side.
+* The `mirrorOctant` ROP sets a different value for each quadrant, `vec4(0, 4, 0, 0)` for one quadrant, `vec4(1, 4, 0, 0)` for the next, and so on.
+
+Several types of ROPs make use of the iteration values passed to them:
+
+* The `iterationField` ROP will return the iteration in one of several formats (raw index, scaled to total count, full `vec4` data, etc).
+* The `iterationSwitch` ROP will call one input for index 0 and the other for index 1.
+
+### Camera Context
+
+The `CameraContext` is used in raymarching when determining the position and direction of the camera ray. It contains information such as the render resolution, which can be used with the normalized UV coordinates in `p` to calculate values based on pixel offsets.
+
+### LightContext
+
+The `LightContext` is used in raymarching when determining the relevant light position and color for a surface ray hit. It includes the surface `Sdf` result and the surface normal vector.
+
+### MaterialContext
+
+The `MaterialContext` is used in raymarching when calculating the color to use for a ray surface hit. It includes the `Sdf` result, the camera `Ray`, the computed `Light`, and other properties used by materials.
+
+## Working with SDF Results
+
+The `Sdf` struct represents a ray hitting a surface (so a more accurate name might be `SurfaceHit`). It includes information about that surface and properties of the ray process that caused the hit. The struct is the only way that an SDF-based operator can pass value to the ROP that called it.
+
+The struct will contain different fields depending on whether those features are being used. For example, if the "near hit" output buffer is being used, it contains fields `nearHitCount` and `nearHitAmount`. Because the struct can contain different types of fields, it is important to use the provided functions for things like creating and modifying them, rather than manually constructing them.
+
+This code is problematic because it fails to account for properties like material blending settings, reflection properties (if those are being used), near hit values (if those are being used), etc:
+
+```glsl
+Sdf badRes;
+badRes.x = dist;
+badRes.material = THISMAT;
+return badRes;
+```
+
+This code uses the provided functions to create and modify the `Sdf` value, which properly handle all the fields that are being used:
+
+```glsl
+Sdf goodRes = createSdf(dist);
+assignMaterial(goodRes, THISMAT);
+return goodRes;
+```
+
+Similarly, when combining two `Sdf` values, ROPs should use the `blendInSdf()` function, which appropriately handles all the fields:
+
+```glsl
+Sdf res1 = inputOp1(p, ctx);
+Sdf res2 = inputOp2(p, ctx);
+Sdf combinedRes = res1;
+combinedRes.x = min(res1.x, res2.x);
+float ratio = smoothBlendRatio(res1.x, res2.x, THIS_Foo);
+blendInSdf(combinedRes, res2, ratio);
+return combinedRes;
+```
+
