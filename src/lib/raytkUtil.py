@@ -422,6 +422,9 @@ class CategoryInfo:
 			return
 		self.category = o
 
+	def __bool__(self):
+		return bool(self.category)
+
 	@property
 	def categoryName(self):
 		return self.category.name if self.category else None
@@ -438,6 +441,10 @@ class CategoryInfo:
 			o
 			for o in _getChildROPs(self.category)
 			if not o.name.startswith('__')], key=lambda o: o.path))
+
+	@property
+	def templateComp(self) -> 'Optional[COMP]':
+		return self.category.op('__template')
 
 def isROP(o: 'OP'):
 	return bool(o) and o.isCOMP and RaytkTags.raytkOP.isOn(o)
@@ -908,6 +915,11 @@ class RaytkContext:
 	def libraryImage(self) -> 'Optional[COMP]':
 		toolkit = self.toolkit()
 		return toolkit and toolkit.op('./libraryImage')
+
+	def categoryInfo(self, category: str) -> 'Optional[CategoryInfo]':
+		comp = self.operatorsRoot().op('./' + category)
+		if comp:
+			return CategoryInfo(comp)
 
 def _isMaster(o: 'COMP'):
 	return o and o.par['clone'] is not None and (o.par.clone.eval() or o.par.clone.expr)
