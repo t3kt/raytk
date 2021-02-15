@@ -434,7 +434,7 @@ class OpDocManager:
 		docText = docText.strip()
 		docText = _stripFrontMatter(docText).strip()
 		docText = _stripFirstMarkdownHeader(docText)
-		sections = _parseMarkdownSections(docText)
+		sections = _parseMarkdownSections(docText, sectionNames=['Parameters', 'Inputs'])
 		if '' in sections:
 			ropHelp.summary, ropHelp.detail = _extractHelpSummaryAndDetail(sections[''])
 		if 'Parameters' in sections:
@@ -600,7 +600,7 @@ class OpDocManager:
 		self._pullFromMissingInputsInto(ropHelp)
 		return ropHelp.formatAsFullPage(self.info)
 
-def _parseMarkdownSections(text: str) -> 'Dict[str, str]':
+def _parseMarkdownSections(text: str, sectionNames: List[str]) -> 'Dict[str, str]':
 	"""
 	Splits apart markdown into blocks with titles using level 2 headers (`## Foo`)
 	:return: dict of title -> body. There may be an empty title for the first section.
@@ -614,7 +614,7 @@ def _parseMarkdownSections(text: str) -> 'Dict[str, str]':
 	title = ''
 	body = ''
 	for line in text.splitlines(keepends=True):
-		if line.startswith('## '):
+		if line.startswith('## ') and line[3:].strip() in sectionNames:
 			if body:
 				sections.append((title, body.strip()))
 			title = line[3:].strip()
