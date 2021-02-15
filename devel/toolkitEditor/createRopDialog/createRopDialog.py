@@ -26,6 +26,7 @@ class CreateRopDialog:
 		self._setMessageText('')
 
 	def Create(self):
+		self._setMessageText('')
 		category = self.ownerComp.op('category_dropmenu').par.Value0.eval()
 		name = self.ownerComp.op('typeName_field').par.Value0.eval()
 		try:

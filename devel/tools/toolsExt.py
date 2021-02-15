@@ -258,14 +258,7 @@ class Tools:
 
 	@staticmethod
 	def organizeCategory(comp: 'COMP'):
-		catInfo = CategoryInfo(comp)
-		rops = catInfo.operators
-		if not rops:
-			return
-		rops.sort(key=lambda r: r.name)
-		for i, rop in enumerate(rops):
-			rop.nodeY = -int(i / 10) * 150
-			rop.nodeX = int(i % 10) * 200
+		RaytkTools().organizeCategory(comp)
 
 	@staticmethod
 	def updateAllROPToolkitVersions():

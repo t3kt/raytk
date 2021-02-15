@@ -1,7 +1,7 @@
 from pathlib import Path
 from raytkDocs import OpDocManager
 from raytkModel import OpDefMeta_OLD, OpSpec_OLD
-from raytkUtil import RaytkContext, ROPInfo, focusCustomParameterPage, RaytkTags
+from raytkUtil import RaytkContext, ROPInfo, focusCustomParameterPage, RaytkTags, CategoryInfo
 from typing import List, Optional
 
 # noinspection PyUnreachableCode
@@ -230,8 +230,8 @@ class RaytkTools(RaytkContext):
 		existing = catInfo.category.op('./' + typeName)
 		if existing:
 			raise Exception(f'ROP {typeName} already exists in category {category}')
-		fileDir = f'src/operators/{category}/'
-		rop = catInfo.category.copy(template, typeName)  # type: COMP
+		fileDir = f'src/operators/{category}'
+		rop = catInfo.category.copy(template, name=typeName)  # type: COMP
 		rop.par.clone = rop.path
 		rop.par.externaltox = f'{fileDir}/{typeName}.tox'
 		codeDat = rop.op('./function')
@@ -240,7 +240,20 @@ class RaytkTools(RaytkContext):
 		codeDat.par.writepulse.pulse()
 		RaytkTags.fileSync.apply(codeDat, True)
 		self.saveROP(rop)
+		self.organizeCategory(catInfo.category)
 		return rop
+
+	@staticmethod
+	def organizeCategory(comp: 'COMP'):
+		catInfo = CategoryInfo(comp)
+		rops = catInfo.operators
+		if not rops:
+			return
+		rops.sort(key=lambda r: r.name)
+		for i, rop in enumerate(rops):
+			rop.nodeY = -int(i / 10) * 150
+			rop.nodeX = int(i % 10) * 200
+		catInfo.category.save(catInfo.category.par.externaltox)
 
 # INCOMPLETE AND UNTESTED
 class AutoLoader:
