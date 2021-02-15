@@ -15,6 +15,7 @@ _opDefParamNames = [
 	'Initcode',
 	'Functemplate',
 	'Materialcode',
+	'Paramsop',
 	'Params',
 	'Specialparams',
 	'Angleparams',

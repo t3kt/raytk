@@ -68,6 +68,7 @@ class CompDefParsT(_OpMetaPars):
 
 class OpDefParsT(_OpMetaPars):
 	Hostop: 'OPParamT'
+	Paramsop: 'OPParamT'
 	Name: 'StrParamT'
 	Enable: 'BoolParamT'
 	Opglobals: 'DatParamT'
@@ -171,6 +172,18 @@ class ROPInfo:
 	@helpUrl.setter
 	def helpUrl(self, val):
 		self.opDefPar.Helpurl = val
+
+	@property
+	def paramsOp(self) -> 'Optional[COMP]':
+		if not self.isROP:
+			return None
+		return self.opDefPar.Paramsop.eval() or self.rop
+
+	@paramsOp.setter
+	def paramsOp(self, o: 'Optional[COMP]'):
+		if not self.isROP:
+			return
+		self.opDefPar.Paramsop = o or ''
 
 	@property
 	def isROP(self):

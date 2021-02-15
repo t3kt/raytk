@@ -4,7 +4,7 @@ import re
 if False:
 	# noinspection PyUnresolvedReferences
 	from _stubs import *
-	from typing import Dict, List, Union
+	from typing import Dict, List, Optional, Union
 	from raytkUtil import OpDefParsT
 	from _stubs.PopDialogExt import PopDialogExt
 
@@ -72,8 +72,11 @@ def combineInputDefinitions(dat: 'DAT', inDats: 'List[DAT]'):
 			dat.appendRow(cells, insertRow)
 			insertRow += 1
 
+def _getParamsOp() -> 'Optional[COMP]':
+	return parentPar().Paramsop.eval() or parentPar().Hostop.eval()
+
 def _getRegularParams() -> 'List[Par]':
-	host = parentPar().Hostop.eval()
+	host = _getParamsOp()
 	if not host:
 		return []
 	paramNames = tdu.expand(parentPar().Params.eval().strip())
@@ -90,7 +93,7 @@ def _getSpecialParamNames():
 
 def buildParamTable(dat: 'DAT'):
 	dat.clear()
-	host = parentPar().Hostop.eval()
+	host = _getParamsOp()
 	if not host:
 		return
 	name = parentPar().Name.eval()

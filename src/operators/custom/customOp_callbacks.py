@@ -2,8 +2,10 @@
 if False:
 	# noinspection PyUnresolvedReferences
 	from _stubs import *
+	from components.customOpController.customOpController import CustomOp
 
 def onCreate(master=None, **kwargs):
-	# detach clone, even in devel
-	parent().par.enablecloning = False
-	op('customOpController').par.Createfunction.pulse()
+	# noinspection PyTypeChecker
+	controller = op('customOpController')  # type: CustomOp
+	controller.Createfunction()
+	controller.Createparamsop()
