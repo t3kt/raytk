@@ -136,7 +136,7 @@ def buildOpInputsTable(dat: 'DAT'):
 				handler.name,
 				inInfo.name or '',
 				inInfo.label or '',
-				inInfo.required,
+				_formatPar(inInfo.handlerPar.Required),
 				bool(inInfo.multiHandler),
 				' '.join(inInfo.supportedCoordTypes),
 				' '.join(inInfo.supportedContextTypes),
