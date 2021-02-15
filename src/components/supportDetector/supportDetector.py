@@ -5,13 +5,16 @@ if False:
 
 def buildSupportTable(
 		support: 'scriptDAT',
-		top: 'glslTOP'):
+		top: 'glslTOP',
+		info: 'infoDAT'):
 	support.clear()
 	support.appendRow(['include', 0])
-	result = top.compileResult
-	if not result:
-		return
-	if not _hasIncludeError(result):
+	textSources = [
+		top.compileResult,
+		info.text,
+		top.warnings(),
+	]
+	if not any([_hasIncludeError(text) for text in textSources]):
 		support['include', 1] = 1
 
 _includeErrorTags = [
@@ -21,6 +24,8 @@ _includeErrorTags = [
 ]
 
 def _hasIncludeError(result: str):
+	if not result:
+		return False
 	for tag in _includeErrorTags:
 		if tag in result:
 			return True
