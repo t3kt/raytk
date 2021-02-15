@@ -5,8 +5,18 @@ nav_order: 1
 ---
 
 # Writing ROP Code
+{: .no_toc }
 
 Each ROP has one primary block of "function" code, and several other optional code blocks. Most of these blocks are designed to contain top-level declarations of variables and/or functions. Some blocks are intended to contain a snippet of code that will be inserted into another generated function.
+
+<details open markdown="block">
+  <summary>
+    Table of contents
+  </summary>
+  {: .text-delta }
+1. TOC
+{:toc}
+</details>
 
 ## ROP Names
 
