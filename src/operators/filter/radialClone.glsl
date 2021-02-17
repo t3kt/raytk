@@ -11,10 +11,7 @@ Sdf thismap(CoordT p, ContextT ctx) {
 	q.THIS_RADIUS_AXIS -= THIS_Radiusoffset;
 #endif
 #if defined(THIS_Iterationtype_index)
-	ctx.iteration = vec4(0, n, 0, 0);
-#elif defined(THIS_Iterationtype_scaled)
-	ctx.iteration = vec4(0, 1, 0, 0);
-	float iterScale = 1 / max(1, float(n - 1));
+	setIterationIndex(ctx, 0);
 #endif
 	merged = inputOp1(q, ctx);
 	for (int i = 1; i < n; i++) {
@@ -28,9 +25,7 @@ Sdf thismap(CoordT p, ContextT ctx) {
 			q.THIS_RADIUS_AXIS -= THIS_Radiusoffset;
 		#endif
 		#if defined(THIS_Iterationtype_index)
-			ctx.iteration = vec4(float(i), n, 0, 0);
-		#elif defined(THIS_Iterationtype_scaled)
-			ctx.iteration = vec4(float(i) * iterScale, 1, 0, 0);
+		setIterationIndex(ctx, float(i));
 		#endif
 		Sdf res = inputOp1(q, ctx);
 		#if defined(THIS_Mergetype_smoothunion)
