@@ -1,16 +1,16 @@
 ReturnT thismap(CoordT p, ContextT ctx) {
 	vec2 q = p.THIS_PLANE;
 	vec2 cell = pMirrorOctant(q, THIS_Size);
-	#ifdef THIS_Iterateoncells
-	ctx.iteration.x = quadrantIndex(ivec2(cell));
-	ctx.iteration.y = 4;
+	#if defined(THIS_Iterationtype_sign)
+	setIterationCell(ctx, cell);
+	#elif defined(THIS_Iterationtype_index)
+	setIterationIndex(ctx, quadrantIndex(ivec2(cell)));
 	#endif
-	float r = THIS_Rotateaxis;
 
+	float r = THIS_Rotateaxis;
 	#ifdef THIS_HAS_INPUT_2
   {
 		#if defined(inputOp2_COORD_TYPE_float)
-
 		float q2 = length(p.THIS_PLANE);
 		#elif defined(inputOp2_COORD_TYPE_vec2)
 		vec2 q2 = p.THIS_PLANE;
