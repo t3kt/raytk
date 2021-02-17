@@ -1,11 +1,13 @@
 ReturnT thismap(CoordT p, ContextT ctx) {
-	float ratio = ctx.iteration.x;
+	float i = ctx.iteration.THIS_Iterationpart;
 	#if defined(THIS_Extend_clamp)
-	ratio = clamp(ratio, 0, 1);
+	i = clamp(i, 0., 1.);
 	#elif defined(THIS_Extend_loop)
-	if (fract(ratio) != 0) {
-		ratio = fract(ratio);
-	}
+	i = mod(i, 2.);
 	#endif
-	return mix(inputOp1(p, ctx), inputOp2(p, ctx), ratio);
+	if (i < 0.5) {
+		return inputOp1(p, ctx);
+	} else {
+		return inputOp2(p, ctx);
+	}
 }
