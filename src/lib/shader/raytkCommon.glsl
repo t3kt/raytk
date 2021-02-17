@@ -166,6 +166,18 @@ Context createDefaultContext() {
 	return ctx;
 }
 
+void setIterationIndex(inout Context ctx, float index) {
+	ctx.iteration = vec4(index, 0., 0., 0.);
+}
+
+void setIterationCell(inout Context ctx, vec2 cell) {
+	ctx.iteration = vec4(cell, 0., 0.);
+}
+
+void setIterationCell(inout Context ctx, vec3 cell) {
+	ctx.iteration = vec4(cell, 0.);
+}
+
 struct Light {
 	vec3 pos;
 	vec3 color;  // Includes brightness. May be determined specific to a particular point in space (such as attentuation).
