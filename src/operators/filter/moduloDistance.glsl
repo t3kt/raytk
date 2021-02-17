@@ -32,8 +32,7 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 	#endif
 
 	#if defined(THIS_Iterateonrings) && defined(THIS_CONTEXT_TYPE_Context)
-	ctx.iteration.x = cell;
-	ctx.iteration.y = 0.;
+	setIterationIndex(ctx, cell);
 	#endif
 	return inputOp1(p, ctx);
 }
