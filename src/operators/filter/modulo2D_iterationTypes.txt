@@ -1,0 +1,5 @@
+name	label
+none	None
+tiledquadrant	Quadrant Index (0-3) In Tiles
+cellcoord	Cell Coordinates
+alternatingcoord	Alternating Cell Coordinates On Axes (0-1, 0-1)
