@@ -1,5 +1,10 @@
 ReturnT thismap(CoordT p, ContextT ctx) {
-	float i = mapRange(ctx.iteration.x, THIS_Indexrange1, THIS_Indexrange2, 0., 1.);
+	#ifdef THIS_HAS_INPUT_2
+	float i = inputOp2(p, ctx);
+	#else
+	float i = ctx.iteration.x;
+	#endif
+	i = mapRange(i, THIS_Indexrange1, THIS_Indexrange2, 0., 1.);
 	#if defined(THIS_Extendmode_linear)
 	#elif defined(THIS_Extendmode_clamp)
 	i = clamp(i, 0., 1.);
