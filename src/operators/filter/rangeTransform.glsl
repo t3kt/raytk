@@ -14,5 +14,10 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 	p -= t;
 	#endif
 
+	#ifdef THIS_Enablerotate
+	CoordT r = mix(THIS_Rotate1, THIS_Rotate2, i);
+	pRotateOnXYZ(p, r);
+	#endif
+
 	return inputOp1(p, ctx);
 }
