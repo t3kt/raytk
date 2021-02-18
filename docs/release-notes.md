@@ -1,5 +1,34 @@
 # Release Notes
 
+## v0.12
+
+* Improvements / additions
+  * Added toolkit viewer image with version info. (#284)
+  * UV map option for render2D (#261)
+  * Option to output normals from pointMapRender (#290)
+  * Added more noise functions in noiseField
+  * Added curlNoiseField, though it is very very costly for performance (#292)
+  * Added horizontal/vertical bar option in gridSdf (#291)
+  * Added flashing help message about palette shortcut on toolkit load
+  * Added documentation for customOp
+  * 1D support for positionField
+  * Added offset field input for mirrorOctant (#307)
+  * Added documentation about iteration (#42)
+  * Added rangeTransform (#282)
+  * Added documentation for various operators
+* Changes
+  * Separate custom parameters from customOp instances (#297). This may cause problems for instances of customOp from older versions.
+  * Cleanup and redesign of iteration value handling throughout toolkit (#310)
+* Fixes
+  * Fix build error in TD2021.10330 related to `op.parTuple` (#288)
+  * Attempted fix for `#include` error for older AMD GPUs. (#34)
+  * Fix bugs in limitField (#305)
+  * Fix broken "clear filter" button in opPicker (#308)
+* Infrastructure / development
+  * Documentation for infrastructure and shared components (#98, #100)
+  * Documentation about ROP code, build process (#31)
+  * Added create ROP type dialog in toolkit editor (#6, #151)
+
 ## v0.11
 
 * Improvements / additions
