@@ -127,7 +127,7 @@ def buildOpInputsTable(dat: 'DAT'):
 	])
 	for rop in RaytkContext().allMasterOperators():
 		info = ROPInfo(rop)
-		if not rop:
+		if not info:
 			continue
 		for i, handler in enumerate(info.inputHandlers):
 			inInfo = InputInfo(handler)
@@ -144,3 +144,20 @@ def buildOpInputsTable(dat: 'DAT'):
 				' '.join(inInfo.supportedReturnTypes),
 				any([p.mode != ParMode.CONSTANT for p in handler.customPars]),
 			])
+
+def buildOpCurrentExpandedParamsTable(dat: 'DAT'):
+	dat.clear()
+	dat.appendRow(['path', 'expr', 'expandedParams'])
+	for rop in RaytkContext().allMasterOperators():
+		info = ROPInfo(rop)
+		if not info or not info.isROP:
+			continue
+		expanded = ' '.join([
+			cell.val.rsplit('_', maxsplit=1)[1]
+			for cell in info.opDef.op('params').col(0)
+		])
+		dat.appendRow([
+			info.path,
+			_formatPar(info.opDefPar.Params),
+			expanded,
+		])
