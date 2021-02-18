@@ -29,7 +29,12 @@ op:
     - Ray
     - Light
   - contextTypes:
+    - none
     - Context
+    - MaterialContext
+    - CameraContext
+    - LightContext
+    - RayContext
     coordTypes:
     - float
     - vec2
@@ -43,6 +48,21 @@ op:
       it is given the distance from the center. If it is a 2D field, it is given the
       position along the mirror axes. If it is a 3D field, it is given the raw position.
       The value is converted to radians and *added* to the `Rotateaxis` parameter.
+  - contextTypes:
+    - none
+    - Context
+    - MaterialContext
+    - CameraContext
+    - LightContext
+    - RayContext
+    coordTypes:
+    - float
+    - vec3
+    label: Offset Field
+    name: offset_field_definition_in
+    returnTypes:
+    - float
+    - vec4
   name: mirrorOctant
   opType: raytk.operators.filter.mirrorOctant
   parameters:
@@ -67,10 +87,18 @@ op:
   - label: Rotate Axis
     name: Rotateaxis
     summary: Rotates the input before applying reflection.
-  - label: Iterate On Cells
-    name: Iterateoncells
+  - name: Iterateoncells
     summary: Enables upstream operators to check which cell in the reflection grid
       a point is in.
+  - label: Iteration Type
+    menuOptions:
+    - label: None
+      name: none
+    - label: Quadrant Index (0-3)
+      name: index
+    - label: Signed Axes (-1/1, -1/1)
+      name: sign
+    name: Iterationtype
   summary: Mirror coordinates across two axes and the diagonals.
 
 ---

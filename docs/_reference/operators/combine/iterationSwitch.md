@@ -24,6 +24,8 @@ op:
     - Sdf
     - Ray
     - Light
+    summary: The input that should be used when the iteration is 0 (or more accurately
+      < 0.5).
   - contextTypes:
     - Context
     coordTypes:
@@ -39,25 +41,38 @@ op:
     - Sdf
     - Ray
     - Light
+    summary: The input that should be used when the iteration is 1 (or more accurately
+      >= 0.5).
   name: iterationSwitch
   opType: raytk.operators.combine.iterationSwitch
   parameters:
   - label: Enable
     name: Enable
-  - label: Scaling
+  - label: Iteration Part
     menuOptions:
-    - label: Raw
-      name: raw
-    - label: Scaled to Total Iterations
-      name: scaled
-    name: Scaling
+    - label: X
+      name: x
+    - label: Y
+      name: y
+    - label: Z
+      name: z
+    - label: W
+      name: w
+    name: Iterationpart
+    summary: Which component of the iteration vector to use. In most cases this should
+      be X.
   - label: Extend
     menuOptions:
-    - label: Clamp
+    - description: Clamp iteration to 0..1 range.
+      label: Clamp
       name: clamp
-    - label: Loop
+    - description: Alternate between 0 for even numbers and 1 for odd numbers.
+      label: Loop
       name: loop
     name: Extend
+    summary: 'How to handle iteration values outside the 0..1 range. '
+  summary: Switches between inputs based on the iteration value provided by a downstream
+    operator.
 
 ---
 
@@ -65,3 +80,6 @@ op:
 
 Category: combine
 
+
+
+Switches between inputs based on the iteration value provided by a downstream operator.

@@ -13,6 +13,8 @@ op:
   parameters:
   - label: Coord Type
     menuOptions:
+    - label: 1D
+      name: float
     - label: 2D
       name: vec2
     - label: 3D
@@ -33,6 +35,13 @@ op:
     - label: Ray Context
       name: RayContext
     name: Contexttype
+  - label: Return Type
+    menuOptions:
+    - label: Float
+      name: float
+    - label: Vector4
+      name: vec4
+    name: Returntype
   summary: A vector field that evaluates to the coordinates in space.
 
 ---

@@ -24,6 +24,8 @@ cat:
   - name: extend
   - name: fieldExpr
   - name: flip
+    summary: Flips the input across an axis, either on its own or merged with the
+      original.
   - name: fold
   - name: instance
     status: beta
@@ -41,6 +43,7 @@ cat:
     summary: Mirror coordinates across two axes and the diagonals.
   - name: mobiusTransform
   - name: modulo1D
+    summary: Repeats space along one axis.
   - name: modulo2D
     summary: Repeats space along 2 axes.
   - name: modulo3D
@@ -56,6 +59,10 @@ cat:
     status: beta
   - name: radialClone
     summary: Repeats an SDF radially around an axis, combining the resulting shapes.
+  - name: rangeTransform
+    status: beta
+    summary: Applies a transform based on a range of settings, mapped with either
+      the iteration value or a field input.
   - name: reflect
     summary: Reflects space across a plane.
   - name: reorderCoords

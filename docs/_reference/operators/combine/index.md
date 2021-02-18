@@ -34,6 +34,8 @@ cat:
     summary: Produces a cylindrical pipe along the blend region, replacing the input
       shapes entirely.
   - name: iterationSwitch
+    summary: Switches between inputs based on the iteration value provided by a downstream
+      operator.
   - name: layoutGrid
     summary: Slices space into a grid, and places each input in a separate cell.
   - name: simpleDiff

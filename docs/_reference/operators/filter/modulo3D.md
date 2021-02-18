@@ -8,6 +8,10 @@ redirect_from:
   - /reference/opType/raytk.operators.filter.modulo3D/
 op:
   category: filter
+  detail: 'This has the effect of making an infinite 3D grid of copies of (slices/cells
+    of) the input, but without the cost of having
+
+    to separately calculate each one.'
   inputs:
   - contextTypes:
     - Context
@@ -29,10 +33,15 @@ op:
     name: Enable
   - label: Size
     name: Size
+    summary: The spacing of the grid along each axis, which is also the size of the
+      cell that is taken from the input.
   - label: Offset
     name: Offset
+    summary: Shifts where the input cell is taken from without moving the position
+      of the grid.
   - label: Shift
     name: Shift
+    summary: Shifts the whole grid (and its contents).
   summary: Repeats space along all 3 axes.
 
 ---
@@ -44,3 +53,6 @@ Category: filter
 
 
 Repeats space along all 3 axes.
+
+This has the effect of making an infinite 3D grid of copies of (slices/cells of) the input, but without the cost of having
+to separately calculate each one.
