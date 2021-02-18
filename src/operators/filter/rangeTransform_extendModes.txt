@@ -1,0 +1,4 @@
+name	label
+linear	Linear
+clamp	Clamp
+loop	Loop
