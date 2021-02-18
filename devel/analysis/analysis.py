@@ -64,11 +64,18 @@ def buildOpInfoTable(dat: 'DAT'):
 		info = ROPInfo(rop)
 		if not info:
 			continue
+		helpDat = info.helpDAT
+		if not helpDat:
+			hasHelp = False
+		elif '## Parameters' in helpDat.text or len(helpDat.text.split()) > 6:
+			hasHelp = True
+		else:
+			hasHelp = False
 		dat.appendRow([
 			rop.path,
 			_ropKind(info),
 			info.statusLabel,
-			bool(info.helpDAT),
+			hasHelp,
 			info.hasROPInputs,
 			bool(info.subROPs),
 		])
