@@ -30,8 +30,8 @@ layout: page
 			<ul>
 				{% for opt in param.menuOptions %}
 				<li>
-					<em class="menu-opt-name" title="{{ opt.name }}">{{ opt.label }}</em>
-					<span class="menu-opt-summary">{{ opt.summary }}</span>
+					<code class="menu-opt-name" title="{{ opt.name }}">{{ opt.label }}</code>:
+					<span class="menu-opt-summary">{{ opt.description }}</span>
 				</li>
 				{% endfor %}
 			</ul>
