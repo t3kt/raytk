@@ -2,7 +2,7 @@ Combines SDFs in various ways.
 
 Depending on which `Combine` option is selected, different parameters will be enabled.
 This operator only supports two input SDFs (along with a value field to control blending).
-To combine more than two SDFs, use one of the specialized operators like `simpleUnion`.
+To combine more than two SDFs, use one of the specialized operators like [`simpleUnion`](/raytk/reference/operators/combine/).
 
 ## Parameters
 
