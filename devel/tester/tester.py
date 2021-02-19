@@ -1,8 +1,6 @@
-from dataclasses import dataclass, field
-from enum import Enum
 from pathlib import Path
-from typing import Callable, Dict, List, Union, Optional
-import re
+from typing import Callable, Dict, Optional
+from raytkTest import TestCaseResult, TestFindingStatus
 from raytkUtil import RaytkContext, recloneComp, Version
 
 # noinspection PyUnreachableCode
@@ -10,6 +8,7 @@ if False:
 	# noinspection PyUnresolvedReferences
 	from _stubs import *
 	from _typeAliases import *
+	from devel.components.testInspectorCore.testInspectorCore import TestInspectorCore
 
 	class _Pars(ParCollection):
 		Testcasefolder: 'StrParamT'
@@ -26,6 +25,9 @@ if False:
 		Running: 'BoolParamT'
 	ipar.uiState = _UiStatePars()
 
+	# noinspection PyTypeChecker
+	iop.testInspectorCore = TestInspectorCore(COMP())
+
 class TestManager:
 	def __init__(self, ownerComp: 'COMP'):
 		# noinspection PyTypeChecker
@@ -35,7 +37,7 @@ class TestManager:
 		self.successCount = tdu.Dependency(0)
 		self.warningCount = tdu.Dependency(0)
 		self.errorCount = tdu.Dependency(0)
-		self._caseResults = {}  # type: Dict[str, _TestCaseResult]
+		self._caseResults = {}  # type: Dict[str, TestCaseResult]
 
 	def onInit(self):
 		self.resetAll()
@@ -153,14 +155,14 @@ class TestManager:
 	def hasResultCounts(self):
 		return self.successCount.val > 0 or self.warningCount.val > 0 or self.errorCount.val > 0
 
-	def _addResult(self, result: '_TestCaseResult'):
+	def _addResult(self, result: 'TestCaseResult'):
 		self._caseResults[result.name] = result
 		table = self._resultTable
 		if not result.findings:
 			table.appendRow([
 				result.name,
 				'',
-				_FindingStatus.success.name,
+				TestFindingStatus.success.name,
 				'',
 				f'No findings for case {result.name}',
 			])
@@ -175,12 +177,8 @@ class TestManager:
 			self.successCount.val += 1
 		for finding in result.findings:
 			table.appendRow([
-				result.name,
-				finding.path.replace(basePath, '') if finding.path and basePath else (finding.path or ''),
-				finding.status.name,
-				finding.source.name,
-				finding.message,
-			])
+				result.name
+			] + finding.toTableRowVals(basePath))
 
 	def runQueuedTests(self):
 		queue = self._testQueue
@@ -265,21 +263,14 @@ class TestManager:
 		for rop in RaytkContext().ropOutputChildrenOf(comp):
 			rop.outputs[0].cook(force=True)
 
-	def _buildTestCaseResult(self) -> 'Optional[_TestCaseResult]':
+	def _buildTestCaseResult(self) -> 'Optional[TestCaseResult]':
 		comp = self._testComp
 		if not comp:
 			raise Exception('No test loaded!')
-		name = self.currentTestName.val
-		result = _TestCaseResult(name=name)
-		validationErrors = self.ownerComp.op('validationErrors')
-		result.findings += _Finding.fromValidationTable(name, validationErrors)
-		result.findings += _Finding.parseErrorLines(
-			name, comp.scriptErrors(recurse=True), _FindingSource.scriptError, _FindingStatus.error)
-		result.findings += _Finding.parseErrorLines(
-			name, comp.warnings(recurse=True), _FindingSource.opWarning, _FindingStatus.warning)
-		result.findings += _Finding.parseErrorLines(
-			name, comp.errors(recurse=True), _FindingSource.opError, _FindingStatus.error)
-		return result
+		return TestCaseResult(
+			name=self.currentTestName.val,
+			findings=iop.testInspectorCore.GetFindings(),
+		)
 
 	def clearLog(self):
 		self.logTable.clear()
@@ -292,9 +283,9 @@ class TestManager:
 	def resultLevelFilterValues(self):
 		level = ipar.uiState.Resultlevelfilter.eval()
 		if level == 'error':
-			return [_FindingStatus.error.name]
+			return [TestFindingStatus.error.name]
 		if level == 'warning':
-			return [_FindingStatus.error.name, _FindingStatus.warning.name]
+			return [TestFindingStatus.error.name, TestFindingStatus.warning.name]
 		return ['*']
 
 	def openLog(self):
@@ -317,118 +308,3 @@ class TestManager:
 	@staticmethod
 	def _queueCall(method: Callable, *args):
 		run('args[0](*(args[1:]))', method, *args, delayFrames=5, delayRef=root)
-
-@dataclass
-class _TestCaseResult:
-	name: Optional[str] = None
-	findings: List['_Finding'] = field(default_factory=list)
-
-	@property
-	def hasError(self):
-		return any([finding.isError for finding in self.findings])
-
-	@property
-	def hasWarning(self):
-		return any([finding.isWarning for finding in self.findings])
-
-class _FindingStatus(Enum):
-	success = 'success'
-	warning = 'warning'
-	error = 'error'
-	unknown = 'unknown'
-
-	@classmethod
-	def parse(cls, s: 'Union[str, Cell]'):
-		s = str(s or '')
-		if not s:
-			return _FindingStatus.unknown
-		if s == 'error':
-			return _FindingStatus.error
-		if s == 'warning':
-			return _FindingStatus.warning
-		if s == 'success':
-			return _FindingStatus.success
-		return _FindingStatus.unknown
-
-class _FindingSource(Enum):
-	validation = 'validation'
-	scriptError = 'scriptError'
-	opError = 'opError'
-	opWarning = 'opWarning'
-
-@dataclass
-class _Finding:
-	case: str
-	status: _FindingStatus
-	source: _FindingSource
-	path: Optional[str] = None
-	message: Optional[str] = None
-
-	@property
-	def isError(self):
-		return self.status == _FindingStatus.error
-
-	@property
-	def isWarning(self):
-		return self.status in (_FindingStatus.warning, _FindingStatus.unknown)
-
-	@classmethod
-	def fromValidationTable(cls, case: str, dat: 'DAT'):
-		return [
-			cls.fromValidationRow(case, dat, row)
-			for row in range(1, dat.numRows)
-		]
-
-	@classmethod
-	def fromValidationRow(cls, case: str, dat: 'DAT', row: int):
-		return _Finding(
-			case=case,
-			path=str(dat[row, 'path']),
-			message=str(dat[row, 'message']),
-			status=_FindingStatus.parse(dat[row, 'level']),
-			source=_FindingSource.validation,
-		)
-
-	@classmethod
-	def parseErrorLines(cls, case: str, text: str, source: '_FindingSource', status: '_FindingStatus') -> 'List[_Finding]':
-		if not text:
-			return []
-		results = []
-		for line in text.splitlines():
-			line = line.strip()
-			if line:
-				results.append(cls.parseErrorLine(case, line, source, status))
-		return results
-
-	@classmethod
-	def parseErrorLine(cls, case: str, line: str, source: '_FindingSource', status: '_FindingStatus'):
-		line = line.strip()
-		match = _opErrorPattern.fullmatch(line)
-		if match:
-			message = match.group(1)
-			path = match.group(2)
-			if message.startswith(path + ':'):
-				message = message.replace(path + ':', '', 1)
-			message = message.strip()
-			if source in (_FindingSource.opError, _FindingSource.scriptError) and message.startswith('Error:'):
-				message = message.replace('Error:', '', 1).strip()
-			elif source == _FindingSource.opWarning and message.startswith('Warning:'):
-				message = message.replace('Warning:', '', 1).strip()
-			o = op(path)
-			if o and isinstance(o, (glslTOP, glslmultiTOP)):
-				status = _FindingStatus.error
-			return cls(
-				case=case,
-				path=path,
-				status=status,
-				source=source,
-				message=message,
-			)
-		return cls(
-			case=case,
-			status=status,
-			source=source,
-			message=line,
-		)
-
-_opErrorPattern = re.compile(r'(.*) \((/.*)\)')
