@@ -36,14 +36,13 @@ float smoothBlendRatio(float a, float b, float k) {
 	return clamp(0.5 + 0.5*(b-a)/k, 0.0, 1.0);
 }
 
-float opSmoothDiff(float res1, float res2, float k) {
-	float h = smoothBlendRatio(res1, res2, k);
-	return mix(res2, -res1, h) + k*h*(1.0-h);
+float opSmoothIntersect(float res1, float res2, float k) {
+	float h = clamp(0.5 - 0.5*(res2-res1)/k, 0., 1.);
+	return mix(res2, res1, h) + k*h*(1.0-h);
 }
 
-float opSmoothIntersect(float res1, float res2, float k) {
-	float h = smoothBlendRatio(res1, res2, k);
-	return mix(res2, res1, h) + k*h*(1.0-h);
+float opSmoothDiff(float res1, float res2, float k) {
+	return opSmoothIntersect(res1, -res2, k);
 }
 
 Sdf opSmoothIntersect(Sdf res1, Sdf res2, float k) {
