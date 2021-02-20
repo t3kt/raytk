@@ -22,10 +22,7 @@ class OutputOp:
 		self.ownerComp = ownerComp
 
 	def _host(self) -> 'Optional[COMP]':
-		host = self.ownerComp.par.Hostop.eval()
-		if not host:
-			raise Exception('No host attached to output op controller')
-		return host
+		return self.ownerComp.par.Hostop.eval()
 
 	def _opDef(self) -> 'Optional[COMP]':
 		return self.ownerComp.par.Opdef.eval()
