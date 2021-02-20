@@ -5,28 +5,18 @@ if False:
 
 def buildSupportTable(
 		support: 'scriptDAT',
-		top: 'glslTOP',
-		info: 'infoDAT'):
+		top: 'glslTOP'):
 	support.clear()
-	support.appendRow(['include', 0])
-	textSources = [
-		top.compileResult,
-		info.text,
-		top.warnings(),
-	]
-	if not any([_hasIncludeError(text) for text in textSources]):
-		support['include', 1] = 1
+	support.appendRow([
+		'include',
+		int(_supportsInclude(top)),
+	])
 
-_includeErrorTags = [
-	'error C7529',
-	'OpenGL does not allow #include directives',
-	'#include statements are not supported',
-]
-
-def _hasIncludeError(result: str):
-	if not result:
+def _supportsInclude(top: 'glslTOP'):
+	# See issue #34.
+	# It's hard to predict what wording every GPU driver is going to use to indicate the error
+	# so instead of looking for anything specific, just consider any warning on that op as an
+	# indication that includes aren't supported.
+	if top.warnings():
 		return False
-	for tag in _includeErrorTags:
-		if tag in result:
-			return True
-	return False
+	return True
