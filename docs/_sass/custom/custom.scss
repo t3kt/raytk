@@ -23,3 +23,23 @@
 .input-types-item:not(:last-of-type)::after {
   content: ', ';
 }
+
+$status-alpha-bg-color: rgb(24%, 30%, 40%);
+$status-alpha-fg-color: rgb(13%, 81%, 81%);
+$status-beta-bg-color: rgb(10%, 16%, 24%);
+$status-beta-fg-color: rgb(13%, 81%, 81%);
+$status-deprecated-bg-color: rgb(19%, 21%, 21%);
+$status-deprecated-fg-color: rgb(64%, 81%, 81%);
+
+.label.status-alpha {
+  background-color: $status-alpha-bg-color;
+  color: $status-alpha-fg-color;
+}
+.label.status-beta {
+  background-color: $status-beta-bg-color;
+  color: $status-beta-fg-color;
+}
+.label.status-deprecated {
+  background-color: $status-deprecated-bg-color;
+  color: $status-deprecated-fg-color;
+}

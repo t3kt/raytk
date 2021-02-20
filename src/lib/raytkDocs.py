@@ -257,11 +257,6 @@ redirect_from:
   - /reference/opType/{ropInfo.opType}/
 {frontMatterData}
 ---
-
-# {ropInfo.shortName}
-
-Category: {ropInfo.categoryName}
-
 '''
 		parts = [
 			header,

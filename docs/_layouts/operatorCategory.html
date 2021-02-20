@@ -23,6 +23,9 @@ layout: page
 		<code class="op-name">
 			<a href="/raytk/reference/operators/{{page.cat.name}}/{{op.name}}/" title="{{ op.name }}">{{ op.name }}</a>
 		</code>:
+		{% if op.status %}
+			<span class="label status-{{ op.status }}">{{ op.status }}</span>
+		{% endif %}
 		<span class="op-desc">{{ op.summary }}</span>
 	</li>
 	{% endfor %}
