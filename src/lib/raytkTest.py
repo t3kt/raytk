@@ -54,6 +54,7 @@ class TestFinding:
 	source: TestFindingSource
 	path: Optional[str] = None
 	message: Optional[str] = None
+	detail: List[str] = dataclasses.field(default_factory=list)
 
 	@property
 	def isError(self):
@@ -80,51 +81,113 @@ class TestFinding:
 		)
 
 	@classmethod
-	def parseErrorLines(cls, text: str, source: 'TestFindingSource', status: 'TestFindingStatus') -> 'List[TestFinding]':
+	def parseErrorLines(
+			cls,
+			text: str,
+			source: 'TestFindingSource',
+			status: 'TestFindingStatus',
+			includeDetail: bool = False,
+	) -> 'List[TestFinding]':
 		if not text:
 			return []
 		results = []
 		for line in text.splitlines():
 			line = line.strip()
 			if line:
-				results.append(cls.parseErrorLine(line, source, status))
+				results.append(cls.parseErrorLine(line, source, status, includeDetail=includeDetail))
 		return results
 
 	@classmethod
-	def parseErrorLine(cls, line: str, source: 'TestFindingSource', status: 'TestFindingStatus'):
+	def parseErrorLine(
+			cls,
+			line: str,
+			source: 'TestFindingSource',
+			status: 'TestFindingStatus',
+			includeDetail: bool = False,
+	):
 		line = line.strip()
 		match = _opErrorPattern.fullmatch(line)
-		if match:
-			message = match.group(1)
-			path = match.group(2)
-			if message.startswith(path + ':'):
-				message = message.replace(path + ':', '', 1)
-			message = message.strip()
-			if source in (TestFindingSource.opError, TestFindingSource.scriptError) and message.startswith('Error:'):
-				message = message.replace('Error:', '', 1).strip()
-			elif source == TestFindingSource.opWarning and message.startswith('Warning:'):
-				message = message.replace('Warning:', '', 1).strip()
-			o = op(path)
-			if o and isinstance(o, (glslTOP, glslmultiTOP)):
-				status = TestFindingStatus.error
+		if not match:
 			return cls(
-				path=path,
 				status=status,
 				source=source,
-				message=message,
+				message=line,
 			)
+		message = match.group(1)
+		path = match.group(2)
+		detail = None
+		if message.startswith(path + ':'):
+			message = message.replace(path + ':', '', 1)
+		message = message.strip()
+		if source in (TestFindingSource.opError, TestFindingSource.scriptError) and message.startswith('Error:'):
+			message = message.replace('Error:', '', 1).strip()
+		elif source == TestFindingSource.opWarning and message.startswith('Warning:'):
+			message = message.replace('Warning:', '', 1).strip()
+		o = op(path)
+		if o and isinstance(o, (glslTOP, glslmultiTOP)):
+			if includeDetail:
+				detail = _parseCompileResultDetail(o.compileResult)
+			status = TestFindingStatus.error
 		return cls(
+			path=path,
 			status=status,
 			source=source,
-			message=line,
+			message=message,
+			detail=detail or [],
 		)
 
-	def toTableRowVals(self, basePath: 'Optional[str]') -> 'List[str]':
-		return [
+	def toTableRowVals(
+			self,
+			basePath: 'Optional[str]',
+			includeDetail: bool = False,
+	) -> 'List[str]':
+		vals = [
 			self.path.replace(basePath, '') if self.path and basePath else (self.path or ''),
 			self.status.name,
 			self.source.name,
 			self.message,
 		]
+		if includeDetail and self.detail:
+			vals.append(repr(self.detail))
+		return vals
 
 _opErrorPattern = re.compile(r'(.*) \((/.*)\)')
+
+def _parseCompileResultDetail(text: str) -> 'List[str]':
+	print('DEBUG ATTEMPTING to extract COMPILE DETAIL')
+	text = text.strip()
+	if not text:
+		print('DEBUG failed to extract compile detail')
+		return []
+	detail = []
+	for line in text.splitlines():
+		line = line.strip()
+		if not line or _matchesIgnoredPattern(line):
+			continue
+		line = _cleanShaderErrorLine(line)
+		if line not in detail:
+			detail.append(line)
+	print(f'DEBUG extracted compile detail:\n{detail}')
+	return detail
+
+_ignoredCompilerPatterns = [
+	re.compile(r'.* Results:$'),
+	re.compile(r'\s*'),
+	re.compile(r'Compiled Successfully'),
+	re.compile(r'Fragment info'),
+	re.compile(r'=+'),
+	re.compile(r'-+'),
+]
+
+def _matchesIgnoredPattern(line: str) -> bool:
+	return any(
+		bool(p.fullmatch(line))
+		for p in _ignoredCompilerPatterns
+	)
+
+_shaderErrorLinePattern = re.compile(r'0\(\d+\)\s*:\s*error\s*[0-9A-F]+:\s*(.+)')
+
+def _cleanShaderErrorLine(line: str) -> str:
+	match = _shaderErrorLinePattern.fullmatch(line)
+	message = match.group(1) if match else None
+	return message or line

@@ -145,7 +145,7 @@ class TestManager:
 	def clearResults(self):
 		table = self._resultTable
 		table.clear()
-		table.appendRow(['case', 'path', 'status', 'source', 'message'])
+		table.appendRow(['case', 'path', 'status', 'source', 'message', 'detail'])
 		self._caseResults = {}
 		self.successCount.val = 0
 		self.warningCount.val = 0
@@ -178,7 +178,7 @@ class TestManager:
 		for finding in result.findings:
 			table.appendRow([
 				result.name
-			] + finding.toTableRowVals(basePath))
+			] + finding.toTableRowVals(basePath, includeDetail=True))
 
 	def runQueuedTests(self):
 		queue = self._testQueue
