@@ -12,6 +12,9 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 	#error invalidIntervalType
 	#endif
 	x = fract((x + THIS_Phase*THIS_Period)/ THIS_Period);
+	if (THIS_Reverse > 0.) {
+		x = 1.0 - x;
+	}
 	#ifdef THIS_HAS_INPUT_1
 	x = inputOp1(x, ctx);
 	#else
