@@ -18,6 +18,7 @@ cat:
   - name: boxSdf
     summary: SDF for a box, optionally infinite one one axis.
   - name: bunnySdf
+    summary: SDF for a bunny.
   - name: capsuleSdf
     summary: A cylinder with rounded ends, between two points.
   - name: coneSdf

@@ -8,6 +8,25 @@ redirect_from:
   - /reference/opType/raytk.operators.sdf.prismSdf/
 op:
   category: sdf
+  inputs:
+  - contextTypes:
+    - Context
+    coordTypes:
+    - vec3
+    label: Height field
+    name: height_field_definition_in
+    returnTypes:
+    - float
+    summary: Float value field that controls the height of the prism.
+  - contextTypes:
+    - Context
+    coordTypes:
+    - vec3
+    label: Radius field
+    name: radius_field_definition_in
+    returnTypes:
+    - float
+    summary: Float value field that controls the radius of the prism.
   name: prismSdf
   opType: raytk.operators.sdf.prismSdf
   parameters:
@@ -28,10 +47,12 @@ op:
     summary: Moves the center of the prism.
   - label: Radius
     name: Radius
-    summary: The radius of the prism.
+    summary: The radius of the prism. If the radius field input is connected, this
+      is not used.
   - label: Height
     name: Height
-    summary: The height / length of the prism.
+    summary: The height / length of the prism. If the height field input, this is
+      not used.
   - label: Axis
     menuOptions:
     - label: X
