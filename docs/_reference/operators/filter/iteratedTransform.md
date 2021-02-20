@@ -123,11 +123,6 @@ op:
 
 ---
 
-# iteratedTransform
-
-Category: filter
-
-
 
 Performs a transform multiple times, optionally reflecting across axes in between the steps.
 

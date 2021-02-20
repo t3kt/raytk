@@ -82,8 +82,3 @@ op:
     name: Multiply
 
 ---
-
-# multiplyFn
-
-Category: function
-

@@ -23,8 +23,3 @@ op:
     name: Outputop
 
 ---
-
-# worldPosMap
-
-Category: post
-

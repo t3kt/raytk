@@ -79,10 +79,5 @@ op:
 
 ---
 
-# gridSdf
-
-Category: sdf
-
-
 
 An infinite grid shape, along two axes.

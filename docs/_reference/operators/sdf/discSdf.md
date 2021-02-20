@@ -23,11 +23,6 @@ op:
 
 ---
 
-# discSdf
-
-Category: sdf
-
-
 
 A flat disc facing the Y axis.
 

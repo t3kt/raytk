@@ -51,11 +51,6 @@ op:
 
 ---
 
-# curlNoiseField
-
-Category: field
-
-
 
 Curl noise field.
 

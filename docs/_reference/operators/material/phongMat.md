@@ -55,10 +55,5 @@ op:
 
 ---
 
-# phongMat
-
-Category: material
-
-
 
 Material that uses phong shading.

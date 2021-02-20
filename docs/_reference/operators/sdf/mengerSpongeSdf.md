@@ -29,10 +29,5 @@ op:
 
 ---
 
-# mengerSpongeSdf
-
-Category: sdf
-
-
 
 Menger sponge fractal, made of boxes with holes cut through each axis.

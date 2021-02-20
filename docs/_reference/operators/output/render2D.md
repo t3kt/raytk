@@ -111,8 +111,3 @@ op:
     name: Shaderbuilderconfig
 
 ---
-
-# render2D
-
-Category: output
-

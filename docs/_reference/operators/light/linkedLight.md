@@ -21,8 +21,3 @@ op:
   status: beta
 
 ---
-
-# linkedLight
-
-Category: light
-

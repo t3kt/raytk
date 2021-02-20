@@ -50,8 +50,3 @@ op:
     name: Enablemirror
 
 ---
-
-# slice
-
-Category: filter
-

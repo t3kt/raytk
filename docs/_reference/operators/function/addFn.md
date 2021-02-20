@@ -82,8 +82,3 @@ op:
     name: Add
 
 ---
-
-# addFn
-
-Category: function
-

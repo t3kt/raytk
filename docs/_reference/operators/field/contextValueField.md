@@ -47,10 +47,5 @@ op:
 
 ---
 
-# contextValueField
-
-Category: field
-
-
 
 Field that returns various fields from the context, from a downstream OP.

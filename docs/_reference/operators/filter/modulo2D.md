@@ -96,11 +96,6 @@ op:
 
 ---
 
-# modulo2D
-
-Category: filter
-
-
 
 Repeats space along 2 axes.
 

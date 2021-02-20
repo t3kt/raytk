@@ -75,11 +75,6 @@ op:
 
 ---
 
-# simpleIntersect
-
-Category: combine
-
-
 
 Combines SDFs using the intersect operator.
 

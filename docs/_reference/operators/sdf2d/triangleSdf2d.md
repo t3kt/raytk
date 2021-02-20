@@ -34,8 +34,3 @@ op:
     name: Point3
 
 ---
-
-# triangleSdf2d
-
-Category: sdf2d
-

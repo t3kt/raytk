@@ -86,10 +86,5 @@ op:
 
 ---
 
-# reflect
-
-Category: filter
-
-
 
 Reflects space across a plane.

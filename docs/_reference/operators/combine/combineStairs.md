@@ -106,10 +106,5 @@ op:
 
 ---
 
-# combineStairs
-
-Category: combine
-
-
 
 Stair SDF combine, producing steps along the blend region.

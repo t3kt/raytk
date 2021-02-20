@@ -21,8 +21,3 @@ op:
     name: Iterations
 
 ---
-
-# apollonianSdf
-
-Category: sdf
-

@@ -52,8 +52,3 @@ op:
     name: Mix
 
 ---
-
-# modulateFn
-
-Category: function
-

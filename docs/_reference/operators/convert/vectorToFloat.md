@@ -47,8 +47,3 @@ op:
     name: Usepart
 
 ---
-
-# vectorToFloat
-
-Category: convert
-

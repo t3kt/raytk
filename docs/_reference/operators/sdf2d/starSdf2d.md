@@ -19,8 +19,3 @@ op:
     name: Tightness
 
 ---
-
-# starSdf2d
-
-Category: sdf2d
-

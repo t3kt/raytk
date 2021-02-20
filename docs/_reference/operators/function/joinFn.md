@@ -82,8 +82,3 @@ op:
     name: Multiply
 
 ---
-
-# joinFn
-
-Category: function
-

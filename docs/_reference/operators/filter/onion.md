@@ -36,8 +36,3 @@ op:
     name: Thickness
 
 ---
-
-# onion
-
-Category: filter
-

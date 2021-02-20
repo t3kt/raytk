@@ -72,10 +72,5 @@ op:
 
 ---
 
-# flip
-
-Category: filter
-
-
 
 Flips the input across an axis, either on its own or merged with the original.

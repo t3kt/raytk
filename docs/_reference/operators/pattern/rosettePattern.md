@@ -32,8 +32,3 @@ op:
     name: Glow
 
 ---
-
-# rosettePattern
-
-Category: pattern
-

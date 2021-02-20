@@ -32,8 +32,3 @@ op:
     name: Enable
 
 ---
-
-# floatToSdf
-
-Category: convert
-

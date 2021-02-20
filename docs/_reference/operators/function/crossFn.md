@@ -68,8 +68,3 @@ op:
     name: Mix
 
 ---
-
-# crossFn
-
-Category: function
-

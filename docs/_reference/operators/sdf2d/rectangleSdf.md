@@ -17,8 +17,3 @@ op:
     name: Scale
 
 ---
-
-# rectangleSdf
-
-Category: sdf2d
-

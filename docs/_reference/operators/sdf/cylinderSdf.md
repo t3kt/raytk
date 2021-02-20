@@ -33,10 +33,5 @@ op:
 
 ---
 
-# cylinderSdf
-
-Category: sdf
-
-
 
 SDF for a cylinder.

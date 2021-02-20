@@ -45,8 +45,3 @@ op:
     name: Offset
 
 ---
-
-# extrude
-
-Category: convert
-

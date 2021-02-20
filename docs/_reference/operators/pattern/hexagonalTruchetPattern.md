@@ -32,8 +32,3 @@ op:
     name: Size
 
 ---
-
-# hexagonalTruchetPattern
-
-Category: pattern
-

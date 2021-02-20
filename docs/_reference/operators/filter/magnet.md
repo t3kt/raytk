@@ -96,11 +96,6 @@ op:
 
 ---
 
-# magnet
-
-Category: filter
-
-
 
 Pulls or twists space within an area.
 

@@ -49,8 +49,3 @@ op:
     name: High
 
 ---
-
-# limitField
-
-Category: filter
-

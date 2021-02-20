@@ -30,8 +30,3 @@ op:
     name: Basevalue
 
 ---
-
-# almostIdentityFn
-
-Category: function
-

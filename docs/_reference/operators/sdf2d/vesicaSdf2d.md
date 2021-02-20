@@ -17,8 +17,3 @@ op:
     name: Distance
 
 ---
-
-# vesicaSdf2d
-
-Category: sdf2d
-

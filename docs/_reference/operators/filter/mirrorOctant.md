@@ -103,10 +103,5 @@ op:
 
 ---
 
-# mirrorOctant
-
-Category: filter
-
-
 
 Mirror coordinates across two axes and the diagonals.

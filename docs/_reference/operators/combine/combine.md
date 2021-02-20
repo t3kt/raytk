@@ -134,11 +134,6 @@ op:
 
 ---
 
-# combine
-
-Category: combine
-
-
 
 Combines SDFs in various ways.
 

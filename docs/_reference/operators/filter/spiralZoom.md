@@ -56,8 +56,3 @@ op:
   status: beta
 
 ---
-
-# spiralZoom
-
-Category: filter
-

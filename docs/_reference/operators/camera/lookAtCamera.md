@@ -30,10 +30,5 @@ op:
 
 ---
 
-# lookAtCamera
-
-Category: camera
-
-
 
 A camera that focuses on a specific point in space.

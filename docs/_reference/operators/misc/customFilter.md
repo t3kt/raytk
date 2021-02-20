@@ -137,8 +137,3 @@ op:
   status: deprecated
 
 ---
-
-# customFilter
-
-Category: misc
-

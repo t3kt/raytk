@@ -40,8 +40,3 @@ op:
   status: beta
 
 ---
-
-# triPlanarTextureField
-
-Category: field
-

@@ -76,10 +76,5 @@ op:
 
 ---
 
-# iterationSwitch
-
-Category: combine
-
-
 
 Switches between inputs based on the iteration value provided by a downstream operator.

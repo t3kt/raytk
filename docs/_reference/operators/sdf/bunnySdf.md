@@ -19,11 +19,6 @@ op:
 
 ---
 
-# bunnySdf
-
-Category: sdf
-
-
 
 SDF for a bunny.
 

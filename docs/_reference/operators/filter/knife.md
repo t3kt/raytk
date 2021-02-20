@@ -49,10 +49,5 @@ op:
 
 ---
 
-# knife
-
-Category: filter
-
-
 
 Cuts off an SDF along a plane.

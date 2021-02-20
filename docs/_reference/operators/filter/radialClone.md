@@ -65,11 +65,6 @@ op:
 
 ---
 
-# radialClone
-
-Category: filter
-
-
 
 Repeats an SDF radially around an axis, combining the resulting shapes.
 

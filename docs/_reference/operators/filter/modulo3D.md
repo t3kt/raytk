@@ -46,11 +46,6 @@ op:
 
 ---
 
-# modulo3D
-
-Category: filter
-
-
 
 Repeats space along all 3 axes.
 

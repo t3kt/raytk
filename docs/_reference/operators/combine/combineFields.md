@@ -61,10 +61,5 @@ op:
 
 ---
 
-# combineFields
-
-Category: combine
-
-
 
 Combines float or vector fields using one of several mathematical operations.

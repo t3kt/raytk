@@ -15,8 +15,3 @@ op:
     name: Scale
 
 ---
-
-# rhombusSdf2d
-
-Category: sdf2d
-

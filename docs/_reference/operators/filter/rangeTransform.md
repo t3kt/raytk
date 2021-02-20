@@ -102,11 +102,6 @@ op:
 
 ---
 
-# rangeTransform
-
-Category: filter
-
-
 
 Applies a transform based on a range of settings, mapped with either the iteration value or a field input.
 

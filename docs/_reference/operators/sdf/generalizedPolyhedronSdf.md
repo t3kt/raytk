@@ -54,11 +54,6 @@ op:
 
 ---
 
-# generalizedPolyhedronSdf
-
-Category: sdf
-
-
 
 Generates one of several different types of polyhedra.
 

@@ -26,8 +26,3 @@ op:
     name: Translate
 
 ---
-
-# cornerSdf2d
-
-Category: sdf2d
-

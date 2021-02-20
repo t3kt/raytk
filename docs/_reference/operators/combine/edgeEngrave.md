@@ -74,10 +74,5 @@ op:
 
 ---
 
-# edgeEngrave
-
-Category: combine
-
-
 
 Carves a v-shaped groove where the second input intersects with the first.

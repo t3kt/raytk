@@ -64,8 +64,3 @@ op:
   status: beta
 
 ---
-
-# instance
-
-Category: filter
-

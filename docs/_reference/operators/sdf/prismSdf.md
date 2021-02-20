@@ -66,10 +66,5 @@ op:
 
 ---
 
-# prismSdf
-
-Category: sdf
-
-
 
 A prism shape, like a cylinder but with flat sides, along the z axis.

@@ -17,8 +17,3 @@ op:
     name: Radius
 
 ---
-
-# circleSdf
-
-Category: sdf2d
-

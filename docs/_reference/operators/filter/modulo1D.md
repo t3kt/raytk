@@ -96,11 +96,6 @@ op:
 
 ---
 
-# modulo1D
-
-Category: filter
-
-
 
 Repeats space along one axis.
 

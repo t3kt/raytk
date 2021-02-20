@@ -37,8 +37,3 @@ op:
     name: Contexttype
 
 ---
-
-# stepFn
-
-Category: function
-

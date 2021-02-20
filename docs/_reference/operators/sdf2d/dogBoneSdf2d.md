@@ -21,8 +21,3 @@ op:
     name: Bulge
 
 ---
-
-# dogBoneSdf2d
-
-Category: sdf2d
-

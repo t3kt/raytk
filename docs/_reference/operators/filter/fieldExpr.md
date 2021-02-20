@@ -184,8 +184,3 @@ op:
     name: Contexttype
 
 ---
-
-# fieldExpr
-
-Category: filter
-

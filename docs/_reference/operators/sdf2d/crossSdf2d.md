@@ -24,10 +24,5 @@ op:
 
 ---
 
-# crossSdf2d
-
-Category: sdf2d
-
-
 
 2D cross shape SDF, with 4 arms and option rounding of the intersections.

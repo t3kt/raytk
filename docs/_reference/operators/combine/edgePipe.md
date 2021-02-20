@@ -75,11 +75,6 @@ op:
 
 ---
 
-# edgePipe
-
-Category: combine
-
-
 
 Produces a cylindrical pipe along the blend region, replacing the input shapes entirely.
 

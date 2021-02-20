@@ -25,8 +25,3 @@ op:
     name: Camup
 
 ---
-
-# basicCamera
-
-Category: camera
-

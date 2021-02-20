@@ -28,11 +28,6 @@ op:
 
 ---
 
-# capsuleSdf
-
-Category: sdf
-
-
 
 A cylinder with rounded ends, between two points.
 

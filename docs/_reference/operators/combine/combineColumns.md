@@ -89,10 +89,5 @@ op:
 
 ---
 
-# combineColumns
-
-Category: combine
-
-
 
 Columns SDF combine, producing n-1 circular columns/ridges at a 45 degree angles along the blend region.

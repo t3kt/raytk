@@ -56,8 +56,3 @@ op:
     name: Enableshadow
 
 ---
-
-# basicMat
-
-Category: material
-

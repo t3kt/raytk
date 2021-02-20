@@ -69,11 +69,6 @@ op:
 
 ---
 
-# gyroidSdf
-
-Category: sdf
-
-
 
 Gyroid shape, which is an infinitely connected periodic surface.
 

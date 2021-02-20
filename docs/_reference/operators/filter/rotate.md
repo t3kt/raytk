@@ -77,8 +77,3 @@ op:
     name: Rot
 
 ---
-
-# rotate
-
-Category: filter
-

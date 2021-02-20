@@ -80,8 +80,3 @@ op:
   status: deprecated
 
 ---
-
-# customGen
-
-Category: misc
-

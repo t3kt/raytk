@@ -63,8 +63,3 @@ op:
     name: Axisz
 
 ---
-
-# reorderCoords
-
-Category: filter
-

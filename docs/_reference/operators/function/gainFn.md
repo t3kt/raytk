@@ -28,8 +28,3 @@ op:
     name: Contexttype
 
 ---
-
-# gainFn
-
-Category: function
-

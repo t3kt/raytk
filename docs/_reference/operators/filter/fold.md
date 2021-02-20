@@ -43,8 +43,3 @@ op:
     name: Distance
 
 ---
-
-# fold
-
-Category: filter
-

@@ -21,10 +21,5 @@ op:
 
 ---
 
-# sphereSdf
-
-Category: sdf
-
-
 
 SDF in 3D space for a uniform sphere.

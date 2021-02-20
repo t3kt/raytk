@@ -20,8 +20,3 @@ op:
   status: beta
 
 ---
-
-# directionalLight
-
-Category: light
-

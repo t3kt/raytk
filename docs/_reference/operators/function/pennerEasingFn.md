@@ -91,8 +91,3 @@ op:
     name: Contexttype
 
 ---
-
-# pennerEasingFn
-
-Category: function
-

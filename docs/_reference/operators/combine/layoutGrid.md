@@ -107,11 +107,6 @@ op:
 
 ---
 
-# layoutGrid
-
-Category: combine
-
-
 
 Slices space into a grid, and places each input in a separate cell.
 

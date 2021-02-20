@@ -96,11 +96,6 @@ op:
 
 ---
 
-# timeField
-
-Category: time
-
-
 
 Field that produces time-based values, equivalent to a `timeline CHOP`.
 

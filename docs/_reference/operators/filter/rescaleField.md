@@ -42,8 +42,3 @@ op:
     name: Outputhigh
 
 ---
-
-# rescaleField
-
-Category: filter
-

@@ -46,8 +46,3 @@ op:
     name: Conversion
 
 ---
-
-# cartesianToPolar
-
-Category: filter
-

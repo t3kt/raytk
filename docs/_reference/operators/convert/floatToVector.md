@@ -132,8 +132,3 @@ op:
     name: Partsourcew
 
 ---
-
-# floatToVector
-
-Category: convert
-

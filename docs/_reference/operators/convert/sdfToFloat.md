@@ -32,8 +32,3 @@ op:
     name: Enable
 
 ---
-
-# sdfToFloat
-
-Category: convert
-

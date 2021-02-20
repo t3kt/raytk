@@ -41,8 +41,3 @@ op:
     name: Range
 
 ---
-
-# chopFn
-
-Category: function
-

@@ -45,8 +45,3 @@ op:
     name: Contexttype
 
 ---
-
-# impulseFn
-
-Category: function
-

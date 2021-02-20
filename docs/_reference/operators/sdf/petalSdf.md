@@ -33,11 +33,6 @@ op:
 
 ---
 
-# petalSdf
-
-Category: sdf
-
-
 
 A flower petal or leaf shape.
 

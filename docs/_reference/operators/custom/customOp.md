@@ -245,11 +245,6 @@ op:
 
 ---
 
-# customOp
-
-Category: custom
-
-
 
 A custom operator that integrates blocks of custom shader code into a RayTK network.
 

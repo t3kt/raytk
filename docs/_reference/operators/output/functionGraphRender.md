@@ -152,11 +152,6 @@ op:
 
 ---
 
-# functionGraphRender
-
-Category: output
-
-
 
 Visualizes the graph of a function operator.
 

@@ -22,8 +22,3 @@ op:
     name: Noisetype
 
 ---
-
-# sphereFbmSdf
-
-Category: sdf
-

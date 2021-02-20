@@ -84,8 +84,3 @@ op:
     name: Dualspread
 
 ---
-
-# helixSdf
-
-Category: sdf
-

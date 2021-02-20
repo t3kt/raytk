@@ -49,8 +49,3 @@ op:
     name: Point
 
 ---
-
-# mobiusTransform
-
-Category: filter
-

@@ -23,8 +23,3 @@ op:
     name: Iterations
 
 ---
-
-# juliaSdf
-
-Category: sdf
-

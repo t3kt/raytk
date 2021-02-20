@@ -30,8 +30,3 @@ op:
     name: Phase
 
 ---
-
-# cubicPulseFn
-
-Category: function
-

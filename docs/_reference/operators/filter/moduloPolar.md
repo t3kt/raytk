@@ -83,10 +83,5 @@ op:
 
 ---
 
-# moduloPolar
-
-Category: filter
-
-
 
 Repeats space radially, like a kaleidoscope.

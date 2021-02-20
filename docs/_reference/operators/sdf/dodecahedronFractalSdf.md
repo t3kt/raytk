@@ -32,8 +32,3 @@ op:
   status: beta
 
 ---
-
-# dodecahedronFractalSdf
-
-Category: sdf
-

@@ -17,10 +17,5 @@ op:
 
 ---
 
-# hardShadow
-
-Category: light
-
-
 
 A simple hard-edged shadow.

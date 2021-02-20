@@ -61,8 +61,3 @@ op:
     name: Partz
 
 ---
-
-# coordTo2D
-
-Category: convert
-

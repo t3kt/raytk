@@ -45,8 +45,3 @@ op:
   status: beta
 
 ---
-
-# quantizeValue
-
-Category: filter
-

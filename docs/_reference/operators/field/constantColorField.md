@@ -41,11 +41,6 @@ op:
 
 ---
 
-# constantColorField
-
-Category: field
-
-
 
 A vector field that evaluates to a constant color value.
 

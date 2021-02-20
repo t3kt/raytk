@@ -17,8 +17,3 @@ op:
     name: Roundness
 
 ---
-
-# roundedRectangleSdf2d
-
-Category: sdf2d
-

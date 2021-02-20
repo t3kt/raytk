@@ -67,8 +67,3 @@ op:
   status: beta
 
 ---
-
-# chopField
-
-Category: field
-

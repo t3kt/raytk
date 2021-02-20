@@ -74,10 +74,5 @@ op:
 
 ---
 
-# timeShift
-
-Category: time
-
-
 
 Shifts contextual time for upstream operators, either by a fixed amount or using a value field.

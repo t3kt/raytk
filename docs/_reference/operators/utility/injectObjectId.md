@@ -43,11 +43,6 @@ op:
 
 ---
 
-# injectObjectId
-
-Category: utility
-
-
 
 Assigns an arbitrary value to the objectId field of an SDF, which can later
 be extracted from rendered output.

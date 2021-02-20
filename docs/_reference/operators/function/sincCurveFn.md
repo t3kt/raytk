@@ -28,8 +28,3 @@ op:
     name: Contexttype
 
 ---
-
-# sincCurveFn
-
-Category: function
-

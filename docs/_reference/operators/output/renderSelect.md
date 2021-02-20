@@ -46,8 +46,3 @@ op:
     name: Lockbuffermenu
 
 ---
-
-# renderSelect
-
-Category: output
-

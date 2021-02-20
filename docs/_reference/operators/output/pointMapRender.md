@@ -90,8 +90,3 @@ op:
   status: beta
 
 ---
-
-# pointMapRender
-
-Category: output
-

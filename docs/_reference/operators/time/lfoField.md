@@ -88,8 +88,3 @@ op:
     name: Contexttype
 
 ---
-
-# lfoField
-
-Category: time
-

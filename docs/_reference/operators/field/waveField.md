@@ -124,11 +124,6 @@ op:
 
 ---
 
-# waveField
-
-Category: field
-
-
 
 A field that uses a periodic wave.
 
