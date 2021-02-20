@@ -35,3 +35,24 @@ class TestInspectorCore:
 		findings += TestFinding.parseErrorLines(
 			scope.errors(recurse=True), TestFindingSource.opError, TestFindingStatus.error)
 		return findings
+
+	def buildFindingTable(self, dat: 'DAT'):
+		dat.clear()
+		dat.appendRow([
+			'path',
+			'relPath',
+			'status',
+			'source',
+			'message',
+		])
+		scope = self._scopeRoot
+		if not scope:
+			return
+		basePath = scope.path + '/'
+		findings = self.GetFindings()
+		for finding in findings:
+			dat.appendRow(
+				[
+					finding.path,
+				] + finding.toTableRowVals(basePath))
+
