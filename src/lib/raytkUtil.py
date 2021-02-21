@@ -1000,6 +1000,10 @@ def detachTox(comp: 'COMP'):
 	comp.par.externaltox.expr = ''
 	comp.par.externaltox.val = ''
 
+def _popDialog() -> 'PopDialogExt':
+	# noinspection PyUnresolvedReferences
+	return op.TDResources.op('popDialog')
+
 def showPromptDialog(
 		title=None,
 		text=None,
@@ -1028,6 +1032,18 @@ def showPromptDialog(
 		buttons=[okText, cancelText],
 		enterButton=1, escButton=2, escOnClickAway=True,
 		callback=_callback)
+
+def showMessageDialog(
+		title=None,
+		text=None,
+		escOnClickAway=True,
+		**kwargs):
+	dialog = _popDialog()
+	dialog.Open(
+		title=title,
+		text=text,
+		escOnClickAway=escOnClickAway,
+		**kwargs)
 
 def cleanDict(d):
 	if not d:

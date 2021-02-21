@@ -286,6 +286,11 @@ def updateOP():
 	host = parentPar().Hostop.eval()
 	if not host:
 		return
+	toolkit = op.raytk
+	updater = toolkit.op('tools/updater')
+	if updater and hasattr(updater, 'UpdateOP'):
+		updater.UpdateOP(host)
+		return
 	if not host.par.clone:
 		_popDialog().Open(
 			title='Warning',

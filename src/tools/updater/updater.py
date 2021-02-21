@@ -1,6 +1,6 @@
 from dataclasses import dataclass, field
 from typing import Dict, List
-from raytkUtil import ROPInfo, RaytkContext, Version
+from raytkUtil import ROPInfo, RaytkContext, Version, showMessageDialog
 
 # noinspection PyUnreachableCode
 if False:
@@ -8,6 +8,39 @@ if False:
 	from _stubs import *
 
 class Updater:
+	def __init__(self, ownerComp: 'COMP'):
+		self.ownerComp = ownerComp
+
+	# This MUST remain publicly available since OPs reference it for the `Updateop` par handler.
+	def UpdateOP(self, o: 'COMP'):
+		info = ROPInfo(o)
+		if not info:
+			self._showError(f'Unable to update {o}, it must be a ROP or RComp')
+			return
+		master = o.par.clone.eval()
+		if not master:
+			self._showError(f'Unable to update {o}, no clone master found')
+			return
+		self._log(f'Updating {o} using master {master}')
+		o.par.enablecloningpulse.pulse()
+		img = o.op('*Definition/opImage')
+		if img:
+			o.par.opviewer.val = img
+			o.viewer = True
+
+	def _showError(self, msg: str):
+		self._log(msg)
+		showMessageDialog(
+			title='Warning',
+			text=msg,
+			escOnClickAway=True,
+		)
+
+	def _log(self, msg: str):
+		print(self.ownerComp, msg)
+		ui.status = msg
+
+class _Updater:
 	def __init__(self, ownerComp: 'COMP'):
 		self.ownerComp = ownerComp
 		self.mappings = []   # type: List[Mapping]
