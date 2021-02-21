@@ -250,7 +250,13 @@ def prepareMacroTable(dat: 'scriptDAT', typeTable: 'DAT', inputTable: 'DAT', mac
 				for cells in table.rows()
 			])
 
+def _isMaster():
+	host = _host()
+	return host and host.par.clone == host
+
 def onValidationChange(dat: 'DAT'):
+	if not _isMaster():
+		return
 	host = _host()
 	if not host:
 		return
