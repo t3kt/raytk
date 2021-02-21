@@ -210,12 +210,23 @@ struct CameraContext {
 };
 
 struct RayContext {
+	Sdf result;
 	Ray ray;
 
 	#if defined(RAYTK_TIME_IN_CONTEXT) || defined(RAYTK_USE_TIME)
 	Time time;
 	#endif
 };
+
+RayContext createRayContext(Ray ray, Sdf result) {
+	RayContext rCtx;
+	rCtx.ray = ray;
+	rCtx.result = result;
+	#if defined(RAYTK_TIME_IN_CONTEXT) || defined(RAYTK_USE_TIME)
+	rCtx.time = getGlobalTime();
+	#endif
+	return rCtx;
+}
 
 mat3 rotateMatrix(vec3 r) {
 	return TDRotateX(r.x) * TDRotateY(r.y) * TDRotateZ(r.z);

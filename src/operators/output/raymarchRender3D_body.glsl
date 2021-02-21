@@ -34,7 +34,7 @@ Sdf map(vec3 q)
 
 Sdf castRay(Ray ray, float maxDist) {
 	float dist = 0;
-	Sdf res;
+	Sdf res = createNonHitSdf();
 	int i;
 	#ifdef RAYTK_NEAR_HITS_IN_SDF
 	int nearHitCount = 0;
@@ -42,7 +42,7 @@ Sdf castRay(Ray ray, float maxDist) {
 	#endif
 	for (i = 0; i < RAYTK_MAX_STEPS; i++) {
 		#ifdef THIS_USE_RAYMOD_FUNC
-		modifyRay(ray);
+		modifyRay(ray, res);
 		#endif
 		if (!checkLimit(ray.pos)) {
 			return createNonHitSdf();
@@ -80,6 +80,9 @@ Sdf castRayBasic(Ray ray, float maxDist) {
 	float dist = 0;
 	Sdf res;
 	for (int i = 0; i < RAYTK_MAX_STEPS; i++) {
+		#ifdef THIS_USE_RAYMOD_FUNC
+		modifyRay(ray, res);
+		#endif
 		if (!checkLimit(ray.pos)) {
 			return createNonHitSdf();
 		}
