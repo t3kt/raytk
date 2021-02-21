@@ -28,7 +28,8 @@ cat:
       original.
   - name: fold
   - name: instance
-    status: beta
+    summary: Repeats its input some number of times, exposing the index as the iteration
+      x value, and combines the results.
   - name: invert
     summary: Invert an SDF, so that the inside is the outside.
   - name: iteratedTransform

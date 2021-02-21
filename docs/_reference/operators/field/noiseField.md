@@ -8,6 +8,24 @@ redirect_from:
   - /reference/opType/raytk.operators.field.noiseField/
 op:
   category: field
+  detail: 'Some of these may be costly to compute, so pay attention to frame rate
+    when using them.
+
+
+    The different types of noise use different types of coordinates. If the type of
+    coordinate used
+
+    by `Noisetype` doesn''t match the `Coordtype`, any missing parts will be replaced
+    with zeros.
+
+    When the `Coordtype` is 3D but the `Noisetype` only uses 2D, the `Axis` parameter
+    determines
+
+    which parts of the coordinates are used.
+
+
+    For types that use 4D coordinates, the `Translate` and `Scale` parameters can
+    still be used to control the 4th coordinate.'
   name: noiseField
   opType: raytk.operators.field.noiseField
   parameters:
@@ -38,6 +56,7 @@ op:
     - label: Simplex 4D
       name: simplex4d
     name: Noisetype
+    summary: The type of noise function.
   - label: Coord Type
     menuOptions:
     - label: 2D
@@ -45,6 +64,7 @@ op:
     - label: 3D
       name: vec3
     name: Coordtype
+    summary: The type of coordinates that the op supports.
   - label: Context Type
     menuOptions:
     - label: None
@@ -60,24 +80,42 @@ op:
     name: Contexttype
   - label: Axis
     menuOptions:
-    - label: X
+    - description: Use Y and Z.
+      label: X
       name: x
-    - label: Y
+    - description: Use Z and X.
+      label: Y
       name: y
-    - label: Z
+    - description: Use X and Y.
+      label: Z
       name: z
     name: Axis
+    summary: When the `Noisetype` uses 2D coordinates but `Coordtype` is 3D, this
+      is used to choose which plane of the coordinates are used.
   - label: Translate
     name: Translate
+    summary: Offsets the coordinates used to calculate noise.
   - label: Scale
     name: Scale
+    summary: Scales the coordinates used to calculate noise.
   - label: Amplitude
     name: Amplitude
+    summary: Multiplies the amount produced by the noise.
   - label: Offset
     name: Offset
+    summary: Offsets (adds to) the amount produced by the noise.
   summary: A float or vector field that uses one of several noise functions.
 
 ---
 
 
 A float or vector field that uses one of several noise functions.
+
+Some of these may be costly to compute, so pay attention to frame rate when using them.
+
+The different types of noise use different types of coordinates. If the type of coordinate used
+by `Noisetype` doesn't match the `Coordtype`, any missing parts will be replaced with zeros.
+When the `Coordtype` is 3D but the `Noisetype` only uses 2D, the `Axis` parameter determines
+which parts of the coordinates are used.
+
+For types that use 4D coordinates, the `Translate` and `Scale` parameters can still be used to control the 4th coordinate.

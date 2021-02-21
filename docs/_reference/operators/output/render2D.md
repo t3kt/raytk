@@ -8,6 +8,13 @@ redirect_from:
   - /reference/opType/raytk.operators.output.render2D/
 op:
   category: output
+  detail: 'The input field can return either vec4 which is used as RGBA, or a float,
+    which is copied to all 4 channels.
+
+    The input field can use either 2D coordinates, or 1D, in which case it only uses
+    the X axis and renders the
+
+    same result for each vertical line of pixels.'
   inputs:
   - contextTypes:
     - Context
@@ -92,6 +99,7 @@ op:
     - label: Center
       name: center
     name: Alignment
+    summary: '* `legacy`'
   - label: Scaling
     menuOptions:
     - label: Fill
@@ -103,11 +111,21 @@ op:
     name: Scaling
   - label: UV Map
     name: Uvmap
+    summary: UV Map that is used to pick the uV coordinates used for each pixel. If
+      this is provided, the `Alignment` and `Scaling` not used.
   - label: Max Distance
     name: Maxdist
   - label: Time Reference Operator
     name: Timerefop
   - label: Shader Builder Config
     name: Shaderbuilderconfig
+  summary: Renders a 2D image by evaluating the input field for each pixel.
 
 ---
+
+
+Renders a 2D image by evaluating the input field for each pixel.
+
+The input field can return either vec4 which is used as RGBA, or a float, which is copied to all 4 channels.
+The input field can use either 2D coordinates, or 1D, in which case it only uses the X axis and renders the
+same result for each vertical line of pixels.

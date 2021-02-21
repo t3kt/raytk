@@ -60,6 +60,8 @@ op:
     - label: Context
       name: context
     name: Timesource
+  - label: Reverse
+    name: Reverse
   - label: Phase (Fraction)
     name: Phase
   - label: Amplitude

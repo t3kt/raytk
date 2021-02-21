@@ -21,7 +21,6 @@ cat:
     summary: A value field that provides an approximation of repeating cellular (voronoi)
       noise.
   - name: chopField
-    status: beta
   - name: colorRampField
     summary: A vector field that maps an input field to values from a range of colors.
   - name: constantColorField

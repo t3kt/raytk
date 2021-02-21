@@ -13,6 +13,8 @@ op:
   parameters:
   - label: Coord Type
     menuOptions:
+    - label: 1D
+      name: float
     - label: 2D
       name: vec2
     - label: 3D
@@ -64,6 +66,5 @@ op:
     - label: Mirror
       name: mirror
     name: Extendmode
-  status: beta
 
 ---
