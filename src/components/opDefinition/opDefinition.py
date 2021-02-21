@@ -12,8 +12,11 @@ if False:
 def parentPar() -> 'Union[ParCollection, OpDefParsT]':
 	return parent().par
 
+def _host() -> 'Optional[COMP]':
+	return parentPar().Hostop.eval()
+
 def buildName():
-	host = parentPar().Hostop.eval()
+	host = _host()
 	if not host:
 		return ''
 	pathParts = host.path[1:].split('/')
@@ -73,7 +76,7 @@ def combineInputDefinitions(dat: 'DAT', inDats: 'List[DAT]'):
 			insertRow += 1
 
 def _getParamsOp() -> 'Optional[COMP]':
-	return parentPar().Paramsop.eval() or parentPar().Hostop.eval()
+	return parentPar().Paramsop.eval() or _host()
 
 def _getRegularParams() -> 'List[Par]':
 	host = _getParamsOp()
@@ -247,6 +250,17 @@ def prepareMacroTable(dat: 'scriptDAT', typeTable: 'DAT', inputTable: 'DAT', mac
 				for cells in table.rows()
 			])
 
+def onValidationChange(dat: 'DAT'):
+	host = _host()
+	if not host:
+		return
+	host.clearScriptErrors()
+	cells = dat.col('message')
+	if not cells:
+		return
+	err = '\n'.join([c.val for c in cells])
+	host.addScriptError(err)
+
 def _popDialog() -> 'PopDialogExt':
 	# noinspection PyUnresolvedReferences
 	return op.TDResources.op('popDialog')
@@ -283,7 +297,7 @@ def updateOP():
 			escOnClickAway=True,
 		)
 		return
-	host = parentPar().Hostop.eval()
+	host = _host()
 	if not host:
 		return
 	toolkit = op.raytk
