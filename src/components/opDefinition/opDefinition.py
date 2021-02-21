@@ -261,6 +261,10 @@ def onValidationChange(dat: 'DAT'):
 	err = '\n'.join([c.val for c in cells])
 	host.addScriptError(err)
 
+def onHostNameChange():
+	# Workaround for dependency update issue (#295) when the host is renamed.
+	op('sel_funcTemplate').cook(force=True)
+
 def _popDialog() -> 'PopDialogExt':
 	# noinspection PyUnresolvedReferences
 	return op.TDResources.op('popDialog')
