@@ -30,19 +30,22 @@ class TestInspectorCore:
 		includeDetail = self.ownerComp.par.Includedetail.eval()
 		findings = []  # type: List[TestFinding]
 		findings += TestFinding.fromValidationTable(validationErrors)
-		findings += TestFinding.parseErrorLines(
+		findings += self._parseErrorLines(
+			scope,
 			scope.scriptErrors(recurse=True),
 			TestFindingSource.scriptError,
 			TestFindingStatus.error,
 			includeDetail=includeDetail,
 		)
-		findings += TestFinding.parseErrorLines(
+		findings += self._parseErrorLines(
+			scope,
 			scope.warnings(recurse=True),
 			TestFindingSource.opWarning,
 			TestFindingStatus.warning,
 			includeDetail=includeDetail,
 		)
-		findings += TestFinding.parseErrorLines(
+		findings += self._parseErrorLines(
+			scope,
 			scope.errors(recurse=True),
 			TestFindingSource.opError,
 			TestFindingStatus.error,
@@ -50,6 +53,59 @@ class TestInspectorCore:
 		)
 		findings = self._dedupFindings(findings)
 		return findings
+
+	def _parseErrorLines(
+			self,
+			scope: 'COMP',
+			text: str,
+			source: 'TestFindingSource',
+			status: 'TestFindingStatus',
+			includeDetail: bool = False,
+	) -> 'List[TestFinding]':
+		if not text:
+			return []
+		findings = []
+		for line in text.splitlines():
+			line = line.strip()
+			if not line:
+				continue
+			finding = TestFinding.parseErrorLine(
+				line,
+				source, status,
+				includeDetail
+			)
+			if finding in findings:
+				continue
+			if finding.status != TestFindingStatus.success and includeDetail:
+				self._investigateFinding(scope, finding)
+			findings.append(finding)
+		return findings
+
+	def _investigateFinding(
+			self,
+			scope: 'COMP',
+			finding: 'TestFinding'):
+		o = scope.op(finding.path)
+		if not o:
+			return
+		self._investigateShaderInputError(o, finding)
+
+	@staticmethod
+	def _investigateShaderInputError(o: 'OP', finding: 'TestFinding'):
+		if not isinstance(o, (glslTOP, glslmultiTOP)):
+			return
+		matched = False
+		for detail in finding.detail:
+			if 'undefined variable "sTD2DInputs"' in detail:
+				matched = True
+				break
+		if not matched:
+			return
+		rop = o.parent()
+		texSources = rop.op('texture_sources')
+		finding.detail.append(f'# tex sources: {texSources.numRows}')
+		for conn in o.inputConnectors:
+			finding.detail.append(f'in{conn.index} #: {len(conn.connections)}')
 
 	@staticmethod
 	def _dedupFindings(findings: 'List[TestFinding]') -> 'List[TestFinding]':

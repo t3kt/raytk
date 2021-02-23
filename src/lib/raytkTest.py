@@ -81,23 +81,6 @@ class TestFinding:
 		)
 
 	@classmethod
-	def parseErrorLines(
-			cls,
-			text: str,
-			source: 'TestFindingSource',
-			status: 'TestFindingStatus',
-			includeDetail: bool = False,
-	) -> 'List[TestFinding]':
-		if not text:
-			return []
-		results = []
-		for line in text.splitlines():
-			line = line.strip()
-			if line:
-				results.append(cls.parseErrorLine(line, source, status, includeDetail=includeDetail))
-		return results
-
-	@classmethod
 	def parseErrorLine(
 			cls,
 			line: str,
@@ -126,7 +109,7 @@ class TestFinding:
 		o = op(path)
 		if o and isinstance(o, (glslTOP, glslmultiTOP)):
 			if includeDetail:
-				detail = _parseCompileResultDetail(o.compileResult)
+				detail = _parseCompileResultDetail(o)
 			status = TestFindingStatus.error
 		return cls(
 			path=path,
@@ -153,7 +136,8 @@ class TestFinding:
 
 _opErrorPattern = re.compile(r'(.*) \((/.*)\)')
 
-def _parseCompileResultDetail(text: str) -> 'List[str]':
+def _parseCompileResultDetail(o: 'Union[glslTOP, glslmultiTOP]') -> 'List[str]':
+	text = o.compileResult
 	print('DEBUG ATTEMPTING to extract COMPILE DETAIL')
 	text = text.strip()
 	if not text:

@@ -258,8 +258,9 @@ class TestManager:
 		comp = self._testComp
 		if not comp:
 			return
-		for rop in RaytkContext().ropChildrenOf(comp):
-			recloneComp(rop)
+		# This is breaking connections made by outputOpController on initialization
+		# for rop in RaytkContext().ropChildrenOf(comp):
+		# 	recloneComp(rop)
 		for rop in RaytkContext().ropOutputChildrenOf(comp):
 			rop.outputs[0].cook(force=True)
 
