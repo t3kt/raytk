@@ -283,9 +283,9 @@ class TestManager:
 	def resultLevelFilterValues(self):
 		level = ipar.uiState.Resultlevelfilter.eval()
 		if level == 'error':
-			return [TestFindingStatus.error.name]
+			return [TestFindingStatus.error.name, TestFindingStatus.unknown.name]
 		if level == 'warning':
-			return [TestFindingStatus.error.name, TestFindingStatus.warning.name]
+			return [TestFindingStatus.error.name, TestFindingStatus.warning.name, TestFindingStatus.unknown.name]
 		return ['*']
 
 	def openLog(self):
