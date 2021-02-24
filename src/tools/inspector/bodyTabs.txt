@@ -1,0 +1,6 @@
+name	label
+preview	Preview
+shader	Shader
+params	Params
+macros	Macros
+validation	Validation
