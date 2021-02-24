@@ -1,5 +1,5 @@
 from typing import Optional
-from raytkUtil import RaytkContext, detachTox, focusCustomParameterPage, ROPInfo
+from raytkUtil import RaytkContext, detachTox, focusCustomParameterPage, ROPInfo, IconColors
 
 # noinspection PyUnreachableCode
 if False:
@@ -151,6 +151,7 @@ class Palette:
 			else:
 				par.val = par.default
 		newOp.allowCooking = True
+		newOp.color = IconColors.defaultBgColor
 		ropInfo = ROPInfo(newOp)
 		ropInfo.invokeCallback('onCreate', master=template)
 		ui.undo.endBlock()
