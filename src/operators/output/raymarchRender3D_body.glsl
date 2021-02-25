@@ -204,12 +204,34 @@ vec3 getColor(vec3 p, MaterialContext matCtx) {
 	float ratio = matCtx.result.interpolant;
 	int m1 = int(matCtx.result.material);
 	int m2 = int(matCtx.result.material2);
+	#ifdef RAYTK_USE_MATERIAL_POS
+	vec3 p1 = p;
+	vec3 p2 = p;
+	if (matCtx.result.materialPos.w > 0.) {
+		p1 = matCtx.result.materialPos.xyz;
+	}
+	if (matCtx.result.materialPos2.w > 0.) {
+		p2 = matCtx.result.materialPos2.xyz;
+	}
+	#endif
 	if (ratio <= 0) {
+		#ifdef RAYTK_USE_MATERIAL_POS
+		matCtx.materialPos = p1;
+		#endif
 		return getColorInner(p, matCtx, m1);
 	} else if (ratio >= 1) {
+		#ifdef RAYTK_USE_MATERIAL_POS
+		matCtx.materialPos = p2;
+		#endif
 		return getColorInner(p, matCtx, m2);
 	} else {
+		#ifdef RAYTK_USE_MATERIAL_POS
+		matCtx.materialPos = p1;
+		#endif
 		vec3 col1 = getColorInner(p, matCtx, m1);
+		#ifdef RAYTK_USE_MATERIAL_POS
+		matCtx.materialPos = p2;
+		#endif
 		vec3 col2 = getColorInner(p, matCtx, m2);
 		return mix(col1, col2, ratio);
 	}
