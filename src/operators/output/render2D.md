@@ -44,7 +44,6 @@ same result for each vertical line of pixels.
   * `fitinside`
   * `fitoutside`
 * `Uvmap`: UV Map that is used to pick the uV coordinates used for each pixel. If this is provided, the `Alignment` and `Scaling` not used.
-* `Maxdist`
 * `Timerefop`
 * `Shaderbuilderconfig`
 
