@@ -2,6 +2,16 @@
 
 ## v0.12
 
+### Highlights
+
+* Fix bug when attaching a camera input in raymarchRender3D! (#185)
+* Improve detection of support for `#include`, which should help for some older AMD GPUs (#34)
+* Show validation errors directly on the ops where they occur, making debugging easier (#319)
+* Support inspecting 2D/3D value fields using instanced geometry. (#148)
+* There was an issue with the "Update OP" tool, so for this release it won't work. For future upgrades from 0.12 and later to newer versions, it will work.
+
+### Details
+
 * Improvements / additions
   * Added toolkit viewer image with version info. (#284)
   * UV map option for render2D (#261)
@@ -16,6 +26,12 @@
   * Added documentation about iteration (#42)
   * Added rangeTransform (#282)
   * Added documentation for various operators
+  * Added field inputs for radius/height in prismSdf (#326)
+  * Added "reverse" parameter in lfoField (#327)
+  * Added documentation for iteration (#42)
+  * Clean up instance op and remove beta tag (#279)
+  * Support 2+ inputs in iterationSwitch, add more extend modes (#335)
+  * Clean up fieldRender and move to beta (#148, #7)
 * Changes
   * Separate custom parameters from customOp instances (#297). This may cause problems for instances of customOp from older versions.
   * Cleanup and redesign of iteration value handling throughout toolkit (#310)
@@ -24,10 +40,20 @@
   * Attempted fix for `#include` error for older AMD GPUs. (#34)
   * Fix bugs in limitField (#305)
   * Fix broken "clear filter" button in opPicker (#308)
+  * Fix bug in the "smooth diff" mode in `combine` (#321)
+  * Fix missing descriptions for parameter menu options in doc site (#322)
+  * Fix missing op status tags in doc site (#329)
+  * Fix extend mode bugs in chopField / chopFn (#231, #331)
+  * Centralize Updateop logic, which will help for updates to the *next* toolkit version (#332)
+  * Fix errors after renaming ROPs (#295)
 * Infrastructure / development
   * Documentation for infrastructure and shared components (#98, #100)
   * Documentation about ROP code, build process (#31)
   * Added create ROP type dialog in toolkit editor (#6, #151)
+  * Lots more automated testing.
+  * Improve error details in automated testing.
+  * Clean up handling of texture inputs.
+  * Improved developer tool support for non-ROP COMPs (#107)
 
 ## v0.11
 
