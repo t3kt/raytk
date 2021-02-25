@@ -44,9 +44,15 @@ vec2 getCoord() {
 			fragCoord.x *= uTDOutputInfo.res.z/uTDOutputInfo.res.w;
 			p = fragCoord*2. - vec2(1.);
 		}
-			#else
+		#else
 		{
 			p = fragCoord;
+			#if defined(THIS_Alignment_bottomleft)
+			#elif defined(THIS_Alignment_center)
+			p -= vec2(0.5);
+			#else
+			#error invalidAlignment
+			#endif
 			#if defined(THIS_Scaling_fill)
 			#elif defined(THIS_Scaling_fitinside)
 			{
@@ -64,12 +70,6 @@ vec2 getCoord() {
 					p.x *= resolution.x / resolution.y;
 				}
 			}
-			#endif
-			#if defined(THIS_Alignment_bottomleft)
-			#elif defined(THIS_Alignment_center)
-			p -= vec2(0.5);
-			#else
-			#error invalidAlignment
 			#endif
 		}
 		#endif
