@@ -985,6 +985,7 @@ class DAT(OP):
 	def run(
 			self, *args, endFrame=False, fromOP: 'OP' = None, asParameter=False, group=None, delayFrames=0,
 			delayMilliSeconds=0, delayRef: 'OP' = None) -> Run: pass
+	def save(self, filepath: str = None, append=False, createFolders=False) -> str: pass
 	module: 'MOD'
 	numRows: int
 	numCols: int

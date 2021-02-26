@@ -588,8 +588,11 @@ class _OpStatusTag(Tag):
 		opDef = ROPInfo(o).opDef
 		return super().isOn(o) or super().isOn(opDef)
 
-def _updateFileSyncPars(o: 'OP', state: bool):
+def _updateFileSyncPars(o: 'Union[OP, DAT]', state: bool):
 	if o.isDAT:
+		filePar = o.par['file']
+		if filePar and state:
+			o.save(filePar.eval())
 		par = o.par['syncfile']
 		if par is not None:
 			par.expr = ''

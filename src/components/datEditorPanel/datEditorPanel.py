@@ -161,7 +161,7 @@ class DatEditorPanel:
 			ui.status = f'Unable to externalize, no file suffix found for {itemGraph.par.name}'
 			return
 		file = Path(tox.replace('.tox', suffix))
-		file.touch(exist_ok=True)
+		itemGraph.sourceDat.save(file.as_posix())
 		itemGraph.file.val = file.as_posix()
 		RaytkTags.fileSync.apply(dat, True)
 		ui.status = f'Externalized {itemGraph.sourceDat} to file {file.as_posix()}'
