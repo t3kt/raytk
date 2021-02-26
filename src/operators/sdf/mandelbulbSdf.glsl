@@ -7,7 +7,7 @@ Sdf thismap(vec3 p, ContextT ctx) {
 	float thetaShift = THIS_Thetashift;
 	float phiShift = THIS_Phishift;
 
-	int n = THIS_ITERATIONS;
+	int n = THIS_Iterations;
 	float d;
 	#ifndef __MANDELBULB_V2
 	n *= 3;
