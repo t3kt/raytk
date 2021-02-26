@@ -1,0 +1,3 @@
+	'THIS_INPUT_OP_1'	'inputOp2' if parent().par.Swaporder else 'inputOp1'
+	'THIS_INPUT_OP_2'	'inputOp1' if parent().par.Swaporder else 'inputOp2'
+	'THIS_COMBINE(a, b)'	op('operations')[parent().par.Operation.eval(), 'expr']

@@ -1,0 +1,1 @@
+	op('layouts')[parent().par.Layout.eval(), 'macroFull' if op('input_info')['inputCount'] > 2 else 'macroPartial'] or ''	

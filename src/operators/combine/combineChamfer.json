@@ -1,6 +1,6 @@
 {
   "meta": {
     "opType": "raytk.operators.combine.combineChamfer",
-    "opVersion": 5
+    "opVersion": 6
   }
 }

@@ -1,0 +1,1 @@
+	'THIS_GET_AMOUNT()'	'(THIS_Amount * inputOp3(p, ctx))' if op('radius_field_definition').numRows > 1 else 'THIS_Amount'

@@ -1,0 +1,1 @@
+'THIS_DIR'	op('ortho_directions')[parent().par.Direction.eval(), 'dir']
