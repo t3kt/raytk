@@ -1,0 +1,2 @@
+	'THIS_lighttype_' + (parent().par.Light.eval() or op('default_light')).par.lighttype.eval()	
+(parent().par.Light.eval() or op('default_light')).par.attenuated	'THIS_attenuated'	

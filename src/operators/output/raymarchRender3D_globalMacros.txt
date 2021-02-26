@@ -1,0 +1,7 @@
+'RAYTK_MAX_STEPS'	int(parent().par.Maxsteps)
+'RAYTK_MAX_DIST'	parent().par.Maxdist
+'RAYTK_SURF_DIST'	parent().par.Surfdist
+'RAYTK_STEPS_IN_SDF' if parent().par.Enablesdfoutput else ''	
+'RAYTK_NEAR_HITS_IN_SDF' if parent().par.Enablenearhitoutput else ''	
+'RAYTK_ITERATION_IN_SDF' if parent().par.Enableiterationoutput else ''	
+'RAYTK_STEPS_IN_SDF' if parent().par.Enablestepoutput else ''	

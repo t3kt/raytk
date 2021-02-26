@@ -1,6 +1,6 @@
 {
   "meta": {
     "opType": "raytk.operators.output.renderSelect",
-    "opVersion": 0
+    "opVersion": 1
   }
 }

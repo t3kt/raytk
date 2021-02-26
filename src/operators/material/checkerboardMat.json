@@ -1,7 +1,7 @@
 {
   "meta": {
-    "opStatus": "beta",
+    "opStatus": "alpha",
     "opType": "raytk.operators.material.checkerboardMat",
-    "opVersion": 5
+    "opVersion": 6
   }
 }

@@ -1,0 +1,2 @@
+'THIS_MIN_DIST'	'THIS_Mindist' if parent().par.Overridemindist else 'RAYTK_SURF_DIST'
+'THIS_MAX_DIST'	'THIS_Maxdist' if parent().par.Overridemaxdist else 'RAYTK_MAX_DIST'
