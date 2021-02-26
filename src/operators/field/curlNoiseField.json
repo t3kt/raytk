@@ -1,6 +1,6 @@
 {
   "meta": {
     "opType": "raytk.operators.field.curlNoiseField",
-    "opVersion": 0
+    "opVersion": 1
   }
 }
