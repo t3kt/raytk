@@ -593,6 +593,8 @@ def _updateFileSyncPars(o: 'Union[OP, DAT]', state: bool):
 		filePar = o.par['file']
 		if filePar and state:
 			o.save(filePar.eval())
+		if o.par['defaultreadencoding'] is not None:
+			o.par.defaultreadencoding = 'utf8'
 		par = o.par['syncfile']
 		if par is not None:
 			par.expr = ''
