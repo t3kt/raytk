@@ -1,0 +1,1 @@
+	'THIS_RADIUS_AXIS'	op('axis_info')['planePart1', 1]

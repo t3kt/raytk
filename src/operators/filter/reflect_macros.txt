@@ -1,0 +1,2 @@
+op('expr_info')[1, 'dir'] != ''	'THIS_DIR'	op('expr_info')[1, 'dir'] or ''
+op('expr_info')[1, 'axisVec'] != ''	'THIS_AXIS_VEC'	op('expr_info')[1, 'axisVec'] or ''

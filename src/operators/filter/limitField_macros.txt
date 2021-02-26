@@ -1,0 +1,3 @@
+	f'THIS_LIMIT_{parent().par.Limittype}'	
+	'THIS_LOW'	'THIS_Low' if op('input_info_1')['Inputreturntype', 1] == 'vec4' else 'THIS_Low1'
+	'THIS_HIGH'	'THIS_High' if op('input_info_1')['Inputreturntype', 1] == 'vec4' else 'THIS_High1'

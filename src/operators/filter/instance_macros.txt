@@ -1,0 +1,1 @@
+op('combine_expr_info')[1, 'exprIsSdf'] == '1'	'THIS_COMBINE_EXPR_IS_SDF'	
