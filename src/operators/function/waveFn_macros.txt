@@ -1,0 +1,1 @@
+	'THIS_FUNC'	op('expr_info')[1, 'function']
