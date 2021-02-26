@@ -1,11 +1,11 @@
 Sdf thismap(CoordT p, ContextT ctx) {
 	p -= THIS_Translate;
-	#ifdef THIS_HEIGHT_FIELD
+	#ifdef THIS_HAS_INPUT_1
 	float height = THIS_Height * inputOp1(p, ctx);
 	#else
 	float height = THIS_Height;
 	#endif
-	#ifdef THIS_RADIUS_FIELD
+	#ifdef THIS_HAS_INPUT_2
 	float radiusMod = inputOp2(p, ctx);
 	#else
 	const float radiusMod = 1.;

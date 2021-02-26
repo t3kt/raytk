@@ -6,7 +6,7 @@ Sdf thismap(vec3 p, ContextT ctx) {
 	p -= THIS_Translate - offset;
 	float scale = THIS_Scale;
 
-	for (int i=0; i<THIS_ITERATIONS; i++)
+	for (int i=0; i<THIS_Iterations; i++)
 	{
 		p = -1.0 + 2.0*fract(0.5*p+0.5);
 

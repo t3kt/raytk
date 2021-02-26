@@ -1,0 +1,3 @@
+	'RAYTK_USE_GDF'	
+	'THIS_BEGIN'	op('shapes')[parent().par.Shape.eval(), 'begin'].val or 'THIS_Begin'
+	'THIS_END'	op('shapes')[parent().par.Shape.eval(), 'end'].val or 'THIS_End'
