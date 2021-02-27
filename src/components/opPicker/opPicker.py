@@ -400,12 +400,15 @@ class PickerOpItem(PickerItem):
 			return False
 		if not filt.text:
 			return True
-		if filt.text in self.shortName.lower():
+		filtText = filt.text.lower()
+		if filtText in self.shortName.lower():
 			return True
-		if filt.text in self.categoryName.lower():
-			return True
-		# TODO: filter using word initials
-		return False
+		if not self.words:
+			return False
+		for w, f in zip(self.words, filtText):
+			if w[0] != f:
+				return False
+		return True
 
 _AnyItemT = Union[PickerCategoryItem, PickerOpItem]
 
@@ -464,7 +467,7 @@ class _ItemLibrary:
 				isDeprecated=status == 'deprecated',
 				helpSummary=str(opHelpTable[path, 'summary'] or ''),
 			)
-			words = _splitCamelCase(shortName) + _splitCamelCase(categoryName)
+			words = _splitCamelCase(shortName)
 			opItem.words = [w.lower() for w in words]
 			if categoryName in categoriesByName:
 				categoriesByName[categoryName].ops.append(opItem)
