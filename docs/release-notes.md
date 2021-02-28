@@ -32,6 +32,12 @@
   * Clean up instance op and remove beta tag (#279)
   * Support 2+ inputs in iterationSwitch, add more extend modes (#335)
   * Clean up fieldRender and move to beta (#148, #7)
+  * Add location position support for basicMat and fieldMat (#341)
+  * Add extend modes to colorRampField
+  * Add axis and thickness parameters for discSdf (#352)
+  * Palette filter improvements, including search by initials (#347)
+  * Add support for separate textures in triPlanarTextureField (#349)
+  * Added uniform scale options in transform and iteratedTransform (#325)
 * Changes
   * Separate custom parameters from customOp instances (#297). This may cause problems for instances of customOp from older versions.
   * Cleanup and redesign of iteration value handling throughout toolkit (#310)
@@ -46,6 +52,11 @@
   * Fix extend mode bugs in chopField / chopFn (#231, #331)
   * Centralize Updateop logic, which will help for updates to the *next* toolkit version (#332)
   * Fix errors after renaming ROPs (#295)
+  * Fix coordinate handling issues in render2D (#342)
+  * Fix extend mode issue in triPlanarTextureField (#348)
+  * Fix broken default expression in round (#356)
+  * Fix keyboard navigation in palette (#357)
+  * Fix duplicate typedef macro bug in shaderBuilder (#358)
 * Infrastructure / development
   * Documentation for infrastructure and shared components (#98, #100)
   * Documentation about ROP code, build process (#31)
