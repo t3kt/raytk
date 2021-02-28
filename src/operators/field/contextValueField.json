@@ -1,6 +1,7 @@
 {
   "meta": {
+    "opStatus": "beta",
     "opType": "raytk.operators.field.contextValueField",
-    "opVersion": 2
+    "opVersion": 3
   }
 }
