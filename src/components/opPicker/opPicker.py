@@ -523,7 +523,7 @@ class _ItemLibrary:
 		self.filteredItems = self._buildFlatList(filt)
 
 def _splitCamelCase(s: str):
-	splits = [i for i, e in enumerate(s) if e.isupper()] + [len(s)]
+	splits = [i for i, e in enumerate(s) if e.isupper() or e.isdigit()] + [len(s)]
 	if not splits:
 		return [s]
 	splits = [0] + splits
