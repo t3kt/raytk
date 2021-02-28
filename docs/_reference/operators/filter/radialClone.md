@@ -58,8 +58,6 @@ op:
       name: none
     - label: Clone Index
       name: index
-    - label: Scaled Clone Index
-      name: scaled
     name: Iterationtype
   summary: Repeats an SDF radially around an axis, combining the resulting shapes.
 

@@ -38,10 +38,12 @@ cat:
   - name: gridSdf
     summary: An infinite grid shape, along two axes.
   - name: gyroidSdf
+    status: beta
     summary: Gyroid shape, which is an infinitely connected periodic surface.
   - name: helixSdf
     summary: '## Parameters'
   - name: juliaSdf
+    status: beta
   - name: kaliGeneratorSdf
     summary: Fractal SDF based on "Generators" by Kali (https://www.shadertoy.com/view/Xtf3Rn).
   - name: linkSdf
