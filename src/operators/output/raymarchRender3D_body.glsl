@@ -294,9 +294,7 @@ void main()
 	#ifdef OUTPUT_DEBUG
 	debugOut = vec4(0, 0, 0, 1);
 	#endif
-	MaterialContext matCtx;
-	matCtx.context = createDefaultContext();
-
+	MaterialContext matCtx = createMaterialContext();
 
 	#if THIS_ANTI_ALIAS > 1
 	vec2 shiftStart = vec2(-float(THIS_ANTI_ALIAS) / 2.0);

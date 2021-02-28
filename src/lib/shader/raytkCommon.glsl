@@ -232,6 +232,19 @@ struct MaterialContext {
 	#endif
 };
 
+MaterialContext createMaterialContext() {
+	MaterialContext matCtx;
+	matCtx.result = createNonHitSdf();
+	matCtx.context = createDefaultContext();
+	matCtx.ray = Ray(vec3(0.), vec3(0.));
+	matCtx.normal = vec3(0.);
+	matCtx.reflectColor = vec3(0.);
+	#ifdef RAYTK_USE_MATERIAL_POS
+	matCtx.materialPos = vec3(0.);
+	#endif
+	return matCtx;
+}
+
 struct CameraContext {
 	vec2 resolution;
 
