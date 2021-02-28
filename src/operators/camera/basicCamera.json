@@ -1,6 +1,7 @@
 {
   "meta": {
+    "opStatus": "deprecated",
     "opType": "raytk.operators.camera.basicCamera",
-    "opVersion": 1
+    "opVersion": 2
   }
 }
