@@ -50,8 +50,8 @@ op:
     name: Rotate
   - label: Scale
     name: Scale
-  - label: Pivot
-    name: Pivot
+  - label: Uniform Scale
+    name: Uniformscale
   - label: Transform Order
     menuOptions:
     - label: Scale Rotate Translate
@@ -67,6 +67,8 @@ op:
     - label: Translate Rotate Scale
       name: trs
     name: Transformorder
+  - label: Pivot
+    name: Pivot
   - label: Rotate Order
     menuOptions:
     - label: Rx Ry Rz
@@ -82,6 +84,13 @@ op:
     - label: Rz Ry Rx
       name: zyx
     name: Rotateorder
+  - label: Scale Type
+    menuOptions:
+    - label: Separate XYZ
+      name: separate
+    - label: Uniform
+      name: uniform
+    name: Scaletype
   summary: Transform the coordinates of the input, with rotation, scaling, and translation.
 
 ---
