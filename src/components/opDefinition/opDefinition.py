@@ -255,12 +255,14 @@ def _isMaster():
 	return host and host.par.clone == host
 
 def onValidationChange(dat: 'DAT'):
-	if not _isMaster():
+	if _isMaster():
 		return
 	host = _host()
 	if not host:
 		return
 	host.clearScriptErrors()
+	if dat.numRows < 2:
+		return
 	cells = dat.col('message')
 	if not cells:
 		return
