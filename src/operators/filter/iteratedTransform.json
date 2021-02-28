@@ -1,6 +1,6 @@
 {
   "meta": {
     "opType": "raytk.operators.filter.iteratedTransform",
-    "opVersion": 8
+    "opVersion": 9
   }
 }
