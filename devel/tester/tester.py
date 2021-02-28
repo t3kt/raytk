@@ -259,9 +259,9 @@ class TestManager:
 		if not comp:
 			return
 		# This is breaking connections made by outputOpController on initialization
-		# for rop in RaytkContext().ropChildrenOf(comp):
-		# 	recloneComp(rop)
-		for rop in RaytkContext().ropOutputChildrenOf(comp):
+		for rop in RaytkContext().ropChildrenOf(comp, maxDepth=None):
+			recloneComp(rop)
+		for rop in RaytkContext().ropOutputChildrenOf(comp, maxDepth=None):
 			rop.outputs[0].cook(force=True)
 
 	def _buildTestCaseResult(self) -> 'Optional[TestCaseResult]':

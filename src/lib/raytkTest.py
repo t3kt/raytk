@@ -108,15 +108,20 @@ class TestFinding:
 			message = message.replace('Warning:', '', 1).strip()
 		o = op(path)
 		if o and isinstance(o, (glslTOP, glslmultiTOP)):
-			if includeDetail:
-				detail = _parseCompileResultDetail(o)
-			status = TestFindingStatus.error
+			detail = _parseCompileResultDetail(o)
+			if not detail:
+				detail = o.compileResult.splitlines()
+				status = TestFindingStatus.error
+			elif all('warning' in line.lower() and 'error' not in line.lower() for line in detail):
+				status = TestFindingStatus.warning
+			else:
+				status = TestFindingStatus.error
 		return cls(
 			path=path,
 			status=status,
 			source=source,
 			message=message,
-			detail=detail or [],
+			detail=(detail if includeDetail else None) or [],
 		)
 
 	def toTableRowVals(
@@ -158,6 +163,7 @@ _ignoredCompilerPatterns = [
 	re.compile(r'.* Results:$'),
 	re.compile(r'\s*'),
 	re.compile(r'Compiled Successfully'),
+	re.compile(r'Linked Successfully'),
 	re.compile(r'Fragment info'),
 	re.compile(r'=+'),
 	re.compile(r'-+'),

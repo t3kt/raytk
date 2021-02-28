@@ -483,11 +483,11 @@ def _getROP(comp: 'COMP', checkParents=True):
 	if checkParents:
 		return _getROP(comp.parent(), checkParents=checkParents)
 
-def _getChildROPs(comp: 'COMP'):
-	return comp.findChildren(type=COMP, tags=[RaytkTags.raytkOP.name, RaytkTags.raytkComp.name], maxDepth=1)
+def _getChildROPs(comp: 'COMP', maxDepth=1):
+	return comp.findChildren(type=COMP, tags=[RaytkTags.raytkOP.name, RaytkTags.raytkComp.name], maxDepth=maxDepth)
 
-def _getChildOutputROPs(comp: 'COMP'):
-	return comp.findChildren(type=COMP, tags=[RaytkTags.raytkOutput.name], maxDepth=1)
+def _getChildOutputROPs(comp: 'COMP', maxDepth=1):
+	return comp.findChildren(type=COMP, tags=[RaytkTags.raytkOutput.name], maxDepth=maxDepth)
 
 def recloneComp(o: 'COMP'):
 	if o and o.par['enablecloningpulse'] is not None:
@@ -923,12 +923,12 @@ class RaytkContext:
 		return results
 
 	@staticmethod
-	def ropChildrenOf(comp: 'COMP'):
-		return _getChildROPs(comp) if comp else []
+	def ropChildrenOf(comp: 'COMP', maxDepth=1):
+		return _getChildROPs(comp, maxDepth=maxDepth) if comp else []
 
 	@staticmethod
-	def ropOutputChildrenOf(comp: 'COMP'):
-		return _getChildOutputROPs(comp) if comp else []
+	def ropOutputChildrenOf(comp: 'COMP', maxDepth=1):
+		return _getChildOutputROPs(comp, maxDepth=maxDepth) if comp else []
 
 	def libraryImage(self) -> 'Optional[COMP]':
 		toolkit = self.toolkit()
