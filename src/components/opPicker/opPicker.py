@@ -403,7 +403,7 @@ class PickerOpItem(PickerItem):
 		filtText = filt.text.lower()
 		if filtText in self.shortName.lower():
 			return True
-		if not self.words:
+		if not self.words or len(filtText) > len(self.words):
 			return False
 		for w, f in zip(self.words, filtText):
 			if w[0] != f:
