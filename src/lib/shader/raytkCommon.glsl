@@ -318,6 +318,14 @@ vec2 modZigZag(vec2 p) {
 		modded.y > 1 ? (2 - modded.y) : modded.y);
 }
 
+vec3 modZigZag(vec3 p) {
+	vec3 modded = mod(p, 2.);
+	return vec3(
+	modded.x > 1 ? (2 - modded.x) : modded.x,
+	modded.y > 1 ? (2 - modded.y) : modded.y,
+	modded.z > 1 ? (2 - modded.z) : modded.z);
+}
+
 vec4 modZigZag(vec4 p) {
 	vec4 modded = mod(p, 2.);
 	return vec4(

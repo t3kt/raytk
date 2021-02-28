@@ -1,5 +1,5 @@
 ReturnT thismap(CoordT p, MaterialContext ctx) {
-	vec3 uv = p;
+	vec3 uv = p - 0.5;
 	uv = (uv - THIS_Translate) / THIS_Scale;
 	#if defined(THIS_Extendmode_hold)
 	uv = clamp(uv, 0, 1);
