@@ -13,4 +13,3 @@ A 360 fisheye camera, that shows all directions from a specific point in space.
 * `Camrot`: Rotates the camera in XYZ.
 * `Lookatpos`: Coordinates that the camera should face.
 * `Camup`
-* `Inspect`

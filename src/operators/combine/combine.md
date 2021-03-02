@@ -29,4 +29,9 @@ To combine more than two SDFs, use one of the specialized operators like [`simpl
 * `Swapinputs`: Swaps the order of the inputs. This is only relevant for "diff" modes.
 * `Radius`: The size of the blending region.
 * `Number`: For stair and column modes, this controls how many steps are used in the blending regions.
-* `Inspect`
+
+## Inputs
+
+* `definition_in_1`: 
+* `definition_in_2`: 
+* `radius_field_definition_in`: 
