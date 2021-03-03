@@ -1,6 +1,6 @@
 {
   "meta": {
     "opType": "raytk.operators.sdf.kaliGeneratorSdf",
-    "opVersion": 1
+    "opVersion": 2
   }
 }
