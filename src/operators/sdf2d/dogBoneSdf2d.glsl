@@ -5,7 +5,7 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 	p -= THIS_Translate;
 	float w = THIS_Length * 0.5;
 	float r = THIS_Radius;
-	float b = THIS_Bulge;
+	float b = -THIS_Bulge;
 
 	if(abs(b)<1e-7) b = 1e-7;	// prevent division by 0
 	float sb = sign(b);
