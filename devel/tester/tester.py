@@ -260,7 +260,10 @@ class TestManager:
 			return
 		# This is breaking connections made by outputOpController on initialization
 		for rop in RaytkContext().ropChildrenOf(comp, maxDepth=None):
-			recloneComp(rop)
+			if rop.par['Updateop'] is not None:
+				rop.par.Updateop.pulse()
+			else:
+				recloneComp(rop)
 		for rop in RaytkContext().ropOutputChildrenOf(comp, maxDepth=None):
 			rop.outputs[0].cook(force=True)
 
