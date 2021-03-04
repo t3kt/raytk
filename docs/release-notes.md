@@ -41,6 +41,7 @@
 * Changes
   * Separate custom parameters from customOp instances (#297). This may cause problems for instances of customOp from older versions.
   * Cleanup and redesign of iteration value handling throughout toolkit (#310)
+  * Inverted the meaning of the Bulge parameter on dogBoneSdf2d to match the name
 * Fixes
   * Fix build error in TD2021.10330 related to `op.parTuple` (#288)
   * Attempted fix for `#include` error for older AMD GPUs. (#34)
@@ -57,6 +58,8 @@
   * Fix broken default expression in round (#356)
   * Fix keyboard navigation in palette (#357)
   * Fix duplicate typedef macro bug in shaderBuilder (#358)
+  * Fix input handling in addFn (#363)
+  * Fix parameter handling in rescaleField (#360)
 * Infrastructure / development
   * Documentation for infrastructure and shared components (#98, #100)
   * Documentation about ROP code, build process (#31)
