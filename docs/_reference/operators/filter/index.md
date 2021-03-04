@@ -23,6 +23,7 @@ cat:
     summary: Splits a shape into pieces, moves them apart, and connects them.
   - name: extend
   - name: fieldExpr
+    status: beta
   - name: flip
     summary: Flips the input across an axis, either on its own or merged with the
       original.
@@ -53,6 +54,7 @@ cat:
   - name: moduloPolar
     summary: Repeats space radially, like a kaleidoscope.
   - name: onion
+    summary: Converts a solid SDF to a thin shell of the surface.
   - name: quantizeCoords
     summary: Quantize coordinates to a 3D grid, which is sort of like "voxelizing"
       the space.
@@ -67,6 +69,7 @@ cat:
   - name: reflect
     summary: Reflects space across a plane.
   - name: reorderCoords
+    summary: Swaps axes for the input.
   - name: rescaleField
   - name: rotate
   - name: round
@@ -75,6 +78,7 @@ cat:
   - name: scale
     summary: Scales space.
   - name: slice
+    summary: Removes all of an SDF except for a slice in space.
   - name: spiralZoom
     status: beta
   - name: transform

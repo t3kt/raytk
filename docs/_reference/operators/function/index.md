@@ -16,9 +16,13 @@ cat:
   name: function
   operators:
   - name: addFn
+    summary: Adds the returned values produced by all of the connected input functions.
   - name: almostIdentityFn
   - name: chopFn
+    summary: Function that looks up values in a CHOP.
   - name: crossFn
+    summary: Cross-fades between two input functions, either based on a parameter
+      or on a third function.
   - name: cubicPulseFn
   - name: easeFn
   - name: flipFn

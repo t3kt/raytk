@@ -43,6 +43,7 @@ op:
     - label: Z
       name: z
     name: Axisx
+    summary: Which axis should be used as the new X axis.
   - label: Y Axis
     menuOptions:
     - label: X
@@ -52,6 +53,7 @@ op:
     - label: Z
       name: z
     name: Axisy
+    summary: Which axis should be used as the new Y axis.
   - label: Z Axis
     menuOptions:
     - label: X
@@ -61,5 +63,10 @@ op:
     - label: Z
       name: z
     name: Axisz
+    summary: Which axis should be used as the new Z axis.
+  summary: Swaps axes for the input.
 
 ---
+
+
+Swaps axes for the input.

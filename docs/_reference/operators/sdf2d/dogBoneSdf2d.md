@@ -13,11 +13,20 @@ op:
   parameters:
   - label: Translate
     name: Translate
+    summary: Moves the center of the shape.
   - label: Radius
     name: Radius
+    summary: Radius of the circles.
   - label: Length
     name: Length
+    summary: Spacing between the two circles.
   - label: Bulge
     name: Bulge
+    summary: Negative values pull the connection tighter, positive values bulge out
+      perpendicular to the main axis.
+  summary: 2D SDF for two connected circles.
 
 ---
+
+
+2D SDF for two connected circles.

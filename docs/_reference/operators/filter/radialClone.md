@@ -35,30 +35,45 @@ op:
     - label: Z
       name: z
     name: Axis
+    summary: The axis around which to rotate the copies.
   - label: Count
     name: Count
+    summary: The number of copies. The performance cost of the input is multiplied
+      by this number.
   - label: Angle Range
     name: Anglerange
+    summary: The angle spread around the axis, where the copies are distributed.
   - label: Angle Offset
     name: Angleoffset
+    summary: Shifts the angle of the first copy around the axis.
   - label: Radius Offset
     name: Radiusoffset
+    summary: Offsets the copies towards/away from the axis. At zero, all copies will
+      be centered on the axis.
   - label: Merge Type
     menuOptions:
-    - label: Union
+    - description: Show all the shapes, without any special treatment for overlap
+        between them.
+      label: Union
       name: union
-    - label: Smooth Union
+    - description: Smooths overlaps between the copies.
+      label: Smooth Union
       name: smoothunion
     name: Mergetype
+    summary: How to merge the copies.
   - label: Merge Radius
     name: Mergeradius
+    summary: The amount of smoothing to apply when merging copies.
   - label: Iteration Type
     menuOptions:
-    - label: None
+    - description: Pass along whatever is provided by the next op after this one.
+      label: None
       name: none
-    - label: Clone Index
+    - description: Use the copy index (from 0 to `Count`-1) as the x iteration value.
+      label: Clone Index
       name: index
     name: Iterationtype
+    summary: Whether and how to expose iteration values to upstream operators.
   summary: Repeats an SDF radially around an axis, combining the resulting shapes.
 
 ---

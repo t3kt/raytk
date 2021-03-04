@@ -30,5 +30,9 @@ op:
   parameters:
   - label: Enable
     name: Enable
+  summary: Converts an SDF into a float value field, based on the SDF surface distance.
 
 ---
+
+
+Converts an SDF into a float value field, based on the SDF surface distance.

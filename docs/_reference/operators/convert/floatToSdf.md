@@ -30,5 +30,9 @@ op:
   parameters:
   - label: Enable
     name: Enable
+  summary: Converts a float value field into an SDF.
 
 ---
+
+
+Converts a float value field into an SDF.

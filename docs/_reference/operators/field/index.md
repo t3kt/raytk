@@ -28,6 +28,7 @@ cat:
   - name: constantField
     summary: A float or vector field that evaluates to a constant value.
   - name: contextValueField
+    status: beta
     summary: Field that returns various fields from the context, from a downstream
       OP.
   - name: curlNoiseField
@@ -46,6 +47,7 @@ cat:
   - name: positionField
     summary: A vector field that evaluates to the coordinates in space.
   - name: reorderField
+    status: beta
   - name: textureField
     summary: A float or vector field that looks up values from a texture.
   - name: triPlanarTextureField

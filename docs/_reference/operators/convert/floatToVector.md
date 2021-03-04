@@ -85,6 +85,7 @@ op:
     - label: One
       name: one
     name: Partsourcex
+    summary: Which source to use for the X part of the vector field.
   - label: Part Source Y
     menuOptions:
     - label: Input 1
@@ -130,5 +131,10 @@ op:
     - label: One
       name: one
     name: Partsourcew
+  summary: Converts one or more float value field inputs into a single vector value
+    field.
 
 ---
+
+
+Converts one or more float value field inputs into a single vector value field.

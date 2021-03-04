@@ -13,6 +13,8 @@ op:
   parameters:
   - label: Coord Type
     menuOptions:
+    - label: 1D
+      name: float
     - label: 2D
       name: vec2
     - label: 3D
@@ -43,6 +45,8 @@ op:
     - label: Object ID (Light)
       name: lightobjectid
     name: Contextfield
+    summary: Which context property to access.
+  status: beta
   summary: Field that returns various fields from the context, from a downstream OP.
 
 ---

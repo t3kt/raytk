@@ -13,7 +13,13 @@ op:
   parameters:
   - label: Translate
     name: Translate
+    summary: Moves the center of the circle.
   - label: Radius
     name: Radius
+    summary: Radius of the circle.
+  summary: 2D circle SDF.
 
 ---
+
+
+2D circle SDF.

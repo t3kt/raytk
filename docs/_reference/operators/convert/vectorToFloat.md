@@ -40,10 +40,17 @@ op:
       name: z
     - label: W
       name: w
-    - label: Length(XYZ)
+    - description: Use the length of the XYZ part of the vector.
+      label: Length(XYZ)
       name: lengthxyz
-    - label: Length(XYZW)
+    - description: Use the length of all 4 parts of the vector.
+      label: Length(XYZW)
       name: lengthxyzw
     name: Usepart
+    summary: Which part of the vector to use for the float field.
+  summary: Converts a vector value field to a float field using one part of the vector.
 
 ---
+
+
+Converts a vector value field to a float field using one part of the vector.

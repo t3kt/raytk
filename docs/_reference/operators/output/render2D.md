@@ -128,8 +128,6 @@ op:
     name: Timerefop
   - label: Shader Builder Config
     name: Shaderbuilderconfig
-  - label: Max Distance
-    name: Maxdist
   summary: Renders a 2D image by evaluating the input field for each pixel.
 
 ---

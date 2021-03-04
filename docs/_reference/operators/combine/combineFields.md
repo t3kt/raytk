@@ -38,25 +38,36 @@ op:
     name: Enable
   - label: Operation
     menuOptions:
-    - label: 'Off'
+    - description: Only use the first input (or second depending on `Swaporder`).
+      label: 'Off'
       name: 'off'
-    - label: Add
+    - description: Add the fields.
+      label: Add
       name: add
-    - label: Subtract
+    - description: Subtract the second from the first.
+      label: Subtract
       name: sub
-    - label: Multiply
+    - description: Multiply the fields.
+      label: Multiply
       name: mul
-    - label: Divide
+    - description: Divide the first by the second.
+      label: Divide
       name: div
-    - label: Average
+    - description: Average the fields.
+      label: Average
       name: avg
-    - label: Minimum
+    - description: Use the smaller of the field values.
+      label: Minimum
       name: min
-    - label: Maximum
+    - description: Use the larger of the field values.
+      label: Maximum
       name: max
     name: Operation
+    summary: What operation to use to combine the field values.
   - label: Swap Order
     name: Swaporder
+    summary: Swaps the two inputs. This is only relevant for some of the `Operation`
+      values.
   summary: Combines float or vector fields using one of several mathematical operations.
 
 ---

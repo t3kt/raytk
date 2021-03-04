@@ -22,7 +22,14 @@ op:
     - label: Top Right
       name: topright
     name: Corner
+    summary: Which corner of the infinite square to place at the origin.
   - label: Translate
     name: Translate
+    summary: Moves the position of the corner.
+  summary: 2D SDF for an infinite corner, like an infinite square positioned by one
+    corner.
 
 ---
+
+
+2D SDF for an infinite corner, like an infinite square positioned by one corner.
