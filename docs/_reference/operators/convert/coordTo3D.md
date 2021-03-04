@@ -52,8 +52,3 @@ op:
     name: Party
 
 ---
-
-# coordTo3D
-
-Category: convert
-

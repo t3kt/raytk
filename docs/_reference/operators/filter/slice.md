@@ -38,20 +38,27 @@ op:
     - label: Z
       name: z
     name: Axis
+    summary: The axis along which to take the slice.
   - label: Offset
     name: Offset
+    summary: Shifts the center position of the slice along the axis.
   - label: Thickness
     name: Thickness
+    summary: Thickness of the slice.
   - label: Enable Smoothing
     name: Enablesmoothing
+    summary: Whether to smooth the transition on each side of the slice down to a
+      size of zero.
   - label: Smooth Radius
     name: Smoothradius
+    summary: The amount of smoothing distance.
   - label: Enable Mirror
     name: Enablemirror
+    summary: When enabled, a second slice is added, mirrored across the origin along
+      the axis.
+  summary: Removes all of an SDF except for a slice in space.
 
 ---
 
-# slice
 
-Category: filter
-
+Removes all of an SDF except for a slice in space.

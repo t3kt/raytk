@@ -30,10 +30,5 @@ op:
 
 ---
 
-# mandelbulbSdf
-
-Category: sdf
-
-
 
 Mandelbulb fractal.

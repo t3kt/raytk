@@ -14,6 +14,7 @@ cat:
   name: camera
   operators:
   - name: basicCamera
+    status: deprecated
   - name: fisheyeCamera
     summary: A 360 fisheye camera, that shows all directions from a specific point
       in space.

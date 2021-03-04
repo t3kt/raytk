@@ -36,10 +36,5 @@ op:
 
 ---
 
-# torusSdf
-
-Category: sdf
-
-
 
 SDF for a torus.

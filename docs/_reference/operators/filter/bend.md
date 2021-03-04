@@ -81,11 +81,6 @@ op:
 
 ---
 
-# bend
-
-Category: filter
-
-
 
 Bends space, along a main axis, towards a second axis.
 

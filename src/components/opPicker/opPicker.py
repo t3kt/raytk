@@ -400,12 +400,15 @@ class PickerOpItem(PickerItem):
 			return False
 		if not filt.text:
 			return True
-		if filt.text in self.shortName.lower():
+		filtText = filt.text.lower()
+		if filtText in self.shortName.lower():
 			return True
-		if filt.text in self.categoryName.lower():
-			return True
-		# TODO: filter using word initials
-		return False
+		if not self.words or len(filtText) > len(self.words):
+			return False
+		for w, f in zip(self.words, filtText):
+			if w[0] != f:
+				return False
+		return True
 
 _AnyItemT = Union[PickerCategoryItem, PickerOpItem]
 
@@ -464,7 +467,7 @@ class _ItemLibrary:
 				isDeprecated=status == 'deprecated',
 				helpSummary=str(opHelpTable[path, 'summary'] or ''),
 			)
-			words = _splitCamelCase(shortName) + _splitCamelCase(categoryName)
+			words = _splitCamelCase(shortName)
 			opItem.words = [w.lower() for w in words]
 			if categoryName in categoriesByName:
 				categoriesByName[categoryName].ops.append(opItem)
@@ -520,7 +523,7 @@ class _ItemLibrary:
 		self.filteredItems = self._buildFlatList(filt)
 
 def _splitCamelCase(s: str):
-	splits = [i for i, e in enumerate(s) if e.isupper()] + [len(s)]
+	splits = [i for i, e in enumerate(s) if e.isupper() or e.isdigit()] + [len(s)]
 	if not splits:
 		return [s]
 	splits = [0] + splits

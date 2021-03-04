@@ -66,11 +66,6 @@ op:
 
 ---
 
-# translate
-
-Category: filter
-
-
 
 Translates coordinates of the input ROP.
 

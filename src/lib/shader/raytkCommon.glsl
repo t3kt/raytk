@@ -7,9 +7,17 @@ struct Ray {
 
 struct Sdf {
 	float x; // distance
+
 	float material; // material ID
 	float material2; // in case of interpolating, the second material
 	float interpolant; // in case of interpolating, the interpolation value
+	#ifdef RAYTK_USE_MATERIAL_POS
+	// xyz: pos
+	// w: whether this has been set
+	// for both material and material2
+	vec4 materialPos;
+	vec4 materialPos2;
+	#endif
 
 	#ifdef RAYTK_REFRACT_IN_SDF
 	float ior; // index of refraction in case of refraction
@@ -47,15 +55,21 @@ struct Sdf {
 Sdf createSdf(float dist) {
 	Sdf res;
 	res.x = dist;
+
 	res.material = 2;
+	res.material2 = 0.;
+	res.interpolant = 0.;
+	#ifdef RAYTK_USE_MATERIAL_POS
+	res.materialPos = vec4(0);
+	res.materialPos2 = vec4(0);
+	#endif
+
 	#ifdef RAYTK_REFLECT_IN_SDF
 	res.reflect = false;
 	#endif
 	#ifdef RAYTK_REFRACT_IN_SDF
 	res.refract = false;
 	#endif
-	res.material2 = 0.;
-	res.interpolant = 0.;
 	#ifdef RAYTK_ORBIT_IN_SDF
 	res.orbit = vec4(0);
 	#endif
@@ -76,6 +90,11 @@ Sdf createSdf(float dist) {
 void blendInSdf(inout Sdf res1, in Sdf res2, in float amt) {
 	res1.material2 = res2.material;
 	res1.interpolant = amt;
+
+	#ifdef RAYTK_USE_MATERIAL_POS
+	res1.materialPos2 = res2.materialPos;
+	#endif
+
 	#ifdef RAYTK_REFRACT_IN_SDF
 	res1.refract = res1.refract || res2.refract;
 	#endif
@@ -105,6 +124,15 @@ void assignMaterial(inout Sdf res, int materialId) {
 	res.material2 = 0;
 	res.interpolant = 0.;
 }
+#ifdef RAYTK_USE_MATERIAL_POS
+void assignMaterialWithPos(inout Sdf res, int materialId, vec3 materialPos) {
+	res.material = materialId;
+	res.material2 = 0;
+	res.materialPos = vec4(materialPos, 1.);
+	res.materialPos2 = vec4(0.);
+	res.interpolant = 0.;
+}
+#endif
 
 #ifndef RAYTK_MAX_DIST
 	#define RAYTK_MAX_DIST 99999
@@ -166,6 +194,18 @@ Context createDefaultContext() {
 	return ctx;
 }
 
+void setIterationIndex(inout Context ctx, float index) {
+	ctx.iteration = vec4(index, 0., 0., 0.);
+}
+
+void setIterationCell(inout Context ctx, vec2 cell) {
+	ctx.iteration = vec4(cell, 0., 0.);
+}
+
+void setIterationCell(inout Context ctx, vec3 cell) {
+	ctx.iteration = vec4(cell, 0.);
+}
+
 struct Light {
 	vec3 pos;
 	vec3 color;  // Includes brightness. May be determined specific to a particular point in space (such as attentuation).
@@ -187,7 +227,23 @@ struct MaterialContext {
 	Light light;
 	vec3 normal;
 	vec3 reflectColor;
+	#ifdef RAYTK_USE_MATERIAL_POS
+	vec3 materialPos;
+	#endif
 };
+
+MaterialContext createMaterialContext() {
+	MaterialContext matCtx;
+	matCtx.result = createNonHitSdf();
+	matCtx.context = createDefaultContext();
+	matCtx.ray = Ray(vec3(0.), vec3(0.));
+	matCtx.normal = vec3(0.);
+	matCtx.reflectColor = vec3(0.);
+	#ifdef RAYTK_USE_MATERIAL_POS
+	matCtx.materialPos = vec3(0.);
+	#endif
+	return matCtx;
+}
 
 struct CameraContext {
 	vec2 resolution;
@@ -198,12 +254,23 @@ struct CameraContext {
 };
 
 struct RayContext {
+	Sdf result;
 	Ray ray;
 
 	#if defined(RAYTK_TIME_IN_CONTEXT) || defined(RAYTK_USE_TIME)
 	Time time;
 	#endif
 };
+
+RayContext createRayContext(Ray ray, Sdf result) {
+	RayContext rCtx;
+	rCtx.ray = ray;
+	rCtx.result = result;
+	#if defined(RAYTK_TIME_IN_CONTEXT) || defined(RAYTK_USE_TIME)
+	rCtx.time = getGlobalTime();
+	#endif
+	return rCtx;
+}
 
 mat3 rotateMatrix(vec3 r) {
 	return TDRotateX(r.x) * TDRotateY(r.y) * TDRotateZ(r.z);
@@ -262,6 +329,14 @@ vec2 modZigZag(vec2 p) {
 	return vec2(
 		modded.x > 1 ? (2 - modded.x) : modded.x,
 		modded.y > 1 ? (2 - modded.y) : modded.y);
+}
+
+vec3 modZigZag(vec3 p) {
+	vec3 modded = mod(p, 2.);
+	return vec3(
+	modded.x > 1 ? (2 - modded.x) : modded.x,
+	modded.y > 1 ? (2 - modded.y) : modded.y,
+	modded.z > 1 ? (2 - modded.z) : modded.z);
 }
 
 vec4 modZigZag(vec4 p) {

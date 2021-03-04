@@ -1,0 +1,1 @@
+	'THIS_EXPR'	op('expr_info')[1, 'exprInterval' if parent().par.Uselimit else 'exprFull']

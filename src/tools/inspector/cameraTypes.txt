@@ -1,0 +1,4 @@
+name	label	camPath	camFuncDef	showAxes
+viewport	Viewport		linkedCamera/definition_out	1
+lookat	Look At		lookAtCamera/definition_out	0
+ortho	Ortho		orthoCamera/definition_out	0

@@ -1,7 +1,13 @@
-name	label	function	coordType	coordLength	returnType	params
-TDSimplexNoise2d	Simplex 2D	TDSimplexNoise	vec2	2	float	Translate1 Translate2 Scale1 Scale2
-TDSimplexNoise3d	Simplex 3D	TDSimplexNoise	vec3	3	float	Translate1 Translate2 Translate3 Scale1 Scale2 Scale3
-TDSimplexNoise4d	Simplex 4D	TDSimplexNoise	vec4	4	float	Translate1 Translate2 Translate3 Translate4 Scale1 Scale2 Scale3 Scale4
-TDPerlinNoise2d	Perlin 2D	TDPerlinNoise	vec2	2	float	Translate1 Translate2 Scale1 Scale2
-TDPerlinNoise3d	Perlin 3D	TDPerlinNoise	vec3	3	float	Translate1 Translate2 Translate3 Scale1 Scale2 Scale3
-TDPerlinNoise4d	Perlin 4D	TDPerlinNoise	vec4	4	float	Translate1 Translate2 Translate3 Translate4 Scale1 Scale2 Scale3 Scale4
+name	label	function	coordType	coordLength	returnType	params	libraryNames	macro
+TDSimplexNoise2d	Simplex 2D	TDSimplexNoise	vec2	2	float	Translate1 Translate2 Scale1 Scale2		
+TDSimplexNoise3d	Simplex 3D	TDSimplexNoise	vec3	3	float	Translate1 Translate2 Translate3 Scale1 Scale2 Scale3		
+TDSimplexNoise4d	Simplex 4D	TDSimplexNoise	vec4	4	float	Translate1 Translate2 Translate3 Translate4 Scale1 Scale2 Scale3 Scale4		
+TDPerlinNoise2d	Perlin 2D	TDPerlinNoise	vec2	2	float	Translate1 Translate2 Scale1 Scale2		
+TDPerlinNoise3d	Perlin 3D	TDPerlinNoise	vec3	3	float	Translate1 Translate2 Translate3 Scale1 Scale2 Scale3		
+TDPerlinNoise4d	Perlin 4D	TDPerlinNoise	vec4	4	float	Translate1 Translate2 Translate3 Translate4 Scale1 Scale2 Scale3 Scale4		
+classicperlin2d	Classic Perlin 2D	cnoise	vec2	2	float	Translate1 Translate2 Scale1 Scale2	glslNoise	NOISE_USE_CLASSIC
+classicperlin3d	Classic Perlin 3D	cnoise	vec3	3	float	Translate1 Translate2 Translate3 Scale1 Scale2 Scale3	glslNoise	NOISE_USE_CLASSIC
+classicperlin4d	Classic Perlin 4D	cnoise	vec4	4	float	Translate1 Translate2 Translate3 Translate4 Scale1 Scale2 Scale3 Scale4	glslNoise	NOISE_USE_CLASSIC
+simplex2d	Simplex 2D	snoise	vec2	2	float	Translate1 Translate2 Scale1 Scale2	glslNoise	NOISE_USE_SIMPLEX
+simplex3d	Simplex 3D	snoise	vec3	3	float	Translate1 Translate2 Translate3 Scale1 Scale2 Scale3	glslNoise	NOISE_USE_SIMPLEX
+simplex4d	Simplex 4D	snoise	vec4	4	float	Translate1 Translate2 Translate3 Translate4 Scale1 Scale2 Scale3 Scale4	glslNoise	NOISE_USE_SIMPLEX

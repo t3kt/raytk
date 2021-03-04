@@ -13,6 +13,8 @@ cat:
     image.'
   name: output
   operators:
+  - name: fieldRender
+    status: beta
   - name: functionGraphRender
     summary: Visualizes the graph of a function operator.
   - name: pointMapRender
@@ -20,6 +22,7 @@ cat:
   - name: raymarchRender3D
     summary: Renders a scene using 3D raymarching.
   - name: render2D
+    summary: Renders a 2D image by evaluating the input field for each pixel.
   - name: renderSelect
   summary: 'Outputs are a special category of operator that takes in one or more
 

@@ -89,10 +89,5 @@ op:
 
 ---
 
-# combineChamfer
-
-Category: combine
-
-
 
 Chamfer SDF combine, producing a flat surface at a 45 degree angle along the blend region.

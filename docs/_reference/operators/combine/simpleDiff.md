@@ -57,11 +57,6 @@ op:
 
 ---
 
-# simpleDiff
-
-Category: combine
-
-
 
 Combines two SDFs using the difference operator.
 

@@ -13,6 +13,7 @@ op:
   parameters:
   - label: Center
     name: Center
+    summary: The point from which distance is measured.
   - label: Coord Type
     menuOptions:
     - label: 1D
@@ -22,6 +23,7 @@ op:
     - label: 3D
       name: vec3
     name: Coordtype
+    summary: The type of coordinates to use.
   - label: Context Type
     menuOptions:
     - label: None
@@ -37,14 +39,11 @@ op:
     - label: Ray Context
       name: RayContext
     name: Contexttype
+    summary: The context type, which should usually be `Context`, except when used
+      for materials.
   summary: A float field that provides the distance from a specific point in space.
 
 ---
-
-# pointDistanceField
-
-Category: field
-
 
 
 A float field that provides the distance from a specific point in space.

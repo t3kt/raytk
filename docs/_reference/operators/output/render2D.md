@@ -8,6 +8,13 @@ redirect_from:
   - /reference/opType/raytk.operators.output.render2D/
 op:
   category: output
+  detail: 'The input field can return either vec4 which is used as RGBA, or a float,
+    which is copied to all 4 channels.
+
+    The input field can use either 2D coordinates, or 1D, in which case it only uses
+    the X axis and renders the
+
+    same result for each vertical line of pixels.'
   inputs:
   - contextTypes:
     - Context
@@ -85,32 +92,49 @@ op:
     name: Format
   - label: Alignment
     menuOptions:
-    - label: Legacy
-      name: legacy
-    - label: Bottom Left
-      name: bottomleft
-    - label: Center
+    - description: Places 0,0 in the center of the frame.
+      label: Center
       name: center
+    - description: Places 0,0 at the bottom left of the frame.
+      label: Bottom Left
+      name: bottomleft
+    - description: Old default behavior. Note that when used, `Scaling` is ignored.
+        When in doubt, don't use this.
+      label: Legacy
+      name: legacy
     name: Alignment
+    summary: How coordinates are positioned within the render frame.
   - label: Scaling
     menuOptions:
-    - label: Fill
+    - description: Stretches coordinates so both axes are -0.5 on one side and 0.5
+        on the other.
+      label: Fill
       name: fill
-    - label: Fit Inside
+    - description: Uses the smaller of the two dimensions of the frame resolution
+        to put -0.5..0.5 on that axis, and whatever the equivalent is on the other
+        axis so that the scaling remains uniform.
+      label: Fit Inside
       name: fitinside
-    - label: Fit Outside
+    - description: Equivalent to `Fit Inside` but uses the larger of the two dimensions.
+      label: Fit Outside
       name: fitoutside
     name: Scaling
-  - label: Max Distance
-    name: Maxdist
+    summary: How coordinates are scaled within the render frame.
+  - label: UV Map
+    name: Uvmap
+    summary: UV Map that is used to pick the uV coordinates used for each pixel. If
+      this is provided, the `Alignment` and `Scaling` not used.
   - label: Time Reference Operator
     name: Timerefop
   - label: Shader Builder Config
     name: Shaderbuilderconfig
+  summary: Renders a 2D image by evaluating the input field for each pixel.
 
 ---
 
-# render2D
 
-Category: output
+Renders a 2D image by evaluating the input field for each pixel.
 
+The input field can return either vec4 which is used as RGBA, or a float, which is copied to all 4 channels.
+The input field can use either 2D coordinates, or 1D, in which case it only uses the X axis and renders the
+same result for each vertical line of pixels.

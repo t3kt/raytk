@@ -1,5 +1,74 @@
 # Release Notes
 
+## v0.12
+
+### Highlights
+
+* Fix bug when attaching a camera input in raymarchRender3D! (#185)
+* Improve detection of support for `#include`, which should help for some older AMD GPUs (#34)
+* Show validation errors directly on the ops where they occur, making debugging easier (#319)
+* Support inspecting 2D/3D value fields using instanced geometry. (#148)
+* There was an issue with the "Update OP" tool, so for this release it won't work. For future upgrades from 0.12 and later to newer versions, it will work.
+
+### Details
+
+* Improvements / additions
+  * Added toolkit viewer image with version info. (#284)
+  * UV map option for render2D (#261)
+  * Option to output normals from pointMapRender (#290)
+  * Added more noise functions in noiseField
+  * Added curlNoiseField, though it is very very costly for performance (#292)
+  * Added horizontal/vertical bar option in gridSdf (#291)
+  * Added flashing help message about palette shortcut on toolkit load
+  * Added documentation for customOp
+  * 1D support for positionField
+  * Added offset field input for mirrorOctant (#307)
+  * Added documentation about iteration (#42)
+  * Added rangeTransform (#282)
+  * Added documentation for various operators
+  * Added field inputs for radius/height in prismSdf (#326)
+  * Added "reverse" parameter in lfoField (#327)
+  * Added documentation for iteration (#42)
+  * Clean up instance op and remove beta tag (#279)
+  * Support 2+ inputs in iterationSwitch, add more extend modes (#335)
+  * Clean up fieldRender and move to beta (#148, #7)
+  * Add location position support for basicMat and fieldMat (#341)
+  * Add extend modes to colorRampField
+  * Add axis and thickness parameters for discSdf (#352)
+  * Palette filter improvements, including search by initials (#347)
+  * Add support for separate textures in triPlanarTextureField (#349)
+  * Added uniform scale options in transform and iteratedTransform (#325)
+* Changes
+  * Separate custom parameters from customOp instances (#297). This may cause problems for instances of customOp from older versions.
+  * Cleanup and redesign of iteration value handling throughout toolkit (#310)
+  * Inverted the meaning of the Bulge parameter on dogBoneSdf2d to match the name
+* Fixes
+  * Fix build error in TD2021.10330 related to `op.parTuple` (#288)
+  * Attempted fix for `#include` error for older AMD GPUs. (#34)
+  * Fix bugs in limitField (#305)
+  * Fix broken "clear filter" button in opPicker (#308)
+  * Fix bug in the "smooth diff" mode in `combine` (#321)
+  * Fix missing descriptions for parameter menu options in doc site (#322)
+  * Fix missing op status tags in doc site (#329)
+  * Fix extend mode bugs in chopField / chopFn (#231, #331)
+  * Centralize Updateop logic, which will help for updates to the *next* toolkit version (#332)
+  * Fix errors after renaming ROPs (#295)
+  * Fix coordinate handling issues in render2D (#342)
+  * Fix extend mode issue in triPlanarTextureField (#348)
+  * Fix broken default expression in round (#356)
+  * Fix keyboard navigation in palette (#357)
+  * Fix duplicate typedef macro bug in shaderBuilder (#358)
+  * Fix input handling in addFn (#363)
+  * Fix parameter handling in rescaleField (#360)
+* Infrastructure / development
+  * Documentation for infrastructure and shared components (#98, #100)
+  * Documentation about ROP code, build process (#31)
+  * Added create ROP type dialog in toolkit editor (#6, #151)
+  * Lots more automated testing.
+  * Improve error details in automated testing.
+  * Clean up handling of texture inputs.
+  * Improved developer tool support for non-ROP COMPs (#107)
+
 ## v0.11
 
 * Improvements / additions

@@ -70,11 +70,6 @@ op:
 
 ---
 
-# scale
-
-Category: filter
-
-
 
 Scales space.
 

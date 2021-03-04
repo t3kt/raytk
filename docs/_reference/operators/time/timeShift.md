@@ -44,6 +44,7 @@ op:
     name: shift_definition_in
     returnTypes:
     - float
+    summary: Value field used to add to the `Shift` value.
   name: timeShift
   opType: raytk.operators.time.timeShift
   parameters:
@@ -51,21 +52,27 @@ op:
     name: Enable
   - label: Shift
     name: Shift
+    summary: Fixed offset to apply to contextual time of upstream operators.
   - label: Interval Type
     menuOptions:
-    - label: Seconds (Timeline)
+    - description: Shifts timeline time by seconds (also updates timeline frame).
+      label: Seconds (Timeline)
       name: seconds
-    - label: Frames (Timeline)
+    - description: Shifts timeline time by frames (also updates timeline seconds).
+      label: Frames (Timeline)
       name: frames
-    - label: Seconds (Absolute)
+    - description: Shifts absolute time by seconds (also updates absolute seconds).
+      label: Seconds (Absolute)
       name: absseconds
-    - label: Frames (Absolute)
+    - description: Shifts absolute time by frames (also updates absolute frame).
+      label: Frames (Absolute)
       name: absframes
     name: Intervaltype
+    summary: The unit and part of time to shift.
+  summary: Shifts contextual time for upstream operators, either by a fixed amount
+    or using a value field.
 
 ---
 
-# timeShift
 
-Category: time
-
+Shifts contextual time for upstream operators, either by a fixed amount or using a value field.

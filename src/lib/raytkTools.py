@@ -1,7 +1,7 @@
 from pathlib import Path
 from raytkDocs import OpDocManager
 from raytkModel import OpDefMeta_OLD, OpSpec_OLD
-from raytkUtil import RaytkContext, ROPInfo, focusCustomParameterPage, RaytkTags
+from raytkUtil import RaytkContext, ROPInfo, focusCustomParameterPage, RaytkTags, CategoryInfo
 from typing import List, Optional
 
 # noinspection PyUnreachableCode
@@ -10,6 +10,10 @@ if False:
 	from _stubs import *
 
 class RaytkTools(RaytkContext):
+	"""
+	Utility that provides tools used to modify the toolkit, for use in development tools.
+	"""
+
 	def generateROPType(self, comp: 'COMP'):
 		info = ROPInfo(comp)
 		if not info.isMaster:
@@ -208,6 +212,50 @@ class RaytkTools(RaytkContext):
 			if info:
 				info.toolkitVersion = version
 
+	def _templateForCategory(self, category: str) -> 'Optional[COMP]':
+		catInfo = self.categoryInfo(category)
+		template = catInfo and catInfo.templateComp
+		if template:
+			return template
+		catInfo = self.categoryInfo('utility')
+		return catInfo and catInfo.templateComp
+
+	def createNewRopType(self, typeName: str, category: str) -> 'Optional[COMP]':
+		catInfo = self.categoryInfo(category)
+		if not catInfo:
+			raise Exception(f'Category not found: {category}')
+		template = self._templateForCategory(category)
+		if not template:
+			raise Exception(f'Template not found for category {category}')
+		existing = catInfo.category.op('./' + typeName)
+		if existing:
+			raise Exception(f'ROP {typeName} already exists in category {category}')
+		fileDir = f'src/operators/{category}'
+		rop = catInfo.category.copy(template, name=typeName)  # type: COMP
+		rop.par.clone = rop.path
+		rop.par.externaltox = f'{fileDir}/{typeName}.tox'
+		codeDat = rop.op('./function')
+		codeDat.par.file = f'{fileDir}/{typeName}.glsl'
+		codeDat.par.syncfile = False
+		codeDat.par.writepulse.pulse()
+		RaytkTags.fileSync.apply(codeDat, True)
+		self.saveROP(rop)
+		self.organizeCategory(catInfo.category)
+		return rop
+
+	@staticmethod
+	def organizeCategory(comp: 'COMP'):
+		catInfo = CategoryInfo(comp)
+		rops = catInfo.operators
+		if not rops:
+			return
+		rops.sort(key=lambda r: r.name)
+		for i, rop in enumerate(rops):
+			rop.nodeY = -int(i / 10) * 150
+			rop.nodeX = int(i % 10) * 200
+		catInfo.category.save(catInfo.category.par.externaltox)
+
+# INCOMPLETE AND UNTESTED
 class AutoLoader:
 	def __init__(self, folderComp: 'COMP'):
 		self.folderComp = folderComp

@@ -36,11 +36,6 @@ op:
 
 ---
 
-# injectGlobalPosition
-
-Category: utility
-
-
 
 Calls its input using the untransformed global position.
 

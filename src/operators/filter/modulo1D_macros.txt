@@ -1,0 +1,1 @@
+'THIS_FUNC'	op('mirror_funcs')[parent().par.Mirrortype.eval(), 2 if parent().par.Uselimit else 1]

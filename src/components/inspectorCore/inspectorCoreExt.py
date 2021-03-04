@@ -56,30 +56,12 @@ class InspectorCore:
 		if not o:
 			self.Reset()
 			return
-		if isROPDef(o) and o.par['Hostop']:
-			o = o.par.Hostop.eval()
-		if o.isDAT and o.isTable and o.numRows > 1:
-			self.inspectDefinitionTable(o)
-		elif isROP(o):
-			self.inspectComp(o)
+		info = ROPInfo(o)
+		if info.isROP or info.isRComp:
+			self.inspectComp(info.rop)
 		else:
 			# TODO: better error handling
 			raise Exception(f'Unsupported OP: {o!r}')
-
-	def inspectDefinitionTable(self, dat: 'DAT'):
-		if isROP(dat.parent()) and dat.name == 'definition' and dat[1, 'path'] == dat.parent().path:
-			self.inspectComp(dat.parent())
-			return
-		self.state.Rawtarget = dat
-		self.state.Targettype = InspectorTargetTypes.definitionTable
-		self.state.Definitiontable = _pathOrEmpty(dat)
-		comp = op(dat[1, 'path'])
-		self.state.Targetcomp = _pathOrEmpty(comp)
-		self.state.Hastarget = True
-		self.state.Hasownviewer = False
-		ropInfo = ROPInfo(comp)
-		self.updateVisualizerType()
-		self.AttachOutputComp(comp if ropInfo.isOutput else None)
 
 	def inspectComp(self, comp: 'COMP'):
 		self.state.Rawtarget = _pathOrEmpty(comp)

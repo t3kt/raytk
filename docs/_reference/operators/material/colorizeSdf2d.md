@@ -48,8 +48,3 @@ op:
     name: Outsidecolor2
 
 ---
-
-# colorizeSdf2d
-
-Category: material
-

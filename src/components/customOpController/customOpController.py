@@ -5,7 +5,7 @@ if False:
 	# noinspection PyUnresolvedReferences
 	from _stubs import *
 	import _stubs.TDJSON as TDJSON
-	from typing import Any, Dict, List, Optional, Set
+	from typing import Any, Dict, List, Optional, Set, Type
 
 # noinspection PyRedeclaration
 TDJSON = op.TDModules.mod.TDJSON
@@ -22,6 +22,10 @@ class CustomOp:
 
 	def opDef(self) -> 'Optional[COMP]':
 		return self.ownerComp.par.Opdef.eval()
+
+	def paramsOp(self) -> 'Optional[COMP]':
+		host = self.host()
+		return host and op(host.par['Paramsop'])
 
 	def Installinhost(self, _=None):
 		host = self.host()
@@ -74,14 +78,31 @@ class CustomOp:
 	def Removeunusedparams(self, _=None):
 		self._updateParams(removeUnused=True, createMissing=False)
 
+	def Createparamsop(self, _=None):
+		host = self.host()
+		parOp = self.paramsOp()
+		if parOp:
+			return
+		parOp = host.parent().create(baseCOMP, host.name + '_params')
+		parOp.nodeX = host.nodeX
+		parOp.nodeY = host.nodeY + 175
+		parOp.dock = host
+		host.showDocked = True
+		parOp.appendCustomPage('Parameters')
+		host.par.Paramsop = parOp
+		return parOp
+
 	def _updateParams(self, removeUnused: bool, createMissing: bool):
 		host = self.host()
-		print(f'Updating params for {host}')
+		paramsOp = self.paramsOp()
+		if not paramsOp:
+			paramsOp = self.Createparamsop()
+		print(f'Updating params for {host} using {paramsOp}')
 		referencedNames = self._allReferencedParamNames()
 		specs = self._paramSpecsFromCode()
 
 		TDJSON.addParametersFromJSONDict(
-			host,
+			paramsOp,
 			specs,
 			replace=True,
 			setValues=False,
@@ -90,11 +111,10 @@ class CustomOp:
 		)
 
 		if createMissing and referencedNames:
-			page = host.appendCustomPage('Parameters')
-			host.sortCustomPages(*(['Parameters'] + [pg.name for pg in host.customPages if pg.name != 'Parameters']))
+			page = paramsOp.appendCustomPage('Parameters')
 			knownTupletNames = [
 				parTuplet[0].tupletName
-				for parTuplet in host.customTuplets
+				for parTuplet in paramsOp.customTuplets
 			]
 			for name in referencedNames:
 				# attempting to check host.par[tupletName] throws an exception instead of just returning none,
@@ -115,23 +135,23 @@ class CustomOp:
 					continue
 				parTuplet[0].destroy()
 
-		paramTable = self.ownerComp.par.Paramnametable.eval()  # type: DAT
-		if paramTable:
-			paramTable.clear()
-			names = []
-			tupletNames = {
-				parTuplet[0].tupletName: [p.name for p in parTuplet]
-				for parTuplet in self._hostParamTuplets()
-			}
-			for name in list(referencedNames) + [spec['name'] for spec in specs.values() if spec.get('name')]:
-				if name not in tupletNames:
-					if name not in names:
-						names.append(name)
-				else:
-					for partName in tupletNames[name]:
-						if partName not in names:
-							names.append(partName)
-			paramTable.appendRow([' '.join(names)])
+	def buildParamTable(self, dat: 'DAT'):
+		dat.clear()
+		referencedNames = self._allReferencedParamNames()
+		names = []
+		tupletNames = {
+			parTuplet[0].tupletName: [p.name for p in parTuplet]
+			for parTuplet in self._hostParamTuplets()
+		}
+		for name in list(referencedNames):
+			if name not in tupletNames:
+				if name not in names:
+					names.append(name)
+			else:
+				for partName in tupletNames[name]:
+					if partName not in names:
+						names.append(partName)
+		dat.appendRow([' '.join(names)])
 
 	def _allCodeBlocks(self) -> 'List[str]':
 		return [
@@ -160,18 +180,33 @@ class CustomOp:
 		return specs
 
 	def _hostParamTuplets(self) -> 'List[ParTupletT]':
-		host = self.host()
-		for page in host.customPages:
-			if page.name == 'Parameters':
-				return page.parTuplets
-		return []
+		paramsOp = self.paramsOp()
+		return paramsOp.customTuplets if paramsOp else []
 
 def _createCodeDat(host: 'COMP', template: 'Optional[DAT]', nameSuffix: str, offsetX: int) -> 'DAT':
-	dat = host.parent().create(textDAT, host.name + nameSuffix)
-	dat.text = template.text if template else ''
-	dat.par.extension = 'glsl'
+	return _createDat(
+		host, textDAT,
+		template, nameSuffix,
+		offsetX, -150,
+	)
+
+def _createDat(
+		host: 'COMP',
+		opType: 'Type[DAT]',
+		template: 'Optional[DAT]',
+		nameSuffix: str,
+		offsetX: int, offsetY: int) -> 'DAT':
+	dat = host.parent().create(opType, host.name + nameSuffix)
+	if template:
+		dat.copy(template)
+	elif dat.isText:
+		dat.text = ''
+	else:
+		dat.clear()
+	if dat.isText:
+		dat.par.extension = 'glsl'
 	dat.nodeX = host.nodeX + offsetX
-	dat.nodeY = host.nodeY - host.nodeHeight - 120
+	dat.nodeY = host.nodeY + offsetY
 	dat.dock = host
 	host.showDocked = True
 	dat.viewer = True

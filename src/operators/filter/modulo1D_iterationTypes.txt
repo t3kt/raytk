@@ -1,0 +1,4 @@
+name	label
+none	None
+cellcoord	Cell Coordinate
+alternatingcoord	Alternating Cell Coordinate (0,1,0,1)

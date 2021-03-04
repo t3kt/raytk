@@ -1,0 +1,7 @@
+name	label	begin	end
+custom	Custom		
+octahedron	Octahedron	3	6
+dodecahedron	Dodecahedron	13	18
+icosahedron	Icosahedron	3	12
+truncatedoctahedron	Truncated Octahedron	0	6
+truncatedicosahedron	Truncated Icosahedron	3	18

@@ -17,8 +17,3 @@ op:
     name: Exponent
 
 ---
-
-# superQuadSdf2d
-
-Category: sdf2d
-

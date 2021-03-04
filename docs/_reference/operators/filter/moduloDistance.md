@@ -59,8 +59,3 @@ op:
     name: Iterateonrings
 
 ---
-
-# moduloDistance
-
-Category: filter
-

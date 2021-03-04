@@ -85,10 +85,5 @@ op:
 
 ---
 
-# edgeGroove
-
-Category: combine
-
-
 
 Creates a raised bar or indented groove where the second input intersects with the first.

@@ -1,10 +1,10 @@
 ReturnT thismap(CoordT p, ContextT ctx) {
 	int n = int(THIS_Instancecount);
-	ctx.iteration = vec4(0, n, 0, 0);
+	setIterationIndex(ctx, 0);
 	ReturnT res1 = inputOp1(p, ctx);
 	float r = THIS_Radius;
 	for (int i = 0; i < n; i++) {
-		ctx.iteration.x = i;
+		setIterationIndex(ctx, i);
 		ReturnT res2 = inputOp1(p, ctx);
 		#ifdef THIS_COMBINE_EXPR_IS_SDF
 		res1 = THIS_COMBINE_EXPR;

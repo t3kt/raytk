@@ -1,0 +1,1 @@
+'texture'	op(parent().par.Texture) or op('blank')

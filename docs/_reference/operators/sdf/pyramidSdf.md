@@ -24,10 +24,5 @@ op:
 
 ---
 
-# pyramidSdf
-
-Category: sdf
-
-
 
 A pyramid with four sides.

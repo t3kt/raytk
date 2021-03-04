@@ -27,8 +27,3 @@ op:
   status: beta
 
 ---
-
-# checkerboardMat
-
-Category: material
-

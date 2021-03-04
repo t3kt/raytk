@@ -1,0 +1,4 @@
+name	label
+none	None
+index	Quadrant Index (0-3)
+sign	Signed Axes (-1/1, -1/1)

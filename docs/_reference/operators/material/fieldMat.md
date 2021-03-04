@@ -27,12 +27,15 @@ op:
     name: color_definition_in
     required: true
     returnTypes:
+    - float
     - vec4
   name: fieldMat
   opType: raytk.operators.material.fieldMat
   parameters:
   - label: Enable
     name: Enable
+  - label: Use Local Position
+    name: Uselocalpos
   summary: 'A material that uses a vector field input to determine
 
     the color. Essentially this is a conversion from a
@@ -40,11 +43,6 @@ op:
     field to a material, with no other features.'
 
 ---
-
-# fieldMat
-
-Category: material
-
 
 
 A material that uses a vector field input to determine

@@ -26,11 +26,6 @@ op:
 
 ---
 
-# solidAngleSdf
-
-Category: sdf
-
-
 
 A conical slice of a sphere.
 

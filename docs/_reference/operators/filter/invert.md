@@ -38,11 +38,6 @@ op:
 
 ---
 
-# invert
-
-Category: filter
-
-
 
 Invert an SDF, so that the inside is the outside.
 

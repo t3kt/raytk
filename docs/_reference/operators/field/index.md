@@ -21,7 +21,6 @@ cat:
     summary: A value field that provides an approximation of repeating cellular (voronoi)
       noise.
   - name: chopField
-    status: beta
   - name: colorRampField
     summary: A vector field that maps an input field to values from a range of colors.
   - name: constantColorField
@@ -29,8 +28,11 @@ cat:
   - name: constantField
     summary: A float or vector field that evaluates to a constant value.
   - name: contextValueField
+    status: beta
     summary: Field that returns various fields from the context, from a downstream
       OP.
+  - name: curlNoiseField
+    summary: Curl noise field.
   - name: iterationField
     summary: Field that returns the current iteration, from a downstream OP.
   - name: metaballField
@@ -45,10 +47,10 @@ cat:
   - name: positionField
     summary: A vector field that evaluates to the coordinates in space.
   - name: reorderField
+    status: beta
   - name: textureField
     summary: A float or vector field that looks up values from a texture.
   - name: triPlanarTextureField
-    status: beta
   - name: waveField
     summary: A field that uses a periodic wave.
   - name: waveletNoiseField

@@ -30,10 +30,9 @@ op:
   parameters:
   - label: Enable
     name: Enable
+  summary: Converts a float value field into an SDF.
 
 ---
 
-# floatToSdf
 
-Category: convert
-
+Converts a float value field into an SDF.

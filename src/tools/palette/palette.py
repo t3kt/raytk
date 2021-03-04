@@ -1,5 +1,5 @@
 from typing import Optional
-from raytkUtil import RaytkContext, detachTox, focusCustomParameterPage, ROPInfo
+from raytkUtil import RaytkContext, detachTox, focusCustomParameterPage, ROPInfo, IconColors
 
 # noinspection PyUnreachableCode
 if False:
@@ -60,6 +60,9 @@ class Palette:
 		ipar.uiState.Pinopen = False
 		ext.opPicker.Loaditems()
 		ext.opPicker.FocusFilterField()
+		image = RaytkContext().libraryImage()
+		if image and image.par['Showshortcut'] is not None:
+			image.par.Showshortcut = False
 
 	def close(self):
 		self._resetCloseTimer()
@@ -148,6 +151,7 @@ class Palette:
 			else:
 				par.val = par.default
 		newOp.allowCooking = True
+		newOp.color = IconColors.defaultBgColor
 		ropInfo = ROPInfo(newOp)
 		ropInfo.invokeCallback('onCreate', master=template)
 		ui.undo.endBlock()

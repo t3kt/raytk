@@ -1,5 +1,5 @@
 ReturnT thismap(CoordT p, MaterialContext ctx) {
-	vec3 uv = p;
+	vec3 uv = p - 0.5;
 	uv = (uv - THIS_Translate) / THIS_Scale;
 	#if defined(THIS_Extendmode_hold)
 	uv = clamp(uv, 0, 1);
@@ -18,9 +18,15 @@ ReturnT thismap(CoordT p, MaterialContext ctx) {
 	#endif
 	vec3 n = abs(ctx.normal);
 	n *= n;
+	#ifdef THIS_Useseparatetextures
+	vec3 colXY = texture(THIS_textureX, uv.xy).rgb;
+	vec3 colYZ = texture(THIS_textureY, uv.yz).rgb;
+	vec3 colZX = texture(THIS_textureZ, uv.zx).rgb;
+	#else
 	vec3 colXY = texture(THIS_texture, uv.xy).rgb;
 	vec3 colYZ = texture(THIS_texture, uv.yz).rgb;
 	vec3 colZX = texture(THIS_texture, uv.zx).rgb;
+	#endif
 
 	vec3 col = colXY * n.z + colYZ * n.x + colZX * n.y;
 	vec4 value = vec4(col, 1);

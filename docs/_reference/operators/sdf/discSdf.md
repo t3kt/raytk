@@ -19,14 +19,20 @@ op:
   - label: Radius
     name: Radius
     summary: The radius of the disc.
+  - label: Axis
+    menuOptions:
+    - label: X
+      name: x
+    - label: Y
+      name: y
+    - label: Z
+      name: z
+    name: Axis
+  - label: Thickness
+    name: Thickness
   summary: A flat disc facing the Y axis.
 
 ---
-
-# discSdf
-
-Category: sdf
-
 
 
 A flat disc facing the Y axis.

@@ -10,6 +10,10 @@ if False:
 	from typing import List, Optional, Union
 
 class BuildContext:
+	"""
+	Utility that is passed through parts of the build process to provide common tools.
+	"""
+
 	def __init__(self, log: Callable[[str], None]):
 		self.log = log
 
@@ -78,6 +82,8 @@ class BuildContext:
 
 	def lockOps(self, os: 'List[OP]'):
 		for o in os:
+			if o.lock:
+				continue
 			self.log(f'Locking {o}')
 			o.lock = True
 
@@ -85,6 +91,11 @@ class BuildContext:
 		self.log(f'Locking build locked ops in {comp}')
 		toLock = comp.findChildren(tags=[RaytkTags.buildLock.name])
 		self.lockOps(toLock)
+
+	def removeBuildExcludeOps(self, comp: 'COMP'):
+		self.log(f'Removing build excluded ops from {comp}')
+		toRemove = list(comp.findChildren(tags=[RaytkTags.buildExclude.name]))
+		self.safeDestroyOps(toRemove)
 
 	@staticmethod
 	def queueAction(action: Callable, *args):
@@ -123,6 +134,9 @@ class BuildTaskContext(BuildContext):
 		self.finish()
 
 class DocProcessor:
+	"""
+	Tool used to extract and process documentation for ROPs.
+	"""
 	def __init__(self, context: 'BuildContext', outputFolder: 'Union[str, Path]'):
 		self.context = context
 		self.outputFolder = Path(outputFolder)

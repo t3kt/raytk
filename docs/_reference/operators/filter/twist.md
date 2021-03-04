@@ -54,10 +54,5 @@ op:
 
 ---
 
-# twist
-
-Category: filter
-
-
 
 Twists space around an axis.

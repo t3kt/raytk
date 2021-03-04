@@ -94,11 +94,6 @@ op:
 
 ---
 
-# blend
-
-Category: combine
-
-
 
 Smoothly blends/morphs between up to 4 SDFs.
 

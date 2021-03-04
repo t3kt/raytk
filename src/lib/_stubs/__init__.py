@@ -985,6 +985,7 @@ class DAT(OP):
 	def run(
 			self, *args, endFrame=False, fromOP: 'OP' = None, asParameter=False, group=None, delayFrames=0,
 			delayMilliSeconds=0, delayRef: 'OP' = None) -> Run: pass
+	def save(self, filepath: str = None, append=False, createFolders=False) -> str: pass
 	module: 'MOD'
 	numRows: int
 	numCols: int
@@ -1532,7 +1533,7 @@ _AnyOpT = _T.Union[OP, DAT, COMP, CHOP, SOP, TOP, MAT, '_AnyCompT']
 
 baseCOMP = COMP
 panelCOMP = PanelCOMP
-mergeDAT = nullDAT = parameterexecuteDAT = parameterDAT = tableDAT = textDAT = scriptDAT = inDAT = outDAT = DAT
+mergeDAT = nullDAT = parameterexecuteDAT = parameterDAT = tableDAT = textDAT = scriptDAT = inDAT = outDAT = infoDAT = DAT
 parameterCHOP = nullCHOP = selectCHOP = inCHOP = outCHOP = CHOP
 inTOP = outTOP = TOP
 importselectSOP = SOP

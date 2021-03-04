@@ -1,7 +1,6 @@
 {
   "meta": {
-    "opStatus": "beta",
     "opType": "raytk.operators.filter.instance",
-    "opVersion": 0
+    "opVersion": 3
   }
 }

@@ -21,10 +21,5 @@ op:
 
 ---
 
-# tetrahedronSdf
-
-Category: sdf
-
-
 
 Tetrahedron shape.

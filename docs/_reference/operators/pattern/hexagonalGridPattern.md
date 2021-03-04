@@ -32,8 +32,3 @@ op:
     name: Thickness
 
 ---
-
-# hexagonalGridPattern
-
-Category: pattern
-

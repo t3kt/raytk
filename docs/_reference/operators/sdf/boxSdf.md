@@ -50,10 +50,5 @@ op:
 
 ---
 
-# boxSdf
-
-Category: sdf
-
-
 
 SDF for a box, optionally infinite one one axis.

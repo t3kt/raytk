@@ -1,0 +1,6 @@
+type	outputOp	render	useOutputBuffer
+none			0
+field	fieldRender	fieldRender/render_out	0
+render2d	render2D	render2D/color_out	1
+render3d	raymarchRender3D	raymarchRender3D/color_out	1
+functionGraph	functionGraphRender	functionGraphRender/color_out	1

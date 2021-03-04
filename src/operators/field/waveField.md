@@ -16,6 +16,7 @@ Without an input, the Axis is used to run the wave function on the position alon
   * `x`
   * `y`
   * `z`
+  * `dist`: Uses distance from the origin instead of an axis.
 * `Coordtype`
   * `float`
   * `vec2`
@@ -35,4 +36,4 @@ Without an input, the Axis is used to run the wave function on the position alon
 ## Inputs
 
 * `definition_in`:  If attached, the wave will use this to determine the numbers that it passes to the wave function (instead of using the position along the chosen `Axis`).
-* `period_field_definition_in` *Period Field*: If attached, the wave will use this field to multiply the `Period` parameter, which can be used for frequency modulation.
+* `period_field_definition_in`:  If attached, the wave will use this field to multiply the `Period` parameter, which can be used for frequency modulation.

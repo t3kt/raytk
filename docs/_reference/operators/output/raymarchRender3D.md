@@ -215,10 +215,5 @@ op:
 
 ---
 
-# raymarchRender3D
-
-Category: output
-
-
 
 Renders a scene using 3D raymarching.

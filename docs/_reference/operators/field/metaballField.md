@@ -55,10 +55,5 @@ op:
 
 ---
 
-# metaballField
-
-Category: field
-
-
 
 Metaball value field.

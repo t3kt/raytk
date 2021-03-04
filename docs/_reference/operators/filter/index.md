@@ -23,10 +23,14 @@ cat:
     summary: Splits a shape into pieces, moves them apart, and connects them.
   - name: extend
   - name: fieldExpr
+    status: beta
   - name: flip
+    summary: Flips the input across an axis, either on its own or merged with the
+      original.
   - name: fold
   - name: instance
-    status: beta
+    summary: Repeats its input some number of times, exposing the index as the iteration
+      x value, and combines the results.
   - name: invert
     summary: Invert an SDF, so that the inside is the outside.
   - name: iteratedTransform
@@ -41,6 +45,7 @@ cat:
     summary: Mirror coordinates across two axes and the diagonals.
   - name: mobiusTransform
   - name: modulo1D
+    summary: Repeats space along one axis.
   - name: modulo2D
     summary: Repeats space along 2 axes.
   - name: modulo3D
@@ -49,6 +54,7 @@ cat:
   - name: moduloPolar
     summary: Repeats space radially, like a kaleidoscope.
   - name: onion
+    summary: Converts a solid SDF to a thin shell of the surface.
   - name: quantizeCoords
     summary: Quantize coordinates to a 3D grid, which is sort of like "voxelizing"
       the space.
@@ -56,9 +62,14 @@ cat:
     status: beta
   - name: radialClone
     summary: Repeats an SDF radially around an axis, combining the resulting shapes.
+  - name: rangeTransform
+    status: beta
+    summary: Applies a transform based on a range of settings, mapped with either
+      the iteration value or a field input.
   - name: reflect
     summary: Reflects space across a plane.
   - name: reorderCoords
+    summary: Swaps axes for the input.
   - name: rescaleField
   - name: rotate
   - name: round
@@ -67,6 +78,7 @@ cat:
   - name: scale
     summary: Scales space.
   - name: slice
+    summary: Removes all of an SDF except for a slice in space.
   - name: spiralZoom
     status: beta
   - name: transform

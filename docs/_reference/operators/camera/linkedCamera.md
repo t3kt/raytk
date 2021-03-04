@@ -29,11 +29,6 @@ op:
 
 ---
 
-# linkedCamera
-
-Category: camera
-
-
 
 A camera that is linked to an existing TD Camera COMP.
 

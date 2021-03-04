@@ -22,18 +22,12 @@ op:
       name: vec3
     name: Coordtype
     summary: Switches between 2D and 3D gyroids.
-  - label: Context Type
-    menuOptions:
-    - label: None
-      name: none
-    - label: Context
-      name: Context
-    - label: Material Context
-      name: MaterialContext
-    - label: Camera Context
-      name: CameraContext
-    - label: Light Context
-      name: LightContext
+  - menuOptions:
+    - name: none
+    - name: Context
+    - name: MaterialContext
+    - name: CameraContext
+    - name: LightContext
     name: Contexttype
     summary: Advanced parameter that should usually just be set to `Context`.
   - label: Translate
@@ -65,14 +59,10 @@ op:
   - label: Thickness
     name: Thickness
     summary: Expands the surfaces producing thicker shapes.
+  status: beta
   summary: Gyroid shape, which is an infinitely connected periodic surface.
 
 ---
-
-# gyroidSdf
-
-Category: sdf
-
 
 
 Gyroid shape, which is an infinitely connected periodic surface.

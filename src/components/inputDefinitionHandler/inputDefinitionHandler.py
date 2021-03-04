@@ -9,10 +9,9 @@ if False:
 def checkInputDefinition(dat: 'DAT'):
 	dat.clear()
 	dat.copy(dat.inputs[0])
-	clearInputTypeErrors()
 	if dat.numRows < 2:
 		return
-	_checkTableTypes(dat, parent().addScriptError, ignoreEmpty=False)
+	_checkTableTypes(dat, None, ignoreEmpty=False)
 
 def _checkType(typeName: str, typeCategory: str, onError: 'Optional[Callable[[str], None]]', ignoreEmpty: bool):
 	if not typeName:
@@ -35,8 +34,16 @@ def _checkTableTypes(dat: 'DAT', onError: 'Optional[Callable[[str], None]]', ign
 	_checkType(str(dat[1, 'contextType'] or ''), 'contextType', onError, ignoreEmpty)
 	_checkType(str(dat[1, 'returnType'] or ''), 'returnType', onError, ignoreEmpty)
 
-def clearInputTypeErrors():
-	parent().clearScriptErrors(error='Input does not support *')
+def onSupportChange():
+	_handleChange()
+
+def onInputDefinitionChange():
+	_handleChange()
+
+def _handleChange():
+	d = op('check_definition')
+	if d:
+		d.cook(force=True)
 
 def updateTypeParMenus():
 	helper = TypeTableHelper(op('typeTable'))

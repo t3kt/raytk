@@ -1,0 +1,2 @@
+none	pMod1	pModInterval1
+mirror	pModMirror1	pModIntervalMirror1

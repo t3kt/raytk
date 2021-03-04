@@ -1,0 +1,6 @@
+name	label	returnType
+full	Full Vector	vec4
+x	X	float
+y	Y	float
+z	Z	float
+w	W	float

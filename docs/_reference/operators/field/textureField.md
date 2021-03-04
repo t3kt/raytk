@@ -20,10 +20,12 @@ op:
     - float
     - vec2
     - vec3
-    label: UV Field
+    label: UV Map Field
     name: uv_field_definition_in
     returnTypes:
     - vec4
+    summary: When provided, this field is used to calculate the UV coordinates (in
+      the x and y parts of the vec4).
   name: textureField
   opType: raytk.operators.field.textureField
   parameters:
@@ -31,13 +33,18 @@ op:
     name: Enable
   - label: Coord Type
     menuOptions:
-    - label: 1D
+    - description: Uses the 1D coordinate as U and 0 for V.
+      label: 1D
       name: float
-    - label: 2D
+    - description: Uses the provided 2D coordinates.
+      label: 2D
       name: vec2
-    - label: 3D
+    - description: Uses the specified `Axis` to choose which axes to use for U and
+        V.
+      label: 3D
       name: vec3
     name: Coordtype
+    summary: The type of coordinates used for UV mapping.
   - label: Return Type
     menuOptions:
     - label: Float
@@ -58,21 +65,30 @@ op:
     - label: Light Context
       name: LightContext
     name: Contexttype
+    summary: When used for materials, set to `MaterialContext`, otherwise use `Context`.
   - label: Plane
     menuOptions:
-    - label: YZ
+    - description: U=Y, V=Z
+      label: YZ
       name: x
-    - label: ZX
+    - description: U=Z, V=X
+      label: ZX
       name: y
-    - label: XY
+    - description: U=X, V=Y
+      label: XY
       name: z
     name: Axis
+    summary: When using 3D coordinates, the axis that faces the plane used for UV.
+      This is not used when a UV field input is attached.
   - label: Translate
     name: Translate
+    summary: Offsets the UV coordinates.
   - label: Scale
     name: Scale
+    summary: Scales the UV coordinates.
   - label: Texture
     name: Texture
+    summary: TOP used for the texture.
   - label: Extend Mode
     menuOptions:
     - label: Hold
@@ -84,14 +100,10 @@ op:
     - label: Mirror
       name: mirror
     name: Extendmode
+    summary: How to handle UV coordinates outside the 0..1 range.
   summary: A float or vector field that looks up values from a texture.
 
 ---
-
-# textureField
-
-Category: field
-
 
 
 A float or vector field that looks up values from a texture.

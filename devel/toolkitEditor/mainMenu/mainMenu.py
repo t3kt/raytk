@@ -7,6 +7,7 @@ if False:
 	from _stubs import *
 	from _typeAliases import *
 	from ..ropEditor.ropEditor import ROPEditor
+	from ..createRopDialog.createRopDialog import CreateRopDialog
 	ext.ropEditor = ROPEditor(COMP())
 
 	class _UiStatePar(ParCollection):
@@ -20,6 +21,7 @@ if False:
 
 	iop.uiState = _UiStateComp()
 	ipar.uiState = _UiStatePar()
+	iop.createRopDialog = CreateRopDialog(COMP())
 
 class MainMenu:
 	menus: 'Dict[str, List[_MenuItem]]'
@@ -39,6 +41,13 @@ class MainMenu:
 						'Save New Version',
 						menuName='File',
 						action=lambda: ext.ropEditor.saveROP(incrementVersion=True),
+						dividerAfter=True,
+					),
+					_MenuItem(
+						'createNewRopType',
+						'Create New ROP Type',
+						menuName='File',
+						action=lambda: iop.createRopDialog.Open(),
 					),
 				],
 			'View': [
@@ -133,7 +142,7 @@ class _MenuItem:
 	depth: int = 1
 	checked: 'Optional[str]' = None
 	itemValue: 'Optional[str]' = None
-	dividerAfter = False
+	dividerAfter: bool = False
 	action: 'Callable[[], None]' = None
 
 	def toMenuItemObj(self):

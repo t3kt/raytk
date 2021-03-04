@@ -1,6 +1,6 @@
 {
   "meta": {
     "opType": "raytk.operators.filter.flip",
-    "opVersion": 3
+    "opVersion": 4
   }
 }

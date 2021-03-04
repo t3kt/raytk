@@ -36,8 +36,3 @@ op:
     name: Blending
 
 ---
-
-# brickPattern
-
-Category: pattern
-

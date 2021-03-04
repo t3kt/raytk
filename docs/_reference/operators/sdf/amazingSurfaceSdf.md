@@ -21,8 +21,3 @@ op:
     name: Stepclamprange
 
 ---
-
-# amazingSurfaceSdf
-
-Category: sdf
-

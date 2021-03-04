@@ -49,11 +49,6 @@ op:
 
 ---
 
-# spiralSdf
-
-Category: sdf
-
-
 
 A tapering spiral squared tube.
 

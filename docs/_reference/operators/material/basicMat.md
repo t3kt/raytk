@@ -54,10 +54,7 @@ op:
     name: Specularexp
   - label: Enable Shadow
     name: Enableshadow
+  - label: Use Local Position
+    name: Uselocalpos
 
 ---
-
-# basicMat
-
-Category: material
-

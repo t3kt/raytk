@@ -15,8 +15,3 @@ op:
     name: Width
 
 ---
-
-# parabolaSdf2d
-
-Category: sdf2d
-

@@ -66,10 +66,5 @@ op:
 
 ---
 
-# coneSdf
-
-Category: sdf
-
-
 
 Defines a cone or capped cone shape.

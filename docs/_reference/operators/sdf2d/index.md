@@ -13,10 +13,14 @@ cat:
   name: sdf2d
   operators:
   - name: circleSdf
+    summary: 2D circle SDF.
   - name: cornerSdf2d
+    summary: 2D SDF for an infinite corner, like an infinite square positioned by
+      one corner.
   - name: crossSdf2d
     summary: 2D cross shape SDF, with 4 arms and option rounding of the intersections.
   - name: dogBoneSdf2d
+    summary: 2D SDF for two connected circles.
   - name: parabolaSdf2d
   - name: pieSdf2d
   - name: polygonSdf2d

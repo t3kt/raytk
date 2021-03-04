@@ -77,7 +77,8 @@ op:
       name: y
     - label: Z
       name: z
-    - label: Distance From Origin
+    - description: Uses distance from the origin instead of an axis.
+      label: Distance From Origin
       name: dist
     name: Axis
     summary: If there is no input, the coordinate along this axis is used for the
@@ -123,11 +124,6 @@ op:
   summary: A field that uses a periodic wave.
 
 ---
-
-# waveField
-
-Category: field
-
 
 
 A field that uses a periodic wave.

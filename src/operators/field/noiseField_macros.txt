@@ -1,0 +1,4 @@
+	'THIS_NOISE_COORD_' + op('expr_info')[1, 'coordType']	
+	'THIS_NOISE_COORD_TYPE'	op('expr_info')[1, 'coordType']
+	'THIS_FUNCTION'	op('expr_info')[1, 'function']
+	op('expr_info')[1, 'macro'] or ''	

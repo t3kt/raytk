@@ -64,8 +64,3 @@ op:
     name: Offset
 
 ---
-
-# waveletNoiseField
-
-Category: field
-

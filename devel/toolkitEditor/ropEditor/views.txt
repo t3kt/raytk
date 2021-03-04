@@ -6,3 +6,4 @@ inputs	Inputs	inputsPanel
 paramConfig	Param Config		
 tables	Tables	tableEditorPanel	
 help	Help	helpEditorPanel	
+spec	Spec	specPanel	

@@ -28,43 +28,63 @@ vec4 map(vec2 p) {
 }
 #endif
 
+vec2 getCoord() {
+	vec2 resolution = uTDOutputInfo.res.zw;
+	vec2 fragCoord = vUV.st;//*resolution;
+	vec2 p;
+
+	#ifdef THIS_uvmap
+	{
+		p = texture(THIS_uvmap, fragCoord).rg;
+	}
+	#else
+	{
+		#if defined(THIS_Alignment_legacy)
+		{
+			fragCoord.x *= uTDOutputInfo.res.z/uTDOutputInfo.res.w;
+			p = fragCoord*2. - vec2(1.);
+		}
+		#else
+		{
+			p = fragCoord;
+			#if defined(THIS_Alignment_bottomleft)
+			#elif defined(THIS_Alignment_center)
+			p -= vec2(0.5);
+			#else
+			#error invalidAlignment
+			#endif
+			#if defined(THIS_Scaling_fill)
+			#elif defined(THIS_Scaling_fitinside)
+			{
+				if (resolution.x > resolution.y) {
+					p.x *= resolution.x / resolution.y;
+				} else {
+					p.y *= resolution.y / resolution.x;
+				}
+			}
+			#elif defined(THIS_Scaling_fitoutside)
+			{
+				if (resolution.x > resolution.y) {
+					p.y *= resolution.y / resolution.x;
+				} else {
+					p.x *= resolution.x / resolution.y;
+				}
+			}
+			#endif
+		}
+		#endif
+	}
+	#endif
+	return p;
+}
+
 void main()
 {
 	#ifdef RAYTK_HAS_INIT
 	init();
 	#endif
 
-	vec2 resolution = uTDOutputInfo.res.zw;
-	vec2 fragCoord = vUV.st;//*resolution;
-	vec2 p;
-
-	#if defined(THIS_Alignment_legacy)
-	fragCoord.x *= uTDOutputInfo.res.z/uTDOutputInfo.res.w;
-	p = fragCoord*2. - vec2(1.);
-	#else
-		p = fragCoord;
-		#if defined(THIS_Scaling_fill)
-		#elif defined(THIS_Scaling_fitinside)
-			if (resolution.x > resolution.y) {
-				p.x *= resolution.x / resolution.y;
-			} else {
-				p.y *= resolution.y / resolution.x;
-			}
-		#elif defined(THIS_Scaling_fitoutside)
-			if (resolution.x > resolution.y) {
-				p.y *= resolution.y / resolution.x;
-			} else {
-				p.x *= resolution.x / resolution.y;
-			}
-		#endif
-		#if defined(THIS_Alignment_bottomleft)
-		#elif defined(THIS_Alignment_center)
-		p -= vec2(0.5);
-		#else
-		#error invalidAlignment
-		#endif
-	#endif
-
+vec2 p = getCoord();
 #ifdef THIS_RETURN_TYPE_Sdf
 	Sdf res = map(p);
 

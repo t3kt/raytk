@@ -51,11 +51,6 @@ op:
 
 ---
 
-# elongate
-
-Category: filter
-
-
 
 Splits a shape into pieces, moves them apart, and connects them.
 

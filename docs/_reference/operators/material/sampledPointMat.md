@@ -32,8 +32,3 @@ op:
   status: beta
 
 ---
-
-# sampledPointMat
-
-Category: material
-

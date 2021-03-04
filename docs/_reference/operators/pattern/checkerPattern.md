@@ -30,8 +30,3 @@ op:
     name: Size
 
 ---
-
-# checkerPattern
-
-Category: pattern
-

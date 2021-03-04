@@ -26,8 +26,3 @@ op:
     name: Radius
 
 ---
-
-# polygonSdf2d
-
-Category: sdf2d
-

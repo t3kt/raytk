@@ -40,8 +40,3 @@ op:
     name: Size
 
 ---
-
-# extend
-
-Category: filter
-

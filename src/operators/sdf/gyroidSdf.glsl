@@ -1,11 +1,11 @@
 ReturnT thismap(CoordT p, ContextT ctx) {
 	p -= THIS_Translate;
 	CoordT q = p;
-	#ifdef THIS_USE_PHASE
+	#ifdef THIS_Enablephase
 	p += THIS_Phase1;
 	q += THIS_Phase2;
 	#endif
-	#ifdef THIS_USE_PERIOD
+	#ifdef THIS_Enableperiod
 	p /= THIS_Period1;
 	q /= THIS_Period2;
 	#endif
@@ -13,7 +13,7 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 	float d = dot(sin(p), cos(q.zxy)) - THIS_Bias;
 	d = abs(d);
 	d /= length(THIS_Scale);
-	#ifdef THIS_USE_PERIOD
+	#ifdef THIS_Enableperiod
 	d /= length(THIS_Period1) * length(THIS_Period2);
 	#endif
 	return createSdf(d - THIS_Thickness);

@@ -25,10 +25,5 @@ op:
 
 ---
 
-# softShadow
-
-Category: light
-
-
 
 A soft-edged shadow.

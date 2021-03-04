@@ -77,11 +77,6 @@ op:
 
 ---
 
-# smoothUnion
-
-Category: combine
-
-
 
 Combines SDFs using a smooth union operator.
 

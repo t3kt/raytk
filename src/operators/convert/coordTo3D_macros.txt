@@ -1,0 +1,2 @@
+	'THIS_PART_X'	'0' if parent().par.Partx == 'zero' else f'p.{parent().par.Partx}'
+	'THIS_PART_Y'	'0' if parent().par.Party == 'zero' else f'p.{parent().par.Party}'

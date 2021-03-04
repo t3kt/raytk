@@ -59,11 +59,6 @@ op:
 
 ---
 
-# geodesicSdf
-
-Category: sdf
-
-
 
 A geodesic polyhedron, optionally with a spike on each face.
 

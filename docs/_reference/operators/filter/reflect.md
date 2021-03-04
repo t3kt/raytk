@@ -70,18 +70,21 @@ op:
   - label: Shift
     name: Shift
     summary: Moves the whole resulting shape along the normal.
-  - label: Expose Iteration
-    name: Exposeiteration
+  - name: Exposeiteration
     summary: Whether to expose which side of the plane a point is on as an iteration
       value for upstream ops.
+  - label: Iteration Type
+    menuOptions:
+    - label: None
+      name: none
+    - label: Index (0/1)
+      name: index
+    - label: Signed (-1/1)
+      name: sign
+    name: Iterationtype
   summary: Reflects space across a plane.
 
 ---
-
-# reflect
-
-Category: filter
-
 
 
 Reflects space across a plane.

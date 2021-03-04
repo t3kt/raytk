@@ -15,6 +15,7 @@ _opDefParamNames = [
 	'Initcode',
 	'Functemplate',
 	'Materialcode',
+	'Paramsop',
 	'Params',
 	'Specialparams',
 	'Angleparams',
@@ -63,11 +64,18 @@ def buildOpInfoTable(dat: 'DAT'):
 		info = ROPInfo(rop)
 		if not info:
 			continue
+		helpDat = info.helpDAT
+		if not helpDat:
+			hasHelp = False
+		elif '## Parameters' in helpDat.text or len(helpDat.text.split()) > 6:
+			hasHelp = True
+		else:
+			hasHelp = False
 		dat.appendRow([
 			rop.path,
 			_ropKind(info),
 			info.statusLabel,
-			bool(info.helpDAT),
+			hasHelp,
 			info.hasROPInputs,
 			bool(info.subROPs),
 		])
@@ -126,7 +134,7 @@ def buildOpInputsTable(dat: 'DAT'):
 	])
 	for rop in RaytkContext().allMasterOperators():
 		info = ROPInfo(rop)
-		if not rop:
+		if not info:
 			continue
 		for i, handler in enumerate(info.inputHandlers):
 			inInfo = InputInfo(handler)
@@ -136,10 +144,27 @@ def buildOpInputsTable(dat: 'DAT'):
 				handler.name,
 				inInfo.name or '',
 				inInfo.label or '',
-				inInfo.required,
+				_formatPar(inInfo.handlerPar.Required),
 				bool(inInfo.multiHandler),
 				' '.join(inInfo.supportedCoordTypes),
 				' '.join(inInfo.supportedContextTypes),
 				' '.join(inInfo.supportedReturnTypes),
 				any([p.mode != ParMode.CONSTANT for p in handler.customPars]),
 			])
+
+def buildOpCurrentExpandedParamsTable(dat: 'DAT'):
+	dat.clear()
+	dat.appendRow(['path', 'expr', 'expandedParams'])
+	for rop in RaytkContext().allMasterOperators():
+		info = ROPInfo(rop)
+		if not info or not info.isROP:
+			continue
+		expanded = ' '.join([
+			cell.val.rsplit('_', maxsplit=1)[1]
+			for cell in info.opDef.op('params').col(0)
+		])
+		dat.appendRow([
+			info.path,
+			_formatPar(info.opDefPar.Params),
+			expanded,
+		])

@@ -21,8 +21,6 @@ cat:
   name: material
   operators:
   - name: basicMat
-  - name: checkerboardMat
-    status: beta
   - name: colorizeSdf2d
   - name: fieldMat
     summary: 'A material that uses a vector field input to determine
@@ -33,8 +31,6 @@ cat:
   - name: phongMat
     summary: Material that uses phong shading.
   - name: reflectMat
-    status: beta
-  - name: sampledPointMat
     status: beta
   summary: 'Material operators that are used by renderers to determine the
 

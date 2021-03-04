@@ -64,10 +64,5 @@ op:
 
 ---
 
-# mobiusRingSdf
-
-Category: sdf
-
-
 
 SDF for a squared mobius ring, which is like a rectangular bar twisted and then bent into a ring.

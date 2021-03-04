@@ -1,5 +1,10 @@
 // raytkMaterial.glsl
 
+#ifdef RAYTK_USE_MATERIAL_POS
+#define getPosForMaterial(p, mctx)  mctx.materialPos
+#else
+#define getPosForMaterial(p, mctx)  p
+#endif
 
 vec3 phongContribForLight(
 	vec3 diffColor, vec3 specColor, float alpha, vec3 p, vec3 eye,

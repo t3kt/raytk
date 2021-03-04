@@ -52,8 +52,3 @@ op:
   status: beta
 
 ---
-
-# reflectMat
-
-Category: material
-

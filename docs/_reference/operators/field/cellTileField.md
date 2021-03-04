@@ -48,11 +48,6 @@ op:
 
 ---
 
-# cellTileField
-
-Category: field
-
-
 
 A value field that provides an approximation of repeating cellular (voronoi) noise.
 

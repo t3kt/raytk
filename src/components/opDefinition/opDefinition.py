@@ -4,7 +4,7 @@ import re
 if False:
 	# noinspection PyUnresolvedReferences
 	from _stubs import *
-	from typing import Dict, List, Union
+	from typing import Dict, List, Optional, Union
 	from raytkUtil import OpDefParsT
 	from _stubs.PopDialogExt import PopDialogExt
 
@@ -12,8 +12,11 @@ if False:
 def parentPar() -> 'Union[ParCollection, OpDefParsT]':
 	return parent().par
 
+def _host() -> 'Optional[COMP]':
+	return parentPar().Hostop.eval()
+
 def buildName():
-	host = parentPar().Hostop.eval()
+	host = _host()
 	if not host:
 		return ''
 	pathParts = host.path[1:].split('/')
@@ -72,8 +75,11 @@ def combineInputDefinitions(dat: 'DAT', inDats: 'List[DAT]'):
 			dat.appendRow(cells, insertRow)
 			insertRow += 1
 
+def _getParamsOp() -> 'Optional[COMP]':
+	return parentPar().Paramsop.eval() or _host()
+
 def _getRegularParams() -> 'List[Par]':
-	host = parentPar().Hostop.eval()
+	host = _getParamsOp()
 	if not host:
 		return []
 	paramNames = tdu.expand(parentPar().Params.eval().strip())
@@ -90,7 +96,7 @@ def _getSpecialParamNames():
 
 def buildParamTable(dat: 'DAT'):
 	dat.clear()
-	host = parentPar().Hostop.eval()
+	host = _getParamsOp()
 	if not host:
 		return
 	name = parentPar().Name.eval()
@@ -194,15 +200,8 @@ def updateLibraryMenuPar(libsComp: 'COMP'):
 	libs.sort(key=lambda l: -l.nodeY)
 	p.menuNames = [lib.name for lib in libs]
 
-def prepareMacroTable(dat: 'scriptDAT', typeTable: 'DAT', inputTable: 'DAT', macroParamTable: 'DAT'):
+def prepareMacroTable(dat: 'scriptDAT', inputTable: 'DAT', macroParamTable: 'DAT'):
 	dat.clear()
-	# 'THIS_' + me.inputCell.val.replace('Type', '').upper() + '_TYPE_' + me.inputCell.offset(0, 1)
-	for kind, typeName in typeTable.rows():
-		dat.appendRow([
-			'',
-			f'THIS_{kind.val.replace("Type", "").upper()}_TYPE_{typeName.val}',
-			'',
-		])
 	for cell in inputTable.col('inputFunc')[1:]:
 		if not cell.val:
 			continue
@@ -244,6 +243,29 @@ def prepareMacroTable(dat: 'scriptDAT', typeTable: 'DAT', inputTable: 'DAT', mac
 				for cells in table.rows()
 			])
 
+def _isMaster():
+	host = _host()
+	return host and host.par.clone == host
+
+def onValidationChange(dat: 'DAT'):
+	if _isMaster():
+		return
+	host = _host()
+	if not host:
+		return
+	host.clearScriptErrors()
+	if dat.numRows < 2:
+		return
+	cells = dat.col('message')
+	if not cells:
+		return
+	err = '\n'.join([c.val for c in cells])
+	host.addScriptError(err)
+
+def onHostNameChange():
+	# Workaround for dependency update issue (#295) when the host is renamed.
+	op('sel_funcTemplate').cook(force=True)
+
 def _popDialog() -> 'PopDialogExt':
 	# noinspection PyUnresolvedReferences
 	return op.TDResources.op('popDialog')
@@ -280,8 +302,13 @@ def updateOP():
 			escOnClickAway=True,
 		)
 		return
-	host = parentPar().Hostop.eval()
+	host = _host()
 	if not host:
+		return
+	toolkit = op.raytk
+	updater = toolkit.op('tools/updater')
+	if updater and hasattr(updater, 'UpdateOP'):
+		updater.UpdateOP(host)
 		return
 	if not host.par.clone:
 		_popDialog().Open(

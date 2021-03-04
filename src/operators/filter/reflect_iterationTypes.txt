@@ -1,0 +1,4 @@
+name	label
+none	None
+index	Index (0/1)
+sign	Signed (-1/1)

@@ -7,4 +7,3 @@ An infinite plane on the x, y, or z axis.
   * `y`
   * `z`
 * `Offset`: Shifts the plane forwards or backwards along the axis that it faces.
-* `Inspect`

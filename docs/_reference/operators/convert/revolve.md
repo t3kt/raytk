@@ -47,8 +47,3 @@ op:
     name: Axisoffset
 
 ---
-
-# revolve
-
-Category: convert
-

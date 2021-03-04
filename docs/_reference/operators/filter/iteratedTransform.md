@@ -68,6 +68,8 @@ op:
     name: Rotate
   - label: Scale
     name: Scale
+  - label: Uniform Scale
+    name: Uniformscale
   - label: Pivot
     name: Pivot
   - label: Transform Order
@@ -100,6 +102,13 @@ op:
     - label: Rz Ry Rx
       name: zyx
     name: Rotateorder
+  - label: Scale Type
+    menuOptions:
+    - label: Separate XYZ
+      name: separate
+    - label: Uniform
+      name: uniform
+    name: Scaletype
   - label: Custom Code
     name: Customcode
   - label: Float Param 1
@@ -122,11 +131,6 @@ op:
     in between the steps.
 
 ---
-
-# iteratedTransform
-
-Category: filter
-
 
 
 Performs a transform multiple times, optionally reflecting across axes in between the steps.

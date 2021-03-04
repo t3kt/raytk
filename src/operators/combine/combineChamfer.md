@@ -9,11 +9,9 @@ Chamfer SDF combine, producing a flat surface at a 45 degree angle along the ble
   * `diff`: Subtracts the second input from the first.
 * `Swapinputs`: Swaps the order of the inputs. This is only used for the `diff` mode.
 * `Radius`: The size of the blending region.
-* `Inspect`
-* `Help`
 
 ## Inputs
 
-* `definition_in_1`
-* `definition_in_2`
-* `radius_definition_in` *Radius Field*: Value field that can be used to vary the radius of the blend region at different points in space, by *multiplying* the value of the `Radius` parameter.
+* `definition_in_1`: 
+* `definition_in_2`: 
+* `radius_definition_in`:  Value field that can be used to vary the radius of the blend region at different points in space, by *multiplying* the value of the `Radius` parameter.

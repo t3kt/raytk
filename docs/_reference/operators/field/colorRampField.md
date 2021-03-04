@@ -38,16 +38,20 @@ op:
     name: Alpha1
   - label: Alpha 2
     name: Alpha2
-  - label: Clamp Range
-    name: Clamprange
+  - label: Extend Mode
+    menuOptions:
+    - label: Hold
+      name: hold
+    - label: Zero
+      name: zero
+    - label: Repeat
+      name: repeat
+    - label: Mirror
+      name: mirror
+    name: Extendmode
   summary: A vector field that maps an input field to values from a range of colors.
 
 ---
-
-# colorRampField
-
-Category: field
-
 
 
 A vector field that maps an input field to values from a range of colors.

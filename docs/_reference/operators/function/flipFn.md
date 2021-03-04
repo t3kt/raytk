@@ -85,10 +85,5 @@ op:
 
 ---
 
-# flipFn
-
-Category: function
-
-
 
 Function that flips its input in one of several different modes.

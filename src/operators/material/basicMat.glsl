@@ -1,17 +1,22 @@
 Sdf thismap(CoordT p, ContextT ctx) {
 	Sdf res = inputOp1(p, ctx);
+	#if defined(THIS_Uselocalpos) && defined(RAYTK_USE_MATERIAL_POS)
+	assignMaterialWithPos(res, THISMAT, p);
+	#else
 	assignMaterial(res, THISMAT);
+	#endif
 	return res;
 }
 
 vec3 THIS_getColor(vec3 p, MaterialContext matCtx) {
 	vec3 sunDir = normalize(matCtx.light.pos);
 	float occ = calcAO(p, matCtx.normal);
-	#ifdef THIS_USE_BASE_COLOR_FIELD
-	vec3 baseColor = inputOp3(p, matCtx).rgb;
-	baseColor *= THIS_Basecolor;
-	#else
 	vec3 baseColor = THIS_Basecolor;
+	#ifdef THIS_USE_BASE_COLOR_FIELD
+	{
+		vec3 mp = getPosForMaterial(p, matCtx);
+		baseColor += inputOp3(mp, matCtx).rgb;
+	}
 	#endif
 	vec3 mate = baseColor;
 	vec3 sunColor = matCtx.light.color;

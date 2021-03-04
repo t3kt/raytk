@@ -16,6 +16,12 @@ layout: page
 	</ol>
 </nav>
 
+<h1>{{ page.op.name }}</h1>
+
+{% if page.op.status %}
+	<div class="label status-{{ page.op.status }}">{{ page.op.status }}</div>
+{% endif %}
+
 {{ content }}
 
 {% if page.op.parameters %}
@@ -30,8 +36,8 @@ layout: page
 			<ul>
 				{% for opt in param.menuOptions %}
 				<li>
-					<em class="menu-opt-name" title="{{ opt.name }}">{{ opt.label }}</em>
-					<span class="menu-opt-summary">{{ opt.summary }}</span>
+					<code class="menu-opt-name" title="{{ opt.name }}">{{ opt.label }}</code>:
+					<span class="menu-opt-summary">{{ opt.description }}</span>
 				</li>
 				{% endfor %}
 			</ul>

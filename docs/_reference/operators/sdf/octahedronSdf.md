@@ -31,10 +31,5 @@ op:
 
 ---
 
-# octahedronSdf
-
-Category: sdf
-
-
 
 An octahedron, with its corners facing the axes.

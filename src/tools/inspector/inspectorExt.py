@@ -35,7 +35,7 @@ class Inspector:
 		self.core.Reset()
 		iop.bufferInspector.Clear()
 
-	def Inspect(self, o: 'Union[OP, DAT, COMP, str]'):
+	def Inspect(self, o: 'Union[OP, COMP, str]'):
 		self.core.Inspect(o)
 		if self.core.par.Hastarget:
 			visualizers = self.ownerComp.op('visualizers')

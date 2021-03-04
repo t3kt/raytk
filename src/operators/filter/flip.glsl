@@ -5,18 +5,19 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 	q.THIS_AXIS -= THIS_Offset;
 	p.THIS_AXIS += THIS_Offset;
 	p.THIS_AXIS -= THIS_Shift;
+	#if defined(THIS_Iterationtype_sign)
+	setIterationIndex(ctx, 1);
+	const int iterB = -1;
+	#elif defined(THIS_Iterationtype_index)
+	setIterationIndex(ctx, 0);
+	const int iterB = 1;
+	#endif
 	#if defined(THIS_Mergetype_none)
-		#ifdef THIS_Iterateonsides
-		ctx.iteration = vec4(1, 2, 0, 0);
-		#endif
 		return inputOp1(q, ctx);
 	#else
-		#ifdef THIS_Iterateonsides
-		ctx.iteration = vec4(0, 2, 0, 0);
-		#endif
 		Sdf res1 = inputOp1(p, ctx);
-		#ifdef THIS_Iterateonsides
-		ctx.iteration.x = 1;
+		#ifndef THIS_Iterationtype_none
+		setIterationIndex(ctx, iterB);
 		#endif
 		Sdf res2 = inputOp1(q, ctx);
 		#ifdef THIS_Mergetype_smoothUnion

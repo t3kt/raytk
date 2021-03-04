@@ -11,9 +11,11 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 		p = p - (2.*t) * planeNormal;
 	}
 	float i = sgn(t) * THIS_DIR;
-#ifdef THIS_Exposeiteration
-	ctx.iteration.x = (i + 1.) * .5;
-	ctx.iteration.y = 2;
-#endif
+	#if defined(THIS_Iterationtype_sign)
+	setIterationIndex(ctx, i);
+	#elif defined(THIS_Iterationtype_index)
+	//  (-1, 1)  --> (1, 0)
+	setIterationIndex(ctx, (i < 0) ? 1: 0);
+	#endif
 	return inputOp1(p, ctx);
 }

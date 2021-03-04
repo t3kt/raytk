@@ -34,8 +34,3 @@ op:
     name: Contexttype
 
 ---
-
-# powerCurveFn
-
-Category: function
-

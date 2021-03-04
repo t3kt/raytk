@@ -15,6 +15,8 @@ op:
   parameters:
   - label: Coord Type
     menuOptions:
+    - label: 1D
+      name: float
     - label: 2D
       name: vec2
     - label: 3D
@@ -40,11 +42,6 @@ op:
   summary: A vector field that evaluates to a constant color value.
 
 ---
-
-# constantColorField
-
-Category: field
-
 
 
 A vector field that evaluates to a constant color value.

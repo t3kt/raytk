@@ -32,8 +32,3 @@ op:
     name: Spin
 
 ---
-
-# spiralPattern
-
-Category: pattern
-

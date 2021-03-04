@@ -1,10 +1,14 @@
 ReturnT thismap(CoordT p, ContextT ctx) {
+	#ifdef THIS_COORD_TYPE_float
+	float u = (p - THIS_Translate) / THIS_Scale;
+	#else
 	float u = (p.THIS_AXIS - THIS_Translate) / THIS_Scale;
+	#endif
 	#if defined(THIS_Extendmode_hold)
 	u = clamp(u, 0, 1);
 	#elif defined(THIS_Extendmode_repeat)
 	u = fract(u);
-	#elif defined(THIS_Extend_mirror)
+	#elif defined(THIS_Extendmode_mirror)
 	u = modZigZag(u);
 	#elif defined(THIS_Extendmode_zero)
 		if (u < 0 || u > 1) {

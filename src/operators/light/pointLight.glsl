@@ -2,7 +2,7 @@ Light thismap(vec3 p, LightContext ctx) {
 	Light light;
 	light.pos = THIS_Position;
 	light.color = THIS_Color;
-	#ifdef THIS_ATTENUATED
+	#ifdef THIS_Enableattenuation
 	float d = length(p - light.pos);
 	float start = THIS_Attenuationstart;
 	float end = THIS_Attenuationend;

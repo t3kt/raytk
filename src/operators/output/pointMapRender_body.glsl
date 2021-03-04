@@ -18,6 +18,16 @@ vec4 getColor(Sdf res, THIS_CoordT p) {
 	return col;
 }
 
+vec3 calcNormal(in vec3 pos)
+{
+	vec2 e = vec2(1.0, -1.0)*0.5773*0.005;
+	return normalize(
+	e.xyy*map(pos + e.xyy).x +
+	e.yyx*map(pos + e.yyx).x +
+	e.yxy*map(pos + e.yxy).x +
+	e.xxx*map(pos + e.xxx).x);
+}
+
 void main() {
 	#ifdef RAYTK_HAS_INIT
 	init();
@@ -32,6 +42,9 @@ void main() {
 		#endif
 		#ifdef OUTPUT_COLOR
 		colorOut = vec4(0);
+		#endif
+		#ifdef OUTPUT_NORMAL
+		normalOut = vec4(0);
 		#endif
 		return;
 	}
@@ -54,6 +67,9 @@ void main() {
 		res.material,
 		res.material2,
 		res.interpolant);
+	#endif
+	#ifdef OUTPUT_NORMAL
+	normalOut = vec4(calcNormal(p), 0.);
 	#endif
 }
 #elif defined(THIS_RETURN_TYPE_vec4) || defined(THIS_RETURN_TYPE_float)

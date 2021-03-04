@@ -1,6 +1,6 @@
 {
   "meta": {
     "opType": "raytk.operators.filter.limitField",
-    "opVersion": 4
+    "opVersion": 6
   }
 }

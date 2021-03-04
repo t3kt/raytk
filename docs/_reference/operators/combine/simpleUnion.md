@@ -75,11 +75,6 @@ op:
 
 ---
 
-# simpleUnion
-
-Category: combine
-
-
 
 Combines several SDFs using the union operator.
 

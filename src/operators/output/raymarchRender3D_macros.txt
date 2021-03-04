@@ -1,0 +1,6 @@
+'THIS_USE_LIGHT_FUNC' if op('definition_3').numRows > 1 else ''	
+'THIS_USE_RAYMOD_FUNC' if op('definition_4').numRows > 1 else ''	
+'RAYTK_ORBIT_IN_SDF' if parent().par.Enableorbitoutput else ''	
+'THIS_USE_LIMIT_BOX' if parent().par.Uselimitbox else ''	
+'THIS_USE_NEAR_HIT' if parent().par.Enablenearhitoutput else ''	
+'THIS_ANTI_ALIAS'	int(parent().par.Antialias)

@@ -257,11 +257,6 @@ redirect_from:
   - /reference/opType/{ropInfo.opType}/
 {frontMatterData}
 ---
-
-# {ropInfo.shortName}
-
-Category: {ropInfo.categoryName}
-
 '''
 		parts = [
 			header,
@@ -434,7 +429,7 @@ class OpDocManager:
 		docText = docText.strip()
 		docText = _stripFrontMatter(docText).strip()
 		docText = _stripFirstMarkdownHeader(docText)
-		sections = _parseMarkdownSections(docText)
+		sections = _parseMarkdownSections(docText, sectionNames=['Parameters', 'Inputs'])
 		if '' in sections:
 			ropHelp.summary, ropHelp.detail = _extractHelpSummaryAndDetail(sections[''])
 		if 'Parameters' in sections:
@@ -568,14 +563,25 @@ class OpDocManager:
 		self._pullFromMissingInputsInto(ropHelp)
 		self._writeToDAT(ropHelp)
 
+	def _getRopParByTupletName(self, tupletName: str) -> 'Optional[Par]':
+		for parTuple in self.rop.customTuplets:
+			if parTuple[0].tupletName == tupletName:
+				return parTuple[0]
+
 	def pushToParamsAndInputs(self):
 		ropHelp = self._parseDAT()
 		for parHelp in ropHelp.parameters:
 			if not parHelp.summary:
 				continue
-			parTuple = self.rop.parTuple[parHelp.name]
-			if parTuple is not None:
-				parTuple.help = parHelp.summary
+			# Some TD builds don't yet support op.parTuple
+			if hasattr(self.rop, 'parTuple'):
+				parTuple = self.rop.parTuple[parHelp.name]
+				if parTuple is not None:
+					parTuple.help = parHelp.summary
+			else:
+				par = self._getRopParByTupletName(parHelp.name)
+				if par is not None:
+					par.help = parHelp.summary
 		for inHelp in ropHelp.inputs:
 			if not inHelp.label:
 				continue
@@ -589,7 +595,7 @@ class OpDocManager:
 		self._pullFromMissingInputsInto(ropHelp)
 		return ropHelp.formatAsFullPage(self.info)
 
-def _parseMarkdownSections(text: str) -> 'Dict[str, str]':
+def _parseMarkdownSections(text: str, sectionNames: List[str]) -> 'Dict[str, str]':
 	"""
 	Splits apart markdown into blocks with titles using level 2 headers (`## Foo`)
 	:return: dict of title -> body. There may be an empty title for the first section.
@@ -603,7 +609,7 @@ def _parseMarkdownSections(text: str) -> 'Dict[str, str]':
 	title = ''
 	body = ''
 	for line in text.splitlines(keepends=True):
-		if line.startswith('## '):
+		if line.startswith('## ') and line[3:].strip() in sectionNames:
 			if body:
 				sections.append((title, body.strip()))
 			title = line[3:].strip()

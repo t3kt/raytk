@@ -41,8 +41,3 @@ op:
     name: Seed
 
 ---
-
-# hexagonalWeavePattern
-
-Category: pattern
-

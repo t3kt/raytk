@@ -68,6 +68,7 @@ class CompDefParsT(_OpMetaPars):
 
 class OpDefParsT(_OpMetaPars):
 	Hostop: 'OPParamT'
+	Paramsop: 'OPParamT'
 	Name: 'StrParamT'
 	Enable: 'BoolParamT'
 	Opglobals: 'DatParamT'
@@ -92,6 +93,13 @@ class OpDefParsT(_OpMetaPars):
 	Contexttype: 'StrParamT'
 
 class ROPInfo:
+	"""
+	Information about either a ROP or RComp instance.
+
+	If the OP used to construct the ROPInfo is invalid or missing, this will evaluate
+	to False when treated as a boolean.
+	"""
+
 	rop: 'Optional[Union[OP, COMP]]'
 	opDef: 'Optional[COMP]'
 	opDefPar: 'Optional[Union[ParCollection, OpDefParsT, CompDefParsT]]'
@@ -164,6 +172,18 @@ class ROPInfo:
 	@helpUrl.setter
 	def helpUrl(self, val):
 		self.opDefPar.Helpurl = val
+
+	@property
+	def paramsOp(self) -> 'Optional[COMP]':
+		if not self.isROP:
+			return None
+		return self.opDefPar.Paramsop.eval() or self.rop
+
+	@paramsOp.setter
+	def paramsOp(self, o: 'Optional[COMP]'):
+		if not self.isROP:
+			return
+		self.opDefPar.Paramsop = o or ''
 
 	@property
 	def isROP(self):
@@ -314,6 +334,13 @@ class _InputHandlerParsT:
 	Supportcontexttypes: 'StrParamT'
 
 class InputInfo:
+	"""
+	Information about a ROP input and its supported types and requirements.
+
+	This is constructed from an `inputDefinitionHandler` component, whose parameters
+	define the behavior.
+	"""
+
 	handler: 'Optional[COMP]'
 	rop: 'Optional[COMP]'
 	handlerPar: 'Union[_InputHandlerParsT, ParCollection]'
@@ -359,6 +386,10 @@ class InputInfo:
 
 	@property
 	def multiHandler(self) -> 'Optional[COMP]':
+		"""
+		:return: The `multiInputHandler` that this input flows into, if any.
+		"""
+
 		if not self.handler or not self.handler.outputs:
 			return
 		output = self.handler.outputs[0]
@@ -390,6 +421,12 @@ class InputInfo:
 		return tdu.split(table['returnType', 1]) if table else []
 
 class CategoryInfo:
+	"""
+	Information about a category of ROPs.
+
+	This can be used by tools that show lists of available ROP types.
+	"""
+
 	category: COMP
 
 	def __init__(self, o: 'Union[OP, str, Cell]'):
@@ -397,6 +434,9 @@ class CategoryInfo:
 		if not o:
 			return
 		self.category = o
+
+	def __bool__(self):
+		return bool(self.category)
 
 	@property
 	def categoryName(self):
@@ -416,13 +456,8 @@ class CategoryInfo:
 			if not o.name.startswith('__')], key=lambda o: o.path))
 
 	@property
-	def operatorInfos(self) -> 'List[ROPInfo]':
-		infos = []
-		for rop in self.operators:
-			info = ROPInfo(rop)
-			if info:
-				infos.append(info)
-		return infos
+	def templateComp(self) -> 'Optional[COMP]':
+		return self.category.op('__template')
 
 def isROP(o: 'OP'):
 	return bool(o) and o.isCOMP and RaytkTags.raytkOP.isOn(o)
@@ -448,11 +483,11 @@ def _getROP(comp: 'COMP', checkParents=True):
 	if checkParents:
 		return _getROP(comp.parent(), checkParents=checkParents)
 
-def _getChildROPs(comp: 'COMP'):
-	return comp.findChildren(type=COMP, tags=[RaytkTags.raytkOP.name, RaytkTags.raytkComp.name], maxDepth=1)
+def _getChildROPs(comp: 'COMP', maxDepth=1):
+	return comp.findChildren(type=COMP, tags=[RaytkTags.raytkOP.name, RaytkTags.raytkComp.name], maxDepth=maxDepth)
 
-def _getChildOutputROPs(comp: 'COMP'):
-	return comp.findChildren(type=COMP, tags=[RaytkTags.raytkOutput.name], maxDepth=1)
+def _getChildOutputROPs(comp: 'COMP', maxDepth=1):
+	return comp.findChildren(type=COMP, tags=[RaytkTags.raytkOutput.name], maxDepth=maxDepth)
 
 def recloneComp(o: 'COMP'):
 	if o and o.par['enablecloningpulse'] is not None:
@@ -468,12 +503,32 @@ _validationColor = 1, 0.95, 0.45
 _deprecatedColor = 0.2, 0.2, 0.2
 _guideColor = 0.0477209, 0.816, 0.816
 
+
+class IconColors:
+	defaultBgColor = 0.0477209, 0.111349, 0.114
+	defaultFgColor = 0.135166, 0.816, 0.816
+	alphaBgColor = 0.24, 0.306, 0.405
+	alphaFgColor = defaultFgColor
+	betaBgColor = 0.1, 0.155, 0.238
+	betaFgColor = defaultFgColor
+	deprecatedBgColor = 0.185, 0.21, 0.21
+	deprecatedFgColor = 0.635, 0.816, 0.816
+
+
 class Tag:
+	"""
+	A tag that can be applied to OPs which tools use to apply various types of behaviors.
+	"""
 	def __init__(
 			self,
 			name: str,
 			color: Tuple[float, float, float] = None,
 			update: Callable[['OP', bool], None] = None):
+		"""
+		:param name: the tag name
+		:param color: Optional RGB color applied to OPs that use the tag.
+		:param update: Optional function that applies tag-specific behavior to OPs.
+		"""
 		self.name = name
 		self.color = color
 		self.update = update
@@ -533,8 +588,13 @@ class _OpStatusTag(Tag):
 		opDef = ROPInfo(o).opDef
 		return super().isOn(o) or super().isOn(opDef)
 
-def _updateFileSyncPars(o: 'OP', state: bool):
+def _updateFileSyncPars(o: 'Union[OP, DAT]', state: bool):
 	if o.isDAT:
+		filePar = o.par['file']
+		if filePar and state:
+			o.save(filePar.eval())
+		if o.par['defaultreadencoding'] is not None:
+			o.par.defaultreadencoding = 'utf8'
 		par = o.par['syncfile']
 		if par is not None:
 			par.expr = ''
@@ -552,16 +612,44 @@ def _updateFileSyncPars(o: 'OP', state: bool):
 		raise Exception(f'updateFileSyncPars does not yet support op: {o}')
 
 class RaytkTags:
+	"""
+	The collection of tags used by RayTK infrastructure and tools.
+	"""
+
 	raytkOP = Tag('raytkOP')
+	"""Indicates that a comp is a ROP."""
+
 	raytkComp = Tag('raytkComp')
+	"""Indicates that a comp is a RComp (a component treated similarly to ROPs)."""
+
 	raytkOutput = Tag('raytkOutput')
+	"""Indicates that a comp is an output ROP that generates and runs a shared."""
+
 	buildExclude = Tag('buildExclude', _buildExcludeColor)
+	"""Indicates that an OP should be removed during the build process."""
+
 	buildLock = Tag('buildLock', _buildLockColor)
+	"""Indicates that an OP should be locked during the build process."""
+
 	fileSync = Tag('fileSync', _fileSyncColor, _updateFileSyncPars)
+	"""Indicates that a DAT is synced with an external file (when in development mode)."""
+
 	alpha = _OpStatusTag('raytkAlpha')
+	"""Status applied to the `opDefinition` within a ROP to indicate that the ROP has alpha status
+	(not yet ready for use).
+	"""
+
 	beta = _OpStatusTag('raytkBeta')
+	"""Status applied to the `opDefinition` within a ROP to indicate that the ROP has beta status
+	(experimental and may be unreliable)."""
+
 	deprecated = _OpStatusTag('raytkDeprecated')
+	"""Status applied to the `opDefinition` within a ROP to indicate that the ROP has deprecated status
+	(should no longer be used and may be removed in future versions)."""
+
 	validation = Tag('raytkValidation', _validationColor)
+	"""Indicates that a DAT is a table of validation errors/warnings for related components."""
+
 	guide = Tag('raytkGuide', _guideColor)
 	guideHeader = Tag('raytkGuideHeader', _guideColor)
 	guideContent = Tag('raytkGuideContent', _guideColor)
@@ -743,6 +831,10 @@ class TypeTableHelper:
 		return types
 
 class RaytkContext:
+	"""
+	Utility that accesses various parts of the toolkit and the current project.
+	"""
+
 	@staticmethod
 	def toolkit():
 		if hasattr(parent, 'raytk'):
@@ -754,6 +846,9 @@ class RaytkContext:
 		toolkit = self.toolkit()
 		par = toolkit.par['Raytkversion']
 		return Version(str(par or '0.1'))
+
+	def develMode(self):
+		return bool(self.toolkit().par['Devel'])
 
 	def operatorsRoot(self):
 		return self.toolkit().op('operators')
@@ -828,17 +923,31 @@ class RaytkContext:
 		return results
 
 	@staticmethod
-	def ropChildrenOf(comp: 'COMP'):
-		return _getChildROPs(comp) if comp else []
+	def ropChildrenOf(comp: 'COMP', maxDepth=1):
+		return _getChildROPs(comp, maxDepth=maxDepth) if comp else []
 
 	@staticmethod
-	def ropOutputChildrenOf(comp: 'COMP'):
-		return _getChildOutputROPs(comp) if comp else []
+	def ropOutputChildrenOf(comp: 'COMP', maxDepth=1):
+		return _getChildOutputROPs(comp, maxDepth=maxDepth) if comp else []
+
+	def libraryImage(self) -> 'Optional[COMP]':
+		toolkit = self.toolkit()
+		return toolkit and toolkit.op('./libraryImage')
+
+	def categoryInfo(self, category: str) -> 'Optional[CategoryInfo]':
+		comp = self.operatorsRoot().op('./' + category)
+		if comp:
+			return CategoryInfo(comp)
 
 def _isMaster(o: 'COMP'):
 	return o and o.par['clone'] is not None and (o.par.clone.eval() or o.par.clone.expr)
 
 def simplifyNames(fullNames: List[Union[str, 'Cell']]):
+	"""
+	Removes prefixes shared by all the provided names.
+
+	For example, ["FOO_x", "FOO_abc", "FOO_asdf"] would produce ["x", "abc", "asdf"]
+	"""
 	if not fullNames:
 		return []
 	fullNames = [str(n) for n in fullNames]
@@ -896,6 +1005,10 @@ def detachTox(comp: 'COMP'):
 	comp.par.externaltox.expr = ''
 	comp.par.externaltox.val = ''
 
+def _popDialog() -> 'PopDialogExt':
+	# noinspection PyUnresolvedReferences
+	return op.TDResources.op('popDialog')
+
 def showPromptDialog(
 		title=None,
 		text=None,
@@ -924,6 +1037,18 @@ def showPromptDialog(
 		buttons=[okText, cancelText],
 		enterButton=1, escButton=2, escOnClickAway=True,
 		callback=_callback)
+
+def showMessageDialog(
+		title=None,
+		text=None,
+		escOnClickAway=True,
+		**kwargs):
+	dialog = _popDialog()
+	dialog.Open(
+		title=title,
+		text=text,
+		escOnClickAway=escOnClickAway,
+		**kwargs)
 
 def cleanDict(d):
 	if not d:

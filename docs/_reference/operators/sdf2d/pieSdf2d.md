@@ -17,8 +17,3 @@ op:
     name: Angle
 
 ---
-
-# pieSdf2d
-
-Category: sdf2d
-

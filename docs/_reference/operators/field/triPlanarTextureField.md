@@ -24,8 +24,16 @@ op:
     name: Translate
   - label: Scale
     name: Scale
+  - label: Use Separate Textures
+    name: Useseparatetextures
   - label: Texture
     name: Texture
+  - label: Texture X
+    name: Texturex
+  - label: Texture Y
+    name: Texturey
+  - label: Texture Z
+    name: Texturez
   - label: Extend Mode
     menuOptions:
     - label: Hold
@@ -37,11 +45,5 @@ op:
     - label: Mirror
       name: mirror
     name: Extendmode
-  status: beta
 
 ---
-
-# triPlanarTextureField
-
-Category: field
-

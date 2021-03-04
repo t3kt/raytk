@@ -66,14 +66,18 @@ op:
       name: LightContext
     name: Contexttype
     summary: advanced parameter that should usually just be set to `Context`
+  - label: Pattern
+    menuOptions:
+    - label: Grid
+      name: grid
+    - label: Horizontal Bars
+      name: hbars
+    - label: Vertical Bars
+      name: vbars
+    name: Pattern
   summary: An infinite grid shape, along two axes.
 
 ---
-
-# gridSdf
-
-Category: sdf
-
 
 
 An infinite grid shape, along two axes.
