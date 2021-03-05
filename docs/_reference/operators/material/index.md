@@ -21,6 +21,7 @@ cat:
   name: material
   operators:
   - name: basicMat
+    summary: Material with a basic lighting model.
   - name: colorizeSdf2d
   - name: fieldMat
     summary: 'A material that uses a vector field input to determine
