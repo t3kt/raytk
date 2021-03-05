@@ -21,7 +21,7 @@ layout: page
 	{% for op in page.cat.operators %}
 	<li>
 		<code class="op-name">
-			<a href="/raytk/reference/operators/{{page.cat.name}}/{{op.name}}/" title="{{ op.name }}">{{ op.name }}</a>
+			<a href="/raytk/reference/operators/{{page.cat.name}}/{{op.name}}" title="{{ op.name }}">{{ op.name }}</a>
 		</code>:
 		{% if op.status %}
 			<span class="label status-{{ op.status }}">{{ op.status }}</span>
