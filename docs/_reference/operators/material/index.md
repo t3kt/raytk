@@ -23,12 +23,11 @@ cat:
   - name: basicMat
     summary: Material with a basic lighting model.
   - name: colorizeSdf2d
+    summary: Converts a 2D SDF to a striped distance pattern.
   - name: fieldMat
     summary: 'A material that uses a vector field input to determine
 
-      the color. Essentially this is a conversion from a
-
-      field to a material, with no other features.'
+      the color.'
   - name: phongMat
     summary: Material that uses phong shading.
   - name: reflectMat
