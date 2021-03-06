@@ -1,5 +1,7 @@
 A float or vector field that looks up values from a texture.
 
+Texture is centered at 0,0 with coordinates from -0.5 to 0.5.
+
 ## Parameters
 
 * `Enable`
@@ -31,4 +33,4 @@ A float or vector field that looks up values from a texture.
 
 ## Inputs
 
-* `uv_field_definition_in` *UV Map Field*: When provided, this field is used to calculate the UV coordinates (in the x and y parts of the vec4).
+* `uv_field_definition_in`:  When provided, this field is used to calculate the UV coordinates (in the x and y parts of the vec4).
