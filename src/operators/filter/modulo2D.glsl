@@ -3,7 +3,7 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 	vec2 cell = THIS_MIRROR_FUNC(q, THIS_Size);
 	p.THIS_PLANE = q - THIS_Offset;
 	#if defined(THIS_Iterationtype_cellcoord)
-	setIterationIndex(ctx, cell);
+	setIterationCell(ctx, cell);
 	#elif defined(THIS_Iterationtype_tiledquadrant)
 	setIterationIndex(ctx, quadrantIndex(ivec2(mod(ivec2(cell), 2))));
 	#elif defined(THIS_Iterationtype_alternatingcoord)
