@@ -11,8 +11,8 @@ op:
   detail: 'On a cube centered at the origin, this has the effect of placing the texture
     on each side of the cube.
 
-    For a sphere, the texture for each axis will smoothly blend as the surface normal
-    shifts from one axis to another.
+    For a sphere, when using normal blending, the texture for each axis will smoothly
+    blend as the surface normal shifts from one axis to another.
 
 
     Textures are centered at 0,0 with coordinates ranging from -0.5 to 0.5.'
@@ -64,15 +64,32 @@ op:
       name: mirror
     name: Extendmode
     summary: How to handle coordinates outside the texture's bounds.
-  summary: Texture field that uses surface normals to apply a texture facing each
-    axis.
+  - label: Blend Mode
+    menuOptions:
+    - description: Use surface normals to blend the colors. Note that this can cause
+        issues with material local positioning.
+      label: Normal Blend
+      name: normals
+    - description: Add the colors from each axis.
+      label: Add Axes
+      name: add
+    - description: Maximum for each channel from each axis.
+      label: Axis Maximum
+      name: max
+    - description: Average the colors from each axis.
+      label: Axis Average
+      name: avg
+    name: Blendmode
+    summary: How to combine the colors from each axis.
+  summary: Texture field that uses surface normals (or other blending techniques)
+    to apply a texture facing each axis.
 
 ---
 
 
-Texture field that uses surface normals to apply a texture facing each axis.
+Texture field that uses surface normals (or other blending techniques) to apply a texture facing each axis.
 
 On a cube centered at the origin, this has the effect of placing the texture on each side of the cube.
-For a sphere, the texture for each axis will smoothly blend as the surface normal shifts from one axis to another.
+For a sphere, when using normal blending, the texture for each axis will smoothly blend as the surface normal shifts from one axis to another.
 
 Textures are centered at 0,0 with coordinates ranging from -0.5 to 0.5.
