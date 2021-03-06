@@ -1,0 +1,5 @@
+name	label
+normals	Normal Blend
+add	Add Axes
+max	Axis Maximum
+avg	Axis Average

@@ -32,11 +32,21 @@ ReturnT thismap(CoordT p, MaterialContext ctx) {
 	vec3 colZX = texture(THIS_texture, uv.zx + 0.5).rgb;
 	#endif
 
+	#if defined(THIS_Blendmode_normals)
 	vec3 col = colXY * n.z * valMult.z + colYZ * n.x * valMult.x + colZX * n.y * valMult.y;
-	vec4 value = vec4(col, 1);
-	#ifdef THIS_RETURN_TYPE_float
-	return value.x;
+	#elif defined(THIS_Blendmode_add)
+	vec3 col = colXY + colYZ + colZX;
+	#elif defined(THIS_Blendmode_max)
+	vec3 col = max(max(colXY, colYZ), colZX);
+	#elif defined(THIS_Blendmode_avg)
+	vec3 col = (colXY + colYZ + colZX) / 3.0;
 	#else
-	return value;
+	#error invalidBlendMode
+	#endif
+
+	#ifdef THIS_RETURN_TYPE_float
+	return col.x;
+	#else
+	return vec4(col, 1);
 	#endif
 }
