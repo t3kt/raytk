@@ -10,8 +10,14 @@ op:
   category: combine
   inputs:
   - contextTypes:
+    - none
     - Context
+    - MaterialContext
+    - CameraContext
+    - LightContext
+    - RayContext
     coordTypes:
+    - float
     - vec2
     - vec3
     label: definition_in_1
@@ -21,8 +27,14 @@ op:
     - float
     - vec4
   - contextTypes:
+    - none
     - Context
+    - MaterialContext
+    - CameraContext
+    - LightContext
+    - RayContext
     coordTypes:
+    - float
     - vec2
     - vec3
     label: definition_in_2

@@ -8,6 +8,7 @@ redirect_from:
   - /reference/opType/raytk.operators.field.textureField/
 op:
   category: field
+  detail: Texture is centered at 0,0 with coordinates from -0.5 to 0.5.
   inputs:
   - contextTypes:
     - none
@@ -107,3 +108,5 @@ op:
 
 
 A float or vector field that looks up values from a texture.
+
+Texture is centered at 0,0 with coordinates from -0.5 to 0.5.

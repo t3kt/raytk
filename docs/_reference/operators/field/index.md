@@ -51,6 +51,8 @@ cat:
   - name: textureField
     summary: A float or vector field that looks up values from a texture.
   - name: triPlanarTextureField
+    summary: Texture field that uses surface normals (or other blending techniques)
+      to apply a texture facing each axis.
   - name: waveField
     summary: A field that uses a periodic wave.
   - name: waveletNoiseField
