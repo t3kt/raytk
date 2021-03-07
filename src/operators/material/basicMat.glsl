@@ -15,7 +15,13 @@ vec3 THIS_getColor(vec3 p, MaterialContext matCtx) {
 	#ifdef THIS_USE_BASE_COLOR_FIELD
 	{
 		vec3 mp = getPosForMaterial(p, matCtx);
+		#if defined(inputOp3_RETURN_TYPE_vec4)
 		baseColor += inputOp3(mp, matCtx).rgb;
+		#elif defined(inputOp3_RETURN_TYPE_float)
+		baseColor += vec3(inputOp3(mp, matCtx));
+		#else
+		#error invalidColorFieldReturnType
+		#endif
 	}
 	#endif
 	vec3 mate = baseColor;
