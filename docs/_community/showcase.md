@@ -14,3 +14,10 @@ nav_order: 0
 {%include instagram.html id="CImRxe4A3mg" %}
 {%include instagram.html id="CJAd1xGHaTn" %}
 {%include instagram.html id="CIzi1epn6zf" %}
+{%include instagram.html id="CMGlMjhHAZX" %}
+{%include instagram.html id="CMAogxuAFTN" %}
+{%include instagram.html id="CL5LzVTHrEy" %}
+{%include instagram.html id="CLvuxpIAdwZ" %}
+{%include instagram.html id="CLlP3WIsppV" %}
+{%include instagram.html id="CLBfCw_jfbA" %}
+{%include instagram.html id="CIqG90goG3z" %}
