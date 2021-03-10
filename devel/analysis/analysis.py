@@ -26,6 +26,7 @@ _opDefParamNames = [
 	'Librarynames',
 	'Help',
 	'Helpurl',
+	'Keywords',
 	'Callbacks',
 	'Raytkoptype',
 	'Raytkopversion',

@@ -1,6 +1,6 @@
 from dataclasses import dataclass, field
 import re
-from typing import Dict, Iterable, List, Optional, Tuple
+from typing import Dict, Iterable, List, Optional, Set, Tuple
 import yaml
 
 from raytkUtil import ROPInfo, CategoryInfo, RaytkTags, InputInfo, cleanDict, mergeDicts
@@ -163,6 +163,7 @@ class ROPHelp:
 	isAlpha: bool = False
 	isBeta: bool = False
 	isDeprecated: bool = False
+	keywords: Set[str] = field(default_factory=set)
 
 	@classmethod
 	def extractFromROP(cls, rop: 'COMP'):
@@ -194,6 +195,7 @@ class ROPHelp:
 			isAlpha=info.isAlpha,
 			isBeta=info.isBeta,
 			isDeprecated=info.isDeprecated,
+			keywords=info.keywords,
 		)
 
 	def formatAsMarkdown(self, headerOffset: int = 0):
@@ -286,6 +288,7 @@ redirect_from:
 			} if full else None,
 			{
 				'status': status,
+				'keywords': list(sorted(self.keywords)),
 			},
 			{
 				'inputs': [

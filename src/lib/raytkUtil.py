@@ -1,6 +1,6 @@
 from functools import total_ordering
 import re
-from typing import Callable, List, Union, Optional, Tuple
+from typing import Callable, List, Union, Optional, Set, Tuple
 
 # noinspection PyUnreachableCode
 if False:
@@ -64,6 +64,7 @@ class _OpMetaPars:
 class CompDefParsT(_OpMetaPars):
 	Help: 'DatParamT'
 	Helpurl: 'StrParamT'
+	Keywords: 'StrParamT'
 	Rops: 'StrParamT'
 
 class OpDefParsT(_OpMetaPars):
@@ -87,6 +88,7 @@ class OpDefParsT(_OpMetaPars):
 	Librarynames: 'StrParamT'
 	Help: 'DatParamT'
 	Helpurl: 'StrParamT'
+	Keywords: 'StrParamT'
 	Disableinspect: 'BoolParamT'
 	Coordtype: 'StrParamT'
 	Returntype: 'StrParamT'
@@ -268,6 +270,19 @@ class ROPInfo:
 	@helpDAT.setter
 	def helpDAT(self, dat: 'Optional[DAT]'):
 		self.opDefPar.Help = dat or ''
+
+	@property
+	def keywords(self) -> 'Set[str]':
+		if not self:
+			return set()
+		return set(tdu.split(self.opDefPar.Keywords))
+
+	@keywords.setter
+	def keywords(self, keywords: 'Optional[Set[str]]'):
+		if not keywords:
+			self.opDefPar.Keywords = ''
+		else:
+			self.opDefPar.Keywords = ' '.join(sorted(keywords))
 
 	@property
 	def hasROPInputs(self):
