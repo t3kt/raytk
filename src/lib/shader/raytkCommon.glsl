@@ -714,3 +714,18 @@ vec2 mobiusTransform(vec2 p, vec2 z1, vec2 z2) {
 	z1 = p - z1; p -= z2;
 	return vec2(dot(z1, p), z1.y*p.x - z1.x*p.y) / dot(p, p);
 }
+
+float adaptAsFloat(float p) { return p; }
+float adaptAsFloat(vec2 p) { return p.x; }
+float adaptAsFloat(vec3 p) { return p.x; }
+float adaptAsFloat(vec4 p) { return p.x; }
+
+vec2 adaptAsVec2(float p) { return vec2(p, 0.); }
+vec2 adaptAsVec2(vec2 p) { return p; }
+vec2 adaptAsVec2(vec3 p) { return p.xy; }
+vec2 adaptAsVec2(vec4 p) { return p.xy; }
+
+vec3 adaptAsVec3(float p) { return vec3(p, 0., 0.); }
+vec3 adaptAsVec3(vec2 p) { return vec3(p, 0.); }
+vec3 adaptAsVec3(vec3 p) { return p; }
+vec3 adaptAsVec3(vec4 p) { return p.xyz; }
