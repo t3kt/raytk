@@ -105,14 +105,6 @@ float sdMengerSponge(in vec3 p, int n, float scale, float crossScale, float boxS
 }
 #endif
 
-float sdCrossSmooth(vec3 p, vec3 size, float r)
-{
-	float da = fBox2(p.xy,size.xy);
-	float db = fBox2(p.yz,size.yz);
-	float dc = fBox2(p.zx,size.zx);
-	return fOpUnionRound(da,fOpUnionRound(db,dc,r), r);
-}
-
 float sdCross(vec2 p, vec2 b, float r)
 {
 	p = abs(p); p = (p.y>p.x) ? p.yx : p.xy;
