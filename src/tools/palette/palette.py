@@ -114,20 +114,37 @@ class Palette:
 		if not template:
 			self._printAndStatus(f'Unable to find template for path: {item.path}')
 			return
-		context = RaytkContext()
-		pane = context.activeEditor()
+		pane = RaytkContext().activeEditor()
 		dest = pane.owner if pane else None
 		if not dest:
 			self._printAndStatus('Unable to find active network editor pane')
 			return
-		ui.undo.startBlock(f'Create ROP {item.shortName}')
-		bufferArea = dest
-		newOp = bufferArea.copy(
-			template,
+		newOp = self._createROP(
+			template=template,
+			dest=dest,
+			nodeX=pane.x,
+			nodeY=pane.y,
 			name=template.name + ('1' if tdu.digits(template.name) is None else ''),
+		)
+		ui.undo.startBlock(f'Create ROP {item.shortName}')
+		ui.undo.addCallback(self._createItemDoHandler, {
+			'template': template,
+			'dest': dest,
+			'nodeX': pane.x,
+			'nodeY': pane.y,
+			'name': newOp.name,
+		})
+		ui.undo.endBlock()
+		if not ipar.uiState.Pinopen:
+			self.close()
+
+	def _createROP(self, template: 'COMP', dest: 'COMP', nodeX: int, nodeY: int, name: str):
+		newOp = dest.copy(
+			template,
+			name=name,
 		)  # type: COMP
-		newOp.nodeCenterX = pane.x
-		newOp.nodeCenterY = pane.y
+		newOp.nodeCenterX = nodeX
+		newOp.nodeCenterY = nodeY
 		detachTox(newOp)
 		img = newOp.op('*Definition/opImage')
 		if img:
@@ -154,10 +171,29 @@ class Palette:
 		newOp.color = IconColors.defaultBgColor
 		ropInfo = ROPInfo(newOp)
 		ropInfo.invokeCallback('onCreate', master=template)
-		ui.undo.endBlock()
 		self._printAndStatus(f'Created OP: {newOp} from {template}')
-		if not ipar.uiState.Pinopen:
-			self.close()
+		return newOp
+
+	def _createItemDoHandler(self, isUndo: bool, info: dict):
+		dest = info['dest']  # type: COMP
+		name = info['name']
+		if isUndo:
+			print(self.ownerComp, f'undoing create OP: {info}')
+			newOp = dest.op(name)
+			if newOp and newOp.valid:
+				try:
+					newOp.destroy()
+				except:
+					pass
+		else:
+			print(self.ownerComp, f'redoing create OP: {info}')
+			self._createROP(
+				template=info['template'],
+				dest=dest,
+				nodeX=info['nodeX'],
+				nodeY=info['nodeY'],
+				name=name,
+			)
 
 	def _printAndStatus(self, msg):
 		print(self.ownerComp, msg)
