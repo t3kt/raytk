@@ -90,24 +90,38 @@ class DatEditorPanel:
 		dat['file', 1] = graph.file or ''
 
 	def onCreateClick(self):
+		print(self.ownerComp, 'onCreateClick')
 		info = ext.ropEditor.ROPInfo
+		if not info:
+			self._printAndStatus('Unable to create DAT, no current ROP')
+			return
 		itemGraph = self._currentItemGraph
-		if not info or not itemGraph or itemGraph.file:
+		if itemGraph and itemGraph.sourceDat:
+			self._printAndStatus('DAT already exists!')
 			return
-		datType = self._itemTable[itemGraph.par.name, 'type'] or 'text'
-		if datType == 'table':
-			dat = info.rop.create(tableDAT)
-		elif datType == 'text':
-			dat = info.rop.create(textDAT)
-		else:
-			ui.status = f'Unsupported DAT type: {datType}'
-			return
-		name = self._itemTable[itemGraph.par.name, 'datName']
-		if name:
-			dat.name = name
-		ui.undo.startBlock(f'Creating {dat}')
+		itemName = self.ownerComp.par.Selecteditem.eval()
+		datType = self._itemTable[itemName, 'type'] or 'text'
+		srcName = self._itemTable[itemName, 'datName']
+		evalName = self._itemTable[itemName, 'evalDatName']
+		ui.undo.startBlock(f'Creating {datType} {srcName}')
 		try:
-			self._externalize(itemGraph, dat)
+			if datType == 'table':
+				srcDat = info.rop.create(tableDAT, srcName)
+			elif datType == 'text':
+				srcDat = info.rop.create(textDAT, srcName)
+			else:
+				self._printAndStatus(f'Unsupported DAT type: {datType}')
+				return
+			srcDat.nodeY = -300 - (self._itemTable[itemName, 0].row * 300)
+			srcDat.nodeX = -475
+			evalDat = None
+			if evalName:
+				evalDat = info.rop.create(evaluateDAT, evalName)
+				evalDat.nodeY = srcDat.nodeY
+				evalDat.nodeX = srcDat.nodeX + 200
+				evalDat.inputConnectors[0].connect(srcDat)
+			self._currentItemPar.val = evalDat or srcDat
+			self._externalize(self._currentItemGraph, srcDat)
 		finally:
 			ui.undo.endBlock()
 
@@ -147,29 +161,30 @@ class DatEditorPanel:
 		if not info or not itemGraph or not itemGraph.sourceDat:
 			return
 		if itemGraph.file is None:
-			ui.status = f'Unable to externalize, no file parameter on {itemGraph.sourceDat}!'
+			self._printAndStatus(f'Unable to externalize, no file parameter on {itemGraph.sourceDat}!')
 			return
 		if itemGraph.file.eval():
-			ui.status = f'No need to externalize, already have external file: {itemGraph.file}'
+			self._printAndStatus(f'No need to externalize, already have external file: {itemGraph.file}')
 			return
 		tox = info.toxFile
 		if not tox:
-			ui.status = f'Unable to externalize, no tox file for {itemGraph.par.name}'
+			self._printAndStatus(f'Unable to externalize, no tox file for {itemGraph.par.name}')
 			return
 		suffix = str(self._itemTable[itemGraph.par.name, 'fileSuffix'] or '')
 		if not suffix:
-			ui.status = f'Unable to externalize, no file suffix found for {itemGraph.par.name}'
+			self._printAndStatus(f'Unable to externalize, no file suffix found for {itemGraph.par.name}')
 			return
 		file = Path(tox.replace('.tox', suffix))
 		itemGraph.sourceDat.par.defaultreadencoding = 'utf8'
 		itemGraph.sourceDat.save(file.as_posix())
 		itemGraph.file.val = file.as_posix()
 		RaytkTags.fileSync.apply(dat, True)
-		ui.status = f'Externalized {itemGraph.sourceDat} to file {file.as_posix()}'
+		self._printAndStatus(f'Externalized {itemGraph.sourceDat} to file {file.as_posix()}')
 
 	def onExternalEditClick(self):
 		graph = self._currentItemGraph
 		if graph and graph.sourceDat and graph.sourceDat.par['edit'] is not None:
+			# TODO: make this path configurable or at least more portable
 			binPath = Path(r'C:\Users\tekt\AppData\Local\JetBrains\Toolbox\apps\PyCharm-P\ch-0\202.7660.27\bin\pycharm64.exe')
 			if binPath.exists():
 				subprocess.Popen([str(binPath), graph.file.val])
@@ -184,3 +199,7 @@ class DatEditorPanel:
 			f'Are you sure you want to delete the {itemGraph.par.label} of {info.rop.path}?',
 			buttons=['Cancel', 'Delete'],
 		)
+
+	def _printAndStatus(self, msg):
+		print(self.ownerComp, msg)
+		ui.status = msg

@@ -1,10 +1,10 @@
-name	label	category	fileSuffix
-Opglobals	Op Globals	code	_globals.glsl
-Initcode	Init Code	code	_init.glsl
-Functemplate	Function	code	.glsl
-Materialcode	Material	code	_material.glsl
-Callbacks	Callbacks	code	_callbacks.py
-Macrotable	Macros	table	_macros.txt
-Texturetable	Textures	table	_textures.txt
-Buffertable	Buffers	table	_buffers.txt
-Help	Help	help	.md
+name	label	category	type	datName	evalDatName	fileSuffix
+Opglobals	Op Globals	code	text	globals		_globals.glsl
+Initcode	Init Code	code	text	init		_init.glsl
+Functemplate	Function	code	text	function		.glsl
+Materialcode	Material	code	text	material		_material.glsl
+Callbacks	Callbacks	code	text	callbacks		_callbacks.py
+Macrotable	Macros	table	table	macro_exprs	eval_macros	_macros.txt
+Texturetable	Textures	table	table	texture_exprs	eval_textures	_textures.txt
+Buffertable	Buffers	table	table	buffer_table	eval_buffers	_buffers.txt
+Help	Help	help	text	help		.md
