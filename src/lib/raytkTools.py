@@ -2,7 +2,7 @@ from pathlib import Path
 from raytkDocs import OpDocManager
 from raytkModel import OpDefMeta_OLD, OpSpec_OLD
 from raytkUtil import RaytkContext, ROPInfo, focusCustomParameterPage, RaytkTags, CategoryInfo
-from typing import List, Optional
+from typing import Callable, List, Optional
 
 # noinspection PyUnreachableCode
 if False:
@@ -243,17 +243,142 @@ class RaytkTools(RaytkContext):
 		self.organizeCategory(catInfo.category)
 		return rop
 
-	@staticmethod
-	def organizeCategory(comp: 'COMP'):
+	def organizeCategory(self, comp: 'COMP', saveIndexTox=True):
 		catInfo = CategoryInfo(comp)
 		rops = catInfo.operators
 		if not rops:
 			return
-		rops.sort(key=lambda r: r.name)
-		for i, rop in enumerate(rops):
-			rop.nodeY = -int(i / 10) * 150
-			rop.nodeX = int(i % 10) * 200
-		catInfo.category.save(catInfo.category.par.externaltox)
+		self._organizeComps(rops)
+		if saveIndexTox:
+			catInfo.category.save(catInfo.category.par.externaltox)
+
+	@staticmethod
+	def _organizeComps(comps: 'List[COMP]'):
+		comps = list(comps)
+		comps.sort(key=lambda c: c.name)
+		for i, o in enumerate(comps):
+			o.nodeY = -int(i / 10) * 150
+			o.nodeX = int(i % 10) * 200
+
+class ToolkitLoader(RaytkTools):
+	def __init__(self, log: 'Callable[[str], None]'):
+		self.categoryNameQueue = []  # type: List[str]
+		self.log = log
+
+	def loadToolkit(self, thenRun: Callable = None, runArgs: list = None):
+		self.categoryNameQueue = []
+		self._queueCall(self._loadToolkit_stage, 0, thenRun, runArgs)
+
+	def _loadToolkit_stage(self, stage: int, thenRun: Callable = None, runArgs: list = None):
+		if stage == 0:
+			self._loadToolkitMetadata()
+		elif stage == 1:
+			self._loadCategoryComps()
+		elif stage == 2:
+			self._loadNextCategory(thenRun, runArgs)
+			return
+		else:
+			if thenRun:
+				self._queueCall(thenRun, *(runArgs or []))
+			return
+		self._queueCall(self._loadToolkit_stage, stage + 1, thenRun, runArgs)
+
+	def _loadToolkitMetadata(self):
+		self.log('Loading toolkit metadata ... but that is not yet implemented')
+
+	def _loadCategoryComps(self):
+		self.log('Loading category comps')
+		opsRoot = self.operatorsRoot()
+		indexTox = Path(opsRoot.par.externaltox.eval())
+		catsDir = indexTox.parent
+		catToxes = list(catsDir.glob('*/index.tox'))
+		self.log(f'  found {len(catToxes)} category toxes')
+		currentCats = list(self.allCategories())
+		for o in currentCats:
+			try:
+				o.destroy()
+			except:
+				pass
+		self.log(f'  cleared out {len(currentCats)} old category comps')
+		for tox in catToxes:
+			self.log(f'f  loading category tox: {tox.as_posix()}')
+			opsRoot.loadTox(tox.as_posix())
+		self.categoryNameQueue = [
+			o.name
+			for o in self.allCategories()
+		]
+		self.log(f'  loaded {len(self.categoryNameQueue)} categories')
+
+	def _loadNextCategory(self, thenRun: Callable, runArgs: list):
+		if not self.categoryNameQueue:
+			self._queueCall(thenRun, *(runArgs or []))
+			return
+		catName = self.categoryNameQueue.pop()
+		self._loadCategory(catName, thenRun=self._loadNextCategory, runArgs=[thenRun, runArgs])
+
+	def _loadCategory(self, categoryName: str, thenRun: Callable, runArgs: list):
+		self.log(f'Loading category {categoryName}')
+		catInfo = self.categoryInfo(categoryName)
+		indexTox = Path(catInfo.category.par.externaltox.eval())
+		catDir = indexTox.parent
+		foundToxes = [
+			tox
+			for tox in catDir.glob('*.tox')
+			if tox.name != 'index.tox'
+		]
+		foundToxes.sort()
+		self.log(f'  found {len(foundToxes)} toxes in category')
+		currentOps = list(catInfo.operators)
+		self.log(f'  clearing {len(currentOps)} current ops in category')
+		for o in currentOps:
+			try:
+				o.destroy()
+			except:
+				pass
+
+
+		self._loadCategoryHelp(catInfo, catDir)
+
+		self.log('  loading category operators...')
+		for tox in foundToxes:
+			self.log(f'  loading operator tox {tox.as_posix()}')
+			catInfo.category.loadTox(tox.as_posix())
+		self.log(f'  loaded {len(catInfo.operators)} operators in category')
+
+		for o in catInfo.operators:
+			self._initializeOperator(o)
+
+		self._queueCall(thenRun, *(runArgs or []))
+
+	def _loadCategoryHelp(self, catInfo: 'CategoryInfo', catDir: 'Path'):
+		helpFile = catDir / 'index.md'
+		helpDat = catInfo.helpDAT
+		self.log(f'Attempting to load category help from {helpFile.as_posix()}')
+		if not helpDat or helpDat.par.file != helpFile.as_posix():
+			if helpDat:
+				helpDat.destroy()
+			if not helpFile.exists():
+				self.log('  no help file to load')
+				return
+			helpDat = catInfo.category.create(textDAT, 'help')
+		helpDat.par.file = helpFile.as_posix()
+		helpDat.par.loadonstartpulse.pulse()
+		RaytkTags.fileSync.apply(helpDat, True)
+		helpDat.nodeX = 1125
+		helpDat.nodeY = 525
+		helpDat.nodeWidth = 350
+		helpDat.nodeHeight = 175
+		self.log(f'  loaded category help from {helpFile.as_posix()} into {helpDat}')
+
+	def _initializeOperator(self, rop: 'COMP'):
+		self.log(f'Initializing operator {rop}')
+		ropInfo = ROPInfo(rop)
+		if ropInfo and ropInfo.opDefPar:
+			ropInfo.toolkitVersion = self.toolkitVersion()
+
+	@staticmethod
+	def _queueCall(method: Callable, *args):
+		run('args[0](*(args[1:]))', method, *args, delayFrames=5, delayRef=root)
 
 # INCOMPLETE AND UNTESTED
 class AutoLoader:
