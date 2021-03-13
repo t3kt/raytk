@@ -1,5 +1,5 @@
 import popMenu
-from raytkTools import RaytkTools, AutoLoader
+from raytkTools import RaytkTools
 from raytkUtil import RaytkTags, Tag, navigateTo, recloneComp, RaytkContext, TypeTableHelper, CategoryInfo, Version
 from typing import List, Tuple, Union
 
@@ -81,15 +81,6 @@ class Tools:
 		self.NavigateTo(rop.par.clone.eval())
 		self.toolkitEditor().EditROP(rop)
 
-	def setCurrentROPBeta(self, state: bool):
-		self.applyTagToCurrentROPs(RaytkTags.beta, state)
-
-	def setCurrentROPAlpha(self, state: bool):
-		self.applyTagToCurrentROPs(RaytkTags.alpha, state)
-
-	def setCurrentROPDeprecated(self, state: bool):
-		self.applyTagToCurrentROPs(RaytkTags.deprecated, state)
-
 	def setUpCurrentROPHelp(self):
 		tools = RaytkTools()
 		for rop in self.getCurrentROPs():
@@ -127,33 +118,6 @@ class Tools:
 			exprTable.viewer = evalTable.viewer = True
 		finally:
 			ui.undo.endBlock()
-
-	def ShowCreateNewRopTypeDialog(self):
-		# noinspection PyUnresolvedReferences
-		self.ownerComp.op('newRopTypeDialog').ShowDialog()
-
-	def OnCreateNewRopTypeAccept(self, info: dict):
-		name = info['opName']
-		category = info['opCategory']
-		dest = RaytkContext().operatorsRoot().op(category)
-		if not dest:
-			raise Exception(f'Invalid ROP category: {category!r}')
-		template = dest.op('_template')
-		if not template:
-			raise Exception(f'No template available for category {category!r}')
-		newOp = dest.copy(template, name=name)
-		newOp.par.clone = newOp.path
-		newOp.par.externaltox = f'src/operators/{category}/{name}.tox'
-		RaytkTools().updateROPMetadata(newOp)
-		self.SaveROP(rop=newOp)
-		newOp.selected = True
-		newOp.nodeX = 0
-		newOp.nodeY = -300
-		opDef = newOp.op('opDefinition')
-		codeDat = opDef.par.Functemplate.eval()
-		if codeDat and codeDat.par['file'] is not None:
-			codeDat.par.file = f'src/operators/{category}/{name}.glsl'
-		self.NavigateTo(dest)
 
 	def OnOperatorsShortcutRightClick(self, button: 'COMP'):
 		def goToItem(name, path):
@@ -227,22 +191,6 @@ class Tools:
 	def applyTagToSelected(self, tag: 'Tag', state: bool):
 		self.forEachSelected(lambda o: tag.apply(o, state))
 
-	def applyTagToCurrentROPs(self, tag: 'Tag', state: bool):
-		for rop in self.getCurrentROPs():
-			tag.apply(rop, state)
-
-	def setUpAutoLoadOnSelected(self):
-		def _action(comp):
-			if comp:
-				AutoLoader(comp).setUpParameters()
-		self.forEachSelected(_action)
-
-	def applyAutoLoadOnSelected(self):
-		def _action(comp):
-			if comp:
-				AutoLoader(comp).applyAutoLoad()
-		self.forEachSelected(_action)
-
 	@staticmethod
 	def forEachSelected(action):
 		editor = RaytkContext().activeEditor()
@@ -273,6 +221,9 @@ class Tools:
 
 	def openPrototypeEditor(self):
 		self.openEditorWorkspace('devel/prototypes/')
+
+	def openExampleEditor(self):
+		self.openEditorWorkspace('examples/')
 
 	def openTestCaseEditor(self):
 		self.openEditorWorkspace('tests/testCases/')
