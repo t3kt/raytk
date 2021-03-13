@@ -35,12 +35,6 @@ class Tools:
 	def ShowLibraryParams():
 		RaytkContext().toolkit().openParameters()
 
-	def UpdateCurrentROPsMetadata(self, incrementVersion=False):
-		rops = self.getCurrentROPs(primaryOnly=False)
-		tools = RaytkTools()
-		for rop in rops:
-			tools.updateROPMetadata(rop, incrementVersion=incrementVersion)
-
 	def FillMonitorHeight(self, usePrimary=True):
 		height = _getMonitorHeight(usePrimary)
 		height -= 270
@@ -59,20 +53,6 @@ class Tools:
 			primaryOnly=primaryOnly,
 			exclude=lambda c: c is self.ownerComp or c.path.startswith(self.ownerComp.path + '/'))
 
-	def SaveCurrentROPs(self, incrementVersion=False):
-		rops = self.getCurrentROPs(primaryOnly=False)
-		if not rops:
-			return
-		for rop in rops:
-			self.SaveROP(incrementVersion=incrementVersion, rop=rop)
-		if len(rops) > 1:
-			ui.status = f'Saved {len(rops)} ROP TOXs'
-
-	def SaveROP(self, incrementVersion=False, rop: 'COMP' = None):
-		if not rop:
-			rop = self.GetCurrentROP()
-		RaytkTools().saveROP(rop, incrementVersion)
-
 	def editCurrentROPMaster(self):
 		rop = self.GetCurrentROP()
 		if not rop:
@@ -80,44 +60,6 @@ class Tools:
 		rop = rop.par.clone.eval() or rop
 		self.NavigateTo(rop.par.clone.eval())
 		self.toolkitEditor().EditROP(rop)
-
-	def setUpCurrentROPHelp(self):
-		tools = RaytkTools()
-		for rop in self.getCurrentROPs():
-			tools.setUpHelp(rop)
-
-	def reloadCurrentROPHelp(self):
-		tools = RaytkTools()
-		for rop in self.getCurrentROPs():
-			tools.reloadHelp(rop)
-
-	def addCurrentROPMacroTable(self):
-		rop = self.GetCurrentROP()
-		if rop:
-			self.addMacroTableToROP(rop)
-
-	@staticmethod
-	def addMacroTableToROP(rop: 'COMP'):
-		opDef = rop.op('opDefinition')
-		if not opDef:
-			return
-		dat = op(opDef.par.Macrotable)
-		if dat:
-			return
-		ui.undo.startBlock('Add macro table to ' + rop.path)
-		try:
-			exprTable = rop.create(tableDAT, 'macro_exprs')
-			exprTable.clear()
-			exprTable.appendRow(['', ''])
-			evalTable = rop.create(evaluateDAT, 'eval_macros')
-			evalTable.inputConnectors[0].connect(exprTable)
-			opDef.par.Macrotable = evalTable
-			exprTable.nodeY = evalTable.nodeY = opDef.nodeY - 250
-			evalTable.nodeCenterX = opDef.nodeCenterX
-			exprTable.nodeX = evalTable.nodeX - 150
-			exprTable.viewer = evalTable.viewer = True
-		finally:
-			ui.undo.endBlock()
 
 	def OnOperatorsShortcutRightClick(self, button: 'COMP'):
 		def goToItem(name, path):
