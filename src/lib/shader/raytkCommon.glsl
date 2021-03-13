@@ -719,6 +719,7 @@ float adaptAsFloat(float p) { return p; }
 float adaptAsFloat(vec2 p) { return p.x; }
 float adaptAsFloat(vec3 p) { return p.x; }
 float adaptAsFloat(vec4 p) { return p.x; }
+float adaptAsFloat(Sdf res) { return res.x; }
 
 vec2 adaptAsVec2(float p) { return vec2(p, 0.); }
 vec2 adaptAsVec2(vec2 p) { return p; }
