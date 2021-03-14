@@ -13,6 +13,9 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 	#else
 	#error invalidExtendMode
 	#endif
+	#ifdef THIS_HAS_INPUT_3
+	i = inputOp3(i, ctx);
+	#endif
 
 	#ifdef THIS_Enabletranslate
 	CoordT t = mix(THIS_Translate1, THIS_Translate2, i);
