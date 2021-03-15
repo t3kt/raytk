@@ -1,5 +1,5 @@
 from dataclasses import dataclass
-from typing import Callable, List, Tuple, Union
+from typing import Callable, Dict, List, Tuple, Union
 from raytkUtil import ROPInfo
 
 # noinspection PyUnreachableCode
@@ -366,11 +366,12 @@ class ShaderBuilder:
 
 	def buildValidationErrors(self, dat: 'DAT'):
 		dat.clear()
-		toolkitVersions = {}
-		rops = self.getOpsFromDefinitionColumn('path')
-		for rop in rops:
-			info = ROPInfo(rop)
-			version = info.toolkitVersion if info else ''
+		toolkitVersions = {}  # type: Dict[str, int]
+		defsTable = self.definitionTable()
+		if defsTable.numRows < 2 or not defsTable[0, 'toolkitVersion']:
+			return
+		for i in range(1, defsTable.numRows):
+			version = str(defsTable[i, 'toolkitVersion'] or '')
 			if version != '':
 				toolkitVersions[version] = 1 + toolkitVersions.get(version, 0)
 		if len(toolkitVersions) > 1:

@@ -41,7 +41,7 @@ def evaluateTypeProperty(par: 'Par', fieldName: str, defVal: str):
 
 def buildInputTable(dat: 'DAT', inDats: 'List[DAT]'):
 	dat.clear()
-	dat.appendRow(['slot', 'inputFunc', 'name'])
+	dat.appendRow(['slot', 'inputFunc', 'name', 'path'])
 	for i, inDat in enumerate(inDats):
 		slot = f'inputName{i + 1}'
 		if inDat.numRows < 2 or not inDat[1, 'name'].val:
@@ -51,6 +51,7 @@ def buildInputTable(dat: 'DAT', inDats: 'List[DAT]'):
 				slot,
 				f'inputOp{i + 1}',
 				inDat[1, 'name'],
+				inDat[1, 'path'],
 			])
 
 def combineInputDefinitions(dat: 'DAT', inDats: 'List[DAT]'):
