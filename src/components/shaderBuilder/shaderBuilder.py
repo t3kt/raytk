@@ -1,6 +1,6 @@
 from dataclasses import dataclass
 from typing import Callable, Dict, List, Tuple, Union
-from raytkUtil import ROPInfo
+from raytkUtil import RaytkContext
 
 # noinspection PyUnreachableCode
 if False:
@@ -366,6 +366,8 @@ class ShaderBuilder:
 
 	def buildValidationErrors(self, dat: 'DAT'):
 		dat.clear()
+		if RaytkContext().develMode():
+			return
 		toolkitVersions = {}  # type: Dict[str, int]
 		defsTable = self.definitionTable()
 		if defsTable.numRows < 2 or not defsTable[0, 'toolkitVersion']:
