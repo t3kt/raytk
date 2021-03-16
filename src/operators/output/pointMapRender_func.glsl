@@ -6,7 +6,7 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 
 #else
 
-Sdf thismap(vec3 p, Context ctx) {
+Sdf thismap(CoordT p, Context ctx) {
 	return createSdf(0.);
 }
 
