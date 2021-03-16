@@ -23,8 +23,15 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 	#endif
 
 	#ifdef THIS_Enablerotate
+	#ifdef THIS_Usepivot
+	CoordT piv = mix(THIS_Pivot1, THIS_Pivot2, i);
+	p -= piv;
+	#endif
 	CoordT r = mix(THIS_Rotate1, THIS_Rotate2, i);
 	pRotateOnXYZ(p, r);
+	#ifdef THIS_Usepivot
+	p += piv;
+	#endif
 	#endif
 
 	return inputOp1(p, ctx);
