@@ -1,6 +1,6 @@
 {
   "meta": {
     "opType": "raytk.operators.sdf.pyramidSdf",
-    "opVersion": 2
+    "opVersion": 3
   }
 }
