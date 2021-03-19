@@ -775,3 +775,15 @@ vec3 adaptAsVec3(float p) { return vec3(p, 0., 0.); }
 vec3 adaptAsVec3(vec2 p) { return vec3(p, 0.); }
 vec3 adaptAsVec3(vec3 p) { return p; }
 vec3 adaptAsVec3(vec4 p) { return p.xyz; }
+
+float extractOrUseAsX(float p) { return p; }
+float extractOrUseAsX(vec4 p) { return p.x; }
+
+float extractOrUseAsY(float p) { return p; }
+float extractOrUseAsY(vec4 p) { return p.y; }
+
+float extractOrUseAsZ(float p) { return p; }
+float extractOrUseAsZ(vec4 p) { return p.z; }
+
+float extractOrUseAsW(float p) { return p; }
+float extractOrUseAsW(vec4 p) { return p.w; }
