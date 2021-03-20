@@ -1,0 +1,7 @@
+{
+  "meta": {
+    "opStatus": "alpha",
+    "opType": "raytk.operators.material.ggxMat",
+    "opVersion": 0
+  }
+}
