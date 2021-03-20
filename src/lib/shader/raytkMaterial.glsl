@@ -48,6 +48,8 @@ float checkersGradBox(in vec2 p)
 
 	return coarse+fine*0.5;//step(fract(p.x), 0.55)-step(fract(p.x), 0.5)+step(fract(p.y), 0.55)-step(fract(p.y), 0.5);
 }
+
+// https://github.com/glslify/glsl-diffuse-oren-nayar
 float orenNayarDiffuse(
 	vec3 lightDirection,
 	vec3 viewDirection,
