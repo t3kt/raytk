@@ -776,6 +776,9 @@ vec3 adaptAsVec3(vec2 p) { return vec3(p, 0.); }
 vec3 adaptAsVec3(vec3 p) { return p; }
 vec3 adaptAsVec3(vec4 p) { return p.xyz; }
 
+vec3 fillToVec3(float p) { return vec3(p); }
+vec3 fillToVec3(vec4 p) { return p.xyz; }
+
 float extractOrUseAsX(float p) { return p; }
 float extractOrUseAsX(vec4 p) { return p.x; }
 
