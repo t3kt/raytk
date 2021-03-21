@@ -19,6 +19,7 @@ cat:
   - name: revolve
   - name: sdfToFloat
     summary: Converts an SDF into a float value field, based on the SDF surface distance.
+  - name: sweep
   - name: vectorToFloat
     summary: Converts a vector value field to a float field using one part of the
       vector.

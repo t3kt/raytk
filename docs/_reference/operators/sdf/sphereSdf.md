@@ -8,6 +8,20 @@ redirect_from:
   - /reference/opType/raytk.operators.sdf.sphereSdf/
 op:
   category: sdf
+  inputs:
+  - contextTypes:
+    - none
+    - Context
+    - MaterialContext
+    - CameraContext
+    - LightContext
+    - RayContext
+    coordTypes:
+    - vec3
+    label: Radius Field
+    name: radius_definition_in
+    returnTypes:
+    - float
   name: sphereSdf
   opType: raytk.operators.sdf.sphereSdf
   parameters:

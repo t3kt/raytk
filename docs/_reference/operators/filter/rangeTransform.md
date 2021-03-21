@@ -54,6 +54,19 @@ op:
     - float
     summary: Optional float value field to use instead of the iteration value. It
       is passed the current coordinates.
+  - contextTypes:
+    - none
+    - Context
+    - MaterialContext
+    - CameraContext
+    - LightContext
+    - RayContext
+    coordTypes:
+    - float
+    label: Easing
+    name: easing_definition_in
+    returnTypes:
+    - float
   name: rangeTransform
   opType: raytk.operators.filter.rangeTransform
   parameters:
@@ -96,6 +109,12 @@ op:
   - label: Rotate 2
     name: Rotate2
     summary: Rotate setting for the end of the range.
+  - label: Use Pivot
+    name: Usepivot
+  - label: Pivot 1
+    name: Pivot1
+  - label: Pivot 2
+    name: Pivot2
   status: beta
   summary: Applies a transform based on a range of settings, mapped with either the
     iteration value or a field input.

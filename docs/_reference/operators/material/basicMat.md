@@ -45,6 +45,7 @@ op:
     label: Base Color Field
     name: baseColor_definition_in
     returnTypes:
+    - float
     - vec4
   name: basicMat
   opType: raytk.operators.material.basicMat

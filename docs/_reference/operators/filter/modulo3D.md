@@ -42,6 +42,15 @@ op:
   - label: Shift
     name: Shift
     summary: Shifts the whole grid (and its contents).
+  - label: Iteration Type
+    menuOptions:
+    - label: None
+      name: none
+    - label: Cell Coordinate
+      name: cellcoord
+    - label: Alternating Cell Coordinate (0,1,0,1)
+      name: alternatingcoord
+    name: Iterationtype
   summary: Repeats space along all 3 axes.
 
 ---

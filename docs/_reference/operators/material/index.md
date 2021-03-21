@@ -19,6 +19,10 @@ cat:
     summary: 'A material that uses a vector field input to determine
 
       the color.'
+  - name: goochMat
+    status: beta
+  - name: orenNayarMat
+    status: beta
   - name: phongMat
     summary: Material that uses phong shading.
   - name: reflectMat

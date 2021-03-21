@@ -27,6 +27,8 @@ cat:
   - name: rectangleSdf
   - name: rhombusSdf2d
   - name: roundedRectangleSdf2d
+  - name: spiralSdf2d
+    status: beta
   - name: starSdf2d
   - name: superQuadSdf2d
   - name: triangleSdf2d

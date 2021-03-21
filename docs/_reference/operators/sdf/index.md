@@ -21,6 +21,7 @@ cat:
     summary: SDF for a bunny.
   - name: capsuleSdf
     summary: A cylinder with rounded ends, between two points.
+  - name: chamferBoxSdf
   - name: coneSdf
     summary: Defines a cone or capped cone shape.
   - name: crossSdf

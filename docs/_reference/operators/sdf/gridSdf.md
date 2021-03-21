@@ -68,11 +68,11 @@ op:
     summary: advanced parameter that should usually just be set to `Context`
   - label: Pattern
     menuOptions:
-    - label: Grid
+    - label: Grid (2D)
       name: grid
-    - label: Horizontal Bars
+    - label: Axis 1 Bars
       name: hbars
-    - label: Vertical Bars
+    - label: Axis 2 Bars
       name: vbars
     name: Pattern
   summary: An infinite grid shape, along two axes.

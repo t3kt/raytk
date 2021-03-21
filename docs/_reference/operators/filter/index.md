@@ -68,6 +68,8 @@ cat:
       the iteration value or a field input.
   - name: reflect
     summary: Reflects space across a plane.
+  - name: remapCoords
+    status: beta
   - name: reorderCoords
     summary: Swaps axes for the input.
   - name: rescaleField
@@ -79,8 +81,10 @@ cat:
     summary: Scales space.
   - name: slice
     summary: Removes all of an SDF except for a slice in space.
-  - name: spiralZoom
+  - name: sphericalMobiusTransform
     status: beta
+  - name: spiralZoom
+    summary: Transforms space using a logarithmic spiral.
   - name: transform
     summary: Transform the coordinates of the input, with rotation, scaling, and translation.
   - name: translate

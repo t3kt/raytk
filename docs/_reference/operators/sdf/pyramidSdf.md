@@ -20,6 +20,15 @@ op:
   - label: Width
     name: Width
     summary: The width of the base of the pyramid.
+  - label: Axis
+    menuOptions:
+    - label: X
+      name: x
+    - label: Y
+      name: y
+    - label: Z
+      name: z
+    name: Axis
   summary: A pyramid with four sides.
 
 ---
