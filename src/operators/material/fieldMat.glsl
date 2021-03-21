@@ -10,11 +10,16 @@ Sdf thismap(CoordT p, ContextT ctx) {
 
 vec3 THIS_getColor(vec3 p, MaterialContext matCtx) {
 	vec3 mp = getPosForMaterial(p, matCtx);
+	vec3 col;
 	#if defined(inputOp2_RETURN_TYPE_vec4)
-	return inputOp2(mp, matCtx).rgb;
+	col = inputOp2(mp, matCtx).rgb;
 	#elif defined(inputOp2_RETURN_TYPE_float)
-	return vec3(inputOp2(mp, matCtx));
+	col = vec3(inputOp2(mp, matCtx));
 	#else
 	#error invalidFieldReturnType
 	#endif
+	#ifdef THIS_Uselightcolor
+	col *= matCtx.light.color;
+	#endif
+	return col;
 }
