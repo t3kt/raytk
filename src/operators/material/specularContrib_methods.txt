@@ -1,0 +1,6 @@
+name	label	expr
+phong	Phong	phongSpecular(lightDir, viewDir, norm, THIS_Shininess)
+blinnphong	Blinn-Phong	blinnPhongSpecular(lightDir, viewDir, norm, THIS_Shininess)
+beckmann	Beckmann	beckmannSpecular(lightDir, viewDir, norm, THIS_Roughness)
+cooktorrance	Cook-Torrance	cookTorranceSpecular(lightDir, viewDir, norm, THIS_Roughness, THIS_Fresnel)
+gaussian	Gaussian	gaussianSpecular(lightDir, viewDir, norm, THIS_Shininess)

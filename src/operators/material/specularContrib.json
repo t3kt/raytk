@@ -1,0 +1,7 @@
+{
+  "meta": {
+    "opStatus": "beta",
+    "opType": "raytk.operators.material.specularContrib",
+    "opVersion": 0
+  }
+}
