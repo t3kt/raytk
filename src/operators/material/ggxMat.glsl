@@ -13,7 +13,7 @@ vec3 THIS_getColor(vec3 p, MaterialContext matCtx) {
 	vec3 viewDir = normalize(-matCtx.ray.dir);
 
 	float roughness = THIS_Roughness;
-	float f0 = THIS_F0;
+	float f0 = THIS_Fresnel;
 
 	vec3 baseColor = THIS_Basecolor;
 	float occ = calcAO(p, matCtx.normal);
