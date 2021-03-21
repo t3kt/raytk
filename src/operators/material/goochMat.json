@@ -1,7 +1,7 @@
 {
   "meta": {
     "opStatus": "alpha",
-    "opType": "raytk.operators.material.goochMaterial",
+    "opType": "raytk.operators.material.goochMat",
     "opVersion": 0
   }
 }
