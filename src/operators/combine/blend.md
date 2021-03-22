@@ -6,6 +6,7 @@ The blend index only considers inputs that are connected, so if you connect the 
 
 * `Enable`
 * `Blend`: Which input or combination of inputs to use. If this value is 0, the first connected input is used. 0.5 is half way between the first and second connected inputs, etc.
+* `Usefield`: Whether to use the 4th input as a field to determine the blending, instead of using it as just another input.
 
 ## Inputs
 

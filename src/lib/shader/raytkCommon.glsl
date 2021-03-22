@@ -1,9 +1,21 @@
 // raytkCommon.glsl
 
+float mixVals(float a, float b, float x) { return mix(a, b, x); }
+vec2 mixVals(vec2 a, vec2 b, float x) { return mix(a, b, x); }
+vec3 mixVals(vec3 a, vec3 b, float x) { return mix(a, b, x); }
+vec4 mixVals(vec4 a, vec4 b, float x) { return mix(a, b, x); }
+
 struct Ray {
 	vec3 pos;
 	vec3 dir;
 };
+
+Ray mixVals(in Ray res1, in Ray res2, float amt) {
+	Ray res;
+	res.pos = mix(res1.pos, res2.pos, amt);
+	res.dir = mix(res2.dir, res2.dir, amt);
+	return res;
+}
 
 struct Sdf {
 	float x; // distance
@@ -119,6 +131,11 @@ void blendInSdf(inout Sdf res1, in Sdf res2, in float amt) {
 	#endif
 }
 
+Sdf mixVals(in Sdf res1, in Sdf res2, float amt) {
+	blendInSdf(res1, res2, amt);
+	return res1;
+}
+
 void assignMaterial(inout Sdf res, int materialId) {
 	res.material = materialId;
 	res.material2 = 0;
@@ -210,6 +227,13 @@ struct Light {
 	vec3 pos;
 	vec3 color;  // Includes brightness. May be determined specific to a particular point in space (such as attentuation).
 };
+
+Light mixVals(in Light res1, in Light res2, float amt) {
+	Light res;
+	res.pos = mix(res1.pos, res2.pos, amt);
+	res.color = mix(res1.color, res2.color, amt);
+	return res;
+}
 
 struct LightContext {
 	Sdf result;
