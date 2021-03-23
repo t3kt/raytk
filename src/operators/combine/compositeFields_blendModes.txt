@@ -1,0 +1,26 @@
+name	label	expr
+add	Add	blendAdd(col1, col2, amt);
+average	Average	blendAverage(col1, col2, amt);
+colorburn	Color Burn	blendColorBurn(col1, col2, amt);
+colordodge	Color Dodge	blendColorDodge(col1, col2, amt);
+darken	Darken	blendDarken(col1, col2, amt);
+difference	Difference	blendDifference(col1, col2, amt);
+exclusion	Exclusion	blendExclusion(col1, col2, amt);
+glow	Glow	blendGlow(col1, col2, amt);
+hardlight	Hard Light	blendHardLight(col1, col2, amt);
+hardmix	Hard Mix	blendHardMix(col1, col2, amt);
+lighten	Lighten	blendLighten(col1, col2, amt);
+linearburn	Linear Burn	blendLinearBurn(col1, col2, amt);
+lineardodge	Linear Dodge	blendLinearDodge(col1, col2, amt);
+linearlight	Linear Light	blendLinearLight(col1, col2, amt);
+multiply	Multiply	blendMultiply(col1, col2, amt);
+negation	Negation	blendNegation(col1, col2, amt);
+normal	Normal	blendNormal(col1, col2, amt);
+overlay	Overlay	blendOverlay(col1, col2, amt);
+phoenix	Phoenix	blendPhoenix(col1, col2, amt);
+pinlight	PinLight	blendPinLight(col1, col2, amt);
+reflect	Reflect	blendReflect(col1, col2, amt);
+screen	Screen	blendScreen(col1, col2, amt);
+softlight	SoftLight	blendSoftLight(col1, col2, amt);
+subtract	Subtract	blendSubtract(col1, col2, amt);
+vividlight	VividLight	blendVividLight(col1, col2, amt);
