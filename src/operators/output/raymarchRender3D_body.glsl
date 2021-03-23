@@ -33,6 +33,7 @@ Sdf map(vec3 q)
 }
 
 Sdf castRay(Ray ray, float maxDist) {
+	int priorStage = pushStage(RAYTK_STAGE_PRIMARY);
 	float dist = 0;
 	Sdf res = createNonHitSdf();
 	int i;
@@ -45,6 +46,7 @@ Sdf castRay(Ray ray, float maxDist) {
 		modifyRay(ray, res);
 		#endif
 		if (!checkLimit(ray.pos)) {
+			popStage(priorStage);
 			return createNonHitSdf();
 		}
 		res = map(ray.pos);
@@ -73,6 +75,7 @@ Sdf castRay(Ray ray, float maxDist) {
 	res.nearHitCount = nearHitCount;
 	res.nearHitAmount = nearHit;
 	#endif
+	popStage(priorStage);
 	return res;
 }
 
@@ -137,7 +140,9 @@ float softShadow(vec3 p, MaterialContext matCtx)
 float calcShadow(in vec3 p, MaterialContext matCtx) {
 	vec3 lightVec = normalize(matCtx.light.pos - p);
 	Ray shadowRay = Ray(p+matCtx.normal * RAYTK_SURF_DIST*2., lightVec);
+	int priorStage = pushStage(RAYTK_STAGE_SHADOW);
 	float shadowDist = castRayBasic(shadowRay, RAYTK_MAX_DIST).x;
+	popStage(priorStage);
 	if (shadowDist < length(matCtx.light.pos - p)) {
 		return 0.1;
 	}
@@ -214,16 +219,17 @@ vec3 getColor(vec3 p, MaterialContext matCtx) {
 		p2 = matCtx.result.materialPos2.xyz;
 	}
 	#endif
+	int priorStage = pushStage(RAYTK_STAGE_MATERIAL);
 	if (ratio <= 0) {
 		#ifdef RAYTK_USE_MATERIAL_POS
 		matCtx.materialPos = p1;
 		#endif
-		return getColorInner(p, matCtx, m1);
+		col = getColorInner(p, matCtx, m1);
 	} else if (ratio >= 1) {
 		#ifdef RAYTK_USE_MATERIAL_POS
 		matCtx.materialPos = p2;
 		#endif
-		return getColorInner(p, matCtx, m2);
+		col = getColorInner(p, matCtx, m2);
 	} else {
 		#ifdef RAYTK_USE_MATERIAL_POS
 		matCtx.materialPos = p1;
@@ -233,8 +239,10 @@ vec3 getColor(vec3 p, MaterialContext matCtx) {
 		matCtx.materialPos = p2;
 		#endif
 		vec3 col2 = getColorInner(p, matCtx, m2);
-		return mix(col1, col2, ratio);
+		col = mix(col1, col2, ratio);
 	}
+	popStage(priorStage);
+	return col;
 }
 
 #ifndef THIS_USE_LIGHT_FUNC
@@ -365,6 +373,7 @@ void main()
 				matCtx.reflectColor = vec3(0);
 				#if defined(RAYTK_USE_REFLECTION) && defined(THIS_Enablereflection)
 				MaterialContext reflectMatCtx = matCtx;
+				int priorStage = pushStage(RAYTK_STAGE_REFLECT);
 				for (int k = 0; k < THIS_Reflectionpasses; k++) {
 					if (reflectMatCtx.result.reflect) {
 						reflectMatCtx.ray.dir = reflect(reflectMatCtx.ray.dir, reflectMatCtx.normal);
@@ -376,6 +385,7 @@ void main()
 						matCtx.reflectColor += getColor(reflectPos, reflectMatCtx);
 					}
 				}
+				popStage(priorStage);
 				#endif
 
 				vec3 col = getColor(p, matCtx);

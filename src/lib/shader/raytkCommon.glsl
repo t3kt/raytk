@@ -296,6 +296,23 @@ RayContext createRayContext(Ray ray, Sdf result) {
 	return rCtx;
 }
 
+const int RAYTK_STAGE_PRIMARY = 0;
+const int RAYTK_STAGE_SHADOW =  1;
+const int RAYTK_STAGE_REFLECT = 2;
+const int RAYTK_STAGE_MATERIAL = 3;
+
+int _raytkStage = RAYTK_STAGE_PRIMARY;
+
+int pushStage(int stage) {
+	int prior = _raytkStage;
+	_raytkStage = stage;
+	return prior;
+}
+
+void popStage(int priorStage) {
+	_raytkStage = priorStage;
+}
+
 mat3 rotateMatrix(vec3 r) {
 	return TDRotateX(r.x) * TDRotateY(r.y) * TDRotateZ(r.z);
 }
