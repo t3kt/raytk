@@ -5,7 +5,8 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 	result = THIS_INPUT_1(p, ctx);
 	#else
 	{
-		float i = ctx.iteration.THIS_Iterationpart;
+		vec4 ival = extractIteration(ctx);
+		float i = ival.THIS_Iterationpart;
 		#if defined(THIS_Extend_clamp)
 		i = clamp(i, 0., THIS_INPUT_COUNT - 1);
 		#elif defined(THIS_Extend_loop)

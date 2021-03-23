@@ -1,7 +1,8 @@
 ReturnT thismap(CoordT p, ContextT ctx) {
+	vec4 val = extractIteration(ctx);
 	#if defined(THIS_Format_full)
-	return ctx.iteration;
+	return val;
 	#else
-	return ctx.iteration.THIS_Format;
+	return val.THIS_Format;
 	#endif
 }

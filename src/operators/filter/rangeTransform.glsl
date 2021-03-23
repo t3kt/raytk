@@ -2,7 +2,7 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 	#ifdef THIS_HAS_INPUT_2
 	float i = inputOp2(p, ctx);
 	#else
-	float i = ctx.iteration.x;
+	float i = extractIteration(ctx).x;
 	#endif
 	i = mapRange(i, THIS_Indexrange1, THIS_Indexrange2, 0., 1.);
 	#if defined(THIS_Extendmode_linear)

@@ -269,6 +269,14 @@ MaterialContext createMaterialContext() {
 	return matCtx;
 }
 
+vec4 extractIteration(Context ctx) {
+	return ctx.iteration;
+}
+
+vec4 extractIteration(MaterialContext ctx) {
+	return ctx.context.iteration;
+}
+
 struct CameraContext {
 	vec2 resolution;
 
@@ -311,6 +319,18 @@ int pushStage(int stage) {
 
 void popStage(int priorStage) {
 	_raytkStage = priorStage;
+}
+
+void captureIterationFromMaterial(out vec4 store, in Context ctx) {
+	if (_raytkStage == RAYTK_STAGE_PRIMARY) {
+		store = ctx.iteration;
+	}
+}
+
+void restoreIterationFromMaterial(out MaterialContext matCtx, in vec4 store) {
+	if (_raytkStage == RAYTK_STAGE_MATERIAL) {
+		matCtx.context.iteration = store;
+	}
 }
 
 mat3 rotateMatrix(vec3 r) {

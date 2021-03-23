@@ -1,3 +1,5 @@
+vec4 THIS_iterationCapture = vec4(0.);
+
 ReturnT thismap(CoordT p, ContextT ctx) {
 	Sdf res = inputOp1(p, ctx);
 	#if defined(THIS_Uselocalpos) && defined(RAYTK_USE_MATERIAL_POS)
@@ -5,10 +7,12 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 	#else
 	assignMaterial(res, THISMAT);
 	#endif
+	captureIterationFromMaterial(THIS_iterationCapture, ctx);
 	return res;
 }
 
 vec3 THIS_getColor(vec3 p, MaterialContext matCtx) {
+	restoreIterationFromMaterial(matCtx, THIS_iterationCapture);
 	vec3 lightDir = normalize(p - matCtx.light.pos);
 	vec3 viewDir = normalize(-matCtx.ray.dir);
 

@@ -1,11 +1,15 @@
+vec4 THIS_iterationCapture = vec4(0.);
+
 Sdf thismap(CoordT p, ContextT ctx) {
 	Sdf res = inputOp1(p, ctx);
 	assignMaterial(res, THISMAT);
 	res.reflect = true;
+	captureIterationFromMaterial(THIS_iterationCapture, ctx);
 	return res;
 }
 
 vec3 THIS_getColor(vec3 p, MaterialContext matCtx) {
+	restoreIterationFromMaterial(matCtx, THIS_iterationCapture);
 	float sunShadow = 1.;
 	#if defined(THIS_SHADOW_FUNC)
 	sunShadow = THIS_SHADOW_FUNC(p+matCtx.normal*0.001, matCtx);
