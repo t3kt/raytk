@@ -1,7 +1,7 @@
 {
   "meta": {
     "opStatus": "beta",
-    "opType": "raytk.operators.function.applyFn",
+    "opType": "raytk.operators.filter.reshapeValues",
     "opVersion": 0
   }
 }
