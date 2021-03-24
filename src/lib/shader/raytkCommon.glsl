@@ -419,6 +419,27 @@ float modZigZag(float p, float low, float high) {
 	return low + modded;
 }
 
+vec2 modZigZag(vec2 p, vec2 low, vec2 high) {
+	p -= low;
+	vec2 range = high - low;
+	vec2 range2 = range * 2.;
+	vec2 modded = mod(p, range2);
+	return low + vec2(
+	modded.x > range.x ? (range2.x - modded.x): modded.x,
+	modded.y > range.y ? (range2.y - modded.y): modded.y);
+}
+
+vec3 modZigZag(vec3 p, vec3 low, vec3 high) {
+	p -= low;
+	vec3 range = high - low;
+	vec3 range2 = range * 2.;
+	vec3 modded = mod(p, range2);
+	return low + vec3(
+	modded.x > range.x ? (range2.x - modded.x): modded.x,
+	modded.y > range.y ? (range2.y - modded.y): modded.y,
+	modded.z > range.z ? (range2.z - modded.z): modded.z);
+}
+
 vec4 modZigZag(vec4 p, vec4 low, vec4 high) {
 	p -= low;
 	vec4 range = high - low;
@@ -433,6 +454,42 @@ vec4 modZigZag(vec4 p, vec4 low, vec4 high) {
 
 float wrapRange(float value, float low, float high) {
 	return low + mod(value - low, high - low);
+}
+
+vec2 wrapRange(vec2 value, vec2 low, vec2 high) {
+	return low + mod(value - low, high - low);
+}
+
+vec3 wrapRange(vec3 value, vec3 low, vec3 high) {
+	return low + mod(value - low, high - low);
+}
+
+vec4 wrapRange(vec4 value, vec4 low, vec4 high) {
+	return low + mod(value - low, high - low);
+}
+
+// There are definitely much more efficient ways to do this..
+
+bool allInRange(float val, float low, float high) {
+	return val >= low && val <= high;
+}
+
+bool allInRange(vec2 val, vec2 low, vec2 high) {
+	return val.x >= low.x && val.x <= high.x &&
+				 val.y >= low.y && val.y <= high.y;
+}
+
+bool allInRange(vec3 val, vec3 low, vec3 high) {
+	return val.x >= low.x && val.x <= high.x &&
+				 val.y >= low.y && val.y <= high.y &&
+				 val.z >= low.z && val.z <= high.z;
+}
+
+bool allInRange(vec4 val, vec4 low, vec4 high) {
+	return val.x >= low.x && val.x <= high.x &&
+				 val.y >= low.y && val.y <= high.y &&
+				 val.z >= low.z && val.z <= high.z &&
+				 val.w >= low.w && val.w <= high.w;
 }
 
 int findMin(vec2 vals, out float minVal) {
