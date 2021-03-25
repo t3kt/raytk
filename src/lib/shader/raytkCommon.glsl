@@ -5,10 +5,17 @@ vec2 mixVals(vec2 a, vec2 b, float x) { return mix(a, b, x); }
 vec3 mixVals(vec3 a, vec3 b, float x) { return mix(a, b, x); }
 vec4 mixVals(vec4 a, vec4 b, float x) { return mix(a, b, x); }
 
+void initDefVal(out float val) { val = 0.; }
+void initDefVal(out vec4 val) { val = vec4(0.); }
+
 struct Ray {
 	vec3 pos;
 	vec3 dir;
 };
+
+void initDefVal(out Ray val) {
+	val = Ray(vec3(0.), vec3(0.));
+}
 
 Ray mixVals(in Ray res1, in Ray res2, float amt) {
 	Ray res;
@@ -161,6 +168,10 @@ Sdf createNonHitSdf() {
 	return res;
 }
 
+void initDefVal(out Sdf val) {
+	val = createNonHitSdf();
+}
+
 bool isNonHitSdf(Sdf res) {
 	return res.x >= RAYTK_MAX_DIST;
 }
@@ -227,6 +238,10 @@ struct Light {
 	vec3 pos;
 	vec3 color;  // Includes brightness. May be determined specific to a particular point in space (such as attentuation).
 };
+
+void initDefVal(out Light val) {
+	val = Light(vec3(0.), vec3(0.));
+}
 
 Light mixVals(in Light res1, in Light res2, float amt) {
 	Light res;

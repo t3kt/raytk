@@ -1,10 +1,8 @@
 ReturnT thismap(CoordT p, ContextT ctx) {
 	#if THIS_INPUT_COUNT == 0
-		#ifdef THIS_RETURN_TYPE_Sdf
-			return createSdf(0);
-		#else
-			return ReturnT(0);
-		#endif
+		ReturnT val;
+		initDefVal(val);
+		return val;
 	#elif THIS_INPUT_COUNT == 1
 		return THIS_INPUT_1(p, ctx);
 	#else

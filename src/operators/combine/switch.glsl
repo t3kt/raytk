@@ -25,10 +25,8 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 			return THIS_INPUT_4(p, ctx);
 		}
 		#endif
-		#ifdef THIS_RETURN_TYPE_Sdf
-			return createSdf(0);
-		#else
-			return ReturnT(0);
-		#endif
+		ReturnT val;
+		initDefVal(val);
+		return val;
 	#endif
 }
