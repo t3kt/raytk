@@ -2,7 +2,7 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 	vec3 lightDir = normalize(p - ctx.light.pos);
 	vec3 viewDir = normalize(-ctx.ray.dir);
 	vec3 norm = normalize(ctx.normal);
-	float amount = THIS_EXPR;
+	float amount = THIS_EXPR * THIS_Level;
 	#if defined(THIS_RETURN_TYPE_float)
 	return amount;
 	#elif defined(THIS_RETURN_TYPE_vec4)

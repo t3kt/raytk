@@ -1,7 +1,7 @@
 {
   "meta": {
-    "opStatus": "beta",
+    "opStatus": "alpha",
     "opType": "raytk.operators.material.diffuseContrib",
-    "opVersion": 0
+    "opVersion": 1
   }
 }
