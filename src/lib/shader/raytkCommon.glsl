@@ -336,13 +336,13 @@ void popStage(int priorStage) {
 	_raytkStage = priorStage;
 }
 
-void captureIterationFromMaterial(out vec4 store, in Context ctx) {
+void captureIterationFromMaterial(inout vec4 store, in Context ctx) {
 	if (_raytkStage == RAYTK_STAGE_PRIMARY) {
 		store = ctx.iteration;
 	}
 }
 
-void restoreIterationFromMaterial(out MaterialContext matCtx, in vec4 store) {
+void restoreIterationFromMaterial(inout MaterialContext matCtx, in vec4 store) {
 	if (_raytkStage == RAYTK_STAGE_MATERIAL) {
 		matCtx.context.iteration = store;
 	}
