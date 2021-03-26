@@ -1,19 +1,13 @@
 ReturnT thismap(CoordT p, ContextT ctx) {
 	#if defined(THIS_RETURN_TYPE_float)
-		#ifdef THIS_COORD_TYPE_float
+		#if defined(THIS_COORD_TYPE_float)
 			return p;
-		#else
+		#elif defined(THIS_COORD_TYPE_vec2) && defined(THIS_Axis_z)
 			return p.x;
+		#else
+			return p.THIS_Axis;
 		#endif
 	#else
-		#if defined(THIS_COORD_TYPE_float)
-			return vec4(p, 0, 0, 0);
-		#elif defined(THIS_COORD_TYPE_vec2)
-			return vec4(p, 0, 0);
-		#elif defined(THIS_COORD_TYPE_vec3)
-			return vec4(p, 0);
-		#else
-			#error invalidCoordType
-		#endif
+		return adaptAsVec4(p);
 	#endif
 }

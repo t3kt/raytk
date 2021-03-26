@@ -909,6 +909,11 @@ vec3 adaptAsVec3(vec2 p) { return vec3(p, 0.); }
 vec3 adaptAsVec3(vec3 p) { return p; }
 vec3 adaptAsVec3(vec4 p) { return p.xyz; }
 
+vec4 adaptAsVec4(float p) { return vec4(p, 0., 0., 0.); }
+vec4 adaptAsVec4(vec2 p) { return vec4(p, 0., 0.); }
+vec4 adaptAsVec4(vec3 p) { return vec4(p, 0.); }
+vec4 adaptAsVec4(vec4 p) { return p; }
+
 vec3 fillToVec3(float p) { return vec3(p); }
 vec3 fillToVec3(vec4 p) { return p.xyz; }
 
