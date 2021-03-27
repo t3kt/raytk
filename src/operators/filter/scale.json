@@ -1,6 +1,6 @@
 {
   "meta": {
     "opType": "raytk.operators.filter.scale",
-    "opVersion": 9
+    "opVersion": 10
   }
 }
