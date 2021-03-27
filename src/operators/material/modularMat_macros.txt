@@ -1,0 +1,1 @@
+parent().par.Enableshadow	('THIS_SHADOW_FUNC inputOp2' if op('shadow_definition').numRows > 1 else 'THIS_USE_SHADOW_DEFAULT')		
