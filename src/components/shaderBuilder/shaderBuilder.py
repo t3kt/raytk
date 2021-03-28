@@ -277,10 +277,23 @@ class ShaderBuilder:
 	def buildTextureDeclarations(self):
 		textureTable = self.ownerComp.op('texture_table')
 		offset = int(self.ownerComp.par.Textureindexoffset)
-		decls = [
-			f'#define {cell.val} sTD2DInputs[{offset + cell.row - 1}]'
-			for cell in textureTable.col('name')[1:]
-		]
+		indexByType = {
+			'2d': offset,
+			'3d': 0,
+		}
+		arrayByType = {
+			'2d': 'sTD2DInputs',
+			'3d': 'sTD3DInputs',
+		}
+		decls = []
+		for i in range(1, textureTable.numRows):
+			name = str(textureTable[i, 'name'])
+			texType = str(textureTable[i, 'type'] or '2d')
+			if texType not in indexByType:
+				raise Exception(f'Invalid texture type for {name}: {texType!r}')
+			index = indexByType[texType]
+			decls.append(f'#define {name} {arrayByType[texType]}[{index}]')
+			indexByType[texType] = index + 1
 		return wrapCodeSection(decls, 'textures')
 
 	def buildBufferDeclarations(self):
