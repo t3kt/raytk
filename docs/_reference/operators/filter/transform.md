@@ -31,6 +31,8 @@ op:
     - float
     - vec4
     - Sdf
+    - Ray
+    - Light
   name: transform
   opType: raytk.operators.filter.transform
   parameters:

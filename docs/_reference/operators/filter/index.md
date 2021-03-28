@@ -73,6 +73,9 @@ cat:
   - name: reorderCoords
     summary: Swaps axes for the input.
   - name: rescaleField
+  - name: reshapeValues
+    status: beta
+    summary: Reshapes the values produced by a field by applying a function.
   - name: rotate
   - name: round
     summary: Adds to (or subtracts from) the size of an SDF, which has the effect

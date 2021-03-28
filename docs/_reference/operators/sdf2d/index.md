@@ -21,6 +21,8 @@ cat:
     summary: 2D cross shape SDF, with 4 arms and option rounding of the intersections.
   - name: dogBoneSdf2d
     summary: 2D SDF for two connected circles.
+  - name: lineSegmentSdf2d
+    summary: 2D line segment SDF.
   - name: parabolaSdf2d
   - name: pieSdf2d
   - name: polygonSdf2d

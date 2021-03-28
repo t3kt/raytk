@@ -8,22 +8,6 @@ redirect_from:
   - /reference/opType/raytk.operators.sdf.chamferBoxSdf/
 op:
   category: sdf
-  inputs:
-  - contextTypes:
-    - Context
-    coordTypes:
-    - float
-    - vec2
-    - vec3
-    label: definition_in
-    name: definition_in
-    required: true
-    returnTypes:
-    - float
-    - vec4
-    - Sdf
-    - Ray
-    - Light
   name: chamferBoxSdf
   opType: raytk.operators.sdf.chamferBoxSdf
   parameters:

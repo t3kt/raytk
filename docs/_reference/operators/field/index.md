@@ -42,11 +42,15 @@ cat:
       (one for each part of the vector).
   - name: noiseField
     summary: A float or vector field that uses one of several noise functions.
+  - name: normalField
+    status: beta
   - name: pointDistanceField
     summary: A float field that provides the distance from a specific point in space.
   - name: positionField
     summary: A vector field that evaluates to the coordinates in space.
   - name: reorderField
+    status: beta
+  - name: texture3dField
     status: beta
   - name: textureField
     summary: A float or vector field that looks up values from a texture.

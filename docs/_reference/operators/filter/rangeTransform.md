@@ -33,6 +33,7 @@ op:
   inputs:
   - contextTypes:
     - Context
+    - MaterialContext
     coordTypes:
     - vec3
     label: definition_in
@@ -46,6 +47,7 @@ op:
     - Light
   - contextTypes:
     - Context
+    - MaterialContext
     coordTypes:
     - vec3
     label: Index Field

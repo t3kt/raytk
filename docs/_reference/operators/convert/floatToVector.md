@@ -17,6 +17,7 @@ op:
     - LightContext
     - RayContext
     coordTypes:
+    - float
     - vec2
     - vec3
     label: definition_in_1
@@ -31,6 +32,7 @@ op:
     - LightContext
     - RayContext
     coordTypes:
+    - float
     - vec2
     - vec3
     label: definition_in_2
@@ -45,6 +47,7 @@ op:
     - LightContext
     - RayContext
     coordTypes:
+    - float
     - vec2
     - vec3
     label: definition_in_3
@@ -59,6 +62,7 @@ op:
     - LightContext
     - RayContext
     coordTypes:
+    - float
     - vec2
     - vec3
     label: definition_in_4

@@ -21,6 +21,7 @@ op:
   inputs:
   - contextTypes:
     - Context
+    - MaterialContext
     coordTypes:
     - float
     - vec2
@@ -35,6 +36,7 @@ op:
     - Light
   - contextTypes:
     - Context
+    - MaterialContext
     coordTypes:
     - float
     - vec2
@@ -49,6 +51,7 @@ op:
     - Light
   - contextTypes:
     - Context
+    - MaterialContext
     coordTypes:
     - float
     - vec2
@@ -63,6 +66,7 @@ op:
     - Light
   - contextTypes:
     - Context
+    - MaterialContext
     coordTypes:
     - float
     - vec2

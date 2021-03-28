@@ -42,6 +42,15 @@ op:
     - label: Vector4
       name: vec4
     name: Returntype
+  - label: Axis
+    menuOptions:
+    - label: X
+      name: x
+    - label: Y
+      name: y
+    - label: Z
+      name: z
+    name: Axis
   summary: A vector field that evaluates to the coordinates in space.
 
 ---

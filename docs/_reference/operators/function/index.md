@@ -25,6 +25,10 @@ cat:
       or on a third function.
   - name: cubicPulseFn
   - name: easeFn
+  - name: extendFn
+    status: beta
+    summary: Defines the behavior of a function outside the normal expected range
+      of coordinates.
   - name: flipFn
     summary: Function that flips its input in one of several different modes.
   - name: gainFn

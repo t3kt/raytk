@@ -29,6 +29,8 @@ op:
     - float
     - vec4
     - Sdf
+    - Ray
+    - Light
   - contextTypes:
     - none
     - Context
@@ -46,6 +48,8 @@ op:
     - float
     - vec4
     - Sdf
+    - Ray
+    - Light
   - contextTypes:
     - none
     - Context
@@ -63,6 +67,8 @@ op:
     - float
     - vec4
     - Sdf
+    - Ray
+    - Light
   - contextTypes:
     - none
     - Context
@@ -80,6 +86,8 @@ op:
     - float
     - vec4
     - Sdf
+    - Ray
+    - Light
   name: blend
   opType: raytk.operators.combine.blend
   parameters:
@@ -90,6 +98,10 @@ op:
     summary: Which input or combination of inputs to use. If this value is 0, the
       first connected input is used. 0.5 is half way between the first and second
       connected inputs, etc.
+  - label: Use Last Input As Switch
+    name: Usefield
+    summary: Whether to use the 4th input as a field to determine the blending, instead
+      of using it as just another input.
   summary: Smoothly blends/morphs between up to 4 SDFs.
 
 ---
