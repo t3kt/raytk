@@ -280,10 +280,12 @@ class ShaderBuilder:
 		indexByType = {
 			'2d': offset,
 			'3d': 0,
+			'cube': 0,
 		}
 		arrayByType = {
 			'2d': 'sTD2DInputs',
 			'3d': 'sTD3DInputs',
+			'cube': 'sTDCubeInputs',
 		}
 		decls = []
 		for i in range(1, textureTable.numRows):
