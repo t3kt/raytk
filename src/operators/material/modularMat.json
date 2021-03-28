@@ -1,7 +1,7 @@
 {
   "meta": {
-    "opStatus": "alpha",
+    "opStatus": "beta",
     "opType": "raytk.operators.material.modularMat",
-    "opVersion": 0
+    "opVersion": 1
   }
 }
