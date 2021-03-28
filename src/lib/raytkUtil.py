@@ -957,7 +957,7 @@ class RaytkContext:
 def _isMaster(o: 'COMP'):
 	return o and o.par['clone'] is not None and (o.par.clone.eval() or o.par.clone.expr)
 
-def simplifyNames(fullNames: List[Union[str, 'Cell']]):
+def simplifyNames(fullNames: List[Union[str, 'Cell']], sep='_'):
 	"""
 	Removes prefixes shared by all the provided names.
 
@@ -966,14 +966,14 @@ def simplifyNames(fullNames: List[Union[str, 'Cell']]):
 	if not fullNames:
 		return []
 	fullNames = [str(n) for n in fullNames]
-	if len(fullNames) != 1 and not any('_' not in n for n in fullNames):
+	if len(fullNames) != 1 and not any(sep not in n for n in fullNames):
 		prefixes = [
-			n.rsplit('_', maxsplit=1)[0] + '_'
+			n.rsplit(sep, maxsplit=1)[0] + sep
 			for n in fullNames
 		]
 		commonPrefix = _longestCommonPrefix(prefixes)
-		if commonPrefix and not commonPrefix.endswith('_'):
-			commonPrefix = commonPrefix.rsplit('_', maxsplit=1)[0] + '_'
+		if commonPrefix and not commonPrefix.endswith(sep):
+			commonPrefix = commonPrefix.rsplit(sep, maxsplit=1)[0] + sep
 		if commonPrefix:
 			prefixLen = len(commonPrefix)
 			return [

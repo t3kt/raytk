@@ -4,3 +4,4 @@ shader	Shader
 params	Params
 macros	Macros
 validation	Validation
+definitions	Definitions
