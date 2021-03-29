@@ -36,20 +36,12 @@ void main() {
 	#ifdef RAYTK_HAS_INIT
 	init();
 	#endif
+	initOutputs();
 	vec2 resolution = uTDOutputInfo.res.zw;
 	vec2 fragCoord = vUV.st;
 	vec4 posAndExists = texture(sTD2DInputs[0], fragCoord);
 
 	if (posAndExists.a == 0) {
-		#ifdef OUTPUT_SDF
-		sdfOut = vec4(0);
-		#endif
-		#ifdef OUTPUT_COLOR
-		colorOut = vec4(0);
-		#endif
-		#ifdef OUTPUT_NORMAL
-		normalOut = vec4(0);
-		#endif
 		return;
 	}
 	#if defined(THIS_COORD_TYPE_vec3)
@@ -81,14 +73,12 @@ void main() {
 	#ifdef RAYTK_HAS_INIT
 	init();
 	#endif
+	initOutputs();
 	vec2 resolution = uTDOutputInfo.res.zw;
 	vec2 fragCoord = vUV.st;
 	vec4 posAndExists = texture(sTD2DInputs[0], fragCoord);
 
 	if (posAndExists.a == 0) {
-		#ifdef OUTPUT_VALUE
-		valueOut = vec4(0);
-		#endif
 		return;
 	}
 	#if defined(THIS_COORD_TYPE_vec3)

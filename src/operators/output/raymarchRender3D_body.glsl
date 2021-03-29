@@ -259,49 +259,8 @@ void main()
 	#ifdef RAYTK_HAS_INIT
 	init();
 	#endif
+	initOutputs();
 
-	#ifdef OUTPUT_DEBUG
-	debugOut = vec4(0);
-	#endif
-	#ifdef OUTPUT_RAYDIR
-	rayDirOut = vec4(0);
-	#endif
-	#ifdef OUTPUT_RAYORIGIN
-	rayOriginOut = vec4(0);
-	#endif
-	#ifdef OUTPUT_OBJECTID
-	objectIdOut = vec4(0);
-	#endif
-	#ifdef OUTPUT_WORLDPOS
-	worldPosOut = vec4(0);
-	#endif
-	#ifdef OUTPUT_NORMAL
-	normalOut = vec4(0);
-	#endif
-	#ifdef OUTPUT_ORBIT
-	orbitOut = vec4(0);
-	#endif
-	#if defined(OUTPUT_NEARHIT)
-	nearHitOut = vec4(0);
-	#endif
-	#ifdef OUTPUT_ITERATION
-	iterationOut = vec4(0);
-	#endif
-	#ifdef OUTPUT_SDF
-	sdfOut = vec4(0);
-	#endif
-	#ifdef OUTPUT_COLOR
-	colorOut = vec4(0);
-	#endif
-	#if defined(OUTPUT_STEPS)
-	stepsOut = vec4(0);
-	#endif
-	#ifdef OUTPUT_DEPTH
-	depthOut = vec4(0);
-	#endif
-	#ifdef OUTPUT_DEBUG
-	debugOut = vec4(0, 0, 0, 1);
-	#endif
 	MaterialContext matCtx = createMaterialContext();
 
 	#if THIS_ANTI_ALIAS > 1

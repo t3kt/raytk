@@ -8,6 +8,8 @@ void main()
 	#ifdef RAYTK_HAS_INIT
 	init();
 	#endif
+	initOutputs();
+
 	vec4 color = map(vUV.st);
 
 	#ifdef OUTPUT_COLOR

@@ -335,6 +335,21 @@ class ShaderBuilder:
 		]
 		return wrapCodeSection(decls, 'outputBuffers')
 
+	def buildOutputInitBlock(self):
+		outputBuffers = self.outputBufferTable()
+		return wrapCodeSection(
+			[
+				'void initOutputs() {'
+			] +
+			[
+				f'{cell.val} = vec4(0.);'
+				for cell in outputBuffers.col('name')[1:]
+			] + [
+				'}'
+			],
+			'outputInit',
+		)
+
 	def buildOpGlobalsBlock(self):
 		dats = self.getOpsFromDefinitionColumn('opGlobalsPath')
 		return wrapCodeSection(dats, 'opGlobals')

@@ -83,6 +83,7 @@ void main()
 	#ifdef RAYTK_HAS_INIT
 	init();
 	#endif
+	initOutputs();
 
 vec2 p = getCoord();
 #ifdef THIS_RETURN_TYPE_Sdf
@@ -97,9 +98,6 @@ vec2 p = getCoord();
 #else
 	#ifdef OUTPUT_COLOR
 	colorOut = map(p);
-	#endif
-	#ifdef OUTPUT_SDF
-	sdfOut = vec4(0);
 	#endif
 #endif
 }
