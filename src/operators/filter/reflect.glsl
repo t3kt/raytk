@@ -1,11 +1,7 @@
 ReturnT thismap(CoordT p, ContextT ctx) {
-	vec3 planeNormal = THIS_AXIS_VEC;
+	vec3 planeNormal = normalize(THIS_AXIS_VEC);
 	p -= planeNormal * THIS_Shift * THIS_DIR;
-	float t = dot(p, planeNormal) + THIS_Offset * THIS_DIR;
-
-#ifdef THIS_HAS_INPUT_2
-	t = sgn(t) * inputOp2(abs(t), ctx);
-#endif
+	float t = dot(p, planeNormal);
 
 	if (t < 0) {
 		p = p - (2.*t) * planeNormal;
@@ -17,5 +13,6 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 	//  (-1, 1)  --> (1, 0)
 	setIterationIndex(ctx, (i < 0) ? 1: 0);
 	#endif
+	p -= planeNormal * THIS_Offset * THIS_DIR;
 	return inputOp1(p, ctx);
 }
