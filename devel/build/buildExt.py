@@ -1,5 +1,5 @@
 from raytkTools import RaytkTools
-from raytkUtil import RaytkTags, navigateTo, focusCustomParameterPage, CategoryInfo, RaytkContext, IconColors
+from raytkUtil import RaytkTags, navigateTo, focusCustomParameterPage, CategoryInfo, RaytkContext, IconColors, isROP
 from raytkBuild import BuildContext, DocProcessor
 from typing import Callable, List, Optional, Union
 
