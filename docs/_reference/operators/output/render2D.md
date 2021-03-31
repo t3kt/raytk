@@ -23,7 +23,6 @@ op:
     - vec2
     label: definition_in
     name: definition_in
-    required: true
     returnTypes:
     - float
     - vec4

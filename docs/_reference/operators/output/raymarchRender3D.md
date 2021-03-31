@@ -15,7 +15,6 @@ op:
     - vec3
     label: SDF Scene
     name: definition_in
-    required: true
     returnTypes:
     - Sdf
     summary: SDF definition the shapes in the scene.

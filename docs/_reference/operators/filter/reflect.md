@@ -24,20 +24,6 @@ op:
     - float
     - vec4
     - Sdf
-  - contextTypes:
-    - none
-    - Context
-    - MaterialContext
-    - CameraContext
-    - LightContext
-    - RayContext
-    coordTypes:
-    - float
-    label: Blend Function
-    name: blend_func_definition_in
-    returnTypes:
-    - float
-    summary: Function used to control blending across the reflection plane.
   name: reflect
   opType: raytk.operators.filter.reflect
   parameters:
@@ -73,6 +59,8 @@ op:
   - name: Exposeiteration
     summary: Whether to expose which side of the plane a point is on as an iteration
       value for upstream ops.
+  - label: Blend Width
+    name: Blendwidth
   - label: Iteration Type
     menuOptions:
     - label: None
