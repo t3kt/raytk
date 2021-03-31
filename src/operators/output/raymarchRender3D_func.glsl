@@ -1,14 +1,10 @@
-#ifdef THIS_HAS_INPUT_1
-
-#define thismap inputOp1
-
-#else
-
 Sdf thismap(vec3 p, Context ctx) {
-	return createSdf(RAYTK_MAX_DIST);
+	#ifdef THIS_HAS_INPUT_1
+	return inputOp1(p, ctx);
+	#else
+	return createNonHitSdf();
+	#endif
 }
-
-#endif
 
 Ray getViewRay(vec2 shift) {
 	vec2 resolution = uTDOutputInfo.res.zw;
