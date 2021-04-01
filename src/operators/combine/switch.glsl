@@ -25,6 +25,26 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 			return THIS_INPUT_4(p, ctx);
 		}
 		#endif
+		#if THIS_INPUT_COUNT > 4
+		if (i == 4) {
+			return THIS_INPUT_5(p, ctx);
+		}
+		#endif
+		#if THIS_INPUT_COUNT > 5
+		if (i == 5) {
+			return THIS_INPUT_6(p, ctx);
+		}
+		#endif
+		#if THIS_INPUT_COUNT > 6
+		if (i == 6) {
+			return THIS_INPUT_7(p, ctx);
+		}
+		#endif
+		#if THIS_INPUT_COUNT > 7
+		if (i == 7) {
+			return THIS_INPUT_8(p, ctx);
+		}
+		#endif
 		ReturnT val;
 		initDefVal(val);
 		return val;
