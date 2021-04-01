@@ -2,6 +2,6 @@
   "meta": {
     "opStatus": "beta",
     "opType": "raytk.operators.material.diffuseContrib",
-    "opVersion": 3
+    "opVersion": 4
   }
 }

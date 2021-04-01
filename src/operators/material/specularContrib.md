@@ -1,13 +1,13 @@
-Calculates specular light contribution for use in a material.
+A material element that provides specular light contribution.
 
 ## Parameters
 
-* `Enable`
-* `Returntype`
+* `Returntype`: Whether the lighting should have coloration or just a brightness level.
   * `float`
   * `vec4`
 * `Color`
-* `Method`
+* `Level`
+* `Method`: The type of specular shading to use. Different methods support different combinations of the other parameters.
   * `phong`
   * `blinnphong`
   * `beckmann`
