@@ -114,30 +114,7 @@ vec3 calcNormal(in vec3 pos)
 		e.xxx*map(pos + e.xxx).x);
 }
 
-// Soft shadow code from http://iquilezles.org/www/articles/rmshadows/rmshadows.htm
-float softShadow(vec3 p, MaterialContext matCtx)
-{
-	float mint = RAYTK_SURF_DIST;
-	float maxt = RAYTK_MAX_DIST;
-	float k = 0.5;  // hardness
-	Ray ray = Ray(p + matCtx.normal + RAYTK_SURF_DIST*2., normalize(matCtx.light.pos - p));
-	float res = 1.0;
-	float ph = 1e20;
-	for (float t=mint; t<maxt;)
-	{
-		float h = map(ray.pos + ray.dir *t).x;
-		if (h<0.001)
-		return 0.0;
-		float y = h*h/(2.0*ph);
-		float d = sqrt(h*h-y*y);
-		res = min(res, k*d/max(0.0, t-y));
-		ph = h;
-		t += h;
-	}
-	return res;
-}
-
-float calcShadow(in vec3 p, MaterialContext matCtx) {
+float calcShadowDefault(in vec3 p, MaterialContext matCtx) {
 	vec3 lightVec = normalize(matCtx.light.pos - p);
 	Ray shadowRay = Ray(p+matCtx.normal * RAYTK_SURF_DIST*2., lightVec);
 	int priorStage = pushStage(RAYTK_STAGE_SHADOW);
@@ -178,7 +155,7 @@ vec3 getColorDefault(vec3 p, MaterialContext matCtx) {
 	vec3 sunColor = matCtx.light.color;
 	vec3 skyColor = vec3(0.5, 0.8, 0.9);
 	float sunDiffuse = clamp(dot(matCtx.normal, sunDir), 0, 1.);
-	float sunShadow = calcShadow(p+matCtx.normal*0.001, matCtx);
+	float sunShadow = matCtx.shadedLevel;
 	float skyDiffuse = clamp(0.5+0.5*dot(matCtx.normal, vec3(0, 1, 0)), 0, 1);
 	float sunSpec = pow(max(dot(-matCtx.ray.dir, matCtx.normal), 0.), 5) * 0.5;
 	vec3 col = mate * sunColor * sunDiffuse * sunShadow;
@@ -217,6 +194,11 @@ vec3 getColor(vec3 p, MaterialContext matCtx) {
 	}
 	if (matCtx.result.materialPos2.w > 0.) {
 		p2 = matCtx.result.materialPos2.xyz;
+	}
+	#endif
+	#ifdef RAYTK_USE_SHADOW
+	if (matCtx.result.useShadow) {
+		matCtx.shadedLevel = getShadedLevel(p, matCtx);
 	}
 	#endif
 	int priorStage = pushStage(RAYTK_STAGE_MATERIAL);

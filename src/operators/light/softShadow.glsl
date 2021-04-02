@@ -6,11 +6,10 @@ float thismap(vec3 p, MaterialContext ctx) {
 	Ray ray = Ray(p + ctx.normal + RAYTK_SURF_DIST*2., normalize(ctx.light.pos - p));
 	float res = 1.0;
 	float ph = 1e20;
-	int priorStage = pushStage(RAYTK_STAGE_SHADOW);
 	for (float t=mint; t<maxt;)
 	{
 		float h = map(ray.pos + ray.dir *t).x;
-		if (h<0.001)
+		if (h<RAYTK_SURF_DIST)
 		return 0.0;
 		float y = h*h/(2.0*ph);
 		float d = sqrt(h*h-y*y);
@@ -18,7 +17,6 @@ float thismap(vec3 p, MaterialContext ctx) {
 		ph = h;
 		t += h;
 	}
-	popStage(priorStage);
 	return res;
 }
 

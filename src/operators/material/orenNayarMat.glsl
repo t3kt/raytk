@@ -10,6 +10,9 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 	assignMaterial(res, THISMAT);
 	#endif
 	captureIterationFromMaterial(THIS_iterationCapture, ctx);
+	#if defined(THIS_Enableshadow) && defined(RAYTK_USE_SHADOW)
+	res.useShadow = true;
+	#endif
 	return res;
 }
 
@@ -44,15 +47,9 @@ vec3 THIS_getColor(vec3 p, MaterialContext matCtx) {
 	vec3 col = baseColor;
 	col += matCtx.light.color * diffAmt * THIS_Diffuse;
 
-	float shadedAmt = 1.0;
 	#ifdef THIS_Enableshadow
-	#ifdef THIS_HAS_INPUT_2
-	shadedAmt = inputOp2(p+matCtx.normal*0.001, matCtx);
-	#else
-	shadedAmt = calcShadow(p+matCtx.normal*0.001, matCtx);
+	col *= matCtx.shadedLevel;
 	#endif
-	#endif
-	col *= shadedAmt;
 
 	col *= mix(vec3(0.5), vec3(1.5), occ);
 	return col;

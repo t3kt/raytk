@@ -69,6 +69,10 @@ struct Sdf {
 	// w: unused
 	vec4 objectId;
 	#endif
+
+	#ifdef RAYTK_USE_SHADOW
+	bool useShadow;
+	#endif
 };
 
 Sdf createSdf(float dist) {
@@ -103,6 +107,9 @@ Sdf createSdf(float dist) {
 	#ifdef RAYTK_OBJECT_ID_IN_SDF
 	res.objectId = vec4(0);
 	#endif
+	#ifdef RAYTK_USE_SHADOW
+	res.useShadow = false;
+	#endif
 	return res;
 }
 
@@ -135,6 +142,10 @@ void blendInSdf(inout Sdf res1, in Sdf res2, in float amt) {
 		res1.objectId.y = res2.objectId.x;
 		res1.objectId.z = amt;
 	}
+	#endif
+
+	#ifdef RAYTK_USE_SHADOW
+	res1.useShadow = res1.useShadow || (res2.useShadow && res2.interpolant >= 1.0);
 	#endif
 }
 
@@ -269,6 +280,7 @@ struct MaterialContext {
 	#ifdef RAYTK_USE_MATERIAL_POS
 	vec3 materialPos;
 	#endif
+	float shadedLevel;
 };
 
 MaterialContext createMaterialContext() {
@@ -281,6 +293,7 @@ MaterialContext createMaterialContext() {
 	#ifdef RAYTK_USE_MATERIAL_POS
 	matCtx.materialPos = vec3(0.);
 	#endif
+	matCtx.shadedLevel = 1.;
 	return matCtx;
 }
 

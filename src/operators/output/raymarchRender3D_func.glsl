@@ -58,3 +58,16 @@ void modifyRay(inout Ray ray, in Sdf res) {
 	ray = inputOp4(ray.pos, rCtx);
 }
 #endif
+
+#ifdef RAYTK_USE_SHADOW
+float getShadedLevel(vec3 p, MaterialContext matCtx) {
+	int priorStage = pushStage(RAYTK_STAGE_SHADOW);
+	#ifdef THIS_HAS_INPUT_5
+	float res = inputOp5(p, matCtx);
+	#else
+	float res = calcShadowDefault(p, matCtx);
+	#endif
+	popStage(priorStage);
+	return res;
+}
+#endif
