@@ -8,6 +8,14 @@ redirect_from:
   - /reference/opType/raytk.operators.material.modularMat/
 op:
   category: material
+  detail: 'The shading contribution operators are intended to be used with this material,
+
+    including `diffuseContrib`, `specularContrib`, and `skyLightContrib`.
+
+    However any float or vector field operator can be used as a lighting element as
+    long
+
+    as it''s set up to use `MaterialContext`.'
   inputs:
   - contextTypes:
     - Context
@@ -19,14 +27,6 @@ op:
     returnTypes:
     - Sdf
   - contextTypes:
-    - MaterialContext
-    coordTypes:
-    - vec3
-    label: Shadow
-    name: shadow_definition_in
-    returnTypes:
-    - float
-  - contextTypes:
     - Context
     - MaterialContext
     coordTypes:
@@ -36,6 +36,7 @@ op:
     returnTypes:
     - float
     - vec4
+    summary: First shading element.
   - contextTypes:
     - Context
     - MaterialContext
@@ -46,6 +47,7 @@ op:
     returnTypes:
     - float
     - vec4
+    summary: Second shading element.
   name: modularMat
   opType: raytk.operators.material.modularMat
   parameters:
@@ -62,5 +64,14 @@ op:
   - label: Enable Shadow
     name: Enableshadow
   status: beta
+  summary: A material that is composed of one or more shading elements.
 
 ---
+
+
+A material that is composed of one or more shading elements.
+
+The shading contribution operators are intended to be used with this material,
+including `diffuseContrib`, `specularContrib`, and `skyLightContrib`.
+However any float or vector field operator can be used as a lighting element as long
+as it's set up to use `MaterialContext`.

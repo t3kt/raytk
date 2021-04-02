@@ -34,14 +34,6 @@ op:
     - MaterialContext
     coordTypes:
     - vec3
-    label: Shadow
-    name: shadow_definition_in
-    returnTypes:
-    - float
-  - contextTypes:
-    - MaterialContext
-    coordTypes:
-    - vec3
     label: Base Color Field
     name: baseColor_definition_in
     returnTypes:

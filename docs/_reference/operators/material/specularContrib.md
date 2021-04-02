@@ -11,17 +11,18 @@ op:
   name: specularContrib
   opType: raytk.operators.material.specularContrib
   parameters:
-  - label: Enable
-    name: Enable
   - label: Return Type
     menuOptions:
-    - label: Float
+    - label: Level Only
       name: float
-    - label: Vector4
+    - label: Color
       name: vec4
     name: Returntype
+    summary: Whether the lighting should have coloration or just a brightness level.
   - label: Color
     name: Color
+  - label: Level
+    name: Level
   - label: Method
     menuOptions:
     - label: Phong
@@ -37,18 +38,18 @@ op:
     - label: GGX
       name: ggx
     name: Method
+    summary: The type of specular shading to use. Different methods support different
+      combinations of the other parameters.
   - label: Shininess
     name: Shininess
   - label: Roughness
     name: Roughness
   - label: Fresnel
     name: Fresnel
-  - label: Level
-    name: Level
   status: beta
-  summary: Calculates specular light contribution for use in a material.
+  summary: A material element that provides specular light contribution.
 
 ---
 
 
-Calculates specular light contribution for use in a material.
+A material element that provides specular light contribution.

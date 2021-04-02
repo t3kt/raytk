@@ -45,6 +45,14 @@ op:
     returnTypes:
     - Ray
     summary: Advanced feature, not ready for use.
+  - contextTypes:
+    - MaterialContext
+    coordTypes:
+    - vec3
+    label: Shadow
+    name: shadow_definition_in
+    returnTypes:
+    - float
   name: raymarchRender3D
   opType: raytk.operators.output.raymarchRender3D
   parameters:
@@ -204,6 +212,8 @@ op:
     name: Enablereflection
   - label: Reflection Passes
     name: Reflectionpasses
+  - label: Enable Shadow
+    name: Enableshadow
   - label: Enable Near Hit Minimum Dist
     name: Enablenearhitmindist
   - label: Near Hit Minimum Distance

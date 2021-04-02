@@ -17,6 +17,7 @@ cat:
     summary: Converts a 2D SDF to a striped distance pattern.
   - name: diffuseContrib
     status: beta
+    summary: A material element that provides diffuse light contribution.
   - name: fieldMat
     summary: 'A material that uses a vector field input to determine
 
@@ -25,6 +26,7 @@ cat:
     status: beta
   - name: modularMat
     status: beta
+    summary: A material that is composed of one or more shading elements.
   - name: orenNayarMat
     status: beta
   - name: phongMat
@@ -33,9 +35,10 @@ cat:
     status: beta
   - name: skyLightContrib
     status: beta
+    summary: A material element that acts as a basic pseudo directional light.
   - name: specularContrib
     status: beta
-    summary: Calculates specular light contribution for use in a material.
+    summary: A material element that provides specular light contribution.
   summary: 'Material operators that are used by renderers to determine the
 
     color of points on the surface of geometry.'
