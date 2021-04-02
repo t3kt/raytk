@@ -17,6 +17,5 @@ as it's set up to use `MaterialContext`.
 ## Inputs
 
 * `definition_in`: 
-* `shadow_definition_in`: Shadow function.
 * `contrib_definition_in_1`: First shading element.
 * `contrib_definition_in_2`: Second shading element.

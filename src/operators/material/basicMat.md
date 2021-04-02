@@ -21,5 +21,4 @@ Third, the "Sky" color acts as a simple pseudo light, that uses the surface norm
 ## Inputs
 
 * `definition_in`: 
-* `shadow_definition_in`: 
 * `baseColor_definition_in`: 
