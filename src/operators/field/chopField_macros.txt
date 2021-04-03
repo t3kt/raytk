@@ -1,1 +1,0 @@
-	'THIS_AXIS'	'x' if (parent().par.Axis == 'z' and parent().par.Coordtype == '2d') else parent().par.Axis.eval()
