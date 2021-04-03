@@ -1,4 +1,5 @@
 from pathlib import Path
+import shutil
 from typing import Callable
 from raytkUtil import detachTox, CategoryInfo, ROPInfo, RaytkTags, RaytkContext
 from raytkDocs import CategoryHelp, OpDocManager
@@ -141,6 +142,16 @@ class DocProcessor:
 		self.context = context
 		self.outputFolder = Path(outputFolder)
 		self.toolkit = RaytkContext().toolkit()
+
+	def clearPreviousDocs(self):
+		if not self.outputFolder.exists():
+			self.context.log(f'No previous docs to clear in {self.outputFolder}')
+			return
+		self.context.log(f'Clearing docs from {self.outputFolder}')
+		paths = list(sorted(self.outputFolder.iterdir()))
+		for path in paths:
+			self.context.log(f'Clearing {path}')
+			shutil.rmtree(path)
 
 	def processOp(self, rop: 'COMP'):
 		self.context.log(f'Processing docs for op {rop}')

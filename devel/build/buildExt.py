@@ -56,25 +56,28 @@ class BuildManager:
 			self.detachAllFileSyncDats(toolkit)
 			self.queueMethodCall(self.runBuild_stage, stage + 1)
 		elif stage == 2:
-			self.updateLibraryInfo(toolkit, thenRun='runBuild_stage', runArgs=[stage + 1])
+			self.docProcessor.clearPreviousDocs()
+			self.queueMethodCall(self.runBuild_stage, stage + 1)
 		elif stage == 3:
-			self.updateLibraryImage(toolkit, thenRun='runBuild_stage', runArgs=[stage + 1])
+			self.updateLibraryInfo(toolkit, thenRun='runBuild_stage', runArgs=[stage + 1])
 		elif stage == 4:
-			self.processOperators(toolkit.op('operators'), thenRun='runBuild_stage', runArgs=[stage + 1])
+			self.updateLibraryImage(toolkit, thenRun='runBuild_stage', runArgs=[stage + 1])
 		elif stage == 5:
+			self.processOperators(toolkit.op('operators'), thenRun='runBuild_stage', runArgs=[stage + 1])
+		elif stage == 6:
 			self.context.lockBuildLockOps(toolkit)
 			self.queueMethodCall(self.runBuild_stage, stage + 1)
-		elif stage == 6:
-			self.processTools(toolkit.op('tools'), thenRun='runBuild_stage', runArgs=[stage + 1])
 		elif stage == 7:
-			self.processComponents(toolkit.op('components'), thenRun='runBuild_stage', runArgs=[stage + 1])
+			self.processTools(toolkit.op('tools'), thenRun='runBuild_stage', runArgs=[stage + 1])
 		elif stage == 8:
+			self.processComponents(toolkit.op('components'), thenRun='runBuild_stage', runArgs=[stage + 1])
+		elif stage == 9:
 			self.context.removeBuildExcludeOps(toolkit)
 			self.queueMethodCall(self.runBuild_stage, stage + 1)
-		elif stage == 9:
+		elif stage == 10:
 			self.finalizeToolkitPars(toolkit)
 			self.queueMethodCall(self.runBuild_stage, stage + 1)
-		elif stage == 10:
+		elif stage == 11:
 			version = RaytkContext().toolkitVersion()
 			toxFile = f'build/RayTK-{version}.tox'
 			self.log('Exporting TOX to ' + toxFile)
