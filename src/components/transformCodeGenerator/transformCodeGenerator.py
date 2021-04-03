@@ -14,16 +14,21 @@ if False:
 		Enablescale: BoolParamT
 		Enablepivot: BoolParamT
 		Scaletype: StrParamT
+		Varname: StrParamT
 
 def _configPar() -> 'Union[_Pars, ParCollection]':
 	return parent().par
 
+def _var():
+	return _configPar().Varname.eval() or 'p'
+
 def generateCode():
 	parts = []
+	v = _var()
 	if _configPar().Enablepivot:
 		parts += _branchByCoordType(
-			'p -= vec2(THIS_Pivotx, THIS_Pivoty);',
-			'p -= THIS_Pivot;')
+			f'{v} -= vec2(THIS_Pivotx, THIS_Pivoty);',
+			f'{v} -= THIS_Pivot;')
 	for part in _configPar().Transformorder.eval():
 		if part == 's':
 			parts += _scaleCode()
@@ -33,38 +38,41 @@ def generateCode():
 			parts += _translateCode()
 	if _configPar().Enablepivot:
 		parts += _branchByCoordType(
-			'p += vec2(THIS_Pivotx, THIS_Pivoty);',
-			'p += THIS_Pivot;')
+			f'{v} += vec2(THIS_Pivotx, THIS_Pivoty);',
+			f'{v} += THIS_Pivot;')
 	return '\n'.join(parts)
 
 def _scaleCode() -> 'List[str]':
 	if not _configPar().Enablescale:
 		return []
+	v = _var()
 	if _configPar().Scaletype == 'uniform':
 		return [
-			'p /= THIS_Uniformscale;',
+			f'{v} /= THIS_Uniformscale;',
 			'valueAdjust /= THIS_Uniformscale;',
 		]
 	return _branchByCoordType(
-		'p /= vec2(THIS_Scalex, THIS_Scaley);',
-		'p /= THIS_Scale;')
+		f'{v} /= vec2(THIS_Scalex, THIS_Scaley);',
+		f'{v} /= THIS_Scale;')
 
 def _rotateCode() -> 'List[str]':
 	if not _configPar().Enablerotate:
 		return []
+	v = _var()
 	return _branchByCoordType(
-		'pR(p, THIS_Rotatez);',
+		f'pR({v}, THIS_Rotatez);',
 		'\n'.join([
-				f'p *= TDRotate{part.upper()}(THIS_Rotate{part});'
+				f'{v} *= TDRotate{part.upper()}(THIS_Rotate{part});'
 				for part in _configPar().Rotateorder.eval()
 		]))
 
 def _translateCode() -> 'List[str]':
 	if not _configPar().Enabletranslate:
 		return []
+	v = _var()
 	return _branchByCoordType(
-		'p -= vec2(THIS_Translatex, THIS_Translatey);',
-		'p -= THIS_Translate;')
+		f'{v} -= vec2(THIS_Translatex, THIS_Translatey);',
+		f'{v} -= THIS_Translate;')
 
 def _branchByCoordType(code2d, code3d):
 	return [
