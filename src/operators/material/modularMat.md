@@ -9,13 +9,13 @@ as it's set up to use `MaterialContext`.
 
 * `Enable`
 * `Basecolor`
-* `Uselightcolor`
+* `Uselightcolor`: Whether to apply the light color to the base color. This does not affect whether the shading elements use the light color.
 * `Uselocalpos`
 * `Enableao`
-* `Enableshadow`
 
 ## Inputs
 
 * `definition_in`: 
-* `contrib_definition_in_1`: First shading element.
-* `contrib_definition_in_2`: Second shading element.
+* `contrib_definition_in_1`:  First shading element.
+* `contrib_definition_in_2`:  Second shading element.
+* `contrib_definition_in_3`:  Third shading element.

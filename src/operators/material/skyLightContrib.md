@@ -8,9 +8,7 @@ It is equivalent to the sky lighting feature in `basicMat`.
 
 ## Parameters
 
-* `Returntype`: Whether the lighting should have coloration or just a brightness level.
-  * `float`
-  * `vec4`
 * `Color`
 * `Level`
 * `Dir`: The direction from which the "light" comes from.
+* `Usecolor`: Whether to produce color or just a brightness value.
