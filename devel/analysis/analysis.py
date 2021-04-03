@@ -1,5 +1,5 @@
 from raytkUtil import RaytkContext, ROPInfo, InputInfo
-from typing import Optional
+from typing import Dict, List, Optional
 
 # noinspection PyUnreachableCode
 if False:
@@ -169,3 +169,31 @@ def buildOpCurrentExpandedParamsTable(dat: 'DAT'):
 			_formatPar(info.opDefPar.Params),
 			expanded,
 		])
+
+def buildOpTestTable(dat: 'DAT', testTable: 'DAT'):
+	dat.clear()
+	dat.appendRow([
+		'path',
+		'testCount',
+		'test1',
+	])
+	testsByOpType = {}  # type: Dict[str, List[str]]
+	for i in range(1, testTable.numRows):
+		opType = str(testTable[i, 'opType'])
+		name = str(testTable[i, 'path']).rsplit('/', maxsplit=1)[1].replace('.tox', '')
+		if not opType:
+			continue
+		elif opType not in testsByOpType:
+			testsByOpType[opType] = [name]
+		else:
+			testsByOpType[opType].append(name)
+	for rop in RaytkContext().allMasterOperators():
+		opType = ROPInfo(rop).opType
+		tests = testsByOpType.get(opType) or []
+		tests.sort()
+		dat.appendRow([
+			rop.path,
+			len(tests),
+		] + tests)
+	for cell in dat.row(0)[2:]:
+		cell.val = 'test' + str(cell.col - 1)
