@@ -8,8 +8,14 @@ Sdf thismap(CoordT p, ContextT ctx) {
 	assignMaterial(res, THISMAT);
 	#endif
 	captureIterationFromMaterial(THIS_iterationCapture, ctx);
-	#if defined(THIS_Enableshadow) && defined(RAYTK_USE_SHADOW)
-	res.useShadow = true;
+	#if defined(RAYTK_USE_SHADOW)
+	{
+		#if (defined(THIS_HAS_INPUT_2) && defined(inputOp2_Enableshadow))\
+		 || (defined(THIS_HAS_INPUT_3) && defined(inputOp3_Enableshadow))\
+		 || (defined(THIS_HAS_INPUT_4) && defined(inputOp4_Enableshadow))
+		res.useShadow = true;
+		#endif
+	}
 	#endif
 	return res;
 }
@@ -17,23 +23,21 @@ Sdf thismap(CoordT p, ContextT ctx) {
 vec3 THIS_getColor(vec3 p, MaterialContext matCtx) {
 	restoreIterationFromMaterial(matCtx, THIS_iterationCapture);
 	vec3 mp = getPosForMaterial(p, matCtx);
-	float sunShadow = 1.;
-	#if defined(THIS_Enableshadow) && defined(RAYTK_USE_SHADOW)
-	sunShadow = matCtx.shadedLevel;
-	#endif
 	vec3 col = THIS_Basecolor;
+	#ifdef THIS_Uselightcolor
+	col *= matCtx.light.color;
+	#endif
+	#ifdef THIS_HAS_INPUT_2
+	col += fillToVec3(inputOp2(mp, matCtx));
+	#endif
 	#ifdef THIS_HAS_INPUT_3
 	col += fillToVec3(inputOp3(mp, matCtx));
 	#endif
 	#ifdef THIS_HAS_INPUT_4
 	col += fillToVec3(inputOp4(mp, matCtx));
 	#endif
-	#ifdef THIS_Uselightcolor
-	col *= matCtx.light.color;
-	#endif
 	#ifdef THIS_Enableao
 	col *= sqrt(calcAO(mp, matCtx.normal));
 	#endif
-	col *= sunShadow;
 	return col;
 }

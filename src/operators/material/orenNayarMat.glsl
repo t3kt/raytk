@@ -47,7 +47,7 @@ vec3 THIS_getColor(vec3 p, MaterialContext matCtx) {
 	vec3 col = baseColor;
 	col += matCtx.light.color * diffAmt * THIS_Diffuse;
 
-	#ifdef THIS_Enableshadow
+	#if defined(THIS_Enableshadow) && defined(RAYTK_USE_SHADOW)
 	col *= matCtx.shadedLevel;
 	#endif
 
