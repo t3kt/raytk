@@ -1,4 +1,5 @@
 ReturnT thismap(CoordT p, ContextT ctx) {
+	p -= THIS_Translate;
 	float t = THIS_Thickness;
 	// standard axis swizzle macros don't match what this needs
 	#if defined(THIS_Axis_x)
@@ -9,14 +10,14 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 	#else
 	#error invalidAxis
 	#endif
-	#ifdef THIS_THICK_FIELD
-	#if defined(THIS_THICK_COORD_TYPE_float)
-	t *= THIS_THICK_FIELD(atan(p.z, p.x) / TAU, ctx);
-	#elif defined(THIS_THICK_COORD_TYPE_vec3)
-	t *= THIS_THICK_FIELD(p, ctx);
+	#ifdef THIS_HAS_INPUT_1
+	#if defined(inputOp1_COORD_TYPE_float)
+	t *= inputOp1(atan(p.z, p.x), ctx);
+	#elif defined(inputOp1_COORD_TYPE_vec3)
+	t *= inputOp1(p, ctx);
 	#else
 	#error invalidRadiusCoordType
 	#endif
 	#endif
-	return createSdf(sdMobiusRing(p - THIS_Translate, THIS_Radius, t, THIS_Rounding, THIS_Twist, THIS_Twistphase));
+	return createSdf(sdMobiusRing(p, THIS_Radius, t, THIS_Rounding, THIS_Twist, THIS_Twistphase));
 }
