@@ -155,10 +155,12 @@ vec3 getColorDefault(vec3 p, MaterialContext matCtx) {
 	vec3 sunColor = matCtx.light.color;
 	vec3 skyColor = vec3(0.5, 0.8, 0.9);
 	float sunDiffuse = clamp(dot(matCtx.normal, sunDir), 0, 1.);
-	float sunShadow = matCtx.shadedLevel;
 	float skyDiffuse = clamp(0.5+0.5*dot(matCtx.normal, vec3(0, 1, 0)), 0, 1);
 	float sunSpec = pow(max(dot(-matCtx.ray.dir, matCtx.normal), 0.), 5) * 0.5;
-	vec3 col = mate * sunColor * sunDiffuse * sunShadow;
+	vec3 col = mate * sunColor * sunDiffuse;
+	#if defined(THIS_Enableshadow) && defined(RAYTK_USE_SHADOW)
+	col *= matCtx.shadedLevel;
+	#endif
 	col += mate * skyColor * skyDiffuse;
 	col += mate * sunColor * sunSpec;
 	col *= mix(vec3(0.5), vec3(1.5), occ);

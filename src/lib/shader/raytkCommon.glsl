@@ -108,7 +108,8 @@ Sdf createSdf(float dist) {
 	res.objectId = vec4(0);
 	#endif
 	#ifdef RAYTK_USE_SHADOW
-	res.useShadow = false;
+	// Switching this on by default since the default material uses shadows.
+	res.useShadow = true;
 	#endif
 	return res;
 }
