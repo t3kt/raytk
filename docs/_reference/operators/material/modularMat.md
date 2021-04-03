@@ -48,6 +48,17 @@ op:
     - float
     - vec4
     summary: Second shading element.
+  - contextTypes:
+    - Context
+    - MaterialContext
+    coordTypes:
+    - vec3
+    label: Color Contribution 1
+    name: contrib_definition_in_3
+    returnTypes:
+    - float
+    - vec4
+    summary: Third shading element.
   name: modularMat
   opType: raytk.operators.material.modularMat
   parameters:
@@ -57,12 +68,12 @@ op:
     name: Basecolor
   - label: Use Light Color
     name: Uselightcolor
+    summary: Whether to apply the light color to the base color. This does not affect
+      whether the shading elements use the light color.
   - label: Use Local Position
     name: Uselocalpos
   - label: Enable Ambient Occlusion
     name: Enableao
-  - label: Enable Shadow
-    name: Enableshadow
   status: beta
   summary: A material that is composed of one or more shading elements.
 

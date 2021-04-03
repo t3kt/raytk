@@ -11,14 +11,6 @@ op:
   name: diffuseContrib
   opType: raytk.operators.material.diffuseContrib
   parameters:
-  - label: Return Type
-    menuOptions:
-    - label: Level Only
-      name: float
-    - label: Color
-      name: vec4
-    name: Returntype
-    summary: Whether the lighting should have coloration or just a brightness level.
   - label: Color
     name: Color
   - label: Level
@@ -36,6 +28,15 @@ op:
     name: Roughness
   - label: Albedo
     name: Albedo
+  - label: Use Color
+    name: Usecolor
+    summary: Whether to produce color or just a brightness value.
+  - label: Use Light Color
+    name: Uselightcolor
+    summary: Whether to apply the light color to the color produced by this element.
+  - label: Enable Shadow
+    name: Enableshadow
+    summary: Whether to apply the shadow to the color/level produced by this element.
   status: beta
   summary: A material element that provides diffuse light contribution.
 

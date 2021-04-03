@@ -20,14 +20,6 @@ op:
   name: skyLightContrib
   opType: raytk.operators.material.skyLightContrib
   parameters:
-  - label: Return Type
-    menuOptions:
-    - label: Level Only
-      name: float
-    - label: Color
-      name: vec4
-    name: Returntype
-    summary: Whether the lighting should have coloration or just a brightness level.
   - label: Color
     name: Color
   - label: Level
@@ -35,6 +27,9 @@ op:
   - label: Direction
     name: Dir
     summary: The direction from which the "light" comes from.
+  - label: Use Color
+    name: Usecolor
+    summary: Whether to produce color or just a brightness value.
   status: beta
   summary: A material element that acts as a basic pseudo directional light.
 
