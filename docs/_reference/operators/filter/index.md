@@ -77,6 +77,10 @@ cat:
     status: beta
     summary: Reshapes the values produced by a field by applying a function.
   - name: rotate
+  - name: rotateNormals
+    status: beta
+    summary: Applies rotation to the surface normals used by material elements such
+      as `specularContrib`.
   - name: round
     summary: Adds to (or subtracts from) the size of an SDF, which has the effect
       of rounding it out or shrinking it.

@@ -240,6 +240,7 @@ op:
   - label: Auto Create Missing Params
     name: Autocreatemissingparams
     summary: Automatically create custom parameters whenever shader code changes.
+  status: beta
   summary: A custom operator that integrates blocks of custom shader code into a RayTK
     network.
 

@@ -146,6 +146,8 @@ op:
     - label: 32-bit float (Mono+Alpha)
       name: monoalpha32float
     name: Format
+  - label: Show Axes
+    name: Showaxes
   - label: Time Reference Operator
     name: Timerefop
   summary: Visualizes the graph of a function operator.

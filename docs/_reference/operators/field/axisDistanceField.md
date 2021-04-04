@@ -22,6 +22,7 @@ op:
     name: Axis
   - label: Center
     name: Center
+    summary: The position along the axis from which the distance is calculated.
   - label: Coord Type
     menuOptions:
     - label: 1D
