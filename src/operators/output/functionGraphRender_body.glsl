@@ -15,4 +15,8 @@ void main()
 	#ifdef OUTPUT_COLOR
 	colorOut = color;
 	#endif
+
+	#ifdef OUTPUT_GUI
+	guiOut = color;
+	#endif
 }
