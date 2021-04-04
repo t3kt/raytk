@@ -6,10 +6,15 @@ if False:
 def onCook(dat):
 	dat.clear()
 	mode = parent().par.Labeltype
-	if mode == 'menupar':
+	if mode == 'par':
 		o = op(parent().par.Targetop)
 		par = o.par[parent().par.Param]
-		text = par.menuLabels[int(par)]
+		if par.isMenu:
+			text = par.menuLabels[int(par)]
+		elif par.isFloat:
+			text = str(round(par.eval(), 4))
+		else:
+			text = str(par)
 		if parent().par.Showparname:
 			text = par.label + ': ' + text
 	else:
