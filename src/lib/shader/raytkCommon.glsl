@@ -907,6 +907,12 @@ vec3 sphericalMobiusTransform(vec3 p, float radius, float rotAmt, vec3 rotation)
 	).xyz;
 }
 
+// https://iquilezles.org/www/articles/palettes/palettes.htm
+// https://github.com/Erkaman/glsl-cos-palette
+vec3 cosPalette(  float t,  vec3 a,  vec3 b,  vec3 c, vec3 d ){
+	return a + b*cos( 6.28318*(c*t+d) );
+}
+
 float adaptAsFloat(float p) { return p; }
 float adaptAsFloat(vec2 p) { return p.x; }
 float adaptAsFloat(vec3 p) { return p.x; }
