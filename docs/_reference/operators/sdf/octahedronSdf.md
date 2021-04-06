@@ -17,7 +17,7 @@ op:
   - label: Radius
     name: Radius
     summary: The size of the shape.
-  - label: Shape Type
+  - label: Function
     menuOptions:
     - description: Provides more accuracy but can produce roughness around the edges.
       label: Exact
@@ -25,7 +25,7 @@ op:
     - description: Less accurate but less rough around the edges.
       label: Bound (Not Exact)
       name: bound
-    name: Shapetype
+    name: Function
     summary: Advanced parameter that chooses between different types of calculations.
   summary: An octahedron, with its corners facing the axes.
 

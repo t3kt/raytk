@@ -20,8 +20,8 @@ op:
     - float
     - vec2
     - vec3
-    label: definition_in
-    name: definition_in
+    label: definition_in_1
+    name: definition_in_1
     returnTypes:
     - float
     - vec4
@@ -80,5 +80,10 @@ op:
     name: Enable
   - label: Multiply
     name: Multiply
+    summary: Multiply the values produced by the functions.
+  summary: Multiplies the returned values produced by all of the connected input functions.
 
 ---
+
+
+Multiplies the returned values produced by all of the connected input functions.

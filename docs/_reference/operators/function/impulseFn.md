@@ -8,6 +8,7 @@ redirect_from:
   - /reference/opType/raytk.operators.function.impulseFn/
 op:
   category: function
+  detail: Based on Inigo Quilez's [article](https://iquilezles.org/www/articles/functions/functions.htm).
   name: impulseFn
   opType: raytk.operators.function.impulseFn
   parameters:
@@ -43,5 +44,11 @@ op:
     - label: Light Context
       name: LightContext
     name: Contexttype
+  summary: Impulse functions that are useful as trigger patterns or animation envelopes.
 
 ---
+
+
+Impulse functions that are useful as trigger patterns or animation envelopes.
+
+Based on Inigo Quilez's [article](https://iquilezles.org/www/articles/functions/functions.htm).

@@ -15,7 +15,9 @@ op:
     - MaterialContext
     - CameraContext
     - LightContext
+    - RayContext
     coordTypes:
+    - vec2
     - vec3
     label: definition_in
     name: definition_in
@@ -24,6 +26,8 @@ op:
     - float
     - vec4
     - Sdf
+    - Ray
+    - Light
   name: reflect
   opType: raytk.operators.filter.reflect
   parameters:
@@ -59,8 +63,6 @@ op:
   - name: Exposeiteration
     summary: Whether to expose which side of the plane a point is on as an iteration
       value for upstream ops.
-  - label: Blend Width
-    name: Blendwidth
   - label: Iteration Type
     menuOptions:
     - label: None

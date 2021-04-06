@@ -8,6 +8,10 @@ redirect_from:
   - /reference/opType/raytk.operators.function.pennerEasingFn/
 op:
   category: function
+  detail: 'Based on [glsl-easings](https://github.com/glslify/glsl-easings).
+
+
+    See [easings.net](https://easings.net/) for a useful reference.'
   name: pennerEasingFn
   opType: raytk.operators.function.pennerEasingFn
   parameters:
@@ -89,5 +93,13 @@ op:
     - label: Light Context
       name: LightContext
     name: Contexttype
+  summary: Robert Penner's collection of easing functions.
 
 ---
+
+
+Robert Penner's collection of easing functions.
+
+Based on [glsl-easings](https://github.com/glslify/glsl-easings).
+
+See [easings.net](https://easings.net/) for a useful reference.
