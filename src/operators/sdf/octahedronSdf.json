@@ -1,6 +1,6 @@
 {
   "meta": {
     "opType": "raytk.operators.sdf.octahedronSdf",
-    "opVersion": 1
+    "opVersion": 2
   }
 }

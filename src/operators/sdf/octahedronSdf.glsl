@@ -1,3 +1,5 @@
 ReturnT thismap(CoordT p, ContextT ctx) {
-	return createSdf(THIS_SHAPE_FUNC(p - THIS_Translate, THIS_Radius));
+	p -= THIS_Translate;
+	float r = THIS_Radius;
+	return createSdf(THIS_EXPR);
 }
