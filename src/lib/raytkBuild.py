@@ -32,6 +32,14 @@ class BuildContext:
 		self.log(f'Recloning {comp}')
 		comp.par.enablecloningpulse.pulse()
 
+	def updateOrReclone(self, comp: 'COMP'):
+		if not comp:
+			return
+		if comp.par['Updateop'] is not None:
+			comp.par.Updateop.pulse()
+		else:
+			self.reclone(comp)
+
 	def disableCloning(self, comp: 'COMP'):
 		if not comp or comp.par['enablecloning'] is None:
 			return

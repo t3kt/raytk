@@ -65,19 +65,21 @@ class BuildManager:
 		elif stage == 5:
 			self.processOperators(toolkit.op('operators'), thenRun='runBuild_stage', runArgs=[stage + 1])
 		elif stage == 6:
+			self.processNestedOperators(toolkit.op('operators'), thenRun='runBuild_stage', runArgs=[stage + 1])
+		elif stage == 7:
 			self.context.lockBuildLockOps(toolkit)
 			self.queueMethodCall(self.runBuild_stage, stage + 1)
-		elif stage == 7:
-			self.processTools(toolkit.op('tools'), thenRun='runBuild_stage', runArgs=[stage + 1])
 		elif stage == 8:
-			self.processComponents(toolkit.op('components'), thenRun='runBuild_stage', runArgs=[stage + 1])
+			self.processTools(toolkit.op('tools'), thenRun='runBuild_stage', runArgs=[stage + 1])
 		elif stage == 9:
+			self.processComponents(toolkit.op('components'), thenRun='runBuild_stage', runArgs=[stage + 1])
+		elif stage == 10:
 			self.context.removeBuildExcludeOps(toolkit)
 			self.queueMethodCall(self.runBuild_stage, stage + 1)
-		elif stage == 10:
+		elif stage == 11:
 			self.finalizeToolkitPars(toolkit)
 			self.queueMethodCall(self.runBuild_stage, stage + 1)
-		elif stage == 11:
+		elif stage == 12:
 			version = RaytkContext().toolkitVersion()
 			toxFile = f'build/RayTK-{version}.tox'
 			self.log('Exporting TOX to ' + toxFile)
@@ -201,6 +203,28 @@ class BuildManager:
 	def processOperatorSubComp(self, comp: 'COMP'):
 		self.context.disableCloning(comp)
 		self.context.detachTox(comp)
+
+	def processNestedOperators(self, comp: 'COMP', thenRun: str = None, runArgs: list = None):
+		self.log('Processing nested operators')
+		subOps = comp.findChildren(tags=[RaytkTags.raytkOP.name], depth=3)
+		self.log(f'found {len(subOps)} nested operators')
+		self.queueMethodCall('processNestedOperators_stage', subOps, thenRun, runArgs)
+
+	def processNestedOperators_stage(self, comps: List['COMP'], thenRun: str = None, runArgs: list = None):
+		if comps:
+			comp = comps.pop()
+			self.processNestedOperator(comp)
+			if comps:
+				self.queueMethodCall(self.processNestedOperators_stage, comps, thenRun, runArgs)
+				return
+		if thenRun:
+			self.queueMethodCall(thenRun, *(runArgs or []))
+
+	def processNestedOperator(self, rop: 'COMP'):
+		self.log(f'Processing sub-operator {rop.path}')
+		self.context.updateOrReclone(rop)
+		self.context.detachTox(rop)
+		self.context.disableCloning(rop)
 
 	def detachAllFileSyncDats(self, toolkit: 'COMP'):
 		self.log('Detaching all fileSync DATs')
