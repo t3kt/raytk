@@ -16,17 +16,10 @@ vec3 THIS_getColor(vec3 p, MaterialContext matCtx) {
 	restoreIterationFromMaterial(matCtx, THIS_iterationCapture);
 	vec3 lightDir = normalize(p - matCtx.light.pos);
 	vec3 viewDir = normalize(-matCtx.ray.dir);
-	vec3 reflectVec = normalize(reflect(-lightDir, matCtx.normal));
-	float NdotL = (dot(lightDir, matCtx.normal) + 1.0) * 0.5;
 
-	vec3 surfaceColor = THIS_Basecolor;
-	vec3 kcool = min(THIS_Coolcolor + THIS_Cooldiffuse * surfaceColor, 1.0);
-	vec3 kwarm = min(THIS_Warmcolor + THIS_Warmdiffuse * surfaceColor, 1.0);
-	vec3 kfinal = mix(kcool, kwarm, NdotL);
-	float spec = max(dot(normalize(reflectVec), viewDir), 0.0);
-	spec = pow(spec, 32.0);
-
-	vec3 col = min(kfinal + spec, 1.0);
-
-	return col;
+	return goochShading(
+		lightDir,
+		viewDir,
+		matCtx.normal,
+		THIS_Coolcolor, THIS_Warmcolor, THIS_Basecolor);
 }

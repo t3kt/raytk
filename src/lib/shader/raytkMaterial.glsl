@@ -171,3 +171,24 @@ float lambertDiffuse(
 	vec3 surfaceNormal) {
 	return max(0.0, dot(lightDirection, surfaceNormal));
 }
+
+// https://github.com/castano/qshaderedit/blob/d4cb6db3a966e129a3b35f1da5b99c0de1b0ec0f/data/shaders/gooch.glsl
+vec3 goochShading(
+	vec3 lightDirection,
+	vec3 viewDirection,
+	vec3 surfaceNormal,
+	vec3 coolColor, vec3 warmColor, vec3 baseColor
+) {
+	vec3 reflectVec = normalize(reflect(-lightDirection, surfaceNormal));
+	float NdotL = (dot(lightDirection, surfaceNormal) + 1.0) * 0.5;
+
+	vec3 kcool = min(coolColor + baseColor, 1.0);
+	vec3 kwarm = min(warmColor + baseColor, 1.0);
+	vec3 kfinal = mix(kcool, kwarm, NdotL);
+	float spec = max(dot(normalize(reflectVec), viewDirection), 0.0);
+	spec = pow(spec, 32.0);
+
+	vec3 col = min(kfinal + spec, 1.0);
+
+	return col;
+}
