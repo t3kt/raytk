@@ -45,6 +45,15 @@ op:
     summary: Thickness of the arms of the spiral.
   - label: Exponent
     name: Exponent
+  - label: Axis
+    menuOptions:
+    - label: X
+      name: x
+    - label: Y
+      name: y
+    - label: Z
+      name: z
+    name: Axis
   summary: A tapering spiral squared tube.
 
 ---
