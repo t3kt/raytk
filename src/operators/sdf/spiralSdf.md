@@ -9,9 +9,12 @@ Based on [Spiral Tiling](https://www.shadertoy.com/view/ls2GRz) by Knightly.
 * `Bend`: The tightness and direction of the spiral. Positive values are counterclockwise and negative are clockwise.
 * `Twist`: Twists the arms of the spiral while keeping their path the same.
 * `Thickness`: Thickness of the arms of the spiral.
-* `Exponent`:
-* `Inspect`
+* `Exponent`
+* `Axis`
+  * `x`
+  * `y`
+  * `z`
 
 ## Inputs
 
-* `definition_in_1` *Cross Section Shape*: 2D SDF used as the cross section shape of the arms instead of the default rounded square.
+* `definition_in_1`:  2D SDF used as the cross section shape of the arms instead of the default rounded square.
