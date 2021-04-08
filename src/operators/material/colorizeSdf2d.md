@@ -5,6 +5,7 @@ While this is not a regular "material", it is used to convert an SDF to a color 
 
 ## Parameters
 
+* `Enable`
 * `Enableedge`: Whether to show a border at the suface of the shape.
 * `Edgethickness`: Thickness of the shape border.
 * `Edgeblending`: Amount of blending applied to each side of the shape border.
