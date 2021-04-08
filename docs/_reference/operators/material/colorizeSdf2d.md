@@ -30,6 +30,8 @@ op:
   name: colorizeSdf2d
   opType: raytk.operators.material.colorizeSdf2d
   parameters:
+  - label: Enable
+    name: Enable
   - label: Enable Edge
     name: Enableedge
     summary: Whether to show a border at the suface of the shape.

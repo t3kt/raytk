@@ -24,6 +24,8 @@ cat:
       the color.'
   - name: goochMat
     status: beta
+  - name: goochShadingContrib
+    status: beta
   - name: modularMat
     status: beta
     summary: A material that is composed of one or more shading elements.

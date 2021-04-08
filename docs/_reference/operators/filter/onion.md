@@ -46,6 +46,8 @@ op:
   - label: Thickness
     name: Thickness
     summary: Thickness of the shell, centered on the input surface.
+  - label: Iterations
+    name: Iterations
   summary: Converts a solid SDF to a thin shell of the surface.
 
 ---

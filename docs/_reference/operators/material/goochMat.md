@@ -35,10 +35,6 @@ op:
     name: Warmcolor
   - label: Cool Color
     name: Coolcolor
-  - label: Warm Diffuse
-    name: Warmdiffuse
-  - label: Cool Diffuse
-    name: Cooldiffuse
   status: beta
 
 ---
