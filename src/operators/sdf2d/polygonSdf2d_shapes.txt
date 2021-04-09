@@ -1,0 +1,4 @@
+name	label	expr
+pentagon	Pentagon	sdPentagon(p, r)
+hexagon	Hexagon	sdHexagon(p, r)
+octogon	Octogon	sdOctogon(p, r)

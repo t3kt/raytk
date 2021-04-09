@@ -11,4 +11,3 @@ An orthographic (non-perspective) camera, which can be used for flattened front/
   * `zneg`
 * `Campos`: Position of the camera.
 * `Rotate`: Rotation of the camera view on the axis facing the camera.
-* `Inspect`

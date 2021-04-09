@@ -1,6 +1,6 @@
 {
   "meta": {
     "opType": "raytk.operators.sdf.sphereSdf",
-    "opVersion": 4
+    "opVersion": 5
   }
 }

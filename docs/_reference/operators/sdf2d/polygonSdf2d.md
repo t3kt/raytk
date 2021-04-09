@@ -19,10 +19,13 @@ op:
       name: hexagon
     - label: Octogon
       name: octogon
-    - label: Hexagram
-      name: hexagram
     name: Shape
   - label: Radius
     name: Radius
+    summary: The distance from the center to each edge.
+  summary: SDF for several types of 2D polygons.
 
 ---
+
+
+SDF for several types of 2D polygons.

@@ -33,15 +33,30 @@ op:
     - MaterialContext
     - CameraContext
     - LightContext
+    - RayContext
     coordTypes:
     - vec2
     - vec3
-    label: definition_in_2
-    name: definition_in_2
+    label: Rotate Field
+    name: rotate_definition_in
     returnTypes:
     - float
     - vec4
     - Sdf
+  - contextTypes:
+    - none
+    - Context
+    - MaterialContext
+    - CameraContext
+    - LightContext
+    - RayContext
+    coordTypes:
+    - vec2
+    - vec3
+    label: Pivot Field
+    name: pivot_definition_in
+    returnTypes:
+    - vec4
   name: rotate
   opType: raytk.operators.filter.rotate
   parameters:
@@ -75,5 +90,9 @@ op:
     name: Rord
   - label: Rotate XYZ
     name: Rot
+  - label: Use Pivot
+    name: Usepivot
+  - label: Pivot
+    name: Pivot
 
 ---

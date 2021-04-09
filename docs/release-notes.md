@@ -1,5 +1,80 @@
 # Release Notes
 
+## v0.13
+
+### Highlights
+
+* Whole new modular material system!
+  * Create customized combinations of different parts of materials.
+  * Lots more options for filters, texturing, and field-based variation.
+* Improvements to support for 2D SDFs and ways to use 2D SDFs in 3D scenes.
+* Lots more documentation.
+* NOTE: The way that shadows are handled has changed. Shadows are no longer specified at the material level.
+  * Instead they are attached to the "Shadow" input on raymarchRender3d.
+  * Materials now have a "Use shadow" setting to opt them in/out of shadows.
+
+### Details
+
+* Improvements / additions
+  * Added remapCoords (#379)
+  * Added 2 axis support for crossSdf (#324)
+  * Added pivot support to rotate (#175) and rangeTransform (#389)
+  * Added 2d spiral SDF
+  * Added sweep operator (#382)
+  * Added chamferBoxSdf (#383)
+  * Added field inputs for boxSdf (#385), sphereSdf (#386), boxFrameSdf (#433)
+  * Added sphericalMobiusTransform (#387)
+  * Added easing function support for rangeTransform (#390)
+  * Improve how validation errors are aggregated (#388)
+  * Added iteration support for modulo3d (#317)
+  * Added 2D support
+    * pointMapRender (#166)
+    * reflect (#439)
+  * Added axis setting
+    * pyramidSdf (#394)
+    * positionField (#422)
+    * spiralSdf (#451)
+  * Added mergeFields operator (#313)
+  * Added field inputs to control pointLight (#406)
+  * New materials
+    * Added orenNayarMat (#407)
+    * Added goochMat (#409)
+  * Added modular material system (#410)
+    * Added specularContrib
+    * Added diffuseContrib
+    * Added skyLightContrib
+    * Added goochShadingContrib (#409)
+    * Added option to control use of light color in fieldMat
+    * Added normalField (#293)
+    * Added texture3DField (#430)
+    * Added rotateNormals (#430, #410)
+  * Added support for switching based on field input in blend (#413)
+  * Added reshapeValues (#414)
+  * Added compositeFields (#415)
+  * Added extendFn (#419)
+  * Added lineSegmentSdf2d (#424)
+  * Added support for 8 inputs in switch, iterationSwitch, simpleIntersect (#101)
+  * Added option to show axes in functionGraphRender (#447)
+  * Added documentation for lots of operators
+  * Added colorPaletteFn (#399)
+  * Added multi-step support in onion (#457)
+* Changes
+  * Restructure the whole shadow system. (#445, #427).
+    * NOTE: This is a breaking change. Shadows are no longer specified at the material level. Instead they are attached to the renderer.
+  * Removed the deprecated customFilter and customGen
+* Fixes
+  * Fix performance issue with shader support detection (#418, #34)
+  * Fix iteration values not working for material field inputs (#397)
+  * Fix cameras and lights not working with blend and switch (#421)
+  * Fix transform errors for 2D (#425)
+  * Fix 1D support for colorRampField, scale (#428), floatToVector (#429)
+  * Fix range issues for 1D field inputs for mobiusRingSdf so that the period is now from 0..1 (#287)
+  * Fix line thickness issues in functionGraphRender (#49, #447)
+  * Use 2D renderer for 1D fields that return vector values, shown as a color gradient (#450)
+* Infrastructure / development
+  * Improved support for nested ROPs in the build process (#436)
+  * Improvements to toolkit editing tools, build process, and testing system
+
 ## v0.12
 
 ### Highlights

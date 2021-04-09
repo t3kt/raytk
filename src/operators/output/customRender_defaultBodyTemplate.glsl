@@ -2,6 +2,7 @@ void main() {
 	#ifdef RAYTK_HAS_INIT
 	init();
 	#endif
+	initOutputs();
 
 	vec2 resolution = uTDOutputInfo.res.zw;
 	vec2 fragCoord = vUV.st;//*resolution;

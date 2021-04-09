@@ -44,7 +44,7 @@ op:
     summary: Shifts the cut plane along the axis that it faces.
   - label: Rotate Plane
     name: Rotateplane
-    summary: Rotate the cut plane in XYZ.
+    summary: Rotate the cut plane in XYZ. When in 2D, only the Z rotation is used.
   summary: Cuts off an SDF along a plane.
 
 ---

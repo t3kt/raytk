@@ -1,13 +1,16 @@
 ReturnT thismap(CoordT p, ContextT ctx) {
-	#if THIS_INPUT_COUNT == 0
-		return THIS_Multiply;
-	#elif THIS_INPUT_COUNT == 1
-		return THIS_Multiply * inputOp1(p, ctx);
-	#elif THIS_INPUT_COUNT == 2
-		return THIS_Multiply * inputOp1(p, ctx) * inputOp2(p, ctx);
-	#elif THIS_INPUT_COUNT == 3
-		return THIS_Multiply * inputOp1(p, ctx) * inputOp2(p, ctx) * inputOp3(p, ctx);
-	#elif THIS_INPUT_COUNT == 4
-		return THIS_Multiply * inputOp1(p, ctx) * inputOp2(p, ctx) * inputOp3 * inputOp4(p, ctx);
+	ReturnT res = ReturnT(THIS_Multiply);
+	#ifdef THIS_HAS_INPUT_1
+	res *= inputOp1(p, ctx);
 	#endif
+	#ifdef THIS_HAS_INPUT_2
+	res *= inputOp2(p, ctx);
+	#endif
+	#ifdef THIS_HAS_INPUT_3
+	res *= inputOp3(p, ctx);
+	#endif
+	#ifdef THIS_HAS_INPUT_4
+	res *= inputOp4(p, ctx);
+	#endif
+	return res;
 }

@@ -11,8 +11,8 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 		q,
 		THIS_Center,
 		THIS_Branches,
-		THIS_Twist,
-		THIS_Zoom,
+		THIS_Twist1,
+		THIS_Twist2,
 		THIS_Phase);
 
 	#if defined(THIS_COORD_TYPE_vec2)

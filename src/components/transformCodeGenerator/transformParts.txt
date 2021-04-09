@@ -1,7 +1,0 @@
-name	code	valueAdjust	enable	params
-s	p /= THIS_Uniformscale;	valueAdjust /= THIS_Uniformscale;	parent().par.Enablescale and parent().par.Scaletype == 'uniform'	Uniformscale
-s	p /= THIS_Scale;		parent().par.Enablescale and parent().par.Scaletype == 'separate'	Scale[xyz]
-t	p -= THIS_Translate;		parent().par.Enabletranslate	Translate[xyz]
-rx	p *= TDRotateX(THIS_Rotatex);		parent().par.Enablerotate	Rotatex
-ry	p *= TDRotateY(THIS_Rotatey);		parent().par.Enablerotate	Rotatey
-rz	p *= TDRotateZ(THIS_Rotatez);		parent().par.Enablerotate	Rotatez

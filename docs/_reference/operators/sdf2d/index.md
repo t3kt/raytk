@@ -21,16 +21,29 @@ cat:
     summary: 2D cross shape SDF, with 4 arms and option rounding of the intersections.
   - name: dogBoneSdf2d
     summary: 2D SDF for two connected circles.
+  - name: lineSegmentSdf2d
+    summary: 2D line segment SDF.
   - name: parabolaSdf2d
   - name: pieSdf2d
+    summary: SDF for a 2D pie-slice shape.
   - name: polygonSdf2d
+    summary: SDF for several types of 2D polygons.
   - name: rectangleSdf
+    summary: SDF for a 2D rectangle.
   - name: rhombusSdf2d
+    summary: SDF for a 2D rhombus (diamond), with its corners aligned to the axes.
   - name: roundedRectangleSdf2d
+    summary: SDF for a 2D rectangle with optionally rounded corners.
+  - name: spiralSdf2d
+    status: beta
   - name: starSdf2d
+    summary: SDF for a 2D star shape.
   - name: superQuadSdf2d
   - name: triangleSdf2d
+    summary: SDF for a 2D triangle.
   - name: vesicaSdf2d
+    summary: SDF for a 2d vesica, which is a shape based on the overlap between two
+      circles.
   summary: 'Signed distances functions which define geometry in 2D space, by calculating
 
     the distance from the edge of the shape at any given point.'

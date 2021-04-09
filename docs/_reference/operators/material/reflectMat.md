@@ -19,14 +19,6 @@ op:
     required: true
     returnTypes:
     - Sdf
-  - contextTypes:
-    - MaterialContext
-    coordTypes:
-    - vec3
-    label: Shadow Definition
-    name: shadow_definition_in
-    returnTypes:
-    - float
   name: reflectMat
   opType: raytk.operators.material.reflectMat
   parameters:

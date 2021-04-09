@@ -1,14 +1,18 @@
 ReturnT thismap(CoordT p, ContextT ctx) {
 	#if THIS_INPUT_COUNT == 0
-		#ifdef THIS_RETURN_TYPE_Sdf
-			return createSdf(0);
-		#else
-			return ReturnT(0);
-		#endif
+		ReturnT val;
+		initDefVal(val);
+		return val;
 	#elif THIS_INPUT_COUNT == 1
 		return THIS_INPUT_1(p, ctx);
 	#else
-		float blend = clamp(THIS_Blend, 0, THIS_INPUT_COUNT-1);
+		float blend;
+		#if defined(THIS_Usefield) && defined(THIS_HAS_INPUT_4)
+		blend = inputOp4(p, ctx);
+		#else
+		blend = THIS_Blend;
+		#endif
+		blend = clamp(blend, 0, THIS_INPUT_COUNT-1);
 		if (blend == 0) {
 			return THIS_INPUT_1(p, ctx);
 		}
@@ -54,12 +58,6 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 		#endif
 
 		float ratio = fract(blend);
-		#if defined(THIS_RETURN_TYPE_Sdf)
-		resA.x = mix(resA.x, resB.x, ratio);
-		blendInSdf(resA, resB, ratio);
-		return resA;
-		#else
-		return mix(resA, resB, ratio);
-		#endif
+		return mixVals(resA, resB, ratio);
 	#endif
 }

@@ -1,0 +1,5 @@
+name	label	swizzle
+xyz	All Axes	xyz
+xy	XY	xyz
+yz	YZ	yzx
+zx	ZX	zxy

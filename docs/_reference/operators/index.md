@@ -22,7 +22,6 @@ return types (SDF, float/vector field, etc).
 light sources and shadow behaviors.
 * [Material](material/) - Material operators that are used by renderers to determine the
 color of points on the surface of geometry.
-* [Misc](misc/) - Assorted operators that don't fit into other categories.
 * [Output](output/) - Outputs are a special category of operator that takes in one or more
 chains of OPs, generate a shader, and run it to produce some sort of
 output.

@@ -15,14 +15,32 @@ cat:
     summary: Material with a basic lighting model.
   - name: colorizeSdf2d
     summary: Converts a 2D SDF to a striped distance pattern.
+  - name: diffuseContrib
+    status: beta
+    summary: A material element that provides diffuse light contribution.
   - name: fieldMat
     summary: 'A material that uses a vector field input to determine
 
       the color.'
+  - name: goochMat
+    status: beta
+  - name: goochShadingContrib
+    status: beta
+  - name: modularMat
+    status: beta
+    summary: A material that is composed of one or more shading elements.
+  - name: orenNayarMat
+    status: beta
   - name: phongMat
     summary: Material that uses phong shading.
   - name: reflectMat
     status: beta
+  - name: skyLightContrib
+    status: beta
+    summary: A material element that acts as a basic pseudo directional light.
+  - name: specularContrib
+    status: beta
+    summary: A material element that provides specular light contribution.
   summary: 'Material operators that are used by renderers to determine the
 
     color of points on the surface of geometry.'

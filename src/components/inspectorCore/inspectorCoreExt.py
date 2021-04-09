@@ -82,7 +82,10 @@ class InspectorCore:
 		if not self.state.Hastarget:
 			return
 		if self.state.Coordtype == CoordTypes.float:
-			self.state.Visualizertype = VisualizerTypes.functionGraph
+			if self.state.Returntype == ReturnTypes.float:
+				self.state.Visualizertype = VisualizerTypes.functionGraph
+			else:
+				self.state.Visualizertype = VisualizerTypes.render2d
 		elif self.state.Coordtype == CoordTypes.vec2:
 			self.state.Visualizertype = VisualizerTypes.render2d
 		elif self.state.Returntype == ReturnTypes.Sdf:

@@ -1,6 +1,6 @@
 from dataclasses import dataclass
-from typing import Callable, List, Tuple, Union
-from raytkUtil import ROPInfo
+from typing import Callable, Dict, List, Tuple, Union
+from raytkUtil import RaytkContext
 
 # noinspection PyUnreachableCode
 if False:
@@ -277,10 +277,25 @@ class ShaderBuilder:
 	def buildTextureDeclarations(self):
 		textureTable = self.ownerComp.op('texture_table')
 		offset = int(self.ownerComp.par.Textureindexoffset)
-		decls = [
-			f'#define {cell.val} sTD2DInputs[{offset + cell.row - 1}]'
-			for cell in textureTable.col('name')[1:]
-		]
+		indexByType = {
+			'2d': offset,
+			'3d': 0,
+			'cube': 0,
+		}
+		arrayByType = {
+			'2d': 'sTD2DInputs',
+			'3d': 'sTD3DInputs',
+			'cube': 'sTDCubeInputs',
+		}
+		decls = []
+		for i in range(1, textureTable.numRows):
+			name = str(textureTable[i, 'name'])
+			texType = str(textureTable[i, 'type'] or '2d')
+			if texType not in indexByType:
+				raise Exception(f'Invalid texture type for {name}: {texType!r}')
+			index = indexByType[texType]
+			decls.append(f'#define {name} {arrayByType[texType]}[{index}]')
+			indexByType[texType] = index + 1
 		return wrapCodeSection(decls, 'textures')
 
 	def buildBufferDeclarations(self):
@@ -319,6 +334,21 @@ class ShaderBuilder:
 			for cell in outputBuffers.col('name')[1:]
 		]
 		return wrapCodeSection(decls, 'outputBuffers')
+
+	def buildOutputInitBlock(self):
+		outputBuffers = self.outputBufferTable()
+		return wrapCodeSection(
+			[
+				'void initOutputs() {'
+			] +
+			[
+				f'{cell.val} = vec4(0.);'
+				for cell in outputBuffers.col('name')[1:]
+			] + [
+				'}'
+			],
+			'outputInit',
+		)
 
 	def buildOpGlobalsBlock(self):
 		dats = self.getOpsFromDefinitionColumn('opGlobalsPath')
@@ -366,11 +396,14 @@ class ShaderBuilder:
 
 	def buildValidationErrors(self, dat: 'DAT'):
 		dat.clear()
-		toolkitVersions = {}
-		rops = self.getOpsFromDefinitionColumn('path')
-		for rop in rops:
-			info = ROPInfo(rop)
-			version = info.toolkitVersion if info else ''
+		if RaytkContext().develMode():
+			return
+		toolkitVersions = {}  # type: Dict[str, int]
+		defsTable = self.definitionTable()
+		if defsTable.numRows < 2 or not defsTable[0, 'toolkitVersion']:
+			return
+		for i in range(1, defsTable.numRows):
+			version = str(defsTable[i, 'toolkitVersion'] or '')
 			if version != '':
 				toolkitVersions[version] = 1 + toolkitVersions.get(version, 0)
 		if len(toolkitVersions) > 1:

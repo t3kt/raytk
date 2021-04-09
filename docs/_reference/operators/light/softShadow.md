@@ -8,6 +8,8 @@ redirect_from:
   - /reference/opType/raytk.operators.light.softShadow/
 op:
   category: light
+  detail: This should be connected to the "Shadow" input of the `raymarchRender3d`
+    operator.
   name: softShadow
   opType: raytk.operators.light.softShadow
   parameters:
@@ -27,3 +29,5 @@ op:
 
 
 A soft-edged shadow.
+
+This should be connected to the "Shadow" input of the `raymarchRender3d` operator.

@@ -41,7 +41,7 @@ def evaluateTypeProperty(par: 'Par', fieldName: str, defVal: str):
 
 def buildInputTable(dat: 'DAT', inDats: 'List[DAT]'):
 	dat.clear()
-	dat.appendRow(['slot', 'inputFunc', 'name'])
+	dat.appendRow(['slot', 'inputFunc', 'name', 'path'])
 	for i, inDat in enumerate(inDats):
 		slot = f'inputName{i + 1}'
 		if inDat.numRows < 2 or not inDat[1, 'name'].val:
@@ -51,6 +51,7 @@ def buildInputTable(dat: 'DAT', inDats: 'List[DAT]'):
 				slot,
 				f'inputOp{i + 1}',
 				inDat[1, 'name'],
+				inDat[1, 'path'],
 			])
 
 def combineInputDefinitions(dat: 'DAT', inDats: 'List[DAT]'):
@@ -242,6 +243,29 @@ def prepareMacroTable(dat: 'scriptDAT', inputTable: 'DAT', macroParamTable: 'DAT
 				[cells[0], cells[1], ' '.join([c.val for c in cells[2:]])]
 				for cells in table.rows()
 			])
+
+def prepareTextureTable(dat: 'scriptDAT'):
+	dat.clear()
+	dat.appendRow(['name', 'path', 'type'])
+	table = parentPar().Texturetable.eval()
+	if not table or table.numRows < 1:
+		return
+	namePrefix = parentPar().Name.eval() + '_'
+	i = 0
+	useNames = False
+	if table[0, 0] == 'name' and table[0, 1] == 'path':
+		i = 1
+		useNames = True
+	while i < table.numRows:
+		name = str(table[i, 'name' if useNames else 0] or '')
+		path = str(table[i, 'path' if useNames else 1] or '')
+		if name and path:
+			dat.appendRow([
+				namePrefix + name,
+				path,
+				table[i, 'type' if useNames else 2] or '2d',
+			])
+		i += 1
 
 def _isMaster():
 	host = _host()

@@ -1,16 +1,20 @@
+vec4 THIS_iterationCapture = vec4(0.);
+
 Sdf thismap(CoordT p, ContextT ctx) {
 	Sdf res = inputOp1(p, ctx);
 	assignMaterial(res, THISMAT);
+	captureIterationFromMaterial(THIS_iterationCapture, ctx);
+	#if defined(THIS_Enableshadow) && defined(RAYTK_USE_SHADOW)
+	res.useShadow = true;
+	#endif
 	return res;
 }
 
 vec3 THIS_getColor(vec3 p, MaterialContext matCtx) {
-
+	restoreIterationFromMaterial(matCtx, THIS_iterationCapture);
 	float sunShadow = 1.;
-	#if defined(THIS_SHADOW_FUNC)
-	sunShadow = THIS_SHADOW_FUNC(p+matCtx.normal*0.001, matCtx);
-	#elif defined(THIS_USE_SHADOW_DEFAULT)
-	sunShadow = calcShadow(p + matCtx.normal*0.001, matCtx);
+	#if defined(THIS_Enableshadow) && defined(RAYTK_USE_SHADOW)
+	sunShadow = matCtx.shadedLevel;
 	#endif
 	vec3 col = THIS_Ambientcolor + phongContribForLight(
 		THIS_Diffusecolor * sunShadow,
@@ -23,9 +27,5 @@ vec3 THIS_getColor(vec3 p, MaterialContext matCtx) {
 		matCtx.normal,
 		calcAO(p, matCtx.normal) // AO
 	);
-
-	vec3 lightDir = normalize(matCtx.light.pos-p);
-//	col *= calcShadow(p, matCtx);
-//	col *= softShadow(p, matCtx);
 	return col;
 }

@@ -20,6 +20,17 @@ op:
   - label: Smooth Radius
     name: Smoothradius
     summary: Smoothing applied to the intersections of the arms.
+  - label: Axes
+    menuOptions:
+    - label: All Axes
+      name: xyz
+    - label: XY
+      name: xy
+    - label: YZ
+      name: yz
+    - label: ZX
+      name: zx
+    name: Axes
   summary: An SDF for a 3D cross of infinite length along each axis.
 
 ---

@@ -19,4 +19,3 @@ Reflects space across a plane.
 ## Inputs
 
 * `definition_in`: 
-* `blend_func_definition_in` *Blend Function*: Function used to control blending across the reflection plane.

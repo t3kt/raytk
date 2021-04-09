@@ -20,8 +20,12 @@ op:
     name: Function
   - label: Edge
     name: Edge
+    summary: Below this the result will be 0 and above it will produce 1. When using
+      blending, the bottom edge will be `Blend/2` lower than this and the upper edge
+      will be `Blend/2` higher.
   - label: Blend
     name: Blend
+    summary: The amount of smoothing to apply on the edge.
   - label: Context Type
     menuOptions:
     - label: None
@@ -35,5 +39,9 @@ op:
     - label: Light Context
       name: LightContext
     name: Contexttype
+  summary: A function that changes from zero to one at a cutoff point.
 
 ---
+
+
+A function that changes from zero to one at a cutoff point.

@@ -22,7 +22,6 @@ op:
     - vec3
     label: definition_in
     name: definition_in
-    required: true
     returnTypes:
     - float
   name: colorRampField
@@ -49,6 +48,23 @@ op:
     - label: Mirror
       name: mirror
     name: Extendmode
+  - label: Context Type
+    menuOptions:
+    - label: Use Input
+      name: useinput
+    - label: None
+      name: none
+    - label: Context
+      name: Context
+    - label: Material Context
+      name: MaterialContext
+    - label: Camera Context
+      name: CameraContext
+    - label: Light Context
+      name: LightContext
+    - label: Ray Context
+      name: RayContext
+    name: Contexttype
   summary: A vector field that maps an input field to values from a range of colors.
 
 ---

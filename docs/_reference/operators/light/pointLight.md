@@ -8,6 +8,39 @@ redirect_from:
   - /reference/opType/raytk.operators.light.pointLight/
 op:
   category: light
+  inputs:
+  - contextTypes:
+    - none
+    - Context
+    - MaterialContext
+    - CameraContext
+    - LightContext
+    - RayContext
+    coordTypes:
+    - float
+    - vec2
+    - vec3
+    label: Color Field
+    name: color_field_definition_in
+    returnTypes:
+    - float
+    - vec4
+  - contextTypes:
+    - none
+    - Context
+    - MaterialContext
+    - CameraContext
+    - LightContext
+    - RayContext
+    coordTypes:
+    - float
+    - vec2
+    - vec3
+    label: Attenuation Field
+    name: attenutation_field_definition_in
+    returnTypes:
+    - float
+    - vec4
   name: pointLight
   opType: raytk.operators.light.pointLight
   parameters:

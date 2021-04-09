@@ -21,6 +21,7 @@ cat:
     summary: A value field that provides an approximation of repeating cellular (voronoi)
       noise.
   - name: chopField
+    summary: Field that provides values from a CHOP.
   - name: colorRampField
     summary: A vector field that maps an input field to values from a range of colors.
   - name: constantColorField
@@ -42,11 +43,16 @@ cat:
       (one for each part of the vector).
   - name: noiseField
     summary: A float or vector field that uses one of several noise functions.
+  - name: normalField
+    status: beta
+    summary: Vector field that produces the surface normal where it is evaluated.
   - name: pointDistanceField
     summary: A float field that provides the distance from a specific point in space.
   - name: positionField
-    summary: A vector field that evaluates to the coordinates in space.
+    summary: A vector field that produces the coordinates in space where it is checked.
   - name: reorderField
+    status: beta
+  - name: texture3dField
     status: beta
   - name: textureField
     summary: A float or vector field that looks up values from a texture.

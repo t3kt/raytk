@@ -4,3 +4,4 @@
 'THIS_USE_LIMIT_BOX' if parent().par.Uselimitbox else ''	
 'THIS_USE_NEAR_HIT' if parent().par.Enablenearhitoutput else ''	
 'THIS_ANTI_ALIAS'	int(parent().par.Antialias)
+'RAYTK_USE_SHADOW' if parent().par.Enableshadow else ''	

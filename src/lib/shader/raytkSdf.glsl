@@ -105,14 +105,6 @@ float sdMengerSponge(in vec3 p, int n, float scale, float crossScale, float boxS
 }
 #endif
 
-float sdCrossSmooth(vec3 p, vec3 size, float r)
-{
-	float da = fBox2(p.xy,size.xy);
-	float db = fBox2(p.yz,size.yz);
-	float dc = fBox2(p.zx,size.zx);
-	return fOpUnionRound(da,fOpUnionRound(db,dc,r), r);
-}
-
 float sdCross(vec2 p, vec2 b, float r)
 {
 	p = abs(p); p = (p.y>p.x) ? p.yx : p.xy;
@@ -580,4 +572,11 @@ vec2 sdHelixCoords(vec3 p, float r1, float m, float dualSpread) {
 float sdHelix(vec3 p, float r1, float r2, float m, float dualSpread) {
 	vec2 q = sdHelixCoords(p, r1, m, dualSpread);
 	return length(q) - r2;
+}
+
+float sdSegment( in vec2 p, in vec2 a, in vec2 b )
+{
+	vec2 pa = p-a, ba = b-a;
+	float h = clamp( dot(pa,ba)/dot(ba,ba), 0.0, 1.0 );
+	return length( pa - ba*h );
 }

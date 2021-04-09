@@ -1,11 +1,11 @@
 #if defined(THIS_RETURN_TYPE_Sdf)
-Sdf map(THIS_CoordT p) {
+Sdf map(CoordT p) {
 	Sdf res = thismap(p, createDefaultContext());
 	res.x *= 0.5;
 	return res;
 }
 
-vec4 getColor(Sdf res, THIS_CoordT p) {
+vec4 getColor(Sdf res, CoordT p) {
 	int m = int(res.material);
 	vec4 col;
 	if (res.x > 0) {
@@ -18,6 +18,8 @@ vec4 getColor(Sdf res, THIS_CoordT p) {
 	return col;
 }
 
+#ifdef THIS_COORD_TYPE_vec3
+
 vec3 calcNormal(in vec3 pos)
 {
 	vec2 e = vec2(1.0, -1.0)*0.5773*0.005;
@@ -28,24 +30,18 @@ vec3 calcNormal(in vec3 pos)
 	e.xxx*map(pos + e.xxx).x);
 }
 
+#endif
+
 void main() {
 	#ifdef RAYTK_HAS_INIT
 	init();
 	#endif
+	initOutputs();
 	vec2 resolution = uTDOutputInfo.res.zw;
 	vec2 fragCoord = vUV.st;
 	vec4 posAndExists = texture(sTD2DInputs[0], fragCoord);
 
 	if (posAndExists.a == 0) {
-		#ifdef OUTPUT_SDF
-		sdfOut = vec4(0);
-		#endif
-		#ifdef OUTPUT_COLOR
-		colorOut = vec4(0);
-		#endif
-		#ifdef OUTPUT_NORMAL
-		normalOut = vec4(0);
-		#endif
 		return;
 	}
 	#if defined(THIS_COORD_TYPE_vec3)
@@ -68,7 +64,7 @@ void main() {
 		res.material2,
 		res.interpolant);
 	#endif
-	#ifdef OUTPUT_NORMAL
+	#if defined(OUTPUT_NORMAL) && defined(THIS_COORD_TYPE_vec3)
 	normalOut = vec4(calcNormal(p), 0.);
 	#endif
 }
@@ -77,14 +73,12 @@ void main() {
 	#ifdef RAYTK_HAS_INIT
 	init();
 	#endif
+	initOutputs();
 	vec2 resolution = uTDOutputInfo.res.zw;
 	vec2 fragCoord = vUV.st;
 	vec4 posAndExists = texture(sTD2DInputs[0], fragCoord);
 
 	if (posAndExists.a == 0) {
-		#ifdef OUTPUT_VALUE
-		valueOut = vec4(0);
-		#endif
 		return;
 	}
 	#if defined(THIS_COORD_TYPE_vec3)

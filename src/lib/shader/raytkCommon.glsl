@@ -1,9 +1,28 @@
 // raytkCommon.glsl
 
+float mixVals(float a, float b, float x) { return mix(a, b, x); }
+vec2 mixVals(vec2 a, vec2 b, float x) { return mix(a, b, x); }
+vec3 mixVals(vec3 a, vec3 b, float x) { return mix(a, b, x); }
+vec4 mixVals(vec4 a, vec4 b, float x) { return mix(a, b, x); }
+
+void initDefVal(out float val) { val = 0.; }
+void initDefVal(out vec4 val) { val = vec4(0.); }
+
 struct Ray {
 	vec3 pos;
 	vec3 dir;
 };
+
+void initDefVal(out Ray val) {
+	val = Ray(vec3(0.), vec3(0.));
+}
+
+Ray mixVals(in Ray res1, in Ray res2, float amt) {
+	Ray res;
+	res.pos = mix(res1.pos, res2.pos, amt);
+	res.dir = mix(res2.dir, res2.dir, amt);
+	return res;
+}
 
 struct Sdf {
 	float x; // distance
@@ -50,6 +69,10 @@ struct Sdf {
 	// w: unused
 	vec4 objectId;
 	#endif
+
+	#ifdef RAYTK_USE_SHADOW
+	bool useShadow;
+	#endif
 };
 
 Sdf createSdf(float dist) {
@@ -84,6 +107,10 @@ Sdf createSdf(float dist) {
 	#ifdef RAYTK_OBJECT_ID_IN_SDF
 	res.objectId = vec4(0);
 	#endif
+	#ifdef RAYTK_USE_SHADOW
+	// Switching this on by default since the default material uses shadows.
+	res.useShadow = true;
+	#endif
 	return res;
 }
 
@@ -117,6 +144,15 @@ void blendInSdf(inout Sdf res1, in Sdf res2, in float amt) {
 		res1.objectId.z = amt;
 	}
 	#endif
+
+	#ifdef RAYTK_USE_SHADOW
+	res1.useShadow = res1.useShadow || (res2.useShadow && res2.interpolant >= 1.0);
+	#endif
+}
+
+Sdf mixVals(in Sdf res1, in Sdf res2, float amt) {
+	blendInSdf(res1, res2, amt);
+	return res1;
 }
 
 void assignMaterial(inout Sdf res, int materialId) {
@@ -142,6 +178,10 @@ Sdf createNonHitSdf() {
 	Sdf res = createSdf(RAYTK_MAX_DIST);
 	assignMaterial(res, -1);
 	return res;
+}
+
+void initDefVal(out Sdf val) {
+	val = createNonHitSdf();
 }
 
 bool isNonHitSdf(Sdf res) {
@@ -211,6 +251,17 @@ struct Light {
 	vec3 color;  // Includes brightness. May be determined specific to a particular point in space (such as attentuation).
 };
 
+void initDefVal(out Light val) {
+	val = Light(vec3(0.), vec3(0.));
+}
+
+Light mixVals(in Light res1, in Light res2, float amt) {
+	Light res;
+	res.pos = mix(res1.pos, res2.pos, amt);
+	res.color = mix(res1.color, res2.color, amt);
+	return res;
+}
+
 struct LightContext {
 	Sdf result;
 	vec3 normal;
@@ -230,6 +281,7 @@ struct MaterialContext {
 	#ifdef RAYTK_USE_MATERIAL_POS
 	vec3 materialPos;
 	#endif
+	float shadedLevel;
 };
 
 MaterialContext createMaterialContext() {
@@ -242,7 +294,16 @@ MaterialContext createMaterialContext() {
 	#ifdef RAYTK_USE_MATERIAL_POS
 	matCtx.materialPos = vec3(0.);
 	#endif
+	matCtx.shadedLevel = 1.;
 	return matCtx;
+}
+
+vec4 extractIteration(Context ctx) {
+	return ctx.iteration;
+}
+
+vec4 extractIteration(MaterialContext ctx) {
+	return ctx.context.iteration;
 }
 
 struct CameraContext {
@@ -270,6 +331,35 @@ RayContext createRayContext(Ray ray, Sdf result) {
 	rCtx.time = getGlobalTime();
 	#endif
 	return rCtx;
+}
+
+const int RAYTK_STAGE_PRIMARY = 0;
+const int RAYTK_STAGE_SHADOW =  1;
+const int RAYTK_STAGE_REFLECT = 2;
+const int RAYTK_STAGE_MATERIAL = 3;
+
+int _raytkStage = RAYTK_STAGE_PRIMARY;
+
+int pushStage(int stage) {
+	int prior = _raytkStage;
+	_raytkStage = stage;
+	return prior;
+}
+
+void popStage(int priorStage) {
+	_raytkStage = priorStage;
+}
+
+void captureIterationFromMaterial(inout vec4 store, in Context ctx) {
+	if (_raytkStage == RAYTK_STAGE_PRIMARY) {
+		store = ctx.iteration;
+	}
+}
+
+void restoreIterationFromMaterial(inout MaterialContext matCtx, in vec4 store) {
+	if (_raytkStage == RAYTK_STAGE_MATERIAL) {
+		matCtx.context.iteration = store;
+	}
 }
 
 mat3 rotateMatrix(vec3 r) {
@@ -358,6 +448,27 @@ float modZigZag(float p, float low, float high) {
 	return low + modded;
 }
 
+vec2 modZigZag(vec2 p, vec2 low, vec2 high) {
+	p -= low;
+	vec2 range = high - low;
+	vec2 range2 = range * 2.;
+	vec2 modded = mod(p, range2);
+	return low + vec2(
+	modded.x > range.x ? (range2.x - modded.x): modded.x,
+	modded.y > range.y ? (range2.y - modded.y): modded.y);
+}
+
+vec3 modZigZag(vec3 p, vec3 low, vec3 high) {
+	p -= low;
+	vec3 range = high - low;
+	vec3 range2 = range * 2.;
+	vec3 modded = mod(p, range2);
+	return low + vec3(
+	modded.x > range.x ? (range2.x - modded.x): modded.x,
+	modded.y > range.y ? (range2.y - modded.y): modded.y,
+	modded.z > range.z ? (range2.z - modded.z): modded.z);
+}
+
 vec4 modZigZag(vec4 p, vec4 low, vec4 high) {
 	p -= low;
 	vec4 range = high - low;
@@ -372,6 +483,42 @@ vec4 modZigZag(vec4 p, vec4 low, vec4 high) {
 
 float wrapRange(float value, float low, float high) {
 	return low + mod(value - low, high - low);
+}
+
+vec2 wrapRange(vec2 value, vec2 low, vec2 high) {
+	return low + mod(value - low, high - low);
+}
+
+vec3 wrapRange(vec3 value, vec3 low, vec3 high) {
+	return low + mod(value - low, high - low);
+}
+
+vec4 wrapRange(vec4 value, vec4 low, vec4 high) {
+	return low + mod(value - low, high - low);
+}
+
+// There are definitely much more efficient ways to do this..
+
+bool allInRange(float val, float low, float high) {
+	return val >= low && val <= high;
+}
+
+bool allInRange(vec2 val, vec2 low, vec2 high) {
+	return val.x >= low.x && val.x <= high.x &&
+				 val.y >= low.y && val.y <= high.y;
+}
+
+bool allInRange(vec3 val, vec3 low, vec3 high) {
+	return val.x >= low.x && val.x <= high.x &&
+				 val.y >= low.y && val.y <= high.y &&
+				 val.z >= low.z && val.z <= high.z;
+}
+
+bool allInRange(vec4 val, vec4 low, vec4 high) {
+	return val.x >= low.x && val.x <= high.x &&
+				 val.y >= low.y && val.y <= high.y &&
+				 val.z >= low.z && val.z <= high.z &&
+				 val.w >= low.w && val.w <= high.w;
 }
 
 int findMin(vec2 vals, out float minVal) {
@@ -714,3 +861,93 @@ vec2 mobiusTransform(vec2 p, vec2 z1, vec2 z2) {
 	z1 = p - z1; p -= z2;
 	return vec2(dot(z1, p), z1.y*p.x - z1.x*p.y) / dot(p, p);
 }
+
+// Based on https://gist.github.com/Dan-Piker/f7d790b3967d41bff8b0291f4cf7bd9e
+// and https://github.com/DBraun/TouchDesigner_Shared/tree/master/Starters/moebius_transformations
+vec3 sphericalMobiusTransform(vec3 p, float radius, float rotAmt, vec3 rotation) {
+	mat3 rMat3 = TDRotateOnAxis(rotation.x, vec3(1, 0, 0)) *
+		TDRotateOnAxis(rotation.y, vec3(0, 1, 0)) *
+		TDRotateOnAxis(rotation.z, vec3(0, 0, 1));
+	mat4 rMat4 = mat4(
+		rMat3[0].xyz, 0,
+		rMat3[1].xyz, 0,
+		rMat3[2].xyz, 0,
+		0, 0, 0, 1);
+
+	p = (rMat4*vec4(p, 1.)).xyz / radius;
+
+	float xa = p.x;
+	float ya = p.y;
+	float za = p.z;
+
+	float rp = 0.; //set to the same as rq for isoclinic rotations
+	float rq = 1.0;
+
+	// reverse stereographic projection to hypersphere
+	float xb = 2 * xa / (1 + xa * xa + ya * ya + za * za);
+	float yb = 2 * ya / (1 + xa * xa + ya * ya + za * za);
+	float zb = 2 * za / (1 + xa * xa + ya * ya + za * za);
+	float wb = (-1 + xa * xa + ya * ya + za * za) / (1 + xa * xa + ya * ya + za * za);
+
+	// rotate hypersphere by amount t
+	float t = rotAmt;
+	float xc = +xb * cos(rp * t) + yb * sin((rp) * t);
+	float yc = -xb * sin(rp * t) + yb * cos((rp) * t);
+	float zc = +zb * cos(rq * t) - wb * sin((rq) * t);
+	float wc = +zb * sin(rq * t) + wb * cos((rq) * t);
+
+	// project stereographically back to flat 3D
+	float xd = xc / (1 - wc);
+	float yd = yc / (1 - wc);
+	float zd = zc / (1 - wc);
+
+	return (
+		inverse(rMat4) *
+		vec4(vec3(xd, yd, zd) * radius, 1.)
+	).xyz;
+}
+
+// https://iquilezles.org/www/articles/palettes/palettes.htm
+// https://github.com/Erkaman/glsl-cos-palette
+vec3 cosPalette(  float t,  vec3 a,  vec3 b,  vec3 c, vec3 d ){
+	return a + b*cos( 6.28318*(c*t+d) );
+}
+
+float adaptAsFloat(float p) { return p; }
+float adaptAsFloat(vec2 p) { return p.x; }
+float adaptAsFloat(vec3 p) { return p.x; }
+float adaptAsFloat(vec4 p) { return p.x; }
+float adaptAsFloat(Sdf res) { return res.x; }
+
+vec2 adaptAsVec2(float p) { return vec2(p, 0.); }
+vec2 adaptAsVec2(vec2 p) { return p; }
+vec2 adaptAsVec2(vec3 p) { return p.xy; }
+vec2 adaptAsVec2(vec4 p) { return p.xy; }
+
+vec3 adaptAsVec3(float p) { return vec3(p, 0., 0.); }
+vec3 adaptAsVec3(vec2 p) { return vec3(p, 0.); }
+vec3 adaptAsVec3(vec3 p) { return p; }
+vec3 adaptAsVec3(vec4 p) { return p.xyz; }
+
+vec4 adaptAsVec4(float p) { return vec4(p, 0., 0., 0.); }
+vec4 adaptAsVec4(vec2 p) { return vec4(p, 0., 0.); }
+vec4 adaptAsVec4(vec3 p) { return vec4(p, 0.); }
+vec4 adaptAsVec4(vec4 p) { return p; }
+
+vec3 fillToVec3(float p) { return vec3(p); }
+vec3 fillToVec3(vec4 p) { return p.xyz; }
+
+float extractOrUseAsX(float p) { return p; }
+float extractOrUseAsX(vec4 p) { return p.x; }
+
+float extractOrUseAsY(float p) { return p; }
+float extractOrUseAsY(vec4 p) { return p.y; }
+
+float extractOrUseAsZ(float p) { return p; }
+float extractOrUseAsZ(vec4 p) { return p.z; }
+
+float extractOrUseAsW(float p) { return p; }
+float extractOrUseAsW(vec4 p) { return p.w; }
+
+void setFronFloat(inout float x, float val) { x = val; }
+void setFromFloat(inout Sdf x, float val) { x.x = val;}

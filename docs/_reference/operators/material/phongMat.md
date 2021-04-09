@@ -19,16 +19,6 @@ op:
     required: true
     returnTypes:
     - Sdf
-  - contextTypes:
-    - MaterialContext
-    coordTypes:
-    - vec3
-    label: Shadow Definition
-    name: shadow_definition_in
-    returnTypes:
-    - float
-    summary: Used to customize the behavior of shadows for the material. Only used
-      if `Enableshadow` is on.
   name: phongMat
   opType: raytk.operators.material.phongMat
   parameters:

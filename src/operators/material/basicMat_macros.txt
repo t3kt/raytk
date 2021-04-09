@@ -1,3 +1,2 @@
-	('THIS_SHADOW_FUNC inputOp2' if op('shadow_definition').numRows > 1 else 'THIS_USE_SHADOW_DEFAULT') if parent().par.Enableshadow else ''	
 op('baseColor_definition').numRows > 1	'THIS_USE_BASE_COLOR_FIELD'	
 parent().par.Uselocalpos	'RAYTK_USE_MATERIAL_POS'	

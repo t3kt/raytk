@@ -1,0 +1,5 @@
+name	label
+hold	Hold
+cycle	Cycle
+mirror	Mirror
+default	Default Value

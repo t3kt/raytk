@@ -1,6 +1,6 @@
 from functools import total_ordering
 import re
-from typing import Callable, List, Union, Optional, Tuple
+from typing import Callable, List, Union, Optional, Set, Tuple
 
 # noinspection PyUnreachableCode
 if False:
@@ -64,6 +64,7 @@ class _OpMetaPars:
 class CompDefParsT(_OpMetaPars):
 	Help: 'DatParamT'
 	Helpurl: 'StrParamT'
+	Keywords: 'StrParamT'
 	Rops: 'StrParamT'
 
 class OpDefParsT(_OpMetaPars):
@@ -87,6 +88,7 @@ class OpDefParsT(_OpMetaPars):
 	Librarynames: 'StrParamT'
 	Help: 'DatParamT'
 	Helpurl: 'StrParamT'
+	Keywords: 'StrParamT'
 	Disableinspect: 'BoolParamT'
 	Coordtype: 'StrParamT'
 	Returntype: 'StrParamT'
@@ -268,6 +270,19 @@ class ROPInfo:
 	@helpDAT.setter
 	def helpDAT(self, dat: 'Optional[DAT]'):
 		self.opDefPar.Help = dat or ''
+
+	@property
+	def keywords(self) -> 'Set[str]':
+		if not self:
+			return set()
+		return set(tdu.split(self.opDefPar.Keywords))
+
+	@keywords.setter
+	def keywords(self, keywords: 'Optional[Set[str]]'):
+		if not keywords:
+			self.opDefPar.Keywords = ''
+		else:
+			self.opDefPar.Keywords = ' '.join(sorted(keywords))
 
 	@property
 	def hasROPInputs(self):
@@ -942,7 +957,7 @@ class RaytkContext:
 def _isMaster(o: 'COMP'):
 	return o and o.par['clone'] is not None and (o.par.clone.eval() or o.par.clone.expr)
 
-def simplifyNames(fullNames: List[Union[str, 'Cell']]):
+def simplifyNames(fullNames: List[Union[str, 'Cell']], sep='_'):
 	"""
 	Removes prefixes shared by all the provided names.
 
@@ -951,14 +966,14 @@ def simplifyNames(fullNames: List[Union[str, 'Cell']]):
 	if not fullNames:
 		return []
 	fullNames = [str(n) for n in fullNames]
-	if len(fullNames) != 1 and not any('_' not in n for n in fullNames):
+	if len(fullNames) != 1 and not any(sep not in n for n in fullNames):
 		prefixes = [
-			n.rsplit('_', maxsplit=1)[0] + '_'
+			n.rsplit(sep, maxsplit=1)[0] + sep
 			for n in fullNames
 		]
 		commonPrefix = _longestCommonPrefix(prefixes)
-		if commonPrefix and not commonPrefix.endswith('_'):
-			commonPrefix = commonPrefix.rsplit('_', maxsplit=1)[0] + '_'
+		if commonPrefix and not commonPrefix.endswith(sep):
+			commonPrefix = commonPrefix.rsplit(sep, maxsplit=1)[0] + sep
 		if commonPrefix:
 			prefixLen = len(commonPrefix)
 			return [

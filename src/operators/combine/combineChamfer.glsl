@@ -9,9 +9,9 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 	#ifdef THIS_RETURN_TYPE_float
 	return THIS_FUNC(res1, res2, radius);
 	#else
-	res1.x = THIS_FUNC(res1.x, res2.x, radius);
 	float h = smoothBlendRatio(res1.x, res2.x, radius);
-	blendInSdf(res1, res2, h);
+	res1.x = THIS_FUNC(res1.x, res2.x, radius);
+	blendInSdf(res1, res2, 1.0 - h);
 	return res1;
 	#endif
 }

@@ -1,0 +1,7 @@
+{
+  "meta": {
+    "opStatus": "beta",
+    "opType": "raytk.operators.filter.reshapeValues",
+    "opVersion": 0
+  }
+}

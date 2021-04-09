@@ -1,14 +1,10 @@
-#ifdef THIS_HAS_INPUT_1
-
-#define thismap inputOp1
-
-#else
-
 Sdf thismap(vec3 p, Context ctx) {
-	return createSdf(RAYTK_MAX_DIST);
+	#ifdef THIS_HAS_INPUT_1
+	return inputOp1(p, ctx);
+	#else
+	return createNonHitSdf();
+	#endif
 }
-
-#endif
 
 Ray getViewRay(vec2 shift) {
 	vec2 resolution = uTDOutputInfo.res.zw;
@@ -60,5 +56,18 @@ float checkNearHit(float d) {
 void modifyRay(inout Ray ray, in Sdf res) {
 	RayContext rCtx = createRayContext(ray, res);
 	ray = inputOp4(ray.pos, rCtx);
+}
+#endif
+
+#ifdef RAYTK_USE_SHADOW
+float getShadedLevel(vec3 p, MaterialContext matCtx) {
+	int priorStage = pushStage(RAYTK_STAGE_SHADOW);
+	#ifdef THIS_HAS_INPUT_5
+	float res = inputOp5(p, matCtx);
+	#else
+	float res = calcShadowDefault(p, matCtx);
+	#endif
+	popStage(priorStage);
+	return res;
 }
 #endif

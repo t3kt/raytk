@@ -33,6 +33,7 @@ Sdf map(vec3 q)
 }
 
 Sdf castRay(Ray ray, float maxDist) {
+	int priorStage = pushStage(RAYTK_STAGE_PRIMARY);
 	float dist = 0;
 	Sdf res = createNonHitSdf();
 	int i;
@@ -45,6 +46,7 @@ Sdf castRay(Ray ray, float maxDist) {
 		modifyRay(ray, res);
 		#endif
 		if (!checkLimit(ray.pos)) {
+			popStage(priorStage);
 			return createNonHitSdf();
 		}
 		res = map(ray.pos);
@@ -73,6 +75,7 @@ Sdf castRay(Ray ray, float maxDist) {
 	res.nearHitCount = nearHitCount;
 	res.nearHitAmount = nearHit;
 	#endif
+	popStage(priorStage);
 	return res;
 }
 
@@ -111,33 +114,12 @@ vec3 calcNormal(in vec3 pos)
 		e.xxx*map(pos + e.xxx).x);
 }
 
-// Soft shadow code from http://iquilezles.org/www/articles/rmshadows/rmshadows.htm
-float softShadow(vec3 p, MaterialContext matCtx)
-{
-	float mint = RAYTK_SURF_DIST;
-	float maxt = RAYTK_MAX_DIST;
-	float k = 0.5;  // hardness
-	Ray ray = Ray(p + matCtx.normal + RAYTK_SURF_DIST*2., normalize(matCtx.light.pos - p));
-	float res = 1.0;
-	float ph = 1e20;
-	for (float t=mint; t<maxt;)
-	{
-		float h = map(ray.pos + ray.dir *t).x;
-		if (h<0.001)
-		return 0.0;
-		float y = h*h/(2.0*ph);
-		float d = sqrt(h*h-y*y);
-		res = min(res, k*d/max(0.0, t-y));
-		ph = h;
-		t += h;
-	}
-	return res;
-}
-
-float calcShadow(in vec3 p, MaterialContext matCtx) {
+float calcShadowDefault(in vec3 p, MaterialContext matCtx) {
 	vec3 lightVec = normalize(matCtx.light.pos - p);
 	Ray shadowRay = Ray(p+matCtx.normal * RAYTK_SURF_DIST*2., lightVec);
+	int priorStage = pushStage(RAYTK_STAGE_SHADOW);
 	float shadowDist = castRayBasic(shadowRay, RAYTK_MAX_DIST).x;
+	popStage(priorStage);
 	if (shadowDist < length(matCtx.light.pos - p)) {
 		return 0.1;
 	}
@@ -173,10 +155,12 @@ vec3 getColorDefault(vec3 p, MaterialContext matCtx) {
 	vec3 sunColor = matCtx.light.color;
 	vec3 skyColor = vec3(0.5, 0.8, 0.9);
 	float sunDiffuse = clamp(dot(matCtx.normal, sunDir), 0, 1.);
-	float sunShadow = calcShadow(p+matCtx.normal*0.001, matCtx);
 	float skyDiffuse = clamp(0.5+0.5*dot(matCtx.normal, vec3(0, 1, 0)), 0, 1);
 	float sunSpec = pow(max(dot(-matCtx.ray.dir, matCtx.normal), 0.), 5) * 0.5;
-	vec3 col = mate * sunColor * sunDiffuse * sunShadow;
+	vec3 col = mate * sunColor * sunDiffuse;
+	#if defined(THIS_Enableshadow) && defined(RAYTK_USE_SHADOW)
+	col *= matCtx.shadedLevel;
+	#endif
 	col += mate * skyColor * skyDiffuse;
 	col += mate * sunColor * sunSpec;
 	col *= mix(vec3(0.5), vec3(1.5), occ);
@@ -214,16 +198,22 @@ vec3 getColor(vec3 p, MaterialContext matCtx) {
 		p2 = matCtx.result.materialPos2.xyz;
 	}
 	#endif
+	#ifdef RAYTK_USE_SHADOW
+	if (matCtx.result.useShadow) {
+		matCtx.shadedLevel = getShadedLevel(p, matCtx);
+	}
+	#endif
+	int priorStage = pushStage(RAYTK_STAGE_MATERIAL);
 	if (ratio <= 0) {
 		#ifdef RAYTK_USE_MATERIAL_POS
 		matCtx.materialPos = p1;
 		#endif
-		return getColorInner(p, matCtx, m1);
+		col = getColorInner(p, matCtx, m1);
 	} else if (ratio >= 1) {
 		#ifdef RAYTK_USE_MATERIAL_POS
 		matCtx.materialPos = p2;
 		#endif
-		return getColorInner(p, matCtx, m2);
+		col = getColorInner(p, matCtx, m2);
 	} else {
 		#ifdef RAYTK_USE_MATERIAL_POS
 		matCtx.materialPos = p1;
@@ -233,8 +223,10 @@ vec3 getColor(vec3 p, MaterialContext matCtx) {
 		matCtx.materialPos = p2;
 		#endif
 		vec3 col2 = getColorInner(p, matCtx, m2);
-		return mix(col1, col2, ratio);
+		col = mix(col1, col2, ratio);
 	}
+	popStage(priorStage);
+	return col;
 }
 
 #ifndef THIS_USE_LIGHT_FUNC
@@ -251,49 +243,8 @@ void main()
 	#ifdef RAYTK_HAS_INIT
 	init();
 	#endif
+	initOutputs();
 
-	#ifdef OUTPUT_DEBUG
-	debugOut = vec4(0);
-	#endif
-	#ifdef OUTPUT_RAYDIR
-	rayDirOut = vec4(0);
-	#endif
-	#ifdef OUTPUT_RAYORIGIN
-	rayOriginOut = vec4(0);
-	#endif
-	#ifdef OUTPUT_OBJECTID
-	objectIdOut = vec4(0);
-	#endif
-	#ifdef OUTPUT_WORLDPOS
-	worldPosOut = vec4(0);
-	#endif
-	#ifdef OUTPUT_NORMAL
-	normalOut = vec4(0);
-	#endif
-	#ifdef OUTPUT_ORBIT
-	orbitOut = vec4(0);
-	#endif
-	#if defined(OUTPUT_NEARHIT)
-	nearHitOut = vec4(0);
-	#endif
-	#ifdef OUTPUT_ITERATION
-	iterationOut = vec4(0);
-	#endif
-	#ifdef OUTPUT_SDF
-	sdfOut = vec4(0);
-	#endif
-	#ifdef OUTPUT_COLOR
-	colorOut = vec4(0);
-	#endif
-	#if defined(OUTPUT_STEPS)
-	stepsOut = vec4(0);
-	#endif
-	#ifdef OUTPUT_DEPTH
-	depthOut = vec4(0);
-	#endif
-	#ifdef OUTPUT_DEBUG
-	debugOut = vec4(0, 0, 0, 1);
-	#endif
 	MaterialContext matCtx = createMaterialContext();
 
 	#if THIS_ANTI_ALIAS > 1
@@ -365,6 +316,7 @@ void main()
 				matCtx.reflectColor = vec3(0);
 				#if defined(RAYTK_USE_REFLECTION) && defined(THIS_Enablereflection)
 				MaterialContext reflectMatCtx = matCtx;
+				int priorStage = pushStage(RAYTK_STAGE_REFLECT);
 				for (int k = 0; k < THIS_Reflectionpasses; k++) {
 					if (reflectMatCtx.result.reflect) {
 						reflectMatCtx.ray.dir = reflect(reflectMatCtx.ray.dir, reflectMatCtx.normal);
@@ -376,6 +328,7 @@ void main()
 						matCtx.reflectColor += getColor(reflectPos, reflectMatCtx);
 					}
 				}
+				popStage(priorStage);
 				#endif
 
 				vec3 col = getColor(p, matCtx);

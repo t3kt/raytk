@@ -1,0 +1,7 @@
+name	label	expr
+xy	XY	xyz
+yx	YX	yxz
+yz	YZ	yzx
+zy	ZY	zyx
+xz	XZ	xzy
+zx	ZX	zxy

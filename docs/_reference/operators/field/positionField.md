@@ -42,9 +42,19 @@ op:
     - label: Vector4
       name: vec4
     name: Returntype
-  summary: A vector field that evaluates to the coordinates in space.
+    summary: Whether to return a single axis value or a vector of all coordinate parts.
+  - label: Axis
+    menuOptions:
+    - label: X
+      name: x
+    - label: Y
+      name: y
+    - label: Z
+      name: z
+    name: Axis
+  summary: A vector field that produces the coordinates in space where it is checked.
 
 ---
 
 
-A vector field that evaluates to the coordinates in space.
+A vector field that produces the coordinates in space where it is checked.

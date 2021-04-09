@@ -21,6 +21,7 @@ op:
   inputs:
   - contextTypes:
     - Context
+    - MaterialContext
     coordTypes:
     - float
     - vec2
@@ -35,6 +36,7 @@ op:
     - Light
   - contextTypes:
     - Context
+    - MaterialContext
     coordTypes:
     - float
     - vec2
@@ -49,6 +51,7 @@ op:
     - Light
   - contextTypes:
     - Context
+    - MaterialContext
     coordTypes:
     - float
     - vec2
@@ -63,12 +66,73 @@ op:
     - Light
   - contextTypes:
     - Context
+    - MaterialContext
     coordTypes:
     - float
     - vec2
     - vec3
     label: definition_in_4
     name: definition_in_4
+    returnTypes:
+    - float
+    - vec4
+    - Sdf
+    - Ray
+    - Light
+  - contextTypes:
+    - Context
+    - MaterialContext
+    coordTypes:
+    - float
+    - vec2
+    - vec3
+    label: definition_in_5
+    name: definition_in_5
+    returnTypes:
+    - float
+    - vec4
+    - Sdf
+    - Ray
+    - Light
+  - contextTypes:
+    - Context
+    - MaterialContext
+    coordTypes:
+    - float
+    - vec2
+    - vec3
+    label: definition_in_6
+    name: definition_in_6
+    returnTypes:
+    - float
+    - vec4
+    - Sdf
+    - Ray
+    - Light
+  - contextTypes:
+    - Context
+    - MaterialContext
+    coordTypes:
+    - float
+    - vec2
+    - vec3
+    label: definition_in_7
+    name: definition_in_7
+    returnTypes:
+    - float
+    - vec4
+    - Sdf
+    - Ray
+    - Light
+  - contextTypes:
+    - Context
+    - MaterialContext
+    coordTypes:
+    - float
+    - vec2
+    - vec3
+    label: definition_in_8
+    name: definition_in_8
     returnTypes:
     - float
     - vec4

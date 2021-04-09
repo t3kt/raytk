@@ -20,8 +20,8 @@ op:
     - float
     - vec2
     - vec3
-    label: definition_in
-    name: definition_in
+    label: definition_in_1
+    name: definition_in_1
     returnTypes:
     - float
     - vec4
@@ -78,7 +78,13 @@ op:
   parameters:
   - label: Enable
     name: Enable
-  - label: Multiply
-    name: Multiply
+  - label: Fit To Range
+    name: Fitrange
+    summary: When enabled, the combined function is scaled back to a 0..1 range. Otherwise,
+      coordinates 0..1 go to the first function, 1..2 to the second, etc.
+  summary: Joins functions end on end.
 
 ---
+
+
+Joins functions end on end.

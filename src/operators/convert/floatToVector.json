@@ -1,6 +1,6 @@
 {
   "meta": {
     "opType": "raytk.operators.convert.floatToVector",
-    "opVersion": 6
+    "opVersion": 7
   }
 }

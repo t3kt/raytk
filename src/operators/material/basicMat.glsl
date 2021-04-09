@@ -1,3 +1,5 @@
+vec4 THIS_iterationCapture = vec4(0.);
+
 Sdf thismap(CoordT p, ContextT ctx) {
 	Sdf res = inputOp1(p, ctx);
 	#if defined(THIS_Uselocalpos) && defined(RAYTK_USE_MATERIAL_POS)
@@ -5,17 +7,28 @@ Sdf thismap(CoordT p, ContextT ctx) {
 	#else
 	assignMaterial(res, THISMAT);
 	#endif
+	#if defined(THIS_Enableshadow) && defined(RAYTK_USE_SHADOW)
+	res.useShadow = true;
+	#endif
+	captureIterationFromMaterial(THIS_iterationCapture, ctx);
 	return res;
 }
 
 vec3 THIS_getColor(vec3 p, MaterialContext matCtx) {
+	restoreIterationFromMaterial(matCtx, THIS_iterationCapture);
 	vec3 sunDir = normalize(matCtx.light.pos);
 	float occ = calcAO(p, matCtx.normal);
 	vec3 baseColor = THIS_Basecolor;
 	#ifdef THIS_USE_BASE_COLOR_FIELD
 	{
 		vec3 mp = getPosForMaterial(p, matCtx);
-		baseColor += inputOp3(mp, matCtx).rgb;
+		#if defined(inputOp2_RETURN_TYPE_vec4)
+		baseColor += inputOp2(mp, matCtx).rgb;
+		#elif defined(inputOp2_RETURN_TYPE_float)
+		baseColor += vec3(inputOp2(mp, matCtx));
+		#else
+		#error invalidColorFieldReturnType
+		#endif
 	}
 	#endif
 	vec3 mate = baseColor;
@@ -23,10 +36,8 @@ vec3 THIS_getColor(vec3 p, MaterialContext matCtx) {
 	vec3 skyColor = THIS_Skycolor;
 	float sunDiffuse = clamp(dot(matCtx.normal, sunDir), 0, 1.);
 	float sunShadow = 1.;
-	#if defined(THIS_SHADOW_FUNC)
-	sunShadow = THIS_SHADOW_FUNC(p+matCtx.normal*0.001, matCtx);
-	#elif defined(THIS_USE_SHADOW_DEFAULT)
-	sunShadow = calcShadow(p+matCtx.normal*0.001, matCtx);
+	#if defined(THIS_Enableshadow) && defined(RAYTK_USE_SHADOW)
+	sunShadow = matCtx.shadedLevel;
 	#endif
 	float skyDiffuse = clamp(0.5+0.5*dot(matCtx.normal, THIS_Skydir), 0, 1);
 	float sunSpec = pow(max(dot(-matCtx.ray.dir, matCtx.normal), 0.), THIS_Specularexp) * THIS_Specularamount;

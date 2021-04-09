@@ -1,0 +1,4 @@
+name	label	params
+equilateral	Equilateral Triangle	Radius
+isosceles	Isosceles Triangle	Height Width
+arbitrary	Abritrary Triangle	Point1[xy] Point2[xy] Point3[xy]

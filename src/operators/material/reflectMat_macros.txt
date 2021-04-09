@@ -1,3 +1,2 @@
-('THIS_SHADOW_FUNC inputOp2' if op('shadow_definition').numRows > 1 else 'THIS_USE_SHADOW_DEFAULT') if parent().par.Enableshadow else ''	
 'RAYTK_USE_REFLECTION'	
 'RAYTK_REFLECT_IN_SDF'	

@@ -1,0 +1,3 @@
+name	label
+3d	3D
+cube	Cube Map

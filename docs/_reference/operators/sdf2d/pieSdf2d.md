@@ -13,7 +13,16 @@ op:
   parameters:
   - label: Radius
     name: Radius
+    summary: The distance from the center to the outer edge.
   - label: Angle
     name: Angle
+    summary: The width of the slice in degrees.
+  - label: Rotate
+    name: Rotate
+    summary: Rotation for the slice in degrees.
+  summary: SDF for a 2D pie-slice shape.
 
 ---
+
+
+SDF for a 2D pie-slice shape.

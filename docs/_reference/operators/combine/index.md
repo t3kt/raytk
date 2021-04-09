@@ -25,6 +25,8 @@ cat:
     summary: Combines float or vector fields using one of several mathematical operations.
   - name: combineStairs
     summary: Stair SDF combine, producing steps along the blend region.
+  - name: compositeFields
+    summary: Combines two vector fields using color compositing.
   - name: edgeEngrave
     summary: Carves a v-shaped groove where the second input intersects with the first.
   - name: edgeGroove
@@ -38,6 +40,8 @@ cat:
       operator.
   - name: layoutGrid
     summary: Slices space into a grid, and places each input in a separate cell.
+  - name: mergeFields
+    status: beta
   - name: simpleDiff
     summary: Combines two SDFs using the difference operator.
   - name: simpleIntersect

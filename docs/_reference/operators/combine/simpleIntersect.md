@@ -16,7 +16,9 @@ op:
     - MaterialContext
     - CameraContext
     - LightContext
+    - RayContext
     coordTypes:
+    - float
     - vec2
     - vec3
     label: definition_in_1
@@ -30,7 +32,9 @@ op:
     - MaterialContext
     - CameraContext
     - LightContext
+    - RayContext
     coordTypes:
+    - float
     - vec2
     - vec3
     label: definition_in_2
@@ -44,7 +48,9 @@ op:
     - MaterialContext
     - CameraContext
     - LightContext
+    - RayContext
     coordTypes:
+    - float
     - vec2
     - vec3
     label: definition_in_3
@@ -58,11 +64,77 @@ op:
     - MaterialContext
     - CameraContext
     - LightContext
+    - RayContext
     coordTypes:
+    - float
     - vec2
     - vec3
     label: definition_in_4
     name: definition_in_4
+    returnTypes:
+    - float
+    - Sdf
+  - contextTypes:
+    - none
+    - Context
+    - MaterialContext
+    - CameraContext
+    - LightContext
+    - RayContext
+    coordTypes:
+    - float
+    - vec2
+    - vec3
+    label: definition_in_5
+    name: definition_in_5
+    returnTypes:
+    - float
+    - Sdf
+  - contextTypes:
+    - none
+    - Context
+    - MaterialContext
+    - CameraContext
+    - LightContext
+    - RayContext
+    coordTypes:
+    - float
+    - vec2
+    - vec3
+    label: definition_in_6
+    name: definition_in_6
+    returnTypes:
+    - float
+    - Sdf
+  - contextTypes:
+    - none
+    - Context
+    - MaterialContext
+    - CameraContext
+    - LightContext
+    - RayContext
+    coordTypes:
+    - float
+    - vec2
+    - vec3
+    label: definition_in_7
+    name: definition_in_7
+    returnTypes:
+    - float
+    - Sdf
+  - contextTypes:
+    - none
+    - Context
+    - MaterialContext
+    - CameraContext
+    - LightContext
+    - RayContext
+    coordTypes:
+    - float
+    - vec2
+    - vec3
+    label: definition_in_8
+    name: definition_in_8
     returnTypes:
     - float
     - Sdf

@@ -5,7 +5,8 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 	result = THIS_INPUT_1(p, ctx);
 	#else
 	{
-		float i = ctx.iteration.THIS_Iterationpart;
+		vec4 ival = extractIteration(ctx);
+		float i = ival.THIS_Iterationpart;
 		#if defined(THIS_Extend_clamp)
 		i = clamp(i, 0., THIS_INPUT_COUNT - 1);
 		#elif defined(THIS_Extend_loop)
@@ -28,9 +29,29 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 				result = THIS_INPUT_3(p, ctx);
 				break;
 			#endif
-			#if THIS_INPUT_COUNT == 4
+			#if THIS_INPUT_COUNT >= 4
 			case 3:
 				result = THIS_INPUT_4(p, ctx);
+				break;
+			#endif
+			#if THIS_INPUT_COUNT >= 5
+				case 4:
+				result = THIS_INPUT_5(p, ctx);
+				break;
+			#endif
+			#if THIS_INPUT_COUNT >= 6
+				case 5:
+				result = THIS_INPUT_6(p, ctx);
+				break;
+			#endif
+			#if THIS_INPUT_COUNT >= 7
+				case 6:
+				result = THIS_INPUT_7(p, ctx);
+				break;
+			#endif
+			#if THIS_INPUT_COUNT == 8
+				case 7:
+				result = THIS_INPUT_8(p, ctx);
 				break;
 			#endif
 			default:

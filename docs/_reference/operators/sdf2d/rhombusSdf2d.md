@@ -13,5 +13,10 @@ op:
   parameters:
   - label: Scale
     name: Scale
+    summary: The size of the rhombus along the X and Y axes.
+  summary: SDF for a 2D rhombus (diamond), with its corners aligned to the axes.
 
 ---
+
+
+SDF for a 2D rhombus (diamond), with its corners aligned to the axes.

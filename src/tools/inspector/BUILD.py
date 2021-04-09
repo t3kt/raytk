@@ -29,11 +29,11 @@ subComps += ops(
 )
 
 for comp in subComps:
-	context.reclone(comp)
+	context.updateOrReclone(comp)
 	context.disableCloning(comp)
 	context.detachTox(comp)
 	for c in comp.findChildren(type=COMP):
-		context.reclone(c)
+		context.updateOrReclone(c)
 		context.disableCloning(c)
 		context.detachTox(c)
 

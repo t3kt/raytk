@@ -44,6 +44,8 @@ op:
       used for the color field will be "before" any downstream transformations are
       applied. When disabled, the final global position where a point ends up in the
       render is used instead.
+  - label: Use Light Color
+    name: Uselightcolor
   summary: 'A material that uses a vector field input to determine
 
     the color.'

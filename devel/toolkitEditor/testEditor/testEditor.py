@@ -45,7 +45,7 @@ class TestEditor:
 
 	def UnloadTest(self):
 		iop.loader.UnloadComponent()
-		self._reloadOutputs()
+		self._reloadOutputsSoon()
 
 	def SaveTest(self):
 		iop.loader.SaveComponent()
@@ -59,7 +59,7 @@ class TestEditor:
 			if not name.endswith('_test'):
 				name += '_test'
 		iop.loader.LoadComponent(tox=toxPath, name=name)
-		self._reloadOutputs()
+		self._reloadOutputsSoon()
 
 	@staticmethod
 	def prepareTestTable(dat: 'DAT', inDat: 'DAT', opTable: 'DAT'):
@@ -116,12 +116,13 @@ class TestEditor:
 			name=name,
 			autoSave=True,
 		)
-		self._reloadOutputs()
+		self._reloadOutputsSoon()
 
-	def _reloadOutputs(self):
-		def reload():
-			self.ownerComp.op('layout_test_outputs').cook(force=True)
-		run('args[0]()', reload, delayFrames=5, delayRef=root)
+	def _reloadOutputsSoon(self):
+		run('args[0]()', self.reloadOutputs, delayFrames=5, delayRef=root)
+
+	def reloadOutputs(self):
+		self.ownerComp.op('layout_test_outputs').cook(force=True)
 
 	def listOnSelectRow(self, info: dict):
 		# rowData = info['rowData']

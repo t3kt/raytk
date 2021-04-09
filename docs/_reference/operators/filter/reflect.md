@@ -15,7 +15,9 @@ op:
     - MaterialContext
     - CameraContext
     - LightContext
+    - RayContext
     coordTypes:
+    - vec2
     - vec3
     label: definition_in
     name: definition_in
@@ -24,20 +26,8 @@ op:
     - float
     - vec4
     - Sdf
-  - contextTypes:
-    - none
-    - Context
-    - MaterialContext
-    - CameraContext
-    - LightContext
-    - RayContext
-    coordTypes:
-    - float
-    label: Blend Function
-    name: blend_func_definition_in
-    returnTypes:
-    - float
-    summary: Function used to control blending across the reflection plane.
+    - Ray
+    - Light
   name: reflect
   opType: raytk.operators.filter.reflect
   parameters:

@@ -9,7 +9,7 @@ float thismap(vec3 p, MaterialContext ctx) {
 	for (float t=mint; t<maxt;)
 	{
 		float h = map(ray.pos + ray.dir *t).x;
-		if (h<0.001)
+		if (h<RAYTK_SURF_DIST)
 		return 0.0;
 		float y = h*h/(2.0*ph);
 		float d = sqrt(h*h-y*y);

@@ -8,6 +8,8 @@ redirect_from:
   - /reference/opType/raytk.operators.light.hardShadow/
 op:
   category: light
+  detail: This should be connected to the "Shadow" input of the `raymarchRender3d`
+    operator.
   name: hardShadow
   opType: raytk.operators.light.hardShadow
   parameters:
@@ -19,3 +21,5 @@ op:
 
 
 A simple hard-edged shadow.
+
+This should be connected to the "Shadow" input of the `raymarchRender3d` operator.

@@ -63,3 +63,12 @@ class Inspector:
 		simplifiedNames = simplifyNames(fullNames)
 		dat.appendCol(fullNames)
 		dat.appendCol(simplifiedNames)
+
+	@staticmethod
+	def buildSimplifiedPaths(dat: 'DAT', inDat: 'DAT'):
+		dat.clear()
+		fullPaths = inDat.col('path')[1:]
+		simplifiedPaths = simplifyNames(fullPaths, sep='/')
+		dat.appendCol(fullPaths)
+		dat.appendCol(simplifiedPaths)
+

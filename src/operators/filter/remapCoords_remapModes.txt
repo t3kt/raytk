@@ -1,0 +1,4 @@
+name	label
+replace	Replace
+add	Add
+multiply	Multiply
