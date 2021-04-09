@@ -137,6 +137,7 @@ class OpPicker:
 		opHelpTable = self.ownerComp.op('opHelpTable')  # type: DAT
 		self.itemLibrary.loadTables(opTable, opHelpTable)
 		self.refreshList()
+		self._applyFilter()
 		self._selectItem(None)
 
 	def refreshList(self):
@@ -419,9 +420,6 @@ class _Filter:
 	beta: bool = False
 	deprecated: bool = False
 
-	def __bool__(self):
-		return bool(self.text or not self.alpha or not self.beta or not self.deprecated)
-
 class _ItemLibrary:
 	allItems: List[_AnyItemT]
 	categories: List[PickerCategoryItem]
@@ -488,7 +486,7 @@ class _ItemLibrary:
 	def _buildFlatList(self, filt: 'Optional[_Filter]') -> 'List[_AnyItemT]':
 		flatItems = []
 		for category in self.categories:
-			if not filt:
+			if filt is None:
 				matchedOps = category.ops
 			else:
 				matchedOps = [
