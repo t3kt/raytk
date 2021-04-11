@@ -27,9 +27,7 @@ Ray mixVals(in Ray res1, in Ray res2, float amt) {
 struct Sdf {
 	float x; // distance
 
-	float material; // material ID
-	float material2; // in case of interpolating, the second material
-	float interpolant; // in case of interpolating, the interpolation value
+	vec3 mat; // x: material ID 1, y: material ID 2, z: interpolant
 	#ifdef RAYTK_USE_MATERIAL_POS
 	// xyz: pos
 	// w: whether this has been set
@@ -75,13 +73,15 @@ struct Sdf {
 	#endif
 };
 
+int resultMaterial1(Sdf res) { return int(res.mat.x); }
+int resultMaterial2(Sdf res) { return int(res.mat.y); }
+float resultMaterialInterp(Sdf res) { return res.mat.z; }
+
 Sdf createSdf(float dist) {
 	Sdf res;
 	res.x = dist;
 
-	res.material = 2;
-	res.material2 = 0.;
-	res.interpolant = 0.;
+	res.mat = vec3(2., 0., 0.);
 	#ifdef RAYTK_USE_MATERIAL_POS
 	res.materialPos = vec4(0);
 	res.materialPos2 = vec4(0);
@@ -115,8 +115,8 @@ Sdf createSdf(float dist) {
 }
 
 void blendInSdf(inout Sdf res1, in Sdf res2, in float amt) {
-	res1.material2 = res2.material;
-	res1.interpolant = amt;
+	res1.mat.y = res2.mat.x;
+	res1.mat.z = amt;
 
 	#ifdef RAYTK_USE_MATERIAL_POS
 	res1.materialPos2 = res2.materialPos;
@@ -146,7 +146,7 @@ void blendInSdf(inout Sdf res1, in Sdf res2, in float amt) {
 	#endif
 
 	#ifdef RAYTK_USE_SHADOW
-	res1.useShadow = res1.useShadow || (res2.useShadow && res2.interpolant >= 1.0);
+	res1.useShadow = res1.useShadow || (res2.useShadow && resultMaterialInterp(res2) >= 1.0);
 	#endif
 }
 
@@ -156,17 +156,13 @@ Sdf mixVals(in Sdf res1, in Sdf res2, float amt) {
 }
 
 void assignMaterial(inout Sdf res, int materialId) {
-	res.material = materialId;
-	res.material2 = 0;
-	res.interpolant = 0.;
+	res.mat = vec3(float(materialId), 0., 0.);
 }
 #ifdef RAYTK_USE_MATERIAL_POS
 void assignMaterialWithPos(inout Sdf res, int materialId, vec3 materialPos) {
-	res.material = materialId;
-	res.material2 = 0;
+	res.mat = vec3(float(materialId), 0., 0.);
 	res.materialPos = vec4(materialPos, 1.);
 	res.materialPos2 = vec4(0.);
-	res.interpolant = 0.;
 }
 #endif
 

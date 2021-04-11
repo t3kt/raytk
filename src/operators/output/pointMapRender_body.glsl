@@ -6,7 +6,7 @@ Sdf map(CoordT p) {
 }
 
 vec4 getColor(Sdf res, CoordT p) {
-	int m = int(res.material);
+	int m = resultMaterial1(res);
 	vec4 col;
 	if (res.x > 0) {
 		return vec4(0);
@@ -60,9 +60,9 @@ void main() {
 	#ifdef OUTPUT_SDF
 	sdfOut = vec4(
 		res.x,
-		res.material,
-		res.material2,
-		res.interpolant);
+		resultMaterial1(res),
+		resultMaterial2(res),
+		resultMaterialInterp(res));
 	#endif
 	#if defined(OUTPUT_NORMAL) && defined(THIS_COORD_TYPE_vec3)
 	normalOut = vec4(calcNormal(p), 0.);

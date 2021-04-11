@@ -187,9 +187,9 @@ vec3 getColorInner(vec3 p, MaterialContext matCtx, int m) {
 vec3 getColor(vec3 p, MaterialContext matCtx) {
 	if (isNonHitSdf(matCtx.result)) return vec3(0.);
 	vec3 col = vec3(0);
-	float ratio = matCtx.result.interpolant;
-	int m1 = int(matCtx.result.material);
-	int m2 = int(matCtx.result.material2);
+	float ratio = resultMaterialInterp(matCtx.result);
+	int m1 = resultMaterial1(matCtx.result);
+	int m2 = resultMaterial2(matCtx.result);
 	#ifdef RAYTK_USE_MATERIAL_POS
 	vec3 p1 = p;
 	vec3 p2 = p;
@@ -206,7 +206,7 @@ vec3 getColor(vec3 p, MaterialContext matCtx) {
 	}
 	#endif
 	int priorStage = pushStage(RAYTK_STAGE_MATERIAL);
-	if (ratio <= 0) {
+	if (ratio <= 0 || m1 == m2) {
 		#ifdef RAYTK_USE_MATERIAL_POS
 		matCtx.materialPos = p1;
 		#endif
@@ -294,11 +294,11 @@ void main()
 
 			#ifdef OUTPUT_SDF
 			#ifdef RAYTK_STEPS_IN_SDF
-			sdfOut += vec4(res.x, res.material, res.steps, 1);
+			sdfOut += vec4(res.x, resultMaterial1(res), res.steps, 1);
 			#else
 			// the raymarch ROP always switches on RAYTK_STEPS_IN_SDF if it's outputting
 			// SDF data, so this case never actually occurs.
-			sdfOut += vec4(res.x, res.material, 0, 1);
+			sdfOut += vec4(res.x, resultMaterial1(res), 0, 1);
 			#endif
 			#endif
 
