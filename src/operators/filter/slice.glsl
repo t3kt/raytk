@@ -6,6 +6,14 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 	float q = p.THIS_AXIS;
 	#endif
 	float d = abs(q - THIS_Offset) - THIS_Thickness;
+	#if defined(THIS_Operation_intersect)
+	#elif defined(THIS_Operation_diff)
+	{
+		d = -d;
+	}
+	#else
+	#error invalidOperation
+	#endif
 	#ifdef THIS_Enablesmoothing
 	res.x = fOpIntersectionRound(res.x, d, THIS_Smoothradius);
 	#else
