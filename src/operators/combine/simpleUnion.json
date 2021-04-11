@@ -1,6 +1,6 @@
 {
   "meta": {
     "opType": "raytk.operators.combine.simpleUnion",
-    "opVersion": 11
+    "opVersion": 12
   }
 }
