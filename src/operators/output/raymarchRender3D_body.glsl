@@ -130,6 +130,7 @@ float calcShadowDefault(in vec3 p, MaterialContext matCtx) {
 // Source - https://www.shadertoy.com/view/lsKcDD
 float calcAO( in vec3 pos, in vec3 nor )
 {
+	int priorStage = pushStage(RAYTK_STAGE_OCCLUSION);
 //	float occ = uAO.x;
 //	float sca = uAO.y;
 	float occ = 0.0;
@@ -145,6 +146,7 @@ float calcAO( in vec3 pos, in vec3 nor )
 		occ += -(dd-hr)*sca;
 		sca *= 0.95;
 	}
+	popStage(priorStage);
 	return clamp( 1.0 - 3.0*occ, 0.0, 1.0 );
 }
 

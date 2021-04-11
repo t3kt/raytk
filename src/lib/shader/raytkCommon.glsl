@@ -337,6 +337,7 @@ const int RAYTK_STAGE_PRIMARY = 0;
 const int RAYTK_STAGE_SHADOW =  1;
 const int RAYTK_STAGE_REFLECT = 2;
 const int RAYTK_STAGE_MATERIAL = 3;
+const int RAYTK_STAGE_OCCLUSION = 4;
 
 int _raytkStage = RAYTK_STAGE_PRIMARY;
 
