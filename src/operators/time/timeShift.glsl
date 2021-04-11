@@ -7,13 +7,13 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 		#endif
 		Time time = contextTime(ctx);
 		#if defined(THIS_Intervaltype_frames)
-			time_setFrame(time, wrapRange(time.frame + shift, time.start, time.end));
+			time_setFrame(time, wrapRange(time_frame(time) + shift, time_start(time), time_end(time)));
 		#elif defined(THIS_Intervaltype_seconds)
-			time_setSeconds(time, wrapRange(time.seconds + shift, (time.start-1)*time.rate, (time.end-1)*time.rate));
+			time_setSeconds(time, wrapRange(time_seconds(time) + shift, (time_start(time)-1)*time_rate(time), (time_end(time)-1)*time_rate(time)));
 		#elif defined(THIS_Intervaltype_absframes)
-			time_setAbsFrame(time, time.absFrame + shift);
+			time_setAbsFrame(time, time_absFrame(time) + shift);
 		#elif defined(THIS_Intervaltype_absseconds)
-			time_setAbsSeconds(time, time.absSeconds + shift);
+			time_setAbsSeconds(time, time_absSeconds(time) + shift);
 		#else
 			#error invalidIntervalType
 		#endif

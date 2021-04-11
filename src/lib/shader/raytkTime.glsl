@@ -3,7 +3,7 @@ uniform vec4 uTime2 = vec4(60., 120., 1., 0.);  // rate, bpm, absFrame, absSecon
 uniform vec4 uTime3 = vec4(0, 0, 0, 0);         // absStep, absStepSeconds
 
 Time getGlobalTime() {
-	return Time(uTime1.x, uTime1.y, uTime1.z, uTime1.w, uTime2.x, uTime2.y, uTime2.z, uTime2.w, uTime3.x, uTime3.y);
+	return Time(uTime1, uTime2, uTime3);
 }
 
 //#if defined(RAYTK_TIME_IN_CONTEXT)
@@ -21,26 +21,37 @@ Time getGlobalTime() {
 //#endif
 
 float time_fraction(Time t) {
-	if (t.end == t.start) return 0.;
-	return (t.frame - t.start) / (t.end - t.start);
+	if (t.frameSecStartEnd.w == t.frameSecStartEnd.z) return 0.;
+	return (t.frameSecStartEnd.x - t.frameSecStartEnd.z) / (t.frameSecStartEnd.w - t.frameSecStartEnd.z);
 }
 
 void time_setFrame(inout Time t, float f) {
-	t.frame = f;
-	t.seconds = (f - 1.0) * t.rate;
+	t.frameSecStartEnd.x = f;
+	t.frameSecStartEnd.y = (f - 1.0) * t.rateBpmAFrmAsec.x;
 }
 
 void time_setSeconds(inout Time t, float s) {
-	t.seconds = s;
-	t.frame = 1 + s * t.rate;
+	t.frameSecStartEnd.y = s;
+	t.frameSecStartEnd.x = 1 + s * t.rateBpmAFrmAsec.x;
 }
 
 void time_setAbsFrame(inout Time t, float f) {
-	t.absFrame = f;
-	t.absSeconds = f / t.rate;
+	t.rateBpmAFrmAsec.z = f;
+	t.rateBpmAFrmAsec.w = f / t.rateBpmAFrmAsec.x;
 }
 
 void time_setAbsSeconds(inout Time t, float s) {
-	t.absSeconds = s;
-	t.absFrame = s * t.rate;
+	t.rateBpmAFrmAsec.w = s;
+	t.rateBpmAFrmAsec.z = s * t.rateBpmAFrmAsec.x;
 }
+
+float time_seconds(Time t) { return t.frameSecStartEnd.y; }
+float time_frame(Time t) { return t.frameSecStartEnd.x; }
+float time_start(Time t) { return t.frameSecStartEnd.z; }
+float time_end(Time t) { return t.frameSecStartEnd.w; }
+float time_rate(Time t) { return t.rateBpmAFrmAsec.x; }
+float time_bpm(Time t) { return t.rateBpmAFrmAsec.y; }
+float time_absFrame(Time t) { return t.rateBpmAFrmAsec.z; }
+float time_absSeconds(Time t) { return t.rateBpmAFrmAsec.w; }
+float time_absStepFrames(Time t) { return t.absStpFrmAStpSec.x; }
+float time_absStepSeconds(Time t) { return t.absStpFrmAStpSec.y; }

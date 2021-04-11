@@ -191,16 +191,9 @@ Sdf withAdjustedScale(in Sdf res, float scaleMult) {
 
 #ifdef RAYTK_USE_TIME
 struct Time {
-	float frame;
-	float seconds;
-	float start;
-	float end;
-	float rate;
-	float bpm;
-	float absFrame;
-	float absSeconds;
-	float absStepFrames;
-	float absStepSeconds;
+	vec4 frameSecStartEnd;  // frame, seconds, start, end
+	vec4 rateBpmAFrmAsec;   // rate, bpm, absFrame, absSeconds
+	vec4 absStpFrmAStpSec;  // absStep, absStepSeconds
 };
 
 Time getGlobalTime();
@@ -266,6 +259,14 @@ struct LightContext {
 	Time time;
 	#endif
 };
+
+LightContext createLightContext(Sdf res, vec3 norm) {
+	return LightContext(res, norm
+	#if defined(RAYTK_TIME_IN_CONTEXT) || defined(RAYTK_USE_TIME)
+	, getGlobalTime()
+	#endif
+	);
+}
 
 struct MaterialContext {
 	Sdf result;

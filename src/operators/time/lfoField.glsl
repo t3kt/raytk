@@ -1,13 +1,13 @@
 ReturnT thismap(CoordT p, ContextT ctx) {
 	Time time = THIS_TIME;
 	#if defined(THIS_Intervaltype_seconds)
-	float x = time.seconds;
+	float x = time_seconds(time);
 	#elif defined(THIS_Intervaltype_frames)
-	float x = time.frame;
+	float x = time_frame(time);
 	#elif defined(THIS_Intervaltype_absseconds)
-	float x = time.absSeconds;
+	float x = time_absSeconds(time);
 	#elif defined(THIS_Intervaltype_absframes)
-	float x = time.absFrame;
+	float x = time_absFrame(time);
 	#else
 	#error invalidIntervalType
 	#endif

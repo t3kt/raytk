@@ -305,9 +305,7 @@ void main()
 			matCtx.result = res;
 			matCtx.ray = ray;
 			matCtx.normal = calcNormal(p);
-			LightContext lightCtx;
-			lightCtx.result = res;
-			lightCtx.normal = matCtx.normal;
+			LightContext lightCtx = createLightContext(res, matCtx.normal);
 			matCtx.light = getLight(p, lightCtx);
 
 			#ifdef OUTPUT_NORMAL
