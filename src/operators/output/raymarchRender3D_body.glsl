@@ -202,7 +202,7 @@ vec3 getColor(vec3 p, MaterialContext matCtx) {
 	#endif
 	#ifdef RAYTK_USE_SHADOW
 	if (matCtx.result.useShadow) {
-		matCtx.shadedLevel = getShadedLevel(p, matCtx);
+		matCtx.shadedLevel = calcShadedLevel(p, matCtx);
 	}
 	#endif
 	int priorStage = pushStage(RAYTK_STAGE_MATERIAL);

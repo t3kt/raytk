@@ -1,0 +1,16 @@
+﻿name	label	expr	returnType
+normal	Surface Normal	vec4(ctx.normal, 0.)	vec4
+matpos	Material Position	vec4(getPosForMaterial(p, ctx), 0.)	vec4
+shaded	Shaded Level	getShadedLevel(ctx)	float
+useshadow	Surface Uses Shadow	float(resultUsesShadow(ctx.result))	float
+raypos	Ray Origin	vec4(ctx.ray.pos, 0.)	vec4
+raydir	Ray Direction	vec4(normalize(ctx.ray.dir), 0.)	vec4
+viewdir	View Direction	vec4(normalize(-ctx.ray.dir), 0.)	vec4
+lightpos	Light Position	vec4(ctx.light.pos, 0.)	vec4
+lightcol	Light Color	vec4(ctx.light.color, 0.)	vec4
+lightdir	Light Direction	vec4(normalize(p - ctx.light.pos), 0.)	vec4
+halfangle	Half Angle Vector	vec4(normalize(normalize(p - ctx.light.pos) + normalize(-ctx.ray.dir)), 0.)	vec4
+ndotl	N · L	dot(ctx.normal, normalize(p - ctx.light.pos))	float
+ndotv	N · V	dot(ctx.normal, normalize(-ctx.ray.dir))	float
+ldotv	L · V	dot(normalize(p - ctx.light.pos), normalize(-ctx.ray.dir))	float
+hdotn	H · N	dot(normalize(normalize(p - ctx.light.pos) + normalize(-ctx.ray.dir)), ctx.normal)	float
