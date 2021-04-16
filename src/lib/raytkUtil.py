@@ -756,11 +756,9 @@ class ContextTypes:
 	CameraContext = 'CameraContext'
 	LightContext = 'LightContext'
 	RayContext = 'RayContext'
-	none = 'none'
 
 	values = [
 		Context,
-		none,
 		MaterialContext,
 		CameraContext,
 		LightContext,

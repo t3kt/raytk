@@ -1,7 +1,8 @@
 from pathlib import Path
 from raytkDocs import OpDocManager
 from raytkModel import OpDefMeta_OLD, OpSpec_OLD
-from raytkUtil import RaytkContext, ROPInfo, focusCustomParameterPage, RaytkTags, CategoryInfo
+from raytkUtil import RaytkContext, ROPInfo, focusCustomParameterPage, RaytkTags, CategoryInfo, ContextTypes, \
+	CoordTypes, ReturnTypes
 from typing import Callable, List, Optional
 
 # noinspection PyUnreachableCode
@@ -259,6 +260,45 @@ class RaytkTools(RaytkContext):
 		for i, o in enumerate(comps):
 			o.nodeY = -int(i / 10) * 150
 			o.nodeX = int(i % 10) * 200
+
+	def updateContextTypeParMenu(self, ropInfo: 'Optional[ROPInfo]'):
+		self._updateTypeParMenu(ropInfo, 'Contexttype', ContextTypes.values)
+
+	def updateCoordTypeParMenu(self, ropInfo: 'Optional[ROPInfo]'):
+		self._updateTypeParMenu(ropInfo, 'Coordtype', CoordTypes.values)
+
+	def updateReturnTypeParMenu(self, ropInfo: 'Optional[ROPInfo]'):
+		self._updateTypeParMenu(ropInfo, 'Returntype', ReturnTypes.values)
+
+	@staticmethod
+	def _updateTypeParMenu(ropInfo: 'Optional[ROPInfo]', parName: str, values: List[str]):
+		if not ropInfo:
+			return
+		par = ropInfo.rop.par[parName]
+		if par is None:
+			ui.status = f'No {parName} to update on {ropInfo.rop}'
+			return
+		if par.menuSource:
+			ui.status = f'Skipping {parName} on {ropInfo.rop} since it is using menuSource'
+			return
+		defVal = par.default
+		shouldUpdateVal = par.mode == ParMode.CONSTANT and defVal != ''
+		hasUseInput = 'useinput' in par.menuNames
+		names = list(values)
+		labels = list(names)
+		if hasUseInput:
+			names = ['useinput'] + names
+			labels = ['Use Input'] + labels
+		if par.menuNames == names:
+			ui.status = f'{parName} on {ropInfo.rop} already up to date'
+			return
+		print(f'Updating {parName} on {ropInfo.rop} menu to :\n{names}')
+		par.menuNames = names
+		par.menuLabels = labels
+		par.default = defVal
+		if shouldUpdateVal:
+			par.val = defVal
+		ui.status = f'Updated {parName} on {ropInfo.rop}!'
 
 class ToolkitLoader(RaytkTools):
 	def __init__(self, log: 'Callable[[str], None]'):

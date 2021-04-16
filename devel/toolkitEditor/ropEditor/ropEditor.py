@@ -82,3 +82,12 @@ class ROPEditor:
 
 	def onKeyboardShortcut(self, shorcutName: str):
 		pass
+
+	def updateCoordTypeParMenu(self):
+		RaytkTools().updateCoordTypeParMenu(self.ROPInfo)
+
+	def updateContextTypeParMenu(self):
+		RaytkTools().updateContextTypeParMenu(self.ROPInfo)
+
+	def updateReturnTypeParMenu(self):
+		RaytkTools().updateReturnTypeParMenu(self.ROPInfo)
