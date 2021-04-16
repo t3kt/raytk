@@ -185,22 +185,85 @@ def buildParamTupletAliases(dat: 'DAT', paramTable: 'DAT'):
 				]))
 			])
 
-def substituteWords(dat: 'DAT'):
+# def substituteWords(dat: 'DAT'):
+# 	if not dat.inputs:
+# 		dat.text = ''
+# 		return
+# 	dat.copy(dat.inputs[0])
+# 	text = dat.text
+# 	for repls in dat.inputs[1:]:
+# 		if repls.numRows == 0 or repls.numCols < 2:
+# 			continue
+# 		if repls[0, 0] == 'before' and repls[0, 1] == 'after':
+# 			startRow = 1
+# 		else:
+# 			startRow = 0
+# 		for row in range(startRow, repls.numRows):
+# 			text = re.sub(r'\b' + repls[row, 0].val + r'\b', repls[row, 1].val, text)
+# 	dat.text = text
+
+_typeReplacements = {
+	re.compile(r'\bCoordT\b'): 'THIS_CoordT',
+	re.compile(r'\bContextT\b'): 'THIS_ContextT',
+	re.compile(r'\bReturnT\b'): 'THIS_ReturnT',
+}
+
+def _getReplacements(
+		inputTable: 'DAT',
+		materialTable: 'DAT',
+) -> 'Dict[str, str]':
+	name = parentPar().Name.eval()
+	repls = {
+		'thismap': name,
+		'THIS_': name + '_',
+	}
+	mat = materialTable[1, 'material']
+	if mat:
+		repls['THISMAT'] = str(mat)
+	for i in range(inputTable.numRows):
+		key = inputTable[i, 'inputFunc']
+		val = inputTable[i, 'name']
+		if val:
+			repls[str(key)] = str(val)
+	return repls
+
+def prepareCode(
+		dat: 'DAT',
+		inputTable: 'DAT',
+		materialTable: 'DAT',
+):
 	if not dat.inputs:
 		dat.text = ''
 		return
+	dat.clear()
+	repls = _getReplacements(inputTable, materialTable)
+	text = _prepareText(dat.inputs[0].text, repls)
+	dat.write(text)
+
+def prepareTable(
+		dat: 'DAT',
+		inputTable: 'DAT',
+		materialTable: 'DAT',
+):
 	dat.copy(dat.inputs[0])
-	text = dat.text
-	for repls in dat.inputs[1:]:
-		if repls.numRows == 0 or repls.numCols < 2:
-			continue
-		if repls[0, 0] == 'before' and repls[0, 1] == 'after':
-			startRow = 1
-		else:
-			startRow = 0
-		for row in range(startRow, repls.numRows):
-			text = re.sub(r'\b' + repls[row, 0].val + r'\b', repls[row, 1].val, text)
-	dat.text = text
+	if dat.numRows < 1:
+		return
+	repls = _getReplacements(inputTable, materialTable)
+	for row in dat.rows():
+		for cell in row:
+			cell.val = _prepareText(cell.val, repls)
+
+def _prepareText(
+		text: str,
+		repls: 'Dict[str, str]',
+) -> str:
+	if not text:
+		return ''
+	for find, repl in _typeReplacements.items():
+		text = find.sub(repl, text)
+	for find, repl in repls.items():
+		text = text.replace(find, repl)
+	return text
 
 def updateLibraryMenuPar(libsComp: 'COMP'):
 	p = parentPar().Librarynames  # type: Par
