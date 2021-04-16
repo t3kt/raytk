@@ -29,7 +29,11 @@ def buildName():
 		name = 'o_' + name
 	return 'RTK_' + name
 
-def evaluateTypeProperty(par: 'Par', fieldName: str, defVal: str):
+def evaluateTypeProperty(
+		par: 'Par',
+		fieldName: str,
+		fallbackPar: 'Par',
+):
 	if par != 'useinput':
 		return str(par)
 	inputDef = op('input_defs')
@@ -37,11 +41,11 @@ def evaluateTypeProperty(par: 'Par', fieldName: str, defVal: str):
 		val = inputDef[1, fieldName]
 		if val and val != 'useinput':
 			return str(val)
-	return defVal
+	return fallbackPar.eval()
 
 def buildInputTable(dat: 'DAT', inDats: 'List[DAT]'):
 	dat.clear()
-	dat.appendRow(['slot', 'inputFunc', 'name', 'path'])
+	dat.appendRow(['slot', 'inputFunc', 'name', 'path', 'coordType', 'contextType', 'returnType'])
 	for i, inDat in enumerate(inDats):
 		slot = f'inputName{i + 1}'
 		if inDat.numRows < 2 or not inDat[1, 'name'].val:
@@ -52,6 +56,9 @@ def buildInputTable(dat: 'DAT', inDats: 'List[DAT]'):
 				f'inputOp{i + 1}',
 				inDat[1, 'name'],
 				inDat[1, 'path'],
+				inDat[1, 'coordType'],
+				inDat[1, 'contextType'],
+				inDat[1, 'returnType'],
 			])
 
 def combineInputDefinitions(dat: 'DAT', inDats: 'List[DAT]'):
