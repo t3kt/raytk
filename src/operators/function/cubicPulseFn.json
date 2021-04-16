@@ -1,6 +1,6 @@
 {
   "meta": {
     "opType": "raytk.operators.function.cubicPulseFn",
-    "opVersion": 0
+    "opVersion": 1
   }
 }
