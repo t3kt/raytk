@@ -29,7 +29,7 @@ def buildName():
 		name = 'o_' + name
 	return 'RTK_' + name
 
-def evaluateTypeProperty(
+def _evalType(
 		par: 'Par',
 		fieldName: str,
 		fallbackPar: 'Par',
@@ -42,6 +42,18 @@ def evaluateTypeProperty(
 		if val and val != 'useinput':
 			return str(val)
 	return fallbackPar.eval()
+
+def buildTypeTable(dat: 'DAT'):
+	dat.clear()
+	p = parentPar()
+	coordType = _evalType(p.Coordtype, 'coordType', p.Fallbackcoordtype)
+	returnType = _evalType(p.Returntype, 'returnType', p.Fallbackreturntype)
+	contextType = _evalType(p.Contexttype, 'contextType', p.Fallbackcontexttype)
+	dat.appendRows([
+		['coordType', coordType],
+		['returnType', returnType],
+		['contextType', contextType],
+	])
 
 def buildInputTable(dat: 'DAT', inDats: 'List[DAT]'):
 	dat.clear()
@@ -185,23 +197,6 @@ def buildParamTupletAliases(dat: 'DAT', paramTable: 'DAT'):
 				]))
 			])
 
-# def substituteWords(dat: 'DAT'):
-# 	if not dat.inputs:
-# 		dat.text = ''
-# 		return
-# 	dat.copy(dat.inputs[0])
-# 	text = dat.text
-# 	for repls in dat.inputs[1:]:
-# 		if repls.numRows == 0 or repls.numCols < 2:
-# 			continue
-# 		if repls[0, 0] == 'before' and repls[0, 1] == 'after':
-# 			startRow = 1
-# 		else:
-# 			startRow = 0
-# 		for row in range(startRow, repls.numRows):
-# 			text = re.sub(r'\b' + repls[row, 0].val + r'\b', repls[row, 1].val, text)
-# 	dat.text = text
-
 _typeReplacements = {
 	re.compile(r'\bCoordT\b'): 'THIS_CoordT',
 	re.compile(r'\bContextT\b'): 'THIS_ContextT',
@@ -336,6 +331,35 @@ def prepareTextureTable(dat: 'scriptDAT'):
 				table[i, 'type' if useNames else 2] or '2d',
 			])
 		i += 1
+
+def prepareBufferTable(dat: 'scriptDAT'):
+	dat.clear()
+	table = parentPar().Buffertable.eval()
+	if not table:
+		return
+	namePrefix = parentPar().Name.eval() + '_'
+	for i in range(table.numRows):
+		name = table[i, 0]
+		path = table[i, 1]
+		if not name or not path:
+			continue
+		dataType = table[i, 1]
+		uniformType = table[i, 1]
+		dat.appendRow([
+			namePrefix + name,
+			path,
+			dataType or 'vec4',
+			uniformType or 'uniformarray',
+		])
+
+def prepareMaterialTable(dat: 'scriptDAT'):
+	dat.clear()
+	dat.appendRow(['material', 'materialCode'])
+	if parentPar().Materialcode:
+		dat.appendRow([
+			'MAT_' + parentPar().Name.eval(),
+			parent().path + '/materialCode',
+		])
 
 def _isMaster():
 	host = _host()
