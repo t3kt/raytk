@@ -782,16 +782,6 @@ class TypeTableHelper:
 	def __init__(self, table: 'DAT'):
 		self.table = table
 
-	def getTypeNamesAndLabels(self, filterColumn: str) -> 'Tuple[List[str], List[str]]':
-		names = []
-		labels = []
-		for row in range(1, self.table.numRows):
-			if self.table[row, filterColumn] != '1':
-				continue
-			names.append(self.table[row, 'name'].val)
-			labels.append(self.table[row, 'label'].val)
-		return names, labels
-
 	def _getTypeNames(self, filterColumn: str) -> 'List[str]':
 		return [
 			self.table[row, 'name'].val
