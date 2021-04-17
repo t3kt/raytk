@@ -1,2 +1,2 @@
 def onCook(dat):
-	mod.inputDefinitionHandler.buildSupportedTypeTable(dat)
+	mod.typeSpec.buildSupportedTypeTable(dat)

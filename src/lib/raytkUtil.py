@@ -792,56 +792,24 @@ class TypeTableHelper:
 			labels.append(self.table[row, 'label'].val)
 		return names, labels
 
+	def _getTypeNames(self, filterColumn: str) -> 'List[str]':
+		return [
+			self.table[row, 'name'].val
+			for row in range(1, self.table.numRows)
+			if self.table[row, filterColumn] == '1'
+		]
+
 	def isTypeAvailableForCategory(self, typeName: str, filterColumn: str):
 		return self.table[typeName, filterColumn] == '1'
 
-	def updateTypePar(
-			self,
-			par: 'Par',
-			filterColumn: str,
-			hasUseInput: Optional[bool] = None):
-		currentVal = par.eval()
-		if hasUseInput is None:
-			hasUseInput = 'useinput' in par.menuNames
-		names, labels = self.getTypeNamesAndLabels(filterColumn)
-		if hasUseInput:
-			names = ['useinput'] + names
-			labels = ['Use Input'] + labels
-		ui.undo.startBlock(f'Updating type parameter {par.owner} {par.name} hasUseInput: {hasUseInput}')
-		par.menuNames = names
-		par.menuLabels = labels
-		par.val = currentVal
-		ui.undo.endBlock()
-
-	def updateCoordTypePar(
-			self,
-			par: 'Par',
-			hasUseInput: Optional[bool] = None):
-		self.updateTypePar(par, 'isCoordType', hasUseInput=hasUseInput)
-
-	def updateContextTypePar(
-			self,
-			par: 'Par',
-			hasUseInput: Optional[bool] = None):
-		self.updateTypePar(par, 'isContextType', hasUseInput=hasUseInput)
-
-	def updateReturnTypePar(
-			self,
-			par: 'Par',
-			hasUseInput: Optional[bool] = None):
-		self.updateTypePar(par, 'isReturnType', hasUseInput=hasUseInput)
-
 	def coordTypes(self):
-		types, _ = self.getTypeNamesAndLabels('isCoordType')
-		return types
+		return self._getTypeNames('isCoordType')
 
 	def contextTypes(self):
-		types, _ = self.getTypeNamesAndLabels('isContextType')
-		return types
+		return self._getTypeNames('isContextType')
 
 	def returnTypes(self):
-		types, _ = self.getTypeNamesAndLabels('isReturnType')
-		return types
+		return self._getTypeNames('isReturnType')
 
 class RaytkContext:
 	"""

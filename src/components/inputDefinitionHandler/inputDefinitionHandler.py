@@ -45,12 +45,6 @@ def _handleChange():
 	if d:
 		d.cook(force=True)
 
-def updateTypeParMenus():
-	helper = TypeTableHelper(op('typeTable'))
-	helper.updateCoordTypePar(parent().par.Supportcoordtypes)
-	helper.updateReturnTypePar(parent().par.Supportreturntypes)
-	helper.updateContextTypePar(parent().par.Supportcontexttypes)
-
 def buildSupportedTypeTable(dat: 'DAT'):
 	dat.clear()
 	typeTable = op('typeTable')

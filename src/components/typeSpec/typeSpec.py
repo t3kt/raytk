@@ -7,12 +7,6 @@ if False:
 	# noinspection PyUnresolvedReferences
 	from _stubs import *
 
-def updateTypeParMenus():
-	helper = _typeHelper()
-	helper.updateCoordTypePar(parent().par.Supportcoordtypes)
-	helper.updateReturnTypePar(parent().par.Supportreturntypes)
-	helper.updateContextTypePar(parent().par.Supportcontexttypes)
-
 def _typeHelper():
 	return TypeTableHelper(op('typeTable'))
 
