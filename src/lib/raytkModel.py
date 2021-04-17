@@ -163,13 +163,13 @@ class FunctionSignature(_DataObject_OLD):
 
 	@classmethod
 	def extractFromHandler(cls, inputHandler: 'COMP'):
-		table = inputHandler.op('supported_type_table')
+		table = inputHandler.op('supportedTypes')
 		if not table:
 			return cls.all()
 		return cls(
-			coordType=TypeSpec.parse(str(table['coordType', 1] or '*')),
-			contextType=TypeSpec.parse(str(table['contextType', 1] or '*')),
-			returnType=TypeSpec.parse(str(table['returnType', 1] or '*')),
+			coordType=TypeSpec.parse(str(table['coordType', 'types'] or '*')),
+			contextType=TypeSpec.parse(str(table['contextType', 'types'] or '*')),
+			returnType=TypeSpec.parse(str(table['returnType', 'types'] or '*')),
 		)
 
 	def isSingle(self):

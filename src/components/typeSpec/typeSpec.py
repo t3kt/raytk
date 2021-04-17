@@ -6,31 +6,59 @@ if False:
 def _typeTable() -> 'DAT':
 	return op('typeTable')
 
-def _expandedTypes(
-		listParName: 'str',
-		toggleParPrefix: 'str',
-		filterColumn: 'str',
-):
-	val = parent().par[listParName].eval()
-	table = _typeTable()
-	allTypes = [
-		table[row, 'name'].val
-		for row in range(1, table.numRows)
-		if table[row, filterColumn] == '1'
-	]
-	if val == '*':
-		return allTypes
-	supported = tdu.split(val)
-	return [
-		t
-		for t in allTypes
-		if t in supported or parent().par[toggleParPrefix + t.lower()]
-	]
+class _Category:
+	name: str
+	togglePrefix: str
+	allToggle: str
+	useInputToggle: str
+	filterColumn: str
+
+	def __init__(self, name: str):
+		self.name = name
+		self.togglePrefix = name.capitalize()
+		self.allToggle = 'All' + name.lower()
+		self.useInputToggle = 'Useinput' + name.lower()
+		self.filterColumn = 'is' + name[0].upper() + name[1:]
+
+	def allTypes(self):
+		table = _typeTable()
+		return [
+			table[row, 'name'].val
+			for row in range(1, table.numRows)
+			if table[row, self.filterColumn] == '1'
+		]
+
+	def expandedTypes(self):
+		allTypes = self.allTypes()
+		if self.supportsAllTypes():
+			return allTypes
+		return [
+			t
+			for t in allTypes
+			if parent().par[self.togglePrefix + t.lower()]
+		]
+
+	def supportsAllTypes(self):
+		return parent().par[self.allToggle]
+
+	def useInputType(self):
+		return parent().par[self.useInputToggle]
+
+_categories = [
+	_Category('coordType'),
+	_Category('contextType'),
+	_Category('returnType'),
+]
 
 def buildSupportedTypeTable(dat: 'scriptDAT'):
 	dat.clear()
-	dat.appendRows([
-		['coordType', ' '.join(_expandedTypes('Supportcoordtypes', 'Supportcoordtype', 'isCoordType'))],
-		['contextType', ' '.join(_expandedTypes('Supportcontexttypes', 'Supportcontexttype', 'isContextType'))],
-		['returnType', ' '.join(_expandedTypes('Supportreturntypes', 'Supportreturntype', 'isReturnType'))],
-	])
+	dat.appendRow(['category', 'spec', 'types'])
+	for cat in _categories:
+		types = ' '.join(cat.expandedTypes())
+		if cat.supportsAllTypes():
+			spec = '*'
+		else:
+			spec = types
+		if cat.useInputType():
+			spec = 'useinput|' + spec
+		dat.appendRow([cat.name, spec, types])

@@ -1,5 +1,3 @@
-from raytkUtil import TypeTableHelper
-
 # noinspection PyUnreachableCode
 if False:
 	# noinspection PyUnresolvedReferences
@@ -20,10 +18,8 @@ def _checkType(typeName: str, typeCategory: str, onError: 'Optional[Callable[[st
 		if onError:
 			onError(f'Invalid input {typeCategory}: {typeName!r}')
 		return False
-	supported = tdu.split(parent().par['Support' + typeCategory.lower() + 's'] or '')
-	if '*' in supported or typeName in supported:
-		return True
-	if parent().par['Support' + typeCategory.lower() + typeName.lower()]:
+	supported = tdu.split(op('supportedTypes')[typeCategory, 'types'] or '')
+	if typeName in supported:
 		return True
 	if onError:
 		onError(f'Input does not support {typeCategory} {typeName}')
@@ -44,27 +40,6 @@ def _handleChange():
 	d = op('check_definition')
 	if d:
 		d.cook(force=True)
-
-def buildSupportedTypeTable(dat: 'DAT'):
-	dat.clear()
-	typeTable = op('typeTable')
-	helper = TypeTableHelper(typeTable)
-	allNames = [c.val for c in typeTable.col('name')[1:]]
-	for category, filterColumn in [
-		('coordType', 'isCoordType'),
-		('contextType', 'isContextType'),
-		('returnType', 'isReturnType'),
-	]:
-		dat.appendRow(
-			[
-				category,
-				' '.join(
-					[
-						name
-						for name in allNames
-						if helper.isTypeAvailableForCategory(name, filterColumn) and _checkType(name, category, onError=None, ignoreEmpty=True)
-					]),
-			])
 
 def buildValidationErrors(dat: 'DAT', inputDef: 'DAT'):
 	dat.clear()

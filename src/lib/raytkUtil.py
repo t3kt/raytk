@@ -418,22 +418,22 @@ class InputInfo:
 		return bool(self.handler and self.handler.par.Required)
 
 	def _supportedTypeTable(self) -> 'Optional[DAT]':
-		return self.handler and self.handler.op('./supported_type_table')
+		return self.handler and self.handler.op('./supportedTypes')
 
 	@property
 	def supportedCoordTypes(self):
 		table = self._supportedTypeTable()
-		return tdu.split(table['coordType', 1]) if table else []
+		return tdu.split(table['coordType', 'types']) if table else []
 
 	@property
 	def supportedContextTypes(self):
 		table = self._supportedTypeTable()
-		return tdu.split(table['contextType', 1]) if table else []
+		return tdu.split(table['contextType', 'types']) if table else []
 
 	@property
 	def supportedReturnTypes(self):
 		table = self._supportedTypeTable()
-		return tdu.split(table['returnType', 1]) if table else []
+		return tdu.split(table['returnType', 'types']) if table else []
 
 class CategoryInfo:
 	"""
