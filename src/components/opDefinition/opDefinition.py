@@ -29,30 +29,18 @@ def buildName():
 		name = 'o_' + name
 	return 'RTK_' + name
 
-def _evalType(
-		par: 'Par',
-		fieldName: str,
-		fallbackPar: 'Par',
-):
-	if par != 'useinput':
-		return str(par)
-	inputDef = op('input_defs')
-	if inputDef.numRows > 1:
-		val = inputDef[1, fieldName]
-		if val and val != 'useinput':
-			return str(val)
-	return fallbackPar.eval()
+def _evalType(category: str, supportedTypes: 'DAT', inputDefs: 'DAT'):
+	spec = supportedTypes[category, 'spec'].val
+	if spec.startswith('useinput') and inputDefs.numRows > 1:
+		return inputDefs[1, category].val
+	return supportedTypes[category, 'types'].val
 
-def buildTypeTable(dat: 'DAT'):
+def buildTypeTable(dat: 'scriptDAT', supportedTypes: 'DAT', inputDefs: 'DAT'):
 	dat.clear()
-	p = parentPar()
-	coordType = _evalType(p.Coordtype, 'coordType', p.Fallbackcoordtype)
-	returnType = _evalType(p.Returntype, 'returnType', p.Fallbackreturntype)
-	contextType = _evalType(p.Contexttype, 'contextType', p.Fallbackcontexttype)
 	dat.appendRows([
-		['coordType', coordType],
-		['returnType', returnType],
-		['contextType', contextType],
+		['coordType', _evalType('coordType', supportedTypes, inputDefs)],
+		['returnType', _evalType('returnType', supportedTypes, inputDefs)],
+		['contextType', _evalType('contextType', supportedTypes, inputDefs)],
 	])
 
 def buildInputTable(dat: 'DAT', inDats: 'List[DAT]'):
