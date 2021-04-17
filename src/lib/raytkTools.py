@@ -1,7 +1,7 @@
 from pathlib import Path
 from raytkDocs import OpDocManager
 from raytkModel import OpDefMeta_OLD, OpSpec_OLD
-from raytkUtil import RaytkContext, ROPInfo, focusCustomParameterPage, RaytkTags, CategoryInfo, ContextTypes, \
+from raytkUtil import RaytkContext, ROPInfo, focusFirstCustomParameterPage, RaytkTags, CategoryInfo, ContextTypes, \
 	CoordTypes, ReturnTypes
 from typing import Callable, List, Optional
 
@@ -98,7 +98,7 @@ class RaytkTools(RaytkContext):
 		self.updateROPParams(rop)
 		self.saveROPSpec(rop)
 		OpDocManager(info).pushToParamsAndInputs()
-		focusCustomParameterPage(rop, 0)
+		focusFirstCustomParameterPage(rop)
 		tox = info.toxFile
 		rop.save(tox)
 		ui.status = f'Saved TOX {tox} (version: {info.opVersion})'

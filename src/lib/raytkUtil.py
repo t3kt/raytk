@@ -989,24 +989,9 @@ def _longestCommonPrefix(strs):
 	else:
 		return min(strs)
 
-# see https://forum.derivative.ca/t/active-current-page-of-parameter-comp-as-a-chop-value/10458
-def focusCustomParameterPage(o: 'COMP', page: 'Union[str, int, Page]'):
-	if not o or not o.customPages:
-		return
-	customIndex = None
-	if isinstance(page, int):
-		customIndex = page
-	elif isinstance(page, str):
-		for pg in o.customPages:
-			if pg.name == page:
-				customIndex = pg.index
-				break
-	elif isinstance(page, Page):
-		customIndex = page.index
-	if customIndex is not None:
-		customIndex += len(o.pages)
-		o.par.stdswitcher1 = customIndex
-		o.cook(force=True)
+def focusFirstCustomParameterPage(o: 'COMP'):
+	if o and o.customPages:
+		o.par.pageindex = len(o.pages)
 
 def detachTox(comp: 'COMP'):
 	if not comp or comp.par['externaltox'] is None:

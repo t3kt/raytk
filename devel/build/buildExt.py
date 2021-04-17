@@ -1,5 +1,5 @@
 from raytkTools import RaytkTools
-from raytkUtil import RaytkTags, navigateTo, focusCustomParameterPage, CategoryInfo, RaytkContext, IconColors, isROP
+from raytkUtil import RaytkTags, navigateTo, focusFirstCustomParameterPage, CategoryInfo, RaytkContext, IconColors, isROP
 from raytkBuild import BuildContext, DocProcessor
 from typing import Callable, List, Optional, Union
 
@@ -105,7 +105,7 @@ class BuildManager:
 		toolkit.par.reloadtoxonstart = True
 		toolkit.par.reloadcustom = True
 		toolkit.par.reloadbuiltin = True
-		focusCustomParameterPage(toolkit, 'RayTK')
+		focusFirstCustomParameterPage(toolkit)
 
 	def updateLibraryImage(self, toolkit: 'COMP', thenRun: str = None, runArgs: list = None):
 		self.log('Updating library image')
