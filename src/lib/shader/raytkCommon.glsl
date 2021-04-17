@@ -152,6 +152,7 @@ void blendInSdf(inout Sdf res1, in Sdf res2, in float amt) {
 
 Sdf mixVals(in Sdf res1, in Sdf res2, float amt) {
 	blendInSdf(res1, res2, amt);
+	res1.x = mix(res1.x, res2.x, amt);
 	return res1;
 }
 
