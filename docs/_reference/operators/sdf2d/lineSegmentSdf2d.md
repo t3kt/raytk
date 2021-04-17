@@ -16,7 +16,6 @@ op:
     instead.'
   inputs:
   - contextTypes:
-    - none
     - Context
     - MaterialContext
     - CameraContext

@@ -18,7 +18,6 @@ op:
     SDF result.'
   inputs:
   - contextTypes:
-    - none
     - Context
     - MaterialContext
     - CameraContext
@@ -39,7 +38,6 @@ op:
     - Light
     summary: The field or SDF whose results will be reshaped.
   - contextTypes:
-    - none
     - Context
     - MaterialContext
     - CameraContext

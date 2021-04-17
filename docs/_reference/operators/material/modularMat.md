@@ -27,7 +27,6 @@ op:
     returnTypes:
     - Sdf
   - contextTypes:
-    - Context
     - MaterialContext
     coordTypes:
     - vec3
@@ -38,7 +37,6 @@ op:
     - vec4
     summary: First shading element.
   - contextTypes:
-    - Context
     - MaterialContext
     coordTypes:
     - vec3
@@ -49,7 +47,6 @@ op:
     - vec4
     summary: Second shading element.
   - contextTypes:
-    - Context
     - MaterialContext
     coordTypes:
     - vec3

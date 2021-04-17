@@ -14,7 +14,6 @@ op:
     output.'
   inputs:
   - contextTypes:
-    - none
     - Context
     - MaterialContext
     - CameraContext

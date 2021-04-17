@@ -10,7 +10,6 @@ op:
   category: function
   inputs:
   - contextTypes:
-    - none
     - Context
     - MaterialContext
     - CameraContext

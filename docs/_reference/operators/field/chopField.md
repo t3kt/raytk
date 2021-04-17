@@ -10,7 +10,6 @@ op:
   category: field
   inputs:
   - contextTypes:
-    - none
     - Context
     - MaterialContext
     - CameraContext

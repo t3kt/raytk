@@ -10,7 +10,6 @@ op:
   category: filter
   inputs:
   - contextTypes:
-    - none
     - Context
     - MaterialContext
     - CameraContext
@@ -29,7 +28,6 @@ op:
     - Ray
     - Light
   - contextTypes:
-    - none
     - Context
     - MaterialContext
     - CameraContext
@@ -48,7 +46,6 @@ op:
     - Ray
     - Light
   - contextTypes:
-    - none
     - Context
     - MaterialContext
     - CameraContext
@@ -67,7 +64,6 @@ op:
     - Ray
     - Light
   - contextTypes:
-    - none
     - Context
     - MaterialContext
     - CameraContext

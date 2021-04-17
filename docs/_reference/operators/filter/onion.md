@@ -21,7 +21,6 @@ op:
     See https://www.shadertoy.com/view/MlcBDj'
   inputs:
   - contextTypes:
-    - none
     - Context
     - MaterialContext
     - CameraContext

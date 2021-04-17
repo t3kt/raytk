@@ -12,7 +12,6 @@ op:
     intersections.
   inputs:
   - contextTypes:
-    - none
     - Context
     - MaterialContext
     - CameraContext
@@ -30,7 +29,6 @@ op:
     - Sdf
     summary: The first SDF to combine.
   - contextTypes:
-    - none
     - Context
     - MaterialContext
     - CameraContext
@@ -48,7 +46,6 @@ op:
     - Sdf
     summary: The second SDF to combine.
   - contextTypes:
-    - none
     - Context
     - MaterialContext
     - CameraContext

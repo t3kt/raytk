@@ -11,7 +11,6 @@ op:
   detail: Based on [Spiral Tiling](https://www.shadertoy.com/view/ls2GRz) by Knightly.
   inputs:
   - contextTypes:
-    - none
     - Context
     - MaterialContext
     - CameraContext

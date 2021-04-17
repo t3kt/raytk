@@ -11,7 +11,6 @@ op:
   detail: Texture is centered at 0,0 with coordinates from -0.5 to 0.5.
   inputs:
   - contextTypes:
-    - none
     - Context
     - MaterialContext
     - CameraContext

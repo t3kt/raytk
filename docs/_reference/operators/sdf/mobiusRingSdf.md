@@ -10,7 +10,6 @@ op:
   category: sdf
   inputs:
   - contextTypes:
-    - none
     - Context
     - MaterialContext
     - CameraContext

@@ -15,7 +15,6 @@ op:
     the selected axis.'
   inputs:
   - contextTypes:
-    - none
     - Context
     - MaterialContext
     - CameraContext
@@ -34,7 +33,6 @@ op:
       passes to the wave function (instead of using the position along the chosen
       `Axis`).
   - contextTypes:
-    - none
     - Context
     - MaterialContext
     - CameraContext

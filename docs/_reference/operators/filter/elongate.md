@@ -22,7 +22,6 @@ op:
     * `Size` - The distance that that parts are pushed apart from the origin.'
   inputs:
   - contextTypes:
-    - none
     - Context
     - MaterialContext
     - CameraContext

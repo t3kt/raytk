@@ -10,7 +10,6 @@ op:
   category: time
   inputs:
   - contextTypes:
-    - none
     - Context
     - MaterialContext
     - CameraContext

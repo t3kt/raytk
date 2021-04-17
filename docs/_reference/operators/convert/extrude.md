@@ -10,7 +10,6 @@ op:
   category: convert
   inputs:
   - contextTypes:
-    - none
     - Context
     - MaterialContext
     - CameraContext

@@ -53,7 +53,6 @@ op:
     \ those parts (e.g. `THIS_Size` could be a `vec3`)."
   inputs:
   - contextTypes:
-    - none
     - Context
     - MaterialContext
     - CameraContext
@@ -72,7 +71,6 @@ op:
     - Ray
     - Light
   - contextTypes:
-    - none
     - Context
     - MaterialContext
     - CameraContext
@@ -91,7 +89,6 @@ op:
     - Ray
     - Light
   - contextTypes:
-    - none
     - Context
     - MaterialContext
     - CameraContext
@@ -110,7 +107,6 @@ op:
     - Ray
     - Light
   - contextTypes:
-    - none
     - Context
     - MaterialContext
     - CameraContext

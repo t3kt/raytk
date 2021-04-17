@@ -12,7 +12,6 @@ op:
     features.
   inputs:
   - contextTypes:
-    - none
     - Context
     coordTypes:
     - vec3

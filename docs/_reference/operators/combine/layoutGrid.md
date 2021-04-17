@@ -13,7 +13,6 @@ op:
     The input shapes are shifted to the center of their cell.'
   inputs:
   - contextTypes:
-    - none
     - Context
     - MaterialContext
     - CameraContext
@@ -27,7 +26,6 @@ op:
     - float
     - Sdf
   - contextTypes:
-    - none
     - Context
     - MaterialContext
     - CameraContext
@@ -41,7 +39,6 @@ op:
     - float
     - Sdf
   - contextTypes:
-    - none
     - Context
     - MaterialContext
     - CameraContext
@@ -55,7 +52,6 @@ op:
     - float
     - Sdf
   - contextTypes:
-    - none
     - Context
     - MaterialContext
     - CameraContext

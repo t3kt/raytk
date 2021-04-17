@@ -10,7 +10,6 @@ op:
   category: convert
   inputs:
   - contextTypes:
-    - none
     - Context
     - MaterialContext
     - CameraContext
@@ -25,7 +24,6 @@ op:
     returnTypes:
     - float
   - contextTypes:
-    - none
     - Context
     - MaterialContext
     - CameraContext
@@ -40,7 +38,6 @@ op:
     returnTypes:
     - float
   - contextTypes:
-    - none
     - Context
     - MaterialContext
     - CameraContext
@@ -55,7 +52,6 @@ op:
     returnTypes:
     - float
   - contextTypes:
-    - none
     - Context
     - MaterialContext
     - CameraContext

@@ -42,8 +42,6 @@ op:
     - vec3
     label: Ray Modifier
     name: rayModifier_definition_in
-    returnTypes:
-    - Ray
     summary: Advanced feature, not ready for use.
   - contextTypes:
     - MaterialContext

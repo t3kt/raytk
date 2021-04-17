@@ -12,7 +12,6 @@ op:
     (or vice versa).
   inputs:
   - contextTypes:
-    - none
     - Context
     - MaterialContext
     - CameraContext
@@ -29,7 +28,6 @@ op:
     summary: The first SDF, which has the second removed from it (unless `Swaporder`
       is used).
   - contextTypes:
-    - none
     - Context
     - MaterialContext
     - CameraContext

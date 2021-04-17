@@ -57,7 +57,6 @@ op:
     summary: Optional float value field to use instead of the iteration value. It
       is passed the current coordinates.
   - contextTypes:
-    - none
     - Context
     - MaterialContext
     - CameraContext

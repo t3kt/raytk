@@ -27,7 +27,6 @@ op:
     is complex or costly.'
   inputs:
   - contextTypes:
-    - none
     - Context
     - MaterialContext
     - CameraContext

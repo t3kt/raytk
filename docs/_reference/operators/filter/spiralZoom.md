@@ -31,7 +31,6 @@ op:
     X and the second is always Y.'
   inputs:
   - contextTypes:
-    - none
     - Context
     - MaterialContext
     - CameraContext

@@ -15,7 +15,6 @@ op:
     point with a radius, and a blending region.'
   inputs:
   - contextTypes:
-    - none
     - Context
     - MaterialContext
     - CameraContext
@@ -34,7 +33,6 @@ op:
     - Ray
     - Light
   - contextTypes:
-    - none
     - Context
     - MaterialContext
     - CameraContext
@@ -55,7 +53,6 @@ op:
       a vec4, it is used to determine where the magnet center position is relative
       to each point.
   - contextTypes:
-    - none
     - Context
     - MaterialContext
     - CameraContext

@@ -15,7 +15,6 @@ op:
     operators, by applying the extend mode to each part of the coordinates.'
   inputs:
   - contextTypes:
-    - none
     - Context
     - MaterialContext
     - CameraContext

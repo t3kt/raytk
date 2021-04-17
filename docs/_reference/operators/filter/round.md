@@ -14,7 +14,6 @@ op:
     See [example](https://www.shadertoy.com/view/Mt3BDj).'
   inputs:
   - contextTypes:
-    - none
     - Context
     - MaterialContext
     - CameraContext
@@ -32,7 +31,6 @@ op:
     - vec4
     - Sdf
   - contextTypes:
-    - none
     - Context
     - MaterialContext
     - CameraContext

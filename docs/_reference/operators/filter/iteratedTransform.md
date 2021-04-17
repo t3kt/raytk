@@ -12,7 +12,6 @@ op:
     systems).
   inputs:
   - contextTypes:
-    - none
     - Context
     - MaterialContext
     - CameraContext

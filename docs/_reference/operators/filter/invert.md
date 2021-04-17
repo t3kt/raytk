@@ -12,7 +12,6 @@ op:
     the space outside the room.
   inputs:
   - contextTypes:
-    - none
     - Context
     - MaterialContext
     - CameraContext
