@@ -67,16 +67,16 @@ op:
     summary: The type of coordinates that the op supports.
   - label: Context Type
     menuOptions:
-    - label: None
-      name: none
     - label: Context
       name: Context
-    - label: Material Context
+    - label: MaterialContext
       name: MaterialContext
-    - label: Camera Context
+    - label: CameraContext
       name: CameraContext
-    - label: Light Context
+    - label: LightContext
       name: LightContext
+    - label: RayContext
+      name: RayContext
     name: Contexttype
   - label: Axis
     menuOptions:

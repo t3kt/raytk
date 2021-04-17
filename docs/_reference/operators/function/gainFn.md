@@ -20,16 +20,16 @@ op:
     name: Exponent
   - label: Context Type
     menuOptions:
-    - label: None
-      name: none
     - label: Context
       name: Context
-    - label: Material Context
+    - label: MaterialContext
       name: MaterialContext
-    - label: Camera Context
+    - label: CameraContext
       name: CameraContext
-    - label: Light Context
+    - label: LightContext
       name: LightContext
+    - label: RayContext
+      name: RayContext
     name: Contexttype
   summary: A function that expands the sides of the coordinate range and compresses
     the center.

@@ -47,8 +47,6 @@ op:
     name: Returntype
   - label: Context Type
     menuOptions:
-    - label: None
-      name: none
     - label: Context
       name: Context
     - label: Material Context
@@ -57,6 +55,8 @@ op:
       name: CameraContext
     - label: Light Context
       name: LightContext
+    - label: Ray Context
+      name: RayContext
     name: Contexttype
   - label: Axis
     menuOptions:

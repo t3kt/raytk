@@ -38,17 +38,15 @@ op:
     summary: Controls the shape of the ball by applying exponential scaling to coordinates.
   - label: Context Type
     menuOptions:
-    - label: None
-      name: none
     - label: Context
       name: Context
-    - label: Material Context
+    - label: MaterialContext
       name: MaterialContext
-    - label: Camera Context
+    - label: CameraContext
       name: CameraContext
-    - label: Light Context
+    - label: LightContext
       name: LightContext
-    - label: Ray Context
+    - label: RayContext
       name: RayContext
     name: Contexttype
   summary: Metaball value field.

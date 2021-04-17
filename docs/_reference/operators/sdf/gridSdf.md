@@ -54,8 +54,6 @@ op:
     summary: the thickness of the bars.
   - label: Context Type
     menuOptions:
-    - label: None
-      name: none
     - label: Context
       name: Context
     - label: Material Context
@@ -64,6 +62,8 @@ op:
       name: CameraContext
     - label: Light Context
       name: LightContext
+    - label: Ray Context
+      name: RayContext
     name: Contexttype
     summary: advanced parameter that should usually just be set to `Context`
   - label: Pattern

@@ -143,23 +143,23 @@ op:
     menuOptions:
     - label: Use Input
       name: useinput
-    - label: 1D
+    - label: float
       name: float
-    - label: 3D
-      name: vec3
-    - label: 2D
+    - label: vec2
       name: vec2
+    - label: vec3
+      name: vec3
     name: Coordtype
   - label: Return Type
     menuOptions:
     - label: Use Input
       name: useinput
-    - label: SDF Result
+    - label: Sdf
       name: Sdf
-    - label: Float
-      name: float
-    - label: Vector4
+    - label: vec4
       name: vec4
+    - label: float
+      name: float
     - label: Ray
       name: Ray
     - label: Light
@@ -169,17 +169,15 @@ op:
     menuOptions:
     - label: Use Input
       name: useinput
-    - label: None
-      name: none
     - label: Context
       name: Context
-    - label: Material Context
+    - label: MaterialContext
       name: MaterialContext
-    - label: Camera Context
+    - label: CameraContext
       name: CameraContext
-    - label: Light Context
+    - label: LightContext
       name: LightContext
-    - label: Ray Context
+    - label: RayContext
       name: RayContext
     name: Contexttype
   status: beta

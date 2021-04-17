@@ -110,16 +110,16 @@ op:
     menuOptions:
     - label: Use Input
       name: useinput
-    - label: None
-      name: none
     - label: Context
       name: Context
-    - label: Material Context
+    - label: MaterialContext
       name: MaterialContext
-    - label: Camera Context
+    - label: CameraContext
       name: CameraContext
-    - label: Light Context
+    - label: LightContext
       name: LightContext
+    - label: RayContext
+      name: RayContext
     name: Contexttype
   summary: A field that uses a periodic wave.
 

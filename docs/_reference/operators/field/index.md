@@ -34,6 +34,8 @@ cat:
       OP.
   - name: curlNoiseField
     summary: Curl noise field.
+  - name: hsvColorField
+    status: beta
   - name: iterationField
     summary: Field that returns the current iteration, from a downstream OP.
   - name: metaballField

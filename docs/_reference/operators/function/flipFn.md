@@ -22,6 +22,7 @@ op:
     - vec3
     label: definition_in
     name: definition_in
+    required: true
     returnTypes:
     - float
     - vec4
@@ -55,14 +56,12 @@ op:
     summary: The type of flipping to apply.
   - label: Return Type
     menuOptions:
-    - label: Use Input
-      name: useinput
-    - label: SDF Result
+    - label: Sdf
       name: Sdf
-    - label: Float
-      name: float
-    - label: Vector4
+    - label: vec4
       name: vec4
+    - label: float
+      name: float
     - label: Ray
       name: Ray
     - label: Light
@@ -70,16 +69,16 @@ op:
     name: Returntype
   - label: Context Type
     menuOptions:
-    - label: None
-      name: none
     - label: Context
       name: Context
-    - label: Material Context
+    - label: MaterialContext
       name: MaterialContext
-    - label: Camera Context
+    - label: CameraContext
       name: CameraContext
-    - label: Light Context
+    - label: LightContext
       name: LightContext
+    - label: RayContext
+      name: RayContext
     name: Contexttype
   summary: Function that flips its input in one of several different modes.
 

@@ -34,10 +34,6 @@ op:
     name: Coordtype
   - label: Context Type
     menuOptions:
-    - label: Use Input
-      name: useinput
-    - label: None
-      name: none
     - label: Context
       name: Context
     - label: Material Context
@@ -46,6 +42,8 @@ op:
       name: CameraContext
     - label: Light Context
       name: LightContext
+    - label: Ray Context
+      name: RayContext
     name: Contexttype
   summary: A float field that provides the distance from a specific point along a
     single axis.

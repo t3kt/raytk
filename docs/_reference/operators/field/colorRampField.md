@@ -52,8 +52,6 @@ op:
     menuOptions:
     - label: Use Input
       name: useinput
-    - label: None
-      name: none
     - label: Context
       name: Context
     - label: Material Context
