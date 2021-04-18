@@ -7,10 +7,5 @@ This is based on Inigo Quilez's [article](https://iquilezles.org/www/articles/fu
 ## Parameters
 
 * `Contexttype`
-  * `none`
-  * `Context`
-  * `MaterialContext`
-  * `CameraContext`
-  * `LightContext`
 * `Threshold`: The value above which things will be unchanged.
 * `Basevalue`: The constant value to use when the input is zero.
