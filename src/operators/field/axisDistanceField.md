@@ -11,10 +11,3 @@ A float field that provides the distance from a specific point along a single ax
   * `float`
   * `vec2`
   * `vec3`
-* `Contexttype`
-  * `useinput`
-  * `none`
-  * `Context`
-  * `MaterialContext`
-  * `CameraContext`
-  * `LightContext`
