@@ -84,9 +84,9 @@ def combineInputDefinitions(dat: 'DAT', inDats: 'List[DAT]'):
 			insertRow += 1
 
 def processInputDefinitionTypes(dat: 'scriptDAT', supportedTypeTable: 'DAT'):
-	# _processInputDefTypeCategory(dat, supportedTypeTable, 'coordType')
+	_processInputDefTypeCategory(dat, supportedTypeTable, 'coordType')
 	_processInputDefTypeCategory(dat, supportedTypeTable, 'contextType')
-	# _processInputDefTypeCategory(dat, supportedTypeTable, 'returnType')
+	_processInputDefTypeCategory(dat, supportedTypeTable, 'returnType')
 
 def _processInputDefTypeCategory(dat: 'scriptDAT', supportedTypeTable: 'DAT', category: 'str'):
 	supported = supportedTypeTable[category, 'types'].val.split(' ')
@@ -95,6 +95,7 @@ def _processInputDefTypeCategory(dat: 'scriptDAT', supportedTypeTable: 'DAT', ca
 		return
 	errors = []
 	ownName = parentPar().Name.eval()
+	# TODO: consolidate this and the typeRestrictor
 	for cell in cells[1:]:
 		inputName = dat[cell.row, 'name']
 		inputTypes = cell.val.split(' ')

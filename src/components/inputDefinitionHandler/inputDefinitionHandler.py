@@ -11,6 +11,15 @@ def checkInputDefinition(dat: 'DAT'):
 		return
 	_checkTableTypes(dat, None, ignoreEmpty=False)
 
+def processInputDefinition(dat: 'DAT'):
+	dat.clear()
+	dat.copy(dat.inputs[0])
+	if dat.numRows < 2:
+		return
+	if not _checkTableTypes(dat, None, ignoreEmpty=False):
+		return
+	# TODO: RESTRICT TYPES
+
 def _checkType(typeName: str, typeCategory: str, onError: 'Optional[Callable[[str], None]]', ignoreEmpty: bool):
 	if not typeName:
 		if ignoreEmpty:
@@ -19,16 +28,21 @@ def _checkType(typeName: str, typeCategory: str, onError: 'Optional[Callable[[st
 			onError(f'Invalid input {typeCategory}: {typeName!r}')
 		return False
 	supported = tdu.split(op('supportedTypes')[typeCategory, 'types'] or '')
-	if typeName in supported:
-		return True
+	if ' ' in typeName:
+		if any(t in supported for t in typeName.split(' ')):
+			return True
+	else:
+		if typeName in supported:
+			return True
 	if onError:
 		onError(f'Input does not support {typeCategory} {typeName}')
 	return False
 
 def _checkTableTypes(dat: 'DAT', onError: 'Optional[Callable[[str], None]]', ignoreEmpty: bool):
-	_checkType(str(dat[1, 'coordType'] or ''), 'coordType', onError, ignoreEmpty)
-	_checkType(str(dat[1, 'contextType'] or ''), 'contextType', onError, ignoreEmpty)
-	_checkType(str(dat[1, 'returnType'] or ''), 'returnType', onError, ignoreEmpty)
+	validCoord = _checkType(str(dat[1, 'coordType'] or ''), 'coordType', onError, ignoreEmpty)
+	validContext = _checkType(str(dat[1, 'contextType'] or ''), 'contextType', onError, ignoreEmpty)
+	validReturn = _checkType(str(dat[1, 'returnType'] or ''), 'returnType', onError, ignoreEmpty)
+	return validCoord and validContext and validReturn
 
 def onSupportChange():
 	_handleChange()
