@@ -211,6 +211,11 @@ class ShaderBuilder:
 		defsTable = self.definitionTable()
 		typedefs = []
 		macros = []
+		coordTypeAdaptFuncs = {
+			'float': 'adaptAsFloat',
+			'vec2': 'adaptAsVec2',
+			'vec3': 'adaptAsVec3',
+		}
 		for row in range(1, defsTable.numRows):
 			name = str(defsTable[row, 'name'])
 			coordType = str(defsTable[row, 'coordType'])
@@ -225,6 +230,7 @@ class ShaderBuilder:
 				f'#define {name}_COORD_TYPE_{coordType}',
 				f'#define {name}_CONTEXT_TYPE_{contextType}',
 				f'#define {name}_RETURN_TYPE_{returnType}',
+				f'#define {name}_asCoordT {coordTypeAdaptFuncs[coordType]}',
 			]
 		if typedefs:
 			lines = typedefs + [''] + macros
