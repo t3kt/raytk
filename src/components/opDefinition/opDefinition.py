@@ -83,6 +83,30 @@ def combineInputDefinitions(dat: 'DAT', inDats: 'List[DAT]'):
 			dat.appendRow(cells, insertRow)
 			insertRow += 1
 
+def processInputDefinitionTypes(dat: 'scriptDAT', supportedTypeTable: 'DAT'):
+	# _processInputDefTypeCategory(dat, supportedTypeTable, 'coordType')
+	_processInputDefTypeCategory(dat, supportedTypeTable, 'contextType')
+	# _processInputDefTypeCategory(dat, supportedTypeTable, 'returnType')
+
+def _processInputDefTypeCategory(dat: 'scriptDAT', supportedTypeTable: 'DAT', category: 'str'):
+	supported = supportedTypeTable[category, 'types'].val.split(' ')
+	cells = dat.col(category)
+	if not cells:
+		return
+	errors = []
+	ownName = parentPar().Name.eval()
+	for cell in cells[1:]:
+		inputName = dat[cell.row, 'name']
+		inputTypes = cell.val.split(' ')
+		supportedInputTypes = [t for t in inputTypes if t in supported]
+		if not supportedInputTypes:
+			errors.append(f'No supported {category} for {inputName} ({" ".join(inputTypes)}')
+		elif len(supportedInputTypes) == 1:
+			cell.val = supportedInputTypes[0]
+		else:
+			# cell.val = ' '.join(supportedInputTypes)
+			cell.val = '@' + ownName
+
 def _getParamsOp() -> 'Optional[COMP]':
 	return parentPar().Paramsop.eval() or _host()
 
