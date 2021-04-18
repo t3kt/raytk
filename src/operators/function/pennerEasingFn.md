@@ -38,9 +38,3 @@ See [easings.net](https://easings.net/) for a useful reference.
   * `sineInOut`
   * `sineIn`
   * `sineOut`
-* `Contexttype`
-  * `none`
-  * `Context`
-  * `MaterialContext`
-  * `CameraContext`
-  * `LightContext`
