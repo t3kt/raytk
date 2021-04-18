@@ -45,6 +45,29 @@ class ShaderBuilder:
 				return o.par
 		return self.ownerComp.par
 
+	def preprocessDefinitions(self, dat: 'scriptDAT'):
+		if dat.numRows < 2:
+			return
+		# BEFORE definitions are reversed, so a def's inputs are always BELOW it in the table
+		self._resolveDefinitionTypes(dat)
+
+	def _resolveDefinitionTypes(self, dat: 'scriptDAT'):
+		self._resolveDefTypeCategory(dat, 'coordType')
+		self._resolveDefTypeCategory(dat, 'contextType')
+		self._resolveDefTypeCategory(dat, 'returnType')
+
+	@staticmethod
+	def _resolveDefTypeCategory(dat: 'scriptDAT', column: str):
+		typesByName = {}  # type: Dict[str, str]
+		for cell in dat.col(column)[1:]:
+			name = dat[cell.row, 'name'].val
+			if cell.val.startswith('@'):
+				refName = cell.val.replace('@', '', 1)
+				if refName not in typesByName:
+					raise Exception(f'Type resolution error for {name}: {cell.val!r}')
+				cell.val = typesByName[refName]
+			typesByName[name] = cell.val
+
 	def definitionTable(self) -> 'DAT':
 		# in reverse order (aka declaration order)
 		return self.ownerComp.op('definitions')
