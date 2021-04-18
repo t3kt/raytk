@@ -11,6 +11,7 @@ class _Category:
 	togglePrefix: str
 	allToggle: str
 	useInputToggle: str
+	fallbackPar: str
 	filterColumn: str
 
 	def __init__(self, name: str):
@@ -18,6 +19,7 @@ class _Category:
 		self.togglePrefix = name.capitalize()
 		self.allToggle = 'All' + name.lower()
 		self.useInputToggle = 'Useinput' + name.lower()
+		self.fallbackPar = 'Fallback' + name.lower()
 		self.filterColumn = 'is' + name[0].upper() + name[1:]
 
 	def allTypes(self):
@@ -44,6 +46,9 @@ class _Category:
 	def useInputType(self):
 		return parent().par[self.useInputToggle]
 
+	def fallbackType(self):
+		return parent().par[self.fallbackPar].eval()
+
 _categories = [
 	_Category('coordType'),
 	_Category('contextType'),
@@ -54,11 +59,15 @@ def buildSupportedTypeTable(dat: 'scriptDAT'):
 	dat.clear()
 	dat.appendRow(['category', 'spec', 'types'])
 	for cat in _categories:
-		types = ' '.join(cat.expandedTypes())
+		types = cat.expandedTypes()
 		if cat.supportsAllTypes():
 			spec = '*'
 		else:
-			spec = types
+			spec = ' '.join(types)
 		if cat.useInputType():
-			spec = 'useinput|' + spec
-		dat.appendRow([cat.name, spec, types])
+			spec = f'useinput|{cat.fallbackType()}:{spec}'
+		dat.appendRow([
+			cat.name,
+			spec,
+			' '.join(types),
+		])

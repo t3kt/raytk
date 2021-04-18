@@ -31,8 +31,12 @@ def buildName():
 
 def _evalType(category: str, supportedTypes: 'DAT', inputDefs: 'DAT'):
 	spec = supportedTypes[category, 'spec'].val
-	if spec.startswith('useinput') and inputDefs.numRows > 1:
-		return inputDefs[1, category].val
+	if spec.startswith('useinput|'):
+		spec = spec.replace('useinput|', '')
+		fallback, spec = spec.split(':')
+		if inputDefs.numRows > 1:
+			return inputDefs[1, category].val
+		return fallback
 	return supportedTypes[category, 'types'].val
 
 def buildTypeTable(dat: 'scriptDAT', supportedTypes: 'DAT', inputDefs: 'DAT'):
