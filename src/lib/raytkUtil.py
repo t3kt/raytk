@@ -93,6 +93,10 @@ class OpDefParsT(_OpMetaPars):
 	Coordtype: 'StrParamT'
 	Returntype: 'StrParamT'
 	Contexttype: 'StrParamT'
+	Fallbackcoordtype: 'StrParamT'
+	Fallbackreturntype: 'StrParamT'
+	Fallbackcontexttype: 'StrParamT'
+	Typespec: 'CompParamT'
 
 class ROPInfo:
 	"""
@@ -249,6 +253,18 @@ class ROPInfo:
 		if not t:
 			return None
 		return t.rsplit('.', 1)[-1]
+
+	@property
+	def typeSpec(self) -> 'Optional[COMP]':
+		if not self.isROP:
+			return None
+		return self.opDefPar.Typespec.eval()
+
+	@property
+	def supportedTypeTable(self) -> 'Optional[DAT]':
+		if not self.isROP:
+			return None
+		return self.opDef.op('./supportedTypes')
 
 	@property
 	def subROPs(self):
