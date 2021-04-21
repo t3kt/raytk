@@ -1,0 +1,8 @@
+name	label
+custom	Custom
+xy	XY Plane
+yx	YX Plane
+yz	YZ Plane
+zy	ZY Plane
+xz	XZ Plane
+zx	ZX Plane
