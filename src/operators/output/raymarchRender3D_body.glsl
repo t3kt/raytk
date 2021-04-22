@@ -247,7 +247,6 @@ void main()
 	#endif
 	initOutputs();
 
-	MaterialContext matCtx = createMaterialContext();
 
 	#if THIS_ANTI_ALIAS > 1
 	vec2 shiftStart = vec2(-float(THIS_ANTI_ALIAS) / 2.0);
@@ -302,11 +301,16 @@ void main()
 			#endif
 			#endif
 
+			MaterialContext matCtx = createMaterialContext();
 			matCtx.result = res;
 			matCtx.ray = ray;
+			#if defined(OUTPUT_COLOR) || defined(OUTPUT_NORMAL)
 			matCtx.normal = calcNormal(p);
+			#endif
+			#if defined(OUTPUT_COLOR)
 			LightContext lightCtx = createLightContext(res, matCtx.normal);
 			matCtx.light = getLight(p, lightCtx);
+			#endif
 
 			#ifdef OUTPUT_NORMAL
 			normalOut += vec4(matCtx.normal, 0);

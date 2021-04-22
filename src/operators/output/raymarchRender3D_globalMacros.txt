@@ -5,3 +5,4 @@
 'RAYTK_NEAR_HITS_IN_SDF' if parent().par.Enablenearhitoutput else ''	
 'RAYTK_ITERATION_IN_SDF' if parent().par.Enableiterationoutput else ''	
 'RAYTK_STEPS_IN_SDF' if parent().par.Enablestepoutput else ''	
+'OUTPUT_COLOR' if parent().par.Enablecoloroutput else ''	
