@@ -19,21 +19,6 @@ op:
     name: Color3
   - label: Color 4
     name: Color4
-  - label: Context Type
-    menuOptions:
-    - label: Use Input
-      name: useinput
-    - label: Context
-      name: Context
-    - label: MaterialContext
-      name: MaterialContext
-    - label: CameraContext
-      name: CameraContext
-    - label: LightContext
-      name: LightContext
-    - label: RayContext
-      name: RayContext
-    name: Contexttype
   status: beta
 
 ---

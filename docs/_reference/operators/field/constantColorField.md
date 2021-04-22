@@ -22,19 +22,6 @@ op:
     - label: 3D
       name: vec3
     name: Coordtype
-  - label: Context Type
-    menuOptions:
-    - label: Context
-      name: Context
-    - label: MaterialContext
-      name: MaterialContext
-    - label: CameraContext
-      name: CameraContext
-    - label: LightContext
-      name: LightContext
-    - label: RayContext
-      name: RayContext
-    name: Contexttype
   - label: Color
     name: Color
   - label: Alpha

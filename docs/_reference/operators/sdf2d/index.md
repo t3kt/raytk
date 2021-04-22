@@ -13,6 +13,9 @@ cat:
   name: sdf2d
   operators:
   - name: arcSdf2d
+  - name: bezierSdf2d
+    status: beta
+  - name: blobbyCrossSdf2d
   - name: circleSdf
     summary: 2D circle SDF.
   - name: cornerSdf2d

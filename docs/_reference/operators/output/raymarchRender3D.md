@@ -218,6 +218,8 @@ op:
     name: Nearhitmindist
   - label: Near Hit Fade
     name: Nearhitfade
+  - label: Enable Color Output
+    name: Enablecoloroutput
   summary: Renders a scene using 3D raymarching.
 
 ---

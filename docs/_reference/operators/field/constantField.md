@@ -27,19 +27,6 @@ op:
     - label: Vector
       name: vec4
     name: Returntype
-  - label: Context Type
-    menuOptions:
-    - label: Context
-      name: Context
-    - label: MaterialContext
-      name: MaterialContext
-    - label: CameraContext
-      name: CameraContext
-    - label: LightContext
-      name: LightContext
-    - label: RayContext
-      name: RayContext
-    name: Contexttype
   - label: Value
     name: Value
   summary: A float or vector field that evaluates to a constant value.

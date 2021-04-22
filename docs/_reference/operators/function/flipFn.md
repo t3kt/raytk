@@ -55,30 +55,17 @@ op:
     summary: The type of flipping to apply.
   - label: Return Type
     menuOptions:
-    - label: Sdf
+    - label: SDF Result
       name: Sdf
-    - label: vec4
-      name: vec4
-    - label: float
+    - label: Float
       name: float
+    - label: Vector4
+      name: vec4
     - label: Ray
       name: Ray
     - label: Light
       name: Light
     name: Returntype
-  - label: Context Type
-    menuOptions:
-    - label: Context
-      name: Context
-    - label: MaterialContext
-      name: MaterialContext
-    - label: CameraContext
-      name: CameraContext
-    - label: LightContext
-      name: LightContext
-    - label: RayContext
-      name: RayContext
-    name: Contexttype
   summary: Function that flips its input in one of several different modes.
 
 ---

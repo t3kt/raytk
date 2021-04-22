@@ -26,19 +26,6 @@ op:
   - label: Blend
     name: Blend
     summary: The amount of smoothing to apply on the edge.
-  - label: Context Type
-    menuOptions:
-    - label: Context
-      name: Context
-    - label: MaterialContext
-      name: MaterialContext
-    - label: CameraContext
-      name: CameraContext
-    - label: LightContext
-      name: LightContext
-    - label: RayContext
-      name: RayContext
-    name: Contexttype
   summary: A function that changes from zero to one at a cutoff point.
 
 ---

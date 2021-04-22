@@ -22,6 +22,8 @@ cat:
       attentuation.
   - name: softShadow
     summary: A soft-edged shadow.
+  - name: spotLight
+    status: beta
   summary: 'Operators that are used in raymarching to define the behavior of light,
     including
 

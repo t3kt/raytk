@@ -15,6 +15,10 @@ op:
   inputs:
   - contextTypes:
     - Context
+    - MaterialContext
+    - CameraContext
+    - LightContext
+    - RayContext
     coordTypes:
     - vec3
     label: definition_in
