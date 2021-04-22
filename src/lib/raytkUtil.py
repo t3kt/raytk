@@ -119,7 +119,7 @@ class ROPInfo:
 			self.opDef = o.op('opDefinition')
 			# noinspection PyTypeChecker
 			self.opDefPar = self.opDef.par
-		elif isROPDef(o):
+		elif isROPDef(o) and o.par['Hostop'] is not None:
 			self.rop = o.par.Hostop.eval()
 			self.opDef = o
 			# noinspection PyTypeChecker
@@ -497,10 +497,10 @@ def _isRComp(o: 'OP'):
 	return bool(o) and o.isCOMP and RaytkTags.raytkComp.isOn(o)
 
 def isROPDef(o: 'OP'):
-	return bool(o) and o.isCOMP and o.name == 'opDefinition'
+	return bool(o) and o.isCOMP and o.name == 'opDefinition' and o.par['Hostop'] is not None
 
 def _isRCompDef(o: 'OP'):
-	return bool(o) and o.isCOMP and o.name == 'compDefinition'
+	return bool(o) and o.isCOMP and o.name == 'compDefinition' and o.par['Hostop'] is not None
 
 def _getROP(comp: 'COMP', checkParents=True):
 	if not comp or comp is root:
@@ -508,7 +508,7 @@ def _getROP(comp: 'COMP', checkParents=True):
 	if isROP(comp) or _isRComp(comp):
 		return comp
 	if isROPDef(comp) or _isRCompDef(comp):
-		host = comp.par.Hostop.eval()
+		host = op(comp.par['Hostop'])
 		if isROP(host) or _isRComp(host):
 			return host
 	if checkParents:

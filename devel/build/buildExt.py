@@ -48,9 +48,10 @@ class BuildManager:
 
 	def runBuild_stage(self, stage: int):
 		toolkit = RaytkContext().toolkit()
-		self.log('Reloading toolkit')
 		if stage == 0:
+			self.log('Reloading toolkit')
 			self.reloadToolkit(toolkit)
+			# self.context.openNetworkPane()
 			self.queueMethodCall(self.runBuild_stage, stage + 1)
 		elif stage == 1:
 			self.detachAllFileSyncDats(toolkit)
@@ -141,6 +142,7 @@ class BuildManager:
 
 	def processOperators(self, comp: 'COMP', thenRun: str = None, runArgs: list = None):
 		self.log(f'Processing operators {comp}')
+		self.context.moveNetworkPane(comp)
 		self.context.detachTox(comp)
 		categories = RaytkContext().allCategories()
 		self.docProcessor.writeCategoryListPage(categories)
@@ -157,6 +159,7 @@ class BuildManager:
 	def processOperatorCategory(self, category: 'COMP', thenRun: str = None, runArgs: list = None):
 		categoryInfo = CategoryInfo(category)
 		self.log(f'Processing operator category {category.name}')
+		self.context.moveNetworkPane(category)
 		self.context.detachTox(category)
 		template = category.op('__template')
 		if template:
@@ -182,6 +185,7 @@ class BuildManager:
 
 	def processOperator(self, comp: 'COMP'):
 		self.log(f'Processing operator {comp}')
+		self.context.focusInNetworkPane(comp)
 		self.context.disableCloning(comp)
 		self.context.detachTox(comp)
 		comp.showCustomOnly = True
@@ -233,6 +237,7 @@ class BuildManager:
 
 	def processTools(self, comp: 'COMP', thenRun: str = None, runArgs: list = None):
 		self.log(f'Processing tools {comp}')
+		self.context.moveNetworkPane(comp)
 		self.context.reloadTox(comp)
 		self.context.detachTox(comp)
 		self.context.runBuildScript(

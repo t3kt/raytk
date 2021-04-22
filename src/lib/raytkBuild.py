@@ -17,6 +17,39 @@ class BuildContext:
 
 	def __init__(self, log: Callable[[str], None]):
 		self.log = log
+		self.pane = None  # type: Optional[NetworkEditor]
+
+	def _findExistingPane(self):
+		for pane in ui.panes:
+			if pane.name == 'raytkBuildNetwork':
+				self.pane = pane
+				return
+
+	def openNetworkPane(self):
+		self._findExistingPane()
+		if self.pane:
+			self.pane.close()
+		self.pane = ui.panes.createFloating(type=PaneType.NETWORKEDITOR, name='raytkBuildNetwork')
+		self.moveNetworkPane(self._toolkit())
+
+	def closeNetworkPane(self):
+		if self.pane:
+			self.pane.close()
+			self.pane = None
+
+	def moveNetworkPane(self, comp: 'COMP'):
+		if self.pane:
+			self.pane.owner = comp
+
+	def focusInNetworkPane(self, o: 'OP'):
+		if o and self.pane:
+			self.pane.owner = o.parent()
+			self.pane.home(zoom=True, op=o)
+			o.current = True
+
+	@staticmethod
+	def _toolkit() -> 'COMP':
+		return RaytkContext().toolkit()
 
 	def detachTox(self, comp: 'COMP'):
 		if not comp or comp.par['externaltox'] is None:
