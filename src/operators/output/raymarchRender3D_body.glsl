@@ -304,7 +304,7 @@ void main()
 			MaterialContext matCtx = createMaterialContext();
 			matCtx.result = res;
 			matCtx.ray = ray;
-			#if defined(OUTPUT_COLOR) || defined(OUTPUT_NORMAL)
+			#if defined(OUTPUT_COLOR) || defined(OUTPUT_NORMAL) || (defined(RAYTK_USE_REFLECTION) && defined(THIS_Enablereflection))
 			matCtx.normal = calcNormal(p);
 			#endif
 			#if defined(OUTPUT_COLOR)
@@ -320,16 +320,21 @@ void main()
 				matCtx.reflectColor = vec3(0);
 				#if defined(RAYTK_USE_REFLECTION) && defined(THIS_Enablereflection)
 				MaterialContext reflectMatCtx = matCtx;
+				vec3 reflectPos = p;
 				int priorStage = pushStage(RAYTK_STAGE_REFLECT);
+
 				for (int k = 0; k < THIS_Reflectionpasses; k++) {
-					if (reflectMatCtx.result.reflect) {
-						reflectMatCtx.ray.dir = reflect(reflectMatCtx.ray.dir, reflectMatCtx.normal);
-						reflectMatCtx.ray.pos += reflectMatCtx.normal * 0.0001;
-						reflectMatCtx.result = castRayBasic(reflectMatCtx.ray, RAYTK_MAX_DIST);
-						if (isNonHitSdf(reflectMatCtx.result)) break;
-						vec3 reflectPos = reflectMatCtx.ray.pos + reflectMatCtx.ray.dir * reflectMatCtx.result.x;
-						reflectMatCtx.normal = calcNormal(reflectPos);
-						matCtx.reflectColor += getColor(reflectPos, reflectMatCtx);
+					reflectMatCtx.ray.pos = reflectPos + reflectMatCtx.normal * RAYTK_SURF_DIST;
+					reflectMatCtx.ray.dir = reflect(ray.dir, matCtx.normal);
+					reflectMatCtx.result = castRayBasic(reflectMatCtx.ray, RAYTK_MAX_DIST);
+					if (isNonHitSdf(reflectMatCtx.result)) {
+						break;
+					}
+					reflectPos = reflectMatCtx.ray.pos + matCtx.normal * reflectMatCtx.result.x;
+					reflectMatCtx.normal = calcNormal(reflectPos);
+					matCtx.reflectColor += getColor(reflectPos, reflectMatCtx);
+					if (!reflectMatCtx.result.reflect) {
+						break;
 					}
 				}
 				popStage(priorStage);
