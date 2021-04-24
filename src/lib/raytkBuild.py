@@ -27,9 +27,8 @@ class BuildContext:
 
 	def openNetworkPane(self):
 		self._findExistingPane()
-		if self.pane:
-			self.pane.close()
-		self.pane = ui.panes.createFloating(type=PaneType.NETWORKEDITOR, name='raytkBuildNetwork')
+		if not self.pane:
+			self.pane = ui.panes.createFloating(type=PaneType.NETWORKEDITOR, name='raytkBuildNetwork')
 		self.moveNetworkPane(self._toolkit())
 
 	def closeNetworkPane(self):

@@ -24,7 +24,7 @@ class BuildManager:
 
 	@staticmethod
 	def OpenToolkitNetwork():
-		navigateTo(RaytkContext().toolkit(), name='toolkit', popup=True, goInto=True)
+		navigateTo(RaytkContext().toolkit(), name='raytkBuildNetwork', popup=True, goInto=True)
 
 	def OpenLog(self):
 		dat = self.ownerComp.op('full_log_text')
@@ -51,7 +51,7 @@ class BuildManager:
 		if stage == 0:
 			self.log('Reloading toolkit')
 			self.reloadToolkit(toolkit)
-			# self.context.openNetworkPane()
+			self.context.openNetworkPane()
 			self.queueMethodCall(self.runBuild_stage, stage + 1)
 		elif stage == 1:
 			self.detachAllFileSyncDats(toolkit)
@@ -81,6 +81,7 @@ class BuildManager:
 			self.finalizeToolkitPars(toolkit)
 			self.queueMethodCall(self.runBuild_stage, stage + 1)
 		elif stage == 12:
+			self.context.focusInNetworkPane(toolkit)
 			version = RaytkContext().toolkitVersion()
 			toxFile = f'build/RayTK-{version}.tox'
 			self.log('Exporting TOX to ' + toxFile)
@@ -98,6 +99,7 @@ class BuildManager:
 
 	def finalizeToolkitPars(self, toolkit: 'COMP'):
 		self.log('Finalizing toolkit parameters')
+		self.context.moveNetworkPane(toolkit)
 		# toolkit.par.Devel = False
 		toolkit.par.Devel.readOnly = True
 		toolkit.par.externaltox = ''
@@ -112,6 +114,7 @@ class BuildManager:
 		self.log('Updating library image')
 		image = RaytkContext().libraryImage()
 		if image:
+			# self.context.moveNetworkPane(image)
 			self.context.detachTox(image)
 			self.context.lockBuildLockOps(image)
 			image.par.Showshortcut = True
@@ -128,6 +131,7 @@ class BuildManager:
 		self.log('Updating library info')
 		libraryInfo = toolkit.op('libraryInfo')
 		libraryInfo.par.Forcebuild.pulse()
+		self.context.moveNetworkPane(libraryInfo)
 		self.context.runBuildScript(
 			libraryInfo.op('BUILD'),
 			thenRun=lambda: self.queueMethodCall(thenRun, *(runArgs or [])),
@@ -135,6 +139,7 @@ class BuildManager:
 
 	def processComponents(self, components: 'COMP', thenRun: str = None, runArgs: list = None):
 		self.log(f'Processing components {components}')
+		self.context.moveNetworkPane(components)
 		self.context.runBuildScript(
 			components.op('BUILD'),
 			thenRun=lambda: self.queueMethodCall(thenRun, *(runArgs or [])),
@@ -145,6 +150,7 @@ class BuildManager:
 		self.context.moveNetworkPane(comp)
 		self.context.detachTox(comp)
 		categories = RaytkContext().allCategories()
+		# categories.sort(key=lambda c: c.name)
 		self.docProcessor.writeCategoryListPage(categories)
 		self.queueMethodCall('processOperatorCategories_stage', categories, thenRun, runArgs)
 
@@ -165,6 +171,7 @@ class BuildManager:
 		if template:
 			template.destroy()
 		comps = categoryInfo.operators
+		# comps.sort(key=lambda c: c.name)
 		for o in comps:
 			if RaytkTags.alpha.isOn(o):
 				self.context.safeDestroyOp(o)
@@ -188,15 +195,19 @@ class BuildManager:
 		self.context.focusInNetworkPane(comp)
 		self.context.disableCloning(comp)
 		self.context.detachTox(comp)
-		comp.showCustomOnly = True
+		if len(comp.customPages) <= 1:
+			comp.showCustomOnly = True
+		# self.context.moveNetworkPane(comp)
 		for child in comp.findChildren(type=COMP):
 			self.processOperatorSubComp(child)
 		tools = RaytkTools()
 		tools.updateROPMetadata(comp)
 		tools.updateROPParams(comp)
+		# self.context.moveNetworkPane(comp)
 		self.log(f'Updating OP image for {comp}')
 		img = tools.updateOPImage(comp)
 		if img:
+			# self.context.focusInNetworkPane(img)
 			self.context.disableCloning(img)
 			self.context.detachTox(img)
 			self.context.lockBuildLockOps(img)
@@ -205,6 +216,7 @@ class BuildManager:
 			self.docProcessor.processOp(comp)
 
 	def processOperatorSubComp(self, comp: 'COMP'):
+		# self.context.focusInNetworkPane(comp)
 		self.context.disableCloning(comp)
 		self.context.detachTox(comp)
 
