@@ -1,11 +1,11 @@
 #if defined(THIS_RETURN_TYPE_Sdf)
-Sdf map(CoordT p) {
+Sdf map(THIS_CoordT p) {
 	Sdf res = thismap(p, createDefaultContext());
 	res.x *= 0.5;
 	return res;
 }
 
-vec4 getColor(Sdf res, CoordT p) {
+vec4 getColor(Sdf res, THIS_CoordT p) {
 	int m = resultMaterial1(res);
 	vec4 col;
 	if (res.x > 0) {
