@@ -29,6 +29,21 @@ op:
     name: Returntype
   - label: Value
     name: Value
+  - label: Context Type
+    menuOptions:
+    - label: Auto
+      name: auto
+    - label: Context
+      name: Context
+    - label: MaterialContext
+      name: MaterialContext
+    - label: CameraContext
+      name: CameraContext
+    - label: LightContext
+      name: LightContext
+    - label: RayContext
+      name: RayContext
+    name: Contexttype
   summary: A float or vector field that evaluates to a constant value.
 
 ---

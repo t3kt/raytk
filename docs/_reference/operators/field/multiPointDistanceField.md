@@ -30,6 +30,8 @@ op:
     name: Coordtype
   - label: Context Type
     menuOptions:
+    - label: Auto
+      name: auto
     - label: Context
       name: Context
     - label: MaterialContext

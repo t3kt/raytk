@@ -16,6 +16,8 @@ op:
     - LightContext
     - RayContext
     coordTypes:
+    - float
+    - vec2
     - vec3
     label: definition_in
     name: definition_in

@@ -8,22 +8,6 @@ redirect_from:
   - /reference/opType/raytk.operators.sdf2d.bezierSdf2d/
 op:
   category: sdf2d
-  inputs:
-  - contextTypes:
-    - Context
-    coordTypes:
-    - float
-    - vec2
-    - vec3
-    label: definition_in
-    name: definition_in
-    required: true
-    returnTypes:
-    - float
-    - vec4
-    - Sdf
-    - Ray
-    - Light
   name: bezierSdf2d
   opType: raytk.operators.sdf2d.bezierSdf2d
   parameters:

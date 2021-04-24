@@ -35,14 +35,12 @@ op:
     name: Coordtype
   - label: Context Type
     menuOptions:
+    - label: Auto
+      name: auto
     - label: Context
       name: Context
     - label: Material Context
       name: MaterialContext
-    - label: Camera Context
-      name: CameraContext
-    - label: Light Context
-      name: LightContext
     name: Contexttype
   summary: Field that returns the current iteration, from a downstream OP.
 

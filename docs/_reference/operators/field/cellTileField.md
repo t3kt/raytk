@@ -32,6 +32,8 @@ op:
     name: Cellstyle
   - label: Context Type
     menuOptions:
+    - label: Auto
+      name: auto
     - label: Context
       name: Context
     - label: Material Context
