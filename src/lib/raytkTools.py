@@ -283,9 +283,13 @@ class RaytkTools(RaytkContext):
 			return
 		defVal = par.default
 		shouldUpdateVal = par.mode == ParMode.CONSTANT and defVal != ''
+		hasAuto = 'auto' in par.menuNames
 		hasUseInput = 'useinput' in par.menuNames
 		names = list(values)
 		labels = list(names)
+		if hasAuto:
+			names = ['auto'] + names
+			labels = ['Auto'] + labels
 		if hasUseInput:
 			names = ['useinput'] + names
 			labels = ['Use Input'] + labels
