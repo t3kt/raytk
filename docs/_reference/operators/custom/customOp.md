@@ -168,6 +168,8 @@ op:
         if the first input is not connected.
       label: Use Input
       name: useinput
+    - label: Auto
+      name: auto
     - label: 1D
       name: float
     - label: 3D
@@ -196,6 +198,8 @@ op:
     summary: The type of return value produced by the op.
   - label: Context Type
     menuOptions:
+    - label: Auto
+      name: auto
     - description: Use whatever type of context the first input uses, or `Context`
         if the first input is not connected.
       label: Use Input
@@ -203,12 +207,14 @@ op:
     - description: The most commonly used context type, used for the main scene graph.
       label: Context
       name: Context
-    - label: Material Context
+    - label: MaterialContext
       name: MaterialContext
-    - label: Camera Context
+    - label: CameraContext
       name: CameraContext
-    - label: Light Context
+    - label: LightContext
       name: LightContext
+    - label: RayContext
+      name: RayContext
     name: Contexttype
     summary: The type of return value produced by the op.
   - label: Params OP

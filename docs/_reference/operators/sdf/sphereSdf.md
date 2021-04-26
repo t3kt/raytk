@@ -30,6 +30,21 @@ op:
   - label: Radius
     name: Radius
     summary: The radius of the sphere.
+  - label: Context Type
+    menuOptions:
+    - label: Auto
+      name: auto
+    - label: Context
+      name: Context
+    - label: MaterialContext
+      name: MaterialContext
+    - label: CameraContext
+      name: CameraContext
+    - label: LightContext
+      name: LightContext
+    - label: RayContext
+      name: RayContext
+    name: Contexttype
   summary: SDF in 3D space for a uniform sphere.
 
 ---

@@ -8,11 +8,6 @@ permalink: /reference/operators/utility/
 cat:
   name: utility
   operators:
-  - name: extractIteration
-    status: beta
-    summary: 'A field that returns the current iteration, from a downstream
-
-      operator.'
   - name: injectGlobalPosition
     summary: Calls its input using the untransformed global position.
   - name: injectObjectId

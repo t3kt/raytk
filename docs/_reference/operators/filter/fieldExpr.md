@@ -89,43 +89,43 @@ op:
   - label: Expression
     menuOptions:
     - label: sqrt(x)         Square Root
-      name: sqrt(inputOp1(p, ctx))
+      name: sqrt
     - label: abs(x)         Absolute Value
-      name: sqrt(inputOp1(p, ctx))
+      name: abs
     - label: sign(x)         Sign
-      name: sign(inputOp1(p, ctx))
+      name: sign
     - label: cos(x)         Cosine
-      name: cos(inputOp1(p, ctx))
+      name: cos
     - label: sin(x)          Sine
-      name: sin(inputOp1(p, ctx))
+      name: sin
     - label: tan(x)         Tangent
-      name: tan(inputOp1(p, ctx))
+      name: tan
     - label: acos(x)       Arccosine
-      name: acos(inputOp1(p, ctx))
+      name: acos
     - label: asin(x)        Arcsine
-      name: asin(inputOp1(p, ctx))
+      name: asin
     - label: atan(x)        Arctan ( Input1 )
-      name: atan(inputOp1(p, ctx))
+      name: atan
     - label: atan2(x,y)   Arctan ( Input1 / Input2 )
-      name: atan2(inputOp1(p, ctx), inputOp2(p, ctx))
+      name: atan2
     - label: cosh(x)       Hyperbolic Cosine
-      name: cosh(inputOp1(p, ctx))
+      name: cosh
     - label: sinh(x)        Hyperbolic Sine
-      name: sinh(inputOp1(p, ctx))
+      name: sinh
     - label: tanh(x)        Hyperbolic Tangent
-      name: tanh(inputOp1(p, ctx))
+      name: tanh
     - label: log2(x)         Log Base 2
-      name: log2(inputOp1(p, ctx))
+      name: log2
     - label: log(x)            Natural Log
-      name: log(inputOp1(p, ctx))
+      name: ln
     - label: exp(x)          e ^ Input1
-      name: exp(inputOp1(p, ctx))
+      name: exp
     - label: exp2(x)        2 ^ Input1
-      name: exp2(inputOp1(p, ctx))
+      name: exp2
     - label: pow(x)         Base ^ Input1
-      name: pow(THIS_Param1, inputOp1(p, ctx))
+      name: powb
     - label: pow(x,y)      Input1 ^ Input2
-      name: pow(inputOp1(p, ctx), inputOp2(p, ctx))
+      name: powxy
     name: Expression
   - label: Param 1
     name: Param1

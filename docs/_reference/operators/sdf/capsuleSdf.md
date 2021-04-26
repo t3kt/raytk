@@ -24,6 +24,21 @@ op:
   - label: Radius
     name: Radius
     summary: The thickness of the capsule.
+  - label: Context Type
+    menuOptions:
+    - label: Auto
+      name: auto
+    - label: Context
+      name: Context
+    - label: MaterialContext
+      name: MaterialContext
+    - label: CameraContext
+      name: CameraContext
+    - label: LightContext
+      name: LightContext
+    - label: RayContext
+      name: RayContext
+    name: Contexttype
   summary: A cylinder with rounded ends, between two points.
 
 ---

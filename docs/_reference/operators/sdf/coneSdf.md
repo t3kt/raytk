@@ -62,6 +62,21 @@ op:
     - label: Z
       name: z
     name: Axis
+  - label: Context Type
+    menuOptions:
+    - label: Auto
+      name: auto
+    - label: Context
+      name: Context
+    - label: MaterialContext
+      name: MaterialContext
+    - label: CameraContext
+      name: CameraContext
+    - label: LightContext
+      name: LightContext
+    - label: RayContext
+      name: RayContext
+    name: Contexttype
   summary: Defines a cone or capped cone shape.
 
 ---

@@ -27,6 +27,39 @@ op:
     - float
     - vec4
     - Sdf
+  - contextTypes:
+    - Context
+    - MaterialContext
+    - CameraContext
+    - LightContext
+    - RayContext
+    coordTypes:
+    - float
+    - vec2
+    - vec3
+    label: Rotate Field
+    name: rotate_definition_in
+    returnTypes:
+    - vec4
+    summary: Optional field used to control rotation. The field is evaluated before
+      each iteration, and the resulting value is added to the `Rotate` parameter.
+      If the field uses 2D/3D coordinates, the current position is used. If the field
+      uses 1D coordinates, it is passed `i / (n-1)`, where `i` is the loop iteration,
+      and `n` is the total number of iterations.
+  - contextTypes:
+    - Context
+    - MaterialContext
+    - CameraContext
+    - LightContext
+    - RayContext
+    coordTypes:
+    - float
+    - vec2
+    - vec3
+    label: Translate Field
+    name: translate_definition_in
+    returnTypes:
+    - vec4
   name: iteratedTransform
   opType: raytk.operators.filter.iteratedTransform
   parameters:
