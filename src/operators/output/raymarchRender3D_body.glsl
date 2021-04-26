@@ -200,7 +200,7 @@ vec3 getColor(vec3 p, MaterialContext matCtx) {
 		p2 = matCtx.result.materialPos2.xyz;
 	}
 	#endif
-	#ifdef RAYTK_USE_SHADOW
+	#if defined(THIS_Enableshadow) && defined(RAYTK_USE_SHADOW)
 	if (matCtx.result.useShadow) {
 		matCtx.shadedLevel = calcShadedLevel(p, matCtx);
 	}
