@@ -1,3 +1,5 @@
+from raytkTypes import TypeSpec
+
 # noinspection PyUnreachableCode
 if False:
 	# noinspection PyUnresolvedReferences
@@ -12,7 +14,6 @@ class _Category:
 	allToggle: str
 	useInputToggle: str
 	fallbackPar: str
-	filterColumn: str
 
 	def __init__(self, name: str):
 		self.name = name
@@ -20,34 +21,26 @@ class _Category:
 		self.allToggle = 'All' + name.lower()
 		self.useInputToggle = 'Useinput' + name.lower()
 		self.fallbackPar = 'Fallback' + name.lower()
-		self.filterColumn = 'is' + name[0].upper() + name[1:]
-
-	def allTypes(self):
+		filterColumn = 'is' + name[0].upper() + name[1:]
 		table = _typeTable()
-		return [
+		self.allTypes = [
 			table[row, 'name'].val
 			for row in range(1, table.numRows)
-			if table[row, self.filterColumn] == '1'
+			if table[row, filterColumn] == '1'
 		]
 
-	def expandedTypes(self):
-		allTypes = self.allTypes()
-		if self.supportsAllTypes():
-			return allTypes
-		return [
-			t
-			for t in allTypes
-			if parent().par[self.togglePrefix + t.lower()]
-		]
-
-	def supportsAllTypes(self):
-		return parent().par[self.allToggle]
-
-	def useInputType(self):
-		return parent().par[self.useInputToggle]
-
-	def fallbackType(self):
-		return parent().par[self.fallbackPar].eval()
+	def getSpec(self):
+		isAll = bool(parent().par[self.allToggle])
+		return TypeSpec(
+			useInput=bool(parent().par[self.useInputToggle]),
+			supportsAll=isAll,
+			supported=[] if isAll else [
+				t
+				for t in self.allTypes
+				if parent().par[self.togglePrefix + t.lower()]
+			],
+			fallback=str(parent().par[self.fallbackPar]),
+		)
 
 _categories = [
 	_Category('coordType'),
@@ -59,15 +52,9 @@ def buildSupportedTypeTable(dat: 'scriptDAT'):
 	dat.clear()
 	dat.appendRow(['category', 'spec', 'types'])
 	for cat in _categories:
-		types = cat.expandedTypes()
-		if cat.supportsAllTypes():
-			spec = '*'
-		else:
-			spec = ' '.join(types)
-		if cat.useInputType():
-			spec = f'useinput|{cat.fallbackType()}:{spec}'
+		typeSpec = cat.getSpec()
 		dat.appendRow([
 			cat.name,
-			spec,
-			' '.join(types),
+			typeSpec.formatSpec(cat.allTypes),
+			typeSpec.formatTypes(cat.allTypes),
 		])

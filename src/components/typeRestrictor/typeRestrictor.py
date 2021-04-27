@@ -1,3 +1,5 @@
+import raytkTypes
+
 # noinspection PyUnreachableCode
 if False:
 	# noinspection PyUnresolvedReferences
@@ -18,9 +20,7 @@ def _restrictTypeCategory(dat: 'scriptDAT', supportedTypes: 'DAT', column: str):
 		cells = cells[1:]
 	supported = supportedTypes[column, 'types'].val.split(' ')
 	for cell in cells:
-		types = cell.val.split(' ')
-		types = [
-			t for t in types if t in supported
-		]
-		cell.val = ' '.join(types)
+		cell.val = raytkTypes.restrictExpandedTypes(
+			expandedTypes=cell.val,
+			supportedTypes=supported)
 

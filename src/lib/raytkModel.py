@@ -63,7 +63,7 @@ def _parseJson(jsonStr: str):
 	return json.loads(jsonStr) if jsonStr else {}
 
 @dataclass
-class TypeSpec(_DataObject_OLD):
+class _TypeSpec_OLD(_DataObject_OLD):
 	"""
 	One or several possible data types.
 	`*` is equivalent to all available types.
@@ -124,9 +124,9 @@ class FunctionSignature(_DataObject_OLD):
 	would be represented as:
 	`(vec2, *) -> float|vec4`
 	"""
-	coordType: TypeSpec
-	contextType: TypeSpec
-	returnType: TypeSpec
+	coordType: _TypeSpec_OLD
+	contextType: _TypeSpec_OLD
+	returnType: _TypeSpec_OLD
 
 	def __str__(self):
 		return f'({self.coordType}, {self.contextType})->{self.returnType}'
@@ -137,9 +137,9 @@ class FunctionSignature(_DataObject_OLD):
 		if not match:
 			raise ValueError('Invalid signature: ' + repr(s))
 		return cls(
-			coordType=TypeSpec.parse(match.group(1)),
-			contextType=TypeSpec.parse(match.group(2)),
-			returnType=TypeSpec.parse(match.group(3)),
+			coordType=_TypeSpec_OLD.parse(match.group(1)),
+			contextType=_TypeSpec_OLD.parse(match.group(2)),
+			returnType=_TypeSpec_OLD.parse(match.group(3)),
 		)
 
 	@classmethod
@@ -149,17 +149,17 @@ class FunctionSignature(_DataObject_OLD):
 	@classmethod
 	def create(cls, coordType: str, contextType: str, returnType: str):
 		return cls(
-			coordType=TypeSpec.parse(coordType),
-			contextType=TypeSpec.parse(contextType),
-			returnType=TypeSpec.parse(returnType),
+			coordType=_TypeSpec_OLD.parse(coordType),
+			contextType=_TypeSpec_OLD.parse(contextType),
+			returnType=_TypeSpec_OLD.parse(returnType),
 		)
 
 	@classmethod
 	def all(cls):
 		return cls(
-			coordType=TypeSpec.all(),
-			contextType=TypeSpec.all(),
-			returnType=TypeSpec.all())
+			coordType=_TypeSpec_OLD.all(),
+			contextType=_TypeSpec_OLD.all(),
+			returnType=_TypeSpec_OLD.all())
 
 	@classmethod
 	def extractFromHandler(cls, inputHandler: 'COMP'):
@@ -167,9 +167,9 @@ class FunctionSignature(_DataObject_OLD):
 		if not table:
 			return cls.all()
 		return cls(
-			coordType=TypeSpec.parse(str(table['coordType', 'types'] or '*')),
-			contextType=TypeSpec.parse(str(table['contextType', 'types'] or '*')),
-			returnType=TypeSpec.parse(str(table['returnType', 'types'] or '*')),
+			coordType=_TypeSpec_OLD.parse(str(table['coordType', 'types'] or '*')),
+			contextType=_TypeSpec_OLD.parse(str(table['contextType', 'types'] or '*')),
+			returnType=_TypeSpec_OLD.parse(str(table['returnType', 'types'] or '*')),
 		)
 
 	def isSingle(self):

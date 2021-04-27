@@ -1,3 +1,4 @@
+from raytkTypes import TypeSpec, evalSpecInOp
 import re
 
 # noinspection PyUnreachableCode
@@ -30,14 +31,11 @@ def buildName():
 	return 'RTK_' + name
 
 def _evalType(category: str, supportedTypes: 'DAT', inputDefs: 'DAT'):
-	spec = supportedTypes[category, 'spec'].val
-	if spec.startswith('useinput|'):
-		spec = spec.replace('useinput|', '')
-		fallback, spec = spec.split(':')
-		if inputDefs.numRows > 1:
-			return inputDefs[1, category].val
-		return fallback
-	return supportedTypes[category, 'types'].val
+	return evalSpecInOp(
+		spec=supportedTypes[category, 'spec'].val,
+		expandedTypes=supportedTypes[category, 'types'].val,
+		inputCell=inputDefs[1, category],
+	)
 
 def buildTypeTable(dat: 'scriptDAT', supportedTypes: 'DAT', inputDefs: 'DAT'):
 	dat.clear()

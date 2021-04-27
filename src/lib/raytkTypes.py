@@ -1,0 +1,108 @@
+from dataclasses import dataclass
+from typing import Dict, List, Optional, Tuple
+
+# noinspection PyUnreachableCode
+if False:
+	# noinspection PyUnresolvedReferences
+	from _stubs import *
+
+@dataclass
+class TypeSpec:
+	useInput: bool = False
+	supportsAll: bool = False
+	supported: 'Optional[List[str]]' = None
+	fallback: 'Optional[str]' = None
+
+	def expandedTypes(self, allTypes: List[str]) -> List[str]:
+		if self.supportsAll:
+			return list(allTypes)
+		return [
+			t
+			for t in allTypes
+			if self.supported and t in self.supported
+		]
+
+	def formatSpec(self, allTypes: List[str]) -> str:
+		types = self.expandedTypes(allTypes)
+		if self.supportsAll:
+			spec = '*'
+		else:
+			spec = ' '.join(types)
+		if self.useInput:
+			fallback = self.fallback
+			if not fallback and types:
+				fallback = types[0]
+			return f'useinput|{fallback or ""}:{spec}'
+		return spec
+
+	def formatTypes(self, allTypes: List[str]) -> str:
+		types = self.expandedTypes(allTypes)
+		return ' '.join(types)
+
+	@classmethod
+	def parseSpec(cls, spec: str):
+		if not spec:
+			return cls()
+		useInput, fallback, spec = _parseUseInput(spec)
+		return cls(
+			useInput=useInput,
+			supportsAll=spec == '*',
+			supported=None if spec == '*' else spec.split(' '),
+			fallback=fallback,
+		)
+
+def _parseUseInput(spec: str) -> Tuple[bool, str, str]:
+	useInput = spec.startswith('useinput|')
+	fallback = None
+	if useInput:
+		spec = spec[9:]  # len('useinput|')
+		if ':' in spec:
+			fallback, spec = spec.split(':', maxsplit=1)
+	return useInput, fallback, spec
+
+# Evaluates a type spec in an OP, expanding wildcards and inheriting input types or using fallback type.
+# Produces a list of 1 or more concrete type names, or a `@` reference to another op (for reverse inheritance).
+#
+# Formats for spec input:
+#   `Type1 Type2`
+#   `*`
+#   `useinput|Fallbacktype:Type1 Type2`
+#   `useinput|Fallbacktype:*`
+#   `@some_op_name`
+#
+# Output formats:
+#    `Type1`
+#    `Type1 Type2`
+#    `@some_op_name`
+# These outputs are what appear in the generated definition tables passed between ops.
+def evalSpecInOp(spec: str, expandedTypes: str, inputCell: Optional['Cell']) -> str:
+	if spec.startswith('@'):
+		return spec
+	useInput, fallback, spec = _parseUseInput(spec)
+	if not useInput:
+		return expandedTypes
+	if inputCell:
+		return str(inputCell)
+	return fallback or ''
+
+def restrictExpandedTypes(expandedTypes: str, supportedTypes: List[str]) -> str:
+	return ' '.join([t for t in expandedTypes.split(' ') if t in supportedTypes])
+
+def getCommonTypesFromCells(cells: List['Cell']) -> List[str]:
+	cells = [
+		cell for cell in cells if cell
+	]
+	if not cells:
+		return []
+	typeCounts = {}  # type: Dict[str, int]
+	for cell in cells:
+		for part in cell.val.split(' '):
+			if not part:
+				continue
+			typeCounts[part] = typeCounts.get(part, 0) + 1
+	n = len(cells)
+	return [
+		t
+		for t, count in typeCounts.items()
+		if count == n
+	]
