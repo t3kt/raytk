@@ -1,6 +1,7 @@
 from dataclasses import dataclass, field
 import dataclasses
 import json
+from pathlib import Path
 import re
 from typing import Dict, Iterable, List, Optional, Union
 import yaml
@@ -156,6 +157,11 @@ class ModelObject(yaml.YAMLObject):
 			if _shouldInclude(val) and val != f.default:
 				d[f.name] = val
 		return d
+
+	def writeToFile(self, file: 'Union[Path, str]'):
+		file = Path(file)
+		text = yaml.dump(self, default_style='')
+		file.write_text(text)
 
 def _shouldInclude(val):
 	if val is None or val == '':
@@ -382,51 +388,52 @@ class ROPSpec(ModelObject):
 	multiInput: Optional[MultiInputSpec] = None
 	inputs: Optional[List[InputSpec]] = field(default_factory=list)
 
-def extractOpSpec(rop: 'COMP', skipParams=False) -> ROPSpec:
-	info = ROPInfo(rop)
-	spec = ROPSpec(
-		meta=ROPMeta(
-			opType=info.opType,
-			opVersion=int(info.opVersion),
-			opStatus=info.statusLabel,
-		),
-		opDef=ROPDef(
-			coordType=_valueOrExprFromPar(info.opDefPar.Coordtype),
-			returnType=_valueOrExprFromPar(info.opDefPar.Returntype),
-			contextType=_valueOrExprFromPar(info.opDefPar.Contexttype),
-			disableInspect=info.opDefPar.Disableinspect.eval(),
-			useParams=_valueOrExprFromPar(info.opDefPar.Params),
-			specialParams=_valueOrExprFromPar(info.opDefPar.Specialparams),
-			angleParams=_valueOrExprFromPar(info.opDefPar.Angleparams),
-			macroParams=_valueOrExprFromPar(info.opDefPar.Macroparams),
-			libraryNames=_valueOrExprFromPar(info.opDefPar.Librarynames),
-			opGlobals=_extractDatSetting(info.opDefPar.Opglobals, isText=True),
-			initCode=_extractDatSetting(info.opDefPar.Initcode, isText=True),
-			function=_extractDatSetting(info.opDefPar.Functemplate, isText=True),
-			help=_extractDatSetting(info.opDefPar.Help, isText=True),
-			callbacks=_extractDatSetting(info.opDefPar.Callbacks, isText=True),
-			bufferTable=_extractDatSetting(info.opDefPar.Buffertable, isText=False),
-			macroTable=_extractDatSetting(info.opDefPar.Macrotable, isText=False),
-			textureTable=_extractDatSetting(info.opDefPar.Texturetable, isText=False),
-		),
-	)
-	if not skipParams:
-		spec.paramPages = [
-			_extractParamPage(page)
-			for page in rop.customPages
-		]
-	multiHandler = info.multiInputHandler
-	if multiHandler:
-		spec.multiInput = MultiInputSpec(
-			minimumInputs=multiHandler.par.Minimuminputs.eval() if multiHandler.par.Minimuminputs > 0 else None,
+	@classmethod
+	def extract(cls, rop: 'COMP', skipParams=False) -> 'ROPSpec':
+		info = ROPInfo(rop)
+		spec = ROPSpec(
+			meta=ROPMeta(
+				opType=info.opType,
+				opVersion=int(info.opVersion),
+				opStatus=info.statusLabel,
+			),
+			opDef=ROPDef(
+				coordType=_valueOrExprFromPar(info.opDefPar.Coordtype),
+				returnType=_valueOrExprFromPar(info.opDefPar.Returntype),
+				contextType=_valueOrExprFromPar(info.opDefPar.Contexttype),
+				disableInspect=info.opDefPar.Disableinspect.eval(),
+				useParams=_valueOrExprFromPar(info.opDefPar.Params),
+				specialParams=_valueOrExprFromPar(info.opDefPar.Specialparams),
+				angleParams=_valueOrExprFromPar(info.opDefPar.Angleparams),
+				macroParams=_valueOrExprFromPar(info.opDefPar.Macroparams),
+				libraryNames=_valueOrExprFromPar(info.opDefPar.Librarynames),
+				opGlobals=_extractDatSetting(info.opDefPar.Opglobals, isText=True),
+				initCode=_extractDatSetting(info.opDefPar.Initcode, isText=True),
+				function=_extractDatSetting(info.opDefPar.Functemplate, isText=True),
+				help=_extractDatSetting(info.opDefPar.Help, isText=True),
+				callbacks=_extractDatSetting(info.opDefPar.Callbacks, isText=True),
+				bufferTable=_extractDatSetting(info.opDefPar.Buffertable, isText=False),
+				macroTable=_extractDatSetting(info.opDefPar.Macrotable, isText=False),
+				textureTable=_extractDatSetting(info.opDefPar.Texturetable, isText=False),
+			),
 		)
-	for inputHandler in info.inputHandlers:
-		inputInfo = InputInfo(inputHandler)
-		if inputInfo.multiHandler:
-			spec.multiInput.inputs.append(_extractInputSpec(inputHandler))
-		else:
-			spec.inputs.append(_extractInputSpec(inputHandler))
-	return spec
+		if not skipParams:
+			spec.paramPages = [
+				_extractParamPage(page)
+				for page in rop.customPages
+			]
+		multiHandler = info.multiInputHandler
+		if multiHandler:
+			spec.multiInput = MultiInputSpec(
+				minimumInputs=multiHandler.par.Minimuminputs.eval() if multiHandler.par.Minimuminputs > 0 else None,
+			)
+		for inputHandler in info.inputHandlers:
+			inputInfo = InputInfo(inputHandler)
+			if inputInfo.multiHandler:
+				spec.multiInput.inputs.append(_extractInputSpec(inputHandler))
+			else:
+				spec.inputs.append(_extractInputSpec(inputHandler))
+		return spec
 
 _ignorePars = 'Help', 'Inspect', 'Updateop'
 

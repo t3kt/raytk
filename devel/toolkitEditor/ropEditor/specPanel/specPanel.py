@@ -1,5 +1,5 @@
-from raytkUtil import ROPInfo, InputInfo
-from raytkModel import extractOpSpec
+from raytkUtil import ROPInfo
+from raytkModel import ROPSpec
 from typing import Optional
 import yaml
 
@@ -27,7 +27,7 @@ class SpecPanel:
 		info = ROPInfo(ipar.inspectorCore.Targetcomp)
 		if not info:
 			return None
-		spec = extractOpSpec(info.rop, skipParams=not ipar.specPanelState.Includeparams)
+		spec = ROPSpec.extract(info.rop, skipParams=not ipar.specPanelState.Includeparams)
 		return yaml.dump(spec, default_style='')
 
 	def Update(self):

@@ -1,6 +1,6 @@
 from pathlib import Path
 from raytkDocs import OpDocManager
-from raytkModel import OpDefMeta_OLD, OpSpec_OLD
+from raytkModel import OpDefMeta_OLD, OpSpec_OLD, ROPSpec
 from raytkUtil import RaytkContext, ROPInfo, focusFirstCustomParameterPage, RaytkTags, CategoryInfo, ContextTypes, \
 	CoordTypes, ReturnTypes
 from typing import Callable, List, Optional
@@ -97,6 +97,7 @@ class RaytkTools(RaytkContext):
 		self.updateROPMetadata(rop, incrementVersion)
 		self.updateROPParams(rop)
 		self.saveROPSpec(rop)
+		# self.saveROPSpec_NEW(rop)
 		OpDocManager(info).pushToParamsAndInputs()
 		focusFirstCustomParameterPage(rop)
 		tox = info.toxFile
@@ -133,7 +134,7 @@ class RaytkTools(RaytkContext):
 			return
 		spec = None
 		if useFile:
-			specFile = self._getROPSpecFile(rop, checkExists=True)
+			specFile = self._getROPRelatedFile(rop, fileSuffix='.json', checkExists=True)
 			if specFile:
 				text = specFile.read_text()
 				spec = OpSpec_OLD.parseJsonStr(text)
@@ -174,14 +175,14 @@ class RaytkTools(RaytkContext):
 			RaytkTags.deprecated.apply(info.rop, False)
 
 	@staticmethod
-	def _getROPSpecFile(rop: 'COMP', checkExists: bool) -> 'Optional[Path]':
+	def _getROPRelatedFile(rop: 'COMP', fileSuffix: str, checkExists: bool) -> 'Optional[Path]':
 		info = ROPInfo(rop)
 		if not info or not info.isMaster:
 			return
 		tox = info.toxFile
 		if not tox:
 			return
-		file = Path(tox.replace('.tox', '.json'))
+		file = Path(tox.replace('.tox', fileSuffix))
 		if checkExists and not file.exists():
 			return
 		return file
@@ -202,9 +203,18 @@ class RaytkTools(RaytkContext):
 		if not info:
 			return
 		spec = self._loadROPSpec(rop, useFile=False, usePars=True)
-		specFile = self._getROPSpecFile(rop, checkExists=False)
+		specFile = self._getROPRelatedFile(rop, '.json', checkExists=False)
 		if specFile and spec:
 			specFile.write_text(spec.toJsonStr(minify=False))
+
+	def saveROPSpec_NEW(self, rop: 'COMP'):
+		try:
+			spec = ROPSpec.extract(rop, skipParams=False)
+			specFile = self._getROPRelatedFile(rop, '.yaml', checkExists=False)
+			spec.writeToFile(specFile)
+		except Exception as err:
+			ui.status = f'Failed to generate ROPSpec for {rop}: {err}'
+			print(f'Failed to generate ROPSpec for {rop}:\n{err}')
 
 	def updateAllROPToolkitVersions(self):
 		version = self.toolkitVersion()
