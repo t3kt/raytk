@@ -28,25 +28,16 @@ def generateInitCode():
 		return ''
 	parts = []
 	if _configPar().Enablepivot:
-		parts += _branchByCoordType(
-			'vec2 pivot = THIS_Pivot.xy;',
-			'vec3 pivot = THIS_Pivot;')
+		parts += ['vec3 pivot = THIS_Pivot;']
 	if _configPar().Enablescale:
 		if _configPar().Scaletype == 'uniform':
 			parts += ['float uniformscale = THIS_Uniformscale;']
 		else:
-			parts += _branchByCoordType(
-				'vec2 scale = THIS_Scale.xy',
-				'vec3 scale = THIS_Scale;')
+			parts += ['vec3 scale = THIS_Scale;']
 	if _configPar().Enablerotate:
-		parts += _branchByCoordType(
-			'float rotate = THIS_Rotatez;',
-			'vec3 rotate = THIS_Rotate;')
+		parts += ['vec3 rotate = THIS_Rotate;']
 	if _configPar().Enabletranslate:
-		parts += _branchByCoordType(
-			'vec2 translate = THIS_Translate.xy;',
-			'vec3 translate = THIS_Translate;'
-		)
+		parts += ['vec3 translate = THIS_Translate;']
 	return '\n'.join(parts)
 
 def _param(name: str):
