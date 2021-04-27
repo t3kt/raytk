@@ -15,6 +15,10 @@ if False:
 		Targetcomp: 'CompParamT'
 	ipar.inspectorCore = _InspectorCorePars()
 
+	class _StatePar(ParCollection):
+		Includeparams: 'BoolParamT'
+	ipar.specPanelState = _StatePar()
+
 class SpecPanel:
 	def __init__(self, ownerComp: 'COMP'):
 		self.ownerComp = ownerComp
@@ -23,6 +27,9 @@ class SpecPanel:
 		info = ROPInfo(ipar.inspectorCore.Targetcomp)
 		if not info:
 			return None
-		spec = extractOpSpec(info.rop, skipParams=True)
+		spec = extractOpSpec(info.rop, skipParams=not ipar.specPanelState.Includeparams)
 		return yaml.dump(spec, default_style='')
+
+	def Update(self):
+		self.ownerComp.op('generateSpec').cook(force=True)
 

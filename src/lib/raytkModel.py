@@ -111,90 +111,6 @@ class _TypeSpec_OLD(_DataObject_OLD):
 	def fromObj(cls, obj):
 		return cls.parse(obj)
 
-_typeSpecPatternPart = r'([\*\w|]+)'
-_signaturePattern = re.compile(
-	fr'\(\s*{_typeSpecPatternPart}\s*,\s*{_typeSpecPatternPart}\s*\)\s*->\s*{_typeSpecPatternPart}')
-
-@dataclass
-class FunctionSignature(_DataObject_OLD):
-	"""
-	Parameter and return types for a function.
-	Can either be a single specific signature, or a collection of possible signatures.
-	For example: "Takes in 2D coords and any type of context and returns either float or vec4",
-	would be represented as:
-	`(vec2, *) -> float|vec4`
-	"""
-	coordType: _TypeSpec_OLD
-	contextType: _TypeSpec_OLD
-	returnType: _TypeSpec_OLD
-
-	def __str__(self):
-		return f'({self.coordType}, {self.contextType})->{self.returnType}'
-
-	@classmethod
-	def parse(cls, s: str):
-		match = _signaturePattern.fullmatch(s.strip())
-		if not match:
-			raise ValueError('Invalid signature: ' + repr(s))
-		return cls(
-			coordType=_TypeSpec_OLD.parse(match.group(1)),
-			contextType=_TypeSpec_OLD.parse(match.group(2)),
-			returnType=_TypeSpec_OLD.parse(match.group(3)),
-		)
-
-	@classmethod
-	def parseOptional(cls, s: Optional[str]):
-		return cls.parse(s) if s else None
-
-	@classmethod
-	def create(cls, coordType: str, contextType: str, returnType: str):
-		return cls(
-			coordType=_TypeSpec_OLD.parse(coordType),
-			contextType=_TypeSpec_OLD.parse(contextType),
-			returnType=_TypeSpec_OLD.parse(returnType),
-		)
-
-	@classmethod
-	def all(cls):
-		return cls(
-			coordType=_TypeSpec_OLD.all(),
-			contextType=_TypeSpec_OLD.all(),
-			returnType=_TypeSpec_OLD.all())
-
-	@classmethod
-	def extractFromHandler(cls, inputHandler: 'COMP'):
-		table = inputHandler.op('supportedTypes')
-		if not table:
-			return cls.all()
-		return cls(
-			coordType=_TypeSpec_OLD.parse(str(table['coordType', 'types'] or '*')),
-			contextType=_TypeSpec_OLD.parse(str(table['contextType', 'types'] or '*')),
-			returnType=_TypeSpec_OLD.parse(str(table['returnType', 'types'] or '*')),
-		)
-
-	def isSingle(self):
-		return self.coordType.isSingle() and self.contextType.isSingle() and self.returnType.isSingle()
-
-	def expandAll(self) -> List['FunctionSignature']:
-		coordTypes = self.coordType.expand(CoordTypes.values)
-		contextTypes = self.contextType.expand(ContextTypes.values)
-		returnTypes = self.returnType.expand(ReturnTypes.values)
-		if self.isSingle():
-			return [self]
-		return [
-			FunctionSignature.create(coord, ctx, ret)
-			for ret in returnTypes
-			for ctx in contextTypes
-			for coord in coordTypes
-		]
-
-	def toObj(self):
-		return str(self)
-
-	@classmethod
-	def fromObj(cls, obj):
-		return cls.parse(obj)
-
 @dataclass
 class OpDefMeta_OLD(_DataObject_OLD):
 	opType: Optional[str] = None
@@ -471,7 +387,7 @@ def extractOpSpec(rop: 'COMP', skipParams=False) -> ROPSpec:
 	spec = ROPSpec(
 		meta=ROPMeta(
 			opType=info.opType,
-			opVersion=info.opVersion,
+			opVersion=int(info.opVersion),
 			opStatus=info.statusLabel,
 		),
 		opDef=ROPDef(
