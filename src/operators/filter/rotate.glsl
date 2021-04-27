@@ -21,7 +21,7 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 	#ifdef THIS_COORD_TYPE_vec2
 		pR(p, radians(r));
 	#else
-		p *= TDRotateOnAxis(radians(r), THIS_Axis);
+		p *= TDRotateOnAxis(radians(r), normalize(THIS_Axis));
 	#endif
 	#ifdef THIS_Usepivot
 	p += pivot;
