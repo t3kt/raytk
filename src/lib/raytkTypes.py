@@ -79,11 +79,11 @@ def evalSpecInOp(spec: str, expandedTypes: str, inputCell: Optional['Cell']) -> 
 	if spec.startswith('@'):
 		return spec
 	useInput, fallback, spec = _parseUseInput(spec)
-	if not useInput:
-		return expandedTypes
-	if inputCell:
+	if useInput and inputCell:
 		return str(inputCell)
-	return fallback or ''
+	if not fallback:
+		return expandedTypes
+	return ' '.join([fallback] + [t for t in expandedTypes.split(' ') if t != fallback])
 
 def restrictExpandedTypes(expandedTypes: str, supportedTypes: List[str]) -> str:
 	return ' '.join([t for t in expandedTypes.split(' ') if t in supportedTypes])
