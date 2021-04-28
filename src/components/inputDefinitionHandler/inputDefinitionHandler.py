@@ -32,7 +32,7 @@ def _checkType(typeName: str, typeCategory: str, onError: 'Optional[Callable[[st
 		if any(t in supported for t in typeName.split(' ')):
 			return True
 	else:
-		if typeName == supported:
+		if typeName in supported:
 			return True
 	if onError:
 		onError(f'Input does not support {typeCategory} {typeName}')
