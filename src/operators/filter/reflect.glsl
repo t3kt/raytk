@@ -20,7 +20,19 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 	//  (-1, 1)  --> (1, 0)
 	setIterationIndex(ctx, (i < 0) ? 1: 0);
 	#endif
-	q -= planeNormal * THIS_Offset * THIS_DIR;
+	float offset = THIS_Offset;
+	#ifdef THIS_Enableblend
+	{
+		float b = clamp((abs(t)+offset) / THIS_Blendrange, 0., 1.);
+		#ifdef THIS_HAS_INPUT_2
+		offset += inputOp2(b, ctx) * THIS_Blendrange;
+		#else
+		offset += b * THIS_Blendrange;
+//		offset += smoothstep(0., 1., b) * THIS_Blendrange;
+		#endif
+	}
+	#endif
+	q -= planeNormal * offset * THIS_DIR;
 	#ifdef THIS_COORD_TYPE_vec2
 	p = q.xy;
 	#else
