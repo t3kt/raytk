@@ -32,31 +32,45 @@ class TestInspectorCore:
 		findings += TestFinding.fromValidationTable(validationErrors)
 		findings += self._parseErrorLines(
 			scope,
-			scope.scriptErrors(recurse=True),
-			TestFindingSource.scriptError,
-			TestFindingStatus.error,
-			includeDetail=includeDetail,
-		)
-		findings += self._parseErrorLines(
-			scope,
-			scope.warnings(recurse=True),
+			scope.path,
+			scope.warnings(recurse=False),
 			TestFindingSource.opWarning,
 			TestFindingStatus.warning,
 			includeDetail=includeDetail,
 		)
+		for child in scope.children:
+			findings += self._parseErrorLines(
+				scope,
+				child.path,
+				child.scriptErrors(recurse=True),
+				TestFindingSource.scriptError,
+				TestFindingStatus.error,
+				includeDetail=includeDetail,
+			)
 		findings += self._parseErrorLines(
 			scope,
-			scope.errors(recurse=True),
+			scope.path,
+			scope.errors(recurse=False),
 			TestFindingSource.opError,
 			TestFindingStatus.error,
 			includeDetail=includeDetail,
 		)
+		for child in scope.children:
+			findings += self._parseErrorLines(
+				scope,
+				child.path,
+				child.errors(recurse=True),
+				TestFindingSource.opError,
+				TestFindingStatus.error,
+				includeDetail=includeDetail,
+			)
 		findings = self._dedupFindings(findings)
 		return findings
 
 	def _parseErrorLines(
 			self,
 			scope: 'COMP',
+			defaultPath: str,
 			text: str,
 			source: 'TestFindingSource',
 			status: 'TestFindingStatus',
@@ -65,11 +79,13 @@ class TestInspectorCore:
 		if not text:
 			return []
 		findings = []
-		for line in text.splitlines():
+		# for line in text.splitlines():
+		for line in [text]:
 			line = line.strip()
 			if not line:
 				continue
 			finding = TestFinding.parseErrorLine(
+				defaultPath,
 				line,
 				source, status,
 				includeDetail

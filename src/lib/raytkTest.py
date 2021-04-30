@@ -83,6 +83,7 @@ class TestFinding:
 	@classmethod
 	def parseErrorLine(
 			cls,
+			defaultPath: str,
 			line: str,
 			source: 'TestFindingSource',
 			status: 'TestFindingStatus',
@@ -92,6 +93,7 @@ class TestFinding:
 		match = _opErrorPattern.fullmatch(line)
 		if not match:
 			return cls(
+				path=defaultPath,
 				status=status,
 				source=source,
 				message=line,
@@ -117,7 +119,7 @@ class TestFinding:
 			else:
 				status = TestFindingStatus.error
 		return cls(
-			path=path,
+			path=path or defaultPath,
 			status=status,
 			source=source,
 			message=message,
@@ -143,7 +145,7 @@ _opErrorPattern = re.compile(r'(.*) \((/.*)\)')
 
 def _parseCompileResultDetail(o: 'Union[glslTOP, glslmultiTOP]') -> 'List[str]':
 	text = o.compileResult
-	print('DEBUG ATTEMPTING to extract COMPILE DETAIL')
+	# print('DEBUG ATTEMPTING to extract COMPILE DETAIL')
 	text = text.strip()
 	if not text:
 		print('DEBUG failed to extract compile detail')
@@ -156,7 +158,7 @@ def _parseCompileResultDetail(o: 'Union[glslTOP, glslmultiTOP]') -> 'List[str]':
 		line = _cleanShaderErrorLine(line)
 		if line not in detail:
 			detail.append(line)
-	print(f'DEBUG extracted compile detail:\n{detail}')
+	# print(f'DEBUG extracted compile detail:\n{detail}')
 	return detail
 
 _ignoredCompilerPatterns = [
