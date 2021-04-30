@@ -214,7 +214,7 @@ class TestManager:
 			self._queueCall(self._runNextTest_stage, stage + 1, name, continueAfter)
 		elif stage == 1:
 			self._processTest()
-			self._queueCall(self._runNextTest_stage, stage + 1, name, continueAfter)
+			self._queueCall(self._runNextTest_stage, stage + 1, name, continueAfter, delayFrames=20)
 		elif stage == 2:
 			result = self._buildTestCaseResult()
 			if result.hasError:
@@ -311,5 +311,5 @@ class TestManager:
 			ipar.uiState.Resultlevelfilter = name
 
 	@staticmethod
-	def _queueCall(method: Callable, *args):
-		run('args[0](*(args[1:]))', method, *args, delayFrames=5, delayRef=root)
+	def _queueCall(method: Callable, *args, delayFrames=5):
+		run('args[0](*(args[1:]))', method, *args, delayFrames=delayFrames, delayRef=root)
