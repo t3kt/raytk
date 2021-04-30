@@ -11,7 +11,6 @@ class TypeSpec:
 	useInput: bool = False
 	supportsAll: bool = False
 	supported: 'Optional[List[str]]' = None
-	fallback: 'Optional[str]' = None
 
 	def expandedTypes(self, allTypes: List[str]) -> List[str]:
 		if self.supportsAll:
@@ -29,10 +28,7 @@ class TypeSpec:
 		else:
 			spec = ' '.join(types)
 		if self.useInput:
-			fallback = self.fallback
-			if not fallback and types:
-				fallback = types[0]
-			return f'useinput|{fallback or ""}:{spec}'
+			return f'useinput|{spec}'
 		return spec
 
 	def formatTypes(self, allTypes: List[str]) -> str:
@@ -43,22 +39,18 @@ class TypeSpec:
 	def parseSpec(cls, spec: str):
 		if not spec:
 			return cls()
-		useInput, fallback, spec = _parseUseInput(spec)
+		useInput, spec = _parseUseInput(spec)
 		return cls(
 			useInput=useInput,
 			supportsAll=spec == '*',
 			supported=None if spec == '*' else spec.split(' '),
-			fallback=fallback,
 		)
 
-def _parseUseInput(spec: str) -> Tuple[bool, str, str]:
+def _parseUseInput(spec: str) -> Tuple[bool, str]:
 	useInput = spec.startswith('useinput|')
-	fallback = None
 	if useInput:
 		spec = spec[9:]  # len('useinput|')
-		if ':' in spec:
-			fallback, spec = spec.split(':', maxsplit=1)
-	return useInput, fallback, spec
+	return useInput, spec
 
 # Evaluates a type spec in an OP, expanding wildcards and inheriting input types or using fallback type.
 # Produces a list of 1 or more concrete type names, or a `@` reference to another op (for reverse inheritance).
@@ -66,8 +58,8 @@ def _parseUseInput(spec: str) -> Tuple[bool, str, str]:
 # Formats for spec input:
 #   `Type1 Type2`
 #   `*`
-#   `useinput|Fallbacktype:Type1 Type2`
-#   `useinput|Fallbacktype:*`
+#   `useinput|Type1 Type2`
+#   `useinput|*`
 #   `@some_op_name`
 #
 # Output formats:
@@ -78,12 +70,10 @@ def _parseUseInput(spec: str) -> Tuple[bool, str, str]:
 def evalSpecInOp(spec: str, expandedTypes: str, inputCell: Optional['Cell']) -> str:
 	if spec.startswith('@'):
 		return spec
-	useInput, fallback, spec = _parseUseInput(spec)
+	useInput, spec = _parseUseInput(spec)
 	if useInput and inputCell:
 		return str(inputCell)
-	if not fallback:
-		return expandedTypes
-	return ' '.join([fallback] + [t for t in expandedTypes.split(' ') if t != fallback])
+	return expandedTypes
 
 def restrictExpandedTypes(expandedTypes: str, supportedTypes: List[str]) -> str:
 	return ' '.join([t for t in expandedTypes.split(' ') if t in supportedTypes])

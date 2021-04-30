@@ -13,14 +13,12 @@ class _Category:
 	togglePrefix: str
 	allToggle: str
 	useInputToggle: str
-	fallbackPar: str
 
 	def __init__(self, name: str):
 		self.name = name
 		self.togglePrefix = name.capitalize()
 		self.allToggle = 'All' + name.lower()
 		self.useInputToggle = 'Useinput' + name.lower()
-		self.fallbackPar = 'Fallback' + name.lower()
 		filterColumn = 'is' + name[0].upper() + name[1:]
 		table = _typeTable()
 		self.allTypes = [
@@ -39,7 +37,6 @@ class _Category:
 				for t in self.allTypes
 				if parent().par[self.togglePrefix + t.lower()]
 			],
-			fallback=str(parent().par[self.fallbackPar]),
 		)
 
 _categories = [
