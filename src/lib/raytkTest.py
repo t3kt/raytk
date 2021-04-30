@@ -118,6 +118,8 @@ class TestFinding:
 				status = TestFindingStatus.warning
 			else:
 				status = TestFindingStatus.error
+			if detail:
+				detail = [d for d in detail if d.strip()]
 		return cls(
 			path=path or defaultPath,
 			status=status,
