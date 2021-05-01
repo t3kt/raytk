@@ -1,6 +1,6 @@
 {
   "meta": {
     "opType": "raytk.operators.sdf.mandelbulbSdf",
-    "opVersion": 5
+    "opVersion": 6
   }
 }

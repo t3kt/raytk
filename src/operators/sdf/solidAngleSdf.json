@@ -1,6 +1,6 @@
 {
   "meta": {
     "opType": "raytk.operators.sdf.solidAngleSdf",
-    "opVersion": 1
+    "opVersion": 2
   }
 }
