@@ -1,8 +1,10 @@
 vec4 thismap(CoordT p, ContextT ctx) {
 	#ifdef THIS_HAS_INPUT_1
 	float q = inputOp1(p, ctx);
+	#elif defined(THIS_Axis_dist)
+	float q = length(p);
 	#else
-	float q = p;
+	float q = p.THIS_Axis;
 	#endif
 	#if defined(THIS_Extendmode_hold)
 	q = clamp(q, 0, 1);
