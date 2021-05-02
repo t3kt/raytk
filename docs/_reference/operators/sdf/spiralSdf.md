@@ -27,8 +27,7 @@ op:
   name: spiralSdf
   opType: raytk.operators.sdf.spiralSdf
   parameters:
-  - label: Enable
-    name: Enable
+  - name: Enable
   - label: Branches
     name: Branches
     summary: The number of arms of the spiral. Fractional values will produce a discontinuity.

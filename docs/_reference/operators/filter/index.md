@@ -55,6 +55,8 @@ cat:
     summary: Repeats space radially, like a kaleidoscope.
   - name: onion
     summary: Converts a solid SDF to a thin shell of the surface.
+  - name: polarToCartesian
+    status: beta
   - name: quantizeCoords
     summary: Quantize coordinates to a 3D grid, which is sort of like "voxelizing"
       the space.

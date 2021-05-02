@@ -46,21 +46,6 @@ op:
   - label: Thickness
     name: Thickness
     summary: The thickness of the bars of the box.
-  - label: Context Type
-    menuOptions:
-    - label: Auto
-      name: auto
-    - label: Context
-      name: Context
-    - label: MaterialContext
-      name: MaterialContext
-    - label: CameraContext
-      name: CameraContext
-    - label: LightContext
-      name: LightContext
-    - label: RayContext
-      name: RayContext
-    name: Contexttype
   summary: SDF for the squared frame of the edges of a box.
 
 ---
