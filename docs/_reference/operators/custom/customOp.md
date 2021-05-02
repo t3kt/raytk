@@ -164,26 +164,18 @@ op:
     name: Typesheader
   - label: Coord Type
     menuOptions:
-    - description: Use whatever type of coordinates the first input uses, or `vec3`
-        if the first input is not connected.
-      label: Use Input
-      name: useinput
     - label: Auto
       name: auto
     - label: 1D
       name: float
-    - label: 3D
-      name: vec3
     - label: 2D
       name: vec2
+    - label: 3D
+      name: vec3
     name: Coordtype
     summary: The type of coordinates that the op uses.
   - label: Return Type
     menuOptions:
-    - description: Use whatever type of return value the first input uses, or `Sdf`
-        if the first input is not connected.
-      label: Use Input
-      name: useinput
     - label: SDF Result
       name: Sdf
     - label: Float
@@ -200,10 +192,6 @@ op:
     menuOptions:
     - label: Auto
       name: auto
-    - description: Use whatever type of context the first input uses, or `Context`
-        if the first input is not connected.
-      label: Use Input
-      name: useinput
     - description: The most commonly used context type, used for the main scene graph.
       label: Context
       name: Context
@@ -242,6 +230,12 @@ op:
   - label: Auto Create Missing Params
     name: Autocreatemissingparams
     summary: Automatically create custom parameters whenever shader code changes.
+  - label: Use Input Coord Type
+    name: Useinputcoordtype
+  - label: Use Input Return Type
+    name: Useinputreturntype
+  - label: Use Input Context Type
+    name: Useinputcontexttype
   status: beta
   summary: A custom operator that integrates blocks of custom shader code into a RayTK
     network.
