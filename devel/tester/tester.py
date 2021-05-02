@@ -1,5 +1,5 @@
 from pathlib import Path
-from typing import Callable, Dict, Optional
+from typing import Callable, Dict, List, Optional
 from raytkTest import TestCaseResult, TestFindingStatus
 from raytkUtil import RaytkContext, recloneComp, Version
 
@@ -23,6 +23,7 @@ if False:
 		Includebeta: 'BoolParamT'
 		Includedeprecated: 'BoolParamT'
 		Running: 'BoolParamT'
+		Filtertext: 'StrParamT'
 	ipar.uiState = _UiStatePars()
 
 	# noinspection PyTypeChecker
@@ -75,10 +76,18 @@ class TestManager:
 		alpha = ipar.uiState.Includealpha
 		beta = ipar.uiState.Includebeta
 		deprecated = ipar.uiState.Includedeprecated
+		filterText = ipar.uiState.Filtertext.eval().strip().lower()
 		casesFolder = Path(self.ownerComp.par.Testcasefolder.eval())
 		for row in range(1, fileTable.numRows):
 			baseName = str(fileTable[row, 'basename'])
 			relPath = str(fileTable[row, 'relpath'])
+			if filterText:
+				if '/' in filterText:
+					if filterText not in relPath.lower():
+						continue
+				else:
+					if filterText not in baseName.lower():
+						continue
 			if 'operators/' in relPath:
 				opName = baseName.split('_', 1)[0]
 				if not opTable[opName, 'name']:
@@ -136,11 +145,30 @@ class TestManager:
 		toolkit.par.Devel = False
 		self.log('Finished loading toolkit')
 
+	def queueFailedTests(self):
+		resultTable = self.ownerComp.op('failedResultTable')
+		if resultTable.numRows < 2 or not resultTable.op('case'):
+			names = []
+		else:
+			names = [n.val for n in resultTable.col('case')[1:]]
+		self.reloadTestTable()
+		self._copyTestsToQueue(filterNames=names)
+
 	def reloadTestQueue(self):
 		self.reloadTestTable()
+		self._copyTestsToQueue()
+
+	def _copyTestsToQueue(self, filterNames: 'Optional[List[str]]' = None):
 		queue = self._testQueue
 		queue.clear()
-		queue.appendCol(self._testTable.col('name')[1:])
+		if filterNames is None:
+			queue.appendCol(self._testTable.col('name')[1:])
+		else:
+			queue.appendCol([
+				c
+				for c in self._testTable.col('name')[1:]
+				if c.val in filterNames
+			])
 
 	def clearResults(self):
 		table = self._resultTable
@@ -301,6 +329,7 @@ class TestManager:
 		self.clearResults()
 		self.reloadTestQueue()
 		ipar.uiState.Running = False
+		ipar.uiState.Filtertext = ''
 
 	@staticmethod
 	def onCountLabelClick(label: 'COMP'):
