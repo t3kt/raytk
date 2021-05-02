@@ -147,7 +147,7 @@ class TestManager:
 
 	def queueFailedTests(self):
 		resultTable = self.ownerComp.op('failedResultTable')
-		if resultTable.numRows < 2 or not resultTable.op('case'):
+		if resultTable.numRows < 2 or not resultTable.col('case'):
 			names = []
 		else:
 			names = [n.val for n in resultTable.col('case')[1:]]
