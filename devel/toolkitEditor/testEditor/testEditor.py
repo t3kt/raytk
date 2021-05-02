@@ -60,6 +60,7 @@ class TestEditor:
 				name += '_test'
 		iop.loader.LoadComponent(tox=toxPath, name=name)
 		self._reloadOutputsSoon()
+		self.ownerComp.op('findingsPanel').cook(force=True)
 
 	@staticmethod
 	def prepareTestTable(dat: 'DAT', inDat: 'DAT', opTable: 'DAT'):
