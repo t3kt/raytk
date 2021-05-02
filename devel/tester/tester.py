@@ -208,6 +208,13 @@ class TestManager:
 				result.name
 			] + finding.toTableRowVals(basePath, includeDetail=True))
 
+	def cancelTestRun(self):
+		if not ipar.uiState.Running:
+			self.log('Already stopped, no canceling necessary')
+			return
+		self.log('Canceling test run...')
+		ipar.uiState.Running = False
+
 	def runQueuedTests(self):
 		queue = self._testQueue
 		if queue.numRows < 1:
@@ -234,6 +241,9 @@ class TestManager:
 		self._queueCall(self._runNextTest_stage, 0, name, continueAfter)
 
 	def _runNextTest_stage(self, stage: int, name: str, continueAfter: bool):
+		if not ipar.uiState.Running:
+			self.log('Canceled test run')
+			return
 		if stage == 0:
 			tox = self._testTable[name, 'tox']
 			if not tox:
