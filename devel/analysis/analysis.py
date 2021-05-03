@@ -79,7 +79,7 @@ def buildOpInfoTable(dat: 'DAT'):
 		dat.appendRow([
 			rop.path,
 			_ropKind(info),
-			info.statusLabel,
+			info.statusLabel or 'stable',
 			hasHelp,
 			info.hasROPInputs,
 			bool(info.subROPs),
