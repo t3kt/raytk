@@ -1,4 +1,4 @@
-from raytkTypes import TypeSpec, evalSpecInOp
+from raytkTypes import evalSpecInOp
 import re
 
 # noinspection PyUnreachableCode

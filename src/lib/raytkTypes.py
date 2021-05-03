@@ -1,4 +1,3 @@
-from dataclasses import dataclass
 from typing import Dict, List, Optional, Tuple
 
 # noinspection PyUnreachableCode
@@ -6,11 +5,15 @@ if False:
 	# noinspection PyUnresolvedReferences
 	from _stubs import *
 
-@dataclass
 class TypeSpec:
 	useInput: bool = False
 	supportsAll: bool = False
 	supported: 'Optional[List[str]]' = None
+
+	def __init__(self, useInput=False, supportsAll=False, supported: Optional[List[str]] = None):
+		self.useInput = useInput
+		self.supportsAll = supportsAll
+		self.supported = supported
 
 	def expandedTypes(self, allTypes: List[str]) -> List[str]:
 		if self.supportsAll:
