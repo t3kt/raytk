@@ -295,24 +295,6 @@ float sdCappedCone(vec3 p, float h, float r1, float r2)
 	return s*sqrt( min(dot2(ca),dot2(cb)) );
 }
 
-//Eiffie
-vec2 sdHelixCoords(vec3 p, float r1, float m, float dualSpread) {
-	float halfm = m*.5,
-	b = mod(p.y, PI*m) - PI*halfm,
-	a = abs(atan(p.x, p.z) * halfm - b);
-	if (a > PI*halfm) a = PI*m - a;
-
-	//optimisation from Shane
-	p.xy = vec2(length(p.xz) - r1, a);
-	p.x = abs(p.x) - dualSpread;
-	return p.xy;
-}
-
-float sdHelix(vec3 p, float r1, float r2, float m, float dualSpread) {
-	vec2 q = sdHelixCoords(p, r1, m, dualSpread);
-	return length(q) - r2;
-}
-
 float sdSegment( in vec2 p, in vec2 a, in vec2 b )
 {
 	vec2 pa = p-a, ba = b-a;
