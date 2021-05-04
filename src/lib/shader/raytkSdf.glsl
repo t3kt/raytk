@@ -139,14 +139,6 @@ float sdOctahedronBound( vec3 p, float s)
 	return (p.x+p.y+p.z-s)*0.57735027;
 }
 
-float sdRhombus(in vec2 p, in vec2 b)
-{
-	vec2 q = abs(p);
-	float h = clamp((-2.0*ndot(q,b)+ndot(b,b))/dot(b,b),-1.0,1.0);
-	float d = length( q - 0.5*b*vec2(1.0-h,1.0+h) );
-	return d * sign( q.x*b.y + q.y*b.x - b.x*b.y );
-}
-
 float sdEquilateralTriangle( in vec2 p )
 {
 	const float k = sqrt(3.0);
@@ -219,39 +211,6 @@ float sdHexagram(in vec2 p, in float r)
 	p -= vec2(clamp(p.x, r*k.z, r*k.w), r);
 	return length(p)*sign(p.y);
 }
-float sdStar(in vec2 p, in float r, in float n, in float m)
-{
-	// next 4 lines can be precomputed for a given shape
-	float an = PI/n;
-	float en = PI/m;  // m is between 2 and n
-	vec2  acs = vec2(cos(an),sin(an));
-	vec2  ecs = vec2(cos(en),sin(en)); // ecs=vec2(0,1) for regular polygon,
-
-	float bn = mod(atan(p.x,p.y),2.0*an) - an;
-	p = length(p)*vec2(cos(bn),abs(sin(bn)));
-	p -= r*acs;
-	p += ecs*clamp( -dot(p,ecs), 0.0, r*acs.y/ecs.y);
-	return length(p)*sign(p.x);
-}
-
-float sdPie( in vec2 p, in vec2 c, in float r )
-{
-	p.x = abs(p.x);
-	float l = length(p) - r;
-	float m = length(p-c*clamp(dot(p,c),0.0,r)); // c = sin/cos of the aperture
-	return max(l,m*sign(c.y*p.x-c.x*p.y));
-}
-
-float sdVesica(vec2 p, float r, float d)
-{
-	p = abs(p);
-	float b = sqrt(r*r-d*d);
-	return ((p.y-b)*d>p.x*b) ? length(p-vec2(0.0,b)) : length(p-vec2(-d,0.0))-r;
-}
-
-float sdSuperQuad(vec2 p, float e) {
-	return pow(pow(p.x,e)+pow(p.y,e),1./e);
-}
 
 // Repeat only a few times: from indices <start> to <stop> (similar to above, but more flexible)
 float pModIntervalMirror1(inout float p, float size, float start, float stop) {
@@ -293,11 +252,4 @@ float sdCappedCone(vec3 p, float h, float r1, float r2)
 	vec2 cb = q - k1 + k2*clamp( dot(k1-q,k2)/dot2(k2), 0.0, 1.0 );
 	float s = (cb.x<0.0 && ca.y<0.0) ? -1.0 : 1.0;
 	return s*sqrt( min(dot2(ca),dot2(cb)) );
-}
-
-float sdSegment( in vec2 p, in vec2 a, in vec2 b )
-{
-	vec2 pa = p-a, ba = b-a;
-	float h = clamp( dot(pa,ba)/dot(ba,ba), 0.0, 1.0 );
-	return length( pa - ba*h );
 }

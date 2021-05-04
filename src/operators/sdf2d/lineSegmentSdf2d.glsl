@@ -1,11 +1,13 @@
 ReturnT thismap(CoordT p, ContextT ctx) {
 	#ifdef THIS_HAS_INPUT_1
 	vec4 pts = inputOp1(p, ctx);
-	vec2 pt1 = pts.xy;
-	vec2 pt2 = pts.zw;
+	vec2 a = pts.xy;
+	vec2 b = pts.zw;
 	#else
-	vec2 pt1 = THIS_Pointa;
-	vec2 pt2 = THIS_Pointb;
+	vec2 a = THIS_Pointa;
+	vec2 b = THIS_Pointb;
 	#endif
-	return createSdf(sdSegment(p, pt1, pt2));
+	vec2 pa = p-a, ba = b-a;
+	float h = clamp( dot(pa,ba)/dot(ba,ba), 0.0, 1.0 );
+	return createSdf(length( pa - ba*h ));
 }
