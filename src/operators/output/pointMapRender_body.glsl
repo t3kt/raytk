@@ -67,6 +67,9 @@ void main() {
 	#if defined(OUTPUT_NORMAL) && defined(THIS_COORD_TYPE_vec3)
 	normalOut = vec4(calcNormal(p), 0.);
 	#endif
+	#if defined(OUTPUT_OBJECTID) && defined(RAYTK_OBJECT_ID_IN_SDF)
+	objectIdOut += res.objectId;
+	#endif
 }
 #elif defined(THIS_RETURN_TYPE_vec4) || defined(THIS_RETURN_TYPE_float)
 void main() {
