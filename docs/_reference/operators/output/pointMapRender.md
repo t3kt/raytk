@@ -80,12 +80,14 @@ op:
     - label: 32-bit float (Mono+Alpha)
       name: monoalpha32float
     name: Format
+  - label: Enable Normal Output
+    name: Enablenormaloutput
+  - label: Enable Object Id Output
+    name: Enableobjectidoutput
   - label: Time Reference Operator
     name: Timerefop
   - label: Shader Builder Config
     name: Shaderbuilderconfig
-  - label: Enable Normal Output
-    name: Enablenormaloutput
   status: beta
 
 ---

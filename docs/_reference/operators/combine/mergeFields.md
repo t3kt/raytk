@@ -134,6 +134,5 @@ op:
     - label: Input 4
       name: input4
     name: Sourcew
-  status: beta
 
 ---

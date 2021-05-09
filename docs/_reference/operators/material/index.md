@@ -33,7 +33,11 @@ cat:
     status: beta
   - name: phongMat
     summary: Material that uses phong shading.
+  - name: reflectContrib
+    status: beta
   - name: reflectMat
+    status: beta
+  - name: sampledPointMat
     status: beta
   - name: skyLightContrib
     status: beta

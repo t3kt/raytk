@@ -11,6 +11,10 @@ op:
   name: colorPaletteFn
   opType: raytk.operators.function.colorPaletteFn
   parameters:
+  - label: Period
+    name: Period
+  - label: Phase
+    name: Phase
   - label: Color 1
     name: Color1
   - label: Color 2

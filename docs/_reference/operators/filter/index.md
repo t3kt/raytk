@@ -61,7 +61,6 @@ cat:
     summary: Quantize coordinates to a 3D grid, which is sort of like "voxelizing"
       the space.
   - name: quantizeValue
-    status: beta
   - name: radialClone
     summary: Repeats an SDF radially around an axis, combining the resulting shapes.
   - name: rangeTransform

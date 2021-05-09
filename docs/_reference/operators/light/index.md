@@ -12,7 +12,7 @@ cat:
   name: light
   operators:
   - name: directionalLight
-    status: beta
+    summary: A directional light.
   - name: hardShadow
     summary: A simple hard-edged shadow.
   - name: linkedLight
