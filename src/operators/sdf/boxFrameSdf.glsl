@@ -1,4 +1,5 @@
 ReturnT thismap(CoordT p, ContextT ctx) {
+	p -= THIS_Translate;
 	vec3 scale = THIS_Scale;
 	#ifdef THIS_HAS_INPUT_1
 	scale *= vec3(inputOp1(p, ctx));
