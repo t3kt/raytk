@@ -1,21 +1,15 @@
 ReturnT thismap(CoordT p, ContextT ctx) {
 	#if !defined(THIS_HAS_INPUT_2)
-		CoordT center = THIS_Center;
+		CoordT center = THIS_asCoordT(THIS_Center);
 		float d = length(p - center);
 	#elif defined(inputOp2_RETURN_TYPE_Sdf)
-		CoordT center = THIS_Center;
+		CoordT center = THIS_asCoordT(THIS_Center);
 		float d = inputOp2(p, ctx).x;
 	#elif defined(inputOp2_RETURN_TYPE_float)
-		CoordT center = THIS_Center;
+		CoordT center = THIS_asCoordT(THIS_Center);
 		float d = inputOp2(p, ctx);
 	#elif defined(inputOp2_RETURN_TYPE_vec4)
-		#if defined(THIS_COORD_TYPE_vec2)
-			CoordT center = inputOp2(p, ctx).xy;
-		#elif defined(THIS_COORD_TYPE_vec3)
-			CoordT center = inputOp2(p, ctx).xyz;
-		#else
-			#error invalidCoordType
-		#endif
+		CoordT center = THIS_asCoordT(inputOp2(p, ctx));
 		float d = length(p - center);
 	#else
 		#error invalidMagnetType
@@ -34,12 +28,12 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 
 	p -= center;
 	#if defined(THIS_COORD_TYPE_vec2)
-	pR(p, THIS_Rotatez);
+	pR(p, THIS_Rotatez * d);
 	#elif defined(THIS_COORD_TYPE_vec3)
 	p *= rotateMatrix(THIS_Rotate * d);
 	#endif
 
-	CoordT scale = mix(CoordT(1.), THIS_Scale, d);
+	CoordT scale = mix(CoordT(1.), THIS_asCoordT(THIS_Scale), d);
 	p /= scale;
 	p += center;
 	ReturnT res = inputOp1(p, ctx);
