@@ -197,12 +197,11 @@ class BuildManager:
 		self.context.detachTox(comp)
 		if len(comp.customPages) <= 1:
 			comp.showCustomOnly = True
-		# self.context.moveNetworkPane(comp)
-		for child in comp.findChildren(type=COMP):
-			self.processOperatorSubComp(child)
 		tools = RaytkTools()
 		tools.updateROPMetadata(comp)
 		tools.updateROPParams(comp)
+		# self.context.moveNetworkPane(comp)
+		self.processOperatorSubCompChildrenOf(comp)
 		# self.context.moveNetworkPane(comp)
 		self.log(f'Updating OP image for {comp}')
 		img = tools.updateOPImage(comp)
@@ -215,14 +214,24 @@ class BuildManager:
 		if self.docProcessor:
 			self.docProcessor.processOp(comp)
 
-	def processOperatorSubComp(self, comp: 'COMP'):
-		# self.context.focusInNetworkPane(comp)
-		self.context.disableCloning(comp)
+	def processOperatorSubCompChildrenOf(self, comp: 'COMP'):
+		subComps = comp.findChildren(type=COMP)
+		if not subComps:
+			return
+		self.context.log(f'Processing {len(subComps)} sub-comps in {comp}')
+		for child in subComps:
+			self.processOperatorSubComp_2(child)
+
+	def processOperatorSubComp_2(self, comp: 'COMP'):
+		self.context.log(f'Processing {comp}')
 		self.context.detachTox(comp)
+		self.context.reclone(comp)
+		self.context.disableCloning(comp)
+		self.processOperatorSubCompChildrenOf(comp)
 
 	def processNestedOperators(self, comp: 'COMP', thenRun: str = None, runArgs: list = None):
 		self.log('Processing nested operators')
-		subOps = comp.findChildren(tags=[RaytkTags.raytkOP.name], depth=3)
+		subOps = comp.findChildren(tags=[RaytkTags.raytkOP.name], depth=4)
 		self.log(f'found {len(subOps)} nested operators')
 		self.queueMethodCall('processNestedOperators_stage', subOps, thenRun, runArgs)
 
