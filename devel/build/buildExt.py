@@ -201,6 +201,10 @@ class BuildManager:
 		tools = RaytkTools()
 		tools.updateROPMetadata(comp)
 		tools.updateROPParams(comp)
+
+		# This really shouldn't be necessary but there's something strange with old cloned components...
+		self.context.safeDestroyOp(comp.op('opDefinition/paramHelpEditor'))
+
 		# self.context.moveNetworkPane(comp)
 		self.processOperatorSubCompChildrenOf(comp)
 		# self.context.moveNetworkPane(comp)
