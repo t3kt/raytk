@@ -139,11 +139,12 @@ class BuildManager:
 
 	def processComponents(self, components: 'COMP', thenRun: str = None, runArgs: list = None):
 		self.log(f'Processing components {components}')
-		self.context.moveNetworkPane(components)
-		self.context.runBuildScript(
-			components.op('BUILD'),
-			thenRun=lambda: self.queueMethodCall(thenRun, *(runArgs or [])),
-			runArgs=[])
+		self.context.focusInNetworkPane(components)
+		try:
+			components.destroy()
+		except:
+			pass
+		self.queueMethodCall(thenRun, *(runArgs or []))
 
 	def processOperators(self, comp: 'COMP', thenRun: str = None, runArgs: list = None):
 		self.log(f'Processing operators {comp}')
