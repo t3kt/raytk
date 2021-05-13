@@ -216,6 +216,10 @@ class ShaderBuilder:
 			'vec2': 'adaptAsVec2',
 			'vec3': 'adaptAsVec3',
 		}
+		returnTypeAdaptFuncs = {
+			'float': 'adaptAsFloat',
+			'vec4': 'adaptAsVec4',
+		}
 		for row in range(1, defsTable.numRows):
 			name = str(defsTable[row, 'name'])
 			coordType = str(defsTable[row, 'coordType'])
@@ -232,6 +236,8 @@ class ShaderBuilder:
 				f'#define {name}_RETURN_TYPE_{returnType}',
 				f'#define {name}_asCoordT {coordTypeAdaptFuncs[coordType]}',
 			]
+			if returnType in returnTypeAdaptFuncs:
+				macros.append(f'#define {name}_asReturnT {returnTypeAdaptFuncs[returnType]}')
 		if typedefs:
 			lines = typedefs + [''] + macros
 		else:
