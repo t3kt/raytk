@@ -46,7 +46,6 @@ op:
   parameters:
   - label: Enable
     name: Enable
-  - label: Mix
-    name: Mix
+  status: beta
 
 ---

@@ -17,6 +17,7 @@ cat:
   - name: axisDistanceField
     summary: A float field that provides the distance from a specific point along
       a single axis.
+  - name: bandField
   - name: cellTileField
     summary: A value field that provides an approximation of repeating cellular (voronoi)
       noise.

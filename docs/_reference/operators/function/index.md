@@ -43,6 +43,7 @@ cat:
   - name: joinFn
     summary: Joins functions end on end.
   - name: modulateFn
+    status: beta
   - name: multiplyFn
     summary: Multiplies the returned values produced by all of the connected input
       functions.
