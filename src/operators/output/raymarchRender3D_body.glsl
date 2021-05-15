@@ -259,7 +259,7 @@ void main()
 	vec2 shift = vec2(0);
 	#endif
 		float renderDepth = uUseRenderDepth > 0 ?
-			min(texture(sTD2DInputs[0], vUV.st + shift).r, RAYTK_MAX_DIST) :
+			min(texture(sTD2DInputs[0], vUV.st).r, RAYTK_MAX_DIST) :
 			RAYTK_MAX_DIST;
 		//-----------------------------------------------------
 		// camera
