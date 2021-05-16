@@ -209,3 +209,13 @@ vec3 goochShading(
 
 	return col;
 }
+
+float attenuateLight(float attenScale, float attenBias, float attenRolloff, float lightDist)
+{
+	float lightAtten = lightDist * attenScale;
+	lightAtten += attenBias;
+	lightAtten = clamp(lightAtten, 0.0, 1.0) * 1.57079633;
+	lightAtten = sin(lightAtten);
+	float finalAtten = pow(lightAtten, attenRolloff);
+	return finalAtten;
+}
