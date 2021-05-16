@@ -77,6 +77,9 @@ cat:
   - name: reshapeValues
     status: beta
     summary: Reshapes the values produced by a field by applying a function.
+  - name: restrictStage
+    status: beta
+    summary: Restricts which render stages an operator is used in.
   - name: rotate
   - name: rotateNormals
     status: beta

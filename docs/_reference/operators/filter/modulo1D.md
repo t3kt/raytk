@@ -96,6 +96,15 @@ op:
       name: alternatingcoord
     name: Iterationtype
     summary: Whether and how to expose iteration values to upstream operators.
+  - label: Limit Type
+    menuOptions:
+    - label: Both
+      name: both
+    - label: Start Only
+      name: start
+    - label: Stop Only
+      name: stop
+    name: Limittype
   summary: Repeats space along one axis.
 
 ---
