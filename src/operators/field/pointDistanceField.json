@@ -1,6 +1,6 @@
 {
   "meta": {
     "opType": "raytk.operators.field.pointDistanceField",
-    "opVersion": 10
+    "opVersion": 11
   }
 }

@@ -1,0 +1,5 @@
+name	label
+xyz	XYZ
+xy	XY
+yz	YZ
+xz	XZ
