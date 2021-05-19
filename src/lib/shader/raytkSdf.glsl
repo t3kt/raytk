@@ -253,3 +253,11 @@ float sdCappedCone(vec3 p, float h, float r1, float r2)
 	float s = (cb.x<0.0 && ca.y<0.0) ? -1.0 : 1.0;
 	return s*sqrt( min(dot2(ca),dot2(cb)) );
 }
+
+float sdRoundedBox( in vec2 p, in vec2 b, in vec4 r )
+{
+	r.xy = (p.x>0.0)?r.xy : r.zw;
+	r.x  = (p.y>0.0)?r.x  : r.y;
+	vec2 q = abs(p)-b+r.x;
+	return min(max(q.x,q.y),0.0) + length(max(q,0.0)) - r.x;
+}
