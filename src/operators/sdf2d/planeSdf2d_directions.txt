@@ -1,0 +1,5 @@
+name	label	expr
+xpos	X+	-p.x + THIS_Offset
+xneg	X-	p.x - THIS_Offset
+ypos	Y+	-p.y + THIS_Offset
+yneg	Y-	p.y - THIS_Offset
