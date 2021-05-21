@@ -17,6 +17,7 @@
     * horseshoeSdf2d
     * bezierSdf2d (#472)
     * blobbyCrossSdf2d (#476)
+    * planeSdf2d (#513)
   * Added hsvColorField (#464)
   * Add spotLight! (#47)
   * Add option to switch off color rendering in raymarchRender3d, which can improve performance when only using other
@@ -27,6 +28,15 @@
   * Added axis parameter in colorRampField
   * Added color field input in directionalLight
   * Added period and phase parameter in colorPaletteFn (#486)
+  * Added object ID output in pointMapRender (#491)
+  * Added material support in pointMapRender (#492)
+  * Added bandField (#500)
+  * Added unidirectional limits in modulo1D (#309)
+  * Added restrictStage (#417, #503)
+  * Added field inputs in cylinderSdf (#508)
+  * Added invert in stepFn (#507)
+  * Added axis limiting in pointDistanceField (#506)
+  * Added archSdf (#510)
 * Changes
   * 
 * Fixes
@@ -38,6 +48,12 @@
   * Fix bugs in 2D support in transform, iteratedTransform, and rangeTransform
   * Fix axis normalization in rotate
   * Fix coordinate handling in helixSdf
+  * Fix translate in boxFrameSdf (#490)
+  * Fix parameter enabling in bend (#493)
+  * Fix 2D issues in magnet (#494)
+  * Fix depth compositing issue with antialiasing (#502)
+  * Fix attenuation issues in linkedLight (#504)
+  * Fix axis bug in mobiusRingSdf (#514)
 * Infrastructure / development
   * Large-scale restructuring of how data types are handled throughout the toolkit. Operators can now support multiple
     variations of coordinate, context, and return types, which downstream operators can restrict and eventually resolve
