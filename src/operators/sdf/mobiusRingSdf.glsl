@@ -30,8 +30,8 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 	#if defined(THIS_Axis_x)
 	p = p.yxz;
 	#elif defined(THIS_Axis_y)
-	p = p.yzx;
 	#elif defined(THIS_Axis_z)
+	p = p.yzx;
 	#else
 	#error invalidAxis
 	#endif
