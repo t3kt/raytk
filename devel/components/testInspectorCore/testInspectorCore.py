@@ -64,6 +64,23 @@ class TestInspectorCore:
 				TestFindingStatus.error,
 				includeDetail=includeDetail,
 			)
+		findings += self._parseErrorLines(
+			scope,
+			scope.path,
+			scope.warnings(recurse=False),
+			TestFindingSource.opWarning,
+			TestFindingStatus.warning,
+			includeDetail=includeDetail,
+		)
+		for child in scope.children:
+			findings += self._parseErrorLines(
+				scope,
+				child.path,
+				child.warnings(recurse=True),
+				TestFindingSource.opWarning,
+				TestFindingStatus.warning,
+				includeDetail=includeDetail,
+			)
 		findings = self._dedupFindings(findings)
 		return findings
 
@@ -140,12 +157,14 @@ class TestInspectorCore:
 			'source',
 			'message',
 		])
+		includeDetail = self.ownerComp.par.Includedetail.eval()
+		if includeDetail:
+			dat.appendCol(['detail'])
 		scope = self._scopeRoot
 		if not scope:
 			return
 		basePath = scope.path + '/'
 		findings = self.GetFindings()
-		includeDetail = self.ownerComp.par.Includedetail.eval()
 		for finding in findings:
 			dat.appendRow(
 				[
