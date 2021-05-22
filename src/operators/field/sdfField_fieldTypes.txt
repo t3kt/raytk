@@ -1,0 +1,7 @@
+name	label
+dist	Distance
+inside	Inside
+outside	Outside
+surface	Surface
+surfaceinside	Surface Inside
+surfaceoutside	Surface Outside
