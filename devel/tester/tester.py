@@ -296,15 +296,26 @@ class TestManager:
 		comp = self._testComp
 		if not comp:
 			return
-		rops = RaytkContext().ropChildrenOf(comp, maxDepth=4)
+		if not comp.valid:
+			self.log(f'For some reason {comp!r} is invalid!')
+			return
+		rops = RaytkContext().ropChildrenOf(comp, maxDepth=1)
 		self.log(f'Found {len(rops)} ROPs in test')
 		# This is breaking connections made by outputOpController on initialization
 		for rop in rops:
+			if not rop.valid:
+				self.log(f'For some reason {rop!r} is invalid!')
+				continue
+			rop.par.reinitnet.pulse()
+			recloneComp(rop)
 			if rop.par['Updateop'] is not None:
 				rop.par.Updateop.pulse()
-			recloneComp(rop)
 		for rop in RaytkContext().ropOutputChildrenOf(comp, maxDepth=4):
-			rop.outputs[0].cook(force=True)
+			if not rop.valid:
+				continue
+			for o in rop.outputs:
+				if o.valid:
+					o.cook(force=True)
 
 	def _buildTestCaseResult(self) -> 'Optional[TestCaseResult]':
 		comp = self._testComp
