@@ -83,6 +83,64 @@ float fOpDifferenceStairs(float a, float b, float r, float n, float o) {
 	return -fOpUnionStairs(-a, b, r, n, o);
 }
 
+// version with offset
+float fOpUnionColumns(float a, float b, float r, float n, float o) {
+	if ((a < r) && (b < r)) {
+		vec2 p = vec2(a, b);
+		float columnradius = r*sqrt(2)/((n-1)*2+sqrt(2));
+		pR45(p);
+		p.x -= sqrt(2)/2*r;
+		p.x += columnradius*sqrt(2);
+		if (mod(n,2) == 1) {
+			p.y += columnradius;
+		}
+		// At this point, we have turned 45 degrees and moved at a point on the
+		// diagonal that we want to place the columns on.
+		// Now, repeat the domain along this direction and place a circle.
+		p.y += o;
+		pMod1(p.y, columnradius*2);
+		float result = length(p) - columnradius;
+		result = min(result, p.x);
+		result = min(result, a);
+		return min(result, b);
+	} else {
+		return min(a, b);
+	}
+}
+
+float fOpDifferenceColumns(float a, float b, float r, float n, float o) {
+	a = -a;
+	float m = min(a, b);
+	//avoid the expensive computation where not needed (produces discontinuity though)
+	if ((a < r) && (b < r)) {
+		vec2 p = vec2(a, b);
+		float columnradius = r*sqrt(2)/n/2.0;
+		columnradius = r*sqrt(2)/((n-1)*2+sqrt(2));
+
+		pR45(p);
+		p.y += columnradius;
+		p.x -= sqrt(2)/2*r;
+		p.x += -columnradius*sqrt(2)/2;
+
+		if (mod(n,2) == 1) {
+			p.y += columnradius;
+		}
+		p.y += o;
+		pMod1(p.y,columnradius*2);
+
+		float result = -length(p) + columnradius;
+		result = max(result, p.x);
+		result = min(result, a);
+		return -min(result, b);
+	} else {
+		return -m;
+	}
+}
+
+float fOpIntersectionColumns(float a, float b, float r, float n, float o) {
+	return fOpDifferenceColumns(a,-b,r, n, o);
+}
+
 float sdTriPrism( vec3 p, vec2 h )
 {
 	vec3 q = abs(p);
