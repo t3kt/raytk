@@ -51,6 +51,7 @@ cat:
   - name: pennerEasingFn
     summary: Robert Penner's collection of easing functions.
   - name: powerCurveFn
+  - name: rainbowFn
   - name: sincCurveFn
   - name: stepFn
     summary: A function that changes from zero to one at a cutoff point.

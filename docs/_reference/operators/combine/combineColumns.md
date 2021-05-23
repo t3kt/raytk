@@ -54,6 +54,19 @@ op:
     - float
     summary: Value field that can be used to vary the radius of the blend region at
       different points in space, by *multiplying* the value of the `Radius` parameter.
+  - contextTypes:
+    - Context
+    - MaterialContext
+    - CameraContext
+    - LightContext
+    - RayContext
+    coordTypes:
+    - vec2
+    - vec3
+    label: Offset Field
+    name: offset_definition_in
+    returnTypes:
+    - float
   name: combineColumns
   opType: raytk.operators.combine.combineColumns
   parameters:
@@ -81,6 +94,8 @@ op:
   - label: Radius
     name: Radius
     summary: The size of the blending region.
+  - label: Offset
+    name: Offset
   summary: Columns SDF combine, producing n-1 circular columns/ridges at a 45 degree
     angles along the blend region.
 
