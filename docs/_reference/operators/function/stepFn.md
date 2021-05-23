@@ -26,6 +26,8 @@ op:
   - label: Blend
     name: Blend
     summary: The amount of smoothing to apply on the edge.
+  - label: Invert
+    name: Invert
   summary: A function that changes from zero to one at a cutoff point.
 
 ---

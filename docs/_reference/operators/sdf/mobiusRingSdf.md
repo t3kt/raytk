@@ -28,8 +28,6 @@ op:
   name: mobiusRingSdf
   opType: raytk.operators.sdf.mobiusRingSdf
   parameters:
-  - label: Enable
-    name: Enable
   - label: Translate
     name: Translate
     summary: Moves the center of the ring.

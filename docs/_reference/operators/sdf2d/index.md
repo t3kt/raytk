@@ -33,6 +33,7 @@ cat:
   - name: parallelogramSdf2d
   - name: pieSdf2d
     summary: SDF for a 2D pie-slice shape.
+  - name: planeSdf2d
   - name: polygonSdf2d
     summary: SDF for several types of 2D polygons.
   - name: rectangleSdf

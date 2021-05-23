@@ -55,6 +55,7 @@ cat:
     summary: A vector field that produces the coordinates in space where it is checked.
   - name: reorderField
     status: beta
+  - name: sdfField
   - name: texture3dField
     status: beta
   - name: textureField

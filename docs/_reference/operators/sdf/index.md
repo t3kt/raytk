@@ -13,6 +13,8 @@ cat:
   operators:
   - name: amazingSurfaceSdf
   - name: apollonianSdf
+  - name: archSdf
+    status: beta
   - name: boxFrameSdf
     summary: SDF for the squared frame of the edges of a box.
   - name: boxSdf
