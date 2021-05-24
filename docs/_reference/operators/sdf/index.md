@@ -68,6 +68,7 @@ cat:
     summary: A prism shape, like a cylinder but with flat sides, along the z axis.
   - name: pyramidSdf
     summary: A pyramid with four sides.
+  - name: segmentedLineSdf
   - name: solidAngleSdf
     summary: A conical slice of a sphere.
   - name: sphereFbmSdf
