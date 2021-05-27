@@ -45,6 +45,8 @@ cat:
   - name: specularContrib
     status: beta
     summary: A material element that provides specular light contribution.
+  - name: toonShadingContrib
+    status: beta
   summary: 'Material operators that are used by renderers to determine the
 
     color of points on the surface of geometry.'

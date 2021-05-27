@@ -59,6 +59,8 @@ op:
     - label: Z
       name: z
     name: Axis
+  - label: Infinite Height
+    name: Infiniteheight
   summary: SDF for a cylinder.
 
 ---
