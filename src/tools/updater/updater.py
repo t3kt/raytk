@@ -13,20 +13,25 @@ class Updater:
 
 	# This MUST remain publicly available since OPs reference it for the `Updateop` par handler.
 	def UpdateOP(self, o: 'COMP'):
+		self._log(f'Updating {o}')
 		info = ROPInfo(o)
 		if not info:
 			self._showError(f'Unable to update {o}, it must be a ROP or RComp')
 			return
 		master = o.par.clone.eval()
-		if not master:
-			self._showError(f'Unable to update {o}, no clone master found')
-			return
+		if not master and o.par.clone.val.startswith('/raytk/'):
+			master = parent.raytk.op(o.par.clone.val.removeprefix('/raytk/'))
+			if not master:
+				self._showError(f'Unable to update {o}, no clone master found')
+				return
+			o.par.clone = master
 		self._log(f'Updating {o} using master {master}')
 		o.par.enablecloningpulse.pulse()
 		img = o.op('*Definition/opImage')
 		if img:
 			o.par.opviewer.val = img
 			o.viewer = True
+		o.par.clone = master.par.clone.val
 
 	def _showError(self, msg: str):
 		self._log(msg)
