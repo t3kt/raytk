@@ -3,6 +3,8 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 	float q = inputOp1(p, ctx);
 	#elif defined(THIS_Axis_dist)
 	float q = length(p);
+	#elif defined(THIS_COORD_TYPE_float)
+	float q = p;
 	#else
 	float q = p.THIS_Axis;
 	#endif
