@@ -102,6 +102,25 @@ class BuildContext:
 				continue
 			par.val = par.default
 
+	def lockROPPars(self, comp: 'COMP'):
+		info = ROPInfo(comp)
+		if not info:
+			return
+		names = tdu.expand(info.opDefPar.Lockpars.eval().strip())
+		if not names:
+			return
+		pars = comp.pars(*[pn.strip() for pn in names])
+		self.log(f'Locking pars on {comp}: {[p.name for p in pars]}')
+		for p in pars:
+			p.val = p.default
+		processedTuplets = set()
+		for p in pars:
+			if p.tupletName in processedTuplets:
+				continue
+			p.enableExpr = ''
+			p.enable = False
+			processedTuplets.add(p.tupletName)
+
 	def reloadTox(self, comp: 'COMP'):
 		if not comp or not comp.par['reinitnet'] or not comp.par['externaltox']:
 			return

@@ -61,6 +61,7 @@ class _OpMetaPars:
 	Raytkopversion: 'IntParamT'
 	Raytkopstatus: 'StrParamT'
 	Raytkversion: 'StrParamT'
+	Lockpars: 'StrParamT'
 
 class CompDefParsT(_OpMetaPars):
 	Help: 'DatParamT'

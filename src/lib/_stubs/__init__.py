@@ -334,6 +334,7 @@ class Par:
 	normMax: float
 	normVal: float
 	enable: bool
+	enableExpr: str
 	order: int
 	page: 'Page'
 	password: bool
