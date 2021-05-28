@@ -200,6 +200,10 @@ vec3 getColor(vec3 p, MaterialContext matCtx) {
 		p2 = matCtx.result.materialPos2.xyz;
 	}
 	#endif
+	#ifdef RAYTK_USE_UV
+	vec4 uv1 = matCtx.result.uv;
+	vec4 uv2 = mix(matCtx.result.uv2, matCtx.result.uv, matCtx.result.uv2.w);
+	#endif
 	#if defined(THIS_Enableshadow) && defined(RAYTK_USE_SHADOW)
 	if (matCtx.result.useShadow) {
 		matCtx.shadedLevel = calcShadedLevel(p, matCtx);
@@ -210,19 +214,31 @@ vec3 getColor(vec3 p, MaterialContext matCtx) {
 		#ifdef RAYTK_USE_MATERIAL_POS
 		matCtx.materialPos = p1;
 		#endif
+		#ifdef RAYTK_USE_UV
+		matCtx.uv = uv1;
+		#endif
 		col = getColorInner(p, matCtx, m1);
 	} else if (ratio >= 1) {
 		#ifdef RAYTK_USE_MATERIAL_POS
 		matCtx.materialPos = p2;
+		#endif
+		#ifdef RAYTK_USE_UV
+		matCtx.uv = uv2;
 		#endif
 		col = getColorInner(p, matCtx, m2);
 	} else {
 		#ifdef RAYTK_USE_MATERIAL_POS
 		matCtx.materialPos = p1;
 		#endif
+		#ifdef RAYTK_USE_UV
+		matCtx.uv = uv1;
+		#endif
 		vec3 col1 = getColorInner(p, matCtx, m1);
 		#ifdef RAYTK_USE_MATERIAL_POS
 		matCtx.materialPos = p2;
+		#endif
+		#ifdef RAYTK_USE_UV
+		matCtx.uv = uv2;
 		#endif
 		vec3 col2 = getColorInner(p, matCtx, m2);
 		col = mix(col1, col2, ratio);

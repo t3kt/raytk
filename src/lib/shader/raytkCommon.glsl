@@ -71,6 +71,17 @@ struct Sdf {
 	#ifdef RAYTK_USE_SHADOW
 	bool useShadow;
 	#endif
+
+	#ifdef RAYTK_USE_UV
+	// For material 1
+	// xyz: UVW
+	// w: whether this has been set
+	vec4 uv;
+	// For material 2
+	// xyz: UVW
+	// w: whether this has been set
+	vec4 uv2;
+	#endif
 };
 
 int resultMaterial1(Sdf res) { return int(res.mat.x); }
@@ -111,6 +122,10 @@ Sdf createSdf(float dist) {
 	// Switching this on by default since the default material uses shadows.
 	res.useShadow = true;
 	#endif
+	#ifdef RAYTK_USE_UV
+	res.uv = vec4(0.);
+	res.uv2 = vec4(0.);
+	#endif
 	return res;
 }
 
@@ -148,6 +163,10 @@ void blendInSdf(inout Sdf res1, in Sdf res2, in float amt) {
 	#ifdef RAYTK_USE_SHADOW
 	res1.useShadow = res1.useShadow || (res2.useShadow && resultMaterialInterp(res2) >= 1.0);
 	#endif
+
+	#ifdef RAYTK_USE_UV
+	res1.uv2 = res2.uv;
+	#endif
 }
 
 Sdf mixVals(in Sdf res1, in Sdf res2, float amt) {
@@ -166,6 +185,13 @@ void assignMaterialWithPos(inout Sdf res, int materialId, vec3 materialPos) {
 	res.materialPos2 = vec4(0.);
 }
 #endif
+
+void assignUV(inout Sdf res, vec3 uv) {
+	#ifdef RAYTK_USE_UV
+	res.uv = vec4(uv, 1.);
+	res.uv2 = vec4(0.);
+	#endif
+}
 
 #ifndef RAYTK_MAX_DIST
 	#define RAYTK_MAX_DIST 99999
@@ -280,6 +306,11 @@ struct MaterialContext {
 	vec3 materialPos;
 	#endif
 	float shadedLevel;
+	#ifdef RAYTK_USE_UV
+	// xyz: UVW
+	// w: whether this has been set
+	vec4 uv;
+	#endif
 };
 
 MaterialContext createMaterialContext() {

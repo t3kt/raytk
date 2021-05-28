@@ -1,3 +1,7 @@
 ReturnT thismap(CoordT p, ContextT ctx) {
-	return createSdf(p.THIS_AXIS - THIS_Offset);
+	ReturnT res = createSdf(p.THIS_AXIS - THIS_Offset);
+	#ifdef RAYTK_USE_UV
+	assignUV(res, vec3(p.THIS_PLANE, 0.));
+	#endif
+	return res;
 }

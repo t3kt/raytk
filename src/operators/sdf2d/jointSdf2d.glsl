@@ -3,13 +3,21 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 	float a = THIS_Bend*PI;
 	float l = THIS_Length;
 	float w = THIS_Thickness;
+	ReturnT res;
 
 	// if perfectly straight
 	if( abs(a)<0.001 )
 	{
 		// THIS IS INCORRECT!
+		float v = p.y;
 		p.y -= clamp(p.y,0.0,l);
-		return createSdf(length(p)-w);
+		res = createSdf(length(p)-w);
+
+		#ifdef RAYTK_USE_UV
+		assignUV(res, vec3(p.x, v, 0.));
+		#endif
+
+		return res;
 	}
 
 	// parameters
@@ -35,5 +43,23 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 	#error invalidShape
 	#endif
 
-	return createSdf(d);
+	res = createSdf(d);
+
+	#ifdef RAYTK_USE_UV
+	{
+		float s = sign(a);
+		float v = ra*atan(s*p.y,-s*p.x);
+		u = u*s;
+		#ifdef THIS_Shape_round
+		if( v<0.0 )
+		{
+			if( s*p.x>0.0 ) { v = abs(ra)*TAU + v; }
+			else { v = p.y; u = q.x + ra; }
+		}
+		#endif
+		assignUV(res, vec3(u, v, 0.));
+	}
+	#endif
+
+	return res;
 }
