@@ -42,6 +42,8 @@ class RaytkTools(RaytkContext):
 		info.opVersion = versionVal
 		info.toolkitVersion = self.toolkitVersion()
 		info.helpUrl = f'https://t3kt.github.io/raytk/reference/opType/{info.opType}/'
+		# Ensure that status is copied to the opDefinition parameter
+		info.opDefPar.Raytkopstatus = info.statusLabel
 
 	@staticmethod
 	def updateROPParams(rop: 'COMP'):
@@ -156,6 +158,7 @@ class RaytkTools(RaytkContext):
 		info = ROPInfo(rop)
 		if not info or not info.isMaster:
 			return
+		info.opDefPar.Raytkopstatus = status or 'default'
 		# note: since applying with status false resets the color, the false ones have to be done before the true one
 		if status == 'alpha':
 			RaytkTags.beta.apply(info.rop, False)

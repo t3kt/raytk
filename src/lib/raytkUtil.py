@@ -59,6 +59,7 @@ class _OpMetaPars:
 	enablecloningpulse: 'Par'
 	Raytkoptype: 'StrParamT'
 	Raytkopversion: 'IntParamT'
+	Raytkopstatus: 'StrParamT'
 	Raytkversion: 'StrParamT'
 
 class CompDefParsT(_OpMetaPars):
@@ -200,19 +201,33 @@ class ROPInfo:
 		return _isRComp(self.rop)
 
 	@property
+	def _statusInParam(self):
+		if not self:
+			return ''
+		val = str(self.opDefPar['Raytkopstatus'] or '')
+		return '' if val == 'unset' else val
+
+	@_statusInParam.setter
+	def _statusInParam(self, val: str):
+		self.opDefPar.Raytkopstatus = val
+
+	@property
 	def isBeta(self):
-		return RaytkTags.beta.isOn(self.rop)
+		return self._statusInParam == 'beta' or RaytkTags.beta.isOn(self.rop)
 
 	@property
 	def isAlpha(self):
-		return RaytkTags.alpha.isOn(self.rop)
+		return self._statusInParam == 'alpha' or RaytkTags.alpha.isOn(self.rop)
 
 	@property
 	def isDeprecated(self):
-		return RaytkTags.deprecated.isOn(self.rop)
+		return self._statusInParam == 'deprecated' or RaytkTags.deprecated.isOn(self.rop)
 
 	@property
 	def statusLabel(self):
+		val = self._statusInParam
+		if val:
+			return val
 		if self.isDeprecated:
 			return 'deprecated'
 		elif self.isAlpha:
