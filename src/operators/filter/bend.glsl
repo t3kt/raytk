@@ -1,5 +1,5 @@
 ReturnT thismap(CoordT p, ContextT ctx) {
-	vec3 q = p.THIS_Direction;
+	vec3 q = adaptAsVec3(p).THIS_Direction;
 	#ifdef THIS_HAS_INPUT_2
 		#if defined(inputOp2_COORD_TYPE_float)
 		float fieldP = q.x;
@@ -24,6 +24,12 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 	q.x += THIS_Shift;
 	q = opCheapBendPos(q, amt);
 	q.x -= THIS_Shift;
+	#if defined(THIS_COORD_TYPE_vec2)
+	p.THIS_Toward = q.y;
+	#elif defined(THIS_COORD_TYPE_vec3)
 	p.THIS_Direction = q;
+	#else
+	#error invalidCoordType
+	#endif
 	return inputOp1(p, ctx);
 }
