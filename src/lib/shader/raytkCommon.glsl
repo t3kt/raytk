@@ -954,6 +954,9 @@ vec4 adaptAsVec4(vec2 p) { return vec4(p, 0., 0.); }
 vec4 adaptAsVec4(vec3 p) { return vec4(p, 0.); }
 vec4 adaptAsVec4(vec4 p) { return p; }
 
+vec2 fillToVec2(float p) { return vec2(p); }
+vec2 fillToVec2(vec4 p) { return p.xy; }
+
 vec3 fillToVec3(float p) { return vec3(p); }
 vec3 fillToVec3(vec4 p) { return p.xyz; }
 
