@@ -18,6 +18,12 @@
     * bezierSdf2d (#472)
     * blobbyCrossSdf2d (#476)
     * planeSdf2d (#513)
+    * ellipseSdf2d (#524)
+    * jointSdf2d (#525)
+    * quadSdf (#532)
+  * Added 3D SDFs:
+    * segmentedLineSdf (#119)
+    * archSdf (#510)
   * Added hsvColorField (#464)
   * Add spotLight! (#47)
   * Add option to switch off color rendering in raymarchRender3d, which can improve performance when only using other
@@ -36,7 +42,11 @@
   * Added field inputs in cylinderSdf (#508)
   * Added invert in stepFn (#507)
   * Added axis limiting in pointDistanceField (#506)
-  * Added archSdf (#510)
+  * Added sdfField for converting SDFs to fields (#516)
+  * Added rainbowFn (#517)
+  * Added offset parameter in combineColumns (#391)
+  * Added shapedCombine (#444)
+  * Added infinite height option in cylinderSdf (#520)
 * Changes
   * 
 * Fixes
@@ -60,7 +70,6 @@
     to single concrete types.
     * The main user-facing result is that fields don't need to specify their context type since whatever they're fed
       into can automatically switch it to the right type.
-    * 
 
 ## v0.13
 
