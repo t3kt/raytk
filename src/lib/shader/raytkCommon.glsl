@@ -898,6 +898,9 @@ float dot2( in vec3 v ) { return dot(v,v); }
 float map01(float value, float inMin, float inMax) {
 	return (value - inMin) / (inMax - inMin);
 }
+vec3 map01(vec3 value, vec3 inMin, vec3 inMax) {
+	return (value - inMin) / (inMax - inMin);
+}
 
 // from Logarithmic Mobius Transform by Shane
 // https://www.shadertoy.com/view/4dcSWs

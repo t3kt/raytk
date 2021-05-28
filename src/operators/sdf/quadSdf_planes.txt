@@ -1,0 +1,5 @@
+name	label	axis
+xy	XY	z
+yz	YZ	x
+zx	ZX	y
+custom	Custom	

@@ -1,0 +1,1 @@
+parent().par.Plane != 'custom'	'THIS_Axis'	op('planes')[parent().par.Plane.eval(), 'axis']
