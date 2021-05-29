@@ -49,6 +49,8 @@
   * Added offset parameter in combineColumns (#391)
   * Added shapedCombine (#444)
   * Added infinite height option in cylinderSdf (#520)
+* Changes
+  * pointMapRender's SDF output will no longer contain material identifiers. The RGB channels will all contain the distance, with A indicating whether the point existed in the input. (#541)
 * Fixes
   * Fix inspector support for inputs 5-8
   * Fix errors in blend (#469)
