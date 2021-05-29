@@ -4,7 +4,9 @@
 
 ### Highlights
 
+* Volumetric point map rendering
 * Reflection material and reflection support in modular materials! (#9, #481)
+* Lots of new SDFs
 
 ### Details
 
@@ -47,8 +49,6 @@
   * Added offset parameter in combineColumns (#391)
   * Added shapedCombine (#444)
   * Added infinite height option in cylinderSdf (#520)
-* Changes
-  * 
 * Fixes
   * Fix inspector support for inputs 5-8
   * Fix errors in blend (#469)
