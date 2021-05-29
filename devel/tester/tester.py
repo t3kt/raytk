@@ -299,7 +299,7 @@ class TestManager:
 		if not comp.valid:
 			self.log(f'For some reason {comp!r} is invalid!')
 			return
-		rops = RaytkContext().ropChildrenOf(comp, maxDepth=1)
+		rops = RaytkContext().ropChildrenOf(comp, maxDepth=2)
 		self.log(f'Found {len(rops)} ROPs in test')
 		# This is breaking connections made by outputOpController on initialization
 		for rop in rops:
