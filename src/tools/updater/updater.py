@@ -20,7 +20,10 @@ class Updater:
 			return
 		master = o.par.clone.eval()
 		if not master and o.par.clone.val.startswith('/raytk/'):
-			master = parent.raytk.op(o.par.clone.val.removeprefix('/raytk/'))
+			path = o.par.clone.val  # type: str
+			if path.startswith('/raytk/'):
+				path = path.replace('/raytk/', '')
+			master = parent.raytk.op(path)
 			if not master:
 				self._showError(f'Unable to update {o}, no clone master found')
 				return
