@@ -1,6 +1,7 @@
 {
   "meta": {
+    "opStatus": "default",
     "opType": "raytk.operators.filter.rescaleField",
-    "opVersion": 11
+    "opVersion": 12
   }
 }
