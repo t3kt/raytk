@@ -45,6 +45,10 @@ class ShaderBuilder:
 				return o.par
 		return self.ownerComp.par
 
+	def preprocessDefinitions(self, dat: 'scriptDAT'):
+		# BEFORE definitions are reversed, so a def's inputs are always BELOW it in the table
+		pass
+
 	def definitionTable(self) -> 'DAT':
 		# in reverse order (aka declaration order)
 		return self.ownerComp.op('definitions')
@@ -207,6 +211,15 @@ class ShaderBuilder:
 		defsTable = self.definitionTable()
 		typedefs = []
 		macros = []
+		coordTypeAdaptFuncs = {
+			'float': 'adaptAsFloat',
+			'vec2': 'adaptAsVec2',
+			'vec3': 'adaptAsVec3',
+		}
+		returnTypeAdaptFuncs = {
+			'float': 'adaptAsFloat',
+			'vec4': 'adaptAsVec4',
+		}
 		for row in range(1, defsTable.numRows):
 			name = str(defsTable[row, 'name'])
 			coordType = str(defsTable[row, 'coordType'])
@@ -221,7 +234,10 @@ class ShaderBuilder:
 				f'#define {name}_COORD_TYPE_{coordType}',
 				f'#define {name}_CONTEXT_TYPE_{contextType}',
 				f'#define {name}_RETURN_TYPE_{returnType}',
+				f'#define {name}_asCoordT {coordTypeAdaptFuncs[coordType]}',
 			]
+			if returnType in returnTypeAdaptFuncs:
+				macros.append(f'#define {name}_asReturnT {returnTypeAdaptFuncs[returnType]}')
 		if typedefs:
 			lines = typedefs + [''] + macros
 		else:

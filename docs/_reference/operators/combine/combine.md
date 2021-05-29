@@ -17,7 +17,6 @@ op:
     To combine more than two SDFs, use one of the specialized operators like [`simpleUnion`](/raytk/reference/operators/combine/).'
   inputs:
   - contextTypes:
-    - none
     - Context
     - MaterialContext
     - CameraContext
@@ -33,7 +32,6 @@ op:
     returnTypes:
     - Sdf
   - contextTypes:
-    - none
     - Context
     - MaterialContext
     - CameraContext
@@ -49,7 +47,6 @@ op:
     returnTypes:
     - Sdf
   - contextTypes:
-    - none
     - Context
     - MaterialContext
     - CameraContext

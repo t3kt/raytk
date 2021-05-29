@@ -5,7 +5,7 @@ if False:
 
 def onCook(dat):
 	dat.clear()
-	mode = parent().par.Labeltype
+	mode = parent().par.Labeltype.eval()
 	if mode == 'par':
 		o = op(parent().par.Targetop)
 		par = o.par[parent().par.Param]
@@ -20,7 +20,7 @@ def onCook(dat):
 	else:
 		text = parent().par.Label
 
-	suffix = parent().par.Suffix
+	suffix = parent().par.Suffix.eval()
 	if suffix:
 		if text and not suffix.startswith(' '):
 			suffix = ' ' + suffix

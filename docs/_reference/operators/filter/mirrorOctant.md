@@ -10,7 +10,6 @@ op:
   category: filter
   inputs:
   - contextTypes:
-    - none
     - Context
     - MaterialContext
     - CameraContext
@@ -29,7 +28,6 @@ op:
     - Ray
     - Light
   - contextTypes:
-    - none
     - Context
     - MaterialContext
     - CameraContext
@@ -49,7 +47,6 @@ op:
       position along the mirror axes. If it is a 3D field, it is given the raw position.
       The value is converted to radians and *added* to the `Rotateaxis` parameter.
   - contextTypes:
-    - none
     - Context
     - MaterialContext
     - CameraContext

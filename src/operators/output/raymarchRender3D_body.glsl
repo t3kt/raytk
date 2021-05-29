@@ -130,6 +130,7 @@ float calcShadowDefault(in vec3 p, MaterialContext matCtx) {
 // Source - https://www.shadertoy.com/view/lsKcDD
 float calcAO( in vec3 pos, in vec3 nor )
 {
+	int priorStage = pushStage(RAYTK_STAGE_OCCLUSION);
 //	float occ = uAO.x;
 //	float sca = uAO.y;
 	float occ = 0.0;
@@ -145,6 +146,7 @@ float calcAO( in vec3 pos, in vec3 nor )
 		occ += -(dd-hr)*sca;
 		sca *= 0.95;
 	}
+	popStage(priorStage);
 	return clamp( 1.0 - 3.0*occ, 0.0, 1.0 );
 }
 
@@ -185,9 +187,9 @@ vec3 getColorInner(vec3 p, MaterialContext matCtx, int m) {
 vec3 getColor(vec3 p, MaterialContext matCtx) {
 	if (isNonHitSdf(matCtx.result)) return vec3(0.);
 	vec3 col = vec3(0);
-	float ratio = matCtx.result.interpolant;
-	int m1 = int(matCtx.result.material);
-	int m2 = int(matCtx.result.material2);
+	float ratio = resultMaterialInterp(matCtx.result);
+	int m1 = resultMaterial1(matCtx.result);
+	int m2 = resultMaterial2(matCtx.result);
 	#ifdef RAYTK_USE_MATERIAL_POS
 	vec3 p1 = p;
 	vec3 p2 = p;
@@ -198,29 +200,45 @@ vec3 getColor(vec3 p, MaterialContext matCtx) {
 		p2 = matCtx.result.materialPos2.xyz;
 	}
 	#endif
-	#ifdef RAYTK_USE_SHADOW
+	#ifdef RAYTK_USE_UV
+	vec4 uv1 = matCtx.result.uv;
+	vec4 uv2 = mix(matCtx.result.uv2, matCtx.result.uv, matCtx.result.uv2.w);
+	#endif
+	#if defined(THIS_Enableshadow) && defined(RAYTK_USE_SHADOW)
 	if (matCtx.result.useShadow) {
-		matCtx.shadedLevel = getShadedLevel(p, matCtx);
+		matCtx.shadedLevel = calcShadedLevel(p, matCtx);
 	}
 	#endif
 	int priorStage = pushStage(RAYTK_STAGE_MATERIAL);
-	if (ratio <= 0) {
+	if (ratio <= 0 || m1 == m2) {
 		#ifdef RAYTK_USE_MATERIAL_POS
 		matCtx.materialPos = p1;
+		#endif
+		#ifdef RAYTK_USE_UV
+		matCtx.uv = uv1;
 		#endif
 		col = getColorInner(p, matCtx, m1);
 	} else if (ratio >= 1) {
 		#ifdef RAYTK_USE_MATERIAL_POS
 		matCtx.materialPos = p2;
 		#endif
+		#ifdef RAYTK_USE_UV
+		matCtx.uv = uv2;
+		#endif
 		col = getColorInner(p, matCtx, m2);
 	} else {
 		#ifdef RAYTK_USE_MATERIAL_POS
 		matCtx.materialPos = p1;
 		#endif
+		#ifdef RAYTK_USE_UV
+		matCtx.uv = uv1;
+		#endif
 		vec3 col1 = getColorInner(p, matCtx, m1);
 		#ifdef RAYTK_USE_MATERIAL_POS
 		matCtx.materialPos = p2;
+		#endif
+		#ifdef RAYTK_USE_UV
+		matCtx.uv = uv2;
 		#endif
 		vec3 col2 = getColorInner(p, matCtx, m2);
 		col = mix(col1, col2, ratio);
@@ -245,7 +263,6 @@ void main()
 	#endif
 	initOutputs();
 
-	MaterialContext matCtx = createMaterialContext();
 
 	#if THIS_ANTI_ALIAS > 1
 	vec2 shiftStart = vec2(-float(THIS_ANTI_ALIAS) / 2.0);
@@ -258,7 +275,7 @@ void main()
 	vec2 shift = vec2(0);
 	#endif
 		float renderDepth = uUseRenderDepth > 0 ?
-			min(texture(sTD2DInputs[0], vUV.st + shift).r, RAYTK_MAX_DIST) :
+			min(texture(sTD2DInputs[0], vUV.st).r, RAYTK_MAX_DIST) :
 			RAYTK_MAX_DIST;
 		//-----------------------------------------------------
 		// camera
@@ -292,21 +309,24 @@ void main()
 
 			#ifdef OUTPUT_SDF
 			#ifdef RAYTK_STEPS_IN_SDF
-			sdfOut += vec4(res.x, res.material, res.steps, 1);
+			sdfOut += vec4(res.x, resultMaterial1(res), res.steps, 1);
 			#else
 			// the raymarch ROP always switches on RAYTK_STEPS_IN_SDF if it's outputting
 			// SDF data, so this case never actually occurs.
-			sdfOut += vec4(res.x, res.material, 0, 1);
+			sdfOut += vec4(res.x, resultMaterial1(res), 0, 1);
 			#endif
 			#endif
 
+			MaterialContext matCtx = createMaterialContext();
 			matCtx.result = res;
 			matCtx.ray = ray;
+			#if defined(OUTPUT_COLOR) || defined(OUTPUT_NORMAL) || (defined(RAYTK_USE_REFLECTION) && defined(THIS_Enablereflection))
 			matCtx.normal = calcNormal(p);
-			LightContext lightCtx;
-			lightCtx.result = res;
-			lightCtx.normal = matCtx.normal;
+			#endif
+			#if defined(OUTPUT_COLOR)
+			LightContext lightCtx = createLightContext(res, matCtx.normal);
 			matCtx.light = getLight(p, lightCtx);
+			#endif
 
 			#ifdef OUTPUT_NORMAL
 			normalOut += vec4(matCtx.normal, 0);
@@ -316,16 +336,21 @@ void main()
 				matCtx.reflectColor = vec3(0);
 				#if defined(RAYTK_USE_REFLECTION) && defined(THIS_Enablereflection)
 				MaterialContext reflectMatCtx = matCtx;
+				vec3 reflectPos = p;
 				int priorStage = pushStage(RAYTK_STAGE_REFLECT);
+
 				for (int k = 0; k < THIS_Reflectionpasses; k++) {
-					if (reflectMatCtx.result.reflect) {
-						reflectMatCtx.ray.dir = reflect(reflectMatCtx.ray.dir, reflectMatCtx.normal);
-						reflectMatCtx.ray.pos += reflectMatCtx.normal * 0.0001;
-						reflectMatCtx.result = castRayBasic(reflectMatCtx.ray, RAYTK_MAX_DIST);
-						if (isNonHitSdf(reflectMatCtx.result)) break;
-						vec3 reflectPos = reflectMatCtx.ray.pos + reflectMatCtx.ray.dir * reflectMatCtx.result.x;
-						reflectMatCtx.normal = calcNormal(reflectPos);
-						matCtx.reflectColor += getColor(reflectPos, reflectMatCtx);
+					reflectMatCtx.ray.pos = reflectPos + reflectMatCtx.normal * RAYTK_SURF_DIST;
+					reflectMatCtx.ray.dir = reflect(ray.dir, matCtx.normal);
+					reflectMatCtx.result = castRayBasic(reflectMatCtx.ray, RAYTK_MAX_DIST);
+					if (isNonHitSdf(reflectMatCtx.result)) {
+						break;
+					}
+					reflectPos = reflectMatCtx.ray.pos + matCtx.normal * reflectMatCtx.result.x;
+					reflectMatCtx.normal = calcNormal(reflectPos);
+					matCtx.reflectColor += getColor(reflectPos, reflectMatCtx);
+					if (!reflectMatCtx.result.reflect) {
+						break;
 					}
 				}
 				popStage(priorStage);

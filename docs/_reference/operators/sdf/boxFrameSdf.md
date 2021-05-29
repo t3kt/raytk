@@ -10,7 +10,6 @@ op:
   category: sdf
   inputs:
   - contextTypes:
-    - none
     - Context
     - MaterialContext
     - CameraContext
@@ -24,7 +23,6 @@ op:
     - float
     - vec4
   - contextTypes:
-    - none
     - Context
     - MaterialContext
     - CameraContext

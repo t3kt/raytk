@@ -24,23 +24,17 @@ op:
       name: vec3
     name: Coordtype
     summary: The type of coordinates to use.
-  - label: Context Type
+  - label: Axes
     menuOptions:
-    - label: None
-      name: none
-    - label: Context
-      name: Context
-    - label: Material Context
-      name: MaterialContext
-    - label: Camera Context
-      name: CameraContext
-    - label: Light Context
-      name: LightContext
-    - label: Ray Context
-      name: RayContext
-    name: Contexttype
-    summary: The context type, which should usually be `Context`, except when used
-      for materials.
+    - label: XYZ
+      name: xyz
+    - label: XY
+      name: xy
+    - label: YZ
+      name: yz
+    - label: XZ
+      name: xz
+    name: Axes
   summary: A float field that provides the distance from a specific point in space.
 
 ---

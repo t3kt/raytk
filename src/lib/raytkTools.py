@@ -1,7 +1,8 @@
 from pathlib import Path
 from raytkDocs import OpDocManager
-from raytkModel import OpDefMeta_OLD, OpSpec_OLD
-from raytkUtil import RaytkContext, ROPInfo, focusCustomParameterPage, RaytkTags, CategoryInfo
+from raytkModel import OpDefMeta_OLD, OpSpec_OLD, ROPSpec
+from raytkUtil import RaytkContext, ROPInfo, focusFirstCustomParameterPage, RaytkTags, CategoryInfo, ContextTypes, \
+	CoordTypes, ReturnTypes
 from typing import Callable, List, Optional
 
 # noinspection PyUnreachableCode
@@ -41,6 +42,8 @@ class RaytkTools(RaytkContext):
 		info.opVersion = versionVal
 		info.toolkitVersion = self.toolkitVersion()
 		info.helpUrl = f'https://t3kt.github.io/raytk/reference/opType/{info.opType}/'
+		# Ensure that status is copied to the opDefinition parameter
+		info.opDefPar.Raytkopstatus = info.statusLabel
 
 	@staticmethod
 	def updateROPParams(rop: 'COMP'):
@@ -96,8 +99,9 @@ class RaytkTools(RaytkContext):
 		self.updateROPMetadata(rop, incrementVersion)
 		self.updateROPParams(rop)
 		self.saveROPSpec(rop)
+		# self.saveROPSpec_NEW(rop)
 		OpDocManager(info).pushToParamsAndInputs()
-		focusCustomParameterPage(rop, 0)
+		focusFirstCustomParameterPage(rop)
 		tox = info.toxFile
 		rop.save(tox)
 		ui.status = f'Saved TOX {tox} (version: {info.opVersion})'
@@ -132,7 +136,7 @@ class RaytkTools(RaytkContext):
 			return
 		spec = None
 		if useFile:
-			specFile = self._getROPSpecFile(rop, checkExists=True)
+			specFile = self._getROPRelatedFile(rop, fileSuffix='.json', checkExists=True)
 			if specFile:
 				text = specFile.read_text()
 				spec = OpSpec_OLD.parseJsonStr(text)
@@ -154,6 +158,7 @@ class RaytkTools(RaytkContext):
 		info = ROPInfo(rop)
 		if not info or not info.isMaster:
 			return
+		info.opDefPar.Raytkopstatus = status or 'default'
 		# note: since applying with status false resets the color, the false ones have to be done before the true one
 		if status == 'alpha':
 			RaytkTags.beta.apply(info.rop, False)
@@ -173,14 +178,14 @@ class RaytkTools(RaytkContext):
 			RaytkTags.deprecated.apply(info.rop, False)
 
 	@staticmethod
-	def _getROPSpecFile(rop: 'COMP', checkExists: bool) -> 'Optional[Path]':
+	def _getROPRelatedFile(rop: 'COMP', fileSuffix: str, checkExists: bool) -> 'Optional[Path]':
 		info = ROPInfo(rop)
 		if not info or not info.isMaster:
 			return
 		tox = info.toxFile
 		if not tox:
 			return
-		file = Path(tox.replace('.tox', '.json'))
+		file = Path(tox.replace('.tox', fileSuffix))
 		if checkExists and not file.exists():
 			return
 		return file
@@ -201,9 +206,18 @@ class RaytkTools(RaytkContext):
 		if not info:
 			return
 		spec = self._loadROPSpec(rop, useFile=False, usePars=True)
-		specFile = self._getROPSpecFile(rop, checkExists=False)
+		specFile = self._getROPRelatedFile(rop, '.json', checkExists=False)
 		if specFile and spec:
 			specFile.write_text(spec.toJsonStr(minify=False))
+
+	def saveROPSpec_NEW(self, rop: 'COMP'):
+		try:
+			spec = ROPSpec.extract(rop, skipParams=False)
+			specFile = self._getROPRelatedFile(rop, '.yaml', checkExists=False)
+			spec.writeToFile(specFile)
+		except Exception as err:
+			ui.status = f'Failed to generate ROPSpec for {rop}: {err}'
+			print(f'Failed to generate ROPSpec for {rop}:\n{err}')
 
 	def updateAllROPToolkitVersions(self):
 		version = self.toolkitVersion()
@@ -259,6 +273,49 @@ class RaytkTools(RaytkContext):
 		for i, o in enumerate(comps):
 			o.nodeY = -int(i / 10) * 150
 			o.nodeX = int(i % 10) * 200
+
+	def updateContextTypeParMenu(self, ropInfo: 'Optional[ROPInfo]'):
+		self._updateTypeParMenu(ropInfo, 'Contexttype', ContextTypes.values)
+
+	def updateCoordTypeParMenu(self, ropInfo: 'Optional[ROPInfo]'):
+		self._updateTypeParMenu(ropInfo, 'Coordtype', CoordTypes.values)
+
+	def updateReturnTypeParMenu(self, ropInfo: 'Optional[ROPInfo]'):
+		self._updateTypeParMenu(ropInfo, 'Returntype', ReturnTypes.values)
+
+	@staticmethod
+	def _updateTypeParMenu(ropInfo: 'Optional[ROPInfo]', parName: str, values: List[str]):
+		if not ropInfo:
+			return
+		par = ropInfo.rop.par[parName]
+		if par is None:
+			ui.status = f'No {parName} to update on {ropInfo.rop}'
+			return
+		if par.menuSource:
+			ui.status = f'Skipping {parName} on {ropInfo.rop} since it is using menuSource'
+			return
+		defVal = par.default
+		shouldUpdateVal = par.mode == ParMode.CONSTANT and defVal != ''
+		hasAuto = 'auto' in par.menuNames
+		hasUseInput = 'useinput' in par.menuNames
+		names = list(values)
+		labels = list(names)
+		if hasAuto:
+			names = ['auto'] + names
+			labels = ['Auto'] + labels
+		if hasUseInput:
+			names = ['useinput'] + names
+			labels = ['Use Input'] + labels
+		if par.menuNames == names:
+			ui.status = f'{parName} on {ropInfo.rop} already up to date'
+			return
+		print(f'Updating {parName} on {ropInfo.rop} menu to :\n{names}')
+		par.menuNames = names
+		par.menuLabels = labels
+		par.default = defVal
+		if shouldUpdateVal:
+			par.val = defVal
+		ui.status = f'Updated {parName} on {ropInfo.rop}!'
 
 class ToolkitLoader(RaytkTools):
 	def __init__(self, log: 'Callable[[str], None]'):

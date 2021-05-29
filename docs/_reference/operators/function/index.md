@@ -23,14 +23,12 @@ cat:
   - name: chopFn
     summary: Function that looks up values in a CHOP.
   - name: colorPaletteFn
-    status: beta
   - name: crossFn
     summary: Cross-fades between two input functions, either based on a parameter
       or on a third function.
   - name: cubicPulseFn
   - name: easeFn
   - name: extendFn
-    status: beta
     summary: Defines the behavior of a function outside the normal expected range
       of coordinates.
   - name: flipFn
@@ -50,6 +48,7 @@ cat:
   - name: pennerEasingFn
     summary: Robert Penner's collection of easing functions.
   - name: powerCurveFn
+  - name: rainbowFn
   - name: sincCurveFn
   - name: stepFn
     summary: A function that changes from zero to one at a cutoff point.

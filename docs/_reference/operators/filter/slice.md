@@ -10,7 +10,6 @@ op:
   category: filter
   inputs:
   - contextTypes:
-    - none
     - Context
     - MaterialContext
     - CameraContext
@@ -56,6 +55,13 @@ op:
     name: Enablemirror
     summary: When enabled, a second slice is added, mirrored across the origin along
       the axis.
+  - label: Operation
+    menuOptions:
+    - label: Intersect
+      name: intersect
+    - label: Difference
+      name: diff
+    name: Operation
   summary: Removes all of an SDF except for a slice in space.
 
 ---

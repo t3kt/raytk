@@ -1,5 +1,5 @@
 from typing import Optional
-from raytkUtil import RaytkContext, detachTox, focusCustomParameterPage, ROPInfo, IconColors
+from raytkUtil import RaytkContext, detachTox, focusFirstCustomParameterPage, ROPInfo, IconColors
 
 # noinspection PyUnreachableCode
 if False:
@@ -20,6 +20,9 @@ if False:
 		par: _Par
 
 	class _UIStatePar(ParCollection):
+		Showalpha: 'BoolParamT'
+		Showbeta: 'BoolParamT'
+		Showdeprecated: 'BoolParamT'
 		Showhelp: 'BoolParamT'
 		Pinopen: 'BoolParamT'
 
@@ -35,6 +38,15 @@ class Palette:
 		self.ownerComp = ownerComp  # type: _COMP
 		self.selItem = tdu.Dependency()  # value type _AnyItemT
 		self.isOpen = tdu.Dependency(False)
+
+	@staticmethod
+	def Initialize():
+		ext.opPicker.SetFilterToggles(
+			alpha=False,
+			beta=True,
+			deprecated=False,
+		)
+		ext.opPicker.Resetstate()
 
 	@property
 	def _closeTimer(self) -> 'timerCHOP':
@@ -157,7 +169,7 @@ class Palette:
 		enableCloning = newOp.par.enablecloning  # type: Par
 		enableCloning.expr = ''
 		enableCloning.val = self._develMode
-		focusCustomParameterPage(newOp, 0)
+		focusFirstCustomParameterPage(newOp)
 		for par in newOp.customPars:
 			if par.readOnly or par.isPulse or par.isMomentary or par.isDefault:
 				continue

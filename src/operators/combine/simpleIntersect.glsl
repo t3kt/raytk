@@ -2,7 +2,6 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 	#if THIS_INPUT_COUNT == 0
 		ReturnT res;
 		initDefVal(res);
-		return res;
 	#else
 		ReturnT res = THIS_INPUT_1(p, ctx);
 		#if THIS_INPUT_COUNT > 1
@@ -26,6 +25,6 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 		#if THIS_INPUT_COUNT > 7
 			res = opSimpleIntersect(res, THIS_INPUT_8(p, ctx));
 		#endif
-		return res;
 	#endif
+	return res;
 }

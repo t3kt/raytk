@@ -11,7 +11,6 @@ op:
   detail: Based on [Spiral Tiling](https://www.shadertoy.com/view/ls2GRz) by Knightly.
   inputs:
   - contextTypes:
-    - none
     - Context
     - MaterialContext
     - CameraContext
@@ -28,8 +27,7 @@ op:
   name: spiralSdf
   opType: raytk.operators.sdf.spiralSdf
   parameters:
-  - label: Enable
-    name: Enable
+  - name: Enable
   - label: Branches
     name: Branches
     summary: The number of arms of the spiral. Fractional values will produce a discontinuity.

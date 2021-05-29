@@ -10,7 +10,6 @@ op:
   category: filter
   inputs:
   - contextTypes:
-    - none
     - Context
     - MaterialContext
     - CameraContext

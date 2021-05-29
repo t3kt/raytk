@@ -7,9 +7,7 @@ if False:
 	from _stubs import *
 
 _opDefParamNames = [
-	'Coordtype',
-	'Returntype',
-	'Contexttype',
+	'Typespec',
 	'Disableinspect',
 	'Opglobals',
 	'Initcode',
@@ -56,6 +54,12 @@ def buildOpInfoTable(dat: 'DAT'):
 			'hasHelp',
 			'hasInputs',
 			'hasSubRops',
+			'Coordtype',
+			'Returntype',
+			'Contexttype',
+			'Fallbackcoordtype',
+			'Fallbackreturntype',
+			'Fallbackcontexttype',
 		] + _opDefParamNames + [
 			'macroCols',
 		]
@@ -75,11 +79,25 @@ def buildOpInfoTable(dat: 'DAT'):
 		dat.appendRow([
 			rop.path,
 			_ropKind(info),
-			info.statusLabel,
+			info.statusLabel or 'stable',
 			hasHelp,
 			info.hasROPInputs,
 			bool(info.subROPs),
 		])
+		typeSpec = info.typeSpec
+		if typeSpec:
+			types = typeSpec.op('supportedTypes')
+			dat[rop.path, 'Coordtype'] = types['coordType', 'spec']
+			dat[rop.path, 'Contexttype'] = types['contextType', 'spec']
+			dat[rop.path, 'Returntype'] = types['returnType', 'spec']
+		elif info.isROP:
+			dat[rop.path, 'Coordtype'] = _formatPar(info.opDefPar.Coordtype)
+			dat[rop.path, 'Contexttype'] = _formatPar(info.opDefPar.Contexttype)
+			dat[rop.path, 'Returntype'] = _formatPar(info.opDefPar.Returntype)
+			dat[rop.path, 'Fallbackcoordtype'] = _formatPar(info.opDefPar.Fallbackcoordtype)
+			dat[rop.path, 'Fallbackcontexttype'] = _formatPar(info.opDefPar.Fallbackcontexttype)
+			dat[rop.path, 'Fallbackreturntype'] = _formatPar(info.opDefPar.Fallbackreturntype)
+			pass
 		for pn in _opDefParamNames:
 			dat[rop.path, pn] = _formatPar(info.opDefPar[pn])
 		if info.isROP:

@@ -14,11 +14,12 @@ cat:
   name: output
   operators:
   - name: fieldRender
-    status: beta
   - name: functionGraphRender
     summary: Visualizes the graph of a function operator.
   - name: pointMapRender
     status: beta
+    summary: Renderer that takes in a TOP of coordinates and evaluates the scene at
+      each point.
   - name: raymarchRender3D
     summary: Renders a scene using 3D raymarching.
   - name: render2D

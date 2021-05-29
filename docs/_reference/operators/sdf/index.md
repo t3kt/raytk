@@ -13,6 +13,7 @@ cat:
   operators:
   - name: amazingSurfaceSdf
   - name: apollonianSdf
+  - name: archSdf
   - name: boxFrameSdf
     summary: SDF for the squared frame of the edges of a box.
   - name: boxSdf
@@ -31,7 +32,6 @@ cat:
   - name: discSdf
     summary: A flat disc facing the Y axis.
   - name: dodecahedronFractalSdf
-    status: beta
   - name: generalizedPolyhedronSdf
     summary: Generates one of several different types of polyhedra.
   - name: geodesicSdf
@@ -39,12 +39,10 @@ cat:
   - name: gridSdf
     summary: An infinite grid shape, along two axes.
   - name: gyroidSdf
-    status: beta
     summary: Gyroid shape, which is an infinitely connected periodic surface.
   - name: helixSdf
     summary: '## Parameters'
   - name: juliaSdf
-    status: beta
   - name: kaliGeneratorSdf
     summary: Fractal SDF based on "Generators" by Kali (https://www.shadertoy.com/view/Xtf3Rn).
   - name: linkSdf
@@ -66,6 +64,9 @@ cat:
     summary: A prism shape, like a cylinder but with flat sides, along the z axis.
   - name: pyramidSdf
     summary: A pyramid with four sides.
+  - name: quadSdf
+    status: beta
+  - name: segmentedLineSdf
   - name: solidAngleSdf
     summary: A conical slice of a sphere.
   - name: sphereFbmSdf

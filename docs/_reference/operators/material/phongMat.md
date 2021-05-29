@@ -10,7 +10,6 @@ op:
   category: material
   inputs:
   - contextTypes:
-    - none
     - Context
     coordTypes:
     - vec3

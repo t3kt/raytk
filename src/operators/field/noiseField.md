@@ -28,11 +28,6 @@ For types that use 4D coordinates, the `Translate` and `Scale` parameters can st
   * `vec2`
   * `vec3`
 * `Contexttype`
-  * `none`
-  * `Context`
-  * `MaterialContext`
-  * `CameraContext`
-  * `LightContext`
 * `Axis`: When the `Noisetype` uses 2D coordinates but `Coordtype` is 3D, this is used to choose which plane of the coordinates are used.
   * `x`: Use Y and Z.
   * `y`: Use Z and X.

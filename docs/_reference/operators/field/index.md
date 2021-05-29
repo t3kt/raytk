@@ -17,6 +17,8 @@ cat:
   - name: axisDistanceField
     summary: A float field that provides the distance from a specific point along
       a single axis.
+  - name: bandField
+    summary: Field that applies values based on a band/slice of an axis.
   - name: cellTileField
     summary: A value field that provides an approximation of repeating cellular (voronoi)
       noise.
@@ -29,11 +31,11 @@ cat:
   - name: constantField
     summary: A float or vector field that evaluates to a constant value.
   - name: contextValueField
-    status: beta
     summary: Field that returns various fields from the context, from a downstream
       OP.
   - name: curlNoiseField
     summary: Curl noise field.
+  - name: hsvColorField
   - name: iterationField
     summary: Field that returns the current iteration, from a downstream OP.
   - name: metaballField
@@ -44,16 +46,15 @@ cat:
   - name: noiseField
     summary: A float or vector field that uses one of several noise functions.
   - name: normalField
-    status: beta
     summary: Vector field that produces the surface normal where it is evaluated.
   - name: pointDistanceField
     summary: A float field that provides the distance from a specific point in space.
   - name: positionField
     summary: A vector field that produces the coordinates in space where it is checked.
   - name: reorderField
-    status: beta
+  - name: sdfField
+    summary: Value field based on an SDF shape.
   - name: texture3dField
-    status: beta
   - name: textureField
     summary: A float or vector field that looks up values from a texture.
   - name: triPlanarTextureField

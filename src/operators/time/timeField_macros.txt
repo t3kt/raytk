@@ -1,0 +1,2 @@
+	'RAYTK_USE_TIME'	
+op('expr_info')[1, 'absolute'] == '1'	'RAYTK_USE_ABS_TIME'	

@@ -10,7 +10,6 @@ op:
   category: filter
   inputs:
   - contextTypes:
-    - none
     - Context
     - MaterialContext
     - CameraContext
@@ -22,6 +21,24 @@ op:
     label: definition_in
     name: definition_in
     required: true
+    returnTypes:
+    - float
+    - vec4
+    - Sdf
+    - Ray
+    - Light
+  - contextTypes:
+    - Context
+    - MaterialContext
+    - CameraContext
+    - LightContext
+    - RayContext
+    coordTypes:
+    - float
+    - vec2
+    - vec3
+    label: Blend Function
+    name: blend_function_definition_in
     returnTypes:
     - float
     - vec4
@@ -63,6 +80,10 @@ op:
   - name: Exposeiteration
     summary: Whether to expose which side of the plane a point is on as an iteration
       value for upstream ops.
+  - label: Enable Blend
+    name: Enableblend
+  - label: Blend Range
+    name: Blendrange
   - label: Iteration Type
     menuOptions:
     - label: None

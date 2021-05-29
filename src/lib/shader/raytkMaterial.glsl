@@ -6,6 +6,23 @@
 #define getPosForMaterial(p, mctx)  p
 #endif
 
+float getShadedLevel(MaterialContext ctx) {
+	#if defined(RAYTK_USE_SHADOW)
+	return ctx.shadedLevel;
+	#else
+	return 1.0;
+	#endif
+}
+
+bool resultUsesShadow(Sdf res)
+{
+	#ifdef RAYTK_USE_SHADOW
+	return res.useShadow;
+	#else
+	return false;
+	#endif
+}
+
 vec3 phongContribForLight(
 	vec3 diffColor, vec3 specColor, float alpha, vec3 p, vec3 eye,
 	vec3 lightPos, vec3 lightIntensity, vec3 norm, float occ) {
@@ -191,4 +208,14 @@ vec3 goochShading(
 	vec3 col = min(kfinal + spec, 1.0);
 
 	return col;
+}
+
+float attenuateLight(float attenScale, float attenBias, float attenRolloff, float lightDist)
+{
+	float lightAtten = lightDist * attenScale;
+	lightAtten += attenBias;
+	lightAtten = clamp(lightAtten, 0.0, 1.0) * 1.57079633;
+	lightAtten = sin(lightAtten);
+	float finalAtten = pow(lightAtten, attenRolloff);
+	return finalAtten;
 }

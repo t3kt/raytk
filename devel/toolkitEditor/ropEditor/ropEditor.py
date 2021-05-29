@@ -10,10 +10,13 @@ if False:
 	from components.inspectorCore.inspectorCoreExt import InspectorCore
 	from components.opPicker.opPicker import PickerItem
 	from ..testEditor.testEditor import TestEditor
+	from .specPanel.specPanel import SpecPanel
 	# noinspection PyTypeHints
 	iop.inspectorCore = InspectorCore(COMP())  # type: Union[COMP, InspectorCore]
 	# noinspection PyTypeChecker,PyTypeHints
 	iop.testEditor = TestEditor(COMP())  # type: Union[COMP, TestEditor]
+	# noinspection PyTypeChecker,PyTypeHints
+	iop.specPanel = SpecPanel(COMP())  # type: Union[COMP, SpecPanel]
 
 class ROPEditor:
 	def __init__(self, ownerComp: 'COMP'):
@@ -28,6 +31,7 @@ class ROPEditor:
 		info = self.ROPInfo
 		self._statusDropMenu.par.Value0 = info.statusLabel or 'default'
 		iop.testEditor.UnloadTest()
+		iop.specPanel.Update()
 
 	def onStatusDropMenuChange(self):
 		info = self.ROPInfo
@@ -82,3 +86,12 @@ class ROPEditor:
 
 	def onKeyboardShortcut(self, shorcutName: str):
 		pass
+
+	def updateCoordTypeParMenu(self):
+		RaytkTools().updateCoordTypeParMenu(self.ROPInfo)
+
+	def updateContextTypeParMenu(self):
+		RaytkTools().updateContextTypeParMenu(self.ROPInfo)
+
+	def updateReturnTypeParMenu(self):
+		RaytkTools().updateReturnTypeParMenu(self.ROPInfo)

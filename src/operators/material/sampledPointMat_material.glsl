@@ -1,2 +1,1 @@
-col.rgb = THIS_Fillcolor;
-col.a = 1;
+col.rgb = THIS_getColor(p, matCtx);

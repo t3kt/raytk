@@ -1,3 +1,4 @@
+from raytkTypes import evalSpecInOp
 import re
 
 # noinspection PyUnreachableCode
@@ -29,19 +30,24 @@ def buildName():
 		name = 'o_' + name
 	return 'RTK_' + name
 
-def evaluateTypeProperty(par: 'Par', fieldName: str, defVal: str):
-	if par != 'useinput':
-		return str(par)
-	inputDef = op('input_defs')
-	if inputDef.numRows > 1:
-		val = inputDef[1, fieldName]
-		if val and val != 'useinput':
-			return str(val)
-	return defVal
+def _evalType(category: str, supportedTypes: 'DAT', inputDefs: 'DAT'):
+	return evalSpecInOp(
+		spec=supportedTypes[category, 'spec'].val,
+		expandedTypes=supportedTypes[category, 'types'].val,
+		inputCell=inputDefs[1, category],
+	)
+
+def buildTypeTable(dat: 'scriptDAT', supportedTypes: 'DAT', inputDefs: 'DAT'):
+	dat.clear()
+	dat.appendRows([
+		['coordType', _evalType('coordType', supportedTypes, inputDefs)],
+		['returnType', _evalType('returnType', supportedTypes, inputDefs)],
+		['contextType', _evalType('contextType', supportedTypes, inputDefs)],
+	])
 
 def buildInputTable(dat: 'DAT', inDats: 'List[DAT]'):
 	dat.clear()
-	dat.appendRow(['slot', 'inputFunc', 'name', 'path'])
+	dat.appendRow(['slot', 'inputFunc', 'name', 'path', 'coordType', 'contextType', 'returnType'])
 	for i, inDat in enumerate(inDats):
 		slot = f'inputName{i + 1}'
 		if inDat.numRows < 2 or not inDat[1, 'name'].val:
@@ -52,6 +58,9 @@ def buildInputTable(dat: 'DAT', inDats: 'List[DAT]'):
 				f'inputOp{i + 1}',
 				inDat[1, 'name'],
 				inDat[1, 'path'],
+				inDat[1, 'coordType'],
+				inDat[1, 'contextType'],
+				inDat[1, 'returnType'],
 			])
 
 def combineInputDefinitions(dat: 'DAT', inDats: 'List[DAT]'):
@@ -75,6 +84,31 @@ def combineInputDefinitions(dat: 'DAT', inDats: 'List[DAT]'):
 			usedNames.add(name)
 			dat.appendRow(cells, insertRow)
 			insertRow += 1
+
+def processInputDefinitionTypes(dat: 'scriptDAT', supportedTypeTable: 'DAT'):
+	_processInputDefTypeCategory(dat, supportedTypeTable, 'coordType')
+	_processInputDefTypeCategory(dat, supportedTypeTable, 'contextType')
+	_processInputDefTypeCategory(dat, supportedTypeTable, 'returnType')
+
+def _processInputDefTypeCategory(dat: 'scriptDAT', supportedTypeTable: 'DAT', category: 'str'):
+	supported = supportedTypeTable[category, 'types'].val.split(' ')
+	cells = dat.col(category)
+	if not cells:
+		return
+	errors = []
+	ownName = parentPar().Name.eval()
+	# TODO: consolidate this and the typeRestrictor
+	for cell in cells[1:]:
+		inputName = dat[cell.row, 'name']
+		inputTypes = cell.val.split(' ')
+		supportedInputTypes = [t for t in inputTypes if t in supported]
+		if not supportedInputTypes:
+			errors.append(f'No supported {category} for {inputName} ({" ".join(inputTypes)}')
+		elif len(supportedInputTypes) == 1:
+			cell.val = supportedInputTypes[0]
+		else:
+			# cell.val = ' '.join(supportedInputTypes)
+			cell.val = '@' + ownName
 
 def _getParamsOp() -> 'Optional[COMP]':
 	return parentPar().Paramsop.eval() or _host()
@@ -178,22 +212,68 @@ def buildParamTupletAliases(dat: 'DAT', paramTable: 'DAT'):
 				]))
 			])
 
-def substituteWords(dat: 'DAT'):
+_typeReplacements = {
+	re.compile(r'\bCoordT\b'): 'THIS_CoordT',
+	re.compile(r'\bContextT\b'): 'THIS_ContextT',
+	re.compile(r'\bReturnT\b'): 'THIS_ReturnT',
+}
+
+def _getReplacements(
+		inputTable: 'DAT',
+		materialTable: 'DAT',
+) -> 'Dict[str, str]':
+	name = parentPar().Name.eval()
+	repls = {
+		'thismap': name,
+		'THIS_': name + '_',
+	}
+	mat = materialTable[1, 'material']
+	if mat:
+		repls['THISMAT'] = str(mat)
+	for i in range(inputTable.numRows):
+		key = inputTable[i, 'inputFunc']
+		val = inputTable[i, 'name']
+		if val:
+			repls[str(key)] = str(val)
+	return repls
+
+def prepareCode(
+		dat: 'DAT',
+		inputTable: 'DAT',
+		materialTable: 'DAT',
+):
 	if not dat.inputs:
 		dat.text = ''
 		return
+	dat.clear()
+	repls = _getReplacements(inputTable, materialTable)
+	text = _prepareText(dat.inputs[0].text, repls)
+	dat.write(text)
+
+def prepareTable(
+		dat: 'DAT',
+		inputTable: 'DAT',
+		materialTable: 'DAT',
+):
 	dat.copy(dat.inputs[0])
-	text = dat.text
-	for repls in dat.inputs[1:]:
-		if repls.numRows == 0 or repls.numCols < 2:
-			continue
-		if repls[0, 0] == 'before' and repls[0, 1] == 'after':
-			startRow = 1
-		else:
-			startRow = 0
-		for row in range(startRow, repls.numRows):
-			text = re.sub(r'\b' + repls[row, 0].val + r'\b', repls[row, 1].val, text)
-	dat.text = text
+	if dat.numRows < 1:
+		return
+	repls = _getReplacements(inputTable, materialTable)
+	for row in dat.rows():
+		for cell in row:
+			cell.val = _prepareText(cell.val, repls)
+
+def _prepareText(
+		text: str,
+		repls: 'Dict[str, str]',
+) -> str:
+	if not text:
+		return ''
+	for find, repl in _typeReplacements.items():
+		text = find.sub(repl, text)
+	for find, repl in repls.items():
+		text = text.replace(find, repl)
+	return text
 
 def updateLibraryMenuPar(libsComp: 'COMP'):
 	p = parentPar().Librarynames  # type: Par
@@ -266,6 +346,35 @@ def prepareTextureTable(dat: 'scriptDAT'):
 				table[i, 'type' if useNames else 2] or '2d',
 			])
 		i += 1
+
+def prepareBufferTable(dat: 'scriptDAT'):
+	dat.clear()
+	table = parentPar().Buffertable.eval()
+	if not table:
+		return
+	namePrefix = parentPar().Name.eval() + '_'
+	for i in range(table.numRows):
+		name = table[i, 0]
+		path = table[i, 1]
+		if not name or not path:
+			continue
+		dataType = table[i, 1]
+		uniformType = table[i, 1]
+		dat.appendRow([
+			namePrefix + name,
+			path,
+			dataType or 'vec4',
+			uniformType or 'uniformarray',
+		])
+
+def prepareMaterialTable(dat: 'scriptDAT'):
+	dat.clear()
+	dat.appendRow(['material', 'materialCode'])
+	if parentPar().Materialcode:
+		dat.appendRow([
+			'MAT_' + parentPar().Name.eval(),
+			parent().path + '/materialCode',
+		])
 
 def _isMaster():
 	host = _host()

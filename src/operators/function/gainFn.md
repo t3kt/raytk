@@ -7,9 +7,3 @@ Based on Inigo Quilez's [article](https://iquilezles.org/www/articles/functions/
 ## Parameters
 
 * `Exponent`
-* `Contexttype`
-  * `none`
-  * `Context`
-  * `MaterialContext`
-  * `CameraContext`
-  * `LightContext`

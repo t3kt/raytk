@@ -132,6 +132,19 @@ class OpPicker:
 		self.clearFilterText()
 		self.isOpen.val = False
 
+	@staticmethod
+	def SetFilterToggles(
+			alpha: 'Optional[bool]' = None,
+			beta: 'Optional[bool]' = None,
+			deprecated: 'Optional[bool]' = None,
+	):
+		if alpha is not None:
+			ipar.uiState.Showalpha = alpha
+		if beta is not None:
+			ipar.uiState.Showbeta = beta
+		if deprecated is not None:
+			ipar.uiState.Showdeprecated = deprecated
+
 	def Loaditems(self, _=None):
 		opTable = self.ownerComp.op('opTable')  # type: DAT
 		opHelpTable = self.ownerComp.op('opHelpTable')  # type: DAT

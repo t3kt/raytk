@@ -1,5 +1,3 @@
-from raytkUtil import TypeTableHelper
-
 # noinspection PyUnreachableCode
 if False:
 	# noinspection PyUnresolvedReferences
@@ -13,6 +11,15 @@ def checkInputDefinition(dat: 'DAT'):
 		return
 	_checkTableTypes(dat, None, ignoreEmpty=False)
 
+def processInputDefinition(dat: 'DAT'):
+	dat.clear()
+	dat.copy(dat.inputs[0])
+	if dat.numRows < 2:
+		return
+	if not _checkTableTypes(dat, None, ignoreEmpty=False):
+		return
+	# TODO: RESTRICT TYPES
+
 def _checkType(typeName: str, typeCategory: str, onError: 'Optional[Callable[[str], None]]', ignoreEmpty: bool):
 	if not typeName:
 		if ignoreEmpty:
@@ -20,19 +27,22 @@ def _checkType(typeName: str, typeCategory: str, onError: 'Optional[Callable[[st
 		if onError:
 			onError(f'Invalid input {typeCategory}: {typeName!r}')
 		return False
-	supported = tdu.split(parent().par['Support' + typeCategory.lower() + 's'] or '')
-	if '*' in supported or typeName in supported:
-		return True
-	if parent().par['Support' + typeCategory.lower() + typeName.lower()]:
-		return True
+	supported = tdu.split(op('supportedTypes')[typeCategory, 'types'] or '')
+	if ' ' in typeName:
+		if any(t in supported for t in typeName.split(' ')):
+			return True
+	else:
+		if typeName in supported:
+			return True
 	if onError:
 		onError(f'Input does not support {typeCategory} {typeName}')
 	return False
 
 def _checkTableTypes(dat: 'DAT', onError: 'Optional[Callable[[str], None]]', ignoreEmpty: bool):
-	_checkType(str(dat[1, 'coordType'] or ''), 'coordType', onError, ignoreEmpty)
-	_checkType(str(dat[1, 'contextType'] or ''), 'contextType', onError, ignoreEmpty)
-	_checkType(str(dat[1, 'returnType'] or ''), 'returnType', onError, ignoreEmpty)
+	validCoord = _checkType(str(dat[1, 'coordType'] or ''), 'coordType', onError, ignoreEmpty)
+	validContext = _checkType(str(dat[1, 'contextType'] or ''), 'contextType', onError, ignoreEmpty)
+	validReturn = _checkType(str(dat[1, 'returnType'] or ''), 'returnType', onError, ignoreEmpty)
+	return validCoord and validContext and validReturn
 
 def onSupportChange():
 	_handleChange()
@@ -44,33 +54,6 @@ def _handleChange():
 	d = op('check_definition')
 	if d:
 		d.cook(force=True)
-
-def updateTypeParMenus():
-	helper = TypeTableHelper(op('typeTable'))
-	helper.updateCoordTypePar(parent().par.Supportcoordtypes)
-	helper.updateReturnTypePar(parent().par.Supportreturntypes)
-	helper.updateContextTypePar(parent().par.Supportcontexttypes)
-
-def buildSupportedTypeTable(dat: 'DAT'):
-	dat.clear()
-	typeTable = op('typeTable')
-	helper = TypeTableHelper(typeTable)
-	allNames = [c.val for c in typeTable.col('name')[1:]]
-	for category, filterColumn in [
-		('coordType', 'isCoordType'),
-		('contextType', 'isContextType'),
-		('returnType', 'isReturnType'),
-	]:
-		dat.appendRow(
-			[
-				category,
-				' '.join(
-					[
-						name
-						for name in allNames
-						if helper.isTypeAvailableForCategory(name, filterColumn) and _checkType(name, category, onError=None, ignoreEmpty=True)
-					]),
-			])
 
 def buildValidationErrors(dat: 'DAT', inputDef: 'DAT'):
 	dat.clear()

@@ -10,7 +10,6 @@ op:
   category: combine
   inputs:
   - contextTypes:
-    - none
     - Context
     - MaterialContext
     - CameraContext
@@ -25,7 +24,6 @@ op:
     returnTypes:
     - Sdf
   - contextTypes:
-    - none
     - Context
     - MaterialContext
     - CameraContext
@@ -40,7 +38,6 @@ op:
     returnTypes:
     - Sdf
   - contextTypes:
-    - none
     - Context
     - MaterialContext
     - CameraContext
@@ -56,7 +53,6 @@ op:
     summary: Value field that can be used to vary the radius of the blend region at
       different points in space, by *multiplying* the value of the `Radius` parameter.
   - contextTypes:
-    - none
     - Context
     - MaterialContext
     - CameraContext

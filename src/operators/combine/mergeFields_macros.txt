@@ -3,6 +3,6 @@ any([p == 'input2' for p in parent().pars('Source[xyzw]')])	'THIS_UseInput2'
 any([p == 'input3' for p in parent().pars('Source[xyzw]')])	'THIS_UseInput3'	
 any([p == 'input4' for p in parent().pars('Source[xyzw]')])	'THIS_UseInput4'	
 	'THIS_ExprX'	({'zero':'0','one':'1'}).get(parent().par.Sourcex.eval()) or ('val' + str(tdu.digits(parent().par.Sourcex.eval())))
-op('opDefinition').par.Returntype == 'vec4'	'THIS_ExprY'	({'zero':'0','one':'1'}).get(parent().par.Sourcey.eval()) or ('val' + str(tdu.digits(parent().par.Sourcey.eval())))
-op('opDefinition').par.Returntype == 'vec4'	'THIS_ExprZ'	({'zero':'0','one':'1'}).get(parent().par.Sourcez.eval()) or ('val' + str(tdu.digits(parent().par.Sourcez.eval())))
-op('opDefinition').par.Returntype == 'vec4'	'THIS_ExprW'	({'zero':'0','one':'1'}).get(parent().par.Sourcew.eval()) or ('val' + str(tdu.digits(parent().par.Sourcew.eval())))
+	'THIS_ExprY'	({'zero':'0','one':'1'}).get(parent().par.Sourcey.eval()) or ('val' + str(tdu.digits(parent().par.Sourcey.eval())))
+	'THIS_ExprZ'	({'zero':'0','one':'1'}).get(parent().par.Sourcez.eval()) or ('val' + str(tdu.digits(parent().par.Sourcez.eval())))
+	'THIS_ExprW'	({'zero':'0','one':'1'}).get(parent().par.Sourcew.eval()) or ('val' + str(tdu.digits(parent().par.Sourcew.eval())))

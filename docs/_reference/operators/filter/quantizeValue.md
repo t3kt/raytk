@@ -10,7 +10,6 @@ op:
   category: filter
   inputs:
   - contextTypes:
-    - none
     - Context
     - MaterialContext
     - CameraContext
@@ -38,10 +37,11 @@ op:
     name: Sizemult
   - label: Offset
     name: Offset
+  - label: Enable Smoothing
+    name: Enablesmoothing
   - label: Smoothing
     name: Smoothing
   - label: Smoothing Multiplier
     name: Smoothingmult
-  status: beta
 
 ---

@@ -65,19 +65,7 @@ op:
       name: vec3
     name: Coordtype
     summary: The type of coordinates that the op supports.
-  - label: Context Type
-    menuOptions:
-    - label: None
-      name: none
-    - label: Context
-      name: Context
-    - label: Material Context
-      name: MaterialContext
-    - label: Camera Context
-      name: CameraContext
-    - label: Light Context
-      name: LightContext
-    name: Contexttype
+  - name: Contexttype
   - label: Axis
     menuOptions:
     - description: Use Y and Z.

@@ -16,7 +16,6 @@ op:
     If a field is used, the field values are added to the Translate XYZ parameter.'
   inputs:
   - contextTypes:
-    - none
     - Context
     - MaterialContext
     - CameraContext
@@ -35,7 +34,6 @@ op:
     - Ray
     - Light
   - contextTypes:
-    - none
     - Context
     - MaterialContext
     - CameraContext

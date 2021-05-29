@@ -10,7 +10,6 @@ op:
   category: function
   inputs:
   - contextTypes:
-    - none
     - Context
     - MaterialContext
     - CameraContext
@@ -22,6 +21,7 @@ op:
     - vec3
     label: definition_in
     name: definition_in
+    required: true
     returnTypes:
     - float
     - vec4
@@ -55,8 +55,6 @@ op:
     summary: The type of flipping to apply.
   - label: Return Type
     menuOptions:
-    - label: Use Input
-      name: useinput
     - label: SDF Result
       name: Sdf
     - label: Float
@@ -68,19 +66,6 @@ op:
     - label: Light
       name: Light
     name: Returntype
-  - label: Context Type
-    menuOptions:
-    - label: None
-      name: none
-    - label: Context
-      name: Context
-    - label: Material Context
-      name: MaterialContext
-    - label: Camera Context
-      name: CameraContext
-    - label: Light Context
-      name: LightContext
-    name: Contexttype
   summary: Function that flips its input in one of several different modes.
 
 ---

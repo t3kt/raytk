@@ -10,13 +10,14 @@ op:
   category: convert
   inputs:
   - contextTypes:
-    - none
     - Context
     - MaterialContext
     - CameraContext
     - LightContext
     - RayContext
     coordTypes:
+    - float
+    - vec2
     - vec3
     label: definition_in
     name: definition_in
@@ -32,6 +33,25 @@ op:
   parameters:
   - label: Enable
     name: Enable
+  - label: Mode
+    menuOptions:
+    - label: Custom
+      name: custom
+    - label: XY Plane
+      name: xy
+    - label: YX Plane
+      name: yx
+    - label: YZ Plane
+      name: yz
+    - label: ZY Plane
+      name: zy
+    - label: XZ Plane
+      name: xz
+    - label: ZX Plane
+      name: zx
+    name: Mode
+  - label: Plane Offset
+    name: Planeoffset
   - label: Part X
     menuOptions:
     - label: X

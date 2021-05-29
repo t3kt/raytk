@@ -15,7 +15,6 @@ op:
     operators, by applying the extend mode to each part of the coordinates.'
   inputs:
   - contextTypes:
-    - none
     - Context
     - MaterialContext
     - CameraContext
@@ -54,7 +53,6 @@ op:
     name: Range
   - label: Default Value
     name: Defval
-  status: beta
   summary: Defines the behavior of a function outside the normal expected range of
     coordinates.
 

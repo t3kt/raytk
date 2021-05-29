@@ -10,7 +10,6 @@ op:
   category: sdf
   inputs:
   - contextTypes:
-    - none
     - Context
     - MaterialContext
     - CameraContext
@@ -28,7 +27,6 @@ op:
       it is provided the position along the axis. If it uses 3D coordinates, it uses
       the absolute position.
   - contextTypes:
-    - none
     - Context
     - MaterialContext
     - CameraContext
@@ -45,7 +43,6 @@ op:
       it is provided the position along the axis. If it uses 3D coordinates, it uses
       the absolute position.
   - contextTypes:
-    - none
     - Context
     - MaterialContext
     - CameraContext

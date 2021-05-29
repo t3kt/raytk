@@ -1,5 +1,5 @@
 from raytkTools import RaytkTools
-from raytkUtil import RaytkTags, navigateTo, focusCustomParameterPage, CategoryInfo, RaytkContext, IconColors, isROP
+from raytkUtil import RaytkTags, navigateTo, focusFirstCustomParameterPage, CategoryInfo, RaytkContext, IconColors, isROP
 from raytkBuild import BuildContext, DocProcessor
 from typing import Callable, List, Optional, Union
 
@@ -24,7 +24,7 @@ class BuildManager:
 
 	@staticmethod
 	def OpenToolkitNetwork():
-		navigateTo(RaytkContext().toolkit(), name='toolkit', popup=True, goInto=True)
+		navigateTo(RaytkContext().toolkit(), name='raytkBuildNetwork', popup=True, goInto=True)
 
 	def OpenLog(self):
 		dat = self.ownerComp.op('full_log_text')
@@ -48,9 +48,10 @@ class BuildManager:
 
 	def runBuild_stage(self, stage: int):
 		toolkit = RaytkContext().toolkit()
-		self.log('Reloading toolkit')
 		if stage == 0:
+			self.log('Reloading toolkit')
 			self.reloadToolkit(toolkit)
+			self.context.openNetworkPane()
 			self.queueMethodCall(self.runBuild_stage, stage + 1)
 		elif stage == 1:
 			self.detachAllFileSyncDats(toolkit)
@@ -80,6 +81,7 @@ class BuildManager:
 			self.finalizeToolkitPars(toolkit)
 			self.queueMethodCall(self.runBuild_stage, stage + 1)
 		elif stage == 12:
+			self.context.focusInNetworkPane(toolkit)
 			version = RaytkContext().toolkitVersion()
 			toxFile = f'build/RayTK-{version}.tox'
 			self.log('Exporting TOX to ' + toxFile)
@@ -97,6 +99,7 @@ class BuildManager:
 
 	def finalizeToolkitPars(self, toolkit: 'COMP'):
 		self.log('Finalizing toolkit parameters')
+		self.context.moveNetworkPane(toolkit)
 		# toolkit.par.Devel = False
 		toolkit.par.Devel.readOnly = True
 		toolkit.par.externaltox = ''
@@ -105,12 +108,13 @@ class BuildManager:
 		toolkit.par.reloadtoxonstart = True
 		toolkit.par.reloadcustom = True
 		toolkit.par.reloadbuiltin = True
-		focusCustomParameterPage(toolkit, 'RayTK')
+		focusFirstCustomParameterPage(toolkit)
 
 	def updateLibraryImage(self, toolkit: 'COMP', thenRun: str = None, runArgs: list = None):
 		self.log('Updating library image')
 		image = RaytkContext().libraryImage()
 		if image:
+			# self.context.moveNetworkPane(image)
 			self.context.detachTox(image)
 			self.context.lockBuildLockOps(image)
 			image.par.Showshortcut = True
@@ -127,6 +131,7 @@ class BuildManager:
 		self.log('Updating library info')
 		libraryInfo = toolkit.op('libraryInfo')
 		libraryInfo.par.Forcebuild.pulse()
+		self.context.moveNetworkPane(libraryInfo)
 		self.context.runBuildScript(
 			libraryInfo.op('BUILD'),
 			thenRun=lambda: self.queueMethodCall(thenRun, *(runArgs or [])),
@@ -134,15 +139,19 @@ class BuildManager:
 
 	def processComponents(self, components: 'COMP', thenRun: str = None, runArgs: list = None):
 		self.log(f'Processing components {components}')
-		self.context.runBuildScript(
-			components.op('BUILD'),
-			thenRun=lambda: self.queueMethodCall(thenRun, *(runArgs or [])),
-			runArgs=[])
+		self.context.focusInNetworkPane(components)
+		try:
+			components.destroy()
+		except:
+			pass
+		self.queueMethodCall(thenRun, *(runArgs or []))
 
 	def processOperators(self, comp: 'COMP', thenRun: str = None, runArgs: list = None):
 		self.log(f'Processing operators {comp}')
+		self.context.moveNetworkPane(comp)
 		self.context.detachTox(comp)
 		categories = RaytkContext().allCategories()
+		# categories.sort(key=lambda c: c.name)
 		self.docProcessor.writeCategoryListPage(categories)
 		self.queueMethodCall('processOperatorCategories_stage', categories, thenRun, runArgs)
 
@@ -157,11 +166,13 @@ class BuildManager:
 	def processOperatorCategory(self, category: 'COMP', thenRun: str = None, runArgs: list = None):
 		categoryInfo = CategoryInfo(category)
 		self.log(f'Processing operator category {category.name}')
+		self.context.moveNetworkPane(category)
 		self.context.detachTox(category)
 		template = category.op('__template')
 		if template:
 			template.destroy()
 		comps = categoryInfo.operators
+		# comps.sort(key=lambda c: c.name)
 		for o in comps:
 			if RaytkTags.alpha.isOn(o):
 				self.context.safeDestroyOp(o)
@@ -182,17 +193,27 @@ class BuildManager:
 
 	def processOperator(self, comp: 'COMP'):
 		self.log(f'Processing operator {comp}')
+		self.context.focusInNetworkPane(comp)
 		self.context.disableCloning(comp)
 		self.context.detachTox(comp)
-		comp.showCustomOnly = True
-		for child in comp.findChildren(type=COMP):
-			self.processOperatorSubComp(child)
+		if len(comp.customPages) <= 1:
+			comp.showCustomOnly = True
 		tools = RaytkTools()
 		tools.updateROPMetadata(comp)
 		tools.updateROPParams(comp)
+		self.context.resetCustomPars(comp)
+		self.context.lockROPPars(comp)
+
+		# This really shouldn't be necessary but there's something strange with old cloned components...
+		self.context.safeDestroyOp(comp.op('opDefinition/paramHelpEditor'))
+
+		# self.context.moveNetworkPane(comp)
+		self.processOperatorSubCompChildrenOf(comp)
+		# self.context.moveNetworkPane(comp)
 		self.log(f'Updating OP image for {comp}')
 		img = tools.updateOPImage(comp)
 		if img:
+			# self.context.focusInNetworkPane(img)
 			self.context.disableCloning(img)
 			self.context.detachTox(img)
 			self.context.lockBuildLockOps(img)
@@ -200,13 +221,24 @@ class BuildManager:
 		if self.docProcessor:
 			self.docProcessor.processOp(comp)
 
-	def processOperatorSubComp(self, comp: 'COMP'):
-		self.context.disableCloning(comp)
+	def processOperatorSubCompChildrenOf(self, comp: 'COMP'):
+		subComps = comp.findChildren(type=COMP)
+		if not subComps:
+			return
+		self.context.log(f'Processing {len(subComps)} sub-comps in {comp}')
+		for child in subComps:
+			self.processOperatorSubComp_2(child)
+
+	def processOperatorSubComp_2(self, comp: 'COMP'):
+		self.context.log(f'Processing {comp}')
 		self.context.detachTox(comp)
+		self.context.reclone(comp)
+		self.context.disableCloning(comp)
+		self.processOperatorSubCompChildrenOf(comp)
 
 	def processNestedOperators(self, comp: 'COMP', thenRun: str = None, runArgs: list = None):
 		self.log('Processing nested operators')
-		subOps = comp.findChildren(tags=[RaytkTags.raytkOP.name], depth=3)
+		subOps = comp.findChildren(tags=[RaytkTags.raytkOP.name], depth=4)
 		self.log(f'found {len(subOps)} nested operators')
 		self.queueMethodCall('processNestedOperators_stage', subOps, thenRun, runArgs)
 
@@ -233,6 +265,7 @@ class BuildManager:
 
 	def processTools(self, comp: 'COMP', thenRun: str = None, runArgs: list = None):
 		self.log(f'Processing tools {comp}')
+		self.context.moveNetworkPane(comp)
 		self.context.reloadTox(comp)
 		self.context.detachTox(comp)
 		self.context.runBuildScript(

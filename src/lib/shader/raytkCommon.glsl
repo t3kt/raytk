@@ -27,9 +27,7 @@ Ray mixVals(in Ray res1, in Ray res2, float amt) {
 struct Sdf {
 	float x; // distance
 
-	float material; // material ID
-	float material2; // in case of interpolating, the second material
-	float interpolant; // in case of interpolating, the interpolation value
+	vec3 mat; // x: material ID 1, y: material ID 2, z: interpolant
 	#ifdef RAYTK_USE_MATERIAL_POS
 	// xyz: pos
 	// w: whether this has been set
@@ -73,15 +71,28 @@ struct Sdf {
 	#ifdef RAYTK_USE_SHADOW
 	bool useShadow;
 	#endif
+
+	#ifdef RAYTK_USE_UV
+	// For material 1
+	// xyz: UVW
+	// w: whether this has been set
+	vec4 uv;
+	// For material 2
+	// xyz: UVW
+	// w: whether this has been set
+	vec4 uv2;
+	#endif
 };
+
+int resultMaterial1(Sdf res) { return int(res.mat.x); }
+int resultMaterial2(Sdf res) { return int(res.mat.y); }
+float resultMaterialInterp(Sdf res) { return res.mat.z; }
 
 Sdf createSdf(float dist) {
 	Sdf res;
 	res.x = dist;
 
-	res.material = 2;
-	res.material2 = 0.;
-	res.interpolant = 0.;
+	res.mat = vec3(2., 0., 0.);
 	#ifdef RAYTK_USE_MATERIAL_POS
 	res.materialPos = vec4(0);
 	res.materialPos2 = vec4(0);
@@ -111,12 +122,16 @@ Sdf createSdf(float dist) {
 	// Switching this on by default since the default material uses shadows.
 	res.useShadow = true;
 	#endif
+	#ifdef RAYTK_USE_UV
+	res.uv = vec4(0.);
+	res.uv2 = vec4(0.);
+	#endif
 	return res;
 }
 
 void blendInSdf(inout Sdf res1, in Sdf res2, in float amt) {
-	res1.material2 = res2.material;
-	res1.interpolant = amt;
+	res1.mat.y = res2.mat.x;
+	res1.mat.z = amt;
 
 	#ifdef RAYTK_USE_MATERIAL_POS
 	res1.materialPos2 = res2.materialPos;
@@ -146,29 +161,37 @@ void blendInSdf(inout Sdf res1, in Sdf res2, in float amt) {
 	#endif
 
 	#ifdef RAYTK_USE_SHADOW
-	res1.useShadow = res1.useShadow || (res2.useShadow && res2.interpolant >= 1.0);
+	res1.useShadow = res1.useShadow || (res2.useShadow && resultMaterialInterp(res2) >= 1.0);
+	#endif
+
+	#ifdef RAYTK_USE_UV
+	res1.uv2 = res2.uv;
 	#endif
 }
 
 Sdf mixVals(in Sdf res1, in Sdf res2, float amt) {
 	blendInSdf(res1, res2, amt);
+	res1.x = mix(res1.x, res2.x, amt);
 	return res1;
 }
 
 void assignMaterial(inout Sdf res, int materialId) {
-	res.material = materialId;
-	res.material2 = 0;
-	res.interpolant = 0.;
+	res.mat = vec3(float(materialId), 0., 0.);
 }
 #ifdef RAYTK_USE_MATERIAL_POS
 void assignMaterialWithPos(inout Sdf res, int materialId, vec3 materialPos) {
-	res.material = materialId;
-	res.material2 = 0;
+	res.mat = vec3(float(materialId), 0., 0.);
 	res.materialPos = vec4(materialPos, 1.);
 	res.materialPos2 = vec4(0.);
-	res.interpolant = 0.;
 }
 #endif
+
+void assignUV(inout Sdf res, vec3 uv) {
+	#ifdef RAYTK_USE_UV
+	res.uv = vec4(uv, 1.);
+	res.uv2 = vec4(0.);
+	#endif
+}
 
 #ifndef RAYTK_MAX_DIST
 	#define RAYTK_MAX_DIST 99999
@@ -195,16 +218,9 @@ Sdf withAdjustedScale(in Sdf res, float scaleMult) {
 
 #ifdef RAYTK_USE_TIME
 struct Time {
-	float frame;
-	float seconds;
-	float start;
-	float end;
-	float rate;
-	float bpm;
-	float absFrame;
-	float absSeconds;
-	float absStepFrames;
-	float absStepSeconds;
+	vec4 frameSecStartEnd;  // frame, seconds, start, end
+	vec4 rateBpmAFrmAsec;   // rate, bpm, absFrame, absSeconds
+	vec4 absStpFrmAStpSec;  // absStep, absStepSeconds
 };
 
 Time getGlobalTime();
@@ -271,6 +287,14 @@ struct LightContext {
 	#endif
 };
 
+LightContext createLightContext(Sdf res, vec3 norm) {
+	return LightContext(res, norm
+	#if defined(RAYTK_TIME_IN_CONTEXT) || defined(RAYTK_USE_TIME)
+	, getGlobalTime()
+	#endif
+	);
+}
+
 struct MaterialContext {
 	Sdf result;
 	Context context;
@@ -282,6 +306,11 @@ struct MaterialContext {
 	vec3 materialPos;
 	#endif
 	float shadedLevel;
+	#ifdef RAYTK_USE_UV
+	// xyz: UVW
+	// w: whether this has been set
+	vec4 uv;
+	#endif
 };
 
 MaterialContext createMaterialContext() {
@@ -337,6 +366,7 @@ const int RAYTK_STAGE_PRIMARY = 0;
 const int RAYTK_STAGE_SHADOW =  1;
 const int RAYTK_STAGE_REFLECT = 2;
 const int RAYTK_STAGE_MATERIAL = 3;
+const int RAYTK_STAGE_OCCLUSION = 4;
 
 int _raytkStage = RAYTK_STAGE_PRIMARY;
 
@@ -350,6 +380,10 @@ void popStage(int priorStage) {
 	_raytkStage = priorStage;
 }
 
+int getStage() {
+	return _raytkStage;
+}
+
 void captureIterationFromMaterial(inout vec4 store, in Context ctx) {
 	if (_raytkStage == RAYTK_STAGE_PRIMARY) {
 		store = ctx.iteration;
@@ -361,6 +395,14 @@ void restoreIterationFromMaterial(inout MaterialContext matCtx, in vec4 store) {
 		matCtx.context.iteration = store;
 	}
 }
+
+#ifdef RAYTK_USE_SPLIT_CAMERA
+int _currentCamera = 0;
+int getCameraIndex() { return _currentCamera; }
+void setCameraIndex(int i) { _currentCamera = i; }
+#else
+int getCameraIndex() { return 0; }
+#endif
 
 mat3 rotateMatrix(vec3 r) {
 	return TDRotateX(r.x) * TDRotateY(r.y) * TDRotateZ(r.z);
@@ -609,6 +651,14 @@ vec4 quantize(vec4 p, vec4 size, vec4 offset, vec4 smoothing) {
 	return ((floor(p) + quantizeGain(fract(p), smoothing)) * size) - offset;
 }
 
+float quantizeHard(float p, float size, float offset) {
+	return (floor((p + offset) / size) * size) - offset;
+}
+
+vec4 quantizeHard(vec4 p, vec4 size, vec4 offset) {
+	return (floor(p = (p + offset) / size) * size) - offset;
+}
+
 float onion(float d, float thickness) {
 	return abs(d)-thickness;
 }
@@ -844,7 +894,11 @@ float smax(float a, float b, float k) {
 float dot2( in vec2 v ) { return dot(v,v); }
 float dot2( in vec3 v ) { return dot(v,v); }
 
+// Maps values from (inMin..inMax) to (0..1) range. This is the inverse of mix().
 float map01(float value, float inMin, float inMax) {
+	return (value - inMin) / (inMax - inMin);
+}
+vec3 map01(vec3 value, vec3 inMin, vec3 inMax) {
 	return (value - inMin) / (inMax - inMin);
 }
 
@@ -907,6 +961,15 @@ vec3 sphericalMobiusTransform(vec3 p, float radius, float rotAmt, vec3 rotation)
 	).xyz;
 }
 
+Ray createStandardCameraRay(vec2 p, vec2 size, int viewAngleMethod, float fov, mat4 camMat) {
+	vec2 uv = p / size;
+	float z = mix(size.x, size.y, float(viewAngleMethod)) / tan(radians(fov) * 0.5) * 0.5;
+	Ray ray;
+	ray.pos = camMat[3].xyz;
+	ray.dir = mat3(camMat) * normalize(vec3((uv - 0.5) * size, -z));
+	return ray;
+}
+
 // https://iquilezles.org/www/articles/palettes/palettes.htm
 // https://github.com/Erkaman/glsl-cos-palette
 vec3 cosPalette(  float t,  vec3 a,  vec3 b,  vec3 c, vec3 d ){
@@ -934,10 +997,15 @@ vec4 adaptAsVec4(vec2 p) { return vec4(p, 0., 0.); }
 vec4 adaptAsVec4(vec3 p) { return vec4(p, 0.); }
 vec4 adaptAsVec4(vec4 p) { return p; }
 
+vec2 fillToVec2(float p) { return vec2(p); }
+vec2 fillToVec2(vec4 p) { return p.xy; }
+
 vec3 fillToVec3(float p) { return vec3(p); }
 vec3 fillToVec3(vec4 p) { return p.xyz; }
 
 float extractOrUseAsX(float p) { return p; }
+float extractOrUseAsX(vec2 p) { return p.x; }
+float extractOrUseAsX(vec3 p) { return p.x; }
 float extractOrUseAsX(vec4 p) { return p.x; }
 
 float extractOrUseAsY(float p) { return p; }

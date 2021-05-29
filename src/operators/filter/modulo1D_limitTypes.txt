@@ -1,0 +1,4 @@
+name	label
+both	Both
+start	Start Only
+stop	Stop Only

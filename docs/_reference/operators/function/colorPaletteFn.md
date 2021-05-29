@@ -11,6 +11,10 @@ op:
   name: colorPaletteFn
   opType: raytk.operators.function.colorPaletteFn
   parameters:
+  - label: Period
+    name: Period
+  - label: Phase
+    name: Phase
   - label: Color 1
     name: Color1
   - label: Color 2
@@ -19,23 +23,5 @@ op:
     name: Color3
   - label: Color 4
     name: Color4
-  - label: Context Type
-    menuOptions:
-    - label: Use Input
-      name: useinput
-    - label: None
-      name: none
-    - label: Context
-      name: Context
-    - label: Material Context
-      name: MaterialContext
-    - label: Camera Context
-      name: CameraContext
-    - label: Light Context
-      name: LightContext
-    - label: Ray Context
-      name: RayContext
-    name: Contexttype
-  status: beta
 
 ---

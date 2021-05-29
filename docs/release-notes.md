@@ -1,5 +1,76 @@
 # Release Notes
 
+## v0.14
+
+### Highlights
+
+* Volumetric point map rendering
+* Reflection material and reflection support in modular materials! (#9, #481)
+* Lots of new SDFs
+
+### Details
+
+* Improvements / additions
+  * Added invert option for slice (#461)
+  * Added 2D SDFs:
+    * parallelogramSdf2d
+    * arcSdf2d
+    * heartSdf2d
+    * horseshoeSdf2d
+    * bezierSdf2d (#472)
+    * blobbyCrossSdf2d (#476)
+    * planeSdf2d (#513)
+    * ellipseSdf2d (#524)
+    * jointSdf2d (#525)
+    * quadSdf (#532)
+  * Added 3D SDFs:
+    * segmentedLineSdf (#119)
+    * archSdf (#510)
+  * Added hsvColorField (#464)
+  * Add spotLight! (#47)
+  * Add option to switch off color rendering in raymarchRender3d, which can improve performance when only using other
+    types of output like depth (#477)
+  * Added 1D support in coordTo2D (#475)
+  * Added reflectionContrib (#9, #481)
+  * Added field inputs in iteratedTransform (#480)
+  * Added axis parameter in colorRampField
+  * Added color field input in directionalLight
+  * Added period and phase parameter in colorPaletteFn (#486)
+  * Added object ID output in pointMapRender (#491)
+  * Added material support in pointMapRender (#492)
+  * Added bandField (#500)
+  * Added unidirectional limits in modulo1D (#309)
+  * Added restrictStage (#417, #503)
+  * Added field inputs in cylinderSdf (#508)
+  * Added invert in stepFn (#507)
+  * Added axis limiting in pointDistanceField (#506)
+  * Added sdfField for converting SDFs to fields (#516)
+  * Added rainbowFn (#517)
+  * Added offset parameter in combineColumns (#391)
+  * Added shapedCombine (#444)
+  * Added infinite height option in cylinderSdf (#520)
+* Fixes
+  * Fix inspector support for inputs 5-8
+  * Fix errors in blend (#469)
+  * Fix issue with normal directions for reflectMat (#9, #481)
+  * Fix parameter handling issues in customOp (#297)
+  * Fix logic around enabling and disabling shadows
+  * Fix bugs in 2D support in transform, iteratedTransform, and rangeTransform
+  * Fix axis normalization in rotate
+  * Fix coordinate handling in helixSdf
+  * Fix translate in boxFrameSdf (#490)
+  * Fix parameter enabling in bend (#493)
+  * Fix 2D issues in magnet (#494)
+  * Fix depth compositing issue with antialiasing (#502)
+  * Fix attenuation issues in linkedLight (#504)
+  * Fix axis bug in mobiusRingSdf (#514)
+* Infrastructure / development
+  * Large-scale restructuring of how data types are handled throughout the toolkit. Operators can now support multiple
+    variations of coordinate, context, and return types, which downstream operators can restrict and eventually resolve
+    to single concrete types.
+    * The main user-facing result is that fields don't need to specify their context type since whatever they're fed
+      into can automatically switch it to the right type.
+
 ## v0.13
 
 ### Highlights

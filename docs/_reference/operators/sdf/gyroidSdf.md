@@ -59,7 +59,6 @@ op:
   - label: Thickness
     name: Thickness
     summary: Expands the surfaces producing thicker shapes.
-  status: beta
   summary: Gyroid shape, which is an infinitely connected periodic surface.
 
 ---

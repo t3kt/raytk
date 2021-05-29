@@ -1,3 +1,16 @@
 ReturnT thismap(CoordT p, ContextT ctx) {
-	return createSdf(sdStar(p, THIS_Radius, THIS_Points, THIS_M));
+	float r = THIS_Radius;
+	float n = THIS_Points;
+	float m = THIS_M;
+	// next 4 lines can be precomputed for a given shape
+	float an = PI/n;
+	float en = PI/m;  // m is between 2 and n
+	vec2  acs = vec2(cos(an),sin(an));
+	vec2  ecs = vec2(cos(en),sin(en)); // ecs=vec2(0,1) for regular polygon,
+
+	float bn = mod(atan(p.x,p.y),2.0*an) - an;
+	p = length(p)*vec2(cos(bn),abs(sin(bn)));
+	p -= r*acs;
+	p += ecs*clamp( -dot(p,ecs), 0.0, r*acs.y/ecs.y);
+	return createSdf(length(p)*sign(p.x));
 }

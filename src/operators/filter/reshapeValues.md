@@ -1,6 +1,6 @@
 Reshapes the values produced by a field by applying a function.
 
-If the source field produces float values, the function is just applied to those values.
+If the source field produces float values, the function is just applied to those values, returning whatever type the function returns.
 If the source field produces vector values, the function is applied individually to each channel in the produced values.
 If the source is an SDF, the function is applied to the distance value in the SDF result.
 

@@ -21,7 +21,6 @@ op:
     but doesn''t support shadows.'
   inputs:
   - contextTypes:
-    - none
     - Context
     coordTypes:
     - vec3

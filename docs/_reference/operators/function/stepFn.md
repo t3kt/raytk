@@ -26,19 +26,8 @@ op:
   - label: Blend
     name: Blend
     summary: The amount of smoothing to apply on the edge.
-  - label: Context Type
-    menuOptions:
-    - label: None
-      name: none
-    - label: Context
-      name: Context
-    - label: Material Context
-      name: MaterialContext
-    - label: Camera Context
-      name: CameraContext
-    - label: Light Context
-      name: LightContext
-    name: Contexttype
+  - label: Invert
+    name: Invert
   summary: A function that changes from zero to one at a cutoff point.
 
 ---

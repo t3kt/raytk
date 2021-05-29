@@ -53,7 +53,6 @@ op:
     \ those parts (e.g. `THIS_Size` could be a `vec3`)."
   inputs:
   - contextTypes:
-    - none
     - Context
     - MaterialContext
     - CameraContext
@@ -72,7 +71,6 @@ op:
     - Ray
     - Light
   - contextTypes:
-    - none
     - Context
     - MaterialContext
     - CameraContext
@@ -91,7 +89,6 @@ op:
     - Ray
     - Light
   - contextTypes:
-    - none
     - Context
     - MaterialContext
     - CameraContext
@@ -110,7 +107,6 @@ op:
     - Ray
     - Light
   - contextTypes:
-    - none
     - Context
     - MaterialContext
     - CameraContext
@@ -168,24 +164,18 @@ op:
     name: Typesheader
   - label: Coord Type
     menuOptions:
-    - description: Use whatever type of coordinates the first input uses, or `vec3`
-        if the first input is not connected.
-      label: Use Input
-      name: useinput
+    - label: Auto
+      name: auto
     - label: 1D
       name: float
-    - label: 3D
-      name: vec3
     - label: 2D
       name: vec2
+    - label: 3D
+      name: vec3
     name: Coordtype
     summary: The type of coordinates that the op uses.
   - label: Return Type
     menuOptions:
-    - description: Use whatever type of return value the first input uses, or `Sdf`
-        if the first input is not connected.
-      label: Use Input
-      name: useinput
     - label: SDF Result
       name: Sdf
     - label: Float
@@ -200,19 +190,19 @@ op:
     summary: The type of return value produced by the op.
   - label: Context Type
     menuOptions:
-    - description: Use whatever type of context the first input uses, or `Context`
-        if the first input is not connected.
-      label: Use Input
-      name: useinput
+    - label: Auto
+      name: auto
     - description: The most commonly used context type, used for the main scene graph.
       label: Context
       name: Context
-    - label: Material Context
+    - label: MaterialContext
       name: MaterialContext
-    - label: Camera Context
+    - label: CameraContext
       name: CameraContext
-    - label: Light Context
+    - label: LightContext
       name: LightContext
+    - label: RayContext
+      name: RayContext
     name: Contexttype
     summary: The type of return value produced by the op.
   - label: Params OP
@@ -240,7 +230,12 @@ op:
   - label: Auto Create Missing Params
     name: Autocreatemissingparams
     summary: Automatically create custom parameters whenever shader code changes.
-  status: beta
+  - label: Use Input Coord Type
+    name: Useinputcoordtype
+  - label: Use Input Return Type
+    name: Useinputreturntype
+  - label: Use Input Context Type
+    name: Useinputcontexttype
   summary: A custom operator that integrates blocks of custom shader code into a RayTK
     network.
 

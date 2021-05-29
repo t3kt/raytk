@@ -15,6 +15,7 @@ if False:
 		Enablepivot: BoolParamT
 		Scaletype: StrParamT
 		Varname: StrParamT
+		Useparamvars: BoolParamT
 
 def _configPar() -> 'Union[_Pars, ParCollection]':
 	return parent().par
@@ -22,13 +23,33 @@ def _configPar() -> 'Union[_Pars, ParCollection]':
 def _var():
 	return _configPar().Varname.eval() or 'p'
 
+def generateInitCode():
+	if not _configPar().Useparamvars:
+		return ''
+	parts = []
+	if _configPar().Enablepivot:
+		parts += ['vec3 pivot = THIS_Pivot;']
+	if _configPar().Enablescale:
+		if _configPar().Scaletype == 'uniform':
+			parts += ['float uniformscale = THIS_Uniformscale;']
+		else:
+			parts += ['vec3 scale = THIS_Scale;']
+	if _configPar().Enablerotate:
+		parts += ['vec3 rotate = THIS_Rotate;']
+	if _configPar().Enabletranslate:
+		parts += ['vec3 translate = THIS_Translate;']
+	return '\n'.join(parts)
+
+def _param(name: str):
+	return name if _configPar().Useparamvars else 'THIS_' + name.capitalize()
+
 def generateCode():
 	parts = []
 	v = _var()
 	if _configPar().Enablepivot:
 		parts += _branchByCoordType(
-			f'{v} -= vec2(THIS_Pivotx, THIS_Pivoty);',
-			f'{v} -= THIS_Pivot;')
+			f'{v} -= {_param("pivot")}.xy;',
+			f'{v} -= {_param("pivot")};')
 	for part in _configPar().Transformorder.eval():
 		if part == 's':
 			parts += _scaleCode()
@@ -38,8 +59,8 @@ def generateCode():
 			parts += _translateCode()
 	if _configPar().Enablepivot:
 		parts += _branchByCoordType(
-			f'{v} += vec2(THIS_Pivotx, THIS_Pivoty);',
-			f'{v} += THIS_Pivot;')
+			f'{v} += {_param("pivot")}.xy;',
+			f'{v} += {_param("pivot")};')
 	return '\n'.join(parts)
 
 def _scaleCode() -> 'List[str]':
@@ -48,21 +69,21 @@ def _scaleCode() -> 'List[str]':
 	v = _var()
 	if _configPar().Scaletype == 'uniform':
 		return [
-			f'{v} /= THIS_Uniformscale;',
-			'valueAdjust /= THIS_Uniformscale;',
+			f'{v} /= {_param("uniformscale")};',
+			f'valueAdjust /= {_param("uniformscale")};',
 		]
 	return _branchByCoordType(
-		f'{v} /= vec2(THIS_Scalex, THIS_Scaley);',
-		f'{v} /= THIS_Scale;')
+		f'{v} /= {_param("scale")}.xy;',
+		f'{v} /= {_param("scale")};')
 
 def _rotateCode() -> 'List[str]':
 	if not _configPar().Enablerotate:
 		return []
 	v = _var()
 	return _branchByCoordType(
-		f'pR({v}, THIS_Rotatez);',
+		f'pR({v}, {_param("rotate")}.z);',
 		'\n'.join([
-				f'{v} *= TDRotate{part.upper()}(THIS_Rotate{part});'
+				f'{v} *= TDRotate{part.upper()}({_param("rotate")}.{part});'
 				for part in _configPar().Rotateorder.eval()
 		]))
 
@@ -71,8 +92,8 @@ def _translateCode() -> 'List[str]':
 		return []
 	v = _var()
 	return _branchByCoordType(
-		f'{v} -= vec2(THIS_Translatex, THIS_Translatey);',
-		f'{v} -= THIS_Translate;')
+		f'{v} -= {_param("translate")}.xy;',
+		f'{v} -= {_param("translate")};')
 
 def _branchByCoordType(code2d, code3d):
 	return [

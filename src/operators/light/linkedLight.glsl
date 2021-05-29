@@ -11,14 +11,15 @@ Light thismap(vec3 p, LightContext ctx) {
 	{
 		light.pos = lightMat[3].xyz;
 		#ifdef THIS_attenuated
+		// Based on TDAttenuateLight()
 		float d = length(p - light.pos);
 		float start = THIS_attenuationstart;
 		float end = THIS_attenuationend;
-		if (d > end) {
-			light.color = vec3(0.);
-		} else if (d > start) {
-			light.color *= (1 - smoothstep(start, end, d));
-		}
+		float attenScale = 1.0 / -(end - start);
+		float attenBias = end / (end - start);
+		float rolloff = THIS_attenuationexp;
+		float lightAtten = attenuateLight(attenScale, attenBias, rolloff, d);
+		light.color *= lightAtten;
 		#endif
 	}
 	#elif defined(THIS_lighttype_distant)

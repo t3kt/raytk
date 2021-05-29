@@ -1,44 +1,57 @@
-from raytkUtil import TypeTableHelper
-from raytkModel import TypeSpec, FunctionSignature
-from typing import List
+from raytkTypes import TypeSpec
 
 # noinspection PyUnreachableCode
 if False:
 	# noinspection PyUnresolvedReferences
 	from _stubs import *
 
-def updateTypeParMenus():
-	helper = _typeHelper()
-	helper.updateCoordTypePar(parent().par.Supportcoordtypes)
-	helper.updateReturnTypePar(parent().par.Supportreturntypes)
-	helper.updateContextTypePar(parent().par.Supportcontexttypes)
+def _typeTable() -> 'DAT':
+	return op('typeTable')
 
-def _typeHelper():
-	return TypeTableHelper(op('typeTable'))
+class _Category:
+	name: str
+	togglePrefix: str
+	allToggle: str
+	useInputToggle: str
 
-def _getTypeSpec(paramPrefix: str, allTypes: List[str]):
-	supported = tdu.split(parent().par[paramPrefix + 's'] or '')
-	if '*' in supported:
-		return TypeSpec.all()
-	return TypeSpec(
-		types=[
-			typeName
-			for typeName in allTypes
-			if parent().par[paramPrefix + typeName.lower()] or typeName in supported
+	def __init__(self, name: str):
+		self.name = name
+		self.togglePrefix = name.capitalize()
+		self.allToggle = 'All' + name.lower()
+		self.useInputToggle = 'Useinput' + name.lower()
+		filterColumn = 'is' + name[0].upper() + name[1:]
+		table = _typeTable()
+		self.allTypes = [
+			table[row, 'name'].val
+			for row in range(1, table.numRows)
+			if table[row, filterColumn] == '1'
 		]
-	)
 
-def _getFunctionSignature():
-	helper = _typeHelper()
-	return FunctionSignature(
-		coordType=_getTypeSpec('Supportcoordtype', helper.coordTypes()),
-		contextType=_getTypeSpec('Supportcontexttype', helper.contextTypes()),
-		returnType=_getTypeSpec('Supportreturntype', helper.returnTypes()),
-	)
+	def getSpec(self):
+		isAll = bool(parent().par[self.allToggle])
+		return TypeSpec(
+			useInput=bool(parent().par[self.useInputToggle]),
+			supportsAll=isAll,
+			supported=[] if isAll else [
+				t
+				for t in self.allTypes
+				if parent().par[self.togglePrefix + t.lower()]
+			],
+		)
 
-def buildVariationsTable(dat: 'DAT'):
-	signature = _getFunctionSignature()
+_categories = [
+	_Category('coordType'),
+	_Category('contextType'),
+	_Category('returnType'),
+]
+
+def buildSupportedTypeTable(dat: 'scriptDAT'):
 	dat.clear()
-	dat.appendRow(['coordType', 'contextType', 'returnType'])
-	for sig in signature.expandAll():
-		dat.appendRow([sig.coordType, sig.contextType, sig.returnType])
+	dat.appendRow(['category', 'spec', 'types'])
+	for cat in _categories:
+		typeSpec = cat.getSpec()
+		dat.appendRow([
+			cat.name,
+			typeSpec.formatSpec(cat.allTypes),
+			typeSpec.formatTypes(cat.allTypes),
+		])

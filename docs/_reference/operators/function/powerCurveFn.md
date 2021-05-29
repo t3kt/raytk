@@ -19,18 +19,5 @@ op:
     name: Normalizescale
   - label: Scale
     name: Scale
-  - label: Context Type
-    menuOptions:
-    - label: None
-      name: none
-    - label: Context
-      name: Context
-    - label: Material Context
-      name: MaterialContext
-    - label: Camera Context
-      name: CameraContext
-    - label: Light Context
-      name: LightContext
-    name: Contexttype
 
 ---

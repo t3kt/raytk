@@ -6,12 +6,32 @@ Sdf thismap(vec3 p, Context ctx) {
 	#endif
 }
 
+Ray evaluateCamera(vec2 p, CameraContext ctx) {
+#ifndef THIS_HAS_INPUT_2
+	mat4 camMat = mat4(
+		1., 0., 0., 0.,
+		0., 1., 0., 0.,
+		0., 0., 1., 0.,
+		0., 0., 5., 0.
+	);
+	return createStandardCameraRay(
+		p,
+		ctx.resolution,
+		0,
+		45,
+		camMat
+	);
+#else
+	return inputOp2(p, ctx);
+#endif
+}
+
 Ray getViewRay(vec2 shift) {
 	vec2 resolution = uTDOutputInfo.res.zw;
 	vec2 fragCoord = vUV.st*resolution + shift;
 	CameraContext ctx;
 	ctx.resolution = resolution;
-	return inputOp2(fragCoord, ctx);
+	return evaluateCamera(fragCoord, ctx);
 }
 
 #ifdef THIS_USE_LIGHT_FUNC
@@ -60,7 +80,7 @@ void modifyRay(inout Ray ray, in Sdf res) {
 #endif
 
 #ifdef RAYTK_USE_SHADOW
-float getShadedLevel(vec3 p, MaterialContext matCtx) {
+float calcShadedLevel(vec3 p, MaterialContext matCtx) {
 	int priorStage = pushStage(RAYTK_STAGE_SHADOW);
 	#ifdef THIS_HAS_INPUT_5
 	float res = inputOp5(p, matCtx);

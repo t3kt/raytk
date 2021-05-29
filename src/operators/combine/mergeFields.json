@@ -1,7 +1,7 @@
 {
   "meta": {
-    "opStatus": "beta",
+    "opStatus": "default",
     "opType": "raytk.operators.combine.mergeFields",
-    "opVersion": 0
+    "opVersion": 2
   }
 }

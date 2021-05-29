@@ -14,7 +14,6 @@ op:
   parameters:
   - label: Enable
     name: Enable
-  status: beta
   summary: Vector field that produces the surface normal where it is evaluated.
 
 ---

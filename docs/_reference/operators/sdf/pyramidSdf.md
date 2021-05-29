@@ -10,7 +10,6 @@ op:
   category: sdf
   inputs:
   - contextTypes:
-    - none
     - Context
     - MaterialContext
     - CameraContext
@@ -25,7 +24,6 @@ op:
     summary: Optional field used to determine the height. When connected, the `Height`
       is multiplied by the value produced by the field.
   - contextTypes:
-    - none
     - Context
     - MaterialContext
     - CameraContext

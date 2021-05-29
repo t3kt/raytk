@@ -9,9 +9,9 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 	#ifdef THIS_RETURN_TYPE_float
 		return fOpEngrave(res1, res2, radius);
 	#else
+	float h = smoothBlendRatio(res1.x, res2.x, radius);
 	res1.x = fOpEngrave(res1.x, res2.x, radius);
-	res1.interpolant = clamp(0.5 - 0.5*(res2.x+res1.x)/radius, 0., 1.);
-	res1.material2 = res2.material;
+	blendInSdf(res1, res2, 1.0 - h);
 	return res1;
 	#endif
 }

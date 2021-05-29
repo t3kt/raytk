@@ -22,23 +22,25 @@ op:
     - label: 3D
       name: vec3
     name: Coordtype
-  - label: Context Type
-    menuOptions:
-    - label: None
-      name: none
-    - label: Context
-      name: Context
-    - label: Material Context
-      name: MaterialContext
-    - label: Camera Context
-      name: CameraContext
-    - label: Light Context
-      name: LightContext
-    name: Contexttype
   - label: Color
     name: Color
   - label: Alpha
     name: Alpha
+  - label: Context Type
+    menuOptions:
+    - label: Auto
+      name: auto
+    - label: Context
+      name: Context
+    - label: MaterialContext
+      name: MaterialContext
+    - label: CameraContext
+      name: CameraContext
+    - label: LightContext
+      name: LightContext
+    - label: RayContext
+      name: RayContext
+    name: Contexttype
   summary: A vector field that evaluates to a constant color value.
 
 ---

@@ -11,7 +11,6 @@ op:
   detail: The resulting shape is the combined areas of all of the inputs.
   inputs:
   - contextTypes:
-    - none
     - Context
     - MaterialContext
     - CameraContext
@@ -25,7 +24,6 @@ op:
     - float
     - Sdf
   - contextTypes:
-    - none
     - Context
     - MaterialContext
     - CameraContext
@@ -39,7 +37,6 @@ op:
     - float
     - Sdf
   - contextTypes:
-    - none
     - Context
     - MaterialContext
     - CameraContext
@@ -53,7 +50,6 @@ op:
     - float
     - Sdf
   - contextTypes:
-    - none
     - Context
     - MaterialContext
     - CameraContext
@@ -67,7 +63,6 @@ op:
     - float
     - Sdf
   - contextTypes:
-    - none
     - Context
     - MaterialContext
     - CameraContext
@@ -81,7 +76,6 @@ op:
     - float
     - Sdf
   - contextTypes:
-    - none
     - Context
     - MaterialContext
     - CameraContext
@@ -95,7 +89,6 @@ op:
     - float
     - Sdf
   - contextTypes:
-    - none
     - Context
     - MaterialContext
     - CameraContext
@@ -109,7 +102,6 @@ op:
     - float
     - Sdf
   - contextTypes:
-    - none
     - Context
     - MaterialContext
     - CameraContext

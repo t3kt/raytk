@@ -10,6 +10,8 @@ if False:
 
 context = args[0]  # type: BuildTaskContext
 
+context.log('Processing inspector')
+
 inspector = parent()  # type: Union[COMP, Inspector]
 inspector.Reset()
 
@@ -27,15 +29,21 @@ subComps += ops(
 	'render2D',
 	'raymarchRender3D',
 )
+context.log(f'Found {len(subComps)} child components in inspector')
 
 for comp in subComps:
-	context.updateOrReclone(comp)
+	context.log(f'Processing inspector child: {comp}')
+# 	context.updateOrReclone(comp)
 	context.disableCloning(comp)
 	context.detachTox(comp)
+	context.log(f'Processing sub-components in {comp}')
 	for c in comp.findChildren(type=COMP):
-		context.updateOrReclone(c)
+# 		context.updateOrReclone(c)
 		context.disableCloning(c)
 		context.detachTox(c)
+	context.log(f'Finished processing inspector child {comp}')
+context.log('Finished processing inspector child components')
 
 context.detachTox(inspector)
+context.log('Finished processing inspector')
 context.finishTask()

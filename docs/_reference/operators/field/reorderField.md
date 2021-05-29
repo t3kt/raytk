@@ -10,7 +10,6 @@ op:
   category: field
   inputs:
   - contextTypes:
-    - none
     - Context
     - MaterialContext
     - CameraContext
@@ -26,7 +25,6 @@ op:
     - float
     - vec4
   - contextTypes:
-    - none
     - Context
     - MaterialContext
     - CameraContext
@@ -42,7 +40,6 @@ op:
     - float
     - vec4
   - contextTypes:
-    - none
     - Context
     - MaterialContext
     - CameraContext
@@ -58,7 +55,6 @@ op:
     - float
     - vec4
   - contextTypes:
-    - none
     - Context
     - MaterialContext
     - CameraContext
@@ -190,6 +186,5 @@ op:
     - label: One
       name: one
     name: Part4
-  status: beta
 
 ---

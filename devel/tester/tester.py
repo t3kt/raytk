@@ -1,5 +1,5 @@
 from pathlib import Path
-from typing import Callable, Dict, Optional
+from typing import Callable, Dict, List, Optional
 from raytkTest import TestCaseResult, TestFindingStatus
 from raytkUtil import RaytkContext, recloneComp, Version
 
@@ -23,6 +23,7 @@ if False:
 		Includebeta: 'BoolParamT'
 		Includedeprecated: 'BoolParamT'
 		Running: 'BoolParamT'
+		Filtertext: 'StrParamT'
 	ipar.uiState = _UiStatePars()
 
 	# noinspection PyTypeChecker
@@ -75,10 +76,18 @@ class TestManager:
 		alpha = ipar.uiState.Includealpha
 		beta = ipar.uiState.Includebeta
 		deprecated = ipar.uiState.Includedeprecated
+		filterText = ipar.uiState.Filtertext.eval().strip().lower()
 		casesFolder = Path(self.ownerComp.par.Testcasefolder.eval())
 		for row in range(1, fileTable.numRows):
 			baseName = str(fileTable[row, 'basename'])
 			relPath = str(fileTable[row, 'relpath'])
+			if filterText:
+				if '/' in filterText:
+					if filterText not in relPath.lower():
+						continue
+				else:
+					if filterText not in baseName.lower():
+						continue
 			if 'operators/' in relPath:
 				opName = baseName.split('_', 1)[0]
 				if not opTable[opName, 'name']:
@@ -136,11 +145,30 @@ class TestManager:
 		toolkit.par.Devel = False
 		self.log('Finished loading toolkit')
 
+	def queueFailedTests(self):
+		resultTable = self.ownerComp.op('failedResultTable')
+		if resultTable.numRows < 2 or not resultTable.col('case'):
+			names = []
+		else:
+			names = [n.val for n in resultTable.col('case')[1:]]
+		self.reloadTestTable()
+		self._copyTestsToQueue(filterNames=names)
+
 	def reloadTestQueue(self):
 		self.reloadTestTable()
+		self._copyTestsToQueue()
+
+	def _copyTestsToQueue(self, filterNames: 'Optional[List[str]]' = None):
 		queue = self._testQueue
 		queue.clear()
-		queue.appendCol(self._testTable.col('name')[1:])
+		if filterNames is None:
+			queue.appendCol(self._testTable.col('name')[1:])
+		else:
+			queue.appendCol([
+				c
+				for c in self._testTable.col('name')[1:]
+				if c.val in filterNames
+			])
 
 	def clearResults(self):
 		table = self._resultTable
@@ -180,6 +208,13 @@ class TestManager:
 				result.name
 			] + finding.toTableRowVals(basePath, includeDetail=True))
 
+	def cancelTestRun(self):
+		if not ipar.uiState.Running:
+			self.log('Already stopped, no canceling necessary')
+			return
+		self.log('Canceling test run...')
+		ipar.uiState.Running = False
+
 	def runQueuedTests(self):
 		queue = self._testQueue
 		if queue.numRows < 1:
@@ -206,6 +241,9 @@ class TestManager:
 		self._queueCall(self._runNextTest_stage, 0, name, continueAfter)
 
 	def _runNextTest_stage(self, stage: int, name: str, continueAfter: bool):
+		if not ipar.uiState.Running:
+			self.log('Canceled test run')
+			return
 		if stage == 0:
 			tox = self._testTable[name, 'tox']
 			if not tox:
@@ -214,7 +252,7 @@ class TestManager:
 			self._queueCall(self._runNextTest_stage, stage + 1, name, continueAfter)
 		elif stage == 1:
 			self._processTest()
-			self._queueCall(self._runNextTest_stage, stage + 1, name, continueAfter)
+			self._queueCall(self._runNextTest_stage, stage + 1, name, continueAfter, delayFrames=20)
 		elif stage == 2:
 			result = self._buildTestCaseResult()
 			if result.hasError:
@@ -258,14 +296,26 @@ class TestManager:
 		comp = self._testComp
 		if not comp:
 			return
+		if not comp.valid:
+			self.log(f'For some reason {comp!r} is invalid!')
+			return
+		rops = RaytkContext().ropChildrenOf(comp, maxDepth=2)
+		self.log(f'Found {len(rops)} ROPs in test')
 		# This is breaking connections made by outputOpController on initialization
-		for rop in RaytkContext().ropChildrenOf(comp, maxDepth=None):
+		for rop in rops:
+			if not rop.valid:
+				self.log(f'For some reason {rop!r} is invalid!')
+				continue
+			rop.par.reinitnet.pulse()
+			recloneComp(rop)
 			if rop.par['Updateop'] is not None:
 				rop.par.Updateop.pulse()
-			else:
-				recloneComp(rop)
-		for rop in RaytkContext().ropOutputChildrenOf(comp, maxDepth=None):
-			rop.outputs[0].cook(force=True)
+		for rop in RaytkContext().ropOutputChildrenOf(comp, maxDepth=4):
+			if not rop.valid:
+				continue
+			for o in rop.outputs:
+				if o.valid:
+					o.cook(force=True)
 
 	def _buildTestCaseResult(self) -> 'Optional[TestCaseResult]':
 		comp = self._testComp
@@ -300,6 +350,7 @@ class TestManager:
 		self.clearResults()
 		self.reloadTestQueue()
 		ipar.uiState.Running = False
+		ipar.uiState.Filtertext = ''
 
 	@staticmethod
 	def onCountLabelClick(label: 'COMP'):
@@ -310,5 +361,5 @@ class TestManager:
 			ipar.uiState.Resultlevelfilter = name
 
 	@staticmethod
-	def _queueCall(method: Callable, *args):
-		run('args[0](*(args[1:]))', method, *args, delayFrames=5, delayRef=root)
+	def _queueCall(method: Callable, *args, delayFrames=5):
+		run('args[0](*(args[1:]))', method, *args, delayFrames=delayFrames, delayRef=root)

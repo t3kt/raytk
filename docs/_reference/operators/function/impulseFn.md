@@ -31,19 +31,7 @@ op:
     name: Falloff
   - label: Polynomial Degree
     name: Polydegree
-  - label: Context Type
-    menuOptions:
-    - label: None
-      name: none
-    - label: Context
-      name: Context
-    - label: Material Context
-      name: MaterialContext
-    - label: Camera Context
-      name: CameraContext
-    - label: Light Context
-      name: LightContext
-    name: Contexttype
+  - name: Contexttype
   summary: Impulse functions that are useful as trigger patterns or animation envelopes.
 
 ---

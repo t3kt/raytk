@@ -1,6 +1,7 @@
 from dataclasses import dataclass, field
 import dataclasses
 import json
+from pathlib import Path
 import re
 from typing import Dict, Iterable, List, Optional, Union
 import yaml
@@ -63,7 +64,7 @@ def _parseJson(jsonStr: str):
 	return json.loads(jsonStr) if jsonStr else {}
 
 @dataclass
-class TypeSpec(_DataObject_OLD):
+class _TypeSpec_OLD(_DataObject_OLD):
 	"""
 	One or several possible data types.
 	`*` is equivalent to all available types.
@@ -103,90 +104,6 @@ class TypeSpec(_DataObject_OLD):
 
 	def supports(self, typeName: str):
 		return self.isAll or typeName in self.types
-
-	def toObj(self):
-		return str(self)
-
-	@classmethod
-	def fromObj(cls, obj):
-		return cls.parse(obj)
-
-_typeSpecPatternPart = r'([\*\w|]+)'
-_signaturePattern = re.compile(
-	fr'\(\s*{_typeSpecPatternPart}\s*,\s*{_typeSpecPatternPart}\s*\)\s*->\s*{_typeSpecPatternPart}')
-
-@dataclass
-class FunctionSignature(_DataObject_OLD):
-	"""
-	Parameter and return types for a function.
-	Can either be a single specific signature, or a collection of possible signatures.
-	For example: "Takes in 2D coords and any type of context and returns either float or vec4",
-	would be represented as:
-	`(vec2, *) -> float|vec4`
-	"""
-	coordType: TypeSpec
-	contextType: TypeSpec
-	returnType: TypeSpec
-
-	def __str__(self):
-		return f'({self.coordType}, {self.contextType})->{self.returnType}'
-
-	@classmethod
-	def parse(cls, s: str):
-		match = _signaturePattern.fullmatch(s.strip())
-		if not match:
-			raise ValueError('Invalid signature: ' + repr(s))
-		return cls(
-			coordType=TypeSpec.parse(match.group(1)),
-			contextType=TypeSpec.parse(match.group(2)),
-			returnType=TypeSpec.parse(match.group(3)),
-		)
-
-	@classmethod
-	def parseOptional(cls, s: Optional[str]):
-		return cls.parse(s) if s else None
-
-	@classmethod
-	def create(cls, coordType: str, contextType: str, returnType: str):
-		return cls(
-			coordType=TypeSpec.parse(coordType),
-			contextType=TypeSpec.parse(contextType),
-			returnType=TypeSpec.parse(returnType),
-		)
-
-	@classmethod
-	def all(cls):
-		return cls(
-			coordType=TypeSpec.all(),
-			contextType=TypeSpec.all(),
-			returnType=TypeSpec.all())
-
-	@classmethod
-	def extractFromHandler(cls, inputHandler: 'COMP'):
-		table = inputHandler.op('supported_type_table')
-		if not table:
-			return cls.all()
-		return cls(
-			coordType=TypeSpec.parse(str(table['coordType', 1] or '*')),
-			contextType=TypeSpec.parse(str(table['contextType', 1] or '*')),
-			returnType=TypeSpec.parse(str(table['returnType', 1] or '*')),
-		)
-
-	def isSingle(self):
-		return self.coordType.isSingle() and self.contextType.isSingle() and self.returnType.isSingle()
-
-	def expandAll(self) -> List['FunctionSignature']:
-		coordTypes = self.coordType.expand(CoordTypes.values)
-		contextTypes = self.contextType.expand(ContextTypes.values)
-		returnTypes = self.returnType.expand(ReturnTypes.values)
-		if self.isSingle():
-			return [self]
-		return [
-			FunctionSignature.create(coord, ctx, ret)
-			for ret in returnTypes
-			for ctx in contextTypes
-			for coord in coordTypes
-		]
 
 	def toObj(self):
 		return str(self)
@@ -240,6 +157,11 @@ class ModelObject(yaml.YAMLObject):
 			if _shouldInclude(val) and val != f.default:
 				d[f.name] = val
 		return d
+
+	def writeToFile(self, file: 'Union[Path, str]'):
+		file = Path(file)
+		text = yaml.dump(self, default_style='')
+		file.write_text(text)
 
 def _shouldInclude(val):
 	if val is None or val == '':
@@ -466,51 +388,52 @@ class ROPSpec(ModelObject):
 	multiInput: Optional[MultiInputSpec] = None
 	inputs: Optional[List[InputSpec]] = field(default_factory=list)
 
-def extractOpSpec(rop: 'COMP', skipParams=False) -> ROPSpec:
-	info = ROPInfo(rop)
-	spec = ROPSpec(
-		meta=ROPMeta(
-			opType=info.opType,
-			opVersion=info.opVersion,
-			opStatus=info.statusLabel,
-		),
-		opDef=ROPDef(
-			coordType=_valueOrExprFromPar(info.opDefPar.Coordtype),
-			returnType=_valueOrExprFromPar(info.opDefPar.Returntype),
-			contextType=_valueOrExprFromPar(info.opDefPar.Contexttype),
-			disableInspect=info.opDefPar.Disableinspect.eval(),
-			useParams=_valueOrExprFromPar(info.opDefPar.Params),
-			specialParams=_valueOrExprFromPar(info.opDefPar.Specialparams),
-			angleParams=_valueOrExprFromPar(info.opDefPar.Angleparams),
-			macroParams=_valueOrExprFromPar(info.opDefPar.Macroparams),
-			libraryNames=_valueOrExprFromPar(info.opDefPar.Librarynames),
-			opGlobals=_extractDatSetting(info.opDefPar.Opglobals, isText=True),
-			initCode=_extractDatSetting(info.opDefPar.Initcode, isText=True),
-			function=_extractDatSetting(info.opDefPar.Functemplate, isText=True),
-			help=_extractDatSetting(info.opDefPar.Help, isText=True),
-			callbacks=_extractDatSetting(info.opDefPar.Callbacks, isText=True),
-			bufferTable=_extractDatSetting(info.opDefPar.Buffertable, isText=False),
-			macroTable=_extractDatSetting(info.opDefPar.Macrotable, isText=False),
-			textureTable=_extractDatSetting(info.opDefPar.Texturetable, isText=False),
-		),
-	)
-	if not skipParams:
-		spec.paramPages = [
-			_extractParamPage(page)
-			for page in rop.customPages
-		]
-	multiHandler = info.multiInputHandler
-	if multiHandler:
-		spec.multiInput = MultiInputSpec(
-			minimumInputs=multiHandler.par.Minimuminputs.eval() if multiHandler.par.Minimuminputs > 0 else None,
+	@classmethod
+	def extract(cls, rop: 'COMP', skipParams=False) -> 'ROPSpec':
+		info = ROPInfo(rop)
+		spec = ROPSpec(
+			meta=ROPMeta(
+				opType=info.opType,
+				opVersion=int(info.opVersion),
+				opStatus=info.statusLabel,
+			),
+			opDef=ROPDef(
+				coordType=_valueOrExprFromPar(info.opDefPar.Coordtype),
+				returnType=_valueOrExprFromPar(info.opDefPar.Returntype),
+				contextType=_valueOrExprFromPar(info.opDefPar.Contexttype),
+				disableInspect=info.opDefPar.Disableinspect.eval(),
+				useParams=_valueOrExprFromPar(info.opDefPar.Params),
+				specialParams=_valueOrExprFromPar(info.opDefPar.Specialparams),
+				angleParams=_valueOrExprFromPar(info.opDefPar.Angleparams),
+				macroParams=_valueOrExprFromPar(info.opDefPar.Macroparams),
+				libraryNames=_valueOrExprFromPar(info.opDefPar.Librarynames),
+				opGlobals=_extractDatSetting(info.opDefPar.Opglobals, isText=True),
+				initCode=_extractDatSetting(info.opDefPar.Initcode, isText=True),
+				function=_extractDatSetting(info.opDefPar.Functemplate, isText=True),
+				help=_extractDatSetting(info.opDefPar.Help, isText=True),
+				callbacks=_extractDatSetting(info.opDefPar.Callbacks, isText=True),
+				bufferTable=_extractDatSetting(info.opDefPar.Buffertable, isText=False),
+				macroTable=_extractDatSetting(info.opDefPar.Macrotable, isText=False),
+				textureTable=_extractDatSetting(info.opDefPar.Texturetable, isText=False),
+			),
 		)
-	for inputHandler in info.inputHandlers:
-		inputInfo = InputInfo(inputHandler)
-		if inputInfo.multiHandler:
-			spec.multiInput.inputs.append(_extractInputSpec(inputHandler))
-		else:
-			spec.inputs.append(_extractInputSpec(inputHandler))
-	return spec
+		if not skipParams:
+			spec.paramPages = [
+				_extractParamPage(page)
+				for page in rop.customPages
+			]
+		multiHandler = info.multiInputHandler
+		if multiHandler:
+			spec.multiInput = MultiInputSpec(
+				minimumInputs=multiHandler.par.Minimuminputs.eval() if multiHandler.par.Minimuminputs > 0 else None,
+			)
+		for inputHandler in info.inputHandlers:
+			inputInfo = InputInfo(inputHandler)
+			if inputInfo.multiHandler:
+				spec.multiInput.inputs.append(_extractInputSpec(inputHandler))
+			else:
+				spec.inputs.append(_extractInputSpec(inputHandler))
+		return spec
 
 _ignorePars = 'Help', 'Inspect', 'Updateop'
 

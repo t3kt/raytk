@@ -15,7 +15,6 @@ op:
     the selected axis.'
   inputs:
   - contextTypes:
-    - none
     - Context
     - MaterialContext
     - CameraContext
@@ -34,7 +33,6 @@ op:
       passes to the wave function (instead of using the position along the chosen
       `Axis`).
   - contextTypes:
-    - none
     - Context
     - MaterialContext
     - CameraContext
@@ -108,18 +106,18 @@ op:
       is set to 1), a ramp wave will produce values from 0.5 to 1.5.
   - label: Context Type
     menuOptions:
-    - label: Use Input
-      name: useinput
-    - label: None
-      name: none
+    - label: Auto
+      name: auto
     - label: Context
       name: Context
-    - label: Material Context
+    - label: MaterialContext
       name: MaterialContext
-    - label: Camera Context
+    - label: CameraContext
       name: CameraContext
-    - label: Light Context
+    - label: LightContext
       name: LightContext
+    - label: RayContext
+      name: RayContext
     name: Contexttype
   summary: A field that uses a periodic wave.
 

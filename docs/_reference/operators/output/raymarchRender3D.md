@@ -42,8 +42,6 @@ op:
     - vec3
     label: Ray Modifier
     name: rayModifier_definition_in
-    returnTypes:
-    - Ray
     summary: Advanced feature, not ready for use.
   - contextTypes:
     - MaterialContext
@@ -220,6 +218,8 @@ op:
     name: Nearhitmindist
   - label: Near Hit Fade
     name: Nearhitfade
+  - label: Enable Color Output
+    name: Enablecoloroutput
   summary: Renders a scene using 3D raymarching.
 
 ---

@@ -10,7 +10,6 @@ op:
   category: convert
   inputs:
   - contextTypes:
-    - none
     - Context
     - MaterialContext
     - CameraContext
@@ -27,7 +26,6 @@ op:
     - Sdf
     summary: The SDF that sweeps around the path SDF.
   - contextTypes:
-    - none
     - Context
     - MaterialContext
     - CameraContext

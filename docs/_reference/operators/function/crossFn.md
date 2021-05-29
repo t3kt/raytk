@@ -13,7 +13,6 @@ op:
     extends off in the same direction on each end.
   inputs:
   - contextTypes:
-    - none
     - Context
     - MaterialContext
     - CameraContext
@@ -30,7 +29,6 @@ op:
     - float
     - vec4
   - contextTypes:
-    - none
     - Context
     - MaterialContext
     - CameraContext
@@ -47,7 +45,6 @@ op:
     - float
     - vec4
   - contextTypes:
-    - none
     - Context
     - MaterialContext
     - CameraContext

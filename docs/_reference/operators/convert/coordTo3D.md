@@ -10,13 +10,13 @@ op:
   category: convert
   inputs:
   - contextTypes:
-    - none
     - Context
     - MaterialContext
     - CameraContext
     - LightContext
     - RayContext
     coordTypes:
+    - float
     - vec2
     label: definition_in
     name: definition_in

@@ -11,7 +11,6 @@ op:
   detail: Texture is centered at 0,0 with coordinates from -0.5 to 0.5.
   inputs:
   - contextTypes:
-    - none
     - Context
     - MaterialContext
     - CameraContext
@@ -55,16 +54,18 @@ op:
     name: Returntype
   - label: Context Type
     menuOptions:
-    - label: None
-      name: none
+    - label: Auto
+      name: auto
     - label: Context
       name: Context
-    - label: Material Context
+    - label: MaterialContext
       name: MaterialContext
-    - label: Camera Context
+    - label: CameraContext
       name: CameraContext
-    - label: Light Context
+    - label: LightContext
       name: LightContext
+    - label: RayContext
+      name: RayContext
     name: Contexttype
     summary: When used for materials, set to `MaterialContext`, otherwise use `Context`.
   - label: Plane

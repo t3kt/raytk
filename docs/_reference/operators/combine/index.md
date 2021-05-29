@@ -41,7 +41,10 @@ cat:
   - name: layoutGrid
     summary: Slices space into a grid, and places each input in a separate cell.
   - name: mergeFields
-    status: beta
+    summary: Merges multiple vector fields, using different fields for each vector
+      part.
+  - name: shapedCombine
+    summary: Combine two SDFs, using a 2D SDF to shape the blending region.
   - name: simpleDiff
     summary: Combines two SDFs using the difference operator.
   - name: simpleIntersect

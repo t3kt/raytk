@@ -10,7 +10,6 @@ op:
   category: function
   inputs:
   - contextTypes:
-    - none
     - Context
     - MaterialContext
     - CameraContext
@@ -27,7 +26,6 @@ op:
     - float
     - vec4
   - contextTypes:
-    - none
     - Context
     - MaterialContext
     - CameraContext
@@ -48,7 +46,5 @@ op:
   parameters:
   - label: Enable
     name: Enable
-  - label: Mix
-    name: Mix
 
 ---

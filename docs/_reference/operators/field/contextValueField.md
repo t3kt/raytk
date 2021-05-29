@@ -46,7 +46,6 @@ op:
       name: lightobjectid
     name: Contextfield
     summary: Which context property to access.
-  status: beta
   summary: Field that returns various fields from the context, from a downstream OP.
 
 ---

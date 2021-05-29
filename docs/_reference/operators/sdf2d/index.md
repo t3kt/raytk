@@ -12,6 +12,9 @@ cat:
     3D geometry such as by extrusion.'
   name: sdf2d
   operators:
+  - name: arcSdf2d
+  - name: bezierSdf2d
+  - name: blobbyCrossSdf2d
   - name: circleSdf
     summary: 2D circle SDF.
   - name: cornerSdf2d
@@ -21,11 +24,18 @@ cat:
     summary: 2D cross shape SDF, with 4 arms and option rounding of the intersections.
   - name: dogBoneSdf2d
     summary: 2D SDF for two connected circles.
+  - name: ellipseSdf2d
+  - name: heartSdf2d
+  - name: horseshoeSdf2d
+  - name: jointSdf2d
+    status: beta
   - name: lineSegmentSdf2d
     summary: 2D line segment SDF.
   - name: parabolaSdf2d
+  - name: parallelogramSdf2d
   - name: pieSdf2d
     summary: SDF for a 2D pie-slice shape.
+  - name: planeSdf2d
   - name: polygonSdf2d
     summary: SDF for several types of 2D polygons.
   - name: rectangleSdf
@@ -35,7 +45,6 @@ cat:
   - name: roundedRectangleSdf2d
     summary: SDF for a 2D rectangle with optionally rounded corners.
   - name: spiralSdf2d
-    status: beta
   - name: starSdf2d
     summary: SDF for a 2D star shape.
   - name: superQuadSdf2d

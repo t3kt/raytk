@@ -11,7 +11,6 @@ op:
   detail: Produces the areas where all input shapes overlap.
   inputs:
   - contextTypes:
-    - none
     - Context
     - MaterialContext
     - CameraContext
@@ -27,7 +26,6 @@ op:
     - float
     - Sdf
   - contextTypes:
-    - none
     - Context
     - MaterialContext
     - CameraContext
@@ -43,7 +41,6 @@ op:
     - float
     - Sdf
   - contextTypes:
-    - none
     - Context
     - MaterialContext
     - CameraContext
@@ -59,7 +56,6 @@ op:
     - float
     - Sdf
   - contextTypes:
-    - none
     - Context
     - MaterialContext
     - CameraContext
@@ -75,7 +71,6 @@ op:
     - float
     - Sdf
   - contextTypes:
-    - none
     - Context
     - MaterialContext
     - CameraContext
@@ -91,7 +86,6 @@ op:
     - float
     - Sdf
   - contextTypes:
-    - none
     - Context
     - MaterialContext
     - CameraContext
@@ -107,7 +101,6 @@ op:
     - float
     - Sdf
   - contextTypes:
-    - none
     - Context
     - MaterialContext
     - CameraContext
@@ -123,7 +116,6 @@ op:
     - float
     - Sdf
   - contextTypes:
-    - none
     - Context
     - MaterialContext
     - CameraContext

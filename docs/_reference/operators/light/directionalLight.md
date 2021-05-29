@@ -8,6 +8,22 @@ redirect_from:
   - /reference/opType/raytk.operators.light.directionalLight/
 op:
   category: light
+  detail: The light always comes from the specified direction, rather than from a
+    point.
+  inputs:
+  - contextTypes:
+    - Context
+    - MaterialContext
+    - CameraContext
+    - LightContext
+    - RayContext
+    coordTypes:
+    - vec3
+    label: Color Field
+    name: color_field_definition_in
+    returnTypes:
+    - float
+    - vec4
   name: directionalLight
   opType: raytk.operators.light.directionalLight
   parameters:
@@ -17,6 +33,11 @@ op:
     name: Intensity
   - label: Color
     name: Color
-  status: beta
+  summary: A directional light.
 
 ---
+
+
+A directional light.
+
+The light always comes from the specified direction, rather than from a point.

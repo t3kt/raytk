@@ -96,34 +96,6 @@ class Tools:
 			o.showCustomOnly = state
 		self.forEachSelected(_action)
 
-	def getTypeNamesAndLabels(self, filterColumn: str) -> 'Tuple[List[str], List[str]]':
-		names = []
-		labels = []
-		table = self.ownerComp.op('typeTable')  # type: DAT
-		for row in range(1, table.numRows):
-			if table[row, filterColumn] != '1':
-				continue
-			names.append(table[row, 'name'].val)
-			labels.append(table[row, 'label'].val)
-		return names, labels
-
-	def updateTypeParsOn(self, comp: 'COMP'):
-		if not comp:
-			return
-		helper = TypeTableHelper(self.ownerComp.op('typeTable'))
-		par = comp.par['Coordtype']
-		if par is not None:
-			helper.updateCoordTypePar(par, hasUseInput=None)
-		par = comp.par['Contexttype']
-		if par is not None:
-			helper.updateContextTypePar(par, hasUseInput=None)
-		par = comp.par['Returntype']
-		if par is not None:
-			helper.updateReturnTypePar(par, hasUseInput=None)
-
-	def updateTypeParsOnSelected(self):
-		self.forEachSelected(self.updateTypeParsOn)
-
 	def DestroySelectedCustomPars(self):
 		def _action(o: 'OP'):
 			if hasattr(o, 'destroyCustomPars'):

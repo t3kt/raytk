@@ -1,10 +1,7 @@
 ReturnT thismap(CoordT p, ContextT ctx) {
 	#if THIS_INPUT_COUNT == 0
-		#ifdef THIS_RETURN_TYPE_Sdf
-			return createSdf(0);
-		#else
-			return ReturnT(0);
-		#endif
+	ReturnT res;
+	initDefVal(res);
 	#else
 		ReturnT res = THIS_INPUT_1(p, ctx);
 		#if THIS_INPUT_COUNT > 1
@@ -28,6 +25,6 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 		#if THIS_INPUT_COUNT > 7
 		res = opSimpleUnion(res, THIS_INPUT_8(p, ctx));
 		#endif
-		return res;
 	#endif
+	return res;
 }

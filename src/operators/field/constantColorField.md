@@ -8,11 +8,5 @@ This is the same as `constantField`, but the parameter is specified as a color i
   * `float`
   * `vec2`
   * `vec3`
-* `Contexttype`
-  * `none`
-  * `Context`
-  * `MaterialContext`
-  * `CameraContext`
-  * `LightContext`
 * `Color`
 * `Alpha`

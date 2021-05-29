@@ -15,7 +15,6 @@ op:
     point.'
   inputs:
   - contextTypes:
-    - none
     - Context
     - MaterialContext
     - CameraContext

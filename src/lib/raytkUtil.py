@@ -59,7 +59,9 @@ class _OpMetaPars:
 	enablecloningpulse: 'Par'
 	Raytkoptype: 'StrParamT'
 	Raytkopversion: 'IntParamT'
+	Raytkopstatus: 'StrParamT'
 	Raytkversion: 'StrParamT'
+	Lockpars: 'StrParamT'
 
 class CompDefParsT(_OpMetaPars):
 	Help: 'DatParamT'
@@ -93,6 +95,10 @@ class OpDefParsT(_OpMetaPars):
 	Coordtype: 'StrParamT'
 	Returntype: 'StrParamT'
 	Contexttype: 'StrParamT'
+	Fallbackcoordtype: 'StrParamT'
+	Fallbackreturntype: 'StrParamT'
+	Fallbackcontexttype: 'StrParamT'
+	Typespec: 'CompParamT'
 
 class ROPInfo:
 	"""
@@ -115,7 +121,7 @@ class ROPInfo:
 			self.opDef = o.op('opDefinition')
 			# noinspection PyTypeChecker
 			self.opDefPar = self.opDef.par
-		elif isROPDef(o):
+		elif isROPDef(o) and o.par['Hostop'] is not None:
 			self.rop = o.par.Hostop.eval()
 			self.opDef = o
 			# noinspection PyTypeChecker
@@ -196,19 +202,37 @@ class ROPInfo:
 		return _isRComp(self.rop)
 
 	@property
+	def _statusInParam(self):
+		if not self:
+			return ''
+		val = str(self.opDefPar['Raytkopstatus'] or '')
+		return '' if val == 'unset' else val
+
+	def _checkStatus(self, name: str, tag: 'Tag'):
+		if not self:
+			return False
+		val = str(self.opDefPar['Raytkopstatus'] or '')
+		if val:
+			return val == name
+		return tag.isOn(self.rop)
+
+	@property
 	def isBeta(self):
-		return RaytkTags.beta.isOn(self.rop)
+		return self._checkStatus('beta', RaytkTags.beta)
 
 	@property
 	def isAlpha(self):
-		return RaytkTags.alpha.isOn(self.rop)
+		return self._checkStatus('alpha', RaytkTags.alpha)
 
 	@property
 	def isDeprecated(self):
-		return RaytkTags.deprecated.isOn(self.rop)
+		return self._checkStatus('deprecated', RaytkTags.deprecated)
 
 	@property
 	def statusLabel(self):
+		val = self._statusInParam
+		if val:
+			return val
 		if self.isDeprecated:
 			return 'deprecated'
 		elif self.isAlpha:
@@ -249,6 +273,18 @@ class ROPInfo:
 		if not t:
 			return None
 		return t.rsplit('.', 1)[-1]
+
+	@property
+	def typeSpec(self) -> 'Optional[COMP]':
+		if not self.isROP:
+			return None
+		return self.opDefPar.Typespec.eval()
+
+	@property
+	def supportedTypeTable(self) -> 'Optional[DAT]':
+		if not self.isROP:
+			return None
+		return self.opDef.op('./supportedTypes')
 
 	@property
 	def subROPs(self):
@@ -418,22 +454,22 @@ class InputInfo:
 		return bool(self.handler and self.handler.par.Required)
 
 	def _supportedTypeTable(self) -> 'Optional[DAT]':
-		return self.handler and self.handler.op('./supported_type_table')
+		return self.handler and self.handler.op('./supportedTypes')
 
 	@property
 	def supportedCoordTypes(self):
 		table = self._supportedTypeTable()
-		return tdu.split(table['coordType', 1]) if table else []
+		return tdu.split(table['coordType', 'types']) if table else []
 
 	@property
 	def supportedContextTypes(self):
 		table = self._supportedTypeTable()
-		return tdu.split(table['contextType', 1]) if table else []
+		return tdu.split(table['contextType', 'types']) if table else []
 
 	@property
 	def supportedReturnTypes(self):
 		table = self._supportedTypeTable()
-		return tdu.split(table['returnType', 1]) if table else []
+		return tdu.split(table['returnType', 'types']) if table else []
 
 class CategoryInfo:
 	"""
@@ -481,10 +517,10 @@ def _isRComp(o: 'OP'):
 	return bool(o) and o.isCOMP and RaytkTags.raytkComp.isOn(o)
 
 def isROPDef(o: 'OP'):
-	return bool(o) and o.isCOMP and o.name == 'opDefinition'
+	return bool(o) and o.isCOMP and o.name == 'opDefinition' and o.par['Hostop'] is not None
 
 def _isRCompDef(o: 'OP'):
-	return bool(o) and o.isCOMP and o.name == 'compDefinition'
+	return bool(o) and o.isCOMP and o.name == 'compDefinition' and o.par['Hostop'] is not None
 
 def _getROP(comp: 'COMP', checkParents=True):
 	if not comp or comp is root:
@@ -492,7 +528,7 @@ def _getROP(comp: 'COMP', checkParents=True):
 	if isROP(comp) or _isRComp(comp):
 		return comp
 	if isROPDef(comp) or _isRCompDef(comp):
-		host = comp.par.Hostop.eval()
+		host = op(comp.par['Hostop'])
 		if isROP(host) or _isRComp(host):
 			return host
 	if checkParents:
@@ -756,11 +792,9 @@ class ContextTypes:
 	CameraContext = 'CameraContext'
 	LightContext = 'LightContext'
 	RayContext = 'RayContext'
-	none = 'none'
 
 	values = [
 		Context,
-		none,
 		MaterialContext,
 		CameraContext,
 		LightContext,
@@ -784,66 +818,24 @@ class TypeTableHelper:
 	def __init__(self, table: 'DAT'):
 		self.table = table
 
-	def getTypeNamesAndLabels(self, filterColumn: str) -> 'Tuple[List[str], List[str]]':
-		names = []
-		labels = []
-		for row in range(1, self.table.numRows):
-			if self.table[row, filterColumn] != '1':
-				continue
-			names.append(self.table[row, 'name'].val)
-			labels.append(self.table[row, 'label'].val)
-		return names, labels
+	def _getTypeNames(self, filterColumn: str) -> 'List[str]':
+		return [
+			self.table[row, 'name'].val
+			for row in range(1, self.table.numRows)
+			if self.table[row, filterColumn] == '1'
+		]
 
 	def isTypeAvailableForCategory(self, typeName: str, filterColumn: str):
 		return self.table[typeName, filterColumn] == '1'
 
-	def updateTypePar(
-			self,
-			par: 'Par',
-			filterColumn: str,
-			hasUseInput: Optional[bool] = None):
-		currentVal = par.eval()
-		if hasUseInput is None:
-			hasUseInput = 'useinput' in par.menuNames
-		names, labels = self.getTypeNamesAndLabels(filterColumn)
-		if hasUseInput:
-			names = ['useinput'] + names
-			labels = ['Use Input'] + labels
-		ui.undo.startBlock(f'Updating type parameter {par.owner} {par.name} hasUseInput: {hasUseInput}')
-		par.menuNames = names
-		par.menuLabels = labels
-		par.val = currentVal
-		ui.undo.endBlock()
-
-	def updateCoordTypePar(
-			self,
-			par: 'Par',
-			hasUseInput: Optional[bool] = None):
-		self.updateTypePar(par, 'isCoordType', hasUseInput=hasUseInput)
-
-	def updateContextTypePar(
-			self,
-			par: 'Par',
-			hasUseInput: Optional[bool] = None):
-		self.updateTypePar(par, 'isContextType', hasUseInput=hasUseInput)
-
-	def updateReturnTypePar(
-			self,
-			par: 'Par',
-			hasUseInput: Optional[bool] = None):
-		self.updateTypePar(par, 'isReturnType', hasUseInput=hasUseInput)
-
 	def coordTypes(self):
-		types, _ = self.getTypeNamesAndLabels('isCoordType')
-		return types
+		return self._getTypeNames('isCoordType')
 
 	def contextTypes(self):
-		types, _ = self.getTypeNamesAndLabels('isContextType')
-		return types
+		return self._getTypeNames('isContextType')
 
 	def returnTypes(self):
-		types, _ = self.getTypeNamesAndLabels('isReturnType')
-		return types
+		return self._getTypeNames('isReturnType')
 
 class RaytkContext:
 	"""
@@ -991,24 +983,9 @@ def _longestCommonPrefix(strs):
 	else:
 		return min(strs)
 
-# see https://forum.derivative.ca/t/active-current-page-of-parameter-comp-as-a-chop-value/10458
-def focusCustomParameterPage(o: 'COMP', page: 'Union[str, int, Page]'):
-	if not o or not o.customPages:
-		return
-	customIndex = None
-	if isinstance(page, int):
-		customIndex = page
-	elif isinstance(page, str):
-		for pg in o.customPages:
-			if pg.name == page:
-				customIndex = pg.index
-				break
-	elif isinstance(page, Page):
-		customIndex = page.index
-	if customIndex is not None:
-		customIndex += len(o.pages)
-		o.par.stdswitcher1 = customIndex
-		o.cook(force=True)
+def focusFirstCustomParameterPage(o: 'COMP'):
+	if o and o.customPages:
+		o.par.pageindex = len(o.pages)
 
 def detachTox(comp: 'COMP'):
 	if not comp or comp.par['externaltox'] is None:
