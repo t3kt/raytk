@@ -961,6 +961,15 @@ vec3 sphericalMobiusTransform(vec3 p, float radius, float rotAmt, vec3 rotation)
 	).xyz;
 }
 
+Ray createStandardCameraRay(vec2 p, vec2 size, int viewAngleMethod, float fov, mat4 camMat) {
+	vec2 uv = p / size;
+	float z = mix(size.x, size.y, float(viewAngleMethod)) / tan(radians(fov) * 0.5) * 0.5;
+	Ray ray;
+	ray.pos = camMat[3].xyz;
+	ray.dir = mat3(camMat) * normalize(vec3((uv - 0.5) * size, -z));
+	return ray;
+}
+
 // https://iquilezles.org/www/articles/palettes/palettes.htm
 // https://github.com/Erkaman/glsl-cos-palette
 vec3 cosPalette(  float t,  vec3 a,  vec3 b,  vec3 c, vec3 d ){
