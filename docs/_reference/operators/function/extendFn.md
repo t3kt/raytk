@@ -53,7 +53,6 @@ op:
     name: Range
   - label: Default Value
     name: Defval
-  status: beta
   summary: Defines the behavior of a function outside the normal expected range of
     coordinates.
 

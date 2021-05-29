@@ -23,7 +23,6 @@ cat:
     summary: Splits a shape into pieces, moves them apart, and connects them.
   - name: extend
   - name: fieldExpr
-    status: beta
   - name: flip
     summary: Flips the input across an axis, either on its own or merged with the
       original.
@@ -56,7 +55,6 @@ cat:
   - name: onion
     summary: Converts a solid SDF to a thin shell of the surface.
   - name: polarToCartesian
-    status: beta
   - name: quantizeCoords
     summary: Quantize coordinates to a 3D grid, which is sort of like "voxelizing"
       the space.
@@ -64,7 +62,6 @@ cat:
   - name: radialClone
     summary: Repeats an SDF radially around an axis, combining the resulting shapes.
   - name: rangeTransform
-    status: beta
     summary: Applies a transform based on a range of settings, mapped with either
       the iteration value or a field input.
   - name: reflect
@@ -77,15 +74,12 @@ cat:
   - name: rescaleField
     summary: Rescales the values produced by a field.
   - name: reshapeValues
-    status: beta
     summary: Reshapes the values produced by a field by applying a function.
   - name: restrictStage
-    status: beta
     summary: Restricts which render stages an operator is used in.
   - name: rotate
     summary: Transforms space with rotation.
   - name: rotateNormals
-    status: beta
     summary: Applies rotation to the surface normals used by material elements such
       as `specularContrib`.
   - name: round
@@ -96,7 +90,6 @@ cat:
   - name: slice
     summary: Removes all of an SDF except for a slice in space.
   - name: sphericalMobiusTransform
-    status: beta
   - name: spiralZoom
     summary: Transforms space using a logarithmic spiral.
   - name: transform

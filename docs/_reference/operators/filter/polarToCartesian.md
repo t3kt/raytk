@@ -43,6 +43,5 @@ op:
     - label: From Cylindrical Z
       name: cylindricalz
     name: Conversion
-  status: beta
 
 ---

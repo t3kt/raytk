@@ -20,7 +20,6 @@ cat:
   - name: revolve
     summary: Creates a 3D SDF by revolving a 2D cross-section SDF around an axis.
   - name: sdfToFloat
-    status: deprecated
     summary: Converts an SDF into a float value field, based on the SDF surface distance.
   - name: sweep
     summary: Creates a 3D SDF by sweeping a 2D SDF along the surface of another 2D

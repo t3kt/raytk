@@ -236,7 +236,6 @@ op:
     name: Useinputreturntype
   - label: Use Input Context Type
     name: Useinputcontexttype
-  status: beta
   summary: A custom operator that integrates blocks of custom shader code into a RayTK
     network.
 

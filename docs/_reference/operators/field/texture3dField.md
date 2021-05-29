@@ -73,6 +73,5 @@ op:
     - label: Mirror
       name: mirror
     name: Extendmode
-  status: beta
 
 ---

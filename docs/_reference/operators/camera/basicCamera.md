@@ -23,6 +23,5 @@ op:
     name: Lookatpos
   - label: Up Vector
     name: Camup
-  status: deprecated
 
 ---

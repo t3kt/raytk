@@ -29,6 +29,5 @@ op:
     name: Framedepth
   - label: Hide Frame Bottom
     name: Hideframebottom
-  status: beta
 
 ---

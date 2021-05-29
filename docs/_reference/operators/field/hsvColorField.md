@@ -88,6 +88,5 @@ op:
     - label: Ray Context
       name: RayContext
     name: Contexttype
-  status: beta
 
 ---

@@ -17,6 +17,5 @@ op:
     name: Pointb
   - label: Point C
     name: Pointc
-  status: beta
 
 ---

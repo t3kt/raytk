@@ -14,7 +14,6 @@ cat:
   name: output
   operators:
   - name: fieldRender
-    status: beta
   - name: functionGraphRender
     summary: Visualizes the graph of a function operator.
   - name: pointMapRender

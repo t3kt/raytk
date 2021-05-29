@@ -186,6 +186,5 @@ op:
     - label: One
       name: one
     name: Part4
-  status: beta
 
 ---

@@ -44,7 +44,6 @@ op:
     name: Rord
   - label: Rotate XYZ
     name: Rotate
-  status: beta
   summary: Applies rotation to the surface normals used by material elements such
     as `specularContrib`.
 

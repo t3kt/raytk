@@ -33,7 +33,6 @@ op:
   - label: Rotate
     name: Rotate
     summary: Rotation of the camera view on the axis facing the camera.
-  status: beta
   summary: An orthographic (non-perspective) camera, which can be used for flattened
     front/side/etc views.
 

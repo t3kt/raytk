@@ -14,7 +14,6 @@ cat:
   operators:
   - name: arcSdf2d
   - name: bezierSdf2d
-    status: beta
   - name: blobbyCrossSdf2d
   - name: circleSdf
     summary: 2D circle SDF.
@@ -46,7 +45,6 @@ cat:
   - name: roundedRectangleSdf2d
     summary: SDF for a 2D rectangle with optionally rounded corners.
   - name: spiralSdf2d
-    status: beta
   - name: starSdf2d
     summary: SDF for a 2D star shape.
   - name: superQuadSdf2d

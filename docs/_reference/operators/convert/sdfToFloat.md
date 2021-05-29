@@ -29,7 +29,6 @@ op:
   parameters:
   - label: Enable
     name: Enable
-  status: deprecated
   summary: Converts an SDF into a float value field, based on the SDF surface distance.
 
 ---
