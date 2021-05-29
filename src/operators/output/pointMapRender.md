@@ -13,7 +13,7 @@ Other uses include:
 * LED pixel mapping, where you use the physical location of each LED for the coordinates, and apply the resulting colors to each LED.
 * GPU particles, where the simulation GLSL TOP produces coordinates from one buffer, which are run through the `pointMapRender`, and then feed the resulting values back into the simulation to control particle forces for each particle/pixel.
 
-The "SDF or Value" output, when using an SDF scene, will output values where the R channel is the distance to the surface. The other channels (GBA) contain settings related to materials, which are only useful in special cases.
+The "SDF or Value" output, when using an SDF scene, will output values where the RGB channels contain the distance to the surface. The alpha channel will be one for points that existed in the input map and zero for ones that did not. In other words the alpha channel will be the same as the alpha channel in the input point map.
 
 ## Parameters
 
