@@ -855,10 +855,12 @@ class RaytkContext:
 		return Version(str(par or '0.1'))
 
 	def develMode(self):
-		return bool(self.toolkit().par['Devel'])
+		toolkit = self.toolkit()
+		return bool(toolkit and toolkit.par['Devel'])
 
 	def operatorsRoot(self):
-		return self.toolkit().op('operators')
+		toolkit = self.toolkit()
+		return toolkit and toolkit.op('operators')
 
 	@staticmethod
 	def activeEditor():
