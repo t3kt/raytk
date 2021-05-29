@@ -208,21 +208,25 @@ class ROPInfo:
 		val = str(self.opDefPar['Raytkopstatus'] or '')
 		return '' if val == 'unset' else val
 
-	@_statusInParam.setter
-	def _statusInParam(self, val: str):
-		self.opDefPar.Raytkopstatus = val
+	def _checkStatus(self, name: str, tag: 'Tag'):
+		if not self:
+			return False
+		val = str(self.opDefPar['Raytkopstatus'] or '')
+		if val:
+			return val == name
+		return tag.isOn(self.rop)
 
 	@property
 	def isBeta(self):
-		return self._statusInParam == 'beta' or RaytkTags.beta.isOn(self.rop)
+		return self._checkStatus('beta', RaytkTags.beta)
 
 	@property
 	def isAlpha(self):
-		return self._statusInParam == 'alpha' or RaytkTags.alpha.isOn(self.rop)
+		return self._checkStatus('alpha', RaytkTags.alpha)
 
 	@property
 	def isDeprecated(self):
-		return self._statusInParam == 'deprecated' or RaytkTags.deprecated.isOn(self.rop)
+		return self._checkStatus('deprecated', RaytkTags.deprecated)
 
 	@property
 	def statusLabel(self):
