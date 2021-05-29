@@ -71,9 +71,11 @@ cat:
     summary: Reflects space across a plane.
   - name: remapCoords
     status: beta
+    summary: Modifies space using a vector field.
   - name: reorderCoords
     summary: Swaps axes for the input.
   - name: rescaleField
+    summary: Rescales the values produced by a field.
   - name: reshapeValues
     status: beta
     summary: Reshapes the values produced by a field by applying a function.
@@ -81,6 +83,7 @@ cat:
     status: beta
     summary: Restricts which render stages an operator is used in.
   - name: rotate
+    summary: Transforms space with rotation.
   - name: rotateNormals
     status: beta
     summary: Applies rotation to the surface normals used by material elements such

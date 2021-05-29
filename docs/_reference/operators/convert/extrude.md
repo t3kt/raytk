@@ -44,6 +44,13 @@ op:
   - label: Offset
     name: Offset
     summary: Moves the extruded shape up and down along the axis.
+  - label: UV Mode
+    menuOptions:
+    - label: Flat
+      name: flat
+    - label: Depth
+      name: depth
+    name: Uvmode
   summary: Creates a 3D SDF by extruding a 2D SDF along along an axis.
 
 ---

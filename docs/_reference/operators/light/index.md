@@ -17,6 +17,7 @@ cat:
     summary: A simple hard-edged shadow.
   - name: linkedLight
     status: beta
+    summary: Light that is based on a standard Light COMP.
   - name: pointLight
     summary: Light eminating from a single point in space, with optional distance
       attentuation.
@@ -24,6 +25,7 @@ cat:
     summary: A soft-edged shadow.
   - name: spotLight
     status: beta
+    summary: Cone-shaped spotlight.
   summary: 'Operators that are used in raymarching to define the behavior of light,
     including
 

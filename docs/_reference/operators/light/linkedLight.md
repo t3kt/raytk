@@ -8,16 +8,28 @@ redirect_from:
   - /reference/opType/raytk.operators.light.linkedLight/
 op:
   category: light
+  detail: 'This can be used to synchronize lighting between a `raymarchRender3d` and
+    a traditional Render TOP.
+
+
+    Not all light types are supported.'
   name: linkedLight
   opType: raytk.operators.light.linkedLight
   parameters:
   - label: Light
     name: Light
-    summary: The camera to match. This can either be a Camera COMP, or an arcBallCamera,
-      or the `camera` from the palette.
+    summary: The Light COMP to match.
   - label: Create Light
     name: Createlight
-    summary: Creates and attaches an instance of the `camera` palette component.
+    summary: Creates and attaches a new Light COMP.
   status: beta
+  summary: Light that is based on a standard Light COMP.
 
 ---
+
+
+Light that is based on a standard Light COMP.
+
+This can be used to synchronize lighting between a `raymarchRender3d` and a traditional Render TOP.
+
+Not all light types are supported.

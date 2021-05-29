@@ -8,6 +8,7 @@ redirect_from:
   - /reference/opType/raytk.operators.field.sdfField/
 op:
   category: field
+  detail: This can be used to apply effects only within certain shaped areas of space.
   inputs:
   - contextTypes:
     - Context
@@ -48,9 +49,20 @@ op:
     name: Fieldtype
   - label: Offset
     name: Offset
+    summary: Offsets the surface of the shape. Positive values expand the shape and
+      negative values contract it. This is equivalent to the `round` operator.
   - label: Thickness
     name: Thickness
+    summary: For surface-based fields, this is the thickness of the area where the
+      value is 1.
   - label: Blending
     name: Blending
+    summary: The distance over which the 1 area transitions to the 0 area.
+  summary: Value field based on an SDF shape.
 
 ---
+
+
+Value field based on an SDF shape.
+
+This can be used to apply effects only within certain shaped areas of space.

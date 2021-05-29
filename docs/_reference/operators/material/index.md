@@ -35,18 +35,20 @@ cat:
     summary: Material that uses phong shading.
   - name: reflectContrib
     status: beta
+    summary: A material element that produces color based on light reflected from
+      other surfaces.
   - name: reflectMat
     status: beta
   - name: sampledPointMat
     status: beta
+    summary: A material that produces color for volumetric points relative to the
+      input shape.
   - name: skyLightContrib
     status: beta
     summary: A material element that acts as a basic pseudo directional light.
   - name: specularContrib
     status: beta
     summary: A material element that provides specular light contribution.
-  - name: toonShadingContrib
-    status: beta
   summary: 'Material operators that are used by renderers to determine the
 
     color of points on the surface of geometry.'

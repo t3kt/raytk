@@ -18,6 +18,7 @@ cat:
     summary: A float field that provides the distance from a specific point along
       a single axis.
   - name: bandField
+    summary: Field that applies values based on a band/slice of an axis.
   - name: cellTileField
     summary: A value field that provides an approximation of repeating cellular (voronoi)
       noise.
@@ -56,6 +57,7 @@ cat:
   - name: reorderField
     status: beta
   - name: sdfField
+    summary: Value field based on an SDF shape.
   - name: texture3dField
     status: beta
   - name: textureField
