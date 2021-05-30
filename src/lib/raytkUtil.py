@@ -859,8 +859,7 @@ class RaytkContext:
 		return bool(toolkit and toolkit.par['Devel'])
 
 	def operatorsRoot(self):
-		toolkit = self.toolkit()
-		return toolkit and toolkit.op('operators')
+		return self.toolkit().op('operators')
 
 	@staticmethod
 	def activeEditor():
