@@ -1,7 +1,5 @@
 Renders a scene using 3D raymarching.
 
-
-
 ## Parameters
 
 * `Res`: Rendering resolution
@@ -11,7 +9,6 @@ Renders a scene using 3D raymarching.
 * `Userenderdepth`: Whether to use the provided Render TOP for a base depth. Not ready for use.
 * `Overlayrender`: Whether to mix the provided Render TOP with the scene using depth. Not ready for use.
 * `Rendertop`: Connect a Render TOP to mix with the scene based on depth. Not ready for use.
-* `Inspect`
 * `Maxsteps`: Maximum number of marching steps.
 * `Surfdist`: Minimum surface distance. Smaller values increase accuracy at the cost of performance.
 * `Maxdist`: Maximum distance. Rays that don't hit anything will stop at this distance. If this is too high, rays that don't hit anything will continue for a long time, causing a performance drain.
@@ -33,10 +30,46 @@ Renders a scene using 3D raymarching.
 * `Enableiterationoutput`: Advance feature, not ready for use.
 * `Enableobjectidoutput`: Advance feature, not ready for use.
 * `Enabledebugoutput`: Advance feature, not ready for use.
+* `Format`
+  * `useinput`
+  * `rgba8fixed`
+  * `srgba8fixed`
+  * `rgba16float`
+  * `rgba32float`
+  * `_separator_`
+  * `rgb10a2fixed`
+  * `rgba16fixed`
+  * `rgba11float`
+  * `rgb16float`
+  * `rgb32float`
+  * `mono8fixed`
+  * `mono16fixed`
+  * `mono16float`
+  * `mono32float`
+  * `rg8fixed`
+  * `rg16fixed`
+  * `rg16float`
+  * `rg32float`
+  * `a8fixed`
+  * `a16fixed`
+  * `a16float`
+  * `a32float`
+  * `monoalpha8fixed`
+  * `monoalpha16fixed`
+  * `monoalpha16float`
+  * `monoalpha32float`
+* `Enablereflection`
+* `Reflectionpasses`
+* `Enableshadow`
+* `Enablenearhitmindist`
+* `Nearhitmindist`
+* `Nearhitfade`
+* `Enablecoloroutput`
 
 ## Inputs
 
-* `definition_in` *SDF Scene*: SDF definition the shapes in the scene.
-* `camera_definition_in` *Camera*: Camera used for render frame.
-* `light_definition_in` *Light*: Light definition that can be used by supporting materials.
-* `rayModifier_definition_in` *Ray Modifier*: Advanced feature, not ready for use.
+* `definition_in`:  SDF definition the shapes in the scene.
+* `camera_definition_in`:  Camera used for render frame.
+* `light_definition_in`:  Light definition that can be used by supporting materials.
+* `rayModifier_definition_in`:  Advanced feature, not ready for use.
+* `shadow_definition_in`: 
