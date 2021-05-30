@@ -211,7 +211,7 @@ class ROPInfo:
 	def _checkStatus(self, name: str, tag: 'Tag'):
 		if not self:
 			return False
-		val = str(self.opDefPar['Raytkopstatus'] or '')
+		val = self._statusInParam
 		if val:
 			return val == name
 		return tag.isOn(self.rop)
@@ -240,7 +240,7 @@ class ROPInfo:
 		elif self.isBeta:
 			return 'beta'
 		else:
-			return ''
+			return 'default'
 
 	@property
 	def isMaster(self):
