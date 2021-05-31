@@ -41,25 +41,41 @@ vec3 getColor(vec2 p, MaterialContext matCtx) {
 	if (matCtx.result.materialPos2.w > 0.) {
 		p2 = matCtx.result.materialPos2.xy;
 	}
-		#endif
+	#endif
+	#ifdef RAYTK_USE_UV
+		vec4 uv1 = matCtx.result.uv;
+		vec4 uv2 = mix(matCtx.result.uv2, matCtx.result.uv, matCtx.result.uv2.w);
+	#endif
 	int priorStage = pushStage(RAYTK_STAGE_MATERIAL);
 	if (ratio <= 0 || m1 == m2) {
 		#ifdef RAYTK_USE_MATERIAL_POS
 		matCtx.materialPos = vec3(p1, 0.);
+		#endif
+		#ifdef RAYTK_USE_UV
+		matCtx.uv = uv1;
 		#endif
 		col = getColorInner(p, matCtx, m1);
 	} else if (ratio >= 1) {
 		#ifdef RAYTK_USE_MATERIAL_POS
 		matCtx.materialPos = vec3(p2, 0.);
 		#endif
+		#ifdef RAYTK_USE_UV
+		matCtx.uv = uv2;
+		#endif
 		col = getColorInner(p, matCtx, m2);
 	} else {
 		#ifdef RAYTK_USE_MATERIAL_POS
 		matCtx.materialPos = vec3(p1, 0.);
 		#endif
+		#ifdef RAYTK_USE_UV
+		matCtx.uv = uv1;
+		#endif
 		vec3 col1 = getColorInner(p, matCtx, m1);
 		#ifdef RAYTK_USE_MATERIAL_POS
 		matCtx.materialPos = vec3(p2, 0.);
+		#endif
+		#ifdef RAYTK_USE_UV
+		matCtx.uv = uv2;
 		#endif
 		vec3 col2 = getColorInner(p, matCtx, m2);
 		col = mix(col1, col2, ratio);
