@@ -349,23 +349,43 @@ def prepareTextureTable(dat: 'scriptDAT'):
 
 def prepareBufferTable(dat: 'scriptDAT'):
 	dat.clear()
+	dat.appendRow(['name', 'type', 'chop', 'uniformType', 'length', 'expr1', 'expr2', 'expr3', 'expr4'])
 	table = parentPar().Buffertable.eval()
-	if not table:
+	if not table or table.numRows == 0:
 		return
 	namePrefix = parentPar().Name.eval() + '_'
-	for i in range(table.numRows):
-		name = table[i, 0]
-		path = table[i, 1]
-		if not name or not path:
-			continue
-		dataType = table[i, 1]
-		uniformType = table[i, 1]
-		dat.appendRow([
-			namePrefix + name,
-			path,
-			dataType or 'vec4',
-			uniformType or 'uniformarray',
-		])
+	if table[0, 0] == 'name':
+		for i in range(1, table.numRows):
+			name = str(table[i, 'name'] or '')
+			path = str(table[i, 'chop'] or '')
+			expr1 = str(table[i, 'expr1'] or '')
+			expr2 = str(table[i, 'expr2'] or '')
+			expr3 = str(table[i, 'expr3'] or '')
+			expr4 = str(table[i, 'expr4'] or '')
+			if not name:
+				continue
+			if not path and not expr1 and not expr2 and not expr3 and not expr4:
+				continue
+			dat.appendRow([
+				namePrefix + name,
+				str(table[i, 'type'] or '') or 'vec4',
+				path,
+				str(table[i, 'uniformType'] or '') or 'uniformarray',
+				table[i, 'length'],
+				expr1, expr2, expr2, expr3,
+			])
+	else:
+		for i in range(table.numRows):
+			name = str(table[i, 0] or '')
+			path = str(table[i, 1] or '')
+			if not name or not path:
+				continue
+			dat.appendRow([
+				namePrefix + name,
+				str(table[i, 1] or '') or 'vec4',
+				path,
+				str(table[i, 2] or '') or 'uniformarray',
+			])
 
 def prepareMaterialTable(dat: 'scriptDAT'):
 	dat.clear()

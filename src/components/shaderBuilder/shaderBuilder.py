@@ -321,11 +321,18 @@ class ShaderBuilder:
 			name = bufferTable[i, 'name']
 			dataType = bufferTable[i, 'type']
 			uniType = bufferTable[i, 'uniformType']
-			n = int(bufferTable[i, 'length'])
 			if uniType == 'uniformarray':
+				lengthVal = str(bufferTable[i, 'length'] or '')
+				if lengthVal == '':
+					c = op(bufferTable[i, 'chop'])
+					n = c.numSamples if c else 1
+				else:
+					n = int(lengthVal)
 				decls.append(f'uniform {dataType} {name}[{n}];')
 			elif uniType == 'texturebuffer':
 				decls.append(f'uniform samplerBuffer {name};')
+			else:
+				raise Exception(f'Invalid uniform type: {uniType}')
 		return wrapCodeSection(decls, 'buffers')
 
 	def buildMaterialDeclarations(self):

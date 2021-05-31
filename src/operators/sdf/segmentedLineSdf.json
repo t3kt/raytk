@@ -1,6 +1,7 @@
 {
   "meta": {
+    "opStatus": "default",
     "opType": "raytk.operators.sdf.segmentedLineSdf",
-    "opVersion": 0
+    "opVersion": 1
   }
 }
