@@ -44,6 +44,7 @@ cat:
     summary: Merges multiple vector fields, using different fields for each vector
       part.
   - name: shapedCombine
+    status: beta
     summary: Combine two SDFs, using a 2D SDF to shape the blending region.
   - name: simpleDiff
     summary: Combines two SDFs using the difference operator.

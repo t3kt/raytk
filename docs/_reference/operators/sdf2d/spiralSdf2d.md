@@ -23,5 +23,6 @@ op:
     name: Useradiuslimit
   - label: Radius Limit
     name: Radiuslimit
+  status: beta
 
 ---

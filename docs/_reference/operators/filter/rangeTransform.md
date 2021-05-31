@@ -116,6 +116,7 @@ op:
     name: Pivot1
   - label: Pivot 2
     name: Pivot2
+  status: beta
   summary: Applies a transform based on a range of settings, mapped with either the
     iteration value or a field input.
 

@@ -37,5 +37,6 @@ op:
     name: Rotate
   - label: Rotation Amount
     name: Rotationamount
+  status: beta
 
 ---

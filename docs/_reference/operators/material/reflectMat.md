@@ -40,5 +40,6 @@ op:
     summary: Whether to use shadows. When enabled, if the *Shadow Definition* input
       is provided, that will be used. Otherwise a default shadow function will be
       used.
+  status: beta
 
 ---

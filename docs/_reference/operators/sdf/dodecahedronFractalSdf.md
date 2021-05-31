@@ -29,5 +29,6 @@ op:
     name: Offset
   - label: Iterations
     name: Iterations
+  status: beta
 
 ---

@@ -23,5 +23,6 @@ op:
     name: Color3
   - label: Color 4
     name: Color4
+  status: beta
 
 ---
