@@ -1,0 +1,3 @@
+name	label
+centered	Centered
+endpoints	End Points
