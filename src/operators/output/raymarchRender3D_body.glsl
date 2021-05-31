@@ -184,6 +184,13 @@ vec3 getColorInner(vec3 p, MaterialContext matCtx, int m) {
 	return col;
 }
 
+#ifdef RAYTK_USE_UV
+void resolveUV(MaterialContext matCtx, out vec4 uv1, out vec4 uv2) {
+	uv1 = matCtx.result.uv;
+	uv2 = mix(matCtx.result.uv2, matCtx.result.uv, matCtx.result.uv2.w);
+}
+#endif
+
 vec3 getColor(vec3 p, MaterialContext matCtx) {
 	if (isNonHitSdf(matCtx.result)) return vec3(0.);
 	vec3 col = vec3(0);
@@ -201,8 +208,9 @@ vec3 getColor(vec3 p, MaterialContext matCtx) {
 	}
 	#endif
 	#ifdef RAYTK_USE_UV
-	vec4 uv1 = matCtx.result.uv;
-	vec4 uv2 = mix(matCtx.result.uv2, matCtx.result.uv, matCtx.result.uv2.w);
+	vec4 uv1;
+	vec4 uv2;
+	resolveUV(matCtx, uv1, uv2);
 	#endif
 	#if defined(THIS_Enableshadow) && defined(RAYTK_USE_SHADOW)
 	if (matCtx.result.useShadow) {
@@ -264,6 +272,7 @@ void main()
 	initOutputs();
 
 
+	MaterialContext matCtx = createMaterialContext();
 	#if THIS_ANTI_ALIAS > 1
 	vec2 shiftStart = vec2(-float(THIS_ANTI_ALIAS) / 2.0);
 	vec2 shiftStep = vec2(1.0 / float(THIS_ANTI_ALIAS));
@@ -271,8 +280,10 @@ void main()
 	for (int i=0; i < THIS_ANTI_ALIAS; i++)
 	{
 	vec2 shift = shiftStart + shiftStep * vec2(i, j);
+	bool writeUV = j == 0 && i == 0;
 	#else
 	vec2 shift = vec2(0);
+	bool writeUV = true;
 	#endif
 		float renderDepth = uUseRenderDepth > 0 ?
 			min(texture(sTD2DInputs[0], vUV.st).r, RAYTK_MAX_DIST) :
@@ -317,7 +328,6 @@ void main()
 			#endif
 			#endif
 
-			MaterialContext matCtx = createMaterialContext();
 			matCtx.result = res;
 			matCtx.ray = ray;
 			#if defined(OUTPUT_COLOR) || defined(OUTPUT_NORMAL) || (defined(RAYTK_USE_REFLECTION) && defined(THIS_Enablereflection))
@@ -360,6 +370,14 @@ void main()
 				vec2 fragCoord = vUV.st*uTDOutputInfo.res.zw;
 				col += (1.0/255.0)*hash1(fragCoord);
 				colorOut += vec4(col, 1);
+			}
+			#endif
+			#ifdef OUTPUT_UV
+			if (writeUV) {
+				vec4 uv1;
+				vec4 uv2;
+				resolveUV(matCtx, uv1, uv2);
+				uvOut = mix(uv1, uv2, round(resultMaterialInterp(matCtx.result)));
 			}
 			#endif
 			#ifdef OUTPUT_ORBIT

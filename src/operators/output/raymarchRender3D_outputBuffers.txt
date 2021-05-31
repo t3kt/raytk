@@ -12,4 +12,5 @@ stepsOut	Step Count	OUTPUT_STEPS		Enablestepoutput	parent().path + '/render_glsl
 iterationOut	Iteration	OUTPUT_ITERATION		Enableiterationoutput	parent().path + '/render_glsl'	me.inputCell.row - 1
 objectIdOut	Object Id	OUTPUT_OBJECTID		Enableobjectidoutput	parent().path + '/render_glsl'	me.inputCell.row - 1
 debugOut	Debug	OUTPUT_DEBUG		Enabledebugoutput	parent().path + '/render_glsl'	me.inputCell.row - 1
+uvOut	UV	OUTPUT_UV		Enableuvoutput	parent().path + '/render_glsl'	me.inputCell.row - 1
 finalOut	Final Output		1		parent().path + '/render_glsl'	me.inputCell.row - 1

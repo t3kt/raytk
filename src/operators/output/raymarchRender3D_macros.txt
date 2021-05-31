@@ -5,3 +5,4 @@
 'THIS_USE_NEAR_HIT' if parent().par.Enablenearhitoutput else ''	
 'THIS_ANTI_ALIAS'	int(parent().par.Antialias)
 'RAYTK_USE_SHADOW' if parent().par.Enableshadow else ''	
+'RAYTK_USE_UV' if parent().par.Enableuvoutput else ''	
