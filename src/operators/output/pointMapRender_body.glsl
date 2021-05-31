@@ -102,11 +102,7 @@ void main() {
 	#endif
 
 	#ifdef OUTPUT_SDF
-	sdfOut = vec4(
-		res.x,
-		resultMaterial1(res),
-		resultMaterial2(res),
-		resultMaterialInterp(res));
+	sdfOut = vec4(vec3(res.x), 1.0);
 	#endif
 	#if defined(OUTPUT_NORMAL) && defined(THIS_COORD_TYPE_vec3)
 	normalOut = vec4(calcNormal(p), 0.);

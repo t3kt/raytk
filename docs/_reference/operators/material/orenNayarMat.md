@@ -58,5 +58,6 @@ op:
     name: Enableshadow
   - label: Use Local Position
     name: Uselocalpos
+  status: beta
 
 ---

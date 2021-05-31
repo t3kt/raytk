@@ -176,5 +176,6 @@ op:
     - label: RayContext
       name: RayContext
     name: Contexttype
+  status: beta
 
 ---

@@ -46,5 +46,6 @@ op:
   parameters:
   - label: Enable
     name: Enable
+  status: beta
 
 ---

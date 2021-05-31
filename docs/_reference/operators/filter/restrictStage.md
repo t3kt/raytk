@@ -73,6 +73,7 @@ op:
     name: Includematerial
   - label: Include Occlusion
     name: Includeocclusion
+  status: beta
   summary: Restricts which render stages an operator is used in.
 
 ---

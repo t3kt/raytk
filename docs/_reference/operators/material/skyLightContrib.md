@@ -30,6 +30,7 @@ op:
   - label: Use Color
     name: Usecolor
     summary: Whether to produce color or just a brightness value.
+  status: beta
   summary: A material element that acts as a basic pseudo directional light.
 
 ---

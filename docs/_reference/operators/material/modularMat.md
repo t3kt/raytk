@@ -71,6 +71,7 @@ op:
     name: Uselocalpos
   - label: Enable Ambient Occlusion
     name: Enableao
+  status: beta
   summary: A material that is composed of one or more shading elements.
 
 ---

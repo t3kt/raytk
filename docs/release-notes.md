@@ -49,6 +49,8 @@
   * Added offset parameter in combineColumns (#391)
   * Added shapedCombine (#444)
   * Added infinite height option in cylinderSdf (#520)
+* Changes
+  * pointMapRender's SDF output will no longer contain material identifiers. The RGB channels will all contain the distance, with A indicating whether the point existed in the input. (#541)
 * Fixes
   * Fix inspector support for inputs 5-8
   * Fix errors in blend (#469)
@@ -133,6 +135,7 @@
   * Restructure the whole shadow system. (#445, #427).
     * NOTE: This is a breaking change. Shadows are no longer specified at the material level. Instead they are attached to the renderer.
   * Removed the deprecated customFilter and customGen
+  * Disable the "Camera" parameter on raymarchRender3d. Instead, create a linkedCamera and connect it to the Camera input on the renderer. (#436)
 * Fixes
   * Fix performance issue with shader support detection (#418, #34)
   * Fix iteration values not working for material field inputs (#397)

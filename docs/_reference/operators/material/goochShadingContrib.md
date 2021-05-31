@@ -23,5 +23,6 @@ op:
     name: Warmcolor
   - label: Cool Color
     name: Coolcolor
+  status: beta
 
 ---
