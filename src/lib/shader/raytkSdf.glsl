@@ -356,3 +356,17 @@ float sdTrapezoid(vec2 p, vec2 a, vec2 b, float ra, float rb)
 	return s*sqrt( min(cax*cax + cay*cay*baba,
 	cbx*cbx + cby*cby*baba) );
 }
+
+// https://www.shadertoy.com/view/wlXSD7
+// build the chain directly, it saves one of four square roots
+// over using sdLinks()
+float sdChain(vec3 pos, float le, float r1, float r2)
+{
+	float ya = max(abs(fract(pos.y    )-0.5)-le,0.0);
+	float yb = max(abs(fract(pos.y+0.5)-0.5)-le,0.0);
+
+	float la = ya*ya - 2.0*r1*sqrt(pos.x*pos.x+ya*ya);
+	float lb = yb*yb - 2.0*r1*sqrt(pos.z*pos.z+yb*yb);
+
+	return sqrt(dot(pos.xz,pos.xz) + r1*r1 + min(la,lb)) - r2;
+}
