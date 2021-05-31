@@ -1,6 +1,7 @@
 {
   "meta": {
+    "opStatus": "default",
     "opType": "raytk.operators.material.fieldMat",
-    "opVersion": 7
+    "opVersion": 8
   }
 }

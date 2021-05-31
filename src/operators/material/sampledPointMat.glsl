@@ -13,7 +13,7 @@ Sdf thismap(CoordT p, ContextT ctx) {
 
 vec3 THIS_getColor(CoordT p, MaterialContext matCtx) {
 	restoreIterationFromMaterial(matCtx, THIS_iterationCapture);
-	vec3 mp = getPosForMaterial(p, matCtx);
+	CoordT mp = THIS_asCoordT(getPosForMaterial(adaptAsVec3(p), matCtx));
 	vec3 col = vec3(0.);
 	#ifdef THIS_Enablefill
 	{
