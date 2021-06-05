@@ -1,3 +1,4 @@
-name	label	macro
-sdfOut	SDF Result	OUTPUT_SDF
-colorOut	Color	OUTPUT_COLOR
+name	label	macro	enable
+sdfOut	SDF Result	OUTPUT_SDF	
+colorOut	Color	OUTPUT_COLOR	
+uvOut	UV	OUTPUT_UV	Enableuvoutput

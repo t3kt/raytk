@@ -43,8 +43,9 @@ vec3 getColor(vec2 p, MaterialContext matCtx) {
 	}
 	#endif
 	#ifdef RAYTK_USE_UV
-		vec4 uv1 = matCtx.result.uv;
-		vec4 uv2 = mix(matCtx.result.uv2, matCtx.result.uv, matCtx.result.uv2.w);
+		vec4 uv1;
+		vec4 uv2;
+		resolveUV(matCtx, uv1, uv2);
 	#endif
 	int priorStage = pushStage(RAYTK_STAGE_MATERIAL);
 	if (ratio <= 0 || m1 == m2) {
@@ -164,6 +165,14 @@ vec2 p = getCoord();
 	#endif
 	#ifdef OUTPUT_SDF
 	sdfOut = vec4(vec3(res.x), exists);
+	#endif
+	#ifdef OUTPUT_UV
+	{
+		vec4 uv1;
+		vec4 uv2;
+		resolveUV(matCtx, uv1, uv2);
+		uvOut = mix(uv1, uv2, round(resultMaterialInterp(matCtx.result)));
+	}
 	#endif
 #else
 	#ifdef OUTPUT_COLOR

@@ -313,6 +313,13 @@ MaterialContext createMaterialContext() {
 	return matCtx;
 }
 
+#ifdef RAYTK_USE_UV
+void resolveUV(MaterialContext matCtx, out vec4 uv1, out vec4 uv2) {
+	uv1 = matCtx.result.uv;
+	uv2 = mix(matCtx.result.uv, matCtx.result.uv2, matCtx.result.uv2.w);
+}
+#endif
+
 vec4 extractIteration(Context ctx) { return ctx.iteration; }
 
 vec4 extractIteration(MaterialContext ctx) { return ctx.context.iteration; }

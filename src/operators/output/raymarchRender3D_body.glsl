@@ -184,13 +184,6 @@ vec3 getColorInner(vec3 p, MaterialContext matCtx, int m) {
 	return col;
 }
 
-#ifdef RAYTK_USE_UV
-void resolveUV(MaterialContext matCtx, out vec4 uv1, out vec4 uv2) {
-	uv1 = matCtx.result.uv;
-	uv2 = mix(matCtx.result.uv2, matCtx.result.uv, matCtx.result.uv2.w);
-}
-#endif
-
 vec3 getColor(vec3 p, MaterialContext matCtx) {
 	if (isNonHitSdf(matCtx.result)) return vec3(0.);
 	vec3 col = vec3(0);
