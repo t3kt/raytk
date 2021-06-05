@@ -16,6 +16,7 @@ if False:
 		Scaletype: StrParamT
 		Varname: StrParamT
 		Useparamvars: BoolParamT
+		Force3d: BoolParamT
 
 def _configPar() -> 'Union[_Pars, ParCollection]':
 	return parent().par
@@ -96,6 +97,8 @@ def _translateCode() -> 'List[str]':
 		f'{v} -= {_param("translate")};')
 
 def _branchByCoordType(code2d, code3d):
+	if _configPar().Force3d:
+		return [code3d]
 	return [
 		'#ifdef THIS_COORD_TYPE_vec2',
 		code2d,

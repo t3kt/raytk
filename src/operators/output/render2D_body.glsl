@@ -167,6 +167,7 @@ vec2 p = getCoord();
 	sdfOut = vec4(vec3(res.x), exists);
 	#endif
 	#ifdef OUTPUT_UV
+	if (res.x < 0.)
 	{
 		vec4 uv1;
 		vec4 uv2;
