@@ -195,6 +195,7 @@ Sdf createNonHitSdf() {
 
 void initDefVal(out Sdf val) { val = createNonHitSdf(); }
 
+bool isNonHitSdfDist(float d) { return d > RAYTK_MAX_DIST; }
 bool isNonHitSdf(Sdf res) { return res.x >= RAYTK_MAX_DIST; }
 
 Sdf withAdjustedScale(in Sdf res, float scaleMult) {
@@ -288,6 +289,7 @@ struct MaterialContext {
 	Light light;
 	vec3 normal;
 	vec3 reflectColor;
+	vec3 refractColor;
 	#ifdef RAYTK_USE_MATERIAL_POS
 	vec3 materialPos;
 	#endif
@@ -352,10 +354,11 @@ RayContext createRayContext(Ray ray, Sdf result) {
 }
 
 const int RAYTK_STAGE_PRIMARY = 0;
-const int RAYTK_STAGE_SHADOW =  1;
-const int RAYTK_STAGE_REFLECT = 2;
-const int RAYTK_STAGE_MATERIAL = 3;
-const int RAYTK_STAGE_OCCLUSION = 4;
+const int RAYTK_STAGE_REFRACT = 1;
+const int RAYTK_STAGE_SHADOW =  2;
+const int RAYTK_STAGE_REFLECT = 3;
+const int RAYTK_STAGE_MATERIAL = 4;
+const int RAYTK_STAGE_OCCLUSION = 5;
 
 int _raytkStage = RAYTK_STAGE_PRIMARY;
 

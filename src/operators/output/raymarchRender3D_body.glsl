@@ -32,6 +32,37 @@ Sdf map(vec3 q)
 	return res;
 }
 
+int DBG_refractCount = 0;
+
+#ifdef RAYTK_USE_REFRACTION
+//void refractRay(inout Ray ray, Sdf res) {
+//	DBG_refractCount++;
+//	#ifdef OUTPUT_DEBUG
+//	debugOut = vec4(DBG_refractCount, 0., 0., 1.);
+//	#endif
+//
+//	int priorStage = pushStage(RAYTK_STAGE_REFRACT);
+//	vec3 n = calcNormal(ray.pos);
+//	vec3 pEnter = ray.pos - n * RAYTK_SURF_DIST*3.1;
+//	Ray rayInside;
+//	rayInside.pos = pEnter;
+//	rayInside.dir = refract(ray.dir, n, 1.0 / res.ior);
+//	float dInside = castRayBasic(rayInside, RAYTK_MAX_DIST).x * -1.;
+//	vec3 pExit = pEnter + rayInside.dir * dInside;
+//	vec3 nExit = -calcNormal(pExit);
+//	ray.pos = pExit;
+//	ray.dir = refract(rayInside.dir, nExit, res.ior);
+//	if (dot(ray.dir, ray.dir) == 0.) {
+//		ray.dir = reflect(rayInside.dir, nExit);
+//	}
+//
+//	//	for (int i = 0; i < THIS_Refractionpasses; i++) {
+//	//
+//	//	}
+//	popStage(priorStage);
+//}
+#endif
+
 Sdf castRay(Ray ray, float maxDist) {
 	int priorStage = pushStage(RAYTK_STAGE_PRIMARY);
 	float dist = 0;
@@ -79,7 +110,7 @@ Sdf castRay(Ray ray, float maxDist) {
 	return res;
 }
 
-Sdf castRayBasic(Ray ray, float maxDist) {
+Sdf castRayBasic(Ray ray, float maxDist, float side) {
 	float dist = 0;
 	Sdf res;
 	for (int i = 0; i < RAYTK_MAX_STEPS; i++) {
@@ -90,6 +121,7 @@ Sdf castRayBasic(Ray ray, float maxDist) {
 			return createNonHitSdf();
 		}
 		res = map(ray.pos);
+		res.x *= side;
 		dist += res.x;
 		ray.pos += ray.dir * res.x;
 		if (dist < RAYTK_SURF_DIST) {
@@ -102,6 +134,10 @@ Sdf castRayBasic(Ray ray, float maxDist) {
 	}
 	res.x = dist;
 	return res;
+}
+
+Sdf castRayBasic(Ray ray, float maxDist) {
+	return castRayBasic(ray, maxDist, 1.);
 }
 
 vec3 calcNormal(in vec3 pos)
@@ -257,6 +293,89 @@ Light getLight(vec3 p, LightContext lightCtx) {
 }
 #endif
 
+#if defined(RAYTK_USE_REFLECTION) && defined(THIS_Enablereflection)
+vec3 getReflectionColor(MaterialContext matCtx, vec3 p) {
+	if (!matCtx.result.reflect) return vec3(0.);
+	int priorStage = pushStage(RAYTK_STAGE_REFLECT);
+
+	matCtx.reflectColor = vec3(0.);
+	for (int k = 0; k < THIS_Reflectionpasses; k++) {
+		if (!matCtx.result.reflect) break;
+		matCtx.ray.pos = p + matCtx.normal * RAYTK_SURF_DIST;
+		matCtx.ray.dir = reflect(matCtx.ray.dir, matCtx.normal);
+		matCtx.result = castRayBasic(matCtx.ray, RAYTK_MAX_DIST);
+		if (isNonHitSdf(matCtx.result)) break;
+		p = matCtx.ray.pos + matCtx.normal * matCtx.result.x;
+		matCtx.normal = calcNormal(p);
+		matCtx.reflectColor += getColor(p, matCtx);
+	}
+
+	popStage(priorStage);
+	return matCtx.reflectColor;
+}
+#endif
+#if defined(RAYTK_USE_REFRACTION) && defined(THIS_Enablerefraction)
+vec3 getRefractionColor(MaterialContext matCtx, vec3 p) {
+	if (!matCtx.result.refract) return vec3(0.);
+	int priorStage = pushStage(RAYTK_STAGE_REFRACT);
+	bool hit = false;
+
+	#ifdef OUTPUT_DEBUG
+	debugOut.a = 1.;
+//	debugOut.b = 0.6;
+	#endif
+	for (int k = 0; k < THIS_Refractionpasses; k++) {
+		if (!matCtx.result.refract) {
+			hit = false;
+			break;
+		}
+		matCtx.normal = calcNormal(p);
+		vec3 pEnter = matCtx.ray.pos - matCtx.normal * RAYTK_SURF_DIST*1.1;// arbitrary multiplier
+		Ray rayInside;
+		rayInside.pos = pEnter;
+		rayInside.dir = refract(matCtx.ray.dir, matCtx.normal, 1.0 / matCtx.result.ior);
+		Sdf resInside = castRayBasic(rayInside, RAYTK_MAX_DIST, -1.);
+		if (isNonHitSdfDist(-1. * resInside.x)) {
+			hit = false;
+			#ifdef OUTPUT_DEBUG
+			debugOut.r = resInside.x;
+			debugOut.b = 1.;
+			#endif
+			break;
+		}
+		vec3 pExit = pEnter + rayInside.dir * resInside.x;
+		vec3 nExit = -calcNormal(pExit);
+		matCtx.ray.pos = pExit;
+		matCtx.ray.dir = refract(rayInside.dir, nExit, resInside.ior);
+		if (dot(matCtx.ray.dir, matCtx.ray.dir) == 0.) {
+			matCtx.ray.dir = reflect(rayInside.dir, nExit);
+		}
+		p = pExit;
+		matCtx.normal = nExit;
+		#ifdef OUTPUT_DEBUG
+//		debugOut.rgb = nExit;
+//		debugOut.r = resInside.mat.x;
+//		debugOut.rgb = matCtx.ray.dir;
+		#endif
+		matCtx.ray.pos += matCtx.ray.dir * RAYTK_SURF_DIST*2.;
+		hit = true;
+	}
+	matCtx.result = castRayBasic(matCtx.ray, RAYTK_MAX_DIST, 1.);
+	if (hit && !isNonHitSdf(matCtx.result)) {
+		#ifdef OUTPUT_DEBUG
+		debugOut.g = 1.;
+		debugOut.r = 0.2;
+		debugOut.a = 1.;
+		#endif
+		vec3 col = getColor(matCtx.ray.pos, matCtx);
+		matCtx.refractColor = col;
+	}
+
+	popStage(priorStage);
+	return matCtx.refractColor;
+}
+#endif
+
 void main()
 {
 	#ifdef RAYTK_HAS_INIT
@@ -336,27 +455,16 @@ void main()
 			#endif
 			#ifdef OUTPUT_COLOR
 			{
-				matCtx.reflectColor = vec3(0);
 				#if defined(RAYTK_USE_REFLECTION) && defined(THIS_Enablereflection)
-				MaterialContext reflectMatCtx = matCtx;
-				vec3 reflectPos = p;
-				int priorStage = pushStage(RAYTK_STAGE_REFLECT);
+				matCtx.reflectColor = getReflectionColor(matCtx, p);
+				#else
+				matCtx.reflectColor = vec3(0);
+				#endif
 
-				for (int k = 0; k < THIS_Reflectionpasses; k++) {
-					reflectMatCtx.ray.pos = reflectPos + reflectMatCtx.normal * RAYTK_SURF_DIST;
-					reflectMatCtx.ray.dir = reflect(ray.dir, matCtx.normal);
-					reflectMatCtx.result = castRayBasic(reflectMatCtx.ray, RAYTK_MAX_DIST);
-					if (isNonHitSdf(reflectMatCtx.result)) {
-						break;
-					}
-					reflectPos = reflectMatCtx.ray.pos + matCtx.normal * reflectMatCtx.result.x;
-					reflectMatCtx.normal = calcNormal(reflectPos);
-					matCtx.reflectColor += getColor(reflectPos, reflectMatCtx);
-					if (!reflectMatCtx.result.reflect) {
-						break;
-					}
-				}
-				popStage(priorStage);
+				#if defined(RAYTK_USE_REFRACTION) && defined(THIS_Enablerefraction)
+				matCtx.refractColor = getRefractionColor(matCtx, p);
+				#else
+				matCtx.refractColor = vec3(0);
 				#endif
 
 				vec3 col = getColor(p, matCtx);
