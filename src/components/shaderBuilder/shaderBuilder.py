@@ -73,6 +73,12 @@ class ShaderBuilder:
 				self.allParamVals(),
 				self.configPar(),
 			)
+		elif mode == 'separateuniforms':
+			return _SeparateUniformsParameterProcessor(
+				self.parameterDetailTable(),
+				self.allParamVals(),
+				self.configPar(),
+			)
 		else:
 			raise NotImplementedError(f'Parameter processor not available for mode: {mode!r}')
 
@@ -474,10 +480,6 @@ class _ParamExpr:
 	expr: Union[str, float]
 	type: str
 
-@dataclass
-class _UniformSpec:
-	pass
-
 class _ParameterProcessor:
 	def __init__(
 			self,
@@ -495,21 +497,28 @@ class _ParameterProcessor:
 	def globalDeclarations(self) -> List[str]:
 		raise NotImplementedError()
 
-	def _generateParamExprs(self) -> List[_ParamExpr]:
-		raise NotImplementedError()
-
 	def paramAliases(self) -> List[str]:
-		raise NotImplementedError()
+		if not self.hasParams:
+			return []
+		# if self.inlineAliases:
+		# 	return []
+		if self.aliasMode == 'globalvar':
+			return [
+				f'{paramExpr.type} {paramExpr.name} = {paramExpr.expr};'
+				for paramExpr in self._generateParamExprs()
+			]
+		else:  # self.aliasMode == 'macro'
+			return [
+				f'#define {paramExpr.name} {paramExpr.expr}'
+				for paramExpr in self._generateParamExprs()
+			]
 
 	def processCodeBlock(self, code: str) -> str:
-		raise NotImplementedError()
-
-class _VectorArrayParameterProcessor(_ParameterProcessor):
-	def globalDeclarations(self) -> List[str]:
-		paramCount = max(1, self.paramDetailTable.numRows - 1)
-		return [
-			f'uniform vec4 vecParams[{paramCount}];',
-		]
+		if not self.inlineAliases or not code:
+			return code
+		for paramExpr in self._generateParamExprs():
+			code = code.replace(paramExpr.name, paramExpr.expr)
+		return code
 
 	def _generateParamExprs(self) -> List[_ParamExpr]:
 		paramExprs = []  # type: List[_ParamExpr]
@@ -518,11 +527,12 @@ class _VectorArrayParameterProcessor(_ParameterProcessor):
 		for i, paramTuplet in enumerate(paramTuplets):
 			useConstant = self.useConstantReadOnly and paramTuplet.isReadOnly and paramTuplet.isPresentInChop(self.paramVals)
 			size = len(paramTuplet.parts)
+			paramRef = self._paramReference(i, paramTuplet)
 			if size == 1:
 				name = paramTuplet.parts[0]
 				paramExprs.append(_ParamExpr(
 					name,
-					repr(float(self.paramVals[name])) if useConstant else f'vecParams[{i}].x',
+					repr(float(self.paramVals[name])) if useConstant else f'{paramRef}.x',
 					'float'
 				))
 			else:
@@ -535,40 +545,47 @@ class _VectorArrayParameterProcessor(_ParameterProcessor):
 						paramExprs.append(_ParamExpr(paramTuplet.parts[partI], partVal, 'float'))
 				else:
 					if size == 4:
-						paramExprs.append(_ParamExpr(paramTuplet.tuplet, f'vecParams[{i}]', 'vec4'))
+						paramExprs.append(_ParamExpr(paramTuplet.tuplet, paramRef, 'vec4'))
 					else:
 						parType = f'vec{size}'
 						paramExprs.append(_ParamExpr(
 							paramTuplet.tuplet,
-							f'{parType}(vecParams[{i}].{suffixes[:size]})',
+							f'{parType}({paramRef}.{suffixes[:size]})',
 							parType
 						))
 					for partI, partName in enumerate(paramTuplet.parts):
-						paramExprs.append(_ParamExpr(partName, f'vecParams[{i}].{suffixes[partI]}', 'float'))
+						paramExprs.append(_ParamExpr(partName, f'{paramRef}.{suffixes[partI]}', 'float'))
 		return paramExprs
 
-	def paramAliases(self) -> List[str]:
+	def _paramReference(self, i: int, paramTuplet: _ParamTupletSpec) -> str:
+		raise NotImplementedError()
+
+class _VectorArrayParameterProcessor(_ParameterProcessor):
+	def _paramReference(self, i: int, paramTuplet: _ParamTupletSpec) -> str:
+		return f'vecParams[{i}]'
+
+	def globalDeclarations(self) -> List[str]:
+		paramCount = max(1, self.paramDetailTable.numRows - 1)
+		return [
+			f'uniform vec4 vecParams[{paramCount}];',
+		]
+
+class _SeparateUniformsParameterProcessor(_ParameterProcessor):
+	def globalDeclarations(self) -> List[str]:
 		if not self.hasParams:
 			return []
-		# if self.inlineAliases:
-		# 	return []
-		if self.aliasMode == 'globalvar':
-			return [
-				f'{paramExpr.type} {paramExpr.name} = {paramExpr.expr};'
-				for paramExpr in self._generateParamExprs()
-			]
-		else:
-			return [
-				f'#define {paramExpr.name} {paramExpr.expr}'
-				for paramExpr in self._generateParamExprs()
-			]
+		decls = []
+		for row in range(1, self.paramDetailTable.numRows):
+			name = self.paramDetailTable[row, 'tuplet'].val
+			size = int(self.paramDetailTable[row, 'size'])
+			if size == 1:
+				decls.append(f'uniform float {name};')
+			else:
+				decls.append(f'uniform vec{size} {name};')
+		return decls
 
-	def processCodeBlock(self, code: str) -> str:
-		if not self.inlineAliases or not code:
-			return code
-		for paramExpr in self._generateParamExprs():
-			code = code.replace(paramExpr.name, paramExpr.expr)
-		return code
+	def _paramReference(self, i: int, paramTuplet: _ParamTupletSpec) -> str:
+		return paramTuplet.tuplet
 
 def _stringify(val: 'Union[str, DAT]'):
 	if val is None:
