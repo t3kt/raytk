@@ -1,6 +1,6 @@
 from dataclasses import dataclass
-from typing import Callable, Dict, List, Tuple, Union
-from raytkUtil import RaytkContext
+from typing import Callable, Dict, List, Tuple, Union, Optional
+from raytkUtil import RaytkContext, simplifyNames
 
 # noinspection PyUnreachableCode
 if False:
@@ -49,18 +49,31 @@ class ShaderBuilder:
 		# BEFORE definitions are reversed, so a def's inputs are always BELOW it in the table
 		pass
 
-	def definitionTable(self) -> 'DAT':
+	def _definitionTable(self) -> 'DAT':
 		# in reverse order (aka declaration order)
 		return self.ownerComp.op('definitions')
 
-	def parameterDetailTable(self) -> 'DAT':
+	def _parameterDetailTable(self) -> 'DAT':
 		return self.ownerComp.op('param_details')
 
-	def outputBufferTable(self) -> 'DAT':
+	def _outputBufferTable(self) -> 'DAT':
 		return self.ownerComp.op('output_buffer_table')
 
-	def allParamVals(self) -> 'CHOP':
+	def _allParamVals(self) -> 'CHOP':
 		return self.ownerComp.op('all_param_vals')
+
+	def buildNameReplacementTable(self, dat: 'scriptDAT'):
+		dat.clear()
+		dat.appendRow(['before', 'after'])
+		if not self.configPar().Simplifynames:
+			return
+		origNames = [c.val for c in self._definitionTable().col('name')[1:]]
+		simpleNames = simplifyNames(origNames)
+		if simpleNames == origNames:
+			return
+		dat.clear()
+		dat.appendCol(['before'] + origNames)
+		dat.appendCol(['after'] + simpleNames)
 
 	def buildGlobalPrefix(self):
 		return wrapCodeSection(self.ownerComp.par.Globalprefix.eval(), 'globalPrefix')
@@ -69,21 +82,21 @@ class ShaderBuilder:
 		mode = self.configPar().Parammode.eval()
 		if mode == 'uniformarray':
 			return _VectorArrayParameterProcessor(
-				self.parameterDetailTable(),
-				self.allParamVals(),
+				self._parameterDetailTable(),
+				self._allParamVals(),
 				self.configPar(),
 			)
 		elif mode == 'separateuniforms':
 			return _SeparateUniformsParameterProcessor(
-				self.parameterDetailTable(),
-				self.allParamVals(),
+				self._parameterDetailTable(),
+				self._allParamVals(),
 				self.configPar(),
 			)
 		else:
 			raise NotImplementedError(f'Parameter processor not available for mode: {mode!r}')
 
 	def buildGlobalDeclarations(self):
-		defsTable = self.definitionTable()
+		defsTable = self._definitionTable()
 		if defsTable.numRows < 2:
 			code = ['#error No input definition']
 		else:
@@ -96,7 +109,7 @@ class ShaderBuilder:
 		return wrapCodeSection(code, 'globals')
 
 	def getOpsFromDefinitionColumn(self, column: str):
-		defsTable = self.definitionTable()
+		defsTable = self._definitionTable()
 		if defsTable.numRows < 2 or not defsTable[0, column]:
 			return []
 		results = []
@@ -134,7 +147,7 @@ class ShaderBuilder:
 				if not name.strip():
 					continue
 				namesAndVals.append((name, value))
-		outputBuffers = self.outputBufferTable()
+		outputBuffers = self._outputBufferTable()
 		if outputBuffers.numRows > 1 and outputBuffers.col('macro'):
 			for cell in outputBuffers.col('macro')[1:]:
 				if cell.val:
@@ -165,7 +178,7 @@ class ShaderBuilder:
 	def getLibraryDats(self, onWarning: Callable[[str], None] = None) -> 'List[DAT]':
 		requiredLibNames = self.ownerComp.par.Librarynames.eval().strip().split(' ')  # type: List[str]
 		requiredLibNames = [n for n in requiredLibNames if n]
-		defsTable = self.definitionTable()
+		defsTable = self._definitionTable()
 		if defsTable[0, 'libraryNames']:
 			for cell in defsTable.col('libraryNames')[1:]:
 				if not cell.val:
@@ -214,7 +227,7 @@ class ShaderBuilder:
 		return wrapCodeSection(libBlocks, 'libraries')
 
 	def buildOpDataTypedefBlock(self):
-		defsTable = self.definitionTable()
+		defsTable = self._definitionTable()
 		typedefs = []
 		macros = []
 		coordTypeAdaptFuncs = {
@@ -254,14 +267,14 @@ class ShaderBuilder:
 		return wrapCodeSection(self.ownerComp.par.Predeclarations.eval(), 'predeclarations')
 
 	def _buildParameterExprs(self) -> 'List[Tuple[str, Union[str, float]]]':
-		paramDetails = self.parameterDetailTable()
+		paramDetails = self._parameterDetailTable()
 		if paramDetails.numRows < 2:
 			return []
 		suffixes = 'xyzw'
 		partAliases = []  # type: List[Tuple[str, Union[str, float]]]
 		mainAliases = []  # type: List[Tuple[str, Union[str, float]]]
 		inlineReadOnly = bool(self.configPar()['Inlinereadonlyparameters'])
-		paramVals = self.allParamVals()
+		paramVals = self._allParamVals()
 		paramTuplets = _ParamTupletSpec.fromTableRows(paramDetails)
 		for i, paramTuplet in enumerate(paramTuplets):
 			shouldInline = inlineReadOnly and paramTuplet.isReadOnly and paramTuplet.isPresentInChop(paramVals)
@@ -355,7 +368,7 @@ class ShaderBuilder:
 		return wrapCodeSection(decls, 'materials')
 
 	def buildOutputBufferDeclarations(self):
-		outputBuffers = self.outputBufferTable()
+		outputBuffers = self._outputBufferTable()
 		if outputBuffers.numRows < 2:
 			return ' '
 		decls = [
@@ -365,7 +378,7 @@ class ShaderBuilder:
 		return wrapCodeSection(decls, 'outputBuffers')
 
 	def buildOutputInitBlock(self):
-		outputBuffers = self.outputBufferTable()
+		outputBuffers = self._outputBufferTable()
 		return wrapCodeSection(
 			[
 				'void initOutputs() {'
@@ -428,7 +441,7 @@ class ShaderBuilder:
 		if RaytkContext().develMode():
 			return
 		toolkitVersions = {}  # type: Dict[str, int]
-		defsTable = self.definitionTable()
+		defsTable = self._definitionTable()
 		if defsTable.numRows < 2 or not defsTable[0, 'toolkitVersion']:
 			return
 		for i in range(1, defsTable.numRows):
@@ -439,6 +452,9 @@ class ShaderBuilder:
 			error = f'Toolkit version mismatch ({", ".join(list(toolkitVersions.keys()))})'
 			dat.appendRow(['path', 'level', 'message'])
 			dat.appendRow([parent().path, 'warning', error])
+
+	def buildUniformTable(self, dat: 'scriptDAT'):
+		pass
 
 _materialParagraphPlaceholder = '// #include <materialParagraph>'
 
@@ -479,6 +495,26 @@ class _ParamExpr:
 	name: str
 	expr: Union[str, float]
 	type: str
+
+@dataclass
+class _UniformSpec:
+	name: str
+	dataType: str  # float | vec2 | vec3 | vec4
+	uniformType: str  # vector | uniformarray
+	arrayLength: int = 1
+	chop: Optional[str] = None
+	expr1: Optional[str] = None
+	expr2: Optional[str] = None
+	expr3: Optional[str] = None
+	expr4: Optional[str] = None
+
+	def declaration(self):
+		if self.uniformType == 'vector':
+			return f'uniform {self.dataType} {self.name};'
+		elif self.uniformType == 'uniformarray':
+			return f'uniform {self.dataType} {self.name}[{self.arrayLength}];'
+		else:
+			raise Exception(f'Invalid uniformType: {self.uniformType!r}')
 
 class _ParameterProcessor:
 	def __init__(

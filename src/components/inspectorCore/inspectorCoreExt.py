@@ -71,7 +71,7 @@ class InspectorCore:
 			self.state.Targettype = InspectorTargetTypes.outputOp
 		else:
 			self.state.Targettype = InspectorTargetTypes.rop
-		self.state.Definitiontable = _pathOrEmpty(comp.op('definition'))
+		self.state.Definitiontable = _pathOrEmpty(comp.op('shaderBuilder/definitions_inspect') or comp.op('definition'))
 		self.state.Hastarget = True
 		self.state.Hasownviewer = ropInfo.isOutput
 		self.updateVisualizerType()
