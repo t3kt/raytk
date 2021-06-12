@@ -1,6 +1,7 @@
 from dataclasses import dataclass
-from typing import Callable, Dict, List, Tuple, Union, Optional
 from raytkUtil import RaytkContext, simplifyNames
+import re
+from typing import Callable, Dict, List, Tuple, Union, Optional
 
 # noinspection PyUnreachableCode
 if False:
@@ -12,7 +13,7 @@ if False:
 		Inlineparameteraliases: 'Union[bool, Par]'
 		Inlinereadonlyparameters: 'Union[bool, Par]'
 		Simplifynames: 'Union[bool, Par]'
-		Generatetypedefs: 'Union[bool, Par]'
+		Inlinetypedefs: 'Union[bool, Par]'
 		Includemode: 'Union[str, Par]'
 
 	class _OwnerCompPar(_ConfigPar):
@@ -227,9 +228,24 @@ class ShaderBuilder:
 		return wrapCodeSection(libBlocks, 'libraries')
 
 	def buildOpDataTypedefBlock(self):
+		typedefs, macros = self._buildTypedefs()
+		if typedefs:
+			lines = [
+				f'#define {name}  {val}'
+				for name, val in typedefs.items()
+			]
+			lines += [
+				f'#define {name}' + (' ' + val) if val != '' else ''
+				for name, val in macros.items()
+			]
+		else:
+			lines = []
+		return wrapCodeSection(lines, 'opDataTypedefs')
+
+	def _buildTypedefs(self) -> 'Tuple[Dict[str, str], Dict[str, str]]':
 		defsTable = self._definitionTable()
-		typedefs = []
-		macros = []
+		typedefs = {}
+		macros = {}
 		coordTypeAdaptFuncs = {
 			'float': 'adaptAsFloat',
 			'vec2': 'adaptAsVec2',
@@ -244,24 +260,36 @@ class ShaderBuilder:
 			coordType = str(defsTable[row, 'coordType'])
 			contextType = str(defsTable[row, 'contextType'])
 			returnType = str(defsTable[row, 'returnType'])
-			typedefs += [
-				f'#define {name}_CoordT    {coordType}',
-				f'#define {name}_ContextT  {contextType}',
-				f'#define {name}_ReturnT   {returnType}',
-			]
-			macros += [
-				f'#define {name}_COORD_TYPE_{coordType}',
-				f'#define {name}_CONTEXT_TYPE_{contextType}',
-				f'#define {name}_RETURN_TYPE_{returnType}',
-				f'#define {name}_asCoordT {coordTypeAdaptFuncs[coordType]}',
-			]
+			typedefs.update({
+				name + '_CoordT': coordType,
+				name + '_ContextT': contextType,
+				name + '_ReturnT': returnType,
+			})
+			macros.update({
+				f'{name}_COORD_TYPE_{coordType}': '',
+				f'{name}_CONTEXT_TYPE_{contextType}': '',
+				f'{name}_RETURN_TYPE_{returnType}': '',
+				f'{name}_asCoordT':  coordTypeAdaptFuncs[coordType],
+			})
 			if returnType in returnTypeAdaptFuncs:
-				macros.append(f'#define {name}_asReturnT {returnTypeAdaptFuncs[returnType]}')
-		if typedefs:
-			lines = typedefs + [''] + macros
-		else:
-			lines = []
-		return wrapCodeSection(lines, 'opDataTypedefs')
+				macros[name + '_asReturnT'] = returnTypeAdaptFuncs[returnType]
+		return typedefs, macros
+
+	def inlineTypedefs(self, code: str) -> str:
+		if not self.configPar()['Inlinetypedefs']:
+			return code
+		typedefs, macros = self._buildTypedefs()
+		if not typedefs:
+			return code
+
+		def replace(m: re.Match):
+			return typedefs.get(m.group(0)) or m.group(0)
+
+		pattern = r'\b[\w_]+_(CoordT|ContextT|ReturnT)\b'
+
+		code = re.sub(pattern, replace, code)
+
+		return code
 
 	def buildPredeclarations(self):
 		return wrapCodeSection(self.ownerComp.par.Predeclarations.eval(), 'predeclarations')

@@ -22,13 +22,14 @@ class Compiler:
 	def __init__(self, ownerComp: 'COMP'):
 		self.ownerComp = ownerComp
 		self.inspectorCore = iop.inspectorCore  # type: Union[InspectorCore, COMP]
+		self.compilerCore = iop.compilerCore  # type: Union[CompilerCore, COMP]
 		self.state = ipar.compilerState
 
 	def Reset(self, _=None):
-		self.inspectorCore.Reset()
+		self.compilerCore.Reset()
 
 	def Load(self, o: 'Union[OP, COMP, str]'):
-		self.inspectorCore.Inspect(o)
-		if not self.inspectorCore.state.Hastarget:
+		self.compilerCore.Load(o)
+		if not self.compilerCore.OutputOP:
 			return
 		pass
