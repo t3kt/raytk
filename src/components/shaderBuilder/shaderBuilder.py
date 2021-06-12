@@ -228,16 +228,29 @@ class ShaderBuilder:
 		return wrapCodeSection(libBlocks, 'libraries')
 
 	def buildOpDataTypedefBlock(self):
+		inline = self.configPar()['Inlinetypedefs']
 		typedefs, macros = self._buildTypedefs()
 		if typedefs:
-			lines = [
-				f'#define {name}  {val}'
-				for name, val in typedefs.items()
-			]
+			lines = []
+			if not inline:
+				# Primary typedef macros are not needed when they're being inlined
+				lines += [
+					f'#define {name}  {val}'
+					for name, val in typedefs.items()
+				]
+			# Macros like FOO_COORD_TYPE_float are always needed
 			lines += [
-				f'#define {name}' + (' ' + val) if val != '' else ''
+				f'#define {name}'
 				for name, val in macros.items()
+				if val == ''
 			]
+			if not inline:
+				# Replacement macros like FOO_asCoordT are not needed when they're being inlined
+				lines += [
+					f'#define {name} {val}'
+					for name, val in macros.items()
+					if val != ''
+				]
 		else:
 			lines = []
 		return wrapCodeSection(lines, 'opDataTypedefs')
@@ -282,10 +295,17 @@ class ShaderBuilder:
 		if not typedefs:
 			return code
 
-		def replace(m: re.Match):
-			return typedefs.get(m.group(0)) or m.group(0)
+		replacements = dict(typedefs)
+		replacements.update({
+			k: v
+			for k, v in macros.items()
+			if v != ''
+		})
 
-		pattern = r'\b[\w_]+_(CoordT|ContextT|ReturnT)\b'
+		def replace(m: re.Match):
+			return replacements.get(m.group(0)) or m.group(0)
+
+		pattern = r'\b[\w_]+_(as?)(CoordT|ContextT|ReturnT)\b'
 
 		code = re.sub(pattern, replace, code)
 
@@ -674,7 +694,7 @@ def wrapCodeSection(code: 'Union[str, DAT, List[Union[str, DAT]]]', name: str):
 	if not code:
 		# return a non-empty string in order to force DATs to be text when using dat.write()
 		return ' '
-	return f'///----BEGIN {name}\n{code}\n///----END {name}'
+	return f'///----BEGIN {name}\n{code.strip()}\n///----END {name}\n'
 
 def updateLibraryMenuPar(libsComp: 'COMP'):
 	p = parent().par.Librarynames  # type: Par
