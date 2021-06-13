@@ -53,6 +53,8 @@ op:
     name: Scale
   - label: Uniform Scale
     name: Uniformscale
+  - label: Pivot
+    name: Pivot
   - label: Transform Order
     menuOptions:
     - label: Scale Rotate Translate
@@ -68,8 +70,6 @@ op:
     - label: Translate Rotate Scale
       name: trs
     name: Transformorder
-  - label: Pivot
-    name: Pivot
   - label: Rotate Order
     menuOptions:
     - label: Rx Ry Rz

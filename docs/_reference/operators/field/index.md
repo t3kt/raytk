@@ -58,6 +58,8 @@ cat:
     status: beta
   - name: sdfField
     summary: Value field based on an SDF shape.
+  - name: stepField
+    status: beta
   - name: texture3dField
     status: beta
   - name: textureField

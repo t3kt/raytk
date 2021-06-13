@@ -23,6 +23,15 @@ op:
     summary: How much the inner points of the start are pulled towards the center.
       At zero this will produce a polygon with two sides for each point. At one it
       will produce thin lines radiating from the center.
+  - label: UV Mode
+    menuOptions:
+    - label: None
+      name: none
+    - label: Cartesian
+      name: cartesian
+    - label: Polar
+      name: polar
+    name: Uvmode
   summary: SDF for a 2D star shape.
 
 ---

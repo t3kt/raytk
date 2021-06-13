@@ -23,6 +23,8 @@ cat:
     summary: SDF for a bunny.
   - name: capsuleSdf
     summary: A cylinder with rounded ends, between two points.
+  - name: chainSdf
+    status: beta
   - name: chamferBoxSdf
   - name: coneSdf
     summary: Defines a cone or capped cone shape.
@@ -34,6 +36,7 @@ cat:
     summary: A flat disc facing the Y axis.
   - name: dodecahedronFractalSdf
     status: beta
+  - name: ellipsoidSdf
   - name: generalizedPolyhedronSdf
     summary: Generates one of several different types of polyhedra.
   - name: geodesicSdf

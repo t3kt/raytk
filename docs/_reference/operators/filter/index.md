@@ -44,6 +44,8 @@ cat:
   - name: mirrorOctant
     summary: Mirror coordinates across two axes and the diagonals.
   - name: mobiusTransform
+  - name: modifyNormals
+    status: beta
   - name: modulo1D
     summary: Repeats space along one axis.
   - name: modulo2D

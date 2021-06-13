@@ -79,6 +79,8 @@ op:
       used for the color field will be "before" any downstream transformations are
       applied. When disabled, the final global position where a point ends up in the
       render is used instead.
+  - label: Offset
+    name: Offset
   status: beta
   summary: A material that produces color for volumetric points relative to the input
     shape.

@@ -220,6 +220,12 @@ op:
     name: Nearhitfade
   - label: Enable Color Output
     name: Enablecoloroutput
+  - label: Enable Refraction
+    name: Enablerefraction
+  - label: Refraction Passes
+    name: Refractionpasses
+  - label: Enable UV Output
+    name: Enableuvoutput
   summary: Renders a scene using 3D raymarching.
 
 ---
