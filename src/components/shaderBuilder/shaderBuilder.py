@@ -282,8 +282,9 @@ class ShaderBuilder:
 				f'{name}_COORD_TYPE_{coordType}': '',
 				f'{name}_CONTEXT_TYPE_{contextType}': '',
 				f'{name}_RETURN_TYPE_{returnType}': '',
-				f'{name}_asCoordT':  coordTypeAdaptFuncs[coordType],
 			})
+			if coordType in coordTypeAdaptFuncs:
+				macros[name + '_asCoordT'] = coordTypeAdaptFuncs[coordType]
 			if returnType in returnTypeAdaptFuncs:
 				macros[name + '_asReturnT'] = returnTypeAdaptFuncs[returnType]
 		return typedefs, macros
