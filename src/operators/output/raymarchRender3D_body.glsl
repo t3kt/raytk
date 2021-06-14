@@ -385,11 +385,11 @@ void main()
 
 
 	MaterialContext matCtx = createMaterialContext();
-	#if THIS_ANTI_ALIAS > 1
-	vec2 shiftStart = vec2(-float(THIS_ANTI_ALIAS) / 2.0);
-	vec2 shiftStep = vec2(1.0 / float(THIS_ANTI_ALIAS));
-	for (int j=0; j < THIS_ANTI_ALIAS; j++)
-	for (int i=0; i < THIS_ANTI_ALIAS; i++)
+	#if THIS_Antialias > 1
+	vec2 shiftStart = vec2(-float(THIS_Antialias) / 2.0);
+	vec2 shiftStep = vec2(1.0 / float(THIS_Antialias));
+	for (int j=0; j < THIS_Antialias; j++)
+	for (int i=0; i < THIS_Antialias; i++)
 	{
 	vec2 shift = shiftStart + shiftStep * vec2(i, j);
 	bool writeUV = j == 0 && i == 0;
@@ -495,10 +495,10 @@ void main()
 		#if defined(OUTPUT_STEPS) && defined(RAYTK_STEPS_IN_SDF)
 		stepsOut += vec4(res.steps, float(res.steps)/float(RAYTK_MAX_STEPS), 0, 1);
 		#endif
-	#if THIS_ANTI_ALIAS > 1
+	#if THIS_Antialias > 1
 	}
 	#endif
-	float aa = 1.0 / float(THIS_ANTI_ALIAS*THIS_ANTI_ALIAS);
+	float aa = 1.0 / float(THIS_Antialias*THIS_Antialias);
 	#ifdef OUTPUT_DEPTH
 	depthOut *= aa;
 	#endif
