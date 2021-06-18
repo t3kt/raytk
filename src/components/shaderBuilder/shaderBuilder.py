@@ -602,7 +602,7 @@ class _ParameterProcessor:
 		if not self.inlineAliases or not code:
 			return code
 		for paramExpr in self._generateParamExprs():
-			code = code.replace(paramExpr.name, paramExpr.expr)
+			code = code.replace(paramExpr.name, str(paramExpr.expr))
 		return code
 
 	def _generateParamExprs(self) -> List[_ParamExpr]:
