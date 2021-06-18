@@ -269,6 +269,9 @@ class ROPInfo:
 
 	@property
 	def shortName(self):
+		'''
+		Short form of the name of the ROP type (not the ROP instance).
+		'''
 		t = self.opType
 		if not t:
 			return None

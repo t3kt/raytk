@@ -113,18 +113,18 @@ def _processInputDefTypeCategory(dat: 'scriptDAT', supportedTypeTable: 'DAT', ca
 def _getParamsOp() -> 'Optional[COMP]':
 	return parentPar().Paramsop.eval() or _host()
 
-def _getRegularParams() -> 'List[Par]':
+def _getRegularParams(spec: str) -> 'List[Par]':
 	host = _getParamsOp()
 	if not host:
 		return []
-	paramNames = tdu.expand(parentPar().Params.eval().strip())
+	paramNames = tdu.expand(spec.strip())
 	if not paramNames:
 		return []
 	return [
-			p
-			for p in host.pars(*[pn.strip() for pn in paramNames])
-			if p.isCustom and not (p.isPulse and p.name == 'Inspect')
-		]
+		p
+		for p in host.pars(*[pn.strip() for pn in paramNames])
+		if p.isCustom and not (p.isPulse and p.name == 'Inspect')
+	]
 
 def _getSpecialParamNames():
 	return tdu.expand(parentPar().Specialparams.eval())
@@ -135,14 +135,16 @@ def buildParamTable(dat: 'DAT'):
 	if not host:
 		return
 	name = parentPar().Name.eval()
-	allParamNames = [p.name for p in _getRegularParams()] + _getSpecialParamNames()
+	allParamNames = [p.name for p in _getRegularParams(parentPar().Params.eval())]
+	allParamNames += _getSpecialParamNames()
 	dat.appendCol([(name + '_' + pn) if pn != '_' else '_' for pn in allParamNames])
 
 def buildParamDetailTable(dat: 'DAT'):
 	dat.clear()
-	dat.appendRow(['tuplet', 'source', 'size', 'part1', 'part2', 'part3', 'part4', 'status'])
+	dat.appendRow(['tuplet', 'source', 'size', 'part1', 'part2', 'part3', 'part4', 'status', 'conversion'])
 	name = parentPar().Name.eval()
-	params = _getRegularParams()
+	params = _getRegularParams(parentPar().Params.eval())
+	anglePars = _getRegularParams(parentPar().Angleparams.eval())
 	if params:
 		paramsByTuplet = {}  # type: Dict[str, List[Par]]
 		for par in params:
@@ -159,9 +161,14 @@ def buildParamDetailTable(dat: 'DAT'):
 					'param',
 					len(tupletPars)
 				])
+			isAngle = False
 			for i, p in enumerate(tupletPars):
+				if p in anglePars:
+					isAngle = True
 				dat[row, 'part' + str(i + 1)] = f'{name}_{p.name}'
 			dat[row, 'status'] = 'readOnly' if _canBeReadOnlyTuplet(tupletPars) else ''
+			dat[row, 'conversion'] = 'angle' if isAngle else ''
+
 	specialNames = _getSpecialParamNames()
 	if specialNames:
 		parts = []
