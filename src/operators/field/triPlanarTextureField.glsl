@@ -1,5 +1,11 @@
 ReturnT thismap(CoordT p, MaterialContext ctx) {
+	#if defined(THIS_HAS_INPUT_1)
+	vec3 uv = inputOp1(p, ctx).xyz;
+	#elif defined(RAYTK_USE_UV)
+	vec3 uv = mix(p, ctx.uv.xyz, ctx.uv.w);
+	#else
 	vec3 uv = p;
+	#endif
 	vec3 valMult = vec3(1.0);
 	uv = (uv - THIS_Translate) / THIS_Scale;
 	#if defined(THIS_Extendmode_hold)
