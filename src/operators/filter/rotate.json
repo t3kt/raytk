@@ -1,6 +1,7 @@
 {
   "meta": {
+    "opStatus": "default",
     "opType": "raytk.operators.filter.rotate",
-    "opVersion": 14
+    "opVersion": 15
   }
 }
