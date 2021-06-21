@@ -313,7 +313,7 @@ class Par:
 	exportOP: _T.Optional['OP']
 	exportSource: _T.Optional[_T.Union['Cell', 'Channel']]
 	bindExpr: str
-	bindMaster: _T.Optional['OP']
+	bindMaster: _T.Optional[_T.Union['Channel', 'Cell', 'Par']]
 	bindReferences: list
 	index: int
 	vecIndex: int

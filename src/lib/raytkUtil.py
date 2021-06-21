@@ -382,6 +382,7 @@ class ROPInfo:
 			getattr(cb, name)(**kwargs)
 
 class _InputHandlerParsT:
+	Source: 'OPParamT'
 	Required: 'BoolParamT'
 	Supportcoordtypes: 'StrParamT'
 	Supportreturntypes: 'StrParamT'
@@ -417,26 +418,41 @@ class InputInfo:
 		if isinstance(dat, inDAT):
 			return dat
 
+	def _sourcePar(self) -> 'Optional[Par]':
+		if not self.handler or not hasattr(self.handlerPar, 'Source'):
+			return
+		return self.handlerPar.Source.bindMaster
+
 	@property
 	def name(self) -> 'Optional[str]':
 		dat = self._inDat()
 		if dat:
 			return dat.name
+		par = self._sourcePar()
+		if par is not None:
+			return par.name
 		if self.handler:
 			return self.handler.name.replace('inputDefinitionHandler_', 'definition_in_')
 
 	@property
 	def label(self) -> 'Optional[str]':
 		dat = self._inDat()
-		if not dat:
-			return
-		p = dat.par.label  # type: Par
-		if not p.isDefault:
+		if dat:
+			p = dat.par.label  # type: Par
+		else:
+			p = self._sourcePar()
+		if p is not None and not p.isDefault:
 			# noinspection PyBroadException
 			try:
 				return p.eval()
 			except Exception:
 				pass
+
+	@property
+	def helpText(self) -> 'Optional[str]':
+		par = self._sourcePar()
+		if par is not None:
+			return par.help
 
 	@property
 	def multiHandler(self) -> 'Optional[COMP]':
