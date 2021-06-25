@@ -194,6 +194,9 @@ vec3 getColorDefault(vec3 p, MaterialContext matCtx) {
 	vec3 sunDir = normalize(matCtx.light.pos);
 	float occ = calcAO(p, matCtx.normal);
 	vec3 mate = vec3(0.28);
+	#ifdef RAYTK_USE_SURFACE_COLOR
+	mate = mix(mate, matCtx.result.color.rgb, matCtx.result.color.w);
+	#endif
 	vec3 sunColor = matCtx.light.color;
 	vec3 skyColor = vec3(0.5, 0.8, 0.9);
 	float sunDiffuse = clamp(dot(matCtx.normal, sunDir), 0, 1.);
