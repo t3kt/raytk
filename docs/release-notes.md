@@ -1,5 +1,66 @@
 # Release Notes
 
+## v0.15
+
+### Highlights
+
+* Material support in 2D rendering
+* Surface UVs
+
+### Details
+
+* Improvements / additions
+  * Material support in 2D rendering (#531)
+  * Surface UVs (#526, #2, #345)
+      * uvField
+      * assignUV
+      * UV support in:
+        * planeSdf
+        * jointSdf2d
+        * extrude
+        * quadSdf
+        * render2D
+        * rectangleSdf
+        * roundedRectangleSdf
+        * circleSdf
+        * starSdf2d
+      * UV output in raymarchRender3D and render2D (#345)
+      * uvTransform
+  * CHOP-based buffers
+  * New SDFs
+    * segmentedLineSdf (#119)
+    * trapezoidSdf2d
+    * chainSdf
+    * ellipsoidSdf (#533)
+  * New fields
+    * stepField (#547)
+    * rayField
+    * atmosphereField (#402)
+  * Added offset parameter in sampledPointMat (#549)
+  * Added field inputs
+    * revolve (#556)
+    * extrude (#567)
+    * UV field input in triPlanarTextureField (#370)
+  * New filters
+    * modifyNormals (#403)
+    * mirrorQuadrant (#558)
+  * Added normal smoothing in raymarchRender3d and pointMapRender (#559)
+  * Expose iteration value in extrude and revolve (#556, #567)
+  * Added assignable color attribute (#553)
+* Changes
+* Fixes
+  * Fixed "Create camera" bug in linkedCamera (#536)
+  * Fixed context type handling
+    * reorderField (#555)
+    * rotate (#164)
+    * many other operators (#564)
+    * blend (#568)
+  * Lower default surface distance in raymarchRender3d (#563)
+  * Fixed axis display in inspector (#217)
+* Infrastructure / development
+  * Standardize processing of output buffers (#489)
+  * Added support for parameter-based inputs (#565)
+
 ## v0.14
 
 ### Highlights
