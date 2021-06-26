@@ -30,7 +30,7 @@ class ROPEditor:
 		iop.inspectorCore.Inspect(o)
 		info = self.ROPInfo
 		self._statusDropMenu.par.Value0 = info.statusLabel or 'default'
-		iop.testEditor.UnloadTest()
+		iop.testEditor.Unload()
 		iop.specPanel.Update()
 
 	def onStatusDropMenuChange(self):
