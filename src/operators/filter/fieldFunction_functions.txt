@@ -1,6 +1,4 @@
-name	label	expr
-acos	acos(x)           Arccosine	acos(a)
-sqrt	sqrt(x)           Square Root	sqrt(a)
+name	label	expr	useVal2
 abs	abs(x)            Absolute Value	abs(a)
 ceil	ceil(x)           Ceiling (Round Up)	ceil(a)
 floor	floor(x)          Floor (Round Down)	floor(a)
@@ -8,9 +6,9 @@ sign	sign(x)           Sign	sign(a)
 exp	e^x               Natural Exponentiation	exp(a)
 exp2	2^x               2 To The Power Of	exp2(a)
 fract	fract(x)          Fractional Part	fract(a)
-mod	mod(x, y)         Modulo	mod(a, b)
+mod	mod(x,y)         Modulo	mod(a, b)	1
 inversesqrt	inversesqrt(x)    Inverse Square Root	inversesqrt(a)
-pow	pow(x, y)         To The Power Of	pow(a, b)
+pow	pow(x,y)         To The Power Of	pow(a, b)	1
 round	round(x)          Round	round(a)
 roundEven	roundEven(x)      Round To Even Integer	roundEven(a)
 sqrt	sqrt(x)           Square Root	sqrt(a)
@@ -21,7 +19,7 @@ tan	tan(x)            Tangent	tan(a)
 acos	acos(x)           Arccosine	acos(a)
 asin	asin(x)           Arcsine	asin(a)
 atan	atan(x)           Arctan( Input1 )	atan(a)
-atan2	atan(x, y)        Arctan( Input1 )	atan(a / b)
+atan2	atan(x,y)        Arctan( Input1 )	atan(a / b)	1
 cosh	cosh(x)           Hyperbolic Cosine	cosh(a)
 sinh	sinh(x)           Hyperbolic Sine	sinh(a)
 tanh	tanh(x)           Hyperbolic Tangent	tanh(a)
