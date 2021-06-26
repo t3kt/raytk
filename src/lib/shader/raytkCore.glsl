@@ -72,6 +72,11 @@ struct Sdf {
 	// w: whether this has been set
 	vec4 uv2;
 	#endif
+
+	#ifdef RAYTK_USE_SURFACE_COLOR
+	// xyz: RGB, w: has been set
+	vec4 color;
+	#endif
 };
 
 int resultMaterial1(Sdf res) { return int(res.mat.x); }
@@ -116,6 +121,9 @@ Sdf createSdf(float dist) {
 	res.uv = vec4(0.);
 	res.uv2 = vec4(0.);
 	#endif
+	#ifdef RAYTK_USE_SURFACE_COLOR
+	res.color = vec4(0.);
+	#endif
 	return res;
 }
 
@@ -156,6 +164,15 @@ void blendInSdf(inout Sdf res1, in Sdf res2, in float amt) {
 
 	#ifdef RAYTK_USE_UV
 	res1.uv2 = res2.uv;
+	#endif
+
+	#ifdef RAYTK_USE_SURFACE_COLOR
+	if (int(res1.color.w) != int(res2.color.w)) {
+		// Use whichever one has color.
+		res1.color = mix(res1.color, res2.color, res2.color.w);
+	} else if (res1.color.w != 0. && res2.color.w != 0.) {
+		res1.color.rgb = mix(res1.color.rgb, res2.color.rgb, amt);
+	}
 	#endif
 }
 
