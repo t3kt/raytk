@@ -1,8 +1,12 @@
-name	label
-xyz	XYZ
-xy	XY
-yx	YX
-yz	YZ
-zy	ZY
-xz	XZ
-zx	ZX
+name	label	expr
+xyz	XYZ	adaptAsVec3(p)
+xy	XY	vec3(p.xy, 0.)
+yx	YX	vec3(p.yx, 0.)
+yz	YZ	vec3(p.yz, 0.)
+zy	ZY	vec3(p.zy, 0.)
+xz	XZ	vec3(p.xz, 0.)
+zx	ZX	vec3(p.zx, 0.)
+cylindricalx	Cylindrical X	vec3(p.x, length(p.yz), atan(p.z, p.y))
+cylindricaly	Cylindrical Y	vec3(atan(p.x, p.z), p.y, length(p.xz))
+cylindricalz	Cylindrical Z	vec3(length(p.xy), atan(p.y, p.x), p.z)
+spherical	Spherical	vec3(length(p), acos(p.z / length(p)), atan(p.y, p.x))
