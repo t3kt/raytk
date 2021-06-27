@@ -424,6 +424,13 @@ float exponentialEasing(float x, float a)
 	}
 }
 
+// https://iquilezles.org/www/articles/smoothstepintegral/smoothstepintegral.htm
+float smoothstepIntegral(float b, float x) {
+	if( x>=b ) return x - 0.5*b;
+	float f = x/b;
+	return f*f*f*(b-x*0.5);
+}
+
 vec3 opCheapBendPos(vec3 p, float k)
 {
 	float c = cos(k*p.x);
