@@ -5,6 +5,7 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 		#if defined(THIS_HAS_INPUT_2)
 		assignUV(res, inputOp2(p, ctx).xyz);
 		#else
+		vec3 q = adaptAsVec3(p);
 		assignUV(res, THIS_EXPR);
 		#endif
 	}
