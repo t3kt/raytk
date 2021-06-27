@@ -317,6 +317,11 @@ struct MaterialContext {
 	vec4 uv;
 	#endif
 };
+void assignUV(inout MaterialContext ctx, vec3 uv) {
+	#ifdef RAYTK_USE_UV
+	ctx.uv = vec4(uv, 1.);
+	#endif
+}
 
 MaterialContext createMaterialContext() {
 	MaterialContext matCtx;
