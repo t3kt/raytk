@@ -227,8 +227,10 @@ vec3 getColorInner(vec3 p, MaterialContext matCtx, int m) {
 	return col;
 }
 
-vec3 getColor(vec3 p, MaterialContext matCtx) {
-	if (isNonHitSdf(matCtx.result)) return vec3(0.);
+vec4 getColor(vec3 p, MaterialContext matCtx) {
+	if (isNonHitSdf(matCtx.result)) {
+		return getBackgroundColor(matCtx.ray);
+	}
 	vec3 col = vec3(0);
 	float ratio = resultMaterialInterp(matCtx.result);
 	int m1 = resultMaterial1(matCtx.result);
@@ -288,7 +290,7 @@ vec3 getColor(vec3 p, MaterialContext matCtx) {
 		col = mix(col1, col2, ratio);
 	}
 	popStage(priorStage);
-	return col;
+	return vec4(col, 1.);
 }
 
 #ifndef THIS_USE_LIGHT_FUNC
@@ -315,10 +317,13 @@ vec3 getReflectionColor(MaterialContext matCtx, vec3 p) {
 		matCtx.ray.pos = p + matCtx.normal * RAYTK_SURF_DIST*reflectStartOffsetMult;
 		matCtx.ray.dir = reflect(matCtx.ray.dir, matCtx.normal);
 		matCtx.result = castRayBasic(matCtx.ray, RAYTK_MAX_DIST);
-		if (isNonHitSdf(matCtx.result)) break;
+		if (isNonHitSdf(matCtx.result)) {
+			// TODO: handle background color reflections!
+			break;
+		}
 		p = matCtx.ray.pos + matCtx.normal * matCtx.result.x;
 		matCtx.normal = calcNormal(p);
-		matCtx.reflectColor += getColor(p, matCtx);
+		matCtx.reflectColor += getColor(p, matCtx).rgb;
 	}
 
 	popStage(priorStage);
@@ -378,7 +383,7 @@ vec3 getRefractionColor(MaterialContext matCtx, vec3 p) {
 		debugOut.r = 0.2;
 		debugOut.a = 1.;
 		#endif
-		vec3 col = getColor(matCtx.ray.pos, matCtx);
+		vec3 col = getColor(matCtx.ray.pos, matCtx).rgb;
 		matCtx.refractColor = col;
 	}
 
@@ -435,7 +440,12 @@ void main()
 		nearHitOut += vec4(res.nearHitAmount, float(res.nearHitCount), 0, 1);
 		#endif
 
-		if (res.x > 0.0 && res.x < renderDepth) {
+		if (res.x >= renderDepth && renderDepth == RAYTK_MAX_DIST) {
+			#ifdef OUTPUT_COLOR
+			colorOut += getBackgroundColor(ray);
+			#endif
+
+		} else if (res.x > 0.0 && res.x < renderDepth) {
 			vec3 p = ray.pos + ray.dir * res.x;
 			#ifdef OUTPUT_WORLDPOS
 			worldPosOut += vec4(p, 1);
@@ -478,10 +488,10 @@ void main()
 				matCtx.refractColor = vec3(0);
 				#endif
 
-				vec3 col = getColor(p, matCtx);
+				vec4 col = getColor(p, matCtx);
 				vec2 fragCoord = vUV.st*uTDOutputInfo.res.zw;
-				col += (1.0/255.0)*hash1(fragCoord);
-				colorOut += vec4(col, 1);
+				col.rgb += (1.0/255.0)*hash1(fragCoord);
+				colorOut += col;
 			}
 			#endif
 			#ifdef OUTPUT_UV

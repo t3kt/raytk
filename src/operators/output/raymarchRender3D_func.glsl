@@ -79,6 +79,19 @@ void modifyRay(inout Ray ray, in Sdf res) {
 }
 #endif
 
+vec4 getBackgroundColor(in Ray ray) {
+	#ifdef THIS_USE_BACKGROUND_FIELD
+	RayContext ctx = createRayContext(ray, createNonHitSdf());
+	vec4 col = inputOp6(ray.pos, ctx);
+	#ifndef THIS_Usebackgroundfieldalpha
+	col.a = 1.;
+	#endif
+	return col;
+	#else
+	return vec4(0.);
+	#endif
+}
+
 #ifdef RAYTK_USE_SHADOW
 float calcShadedLevel(vec3 p, MaterialContext matCtx) {
 	int priorStage = pushStage(RAYTK_STAGE_SHADOW);
