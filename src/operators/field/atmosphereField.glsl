@@ -115,6 +115,7 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 	#elif defined(THIS_CONTEXT_TYPE_RayContext) || defined(THIS_CONTEXT_TYPE_MaterialContext)
 	vec3 rayDir = ctx.ray.dir;
 	#endif
+	pRotateOnXYZ(rayDir, THIS_Rotate);
 
 	float planetRadius = THIS_Planetradius * 1e3;
 	float atmosRadius = planetRadius + THIS_Atmosthickness * 1e3;
