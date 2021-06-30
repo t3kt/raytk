@@ -1,6 +1,8 @@
 ReturnT thismap(CoordT p, ContextT ctx) {
 	#if defined(THIS_HAS_INPUT_1)
 	vec3 uv = inputOp1(p, ctx).xyz;
+	#elif defined(THIS_CONTEXT_TYPE_RayContext)
+	vec3 uv = ctx.ray.dir;
 	#else
 	vec3 uv = adaptAsVec3(p);
 	#endif
