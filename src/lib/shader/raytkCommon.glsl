@@ -657,5 +657,5 @@ float extractOrUseAsZ(vec4 p) { return p.z; }
 float extractOrUseAsW(float p) { return p; }
 float extractOrUseAsW(vec4 p) { return p.w; }
 
-void setFronFloat(inout float x, float val) { x = val; }
+void setFromFloat(inout float x, float val) { x = val; }
 void setFromFloat(inout Sdf x, float val) { x.x = val;}
