@@ -40,8 +40,10 @@ op:
     - RayContext
     coordTypes:
     - vec3
-    label: Ray Modifier
-    name: rayModifier_definition_in
+    label: Raymodifier
+    name: Raymodifier
+    returnTypes:
+    - Ray
     summary: Advanced feature, not ready for use.
   - contextTypes:
     - MaterialContext
@@ -51,6 +53,16 @@ op:
     name: shadow_definition_in
     returnTypes:
     - float
+  - contextTypes:
+    - RayContext
+    coordTypes:
+    - vec3
+    label: Backgroundfield
+    name: Backgroundfield
+    returnTypes:
+    - float
+    - vec4
+    summary: Help not available.
   name: raymarchRender3D
   opType: raytk.operators.output.raymarchRender3D
   parameters:
@@ -224,8 +236,22 @@ op:
     name: Enablerefraction
   - label: Refraction Passes
     name: Refractionpasses
+  - label: Background Field
+    name: Backgroundfield
+  - label: Use Background Field Alpha
+    name: Usebackgroundfieldalpha
+  - label: Enable Normal Smoothing
+    name: Enablenormalsmoothing
+  - label: Normal Smoothing
+    name: Normalsmoothing
+  - label: Ray Modifier
+    name: Raymodifier
   - label: Enable UV Output
     name: Enableuvoutput
+  - label: Enable Custom Output 1
+    name: Enablecustomoutput1
+  - label: Enable Custom Output 2
+    name: Enablecustomoutput2
   summary: Renders a scene using 3D raymarching.
 
 ---

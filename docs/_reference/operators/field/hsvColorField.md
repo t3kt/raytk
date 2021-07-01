@@ -56,10 +56,10 @@ op:
   parameters:
   - label: Hue Offset
     name: Hueoffset
-  - label: Value
-    name: Value
   - label: Saturation
     name: Saturation
+  - label: Value
+    name: Value
   - label: Coord Type
     menuOptions:
     - label: Use Input

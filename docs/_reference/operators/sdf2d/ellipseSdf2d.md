@@ -27,5 +27,12 @@ op:
   parameters:
   - label: Scale
     name: Scale
+  - label: UV Mode
+    menuOptions:
+    - label: None
+      name: none
+    - label: Bounds
+      name: bounds
+    name: Uvmode
 
 ---

@@ -14,6 +14,8 @@ cat:
     texture.'
   name: field
   operators:
+  - name: atmosphereField
+    status: beta
   - name: axisDistanceField
     summary: A float field that provides the distance from a specific point along
       a single axis.
@@ -54,6 +56,8 @@ cat:
     summary: A float field that provides the distance from a specific point in space.
   - name: positionField
     summary: A vector field that produces the coordinates in space where it is checked.
+  - name: rayField
+    status: beta
   - name: reorderField
     status: beta
   - name: sdfField
@@ -67,6 +71,8 @@ cat:
   - name: triPlanarTextureField
     summary: Texture field that uses surface normals (or other blending techniques)
       to apply a texture facing each axis.
+  - name: uvField
+    status: beta
   - name: waveField
     summary: A field that uses a periodic wave.
   - name: waveletNoiseField

@@ -129,6 +129,10 @@ op:
     name: Timerefop
   - label: Shader Builder Config
     name: Shaderbuilderconfig
+  - label: Enable Normal Smoothing
+    name: Enablenormalsmoothing
+  - label: Normal Smoothing
+    name: Normalsmoothing
   status: beta
   summary: Renderer that takes in a TOP of coordinates and evaluates the scene at
     each point.

@@ -17,6 +17,8 @@ op:
       name: step
     - label: Smoothstep
       name: smoothstep
+    - label: Smoothstep Integral
+      name: smoothstepIntegral
     name: Function
   - label: Edge
     name: Edge

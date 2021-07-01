@@ -27,6 +27,48 @@ op:
     - Ray
     - Light
     summary: The 2D shape that is revolved around the axis.
+  - contextTypes:
+    - Context
+    - MaterialContext
+    - CameraContext
+    - LightContext
+    - RayContext
+    coordTypes:
+    - float
+    label: Rotate Field
+    name: rotate_field_in
+    returnTypes:
+    - float
+    summary: Optional field that controls rotation of the cross-section as it goes
+      around the axis.
+  - contextTypes:
+    - Context
+    - MaterialContext
+    - CameraContext
+    - LightContext
+    - RayContext
+    coordTypes:
+    - float
+    label: Scale Field
+    name: scale_field_in
+    returnTypes:
+    - float
+    summary: Optional field that controls scale of the cross-section as it goes around
+      the axis.
+  - contextTypes:
+    - Context
+    - MaterialContext
+    - CameraContext
+    - LightContext
+    - RayContext
+    coordTypes:
+    - float
+    label: Translate Field
+    name: translate_field_in
+    returnTypes:
+    - vec4
+    summary: Optional field that controls translate of the cross-section as it goes
+      around the axis.
   name: revolve
   opType: raytk.operators.convert.revolve
   parameters:
@@ -45,6 +87,13 @@ op:
   - label: Axis Offset
     name: Axisoffset
     summary: Moves the resulting shape along the axis.
+  - label: Iteration Type
+    menuOptions:
+    - label: None
+      name: none
+    - label: Ratio
+      name: ratio
+    name: Iterationtype
   summary: Creates a 3D SDF by revolving a 2D cross-section SDF around an axis.
 
 ---

@@ -14,12 +14,7 @@ op:
     It is based on [code](https://iquilezles.org/www/articles/distfunctions/distfunctions.htm)
     from Inigo Quilez.
 
-    See [example](https://www.shadertoy.com/view/Ml3fWj).
-
-
-    * `Enable` - Enables or disables the op.
-
-    * `Size` - The distance that that parts are pushed apart from the origin.'
+    See [example](https://www.shadertoy.com/view/Ml3fWj).'
   inputs:
   - contextTypes:
     - Context
@@ -44,19 +39,21 @@ op:
   parameters:
   - label: Enable
     name: Enable
+  - label: Center
+    name: Center
+    summary: The center point of the stretching.
   - label: Size
     name: Size
-  summary: Splits a shape into pieces, moves them apart, and connects them.
+    summary: The distance that that parts are pushed apart from the origin.
+  summary: Stretches a shape by splitting it into pieces, moves them apart, and connects
+    them.
 
 ---
 
 
-Splits a shape into pieces, moves them apart, and connects them.
+Stretches a shape by splitting it into pieces, moves them apart, and connects them.
 
 For example, a capsule is an elongated version of a sphere.
 
 It is based on [code](https://iquilezles.org/www/articles/distfunctions/distfunctions.htm) from Inigo Quilez.
 See [example](https://www.shadertoy.com/view/Ml3fWj).
-
-* `Enable` - Enables or disables the op.
-* `Size` - The distance that that parts are pushed apart from the origin.

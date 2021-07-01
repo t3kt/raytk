@@ -16,11 +16,16 @@ cat:
     float/vector fields, etc). Some only support a limited set of return types.'
   name: filter
   operators:
+  - name: assignColor
+    status: beta
+  - name: assignUV
+    status: beta
   - name: bend
     summary: Bends space, along a main axis, towards a second axis.
   - name: cartesianToPolar
   - name: elongate
-    summary: Splits a shape into pieces, moves them apart, and connects them.
+    summary: Stretches a shape by splitting it into pieces, moves them apart, and
+      connects them.
   - name: extend
   - name: fieldExpr
     status: beta
@@ -43,6 +48,7 @@ cat:
     summary: Pulls or twists space within an area.
   - name: mirrorOctant
     summary: Mirror coordinates across two axes and the diagonals.
+  - name: mirrorQuadrant
   - name: mobiusTransform
   - name: modifyNormals
     status: beta
@@ -107,6 +113,8 @@ cat:
     summary: Translates coordinates of the input ROP.
   - name: twist
     summary: Twists space around an axis.
+  - name: uvTransform
+    status: beta
   summary: Operators that take an input and modify it.
 
 ---

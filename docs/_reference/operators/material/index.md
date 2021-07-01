@@ -43,12 +43,16 @@ cat:
     status: beta
     summary: A material that produces color for volumetric points relative to the
       input shape.
+  - name: shadowContrib
+    status: beta
   - name: skyLightContrib
     status: beta
     summary: A material element that acts as a basic pseudo directional light.
   - name: specularContrib
     status: beta
     summary: A material element that provides specular light contribution.
+  - name: surfaceColorContrib
+    status: beta
   summary: 'Material operators that are used by renderers to determine the
 
     color of points on the surface of geometry.'
