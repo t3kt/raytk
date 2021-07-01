@@ -1,0 +1,1 @@
+	'THIS_STATEMENT'	('' if 'return ' in str(parent().par.Expression or 'inputOp1(p, ctx)') else 'return ') + (parent().par.Expression or 'inputOp1(p, ctx)')
