@@ -9,13 +9,15 @@ def onCook(dat):
 	if mode == 'par':
 		o = op(parent().par.Targetop)
 		par = o.par[parent().par.Param]
-		if par.isMenu:
+		if par is None:
+			text = ''
+		elif par.isMenu:
 			text = par.menuLabels[int(par)]
 		elif par.isFloat:
 			text = str(round(par.eval(), 4))
 		else:
 			text = str(par)
-		if parent().par.Showparname:
+		if par is not None and parent().par.Showparname:
 			text = par.label + ': ' + text
 	else:
 		text = parent().par.Label
@@ -25,4 +27,5 @@ def onCook(dat):
 		if text and not suffix.startswith(' '):
 			suffix = ' ' + suffix
 		text += suffix
-	dat.appendRow([text])
+	text = str(text or '').replace('|', '\n')
+	dat.write(text)
