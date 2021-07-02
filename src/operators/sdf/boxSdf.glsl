@@ -1,13 +1,24 @@
 ReturnT thismap(CoordT p, ContextT ctx) {
-	vec3 scale = THIS_Scale;
+	CoordT scale = THIS_Scale * THIS_Uniformscale;
 	#ifdef THIS_HAS_INPUT_1
-	scale *= vec3(inputOp1(p, ctx));
+	scale *= fillToVec3(inputOp1(p, ctx));
 	#endif
+	p -= THIS_Translate;
 #ifdef THIS_INF_PLANE
-	return createSdf(THIS_BOX_FUNC(
-		p.THIS_INF_PLANE - vec3(THIS_Translate).THIS_INF_PLANE,
-		scale.THIS_INF_PLANE));
+	vec2 q = p.THIS_INF_PLANE;
+	vec2 s = scale.THIS_INF_PLANE;
+	Sdf res = createSdf(THIS_BOX_FUNC(q, s));
+	#ifdef THIS_Uvmode_bounds
+	vec3 uv;
+	uv.THIS_INF_PLANE = map01(q, -s/2., s/2.);
+	uv.THIS_AXIS = p.THIS_AXIS;
+	assignUV(res, uv);
+	#endif
 #else
-	return createSdf(THIS_BOX_FUNC(p - THIS_Translate, scale));
+	Sdf res = createSdf(THIS_BOX_FUNC(p, scale));
+	#ifdef THIS_Uvmode_bounds
+	assignUV(res, map01(p, -scale/2., scale/2.));
+	#endif
 #endif
+	return res;
 }
