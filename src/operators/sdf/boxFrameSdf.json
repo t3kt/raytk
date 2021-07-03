@@ -1,6 +1,7 @@
 {
   "meta": {
+    "opStatus": "default",
     "opType": "raytk.operators.sdf.boxFrameSdf",
-    "opVersion": 10
+    "opVersion": 11
   }
 }
