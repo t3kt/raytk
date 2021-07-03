@@ -1510,6 +1510,14 @@ class textTOP(TOP):
 	def evalTextSize(self, s: str) -> _T.Tuple[float, float]: pass
 	def lines(self) -> _T.List['TextLine']: pass
 
+class scriptTOP(TOP):
+	def copyNumpyArray(self, arr: numpy.array) -> None: pass
+	def copyCUDAMemory(self, address, size, shape: CUDAMemoryShape) -> None: pass
+	def loadByteArray(self, fileType: str, byteArray: _T.Union[bytes, bytearray]) -> bool: pass
+	def destroyCustomPars(self): pass
+	def sortCustomPages(self, *pages): pass
+	def appendCustomPage(self, name: str) -> 'Page': pass
+
 class textSOP(SOP):
 	numLines: int
 	ascender: float
