@@ -11,6 +11,7 @@ _opDefParamNames = [
 	'Disableinspect',
 	'Opglobals',
 	'Initcode',
+	'Stageinitcode',
 	'Functemplate',
 	'Materialcode',
 	'Paramsop',
