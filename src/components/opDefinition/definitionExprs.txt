@@ -1,6 +1,9 @@
 name	op('name')[0,0]
 path	parent().par.Hostop or ''
 opType	parent().par.Raytkoptype or ''
+coordType	op('types')['coordType', 1]
+contextType	op('types')['contextType', 1]
+returnType	op('types')['returnType', 1]
 opVersion	parent().par.Raytkopversion or 0
 toolkitVersion	parent().par.Raytkversion or ''
 functionPath	parent().path + '/function'
