@@ -52,16 +52,20 @@ class UI:
 	showPaletteBrowser: bool
 	status: str
 	undo: 'Undo'
+	windowWidth: int
+	windowHeight: int
+	windowX: int
+	windowY: int
 
-	def copyOPs(self, listOfOPs): pass
+	def copyOPs(self, listOfOPs: _T.List['_AnyOpT']): pass
 	# noinspection PyShadowingNames
-	def pasteOPs(self, COMP, x=None, y=None): pass
+	def pasteOPs(self, COMP, x: _T.Optional[int] = None, y: _T.Optional[int] = None): pass
 	# noinspection PyDefaultArgument
-	def messageBox(self, title, message, buttons=['Ok']) -> int: pass
+	def messageBox(self, title: str, message: str, buttons: _T.List[str] = ['Ok']) -> int: pass
 	def refresh(self): pass
 	def chooseFile(self, load=True, start=None, fileTypes=None, title=None, asExpression=False) -> _T.Optional[str]: pass
 	def chooseFolder(self, title='Select Folder', start=None, asExpression=False) -> _T.Optional[str]: pass
-	def viewFile(self, url_or_path): pass
+	def viewFile(self, url_or_path: str): pass
 	def openAbletonControl(self): pass
 	def openBeat(self): pass
 	def openBookmarks(self): pass
@@ -85,6 +89,7 @@ class UI:
 	def openTextport(self): pass
 	def openVersion(self): pass
 	def openWindowPlacement(self): pass
+	def findEditDAT(self, filename: str) -> _T.Optional['DAT']: pass
 
 	status: str
 
@@ -641,6 +646,17 @@ def ops(*paths) -> _T.List['_AnyOpT']: pass
 
 # noinspection PyUnusedLocal
 def var(name) -> str: pass
+
+# noinspection PyUnusedLocal
+def varExists(name: str) -> bool: pass
+
+# noinspection PyUnusedLocal
+def varOwner(name: str) -> _T.Optional['_AnyOpT']: pass
+
+def isMainThread() -> bool: pass
+
+# clears textport
+def clear()-> None: pass
 
 class Run:
 	active: bool
@@ -1677,6 +1693,11 @@ class App:
 	userPaletteFolder: str
 	version: str
 	windowColorBits: int
+
+	def addNonCommercialLimit(self, password: _T.Optional[str] = None) -> None: pass
+	def removeNonCommercialLimit(self, password: _T.Optional[str] = None) -> bool: pass
+	def addResolutionLimit(self, x: int, y: int, password: _T.Optional[str] = None) -> None: pass
+	def removeResolutionLimit(self, password: _T.Optional[str] = None) -> bool: pass
 
 app: App
 
