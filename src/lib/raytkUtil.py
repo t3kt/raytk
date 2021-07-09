@@ -76,6 +76,7 @@ class OpDefParsT(_OpMetaPars):
 	Enable: 'BoolParamT'
 	Opglobals: 'DatParamT'
 	Initcode: 'DatParamT'
+	Stageinitcode: 'DatParamT'
 	Functemplate: 'DatParamT'
 	Materialcode: 'DatParamT'
 	Macrotable: 'DatParamT'

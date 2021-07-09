@@ -152,6 +152,8 @@ void main()
 	#endif
 	initOutputs();
 
+	pushStage(RAYTK_STAGE_PRIMARY);
+
 vec2 p = getCoord();
 #ifdef THIS_RETURN_TYPE_Sdf
 	Sdf res = map(p);

@@ -10,6 +10,8 @@ void main()
 	#endif
 	initOutputs();
 
+	pushStage(RAYTK_STAGE_PRIMARY);
+
 	vec4 color = map(vUV.st);
 
 	#ifdef OUTPUT_COLOR

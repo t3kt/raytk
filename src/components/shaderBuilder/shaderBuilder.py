@@ -457,6 +457,18 @@ class ShaderBuilder:
 			'}',
 		], 'init')
 
+	def buildStageInitBlock(self):
+		dats = self.getOpsFromDefinitionColumn('stageInitPath')
+		code = _combineCode(dats)
+		if not code.strip():
+			return ' '
+		return wrapCodeSection([
+			'#define RAYTK_HAS_STAGE_INIT',
+			'void stageInit(int stage) {',
+			code,
+			'}',
+		], 'stageInit')
+
 	def buildFunctionsBlock(self):
 		dats = self.getOpsFromDefinitionColumn('functionPath')
 		return wrapCodeSection(dats, 'functions')

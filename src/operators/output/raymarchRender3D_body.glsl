@@ -399,6 +399,7 @@ void main()
 	#endif
 	initOutputs();
 
+	pushStage(RAYTK_STAGE_PRIMARY);
 
 	MaterialContext matCtx = createMaterialContext();
 	#if THIS_Antialias > 1

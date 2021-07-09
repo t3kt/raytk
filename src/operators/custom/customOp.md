@@ -93,6 +93,7 @@ relevant `vec*` type, which combines all of those parts (e.g. `THIS_Size` could 
 * `Codeheader`
 * `Opglobals`
 * `Initcode`
+* `Stageinitcode`
 * `Function`: DAT with the main shader function.
 * `Materialcode`: DAT with the optional material snippet.
 * `Settingsheader`
@@ -106,32 +107,36 @@ relevant `vec*` type, which combines all of those parts (e.g. `THIS_Size` could 
   * `raytkMaterial`
 * `Typesheader`
 * `Coordtype`: The type of coordinates that the op uses.
-  * `useinput`: Use whatever type of coordinates the first input uses, or `vec3` if the first input is not connected.
+  * `auto`
   * `float`
-  * `vec3`
   * `vec2`
+  * `vec3`
 * `Returntype`: The type of return value produced by the op.
-  * `useinput`: Use whatever type of return value the first input uses, or `Sdf` if the first input is not connected.
   * `Sdf`
   * `float`
   * `vec4`
   * `Ray`
   * `Light`
 * `Contexttype`: The type of return value produced by the op.
-  * `useinput`: Use whatever type of context the first input uses, or `Context` if the first input is not connected.
+  * `auto`
   * `Context`: The most commonly used context type, used for the main scene graph.
   * `MaterialContext`
   * `CameraContext`
   * `LightContext`
+  * `RayContext`
 * `Paramsop`: The COMP that contains any custom parameters used by the op.
 * `Createopglobals`
 * `Createinit`
+* `Createstageinit`
 * `Createfunction`
 * `Creatematerial`
 * `Createparamsop`: Creates and attaches a new COMP for `Paramsop`, if there is none.
 * `Createmissingparams`: Adds any parameters referred to by shader code that aren't defined in the `Paramsop`.
 * `Removeunusedparams`: Removes any custom parameters from the `Paramsop` that aren't used in the shader code.
 * `Autocreatemissingparams`: Automatically create custom parameters whenever shader code changes.
+* `Useinputcoordtype`
+* `Useinputreturntype`
+* `Useinputcontexttype`
 
 ## Inputs
 

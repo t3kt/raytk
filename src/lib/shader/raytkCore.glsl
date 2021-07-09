@@ -387,6 +387,9 @@ int _raytkStage = RAYTK_STAGE_PRIMARY;
 int pushStage(int stage) {
 	int prior = _raytkStage;
 	_raytkStage = stage;
+	#ifdef RAYTK_HAS_STAGE_INIT
+	stageInit(stage);
+	#endif
 	return prior;
 }
 
