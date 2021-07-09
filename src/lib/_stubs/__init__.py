@@ -1492,6 +1492,35 @@ class glslTOP(TOP):
 
 glslmultiTOP = glslTOP
 
+class webrenderTOP(TOP):
+	def sendKey(self, char: _T.Union[str, int], shift=False, alt=False, ctrl=False, cmd=False): pass
+	def interactMouse(
+			self,
+			u: float, v: float,
+			leftClick=0, middleClick=0, rightClick=0,
+			left=False, middle=False, right=False,
+			wheel=0,
+			pixels=False,
+			aux=None,
+	):
+		"""
+		:param u: pos
+		:param v:
+		:param leftClick: number of left clicks
+		:param middleClick: number of middle clicks
+		:param rightClick: number of right clicks
+		:param left: left button state
+		:param middle: middle button state
+		:param right: right button state
+		:param wheel: mouse wheel
+		:param pixels: treat coords as pixel offsets instead of normalized
+		:param aux: auxilliary data
+		:return:
+		"""
+		pass
+	def executeJavaScript(self, script: str): pass
+	def sendString(self, char: str): pass
+
 class textTOP(TOP):
 	curText: str
 	cursorEnd: int
@@ -1628,14 +1657,26 @@ class tcpipDAT(DAT):
 	def send(self, *messages: str, terminator='') -> int: pass
 
 class App:
-	name: str
+	architecture: str
+	binFolder: str
 	build: str
-	launchTime: str
-	product: str
-	version: str
+	compileDate: _T.Tuple[int, int, int]  # year, month, day
+	configFolder: str
+	desktopFolder: str
+	enableOptimizedExprs: bool
+	installFolder: str
+	launchTime: float  # seconds since launch
+	logExtensionCompiles: bool
 	osName: str
 	osVersion: str
+	power: bool
+	preferencesFolder: str
+	product: str
+	recentFiles: _T.List[str]
+	samplesFolder: str
 	userPaletteFolder: str
+	version: str
+	windowColorBits: int
 
 app: App
 
