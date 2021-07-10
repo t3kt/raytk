@@ -84,25 +84,31 @@ def buildLegacyTypeSettingsTable(dat: 'DAT', inputTable: 'DAT'):
 		typeVal = inputTable['inputName1', 'returnType'] or parentPar().Fallbackreturntype
 		dat.appendRow(['returnType', typeVal, '1'])
 
-def combineInputDefinitions(dat: 'DAT', inDats: 'List[DAT]'):
+def combineInputDefinitions(
+		dat: 'DAT',
+		inDats: 'List[DAT]',
+		defFields: 'DAT',
+):
 	dat.clear()
 	if not inDats:
 		return
-	for d in inDats:
-		if d.numRows > 0:
-			dat.appendRow(d.row(0))
-			break
+	cols = defFields.col(0)
+	dat.appendRow(cols)
 	inDats = [d for d in inDats if d.numRows > 1]
 	if not inDats:
 		return
 	usedNames = set()
 	for d in reversed(inDats):
 		insertRow = 0
-		for cells in d.rows()[1:]:
-			name = cells[0].val
+		for inDatRow in range(1, d.numRows):
+			name = d[inDatRow, 'name'].val
 			if not name or name in usedNames:
 				continue
 			usedNames.add(name)
+			cells = [
+				d[inDatRow, col] or ''
+				for col in cols
+			]
 			dat.appendRow(cells, insertRow)
 			insertRow += 1
 
