@@ -16,6 +16,7 @@ cat:
   operators:
   - name: atmosphereField
     status: beta
+    summary: Field that simulates a sun and sky.
   - name: axisDistanceField
     summary: A float field that provides the distance from a specific point along
       a single axis.
@@ -40,6 +41,7 @@ cat:
     summary: Curl noise field.
   - name: hsvColorField
     status: beta
+    summary: A field that uses HSV-based parameters to produce colors.
   - name: iterationField
     summary: Field that returns the current iteration, from a downstream OP.
   - name: metaballField
@@ -58,12 +60,14 @@ cat:
     summary: A vector field that produces the coordinates in space where it is checked.
   - name: rayField
     status: beta
+    summary: Field that provides the ray direction or origin.
   - name: reorderField
     status: beta
   - name: sdfField
     summary: Value field based on an SDF shape.
   - name: stepField
     status: beta
+    summary: A field that switches between two values at a threshold point.
   - name: texture3dField
     status: beta
   - name: textureField
@@ -73,6 +77,7 @@ cat:
       to apply a texture facing each axis.
   - name: uvField
     status: beta
+    summary: Field that produces surface UV coordinates, if available.
   - name: waveField
     summary: A field that uses a periodic wave.
   - name: waveletNoiseField

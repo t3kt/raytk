@@ -8,6 +8,7 @@ redirect_from:
   - /reference/opType/raytk.operators.filter.limitField/
 op:
   category: filter
+  detail: This is similar to the Limit CHOP.
   inputs:
   - contextTypes:
     - Context
@@ -46,5 +47,11 @@ op:
     name: Low
   - label: Input High
     name: High
+  summary: Limits the values produced by a float or vector field.
 
 ---
+
+
+Limits the values produced by a float or vector field.
+
+This is similar to the Limit CHOP.

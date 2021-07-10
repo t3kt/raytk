@@ -8,6 +8,8 @@ redirect_from:
   - /reference/opType/raytk.operators.filter.assignColor/
 op:
   category: filter
+  detail: Various types of materials and fields can access and use the surface color
+    attributes.
   inputs:
   - contextTypes:
     - Context
@@ -24,6 +26,7 @@ op:
     required: true
     returnTypes:
     - Sdf
+    summary: SDF definition to which the color is applied.
   - contextTypes:
     - Context
     - MaterialContext
@@ -39,6 +42,7 @@ op:
     returnTypes:
     - float
     - vec4
+    summary: Optional field used to calculate the color instead of the `Color` parameter.
   name: assignColor
   opType: raytk.operators.filter.assignColor
   parameters:
@@ -47,5 +51,11 @@ op:
   - label: Color
     name: Color
   status: beta
+  summary: Assigns a surface color attribute to an SDF surface.
 
 ---
+
+
+Assigns a surface color attribute to an SDF surface.
+
+Various types of materials and fields can access and use the surface color attributes.

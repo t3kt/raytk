@@ -8,6 +8,11 @@ redirect_from:
   - /reference/opType/raytk.operators.field.rayField/
 op:
   category: field
+  detail: 'When used in a material context, the ray is the one that went from the
+    camera to the surface.
+
+    When used in a background field, the ray is the one that went from the camera
+    and missed all surfaces.'
   name: rayField
   opType: raytk.operators.field.rayField
   parameters:
@@ -28,5 +33,12 @@ op:
       name: RayContext
     name: Contexttype
   status: beta
+  summary: Field that provides the ray direction or origin.
 
 ---
+
+
+Field that provides the ray direction or origin.
+
+When used in a material context, the ray is the one that went from the camera to the surface.
+When used in a background field, the ray is the one that went from the camera and missed all surfaces.

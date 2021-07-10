@@ -8,6 +8,17 @@ redirect_from:
   - /reference/opType/raytk.operators.field.atmosphereField/
 op:
   category: field
+  detail: 'This is primarily intended for use with the "Background Field" feature
+    in `raymarchRender3d`.
+
+
+    Example:
+
+
+    ![glsl-atmosphere](https://raw.githubusercontent.com/wwwtyro/glsl-atmosphere/master/images/atmosphere.png)
+
+
+    Based on [glsl-atmosphere](https://github.com/wwwtyro/glsl-atmosphere/).'
   inputs:
   - contextTypes:
     - Context
@@ -49,5 +60,17 @@ op:
   - label: Secondary Steps
     name: Secondarysteps
   status: beta
+  summary: Field that simulates a sun and sky.
 
 ---
+
+
+Field that simulates a sun and sky.
+
+This is primarily intended for use with the "Background Field" feature in `raymarchRender3d`.
+
+Example:
+
+![glsl-atmosphere](https://raw.githubusercontent.com/wwwtyro/glsl-atmosphere/master/images/atmosphere.png)
+
+Based on [glsl-atmosphere](https://github.com/wwwtyro/glsl-atmosphere/).

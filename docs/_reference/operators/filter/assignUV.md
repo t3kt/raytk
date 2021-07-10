@@ -8,6 +8,8 @@ redirect_from:
   - /reference/opType/raytk.operators.filter.assignUV/
 op:
   category: filter
+  detail: Coordinates can either be determined using the selected `UV Mode`, or using
+    a vector field input.
   inputs:
   - contextTypes:
     - Context
@@ -24,6 +26,7 @@ op:
     required: true
     returnTypes:
     - Sdf
+    summary: SDF definition to which the UVs are applied.
   - contextTypes:
     - Context
     - MaterialContext
@@ -38,6 +41,7 @@ op:
     name: uv_field_in
     returnTypes:
     - vec4
+    summary: Optional field used to calculate the UV coordinates.
   name: assignUV
   opType: raytk.operators.filter.assignUV
   parameters:
@@ -69,5 +73,11 @@ op:
       name: spherical
     name: Uvmode
   status: beta
+  summary: Assigns UV coordinates to an SDF surface.
 
 ---
+
+
+Assigns UV coordinates to an SDF surface.
+
+Coordinates can either be determined using the selected `UV Mode`, or using a vector field input.

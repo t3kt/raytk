@@ -35,8 +35,11 @@ op:
     name: Enable
   - label: Transform Primary UVs
     name: Transformprimary
+    summary: Whether to transform the primary UV coordinates.
   - label: Transform Secondary UVs
     name: Transformsecondary
+    summary: Whether to transform the secondary UV coordinates, which are used in
+      cases where materials are being blended through a combine operator.
   - label: Enable Translate
     name: Enabletranslate
   - label: Enable Rotate
@@ -93,5 +96,9 @@ op:
       name: uniform
     name: Scaletype
   status: beta
+  summary: Transform the UV coordinates assigned to an SDF result.
 
 ---
+
+
+Transform the UV coordinates assigned to an SDF result.

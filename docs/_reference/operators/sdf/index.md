@@ -74,6 +74,7 @@ cat:
   - name: quadSdf
     status: beta
   - name: segmentedLineSdf
+    summary: Multi-segment line SDF.
   - name: solidAngleSdf
     summary: A conical slice of a sphere.
   - name: sphereFbmSdf

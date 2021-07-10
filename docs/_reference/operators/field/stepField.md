@@ -8,6 +8,10 @@ redirect_from:
   - /reference/opType/raytk.operators.field.stepField/
 op:
   category: field
+  detail: 'This can be used to apply one color to the left of some point and another
+    color on the right side of that point.
+
+    It can also smooth out the transition between the two values.'
   inputs:
   - contextTypes:
     - Context
@@ -24,6 +28,8 @@ op:
     returnTypes:
     - float
     - vec4
+    summary: Optional field whose value is used instead of coordinates when checking
+      which side of the threshold a point is on.
   name: stepField
   opType: raytk.operators.field.stepField
   parameters:
@@ -66,8 +72,10 @@ op:
     name: Returntype
   - label: Value 1
     name: Value1
+    summary: Value used when below `Edge`
   - label: Value 2
     name: Value2
+    summary: Value used when above `Edge`
   - label: Context Type
     menuOptions:
     - label: Auto
@@ -84,5 +92,12 @@ op:
       name: RayContext
     name: Contexttype
   status: beta
+  summary: A field that switches between two values at a threshold point.
 
 ---
+
+
+A field that switches between two values at a threshold point.
+
+This can be used to apply one color to the left of some point and another color on the right side of that point.
+It can also smooth out the transition between the two values.
