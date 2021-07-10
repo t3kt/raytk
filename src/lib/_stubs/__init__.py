@@ -1116,7 +1116,7 @@ class COMP(OP):
 	def unsetVar(self, name: str): pass
 	def vars(self, *patterns: str) -> list: pass
 
-class PanelValue(_T.SupportsFloat, _ABC):
+class PanelValue(_T.SupportsFloat, _T.SupportsInt, _ABC):
 	name: str
 	owner: OP
 	val: _T.Union[float, int, str]
@@ -1124,7 +1124,85 @@ class PanelValue(_T.SupportsFloat, _ABC):
 
 class Panel:
 	owner: OP
-	def __getitem__(self, item: str) -> PanelValue: pass
+
+	# Container
+	select: PanelValue
+	lselect: PanelValue
+	mselect: PanelValue
+	rselect: PanelValue
+	reposition: PanelValue
+	resize: PanelValue
+	dragout: PanelValue
+	ldragout: PanelValue
+	mdragout: PanelValue
+	rdragout: PanelValue
+	ctrl: PanelValue
+	alt: PanelValue
+	shift: PanelValue
+	cmd: PanelValue
+	u: PanelValue
+	v: PanelValue
+	trueu: PanelValue
+	truev: PanelValue
+	rollu: PanelValue
+	rollv: PanelValue
+	dragrollu: PanelValue
+	dragrollv: PanelValue
+	dragrollover: PanelValue
+	rollover: PanelValue
+	inside: PanelValue
+	insideu: PanelValue
+	insidev: PanelValue
+	radio: PanelValue
+	lradio: PanelValue
+	mradio: PanelValue
+	rradio: PanelValue
+	radioname: PanelValue
+	lradioname: PanelValue
+	mradioname: PanelValue
+	rradioname: PanelValue
+	children: PanelValue
+	display: PanelValue
+	enable: PanelValue
+	key: PanelValue
+	character: PanelValue
+	focusselect: PanelValue
+	click: PanelValue
+	winopen: PanelValue
+	wheel: PanelValue
+	drag: PanelValue
+	drop: PanelValue
+	screenw: PanelValue
+	screenh: PanelValue
+	screenwm: PanelValue
+	screenhm: PanelValue
+	# Button
+	state: PanelValue
+	lstate: PanelValue
+	mstate: PanelValue
+	rstate: PanelValue
+	picked: PanelValue
+	# Field
+	field: PanelValue
+	fieldediting: PanelValue
+	invalidkey: PanelValue
+	focus: PanelValue
+	# List
+	scrollu: PanelValue
+	scrollv: PanelValue
+	# Slider
+	stateu: PanelValue
+	statev: PanelValue
+	# Table
+	celloverid: PanelValue
+	cellfocusid: PanelValue
+	cellselectid: PanelValue
+	celllselectid: PanelValue
+	cellmselectid: PanelValue
+	cellrselectid: PanelValue
+	cellradioid: PanelValue
+	celldragid: PanelValue
+	celldropid: PanelValue
 
 class PanelCOMP(COMP):
 	panel: Panel
