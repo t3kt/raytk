@@ -32,6 +32,13 @@ op:
     name: Startangle
   - label: End Angle
     name: Endangle
+  - label: UV Mode
+    menuOptions:
+    - label: None
+      name: none
+    - label: Torus
+      name: torus
+    name: Uvmode
   summary: SDF for a torus.
 
 ---

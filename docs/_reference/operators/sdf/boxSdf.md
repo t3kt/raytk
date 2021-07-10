@@ -60,6 +60,13 @@ op:
   - label: Uniform Scale
     name: Uniformscale
     summary: Scaling applied to all dimensions of the `Scale`.
+  - label: UV Mode
+    menuOptions:
+    - label: None
+      name: none
+    - label: Bounds XYZ
+      name: bounds
+    name: Uvmode
   summary: SDF for a box, optionally infinite one one axis.
 
 ---
