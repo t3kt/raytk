@@ -22,7 +22,7 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 		res,
 		vec3(
 			atan(p.x, p.z)/TAU + 0.5, // around axis
-			atan(d0, p.y), // around core
+			atan(d0, p.y)/TAU + 0.5, // around core
 			length(vec2(d0, p.y)) / THIS_Thickness // dist from core
 		)
 	);
