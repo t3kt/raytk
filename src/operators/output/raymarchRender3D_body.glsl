@@ -318,8 +318,8 @@ vec3 getReflectionColor(MaterialContext matCtx, vec3 p) {
 		matCtx.ray.dir = reflect(matCtx.ray.dir, matCtx.normal);
 		matCtx.result = castRayBasic(matCtx.ray, RAYTK_MAX_DIST);
 		if (isNonHitSdf(matCtx.result)) {
-			// TODO: handle background color reflections!
-			break;
+			vec4 bg = getBackgroundColor(matCtx.ray);
+			return bg.rgb * bg.a;
 		}
 		p = matCtx.ray.pos + matCtx.normal * matCtx.result.x;
 		matCtx.normal = calcNormal(p);
