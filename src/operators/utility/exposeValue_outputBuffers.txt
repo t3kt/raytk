@@ -1,0 +1,4 @@
+name	label
+customOut1	Custom 1
+customOut2	Custom 2
+debugOut	Debug
