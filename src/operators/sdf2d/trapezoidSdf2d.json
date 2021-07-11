@@ -1,0 +1,7 @@
+{
+  "meta": {
+    "opStatus": "default",
+    "opType": "raytk.operators.sdf2d.trapezoidSdf2d",
+    "opVersion": 0
+  }
+}

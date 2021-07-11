@@ -1,6 +1,7 @@
 {
   "meta": {
+    "opStatus": "default",
     "opType": "raytk.operators.convert.revolve",
-    "opVersion": 3
+    "opVersion": 5
   }
 }

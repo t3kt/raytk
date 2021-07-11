@@ -7,7 +7,9 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 		lightDir,
 		viewDir,
 		norm,
-		THIS_Coolcolor, THIS_Warmcolor, THIS_Basecolor);
+		THIS_Coolcolor * THIS_Level,
+		THIS_Warmcolor * THIS_Level,
+		THIS_Basecolor * THIS_Level);
 
 	#ifdef THIS_Uselightcolor
 	col *= ctx.light.color;

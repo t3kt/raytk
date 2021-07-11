@@ -8,6 +8,7 @@ redirect_from:
   - /reference/opType/raytk.operators.field.hsvColorField/
 op:
   category: field
+  detail: By default, the X axis is used for the hue.
   inputs:
   - contextTypes:
     - Context
@@ -23,6 +24,8 @@ op:
     name: hue_field_definition_in
     returnTypes:
     - float
+    summary: Optional field that can calculate the hue setting based on position or
+      other attributes.
   - contextTypes:
     - Context
     - MaterialContext
@@ -37,6 +40,8 @@ op:
     name: saturation_field_definition_in
     returnTypes:
     - float
+    summary: Optional field that can calculate the saturation setting based on position
+      or other attributes.
   - contextTypes:
     - Context
     - MaterialContext
@@ -51,15 +56,17 @@ op:
     name: value_field_definition_in
     returnTypes:
     - float
+    summary: Optional field that can calculate the value setting based on position
+      or other attributes.
   name: hsvColorField
   opType: raytk.operators.field.hsvColorField
   parameters:
   - label: Hue Offset
     name: Hueoffset
-  - label: Value
-    name: Value
   - label: Saturation
     name: Saturation
+  - label: Value
+    name: Value
   - label: Coord Type
     menuOptions:
     - label: Use Input
@@ -89,5 +96,11 @@ op:
       name: RayContext
     name: Contexttype
   status: beta
+  summary: A field that uses HSV-based parameters to produce colors.
 
 ---
+
+
+A field that uses HSV-based parameters to produce colors.
+
+By default, the X axis is used for the hue.

@@ -1,4 +1,4 @@
-name	label	function
+name	label	expr
 union	Union	fOpUnionColumns
 intersect	Intersect	fOpIntersectionColumns
 diff	Difference	fOpDifferenceColumns

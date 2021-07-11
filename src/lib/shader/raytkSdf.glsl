@@ -319,3 +319,54 @@ float sdRoundedBox( in vec2 p, in vec2 b, in vec4 r )
 	vec2 q = abs(p)-b+r.x;
 	return min(max(q.x,q.y),0.0) + length(max(q,0.0)) - r.x;
 }
+
+// https://www.shadertoy.com/view/MlycD3
+// trapezoid / capped cone, specialized for Y alignment
+// r1: bottom width, r2: top width, he: height
+float sdTrapezoid(vec2 p, float r1, float r2, float he)
+{
+	vec2 k1 = vec2(r2,he);
+	vec2 k2 = vec2(r2-r1,2.0*he);
+
+	p.x = abs(p.x);
+	vec2 ca = vec2(max(0.0,p.x-((p.y<0.0)?r1:r2)), abs(p.y)-he);
+	vec2 cb = p - k1 + k2*clamp( dot(k1-p,k2)/dot2(k2), 0.0, 1.0 );
+
+	float s = (cb.x < 0.0 && ca.y < 0.0) ? -1.0 : 1.0;
+
+	return s*sqrt( min(dot2(ca),dot2(cb)) );
+}
+
+// trapezoid / capped cone
+// a: ?, b: ?, ra: ?, rb: ?
+float sdTrapezoid(vec2 p, vec2 a, vec2 b, float ra, float rb)
+{
+	float rba  = rb-ra;
+	float baba = dot(b-a,b-a);
+	float papa = dot(p-a,p-a);
+	float paba = dot(p-a,b-a)/baba;
+	float x = sqrt( papa - paba*paba*baba );
+	float cax = max(0.0,x-((paba<0.5)?ra:rb));
+	float cay = abs(paba-0.5)-0.5;
+	float k = rba*rba + baba;
+	float f = clamp( (rba*(x-ra)+paba*baba)/k, 0.0, 1.0 );
+	float cbx = x-ra - f*rba;
+	float cby = paba - f;
+	float s = (cbx < 0.0 && cay < 0.0) ? -1.0 : 1.0;
+	return s*sqrt( min(cax*cax + cay*cay*baba,
+	cbx*cbx + cby*cby*baba) );
+}
+
+// https://www.shadertoy.com/view/wlXSD7
+// build the chain directly, it saves one of four square roots
+// over using sdLinks()
+float sdChain(vec3 pos, float le, float r1, float r2)
+{
+	float ya = max(abs(fract(pos.y    )-0.5)-le,0.0);
+	float yb = max(abs(fract(pos.y+0.5)-0.5)-le,0.0);
+
+	float la = ya*ya - 2.0*r1*sqrt(pos.x*pos.x+ya*ya);
+	float lb = yb*yb - 2.0*r1*sqrt(pos.z*pos.z+yb*yb);
+
+	return sqrt(dot(pos.xz,pos.xz) + r1*r1 + min(la,lb)) - r2;
+}

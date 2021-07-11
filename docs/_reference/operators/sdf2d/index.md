@@ -50,6 +50,7 @@ cat:
   - name: starSdf2d
     summary: SDF for a 2D star shape.
   - name: superQuadSdf2d
+  - name: trapezoidSdf2d
   - name: triangleSdf2d
     summary: SDF for a 2D triangle.
   - name: vesicaSdf2d

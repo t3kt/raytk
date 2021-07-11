@@ -12,6 +12,9 @@ op:
   - contextTypes:
     - Context
     - MaterialContext
+    - CameraContext
+    - LightContext
+    - RayContext
     coordTypes:
     - float
     - vec2
@@ -43,19 +46,6 @@ op:
     - label: Vector
       name: vec4
     name: Returntype
-  - label: Context Type
-    menuOptions:
-    - label: Use Input
-      name: useinput
-    - label: Context
-      name: Context
-    - label: Material Context
-      name: MaterialContext
-    - label: Light Context
-      name: LightContext
-    - label: Ray Context
-      name: RayContext
-    name: Contexttype
   - label: Translate
     name: Translate
   - label: Scale
@@ -73,6 +63,19 @@ op:
     - label: Mirror
       name: mirror
     name: Extendmode
+  - label: Context Type
+    menuOptions:
+    - label: Auto
+      name: auto
+    - label: Context
+      name: Context
+    - label: Material Context
+      name: MaterialContext
+    - label: Light Context
+      name: LightContext
+    - label: Ray Context
+      name: RayContext
+    name: Contexttype
   status: beta
 
 ---

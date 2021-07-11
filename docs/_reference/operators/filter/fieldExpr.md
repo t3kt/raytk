@@ -165,6 +165,8 @@ op:
     menuOptions:
     - label: Use Input
       name: useinput
+    - label: Auto
+      name: auto
     - label: Context
       name: Context
     - label: MaterialContext

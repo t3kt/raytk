@@ -52,16 +52,20 @@ class UI:
 	showPaletteBrowser: bool
 	status: str
 	undo: 'Undo'
+	windowWidth: int
+	windowHeight: int
+	windowX: int
+	windowY: int
 
-	def copyOPs(self, listOfOPs): pass
+	def copyOPs(self, listOfOPs: _T.List['_AnyOpT']): pass
 	# noinspection PyShadowingNames
-	def pasteOPs(self, COMP, x=None, y=None): pass
+	def pasteOPs(self, COMP, x: _T.Optional[int] = None, y: _T.Optional[int] = None): pass
 	# noinspection PyDefaultArgument
-	def messageBox(self, title, message, buttons=['Ok']) -> int: pass
+	def messageBox(self, title: str, message: str, buttons: _T.List[str] = ['Ok']) -> int: pass
 	def refresh(self): pass
 	def chooseFile(self, load=True, start=None, fileTypes=None, title=None, asExpression=False) -> _T.Optional[str]: pass
 	def chooseFolder(self, title='Select Folder', start=None, asExpression=False) -> _T.Optional[str]: pass
-	def viewFile(self, url_or_path): pass
+	def viewFile(self, url_or_path: str): pass
 	def openAbletonControl(self): pass
 	def openBeat(self): pass
 	def openBookmarks(self): pass
@@ -85,6 +89,7 @@ class UI:
 	def openTextport(self): pass
 	def openVersion(self): pass
 	def openWindowPlacement(self): pass
+	def findEditDAT(self, filename: str) -> _T.Optional['DAT']: pass
 
 	status: str
 
@@ -313,7 +318,7 @@ class Par:
 	exportOP: _T.Optional['OP']
 	exportSource: _T.Optional[_T.Union['Cell', 'Channel']]
 	bindExpr: str
-	bindMaster: _T.Optional['OP']
+	bindMaster: _T.Optional[_T.Union['Channel', 'Cell', 'Par']]
 	bindReferences: list
 	index: int
 	vecIndex: int
@@ -641,6 +646,17 @@ def ops(*paths) -> _T.List['_AnyOpT']: pass
 
 # noinspection PyUnusedLocal
 def var(name) -> str: pass
+
+# noinspection PyUnusedLocal
+def varExists(name: str) -> bool: pass
+
+# noinspection PyUnusedLocal
+def varOwner(name: str) -> _T.Optional['_AnyOpT']: pass
+
+def isMainThread() -> bool: pass
+
+# clears textport
+def clear()-> None: pass
 
 class Run:
 	active: bool
@@ -1100,7 +1116,7 @@ class COMP(OP):
 	def unsetVar(self, name: str): pass
 	def vars(self, *patterns: str) -> list: pass
 
-class PanelValue(_T.SupportsFloat, _ABC):
+class PanelValue(_T.SupportsFloat, _T.SupportsInt, _ABC):
 	name: str
 	owner: OP
 	val: _T.Union[float, int, str]
@@ -1108,7 +1124,85 @@ class PanelValue(_T.SupportsFloat, _ABC):
 
 class Panel:
 	owner: OP
-	def __getitem__(self, item: str) -> PanelValue: pass
+
+	# Container
+	select: PanelValue
+	lselect: PanelValue
+	mselect: PanelValue
+	rselect: PanelValue
+	reposition: PanelValue
+	resize: PanelValue
+	dragout: PanelValue
+	ldragout: PanelValue
+	mdragout: PanelValue
+	rdragout: PanelValue
+	ctrl: PanelValue
+	alt: PanelValue
+	shift: PanelValue
+	cmd: PanelValue
+	u: PanelValue
+	v: PanelValue
+	trueu: PanelValue
+	truev: PanelValue
+	rollu: PanelValue
+	rollv: PanelValue
+	dragrollu: PanelValue
+	dragrollv: PanelValue
+	dragrollover: PanelValue
+	rollover: PanelValue
+	inside: PanelValue
+	insideu: PanelValue
+	insidev: PanelValue
+	radio: PanelValue
+	lradio: PanelValue
+	mradio: PanelValue
+	rradio: PanelValue
+	radioname: PanelValue
+	lradioname: PanelValue
+	mradioname: PanelValue
+	rradioname: PanelValue
+	children: PanelValue
+	display: PanelValue
+	enable: PanelValue
+	key: PanelValue
+	character: PanelValue
+	focusselect: PanelValue
+	click: PanelValue
+	winopen: PanelValue
+	wheel: PanelValue
+	drag: PanelValue
+	drop: PanelValue
+	screenw: PanelValue
+	screenh: PanelValue
+	screenwm: PanelValue
+	screenhm: PanelValue
+	# Button
+	state: PanelValue
+	lstate: PanelValue
+	mstate: PanelValue
+	rstate: PanelValue
+	picked: PanelValue
+	# Field
+	field: PanelValue
+	fieldediting: PanelValue
+	invalidkey: PanelValue
+	focus: PanelValue
+	# List
+	scrollu: PanelValue
+	scrollv: PanelValue
+	# Slider
+	stateu: PanelValue
+	statev: PanelValue
+	# Table
+	celloverid: PanelValue
+	cellfocusid: PanelValue
+	cellselectid: PanelValue
+	celllselectid: PanelValue
+	cellmselectid: PanelValue
+	cellrselectid: PanelValue
+	cellradioid: PanelValue
+	celldragid: PanelValue
+	celldropid: PanelValue
 
 class PanelCOMP(COMP):
 	panel: Panel
@@ -1492,6 +1586,35 @@ class glslTOP(TOP):
 
 glslmultiTOP = glslTOP
 
+class webrenderTOP(TOP):
+	def sendKey(self, char: _T.Union[str, int], shift=False, alt=False, ctrl=False, cmd=False): pass
+	def interactMouse(
+			self,
+			u: float, v: float,
+			leftClick=0, middleClick=0, rightClick=0,
+			left=False, middle=False, right=False,
+			wheel=0,
+			pixels=False,
+			aux=None,
+	):
+		"""
+		:param u: pos
+		:param v:
+		:param leftClick: number of left clicks
+		:param middleClick: number of middle clicks
+		:param rightClick: number of right clicks
+		:param left: left button state
+		:param middle: middle button state
+		:param right: right button state
+		:param wheel: mouse wheel
+		:param pixels: treat coords as pixel offsets instead of normalized
+		:param aux: auxilliary data
+		:return:
+		"""
+		pass
+	def executeJavaScript(self, script: str): pass
+	def sendString(self, char: str): pass
+
 class textTOP(TOP):
 	curText: str
 	cursorEnd: int
@@ -1509,6 +1632,14 @@ class textTOP(TOP):
 	def fontSupportsCharts(self, s: str) -> bool: pass
 	def evalTextSize(self, s: str) -> _T.Tuple[float, float]: pass
 	def lines(self) -> _T.List['TextLine']: pass
+
+class scriptTOP(TOP):
+	def copyNumpyArray(self, arr: numpy.array) -> None: pass
+	def copyCUDAMemory(self, address, size, shape: CUDAMemoryShape) -> None: pass
+	def loadByteArray(self, fileType: str, byteArray: _T.Union[bytes, bytearray]) -> bool: pass
+	def destroyCustomPars(self): pass
+	def sortCustomPages(self, *pages): pass
+	def appendCustomPage(self, name: str) -> 'Page': pass
 
 class textSOP(SOP):
 	numLines: int
@@ -1620,14 +1751,31 @@ class tcpipDAT(DAT):
 	def send(self, *messages: str, terminator='') -> int: pass
 
 class App:
-	name: str
+	architecture: str
+	binFolder: str
 	build: str
-	launchTime: str
-	product: str
-	version: str
+	compileDate: _T.Tuple[int, int, int]  # year, month, day
+	configFolder: str
+	desktopFolder: str
+	enableOptimizedExprs: bool
+	installFolder: str
+	launchTime: float  # seconds since launch
+	logExtensionCompiles: bool
 	osName: str
 	osVersion: str
+	power: bool
+	preferencesFolder: str
+	product: str
+	recentFiles: _T.List[str]
+	samplesFolder: str
 	userPaletteFolder: str
+	version: str
+	windowColorBits: int
+
+	def addNonCommercialLimit(self, password: _T.Optional[str] = None) -> None: pass
+	def removeNonCommercialLimit(self, password: _T.Optional[str] = None) -> bool: pass
+	def addResolutionLimit(self, x: int, y: int, password: _T.Optional[str] = None) -> None: pass
+	def removeResolutionLimit(self, password: _T.Optional[str] = None) -> bool: pass
 
 app: App
 

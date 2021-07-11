@@ -72,6 +72,8 @@ op:
       used for the color field will be "before" any downstream transformations are
       applied. When disabled, the final global position where a point ends up in the
       render is used instead.
+  - label: Use Surface Color
+    name: Usesurfacecolor
   summary: Material with a basic lighting model.
 
 ---

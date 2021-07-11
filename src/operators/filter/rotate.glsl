@@ -1,13 +1,9 @@
 ReturnT thismap(CoordT p, ContextT ctx) {
 	#ifdef THIS_Usepivot
 		#ifdef THIS_HAS_INPUT_3
-			#ifdef THIS_COORD_TYPE_vec2
-			CoordT pivot = adaptAsVec2(inputOp3(p, ctx));
-			#else
-			CoordT pivot = adaptAsVec3(inputOp3(p, ctx));
-			#endif
+			CoordT pivot = THIS_asCoordT(inputOp3(p, ctx));
 		#else
-			CoordT pivot = THIS_Pivot;
+			CoordT pivot = THIS_asCoordT(THIS_Pivot);
 		#endif
 	#endif
 #if defined(THIS_COORD_TYPE_vec2) || defined(THIS_Rotatemode_axis)

@@ -8,6 +8,10 @@ RayTK consists of a set of operator (ROP) components, and a set of tools for wor
 
 Check out the [Getting Started](https://t3kt.github.io/raytk/guide/getting-started/) guide on the documentation website.
 
+## Troubleshooting
+
+Check out the [Troubleshooting Guide](https://t3kt.github.io/raytk/guide/troubleshooting/).
+
 ## How RayTK works
 
 ### Output ROPs

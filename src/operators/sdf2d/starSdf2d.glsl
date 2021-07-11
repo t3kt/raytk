@@ -1,4 +1,5 @@
 ReturnT thismap(CoordT p, ContextT ctx) {
+	CoordT p0 = p;
 	float r = THIS_Radius;
 	float n = THIS_Points;
 	float m = THIS_M;
@@ -12,5 +13,15 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 	p = length(p)*vec2(cos(bn),abs(sin(bn)));
 	p -= r*acs;
 	p += ecs*clamp( -dot(p,ecs), 0.0, r*acs.y/ecs.y);
-	return createSdf(length(p)*sign(p.x));
+	ReturnT res = createSdf(length(p)*sign(p.x));
+	#if defined(THIS_Uvmode_cartesian)
+	assignUV(res, vec3(map01(p0, -vec2(THIS_Radius/2.), vec2(THIS_Radius/2.)), 0.));
+	#elif defined(THIS_Uvmode_polar)
+	assignUV(res, vec3(
+		length(p0) / THIS_Radius,
+		atan(p0.y, p0.x),
+		0.
+	));
+	#endif
+	return res;
 }

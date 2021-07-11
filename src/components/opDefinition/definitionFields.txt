@@ -1,6 +1,9 @@
 name
 path
 opType
+coordType
+contextType
+returnType
 opVersion
 toolkitVersion
 functionPath
@@ -14,9 +17,6 @@ bufferTable
 libraryNames
 initPath
 opGlobalsPath
-coordType
-returnType
-contextType
 inputName1
 inputName2
 inputName3

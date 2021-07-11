@@ -1,6 +1,6 @@
-name	label	returnType	macro	enable
-sdfOut	SDF Result	Sdf	OUTPUT_SDF	
-colorOut	Color	Sdf	OUTPUT_COLOR	
-valueOut	Value	vec4 float	OUTPUT_VALUE	
-normalOut	Normal	Sdf	OUTPUT_NORMAL	Enablenormaloutput
-objectIdOut	Object Id	Sdf	OUTPUT_OBJECTID	Enableobjectidoutput
+name	label	macro	enable	path
+sdfOut	SDF Result	OUTPUT_SDF	op('definition')[1, 'returnType'].val == 'Sdf'	parent().path + '/render_glsl'
+colorOut	Color	OUTPUT_COLOR	op('definition')[1, 'returnType'].val == 'Sdf'	parent().path + '/render_glsl'
+valueOut	Value	OUTPUT_VALUE	op('definition')[1, 'returnType'].val in ('float', 'vec4')	parent().path + '/render_glsl'
+normalOut	Normal	OUTPUT_NORMAL	parent().par.Enablenormaloutput and op('definition')[1, 'returnType'].val == 'Sdf'	parent().path + '/render_glsl'
+objectIdOut	Object Id	OUTPUT_OBJECTID	parent().par.Enableobjectidoutput and op('definition')[1, 'returnType'].val == 'Sdf'	parent().path + '/render_glsl'

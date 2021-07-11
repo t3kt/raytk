@@ -1,3 +1,0 @@
-	'THIS_FUNC'	op('operation_funcs')[parent().par.Operation.eval(), 1]
-	'THIS_INPUT_1'	'inputOp2' if parent().par.Swapinputs else 'inputOp1'
-	'THIS_INPUT_2'	'inputOp1' if parent().par.Swapinputs else 'inputOp2'

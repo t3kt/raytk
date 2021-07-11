@@ -1,0 +1,2 @@
+'name'	'type'	'chop'	'uniformType'	'length'
+'points' if parent().par.Source == 'chop' else ''	'vec3'	op('points')	'uniformarray'	parent().par.Segments + 1

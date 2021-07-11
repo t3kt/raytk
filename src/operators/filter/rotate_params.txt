@@ -1,4 +1,0 @@
-'Rotate' if op('input_info_1')['Inputcoordtype', 1] == 'vec2' else ''
-'Axis[xyz] Rotate' if op('input_info_1')['Inputcoordtype', 1] == 'vec3' and parent().par.Rotatemode == 'axis' else ''
-'Rot[xyz]' if op('input_info_1')['Inputcoordtype', 1] == 'vec3' and parent().par.Rotatemode == 'euler' else ''
-'' if not parent().par.Usepivot else ('Pivot[xyz]' if op('input_info_1')['Inputcoordtype', 1] == 'vec3' else 'Pivot[xy]')

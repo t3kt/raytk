@@ -63,25 +63,52 @@ def buildInputTable(dat: 'DAT', inDats: 'List[DAT]'):
 				inDat[1, 'returnType'],
 			])
 
-def combineInputDefinitions(dat: 'DAT', inDats: 'List[DAT]'):
+def buildLegacyTypeSettingsTable(dat: 'DAT', inputTable: 'DAT'):
+	dat.clear()
+	typeVal = parentPar().Coordtype.eval()
+	if typeVal != 'useinput':
+		dat.appendRow(['coordType', typeVal, '0'])
+	else:
+		typeVal = inputTable['inputName1', 'coordType'] or parentPar().Fallbackcoordtype
+		dat.appendRow(['coordType', typeVal, '1'])
+	typeVal = parentPar().Contexttype.eval()
+	if typeVal != 'useinput':
+		dat.appendRow(['contextType', typeVal, '0'])
+	else:
+		typeVal = inputTable['inputName1', 'contextType'] or parentPar().Fallbackcontexttype
+		dat.appendRow(['contextType', typeVal, '1'])
+	typeVal = parentPar().Returntype.eval()
+	if typeVal != 'useinput':
+		dat.appendRow(['returnType', typeVal, '0'])
+	else:
+		typeVal = inputTable['inputName1', 'returnType'] or parentPar().Fallbackreturntype
+		dat.appendRow(['returnType', typeVal, '1'])
+
+def combineInputDefinitions(
+		dat: 'DAT',
+		inDats: 'List[DAT]',
+		defFields: 'DAT',
+):
 	dat.clear()
 	if not inDats:
 		return
-	for d in inDats:
-		if d.numRows > 0:
-			dat.appendRow(d.row(0))
-			break
+	cols = defFields.col(0)
+	dat.appendRow(cols)
 	inDats = [d for d in inDats if d.numRows > 1]
 	if not inDats:
 		return
 	usedNames = set()
 	for d in reversed(inDats):
 		insertRow = 0
-		for cells in d.rows()[1:]:
-			name = cells[0].val
+		for inDatRow in range(1, d.numRows):
+			name = d[inDatRow, 'name'].val
 			if not name or name in usedNames:
 				continue
 			usedNames.add(name)
+			cells = [
+				d[inDatRow, col] or ''
+				for col in cols
+			]
 			dat.appendRow(cells, insertRow)
 			insertRow += 1
 
@@ -113,18 +140,18 @@ def _processInputDefTypeCategory(dat: 'scriptDAT', supportedTypeTable: 'DAT', ca
 def _getParamsOp() -> 'Optional[COMP]':
 	return parentPar().Paramsop.eval() or _host()
 
-def _getRegularParams() -> 'List[Par]':
+def _getRegularParams(spec: str) -> 'List[Par]':
 	host = _getParamsOp()
 	if not host:
 		return []
-	paramNames = tdu.expand(parentPar().Params.eval().strip())
+	paramNames = tdu.expand(spec.strip())
 	if not paramNames:
 		return []
 	return [
-			p
-			for p in host.pars(*[pn.strip() for pn in paramNames])
-			if p.isCustom and not (p.isPulse and p.name == 'Inspect')
-		]
+		p
+		for p in host.pars(*[pn.strip() for pn in paramNames])
+		if p.isCustom and not (p.isPulse and p.name == 'Inspect')
+	]
 
 def _getSpecialParamNames():
 	return tdu.expand(parentPar().Specialparams.eval())
@@ -135,14 +162,16 @@ def buildParamTable(dat: 'DAT'):
 	if not host:
 		return
 	name = parentPar().Name.eval()
-	allParamNames = [p.name for p in _getRegularParams()] + _getSpecialParamNames()
+	allParamNames = [p.name for p in _getRegularParams(parentPar().Params.eval())]
+	allParamNames += _getSpecialParamNames()
 	dat.appendCol([(name + '_' + pn) if pn != '_' else '_' for pn in allParamNames])
 
 def buildParamDetailTable(dat: 'DAT'):
 	dat.clear()
-	dat.appendRow(['tuplet', 'source', 'size', 'part1', 'part2', 'part3', 'part4', 'status'])
+	dat.appendRow(['tuplet', 'source', 'size', 'part1', 'part2', 'part3', 'part4', 'status', 'conversion'])
 	name = parentPar().Name.eval()
-	params = _getRegularParams()
+	params = _getRegularParams(parentPar().Params.eval())
+	anglePars = _getRegularParams(parentPar().Angleparams.eval())
 	if params:
 		paramsByTuplet = {}  # type: Dict[str, List[Par]]
 		for par in params:
@@ -159,9 +188,14 @@ def buildParamDetailTable(dat: 'DAT'):
 					'param',
 					len(tupletPars)
 				])
+			isAngle = False
 			for i, p in enumerate(tupletPars):
+				if p in anglePars:
+					isAngle = True
 				dat[row, 'part' + str(i + 1)] = f'{name}_{p.name}'
 			dat[row, 'status'] = 'readOnly' if _canBeReadOnlyTuplet(tupletPars) else ''
+			dat[row, 'conversion'] = 'angle' if isAngle else ''
+
 	specialNames = _getSpecialParamNames()
 	if specialNames:
 		parts = []
@@ -349,23 +383,43 @@ def prepareTextureTable(dat: 'scriptDAT'):
 
 def prepareBufferTable(dat: 'scriptDAT'):
 	dat.clear()
+	dat.appendRow(['name', 'type', 'chop', 'uniformType', 'length', 'expr1', 'expr2', 'expr3', 'expr4'])
 	table = parentPar().Buffertable.eval()
-	if not table:
+	if not table or table.numRows == 0:
 		return
 	namePrefix = parentPar().Name.eval() + '_'
-	for i in range(table.numRows):
-		name = table[i, 0]
-		path = table[i, 1]
-		if not name or not path:
-			continue
-		dataType = table[i, 1]
-		uniformType = table[i, 1]
-		dat.appendRow([
-			namePrefix + name,
-			path,
-			dataType or 'vec4',
-			uniformType or 'uniformarray',
-		])
+	if table[0, 0] == 'name':
+		for i in range(1, table.numRows):
+			name = str(table[i, 'name'] or '')
+			path = str(table[i, 'chop'] or '')
+			expr1 = str(table[i, 'expr1'] or '')
+			expr2 = str(table[i, 'expr2'] or '')
+			expr3 = str(table[i, 'expr3'] or '')
+			expr4 = str(table[i, 'expr4'] or '')
+			if not name:
+				continue
+			if not path and not expr1 and not expr2 and not expr3 and not expr4:
+				continue
+			dat.appendRow([
+				namePrefix + name,
+				str(table[i, 'type'] or '') or 'vec4',
+				path,
+				str(table[i, 'uniformType'] or '') or 'uniformarray',
+				table[i, 'length'],
+				expr1, expr2, expr2, expr3,
+			])
+	else:
+		for i in range(table.numRows):
+			name = str(table[i, 0] or '')
+			path = str(table[i, 1] or '')
+			if not name or not path:
+				continue
+			dat.appendRow([
+				namePrefix + name,
+				str(table[i, 1] or '') or 'vec4',
+				path,
+				str(table[i, 2] or '') or 'uniformarray',
+			])
 
 def prepareMaterialTable(dat: 'scriptDAT'):
 	dat.clear()

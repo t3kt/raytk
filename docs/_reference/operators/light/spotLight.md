@@ -17,8 +17,6 @@ op:
     - LightContext
     - RayContext
     coordTypes:
-    - float
-    - vec2
     - vec3
     label: Color Field
     name: color_field_definition_in
@@ -34,8 +32,6 @@ op:
     - RayContext
     coordTypes:
     - float
-    - vec2
-    - vec3
     label: Attenuation Field
     name: attenutation_field_definition_in
     returnTypes:

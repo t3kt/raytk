@@ -1,0 +1,7 @@
+{
+  "meta": {
+    "opStatus": "beta",
+    "opType": "raytk.operators.field.stepField",
+    "opVersion": 1
+  }
+}

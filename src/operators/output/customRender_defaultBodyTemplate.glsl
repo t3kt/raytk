@@ -9,6 +9,8 @@ void main() {
 	fragCoord.x *= uTDOutputInfo.res.z/uTDOutputInfo.res.w;
 	vec2 p = fragCoord*2. - vec2(1.);
 
+	pushStage(RAYTK_STAGE_PRIMARY);
+
 	#if defined(THIS_RETURN_TYPE_float)
 	vec4 color = vec4(thismap(p, createDefaultContext()));
 	#elif defined(THIS_RETURN_TYPE_vec4)

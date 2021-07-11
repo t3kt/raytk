@@ -1,19 +1,30 @@
 ReturnT thismap(CoordT p, ContextT ctx) {
-	ReturnT res = inputOp1(p, ctx);
+	ReturnT res;
 	#ifdef RAYTK_USE_UV
 	{
+		vec3 uv;
 		#if defined(THIS_HAS_INPUT_2)
-		assignUV(res, inputOp2(p, ctx).xyz);
-		#elif defined(THIS_Uvmode_xyz)
-		assignUV(res, adaptAsVec3(p));
-		#elif defined(THIS_Uvmode_xy) || defined(THIS_Uvmode_yx) ||\
-		  defined(THIS_Uvmode_yz) || defined(THIS_Uvmode_zy) || \
-			defined(THIS_Uvmode_xz) || defined(THIS_Uvmode_zx)
-		assignUV(res, vec3(p.THIS_Uvmode, 0.));
+		uv = inputOp2(p, ctx).xyz;
 		#else
-		#error invalidUVMode
+		vec3 q = adaptAsVec3(p);
+		uv = THIS_EXPR;
+		#endif
+		#if defined(THIS_RETURN_TYPE_Sdf)
+		{
+			res = inputOp1(p, ctx);
+			assignUV(res, uv);
+		}
+		#elif defined(THIS_CONTEXT_TYPE_MaterialContext)
+		{
+			assignUV(ctx, uv);
+			res = inputOp1(p, ctx);
+		}
+		#else
+			#error invalidReturnContextTypeCombo
 		#endif
 	}
+	#else
+	res = inputOp1(p, ctx);
 	#endif
 	return res;
 }

@@ -1,0 +1,2 @@
+	'RAYTK_USE_SHADOW'	
+	'THIS_Enableshadow'	

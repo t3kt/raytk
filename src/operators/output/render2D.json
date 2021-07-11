@@ -1,6 +1,7 @@
 {
   "meta": {
+    "opStatus": "default",
     "opType": "raytk.operators.output.render2D",
-    "opVersion": 37
+    "opVersion": 45
   }
 }

@@ -8,6 +8,9 @@ Sdf thismap(CoordT p, ContextT ctx) {
 	assignMaterial(res, THISMAT);
 	#endif
 	captureIterationFromMaterial(THIS_iterationCapture, ctx);
+	#if defined(RAYTK_REFLECT_IN_SDF) && defined(THIS_Enablereflection)
+	res.reflect = true;
+	#endif
 	#if defined(RAYTK_USE_SHADOW)
 	{
 		#if (defined(THIS_HAS_INPUT_2) && defined(inputOp2_Enableshadow))\

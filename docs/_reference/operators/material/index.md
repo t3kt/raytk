@@ -24,8 +24,10 @@ cat:
       the color.'
   - name: goochMat
     status: beta
+    summary: A material that uses the Gooch shading model.
   - name: goochShadingContrib
     status: beta
+    summary: A material element that uses the Gooch shading model.
   - name: modularMat
     status: beta
     summary: A material that is composed of one or more shading elements.
@@ -43,12 +45,19 @@ cat:
     status: beta
     summary: A material that produces color for volumetric points relative to the
       input shape.
+  - name: shadowContrib
+    status: beta
+    summary: A material element that produces the shading level for the surface.
   - name: skyLightContrib
     status: beta
     summary: A material element that acts as a basic pseudo directional light.
   - name: specularContrib
     status: beta
     summary: A material element that provides specular light contribution.
+  - name: surfaceColorContrib
+    status: beta
+    summary: A material element that produces the assigned color attribute for the
+      surface.
   summary: 'Material operators that are used by renderers to determine the
 
     color of points on the surface of geometry.'

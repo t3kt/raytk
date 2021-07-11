@@ -17,6 +17,15 @@ op:
   - label: Radius
     name: Radius
     summary: Radius of the circle.
+  - label: UV Mode
+    menuOptions:
+    - label: None
+      name: none
+    - label: Cartesian
+      name: cartesian
+    - label: Polar
+      name: polar
+    name: Uvmode
   summary: 2D circle SDF.
 
 ---

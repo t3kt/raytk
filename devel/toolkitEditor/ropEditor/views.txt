@@ -1,6 +1,7 @@
 name	label	panel	op
 ropParams	ROP Params	params_panel	ext.ropEditor.ROP or ''
 opDefParams	opDefinition	params_panel	ext.ropEditor.ROPInfo.opDef or ''
+typeSpec	Type Spec	params_panel	ext.ropEditor.ROPInfo.typeSpec or ''
 code	Code	codeEditorPanel	
 inputs	Inputs	inputsPanel	
 paramConfig	Param Config		

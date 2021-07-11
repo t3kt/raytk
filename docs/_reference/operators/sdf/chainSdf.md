@@ -1,0 +1,22 @@
+---
+layout: operator
+title: chainSdf
+parent: Sdf Operators
+grand_parent: Operators
+permalink: /reference/operators/sdf/chainSdf
+redirect_from:
+  - /reference/opType/raytk.operators.sdf.chainSdf/
+op:
+  category: sdf
+  name: chainSdf
+  opType: raytk.operators.sdf.chainSdf
+  parameters:
+  - label: Length
+    name: Length
+  - label: Radius
+    name: Radius
+  - label: Thickness
+    name: Thickness
+  status: beta
+
+---

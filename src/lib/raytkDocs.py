@@ -122,6 +122,7 @@ class InputHelp:
 		return cls(
 			name=info.name,
 			label=info.label,
+			summary=info.helpText,
 			required=info.required,
 			coordTypes=info.supportedCoordTypes,
 			contextTypes=info.supportedContextTypes,

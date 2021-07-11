@@ -1,4 +1,4 @@
-name	uniformType	expr1	expr2	expr3	expr4
-'uTime1'	'vector'	f"op('{parent().path}/time_vals')['frame']"	f"op('{parent().path}/time_vals')['second']"	f"op('{parent().path}/time_vals')['start']"	f"op('{parent().path}/time_vals')['end']"
-'uTime2'	'vector'	f"op('{parent().path}/time_vals')['rate']"	f"op('{parent().path}/time_vals')['bpm']"	"absTime.frame"	"absTime.seconds"
-'uTime3'	'vector'	'absTime.step'	'absTime.stepSeconds'		
+name	dataType	uniformType	expr1	expr2	expr3	expr4
+'uTime1'	'vec4'	'vector'	f"op('{parent().path}/time_vals')['frame']"	f"op('{parent().path}/time_vals')['second']"	f"op('{parent().path}/time_vals')['start']"	f"op('{parent().path}/time_vals')['end']"
+'uTime2'	'vec4'	'vector'	f"op('{parent().path}/time_vals')['rate']"	f"op('{parent().path}/time_vals')['bpm']"	"absTime.frame"	"absTime.seconds"
+'uTime3'	'vec4'	'vector'	'absTime.step'	'absTime.stepSeconds'		

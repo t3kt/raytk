@@ -46,6 +46,13 @@ op:
   - label: Thickness
     name: Thickness
     summary: The thickness of the bars of the box.
+  - label: UV Mode
+    menuOptions:
+    - label: None
+      name: none
+    - label: Bounds XYZ
+      name: bounds
+    name: Uvmode
   summary: SDF for the squared frame of the edges of a box.
 
 ---

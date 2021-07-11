@@ -16,12 +16,21 @@ cat:
     float/vector fields, etc). Some only support a limited set of return types.'
   name: filter
   operators:
+  - name: assignColor
+    status: beta
+    summary: Assigns a surface color attribute to an SDF surface.
+  - name: assignUV
+    status: beta
+    summary: Assigns UV coordinates to an SDF surface.
   - name: bend
     summary: Bends space, along a main axis, towards a second axis.
   - name: cartesianToPolar
   - name: elongate
-    summary: Splits a shape into pieces, moves them apart, and connects them.
+    summary: Stretches a shape by splitting it into pieces, moves them apart, and
+      connects them.
   - name: extend
+    summary: Clamps coordinates around an SDF result, which causes their edges to
+      be extended infinitely along each axis.
   - name: fieldExpr
     status: beta
   - name: flip
@@ -39,11 +48,16 @@ cat:
   - name: knife
     summary: Cuts off an SDF along a plane.
   - name: limitField
+    summary: Limits the values produced by a float or vector field.
   - name: magnet
     summary: Pulls or twists space within an area.
   - name: mirrorOctant
     summary: Mirror coordinates across two axes and the diagonals.
+  - name: mirrorQuadrant
+    summary: Mirror coordinates across two axes.
   - name: mobiusTransform
+  - name: modifyNormals
+    status: beta
   - name: modulo1D
     summary: Repeats space along one axis.
   - name: modulo2D
@@ -105,6 +119,9 @@ cat:
     summary: Translates coordinates of the input ROP.
   - name: twist
     summary: Twists space around an axis.
+  - name: uvTransform
+    status: beta
+    summary: Transform the UV coordinates assigned to an SDF result.
   summary: Operators that take an input and modify it.
 
 ---

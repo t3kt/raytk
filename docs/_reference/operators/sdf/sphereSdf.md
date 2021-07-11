@@ -30,6 +30,15 @@ op:
   - label: Radius
     name: Radius
     summary: The radius of the sphere.
+  - label: UV Mode
+    menuOptions:
+    - label: None
+      name: none
+    - label: Bounds XYZ
+      name: bounds
+    - label: Spherical Polar
+      name: spherical
+    name: Uvmode
   summary: SDF in 3D space for a uniform sphere.
 
 ---

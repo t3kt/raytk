@@ -19,6 +19,11 @@ vec3 THIS_getColor(vec3 p, MaterialContext matCtx) {
 	vec3 sunDir = normalize(matCtx.light.pos);
 	float occ = calcAO(p, matCtx.normal);
 	vec3 baseColor = THIS_Basecolor;
+	#if defined(THIS_Usesurfacecolor) && defined(RAYTK_USE_SURFACE_COLOR)
+	if (matCtx.result.color.w > 0.) {
+		baseColor *= matCtx.result.color.rgb;
+	}
+	#endif
 	#ifdef THIS_USE_BASE_COLOR_FIELD
 	{
 		vec3 mp = getPosForMaterial(p, matCtx);

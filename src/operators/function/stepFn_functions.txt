@@ -1,3 +1,4 @@
-name	label	expr	params	specialParams	enableParams
-step	Step	step(THIS_Edge, p)	Edge		Edge
-smoothstep	Smoothstep	smoothstep(THIS_Edgelow, THIS_Edgehigh, p)	Edge	Edgelow Edgehigh	Edge Blend
+name	label
+step	Step
+smoothstep	Smoothstep
+smoothstepIntegral	Smoothstep Integral

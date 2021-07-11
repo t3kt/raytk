@@ -40,23 +40,23 @@ class TestEditor:
 		return name
 
 	@property
-	def currentTestTox(self):
+	def currentTox(self):
 		return iop.loader.ComponentTox
 
-	def UnloadTest(self):
+	def Unload(self):
 		iop.loader.UnloadComponent()
 		self._reloadOutputsSoon()
 
-	def SaveTest(self):
+	def Save(self):
 		iop.loader.SaveComponent()
-		msg = f'Saved test to {self.currentTestTox}'
+		msg = f'Saved to {self.currentTox}'
 		print(msg)
 		ui.status = msg
 
 	def _loadTest(self, name: str, toxPath: Path):
 		if name:
 			name = name.replace(' ', '_')
-			if not name.endswith('_test'):
+			if not name.endswith('_test') and not name.endswith('_snippet'):
 				name += '_test'
 		iop.loader.LoadComponent(tox=toxPath, name=name)
 		self._reloadOutputsSoon()
@@ -78,7 +78,7 @@ class TestEditor:
 			rootFolder = Path(str(inDat[i, 'rootfolder']))
 			relPath = str(inDat[i, 'relpath'])
 			opType = ''
-			if group == 'test':
+			if group in ('test', 'snippet'):
 				opType = str(opTable[baseName.split('_')[0], 'opType'] or '')
 			dat.appendRow([
 				(rootFolder / relPath).stem.replace('_', ' '),
@@ -88,36 +88,57 @@ class TestEditor:
 			])
 
 	def createTest(self):
-		print(self.ownerComp, 'createTest')
+		self._create('test')
+
+	def createSnippet(self):
+		self._create('snippet')
+
+	def _create(self, group: str):
+		print(self.ownerComp, f'create {group}')
 		info = ext.ropEditor.ROPInfo
 		if not info:
 			print(self.ownerComp, 'there is no rop')
 			return
+		if group == 'test':
+			folder = Path(self.ownerComp.par.Testcasefolder.eval())
+		elif group == 'snippet':
+			folder = Path(self.ownerComp.par.Snippetfolder.eval())
+		else:
+			raise Exception(f'Invalid group: {group}')
 		showPromptDialog(
-			title='Create test',
-			text='Test name',
-			default=info.shortName + '_test',
+			title='Create ' + group,
+			text=group.upper() + ' name',
+			default=info.shortName + '_' + group,
 			textEntry=True,
-			ok=lambda name: self._createTest(name),
+			ok=lambda name: self._doCreate(name, group, folder),
 		)
 
-	def _createTest(self, name: str):
+	def _doCreate(self, name: str, group: str, folder: Path, confirmed=False):
 		info = ext.ropEditor.ROPInfo
 		if not info:
 			return
 		name = name.replace(' ', '_')
 		if name.endswith('.tox'):
 			name = name.replace('.tox', '')
-		if not name.endswith('_test'):
-			name += '_test'
-		toxPath = Path(self.ownerComp.par.Testcasefolder.eval()) / 'operators' / info.categoryName / (name + '.tox')
+		if not name.endswith('_' + group):
+			name += '_' + group
+		toxPath = folder / 'operators' / info.categoryName / (name + '.tox')
 		print(self.ownerComp, f'name: {name!r} toxPath: {toxPath!r}')
-		iop.loader.CreateNewComponent(
-			tox=toxPath,
-			name=name,
-			autoSave=True,
-		)
-		self._reloadOutputsSoon()
+		if toxPath.exists() and not confirmed:
+			showPromptDialog(
+				title='Overwrite TOX',
+				text=f'File {toxPath} exists. Replace it?',
+				textEntry=False,
+				ok=lambda _: self._doCreate(
+					name, group, folder, confirmed=True),
+			)
+		else:
+			iop.loader.CreateNewComponent(
+				tox=toxPath,
+				name=name,
+				autoSave=True,
+			)
+			self._reloadOutputsSoon()
 
 	def _reloadOutputsSoon(self):
 		run('args[0]()', self.reloadOutputs, delayFrames=5, delayRef=root)
@@ -136,7 +157,7 @@ class TestEditor:
 		print(self.ownerComp, 'listOnClick', mod.json.dumps(rowData, indent='  '))
 		if not rowObj:
 			return
-		self.UnloadTest()
+		self.Unload()
 		self._loadTest(rowObj['name'], Path(rowObj['path']))
 
 	@staticmethod

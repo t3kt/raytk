@@ -16,6 +16,17 @@ op:
 
 
     Textures are centered at 0,0 with coordinates ranging from -0.5 to 0.5.'
+  inputs:
+  - contextTypes:
+    - MaterialContext
+    coordTypes:
+    - float
+    - vec2
+    - vec3
+    label: UV Map Field
+    name: uv_field_definition_in
+    returnTypes:
+    - vec4
   name: triPlanarTextureField
   opType: raytk.operators.field.triPlanarTextureField
   parameters:

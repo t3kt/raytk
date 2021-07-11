@@ -88,6 +88,7 @@ Evaluates to:
 | 0  | 1 | 2 |
 | --- | --- | --- |
 | `False` | `THIS_HAS_TWO_THINGS` | |
+| | `'THIS_USE_THINGS'` |
 | | `THIS_STUFF` | `vec2(0.3, 0.1)` |
 | | `THIS_FOO 3.5` | |
 

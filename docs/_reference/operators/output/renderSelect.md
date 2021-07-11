@@ -41,6 +41,8 @@ op:
       name: objectIdOut
     - label: Debug
       name: debugOut
+    - label: UV
+      name: uvOut
     name: Outputbuffer
   - label: Lock Buffer Menu
     name: Lockbuffermenu

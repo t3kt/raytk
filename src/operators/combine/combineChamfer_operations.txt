@@ -1,0 +1,4 @@
+name	label	expr
+union	Union	fOpUnionChamfer
+intersect	Intersect	fOpIntersectionChamfer
+diff	Difference	fOpDifferenceChamfer

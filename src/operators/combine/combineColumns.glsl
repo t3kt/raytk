@@ -9,8 +9,13 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 	#else
 	float offset = THIS_Offset;
 	#endif
-	ReturnT res1 = THIS_INPUT_1(p, ctx);
-	ReturnT res2 = THIS_INPUT_2(p, ctx);
+	#ifdef THIS_Swapinputs
+	ReturnT res1 = inputOp2(p, ctx);
+	ReturnT res2 = inputOp1(p, ctx);
+	#else
+	ReturnT res1 = inputOp1(p, ctx);
+	ReturnT res2 = inputOp2(p, ctx);
+	#endif
 	#ifdef THIS_RETURN_TYPE_float
 	return THIS_FUNC(res1, res2, radius, THIS_Number, offset);
 	#else

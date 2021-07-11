@@ -23,6 +23,30 @@ op:
     returnTypes:
     - Sdf
     summary: The 2D shape that is extruded along the axis.
+  - contextTypes:
+    - Context
+    - MaterialContext
+    - CameraContext
+    - LightContext
+    - RayContext
+    coordTypes:
+    - vec3
+    label: Height Field
+    name: height_definition_in
+    returnTypes:
+    - float
+  - contextTypes:
+    - Context
+    - MaterialContext
+    - CameraContext
+    - LightContext
+    - RayContext
+    coordTypes:
+    - vec3
+    label: Offset Field
+    name: offset_definition_in
+    returnTypes:
+    - float
   name: extrude
   opType: raytk.operators.convert.extrude
   parameters:
@@ -51,6 +75,13 @@ op:
     - label: Depth
       name: depth
     name: Uvmode
+  - label: Iteration Type
+    menuOptions:
+    - label: None
+      name: none
+    - label: Ratio
+      name: ratio
+    name: Iterationtype
   summary: Creates a 3D SDF by extruding a 2D SDF along along an axis.
 
 ---

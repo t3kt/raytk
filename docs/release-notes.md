@@ -1,5 +1,97 @@
 # Release Notes
 
+## v0.15
+
+### Highlights
+
+* Materials in 2D rendering
+  * 2D SDFs can now be rendered using materials, instead of with conversions like `colorizeSdf2d`.
+  * The `sampledPointMat` can be used with 2D shapes similar to how it works with `pointMapRender`.
+  * Not all materials work for 2D shapes, and things like surface normals and lighting are not available.
+* Surface UVs
+  * Surfaces can now have UV coordinates, which can be used by materials for things like texture lookups.
+  * Some SDFs have a "UV Mode" option to generate shape-specific UVs, such as `boxSdf` and `sphereSdf`, as well as some 2D SDFs including `rectangleSdf`.
+  * There's a "UV" output from renderers that accesses the UV coordinates for each surface point in the rendered output. This can be used for things like applying textures using post-processing with TOPs.
+  * UV coordinates can be assigned to any surface using `assignUV`, and modified using `uvTransform`.
+  * UV coordinates can be accessed within materials using operators like `uvField`.
+* Surface colors
+  * Surfaces can now have a "Color" attribute, which can be assigned using `assignColor`, either with a constant color or using a field.
+  * Surface colors can be used by various types of materials.
+  * Within modular materials (`modularMat`), the `surfaceColorContrib` operator provides access to the surface color values.
+* Background fields
+  * The `raymarchRender3d` operator now has a "Background Field" parameter which can be assigned to certain types of fields.
+  * The background field is used to calculate a color for rays that don't hit any surface before they give up.
+  * The `atmosphereField` is designed for use with the "Background Field" feature. It produces a simulation of a sky with a sun, including some advanced atmosphere-based coloration. It's great for creating sunsets.
+  * The `texture3dField` also supports being used as a background field. It can be used to apply environment lighting with cube-maps and other types of 3D textures.
+  * The background color is used for reflection-based rays as well as primary rays, so the background colors will show up on reflective surfaces.
+  * The `rayField` operator can be used within background fields to access the direction of the ray that hit the background, as well as in materials where it uses the ray that hit the surface.
+
+### Details
+
+* Improvements / additions
+  * Material support in 2D rendering (#531)
+  * Surface UVs (#526, #2, #345)
+      * uvField
+      * assignUV
+      * UV support in:
+        * boxFrameSdf
+        * boxSdf
+        * circleSdf
+        * ellipseSdf2d
+        * extrude
+        * jointSdf2d
+        * planeSdf
+        * quadSdf
+        * rectangleSdf
+        * render2D
+        * roundedRectangleSdf
+        * sphereSdf
+        * starSdf2d
+        * torusSdf
+      * UV output in raymarchRender3D and render2D (#345)
+      * uvTransform
+      * UV field input in triPlanarTextureField (#370)
+  * CHOP-based buffers
+  * New SDFs
+    * chainSdf
+    * ellipsoidSdf (#533)
+    * segmentedLineSdf (#119)
+    * trapezoidSdf2d
+  * New fields
+    * atmosphereField (#402)
+    * rayField
+    * stepField (#547)
+  * Added offset parameter in sampledPointMat (#549)
+  * Added field inputs
+    * revolve (#556)
+    * extrude (#567)
+    * rectangleSdf (#588)
+  * New filters
+    * modifyNormals (#403)
+    * mirrorQuadrant (#558)
+  * Added normal smoothing in raymarchRender3d and pointMapRender (#559)
+  * Expose iteration value in extrude and revolve (#556, #567)
+  * Added assignable color attribute (#553)
+  * Added background fields in raymarchRender3d (#580)
+  * Added shadowContrib that can be used in modular materials to customize the coloration of shadows (#576)
+  * Added troubleshooting guide (#336)
+* Changes
+* Fixes
+  * Fixed "Create camera" bug in linkedCamera (#536)
+  * Fixed context type handling
+    * blend (#568)
+    * many other operators (#564)
+    * reorderField (#555)
+    * rotate (#164)
+  * Lower default surface distance in raymarchRender3d (#563)
+  * Fixed axis display in inspector (#217)
+  * Fixed reflection support in modular materials with reflectionContrib (#575)
+  * Fixed some reflection banding issues (#579)
+  * Fixed parmaeter handling and other issues in fieldExpr (#102)
+* Infrastructure / development
+  * Standardize processing of output buffers (#489)
+  * Added support for parameter-based inputs (#565)
+
 ## v0.14
 
 ### Highlights

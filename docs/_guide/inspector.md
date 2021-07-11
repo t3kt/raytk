@@ -16,6 +16,8 @@ Because the ROPs are not a natively supported part of TouchDesigner, they don't 
 
 All ROPs have a parameter named "Inspect". Clicking on this parameter will open up an inspector window, pointed at that ROP. Inspecting another ROP will reuse that same window. It is not currently possible to have multiple inspectors.
 
+![The "Inspect" parameter](/raytk/assets/images/guide/inspector-open.png)
+
 :information_source: Upcoming versions to the toolkit will likely provide other ways to launch the inspector, such as with a keyboard shortcut.
 
 ## The Inspector UI

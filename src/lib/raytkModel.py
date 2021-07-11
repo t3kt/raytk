@@ -293,7 +293,10 @@ class ROPDef(ModelObject):
 			opGlobals: Code block for global declarations used by the ROP.
 				This is a TextData object with either inline content or a reference to
 				an external file.
-			initCode: Code block for initialization code that the ROP needs to run.
+			initCode: Code block for initialization code that the ROP needs to run
+				once per shader execution.
+			stageInitCode: Code block for initialization code that the ROP needs to
+				run before each render stage.
 			function: Code block for the ROP's primary function.
 			material: Code block for the ROP's material block.
 
@@ -326,6 +329,7 @@ class ROPDef(ModelObject):
 
 	opGlobals: Optional[TextData] = None
 	initCode: Optional[TextData] = None
+	stageInitCode: Optional[TextData] = None
 	function: Optional[TextData] = None
 	material: Optional[TextData] = None
 
@@ -409,6 +413,7 @@ class ROPSpec(ModelObject):
 				libraryNames=_valueOrExprFromPar(info.opDefPar.Librarynames),
 				opGlobals=_extractDatSetting(info.opDefPar.Opglobals, isText=True),
 				initCode=_extractDatSetting(info.opDefPar.Initcode, isText=True),
+				stageInitCode=_extractDatSetting(info.opDefPar.Stageinitcode, isText=True),
 				function=_extractDatSetting(info.opDefPar.Functemplate, isText=True),
 				help=_extractDatSetting(info.opDefPar.Help, isText=True),
 				callbacks=_extractDatSetting(info.opDefPar.Callbacks, isText=True),
@@ -629,6 +634,8 @@ class ROPSpecLoader:
 		self._loadTextSetting(p.Opglobals, d.opGlobals, defaultName='globals', x=x, y=y)
 		y -= 150
 		self._loadTextSetting(p.Initcode, d.initCode, defaultName='init', x=x, y=y)
+		y -= 150
+		self._loadTextSetting(p.Stageinitcode, d.stageInitCode, defaultName='stageInit', x=x, y=y)
 		y -= 150
 		self._loadTextSetting(p.Materialcode, d.material, defaultName='material', x=x, y=y)
 		self._loadTextSetting(p.Callbacks, d.callbacks, defaultName='callbacks', x=200, y=200)

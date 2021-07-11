@@ -59,12 +59,16 @@ vec3 getColor(THIS_CoordT p, MaterialContext matCtx) {
 
 vec3 calcNormal(in vec3 pos)
 {
-	vec2 e = vec2(1.0, -1.0)*0.5773*0.005;
+	#ifdef THIS_Enablenormalsmoothing
+	vec2 e = vec2(1.0, -1.0) * (0.5773*0.005 + THIS_Normalsmoothing);
+	#else
+	const vec2 e = vec2(1.0, -1.0)*0.5773*0.005;
+	#endif
 	return normalize(
-	e.xyy*map(pos + e.xyy).x +
-	e.yyx*map(pos + e.yyx).x +
-	e.yxy*map(pos + e.yxy).x +
-	e.xxx*map(pos + e.xxx).x);
+		e.xyy*map(pos + e.xyy).x +
+		e.yyx*map(pos + e.yyx).x +
+		e.yxy*map(pos + e.yxy).x +
+		e.xxx*map(pos + e.xxx).x);
 }
 
 #endif
