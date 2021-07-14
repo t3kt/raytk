@@ -351,7 +351,7 @@ class Par:
 	menuLabels: _T.List[str]
 	menuIndex: int
 	menuSource: str
-	owner: 'OP'
+	owner: '_AnyOpT'
 
 	isDefault: bool
 	isCustom: bool
