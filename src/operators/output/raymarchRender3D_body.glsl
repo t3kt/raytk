@@ -305,7 +305,7 @@ Light getLight(vec3 p, LightContext lightCtx) {
 #if defined(RAYTK_USE_REFLECTION) && defined(THIS_Enablereflection)
 
 // Extra offset to fix banding. Not sure if this will be correct for all cases.
-const float reflectStartOffsetMult = 1.5;
+const float reflectStartOffsetMult = 4.0;
 
 vec3 getReflectionColor(MaterialContext matCtx, vec3 p) {
 	if (!matCtx.result.reflect) return vec3(0.);
@@ -314,7 +314,7 @@ vec3 getReflectionColor(MaterialContext matCtx, vec3 p) {
 	matCtx.reflectColor = vec3(0.);
 	for (int k = 0; k < THIS_Reflectionpasses; k++) {
 		if (!matCtx.result.reflect) break;
-		matCtx.ray.pos = p + matCtx.normal * RAYTK_SURF_DIST*reflectStartOffsetMult;
+		matCtx.ray.pos = p + matCtx.normal * RAYTK_SURF_DIST * reflectStartOffsetMult;
 		matCtx.ray.dir = reflect(matCtx.ray.dir, matCtx.normal);
 		matCtx.result = castRayBasic(matCtx.ray, RAYTK_MAX_DIST);
 		if (isNonHitSdf(matCtx.result)) {
