@@ -9,6 +9,7 @@ if False:
 	# noinspection PyUnresolvedReferences
 	from _stubs import *
 	from typing import List, Optional, Union
+	from tools.updater.updater import Updater
 
 class BuildContext:
 	"""
@@ -169,6 +170,13 @@ class BuildContext:
 			self.queueAction(thenRun, *runArgs)
 		subContext = BuildTaskContext(finishTask, self.log)
 		dat.run(subContext)
+
+	def updateROPInstance(self, comp: 'COMP'):
+		self.log(f'Updating OP instance: {comp}')
+		# noinspection PyTypeChecker
+		updater = self._toolkit().op('tools/updater')  # type: Updater
+		updater.UpdateOP(comp)
+		self.log(f'Finished updating OP instance {comp}')
 
 class BuildTaskContext(BuildContext):
 	"""

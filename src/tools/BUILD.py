@@ -18,9 +18,16 @@ def runStage(stage: int):
 			thenRun=runStage,
 			runArgs=[stage + 1])
 	elif stage == 2:
+		stripCompiler()
+		context.queueAction(runStage, stage + 1)
+	elif stage == 3:
 		context.runBuildScript(
 			op('palette/BUILD'),
 			thenRun=context.finishTask,
 			runArgs=[])
+
+def stripCompiler():
+	context.log('Stripping out the compiler')
+	context.safeDestroyOp(op('compiler'))
 
 runStage(0)
