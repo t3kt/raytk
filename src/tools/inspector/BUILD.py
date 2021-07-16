@@ -1,4 +1,4 @@
-from raytkUtil import RaytkTags
+from raytkUtil import isROP, RaytkTags
 
 # noinspection PyUnreachableCode
 if False:
@@ -38,9 +38,13 @@ for comp in subComps:
 	context.detachTox(comp)
 	context.log(f'Processing sub-components in {comp}')
 	for c in comp.findChildren(type=COMP):
-# 		context.updateOrReclone(c)
 		context.disableCloning(c)
 		context.detachTox(c)
+		if isROP(c):
+			context.updateROPInstance(c)
+		else:
+			# reclone?
+			pass
 	context.log(f'Finished processing inspector child {comp}')
 context.log('Finished processing inspector child components')
 

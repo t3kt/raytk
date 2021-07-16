@@ -68,10 +68,10 @@ class BuildManager:
 		elif stage == 6:
 			self.processNestedOperators(toolkit.op('operators'), thenRun='runBuild_stage', runArgs=[stage + 1])
 		elif stage == 7:
+			self.processTools(toolkit.op('tools'), thenRun='runBuild_stage', runArgs=[stage + 1])
+		elif stage == 8:
 			self.context.lockBuildLockOps(toolkit)
 			self.queueMethodCall(self.runBuild_stage, stage + 1)
-		elif stage == 8:
-			self.processTools(toolkit.op('tools'), thenRun='runBuild_stage', runArgs=[stage + 1])
 		elif stage == 9:
 			self.processComponents(toolkit.op('components'), thenRun='runBuild_stage', runArgs=[stage + 1])
 		elif stage == 10:
