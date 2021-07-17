@@ -1,5 +1,8 @@
-from raytkUtil import RaytkContext, ROPInfo, InputInfo
+import json
+
+from raytkUtil import RaytkContext, ROPInfo, InputInfo, CategoryInfo
 from typing import Dict, List, Optional
+import raytkDocs
 
 # noinspection PyUnreachableCode
 if False:
@@ -216,3 +219,16 @@ def buildOpTestTable(dat: 'DAT', testTable: 'DAT'):
 		] + tests)
 	for cell in dat.row(0)[2:]:
 		cell.val = 'test' + str(cell.col - 1)
+
+def buildToolkitIndexJson():
+	toolkitIndex = {
+		'categories': {
+			CategoryInfo(cat).categoryName: _buildCategoryIndexObj(cat)
+			for cat in RaytkContext().allCategories()
+		}
+	}
+	return json.dumps(toolkitIndex, indent='  ')
+
+def _buildCategoryIndexObj(cat: 'COMP'):
+	catHelp = raytkDocs.CategoryHelp.extractFromComp(cat)
+	return catHelp.toFrontMatterData()
