@@ -12,21 +12,47 @@ def _hostPar() -> 'Optional[Par]':
 	host = parent().par.Hostop.eval()
 	return host and host.par[parent().par.Param]
 
-def buildCode():
+def _effectiveMode():
 	mode = parent().par.Switchmode.eval()
+	par = _hostPar()
+	if mode == 'auto':
+		mode = 'inline'if par is None or par.readOnly else 'switch'
+	return mode
+
+def buildParametersTable(dat: 'DAT'):
+	dat.clear()
+	mode = _effectiveMode()
+	params = []
+	macroParams = []
+	name = parent().par.Param.eval()
+	if mode == 'switch':
+		params.append(name)
+	else:
+		macroParams.append(name)
+	if parent().par.Manageparamstates:
+		if mode == 'switch':
+			params += list(_paramModes().keys())
+		else:
+			params.append(str(op('currentItemInfo')[1, 'params'] or ''))
+	dat.appendRow(['params', ' '.join(params)])
+	dat.appendRow(['macroParams', ' '.join(macroParams)])
+
+def buildCode():
 	par = _hostPar()
 	if par is None:
 		return ''
-	if mode == 'auto':
-		mode = 'inline' if par.readOnly else 'switch'
+	mode = _effectiveMode()
 	table = op('table')
 	if mode == 'switch':
 		return _buildRuntimeSwitch(table)
 	else:  # inline
-		return _prepareItemCode(table[par.eval(), 'code'])
+		return _prepareItemCode(table[par.eval(), 'code']) + ';'
 
 def _prepareItemCode(code: 'Cell'):
-	return str(code or '').replace(';', ';\n')
+	code = str(code or '')
+	if code.endswith(';'):
+		code = code[:-1]
+	return code.replace(';', ';\n')
 
 def _buildRuntimeSwitch(table: 'DAT'):
 	code = f'switch (int(THIS_{parent().par.Param})) {{\n'
@@ -39,13 +65,10 @@ def _buildRuntimeSwitch(table: 'DAT'):
 	code += '}\n'
 	return code
 
-def _updateParamEnableExprs():
+def _paramModes() -> Dict[str, List[str]]:
 	table = _table()
 	if table.numRows < 2:
-		return
-	hostPar = _hostPar()
-	if hostPar is None:
-		return
+		return {}
 	paramModes = {}  # type: Dict[str, List[str]]
 	for i in range(1, table.numRows):
 		params = tdu.expand(table[i, 'params'].val)
@@ -55,10 +78,25 @@ def _updateParamEnableExprs():
 				paramModes[param].append(val)
 			else:
 				paramModes[param] = [val]
+	return paramModes
+
+def _updateParamEnableExprs():
+	table = _table()
+	if table.numRows < 2:
+		return
+	hostPar = _hostPar()
+	if hostPar is None:
+		return
+	paramModes = _paramModes()
+	allValues = set(paramModes.keys())
 	host = hostPar.owner
 	for param, vals in paramModes.items():
 		par = host.par[param]
-		par.enableExpr = f'me.par.{hostPar.name} in {repr(tuple(vals))}'
+		if set(vals) == allValues:
+			par.enableExpr = ''
+			par.enable = True
+		else:
+			par.enableExpr = f'me.par.{hostPar.name} in {repr(tuple(vals))}'
 
 def _updateParamMenu():
 	hostPar = _hostPar()
