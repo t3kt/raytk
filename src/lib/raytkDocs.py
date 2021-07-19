@@ -1,3 +1,9 @@
+"""
+Tools for extracting and processing documentation for the toolkit and the operators within it.
+
+This should only be used within development tools.
+"""
+
 from dataclasses import dataclass, field
 import re
 from typing import Dict, Iterable, List, Optional, Tuple

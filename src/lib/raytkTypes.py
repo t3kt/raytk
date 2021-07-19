@@ -1,3 +1,7 @@
+"""
+Utilities for processing (coord/context/return) types within ROPs and in shader construction.
+"""
+
 from typing import Dict, List, Optional, Tuple
 
 # noinspection PyUnreachableCode
@@ -6,6 +10,18 @@ if False:
 	from _stubs import *
 
 class TypeSpec:
+	"""
+	A specification for a category of types (such as coordinate types) that an operator/input/etc supports using.
+	Each ROP has 3 of these:
+	* Coordinate type spec
+	* Context type spec
+	* Return type spec
+
+	A type spec is either:
+	* A single type (e.g. 'vec2')
+	* A set of several types (e.g. 'vec2|vec3')
+	* All available types ('*')
+	"""
 	useInput: bool = False
 	supportsAll: bool = False
 	supported: 'Optional[List[str]]' = None

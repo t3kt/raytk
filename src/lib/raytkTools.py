@@ -1,3 +1,9 @@
+"""
+Tools for working with the toolkit in a development environment.
+
+This should only be used within development tools.
+"""
+
 from pathlib import Path
 from raytkDocs import OpDocManager
 from raytkModel import OpDefMeta_OLD, OpSpec_OLD, ROPSpec

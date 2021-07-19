@@ -1,3 +1,7 @@
+"""
+Common utilities for working with the toolkit and related ops.
+This can be included in runtime tools.
+"""
 from functools import total_ordering
 import re
 from typing import Callable, List, Union, Optional, Set, Tuple

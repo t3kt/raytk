@@ -1,3 +1,9 @@
+"""
+Toolkit model which works with operator type specifications and metadata.
+
+This should only be used within development tools.
+"""
+
 from dataclasses import dataclass, field
 import dataclasses
 import json
@@ -6,7 +12,7 @@ import re
 from typing import Dict, Iterable, List, Optional, Union
 import yaml
 
-from raytkUtil import CoordTypes, ContextTypes, ReturnTypes, cleanDict, ROPInfo, InputInfo, RaytkTags
+from raytkUtil import cleanDict, ROPInfo, InputInfo, RaytkTags
 
 # noinspection PyUnreachableCode
 if False:
