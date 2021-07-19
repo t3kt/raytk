@@ -1,6 +1,7 @@
 {
   "meta": {
+    "opStatus": "default",
     "opType": "raytk.operators.field.waveField",
-    "opVersion": 12
+    "opVersion": 13
   }
 }

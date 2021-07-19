@@ -5,14 +5,7 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 	float period = THIS_Period;
 	#endif
 	#if defined(THIS_HAS_INPUT_1)
-		#ifdef THIS_RETURN_TYPE_Sdf
-		Sdf res = inputOp1(p, ctx);
-		float val = THIS_FUNC((res.x / period) + THIS_Phase);
-		res.x = (val * THIS_Amplitude) + THIS_Offset;
-		return res;
-		#else
-		ReturnT q = inputOp1(p, ctx);
-		#endif
+		float q = inputOp1(p, ctx);
 	#elif defined(THIS_COORD_TYPE_float)
 		float q = p;
 	#elif defined(THIS_Axis_dist)
@@ -20,6 +13,7 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 	#else
 		float q = p.THIS_Axis;
 	#endif
-	ReturnT val = THIS_FUNC((q / period) + THIS_Phase);
-	return (val * THIS_Amplitude) + THIS_Offset;
+	q = (q / period) + THIS_Phase;
+	ReturnT res = THIS_FUNC(q);
+	return (res * THIS_Amplitude) + THIS_Offset;
 }
