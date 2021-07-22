@@ -658,4 +658,10 @@ float extractOrUseAsW(float p) { return p; }
 float extractOrUseAsW(vec4 p) { return p.w; }
 
 void setFromFloat(inout float x, float val) { x = val; }
-void setFromFloat(inout Sdf x, float val) { x.x = val;}
+void setFromFloat(inout Sdf x, float val) { x.x = val; }
+
+void swap(inout Sdf a, inout Sdf b) {
+	Sdf tmp = a;
+	a = b;
+	b = tmp;
+}
