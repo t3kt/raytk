@@ -53,26 +53,16 @@ class Tools:
 			primaryOnly=primaryOnly,
 			exclude=lambda c: c is self.ownerComp or c.path.startswith(self.ownerComp.path + '/'))
 
-	def editCurrentROPMaster(self):
-		rop = self.GetCurrentROP()
-		if not rop:
-			return
-		rop = rop.par.clone.eval() or rop
-		self.NavigateTo(rop.par.clone.eval())
-		self.toolkitEditor().EditROP(rop)
-
 	def OnOperatorsShortcutRightClick(self, button: 'COMP'):
 		def goToItem(name, path):
 			return popMenu.Item(
 				name,
 				callback=lambda: self.NavigateTo(op(path)),
 			)
-
-		categoryTable = self.ownerComp.op('rop_categories')
 		popMenu.fromButton(button, h='Right', v='Top').Show(
 			[
-				goToItem(categoryTable[i, 'name'].val, categoryTable[i, 'path'])
-				for i in range(1, categoryTable.numRows)
+				goToItem(o.name, o.path)
+				for o in RaytkContext().allCategories()
 			]
 		)
 
