@@ -439,6 +439,18 @@ vec3 opCheapBendPos(vec3 p, float k)
 	return vec3(m*p.xy, p.z);
 }
 
+// https://www.shadertoy.com/view/3llfRl
+vec2 opKink(vec2 p, vec2 c, float k) {
+	p -= c;
+	//to polar coordinates
+	float ang = atan(p.x, p.y);
+	float len = length(p);
+	//warp angle with sigmoid function
+	ang -= ang/sqrt(1.+ang*ang)*(1.-k);
+	//to cartesian coordiantes
+	return vec2(sin(ang),cos(ang))*len + c;
+}
+
 // Returns xyz: new pos, w: value to add to surface distance (which may not work correctly)
 vec4 opElongate(in vec3 p, in vec3 h)
 {
