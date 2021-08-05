@@ -1,5 +1,53 @@
 # Release Notes
 
+## v0.16
+
+### Highlights
+
+* Faster switching for menu parameters with optional optimization for parameters marked as read-only.
+* Breaking change: fixed handling of the Period and Phase parameters in waveField. This may change the behavior and scaling of the field.
+
+### Details
+
+* Improvements / additions
+    * Show bypass indicator in opImages (#599)
+    * Added "Customize Shader Config" to renderers (#594)
+    * Option to change the palette shortcut and manually trigger the palette (#552)
+    * Improved runtime menu switching (#571, #586)
+      * coneSdf
+      * combineFields
+      * compositeFields
+      * combineChamfer
+      * combineColumns
+      * combineStairs
+    * New filters / combines
+      * adjustColor (#587)
+      * addFields (#606)
+      * kink (variation on bend)
+    * New SDFs
+      * quadSdf2d
+      * arrowSdf2d (#612)
+    * Added field inputs to operators (#588)
+      * circleSdf
+      * polygonSdf2d
+      * starSdf2d
+      * superQuadSdf2d
+      * rhombusSdf2d
+      * roundedRectangleSdf2d
+    * New parameters in operators
+      * rescaleField multiplier and post-add
+      * colorizeSdf2d phase (#608)
+    * Automatic coord/context type settings for operators
+      * timeField (#141)
+* Changes
+* Fixes
+    * Workaround for color banding issue in reflections (#579)
+    * Fixed handling of the Period and Phase parameters in waveField (#604)
+    * Fixed breakage and incorrect SDF output in fieldRender (#611)
+    * Possible fix for feature support detection for AMD GPUs (#589, #34)
+    * Pass surface attributes through from input SDF in geodesicSdf (#615)
+* Infrastructure / development
+
 ## v0.15
 
 ### Highlights
