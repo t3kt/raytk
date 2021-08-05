@@ -14,39 +14,38 @@
     * Added "Customize Shader Config" to renderers (#594)
     * Option to change the palette shortcut and manually trigger the palette (#552)
     * Improved runtime menu switching (#571, #586)
-      * coneSdf
-      * combineFields
-      * compositeFields
       * combineChamfer
       * combineColumns
+      * combineFields
       * combineStairs
+      * compositeFields
+      * coneSdf
     * New filters / combines
-      * adjustColor (#587)
       * addFields (#606)
+      * adjustColor (#587)
       * kink (variation on bend)
     * New SDFs
-      * quadSdf2d
       * arrowSdf2d (#612)
+      * quadSdf2d
     * Added field inputs to operators (#588)
       * circleSdf
       * polygonSdf2d
-      * starSdf2d
-      * superQuadSdf2d
       * rhombusSdf2d
       * roundedRectangleSdf2d
+      * starSdf2d
+      * superQuadSdf2d
     * New parameters in operators
-      * rescaleField multiplier and post-add
       * colorizeSdf2d phase (#608)
+      * rescaleField multiplier and post-add
     * Automatic coord/context type settings for operators
       * timeField (#141)
 * Changes
+    * Fixed handling of the Period and Phase parameters in waveField (#604)
 * Fixes
     * Workaround for color banding issue in reflections (#579)
-    * Fixed handling of the Period and Phase parameters in waveField (#604)
     * Fixed breakage and incorrect SDF output in fieldRender (#611)
     * Possible fix for feature support detection for AMD GPUs (#589, #34)
     * Pass surface attributes through from input SDF in geodesicSdf (#615)
-* Infrastructure / development
 
 ## v0.15
 
