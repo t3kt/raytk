@@ -14,6 +14,7 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 		float q = p.THIS_Axis;
 	#endif
 	q = (q / period) + THIS_Phase;
-	ReturnT res = THIS_FUNC(q);
+	ReturnT res;
+	BODY();
 	return (res * THIS_Amplitude) + THIS_Offset;
 }
