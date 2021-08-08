@@ -1,7 +1,7 @@
-name	label	expr
-phong	Phong	phongSpecular(lightDir, viewDir, norm, THIS_Shininess)
-blinnphong	Blinn-Phong	blinnPhongSpecular(lightDir, viewDir, norm, THIS_Shininess)
-beckmann	Beckmann	beckmannSpecular(-lightDir, viewDir, norm, THIS_Roughness)
-cooktorrance	Cook-Torrance	cookTorranceSpecular(-lightDir, viewDir, norm, THIS_Roughness, THIS_Fresnel)
-gaussian	Gaussian	gaussianSpecular(-lightDir, viewDir, norm, THIS_Shininess)
-ggx	GGX	ggx(norm, lightDir, viewDir, THIS_Roughness, THIS_Fresnel)
+name	label	code	params
+phong	Phong	amount = phongSpecular(lightDir, viewDir, norm, THIS_Shininess)	Shininess
+blinnphong	Blinn-Phong	amount = blinnPhongSpecular(lightDir, viewDir, norm, THIS_Shininess)	Shininess
+beckmann	Beckmann	amount = beckmannSpecular(-lightDir, viewDir, norm, THIS_Roughness)	Roughness
+cooktorrance	Cook-Torrance	amount = cookTorranceSpecular(-lightDir, viewDir, norm, THIS_Roughness, THIS_Fresnel)	Roughness Fresnel
+gaussian	Gaussian	amount = gaussianSpecular(-lightDir, viewDir, norm, THIS_Shininess)	Shininess
+ggx	GGX	amount = ggx(norm, lightDir, viewDir, THIS_Roughness, THIS_Fresnel)	Roughness Fresnel
