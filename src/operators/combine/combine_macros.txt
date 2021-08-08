@@ -1,4 +1,3 @@
-'Radius' in str(op('expr_info')[1, 'params'] or '')	'THIS_GET_RADIUS()'	'(THIS_Radius * inputOp3(p, ctx))' if op('field_definition').numRows > 1 else 'THIS_Radius'
-	'THIS_INPUT_1'	'inputOp2' if parent().par.Swapinputs else 'inputOp1'
-	'THIS_INPUT_2'	'inputOp1' if parent().par.Swapinputs else 'inputOp2'
-op('expr_info')[1, 'exprIsSdf'] == 1	'THIS_EXPR_IS_SDF'	
+'Radius' in op('switcher_params')['params', 1].val	'THIS_HAS_RADIUS'	
+'Number' in op('switcher_params')['params', 1].val	'THIS_HAS_NUMBER'	
+'Offset' in op('switcher_params')['params', 1].val	'THIS_HAS_OFFSET'	

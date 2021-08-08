@@ -1,17 +1,22 @@
 ReturnT thismap(CoordT p, ContextT ctx) {
-	#ifdef THIS_GET_RADIUS
-	float r = THIS_GET_RADIUS();
+	#ifdef THIS_HAS_RADIUS
+		float r = THIS_Radius;
+		#ifdef THIS_HAS_INPUT_3
+		r *= inputOp3(p, ctx);
+		#endif
 	#endif
-	ReturnT res1 = THIS_INPUT_1(p, ctx);
-	ReturnT res2 = THIS_INPUT_2(p, ctx);
-	#if defined(THIS_EXPR_IS_SDF)
-	return THIS_EXPR;
-	#elif defined(THIS_GET_RADIUS)
-			float h = smoothBlendRatio(res1.x, res2.x, r);
-			res1.x = THIS_EXPR;
-			blendInSdf(res1, res2, 1.0 - h);
-	#else
-		res1.x = THIS_EXPR;
+	ReturnT res1 = inputOp1(p, ctx);
+	ReturnT res2 = inputOp2(p, ctx);
+	if (THIS_Swapinputs > 0.) {
+		swap(res1, res2);
+	}
+	#ifdef THIS_HAS_NUMBER
+		float n = THIS_Number;
 	#endif
+	#ifdef THIS_HAS_OFFSET
+	float o = THIS_Offset;
+	#endif
+	float h = smoothBlendRatio(res1.x, res2.x, r);
+	BODY();
 	return res1;
 }
