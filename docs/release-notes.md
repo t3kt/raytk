@@ -13,13 +13,17 @@
     * Show bypass indicator in opImages (#599)
     * Added "Customize Shader Config" to renderers (#594)
     * Option to change the palette shortcut and manually trigger the palette (#552)
+    * Added domainColorField (#401)
     * Improved runtime menu switching (#571, #586)
+      * combine
       * combineChamfer
       * combineColumns
       * combineFields
       * combineStairs
       * compositeFields
       * coneSdf
+      * diffuseContrib
+      * specularContrib
       * waveField
       * waveFn
     * New filters / combines
