@@ -20,6 +20,8 @@
       * combineStairs
       * compositeFields
       * coneSdf
+      * waveField
+      * waveFn
     * New filters / combines
       * addFields (#606)
       * adjustColor (#587)
@@ -46,6 +48,7 @@
     * Fixed breakage and incorrect SDF output in fieldRender (#611)
     * Possible fix for feature support detection for AMD GPUs (#589, #34)
     * Pass surface attributes through from input SDF in geodesicSdf (#615)
+    * Fixed 2D handling in flip (#609)
 
 ## v0.15
 
