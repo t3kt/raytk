@@ -1,5 +1,5 @@
 ReturnT thismap(CoordT p, ContextT ctx) {
-	vec3 q = p;
+	CoordT q = p;
 	q.THIS_AXIS += THIS_Shift;
 	q.THIS_AXIS *= -1;
 	q.THIS_AXIS -= THIS_Offset;
