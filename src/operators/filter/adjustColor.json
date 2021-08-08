@@ -1,7 +1,7 @@
 {
   "meta": {
-    "opStatus": "alpha",
+    "opStatus": "beta",
     "opType": "raytk.operators.filter.adjustColor",
-    "opVersion": 1
+    "opVersion": 2
   }
 }
