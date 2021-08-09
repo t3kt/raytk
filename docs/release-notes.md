@@ -14,6 +14,7 @@
     * Added "Customize Shader Config" to renderers (#594)
     * Option to change the palette shortcut and manually trigger the palette (#552)
     * Added domainColorField (#401)
+    * Added fieldFunction
     * Improved runtime menu switching (#571, #586)
       * combine
       * combineChamfer
