@@ -11,6 +11,7 @@ cat:
     well as more generic things like switches and cross-fade blending.'
   name: combine
   operators:
+  - name: addFields
   - name: blend
     summary: Smoothly blends/morphs between up to 4 SDFs.
   - name: combine

@@ -8,6 +8,31 @@ redirect_from:
   - /reference/opType/raytk.operators.sdf2d.starSdf2d/
 op:
   category: sdf2d
+  inputs:
+  - contextTypes:
+    - Context
+    - MaterialContext
+    - CameraContext
+    - LightContext
+    - RayContext
+    coordTypes:
+    - vec2
+    label: Radius Field
+    name: radius_definition_in
+    returnTypes:
+    - float
+  - contextTypes:
+    - Context
+    - MaterialContext
+    - CameraContext
+    - LightContext
+    - RayContext
+    coordTypes:
+    - vec2
+    label: Tightness Field
+    name: tightness_definition_in
+    returnTypes:
+    - float
   name: starSdf2d
   opType: raytk.operators.sdf2d.starSdf2d
   parameters:

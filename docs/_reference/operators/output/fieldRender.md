@@ -45,6 +45,8 @@ op:
     name: Timerefop
   - label: Shader Builder Config
     name: Shaderbuilderconfig
+  - label: Customize Shader Config
+    name: Customizeshaderconfig
   status: beta
 
 ---

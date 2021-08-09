@@ -8,6 +8,19 @@ redirect_from:
   - /reference/opType/raytk.operators.sdf2d.polygonSdf2d/
 op:
   category: sdf2d
+  inputs:
+  - contextTypes:
+    - Context
+    - MaterialContext
+    - CameraContext
+    - LightContext
+    - RayContext
+    coordTypes:
+    - vec2
+    label: Radius Field
+    name: radius_definition_in
+    returnTypes:
+    - float
   name: polygonSdf2d
   opType: raytk.operators.sdf2d.polygonSdf2d
   parameters:

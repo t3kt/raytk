@@ -69,29 +69,6 @@ op:
       name: context
     name: Timesource
     summary: Where to pull the time values from.
-  - label: Coord Type
-    menuOptions:
-    - label: 1D
-      name: float
-    - label: 2D
-      name: vec2
-    - label: 3D
-      name: vec3
-    name: Coordtype
-    summary: While this operator does not actually use the coordinates, it still needs
-      to have whatever setting is required by operators that it connects to.
-  - label: Context Type
-    menuOptions:
-    - label: Context
-      name: Context
-    - label: Material Context
-      name: MaterialContext
-    - label: Camera Context
-      name: CameraContext
-    - label: Light Context
-      name: LightContext
-    name: Contexttype
-    summary: Advanced parameter that should almost always be `Context`.
   summary: Field that produces time-based values, equivalent to a `timeline CHOP`.
 
 ---

@@ -25,7 +25,7 @@ op:
     - vec2
     - vec3
     label: Coordinate Field
-    name: definition_in
+    name: coordinate_field_in
     returnTypes:
     - float
     - vec4

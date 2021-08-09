@@ -13,6 +13,33 @@ op:
 
 
     See [ShaderToy](https://www.shadertoy.com/view/4llXD7) for example.'
+  inputs:
+  - contextTypes:
+    - Context
+    - MaterialContext
+    - CameraContext
+    - LightContext
+    - RayContext
+    coordTypes:
+    - vec2
+    label: Scale Field
+    name: scale_definition_in
+    returnTypes:
+    - float
+    - vec4
+  - contextTypes:
+    - Context
+    - MaterialContext
+    - CameraContext
+    - LightContext
+    - RayContext
+    coordTypes:
+    - vec2
+    label: Roundness Field
+    name: roundness_definition_in
+    returnTypes:
+    - float
+    - vec4
   name: roundedRectangleSdf2d
   opType: raytk.operators.sdf2d.roundedRectangleSdf2d
   parameters:

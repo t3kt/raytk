@@ -43,6 +43,10 @@ op:
       name: debugOut
     - label: UV
       name: uvOut
+    - label: Custom 1
+      name: customOut1
+    - label: Custom 2
+      name: customOut2
     name: Outputbuffer
   - label: Lock Buffer Menu
     name: Lockbuffermenu

@@ -73,7 +73,6 @@ op:
     name: Enableao
   - label: Enable Reflection
     name: Enablereflection
-  status: beta
   summary: A material that is composed of one or more shading elements.
 
 ---

@@ -16,8 +16,10 @@ cat:
     float/vector fields, etc). Some only support a limited set of return types.'
   name: filter
   operators:
-  - name: assignColor
+  - name: adjustColor
     status: beta
+    summary: Adjust properties of color values.
+  - name: assignColor
     summary: Assigns a surface color attribute to an SDF surface.
   - name: assignUV
     status: beta
@@ -33,6 +35,8 @@ cat:
       be extended infinitely along each axis.
   - name: fieldExpr
     status: beta
+  - name: fieldFunction
+    status: beta
   - name: flip
     summary: Flips the input across an axis, either on its own or merged with the
       original.
@@ -45,6 +49,7 @@ cat:
   - name: iteratedTransform
     summary: Performs a transform multiple times, optionally reflecting across axes
       in between the steps.
+  - name: kink
   - name: knife
     summary: Cuts off an SDF along a plane.
   - name: limitField

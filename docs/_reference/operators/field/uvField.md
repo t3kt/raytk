@@ -26,7 +26,6 @@ op:
     - label: 3D
       name: vec3
     name: Coordtype
-  status: beta
   summary: Field that produces surface UV coordinates, if available.
 
 ---

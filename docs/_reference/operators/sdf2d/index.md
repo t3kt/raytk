@@ -13,6 +13,7 @@ cat:
   name: sdf2d
   operators:
   - name: arcSdf2d
+  - name: arrowSdf2d
   - name: bezierSdf2d
     status: beta
   - name: blobbyCrossSdf2d
@@ -39,6 +40,8 @@ cat:
   - name: planeSdf2d
   - name: polygonSdf2d
     summary: SDF for several types of 2D polygons.
+  - name: quadSdf2d
+    summary: SDF for a 2D quad with arbitrary corners.
   - name: rectangleSdf
     summary: SDF for a 2D rectangle.
   - name: rhombusSdf2d

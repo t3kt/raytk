@@ -50,7 +50,6 @@ op:
     name: Enable
   - label: Color
     name: Color
-  status: beta
   summary: Assigns a surface color attribute to an SDF surface.
 
 ---

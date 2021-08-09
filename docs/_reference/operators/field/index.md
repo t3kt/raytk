@@ -39,6 +39,8 @@ cat:
       OP.
   - name: curlNoiseField
     summary: Curl noise field.
+  - name: domainColorField
+    status: beta
   - name: hsvColorField
     status: beta
     summary: A field that uses HSV-based parameters to produce colors.
@@ -52,14 +54,12 @@ cat:
   - name: noiseField
     summary: A float or vector field that uses one of several noise functions.
   - name: normalField
-    status: beta
     summary: Vector field that produces the surface normal where it is evaluated.
   - name: pointDistanceField
     summary: A float field that provides the distance from a specific point in space.
   - name: positionField
     summary: A vector field that produces the coordinates in space where it is checked.
   - name: rayField
-    status: beta
     summary: Field that provides the ray direction or origin.
   - name: reorderField
     status: beta
@@ -76,7 +76,6 @@ cat:
     summary: Texture field that uses surface normals (or other blending techniques)
       to apply a texture facing each axis.
   - name: uvField
-    status: beta
     summary: Field that produces surface UV coordinates, if available.
   - name: waveField
     summary: A field that uses a periodic wave.

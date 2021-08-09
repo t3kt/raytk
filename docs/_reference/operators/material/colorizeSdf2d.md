@@ -20,11 +20,14 @@ op:
     - LightContext
     - RayContext
     coordTypes:
+    - float
     - vec2
+    - vec3
     label: definition_in
     name: definition_in
     required: true
     returnTypes:
+    - float
     - Sdf
   name: colorizeSdf2d
   opType: raytk.operators.material.colorizeSdf2d
@@ -61,6 +64,10 @@ op:
   - label: Outside Color 2
     name: Outsidecolor2
     summary: The second stripe color outside the shape.
+  - label: Inside Phase
+    name: Insidephase
+  - label: Outside Phase
+    name: Outsidephase
   summary: Converts a 2D SDF to a striped distance pattern.
 
 ---
