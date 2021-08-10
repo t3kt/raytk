@@ -1,6 +1,7 @@
 {
   "meta": {
+    "opStatus": "default",
     "opType": "raytk.operators.sdf.chamferBoxSdf",
-    "opVersion": 3
+    "opVersion": 4
   }
 }

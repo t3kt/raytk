@@ -2,6 +2,6 @@
   "meta": {
     "opStatus": "beta",
     "opType": "raytk.operators.sdf.quadSdf",
-    "opVersion": 0
+    "opVersion": 1
   }
 }

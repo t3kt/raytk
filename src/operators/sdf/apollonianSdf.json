@@ -1,6 +1,7 @@
 {
   "meta": {
+    "opStatus": "default",
     "opType": "raytk.operators.sdf.apollonianSdf",
-    "opVersion": 7
+    "opVersion": 8
   }
 }
