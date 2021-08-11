@@ -11,9 +11,14 @@ def onCook(dat: 'DAT'):
 	if not info:
 		dat.appendRow(['typeName', ''])
 		dat.appendRow(['category', ''])
+		dat.appendRow(['toolkitVersion', ''])
 	else:
 		dat.appendRow(['typeName', info.shortName or ''])
 		dat.appendRow(['category', info.categoryName or ''])
+		version = info.toolkitVersion
+		if version:
+			version = 'v' + version
+		dat.appendRow(['toolkitVersion', version or ''])
 	if info and info.isDeprecated:
 		dat.appendRow(['statusIcon', '\uFB7E'])
 		dat.appendRow(['fg'] + list(IconColors.deprecatedFgColor))
