@@ -10,6 +10,11 @@ op:
   category: sdf
   detail: Based on ["Generalized Distance Functions"](http://people.tamu.edu/~ergun/research/implicitmodeling/papers/sm99.pdf)
     by Akleman and Chen.
+  keywords:
+  - dodecahedron
+  - icosahedron
+  - octahedron
+  - polyhedron
   name: generalizedPolyhedronSdf
   opType: raytk.operators.sdf.generalizedPolyhedronSdf
   parameters:

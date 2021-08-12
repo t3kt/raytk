@@ -25,6 +25,10 @@ op:
     summary: Value field that can be used to vary the thickness of the ring. A 1D
       field will use the angle of the ring as the coordinate, scaled to a 0..1 range.
       A 3D field will use the absolute XYZ coordinates.
+  keywords:
+  - mobius
+  - ring
+  - twist
   name: mobiusRingSdf
   opType: raytk.operators.sdf.mobiusRingSdf
   parameters:

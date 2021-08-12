@@ -47,6 +47,7 @@ op:
       render is used instead.
   - label: Use Light Color
     name: Uselightcolor
+  status: deprecated
   summary: 'A material that uses a vector field input to determine
 
     the color.'

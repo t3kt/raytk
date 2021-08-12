@@ -8,6 +8,10 @@ redirect_from:
   - /reference/opType/raytk.operators.sdf.mandelbulbSdf/
 op:
   category: sdf
+  keywords:
+  - fractal
+  - mandelbrot
+  - mandelbulb
   name: mandelbulbSdf
   opType: raytk.operators.sdf.mandelbulbSdf
   parameters:

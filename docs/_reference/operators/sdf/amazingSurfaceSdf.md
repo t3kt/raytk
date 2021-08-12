@@ -8,6 +8,8 @@ redirect_from:
   - /reference/opType/raytk.operators.sdf.amazingSurfaceSdf/
 op:
   category: sdf
+  keywords:
+  - fractal
   name: amazingSurfaceSdf
   opType: raytk.operators.sdf.amazingSurfaceSdf
   parameters:

@@ -45,6 +45,10 @@ op:
     - Sdf
     - Ray
     - Light
+  keywords:
+  - flip
+  - mirror
+  - reflect
   name: reflect
   opType: raytk.operators.filter.reflect
   parameters:

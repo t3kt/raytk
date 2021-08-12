@@ -61,6 +61,16 @@ op:
     returnTypes:
     - float
     - Sdf
+  keywords:
+  - chamfer
+  - columns
+  - combine
+  - diff
+  - intersect
+  - round
+  - smooth
+  - stairs
+  - union
   name: combine
   opType: raytk.operators.combine.combine
   parameters:

@@ -9,6 +9,11 @@ redirect_from:
 op:
   category: sdf
   detail: With a small `Radius`, this can be used to create a line segment.
+  keywords:
+  - capsule
+  - line
+  - points
+  - segment
   name: capsuleSdf
   opType: raytk.operators.sdf.capsuleSdf
   parameters:

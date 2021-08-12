@@ -28,6 +28,9 @@ op:
     - Sdf
     - Ray
     - Light
+  keywords:
+  - extend
+  - stretch
   name: extend
   opType: raytk.operators.filter.extend
   parameters:

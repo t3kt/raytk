@@ -30,6 +30,10 @@ op:
     returnTypes:
     - float
     - vec4
+  keywords:
+  - range
+  - remap
+  - rescale
   name: rescaleField
   opType: raytk.operators.filter.rescaleField
   parameters:

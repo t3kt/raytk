@@ -25,6 +25,14 @@ op:
     required: true
     returnTypes:
     - vec4
+  keywords:
+  - adjust
+  - brightness
+  - color
+  - contrast
+  - filter
+  - hue
+  - saturation
   name: adjustColor
   opType: raytk.operators.filter.adjustColor
   parameters:

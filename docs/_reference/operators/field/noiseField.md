@@ -26,6 +26,22 @@ op:
 
     For types that use 4D coordinates, the `Translate` and `Scale` parameters can
     still be used to control the 4th coordinate.'
+  inputs:
+  - contextTypes:
+    - Context
+    - MaterialContext
+    - CameraContext
+    - LightContext
+    - RayContext
+    coordTypes:
+    - float
+    - vec2
+    - vec3
+    label: Coordinate Field
+    name: coordinate_field_in
+    returnTypes:
+    - float
+    - vec4
   name: noiseField
   opType: raytk.operators.field.noiseField
   parameters:
@@ -55,13 +71,17 @@ op:
       name: simplex3d
     - label: Simplex 4D
       name: simplex4d
+    - label: Cheap Random Lookup
+      name: cheapNoiseLookup
     name: Noisetype
     summary: The type of noise function.
   - label: Coord Type
     menuOptions:
-    - label: 2D
+    - label: float
+      name: float
+    - label: vec2
       name: vec2
-    - label: 3D
+    - label: vec3
       name: vec3
     name: Coordtype
     summary: The type of coordinates that the op supports.

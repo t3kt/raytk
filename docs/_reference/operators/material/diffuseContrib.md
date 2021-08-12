@@ -8,6 +8,14 @@ redirect_from:
   - /reference/opType/raytk.operators.material.diffuseContrib/
 op:
   category: material
+  keywords:
+  - diffuse
+  - lambert
+  - lighting
+  - material
+  - modularmat
+  - oren-nayar
+  - shading
   name: diffuseContrib
   opType: raytk.operators.material.diffuseContrib
   parameters:

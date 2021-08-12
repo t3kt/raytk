@@ -8,6 +8,10 @@ redirect_from:
   - /reference/opType/raytk.operators.sdf.chamferBoxSdf/
 op:
   category: sdf
+  keywords:
+  - box
+  - chamfer
+  - cube
   name: chamferBoxSdf
   opType: raytk.operators.sdf.chamferBoxSdf
   parameters:

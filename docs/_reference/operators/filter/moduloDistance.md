@@ -27,6 +27,12 @@ op:
     - Sdf
     - Ray
     - Light
+  keywords:
+  - distance
+  - modulo
+  - polar
+  - radial
+  - repeat
   name: moduloDistance
   opType: raytk.operators.filter.moduloDistance
   parameters:

@@ -27,7 +27,11 @@ cat:
       noise.
   - name: chopField
     summary: Field that provides values from a CHOP.
-  - name: colorRampField
+  - keywords:
+    - color
+    - gradient
+    - ramp
+    name: colorRampField
     summary: A vector field that maps an input field to values from a range of colors.
   - name: constantColorField
     summary: A vector field that evaluates to a constant color value.

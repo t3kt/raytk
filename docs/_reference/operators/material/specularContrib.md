@@ -8,6 +8,14 @@ redirect_from:
   - /reference/opType/raytk.operators.material.specularContrib/
 op:
   category: material
+  keywords:
+  - ggx
+  - lighting
+  - material
+  - modularmat
+  - phong
+  - shading
+  - specular
   name: specularContrib
   opType: raytk.operators.material.specularContrib
   parameters:

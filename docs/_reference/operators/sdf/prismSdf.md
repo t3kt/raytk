@@ -27,6 +27,14 @@ op:
     returnTypes:
     - float
     summary: Float value field that controls the radius of the prism.
+  keywords:
+  - column
+  - cylinder
+  - hexagon
+  - octagon
+  - prism
+  - square
+  - triangle
   name: prismSdf
   opType: raytk.operators.sdf.prismSdf
   parameters:

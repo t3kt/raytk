@@ -10,6 +10,11 @@ op:
   category: material
   detail: If no color attribute has been assigned to the surface, this will use the
     `Default Color` instead.
+  keywords:
+  - color
+  - material
+  - modularmat
+  - surface
   name: surfaceColorContrib
   opType: raytk.operators.material.surfaceColorContrib
   parameters:

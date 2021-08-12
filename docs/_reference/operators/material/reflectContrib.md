@@ -10,6 +10,12 @@ op:
   category: material
   detail: In order for this to work, reflection support needs to be enabled in the
     renderer.
+  keywords:
+  - lighting
+  - material
+  - modularmat
+  - reflection
+  - shading
   name: reflectContrib
   opType: raytk.operators.material.reflectContrib
   parameters:

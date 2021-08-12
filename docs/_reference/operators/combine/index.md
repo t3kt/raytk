@@ -14,7 +14,17 @@ cat:
   - name: addFields
   - name: blend
     summary: Smoothly blends/morphs between up to 4 SDFs.
-  - name: combine
+  - keywords:
+    - chamfer
+    - columns
+    - combine
+    - diff
+    - intersect
+    - round
+    - smooth
+    - stairs
+    - union
+    name: combine
     summary: Combines SDFs in various ways.
   - name: combineChamfer
     summary: Chamfer SDF combine, producing a flat surface at a 45 degree angle along

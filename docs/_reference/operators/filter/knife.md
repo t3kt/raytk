@@ -25,6 +25,10 @@ op:
     - float
     - vec4
     - Sdf
+  keywords:
+  - crop
+  - knife
+  - slice
   name: knife
   opType: raytk.operators.filter.knife
   parameters:

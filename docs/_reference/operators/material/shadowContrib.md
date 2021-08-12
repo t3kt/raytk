@@ -10,6 +10,12 @@ op:
   category: material
   detail: The shading level will be 1 in areas without a shadow, and 0 in areas that
     are fully in shadow.
+  keywords:
+  - lighting
+  - material
+  - modularmat
+  - shading
+  - shadow
   name: shadowContrib
   opType: raytk.operators.material.shadowContrib
   parameters:

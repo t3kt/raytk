@@ -23,6 +23,11 @@ op:
     - Sdf
     - Ray
     - Light
+  keywords:
+  - kaleidoscope
+  - modulo
+  - polar
+  - repeat
   name: moduloPolar
   opType: raytk.operators.filter.moduloPolar
   parameters:

@@ -55,6 +55,10 @@ op:
     returnTypes:
     - float
     - Sdf
+  keywords:
+  - coil
+  - helix
+  - spiral
   name: helixSdf
   opType: raytk.operators.sdf.helixSdf
   parameters:

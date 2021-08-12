@@ -49,6 +49,9 @@ op:
       in space. If the field returns float values, the value of all the `Scale` parameters
       are multiplied by that value. If it returns vec4 values, each part of the `Scale`
       parameter is multiplied by the corresponding value in the vec4.
+  keywords:
+  - scale
+  - transform
   name: scale
   opType: raytk.operators.filter.scale
   parameters:

@@ -10,6 +10,11 @@ op:
   category: sdf
   detail: The line is defined my a list of points, which are either defined by parameters
     or by CHOP channels.
+  keywords:
+  - line
+  - path
+  - points
+  - segments
   name: segmentedLineSdf
   opType: raytk.operators.sdf.segmentedLineSdf
   parameters:

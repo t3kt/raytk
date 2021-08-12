@@ -8,6 +8,9 @@ redirect_from:
   - /reference/opType/raytk.operators.sdf.octahedronSdf/
 op:
   category: sdf
+  keywords:
+  - octahedron
+  - polyhedron
   name: octahedronSdf
   opType: raytk.operators.sdf.octahedronSdf
   parameters:

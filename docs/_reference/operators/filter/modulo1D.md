@@ -31,6 +31,9 @@ op:
     - Sdf
     - Ray
     - Light
+  keywords:
+  - modulo
+  - repeat
   name: modulo1D
   opType: raytk.operators.filter.modulo1D
   parameters:

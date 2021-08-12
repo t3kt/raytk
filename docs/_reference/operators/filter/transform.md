@@ -32,6 +32,14 @@ op:
     - Sdf
     - Ray
     - Light
+  keywords:
+  - move
+  - pivot
+  - position
+  - rotate
+  - scale
+  - transform
+  - translate
   name: transform
   opType: raytk.operators.filter.transform
   parameters:

@@ -43,6 +43,11 @@ op:
     - float
     - vec4
     summary: Optional field used to calculate the color instead of the `Color` parameter.
+  keywords:
+  - color
+  - material
+  - modularmat
+  - surface
   name: assignColor
   opType: raytk.operators.filter.assignColor
   parameters:

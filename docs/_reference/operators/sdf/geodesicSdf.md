@@ -20,6 +20,10 @@ op:
     returnTypes:
     - Sdf
     summary: Optional SDF that is placed at the tip of each spike.
+  keywords:
+  - geodesic
+  - polyhedron
+  - spikes
   name: geodesicSdf
   opType: raytk.operators.sdf.geodesicSdf
   parameters:

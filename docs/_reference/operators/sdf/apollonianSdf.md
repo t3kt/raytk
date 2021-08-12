@@ -8,6 +8,9 @@ redirect_from:
   - /reference/opType/raytk.operators.sdf.apollonianSdf/
 op:
   category: sdf
+  keywords:
+  - apollonian
+  - fractal
   name: apollonianSdf
   opType: raytk.operators.sdf.apollonianSdf
   parameters:

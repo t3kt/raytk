@@ -24,6 +24,10 @@ op:
     - Sdf
     summary: 2D SDF used as the cross section shape of the arms instead of the default
       rounded square.
+  keywords:
+  - coil
+  - spiral
+  - swirl
   name: spiralSdf
   opType: raytk.operators.sdf.spiralSdf
   parameters:

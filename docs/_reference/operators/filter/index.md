@@ -16,21 +16,46 @@ cat:
     float/vector fields, etc). Some only support a limited set of return types.'
   name: filter
   operators:
-  - name: adjustColor
+  - keywords:
+    - adjust
+    - brightness
+    - color
+    - contrast
+    - filter
+    - hue
+    - saturation
+    name: adjustColor
     status: beta
     summary: Adjust properties of color values.
-  - name: assignColor
+  - keywords:
+    - color
+    - material
+    - modularmat
+    - surface
+    name: assignColor
     summary: Assigns a surface color attribute to an SDF surface.
-  - name: assignUV
+  - keywords:
+    - material
+    - modularmat
+    - surface
+    - texture
+    name: assignUV
     status: beta
     summary: Assigns UV coordinates to an SDF surface.
   - name: bend
     summary: Bends space, along a main axis, towards a second axis.
   - name: cartesianToPolar
-  - name: elongate
+  - keywords:
+    - elongate
+    - extend
+    - stretch
+    name: elongate
     summary: Stretches a shape by splitting it into pieces, moves them apart, and
       connects them.
-  - name: extend
+  - keywords:
+    - extend
+    - stretch
+    name: extend
     summary: Clamps coordinates around an SDF result, which causes their edges to
       be extended infinitely along each axis.
   - name: fieldExpr
@@ -41,7 +66,12 @@ cat:
     summary: Flips the input across an axis, either on its own or merged with the
       original.
   - name: fold
-  - name: instance
+  - keywords:
+    - copy
+    - instance
+    - iterate
+    - repeat
+    name: instance
     summary: Repeats its input some number of times, exposing the index as the iteration
       x value, and combines the results.
   - name: invert
@@ -50,9 +80,19 @@ cat:
     summary: Performs a transform multiple times, optionally reflecting across axes
       in between the steps.
   - name: kink
-  - name: knife
+  - keywords:
+    - crop
+    - knife
+    - slice
+    name: knife
     summary: Cuts off an SDF along a plane.
-  - name: limitField
+  - keywords:
+    - clamp
+    - limit
+    - loop
+    - value
+    - zigzag
+    name: limitField
     summary: Limits the values produced by a float or vector field.
   - name: magnet
     summary: Pulls or twists space within an area.
@@ -61,18 +101,54 @@ cat:
   - name: mirrorQuadrant
     summary: Mirror coordinates across two axes.
   - name: mobiusTransform
-  - name: modifyNormals
+  - keywords:
+    - bumpmap
+    - material
+    - modularmat
+    - normals
+    - shading
+    - surface
+    - texture
+    name: modifyNormals
     status: beta
-  - name: modulo1D
+    summary: Use a field to modify the normals (bump mapping) used by shading elements
+      in a modular material.
+  - keywords:
+    - modulo
+    - repeat
+    name: modulo1D
     summary: Repeats space along one axis.
-  - name: modulo2D
+  - keywords:
+    - grid
+    - modulo
+    - repeat
+    name: modulo2D
     summary: Repeats space along 2 axes.
-  - name: modulo3D
+  - keywords:
+    - grid
+    - modulo
+    - repeat
+    name: modulo3D
     summary: Repeats space along all 3 axes.
-  - name: moduloDistance
-  - name: moduloPolar
+  - keywords:
+    - distance
+    - modulo
+    - polar
+    - radial
+    - repeat
+    name: moduloDistance
+  - keywords:
+    - kaleidoscope
+    - modulo
+    - polar
+    - repeat
+    name: moduloPolar
     summary: Repeats space radially, like a kaleidoscope.
-  - name: onion
+  - keywords:
+    - hollow
+    - onion
+    - shell
+    name: onion
     summary: Converts a solid SDF to a thin shell of the surface.
   - name: polarToCartesian
     status: beta
@@ -80,20 +156,33 @@ cat:
     summary: Quantize coordinates to a 3D grid, which is sort of like "voxelizing"
       the space.
   - name: quantizeValue
-  - name: radialClone
+  - keywords:
+    - clone
+    - copy
+    - radial
+    - repeat
+    name: radialClone
     summary: Repeats an SDF radially around an axis, combining the resulting shapes.
   - name: rangeTransform
     status: beta
     summary: Applies a transform based on a range of settings, mapped with either
       the iteration value or a field input.
-  - name: reflect
+  - keywords:
+    - flip
+    - mirror
+    - reflect
+    name: reflect
     summary: Reflects space across a plane.
   - name: remapCoords
     status: beta
     summary: Modifies space using a vector field.
   - name: reorderCoords
     summary: Swaps axes for the input.
-  - name: rescaleField
+  - keywords:
+    - range
+    - remap
+    - rescale
+    name: rescaleField
     summary: Rescales the values produced by a field.
   - name: reshapeValues
     status: beta
@@ -101,32 +190,67 @@ cat:
   - name: restrictStage
     status: beta
     summary: Restricts which render stages an operator is used in.
-  - name: rotate
+  - keywords:
+    - rotate
+    - spin
+    - transform
+    - twist
+    name: rotate
     summary: Transforms space with rotation.
-  - name: rotateNormals
+  - keywords:
+    - material
+    - modularmat
+    - normals
+    - rotate
+    - spin
+    - transform
+    name: rotateNormals
     status: beta
     summary: Applies rotation to the surface normals used by material elements such
       as `specularContrib`.
   - name: round
     summary: Adds to (or subtracts from) the size of an SDF, which has the effect
       of rounding it out or shrinking it.
-  - name: scale
+  - keywords:
+    - scale
+    - transform
+    name: scale
     summary: Scales space.
   - name: slice
     summary: Removes all of an SDF except for a slice in space.
   - name: sphericalMobiusTransform
     status: beta
+  - keywords:
+    - rotate
+    - spin
+    name: spin
+    status: beta
   - name: spiralZoom
     summary: Transforms space using a logarithmic spiral.
-  - name: transform
+  - keywords:
+    - move
+    - pivot
+    - position
+    - rotate
+    - scale
+    - transform
+    - translate
+    name: transform
     summary: Transform the coordinates of the input, with rotation, scaling, and translation.
-  - name: translate
+  - keywords:
+    - move
+    - position
+    - transform
+    - translate
+    name: translate
     summary: Translates coordinates of the input ROP.
   - name: twist
     summary: Twists space around an axis.
   - name: uvTransform
     status: beta
     summary: Transform the UV coordinates assigned to an SDF result.
+  - name: waveWarp
+    status: beta
   summary: Operators that take an input and modify it.
 
 ---

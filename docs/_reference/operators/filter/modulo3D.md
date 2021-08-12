@@ -30,6 +30,10 @@ op:
     - Sdf
     - Ray
     - Light
+  keywords:
+  - grid
+  - modulo
+  - repeat
   name: modulo3D
   opType: raytk.operators.filter.modulo3D
   parameters:

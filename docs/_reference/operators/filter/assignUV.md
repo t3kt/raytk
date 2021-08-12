@@ -42,6 +42,11 @@ op:
     returnTypes:
     - vec4
     summary: Optional field used to calculate the UV coordinates.
+  keywords:
+  - material
+  - modularmat
+  - surface
+  - texture
   name: assignUV
   opType: raytk.operators.filter.assignUV
   parameters:
