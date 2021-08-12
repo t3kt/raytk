@@ -22,6 +22,10 @@ op:
     returnTypes:
     - float
     - vec4
+  keywords:
+  - circle
+  - ellipse
+  - oval
   name: ellipseSdf2d
   opType: raytk.operators.sdf2d.ellipseSdf2d
   parameters:

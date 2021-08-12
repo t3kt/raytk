@@ -26,7 +26,11 @@ cat:
     summary: 2D cross shape SDF, with 4 arms and option rounding of the intersections.
   - name: dogBoneSdf2d
     summary: 2D SDF for two connected circles.
-  - name: ellipseSdf2d
+  - keywords:
+    - circle
+    - ellipse
+    - oval
+    name: ellipseSdf2d
   - name: heartSdf2d
   - name: horseshoeSdf2d
   - name: jointSdf2d
