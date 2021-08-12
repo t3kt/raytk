@@ -662,6 +662,8 @@ vec4 domainColoring (vec2 z, vec2 gridSpacing, float saturation, float gridStren
 	return vec4(rgb, 1.0);
 }
 
+float cheapNoiseLookup(vec2 p) { return texture(sTDNoiseMap, p).r; }
+
 float adaptAsFloat(float p) { return p; }
 float adaptAsFloat(vec2 p) { return p.x; }
 float adaptAsFloat(vec3 p) { return p.x; }
