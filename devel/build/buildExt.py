@@ -196,8 +196,7 @@ class BuildManager:
 		self.context.focusInNetworkPane(comp)
 		self.context.disableCloning(comp)
 		self.context.detachTox(comp)
-		if len(comp.customPages) <= 1:
-			comp.showCustomOnly = True
+		comp.showCustomOnly = True
 		tools = RaytkTools()
 		tools.updateROPMetadata(comp)
 		tools.updateROPParams(comp)
