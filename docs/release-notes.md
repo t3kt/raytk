@@ -5,6 +5,7 @@
 ### Highlights
 
 * Faster switching for menu parameters with optional optimization for parameters marked as read-only.
+* New field inputs to control lots of operators.
 * Keyword searching in palette: palette searches now show ops matching keywords in addition to matching names / initials. Try searching for "ring", and `torusSdf` will show up!
 * Updated to TD v2021.14360.
 * Breaking change: Fixed handling of the Period and Phase parameters in waveField. This may change the behavior and scaling of the field.
