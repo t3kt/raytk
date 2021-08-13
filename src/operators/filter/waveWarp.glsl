@@ -1,15 +1,20 @@
+vec3 THIS_wave(vec3 q) {
+	vec3 amt;
+	BODY();
+	return amt;
+}
+
 ReturnT thismap(CoordT p, ContextT ctx) {
 	#if defined(THIS_COORD_TYPE_float)
-		float q = p;
+		float q0 = p;
 	#elif defined(THIS_Axis_dist)
-		float q = length(p);
+		float q0 = length(p);
 	#else
-		float q = p.THIS_Axis;
+		float q0 = p.THIS_Axis;
 	#endif
-	q = (q / THIS_Period) + THIS_Phase;
-	float amt;
-	BODY();
+	vec3 q = (vec3(q0) / THIS_Period) + THIS_Phase;
+	vec3 amt = THIS_wave(q);
 	amt = (amt * THIS_Amplitude) + THIS_Offset;
-	p -= THIS_asCoordT(THIS_Amount) * amt;
+	p -= THIS_asCoordT(amt);
 	return inputOp1(p, ctx);
 }
