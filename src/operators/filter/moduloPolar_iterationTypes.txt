@@ -1,0 +1,4 @@
+name	label
+none	None
+index	Cell Index
+ratio	Cell Ratio
