@@ -9,6 +9,43 @@ redirect_from:
 op:
   category: sdf
   detail: With a small `Radius`, this can be used to create a line segment.
+  inputs:
+  - contextTypes:
+    - Context
+    - MaterialContext
+    - CameraContext
+    - LightContext
+    - RayContext
+    coordTypes:
+    - vec3
+    label: Endpoint 1 Field
+    name: endpoint1_definition_in
+    returnTypes:
+    - vec4
+  - contextTypes:
+    - Context
+    - MaterialContext
+    - CameraContext
+    - LightContext
+    - RayContext
+    coordTypes:
+    - vec3
+    label: Endpoint 2 Field
+    name: endpoint2_definition_in
+    returnTypes:
+    - vec4
+  - contextTypes:
+    - Context
+    - MaterialContext
+    - CameraContext
+    - LightContext
+    - RayContext
+    coordTypes:
+    - vec3
+    label: Radius Field
+    name: radius_definition_in
+    returnTypes:
+    - float
   keywords:
   - capsule
   - line

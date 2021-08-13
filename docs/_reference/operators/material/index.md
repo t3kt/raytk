@@ -68,7 +68,6 @@ cat:
     status: beta
     summary: A material element that produces the shading level for the surface.
   - name: skyLightContrib
-    status: beta
     summary: A material element that acts as a basic pseudo directional light.
   - keywords:
     - ggx
@@ -86,7 +85,6 @@ cat:
     - modularmat
     - surface
     name: surfaceColorContrib
-    status: beta
     summary: A material element that produces the assigned color attribute for the
       surface.
   summary: 'Material operators that are used by renderers to determine the

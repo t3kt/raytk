@@ -249,8 +249,15 @@ cat:
   - name: uvTransform
     status: beta
     summary: Transform the UV coordinates assigned to an SDF result.
-  - name: waveWarp
+  - keywords:
+    - offset
+    - shift
+    - sine
+    - warp
+    - wave
+    name: waveWarp
     status: beta
+    summary: Uses repeating waves to offset space.
   summary: Operators that take an input and modify it.
 
 ---

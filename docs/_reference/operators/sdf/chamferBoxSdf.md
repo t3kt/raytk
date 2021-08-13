@@ -8,6 +8,44 @@ redirect_from:
   - /reference/opType/raytk.operators.sdf.chamferBoxSdf/
 op:
   category: sdf
+  inputs:
+  - contextTypes:
+    - Context
+    - MaterialContext
+    - CameraContext
+    - LightContext
+    - RayContext
+    coordTypes:
+    - vec3
+    label: Scale Field
+    name: scale_definition_in
+    returnTypes:
+    - float
+    - vec4
+  - contextTypes:
+    - Context
+    - MaterialContext
+    - CameraContext
+    - LightContext
+    - RayContext
+    coordTypes:
+    - vec3
+    label: Chamfer Field
+    name: chamfer_definition_in
+    returnTypes:
+    - float
+  - contextTypes:
+    - Context
+    - MaterialContext
+    - CameraContext
+    - LightContext
+    - RayContext
+    coordTypes:
+    - vec3
+    label: Rounding Field
+    name: rounding_definition_in
+    returnTypes:
+    - float
   keywords:
   - box
   - chamfer

@@ -23,6 +23,46 @@ op:
     - Sdf
     - Ray
     - Light
+  - contextTypes:
+    - Context
+    - MaterialContext
+    - CameraContext
+    - LightContext
+    - RayContext
+    coordTypes:
+    - vec2
+    - vec3
+    label: Pre Rotate Field
+    name: pre_rotate_field_definition_in
+    returnTypes:
+    - float
+  - contextTypes:
+    - Context
+    - MaterialContext
+    - CameraContext
+    - LightContext
+    - RayContext
+    coordTypes:
+    - vec2
+    - vec3
+    label: Offset Field
+    name: offset_field_definition_in
+    returnTypes:
+    - float
+    - vec4
+  - contextTypes:
+    - Context
+    - MaterialContext
+    - CameraContext
+    - LightContext
+    - RayContext
+    coordTypes:
+    - vec2
+    - vec3
+    label: Rotate Field
+    name: rotate_field_definition_in1
+    returnTypes:
+    - float
   keywords:
   - kaleidoscope
   - modulo
@@ -78,12 +118,20 @@ op:
   - label: Limit High
     name: Limithigh
     summary: End or the repetition range, in terms of the number of repetitions.
-  - label: Iterate On Cells
-    name: Iterateoncells
+  - name: Iterateoncells
     summary: Whether to expose the slice number as an "iteration" value for upstream
       ops.
   - label: Enable
     name: Enable
+  - label: Iteration Type
+    menuOptions:
+    - label: None
+      name: none
+    - label: Cell Index
+      name: index
+    - label: Cell Ratio
+      name: ratio
+    name: Iterationtype
   summary: Repeats space radially, like a kaleidoscope.
 
 ---

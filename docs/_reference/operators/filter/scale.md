@@ -43,7 +43,6 @@ op:
     name: scale_field_definition_in
     returnTypes:
     - float
-    - vec4
     - Sdf
     summary: If provided, this field is used to modify the scaling at different points
       in space. If the field returns float values, the value of all the `Scale` parameters
