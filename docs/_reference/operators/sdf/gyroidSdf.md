@@ -11,6 +11,10 @@ op:
   detail: 'The Gyroid is constructed using overlapping sine and cosine waves.
 
     See [wikipedia](https://en.wikipedia.org/wiki/Gyroid) for more information.'
+  keywords:
+  - gyroid
+  - sine
+  - wave
   name: gyroidSdf
   opType: raytk.operators.sdf.gyroidSdf
   parameters:
@@ -59,7 +63,6 @@ op:
   - label: Thickness
     name: Thickness
     summary: Expands the surfaces producing thicker shapes.
-  status: beta
   summary: Gyroid shape, which is an infinitely connected periodic surface.
 
 ---

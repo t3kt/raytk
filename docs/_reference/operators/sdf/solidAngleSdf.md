@@ -9,6 +9,11 @@ redirect_from:
 op:
   category: sdf
   detail: Similar to `coneSdf` but with the base rounded.
+  keywords:
+  - cone
+  - pie
+  - slice
+  - wedge
   name: solidAngleSdf
   opType: raytk.operators.sdf.solidAngleSdf
   parameters:

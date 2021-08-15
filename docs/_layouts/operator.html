@@ -22,6 +22,17 @@ layout: page
 	<div class="label status-{{ page.op.status }}">{{ page.op.status }}</div>
 {% endif %}
 
+{% if page.op.keywords %}
+<div class="keywords">
+	<div class="keywords-label">Keywords:</div>
+	<ul class="keyword-list">
+		{% for keyword in page.op.keywords %}
+		<li>{{keyword}}</li>
+		{% endfor %}
+	</ul>
+</div>
+{% endif %}
+
 {{ content }}
 
 {% if page.op.parameters %}

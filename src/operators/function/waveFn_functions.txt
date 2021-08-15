@@ -1,6 +1,6 @@
-name	label	function
-sin	Sine	wave_sin
-cos	Cosine	wave_cos
-tri	Triangle	wave_tri
-ramp	Ramp	wave_ramp
-square	Square	wave_square
+name	label	code
+sin	Sine	res = wave_sin(p)
+cos	Cosine	res = wave_cos(p)
+tri	Triangle	res = wave_tri(p)
+ramp	Ramp	res = wave_ramp(p)
+square	Square	res = wave_square(p)

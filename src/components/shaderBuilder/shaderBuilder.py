@@ -37,14 +37,37 @@ class ShaderBuilder:
 	def __init__(self, ownerComp: '_OwnerComp'):
 		self.ownerComp = ownerComp
 
+	def _config(self) -> '_ConfigComp':
+		o = self.ownerComp.par.Shaderbuilderconfig.eval()
+		# noinspection PyTypeChecker
+		return o or self.ownerComp.op('default_shaderBuilderConfig')
+
 	def configPar(self) -> '_ConfigPar':
-		p = self.ownerComp.par['Shaderbuilderconfig']
-		if p:
-			o = op(p)
-			if o:
-				# noinspection PyTypeChecker
-				return o.par
-		return self.ownerComp.par
+		return self._config().par
+
+	def Createcustomconfig(self, _=None):
+		hostPar = self.ownerComp.par.Shaderbuilderconfig.bindMaster
+		if hostPar is None or not isinstance(hostPar, Par):
+			raise Exception('Invalid setup for Shaderbuilderconfig par, must be a parameter binding')
+		if hostPar.eval():
+			msg = f'Operator already has custom Shaderbuilderconfig: {hostPar.owner}'
+			print(msg)
+			ui.status = msg
+			return
+		template = self._config()
+		host = hostPar.owner
+		ui.undo.startBlock('Customize shader config')
+		config = host.parent().copy(template, name=host.name + '_shaderConfig')
+		config.nodeX = host.nodeX
+		config.nodeY = host.nodeY - 150
+		config.dock = host
+		host.showDocked = True
+		for par in config.customPars:
+			if par.mode == ParMode.EXPRESSION:
+				par.expr = ''
+				par.val = template.par[par.name].eval()
+		hostPar.val = config.name
+		ui.undo.endBlock()
 
 	def preprocessDefinitions(self, dat: 'scriptDAT'):
 		# BEFORE definitions are reversed, so a def's inputs are always BELOW it in the table

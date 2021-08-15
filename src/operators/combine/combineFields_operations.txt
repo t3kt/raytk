@@ -1,9 +1,9 @@
-name	label	expr
-off	Off	a
-add	Add	a + b
-sub	Subtract	a - b
-mul	Multiply	a * b
-div	Divide	a / b
-avg	Average	(a + b) / 2.
-min	Minimum	min(a, b)
-max	Maximum	max(a, b)
+name	label	code
+off	Off	res = a
+add	Add	res = a + b
+sub	Subtract	res = a - b
+mul	Multiply	res = a * b
+div	Divide	res = a / b
+avg	Average	res = (a + b) / 2.
+min	Minimum	res = min(a, b)
+max	Maximum	res = max(a, b)

@@ -8,6 +8,10 @@ redirect_from:
   - /reference/opType/raytk.operators.sdf.juliaSdf/
 op:
   category: sdf
+  keywords:
+  - fractal
+  - julia
+  - quaternion
   name: juliaSdf
   opType: raytk.operators.sdf.juliaSdf
   parameters:

@@ -1,5 +1,5 @@
 ReturnT thismap(CoordT p, ContextT ctx) {
-	CoordT t = THIS_Translate;
+	CoordT t = THIS_asCoordT(THIS_Translate);
 	#ifdef THIS_HAS_INPUT_2
 		#if defined(inputOp2_RETURN_TYPE_float) || defined(inputOp2_RETURN_TYPE_Sdf)
 			t *= adaptAsFloat(inputOp2(p, ctx));

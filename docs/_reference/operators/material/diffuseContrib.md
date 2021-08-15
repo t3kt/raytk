@@ -8,6 +8,14 @@ redirect_from:
   - /reference/opType/raytk.operators.material.diffuseContrib/
 op:
   category: material
+  keywords:
+  - diffuse
+  - lambert
+  - lighting
+  - material
+  - modularmat
+  - oren-nayar
+  - shading
   name: diffuseContrib
   opType: raytk.operators.material.diffuseContrib
   parameters:
@@ -37,7 +45,6 @@ op:
   - label: Enable Shadow
     name: Enableshadow
     summary: Whether to apply the shadow to the color/level produced by this element.
-  status: beta
   summary: A material element that provides diffuse light contribution.
 
 ---

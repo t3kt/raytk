@@ -1,0 +1,6 @@
+name	label	expr	code
+sin	Sine	wave_sin	res = wave_sin(q)
+cos	Cosine	wave_cos	res = wave_cos(q)
+tri	Triangle	wave_tri	res = wave_tri(q)
+ramp	Ramp	wave_ramp	res = wave_ramp(q)
+square	Square	wave_square	res = wave_square(q)

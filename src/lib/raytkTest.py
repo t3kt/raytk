@@ -1,3 +1,9 @@
+"""
+Utilities used for automated toolkit testing.
+
+This should only be used within development tools.
+"""
+
 import dataclasses
 from dataclasses import dataclass
 from enum import Enum

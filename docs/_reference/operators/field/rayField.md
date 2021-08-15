@@ -32,7 +32,6 @@ op:
     - label: RayContext
       name: RayContext
     name: Contexttype
-  status: beta
   summary: Field that provides the ray direction or origin.
 
 ---

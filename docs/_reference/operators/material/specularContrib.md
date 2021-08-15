@@ -8,6 +8,14 @@ redirect_from:
   - /reference/opType/raytk.operators.material.specularContrib/
 op:
   category: material
+  keywords:
+  - ggx
+  - lighting
+  - material
+  - modularmat
+  - phong
+  - shading
+  - specular
   name: specularContrib
   opType: raytk.operators.material.specularContrib
   parameters:
@@ -47,7 +55,6 @@ op:
   - label: Enable Shadow
     name: Enableshadow
     summary: Whether to apply the shadow to the color/level produced by this element.
-  status: beta
   summary: A material element that provides specular light contribution.
 
 ---

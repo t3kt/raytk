@@ -15,10 +15,18 @@ cat:
     summary: Material with a basic lighting model.
   - name: colorizeSdf2d
     summary: Converts a 2D SDF to a striped distance pattern.
-  - name: diffuseContrib
-    status: beta
+  - keywords:
+    - diffuse
+    - lambert
+    - lighting
+    - material
+    - modularmat
+    - oren-nayar
+    - shading
+    name: diffuseContrib
     summary: A material element that provides diffuse light contribution.
   - name: fieldMat
+    status: deprecated
     summary: 'A material that uses a vector field input to determine
 
       the color.'
@@ -29,13 +37,18 @@ cat:
     status: beta
     summary: A material element that uses the Gooch shading model.
   - name: modularMat
-    status: beta
     summary: A material that is composed of one or more shading elements.
   - name: orenNayarMat
     status: beta
   - name: phongMat
     summary: Material that uses phong shading.
-  - name: reflectContrib
+  - keywords:
+    - lighting
+    - material
+    - modularmat
+    - reflection
+    - shading
+    name: reflectContrib
     status: beta
     summary: A material element that produces color based on light reflected from
       other surfaces.
@@ -45,17 +58,33 @@ cat:
     status: beta
     summary: A material that produces color for volumetric points relative to the
       input shape.
-  - name: shadowContrib
+  - keywords:
+    - lighting
+    - material
+    - modularmat
+    - shading
+    - shadow
+    name: shadowContrib
     status: beta
     summary: A material element that produces the shading level for the surface.
   - name: skyLightContrib
-    status: beta
     summary: A material element that acts as a basic pseudo directional light.
-  - name: specularContrib
-    status: beta
+  - keywords:
+    - ggx
+    - lighting
+    - material
+    - modularmat
+    - phong
+    - shading
+    - specular
+    name: specularContrib
     summary: A material element that provides specular light contribution.
-  - name: surfaceColorContrib
-    status: beta
+  - keywords:
+    - color
+    - material
+    - modularmat
+    - surface
+    name: surfaceColorContrib
     summary: A material element that produces the assigned color attribute for the
       surface.
   summary: 'Material operators that are used by renderers to determine the

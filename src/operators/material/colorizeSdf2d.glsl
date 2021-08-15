@@ -1,12 +1,11 @@
 vec4 thismap(vec2 p, ContextT ctx) {
-	Sdf res = inputOp1(p, ctx);
-	float d = res.x;
+	float d = adaptAsFloat(inputOp1(p, ctx));
 	vec4 color;
 
 	if (d > 0.) {
-		color = mix(THIS_Outsidecolor1, THIS_Outsidecolor2, (1. + sin(d / THIS_Outsideperiod)) * 0.5);
+		color = mix(THIS_Outsidecolor1, THIS_Outsidecolor2, (1. + sin((d - THIS_Outsidephase) / THIS_Outsideperiod)) * 0.5);
 	} else {
-		color = mix(THIS_Insidecolor1, THIS_Insidecolor2, (1. + sin(d / THIS_Insideperiod)) * 0.5);
+		color = mix(THIS_Insidecolor1, THIS_Insidecolor2, (1. + sin((d - THIS_Insidephase) / THIS_Insideperiod)) * 0.5);
 	}
 	#ifdef THIS_Enableedge
 	float thickness = THIS_Edgethickness;

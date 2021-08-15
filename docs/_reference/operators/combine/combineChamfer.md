@@ -23,7 +23,6 @@ op:
     name: definition_in_1
     required: true
     returnTypes:
-    - float
     - Sdf
   - contextTypes:
     - Context
@@ -39,7 +38,6 @@ op:
     name: definition_in_2
     required: true
     returnTypes:
-    - float
     - Sdf
   - contextTypes:
     - Context

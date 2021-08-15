@@ -1,6 +1,7 @@
 {
   "meta": {
+    "opStatus": "default",
     "opType": "raytk.operators.sdf.cylinderSdf",
-    "opVersion": 10
+    "opVersion": 11
   }
 }

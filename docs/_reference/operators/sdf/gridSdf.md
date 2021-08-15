@@ -8,6 +8,9 @@ redirect_from:
   - /reference/opType/raytk.operators.sdf.gridSdf/
 op:
   category: sdf
+  keywords:
+  - bars
+  - grid
   name: gridSdf
   opType: raytk.operators.sdf.gridSdf
   parameters:

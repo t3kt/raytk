@@ -2,7 +2,9 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 	vec3 lightDir = normalize(p - ctx.light.pos);
 	vec3 viewDir = normalize(-ctx.ray.dir);
 	vec3 norm = normalize(ctx.normal);
-	float amount = THIS_EXPR * THIS_Level;
+	float amount;
+	BODY();
+	amount *= THIS_Level;
 	ReturnT res;
 	#if defined(THIS_RETURN_TYPE_float)
 	res = ReturnT(amount);
@@ -13,10 +15,10 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 		res.rgb *= ctx.light.color;
 		#endif
 	}
-		#else
+	#else
 		#error invalidReturnType
-		#endif
-		#if defined(THIS_Enableshadow) && defined(RAYTK_USE_SHADOW)
+	#endif
+	#if defined(THIS_Enableshadow) && defined(RAYTK_USE_SHADOW)
 	res *= ctx.shadedLevel;
 	#endif
 	return res;

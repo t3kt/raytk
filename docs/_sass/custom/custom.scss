@@ -43,3 +43,35 @@ $status-deprecated-fg-color: rgb(64%, 81%, 81%);
   background-color: $status-deprecated-bg-color;
   color: $status-deprecated-fg-color;
 }
+.main-content .keywords {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+.main-content .keywords-label {
+  margin-right: .5em;
+}
+
+.main-content ul.keyword-list {
+  list-style: none;
+  padding-left: 0;
+  margin: 0;
+}
+
+.main-content ul.keyword-list li {
+  padding-left: 0;
+  list-style: none;
+  display: inline;
+}
+.main-content ul.keyword-list > li:not(:last-child)::after {
+  content: ',';
+  display: inline;
+}
+
+.main-content .keyword-list {
+  display: inline-block;
+  list-style: none;
+}
+.main-content .keyword-list > li::before {
+  display: none;
+}

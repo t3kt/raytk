@@ -18,7 +18,6 @@ cat:
   - name: functionGraphRender
     summary: Visualizes the graph of a function operator.
   - name: pointMapRender
-    status: beta
     summary: Renderer that takes in a TOP of coordinates and evaluates the scene at
       each point.
   - name: raymarchRender3D

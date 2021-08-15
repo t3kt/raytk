@@ -52,6 +52,11 @@ op:
       at each point in space. If the field returns a float (or SDF), the `Translate`
       parameter is *multiplied* by that value. If it returns a vec4, the parts are
       *added* to the `Translate` parameter parts.
+  keywords:
+  - move
+  - position
+  - transform
+  - translate
   name: translate
   opType: raytk.operators.filter.translate
   parameters:

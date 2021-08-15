@@ -37,6 +37,10 @@ op:
     - float
     - vec4
     - Sdf
+  keywords:
+  - hollow
+  - onion
+  - shell
   name: onion
   opType: raytk.operators.filter.onion
   parameters:

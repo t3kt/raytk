@@ -27,6 +27,12 @@ op:
     - float
     - vec4
     - Sdf
+  keywords:
+  - clamp
+  - limit
+  - loop
+  - value
+  - zigzag
   name: limitField
   opType: raytk.operators.filter.limitField
   parameters:

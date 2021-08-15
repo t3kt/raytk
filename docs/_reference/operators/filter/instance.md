@@ -41,6 +41,11 @@ op:
     required: true
     returnTypes:
     - Sdf
+  keywords:
+  - copy
+  - instance
+  - iterate
+  - repeat
   name: instance
   opType: raytk.operators.filter.instance
   parameters:

@@ -1,0 +1,7 @@
+{
+  "meta": {
+    "opStatus": "default",
+    "opType": "raytk.operators.filter.kink",
+    "opVersion": 0
+  }
+}

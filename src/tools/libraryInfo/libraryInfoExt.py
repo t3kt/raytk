@@ -42,7 +42,7 @@ class LibraryInfoBuilder:
 		rops = []  # type: List[COMP]
 		if opsRoot:
 			rops = opsRoot.findChildren(type=COMP, tags=['raytk*'], depth=2, maxDepth=2)
-		dat.appendRow(['name', 'path', 'parentPath', 'tags', 'category', 'fullName', 'opType', 'opVersion', 'status'])
+		dat.appendRow(['name', 'path', 'parentPath', 'tags', 'category', 'fullName', 'opType', 'opVersion', 'status', 'keywords'])
 		if not rops:
 			return
 		rops.sort(key=lambda o: o.path.lower())
@@ -63,6 +63,7 @@ class LibraryInfoBuilder:
 				ropInfo.opType,
 				ropInfo.opVersion,
 				ropInfo.statusLabel,
+				' '.join(sorted(ropInfo.keywords)),
 			])
 
 	@staticmethod
@@ -78,7 +79,7 @@ class LibraryInfoBuilder:
 
 	def buildROPHelpTable(self, dat: 'tableDAT', opTable: 'DAT'):
 		dat.clear()
-		dat.appendRow(['path', 'opType', 'category', 'summary', 'helpPath'])
+		dat.appendRow(['path', 'opType', 'category', 'summary', 'helpPath', 'keywords'])
 		for row in range(1, opTable.numRows):
 			path = opTable[row, 'path']
 			ropInfo = ROPInfo(path)
@@ -89,6 +90,7 @@ class LibraryInfoBuilder:
 				opTable[row, 'category'],
 				self.extractHelpSummary(helpDAT),
 				helpDAT.path if helpDAT else '',
+				' '.join(sorted(ropInfo.keywords)),
 			])
 
 	def buildCategoryHelpTable(self, dat: 'tableDAT', categoryTable: 'DAT'):

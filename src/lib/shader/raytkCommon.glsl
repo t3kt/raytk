@@ -439,6 +439,18 @@ vec3 opCheapBendPos(vec3 p, float k)
 	return vec3(m*p.xy, p.z);
 }
 
+// https://www.shadertoy.com/view/3llfRl
+vec2 opKink(vec2 p, vec2 c, float k) {
+	p -= c;
+	//to polar coordinates
+	float ang = atan(p.x, p.y);
+	float len = length(p);
+	//warp angle with sigmoid function
+	ang -= ang/sqrt(1.+ang*ang)*(1.-k);
+	//to cartesian coordiantes
+	return vec2(sin(ang),cos(ang))*len + c;
+}
+
 // Returns xyz: new pos, w: value to add to surface distance (which may not work correctly)
 vec4 opElongate(in vec3 p, in vec3 h)
 {
@@ -447,11 +459,21 @@ vec4 opElongate(in vec3 p, in vec3 h)
 	return vec4(max(q,0.0), min(max(q.x,max(q.y,q.z)),0.0));
 }
 
-#define wave_sin(x)  sin(x * TAU)
-#define wave_cos(x)  cos(x * TAU)
-#define wave_tri(x)  (abs(4.*fract(x)-2.)-1.)
-#define wave_square(x) (2.*step(fract(x), 0.5)-1.)
-#define wave_ramp(x)  fract(x)
+float wave_sin(float x) { return sin(x * TAU); }
+vec3 wave_sin(vec3 x) { return sin(x * TAU); }
+vec4 wave_sin(vec4 x) { return sin(x * TAU); }
+float wave_cos(float x) { return cos(x * TAU); }
+vec3 wave_cos(vec3 x) { return cos(x * TAU); }
+vec4 wave_cos(vec4 x) { return cos(x * TAU); }
+float wave_tri(float x) { return abs(4.*fract(x)-2.)-1.; }
+vec3 wave_tri(vec3 x) { return abs(vec3(4.)*fract(x)-2.)-1.; }
+vec4 wave_tri(vec4 x) { return abs(vec4(4.)*fract(x)-2.)-1.; }
+float wave_square(float x) { return 2.*step(fract(x), 0.5)-1.; }
+vec3 wave_square(vec3 x) { return 2.*step(fract(x), vec3(0.5))-1.; }
+vec4 wave_square(vec4 x) { return 2.*step(fract(x), vec4(0.5))-1.; }
+float wave_ramp(float x) { return fract(x); }
+vec3 wave_ramp(vec3 x) { return fract(x); }
+vec4 wave_ramp(vec4 x) { return fract(x); }
 
 
 vec4 qsqr(in vec4 a)// square a quaterion
@@ -615,6 +637,42 @@ vec3 czm_hue(vec3 rgb, float adjustment)
 	vec3 color = vec3(yiq.x, chroma * cos(hue), chroma * sin(hue));
 	return toRGB * color;
 }
+// https://github.com/rreusser/glsl-hypot
+float hypot (vec2 z) {
+	float t;
+	float x = abs(z.x);
+	float y = abs(z.y);
+	t = min(x, y);
+	x = max(x, y);
+	t = t / x;
+	return (z.x == 0.0 && z.y == 0.0) ? 0.0 : x * sqrt(1.0 + t * t);
+}
+
+vec4 domainColoring (vec2 z, vec2 gridSpacing, float saturation, float gridStrength, float magStrength, float linePower) {
+	float carg = atan(z.y, z.x);
+	float cmod = hypot(z);
+
+	float rebrt = (fract(z.x / gridSpacing.x) - 0.5) * 2.0;
+	rebrt *= rebrt;
+
+	float imbrt = (fract(z.y / gridSpacing.y) - 0.5) * 2.0;
+	imbrt *= imbrt;
+
+	float grid = 1.0 - (1.0 - rebrt) * (1.0 - imbrt);
+	grid = pow(abs(grid), linePower);
+
+	float circ = (fract(log2(cmod)) - 0.5) * 2.0;
+	circ = pow(abs(circ), linePower);
+
+	circ *= magStrength;
+
+	vec3 rgb = TDHSVToRGB(vec3(carg * 0.5 / PI, saturation, 0.5 + 0.5 * saturation - gridStrength * grid));
+	rgb *= (1.0 - circ);
+	rgb += circ * vec3(1.0);
+	return vec4(rgb, 1.0);
+}
+
+float cheapNoiseLookup(vec2 p) { return texture(sTDNoiseMap, p).r; }
 
 float adaptAsFloat(float p) { return p; }
 float adaptAsFloat(vec2 p) { return p.x; }
@@ -658,4 +716,10 @@ float extractOrUseAsW(float p) { return p; }
 float extractOrUseAsW(vec4 p) { return p.w; }
 
 void setFromFloat(inout float x, float val) { x = val; }
-void setFromFloat(inout Sdf x, float val) { x.x = val;}
+void setFromFloat(inout Sdf x, float val) { x.x = val; }
+
+void swap(inout Sdf a, inout Sdf b) {
+	Sdf tmp = a;
+	a = b;
+	b = tmp;
+}

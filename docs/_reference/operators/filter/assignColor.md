@@ -43,6 +43,11 @@ op:
     - float
     - vec4
     summary: Optional field used to calculate the color instead of the `Color` parameter.
+  keywords:
+  - color
+  - material
+  - modularmat
+  - surface
   name: assignColor
   opType: raytk.operators.filter.assignColor
   parameters:
@@ -50,7 +55,6 @@ op:
     name: Enable
   - label: Color
     name: Color
-  status: beta
   summary: Assigns a surface color attribute to an SDF surface.
 
 ---

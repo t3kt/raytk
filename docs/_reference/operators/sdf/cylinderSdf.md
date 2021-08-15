@@ -38,6 +38,10 @@ op:
     name: height_field_definition_in
     returnTypes:
     - float
+  keywords:
+  - column
+  - cylinder
+  - pipe
   name: cylinderSdf
   opType: raytk.operators.sdf.cylinderSdf
   parameters:

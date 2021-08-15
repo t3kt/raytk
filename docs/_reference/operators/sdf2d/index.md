@@ -13,6 +13,7 @@ cat:
   name: sdf2d
   operators:
   - name: arcSdf2d
+  - name: arrowSdf2d
   - name: bezierSdf2d
     status: beta
   - name: blobbyCrossSdf2d
@@ -25,7 +26,11 @@ cat:
     summary: 2D cross shape SDF, with 4 arms and option rounding of the intersections.
   - name: dogBoneSdf2d
     summary: 2D SDF for two connected circles.
-  - name: ellipseSdf2d
+  - keywords:
+    - circle
+    - ellipse
+    - oval
+    name: ellipseSdf2d
   - name: heartSdf2d
   - name: horseshoeSdf2d
   - name: jointSdf2d
@@ -39,6 +44,8 @@ cat:
   - name: planeSdf2d
   - name: polygonSdf2d
     summary: SDF for several types of 2D polygons.
+  - name: quadSdf2d
+    summary: SDF for a 2D quad with arbitrary corners.
   - name: rectangleSdf
     summary: SDF for a 2D rectangle.
   - name: rhombusSdf2d

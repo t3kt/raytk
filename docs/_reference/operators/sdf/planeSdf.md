@@ -8,6 +8,10 @@ redirect_from:
   - /reference/opType/raytk.operators.sdf.planeSdf/
 op:
   category: sdf
+  keywords:
+  - floor
+  - plane
+  - sheet
   name: planeSdf
   opType: raytk.operators.sdf.planeSdf
   parameters:

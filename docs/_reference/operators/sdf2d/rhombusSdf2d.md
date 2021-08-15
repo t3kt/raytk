@@ -8,6 +8,20 @@ redirect_from:
   - /reference/opType/raytk.operators.sdf2d.rhombusSdf2d/
 op:
   category: sdf2d
+  inputs:
+  - contextTypes:
+    - Context
+    - MaterialContext
+    - CameraContext
+    - LightContext
+    - RayContext
+    coordTypes:
+    - vec2
+    label: Scale Field
+    name: scale_definition_in
+    returnTypes:
+    - float
+    - vec4
   name: rhombusSdf2d
   opType: raytk.operators.sdf2d.rhombusSdf2d
   parameters:

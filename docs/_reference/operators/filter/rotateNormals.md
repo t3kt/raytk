@@ -22,6 +22,13 @@ op:
     - Sdf
     - Ray
     - Light
+  keywords:
+  - material
+  - modularmat
+  - normals
+  - rotate
+  - spin
+  - transform
   name: rotateNormals
   opType: raytk.operators.filter.rotateNormals
   parameters:

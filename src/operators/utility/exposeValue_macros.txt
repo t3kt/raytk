@@ -1,0 +1,1 @@
+	'THIS_RENDER_STAGE'	op('renderStages')[parent().par.Renderstage.eval(), 'macro']

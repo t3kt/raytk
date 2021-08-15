@@ -23,6 +23,10 @@ op:
     name: definition_in
     returnTypes:
     - float
+  keywords:
+  - color
+  - gradient
+  - ramp
   name: colorRampField
   opType: raytk.operators.field.colorRampField
   parameters:

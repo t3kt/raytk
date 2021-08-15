@@ -1,5 +1,79 @@
 # Release Notes
 
+## v0.16
+
+### Highlights
+
+* Faster switching for menu parameters with optional optimization for parameters marked as read-only.
+* New field inputs to control lots of operators.
+* Keyword searching in palette: palette searches now show ops matching keywords in addition to matching names / initials. Try searching for "ring", and `torusSdf` will show up!
+* Updated to TD v2021.14360.
+* Breaking change: Fixed handling of the Period and Phase parameters in waveField. This may change the behavior and scaling of the field.
+* Breaking change: Added "Iteration Type"  setting to moduloPolar, which replaces the previous "Iterate on Cells" toggle. Updating OPs will default to iteration being switched off, regardless of original toggle setting.
+
+### Details
+
+* Improvements / additions
+    * Show bypass indicator in opImages (#599)
+    * Added "Customize Shader Config" to renderers (#594)
+    * Option to change the palette shortcut and manually trigger the palette (#552)
+    * Improved runtime menu switching (#571, #586)
+      * combine
+      * combineChamfer
+      * combineColumns
+      * combineFields
+      * combineStairs
+      * compositeFields
+      * coneSdf
+      * diffuseContrib
+      * specularContrib
+      * waveField
+      * waveFn
+    * New filters / combines
+      * addFields (#606)
+      * adjustColor (#587)
+      * kink (variation on bend)
+      * fieldFunction
+      * modifyNormals (#403, #620)
+    * New SDFs
+      * arrowSdf2d (#612)
+      * quadSdf2d
+    * New fields
+      * domainColorField (#401)
+    * Added field inputs to operators (#588)
+      * capsuleSdf
+      * circleSdf
+      * chamferBoxSdf (#627)
+      * moduloPolar (#624)
+      * noiseField (#619)
+      * polygonSdf2d
+      * rhombusSdf2d
+      * roundedRectangleSdf2d
+      * starSdf2d
+      * superQuadSdf2d
+    * New parameters in operators
+      * colorizeSdf2d phase (#608)
+      * rescaleField multiplier and post-add
+    * Automatic coord/context type settings for operators
+      * timeField (#141)
+    * Keyword support in palette and generated docs (#378)
+    * New convenience operators, which simplify common operations
+      * spin
+      * waveWarp
+* Changes
+    * Fixed handling of the Period and Phase parameters in waveField (#604). 
+    * New iteration type setting in moduloPolar replaces toggle (#622)
+    * Update to TD v2021.14360
+* Fixes
+    * Workaround for color banding issue in reflections (#579)
+    * Fixed breakage and incorrect SDF output in fieldRender (#611)
+    * Possible fix for feature support detection for AMD GPUs (#589, #34)
+    * Pass surface attributes through from input SDF in geodesicSdf (#615)
+    * Fixed 2D handling in flip (#609)
+    * Fixed edge discontinuity with textureFields (#617)
+    * Remove workaround for parameter page issue now that TD has fixed the bug (#487)
+    * Fixed parameter defaults and state handling in scale (#623)
+
 ## v0.15
 
 ### Highlights

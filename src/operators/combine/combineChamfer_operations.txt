@@ -1,4 +1,4 @@
-name	label	expr
-union	Union	fOpUnionChamfer
-intersect	Intersect	fOpIntersectionChamfer
-diff	Difference	fOpDifferenceChamfer
+name	label	code
+union	Union	res1.x = fOpUnionChamfer(res1.x, res2.x, r)
+intersect	Intersect	res1.x = fOpIntersectionChamfer(res1.x, res2.x, r)
+diff	Difference	res1.x = fOpDifferenceChamfer(res1.x, res2.x, r)

@@ -19,6 +19,8 @@ op:
       name: vec2
     - label: 3D
       name: vec3
+    - label: Auto
+      name: auto
     name: Coordtype
   - label: Return Type
     menuOptions:

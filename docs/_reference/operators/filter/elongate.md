@@ -34,6 +34,10 @@ op:
     - Sdf
     - Ray
     - Light
+  keywords:
+  - elongate
+  - extend
+  - stretch
   name: elongate
   opType: raytk.operators.filter.elongate
   parameters:

@@ -43,12 +43,14 @@ op:
     name: scale_field_definition_in
     returnTypes:
     - float
-    - vec4
     - Sdf
     summary: If provided, this field is used to modify the scaling at different points
       in space. If the field returns float values, the value of all the `Scale` parameters
       are multiplied by that value. If it returns vec4 values, each part of the `Scale`
       parameter is multiplied by the corresponding value in the vec4.
+  keywords:
+  - scale
+  - transform
   name: scale
   opType: raytk.operators.filter.scale
   parameters:

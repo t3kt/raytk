@@ -34,6 +34,12 @@ op:
     name: thickness_definition_in
     returnTypes:
     - float
+  keywords:
+  - box
+  - cube
+  - frame
+  - rectangle
+  - square
   name: boxFrameSdf
   opType: raytk.operators.sdf.boxFrameSdf
   parameters:

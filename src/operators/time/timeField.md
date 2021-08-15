@@ -21,12 +21,3 @@ For timeline based values, output operators have a parameter that can specify th
 * `Timesource`: Where to pull the time values from.
   * `global`: Global time is always the same throughout the whole shader scene graph.
   * `context`: Context time can be modified by downstream operators.
-* `Coordtype`: While this operator does not actually use the coordinates, it still needs to have whatever setting is required by operators that it connects to.
-  * `float`
-  * `vec2`
-  * `vec3`
-* `Contexttype`: Advanced parameter that should almost always be `Context`.
-  * `Context`
-  * `MaterialContext`
-  * `CameraContext`
-  * `LightContext`

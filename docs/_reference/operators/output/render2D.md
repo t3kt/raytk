@@ -127,6 +127,8 @@ op:
     name: Timerefop
   - label: Shader Builder Config
     name: Shaderbuilderconfig
+  - label: Customize Shader Config
+    name: Customizeshaderconfig
   - label: Enable UV Output
     name: Enableuvoutput
   summary: Renders a 2D image by evaluating the input field for each pixel.

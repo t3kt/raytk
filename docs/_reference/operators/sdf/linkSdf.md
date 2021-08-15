@@ -8,6 +8,9 @@ redirect_from:
   - /reference/opType/raytk.operators.sdf.linkSdf/
 op:
   category: sdf
+  keywords:
+  - chain
+  - link
   name: linkSdf
   opType: raytk.operators.sdf.linkSdf
   parameters:

@@ -1,3 +1,9 @@
+"""
+Utilities used within the build process.
+
+This should only be used in the build tool, and component BUILD scripts.
+"""
+
 from pathlib import Path
 import shutil
 from typing import Callable

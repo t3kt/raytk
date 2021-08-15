@@ -1,6 +1,7 @@
 {
   "meta": {
+    "opStatus": "default",
     "opType": "raytk.operators.sdf.mobiusRingSdf",
-    "opVersion": 6
+    "opVersion": 7
   }
 }

@@ -402,6 +402,7 @@ class PickerCategoryItem(PickerItem):
 @dataclass
 class PickerOpItem(PickerItem):
 	words: List[str] = field(default_factory=list)
+	keywords: List[str] = field(default_factory=list)
 	isOP = True
 	isCategory = False
 
@@ -417,6 +418,9 @@ class PickerOpItem(PickerItem):
 		filtText = filt.text.lower()
 		if filtText in self.shortName.lower():
 			return True
+		for keyword in self.keywords:
+			if keyword.startswith(filtText):
+				return True
 		if not self.words or len(filtText) > len(self.words):
 			return False
 		for w, f in zip(self.words, filtText):
@@ -478,8 +482,15 @@ class _ItemLibrary:
 				isDeprecated=status == 'deprecated',
 				helpSummary=str(opHelpTable[path, 'summary'] or ''),
 			)
+			keywords = tdu.split(opTable[row, 'keywords'])
+			if keywords:
+				if opItem.helpSummary:
+					opItem.helpSummary += '\n\n'
+				opItem.helpSummary += 'Keywords: ' + ', '.join(keywords)
+				pass
 			words = _splitCamelCase(shortName)
 			opItem.words = [w.lower() for w in words]
+			opItem.keywords += [k.lower() for k in keywords]
 			if categoryName in categoriesByName:
 				categoriesByName[categoryName].ops.append(opItem)
 			else:

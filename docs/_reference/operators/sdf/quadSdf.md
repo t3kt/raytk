@@ -8,6 +8,11 @@ redirect_from:
   - /reference/opType/raytk.operators.sdf.quadSdf/
 op:
   category: sdf
+  keywords:
+  - plane
+  - quad
+  - rectangle
+  - square
   name: quadSdf
   opType: raytk.operators.sdf.quadSdf
   parameters:

@@ -21,6 +21,11 @@ op:
     required: true
     returnTypes:
     - Sdf
+  keywords:
+  - clone
+  - copy
+  - radial
+  - repeat
   name: radialClone
   opType: raytk.operators.filter.radialClone
   parameters:

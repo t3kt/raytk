@@ -8,6 +8,10 @@ redirect_from:
   - /reference/opType/raytk.operators.sdf.torusSdf/
 op:
   category: sdf
+  keywords:
+  - donut
+  - ring
+  - torus
   name: torusSdf
   opType: raytk.operators.sdf.torusSdf
   parameters:

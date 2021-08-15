@@ -30,7 +30,10 @@ op:
     returnTypes:
     - float
     - vec4
-    - Sdf
+  keywords:
+  - range
+  - remap
+  - rescale
   name: rescaleField
   opType: raytk.operators.filter.rescaleField
   parameters:
@@ -48,6 +51,12 @@ op:
   - label: Output High
     name: Outputhigh
     summary: The high end of the rescaled value range.
+  - label: Multiply
+    name: Mult
+  - label: Multiply
+    name: Multiply
+  - label: Post Add
+    name: Postadd
   summary: Rescales the values produced by a field.
 
 ---

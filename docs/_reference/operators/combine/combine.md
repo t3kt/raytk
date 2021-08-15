@@ -61,6 +61,16 @@ op:
     returnTypes:
     - float
     - Sdf
+  keywords:
+  - chamfer
+  - columns
+  - combine
+  - diff
+  - intersect
+  - round
+  - smooth
+  - stairs
+  - union
   name: combine
   opType: raytk.operators.combine.combine
   parameters:
@@ -127,6 +137,8 @@ op:
     name: Number
     summary: For stair and column modes, this controls how many steps are used in
       the blending regions.
+  - label: Offset
+    name: Offset
   summary: Combines SDFs in various ways.
 
 ---

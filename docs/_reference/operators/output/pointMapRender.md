@@ -133,7 +133,8 @@ op:
     name: Enablenormalsmoothing
   - label: Normal Smoothing
     name: Normalsmoothing
-  status: beta
+  - label: Customize Shader Config
+    name: Customizeshaderconfig
   summary: Renderer that takes in a TOP of coordinates and evaluates the scene at
     each point.
 

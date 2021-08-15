@@ -6,6 +6,7 @@ if False:
 def buildSupportTable(
 		support: 'scriptDAT',
 		top: 'glslTOP'):
+	top.cook(force=True)
 	support.clear()
 	support.appendRow([
 		'include',

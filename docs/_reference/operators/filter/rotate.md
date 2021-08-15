@@ -62,6 +62,11 @@ op:
     returnTypes:
     - vec4
     summary: Optional field that can be used to control the pivot point.
+  keywords:
+  - rotate
+  - spin
+  - transform
+  - twist
   name: rotate
   opType: raytk.operators.filter.rotate
   parameters:

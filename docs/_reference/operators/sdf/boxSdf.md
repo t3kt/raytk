@@ -22,6 +22,11 @@ op:
     returnTypes:
     - float
     - vec4
+  keywords:
+  - box
+  - cube
+  - rectangle
+  - square
   name: boxSdf
   opType: raytk.operators.sdf.boxSdf
   parameters:

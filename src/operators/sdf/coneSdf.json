@@ -1,6 +1,7 @@
 {
   "meta": {
+    "opStatus": "default",
     "opType": "raytk.operators.sdf.coneSdf",
-    "opVersion": 7
+    "opVersion": 8
   }
 }

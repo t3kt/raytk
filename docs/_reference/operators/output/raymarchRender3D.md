@@ -252,6 +252,8 @@ op:
     name: Enablecustomoutput1
   - label: Enable Custom Output 2
     name: Enablecustomoutput2
+  - label: Customize Shader Config
+    name: Customizeshaderconfig
   summary: Renders a scene using 3D raymarching.
 
 ---

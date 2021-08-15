@@ -1,6 +1,7 @@
 {
   "meta": {
+    "opStatus": "default",
     "opType": "raytk.operators.material.colorizeSdf2d",
-    "opVersion": 2
+    "opVersion": 3
   }
 }

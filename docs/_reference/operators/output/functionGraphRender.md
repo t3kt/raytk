@@ -150,6 +150,8 @@ op:
     name: Showaxes
   - label: Time Reference Operator
     name: Timerefop
+  - label: Customize Shader Config
+    name: Customizeshaderconfig
   summary: Visualizes the graph of a function operator.
 
 ---

@@ -1,3 +1,9 @@
+"""
+Toolkit model which works with operator type specifications and metadata.
+
+This should only be used within development tools.
+"""
+
 from dataclasses import dataclass, field
 import dataclasses
 import json
@@ -6,7 +12,7 @@ import re
 from typing import Dict, Iterable, List, Optional, Union
 import yaml
 
-from raytkUtil import CoordTypes, ContextTypes, ReturnTypes, cleanDict, ROPInfo, InputInfo, RaytkTags
+from raytkUtil import cleanDict, ROPInfo, InputInfo, RaytkTags
 
 # noinspection PyUnreachableCode
 if False:
@@ -62,55 +68,6 @@ def _parseJson(jsonStr: str):
 	if jsonStr:
 		jsonStr = jsonStr.strip()
 	return json.loads(jsonStr) if jsonStr else {}
-
-@dataclass
-class _TypeSpec_OLD(_DataObject_OLD):
-	"""
-	One or several possible data types.
-	`*` is equivalent to all available types.
-	`foo` is equivalent to one specific type.
-	`foo|bar|baz` is equivalent to one of a list of possible types.
-	"""
-	isAll: bool = False
-	types: List[str] = dataclasses.field(default_factory=list)
-
-	def isSingle(self):
-		return not self.isAll and len(self.types) == 1
-
-	def __str__(self):
-		if self.isAll:
-			return '*'
-		return '|'.join(self.types)
-
-	@classmethod
-	def parse(cls, s: str):
-		if not s:
-			return cls()
-		if s == '*':
-			return cls.all()
-		return cls(types=s.split('|'))
-
-	@classmethod
-	def all(cls):
-		return cls(isAll=True)
-
-	def expand(self, allTypes: List[str]):
-		if self.isAll:
-			return list(allTypes)
-		return list(filter(lambda t: t in allTypes, self.types))
-
-	def expandedStr(self, allTypes: List[str]):
-		return '|'.join(self.expand(allTypes))
-
-	def supports(self, typeName: str):
-		return self.isAll or typeName in self.types
-
-	def toObj(self):
-		return str(self)
-
-	@classmethod
-	def fromObj(cls, obj):
-		return cls.parse(obj)
 
 @dataclass
 class OpDefMeta_OLD(_DataObject_OLD):

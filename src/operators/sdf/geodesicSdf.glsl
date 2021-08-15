@@ -119,6 +119,10 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 	p -= n * (THIS_Spikeoffset + THIS_Spikelength);
 	p = reflect(p, normalize(mix(vec3(0,1,0), -n, .5)));
 	d = min(d, inputOp1(p, ctx).x);
-	#endif
+	ReturnT res = inputOp1(p, ctx);
+	res.x = min(res.x, d);
+	return res;
+	#else
 	return createSdf(d);
+	#endif
 }

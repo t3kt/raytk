@@ -1,7 +1,9 @@
 #if defined(THIS_RETURN_TYPE_Sdf)
 Sdf map(THIS_CoordT p) {
 	Sdf res = thismap(p, createDefaultContext());
-	res.x *= 0.5;
+	if (!isNonHitSdf(res)) {
+		res.x *= 0.5;
+	}
 	return res;
 }
 
@@ -106,7 +108,11 @@ void main() {
 	#endif
 
 	#ifdef OUTPUT_SDF
-	sdfOut = vec4(vec3(res.x), 1.0);
+	if (isNonHitSdf(res)) {
+		sdfOut = vec4(0.);
+	} else {
+		sdfOut = vec4(vec3(res.x), 1.0);
+	}
 	#endif
 	#if defined(OUTPUT_NORMAL) && defined(THIS_COORD_TYPE_vec3)
 	normalOut = vec4(calcNormal(p), 0.);
