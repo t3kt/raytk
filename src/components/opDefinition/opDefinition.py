@@ -140,11 +140,147 @@ def _processInputDefTypeCategory(dat: 'scriptDAT', supportedTypeTable: 'DAT', ca
 def _getParamsOp() -> 'Optional[COMP]':
 	return parentPar().Paramsop.eval() or _host()
 
-def _getRegularParams(spec: str) -> 'List[Par]':
+# Builds the primary table from which all other parameter tables are built.
+# This table contains regular parameters and special parameters, with both runtime and macro handling.
+def buildParamSpecTable(dat: 'scriptDAT'):
+	dat.clear()
+	dat.appendRow([
+		'localName',
+		'globalName',
+		'source',
+		'style',
+		'tupletName',
+		'tupletGlobalName',
+		'vecIndex',
+		'status',
+		'handling',
+		'conversion',
+	])
+	globalPrefix = parentPar().Name.eval() + '_'
+
+	def addPar(p: 'Par', handling: str):
+		dat.appendRow([
+			p.name,
+			globalPrefix + p.name,
+			'param',
+			p.style,
+			p.tupletName,
+			globalPrefix + p.tupletName,
+			p.vecIndex,
+			'',
+			handling,
+			'',
+		])
+
+	listTable = parentPar().Paramlisttable.eval()  # type: DAT
+
+	def getNamesFromListTable(category: str):
+		rowCells = listTable and listTable.row(category)
+		if not rowCells:
+			return []
+		names = []
+		for cell in rowCells[1:]:
+			for n in tdu.split(cell.val.strip()):
+				if n not in names:
+					names.append(n)
+		return names
+
+	# Add params from opDefinition Params par
+	for par in _getRegularParams(parentPar().Params):
+		addPar(par, handling='runtime')
+	# Add params from opDefinition Macroparams par
+	for par in _getRegularParams(parentPar().Macroparams):
+		addPar(par, handling='macro')
+
+	# Add special params from opDefinition Specialparams par
+	specialNames = tdu.expand(parentPar().Specialparams.eval())
+	specialNames += getNamesFromListTable('specialParams')
+	for name in specialNames:
+		dat.appendRow([
+			name,
+			globalPrefix + name,
+			'special',
+			'Float',
+			'',
+			'',
+			'0',
+			'',
+			'runtime',
+			'',
+		])
+		# TODO: tuplets for special params
+
+	# Add regular params from Paramlisttable
+	for par in _getRegularParams(' '.join(getNamesFromListTable('params'))):
+		addPar(par, handling='runtime')
+	# Add macro params from Paramlisttable
+	for par in _getRegularParams(' '.join(getNamesFromListTable('macroParams'))):
+		addPar(par, handling='macro')
+
+	# Update conversions from opDefinition Angleparams par
+	for par in _getRegularParams(parentPar().Angleparams):
+		dat[par.name, 'conversion'] = 'angle'
+	for par in _getRegularParams(' '.join(getNamesFromListTable('angleParams'))):
+		dat[par.name, 'conversion'] = 'angle'
+
+	# Update param statuses based on tuplets
+	_fillParamStatuses(dat)
+
+	# Group special parameters into tuplets
+	_groupSpecialParamsIntoTuplets(dat)
+
+def _fillParamStatuses(dat: 'DAT'):
+	parsByTuplet = {}  # type: Dict[str, List[Par]]
+	host = _getParamsOp()
+	if not host:
+		return
+	for i in range(1, dat.numRows):
+		if dat[i, 'source'] != 'param':
+			continue
+		name = dat[i, 'localName']
+		tupletName = dat[i, 'tupletName'].val
+		par = host.par[name]
+		if par is None:
+			continue
+		if tupletName not in parsByTuplet:
+			parsByTuplet[tupletName] = [par]
+		else:
+			parsByTuplet[tupletName].append(par)
+	for tupletName, pars in parsByTuplet.items():
+		if _canBeReadOnlyTuplet(pars):
+			for par in pars:
+				dat[par.name, 'status'] = 'readOnly'
+
+def _groupSpecialParamsIntoTuplets(dat: 'DAT'):
+	parts = []
+	tupletIndex = 0
+	globalPrefix = parentPar().Name.eval() + '_'
+
+	# TODO: handle placeholders ???? "_"
+	def addTuplet():
+		tupletName = _getTupletName(parts) or f'special{tupletIndex}'
+		for vecIndex, part in enumerate(parts):
+			dat[part, 'tupletName'] = tupletName
+			dat[part, 'tupletGlobalName'] = globalPrefix + tupletName
+			dat[part, 'vecIndex'] = vecIndex
+
+	for i in range(1, dat.numRows):
+		if dat[i, 'source'] != 'special':
+			continue
+		name = dat[i, 'localName'].val
+		parts.append(name)
+		if len(parts) == 4:
+			addTuplet()
+			parts.clear()
+			tupletIndex += 1
+	if parts:
+		addTuplet()
+
+def _getRegularParams(spec: 'Union[str, Par]') -> 'List[Par]':
 	host = _getParamsOp()
 	if not host:
 		return []
-	paramNames = tdu.expand(spec.strip())
+	paramNames = tdu.expand(str(spec).strip())
 	if not paramNames:
 		return []
 	return [
@@ -168,80 +304,59 @@ def _getNamePatternsFromParamListTable(category: str) -> 'List[str]':
 		names += tdu.split(cell)
 	return names
 
-def buildParamTable(dat: 'DAT'):
+def buildParamTable(dat: 'DAT', paramSpecTable: 'DAT'):
 	dat.clear()
-	host = _getParamsOp()
-	if not host:
-		return
-	name = parentPar().Name.eval()
-	allParamNames = [p.name for p in _getMainRegularParams()]
-	allParamNames += _getSpecialParamNames()
-	dat.appendCol([(name + '_' + pn) if pn != '_' else '_' for pn in allParamNames])
+	for i in range(1, paramSpecTable.numRows):
+		if paramSpecTable[i, 'handling'] != 'runtime':
+			continue
+		dat.appendRow([paramSpecTable[i, 'globalName']])
 
 def _getMainRegularParams():
 	params = _getRegularParams(parentPar().Params.eval())
 	params += _getRegularParams(' '.join(_getNamePatternsFromParamListTable('params')))
 	return params
 
-def buildParamDetailTable(dat: 'DAT'):
+def buildParamDetailTable(dat: 'DAT', paramSpecTable: 'DAT'):
 	dat.clear()
 	dat.appendRow(['tuplet', 'source', 'size', 'part1', 'part2', 'part3', 'part4', 'status', 'conversion', 'localNames'])
-	name = parentPar().Name.eval()
-	params = _getMainRegularParams()
-	anglePars = _getRegularParams(parentPar().Angleparams.eval())
-	if params:
-		paramsByTuplet = {}  # type: Dict[str, List[Par]]
-		for par in params:
-			if par.tupletName in paramsByTuplet:
-				paramsByTuplet[par.tupletName].append(par)
+	namesByTupletName = {}  # type: Dict[str, List[str]]
+	for i in range(1, paramSpecTable.numRows):
+		tupletName = paramSpecTable[i, 'tupletName'].val
+		vecIndex = int(paramSpecTable[i, 'vecIndex'] or 0)
+		if not tupletName:
+			continue
+		if tupletName not in namesByTupletName:
+			namesByTupletName[tupletName] = ['', '', '', '']
+		namesByTupletName[tupletName][vecIndex] = paramSpecTable[i, 'localName'].val
+
+	for tupletName, parts in namesByTupletName.items():
+		if paramSpecTable[parts[0], 'handling'] != 'runtime':
+			continue
+		size = 0
+		for part in parts:
+			if part:
+				size += 1
 			else:
-				paramsByTuplet[par.tupletName] = [par]
-		for tupletName, tupletPars in paramsByTuplet.items():
-			tupletPars.sort(key=lambda p: p.vecIndex)
-			row = dat.numRows
-			dat.appendRow(
-				[
-					f'{name}_{tupletName}',
-					'param',
-					len(tupletPars)
-				])
-			isAngle = False
-			for i, p in enumerate(tupletPars):
-				if p in anglePars:
-					isAngle = True
-				dat[row, 'part' + str(i + 1)] = f'{name}_{p.name}'
-			dat[row, 'status'] = 'readOnly' if _canBeReadOnlyTuplet(tupletPars) else ''
-			dat[row, 'conversion'] = 'angle' if isAngle else ''
-			dat[row, 'localNames'] = ' '.join(p.name for p in tupletPars)
+				break
+		dat.appendRow([
+			paramSpecTable[parts[0], 'tupletGlobalName'],
+			paramSpecTable[parts[0], 'source'],
+			size,
+			paramSpecTable[parts[0], 'globalName'] or '',
+			paramSpecTable[parts[1], 'globalName'] or '',
+			paramSpecTable[parts[2], 'globalName'] or '',
+			paramSpecTable[parts[3], 'globalName'] or '',
+			paramSpecTable[parts[0], 'status'],
+			paramSpecTable[parts[0], 'conversion'],
+			' '.join(p for p in parts if p),
+		])
 
-	specialNames = _getSpecialParamNames()
-	if specialNames:
-		parts = []
-		specialIndex = 0
-
-		def addSpecial():
-			cleanParts = [p for p in parts if p != '_']
-			tupletName = _getTupletName(cleanParts) or f'special{specialIndex}'
-			dat.appendRow([f'{name}_{tupletName}', 'special', len(cleanParts)] + [
-				f'{name}_{part}' for part in cleanParts
-			])
-
-		for specialName in specialNames:
-			parts.append(specialName)
-			if len(parts) == 4:
-				addSpecial()
-				parts.clear()
-				specialIndex += 1
-		if parts:
-			addSpecial()
 
 def _canBeReadOnlyTuplet(pars: 'List[Par]'):
-	if not pars[0].readOnly:
-		return False
-	for par in pars:
-		if par.mode != ParMode.CONSTANT:
-			return False
-	return True
+	return all(_canBeReadOnlyPar(p) for p in pars)
+
+def _canBeReadOnlyPar(par: 'Par'):
+	return par.readOnly and par.mode == ParMode.CONSTANT
 
 def _getTupletName(parts: 'List[str]'):
 	if len(parts) <= 1 or len(parts[0]) <= 1:
@@ -263,6 +378,26 @@ def buildParamTupletAliases(dat: 'DAT', paramTable: 'DAT'):
 					for j in range(size)
 				]))
 			])
+
+def buildParamChopNamesTable(dat: 'DAT', paramSpecTable: 'DAT'):
+	dat.clear()
+	regularNames = []
+	specialNames = []
+	angleNames = []
+	for i in range(1, paramSpecTable.numRows):
+		if paramSpecTable[i, 'handling'] != 'runtime':
+			continue
+		name = paramSpecTable[i, 'localName'].val
+		source = paramSpecTable[i, 'source']
+		if source == 'param':
+			regularNames.append(name)
+		elif source == 'special':
+			specialNames.append(name)
+		if paramSpecTable[i, 'conversion'] == 'angle':
+			angleNames.append(name)
+	dat.appendRow(['regular', ' '.join(regularNames)])
+	dat.appendRow(['special', ' '.join(specialNames)])
+	dat.appendRow(['angle', ' '.join(angleNames)])
 
 _typeReplacements = {
 	re.compile(r'\bCoordT\b'): 'THIS_CoordT',
