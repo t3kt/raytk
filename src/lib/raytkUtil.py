@@ -91,6 +91,7 @@ class OpDefParsT(_OpMetaPars):
 	Specialparams: 'StrParamT'
 	Angleparams: 'StrParamT'
 	Macroparams: 'StrParamT'
+	Paramlisttable: 'OPParamT'
 	Callbacks: 'DatParamT'
 	Librarynames: 'StrParamT'
 	Help: 'DatParamT'

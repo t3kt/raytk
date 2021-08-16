@@ -156,21 +156,38 @@ def _getRegularParams(spec: str) -> 'List[Par]':
 def _getSpecialParamNames():
 	return tdu.expand(parentPar().Specialparams.eval())
 
+def _getNamePatternsFromParamListTable(category: str) -> 'List[str]':
+	table = parentPar().Paramlisttable.eval()
+	if not table:
+		return []
+	rowCells = table.row(category)
+	if not rowCells:
+		return []
+	names = []
+	for cell in rowCells[1:]:
+		names += tdu.split(cell)
+	return names
+
 def buildParamTable(dat: 'DAT'):
 	dat.clear()
 	host = _getParamsOp()
 	if not host:
 		return
 	name = parentPar().Name.eval()
-	allParamNames = [p.name for p in _getRegularParams(parentPar().Params.eval())]
+	allParamNames = [p.name for p in _getMainRegularParams()]
 	allParamNames += _getSpecialParamNames()
 	dat.appendCol([(name + '_' + pn) if pn != '_' else '_' for pn in allParamNames])
 
+def _getMainRegularParams():
+	params = _getRegularParams(parentPar().Params.eval())
+	params += _getRegularParams(' '.join(_getNamePatternsFromParamListTable('params')))
+	return params
+
 def buildParamDetailTable(dat: 'DAT'):
 	dat.clear()
-	dat.appendRow(['tuplet', 'source', 'size', 'part1', 'part2', 'part3', 'part4', 'status', 'conversion'])
+	dat.appendRow(['tuplet', 'source', 'size', 'part1', 'part2', 'part3', 'part4', 'status', 'conversion', 'localNames'])
 	name = parentPar().Name.eval()
-	params = _getRegularParams(parentPar().Params.eval())
+	params = _getMainRegularParams()
 	anglePars = _getRegularParams(parentPar().Angleparams.eval())
 	if params:
 		paramsByTuplet = {}  # type: Dict[str, List[Par]]
@@ -195,6 +212,7 @@ def buildParamDetailTable(dat: 'DAT'):
 				dat[row, 'part' + str(i + 1)] = f'{name}_{p.name}'
 			dat[row, 'status'] = 'readOnly' if _canBeReadOnlyTuplet(tupletPars) else ''
 			dat[row, 'conversion'] = 'angle' if isAngle else ''
+			dat[row, 'localNames'] = ' '.join(p.name for p in tupletPars)
 
 	specialNames = _getSpecialParamNames()
 	if specialNames:
@@ -315,7 +333,12 @@ def updateLibraryMenuPar(libsComp: 'COMP'):
 	libs.sort(key=lambda l: -l.nodeY)
 	p.menuNames = [lib.name for lib in libs]
 
-def prepareMacroTable(dat: 'scriptDAT', inputTable: 'DAT', macroParamTable: 'DAT'):
+def _getMacroParams() -> 'List[Par]':
+	params = _getRegularParams(parentPar().Macroparams.eval())
+	params += _getRegularParams(' '.join(_getNamePatternsFromParamListTable('macroParams')))
+	return params
+
+def prepareMacroTable(dat: 'scriptDAT', inputTable: 'DAT'):
 	dat.clear()
 	for cell in inputTable.col('inputFunc')[1:]:
 		if not cell.val:
@@ -325,10 +348,11 @@ def prepareMacroTable(dat: 'scriptDAT', inputTable: 'DAT', macroParamTable: 'DAT
 			f'THIS_HAS_INPUT_{tdu.digits(cell.val)}',
 			'',
 		])
-	for row in range(1, macroParamTable.numRows):
-		name = macroParamTable[row, 'name']
-		val = macroParamTable[row, 'value']
-		style = macroParamTable[row, 'style']
+	macroParams = _getMacroParams()
+	for par in macroParams:
+		name = par.name
+		val = par.eval()
+		style = par.style
 		if style in ('Menu', 'Str', 'StrMenu'):
 			dat.appendRow(['', f'THIS_{name}_{val}', ''])
 			dat.appendRow(['', f'THIS_{name}', val])
