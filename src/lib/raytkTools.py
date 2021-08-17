@@ -68,6 +68,8 @@ class RaytkTools(RaytkContext):
 				inspectPar = page.appendPulse('Inspect')[0]
 			inspectPar.startSection = True
 			inspectPar.order = 888
+			inspectPar.enableExpr = "hasattr(op, 'raytk') and bool(op.raytk.op('tools/inspector'))"
+			inspectPar.help = 'Open the Inspector for this OP.\nToolkit tox must be loaded in the project.'
 		elif inspectPar is not None:
 			inspectPar.destroy()
 
