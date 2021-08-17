@@ -142,7 +142,7 @@ def _getParamsOp() -> 'Optional[COMP]':
 
 # Builds the primary table from which all other parameter tables are built.
 # This table contains regular parameters and special parameters, with both runtime and macro handling.
-def buildParamSpecTable(dat: 'scriptDAT'):
+def buildParamSpecTable(dat: 'scriptDAT', paramListTable: 'DAT'):
 	dat.clear()
 	dat.appendRow([
 		'localName',
@@ -172,10 +172,9 @@ def buildParamSpecTable(dat: 'scriptDAT'):
 			'',
 		])
 
-	listTable = parentPar().Paramlisttable.eval()  # type: DAT
 
 	def getNamesFromListTable(category: str):
-		rowCells = listTable and listTable.row(category)
+		rowCells = paramListTable.row(category)
 		if not rowCells:
 			return []
 		names = []
@@ -185,16 +184,15 @@ def buildParamSpecTable(dat: 'scriptDAT'):
 					names.append(n)
 		return names
 
-	# Add params from opDefinition Params par
-	for par in _getRegularParams(parentPar().Params):
+	# Add regular params from Paramlisttable
+	for par in _getRegularParams(getNamesFromListTable('params')):
 		addPar(par, handling='runtime')
-	# Add params from opDefinition Macroparams par
-	for par in _getRegularParams(parentPar().Macroparams):
+	# Add macro params from Paramlisttable
+	for par in _getRegularParams(getNamesFromListTable('macroParams')):
 		addPar(par, handling='macro')
 
 	# Add special params from opDefinition Specialparams par
-	specialNames = tdu.expand(parentPar().Specialparams.eval())
-	specialNames += getNamesFromListTable('specialParams')
+	specialNames = getNamesFromListTable('specialParams')
 	for name in specialNames:
 		dat.appendRow([
 			name,
@@ -207,20 +205,11 @@ def buildParamSpecTable(dat: 'scriptDAT'):
 			'',
 			'runtime',
 			'',
-		])
-		# TODO: tuplets for special params
-
-	# Add regular params from Paramlisttable
-	for par in _getRegularParams(' '.join(getNamesFromListTable('params'))):
-		addPar(par, handling='runtime')
-	# Add macro params from Paramlisttable
-	for par in _getRegularParams(' '.join(getNamesFromListTable('macroParams'))):
-		addPar(par, handling='macro')
+			])
+	# TODO: tuplet placeholder special params ("_")?
 
 	# Update conversions from opDefinition Angleparams par
-	for par in _getRegularParams(parentPar().Angleparams):
-		dat[par.name, 'conversion'] = 'angle'
-	for par in _getRegularParams(' '.join(getNamesFromListTable('angleParams'))):
+	for par in _getRegularParams(getNamesFromListTable('angleParams')):
 		dat[par.name, 'conversion'] = 'angle'
 
 	# Update param statuses based on tuplets
@@ -276,11 +265,12 @@ def _groupSpecialParamsIntoTuplets(dat: 'DAT'):
 	if parts:
 		addTuplet()
 
-def _getRegularParams(spec: 'Union[str, Par]') -> 'List[Par]':
+def _getRegularParams(specs: 'List[str]') -> 'List[Par]':
 	host = _getParamsOp()
 	if not host:
 		return []
-	paramNames = tdu.expand(str(spec).strip())
+	# TODO: clean this up. joining and splitting and rejoining, etc.
+	paramNames = tdu.expand(str(' '.join(specs)).strip())
 	if not paramNames:
 		return []
 	return [
@@ -289,21 +279,7 @@ def _getRegularParams(spec: 'Union[str, Par]') -> 'List[Par]':
 		if p.isCustom and not (p.isPulse and p.name == 'Inspect')
 	]
 
-def _getSpecialParamNames():
-	return tdu.expand(parentPar().Specialparams.eval())
-
-def _getNamePatternsFromParamListTable(category: str) -> 'List[str]':
-	table = parentPar().Paramlisttable.eval()
-	if not table:
-		return []
-	rowCells = table.row(category)
-	if not rowCells:
-		return []
-	names = []
-	for cell in rowCells[1:]:
-		names += tdu.split(cell)
-	return names
-
+# Builds a table that lists global names of runtime-based parameters.
 def buildParamTable(dat: 'DAT', paramSpecTable: 'DAT'):
 	dat.clear()
 	for i in range(1, paramSpecTable.numRows):
@@ -311,11 +287,7 @@ def buildParamTable(dat: 'DAT', paramSpecTable: 'DAT'):
 			continue
 		dat.appendRow([paramSpecTable[i, 'globalName']])
 
-def _getMainRegularParams():
-	params = _getRegularParams(parentPar().Params.eval())
-	params += _getRegularParams(' '.join(_getNamePatternsFromParamListTable('params')))
-	return params
-
+# Builds a table of parameters organized into tuplets.
 def buildParamDetailTable(dat: 'DAT', paramSpecTable: 'DAT'):
 	dat.clear()
 	dat.appendRow(['tuplet', 'source', 'size', 'part1', 'part2', 'part3', 'part4', 'status', 'conversion', 'localNames'])
@@ -353,10 +325,7 @@ def buildParamDetailTable(dat: 'DAT', paramSpecTable: 'DAT'):
 
 
 def _canBeReadOnlyTuplet(pars: 'List[Par]'):
-	return all(_canBeReadOnlyPar(p) for p in pars)
-
-def _canBeReadOnlyPar(par: 'Par'):
-	return par.readOnly and par.mode == ParMode.CONSTANT
+	return all(p.readOnly and p.mode == ParMode.CONSTANT for p in pars)
 
 def _getTupletName(parts: 'List[str]'):
 	if len(parts) <= 1 or len(parts[0]) <= 1:
@@ -379,6 +348,7 @@ def buildParamTupletAliases(dat: 'DAT', paramTable: 'DAT'):
 				]))
 			])
 
+# Builds a table with lists of parameter local names, for use in CHOP parameter expressions.
 def buildParamChopNamesTable(dat: 'DAT', paramSpecTable: 'DAT'):
 	dat.clear()
 	regularNames = []
@@ -468,12 +438,7 @@ def updateLibraryMenuPar(libsComp: 'COMP'):
 	libs.sort(key=lambda l: -l.nodeY)
 	p.menuNames = [lib.name for lib in libs]
 
-def _getMacroParams() -> 'List[Par]':
-	params = _getRegularParams(parentPar().Macroparams.eval())
-	params += _getRegularParams(' '.join(_getNamePatternsFromParamListTable('macroParams')))
-	return params
-
-def prepareMacroTable(dat: 'scriptDAT', inputTable: 'DAT'):
+def prepareMacroTable(dat: 'scriptDAT', inputTable: 'DAT', paramSpecTable: 'DAT'):
 	dat.clear()
 	for cell in inputTable.col('inputFunc')[1:]:
 		if not cell.val:
@@ -483,7 +448,14 @@ def prepareMacroTable(dat: 'scriptDAT', inputTable: 'DAT'):
 			f'THIS_HAS_INPUT_{tdu.digits(cell.val)}',
 			'',
 		])
-	macroParams = _getMacroParams()
+	macroParams = []
+	host = _getParamsOp()
+	for i in range(1, paramSpecTable.numRows):
+		if paramSpecTable[i, 'handling'] != 'macro':
+			continue
+		par = host.par[paramSpecTable[i, 'localName']]
+		if par is not None:
+			macroParams.append(par)
 	for par in macroParams:
 		name = par.name
 		val = par.eval()
