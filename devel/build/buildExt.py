@@ -200,6 +200,7 @@ class BuildManager:
 		tools = RaytkTools()
 		tools.updateROPMetadata(comp)
 		tools.updateROPParams(comp)
+		self.context.applyParamUpdatersIn(comp)
 		self.context.resetCustomPars(comp)
 		self.context.lockROPPars(comp)
 
