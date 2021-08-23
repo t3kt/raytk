@@ -1,4 +1,5 @@
 name	label
 none	None
 bounds	Bounds XYZ
-spherical	Spherical Polar
+sphericalpolar	Spherical Polar
+sphere	Sphere
