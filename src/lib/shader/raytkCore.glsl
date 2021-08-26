@@ -316,6 +316,9 @@ struct MaterialContext {
 	// w: whether this has been set
 	vec4 uv;
 	#endif
+	#ifdef RAYTK_LOD_IN_MATERIAL_CONTEXT
+	float lod;
+	#endif
 };
 void assignUV(inout MaterialContext ctx, vec3 uv) {
 	#ifdef RAYTK_USE_UV
@@ -334,6 +337,12 @@ MaterialContext createMaterialContext() {
 	matCtx.materialPos = vec3(0.);
 	#endif
 	matCtx.shadedLevel = 1.;
+	#ifdef RAYTK_USE_UV
+	matCtx.uv = vec4(0.);
+	#endif
+	#ifdef RAYTK_LOD_IN_MATERIAL_CONTEXT
+	matCtx.lod = 1.;
+	#endif
 	return matCtx;
 }
 

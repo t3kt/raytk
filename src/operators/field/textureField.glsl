@@ -24,7 +24,11 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 			#endif
 		}
 	#endif
+	#if defined(RAYTK_LOD_IN_MATERIAL_CONTEXT) && defined(THIS_CONTEXT_TYPE_MaterialContext)
+	vec4 value = textureLod(THIS_texture, uv + 0.5, ctx.lod);
+	#else
 	vec4 value = texture(THIS_texture, uv + 0.5);
+	#endif
 	#ifdef THIS_RETURN_TYPE_float
 	return value.x;
 	#else
