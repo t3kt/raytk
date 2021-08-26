@@ -220,14 +220,8 @@ float attenuateLight(float attenScale, float attenBias, float attenRolloff, floa
 	return finalAtten;
 }
 
-// PBR demo by piluve
+// Based on PBR demo by piluve
 // https://www.shadertoy.com/view/XssBDr
-
-// Returns the color of the current point. Uses the Cook-Torrance for the
-// specular BRDF and Lambertian for the diffuse BRDF
-vec3 pbrShading(vec3 p) {
-	return vec3(0.);
-}
 
 // Fresnel-Schlick approximation
 vec3 pbr_fresnel(float ndv,vec3 F0)

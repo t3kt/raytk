@@ -1,3 +1,7 @@
+// Based on PBR demo by piluve
+// https://www.shadertoy.com/view/XssBDr
+// Uses Cook-Torrance for the specular BRDF and Lambertian for the diffuse BRDF
+
 vec4 THIS_iterationCapture = vec4(0.);
 
 ReturnT thismap(CoordT p, ContextT ctx) {
@@ -15,10 +19,13 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 	Returns the irradiance map (diffuse IBL).
 	Its 50% hack
 */
-vec3 THIS_IrradianceMap(vec3 n) {
-	// TODO: ....
+vec3 THIS_irradianceMap(vec3 p, MaterialContext matCtx) {
 //	return texture(iChannel1,n).xyz;
+	#ifdef THIS_HAS_INPUT_2
+	return inputOp2(p, matCtx).xyz;
+	#else
 	return vec3(0.5);
+	#endif
 }
 
 /*
@@ -26,13 +33,18 @@ vec3 THIS_IrradianceMap(vec3 n) {
 	Its 100% hack, a version that blurs the cubemap should give
 	much better results at hight roughness.
 */
-vec3 THIS_ReflectanceMap(vec3 refl,float roughness,vec3 n)
-{
-	// TODO: ....
-//	vec3 blurMap = THIS_IrradianceMap(n);
-//	vec3 reflecMap = textureLod(iChannel0,refl,4.0 * roughness).xyz;
-//	return mix(reflecMap,blurMap,roughness);
-	return vec3(0.5);
+vec3 THIS_reflectanceMap(vec3 p, MaterialContext matCtx, vec3 refl, float roughness, vec3 blurMap) {
+	//	vec3 blurMap = THIS_IrradianceMap(n);
+	//	vec3 reflecMap = textureLod(iChannel0,refl,4.0 * roughness).xyz;
+	//	return mix(reflecMap,blurMap,roughness);
+	#ifdef THIS_HAS_INPUT_3
+	matCtx.lod = 4.0 * roughness;
+	matCtx.normal = refl;
+	vec3 reflectMap = inputOp3(p, matCtx).xyz;
+	#else
+	vec3 reflectMap = vec3(0.5);
+	#endif
+	return mix(reflectMap, blurMap, roughness);
 }
 
 vec3 THIS_getColor(vec3 p, MaterialContext matCtx) {
@@ -108,10 +120,12 @@ vec3 THIS_getColor(vec3 p, MaterialContext matCtx) {
 	vec3 totalIBL = vec3(0.0);
 
 	// Diffuse IBL
-	vec3 diffuseIBL = THIS_IrradianceMap(n) * albedo * kD * 1.0;
+	vec3 irradiance = THIS_irradianceMap(p, matCtx);
+	vec3 diffuseIBL = irradiance * albedo * kD * 1.0;
 
 	// Specular IBL
-	vec3 specularIBL = THIS_ReflectanceMap(r,roughness,n) * F;
+	vec3 reflectance = THIS_reflectanceMap(p, matCtx, r, roughness, irradiance);
+	vec3 specularIBL = reflectance * F;
 
 	totalIBL = kD * diffuseIBL + specularIBL;
 
