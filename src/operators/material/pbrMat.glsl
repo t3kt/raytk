@@ -49,13 +49,32 @@ vec3 THIS_reflectanceMap(vec3 p, MaterialContext matCtx, vec3 refl, float roughn
 
 vec3 THIS_getColor(vec3 p, MaterialContext matCtx) {
 	restoreIterationFromMaterial(matCtx, THIS_iterationCapture);
+	vec3 mp = getPosForMaterial(p, matCtx);
+
 	vec3 lightDir = normalize(p - matCtx.light.pos);
 	vec3 viewDir = normalize(-matCtx.ray.dir);
 
-	float roughness = max(THIS_Roughness, 0.005); // TODO: DO THIS WITH PARAM LIMITS?
+	float roughness = THIS_Roughness;
 	float metallic = THIS_Metallic;
-	// TODO: Albedo is a vec3?
-	vec3 albedo = vec3(THIS_Albedo);
+
+	#ifdef THIS_HAS_INPUT_4
+	roughness *= inputOp4(mp, matCtx);
+	#endif
+	#ifdef THIS_HAS_INPUT_5
+	metallic *= inputOp5(mp, matCtx);
+	#endif
+
+	vec3 baseColor = THIS_Basecolor;
+	#if defined(THIS_Usesurfacecolor) && defined(RAYTK_USE_SURFACE_COLOR)
+	if (matCtx.result.color.w > 0.) {
+		baseColor *= matCtx.result.color.rgb;
+	}
+	#endif
+	#ifdef THIS_HAS_INPUT_3
+		baseColor *= fillToVec3(inputOp3(mp, matCtx));
+	#endif
+
+	vec3 albedo = baseColor * THIS_Albedo;
 
 	vec3 F0 = vec3(0.04);					// Base normal incidence for
 	// non-conductors (average of some materials)
@@ -120,11 +139,11 @@ vec3 THIS_getColor(vec3 p, MaterialContext matCtx) {
 	vec3 totalIBL = vec3(0.0);
 
 	// Diffuse IBL
-	vec3 irradiance = THIS_irradianceMap(p, matCtx);
+	vec3 irradiance = THIS_irradianceMap(mp, matCtx);
 	vec3 diffuseIBL = irradiance * albedo * kD * 1.0;
 
 	// Specular IBL
-	vec3 reflectance = THIS_reflectanceMap(p, matCtx, r, roughness, irradiance);
+	vec3 reflectance = THIS_reflectanceMap(mp, matCtx, r, roughness, irradiance);
 	vec3 specularIBL = reflectance * F;
 
 	totalIBL = kD * diffuseIBL + specularIBL;
