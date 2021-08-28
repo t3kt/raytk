@@ -63,7 +63,28 @@ int DBG_refractCount = 0;
 //}
 #endif
 
+// Volumetric light value accumulated during the current ray march.
+vec3 volAccum;
+float vStepDist = THIS_Volumetricstep;
+
+void addVolLight(Ray ray, Sdf res, float mainStepDist) {
+	#ifdef RAYTK_USE_VOLUMETRIC_LIGHT
+	vec3 col = vec3(0.);
+	for (int i = 0; i < THIS_Volumetricmaxsteps; i++) {
+		float actualStep = min(mainStepDist, vStepDist);
+		if (actualStep <= 0.) break;
+		vec3 midPoint = ray.pos + ray.dir * actualStep * 0.5;
+		col += getVolLightForStep(midPoint, ray, res) * actualStep;
+		ray.pos += ray.dir * actualStep;
+		mainStepDist -= actualStep;
+	}
+	volAccum += col;
+	#endif
+}
+
+
 Sdf castRay(Ray ray, float maxDist) {
+	volAccum = vec3(0.);
 	int priorStage = pushStage(RAYTK_STAGE_PRIMARY);
 	float dist = 0;
 	Sdf res = createNonHitSdf();
@@ -82,6 +103,9 @@ Sdf castRay(Ray ray, float maxDist) {
 		}
 		res = map(ray.pos);
 		dist += res.x;
+		if (res.x >= RAYTK_SURF_DIST) {
+			addVolLight(ray, res, res.x);
+		}
 		ray.pos += ray.dir * res.x;
 		#ifdef RAYTK_NEAR_HITS_IN_SDF
 		float nearHitAmount = checkNearHit(res.x);
@@ -490,6 +514,12 @@ void main()
 				#endif
 
 				vec4 col = getColor(p, matCtx);
+				col.rgb += volAccum;
+
+				// TEMP
+//				col.rgb = volAccum;
+				// TEMP
+
 				vec2 fragCoord = vUV.st*uTDOutputInfo.res.zw;
 				col.rgb += (1.0/255.0)*hash1(fragCoord);
 				colorOut += col;
