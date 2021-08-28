@@ -179,7 +179,7 @@ def buildParamSpecTable(dat: 'scriptDAT', paramListTable: 'DAT'):
 			return []
 		names = []
 		for cell in rowCells[1:]:
-			for n in tdu.split(cell.val.strip()):
+			for n in tdu.expand(cell.val.strip()):
 				if n not in names:
 					names.append(n)
 		return names
