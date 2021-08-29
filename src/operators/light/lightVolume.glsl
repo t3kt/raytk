@@ -2,7 +2,7 @@ float THIS_getLevel(CoordT p, ContextT ctx) {
 	if (THIS_Level <= 0.) return 0.;
 	#ifdef THIS_HAS_INPUT_1
 		float d = inputOp1(p, ctx).x - THIS_Offset;
-		return THIS_Level * (1.0 - smoothstep(0., THIS_Blending, max(d, 0.)));
+		return THIS_Level * (1.0 - max(0., smoothstep(-THIS_Blending*0.5, THIS_Blending*0.5, d)));
 	#else
 	return THIS_Level;
 	#endif
@@ -13,9 +13,7 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 	float level = THIS_getLevel(p, ctx);
 	if (level > 0.) {
 		#if defined(THIS_Enableshadow) && defined(RAYTK_USE_SHADOW)
-		MaterialContext matCtx = createMaterialContext();
-		matCtx.ray = ctx.ray;
-		level *= calcShadedLevel(p, matCtx);
+		level *= calcShadedLevel(p, ctx);
 		#endif
 	}
 	if (level > 0.) {

@@ -106,10 +106,7 @@ float calcShadedLevel(vec3 p, MaterialContext matCtx) {
 #endif
 
 #ifdef RAYTK_USE_VOLUMETRIC_LIGHT
-	vec3 getVolLightForStep(vec3 midPoint, Ray ray, Sdf res) {
-		RayContext rCtx = createRayContext(ray, res);
-		vec3 col = inputOp7(midPoint, rCtx).rgb;
-//	col.r = 0.7;
-	return col;
-	}
+vec3 getVolLightForStep(vec3 midPoint, MaterialContext matCtx) {
+	return inputOp7(midPoint, matCtx).rgb;
+}
 #endif

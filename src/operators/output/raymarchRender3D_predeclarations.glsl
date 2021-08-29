@@ -5,3 +5,4 @@ vec3 calcNormal(in vec3 pos);
 float calcShadowDefault(in vec3 p, MaterialContext matCtx);
 float calcShadedLevel(vec3 p, MaterialContext matCtx);
 float calcAO( in vec3 pos, in vec3 nor );
+Light getLight(vec3 p, LightContext ctx);

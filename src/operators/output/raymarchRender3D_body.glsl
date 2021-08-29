@@ -63,28 +63,29 @@ int DBG_refractCount = 0;
 //}
 #endif
 
-// Volumetric light value accumulated during the current ray march.
-vec3 volAccum;
-float vStepDist = THIS_Volumetricstep;
-
-void addVolLight(Ray ray, Sdf res, float mainStepDist) {
-	#ifdef RAYTK_USE_VOLUMETRIC_LIGHT
+vec3 getVolLight(MaterialContext matCtx) {
 	vec3 col = vec3(0.);
+	#ifdef RAYTK_USE_VOLUMETRIC_LIGHT
+	int priorStage = pushStage(RAYTK_STAGE_VOLUMETRIC);
+	float vStepDist = THIS_Volumetricstep;
+	float remainingDist = matCtx.result.x;
+	Ray ray = matCtx.ray;
+	LightContext lightCtx = createLightContext(matCtx.result, matCtx.normal);
 	for (int i = 0; i < THIS_Volumetricmaxsteps; i++) {
-		float actualStep = min(mainStepDist, vStepDist);
+		float actualStep = min(remainingDist, vStepDist);
 		if (actualStep <= 0.) break;
 		vec3 midPoint = ray.pos + ray.dir * actualStep * 0.5;
-		col += getVolLightForStep(midPoint, ray, res) * actualStep;
+		matCtx.light = getLight(midPoint, lightCtx);
+		col += getVolLightForStep(midPoint, matCtx) * actualStep;
 		ray.pos += ray.dir * actualStep;
-		mainStepDist -= actualStep;
+		remainingDist -= actualStep;
 	}
-	volAccum += col;
+	popStage(priorStage);
 	#endif
+	return col;
 }
 
-
 Sdf castRay(Ray ray, float maxDist) {
-	volAccum = vec3(0.);
 	int priorStage = pushStage(RAYTK_STAGE_PRIMARY);
 	float dist = 0;
 	Sdf res = createNonHitSdf();
@@ -103,9 +104,6 @@ Sdf castRay(Ray ray, float maxDist) {
 		}
 		res = map(ray.pos);
 		dist += res.x;
-		if (res.x >= RAYTK_SURF_DIST) {
-			addVolLight(ray, res, res.x);
-		}
 		ray.pos += ray.dir * res.x;
 		#ifdef RAYTK_NEAR_HITS_IN_SDF
 		float nearHitAmount = checkNearHit(res.x);
@@ -465,9 +463,12 @@ void main()
 		nearHitOut += vec4(res.nearHitAmount, float(res.nearHitCount), 0, 1);
 		#endif
 
+		matCtx.result = res;
+		matCtx.ray = ray;
 		if (res.x >= renderDepth && renderDepth == RAYTK_MAX_DIST) {
 			#ifdef OUTPUT_COLOR
 			colorOut += getBackgroundColor(ray);
+			colorOut.rgb += getVolLight(matCtx);
 			#endif
 
 		} else if (res.x > 0.0 && res.x < renderDepth) {
@@ -486,8 +487,6 @@ void main()
 			#endif
 			#endif
 
-			matCtx.result = res;
-			matCtx.ray = ray;
 			#if defined(OUTPUT_COLOR) || defined(OUTPUT_NORMAL) || (defined(RAYTK_USE_REFLECTION) && defined(THIS_Enablereflection))
 			matCtx.normal = calcNormal(p);
 			#endif
@@ -514,11 +513,7 @@ void main()
 				#endif
 
 				vec4 col = getColor(p, matCtx);
-				col.rgb += volAccum;
-
-				// TEMP
-//				col.rgb = volAccum;
-				// TEMP
+				col.rgb += getVolLight(matCtx);
 
 				vec2 fragCoord = vUV.st*uTDOutputInfo.res.zw;
 				col.rgb += (1.0/255.0)*hash1(fragCoord);
