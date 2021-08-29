@@ -1,5 +1,5 @@
-name	label	expr
-bottomleft	Bottom Left	vec2(p)
-topleft	Top Left	vec2(p.x, -p.y)
-bottomright	Bottom Right	vec2(-p.x, p.y)
-topright	Top Right	vec2(-p.x, -p.y)
+name	label	code
+bottomleft	Bottom Left	q = p
+topleft	Top Left	q = vec2(p.x, -p.y)
+bottomright	Bottom Right	q = vec2(-p.x, p.y)
+topright	Top Right	q = vec2(-p.x, -p.y)
