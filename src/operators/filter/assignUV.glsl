@@ -7,7 +7,7 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 		uv = inputOp2(p, ctx).xyz;
 		#else
 		vec3 q = adaptAsVec3(p);
-		uv = THIS_EXPR;
+		BODY();
 		#endif
 		#if defined(THIS_RETURN_TYPE_Sdf)
 		{

@@ -1,5 +1,5 @@
-name	label	expr
-spherical	From Spherical	vec3(p.x * cos(p.z) * sin(p.y), p.x * sin(p.z) * sin(p.y), p.x * cos(p.y))
-cylindricalx	From Cylindrical X	vec3(p.x, p.y * cos(p.z), p.y * sin(p.z))
-cylindricaly	From Cylindrical Y	vec3(p.z * sin(p.x), p.y, p.z * cos(p.x))
-cylindricalz	From Cylindrical Z	vec3(p.x * cos(p.y), p.x * sin(p.y), p.z)
+name	label	code
+spherical	From Spherical	p = vec3(p.x * cos(p.z) * sin(p.y), p.x * sin(p.z) * sin(p.y), p.x * cos(p.y))
+cylindricalx	From Cylindrical X	p = vec3(p.x, p.y * cos(p.z), p.y * sin(p.z))
+cylindricaly	From Cylindrical Y	p = vec3(p.z * sin(p.x), p.y, p.z * cos(p.x))
+cylindricalz	From Cylindrical Z	p = vec3(p.x * cos(p.y), p.x * sin(p.y), p.z)

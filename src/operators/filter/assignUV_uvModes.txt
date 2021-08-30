@@ -1,12 +1,12 @@
-name	label	expr
-xyz	XYZ	q
-xy	XY	vec3(q.xy, 0.)
-yx	YX	vec3(q.yx, 0.)
-yz	YZ	vec3(q.yz, 0.)
-zy	ZY	vec3(q.zy, 0.)
-xz	XZ	vec3(q.xz, 0.)
-zx	ZX	vec3(q.zx, 0.)
-cylindricalx	Cylindrical X	vec3(q.x, length(q.yz), atan(q.z, q.y))
-cylindricaly	Cylindrical Y	vec3(atan(q.x, q.z), q.y, length(q.xz))
-cylindricalz	Cylindrical Z	vec3(length(q.xy), atan(q.y, q.x), q.z)
-spherical	Spherical	vec3(length(q), acos(q.z / length(q)), atan(q.y, q.x))
+name	label	code
+xyz	XYZ	uv = q
+xy	XY	uv = vec3(q.xy, 0.)
+yx	YX	uv = vec3(q.yx, 0.)
+yz	YZ	uv = vec3(q.yz, 0.)
+zy	ZY	uv = vec3(q.zy, 0.)
+xz	XZ	uv = vec3(q.xz, 0.)
+zx	ZX	uv = vec3(q.zx, 0.)
+cylindricalx	Cylindrical X	uv = vec3(q.x, length(q.yz), atan(q.z, q.y))
+cylindricaly	Cylindrical Y	uv = vec3(atan(q.x, q.z), q.y, length(q.xz))
+cylindricalz	Cylindrical Z	uv = vec3(length(q.xy), atan(q.y, q.x), q.z)
+spherical	Spherical	uv = vec3(length(q), acos(q.z / length(q)), atan(q.y, q.x))
