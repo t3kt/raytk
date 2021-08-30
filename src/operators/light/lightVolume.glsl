@@ -18,6 +18,9 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 	}
 	if (level > 0.) {
 		col = THIS_Color;
+		#ifdef THIS_Uselightcolor
+		col *= ctx.light.color;
+		#endif
 		#ifdef THIS_HAS_INPUT_2
 		col *= fillToVec3(inputOp2(p, ctx));
 		#endif

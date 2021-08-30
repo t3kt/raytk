@@ -2,6 +2,6 @@
   "meta": {
     "opStatus": "beta",
     "opType": "raytk.operators.light.lightVolume",
-    "opVersion": 3
+    "opVersion": 4
   }
 }
