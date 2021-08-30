@@ -15,6 +15,8 @@ cat:
     summary: A directional light.
   - name: hardShadow
     summary: A simple hard-edged shadow.
+  - name: lightVolume
+    status: beta
   - name: linkedLight
     status: beta
     summary: Light that is based on a standard Light COMP.

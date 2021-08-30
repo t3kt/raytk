@@ -1,15 +1,13 @@
 ---
 layout: operator
-title: edgePipe
+title: edgeCombine
 parent: Combine Operators
 grand_parent: Operators
-permalink: /reference/operators/combine/edgePipe
+permalink: /reference/operators/combine/edgeCombine
 redirect_from:
-  - /reference/opType/raytk.operators.combine.edgePipe/
+  - /reference/opType/raytk.operators.combine.edgeCombine/
 op:
   category: combine
-  detail: Creates an entirely new SDF result, removing any materials and other settings
-    from the inputs.
   inputs:
   - contextTypes:
     - Context
@@ -23,10 +21,12 @@ op:
     - vec3
     label: definition_in_1
     name: definition_in_1
-    required: true
     returnTypes:
     - float
+    - vec4
     - Sdf
+    - Ray
+    - Light
   - contextTypes:
     - Context
     - MaterialContext
@@ -39,10 +39,12 @@ op:
     - vec3
     label: definition_in_2
     name: definition_in_2
-    required: true
     returnTypes:
     - float
+    - vec4
     - Sdf
+    - Ray
+    - Light
   - contextTypes:
     - Context
     - MaterialContext
@@ -57,23 +59,41 @@ op:
     name: radius_definition_in
     returnTypes:
     - float
-    summary: Value field that can be used to vary the radius of the blend region at
-      different points in space, by *multiplying* the value of the `Radius` parameter.
-  name: edgePipe
-  opType: raytk.operators.combine.edgePipe
+  - contextTypes:
+    - Context
+    - MaterialContext
+    - CameraContext
+    - LightContext
+    - RayContext
+    coordTypes:
+    - float
+    - vec2
+    - vec3
+    label: Depth Field
+    name: depth_definition_in
+    returnTypes:
+    - float
+  name: edgeCombine
+  opType: raytk.operators.combine.edgeCombine
   parameters:
   - label: Enable
     name: Enable
+  - label: Combine
+    menuOptions:
+    - label: Engrave
+      name: engrave
+    - label: Groove
+      name: groove
+    - label: Tongue
+      name: tongue
+    - label: Pipe
+      name: pipe
+    name: Combine
+  - label: Swap Inputs
+    name: Swapinputs
   - label: Radius
     name: Radius
-    summary: The width of the pipe.
-  status: deprecated
-  summary: Produces a cylindrical pipe along the blend region, replacing the input
-    shapes entirely.
+  - label: Depth
+    name: Depth
 
 ---
-
-
-Produces a cylindrical pipe along the blend region, replacing the input shapes entirely.
-
-Creates an entirely new SDF result, removing any materials and other settings from the inputs.

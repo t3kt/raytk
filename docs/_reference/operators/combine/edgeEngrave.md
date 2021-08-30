@@ -67,6 +67,7 @@ op:
   - label: Radius
     name: Radius
     summary: Width of the groove.
+  status: deprecated
   summary: Carves a v-shaped groove where the second input intersects with the first.
 
 ---

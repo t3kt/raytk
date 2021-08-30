@@ -40,6 +40,8 @@ cat:
     summary: A material that is composed of one or more shading elements.
   - name: orenNayarMat
     status: beta
+  - name: pbrMat
+    status: beta
   - name: phongMat
     summary: Material that uses phong shading.
   - keywords:

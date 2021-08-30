@@ -38,12 +38,16 @@ cat:
     summary: Stair SDF combine, producing steps along the blend region.
   - name: compositeFields
     summary: Combines two vector fields using color compositing.
+  - name: edgeCombine
   - name: edgeEngrave
+    status: deprecated
     summary: Carves a v-shaped groove where the second input intersects with the first.
   - name: edgeGroove
+    status: deprecated
     summary: Creates a raised bar or indented groove where the second input intersects
       with the first.
   - name: edgePipe
+    status: deprecated
     summary: Produces a cylindrical pipe along the blend region, replacing the input
       shapes entirely.
   - name: iterationSwitch

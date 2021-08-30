@@ -63,6 +63,15 @@ op:
     - float
     - vec4
     summary: Help not available.
+  - contextTypes:
+    - MaterialContext
+    coordTypes:
+    - vec3
+    label: definition_in_7
+    name: definition_in_7
+    returnTypes:
+    - float
+    - vec4
   name: raymarchRender3D
   opType: raytk.operators.output.raymarchRender3D
   parameters:
@@ -246,6 +255,14 @@ op:
     name: Normalsmoothing
   - label: Ray Modifier
     name: Raymodifier
+  - label: Enable Volumetric Light
+    name: Enablevolumetriclight
+  - label: Volumetric Step
+    name: Volumetricstep
+  - label: Volumetric Max Steps
+    name: Volumetricmaxsteps
+  - label: Volumetric Light
+    name: Volumetriclight
   - label: Enable UV Output
     name: Enableuvoutput
   - label: Enable Custom Output 1

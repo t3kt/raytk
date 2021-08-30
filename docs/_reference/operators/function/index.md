@@ -48,6 +48,10 @@ cat:
     summary: Multiplies the returned values produced by all of the connected input
       functions.
   - name: parabolaFn
+  - keywords:
+    - toggle
+    - wave
+    name: pausingWaveFn
   - name: pennerEasingFn
     summary: Robert Penner's collection of easing functions.
   - name: powerCurveFn

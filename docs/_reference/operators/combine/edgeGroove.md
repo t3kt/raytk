@@ -77,6 +77,7 @@ op:
   - label: Radius
     name: Radius
     summary: The width of the bar/groove.
+  status: deprecated
   summary: Creates a raised bar or indented groove where the second input intersects
     with the first.
 
