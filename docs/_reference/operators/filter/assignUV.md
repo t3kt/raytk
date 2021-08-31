@@ -77,7 +77,6 @@ op:
     - label: Spherical
       name: spherical
     name: Uvmode
-  status: beta
   summary: Assigns UV coordinates to an SDF surface.
 
 ---
