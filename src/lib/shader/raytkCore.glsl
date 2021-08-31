@@ -320,6 +320,19 @@ struct MaterialContext {
 	float lod;
 	#endif
 };
+
+void setIterationIndex(inout MaterialContext ctx, float index) {
+	setIterationIndex(ctx.context, index);
+}
+
+void setIterationCell(inout MaterialContext ctx, vec2 cell) {
+	setIterationCell(ctx.context, cell);
+}
+
+void setIterationCell(inout MaterialContext ctx, vec3 cell) {
+	setIterationCell(ctx.context, cell);
+}
+
 void assignUV(inout MaterialContext ctx, vec3 uv) {
 	#ifdef RAYTK_USE_UV
 	ctx.uv = vec4(uv, 1.);
