@@ -23,3 +23,16 @@ There are 3 types of OPs that you can create with the toolkit.
     - They are kind of like the `Render TOP`, which takes in a few different kinds of operators (geometry, lights, camera) and uses them to render an image.
 - Supplemental components
     - There are a handful of other components that you can use with a scene, mostly for post-processing.
+
+# Palette
+
+- The Palette is equivalent to the TouchDesigner "Create OP" dialog.
+- It is used to create new ROPs and related components.
+- Open the palette using **ALT+r**.
+- OPs are grouped into categories like Filters, Materials, Lights, etc.
+- The filter bar in the palette searches the list of OPs.
+    - You can either search for pieces of text in names, or for initials of names like "rr3" for `raymarchRender3D`.
+    - You can also search for keywords. For example, searching for "ring" will show `torusSdf`.
+- The status filter toggle buttons show and hide:
+    - Beta OPs: new ones that might still have some bugs, and are likely to change in newer versions of the toolkit.
+    - Deprecated OPs: old ones that have been replaced by better alternatives or weren't useful.
