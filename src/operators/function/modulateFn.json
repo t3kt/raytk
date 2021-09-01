@@ -2,6 +2,6 @@
   "meta": {
     "opStatus": "beta",
     "opType": "raytk.operators.function.modulateFn",
-    "opVersion": 3
+    "opVersion": 4
   }
 }
