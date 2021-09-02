@@ -341,6 +341,7 @@ class ROPInfo:
 		if not self:
 			return []
 		handlers = self.rop.ops('inputDefinitionHandler_*')
+		handlers = [o for o in handlers if not o.name.endswith('_typeSpec')]
 		handlers.sort(key=lambda o: o.nodeY, reverse=True)
 		return handlers
 
