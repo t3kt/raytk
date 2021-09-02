@@ -1,6 +1,7 @@
 {
   "meta": {
+    "opStatus": "default",
     "opType": "raytk.operators.filter.mobiusTransform",
-    "opVersion": 1
+    "opVersion": 2
   }
 }
