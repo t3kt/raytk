@@ -33,6 +33,8 @@ op:
     name: Level
   - label: Color
     name: Color
+  - label: Use Light Color
+    name: Uselightcolor
   - label: Blending
     name: Blending
   - label: Offset

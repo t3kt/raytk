@@ -11,8 +11,6 @@ op:
   name: spiralSdf2d
   opType: raytk.operators.sdf2d.spiralSdf2d
   parameters:
-  - label: Enable
-    name: Enable
   - label: Spread
     name: Spread
   - label: Rotate
