@@ -212,7 +212,7 @@ Sdf createNonHitSdf() {
 
 void initDefVal(out Sdf val) { val = createNonHitSdf(); }
 
-bool isNonHitSdfDist(float d) { return d > RAYTK_MAX_DIST; }
+bool isNonHitSdfDist(float d) { return d >= RAYTK_MAX_DIST; }
 bool isNonHitSdf(Sdf res) { return res.x >= RAYTK_MAX_DIST; }
 
 Sdf withAdjustedScale(in Sdf res, float scaleMult) {
@@ -403,7 +403,8 @@ const int RAYTK_STAGE_SHADOW =  2;
 const int RAYTK_STAGE_REFLECT = 3;
 const int RAYTK_STAGE_MATERIAL = 4;
 const int RAYTK_STAGE_OCCLUSION = 5;
-const int RAYTK_STAGE_VOLUMETRIC = 5;
+const int RAYTK_STAGE_VOLUMETRIC = 6;
+const int RAYTK_STAGE_VOLUMETRIC_SHADOW = 7;
 
 int _raytkStage = RAYTK_STAGE_PRIMARY;
 

@@ -13,7 +13,7 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 	float level = THIS_getLevel(p, ctx);
 	if (level > 0.) {
 		#if defined(THIS_Enableshadow) && defined(RAYTK_USE_SHADOW)
-		level *= calcShadedLevel(p, ctx);
+		level *= ctx.shadedLevel;
 		#endif
 	}
 	if (level > 0.) {

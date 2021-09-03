@@ -1,59 +1,57 @@
-void THIS_step(
-	inout Ray ray,
-	inout ContextT ctx,
-	inout LightContext lightCtx,
-	inout vec4 accum,
-	float stepDist,
-	float amount) {
-	vec3 midPoint = ray.pos + ray.dir * stepDist * 0.5;
-	#ifdef THIS_Recalculatelight
-	ctx.light = getLight(midPoint, lightCtx);
-	#endif
-	accum += inputOp1(midPoint, ctx) * amount;
-	ray.pos += ray.dir + stepDist;
-}
-
 ReturnT thismap(CoordT p, ContextT ctx) {
 	vec4 res = vec4(0.);
 	#ifdef THIS_Enablevolumetric
-	if (THIS_Skipmissedrays > 0. && isNonHitSdf(ctx.result)) {
+	float totalDist = ctx.result.x;
+	bool isMiss = isNonHitSdfDist(totalDist);
+	if (THIS_Skipmissedrays > 0. && isMiss) {
 		return ReturnT(0.);
 	}
 	int priorStage = pushStage(RAYTK_STAGE_VOLUMETRIC);
+	float level = THIS_Level;
 	Ray ray = ctx.ray;
 	LightContext lightCtx = createLightContext(ctx.result, ctx.normal);
-	float remainingDist = ctx.result.x;
+	#ifndef THIS_Recalculatelight
+	// For non-hits, this won't be populated by default.
+	// and if Recalculatelight isn't used, it won't be updated within the loop below.
+	if (isNonHitSdf(ctx.result)) {
+		ctx.light = getLight(ray.pos + ray.dir * ctx.result.x, lightCtx);
+	}
+	#endif
 	#if defined(THIS_Marchmode_fixedstep)
 	int n = int(THIS_Maxsteps);
 	float stepDist = THIS_Fixedstep;
+	if (isMiss) {
+		totalDist = RAYTK_MAX_DIST;
+	}
 	#elif defined(THIS_Marchmode_divisions)
 	int n = int(THIS_Stepdivisions);
-	if (isNonHitSdf(ctx.result)) {
-		remainingDist = THIS_Raymissdist;
+	if (isMiss) {
+		totalDist = THIS_Raymissdist;
 	}
-	float stepDist = remainingDist / float(n);
+	float stepDist = totalDist / float(n);
 	#else
 	#error invalidMarchMode
 	#endif
+	float remainingDist = totalDist;
 	for (int i = 0; i < n; i++) {
-		#ifdef THIS_Marchmode_fixedstep
 		float actualStep = min(remainingDist, stepDist);
 		if (actualStep <= 0.) break;
-		#else
-		float actualStep = stepDist;
+		vec3 midPoint = ray.pos + ray.dir * stepDist * 0.5;
+		#ifdef THIS_Recalculatelight
+		ctx.light = getLight(midPoint, lightCtx);
 		#endif
-		THIS_step(
-		ray, ctx, lightCtx,
-		res,
-		actualStep,
-		actualStep
-		);
-		#ifdef THIS_Marchmode_fixedstep
+		#if defined(THIS_Enableshadow) && defined(RAYTK_USE_SHADOW)
+		int innerPriorStage = pushStage(RAYTK_STAGE_VOLUMETRIC_SHADOW);
+		ctx.shadedLevel = calcShadedLevel(midPoint, ctx);
+		popStage(innerPriorStage);
+		#endif
+		float amount = actualStep * level;
+		res += inputOp1(midPoint, ctx) * amount;
+		ray.pos += ray.dir * actualStep;
 		remainingDist -= actualStep;
-		#endif
 	}
 
 	popStage(priorStage);
 	#endif
-	return accum;
+	return res;
 }

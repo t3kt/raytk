@@ -274,7 +274,9 @@ vec4 getColor(vec3 p, MaterialContext matCtx) {
 	#endif
 	#if defined(THIS_Enableshadow) && defined(RAYTK_USE_SHADOW)
 	if (matCtx.result.useShadow) {
+		int priorStage = pushStage(RAYTK_STAGE_SHADOW);
 		matCtx.shadedLevel = calcShadedLevel(p, matCtx);
+		popStage(priorStage);
 	}
 	#endif
 	int priorStage = pushStage(RAYTK_STAGE_MATERIAL);
@@ -469,6 +471,9 @@ void main()
 			#ifdef OUTPUT_COLOR
 			colorOut += getBackgroundColor(ray);
 			colorOut.rgb += getVolLight(matCtx);
+			vec4 color2 = castSecondaryRay(matCtx);
+			colorOut.rgb += color2.rgb;
+			// TODO: alpha?
 			#endif
 
 		} else if (res.x > 0.0 && res.x < renderDepth) {
@@ -514,6 +519,8 @@ void main()
 
 				vec4 col = getColor(p, matCtx);
 				col.rgb += getVolLight(matCtx);
+				vec4 color2 = castSecondaryRay(matCtx);
+				colorOut.rgb += color2.rgb;
 
 				vec2 fragCoord = vUV.st*uTDOutputInfo.res.zw;
 				col.rgb += (1.0/255.0)*hash1(fragCoord);

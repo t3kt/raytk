@@ -94,13 +94,11 @@ vec4 getBackgroundColor(in Ray ray) {
 
 #ifdef RAYTK_USE_SHADOW
 float calcShadedLevel(vec3 p, MaterialContext matCtx) {
-	int priorStage = pushStage(RAYTK_STAGE_SHADOW);
 	#ifdef THIS_HAS_INPUT_5
 	float res = inputOp5(p, matCtx);
 	#else
 	float res = calcShadowDefault(p, matCtx);
 	#endif
-	popStage(priorStage);
 	return res;
 }
 #endif
@@ -110,3 +108,11 @@ vec3 getVolLightForStep(vec3 midPoint, MaterialContext matCtx) {
 	return inputOp7(midPoint, matCtx).rgb;
 }
 #endif
+
+vec4 castSecondaryRay(MaterialContext matCtx) {
+#ifdef RAYTK_USE_SECONDARY_RAY_CAST
+	return inputOp8(matCtx.ray.pos, matCtx);
+#else
+	return vec4(0.);
+#endif
+}
