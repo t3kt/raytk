@@ -1,5 +1,51 @@
 # Release Notes
 
+## v0.17
+
+### Highlights
+
+* PBR Materials (#636)
+* Volumetric lighting, still experimental (#637, #11)
+
+### Details
+
+* Improvements / additions
+    * Improved runtime menu switching (#571, #586)
+        * cornerSdf2d
+        * planeSdf2d
+        * polygonSdf2d
+        * triangleSdf2d
+        * octahedronSdf
+        * prismSdf
+        * sweep
+        * assignUV
+        * cartesianToPolar
+        * polarToCartesian
+    * Auto-disable Inspect/Updateop parameter when unavailable (#630)
+    * New fields
+        * pausingWaveFn
+    * Specialized UV support in SDFs
+        * sphereSdf (#526)
+    * Consolidate edgeEngrave, edgeGroove, edgePipe into a single edgeCombine op (#635)
+    * Added pbrMat (#636)
+    * Volumetric lighting (#637, #11)
+        * lightVolume
+        * volumetricRayCast
+* Fixes
+    * Fix parameter state management in diffuseContrib (#633)
+    * Fix menu optimization in combine (#634)
+    * Fix coord type handling in spin (#638)
+    * Fix context type handling
+        * iterationField
+        * rotate
+        * circleSdf
+        * moduloPolar
+* Infrastructure / internals
+    * Cleanup and refactoring in opDefinition parameter handling
+    * Migrate more ops to aggregateCodeGenerator
+    * Type handling cleanup in many operators
+    * Starting migration to new inputHandler
+
 ## v0.16
 
 ### Highlights
