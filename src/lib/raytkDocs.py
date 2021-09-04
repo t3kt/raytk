@@ -110,6 +110,7 @@ class InputHelp:
 	coordTypes: List[str] = field(default_factory=list)
 	contextTypes: List[str] = field(default_factory=list)
 	returnTypes: List[str] = field(default_factory=list)
+	inputHandler: Optional[COMP] = None
 
 	def formatMarkdownListItem(self, forBuild=False):
 		text = f'* `{self.name}`'
@@ -133,6 +134,7 @@ class InputHelp:
 			coordTypes=info.supportedCoordTypes,
 			contextTypes=info.supportedContextTypes,
 			returnTypes=info.supportedReturnTypes,
+			inputHandler=inputHandler,
 		)
 
 	def mergeFrom(self, other: 'InputHelp'):
@@ -144,6 +146,7 @@ class InputHelp:
 		self.coordTypes = other.coordTypes
 		self.contextTypes = other.contextTypes
 		self.returnTypes = other.returnTypes
+		self.inputHandler = self.inputHandler or other.inputHandler
 
 	def toFrontMatterData(self):
 		return cleanDict({
@@ -593,11 +596,17 @@ class OpDocManager:
 				if par is not None:
 					par.help = parHelp.summary
 		for inHelp in ropHelp.inputs:
-			if not inHelp.label:
+			if not inHelp.inputHandler:
 				continue
-			inOp = self.rop.op(inHelp.name)
-			if inOp:
-				inOp.par.label = inHelp.label
+			inInfo = InputInfo(inHelp.inputHandler)
+			if inInfo.isNewHandler:
+				if inHelp.summary:
+					inInfo.helpText = inHelp.summary
+			else:
+				if inHelp.label:
+					inOp = self.rop.op(inHelp.name)
+					if inOp:
+						inOp.par.label = inHelp.label
 
 	def formatForBuild(self) -> str:
 		ropHelp = self._parseDAT()

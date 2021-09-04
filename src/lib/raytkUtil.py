@@ -437,6 +437,15 @@ class InputInfo:
 			return table[name, 1].val
 
 	@property
+	def isNewHandler(self):
+		# TODO: get rid of this after fully switching over to new handler
+		return bool(self._configTable)
+
+	def _assertIsNewHandler(self):
+		if not self.isNewHandler:
+			raise Exception('Input handler does not support this action')
+
+	@property
 	def name(self) -> 'Optional[str]':
 		name = self._configTableVal('name')
 		if name:
@@ -449,6 +458,11 @@ class InputInfo:
 			return par.name
 		if self.handler:
 			return self.handler.name.replace('inputDefinitionHandler_', 'definition_in_')
+
+	@name.setter
+	def name(self, val: Optional[str]):
+		self._assertIsNewHandler()
+		self.handlerPar.Name = val or ''
 
 	@property
 	def label(self) -> 'Optional[str]':
@@ -467,6 +481,11 @@ class InputInfo:
 			except Exception:
 				pass
 
+	@label.setter
+	def label(self, val: Optional[str]):
+		self._assertIsNewHandler()
+		self.handlerPar.Label = val or ''
+
 	@property
 	def helpText(self) -> 'Optional[str]':
 		if not self.handler:
@@ -474,6 +493,11 @@ class InputInfo:
 		par = self._sourcePar()
 		if par is not None:
 			return par.help
+
+	@helpText.setter
+	def helpText(self, val: Optional[str]):
+		self._assertIsNewHandler()
+		self.handlerPar.Help = val or ''
 
 	@property
 	def multiHandler(self) -> 'Optional[COMP]':

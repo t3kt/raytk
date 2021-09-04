@@ -104,7 +104,7 @@ def buildConfigTable(dat: 'scriptDAT'):
 	elif sourcePar is not None:
 		label = sourcePar.label
 	else:
-		label = name
+		label = name.replace('_', ' ')
 	if _parentPar().Localalias:
 		alias = _parentPar().Localalias
 	else:
