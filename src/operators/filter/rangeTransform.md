@@ -10,7 +10,6 @@ if the second input is connected, that float value field is used to determine th
 The index is then scaled from the specified range down to 0..1. The `Extend` parameter controls how
 values outside that range are handled.
 
-
 ## Parameters
 
 * `Enable`
@@ -25,8 +24,12 @@ values outside that range are handled.
 * `Enablerotate`: Whether to use rotation.
 * `Rotate1`: Rotate setting for the beginning of the range.
 * `Rotate2`: Rotate setting for the end of the range.
+* `Usepivot`
+* `Pivot1`
+* `Pivot2`
 
 ## Inputs
 
 * `definition_in`: 
-* `index_field_definition_in` *Index Field*: Optional float value field to use instead of the iteration value. It is passed the current coordinates.
+* `indexField`:  Optional float value field to use instead of the iteration value. It is passed the current coordinates.
+* `easingFunction`: 
