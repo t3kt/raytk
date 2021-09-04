@@ -15,6 +15,7 @@ if False:
 		Name: StrParamT
 		Label: StrParamT
 		Localalias: StrParamT
+		Help: StrParamT
 
 def _parentPar() -> '_HandlerPar':
 	# noinspection PyTypeChecker
@@ -26,7 +27,7 @@ def _isValidDefinitionDat(o: 'Optional[Union[OP, DAT]]'):
 	return o and o.isDAT and o.isTable and o.numRows > 0 and o[0, 0] == 'name'
 
 def resolveSourceParDefinition(onError: 'Optional[Callable[[str], None]]' = None) -> 'Optional[DAT]':
-	p = _parentPar().Source  # type: Par
+	p = _parentPar().Source
 	if p.bindMaster is not None:
 		p = p.bindMaster
 	o = p.eval()
@@ -79,6 +80,7 @@ def buildConfigTable(dat: 'scriptDAT'):
 	host = _parentPar().Hostop.eval()
 	ownIn = _getAttachedInDAT()
 	baseName, localName = _parseHandlerName()
+	sourcePar = _parentPar().Source.bindMaster
 
 	if not _parentPar().Autoindex:
 		index = int(_parentPar().Index)
@@ -87,6 +89,8 @@ def buildConfigTable(dat: 'scriptDAT'):
 	defaultName = f'inputOp{index}'
 	if _parentPar().Name:
 		name = _parentPar().Name
+	elif sourcePar is not None:
+		name = sourcePar.name
 	elif localName:
 		name = localName
 	elif ownIn:
@@ -97,17 +101,26 @@ def buildConfigTable(dat: 'scriptDAT'):
 		label = _parentPar().Label
 	elif ownIn and ownIn.par.label:
 		label = ownIn.par.label
+	elif sourcePar is not None:
+		label = sourcePar.label
 	else:
 		label = name
 	if _parentPar().Localalias:
 		alias = _parentPar().Localalias
 	else:
 		alias = defaultName
+	if _parentPar().Help:
+		helpText = _parentPar().Help
+	elif sourcePar is not None and sourcePar.help:
+		helpText = sourcePar.help
+	else:
+		helpText = ''
 	dat.appendRows([
 		['index', index],
 		['name', name],
 		['label', label],
 		['alias', alias],
+		['help', helpText],
 	])
 
 def _determineAutoIndex(
