@@ -80,7 +80,8 @@ class RaytkTools(RaytkContext):
 		if info.helpUrl:
 			if helpPar is None:
 				helpPar = page.appendPulse('Help')[0]
-			helpPar.startSection = True
+			if inspectPar is None:
+				helpPar.startSection = True
 			helpPar.order = 999
 		elif helpPar is not None:
 			helpPar.destroy()
@@ -89,7 +90,8 @@ class RaytkTools(RaytkContext):
 		updatePar = rop.par['Updateop']
 		if updatePar is None:
 			updatePar = page.appendPulse('Updateop', label='Update OP')[0]
-		updatePar.startSection = True
+		if inspectPar is None and helpPar is None:
+			updatePar.startSection = True
 		updatePar.order = 1111
 		updatePar.enableExpr = toolkitAvailableExpr
 		updatePar.help = 'Update this OP to a new toolkit version.\nNew toolkit tox must be loaded in the project.'

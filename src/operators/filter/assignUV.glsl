@@ -3,8 +3,8 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 	#ifdef RAYTK_USE_UV
 	{
 		vec3 uv;
-		#if defined(THIS_HAS_INPUT_2)
-		uv = inputOp2(p, ctx).xyz;
+		#if defined(THIS_HAS_INPUT_uvField)
+		uv = inputOp_uvField(p, ctx).xyz;
 		#else
 		vec3 q = adaptAsVec3(p);
 		BODY();
