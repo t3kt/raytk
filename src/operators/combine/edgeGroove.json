@@ -2,6 +2,6 @@
   "meta": {
     "opStatus": "deprecated",
     "opType": "raytk.operators.combine.edgeGroove",
-    "opVersion": 5
+    "opVersion": 6
   }
 }

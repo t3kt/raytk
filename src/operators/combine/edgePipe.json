@@ -2,6 +2,6 @@
   "meta": {
     "opStatus": "deprecated",
     "opType": "raytk.operators.combine.edgePipe",
-    "opVersion": 3
+    "opVersion": 4
   }
 }
