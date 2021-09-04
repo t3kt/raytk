@@ -64,11 +64,28 @@ op:
     - vec4
     summary: Help not available.
   - contextTypes:
+    - Context
+    coordTypes:
+    - vec3
+    label: Shadow
+    name: shadowInput
+    returnTypes:
+    - Sdf
+  - contextTypes:
     - MaterialContext
     coordTypes:
     - vec3
     label: definition_in_7
     name: definition_in_7
+    returnTypes:
+    - float
+    - vec4
+  - contextTypes:
+    - MaterialContext
+    coordTypes:
+    - vec3
+    label: definition_in_8
+    name: definition_in_8
     returnTypes:
     - float
     - vec4
@@ -263,6 +280,10 @@ op:
     name: Volumetricmaxsteps
   - label: Volumetric Light
     name: Volumetriclight
+  - label: Enable Secondary Ray Cast
+    name: Enablesecondaryraycast
+  - label: Secondary Ray Cast
+    name: Secondaryraycast
   - label: Enable UV Output
     name: Enableuvoutput
   - label: Enable Custom Output 1

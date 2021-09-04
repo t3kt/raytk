@@ -50,7 +50,7 @@ op:
     - vec2
     - vec3
     label: Radius Field
-    name: radius_definition_in
+    name: radiusField
     returnTypes:
     - float
     summary: Value field that can be used to vary the radius of the blend region at

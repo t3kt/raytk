@@ -57,7 +57,7 @@ op:
     coordTypes:
     - vec3
     label: Index Field
-    name: index_field_definition_in
+    name: indexField
     returnTypes:
     - float
     summary: Optional float value field to use instead of the iteration value. It
@@ -71,7 +71,7 @@ op:
     coordTypes:
     - float
     label: Easing
-    name: easing_definition_in
+    name: easingFunction
     returnTypes:
     - float
   name: rangeTransform

@@ -38,7 +38,8 @@ op:
     - vec2
     - vec3
     label: Color Field
-    name: color_field_in
+    name: colorField
+    required: true
     returnTypes:
     - float
     - vec4

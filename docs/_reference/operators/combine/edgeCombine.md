@@ -21,12 +21,9 @@ op:
     - vec3
     label: definition_in_1
     name: definition_in_1
+    required: true
     returnTypes:
-    - float
-    - vec4
     - Sdf
-    - Ray
-    - Light
   - contextTypes:
     - Context
     - MaterialContext
@@ -39,12 +36,9 @@ op:
     - vec3
     label: definition_in_2
     name: definition_in_2
+    required: true
     returnTypes:
-    - float
-    - vec4
     - Sdf
-    - Ray
-    - Light
   - contextTypes:
     - Context
     - MaterialContext
@@ -56,7 +50,7 @@ op:
     - vec2
     - vec3
     label: Radius Field
-    name: radius_definition_in
+    name: radiusField
     returnTypes:
     - float
   - contextTypes:
@@ -70,7 +64,7 @@ op:
     - vec2
     - vec3
     label: Depth Field
-    name: depth_definition_in
+    name: depthField
     returnTypes:
     - float
   name: edgeCombine

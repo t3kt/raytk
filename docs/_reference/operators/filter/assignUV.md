@@ -38,7 +38,8 @@ op:
     - vec2
     - vec3
     label: UV Field
-    name: uv_field_in
+    name: uvField
+    required: true
     returnTypes:
     - vec4
     summary: Optional field used to calculate the UV coordinates.
