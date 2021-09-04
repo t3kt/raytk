@@ -55,7 +55,7 @@ def buildInputTable(dat: 'DAT', inDats: 'List[DAT]'):
 		else:
 			dat.appendRow([
 				slot,
-				f'inputOp{i + 1}',
+				inDat[1, 'input:alias'] or f'inputOp{i + 1}',
 				inDat[1, 'name'],
 				inDat[1, 'path'],
 				inDat[1, 'coordType'],

@@ -46,30 +46,6 @@ def resolveSourceParDefinition(onError: 'Optional[Callable[[str], None]]' = None
 			msg = f'Invalid {mp.label} source.'
 		onError(msg + ' Only ROPs and defintion DATs are allowed.')
 
-def determineIndex():
-	if not _parentPar().Autoindex:
-		return _parentPar().Index.eval()
-	host = _parentPar().Hostop.eval()  # type: COMP
-	if not host:
-		return 0
-	# Check where the associated inDAT sits in the hosts inputs list
-	ownIn = _getAttachedInDAT()
-	if ownIn:
-		for conn in host.inputConnectors:
-			if conn.inOP and conn.inOP.isDAT and ownIn is conn.inOP:
-				return 1 + conn.index
-	# Look for digits in the first part of the name, with support for:
-	# inputHandler3_foo5 -> 3
-	# inputHandler5 -> 5
-	handlerName = parent().name
-	if handlerName.startswith('inputHandler'):
-		if '_' in handlerName:
-			handlerName = handlerName.split('_', maxsplit=1)[0]
-		i = tdu.digits(handlerName)
-		if i is not None:
-			return i
-	return 0
-
 def _getAttachedInDAT() -> 'Optional[inDAT]':
 	host = _parentPar().Hostop.eval()
 	if not host:
@@ -100,14 +76,6 @@ def _parseHandlerName():
 # Everything in this table gets frozen at build time.
 def buildConfigTable(dat: 'scriptDAT'):
 	dat.clear()
-	dat.appendCol([
-		'Index',
-		'Defaultname',
-		'Name',
-		'Label',
-		'Localalias',
-	])
-	dat.appendCol([''])
 	host = _parentPar().Hostop.eval()
 	ownIn = _getAttachedInDAT()
 	baseName, localName = _parseHandlerName()
@@ -116,26 +84,31 @@ def buildConfigTable(dat: 'scriptDAT'):
 		index = int(_parentPar().Index)
 	else:
 		index = _determineAutoIndex(host=host, ownIn=ownIn, baseName=baseName)
-	dat['Index', 1] = index
-	dat['Defaultname', 1] = f'inputOp{index}'
+	defaultName = f'inputOp{index}'
 	if _parentPar().Name:
-		dat['Name', 1] = _parentPar().Name
+		name = _parentPar().Name
 	elif localName:
-		dat['Name', 1] = localName
+		name = localName
 	elif ownIn:
-		dat['Name', 1] = ownIn.name
+		name = ownIn.name
 	else:
-		dat['Name', 1] = dat['Defaultname', 1]
+		name = defaultName
 	if _parentPar().Label:
-		dat['Label', 1] = _parentPar().Label
+		label = _parentPar().Label
 	elif ownIn and ownIn.par.label:
-		dat['Label', 1] = ownIn.par.label
+		label = ownIn.par.label
 	else:
-		dat['Label', 1] = dat['Name', 1]
+		label = name
 	if _parentPar().Localalias:
-		dat['Localalias', 1] = _parentPar().Localalias
+		alias = _parentPar().Localalias
 	else:
-		dat['Localalias', 1] = dat['Defaultname', 1]
+		alias = defaultName
+	dat.appendRows([
+		['index', index],
+		['name', name],
+		['label', label],
+		['alias', alias],
+	])
 
 def _determineAutoIndex(
 		host: 'Optional[COMP]',
@@ -143,11 +116,6 @@ def _determineAutoIndex(
 		baseName: 'Optional[str]'):
 	if not host:
 		return 0
-	# Check where the associated inDAT sits in the hosts inputs list
-	if ownIn:
-		for conn in host.inputConnectors:
-			if conn.inOP and conn.inOP.isDAT and ownIn is conn.inOP:
-				return 1 + conn.index
 	# Look for digits in the first part of the name, with support for:
 	# inputHandler3_foo5 -> 3
 	# inputHandler5 -> 5
@@ -155,4 +123,46 @@ def _determineAutoIndex(
 		i = tdu.digits(baseName)
 		if i is not None:
 			return i
+	# Check where the associated inDAT sits in the hosts inputs list
+	if ownIn:
+		for conn in host.inputConnectors:
+			if conn.inOP and conn.inOP.isDAT and ownIn is conn.inOP:
+				return 1 + conn.index
 	return 0
+
+def buildValidationErrors(dat: 'DAT', inputDef: 'DAT'):
+	dat.clear()
+
+	def _addError(msg):
+		if not dat.numRows:
+			dat.appendRow(['path', 'level', 'message'])
+		dat.appendRow([parent().path, 'error', msg])
+
+	resolveSourceParDefinition(_addError)
+	if parent().par.Required and inputDef.numRows < 2:
+		_addError('Required input is missing')
+	_checkTableTypes(inputDef, _addError, ignoreEmpty=True)
+
+def _checkType(typeName: str, typeCategory: str, onError: 'Optional[Callable[[str], None]]', ignoreEmpty: bool):
+	if not typeName:
+		if ignoreEmpty:
+			return True
+		if onError:
+			onError(f'Invalid input {typeCategory}: {typeName!r}')
+		return False
+	supported = tdu.split(op('supportedTypes')[typeCategory, 'types'] or '')
+	if ' ' in typeName:
+		if any(t in supported for t in typeName.split(' ')):
+			return True
+	else:
+		if typeName in supported:
+			return True
+	if onError:
+		onError(f'Input does not support {typeCategory} {typeName}')
+	return False
+
+def _checkTableTypes(dat: 'DAT', onError: 'Optional[Callable[[str], None]]', ignoreEmpty: bool):
+	validCoord = _checkType(str(dat[1, 'coordType'] or ''), 'coordType', onError, ignoreEmpty)
+	validContext = _checkType(str(dat[1, 'contextType'] or ''), 'contextType', onError, ignoreEmpty)
+	validReturn = _checkType(str(dat[1, 'returnType'] or ''), 'returnType', onError, ignoreEmpty)
+	return validCoord and validContext and validReturn
