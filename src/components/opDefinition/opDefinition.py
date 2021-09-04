@@ -388,9 +388,11 @@ def _getReplacements(
 	if mat:
 		repls['THISMAT'] = str(mat)
 	for i in range(inputTable.numRows):
-		key = inputTable[i, 'inputFunc']
+		key = str(inputTable[i, 'inputFunc'])
 		val = inputTable[i, 'name']
 		if val:
+			if not key.startswith('inputOp'):
+				key = 'inputOp_' + key
 			repls[str(key)] = str(val)
 	return repls
 
@@ -438,6 +440,13 @@ def updateLibraryMenuPar(libsComp: 'COMP'):
 	libs.sort(key=lambda l: -l.nodeY)
 	p.menuNames = [lib.name for lib in libs]
 
+def _getHasInputMacroName(inputAlias: str):
+	if tdu.base(inputAlias) == 'inputOp':
+		i = tdu.digits(inputAlias)
+		if i is not None:
+			return f'THIS_HAS_INPUT_{i}'
+	return f'THIS_HAS_INPUT_{inputAlias}'
+
 def prepareMacroTable(dat: 'scriptDAT', inputTable: 'DAT', paramSpecTable: 'DAT'):
 	dat.clear()
 	for cell in inputTable.col('inputFunc')[1:]:
@@ -445,7 +454,7 @@ def prepareMacroTable(dat: 'scriptDAT', inputTable: 'DAT', paramSpecTable: 'DAT'
 			continue
 		dat.appendRow([
 			'',
-			f'THIS_HAS_INPUT_{tdu.digits(cell.val)}',
+			_getHasInputMacroName(cell.val),
 			'',
 		])
 	macroParams = []
