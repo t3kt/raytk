@@ -110,3 +110,11 @@ vec4 castSecondaryRay(MaterialContext matCtx) {
 	return vec4(0.);
 #endif
 }
+
+vec3 getRefractionColor(vec3 p, MaterialContext matCtx) {
+	#if defined(RAYTK_USE_REFRACTION) && defined(THIS_HAS_INPUT_refractionRayCast)
+	return inputOp_refractionRayCast(matCtx.ray.pos, matCtx).rgb;
+	#else
+	return vec3(0.);
+	#endif
+}

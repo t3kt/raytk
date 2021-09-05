@@ -97,6 +97,7 @@ Sdf createSdf(float dist) {
 	res.reflect = false;
 	#endif
 	#ifdef RAYTK_REFRACT_IN_SDF
+	res.ior = 1.0;
 	res.refract = false;
 	#endif
 	#ifdef RAYTK_ORBIT_IN_SDF
