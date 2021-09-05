@@ -63,28 +63,6 @@ int DBG_refractCount = 0;
 //}
 #endif
 
-vec3 getVolLight(MaterialContext matCtx) {
-	vec3 col = vec3(0.);
-	#ifdef RAYTK_USE_VOLUMETRIC_LIGHT
-	int priorStage = pushStage(RAYTK_STAGE_VOLUMETRIC);
-	float vStepDist = THIS_Volumetricstep;
-	float remainingDist = matCtx.result.x;
-	Ray ray = matCtx.ray;
-	LightContext lightCtx = createLightContext(matCtx.result, matCtx.normal);
-	for (int i = 0; i < THIS_Volumetricmaxsteps; i++) {
-		float actualStep = min(remainingDist, vStepDist);
-		if (actualStep <= 0.) break;
-		vec3 midPoint = ray.pos + ray.dir * actualStep * 0.5;
-		matCtx.light = getLight(midPoint, lightCtx);
-		col += getVolLightForStep(midPoint, matCtx) * actualStep;
-		ray.pos += ray.dir * actualStep;
-		remainingDist -= actualStep;
-	}
-	popStage(priorStage);
-	#endif
-	return col;
-}
-
 Sdf castRay(Ray ray, float maxDist) {
 	int priorStage = pushStage(RAYTK_STAGE_PRIMARY);
 	float dist = 0;
@@ -470,7 +448,6 @@ void main()
 		if (res.x >= renderDepth && renderDepth == RAYTK_MAX_DIST) {
 			#ifdef OUTPUT_COLOR
 			colorOut += getBackgroundColor(ray);
-			colorOut.rgb += getVolLight(matCtx);
 			vec4 color2 = castSecondaryRay(matCtx);
 			colorOut.rgb += color2.rgb;
 			// TODO: alpha?
@@ -518,7 +495,6 @@ void main()
 				#endif
 
 				vec4 col = getColor(p, matCtx);
-				col.rgb += getVolLight(matCtx);
 				vec4 color2 = castSecondaryRay(matCtx);
 				colorOut.rgb += color2.rgb;
 

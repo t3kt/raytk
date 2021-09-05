@@ -46,7 +46,12 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 		popStage(innerPriorStage);
 		#endif
 		float amount = actualStep * level;
-		res += inputOp1(midPoint, ctx) * amount;
+		#ifdef THIS_HAS_INPUT_lightVolume
+		vec4 col = inputOp_lightVolume(midPoint, ctx);
+		#else
+		vec4 col = vec4(1.);
+		#endif
+		res += col * amount;
 		ray.pos += ray.dir * actualStep;
 		remainingDist -= actualStep;
 	}

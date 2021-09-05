@@ -103,15 +103,9 @@ float calcShadedLevel(vec3 p, MaterialContext matCtx) {
 }
 #endif
 
-#ifdef RAYTK_USE_VOLUMETRIC_LIGHT
-vec3 getVolLightForStep(vec3 midPoint, MaterialContext matCtx) {
-	return inputOp7(midPoint, matCtx).rgb;
-}
-#endif
-
 vec4 castSecondaryRay(MaterialContext matCtx) {
 #ifdef RAYTK_USE_SECONDARY_RAY_CAST
-	return inputOp8(matCtx.ray.pos, matCtx);
+	return inputOp_secondaryRayCast(matCtx.ray.pos, matCtx);
 #else
 	return vec4(0.);
 #endif
