@@ -2,6 +2,6 @@
   "meta": {
     "opStatus": "default",
     "opType": "raytk.operators.field.colorRampField",
-    "opVersion": 8
+    "opVersion": 9
   }
 }

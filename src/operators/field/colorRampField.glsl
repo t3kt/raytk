@@ -1,6 +1,6 @@
 vec4 thismap(CoordT p, ContextT ctx) {
-	#ifdef THIS_HAS_INPUT_1
-	float q = inputOp1(p, ctx);
+	#ifdef THIS_HAS_INPUT_coordField
+	float q = inputOp_coordField(p, ctx);
 	#elif defined(THIS_Axis_dist)
 	float q = length(p);
 	#else
@@ -17,5 +17,5 @@ vec4 thismap(CoordT p, ContextT ctx) {
 		return vec4(0);
 	}
 	#endif
-	return mix(THIS_Color1, THIS_Color2, q);
+	return mix(vec4(THIS_Color1, THIS_Alpha1), vec4(THIS_Color2, THIS_Alpha2), q);
 }
