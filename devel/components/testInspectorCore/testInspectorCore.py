@@ -1,3 +1,4 @@
+from pathlib import Path
 from typing import List, Optional
 from raytkTest import TestFinding, TestFindingSource, TestFindingStatus
 
@@ -173,4 +174,27 @@ class TestInspectorCore:
 					basePath,
 					includeDetail=includeDetail,
 				))
+
+	def WriteSnapshots(self, caseRootFolder: str, imagesRootFolder: str):
+		scope = self._scopeRoot
+		if not scope:
+			print(self.ownerComp, f'No scope currently loaded')
+			return
+		if not caseRootFolder.endswith('/'):
+			caseRootFolder += '/'
+		if not imagesRootFolder.endswith('/'):
+			imagesRootFolder += '/'
+		tox = str(scope.par.externaltox)
+		if not tox.startswith(caseRootFolder) or not tox.endswith('_test.tox'):
+			print(self.ownerComp, f'Tox does not support snapshots: {tox!r}')
+			return
+		for o in scope.children:
+			if not o.par['Enablesnapshot'] or not o.par['Snapshotname']:
+				continue
+			top = o.op('snapshot')  # type: TOP
+			if not top:
+				continue
+			suffix = '_' + o.par.Snapshotname.eval() + '.png'
+			imagePath = imagesRootFolder + '/' + tox.replace(caseRootFolder, '').replace('_test.tox', suffix)
+			top.save(imagePath, createFolders=True)
 
