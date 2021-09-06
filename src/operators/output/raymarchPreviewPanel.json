@@ -1,7 +1,7 @@
 {
   "meta": {
-    "opStatus": "alpha",
+    "opStatus": "beta",
     "opType": "raytk.operators.output.raymarchPreviewPanel",
-    "opVersion": 0
+    "opVersion": 1
   }
 }
