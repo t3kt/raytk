@@ -33,6 +33,8 @@ cat:
     - ramp
     name: colorRampField
     summary: A vector field that maps an input field to values from a range of colors.
+  - name: colorSwitchField
+    status: beta
   - name: constantColorField
     summary: A vector field that evaluates to a constant color value.
   - name: constantField
