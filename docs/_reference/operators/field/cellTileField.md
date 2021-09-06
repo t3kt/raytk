@@ -30,21 +30,6 @@ op:
     - label: Raw
       name: raw
     name: Cellstyle
-  - label: Context Type
-    menuOptions:
-    - label: Auto
-      name: auto
-    - label: Context
-      name: Context
-    - label: Material Context
-      name: MaterialContext
-    - label: Camera Context
-      name: CameraContext
-    - label: Light Context
-      name: LightContext
-    - label: Ray Context
-      name: RayContext
-    name: Contexttype
   summary: A value field that provides an approximation of repeating cellular (voronoi)
     noise.
 

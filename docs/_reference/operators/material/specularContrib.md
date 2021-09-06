@@ -55,6 +55,8 @@ op:
   - label: Enable Shadow
     name: Enableshadow
     summary: Whether to apply the shadow to the color/level produced by this element.
+  - label: Use Surface Color
+    name: Usesurfacecolor
   summary: A material element that provides specular light contribution.
 
 ---

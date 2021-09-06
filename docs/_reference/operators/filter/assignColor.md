@@ -39,7 +39,6 @@ op:
     - vec3
     label: Color Field
     name: colorField
-    required: true
     returnTypes:
     - float
     - vec4

@@ -48,6 +48,7 @@ op:
   - contextTypes:
     - Context
     coordTypes:
+    - float
     - vec2
     - vec3
     label: definition_in
@@ -129,6 +130,15 @@ op:
     name: Timerefop
   - label: Shader Builder Config
     name: Shaderbuilderconfig
+  - label: Coord Type
+    menuOptions:
+    - label: Auto
+      name: auto
+    - label: 2D
+      name: vec2
+    - label: 3D
+      name: vec3
+    name: Coordtype
   - label: Enable Normal Smoothing
     name: Enablenormalsmoothing
   - label: Normal Smoothing

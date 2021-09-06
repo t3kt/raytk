@@ -64,31 +64,25 @@ op:
     - vec4
     summary: Help not available.
   - contextTypes:
-    - Context
+    - MaterialContext
     coordTypes:
     - vec3
-    label: Shadow
-    name: shadowInput
+    label: Secondary Ray Cast
+    name: Secondaryraycast
     returnTypes:
-    - Sdf
+    - float
+    - vec4
+    summary: Help not available.
   - contextTypes:
     - MaterialContext
     coordTypes:
     - vec3
-    label: definition_in_7
-    name: definition_in_7
+    label: Refraction Ray Cast
+    name: Refractionraycast
     returnTypes:
     - float
     - vec4
-  - contextTypes:
-    - MaterialContext
-    coordTypes:
-    - vec3
-    label: definition_in_8
-    name: definition_in_8
-    returnTypes:
-    - float
-    - vec4
+    summary: Help not available.
   name: raymarchRender3D
   opType: raytk.operators.output.raymarchRender3D
   parameters:
@@ -262,6 +256,8 @@ op:
     name: Enablerefraction
   - label: Refraction Passes
     name: Refractionpasses
+  - label: Refraction Ray Cast
+    name: Refractionraycast
   - label: Background Field
     name: Backgroundfield
   - label: Use Background Field Alpha
@@ -272,14 +268,6 @@ op:
     name: Normalsmoothing
   - label: Ray Modifier
     name: Raymodifier
-  - label: Enable Volumetric Light
-    name: Enablevolumetriclight
-  - label: Volumetric Step
-    name: Volumetricstep
-  - label: Volumetric Max Steps
-    name: Volumetricmaxsteps
-  - label: Volumetric Light
-    name: Volumetriclight
   - label: Enable Secondary Ray Cast
     name: Enablesecondaryraycast
   - label: Secondary Ray Cast

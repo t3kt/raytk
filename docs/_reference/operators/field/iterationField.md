@@ -24,24 +24,6 @@ op:
     - label: W
       name: w
     name: Format
-  - label: Coord Type
-    menuOptions:
-    - label: 1D
-      name: float
-    - label: 2D
-      name: vec2
-    - label: 3D
-      name: vec3
-    name: Coordtype
-  - label: Context Type
-    menuOptions:
-    - label: Auto
-      name: auto
-    - label: Context
-      name: Context
-    - label: Material Context
-      name: MaterialContext
-    name: Contexttype
   summary: Field that returns the current iteration, from a downstream OP.
 
 ---

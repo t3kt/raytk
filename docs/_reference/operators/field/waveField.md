@@ -25,7 +25,7 @@ op:
     - vec2
     - vec3
     label: Coordinate Field
-    name: coordinate_field_in
+    name: coordField
     returnTypes:
     - float
     - vec4
@@ -43,11 +43,25 @@ op:
     - vec2
     - vec3
     label: Period Field
-    name: period_field_definition_in
+    name: periodField
     returnTypes:
     - float
     summary: If attached, the wave will use this field to multiply the `Period` parameter,
       which can be used for frequency modulation.
+  - contextTypes:
+    - Context
+    - MaterialContext
+    - CameraContext
+    - LightContext
+    - RayContext
+    coordTypes:
+    - float
+    - vec2
+    - vec3
+    label: Phase Field
+    name: phaseField
+    returnTypes:
+    - float
   name: waveField
   opType: raytk.operators.field.waveField
   parameters:
