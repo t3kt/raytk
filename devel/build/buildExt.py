@@ -210,13 +210,14 @@ class BuildManager:
 		# self.context.moveNetworkPane(comp)
 		self.processOperatorSubCompChildrenOf(comp)
 		# self.context.moveNetworkPane(comp)
-		self.log(f'Updating OP image for {comp}')
-		img = tools.updateOPImage(comp)
-		if img:
-			# self.context.focusInNetworkPane(img)
-			self.context.disableCloning(img)
-			self.context.detachTox(img)
-			self.context.lockBuildLockOps(img)
+		if not comp.isPanel:
+			self.log(f'Updating OP image for {comp}')
+			img = tools.updateOPImage(comp)
+			if img:
+				# self.context.focusInNetworkPane(img)
+				self.context.disableCloning(img)
+				self.context.detachTox(img)
+				self.context.lockBuildLockOps(img)
 		comp.color = IconColors.defaultBgColor
 		if self.docProcessor:
 			self.docProcessor.processOp(comp)
