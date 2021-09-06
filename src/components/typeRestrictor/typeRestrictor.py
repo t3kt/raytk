@@ -12,7 +12,7 @@ def restrictTypes(dat: 'scriptDAT', supportedTypes: 'DAT'):
 
 def _restrictTypeCategory(dat: 'scriptDAT', supportedTypes: 'DAT', column: str):
 	cells = dat.col(column)
-	if not cells:
+	if not cells or len(cells) < 2:
 		return
 	if parent().par.Onlyfirstdef:
 		cells = [cells[1]]
