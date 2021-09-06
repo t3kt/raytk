@@ -21,6 +21,14 @@ def _parentPar() -> '_HandlerPar':
 	# noinspection PyTypeChecker
 	return parent().par
 
+# WARNING: This reaches outside into the host OP and looks for opDefinition.
+def shouldBypass() -> bool:
+	host = _parentPar().Hostop.eval()
+	opDef = host and host.op('opDefinition')
+	if not opDef or opDef.par['Enable'] is None:
+		return False
+	return not opDef.par.Enable
+
 def _isValidDefinitionDat(o: 'Optional[Union[OP, DAT]]'):
 	if not o or not o.isDAT:
 		return False
