@@ -1,7 +1,7 @@
 {
   "meta": {
-    "opStatus": "alpha",
+    "opStatus": "beta",
     "opType": "raytk.operators.light.volumetricRayCast",
-    "opVersion": 2
+    "opVersion": 3
   }
 }
