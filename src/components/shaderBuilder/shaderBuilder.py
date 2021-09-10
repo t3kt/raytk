@@ -219,6 +219,9 @@ class ShaderBuilder:
 			elif libraryOp.isCOMP:
 				namesToRemove = []
 				for name in requiredLibNames:
+					if name.startswith('/'):
+						# This is a full library DAT path, not a name, so it's handled in the next loop
+						continue
 					dat = libraryOp.op(name)
 					if not dat:
 						continue
@@ -226,8 +229,26 @@ class ShaderBuilder:
 					namesToRemove.append(name)
 				for name in namesToRemove:
 					requiredLibNames.remove(name)
+		namesToRemove = []
+		for libraryPath in requiredLibNames:
+			if not libraryPath.startswith('/'):
+				continue
+			dat = op(libraryPath)
+			if dat:
+				dats.append(dat)
+				namesToRemove.append(libraryPath)
+		for name in namesToRemove:
+			requiredLibNames.remove(name)
 		if requiredLibNames and onWarning:
 			onWarning('Missing libraries: ' + repr(requiredLibNames))
+		dedupedDats = []
+		libraryTexts = set()
+		for dat in dats:
+			if dat.text in libraryTexts:
+				continue
+			libraryTexts.add(dat.text)
+			dedupedDats.append(dat)
+		dats = dedupedDats
 		return dats
 
 	def buildLibraryIncludes(self, onWarning: Callable[[str], None] = None):
