@@ -22,7 +22,13 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 	float amt = THIS_Amount;
 	#endif
 	q.x += THIS_Shift;
-	q = opCheapBendPos(q, amt);
+
+	// opCheapBendPos
+	float c = cos(amt*q.x);
+	float s = sin(amt*q.x);
+	mat2 m = mat2(c, -s, s, c);
+	q = vec3(m*q.xy, q.z);
+
 	q.x -= THIS_Shift;
 	#if defined(THIS_COORD_TYPE_vec2)
 	p.THIS_Toward = q.y;

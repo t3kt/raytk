@@ -1,6 +1,7 @@
 {
   "meta": {
+    "opStatus": "default",
     "opType": "raytk.operators.field.chopField",
-    "opVersion": 7
+    "opVersion": 8
   }
 }

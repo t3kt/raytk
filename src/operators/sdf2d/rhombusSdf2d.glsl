@@ -1,3 +1,4 @@
+// https://www.shadertoy.com/view/XdXcRB
 ReturnT thismap(CoordT p, ContextT ctx) {
 	vec2 b = THIS_Scale;
 	#ifdef THIS_HAS_INPUT_1

@@ -1,6 +1,7 @@
 {
   "meta": {
+    "opStatus": "default",
     "opType": "raytk.operators.function.sincCurveFn",
-    "opVersion": 2
+    "opVersion": 3
   }
 }

@@ -2,6 +2,6 @@
   "meta": {
     "opStatus": "default",
     "opType": "raytk.operators.field.triPlanarTextureField",
-    "opVersion": 8
+    "opVersion": 9
   }
 }
