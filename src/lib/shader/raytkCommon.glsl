@@ -184,12 +184,6 @@ Ray createStandardCameraRay(vec2 p, vec2 size, int viewAngleMethod, float fov, m
 	return ray;
 }
 
-// https://iquilezles.org/www/articles/palettes/palettes.htm
-// https://github.com/Erkaman/glsl-cos-palette
-vec3 cosPalette(  float t,  vec3 a,  vec3 b,  vec3 c, vec3 d ){
-	return a + b*cos( 6.28318*(c*t+d) );
-}
-
 float cheapNoiseLookup(vec2 p) { return texture(sTDNoiseMap, p).r; }
 
 float adaptAsFloat(float p) { return p; }

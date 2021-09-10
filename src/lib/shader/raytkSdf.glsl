@@ -141,42 +141,6 @@ float fOpIntersectionColumns(float a, float b, float r, float n, float o) {
 	return fOpDifferenceColumns(a,-b,r, n, o);
 }
 
-float sdTriPrism( vec3 p, vec2 h )
-{
-	vec3 q = abs(p);
-	return max(q.z-h.y,max(q.x*0.866025+p.y*0.5,-p.y)-h.x*0.5);
-}
-
-float sdHexPrism( vec3 p, vec2 h )
-{
-	const vec3 k = vec3(-0.8660254, 0.5, 0.57735);
-	p = abs(p);
-	p.xy -= 2.0*min(dot(k.xy, p.xy), 0.0)*k.xy;
-	vec2 d = vec2(
-		length(p.xy-vec2(clamp(p.x,-k.z*h.x,k.z*h.x), h.x))*sign(p.y-h.x),
-		p.z-h.y );
-	return min(max(d.x,d.y),0.0) + length(max(d,0.0));
-}
-
-float sdOctogonPrism( in vec3 p, in float r, float h )
-{
-	const vec3 k = vec3(-0.9238795325,  // sqrt(2+sqrt(2))/2
-											0.3826834323,   // sqrt(2-sqrt(2))/2
-											0.4142135623 ); // sqrt(2)-1
-	// reflections
-	p = abs(p);
-	p.xy -= 2.0*min(dot(vec2( k.x,k.y),p.xy),0.0)*vec2( k.x,k.y);
-	p.xy -= 2.0*min(dot(vec2(-k.x,k.y),p.xy),0.0)*vec2(-k.x,k.y);
-	// polygon side
-	p.xy -= vec2(clamp(p.x, -k.z*r, k.z*r), r);
-	vec2 d = vec2( length(p.xy)*sign(p.y), p.z-h );
-	return min(max(d.x,d.y),0.0) + length(max(d,0.0));
-}
-
-float sdSquarePrism(vec3 p, vec2 h) {
-	return fBox(p, h.xxy);
-}
-
 float sdOctahedron( vec3 p, float s)
 {
 	p = abs(p);
@@ -195,79 +159,6 @@ float sdOctahedronBound( vec3 p, float s)
 {
 	p = abs(p);
 	return (p.x+p.y+p.z-s)*0.57735027;
-}
-
-float sdEquilateralTriangle( in vec2 p )
-{
-	const float k = sqrt(3.0);
-	p.x = abs(p.x) - 1.0;
-	p.y = p.y + 1.0/k;
-	if( p.x+k*p.y>0.0 ) p = vec2(p.x-k*p.y,-k*p.x-p.y)/2.0;
-	p.x -= clamp( p.x, -2.0, 0.0 );
-	return -length(p)*sign(p.y);
-}
-
-float sdTriangleIsosceles( in vec2 p, in vec2 q )
-{
-	p.x = abs(p.x);
-	vec2 a = p - q*clamp( dot(p,q)/dot(q,q), 0.0, 1.0 );
-	vec2 b = p - q*vec2( clamp( p.x/q.x, 0.0, 1.0 ), 1.0 );
-	float s = -sign( q.y );
-	vec2 d = min(
-		vec2( dot(a,a), s*(p.x*q.y-p.y*q.x) ),
-		vec2( dot(b,b), s*(p.y-q.y)  ));
-	return -sqrt(d.x)*sign(d.y);
-}
-
-float sdTriangle( in vec2 p, in vec2 p0, in vec2 p1, in vec2 p2 )
-{
-	vec2 e0 = p1-p0, e1 = p2-p1, e2 = p0-p2;
-	vec2 v0 = p -p0, v1 = p -p1, v2 = p -p2;
-	vec2 pq0 = v0 - e0*clamp( dot(v0,e0)/dot(e0,e0), 0.0, 1.0 );
-	vec2 pq1 = v1 - e1*clamp( dot(v1,e1)/dot(e1,e1), 0.0, 1.0 );
-	vec2 pq2 = v2 - e2*clamp( dot(v2,e2)/dot(e2,e2), 0.0, 1.0 );
-	float s = sign( e0.x*e2.y - e0.y*e2.x );
-	vec2 d = min(min(
-		vec2(dot(pq0,pq0), s*(v0.x*e0.y-v0.y*e0.x)),
-		vec2(dot(pq1,pq1), s*(v1.x*e1.y-v1.y*e1.x))),
-		vec2(dot(pq2,pq2), s*(v2.x*e2.y-v2.y*e2.x)));
-	return -sqrt(d.x)*sign(d.y);
-}
-
-float sdPentagon( in vec2 p, in float r )
-{
-	const vec3 k = vec3(0.809016994,0.587785252,0.726542528);
-	p.x = abs(p.x);
-	p -= 2.0*min(dot(vec2(-k.x,k.y),p),0.0)*vec2(-k.x,k.y);
-	p -= 2.0*min(dot(vec2( k.x,k.y),p),0.0)*vec2( k.x,k.y);
-	p -= vec2(clamp(p.x,-r*k.z,r*k.z),r);
-	return length(p)*sign(p.y);
-}
-float sdHexagon(in vec2 p, in float r)
-{
-	const vec3 k = vec3(-0.866025404, 0.5, 0.577350269);
-	p = abs(p);
-	p -= 2.0*min(dot(k.xy, p), 0.0)*k.xy;
-	p -= vec2(clamp(p.x, -k.z*r, k.z*r), r);
-	return length(p)*sign(p.y);
-}
-float sdOctogon(in vec2 p, in float r)
-{
-	const vec3 k = vec3(-0.9238795325, 0.3826834323, 0.4142135623);
-	p = abs(p);
-	p -= 2.0*min(dot(vec2(k.x, k.y), p), 0.0)*vec2(k.x, k.y);
-	p -= 2.0*min(dot(vec2(-k.x, k.y), p), 0.0)*vec2(-k.x, k.y);
-	p -= vec2(clamp(p.x, -k.z*r, k.z*r), r);
-	return length(p)*sign(p.y);
-}
-float sdHexagram(in vec2 p, in float r)
-{
-	const vec4 k = vec4(-0.5, 0.8660254038, 0.5773502692, 1.7320508076);
-	p = abs(p);
-	p -= 2.0*min(dot(k.xy, p), 0.0)*k.xy;
-	p -= 2.0*min(dot(k.yx, p), 0.0)*k.yx;
-	p -= vec2(clamp(p.x, r*k.z, r*k.w), r);
-	return length(p)*sign(p.y);
 }
 
 float sdCappedTorus(in vec3 p, in vec2 sc, in float ra, in float rb)
@@ -301,55 +192,4 @@ float sdRoundedBox( in vec2 p, in vec2 b, in vec4 r )
 	r.x  = (p.y>0.0)?r.x  : r.y;
 	vec2 q = abs(p)-b+r.x;
 	return min(max(q.x,q.y),0.0) + length(max(q,0.0)) - r.x;
-}
-
-// https://www.shadertoy.com/view/MlycD3
-// trapezoid / capped cone, specialized for Y alignment
-// r1: bottom width, r2: top width, he: height
-float sdTrapezoid(vec2 p, float r1, float r2, float he)
-{
-	vec2 k1 = vec2(r2,he);
-	vec2 k2 = vec2(r2-r1,2.0*he);
-
-	p.x = abs(p.x);
-	vec2 ca = vec2(max(0.0,p.x-((p.y<0.0)?r1:r2)), abs(p.y)-he);
-	vec2 cb = p - k1 + k2*clamp( dot(k1-p,k2)/dot2(k2), 0.0, 1.0 );
-
-	float s = (cb.x < 0.0 && ca.y < 0.0) ? -1.0 : 1.0;
-
-	return s*sqrt( min(dot2(ca),dot2(cb)) );
-}
-
-// trapezoid / capped cone
-// a: ?, b: ?, ra: ?, rb: ?
-float sdTrapezoid(vec2 p, vec2 a, vec2 b, float ra, float rb)
-{
-	float rba  = rb-ra;
-	float baba = dot(b-a,b-a);
-	float papa = dot(p-a,p-a);
-	float paba = dot(p-a,b-a)/baba;
-	float x = sqrt( papa - paba*paba*baba );
-	float cax = max(0.0,x-((paba<0.5)?ra:rb));
-	float cay = abs(paba-0.5)-0.5;
-	float k = rba*rba + baba;
-	float f = clamp( (rba*(x-ra)+paba*baba)/k, 0.0, 1.0 );
-	float cbx = x-ra - f*rba;
-	float cby = paba - f;
-	float s = (cbx < 0.0 && cay < 0.0) ? -1.0 : 1.0;
-	return s*sqrt( min(cax*cax + cay*cay*baba,
-	cbx*cbx + cby*cby*baba) );
-}
-
-// https://www.shadertoy.com/view/wlXSD7
-// build the chain directly, it saves one of four square roots
-// over using sdLinks()
-float sdChain(vec3 pos, float le, float r1, float r2)
-{
-	float ya = max(abs(fract(pos.y    )-0.5)-le,0.0);
-	float yb = max(abs(fract(pos.y+0.5)-0.5)-le,0.0);
-
-	float la = ya*ya - 2.0*r1*sqrt(pos.x*pos.x+ya*ya);
-	float lb = yb*yb - 2.0*r1*sqrt(pos.z*pos.z+yb*yb);
-
-	return sqrt(dot(pos.xz,pos.xz) + r1*r1 + min(la,lb)) - r2;
 }
