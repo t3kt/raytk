@@ -112,7 +112,6 @@ vec4 opElongate(in vec3 p, in vec3 h)
 	return vec4(max(q,0.0), min(max(q.x,max(q.y,q.z)),0.0));
 }
 
-
 vec4 qsqr(in vec4 a)// square a quaterion
 {
 	return vec4(
@@ -137,11 +136,6 @@ vec3 mengerFold(vec3 p) {
 	p.y -= a;
 	p.z += a;
 	return p;
-}
-
-// Barycentric to Cartesian
-vec3 bToC(vec3 A, vec3 B, vec3 C, vec3 barycentric) {
-	return barycentric.x * A + barycentric.y * B + barycentric.z * C;
 }
 
 // Normal for the perpendicular bisector plane of two points

@@ -1,4 +1,4 @@
 #ifndef GEODESIC_INIT
 #define GEODESIC_INIT
-GEODESIC_init();
+geo_init();
 #endif
