@@ -167,36 +167,6 @@ bool allInRange(vec4 val, vec4 low, vec4 high) {
 				 val.w >= low.w && val.w <= high.w;
 }
 
-int findMin(vec2 vals, out float minVal) {
-	if (vals.x < vals.y) {
-		minVal = vals.x;
-		return 0;
-	} else {
-		minVal = vals.y;
-		return 1;
-	}
-}
-
-int findMin(vec3 vals, out float minVal) {
-	int i = findMin(vals.xy, minVal);
-	if (minVal < vals.z) {
-		return i;
-	} else {
-		minVal = vals.z;
-		return 2;
-	}
-}
-
-int findMin(vec4 vals, out float minVal) {
-	int i = findMin(vals.xyz, minVal);
-	if (minVal < vals.w) {
-		return i;
-	} else {
-		minVal = vals.w;
-		return 3;
-	}
-}
-
 /**
  * Return a transform matrix that will transform a ray from view space
  * to world coordinates, given the eye point, the camera target, and an up vector.
@@ -273,34 +243,6 @@ vec4 onion(vec4 d, float thickness) {
 // https://www.shadertoy.com/view/XdXcRB
 float ndot(vec2 a, vec2 b ) { return a.x*b.x - a.y*b.y; }
 
-// f: attack width
-float expImpulse(float x, float k)
-{
-	float h = k*x;
-	return h*exp(1.0-h);
-}
-
-// f: attack width
-// k: release
-float expSustainedImpulse(float x, float f, float k)
-{
-	float s = max(x-f, 0.0);
-	return min(x*x/(f*f), 1+(2.0/f)*s*exp(-k*s));
-}
-
-// k: falloff
-float quaImpulse(float x, float k)
-{
-	return 2.0*sqrt(k)*x/(1.0+k*x*x);
-}
-
-// n: polynomial degree
-// k: falloff
-float polyImpulse(float x, float n, float k)
-{
-	return (n/(n-1.0))*pow((n-1.0)*k, 1.0/n) * x/(1.0+k*pow(x, n));
-}
-
 // k: number of bounces
 float sinc(float x, float k)
 {
@@ -308,24 +250,10 @@ float sinc(float x, float k)
 	return sin(a)/a;
 }
 
-// c: phase/shift, w: width
-float cubicPulse( float x, float c, float w )
-{
-	x = abs(x - c);
-	if (x>w) return 0.0;
-	x /= w;
-	return 1.0 - x*x*(3.0-2.0*x);
-}
-
 float gain(float x, float k)
 {
 	float a = 0.5*pow(2.0*((x<0.5)?x:1.0-x), k);
 	return (x<0.5)?a:1.0-a;
-}
-
-float parabola(float x, float k)
-{
-	return pow(4.0*x*(1.0-x), k);
 }
 
 // https://iquilezles.org/www/articles/smoothstepintegral/smoothstepintegral.htm
