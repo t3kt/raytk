@@ -2,6 +2,6 @@
   "meta": {
     "opStatus": "default",
     "opType": "raytk.operators.light.hardShadow",
-    "opVersion": 4
+    "opVersion": 5
   }
 }
