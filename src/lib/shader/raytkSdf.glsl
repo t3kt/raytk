@@ -270,23 +270,6 @@ float sdHexagram(in vec2 p, in float r)
 	return length(p)*sign(p.y);
 }
 
-// Repeat only a few times: from indices <start> to <stop> (similar to above, but more flexible)
-float pModIntervalMirror1(inout float p, float size, float start, float stop) {
-	float halfsize = size*0.5;
-	float c = floor((p + halfsize)/size);
-	p = mod(p+halfsize, size) - halfsize;
-	p *= mod(c, 2.0)*2 - 1;
-	if (c > stop) { //yes, this might not be the best thing numerically.
-		p += size*(c - stop);
-		c = stop;
-	}
-	if (c <start) {
-		p += size*(c - start);
-		c = start;
-	}
-	return c;
-}
-
 float sdCappedTorus(in vec3 p, in vec2 sc, in float ra, in float rb)
 {
 	p.x = abs(p.x);
