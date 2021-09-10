@@ -270,83 +270,8 @@ vec4 onion(vec4 d, float thickness) {
 	return abs(d)-thickness;
 }
 
-float pModPolarMirror(inout vec2 p, float repetitions) {
-	float angle = 2*PI/repetitions;
-	float a = atan(p.y, p.x) + angle/2.;
-	float r = length(p);
-	float c = floor(a/angle);
-//	a = mod(a,angle) - angle/2.;
-	float a1 = mod(a, angle * 2);
-	if (a1 >= angle) {
-		a1 = angle - a1;
-	}
-	a = mod(a1, angle) - angle/2.;
-
-	p = vec2(cos(a), sin(a))*r;
-	// For an odd number of repetitions, fix cell index of the cell in -x direction
-	// (cell index would be e.g. -5 and 5 in the two halves of the cell):
-	if (abs(c) >= (repetitions/2)) c = abs(c);
-	return c;
-}
-
-float pModPolarInterval(inout vec2 p, float repetitions, float start, float stop) {
-	float angle = 2.*PI/repetitions;
-	float a = atan(p.y, p.x) + angle/2.;
-	float r = length(p);
-	float c = floor(a/angle);
-	float a2 = mod(a, 2.*PI)/angle;
-	if (a2 < start) {
-		return -1.;
-	}
-	if (a2 > stop) {
-		return repetitions + 1.;
-	}
-
-	a = mod(a,angle) - angle/2.;
-	p = vec2(cos(a), sin(a))*r;
-	// For an odd number of repetitions, fix cell index of the cell in -x direction
-	// (cell index would be e.g. -5 and 5 in the two halves of the cell):
-	if (abs(c) >= (repetitions/2)) c = abs(c);
-	return c;
-}
-
-float pModPolarIntervalMirror(inout vec2 p, float repetitions, float start, float stop) {
-	float angle = 2*PI/repetitions;
-	float a = atan(p.y, p.x) + angle/2.;
-	float r = length(p);
-	float c = floor(a/angle);
-	float a2 = mod(a, 2.*PI)/angle;
-	if (a2 < start) {
-		return -1.;
-	}
-	if (a2 > stop) {
-		return repetitions + 1.;
-	}
-	float a1 = mod(a, angle * 2);
-	if (a1 >= angle) {
-		a1 = angle - a1;
-	}
-	a = mod(a1, angle) - angle/2.;
-
-	p = vec2(cos(a), sin(a))*r;
-	// For an odd number of repetitions, fix cell index of the cell in -x direction
-	// (cell index would be e.g. -5 and 5 in the two halves of the cell):
-	if (abs(c) >= (repetitions/2)) c = abs(c);
-	return c;
-}
-
 // https://www.shadertoy.com/view/XdXcRB
 float ndot(vec2 a, vec2 b ) { return a.x*b.x - a.y*b.y; }
-
-// https://iquilezles.org/www/articles/functions/functions.htm
-float remapAlmostIdentity( float x, float m, float n )
-{
-	if( x>m ) return x;
-	float a = 2.0*n - m;
-	float b = 2.0*m - 3.0*n;
-	float t = x/m;
-	return (a*t + b)*t*t + n;
-}
 
 // f: attack width
 float expImpulse(float x, float k)
@@ -403,27 +328,6 @@ float parabola(float x, float k)
 	return pow(4.0*x*(1.0-x), k);
 }
 
-float exponentialEasing(float x, float a)
-{
-	const float epsilon = 0.00001;
-	const float min_param_a = 0.0 + epsilon;
-	const float max_param_a = 1.0 - epsilon;
-	a = max(min_param_a, min(max_param_a, a));
-
-	if (a < 0.5)
-	{
-		// emphasis
-		a = 2.0*(a);
-		float y = pow(x, a);
-		return y;
-	} else {
-		// de-emphasis
-		a = 2.0*(a-0.5);
-		float y = pow(x, 1.0/(1-a));
-		return y;
-	}
-}
-
 // https://iquilezles.org/www/articles/smoothstepintegral/smoothstepintegral.htm
 float smoothstepIntegral(float b, float x) {
 	if( x>=b ) return x - 0.5*b;
@@ -437,18 +341,6 @@ vec3 opCheapBendPos(vec3 p, float k)
 	float s = sin(k*p.x);
 	mat2  m = mat2(c, -s, s, c);
 	return vec3(m*p.xy, p.z);
-}
-
-// https://www.shadertoy.com/view/3llfRl
-vec2 opKink(vec2 p, vec2 c, float k) {
-	p -= c;
-	//to polar coordinates
-	float ang = atan(p.x, p.y);
-	float len = length(p);
-	//warp angle with sigmoid function
-	ang -= ang/sqrt(1.+ang*ang)*(1.-k);
-	//to cartesian coordiantes
-	return vec2(sin(ang),cos(ang))*len + c;
 }
 
 // Returns xyz: new pos, w: value to add to surface distance (which may not work correctly)
@@ -538,63 +430,10 @@ vec3 map01(vec3 value, vec3 inMin, vec3 inMax) {
 	return (value - inMin) / (inMax - inMin);
 }
 
-// from Logarithmic Mobius Transform by Shane
-// https://www.shadertoy.com/view/4dcSWs
-vec2 spiralZoom(vec2 p, vec2 offs, float n, float spiral, float zoom, vec2 phase) {
-	p -= offs;
-	float a = atan(p.y, p.x)/6.283;
-	float d = log(length(p));
-	return vec2(a*n + d*spiral, -d*zoom + a) + phase;
-}
 // Standard Mobius transform: f(z) = (az + b)/(cz + d). Slightly obfuscated.
 vec2 mobiusTransform(vec2 p, vec2 z1, vec2 z2) {
 	z1 = p - z1; p -= z2;
 	return vec2(dot(z1, p), z1.y*p.x - z1.x*p.y) / dot(p, p);
-}
-
-// Based on https://gist.github.com/Dan-Piker/f7d790b3967d41bff8b0291f4cf7bd9e
-// and https://github.com/DBraun/TouchDesigner_Shared/tree/master/Starters/moebius_transformations
-vec3 sphericalMobiusTransform(vec3 p, float radius, float rotAmt, vec3 rotation) {
-	mat3 rMat3 = TDRotateOnAxis(rotation.x, vec3(1, 0, 0)) *
-		TDRotateOnAxis(rotation.y, vec3(0, 1, 0)) *
-		TDRotateOnAxis(rotation.z, vec3(0, 0, 1));
-	mat4 rMat4 = mat4(
-		rMat3[0].xyz, 0,
-		rMat3[1].xyz, 0,
-		rMat3[2].xyz, 0,
-		0, 0, 0, 1);
-
-	p = (rMat4*vec4(p, 1.)).xyz / radius;
-
-	float xa = p.x;
-	float ya = p.y;
-	float za = p.z;
-
-	float rp = 0.; //set to the same as rq for isoclinic rotations
-	float rq = 1.0;
-
-	// reverse stereographic projection to hypersphere
-	float xb = 2 * xa / (1 + xa * xa + ya * ya + za * za);
-	float yb = 2 * ya / (1 + xa * xa + ya * ya + za * za);
-	float zb = 2 * za / (1 + xa * xa + ya * ya + za * za);
-	float wb = (-1 + xa * xa + ya * ya + za * za) / (1 + xa * xa + ya * ya + za * za);
-
-	// rotate hypersphere by amount t
-	float t = rotAmt;
-	float xc = +xb * cos(rp * t) + yb * sin((rp) * t);
-	float yc = -xb * sin(rp * t) + yb * cos((rp) * t);
-	float zc = +zb * cos(rq * t) - wb * sin((rq) * t);
-	float wc = +zb * sin(rq * t) + wb * cos((rq) * t);
-
-	// project stereographically back to flat 3D
-	float xd = xc / (1 - wc);
-	float yd = yc / (1 - wc);
-	float zd = zc / (1 - wc);
-
-	return (
-		inverse(rMat4) *
-		vec4(vec3(xd, yd, zd) * radius, 1.)
-	).xyz;
 }
 
 Ray createStandardCameraRay(vec2 p, vec2 size, int viewAngleMethod, float fov, mat4 camMat) {
@@ -610,66 +449,6 @@ Ray createStandardCameraRay(vec2 p, vec2 size, int viewAngleMethod, float fov, m
 // https://github.com/Erkaman/glsl-cos-palette
 vec3 cosPalette(  float t,  vec3 a,  vec3 b,  vec3 c, vec3 d ){
 	return a + b*cos( 6.28318*(c*t+d) );
-}
-
-// https://github.com/CesiumGS/cesium/blob/master/Source/Shaders/Builtin/Functions/
-vec3 czm_saturation(vec3 rgb, float adjustment)
-{
-	// Algorithm from Chapter 16 of OpenGL Shading Language
-	const vec3 W = vec3(0.2125, 0.7154, 0.0721);
-	vec3 intensity = vec3(dot(rgb, W));
-	return mix(intensity, rgb, adjustment);
-}
-// adjustment is in radians
-vec3 czm_hue(vec3 rgb, float adjustment)
-{
-	const mat3 toYIQ = mat3(0.299,     0.587,     0.114,
-	0.595716, -0.274453, -0.321263,
-	0.211456, -0.522591,  0.311135);
-	const mat3 toRGB = mat3(1.0,  0.9563,  0.6210,
-	1.0, -0.2721, -0.6474,
-	1.0, -1.107,   1.7046);
-
-	vec3 yiq = toYIQ * rgb;
-	float hue = atan(yiq.z, yiq.y) + adjustment;
-	float chroma = sqrt(yiq.z * yiq.z + yiq.y * yiq.y);
-
-	vec3 color = vec3(yiq.x, chroma * cos(hue), chroma * sin(hue));
-	return toRGB * color;
-}
-// https://github.com/rreusser/glsl-hypot
-float hypot (vec2 z) {
-	float t;
-	float x = abs(z.x);
-	float y = abs(z.y);
-	t = min(x, y);
-	x = max(x, y);
-	t = t / x;
-	return (z.x == 0.0 && z.y == 0.0) ? 0.0 : x * sqrt(1.0 + t * t);
-}
-
-vec4 domainColoring (vec2 z, vec2 gridSpacing, float saturation, float gridStrength, float magStrength, float linePower) {
-	float carg = atan(z.y, z.x);
-	float cmod = hypot(z);
-
-	float rebrt = (fract(z.x / gridSpacing.x) - 0.5) * 2.0;
-	rebrt *= rebrt;
-
-	float imbrt = (fract(z.y / gridSpacing.y) - 0.5) * 2.0;
-	imbrt *= imbrt;
-
-	float grid = 1.0 - (1.0 - rebrt) * (1.0 - imbrt);
-	grid = pow(abs(grid), linePower);
-
-	float circ = (fract(log2(cmod)) - 0.5) * 2.0;
-	circ = pow(abs(circ), linePower);
-
-	circ *= magStrength;
-
-	vec3 rgb = TDHSVToRGB(vec3(carg * 0.5 / PI, saturation, 0.5 + 0.5 * saturation - gridStrength * grid));
-	rgb *= (1.0 - circ);
-	rgb += circ * vec3(1.0);
-	return vec4(rgb, 1.0);
 }
 
 float cheapNoiseLookup(vec2 p) { return texture(sTDNoiseMap, p).r; }
