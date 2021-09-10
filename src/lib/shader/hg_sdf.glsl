@@ -4,16 +4,54 @@
 //
 //     GLSL LIBRARY FOR BUILDING SIGNED DISTANCE BOUNDS
 //
-//     version 2016-01-10
+//     version 2021-07-28
 //
-//     Check http://mercury.sexy/hg_sdf for updates
+//     Check https://mercury.sexy/hg_sdf for updates
 //     and usage examples. Send feedback to spheretracing@mercury.sexy.
 //
-//     Brought to you by MERCURY http://mercury.sexy
+//     Brought to you by MERCURY https://mercury.sexy/
 //
 //
 //
-// Released as Creative Commons Attribution-NonCommercial (CC BY-NC)
+// Released dual-licensed under
+//   Creative Commons Attribution-NonCommercial (CC BY-NC)
+// or
+//   MIT License
+// at your choice.
+//
+// SPDX-License-Identifier: MIT OR CC-BY-NC-4.0
+//
+// /////
+//
+// CC-BY-NC-4.0
+// https://creativecommons.org/licenses/by-nc/4.0/legalcode
+// https://creativecommons.org/licenses/by-nc/4.0/
+//
+// /////
+//
+// MIT License
+//
+// Copyright (c) 2011-2021 Mercury Demogroup
+//
+// Permission is hereby granted, free of charge, to any person obtaining a copy
+// of this software and associated documentation files (the "Software"), to deal
+// in the Software without restriction, including without limitation the rights
+// to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+// copies of the Software, and to permit persons to whom the Software is
+// furnished to do so, subject to the following conditions:
+//
+// The above copyright notice and this permission notice shall be included in all
+// copies or substantial portions of the Software.
+//
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+// SOFTWARE.
+//
+// /////
 //
 ////////////////////////////////////////////////////////////////
 //
@@ -22,8 +60,9 @@
 // 1. Build some system to #include glsl files in each other.
 //   Include this one at the very start. Or just paste everywhere.
 // 2. Build a sphere tracer. See those papers:
-//   * "Sphere Tracing" http://graphics.cs.illinois.edu/sites/default/files/zeno.pdf
-//   * "Enhanced Sphere Tracing" http://lgdv.cs.fau.de/get/2234
+//   * "Sphere Tracing" https://link.springer.com/article/10.1007%2Fs003710050084
+//   * "Enhanced Sphere Tracing" http://diglib.eg.org/handle/10.2312/stag.20141233.001-008
+//   * "Improved Ray Casting of Procedural Distance Bounds" https://www.bibsonomy.org/bibtex/258e85442234c3ace18ba4d89de94e57d
 //   The Raymnarching Toolbox Thread on pouet can be helpful as well
 //   http://www.pouet.net/topic.php?which=7931&page=1
 //   and contains links to many more resources.
@@ -428,6 +467,14 @@ float fGDF(vec3 p, float r, int begin, int end) {
 //
 //float fIcosahedron(vec3 p, float r) {
 //	return fGDF(p, r, 3, 12);
+//}
+//
+//float fTruncatedOctahedron(vec3 p, float r) {
+//	return fGDF(p, r, 0, 6);
+//}
+//
+//float fTruncatedIcosahedron(vec3 p, float r) {
+//	return fGDF(p, r, 3, 18);
 //}
 //
 //float fTruncatedOctahedron(vec3 p, float r) {
