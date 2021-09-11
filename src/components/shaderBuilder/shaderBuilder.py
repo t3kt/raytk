@@ -335,10 +335,13 @@ class ShaderBuilder:
 
 	def inlineTypedefs(self, code: str) -> str:
 		if not self.configPar()['Inlinetypedefs']:
+			debug(self, 'Inlinetypedefs is OFF')
 			return code
 		typedefs, macros = self._buildTypedefs()
 		if not typedefs:
+			debug(self, 'no typedefs to inline')
 			return code
+		debug(self, f'found {len(typedefs)} to inline')
 
 		replacements = dict(typedefs)
 		replacements.update({
@@ -350,7 +353,7 @@ class ShaderBuilder:
 		def replace(m: re.Match):
 			return replacements.get(m.group(0)) or m.group(0)
 
-		pattern = r'\b[\w_]+_(as?)(CoordT|ContextT|ReturnT)\b'
+		pattern = r'\b[\w_]+_(as)?(CoordT|ContextT|ReturnT)\b'
 
 		code = re.sub(pattern, replace, code)
 

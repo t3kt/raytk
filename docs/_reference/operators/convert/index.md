@@ -17,6 +17,8 @@ cat:
   - name: floatToVector
     summary: Converts one or more float value field inputs into a single vector value
       field.
+  - name: projectPlane
+    status: beta
   - name: revolve
     summary: Creates a 3D SDF by revolving a 2D cross-section SDF around an axis.
   - name: sdfToFloat
