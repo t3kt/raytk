@@ -1,7 +1,7 @@
 {
   "meta": {
-    "opStatus": "alpha",
+    "opStatus": "deprecated",
     "opType": "raytk.operators.material.ggxMat",
-    "opVersion": 2
+    "opVersion": 3
   }
 }
