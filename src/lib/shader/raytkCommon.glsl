@@ -88,13 +88,6 @@ mat4 lookAtViewMatrix(vec3 eye, vec3 center, vec3 up) {
 	);
 }
 
-float onion(float d, float thickness) {
-	return abs(d)-thickness;
-}
-vec4 onion(vec4 d, float thickness) {
-	return abs(d)-thickness;
-}
-
 float ndot(vec2 a, vec2 b ) { return a.x*b.x - a.y*b.y; }
 
 // https://iquilezles.org/www/articles/smoothstepintegral/smoothstepintegral.htm
@@ -102,14 +95,6 @@ float smoothstepIntegral(float b, float x) {
 	if( x>=b ) return x - 0.5*b;
 	float f = x/b;
 	return f*f*f*(b-x*0.5);
-}
-
-// Returns xyz: new pos, w: value to add to surface distance (which may not work correctly)
-vec4 opElongate(in vec3 p, in vec3 h)
-{
-	//return vec4( p-clamp(p,-h,h), 0.0 ); // faster, but produces zero in the interior elongated box
-	vec3 q = abs(p)-h;
-	return vec4(max(q,0.0), min(max(q.x,max(q.y,q.z)),0.0));
 }
 
 vec4 qsqr(in vec4 a)// square a quaterion

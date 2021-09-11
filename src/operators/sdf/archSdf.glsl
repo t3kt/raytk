@@ -27,7 +27,7 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 
 		float d0 = sdRoundedBox(p.xy, vec2(THIS_Width, h+0.1), r);
 		// Onion
-		float d1 = onion(d0, THIS_Framethickness);
+		float d1 = abs(d0) - THIS_Framethickness;
 
 
 		// Extrude
