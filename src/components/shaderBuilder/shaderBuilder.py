@@ -335,13 +335,10 @@ class ShaderBuilder:
 
 	def inlineTypedefs(self, code: str) -> str:
 		if not self.configPar()['Inlinetypedefs']:
-			debug(self, 'Inlinetypedefs is OFF')
 			return code
 		typedefs, macros = self._buildTypedefs()
 		if not typedefs:
-			debug(self, 'no typedefs to inline')
 			return code
-		debug(self, f'found {len(typedefs)} to inline')
 
 		replacements = dict(typedefs)
 		replacements.update({
@@ -644,8 +641,8 @@ class _ParameterProcessor:
 	def paramAliases(self) -> List[str]:
 		if not self.hasParams:
 			return []
-		# if self.inlineAliases:
-		# 	return []
+		if self.inlineAliases:
+			return []
 		if self.aliasMode == 'globalvar':
 			return [
 				f'{paramExpr.type} {paramExpr.name} = {paramExpr.expr};'
@@ -661,7 +658,7 @@ class _ParameterProcessor:
 		if not self.inlineAliases or not code:
 			return code
 		for paramExpr in self._generateParamExprs():
-			code = code.replace(paramExpr.name, str(paramExpr.expr))
+			code = re.sub(r'\b' + re.escape(paramExpr.name) + r'\b', paramExpr.expr, code)
 		return code
 
 	def _generateParamExprs(self) -> List[_ParamExpr]:
