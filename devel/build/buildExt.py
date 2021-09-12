@@ -43,7 +43,11 @@ class BuildManager:
 		self.logTable.clear()
 		self.log('Starting build')
 		self.context = BuildContext(self.log)
-		self.docProcessor = DocProcessor(self.context, 'docs/_reference')
+		self.docProcessor = DocProcessor(
+			self.context,
+			outputFolder='docs/_reference',
+			imagesFolder='docs/assets/images',
+		)
 		self.queueMethodCall(self.runBuild_stage, 0)
 
 	def runBuild_stage(self, stage: int):

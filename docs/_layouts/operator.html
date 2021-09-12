@@ -94,3 +94,12 @@ layout: page
 		{% endfor %}
 	</ul>
 {% endif %}
+
+{% if page.op.images %}
+	<h2>Images</h2>
+	{% for img in page.op.images %}
+		<figure>
+			<img src="/raytk/{{img}}"/>
+		</figure>
+	{% endfor %}
+{% endif %}

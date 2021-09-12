@@ -227,9 +227,15 @@ class DocProcessor:
 	"""
 	Tool used to extract and process documentation for ROPs.
 	"""
-	def __init__(self, context: 'BuildContext', outputFolder: 'Union[str, Path]'):
+	def __init__(
+			self,
+			context: 'BuildContext',
+			outputFolder: 'Union[str, Path]',
+			imagesFolder: 'Union[str, Path]',
+	):
 		self.context = context
 		self.outputFolder = Path(outputFolder)
+		self.imagesFolder = Path(imagesFolder)
 		self.toolkit = RaytkContext().toolkit()
 
 	def clearPreviousDocs(self):
@@ -251,7 +257,8 @@ class DocProcessor:
 		docManager = OpDocManager(ropInfo)
 		docManager.setUpMissingParts()
 		docManager.pushToParamsAndInputs()
-		docText = docManager.formatForBuild()
+		docText = docManager.formatForBuild(
+			imagesFolder=self.imagesFolder)
 		self._writeDocs(
 			Path(self.toolkit.relativePath(rop).replace('./', '') + '.md'),
 			docText)

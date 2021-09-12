@@ -5,6 +5,7 @@ This should only be used within development tools.
 """
 
 from dataclasses import dataclass, field
+from pathlib import Path
 import re
 from typing import Dict, Iterable, List, Optional, Tuple
 import yaml
@@ -174,6 +175,7 @@ class ROPHelp:
 	isBeta: bool = False
 	isDeprecated: bool = False
 	keywords: List[str] = field(default_factory=list)
+	images: List[str] = field(default_factory=list)
 
 	@classmethod
 	def extractFromROP(cls, rop: 'COMP'):
@@ -310,6 +312,7 @@ redirect_from:
 					for parHelp in self.parameters
 					if parHelp.name not in _ignorePars
 				],
+				'images': self.images or [],
 			} if full else None,
 		))
 		if full:
@@ -608,10 +611,23 @@ class OpDocManager:
 					if inOp:
 						inOp.par.label = inHelp.label
 
-	def formatForBuild(self) -> str:
+	def _gatherImages(self, ropHelp: ROPHelp, imagesFolder: 'Path'):
+		folder = imagesFolder / f'reference/operators/{self.info.categoryName}'
+		debug(f'checking images in {folder.absolute()}')
+		images = list(folder.glob(self.info.shortName + '_*.png'))
+		debug(f'for {self.rop}, found images: {images!r}')
+		ropHelp.images = []
+		for img in images:
+			img = img.as_posix()
+			if img.startswith('docs/'):
+				img = img.replace('docs/', '', 1)
+			ropHelp.images.append(img)
+
+	def formatForBuild(self, imagesFolder: 'Path') -> str:
 		ropHelp = self._parseDAT()
 		self._pullFromMissingParamsInto(ropHelp)
 		self._pullFromMissingInputsInto(ropHelp)
+		self._gatherImages(ropHelp, imagesFolder)
 		return ropHelp.formatAsFullPage(self.info)
 
 def _parseMarkdownSections(text: str, sectionNames: List[str]) -> 'Dict[str, str]':
