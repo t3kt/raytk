@@ -2,3 +2,4 @@ name	label
 none	None
 common	Types Supported By Inputs
 bestcommon	Best Type Supported By Inputs
+besteach	Best Type Supported By Each
