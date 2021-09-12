@@ -220,7 +220,6 @@ class TestManager:
 		queue = self._testQueue
 		if queue.numRows < 1:
 			raise Exception('No tests queued!')
-		self.clearLog()
 		self.clearResults()
 		self.log(f'Running {queue.numRows} queued tests...')
 		ipar.uiState.Running = True
