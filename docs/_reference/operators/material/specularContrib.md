@@ -8,6 +8,13 @@ redirect_from:
   - /reference/opType/raytk.operators.material.specularContrib/
 op:
   category: material
+  images:
+  - assets/images/reference/operators/material/specularContrib_beckmann.png
+  - assets/images/reference/operators/material/specularContrib_blinnphong.png
+  - assets/images/reference/operators/material/specularContrib_cooktorrance.png
+  - assets/images/reference/operators/material/specularContrib_gaussian.png
+  - assets/images/reference/operators/material/specularContrib_ggx.png
+  - assets/images/reference/operators/material/specularContrib_phong.png
   keywords:
   - ggx
   - lighting

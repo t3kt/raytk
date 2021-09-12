@@ -8,6 +8,13 @@ redirect_from:
   - /reference/opType/raytk.operators.convert.projectPlane/
 op:
   category: convert
+  images:
+  - assets/images/reference/operators/convert/projectPlane_plane_xy.png
+  - assets/images/reference/operators/convert/projectPlane_plane_xz.png
+  - assets/images/reference/operators/convert/projectPlane_plane_yx.png
+  - assets/images/reference/operators/convert/projectPlane_plane_yz.png
+  - assets/images/reference/operators/convert/projectPlane_plane_zx.png
+  - assets/images/reference/operators/convert/projectPlane_plane_zy.png
   inputs:
   - contextTypes:
     - Context

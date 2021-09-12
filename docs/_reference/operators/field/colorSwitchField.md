@@ -8,6 +8,13 @@ redirect_from:
   - /reference/opType/raytk.operators.field.colorSwitchField/
 op:
   category: field
+  images:
+  - assets/images/reference/operators/field/colorSwitchField_clamp_blend_positionField.png
+  - assets/images/reference/operators/field/colorSwitchField_clamp_iterationField.png
+  - assets/images/reference/operators/field/colorSwitchField_loop_blend_positionField.png
+  - assets/images/reference/operators/field/colorSwitchField_loop_iterationField.png
+  - assets/images/reference/operators/field/colorSwitchField_zigzag_blend_positionField.png
+  - assets/images/reference/operators/field/colorSwitchField_zigzag_iterationField.png
   inputs:
   - contextTypes:
     - Context

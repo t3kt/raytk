@@ -8,6 +8,9 @@ redirect_from:
   - /reference/opType/raytk.operators.material.diffuseContrib/
 op:
   category: material
+  images:
+  - assets/images/reference/operators/material/diffuseContrib_lambert.png
+  - assets/images/reference/operators/material/diffuseContrib_orennayar.png
   keywords:
   - diffuse
   - lambert
