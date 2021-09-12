@@ -4,6 +4,7 @@ if False:
 	from _stubs import *
 	from typing import Callable, Optional, Union
 
+# TODO: clean this up, it doesn't seem to exist anymore
 def checkInputDefinition(dat: 'DAT'):
 	dat.clear()
 	dat.copy(dat.inputs[0])
@@ -51,6 +52,7 @@ def onInputDefinitionChange():
 	_handleChange()
 
 def _handleChange():
+	# TODO: clean this up, it doesn't seem to exist anymore
 	d = op('check_definition')
 	if d:
 		d.cook(force=True)

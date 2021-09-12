@@ -16,7 +16,9 @@ op:
     - MaterialContext
     - CameraContext
     - LightContext
+    - RayContext
     coordTypes:
+    - float
     - vec2
     - vec3
     label: definition_in_1
@@ -32,7 +34,9 @@ op:
     - MaterialContext
     - CameraContext
     - LightContext
+    - RayContext
     coordTypes:
+    - float
     - vec2
     - vec3
     label: definition_in_2

@@ -91,6 +91,7 @@ class OpDefParsT(_OpMetaPars):
 	Specialparams: 'StrParamT'
 	Angleparams: 'StrParamT'
 	Macroparams: 'StrParamT'
+	Paramlisttable: 'OPParamT'
 	Callbacks: 'DatParamT'
 	Librarynames: 'StrParamT'
 	Help: 'DatParamT'
@@ -339,7 +340,8 @@ class ROPInfo:
 	def inputHandlers(self) -> 'List[COMP]':
 		if not self:
 			return []
-		handlers = self.rop.ops('inputDefinitionHandler_*')
+		handlers = self.rop.ops('inputDefinitionHandler_*', 'inputHandler*')
+		handlers = [o for o in handlers if o.isCOMP and not o.name.endswith('_typeSpec')]
 		handlers.sort(key=lambda o: o.nodeY, reverse=True)
 		return handlers
 
@@ -389,15 +391,12 @@ class ROPInfo:
 class _InputHandlerParsT:
 	Source: 'OPParamT'
 	Required: 'BoolParamT'
-	Supportcoordtypes: 'StrParamT'
-	Supportreturntypes: 'StrParamT'
-	Supportcontexttypes: 'StrParamT'
 
 class InputInfo:
 	"""
 	Information about a ROP input and its supported types and requirements.
 
-	This is constructed from an `inputDefinitionHandler` component, whose parameters
+	This is constructed from an `inputDefinitionHandler` or `inputHandler` component, whose parameters
 	define the behavior.
 	"""
 
@@ -429,7 +428,28 @@ class InputInfo:
 		return self.handlerPar.Source.bindMaster
 
 	@property
+	def _configTable(self) -> 'Optional[DAT]':
+		return self.handler and self.handler.op('config')
+
+	def _configTableVal(self, name: str) -> 'Optional[str]':
+		table = self._configTable
+		if table and table[name, 1] is not None:
+			return table[name, 1].val
+
+	@property
+	def isNewHandler(self):
+		# TODO: get rid of this after fully switching over to new handler
+		return bool(self._configTable)
+
+	def _assertIsNewHandler(self):
+		if not self.isNewHandler:
+			raise Exception('Input handler does not support this action')
+
+	@property
 	def name(self) -> 'Optional[str]':
+		name = self._configTableVal('name')
+		if name:
+			return name
 		dat = self._inDat()
 		if dat:
 			return dat.name
@@ -439,8 +459,16 @@ class InputInfo:
 		if self.handler:
 			return self.handler.name.replace('inputDefinitionHandler_', 'definition_in_')
 
+	@name.setter
+	def name(self, val: Optional[str]):
+		self._assertIsNewHandler()
+		self.handlerPar.Name = val or ''
+
 	@property
 	def label(self) -> 'Optional[str]':
+		label = self._configTableVal('label')
+		if label:
+			return label
 		dat = self._inDat()
 		if dat:
 			p = dat.par.label  # type: Par
@@ -453,11 +481,23 @@ class InputInfo:
 			except Exception:
 				pass
 
+	@label.setter
+	def label(self, val: Optional[str]):
+		self._assertIsNewHandler()
+		self.handlerPar.Label = val or ''
+
 	@property
 	def helpText(self) -> 'Optional[str]':
+		if not self.handler:
+			return
 		par = self._sourcePar()
 		if par is not None:
 			return par.help
+
+	@helpText.setter
+	def helpText(self, val: Optional[str]):
+		self._assertIsNewHandler()
+		self.handlerPar.Help = val or ''
 
 	@property
 	def multiHandler(self) -> 'Optional[COMP]':

@@ -164,6 +164,22 @@ class BuildContext:
 		toRemove = list(comp.findChildren(tags=[RaytkTags.buildExclude.name]))
 		self.safeDestroyOps(toRemove)
 
+	def applyParamUpdatersIn(self, comp: 'COMP'):
+		for child in comp.children:
+			self._applyParamUpdater(child)
+
+	def _applyParamUpdater(self, comp: 'COMP'):
+		if not comp or not comp.isCOMP:
+			return
+		if comp.name.startswith('parMenuUpdater') and comp.par['Autoupdate'] and comp.par['Update'] is not None:
+			self.log(f'Applying parameter updater {comp}')
+			comp.par.Update.pulse()
+		elif comp.name.startswith('codeSwitcher') and comp.par['Autoupdateparams'] and comp.par['Updateparams'] is not None:
+			self.log(f'Applying parameter updater {comp}')
+			comp.par.Updateparams.pulse()
+		elif comp.name.startswith('expressionSwitcher'):
+			self._applyParamUpdater(comp.op('parMenuUpdater'))
+
 	@staticmethod
 	def queueAction(action: Callable, *args):
 		run(f'args[0](*(args[1:]))', action, *args, delayFrames=5, delayRef=root)
@@ -211,9 +227,15 @@ class DocProcessor:
 	"""
 	Tool used to extract and process documentation for ROPs.
 	"""
-	def __init__(self, context: 'BuildContext', outputFolder: 'Union[str, Path]'):
+	def __init__(
+			self,
+			context: 'BuildContext',
+			outputFolder: 'Union[str, Path]',
+			imagesFolder: 'Union[str, Path]',
+	):
 		self.context = context
 		self.outputFolder = Path(outputFolder)
+		self.imagesFolder = Path(imagesFolder)
 		self.toolkit = RaytkContext().toolkit()
 
 	def clearPreviousDocs(self):
@@ -235,7 +257,8 @@ class DocProcessor:
 		docManager = OpDocManager(ropInfo)
 		docManager.setUpMissingParts()
 		docManager.pushToParamsAndInputs()
-		docText = docManager.formatForBuild()
+		docText = docManager.formatForBuild(
+			imagesFolder=self.imagesFolder)
 		self._writeDocs(
 			Path(self.toolkit.relativePath(rop).replace('./', '') + '.md'),
 			docText)

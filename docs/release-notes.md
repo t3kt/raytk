@@ -1,5 +1,84 @@
 # Release Notes
 
+## v0.17
+
+### Highlights
+
+* PBR Materials (#636)
+* Volumetric lighting (experimental) (#637, #11)
+* Simple raymarch preview panel (#543)
+* Compile speed optimizations
+
+### Details
+
+* Improvements / additions
+    * Improved runtime menu switching (#571, #586)
+        * assignUV
+        * cartesianToPolar
+        * cornerSdf2d
+        * octahedronSdf
+        * planeSdf2d
+        * polarToCartesian
+        * polygonSdf2d
+        * prismSdf
+        * sweep
+        * triangleSdf2d
+    * Auto-disable Inspect/Updateop parameter when unavailable (#630)
+    * New fields/functions
+        * colorSwitchField (#647)
+        * pausingWaveFn
+    * Specialized UV support in SDFs
+        * sphereSdf (#526)
+    * Consolidate edgeEngrave, edgeGroove, edgePipe into a single edgeCombine op (#635)
+    * Added pbrMat (#636)
+    * Volumetric lighting (#637, #11)
+        * lightVolume
+        * volumetricRayCast
+    * Improve type handling
+        * addFields, combineFields, compositeFields
+        * blend, iterationSwitch, switch
+        * circleSdf
+        * axisDistanceField, bandField, cellTileField, colorRampField, constantColorField, constantField, iterationField, waveField
+        * combine, combineChamfer, combineColumns, combineStairs
+        * fieldRender, pointMapRender
+        * moduloPolar, rotate
+    * New control field inputs in ops
+        * Phase input for waveField (#644)
+    * Option to use surface color in diffuseContrib and specularContrib (#645)
+    * Added simplified raymarch preview panel (#543)
+    * Added projectPlane, a simplified version of coordTo3D (#214)
+    * New SDFs
+        * latticeSdf
+* Changes (potentially breaking)
+    * Support for auto-choosing a coordinate type, as well as manually specifying one to force auto-typed inputs
+        * fieldRender
+        * pointMapRender
+* Fixes
+    * Fix parameter state management in diffuseContrib (#633)
+    * Fix menu optimization in combine (#634)
+    * Fix coord type handling in spin (#638)
+    * Fix typedef and parameter alias inlining options for shaderBuilder (#650)
+* Infrastructure / internals
+    * Cleanup and refactoring in opDefinition parameter handling
+    * Migrate more ops to aggregateCodeGenerator
+    * Type handling cleanup in many operators
+    * Starting migration to new inputHandler
+    * Support for generating snapshot images from tests to use in docs (#643)
+    * Move code out of shared libraries and split it into more granular units to reduce unnecessary code (#70, #13)
+        * almostIdentityFn, colorPaletteFn, cubicPulseFn, easeFn, extendFn, gainFn, impulseFn, sincCurveFn
+        * archSdf, chainSdf, generalizePolyhedronSdf, geodesicSdf, prismSdf
+        * bend, elongate, kink, moduloPolar, onion, sphericalMobiusTransform, spiralZoom
+        * chopField, chopFn
+        * colorRampField, curlNoiseField, domainColorField, valuePointsField
+        * compositeFields
+        * diffuseContrib, ggxMat, orenNayarMat, phongMat, pbrMat, specularContrib
+        * iterationSwitch
+        * limitField
+        * polygonSdf2d, rhombusSdf2d, trapezoidSdf2d, triangleSdf2d
+        * quantizeCoords, quantizeValue
+        * texture3dField, textureField, triPlanarTextureField
+        * waveField, waveWarp, waveFn, lfoField
+
 ## v0.16
 
 ### Highlights

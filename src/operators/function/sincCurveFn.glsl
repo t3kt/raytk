@@ -1,3 +1,4 @@
-float thismap(float p, ContextT ctx) {
-	return sinc(p, THIS_Bounces);
+ReturnT thismap(CoordT p, ContextT ctx) {
+	float a = PI*(THIS_Bounces*p-1.0);
+	return sin(a)/a;
 }

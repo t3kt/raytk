@@ -21,6 +21,7 @@ op:
   inputs:
   - contextTypes:
     - MaterialContext
+    - LightContext
     coordTypes:
     - float
     - vec2
@@ -38,6 +39,7 @@ op:
       like `diffuseContrib` or `specularContrib`.
   - contextTypes:
     - MaterialContext
+    - LightContext
     coordTypes:
     - float
     - vec2

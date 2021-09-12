@@ -24,13 +24,6 @@ See also the `slice` operator, which behaves similarly for SDF results.
   * `vec4`
 * `Insidevalue`: The value used for the "inside" part. If `Return Type` is `Float`, only the first parameter will be used.
 * `Outsidevalue`: The value used for the "outside" part. If `Return Type` is `Float`, only the first parameter will be used.
-* `Contexttype`
-  * `auto`
-  * `Context`
-  * `MaterialContext`
-  * `CameraContext`
-  * `LightContext`
-  * `RayContext`
 
 ## Inputs
 

@@ -1,3 +1,3 @@
 vec4 thismap(CoordT p, ContextT ctx) {
-	return THIS_Color;
+	return vec4(THIS_Color, THIS_Alpha);
 }

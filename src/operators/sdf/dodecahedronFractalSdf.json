@@ -2,6 +2,6 @@
   "meta": {
     "opStatus": "beta",
     "opType": "raytk.operators.sdf.dodecahedronFractalSdf",
-    "opVersion": 1
+    "opVersion": 2
   }
 }

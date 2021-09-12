@@ -1,0 +1,5 @@
+name	label	code
+engrave	Engrave	res1.x = fOpEngrave(res1.x, res2.x, r);
+groove	Groove	res1.x = fOpGroove(res1.x, res2.x, d, r);
+tongue	Tongue	res1.x = fOpTongue(res1.x, res2.x, d, r);
+pipe	Pipe	res1.x = fOpPipe(res1.x, res2.x, r);

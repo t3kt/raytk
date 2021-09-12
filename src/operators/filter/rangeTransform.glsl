@@ -1,6 +1,6 @@
 ReturnT thismap(CoordT p, ContextT ctx) {
-	#ifdef THIS_HAS_INPUT_2
-	float i = inputOp2(p, ctx);
+	#ifdef THIS_HAS_INPUT_indexField
+	float i = inputOp_indexField(p, ctx);
 	#else
 	float i = extractIteration(ctx).x;
 	#endif
@@ -13,8 +13,8 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 	#else
 	#error invalidExtendMode
 	#endif
-	#ifdef THIS_HAS_INPUT_3
-	i = inputOp3(i, ctx);
+	#ifdef THIS_HAS_INPUT_easingFunction
+	i = inputOp_easingFunction(i, ctx);
 	#endif
 
 	#ifdef THIS_Enabletranslate

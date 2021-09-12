@@ -40,7 +40,6 @@ cat:
     - surface
     - texture
     name: assignUV
-    status: beta
     summary: Assigns UV coordinates to an SDF surface.
   - name: bend
     summary: Bends space, along a main axis, towards a second axis.

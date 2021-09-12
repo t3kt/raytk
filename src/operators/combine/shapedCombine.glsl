@@ -5,7 +5,7 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 	float a = adaptAsFloat(res1);
 	float b = adaptAsFloat(res2);
 
-	float d = adaptAsFloat(inputOp3(vec2(a, b)/r, ctx)) / r;
+	float d = adaptAsFloat(inputOp_blendShape(vec2(a, b)/r, ctx)) / r;
 	ReturnT res;
 	#if defined(THIS_RETURN_TYPE_float)
 	{

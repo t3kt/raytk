@@ -1,3 +1,11 @@
+vec3 THIS_sampleTexture(sampler2D tex, vec2 uv, MaterialContext ctx) {
+	#if defined(RAYTK_LOD_IN_MATERIAL_CONTEXT)
+	return textureLod(tex, uv + 0.5, matCtx.lod).rgb;
+	#else
+	return texture(tex, uv + 0.5).rgb;
+	#endif
+}
+
 ReturnT thismap(CoordT p, MaterialContext ctx) {
 	#if defined(THIS_HAS_INPUT_1)
 	vec3 uv = inputOp1(p, ctx).xyz;

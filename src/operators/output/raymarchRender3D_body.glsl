@@ -252,7 +252,9 @@ vec4 getColor(vec3 p, MaterialContext matCtx) {
 	#endif
 	#if defined(THIS_Enableshadow) && defined(RAYTK_USE_SHADOW)
 	if (matCtx.result.useShadow) {
+		int priorStage = pushStage(RAYTK_STAGE_SHADOW);
 		matCtx.shadedLevel = calcShadedLevel(p, matCtx);
+		popStage(priorStage);
 	}
 	#endif
 	int priorStage = pushStage(RAYTK_STAGE_MATERIAL);
@@ -330,67 +332,67 @@ vec3 getReflectionColor(MaterialContext matCtx, vec3 p) {
 	return matCtx.reflectColor;
 }
 #endif
-#if defined(RAYTK_USE_REFRACTION) && defined(THIS_Enablerefraction)
-vec3 getRefractionColor(MaterialContext matCtx, vec3 p) {
-	if (!matCtx.result.refract) return vec3(0.);
-	int priorStage = pushStage(RAYTK_STAGE_REFRACT);
-	bool hit = false;
-
-	#ifdef OUTPUT_DEBUG
-	debugOut.a = 1.;
-//	debugOut.b = 0.6;
-	#endif
-	for (int k = 0; k < THIS_Refractionpasses; k++) {
-		if (!matCtx.result.refract) {
-			hit = false;
-			break;
-		}
-		matCtx.normal = calcNormal(p);
-		vec3 pEnter = matCtx.ray.pos - matCtx.normal * RAYTK_SURF_DIST*1.1;// arbitrary multiplier
-		Ray rayInside;
-		rayInside.pos = pEnter;
-		rayInside.dir = refract(matCtx.ray.dir, matCtx.normal, 1.0 / matCtx.result.ior);
-		Sdf resInside = castRayBasic(rayInside, RAYTK_MAX_DIST, -1.);
-		if (isNonHitSdfDist(-1. * resInside.x)) {
-			hit = false;
-			#ifdef OUTPUT_DEBUG
-			debugOut.r = resInside.x;
-			debugOut.b = 1.;
-			#endif
-			break;
-		}
-		vec3 pExit = pEnter + rayInside.dir * resInside.x;
-		vec3 nExit = -calcNormal(pExit);
-		matCtx.ray.pos = pExit;
-		matCtx.ray.dir = refract(rayInside.dir, nExit, resInside.ior);
-		if (dot(matCtx.ray.dir, matCtx.ray.dir) == 0.) {
-			matCtx.ray.dir = reflect(rayInside.dir, nExit);
-		}
-		p = pExit;
-		matCtx.normal = nExit;
-		#ifdef OUTPUT_DEBUG
-//		debugOut.rgb = nExit;
-//		debugOut.r = resInside.mat.x;
-//		debugOut.rgb = matCtx.ray.dir;
-		#endif
-		matCtx.ray.pos += matCtx.ray.dir * RAYTK_SURF_DIST*2.;
-		hit = true;
-	}
-	matCtx.result = castRayBasic(matCtx.ray, RAYTK_MAX_DIST, 1.);
-	if (hit && !isNonHitSdf(matCtx.result)) {
-		#ifdef OUTPUT_DEBUG
-		debugOut.g = 1.;
-		debugOut.r = 0.2;
-		debugOut.a = 1.;
-		#endif
-		vec3 col = getColor(matCtx.ray.pos, matCtx).rgb;
-		matCtx.refractColor = col;
-	}
-
-	popStage(priorStage);
-	return matCtx.refractColor;
-}
-#endif
+//#if defined(RAYTK_USE_REFRACTION) && defined(THIS_Enablerefraction)
+//vec3 getRefractionColor(vec3 p, MaterialContext matCtx) {
+//	if (!matCtx.result.refract) return vec3(0.);
+//	int priorStage = pushStage(RAYTK_STAGE_REFRACT);
+//	bool hit = false;
+//
+//	#ifdef OUTPUT_DEBUG
+//	debugOut.a = 1.;
+////	debugOut.b = 0.6;
+//	#endif
+//	for (int k = 0; k < THIS_Refractionpasses; k++) {
+//		if (!matCtx.result.refract) {
+//			hit = false;
+//			break;
+//		}
+//		matCtx.normal = calcNormal(p);
+//		vec3 pEnter = matCtx.ray.pos - matCtx.normal * RAYTK_SURF_DIST*1.1;// arbitrary multiplier
+//		Ray rayInside;
+//		rayInside.pos = pEnter;
+//		rayInside.dir = refract(matCtx.ray.dir, matCtx.normal, 1.0 / matCtx.result.ior);
+//		Sdf resInside = castRayBasic(rayInside, RAYTK_MAX_DIST, -1.);
+//		if (isNonHitSdfDist(-1. * resInside.x)) {
+//			hit = false;
+//			#ifdef OUTPUT_DEBUG
+//			debugOut.r = resInside.x;
+//			debugOut.b = 1.;
+//			#endif
+//			break;
+//		}
+//		vec3 pExit = pEnter + rayInside.dir * resInside.x;
+//		vec3 nExit = -calcNormal(pExit);
+//		matCtx.ray.pos = pExit;
+//		matCtx.ray.dir = refract(rayInside.dir, nExit, resInside.ior);
+//		if (dot(matCtx.ray.dir, matCtx.ray.dir) == 0.) {
+//			matCtx.ray.dir = reflect(rayInside.dir, nExit);
+//		}
+//		p = pExit;
+//		matCtx.normal = nExit;
+//		#ifdef OUTPUT_DEBUG
+////		debugOut.rgb = nExit;
+////		debugOut.r = resInside.mat.x;
+////		debugOut.rgb = matCtx.ray.dir;
+//		#endif
+//		matCtx.ray.pos += matCtx.ray.dir * RAYTK_SURF_DIST*2.;
+//		hit = true;
+//	}
+//	matCtx.result = castRayBasic(matCtx.ray, RAYTK_MAX_DIST, 1.);
+//	if (hit && !isNonHitSdf(matCtx.result)) {
+//		#ifdef OUTPUT_DEBUG
+//		debugOut.g = 1.;
+//		debugOut.r = 0.2;
+//		debugOut.a = 1.;
+//		#endif
+//		vec3 col = getColor(matCtx.ray.pos, matCtx).rgb;
+//		matCtx.refractColor = col;
+//	}
+//
+//	popStage(priorStage);
+//	return matCtx.refractColor;
+//}
+//#endif
 
 void main()
 {
@@ -441,9 +443,14 @@ void main()
 		nearHitOut += vec4(res.nearHitAmount, float(res.nearHitCount), 0, 1);
 		#endif
 
+		matCtx.result = res;
+		matCtx.ray = ray;
 		if (res.x >= renderDepth && renderDepth == RAYTK_MAX_DIST) {
 			#ifdef OUTPUT_COLOR
 			colorOut += getBackgroundColor(ray);
+			vec4 color2 = castSecondaryRay(matCtx);
+			colorOut.rgb += color2.rgb;
+			// TODO: alpha?
 			#endif
 
 		} else if (res.x > 0.0 && res.x < renderDepth) {
@@ -462,8 +469,6 @@ void main()
 			#endif
 			#endif
 
-			matCtx.result = res;
-			matCtx.ray = ray;
 			#if defined(OUTPUT_COLOR) || defined(OUTPUT_NORMAL) || (defined(RAYTK_USE_REFLECTION) && defined(THIS_Enablereflection))
 			matCtx.normal = calcNormal(p);
 			#endif
@@ -484,12 +489,15 @@ void main()
 				#endif
 
 				#if defined(RAYTK_USE_REFRACTION) && defined(THIS_Enablerefraction)
-				matCtx.refractColor = getRefractionColor(matCtx, p);
+				matCtx.refractColor = getRefractionColor(p, matCtx);
 				#else
 				matCtx.refractColor = vec3(0);
 				#endif
 
 				vec4 col = getColor(p, matCtx);
+				vec4 color2 = castSecondaryRay(matCtx);
+				colorOut.rgb += color2.rgb;
+
 				vec2 fragCoord = vUV.st*uTDOutputInfo.res.zw;
 				col.rgb += (1.0/255.0)*hash1(fragCoord);
 				colorOut += col;

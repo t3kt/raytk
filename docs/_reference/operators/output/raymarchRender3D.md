@@ -63,6 +63,26 @@ op:
     - float
     - vec4
     summary: Help not available.
+  - contextTypes:
+    - MaterialContext
+    coordTypes:
+    - vec3
+    label: Secondary Ray Cast
+    name: Secondaryraycast
+    returnTypes:
+    - float
+    - vec4
+    summary: Help not available.
+  - contextTypes:
+    - MaterialContext
+    coordTypes:
+    - vec3
+    label: Refraction Ray Cast
+    name: Refractionraycast
+    returnTypes:
+    - float
+    - vec4
+    summary: Help not available.
   name: raymarchRender3D
   opType: raytk.operators.output.raymarchRender3D
   parameters:
@@ -236,6 +256,8 @@ op:
     name: Enablerefraction
   - label: Refraction Passes
     name: Refractionpasses
+  - label: Refraction Ray Cast
+    name: Refractionraycast
   - label: Background Field
     name: Backgroundfield
   - label: Use Background Field Alpha
@@ -246,6 +268,10 @@ op:
     name: Normalsmoothing
   - label: Ray Modifier
     name: Raymodifier
+  - label: Enable Secondary Ray Cast
+    name: Enablesecondaryraycast
+  - label: Secondary Ray Cast
+    name: Secondaryraycast
   - label: Enable UV Output
     name: Enableuvoutput
   - label: Enable Custom Output 1

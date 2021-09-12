@@ -1,6 +1,7 @@
 {
   "meta": {
+    "opStatus": "default",
     "opType": "raytk.operators.field.textureField",
-    "opVersion": 13
+    "opVersion": 14
   }
 }

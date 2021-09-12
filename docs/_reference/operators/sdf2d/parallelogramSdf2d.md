@@ -11,8 +11,6 @@ op:
   name: parallelogramSdf2d
   opType: raytk.operators.sdf2d.parallelogramSdf2d
   parameters:
-  - label: Enable
-    name: Enable
   - label: Width
     name: Width
   - label: Height

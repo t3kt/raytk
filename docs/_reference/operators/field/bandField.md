@@ -25,7 +25,7 @@ op:
     - vec2
     - vec3
     label: Coordinate Field
-    name: coord_field_definition_in
+    name: coordField
     returnTypes:
     - float
     summary: Optional float field that can be used as an alternative coordinate source
@@ -41,8 +41,9 @@ op:
     - vec2
     - vec3
     label: Inside Value Field
-    name: inside_value_definition_in
+    name: insideValue
     returnTypes:
+    - float
     - vec4
     summary: Optional field that is used to produce the values for the "inside" part.
       If used, the `Inside Value` parameter will be ignored.
@@ -57,8 +58,9 @@ op:
     - vec2
     - vec3
     label: Outside Value Field
-    name: outside_value_definition_in
+    name: outsideValue
     returnTypes:
+    - float
     - vec4
     summary: Optional field that is used to produce the values for the "outside" part.
       If used, the `Outside Value` parameter will be ignored.
@@ -70,16 +72,10 @@ op:
     - RayContext
     coordTypes:
     - float
-    - vec2
-    - vec3
     label: Blend Function
-    name: blend_function_definition_in
+    name: blendFunction
     returnTypes:
     - float
-    - vec4
-    - Sdf
-    - Ray
-    - Light
     summary: Optional function used to control how `Blending` is applied.
   name: bandField
   opType: raytk.operators.field.bandField
@@ -134,21 +130,6 @@ op:
     name: Outsidevalue
     summary: The value used for the "outside" part. If `Return Type` is `Float`, only
       the first parameter will be used.
-  - label: Context Type
-    menuOptions:
-    - label: Auto
-      name: auto
-    - label: Context
-      name: Context
-    - label: MaterialContext
-      name: MaterialContext
-    - label: CameraContext
-      name: CameraContext
-    - label: LightContext
-      name: LightContext
-    - label: RayContext
-      name: RayContext
-    name: Contexttype
   summary: Field that applies values based on a band/slice of an axis.
 
 ---

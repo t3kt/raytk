@@ -52,7 +52,7 @@ op:
     - vec2
     - vec3
     label: Radius Field
-    name: radius_definition_in
+    name: radiusField
     returnTypes:
     - float
     summary: Value field that can be used to vary the radius of the blend region at
@@ -77,6 +77,7 @@ op:
   - label: Radius
     name: Radius
     summary: The width of the bar/groove.
+  status: deprecated
   summary: Creates a raised bar or indented groove where the second input intersects
     with the first.
 

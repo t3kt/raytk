@@ -1,3 +1,4 @@
+from datetime import datetime
 from pathlib import Path
 from typing import Callable, Dict, List, Optional
 from raytkTest import TestCaseResult, TestFindingStatus
@@ -219,7 +220,6 @@ class TestManager:
 		queue = self._testQueue
 		if queue.numRows < 1:
 			raise Exception('No tests queued!')
-		self.clearLog()
 		self.clearResults()
 		self.log(f'Running {queue.numRows} queued tests...')
 		ipar.uiState.Running = True
@@ -331,7 +331,8 @@ class TestManager:
 
 	def log(self, message: str):
 		print(message)
-		self.logTable.appendRow([message])
+		stamp = datetime.now().strftime('%H:%M:%S')
+		self.logTable.appendRow([stamp, message])
 
 	@property
 	def resultLevelFilterValues(self):

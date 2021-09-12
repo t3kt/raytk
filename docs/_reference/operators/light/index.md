@@ -15,6 +15,8 @@ cat:
     summary: A directional light.
   - name: hardShadow
     summary: A simple hard-edged shadow.
+  - name: lightVolume
+    status: beta
   - name: linkedLight
     status: beta
     summary: Light that is based on a standard Light COMP.
@@ -26,6 +28,8 @@ cat:
   - name: spotLight
     status: beta
     summary: Cone-shaped spotlight.
+  - name: volumetricRayCast
+    status: beta
   summary: 'Operators that are used in raymarching to define the behavior of light,
     including
 

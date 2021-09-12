@@ -2,6 +2,6 @@
   "meta": {
     "opStatus": "default",
     "opType": "raytk.operators.combine.combineColumns",
-    "opVersion": 14
+    "opVersion": 16
   }
 }

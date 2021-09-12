@@ -38,6 +38,8 @@ op:
       name: x
     - label: Y
       name: y
+    - label: Z
+      name: z
     - label: Zero
       name: zero
     name: Partx
@@ -47,6 +49,8 @@ op:
       name: x
     - label: Y
       name: y
+    - label: Z
+      name: z
     - label: Zero
       name: zero
     name: Party

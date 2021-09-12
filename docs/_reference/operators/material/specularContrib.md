@@ -8,6 +8,13 @@ redirect_from:
   - /reference/opType/raytk.operators.material.specularContrib/
 op:
   category: material
+  images:
+  - assets/images/reference/operators/material/specularContrib_beckmann.png
+  - assets/images/reference/operators/material/specularContrib_blinnphong.png
+  - assets/images/reference/operators/material/specularContrib_cooktorrance.png
+  - assets/images/reference/operators/material/specularContrib_gaussian.png
+  - assets/images/reference/operators/material/specularContrib_ggx.png
+  - assets/images/reference/operators/material/specularContrib_phong.png
   keywords:
   - ggx
   - lighting
@@ -55,6 +62,8 @@ op:
   - label: Enable Shadow
     name: Enableshadow
     summary: Whether to apply the shadow to the color/level produced by this element.
+  - label: Use Surface Color
+    name: Usesurfacecolor
   summary: A material element that provides specular light contribution.
 
 ---

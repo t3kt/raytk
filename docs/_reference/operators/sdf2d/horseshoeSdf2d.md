@@ -11,8 +11,6 @@ op:
   name: horseshoeSdf2d
   opType: raytk.operators.sdf2d.horseshoeSdf2d
   parameters:
-  - label: Enable
-    name: Enable
   - label: Angle
     name: Angle
   - label: Radius

@@ -8,9 +8,24 @@ redirect_from:
   - /reference/opType/raytk.operators.filter.moduloPolar/
 op:
   category: filter
+  images:
+  - assets/images/reference/operators/filter/moduloPolar_2d.png
+  - assets/images/reference/operators/filter/moduloPolar_3d_iteration_index.png
+  - assets/images/reference/operators/filter/moduloPolar_3d_iteration_ratio.png
+  - assets/images/reference/operators/filter/moduloPolar_3d_limit.png
+  - assets/images/reference/operators/filter/moduloPolar_3d_mirror.png
+  - assets/images/reference/operators/filter/moduloPolar_3d_no_mirror.png
+  - assets/images/reference/operators/filter/moduloPolar_3d_offset.png
+  - assets/images/reference/operators/filter/moduloPolar_3d_offset_field.png
+  - assets/images/reference/operators/filter/moduloPolar_3d_pre_rotate_field.png
+  - assets/images/reference/operators/filter/moduloPolar_3d_rotate_field.png
   inputs:
   - contextTypes:
     - Context
+    - MaterialContext
+    - CameraContext
+    - LightContext
+    - RayContext
     coordTypes:
     - vec2
     - vec3

@@ -2,6 +2,6 @@
   "meta": {
     "opStatus": "default",
     "opType": "raytk.operators.filter.onion",
-    "opVersion": 6
+    "opVersion": 8
   }
 }

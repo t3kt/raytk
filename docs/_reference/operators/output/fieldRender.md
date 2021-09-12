@@ -11,16 +11,25 @@ op:
   name: fieldRender
   opType: raytk.operators.output.fieldRender
   parameters:
+  - label: Coord Type
+    menuOptions:
+    - label: Auto
+      name: auto
+    - label: 2D
+      name: vec2
+    - label: 3D
+      name: vec3
+    name: Coordtype
   - label: Sample Coords
     name: Samplecoords
   - label: Grid Center
     name: Gridcenter
-  - label: Grid Size
-    name: Gridsize
   - label: Grid Resolution X
     name: Gridresolutionx
   - label: Grid Resolution Y
     name: Gridresolutiony
+  - label: Grid Size
+    name: Gridsize
   - label: Grid Resolution Z
     name: Gridresolutionz
   - label: Unit Shape

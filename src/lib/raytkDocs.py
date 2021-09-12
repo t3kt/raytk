@@ -5,6 +5,7 @@ This should only be used within development tools.
 """
 
 from dataclasses import dataclass, field
+from pathlib import Path
 import re
 from typing import Dict, Iterable, List, Optional, Tuple
 import yaml
@@ -110,6 +111,7 @@ class InputHelp:
 	coordTypes: List[str] = field(default_factory=list)
 	contextTypes: List[str] = field(default_factory=list)
 	returnTypes: List[str] = field(default_factory=list)
+	inputHandler: Optional[COMP] = None
 
 	def formatMarkdownListItem(self, forBuild=False):
 		text = f'* `{self.name}`'
@@ -133,6 +135,7 @@ class InputHelp:
 			coordTypes=info.supportedCoordTypes,
 			contextTypes=info.supportedContextTypes,
 			returnTypes=info.supportedReturnTypes,
+			inputHandler=inputHandler,
 		)
 
 	def mergeFrom(self, other: 'InputHelp'):
@@ -144,6 +147,7 @@ class InputHelp:
 		self.coordTypes = other.coordTypes
 		self.contextTypes = other.contextTypes
 		self.returnTypes = other.returnTypes
+		self.inputHandler = self.inputHandler or other.inputHandler
 
 	def toFrontMatterData(self):
 		return cleanDict({
@@ -171,6 +175,7 @@ class ROPHelp:
 	isBeta: bool = False
 	isDeprecated: bool = False
 	keywords: List[str] = field(default_factory=list)
+	images: List[str] = field(default_factory=list)
 
 	@classmethod
 	def extractFromROP(cls, rop: 'COMP'):
@@ -307,6 +312,7 @@ redirect_from:
 					for parHelp in self.parameters
 					if parHelp.name not in _ignorePars
 				],
+				'images': self.images or [],
 			} if full else None,
 		))
 		if full:
@@ -593,16 +599,35 @@ class OpDocManager:
 				if par is not None:
 					par.help = parHelp.summary
 		for inHelp in ropHelp.inputs:
-			if not inHelp.label:
+			if not inHelp.inputHandler:
 				continue
-			inOp = self.rop.op(inHelp.name)
-			if inOp:
-				inOp.par.label = inHelp.label
+			inInfo = InputInfo(inHelp.inputHandler)
+			if inInfo.isNewHandler:
+				if inHelp.summary:
+					inInfo.helpText = inHelp.summary
+			else:
+				if inHelp.label:
+					inOp = self.rop.op(inHelp.name)
+					if inOp:
+						inOp.par.label = inHelp.label
 
-	def formatForBuild(self) -> str:
+	def _gatherImages(self, ropHelp: ROPHelp, imagesFolder: 'Path'):
+		folder = imagesFolder / f'reference/operators/{self.info.categoryName}'
+		debug(f'checking images in {folder.absolute()}')
+		images = list(folder.glob(self.info.shortName + '_*.png'))
+		debug(f'for {self.rop}, found images: {images!r}')
+		ropHelp.images = []
+		for img in images:
+			img = img.as_posix()
+			if img.startswith('docs/'):
+				img = img.replace('docs/', '', 1)
+			ropHelp.images.append(img)
+
+	def formatForBuild(self, imagesFolder: 'Path') -> str:
 		ropHelp = self._parseDAT()
 		self._pullFromMissingParamsInto(ropHelp)
 		self._pullFromMissingInputsInto(ropHelp)
+		self._gatherImages(ropHelp, imagesFolder)
 		return ropHelp.formatAsFullPage(self.info)
 
 def _parseMarkdownSections(text: str, sectionNames: List[str]) -> 'Dict[str, str]':

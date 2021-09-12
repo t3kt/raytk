@@ -43,7 +43,11 @@ class BuildManager:
 		self.logTable.clear()
 		self.log('Starting build')
 		self.context = BuildContext(self.log)
-		self.docProcessor = DocProcessor(self.context, 'docs/_reference')
+		self.docProcessor = DocProcessor(
+			self.context,
+			outputFolder='docs/_reference',
+			imagesFolder='docs/assets/images',
+		)
 		self.queueMethodCall(self.runBuild_stage, 0)
 
 	def runBuild_stage(self, stage: int):
@@ -200,6 +204,7 @@ class BuildManager:
 		tools = RaytkTools()
 		tools.updateROPMetadata(comp)
 		tools.updateROPParams(comp)
+		self.context.applyParamUpdatersIn(comp)
 		self.context.resetCustomPars(comp)
 		self.context.lockROPPars(comp)
 
@@ -209,13 +214,14 @@ class BuildManager:
 		# self.context.moveNetworkPane(comp)
 		self.processOperatorSubCompChildrenOf(comp)
 		# self.context.moveNetworkPane(comp)
-		self.log(f'Updating OP image for {comp}')
-		img = tools.updateOPImage(comp)
-		if img:
-			# self.context.focusInNetworkPane(img)
-			self.context.disableCloning(img)
-			self.context.detachTox(img)
-			self.context.lockBuildLockOps(img)
+		if not comp.isPanel:
+			self.log(f'Updating OP image for {comp}')
+			img = tools.updateOPImage(comp)
+			if img:
+				# self.context.focusInNetworkPane(img)
+				self.context.disableCloning(img)
+				self.context.detachTox(img)
+				self.context.lockBuildLockOps(img)
 		comp.color = IconColors.defaultBgColor
 		if self.docProcessor:
 			self.docProcessor.processOp(comp)

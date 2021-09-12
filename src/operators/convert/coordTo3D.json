@@ -1,6 +1,7 @@
 {
   "meta": {
+    "opStatus": "default",
     "opType": "raytk.operators.convert.coordTo3D",
-    "opVersion": 9
+    "opVersion": 10
   }
 }

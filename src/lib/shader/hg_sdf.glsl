@@ -1,148 +1,19 @@
-////////////////////////////////////////////////////////////////
-//
 //                           HG_SDF
-//
 //     GLSL LIBRARY FOR BUILDING SIGNED DISTANCE BOUNDS
-//
-//     version 2016-01-10
-//
-//     Check http://mercury.sexy/hg_sdf for updates
+//     version 2021-07-28
+//     Check https://mercury.sexy/hg_sdf for updates
 //     and usage examples. Send feedback to spheretracing@mercury.sexy.
-//
-//     Brought to you by MERCURY http://mercury.sexy
-//
-//
-//
-// Released as Creative Commons Attribution-NonCommercial (CC BY-NC)
-//
-////////////////////////////////////////////////////////////////
-//
-// How to use this:
-//
-// 1. Build some system to #include glsl files in each other.
-//   Include this one at the very start. Or just paste everywhere.
-// 2. Build a sphere tracer. See those papers:
-//   * "Sphere Tracing" http://graphics.cs.illinois.edu/sites/default/files/zeno.pdf
-//   * "Enhanced Sphere Tracing" http://lgdv.cs.fau.de/get/2234
-//   The Raymnarching Toolbox Thread on pouet can be helpful as well
-//   http://www.pouet.net/topic.php?which=7931&page=1
-//   and contains links to many more resources.
-// 3. Use the tools in this library to build your distance bound f().
-// 4. ???
-// 5. Win a compo.
-// 
-// (6. Buy us a beer or a good vodka or something, if you like.)
-//
-////////////////////////////////////////////////////////////////
-//
-// Table of Contents:
-//
-// * Helper functions and macros
-// * Collection of some primitive objects
-// * Domain Manipulation operators
-// * Object combination operators
-//
-////////////////////////////////////////////////////////////////
-//
-// Why use this?
-//
-// The point of this lib is that everything is structured according
-// to patterns that we ended up using when building geometry.
-// It makes it more easy to write code that is reusable and that somebody
-// else can actually understand. Especially code on Shadertoy (which seems
-// to be what everybody else is looking at for "inspiration") tends to be
-// really ugly. So we were forced to do something about the situation and
-// release this lib ;)
-//
-// Everything in here can probably be done in some better way.
-// Please experiment. We'd love some feedback, especially if you
-// use it in a scene production.
-//
-// The main patterns for building geometry this way are:
-// * Stay Lipschitz continuous. That means: don't have any distance
-//   gradient larger than 1. Try to be as close to 1 as possible -
-//   Distances are euclidean distances, don't fudge around.
-//   Underestimating distances will happen. That's why calling
-//   it a "distance bound" is more correct. Don't ever multiply
-//   distances by some value to "fix" a Lipschitz continuity
-//   violation. The invariant is: each fSomething() function returns
-//   a correct distance bound.
-// * Use very few primitives and combine them as building blocks
-//   using combine opertors that preserve the invariant.
-// * Multiply objects by repeating the domain (space).
-//   If you are using a loop inside your distance function, you are
-//   probably doing it wrong (or you are building boring fractals).
-// * At right-angle intersections between objects, build a new local
-//   coordinate system from the two distances to combine them in
-//   interesting ways.
-// * As usual, there are always times when it is best to not follow
-//   specific patterns.
-//
-////////////////////////////////////////////////////////////////
-//
-// FAQ
-//
-// Q: Why is there no sphere tracing code in this lib?
-// A: Because our system is way too complex and always changing.
-//    This is the constant part. Also we'd like everyone to
-//    explore for themselves.
-//
-// Q: This does not work when I paste it into Shadertoy!!!!
-// A: Yes. It is GLSL, not GLSL ES. We like real OpenGL
-//    because it has way more features and is more likely
-//    to work compared to browser-based WebGL. We recommend
-//    you consider using OpenGL for your productions. Most
-//    of this can be ported easily though.
-//
-// Q: How do I material?
-// A: We recommend something like this:
-//    Write a material ID, the distance and the local coordinate
-//    p into some global variables whenever an object's distance is
-//    smaller than the stored distance. Then, at the end, evaluate
-//    the material to get color, roughness, etc., and do the shading.
-//
-// Q: I found an error. Or I made some function that would fit in
-//    in this lib. Or I have some suggestion.
-// A: Awesome! Drop us a mail at spheretracing@mercury.sexy.
-//
-// Q: Why is this not on github?
-// A: Because we were too lazy. If we get bugged about it enough,
-//    we'll do it.
-//
-// Q: Your license sucks for me.
-// A: Oh. What should we change it to?
-//
-// Q: I have trouble understanding what is going on with my distances.
-// A: Some visualization of the distance field helps. Try drawing a
-//    plane that you can sweep through your scene with some color
-//    representation of the distance field at each point and/or iso
-//    lines at regular intervals. Visualizing the length of the
-//    gradient (or better: how much it deviates from being equal to 1)
-//    is immensely helpful for understanding which parts of the
-//    distance field are broken.
-//
-////////////////////////////////////////////////////////////////
-
-
-
-
-
-
-////////////////////////////////////////////////////////////////
-//
-//             HELPER FUNCTIONS/MACROS
-//
-////////////////////////////////////////////////////////////////
+// Released dual-licensed under
+//   Creative Commons Attribution-NonCommercial (CC BY-NC)
+// SPDX-License-Identifier: MIT OR CC-BY-NC-4.0
+// CC-BY-NC-4.0
+// https://creativecommons.org/licenses/by-nc/4.0/legalcode
+// https://creativecommons.org/licenses/by-nc/4.0/
 
 #define PI 3.14159265
 #define TAU (2*PI)
 #define PHI (sqrt(5)*0.5 + 0.5)
 
-// Clamp to [0,1] - this operation is free under certain circumstances.
-// For further information see
-// http://www.humus.name/Articles/Persson_LowLevelThinking.pdf and
-// http://www.humus.name/Articles/Persson_LowlevelShaderOptimization.pdf
-//#define saturate(x) clamp(x, 0, 1)
 float saturate(float x) { return clamp(x, 0, 1); }
 
 // Sign function that doesn't return 0
@@ -195,25 +66,6 @@ float vmin(vec3 v) {
 float vmin(vec4 v) {
 	return min(min(v.x, v.y), min(v.z, v.w));
 }
-
-
-
-
-////////////////////////////////////////////////////////////////
-//
-//             PRIMITIVE DISTANCE FUNCTIONS
-//
-////////////////////////////////////////////////////////////////
-//
-// Conventions:
-//
-// Everything that is a distance function is called fSomething.
-// The first argument is always a point in 2 or 3-space called <p>.
-// Unless otherwise noted, (if the object has an intrinsic "up"
-// side or direction) the y axis is "up" and the object is
-// centered at the origin.
-//
-////////////////////////////////////////////////////////////////
 
 float fSphere(vec3 p, float r) {
 	return length(p) - r;
@@ -284,7 +136,7 @@ float fLineSegment(vec3 p, vec3 a, vec3 b) {
 	return length((ab*t + a) - p);
 }
 
-// Capsule version 2: between two end points <a> and <b> with radius r 
+// Capsule version 2: between two end points <a> and <b> with radius r
 float fCapsule(vec3 p, vec3 a, vec3 b, float r) {
 	return fLineSegment(p, a, b) - r;
 }
@@ -340,135 +192,6 @@ float fCone(vec3 p, float radius, float height) {
 	}
 	return d;
 }
-
-#ifdef RAYTK_USE_GDF
-
-//
-// "Generalized Distance Functions" by Akleman and Chen.
-// see the Paper at https://www.viz.tamu.edu/faculty/ergun/research/implicitmodeling/papers/sm99.pdf
-//
-// This set of constants is used to construct a large variety of geometric primitives.
-// Indices are shifted by 1 compared to the paper because we start counting at Zero.
-// Some of those are slow whenever a driver decides to not unroll the loop,
-// which seems to happen for fIcosahedron und fTruncatedIcosahedron on nvidia 350.12 at least.
-// Specialized implementations can well be faster in all cases.
-//
-
-const vec3 GDFVectors[19] = vec3[](
-	normalize(vec3(1, 0, 0)),
-	normalize(vec3(0, 1, 0)),
-	normalize(vec3(0, 0, 1)),
-
-	normalize(vec3(1, 1, 1 )),
-	normalize(vec3(-1, 1, 1)),
-	normalize(vec3(1, -1, 1)),
-	normalize(vec3(1, 1, -1)),
-
-	normalize(vec3(0, 1, PHI+1)),
-	normalize(vec3(0, -1, PHI+1)),
-	normalize(vec3(PHI+1, 0, 1)),
-	normalize(vec3(-PHI-1, 0, 1)),
-	normalize(vec3(1, PHI+1, 0)),
-	normalize(vec3(-1, PHI+1, 0)),
-
-	normalize(vec3(0, PHI, 1)),
-	normalize(vec3(0, -PHI, 1)),
-	normalize(vec3(1, 0, PHI)),
-	normalize(vec3(-1, 0, PHI)),
-	normalize(vec3(PHI, 1, 0)),
-	normalize(vec3(-PHI, 1, 0))
-);
-
-// Version with variable exponent.
-// This is slow and does not produce correct distances, but allows for bulging of objects.
-float fGDF(vec3 p, float r, float e, int begin, int end) {
-	float d = 0;
-	for (int i = begin; i <= end; ++i)
-		d += pow(abs(dot(p, GDFVectors[i])), e);
-	return pow(d, 1/e) - r;
-}
-
-// Version with without exponent, creates objects with sharp edges and flat faces
-float fGDF(vec3 p, float r, int begin, int end) {
-	float d = 0;
-	for (int i = begin; i <= end; ++i)
-		d = max(d, abs(dot(p, GDFVectors[i])));
-	return d - r;
-}
-
-// Primitives follow:
-
-//float fOctahedron(vec3 p, float r, float e) {
-//	return fGDF(p, r, e, 3, 6);
-//}
-//
-//float fDodecahedron(vec3 p, float r, float e) {
-//	return fGDF(p, r, e, 13, 18);
-//}
-//
-//float fIcosahedron(vec3 p, float r, float e) {
-//	return fGDF(p, r, e, 3, 12);
-//}
-//
-//float fTruncatedOctahedron(vec3 p, float r, float e) {
-//	return fGDF(p, r, e, 0, 6);
-//}
-//
-//float fTruncatedIcosahedron(vec3 p, float r, float e) {
-//	return fGDF(p, r, e, 3, 18);
-//}
-//
-//float fOctahedron(vec3 p, float r) {
-//	return fGDF(p, r, 3, 6);
-//}
-//
-//float fDodecahedron(vec3 p, float r) {
-//	return fGDF(p, r, 13, 18);
-//}
-//
-//float fIcosahedron(vec3 p, float r) {
-//	return fGDF(p, r, 3, 12);
-//}
-//
-//float fTruncatedOctahedron(vec3 p, float r) {
-//	return fGDF(p, r, 0, 6);
-//}
-//
-//float fTruncatedIcosahedron(vec3 p, float r) {
-//	return fGDF(p, r, 3, 18);
-//}
-
-#endif // RTK_USE_GDF
-
-
-////////////////////////////////////////////////////////////////
-//
-//                DOMAIN MANIPULATION OPERATORS
-//
-////////////////////////////////////////////////////////////////
-//
-// Conventions:
-//
-// Everything that modifies the domain is named pSomething.
-//
-// Many operate only on a subset of the three dimensions. For those,
-// you must choose the dimensions that you want manipulated
-// by supplying e.g. <p.x> or <p.zx>
-//
-// <inout p> is always the first argument and modified in place.
-//
-// Many of the operators partition space into cells. An identifier
-// or cell index is returned, if possible. This return value is
-// intended to be optionally used e.g. as a random seed to change
-// parameters of the distance functions inside the cells.
-//
-// Unless stated otherwise, for cell index 0, <p> is unchanged and cells
-// are centered on the origin so objects don't have to be moved to fit.
-//
-//
-////////////////////////////////////////////////////////////////
-
-
 
 // Rotate around a coordinate axis (i.e. in a plane perpendicular to that axis) by angle <a>.
 // Read like this: R(p.xz, a) rotates "x towards z".
@@ -601,63 +324,6 @@ float pReflect(inout vec3 p, vec3 planeNormal, float offset) {
 	return sgn(t);
 }
 
-
-////////////////////////////////////////////////////////////////
-//
-//             OBJECT COMBINATION OPERATORS
-//
-////////////////////////////////////////////////////////////////
-//
-// We usually need the following boolean operators to combine two objects:
-// Union: OR(a,b)
-// Intersection: AND(a,b)
-// Difference: AND(a,!b)
-// (a and b being the distances to the objects).
-//
-// The trivial implementations are min(a,b) for union, max(a,b) for intersection
-// and max(a,-b) for difference. To combine objects in more interesting ways to
-// produce rounded edges, chamfers, stairs, etc. instead of plain sharp edges we
-// can use combination operators. It is common to use some kind of "smooth minimum"
-// instead of min(), but we don't like that because it does not preserve Lipschitz
-// continuity in many cases.
-//
-// Naming convention: since they return a distance, they are called fOpSomething.
-// The different flavours usually implement all the boolean operators above
-// and are called fOpUnionRound, fOpIntersectionRound, etc.
-//
-// The basic idea: Assume the object surfaces intersect at a right angle. The two
-// distances <a> and <b> constitute a new local two-dimensional coordinate system
-// with the actual intersection as the origin. In this coordinate system, we can
-// evaluate any 2D distance function we want in order to shape the edge.
-//
-// The operators below are just those that we found useful or interesting and should
-// be seen as examples. There are infinitely more possible operators.
-//
-// They are designed to actually produce correct distances or distance bounds, unlike
-// popular "smooth minimum" operators, on the condition that the gradients of the two
-// SDFs are at right angles. When they are off by more than 30 degrees or so, the
-// Lipschitz condition will no longer hold (i.e. you might get artifacts). The worst
-// case is parallel surfaces that are close to each other.
-//
-// Most have a float argument <r> to specify the radius of the feature they represent.
-// This should be much smaller than the object size.
-//
-// Some of them have checks like "if ((-a < r) && (-b < r))" that restrict
-// their influence (and computation cost) to a certain area. You might
-// want to lift that restriction or enforce it. We have left it as comments
-// in some cases.
-//
-// usage example:
-//
-// float fTwoBoxes(vec3 p) {
-//   float box0 = fBox(p, vec3(1));
-//   float box1 = fBox(p-vec3(1), vec3(1));
-//   return fOpUnionChamfer(box0, box1, 0.2);
-// }
-//
-////////////////////////////////////////////////////////////////
-
-
 // The "Chamfer" flavour makes a 45-degree chamfered edge (the diagonal of a square of size <r>):
 float fOpUnionChamfer(float a, float b, float r) {
 	return min(min(a, b), (a - r + b)*sqrt(0.5));
@@ -689,7 +355,6 @@ float fOpIntersectionRound(float a, float b, float r) {
 float fOpDifferenceRound (float a, float b, float r) {
 	return fOpIntersectionRound(a, -b, r);
 }
-
 
 // The "Columns" flavour makes n-1 circular columns at a 45 degree angle:
 float fOpUnionColumns(float a, float b, float r, float n) {
@@ -763,7 +428,6 @@ float fOpIntersectionStairs(float a, float b, float r, float n) {
 float fOpDifferenceStairs(float a, float b, float r, float n) {
 	return -fOpUnionStairs(-a, b, r, n);
 }
-
 
 // Similar to fOpUnionRound, but more lipschitz-y at acute angles
 // (and less so at 90 degrees). Useful when fudging around too much

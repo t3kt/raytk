@@ -52,7 +52,7 @@ op:
     - vec2
     - vec3
     label: Radius Field
-    name: radius_definition_in
+    name: radiusField
     returnTypes:
     - float
     summary: Value field that can be used to vary the radius of the groove at different
@@ -67,6 +67,7 @@ op:
   - label: Radius
     name: Radius
     summary: Width of the groove.
+  status: deprecated
   summary: Carves a v-shaped groove where the second input intersects with the first.
 
 ---

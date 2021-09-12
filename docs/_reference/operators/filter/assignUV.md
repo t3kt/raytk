@@ -38,7 +38,7 @@ op:
     - vec2
     - vec3
     label: UV Field
-    name: uv_field_in
+    name: uvField
     returnTypes:
     - vec4
     summary: Optional field used to calculate the UV coordinates.
@@ -77,7 +77,6 @@ op:
     - label: Spherical
       name: spherical
     name: Uvmode
-  status: beta
   summary: Assigns UV coordinates to an SDF surface.
 
 ---

@@ -27,7 +27,7 @@ op:
     - vec2
     - vec3
     label: definition_in_1
-    name: definition_in_1
+    name: input1
     required: true
     returnTypes:
     - Sdf
@@ -42,7 +42,7 @@ op:
     - vec2
     - vec3
     label: definition_in_2
-    name: definition_in_2
+    name: input2
     required: true
     returnTypes:
     - Sdf
@@ -57,7 +57,7 @@ op:
     - vec2
     - vec3
     label: radius_field_definition_in
-    name: radius_field_definition_in
+    name: radiusField
     returnTypes:
     - float
     - Sdf

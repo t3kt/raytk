@@ -110,6 +110,8 @@ cat:
     status: beta
   - name: kaliGeneratorSdf
     summary: Fractal SDF based on "Generators" by Kali (https://www.shadertoy.com/view/Xtf3Rn).
+  - name: latticeSdf
+    status: beta
   - keywords:
     - chain
     - link

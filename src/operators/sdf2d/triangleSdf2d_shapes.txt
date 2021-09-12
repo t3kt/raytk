@@ -1,4 +1,4 @@
-name	label	params
-equilateral	Equilateral Triangle	Radius
-isosceles	Isosceles Triangle	Height Width
-arbitrary	Abritrary Triangle	Point1[xy] Point2[xy] Point3[xy]
+name	label	code	params
+equilateral	Equilateral Triangle	d = sdEquilateralTriangle(p / THIS_Radius)	Radius
+isosceles	Isosceles Triangle	d = sdTriangleIsosceles(p, vec2(THIS_Width, THIS_Height))	Height Width
+arbitrary	Abritrary Triangle	d = sdTriangle(p, THIS_Point1, THIS_Point2, THIS_Point3)	Point1[xy] Point2[xy] Point3[xy]

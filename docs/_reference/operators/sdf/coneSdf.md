@@ -31,8 +31,7 @@ op:
   name: coneSdf
   opType: raytk.operators.sdf.coneSdf
   parameters:
-  - label: Enable
-    name: Enable
+  - name: Enable
   - label: Shape
     menuOptions:
     - label: Cone

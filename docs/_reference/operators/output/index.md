@@ -20,6 +20,13 @@ cat:
   - name: pointMapRender
     summary: Renderer that takes in a TOP of coordinates and evaluates the scene at
       each point.
+  - keywords:
+    - inspect
+    - preview
+    - raymarch
+    - render
+    name: raymarchPreviewPanel
+    status: beta
   - name: raymarchRender3D
     summary: Renders a scene using 3D raymarching.
   - name: render2D

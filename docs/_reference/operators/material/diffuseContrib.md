@@ -8,6 +8,9 @@ redirect_from:
   - /reference/opType/raytk.operators.material.diffuseContrib/
 op:
   category: material
+  images:
+  - assets/images/reference/operators/material/diffuseContrib_lambert.png
+  - assets/images/reference/operators/material/diffuseContrib_orennayar.png
   keywords:
   - diffuse
   - lambert
@@ -45,6 +48,8 @@ op:
   - label: Enable Shadow
     name: Enableshadow
     summary: Whether to apply the shadow to the color/level produced by this element.
+  - label: Use Surface Color
+    name: Usesurfacecolor
   summary: A material element that provides diffuse light contribution.
 
 ---

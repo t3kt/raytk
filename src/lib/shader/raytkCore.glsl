@@ -97,6 +97,7 @@ Sdf createSdf(float dist) {
 	res.reflect = false;
 	#endif
 	#ifdef RAYTK_REFRACT_IN_SDF
+	res.ior = 1.0;
 	res.refract = false;
 	#endif
 	#ifdef RAYTK_ORBIT_IN_SDF
@@ -212,7 +213,7 @@ Sdf createNonHitSdf() {
 
 void initDefVal(out Sdf val) { val = createNonHitSdf(); }
 
-bool isNonHitSdfDist(float d) { return d > RAYTK_MAX_DIST; }
+bool isNonHitSdfDist(float d) { return d >= RAYTK_MAX_DIST; }
 bool isNonHitSdf(Sdf res) { return res.x >= RAYTK_MAX_DIST; }
 
 Sdf withAdjustedScale(in Sdf res, float scaleMult) {
@@ -316,7 +317,23 @@ struct MaterialContext {
 	// w: whether this has been set
 	vec4 uv;
 	#endif
+	#ifdef RAYTK_LOD_IN_MATERIAL_CONTEXT
+	float lod;
+	#endif
 };
+
+void setIterationIndex(inout MaterialContext ctx, float index) {
+	setIterationIndex(ctx.context, index);
+}
+
+void setIterationCell(inout MaterialContext ctx, vec2 cell) {
+	setIterationCell(ctx.context, cell);
+}
+
+void setIterationCell(inout MaterialContext ctx, vec3 cell) {
+	setIterationCell(ctx.context, cell);
+}
+
 void assignUV(inout MaterialContext ctx, vec3 uv) {
 	#ifdef RAYTK_USE_UV
 	ctx.uv = vec4(uv, 1.);
@@ -334,6 +351,12 @@ MaterialContext createMaterialContext() {
 	matCtx.materialPos = vec3(0.);
 	#endif
 	matCtx.shadedLevel = 1.;
+	#ifdef RAYTK_USE_UV
+	matCtx.uv = vec4(0.);
+	#endif
+	#ifdef RAYTK_LOD_IN_MATERIAL_CONTEXT
+	matCtx.lod = 1.;
+	#endif
 	return matCtx;
 }
 
@@ -381,6 +404,8 @@ const int RAYTK_STAGE_SHADOW =  2;
 const int RAYTK_STAGE_REFLECT = 3;
 const int RAYTK_STAGE_MATERIAL = 4;
 const int RAYTK_STAGE_OCCLUSION = 5;
+const int RAYTK_STAGE_VOLUMETRIC = 6;
+const int RAYTK_STAGE_VOLUMETRIC_SHADOW = 7;
 
 int _raytkStage = RAYTK_STAGE_PRIMARY;
 

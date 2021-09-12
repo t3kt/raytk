@@ -1,6 +1,7 @@
 {
   "meta": {
+    "opStatus": "default",
     "opType": "raytk.operators.filter.bend",
-    "opVersion": 6
+    "opVersion": 7
   }
 }

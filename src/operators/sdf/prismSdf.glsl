@@ -11,5 +11,7 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 	#endif
 	p -= THIS_Translate;
 	p = vec3(p.THIS_PLANE_P2, p.THIS_PLANE_P1, p.THIS_AXIS);
-	return createSdf(THIS_EXPR);
+	float d;
+	BODY();
+	return createSdf(d);
 }

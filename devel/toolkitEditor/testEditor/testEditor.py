@@ -7,15 +7,19 @@ if False:
 	from _stubs import *
 	from _typeAliases import *
 	from ..ropEditor.ropEditor import ROPEditor
+	from components.testInspectorCore.testInspectorCore import TestInspectorCore
 	from editor.componentLoader.componentLoader import ComponentLoader
 	ext.ropEditor = ROPEditor(COMP())
 	# noinspection PyTypeHints
 	iop.loader = ComponentLoader(COMP())
+	# noinspection PyTypeChecker
+	iop.testInspectorCore = TestInspectorCore(COMP())
 
 	class _Par(ParCollection):
 		Selectedrop: 'CompParamT'
 		Selectedoptype: 'StrParamT'
 		Testcasefolder: 'StrParamT'
+		Snapshotsfolder: 'StrParamT'
 
 	class _COMP(COMP):
 		par: _Par
@@ -52,6 +56,12 @@ class TestEditor:
 		msg = f'Saved to {self.currentTox}'
 		print(msg)
 		ui.status = msg
+
+	def writeSnapshots(self):
+		iop.testInspectorCore.WriteSnapshots(
+			caseRootFolder=self.ownerComp.par.Testcasefolder.eval(),
+			imagesRootFolder=self.ownerComp.par.Snapshotsfolder.eval(),
+		)
 
 	def _loadTest(self, name: str, toxPath: Path):
 		if name:

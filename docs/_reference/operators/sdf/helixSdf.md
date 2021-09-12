@@ -62,8 +62,7 @@ op:
   name: helixSdf
   opType: raytk.operators.sdf.helixSdf
   parameters:
-  - label: Enable
-    name: Enable
+  - name: Enable
   - label: Axis
     menuOptions:
     - label: X

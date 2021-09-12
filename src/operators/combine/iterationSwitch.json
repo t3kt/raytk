@@ -1,6 +1,7 @@
 {
   "meta": {
+    "opStatus": "default",
     "opType": "raytk.operators.combine.iterationSwitch",
-    "opVersion": 14
+    "opVersion": 17
   }
 }

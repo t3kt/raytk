@@ -65,6 +65,16 @@ class TypeSpec:
 			supported=None if spec == '*' else spec.split(' '),
 		)
 
+allTypeCategories = ('coordType', 'contextType', 'returnType')
+
+def getAllTypesInCategory(typeTable: 'DAT', category: str):
+	filterColumn = 'is' + category[0].upper() + category[1:]
+	return [
+		typeTable[row, 'name'].val
+		for row in range(1, typeTable.numRows)
+		if typeTable[row, filterColumn] == '1'
+	]
+
 def _parseUseInput(spec: str) -> Tuple[bool, str]:
 	useInput = spec.startswith('useinput|')
 	if useInput:

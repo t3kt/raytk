@@ -1,7 +1,7 @@
-name	label	expr
-xy	XY	xyz
-yx	YX	yxz
-yz	YZ	yzx
-zy	ZY	zyx
-xz	XZ	xzy
-zx	ZX	zxy
+name	label	code
+xy	XY	p = p.xyz
+yx	YX	p = p.yxz
+yz	YZ	p = p.yzx
+zy	ZY	p = p.zyx
+xz	XZ	p = p.xzy
+zx	ZX	p = p.zxy

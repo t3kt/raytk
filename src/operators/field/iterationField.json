@@ -1,6 +1,7 @@
 {
   "meta": {
+    "opStatus": "default",
     "opType": "raytk.operators.field.iterationField",
-    "opVersion": 5
+    "opVersion": 7
   }
 }

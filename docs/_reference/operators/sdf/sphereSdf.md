@@ -37,7 +37,9 @@ op:
     - label: Bounds XYZ
       name: bounds
     - label: Spherical Polar
-      name: spherical
+      name: sphericalpolar
+    - label: Sphere
+      name: sphere
     name: Uvmode
   summary: SDF in 3D space for a uniform sphere.
 

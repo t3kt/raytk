@@ -1,6 +1,7 @@
 {
   "meta": {
+    "opStatus": "default",
     "opType": "raytk.operators.time.lfoField",
-    "opVersion": 6
+    "opVersion": 7
   }
 }

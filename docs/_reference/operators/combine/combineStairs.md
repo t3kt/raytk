@@ -16,6 +16,7 @@ op:
     - LightContext
     - RayContext
     coordTypes:
+    - float
     - vec2
     - vec3
     label: definition_in_1
@@ -30,6 +31,7 @@ op:
     - LightContext
     - RayContext
     coordTypes:
+    - float
     - vec2
     - vec3
     label: definition_in_2
@@ -44,10 +46,11 @@ op:
     - LightContext
     - RayContext
     coordTypes:
+    - float
     - vec2
     - vec3
     label: Radius Field
-    name: radius_definition_in
+    name: radiusField
     returnTypes:
     - float
     summary: Value field that can be used to vary the radius of the blend region at
@@ -59,10 +62,11 @@ op:
     - LightContext
     - RayContext
     coordTypes:
+    - float
     - vec2
     - vec3
     label: Offset Field
-    name: offset_definition_in
+    name: offsetField
     returnTypes:
     - float
     summary: Value field that can be used to vary the offset of the stairs at different

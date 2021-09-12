@@ -54,7 +54,7 @@ op:
     - vec2
     - vec3
     label: Radius Field
-    name: radius_definition_in
+    name: radiusField
     returnTypes:
     - float
     summary: Value field that can be used to vary the radius of the blend region at
@@ -67,6 +67,7 @@ op:
   - label: Radius
     name: Radius
     summary: The width of the pipe.
+  status: deprecated
   summary: Produces a cylindrical pipe along the blend region, replacing the input
     shapes entirely.
 

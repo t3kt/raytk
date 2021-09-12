@@ -1,0 +1,7 @@
+{
+  "meta": {
+    "opStatus": "alpha",
+    "opType": "raytk.operators.light.refractionRayCast",
+    "opVersion": 0
+  }
+}

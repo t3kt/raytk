@@ -1,6 +1,7 @@
 {
   "meta": {
+    "opStatus": "default",
     "opType": "raytk.operators.material.phongMat",
-    "opVersion": 9
+    "opVersion": 10
   }
 }

@@ -11,19 +11,7 @@ op:
   name: chopFn
   opType: raytk.operators.function.chopFn
   parameters:
-  - label: Context Type
-    menuOptions:
-    - label: Context
-      name: Context
-    - label: MaterialContext
-      name: MaterialContext
-    - label: CameraContext
-      name: CameraContext
-    - label: LightContext
-      name: LightContext
-    - label: RayContext
-      name: RayContext
-    name: Contexttype
+  - name: Contexttype
   - label: Chop
     name: Chop
     summary: The CHOP that values are pulled from.

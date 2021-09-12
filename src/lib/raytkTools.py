@@ -61,6 +61,8 @@ class RaytkTools(RaytkContext):
 		else:
 			page = rop.appendCustomPage('Settings')
 
+		toolkitAvailableExpr = "hasattr(op, 'raytk') and bool(op.raytk.op('tools/inspector'))"
+
 		# Set up inspect par
 		inspectPar = rop.par['Inspect']
 		if info.supportsInspect:
@@ -68,6 +70,8 @@ class RaytkTools(RaytkContext):
 				inspectPar = page.appendPulse('Inspect')[0]
 			inspectPar.startSection = True
 			inspectPar.order = 888
+			inspectPar.enableExpr = toolkitAvailableExpr
+			inspectPar.help = 'Open the Inspector for this OP.\nToolkit tox must be loaded in the project.'
 		elif inspectPar is not None:
 			inspectPar.destroy()
 
@@ -76,7 +80,8 @@ class RaytkTools(RaytkContext):
 		if info.helpUrl:
 			if helpPar is None:
 				helpPar = page.appendPulse('Help')[0]
-			helpPar.startSection = True
+			if inspectPar is None:
+				helpPar.startSection = True
 			helpPar.order = 999
 		elif helpPar is not None:
 			helpPar.destroy()
@@ -85,8 +90,11 @@ class RaytkTools(RaytkContext):
 		updatePar = rop.par['Updateop']
 		if updatePar is None:
 			updatePar = page.appendPulse('Updateop', label='Update OP')[0]
-		updatePar.startSection = True
+		if inspectPar is None and helpPar is None:
+			updatePar.startSection = True
 		updatePar.order = 1111
+		updatePar.enableExpr = toolkitAvailableExpr
+		updatePar.help = 'Update this OP to a new toolkit version.\nNew toolkit tox must be loaded in the project.'
 
 	@staticmethod
 	def updateOPImage(rop: 'COMP'):

@@ -19,8 +19,8 @@ op:
     - float
     - vec2
     - vec3
-    label: definition_in
-    name: definition_in
+    label: coord_field_definition_in
+    name: coordField
     returnTypes:
     - float
   keywords:
@@ -34,6 +34,8 @@ op:
     name: Enable
   - label: Coord Type
     menuOptions:
+    - label: Auto
+      name: auto
     - label: 1D
       name: float
     - label: 2D
@@ -71,21 +73,6 @@ op:
     - label: Mirror
       name: mirror
     name: Extendmode
-  - label: Context Type
-    menuOptions:
-    - label: Auto
-      name: auto
-    - label: Context
-      name: Context
-    - label: Material Context
-      name: MaterialContext
-    - label: Camera Context
-      name: CameraContext
-    - label: Light Context
-      name: LightContext
-    - label: Ray Context
-      name: RayContext
-    name: Contexttype
   summary: A vector field that maps an input field to values from a range of colors.
 
 ---

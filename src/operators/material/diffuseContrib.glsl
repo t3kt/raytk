@@ -14,6 +14,9 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 		#ifdef THIS_Uselightcolor
 		res.rgb *= ctx.light.color;
 		#endif
+		#ifdef RAYTK_USE_SURFACE_COLOR
+		res.rgb *= mix(vec3(1.), ctx.result.color.rgb, ctx.result.color.a);
+		#endif
 	}
 	#else
 		#error invalidReturnType

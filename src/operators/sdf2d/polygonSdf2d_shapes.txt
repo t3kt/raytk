@@ -1,4 +1,4 @@
-name	label	expr
-pentagon	Pentagon	sdPentagon(p, r)
-hexagon	Hexagon	sdHexagon(p, r)
-octogon	Octogon	sdOctogon(p, r)
+name	label	code
+pentagon	Pentagon	d = sdPentagon(p, r)
+hexagon	Hexagon	d = sdHexagon(p, r)
+octogon	Octogon	d = sdOctogon(p, r)

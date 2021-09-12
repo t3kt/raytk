@@ -219,6 +219,9 @@ class ShaderBuilder:
 			elif libraryOp.isCOMP:
 				namesToRemove = []
 				for name in requiredLibNames:
+					if name.startswith('/'):
+						# This is a full library DAT path, not a name, so it's handled in the next loop
+						continue
 					dat = libraryOp.op(name)
 					if not dat:
 						continue
@@ -226,8 +229,26 @@ class ShaderBuilder:
 					namesToRemove.append(name)
 				for name in namesToRemove:
 					requiredLibNames.remove(name)
+		namesToRemove = []
+		for libraryPath in requiredLibNames:
+			if not libraryPath.startswith('/'):
+				continue
+			dat = op(libraryPath)
+			if dat:
+				dats.append(dat)
+				namesToRemove.append(libraryPath)
+		for name in namesToRemove:
+			requiredLibNames.remove(name)
 		if requiredLibNames and onWarning:
 			onWarning('Missing libraries: ' + repr(requiredLibNames))
+		dedupedDats = []
+		libraryTexts = set()
+		for dat in dats:
+			if dat.text in libraryTexts:
+				continue
+			libraryTexts.add(dat.text)
+			dedupedDats.append(dat)
+		dats = dedupedDats
 		return dats
 
 	def buildLibraryIncludes(self, onWarning: Callable[[str], None] = None):
@@ -329,7 +350,7 @@ class ShaderBuilder:
 		def replace(m: re.Match):
 			return replacements.get(m.group(0)) or m.group(0)
 
-		pattern = r'\b[\w_]+_(as?)(CoordT|ContextT|ReturnT)\b'
+		pattern = r'\b[\w_]+_(as)?(CoordT|ContextT|ReturnT)\b'
 
 		code = re.sub(pattern, replace, code)
 
@@ -620,8 +641,8 @@ class _ParameterProcessor:
 	def paramAliases(self) -> List[str]:
 		if not self.hasParams:
 			return []
-		# if self.inlineAliases:
-		# 	return []
+		if self.inlineAliases:
+			return []
 		if self.aliasMode == 'globalvar':
 			return [
 				f'{paramExpr.type} {paramExpr.name} = {paramExpr.expr};'
@@ -637,7 +658,7 @@ class _ParameterProcessor:
 		if not self.inlineAliases or not code:
 			return code
 		for paramExpr in self._generateParamExprs():
-			code = code.replace(paramExpr.name, str(paramExpr.expr))
+			code = re.sub(r'\b' + re.escape(paramExpr.name) + r'\b', paramExpr.expr, code)
 		return code
 
 	def _generateParamExprs(self) -> List[_ParamExpr]:

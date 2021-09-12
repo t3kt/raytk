@@ -28,10 +28,7 @@ op:
     name: definition_in_1
     required: true
     returnTypes:
-    - float
     - vec4
-    - Sdf
-    - Ray
     - Light
   - contextTypes:
     - Context
@@ -47,10 +44,7 @@ op:
     name: definition_in_2
     required: true
     returnTypes:
-    - float
     - vec4
-    - Sdf
-    - Ray
     - Light
   name: compositeFields
   opType: raytk.operators.combine.compositeFields

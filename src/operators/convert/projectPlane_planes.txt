@@ -1,0 +1,7 @@
+name	label	code
+xy	XY	q = p.xy
+yx	YX	q = p.yx
+yz	YZ	q = p.yz
+zy	ZY	q = p.zy
+xz	XZ	q = p.xz
+zx	ZX	q = p.zx

@@ -1,6 +1,7 @@
 {
   "meta": {
+    "opStatus": "default",
     "opType": "raytk.operators.camera.splitCamera",
-    "opVersion": 10
+    "opVersion": 12
   }
 }

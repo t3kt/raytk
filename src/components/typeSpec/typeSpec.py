@@ -1,4 +1,4 @@
-from raytkTypes import TypeSpec
+from raytkTypes import TypeSpec, getAllTypesInCategory
 
 # noinspection PyUnreachableCode
 if False:
@@ -19,13 +19,7 @@ class _Category:
 		self.togglePrefix = name.capitalize()
 		self.allToggle = 'All' + name.lower()
 		self.useInputToggle = 'Useinput' + name.lower()
-		filterColumn = 'is' + name[0].upper() + name[1:]
-		table = _typeTable()
-		self.allTypes = [
-			table[row, 'name'].val
-			for row in range(1, table.numRows)
-			if table[row, filterColumn] == '1'
-		]
+		self.allTypes = getAllTypesInCategory(_typeTable(), name)
 
 	def getSpec(self):
 		isAll = bool(parent().par[self.allToggle])

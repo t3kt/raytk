@@ -11,8 +11,6 @@ op:
   name: planeSdf2d
   opType: raytk.operators.sdf2d.planeSdf2d
   parameters:
-  - label: Enable
-    name: Enable
   - label: Direction
     menuOptions:
     - label: X+

@@ -1,6 +1,7 @@
 {
   "meta": {
+    "opStatus": "default",
     "opType": "raytk.operators.filter.reorderCoords",
-    "opVersion": 3
+    "opVersion": 4
   }
 }

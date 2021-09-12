@@ -13,14 +13,14 @@ op:
   parameters:
   - label: Coord Type
     menuOptions:
+    - label: Auto
+      name: auto
     - label: 1D
       name: float
     - label: 2D
       name: vec2
     - label: 3D
       name: vec3
-    - label: Auto
-      name: auto
     name: Coordtype
   - label: Return Type
     menuOptions:
