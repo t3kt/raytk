@@ -15,7 +15,9 @@ op:
     - MaterialContext
     - CameraContext
     - LightContext
+    - RayContext
     coordTypes:
+    - float
     - vec2
     - vec3
     label: definition_in_1
@@ -28,7 +30,9 @@ op:
     - MaterialContext
     - CameraContext
     - LightContext
+    - RayContext
     coordTypes:
+    - float
     - vec2
     - vec3
     label: definition_in_2
@@ -41,7 +45,9 @@ op:
     - MaterialContext
     - CameraContext
     - LightContext
+    - RayContext
     coordTypes:
+    - float
     - vec2
     - vec3
     label: definition_in_3
@@ -54,7 +60,9 @@ op:
     - MaterialContext
     - CameraContext
     - LightContext
+    - RayContext
     coordTypes:
+    - float
     - vec2
     - vec3
     label: definition_in_4
@@ -67,7 +75,9 @@ op:
     - MaterialContext
     - CameraContext
     - LightContext
+    - RayContext
     coordTypes:
+    - float
     - vec2
     - vec3
     label: definition_in_5
@@ -80,7 +90,9 @@ op:
     - MaterialContext
     - CameraContext
     - LightContext
+    - RayContext
     coordTypes:
+    - float
     - vec2
     - vec3
     label: definition_in_6
@@ -93,7 +105,9 @@ op:
     - MaterialContext
     - CameraContext
     - LightContext
+    - RayContext
     coordTypes:
+    - float
     - vec2
     - vec3
     label: definition_in_7
@@ -106,7 +120,9 @@ op:
     - MaterialContext
     - CameraContext
     - LightContext
+    - RayContext
     coordTypes:
+    - float
     - vec2
     - vec3
     label: definition_in_8

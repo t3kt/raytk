@@ -30,6 +30,8 @@ cat:
     summary: 'A material that uses a vector field input to determine
 
       the color.'
+  - name: ggxMat
+    status: deprecated
   - name: goochMat
     status: beta
     summary: A material that uses the Gooch shading model.
@@ -39,7 +41,7 @@ cat:
   - name: modularMat
     summary: A material that is composed of one or more shading elements.
   - name: orenNayarMat
-    status: beta
+    status: deprecated
   - name: pbrMat
     status: beta
   - name: phongMat

@@ -17,6 +17,7 @@ op:
     - MaterialContext
     - CameraContext
     - LightContext
+    - RayContext
     coordTypes:
     - vec2
     - vec3
@@ -24,12 +25,16 @@ op:
     name: definition_in_1
     returnTypes:
     - float
+    - vec4
     - Sdf
+    - Ray
+    - Light
   - contextTypes:
     - Context
     - MaterialContext
     - CameraContext
     - LightContext
+    - RayContext
     coordTypes:
     - vec2
     - vec3
@@ -37,12 +42,16 @@ op:
     name: definition_in_2
     returnTypes:
     - float
+    - vec4
     - Sdf
+    - Ray
+    - Light
   - contextTypes:
     - Context
     - MaterialContext
     - CameraContext
     - LightContext
+    - RayContext
     coordTypes:
     - vec2
     - vec3
@@ -50,12 +59,16 @@ op:
     name: definition_in_3
     returnTypes:
     - float
+    - vec4
     - Sdf
+    - Ray
+    - Light
   - contextTypes:
     - Context
     - MaterialContext
     - CameraContext
     - LightContext
+    - RayContext
     coordTypes:
     - vec2
     - vec3
@@ -63,7 +76,10 @@ op:
     name: definition_in_4
     returnTypes:
     - float
+    - vec4
     - Sdf
+    - Ray
+    - Light
   name: layoutGrid
   opType: raytk.operators.combine.layoutGrid
   parameters:

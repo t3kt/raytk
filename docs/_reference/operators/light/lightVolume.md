@@ -14,7 +14,7 @@ op:
     coordTypes:
     - vec3
     label: Bound Volume
-    name: bound_definition_in
+    name: boundVolume
     returnTypes:
     - Sdf
   - contextTypes:
@@ -22,7 +22,7 @@ op:
     coordTypes:
     - vec3
     label: Color Field
-    name: color_definition_in
+    name: colorField
     returnTypes:
     - float
     - vec4
@@ -35,6 +35,8 @@ op:
     name: Color
   - label: Use Light Color
     name: Uselightcolor
+  - label: Use Bounds SDF Surface Color
+    name: Usesdfcolor
   - label: Blending
     name: Blending
   - label: Offset

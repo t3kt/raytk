@@ -28,6 +28,8 @@ cat:
   - name: spotLight
     status: beta
     summary: Cone-shaped spotlight.
+  - name: volumetricRayCast
+    status: beta
   summary: 'Operators that are used in raymarching to define the behavior of light,
     including
 

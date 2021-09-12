@@ -56,7 +56,7 @@ op:
     - vec2
     - vec3
     label: Radius Field
-    name: definition_in_3
+    name: radiusField
     returnTypes:
     - float
     - Sdf

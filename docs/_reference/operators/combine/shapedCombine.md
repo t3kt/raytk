@@ -49,8 +49,8 @@ op:
     - RayContext
     coordTypes:
     - vec2
-    label: blend_shape_definition_in
-    name: blend_shape_definition_in
+    label: Blend Shape
+    name: blendShape
     required: true
     returnTypes:
     - float
