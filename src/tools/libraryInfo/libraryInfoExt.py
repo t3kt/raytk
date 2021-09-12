@@ -71,6 +71,10 @@ class LibraryInfoBuilder:
 		dat.clear()
 		dat.appendRow(['category', 'path'])
 		categoryPaths = set(c.val.lower() for c in opTable.col('parentPath')[1:])
+		context = RaytkContext()
+		if context.develMode():
+			for category in context.allCategories():
+				categoryPaths.add(category.path)
 		for path in sorted(categoryPaths):
 			dat.appendRow([
 				path.rsplit('/', maxsplit=1)[-1],
