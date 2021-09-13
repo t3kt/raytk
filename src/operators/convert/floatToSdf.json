@@ -1,6 +1,7 @@
 {
   "meta": {
+    "opStatus": "default",
     "opType": "raytk.operators.convert.floatToSdf",
-    "opVersion": 5
+    "opVersion": 6
   }
 }

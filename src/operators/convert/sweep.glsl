@@ -3,6 +3,6 @@
 
 ReturnT thismap(CoordT p, ContextT ctx) {
 	BODY();
-	float w = adaptAsFloat(inputOp2(p.xy, ctx));
-	return inputOp1(vec2(p.z, w), ctx);
+	float w = adaptAsFloat(inputOp_path(p.xy, ctx));
+	return inputOp_crossSection(vec2(p.z, w), ctx);
 }

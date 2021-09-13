@@ -1,10 +1,8 @@
-#ifndef THIS_USE_LENGTH
-
-#define thismap(p, ctx) inputOp1(p, ctx).THIS_PART
-
-#else
-
-#define thismap(p, ctx) length(inputOp1(p, ctx).THIS_PARTS)
-
-#endif
+ReturnT thismap(CoordT p, ContextT ctx) {
+	#ifndef THIS_USE_LENGTH
+	return inputOp1(p, ctx).THIS_PART;
+	#else
+	return length(inputOp1(p, ctx).THIS_PARTS);
+	#endif
+}
 
