@@ -1,14 +1,14 @@
-vec3 THIS_sampleTexture(sampler2D tex, vec2 uv, MaterialContext ctx) {
+vec3 THIS_sampleTexture(sampler2D tex, vec2 uv, ContextT ctx) {
 	#if defined(RAYTK_LOD_IN_MATERIAL_CONTEXT)
-	return textureLod(tex, uv + 0.5, matCtx.lod).rgb;
+	return textureLod(tex, uv + 0.5, ctx.lod).rgb;
 	#else
 	return texture(tex, uv + 0.5).rgb;
 	#endif
 }
 
-ReturnT thismap(CoordT p, MaterialContext ctx) {
-	#if defined(THIS_HAS_INPUT_1)
-	vec3 uv = inputOp1(p, ctx).xyz;
+ReturnT thismap(CoordT p, ContextT ctx) {
+	#if defined(THIS_HAS_INPUT_uvField)
+	vec3 uv = inputOp_uvField(p, ctx).xyz;
 	#elif defined(RAYTK_USE_UV)
 	vec3 uv = mix(p, ctx.uv.xyz, ctx.uv.w);
 	#else
