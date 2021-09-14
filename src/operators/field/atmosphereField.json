@@ -2,6 +2,6 @@
   "meta": {
     "opStatus": "beta",
     "opType": "raytk.operators.field.atmosphereField",
-    "opVersion": 3
+    "opVersion": 4
   }
 }
