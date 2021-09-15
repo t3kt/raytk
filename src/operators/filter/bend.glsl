@@ -1,20 +1,20 @@
 ReturnT thismap(CoordT p, ContextT ctx) {
 	vec3 q = adaptAsVec3(p).THIS_Direction;
-	#ifdef THIS_HAS_INPUT_2
-		#if defined(inputOp2_COORD_TYPE_float)
+	#ifdef THIS_HAS_INPUT_bendField
+		#if defined(inputOp_bendField_COORD_TYPE_float)
 		float fieldP = q.x;
-		#elif defined(inputOp2_COORD_TYPE_vec2)
+		#elif defined(inputOp_bendField_COORD_TYPE_vec2)
 		vec2 fieldP = q.xy;
-		#elif defined(inputOp2_COORD_TYPE_vec3)
+		#elif defined(inputOp_bendField_COORD_TYPE_vec3)
 		vec3 fieldP = q;
 		#else
 		#error unsupportedFieldCoordType
 		#endif
 		
-		#if defined(inputOp2_RETURN_TYPE_Sdf)
-		float amt = inputOp2(fieldP, ctx).x;
-		#elif defined(inputOp2_RETURN_TYPE_float)
-		float amt = inputOp2(fieldP, ctx);
+		#if defined(inputOp_bendField_RETURN_TYPE_Sdf)
+		float amt = inputOp_bendField(fieldP, ctx).x;
+		#elif defined(inputOp_bendField_RETURN_TYPE_float)
+		float amt = inputOp_bendField(fieldP, ctx);
 		#else
 		#error unsupportedInputReturnType
 		#endif
