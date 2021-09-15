@@ -1,13 +1,5 @@
 ReturnT thismap(CoordT p, ContextT ctx) {
-	#if defined(THIS_COORD_TYPE_float)
-	CoordT p2 = adaptAsFloat(inputOp2(p, ctx));
-	#elif defined(THIS_COORD_TYPE_vec2)
-	CoordT p2 = adaptAsVec2(inputOp2(p, ctx));
-	#elif defined(THIS_COORD_TYPE_vec3)
-	CoordT p2 = adaptAsVec3(inputOp2(p, ctx));
-	#else
-	#error invalidCoordType
-	#endif
+	CoordT p2 = THIS_asCoordT(inputOp_coordField(p, ctx));
 	#if defined(THIS_Remapmode_replace)
 	CoordT q = p2;
 	#elif defined(THIS_Remapmode_add)

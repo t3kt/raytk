@@ -1,10 +1,10 @@
 ReturnT thismap(CoordT p, ContextT ctx) {
 	CoordT t = THIS_asCoordT(THIS_Translate);
-	#ifdef THIS_HAS_INPUT_2
-		#if defined(inputOp2_RETURN_TYPE_float) || defined(inputOp2_RETURN_TYPE_Sdf)
-			t *= adaptAsFloat(inputOp2(p, ctx));
-		#elif defined(inputOp2_RETURN_TYPE_vec4)
-			t += THIS_asCoordT(inputOp2(p, ctx));
+	#ifdef THIS_HAS_INPUT_translateField
+		#if defined(inputOp_translateField_RETURN_TYPE_float) || defined(inputOp_translateField_RETURN_TYPE_Sdf)
+			t *= adaptAsFloat(inputOp_translateField(p, ctx));
+		#elif defined(inputOp_translateField_RETURN_TYPE_vec4)
+			t += THIS_asCoordT(inputOp_translateField(p, ctx));
 		#else
 			#error invalidFieldReturnType
 		#endif

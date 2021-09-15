@@ -24,8 +24,8 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 	#ifdef THIS_Enableblend
 	{
 		float b = clamp((abs(t)+offset) / THIS_Blendrange, 0., 1.);
-		#ifdef THIS_HAS_INPUT_2
-		offset += inputOp2(b, ctx) * THIS_Blendrange;
+		#ifdef THIS_HAS_INPUT_blending
+		offset += inputOp_blending(b, ctx) * THIS_Blendrange;
 		#else
 		offset += b * THIS_Blendrange;
 //		offset += smoothstep(0., 1., b) * THIS_Blendrange;

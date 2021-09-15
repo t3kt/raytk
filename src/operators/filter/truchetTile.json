@@ -2,6 +2,6 @@
   "meta": {
     "opStatus": "alpha",
     "opType": "raytk.operators.filter.truchetTile",
-    "opVersion": 1
+    "opVersion": 2
   }
 }

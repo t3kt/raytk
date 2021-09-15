@@ -2,6 +2,6 @@
   "meta": {
     "opStatus": "beta",
     "opType": "raytk.operators.filter.rotateNormals",
-    "opVersion": 2
+    "opVersion": 3
   }
 }
