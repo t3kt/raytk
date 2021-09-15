@@ -1,15 +1,15 @@
 ReturnT thismap(CoordT p, ContextT ctx) {
-	#if !defined(THIS_HAS_INPUT_2)
+	#if !defined(THIS_HAS_INPUT_magnet)
 		CoordT center = THIS_asCoordT(THIS_Center);
 		float d = length(p - center);
-	#elif defined(inputOp2_RETURN_TYPE_Sdf)
+	#elif defined(inputOp_magnet_RETURN_TYPE_Sdf)
 		CoordT center = THIS_asCoordT(THIS_Center);
-		float d = inputOp2(p, ctx).x;
-	#elif defined(inputOp2_RETURN_TYPE_float)
+		float d = inputOp_magnet(p, ctx).x;
+	#elif defined(inputOp_magnet_RETURN_TYPE_float)
 		CoordT center = THIS_asCoordT(THIS_Center);
-		float d = inputOp2(p, ctx);
-	#elif defined(inputOp2_RETURN_TYPE_vec4)
-		CoordT center = THIS_asCoordT(inputOp2(p, ctx));
+		float d = inputOp_magnet(p, ctx);
+	#elif defined(inputOp_magnet_RETURN_TYPE_vec4)
+		CoordT center = THIS_asCoordT(inputOp_magnet(p, ctx));
 		float d = length(p - center);
 	#else
 		#error invalidMagnetType
@@ -18,9 +18,9 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 	float radius = THIS_Radius;
 	float low = radius;
 	float high = radius - THIS_Fade / 2.;
-	#if defined(THIS_HAS_INPUT_3)
+	#if defined(THIS_HAS_INPUT_easing)
 	// There's probably a better way to do this..
-		d = inputOp3(clamp(map01(d, low, high), 0., 1.), ctx);
+		d = inputOp_easing(clamp(map01(d, low, high), 0., 1.), ctx);
 	#else
 	d = smoothstep(low, high, d);
 	#endif
