@@ -1,6 +1,7 @@
 {
   "meta": {
+    "opStatus": "default",
     "opType": "raytk.operators.function.flipFn",
-    "opVersion": 6
+    "opVersion": 7
   }
 }
