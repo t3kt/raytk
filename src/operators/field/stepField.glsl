@@ -14,10 +14,15 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 	#error invalidCoordinateSource
 	#endif
 
-	#ifdef THIS_Enableblend
-	float x = smoothstep(0, THIS_Blend, q - THIS_Edge);
+	#ifdef THIS_HAS_INPUT_edgeField
+	float edge = inputOp_edgeField(p, ctx);
 	#else
-	float x = step(THIS_Edge, q);
+	float edge = THIS_Edge;
+	#endif
+	#ifdef THIS_Enableblend
+	float x = smoothstep(0, THIS_Blend, q - edge);
+	#else
+	float x = step(edge, q);
 	#endif
 
 	#ifdef THIS_Reverse
