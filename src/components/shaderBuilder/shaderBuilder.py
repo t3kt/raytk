@@ -632,7 +632,7 @@ class _OutputBufferSpec:
 		return f'layout(location = {self.index}) out vec4 {self.name};'
 
 	def computeOutputDeclaration(self):
-		return f'#define {self.name} sTDComputeOutputs[{self.index}]'
+		return f'#define {self.name} mTDComputeOutputs[{self.index}]'
 
 @dataclass
 class _UniformSpec:
