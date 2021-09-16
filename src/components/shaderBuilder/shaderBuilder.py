@@ -493,19 +493,15 @@ class ShaderBuilder:
 		return wrapCodeSection(decls, 'outputBuffers')
 
 	def buildOutputInitBlock(self):
-		if self.ownerComp.par.Shadertype == 'compute':
-			return ''
 		outputBuffers = self._outputBufferTable()
-		return wrapCodeSection(
-			[
-				'void initOutputs() {'
-			] +
-			[
+		lines = ['void initOutputs() {']
+		if self.ownerComp.par.Shadertype != 'compute':
+			lines += [
 				f'{cell.val} = vec4(0.);'
 				for cell in outputBuffers.col('name')[1:]
-			] + [
-				'}'
-			],
+			]
+		return wrapCodeSection(
+			lines + ['}'],
 			'outputInit',
 		)
 
