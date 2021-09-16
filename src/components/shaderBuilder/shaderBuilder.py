@@ -7,25 +7,27 @@ from typing import Callable, Dict, List, Tuple, Union, Optional
 if False:
 	# noinspection PyUnresolvedReferences
 	from _stubs import *
+	from _typeAliases import *
 
 	class _ConfigPar(ParCollection):
-		Parammode: 'Union[str, Par]'
-		Inlineparameteraliases: 'Union[bool, Par]'
-		Inlinereadonlyparameters: 'Union[bool, Par]'
-		Simplifynames: 'Union[bool, Par]'
-		Inlinetypedefs: 'Union[bool, Par]'
-		Includemode: 'Union[str, Par]'
+		Parammode: StrParamT
+		Inlineparameteraliases: BoolParamT
+		Inlinereadonlyparameters: BoolParamT
+		Simplifynames: BoolParamT
+		Inlinetypedefs: BoolParamT
+		Includemode: StrParamT
 
 	class _OwnerCompPar(_ConfigPar):
-		Globalprefix: 'Union[DAT, str, Par]'
-		Predeclarations: 'Union[DAT, str, Par]'
-		Textureindexoffset: 'Union[int, Par]'
-		Globalmacrotable: 'Union[DAT, str, Par]'
-		Libraries: 'Union[str, Par]'
-		Bodytemplate: 'Union[DAT, str, Par]'
-		Outputbuffertable: 'Union[DAT, str, Par]'
-		Supportmaterials: 'Union[bool, Par]'
-		Shaderbuilderconfig: 'Union[COMP, str, Par]'
+		Globalprefix: DatParamT
+		Predeclarations: DatParamT
+		Textureindexoffset: IntParamT
+		Globalmacrotable: DatParamT
+		Libraries: StrParamT
+		Bodytemplate: DatParamT
+		Outputbuffertable: DatParamT
+		Supportmaterials: BoolParamT
+		Shaderbuilderconfig: CompParamT
+		Shadertype: StrParamT
 
 	class _OwnerComp(COMP):
 		par: '_OwnerCompPar'
@@ -171,12 +173,24 @@ class ShaderBuilder:
 				if not name.strip():
 					continue
 				namesAndVals.append((name, value))
-		outputBuffers = self._outputBufferTable()
-		if outputBuffers.numRows > 1 and outputBuffers.col('macro'):
-			for cell in outputBuffers.col('macro')[1:]:
-				if cell.val:
-					namesAndVals.append((cell.val, ''))
+		for outputBuffer in self._getOutputBufferSpecs():
+			if outputBuffer.macro:
+				namesAndVals.append((outputBuffer.macro, ''))
 		return namesAndVals
+
+	def _getOutputBufferSpecs(self) -> 'List[_OutputBufferSpec]':
+		table = self._outputBufferTable()
+		if table.numRows <= 1:
+			return []
+		return [
+			_OutputBufferSpec(
+				name=table[row, 'name'].val,
+				label=table[row, 'label'].val,
+				macro=table[row, 'macro'].val,
+				index=row - 1,
+			)
+			for row in range(1, table.numRows)
+		]
 
 	def buildMacroTable(self, dat: 'DAT'):
 		dat.clear()
@@ -464,13 +478,23 @@ class ShaderBuilder:
 		outputBuffers = self._outputBufferTable()
 		if outputBuffers.numRows < 2:
 			return ' '
-		decls = [
-			f'layout(location = {cell.row - 1}) out vec4 {cell.val};'
-			for cell in outputBuffers.col('name')[1:]
-		]
+		specs = self._getOutputBufferSpecs()
+		if self.ownerComp.par.Shadertype == 'compute':
+			decls = [
+				spec.computeOutputDeclaration()
+				for spec in specs
+			]
+		else:
+			decls = [
+				spec.fragmentOutputDeclaration()
+				for spec in specs
+			]
+
 		return wrapCodeSection(decls, 'outputBuffers')
 
 	def buildOutputInitBlock(self):
+		if self.ownerComp.par.Shadertype == 'compute':
+			return ''
 		outputBuffers = self._outputBufferTable()
 		return wrapCodeSection(
 			[
@@ -600,6 +624,19 @@ class _ParamExpr:
 	name: str
 	expr: Union[str, float]
 	type: str
+
+@dataclass
+class _OutputBufferSpec:
+	name: str
+	index: int
+	label: Optional[str] = None
+	macro: Optional[str] = None
+
+	def fragmentOutputDeclaration(self):
+		return f'layout(location = {self.index}) out vec4 {self.name};'
+
+	def computeOutputDeclaration(self):
+		return f'#define {self.name} sTDComputeOutputs[{self.index}]'
 
 @dataclass
 class _UniformSpec:
