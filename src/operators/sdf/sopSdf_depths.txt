@@ -1,0 +1,6 @@
+name	label
+16x	16x
+32x	32x
+64x	64x
+128x	128x
+256x	256x
