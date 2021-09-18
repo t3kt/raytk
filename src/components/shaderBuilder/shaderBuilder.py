@@ -325,6 +325,7 @@ class ShaderBuilder:
 		returnTypeAdaptFuncs = {
 			'float': 'adaptAsFloat',
 			'vec4': 'adaptAsVec4',
+			'Sdf': 'adaptAsSdf',
 		}
 		for row in range(1, defsTable.numRows):
 			name = str(defsTable[row, 'name'])
