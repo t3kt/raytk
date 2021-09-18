@@ -423,11 +423,19 @@ class ShaderBuilder:
 			'2d': offset,
 			'3d': 0,
 			'cube': 0,
+			'2darray': 0,
 		}
 		arrayByType = {
 			'2d': 'sTD2DInputs',
 			'3d': 'sTD3DInputs',
 			'cube': 'sTDCubeInputs',
+			'2darray': 'sTD2DArrayInputs',
+		}
+		infoByType = {
+			'2d': 'uTD2DInfos',
+			'3d': 'uTD3DInfos',
+			'cube': 'uTDCubeInfos',
+			'2darray': 'uTD2DArrayInfos',
 		}
 		decls = []
 		for i in range(1, textureTable.numRows):
@@ -437,6 +445,7 @@ class ShaderBuilder:
 				raise Exception(f'Invalid texture type for {name}: {texType!r}')
 			index = indexByType[texType]
 			decls.append(f'#define {name} {arrayByType[texType]}[{index}]')
+			decls.append(f'#define {name}_info {infoByType[texType]}[{index}]')
 			indexByType[texType] = index + 1
 		return wrapCodeSection(decls, 'textures')
 

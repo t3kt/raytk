@@ -1,0 +1,2 @@
+'name'	'path'	'type'
+'normAndDist'	op('normAndDist')	'2darray'
