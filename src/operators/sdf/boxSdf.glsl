@@ -1,7 +1,7 @@
 ReturnT thismap(CoordT p, ContextT ctx) {
 	CoordT scale = THIS_Scale * THIS_Uniformscale;
-	#ifdef THIS_HAS_INPUT_1
-	scale *= fillToVec3(inputOp1(p, ctx));
+	#ifdef THIS_HAS_INPUT_scaleField
+	scale *= fillToVec3(inputOp_scaleField(p, ctx));
 	#endif
 	p -= THIS_Translate;
 #ifdef THIS_INF_PLANE
