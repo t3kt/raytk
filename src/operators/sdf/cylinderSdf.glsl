@@ -2,10 +2,10 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 	p -= THIS_Translate;
 	vec3 q = vec3(p.THIS_PLANE_P1, p.THIS_AXIS, p.THIS_PLANE_P2);
 	float r = THIS_Radius;
-	#if defined(THIS_HAS_INPUT_1) && defined(inputOp1_COORD_TYPE_float)
-	r *= inputOp1(q.y, ctx);
-	#elif defined(THIS_HAS_INPUT_1) && defined(inputOp1_COORD_TYPE_vec3)
-	r *= inputOp1(p, ctx);
+	#if defined(THIS_HAS_INPUT_radiusField) && defined(inputOp_radiusField_COORD_TYPE_float)
+	r *= inputOp_radiusField(q.y, ctx);
+	#elif defined(THIS_HAS_INPUT_radiusField) && defined(inputOp_radiusField_COORD_TYPE_vec3)
+	r *= inputOp_radiusField(p, ctx);
 	#endif
 	ReturnT res;
 	#ifdef THIS_Infiniteheight
@@ -15,10 +15,10 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 	#else
 	{
 		float h = THIS_Height;
-		#if defined(THIS_HAS_INPUT_2) && defined(inputOp2_COORD_TYPE_float)
-		h *= inputOp2(q.y, ctx);
-		#elif defined(THIS_HAS_INPUT_2) && defined(inputOp2_COORD_TYPE_vec3)
-		h *= inputOp2(p, ctx);
+		#if defined(THIS_HAS_INPUT_heightField) && defined(inputOp_heightField_COORD_TYPE_float)
+		h *= inputOp_heightField(q.y, ctx);
+		#elif defined(THIS_HAS_INPUT_heightField) && defined(inputOp_heightField_COORD_TYPE_vec3)
+		h *= inputOp_heightField(p, ctx);
 		#endif
 		res = createSdf(fCylinder(q, r, h));
 	}

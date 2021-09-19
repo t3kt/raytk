@@ -3,11 +3,11 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 	p.yzx = p.THIS_AXIS_PLANE_SWIZZLE;
 	float h = THIS_Height;
 	float w = THIS_Width;
-	#ifdef THIS_HAS_INPUT_1
-	h *= inputOp1(p, ctx);
+	#ifdef THIS_HAS_INPUT_heightField
+	h *= inputOp_heightField(p, ctx);
 	#endif
-	#ifdef THIS_HAS_INPUT_2
-	w *= inputOp2(p, ctx);
+	#ifdef THIS_HAS_INPUT_widthField
+	w *= inputOp_widthField(p, ctx);
 	#endif
 	p /= vec3(w, 1., w);
 	float m2 = h*h + 0.25;
