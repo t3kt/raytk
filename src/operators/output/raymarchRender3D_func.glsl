@@ -7,7 +7,7 @@ Sdf thismap(vec3 p, Context ctx) {
 }
 
 Ray evaluateCamera(vec2 p, CameraContext ctx) {
-#ifndef THIS_HAS_INPUT_2
+#ifndef THIS_HAS_INPUT_camera
 	mat4 camMat = mat4(
 		1., 0., 0., 0.,
 		0., 1., 0., 0.,
@@ -22,7 +22,7 @@ Ray evaluateCamera(vec2 p, CameraContext ctx) {
 		camMat
 	);
 #else
-	return inputOp2(p, ctx);
+	return inputOp_camera(p, ctx);
 #endif
 }
 
