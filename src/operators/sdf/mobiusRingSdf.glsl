@@ -35,11 +35,11 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 	#else
 	#error invalidAxis
 	#endif
-	#ifdef THIS_HAS_INPUT_1
-	#if defined(inputOp1_COORD_TYPE_float)
-	thickness *= inputOp1(atan(p.z, p.x), ctx);
-	#elif defined(inputOp1_COORD_TYPE_vec3)
-	thickness *= inputOp1(p, ctx);
+	#ifdef THIS_HAS_INPUT_thicknessField
+	#if defined(inputOp_thicknessField_COORD_TYPE_float)
+	thickness *= inputOp_thicknessField(atan(p.z, p.x), ctx);
+	#elif defined(inputOp_thicknessField_COORD_TYPE_vec3)
+	thickness *= inputOp_thicknessField(p, ctx);
 	#else
 	#error invalidRadiusCoordType
 	#endif

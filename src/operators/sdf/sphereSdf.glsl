@@ -1,7 +1,7 @@
 ReturnT thismap(CoordT p, ContextT ctx) {
 	float r = THIS_Radius;
-	#ifdef THIS_HAS_INPUT_1
-	r *= inputOp1(p, ctx);
+	#ifdef THIS_HAS_INPUT_radiusField
+	r *= inputOp_radiusField(p, ctx);
 	#endif
 	p -= THIS_Translate;
 	ReturnT res = createSdf(length(p)-r);

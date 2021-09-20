@@ -3,11 +3,11 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 	float r = THIS_Radius;
 	float n = THIS_Points;
 	float t = THIS_Tightness;
-	#ifdef THIS_HAS_INPUT_1
-	r *= inputOp1(p, ctx);
+	#ifdef THIS_HAS_INPUT_radiusField
+	r *= inputOp_radiusField(p, ctx);
 	#endif
-	#ifdef THIS_HAS_INPUT_2
-	t *= inputOp2(p, ctx);
+	#ifdef THIS_HAS_INPUT_tightnessField
+	t *= inputOp_tightnessField(p, ctx);
 	#endif
 	float m = mapRange(t, 0., 1., 2., n);
 	// next 4 lines can be precomputed for a given shape

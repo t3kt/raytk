@@ -1,8 +1,8 @@
 // https://www.shadertoy.com/view/XdXcRB
 ReturnT thismap(CoordT p, ContextT ctx) {
 	vec2 b = THIS_Scale;
-	#ifdef THIS_HAS_INPUT_1
-	b *= fillToVec2(inputOp1(p, ctx));
+	#ifdef THIS_HAS_INPUT_scaleField
+	b *= fillToVec2(inputOp_scaleField(p, ctx));
 	#endif
 	vec2 q = abs(p);
 	float h = clamp((-2.0*ndot(q,b)+ndot(b,b))/dot(b,b),-1.0,1.0);

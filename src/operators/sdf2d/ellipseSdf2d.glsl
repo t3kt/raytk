@@ -2,8 +2,8 @@
 ReturnT thismap(CoordT p, ContextT ctx) {
 	vec2 ab = THIS_Scale;
 	CoordT p0 = p;
-	#ifdef THIS_HAS_INPUT_1
-	ab *= fillToVec2(inputOp1(p, ctx));
+	#ifdef THIS_HAS_INPUT_scaleField
+	ab *= fillToVec2(inputOp_scaleField(p, ctx));
 	#endif
 	ReturnT res;
 	if (ab.x == ab.y) {

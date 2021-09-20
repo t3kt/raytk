@@ -1,11 +1,11 @@
 ReturnT thismap(CoordT p, ContextT ctx) {
 	vec2 s = THIS_Scale;
-	#ifdef THIS_HAS_INPUT_1
-	s *= fillToVec2(inputOp1(p, ctx));
+	#ifdef THIS_HAS_INPUT_scaleField
+	s *= fillToVec2(inputOp_scaleField(p, ctx));
 	#endif
 	vec4 r = THIS_Roundness;
-	#ifdef THIS_HAS_INPUT_2
-	r *= inputOp2(p, ctx);
+	#ifdef THIS_HAS_INPUT_roundingField
+	r *= inputOp_roundingField(p, ctx);
 	#endif
 	ReturnT res = createSdf(sdRoundedBox(p, s, r));
 	#ifdef RAYTK_USE_UV

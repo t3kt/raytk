@@ -1,8 +1,8 @@
 // https://www.shadertoy.com/view/slj3Dd
 
 ReturnT thismap(CoordT p, ContextT ctx) {
-	#ifdef THIS_HAS_INPUT_1
-	vec4 pts = inputOp1(p, ctx);
+	#ifdef THIS_HAS_INPUT_points
+	vec4 pts = inputOp_points(p, ctx);
 	CoordT a = pts.xy;
 	CoordT b = pts.zw;
 	#else
