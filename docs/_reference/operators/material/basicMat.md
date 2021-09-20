@@ -25,7 +25,7 @@ op:
     coordTypes:
     - vec3
     label: SDF Shape
-    name: definition_in
+    name: sdf
     required: true
     returnTypes:
     - Sdf
@@ -34,7 +34,7 @@ op:
     coordTypes:
     - vec3
     label: Base Color Field
-    name: baseColor_definition_in
+    name: baseColorField
     returnTypes:
     - float
     - vec4

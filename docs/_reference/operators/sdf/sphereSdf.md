@@ -15,10 +15,11 @@ op:
     - CameraContext
     - LightContext
     - RayContext
+    - ParticleContext
     coordTypes:
     - vec3
     label: Radius Field
-    name: radius_definition_in
+    name: radiusField
     returnTypes:
     - float
   name: sphereSdf

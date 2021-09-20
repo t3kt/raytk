@@ -32,6 +32,7 @@ op:
     - CameraContext
     - LightContext
     - RayContext
+    - ParticleContext
     coordTypes:
     - float
     - vec2

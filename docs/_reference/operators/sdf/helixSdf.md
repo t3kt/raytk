@@ -15,12 +15,13 @@ op:
     - CameraContext
     - LightContext
     - RayContext
+    - ParticleContext
     coordTypes:
     - float
     - vec2
     - vec3
     label: Thickness Field
-    name: thickness_field_definition_in
+    name: thicknessField
     returnTypes:
     - float
     summary: Field used to multiply the `Radius` parameter. If it uses 1D coordinates,
@@ -32,11 +33,12 @@ op:
     - CameraContext
     - LightContext
     - RayContext
+    - ParticleContext
     coordTypes:
     - float
     - vec3
     label: Radius Field
-    name: radius_field_definition_in
+    name: radiusField
     returnTypes:
     - float
     summary: Field used to multiply the `Thickness` parameter. If it uses 1D coordinates,
@@ -48,10 +50,11 @@ op:
     - CameraContext
     - LightContext
     - RayContext
+    - ParticleContext
     coordTypes:
     - vec2
     label: Cross Section Shape
-    name: cross_section_definition_in
+    name: crossSection
     returnTypes:
     - float
     - Sdf

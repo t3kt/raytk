@@ -17,6 +17,7 @@ op:
     - CameraContext
     - LightContext
     - RayContext
+    - ParticleContext
     coordTypes:
     - vec2
     - vec3
@@ -29,17 +30,19 @@ op:
     - Sdf
     - Ray
     - Light
+    - Particle
   - contextTypes:
     - Context
     - MaterialContext
     - CameraContext
     - LightContext
     - RayContext
+    - ParticleContext
     coordTypes:
     - vec2
     - vec3
     label: Rotate Field
-    name: rotate_definition_in
+    name: rotateField
     returnTypes:
     - float
     - vec4
@@ -55,11 +58,12 @@ op:
     - CameraContext
     - LightContext
     - RayContext
+    - ParticleContext
     coordTypes:
     - vec2
     - vec3
     label: Pivot Field
-    name: pivot_definition_in
+    name: pivotField
     returnTypes:
     - vec4
     summary: Optional field that can be used to control the pivot point.

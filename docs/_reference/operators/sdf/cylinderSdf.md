@@ -15,11 +15,12 @@ op:
     - CameraContext
     - LightContext
     - RayContext
+    - ParticleContext
     coordTypes:
     - float
     - vec3
     label: Radius Field
-    name: radius_definition_in
+    name: radiusField
     returnTypes:
     - float
     summary: Optional field used to control the radius of the cylinder. If it uses
@@ -31,11 +32,12 @@ op:
     - CameraContext
     - LightContext
     - RayContext
+    - ParticleContext
     coordTypes:
     - float
     - vec3
     label: Height Field
-    name: height_field_definition_in
+    name: heightField
     returnTypes:
     - float
   keywords:

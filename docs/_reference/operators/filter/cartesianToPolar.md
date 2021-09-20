@@ -15,6 +15,7 @@ op:
     - CameraContext
     - LightContext
     - RayContext
+    - ParticleContext
     coordTypes:
     - vec2
     - vec3
@@ -27,6 +28,7 @@ op:
     - Sdf
     - Ray
     - Light
+    - Particle
   name: cartesianToPolar
   opType: raytk.operators.filter.cartesianToPolar
   parameters:

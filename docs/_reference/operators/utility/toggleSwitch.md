@@ -1,13 +1,13 @@
 ---
 layout: operator
-title: modulateFn
-parent: Function Operators
+title: toggleSwitch
+parent: Utility Operators
 grand_parent: Operators
-permalink: /reference/operators/function/modulateFn
+permalink: /reference/operators/utility/toggleSwitch
 redirect_from:
-  - /reference/opType/raytk.operators.function.modulateFn/
+  - /reference/opType/raytk.operators.utility.toggleSwitch/
 op:
-  category: function
+  category: utility
   inputs:
   - contextTypes:
     - Context
@@ -20,12 +20,15 @@ op:
     - float
     - vec2
     - vec3
-    label: Function
+    label: definition_in
     name: definition_in
-    required: true
     returnTypes:
     - float
     - vec4
+    - Sdf
+    - Ray
+    - Light
+    - Particle
   - contextTypes:
     - Context
     - MaterialContext
@@ -37,17 +40,21 @@ op:
     - float
     - vec2
     - vec3
-    label: Modulating Function
-    name: definition_in_2
-    required: true
+    label: Default
+    name: default_in
     returnTypes:
     - float
     - vec4
-  name: modulateFn
-  opType: raytk.operators.function.modulateFn
+    - Sdf
+    - Ray
+    - Light
+    - Particle
+  name: toggleSwitch
+  opType: raytk.operators.utility.toggleSwitch
   parameters:
   - label: Enable
     name: Enable
-  status: beta
+  - label: Default Value
+    name: Defaultvalue
 
 ---

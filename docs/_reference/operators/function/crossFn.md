@@ -18,6 +18,7 @@ op:
     - CameraContext
     - LightContext
     - RayContext
+    - ParticleContext
     coordTypes:
     - float
     - vec2
@@ -34,6 +35,7 @@ op:
     - CameraContext
     - LightContext
     - RayContext
+    - ParticleContext
     coordTypes:
     - float
     - vec2
@@ -50,12 +52,13 @@ op:
     - CameraContext
     - LightContext
     - RayContext
+    - ParticleContext
     coordTypes:
     - float
     - vec2
     - vec3
     label: mix definition in
-    name: mix_definition_in
+    name: mixField
     returnTypes:
     - float
     - vec4

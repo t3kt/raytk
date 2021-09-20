@@ -15,6 +15,7 @@ op:
     - CameraContext
     - LightContext
     - RayContext
+    - ParticleContext
     coordTypes:
     - float
     - vec2
@@ -27,12 +28,14 @@ op:
     - Sdf
     - Ray
     - Light
+    - Particle
   - contextTypes:
     - Context
     - MaterialContext
     - CameraContext
     - LightContext
     - RayContext
+    - ParticleContext
     coordTypes:
     - float
     - vec2
@@ -45,12 +48,14 @@ op:
     - Sdf
     - Ray
     - Light
+    - Particle
   - contextTypes:
     - Context
     - MaterialContext
     - CameraContext
     - LightContext
     - RayContext
+    - ParticleContext
     coordTypes:
     - float
     - vec2
@@ -63,12 +68,14 @@ op:
     - Sdf
     - Ray
     - Light
+    - Particle
   - contextTypes:
     - Context
     - MaterialContext
     - CameraContext
     - LightContext
     - RayContext
+    - ParticleContext
     coordTypes:
     - float
     - vec2
@@ -81,6 +88,7 @@ op:
     - Sdf
     - Ray
     - Light
+    - Particle
   name: fieldExpr
   opType: raytk.operators.filter.fieldExpr
   parameters:

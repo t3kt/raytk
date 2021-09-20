@@ -15,18 +15,15 @@ op:
     - CameraContext
     - LightContext
     - RayContext
+    - ParticleContext
     coordTypes:
     - float
     - vec2
     - vec3
     label: Coordinate Field
-    name: definition_in
+    name: coordField
     returnTypes:
-    - float
     - vec4
-    - Sdf
-    - Ray
-    - Light
   name: texture3dField
   opType: raytk.operators.field.texture3dField
   parameters:

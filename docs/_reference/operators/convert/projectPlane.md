@@ -22,6 +22,7 @@ op:
     - CameraContext
     - LightContext
     - RayContext
+    - ParticleContext
     coordTypes:
     - float
     - vec2
@@ -34,6 +35,7 @@ op:
     - Sdf
     - Ray
     - Light
+    - Particle
   name: projectPlane
   opType: raytk.operators.convert.projectPlane
   parameters:

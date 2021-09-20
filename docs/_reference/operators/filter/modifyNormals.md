@@ -27,7 +27,7 @@ op:
     - vec2
     - vec3
     label: Shading Element
-    name: shading_element_in
+    name: shadingElement
     required: true
     returnTypes:
     - float
@@ -35,6 +35,7 @@ op:
     - Sdf
     - Ray
     - Light
+    - Particle
     summary: Shading element that will use the modified normals. This should be something
       like `diffuseContrib` or `specularContrib`.
   - contextTypes:
@@ -45,7 +46,7 @@ op:
     - vec2
     - vec3
     label: Modifier Field
-    name: modifier_field_in
+    name: modifierField
     returnTypes:
     - float
     - vec4

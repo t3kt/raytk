@@ -26,8 +26,8 @@ op:
     - CameraContext
     - LightContext
     - RayContext
+    - ParticleContext
     coordTypes:
-    - float
     - vec2
     - vec3
     label: definition_in

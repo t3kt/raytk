@@ -12,15 +12,11 @@ op:
     point.
   inputs:
   - contextTypes:
-    - Context
-    - MaterialContext
-    - CameraContext
     - LightContext
-    - RayContext
     coordTypes:
     - vec3
     label: Color Field
-    name: color_field_definition_in
+    name: colorField
     returnTypes:
     - float
     - vec4

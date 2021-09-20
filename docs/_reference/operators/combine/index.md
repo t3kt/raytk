@@ -12,6 +12,8 @@ cat:
   name: combine
   operators:
   - name: addFields
+  - name: arrange
+    status: beta
   - name: blend
     summary: Smoothly blends/morphs between up to 4 SDFs.
   - keywords:

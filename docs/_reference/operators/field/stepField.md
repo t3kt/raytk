@@ -19,17 +19,33 @@ op:
     - CameraContext
     - LightContext
     - RayContext
+    - ParticleContext
     coordTypes:
     - float
     - vec2
     - vec3
     label: Coordinate Field
-    name: definition_in
+    name: coordField
     returnTypes:
     - float
     - vec4
     summary: Optional field whose value is used instead of coordinates when checking
       which side of the threshold a point is on.
+  - contextTypes:
+    - Context
+    - MaterialContext
+    - CameraContext
+    - LightContext
+    - RayContext
+    - ParticleContext
+    coordTypes:
+    - float
+    - vec2
+    - vec3
+    label: Edge Field
+    name: edgeField
+    returnTypes:
+    - float
   name: stepField
   opType: raytk.operators.field.stepField
   parameters:

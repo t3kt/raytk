@@ -15,6 +15,7 @@ op:
     - CameraContext
     - LightContext
     - RayContext
+    - ParticleContext
     coordTypes:
     - float
     - vec2
@@ -27,6 +28,7 @@ op:
     - Sdf
     - Ray
     - Light
+    - Particle
   name: coordTo3D
   opType: raytk.operators.convert.coordTo3D
   parameters:

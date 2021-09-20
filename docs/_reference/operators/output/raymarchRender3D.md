@@ -16,6 +16,8 @@ op:
     label: SDF Scene
     name: definition_in
     returnTypes:
+    - float
+    - vec4
     - Sdf
     summary: SDF definition the shapes in the scene.
   - contextTypes:
@@ -23,7 +25,7 @@ op:
     coordTypes:
     - vec2
     label: Camera
-    name: camera_definition_in
+    name: camera
     returnTypes:
     - Ray
     summary: Camera used for render frame.
@@ -32,7 +34,7 @@ op:
     coordTypes:
     - vec3
     label: Light
-    name: light_definition_in
+    name: light
     returnTypes:
     - Light
     summary: Light definition that can be used by supporting materials.
@@ -40,7 +42,7 @@ op:
     - RayContext
     coordTypes:
     - vec3
-    label: Raymodifier
+    label: Ray Modifier
     name: Raymodifier
     returnTypes:
     - Ray
@@ -50,14 +52,14 @@ op:
     coordTypes:
     - vec3
     label: Shadow
-    name: shadow_definition_in
+    name: shadow
     returnTypes:
     - float
   - contextTypes:
     - RayContext
     coordTypes:
     - vec3
-    label: Backgroundfield
+    label: Background Field
     name: Backgroundfield
     returnTypes:
     - float

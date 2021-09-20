@@ -16,6 +16,7 @@ cat:
       later
 
       be extracted from rendered output.'
+  - name: toggleSwitch
   summary: Advanced operators that change how ROP chains behave.
 
 ---

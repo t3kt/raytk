@@ -15,10 +15,11 @@ op:
     - CameraContext
     - LightContext
     - RayContext
+    - ParticleContext
     coordTypes:
     - vec2
     label: Scale Field
-    name: scale_definition_in
+    name: scaleField
     returnTypes:
     - float
     - vec4
@@ -28,10 +29,11 @@ op:
     - CameraContext
     - LightContext
     - RayContext
+    - ParticleContext
     coordTypes:
     - vec2
     label: Translate Field
-    name: translate_definition_in
+    name: translateField
     returnTypes:
     - float
     - vec4

@@ -14,7 +14,7 @@ op:
     coordTypes:
     - vec3
     label: definition_in
-    name: definition_in
+    name: sdf
     required: true
     returnTypes:
     - Sdf

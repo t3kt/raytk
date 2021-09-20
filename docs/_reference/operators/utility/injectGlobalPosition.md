@@ -27,6 +27,7 @@ op:
     - Sdf
     - Ray
     - Light
+    - Particle
   name: injectGlobalPosition
   opType: raytk.operators.utility.injectGlobalPosition
   parameters:

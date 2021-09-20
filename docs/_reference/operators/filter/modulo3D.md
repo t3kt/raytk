@@ -19,6 +19,7 @@ op:
     - CameraContext
     - LightContext
     - RayContext
+    - ParticleContext
     coordTypes:
     - vec3
     label: definition_in
@@ -30,6 +31,7 @@ op:
     - Sdf
     - Ray
     - Light
+    - Particle
   keywords:
   - grid
   - modulo

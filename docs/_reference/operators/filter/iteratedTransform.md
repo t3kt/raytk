@@ -17,6 +17,7 @@ op:
     - CameraContext
     - LightContext
     - RayContext
+    - ParticleContext
     coordTypes:
     - vec2
     - vec3
@@ -33,12 +34,13 @@ op:
     - CameraContext
     - LightContext
     - RayContext
+    - ParticleContext
     coordTypes:
     - float
     - vec2
     - vec3
     label: Rotate Field
-    name: rotate_definition_in
+    name: rotateField
     returnTypes:
     - vec4
     summary: Optional field used to control rotation. The field is evaluated before
@@ -52,12 +54,13 @@ op:
     - CameraContext
     - LightContext
     - RayContext
+    - ParticleContext
     coordTypes:
     - float
     - vec2
     - vec3
     label: Translate Field
-    name: translate_definition_in
+    name: translateField
     returnTypes:
     - vec4
   name: iteratedTransform

@@ -14,7 +14,7 @@ op:
     coordTypes:
     - vec3
     label: definition_in
-    name: definition_in
+    name: sdf
     required: true
     returnTypes:
     - Sdf
@@ -23,7 +23,7 @@ op:
     coordTypes:
     - vec3
     label: Irradiance Field
-    name: irradiance_definition_in
+    name: irradianceField
     returnTypes:
     - vec4
   - contextTypes:
@@ -31,7 +31,7 @@ op:
     coordTypes:
     - vec3
     label: Reflectance Field
-    name: reflectance_definition_in
+    name: reflectanceField
     returnTypes:
     - vec4
   - contextTypes:
@@ -39,7 +39,7 @@ op:
     coordTypes:
     - vec3
     label: Base Color Field
-    name: baseColor_definition_in
+    name: baseColorField
     returnTypes:
     - float
     - vec4
@@ -48,7 +48,7 @@ op:
     coordTypes:
     - vec3
     label: Roughness Field
-    name: roughness_definition_in
+    name: roughnessField
     returnTypes:
     - float
   - contextTypes:
@@ -56,7 +56,7 @@ op:
     coordTypes:
     - vec3
     label: Metallic Field
-    name: metallic_definition_in
+    name: metallicField
     returnTypes:
     - float
   name: pbrMat

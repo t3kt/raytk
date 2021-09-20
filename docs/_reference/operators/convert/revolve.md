@@ -15,17 +15,14 @@ op:
     - CameraContext
     - LightContext
     - RayContext
+    - ParticleContext
     coordTypes:
     - vec2
     label: Cross-Section SDF
-    name: cross_section_definition_in
+    name: crossSection
     required: true
     returnTypes:
-    - float
-    - vec4
     - Sdf
-    - Ray
-    - Light
     summary: The 2D shape that is revolved around the axis.
   - contextTypes:
     - Context
@@ -33,10 +30,11 @@ op:
     - CameraContext
     - LightContext
     - RayContext
+    - ParticleContext
     coordTypes:
     - float
     label: Rotate Field
-    name: rotate_field_in
+    name: rotateField
     returnTypes:
     - float
     summary: Optional field that controls rotation of the cross-section as it goes
@@ -47,10 +45,11 @@ op:
     - CameraContext
     - LightContext
     - RayContext
+    - ParticleContext
     coordTypes:
     - float
     label: Scale Field
-    name: scale_field_in
+    name: scaleField
     returnTypes:
     - float
     summary: Optional field that controls scale of the cross-section as it goes around
@@ -61,10 +60,11 @@ op:
     - CameraContext
     - LightContext
     - RayContext
+    - ParticleContext
     coordTypes:
     - float
     label: Translate Field
-    name: translate_field_in
+    name: translateField
     returnTypes:
     - vec4
     summary: Optional field that controls translate of the cross-section as it goes

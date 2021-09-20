@@ -21,10 +21,11 @@ op:
     - CameraContext
     - LightContext
     - RayContext
+    - ParticleContext
     coordTypes:
     - vec2
     label: Point Coords Field
-    name: points_definition_in
+    name: points
     returnTypes:
     - vec4
     summary: If connected, this field will be used to pick both points. The first

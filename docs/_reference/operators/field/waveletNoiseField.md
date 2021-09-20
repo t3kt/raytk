@@ -15,11 +15,12 @@ op:
     - CameraContext
     - LightContext
     - RayContext
+    - ParticleContext
     coordTypes:
     - vec2
     - vec3
     label: Phase Field
-    name: phase_field_definition_in
+    name: phaseField
     returnTypes:
     - float
   name: waveletNoiseField
@@ -31,9 +32,13 @@ op:
       name: vec2
     - label: 3D
       name: vec3
+    - label: Auto
+      name: auto
     name: Coordtype
   - label: Context Type
     menuOptions:
+    - label: Auto
+      name: auto
     - label: Context
       name: Context
     - label: MaterialContext

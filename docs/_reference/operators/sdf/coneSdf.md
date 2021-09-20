@@ -11,19 +11,29 @@ op:
   inputs:
   - contextTypes:
     - Context
+    - MaterialContext
+    - CameraContext
+    - LightContext
+    - RayContext
+    - ParticleContext
     coordTypes:
     - vec3
     label: Height Field
-    name: height_field_definition_in
+    name: heightField
     returnTypes:
     - float
     summary: Value field that can be used to vary the height of the cone.
   - contextTypes:
     - Context
+    - MaterialContext
+    - CameraContext
+    - LightContext
+    - RayContext
+    - ParticleContext
     coordTypes:
     - vec3
     label: Radius Field
-    name: radius_field_definition_in
+    name: radiusField
     returnTypes:
     - float
     summary: Value field that can be used to vary the radius (both base and top) of

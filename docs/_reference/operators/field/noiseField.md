@@ -26,6 +26,15 @@ op:
 
     For types that use 4D coordinates, the `Translate` and `Scale` parameters can
     still be used to control the 4th coordinate.'
+  images:
+  - assets/images/reference/operators/field/noiseField_3d.png
+  - assets/images/reference/operators/field/noiseField_3d_cheap_random.png
+  - assets/images/reference/operators/field/noiseField_cheap_random.png
+  - assets/images/reference/operators/field/noiseField_float_coord.png
+  - assets/images/reference/operators/field/noiseField_perlin_2d.png
+  - assets/images/reference/operators/field/noiseField_perlin_4d_in_2d.png
+  - assets/images/reference/operators/field/noiseField_simplex_3d_in_2d.png
+  - assets/images/reference/operators/field/noiseField_vector_coord.png
   inputs:
   - contextTypes:
     - Context
@@ -33,12 +42,13 @@ op:
     - CameraContext
     - LightContext
     - RayContext
+    - ParticleContext
     coordTypes:
     - float
     - vec2
     - vec3
     label: Coordinate Field
-    name: coordinate_field_in
+    name: coordField
     returnTypes:
     - float
     - vec4

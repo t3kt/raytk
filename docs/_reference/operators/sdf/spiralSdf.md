@@ -15,10 +15,12 @@ op:
     - MaterialContext
     - CameraContext
     - LightContext
+    - RayContext
+    - ParticleContext
     coordTypes:
     - vec2
     label: Cross Section Shape
-    name: definition_in_1
+    name: crossSection
     returnTypes:
     - float
     - Sdf

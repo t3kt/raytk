@@ -21,18 +21,12 @@ op:
   - contextTypes:
     - Context
     coordTypes:
-    - float
-    - vec2
     - vec3
     label: definition_in
-    name: definition_in
+    name: sdf
     required: true
     returnTypes:
-    - float
-    - vec4
     - Sdf
-    - Ray
-    - Light
   name: goochMat
   opType: raytk.operators.material.goochMat
   parameters:

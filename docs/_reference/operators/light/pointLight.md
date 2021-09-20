@@ -10,15 +10,11 @@ op:
   category: light
   inputs:
   - contextTypes:
-    - Context
-    - MaterialContext
-    - CameraContext
     - LightContext
-    - RayContext
     coordTypes:
     - vec3
     label: Color Field
-    name: color_field_definition_in
+    name: colorField
     returnTypes:
     - float
     - vec4
@@ -26,15 +22,11 @@ op:
       of surface hits where it is being applied. The resulting color is multiplied
       by the `Color` parameter and `Intensity`.
   - contextTypes:
-    - Context
-    - MaterialContext
-    - CameraContext
     - LightContext
-    - RayContext
     coordTypes:
     - float
     label: Attenuation Field
-    name: attenutation_field_definition_in
+    name: attenuationField
     returnTypes:
     - float
     - vec4

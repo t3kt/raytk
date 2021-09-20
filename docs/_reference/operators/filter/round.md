@@ -19,6 +19,7 @@ op:
     - CameraContext
     - LightContext
     - RayContext
+    - ParticleContext
     coordTypes:
     - float
     - vec2
@@ -36,12 +37,13 @@ op:
     - CameraContext
     - LightContext
     - RayContext
+    - ParticleContext
     coordTypes:
     - float
     - vec2
     - vec3
     label: amount_field_definition_in
-    name: amount_field_definition_in
+    name: amountField
     returnTypes:
     - float
   name: round

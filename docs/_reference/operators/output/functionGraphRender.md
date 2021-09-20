@@ -29,6 +29,7 @@ op:
     name: definition_in_1
     returnTypes:
     - float
+    - vec4
   - contextTypes:
     - Context
     coordTypes:
@@ -37,6 +38,7 @@ op:
     name: definition_in_2
     returnTypes:
     - float
+    - vec4
   - contextTypes:
     - Context
     coordTypes:
@@ -45,6 +47,7 @@ op:
     name: definition_in_3
     returnTypes:
     - float
+    - vec4
   - contextTypes:
     - Context
     coordTypes:
@@ -53,6 +56,7 @@ op:
     name: definition_in_4
     returnTypes:
     - float
+    - vec4
   name: functionGraphRender
   opType: raytk.operators.output.functionGraphRender
   parameters:

@@ -36,6 +36,7 @@ op:
     - CameraContext
     - LightContext
     - RayContext
+    - ParticleContext
     coordTypes:
     - vec2
     - vec3
@@ -48,6 +49,7 @@ op:
     - Sdf
     - Ray
     - Light
+    - Particle
   name: spiralZoom
   opType: raytk.operators.filter.spiralZoom
   parameters:
