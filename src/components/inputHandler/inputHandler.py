@@ -9,7 +9,6 @@ if False:
 		Hostop: OPParamT
 		Source: OPParamT
 		Required: BoolParamT
-		Typespec: CompParamT
 		Autoindex: BoolParamT
 		Index: IntParamT
 		Name: StrParamT
