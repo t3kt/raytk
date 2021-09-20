@@ -1,0 +1,5 @@
+1	'posIn'	f"sTD2DInputs[{op('output_buffers')['posOut', 'buffer']}]"
+1	'dirIn'	f"sTD2DInputs[{op('output_buffers')['dirOut', 'buffer']}]"
+1	'velIn'	f"sTD2DInputs[{op('output_buffers')['velOut', 'buffer']}]"
+1	'angVelIn'	f"sTD2DInputs[{op('output_buffers')['angVelOut', 'buffer']}]"
+1	'lifeStateIn'	f"sTD2DInputs[{op('output_buffers')['lifeStateOut', 'buffer']}]"

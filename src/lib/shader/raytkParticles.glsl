@@ -10,6 +10,7 @@ struct Particle {
 	float age;
 	float life;
 	int state;
+	uint id;
 };
 
 const int PARTICLE_STATE_DEAD = 0;
@@ -18,10 +19,13 @@ const float LIFE_INFINITE = -1.0;
 
 Particle createParticle(vec3 p, vec3 d) {
 	return Particle(
-		p, d, vec3(0.), vec3(0.), vec3(0.), vec3(0.), 0., 0., PARTICLE_STATE_DEAD
+		p, d, vec3(0.), vec3(0.), vec3(0.), vec3(0.), 0., 0., PARTICLE_STATE_DEAD, 0
 	);
 }
 Particle createParticle() { return createParticle(vec3(0.), vec3(0.)); }
+bool isAlive(Particle part) {
+	return part.state == PARTICLE_STATE_ALIVE;
+}
 
 void initDefVal(out Particle val) {
 	val = createParticle(vec3(0.), vec3(0.));
@@ -29,9 +33,9 @@ void initDefVal(out Particle val) {
 
 struct ParticleContext {
 	Context context;
-	Particle initParticle;
+	Particle particle;
 };
 
-ParticleContext createParticleContext(Context ctx) {
-	return ParticleContext(ctx, createParticle());
+ParticleContext createParticleContext(Context ctx, Particle part) {
+	return ParticleContext(ctx, part);
 }
