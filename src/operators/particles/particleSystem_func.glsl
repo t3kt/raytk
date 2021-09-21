@@ -1,3 +1,18 @@
+void killParticle(inout Particle part) {
+	part.life = 0.;
+	part.state = P_STATE_DEAD;
+}
+
+bool updateLife(inout Particle part, float timeStep) {
+	if (part.life == P_LIFE_INFINITE) return true;
+	part.life -= timeStep;
+	if (part.life <= 0.) {
+		return false;
+	}
+	part.age += timeStep;
+	return true;
+}
+
 ReturnT thismap(CoordT p, ContextT ctx) {
 	Particle part = ctx.particle;
 	if (!isAlive(part)) {
@@ -23,5 +38,13 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 	ctx.particle = part;
 	part = inputOp_process3(p, ctx);
 	#endif
+
+	// TODO: more customization and ordering for the update step
+	float timeStep = time_absStepSeconds(contextTime(ctx));
+	if (!updateLife(part, timeStep)) {
+		killParticle(part);
+		return part;
+	}
+
 	return part;
 }

@@ -50,3 +50,8 @@ struct ParticleContext {
 ParticleContext createParticleContext(Context ctx, Particle part, ivec2 dataPos) {
 	return ParticleContext(ctx, part, dataPos);
 }
+
+#if defined(RAYTK_TIME_IN_CONTEXT)
+Time contextTime(ParticleContext ctx) { return ctx.context.time; }
+void setContextTime(inout ParticleContext ctx, Time time) { ctx.context.time = time; }
+#endif

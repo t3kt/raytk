@@ -3,3 +3,5 @@
 1	'velIn'	f"sTD2DInputs[{op('output_buffers')['velOut', 'buffer']}]"
 1	'angVelIn'	f"sTD2DInputs[{op('output_buffers')['angVelOut', 'buffer']}]"
 1	'lifeStateIn'	f"sTD2DInputs[{op('output_buffers')['lifeStateOut', 'buffer']}]"
+	'RAYTK_USE_TIME'	
+	'RAYTK_TIME_IN_CONTEXT'	

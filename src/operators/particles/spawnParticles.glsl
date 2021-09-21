@@ -7,7 +7,10 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 
 	part.state = P_STATE_ALIVE;
 	part.age = 0.;
-	part.life = P_LIFE_INFINITE;
+	// TODO: more life setup
+//	part.life = P_LIFE_INFINITE;
+	part.life = THIS_Life;
+
 	part.id = nextParticleId();
 	#if defined(THIS_HAS_INPUT_positionField)
 	ctx.particle = part;
