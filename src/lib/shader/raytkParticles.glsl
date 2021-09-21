@@ -13,18 +13,28 @@ struct Particle {
 	uint id;
 };
 
-const int PARTICLE_STATE_DEAD = 0;
-const int PARTICLE_STATE_ALIVE = 1;
-const float LIFE_INFINITE = -1.0;
+const int P_STATE_DEAD = 0;
+const int P_STATE_ALIVE = 1;
+const float P_LIFE_INFINITE = -1.0;
 
 Particle createParticle(vec3 p, vec3 d) {
 	return Particle(
-		p, d, vec3(0.), vec3(0.), vec3(0.), vec3(0.), 0., 0., PARTICLE_STATE_DEAD, 0
+		p, d, vec3(0.), vec3(0.), vec3(0.), vec3(0.), 0., 0., P_STATE_DEAD, 0
 	);
 }
 Particle createParticle() { return createParticle(vec3(0.), vec3(0.)); }
 bool isAlive(Particle part) {
-	return part.state == PARTICLE_STATE_ALIVE;
+	return part.state == P_STATE_ALIVE;
+}
+
+vec4 getParticleStateVec(Particle part) {
+	return vec4(part.age, part.life, float(part.state), float(part.id));
+}
+void setParticleStateVec(inout Particle part, vec4 state) {
+	part.age = state.x;
+	part.life = state.y;
+	part.state = int(round(state.z));
+	part.id = uint(round(state.w));
 }
 
 void initDefVal(out Particle val) {
@@ -34,8 +44,9 @@ void initDefVal(out Particle val) {
 struct ParticleContext {
 	Context context;
 	Particle particle;
+	ivec2 dataPos;
 };
 
-ParticleContext createParticleContext(Context ctx, Particle part) {
-	return ParticleContext(ctx, part);
+ParticleContext createParticleContext(Context ctx, Particle part, ivec2 dataPos) {
+	return ParticleContext(ctx, part, dataPos);
 }
