@@ -1,0 +1,5 @@
+name	label	params
+position	Position	Translate Scale
+indextexel	Index (Texel)	
+scaledindex	Scaled Index	Indexrange[1-2]
+autoscaledindex	Auto-Scaled Index	
