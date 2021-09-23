@@ -8,19 +8,13 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 	q = mod(q+halfsize, size) - halfsize;
 	#if defined(THIS_Uselimit)
 	{
-		float start = THIS_Limitstart;
-		float stop = THIS_Limitstop;
-		#if defined(THIS_Limittype_stop) || defined(THIS_Limittype_both)
-		if (c > stop) {
-			q += size * (c - stop);
-			c = stop;
-		}
-			#endif
 		#if defined(THIS_Limittype_start) || defined(THIS_Limittype_both)
-		if (c < start) {
-			q += size * (c - start);
-			c = start;
-		}
+		float start = THIS_Limitstart + THIS_Limitoffset;
+		if (c < start) applyModLimit(q, c, size, start);
+		#endif
+		#if defined(THIS_Limittype_stop) || defined(THIS_Limittype_both)
+		float stop = THIS_Limitstop + THIS_Limitoffset;
+		if (c > stop) applyModLimit(q, c, size, stop);
 		#endif
 	}
 	#endif

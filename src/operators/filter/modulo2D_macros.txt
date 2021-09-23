@@ -1,1 +1,0 @@
-'THIS_MIRROR_FUNC'	op('mirror_funcs')[parent().par.Mirrortype.eval(), 'function']

@@ -1,0 +1,5 @@
+name	label	params
+none	None	
+both	Both	Limitoffset[1-2] Limitstart[1-2] Limitstop[1-2]
+start	Start Only	Limitoffset[1-2] Limitstart[1-2]
+stop	Stop Only	Limitoffset[1-2] Limitstop[1-2]

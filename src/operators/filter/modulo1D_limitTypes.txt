@@ -1,4 +1,4 @@
-name	label
-both	Both
-start	Start Only
-stop	Stop Only
+name	label	params
+both	Both	Limitoffset Limitstart Limitstop
+start	Start Only	Limitoffset Limitstart
+stop	Stop Only	Limitoffset Limitstop

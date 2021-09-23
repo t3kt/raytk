@@ -171,6 +171,11 @@ Ray createStandardCameraRay(vec2 p, vec2 size, int viewAngleMethod, float fov, m
 
 float cheapNoiseLookup(vec2 p) { return texture(sTDNoiseMap, p).r; }
 
+void applyModLimit(inout float p, inout float cell, in float size, in float limit) {
+	p += size * (cell - limit);
+	cell = limit;
+}
+
 float adaptAsFloat(float p) { return p; }
 float adaptAsFloat(vec2 p) { return p.x; }
 float adaptAsFloat(vec3 p) { return p.x; }
