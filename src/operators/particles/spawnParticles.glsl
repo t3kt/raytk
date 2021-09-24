@@ -14,7 +14,7 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 	// TODO: more life setup
 //	part.life = P_LIFE_INFINITE;
 	part.life = THIS_Life;
-	part.life *= part.hashId.x;
+	part.life += part.hashId.x * THIS_Lifejitter;
 
 	#if defined(THIS_HAS_INPUT_positionField)
 	ctx.particle = part;
