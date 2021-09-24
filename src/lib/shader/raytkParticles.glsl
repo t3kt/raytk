@@ -11,6 +11,7 @@ struct Particle {
 	float life;
 	int state;
 	uint id;
+	vec3 hashId;
 };
 
 const int P_STATE_DEAD = 0;
@@ -19,7 +20,7 @@ const float P_LIFE_INFINITE = -1.0;
 
 Particle createParticle(vec3 p, vec3 d) {
 	return Particle(
-		p, d, vec3(0.), vec3(0.), vec3(0.), vec3(0.), 0., 0., P_STATE_DEAD, 0
+		p, d, vec3(0.), vec3(0.), vec3(0.), vec3(0.), 0., 0., P_STATE_DEAD, 0, vec3(0.)
 	);
 }
 Particle createParticle() { return createParticle(vec3(0.), vec3(0.)); }

@@ -176,6 +176,17 @@ void applyModLimit(inout float p, inout float cell, in float size, in float limi
 	cell = limit;
 }
 
+// https://www.shadertoy.com/view/XlXcW4
+vec3 intHash3( uvec3 x )
+{
+	const uint k = 1103515245U;  // GLIB C
+	x = ((x>>8U)^x.yzx)*k;
+	x = ((x>>8U)^x.yzx)*k;
+	x = ((x>>8U)^x.yzx)*k;
+
+	return vec3(x)*(1.0/float(0xffffffffU));
+}
+
 float adaptAsFloat(float p) { return p; }
 float adaptAsFloat(vec2 p) { return p.x; }
 float adaptAsFloat(vec3 p) { return p.x; }

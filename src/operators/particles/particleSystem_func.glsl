@@ -46,5 +46,9 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 		return part;
 	}
 
+	part.vel += part.accel * timeStep;
+	part.pos += part.vel * timeStep;
+	// TODO: angular vel
+
 	return part;
 }

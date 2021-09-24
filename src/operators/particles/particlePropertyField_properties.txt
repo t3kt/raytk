@@ -13,3 +13,7 @@ id	Particle ID	return float(ctx.particle.id);	float
 statevec	State Data Vector	return getParticleStateVec(ctx.particle);	vec4
 datapos	Data Coordinate	return vec4(ctx.dataPos, 0., 0.);	vec4
 particle	Particle	return ctx.particle;	Particle
+hashid	Hash ID Vector	return vec4(ctx.particle.hashId, 0.);	vec4
+hashidx	Hash ID X	return ctx.particle.hashId.x;	float
+hashidy	Hash ID Y	return ctx.particle.hashId.y;	float
+hashidz	Hash ID Z	return ctx.particle.hashId.z;	float
