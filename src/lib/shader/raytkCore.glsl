@@ -183,6 +183,12 @@ Sdf mixVals(in Sdf res1, in Sdf res2, float amt) {
 	return res1;
 }
 
+void assignColor(inout Sdf res, vec4 color) {
+	#ifdef RAYKT_USE_SURFACE_COLOR
+	res.color = color;
+	#endif
+}
+
 void assignMaterial(inout Sdf res, int materialId) {
 	res.mat = vec3(float(materialId), 0., 0.);
 }

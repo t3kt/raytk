@@ -12,6 +12,11 @@ struct Particle {
 	int state;
 	uint id;
 	vec3 hashId;
+
+	#ifdef RAYTK_USE_SURFACE_COLOR
+	// xyz: RGB, w: has been set
+	vec4 color;
+	#endif
 };
 
 const int P_STATE_DEAD = 0;
@@ -40,6 +45,12 @@ void setParticleStateVec(inout Particle part, vec4 state) {
 
 void initDefVal(out Particle val) {
 	val = createParticle(vec3(0.), vec3(0.));
+}
+
+void assignColor(inout Particle part, vec4 color) {
+	#ifdef RAYKT_USE_SURFACE_COLOR
+	part.color = color;
+	#endif
 }
 
 struct ParticleContext {
