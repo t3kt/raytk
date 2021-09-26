@@ -59,10 +59,12 @@ class Tools:
 				name,
 				callback=lambda: self.NavigateTo(op(path)),
 			)
+		categories = RaytkContext().allCategories()
+		categories.sort(key=lambda c: c.name)
 		popMenu.fromButton(button, h='Right', v='Top').Show(
 			[
 				goToItem(o.name, o.path)
-				for o in RaytkContext().allCategories()
+				for o in categories
 			]
 		)
 
