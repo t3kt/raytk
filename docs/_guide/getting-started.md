@@ -8,11 +8,12 @@ nav_order: 1
 
 The first step to using RayTK is to download the latest tox file, from the [repository](https://github.com/t3kt/raytk/releases).
 
-Note that there are many of files in the repository itself, but these are only needed for development purposes. If you only want to *use* the library rather than *modify* it, use the release tox file.
+Note that there are many source files in the repository itself, but these are only needed for development purposes.
+Feel free to take a look through them if you want, but if you only want to *use* the library rather than *modify* it, use the release tox file.
 
 ## Load the Library
 
-Drag the tox file into the project. It's generally good to add it to the *root* network (`/` rather than `/project1`), but it's not strictly necessary.
+Drag the tox file into the project.
 
 ## Creating a Network
 
@@ -22,12 +23,6 @@ To create your first ROP, use the keyboard shortcut `alt + r` to open up the edi
 
 1. Choose a `boxFrameSdf`, and a new COMP will be created in the network editor.
 1. Create a `raymarchRender3d` and connect the output of your `boxFrameSdf` to the input of the `raymarchRender3d`.
-1. From the TD Palette, under "Tools" drag a `camera` component into the network.
-    ![TD Palette Camera](/raytk/assets/images/guide/intro-tdPaletteCamera.png)
-1. Select the new camera and drag it into the `raymarchRender3d` and choose "Parm: Camera".
-    ![Drag camera onto render](/raytk/assets/images/guide/intro-dropCameraOntoRender.png)
-    :information_source: The camera by default is aimed in slightly the wrong direction. To correct it, open the viewer of the camera, left click, and drag a bit to the left.
-1. Create a regular TD light, drag it onto the `raymarchRender3d` and choose "Parm: Light".
 1. Connect a `Null TOP` to the first output of `raymarchRender3d`.
 1. Play around with the parameters of the `boxFrameSdf`.
 
@@ -37,21 +32,47 @@ You've just created your first RayTK network!
 
 The `boxFrameSdf` is an `SDF` (signed distance function) operator, which is how you define geometry. It's equivalent to `SOP`s like `Sphere`, `Box`, etc.
 
-## Add to Your Network
+The `raymarchRender3d` is an "Output OP" or renderer. It's equivalent to a `Render TOP`. It generates and runs a shader that renders the scene.
 
-Now that you have a complete render setup, you can start to add to and change your scene.
+## Camera and Light
 
-1. Add a `twist` between the `boxFrameSdf` and the `raymarchRender3d`.
-2. Change the "Axis" to "Y".
-3. Adjust the "Amount" parameter and watch the box twist in the output.
+By default, the renderer uses a built-in camera and light. To override those, attach camera and light operators.
+
+1. Create a `lookAtCamera` and connect it to the second ("Camera") input of the `raymarchRender3d`.
+1. Create a `pointLight` and connect it to the third ("Light") input of the `raymarchRender3d`.
+1. Try changing the settings of the `lookAtCamera` and `pointLight`.
 
 ![Basic RayTK Network](/raytk/assets/images/guide/intro-basicNetwork2.png)
 
-You've just created your first "filter" ROP! It modifies the behavior of another ROP.
+## Filters
 
-4. Add a `basicMat` between the `twist` and the `raymarchRender3d`.
-5. Try out different color settings.
+Now that you have a complete render setup, you can use filters to modify the SDF.
+
+1. Add a `twist` between the `boxFrameSdf` and the `raymarchRender3d`.
+1. Adjust the "Amount" parameter and watch the box twist in the output.
+1. Try changing the "Axis" parameter to twist around another axis.
 
 ![Basic RayTK Network](/raytk/assets/images/guide/intro-basicNetwork3.png)
 
-You've just created your first "material" ROP. It assigns a material to a ROP, which is used to determine what colors it should use.
+You've just created your first "filter" ROP! It modifies the behavior of another ROP.
+
+## Materials
+
+By default, the renderer uses a built-in material. To override it, insert a material operator.
+
+1. Add a `basicMat` between the `twist` and the `raymarchRender3d`.
+2. Try out different color settings.
+
+![Basic RayTK Network](/raytk/assets/images/guide/intro-basicNetwork4.png)
+
+You've just created your first "material" ROP. It assigns a material to an SDF, which is used to determine what colors it should use.
+
+## Cleanup
+
+Now that you've set up your scene, you don't need to keep the main toolkit tox loaded in the project if you don't want to.
+
+All the ROPs are totally self-contained! That means that if you save out scenes as tox files, you can drop those into any project and they'll work, without having to load the toolkit itself.
+
+However some editing tools such as the Palette and the [Inspector] are only available if the toolkit itself is loaded
+
+[Inspector]: /raytk/guide/inspector
