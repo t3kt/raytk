@@ -22,11 +22,9 @@ To create your first ROP, use the keyboard shortcut `alt + r` to open up the edi
 
 1. Choose a `boxFrameSdf`, and a new COMP will be created in the network editor.
 1. Create a `raymarchRender3d` and connect the output of your `boxFrameSdf` to the input of the `raymarchRender3d`.
-1. From the TD Palette, under "Tools" drag a `camera` component into the network.
-    ![TD Palette Camera](/raytk/assets/images/guide/intro-tdPaletteCamera.png)
-1. Select the new camera and drag it into the `raymarchRender3d` and choose "Parm: Camera".
-    ![Drag camera onto render](/raytk/assets/images/guide/intro-dropCameraOntoRender.png)
-    :information_source: The camera by default is aimed in slightly the wrong direction. To correct it, open the viewer of the camera, left click, and drag a bit to the left.
+1. Create a `lookAtCamera` and connect it to the "Camera" input of the `raymarchRender3d`.
+1. Create a `pointLight` and connect it to the "Light" input of the `raymarchRender3d`.
+1. Change the position of the `pointLight`
 1. Create a regular TD light, drag it onto the `raymarchRender3d` and choose "Parm: Light".
 1. Connect a `Null TOP` to the first output of `raymarchRender3d`.
 1. Play around with the parameters of the `boxFrameSdf`.

@@ -15,6 +15,7 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 	q -= THIS_asNoiseCoordT(THIS_Translate);
 	q /= THIS_asNoiseCoordT(THIS_Scale);
 
-	ReturnT val = THIS_FUNCTION(q);
-	return (val * THIS_Amplitude) + THIS_Offset;
+	ReturnT res;
+	BODY();
+	return (res * THIS_Amplitude) + THIS_Offset;
 }
