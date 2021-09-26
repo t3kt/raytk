@@ -1,33 +1,5 @@
-//
-//  Wombat
-//  An efficient texture-free GLSL procedural noise library
-//  Source: https://github.com/BrianSharpe/Wombat
-//  Derived from: https://github.com/BrianSharpe/GPU-Noise-Lib
-//
-//  I'm not one for copyrights.  Use the code however you wish.
-//  All I ask is that credit be given back to the blog or myself when appropriate.
-//  And also to let me know if you come up with any changes, improvements, thoughts or interesting uses for this stuff. :)
-//  Thanks!
-//
-//  Brian Sharpe
-//  brisharpe CIRCLE_A yahoo DOT com
-//  http://briansharpe.wordpress.com
-//  https://github.com/BrianSharpe
-//
-
-//
-//  This represents a modified version of Stefan Gustavson's work at http://www.itn.liu.se/~stegu/GLSL-cellular
-//  The noise is optimized to use a 2x2 search window instead of 3x3
-//  Modifications are...
-//  - faster random number generation
-//  - analytical final normalization
-//  - random point offset is restricted to prevent artifacts
-//
-
-//
 //  Cellular Noise 2D
 //  produces a range of 0.0->1.0
-//
 float Cellular2D( vec2 P )
 {
     //  https://github.com/BrianSharpe/Wombat/blob/master/Cellular2D.glsl

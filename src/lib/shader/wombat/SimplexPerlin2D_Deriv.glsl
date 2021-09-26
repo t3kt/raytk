@@ -1,32 +1,5 @@
-//
-//  Wombat
-//  An efficient texture-free GLSL procedural noise library
-//  Source: https://github.com/BrianSharpe/Wombat
-//  Derived from: https://github.com/BrianSharpe/GPU-Noise-Lib
-//
-//  I'm not one for copyrights.  Use the code however you wish.
-//  All I ask is that credit be given back to the blog or myself when appropriate.
-//  And also to let me know if you come up with any changes, improvements, thoughts or interesting uses for this stuff. :)
-//  Thanks!
-//
-//  Brian Sharpe
-//  brisharpe CIRCLE_A yahoo DOT com
-//  http://briansharpe.wordpress.com
-//  https://github.com/BrianSharpe
-//
-
-//
-//  This is a modified version of Stefan Gustavson's and Ian McEwan's work at http://github.com/ashima/webgl-noise
-//  Modifications are...
-//  - faster random number generation
-//  - analytical final normalization
-//  - space scaled can have an approx feature size of 1.0
-//
-
-//
 //  Simplex Perlin Noise 2D Deriv
 //  Return value range of -1.0->1.0, with format vec3( value, xderiv, yderiv )
-//
 vec3 SimplexPerlin2D_Deriv( vec2 P )
 {
     //  https://github.com/BrianSharpe/Wombat/blob/master/SimplexPerlin2D_Deriv.glsl
