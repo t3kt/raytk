@@ -1,5 +1,35 @@
 # Release Notes
 
+## v0.18
+
+### Highlights
+
+* ...
+
+### Details
+
+* Improvements / additions
+    * New ops
+        * toggleSwitch (#658)
+        * mergeToggle (#666)
+        * arrange (#655)
+        * axisLight (#663)
+    * New field inputs
+        * Edge in stepField
+    * New parameters
+        * Limiting options for modulo2D and modulo3D (#660)
+        * Mirroring support in modulo3D
+    * Better index support in chopField (#613, #659)
+    * New noise types in noiseField using the Wombat library
+* Changes (potentially breaking)
+* Fixes
+    * Fix swapped inputs in pbrMat
+* Infrastructure / internals
+    * Replaced all inputHandlers with new implementation
+    * Improvements to multiInputHandler
+    * Improvements to aggregateCodeGenerator
+    * Support for compute shaders
+
 ## v0.17
 
 ### Highlights
