@@ -306,6 +306,10 @@ class RaytkTools(RaytkContext):
 				self.saveROP(rop)
 			self.organizeCategory(cat, saveIndexTox=True)
 
+	def organizeAllCategories(self):
+		for cat in self.allCategories():
+			self.organizeCategory(cat, saveIndexTox=True)
+
 	def updateContextTypeParMenu(self, ropInfo: 'Optional[ROPInfo]'):
 		self._updateTypeParMenu(ropInfo, 'Contexttype', ContextTypes.values)
 
