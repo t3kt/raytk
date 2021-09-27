@@ -1,5 +1,3 @@
-
-
 ReturnT thismap(CoordT p, ContextT ctx) {
 	float q = p.THIS_Axis + THIS_Shift;
 	float size = THIS_Size;
