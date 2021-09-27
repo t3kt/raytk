@@ -1,5 +1,6 @@
 {
   "meta": {
+    "opStatus": "default",
     "opType": "raytk.operators.function.pennerEasingFn",
     "opVersion": 5
   }
