@@ -1,0 +1,3 @@
+name	type	chop	uniformType	length
+'translates' if parent().par.Enabletransform and parent().par.Enabletranslate else ''	'vec3'	op('translateVals')	'uniformarray'	parent().par.Instancecount
+'rotates' if parent().par.Enabletransform and parent().par.Enablerotate else ''	'vec3'	op('rotateVals')	'uniformarray'	parent().par.Instancecount
