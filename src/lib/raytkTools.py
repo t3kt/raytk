@@ -50,6 +50,9 @@ class RaytkTools(RaytkContext):
 		info.helpUrl = f'https://t3kt.github.io/raytk/reference/opType/{info.opType}/'
 		# Ensure that status is copied to the opDefinition parameter
 		info.opDefPar.Raytkopstatus = info.statusLabel
+		for tag in [RaytkTags.alpha, RaytkTags.beta, RaytkTags.deprecated]:
+			if tag.name in info.opDef.tags:
+				info.opDef.tags.remove(tag.name)
 
 	@staticmethod
 	def updateROPParams(rop: 'COMP'):
@@ -112,11 +115,19 @@ class RaytkTools(RaytkContext):
 			return
 		self.updateROPMetadata(rop, incrementVersion)
 		self.updateROPParams(rop)
+		self.updateOPImage(rop)
 		self.saveROPSpec(rop)
 		# self.saveROPSpec_NEW(rop)
 		OpDocManager(info).pushToParamsAndInputs()
 		focusFirstCustomParameterPage(rop)
 		tox = info.toxFile
+		rop.par.savebackup = False
+		rop.par.reloadtoxonstart.expr = ''
+		rop.par.reloadtoxonstart.val = True
+		rop.par.reloadcustom.expr = ''
+		rop.par.reloadcustom.val = True
+		rop.par.reloadbuiltin.expr = ''
+		rop.par.reloadbuiltin.val = True
 		rop.save(tox)
 		ui.status = f'Saved TOX {tox} (version: {info.opVersion})'
 
@@ -287,6 +298,13 @@ class RaytkTools(RaytkContext):
 		for i, o in enumerate(comps):
 			o.nodeY = -int(i / 10) * 150
 			o.nodeX = int(i % 10) * 200
+
+	def saveAllOperatorsAndCategories(self):
+		for cat in self.allCategories():
+			catInfo = CategoryInfo(cat)
+			for rop in catInfo.operators:
+				self.saveROP(rop)
+			self.organizeCategory(cat, saveIndexTox=True)
 
 	def updateContextTypeParMenu(self, ropInfo: 'Optional[ROPInfo]'):
 		self._updateTypeParMenu(ropInfo, 'Contexttype', ContextTypes.values)
