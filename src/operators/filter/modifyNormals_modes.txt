@@ -1,3 +1,4 @@
 name	label	code
 add	Add	n += val
 mul	Multiply	n *= val
+replace	Replace	n = vec3(val)
