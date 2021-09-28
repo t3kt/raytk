@@ -14,7 +14,7 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 		float q = p.THIS_Axis;
 	#endif
 	#ifdef THIS_HAS_INPUT_phaseField
-	float phase = THIS_Phase + inputOP_phaseField(p, ctx);
+	float phase = THIS_Phase + inputOp_phaseField(p, ctx);
 	#else
 	float phase = THIS_Phase;
 	#endif
