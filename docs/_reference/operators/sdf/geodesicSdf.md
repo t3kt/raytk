@@ -11,14 +11,8 @@ op:
   detail: Based on [Geodesic domain manipulation](https://www.shadertoy.com/view/4tG3zW)
     by tdhooper.
   inputs:
-  - contextTypes:
-    - Context
-    coordTypes:
-    - vec3
-    label: Spike Tip Shape
+  - label: definition_in_1
     name: definition_in_1
-    returnTypes:
-    - Sdf
     summary: Optional SDF that is placed at the tip of each spike.
   keywords:
   - geodesic

@@ -83,6 +83,24 @@ op:
       name: simplex4d
     - label: Cheap Random Lookup
       name: cheapNoiseLookup
+    - label: Cellular 2D
+      name: wbtcellular2d
+    - label: Cellular 2D Deriv
+      name: wbtcellular2dderiv
+    - label: Cellular 3D
+      name: wbtcellular3d
+    - label: Cellular 3D Deriv
+      name: wbtcellular3dderiv
+    - label: Value 2D
+      name: wbtvalue2d
+    - label: Value 2D Deriv
+      name: wbtvalue2dderiv
+    - label: Value 3D
+      name: wbtvalue3d
+    - label: Value 3D Deriv
+      name: wbtvalue3dderiv
+    - label: Value 4D
+      name: wbtvalue4d
     name: Noisetype
     summary: The type of noise function.
   - label: Coord Type

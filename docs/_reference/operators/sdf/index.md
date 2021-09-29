@@ -11,6 +11,8 @@ cat:
     often the first operator in a chain that ends with a `raymarchRender3d`.'
   name: sdf
   operators:
+  - name: aexionSdf
+    status: alpha
   - keywords:
     - fractal
     name: amazingSurfaceSdf
@@ -171,6 +173,8 @@ cat:
     - segments
     name: segmentedLineSdf
     summary: Multi-segment line SDF.
+  - name: sierpinskiTetrahedronSdf
+    status: alpha
   - keywords:
     - cone
     - pie
@@ -178,6 +182,8 @@ cat:
     - wedge
     name: solidAngleSdf
     summary: A conical slice of a sphere.
+  - name: sopSdf
+    status: alpha
   - name: sphereFbmSdf
   - name: sphereSdf
     summary: SDF in 3D space for a uniform sphere.

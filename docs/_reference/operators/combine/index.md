@@ -16,6 +16,8 @@ cat:
     status: beta
   - name: blend
     summary: Smoothly blends/morphs between up to 4 SDFs.
+  - name: boundLimit
+    status: alpha
   - keywords:
     - chamfer
     - columns
@@ -60,6 +62,8 @@ cat:
   - name: mergeFields
     summary: Merges multiple vector fields, using different fields for each vector
       part.
+  - name: mergeToggle
+    status: alpha
   - name: shapedCombine
     status: beta
     summary: Combine two SDFs, using a 2D SDF to shape the blending region.

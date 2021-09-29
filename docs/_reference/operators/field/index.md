@@ -83,6 +83,8 @@ cat:
       to apply a texture facing each axis.
   - name: uvField
     summary: Field that produces surface UV coordinates, if available.
+  - name: valuePointsField
+    status: alpha
   - name: waveField
     summary: A field that uses a periodic wave.
   - name: waveletNoiseField

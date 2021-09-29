@@ -18,6 +18,8 @@ cat:
   - name: fisheyeCamera
     summary: A 360 fisheye camera, that shows all directions from a specific point
       in space.
+  - name: isoCamera
+    status: alpha
   - name: linkedCamera
     summary: A camera that is linked to an existing TD Camera COMP.
   - name: lookAtCamera

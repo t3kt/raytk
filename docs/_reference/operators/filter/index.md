@@ -93,6 +93,8 @@ cat:
     - zigzag
     name: limitField
     summary: Limits the values produced by a float or vector field.
+  - name: linkedTransform
+    status: alpha
   - name: magnet
     summary: Pulls or twists space within an area.
   - name: mirrorOctant
@@ -243,6 +245,8 @@ cat:
     - translate
     name: translate
     summary: Translates coordinates of the input ROP.
+  - name: truchetTile
+    status: alpha
   - name: twist
     summary: Twists space around an axis.
   - name: uvTransform

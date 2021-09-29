@@ -52,6 +52,30 @@ op:
   - label: Shift
     name: Shift
     summary: Shifts the whole grid (and its contents).
+  - label: Limit Type
+    menuOptions:
+    - label: None
+      name: none
+    - label: Both
+      name: both
+    - label: Start Only
+      name: start
+    - label: Stop Only
+      name: stop
+    name: Limittype
+  - label: Limit Start
+    name: Limitstart
+  - label: Limit Stop
+    name: Limitstop
+  - label: Limit Offset
+    name: Limitoffset
+  - label: Mirror Type
+    menuOptions:
+    - label: None
+      name: none
+    - label: Mirror
+      name: mirror
+    name: Mirrortype
   - label: Iteration Type
     menuOptions:
     - label: None

@@ -27,6 +27,7 @@ op:
     required: true
     returnTypes:
     - Sdf
+    - Particle
     summary: SDF definition to which the color is applied.
   - contextTypes:
     - Context

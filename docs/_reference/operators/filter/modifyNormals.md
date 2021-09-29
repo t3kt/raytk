@@ -72,6 +72,8 @@ op:
     - description: The normals are multiplied by the modifier values.
       label: Multiply
       name: mul
+    - label: Replace
+      name: replace
     name: Mode
     summary: How the modifier values are applied to the normals.
   - label: Mix
