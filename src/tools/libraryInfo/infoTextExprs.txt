@@ -1,0 +1,5 @@
+f"RayTK v{op('buildInfo')['toolkitVersion', 1]}"
+f"{op('buildInfo')['toolkitBuildType', 1].val.capitalize()} Build"
+f"Built {op('buildInfo')['toolkitBuildDate', 1]}"
+f"TouchDesigner build {op('buildInfo')['touchDesignerBuild', 1]}"
+'https://github.com/t3kt/raytk'

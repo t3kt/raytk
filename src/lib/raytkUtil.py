@@ -573,6 +573,8 @@ class IconColors:
 	betaFgColor = defaultFgColor
 	deprecatedBgColor = 0.185, 0.21, 0.21
 	deprecatedFgColor = 0.635, 0.816, 0.816
+	experimentalBgColor = 0.1, 0.238, 0.1368
+	experimentalFgColor = defaultFgColor
 
 
 class Tag:
@@ -866,6 +868,10 @@ class RaytkContext:
 	def develMode(self):
 		toolkit = self.toolkit()
 		return bool(toolkit and toolkit.par['Devel'])
+
+	def experimentalMode(self):
+		toolkit = self.toolkit()
+		return bool(toolkit and toolkit.par['Experimentalbuild'])
 
 	def operatorsRoot(self):
 		return self.toolkit().op('operators')

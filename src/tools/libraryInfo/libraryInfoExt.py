@@ -32,6 +32,14 @@ class LibraryInfoBuilder:
 	def buildBuildInfoTable(self, dat: 'tableDAT'):
 		self.buildVersionTable(dat)
 		dat.insertRow(['toolkitBuildDate', datetime.now().isoformat(sep=' ')], 'touchDesignerVersion')
+		context = RaytkContext()
+		if context.develMode():
+			buildType = 'devel'
+		elif context.experimentalMode():
+			buildType = 'experimental'
+		else:
+			buildType = 'production'
+		dat.insertRow(['toolkitBuildType', buildType], 'toolkitBuildDate')
 		dat.appendRow(['buildOsName', app.osName])
 		dat.appendRow(['buildOsVersion', app.osVersion])
 
