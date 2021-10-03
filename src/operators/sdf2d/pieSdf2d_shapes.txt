@@ -1,0 +1,3 @@
+name	label	code	params
+slice	Slice		
+ring	Ring	d = max(-length(p)+THIS_Innerradius, d)	Innerradius
