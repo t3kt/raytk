@@ -429,6 +429,12 @@ void popStage(int priorStage) { _raytkStage = priorStage; }
 
 int getStage() { return _raytkStage; }
 
+bool isDistanceOnlyStage() {
+	return _raytkStage == RAYTK_STAGE_SHADOW ||
+	_raytkStage == RAYTK_STAGE_OCCLUSION ||
+	_raytkStage == RAYTK_STAGE_NORMAL;
+}
+
 void captureIterationFromMaterial(inout vec4 store, in Context ctx) {
 	if (_raytkStage == RAYTK_STAGE_PRIMARY) {
 		store = ctx.iteration;
