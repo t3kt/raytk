@@ -1,10 +1,10 @@
 name	label	function	code	coordType	coordLength	returnType	libraryNames	macro
-TDSimplexNoise2d	Simplex 2D	TDSimplexNoise	res = TDSimplexNoise2d(q);	vec2	2	float		
-TDSimplexNoise3d	Simplex 3D	TDSimplexNoise	res = TDSimplexNoise3d(q);	vec3	3	float		
-TDSimplexNoise4d	Simplex 4D	TDSimplexNoise	res = TDSimplexNoise43(q);	vec4	4	float		
-TDPerlinNoise2d	Perlin 2D	TDPerlinNoise	res = TDPerlinNoise2d(q);	vec2	2	float		
-TDPerlinNoise3d	Perlin 3D	TDPerlinNoise	res = TDPerlinNoise3d(q);	vec3	3	float		
-TDPerlinNoise4d	Perlin 4D	TDPerlinNoise	res = TDPerlinNoise4d(q);	vec4	4	float		
+TDSimplexNoise2d	Simplex 2D	TDSimplexNoise	res = TDSimplexNoise(q);	vec2	2	float
+TDSimplexNoise3d	Simplex 3D	TDSimplexNoise	res = TDSimplexNoise(q);	vec3	3	float
+TDSimplexNoise4d	Simplex 4D	TDSimplexNoise	res = TDSimplexNoise(q);	vec4	4	float
+TDPerlinNoise2d	Perlin 2D	TDPerlinNoise	res = TDPerlinNoise(q);	vec2	2	float
+TDPerlinNoise3d	Perlin 3D	TDPerlinNoise	res = TDPerlinNoise(q);	vec3	3	float
+TDPerlinNoise4d	Perlin 4D	TDPerlinNoise	res = TDPerlinNoise(q);	vec4	4	float
 classicperlin2d	Classic Perlin 2D	cnoise	res = cnoise(q);	vec2	2	float	glslNoise	NOISE_USE_CLASSIC
 classicperlin3d	Classic Perlin 3D	cnoise	res = cnoise(q);	vec3	3	float	glslNoise	NOISE_USE_CLASSIC
 classicperlin4d	Classic Perlin 4D	cnoise	res = cnoise(q);	vec4	4	float	glslNoise	NOISE_USE_CLASSIC
