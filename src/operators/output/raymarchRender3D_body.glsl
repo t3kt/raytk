@@ -142,16 +142,19 @@ Sdf castRayBasic(Ray ray, float maxDist) {
 
 vec3 calcNormal(in vec3 pos)
 {
+	int priorStage = pushStage(RAYTK_STAGE_NORMAL);
 	#ifdef THIS_Enablenormalsmoothing
 	vec2 e = vec2(1.0, -1.0) * (0.5773*0.005 + THIS_Normalsmoothing);
 	#else
 	const vec2 e = vec2(1.0, -1.0)*0.5773*0.005;
 	#endif
-	return normalize(
+	vec3 n = normalize(
 		e.xyy*map(pos + e.xyy).x +
 		e.yyx*map(pos + e.yyx).x +
 		e.yxy*map(pos + e.yxy).x +
 		e.xxx*map(pos + e.xxx).x);
+	popStage(priorStage);
+	return n;
 }
 
 float calcShadowDefault(in vec3 p, MaterialContext matCtx) {
