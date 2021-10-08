@@ -14,21 +14,31 @@
         * mergeToggle (#666)
         * arrange (#655)
         * axisLight (#663)
+        * polarVectorField (#676)
+        * waveVectorField (#671)
     * New field inputs
         * Edge in stepField
     * New parameters
         * Limiting options for modulo2D and modulo3D (#660)
         * Mirroring support in modulo3D
+        * Replace mode in modifyNormals (#673)
+        * Optional coord type in iterationField (#672)
+        * Ring mode in pieSdf2d, for pie chart-style shapes (#669)
+        * Normal calculation exclusion for restrictStage (#667)
+        * Flip option in planeSdf (#679)
     * Better index support in chopField (#613, #659)
     * New noise types in noiseField using the Wombat library
+    * Added CHOP-based transforms in instance (#613)
 * Changes (potentially breaking)
 * Fixes
     * Fix swapped inputs in pbrMat
+    * Fix underside of pyramidSdf (#677)
 * Infrastructure / internals
     * Replaced all inputHandlers with new implementation
     * Improvements to multiInputHandler
     * Improvements to aggregateCodeGenerator
     * Support for compute shaders
+    * Added build / test support for experimental builds (#674)
 
 ## v0.17
 
