@@ -47,6 +47,11 @@ void initDefVal(out Particle val) {
 	val = createParticle(vec3(0.), vec3(0.));
 }
 
+void killParticle(inout Particle part) {
+	part.life = 0.;
+	part.state = P_STATE_DEAD;
+}
+
 void assignColor(inout Particle part, vec4 color) {
 	#ifdef RAYKT_USE_SURFACE_COLOR
 	part.color = color;

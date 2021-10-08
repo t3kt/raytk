@@ -1,8 +1,3 @@
-void killParticle(inout Particle part) {
-	part.life = 0.;
-	part.state = P_STATE_DEAD;
-}
-
 bool updateLife(inout Particle part, float timeStep) {
 	if (part.life == P_LIFE_INFINITE) return true;
 	part.life -= timeStep;
