@@ -9,6 +9,9 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 	#ifdef THIS_Uselightcolor
 	res.rgb *= ctx.light.color;
 	#endif
+	#if defined(THIS_Usesurfacecolor) && defined(RAYTK_USE_SURFACE_COLOR)
+	res.rgb *= mix(vec3(1.), ctx.result.color.rgb, ctx.result.color.a);
+	#endif
 	#if defined(THIS_Enableshadow) && defined(RAYTK_USE_SHADOW)
 	res *= ctx.shadedLevel;
 	#endif
