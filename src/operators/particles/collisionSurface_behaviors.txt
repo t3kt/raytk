@@ -1,0 +1,4 @@
+name	label	code	params
+none	None		
+kill	Kill	if (inputOp_surface(p, ctx).x<=0.) { killParticle(part); }	
+bounce	Bounce	if (inputOp_surface(p, ctx).x<=0.) { vec3 n = THIS_calcNormal(p, ctx); part.vel = reflect(part.vel, n); }	

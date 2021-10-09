@@ -12,7 +12,7 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 	Particle part = ctx.particle;
 	if (!isAlive(part)) {
 		#ifdef THIS_HAS_INPUT_spawn
-		part = inputOp_spawn(p, ctx);
+		part = inputOp_spawn(part.pos, ctx);
 		#endif
 	}
 	if (!isAlive(part)) {
