@@ -2,12 +2,9 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 	#if !defined(THIS_HAS_INPUT_magnet)
 		CoordT center = THIS_asCoordT(THIS_Center);
 		float d = length(p - center);
-	#elif defined(inputOp_magnet_RETURN_TYPE_Sdf)
+	#elif defined(inputOp_magnet_RETURN_TYPE_Sdf) || defined(inputOp_magnet_RETURN_TYPE_float)
 		CoordT center = THIS_asCoordT(THIS_Center);
-		float d = inputOp_magnet(p, ctx).x;
-	#elif defined(inputOp_magnet_RETURN_TYPE_float)
-		CoordT center = THIS_asCoordT(THIS_Center);
-		float d = inputOp_magnet(p, ctx);
+		float d = adaptAsFloat(inputOp_magnet(p, ctx));
 	#elif defined(inputOp_magnet_RETURN_TYPE_vec4)
 		CoordT center = THIS_asCoordT(inputOp_magnet(p, ctx));
 		float d = length(p - center);
