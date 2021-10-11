@@ -1,15 +1,3 @@
-#if defined(THIS_COORD_TYPE_float)
-float prepCoord(vec2 p) {
-	return p.x;
-}
-#elif defined(THIS_COORD_TYPE_vec2)
-vec2 prepCoord(vec2 p) {
-	return p;
-}
-#else
-#error invalidCoordType
-#endif
-
 #ifdef THIS_RETURN_TYPE_Sdf
 Sdf map(vec2 p)
 {
