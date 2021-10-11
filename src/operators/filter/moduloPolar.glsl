@@ -1,5 +1,7 @@
 ReturnT thismap(CoordT p, ContextT ctx) {
+	vec2 pivot = THIS_Pivot;
 	vec2 q = p.THIS_PLANE;
+	q -= pivot;
 	float r = THIS_Rotate;
 	#ifdef THIS_HAS_INPUT_rotateField
 	r += radians(inputOp_rotateField(p, ctx));
@@ -15,7 +17,7 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 	#ifdef THIS_HAS_INPUT_offsetField
 	o += inputOp_offsetField(p, ctx).xy;
 	#endif
-	p.THIS_PLANE = q - o;
+	p.THIS_PLANE = q - o + pivot;
 	#if defined(THIS_Iterationtype_index)
 	setIterationIndex(ctx, cell);
 	#elif defined(THIS_Iterationtype_ratio)
