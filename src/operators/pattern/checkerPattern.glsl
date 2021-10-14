@@ -1,6 +1,11 @@
 ReturnT thismap(CoordT p, ContextT ctx) {
-	p -= THIS_Translate;
-	p /= THIS_Size;
-	p = 0.5 - fract(p);
-	return 0.5 + 0.5*sign(p.x*p.y);
+	#ifdef THIS_HAS_INPUT_coordField
+	vec2 q = adaptAsVec2(inputOp_coordField(p, ctx));
+	#else
+	vec2 q = adaptAsVec2(p);
+	#endif
+	q -= THIS_Translate;
+	q /= THIS_Size;
+	q = 0.5 - fract(q);
+	return 0.5 + 0.5*sign(q.x*q.y);
 }

@@ -3,8 +3,13 @@
 #define THIS_S(x,y)   abs(fract(x)-.5) < THIS_Thickness  ? .7 + .3* sin(3.14* (y + ceil(x) )) : 0.
 
 ReturnT thismap(CoordT p, ContextT ctx) {
-	p -= THIS_Translate;
-	p /= THIS_Size;
+	#ifdef THIS_HAS_INPUT_coordField
+	vec2 q = adaptAsVec2(inputOp_coordField(p, ctx));
+	#else
+	vec2 q = adaptAsVec2(p);
+	#endif
+	q -= THIS_Translate;
+	q /= THIS_Size;
 
-	return max(THIS_S(p.x,p.y), THIS_S(-p.y,p.x));
+	return max(THIS_S(q.x,q.y), THIS_S(-q.y,q.x));
 }

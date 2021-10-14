@@ -26,12 +26,17 @@ float THIS_mask( vec2 p) {
 }
 
 ReturnT thismap(CoordT p, ContextT ctx) {
-	p -= THIS_Translate;
-	p /= THIS_Size;
+	#ifdef THIS_HAS_INPUT_coordField
+	vec2 q = adaptAsVec2(inputOp_coordField(p, ctx));
+	#else
+	vec2 q = adaptAsVec2(p);
+	#endif
+	q -= THIS_Translate;
+	q /= THIS_Size;
 
 	vec2 R = vec2(100); // REPLACE THIS IT WAS RESOLUTION
 	vec4 O = vec4(0.);
-	vec4 hp = THIS_getHex(p);
+	vec4 hp = THIS_getHex(q);
 
 	vec2 hp2 = hp.xy;
 	pR(hp2, -TAU/6.);
