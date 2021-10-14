@@ -52,9 +52,9 @@ void killParticle(inout Particle part) {
 	part.state = P_STATE_DEAD;
 }
 
-void assignColor(inout Particle part, vec4 color) {
-	#ifdef RAYKT_USE_SURFACE_COLOR
-	part.color = color;
+void assignColor(inout Particle part, vec3 color) {
+	#ifdef RAYTK_USE_SURFACE_COLOR
+	part.color = vec4(color, 1.);
 	#endif
 }
 
