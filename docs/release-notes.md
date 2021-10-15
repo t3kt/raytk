@@ -16,8 +16,15 @@
         * axisLight (#663)
         * polarVectorField (#676)
         * waveVectorField (#671)
+        * toonShadingContrib, for cel-shading in modular materials (#465)
+        * magnetField (#680)
+        * axisLight (#663)
     * New field inputs
         * Edge in stepField
+        * Offset in combine (#684)
+        * Size in modulo1D (#695)
+        * Coordinate fields in all pattern ops (#254, #691)
+        * Radius in octahedronSdf and generalizedPolyhedronSdf (#693)
     * New parameters
         * Limiting options for modulo2D and modulo3D (#660)
         * Mirroring support in modulo3D
@@ -26,10 +33,14 @@
         * Ring mode in pieSdf2d, for pie chart-style shapes (#669)
         * Normal calculation exclusion for restrictStage (#667)
         * Flip option in planeSdf (#679)
+        * Zoom and offset in render2d
+        * Pivot in moduloPolar (#681)
+        * Repeat option in bandField (#687)
     * Better index support in chopField (#613, #659)
     * New noise types in noiseField using the Wombat library
     * Added CHOP-based transforms in instance (#613)
 * Changes (potentially breaking)
+    * Mark combineChamfer, combineColumns, combineStairs as deprecated since their features are all supported in the combine op.
 * Fixes
     * Fix swapped inputs in pbrMat
     * Fix underside of pyramidSdf (#677)
