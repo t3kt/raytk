@@ -10,20 +10,29 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 	p = p.xzy;
 	#endif
 
+	float r = THIS_Radius;
+	#ifdef THIS_HAS_INPUT_radiusField
+	r *= inputOp_radiusField(p, ctx);
+	#endif
+	float t = THIS_Thickness;
+	#ifdef THIS_HAS_INPUT_thicknessField
+	t *= inputOp_thicknessField(p, ctx);
+	#endif
+
 	#ifdef THIS_Enablecaps
 	ReturnT res = createSdf(sdCappedTorus(
-		p, vec2(THIS_Startangle, THIS_Endangle), THIS_Radius, THIS_Thickness));
+		p, vec2(THIS_Startangle, THIS_Endangle), r, t));
 	#else
-	ReturnT res = createSdf(fTorus(p, THIS_Thickness, THIS_Radius));
+	ReturnT res = createSdf(fTorus(p, t, r));
 	#endif
 	#ifdef THIS_Uvmode_torus
-	float d0 = length(p.xz) - THIS_Radius;
+	float d0 = length(p.xz) - r;
 	assignUV(
 		res,
 		vec3(
 			atan(p.x, p.z)/TAU + 0.5, // around axis
 			atan(d0, p.y)/TAU + 0.5, // around core
-			length(vec2(d0, p.y)) / THIS_Thickness // dist from core
+			length(vec2(d0, p.y)) / t // dist from core
 		)
 	);
 	#endif
