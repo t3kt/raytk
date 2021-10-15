@@ -91,27 +91,6 @@ def buildInputTable(dat: 'DAT', inDats: 'List[DAT]'):
 				inDat[1, 'returnType'],
 			])
 
-def buildLegacyTypeSettingsTable(dat: 'DAT', inputTable: 'DAT'):
-	dat.clear()
-	typeVal = parentPar().Coordtype.eval()
-	if typeVal != 'useinput':
-		dat.appendRow(['coordType', typeVal, '0'])
-	else:
-		typeVal = inputTable['inputName1', 'coordType'] or parentPar().Fallbackcoordtype
-		dat.appendRow(['coordType', typeVal, '1'])
-	typeVal = parentPar().Contexttype.eval()
-	if typeVal != 'useinput':
-		dat.appendRow(['contextType', typeVal, '0'])
-	else:
-		typeVal = inputTable['inputName1', 'contextType'] or parentPar().Fallbackcontexttype
-		dat.appendRow(['contextType', typeVal, '1'])
-	typeVal = parentPar().Returntype.eval()
-	if typeVal != 'useinput':
-		dat.appendRow(['returnType', typeVal, '0'])
-	else:
-		typeVal = inputTable['inputName1', 'returnType'] or parentPar().Fallbackreturntype
-		dat.appendRow(['returnType', typeVal, '1'])
-
 def combineInputDefinitions(
 		dat: 'DAT',
 		inDats: 'List[DAT]',

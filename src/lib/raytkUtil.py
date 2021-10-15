@@ -98,12 +98,6 @@ class OpDefParsT(_OpMetaPars):
 	Helpurl: 'StrParamT'
 	Keywords: 'StrParamT'
 	Disableinspect: 'BoolParamT'
-	Coordtype: 'StrParamT'
-	Returntype: 'StrParamT'
-	Contexttype: 'StrParamT'
-	Fallbackcoordtype: 'StrParamT'
-	Fallbackreturntype: 'StrParamT'
-	Fallbackcontexttype: 'StrParamT'
 	Typespec: 'CompParamT'
 
 class ROPInfo:

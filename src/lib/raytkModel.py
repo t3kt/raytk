@@ -359,9 +359,7 @@ class ROPSpec(ModelObject):
 				opStatus=info.statusLabel,
 			),
 			opDef=ROPDef(
-				coordType=_valueOrExprFromPar(info.opDefPar.Coordtype),
-				returnType=_valueOrExprFromPar(info.opDefPar.Returntype),
-				contextType=_valueOrExprFromPar(info.opDefPar.Contexttype),
+				# TODO: typeSpec support
 				disableInspect=info.opDefPar.Disableinspect.eval(),
 				useParams=_valueOrExprFromPar(info.opDefPar.Params),
 				specialParams=_valueOrExprFromPar(info.opDefPar.Specialparams),
@@ -571,9 +569,7 @@ class ROPSpecLoader:
 	def _loadOpDefSettings(self):
 		p = self.info.opDefPar
 		d = self.spec.opDef
-		_updatePar(p.Coordtype, d.coordType)
-		_updatePar(p.Returntype, d.returnType)
-		_updatePar(p.Contexttype, d.contextType)
+		# TODO: typeSpec support
 		_updatePar(p.Disableinspect, d.disableInspect)
 
 		_updatePar(p.Params, d.useParams)
