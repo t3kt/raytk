@@ -200,6 +200,38 @@ class BuildContext:
 		updater.UpdateOP(comp)
 		self.log(f'Finished updating OP instance {comp}')
 
+	def removeRedundantPythonModules(self, scopeRoot: 'COMP', scopeChildren: 'List[COMP]'):
+		if not scopeRoot:
+			return
+		loc = scopeRoot.op('local')
+		if not loc:
+			return
+		self.detachTox(loc)
+		mods = loc.op('modules')
+		if not mods:
+			return
+		self.detachTox(mods)
+		if not scopeChildren:
+			return
+		modNames = [m.name for m in mods.children if _isPythonLibrary(m)]
+		opsToDelete = []
+		for modName in modNames:
+			for scopeChild in scopeChildren:
+				if not scopeChild:
+					continue
+				for m in scopeChild.findChildren(type=textDAT, path='*/' + modName):
+					if _isPythonLibrary(m, modName):
+						opsToDelete.append(m)
+		if not opsToDelete:
+			return
+		self.log(f'Deleting {len(opsToDelete)} redundant python libraries')
+		self.safeDestroyOps(opsToDelete)
+
+def _isPythonLibrary(m: 'OP', modName: 'Optional[str]' = None):
+	if not isinstance(m, textDAT) or not RaytkTags.fileSync.isOn(m):
+		return False
+	return modName is None or m.name == modName
+
 class BuildTaskContext(BuildContext):
 	"""
 	Context passed to build scripts, in order to provide common tools, and to support asynchronously triggering the rest

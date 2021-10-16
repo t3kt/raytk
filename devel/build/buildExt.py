@@ -86,9 +86,12 @@ class BuildManager:
 			self.context.removeBuildExcludeOps(toolkit)
 			self.queueMethodCall(self.runBuild_stage, stage + 1)
 		elif stage == 11:
-			self.finalizeToolkitPars(toolkit)
+			self.context.removeRedundantPythonModules(toolkit, toolkit.ops('tools', 'libraryInfo'))
 			self.queueMethodCall(self.runBuild_stage, stage + 1)
 		elif stage == 12:
+			self.finalizeToolkitPars(toolkit)
+			self.queueMethodCall(self.runBuild_stage, stage + 1)
+		elif stage == 13:
 			self.context.focusInNetworkPane(toolkit)
 			version = RaytkContext().toolkitVersion()
 			if self.experimentalMode:
