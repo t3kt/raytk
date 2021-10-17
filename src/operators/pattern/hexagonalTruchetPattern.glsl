@@ -18,12 +18,6 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 	q -= THIS_Translate;
 	q /= THIS_Size;
 
-//	vec2 R = iResolution.xy;
-//	vec2 R = vec2(1920., 1080.);
-//	float Z = 10./R.y;
-
-//	q = q*0.1;
-
 	// NB: M^-1.H(M.p) converts back and forth to hex grid, which is mostly a tilted square grid
 	vec2 h = THIS_closestHexCenters( q+ vec2(.58,.15)*q.y ); // closestHex( mat2(1,0, .58, 1.15)*q ); // 1/sqrt(3), 2/sqrt(3)
 	q -=   h- vec2(.5, .13)*h.y;   // q -= mat2(1,0,-.5, .87) * h;          // -1/2, sqrt(3)/2
@@ -41,8 +35,7 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 
 //o -=o-- -.2 / abs(l-.5);
 
-// o -=o- smoothstep(.1+Z, .1, abs(l-.5));              // precise anti-aliasing
-	return ReturnT(.2 / abs(l-.5));
-//return ReturnT(cos(l*25.1));                                  // nice variant 1 by Shane
-//return vec4(sqrt(2.*cos(vec3(1, 3, 3)*l*6.28)), 1.); // nice variant 2 by Shane
+	ReturnT res;
+	BODY();
+	return res;
 }
