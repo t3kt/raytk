@@ -1,8 +1,16 @@
 ReturnT thismap(CoordT p, ContextT ctx) {
-	vec3 q = p + THIS_Shift;
+	vec3 q = p;
 	vec3 size = THIS_Size;
+	#ifdef THIS_HAS_INPUT_sizeField
+	size *= fillToVec3(inputOp_sizeField(p, ctx));
+	#endif
 	vec3 halfsize = size * 0.5;
 
+	vec3 sh = THIS_Shift;
+	#ifdef THIS_HAS_INPUT_shiftField
+	sh += fillToVec3(inputOp_shiftField(p, ctx));
+	#endif
+	q += sh;
 	vec3 c = floor((q + halfsize) / size);
 	q = mod(q + halfsize, size) - halfsize;
 
@@ -23,7 +31,12 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 	q *= mod(c, vec3(2.))*2. - vec3(1.);
 	#endif
 
-	p = q - THIS_Offset;
+	// offset field can use iteration
+	vec3 o = THIS_Offset;
+	#ifdef THIS_HAS_INPUT_offsetField
+	o += fillToVec3(inputOp_offsetField(p, ctx));
+	#endif
+	p = q - o;
 	#if defined(THIS_Iterationtype_cellcoord)
 	setIterationCell(ctx, c);
 	#elif defined(THIS_Iterationtype_alternatingcoord)
