@@ -1,0 +1,8 @@
+name	label	coordType
+x	X	float vec2 vec3
+y	Y	float vec2 vec3
+z	Z	float vec2 vec3
+xy	XY	vec2 vec3
+yz	YZ	vec2 vec3
+xz	XZ	vec2 vec3
+xyz	XYZ	vec3
