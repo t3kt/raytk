@@ -47,11 +47,15 @@ cat:
     summary: Curl noise field.
   - name: domainColorField
     status: beta
+  - name: hashField
+    status: alpha
   - name: hsvColorField
     status: beta
     summary: A field that uses HSV-based parameters to produce colors.
   - name: iterationField
     summary: Field that returns the current iteration, from a downstream OP.
+  - name: magnetField
+    status: beta
   - name: metaballField
     summary: Metaball value field.
   - name: multiPointDistanceField
@@ -63,6 +67,7 @@ cat:
     summary: Vector field that produces the surface normal where it is evaluated.
   - name: pointDistanceField
     summary: A float field that provides the distance from a specific point in space.
+  - name: polarVectorField
   - name: positionField
     summary: A vector field that produces the coordinates in space where it is checked.
   - name: rayField
@@ -87,6 +92,8 @@ cat:
     status: alpha
   - name: waveField
     summary: A field that uses a periodic wave.
+  - name: waveVectorField
+    status: beta
   - name: waveletNoiseField
   summary: Float or vector fields, which provide values for the requested coordinates.
 

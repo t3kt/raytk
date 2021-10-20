@@ -28,6 +28,8 @@ op:
   - label: Offset
     name: Offset
     summary: Shifts the plane forwards or backwards along the axis that it faces.
+  - label: Flip
+    name: Flip
   summary: An infinite plane on the x, y, or z axis.
 
 ---

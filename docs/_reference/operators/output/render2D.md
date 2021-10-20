@@ -127,6 +127,10 @@ op:
     name: Timerefop
   - label: Shader Builder Config
     name: Shaderbuilderconfig
+  - label: Zoom
+    name: Zoom
+  - label: Offset
+    name: Offset
   - label: Customize Shader Config
     name: Customizeshaderconfig
   - label: Enable UV Output

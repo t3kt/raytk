@@ -228,6 +228,8 @@ cat:
     status: beta
   - name: spiralZoom
     summary: Transforms space using a logarithmic spiral.
+  - name: spread
+    status: alpha
   - keywords:
     - move
     - pivot

@@ -38,6 +38,8 @@ op:
     name: Value4
   - label: Coord Type
     menuOptions:
+    - label: Auto
+      name: auto
     - label: 1D
       name: float
     - label: 2D
@@ -47,6 +49,8 @@ op:
     name: Coordtype
   - label: Context Type
     menuOptions:
+    - label: Auto
+      name: auto
     - label: Context
       name: Context
     - label: MaterialContext
@@ -57,6 +61,8 @@ op:
       name: LightContext
     - label: RayContext
       name: RayContext
+    - label: ParticleContext
+      name: ParticleContext
     name: Contexttype
   status: alpha
 

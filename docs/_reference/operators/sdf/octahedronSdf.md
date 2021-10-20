@@ -8,6 +8,20 @@ redirect_from:
   - /reference/opType/raytk.operators.sdf.octahedronSdf/
 op:
   category: sdf
+  inputs:
+  - contextTypes:
+    - Context
+    - MaterialContext
+    - CameraContext
+    - LightContext
+    - RayContext
+    - ParticleContext
+    coordTypes:
+    - vec3
+    label: Radius Field
+    name: radiusField
+    returnTypes:
+    - float
   keywords:
   - octahedron
   - polyhedron

@@ -102,7 +102,9 @@ cat:
     summary: A material element that produces the assigned color attribute for the
       surface.
   - name: toonShadingContrib
-    status: alpha
+    status: beta
+    summary: Modular shading element which uses a cell/toon shading technique with
+      a color ramp.
   summary: 'Material operators that are used by renderers to determine the
 
     color of points on the surface of geometry.'

@@ -143,6 +143,8 @@ op:
       ops.
   - label: Enable
     name: Enable
+  - label: Pivot
+    name: Pivot
   - label: Iteration Type
     menuOptions:
     - label: None

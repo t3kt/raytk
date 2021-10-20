@@ -59,11 +59,26 @@ op:
     - float
     - vec2
     - vec3
-    label: radius_field_definition_in
+    label: Radius Field
     name: radiusField
     returnTypes:
     - float
     - Sdf
+  - contextTypes:
+    - Context
+    - MaterialContext
+    - CameraContext
+    - LightContext
+    - RayContext
+    - ParticleContext
+    coordTypes:
+    - float
+    - vec2
+    - vec3
+    label: Offset Field
+    name: offsetField
+    returnTypes:
+    - float
   keywords:
   - chamfer
   - columns

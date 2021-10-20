@@ -8,6 +8,7 @@ redirect_from:
   - /reference/opType/raytk.operators.combine.mergeToggle/
 op:
   category: combine
+  detail: This can be used to combine and toggle a collection of scene elements.
   inputs:
   - contextTypes:
     - Context
@@ -148,6 +149,13 @@ op:
     name: Enable7
   - label: Enable 8
     name: Enable8
-  status: alpha
+  status: beta
+  summary: Combines multiple SDFs with a toggle to show/hide each without a shader
+    rebuild.
 
 ---
+
+
+Combines multiple SDFs with a toggle to show/hide each without a shader rebuild.
+
+This can be used to combine and toggle a collection of scene elements.

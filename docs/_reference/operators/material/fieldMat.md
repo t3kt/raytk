@@ -14,6 +14,7 @@ op:
   - contextTypes:
     - Context
     coordTypes:
+    - vec2
     - vec3
     label: SDF Shape
     name: sdf
@@ -23,6 +24,7 @@ op:
   - contextTypes:
     - MaterialContext
     coordTypes:
+    - vec2
     - vec3
     label: Color Field
     name: baseColorField

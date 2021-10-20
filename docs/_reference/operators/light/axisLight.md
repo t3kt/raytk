@@ -51,6 +51,6 @@ op:
     name: Attenuationstart
   - label: Attenuation End
     name: Attenuationend
-  status: alpha
+  status: beta
 
 ---

@@ -30,6 +30,13 @@ op:
     name: Uselightcolor
   - label: Enable Shadow
     name: Enableshadow
-  status: alpha
+  - label: Use Surface Color
+    name: Usesurfacecolor
+  status: beta
+  summary: Modular shading element which uses a cell/toon shading technique with a
+    color ramp.
 
 ---
+
+
+Modular shading element which uses a cell/toon shading technique with a color ramp.

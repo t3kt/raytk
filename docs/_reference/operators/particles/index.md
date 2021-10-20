@@ -8,6 +8,10 @@ permalink: /reference/operators/particles/
 cat:
   name: particles
   operators:
+  - name: boundsCheck
+    status: alpha
+  - name: collisionSurface
+    status: alpha
   - name: dragForce
     status: alpha
   - name: fieldForce

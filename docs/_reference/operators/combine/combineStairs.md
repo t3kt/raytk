@@ -106,6 +106,7 @@ op:
     name: Offset
     summary: Shifts the steps along the blend region, with 0 being no shift, and 1
       being a full shift of the total number of steps.
+  status: deprecated
   summary: Stair SDF combine, producing steps along the blend region.
 
 ---

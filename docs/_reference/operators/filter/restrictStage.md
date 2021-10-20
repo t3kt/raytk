@@ -77,6 +77,12 @@ op:
     name: Includematerial
   - label: Include Occlusion
     name: Includeocclusion
+  - label: Include Volumetric
+    name: Includevolumetric
+  - label: Include Volumetric Shadow
+    name: Includevolumetricshadow
+  - label: Include Normal
+    name: Includenormal
   status: beta
   summary: Restricts which render stages an operator is used in.
 

@@ -33,6 +33,21 @@ op:
     - Ray
     - Light
     - Particle
+  - contextTypes:
+    - Context
+    - MaterialContext
+    - CameraContext
+    - LightContext
+    - RayContext
+    - ParticleContext
+    coordTypes:
+    - float
+    - vec2
+    - vec3
+    label: Size Field
+    name: sizeField
+    returnTypes:
+    - float
   keywords:
   - modulo
   - repeat

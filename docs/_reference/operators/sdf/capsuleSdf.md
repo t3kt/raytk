@@ -48,7 +48,7 @@ op:
     label: Radius Field
     name: radiusField
     returnTypes:
-    - vec4
+    - float
   keywords:
   - capsule
   - line

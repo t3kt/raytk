@@ -8,6 +8,7 @@ redirect_from:
   - /reference/opType/raytk.operators.convert.projectPlane/
 op:
   category: convert
+  detail: This is a simplified version of `coordTo3D`.
   images:
   - assets/images/reference/operators/convert/projectPlane_plane_xy.png
   - assets/images/reference/operators/convert/projectPlane_plane_xz.png
@@ -55,5 +56,12 @@ op:
       name: zx
     name: Plane
   status: beta
+  summary: Takes a 1D or 2D operator and converts it to a 3D operator by mapping it
+    to a plane within 3D space.
 
 ---
+
+
+Takes a 1D or 2D operator and converts it to a 3D operator by mapping it to a plane within 3D space.
+
+This is a simplified version of `coordTo3D`.

@@ -134,6 +134,12 @@ op:
     name: Outsidevalue
     summary: The value used for the "outside" part. If `Return Type` is `Float`, only
       the first parameter will be used.
+  - label: Enable Repeat
+    name: Enablerepeat
+  - label: Repeat Size
+    name: Repeatsize
+  - label: Repeat Shift
+    name: Repeatshift
   summary: Field that applies values based on a band/slice of an axis.
 
 ---

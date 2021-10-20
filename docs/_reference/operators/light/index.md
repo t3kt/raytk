@@ -12,7 +12,7 @@ cat:
   name: light
   operators:
   - name: axisLight
-    status: alpha
+    status: beta
   - name: bendRay
     status: alpha
   - name: directionalLight

@@ -20,6 +20,15 @@ op:
   - label: Rotate
     name: Rotate
     summary: Rotation for the slice in degrees.
+  - label: Shape
+    menuOptions:
+    - label: Slice
+      name: slice
+    - label: Ring
+      name: ring
+    name: Shape
+  - label: Inner Radius
+    name: Innerradius
   summary: SDF for a 2D pie-slice shape.
 
 ---
