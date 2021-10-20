@@ -1,0 +1,4 @@
+name	label
+none	None
+index	Step Index
+ratio	Step Ratio

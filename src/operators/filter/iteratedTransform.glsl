@@ -11,9 +11,19 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 	#if defined(THIS_Enabletranslate) && defined(THIS_HAS_INPUT_translateField)
 	vec3 baseT = translate;
 	#endif
+	#if defined(THIS_Enablescale) && defined(THIS_HAS_INPUT_scaleField)
+	#if defined(THIS_Scaletype_uniform)
+	float baseS = uniformscale;
+	#else
+	vec3 baseS = scale;
+	#endif
+	#endif
 	for (int i = 0; i < n; i++) {
-	#if defined(THIS_HAS_INPUT_rotateField) || defined(THIS_HAS_INPUT_translateField)
 		float ratio = float(i) / float(n - 1);
+	#if defined(THIS_Iterationtype_index)
+		setIterationIndex(ctx, float(i));
+	#elif defined(THIS_Iterationtype_ratio)
+		setIterationIndex(ctx, ratio);
 	#endif
 	#if defined(THIS_Enablerotate) && defined(THIS_HAS_INPUT_rotateField)
 		#ifdef inputOp_rotateField_COORD_TYPE_float
@@ -28,6 +38,20 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 		#else
 		translate = baseT + inputOp_translateField(p, ctx).xyz;
 		#endif
+	#endif
+	#if defined(THIS_Enablescale) && defined(THIS_HAS_INPUT_scaleField)
+		{
+			#ifdef inputOp_scaleField_COORD_TYPE_float
+			inputOp_scaleField_CoordT q0 = ratio;
+			#else
+			inputOp_scaleField_CoordT q0 = p;
+			#endif
+			#ifdef THIS_Scaletype_uniform
+			uniformscale = baseS * adaptAsFloat(inputOp_scaleField(q0, ctx));
+			#else
+			scale = baseS * fillToVec3(inputOp_scaleField(q0, ctx));
+			#endif
+		}
 	#endif
 	#ifdef RAYTK_ORBIT_IN_SDF
 		CoordT q = p;
