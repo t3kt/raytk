@@ -217,7 +217,9 @@ def buildParamSpecTable(dat: 'scriptDAT', paramListTable: 'DAT'):
 
 	# Update conversions from opDefinition Angleparams par
 	for par in _getRegularParams(getNamesFromListTable('angleParams')):
-		dat[par.name, 'conversion'] = 'angle'
+		cell = dat[par.name, 'conversion']
+		if cell is not None:
+			cell.val = 'angle'
 
 	# Update param statuses based on tuplets
 	_fillParamStatuses(dat)
