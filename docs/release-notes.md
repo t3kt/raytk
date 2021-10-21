@@ -4,39 +4,43 @@
 
 ### Highlights
 
-* ...
+* Easier workflows with CHOPs, including instance positioning, easier indexing in chopField, and CHOP input in constantField
+* Cel-shading for modular materials with toonShadingContrib
+* Easier coordinate mapping of pattern operators
+* New noise types in noiseField
+* New field inputs to customize SDFs and filters
+* Convenience operators for managing scene elements, like arrange, mergeToggle, and toggleSwitch
 
 ### Details
 
 * Improvements / additions
     * New ops
-        * toggleSwitch (#658)
-        * mergeToggle (#666)
         * arrange (#655)
         * axisLight (#663)
-        * polarVectorField (#676)
-        * waveVectorField (#671)
-        * toonShadingContrib, for cel-shading in modular materials (#465)
         * magnetField (#680)
-        * axisLight (#663)
+        * mergeToggle (#666)
+        * polarVectorField (#676)
+        * toggleSwitch (#658)
+        * toonShadingContrib, for cel-shading in modular materials (#465)
+        * waveVectorField (#671)
     * New field inputs
+        * Coordinate fields in all pattern ops (#254, #691)
         * Edge in stepField
         * Offset in combine (#684)
-        * Size, shift, offset in modulo1D, modulo2D, modulo3D (#695)
-        * Coordinate fields in all pattern ops (#254, #691)
-        * Radius in octahedronSdf and generalizedPolyhedronSdf (#693)
         * Radius and thickness in torusSdf (#693)
+        * Radius in octahedronSdf and generalizedPolyhedronSdf (#693)
+        * Size, shift, offset in modulo1D, modulo2D, modulo3D (#695)
     * New parameters
+        * Flip option in planeSdf (#679)
         * Limiting options for modulo2D and modulo3D (#660)
         * Mirroring support in modulo3D
-        * Replace mode in modifyNormals (#673)
-        * Optional coord type in iterationField (#672)
-        * Ring mode in pieSdf2d, for pie chart-style shapes (#669)
         * Normal calculation exclusion for restrictStage (#667)
-        * Flip option in planeSdf (#679)
-        * Zoom and offset in render2d
+        * Optional coord type in iterationField (#672)
         * Pivot in moduloPolar (#681)
         * Repeat option in bandField (#687)
+        * Replace mode in modifyNormals (#673)
+        * Ring mode in pieSdf2d, for pie chart-style shapes (#669)
+        * Zoom and offset in render2d
     * Better index support in chopField (#613, #659)
     * New noise types in noiseField using the Wombat library
     * Added CHOP-based transforms in instance (#613)
