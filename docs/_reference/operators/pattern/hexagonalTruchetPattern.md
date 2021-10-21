@@ -8,9 +8,33 @@ redirect_from:
   - /reference/opType/raytk.operators.pattern.hexagonalTruchetPattern/
 op:
   category: pattern
+  inputs:
+  - contextTypes:
+    - Context
+    - MaterialContext
+    - CameraContext
+    - LightContext
+    - RayContext
+    - ParticleContext
+    coordTypes:
+    - vec2
+    - vec3
+    label: Coordinate Field
+    name: coordField
+    returnTypes:
+    - vec4
   name: hexagonalTruchetPattern
   opType: raytk.operators.pattern.hexagonalTruchetPattern
   parameters:
+  - label: Pattern
+    menuOptions:
+    - label: Default (FabriceNeyret2)
+      name: default
+    - label: Variant 1 (Shane)
+      name: variant1
+    - label: Variant 2 (Shane)
+      name: variant2
+    name: Pattern
   - label: Seed
     name: Seed
   - label: Translate

@@ -116,16 +116,20 @@ class TestManager:
 			relFile = Path(str(fileTable[row, 'relpath']))
 			toxFile = buildFolder / relFile
 			versionStr = toxFile.stem
+			isExp = versionStr.endswith('-exp')
+			if isExp:
+				versionStr = versionStr.replace('-exp', '')
 			if '-' in versionStr:
 				versionStr = versionStr.split('-', 1)[1]
 			try:
 				version = Version(versionStr)
 			except ValueError:
 				version = None
+			expSuffix = ' (exp)' if isExp else ''
 			dat.appendRow([
 				toxFile.stem,
-				f'Build {version}' if version else toxFile.stem,
-				version or '',
+				f'Build {version}{expSuffix}' if version else f'{toxFile.stem}{expSuffix}',
+				f'{version or ""}{expSuffix}',
 				toxFile.as_posix(),
 			])
 

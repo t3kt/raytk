@@ -12,8 +12,12 @@ cat:
   name: combine
   operators:
   - name: addFields
+  - name: arrange
+    status: beta
   - name: blend
     summary: Smoothly blends/morphs between up to 4 SDFs.
+  - name: boundLimit
+    status: alpha
   - keywords:
     - chamfer
     - columns
@@ -27,14 +31,17 @@ cat:
     name: combine
     summary: Combines SDFs in various ways.
   - name: combineChamfer
+    status: deprecated
     summary: Chamfer SDF combine, producing a flat surface at a 45 degree angle along
       the blend region.
   - name: combineColumns
+    status: deprecated
     summary: Columns SDF combine, producing n-1 circular columns/ridges at a 45 degree
       angles along the blend region.
   - name: combineFields
     summary: Combines float or vector fields using one of several mathematical operations.
   - name: combineStairs
+    status: deprecated
     summary: Stair SDF combine, producing steps along the blend region.
   - name: compositeFields
     summary: Combines two vector fields using color compositing.
@@ -58,6 +65,10 @@ cat:
   - name: mergeFields
     summary: Merges multiple vector fields, using different fields for each vector
       part.
+  - name: mergeToggle
+    status: beta
+    summary: Combines multiple SDFs with a toggle to show/hide each without a shader
+      rebuild.
   - name: shapedCombine
     status: beta
     summary: Combine two SDFs, using a 2D SDF to shape the blending region.

@@ -15,10 +15,11 @@ op:
     - CameraContext
     - LightContext
     - RayContext
+    - ParticleContext
     coordTypes:
     - vec2
     label: Radius Field
-    name: radius_definition_in
+    name: radiusField
     returnTypes:
     - float
   - contextTypes:
@@ -27,10 +28,11 @@ op:
     - CameraContext
     - LightContext
     - RayContext
+    - ParticleContext
     coordTypes:
     - vec2
     label: Exponent Field
-    name: exponent_definition_in
+    name: exponentField
     returnTypes:
     - float
   name: superQuadSdf2d

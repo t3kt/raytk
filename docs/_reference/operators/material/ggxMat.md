@@ -12,11 +12,9 @@ op:
   - contextTypes:
     - Context
     coordTypes:
-    - float
-    - vec2
     - vec3
     label: definition_in
-    name: definition_in
+    name: sdf
     required: true
     returnTypes:
     - Sdf

@@ -2,6 +2,6 @@
   "meta": {
     "opStatus": "default",
     "opType": "raytk.operators.sdf.planeSdf",
-    "opVersion": 9
+    "opVersion": 10
   }
 }

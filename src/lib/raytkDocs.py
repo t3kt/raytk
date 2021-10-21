@@ -602,14 +602,8 @@ class OpDocManager:
 			if not inHelp.inputHandler:
 				continue
 			inInfo = InputInfo(inHelp.inputHandler)
-			if inInfo.isNewHandler:
-				if inHelp.summary:
-					inInfo.helpText = inHelp.summary
-			else:
-				if inHelp.label:
-					inOp = self.rop.op(inHelp.name)
-					if inOp:
-						inOp.par.label = inHelp.label
+			if inHelp.summary:
+				inInfo.helpText = inHelp.summary
 
 	def _gatherImages(self, ropHelp: ROPHelp, imagesFolder: 'Path'):
 		folder = imagesFolder / f'reference/operators/{self.info.categoryName}'

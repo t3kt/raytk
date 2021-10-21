@@ -15,4 +15,8 @@ comp = parent()
 
 context.detachTox(comp)
 
+for o in comp.ops('opPicker'):
+	context.disableCloning(o)
+	context.detachTox(o)
+
 context.finishTask()

@@ -15,8 +15,8 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 	if (THIS_Reverse > 0.) {
 		x = 1.0 - x;
 	}
-	#ifdef THIS_HAS_INPUT_1
-	x = inputOp1(x, ctx);
+	#ifdef THIS_HAS_INPUT_waveFunction
+	x = inputOp_waveFunction(x, ctx);
 	#else
 	x = THIS_WAVE_EXPR;
 	#endif

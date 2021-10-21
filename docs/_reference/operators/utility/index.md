@@ -8,6 +8,10 @@ permalink: /reference/operators/utility/
 cat:
   name: utility
   operators:
+  - name: exposeValue
+    status: alpha
+  - name: extractDebugValues
+    status: alpha
   - name: injectGlobalPosition
     summary: Calls its input using the untransformed global position.
   - name: injectObjectId
@@ -16,6 +20,7 @@ cat:
       later
 
       be extracted from rendered output.'
+  - name: toggleSwitch
   summary: Advanced operators that change how ROP chains behave.
 
 ---

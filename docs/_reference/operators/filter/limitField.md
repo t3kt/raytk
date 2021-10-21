@@ -16,6 +16,7 @@ op:
     - CameraContext
     - LightContext
     - RayContext
+    - ParticleContext
     coordTypes:
     - float
     - vec2
@@ -40,8 +41,6 @@ op:
     name: Enable
   - label: Limit Type
     menuOptions:
-    - label: 'Off'
-      name: 'off'
     - label: Clamp
       name: clamp
     - label: Loop

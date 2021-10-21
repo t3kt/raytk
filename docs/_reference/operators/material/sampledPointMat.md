@@ -18,7 +18,7 @@ op:
     - vec2
     - vec3
     label: definition_in
-    name: definition_in
+    name: sdf
     required: true
     returnTypes:
     - Sdf
@@ -29,7 +29,7 @@ op:
     - vec2
     - vec3
     label: Fill Color Field
-    name: fill_color_field_definition_in
+    name: fillColorField
     returnTypes:
     - float
     - vec4
@@ -41,7 +41,7 @@ op:
     - vec2
     - vec3
     label: Edge Color Field
-    name: edge_color_field_definition_in
+    name: edgeColorField
     returnTypes:
     - float
     - vec4

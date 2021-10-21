@@ -1,5 +1,69 @@
 # Release Notes
 
+## v0.18
+
+### Highlights
+
+* Easier workflows with CHOPs, including instance positioning, easier indexing in chopField, and CHOP input in constantField
+* Cel-shading for modular materials with toonShadingContrib
+* Easier coordinate mapping of pattern operators
+* New noise types in noiseField
+* New field inputs to customize SDFs and filters
+* Convenience operators for managing scene elements, like arrange, mergeToggle, and toggleSwitch
+
+### Details
+
+* Improvements / additions
+    * New ops
+        * arrange (#655)
+        * axisLight (#663)
+        * magnetField (#680)
+        * mergeToggle (#666)
+        * polarVectorField (#676)
+        * toggleSwitch (#658)
+        * toonShadingContrib, for cel-shading in modular materials (#465)
+        * waveVectorField (#671)
+    * New field inputs
+        * Coordinate fields in all pattern ops (#254, #691)
+        * Edge in stepField
+        * Offset in combine (#684)
+        * Radius and thickness in torusSdf (#693)
+        * Radius in octahedronSdf and generalizedPolyhedronSdf (#693)
+        * Size, shift, offset in modulo1D, modulo2D, modulo3D (#695)
+    * New parameters
+        * Flip option in planeSdf (#679)
+        * Limiting options for modulo2D and modulo3D (#660)
+        * Mirroring support in modulo3D
+        * Normal calculation exclusion for restrictStage (#667)
+        * Optional coord type in iterationField (#672)
+        * Pivot in moduloPolar (#681)
+        * Repeat option in bandField (#687)
+        * Replace mode in modifyNormals (#673)
+        * Ring mode in pieSdf2d, for pie chart-style shapes (#669)
+        * Zoom and offset in render2d
+    * Better index support in chopField (#613, #659)
+    * New noise types in noiseField using the Wombat library
+    * Added CHOP-based transforms in instance (#613)
+    * Added CHOP input in constantField for a quick way to get up to 4 values into a field (#682)
+    * Added new pattern variants to hexagonalTruchetPattern (#255)
+    * Support for proper iteration for upstream fields in iteratedTransform (#705, #94)
+* Changes (potentially breaking)
+    * Mark combineChamfer, combineColumns, combineStairs as deprecated since their features are all supported in the combine op.
+* Fixes
+    * Fix swapped inputs in pbrMat
+    * Fix underside of pyramidSdf (#677)
+    * Fix bypass indicator in opImage (#700)
+    * Fix type handling bugs in mergeFields
+* Infrastructure / internals
+    * Replaced all inputHandlers with new implementation
+    * Improvements to multiInputHandler
+    * Improvements to aggregateCodeGenerator
+    * Support for compute shaders
+    * Added build / test support for experimental builds (#674)
+    * Reduced lots of redundant copies of python modules, decreasing tox size (#701)
+    * Remove deprecated type settings in opDefinition
+    * Support for experimental builds (#674)
+
 ## v0.17
 
 ### Highlights

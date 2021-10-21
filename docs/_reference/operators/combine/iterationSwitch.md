@@ -34,6 +34,7 @@ op:
     - Sdf
     - Ray
     - Light
+    - Particle
   - contextTypes:
     - Context
     - MaterialContext
@@ -49,6 +50,7 @@ op:
     - Sdf
     - Ray
     - Light
+    - Particle
   - contextTypes:
     - Context
     - MaterialContext
@@ -64,6 +66,7 @@ op:
     - Sdf
     - Ray
     - Light
+    - Particle
   - contextTypes:
     - Context
     - MaterialContext
@@ -79,6 +82,7 @@ op:
     - Sdf
     - Ray
     - Light
+    - Particle
   - contextTypes:
     - Context
     - MaterialContext
@@ -94,6 +98,7 @@ op:
     - Sdf
     - Ray
     - Light
+    - Particle
   - contextTypes:
     - Context
     - MaterialContext
@@ -109,6 +114,7 @@ op:
     - Sdf
     - Ray
     - Light
+    - Particle
   - contextTypes:
     - Context
     - MaterialContext
@@ -124,6 +130,7 @@ op:
     - Sdf
     - Ray
     - Light
+    - Particle
   - contextTypes:
     - Context
     - MaterialContext
@@ -139,6 +146,7 @@ op:
     - Sdf
     - Ray
     - Light
+    - Particle
   name: iterationSwitch
   opType: raytk.operators.combine.iterationSwitch
   parameters:

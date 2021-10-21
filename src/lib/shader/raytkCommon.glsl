@@ -171,6 +171,22 @@ Ray createStandardCameraRay(vec2 p, vec2 size, int viewAngleMethod, float fov, m
 
 float cheapNoiseLookup(vec2 p) { return texture(sTDNoiseMap, p).r; }
 
+void applyModLimit(inout float p, inout float cell, in float size, in float limit) {
+	p += size * (cell - limit);
+	cell = limit;
+}
+
+// https://www.shadertoy.com/view/XlXcW4
+vec3 intHash3( uvec3 x )
+{
+	const uint k = 1103515245U;  // GLIB C
+	x = ((x>>8U)^x.yzx)*k;
+	x = ((x>>8U)^x.yzx)*k;
+	x = ((x>>8U)^x.yzx)*k;
+
+	return vec3(x)*(1.0/float(0xffffffffU));
+}
+
 float adaptAsFloat(float p) { return p; }
 float adaptAsFloat(vec2 p) { return p.x; }
 float adaptAsFloat(vec3 p) { return p.x; }
@@ -191,6 +207,9 @@ vec4 adaptAsVec4(float p) { return vec4(p, 0., 0., 0.); }
 vec4 adaptAsVec4(vec2 p) { return vec4(p, 0., 0.); }
 vec4 adaptAsVec4(vec3 p) { return vec4(p, 0.); }
 vec4 adaptAsVec4(vec4 p) { return p; }
+
+Sdf adaptAsSdf(float p) { return createSdf(p); }
+Sdf adaptAsSdf(Sdf res) { return res; }
 
 vec2 fillToVec2(float p) { return vec2(p); }
 vec2 fillToVec2(vec4 p) { return p.xy; }

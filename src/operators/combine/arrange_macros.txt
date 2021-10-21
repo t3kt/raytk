@@ -1,0 +1,3 @@
+'Radius' in op('switcher_params')['params', 1].val	'THIS_HAS_RADIUS'	
+'Number' in op('switcher_params')['params', 1].val	'THIS_HAS_NUMBER'	
+'Offset' in op('switcher_params')['params', 1].val	'THIS_HAS_OFFSET'	

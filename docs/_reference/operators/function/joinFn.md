@@ -15,10 +15,9 @@ op:
     - CameraContext
     - LightContext
     - RayContext
+    - ParticleContext
     coordTypes:
     - float
-    - vec2
-    - vec3
     label: definition_in_1
     name: definition_in_1
     returnTypes:
@@ -30,10 +29,9 @@ op:
     - CameraContext
     - LightContext
     - RayContext
+    - ParticleContext
     coordTypes:
     - float
-    - vec2
-    - vec3
     label: definition_in_2
     name: definition_in_2
     returnTypes:
@@ -45,10 +43,9 @@ op:
     - CameraContext
     - LightContext
     - RayContext
+    - ParticleContext
     coordTypes:
     - float
-    - vec2
-    - vec3
     label: definition_in_3
     name: definition_in_3
     returnTypes:
@@ -60,10 +57,9 @@ op:
     - CameraContext
     - LightContext
     - RayContext
+    - ParticleContext
     coordTypes:
     - float
-    - vec2
-    - vec3
     label: definition_in_4
     name: definition_in_4
     returnTypes:

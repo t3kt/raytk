@@ -18,11 +18,10 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 	#ifdef THIS_Enablefaces
 	d = min(d, fPlane(p, n, -THIS_Faceoffset));
 	#endif
-	#ifdef THIS_HAS_INPUT_1
+	#ifdef THIS_HAS_INPUT_spikeSdf
 	p -= n * (THIS_Spikeoffset + THIS_Spikelength);
 	p = reflect(p, normalize(mix(vec3(0,1,0), -n, .5)));
-	d = min(d, inputOp1(p, ctx).x);
-	ReturnT res = inputOp1(p, ctx);
+	ReturnT res = inputOp_spikeSdf(p, ctx);
 	res.x = min(res.x, d);
 	return res;
 	#else

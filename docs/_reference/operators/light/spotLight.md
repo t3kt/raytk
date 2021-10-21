@@ -11,29 +11,21 @@ op:
   detail: This is similar to the Light COMP in spotlight mode.
   inputs:
   - contextTypes:
-    - Context
-    - MaterialContext
-    - CameraContext
     - LightContext
-    - RayContext
     coordTypes:
     - vec3
     label: Color Field
-    name: color_field_definition_in
+    name: colorField
     returnTypes:
     - float
     - vec4
     summary: Optional field that controls the color of the light.
   - contextTypes:
-    - Context
-    - MaterialContext
-    - CameraContext
     - LightContext
-    - RayContext
     coordTypes:
     - float
     label: Attenuation Field
-    name: attenutation_field_definition_in
+    name: attenuationField
     returnTypes:
     - float
     - vec4

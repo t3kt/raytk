@@ -24,7 +24,7 @@ op:
     - vec2
     - vec3
     label: UV Map Field
-    name: uv_field_definition_in
+    name: uvField
     returnTypes:
     - vec4
   name: triPlanarTextureField

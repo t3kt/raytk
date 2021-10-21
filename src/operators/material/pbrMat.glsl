@@ -21,8 +21,8 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 */
 vec3 THIS_irradianceMap(vec3 p, MaterialContext matCtx) {
 //	return texture(iChannel1,n).xyz;
-	#ifdef THIS_HAS_INPUT_2
-	return inputOp2(p, matCtx).xyz;
+	#ifdef THIS_HAS_INPUT_irradianceField
+	return inputOp_irradianceField(p, matCtx).xyz;
 	#else
 	return vec3(0.5);
 	#endif
@@ -37,7 +37,7 @@ vec3 THIS_reflectanceMap(vec3 p, MaterialContext matCtx, vec3 refl, float roughn
 	//	vec3 blurMap = THIS_IrradianceMap(n);
 	//	vec3 reflecMap = textureLod(iChannel0,refl,4.0 * roughness).xyz;
 	//	return mix(reflecMap,blurMap,roughness);
-	#ifdef THIS_HAS_INPUT_3
+	#ifdef THIS_HAS_INPUT_reflectanceField
 	matCtx.lod = 4.0 * roughness;
 	matCtx.normal = refl;
 	vec3 reflectMap = inputOp3(p, matCtx).xyz;
@@ -57,11 +57,11 @@ vec3 THIS_getColor(vec3 p, MaterialContext matCtx) {
 	float roughness = THIS_Roughness;
 	float metallic = THIS_Metallic;
 
-	#ifdef THIS_HAS_INPUT_4
-	roughness *= inputOp4(mp, matCtx);
+	#ifdef THIS_HAS_INPUT_roughnessField
+	roughness *= inputOp_roughnessField(mp, matCtx);
 	#endif
-	#ifdef THIS_HAS_INPUT_5
-	metallic *= inputOp5(mp, matCtx);
+	#ifdef THIS_HAS_INPUT_metallicField
+	metallic *= inputOp_metallicField(mp, matCtx);
 	#endif
 
 	vec3 baseColor = THIS_Basecolor;
@@ -70,8 +70,8 @@ vec3 THIS_getColor(vec3 p, MaterialContext matCtx) {
 		baseColor *= matCtx.result.color.rgb;
 	}
 	#endif
-	#ifdef THIS_HAS_INPUT_3
-		baseColor *= fillToVec3(inputOp3(mp, matCtx));
+	#ifdef THIS_HAS_INPUT_baseColorField
+		baseColor *= fillToVec3(inputOp_baseColorField(mp, matCtx));
 	#endif
 
 	vec3 albedo = baseColor * THIS_Albedo;

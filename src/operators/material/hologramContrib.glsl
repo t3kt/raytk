@@ -10,8 +10,8 @@ ReturnT thismap(CoordT p, MaterialContext ctx) {
 	vec3 period = THIS_Period;
 	for (int i = 0; i < THIS_Iterations; i++) {
 		q = ro + rd * stepDist * float(i);
-		#ifdef THIS_HAS_INPUT_1
-		val = vec4(inputOp1(q, ctx));
+		#ifdef THIS_HAS_INPUT_baseColorField
+		val = vec4(inputOp_baseColorField(q, ctx));
 		res.rgb += val.rgb;// / lum;
 		#else
 		lum += abs(sin(q.x / period.x) + sin(q.y / period.y) + sin(q.z / period.z));// + sin( p.y * 3. ) + sin( p.z * 5.);

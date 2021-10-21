@@ -15,10 +15,11 @@ op:
     - CameraContext
     - LightContext
     - RayContext
+    - ParticleContext
     coordTypes:
     - vec3
     label: Scale Field
-    name: scale_definition_in
+    name: scaleField
     returnTypes:
     - float
     - vec4
@@ -28,10 +29,11 @@ op:
     - CameraContext
     - LightContext
     - RayContext
+    - ParticleContext
     coordTypes:
     - vec3
     label: Chamfer Field
-    name: chamfer_definition_in
+    name: chamferField
     returnTypes:
     - float
   - contextTypes:
@@ -40,10 +42,11 @@ op:
     - CameraContext
     - LightContext
     - RayContext
+    - ParticleContext
     coordTypes:
     - vec3
     label: Rounding Field
-    name: rounding_definition_in
+    name: roundingField
     returnTypes:
     - float
   keywords:

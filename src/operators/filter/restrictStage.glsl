@@ -1,5 +1,5 @@
 bool THIS_check() {
-	#if !defined(THIS_Includeprimary) || !defined(THIS_Includeshadow) || !defined(THIS_Includereflect) || !defined(THIS_Includematerial) || !defined(THIS_Includeocclusion)
+	#if !defined(THIS_Includeprimary) || !defined(THIS_Includeshadow) || !defined(THIS_Includereflect) || !defined(THIS_Includematerial) || !defined(THIS_Includeocclusion) || !defined(THIS_Includevolumetric) || !defined(THIS_Includevolumetricshadow) || !defined(THIS_Includenormal)
 	int s = getStage();
 	return false ||
 	#ifdef THIS_Includeprimary
@@ -16,6 +16,15 @@ bool THIS_check() {
 	#endif
 	#ifdef THIS_Includeocclusion
 	(s == RAYTK_STAGE_OCCLUSION) ||
+	#endif
+	#ifdef THIS_Includevolumetric
+	(s == RAYTK_STAGE_VOLUMETRIC) ||
+	#endif
+	#ifdef THIS_Includevolumetricshadow
+	(s == RAYTK_STAGE_VOLUMETRIC_SHADOW) ||
+	#endif
+	#ifdef THIS_Includenormal
+	(s == RAYTK_STAGE_NORMAL) ||
 	#endif
 	false
 	;

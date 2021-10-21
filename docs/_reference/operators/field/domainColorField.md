@@ -8,25 +8,6 @@ redirect_from:
   - /reference/opType/raytk.operators.field.domainColorField/
 op:
   category: field
-  inputs:
-  - contextTypes:
-    - Context
-    - MaterialContext
-    - CameraContext
-    - LightContext
-    - RayContext
-    coordTypes:
-    - float
-    - vec2
-    - vec3
-    label: definition_in
-    name: definition_in
-    returnTypes:
-    - float
-    - vec4
-    - Sdf
-    - Ray
-    - Light
   name: domainColorField
   opType: raytk.operators.field.domainColorField
   parameters:

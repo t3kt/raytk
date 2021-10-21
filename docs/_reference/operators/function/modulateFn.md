@@ -15,11 +15,12 @@ op:
     - CameraContext
     - LightContext
     - RayContext
+    - ParticleContext
     coordTypes:
     - float
     - vec2
     - vec3
-    label: definition_in
+    label: Function
     name: definition_in
     required: true
     returnTypes:
@@ -31,11 +32,12 @@ op:
     - CameraContext
     - LightContext
     - RayContext
+    - ParticleContext
     coordTypes:
     - float
     - vec2
     - vec3
-    label: definition_in_2
+    label: Modulating Function
     name: definition_in_2
     required: true
     returnTypes:

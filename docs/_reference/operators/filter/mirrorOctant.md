@@ -15,6 +15,7 @@ op:
     - CameraContext
     - LightContext
     - RayContext
+    - ParticleContext
     coordTypes:
     - vec2
     - vec3
@@ -27,18 +28,20 @@ op:
     - Sdf
     - Ray
     - Light
+    - Particle
   - contextTypes:
     - Context
     - MaterialContext
     - CameraContext
     - LightContext
     - RayContext
+    - ParticleContext
     coordTypes:
     - float
     - vec2
     - vec3
     label: Rotate Axis Field
-    name: rotate_axis_field_definition_in
+    name: rotateField
     returnTypes:
     - float
     - Sdf
@@ -52,11 +55,12 @@ op:
     - CameraContext
     - LightContext
     - RayContext
+    - ParticleContext
     coordTypes:
     - float
     - vec3
     label: Offset Field
-    name: offset_field_definition_in
+    name: offsetField
     returnTypes:
     - float
     - vec4

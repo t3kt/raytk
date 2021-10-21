@@ -15,10 +15,11 @@ op:
     - CameraContext
     - LightContext
     - RayContext
+    - ParticleContext
     coordTypes:
     - vec2
     label: Cross-Section SDF
-    name: cross_section_definition_in
+    name: crossSection
     required: true
     returnTypes:
     - float
@@ -31,10 +32,11 @@ op:
     - CameraContext
     - LightContext
     - RayContext
+    - ParticleContext
     coordTypes:
     - vec2
     label: Path SDF
-    name: path_definition_in
+    name: path
     required: true
     returnTypes:
     - float

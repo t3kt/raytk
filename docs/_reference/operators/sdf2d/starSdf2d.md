@@ -15,10 +15,11 @@ op:
     - CameraContext
     - LightContext
     - RayContext
+    - ParticleContext
     coordTypes:
     - vec2
     label: Radius Field
-    name: radius_definition_in
+    name: radiusField
     returnTypes:
     - float
   - contextTypes:
@@ -27,10 +28,11 @@ op:
     - CameraContext
     - LightContext
     - RayContext
+    - ParticleContext
     coordTypes:
     - vec2
     label: Tightness Field
-    name: tightness_definition_in
+    name: tightnessField
     returnTypes:
     - float
   name: starSdf2d

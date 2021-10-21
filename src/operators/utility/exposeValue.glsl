@@ -9,8 +9,8 @@ bool THIS_check(ReturnT res, ContextT ctx) {
 ReturnT thismap(CoordT p, ContextT ctx) {
 	ReturnT res = inputOp1(p, ctx);
 	if (THIS_check(res, ctx)) {
-		#ifdef THIS_HAS_INPUT_2
-		inputOp2_ReturnT valRes = inputOp2(p, ctx);
+		#ifdef THIS_HAS_INPUT_valueField
+		inputOp2_ReturnT valRes = inputOp_valueField(p, ctx);
 		#else
 		ReturnT valRes = res;
 		#endif

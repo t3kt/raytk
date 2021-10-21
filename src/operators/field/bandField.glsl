@@ -8,6 +8,9 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 	#else
 	float q = p.THIS_Axis;
 	#endif
+	#ifdef THIS_Enablerepeat
+	q = mod(q + THIS_Repeatshift, THIS_Repeatsize);
+	#endif
 	q = abs(q - THIS_Center);
 	float w = THIS_Width / 2.;
 	#if !defined(THIS_Enableblending)

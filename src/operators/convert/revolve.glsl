@@ -5,18 +5,18 @@ ReturnT thismap(vec3 p, ContextT ctx) {
 	#ifdef THIS_Iterationtype_ratio
 	setIterationIndex(ctx, a);
 	#endif
-	#ifdef THIS_HAS_INPUT_2
-	float r = inputOp2(a, ctx);
+	#ifdef THIS_HAS_INPUT_rotateField
+	float r = inputOp_rotateField(a, ctx);
 	pR(q, radians(r));
 	#endif
 	float scaleMult = 1.;
-	#ifdef THIS_HAS_INPUT_3
-	float s = inputOp3(a, ctx);
+	#ifdef THIS_HAS_INPUT_scaleField
+	float s = inputOp_scaleField(a, ctx);
 	q /= s;
 	scaleMult = s;
 	#endif
-	#ifdef THIS_HAS_INPUT_4
-		q -= inputOp4(a, ctx).xy;
+	#ifdef THIS_HAS_INPUT_translateField
+		q -= inputOp_translateField(a, ctx).xy;
 	#endif
-	return withAdjustedScale(inputOp1(q, ctx), scaleMult);
+	return withAdjustedScale(inputOp_crossSection(q, ctx), scaleMult);
 }

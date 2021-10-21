@@ -1,16 +1,17 @@
-from typing import List, Optional
-import raytkTypes
+from typing import Dict, List, Optional
 
 # noinspection PyUnreachableCode
 if False:
 	# noinspection PyUnresolvedReferences
 	from _stubs import *
 
+_allTypeCategories = ('coordType', 'contextType', 'returnType')
+
 def buildTypeSettings(dat: 'scriptDAT'):
 	dat.clear()
 	dat.appendRow(['category', 'mode', 'replacement', 'scope'])
 	allInputDefs = ops('definition_in_?')
-	for category in raytkTypes.allTypeCategories:
+	for category in _allTypeCategories:
 		parPrefix = category.replace('Type', '').capitalize()
 		mode = parent().par[parPrefix + 'typereductionmode']
 		dat.appendRow([
@@ -27,7 +28,7 @@ def buildTypeSettings(dat: 'scriptDAT'):
 				if table.digits in scopeIndices
 			]
 			dat[category, 'scope'] = ' '.join(str(i) for i in scopeIndices)
-			commonTypes = raytkTypes.getCommonTypesFromCells(inScopeCells)
+			commonTypes = _getCommonTypesFromCells(inScopeCells)
 			if mode == 'common':
 				dat[category, 'replacement'] = ' '.join(commonTypes)
 			elif mode == 'bestcommon':
@@ -36,6 +37,23 @@ def buildTypeSettings(dat: 'scriptDAT'):
 			elif mode == 'besteach':
 				preferredTypes = tdu.split(parent().par[parPrefix + 'typepreference'])
 				dat[category, 'replacement'] = ' '.join(preferredTypes)
+
+def _getCommonTypesFromCells(cells: List['Cell']) -> List[str]:
+	cells = [cell for cell in cells if cell]
+	if not cells:
+		return []
+	typeCounts = {}  # type: Dict[str, int]
+	for cell in cells:
+		for part in cell.val.split(' '):
+			if not part:
+				continue
+			typeCounts[part] = typeCounts.get(part, 0) + 1
+	n = len(cells)
+	return [
+		t
+		for t, count in typeCounts.items()
+		if count == n
+	]
 
 def _firstMatch(vals, matchVals):
 	for val in vals:
@@ -60,7 +78,7 @@ def buildValidationErrors(dat: 'DAT', mergedDefs: 'DAT', typeSettings: 'DAT'):
 		addRow('error', f'Only {len(processedInputDefs)} provided, {minCount} required')
 	if mergedDefs.numRows < 2:
 		return
-	for typeCategory in raytkTypes.allTypeCategories:
+	for typeCategory in _allTypeCategories:
 		if typeSettings[typeCategory, 'mode'].val == 'besteach':
 			for inDef in processedInputDefs:
 				current = inDef[1, typeCategory]
@@ -82,7 +100,7 @@ def _parseInputScope(val: str, maxInputs: int) -> List[int]:
 def applyTypeSettings(dat: 'scriptDAT', index: int, typeSettings: 'DAT'):
 	if dat.numRows < 2:
 		return
-	for category in raytkTypes.allTypeCategories:
+	for category in _allTypeCategories:
 		if str(index) not in typeSettings[category, 'scope'].val.split(' '):
 			continue
 		repl = _getTypeReplacement(typeSettings, category, dat[1, category])

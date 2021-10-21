@@ -19,6 +19,8 @@ cat:
       field.
   - name: projectPlane
     status: beta
+    summary: Takes a 1D or 2D operator and converts it to a 3D operator by mapping
+      it to a plane within 3D space.
   - name: revolve
     summary: Creates a 3D SDF by revolving a 2D cross-section SDF around an axis.
   - name: sdfToFloat

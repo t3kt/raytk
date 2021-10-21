@@ -11,19 +11,29 @@ op:
   inputs:
   - contextTypes:
     - Context
+    - MaterialContext
+    - CameraContext
+    - LightContext
+    - RayContext
+    - ParticleContext
     coordTypes:
     - vec3
     label: Height field
-    name: height_field_definition_in
+    name: heightField
     returnTypes:
     - float
     summary: Float value field that controls the height of the prism.
   - contextTypes:
     - Context
+    - MaterialContext
+    - CameraContext
+    - LightContext
+    - RayContext
+    - ParticleContext
     coordTypes:
     - vec3
     label: Radius field
-    name: radius_field_definition_in
+    name: radiusField
     returnTypes:
     - float
     summary: Float value field that controls the radius of the prism.

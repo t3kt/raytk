@@ -17,6 +17,7 @@ op:
     - CameraContext
     - LightContext
     - RayContext
+    - ParticleContext
     coordTypes:
     - float
     - vec2
@@ -26,6 +27,7 @@ op:
     required: true
     returnTypes:
     - Sdf
+    - Particle
     summary: SDF definition to which the color is applied.
   - contextTypes:
     - Context
@@ -33,6 +35,7 @@ op:
     - CameraContext
     - LightContext
     - RayContext
+    - ParticleContext
     coordTypes:
     - float
     - vec2

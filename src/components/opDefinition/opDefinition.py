@@ -1,11 +1,10 @@
-from raytkTypes import evalSpecInOp
 import re
 
 # noinspection PyUnreachableCode
 if False:
 	# noinspection PyUnresolvedReferences
 	from _stubs import *
-	from typing import Dict, List, Optional, Union
+	from typing import Dict, List, Optional, Union, Tuple
 	from raytkUtil import OpDefParsT
 	from _stubs.PopDialogExt import PopDialogExt
 
@@ -31,11 +30,40 @@ def buildName():
 	return 'RTK_' + name
 
 def _evalType(category: str, supportedTypes: 'DAT', inputDefs: 'DAT'):
-	return evalSpecInOp(
+	return _evalSpecInOp(
 		spec=supportedTypes[category, 'spec'].val,
 		expandedTypes=supportedTypes[category, 'types'].val,
 		inputCell=inputDefs[1, category],
 	)
+
+def _parseUseInput(spec: str) -> 'Tuple[bool, str]':
+	useInput = spec.startswith('useinput|')
+	if useInput:
+		spec = spec[9:]  # len('useinput|')
+	return useInput, spec
+
+# Evaluates a type spec in an OP, expanding wildcards and inheriting input types or using fallback type.
+# Produces a list of 1 or more concrete type names, or a `@` reference to another op (for reverse inheritance).
+#
+# Formats for spec input:
+#   `Type1 Type2`
+#   `*`
+#   `useinput|Type1 Type2`
+#   `useinput|*`
+#   `@some_op_name`
+#
+# Output formats:
+#    `Type1`
+#    `Type1 Type2`
+#    `@some_op_name`
+# These outputs are what appear in the generated definition tables passed between ops.
+def _evalSpecInOp(spec: str, expandedTypes: str, inputCell: 'Optional[Cell]') -> str:
+	if spec.startswith('@'):
+		return spec
+	useInput, spec = _parseUseInput(spec)
+	if useInput and inputCell:
+		return str(inputCell)
+	return expandedTypes
 
 def buildTypeTable(dat: 'scriptDAT', supportedTypes: 'DAT', inputDefs: 'DAT'):
 	dat.clear()
@@ -62,27 +90,6 @@ def buildInputTable(dat: 'DAT', inDats: 'List[DAT]'):
 				inDat[1, 'contextType'],
 				inDat[1, 'returnType'],
 			])
-
-def buildLegacyTypeSettingsTable(dat: 'DAT', inputTable: 'DAT'):
-	dat.clear()
-	typeVal = parentPar().Coordtype.eval()
-	if typeVal != 'useinput':
-		dat.appendRow(['coordType', typeVal, '0'])
-	else:
-		typeVal = inputTable['inputName1', 'coordType'] or parentPar().Fallbackcoordtype
-		dat.appendRow(['coordType', typeVal, '1'])
-	typeVal = parentPar().Contexttype.eval()
-	if typeVal != 'useinput':
-		dat.appendRow(['contextType', typeVal, '0'])
-	else:
-		typeVal = inputTable['inputName1', 'contextType'] or parentPar().Fallbackcontexttype
-		dat.appendRow(['contextType', typeVal, '1'])
-	typeVal = parentPar().Returntype.eval()
-	if typeVal != 'useinput':
-		dat.appendRow(['returnType', typeVal, '0'])
-	else:
-		typeVal = inputTable['inputName1', 'returnType'] or parentPar().Fallbackreturntype
-		dat.appendRow(['returnType', typeVal, '1'])
 
 def combineInputDefinitions(
 		dat: 'DAT',
@@ -210,7 +217,9 @@ def buildParamSpecTable(dat: 'scriptDAT', paramListTable: 'DAT'):
 
 	# Update conversions from opDefinition Angleparams par
 	for par in _getRegularParams(getNamesFromListTable('angleParams')):
-		dat[par.name, 'conversion'] = 'angle'
+		cell = dat[par.name, 'conversion']
+		if cell is not None:
+			cell.val = 'angle'
 
 	# Update param statuses based on tuplets
 	_fillParamStatuses(dat)

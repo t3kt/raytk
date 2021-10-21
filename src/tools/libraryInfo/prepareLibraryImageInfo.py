@@ -13,6 +13,10 @@ def onCook(dat: 'DAT'):
 		dat.appendRow(['status', 'development'])
 		dat.appendRow(['bg'] + list(IconColors.betaBgColor))
 		dat.appendRow(['fg'] + list(IconColors.betaFgColor))
+	elif context.experimentalMode():
+		dat.appendRow(['status', 'experimental'])
+		dat.appendRow(['bg'] + list(IconColors.experimentalBgColor))
+		dat.appendRow(['fg'] + list(IconColors.experimentalFgColor))
 	else:
 		dat.appendRow(['status', ''])
 		dat.appendRow(['bg'] + list(IconColors.defaultBgColor))

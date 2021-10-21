@@ -19,6 +19,7 @@ op:
     - CameraContext
     - LightContext
     - RayContext
+    - ParticleContext
     coordTypes:
     - vec3
     label: definition_in
@@ -30,6 +31,49 @@ op:
     - Sdf
     - Ray
     - Light
+    - Particle
+  - contextTypes:
+    - Context
+    - MaterialContext
+    - CameraContext
+    - LightContext
+    - RayContext
+    - ParticleContext
+    coordTypes:
+    - vec3
+    label: Size Field
+    name: sizeField
+    returnTypes:
+    - float
+    - vec4
+  - contextTypes:
+    - Context
+    - MaterialContext
+    - CameraContext
+    - LightContext
+    - RayContext
+    - ParticleContext
+    coordTypes:
+    - vec3
+    label: Offset Field
+    name: offsetField
+    returnTypes:
+    - float
+    - vec4
+  - contextTypes:
+    - Context
+    - MaterialContext
+    - CameraContext
+    - LightContext
+    - RayContext
+    - ParticleContext
+    coordTypes:
+    - vec3
+    label: Shift Field
+    name: shiftField
+    returnTypes:
+    - float
+    - vec4
   keywords:
   - grid
   - modulo
@@ -50,6 +94,30 @@ op:
   - label: Shift
     name: Shift
     summary: Shifts the whole grid (and its contents).
+  - label: Limit Type
+    menuOptions:
+    - label: None
+      name: none
+    - label: Both
+      name: both
+    - label: Start Only
+      name: start
+    - label: Stop Only
+      name: stop
+    name: Limittype
+  - label: Limit Start
+    name: Limitstart
+  - label: Limit Stop
+    name: Limitstop
+  - label: Limit Offset
+    name: Limitoffset
+  - label: Mirror Type
+    menuOptions:
+    - label: None
+      name: none
+    - label: Mirror
+      name: mirror
+    name: Mirrortype
   - label: Iteration Type
     menuOptions:
     - label: None

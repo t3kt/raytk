@@ -1,6 +1,7 @@
 {
   "meta": {
+    "opStatus": "default",
     "opType": "raytk.operators.field.positionField",
-    "opVersion": 9
+    "opVersion": 10
   }
 }

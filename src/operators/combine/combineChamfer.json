@@ -1,7 +1,7 @@
 {
   "meta": {
-    "opStatus": "default",
+    "opStatus": "deprecated",
     "opType": "raytk.operators.combine.combineChamfer",
-    "opVersion": 11
+    "opVersion": 12
   }
 }

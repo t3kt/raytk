@@ -15,10 +15,11 @@ op:
     - CameraContext
     - LightContext
     - RayContext
+    - ParticleContext
     coordTypes:
     - vec3
     label: Scale Field
-    name: scale_definition_in
+    name: scaleField
     returnTypes:
     - float
     - vec4
@@ -28,10 +29,11 @@ op:
     - CameraContext
     - LightContext
     - RayContext
+    - ParticleContext
     coordTypes:
     - vec3
     label: Thickness Field
-    name: thickness_definition_in
+    name: thicknessField
     returnTypes:
     - float
   keywords:

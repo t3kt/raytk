@@ -15,6 +15,7 @@ op:
     - CameraContext
     - LightContext
     - RayContext
+    - ParticleContext
     coordTypes:
     - float
     - vec2
@@ -30,6 +31,7 @@ op:
     - CameraContext
     - LightContext
     - RayContext
+    - ParticleContext
     coordTypes:
     - float
     - vec2
@@ -45,6 +47,7 @@ op:
     - CameraContext
     - LightContext
     - RayContext
+    - ParticleContext
     coordTypes:
     - float
     - vec2
@@ -61,6 +64,7 @@ op:
     - CameraContext
     - LightContext
     - RayContext
+    - ParticleContext
     coordTypes:
     - float
     - vec2
@@ -98,6 +102,7 @@ op:
     summary: The size of the blending region.
   - label: Offset
     name: Offset
+  status: deprecated
   summary: Columns SDF combine, producing n-1 circular columns/ridges at a 45 degree
     angles along the blend region.
 

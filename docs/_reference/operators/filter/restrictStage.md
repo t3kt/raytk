@@ -26,6 +26,7 @@ op:
     - CameraContext
     - LightContext
     - RayContext
+    - ParticleContext
     coordTypes:
     - float
     - vec2
@@ -39,12 +40,14 @@ op:
     - Sdf
     - Ray
     - Light
+    - Particle
   - contextTypes:
     - Context
     - MaterialContext
     - CameraContext
     - LightContext
     - RayContext
+    - ParticleContext
     coordTypes:
     - float
     - vec2
@@ -57,6 +60,7 @@ op:
     - Sdf
     - Ray
     - Light
+    - Particle
   name: restrictStage
   opType: raytk.operators.filter.restrictStage
   parameters:
@@ -73,6 +77,12 @@ op:
     name: Includematerial
   - label: Include Occlusion
     name: Includeocclusion
+  - label: Include Volumetric
+    name: Includevolumetric
+  - label: Include Volumetric Shadow
+    name: Includevolumetricshadow
+  - label: Include Normal
+    name: Includenormal
   status: beta
   summary: Restricts which render stages an operator is used in.
 

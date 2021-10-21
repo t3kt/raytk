@@ -15,10 +15,11 @@ op:
     - CameraContext
     - LightContext
     - RayContext
+    - ParticleContext
     coordTypes:
     - float
-    label: wave_definition_in
-    name: wave_definition_in
+    label: Wave Function
+    name: waveFunction
     returnTypes:
     - float
   name: lfoField
@@ -69,6 +70,8 @@ op:
     name: Offset
   - label: Coord Type
     menuOptions:
+    - label: Auto
+      name: auto
     - label: 1D
       name: float
     - label: 2D
@@ -78,6 +81,8 @@ op:
     name: Coordtype
   - label: Context Type
     menuOptions:
+    - label: Auto
+      name: auto
     - label: Context
       name: Context
     - label: Material Context
@@ -86,6 +91,10 @@ op:
       name: CameraContext
     - label: Light Context
       name: LightContext
+    - label: Ray Context
+      name: RayContext
+    - label: Particle Context
+      name: ParticleContext
     name: Contexttype
 
 ---

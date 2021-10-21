@@ -15,10 +15,11 @@ op:
     - CameraContext
     - LightContext
     - RayContext
+    - ParticleContext
     coordTypes:
     - vec2
     label: Radius Field
-    name: radius_definition_in
+    name: radiusField
     returnTypes:
     - float
   name: polygonSdf2d

@@ -6,8 +6,10 @@ vec4	Vector	1	0	0	4	xyzw
 Sdf	SDF	1	0	0	1	x
 Ray	Ray	1	0	0	3	xyz
 Light	Light	1	0	0		
-Context	Context	0	0	1
+Particle	Particle	1	0	0		
+Context	Context	0	0	1		
 MaterialContext	Material Context	0	0	1		
 CameraContext	Camera Context	0	0	1		
 LightContext	Light Context	0	0	1		
 RayContext	Ray Context	0	0	1		
+ParticleContext	Particle Context	0	0	1		

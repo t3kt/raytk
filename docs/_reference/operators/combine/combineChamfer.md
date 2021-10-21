@@ -15,6 +15,7 @@ op:
     - CameraContext
     - LightContext
     - RayContext
+    - ParticleContext
     coordTypes:
     - float
     - vec2
@@ -30,6 +31,7 @@ op:
     - CameraContext
     - LightContext
     - RayContext
+    - ParticleContext
     coordTypes:
     - float
     - vec2
@@ -45,6 +47,7 @@ op:
     - CameraContext
     - LightContext
     - RayContext
+    - ParticleContext
     coordTypes:
     - float
     - vec2
@@ -79,6 +82,7 @@ op:
   - label: Radius
     name: Radius
     summary: The size of the blending region.
+  status: deprecated
   summary: Chamfer SDF combine, producing a flat surface at a 45 degree angle along
     the blend region.
 

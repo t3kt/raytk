@@ -1,0 +1,20 @@
+name	label	code	returnType	macro
+pos	Position	return vec4(ctx.particle.pos, 0.);	vec4	
+dir	Direction	return vec4(normalize(ctx.particle.dir), 0.);	vec4	
+ray	Position/Direction Ray	return Ray(ctx.particle.pos, normalize(ctx.particle.dir));	Ray	
+vel	Velocity	return vec4(ctx.particle.vel, 0.);	vec4	
+angvel	Angular Velocity	return vec4(ctx.particle.angVel, 0.);	vec4	
+accel	Acceleration	return vec4(ctx.particle.accel, 0.);	vec4	
+angaccel	Angular Acceleration	return vec4(ctx.particle.angAccel, 0.);	vec4	
+age	Age	return ctx.particle.age;	float	
+life	Remaining Life	return ctx.particle.life;	float	
+state	State	return float(ctx.particle.state);	float	
+id	Particle ID	return float(ctx.particle.id);	float	
+statevec	State Data Vector	return getParticleStateVec(ctx.particle);	vec4	
+datapos	Data Coordinate	return vec4(ctx.dataPos, 0., 0.);	vec4	
+particle	Particle	return ctx.particle;	Particle	
+hashid	Hash ID Vector	return vec4(ctx.particle.hashId, 0.);	vec4	
+hashidx	Hash ID X	return ctx.particle.hashId.x;	float	
+hashidy	Hash ID Y	return ctx.particle.hashId.y;	float	
+hashidz	Hash ID Z	return ctx.particle.hashId.z;	float	
+color	Color	return ctx.particle.color;	vec4	RAYTK_USE_SURFACE_COLOR

@@ -1,0 +1,5 @@
+name	label	code	returnType
+amount	Amount Only	res = d;	float
+vectoramt	Vector & Amount	res = adaptAsVec4(v) + vec4(0., 0., 0., d);	vec4
+centeramt	Center & Amount	res = adaptAsVec4(center) + vec4(0., 0., 0., d);	vec4
+scaledvec	Scaled Vector	res = adaptAsVec4(d * normalize(v));	vec4

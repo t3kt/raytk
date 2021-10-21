@@ -26,9 +26,10 @@ op:
     - CameraContext
     - LightContext
     - RayContext
+    - ParticleContext
     coordTypes:
     - vec3
-    label: ray_direction_field_in
+    label: Ray Direction Field
     name: ray_direction_field_in
     returnTypes:
     - vec4

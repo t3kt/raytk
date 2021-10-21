@@ -3,16 +3,16 @@
 
 ReturnT thismap(CoordT p, ContextT ctx) {
 	vec3 s = THIS_Scale;
-	#ifdef THIS_HAS_INPUT_1
-	s *= fillToVec3(inputOp1(p, ctx));
+	#ifdef THIS_HAS_INPUT_scaleField
+	s *= fillToVec3(inputOp_scaleField(p, ctx));
 	#endif
-	#ifdef THIS_HAS_INPUT_2
-	float c = inputOp2(p, ctx);
+	#ifdef THIS_HAS_INPUT_chamferField
+	float c = inputOp_chamferField(p, ctx);
 	#else
 	float c = THIS_Chamfer;
 	#endif
-	#ifdef THIS_HAS_INPUT_3
-	float r = inputOp3(p, ctx);
+	#ifdef THIS_HAS_INPUT_roundingField
+	float r = inputOp_roundingField(p, ctx);
 	#else
 	float r = THIS_Round;
 	#endif

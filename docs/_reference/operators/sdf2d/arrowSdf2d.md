@@ -15,10 +15,11 @@ op:
     - CameraContext
     - LightContext
     - RayContext
+    - ParticleContext
     coordTypes:
     - vec2
     label: Point Coords Field
-    name: points_definition_in
+    name: points
     returnTypes:
     - vec4
   name: arrowSdf2d

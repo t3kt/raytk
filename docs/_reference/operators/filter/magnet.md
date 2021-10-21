@@ -20,7 +20,9 @@ op:
     - CameraContext
     - LightContext
     - RayContext
+    - ParticleContext
     coordTypes:
+    - float
     - vec2
     - vec3
     label: definition_in
@@ -32,17 +34,20 @@ op:
     - Sdf
     - Ray
     - Light
+    - Particle
   - contextTypes:
     - Context
     - MaterialContext
     - CameraContext
     - LightContext
     - RayContext
+    - ParticleContext
     coordTypes:
+    - float
     - vec2
     - vec3
     label: Magnet
-    name: magnet_definition_in
+    name: magnet
     returnTypes:
     - float
     - vec4
@@ -58,10 +63,11 @@ op:
     - CameraContext
     - LightContext
     - RayContext
+    - ParticleContext
     coordTypes:
     - float
     label: Easing
-    name: easing_definition_in
+    name: easing
     returnTypes:
     - float
     summary: Easing function used to control how the blending region is smoothed.

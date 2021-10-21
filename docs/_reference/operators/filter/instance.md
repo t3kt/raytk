@@ -32,6 +32,7 @@ op:
     - CameraContext
     - LightContext
     - RayContext
+    - ParticleContext
     coordTypes:
     - float
     - vec2
@@ -90,6 +91,14 @@ op:
       work properly. The others may produce unexpected and problematic results.
   - label: Radius
     name: Radius
+  - label: Enable Transform
+    name: Enabletransform
+  - label: Transform CHOP
+    name: Transformchop
+  - label: Enable Translate
+    name: Enabletranslate
+  - label: Enable Rotate
+    name: Enablerotate
   summary: Repeats its input some number of times, exposing the index as the iteration
     x value, and combines the results.
 

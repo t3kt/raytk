@@ -16,10 +16,11 @@ op:
     - CameraContext
     - LightContext
     - RayContext
+    - ParticleContext
     coordTypes:
     - vec3
     label: Endpoint 1 Field
-    name: endpoint1_definition_in
+    name: endpoint1
     returnTypes:
     - vec4
   - contextTypes:
@@ -28,10 +29,11 @@ op:
     - CameraContext
     - LightContext
     - RayContext
+    - ParticleContext
     coordTypes:
     - vec3
     label: Endpoint 2 Field
-    name: endpoint2_definition_in
+    name: endpoint2
     returnTypes:
     - vec4
   - contextTypes:
@@ -40,10 +42,11 @@ op:
     - CameraContext
     - LightContext
     - RayContext
+    - ParticleContext
     coordTypes:
     - vec3
     label: Radius Field
-    name: radius_definition_in
+    name: radiusField
     returnTypes:
     - float
   keywords:

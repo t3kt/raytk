@@ -13,10 +13,14 @@ cat:
     image.'
   name: output
   operators:
+  - name: customRender
+    status: alpha
   - name: fieldRender
     status: beta
   - name: functionGraphRender
     summary: Visualizes the graph of a function operator.
+  - name: particleRender
+    status: alpha
   - name: pointMapRender
     summary: Renderer that takes in a TOP of coordinates and evaluates the scene at
       each point.

@@ -16,12 +16,13 @@ op:
     - CameraContext
     - LightContext
     - RayContext
+    - ParticleContext
     coordTypes:
     - float
     - vec2
     - vec3
     label: Hue Field
-    name: hue_field_definition_in
+    name: hueField
     returnTypes:
     - float
     summary: Optional field that can calculate the hue setting based on position or
@@ -32,12 +33,13 @@ op:
     - CameraContext
     - LightContext
     - RayContext
+    - ParticleContext
     coordTypes:
     - float
     - vec2
     - vec3
     label: Saturation Field
-    name: saturation_field_definition_in
+    name: saturationField
     returnTypes:
     - float
     summary: Optional field that can calculate the saturation setting based on position
@@ -48,12 +50,13 @@ op:
     - CameraContext
     - LightContext
     - RayContext
+    - ParticleContext
     coordTypes:
     - float
     - vec2
     - vec3
     label: Value Field
-    name: value_field_definition_in
+    name: valueField
     returnTypes:
     - float
     summary: Optional field that can calculate the value setting based on position

@@ -1,6 +1,7 @@
 {
   "meta": {
+    "opStatus": "default",
     "opType": "raytk.operators.pattern.rosettePattern",
-    "opVersion": 2
+    "opVersion": 3
   }
 }

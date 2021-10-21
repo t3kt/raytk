@@ -1,6 +1,6 @@
 ReturnT thismap(CoordT p, ContextT ctx) {
-	#ifdef THIS_HAS_INPUT_1
-	vec4 pts = inputOp1(p, ctx);
+	#ifdef THIS_HAS_INPUT_points
+	vec4 pts = inputOp_points(p, ctx);
 	vec2 a = pts.xy;
 	vec2 b = pts.zw;
 	#else

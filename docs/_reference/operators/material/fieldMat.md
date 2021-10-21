@@ -17,7 +17,7 @@ op:
     - vec2
     - vec3
     label: SDF Shape
-    name: definition_in
+    name: sdf
     required: true
     returnTypes:
     - Sdf
@@ -27,8 +27,7 @@ op:
     - vec2
     - vec3
     label: Color Field
-    name: color_definition_in
-    required: true
+    name: baseColorField
     returnTypes:
     - float
     - vec4

@@ -15,6 +15,7 @@ op:
     - CameraContext
     - LightContext
     - RayContext
+    - ParticleContext
     coordTypes:
     - vec2
     - vec3
@@ -27,24 +28,20 @@ op:
     - Sdf
     - Ray
     - Light
+    - Particle
   - contextTypes:
     - Context
     - MaterialContext
     - CameraContext
     - LightContext
     - RayContext
+    - ParticleContext
     coordTypes:
     - float
-    - vec2
-    - vec3
     label: Blend Function
-    name: blend_function_definition_in
+    name: blending
     returnTypes:
     - float
-    - vec4
-    - Sdf
-    - Ray
-    - Light
   keywords:
   - flip
   - mirror

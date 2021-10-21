@@ -11,12 +11,12 @@ vec3 THIS_erot(vec3 p, vec3 ax, float ro) {
 ReturnT thismap(CoordT p, ContextT ctx) {
 	float k = 1/ (THIS_Scalefactor==0.?0.00001:THIS_Scalefactor);
 	float z = THIS_Phase * k;
-	#ifdef THIS_HAS_INPUT_1
+	#ifdef THIS_HAS_INPUT_phaseField
 	{
 		#if defined(inputOp1_COORD_TYPE_vec2)
 		{
 			#ifdef THIS_COORD_TYPE_vec2
-			z += inputOp1(p, ctx);
+			z += inputOp_phaseField(p, ctx);
 			#else
 			#error mismatchedCoordType
 			#endif
@@ -24,7 +24,7 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 		#elif defined(inputOp1_COORD_TYPE_vec3)
 		{
 			#ifdef THIS_COORD_TYPE_vec3
-			z += inputOp1(p, ctx);
+			z += inputOp_phaseField(p, ctx);
 			#else
 			#error mismatchedCoordType
 			#endif

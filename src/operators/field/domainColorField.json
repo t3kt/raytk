@@ -2,6 +2,6 @@
   "meta": {
     "opStatus": "beta",
     "opType": "raytk.operators.field.domainColorField",
-    "opVersion": 1
+    "opVersion": 2
   }
 }

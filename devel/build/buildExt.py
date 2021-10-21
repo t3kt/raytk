@@ -1,5 +1,5 @@
 from raytkTools import RaytkTools
-from raytkUtil import RaytkTags, navigateTo, focusFirstCustomParameterPage, CategoryInfo, RaytkContext, IconColors, isROP
+from raytkUtil import RaytkTags, navigateTo, focusFirstCustomParameterPage, CategoryInfo, RaytkContext, IconColors
 from raytkBuild import BuildContext, DocProcessor
 from typing import Callable, List, Optional, Union
 
@@ -14,6 +14,7 @@ class BuildManager:
 		self.logTable = ownerComp.op('log')
 		self.context = None  # type: Optional[BuildContext]
 		self.docProcessor = None  # type: Optional[DocProcessor]
+		self.experimentalMode = False
 
 	def OnInit(self):
 		self.ClearLog()
@@ -42,12 +43,14 @@ class BuildManager:
 	def RunBuild(self):
 		self.logTable.clear()
 		self.log('Starting build')
+		self.experimentalMode = bool(self.ownerComp.op('experimental_toggle').par.Value0)
 		self.context = BuildContext(self.log)
-		self.docProcessor = DocProcessor(
-			self.context,
-			outputFolder='docs/_reference',
-			imagesFolder='docs/assets/images',
-		)
+		if not self.experimentalMode:
+			self.docProcessor = DocProcessor(
+				self.context,
+				outputFolder='docs/_reference',
+				imagesFolder='docs/assets/images',
+			)
 		self.queueMethodCall(self.runBuild_stage, 0)
 
 	def runBuild_stage(self, stage: int):
@@ -61,7 +64,8 @@ class BuildManager:
 			self.detachAllFileSyncDats(toolkit)
 			self.queueMethodCall(self.runBuild_stage, stage + 1)
 		elif stage == 2:
-			self.docProcessor.clearPreviousDocs()
+			if self.docProcessor:
+				self.docProcessor.clearPreviousDocs()
 			self.queueMethodCall(self.runBuild_stage, stage + 1)
 		elif stage == 3:
 			self.updateLibraryInfo(toolkit, thenRun='runBuild_stage', runArgs=[stage + 1])
@@ -82,12 +86,19 @@ class BuildManager:
 			self.context.removeBuildExcludeOps(toolkit)
 			self.queueMethodCall(self.runBuild_stage, stage + 1)
 		elif stage == 11:
-			self.finalizeToolkitPars(toolkit)
+			self.context.removeRedundantPythonModules(toolkit, toolkit.ops('tools', 'libraryInfo'))
 			self.queueMethodCall(self.runBuild_stage, stage + 1)
 		elif stage == 12:
+			self.finalizeToolkitPars(toolkit)
+			self.queueMethodCall(self.runBuild_stage, stage + 1)
+		elif stage == 13:
 			self.context.focusInNetworkPane(toolkit)
 			version = RaytkContext().toolkitVersion()
-			toxFile = f'build/RayTK-{version}.tox'
+			if self.experimentalMode:
+				suffix = '-exp'
+			else:
+				suffix = ''
+			toxFile = f'build/RayTK-{version}{suffix}.tox'
 			self.log('Exporting TOX to ' + toxFile)
 			toolkit.save(toxFile)
 			self.log('Build completed!')
@@ -133,6 +144,9 @@ class BuildManager:
 
 	def updateLibraryInfo(self, toolkit: 'COMP', thenRun: str = None, runArgs: list = None):
 		self.log('Updating library info')
+		if toolkit.par['Experimentalbuild'] is not None:
+			toolkit.par.Experimentalbuild.val = self.experimentalMode
+			toolkit.par.Experimentalbuild.readOnly = True
 		libraryInfo = toolkit.op('libraryInfo')
 		libraryInfo.par.Forcebuild.pulse()
 		self.context.moveNetworkPane(libraryInfo)
@@ -156,7 +170,8 @@ class BuildManager:
 		self.context.detachTox(comp)
 		categories = RaytkContext().allCategories()
 		# categories.sort(key=lambda c: c.name)
-		self.docProcessor.writeCategoryListPage(categories)
+		if self.docProcessor:
+			self.docProcessor.writeCategoryListPage(categories)
 		self.queueMethodCall('processOperatorCategories_stage', categories, thenRun, runArgs)
 
 	def processOperatorCategories_stage(self, categories: List['COMP'], thenRun: str = None, runArgs: list = None):
@@ -175,12 +190,13 @@ class BuildManager:
 		template = category.op('__template')
 		if template:
 			template.destroy()
+		if not self.experimentalMode:
+			comps = categoryInfo.operators
+			for o in comps:
+				if RaytkTags.alpha.isOn(o):
+					self.context.safeDestroyOp(o)
 		comps = categoryInfo.operators
 		# comps.sort(key=lambda c: c.name)
-		for o in comps:
-			if RaytkTags.alpha.isOn(o):
-				self.context.safeDestroyOp(o)
-		comps = categoryInfo.operators
 		if self.docProcessor:
 			self.docProcessor.processOpCategory(category)
 		self.queueMethodCall(self.processOperatorCategory_stage, comps, thenRun, runArgs)
@@ -284,8 +300,8 @@ class BuildManager:
 
 	def queueMethodCall(self, method: Union[str, Callable], *args):
 		if callable(method):
-			run('args[0](*(args[1:]))', method, *args, delayFrames=5, delayRef=root)
+			run('args[0](*(args[1:]))', method, *args, delayFrames=2, delayRef=root)
 		elif '.' in method:
-			run(method, *args, delayFrames=5, delayRef=root)
+			run(method, *args, delayFrames=2, delayRef=root)
 		else:
-			run(f'args[0].{method}(*(args[1:]))', self, *args, delayFrames=5, delayRef=root)
+			run(f'args[0].{method}(*(args[1:]))', self, *args, delayFrames=2, delayRef=root)

@@ -10,6 +10,15 @@ op:
   category: filter
   detail: For example, bends sideways (towards X) depending on the vertical position
     (along Y).
+  images:
+  - assets/images/reference/operators/filter/bend_2d_along_x_to_y.png
+  - assets/images/reference/operators/filter/bend_2d_along_y_to_x.png
+  - assets/images/reference/operators/filter/bend_along_x_to_y.png
+  - assets/images/reference/operators/filter/bend_along_x_to_z.png
+  - assets/images/reference/operators/filter/bend_along_y_to_x.png
+  - assets/images/reference/operators/filter/bend_along_y_to_z.png
+  - assets/images/reference/operators/filter/bend_along_z_to_x.png
+  - assets/images/reference/operators/filter/bend_along_z_to_y.png
   inputs:
   - contextTypes:
     - Context
@@ -17,6 +26,7 @@ op:
     - CameraContext
     - LightContext
     - RayContext
+    - ParticleContext
     coordTypes:
     - vec2
     - vec3
@@ -29,18 +39,20 @@ op:
     - Sdf
     - Ray
     - Light
+    - Particle
   - contextTypes:
     - Context
     - MaterialContext
     - CameraContext
     - LightContext
     - RayContext
+    - ParticleContext
     coordTypes:
     - float
     - vec2
     - vec3
     label: Bend Field
-    name: definition_in_2
+    name: bendField
     returnTypes:
     - float
     - Sdf

@@ -15,11 +15,12 @@ op:
     - CameraContext
     - LightContext
     - RayContext
+    - ParticleContext
     coordTypes:
     - float
     - vec3
     label: Thickness Field
-    name: thickness_field_definition_in
+    name: thicknessField
     returnTypes:
     - float
     summary: Value field that can be used to vary the thickness of the ring. A 1D

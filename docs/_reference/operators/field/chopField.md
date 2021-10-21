@@ -15,6 +15,7 @@ op:
     - CameraContext
     - LightContext
     - RayContext
+    - ParticleContext
     coordTypes:
     - float
     - vec2
@@ -91,6 +92,19 @@ op:
       name: mirror
     name: Extendmode
     summary: How to handle coordinates outside the 0..1 range.
+  - label: Coord Mode
+    menuOptions:
+    - label: Position
+      name: position
+    - label: Index (Texel)
+      name: indextexel
+    - label: Scaled Index
+      name: scaledindex
+    - label: Auto-Scaled Index
+      name: autoscaledindex
+    name: Coordmode
+  - label: Index Range
+    name: Indexrange
   summary: Field that provides values from a CHOP.
 
 ---

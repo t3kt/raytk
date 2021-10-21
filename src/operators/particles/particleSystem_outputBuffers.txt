@@ -1,0 +1,6 @@
+name	label	macro	enable	path
+posOut	Position		1	parent().path + '/render_glsl'
+dirOut	Direction		1	parent().path + '/render_glsl'
+velOut	Velocity		1	parent().path + '/render_glsl'
+angVelOut	Angular Velocity		1	parent().path + '/render_glsl'
+lifeStateOut	Life + State		1	parent().path + '/render_glsl'

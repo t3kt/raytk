@@ -18,6 +18,7 @@ op:
     - CameraContext
     - LightContext
     - RayContext
+    - ParticleContext
     coordTypes:
     - float
     - vec2
@@ -31,25 +32,24 @@ op:
     - Sdf
     - Ray
     - Light
+    - Particle
   - contextTypes:
     - Context
     - MaterialContext
     - CameraContext
     - LightContext
     - RayContext
+    - ParticleContext
     coordTypes:
     - float
     - vec2
     - vec3
     label: Coordinate Field
-    name: coord_field_definition_in
+    name: coordField
     required: true
     returnTypes:
     - float
     - vec4
-    - Sdf
-    - Ray
-    - Light
   name: remapCoords
   opType: raytk.operators.filter.remapCoords
   parameters:

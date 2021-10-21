@@ -1,12 +1,12 @@
 ReturnT thismap(CoordT p, ContextT ctx) {
 	p -= THIS_Translate;
-	#ifdef THIS_HAS_INPUT_1
-	float height = THIS_Height * inputOp1(p, ctx);
+	#ifdef THIS_HAS_INPUT_heightField
+	float height = THIS_Height * inputOp_heightField(p, ctx);
 	#else
 	float height = THIS_Height;
 	#endif
-	#ifdef THIS_HAS_INPUT_2
-	float radiusMod = inputOp2(p, ctx);
+	#ifdef THIS_HAS_INPUT_radiusField
+	float radiusMod = inputOp_radiusField(p, ctx);
 	#else
 	const float radiusMod = 1.;
 	#endif

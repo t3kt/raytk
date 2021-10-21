@@ -1,9 +1,11 @@
 ReturnT thismap(CoordT p, ContextT ctx) {
 	ReturnT res = inputOp1(p, ctx);
-	#ifdef THIS_HAS_INPUT_colorField
-	res.color = vec4(inputOp_colorField(p, ctx).rgb, 1.);
-	#else
-	res.color = vec4(THIS_Color, 1.);
-	#endif
+	if (!isDistanceOnlyStage()) {
+		#ifdef THIS_HAS_INPUT_colorField
+		assignColor(res, inputOp_colorField(p, ctx).rgb);
+		#else
+		assignColor(res, THIS_Color);
+		#endif
+	}
 	return res;
 }

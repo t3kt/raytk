@@ -1,6 +1,6 @@
 ReturnT thismap(CoordT p, ContextT ctx) {
-	#if defined(THIS_HAS_INPUT_1)
-	vec2 uv = inputOp1(p, ctx).xy;
+	#if defined(THIS_HAS_INPUT_uvField)
+	vec2 uv = inputOp_uvField(p, ctx).xy;
 	#elif defined(THIS_COORD_TYPE_float)
 	vec2 uv = vec2(p, 0);
 	#elif defined(THIS_COORD_TYPE_vec2)

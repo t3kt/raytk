@@ -61,9 +61,6 @@ def buildOpInfoTable(dat: 'DAT'):
 			'Coordtype',
 			'Returntype',
 			'Contexttype',
-			'Fallbackcoordtype',
-			'Fallbackreturntype',
-			'Fallbackcontexttype',
 		] + _opDefParamNames + [
 			'macroCols',
 		]
@@ -94,14 +91,6 @@ def buildOpInfoTable(dat: 'DAT'):
 			dat[rop.path, 'Coordtype'] = types['coordType', 'spec']
 			dat[rop.path, 'Contexttype'] = types['contextType', 'spec']
 			dat[rop.path, 'Returntype'] = types['returnType', 'spec']
-		elif info.isROP:
-			dat[rop.path, 'Coordtype'] = _formatPar(info.opDefPar.Coordtype)
-			dat[rop.path, 'Contexttype'] = _formatPar(info.opDefPar.Contexttype)
-			dat[rop.path, 'Returntype'] = _formatPar(info.opDefPar.Returntype)
-			dat[rop.path, 'Fallbackcoordtype'] = _formatPar(info.opDefPar.Fallbackcoordtype)
-			dat[rop.path, 'Fallbackcontexttype'] = _formatPar(info.opDefPar.Fallbackcontexttype)
-			dat[rop.path, 'Fallbackreturntype'] = _formatPar(info.opDefPar.Fallbackreturntype)
-			pass
 		for pn in _opDefParamNames:
 			dat[rop.path, pn] = _formatPar(info.opDefPar[pn])
 		if info.isROP:
@@ -154,7 +143,6 @@ def buildOpInputsTable(dat: 'DAT'):
 		'contextTypes',
 		'returnTypes',
 		'hasExprs',
-		'newHandler',
 	])
 	for rop in RaytkContext().allMasterOperators():
 		info = ROPInfo(rop)
@@ -174,7 +162,6 @@ def buildOpInputsTable(dat: 'DAT'):
 				' '.join(inInfo.supportedContextTypes),
 				' '.join(inInfo.supportedReturnTypes),
 				any([p.mode != ParMode.CONSTANT for p in handler.customPars]),
-				inInfo.isNewHandler,
 			])
 
 def buildOpCurrentExpandedParamsTable(dat: 'DAT'):

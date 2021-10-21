@@ -16,19 +16,17 @@ op:
     - CameraContext
     - LightContext
     - RayContext
+    - ParticleContext
     coordTypes:
     - float
     - vec2
     - vec3
-    label: definition_in
+    label: SDF
     name: definition_in
     required: true
     returnTypes:
     - float
-    - vec4
     - Sdf
-    - Ray
-    - Light
   name: sdfField
   opType: raytk.operators.field.sdfField
   parameters:

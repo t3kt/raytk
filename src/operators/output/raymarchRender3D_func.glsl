@@ -7,7 +7,7 @@ Sdf thismap(vec3 p, Context ctx) {
 }
 
 Ray evaluateCamera(vec2 p, CameraContext ctx) {
-#ifndef THIS_HAS_INPUT_2
+#ifndef THIS_HAS_INPUT_camera
 	mat4 camMat = mat4(
 		1., 0., 0., 0.,
 		0., 1., 0., 0.,
@@ -22,7 +22,7 @@ Ray evaluateCamera(vec2 p, CameraContext ctx) {
 		camMat
 	);
 #else
-	return inputOp2(p, ctx);
+	return inputOp_camera(p, ctx);
 #endif
 }
 
@@ -82,7 +82,7 @@ void modifyRay(inout Ray ray, in Sdf res) {
 vec4 getBackgroundColor(in Ray ray) {
 	#ifdef THIS_USE_BACKGROUND_FIELD
 	RayContext ctx = createRayContext(ray, createNonHitSdf());
-	vec4 col = inputOp6(ray.pos, ctx);
+	vec4 col = inputOp_backgroundField(ray.pos, ctx);
 	#ifndef THIS_Usebackgroundfieldalpha
 	col.a = 1.;
 	#endif
@@ -94,8 +94,8 @@ vec4 getBackgroundColor(in Ray ray) {
 
 #ifdef RAYTK_USE_SHADOW
 float calcShadedLevel(vec3 p, MaterialContext matCtx) {
-	#ifdef THIS_HAS_INPUT_5
-	float res = inputOp5(p, matCtx);
+	#ifdef THIS_HAS_INPUT_shadow
+	float res = inputOp_shadow(p, matCtx);
 	#else
 	float res = calcShadowDefault(p, matCtx);
 	#endif

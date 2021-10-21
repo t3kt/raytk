@@ -1,8 +1,8 @@
 ReturnT thismap(CoordT p, ContextT ctx) {
-	float d1 = length(p - THIS_Point1);
-	float d2 = length(p - THIS_Point2);
-	float d3 = length(p - THIS_Point3);
-	float d4 = length(p - THIS_Point4);
+	float d1 = length(p - THIS_asCoordT(THIS_Point1));
+	float d2 = length(p - THIS_asCoordT(THIS_Point2));
+	float d3 = length(p - THIS_asCoordT(THIS_Point3));
+	float d4 = length(p - THIS_asCoordT(THIS_Point4));
 	vec4 allD = vec4(d1, d2, d3, d4);
 
 	ReturnT v1 = THIS_Value1;

@@ -1,14 +1,23 @@
-name	label	function	coordType	coordLength	returnType	libraryNames	macro
-TDSimplexNoise2d	Simplex 2D	TDSimplexNoise	vec2	2	float		
-TDSimplexNoise3d	Simplex 3D	TDSimplexNoise	vec3	3	float		
-TDSimplexNoise4d	Simplex 4D	TDSimplexNoise	vec4	4	float		
-TDPerlinNoise2d	Perlin 2D	TDPerlinNoise	vec2	2	float		
-TDPerlinNoise3d	Perlin 3D	TDPerlinNoise	vec3	3	float		
-TDPerlinNoise4d	Perlin 4D	TDPerlinNoise	vec4	4	float		
-classicperlin2d	Classic Perlin 2D	cnoise	vec2	2	float	glslNoise	NOISE_USE_CLASSIC
-classicperlin3d	Classic Perlin 3D	cnoise	vec3	3	float	glslNoise	NOISE_USE_CLASSIC
-classicperlin4d	Classic Perlin 4D	cnoise	vec4	4	float	glslNoise	NOISE_USE_CLASSIC
-simplex2d	Simplex 2D	snoise	vec2	2	float	glslNoise	NOISE_USE_SIMPLEX
-simplex3d	Simplex 3D	snoise	vec3	3	float	glslNoise	NOISE_USE_SIMPLEX
-simplex4d	Simplex 4D	snoise	vec4	4	float	glslNoise	NOISE_USE_SIMPLEX
-cheapNoiseLookup	Cheap Random Lookup	cheapNoiseLookup	vec2	2	float		
+name	label	function	code	coordType	coordLength	returnType	libraryNames	macro
+TDSimplexNoise2d	Simplex 2D	TDSimplexNoise	res = TDSimplexNoise(q);	vec2	2	float
+TDSimplexNoise3d	Simplex 3D	TDSimplexNoise	res = TDSimplexNoise(q);	vec3	3	float
+TDSimplexNoise4d	Simplex 4D	TDSimplexNoise	res = TDSimplexNoise(q);	vec4	4	float
+TDPerlinNoise2d	Perlin 2D	TDPerlinNoise	res = TDPerlinNoise(q);	vec2	2	float
+TDPerlinNoise3d	Perlin 3D	TDPerlinNoise	res = TDPerlinNoise(q);	vec3	3	float
+TDPerlinNoise4d	Perlin 4D	TDPerlinNoise	res = TDPerlinNoise(q);	vec4	4	float
+classicperlin2d	Classic Perlin 2D	cnoise	res = cnoise(q);	vec2	2	float	glslNoise	NOISE_USE_CLASSIC
+classicperlin3d	Classic Perlin 3D	cnoise	res = cnoise(q);	vec3	3	float	glslNoise	NOISE_USE_CLASSIC
+classicperlin4d	Classic Perlin 4D	cnoise	res = cnoise(q);	vec4	4	float	glslNoise	NOISE_USE_CLASSIC
+simplex2d	Simplex 2D	snoise	res = snoise(q);	vec2	2	float	glslNoise	NOISE_USE_SIMPLEX
+simplex3d	Simplex 3D	snoise	res = snoise(q);	vec3	3	float	glslNoise	NOISE_USE_SIMPLEX
+simplex4d	Simplex 4D	snoise	res = snoise(q);	vec4	4	float	glslNoise	NOISE_USE_SIMPLEX
+cheapNoiseLookup	Cheap Random Lookup	cheapNoiseLookup	res = cheapNoiseLookup(q);	vec2	2	float		
+wbtcellular2d	Cellular 2D	Cellular2D	res = Cellular2D(q);	vec2	2	float	wombat_Cellular2D	
+wbtcellular2dderiv	Cellular 2D Deriv	Cellular2D_Deriv	res = vec4(Cellular2D_Deriv(q), 1.);	vec2	2	vec4	wombat_Cellular2D_Deriv	
+wbtcellular3d	Cellular 3D	Cellular3D	res = Cellular3D(q);	vec3	3	float	wombat_Cellular3D	
+wbtcellular3dderiv	Cellular 3D Deriv	Cellular3D_Deriv	res = Cellular3D_Deriv(q);	vec3	3	vec4	wombat_Cellular3D_Deriv
+wbtvalue2d	Value 2D	Value2D	res = Value2D(q);	vec2	2	float	wombat_Value2D	
+wbtvalue2dderiv	Value 2D Deriv	Value2D_Deriv	res = vec4(Value2D_Deriv(q), 1.);	vec2	2	vec4	wombat_Value2D_Deriv	
+wbtvalue3d	Value 3D	Value3D	res = Value3D(q);	vec3	3	float	wombat_Value3D	
+wbtvalue3dderiv	Value 3D Deriv	Value3D_Deriv	res = Value3D_Deriv(q);	vec3	3	vec4	wombat_Value3D_Deriv
+wbtvalue4d	Value 4D	Value4D	res = Value4D(q);	vec4	4	float	wombat_Value4D	

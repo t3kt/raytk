@@ -15,6 +15,7 @@ op:
     - CameraContext
     - LightContext
     - RayContext
+    - ParticleContext
     coordTypes:
     - float
     - vec2
@@ -28,6 +29,7 @@ op:
     - Sdf
     - Ray
     - Light
+    - Particle
   name: quantizeCoords
   opType: raytk.operators.filter.quantizeCoords
   parameters:

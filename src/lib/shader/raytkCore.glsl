@@ -183,6 +183,12 @@ Sdf mixVals(in Sdf res1, in Sdf res2, float amt) {
 	return res1;
 }
 
+void assignColor(inout Sdf res, vec3 color) {
+	#ifdef RAYTK_USE_SURFACE_COLOR
+	res.color = vec4(color, 1.);
+	#endif
+}
+
 void assignMaterial(inout Sdf res, int materialId) {
 	res.mat = vec3(float(materialId), 0., 0.);
 }
@@ -406,6 +412,7 @@ const int RAYTK_STAGE_MATERIAL = 4;
 const int RAYTK_STAGE_OCCLUSION = 5;
 const int RAYTK_STAGE_VOLUMETRIC = 6;
 const int RAYTK_STAGE_VOLUMETRIC_SHADOW = 7;
+const int RAYTK_STAGE_NORMAL = 8;
 
 int _raytkStage = RAYTK_STAGE_PRIMARY;
 
@@ -421,6 +428,12 @@ int pushStage(int stage) {
 void popStage(int priorStage) { _raytkStage = priorStage; }
 
 int getStage() { return _raytkStage; }
+
+bool isDistanceOnlyStage() {
+	return _raytkStage == RAYTK_STAGE_SHADOW ||
+	_raytkStage == RAYTK_STAGE_OCCLUSION ||
+	_raytkStage == RAYTK_STAGE_NORMAL;
+}
 
 void captureIterationFromMaterial(inout vec4 store, in Context ctx) {
 	if (_raytkStage == RAYTK_STAGE_PRIMARY) {

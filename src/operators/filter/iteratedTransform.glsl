@@ -5,29 +5,53 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 	vec4 orb = vec4(1000);
 	#endif
 	TRANSFORM_INIT();
-	#if defined(THIS_Enablerotate) && defined(THIS_HAS_INPUT_2)
+	#if defined(THIS_Enablerotate) && defined(THIS_HAS_INPUT_rotateField)
 	vec3 baseRot = rotate;
 	#endif
-	#if defined(THIS_Enabletranslate) && defined(THIS_HAS_INPUT_3)
+	#if defined(THIS_Enabletranslate) && defined(THIS_HAS_INPUT_translateField)
 	vec3 baseT = translate;
 	#endif
+	#if defined(THIS_Enablescale) && defined(THIS_HAS_INPUT_scaleField)
+	#if defined(THIS_Scaletype_uniform)
+	float baseS = uniformscale;
+	#else
+	vec3 baseS = scale;
+	#endif
+	#endif
 	for (int i = 0; i < n; i++) {
-	#if defined(THIS_HAS_INPUT_2) || defined(THIS_HAS_INPUT_3)
 		float ratio = float(i) / float(n - 1);
+	#if defined(THIS_Iterationtype_index)
+		setIterationIndex(ctx, float(i));
+	#elif defined(THIS_Iterationtype_ratio)
+		setIterationIndex(ctx, ratio);
 	#endif
-	#if defined(THIS_Enablerotate) && defined(THIS_HAS_INPUT_2)
-		#ifdef inputOp2_COORD_TYPE_float
-		rotate = baseRot + inputOp2(ratio, ctx).xyz;
+	#if defined(THIS_Enablerotate) && defined(THIS_HAS_INPUT_rotateField)
+		#ifdef inputOp_rotateField_COORD_TYPE_float
+		rotate = baseRot + inputOp_rotateField(ratio, ctx).xyz;
 		#else
-		rotate = baseRot + inputOp2(p, ctx).xyz;
+		rotate = baseRot + inputOp_rotateField(p, ctx).xyz;
 		#endif
 	#endif
-	#if defined(THIS_Enabletranslate) && defined(THIS_HAS_INPUT_3)
-		#ifdef inputOp3_COORD_TYPE_float
-		translate = baseT + inputOp3(ratio, ctx).xyz;
+	#if defined(THIS_Enabletranslate) && defined(THIS_HAS_INPUT_translateField)
+		#ifdef inputOp_translateField_COORD_TYPE_float
+		translate = baseT + inputOp_translateField(ratio, ctx).xyz;
 		#else
-		translate = baseT + inputOp3(p, ctx).xyz;
+		translate = baseT + inputOp_translateField(p, ctx).xyz;
 		#endif
+	#endif
+	#if defined(THIS_Enablescale) && defined(THIS_HAS_INPUT_scaleField)
+		{
+			#ifdef inputOp_scaleField_COORD_TYPE_float
+			inputOp_scaleField_CoordT q0 = ratio;
+			#else
+			inputOp_scaleField_CoordT q0 = p;
+			#endif
+			#ifdef THIS_Scaletype_uniform
+			uniformscale = baseS * adaptAsFloat(inputOp_scaleField(q0, ctx));
+			#else
+			scale = baseS * fillToVec3(inputOp_scaleField(q0, ctx));
+			#endif
+		}
 	#endif
 	#ifdef RAYTK_ORBIT_IN_SDF
 		CoordT q = p;

@@ -15,10 +15,11 @@ op:
     - CameraContext
     - LightContext
     - RayContext
+    - ParticleContext
     coordTypes:
     - vec3
     label: Height Field
-    name: height_field_definition_in
+    name: heightField
     returnTypes:
     - float
     summary: Optional field used to determine the height. When connected, the `Height`
@@ -29,10 +30,11 @@ op:
     - CameraContext
     - LightContext
     - RayContext
+    - ParticleContext
     coordTypes:
     - vec3
     label: Width Field
-    name: width_field_definition_in
+    name: widthField
     returnTypes:
     - float
     summary: Optional field used to determine the width. When connected, the `Width`

@@ -1,13 +1,14 @@
 ReturnT thismap(CoordT p, ContextT ctx) {
 	p -= THIS_Translate;
 	p.yzx = p.THIS_AXIS_PLANE_SWIZZLE;
+	float pd = -p.y;
 	float h = THIS_Height;
 	float w = THIS_Width;
-	#ifdef THIS_HAS_INPUT_1
-	h *= inputOp1(p, ctx);
+	#ifdef THIS_HAS_INPUT_heightField
+	h *= inputOp_heightField(p, ctx);
 	#endif
-	#ifdef THIS_HAS_INPUT_2
-	w *= inputOp2(p, ctx);
+	#ifdef THIS_HAS_INPUT_widthField
+	w *= inputOp_widthField(p, ctx);
 	#endif
 	p /= vec3(w, 1., w);
 	float m2 = h*h + 0.25;
@@ -25,6 +26,7 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 	float b = m2*(q.x+0.5*t)*(q.x+0.5*t) + (q.y-m2*t)*(q.y-m2*t);
 
 	float d2 = min(q.y,-q.x*m2-q.y*0.5) > 0.0 ? 0.0 : min(a,b);
-
-	return createSdf(sqrt( (d2+q.z*q.z)/m2 ) * sign(max(q.z,-p.y)));
+	float d = sqrt( (d2+q.z*q.z)/m2 ) * sign(max(q.z,-p.y));
+	d = max(d, pd);
+	return createSdf(d);
 }

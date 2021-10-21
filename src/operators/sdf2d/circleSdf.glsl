@@ -1,8 +1,8 @@
 ReturnT thismap(CoordT p, ContextT ctx) {
 	p -= THIS_Translate;
 	float r = THIS_Radius;
-	#ifdef THIS_HAS_INPUT_1
-	r *= inputOp1(p, ctx);
+	#ifdef THIS_HAS_INPUT_radiusField
+	r *= inputOp_radiusField(p, ctx);
 	#endif
 	ReturnT res = createSdf(length(p)-r);
 	#if defined(THIS_Uvmode_cartesian)

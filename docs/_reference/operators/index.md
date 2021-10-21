@@ -25,6 +25,7 @@ color of points on the surface of geometry.
 * [Output](output/) - Outputs are a special category of operator that takes in one or more
 chains of OPs, generate a shader, and run it to produce some sort of
 output.
+* [Particles](particles/) - 
 * [Pattern](pattern/) - 2D pattern generators, which can be used for things like textures.
 Pattern operators are essentially a sub-category of field operators that focus
 on producing value or color patterns using 2D coordinates.

@@ -17,6 +17,7 @@ op:
     - CameraContext
     - LightContext
     - RayContext
+    - ParticleContext
     coordTypes:
     - vec2
     - vec3
@@ -33,12 +34,13 @@ op:
     - CameraContext
     - LightContext
     - RayContext
+    - ParticleContext
     coordTypes:
     - float
     - vec2
     - vec3
     label: Rotate Field
-    name: rotate_definition_in
+    name: rotateField
     returnTypes:
     - vec4
     summary: Optional field used to control rotation. The field is evaluated before
@@ -52,13 +54,30 @@ op:
     - CameraContext
     - LightContext
     - RayContext
+    - ParticleContext
     coordTypes:
     - float
     - vec2
     - vec3
     label: Translate Field
-    name: translate_definition_in
+    name: translateField
     returnTypes:
+    - vec4
+  - contextTypes:
+    - Context
+    - MaterialContext
+    - CameraContext
+    - LightContext
+    - RayContext
+    - ParticleContext
+    coordTypes:
+    - float
+    - vec2
+    - vec3
+    label: Scale Field
+    name: scaleField
+    returnTypes:
+    - float
     - vec4
   name: iteratedTransform
   opType: raytk.operators.filter.iteratedTransform
@@ -159,6 +178,15 @@ op:
     name: Vecparam3
   - label: Vec Param 4
     name: Vecparam4
+  - label: Iteration Type
+    menuOptions:
+    - label: None
+      name: none
+    - label: Step Index
+      name: index
+    - label: Step Ratio
+      name: ratio
+    name: Iterationtype
   summary: Performs a transform multiple times, optionally reflecting across axes
     in between the steps.
 

@@ -26,6 +26,15 @@ op:
 
     For types that use 4D coordinates, the `Translate` and `Scale` parameters can
     still be used to control the 4th coordinate.'
+  images:
+  - assets/images/reference/operators/field/noiseField_3d.png
+  - assets/images/reference/operators/field/noiseField_3d_cheap_random.png
+  - assets/images/reference/operators/field/noiseField_cheap_random.png
+  - assets/images/reference/operators/field/noiseField_float_coord.png
+  - assets/images/reference/operators/field/noiseField_perlin_2d.png
+  - assets/images/reference/operators/field/noiseField_perlin_4d_in_2d.png
+  - assets/images/reference/operators/field/noiseField_simplex_3d_in_2d.png
+  - assets/images/reference/operators/field/noiseField_vector_coord.png
   inputs:
   - contextTypes:
     - Context
@@ -33,12 +42,13 @@ op:
     - CameraContext
     - LightContext
     - RayContext
+    - ParticleContext
     coordTypes:
     - float
     - vec2
     - vec3
     label: Coordinate Field
-    name: coordinate_field_in
+    name: coordField
     returnTypes:
     - float
     - vec4
@@ -73,6 +83,24 @@ op:
       name: simplex4d
     - label: Cheap Random Lookup
       name: cheapNoiseLookup
+    - label: Cellular 2D
+      name: wbtcellular2d
+    - label: Cellular 2D Deriv
+      name: wbtcellular2dderiv
+    - label: Cellular 3D
+      name: wbtcellular3d
+    - label: Cellular 3D Deriv
+      name: wbtcellular3dderiv
+    - label: Value 2D
+      name: wbtvalue2d
+    - label: Value 2D Deriv
+      name: wbtvalue2dderiv
+    - label: Value 3D
+      name: wbtvalue3d
+    - label: Value 3D Deriv
+      name: wbtvalue3dderiv
+    - label: Value 4D
+      name: wbtvalue4d
     name: Noisetype
     summary: The type of noise function.
   - label: Coord Type

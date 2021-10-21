@@ -12,24 +12,18 @@ op:
   - contextTypes:
     - Context
     coordTypes:
-    - float
-    - vec2
     - vec3
     label: definition_in
-    name: definition_in
+    name: sdf
     required: true
     returnTypes:
-    - float
-    - vec4
     - Sdf
-    - Ray
-    - Light
   - contextTypes:
     - MaterialContext
     coordTypes:
     - vec3
     label: Shadow
-    name: shadow_definition_in
+    name: shadow
     returnTypes:
     - float
   - contextTypes:
@@ -37,7 +31,7 @@ op:
     coordTypes:
     - vec3
     label: Base Color Field
-    name: baseColor_definition_in
+    name: baseColorField
     returnTypes:
     - float
     - vec4

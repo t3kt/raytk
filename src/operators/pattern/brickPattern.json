@@ -1,6 +1,7 @@
 {
   "meta": {
+    "opStatus": "default",
     "opType": "raytk.operators.pattern.brickPattern",
-    "opVersion": 2
+    "opVersion": 3
   }
 }

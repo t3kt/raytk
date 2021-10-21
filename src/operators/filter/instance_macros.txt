@@ -1,1 +1,3 @@
 op('combine_expr_info')[1, 'exprIsSdf'] == '1'	'THIS_COMBINE_EXPR_IS_SDF'	
+parent().par.Enabletransform and parent().par.Enabletranslate and bool(parent().par.Transformchop)	'THIS_HAS_TRANSLATE'	
+parent().par.Enabletransform and parent().par.Enablerotate and bool(parent().par.Transformchop)	'THIS_HAS_ROTATE'	

@@ -19,14 +19,14 @@ vec3 THIS_getColor(CoordT p, MaterialContext matCtx) {
 	#ifdef THIS_Enablefill
 	{
 		vec3 fillColor = THIS_Fillcolor;
-		#ifdef THIS_HAS_INPUT_2
+		#ifdef THIS_HAS_INPUT_fillColorField
 		{
-			#if defined(inputOp2_COORD_TYPE_float)
+			#if defined(inputOp_fillColorField_COORD_TYPE_float)
 			float q = -d;
 			#else
-			inputOp2_CoordT q = inputOp2_asCoordT(mp);
+			inputOp_fillColorField_CoordT q = inputOp_fillColorField_asCoordT(mp);
 			#endif
-			fillColor *= fillToVec3(inputOp2(q, matCtx));
+			fillColor *= fillToVec3(inputOp_fillColorField(q, matCtx));
 		}
 			#endif
 		col += fillColor * (1.0 - smoothstep(0, THIS_Blending, max(d, 0.)));
@@ -35,14 +35,14 @@ vec3 THIS_getColor(CoordT p, MaterialContext matCtx) {
 	#ifdef THIS_Enableedge
 	{
 		vec3 edgeColor = THIS_Edgecolor;
-		#ifdef THIS_HAS_INPUT_3
+		#ifdef THIS_HAS_INPUT_edgeColorField
 		{
-			#if defined(inputOp3_COORD_TYPE_float)
+			#if defined(inputOp_edgeColorField_COORD_TYPE_float)
 			float q = -d;
 			#else
-			inputOp3_CoordT q = inputOp3_asCoordT(mp);
+			inputOp_edgeColorField_CoordT q = inputOp_edgeColorField_asCoordT(mp);
 			#endif
-			edgeColor *= fillToVec3(inputOp3(q, matCtx));
+			edgeColor *= fillToVec3(inputOp_edgeColorField(q, matCtx));
 		}
 		#endif
 		col += edgeColor * (1.0 - smoothstep(THIS_Edgethickness - THIS_Blending / 2., THIS_Edgethickness + THIS_Blending/2., abs(d)));

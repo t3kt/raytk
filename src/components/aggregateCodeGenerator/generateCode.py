@@ -5,24 +5,35 @@ if False:
 
 def onCook(dat):
 	dat.clear()
-	n = int(op('inputInfo')['inputCount'] or 0)
+	info = op('inputInfo')  # type: CHOP
 	stepStmt = _prepStatement(parent().par.Stepstmt)
 	initMode = parent().par.Initmode
+	numMode = parent().par.Numberingmode
+	if numMode == 'available':
+		indices = [
+			tdu.digits(ch.name)
+			for ch in info.chans('hasInput*')
+			if ch
+		]
+		n = len(indices)
+	else:  # sequential
+		n = int(info['inputCount'] or 0)
+		indices = list(range(1, n + 1))
 	if initMode == 'firststep':
 		if n == 0:
 			return _prepStatement(parent().par.Defaultstmt)
 		firstStmt = _prepStatement(parent().par.Firststepstmt)
 		if n == 1:
-			return _injectIndex(firstStmt, 1)
-		lines = [_injectIndex(firstStmt, 1)] + [
+			return _injectIndex(firstStmt, indices[0])
+		lines = [_injectIndex(firstStmt, indices[0])] + [
 			_injectIndex(stepStmt, i)
-			for i in range(2, n + 1)
+			for i in indices[1:]
 		]
 	else:  # separate
 		startStmt = _prepStatement(parent().par.Startstmt)
 		lines = [startStmt] + [
 			_injectIndex(stepStmt, i)
-			for i in range(1, n + 1)
+			for i in indices
 		]
 	dat.write('\n'.join(lines))
 
@@ -33,6 +44,6 @@ def _prepStatement(stmt: 'Par'):
 	stmt = str(stmt)
 	if not stmt:
 		return ''
-	if not stmt.endswith(';'):
+	if not stmt.endswith(';') and '\n' not in stmt:
 		return stmt + ';'
 	return stmt

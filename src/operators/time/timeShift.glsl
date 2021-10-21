@@ -2,8 +2,8 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 	#ifdef RAYTK_USE_TIME
 	{
 		float shift = THIS_Shift;
-		#ifdef THIS_HAS_INPUT_2
-		shift += inputOp2(p, ctx);
+		#ifdef THIS_HAS_INPUT_shiftField
+		shift += inputOp_shiftField(p, ctx);
 		#endif
 		Time time = contextTime(ctx);
 		#if defined(THIS_Intervaltype_frames)

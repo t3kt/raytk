@@ -5,5 +5,7 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 	p.x = abs(p.x);
 	float l = length(p) - r;
 	float m = length(p-c*clamp(dot(p,c),0.0,r)); // c = sin/cos of the aperture
-	return createSdf(max(l,m*sign(c.y*p.x-c.x*p.y)));
+	float d = max(l,m*sign(c.y*p.x-c.x*p.y));
+	BODY();
+	return createSdf(d);
 }

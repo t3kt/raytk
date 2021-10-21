@@ -15,10 +15,11 @@ op:
     - CameraContext
     - LightContext
     - RayContext
+    - ParticleContext
     coordTypes:
     - vec2
     label: Scale Field
-    name: scale_definition_in
+    name: scaleField
     returnTypes:
     - float
     - vec4

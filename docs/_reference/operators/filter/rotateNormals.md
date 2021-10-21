@@ -22,6 +22,7 @@ op:
     - Sdf
     - Ray
     - Light
+    - Particle
   keywords:
   - material
   - modularmat

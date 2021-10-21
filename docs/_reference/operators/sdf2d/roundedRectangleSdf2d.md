@@ -20,10 +20,11 @@ op:
     - CameraContext
     - LightContext
     - RayContext
+    - ParticleContext
     coordTypes:
     - vec2
     label: Scale Field
-    name: scale_definition_in
+    name: scaleField
     returnTypes:
     - float
     - vec4
@@ -33,10 +34,11 @@ op:
     - CameraContext
     - LightContext
     - RayContext
+    - ParticleContext
     coordTypes:
     - vec2
     label: Roundness Field
-    name: roundness_definition_in
+    name: roundingField
     returnTypes:
     - float
     - vec4

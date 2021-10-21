@@ -1,7 +1,7 @@
 ReturnT thismap(CoordT p, ContextT ctx) {
 	float q;
-	#if defined(THIS_HAS_INPUT_1)
-	q = inputOp1(p, ctx);
+	#if defined(THIS_HAS_INPUT_coordField)
+	q = inputOp_coordField(p, ctx);
 	#elif defined(THIS_Axis_dist)
 	q = length(p);
 	#elif defined(THIS_Axis_x) || defined(THIS_COORD_TYPE_float) || (defined(THIS_Axis_z) && defined(THIS_COORD_TYPE_vec2))
@@ -14,10 +14,15 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 	#error invalidCoordinateSource
 	#endif
 
-	#ifdef THIS_Enableblend
-	float x = smoothstep(0, THIS_Blend, q - THIS_Edge);
+	#ifdef THIS_HAS_INPUT_edgeField
+	float edge = inputOp_edgeField(p, ctx);
 	#else
-	float x = step(THIS_Edge, q);
+	float edge = THIS_Edge;
+	#endif
+	#ifdef THIS_Enableblend
+	float x = smoothstep(0, THIS_Blend, q - edge);
+	#else
+	float x = step(edge, q);
 	#endif
 
 	#ifdef THIS_Reverse

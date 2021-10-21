@@ -14,7 +14,10 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 		float n = THIS_Number;
 	#endif
 	#ifdef THIS_HAS_OFFSET
-	float o = THIS_Offset;
+		float o = THIS_Offset;
+		#ifdef THIS_HAS_INPUT_offsetField
+		o *= inputOp_offsetField(p, ctx);
+		#endif
 	#endif
 	float h = smoothBlendRatio(res1.x, res2.x, r);
 	BODY();

@@ -2,12 +2,12 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 	p -= THIS_Translate;
 	vec3 p0 = p;
 	vec3 scale = THIS_Scale;
-	#ifdef THIS_HAS_INPUT_1
-	scale *= vec3(inputOp1(p, ctx));
+	#ifdef THIS_HAS_INPUT_scaleField
+	scale *= vec3(inputOp_scaleField(p, ctx));
 	#endif
 	float thickness = THIS_Thickness;
-	#ifdef THIS_HAS_INPUT_2
-	thickness *= inputOp2(p, ctx);
+	#ifdef THIS_HAS_INPUT_thicknessField
+	thickness *= inputOp_thicknessField(p, ctx);
 	#endif
 	vec3 b = scale;
 	float e = thickness;

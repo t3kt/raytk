@@ -110,8 +110,8 @@ vec3 THIS_atmosphere(
 }
 
 ReturnT thismap(CoordT p, ContextT ctx) {
-	#if defined(THIS_HAS_INPUT_1)
-	vec3 rayDir = inputOp1(p, ctx).xyz;
+	#if defined(THIS_HAS_INPUT_rayDirectionField)
+	vec3 rayDir = inputOp_rayDirectionField(p, ctx).xyz;
 	#elif defined(THIS_CONTEXT_TYPE_RayContext) || defined(THIS_CONTEXT_TYPE_MaterialContext)
 	vec3 rayDir = ctx.ray.dir;
 	#endif
