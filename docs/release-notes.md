@@ -22,9 +22,10 @@
     * New field inputs
         * Edge in stepField
         * Offset in combine (#684)
-        * Size in modulo1D (#695)
+        * Size, shift, offset in modulo1D, modulo2D, modulo3D (#695)
         * Coordinate fields in all pattern ops (#254, #691)
         * Radius in octahedronSdf and generalizedPolyhedronSdf (#693)
+        * Radius and thickness in torusSdf (#693)
     * New parameters
         * Limiting options for modulo2D and modulo3D (#660)
         * Mirroring support in modulo3D
@@ -39,17 +40,25 @@
     * Better index support in chopField (#613, #659)
     * New noise types in noiseField using the Wombat library
     * Added CHOP-based transforms in instance (#613)
+    * Added CHOP input in constantField for a quick way to get up to 4 values into a field (#682)
+    * Added new pattern variants to hexagonalTruchetPattern (#255)
+    * Support for proper iteration for upstream fields in iteratedTransform (#705, #94)
 * Changes (potentially breaking)
     * Mark combineChamfer, combineColumns, combineStairs as deprecated since their features are all supported in the combine op.
 * Fixes
     * Fix swapped inputs in pbrMat
     * Fix underside of pyramidSdf (#677)
+    * Fix bypass indicator in opImage (#700)
+    * Fix type handling bugs in mergeFields
 * Infrastructure / internals
     * Replaced all inputHandlers with new implementation
     * Improvements to multiInputHandler
     * Improvements to aggregateCodeGenerator
     * Support for compute shaders
     * Added build / test support for experimental builds (#674)
+    * Reduced lots of redundant copies of python modules, decreasing tox size (#701)
+    * Remove deprecated type settings in opDefinition
+    * Support for experimental builds (#674)
 
 ## v0.17
 
