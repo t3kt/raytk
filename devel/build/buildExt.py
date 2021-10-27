@@ -216,7 +216,6 @@ class BuildManager:
 		self.context.focusInNetworkPane(comp)
 		self.context.disableCloning(comp)
 		self.context.detachTox(comp)
-		comp.showCustomOnly = True
 		tools = RaytkTools()
 		tools.updateROPMetadata(comp)
 		tools.updateROPParams(comp)
@@ -231,6 +230,7 @@ class BuildManager:
 		self.processOperatorSubCompChildrenOf(comp)
 		# self.context.moveNetworkPane(comp)
 		if not comp.isPanel:
+			comp.showCustomOnly = True
 			self.log(f'Updating OP image for {comp}')
 			img = tools.updateOPImage(comp)
 			if img:
