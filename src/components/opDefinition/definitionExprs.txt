@@ -18,3 +18,5 @@ libraryNames	parent().par.Librarynames
 initPath	(parent().path + '/initCode') if parent().par.Initcode else ''
 stageInitPath	(parent().path + '/stageInitCode') if parent().par.Stageinitcode else ''
 opGlobalsPath	(parent().path + '/opGlobals') if parent().par.Opglobals else ''
+variableTable	(parent().path + '/variable_table') if op('variable_table').numRows > 1 else ''
+referenceTable	(parent().path + '/reference_table') if op('reference_table').numRows > 1 else ''

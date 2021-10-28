@@ -4,7 +4,7 @@ import re
 if False:
 	# noinspection PyUnresolvedReferences
 	from _stubs import *
-	from typing import Dict, List, Optional, Union, Tuple
+	from typing import Callable, Dict, List, Optional, Union, Tuple
 	from raytkUtil import OpDefParsT
 	from _stubs.PopDialogExt import PopDialogExt
 
@@ -578,6 +578,73 @@ def prepareMaterialTable(dat: 'scriptDAT'):
 			'MAT_' + parentPar().Name.eval(),
 			parent().path + '/materialCode',
 		])
+
+def prepareVariableTable(dat: 'scriptDAT'):
+	dat.clear()
+	dat.appendRow(['name', 'localName', 'label', 'dataType'])
+	table = parentPar().Variabletable.eval()
+	if not table or table.numRows < 2:
+		return
+	namePrefix = parentPar().Name.eval() + '_'
+	for i in range(1, table.numRows):
+		localName = table[i, 'name'].val
+		dat.appendRow([
+			namePrefix + localName,
+			localName,
+			table[i, 'label'] or localName,
+			table[i, 'dataType'],
+		])
+
+def prepareReferenceTable(dat: 'scriptDAT'):
+	dat.clear()
+	dat.appendRow(['name', 'localName', 'refType', 'sourcePath', 'sourceName', 'dataType'])
+	_prepareReferences(dat=dat, onError=None)
+
+def validateReferences(dat: 'scriptDAT'):
+	dat.clear()
+	dat.appendRow(['path', 'level', 'message'])
+	path = parent().path
+	def onError(err):
+		dat.appendRow([path, 'error', err])
+	_prepareReferences(onError=onError)
+
+def _prepareReferences(
+		dat: 'Optional[scriptDAT]' = None,
+		onError: 'Optional[Callable[[str], None]]' = None,
+):
+	table = parentPar().Referencetable.eval()
+	if not table or table.numRows < 2:
+		return []
+	namePrefix = parentPar().Name.eval() + '_'
+	for i in range(1, table.numRows):
+		localName = str(table[1, 'name'])
+		sourcePath = table[i, 'sourcePath']
+		if not sourcePath:
+			continue
+		sourceOp = op(sourcePath)
+		if not sourceOp:
+			if onError:
+				onError(f'Invalid source path for reference {localName}')
+			continue
+		globalName = namePrefix + localName
+		refType = table[1, 'refType']
+		sourceName = table[i, 'sourceName']
+		dataType = table[i, 'dataType']
+		if refType == 'variable':
+			if dat:
+				dat.appendRow([
+					globalName,
+					localName,
+					refType,
+					sourcePath,
+					sourceName,
+					dataType,
+				])
+			pass
+		else:
+			if onError:
+				onError(f'Invalid refType for reference {localName}')
+			continue
 
 def _isMaster():
 	host = _host()

@@ -86,6 +86,8 @@ class OpDefParsT(_OpMetaPars):
 	Macrotable: 'DatParamT'
 	Buffertable: 'DatParamT'
 	Texturetable: 'DatParamT'
+	Variabletable: 'DatParamT'
+	Referencetable: 'DatParamT'
 	Generatedmacrotables: 'StrParamT'
 	Params: 'StrParamT'
 	Specialparams: 'StrParamT'

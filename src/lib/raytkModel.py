@@ -299,6 +299,8 @@ class ROPDef(ModelObject):
 	bufferTable: Optional[TableData] = None
 	textureTable: Optional[TableData] = None
 	macroTable: Optional[TableData] = None
+	variableTable: Optional[TableData] = None
+	referenceTable: Optional[TableData] = None
 
 	help: Optional[TextData] = None
 	callbacks: Optional[TextData] = None
@@ -375,6 +377,8 @@ class ROPSpec(ModelObject):
 				bufferTable=_extractDatSetting(info.opDefPar.Buffertable, isText=False),
 				macroTable=_extractDatSetting(info.opDefPar.Macrotable, isText=False),
 				textureTable=_extractDatSetting(info.opDefPar.Texturetable, isText=False),
+				variableTable=_extractDatSetting(info.opDefPar.Variabletable, isText=False),
+				referenceTable=_extractDatSetting(info.opDefPar.Referencetable, isText=False),
 			),
 		)
 		if not skipParams:
