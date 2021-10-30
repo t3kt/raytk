@@ -826,31 +826,75 @@ class _CodeReducerFilter(_CodeFilter):
 		if not self.macros:
 			return code
 		lines = []
-		blockIsMatched = False
-		matching = True
+		state = _ReducerState()
 		for line in code.splitlines():
 			m = _filterLinePattern.fullmatch(line)
 			if m:
 				command = m.group(1)
 				symbol = m.group(3)
 				if command == 'endif':
-					blockIsMatched = False
-					matching = True
+					if symbol:
+						raise AssertionError('Invalid endif')
+					state.handleEndif()
 					continue
-				elif command == 'if' or command == 'elif':
-					if symbol in self.macros:
-						blockIsMatched = True
-						matching = True
-					else:
-						matching = False
+				elif command == 'if':
+					state.handleIf(symbol in self.macros)
+					continue
+				elif command == 'elif':
+					state.handleElif(symbol in self.macros)
 					continue
 				elif command == 'else':
-					if not blockIsMatched:
-						matching = True
+					if symbol:
+						raise AssertionError('Invalid else')
+					state.handleElse()
 					continue
-			if matching:
+			if state.isMatching():
 				lines.append(line)
 		return '\n'.join(lines)
+
+@dataclass
+class _ReducerFrame:
+	nowMatching: bool
+	hasMatched: bool = False
+
+class _ReducerState:
+	def __init__(self):
+		self._stack = []  # type: List[_ReducerFrame]
+
+	def handleIf(self, matching: bool):
+		self._stack.append(_ReducerFrame(nowMatching=matching, hasMatched=matching))
+
+	def handleElif(self, matching: bool):
+		if not self._stack:
+			raise AssertionError('Invalid elif without if')
+		frame = self._stack[-1]
+		if matching:
+			if frame.hasMatched:
+				raise AssertionError('Invalid elif, multiple conditions matched')
+			frame.nowMatching = True
+			frame.hasMatched = True
+		else:
+			frame.nowMatching = False
+
+	def handleElse(self):
+		if not self._stack:
+			raise AssertionError('Invalid else without if')
+		frame = self._stack[-1]
+		if frame.hasMatched:
+			frame.nowMatching = False
+		else:
+			frame.nowMatching = True
+			frame.hasMatched = True
+
+	def handleEndif(self):
+		if not self._stack:
+			raise AssertionError('Invalid endif without if')
+		self._stack.pop()
+
+	def isMatching(self):
+		if not self._stack:
+			return True
+		return self._stack[-1].nowMatching
 
 def _stringify(val: 'Union[str, DAT]'):
 	if val is None:
