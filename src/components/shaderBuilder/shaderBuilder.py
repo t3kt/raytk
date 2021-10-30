@@ -1,7 +1,7 @@
 from dataclasses import dataclass
 from raytkUtil import RaytkContext, simplifyNames
 import re
-from typing import Callable, Dict, List, Tuple, Union, Optional
+from typing import Callable, Dict, List, Set, Tuple, Union, Optional
 
 # noinspection PyUnreachableCode
 if False:
@@ -16,6 +16,7 @@ if False:
 		Simplifynames: BoolParamT
 		Inlinetypedefs: BoolParamT
 		Includemode: StrParamT
+		Filtermode: StrParamT
 
 	class _OwnerCompPar(_ConfigPar):
 		Globalprefix: DatParamT
@@ -370,6 +371,21 @@ class ShaderBuilder:
 		code = re.sub(pattern, replace, code)
 
 		return code
+
+	def _createCodeFilter(self) -> '_CodeFilter':
+		mode = self.configPar()['Filtermode']
+		if mode == 'filter':
+			return _CodeReducerFilter(macroTable=self.ownerComp.op('macroTable'))
+		else:  # macroize
+			return _CodeMacroizerFilter()
+
+	def filterCode(self, code: str) -> str:
+		if not code:
+			return ''
+		if '#pragma' not in code:
+			return code
+		filt = self._createCodeFilter()
+		return filt.processCodeBlock(code)
 
 	def buildPredeclarations(self):
 		return wrapCodeSection(self.ownerComp.par.Predeclarations.eval(), 'predeclarations')
@@ -770,6 +786,71 @@ class _SeparateUniformsParameterProcessor(_ParameterProcessor):
 
 	def _paramReference(self, i: int, paramTuplet: _ParamTupletSpec) -> str:
 		return paramTuplet.tuplet
+
+_filterLinePattern = re.compile(r'^\s*#pragma r:(if|elif|else|endif)(\s+(\w+))?$', re.MULTILINE)
+
+class _CodeFilter:
+	def processCodeBlock(self, code: str) -> str:
+		return code
+
+class _CodeMacroizerFilter(_CodeFilter):
+	def processCodeBlock(self, code: str) -> str:
+		if not code:
+			return ''
+		return _filterLinePattern.sub(self._replacement, code)
+
+	@staticmethod
+	def _replacement(m: 're.Match'):
+		command = m.group(1)
+		symbol = m.group(3)
+		if command == 'if':
+			return f'#ifdef {symbol}'
+		elif command == 'elif':
+			return f'#elif defined({symbol})'
+		elif command == 'else':
+			return '#else'
+		elif command == 'endif':
+			return '#endif'
+		else:
+			return m.group()
+
+
+class _CodeReducerFilter(_CodeFilter):
+	def __init__(self, macroTable: 'DAT'):
+		cells = macroTable.col(0)
+		self.macros = set(c.val for c in cells) if cells else set()  # type: Set[str]
+
+	def processCodeBlock(self, code: str) -> str:
+		if not code:
+			return ''
+		if not self.macros:
+			return code
+		lines = []
+		blockIsMatched = False
+		matching = True
+		for line in code.splitlines():
+			m = _filterLinePattern.fullmatch(line)
+			if m:
+				command = m.group(1)
+				symbol = m.group(3)
+				if command == 'endif':
+					blockIsMatched = False
+					matching = True
+					continue
+				elif command == 'if' or command == 'elif':
+					if symbol in self.macros:
+						blockIsMatched = True
+						matching = True
+					else:
+						matching = False
+					continue
+				elif command == 'else':
+					if not blockIsMatched:
+						matching = True
+					continue
+			if matching:
+				lines.append(line)
+		return '\n'.join(lines)
 
 def _stringify(val: 'Union[str, DAT]'):
 	if val is None:
