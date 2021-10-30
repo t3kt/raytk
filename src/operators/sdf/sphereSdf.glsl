@@ -1,13 +1,13 @@
 ReturnT thismap(CoordT p, ContextT ctx) {
 	float r = THIS_Radius;
-	#ifdef THIS_HAS_INPUT_radiusField
+	#pragma r:if THIS_HAS_INPUT_radiusField
 	r *= inputOp_radiusField(p, ctx);
-	#endif
+	#pragma r:endif
 	p -= THIS_Translate;
 	ReturnT res = createSdf(length(p)-r);
-	#if defined(THIS_Uvmode_bounds)
+	#pragma r:if THIS_Uvmode_bounds
 	assignUV(res, map01(p, vec3(-r), vec3(r)));
-	#elif defined(THIS_Uvmode_sphericalpolar)
+	#pragma r:elif THIS_Uvmode_sphericalpolar
 	assignUV(
 		res,
 		vec3(
@@ -15,7 +15,7 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 			acos(p.z / res.x),
 			atan(p.y, p.x)
 		));
-	#elif defined(THIS_Uvmode_sphere)
+	#pragma r:elif THIS_Uvmode_sphere
 	CoordT q = p / r;
 	// https://www.shadertoy.com/view/3dVSzm
 	assignUV(
@@ -26,6 +26,6 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 			0.
 		)
 	);
-	#endif
+	#pragma r:endif
 	return res;
 }
