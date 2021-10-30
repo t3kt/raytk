@@ -1,6 +1,9 @@
 // https://www.shadertoy.com/view/4tG3zW
 
 ReturnT thismap(CoordT p, ContextT ctx) {
+	#ifdef THIS_Faceoffsetfieldcoordmode_origpos
+	CoordT foFieldP = p;
+	#endif
 	float s = THIS_Divisions;
 	#if defined(THIS_Shape_dodecahedron)
 	vec3 n = pDodecahedron(p, int(s));
@@ -16,7 +19,15 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 	d = min(d, fCone(p, spikeSize, THIS_Spikelength, n, THIS_Spikeoffset));
 	#endif
 	#ifdef THIS_Enablefaces
-	d = min(d, fPlane(p, n, -THIS_Faceoffset));
+	#ifdef THIS_Faceoffsetfieldcoordmode_geopos
+	CoordT foFieldP = p;
+	#endif
+	#ifdef THIS_HAS_INPUT_faceOffset
+	float fo = inputOp_faceOffset(foFieldP, ctx);
+	#else
+	float fo = THIS_Faceoffset;
+	#endif
+	d = min(d, fPlane(p, n, -fo));
 	#endif
 	#ifdef THIS_HAS_INPUT_spikeSdf
 	p -= n * (THIS_Spikeoffset + THIS_Spikelength);
