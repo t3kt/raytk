@@ -375,7 +375,11 @@ class ShaderBuilder:
 	def _createCodeFilter(self) -> '_CodeFilter':
 		mode = self.configPar()['Filtermode']
 		if mode == 'filter':
-			return _CodeReducerFilter(macroTable=self.ownerComp.op('macroTable'))
+			_, typeDefMacros = self._buildTypedefs()
+			return _CodeReducerFilter(
+				macroTable=self.ownerComp.op('macroTable'),
+				typeDefMacros=typeDefMacros,
+			)
 		else:  # macroize
 			return _CodeMacroizerFilter()
 
@@ -816,9 +820,14 @@ class _CodeMacroizerFilter(_CodeFilter):
 
 
 class _CodeReducerFilter(_CodeFilter):
-	def __init__(self, macroTable: 'DAT'):
+	def __init__(
+			self,
+			macroTable: 'DAT',
+			typeDefMacros: 'Dict[str, str]',
+	):
 		cells = macroTable.col(0)
 		self.macros = set(c.val for c in cells) if cells else set()  # type: Set[str]
+		self.macros |= typeDefMacros.keys()
 
 	def processCodeBlock(self, code: str) -> str:
 		if not code:
@@ -869,10 +878,9 @@ class _ReducerState:
 			raise AssertionError('Invalid elif without if')
 		frame = self._stack[-1]
 		if matching:
-			if frame.hasMatched:
-				raise AssertionError('Invalid elif, multiple conditions matched')
-			frame.nowMatching = True
-			frame.hasMatched = True
+			if not frame.hasMatched:
+				frame.nowMatching = True
+				frame.hasMatched = True
 		else:
 			frame.nowMatching = False
 
