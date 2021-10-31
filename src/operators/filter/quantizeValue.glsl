@@ -1,29 +1,29 @@
 ReturnT thismap(CoordT p, ContextT ctx) {
 	ReturnT res = inputOp1(p, ctx);
-	#if defined(THIS_RETURN_TYPE_Sdf)
+	#pragma r:if THIS_RETURN_TYPE_Sdf
 	{
-		#ifdef THIS_Enablesmoothing
+		#pragma r:if THIS_Enablesmoothing
 		res.x = quantize(res.x, THIS_Size.x, THIS_Offset.x, THIS_Smoothing.x);
-		#else
+		#pragma r:else
 		res.x = quantizeHard(res.x, THIS_Size.x, THIS_Offset.x);
-		#endif
+		#pragma r:endif
 	}
-	#elif defined(THIS_RETURN_TYPE_float)
+	#pragma r:elif THIS_RETURN_TYPE_float
 	{
-		#ifdef THIS_Enablesmoothing
+		#pragma r:ifdef THIS_Enablesmoothing
 		res = quantize(res, THIS_Size.x, THIS_Offset.x, THIS_Smoothing.x);
-		#else
+		#pragma r:else
 		res = quantizeHard(res, THIS_Size.x, THIS_Offset.x);
-		#endif
+		#pragma r:endif
 	}
-	#else
+	#pragma r:else
 	{
-		#ifdef THIS_Enablesmoothing
+		#pragma r:if THIS_Enablesmoothing
 		res = quantize(res, THIS_Size, THIS_Offset, THIS_Smoothing);
-		#else
+		#pragma r:else
 		res = quantizeHard(res, THIS_Size, THIS_Offset);
-		#endif
+		#pragma r:endif
 	}
-	#endif
+	#pragma r:endif
 	return res;
 }

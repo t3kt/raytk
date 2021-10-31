@@ -1,25 +1,25 @@
 ReturnT thismap(CoordT p, ContextT ctx) {
-	#if defined(THIS_Scaletype_uniform)
+	#pragma r:if THIS_Scaletype_uniform
 	float scale = THIS_Uniformscale;
-	#ifdef THIS_HAS_INPUT_scaleField
+	#pragma r:if THIS_HAS_INPUT_scaleField
 	scale *= adaptAsFloat(inputOp_scaleField(p, ctx));
-	#endif
+	#pragma r:endif
 	float adjust = scale;
-	#elif defined(THIS_Scaletype_separate)
+	#pragma r:elif THIS_Scaletype_separate
 	CoordT scale = THIS_asCoordT(THIS_Scale);
-	#ifdef THIS_HAS_INPUT_scaleField
+	#pragma r:if THIS_HAS_INPUT_scaleField
 	scale *= THIS_asCoordT(fillToVec3(inputOp_scaleField(p, ctx)));
-	#endif
+	#pragma r:endif
 	float adjust = vmin(scale);
-	#else
+	#pragma r:else
 	#error invalidScaleType
-	#endif
+	#pragma r:endif
 
 	ReturnT res = inputOp1(p / scale, ctx);
-	#ifdef THIS_RETURN_TYPE_float
+	#pragma r:if THIS_RETURN_TYPE_float
 	res *= adjust;
-	#else
+	#pragma r:else
 	res.x *= adjust;
-	#endif
+	#pragma r:endif
 	return res;
 }

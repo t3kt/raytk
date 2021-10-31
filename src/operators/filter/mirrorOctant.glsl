@@ -1,57 +1,57 @@
 ReturnT thismap(CoordT p, ContextT ctx) {
 	vec2 q = p.THIS_PLANE;
 	vec2 cell = pMirrorOctant(q, THIS_Size);
-	#if defined(THIS_Iterationtype_sign)
+	#pragma r:if THIS_Iterationtype_sign
 	setIterationCell(ctx, cell);
-	#elif defined(THIS_Iterationtype_index)
+	#pragma r:elif THIS_Iterationtype_index
 	setIterationIndex(ctx, quadrantIndex(ivec2(cell)));
-	#endif
+	#pragma r:endif
 
 	float r = THIS_Rotateaxis;
-	#ifdef THIS_HAS_INPUT_rotateField
+	#pragma r:if THIS_HAS_INPUT_rotateField
 	{
-		#if defined(inputOp_rotateField_COORD_TYPE_float)
+		#pragma r:if inputOp_rotateField_COORD_TYPE_float
 		float q2 = length(p.THIS_PLANE);
-		#elif defined(inputOp_rotateField_COORD_TYPE_vec2)
+		#pragma r:elif inputOp_rotateField_COORD_TYPE_vec2
 		vec2 q2 = p.THIS_PLANE;
-		#elif defined(inputOp_rotateField_COORD_TYPE_vec3)
+		#pragma r:elif inputOp_rotateField_COORD_TYPE_vec3
 		vec3 q2 = p;
-		#else
+		#pragma r:else
 		#error invalidRotateAxisCoordType
-		#endif
+		#pragma r:endif
 
-		#if defined(inputOp_rotateField_RETURN_TYPE_Sdf)
+		#pragma r:if inputOp_rotateField_RETURN_TYPE_Sdf
 		r += radians(inputOp_rotateField(q2, ctx).x);
-		#elif defined(inputOp_rotateField_RETURN_TYPE_float)
+		#pragma r:elif inputOp_rotateField_RETURN_TYPE_float
 		r += radians(inputOp_rotateField(q2, ctx));
-		#else
+		#pragma r:else
 		#error invalidRotateAxisReturnType
-		#endif
+		#pragma r:endif
 	}
-	#endif
+	#pragma r:endif
 	pR(q, r);
 
 	vec2 offset = THIS_Offset;
 
-	#ifdef THIS_HAS_INPUT_offsetField
+	#pragma r:if THIS_HAS_INPUT_offsetField
 	{
-		#if defined(inputOp_offsetField_COORD_TYPE_float)
+		#pragma r:if inputOp_offsetField_COORD_TYPE_float
 		float q3 = p.THIS_AXIS;
-		#elif defined(inputOp_offsetField_COORD_TYPE_vec3)
+		#pragma r:elif inputOp_offsetField_COORD_TYPE_vec3
 		vec3 q3 = p;
-		#else
+		#pragma r:else
 		#error invalidOffsetCoordType
-		#endif
+		#pragma r:endif
 
-		#if defined(inputOp_offsetField_RETURN_TYPE_float)
+		#pragma r:if inputOp_offsetField_RETURN_TYPE_float
 		offset += vec2(inputOp_offsetField(q3, ctx));
-		#elif defined(inputOp_offsetField_RETURN_TYPE_vec4)
+		#pragma r:elif inputOp_offsetField_RETURN_TYPE_vec4
 		offset += inputOp_offsetField(q3, ctx).xy;
-		#else
+		#pragma r:else
 		#error invalidOffsetReturnType
-		#endif
+		#pragma r:endif
 	}
-	#endif
+	#pragma r:endif
 
 	p.THIS_PLANE = q - offset;
 	return inputOp1(p, ctx);
