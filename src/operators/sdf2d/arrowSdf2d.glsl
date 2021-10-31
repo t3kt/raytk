@@ -1,14 +1,14 @@
 // https://www.shadertoy.com/view/slj3Dd
 
 ReturnT thismap(CoordT p, ContextT ctx) {
-	#ifdef THIS_HAS_INPUT_points
+	#pragma r:if THIS_HAS_INPUT_points
 	vec4 pts = inputOp_points(p, ctx);
 	CoordT a = pts.xy;
 	CoordT b = pts.zw;
-	#else
+	#pragma r:else
 	CoordT a = THIS_Pointa;
 	CoordT b = THIS_Pointb;
-	#endif
+	#pragma r:endif
 
 	float w1 = THIS_Thickness;
 	float w2 = THIS_Headthickness;

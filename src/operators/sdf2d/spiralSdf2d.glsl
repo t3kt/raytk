@@ -24,11 +24,11 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 	float lower_r = a * exp(b * (t + 2.0 * PI * n));
 	float upper_r = lower_r * exp(2.0 * PI * b);
 
-	#ifdef THIS_Useradiuslimit
+	#pragma r:if THIS_Useradiuslimit
 	float r2 = r - THIS_Radiuslimit;
-	#else
+	#pragma r:else
 	float r2 = -r;
-	#endif
+	#pragma r:endif
 
 	//# return the minimum distance to the target point
 	float d =

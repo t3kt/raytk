@@ -1,24 +1,24 @@
 ReturnT thismap(CoordT p, ContextT ctx) {
-	#ifdef RAYTK_USE_TIME
+	#pragma r:if RAYTK_USE_TIME
 	{
 		float shift = THIS_Shift;
-		#ifdef THIS_HAS_INPUT_shiftField
+		#pragma r:if THIS_HAS_INPUT_shiftField
 		shift += inputOp_shiftField(p, ctx);
-		#endif
+		#pragma r:endif
 		Time time = contextTime(ctx);
-		#if defined(THIS_Intervaltype_frames)
+		#pragma r:if THIS_Intervaltype_frames
 			time_setFrame(time, wrapRange(time_frame(time) + shift, time_start(time), time_end(time)));
-		#elif defined(THIS_Intervaltype_seconds)
+		#pragma r:elif THIS_Intervaltype_seconds
 			time_setSeconds(time, wrapRange(time_seconds(time) + shift, (time_start(time)-1)*time_rate(time), (time_end(time)-1)*time_rate(time)));
-		#elif defined(THIS_Intervaltype_absframes)
+		#pragma r:elif THIS_Intervaltype_absframes
 			time_setAbsFrame(time, time_absFrame(time) + shift);
-		#elif defined(THIS_Intervaltype_absseconds)
+		#pragma r:elif THIS_Intervaltype_absseconds
 			time_setAbsSeconds(time, time_absSeconds(time) + shift);
-		#else
+		#pragma r:else
 			#error invalidIntervalType
-		#endif
+		#pragma r:endif
 		setContextTime(ctx, time);
 	}
-	#endif
+	#pragma r:endif
 	return inputOp1(p, ctx);
 }

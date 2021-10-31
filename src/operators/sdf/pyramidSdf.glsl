@@ -4,12 +4,12 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 	float pd = -p.y;
 	float h = THIS_Height;
 	float w = THIS_Width;
-	#ifdef THIS_HAS_INPUT_heightField
+	#pragma r:if THIS_HAS_INPUT_heightField
 	h *= inputOp_heightField(p, ctx);
-	#endif
-	#ifdef THIS_HAS_INPUT_widthField
+	#pragma r:endif
+	#pragma r:if THIS_HAS_INPUT_widthField
 	w *= inputOp_widthField(p, ctx);
-	#endif
+	#pragma r:endif
 	p /= vec3(w, 1., w);
 	float m2 = h*h + 0.25;
 

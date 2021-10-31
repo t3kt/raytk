@@ -1,8 +1,8 @@
 ReturnT thismap(CoordT p, ContextT ctx) {
 	float r = THIS_Radius;
-	#ifdef THIS_HAS_INPUT_radiusField
+	#pragma r:if THIS_HAS_INPUT_radiusField
 	r *= inputOp_radiusField(p, ctx);
-	#endif
+	#pragma r:endif
 	float d;
 	BODY();
 	return createSdf(d);

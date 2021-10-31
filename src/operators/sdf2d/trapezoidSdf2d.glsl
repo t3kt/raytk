@@ -1,11 +1,11 @@
 ReturnT thismap(CoordT p, ContextT ctx) {
 	ReturnT res;
-	#if defined(THIS_Mode_centered)
+	#pragma r:if THIS_Mode_centered
 	res = createSdf(sdTrapezoid(p, THIS_Width2, THIS_Width1, THIS_Height));
-	#elif defined(THIS_Mode_endpoints)
+	#pragma r:elif THIS_Mode_endpoints
 	res = createSdf(sdTrapezoid(p, THIS_Point1, THIS_Point2, THIS_Width1, THIS_Width2));
-	#else
+	#pragma r:else
 	#error invalidMode
-	#endif
+	#pragma r:endif
 	return res;
 }

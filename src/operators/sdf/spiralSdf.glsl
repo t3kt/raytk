@@ -16,14 +16,14 @@ Sdf thismap(vec3 p, ContextT ctx) {
 	mat2 m=mat2(vec2(cos(a),-sin(a)), vec2(sin(a),cos(a)));
 	pp=m*pp;//apply twist
 	pp=abs(pp);
-	#if defined(inputOp_crossSection_RETURN_TYPE_Sdf)
+	#pragma r:if inputOp_crossSection_RETURN_TYPE_Sdf
 	Sdf res = inputOp_crossSection(pp.xy, ctx);
 	return res;
-	#elif defined(inputOp_crossSection_RETURN_float)
+	#pragma r:elif inputOp_crossSection_RETURN_float
 	return createSdf(0.9 * (inputOp_crossSection(pp.xy, ctx) - THIS_Thickness));
-	#else
+	#pragma r:else
 	float e = THIS_Exponent;//superquadric param
 	float res= 0.9*(pow(pow(pp.x,e)+pow(pp.y,e),1./e)-THIS_Thickness*r);//distance have to be scaled down because this is just an approximation.
 	return createSdf(res);
-	#endif
+	#pragma r:endif
 }
