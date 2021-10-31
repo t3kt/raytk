@@ -859,6 +859,8 @@ class _CodeReducerFilter(_CodeFilter):
 					continue
 			if state.isMatching():
 				lines.append(line)
+		if state.hasOpenBlock():
+			raise AssertionError('Unmatched if block, missing endif')
 		return '\n'.join(lines)
 
 @dataclass
@@ -903,6 +905,9 @@ class _ReducerState:
 		if not self._stack:
 			return True
 		return all(f.nowMatching for f in self._stack)
+
+	def hasOpenBlock(self):
+		return bool(self._stack)
 
 def _stringify(val: 'Union[str, DAT]'):
 	if val is None:
