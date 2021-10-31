@@ -1,15 +1,15 @@
 ReturnT THIS_combine(ReturnT res1, ReturnT res2) {
-	#ifdef THIS_HAS_RADIUS
+	#pragma r:if THIS_HAS_RADIUS
 	float r = THIS_Radius;
-	#else
-	float r = 0;
-	#endif
-	#ifdef THIS_HAS_NUMBER
+	#pragma r:else
+	const float r = 0;
+	#pragma r:endif
+	#pragma r:if THIS_HAS_NUMBER
 	float n = THIS_Number;
-	#endif
-	#ifdef THIS_HAS_OFFSET
+	#pragma r:endif
+	#pragma r:if THIS_HAS_OFFSET
 	float o = THIS_Offset;
-	#endif
+	#pragma r:endif
 	float h = smoothBlendRatio(res1.x, res2.x, r);
 	COMBINE();
 	return res1;
