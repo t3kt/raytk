@@ -1,7 +1,7 @@
 from dataclasses import dataclass
 from raytkUtil import RaytkContext, simplifyNames
 import re
-from typing import Callable, Dict, List, Set, Tuple, Union, Optional
+from typing import Callable, Dict, Iterable, List, Set, Tuple, Union, Optional
 
 # noinspection PyUnreachableCode
 if False:
@@ -791,7 +791,7 @@ class _SeparateUniformsParameterProcessor(_ParameterProcessor):
 	def _paramReference(self, i: int, paramTuplet: _ParamTupletSpec) -> str:
 		return paramTuplet.tuplet
 
-_filterLinePattern = re.compile(r'^\s*#pragma r:(if|elif|else|endif)(\s+(\w+))?$', re.MULTILINE)
+_filterLinePattern = re.compile(r'^\s*#pragma r:(if|elif|else|endif)([ \t]+(.+))?$', re.MULTILINE)
 
 class _CodeFilter:
 	def processCodeBlock(self, code: str) -> str:
@@ -806,11 +806,11 @@ class _CodeMacroizerFilter(_CodeFilter):
 	@staticmethod
 	def _replacement(m: 're.Match'):
 		command = m.group(1)
-		symbol = m.group(3)
+		condition = _ReducerCondition.parse(m.group(3))
 		if command == 'if':
-			return f'#ifdef {symbol}'
+			return f'#if {condition.asMacroExpression()}'
 		elif command == 'elif':
-			return f'#elif defined({symbol})'
+			return f'#elif {condition.asMacroExpression()}'
 		elif command == 'else':
 			return '#else'
 		elif command == 'endif':
@@ -840,20 +840,24 @@ class _CodeReducerFilter(_CodeFilter):
 			m = _filterLinePattern.fullmatch(line)
 			if m:
 				command = m.group(1)
-				symbol = m.group(3)
+				condition = _ReducerCondition.parse(m.group(3))
 				if command == 'endif':
-					if symbol:
-						raise AssertionError('Invalid endif')
+					if condition:
+						raise AssertionError(f'Invalid endif: {line}')
 					state.handleEndif()
 					continue
 				elif command == 'if':
-					state.handleIf(symbol in self.macros)
+					if not condition:
+						raise AssertionError(f'Missing condition: {line}')
+					state.handleIf(condition.evaluate(self.macros))
 					continue
 				elif command == 'elif':
-					state.handleElif(symbol in self.macros)
+					if not condition:
+						raise AssertionError(f'Missing condition: {line}')
+					state.handleElif(condition.evaluate(self.macros))
 					continue
 				elif command == 'else':
-					if symbol:
+					if condition:
 						raise AssertionError('Invalid else')
 					state.handleElse()
 					continue
@@ -862,6 +866,61 @@ class _CodeReducerFilter(_CodeFilter):
 		if state.hasOpenBlock():
 			raise AssertionError('Unmatched if block, missing endif')
 		return '\n'.join(lines)
+
+@dataclass
+class _ReducerCondition:
+	operator: str
+	symbols: 'List[str]'
+
+	@classmethod
+	def parse(cls, expr: str):
+		expr = expr.strip() if expr else None
+		if not expr:
+			return None
+
+		symbols = []
+		isOr = False
+		isAnd = False
+
+		for token in expr.split():
+			if token == '||':
+				if isAnd:
+					raise AssertionError(f'Invalid expression (multiple operators): {expr!r}')
+				isOr = True
+			elif token == '&&':
+				if isOr:
+					raise AssertionError(f'Invalid expression (multiple operators): {expr!r}')
+				isAnd = True
+			elif not re.fullmatch(r'\w+', token):
+				raise AssertionError(f'Invalid expression (bad token): {expr!r}')
+			else:
+				symbols.append(token)
+		if not symbols:
+			if isOr or isAnd:
+				raise AssertionError(f'Invalid expression (operator but no symbols): {expr!r}')
+			return None
+		if isOr:
+			o = '||'
+		elif isAnd:
+			o = '&&'
+		else:
+			if len(symbols) > 1:
+				raise AssertionError(f'Invalid expression (missing operator): {expr!r}')
+			else:
+				o = '||'
+		return cls(operator=o, symbols=symbols)
+
+	def evaluate(self, definedSymbols: 'Iterable[str]'):
+		if not self.symbols:
+			return False
+		if self.operator == '&&':
+			return all(s in definedSymbols for s in self.symbols)
+		elif self.operator == '||':
+			return any(s in definedSymbols for s in self.symbols)
+		return False
+
+	def asMacroExpression(self):
+		return (' ' + self.operator + ' ').join([f'defined({s})' for s in self.symbols])
 
 @dataclass
 class _ReducerFrame:
