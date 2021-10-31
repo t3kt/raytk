@@ -2,6 +2,6 @@
   "meta": {
     "opStatus": "default",
     "opType": "raytk.operators.filter.modulo3D",
-    "opVersion": 12
+    "opVersion": 13
   }
 }

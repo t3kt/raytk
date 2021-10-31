@@ -1,11 +1,11 @@
 ReturnT thismap(CoordT p, ContextT ctx) {
 	vec3 planeNormal = THIS_AXIS_VEC;
-	#ifdef THIS_COORD_TYPE_vec2
+	#pragma r:if THIS_COORD_TYPE_vec2
 	vec3 q = vec3(p, 0.);
 	planeNormal.z = 0.;
-	#else
+	#pragma r:else
 	vec3 q = p;
-	#endif
+	#pragma r:endif
 	planeNormal = normalize(planeNormal);
 	q -= planeNormal * THIS_Shift * THIS_DIR;
 	float t = dot(q, planeNormal);
@@ -14,29 +14,29 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 		q = q - (2.*t) * planeNormal;
 	}
 	float i = sgn(t) * THIS_DIR;
-	#if defined(THIS_Iterationtype_sign)
+	#pragma r:if THIS_Iterationtype_sign
 	setIterationIndex(ctx, i);
-	#elif defined(THIS_Iterationtype_index)
+	#pragma r:elif THIS_Iterationtype_index
 	//  (-1, 1)  --> (1, 0)
 	setIterationIndex(ctx, (i < 0) ? 1: 0);
-	#endif
+	#pragma r:endif
 	float offset = THIS_Offset;
-	#ifdef THIS_Enableblend
+	#pragma r:if THIS_Enableblend
 	{
 		float b = clamp((abs(t)+offset) / THIS_Blendrange, 0., 1.);
-		#ifdef THIS_HAS_INPUT_blending
+		#pragma r:if THIS_HAS_INPUT_blending
 		offset += inputOp_blending(b, ctx) * THIS_Blendrange;
-		#else
+		#pragma r:else
 		offset += b * THIS_Blendrange;
 //		offset += smoothstep(0., 1., b) * THIS_Blendrange;
-		#endif
+		#pragma r:endif
 	}
-	#endif
+	#pragma r:endif
 	q -= planeNormal * offset * THIS_DIR;
-	#ifdef THIS_COORD_TYPE_vec2
+	#pragma r:if THIS_COORD_TYPE_vec2
 	p = q.xy;
-	#else
+	#pragma r:else
 	p = q;
-	#endif
+	#pragma r:endif
 	return inputOp1(p, ctx);
 }

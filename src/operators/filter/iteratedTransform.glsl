@@ -1,76 +1,76 @@
 ReturnT thismap(CoordT p, ContextT ctx) {
 	float valueAdjust = 1.0;
 	int n = int(THIS_Iterations);
-	#ifdef RAYTK_ORBIT_IN_SDF
+	#pragma r:if RAYTK_ORBIT_IN_SDF
 	vec4 orb = vec4(1000);
-	#endif
+	#pragma r:endif
 	TRANSFORM_INIT();
-	#if defined(THIS_Enablerotate) && defined(THIS_HAS_INPUT_rotateField)
+	#pragma r:if THIS_Enablerotate && THIS_HAS_INPUT_rotateField
 	vec3 baseRot = rotate;
-	#endif
-	#if defined(THIS_Enabletranslate) && defined(THIS_HAS_INPUT_translateField)
+	#pragma r:endif
+	#pragma r:if THIS_Enabletranslate && THIS_HAS_INPUT_translateField
 	vec3 baseT = translate;
-	#endif
-	#if defined(THIS_Enablescale) && defined(THIS_HAS_INPUT_scaleField)
-	#if defined(THIS_Scaletype_uniform)
+	#pragma r:endif
+	#pragma r:if THIS_Enablescale && THIS_HAS_INPUT_scaleField
+	#pragma r:if THIS_Scaletype_uniform
 	float baseS = uniformscale;
-	#else
+	#pragma r:else
 	vec3 baseS = scale;
-	#endif
-	#endif
+	#pragma r:endif
+	#pragma r:endif
 	for (int i = 0; i < n; i++) {
 		float ratio = float(i) / float(n - 1);
-	#if defined(THIS_Iterationtype_index)
+	#pragma r:if THIS_Iterationtype_index
 		setIterationIndex(ctx, float(i));
-	#elif defined(THIS_Iterationtype_ratio)
+	#pragma r:elif THIS_Iterationtype_ratio
 		setIterationIndex(ctx, ratio);
-	#endif
-	#if defined(THIS_Enablerotate) && defined(THIS_HAS_INPUT_rotateField)
-		#ifdef inputOp_rotateField_COORD_TYPE_float
+	#pragma r:endif
+	#pragma r:if THIS_Enablerotate && THIS_HAS_INPUT_rotateField
+		#pragma r:if inputOp_rotateField_COORD_TYPE_float
 		rotate = baseRot + inputOp_rotateField(ratio, ctx).xyz;
-		#else
+		#pragma r:else
 		rotate = baseRot + inputOp_rotateField(p, ctx).xyz;
-		#endif
-	#endif
-	#if defined(THIS_Enabletranslate) && defined(THIS_HAS_INPUT_translateField)
-		#ifdef inputOp_translateField_COORD_TYPE_float
+		#pragma r:endif
+	#pragma r:endif
+	#pragma r:if THIS_Enabletranslate && THIS_HAS_INPUT_translateField
+		#pragma r:if inputOp_translateField_COORD_TYPE_float
 		translate = baseT + inputOp_translateField(ratio, ctx).xyz;
-		#else
+		#pragma r:else
 		translate = baseT + inputOp_translateField(p, ctx).xyz;
-		#endif
-	#endif
-	#if defined(THIS_Enablescale) && defined(THIS_HAS_INPUT_scaleField)
+		#pragma r:endif
+	#pragma r:endif
+	#pragma r:if THIS_Enablescale && THIS_HAS_INPUT_scaleField
 		{
-			#ifdef inputOp_scaleField_COORD_TYPE_float
+			#pragma r:if inputOp_scaleField_COORD_TYPE_float
 			inputOp_scaleField_CoordT q0 = ratio;
-			#else
+			#pragma r:else
 			inputOp_scaleField_CoordT q0 = p;
-			#endif
-			#ifdef THIS_Scaletype_uniform
+			#pragma r:endif
+			#pragma r:if THIS_Scaletype_uniform
 			uniformscale = baseS * adaptAsFloat(inputOp_scaleField(q0, ctx));
-			#else
+			#pragma r:else
 			scale = baseS * fillToVec3(inputOp_scaleField(q0, ctx));
-			#endif
+			#pragma r:endif
 		}
-	#endif
-	#ifdef RAYTK_ORBIT_IN_SDF
+	#pragma r:endif
+	#pragma r:if RAYTK_ORBIT_IN_SDF
 		CoordT q = p;
-	#endif
+	#pragma r:endif
 		THIS_REFLECT();
-	#ifdef RAYTK_ORBIT_IN_SDF
+	#pragma r:if RAYTK_ORBIT_IN_SDF
 		orb = min(orb, vec4(abs(q - p), length(p)));
-	#endif
+	#pragma r:endif
 		TRANSFORM_CODE();
 		CUSTOM_CODE();
 	}
 	ReturnT res = inputOp1(p, ctx);
-#ifdef RAYTK_ORBIT_IN_SDF
+#pragma r:if RAYTK_ORBIT_IN_SDF
 	res.orbit = vec4(orb);
-#endif
-#ifdef THIS_RETURN_TYPE_Sdf
+#pragma r:endif
+#pragma r:if THIS_RETURN_TYPE_Sdf
 	res.x *= valueAdjust;
 	return res;
-#else
+#pragma r:else
 	return res * valueAdjust;
-#endif
+#pragma r:endif
 }

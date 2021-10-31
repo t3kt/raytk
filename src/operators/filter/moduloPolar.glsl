@@ -3,25 +3,25 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 	vec2 q = p.THIS_PLANE;
 	q -= pivot;
 	float r = THIS_Rotate;
-	#ifdef THIS_HAS_INPUT_rotateField
+	#pragma r:if THIS_HAS_INPUT_rotateField
 	r += radians(inputOp_rotateField(p, ctx));
-	#endif
+	#pragma r:endif
 	pR(q, r);
 	float cell = THIS_EXPR;
 	float pr = THIS_Prerotate;
-	#ifdef THIS_HAS_INPUT_preRotateField
+	#pragma r:if THIS_HAS_INPUT_preRotateField
 	pr += radians(inputOp_preRotateField(p, ctx));
-	#endif
+	#pragma r:endif
 	pR(q, pr);
 	vec2 o = THIS_Offset;
-	#ifdef THIS_HAS_INPUT_offsetField
+	#pragma r:if THIS_HAS_INPUT_offsetField
 	o += inputOp_offsetField(p, ctx).xy;
-	#endif
+	#pragma r:endif
 	p.THIS_PLANE = q - o + pivot;
-	#if defined(THIS_Iterationtype_index)
+	#pragma r:if THIS_Iterationtype_index
 	setIterationIndex(ctx, cell);
-	#elif defined(THIS_Iterationtype_ratio)
+	#pragma r:elif THIS_Iterationtype_ratio
 	setIterationIndex(ctx, cell / (THIS_Repetitions - 1.));
-	#endif
+	#pragma r:endif
 	return inputOp1(p, ctx);
 }

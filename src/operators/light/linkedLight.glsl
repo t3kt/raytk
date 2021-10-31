@@ -7,10 +7,10 @@ Light thismap(vec3 p, LightContext ctx) {
 	);
 	Light light;
 	light.color = vec3(THIS_cr, THIS_cg, THIS_cb);
-	#if defined(THIS_lighttype_point)
+	#pragma r:if THIS_lighttype_point
 	{
 		light.pos = lightMat[3].xyz;
-		#ifdef THIS_attenuated
+		#pragma r:if THIS_attenuated
 		// Based on TDAttenuateLight()
 		float d = length(p - light.pos);
 		float start = THIS_attenuationstart;
@@ -20,13 +20,13 @@ Light thismap(vec3 p, LightContext ctx) {
 		float rolloff = THIS_attenuationexp;
 		float lightAtten = attenuateLight(attenScale, attenBias, rolloff, d);
 		light.color *= lightAtten;
-		#endif
+		#pragma r:endif
 	}
-	#elif defined(THIS_lighttype_distant)
+	#pragma r:elif THIS_lighttype_distant
 	// not sure if this is correct
 	light.pos = p - (vec3(0, 1, 0) * mat3(lightMat));
-	#else
+	#pragma r:else
 	#error unsupportedLightType
-	#endif
+	#pragma r:endif
 	return light;
 }
