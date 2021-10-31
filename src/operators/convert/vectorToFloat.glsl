@@ -1,8 +1,8 @@
 ReturnT thismap(CoordT p, ContextT ctx) {
-	#ifndef THIS_USE_LENGTH
-	return inputOp1(p, ctx).THIS_PART;
-	#else
+	#pragma r:if THIS_USE_LENGTH
 	return length(inputOp1(p, ctx).THIS_PARTS);
-	#endif
+	#pragma r:else
+	return inputOp1(p, ctx).THIS_PART;
+	#pragma r:endif
 }
 
