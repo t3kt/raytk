@@ -2,6 +2,6 @@
   "meta": {
     "opStatus": "default",
     "opType": "raytk.operators.filter.assignUV",
-    "opVersion": 7
+    "opVersion": 8
   }
 }
