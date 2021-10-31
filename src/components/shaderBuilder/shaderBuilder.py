@@ -902,7 +902,7 @@ class _ReducerState:
 	def isMatching(self):
 		if not self._stack:
 			return True
-		return self._stack[-1].nowMatching
+		return all(f.nowMatching for f in self._stack)
 
 def _stringify(val: 'Union[str, DAT]'):
 	if val is None:
