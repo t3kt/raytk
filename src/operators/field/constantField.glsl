@@ -1,5 +1,5 @@
-#ifdef THIS_RETURN_TYPE_vec4
+#pragma r:if THIS_RETURN_TYPE_vec4
 #define thismap(p, ctx)  THIS_Value
-#else
+#pragma r:else
 #define thismap(p, ctx)  THIS_Value1
-#endif
+#pragma r:endif

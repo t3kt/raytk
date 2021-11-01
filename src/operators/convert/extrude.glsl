@@ -6,10 +6,10 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 		setIterationIndex(ctx, p.THIS_AXIS);
 		#pragma r:endif
 		res = inputOp_crossSection(p.THIS_PLANE, ctx);
-		#if defined(RAYTK_USE_UV) && defined(THIS_Uvmode_depth)
+		#pragma r:if RAYTK_USE_UV && THIS_Uvmode_depth
 		// Replace UV.Y if UV has been set already
 		res.uv.y = mix(res.uv.y, p.THIS_AXIS, res.uv.w);
-		#endif
+		#pragma r:endif
 	}
 	#pragma r:else
 	{
@@ -30,10 +30,10 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 		res = inputOp_crossSection(p.THIS_PLANE, ctx);
 		vec2 w = vec2(res.x, abs(p.THIS_AXIS - o) - h);
 		res.x = min(max(w.x,w.y), 0.0) + length(max(w, 0.0));
-		#if defined(RAYTK_USE_UV) && defined(THIS_Uvmode_depth)
+		#pragma r:if RAYTK_USE_UV && THIS_Uvmode_depth
 		// Replace UV.Y if UV has been set already
 		res.uv.y = mix(res.uv.y, w.y, ratio);
-		#endif
+		#pragma r:endif
 	}
 	#pragma r:endif
 	return res;

@@ -1,14 +1,14 @@
 CoordT THIS_transform(CoordT p, int i) {
-	#ifdef THIS_HAS_TRANSLATE
+	#pragma r:if THIS_HAS_TRANSLATE
 	p -= THIS_asCoordT(THIS_translates[i]);
-	#endif
-	#ifdef THIS_HAS_ROTATE
-	#ifdef THIS_COORD_TYPE_vec3
+	#pragma r:endif
+	#pragma r:if THIS_HAS_ROTATE
+	#pragma r:if THIS_COORD_TYPE_vec3
 	pRotateOnXYZ(p, radians(THIS_rotates[i]));
-	#elif defined(THIS_COORD_TYPE_vec2)
+	#pragma r:elif THIS_COORD_TYPE_vec2
 	pR(p, radians(THIS_rotates[i].z));
-	#endif
-	#endif
+	#pragma r:endif
+	#pragma r:endif
 	return p;
 }
 
@@ -22,13 +22,13 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 		setIterationIndex(ctx, i);
 		q = THIS_transform(p, i);
 		ReturnT res2 = inputOp1(q, ctx);
-		#ifdef THIS_COMBINE_EXPR_IS_SDF
+		#pragma r:if THIS_COMBINE_EXPR_IS_SDF
 		res1 = THIS_COMBINE_EXPR;
-		#else
+		#pragma r:else
 		float h = smoothBlendRatio(res1.x, res2.x, r);
 		res1.x = THIS_COMBINE_EXPR;
 		blendInSdf(res1, res2, 1.0 - h);
-		#endif
+		#pragma r:endif
 	}
 	return res1;
 }

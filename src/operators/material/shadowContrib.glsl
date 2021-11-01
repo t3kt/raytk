@@ -5,10 +5,10 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 		level = 1.0 - level;
 	}
 
-	#ifdef THIS_Usecolor
+	#pragma r:if THIS_Usecolor
 	res = vec4(THIS_Color * level, 1.);
-	#else
+	#pragma r:else
 	res = level;
-	#endif
+	#pragma r:endif
 	return res;
 }

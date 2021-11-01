@@ -4,15 +4,15 @@ vec4 THIS_iterationCapture = vec4(0.);
 
 ReturnT thismap(CoordT p, ContextT ctx) {
 	Sdf res = inputOp1(p, ctx);
-	#if defined(THIS_Uselocalpos) && defined(RAYTK_USE_MATERIAL_POS)
+	#pragma r:if THIS_Uselocalpos && RAYTK_USE_MATERIAL_POS
 	assignMaterialWithPos(res, THISMAT, p);
-	#else
+	#pragma r:else
 	assignMaterial(res, THISMAT);
-	#endif
+	#pragma r:endif
 	captureIterationFromMaterial(THIS_iterationCapture, ctx);
-	#if defined(THIS_Enableshadow) && defined(RAYTK_USE_SHADOW)
+	#pragma r:if THIS_Enableshadow && RAYTK_USE_SHADOW
 	res.useShadow = true;
-	#endif
+	#pragma r:endif
 	return res;
 }
 
@@ -22,18 +22,18 @@ vec3 THIS_getColor(vec3 p, MaterialContext matCtx) {
 	vec3 viewDir = normalize(-matCtx.ray.dir);
 
 	vec3 baseColor = THIS_Basecolor;
-	#ifdef THIS_HAS_INPUT_3
+	#pragma r:if THIS_HAS_INPUT_baseColorField
 	{
 		vec3 mp = getPosForMaterial(p, matCtx);
-		#if defined(inputOp3_RETURN_TYPE_vec4)
-		baseColor *= inputOp3(mp, matCtx).rgb;
-		#elif defined(inputOp3_RETURN_TYPE_float)
-		baseColor *= vec3(inputOp3(mp, matCtx));
-		#else
+		#pragma r:if inputOp_baseColorField_RETURN_TYPE_vec4
+		baseColor *= inputOp_baseColorField(mp, matCtx).rgb;
+		#pragma r:elif inputOp_baseColorField_RETURN_TYPE_float
+		baseColor *= vec3(inputOp_baseColorField(mp, matCtx));
+		#pragma r:else
 		#error invalidColorFieldReturnType
-		#endif
+		#pragma r:endif
 	}
-	#endif
+	#pragma r:endif
 
 	float occ = calcAO(p, matCtx.normal);
 	float diffAmt = orenNayarDiffuse(
@@ -47,9 +47,9 @@ vec3 THIS_getColor(vec3 p, MaterialContext matCtx) {
 	vec3 col = baseColor;
 	col += matCtx.light.color * diffAmt * THIS_Diffuse;
 
-	#if defined(THIS_Enableshadow) && defined(RAYTK_USE_SHADOW)
+	#pragma r:if THIS_Enableshadow && RAYTK_USE_SHADOW
 	col *= matCtx.shadedLevel;
-	#endif
+	#pragma r:endif
 
 	col *= mix(vec3(0.5), vec3(1.5), occ);
 	return col;

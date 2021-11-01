@@ -1,13 +1,13 @@
 ReturnT thismap(CoordT p, ContextT ctx) {
-	#if defined(THIS_RETURN_TYPE_float)
-		#if defined(THIS_COORD_TYPE_float)
+	#pragma r:if THIS_RETURN_TYPE_float
+		#pragma r:if THIS_COORD_TYPE_float
 			return p;
-		#elif defined(THIS_COORD_TYPE_vec2) && defined(THIS_Axis_z)
+		#pragma r:elif THIS_COORD_TYPE_vec2 && THIS_Axis_z
 			return p.x;
-		#else
+		#pragma r:else
 			return p.THIS_Axis;
-		#endif
-	#else
+		#pragma r:endif
+	#pragma r:else
 		return adaptAsVec4(p);
-	#endif
+	#pragma r:endif
 }

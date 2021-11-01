@@ -6,11 +6,11 @@ vec4 THIS_iterationCapture = vec4(0.);
 
 ReturnT thismap(CoordT p, ContextT ctx) {
 	Sdf res = inputOp1(p, ctx);
-	#if defined(THIS_Uselocalpos) && defined(RAYTK_USE_MATERIAL_POS)
+	#pragma r:if THIS_Uselocalpos && RAYTK_USE_MATERIAL_POS
 	assignMaterialWithPos(res, THISMAT, p);
-	#else
+	#pragma r:else
 	assignMaterial(res, THISMAT);
-	#endif
+	#pragma r:endif
 	captureIterationFromMaterial(THIS_iterationCapture, ctx);
 	return res;
 }
@@ -21,11 +21,11 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 */
 vec3 THIS_irradianceMap(vec3 p, MaterialContext matCtx) {
 //	return texture(iChannel1,n).xyz;
-	#ifdef THIS_HAS_INPUT_irradianceField
+	#pragma r:if THIS_HAS_INPUT_irradianceField
 	return inputOp_irradianceField(p, matCtx).xyz;
-	#else
+	#pragma r:else
 	return vec3(0.5);
-	#endif
+	#pragma r:endif
 }
 
 /*
@@ -37,13 +37,13 @@ vec3 THIS_reflectanceMap(vec3 p, MaterialContext matCtx, vec3 refl, float roughn
 	//	vec3 blurMap = THIS_IrradianceMap(n);
 	//	vec3 reflecMap = textureLod(iChannel0,refl,4.0 * roughness).xyz;
 	//	return mix(reflecMap,blurMap,roughness);
-	#ifdef THIS_HAS_INPUT_reflectanceField
+	#pragma r:if THIS_HAS_INPUT_reflectanceField
 	matCtx.lod = 4.0 * roughness;
 	matCtx.normal = refl;
-	vec3 reflectMap = inputOp3(p, matCtx).xyz;
-	#else
+	vec3 reflectMap = inputOp_reflectanceField(p, matCtx).xyz;
+	#pragma r:else
 	vec3 reflectMap = vec3(0.5);
-	#endif
+	#pragma r:endif
 	return mix(reflectMap, blurMap, roughness);
 }
 
@@ -57,22 +57,22 @@ vec3 THIS_getColor(vec3 p, MaterialContext matCtx) {
 	float roughness = THIS_Roughness;
 	float metallic = THIS_Metallic;
 
-	#ifdef THIS_HAS_INPUT_roughnessField
+	#pragma r:if THIS_HAS_INPUT_roughnessField
 	roughness *= inputOp_roughnessField(mp, matCtx);
-	#endif
-	#ifdef THIS_HAS_INPUT_metallicField
+	#pragma r:endif
+	#pragma r:if THIS_HAS_INPUT_metallicField
 	metallic *= inputOp_metallicField(mp, matCtx);
-	#endif
+	#pragma r:endif
 
 	vec3 baseColor = THIS_Basecolor;
-	#if defined(THIS_Usesurfacecolor) && defined(RAYTK_USE_SURFACE_COLOR)
+	#pragma r:if THIS_Usesurfacecolor && RAYTK_USE_SURFACE_COLOR
 	if (matCtx.result.color.w > 0.) {
 		baseColor *= matCtx.result.color.rgb;
 	}
-	#endif
-	#ifdef THIS_HAS_INPUT_baseColorField
+	#pragma r:endif
+	#pragma r:if THIS_HAS_INPUT_baseColorField
 		baseColor *= fillToVec3(inputOp_baseColorField(mp, matCtx));
-	#endif
+	#pragma r:endif
 
 	vec3 albedo = baseColor * THIS_Albedo;
 
@@ -126,9 +126,9 @@ vec3 THIS_getColor(vec3 p, MaterialContext matCtx) {
 		// Shadow
 //		vec3 sDir = normalize(lp - p);
 //		sAcum -= Shadow(p,sDir);
-		#if defined(THIS_Enableshadow) && defined(RAYTK_USE_SHADOW)
+		#pragma r:if THIS_Enableshadow && RAYTK_USE_SHADOW
 		sAcum *= matCtx.shadedLevel;
-		#endif
+		#pragma r:endif
 	}
 
 	// IBL
