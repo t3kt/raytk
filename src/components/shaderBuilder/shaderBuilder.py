@@ -868,9 +868,20 @@ class _CodeReducerFilter(_CodeFilter):
 		return '\n'.join(lines)
 
 @dataclass
+class _ReducerClause:
+	symbol: str
+	negate: bool = False
+
+	def evaluate(self, definedSymbols: 'Iterable[str]'):
+		if self.negate:
+			return self.symbol not in definedSymbols
+		else:
+			return self.symbol in definedSymbols
+
+@dataclass
 class _ReducerCondition:
 	operator: str
-	symbols: 'List[str]'
+	symbols: 'List[_ReducerClause]'
 
 	@classmethod
 	def parse(cls, expr: str):
@@ -891,10 +902,14 @@ class _ReducerCondition:
 				if isOr:
 					raise AssertionError(f'Invalid expression (multiple operators): {expr!r}')
 				isAnd = True
-			elif not re.fullmatch(r'\w+', token):
-				raise AssertionError(f'Invalid expression (bad token): {expr!r}')
 			else:
-				symbols.append(token)
+				neg = token.startswith('!')
+				if neg:
+					token = token[1:]
+				if not re.fullmatch(r'\w+', token):
+					raise AssertionError(f'Invalid expression (bad token): {expr!r}')
+				else:
+					symbols.append(_ReducerClause(token, neg))
 		if not symbols:
 			if isOr or isAnd:
 				raise AssertionError(f'Invalid expression (operator but no symbols): {expr!r}')
@@ -914,9 +929,9 @@ class _ReducerCondition:
 		if not self.symbols:
 			return False
 		if self.operator == '&&':
-			return all(s in definedSymbols for s in self.symbols)
+			return all(s.evaluate(definedSymbols) for s in self.symbols)
 		elif self.operator == '||':
-			return any(s in definedSymbols for s in self.symbols)
+			return any(s.evaluate(definedSymbols) for s in self.symbols)
 		return False
 
 	def asMacroExpression(self):
