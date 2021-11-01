@@ -808,9 +808,9 @@ class _CodeMacroizerFilter(_CodeFilter):
 		command = m.group(1)
 		condition = _ReducerCondition.parse(m.group(3))
 		if command == 'if':
-			return f'#if {condition.asMacroExpression()}'
+			return f'#if {condition.asExpr()}'
 		elif command == 'elif':
-			return f'#elif {condition.asMacroExpression()}'
+			return f'#elif {condition.asExpr()}'
 		elif command == 'else':
 			return '#else'
 		elif command == 'endif':
@@ -837,10 +837,13 @@ class _CodeReducerFilter(_CodeFilter):
 		lines = []
 		state = _ReducerState()
 		for line in code.splitlines():
-			m = _filterLinePattern.fullmatch(line)
-			if m:
-				command = m.group(1)
-				condition = _ReducerCondition.parse(m.group(3))
+			cleaned = line.lstrip()
+			if cleaned.startswith('#pragma r:'):
+				cleaned = cleaned[10:]
+				parts = cleaned.split(' ', maxsplit=1)
+				command = parts[0]
+				conditionExpr = parts[1] if len(parts) > 1 else None
+				condition = _ReducerCondition.parse(conditionExpr)
 				if command == 'endif':
 					if condition:
 						raise AssertionError(f'Invalid endif: {line}')
@@ -849,45 +852,29 @@ class _CodeReducerFilter(_CodeFilter):
 				elif command == 'if':
 					if not condition:
 						raise AssertionError(f'Missing condition: {line}')
-					state.handleIf(condition.evaluate(self.macros))
+					state.handleIf(condition.eval(self.macros))
 					continue
 				elif command == 'elif':
 					if not condition:
 						raise AssertionError(f'Missing condition: {line}')
-					state.handleElif(condition.evaluate(self.macros))
+					state.handleElif(condition.eval(self.macros))
 					continue
 				elif command == 'else':
 					if condition:
 						raise AssertionError('Invalid else')
 					state.handleElse()
 					continue
-			if state.isMatching():
+				else:
+					raise AssertionError(f'Invalid pragma: {line}')
+			if state.matching:
 				lines.append(line)
 		if state.hasOpenBlock():
 			raise AssertionError('Unmatched if block, missing endif')
 		return '\n'.join(lines)
 
-@dataclass
-class _ReducerClause:
-	symbol: str
-	negate: bool = False
-
-	def evaluate(self, definedSymbols: 'Iterable[str]'):
-		if self.negate:
-			return self.symbol not in definedSymbols
-		else:
-			return self.symbol in definedSymbols
-
-	def asMacroExpression(self):
-		if self.negate:
-			return f'!defined({self.symbol})'
-		else:
-			return f'defined({self.symbol})'
-
-@dataclass
 class _ReducerCondition:
-	operator: str
-	symbols: 'List[_ReducerClause]'
+	def eval(self, macros: 'Set[str]') -> bool: pass
+	def asExpr(self) -> str: pass
 
 	@classmethod
 	def parse(cls, expr: str):
@@ -895,7 +882,8 @@ class _ReducerCondition:
 		if not expr:
 			return None
 
-		symbols = []
+		posSyms = set()
+		negSyms = set()
 		isOr = False
 		isAnd = False
 
@@ -912,36 +900,81 @@ class _ReducerCondition:
 				neg = token.startswith('!')
 				if neg:
 					token = token[1:]
-				if not re.fullmatch(r'\w+', token):
-					raise AssertionError(f'Invalid expression (bad token): {expr!r}')
+				# if not re.fullmatch(r'\w+', token):
+				# 	raise AssertionError(f'Invalid expression (bad token): {expr!r}')
+				# else:
+				if neg:
+					negSyms.add(token)
 				else:
-					symbols.append(_ReducerClause(token, neg))
-		if not symbols:
+					posSyms.add(token)
+		if not posSyms and not negSyms:
 			if isOr or isAnd:
 				raise AssertionError(f'Invalid expression (operator but no symbols): {expr!r}')
 			return None
 		if isOr:
-			o = '||'
+			return _ReducerConditionOr(posSyms, negSyms)
 		elif isAnd:
-			o = '&&'
+			return _ReducerConditionAnd(posSyms, negSyms)
 		else:
-			if len(symbols) > 1:
+			if (len(posSyms) + len(negSyms)) > 1:
 				raise AssertionError(f'Invalid expression (missing operator): {expr!r}')
 			else:
-				o = '||'
-		return cls(operator=o, symbols=symbols)
+				if posSyms:
+					return _ReducerConditionSingle(posSyms.pop(), neg=False)
+				else:
+					return _ReducerConditionSingle(negSyms.pop(), neg=True)
 
-	def evaluate(self, definedSymbols: 'Iterable[str]'):
-		if not self.symbols:
-			return False
-		if self.operator == '&&':
-			return all(s.evaluate(definedSymbols) for s in self.symbols)
-		elif self.operator == '||':
-			return any(s.evaluate(definedSymbols) for s in self.symbols)
+class _ReducerConditionOr(_ReducerCondition):
+	def __init__(self, posSyms: 'Set[str]', negSyms: 'Set[str]'):
+		self.posSyms = posSyms
+		self.negSyms = negSyms
+
+	def eval(self, macros: 'Set[str]') -> bool:
+		if self.posSyms and _anyIn(self.posSyms, macros):
+			return True
+		if self.negSyms and not _allIn(self.negSyms, macros):
+			return True
 		return False
 
-	def asMacroExpression(self):
-		return (' ' + self.operator + ' ').join([s.asMacroExpression() for s in self.symbols])
+	def asExpr(self) -> str:
+		return ' || '.join([f'defined({s})' for s in self.posSyms] + [f'!defined({s})' for s in self.negSyms])
+
+class _ReducerConditionAnd(_ReducerCondition):
+	def __init__(self, posSyms: 'Set[str]', negSyms: 'Set[str]'):
+		self.posSyms = posSyms
+		self.negSyms = negSyms
+
+	def eval(self, macros: 'Set[str]') -> bool:
+		if self.posSyms and not _allIn(self.posSyms, macros):
+			return False
+		if self.negSyms and _anyIn(self.posSyms, macros):
+			return False
+		return True
+
+	def asExpr(self) -> str:
+		return ' && '.join([f'defined({s})' for s in self.posSyms] + [f'!defined({s})' for s in self.negSyms])
+
+class _ReducerConditionSingle(_ReducerCondition):
+	def __init__(self, sym: str, neg: bool):
+		self.sym = sym
+		self.neg = neg
+
+	def eval(self, macros: 'Set[str]') -> bool:
+		if self.neg:
+			return self.sym not in macros
+		else:
+			return self.sym in macros
+
+	def asExpr(self) -> str:
+		if self.neg:
+			return f'!defined({self.sym})'
+		else:
+			return f'defined({self.sym})'
+
+def _anyIn(s1: 'Set[str]', s2: 'Set[str]'):
+	return s1.intersection(s2)
+def _allIn(s1: 'Set[str]', s2: 'Set[str]'):
+	return s1.issubset(s2)
 
 @dataclass
 class _ReducerFrame:
@@ -951,9 +984,11 @@ class _ReducerFrame:
 class _ReducerState:
 	def __init__(self):
 		self._stack = []  # type: List[_ReducerFrame]
+		self.matching = True
 
 	def handleIf(self, matching: bool):
 		self._stack.append(_ReducerFrame(nowMatching=matching, hasMatched=matching))
+		self._updateState()
 
 	def handleElif(self, matching: bool):
 		if not self._stack:
@@ -965,6 +1000,7 @@ class _ReducerState:
 				frame.hasMatched = True
 		else:
 			frame.nowMatching = False
+		self._updateState()
 
 	def handleElse(self):
 		if not self._stack:
@@ -975,16 +1011,19 @@ class _ReducerState:
 		else:
 			frame.nowMatching = True
 			frame.hasMatched = True
+		self._updateState()
 
 	def handleEndif(self):
 		if not self._stack:
 			raise AssertionError('Invalid endif without if')
 		self._stack.pop()
+		self._updateState()
 
-	def isMatching(self):
+	def _updateState(self):
 		if not self._stack:
-			return True
-		return all(f.nowMatching for f in self._stack)
+			self.matching = True
+		else:
+			self.matching = all(f.nowMatching for f in self._stack)
 
 	def hasOpenBlock(self):
 		return bool(self._stack)
