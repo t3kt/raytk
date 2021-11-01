@@ -878,6 +878,12 @@ class _ReducerClause:
 		else:
 			return self.symbol in definedSymbols
 
+	def asMacroExpression(self):
+		if self.negate:
+			return f'!defined({self.symbol})'
+		else:
+			return f'defined({self.symbol})'
+
 @dataclass
 class _ReducerCondition:
 	operator: str
@@ -935,7 +941,7 @@ class _ReducerCondition:
 		return False
 
 	def asMacroExpression(self):
-		return (' ' + self.operator + ' ').join([f'defined({s})' for s in self.symbols])
+		return (' ' + self.operator + ' ').join([s.asMacroExpression() for s in self.symbols])
 
 @dataclass
 class _ReducerFrame:
