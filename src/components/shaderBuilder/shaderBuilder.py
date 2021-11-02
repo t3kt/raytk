@@ -1015,12 +1015,6 @@ def wrapCodeSection(code: 'Union[str, DAT, List[Union[str, DAT]]]', name: str):
 		return ' '
 	return f'///----BEGIN {name}\n{code.strip()}\n///----END {name}\n'
 
-def updateLibraryMenuPar(libsComp: 'COMP'):
-	p = parent().par.Librarynames  # type: Par
-	libs = libsComp.findChildren(type=DAT, maxDepth=1, tags=['library'])
-	libs.sort(key=lambda l: -l.nodeY)
-	p.menuNames = [lib.name for lib in libs]
-
 def _uniqueList(items: list):
 	results = []
 	for item in items:
