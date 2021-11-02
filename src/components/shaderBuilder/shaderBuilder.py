@@ -1,7 +1,7 @@
 from dataclasses import dataclass
 from raytkUtil import RaytkContext, simplifyNames
 import re
-from typing import Callable, Dict, Iterable, List, Set, Tuple, Union, Optional
+from typing import Callable, Dict, List, Set, Tuple, Union, Optional
 
 # noinspection PyUnreachableCode
 if False:
@@ -200,13 +200,12 @@ class ShaderBuilder:
 			for name, value in self._getMacros()
 		])
 
-	def buildMacroBlock(self):
-		decls = []
-		for name, value in self._getMacros():
-			if name.startswith('#define'):
-				decls.append(name + value)
-			else:
-				decls.append(f'#define {name} {value}')
+	@staticmethod
+	def buildMacroBlock(macroTable: 'DAT'):
+		decls = [
+			f'#define {macroTable[i, 0]} {macroTable[i, 1]}'
+			for i in range(macroTable.numRows)
+		]
 		decls = _uniqueList(decls)
 		code = wrapCodeSection(decls, 'macros')
 		# if self.configPar().Inlineparameteraliases:
@@ -286,10 +285,16 @@ class ShaderBuilder:
 			]
 		return wrapCodeSection(libBlocks, 'libraries')
 
-	def buildOpDataTypedefBlock(self):
+	def buildOpDataTypedefBlock(self, typeDefMacroTable: 'DAT'):
 		inline = self.configPar()['Inlinetypedefs']
-		typedefs, macros = self._buildTypedefs()
-		if typedefs:
+		if typeDefMacroTable.numRows:
+			typedefs = {}
+			macros = {}
+			for cells in typeDefMacroTable.rows():
+				if cells[2] == 'typedef':
+					typedefs[cells[0].val] = cells[1].val
+				else:
+					macros[cells[0].val] = cells[1].val
 			lines = []
 			if not inline:
 				# Primary typedef macros are not needed when they're being inlined
@@ -314,10 +319,9 @@ class ShaderBuilder:
 			lines = []
 		return wrapCodeSection(lines, 'opDataTypedefs')
 
-	def _buildTypedefs(self) -> 'Tuple[Dict[str, str], Dict[str, str]]':
+	def buildTypedefMacroTable(self, dat: 'scriptDAT'):
+		dat.clear()
 		defsTable = self._definitionTable()
-		typedefs = {}
-		macros = {}
 		coordTypeAdaptFuncs = {
 			'float': 'adaptAsFloat',
 			'vec2': 'adaptAsVec2',
@@ -333,35 +337,27 @@ class ShaderBuilder:
 			coordType = str(defsTable[row, 'coordType'])
 			contextType = str(defsTable[row, 'contextType'])
 			returnType = str(defsTable[row, 'returnType'])
-			typedefs.update({
-				name + '_CoordT': coordType,
-				name + '_ContextT': contextType,
-				name + '_ReturnT': returnType,
-			})
-			macros.update({
-				f'{name}_COORD_TYPE_{coordType}': '',
-				f'{name}_CONTEXT_TYPE_{contextType}': '',
-				f'{name}_RETURN_TYPE_{returnType}': '',
-			})
+			dat.appendRow([name + '_CoordT',  coordType, 'typedef'])
+			dat.appendRow([name + '_ContextT',  contextType, 'typedef'])
+			dat.appendRow([name + '_ReturnT',  returnType, 'typedef'])
+			dat.appendRow([name + '_COORD_TYPE_' + coordType, '', 'macro'])
+			dat.appendRow([name + '_CONTEXT_TYPE_' + contextType, '', 'macro'])
+			dat.appendRow([name + '_RETURN_TYPE_' + returnType, '', 'macro'])
 			if coordType in coordTypeAdaptFuncs:
-				macros[name + '_asCoordT'] = coordTypeAdaptFuncs[coordType]
+				dat.appendRow([name + '_asCoordT', coordTypeAdaptFuncs[coordType], 'macro'])
 			if returnType in returnTypeAdaptFuncs:
-				macros[name + '_asReturnT'] = returnTypeAdaptFuncs[returnType]
-		return typedefs, macros
+				dat.appendRow([name + '_asReturnT', returnTypeAdaptFuncs[returnType], 'macro'])
 
-	def inlineTypedefs(self, code: str) -> str:
+	def inlineTypedefs(self, code: str, typeDefMacroTable: 'DAT') -> str:
 		if not self.configPar()['Inlinetypedefs']:
 			return code
-		typedefs, macros = self._buildTypedefs()
-		if not typedefs:
+		if not typeDefMacroTable.numRows:
 			return code
 
-		replacements = dict(typedefs)
-		replacements.update({
-			k: v
-			for k, v in macros.items()
-			if v != ''
-		})
+		replacements = {
+			str(cells[0]): str(cells[1])
+			for cells in typeDefMacroTable.rows()
+		}
 
 		def replace(m: re.Match):
 			return replacements.get(m.group(0)) or m.group(0)
@@ -372,61 +368,26 @@ class ShaderBuilder:
 
 		return code
 
-	def _createCodeFilter(self) -> '_CodeFilter':
+	def _createCodeFilter(self, typeDefMacroTable: 'DAT') -> '_CodeFilter':
 		mode = self.configPar()['Filtermode']
 		if mode == 'filter':
-			_, typeDefMacros = self._buildTypedefs()
 			return _CodeReducerFilter(
 				macroTable=self.ownerComp.op('macroTable'),
-				typeDefMacros=typeDefMacros,
+				typeDefMacroTable=typeDefMacroTable,
 			)
 		else:  # macroize
 			return _CodeMacroizerFilter()
 
-	def filterCode(self, code: str) -> str:
+	def filterCode(self, code: str, typeDefMacroTable: 'DAT') -> str:
 		if not code:
 			return ''
 		if '#pragma' not in code:
 			return code
-		filt = self._createCodeFilter()
+		filt = self._createCodeFilter(typeDefMacroTable)
 		return filt.processCodeBlock(code)
 
 	def buildPredeclarations(self):
 		return wrapCodeSection(self.ownerComp.par.Predeclarations.eval(), 'predeclarations')
-
-	def _buildParameterExprs(self) -> 'List[Tuple[str, Union[str, float]]]':
-		paramDetails = self._parameterDetailTable()
-		if paramDetails.numRows < 2:
-			return []
-		suffixes = 'xyzw'
-		partAliases = []  # type: List[Tuple[str, Union[str, float]]]
-		mainAliases = []  # type: List[Tuple[str, Union[str, float]]]
-		inlineReadOnly = bool(self.configPar()['Inlinereadonlyparameters'])
-		paramVals = self._allParamVals()
-		paramTuplets = _ParamTupletSpec.fromTableRows(paramDetails)
-		for i, paramTuplet in enumerate(paramTuplets):
-			shouldInline = inlineReadOnly and paramTuplet.isReadOnly and paramTuplet.isPresentInChop(paramVals)
-			size = len(paramTuplet.parts)
-			if size == 1:
-				if shouldInline:
-					mainAliases.append((paramTuplet.parts[0], float(paramVals[paramTuplet.parts[0]])))
-				else:
-					mainAliases.append((paramTuplet.parts[0], f'vecParams[{i}].x'))
-			else:
-				if shouldInline:
-					partVals = [float(paramVals[part]) for part in paramTuplet.parts]
-					valsExpr = ','.join(str(v) for v in partVals)
-					mainAliases.append((paramTuplet.tuplet, f'vec{size}({valsExpr})'))
-					for partI, partVal in enumerate(partVals):
-						partAliases.append((paramTuplet.parts[partI], partVal))
-				else:
-					if size == 4:
-						mainAliases.append((paramTuplet.tuplet, f'vecParams[{i}]'))
-					else:
-						mainAliases.append((paramTuplet.tuplet, f'vec{size}(vecParams[{i}].{suffixes[:size]})'))
-					for partI, partName in enumerate(paramTuplet.parts):
-						partAliases.append((partName, f'vecParams[{i}].{suffixes[partI]}'))
-		return partAliases + mainAliases
 
 	def buildParameterAliases(self):
 		paramProcessor = self._createParamProcessor()
@@ -440,7 +401,7 @@ class ShaderBuilder:
 	def buildTextureDeclarations(self):
 		textureTable = self.ownerComp.op('texture_table')
 		offset = int(self.ownerComp.par.Textureindexoffset)
-		indexByType = {
+		indexByType: 'Dict[str, int]' = {
 			'2d': offset,
 			'3d': 0,
 			'cube': 0,
@@ -607,9 +568,6 @@ class ShaderBuilder:
 			error = f'Toolkit version mismatch ({", ".join(list(toolkitVersions.keys()))})'
 			dat.appendRow(['path', 'level', 'message'])
 			dat.appendRow([parent().path, 'warning', error])
-
-	def buildUniformTable(self, dat: 'scriptDAT'):
-		pass
 
 _materialParagraphPlaceholder = '// #include <materialParagraph>'
 
@@ -823,11 +781,15 @@ class _CodeReducerFilter(_CodeFilter):
 	def __init__(
 			self,
 			macroTable: 'DAT',
-			typeDefMacros: 'Dict[str, str]',
+			typeDefMacroTable: 'DAT',
 	):
 		cells = macroTable.col(0)
 		self.macros = set(c.val for c in cells) if cells else set()  # type: Set[str]
-		self.macros |= typeDefMacros.keys()
+		for cells in typeDefMacroTable.rows():
+			n = cells[0]
+			v = cells[1]
+			if v:
+				self.macros.add(str(n))
 
 	def processCodeBlock(self, code: str) -> str:
 		if not code:
