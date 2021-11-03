@@ -11,8 +11,14 @@ def update():
 		dat = parent().par.Table.eval()
 		if not dat or dat.numRows < 2:
 			return
-		names = [c.val for c in dat.col('name')[1:]]
-		labels = [c.val for c in dat.col('label')[1:]]
+		names = []
+		labels = []
+		for i in range(1, dat.numRows):
+			name = dat[i, 'name'].val
+			if name.startswith('-'):
+				continue
+			names.append(name)
+			labels.append(dat[i, 'label'].val)
 		pars = host.pars(*(mod.tdu.split(parent().par.Param)))
 		for par in pars:
 			par.menuNames = names
