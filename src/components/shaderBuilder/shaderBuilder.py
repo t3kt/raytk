@@ -150,44 +150,30 @@ class ShaderBuilder:
 					results.append(o)
 		return results
 
-	def _getMacros(self) -> 'List[Tuple[str, str]]':
+	def buildMacroTable(self, dat: 'DAT'):
+		dat.clear()
 		tables = [self.ownerComp.par.Globalmacrotable.eval()]
 		tables += self.getOpsFromDefinitionColumn('macroTable')
-		namesAndVals = []
 		for table in tables:
 			if not table:
 				continue
 			for row in range(table.numRows):
 				if table.numCols == 3:
-					if table[row, 0].val in ('0', 'False'):
+					if table[row, 0] in ('0', 'False'):
 						continue
-					name = table[row, 1].val
-					value = table[row, 2].val
+					name = table[row, 1].val.strip()
+					if name:
+						dat.appendRow([name, table[row, 2]])
 				else:
-					name = table[row, 0].val
-					if table.numCols > 1:
-						value = table[row, 1].val
-					else:
-						value = ''
-				if value:
-					value = ' ' + value
-				if not name.strip():
-					continue
-				namesAndVals.append((name, value))
+					name = dat[row, 0].val.strip()
+					if not name:
+						continue
+					dat.appendRow([name, table[row, 1] if table.numCols > 1 else ''])
 		outputBufferTable = self._outputBufferTable()
-		if outputBufferTable.numRows > 1:
-			for row in range(1, outputBufferTable.numRows):
-				macro = outputBufferTable[row, 'macro'].val
-				if macro:
-					namesAndVals.append((macro, ''))
-		return namesAndVals
-
-	def buildMacroTable(self, dat: 'DAT'):
-		dat.clear()
-		dat.appendRows([
-			[name, value]
-			for name, value in self._getMacros()
-		])
+		for row in range(1, outputBufferTable.numRows):
+			name = outputBufferTable[row, 'macro'].val.strip()
+			if name:
+				dat.appendRow([name, ''])
 
 	@staticmethod
 	def buildMacroBlock(macroTable: 'DAT'):
