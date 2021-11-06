@@ -37,7 +37,7 @@ if False:
 		par: '_ConfigPar'
 
 class ShaderBuilder:
-	def __init__(self, ownerComp: '_OwnerComp'):
+	def __init__(self, ownerComp: 'Union[_OwnerComp, COMP]'):
 		self.ownerComp = ownerComp
 
 	def _config(self) -> '_ConfigComp':
@@ -135,7 +135,7 @@ class ShaderBuilder:
 			]
 		return wrapCodeSection(code, 'globals')
 
-	def getOpsFromDefinitionColumn(self, column: str):
+	def _getOpsFromDefinitionColumn(self, column: str):
 		defsTable = self._definitionTable()
 		if defsTable.numRows < 2 or not defsTable[0, column]:
 			return []
@@ -153,7 +153,7 @@ class ShaderBuilder:
 	def buildMacroTable(self, dat: 'DAT'):
 		dat.clear()
 		tables = [self.ownerComp.par.Globalmacrotable.eval()]
-		tables += self.getOpsFromDefinitionColumn('macroTable')
+		tables += self._getOpsFromDefinitionColumn('macroTable')
 		for table in tables:
 			if not table:
 				continue
@@ -188,7 +188,7 @@ class ShaderBuilder:
 		# 	return processor.processCodeBlock(code)
 		return code
 
-	def getLibraryDats(self, onWarning: Callable[[str], None] = None) -> 'List[DAT]':
+	def _getLibraryDats(self, onWarning: Callable[[str], None] = None) -> 'List[DAT]':
 		requiredLibNames = self.ownerComp.par.Librarynames.eval().strip().split(' ')  # type: List[str]
 		requiredLibNames = [n for n in requiredLibNames if n]
 		defsTable = self._definitionTable()
@@ -247,7 +247,7 @@ class ShaderBuilder:
 			inlineAll = True
 		else:
 			inlineAll = mode == 'inlineall'
-		libraries = self.getLibraryDats(onWarning)
+		libraries = self._getLibraryDats(onWarning)
 		if inlineAll:
 			libBlocks = [
 				f'// Library: <{lib.path}>\n{lib.text}'
@@ -475,11 +475,11 @@ class ShaderBuilder:
 		)
 
 	def buildOpGlobalsBlock(self):
-		dats = self.getOpsFromDefinitionColumn('opGlobalsPath')
+		dats = self._getOpsFromDefinitionColumn('opGlobalsPath')
 		return wrapCodeSection(dats, 'opGlobals')
 
 	def buildInitBlock(self):
-		dats = self.getOpsFromDefinitionColumn('initPath')
+		dats = self._getOpsFromDefinitionColumn('initPath')
 		code = _combineCode(dats)
 		if not code.strip():
 			return ' '
@@ -491,7 +491,7 @@ class ShaderBuilder:
 		], 'init')
 
 	def buildStageInitBlock(self):
-		dats = self.getOpsFromDefinitionColumn('stageInitPath')
+		dats = self._getOpsFromDefinitionColumn('stageInitPath')
 		code = _combineCode(dats)
 		if not code.strip():
 			return ' '
@@ -503,7 +503,7 @@ class ShaderBuilder:
 		], 'stageInit')
 
 	def buildFunctionsBlock(self):
-		dats = self.getOpsFromDefinitionColumn('functionPath')
+		dats = self._getOpsFromDefinitionColumn('functionPath')
 		return wrapCodeSection(dats, 'functions')
 
 	def buildBodyBlock(self, materialTable: 'DAT'):
