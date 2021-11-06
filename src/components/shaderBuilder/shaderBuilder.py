@@ -174,24 +174,13 @@ class ShaderBuilder:
 				if not name.strip():
 					continue
 				namesAndVals.append((name, value))
-		for outputBuffer in self._getOutputBufferSpecs():
-			if outputBuffer.macro:
-				namesAndVals.append((outputBuffer.macro, ''))
+		outputBufferTable = self._outputBufferTable()
+		if outputBufferTable.numRows > 1:
+			for row in range(1, outputBufferTable.numRows):
+				macro = outputBufferTable[row, 'macro'].val
+				if macro:
+					namesAndVals.append((macro, ''))
 		return namesAndVals
-
-	def _getOutputBufferSpecs(self) -> 'List[_OutputBufferSpec]':
-		table = self._outputBufferTable()
-		if table.numRows <= 1:
-			return []
-		return [
-			_OutputBufferSpec(
-				name=table[row, 'name'].val,
-				label=table[row, 'label'].val,
-				macro=table[row, 'macro'].val,
-				index=row - 1,
-			)
-			for row in range(1, table.numRows)
-		]
 
 	def buildMacroTable(self, dat: 'DAT'):
 		dat.clear()
@@ -466,19 +455,22 @@ class ShaderBuilder:
 		return wrapCodeSection(decls, 'materials')
 
 	def buildOutputBufferDeclarations(self):
+		outputBufferTable = self._outputBufferTable()
+		if outputBufferTable.numRows <= 1:
+			return ' '
+
 		outputBuffers = self._outputBufferTable()
 		if outputBuffers.numRows < 2:
 			return ' '
-		specs = self._getOutputBufferSpecs()
 		if self.ownerComp.par.Shadertype == 'compute':
 			decls = [
-				spec.computeOutputDeclaration()
-				for spec in specs
+				f'#define {outputBufferTable[row, "name"]} mTDComputeOutputs[{row - 1}]'
+				for row in range(1, outputBufferTable.numRows)
 			]
 		else:
 			decls = [
-				spec.fragmentOutputDeclaration()
-				for spec in specs
+				f'layout(location = {row - 1}) out vec4 {outputBufferTable[row, "name"]};'
+				for row in range(1, outputBufferTable.numRows)
 			]
 
 		return wrapCodeSection(decls, 'outputBuffers')
@@ -608,19 +600,6 @@ class _ParamExpr:
 	name: str
 	expr: Union[str, float]
 	type: str
-
-@dataclass
-class _OutputBufferSpec:
-	name: str
-	index: int
-	label: Optional[str] = None
-	macro: Optional[str] = None
-
-	def fragmentOutputDeclaration(self):
-		return f'layout(location = {self.index}) out vec4 {self.name};'
-
-	def computeOutputDeclaration(self):
-		return f'#define {self.name} mTDComputeOutputs[{self.index}]'
 
 @dataclass
 class _UniformSpec:
