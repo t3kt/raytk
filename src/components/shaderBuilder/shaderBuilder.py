@@ -155,7 +155,7 @@ class ShaderBuilder:
 		tables = [self.ownerComp.par.Globalmacrotable.eval()]
 		tables += self._getOpsFromDefinitionColumn('macroTable')
 		for table in tables:
-			if not table:
+			if not table or not table.numRows:
 				continue
 			for row in range(table.numRows):
 				if table.numCols == 3:
@@ -165,7 +165,7 @@ class ShaderBuilder:
 					if name:
 						dat.appendRow([name, table[row, 2]])
 				else:
-					name = dat[row, 0].val.strip()
+					name = table[row, 0].val.strip()
 					if not name:
 						continue
 					dat.appendRow([name, table[row, 1] if table.numCols > 1 else ''])
