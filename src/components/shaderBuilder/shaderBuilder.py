@@ -752,9 +752,7 @@ class _CodeReducerFilter(_CodeFilter):
 		self.macros = set(c.val for c in cells) if cells else set()  # type: Set[str]
 		for cells in typeDefMacroTable.rows():
 			n = cells[0]
-			v = cells[1]
-			if v:
-				self.macros.add(str(n))
+			self.macros.add(str(n))
 
 	def processCodeBlock(self, code: str) -> str:
 		if not code:
