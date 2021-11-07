@@ -574,20 +574,6 @@ class ShaderBuilder:
 		)
 		writer.run()
 
-def onCook(dat):
-	# noinspection PyUnreachableCode
-	if False:
-		ext.shaderBuilder = ShaderBuilder(COMP())
-	ext.shaderBuilder.V2_writeShader(
-		dat,
-		macroTable=dat.inputs[0],
-		typeDefMacroTable=dat.inputs[1],
-		textureTable=dat.inputs[2],
-		bufferTable=dat.inputs[3],
-		materialTable=dat.inputs[4],
-		outputBufferTable=dat.inputs[5],
-	)
-
 @dataclass
 class _V2_Writer:
 	sb: 'ShaderBuilder'
@@ -777,7 +763,7 @@ class _V2_Writer:
 		self._startBlock('outputBuffers')
 		if self.ownerComp.par.Shadertype == 'compute':
 			for name in self.outputBufferTable.col('name')[1:]:
-				self._writeMacro(name, f'mTDComputeOutputs[{name.row}]')
+				self._writeMacro(name, f'mTDComputeOutputs[{name.row - 1}]')
 		else:
 			for name in self.outputBufferTable.col('name')[1:]:
 				self._write(f'layout(location = {name.row - 1}) out vec4 {name};\n')
@@ -790,6 +776,7 @@ class _V2_Writer:
 		self._write('void initOutputs() {\n')
 		for name in self.outputBufferTable.col('name')[1:]:
 			self._write(f'{name} = vec4(0.);\n')
+		self._write('}\n')
 		self._endBlock('outputInit')
 
 	def _writeOpGlobals(self):
@@ -936,7 +923,6 @@ class _ParamTupletSpec:
 
 @dataclass
 class _ParamExpr:
-	name: str
 	expr: Union[str, float]
 	type: str
 
@@ -960,6 +946,8 @@ class _UniformSpec:
 		else:
 			raise Exception(f'Invalid uniformType: {self.uniformType!r}')
 
+_paramAliasPattern = re.compile(r'\bRTK_\w+\b')
+
 class _ParameterProcessor:
 	def __init__(
 			self,
@@ -973,7 +961,7 @@ class _ParameterProcessor:
 		self.inlineAliases = configPar.Inlineparameteraliases
 		self.paramVals = paramVals
 		self.aliasMode = str(configPar['Paramaliasmode'] or 'macro')
-		self.paramExprs = None  # type: Optional[List[_ParamExpr]]
+		self.paramExprs = None  # type: Optional[Dict[str, _ParamExpr]]
 
 	def globalDeclarations(self) -> List[str]:
 		raise NotImplementedError()
@@ -986,27 +974,29 @@ class _ParameterProcessor:
 		self._initParamExprs()
 		if self.aliasMode == 'globalvar':
 			return [
-				f'{paramExpr.type} {paramExpr.name} = {paramExpr.expr};'
-				for paramExpr in self.paramExprs
+				f'{paramExpr.type} {name} = {paramExpr.expr};'
+				for name, paramExpr in self.paramExprs.items()
 			]
 		else:  # self.aliasMode == 'macro'
 			return [
-				f'#define {paramExpr.name} {paramExpr.expr}'
-				for paramExpr in self.paramExprs
+				f'#define {name} {expr.expr}'
+				for name, expr in self.paramExprs.items()
 			]
 
 	def processCodeBlock(self, code: str) -> str:
 		if not self.inlineAliases or not code:
 			return code
 		self._initParamExprs()
-		for paramExpr in self.paramExprs:
-			code = re.sub(r'\b' + re.escape(paramExpr.name) + r'\b', paramExpr.expr, code)
+		def replace(m: 're.Match'):
+			paramExpr = self.paramExprs.get(m.group(0))
+			return paramExpr.expr if paramExpr else m.group(0)
+		code = _paramAliasPattern.sub(replace, code)
 		return code
 
 	def _initParamExprs(self):
 		if self.paramExprs is not None:
 			return
-		self.paramExprs = []  # type: List[_ParamExpr]
+		self.paramExprs = {}
 		suffixes = 'xyzw'
 		paramTuplets = _ParamTupletSpec.fromTableRows(self.paramDetailTable)
 		for i, paramTuplet in enumerate(paramTuplets):
@@ -1015,31 +1005,29 @@ class _ParameterProcessor:
 			paramRef = self._paramReference(i, paramTuplet)
 			if size == 1:
 				name = paramTuplet.parts[0]
-				self.paramExprs.append(_ParamExpr(
-					name,
+				self.paramExprs[name] = _ParamExpr(
 					repr(float(self.paramVals[name])) if useConstant else f'{paramRef}.x',
 					'float'
-				))
+				)
 			else:
 				if useConstant:
 					partVals = [float(self.paramVals[part]) for part in paramTuplet.parts]
 					valsExpr = ','.join(str(v) for v in partVals)
 					parType = f'vec{size}'
-					self.paramExprs.append(_ParamExpr(paramTuplet.tuplet, f'{parType}({valsExpr})', parType))
+					self.paramExprs[paramTuplet.tuplet] = _ParamExpr(f'{parType}({valsExpr})', parType)
 					for partI, partVal in enumerate(partVals):
-						self.paramExprs.append(_ParamExpr(paramTuplet.parts[partI], partVal, 'float'))
+						self.paramExprs[paramTuplet.parts[partI]] = _ParamExpr(partVal, 'float')
 				else:
 					if size == 4:
-						self.paramExprs.append(_ParamExpr(paramTuplet.tuplet, paramRef, 'vec4'))
+						self.paramExprs[paramTuplet.tuplet] = _ParamExpr(paramRef, 'vec4')
 					else:
 						parType = f'vec{size}'
-						self.paramExprs.append(_ParamExpr(
-							paramTuplet.tuplet,
+						self.paramExprs[paramTuplet.tuplet] = _ParamExpr(
 							f'{parType}({paramRef}.{suffixes[:size]})',
 							parType
-						))
+						)
 					for partI, partName in enumerate(paramTuplet.parts):
-						self.paramExprs.append(_ParamExpr(partName, f'{paramRef}.{suffixes[partI]}', 'float'))
+						self.paramExprs[partName] = _ParamExpr(f'{paramRef}.{suffixes[partI]}', 'float')
 
 	def _paramReference(self, i: int, paramTuplet: _ParamTupletSpec) -> str:
 		raise NotImplementedError()
