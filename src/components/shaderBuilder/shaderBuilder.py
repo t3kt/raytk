@@ -552,7 +552,7 @@ class ShaderBuilder:
 			self,
 			dat: 'scriptDAT',
 			macroTable: 'DAT',
-			typedefMacroTable: 'DAT',
+			typeDefMacroTable: 'DAT',
 			textureTable: 'DAT',
 			bufferTable: 'DAT',
 			materialTable: 'DAT',
@@ -563,8 +563,9 @@ class ShaderBuilder:
 			out=dat,
 			defTable=self._definitionTable(),
 			paramProc=self._createParamProcessor(),
+			codeFilter=self._createCodeFilter(typeDefMacroTable=typeDefMacroTable),
 			macroTable=macroTable,
-			typedefMacroTable=typedefMacroTable,
+			typeDefMacroTable=typeDefMacroTable,
 			libraryDats=self._getLibraryDats(),
 			textureTable=textureTable,
 			bufferTable=bufferTable,
@@ -580,7 +581,7 @@ def onCook(dat):
 	ext.shaderBuilder.V2_writeShader(
 		dat,
 		macroTable=dat.inputs[0],
-		typedefMacroTable=dat.inputs[1],
+		typeDefMacroTable=dat.inputs[1],
 		textureTable=dat.inputs[2],
 		bufferTable=dat.inputs[3],
 		materialTable=dat.inputs[4],
@@ -593,17 +594,28 @@ class _V2_Writer:
 	out: 'scriptDAT'
 	defTable: 'DAT'
 	paramProc: '_ParameterProcessor'
+	codeFilter: '_CodeFilter'
 	macroTable: 'DAT'
-	typedefMacroTable: 'DAT'
+	typeDefMacroTable: 'DAT'
 	libraryDats: 'List[DAT]'
 	textureTable: 'DAT'
 	bufferTable: 'DAT'
 	materialTable: 'DAT'
 	outputBufferTable: 'DAT'
 
+	inlineTypedefRepls: 'Optional[Dict[str, str]]' = None
+	inlineTypedefPattern: 'Optional[re.Pattern]' = None
+
 	def __post_init__(self):
 		self.configPar = self.sb.configPar()
 		self.ownerComp = self.sb.ownerComp
+		if self.configPar['Inlinetypedefs'] and self.typeDefMacroTable.numRows > 1:
+			self.inlineTypedefRepls = {
+				str(cells[0]): str(cells[1])
+				for cells in self.typeDefMacroTable.rows()
+				if cells[1]
+			}
+			self.inlineTypedefPattern = re.compile(r'\b[\w_]+_(as)?(CoordT|ContextT|ReturnT)\b')
 
 	def run(self):
 		self.out.clear()
@@ -639,11 +651,11 @@ class _V2_Writer:
 
 	def _writeOpDataTypedefs(self):
 		inline = self.configPar['Inlinetypedefs']
-		if not self.typedefMacroTable.numRows:
+		if not self.typeDefMacroTable.numRows:
 			return
 		self._startBlock('opDataTypedefs')
 		macros = {}
-		for cells in self.typedefMacroTable.rows():
+		for cells in self.typeDefMacroTable.rows():
 			if cells[2] == 'typedef':
 				if not inline:
 					# Primary typedef macros are not needed when they're being inlined
@@ -811,7 +823,9 @@ class _V2_Writer:
 		if not dat:
 			return
 		self._startBlock('body')
-		for line in dat.text.splitlines(keepends=True):
+		code = self._inlineTypedefs(dat.text)
+		code = self.codeFilter.processCodeBlock(code)
+		for line in code.splitlines(keepends=True):
 			if line.endswith('// #include <materialParagraph>\n'):
 				self._writeMaterialBody()
 			else:
@@ -827,6 +841,7 @@ class _V2_Writer:
 			self._write(f'else if(m == {name}) {{\n')
 			dat = op(path)
 			if dat:
+				# Intentionally skipping typedef inlining and code filtering for these since no materials need it.
 				self._write(dat.text, '\n}')
 
 	def _write(self, *args):
@@ -853,7 +868,9 @@ class _V2_Writer:
 		if not dat or not dat.text:
 			return
 		self._startBlock(blockName)
-		self._write(dat.text, '\n')
+		code = self._inlineTypedefs(dat.text)
+		code = self.codeFilter.processCodeBlock(code)
+		self._write(code, '\n')
 		self._endBlock(blockName)
 
 	def _writeCodeDatsFromCol(
@@ -867,9 +884,22 @@ class _V2_Writer:
 		self._startBlock(blockName)
 		self._writeLines(prefixes)
 		for dat in dats:
-			self._write(dat.text, '\n')
+			code = self._inlineTypedefs(dat.text)
+			code = self.codeFilter.processCodeBlock(code)
+			self._write(code, '\n')
 		self._writeLines(suffixes)
 		self._endBlock(blockName)
+
+	def _replaceInlineTypedefMatch(self, m: 're.Match'):
+		return self.inlineTypedefRepls.get(m.group(0)) or m.group(0)
+
+	def _inlineTypedefs(self, code: 'str'):
+		if not self.inlineTypedefRepls:
+			return code
+		return self.inlineTypedefPattern.sub(self._replaceInlineTypedefMatch, code)
+
+	# def _processCodeBlock(self, code: str):
+	# 	pass
 
 
 @dataclass
