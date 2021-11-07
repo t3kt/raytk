@@ -18,7 +18,7 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 	vec3 start = THIS_Limitstart + THIS_Limitoffset;
 	if (c.x < start.x) applyModLimit(q.x, c.x, size.x, start.x);
 	if (c.y < start.y) applyModLimit(q.y, c.y, size.y, start.y);
-	if (c.z > start.z) applyModLimit(q.z, c.z, size.z, start.z);
+	if (c.z < start.z) applyModLimit(q.z, c.z, size.z, start.z);
 	#pragma r:endif
 	#pragma r:if THIS_Limittype_both || THIS_Limittype_stop
 	vec3 stop = THIS_Limitstop + THIS_Limitoffset;
