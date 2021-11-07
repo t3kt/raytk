@@ -15,6 +15,44 @@
 
 * Improvements / additions
     * New ops
+        * polyhedronSdf (#715)
+    * New field inputs
+        * Face offset input field for geodesicSdf (#693)
+        * Smooth radius and size in crossSdf (#693)
+        * Scale in ellipsoidSdf (#693)
+        * Offset in planeSdf (#693)
+        * Radius and thickness in discSdf (#693)
+        * Shift and offset in modulo1D (#722)
+        * Blend radius in instance (#721)
+    * New parameters
+        * Reverse parameter in helixSdf (#704)
+        * Expand to vec4 / collapse to float in rescaleField
+* Changes (potentially breaking)
+    * 
+* Fixes
+    * Fix missing translate parameters in arrange (#709)
+    * Fix hidden built-in parameters in panel comps (#708)
+* Infrastructure / internals
+    * Code filtering, which reduces the amount of shader code sent to the GPU, which should help with recompile times.
+      Currently disabled by default. (#710)
+    * Improved test handling in toolkit editor
+    * Simplification and optimization in shaderBuilder
+
+## v0.18
+
+### Highlights
+
+* Easier workflows with CHOPs, including instance positioning, easier indexing in chopField, and CHOP input in constantField
+* Cel-shading for modular materials with toonShadingContrib
+* Easier coordinate mapping of pattern operators
+* New noise types in noiseField
+* New field inputs to customize SDFs and filters
+* Convenience operators for managing scene elements, like arrange, mergeToggle, and toggleSwitch
+
+### Details
+
+* Improvements / additions
+    * New ops
         * arrange (#655)
         * axisLight (#663)
         * magnetField (#680)
