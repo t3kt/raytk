@@ -17,11 +17,15 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 	setIterationIndex(ctx, 0);
 	CoordT q = THIS_transform(p, 0);
 	ReturnT res1 = inputOp1(q, ctx);
-	float r = THIS_Radius;
 	for (int i = 1; i < n; i++) {
 		setIterationIndex(ctx, i);
 		q = THIS_transform(p, i);
 		ReturnT res2 = inputOp1(q, ctx);
+		#pragma r:if THIS_HAS_INPUT_radiusField
+		float r = THIS_Radius * adaptAsFloat(inputOp_radiusField(q, ctx));
+		#pragma r:else
+		float r = THIS_Radius;
+		#pragma r:endif
 		#pragma r:if THIS_COMBINE_EXPR_IS_SDF
 		res1 = THIS_COMBINE_EXPR;
 		#pragma r:else
