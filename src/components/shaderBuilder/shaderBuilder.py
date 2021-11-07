@@ -127,7 +127,7 @@ class ShaderBuilder:
 		if defsTable.numRows < 2:
 			code = ['#error No input definition']
 		else:
-			mainName = defsTable[defsTable.numRows - 1, 'name']
+			mainName = defsTable[-1, 'name']
 			paramProcessor = self._createParamProcessor()
 			code = paramProcessor.globalDeclarations()
 			code += [
@@ -135,7 +135,7 @@ class ShaderBuilder:
 			]
 		return wrapCodeSection(code, 'globals')
 
-	def _getOpsFromDefinitionColumn(self, column: str):
+	def getOpsFromDefinitionColumn(self, column: str):
 		defsTable = self._definitionTable()
 		if defsTable.numRows < 2 or not defsTable[0, column]:
 			return []
@@ -153,7 +153,7 @@ class ShaderBuilder:
 	def buildMacroTable(self, dat: 'DAT'):
 		dat.clear()
 		tables = [self.ownerComp.par.Globalmacrotable.eval()]
-		tables += self._getOpsFromDefinitionColumn('macroTable')
+		tables += self.getOpsFromDefinitionColumn('macroTable')
 		for table in tables:
 			if not table or not table.numRows:
 				continue
@@ -475,11 +475,11 @@ class ShaderBuilder:
 		)
 
 	def buildOpGlobalsBlock(self):
-		dats = self._getOpsFromDefinitionColumn('opGlobalsPath')
+		dats = self.getOpsFromDefinitionColumn('opGlobalsPath')
 		return wrapCodeSection(dats, 'opGlobals')
 
 	def buildInitBlock(self):
-		dats = self._getOpsFromDefinitionColumn('initPath')
+		dats = self.getOpsFromDefinitionColumn('initPath')
 		code = _combineCode(dats)
 		if not code.strip():
 			return ' '
@@ -491,7 +491,7 @@ class ShaderBuilder:
 		], 'init')
 
 	def buildStageInitBlock(self):
-		dats = self._getOpsFromDefinitionColumn('stageInitPath')
+		dats = self.getOpsFromDefinitionColumn('stageInitPath')
 		code = _combineCode(dats)
 		if not code.strip():
 			return ' '
@@ -503,7 +503,7 @@ class ShaderBuilder:
 		], 'stageInit')
 
 	def buildFunctionsBlock(self):
-		dats = self._getOpsFromDefinitionColumn('functionPath')
+		dats = self.getOpsFromDefinitionColumn('functionPath')
 		return wrapCodeSection(dats, 'functions')
 
 	def buildBodyBlock(self, materialTable: 'DAT'):
@@ -511,9 +511,10 @@ class ShaderBuilder:
 		code = bodyDat.text if bodyDat else ''
 		if not code:
 			return ' '
-		if _materialParagraphPlaceholder in code:
+		placeholder = '// #include <materialParagraph>'
+		if placeholder in code:
 			materialBlock = self._buildMaterialBlock(materialTable)
-			code = code.replace(_materialParagraphPlaceholder, materialBlock, 1)
+			code = code.replace(placeholder, materialBlock, 1)
 		return wrapCodeSection(code, 'body')
 
 	@staticmethod
@@ -547,7 +548,329 @@ class ShaderBuilder:
 			dat.appendRow(['path', 'level', 'message'])
 			dat.appendRow([parent().path, 'warning', error])
 
-_materialParagraphPlaceholder = '// #include <materialParagraph>'
+	def V2_writeShader(
+			self,
+			dat: 'scriptDAT',
+			macroTable: 'DAT',
+			typedefMacroTable: 'DAT',
+			textureTable: 'DAT',
+			bufferTable: 'DAT',
+			materialTable: 'DAT',
+			outputBufferTable: 'DAT',
+	):
+		writer = _V2_Writer(
+			sb=self,
+			out=dat,
+			defTable=self._definitionTable(),
+			paramProc=self._createParamProcessor(),
+			macroTable=macroTable,
+			typedefMacroTable=typedefMacroTable,
+			libraryDats=self._getLibraryDats(),
+			textureTable=textureTable,
+			bufferTable=bufferTable,
+			materialTable=materialTable,
+			outputBufferTable=outputBufferTable,
+		)
+		writer.run()
+
+def onCook(dat):
+	# noinspection PyUnreachableCode
+	if False:
+		ext.shaderBuilder = ShaderBuilder(COMP())
+	ext.shaderBuilder.V2_writeShader(
+		dat,
+		macroTable=dat.inputs[0],
+		typedefMacroTable=dat.inputs[1],
+		textureTable=dat.inputs[2],
+		bufferTable=dat.inputs[3],
+		materialTable=dat.inputs[4],
+		outputBufferTable=dat.inputs[5],
+	)
+
+@dataclass
+class _V2_Writer:
+	sb: 'ShaderBuilder'
+	out: 'scriptDAT'
+	defTable: 'DAT'
+	paramProc: '_ParameterProcessor'
+	macroTable: 'DAT'
+	typedefMacroTable: 'DAT'
+	libraryDats: 'List[DAT]'
+	textureTable: 'DAT'
+	bufferTable: 'DAT'
+	materialTable: 'DAT'
+	outputBufferTable: 'DAT'
+
+	def __post_init__(self):
+		self.configPar = self.sb.configPar()
+		self.ownerComp = self.sb.ownerComp
+
+	def run(self):
+		self.out.clear()
+		if self.defTable.numRows < 2:
+			self._write('#error No input definition\n')
+			return
+		self._writeCodeDat('globalPrefix', self.ownerComp.par.Globalprefix.eval())
+		self._writeGlobalDecls()
+		self._writeOpDataTypedefs()
+		self._writeMacroBlock()
+		self._writeLibraryIncludes()
+		self._writeCodeDat('predeclarations', self.ownerComp.par.Predeclarations.eval())
+		self._writeParameterAliases()
+		self._writeTextureDeclarations()
+		self._writeBufferDeclarations()
+		self._writeMaterialDeclarations()
+		self._writeOutputBufferDeclarations()
+
+
+		self._writeOutputInit()
+		self._writeOpGlobals()
+		self._writeInit()
+		self._writeStageInit()
+		self._writeFunctions()
+		self._writeBody()
+
+	def _writeGlobalDecls(self):
+		mainName = self.defTable[-1, 'name']
+		self._startBlock('globals')
+		self._writeLines(self.paramProc.globalDeclarations())
+		self._write(f'#define thismap {mainName}\n')
+		self._endBlock('globals')
+
+	def _writeOpDataTypedefs(self):
+		inline = self.configPar['Inlinetypedefs']
+		if not self.typedefMacroTable.numRows:
+			return
+		self._startBlock('opDataTypedefs')
+		macros = {}
+		for cells in self.typedefMacroTable.rows():
+			if cells[2] == 'typedef':
+				if not inline:
+					# Primary typedef macros are not needed when they're being inlined
+					self._writeMacro(cells[0], cells[1])
+			else:
+				macros[cells[0].val] = cells[1].val
+		# Macros like FOO_COORD_TYPE_float are always needed
+		for name, val in macros.items():
+			if val == '':
+				self._writeMacro(name)
+			elif not inline:
+				# Replacement macros like FOO_asCoordT are not needed when they're being inlined
+				self._writeMacro(name, val)
+		self._endBlock('opDataTypedefs')
+
+	def _writeMacroBlock(self):
+		if not self.macroTable.numRows:
+			return
+		self._startBlock('macros')
+		decls = set()
+		for name, val in self.macroTable.rows():
+			nameVal = name.val, val.val
+			if nameVal in decls:
+				continue
+			decls.add(nameVal)
+			self._writeMacro(name, val)
+		self._endBlock('macros')
+
+	def _writeLibraryIncludes(self):
+		if not self.libraryDats:
+			return
+		self._startBlock('libraries')
+		mode = str(self.configPar['Includemode'] or 'includelibs')
+		supportsInclude = self.ownerComp.op('support_table')['include', 1] == '1'
+		if mode == 'includelibs' and not supportsInclude:
+			inlineAll = True
+		else:
+			inlineAll = mode == 'inlineall'
+		if inlineAll:
+			for lib in self.libraryDats:
+				self._write(f'/// Library: <{lib.path}>\n', lib.text, '\n')
+		else:
+			for lib in self.libraryDats:
+				self._write(f'#include <{lib.path}>\n')
+		self._endBlock('libraries')
+
+	def _writeParameterAliases(self):
+		decls = self.paramProc.paramAliases()
+		if not decls:
+			return
+		self._startBlock('paramAliases')
+		self._writeLines(decls)
+		self._endBlock('paramAliases')
+
+	def _writeTextureDeclarations(self):
+		if self.textureTable.numRows < 2:
+			return
+		offset = int(self.ownerComp.par.Textureindexoffset)
+		indexByType: 'Dict[str, int]' = {
+			'2d': offset,
+			'3d': 0,
+			'cube': 0,
+			'2darray': 0,
+		}
+		arrayByType = {
+			'2d': 'sTD2DInputs',
+			'3d': 'sTD3DInputs',
+			'cube': 'sTDCubeInputs',
+			'2darray': 'sTD2DArrayInputs',
+		}
+		infoByType = {
+			'2d': 'uTD2DInfos',
+			'3d': 'uTD3DInfos',
+			'cube': 'uTDCubeInfos',
+			'2darray': 'uTD2DArrayInfos',
+		}
+		self._startBlock('textures')
+		for name, path, texType in self.textureTable.rows()[1:]:
+			texType = texType.val or '2d'
+			if texType not in indexByType:
+				raise Exception(f'Invalid texture type for {name}: {texType!r}')
+			index = indexByType[texType]
+			indexByType[texType] = index + 1
+			self._writeMacro(name, f'{arrayByType[texType]}[{index}]')
+			self._writeMacro(name + '_info', f'{infoByType[texType]}[{index}]')
+		self._endBlock('textures')
+
+	def _writeBufferDeclarations(self):
+		if self.bufferTable.numRows < 2:
+			return
+		self._startBlock('buffers')
+		for i in range(1, self.bufferTable.numRows):
+			name = self.bufferTable[i, 'name']
+			dataType = self.bufferTable[i, 'type']
+			uniType = self.bufferTable[i, 'uniformType']
+			if uniType == 'uniformarray':
+				lengthVal = str(self.bufferTable[i, 'length'] or '')
+				if lengthVal == '':
+					c = op(self.bufferTable[i, 'chop'])
+					n = c.numSamples if c else 1
+				else:
+					n = int(lengthVal)
+				self._write(f'uniform {dataType} {name}[{n}];\n')
+			elif uniType == 'texturebuffer':
+				self._write(f'uniform samplerBuffer {name};\n')
+		self._endBlock('buffers')
+
+	def _writeMaterialDeclarations(self):
+		if not self.ownerComp.par.Supportmaterials or self.materialTable.numRows < 2:
+			return
+		self._startBlock('materials')
+		for name in self.materialTable.col('material')[1:]:
+			self._writeMacro(name, 1001 + (name.row - 1))
+		self._endBlock('materials')
+
+	def _writeOutputBufferDeclarations(self):
+		if self.outputBufferTable.numRows < 2:
+			return
+		self._startBlock('outputBuffers')
+		if self.ownerComp.par.Shadertype == 'compute':
+			for name in self.outputBufferTable.col('name')[1:]:
+				self._writeMacro(name, f'mTDComputeOutputs[{name.row}]')
+		else:
+			for name in self.outputBufferTable.col('name')[1:]:
+				self._write(f'layout(location = {name.row - 1}) out vec4 {name};\n')
+		self._endBlock('outputBuffers')
+
+	def _writeOutputInit(self):
+		if self.ownerComp.par.Shadertype == 'compute' or self.outputBufferTable.numRows < 2:
+			return
+		self._startBlock('outputInit')
+		self._write('void initOutputs() {\n')
+		for name in self.outputBufferTable.col('name')[1:]:
+			self._write(f'{name} = vec4(0.);\n')
+		self._endBlock('outputInit')
+
+	def _writeOpGlobals(self):
+		self._writeCodeDatsFromCol('opGlobals', col='opGlobals')
+
+	def _writeInit(self):
+		self._writeCodeDatsFromCol(
+			'init', col='initPath',
+			prefixes=[
+				'#define RAYTK_HAS_INIT',
+				'void init() {',
+			],
+			suffixes=['}'],
+		)
+
+	def _writeStageInit(self):
+		self._writeCodeDatsFromCol(
+			'stageInit', col='stageInitPath',
+			prefixes=[
+				'#define RAYTK_HAS_STAGE_INIT',
+				'void stageInit(int stage) {',
+			],
+			suffixes=['}'],
+		)
+
+	def _writeFunctions(self):
+		self._writeCodeDatsFromCol('functions', col='functionPath')
+
+	def _writeBody(self):
+		dat = self.ownerComp.par.Bodytemplate.eval()
+		if not dat:
+			return
+		self._startBlock('body')
+		for line in dat.text.splitlines(keepends=True):
+			if line.endswith('// #include <materialParagraph>\n'):
+				self._writeMaterialBody()
+			else:
+				self._write(line)
+		self._endBlock('body')
+
+	def _writeMaterialBody(self):
+		if self.materialTable.numRows < 2:
+			return
+		for name, path in self.materialTable.rows()[1:]:
+			if not name:
+				continue
+			self._write(f'else if(m == {name}) {{\n')
+			dat = op(path)
+			if dat:
+				self._write(dat.text, '\n}')
+
+	def _write(self, *args):
+		self.out.write(*args)
+
+	def _writeLines(self, lines: 'Optional[List[str]]'):
+		if lines:
+			for line in lines:
+				self._write(line, '\n')
+
+	def _writeMacro(self, name: 'Union[str, Cell]', val: 'Union[str, Cell, None, int]' = None):
+		if val == '' or val is None:
+			self._write('#define ', name, '\n')
+		else:
+			self._write('#define ', name, ' ', val, '\n')
+
+	def _startBlock(self, name: str):
+		self._write(f'///----BEGIN {name}\n')
+
+	def _endBlock(self, name: str):
+		self._write(f'///----END {name}\n')
+
+	def _writeCodeDat(self, blockName: str, dat: 'Optional[DAT]'):
+		if not dat or not dat.text:
+			return
+		self._startBlock(blockName)
+		self._write(dat.text, '\n')
+		self._endBlock(blockName)
+
+	def _writeCodeDatsFromCol(
+			self, blockName: str, col: str,
+			prefixes: 'Optional[List[str]]' = None,
+			suffixes: 'Optional[List[str]]' = None,
+	):
+		dats = self.sb.getOpsFromDefinitionColumn(col)
+		if not dats:
+			return
+		self._startBlock(blockName)
+		self._writeLines(prefixes)
+		for dat in dats:
+			self._write(dat.text, '\n')
+		self._writeLines(suffixes)
+		self._endBlock(blockName)
+
 
 @dataclass
 class _ParamTupletSpec:
