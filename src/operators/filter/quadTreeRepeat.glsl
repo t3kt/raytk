@@ -1,13 +1,17 @@
-// vec2 to vec2 hash.
+// https://www.shadertoy.com/view/llcBD7
+
 vec2 THIS_hash22(vec2 p){
 	// Faster, but doesn't disperse things quite as nicely.
 	return fract(vec2(262144, 32768)*sin(dot(p, vec2(THIS_Seed, 27))));
 }
 
-// https://www.shadertoy.com/view/llcBD7
 ReturnT thismap(CoordT p, ContextT ctx) {
 	ReturnT res;
+	#pragma r:if THIS_COORD_TYPE_vec3
+	vec2 q = p.THIS_PLANE;
+	#pragma r:else
 	vec2 q = p;
+	#pragma r:endif
 
 	// Distance file values.
 //	vec4 d = vec4(1e5);
@@ -55,15 +59,23 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 //			const float lwg = .015;
 //			d.y = abs(max(abs(locP.x), abs(locP.y)) - .5/dim) - lwg/2.;
 
-			#ifdef THIS_Iterationtype_cell
+			#pragma r:if THIS_Iterationtype_cell
 			setIterationCell(ctx, vec3(rnd, float(k) / 3.));
-			#endif
+			#pragma r:endif
 
-			CoordT pForIn = locP * dim * div;
+			#pragma r:if THIS_COORD_TYPE_vec3
+			CoordT pForIn = p;
+			pForIn.THIS_PLANE = locP;
+			#pragma r:else
+			CoordT pForIn = locP;
+			#pragma r:endif
+			#pragma r:if THIS_Enablerescale
+			pForIn *= dim * div;
+			#pragma r:endif
 			res = inputOp1(pForIn, ctx);
-			#ifdef inputOp1_RETURN_TYPE_Sdf
+			#pragma r:if inputOp1_RETURN_TYPE_Sdf
 			res = withAdjustedScale(res, 1./dim/div);
-			#endif
+			#pragma r:endif
 			return res;
 		}
 
