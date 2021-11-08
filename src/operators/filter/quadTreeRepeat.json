@@ -1,0 +1,7 @@
+{
+  "meta": {
+    "opStatus": "alpha",
+    "opType": "raytk.operators.filter.quadTreeRepeat",
+    "opVersion": 0
+  }
+}
