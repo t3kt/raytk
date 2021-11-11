@@ -7,7 +7,7 @@ vec3 THIS_fold(vec3 pos) {
 }
 
 float THIS_D2Planes(vec3 pos) {//distance to the 3 faces
-	pos-=THIS_p;
+	pos-=THIS_p * THIS_Faceradius * THIS_Radius;
 	float d0=dot(pos,THIS_pab);
 	float d1=dot(pos,THIS_pbc);
 	float d2=dot(pos,THIS_pca);
@@ -15,15 +15,15 @@ float THIS_D2Planes(vec3 pos) {//distance to the 3 faces
 }
 
 float THIS_D2Segments(vec3 pos) {
-	pos-=THIS_p;
+	pos-=THIS_p * THIS_Segmentradius * THIS_Radius;
 	float dla=dot2(pos-min(0.,pos.x)*vec3(1.,0.,0.));
 	float dlb=dot2(pos-min(0.,pos.y)*vec3(0.,1.,0.));
 	float dlc=dot2(pos-min(0.,dot(pos,THIS_nc))*THIS_nc);
-	return sqrt(min(min(dla,dlb),dlc))-THIS_Segmentradius;
+	return sqrt(min(min(dla,dlb),dlc))-THIS_Segmentsize;
 }
 
 float THIS_D2Vertices(vec3 pos) {
-	return length(pos-THIS_p)-THIS_Vertexradius;
+	return length(pos-THIS_p * THIS_Vertexradius * THIS_Radius)-THIS_Vertexsize;
 }
 
 ReturnT thismap(CoordT p, ContextT ctx) {
