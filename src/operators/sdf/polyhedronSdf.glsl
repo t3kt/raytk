@@ -26,18 +26,33 @@ float THIS_D2Vertices(vec3 pos) {
 	return length(pos-THIS_p * THIS_Vertexradius * THIS_Radius)-THIS_Vertexsize;
 }
 
+void THIS_combine(inout Sdf res1, Sdf res2) {
+	#pragma r:if THIS_HAS_BLEND_RADIUS
+	float r = THIS_Blendradius;
+	float h = smoothBlendRatio(res1.x, res2.x, r);
+	#else
+	#pragma r:endif
+	#pragma r:if THIS_HAS_BLEND_NUMBER
+	float n = THIS_Blendnumber;
+	#pragma r:endif
+	#pragma r:if THIS_HAS_BLEND_OFFSET
+	float o = THIS_Blendoffset;
+	#pragma r:endif
+	COMBINE();
+}
+
 ReturnT thismap(CoordT p, ContextT ctx) {
 	p = THIS_fold(p);
-	float d = RAYTK_MAX_DIST;
+	Sdf res1 = createSdf(RAYTK_MAX_DIST);
 	if (THIS_Enablefaces > 0.5) {
-		d = min(d, THIS_D2Planes(p));
+		THIS_combine(res1, createSdf(THIS_D2Planes(p)));
 	}
 	if (THIS_Enablesegments > 0.5) {
-		d = min(d, THIS_D2Segments(p));
+		THIS_combine(res1, createSdf(THIS_D2Segments(p)));
 	}
 	if (THIS_Enablevertices > 0.5) {
-		d = min(d, THIS_D2Vertices(p));
+		THIS_combine(res1, createSdf(THIS_D2Vertices(p)));
 	}
 
-	return createSdf(d);
+	return res1;
 }
