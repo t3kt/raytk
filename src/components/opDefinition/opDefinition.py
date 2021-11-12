@@ -516,10 +516,12 @@ def prepareTextureTable(dat: 'scriptDAT'):
 	namePrefix = parentPar().Name.eval() + '_'
 	i = 0
 	useNames = False
-	if table[0, 0] == 'name' and table[0, 1] == 'path':
+	if table[0, 0] in ('name', 'enable'):
 		i = 1
 		useNames = True
 	while i < table.numRows:
+		if table[i, 'enable'] in ('0', 'False'):
+			continue
 		name = str(table[i, 'name' if useNames else 0] or '')
 		path = str(table[i, 'path' if useNames else 1] or '')
 		if name and path:

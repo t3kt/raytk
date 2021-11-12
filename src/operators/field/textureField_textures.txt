@@ -1,1 +1,2 @@
-'texture'	op(parent().par.Texture) or op('blank')
+'name'	'path'	'type'
+'texture'	op(parent().par.Texture) or op('blank')	'2d'

@@ -1,1 +1,2 @@
-'texture'	op('tex')
+'name'	'path'	'type'
+'texture'	op('tex')	

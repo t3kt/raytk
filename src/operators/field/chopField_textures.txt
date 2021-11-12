@@ -1,1 +1,2 @@
-'texture'	op('data_tex')
+'name'	'path'	'type'
+'texture'	op('data_tex')	'2d'
