@@ -2,6 +2,6 @@
   "meta": {
     "opStatus": "beta",
     "opType": "raytk.operators.sdf.polyhedronSdf",
-    "opVersion": 3
+    "opVersion": 4
   }
 }

@@ -22,8 +22,12 @@ float THIS_D2Segments(vec3 pos) {
 	return sqrt(min(min(dla,dlb),dlc))-THIS_Segmentsize;
 }
 
-float THIS_D2Vertices(vec3 pos) {
-	return length(pos-THIS_p * THIS_Vertexradius * THIS_Radius)-THIS_Vertexsize;
+Sdf THIS_D2Vertices(vec3 pos, ContextT ctx) {
+	#pragma r:if THIS_HAS_INPUT_vertexShape
+	return inputOp_vertexShape(pos - THIS_p * THIS_Vertexradius * THIS_Radius, ctx);
+	#pragma r:else
+	return createSdf(length(pos - THIS_p * THIS_Vertexradius * THIS_Radius)-THIS_Vertexsize);
+	#pragma r:endif
 }
 
 void THIS_combine(inout Sdf res1, Sdf res2) {
@@ -51,7 +55,7 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 		THIS_combine(res1, createSdf(THIS_D2Segments(p)));
 	}
 	if (THIS_Enablevertices > 0.5) {
-		THIS_combine(res1, createSdf(THIS_D2Vertices(p)));
+		THIS_combine(res1, THIS_D2Vertices(p, ctx));
 	}
 
 	return res1;
