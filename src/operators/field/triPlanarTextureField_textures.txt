@@ -1,3 +1,4 @@
-'textureX' if parent().par.Useseparatetextures else 'texture'	op(parent().par.Texturex if parent().par.Useseparatetextures else parent().par.Texture) or op('blank')
-'textureY' if parent().par.Useseparatetextures else ''	(op(parent().par.Texturey) or op('blank')) if parent().par.Useseparatetextures else ''
-'textureZ' if parent().par.Useseparatetextures else ''	(op(parent().par.Texturez) or op('blank')) if parent().par.Useseparatetextures else ''
+'name'	'path'	'type'	'enable'
+'textureX' if parent().par.Useseparatetextures else 'texture'	op(parent().par.Texturex if parent().par.Useseparatetextures else parent().par.Texture) or op('blank')	'2d'
+'textureY' if parent().par.Useseparatetextures else ''	(op(parent().par.Texturey) or op('blank')) if parent().par.Useseparatetextures else ''	'2d'
+'textureZ' if parent().par.Useseparatetextures else ''	(op(parent().par.Texturez) or op('blank')) if parent().par.Useseparatetextures else ''	'2d'

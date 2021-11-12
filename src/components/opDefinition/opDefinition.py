@@ -511,32 +511,27 @@ def prepareTextureTable(dat: 'scriptDAT'):
 	dat.clear()
 	dat.appendRow(['name', 'path', 'type'])
 	table = parentPar().Texturetable.eval()
-	if not table or table.numRows < 1:
+	if not table or table.numRows < 2:
 		return
 	namePrefix = parentPar().Name.eval() + '_'
-	i = 0
-	useNames = False
-	if table[0, 0] in ('name', 'enable'):
-		i = 1
-		useNames = True
-	while i < table.numRows:
+	for i in range(1, table.numRows):
 		if table[i, 'enable'] in ('0', 'False'):
 			continue
-		name = str(table[i, 'name' if useNames else 0] or '')
-		path = str(table[i, 'path' if useNames else 1] or '')
-		if name and path:
-			dat.appendRow([
-				namePrefix + name,
-				path,
-				table[i, 'type' if useNames else 2] or '2d',
-			])
-		i += 1
+		name = str(table[i, 'name'] or '')
+		path = str(table[i, 'path'] or '')
+		if not name or not path:
+			continue
+		dat.appendRow([
+			namePrefix + name,
+			path,
+			table[i, 'type'] or '2d',
+		])
 
 def prepareBufferTable(dat: 'scriptDAT'):
 	dat.clear()
 	dat.appendRow(['name', 'type', 'chop', 'uniformType', 'length', 'expr1', 'expr2', 'expr3', 'expr4'])
 	table = parentPar().Buffertable.eval()
-	if not table or table.numRows == 0:
+	if not table or table.numRows < 2:
 		return
 	namePrefix = parentPar().Name.eval() + '_'
 	for i in range(1, table.numRows):
