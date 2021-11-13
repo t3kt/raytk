@@ -168,6 +168,12 @@ class BuildContext:
 		self.log(f'Cleaning opImage {img}')
 		self.safeDestroyOps(img.ops('compImage/componentMeta'))
 
+	def removeOpHelp(self, comp: 'COMP'):
+		self.safeDestroyOp(ROPInfo(comp).helpDAT)
+
+	def removeCatHelp(self, comp: 'COMP'):
+		self.safeDestroyOp(CategoryInfo(comp).helpDAT)
+
 	def applyParamUpdatersIn(self, comp: 'COMP'):
 		for child in comp.children:
 			self._applyParamUpdater(child)

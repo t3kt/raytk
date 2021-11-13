@@ -199,6 +199,7 @@ class BuildManager:
 		# comps.sort(key=lambda c: c.name)
 		if self.docProcessor:
 			self.docProcessor.processOpCategory(category)
+		self.context.removeCatHelp(category)
 		self.queueMethodCall(self.processOperatorCategory_stage, comps, thenRun, runArgs)
 
 	def processOperatorCategory_stage(self, components: List['COMP'], thenRun: str = None, runArgs: list = None):
@@ -242,6 +243,7 @@ class BuildManager:
 		comp.color = IconColors.defaultBgColor
 		if self.docProcessor:
 			self.docProcessor.processOp(comp)
+		self.context.removeOpHelp(comp)
 
 	def processOperatorSubCompChildrenOf(self, comp: 'COMP'):
 		subComps = comp.findChildren(type=COMP)
