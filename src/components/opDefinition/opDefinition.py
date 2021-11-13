@@ -4,7 +4,7 @@ import re
 if False:
 	# noinspection PyUnresolvedReferences
 	from _stubs import *
-	from typing import Callable, Dict, List, Optional, Union, Tuple
+	from typing import Callable, Dict, List, Optional, Union
 	from raytkUtil import OpDefParsT
 	from _stubs.PopDialogExt import PopDialogExt
 
@@ -29,18 +29,6 @@ def buildName():
 		name = 'o_' + name
 	return 'RTK_' + name
 
-def _evalType(category: str, supportedTypes: 'DAT', inputDefs: 'DAT'):
-	return _evalSpecInOp(
-		spec=supportedTypes[category, 'spec'].val,
-		expandedTypes=supportedTypes[category, 'types'].val,
-		inputCell=inputDefs[1, category],
-	)
-
-def _parseUseInput(spec: str) -> 'Tuple[bool, str]':
-	useInput = spec.startswith('useinput|')
-	if useInput:
-		spec = spec[9:]  # len('useinput|')
-	return useInput, spec
 
 # Evaluates a type spec in an OP, expanding wildcards and inheriting input types or using fallback type.
 # Produces a list of 1 or more concrete type names, or a `@` reference to another op (for reverse inheritance).
@@ -57,13 +45,14 @@ def _parseUseInput(spec: str) -> 'Tuple[bool, str]':
 #    `Type1 Type2`
 #    `@some_op_name`
 # These outputs are what appear in the generated definition tables passed between ops.
-def _evalSpecInOp(spec: str, expandedTypes: str, inputCell: 'Optional[Cell]') -> str:
+def _evalType(category: str, supportedTypes: 'DAT', inputDefs: 'DAT'):
+	spec = supportedTypes[category, 'spec'].val
 	if spec.startswith('@'):
 		return spec
-	useInput, spec = _parseUseInput(spec)
-	if useInput and inputCell:
-		return str(inputCell)
-	return expandedTypes
+	inputCell = inputDefs[1, category]
+	if spec.startswith('useinput|') and inputCell:
+		return inputCell
+	return supportedTypes[category, 'types']
 
 def buildTypeTable(dat: 'scriptDAT', supportedTypes: 'DAT', inputDefs: 'DAT'):
 	dat.clear()
@@ -112,11 +101,7 @@ def combineInputDefinitions(
 			if not name or name.val in usedNames:
 				continue
 			usedNames.add(name.val)
-			cells = [
-				d[inDatRow, col] or ''
-				for col in cols
-			]
-			dat.appendRow(cells, insertRow)
+			dat.appendRow([d[inDatRow, col] or '' for col in cols], insertRow)
 			insertRow += 1
 
 def processInputDefinitionTypes(dat: 'scriptDAT', supportedTypeTable: 'DAT'):
@@ -204,14 +189,7 @@ def buildParamSpecTable(dat: 'scriptDAT', paramListTable: 'DAT'):
 		dat.appendRow([
 			name,
 			globalPrefix + name,
-			'special',
-			'Float',
-			'',
-			'',
-			'0',
-			'',
-			'runtime',
-			'',
+			'special', 'Float', '', '', '0', '', 'runtime', '',
 			])
 	# TODO: tuplet placeholder special params ("_")?
 
@@ -285,7 +263,7 @@ def _getRegularParams(specs: 'List[str]') -> 'List[Par]':
 	return [
 		p
 		for p in host.pars(*[pn.strip() for pn in paramNames])
-		if p.isCustom and not (p.isPulse and p.name == 'Inspect')
+		if p.isCustom and p.name != 'Inspect'
 	]
 
 # Builds a table that lists global names of runtime-based parameters.
@@ -378,16 +356,7 @@ def buildParamChopNamesTable(dat: 'DAT', paramSpecTable: 'DAT'):
 	dat.appendRow(['special', ' '.join(specialNames)])
 	dat.appendRow(['angle', ' '.join(angleNames)])
 
-_typeReplacements = {
-	re.compile(r'\bCoordT\b'): 'THIS_CoordT',
-	re.compile(r'\bContextT\b'): 'THIS_ContextT',
-	re.compile(r'\bReturnT\b'): 'THIS_ReturnT',
-}
-
-def _getReplacements(
-		inputTable: 'DAT',
-		materialTable: 'DAT',
-) -> 'Dict[str, str]':
+def _getReplacements(inputTable: 'DAT', materialTable: 'DAT'):
 	name = parentPar().Name.eval()
 	repls = {
 		'thismap': name,
@@ -431,14 +400,14 @@ def prepareTable(
 		for cell in row:
 			cell.val = _prepareText(cell.val, repls)
 
-def _prepareText(
-		text: str,
-		repls: 'Dict[str, str]',
-) -> str:
+_typePattern = re.compile(r'\b[CR][a-z]+T\b')
+_typeRepls = {'CoordT': 'THIS_CoordT', 'ContextT': 'THIS_ContextT', 'ReturnT': 'THIS_ReturnT'}
+def _typeRepl(m): return _typeRepls.get(m.group(0), m.group(0))
+
+def _prepareText(text: str, repls: 'Dict[str, str]'):
 	if not text:
 		return ''
-	for find, repl in _typeReplacements.items():
-		text = find.sub(repl, text)
+	text = _typePattern.sub(_typeRepl, text)
 	for find, repl in repls.items():
 		text = text.replace(find, repl)
 	return text
@@ -517,12 +486,12 @@ def prepareTextureTable(dat: 'scriptDAT'):
 	for i in range(1, table.numRows):
 		if table[i, 'enable'] in ('0', 'False'):
 			continue
-		name = str(table[i, 'name'] or '')
-		path = str(table[i, 'path'] or '')
+		name = table[i, 'name']
+		path = table[i, 'path']
 		if not name or not path:
 			continue
 		dat.appendRow([
-			namePrefix + name,
+			namePrefix + name.val,
 			path,
 			table[i, 'type'] or '2d',
 		])
@@ -549,9 +518,9 @@ def prepareBufferTable(dat: 'scriptDAT'):
 			continue
 		dat.appendRow([
 			namePrefix + name,
-			str(table[i, 'type'] or '') or 'vec4',
+			table[i, 'type'] or 'vec4',
 			path,
-			str(table[i, 'uniformType'] or '') or 'uniformarray',
+			table[i, 'uniformType'] or 'uniformarray',
 			table[i, 'length'],
 			expr1, expr2, expr2, expr3,
 			])
