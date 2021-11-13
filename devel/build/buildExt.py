@@ -238,6 +238,7 @@ class BuildManager:
 				self.context.disableCloning(img)
 				self.context.detachTox(img)
 				self.context.lockBuildLockOps(img)
+				self.context.cleanOpImage(img)
 		comp.color = IconColors.defaultBgColor
 		if self.docProcessor:
 			self.docProcessor.processOp(comp)

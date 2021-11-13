@@ -164,6 +164,10 @@ class BuildContext:
 		toRemove = list(comp.findChildren(tags=[RaytkTags.buildExclude.name]))
 		self.safeDestroyOps(toRemove)
 
+	def cleanOpImage(self, img: 'COMP'):
+		self.log(f'Cleaning opImage {img}')
+		self.safeDestroyOps(img.ops('compImage/componentMeta'))
+
 	def applyParamUpdatersIn(self, comp: 'COMP'):
 		for child in comp.children:
 			self._applyParamUpdater(child)
