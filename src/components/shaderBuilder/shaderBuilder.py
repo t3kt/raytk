@@ -1,6 +1,5 @@
 from dataclasses import dataclass
-from raytkUtil import RaytkContext, simplifyNames
-from raytkShader import CodeFilter
+from raytkShader import simplifyNames, CodeFilter
 import re
 from typing import Callable, Dict, List, Tuple, Union, Optional
 
@@ -535,7 +534,7 @@ class ShaderBuilder:
 
 	def buildValidationErrors(self, dat: 'DAT'):
 		dat.clear()
-		if RaytkContext().develMode():
+		if _isInDevelMode():
 			return
 		toolkitVersions = {}  # type: Dict[str, int]
 		defsTable = self._definitionTable()
@@ -1092,3 +1091,6 @@ def _uniqueList(items: list):
 		if item not in results:
 			results.append(item)
 	return results
+
+def _isInDevelMode():
+	return hasattr(op, 'raytk') and bool(op.raytk.par['Devel'])

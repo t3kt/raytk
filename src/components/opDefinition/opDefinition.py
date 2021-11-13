@@ -78,7 +78,7 @@ def buildInputTable(dat: 'DAT', inDats: 'List[DAT]'):
 	dat.appendRow(['slot', 'inputFunc', 'name', 'path', 'coordType', 'contextType', 'returnType'])
 	for i, inDat in enumerate(inDats):
 		slot = f'inputName{i + 1}'
-		if inDat.numRows < 2 or not str(inDat[1, 'name'] or ''):
+		if inDat.numRows < 2 or not inDat[1, 'name']:
 			dat.appendRow([slot])
 		else:
 			dat.appendRow([
@@ -108,10 +108,10 @@ def combineInputDefinitions(
 	for d in reversed(inDats):
 		insertRow = 0
 		for inDatRow in range(1, d.numRows):
-			name = str(d[inDatRow, 'name'] or '')
-			if not name or name in usedNames:
+			name = d[inDatRow, 'name']
+			if not name or name.val in usedNames:
 				continue
-			usedNames.add(name)
+			usedNames.add(name.val)
 			cells = [
 				d[inDatRow, col] or ''
 				for col in cols
