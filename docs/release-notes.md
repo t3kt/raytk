@@ -20,6 +20,7 @@
         * constantSwitchField
         * polyhedronSdf (#715)
         * quadTreeRepeat (#725)
+        * sdfNormalField
     * New field inputs
         * Face offset input field for geodesicSdf (#693)
         * Smooth radius and size in crossSdf (#693)
