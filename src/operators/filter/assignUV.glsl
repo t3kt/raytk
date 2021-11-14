@@ -1,5 +1,6 @@
 ReturnT thismap(CoordT p, ContextT ctx) {
 	ReturnT res;
+	if (isDistanceOnlyStage()) { return inputOp1(p, ctx); }
 	#pragma r:if RAYTK_USE_UV
 	{
 		vec3 uv;

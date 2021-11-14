@@ -1,5 +1,7 @@
 // raytkCore.glsl
 
+bool isDistanceOnlyStage();
+
 struct Ray {
 	vec3 pos;
 	vec3 dir;
@@ -86,6 +88,7 @@ float resultMaterialInterp(Sdf res) { return res.mat.z; }
 Sdf createSdf(float dist) {
 	Sdf res;
 	res.x = dist;
+	if (isDistanceOnlyStage()) { return res; }
 
 	res.mat = vec3(2., 0., 0.);
 	#ifdef RAYTK_USE_MATERIAL_POS
@@ -129,6 +132,7 @@ Sdf createSdf(float dist) {
 }
 
 void blendInSdf(inout Sdf res1, in Sdf res2, in float amt) {
+	if (isDistanceOnlyStage()) { return; }
 	res1.mat.y = res2.mat.x;
 	res1.mat.z = amt;
 
@@ -213,7 +217,9 @@ void assignUV(inout Sdf res, vec3 uv) {
 
 Sdf createNonHitSdf() {
 	Sdf res = createSdf(RAYTK_MAX_DIST);
-	assignMaterial(res, -1);
+	if (!isDistanceOnlyStage()) {
+		assignMaterial(res, -1);
+	}
 	return res;
 }
 
