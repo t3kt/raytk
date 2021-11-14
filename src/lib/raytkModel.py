@@ -486,7 +486,6 @@ class EditorItemGraph:
 	endDat: 'Optional[DAT]' = None
 	sourceDat: 'Optional[DAT]' = None
 	hasEval: bool = False
-	hasMerge: bool = False
 	supported: bool = False
 	file: 'Optional[Par]' = None
 
@@ -501,33 +500,42 @@ class EditorItemGraph:
 				endDat=endDat,
 				sourceDat=endDat,
 				hasEval=False,
-				hasMerge=False,
 				supported=True,
 				file=endDat.par['file'],
 			)
-		dat = endDat
-		if isinstance(dat, nullDAT):
-			if not dat.inputs:
-				return cls(par, supported=False)
-			dat = dat.inputs[0]
 		hasEval = False
-		hasMerge = False
-		if isinstance(dat, evaluateDAT):
-			if not dat.inputs:
-				return cls(par, endDat=endDat, supported=False)
-			hasEval = True
-			dat = dat.inputs[0]
-		if isinstance(dat, (tableDAT, textDAT)):
-			return cls(
-				par,
-				endDat=endDat,
-				sourceDat=dat,
-				hasMerge=hasMerge,
-				hasEval=hasEval,
-				supported=True,
-				file=dat.par['file'],
-			)
-		return cls(par, supported=False)
+		dats = _opChain(endDat)
+		if not isinstance(dats[0], (tableDAT, textDAT)):
+			return cls(par, endDat=endDat, supported=False)
+		for dat in dats[1:]:
+			if isinstance(dat, evaluateDAT):
+				hasEval = True
+			elif not isinstance(dat, (nullDAT, substituteDAT)):
+				return cls(
+					par,
+					sourceDat=dats[0],
+					endDat=endDat,
+					hasEval=hasEval,
+					file=dats[0].par.file,
+					supported=False,
+				)
+		return cls(
+			par,
+			sourceDat=dats[0],
+			endDat=endDat,
+			hasEval=hasEval,
+			file=dats[0].par.file,
+			supported=True,
+		)
+
+def _opChain(endOp: 'DAT'):
+	chain = [endOp]
+	o = endOp
+	while True:
+		if not o.inputs:
+			return chain
+		o = o.inputs[0]
+		chain.insert(0, o)
 
 class ROPSpecLoader:
 	def __init__(self, rop: 'COMP', spec: ROPSpec):

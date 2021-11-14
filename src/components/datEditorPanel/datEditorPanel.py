@@ -74,7 +74,6 @@ class DatEditorPanel:
 			'endDat',
 			'sourceDat',
 			'hasEval',
-			'hasMerge',
 			'supported',
 			'file',
 		])
@@ -85,7 +84,6 @@ class DatEditorPanel:
 		dat['endDat', 1] = graph.endDat or ''
 		dat['sourceDat', 1] = graph.sourceDat or ''
 		dat['hasEval', 1] = int(graph.hasEval)
-		dat['hasMerge', 1] = int(graph.hasMerge)
 		dat['supported', 1] = 1
 		dat['file', 1] = graph.file or ''
 
