@@ -1,6 +1,6 @@
 # Release Notes
 
-## v0.18
+## v0.19
 
 ### Highlights
 
@@ -15,7 +15,11 @@
 
 * Improvements / additions
     * New ops
+        * 3D bezierSdf (#726)
+        * backgroundFieldContrib (#733)
+        * constantSwitchField
         * polyhedronSdf (#715)
+        * quadTreeRepeat (#725)
     * New field inputs
         * Face offset input field for geodesicSdf (#693)
         * Smooth radius and size in crossSdf (#693)
@@ -27,6 +31,7 @@
     * New parameters
         * Reverse parameter in helixSdf (#704)
         * Expand to vec4 / collapse to float in rescaleField
+        * Enable toggle in bandField (#724)
 * Changes (potentially breaking)
     * 
 * Fixes
@@ -37,6 +42,13 @@
       Currently disabled by default. (#710)
     * Improved test handling in toolkit editor
     * Simplification and optimization in shaderBuilder
+    * Clean up buffer/texture table format
+    * Reduce build / tox size
+        * Remove unnecessary copies of shared python
+        * Python code cleanup
+        * Remove unnecessary data and copies of operator tables
+        * Clean out internal metadata during build
+        * Strip out full help DATs during build
 
 ## v0.18
 
