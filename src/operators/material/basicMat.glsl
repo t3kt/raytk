@@ -2,6 +2,7 @@ vec4 THIS_iterationCapture = vec4(0.);
 
 Sdf thismap(CoordT p, ContextT ctx) {
 	Sdf res = inputOp1(p, ctx);
+	if (isDistanceOnlyStage()) { return res; }
 	#pragma r:if THIS_Uselocalpos && RAYTK_USE_MATERIAL_POS
 	assignMaterialWithPos(res, THISMAT, p);
 	#pragma r:else
