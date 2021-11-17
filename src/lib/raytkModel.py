@@ -236,17 +236,98 @@ class MultiInputSpec(ModelObject):
 	minimumInputs: Optional[int] = None
 
 @dataclass
+class CoordTypes(ModelObject):
+	Coordtypefloat: bool = True
+	Coordtypevec2: bool = True
+	Coordtypevec3: bool = True
+
+@dataclass
+class ContextTypes(ModelObject):
+	Contexttypecontext: bool = True
+	Contexttypematerialcontext: bool = True
+	Contexttypecameracontext: bool = True
+	Contexttypelightcontext: bool = True
+	Contexttyperaycontext: bool = True
+	Contexttypeparticlecontext: bool = True
+
+@dataclass
+class ReturnTypes(ModelObject):
+	Returntypesdf: bool = True
+	Returntypefloat: bool = True
+	Returntypevec4: bool = True
+	Returntyperay: bool = True
+	Returntypelight: bool = True
+	Returntypeparticle: bool = True
+
+def _getParValsDict(pars: 'Iterable[Par]'):
+	return {
+		p.name: p.eval()
+		for p in pars
+		if not p.isPulse and not p.isMomentary
+	}
+def _setParValsFromDict(o: 'OP', parVals: dict):
+	for name, val in parVals.items():
+		o.par[name] = val
+
+@dataclass
+class ROPTypeSpec(ModelObject):
+	yaml_tag = u'!ropTypes'
+
+	Useinputcoordtype: bool = True
+	Useinputcontexttype: bool = True
+	Useinputreturntype: bool = True
+
+	coordType: Union[str, CoordTypes] = '*'
+	contextType: Union[str, ContextTypes] = '*'
+	returnType: Union[str, ReturnTypes] = '*'
+
+	@classmethod
+	def extract(cls, specComp: 'COMP'):
+		spec = cls(
+			**_getParValsDict(specComp.pars('Useinput*')))
+		if specComp.par.Allcoordtype:
+			spec.coordType = '*'
+		else:
+			spec.coordType = CoordTypes(**_getParValsDict(specComp.pars('Coordtype*')))
+		if specComp.par.Allcontexttype:
+			spec.contextType = '*'
+		else:
+			spec.contextType = ContextTypes(**_getParValsDict(specComp.pars('Contexttype*')))
+		if specComp.par.Allreturntype:
+			spec.returnType = '*'
+		else:
+			spec.returnType = ReturnTypes(**_getParValsDict(specComp.pars('Returntype*')))
+		return spec
+
+	def applyTo(self, specComp: 'COMP'):
+		specComp.par.Useinputcoordtype = self.Useinputcoordtype
+		specComp.par.Useinputcontexttype = self.Useinputcontexttype
+		specComp.par.Useinputreturntype = self.Useinputreturntype
+		if self.coordType == '*':
+			specComp.par.Allcoordtype = True
+		else:
+			specComp.par.Allcoordtype = False
+			_setParValsFromDict(specComp, self.coordType.toYamlDict())
+		if self.contextType == '*':
+			specComp.par.Allcontexttype = True
+		else:
+			specComp.par.Allcontexttype = False
+			_setParValsFromDict(specComp, self.contextType.toYamlDict())
+		if self.returnType == '*':
+			specComp.par.Allreturntype = True
+		else:
+			specComp.par.Allreturntype = False
+			_setParValsFromDict(specComp, self.returnType.toYamlDict())
+
+@dataclass
 class ROPDef(ModelObject):
 	# noinspection PyUnresolvedReferences
 	"""Definition for a ROP.
 
 		Attributes:
-			coordType: Name of the coordinate type or expression that produces it.
-			returnType: Name of the return type or expression that produces it.
-			contextType: Name of the context type or expression that produces it.
-
 			disableInspect: Whether the ROP should disable the "Inspect" feature.
 
+			typeSpec: Settings for the ROP's coord/context/return types.
 			opGlobals: Code block for global declarations used by the ROP.
 				This is a TextData object with either inline content or a reference to
 				an external file.
@@ -278,9 +359,7 @@ class ROPDef(ModelObject):
 
 	yaml_tag = u'!def'
 
-	coordType: ValueOrExprT = 'useinput'
-	returnType: ValueOrExprT = 'useinput'
-	contextType: ValueOrExprT = 'useinput'
+	typeSpec: Optional[ROPTypeSpec] = None
 
 	disableInspect: bool = False
 
@@ -361,7 +440,7 @@ class ROPSpec(ModelObject):
 				opStatus=info.statusLabel,
 			),
 			opDef=ROPDef(
-				# TODO: typeSpec support
+				typeSpec=ROPTypeSpec.extract(info.opDefPar.Typespec.eval()),
 				disableInspect=info.opDefPar.Disableinspect.eval(),
 				useParams=_valueOrExprFromPar(info.opDefPar.Params),
 				specialParams=_valueOrExprFromPar(info.opDefPar.Specialparams),
@@ -372,6 +451,7 @@ class ROPSpec(ModelObject):
 				initCode=_extractDatSetting(info.opDefPar.Initcode, isText=True),
 				stageInitCode=_extractDatSetting(info.opDefPar.Stageinitcode, isText=True),
 				function=_extractDatSetting(info.opDefPar.Functemplate, isText=True),
+				material=_extractDatSetting(info.opDefPar.Materialcode, isText=True),
 				help=_extractDatSetting(info.opDefPar.Help, isText=True),
 				callbacks=_extractDatSetting(info.opDefPar.Callbacks, isText=True),
 				bufferTable=_extractDatSetting(info.opDefPar.Buffertable, isText=False),
