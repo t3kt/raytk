@@ -1,0 +1,5 @@
+name	label
+none	None
+cellcoord	Cell Coordinates
+alternatingcoord	Alternating Cell Coordinates On Axes (0-1, 0-1)
+cellcoordandratio	Cell Coordinate for Distance and Ratio for Radial
