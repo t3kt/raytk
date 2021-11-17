@@ -7,19 +7,29 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 	vec2 q = p.THIS_PLANE;
 	#endif
 
+	float scale = THIS_Radialreps/TAU;
+	float scaleAdj = 1.0;
+	vec2 cell = vec2(0.);
+
 	#if defined(THIS_Mode_logpolar)
-	q *= 1.5;
-	q = vec2(log(length(q)), atan(q.y, q.x));
+	float r = length(q);
+	q = vec2(log(r), atan(q.y, q.x));
 	q -= vec2(THIS_Rhooffset, THIS_Thetaoffset);
-	q = fract(q) - 0.5;
+	q *= scale;
+//	q = fract(q) - 0.5;
+	cell = pModMirror2(q, vec2(1.));
+	scaleAdj = r / scale;
 	#endif
 
 	#ifdef THIS_COORD_TYPE_vec2
 	p = q;
 	#else
 	p.THIS_PLANE = q;
+	p.THIS_AXIS / scaleAdj;
 	#endif
 	ReturnT res = inputOp1(p, ctx);
-	// TODO: scale adjust
+	#ifdef THIS_RETURN_TYPE_Sdf
+	res = withAdjustedScale(res, scaleAdj);
+	#endif
 	return res;
 }
