@@ -1,6 +1,6 @@
 name	label	returnType	code
-polar	Polar (Dist,Angle,AxisPos)	vec4	res = vec4(length(q.xy), THIS_norm(atan(q.y, q.x)), q.z, 0.);
-spherical	Spherical (Dist,Angle1,Angle2)	vec4	res = vec4(length(q), THIS_norm(acos(q.z / length(q))), THIS_norm(atan(q.y, q.x)), 0.);
-angle	Angle	float	res = THIS_norm(atan(q.y, q.x));
+polar	Polar (Dist,Angle,AxisPos)	vec4	res = vec4(length(q.xy), THIS_ang(atan(q.y, q.x)), q.z, 0.);
+spherical	Spherical (Dist,Angle1,Angle2)	vec4	res = vec4(length(q), THIS_ang(acos(q.z / length(q))), THIS_ang(atan(q.y, q.x)), 0.);
+angle	Angle	float	res = THIS_ang(atan(q.y, q.x));
 planedist	Plane Distance	float	res = length(q.xy);
 dist	Spherical Distance	float	res = length(q);

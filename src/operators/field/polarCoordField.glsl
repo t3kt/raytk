@@ -1,8 +1,10 @@
-float THIS_norm(float a) {
-	#ifdef THIS_Normalizeangles
+float THIS_ang(float a) {
+	#if defined(THIS_Angleunit_ratio)
 	return a / TAU;
-	#else
+	#elif defined(THIS_Angleunit_degrees)
 	return degrees(a);
+	#else
+	return a;
 	#endif
 }
 

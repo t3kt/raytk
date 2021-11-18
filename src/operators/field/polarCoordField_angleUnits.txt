@@ -1,0 +1,4 @@
+name	label
+ratio	Ratio (0..1)
+degrees	Degrees
+radians	Radians
