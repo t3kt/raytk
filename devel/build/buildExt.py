@@ -44,7 +44,9 @@ class BuildManager:
 		self.logTable.clear()
 		self.log('Starting build')
 		self.experimentalMode = bool(self.ownerComp.op('experimental_toggle').par.Value0)
-		self.context = BuildContext(self.log)
+		self.context = BuildContext(
+			self.log,
+			experimental=self.experimentalMode)
 		if not self.experimentalMode:
 			self.docProcessor = DocProcessor(
 				self.context,
