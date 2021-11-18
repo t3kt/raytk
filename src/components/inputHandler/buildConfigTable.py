@@ -7,8 +7,6 @@ if False:
 	from .inputHandler import _HandlerPar
 
 	class _HandlerParFull(_HandlerPar):
-		Autoindex: BoolParamT
-		Index: IntParamT
 		Name: StrParamT
 		Label: StrParamT
 		Localalias: StrParamT
@@ -22,10 +20,7 @@ def onCook(dat: 'scriptDAT'):
 	baseName, localName = _parseHandlerName()
 	sourcePar = _parentPar().Source.bindMaster
 
-	if not _parentPar().Autoindex:
-		index = int(_parentPar().Index)
-	else:
-		index = _determineAutoIndex(host=host, ownIn=ownIn, baseName=baseName)
+	index = _determineAutoIndex(host=host, ownIn=ownIn, baseName=baseName)
 	defaultName = f'inputOp{index}'
 	if _parentPar().Name:
 		name = _parentPar().Name
