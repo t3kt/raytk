@@ -93,8 +93,14 @@ cat:
     - zigzag
     name: limitField
     summary: Limits the values produced by a float or vector field.
-  - name: linkedTransform
-    status: alpha
+  - keywords:
+    - log
+    - modulo
+    - polar
+    - radial
+    - repeat
+    name: logPolarRepeat
+    status: beta
   - name: magnet
     summary: Pulls or twists space within an area.
   - name: mirrorOctant
@@ -152,6 +158,8 @@ cat:
     name: onion
     summary: Converts a solid SDF to a thin shell of the surface.
   - name: polarToCartesian
+    status: beta
+  - name: quadTreeRepeat
     status: beta
   - name: quantizeCoords
     summary: Quantize coordinates to a 3D grid, which is sort of like "voxelizing"
@@ -226,10 +234,12 @@ cat:
     - spin
     name: spin
     status: beta
-  - name: spiralZoom
+  - keywords:
+    - log
+    - polar
+    - spiral
+    name: spiralZoom
     summary: Transforms space using a logarithmic spiral.
-  - name: spread
-    status: alpha
   - keywords:
     - move
     - pivot
@@ -247,8 +257,6 @@ cat:
     - translate
     name: translate
     summary: Translates coordinates of the input ROP.
-  - name: truchetTile
-    status: alpha
   - name: twist
     summary: Twists space around an axis.
   - name: uvTransform

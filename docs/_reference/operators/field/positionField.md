@@ -36,6 +36,8 @@ op:
       name: LightContext
     - label: RayContext
       name: RayContext
+    - label: ParticleContext
+      name: ParticleContext
     name: Contexttype
   - label: Return Type
     menuOptions:

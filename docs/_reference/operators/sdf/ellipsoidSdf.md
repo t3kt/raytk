@@ -8,6 +8,21 @@ redirect_from:
   - /reference/opType/raytk.operators.sdf.ellipsoidSdf/
 op:
   category: sdf
+  inputs:
+  - contextTypes:
+    - Context
+    - MaterialContext
+    - CameraContext
+    - LightContext
+    - RayContext
+    - ParticleContext
+    coordTypes:
+    - vec3
+    label: Scale Field
+    name: scaleField
+    returnTypes:
+    - float
+    - vec4
   keywords:
   - circle
   - ellipse

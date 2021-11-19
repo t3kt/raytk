@@ -134,6 +134,8 @@ op:
     name: Outsidevalue
     summary: The value used for the "outside" part. If `Return Type` is `Float`, only
       the first parameter will be used.
+  - label: Enable
+    name: Enable
   - label: Enable Repeat
     name: Enablerepeat
   - label: Repeat Size

@@ -1,13 +1,13 @@
 ---
 layout: operator
-title: linkedTransform
-parent: Filter Operators
+title: backgroundFieldContrib
+parent: Material Operators
 grand_parent: Operators
-permalink: /reference/operators/filter/linkedTransform
+permalink: /reference/operators/material/backgroundFieldContrib
 redirect_from:
-  - /reference/opType/raytk.operators.filter.linkedTransform/
+  - /reference/opType/raytk.operators.material.backgroundFieldContrib/
 op:
-  category: filter
+  category: material
   inputs:
   - contextTypes:
     - Context
@@ -17,6 +17,7 @@ op:
     - RayContext
     - ParticleContext
     coordTypes:
+    - float
     - vec2
     - vec3
     label: definition_in
@@ -29,13 +30,11 @@ op:
     - Ray
     - Light
     - Particle
-  name: linkedTransform
-  opType: raytk.operators.filter.linkedTransform
+  name: backgroundFieldContrib
+  opType: raytk.operators.material.backgroundFieldContrib
   parameters:
-  - label: Enable
-    name: Enable
-  - label: Object
-    name: Object
-  status: alpha
+  - label: Level
+    name: Level
+  status: beta
 
 ---

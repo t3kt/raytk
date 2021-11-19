@@ -20,6 +20,19 @@ op:
     returnTypes:
     - Sdf
     summary: Optional SDF that is placed at the tip of each spike.
+  - contextTypes:
+    - Context
+    - MaterialContext
+    - CameraContext
+    - LightContext
+    - RayContext
+    - ParticleContext
+    coordTypes:
+    - vec3
+    label: Face Offset Field
+    name: faceOffset
+    returnTypes:
+    - float
   keywords:
   - geodesic
   - polyhedron
@@ -59,6 +72,13 @@ op:
   - label: Spike Radius
     name: Spikeradius
     summary: The base radius of each spike.
+  - label: Face Offset Field Coord Mode
+    menuOptions:
+    - label: Original Position
+      name: origpos
+    - label: Geodesic Position
+      name: geopos
+    name: Faceoffsetfieldcoordmode
   summary: A geodesic polyhedron, optionally with a spike on each face.
 
 ---

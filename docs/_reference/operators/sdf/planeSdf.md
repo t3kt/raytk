@@ -8,6 +8,21 @@ redirect_from:
   - /reference/opType/raytk.operators.sdf.planeSdf/
 op:
   category: sdf
+  inputs:
+  - contextTypes:
+    - Context
+    - MaterialContext
+    - CameraContext
+    - LightContext
+    - RayContext
+    - ParticleContext
+    coordTypes:
+    - vec2
+    - vec3
+    label: Offset Field
+    name: offsetField
+    returnTypes:
+    - float
   keywords:
   - floor
   - plane

@@ -10,6 +10,33 @@ op:
   category: sdf
   detail: Because the disc is infinitely thin, it will only appear as a line when
     viewed from the side.
+  inputs:
+  - contextTypes:
+    - Context
+    - MaterialContext
+    - CameraContext
+    - LightContext
+    - RayContext
+    - ParticleContext
+    coordTypes:
+    - vec3
+    label: Radius Field
+    name: radiusField
+    returnTypes:
+    - float
+  - contextTypes:
+    - Context
+    - MaterialContext
+    - CameraContext
+    - LightContext
+    - RayContext
+    - ParticleContext
+    coordTypes:
+    - vec3
+    label: Thickness Field
+    name: thicknessField
+    returnTypes:
+    - float
   name: discSdf
   opType: raytk.operators.sdf.discSdf
   parameters:

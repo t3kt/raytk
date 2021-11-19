@@ -11,10 +11,10 @@ cat:
     and may not support being fed through other OPs like filters.'
   name: material
   operators:
+  - name: backgroundFieldContrib
+    status: beta
   - name: basicMat
     summary: Material with a basic lighting model.
-  - name: checkerboardMat
-    status: alpha
   - name: colorizeSdf2d
     summary: Converts a 2D SDF to a striped distance pattern.
   - keywords:
@@ -40,8 +40,6 @@ cat:
   - name: goochShadingContrib
     status: beta
     summary: A material element that uses the Gooch shading model.
-  - name: hologramContrib
-    status: alpha
   - name: modularMat
     summary: A material that is composed of one or more shading elements.
   - name: orenNayarMat
@@ -62,16 +60,10 @@ cat:
       other surfaces.
   - name: reflectMat
     status: beta
-  - name: refractContrib
-    status: alpha
-  - name: refractMat
-    status: alpha
   - name: sampledPointMat
     status: beta
     summary: A material that produces color for volumetric points relative to the
       input shape.
-  - name: shadingProperty
-    status: alpha
   - keywords:
     - lighting
     - material

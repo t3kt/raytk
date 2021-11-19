@@ -1,11 +1,11 @@
 ---
 layout: operator
-title: truchetTile
+title: quadTreeRepeat
 parent: Filter Operators
 grand_parent: Operators
-permalink: /reference/operators/filter/truchetTile
+permalink: /reference/operators/filter/quadTreeRepeat
 redirect_from:
-  - /reference/opType/raytk.operators.filter.truchetTile/
+  - /reference/opType/raytk.operators.filter.quadTreeRepeat/
 op:
   category: filter
   inputs:
@@ -18,6 +18,7 @@ op:
     - ParticleContext
     coordTypes:
     - vec2
+    - vec3
     label: definition_in
     name: definition_in
     required: true
@@ -28,8 +29,8 @@ op:
     - Ray
     - Light
     - Particle
-  name: truchetTile
-  opType: raytk.operators.filter.truchetTile
+  name: quadTreeRepeat
+  opType: raytk.operators.filter.quadTreeRepeat
   parameters:
   - label: Enable
     name: Enable
@@ -42,6 +43,23 @@ op:
     - label: XY
       name: z
     name: Axis
-  status: alpha
+  - label: Division
+    name: Division
+  - label: Level 1 Chance
+    name: Chance1
+  - label: Level 2 Chance
+    name: Chance2
+  - label: Enable Rescale
+    name: Enablerescale
+  - label: Iteration Type
+    menuOptions:
+    - label: None
+      name: none
+    - label: Cell Id (xy) & Layer (z)
+      name: cell
+    name: Iterationtype
+  - label: Seed
+    name: Seed
+  status: beta
 
 ---
