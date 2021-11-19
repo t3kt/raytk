@@ -193,10 +193,7 @@ class BuildManager:
 		if template:
 			template.destroy()
 		if not self.experimentalMode:
-			comps = categoryInfo.operators
-			for o in comps:
-				if RaytkTags.alpha.isOn(o):
-					self.context.safeDestroyOp(o)
+			self.context.removeAlphaOps(category)
 		comps = categoryInfo.operators
 		# comps.sort(key=lambda c: c.name)
 		if self.docProcessor:
