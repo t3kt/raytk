@@ -4,12 +4,11 @@
 
 ### Highlights
 
-* Easier workflows with CHOPs, including instance positioning, easier indexing in chopField, and CHOP input in constantField
-* Cel-shading for modular materials with toonShadingContrib
-* Easier coordinate mapping of pattern operators
-* New noise types in noiseField
-* New field inputs to customize SDFs and filters
-* Convenience operators for managing scene elements, like arrange, mergeToggle, and toggleSwitch
+* New 3D bezierSdf to create arbitrary curved paths
+* New headSdf based on tdhooper's model
+* New polyhedronSdf with lots of controls and support for custom SDFs on vertices, similar to geodesicSdf
+* Lots of new field inputs to customize various filters and SDFs
+* Various optimizations
 
 ### Details
 
@@ -18,9 +17,13 @@
         * 3D bezierSdf (#726)
         * backgroundFieldContrib (#733)
         * constantSwitchField
+        * headSdf based on tdhooper's model (#116)
+        * logPolarRepeat (#738)
+        * polarCoordField (#699)
         * polyhedronSdf (#715)
         * quadTreeRepeat (#725)
         * sdfNormalField
+        * spikeSdf2d
     * New field inputs
         * Face offset input field for geodesicSdf (#693)
         * Smooth radius and size in crossSdf (#693)
@@ -33,8 +36,9 @@
         * Reverse parameter in helixSdf (#704)
         * Expand to vec4 / collapse to float in rescaleField
         * Enable toggle in bandField (#724)
-* Changes (potentially breaking)
-    * 
+        * Logarithmic conversions in cartesianToPolar (#738)
+    * Optimization
+        * Skip material processing, property blending when it isn't needed (e.g. in shadow checks and calculating normals)
 * Fixes
     * Fix missing translate parameters in arrange (#709)
     * Fix hidden built-in parameters in panel comps (#708)
@@ -50,6 +54,7 @@
         * Remove unnecessary data and copies of operator tables
         * Clean out internal metadata during build
         * Strip out full help DATs during build
+    * Support for variables / references, as a more flexible alternative to iteration values (#574, #712)
 
 ## v0.18
 
