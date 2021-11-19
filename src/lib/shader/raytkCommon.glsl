@@ -26,6 +26,11 @@ void pRotateOnXYZ(inout vec3 p, vec3 rotation) {
 	p.yz = temp;
 }
 
+vec2 pRi(vec2 p, float a) {
+	pR(p, a);
+	return p;
+}
+
 int quadrantIndex(ivec2 cell) {
 	/*
 	[0] -1, 1    [1] 1, 1
@@ -138,6 +143,30 @@ float smin(float a, float b, float k){
 
 float smax(float a, float b, float k) {
 	return -smin(-a, -b, k);
+}
+
+float smin2(float a, float b, float r) {
+	vec2 u = max(vec2(r - a,r - b), vec2(0));
+	return max(r, min (a, b)) - length(u);
+}
+
+float smax2(float a, float b, float r) {
+	vec2 u = max(vec2(r + a,r + b), vec2(0));
+	return min(-r, max (a, b)) + length(u);
+}
+
+float smin3(float a, float b, float k){
+	return min(
+	smin(a, b, k),
+	smin2(a, b, k)
+	);
+}
+
+float smax3(float a, float b, float k){
+	return max(
+	smax(a, b, k),
+	smax2(a, b, k)
+	);
 }
 
 float dot2( in vec2 v ) { return dot(v,v); }
