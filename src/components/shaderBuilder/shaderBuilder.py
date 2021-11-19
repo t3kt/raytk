@@ -86,6 +86,12 @@ class ShaderBuilder:
 	def _outputBufferTable(self) -> 'DAT':
 		return self.ownerComp.op('output_buffer_table')
 
+	def _variableTable(self) -> 'DAT':
+		return self.ownerComp.op('variable_table')
+
+	def _referenceTable(self) -> 'DAT':
+		return self.ownerComp.op('reference_table')
+
 	def _allParamVals(self) -> 'CHOP':
 		return self.ownerComp.op('all_param_vals')
 
@@ -174,6 +180,26 @@ class ShaderBuilder:
 			name = outputBufferTable[row, 'macro'].val.strip()
 			if name:
 				dat.appendRow([name, ''])
+		varTable = self._variableTable()
+		for row in range(1, varTable.numRows):
+			ownerName = varTable[row, 'owner']
+			localName = varTable[row, 'localName']
+			dat.appendRow([f'{ownerName}_EXPOSE_{localName}', ''])
+		refTable = self._referenceTable()
+		for row in range(1, refTable.numRows):
+			ownerName = refTable[row, 'owner']
+			localName = refTable[row, 'localName']
+			dat.appendRow([refTable[row, 'name'], refTable[row, 'source']])
+			dat.appendRow([f'{ownerName}_HAS_REF_{localName}', ''])
+
+	def buildVariableDeclarations(self):
+		varTable = self.ownerComp.op('variable_table')
+		decls = []
+		for i in range(1, varTable.numRows):
+			name = varTable[i, 'name']
+			dataType = varTable[i, 'dataType']
+			decls.append(f'{dataType} {name};')
+		return wrapCodeSection(decls, 'variables')
 
 	@staticmethod
 	def buildMacroBlock(macroTable: 'DAT'):
@@ -361,6 +387,60 @@ class ShaderBuilder:
 			return code
 		filt = self._createCodeFilter(typeDefMacroTable)
 		return filt.processCodeBlock(code)
+
+	def processReferenceTable(
+			self,
+			dat: 'scriptDAT',
+			rawRefTable: 'DAT',
+			rawVarTable: 'DAT',
+	):
+		dat.clear()
+		dat.appendRow(['name', 'owner', 'localName', 'source', 'dataType'])
+		defTable = self._definitionTable()
+		# rawRef columns: name, localName, sourcePath, sourceName, dataType, owner
+		# rawVar columns: name, localName, label, dataType, owner
+		varNames = {}
+		for i in range(1, rawVarTable.numRows):
+			varOwnerName = rawVarTable[i, 'owner']
+			varOwnerPath = defTable[varOwnerName, 'path'].val
+			varNames[(varOwnerPath, rawVarTable[i, 'localName'].val)] = rawVarTable[i, 'name'].val
+		for i in range(1, rawRefTable.numRows):
+			sourcePath = rawRefTable[i, 'sourcePath'].val
+			sourceName = rawRefTable[i, 'sourceName'].val
+			if not sourcePath or not sourceName:
+				continue
+			sourceName = varNames.get((sourcePath, sourceName), None)
+			if not sourceName:
+				# TODO: report invalid ref
+				continue
+			# TODO: validate dataType match
+			dat.appendRow([
+				rawRefTable[i, 'name'],
+				rawRefTable[i, 'owner'],
+				rawRefTable[i, 'localName'],
+				sourceName,
+				rawRefTable[i, 'dataType']
+			])
+
+	@staticmethod
+	def processVariableTable(
+			dat: 'scriptDAT',
+			procRefTable: 'DAT',
+			rawVarTable: 'DAT',
+	):
+		dat.clear()
+		dat.appendRow(['name', 'owner', 'localName', 'dataType'])
+		refNames = set(c.val for c in procRefTable.col('source')[1:])
+		# rawVar columns: name, localName, label, dataType, owner
+		for i in range(1, rawVarTable.numRows):
+			name = rawVarTable[i, 'name'].val
+			if name in refNames:
+				dat.appendRow([
+					name,
+					rawVarTable[i, 'owner'],
+					rawVarTable[i, 'localName'],
+					rawVarTable[i, 'dataType']
+				])
 
 	def buildPredeclarations(self):
 		return wrapCodeSection(self.ownerComp.par.Predeclarations.eval(), 'predeclarations')

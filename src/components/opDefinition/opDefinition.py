@@ -536,23 +536,27 @@ def prepareMaterialTable(dat: 'scriptDAT'):
 
 def prepareVariableTable(dat: 'scriptDAT'):
 	dat.clear()
-	dat.appendRow(['name', 'localName', 'label', 'dataType'])
+	dat.appendRow(['name', 'localName', 'label', 'dataType', 'owner'])
 	table = parentPar().Variabletable.eval()
 	if not table or table.numRows < 2:
 		return
-	namePrefix = parentPar().Name.eval() + '_'
+	hostName = parentPar().Name.eval()
+	namePrefix = hostName + '_'
 	for i in range(1, table.numRows):
+		if table[i, 'enable'] in ('0', 'False'):
+			continue
 		localName = table[i, 'name'].val
 		dat.appendRow([
 			namePrefix + localName,
 			localName,
 			table[i, 'label'] or localName,
 			table[i, 'dataType'],
+			hostName,
 		])
 
 def prepareReferenceTable(dat: 'scriptDAT'):
 	dat.clear()
-	dat.appendRow(['name', 'localName', 'refType', 'sourcePath', 'sourceName', 'dataType'])
+	dat.appendRow(['name', 'localName', 'sourcePath', 'sourceName', 'dataType', 'owner'])
 	_prepareReferences(dat=dat, onError=None)
 
 def validateReferences(dat: 'scriptDAT'):
@@ -570,9 +574,13 @@ def _prepareReferences(
 	table = parentPar().Referencetable.eval()
 	if not table or table.numRows < 2:
 		return []
-	namePrefix = parentPar().Name.eval() + '_'
+	hostName = parentPar().Name.eval()
+	namePrefix = hostName + '_'
+	hostPath = _host().path
 	for i in range(1, table.numRows):
 		localName = str(table[1, 'name'])
+		if localName == 'none' or not localName:
+			continue
 		sourcePath = table[i, 'sourcePath']
 		if not sourcePath:
 			continue
@@ -581,25 +589,17 @@ def _prepareReferences(
 			if onError:
 				onError(f'Invalid source path for reference {localName}')
 			continue
-		globalName = namePrefix + localName
-		refType = table[1, 'refType']
-		sourceName = table[i, 'sourceName']
 		dataType = table[i, 'dataType']
-		if refType == 'variable':
-			if dat:
-				dat.appendRow([
-					globalName,
-					localName,
-					refType,
-					sourcePath,
-					sourceName,
-					dataType,
-				])
-			pass
-		else:
-			if onError:
-				onError(f'Invalid refType for reference {localName}')
-			continue
+		if dat:
+			globalName = namePrefix + localName
+			dat.appendRow([
+				globalName,
+				localName,
+				sourcePath,
+				table[i, 'sourceName'],
+				dataType,
+				hostName,
+			])
 
 def _isMaster():
 	host = _host()

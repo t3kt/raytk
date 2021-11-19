@@ -17,6 +17,8 @@ bufferTable
 libraryNames
 initPath
 opGlobalsPath
+variableTable
+referenceTable
 inputName1
 inputName2
 inputName3
