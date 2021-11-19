@@ -2,45 +2,40 @@
 // https://www.shadertoy.com/view/wlf3WX
 
 
-float ellip(vec3 p, vec3 s) {
+float tdh_ellip(vec3 p, vec3 s) {
 	float r = vmin(s);
 	p *= r / s;
 	return length(p) - r;
 }
 
-float ellip(vec2 p, vec2 s) {
+float tdh_ellip(vec2 p, vec2 s) {
 	float r = vmin(s);
 	p *= r / s;
 	return length(p) - r;
 }
 
-float tdhooperHead(vec3 p) {
-	bool isEye;
-
-	pR(p.yz, -.1);
-	p.y -= .11;
+float tdh_headMain(vec3 p) {
 
 	vec3 pa = p;
 	vec3 ps = p;
 	ps.x = sqrt(ps.x * ps.x + .0005);
-	p.x = abs(p.x);
 	vec3 pp = p;
 
 	float d = 1e12;
 
 	// skull back
 	p += vec3(0,-.135,.09);
-	d = ellip(p, vec3(.395, .385, .395));
+	d = tdh_ellip(p, vec3(.395, .385, .395));
 
 	// skull base
 	p = pp;
 	p += vec3(0,-.135,.09) + vec3(0,.1,.07);
-	d = smin(d, ellip(p, vec3(.38, .36, .35)), .05);
+	d = smin(d, tdh_ellip(p, vec3(.38, .36, .35)), .05);
 
 	// forehead
 	p = pp;
 	p += vec3(0,-.145,-.175);
-	d = smin(d, ellip(p, vec3(.315, .3, .33)), .18);
+	d = smin(d, tdh_ellip(p, vec3(.315, .3, .33)), .18);
 
 	p = pp;
 	pR(p.yz, -.5);
@@ -55,7 +50,7 @@ float tdhooperHead(vec3 p) {
 	// behind ear
 	p = ps;
 	p += vec3(-.15,.13,.06);
-	d = smin(d, ellip(p, vec3(.15,.15,.15)), .15);
+	d = smin(d, tdh_ellip(p, vec3(.15,.15,.15)), .15);
 
 	p = ps;
 	p += vec3(-.07,.18,.1);
@@ -64,13 +59,13 @@ float tdhooperHead(vec3 p) {
 	// cheek base
 	p = pp;
 	p += vec3(-.2,.12,-.14);
-	d = smin(d, ellip(p, vec3(.15,.22,.2) * .8), .15);
+	d = smin(d, tdh_ellip(p, vec3(.15,.22,.2) * .8), .15);
 
 	// jaw base
 	p = pp;
 	p += vec3(0,.475,-.16);
 	pR(p.yz, .8);
-	d = smin(d, ellip(p, vec3(.19,.1,.2)), .1);
+	d = smin(d, tdh_ellip(p, vec3(.19,.1,.2)), .1);
 
 	// brow
 	p = pp;
@@ -128,7 +123,7 @@ float tdhooperHead(vec3 p) {
 	p = pp;
 	p += vec3(0,.585,-.395);
 	p.x *= .7;
-	d = smin(d, ellip(p, vec3(.028,.028,.028)*1.2), .15);
+	d = smin(d, tdh_ellip(p, vec3(.028,.028,.028)*1.2), .15);
 
 	// nose
 	p = pp;
@@ -147,40 +142,40 @@ float tdhooperHead(vec3 p) {
 	p += vec3(-.2,.2,-.28);
 	pR(p.xz, .5);
 	pR(p.yz, .4);
-	float ch = ellip(p, vec3(.1,.1,.12)*1.05);
+	float ch = tdh_ellip(p, vec3(.1,.1,.12)*1.05);
 	d = smin(d, ch, .1);
 
 	p = pp;
 	p += vec3(-.26,.02,-.1);
 	pR(p.xz, .13);
 	pR(p.yz, .5);
-	float temple = ellip(p, vec3(.1,.1,.15));
+	float temple = tdh_ellip(p, vec3(.1,.1,.15));
 	temple = smax(temple, p.x - .07, .1);
 	d = smin(d, temple, .1);
 
 	p = pp;
 	p += vec3(.0,.2,-.32);
-	ch = ellip(p, vec3(.1,.08,.1));
+	ch = tdh_ellip(p, vec3(.1,.08,.1));
 	d = smin(d, ch, .1);
 
 	p = pp;
 	p += vec3(-.17,.31,-.17);
-	ch = ellip(p, vec3(.1));
+	ch = tdh_ellip(p, vec3(.1));
 	d = smin(d, ch, .1);
 
 	// mouth base
 	p = pp;
 	p += vec3(-.0,.29,-.29);
 	pR(p.yz, -.3);
-	d = smin(d, ellip(p, vec3(.13,.15,.1)), .18);
+	d = smin(d, tdh_ellip(p, vec3(.13,.15,.1)), .18);
 
 	p = pp;
 	p += vec3(0,.37,-.4);
-	d = smin(d, ellip(p, vec3(.03,.03,.02) * .5), .1);
+	d = smin(d, tdh_ellip(p, vec3(.03,.03,.02) * .5), .1);
 
 	p = pp;
 	p += vec3(-.09,.37,-.31);
-	d = smin(d, ellip(p, vec3(.04)), .18);
+	d = smin(d, tdh_ellip(p, vec3(.04)), .18);
 
 	// bottom lip
 	p = pp;
@@ -241,7 +236,7 @@ float tdhooperHead(vec3 p) {
 	p = pp;
 	p += vec3(0,.27,-.52);
 	pR(p.yz, .2);
-	float nostrils = ellip(p, vec3(.055,.05,.06));
+	float nostrils = tdh_ellip(p, vec3(.055,.05,.06));
 
 	p = pp;
 	p += vec3(-.043,.28,-.48);
@@ -254,18 +249,22 @@ float tdhooperHead(vec3 p) {
 	p = pp;
 	p += vec3(-.033,.3,-.515);
 	pR(p.xz, .5);
-	d = smax(d, -ellip(p, vec3(.011,.03,.025)), .015);
+	d = smax(d, -tdh_ellip(p, vec3(.011,.03,.025)), .015);
 
 	//return d;
 
+	return d;
+}
+
+void tdh_eye(vec3 p, inout float d, out bool isEye) {
+	vec3 pp = p;
 	// eyelids
-	p = pp;
 	p += vec3(-.16,.07,-.34);
-	float eyelids = ellip(p, vec3(.08,.1,.1));
+	float eyelids = tdh_ellip(p, vec3(.08,.1,.1));
 
 	p = pp;
 	p += vec3(-.16,.09,-.35);
-	float eyelids2 = ellip(p, vec3(.09,.1,.07));
+	float eyelids2 = tdh_ellip(p, vec3(.09,.1,.07));
 
 	// edge top
 	p = pp;
@@ -298,9 +297,10 @@ float tdhooperHead(vec3 p) {
 	p = pp;
 	p += vec3(-.075,.1,-.37);
 	d = min(d, length(p) - .05);
+}
 
-	// ear
-	p = pp;
+void tdh_ear(vec3 p, inout float d) {
+	vec3 pp = p;
 	p += vec3(-.405,.12,.10);
 	pR(p.xy, -.12);
 	pR(p.xz, .35);
@@ -313,7 +313,7 @@ float tdhooperHead(vec3 p) {
 
 	// inner
 	pR(p.xz, -.5);
-	float iear = ellip(p.zy - vec2(.01,-.03), vec2(.045,.05));
+	float iear = tdh_ellip(p.zy - vec2(.01,-.03), vec2(.045,.05));
 	iear = smin(iear, length(p.zy - vec2(.04,-.09)) - .02, .09);
 	float ridge = iear;
 	iear = smin(iear, length(p.zy - vec2(.1,-.03)) - .06, .07);
@@ -323,9 +323,9 @@ float tdhooperHead(vec3 p) {
 	// ridge
 	p = pe;
 	pR(p.xz, .2);
-	ridge = ellip(p.zy - vec2(.01,-.03), vec2(.045,.055));
+	ridge = tdh_ellip(p.zy - vec2(.01,-.03), vec2(.045,.055));
 	ridge = smin3(ridge, -pRi(p.zy, .2).x - .01, .015);
-	ridge = smax3(ridge, -ellip(p.zy - vec2(-.01,.1), vec2(.12,.08)), .02);
+	ridge = smax3(ridge, -tdh_ellip(p.zy - vec2(-.01,.1), vec2(.12,.08)), .02);
 
 	float ridger = .01;
 
@@ -338,13 +338,13 @@ float tdhooperHead(vec3 p) {
 	p = pe;
 
 	// outline
-	float outline = ellip(pRi(p.yz, .2), vec2(.12,.09));
-	outline = smin(outline, ellip(p.yz + vec2(.155,-.02), vec2(.035, .03)), .14);
+	float outline = tdh_ellip(pRi(p.yz, .2), vec2(.12,.09));
+	outline = smin(outline, tdh_ellip(p.yz + vec2(.155,-.02), vec2(.035, .03)), .14);
 
 	// edge
 	float eedge = p.x + smoothstep(.2, -.4, p.y) * .06 - .03;
 
-	float edgeo = ellip(pRi(p.yz, .1), vec2(.095,.065));
+	float edgeo = tdh_ellip(pRi(p.yz, .1), vec2(.095,.065));
 	edgeo = smin(edgeo, length(p.zy - vec2(0,-.1)) - .03, .1);
 	float edgeoin = smax(abs(pRi(p.zy, .15).y + .035) - .01, -p.z-.01, .01);
 	edgeo = smax(edgeo, -edgeoin, .05);
@@ -367,12 +367,10 @@ float tdhooperHead(vec3 p) {
 	// targus
 	p = pp;
 	p += vec3(-.34,.2,.02);
-	d = smin2(d, ellip(p, vec3(.015,.025,.015)), .035);
+	d = smin2(d, tdh_ellip(p, vec3(.015,.025,.015)), .035);
 	p = pp;
 	p += vec3(-.37,.18,.03);
 	pR(p.xz, .5);
 	pR(p.yz, -.4);
-	d = smin(d, ellip(p, vec3(.01,.03,.015)), .015);
-
-	return d;
+	d = smin(d, tdh_ellip(p, vec3(.01,.03,.015)), .015);
 }
