@@ -5,12 +5,13 @@ if False:
 
 def onCook(dat):
 	dat.clear()
-	dat.appendRow(['none', 'None'])
 	source = parent().par.Source.eval()
 	if not source:
+		dat.appendRow(['', ''])
 		return
 	varTable = source.op('opDefinition/variable_table')  # type: DAT
 	if not varTable or varTable.numRows < 2:
+		dat.appendRow(['', ''])
 		return
 	for i in range(1, varTable.numRows):
 		name = varTable[i, 'localName']
