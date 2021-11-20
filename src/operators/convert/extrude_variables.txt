@@ -1,0 +1,3 @@
+'name'	'label'	'dataType'	'enable'
+'axisPos'	'Position Along Axis'	'float'	
+'normOffset'	'Normalized Offset'	'float'	
