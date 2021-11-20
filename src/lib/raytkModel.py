@@ -870,7 +870,7 @@ class _SpecExtractor:
 			macroParams=self._valOrExprFromPar(pars.Macroparams, useList=True),
 			lockParams=self._valOrExprFromPar(pars.Lockpars, useList=True),
 
-			paramListTable=self._datSettingFromPar(pars.Paramlisttable, isText=False),
+			paramListTable=self._valOrExprFromPar(pars.Paramlisttable),
 
 			libraryNames=self._valOrExprFromPar(pars.Librarynames, useList=True),
 
