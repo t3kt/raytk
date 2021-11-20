@@ -16,8 +16,6 @@ cat:
     status: beta
   - name: blend
     summary: Smoothly blends/morphs between up to 4 SDFs.
-  - name: boundLimit
-    status: alpha
   - keywords:
     - chamfer
     - columns

@@ -42,6 +42,22 @@ op:
     required: true
     returnTypes:
     - Sdf
+  - contextTypes:
+    - Context
+    - MaterialContext
+    - CameraContext
+    - LightContext
+    - RayContext
+    - ParticleContext
+    coordTypes:
+    - float
+    - vec2
+    - vec3
+    label: Radius Field
+    name: radiusField
+    returnTypes:
+    - float
+    - Sdf
   keywords:
   - copy
   - instance

@@ -1,12 +1,5 @@
 // from Logarithmic Mobius Transform by Shane
 // https://www.shadertoy.com/view/4dcSWs
-vec2 THIS_spiralZoom(vec2 p, vec2 offs, float n, float spiral, float zoom, vec2 phase) {
-	p -= offs;
-	float a = atan(p.y, p.x)/6.283;
-	float d = log(length(p));
-	return vec2(a*n + d*spiral, -d*zoom + a) + phase;
-}
-
 ReturnT thismap(CoordT p, ContextT ctx) {
 	#if defined(THIS_COORD_TYPE_vec2)
 	vec2 q = p;
@@ -16,13 +9,14 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 	#error invalidCoordType
 	#endif
 
-	q = THIS_spiralZoom(
-		q,
-		THIS_Center,
-		THIS_Branches,
-		THIS_Twist1,
-		THIS_Twist2,
-		THIS_Phase);
+	q -= THIS_Center;
+	float a = atan(q.y, q.x)/TAU;
+	float r = log(length(q));
+	float n = THIS_Branches;
+	float spiral = THIS_Twist1;
+	float zoom = THIS_Twist2;
+
+	q = vec2(a*n + r*spiral, -r*zoom + a) + THIS_Phase;
 
 	#if defined(THIS_COORD_TYPE_vec2)
 	return inputOp1(q, ctx);

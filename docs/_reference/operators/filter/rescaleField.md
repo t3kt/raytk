@@ -52,10 +52,19 @@ op:
   - label: Output High
     name: Outputhigh
     summary: The high end of the rescaled value range.
-  - label: Multiply
-    name: Mult
+  - label: Return Type
+    menuOptions:
+    - label: Auto
+      name: auto
+    - label: Float
+      name: float
+    - label: Vector
+      name: vec4
+    name: Returntype
   - label: Multiply
     name: Multiply
+  - label: Multiply
+    name: Mult
   - label: Post Add
     name: Postadd
   summary: Rescales the values produced by a field.

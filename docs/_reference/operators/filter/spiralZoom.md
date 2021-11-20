@@ -50,6 +50,10 @@ op:
     - Ray
     - Light
     - Particle
+  keywords:
+  - log
+  - polar
+  - spiral
   name: spiralZoom
   opType: raytk.operators.filter.spiralZoom
   parameters:

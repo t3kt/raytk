@@ -1,30 +1,31 @@
 ReturnT thismap(CoordT p, ContextT ctx) {
 	ReturnT res;
-	#ifdef RAYTK_USE_UV
+	if (isDistanceOnlyStage()) { return inputOp1(p, ctx); }
+	#pragma r:if RAYTK_USE_UV
 	{
 		vec3 uv;
-		#if defined(THIS_HAS_INPUT_uvField)
+		#pragma r:if THIS_HAS_INPUT_uvField
 		uv = inputOp_uvField(p, ctx).xyz;
-		#else
+		#pragma r:else
 		vec3 q = adaptAsVec3(p);
 		BODY();
-		#endif
-		#if defined(THIS_RETURN_TYPE_Sdf)
+		#pragma r:endif
+		#pragma r:if THIS_RETURN_TYPE_Sdf
 		{
 			res = inputOp1(p, ctx);
 			assignUV(res, uv);
 		}
-		#elif defined(THIS_CONTEXT_TYPE_MaterialContext)
+		#pragma r:elif THIS_CONTEXT_TYPE_MaterialContext
 		{
 			assignUV(ctx, uv);
 			res = inputOp1(p, ctx);
 		}
-		#else
+		#pragma r:else
 			#error invalidReturnContextTypeCombo
-		#endif
+		#pragma r:endif
 	}
-	#else
+	#pragma r:else
 	res = inputOp1(p, ctx);
-	#endif
+	#pragma r:endif
 	return res;
 }

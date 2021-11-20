@@ -5,25 +5,25 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 	q.THIS_AXIS -= THIS_Offset;
 	p.THIS_AXIS += THIS_Offset;
 	p.THIS_AXIS -= THIS_Shift;
-	#if defined(THIS_Iterationtype_sign)
+	#pragma r:if THIS_Iterationtype_sign
 	setIterationIndex(ctx, 1);
 	const int iterB = -1;
-	#elif defined(THIS_Iterationtype_index)
+	#pragma r:elif THIS_Iterationtype_index
 	setIterationIndex(ctx, 0);
 	const int iterB = 1;
-	#endif
-	#if defined(THIS_Mergetype_none)
+	#pragma r:endif
+	#pragma r:if THIS_Mergetype_none
 		return inputOp1(q, ctx);
-	#else
+	#pragma r:else
 		Sdf res1 = inputOp1(p, ctx);
-		#ifndef THIS_Iterationtype_none
+		#pragma r:if !THIS_Iterationtype_none
 		setIterationIndex(ctx, iterB);
-		#endif
+		#pragma r:endif
 		Sdf res2 = inputOp1(q, ctx);
-		#ifdef THIS_Mergetype_smoothUnion
+		#pragma r:if THIS_Mergetype_smoothUnion
 			return opSmoothUnionM(res1, res2, THIS_Mergeradius);
-		#else
+		#pragma r:else
 			return opSimpleUnion(res1, res2);
-		#endif
-	#endif
+		#pragma r:endif
+	#pragma r:endif
 }

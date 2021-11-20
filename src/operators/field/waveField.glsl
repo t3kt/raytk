@@ -1,23 +1,23 @@
 ReturnT thismap(CoordT p, ContextT ctx) {
-	#ifdef THIS_HAS_INPUT_periodField
+	#pragma r:if THIS_HAS_INPUT_periodField
 	float period = THIS_Period * inputOp_periodField(p, ctx);
-	#else
+	#pragma r:else
 	float period = THIS_Period;
-	#endif
-	#if defined(THIS_HAS_INPUT_coordField)
+	#pragma r:endif
+	#pragma r:if THIS_HAS_INPUT_coordField
 		float q = inputOp_coordField(p, ctx);
-	#elif defined(THIS_COORD_TYPE_float)
+	#pragma r:elif THIS_COORD_TYPE_float
 		float q = p;
-	#elif defined(THIS_Axis_dist)
+	#pragma r:elif THIS_Axis_dist
 		float q = length(p);
-	#else
+	#pragma r:else
 		float q = p.THIS_Axis;
-	#endif
-	#ifdef THIS_HAS_INPUT_phaseField
+	#pragma r:endif
+	#pragma r:if THIS_HAS_INPUT_phaseField
 	float phase = THIS_Phase + inputOp_phaseField(p, ctx);
-	#else
+	#pragma r:else
 	float phase = THIS_Phase;
-	#endif
+	#pragma r:endif
 	q = (q / period) + phase;
 	ReturnT res;
 	BODY();

@@ -1,11 +1,11 @@
 ReturnT thismap(CoordT p, ContextT ctx) {
 	ReturnT res = inputOp1(p, ctx);
-	#ifdef OUTPUT_DEBUG
-		#if defined(THIS_RETURN_TYPE_vec4)
+	#pragma r:if OUTPUT_DEBUG
+		#pragma r:if THIS_RETURN_TYPE_vec4
 			debugOut = res;
-		#elif defined(THIS_RETURN_TYPE_float)
+		#pragma r:elif THIS_RETURN_TYPE_float
 			debugOut = vec4(res, 0, 0, 1);
-		#endif
-	#endif
+		#pragma r:endif
+	#pragma r:endif
 	return res;
 }

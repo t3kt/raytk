@@ -25,6 +25,8 @@ _opDefParamNames = [
 	'Buffertable',
 	'Texturetable',
 	'Macrotable',
+	'Variabletable',
+	'Referencetable',
 	'Librarynames',
 	'Help',
 	'Helpurl',

@@ -20,6 +20,9 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 	ReturnT res;
 	p -= THIS_Translate;
 	p = vec3(p.THIS_PLANE_P1, p.THIS_AXIS, p.THIS_PLANE_P2);
+	if (THIS_Reverse > 0.5) {
+		p.x *= -1;
+	}
 	float thickness = THIS_Thickness;
 	float radius = THIS_Radius;
 	#ifdef THIS_HAS_INPUT_thicknessField

@@ -39,6 +39,8 @@ cat:
     summary: A vector field that evaluates to a constant color value.
   - name: constantField
     summary: A float or vector field that evaluates to a constant value.
+  - name: constantSwitchField
+    status: beta
   - name: contextValueField
     status: beta
     summary: Field that returns various fields from the context, from a downstream
@@ -47,8 +49,6 @@ cat:
     summary: Curl noise field.
   - name: domainColorField
     status: beta
-  - name: hashField
-    status: alpha
   - name: hsvColorField
     status: beta
     summary: A field that uses HSV-based parameters to produce colors.
@@ -67,6 +67,8 @@ cat:
     summary: Vector field that produces the surface normal where it is evaluated.
   - name: pointDistanceField
     summary: A float field that provides the distance from a specific point in space.
+  - name: polarCoordField
+    status: beta
   - name: polarVectorField
   - name: positionField
     summary: A vector field that produces the coordinates in space where it is checked.
@@ -76,6 +78,8 @@ cat:
     status: beta
   - name: sdfField
     summary: Value field based on an SDF shape.
+  - name: sdfNormalField
+    status: beta
   - name: stepField
     status: beta
     summary: A field that switches between two values at a threshold point.
@@ -88,8 +92,6 @@ cat:
       to apply a texture facing each axis.
   - name: uvField
     summary: Field that produces surface UV coordinates, if available.
-  - name: valuePointsField
-    status: alpha
   - name: waveField
     summary: A field that uses a periodic wave.
   - name: waveVectorField

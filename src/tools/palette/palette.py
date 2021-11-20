@@ -16,6 +16,9 @@ if False:
 
 	class _Par(ParCollection):
 		Devel: 'BoolParamT'
+		Defaultshowalpha: 'BoolParamT'
+		Defaultshowbeta: 'BoolParamT'
+		Defaultshowdeprecated: 'BoolParamT'
 	class _COMP(panelCOMP):
 		par: _Par
 
@@ -39,12 +42,11 @@ class Palette:
 		self.selItem = tdu.Dependency()  # value type _AnyItemT
 		self.isOpen = tdu.Dependency(False)
 
-	@staticmethod
-	def Initialize():
+	def Initialize(self):
 		ext.opPicker.SetFilterToggles(
-			alpha=False,
-			beta=True,
-			deprecated=False,
+			alpha=self.ownerComp.par.Defaultshowalpha.eval(),
+			beta=self.ownerComp.par.Defaultshowbeta.eval(),
+			deprecated=self.ownerComp.par.Defaultshowdeprecated.eval(),
 		)
 		ext.opPicker.Resetstate()
 

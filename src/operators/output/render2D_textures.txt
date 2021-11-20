@@ -1,1 +1,2 @@
-'uvmap'	op(parent().par.Uvmap) or ''
+'name'	'path'	'type'
+'uvmap'	op(parent().par.Uvmap) or ''	

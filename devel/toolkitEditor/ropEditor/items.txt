@@ -8,4 +8,6 @@ Callbacks	Callbacks	code	text	callbacks		_callbacks.py
 Macrotable	Macros	table	table	macro_exprs	eval_macros	_macros.txt
 Texturetable	Textures	table	table	texture_exprs	eval_textures	_textures.txt
 Buffertable	Buffers	table	table	buffer_table	eval_buffers	_buffers.txt
+Variabletable	Variables	table	table	variable_exprs	eval_variables	_variables.txt
+Referencetable	References	table	table	reference_exprs	eval_references	_references.txt
 Help	Help	help	text	help		.md

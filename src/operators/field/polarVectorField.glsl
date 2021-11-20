@@ -1,27 +1,27 @@
 ReturnT thismap(CoordT p, ContextT ctx) {
-	#ifdef THIS_HAS_INPUT_thetaField
+	#pragma r:if THIS_HAS_INPUT_thetaField
 	float theta = radians(THIS_Thetaoffset + inputOp_thetaField(p, ctx));
-	#else
+	#pragma r:else
 	float theta = radians(THIS_Thetaoffset);
-	#endif
-	#ifdef THIS_HAS_INPUT_lengthField
+	#pragma r:endif
+	#pragma r:if THIS_HAS_INPUT_lengthField
 	float len = inputOp_lengthField(p, ctx);
-	#else
+	#pragma r:else
 	float len = THIS_Length;
-	#endif
+	#pragma r:endif
 	ReturnT res;
-	#if defined(THIS_COORD_TYPE_vec3)
+	#pragma r:if THIS_COORD_TYPE_vec3
 	{
-		#ifdef THIS_HAS_INPUT_phiField
+		#pragma r:if THIS_HAS_INPUT_phiField
 		float phi = radians(THIS_Phioffset + inputOp_phiField(p, ctx));
-		#else
+		#pragma r:else
 		float phi = radians(THIS_Phioffset);
-		#endif
+		#pragma r:endif
 		res.xyz = vec3(len * cos(phi) * sin(theta), len * sin(phi) * sin(theta), len * cos(theta));
 		res.y = 4.;
 	}
-	#elif defined(THIS_COORD_TYPE_vec2)
+	#pragma r:elif THIS_COORD_TYPE_vec2
 	res.xy = vec2(len * cos(theta), len * sin(theta));
-	#endif
+	#pragma r:endif
 	return res;
 }

@@ -44,6 +44,12 @@ op:
       name: cylindricaly
     - label: Cylindrical Z
       name: cylindricalz
+    - label: Log-Cylindrical X
+      name: logcylindricalx
+    - label: Log-Cylindrical Y
+      name: logcylindricaly
+    - label: Log-Cylindrical Z
+      name: logcylindricalz
     name: Conversion
 
 ---

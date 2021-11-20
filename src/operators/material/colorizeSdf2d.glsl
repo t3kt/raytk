@@ -7,10 +7,10 @@ vec4 thismap(vec2 p, ContextT ctx) {
 	} else {
 		color = mix(THIS_Insidecolor1, THIS_Insidecolor2, (1. + sin((d - THIS_Insidephase) / THIS_Insideperiod)) * 0.5);
 	}
-	#ifdef THIS_Enableedge
+	#pragma r:if THIS_Enableedge
 	float thickness = THIS_Edgethickness;
 	float blending = THIS_Edgeblending;
 	color = mix(color, THIS_Edgecolor, 1.0 - smoothstep((thickness-blending)*0.5, (thickness+blending)*0.5, abs(d)));
-	#endif
+	#pragma r:endif
 	return color;
 }

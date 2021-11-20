@@ -1,5 +1,8 @@
 name	label	code
-spherical	Spherical	p = vec3(length(p), acos(p.z / length(p)), atan(p.y, p.x))
-cylindricalx	Cylindrical X	p = vec3(p.x, length(p.yz), atan(p.z, p.y))
-cylindricaly	Cylindrical Y	p = vec3(atan(p.x, p.z), p.y, length(p.xz))
-cylindricalz	Cylindrical Z	p = vec3(length(p.xy), atan(p.y, p.x), p.z)
+spherical	Spherical	q = vec3(length(q), acos(q.z / length(q)), atan(q.y, q.x))
+cylindricalx	Cylindrical X	q = vec3(q.x, length(q.yz), atan(q.z, q.y))
+cylindricaly	Cylindrical Y	q = vec3(atan(q.x, q.z), q.y, length(q.xz))
+cylindricalz	Cylindrical Z	q = vec3(length(q.xy), atan(q.y, q.x), q.z)
+logcylindricalx	Log-Cylindrical X	q = vec3(q.x, log(length(q.yz)), atan(q.z, q.y))
+logcylindricaly	Log-Cylindrical Y	q = vec3(atan(q.x, q.z), q.y, log(length(q.xz)))
+logcylindricalz	Log-Cylindrical Z	q = vec3(log(length(q.xy)), atan(q.y, q.x), q.z)

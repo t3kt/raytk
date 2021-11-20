@@ -1,50 +1,50 @@
 ReturnT thismap(CoordT p, ContextT ctx) {
-	#ifdef THIS_Usepivot
-		#ifdef THIS_HAS_INPUT_pivotField
+	#pragma r:if THIS_Usepivot
+		#pragma r:if THIS_HAS_INPUT_pivotField
 			CoordT pivot = THIS_asCoordT(inputOp_pivotField(p, ctx));
-		#else
+		#pragma r:else
 			CoordT pivot = THIS_asCoordT(THIS_Pivot);
-		#endif
-	#endif
+		#pragma r:endif
+	#pragma r:endif
 #if defined(THIS_COORD_TYPE_vec2) || defined(THIS_Rotatemode_axis)
 	float r = THIS_Rotate;
-	#ifdef THIS_HAS_INPUT_rotateField
+	#pragma r:if THIS_HAS_INPUT_rotateField
 		r += adaptAsFloat(inputOp_rotateField(p, ctx));
-	#endif
-	#ifdef THIS_Usepivot
+	#pragma r:endif
+	#pragma r:if THIS_Usepivot
 	p -= pivot;
-	#endif
-	#ifdef THIS_COORD_TYPE_vec2
+	#pragma r:endif
+	#pragma r:if THIS_COORD_TYPE_vec2
 		pR(p, radians(r));
-	#else
+	#pragma r:else
 		p *= TDRotateOnAxis(radians(r), normalize(THIS_Axis));
-	#endif
-	#ifdef THIS_Usepivot
+	#pragma r:endif
+	#pragma r:if THIS_Usepivot
 	p += pivot;
-	#endif
+	#pragma r:endif
 #elif defined(THIS_Rotatemode_euler)
 	vec3 r = vec3(THIS_ROT_1, THIS_ROT_2, THIS_ROT_3);
-	#ifdef THIS_HAS_INPUT_rotateField
-		#if defined(inputOp_rotateField_RETURN_TYPE_vec4)
+	#pragma r:if THIS_HAS_INPUT_rotateField
+		#pragma r:if inputOp_rotateField_RETURN_TYPE_vec4
 		vec4 fieldVal = inputOp_rotateField(p, ctx);
 		r += vec3(THIS_FIELD_ROT_1, THIS_FIELD_ROT_2, THIS_FIELD_ROT_3);
-		#elif defined(inputOp_rotateField_RETURN_TYPE_float)
+		#pragma r:elif inputOp_rotateField_RETURN_TYPE_float
 		r *= inputOp_rotateField(p, ctx);
-		#elif defined(inputOp_rotateField_RETURN_TYPE_Sdf)
+		#pragma r:elif inputOp_rotateField_RETURN_TYPE_Sdf
 		r *= inputOp_rotateField(p, ctx).x;
-		#else
+		#pragma r:else
 		#error invalidFieldReturnType
-		#endif
-	#endif
-	#ifdef THIS_Usepivot
+		#pragma r:endif
+	#pragma r:endif
+	#pragma r:if THIS_Usepivot
 	p -= pivot;
-	#endif
+	#pragma r:endif
 	p *= TDRotateOnAxis(radians(r[0]), THIS_AXIS_1)
 		* TDRotateOnAxis(radians(r[1]), THIS_AXIS_2)
 		* TDRotateOnAxis(radians(r[2]), THIS_AXIS_3);
-	#ifdef THIS_Usepivot
+	#pragma r:if THIS_Usepivot
 	p += pivot;
-	#endif
+	#pragma r:endif
 #else
 	#error invalidRotateMode
 #endif

@@ -13,8 +13,6 @@ cat:
   operators:
   - name: axisLight
     status: beta
-  - name: bendRay
-    status: alpha
   - name: directionalLight
     summary: A directional light.
   - name: hardShadow
@@ -27,8 +25,6 @@ cat:
   - name: pointLight
     summary: Light eminating from a single point in space, with optional distance
       attentuation.
-  - name: refractionRayCast
-    status: alpha
   - name: softShadow
     summary: A soft-edged shadow.
   - name: spotLight

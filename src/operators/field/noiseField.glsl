@@ -1,17 +1,17 @@
 ReturnT thismap(CoordT p, ContextT ctx) {
-	#ifdef THIS_HAS_INPUT_coordField
+	#pragma r:if THIS_HAS_INPUT_coordField
 	p = THIS_asCoordT(inputOp_coordField(p, ctx));
-	#endif
+	#pragma r:endif
 	THIS_NOISE_COORD_TYPE q;
-	#if defined(THIS_COORD_TYPE_vec2)
+	#pragma r:if THIS_COORD_TYPE_vec2
 		q = THIS_asNoiseCoordT(p);
-	#elif defined(THIS_COORD_TYPE_vec3)
-		#if defined(THIS_NOISE_COORD_vec2)
+	#pragma r:elif THIS_COORD_TYPE_vec3
+		#pragma r:if THIS_NOISE_COORD_vec2
 		q = p.THIS_PLANE;
-		#else
+		#pragma r:else
 		q = THIS_asNoiseCoordT(p);
-		#endif
-	#endif
+		#pragma r:endif
+	#pragma r:endif
 	q -= THIS_asNoiseCoordT(THIS_Translate);
 	q /= THIS_asNoiseCoordT(THIS_Scale);
 

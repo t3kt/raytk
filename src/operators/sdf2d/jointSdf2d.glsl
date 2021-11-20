@@ -13,9 +13,9 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 		p.y -= clamp(p.y,0.0,l);
 		res = createSdf(length(p)-w);
 
-		#ifdef RAYTK_USE_UV
+		#pragma r:if RAYTK_USE_UV
 		assignUV(res, vec3(p.x, v, 0.));
-		#endif
+		#pragma r:endif
 
 		return res;
 	}
@@ -34,32 +34,32 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 	float u = abs(ra)-length(q);
 	float d;
 
-	#if defined(THIS_Shape_square)
+	#pragma r:if THIS_Shape_square
 	d = max(length( vec2(q.x+ra-clamp(q.x+ra,-w,w), q.y) )*sign(-q.y),abs(u) - w);
-	#elif defined(THIS_Shape_round)
+	#pragma r:elif THIS_Shape_round
 	d = (q.y<0.0) ? length( q+vec2(ra,0.0) ) : abs(u);
 	d -= w;
-	#else
+	#pragma r:else
 	#error invalidShape
-	#endif
+	#pragma r:endif
 
 	res = createSdf(d);
 
-	#ifdef RAYTK_USE_UV
+	#pragma r:if RAYTK_USE_UV
 	{
 		float s = sign(a);
 		float v = ra*atan(s*p.y,-s*p.x);
 		u = u*s;
-		#ifdef THIS_Shape_round
+		#pragma r:if THIS_Shape_round
 		if( v<0.0 )
 		{
 			if( s*p.x>0.0 ) { v = abs(ra)*TAU + v; }
 			else { v = p.y; u = q.x + ra; }
 		}
-		#endif
+		#pragma r:endif
 		assignUV(res, vec3(u, v, 0.));
 	}
-	#endif
+	#pragma r:endif
 
 	return res;
 }

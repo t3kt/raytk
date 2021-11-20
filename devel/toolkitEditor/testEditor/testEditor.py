@@ -1,5 +1,6 @@
 from pathlib import Path
 from raytkUtil import showPromptDialog, navigateTo
+from raytkTest import processTest
 
 # noinspection PyUnreachableCode
 if False:
@@ -62,6 +63,14 @@ class TestEditor:
 			caseRootFolder=self.ownerComp.par.Testcasefolder.eval(),
 			imagesRootFolder=self.ownerComp.par.Snapshotsfolder.eval(),
 		)
+
+	def processTest(self):
+		comp = self.hostedComponent
+		if not comp:
+			return
+		processTest(comp, log=None)
+		comp.clearScriptErrors(recurse=True)
+		iop.testInspectorCore.GetFindings()
 
 	def _loadTest(self, name: str, toxPath: Path):
 		if name:

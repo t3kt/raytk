@@ -1,0 +1,241 @@
+!rop
+meta: !meta
+  opType: raytk.operators.combine.combine
+  opVersion: '16'
+  opStatus: default
+opDef: !def
+  enable: !expr 'op(''..'').par.Enable'
+  typeSpec: !ropTypes
+    coordType: !coordT
+      Allcoordtype: true
+      Coordtypefloat: false
+      Coordtypevec2: true
+      Coordtypevec3: false
+    contextType: !contextT
+      Allcontexttype: true
+      Contexttypecontext: false
+      Contexttypematerialcontext: false
+      Contexttypecameracontext: false
+      Contexttypelightcontext: false
+      Contexttyperaycontext: false
+      Contexttypeparticlecontext: false
+    returnType: !returnT
+      Allreturntype: false
+      Returntypesdf: true
+      Returntypefloat: false
+      Returntypevec4: false
+      Returntyperay: false
+      Returntypelight: false
+      Returntypeparticle: false
+  function: !text
+    file: src/operators/combine/combine.glsl
+    name: functionTemplate
+  paramListTable: switcher_params
+  macroTable: eval_macros
+  help: help
+  keywords:
+  - combine
+  - union
+  - diff
+  - intersect
+  - smooth
+  - round
+  - chamfer
+  - stairs
+  - columns
+paramPages:
+- !page
+  name: Combine
+  pars:
+    Enable:
+      name: Enable
+      label: Enable
+      style: Toggle
+      default: true
+    Combine:
+      name: Combine
+      label: Combine
+      style: Menu
+      default: simpleUnion
+      menuNames:
+      - simpleUnion
+      - simpleIntersect
+      - simpleDiff
+      - smoothUnion
+      - smoothIntersect
+      - smoothDiff
+      - roundUnion
+      - roundIntersect
+      - roundDiff
+      - chamferUnion
+      - chamferIntersect
+      - chamferDiff
+      - stairUnion
+      - stairIntersect
+      - stairDiff
+      - columnUnion
+      - columnIntersect
+      - columnDiff
+      menuLabels:
+      - Simple Union
+      - Simple Intersect
+      - Simple Difference
+      - Smooth Union
+      - Smooth Intersect
+      - Smooth Difference
+      - Round Union
+      - Round Intersect
+      - Round Difference
+      - Chamfer Union
+      - Chamfer Intersect
+      - Chamfer Difference
+      - Stair Union
+      - Stair Intersect
+      - Stair Difference
+      - Column Union
+      - Column Intersect
+      - Column Difference
+    Swapinputs:
+      name: Swapinputs
+      label: Swap Inputs
+      style: Toggle
+      default: false
+      enable: false
+      enableExpr: me.par.Combine in ('simpleDiff', 'smoothDiff', 'roundDiff', 'chamferDiff',
+        'stairDiff', 'columnDiff')
+    Radius:
+      name: Radius
+      label: Radius
+      style: Float
+      size: 1
+      default: 0.5
+      enable: false
+      enableExpr: me.par.Combine in ('smoothUnion', 'smoothIntersect', 'smoothDiff',
+        'roundUnion', 'roundIntersect', 'roundDiff', 'chamferUnion', 'chamferIntersect',
+        'chamferDiff', 'stairUnion', 'stairIntersect', 'stairDiff', 'columnUnion',
+        'columnIntersect', 'columnDiff')
+      normMin: 0.0
+      normMax: 2.0
+    Number:
+      name: Number
+      label: Number
+      style: Float
+      size: 1
+      default: 3.0
+      enable: false
+      enableExpr: me.par.Combine in ('stairUnion', 'stairIntersect', 'stairDiff',
+        'columnUnion', 'columnIntersect', 'columnDiff')
+      normMin: 0.0
+      normMax: 10.0
+    Offset:
+      name: Offset
+      label: Offset
+      style: Float
+      size: 1
+      default: 0.0
+      enable: false
+      enableExpr: me.par.Combine in ('stairUnion', 'stairIntersect', 'stairDiff',
+        'columnUnion', 'columnIntersect', 'columnDiff')
+      normMin: 0.0
+      normMax: 1.0
+multiInput: !multiInput
+  Minimuminputs: 0
+  Coordtypereductionmode: common
+  Coordtypereductionscope: '*'
+  Contexttypereductionmode: common
+  Contexttypereductionscope: '*'
+  Returntypereductionmode: none
+  inputs:
+  - !input
+    Required: true
+    coordType: !coordT
+      Allcoordtype: true
+      Coordtypefloat: false
+      Coordtypevec2: true
+      Coordtypevec3: true
+    contextType: !contextT
+      Allcontexttype: true
+      Contexttypecontext: true
+      Contexttypematerialcontext: false
+      Contexttypecameracontext: false
+      Contexttypelightcontext: false
+      Contexttyperaycontext: false
+      Contexttypeparticlecontext: false
+    returnType: !returnT
+      Allreturntype: false
+      Returntypesdf: true
+      Returntypefloat: false
+      Returntypevec4: false
+      Returntyperay: false
+      Returntypelight: false
+      Returntypeparticle: false
+  - !input
+    Required: true
+    coordType: !coordT
+      Allcoordtype: true
+      Coordtypefloat: false
+      Coordtypevec2: true
+      Coordtypevec3: true
+    contextType: !contextT
+      Allcontexttype: true
+      Contexttypecontext: true
+      Contexttypematerialcontext: false
+      Contexttypecameracontext: false
+      Contexttypelightcontext: false
+      Contexttyperaycontext: false
+      Contexttypeparticlecontext: false
+    returnType: !returnT
+      Allreturntype: false
+      Returntypesdf: true
+      Returntypefloat: false
+      Returntypevec4: false
+      Returntyperay: false
+      Returntypelight: false
+      Returntypeparticle: false
+inputs:
+- !input
+  Localalias: radiusField
+  coordType: !coordT
+    Allcoordtype: true
+    Coordtypefloat: false
+    Coordtypevec2: true
+    Coordtypevec3: true
+  contextType: !contextT
+    Allcontexttype: true
+    Contexttypecontext: true
+    Contexttypematerialcontext: false
+    Contexttypecameracontext: false
+    Contexttypelightcontext: false
+    Contexttyperaycontext: false
+    Contexttypeparticlecontext: false
+  returnType: !returnT
+    Allreturntype: false
+    Returntypesdf: true
+    Returntypefloat: true
+    Returntypevec4: false
+    Returntyperay: false
+    Returntypelight: false
+    Returntypeparticle: false
+- !input
+  Localalias: offsetField
+  coordType: !coordT
+    Allcoordtype: true
+    Coordtypefloat: false
+    Coordtypevec2: false
+    Coordtypevec3: true
+  contextType: !contextT
+    Allcontexttype: true
+    Contexttypecontext: true
+    Contexttypematerialcontext: false
+    Contexttypecameracontext: false
+    Contexttypelightcontext: false
+    Contexttyperaycontext: false
+    Contexttypeparticlecontext: false
+  returnType: !returnT
+    Allreturntype: false
+    Returntypesdf: false
+    Returntypefloat: true
+    Returntypevec4: false
+    Returntyperay: false
+    Returntypelight: false
+    Returntypeparticle: false

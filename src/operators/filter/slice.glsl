@@ -1,23 +1,23 @@
 ReturnT thismap(CoordT p, ContextT ctx) {
 	Sdf res = inputOp1(p, ctx);
-	#ifdef THIS_Enablemirror
+	#pragma r:if THIS_Enablemirror
 	float q = abs(p.THIS_AXIS);
-	#else
+	#pragma r:else
 	float q = p.THIS_AXIS;
-	#endif
+	#pragma r:endif
 	float d = abs(q - THIS_Offset) - THIS_Thickness;
-	#if defined(THIS_Operation_intersect)
-	#elif defined(THIS_Operation_diff)
+	#pragma r:if THIS_Operation_intersect
+	#pragma r:elif THIS_Operation_diff
 	{
 		d = -d;
 	}
-	#else
+	#pragma r:else
 	#error invalidOperation
-	#endif
-	#ifdef THIS_Enablesmoothing
+	#pragma r:endif
+	#pragma r:if THIS_Enablesmoothing
 	res.x = fOpIntersectionRound(res.x, d, THIS_Smoothradius);
-	#else
+	#pragma r:else
 	res.x = max(res.x, d);
-	#endif
+	#pragma r:endif
 	return res;
 }

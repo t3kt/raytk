@@ -8,7 +8,8 @@ import dataclasses
 from dataclasses import dataclass
 from enum import Enum
 import re
-from typing import List, Optional, Union
+from typing import Callable, List, Optional, Union
+from raytkUtil import RaytkContext, recloneComp
 
 # noinspection PyUnreachableCode
 if False:
@@ -191,3 +192,27 @@ def _cleanShaderErrorLine(line: str) -> str:
 	match = _shaderErrorLinePattern.fullmatch(line)
 	message = match.group(1) if match else None
 	return message or line
+
+def processTest(comp, log: 'Callable[[str], None]' = None):
+	if not comp:
+		return
+	if not comp.valid:
+		log and log(f'For some reason {comp!r} is invalid!')
+		return
+	rops = RaytkContext().ropChildrenOf(comp, maxDepth=2)
+	log and log(f'Found {len(rops)} ROPs in test')
+	# This is breaking connections made by outputOpController on initialization
+	for rop in rops:
+		if not rop.valid:
+			log and log(f'For some reason {rop!r} is invalid!')
+			continue
+		rop.par.reinitnet.pulse()
+		recloneComp(rop)
+		if rop.par['Updateop'] is not None:
+			rop.par.Updateop.pulse()
+	for rop in RaytkContext().ropOutputChildrenOf(comp, maxDepth=4):
+		if not rop.valid:
+			continue
+		for o in rop.outputs:
+			if o.valid:
+				o.cook(force=True)

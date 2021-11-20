@@ -3,12 +3,12 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 	float r = THIS_Radius;
 	float n = THIS_Points;
 	float t = THIS_Tightness;
-	#ifdef THIS_HAS_INPUT_radiusField
+	#pragma r:if THIS_HAS_INPUT_radiusField
 	r *= inputOp_radiusField(p, ctx);
-	#endif
-	#ifdef THIS_HAS_INPUT_tightnessField
+	#pragma r:endif
+	#pragma r:if THIS_HAS_INPUT_tightnessField
 	t *= inputOp_tightnessField(p, ctx);
-	#endif
+	#pragma r:endif
 	float m = mapRange(t, 0., 1., 2., n);
 	// next 4 lines can be precomputed for a given shape
 	float an = PI/n;
@@ -21,14 +21,14 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 	p -= r*acs;
 	p += ecs*clamp( -dot(p,ecs), 0.0, r*acs.y/ecs.y);
 	ReturnT res = createSdf(length(p)*sign(p.x));
-	#if defined(THIS_Uvmode_cartesian)
+	#pragma r:if THIS_Uvmode_cartesian
 	assignUV(res, vec3(map01(p0, -vec2(THIS_Radius/2.), vec2(THIS_Radius/2.)), 0.));
-	#elif defined(THIS_Uvmode_polar)
+	#pragma r:elif THIS_Uvmode_polar
 	assignUV(res, vec3(
 		length(p0) / THIS_Radius,
 		atan(p0.y, p0.x),
 		0.
 	));
-	#endif
+	#pragma r:endif
 	return res;
 }

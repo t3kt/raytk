@@ -1,5 +1,5 @@
 from dataclasses import dataclass, field
-from typing import Dict, List, Union, Optional
+from typing import Dict, List, Union, Optional, Tuple
 from raytkUtil import RaytkContext
 
 # noinspection PyUnreachableCode
@@ -13,47 +13,6 @@ if False:
 	class _COMP(panelCOMP):
 		par: _Par
 
-	class _ListConfigPar(ParCollection):
-		Bgcolorr: 'FloatParamT'
-		Bgcolorg: 'FloatParamT'
-		Bgcolorb: 'FloatParamT'
-
-		Textcolorr: 'FloatParamT'
-		Textcolorg: 'FloatParamT'
-		Textcolorb: 'FloatParamT'
-
-		Alphacolorr: 'FloatParamT'
-		Alphacolorg: 'FloatParamT'
-		Alphacolorb: 'FloatParamT'
-
-		Betacolorr: 'FloatParamT'
-		Betacolorg: 'FloatParamT'
-		Betacolorb: 'FloatParamT'
-
-		Deprecatedcolorr: 'FloatParamT'
-		Deprecatedcolorg: 'FloatParamT'
-		Deprecatedcolorb: 'FloatParamT'
-
-		Rolloverhighlightcolorr: 'FloatParamT'
-		Rolloverhighlightcolorg: 'FloatParamT'
-		Rolloverhighlightcolorb: 'FloatParamT'
-
-		Categorybgcolorr: 'FloatParamT'
-		Categorybgcolorg: 'FloatParamT'
-		Categorybgcolorb: 'FloatParamT'
-
-		Categorytextcolorr: 'FloatParamT'
-		Categorytextcolorg: 'FloatParamT'
-		Categorytextcolorb: 'FloatParamT'
-
-		Buttonbgcolorr: 'FloatParamT'
-		Buttonbgcolorg: 'FloatParamT'
-		Buttonbgcolorb: 'FloatParamT'
-
-		Buttonrolloverbgcolorr: 'FloatParamT'
-		Buttonrolloverbgcolorg: 'FloatParamT'
-		Buttonrolloverbgcolorb: 'FloatParamT'
-
 	class _UIStatePar(ParCollection):
 		Showalpha: 'BoolParamT'
 		Showbeta: 'BoolParamT'
@@ -61,10 +20,14 @@ if False:
 		Showhelp: 'BoolParamT'
 		Pinopen: 'BoolParamT'
 
-	ipar.listConfig = _ListConfigPar()
+	ipar.listConfig = ParCollection()
 	ipar.uiState = _UIStatePar()
 	from _stubs.TDCallbacksExt import CallbacksExt
 	ext.callbacks = CallbacksExt(None)
+
+def _configColor(name: str) -> 'Tuple[Par, Par, Par, int]':
+	p = ipar.listConfig
+	return p[name + 'r'], p[name + 'g'], p[name + 'b'], 1
 
 class OpPicker:
 	def __init__(self, ownerComp: 'COMP'):
@@ -245,7 +208,7 @@ class OpPicker:
 					attribs.top = self.ownerComp.op('expandIcon')
 				else:
 					attribs.top = self.ownerComp.op('collapseIcon')
-				attribs.bgColor = ipar.listConfig.Buttonbgcolorr, ipar.listConfig.Buttonbgcolorg, ipar.listConfig.Buttonbgcolorb, 1
+				attribs.bgColor = _configColor('Buttonbgcolor')
 			elif col == 1:
 				attribs.textOffsetX = 5
 		elif isinstance(item, PickerOpItem):
@@ -260,7 +223,7 @@ class OpPicker:
 					attribs.top = self.ownerComp.op('deprecatedIcon')
 			elif col == 3:
 				attribs.top = self.ownerComp.op('editIcon')
-				attribs.bgColor = ipar.listConfig.Buttonbgcolorr, ipar.listConfig.Buttonbgcolorg, ipar.listConfig.Buttonbgcolorb, 1
+				attribs.bgColor = _configColor('Bgcolor')
 
 	def onInitRow(self, row: int, attribs: 'ListAttributes'):
 		item = self.itemLibrary.itemForRow(row)
@@ -269,14 +232,14 @@ class OpPicker:
 		if item.isAlpha or item.isBeta or item.isDeprecated:
 			attribs.fontItalic = True
 		if isinstance(item, PickerCategoryItem):
-			attribs.textColor = ipar.listConfig.Categorytextcolorr, ipar.listConfig.Categorytextcolorg, ipar.listConfig.Categorytextcolorb, 1
-			attribs.bgColor = ipar.listConfig.Categorybgcolorr, ipar.listConfig.Categorybgcolorg, ipar.listConfig.Categorybgcolorb, 1
+			attribs.textColor = _configColor('Categorytextcolor')
+			attribs.bgColor = _configColor('Categorybgcolor')
 		if item.isAlpha:
-			attribs.textColor = ipar.listConfig.Alphacolorr, ipar.listConfig.Alphacolorg, ipar.listConfig.Alphacolorb
+			attribs.textColor = _configColor('Alphacolor')
 		elif item.isBeta:
-			attribs.textColor = ipar.listConfig.Betacolorr, ipar.listConfig.Betacolorg, ipar.listConfig.Betacolorb
+			attribs.textColor = _configColor('Betacolor')
 		elif item.isDeprecated:
-			attribs.textColor = ipar.listConfig.Deprecatedcolorr, ipar.listConfig.Deprecatedcolorg, ipar.listConfig.Deprecatedcolorb
+			attribs.textColor = _configColor('Deprecatedcolor')
 
 	@staticmethod
 	def onInitCol(col: int, attribs: 'ListAttributes'):
@@ -292,8 +255,8 @@ class OpPicker:
 	@staticmethod
 	def onInitTable(attribs: 'ListAttributes'):
 		attribs.rowHeight = 26
-		attribs.bgColor = ipar.listConfig.Bgcolorr, ipar.listConfig.Bgcolorg, ipar.listConfig.Bgcolorb
-		attribs.textColor = ipar.listConfig.Textcolorr, ipar.listConfig.Textcolorg, ipar.listConfig.Textcolorb
+		attribs.bgColor = _configColor('Bgcolor')
+		attribs.textColor = _configColor('Textcolor')
 		attribs.fontFace = 'Roboto'
 		attribs.fontSizeX = 18
 		attribs.textJustify = JustifyType.CENTERLEFT
@@ -305,9 +268,9 @@ class OpPicker:
 		if not attribs:
 			return
 		if highlight:
-			color = ipar.listConfig.Buttonrolloverbgcolorr, ipar.listConfig.Buttonrolloverbgcolorg, ipar.listConfig.Buttonrolloverbgcolorb, 1
+			color = _configColor('Buttonrolloverbgcolor')
 		else:
-			color = ipar.listConfig.Buttonbgcolorr, ipar.listConfig.Buttonbgcolorg, ipar.listConfig.Buttonbgcolorb, 1
+			color = _configColor('Buttonbgcolor')
 		attribs.bgColor = color
 
 	def _setRowHighlight(self, row: int, selected: bool):
@@ -315,7 +278,7 @@ class OpPicker:
 			return
 		# print(self.ownerComp, f'setRowHighlight(row: {row!r}, sel: {selected!r})')
 		if selected:
-			color = ipar.listConfig.Rolloverhighlightcolorr, ipar.listConfig.Rolloverhighlightcolorg, ipar.listConfig.Rolloverhighlightcolorb, 1
+			color = _configColor('Rolloverhighlightcolor')
 		else:
 			color = 0, 0, 0, 0
 		listComp = self._listComp
@@ -361,7 +324,6 @@ class OpPicker:
 			endRow: int, endCol: int,
 			start: bool, end: bool):
 		item = self.itemLibrary.itemForRow(endRow)
-		# print(self.ownerComp, f'SELECT startRC: {startRow},{startCol}, endRC: {endRow},{endCol}, start: {start}, end: {end} \n{item}')
 		self._selectItem(item)
 		if end:
 			if item.isCategory:

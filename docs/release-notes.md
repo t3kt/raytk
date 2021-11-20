@@ -1,5 +1,61 @@
 # Release Notes
 
+## v0.19
+
+### Highlights
+
+* New 3D bezierSdf to create arbitrary curved paths
+* New headSdf based on tdhooper's model
+* New polyhedronSdf with lots of controls and support for custom SDFs on vertices, similar to geodesicSdf
+* Lots of new field inputs to customize various filters and SDFs
+* Various optimizations
+
+### Details
+
+* Improvements / additions
+    * New ops
+        * 3D bezierSdf (#726)
+        * backgroundFieldContrib (#733)
+        * constantSwitchField
+        * headSdf based on tdhooper's model (#116)
+        * logPolarRepeat (#738)
+        * polarCoordField (#699)
+        * polyhedronSdf (#715)
+        * quadTreeRepeat (#725)
+        * sdfNormalField
+        * spikeSdf2d
+    * New field inputs
+        * Face offset input field for geodesicSdf (#693)
+        * Smooth radius and size in crossSdf (#693)
+        * Scale in ellipsoidSdf (#693)
+        * Offset in planeSdf (#693)
+        * Radius and thickness in discSdf (#693)
+        * Shift and offset in modulo1D (#722)
+        * Blend radius in instance (#721)
+    * New parameters
+        * Reverse parameter in helixSdf (#704)
+        * Expand to vec4 / collapse to float in rescaleField
+        * Enable toggle in bandField (#724)
+        * Logarithmic conversions in cartesianToPolar (#738)
+    * Optimization
+        * Skip material processing, property blending when it isn't needed (e.g. in shadow checks and calculating normals)
+* Fixes
+    * Fix missing translate parameters in arrange (#709)
+    * Fix hidden built-in parameters in panel comps (#708)
+* Infrastructure / internals
+    * Code filtering, which reduces the amount of shader code sent to the GPU, which should help with recompile times.
+      Currently disabled by default. (#710)
+    * Improved test handling in toolkit editor
+    * Simplification and optimization in shaderBuilder
+    * Clean up buffer/texture table format
+    * Reduce build / tox size
+        * Remove unnecessary copies of shared python
+        * Python code cleanup
+        * Remove unnecessary data and copies of operator tables
+        * Clean out internal metadata during build
+        * Strip out full help DATs during build
+    * Support for variables / references, as a more flexible alternative to iteration values (#574, #712)
+
 ## v0.18
 
 ### Highlights

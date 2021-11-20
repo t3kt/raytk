@@ -1,4 +1,4 @@
-from raytkUtil import simplifyNames
+from raytkShader import simplifyNames
 
 # noinspection PyUnreachableCode
 if False:

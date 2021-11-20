@@ -1,30 +1,41 @@
 // https://www.shadertoy.com/view/4tG3zW
 
 ReturnT thismap(CoordT p, ContextT ctx) {
+	#pragma r:if THIS_Faceoffsetfieldcoordmode_origpos
+	CoordT foFieldP = p;
+	#pragma r:endif
 	float s = THIS_Divisions;
-	#if defined(THIS_Shape_dodecahedron)
+	#pragma r:if THIS_Shape_dodecahedron
 	vec3 n = pDodecahedron(p, int(s));
-	#elif defined(THIS_Shape_icosahedron)
+	#pragma r:elif THIS_Shape_icosahedron
 	vec3 n = pIcosahedron(p, int(s));
-	#else
+	#pragma r:else
 	#error invalidShape
-	#endif
+	#pragma r:endif
 
 	float d = RAYTK_MAX_DIST;
-	#if defined(THIS_Enablespikes)
+	#pragma r:if THIS_Enablespikes
 	float spikeSize = .08 + (2. - s) * THIS_Spikeradius;
 	d = min(d, fCone(p, spikeSize, THIS_Spikelength, n, THIS_Spikeoffset));
-	#endif
-	#ifdef THIS_Enablefaces
-	d = min(d, fPlane(p, n, -THIS_Faceoffset));
-	#endif
-	#ifdef THIS_HAS_INPUT_spikeSdf
+	#pragma r:endif
+	#pragma r:if THIS_Enablefaces
+	#pragma r:if THIS_Faceoffsetfieldcoordmode_geopos
+	CoordT foFieldP = p;
+	#pragma r:endif
+	#pragma r:if THIS_HAS_INPUT_faceOffset
+	float fo = inputOp_faceOffset(foFieldP, ctx);
+	#pragma r:else
+	float fo = THIS_Faceoffset;
+	#pragma r:endif
+	d = min(d, fPlane(p, n, -fo));
+	#pragma r:endif
+	#pragma r:if THIS_HAS_INPUT_spikeSdf
 	p -= n * (THIS_Spikeoffset + THIS_Spikelength);
 	p = reflect(p, normalize(mix(vec3(0,1,0), -n, .5)));
 	ReturnT res = inputOp_spikeSdf(p, ctx);
 	res.x = min(res.x, d);
 	return res;
-	#else
+	#pragma r:else
 	return createSdf(d);
-	#endif
+	#pragma r:endif
 }

@@ -2,28 +2,28 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 	ReturnT val = inputOp1(p, ctx);
 	ReturnT low = THIS_asReturnT(THIS_Low);
 	ReturnT high = THIS_asReturnT(THIS_High);
-	#if defined(THIS_Limittype_off)
+	#pragma r:if THIS_Limittype_off
 		return val;
-	#elif defined(THIS_Limittype_clamp)
-		#ifdef THIS_RETURN_TYPE_Sdf
+	#pragma r:elif THIS_Limittype_clamp
+		#pragma r:if THIS_RETURN_TYPE_Sdf
 		val.x = clamp(val.x, low, high);
-		#else
+		#pragma r:else
 		val = clamp(val, low, high);
-		#endif
-	#elif defined(THIS_Limittype_zigzag)
-		#ifdef THIS_RETURN_TYPE_Sdf
+		#pragma r:endif
+	#pragma r:elif THIS_Limittype_zigzag
+		#pragma r:if THIS_RETURN_TYPE_Sdf
 		val.x = modZigZag(val.x, low, high);
-		#else
+		#pragma r:else
 		val = modZigZag(val, low, high);
-		#endif
-	#elif defined(THIS_Limittype_loop)
-		#ifdef THIS_RETURN_TYPE_Sdf
+		#pragma r:endif
+	#pragma r:elif THIS_Limittype_loop
+		#pragma r:if THIS_RETURN_TYPE_Sdf
 		val.x = wrapRange(val.x, low, high);
-		#else
+		#pragma r:else
 		val = wrapRange(val, low, high);
-		#endif
-	#else
+		#pragma r:endif
+	#pragma r:else
 		#error invalidLimitType
-	#endif
+	#pragma r:endif
 	return val;
 }

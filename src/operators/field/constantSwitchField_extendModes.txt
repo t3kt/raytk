@@ -1,0 +1,4 @@
+name	label	code
+clamp	Clamp	i = clamp(i, 0., n - 1.)
+loop	Loop	i = mod(i, float(n))
+zigzag	Zig-Zag	i = modZigZag(i / float(n - 1)) * float(n - 1)

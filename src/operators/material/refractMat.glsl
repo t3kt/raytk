@@ -2,6 +2,7 @@ vec4 THIS_iterationCapture = vec4(0.);
 
 ReturnT thismap(CoordT p, ContextT ctx) {
 	ReturnT res = inputOp1(p, ctx);
+	if (isDistanceOnlyStage()) { return res; }
 	assignMaterial(res, THISMAT);
 	res.ior = THIS_Ior;
 	res.refract = true;

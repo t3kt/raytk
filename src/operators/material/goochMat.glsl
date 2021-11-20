@@ -2,11 +2,12 @@ vec4 THIS_iterationCapture = vec4(0.);
 
 ReturnT thismap(CoordT p, ContextT ctx) {
 	Sdf res = inputOp1(p, ctx);
-	#if defined(THIS_Uselocalpos) && defined(RAYTK_USE_MATERIAL_POS)
+	if (isDistanceOnlyStage()) { return res; }
+	#pragma r:if THIS_Uselocalpos && RAYTK_USE_MATERIAL_POS
 	assignMaterialWithPos(res, THISMAT, p);
-	#else
+	#pragma r:else
 	assignMaterial(res, THISMAT);
-	#endif
+	#pragma r:endif
 	captureIterationFromMaterial(THIS_iterationCapture, ctx);
 	return res;
 }

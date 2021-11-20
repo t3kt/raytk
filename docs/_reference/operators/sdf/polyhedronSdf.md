@@ -1,0 +1,101 @@
+---
+layout: operator
+title: polyhedronSdf
+parent: Sdf Operators
+grand_parent: Operators
+permalink: /reference/operators/sdf/polyhedronSdf
+redirect_from:
+  - /reference/opType/raytk.operators.sdf.polyhedronSdf/
+op:
+  category: sdf
+  inputs:
+  - contextTypes:
+    - Context
+    - MaterialContext
+    - CameraContext
+    - LightContext
+    - RayContext
+    - ParticleContext
+    coordTypes:
+    - vec3
+    label: Vertex Shape
+    name: vertexShape
+    returnTypes:
+    - Sdf
+  name: polyhedronSdf
+  opType: raytk.operators.sdf.polyhedronSdf
+  parameters:
+  - label: Type
+    name: Type
+  - label: U
+    name: U
+  - label: V
+    name: V
+  - label: W
+    name: W
+  - label: Radius
+    name: Radius
+  - label: Enable Faces
+    name: Enablefaces
+  - label: Face Radius
+    name: Faceradius
+  - label: Enable Segments
+    name: Enablesegments
+  - label: Segment Radius
+    name: Segmentradius
+  - label: Segment Size
+    name: Segmentsize
+  - label: Enable Vertices
+    name: Enablevertices
+  - label: Vertex Radius
+    name: Vertexradius
+  - label: Vertex Size
+    name: Vertexsize
+  - label: Combine
+    menuOptions:
+    - label: Simple Union
+      name: simpleUnion
+    - label: Simple Intersect
+      name: simpleIntersect
+    - label: Simple Difference
+      name: simpleDiff
+    - label: Smooth Union
+      name: smoothUnion
+    - label: Smooth Intersect
+      name: smoothIntersect
+    - label: Smooth Difference
+      name: smoothDiff
+    - label: Round Union
+      name: roundUnion
+    - label: Round Intersect
+      name: roundIntersect
+    - label: Round Difference
+      name: roundDiff
+    - label: Chamfer Union
+      name: chamferUnion
+    - label: Chamfer Intersect
+      name: chamferIntersect
+    - label: Chamfer Difference
+      name: chamferDiff
+    - label: Stair Union
+      name: stairUnion
+    - label: Stair Intersect
+      name: stairIntersect
+    - label: Stair Difference
+      name: stairDiff
+    - label: Column Union
+      name: columnUnion
+    - label: Column Intersect
+      name: columnIntersect
+    - label: Column Difference
+      name: columnDiff
+    name: Combine
+  - label: Blend Radius
+    name: Blendradius
+  - label: Blend Number
+    name: Blendnumber
+  - label: Blend Offset
+    name: Blendoffset
+  status: beta
+
+---

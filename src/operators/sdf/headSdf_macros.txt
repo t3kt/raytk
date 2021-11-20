@@ -1,0 +1,1 @@
+parent().par.Enablesurfacecolor	'RAYTK_USE_SURFACE_COLOR'	

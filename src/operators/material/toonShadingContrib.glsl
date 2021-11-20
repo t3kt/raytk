@@ -6,14 +6,14 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 	vec3 val = fillToVec3(inputOp_colorRamp(NdotL, ctx));
 	ReturnT res;
 	res.rgb = THIS_Color * THIS_Level * val * 2.0;
-	#ifdef THIS_Uselightcolor
+	#pragma r:if THIS_Uselightcolor
 	res.rgb *= ctx.light.color;
-	#endif
-	#if defined(THIS_Usesurfacecolor) && defined(RAYTK_USE_SURFACE_COLOR)
+	#pragma r:endif
+	#pragma r:if THIS_Usesurfacecolor && RAYTK_USE_SURFACE_COLOR
 	res.rgb *= mix(vec3(1.), ctx.result.color.rgb, ctx.result.color.a);
-	#endif
-	#if defined(THIS_Enableshadow) && defined(RAYTK_USE_SHADOW)
+	#pragma r:endif
+	#pragma r:if THIS_Enableshadow && RAYTK_USE_SHADOW
 	res *= ctx.shadedLevel;
-	#endif
+	#pragma r:endif
 	return res;
 }

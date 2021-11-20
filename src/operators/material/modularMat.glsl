@@ -2,24 +2,29 @@ vec4 THIS_iterationCapture = vec4(0.);
 
 Sdf thismap(CoordT p, ContextT ctx) {
 	Sdf res = inputOp1(p, ctx);
-	#if defined(THIS_Uselocalpos) && defined(RAYTK_USE_MATERIAL_POS)
+	if (isDistanceOnlyStage()) { return res; }
+	#pragma r:if THIS_Uselocalpos && RAYTK_USE_MATERIAL_POS
 	assignMaterialWithPos(res, THISMAT, p);
-	#else
+	#pragma r:else
 	assignMaterial(res, THISMAT);
-	#endif
+	#pragma r:endif
 	captureIterationFromMaterial(THIS_iterationCapture, ctx);
-	#if defined(RAYTK_REFLECT_IN_SDF) && defined(THIS_Enablereflection)
+	#pragma r:if RAYTK_REFLECT_IN_SDF && THIS_Enablereflection
 	res.reflect = true;
-	#endif
-	#if defined(RAYTK_USE_SHADOW)
+	#pragma r:endif
+	#pragma r:if RAYTK_USE_SHADOW
 	{
-		#if (defined(THIS_HAS_INPUT_2) && defined(inputOp2_Enableshadow))\
-		 || (defined(THIS_HAS_INPUT_3) && defined(inputOp3_Enableshadow))\
-		 || (defined(THIS_HAS_INPUT_4) && defined(inputOp4_Enableshadow))
+		#pragma r:if THIS_HAS_INPUT_2 && inputOp2_Enableshadow
 		res.useShadow = true;
-		#endif
+		#pragma r:endif
+		#pragma r:if THIS_HAS_INPUT_3 && inputOp3_Enableshadow
+		res.useShadow = true;
+		#pragma r:endif
+		#pragma r:if THIS_HAS_INPUT_4 && inputOp4_Enableshadow
+		res.useShadow = true;
+		#pragma r:endif
 	}
-	#endif
+	#pragma r:endif
 	return res;
 }
 
@@ -27,20 +32,20 @@ vec3 THIS_getColor(vec3 p, MaterialContext matCtx) {
 	restoreIterationFromMaterial(matCtx, THIS_iterationCapture);
 	vec3 mp = getPosForMaterial(p, matCtx);
 	vec3 col = THIS_Basecolor;
-	#ifdef THIS_Uselightcolor
+	#pragma r:if THIS_Uselightcolor
 	col *= matCtx.light.color;
-	#endif
-	#ifdef THIS_HAS_INPUT_2
+	#pragma r:endif
+	#pragma r:if THIS_HAS_INPUT_2
 	col += fillToVec3(inputOp2(mp, matCtx));
-	#endif
-	#ifdef THIS_HAS_INPUT_3
+	#pragma r:endif
+	#pragma r:if THIS_HAS_INPUT_3
 	col += fillToVec3(inputOp3(mp, matCtx));
-	#endif
-	#ifdef THIS_HAS_INPUT_4
+	#pragma r:endif
+	#pragma r:if THIS_HAS_INPUT_4
 	col += fillToVec3(inputOp4(mp, matCtx));
-	#endif
-	#ifdef THIS_Enableao
+	#pragma r:endif
+	#pragma r:if THIS_Enableao
 	col *= sqrt(calcAO(mp, matCtx.normal));
-	#endif
+	#pragma r:endif
 	return col;
 }

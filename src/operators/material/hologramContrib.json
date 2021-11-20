@@ -2,6 +2,6 @@
   "meta": {
     "opStatus": "alpha",
     "opType": "raytk.operators.material.hologramContrib",
-    "opVersion": 1
+    "opVersion": 2
   }
 }

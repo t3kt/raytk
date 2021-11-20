@@ -187,6 +187,14 @@ op:
     name: Translate3
   - label: Translate 4
     name: Translate4
+  - label: Translate 5
+    name: Translate5
+  - label: Translate 6
+    name: Translate6
+  - label: Translate 7
+    name: Translate7
+  - label: Translate 8
+    name: Translate8
   status: beta
 
 ---

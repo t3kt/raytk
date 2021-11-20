@@ -1,5 +1,5 @@
 from dataclasses import dataclass
-from raytkUtil import RaytkContext, simplifyNames
+from raytkShader import simplifyNames, CodeFilter
 import re
 from typing import Callable, Dict, List, Tuple, Union, Optional
 
@@ -16,6 +16,7 @@ if False:
 		Simplifynames: BoolParamT
 		Inlinetypedefs: BoolParamT
 		Includemode: StrParamT
+		Filtermode: StrParamT
 
 	class _OwnerCompPar(_ConfigPar):
 		Globalprefix: DatParamT
@@ -36,7 +37,7 @@ if False:
 		par: '_ConfigPar'
 
 class ShaderBuilder:
-	def __init__(self, ownerComp: '_OwnerComp'):
+	def __init__(self, ownerComp: 'Union[_OwnerComp, COMP]'):
 		self.ownerComp = ownerComp
 
 	def _config(self) -> '_ConfigComp':
@@ -85,6 +86,12 @@ class ShaderBuilder:
 	def _outputBufferTable(self) -> 'DAT':
 		return self.ownerComp.op('output_buffer_table')
 
+	def _variableTable(self) -> 'DAT':
+		return self.ownerComp.op('variable_table')
+
+	def _referenceTable(self) -> 'DAT':
+		return self.ownerComp.op('reference_table')
+
 	def _allParamVals(self) -> 'CHOP':
 		return self.ownerComp.op('all_param_vals')
 
@@ -126,7 +133,7 @@ class ShaderBuilder:
 		if defsTable.numRows < 2:
 			code = ['#error No input definition']
 		else:
-			mainName = defsTable[defsTable.numRows - 1, 'name']
+			mainName = defsTable[-1, 'name']
 			paramProcessor = self._createParamProcessor()
 			code = paramProcessor.globalDeclarations()
 			code += [
@@ -149,63 +156,57 @@ class ShaderBuilder:
 					results.append(o)
 		return results
 
-	def _getMacros(self) -> 'List[Tuple[str, str]]':
+	def buildMacroTable(self, dat: 'DAT'):
+		dat.clear()
 		tables = [self.ownerComp.par.Globalmacrotable.eval()]
 		tables += self.getOpsFromDefinitionColumn('macroTable')
-		namesAndVals = []
 		for table in tables:
-			if not table:
+			if not table or not table.numRows:
 				continue
 			for row in range(table.numRows):
 				if table.numCols == 3:
-					if table[row, 0].val in ('0', 'False'):
+					if table[row, 0] in ('0', 'False'):
 						continue
-					name = table[row, 1].val
-					value = table[row, 2].val
+					name = table[row, 1].val.strip()
+					if name:
+						dat.appendRow([name, table[row, 2]])
 				else:
-					name = table[row, 0].val
-					if table.numCols > 1:
-						value = table[row, 1].val
-					else:
-						value = ''
-				if value:
-					value = ' ' + value
-				if not name.strip():
-					continue
-				namesAndVals.append((name, value))
-		for outputBuffer in self._getOutputBufferSpecs():
-			if outputBuffer.macro:
-				namesAndVals.append((outputBuffer.macro, ''))
-		return namesAndVals
+					name = table[row, 0].val.strip()
+					if not name:
+						continue
+					dat.appendRow([name, table[row, 1] if table.numCols > 1 else ''])
+		outputBufferTable = self._outputBufferTable()
+		for row in range(1, outputBufferTable.numRows):
+			name = outputBufferTable[row, 'macro'].val.strip()
+			if name:
+				dat.appendRow([name, ''])
+		varTable = self._variableTable()
+		for row in range(1, varTable.numRows):
+			ownerName = varTable[row, 'owner']
+			localName = varTable[row, 'localName']
+			dat.appendRow([f'{ownerName}_EXPOSE_{localName}', ''])
+		refTable = self._referenceTable()
+		for row in range(1, refTable.numRows):
+			ownerName = refTable[row, 'owner']
+			localName = refTable[row, 'localName']
+			dat.appendRow([refTable[row, 'name'], refTable[row, 'source']])
+			dat.appendRow([f'{ownerName}_HAS_REF_{localName}', ''])
 
-	def _getOutputBufferSpecs(self) -> 'List[_OutputBufferSpec]':
-		table = self._outputBufferTable()
-		if table.numRows <= 1:
-			return []
-		return [
-			_OutputBufferSpec(
-				name=table[row, 'name'].val,
-				label=table[row, 'label'].val,
-				macro=table[row, 'macro'].val,
-				index=row - 1,
-			)
-			for row in range(1, table.numRows)
-		]
-
-	def buildMacroTable(self, dat: 'DAT'):
-		dat.clear()
-		dat.appendRows([
-			[name, value]
-			for name, value in self._getMacros()
-		])
-
-	def buildMacroBlock(self):
+	def buildVariableDeclarations(self):
+		varTable = self.ownerComp.op('variable_table')
 		decls = []
-		for name, value in self._getMacros():
-			if name.startswith('#define'):
-				decls.append(name + value)
-			else:
-				decls.append(f'#define {name} {value}')
+		for i in range(1, varTable.numRows):
+			name = varTable[i, 'name']
+			dataType = varTable[i, 'dataType']
+			decls.append(f'{dataType} {name};')
+		return wrapCodeSection(decls, 'variables')
+
+	@staticmethod
+	def buildMacroBlock(macroTable: 'DAT'):
+		decls = [
+			f'#define {macroTable[i, 0]} {macroTable[i, 1]}'
+			for i in range(macroTable.numRows)
+		]
 		decls = _uniqueList(decls)
 		code = wrapCodeSection(decls, 'macros')
 		# if self.configPar().Inlineparameteraliases:
@@ -213,7 +214,7 @@ class ShaderBuilder:
 		# 	return processor.processCodeBlock(code)
 		return code
 
-	def getLibraryDats(self, onWarning: Callable[[str], None] = None) -> 'List[DAT]':
+	def _getLibraryDats(self, onWarning: Callable[[str], None] = None) -> 'List[DAT]':
 		requiredLibNames = self.ownerComp.par.Librarynames.eval().strip().split(' ')  # type: List[str]
 		requiredLibNames = [n for n in requiredLibNames if n]
 		defsTable = self._definitionTable()
@@ -272,7 +273,7 @@ class ShaderBuilder:
 			inlineAll = True
 		else:
 			inlineAll = mode == 'inlineall'
-		libraries = self.getLibraryDats(onWarning)
+		libraries = self._getLibraryDats(onWarning)
 		if inlineAll:
 			libBlocks = [
 				f'// Library: <{lib.path}>\n{lib.text}'
@@ -285,10 +286,16 @@ class ShaderBuilder:
 			]
 		return wrapCodeSection(libBlocks, 'libraries')
 
-	def buildOpDataTypedefBlock(self):
+	def buildOpDataTypedefBlock(self, typeDefMacroTable: 'DAT'):
 		inline = self.configPar()['Inlinetypedefs']
-		typedefs, macros = self._buildTypedefs()
-		if typedefs:
+		if typeDefMacroTable.numRows:
+			typedefs = {}
+			macros = {}
+			for cells in typeDefMacroTable.rows():
+				if cells[2] == 'typedef':
+					typedefs[cells[0].val] = cells[1].val
+				else:
+					macros[cells[0].val] = cells[1].val
 			lines = []
 			if not inline:
 				# Primary typedef macros are not needed when they're being inlined
@@ -313,10 +320,9 @@ class ShaderBuilder:
 			lines = []
 		return wrapCodeSection(lines, 'opDataTypedefs')
 
-	def _buildTypedefs(self) -> 'Tuple[Dict[str, str], Dict[str, str]]':
+	def buildTypedefMacroTable(self, dat: 'scriptDAT'):
+		dat.clear()
 		defsTable = self._definitionTable()
-		typedefs = {}
-		macros = {}
 		coordTypeAdaptFuncs = {
 			'float': 'adaptAsFloat',
 			'vec2': 'adaptAsVec2',
@@ -332,35 +338,27 @@ class ShaderBuilder:
 			coordType = str(defsTable[row, 'coordType'])
 			contextType = str(defsTable[row, 'contextType'])
 			returnType = str(defsTable[row, 'returnType'])
-			typedefs.update({
-				name + '_CoordT': coordType,
-				name + '_ContextT': contextType,
-				name + '_ReturnT': returnType,
-			})
-			macros.update({
-				f'{name}_COORD_TYPE_{coordType}': '',
-				f'{name}_CONTEXT_TYPE_{contextType}': '',
-				f'{name}_RETURN_TYPE_{returnType}': '',
-			})
+			dat.appendRow([name + '_CoordT',  coordType, 'typedef'])
+			dat.appendRow([name + '_ContextT',  contextType, 'typedef'])
+			dat.appendRow([name + '_ReturnT',  returnType, 'typedef'])
+			dat.appendRow([name + '_COORD_TYPE_' + coordType, '', 'macro'])
+			dat.appendRow([name + '_CONTEXT_TYPE_' + contextType, '', 'macro'])
+			dat.appendRow([name + '_RETURN_TYPE_' + returnType, '', 'macro'])
 			if coordType in coordTypeAdaptFuncs:
-				macros[name + '_asCoordT'] = coordTypeAdaptFuncs[coordType]
+				dat.appendRow([name + '_asCoordT', coordTypeAdaptFuncs[coordType], 'macro'])
 			if returnType in returnTypeAdaptFuncs:
-				macros[name + '_asReturnT'] = returnTypeAdaptFuncs[returnType]
-		return typedefs, macros
+				dat.appendRow([name + '_asReturnT', returnTypeAdaptFuncs[returnType], 'macro'])
 
-	def inlineTypedefs(self, code: str) -> str:
+	def inlineTypedefs(self, code: str, typeDefMacroTable: 'DAT') -> str:
 		if not self.configPar()['Inlinetypedefs']:
 			return code
-		typedefs, macros = self._buildTypedefs()
-		if not typedefs:
+		if not typeDefMacroTable.numRows:
 			return code
 
-		replacements = dict(typedefs)
-		replacements.update({
-			k: v
-			for k, v in macros.items()
-			if v != ''
-		})
+		replacements = {
+			str(cells[0]): str(cells[1])
+			for cells in typeDefMacroTable.rows()
+		}
 
 		def replace(m: re.Match):
 			return replacements.get(m.group(0)) or m.group(0)
@@ -371,42 +369,81 @@ class ShaderBuilder:
 
 		return code
 
+	def _createCodeFilter(self, typeDefMacroTable: 'DAT') -> 'CodeFilter':
+		mode = self.configPar()['Filtermode']
+		if mode == 'filter':
+			macroTable = self.ownerComp.op('macroTable')
+			cells = macroTable.col(0) or []
+			cells += typeDefMacroTable.col(0) or []
+			macros = set(c.val for c in cells)
+			return CodeFilter.reducer(macros)
+		else:  # macroize
+			return CodeFilter.macroizer()
+
+	def filterCode(self, code: str, typeDefMacroTable: 'DAT') -> str:
+		if not code:
+			return ''
+		if '#pragma' not in code:
+			return code
+		filt = self._createCodeFilter(typeDefMacroTable)
+		return filt.processCodeBlock(code)
+
+	def processReferenceTable(
+			self,
+			dat: 'scriptDAT',
+			rawRefTable: 'DAT',
+			rawVarTable: 'DAT',
+	):
+		dat.clear()
+		dat.appendRow(['name', 'owner', 'localName', 'source', 'dataType'])
+		defTable = self._definitionTable()
+		# rawRef columns: name, localName, sourcePath, sourceName, dataType, owner
+		# rawVar columns: name, localName, label, dataType, owner
+		varNames = {}
+		for i in range(1, rawVarTable.numRows):
+			varOwnerName = rawVarTable[i, 'owner']
+			varOwnerPath = defTable[varOwnerName, 'path'].val
+			varNames[(varOwnerPath, rawVarTable[i, 'localName'].val)] = rawVarTable[i, 'name'].val
+		for i in range(1, rawRefTable.numRows):
+			sourcePath = rawRefTable[i, 'sourcePath'].val
+			sourceName = rawRefTable[i, 'sourceName'].val
+			if not sourcePath or not sourceName:
+				continue
+			sourceName = varNames.get((sourcePath, sourceName), None)
+			if not sourceName:
+				# TODO: report invalid ref
+				continue
+			# TODO: validate dataType match
+			dat.appendRow([
+				rawRefTable[i, 'name'],
+				rawRefTable[i, 'owner'],
+				rawRefTable[i, 'localName'],
+				sourceName,
+				rawRefTable[i, 'dataType']
+			])
+
+	@staticmethod
+	def processVariableTable(
+			dat: 'scriptDAT',
+			procRefTable: 'DAT',
+			rawVarTable: 'DAT',
+	):
+		dat.clear()
+		dat.appendRow(['name', 'owner', 'localName', 'dataType'])
+		refNames = set(c.val for c in procRefTable.col('source')[1:])
+		# rawVar columns: name, localName, label, dataType, owner
+		for i in range(1, rawVarTable.numRows):
+			name = rawVarTable[i, 'name'].val
+			if name in refNames:
+				dat.appendRow([
+					name,
+					rawVarTable[i, 'owner'],
+					rawVarTable[i, 'localName'],
+					rawVarTable[i, 'dataType']
+				])
+
 	def buildPredeclarations(self):
 		return wrapCodeSection(self.ownerComp.par.Predeclarations.eval(), 'predeclarations')
-
-	def _buildParameterExprs(self) -> 'List[Tuple[str, Union[str, float]]]':
-		paramDetails = self._parameterDetailTable()
-		if paramDetails.numRows < 2:
-			return []
-		suffixes = 'xyzw'
-		partAliases = []  # type: List[Tuple[str, Union[str, float]]]
-		mainAliases = []  # type: List[Tuple[str, Union[str, float]]]
-		inlineReadOnly = bool(self.configPar()['Inlinereadonlyparameters'])
-		paramVals = self._allParamVals()
-		paramTuplets = _ParamTupletSpec.fromTableRows(paramDetails)
-		for i, paramTuplet in enumerate(paramTuplets):
-			shouldInline = inlineReadOnly and paramTuplet.isReadOnly and paramTuplet.isPresentInChop(paramVals)
-			size = len(paramTuplet.parts)
-			if size == 1:
-				if shouldInline:
-					mainAliases.append((paramTuplet.parts[0], float(paramVals[paramTuplet.parts[0]])))
-				else:
-					mainAliases.append((paramTuplet.parts[0], f'vecParams[{i}].x'))
-			else:
-				if shouldInline:
-					partVals = [float(paramVals[part]) for part in paramTuplet.parts]
-					valsExpr = ','.join(str(v) for v in partVals)
-					mainAliases.append((paramTuplet.tuplet, f'vec{size}({valsExpr})'))
-					for partI, partVal in enumerate(partVals):
-						partAliases.append((paramTuplet.parts[partI], partVal))
-				else:
-					if size == 4:
-						mainAliases.append((paramTuplet.tuplet, f'vecParams[{i}]'))
-					else:
-						mainAliases.append((paramTuplet.tuplet, f'vec{size}(vecParams[{i}].{suffixes[:size]})'))
-					for partI, partName in enumerate(paramTuplet.parts):
-						partAliases.append((partName, f'vecParams[{i}].{suffixes[partI]}'))
-		return partAliases + mainAliases
 
 	def buildParameterAliases(self):
 		paramProcessor = self._createParamProcessor()
@@ -420,7 +457,7 @@ class ShaderBuilder:
 	def buildTextureDeclarations(self):
 		textureTable = self.ownerComp.op('texture_table')
 		offset = int(self.ownerComp.par.Textureindexoffset)
-		indexByType = {
+		indexByType: 'Dict[str, int]' = {
 			'2d': offset,
 			'3d': 0,
 			'cube': 0,
@@ -485,19 +522,22 @@ class ShaderBuilder:
 		return wrapCodeSection(decls, 'materials')
 
 	def buildOutputBufferDeclarations(self):
+		outputBufferTable = self._outputBufferTable()
+		if outputBufferTable.numRows <= 1:
+			return ' '
+
 		outputBuffers = self._outputBufferTable()
 		if outputBuffers.numRows < 2:
 			return ' '
-		specs = self._getOutputBufferSpecs()
 		if self.ownerComp.par.Shadertype == 'compute':
 			decls = [
-				spec.computeOutputDeclaration()
-				for spec in specs
+				f'#define {outputBufferTable[row, "name"]} mTDComputeOutputs[{row - 1}]'
+				for row in range(1, outputBufferTable.numRows)
 			]
 		else:
 			decls = [
-				spec.fragmentOutputDeclaration()
-				for spec in specs
+				f'layout(location = {row - 1}) out vec4 {outputBufferTable[row, "name"]};'
+				for row in range(1, outputBufferTable.numRows)
 			]
 
 		return wrapCodeSection(decls, 'outputBuffers')
@@ -552,9 +592,10 @@ class ShaderBuilder:
 		code = bodyDat.text if bodyDat else ''
 		if not code:
 			return ' '
-		if _materialParagraphPlaceholder in code:
+		placeholder = '// #include <materialParagraph>'
+		if placeholder in code:
 			materialBlock = self._buildMaterialBlock(materialTable)
-			code = code.replace(_materialParagraphPlaceholder, materialBlock, 1)
+			code = code.replace(placeholder, materialBlock, 1)
 		return wrapCodeSection(code, 'body')
 
 	@staticmethod
@@ -573,7 +614,7 @@ class ShaderBuilder:
 
 	def buildValidationErrors(self, dat: 'DAT'):
 		dat.clear()
-		if RaytkContext().develMode():
+		if _isInDevelMode():
 			return
 		toolkitVersions = {}  # type: Dict[str, int]
 		defsTable = self._definitionTable()
@@ -588,10 +629,346 @@ class ShaderBuilder:
 			dat.appendRow(['path', 'level', 'message'])
 			dat.appendRow([parent().path, 'warning', error])
 
-	def buildUniformTable(self, dat: 'scriptDAT'):
-		pass
+	def V2_writeShader(
+			self,
+			dat: 'scriptDAT',
+			macroTable: 'DAT',
+			typeDefMacroTable: 'DAT',
+			textureTable: 'DAT',
+			bufferTable: 'DAT',
+			materialTable: 'DAT',
+			outputBufferTable: 'DAT',
+	):
+		writer = _V2_Writer(
+			sb=self,
+			out=dat,
+			defTable=self._definitionTable(),
+			paramProc=self._createParamProcessor(),
+			codeFilter=self._createCodeFilter(typeDefMacroTable=typeDefMacroTable),
+			macroTable=macroTable,
+			typeDefMacroTable=typeDefMacroTable,
+			libraryDats=self._getLibraryDats(),
+			textureTable=textureTable,
+			bufferTable=bufferTable,
+			materialTable=materialTable,
+			outputBufferTable=outputBufferTable,
+		)
+		writer.run()
 
-_materialParagraphPlaceholder = '// #include <materialParagraph>'
+@dataclass
+class _V2_Writer:
+	sb: 'ShaderBuilder'
+	out: 'scriptDAT'
+	defTable: 'DAT'
+	paramProc: '_ParameterProcessor'
+	codeFilter: 'CodeFilter'
+	macroTable: 'DAT'
+	typeDefMacroTable: 'DAT'
+	libraryDats: 'List[DAT]'
+	textureTable: 'DAT'
+	bufferTable: 'DAT'
+	materialTable: 'DAT'
+	outputBufferTable: 'DAT'
+
+	inlineTypedefRepls: 'Optional[Dict[str, str]]' = None
+	inlineTypedefPattern: 'Optional[re.Pattern]' = None
+
+	def __post_init__(self):
+		self.configPar = self.sb.configPar()
+		self.ownerComp = self.sb.ownerComp
+		if self.configPar['Inlinetypedefs'] and self.typeDefMacroTable.numRows > 1:
+			self.inlineTypedefRepls = {
+				str(cells[0]): str(cells[1])
+				for cells in self.typeDefMacroTable.rows()
+				if cells[1]
+			}
+			self.inlineTypedefPattern = re.compile(r'\b[\w_]+_(as)?(CoordT|ContextT|ReturnT)\b')
+
+	def run(self):
+		self.out.clear()
+		if self.defTable.numRows < 2:
+			self._write('#error No input definition\n')
+			return
+		self._writeCodeDat('globalPrefix', self.ownerComp.par.Globalprefix.eval())
+		self._writeGlobalDecls()
+		self._writeOpDataTypedefs()
+		self._writeMacroBlock()
+		self._writeLibraryIncludes()
+		self._writeCodeDat('predeclarations', self.ownerComp.par.Predeclarations.eval())
+		self._writeParameterAliases()
+		self._writeTextureDeclarations()
+		self._writeBufferDeclarations()
+		self._writeMaterialDeclarations()
+		self._writeOutputBufferDeclarations()
+
+
+		self._writeOutputInit()
+		self._writeOpGlobals()
+		self._writeInit()
+		self._writeStageInit()
+		self._writeFunctions()
+		self._writeBody()
+
+	def _writeGlobalDecls(self):
+		mainName = self.defTable[-1, 'name']
+		self._startBlock('globals')
+		self._writeLines(self.paramProc.globalDeclarations())
+		self._write(f'#define thismap {mainName}\n')
+		self._endBlock('globals')
+
+	def _writeOpDataTypedefs(self):
+		inline = self.configPar['Inlinetypedefs']
+		if not self.typeDefMacroTable.numRows:
+			return
+		self._startBlock('opDataTypedefs')
+		macros = {}
+		for cells in self.typeDefMacroTable.rows():
+			if cells[2] == 'typedef':
+				if not inline:
+					# Primary typedef macros are not needed when they're being inlined
+					self._writeMacro(cells[0], cells[1])
+			else:
+				macros[cells[0].val] = cells[1].val
+		# Macros like FOO_COORD_TYPE_float are always needed
+		for name, val in macros.items():
+			if val == '':
+				self._writeMacro(name)
+			elif not inline:
+				# Replacement macros like FOO_asCoordT are not needed when they're being inlined
+				self._writeMacro(name, val)
+		self._endBlock('opDataTypedefs')
+
+	def _writeMacroBlock(self):
+		if not self.macroTable.numRows:
+			return
+		self._startBlock('macros')
+		decls = set()
+		for name, val in self.macroTable.rows():
+			nameVal = name.val, val.val
+			if nameVal in decls:
+				continue
+			decls.add(nameVal)
+			self._writeMacro(name, val)
+		self._endBlock('macros')
+
+	def _writeLibraryIncludes(self):
+		if not self.libraryDats:
+			return
+		self._startBlock('libraries')
+		mode = str(self.configPar['Includemode'] or 'includelibs')
+		supportsInclude = self.ownerComp.op('support_table')['include', 1] == '1'
+		if mode == 'includelibs' and not supportsInclude:
+			inlineAll = True
+		else:
+			inlineAll = mode == 'inlineall'
+		if inlineAll:
+			for lib in self.libraryDats:
+				self._write(f'/// Library: <{lib.path}>\n', lib.text, '\n')
+		else:
+			for lib in self.libraryDats:
+				self._write(f'#include <{lib.path}>\n')
+		self._endBlock('libraries')
+
+	def _writeParameterAliases(self):
+		decls = self.paramProc.paramAliases()
+		if not decls:
+			return
+		self._startBlock('paramAliases')
+		self._writeLines(decls)
+		self._endBlock('paramAliases')
+
+	def _writeTextureDeclarations(self):
+		if self.textureTable.numRows < 2:
+			return
+		offset = int(self.ownerComp.par.Textureindexoffset)
+		indexByType: 'Dict[str, int]' = {
+			'2d': offset,
+			'3d': 0,
+			'cube': 0,
+			'2darray': 0,
+		}
+		arrayByType = {
+			'2d': 'sTD2DInputs',
+			'3d': 'sTD3DInputs',
+			'cube': 'sTDCubeInputs',
+			'2darray': 'sTD2DArrayInputs',
+		}
+		infoByType = {
+			'2d': 'uTD2DInfos',
+			'3d': 'uTD3DInfos',
+			'cube': 'uTDCubeInfos',
+			'2darray': 'uTD2DArrayInfos',
+		}
+		self._startBlock('textures')
+		for name, path, texType in self.textureTable.rows()[1:]:
+			texType = texType.val or '2d'
+			if texType not in indexByType:
+				raise Exception(f'Invalid texture type for {name}: {texType!r}')
+			index = indexByType[texType]
+			indexByType[texType] = index + 1
+			self._writeMacro(name, f'{arrayByType[texType]}[{index}]')
+			self._writeMacro(name + '_info', f'{infoByType[texType]}[{index}]')
+		self._endBlock('textures')
+
+	def _writeBufferDeclarations(self):
+		if self.bufferTable.numRows < 2:
+			return
+		self._startBlock('buffers')
+		for i in range(1, self.bufferTable.numRows):
+			name = self.bufferTable[i, 'name']
+			dataType = self.bufferTable[i, 'type']
+			uniType = self.bufferTable[i, 'uniformType']
+			if uniType == 'uniformarray':
+				lengthVal = str(self.bufferTable[i, 'length'] or '')
+				if lengthVal == '':
+					c = op(self.bufferTable[i, 'chop'])
+					n = c.numSamples if c else 1
+				else:
+					n = int(lengthVal)
+				self._write(f'uniform {dataType} {name}[{n}];\n')
+			elif uniType == 'texturebuffer':
+				self._write(f'uniform samplerBuffer {name};\n')
+		self._endBlock('buffers')
+
+	def _writeMaterialDeclarations(self):
+		if not self.ownerComp.par.Supportmaterials or self.materialTable.numRows < 2:
+			return
+		self._startBlock('materials')
+		for name in self.materialTable.col('material')[1:]:
+			self._writeMacro(name, 1001 + (name.row - 1))
+		self._endBlock('materials')
+
+	def _writeOutputBufferDeclarations(self):
+		if self.outputBufferTable.numRows < 2:
+			return
+		self._startBlock('outputBuffers')
+		if self.ownerComp.par.Shadertype == 'compute':
+			for name in self.outputBufferTable.col('name')[1:]:
+				self._writeMacro(name, f'mTDComputeOutputs[{name.row - 1}]')
+		else:
+			for name in self.outputBufferTable.col('name')[1:]:
+				self._write(f'layout(location = {name.row - 1}) out vec4 {name};\n')
+		self._endBlock('outputBuffers')
+
+	def _writeOutputInit(self):
+		if self.ownerComp.par.Shadertype == 'compute' or self.outputBufferTable.numRows < 2:
+			return
+		self._startBlock('outputInit')
+		self._write('void initOutputs() {\n')
+		for name in self.outputBufferTable.col('name')[1:]:
+			self._write(f'{name} = vec4(0.);\n')
+		self._write('}\n')
+		self._endBlock('outputInit')
+
+	def _writeOpGlobals(self):
+		self._writeCodeDatsFromCol('opGlobals', col='opGlobals')
+
+	def _writeInit(self):
+		self._writeCodeDatsFromCol(
+			'init', col='initPath',
+			prefixes=[
+				'#define RAYTK_HAS_INIT',
+				'void init() {',
+			],
+			suffixes=['}'],
+		)
+
+	def _writeStageInit(self):
+		self._writeCodeDatsFromCol(
+			'stageInit', col='stageInitPath',
+			prefixes=[
+				'#define RAYTK_HAS_STAGE_INIT',
+				'void stageInit(int stage) {',
+			],
+			suffixes=['}'],
+		)
+
+	def _writeFunctions(self):
+		self._writeCodeDatsFromCol('functions', col='functionPath')
+
+	def _writeBody(self):
+		dat = self.ownerComp.par.Bodytemplate.eval()
+		if not dat:
+			return
+		self._startBlock('body')
+		code = self._inlineTypedefs(dat.text)
+		code = self.codeFilter.processCodeBlock(code)
+		for line in code.splitlines(keepends=True):
+			if line.endswith('// #include <materialParagraph>\n'):
+				self._writeMaterialBody()
+			else:
+				self._write(line)
+		self._endBlock('body')
+
+	def _writeMaterialBody(self):
+		if self.materialTable.numRows < 2:
+			return
+		for name, path in self.materialTable.rows()[1:]:
+			if not name:
+				continue
+			self._write(f'else if(m == {name}) {{\n')
+			dat = op(path)
+			if dat:
+				# Intentionally skipping typedef inlining and code filtering for these since no materials need it.
+				self._write(dat.text, '\n}')
+
+	def _write(self, *args):
+		self.out.write(*args)
+
+	def _writeLines(self, lines: 'Optional[List[str]]'):
+		if lines:
+			for line in lines:
+				self._write(line, '\n')
+
+	def _writeMacro(self, name: 'Union[str, Cell]', val: 'Union[str, Cell, None, int]' = None):
+		if val == '' or val is None:
+			self._write('#define ', name, '\n')
+		else:
+			self._write('#define ', name, ' ', val, '\n')
+
+	def _startBlock(self, name: str):
+		self._write(f'///----BEGIN {name}\n')
+
+	def _endBlock(self, name: str):
+		self._write(f'///----END {name}\n')
+
+	def _writeCodeDat(self, blockName: str, dat: 'Optional[DAT]'):
+		if not dat or not dat.text:
+			return
+		self._startBlock(blockName)
+		code = self._inlineTypedefs(dat.text)
+		code = self.codeFilter.processCodeBlock(code)
+		self._write(code, '\n')
+		self._endBlock(blockName)
+
+	def _writeCodeDatsFromCol(
+			self, blockName: str, col: str,
+			prefixes: 'Optional[List[str]]' = None,
+			suffixes: 'Optional[List[str]]' = None,
+	):
+		dats = self.sb.getOpsFromDefinitionColumn(col)
+		if not dats:
+			return
+		self._startBlock(blockName)
+		self._writeLines(prefixes)
+		for dat in dats:
+			code = self._inlineTypedefs(dat.text)
+			code = self.codeFilter.processCodeBlock(code)
+			self._write(code, '\n')
+		self._writeLines(suffixes)
+		self._endBlock(blockName)
+
+	def _replaceInlineTypedefMatch(self, m: 're.Match'):
+		return self.inlineTypedefRepls.get(m.group(0)) or m.group(0)
+
+	def _inlineTypedefs(self, code: 'str'):
+		if not self.inlineTypedefRepls:
+			return code
+		return self.inlineTypedefPattern.sub(self._replaceInlineTypedefMatch, code)
+
+	# def _processCodeBlock(self, code: str):
+	# 	pass
+
 
 @dataclass
 class _ParamTupletSpec:
@@ -627,22 +1004,8 @@ class _ParamTupletSpec:
 
 @dataclass
 class _ParamExpr:
-	name: str
 	expr: Union[str, float]
 	type: str
-
-@dataclass
-class _OutputBufferSpec:
-	name: str
-	index: int
-	label: Optional[str] = None
-	macro: Optional[str] = None
-
-	def fragmentOutputDeclaration(self):
-		return f'layout(location = {self.index}) out vec4 {self.name};'
-
-	def computeOutputDeclaration(self):
-		return f'#define {self.name} mTDComputeOutputs[{self.index}]'
 
 @dataclass
 class _UniformSpec:
@@ -664,6 +1027,8 @@ class _UniformSpec:
 		else:
 			raise Exception(f'Invalid uniformType: {self.uniformType!r}')
 
+_paramAliasPattern = re.compile(r'\bRTK_\w+\b')
+
 class _ParameterProcessor:
 	def __init__(
 			self,
@@ -677,6 +1042,7 @@ class _ParameterProcessor:
 		self.inlineAliases = configPar.Inlineparameteraliases
 		self.paramVals = paramVals
 		self.aliasMode = str(configPar['Paramaliasmode'] or 'macro')
+		self.paramExprs = None  # type: Optional[Dict[str, _ParamExpr]]
 
 	def globalDeclarations(self) -> List[str]:
 		raise NotImplementedError()
@@ -686,26 +1052,32 @@ class _ParameterProcessor:
 			return []
 		if self.inlineAliases:
 			return []
+		self._initParamExprs()
 		if self.aliasMode == 'globalvar':
 			return [
-				f'{paramExpr.type} {paramExpr.name} = {paramExpr.expr};'
-				for paramExpr in self._generateParamExprs()
+				f'{paramExpr.type} {name} = {paramExpr.expr};'
+				for name, paramExpr in self.paramExprs.items()
 			]
 		else:  # self.aliasMode == 'macro'
 			return [
-				f'#define {paramExpr.name} {paramExpr.expr}'
-				for paramExpr in self._generateParamExprs()
+				f'#define {name} {expr.expr}'
+				for name, expr in self.paramExprs.items()
 			]
 
 	def processCodeBlock(self, code: str) -> str:
 		if not self.inlineAliases or not code:
 			return code
-		for paramExpr in self._generateParamExprs():
-			code = re.sub(r'\b' + re.escape(paramExpr.name) + r'\b', paramExpr.expr, code)
+		self._initParamExprs()
+		def replace(m: 're.Match'):
+			paramExpr = self.paramExprs.get(m.group(0))
+			return paramExpr.expr if paramExpr else m.group(0)
+		code = _paramAliasPattern.sub(replace, code)
 		return code
 
-	def _generateParamExprs(self) -> List[_ParamExpr]:
-		paramExprs = []  # type: List[_ParamExpr]
+	def _initParamExprs(self):
+		if self.paramExprs is not None:
+			return
+		self.paramExprs = {}
 		suffixes = 'xyzw'
 		paramTuplets = _ParamTupletSpec.fromTableRows(self.paramDetailTable)
 		for i, paramTuplet in enumerate(paramTuplets):
@@ -714,32 +1086,29 @@ class _ParameterProcessor:
 			paramRef = self._paramReference(i, paramTuplet)
 			if size == 1:
 				name = paramTuplet.parts[0]
-				paramExprs.append(_ParamExpr(
-					name,
+				self.paramExprs[name] = _ParamExpr(
 					repr(float(self.paramVals[name])) if useConstant else f'{paramRef}.x',
 					'float'
-				))
+				)
 			else:
 				if useConstant:
 					partVals = [float(self.paramVals[part]) for part in paramTuplet.parts]
 					valsExpr = ','.join(str(v) for v in partVals)
 					parType = f'vec{size}'
-					paramExprs.append(_ParamExpr(paramTuplet.tuplet, f'{parType}({valsExpr})', parType))
+					self.paramExprs[paramTuplet.tuplet] = _ParamExpr(f'{parType}({valsExpr})', parType)
 					for partI, partVal in enumerate(partVals):
-						paramExprs.append(_ParamExpr(paramTuplet.parts[partI], partVal, 'float'))
+						self.paramExprs[paramTuplet.parts[partI]] = _ParamExpr(partVal, 'float')
 				else:
 					if size == 4:
-						paramExprs.append(_ParamExpr(paramTuplet.tuplet, paramRef, 'vec4'))
+						self.paramExprs[paramTuplet.tuplet] = _ParamExpr(paramRef, 'vec4')
 					else:
 						parType = f'vec{size}'
-						paramExprs.append(_ParamExpr(
-							paramTuplet.tuplet,
+						self.paramExprs[paramTuplet.tuplet] = _ParamExpr(
 							f'{parType}({paramRef}.{suffixes[:size]})',
 							parType
-						))
+						)
 					for partI, partName in enumerate(paramTuplet.parts):
-						paramExprs.append(_ParamExpr(partName, f'{paramRef}.{suffixes[partI]}', 'float'))
-		return paramExprs
+						self.paramExprs[partName] = _ParamExpr(f'{paramRef}.{suffixes[partI]}', 'float')
 
 	def _paramReference(self, i: int, paramTuplet: _ParamTupletSpec) -> str:
 		raise NotImplementedError()
@@ -796,15 +1165,12 @@ def wrapCodeSection(code: 'Union[str, DAT, List[Union[str, DAT]]]', name: str):
 		return ' '
 	return f'///----BEGIN {name}\n{code.strip()}\n///----END {name}\n'
 
-def updateLibraryMenuPar(libsComp: 'COMP'):
-	p = parent().par.Librarynames  # type: Par
-	libs = libsComp.findChildren(type=DAT, maxDepth=1, tags=['library'])
-	libs.sort(key=lambda l: -l.nodeY)
-	p.menuNames = [lib.name for lib in libs]
-
 def _uniqueList(items: list):
 	results = []
 	for item in items:
 		if item not in results:
 			results.append(item)
 	return results
+
+def _isInDevelMode():
+	return hasattr(op, 'raytk') and bool(op.raytk.par['Devel'])

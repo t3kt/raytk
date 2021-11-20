@@ -11,8 +11,6 @@ cat:
     often the first operator in a chain that ends with a `raymarchRender3d`.'
   name: sdf
   operators:
-  - name: aexionSdf
-    status: alpha
   - keywords:
     - fractal
     name: amazingSurfaceSdf
@@ -21,6 +19,8 @@ cat:
     - fractal
     name: apollonianSdf
   - name: archSdf
+    status: beta
+  - name: bezierSdf
     status: beta
   - keywords:
     - box
@@ -98,6 +98,8 @@ cat:
     - wave
     name: gyroidSdf
     summary: Gyroid shape, which is an infinitely connected periodic surface.
+  - name: headSdf
+    status: beta
   - keywords:
     - coil
     - helix
@@ -147,6 +149,8 @@ cat:
     - sheet
     name: planeSdf
     summary: An infinite plane on the x, y, or z axis.
+  - name: polyhedronSdf
+    status: beta
   - keywords:
     - column
     - cylinder
@@ -173,8 +177,6 @@ cat:
     - segments
     name: segmentedLineSdf
     summary: Multi-segment line SDF.
-  - name: sierpinskiTetrahedronSdf
-    status: alpha
   - keywords:
     - cone
     - pie
@@ -182,11 +184,10 @@ cat:
     - wedge
     name: solidAngleSdf
     summary: A conical slice of a sphere.
-  - name: sopSdf
-    status: alpha
   - name: sphereFbmSdf
   - name: sphereSdf
     summary: SDF in 3D space for a uniform sphere.
+  - name: spikeSdf2d
   - keywords:
     - coil
     - spiral

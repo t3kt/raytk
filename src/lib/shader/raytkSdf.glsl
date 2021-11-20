@@ -186,10 +186,29 @@ float sdCappedCone(vec3 p, float h, float r1, float r2)
 	return s*sqrt( min(dot2(ca),dot2(cb)) );
 }
 
+// IQ https://www.shadertoy.com/view/Xds3zN
+float sdRoundCone( in vec3 p, in float r1, float r2, float h )
+{
+	vec2 q = vec2( length(p.xz), p.y );
+
+	float b = (r1-r2)/h;
+	float a = sqrt(1.0-b*b);
+	float k = dot(q,vec2(-b,a));
+
+	if( k < 0.0 ) return length(q) - r1;
+	if( k > a*h ) return length(q-vec2(0.0,h)) - r2;
+
+	return dot(q, vec2(a,b) ) - r1;
+}
+
 float sdRoundedBox( in vec2 p, in vec2 b, in vec4 r )
 {
 	r.xy = (p.x>0.0)?r.xy : r.zw;
 	r.x  = (p.y>0.0)?r.x  : r.y;
 	vec2 q = abs(p)-b+r.x;
 	return min(max(q.x,q.y),0.0) + length(max(q,0.0)) - r.x;
+}
+
+float fCorner2(vec2 p) {
+	return length(max(p, vec2(0))) + vmax(min(p, vec2(0)));
 }

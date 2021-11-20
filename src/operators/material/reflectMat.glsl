@@ -2,21 +2,22 @@ vec4 THIS_iterationCapture = vec4(0.);
 
 Sdf thismap(CoordT p, ContextT ctx) {
 	Sdf res = inputOp1(p, ctx);
+	if (isDistanceOnlyStage()) { return res; }
 	assignMaterial(res, THISMAT);
 	res.reflect = true;
 	captureIterationFromMaterial(THIS_iterationCapture, ctx);
-	#if defined(THIS_Enableshadow) && defined(RAYTK_USE_SHADOW)
+	#pragma r:if THIS_Enableshadow && RAYTK_USE_SHADOW
 	res.useShadow = true;
-	#endif
+	#pragma r:endif
 	return res;
 }
 
 vec3 THIS_getColor(vec3 p, MaterialContext matCtx) {
 	restoreIterationFromMaterial(matCtx, THIS_iterationCapture);
 	float sunShadow = 1.;
-	#if defined(THIS_Enableshadow) && defined(RAYTK_USE_SHADOW)
+	#pragma r:if THIS_Enableshadow && RAYTK_USE_SHADOW
 	sunShadow = matCtx.shadedLevel;
-	#endif
+	#pragma r:endif
 	vec3 col = THIS_Color;
 	float ks = THIS_Ks;
 	float sky = 0.5 + 0.5 * matCtx.normal.y;

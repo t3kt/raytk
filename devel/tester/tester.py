@@ -1,7 +1,7 @@
 from datetime import datetime
 from pathlib import Path
 from typing import Callable, Dict, List, Optional
-from raytkTest import TestCaseResult, TestFindingStatus
+from raytkTest import TestCaseResult, TestFindingStatus, processTest
 from raytkUtil import RaytkContext, recloneComp, Version
 
 # noinspection PyUnreachableCode
@@ -298,28 +298,7 @@ class TestManager:
 
 	def _processTest(self):
 		comp = self._testComp
-		if not comp:
-			return
-		if not comp.valid:
-			self.log(f'For some reason {comp!r} is invalid!')
-			return
-		rops = RaytkContext().ropChildrenOf(comp, maxDepth=2)
-		self.log(f'Found {len(rops)} ROPs in test')
-		# This is breaking connections made by outputOpController on initialization
-		for rop in rops:
-			if not rop.valid:
-				self.log(f'For some reason {rop!r} is invalid!')
-				continue
-			rop.par.reinitnet.pulse()
-			recloneComp(rop)
-			if rop.par['Updateop'] is not None:
-				rop.par.Updateop.pulse()
-		for rop in RaytkContext().ropOutputChildrenOf(comp, maxDepth=4):
-			if not rop.valid:
-				continue
-			for o in rop.outputs:
-				if o.valid:
-					o.cook(force=True)
+		processTest(comp, log=self.log)
 
 	def _buildTestCaseResult(self) -> 'Optional[TestCaseResult]':
 		comp = self._testComp

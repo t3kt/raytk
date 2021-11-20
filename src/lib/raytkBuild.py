@@ -22,9 +22,13 @@ class BuildContext:
 	Utility that is passed through parts of the build process to provide common tools.
 	"""
 
-	def __init__(self, log: Callable[[str], None]):
+	def __init__(
+			self,
+			log: Callable[[str], None],
+			experimental=False):
 		self.log = log
 		self.pane = None  # type: Optional[NetworkEditor]
+		self.experimental = experimental
 
 	def _findExistingPane(self):
 		for pane in ui.panes:
@@ -134,6 +138,17 @@ class BuildContext:
 		self.log(f'Reloading {comp.par.externaltox} for {comp}')
 		comp.par.reinitnet.pulse()
 
+	def removeAlphaOps(self, category: 'COMP'):
+		catInfo = CategoryInfo(category)
+		alphaOps = [
+			o
+			for o in catInfo.operators
+			if ROPInfo(o).isAlpha
+		]
+		if alphaOps:
+			self.log(f'Removing {len(alphaOps)} alpha operators from {category.name}')
+			self.safeDestroyOps(alphaOps)
+
 	def safeDestroyOp(self, o: 'OP'):
 		if not o or not o.valid:
 			return
@@ -164,6 +179,18 @@ class BuildContext:
 		toRemove = list(comp.findChildren(tags=[RaytkTags.buildExclude.name]))
 		self.safeDestroyOps(toRemove)
 
+	def cleanOpImage(self, img: 'COMP'):
+		self.log(f'Cleaning opImage {img}')
+		self.safeDestroyOps(img.ops('compImage/componentMeta'))
+
+	def removeOpHelp(self, comp: 'COMP'):
+		ropInfo = ROPInfo(comp)
+		self.safeDestroyOp(ropInfo.helpDAT)
+		ropInfo.helpDAT = ''
+
+	def removeCatHelp(self, comp: 'COMP'):
+		self.safeDestroyOp(CategoryInfo(comp).helpDAT)
+
 	def applyParamUpdatersIn(self, comp: 'COMP'):
 		for child in comp.children:
 			self._applyParamUpdater(child)
@@ -190,7 +217,7 @@ class BuildContext:
 		def finishTask():
 			self.log(f'Finished running build script: {dat}')
 			self.queueAction(thenRun, *runArgs)
-		subContext = BuildTaskContext(finishTask, self.log)
+		subContext = BuildTaskContext(finishTask, self.log, self.experimental)
 		dat.run(subContext)
 
 	def updateROPInstance(self, comp: 'COMP'):
@@ -248,9 +275,10 @@ class BuildTaskContext(BuildContext):
 	def __init__(
 			self,
 			finish: Callable[[], None],
-			log: Callable[[str], None]):
+			log: Callable[[str], None],
+			experimental: bool):
 		self.finish = finish
-		super().__init__(log)
+		super().__init__(log, experimental)
 
 	def finishTask(self):
 		self.finish()

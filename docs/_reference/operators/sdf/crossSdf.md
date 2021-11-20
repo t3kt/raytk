@@ -8,6 +8,34 @@ redirect_from:
   - /reference/opType/raytk.operators.sdf.crossSdf/
 op:
   category: sdf
+  inputs:
+  - contextTypes:
+    - Context
+    - MaterialContext
+    - CameraContext
+    - LightContext
+    - RayContext
+    - ParticleContext
+    coordTypes:
+    - vec3
+    label: Scale Field
+    name: sizeField
+    returnTypes:
+    - float
+    - vec4
+  - contextTypes:
+    - Context
+    - MaterialContext
+    - CameraContext
+    - LightContext
+    - RayContext
+    - ParticleContext
+    coordTypes:
+    - vec3
+    label: Smooth Radius Field
+    name: smoothRadiusField
+    returnTypes:
+    - float
   name: crossSdf
   opType: raytk.operators.sdf.crossSdf
   parameters:

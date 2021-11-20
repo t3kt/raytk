@@ -44,7 +44,9 @@ class BuildManager:
 		self.logTable.clear()
 		self.log('Starting build')
 		self.experimentalMode = bool(self.ownerComp.op('experimental_toggle').par.Value0)
-		self.context = BuildContext(self.log)
+		self.context = BuildContext(
+			self.log,
+			experimental=self.experimentalMode)
 		if not self.experimentalMode:
 			self.docProcessor = DocProcessor(
 				self.context,
@@ -191,14 +193,12 @@ class BuildManager:
 		if template:
 			template.destroy()
 		if not self.experimentalMode:
-			comps = categoryInfo.operators
-			for o in comps:
-				if RaytkTags.alpha.isOn(o):
-					self.context.safeDestroyOp(o)
+			self.context.removeAlphaOps(category)
 		comps = categoryInfo.operators
 		# comps.sort(key=lambda c: c.name)
 		if self.docProcessor:
 			self.docProcessor.processOpCategory(category)
+		self.context.removeCatHelp(category)
 		self.queueMethodCall(self.processOperatorCategory_stage, comps, thenRun, runArgs)
 
 	def processOperatorCategory_stage(self, components: List['COMP'], thenRun: str = None, runArgs: list = None):
@@ -216,7 +216,6 @@ class BuildManager:
 		self.context.focusInNetworkPane(comp)
 		self.context.disableCloning(comp)
 		self.context.detachTox(comp)
-		comp.showCustomOnly = True
 		tools = RaytkTools()
 		tools.updateROPMetadata(comp)
 		tools.updateROPParams(comp)
@@ -231,6 +230,7 @@ class BuildManager:
 		self.processOperatorSubCompChildrenOf(comp)
 		# self.context.moveNetworkPane(comp)
 		if not comp.isPanel:
+			comp.showCustomOnly = True
 			self.log(f'Updating OP image for {comp}')
 			img = tools.updateOPImage(comp)
 			if img:
@@ -238,9 +238,11 @@ class BuildManager:
 				self.context.disableCloning(img)
 				self.context.detachTox(img)
 				self.context.lockBuildLockOps(img)
+				self.context.cleanOpImage(img)
 		comp.color = IconColors.defaultBgColor
 		if self.docProcessor:
 			self.docProcessor.processOp(comp)
+		self.context.removeOpHelp(comp)
 
 	def processOperatorSubCompChildrenOf(self, comp: 'COMP'):
 		subComps = comp.findChildren(type=COMP)

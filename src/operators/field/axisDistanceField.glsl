@@ -1,7 +1,7 @@
 float thismap(CoordT p, ContextT ctx) {
-	#ifdef THIS_COORD_TYPE_float
+	#pragma r:if THIS_COORD_TYPE_float
 	return abs(p - THIS_Center);
-	#else
+	#pragma r:else
 	return length(p.THIS_AXIS - THIS_Center);
-	#endif
+	#pragma r:endif
 }

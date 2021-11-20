@@ -1,5 +1,6 @@
 from typing import Union
-from raytkUtil import InspectorTargetTypes, simplifyNames
+from raytkUtil import InspectorTargetTypes
+from raytkShader import simplifyNames
 
 # noinspection PyUnreachableCode
 if False:

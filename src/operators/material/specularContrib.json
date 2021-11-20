@@ -2,6 +2,6 @@
   "meta": {
     "opStatus": "default",
     "opType": "raytk.operators.material.specularContrib",
-    "opVersion": 10
+    "opVersion": 12
   }
 }
