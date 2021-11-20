@@ -5,6 +5,12 @@ ReturnT thismap(vec3 p, ContextT ctx) {
 	#pragma r:if THIS_Iterationtype_ratio
 	setIterationIndex(ctx, a);
 	#pragma r:endif
+	#pragma r:if THIS_EXPOSE_normAngle
+	THIS_normAngle = .5 + a*.5;
+	#pragma r:endif
+	#pragma r:if THIS_EXPOSE_angle
+	THIS_angle = 360. * a;
+	#pragma r:endif
 	#pragma r:if THIS_HAS_INPUT_rotateField
 	float r = inputOp_rotateField(a, ctx);
 	pR(q, radians(r));
