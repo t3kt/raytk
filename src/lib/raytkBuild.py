@@ -138,6 +138,17 @@ class BuildContext:
 		self.log(f'Reloading {comp.par.externaltox} for {comp}')
 		comp.par.reinitnet.pulse()
 
+	def removeAlphaOps(self, category: 'COMP'):
+		catInfo = CategoryInfo(category)
+		alphaOps = [
+			o
+			for o in catInfo.operators
+			if ROPInfo(o).isAlpha
+		]
+		if alphaOps:
+			self.log(f'Removing {len(alphaOps)} alpha operators from {category.name}')
+			self.safeDestroyOps(alphaOps)
+
 	def safeDestroyOp(self, o: 'OP'):
 		if not o or not o.valid:
 			return
@@ -173,7 +184,9 @@ class BuildContext:
 		self.safeDestroyOps(img.ops('compImage/componentMeta'))
 
 	def removeOpHelp(self, comp: 'COMP'):
-		self.safeDestroyOp(ROPInfo(comp).helpDAT)
+		ropInfo = ROPInfo(comp)
+		self.safeDestroyOp(ropInfo.helpDAT)
+		ropInfo.helpDAT = ''
 
 	def removeCatHelp(self, comp: 'COMP'):
 		self.safeDestroyOp(CategoryInfo(comp).helpDAT)
