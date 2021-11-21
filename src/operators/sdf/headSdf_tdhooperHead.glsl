@@ -256,7 +256,7 @@ float tdh_headMain(vec3 p) {
 	return d;
 }
 
-void tdh_eye(vec3 p, inout float d, out bool isEye) {
+void tdh_eye(vec3 p, inout float d, out bool isEye, float blink) {
 	vec3 pp = p;
 	// eyelids
 	p += vec3(-.16,.07,-.34);
@@ -268,12 +268,20 @@ void tdh_eye(vec3 p, inout float d, out bool isEye) {
 
 	// edge top
 	p = pp;
+	vec3 adj = vec3(-0.5, -0.3, 0.1);
+	p += adj;
+	p *= TDRotateOnAxis(blink * 0.05, vec3(1., -0.5, 0.8));
+	p -= adj;
 	p += vec3(-.173,.148,-.43);
 	p.x *= .97;
 	float et = length(p.xy) - .09;
 
 	// edge bottom
 	p = pp;
+//	adj = vec3(0., 0., 0.);
+	p += adj;
+	p *= TDRotateOnAxis(blink * -0.025, vec3(1., -0.2, 0.4));
+	p -= adj;
 	p += vec3(-.168,.105,-.43);
 	p.x *= .9;
 	float eb = dot(p, normalize(vec3(-.1,-1,-.2))) + .001;
