@@ -64,21 +64,33 @@ def buildTypeTable(dat: 'scriptDAT', supportedTypes: 'DAT', inputDefs: 'DAT'):
 
 def buildInputTable(dat: 'DAT', inDats: 'List[DAT]'):
 	dat.clear()
-	dat.appendRow(['slot', 'inputFunc', 'name', 'path', 'coordType', 'contextType', 'returnType'])
+	dat.appendRow(['slot', 'inputFunc', 'name', 'path', 'coordType', 'contextType', 'returnType', 'placeholder'])
 	for i, inDat in enumerate(inDats):
 		slot = f'inputName{i + 1}'
 		if inDat.numRows < 2 or not inDat[1, 'name']:
 			dat.appendRow([slot])
 		else:
+			func = str(inDat[1, 'input:alias'] or f'inputOp{i + 1}')
 			dat.appendRow([
 				slot,
-				inDat[1, 'input:alias'] or f'inputOp{i + 1}',
+				func,
 				inDat[1, 'name'],
 				inDat[1, 'path'],
 				inDat[1, 'coordType'],
 				inDat[1, 'contextType'],
 				inDat[1, 'returnType'],
+				('inputOp_' + func) if not func.startswith('inputOp') else func,
 			])
+
+def getInputNames(inputTable: 'DAT'):
+	allNames = [c.val for c in inputTable.col('name')[1:]]
+	lastIndex = None
+	for i, name in enumerate(allNames):
+		if name:
+			lastIndex = i
+	if lastIndex is None:
+		return ''
+	return ' '.join([n or '_' for n in allNames[:lastIndex]])
 
 def combineInputDefinitions(
 		dat: 'DAT',
@@ -356,61 +368,28 @@ def buildParamChopNamesTable(dat: 'DAT', paramSpecTable: 'DAT'):
 	dat.appendRow(['special', ' '.join(specialNames)])
 	dat.appendRow(['angle', ' '.join(angleNames)])
 
-def _getReplacements(inputTable: 'DAT', materialTable: 'DAT'):
-	name = parentPar().Name.eval()
-	repls = {
-		'thismap': name,
-		'THIS_': name + '_',
-	}
-	mat = materialTable[1, 'material']
-	if mat:
-		repls['THISMAT'] = str(mat)
-	for i in range(inputTable.numRows):
-		key = str(inputTable[i, 'inputFunc'])
-		val = inputTable[i, 'name']
-		if val:
-			if not key.startswith('inputOp'):
-				key = 'inputOp_' + key
-			repls[str(key)] = str(val)
-	return repls
-
-def prepareCode(
-		dat: 'DAT',
-		inputTable: 'DAT',
-		materialTable: 'DAT',
-):
+def prepareCode(dat: 'DAT'):
 	if not dat.inputs:
 		dat.text = ''
 		return
 	dat.clear()
-	repls = _getReplacements(inputTable, materialTable)
-	text = _prepareText(dat.inputs[0].text, repls)
+	text = dat.inputs[0].text
+	# text = _prepareVarExposure(text)
 	dat.write(text)
 
-def prepareTable(
-		dat: 'DAT',
-		inputTable: 'DAT',
-		materialTable: 'DAT',
-):
-	dat.copy(dat.inputs[0])
-	if dat.numRows < 1:
-		return
-	repls = _getReplacements(inputTable, materialTable)
-	for row in dat.rows():
-		for cell in row:
-			cell.val = _prepareText(cell.val, repls)
-
-_typePattern = re.compile(r'\b[CR][a-z]+T\b')
-_typeRepls = {'CoordT': 'THIS_CoordT', 'ContextT': 'THIS_ContextT', 'ReturnT': 'THIS_ReturnT'}
-def _typeRepl(m): return _typeRepls.get(m.group(0), m.group(0))
-
-def _prepareText(text: str, repls: 'Dict[str, str]'):
-	if not text:
-		return ''
-	text = _typePattern.sub(_typeRepl, text)
-	for find, repl in repls.items():
-		text = text.replace(find, repl)
-	return text
+# _exposePattern = re.compile(r'^\s*\bEXPOSE_(\w+)\s*\((.*)\);$', re.MULTILINE)
+# def _exposeRepl(m):
+# 	return f'''#ifdef THIS_EXPOSE_{m.group(1)}
+# THIS_{m.group(1)} = {m.group(2)};
+# #endif
+# '''
+#
+# def _prepareVarExposure(text: str):
+# 	if not text:
+# 		return ''
+# 	if 'EXPOSE' not in text:
+# 		return text
+# 	return _exposePattern.sub(_exposeRepl, text)
 
 def updateLibraryMenuPar(libsComp: 'COMP'):
 	p = parentPar().Librarynames  # type: Par
