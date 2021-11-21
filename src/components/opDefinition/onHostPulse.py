@@ -13,3 +13,5 @@ def onPulse(par):
 		mod.opDefinition.launchHelp()
 	elif action == 'Updateop':
 		mod.opDefinition.updateOP()
+	elif action.startswith('Createref'):
+		mod.opDefinition.createVarRef(action.replace('Createref', ''))

@@ -677,3 +677,21 @@ def updateOP():
 		return
 	if host and host.par.clone:
 		host.par.enablecloningpulse.pulse()
+
+def createVarRef(name: str):
+	if not hasattr(op, 'raytk'):
+		_popDialog().Open(
+			title='Warning',
+			text='Unable to create reference because RayTK toolkit is not available.',
+			escOnClickAway=True,
+		)
+		return
+	palette = op.raytk.op('tools/palette')
+	host = _host()
+	varTable = op('variable_table')
+	for i in range(1, varTable.numRows):
+		if varTable[i, 'localName'].val.lower() == name:
+			dataType = varTable[i, 'dataType'].val
+			palette.CreateVariableReference(host, name, dataType)
+			return
+	raise Exception(f'Variable not found: {name}')
