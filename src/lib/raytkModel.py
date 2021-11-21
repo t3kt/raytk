@@ -147,6 +147,15 @@ ValueOrListOrExprT = Union[ValueOrExprT, List[str]]
 CellValueT = Union[str, int, float, bool]
 
 @dataclass
+class EvalDatOptions(ModelObject):
+	yaml_tag = u'!evalOpts'
+
+	excludeFirstRow: bool = False
+	excludeFirstCol: bool = False
+	rows: Optional[str] = '*'
+	cols: Optional[str] = '*'
+
+@dataclass
 class TableData(ModelObject):
 	# noinspection PyUnresolvedReferences
 	"""Spec for an table DAT with either inline content or an external file.
@@ -165,6 +174,7 @@ class TableData(ModelObject):
 	name: Optional[str] = None
 	rows: List[List[CellValueT]] = field(default_factory=list)
 	evaluate: Optional[bool] = None
+	evalOpts: Optional[EvalDatOptions] = None
 
 @dataclass
 class TextData(ModelObject):
@@ -577,6 +587,27 @@ def _loadFieldsFromPars(obj: 'ModelObject', pars: 'Iterable[Par]'):
 		v = _valueOrExprFromPar(p)
 		setattr(obj, p.name, v)
 
+def _extractDatEvalPart(modePar: 'Par', namesPar: 'Par'):
+	if modePar.mode != ParMode.CONSTANT:
+		raise Exception(f'Unsupported mode for {modePar!r}')
+	if namesPar.mode != ParMode.CONSTANT:
+		raise Exception(f'Unsupported mode for {namesPar!r}')
+	if modePar == 'all':
+		return '*'
+	elif modePar == 'bynames':
+		return namesPar.val
+	raise Exception(f'Unsupported eval dat scope mode: {modePar!r}')
+
+def _extractEvalOpts(dat: 'Optional[evaluateDAT]'):
+	if not dat:
+		return None
+	return EvalDatOptions(
+		excludeFirstRow=dat.par.xfirstrow.eval(),
+		excludeFirstCol=dat.par.xfirstcol.eval(),
+		rows=_extractDatEvalPart(dat.par.extractrows, dat.par.rownames),
+		cols=_extractDatEvalPart(dat.par.extractcols, dat.par.colnames),
+	)
+
 def _extractDatSetting(par: Optional['Par'], isText: bool) -> Union[TextData, TableData, Expr, None]:
 	if par is None:
 		return None
@@ -589,6 +620,9 @@ def _extractDatSetting(par: Optional['Par'], isText: bool) -> Union[TextData, Ta
 	graph = EditorItemGraph.fromPar(par)
 	if not graph.supported:
 		raise Exception(f'DAT setup not supported for {par!r}')
+	evalOpts = None
+	if graph.evalDat:
+		evalOpts = _extractEvalOpts(graph.evalDat)
 	if graph.file:
 		if isText:
 			return TextData(
@@ -600,6 +634,7 @@ def _extractDatSetting(par: Optional['Par'], isText: bool) -> Union[TextData, Ta
 				file=graph.file.eval(),
 				name=graph.sourceDat.name,
 				evaluate=graph.hasEval or None,
+				evalOpts=evalOpts,
 			)
 	if graph.endDat.isTable:
 		return TableData(
@@ -609,6 +644,7 @@ def _extractDatSetting(par: Optional['Par'], isText: bool) -> Union[TextData, Ta
 				for row in graph.sourceDat.rows()
 			],
 			evaluate=graph.hasEval or None,
+			evalOpts=evalOpts,
 		)
 	else:
 		return TextData(
@@ -621,6 +657,7 @@ class EditorItemGraph:
 	par: 'Par'
 	endDat: 'Optional[DAT]' = None
 	sourceDat: 'Optional[DAT]' = None
+	evalDat: 'Optional[evaluateDAT]' = None
 	hasEval: bool = False
 	supported: bool = False
 	file: 'Optional[Par]' = None
@@ -635,22 +672,26 @@ class EditorItemGraph:
 				par,
 				endDat=endDat,
 				sourceDat=endDat,
+				evalDat=None,
 				hasEval=False,
 				supported=True,
 				file=endDat.par['file'],
 			)
 		hasEval = False
+		evalDat = None
 		dats = _opChain(endDat)
 		if not isinstance(dats[0], (tableDAT, textDAT)):
 			return cls(par, endDat=endDat, supported=False)
 		for dat in dats[1:]:
 			if isinstance(dat, evaluateDAT):
+				evalDat = dat
 				hasEval = True
 			elif not isinstance(dat, (nullDAT, substituteDAT)):
 				return cls(
 					par,
 					sourceDat=dats[0],
 					endDat=endDat,
+					evalDat=evalDat,
 					hasEval=hasEval,
 					file=dats[0].par.file,
 					supported=False,
@@ -659,6 +700,7 @@ class EditorItemGraph:
 			par,
 			sourceDat=dats[0],
 			endDat=endDat,
+			evalDat=evalDat,
 			hasEval=hasEval,
 			file=dats[0].par.file,
 			supported=True,
@@ -759,6 +801,7 @@ class ROPSpecLoader:
 			val: Optional[TextData],
 			defaultName: str,
 			x: int, y: int):
+		raise Exception('TODO: support for eval opts')
 		if val is None:
 			_setParVal(par, '')
 			return
@@ -780,6 +823,7 @@ class ROPSpecLoader:
 			val: Optional[TableData],
 			defaultName: str,
 			x: int, y: int):
+		raise Exception('TODO: support for eval opts')
 		if val is None:
 			_setParVal(par, '')
 			return

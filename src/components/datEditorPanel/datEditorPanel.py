@@ -44,6 +44,11 @@ class DatEditorPanel:
 		return graph and graph.sourceDat
 
 	@property
+	def currentEvalDat(self) -> 'Optional[evaluateDAT]':
+		graph = self._currentItemGraph
+		return graph and graph.evalDat
+
+	@property
 	def _currentItemGraph(self) -> 'Optional[EditorItemGraph]':
 		par = self._currentItemPar
 		if par is None:
@@ -74,6 +79,7 @@ class DatEditorPanel:
 			'endDat',
 			'sourceDat',
 			'hasEval',
+			'evalDat',
 			'supported',
 			'file',
 		])
@@ -83,6 +89,7 @@ class DatEditorPanel:
 			return
 		dat['endDat', 1] = graph.endDat or ''
 		dat['sourceDat', 1] = graph.sourceDat or ''
+		dat['evalDat', 1] = graph.evalDat or ''
 		dat['hasEval', 1] = int(graph.hasEval)
 		dat['supported', 1] = 1
 		dat['file', 1] = graph.file or ''
