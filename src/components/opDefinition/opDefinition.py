@@ -368,12 +368,17 @@ def buildParamChopNamesTable(dat: 'DAT', paramSpecTable: 'DAT'):
 	dat.appendRow(['special', ' '.join(specialNames)])
 	dat.appendRow(['angle', ' '.join(angleNames)])
 
+_typePattern = re.compile(r'\b[CR][a-z]+T\b')
+_typeRepls = {'CoordT': 'THIS_CoordT', 'ContextT': 'THIS_ContextT', 'ReturnT': 'THIS_ReturnT'}
+def _typeRepl(m): return _typeRepls.get(m.group(0), m.group(0))
+
 def prepareCode(dat: 'DAT'):
 	if not dat.inputs:
 		dat.text = ''
 		return
 	dat.clear()
 	text = dat.inputs[0].text
+	text = _typePattern.sub(_typeRepl, text)
 	# text = _prepareVarExposure(text)
 	dat.write(text)
 

@@ -1,7 +1,4 @@
 before	after
-CoordT	'THIS_CoordT'
-ContextT	'THIS_ContextT'
-ReturnT	'THIS_ReturnT'
 thismap	parent().par.Name
 THIS_	parent().par.Name + '_'
 THISMAT	op('material_table')[1, 'material'] or ''
