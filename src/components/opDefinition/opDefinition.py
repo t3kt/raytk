@@ -662,6 +662,18 @@ def updateOP():
 	if host and host.par.clone:
 		host.par.enablecloningpulse.pulse()
 
+_varTypes = {
+	'float': 'float',
+	'int': 'float',
+	'bool': 'float',
+	'vec2': 'vec4',
+	'vec3': 'vec4',
+	'vec4': 'vec4',
+	'ivec2': 'vec4',
+	'ivec3': 'vec4',
+	'ivec4': 'vec4',
+}
+
 def createVarRef(name: str):
 	if not hasattr(op, 'raytk'):
 		_popDialog().Open(
@@ -676,6 +688,7 @@ def createVarRef(name: str):
 	for i in range(1, varTable.numRows):
 		if varTable[i, 'localName'].val.lower() == name:
 			dataType = varTable[i, 'dataType'].val
+			dataType = _varTypes.get(dataType, dataType)
 			palette.CreateVariableReference(host, name, dataType)
 			return
 	raise Exception(f'Variable not found: {name}')
