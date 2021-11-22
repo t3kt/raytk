@@ -117,11 +117,16 @@ class DatEditorPanel:
 			else:
 				self._printAndStatus(f'Unsupported DAT type: {datType}')
 				return
+			template = op(self._itemTable[itemName, 'template'])
+			if template:
+				srcDat.copy(template)
 			srcDat.nodeY = -300 - (self._itemTable[itemName, 0].row * 300)
 			srcDat.nodeX = -475
 			evalDat = None
 			if evalName:
 				evalDat = info.rop.create(evaluateDAT, evalName)
+				if datType == 'table' and srcDat.numRows > 0 and srcDat.numCols > 0 and not any(c.val.startswith('\'') for c in srcDat.row(0)):
+					evalDat.par.xfirstrow = True
 				evalDat.nodeY = srcDat.nodeY
 				evalDat.nodeX = srcDat.nodeX + 200
 				evalDat.inputConnectors[0].connect(srcDat)
