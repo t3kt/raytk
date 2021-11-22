@@ -1,0 +1,4 @@
+name	label	dataType	enable
+axisoffset	Offset Along Axis	float	1
+angle	Angle Around Axis (Deg)	float	1
+normangle	Normalized Angle (0..1)	float	1
