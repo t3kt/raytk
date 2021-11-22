@@ -8,6 +8,17 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 	#pragma r:endif
 	pR(q, r);
 	float cell = THIS_EXPR;
+	#pragma r:if THIS_Iterationtype_index
+	setIterationIndex(ctx, cell);
+	#pragma r:elif THIS_Iterationtype_ratio
+	setIterationIndex(ctx, cell / (THIS_Repetitions - 1.));
+	#pragma r:endif
+	#pragma r:if THIS_EXPOSE_step
+	THIS_step = cell;
+	#pragma r:endif
+	#pragma r:if THIS_EXPOSE_normstep
+	THIS_normstep = cell / (THIS_Repetitions - 1.);
+	#pragma r:endif
 	float pr = THIS_Prerotate;
 	#pragma r:if THIS_HAS_INPUT_preRotateField
 	pr += radians(inputOp_preRotateField(p, ctx));
@@ -18,10 +29,5 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 	o += inputOp_offsetField(p, ctx).xy;
 	#pragma r:endif
 	p.THIS_PLANE = q - o + pivot;
-	#pragma r:if THIS_Iterationtype_index
-	setIterationIndex(ctx, cell);
-	#pragma r:elif THIS_Iterationtype_ratio
-	setIterationIndex(ctx, cell / (THIS_Repetitions - 1.));
-	#pragma r:endif
 	return inputOp1(p, ctx);
 }
