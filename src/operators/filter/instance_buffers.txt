@@ -1,3 +1,3 @@
-name	'enable'	type	chop	uniformType	length
+name	enable	type	chop	uniformType	length
 'translates'	parent().par.Enabletransform and parent().par.Enabletranslate	'vec3'	op('translateVals')	'uniformarray'	parent().par.Instancecount
 'rotates'	parent().par.Enabletransform and parent().par.Enablerotate	'vec3'	op('rotateVals')	'uniformarray'	parent().par.Instancecount
