@@ -10,6 +10,13 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 	p = p.xzy;
 	#pragma r:endif
 
+	#pragma r:if THIS_EXPOSE_angle
+	THIS_angle = degrees(atan(p.x, p.z)) + 180.;
+	#pragma r:endif
+	#pragma r:if THIS_EXPOSE_normangle
+	THIS_normangle = atan(p.x, p.z)/TAU - .5;
+	#pragma r:endif
+
 	float r = THIS_Radius;
 	#pragma r:if THIS_HAS_INPUT_radiusField
 	r *= inputOp_radiusField(p, ctx);
