@@ -1,5 +1,9 @@
 ReturnT thismap(CoordT p, ContextT ctx) {
-	float k = 1. / THIS_Width;
+	float w = THIS_Width;
+	#ifdef THIS_HAS_INPUT_widthField
+	w *= inputOp_widthField(p, ctx);
+	#endif
+	float k = 1. / w;
 	p.x = abs(p.x);
 	float ik = 1.0/k;
 	float p1 = ik*(p.y - 0.5*ik)/3.0;

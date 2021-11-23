@@ -1,5 +1,5 @@
 name	label	code
-xpos	X+	d = -p.x + THIS_Offset
-xneg	X-	d = p.x - THIS_Offset
-ypos	Y+	d = -p.y + THIS_Offset
-yneg	Y-	d = p.y - THIS_Offset
+xpos	X+	d = -p.x + o
+xneg	X-	d = p.x - o
+ypos	Y+	d = -p.y + o
+yneg	Y-	d = p.y - o
