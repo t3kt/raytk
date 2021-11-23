@@ -1,0 +1,3 @@
+name	label	dataType	enable
+sign	Side Sign (-1/1)	float	1
+index	Side Index (0/1)	float	1

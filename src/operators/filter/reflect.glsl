@@ -20,6 +20,12 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 	//  (-1, 1)  --> (1, 0)
 	setIterationIndex(ctx, (i < 0) ? 1: 0);
 	#pragma r:endif
+	#pragma r:if THIS_EXPOSE_sign
+	THIS_sign = i;
+	#pragma r:endif
+	#pragma r:if THIS_EXPOSE_index
+	THIS_index = (i < 0) ? 1 : 0;
+	#pragma r:endif
 	float offset = THIS_Offset;
 	#pragma r:if THIS_Enableblend
 	{
