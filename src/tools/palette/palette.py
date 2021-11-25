@@ -263,4 +263,4 @@ class Palette:
 			op.raytkDevelEditor.EditROP(template)
 
 	def onRolloverItem(self, item: 'Optional[PickerItem]'):
-		self.ownerComp.op('thumbImage').cook()
+		self.ownerComp.op('thumbImage').cook(force=True)
