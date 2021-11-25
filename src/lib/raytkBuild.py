@@ -181,7 +181,12 @@ class BuildContext:
 
 	def cleanOpImage(self, img: 'COMP'):
 		self.log(f'Cleaning opImage {img}')
-		self.safeDestroyOps(img.ops('compImage/componentMeta'))
+		overlaySwitch = img.op('useOverlaySwitch')
+		overlaySwitch.outputs[0].inputConnectors[0].connect(overlaySwitch.inputs[int(overlaySwitch.par.index)])
+		toRemove = img.ops('compImage/componentMeta') + [overlaySwitch]
+		if overlaySwitch.par.index == 0:
+			toRemove += img.ops('var__*')
+		self.safeDestroyOps(toRemove)
 
 	def removeOpHelp(self, comp: 'COMP'):
 		ropInfo = ROPInfo(comp)

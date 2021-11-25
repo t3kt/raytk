@@ -8,30 +8,41 @@ if False:
 def onCook(dat: 'DAT'):
 	dat.clear()
 	info = ROPInfo(parent().par.Definitionop.eval())
+	dat.appendRow(['res', 256, 256])
+	dat.appendRow(['name', ''])
+	dat.appendRow(['category', ''])
+	dat.appendRow(['toolkitVersion', ''])
+	dat.appendRow(['statusIcon', ''])
+	dat.appendRow(['useOverlay', '0'])
+	dat.appendRow(['fg'] + list(IconColors.defaultFgColor))
+	dat.appendRow(['bg'] + list(IconColors.defaultBgColor))
 	if not info:
-		dat.appendRow(['typeName', ''])
-		dat.appendRow(['category', ''])
-		dat.appendRow(['toolkitVersion', ''])
+		return
+	showStatus = True
+	if info.opStyle == 'variable':
+		dat['category', 1] = 'variable'
+		dat['useOverlay', 1] = '1'
+		# dat.replaceRow('res', ['res', 256, 160])
+		showStatus = False
 	else:
-		dat.appendRow(['typeName', info.shortName or ''])
-		dat.appendRow(['category', info.categoryName or ''])
-		version = info.toolkitVersion
-		if version:
-			version = 'v' + version
-		dat.appendRow(['toolkitVersion', version or ''])
-	if info and info.isDeprecated:
-		dat.appendRow(['statusIcon', '\uFB7E'])
-		dat.appendRow(['fg'] + list(IconColors.deprecatedFgColor))
-		dat.appendRow(['bg'] + list(IconColors.deprecatedBgColor))
-	elif info and info.isAlpha:
-		dat.appendRow(['statusIcon', '\uF02B'])
-		dat.appendRow(['fg'] + list(IconColors.alphaFgColor))
-		dat.appendRow(['bg'] + list(IconColors.alphaBgColor))
-	elif info and info.isBeta:
-		dat.appendRow(['statusIcon', '\uF0A1'])
-		dat.appendRow(['fg'] + list(IconColors.betaFgColor))
-		dat.appendRow(['bg'] + list(IconColors.betaBgColor))
-	else:
-		dat.appendRow(['statusIcon', ''])
-		dat.appendRow(['fg'] + list(IconColors.defaultFgColor))
-		dat.appendRow(['bg'] + list(IconColors.defaultBgColor))
+		dat['name', 1] = info.shortName or ''
+		dat['category', 1] = info.categoryName or ''
+	version = info.toolkitVersion
+	if version:
+		version = 'v' + version
+	dat['toolkitVersion', 1] = version or ''
+	if info.isDeprecated:
+		if showStatus:
+			dat['statusIcon', 1] = '\uFB7E'
+		dat.replaceRow('fg', ['fg'] + list(IconColors.deprecatedFgColor))
+		dat.replaceRow('bg', ['bg'] + list(IconColors.deprecatedBgColor))
+	elif info.isAlpha:
+		if showStatus:
+			dat['statusIcon', 1] = '\uF02B'
+		dat.replaceRow('fg', ['fg'] + list(IconColors.alphaFgColor))
+		dat.replaceRow('bg', ['bg'] + list(IconColors.alphaBgColor))
+	elif info.isBeta:
+		if showStatus:
+			dat['statusIcon', 1] = '\uF0A1'
+		dat.replaceRow('fg', ['fg'] + list(IconColors.betaFgColor))
+		dat.replaceRow('bg', ['bg'] + list(IconColors.betaBgColor))

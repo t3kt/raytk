@@ -72,11 +72,15 @@ class CompDefParsT(_OpMetaPars):
 	Helpurl: 'StrParamT'
 	Keywords: 'StrParamT'
 	Rops: 'StrParamT'
+	Style: 'StrParamT'
+	Label: 'StrParamT'
 
 class OpDefParsT(_OpMetaPars):
 	Hostop: 'OPParamT'
 	Paramsop: 'OPParamT'
 	Name: 'StrParamT'
+	Style: 'StrParamT'
+	Label: 'StrParamT'
 	Enable: 'BoolParamT'
 	Opglobals: 'DatParamT'
 	Initcode: 'DatParamT'
@@ -174,6 +178,14 @@ class ROPInfo:
 	@opType.setter
 	def opType(self, val: str):
 		self.opDefPar.Raytkoptype = val
+
+	@property
+	def opStyle(self):
+		return str(self.opDefPar['Style'] or 'default')
+
+	@property
+	def opLabel(self):
+		return str(self.opDefPar['Label'])
 
 	@property
 	def helpUrl(self):
