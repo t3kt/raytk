@@ -175,7 +175,12 @@ class TestInspectorCore:
 					includeDetail=includeDetail,
 				))
 
-	def WriteSnapshots(self, caseRootFolder: str, imagesRootFolder: str):
+	def WriteSnapshots(
+			self,
+			caseRootFolder: str,
+			imagesRootFolder: str,
+			sourceFolder: str,
+	):
 		scope = self._scopeRoot
 		if not scope:
 			print(self.ownerComp, f'No scope currently loaded')
@@ -184,17 +189,27 @@ class TestInspectorCore:
 			caseRootFolder += '/'
 		if not imagesRootFolder.endswith('/'):
 			imagesRootFolder += '/'
+		if not sourceFolder.endswith('/'):
+			sourceFolder += '/'
 		tox = str(scope.par.externaltox)
 		if not tox.startswith(caseRootFolder) or not tox.endswith('_test.tox'):
 			print(self.ownerComp, f'Tox does not support snapshots: {tox!r}')
 			return
 		for o in scope.children:
-			if not o.par['Enablesnapshot'] or not o.par['Snapshotname']:
+			if not o.par['Enablesnapshot']:
 				continue
 			top = o.op('snapshot')  # type: TOP
 			if not top:
 				continue
-			suffix = '_' + o.par.Snapshotname.eval() + '.png'
-			imagePath = imagesRootFolder + '/' + tox.replace(caseRootFolder, '').replace('_test.tox', suffix)
+			isThumb = o.par['Isthumb']
+			if isThumb:
+				pathBase, testName = tox.replace(caseRootFolder, sourceFolder).rsplit('/', maxsplit=1)
+				opName = testName.split('_', maxsplit=1)[0]
+				imagePath = f'{pathBase}/{opName}_thumb.png'
+			elif o.par['Snapshotname']:
+				suffix = '_' + o.par.Snapshotname.eval() + '.png'
+				imagePath = imagesRootFolder + '/' + tox.replace(caseRootFolder, '').replace('_test.tox', suffix)
+			else:
+				continue
 			top.save(imagePath, createFolders=True)
 
