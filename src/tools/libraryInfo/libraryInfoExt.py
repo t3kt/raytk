@@ -44,13 +44,13 @@ class LibraryInfoBuilder:
 		dat.appendRow(['buildOsVersion', app.osVersion])
 
 	@staticmethod
-	def buildROPTable(dat: 'tableDAT'):
+	def buildROPTable(dat: 'scriptDAT', thumbTable: 'DAT'):
 		dat.clear()
 		opsRoot = RaytkContext().operatorsRoot()
 		rops = []  # type: List[COMP]
 		if opsRoot:
 			rops = opsRoot.findChildren(type=COMP, tags=['raytk*'], depth=2, maxDepth=2)
-		dat.appendRow(['name', 'path', 'tags', 'category', 'opType', 'opVersion', 'status', 'keywords'])
+		dat.appendRow(['name', 'path', 'tags', 'category', 'opType', 'opVersion', 'status', 'keywords', 'thumb'])
 		if not rops:
 			return
 		rops.sort(key=lambda o: o.path.lower())
@@ -61,6 +61,11 @@ class LibraryInfoBuilder:
 			if not ropInfo or not ropInfo.isMaster:
 				continue
 			category = rop.parent()
+			thumbPos = thumbTable[rop.path, 'l'], thumbTable[rop.path, 'b']
+			if None not in thumbPos:
+				thumb = f'{thumbPos[0]},{thumbPos[1]}'
+			else:
+				thumb = ''
 			dat.appendRow([
 				rop.name,
 				rop.path,
@@ -70,6 +75,7 @@ class LibraryInfoBuilder:
 				ropInfo.opVersion,
 				ropInfo.statusLabel,
 				' '.join(sorted(ropInfo.keywords)),
+				thumb,
 			])
 
 	@staticmethod
