@@ -300,6 +300,7 @@ class OpPicker:
 		# note for performance: this gets called frequently as the mouse moves even within a single cell
 		if row == prevRow and col == prevCol:
 			return
+		item = None
 		if row >= 0:
 			item = self.itemLibrary.itemForRow(row)
 			self._selectItem(item)
@@ -309,6 +310,7 @@ class OpPicker:
 			item = self.itemLibrary.itemForRow(prevRow)
 			if isinstance(item, PickerOpItem):
 				self._setButtonHighlight(prevRow, prevCol, False)
+		ext.callbacks.DoCallback('onRolloverItem', {'item': item})
 
 	def _toggleCategoryExpansion(self, item: 'PickerCategoryItem'):
 		item.collapsed = not item.collapsed

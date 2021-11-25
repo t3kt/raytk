@@ -14,3 +14,6 @@ def onPickItem(info: dict):
 
 def onEditItem(info: dict):
 	ext.palette.onEditItem(info.get('item'))
+
+def onRolloverItem(info: dict):
+	ext.palette.onRolloverItem(info.get('item'))
