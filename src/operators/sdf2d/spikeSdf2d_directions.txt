@@ -1,0 +1,5 @@
+name	label	code
+xpos	X+	q = p.yx
+xneg	X-	q = vec2(p.y, -p.x)
+ypos	Y+	q = p
+yneg	Y-	q = vec2(p.x, -p.y)
