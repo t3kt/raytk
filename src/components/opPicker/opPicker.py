@@ -447,11 +447,6 @@ class _ItemLibrary:
 				helpSummary=str(opHelpTable[path, 'summary'] or ''),
 			)
 			keywords = tdu.split(opTable[row, 'keywords'])
-			if keywords:
-				if opItem.helpSummary:
-					opItem.helpSummary += '\n\n'
-				opItem.helpSummary += 'Keywords: ' + ', '.join(keywords)
-				pass
 			words = _splitCamelCase(shortName)
 			opItem.words = [w.lower() for w in words]
 			opItem.keywords += [k.lower() for k in keywords]
