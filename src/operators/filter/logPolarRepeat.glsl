@@ -31,6 +31,10 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 	setIterationCell(ctx, cell);
 	#endif
 
+	#ifdef THIS_EXPOSE_cellcoord
+	THIS_cellcoord = ivec2(cell);
+	#endif
+
 	#ifdef THIS_COORD_TYPE_vec2
 	p = q;
 	#else
