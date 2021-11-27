@@ -108,28 +108,34 @@ class BuildManager:
 			self.logStageStart('Process nested operators')
 			self.processNestedOperators(toolkit.op('operators'), thenRun=self.runBuild_stage, runArgs=[stage + 1])
 		elif stage == 7:
+			self.logStageStart('Lock library info')
+			self.lockLibraryInfo(toolkit, thenRun=self.runBuild_stage, runArgs=[stage + 1])
+		elif stage == 8:
+			self.logStageStart('Remove op help')
+			self.removeAllOpHelp(thenRun=self.runBuild_stage, runArgs=[stage + 1])
+		elif stage == 9:
 			self.logStageStart('Process tools')
 			self.processTools(toolkit.op('tools'), thenRun=self.runBuild_stage, runArgs=[stage + 1])
-		elif stage == 8:
+		elif stage == 10:
 			self.logStageStart('Lock buildLock ops')
 			self.context.lockBuildLockOps(toolkit)
 			self.queueMethodCall(self.runBuild_stage, stage + 1)
-		elif stage == 9:
+		elif stage == 11:
 			self.logStageStart('Process components')
 			self.processComponents(toolkit.op('components'), thenRun=self.runBuild_stage, runArgs=[stage + 1])
-		elif stage == 10:
+		elif stage == 12:
 			self.logStageStart('Remove buildExclude ops')
 			self.context.removeBuildExcludeOps(toolkit)
 			self.queueMethodCall(self.runBuild_stage, stage + 1)
-		elif stage == 11:
+		elif stage == 13:
 			self.logStageStart('Remove redundant python mods')
 			self.context.removeRedundantPythonModules(toolkit, toolkit.ops('tools', 'libraryInfo'))
 			self.queueMethodCall(self.runBuild_stage, stage + 1)
-		elif stage == 12:
+		elif stage == 14:
 			self.logStageStart('Finalize toolkit pars')
 			self.finalizeToolkitPars(toolkit)
 			self.queueMethodCall(self.runBuild_stage, stage + 1)
-		elif stage == 13:
+		elif stage == 15:
 			self.logStageStart('Finish build')
 			self.context.focusInNetworkPane(toolkit)
 			version = RaytkContext().toolkitVersion()
@@ -198,6 +204,15 @@ class BuildManager:
 			libraryInfo.op('BUILD'),
 			thenRun=lambda: self.queueMethodCall(thenRun, *(runArgs or [])),
 			runArgs=[])
+
+	def lockLibraryInfo(
+			self, toolkit: 'COMP',
+			thenRun: 'Optional[Callable]' = None, runArgs: list = None):
+		self.log('Locking library info')
+		self.context.lockOps(toolkit.ops(
+			'info', 'opTable', 'opCategoryTable', 'opHelpTable', 'buildInfo'))
+		if thenRun:
+			self.queueMethodCall(thenRun, *(runArgs or []))
 
 	def processComponents(
 			self, components: 'COMP',
@@ -293,7 +308,6 @@ class BuildManager:
 		comp.color = IconColors.defaultBgColor
 		if self.docProcessor:
 			self.docProcessor.processOp(comp)
-		self.context.removeOpHelp(comp)
 
 	def processOperatorSubCompChildrenOf(self, comp: 'COMP'):
 		subComps = comp.findChildren(type=COMP)
@@ -335,6 +349,14 @@ class BuildManager:
 		self.context.updateOrReclone(rop)
 		self.context.detachTox(rop)
 		self.context.disableCloning(rop)
+
+	def removeAllOpHelp(
+			self,
+			thenRun: 'Optional[Callable]' = None, runArgs: list = None):
+		operators = RaytkContext().allMasterOperators()
+		for comp in operators:
+			self.context.removeOpHelp(comp)
+		self.queueMethodCall(thenRun, *(runArgs or []))
 
 	def detachAllFileSyncDats(self, toolkit: 'COMP'):
 		self.log('Detaching all fileSync DATs')
