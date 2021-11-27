@@ -131,6 +131,28 @@ def buildOpParamsTable(dat: 'DAT'):
 				cell = dat[info.path, par.tupletName]
 			cell.val = par.style
 
+def buildOpVariablesTable(dat: 'DAT'):
+	dat.clear()
+	dat.appendRow(['path'])
+	for rop in RaytkContext().allMasterOperators():
+		info = ROPInfo(rop)
+		if not info.isROP:
+			continue
+		varTable = info.opDefPar.Variabletable.eval()
+		if varTable and isinstance(varTable, evaluateDAT):
+			varTable = varTable.inputs[0]
+		if not varTable:
+			continue
+		dat.appendRow([info.path])
+		for i in range(1, varTable.numRows):
+			name = varTable[i, 'name'] or varTable[i, 0]
+			dataType = varTable[i, 'dataType'] or varTable[i, 2]
+			cell = dat[info.path, name]
+			if cell is None:
+				dat.appendCol([name])
+				cell = dat[info.path, name]
+			cell.val = dataType
+
 def buildOpInputsTable(dat: 'DAT'):
 	dat.clear()
 	dat.appendRow([

@@ -12,3 +12,4 @@ raytk-op-tests.csv
 etc/*unpack*
 raytk-structure.csv
 build/log/*.txt
+raytk-op-variables.csv
