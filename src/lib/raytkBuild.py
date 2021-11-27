@@ -24,11 +24,14 @@ class BuildContext:
 
 	def __init__(
 			self,
-			log: Callable[[str], None],
+			log: Callable,
 			experimental=False):
-		self.log = log
+		self._log = log
 		self.pane = None  # type: Optional[NetworkEditor]
 		self.experimental = experimental
+
+	def log(self, msg, verbose=False):
+		self._log(msg, verbose=verbose)
 
 	def _findExistingPane(self):
 		for pane in ui.panes:
@@ -69,10 +72,10 @@ class BuildContext:
 		self.log(f'Detaching tox from {comp}')
 		detachTox(comp)
 
-	def reclone(self, comp: 'COMP'):
+	def reclone(self, comp: 'COMP', verbose=True):
 		if not comp or not comp.par['enablecloningpulse'] or not comp.par['clone']:
 			return
-		self.log(f'Recloning {comp}')
+		self.log(f'Recloning {comp}', verbose)
 		comp.par.enablecloningpulse.pulse()
 
 	def updateOrReclone(self, comp: 'COMP'):
@@ -83,19 +86,19 @@ class BuildContext:
 		else:
 			self.reclone(comp)
 
-	def disableCloning(self, comp: 'COMP'):
+	def disableCloning(self, comp: 'COMP', verbose=True):
 		if not comp or comp.par['enablecloning'] is None:
 			return
-		self.log(f'Disabling cloning on {comp}')
+		self.log(f'Disabling cloning on {comp}', verbose)
 		comp.par.enablecloning.expr = ''
 		comp.par.enablecloning = False
 
-	def detachDat(self, dat: 'DAT', reloadFirst=False):
+	def detachDat(self, dat: 'DAT', reloadFirst=False, verbose=True):
 		if not dat or dat.par['file'] is None:
 			return
 		if not dat.par.file and dat.par.file.mode == ParMode.CONSTANT:
 			return
-		self.log(f'Detaching DAT {dat}')
+		self.log(f'Detaching DAT {dat}', verbose)
 		for par in dat.pars('syncfile', 'loadonstart', 'loadonstartpulse', 'write', 'writepulse'):
 			par.expr = ''
 			par.val = False
@@ -149,18 +152,18 @@ class BuildContext:
 			self.log(f'Removing {len(alphaOps)} alpha operators from {category.name}')
 			self.safeDestroyOps(alphaOps)
 
-	def safeDestroyOp(self, o: 'OP'):
+	def safeDestroyOp(self, o: 'OP', verbose=True):
 		if not o or not o.valid:
 			return
-		self.log(f'Removing {o}')
+		self.log(f'Removing {o}', verbose)
 		try:
 			o.destroy()
 		except Exception as e:
-			self.log(f'Ignoring error removing {o}: {e}')
+			self.log(f'Ignoring error removing {o}: {e}', verbose=False)
 
-	def safeDestroyOps(self, os: 'List[OP]'):
+	def safeDestroyOps(self, os: 'List[OP]', verbose=True):
 		for o in os:
-			self.safeDestroyOp(o)
+			self.safeDestroyOp(o, verbose)
 
 	def lockOps(self, os: 'List[OP]'):
 		for o in os:
@@ -174,9 +177,11 @@ class BuildContext:
 		toLock = comp.findChildren(tags=[RaytkTags.buildLock.name])
 		self.lockOps(toLock)
 
-	def removeBuildExcludeOps(self, comp: 'COMP'):
-		self.log(f'Removing build excluded ops from {comp}')
+	def removeBuildExcludeOps(self, comp: 'COMP', verbose=True):
 		toRemove = list(comp.findChildren(tags=[RaytkTags.buildExclude.name]))
+		if not toRemove:
+			return
+		self.log(f'Removing build excluded ops from {comp}', verbose)
 		self.safeDestroyOps(toRemove)
 
 	def cleanOpImage(self, img: 'COMP'):
@@ -280,7 +285,7 @@ class BuildTaskContext(BuildContext):
 	def __init__(
 			self,
 			finish: Callable[[], None],
-			log: Callable[[str], None],
+			log: Callable,
 			experimental: bool):
 		self.finish = finish
 		super().__init__(log, experimental)

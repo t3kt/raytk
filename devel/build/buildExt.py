@@ -18,6 +18,7 @@ class BuildManager:
 		self.docProcessor = None  # type: Optional[DocProcessor]
 		self.experimentalMode = False
 		self.logFile = None  # type: Optional[TextIO]
+		self.enableVerboseLogging = False
 
 	def OnInit(self):
 		self.ClearLog()
@@ -59,6 +60,7 @@ class BuildManager:
 
 	def RunBuild(self):
 		self.experimentalMode = bool(self.ownerComp.op('experimental_toggle').par.Value0)
+		self.enableVerboseLogging = bool(self.ownerComp.op('verboseLogging_toggle').par.Value0)
 		self.logTable.clear()
 		self.closeLogFile()
 		if self.ownerComp.op('useLogFile_toggle').par.Value0:
@@ -85,37 +87,50 @@ class BuildManager:
 			self.context.openNetworkPane()
 			self.queueMethodCall(self.runBuild_stage, stage + 1)
 		elif stage == 1:
+			self.logStageStart('Detach fileSync ops')
 			self.detachAllFileSyncDats(toolkit)
 			self.queueMethodCall(self.runBuild_stage, stage + 1)
 		elif stage == 2:
 			if self.docProcessor:
+				self.logStageStart('Clear old docs')
 				self.docProcessor.clearPreviousDocs()
 			self.queueMethodCall(self.runBuild_stage, stage + 1)
 		elif stage == 3:
+			self.logStageStart('Update library info')
 			self.updateLibraryInfo(toolkit, thenRun=self.runBuild_stage, runArgs=[stage + 1])
 		elif stage == 4:
+			self.logStageStart('Update library image')
 			self.updateLibraryImage(toolkit, thenRun=self.runBuild_stage, runArgs=[stage + 1])
 		elif stage == 5:
+			self.logStageStart('Process operators')
 			self.processOperators(toolkit.op('operators'), thenRun=self.runBuild_stage, runArgs=[stage + 1])
 		elif stage == 6:
+			self.logStageStart('Process nested operators')
 			self.processNestedOperators(toolkit.op('operators'), thenRun=self.runBuild_stage, runArgs=[stage + 1])
 		elif stage == 7:
+			self.logStageStart('Process tools')
 			self.processTools(toolkit.op('tools'), thenRun=self.runBuild_stage, runArgs=[stage + 1])
 		elif stage == 8:
+			self.logStageStart('Lock buildLock ops')
 			self.context.lockBuildLockOps(toolkit)
 			self.queueMethodCall(self.runBuild_stage, stage + 1)
 		elif stage == 9:
+			self.logStageStart('Process components')
 			self.processComponents(toolkit.op('components'), thenRun=self.runBuild_stage, runArgs=[stage + 1])
 		elif stage == 10:
+			self.logStageStart('Remove buildExclude ops')
 			self.context.removeBuildExcludeOps(toolkit)
 			self.queueMethodCall(self.runBuild_stage, stage + 1)
 		elif stage == 11:
+			self.logStageStart('Remove redundant python mods')
 			self.context.removeRedundantPythonModules(toolkit, toolkit.ops('tools', 'libraryInfo'))
 			self.queueMethodCall(self.runBuild_stage, stage + 1)
 		elif stage == 12:
+			self.logStageStart('Finalize toolkit pars')
 			self.finalizeToolkitPars(toolkit)
 			self.queueMethodCall(self.runBuild_stage, stage + 1)
 		elif stage == 13:
+			self.logStageStart('Finish build')
 			self.context.focusInNetworkPane(toolkit)
 			version = RaytkContext().toolkitVersion()
 			if self.experimentalMode:
@@ -338,11 +353,16 @@ class BuildManager:
 			thenRun=lambda: self.queueMethodCall(thenRun, *(runArgs or [])),
 			runArgs=[])
 
-	def log(self, message: str):
+	def log(self, message: str, verbose=False):
+		if verbose and not self.enableVerboseLogging:
+			return
 		print(message)
 		if self.logFile:
 			print(message, file=self.logFile)
 		self.logTable.appendRow([message])
+
+	def logStageStart(self, desc: str):
+		self.log(f'===[{desc}]===')
 
 	@staticmethod
 	def queueMethodCall(method: Callable, *args):
