@@ -689,6 +689,6 @@ def createVarRef(name: str):
 		if varTable[i, 'localName'].val.lower() == name:
 			dataType = varTable[i, 'dataType'].val
 			dataType = _varTypes.get(dataType, dataType)
-			palette.CreateVariableReference(host, name, dataType)
+			palette.CreateVariableReference(host, varTable[i, 'localName'].val, dataType)
 			return
 	raise Exception(f'Variable not found: {name}')
