@@ -11,3 +11,4 @@ raytk-op-current-expanded-params.csv
 raytk-op-tests.csv
 etc/*unpack*
 raytk-structure.csv
+build/log/*.txt

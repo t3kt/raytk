@@ -1,7 +1,9 @@
+from datetime import datetime
+from pathlib import Path
 from raytkTools import RaytkTools
 from raytkUtil import RaytkTags, navigateTo, focusFirstCustomParameterPage, CategoryInfo, RaytkContext, IconColors
 from raytkBuild import BuildContext, DocProcessor
-from typing import Callable, List, Optional
+from typing import Callable, List, Optional, TextIO
 
 # noinspection PyUnreachableCode
 if False:
@@ -15,6 +17,7 @@ class BuildManager:
 		self.context = None  # type: Optional[BuildContext]
 		self.docProcessor = None  # type: Optional[DocProcessor]
 		self.experimentalMode = False
+		self.logFile = None  # type: Optional[TextIO]
 
 	def OnInit(self):
 		self.ClearLog()
@@ -33,6 +36,20 @@ class BuildManager:
 
 	def ClearLog(self):
 		self.logTable.clear()
+		self.closeLogFile()
+
+	def closeLogFile(self):
+		if not self.logFile:
+			return
+		self.logFile.close()
+		self.logFile = None
+
+	def startNewLogFile(self):
+		stamp = datetime.now().strftime('%H-%M-%S')
+		fileName = f'build/log/build-{stamp}.txt'
+		filePath = Path(fileName)
+		filePath.parent.mkdir(parents=True, exist_ok=True)
+		self.logFile = filePath.open('a')
 
 	def ReloadToolkit(self):
 		self.logTable.clear()
@@ -41,9 +58,14 @@ class BuildManager:
 		self.queueMethodCall(self.reloadToolkit, toolkit)
 
 	def RunBuild(self):
-		self.logTable.clear()
-		self.log('Starting build')
 		self.experimentalMode = bool(self.ownerComp.op('experimental_toggle').par.Value0)
+		self.logTable.clear()
+		self.closeLogFile()
+		if self.ownerComp.op('useLogFile_toggle').par.Value0:
+			self.startNewLogFile()
+		version = RaytkContext().toolkitVersion()
+		self.log('Starting build')
+		self.log(f'Version: {version}' + (' (experimental)' if self.experimentalMode else ''))
 		self.context = BuildContext(
 			self.log,
 			experimental=self.experimentalMode)
@@ -105,6 +127,7 @@ class BuildManager:
 			toolkit.save(toxFile)
 			self.log('Build completed!')
 			self.log(f'Exported tox file: {toxFile}')
+			self.closeLogFile()
 
 	@staticmethod
 	def reloadToolkit(toolkit: 'COMP'):
@@ -317,6 +340,8 @@ class BuildManager:
 
 	def log(self, message: str):
 		print(message)
+		if self.logFile:
+			print(message, file=self.logFile)
 		self.logTable.appendRow([message])
 
 	@staticmethod
