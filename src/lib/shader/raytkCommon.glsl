@@ -246,6 +246,9 @@ vec2 fillToVec2(vec4 p) { return p.xy; }
 vec3 fillToVec3(float p) { return vec3(p); }
 vec3 fillToVec3(vec4 p) { return p.xyz; }
 
+vec4 fillToVec4(float p) { return vec4(p); }
+vec4 fillToVec4(vec4 p) { return p; }
+
 float extractOrUseAsX(float p) { return p; }
 float extractOrUseAsX(vec2 p) { return p.x; }
 float extractOrUseAsX(vec3 p) { return p.x; }
