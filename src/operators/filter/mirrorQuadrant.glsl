@@ -8,6 +8,12 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 	#pragma r:elif THIS_Iterationtype_index
 	setIterationIndex(ctx, quadrantIndex(ivec2(cell)));
 	#pragma r:endif
+	#pragma r:if THIS_EXPOSE_index
+	THIS_index = quadrantIndex(ivec2(cell));
+	#pragma r:endif
+	#pragma r:if THIS_EXPOSE_sign
+	THIS_sign = cell;
+	#pragma r:endif
 
 	float r = THIS_Rotateaxis;
 	#pragma r:if THIS_HAS_INPUT_rotateField
