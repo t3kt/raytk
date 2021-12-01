@@ -46,7 +46,7 @@ class BuildManager:
 		self.logFile = None
 
 	def startNewLogFile(self):
-		stamp = datetime.now().strftime('%H-%M-%S')
+		stamp = datetime.now().strftime('%Y-%m-%d_%H-%M-%S')
 		fileName = f'build/log/build-{stamp}.txt'
 		filePath = Path(fileName)
 		filePath.parent.mkdir(parents=True, exist_ok=True)
@@ -96,46 +96,51 @@ class BuildManager:
 				self.docProcessor.clearPreviousDocs()
 			self.queueMethodCall(self.runBuild_stage, stage + 1)
 		elif stage == 3:
+			self.logStageStart('Process thumbnails')
+			self.context.runBuildScript(
+				toolkit.op('libraryThumbs/BUILD'),
+				thenRun=self.runBuild_stage, runArgs=[stage + 1])
+		elif stage == 4:
 			self.logStageStart('Update library info')
 			self.updateLibraryInfo(toolkit, thenRun=self.runBuild_stage, runArgs=[stage + 1])
-		elif stage == 4:
+		elif stage == 5:
 			self.logStageStart('Update library image')
 			self.updateLibraryImage(toolkit, thenRun=self.runBuild_stage, runArgs=[stage + 1])
-		elif stage == 5:
+		elif stage == 6:
 			self.logStageStart('Process operators')
 			self.processOperators(toolkit.op('operators'), thenRun=self.runBuild_stage, runArgs=[stage + 1])
-		elif stage == 6:
+		elif stage == 7:
 			self.logStageStart('Process nested operators')
 			self.processNestedOperators(toolkit.op('operators'), thenRun=self.runBuild_stage, runArgs=[stage + 1])
-		elif stage == 7:
+		elif stage == 8:
 			self.logStageStart('Lock library info')
 			self.lockLibraryInfo(toolkit, thenRun=self.runBuild_stage, runArgs=[stage + 1])
-		elif stage == 8:
+		elif stage == 9:
 			self.logStageStart('Remove op help')
 			self.removeAllOpHelp(thenRun=self.runBuild_stage, runArgs=[stage + 1])
-		elif stage == 9:
+		elif stage == 10:
 			self.logStageStart('Process tools')
 			self.processTools(toolkit.op('tools'), thenRun=self.runBuild_stage, runArgs=[stage + 1])
-		elif stage == 10:
+		elif stage == 11:
 			self.logStageStart('Lock buildLock ops')
 			self.context.lockBuildLockOps(toolkit)
 			self.queueMethodCall(self.runBuild_stage, stage + 1)
-		elif stage == 11:
+		elif stage == 12:
 			self.logStageStart('Process components')
 			self.processComponents(toolkit.op('components'), thenRun=self.runBuild_stage, runArgs=[stage + 1])
-		elif stage == 12:
+		elif stage == 13:
 			self.logStageStart('Remove buildExclude ops')
 			self.context.removeBuildExcludeOps(toolkit)
 			self.queueMethodCall(self.runBuild_stage, stage + 1)
-		elif stage == 13:
+		elif stage == 14:
 			self.logStageStart('Remove redundant python mods')
 			self.context.removeRedundantPythonModules(toolkit, toolkit.ops('tools', 'libraryInfo'))
 			self.queueMethodCall(self.runBuild_stage, stage + 1)
-		elif stage == 14:
+		elif stage == 15:
 			self.logStageStart('Finalize toolkit pars')
 			self.finalizeToolkitPars(toolkit)
 			self.queueMethodCall(self.runBuild_stage, stage + 1)
-		elif stage == 15:
+		elif stage == 16:
 			self.logStageStart('Finish build')
 			self.context.focusInNetworkPane(toolkit)
 			version = RaytkContext().toolkitVersion()

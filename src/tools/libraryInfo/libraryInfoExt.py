@@ -60,22 +60,16 @@ class LibraryInfoBuilder:
 			ropInfo = ROPInfo(rop)
 			if not ropInfo or not ropInfo.isMaster:
 				continue
-			category = rop.parent()
-			thumbPos = thumbTable[rop.path, 'l'], thumbTable[rop.path, 'b']
-			if None not in thumbPos:
-				thumb = f'{thumbPos[0]},{thumbPos[1]}'
-			else:
-				thumb = ''
 			dat.appendRow([
 				rop.name,
 				rop.path,
 				' '.join(sorted(rop.tags)),
-				category.name,
+				rop.parent().name,
 				ropInfo.opType,
 				ropInfo.opVersion,
 				ropInfo.statusLabel,
 				' '.join(sorted(ropInfo.keywords)),
-				thumb,
+				thumbTable[rop.path, 'thumb'] or '',
 			])
 
 	@staticmethod

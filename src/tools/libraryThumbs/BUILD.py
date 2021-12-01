@@ -12,16 +12,25 @@ def runStage(stage: int):
 		repl = op('thumbFileReplicator')
 		repl.par.recreateall.pulse()
 	elif stage == 1:
+		repl = op('thumbFileReplicator')
+		context.log(f'Destroying replicator {repl}')
+		context.safeDestroyOp(repl)
+		thumbs = ops('thumbImages/thumb_*')
+		context.log(f'Post replication, have {len(thumbs)} thumb images')
+	elif stage == 2:
 		context.log('Reloading images')
-		for o in ops('thumbImages/thumb_*'):
+		thumbs = ops('thumbImages/thumb_*')
+		context.log(f'Found {len(thumbs)} images')
+		for o in thumbs:
 			o.par.reloadpulse.pulse()
+	elif stage == 3:
+		context.log('Locking images')
+		thumbs = ops('thumbImages/thumb_*')
+		context.lockOps(thumbs)
+		context.safeDestroyOps(ops('imageTemplate', 'layoutThumbImages'))
 	else:
 		context.finishTask()
 		return
 	context.queueAction(runStage, stage + 1)
-
-def stripCompiler():
-	context.log('Stripping out the compiler')
-	context.safeDestroyOp(op('compiler'))
 
 runStage(0)
