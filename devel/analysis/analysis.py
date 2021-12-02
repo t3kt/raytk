@@ -65,8 +65,10 @@ def buildOpInfoTable(dat: 'DAT'):
 			'Contexttype',
 		] + _opDefParamNames + [
 			'macroCols',
+			'hasThumb',
 		]
 	)
+	opThumbs = op('opThumbs')
 	context = RaytkContext()
 	for rop in context.allMasterOperators():
 		info = ROPInfo(rop)
@@ -99,6 +101,7 @@ def buildOpInfoTable(dat: 'DAT'):
 			macros = info.opDefPar.Macrotable.eval()
 			if macros:
 				dat[rop.path, 'macroCols'] = macros.numCols
+		dat[rop.path, 'hasThumb'] = bool(opThumbs[rop.path, 'thumb'])
 
 def _ropKind(info: 'ROPInfo'):
 	if info.isOutput:
