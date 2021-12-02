@@ -10,6 +10,8 @@ if False:
 
 	class _Par(ParCollection):
 		Showedit: 'BoolParamT'
+		Thumbsize: 'IntParamT'
+		Thumbroot: 'OPParamT'
 	class _COMP(panelCOMP):
 		par: _Par
 
@@ -18,6 +20,7 @@ if False:
 		Showbeta: 'BoolParamT'
 		Showdeprecated: 'BoolParamT'
 		Showhelp: 'BoolParamT'
+		Showthumbs: 'BoolParamT'
 		Pinopen: 'BoolParamT'
 
 	ipar.listConfig = ParCollection()
@@ -119,7 +122,8 @@ class OpPicker:
 	def refreshList(self):
 		listComp = self._listComp
 		listComp.par.rows = self.itemLibrary.currentItemCount
-		listComp.par.cols = 4 if self._showEdit else 3
+		layout = self._getLayout()
+		listComp.par.cols = layout.numCols
 		listComp.par.reset.pulse()
 
 	def _offsetSelection(self, offset: int):
@@ -165,6 +169,12 @@ class OpPicker:
 	def onFilterSettingChange(self):
 		self._applyFilter()
 
+	def onUIStateChange(self, par: 'Par'):
+		if par.name in ('Showalpha', 'Showbeta', 'Showdeprecated'):
+			self.onFilterSettingChange()
+		elif par.name == 'Showthumbs':
+			self.refreshList()
+
 	def onKeyboardShortcut(self, shortcutName: str):
 		print(self.ownerComp, f'onKeyboardShortcut: {shortcutName}')
 		if shortcutName == 'up':
@@ -200,40 +210,49 @@ class OpPicker:
 		item = self.itemLibrary.itemForRow(row)
 		if not item:
 			return
-		if col == 1:
+		layout = self._getLayout()
+		if col == layout.labelCol:
 			attribs.text = item.shortName
 		if isinstance(item, PickerCategoryItem):
-			if col == 0:
+			if col == layout.toggleCol:
 				if item.collapsed:
 					attribs.top = self.ownerComp.op('expandIcon')
 				else:
 					attribs.top = self.ownerComp.op('collapseIcon')
 				attribs.bgColor = _configColor('Buttonbgcolor')
-			elif col == 1:
+			elif col == layout.labelCol:
 				attribs.textOffsetX = 5
 		elif isinstance(item, PickerOpItem):
-			if col == 1:
+			if col == layout.labelCol:
 				attribs.textOffsetX = 20
-			elif col == 2:
+			elif col == layout.statusCol:
 				if item.isAlpha:
 					attribs.top = self.ownerComp.op('alphaIcon')
 				elif item.isBeta:
 					attribs.top = self.ownerComp.op('betaIcon')
 				elif item.isDeprecated:
 					attribs.top = self.ownerComp.op('deprecatedIcon')
-			elif col == 3:
+			elif col == layout.editCol:
 				attribs.top = self.ownerComp.op('editIcon')
 				attribs.bgColor = _configColor('Bgcolor')
+			elif col == layout.thumbCol:
+				thumbRoot = self.ownerComp.par.Thumbroot.eval()
+				if thumbRoot and item.thumbPath:
+					attribs.top = thumbRoot.op(item.thumbPath) or ''
 
 	def onInitRow(self, row: int, attribs: 'ListAttributes'):
 		item = self.itemLibrary.itemForRow(row)
 		if not item:
 			return
+		layout = self._getLayout()
 		if item.isAlpha or item.isBeta or item.isDeprecated:
 			attribs.fontItalic = True
 		if isinstance(item, PickerCategoryItem):
+			attribs.rowHeight = layout.catRowHeight
 			attribs.textColor = _configColor('Categorytextcolor')
 			attribs.bgColor = _configColor('Categorybgcolor')
+		elif isinstance(item, PickerOpItem):
+			attribs.rowHeight = layout.opRowHeight
 		if item.isAlpha:
 			attribs.textColor = _configColor('Alphacolor')
 		elif item.isBeta:
@@ -241,20 +260,23 @@ class OpPicker:
 		elif item.isDeprecated:
 			attribs.textColor = _configColor('Deprecatedcolor')
 
-	@staticmethod
-	def onInitCol(col: int, attribs: 'ListAttributes'):
-		if col == 0:
-			attribs.colWidth = 26
-		elif col == 1:
+	def onInitCol(self, col: int, attribs: 'ListAttributes'):
+		if col is None:
+			return
+		layout = self._getLayout()
+		if col == layout.toggleCol:
+			attribs.colWidth = layout.toggleColWidth
+		elif col == layout.labelCol:
 			attribs.colStretch = True
-		elif col == 2:
-			attribs.colWidth = 30
-		elif col == 3:
-			attribs.colWidth = 26
+		elif col == layout.statusCol:
+			attribs.colWidth = layout.statusColWidth
+		elif col == layout.editCol:
+			attribs.colWidth = layout.opRowHeight  # so icons end up square
+		elif col == layout.thumbCol:
+			attribs.colWidth = layout.thumbColWidth
 
 	@staticmethod
 	def onInitTable(attribs: 'ListAttributes'):
-		attribs.rowHeight = 26
 		attribs.bgColor = _configColor('Bgcolor')
 		attribs.textColor = _configColor('Textcolor')
 		attribs.fontFace = 'Roboto'
@@ -300,13 +322,14 @@ class OpPicker:
 		# note for performance: this gets called frequently as the mouse moves even within a single cell
 		if row == prevRow and col == prevCol:
 			return
+		layout = self._getLayout()
 		item = None
 		if row >= 0:
 			item = self.itemLibrary.itemForRow(row)
 			self._selectItem(item)
-			if col == 3 and isinstance(item, PickerOpItem):
+			if col == layout.editCol and isinstance(item, PickerOpItem):
 				self._setButtonHighlight(row, col, True)
-		if prevRow >= 0 and prevCol == 3:
+		if prevRow >= 0 and prevCol == layout.editCol:
 			item = self.itemLibrary.itemForRow(prevRow)
 			if isinstance(item, PickerOpItem):
 				self._setButtonHighlight(prevRow, prevCol, False)
@@ -320,26 +343,63 @@ class OpPicker:
 		elif item.ops:
 			self._selectItem(item.ops[0], scroll=False)
 
-	def onSelect(
-			self,
-			startRow: int, startCol: int,
-			endRow: int, endCol: int,
-			start: bool, end: bool):
+	def onSelect(self, endRow: int, endCol: int, end: bool):
 		item = self.itemLibrary.itemForRow(endRow)
 		self._selectItem(item)
-		if end:
-			if item.isCategory:
-				self._toggleCategoryExpansion(item)
-			elif endCol == 3 and self._showEdit:
-				self.onEditItem()
-			else:
-				self.onPickItem()
+		if not end:
+			return
+		layout = self._getLayout()
+		if item.isCategory:
+			self._toggleCategoryExpansion(item)
+		elif endCol == layout.editCol and layout.editCol is not None:
+			self.onEditItem()
+		else:
+			self.onPickItem()
 
 	def onRadio(self, row: int, col: int, prevRow: int, prevCol: int):
 		pass
 
 	def onFocus(self, row: int, col: int, prevRow: int, prevCol: int):
 		pass
+
+	def _getLayout(self):
+		showEdit = self._showEdit
+		layout = _Layout(
+			toggleCol=0,
+			labelCol=1,
+			statusCol=2,
+			editCol=3 if showEdit else None,
+			thumbCol=None,
+			numCols=4 if showEdit else 3,
+			thumbColWidth=self.ownerComp.par.Thumbsize.eval(),
+		)
+		if ipar.uiState.Showthumbs:
+			layout.thumbCol = layout.numCols
+			layout.numCols += 1
+			thumbSize = int(self.ownerComp.par.Thumbsize)
+			layout.opRowHeight = thumbSize
+			layout.editColWidth = thumbSize
+			layout.thumbColWidth = thumbSize
+			layout.statusColWidth = thumbSize
+		return layout
+
+@dataclass
+class _Layout:
+	toggleCol: Optional[int]
+	labelCol: Optional[int]
+	statusCol: Optional[int]
+	editCol: Optional[int]
+	thumbCol: Optional[int]
+
+	numCols: int
+
+	opRowHeight: int = 26
+	catRowHeight: int = 26
+
+	toggleColWidth: int = 26
+	statusColWidth: int = 30
+	editColWidth: int = 26
+	thumbColWidth: int = 50
 
 @dataclass
 class PickerItem:
@@ -367,6 +427,7 @@ class PickerCategoryItem(PickerItem):
 class PickerOpItem(PickerItem):
 	words: List[str] = field(default_factory=list)
 	keywords: List[str] = field(default_factory=list)
+	thumbPath: Optional[str] = None
 	isOP = True
 	isCategory = False
 
@@ -450,6 +511,7 @@ class _ItemLibrary:
 			words = _splitCamelCase(shortName)
 			opItem.words = [w.lower() for w in words]
 			opItem.keywords += [k.lower() for k in keywords]
+			opItem.thumbPath = str(opTable[row, 'thumb'] or '')
 			if categoryName in categoriesByName:
 				categoriesByName[categoryName].ops.append(opItem)
 			else:

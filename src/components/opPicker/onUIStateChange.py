@@ -6,4 +6,4 @@ if False:
 	ext.opPicker = OpPicker(COMP())
 
 def onValueChange(par, prev):
-	ext.opPicker.onFilterSettingChange()
+	ext.opPicker.onUIStateChange(par)

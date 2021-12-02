@@ -17,7 +17,7 @@ def onInitTable(comp, attribs):
 def onRollover(comp, row, col, coords, prevRow, prevCol, prevCoords):
 	ext.opPicker.onRollover(row, col, prevRow, prevCol)
 def onSelect(comp, startRow, startCol, startCoords, endRow, endCol, endCoords, start, end):
-	ext.opPicker.onSelect(startRow, startCol, endRow, endCol, start, end)
+	ext.opPicker.onSelect(endRow, endCol, end)
 def onRadio(comp, row, col, prevRow, prevCol):
 	ext.opPicker.onRadio(row, col, prevRow, prevCol)
 def onFocus(comp, row, col, prevRow, prevCol):
