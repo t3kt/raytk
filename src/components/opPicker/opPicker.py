@@ -304,6 +304,7 @@ class OpPicker:
 		else:
 			color = 0, 0, 0, 0
 		listComp = self._listComp
+		layout = self._getLayout()
 		rowAttribs = listComp.rowAttribs[row]
 		if rowAttribs:
 			rowAttribs.topBorderOutColor = color
@@ -311,7 +312,7 @@ class OpPicker:
 		cellAttribs = listComp.cellAttribs[row, 0]
 		if cellAttribs:
 			cellAttribs.leftBorderInColor = color
-		cellAttribs = listComp.cellAttribs[row, 3 if self._showEdit else 2]
+		cellAttribs = listComp.cellAttribs[row, layout.numCols - 1]
 		if cellAttribs:
 			cellAttribs.rightBorderOutColor = color
 
