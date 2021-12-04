@@ -201,15 +201,12 @@ class TestInspectorCore:
 			top = o.op('snapshot')  # type: TOP
 			if not top:
 				continue
-			isThumb = o.par['Isthumb']
-			if isThumb:
-				pathBase, testName = tox.replace(caseRootFolder, sourceFolder).rsplit('/', maxsplit=1)
-				opName = testName.split('_', maxsplit=1)[0]
-				imagePath = f'{pathBase}/{opName}_thumb.png'
+			if o.par['Isthumb']:
+				suffix = '_thumb.png'
 			elif o.par['Snapshotname']:
 				suffix = '_' + o.par.Snapshotname.eval() + '.png'
-				imagePath = imagesRootFolder + '/' + tox.replace(caseRootFolder, '').replace('_test.tox', suffix)
 			else:
 				continue
+			imagePath = imagesRootFolder + '/' + tox.replace(caseRootFolder, '').replace('_test.tox', suffix)
 			top.save(imagePath, createFolders=True)
 
