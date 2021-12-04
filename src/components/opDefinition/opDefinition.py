@@ -64,23 +64,20 @@ def buildTypeTable(dat: 'scriptDAT', supportedTypes: 'DAT', inputDefs: 'DAT'):
 
 def buildInputTable(dat: 'DAT', inDats: 'List[DAT]'):
 	dat.clear()
-	dat.appendRow(['slot', 'inputFunc', 'name', 'path', 'coordType', 'contextType', 'returnType', 'placeholder'])
+	dat.appendRow(['inputFunc', 'name', 'path', 'coordType', 'contextType', 'returnType', 'placeholder'])
 	for i, inDat in enumerate(inDats):
-		slot = f'inputName{i + 1}'
-		if inDat.numRows < 2 or not inDat[1, 'name']:
-			dat.appendRow([slot])
-		else:
-			func = str(inDat[1, 'input:alias'] or f'inputOp{i + 1}')
-			dat.appendRow([
-				slot,
-				func,
-				inDat[1, 'name'],
-				inDat[1, 'path'],
-				inDat[1, 'coordType'],
-				inDat[1, 'contextType'],
-				inDat[1, 'returnType'],
-				('inputOp_' + func) if not func.startswith('inputOp') else func,
-			])
+		if not inDat[1, 'name']:
+			continue
+		func = str(inDat[1, 'input:alias'] or f'inputOp{i + 1}')
+		dat.appendRow([
+			func,
+			inDat[1, 'name'],
+			inDat[1, 'path'],
+			inDat[1, 'coordType'],
+			inDat[1, 'contextType'],
+			inDat[1, 'returnType'],
+			('inputOp_' + func) if not func.startswith('inputOp') else func,
+		])
 
 def combineInputDefinitions(
 		dat: 'DAT',
