@@ -35,14 +35,14 @@ A definition contains:
 * `coordType`: the type of coordinates that the ROP's function accepts.
 * `returnType`: the type of value the that the ROP's function returns.
 * `contextType`: the type of context that the ROP's function expects along with the coordinates.
-* `inputName1` - `inputName4`: the names of other ROPs that this ROP's function calls.
+* `inputNames`: the names of other ROPs that this ROP's function calls.
 
 ## ROP Functions and GLSL Types
 
 Each ROP has a main function that it contributes to the shader. All of these functions take in two parameters: coordinates, and context, and return a single value.
 
 ```glsl
-Sdf sphere1(vec3 p, Context ctx) {
+ReturnT sphere1(CoordT p, ContextT ctx) {
   return createSdf(length(p));
 }
 ```

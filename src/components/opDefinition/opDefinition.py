@@ -82,16 +82,6 @@ def buildInputTable(dat: 'DAT', inDats: 'List[DAT]'):
 				('inputOp_' + func) if not func.startswith('inputOp') else func,
 			])
 
-def getInputNames(inputTable: 'DAT'):
-	allNames = [c.val for c in inputTable.col('name')[1:]]
-	lastIndex = None
-	for i, name in enumerate(allNames):
-		if name:
-			lastIndex = i
-	if lastIndex is None:
-		return ''
-	return ' '.join([n or '_' for n in allNames[:lastIndex]])
-
 def combineInputDefinitions(
 		dat: 'DAT',
 		inDats: 'List[DAT]',

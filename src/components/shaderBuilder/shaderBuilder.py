@@ -686,10 +686,7 @@ class _VarRefChecker:
 		self.opOutputs = {}  # type: Dict[str, List[str]]
 		for i in range(1, defTable.numRows):
 			name = defTable[i, 'name'].val
-			inputNames = [
-				c.val for c in defTable.cells(i, 'inputName[12345678]') if c
-			]
-			for inName in inputNames:
+			for inName in defTable[i, 'inputNames'].val.split():
 				if inName in self.opOutputs:
 					self.opOutputs[inName].append(name)
 				else:

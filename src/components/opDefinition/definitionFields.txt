@@ -19,11 +19,4 @@ initPath
 opGlobalsPath
 variableTable
 referenceTable
-inputName1
-inputName2
-inputName3
-inputName4
-inputName5
-inputName6
-inputName7
-inputName8
+inputNames
