@@ -216,6 +216,12 @@ vec3 intHash3( uvec3 x )
 	return vec3(x)*(1.0/float(0xffffffffU));
 }
 
+// Smooth abs() - https://www.shadertoy.com/view/tlcfRn
+float sabs(float x, float k) {
+	if (x == 0.) return abs(x);
+	return 2.0 * k * log(exp(-abs(x) / k) + 1.0) + abs(x);
+}
+
 float adaptAsFloat(float p) { return p; }
 float adaptAsFloat(vec2 p) { return p.x; }
 float adaptAsFloat(vec3 p) { return p.x; }
