@@ -9,7 +9,6 @@ if False:
 	from _typeAliases import *
 
 	class _Par(ParCollection):
-		Showedit: 'BoolParamT'
 		Thumbsize: 'IntParamT'
 		Thumbroot: 'OPParamT'
 	class _COMP(panelCOMP):
@@ -63,10 +62,6 @@ class OpPicker:
 		widget = self._filterTextWidget
 		if widget:
 			return op(widget.par.Stringfield0).op('./field')
-
-	@property
-	def _showEdit(self):
-		return bool(self.ownerComp.par.Showedit)
 
 	@property
 	def SelectedItem(self) -> 'Optional[_AnyItemT]':
@@ -196,12 +191,6 @@ class OpPicker:
 				self._selectItem(item)
 		ext.callbacks.DoCallback('onPickItem', {'item': item})
 
-	def onEditItem(self):
-		item = self.SelectedItem
-		if not item:
-			return
-		ext.callbacks.DoCallback('onEditItem', {'item': item})
-
 	def _printAndStatus(self, msg):
 		print(self.ownerComp, msg)
 		ui.status = msg
@@ -236,9 +225,6 @@ class OpPicker:
 				elif item.isDeprecated:
 					attribs.top = self.ownerComp.op('deprecatedIcon')
 					attribs.help = 'Deprecated'
-			elif col == layout.editCol:
-				attribs.top = self.ownerComp.op('editIcon')
-				attribs.bgColor = _configColor('Bgcolor')
 			elif col == layout.thumbCol:
 				thumbRoot = self.ownerComp.par.Thumbroot.eval()
 				if thumbRoot and item.thumbPath:
@@ -274,8 +260,6 @@ class OpPicker:
 			attribs.colStretch = True
 		elif col == layout.statusCol:
 			attribs.colWidth = layout.statusColWidth
-		elif col == layout.editCol:
-			attribs.colWidth = layout.opRowHeight  # so icons end up square
 		elif col == layout.thumbCol:
 			attribs.colWidth = layout.thumbColWidth
 
@@ -327,17 +311,10 @@ class OpPicker:
 		# note for performance: this gets called frequently as the mouse moves even within a single cell
 		if row == prevRow and col == prevCol:
 			return
-		layout = self._getLayout()
 		item = None
 		if row >= 0:
 			item = self.itemLibrary.itemForRow(row)
 			self._selectItem(item)
-			if col == layout.editCol and isinstance(item, PickerOpItem):
-				self._setButtonHighlight(row, col, True)
-		if prevRow >= 0 and prevCol == layout.editCol:
-			item = self.itemLibrary.itemForRow(prevRow)
-			if isinstance(item, PickerOpItem):
-				self._setButtonHighlight(prevRow, prevCol, False)
 		ext.callbacks.DoCallback('onRolloverItem', {'item': item})
 
 	def _toggleCategoryExpansion(self, item: 'PickerCategoryItem'):
@@ -356,8 +333,6 @@ class OpPicker:
 		layout = self._getLayout()
 		if item.isCategory:
 			self._toggleCategoryExpansion(item)
-		elif endCol == layout.editCol and layout.editCol is not None:
-			self.onEditItem()
 		else:
 			self.onPickItem()
 
@@ -368,14 +343,12 @@ class OpPicker:
 		pass
 
 	def _getLayout(self):
-		showEdit = self._showEdit
-		layout = _Layout(
+		layout = _LayoutSettings(
 			toggleCol=0,
 			labelCol=1,
 			statusCol=2,
-			editCol=3 if showEdit else None,
 			thumbCol=None,
-			numCols=4 if showEdit else 3,
+			numCols=3,
 			thumbColWidth=self.ownerComp.par.Thumbsize.eval(),
 		)
 		if ipar.uiState.Showthumbs:
@@ -383,17 +356,15 @@ class OpPicker:
 			layout.numCols += 1
 			thumbSize = int(self.ownerComp.par.Thumbsize)
 			layout.opRowHeight = thumbSize
-			layout.editColWidth = thumbSize
 			layout.thumbColWidth = thumbSize
 			layout.statusColWidth = thumbSize
 		return layout
 
 @dataclass
-class _Layout:
+class _LayoutSettings:
 	toggleCol: Optional[int]
 	labelCol: Optional[int]
 	statusCol: Optional[int]
-	editCol: Optional[int]
 	thumbCol: Optional[int]
 
 	numCols: int
@@ -403,7 +374,6 @@ class _Layout:
 
 	toggleColWidth: int = 26
 	statusColWidth: int = 30
-	editColWidth: int = 26
 	thumbColWidth: int = 50
 
 @dataclass

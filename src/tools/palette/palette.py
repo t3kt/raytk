@@ -253,14 +253,5 @@ class Palette:
 			return
 		self.createItem(item.path)
 
-	def onEditItem(self, item: 'PickerItem'):
-		if not item or not item.isOP:
-			return
-		if not hasattr(op, 'raytkDevelEditor'):
-			return
-		template = self._getTemplate(item.path)
-		if template:
-			op.raytkDevelEditor.EditROP(template)
-
 	def onRolloverItem(self, item: 'Optional[PickerItem]'):
 		self.ownerComp.op('thumbImage').cook(force=True)
