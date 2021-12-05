@@ -35,6 +35,7 @@ class OpPicker:
 		# noinspection PyTypeChecker
 		self.ownerComp = ownerComp  # type: _COMP
 		self.impl = _DefaultPickerImpl(ownerComp)
+		# self.impl = _CategoryColumnPickerImpl(ownerComp)
 		self.isOpen = tdu.Dependency(False)
 		self.Loaditems()
 
@@ -225,6 +226,46 @@ class _Filter:
 	beta: bool = False
 	deprecated: bool = False
 
+def _loadItemCategories(opTable: 'DAT', opHelpTable: 'DAT'):
+	categories = []
+	categoriesByName = {}  # type: Dict[str, PickerCategoryItem]
+
+	for row in range(1, opTable.numRows):
+		shortName = str(opTable[row, 'name'])
+		path = str(opTable[row, 'path'])
+		status = str(opTable[row, 'status'])
+		categoryName = str(opTable[row, 'category'])
+		opItem = PickerOpItem(
+			shortName=shortName,
+			path=path,
+			opType=str(opTable[row, 'opType']),
+			categoryName=categoryName,
+			status=status,
+			isAlpha=status == 'alpha',
+			isBeta=status == 'beta',
+			isDeprecated=status == 'deprecated',
+			helpSummary=str(opHelpTable[path, 'summary'] or ''),
+		)
+		keywords = tdu.split(opTable[row, 'keywords'])
+		words = _splitCamelCase(shortName)
+		opItem.words = [w.lower() for w in words]
+		opItem.keywords += [k.lower() for k in keywords]
+		opItem.thumbPath = str(opTable[row, 'thumb'] or '')
+		if categoryName in categoriesByName:
+			categoriesByName[categoryName].ops.append(opItem)
+		else:
+			categoriesByName[categoryName] = PickerCategoryItem(
+				shortName=categoryName, ops=[opItem])
+
+	for categoryName in sorted(categoriesByName.keys()):
+		category = categoriesByName[categoryName]
+		categories.append(category)
+		category.ops.sort(key=lambda o: o.path)
+		category.isAlpha = all([o.isAlpha for o in category.ops])
+		category.isBeta = all([o.isBeta for o in category.ops])
+		category.isDeprecated = all([o.isDeprecated for o in category.ops])
+	return categories
+
 class _ItemLibrary:
 	allItems: List[_AnyItemT]
 	categories: List[PickerCategoryItem]
@@ -252,43 +293,7 @@ class _ItemLibrary:
 	def loadTables(self, opTable: 'DAT', opHelpTable: 'DAT'):
 		self.categories = []
 		self.filteredItems = None
-		categoriesByName = {}  # type: Dict[str, PickerCategoryItem]
-
-		for row in range(1, opTable.numRows):
-			shortName = str(opTable[row, 'name'])
-			path = str(opTable[row, 'path'])
-			status = str(opTable[row, 'status'])
-			categoryName = str(opTable[row, 'category'])
-			opItem = PickerOpItem(
-				shortName=shortName,
-				path=path,
-				opType=str(opTable[row, 'opType']),
-				categoryName=categoryName,
-				status=status,
-				isAlpha=status == 'alpha',
-				isBeta=status == 'beta',
-				isDeprecated=status == 'deprecated',
-				helpSummary=str(opHelpTable[path, 'summary'] or ''),
-			)
-			keywords = tdu.split(opTable[row, 'keywords'])
-			words = _splitCamelCase(shortName)
-			opItem.words = [w.lower() for w in words]
-			opItem.keywords += [k.lower() for k in keywords]
-			opItem.thumbPath = str(opTable[row, 'thumb'] or '')
-			if categoryName in categoriesByName:
-				categoriesByName[categoryName].ops.append(opItem)
-			else:
-				categoriesByName[categoryName] = PickerCategoryItem(
-					shortName=categoryName, ops=[opItem])
-
-		for categoryName in sorted(categoriesByName.keys()):
-			category = categoriesByName[categoryName]
-			self.categories.append(category)
-			category.ops.sort(key=lambda o: o.path)
-			category.isAlpha = all([o.isAlpha for o in category.ops])
-			category.isBeta = all([o.isBeta for o in category.ops])
-			category.isDeprecated = all([o.isDeprecated for o in category.ops])
-
+		self.categories = _loadItemCategories(opTable, opHelpTable)
 		self.allItems = self._buildFlatList(None)
 
 	def _buildFlatList(self, filt: 'Optional[_Filter]') -> 'List[_AnyItemT]':
@@ -342,7 +347,6 @@ class _PickerImpl:
 		self.listComp = ownerComp.op('list')  # type: listCOMP
 		self.filterTextWidget = ownerComp.op('filterText_textfield')  # type: widgetCOMP
 		self.filterTextField = op(self.filterTextWidget.par.Stringfield0).op('./field')  # type: fieldCOMP
-		self.itemLibrary = _ItemLibrary()
 		self.selItem = tdu.Dependency()  # value type _AnyItemT
 		self.filterText = ''
 
@@ -424,7 +428,7 @@ class _PickerImpl:
 			layout.statusColWidth = thumbSize
 		return layout
 
-	def setItemHighlight(self, item: 'Optional[_AnyItemT]', state: bool):
+	def setItemHighlight(self, item: 'Optional[_AnyItemT]', selected: bool):
 		raise NotImplementedError()
 
 	def offsetSelection(self, x: int, y: int):
@@ -486,6 +490,10 @@ class _PickerImpl:
 			attribs.top = thumbRoot.op(item.thumbPath) or ''
 
 class _DefaultPickerImpl(_PickerImpl):
+	def __init__(self, ownerComp: 'COMP'):
+		super().__init__(ownerComp)
+		self.itemLibrary = _ItemLibrary()
+
 	def loadItems(self, opTable: 'DAT', opHelpTable: 'DAT'):
 		self.itemLibrary.loadTables(opTable, opHelpTable)
 		self.refreshList()
@@ -611,4 +619,242 @@ class _DefaultPickerImpl(_PickerImpl):
 			elif col == layout.statusCol:
 				self._initStatusIconCell(attribs, item)
 			elif col == layout.thumbCol:
+				self._initThumbCell(attribs, item)
+
+@dataclass
+class _CategoryColumn:
+	category: PickerCategoryItem
+	allOps: List[PickerOpItem]
+	filteredOps: Optional[List[PickerOpItem]] = None
+
+	def applyFilter(self, filt: Optional[_Filter]) -> bool:
+		if not filt:
+			self.filteredOps = None
+			return True
+		else:
+			self.filteredOps = [o for o in self.allOps if o.matches(filt)]
+			return bool(self.filteredOps)
+
+	@property
+	def currentOpList(self):
+		return self.filteredOps if self.filteredOps is not None else self.allOps
+
+	@property
+	def currentItemCount(self):
+		return 1 + len(self.currentOpList)
+
+	def getItemByRow(self, i: int) -> Optional[_AnyItemT]:
+		if i < 0:
+			return None
+		if i == 0:
+			return self.category
+		i -= 1
+		curOps = self.currentOpList
+		return curOps[i] if i < len(curOps) else None
+
+	def getRowByItem(self, item: Optional[_AnyItemT]):
+		if not item:
+			return -1
+		if item == self.category:
+			return 0
+		try:
+			return 1 + self.currentOpList.index(item)
+		except ValueError:
+			return -1
+
+class _CategoryColumnLibrary:
+	allItems: List[_AnyItemT]
+	allColumns: List[_CategoryColumn]
+	filteredColumns: Optional[List[_CategoryColumn]]
+
+	def __init__(self):
+		self.allItems = []
+		self.allCategories = []
+		self.filteredColumns = None
+
+	def loadTables(self, opTable: 'DAT', opHelpTable: 'DAT'):
+		self.allItems = []
+		self.allColumns = []
+		for category in _loadItemCategories(opTable, opHelpTable):
+			self.allColumns.append(_CategoryColumn(
+				category,
+				allOps=list(category.ops),
+			))
+		self.applyFilter(None)
+
+	@property
+	def currentColList(self):
+		return self.filteredColumns if self.filteredColumns is not None else self.allColumns
+
+	def getCurrentSize(self) -> Tuple[int, int]:
+		cols = self.currentColList
+		if not cols:
+			return 1, 1
+		maxOps = max([col.currentItemCount for col in cols])
+		return maxOps, len(cols)
+
+	def applyFilter(self, filt: Optional[_Filter] = None):
+		if not filt:
+			self.filteredColumns = None
+			for col in self.allColumns:
+				col.applyFilter(None)
+		else:
+			self.filteredColumns = []
+			for col in self.allColumns:
+				if col.applyFilter(filt):
+					self.filteredColumns.append(col)
+
+	def getCol(self, col: int) -> Optional[_CategoryColumn]:
+		cols = self.currentColList
+		return cols[col] if 0 <= col < len(cols) else None
+
+	def getPosForItem(self, item: Optional[_AnyItemT]):
+		if not item:
+			return None, None
+		for colI, col in enumerate(self.currentColList):
+			row = col.getRowByItem(item)
+			if row != -1:
+				return row, colI
+		return None, None
+
+	def getItemByPos(self, row:int, col: int) -> Optional[_AnyItemT]:
+		if col < 0:
+			return None
+		cols = self.currentColList
+		if 0 <= col < len(cols):
+			return cols[col].getItemByRow(row)
+
+class _CategoryColumnPickerImpl(_PickerImpl):
+	def __init__(self, ownerComp: 'COMP'):
+		super().__init__(ownerComp)
+		self.itemLibrary = _CategoryColumnLibrary()
+
+	def getLayout(self):
+		layout = super().getLayout()
+		layout.toggleCol = None
+		layout.numCols -= 1
+		return layout
+
+	def selectFirstOpItem(self) -> 'Optional[_AnyItemT]':
+		for col in self.itemLibrary.currentColList:
+			colOps = col.currentOpList
+			if colOps:
+				item = colOps[0]
+				self.selectItem(item)
+				return item
+
+	def loadItems(self, opTable: 'DAT', opHelpTable: 'DAT'):
+		self.itemLibrary.loadTables(opTable, opHelpTable)
+		self.refreshList()
+		self.applyFilter()
+		self.selectItem(None)
+
+	def refreshList(self):
+		listComp = self.listComp
+		rows, cols = self.itemLibrary.getCurrentSize()
+		layout = self.getLayout()
+		listComp.par.rows = rows
+		listComp.par.cols = cols * layout.numCols
+
+	def applyFilter(self):
+		item = self.getSelectedItem()
+		settings = self._getFilterSettings()
+		self.itemLibrary.applyFilter(settings)
+		if item:
+			pass
+		pass
+
+	def _getCellAttribsForItem(self, item: 'Optional[_AnyItemT]') -> 'List[ListAttributes]':
+		row, col = self.itemLibrary.getPosForItem(item)
+		if row is None:
+			return []
+		return [
+			self.listComp.cellAttribs[row, col + i]
+			for i in range(self.getLayout().numCols)
+		]
+
+	def setItemHighlight(self, item: 'Optional[_AnyItemT]', selected: bool):
+		cellAttribs = self._getCellAttribsForItem(item)
+		if not cellAttribs:
+			return
+		if selected:
+			color = _configColor('Rolloverhighlightcolor')
+		else:
+			color = 0, 0, 0, 0
+		for ca in cellAttribs:
+			ca.topBorderOutColor = color
+			ca.bottomBorderOutColor = color
+		cellAttribs[0].leftBorderInColor = color
+		cellAttribs[len(cellAttribs) - 1].rightBorderOutColor = color
+
+	def offsetSelection(self, x: int, y: int):
+		if not self.itemLibrary or (x == 0 and y == 0):
+			return
+		# item = self.getSelectedItem()
+		# if item:
+		# 	row, col = self.itemLibrary.getPosForItem(item)
+		# 	if row is None:
+		# 		pass
+		# 	pass
+		raise NotImplementedError()
+
+	def scrollToItem(self, item: 'Optional[_AnyItemT]'):
+		row, col = self.itemLibrary.getPosForItem(item)
+		if row is None:
+			return
+		self.listComp.scroll(row, col * self.getLayout().numCols)
+
+	def getItemForCell(self, row: int, col: int) -> 'Optional[_AnyItemT]':
+		if row < 0 or col < 0:
+			return None
+		layout = self.getLayout()
+		return self.itemLibrary.getItemByPos(
+			row=row,
+			col=int(col / layout.numCols)
+		)
+
+	def initCol(self, col: int, attribs: 'ListAttributes'):
+		if col is None:
+			return
+		layout = self.getLayout()
+		col = col % layout.numCols
+		if col == layout.labelCol:
+			# attribs.colStretch = True
+			attribs.colWidth = 200
+		elif col == layout.statusCol:
+			attribs.colWidth = layout.statusColWidth
+		elif col == layout.thumbCol:
+			attribs.colWidth = layout.thumbColWidth
+
+	def initRow(self, row: int, attribs: 'ListAttributes'):
+		layout = self.getLayout()
+		if row == 0:
+			attribs.rowHeight = layout.catRowHeight
+			attribs.textColor = _configColor('Categorytextcolor')
+			attribs.bgColor = _configColor('Categorybgcolor')
+		else:
+			attribs.rowHeight = layout.opRowHeight
+
+	def initCell(self, row: int, col: int, attribs: 'ListAttributes'):
+		layout = self.getLayout()
+		colPart = col % layout.numCols
+		colIndex = int(col / layout.numCols)
+		catCol = self.itemLibrary.getCol(colIndex)
+		if not catCol:
+			return
+		item = catCol.getItemByRow(row)
+		if not item:
+			return
+		if colPart == layout.labelCol:
+			attribs.text = item.shortName
+		if isinstance(item, PickerOpItem):
+			attribs.help = item.helpSummary or ''
+			self._applyStatusTextColor(attribs, item)
+			if colPart == layout.labelCol:
+				if item.isAlpha or item.isBeta or item.isDeprecated:
+					attribs.fontItalic = True
+				attribs.textOffsetX = 5
+			elif colPart == layout.statusCol:
+				self._initStatusIconCell(attribs, item)
+			elif colPart == layout.thumbCol:
 				self._initThumbCell(attribs, item)
