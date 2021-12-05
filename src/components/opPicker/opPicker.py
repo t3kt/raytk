@@ -223,15 +223,19 @@ class OpPicker:
 			elif col == layout.labelCol:
 				attribs.textOffsetX = 5
 		elif isinstance(item, PickerOpItem):
+			attribs.help = item.helpSummary or ''
 			if col == layout.labelCol:
 				attribs.textOffsetX = 20
 			elif col == layout.statusCol:
 				if item.isAlpha:
 					attribs.top = self.ownerComp.op('alphaIcon')
+					attribs.help = 'Alpha (experimental)'
 				elif item.isBeta:
 					attribs.top = self.ownerComp.op('betaIcon')
+					attribs.help = 'Beta'
 				elif item.isDeprecated:
 					attribs.top = self.ownerComp.op('deprecatedIcon')
+					attribs.help = 'Deprecated'
 			elif col == layout.editCol:
 				attribs.top = self.ownerComp.op('editIcon')
 				attribs.bgColor = _configColor('Bgcolor')
