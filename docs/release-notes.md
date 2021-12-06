@@ -1,5 +1,85 @@
 # Release Notes
 
+## v0.20
+
+### Highlights
+
+* Thumbnail images in the palette!
+  * The palette now has a toggle to enable showing thumbnail images next to each type of
+    operator. These make it easier to find the operators you're looking for, and see what's available. Not all operators
+    have thumnbnails (e.g. it's hard to represent things like floatToVector in an image).
+* Variables are a whole new way to control and vary the behavior of operators.
+  * These will eventually replace Iteration.
+  * They use more explicit connections and support multiple levels of values. For example, you can repeat a shape radially
+    using modulorPolar, then repeat that in a grid using modulo2d, and the input shapes can be based on both the grid cell
+    and the radial slice.
+  * Operators that support them have a "Variables" parameter page with buttons to create references to them which can
+    be used by upstream operators.
+
+### Details
+
+* Improvements / additions
+  * Variables (#574, #712)
+    * variableReference
+    * cylinderSdf
+    * extrude
+    * flip
+    * helixSdf
+    * instance
+    * iteratedTransform
+    * logPolarRepeat
+    * mirrorOctant
+    * mirrorQuadrant
+    * mobiusSdf
+    * modulo1d
+    * modulo2d
+    * modulo3d
+    * moduloPolar
+    * provideVariable
+    * reflect
+    * revolve
+    * torusSdf
+    * Helper buttons to create references
+    * Validation for references
+  * New ops
+    * flowerSdf2d (#748)
+    * moduloSpherical
+    * provideVariable
+    * variableReference
+  * New field inputs (#588)
+    * bezierSdf2d point field inputs
+    * crossSdf2d
+    * parabolaSdf2d
+    * planeSdf2d
+    * quadSdf2d
+    * spikeSdf2d
+    * vesicaSdf2d
+  * New parameters
+    * headSdf blinking (#116)
+    * spikeSdf2d direction and center
+    * reflect blending (#53)
+  * Picker improvements
+    * Thumbnail images (#62, #751)
+    * Help text improvements
+    * Help tooltips
+  * Improve type handling in compositeField (#743)
+  * Add help to some operators
+* Changes (potentially breaking)
+  * Move spikeSdf2d to the correct category. This will break Update OP for those operators.
+  * Reflect handling of Offset changed, resulting in slightly reduced offsets.
+* Fixes
+  * Fix broken help in palette (#731)
+  * Fix broken color output in pointMapRender (#757)
+* Infrastructure / internals
+  * Support for variables and references (#574, #712)
+  * Refactoring and cleanup of token replacement in opDefinition
+  * Support for alternate styling for ops (used for variableReference) (#753)
+  * Clean up prototypes
+  * Thumbnail images (#62, #751)
+    * Generate thumbnails from tests
+  * Log files for builds with verbosity settings (#732)
+  * Consolidate input name columns in op definition tables (#299)
+
 ## v0.19
 
 ### Highlights
