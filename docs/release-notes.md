@@ -37,6 +37,8 @@
     * moduloDistance
     * moduloPolar
     * provideVariable
+    * quadTreeRepeat
+    * radialClone
     * reflect
     * revolve
     * torusSdf

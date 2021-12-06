@@ -13,6 +13,12 @@ Sdf thismap(CoordT p, ContextT ctx) {
 #pragma r:if THIS_Iterationtype_index
 	setIterationIndex(ctx, 0);
 #pragma r:endif
+#pragma r:if THIS_EXPOSE_index
+	THIS_index = 0;
+#pragma r:endif
+#pragma r:if THIS_EXPOSE_normindex
+	THIS_normindex = 0.;
+#pragma r:endif
 	merged = inputOp1(q, ctx);
 	for (int i = 1; i < n; i++) {
 		rot += THIS_Anglestep;
@@ -26,6 +32,12 @@ Sdf thismap(CoordT p, ContextT ctx) {
 		#pragma r:endif
 		#pragma r:if THIS_Iterationtype_index
 		setIterationIndex(ctx, float(i));
+		#pragma r:endif
+		#pragma r:if THIS_EXPOSE_index
+		THIS_index = i;
+		#pragma r:endif
+		#pragma r:if THIS_EXPOSE_normindex
+		THIS_normindex = float(i) / float(n - 1);
 		#pragma r:endif
 		Sdf res = inputOp1(q, ctx);
 		#pragma r:if THIS_Mergetype_smoothunion
