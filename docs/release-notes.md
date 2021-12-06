@@ -34,6 +34,7 @@
     * modulo1d
     * modulo2d
     * modulo3d
+    * moduloDistance
     * moduloPolar
     * provideVariable
     * reflect
