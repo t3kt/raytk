@@ -16,7 +16,12 @@ layout: page
 	</ol>
 </nav>
 
-<h1>{{ page.op.name }}</h1>
+<header>
+	{% if page.op.thumb %}
+	<img class="op-thumb" src="/raytk/{{ page.op.thumb }}" alt="{{ page.op.name }}">
+	{% endif %}
+	<h1>{{ page.op.name }}</h1>
+</header>
 
 {% if page.op.status %}
 	<div class="label status-{{ page.op.status }}">{{ page.op.status }}</div>

@@ -17,9 +17,12 @@ layout: page
 
 <h2>Operators</h2>
 
-<ul>
+<ul class="category-ops">
 	{% for op in page.cat.operators %}
 	<li>
+		{% if op.thumb %}
+		<img class="thumb" src="/raytk/{{ op.thumb }}" alt="{{ op.name }}">
+		{% endif %}
 		<code class="op-name">
 			<a href="/raytk/reference/operators/{{page.cat.name}}/{{op.name}}" title="{{ op.name }}">{{ op.name }}</a>
 		</code>:

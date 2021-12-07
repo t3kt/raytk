@@ -265,22 +265,22 @@ class BuildManager:
 			self.context.removeAlphaOps(category)
 		comps = categoryInfo.operators
 		# comps.sort(key=lambda c: c.name)
-		if self.docProcessor:
-			self.docProcessor.processOpCategory(category)
-		self.context.removeCatHelp(category)
-		self.queueMethodCall(self.processOperatorCategory_stage, comps, thenRun, runArgs)
+		self.queueMethodCall(self.processOperatorCategory_stage, category, comps, thenRun, runArgs)
 
 	def processOperatorCategory_stage(
-			self, components: List['COMP'],
+			self, category: 'COMP', components: List['COMP'],
 			thenRun: 'Optional[Callable]' = None, runArgs: list = None):
 		if components:
 			comp = components.pop()
 			self.processOperator(comp)
-			if components:
-				self.queueMethodCall(self.processOperatorCategory_stage, components, thenRun, runArgs)
-				return
-		if thenRun:
-			self.queueMethodCall(thenRun, *(runArgs or []))
+			self.queueMethodCall(self.processOperatorCategory_stage, category, components, thenRun, runArgs)
+		else:
+			# after finishing the operators in the category, process the category help
+			if self.docProcessor:
+				self.docProcessor.processOpCategory(category)
+			self.context.removeCatHelp(category)
+			if thenRun:
+				self.queueMethodCall(thenRun, *(runArgs or []))
 
 	def processOperator(self, comp: 'COMP'):
 		self.log(f'Processing operator {comp}')
