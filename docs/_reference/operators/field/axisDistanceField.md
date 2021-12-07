@@ -34,6 +34,7 @@ op:
     name: Coordtype
   summary: A float field that provides the distance from a specific point along a
     single axis.
+  thumb: assets/images/reference/operators/field/axisDistanceField_thumb.png
 
 ---
 

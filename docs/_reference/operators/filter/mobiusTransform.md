@@ -48,5 +48,6 @@ op:
     name: Center
   - label: Point
     name: Point
+  thumb: assets/images/reference/operators/filter/mobiusTransform_thumb.png
 
 ---

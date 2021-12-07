@@ -88,6 +88,7 @@ op:
     name: Shift
     summary: Shifts the axis to bend along and the axis to bend towards.
   summary: Bends space, along a main axis, towards a second axis.
+  thumb: assets/images/reference/operators/filter/bend_thumb.png
 
 ---
 

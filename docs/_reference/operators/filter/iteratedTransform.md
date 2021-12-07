@@ -187,8 +187,15 @@ op:
     - label: Step Ratio
       name: ratio
     name: Iterationtype
+  - label: Step Index
+    name: Createrefstep
+    summary: 'Create reference to variable: Step Index'
+  - label: Normalized Step (0..1)
+    name: Createrefnormstep
+    summary: 'Create reference to variable: Normalized Step (0..1)'
   summary: Performs a transform multiple times, optionally reflecting across axes
     in between the steps.
+  thumb: assets/images/reference/operators/filter/iteratedTransform_thumb.png
 
 ---
 

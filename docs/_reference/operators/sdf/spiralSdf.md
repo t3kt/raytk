@@ -59,6 +59,7 @@ op:
       name: z
     name: Axis
   summary: A tapering spiral squared tube.
+  thumb: assets/images/reference/operators/sdf/spiralSdf_thumb.png
 
 ---
 

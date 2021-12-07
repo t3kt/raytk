@@ -30,6 +30,7 @@ op:
     name: Rotate
     summary: Rotates the petal around the y axis.
   summary: A flower petal or leaf shape.
+  thumb: assets/images/reference/operators/sdf/petalSdf_thumb.png
 
 ---
 

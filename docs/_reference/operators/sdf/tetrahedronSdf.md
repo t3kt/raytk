@@ -18,6 +18,7 @@ op:
     name: Scale
     summary: The size of the shape.
   summary: Tetrahedron shape.
+  thumb: assets/images/reference/operators/sdf/tetrahedronSdf_thumb.png
 
 ---
 

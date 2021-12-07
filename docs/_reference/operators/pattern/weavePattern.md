@@ -32,5 +32,6 @@ op:
     name: Size
   - label: Thickness
     name: Thickness
+  thumb: assets/images/reference/operators/pattern/weavePattern_thumb.png
 
 ---

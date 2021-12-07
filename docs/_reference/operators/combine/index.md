@@ -12,8 +12,10 @@ cat:
   name: combine
   operators:
   - name: addFields
+    summary: Adds the values of multiple fields.
   - name: arrange
     status: beta
+    summary: Combines multiple SDFs, with a different position for each.
   - name: blend
     summary: Smoothly blends/morphs between up to 4 SDFs.
   - keywords:

@@ -9,6 +9,33 @@ redirect_from:
 op:
   category: sdf2d
   detail: Based on [Sierpinski Fractal Cubes by Shane](https://www.shadertoy.com/view/tldfzX).
+  inputs:
+  - contextTypes:
+    - Context
+    - MaterialContext
+    - CameraContext
+    - LightContext
+    - RayContext
+    - ParticleContext
+    coordTypes:
+    - vec2
+    label: Point 1-2 Coords Field
+    name: points12
+    returnTypes:
+    - vec4
+  - contextTypes:
+    - Context
+    - MaterialContext
+    - CameraContext
+    - LightContext
+    - RayContext
+    - ParticleContext
+    coordTypes:
+    - vec2
+    label: Point 3-4 Coords Field
+    name: points34
+    returnTypes:
+    - vec4
   name: quadSdf2d
   opType: raytk.operators.sdf2d.quadSdf2d
   parameters:
@@ -21,6 +48,7 @@ op:
   - label: Point 4
     name: Point4
   summary: SDF for a 2D quad with arbitrary corners.
+  thumb: assets/images/reference/operators/sdf2d/quadSdf2d_thumb.png
 
 ---
 

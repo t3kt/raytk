@@ -32,5 +32,6 @@ op:
     name: Size
   - label: Glow
     name: Glow
+  thumb: assets/images/reference/operators/pattern/rosettePattern_thumb.png
 
 ---

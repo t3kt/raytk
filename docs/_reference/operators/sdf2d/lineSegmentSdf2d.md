@@ -39,6 +39,7 @@ op:
   - label: Point B
     name: Pointb
   summary: 2D line segment SDF.
+  thumb: assets/images/reference/operators/sdf2d/lineSegmentSdf2d_thumb.png
 
 ---
 

@@ -99,6 +99,7 @@ cat:
     - polar
     - radial
     - repeat
+    - spiral
     name: logPolarRepeat
     status: beta
   - name: magnet
@@ -151,6 +152,8 @@ cat:
     - repeat
     name: moduloPolar
     summary: Repeats space radially, like a kaleidoscope.
+  - name: moduloSpherical
+    status: beta
   - keywords:
     - hollow
     - onion

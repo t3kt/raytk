@@ -84,7 +84,14 @@ op:
       name: index
     name: Iterationtype
     summary: Whether and how to expose iteration values to upstream operators.
+  - label: Index
+    name: Createrefindex
+    summary: 'Create reference to variable: Index'
+  - label: Normalized Index (0..1)
+    name: Createrefnormindex
+    summary: 'Create reference to variable: Normalized Index (0..1)'
   summary: Repeats an SDF radially around an axis, combining the resulting shapes.
+  thumb: assets/images/reference/operators/filter/radialClone_thumb.png
 
 ---
 

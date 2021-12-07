@@ -100,6 +100,7 @@ op:
     name: Contexttype
   status: beta
   summary: A field that uses HSV-based parameters to produce colors.
+  thumb: assets/images/reference/operators/field/hsvColorField_thumb.png
 
 ---
 

@@ -26,5 +26,6 @@ op:
     name: Height
   - label: Width
     name: Width
+  thumb: assets/images/reference/operators/sdf2d/trapezoidSdf2d_thumb.png
 
 ---

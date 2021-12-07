@@ -31,5 +31,6 @@ op:
   - label: Normal Smoothing
     name: Normalsmoothing
   status: beta
+  thumb: assets/images/reference/operators/field/sdfNormalField_thumb.png
 
 ---

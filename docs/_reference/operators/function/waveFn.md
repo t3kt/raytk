@@ -42,6 +42,7 @@ op:
   - label: Offset
     name: Offset
   summary: A function that uses a periodic wave, with the position as the parameter.
+  thumb: assets/images/reference/operators/function/waveFn_thumb.png
 
 ---
 

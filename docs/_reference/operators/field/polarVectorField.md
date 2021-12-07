@@ -59,5 +59,6 @@ op:
     name: Phioffset
   - label: Length
     name: Length
+  thumb: assets/images/reference/operators/field/polarVectorField_thumb.png
 
 ---

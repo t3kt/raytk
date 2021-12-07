@@ -43,6 +43,7 @@ op:
       name: sphere
     name: Uvmode
   summary: SDF in 3D space for a uniform sphere.
+  thumb: assets/images/reference/operators/sdf/sphereSdf_thumb.png
 
 ---
 

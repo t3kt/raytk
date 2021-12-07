@@ -42,5 +42,6 @@ op:
   - label: Rotation Amount
     name: Rotationamount
   status: beta
+  thumb: assets/images/reference/operators/filter/sphericalMobiusTransform_thumb.png
 
 ---

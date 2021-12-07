@@ -16,6 +16,7 @@ op:
   - label: Shadow Level
     name: Shadowlevel
   summary: A simple hard-edged shadow.
+  thumb: assets/images/reference/operators/light/hardShadow_thumb.png
 
 ---
 

@@ -33,6 +33,7 @@ op:
     name: Polydegree
   - name: Contexttype
   summary: Impulse functions that are useful as trigger patterns or animation envelopes.
+  thumb: assets/images/reference/operators/function/impulseFn_thumb.png
 
 ---
 

@@ -15,5 +15,6 @@ op:
     name: Tightness
   - label: Rounding
     name: Rounding
+  thumb: assets/images/reference/operators/sdf2d/blobbyCrossSdf2d_thumb.png
 
 ---

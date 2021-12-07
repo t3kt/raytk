@@ -41,5 +41,6 @@ op:
     name: Translate
   - label: Size
     name: Size
+  thumb: assets/images/reference/operators/pattern/hexagonalTruchetPattern_thumb.png
 
 ---

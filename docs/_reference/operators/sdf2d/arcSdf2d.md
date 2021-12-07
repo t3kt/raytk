@@ -21,5 +21,6 @@ op:
     name: Radius
   - label: Thickness
     name: Thickness
+  thumb: assets/images/reference/operators/sdf2d/arcSdf2d_thumb.png
 
 ---

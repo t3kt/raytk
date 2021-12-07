@@ -105,7 +105,7 @@ cat:
     - helix
     - spiral
     name: helixSdf
-    summary: '## Parameters'
+    summary: SDF for a helix (an elongated spiral).
   - keywords:
     - fractal
     - julia
@@ -187,7 +187,6 @@ cat:
   - name: sphereFbmSdf
   - name: sphereSdf
     summary: SDF in 3D space for a uniform sphere.
-  - name: spikeSdf2d
   - keywords:
     - coil
     - spiral

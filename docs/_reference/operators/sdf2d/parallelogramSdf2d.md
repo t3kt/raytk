@@ -17,5 +17,6 @@ op:
     name: Height
   - label: Skew
     name: Skew
+  thumb: assets/images/reference/operators/sdf2d/parallelogramSdf2d_thumb.png
 
 ---

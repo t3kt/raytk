@@ -127,7 +127,11 @@ op:
     - label: Alternating Cell Coordinate (0,1,0,1)
       name: alternatingcoord
     name: Iterationtype
+  - label: Cell Coord
+    name: Createrefcellcoord
+    summary: 'Create reference to variable: Cell Coord'
   summary: Repeats space along all 3 axes.
+  thumb: assets/images/reference/operators/filter/modulo3D_thumb.png
 
 ---
 

@@ -97,5 +97,6 @@ op:
   - label: Blend Offset
     name: Blendoffset
   status: beta
+  thumb: assets/images/reference/operators/sdf/polyhedronSdf_thumb.png
 
 ---

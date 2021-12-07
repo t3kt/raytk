@@ -58,6 +58,7 @@ op:
   - label: Point 8
     name: Point8
   summary: Multi-segment line SDF.
+  thumb: assets/images/reference/operators/sdf/segmentedLineSdf_thumb.png
 
 ---
 

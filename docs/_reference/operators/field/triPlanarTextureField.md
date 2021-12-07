@@ -94,6 +94,7 @@ op:
     summary: How to combine the colors from each axis.
   summary: Texture field that uses surface normals (or other blending techniques)
     to apply a texture facing each axis.
+  thumb: assets/images/reference/operators/field/triPlanarTextureField_thumb.png
 
 ---
 

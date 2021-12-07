@@ -25,6 +25,7 @@ op:
     summary: Negative values pull the connection tighter, positive values bulge out
       perpendicular to the main axis.
   summary: 2D SDF for two connected circles.
+  thumb: assets/images/reference/operators/sdf2d/dogBoneSdf2d_thumb.png
 
 ---
 

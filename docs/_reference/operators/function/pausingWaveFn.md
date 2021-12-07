@@ -18,5 +18,6 @@ op:
     name: Lowwidth
   - label: High Width
     name: Highwidth
+  thumb: assets/images/reference/operators/function/pausingWaveFn_thumb.png
 
 ---

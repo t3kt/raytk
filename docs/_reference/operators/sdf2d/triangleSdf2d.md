@@ -48,6 +48,7 @@ op:
     name: Point3
     summary: The third corner position, for an arbitrary triangle.
   summary: SDF for a 2D triangle.
+  thumb: assets/images/reference/operators/sdf2d/triangleSdf2d_thumb.png
 
 ---
 

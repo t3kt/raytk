@@ -70,7 +70,14 @@ op:
     - label: Torus
       name: torus
     name: Uvmode
+  - label: Angle (0-360)
+    name: Createrefangle
+    summary: 'Create reference to variable: Angle (0-360)'
+  - label: Normalized Angle (0-1)
+    name: Createrefnormangle
+    summary: 'Create reference to variable: Normalized Angle (0-1)'
   summary: SDF for a torus.
+  thumb: assets/images/reference/operators/sdf/torusSdf_thumb.png
 
 ---
 

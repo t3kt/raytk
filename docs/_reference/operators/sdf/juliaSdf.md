@@ -26,5 +26,6 @@ op:
   - label: Iterations
     name: Iterations
   status: beta
+  thumb: assets/images/reference/operators/sdf/juliaSdf_thumb.png
 
 ---

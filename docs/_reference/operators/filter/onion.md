@@ -52,6 +52,7 @@ op:
   - label: Iterations
     name: Iterations
   summary: Converts a solid SDF to a thin shell of the surface.
+  thumb: assets/images/reference/operators/filter/onion_thumb.png
 
 ---
 

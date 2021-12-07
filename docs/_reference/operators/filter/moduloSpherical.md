@@ -1,11 +1,11 @@
 ---
 layout: operator
-title: fold
+title: moduloSpherical
 parent: Filter Operators
 grand_parent: Operators
-permalink: /reference/operators/filter/fold
+permalink: /reference/operators/filter/moduloSpherical
 redirect_from:
-  - /reference/opType/raytk.operators.filter.fold/
+  - /reference/opType/raytk.operators.filter.moduloSpherical/
 op:
   category: filter
   inputs:
@@ -28,20 +28,19 @@ op:
     - Ray
     - Light
     - Particle
-  name: fold
-  opType: raytk.operators.filter.fold
+  name: moduloSpherical
+  opType: raytk.operators.filter.moduloSpherical
   parameters:
   - label: Enable
     name: Enable
-  - label: Function
-    menuOptions:
-    - label: Box Fold
-      name: boxfold
-    - label: Menger Fold
-      name: mengerfold
-    name: Function
-  - label: Distance
-    name: Distance
-  thumb: assets/images/reference/operators/filter/fold_thumb.png
+  - label: Repetitions
+    name: Repetitions
+  - label: Shift
+    name: Shift
+  - label: Offset
+    name: Offset
+  - label: Pivot
+    name: Pivot
+  status: beta
 
 ---

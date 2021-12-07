@@ -62,6 +62,7 @@ op:
       name: z
     name: Axis
   summary: A pyramid with four sides.
+  thumb: assets/images/reference/operators/sdf/pyramidSdf_thumb.png
 
 ---
 

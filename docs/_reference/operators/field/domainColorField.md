@@ -24,5 +24,6 @@ op:
   - label: Line Power
     name: Linepower
   status: beta
+  thumb: assets/images/reference/operators/field/domainColorField_thumb.png
 
 ---

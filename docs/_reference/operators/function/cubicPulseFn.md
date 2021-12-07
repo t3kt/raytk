@@ -15,5 +15,6 @@ op:
     name: Width
   - label: Phase
     name: Phase
+  thumb: assets/images/reference/operators/function/cubicPulseFn_thumb.png
 
 ---

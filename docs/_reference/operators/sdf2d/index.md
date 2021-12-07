@@ -31,6 +31,7 @@ cat:
     - ellipse
     - oval
     name: ellipseSdf2d
+  - name: flowerSdf2d
   - name: heartSdf2d
   - name: horseshoeSdf2d
   - name: jointSdf2d
@@ -52,6 +53,7 @@ cat:
     summary: SDF for a 2D rhombus (diamond), with its corners aligned to the axes.
   - name: roundedRectangleSdf2d
     summary: SDF for a 2D rectangle with optionally rounded corners.
+  - name: spikeSdf2d
   - name: spiralSdf2d
     status: beta
   - name: starSdf2d

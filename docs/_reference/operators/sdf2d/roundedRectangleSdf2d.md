@@ -54,6 +54,7 @@ op:
       exceeds half the `Scale`, the rectangle will have discontinuities along the
       axes.
   summary: SDF for a 2D rectangle with optionally rounded corners.
+  thumb: assets/images/reference/operators/sdf2d/roundedRectangleSdf2d_thumb.png
 
 ---
 

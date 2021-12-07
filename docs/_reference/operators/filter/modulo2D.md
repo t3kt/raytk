@@ -164,7 +164,14 @@ op:
     name: Limitstop
   - label: Limit Offset
     name: Limitoffset
+  - label: Cell Coord
+    name: Createrefcellcoord
+    summary: 'Create reference to variable: Cell Coord'
+  - label: Tiled Quadrant
+    name: Createreftiledquad
+    summary: 'Create reference to variable: Tiled Quadrant'
   summary: Repeats space along 2 axes.
+  thumb: assets/images/reference/operators/filter/modulo2D_thumb.png
 
 ---
 

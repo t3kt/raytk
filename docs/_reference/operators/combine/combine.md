@@ -158,6 +158,7 @@ op:
   - label: Offset
     name: Offset
   summary: Combines SDFs in various ways.
+  thumb: assets/images/reference/operators/combine/combine_thumb.png
 
 ---
 

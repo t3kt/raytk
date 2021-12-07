@@ -129,6 +129,7 @@ op:
   status: beta
   summary: Applies a transform based on a range of settings, mapped with either the
     iteration value or a field input.
+  thumb: assets/images/reference/operators/filter/rangeTransform_thumb.png
 
 ---
 

@@ -57,6 +57,7 @@ op:
     name: Blending
     summary: The distance over which the 1 area transitions to the 0 area.
   summary: Value field based on an SDF shape.
+  thumb: assets/images/reference/operators/field/sdfField_thumb.png
 
 ---
 

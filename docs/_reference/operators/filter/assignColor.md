@@ -59,6 +59,7 @@ op:
   - label: Color
     name: Color
   summary: Assigns a surface color attribute to an SDF surface.
+  thumb: assets/images/reference/operators/filter/assignColor_thumb.png
 
 ---
 

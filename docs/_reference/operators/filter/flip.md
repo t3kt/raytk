@@ -68,7 +68,14 @@ op:
       name: sign
     name: Iterationtype
     summary: What kind of iteration values should be provided for upstream ops.
+  - label: Side Sign (-1/1)
+    name: Createrefsign
+    summary: 'Create reference to variable: Side Sign (-1/1)'
+  - label: Side Index (0/1)
+    name: Createrefindex
+    summary: 'Create reference to variable: Side Index (0/1)'
   summary: Flips the input across an axis, either on its own or merged with the original.
+  thumb: assets/images/reference/operators/filter/flip_thumb.png
 
 ---
 

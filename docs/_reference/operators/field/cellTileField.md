@@ -32,6 +32,7 @@ op:
     name: Cellstyle
   summary: A value field that provides an approximation of repeating cellular (voronoi)
     noise.
+  thumb: assets/images/reference/operators/field/cellTileField_thumb.png
 
 ---
 

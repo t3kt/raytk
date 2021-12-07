@@ -155,7 +155,11 @@ op:
     - label: Stop Only
       name: stop
     name: Limittype
+  - label: Cell Index
+    name: Createrefcellcoord
+    summary: 'Create reference to variable: Cell Index'
   summary: Repeats space along one axis.
+  thumb: assets/images/reference/operators/filter/modulo1D_thumb.png
 
 ---
 

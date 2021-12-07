@@ -70,6 +70,7 @@ op:
     name: Radius
     summary: The thickness of the capsule.
   summary: A cylinder with rounded ends, between two points.
+  thumb: assets/images/reference/operators/sdf/capsuleSdf_thumb.png
 
 ---
 

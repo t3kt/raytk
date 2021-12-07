@@ -27,6 +27,7 @@ op:
       name: vec3
     name: Coordtype
   summary: Field that produces surface UV coordinates, if available.
+  thumb: assets/images/reference/operators/field/uvField_thumb.png
 
 ---
 

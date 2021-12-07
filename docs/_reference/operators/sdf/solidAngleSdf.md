@@ -28,6 +28,7 @@ op:
     summary: The radius of the sphere that the shape is based one, equivalent to the
       distance from the tip to the base.
   summary: A conical slice of a sphere.
+  thumb: assets/images/reference/operators/sdf/solidAngleSdf_thumb.png
 
 ---
 

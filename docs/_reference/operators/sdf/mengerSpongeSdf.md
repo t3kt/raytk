@@ -26,6 +26,7 @@ op:
     name: Crossscale
     summary: The size of the holes cut through the boxes at each step.
   summary: Menger sponge fractal, made of boxes with holes cut through each axis.
+  thumb: assets/images/reference/operators/sdf/mengerSpongeSdf_thumb.png
 
 ---
 

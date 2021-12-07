@@ -29,6 +29,7 @@ op:
   - label: Alpha
     name: Alpha
   summary: A vector field that evaluates to a constant color value.
+  thumb: assets/images/reference/operators/field/constantColorField_thumb.png
 
 ---
 

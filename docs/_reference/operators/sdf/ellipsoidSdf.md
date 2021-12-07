@@ -34,5 +34,6 @@ op:
   parameters:
   - label: Scale
     name: Scale
+  thumb: assets/images/reference/operators/sdf/ellipsoidSdf_thumb.png
 
 ---

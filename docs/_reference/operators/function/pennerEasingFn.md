@@ -81,6 +81,7 @@ op:
       name: sineOut
     name: Function
   summary: Robert Penner's collection of easing functions.
+  thumb: assets/images/reference/operators/function/pennerEasingFn_thumb.png
 
 ---
 

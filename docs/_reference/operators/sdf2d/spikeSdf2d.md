@@ -1,14 +1,27 @@
 ---
 layout: operator
-title: planeSdf2d
+title: spikeSdf2d
 parent: Sdf2d Operators
 grand_parent: Operators
-permalink: /reference/operators/sdf2d/planeSdf2d
+permalink: /reference/operators/sdf2d/spikeSdf2d
 redirect_from:
-  - /reference/opType/raytk.operators.sdf2d.planeSdf2d/
+  - /reference/opType/raytk.operators.sdf2d.spikeSdf2d/
 op:
   category: sdf2d
   inputs:
+  - contextTypes:
+    - Context
+    - MaterialContext
+    - CameraContext
+    - LightContext
+    - RayContext
+    - ParticleContext
+    coordTypes:
+    - vec2
+    label: Height Field
+    name: heightField
+    returnTypes:
+    - float
   - contextTypes:
     - Context
     - MaterialContext
@@ -22,8 +35,8 @@ op:
     name: offsetField
     returnTypes:
     - float
-  name: planeSdf2d
-  opType: raytk.operators.sdf2d.planeSdf2d
+  name: spikeSdf2d
+  opType: raytk.operators.sdf2d.spikeSdf2d
   parameters:
   - label: Direction
     menuOptions:
@@ -36,8 +49,12 @@ op:
     - label: Y-
       name: yneg
     name: Direction
+  - label: Height
+    name: Height
   - label: Offset
     name: Offset
-  thumb: assets/images/reference/operators/sdf2d/planeSdf2d_thumb.png
+  - label: Center
+    name: Center
+  thumb: assets/images/reference/operators/sdf2d/spikeSdf2d_thumb.png
 
 ---

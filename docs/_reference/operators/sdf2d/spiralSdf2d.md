@@ -22,5 +22,6 @@ op:
   - label: Radius Limit
     name: Radiuslimit
   status: beta
+  thumb: assets/images/reference/operators/sdf2d/spiralSdf2d_thumb.png
 
 ---

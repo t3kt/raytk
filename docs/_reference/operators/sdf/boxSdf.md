@@ -74,6 +74,7 @@ op:
       name: bounds
     name: Uvmode
   summary: SDF for a box, optionally infinite one one axis.
+  thumb: assets/images/reference/operators/sdf/boxSdf_thumb.png
 
 ---
 

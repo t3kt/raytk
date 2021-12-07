@@ -60,6 +60,7 @@ op:
       name: polar
     name: Uvmode
   summary: SDF for a 2D star shape.
+  thumb: assets/images/reference/operators/sdf2d/starSdf2d_thumb.png
 
 ---
 

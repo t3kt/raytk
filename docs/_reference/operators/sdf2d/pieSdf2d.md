@@ -30,6 +30,7 @@ op:
   - label: Inner Radius
     name: Innerradius
   summary: SDF for a 2D pie-slice shape.
+  thumb: assets/images/reference/operators/sdf2d/pieSdf2d_thumb.png
 
 ---
 

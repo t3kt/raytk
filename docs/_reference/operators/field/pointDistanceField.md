@@ -36,6 +36,7 @@ op:
       name: xz
     name: Axes
   summary: A float field that provides the distance from a specific point in space.
+  thumb: assets/images/reference/operators/field/pointDistanceField_thumb.png
 
 ---
 

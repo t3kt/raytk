@@ -62,6 +62,7 @@ op:
       name: bounds
     name: Uvmode
   summary: SDF for the squared frame of the edges of a box.
+  thumb: assets/images/reference/operators/sdf/boxFrameSdf_thumb.png
 
 ---
 

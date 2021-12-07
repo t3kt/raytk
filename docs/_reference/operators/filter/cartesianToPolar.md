@@ -51,5 +51,6 @@ op:
     - label: Log-Cylindrical Z
       name: logcylindricalz
     name: Conversion
+  thumb: assets/images/reference/operators/filter/cartesianToPolar_thumb.png
 
 ---

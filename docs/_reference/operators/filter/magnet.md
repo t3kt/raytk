@@ -96,6 +96,7 @@ op:
     name: Rotate
     summary: Rotation to be applied within the magnet area.
   summary: Pulls or twists space within an area.
+  thumb: assets/images/reference/operators/filter/magnet_thumb.png
 
 ---
 

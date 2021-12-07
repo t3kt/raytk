@@ -29,19 +29,6 @@ op:
     - Ray
     - Light
     - Particle
-  - contextTypes:
-    - Context
-    - MaterialContext
-    - CameraContext
-    - LightContext
-    - RayContext
-    - ParticleContext
-    coordTypes:
-    - float
-    label: Blend Function
-    name: blending
-    returnTypes:
-    - float
   keywords:
   - flip
   - mirror
@@ -83,8 +70,8 @@ op:
       value for upstream ops.
   - label: Enable Blend
     name: Enableblend
-  - label: Blend Range
-    name: Blendrange
+  - label: Blending
+    name: Blend
   - label: Iteration Type
     menuOptions:
     - label: None
@@ -94,7 +81,14 @@ op:
     - label: Signed (-1/1)
       name: sign
     name: Iterationtype
+  - label: Side Sign (-1/1)
+    name: Createrefsign
+    summary: 'Create reference to variable: Side Sign (-1/1)'
+  - label: Side Index (0/1)
+    name: Createrefindex
+    summary: 'Create reference to variable: Side Index (0/1)'
   summary: Reflects space across a plane.
+  thumb: assets/images/reference/operators/filter/reflect_thumb.png
 
 ---
 

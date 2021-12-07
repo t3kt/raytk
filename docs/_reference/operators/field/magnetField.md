@@ -89,5 +89,6 @@ op:
       name: ParticleContext
     name: Contexttype
   status: beta
+  thumb: assets/images/reference/operators/field/magnetField_thumb.png
 
 ---

@@ -35,6 +35,7 @@ op:
   - label: Enable
     name: Enable
   summary: Invert an SDF, so that the inside is the outside.
+  thumb: assets/images/reference/operators/filter/invert_thumb.png
 
 ---
 

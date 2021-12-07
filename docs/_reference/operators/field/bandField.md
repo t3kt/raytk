@@ -143,6 +143,7 @@ op:
   - label: Repeat Shift
     name: Repeatshift
   summary: Field that applies values based on a band/slice of an axis.
+  thumb: assets/images/reference/operators/field/bandField_thumb.png
 
 ---
 

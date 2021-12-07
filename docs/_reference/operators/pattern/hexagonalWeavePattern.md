@@ -41,5 +41,6 @@ op:
     name: Randomize
   - label: Seed
     name: Seed
+  thumb: assets/images/reference/operators/pattern/hexagonalWeavePattern_thumb.png
 
 ---

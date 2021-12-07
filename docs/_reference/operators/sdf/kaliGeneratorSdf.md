@@ -22,6 +22,7 @@ op:
   - label: Box Round
     name: Boxround
   summary: Fractal SDF based on "Generators" by Kali (https://www.shadertoy.com/view/Xtf3Rn).
+  thumb: assets/images/reference/operators/sdf/kaliGeneratorSdf_thumb.png
 
 ---
 

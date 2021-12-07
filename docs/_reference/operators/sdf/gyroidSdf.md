@@ -64,6 +64,7 @@ op:
     name: Thickness
     summary: Expands the surfaces producing thicker shapes.
   summary: Gyroid shape, which is an infinitely connected periodic surface.
+  thumb: assets/images/reference/operators/sdf/gyroidSdf_thumb.png
 
 ---
 

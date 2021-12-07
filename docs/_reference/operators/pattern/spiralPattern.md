@@ -32,5 +32,6 @@ op:
     name: Scale
   - label: Spin
     name: Spin
+  thumb: assets/images/reference/operators/pattern/spiralPattern_thumb.png
 
 ---
