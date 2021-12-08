@@ -755,6 +755,7 @@ class _CategoryColumnPickerImpl(_PickerImpl):
 		layout = self.getLayout()
 		listComp.par.rows = rows
 		listComp.par.cols = cols * layout.numCols
+		listComp.par.reset.pulse()
 
 	def applyFilter(self):
 		item = self.getSelectedItem()
