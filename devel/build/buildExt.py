@@ -318,12 +318,12 @@ class BuildManager:
 		subComps = comp.findChildren(type=COMP)
 		if not subComps:
 			return
-		self.context.log(f'Processing {len(subComps)} sub-comps in {comp}')
+		self.context.log(f'Processing {len(subComps)} sub-comps in {comp}', verbose=True)
 		for child in subComps:
 			self.processOperatorSubComp_2(child)
 
 	def processOperatorSubComp_2(self, comp: 'COMP'):
-		self.context.log(f'Processing {comp}')
+		self.context.log(f'Processing {comp}', verbose=True)
 		self.context.detachTox(comp)
 		self.context.reclone(comp)
 		self.context.disableCloning(comp)
