@@ -1,6 +1,9 @@
 ReturnT thismap(CoordT p, ContextT ctx) {
 	vec2 props = sdBezier(p, THIS_Point1, THIS_Point2, THIS_Point3);
 	float r = mapRange(props.y, 0., 1., THIS_Radiusstart, THIS_Radiusend);
+	#pragma r:if THIS_EXPOSE_normoffset
+	THIS_normoffset = props.y;
+	#pragma r:endif
 	#pragma r:if THIS_HAS_INPUT_radiusField
 	{
 		setIterationIndex(ctx, props.y);
