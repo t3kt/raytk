@@ -7,9 +7,7 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 	float r = THIS_Radius;
 	#ifndef THIS_Infiniteheight
 	float h = THIS_Height;
-	#if defined(THIS_HAS_INPUT_heightField) && defined(inputOp_heightField_COORD_TYPE_float)
-	h *= inputOp_heightField(q.y, ctx);
-	#elif defined(THIS_HAS_INPUT_heightField) && defined(inputOp_heightField_COORD_TYPE_vec3)
+	#if defined(THIS_HAS_INPUT_heightField)
 	h *= inputOp_heightField(p, ctx);
 	#endif
 	#ifdef THIS_EXPOSE_normoffset
@@ -17,9 +15,7 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 	#endif
 	#endif
 
-	#if defined(THIS_HAS_INPUT_radiusField) && defined(inputOp_radiusField_COORD_TYPE_float)
-	r *= inputOp_radiusField(q.y, ctx);
-	#elif defined(THIS_HAS_INPUT_radiusField) && defined(inputOp_radiusField_COORD_TYPE_vec3)
+	#if defined(THIS_HAS_INPUT_radiusField)
 	r *= inputOp_radiusField(p, ctx);
 	#endif
 	ReturnT res;
