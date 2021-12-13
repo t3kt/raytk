@@ -5,7 +5,8 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 	vec3 q = adaptAsVec3(p);
 	#endif
 	vec2 hashShift = THIS_Hashoffset;
-	vec3 data = voronoi(q.xy, hashShift);
+	vec3 data;
+	BODY();
 	float d = data.x;
 	vec2 localPos = (-data.yz);
 

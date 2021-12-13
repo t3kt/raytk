@@ -1,0 +1,3 @@
+name	label	code
+voronoi2d	Voronoi 2D	data = voronoi2d(q.xy, THIS_Hashoffset);
+voronoi3d	Voronoi 3D	data = voronoi3d(q);
