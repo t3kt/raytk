@@ -412,6 +412,17 @@ class ROPInfo:
 		if cb and hasattr(cb, name):
 			getattr(cb, name)(**kwargs)
 
+	@property
+	def ropKind(self):
+		if not self:
+			return
+		if self.isOutput:
+			return RaytkTags.raytkOutput.name
+		if self.isROP:
+			return RaytkTags.raytkOP.name
+		if self.isRComp:
+			return RaytkTags.raytkComp.name
+
 class _InputHandlerParsT:
 	Source: 'OPParamT'
 	Required: 'BoolParamT'

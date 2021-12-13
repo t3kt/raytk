@@ -83,7 +83,7 @@ def buildOpInfoTable(dat: 'DAT'):
 			hasHelp = False
 		dat.appendRow([
 			rop.path,
-			_ropKind(info),
+			info.ropKind or '',
 			info.statusLabel or 'stable',
 			hasHelp,
 			info.hasROPInputs,
@@ -103,16 +103,6 @@ def buildOpInfoTable(dat: 'DAT'):
 				dat[rop.path, 'macroCols'] = macros.numCols
 		dat[rop.path, 'hasThumb'] = bool(opThumbs[rop.path, 'thumb'])
 
-def _ropKind(info: 'ROPInfo'):
-	if info.isOutput:
-		return 'ROutput'
-	elif info.isROP:
-		return 'ROP'
-	elif info.isRComp:
-		return 'RComp'
-	else:
-		return ''
-
 def buildOpParamsTable(dat: 'DAT'):
 	dat.clear()
 	dat.appendRow(['path', 'kind'])
@@ -122,7 +112,7 @@ def buildOpParamsTable(dat: 'DAT'):
 			continue
 		dat.appendRow([
 			info.path,
-			_ropKind(info)
+			info.ropKind or '',
 		])
 		for tuplet in info.rop.customTuplets:
 			par = tuplet[0]
