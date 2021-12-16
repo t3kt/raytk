@@ -487,7 +487,7 @@ class _PickerImpl:
 	def _initThumbCell(self, attribs: 'ListAttributes', item: 'PickerOpItem'):
 		thumbRoot = self.ownerComp.par.Thumbroot.eval()
 		if thumbRoot and item.thumbPath:
-			attribs.top = thumbRoot.op(item.thumbPath) or ''
+			attribs.top = thumbRoot.op(item.thumbPath)
 
 class _DefaultPickerImpl(_PickerImpl):
 	def __init__(self, ownerComp: 'COMP'):
