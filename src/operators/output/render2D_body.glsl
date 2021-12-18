@@ -14,6 +14,18 @@ vec3 getColorInner(vec2 p, MaterialContext matCtx, int m) {
 	return col;
 }
 
+vec2 calcNormal(vec2 pos) {
+	int priorStage = pushStage(RAYTK_STAGE_NORMAL);
+	const vec2 e = vec2(1.0, -1.0)*0.5773*0.005;
+	vec2 n = normalize(
+		e.xy*map(pos + e.xy).x +
+		e.yy*map(pos + e.yy).x +
+		e.yx*map(pos + e.yx).x +
+		e.xx*map(pos + e.xx).x);
+	popStage(priorStage);
+	return n;
+}
+
 vec3 getColor(vec2 p, MaterialContext matCtx) {
 	if (matCtx.result.x > 0.) return vec3(0.);
 	vec3 col = vec3(0.);
@@ -164,6 +176,10 @@ vec2 p = getCoord();
 		resolveUV(matCtx, uv1, uv2);
 		uvOut = mix(uv1, uv2, round(resultMaterialInterp(matCtx.result)));
 	}
+	#endif
+	#ifdef OUTPUT_NORMAL
+		vec2 n = calcNormal(p);
+		normalOut = vec4(n, 0., 1.);
 	#endif
 #else
 	#ifdef OUTPUT_COLOR
