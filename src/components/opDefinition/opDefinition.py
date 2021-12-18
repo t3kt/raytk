@@ -649,6 +649,16 @@ def updateOP():
 	if host and host.par.clone:
 		host.par.enablecloningpulse.pulse()
 
+def _getPalette():
+	if not hasattr(op, 'raytk'):
+		_popDialog().Open(
+			title='Warning',
+			text='Unable to create reference because RayTK toolkit is not available.',
+			escOnClickAway=True,
+		)
+		return
+	return op.raytk.op('tools/palette')
+
 _varTypes = {
 	'float': 'float',
 	'int': 'float',
@@ -662,14 +672,9 @@ _varTypes = {
 }
 
 def createVarRef(name: str):
-	if not hasattr(op, 'raytk'):
-		_popDialog().Open(
-			title='Warning',
-			text='Unable to create reference because RayTK toolkit is not available.',
-			escOnClickAway=True,
-		)
+	palette = _getPalette()
+	if not palette:
 		return
-	palette = op.raytk.op('tools/palette')
 	host = _host()
 	varTable = op('variable_table')
 	for i in range(1, varTable.numRows):
@@ -679,3 +684,17 @@ def createVarRef(name: str):
 			palette.CreateVariableReference(host, varTable[i, 'localName'].val, dataType)
 			return
 	raise Exception(f'Variable not found: {name}')
+
+def createRenderSel(name: str):
+	palette = _getPalette()
+	if not palette:
+		return
+	host = _host()
+	bufTable = op('../output_buffers')
+	if bufTable:
+		name = name.lower()
+		for i in range(1, bufTable.numRows):
+			if bufTable[i, 'name'].val.lower() == name:
+				palette.CreateRenderSelect(host, bufTable[i, 'name'].val)
+				return
+	raise Exception(f'Output buffer not found: {name}')

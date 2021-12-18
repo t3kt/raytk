@@ -15,3 +15,5 @@ def onPulse(par):
 		mod.opDefinition.updateOP()
 	elif action.startswith('Createref'):
 		mod.opDefinition.createVarRef(action.replace('Createref', ''))
+	elif action.startswith('Creatersel'):
+		mod.opDefinition.createRenderSel(action.replace('Creatersel', ''))

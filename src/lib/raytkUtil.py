@@ -301,23 +301,39 @@ class ROPInfo:
 	def supportedTypeTable(self) -> 'Optional[DAT]':
 		if not self.isROP:
 			return None
-		return self.opDef.op('./supportedTypes')
+		return self.opDef.op('supportedTypes')
 
 	@property
 	def _variableTable(self) -> 'Optional[DAT]':
 		if not self.isROP:
 			return None
-		return self.opDef.op('./variable_table')
+		return self.opDef.op('variable_table')
 
 	@property
 	def variableNameAndLabels(self):
 		table = self._variableTable
 		if not table:
 			return []
-		namesAndLabels = []
-		for i in range(1, table.numRows):
-			namesAndLabels.append((table[i, 'localName'].val, table[i, 'label'].val))
-		return namesAndLabels
+		return [
+			(table[i, 'localName'].val, table[i, 'label'].val)
+			for i in range(1, table.numRows)
+		]
+
+	@property
+	def _outputBufferTable(self) -> 'Optional[DAT]':
+		if not self.isOutput:
+			return None
+		return self.rop.op('outputBuffers')
+
+	@property
+	def outputBufferNamesAndLabels(self):
+		table = self._outputBufferTable
+		if not table:
+			return []
+		return [
+			(table[i, 'name'].val, table[i, 'label'].val)
+			for i in range(1, table.numRows)
+		]
 
 	@property
 	def subROPs(self):

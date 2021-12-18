@@ -1,7 +1,7 @@
 def updatePars():
 	if not parent().par.Lockbuffermenu:
 		return
-	op('output_table_path').cook(force=True)
+	op('findOutputTable').cook(force=True)
 	dat = op('output_table')
 	if dat.numRows < 2:
 		return
