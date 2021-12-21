@@ -139,6 +139,21 @@ op:
     - label: 3D
       name: vec3
     name: Coordtype
+  - label: Select SDF Result
+    name: Createrselsdfout
+    summary: 'Create renderSelect for output: SDF Result'
+  - label: Select Color
+    name: Createrselcolorout
+    summary: 'Create renderSelect for output: Color'
+  - label: Select Value
+    name: Createrselvalueout
+    summary: 'Create renderSelect for output: Value'
+  - label: Select Normal
+    name: Createrselnormalout
+    summary: 'Create renderSelect for output: Normal'
+  - label: Select Object Id
+    name: Createrselobjectidout
+    summary: 'Create renderSelect for output: Object Id'
   - label: Enable Normal Smoothing
     name: Enablenormalsmoothing
   - label: Normal Smoothing

@@ -46,5 +46,9 @@ op:
       name: cylindricalz
     name: Conversion
   status: beta
+  summary: Converts coordinates from polar to cartesian.
 
 ---
+
+
+Converts coordinates from polar to cartesian.

@@ -17,7 +17,6 @@ op:
     - RayContext
     - ParticleContext
     coordTypes:
-    - float
     - vec3
     label: Radius Field
     name: radiusField
@@ -34,7 +33,6 @@ op:
     - RayContext
     - ParticleContext
     coordTypes:
-    - float
     - vec3
     label: Height Field
     name: heightField

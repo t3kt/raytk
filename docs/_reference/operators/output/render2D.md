@@ -135,6 +135,20 @@ op:
     name: Customizeshaderconfig
   - label: Enable UV Output
     name: Enableuvoutput
+  - label: Enable Normal Output
+    name: Enablenormaloutput
+  - label: Select SDF Result
+    name: Createrselsdfout
+    summary: 'Create renderSelect for output: SDF Result'
+  - label: Select Color
+    name: Createrselcolorout
+    summary: 'Create renderSelect for output: Color'
+  - label: Select UV
+    name: Createrseluvout
+    summary: 'Create renderSelect for output: UV'
+  - label: Select Normal
+    name: Createrselnormalout
+    summary: 'Create renderSelect for output: Normal'
   summary: Renders a 2D image by evaluating the input field for each pixel.
 
 ---

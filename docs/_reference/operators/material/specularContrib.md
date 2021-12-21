@@ -65,6 +65,7 @@ op:
   - label: Use Surface Color
     name: Usesurfacecolor
   summary: A material element that provides specular light contribution.
+  thumb: assets/images/reference/operators/material/specularContrib_thumb.png
 
 ---
 

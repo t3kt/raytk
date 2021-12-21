@@ -51,6 +51,7 @@ op:
   - label: Use Surface Color
     name: Usesurfacecolor
   summary: A material element that provides diffuse light contribution.
+  thumb: assets/images/reference/operators/material/diffuseContrib_thumb.png
 
 ---
 

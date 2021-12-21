@@ -16,6 +16,8 @@ cat:
       later
 
       be extracted from rendered output.'
+  - name: provideVariable
+    status: beta
   - name: toggleSwitch
   - name: variableReference
     status: beta

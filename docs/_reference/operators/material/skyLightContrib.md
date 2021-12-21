@@ -31,6 +31,7 @@ op:
     name: Usecolor
     summary: Whether to produce color or just a brightness value.
   summary: A material element that acts as a basic pseudo directional light.
+  thumb: assets/images/reference/operators/material/skyLightContrib_thumb.png
 
 ---
 

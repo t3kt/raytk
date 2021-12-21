@@ -162,6 +162,7 @@ cat:
     summary: Converts a solid SDF to a thin shell of the surface.
   - name: polarToCartesian
     status: beta
+    summary: Converts coordinates from polar to cartesian.
   - name: quadTreeRepeat
     status: beta
   - name: quantizeCoords
