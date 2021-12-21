@@ -20,7 +20,8 @@
 
 * Improvements / additions
   * Variables (#574, #712)
-    * variableReference
+    * bezierSdf
+    * bezierSdf2d
     * cylinderSdf
     * extrude
     * flip
@@ -36,12 +37,14 @@
     * modulo3d
     * moduloDistance
     * moduloPolar
+    * providePosition
     * provideVariable
     * quadTreeRepeat
     * radialClone
     * reflect
     * revolve
     * torusSdf
+    * variableReference
     * Helper buttons to create references
     * Validation for references
   * New ops
@@ -67,12 +70,19 @@
     * Help tooltips
   * Improve type handling in compositeField (#743)
   * Add help to some operators
+  * Show thumbnail images in the doc site
+  * Surface normal output in render2D (#560)
+  * Shorcut parameters to create renderSelects similar to the variable shortcuts
 * Changes (potentially breaking)
   * Move spikeSdf2d to the correct category. This will break Update OP for those operators.
   * Reflect handling of Offset changed, resulting in slightly reduced offsets.
+  * Remove 1D coord support in cylinderSdf, since variables do the same thing (#521, #574)
 * Fixes
   * Fix broken help in palette (#731)
   * Fix broken color output in pointMapRender (#757)
+  * Fix height field input in cylinderSdf (#767)
+  * Fix compile error in adjustColor (#775)
+  * Fix parameter ordering in fieldRender
 * Infrastructure / internals
   * Support for variables and references (#574, #712)
   * Refactoring and cleanup of token replacement in opDefinition
