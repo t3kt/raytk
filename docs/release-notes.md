@@ -60,6 +60,7 @@
     * planeSdf2d
     * quadSdf2d
     * spikeSdf2d
+    * switch (#413)
     * vesicaSdf2d
   * New parameters
     * headSdf blinking (#116)

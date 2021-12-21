@@ -3,7 +3,12 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 	#if THIS_INPUT_COUNT == 0
 	initDefVal(res);
 	#else
-		int i = clamp(int(THIS_Source), 0, THIS_INPUT_COUNT - 1);
+		#ifdef THIS_HAS_INPUT_indexField
+		int source = int(inputOp_indexField(p, ctx));
+		#else
+		int source = int(THIS_Source);
+		#endif
+		int i = clamp(source, 0, THIS_INPUT_COUNT - 1);
 		if (i == 0) {
 			res = THIS_INPUT_1(p, ctx);
 		}
