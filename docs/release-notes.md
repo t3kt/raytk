@@ -20,6 +20,7 @@
 
 * Improvements / additions
   * Variables (#574, #712)
+    * bend
     * bezierSdf
     * bezierSdf2d
     * cylinderSdf

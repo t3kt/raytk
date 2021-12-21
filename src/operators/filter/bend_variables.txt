@@ -1,0 +1,3 @@
+name	label	dataType	enable
+axispos	Position Along Axis	float	1
+bendpos	Position On Bend Axis	float	1
