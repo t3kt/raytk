@@ -62,10 +62,13 @@ def buildTypeTable(dat: 'scriptDAT', supportedTypes: 'DAT', inputDefs: 'DAT'):
 		['contextType', _evalType('contextType', supportedTypes, inputDefs)],
 	])
 
+def _inputDefsFromPar():
+	return parentPar().Inputdefs.evalOPs()
+
 def buildInputTable(dat: 'DAT', inDats: 'List[DAT]'):
 	dat.clear()
 	dat.appendRow(['inputFunc', 'name', 'path', 'coordType', 'contextType', 'returnType', 'placeholder'])
-	for i, inDat in enumerate(inDats):
+	for i, inDat in enumerate(inDats + _inputDefsFromPar()):
 		if not inDat[1, 'name']:
 			continue
 		func = str(inDat[1, 'input:alias'] or f'inputOp{i + 1}')
@@ -85,6 +88,7 @@ def combineInputDefinitions(
 		defFields: 'DAT',
 ):
 	dat.clear()
+	inDats += _inputDefsFromPar()
 	if not inDats:
 		return
 	cols = defFields.col(0)

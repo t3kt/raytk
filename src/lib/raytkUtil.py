@@ -105,6 +105,7 @@ class OpDefParsT(_OpMetaPars):
 	Keywords: 'StrParamT'
 	Disableinspect: 'BoolParamT'
 	Typespec: 'CompParamT'
+	Inputdefs: 'StrParamT'
 
 class ROPInfo:
 	"""
