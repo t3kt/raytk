@@ -428,6 +428,7 @@ class ROPDef(ModelObject):
 
 	help: _TextSetting = None
 	keywords: ValueOrListOrExprT = None
+	shortcuts: ValueOrListOrExprT = None
 
 @dataclass
 class ParamPage(ModelObject):
@@ -928,6 +929,7 @@ class _SpecExtractor:
 
 			help=self._valOrExprFromPar(pars.Help),
 			keywords=self._valOrExprFromPar(pars.Keywords, useList=True),
+			shortcuts=self._valOrExprFromPar(pars.Shortcuts, useList=True),
 		)
 
 	def _extractTypeSpec(self) -> 'ROPTypeSpec':

@@ -175,6 +175,7 @@ class ROPHelp:
 	isBeta: bool = False
 	isDeprecated: bool = False
 	keywords: List[str] = field(default_factory=list)
+	shortcuts: List[str] = field(default_factory=list)
 	images: List[str] = field(default_factory=list)
 	thumb: Optional[str] = None
 
@@ -209,6 +210,7 @@ class ROPHelp:
 			isBeta=info.isBeta,
 			isDeprecated=info.isDeprecated,
 			keywords=list(sorted(info.keywords)),
+			shortcuts=list(sorted(info.shortcuts)),
 		)
 
 	def formatAsMarkdown(self, headerOffset: int = 0):
@@ -307,6 +309,7 @@ redirect_from:
 			{
 				'status': status,
 				'keywords': list(sorted(self.keywords)),
+				'shortcuts': list(sorted(self.shortcuts)),
 				'thumb': self.thumb,
 			},
 			{

@@ -31,6 +31,7 @@ _opDefParamNames = [
 	'Help',
 	'Helpurl',
 	'Keywords',
+	'Shortcuts',
 	'Callbacks',
 	'Raytkoptype',
 	'Raytkopversion',

@@ -71,6 +71,7 @@ class CompDefParsT(_OpMetaPars):
 	Help: 'DatParamT'
 	Helpurl: 'StrParamT'
 	Keywords: 'StrParamT'
+	Shortcuts: 'StrParamT'
 	Rops: 'StrParamT'
 	Style: 'StrParamT'
 	Label: 'StrParamT'
@@ -103,6 +104,7 @@ class OpDefParsT(_OpMetaPars):
 	Help: 'DatParamT'
 	Helpurl: 'StrParamT'
 	Keywords: 'StrParamT'
+	Shortcuts: 'StrParamT'
 	Disableinspect: 'BoolParamT'
 	Typespec: 'CompParamT'
 	Inputdefs: 'StrParamT'
@@ -359,16 +361,19 @@ class ROPInfo:
 
 	@property
 	def keywords(self) -> 'Set[str]':
-		if not self:
-			return set()
-		return set(tdu.split(self.opDefPar.Keywords))
+		return set(tdu.split(self.opDefPar.Keywords)) if self else set()
 
 	@keywords.setter
 	def keywords(self, keywords: 'Optional[Set[str]]'):
-		if not keywords:
-			self.opDefPar.Keywords = ''
-		else:
-			self.opDefPar.Keywords = ' '.join(sorted(keywords))
+		self.opDefPar.Keywords = ' '.join(sorted(keywords)) if keywords else ''
+
+	@property
+	def shortcuts(self) -> 'Set[str]':
+		return set(tdu.split(self.opDefPar.Shortcuts)) if self else set()
+
+	@shortcuts.setter
+	def shortcuts(self, shortcuts: 'Optional[Set[str]]'):
+		self.opDefPar.Shortcuts = ' '.join(sorted(shortcuts)) if shortcuts else ''
 
 	@property
 	def hasROPInputs(self):

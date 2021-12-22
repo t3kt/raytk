@@ -98,11 +98,13 @@ class OpPicker:
 			ext.callbacks.DoCallback('onKeyboardShortcut', {'shortcut': shortcutName})
 
 	def onPickItem(self):
-		item = self.impl.getSelectedItem()
+		item = self.impl.selectFilterShortcutItem()
+		if not item:
+			item = self.impl.getSelectedItem()
 		if not item:
 			item = self.impl.selectFirstOpItem()
-			if not item:
-				return
+		if not item:
+			return
 		ext.callbacks.DoCallback('onPickItem', {'item': item})
 
 	def _printAndStatus(self, msg):
@@ -191,6 +193,7 @@ class PickerCategoryItem(PickerItem):
 class PickerOpItem(PickerItem):
 	words: List[str] = field(default_factory=list)
 	keywords: List[str] = field(default_factory=list)
+	shortcuts: List[str] = field(default_factory=list)
 	thumbPath: Optional[str] = None
 	isOP = True
 	isCategory = False
@@ -205,6 +208,8 @@ class PickerOpItem(PickerItem):
 		if not filt.text:
 			return True
 		filtText = filt.text.lower()
+		if filtText in self.shortcuts:
+			return True
 		if filtText in self.shortName.lower():
 			return True
 		for keyword in self.keywords:
@@ -247,9 +252,11 @@ def _loadItemCategories(opTable: 'DAT', opHelpTable: 'DAT'):
 			helpSummary=str(opHelpTable[path, 'summary'] or ''),
 		)
 		keywords = tdu.split(opTable[row, 'keywords'])
+		shortcuts = tdu.split(opTable[row, 'shortcuts'])
 		words = _splitCamelCase(shortName)
 		opItem.words = [w.lower() for w in words]
 		opItem.keywords += [k.lower() for k in keywords]
+		opItem.shortcuts += [s.lower() for s in shortcuts]
 		opItem.thumbPath = str(opTable[row, 'thumb'] or '')
 		if categoryName in categoriesByName:
 			categoriesByName[categoryName].ops.append(opItem)
@@ -288,6 +295,11 @@ class _ItemLibrary:
 	def firstOpItem(self) -> 'Optional[PickerOpItem]':
 		for item in self._currentItemList:
 			if item.isOP:
+				return item
+
+	def opItemForShortcut(self, shortcut: str) -> 'Optional[PickerOpItem]':
+		for item in self._currentItemList:
+			if item.isOP and shortcut in item.shortcuts:
 				return item
 
 	def loadTables(self, opTable: 'DAT', opHelpTable: 'DAT'):
@@ -352,6 +364,9 @@ class _PickerImpl:
 
 	def getSelectedItem(self) -> 'Optional[_AnyItemT]':
 		return self.selItem.val
+
+	def selectFilterShortcutItem(self) -> 'Optional[_AnyItemT]':
+		raise NotImplementedError()
 
 	def selectItem(self, item: 'Optional[_AnyItemT]', scroll=False):
 		oldItem = self.selItem.val  # type: Optional[_AnyItemT]
@@ -533,6 +548,16 @@ class _DefaultPickerImpl(_PickerImpl):
 				self.setItemHighlight(item, True)
 		self.refreshList()
 
+	def selectFilterShortcutItem(self) -> 'Optional[_AnyItemT]':
+		shortcut = self.filterText
+		if not shortcut:
+			return
+		item = self.itemLibrary.opItemForShortcut(shortcut)
+		if not item:
+			return
+		self.selectItem(item)
+		return item
+
 	def selectFirstOpItem(self) -> 'Optional[_AnyItemT]':
 		item = self.itemLibrary.firstOpItem
 		if not item:
@@ -605,17 +630,19 @@ class _DefaultPickerImpl(_PickerImpl):
 		if not item:
 			return
 		layout = self.getLayout()
-		if col == layout.labelCol:
-			attribs.text = item.shortName
 		if isinstance(item, PickerCategoryItem):
 			if col == layout.toggleCol:
 				self._initToggleCell(attribs, item)
 			elif col == layout.labelCol:
 				attribs.textOffsetX = 5
+				attribs.text = item.shortName
 		elif isinstance(item, PickerOpItem):
 			attribs.help = item.helpSummary or ''
 			if col == layout.labelCol:
 				attribs.textOffsetX = 20
+				attribs.text = item.shortName
+				if item.shortcuts:
+					attribs.text += f' ({item.shortcuts[0]})'
 			elif col == layout.statusCol:
 				self._initStatusIconCell(attribs, item)
 			elif col == layout.thumbCol:
@@ -661,6 +688,12 @@ class _CategoryColumn:
 			return 1 + self.currentOpList.index(item)
 		except ValueError:
 			return -1
+
+	def opItemForShortcut(self, shortcut: str) -> 'Optional[PickerOpItem]':
+		for item in self.currentOpList:
+			if item.isOP and shortcut in item.shortcuts:
+				return item
+
 
 class _CategoryColumnLibrary:
 	allItems: List[_AnyItemT]
@@ -724,6 +757,12 @@ class _CategoryColumnLibrary:
 		if 0 <= col < len(cols):
 			return cols[col].getItemByRow(row)
 
+	def opItemForShortcut(self, shortcut: str) -> 'Optional[PickerOpItem]':
+		for col in self.currentColList:
+			item = col.opItemForShortcut(shortcut)
+			if item:
+				return item
+
 class _CategoryColumnPickerImpl(_PickerImpl):
 	def __init__(self, ownerComp: 'COMP'):
 		super().__init__(ownerComp)
@@ -742,6 +781,16 @@ class _CategoryColumnPickerImpl(_PickerImpl):
 				item = colOps[0]
 				self.selectItem(item)
 				return item
+
+	def selectFilterShortcutItem(self) -> 'Optional[_AnyItemT]':
+		shortcut = self.filterText
+		if not shortcut:
+			return
+		item = self.itemLibrary.opItemForShortcut(shortcut)
+		if not item:
+			return
+		self.selectItem(item)
+		return item
 
 	def loadItems(self, opTable: 'DAT', opHelpTable: 'DAT'):
 		self.itemLibrary.loadTables(opTable, opHelpTable)
