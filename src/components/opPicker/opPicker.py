@@ -571,21 +571,25 @@ class _DefaultPickerImpl(_PickerImpl):
 			return
 		# print(self.ownerComp, f'setRowHighlight(row: {row!r}, sel: {selected!r})')
 		if selected:
-			color = _configColor('Rolloverhighlightcolor')
+			bottomColor = _configColor('Rolloverhighlightcolor')
+			topColor = bottomColor
+			sideColor = bottomColor
 		else:
-			color = 0, 0, 0, 0
+			bottomColor = _configColor('Bordercolor')
+			topColor = 0, 0, 0, 0
+			sideColor = topColor
 		listComp = self.listComp
 		layout = self.getLayout()
 		rowAttribs = listComp.rowAttribs[row]
 		if rowAttribs:
-			rowAttribs.topBorderOutColor = color
-			rowAttribs.bottomBorderOutColor = color
+			rowAttribs.topBorderOutColor = topColor
+			rowAttribs.bottomBorderOutColor = bottomColor
 		cellAttribs = listComp.cellAttribs[row, 0]
 		if cellAttribs:
-			cellAttribs.leftBorderInColor = color
+			cellAttribs.leftBorderInColor = sideColor
 		cellAttribs = listComp.cellAttribs[row, layout.numCols - 1]
 		if cellAttribs:
-			cellAttribs.rightBorderOutColor = color
+			cellAttribs.rightBorderOutColor = sideColor
 
 	def scrollToItem(self, item: 'Optional[_AnyItemT]'):
 		row = self.itemLibrary.rowForItem(item)
@@ -638,6 +642,7 @@ class _DefaultPickerImpl(_PickerImpl):
 				attribs.text = item.shortName
 		elif isinstance(item, PickerOpItem):
 			attribs.help = item.helpSummary or ''
+			attribs.bottomBorderInColor = _configColor('Bordercolor')
 			if col == layout.labelCol:
 				attribs.textOffsetX = 20
 				attribs.text = item.shortName
@@ -828,14 +833,18 @@ class _CategoryColumnPickerImpl(_PickerImpl):
 		if not cellAttribs:
 			return
 		if selected:
-			color = _configColor('Rolloverhighlightcolor')
+			bottomColor = _configColor('Rolloverhighlightcolor')
+			topColor = bottomColor
+			sideColor = bottomColor
 		else:
-			color = 0, 0, 0, 0
+			bottomColor = _configColor('Bordercolor')
+			topColor = 0, 0, 0, 0
+			sideColor = topColor
 		for ca in cellAttribs:
-			ca.topBorderOutColor = color
-			ca.bottomBorderOutColor = color
-		cellAttribs[0].leftBorderInColor = color
-		cellAttribs[len(cellAttribs) - 1].rightBorderOutColor = color
+			ca.topBorderOutColor = topColor
+			ca.bottomBorderOutColor = bottomColor
+		cellAttribs[0].leftBorderInColor = sideColor
+		cellAttribs[len(cellAttribs) - 1].rightBorderOutColor = sideColor
 
 	def offsetSelection(self, x: int, y: int):
 		if not self.itemLibrary or (x == 0 and y == 0):
@@ -899,6 +908,7 @@ class _CategoryColumnPickerImpl(_PickerImpl):
 			attribs.text = item.shortName
 		if isinstance(item, PickerOpItem):
 			attribs.help = item.helpSummary or ''
+			attribs.bottomBorderInColor = _configColor('Bordercolor')
 			self._applyStatusTextColor(attribs, item)
 			if colPart == layout.labelCol:
 				if item.isAlpha or item.isBeta or item.isDeprecated:
