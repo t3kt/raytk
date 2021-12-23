@@ -95,6 +95,10 @@ mat4 lookAtViewMatrix(vec3 eye, vec3 center, vec3 up) {
 
 float ndot(vec2 a, vec2 b ) { return a.x*b.x - a.y*b.y; }
 
+vec3 sgn(vec3 v) {
+	return vec3((v.x<0)?-1:1, (v.y<0)?-1:1, (v.z<0)?-1:1);
+}
+
 // https://iquilezles.org/www/articles/smoothstepintegral/smoothstepintegral.htm
 float smoothstepIntegral(float b, float x) {
 	if( x>=b ) return x - 0.5*b;
