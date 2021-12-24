@@ -69,6 +69,10 @@ class OpPicker:
 		if deprecated is not None:
 			ipar.uiState.Showdeprecated = deprecated
 
+	@staticmethod
+	def SetThumbToggle(showThumbs: bool):
+		ipar.uiState.Showthumbs = showThumbs
+
 	def Loaditems(self, _=None):
 		self.impl.loadItems(
 			self.ownerComp.op('opTable'),

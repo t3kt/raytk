@@ -29,5 +29,6 @@ context.disableCloning(o)
 context.detachTox(o)
 if context.experimental:
 	o.SetFilterToggles(alpha=True, beta=True, deprecated=True)
+o.SetThumbToggle(True)
 
 context.finishTask()
