@@ -13,7 +13,7 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 	float z = THIS_Phase * k;
 	#ifdef THIS_HAS_INPUT_phaseField
 	{
-		#if defined(inputOp1_COORD_TYPE_vec2)
+		#if defined(inputOp_phaseField_COORD_TYPE_vec2)
 		{
 			#ifdef THIS_COORD_TYPE_vec2
 			z += inputOp_phaseField(p, ctx);
@@ -21,7 +21,7 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 			#error mismatchedCoordType
 			#endif
 		}
-		#elif defined(inputOp1_COORD_TYPE_vec3)
+		#elif defined(inputOp_phaseField_COORD_TYPE_vec3)
 		{
 			#ifdef THIS_COORD_TYPE_vec3
 			z += inputOp_phaseField(p, ctx);
