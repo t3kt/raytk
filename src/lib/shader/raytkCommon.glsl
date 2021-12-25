@@ -226,6 +226,17 @@ float sabs(float x, float k) {
 	return 2.0 * k * log(exp(-abs(x) / k) + 1.0) + abs(x);
 }
 
+// https://github.com/rreusser/glsl-hypot
+float hypot (vec2 z) {
+	float t;
+	float x = abs(z.x);
+	float y = abs(z.y);
+	t = min(x, y);
+	x = max(x, y);
+	t = t / x;
+	return (z.x == 0.0 && z.y == 0.0) ? 0.0 : x * sqrt(1.0 + t * t);
+}
+
 float adaptAsFloat(float p) { return p; }
 float adaptAsFloat(vec2 p) { return p.x; }
 float adaptAsFloat(vec3 p) { return p.x; }
