@@ -1,9 +1,23 @@
 // https://www.shadertoy.com/view/fljXzK
 ReturnT thismap(CoordT p, ContextT ctx) {
-	float c = THIS_Radius;
-	float a = THIS_Amplitude;
+	float ang = atan(p.y, p.x);
+	#ifdef THIS_EXPOSE_normangle
+	THIS_normangle = ang / TAU + 0.5;
+	#endif
+	#ifdef THIS_HAS_INPUT_petalsField
+	float f = inputOp_petalsField(p, ctx);
+	#else
 	float f = THIS_Petals;
-	float ang = mod(atan(p.y, p.x) + PI / f, 2.0 * PI / f) - PI / f;
+	#endif
+	ang = mod(ang + PI / f, 2.0 * PI / f) - PI / f;
+	float c = THIS_Radius;
+	#ifdef THIS_HAS_INPUT_radiusField
+	c *= inputOp_radiusField(p, ctx);
+	#endif
+	float a = THIS_Amplitude;
+	#ifdef THIS_HAS_INPUT_amplitudeField
+	a *= inputOp_amplitudeField(p, ctx);
+	#endif
 	p = vec2(cos(ang), sin(ang)) * length(p);
 	p.y = abs(p.y);
 

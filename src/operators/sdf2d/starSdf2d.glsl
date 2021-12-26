@@ -1,7 +1,14 @@
 ReturnT thismap(CoordT p, ContextT ctx) {
 	CoordT p0 = p;
+	#pragma r:if THIS_EXPOSE_normangle
+	THIS_normangle = atan(p.y, p.x) / TAU + 0.5;
+	#pragma r:endif
 	float r = THIS_Radius;
+	#pragma r:if THIS_HAS_INPUT_pointsField
+	float n = inputOp_pointsField(p, ctx);
+	#pragma r:else
 	float n = THIS_Points;
+	#pragma r:endif
 	float t = THIS_Tightness;
 	#pragma r:if THIS_HAS_INPUT_radiusField
 	r *= inputOp_radiusField(p, ctx);
