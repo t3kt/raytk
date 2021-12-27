@@ -9,6 +9,14 @@ Sdf thismap(CoordT p, ContextT ctx) {
 	#else
 	vec3 pt2 = THIS_Endpoint2;
 	#endif
+	#ifdef THIS_EXPOSE_normoffset
+	{
+		// Not sure if this is correct.
+		float d1 = length(p - pt1);
+		float d2 = length(p - pt2);
+		THIS_normoffset = saturate(d1 / (d1 + d2));
+	}
+	#endif
 	float r = THIS_Radius;
 	#ifdef THIS_HAS_INPUT_radiusField
 	r *= inputOp_radiusField(p, ctx);
