@@ -1,0 +1,4 @@
+name	label	dataType	enable
+lightcolor	Light Color	vec3	1
+surfacecolor	Surface Color (r, g, b, is set)	vec4	1
+surfaceuv	Surface UV (u, v, w, is set)	vec4	1
