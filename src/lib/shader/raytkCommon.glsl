@@ -12,6 +12,11 @@ mat3 rotateMatrix(vec3 r) {
 	return TDRotateX(r.x) * TDRotateY(r.y) * TDRotateZ(r.z);
 }
 
+mat2 rotateMatrix2d(float a) {
+	float ca = cos(a), sa = sin(a);
+	return mat2(ca, -sa, sa, ca);
+}
+
 
 void pRotateOnXYZ(inout vec3 p, vec3 rotation) {
 	vec2 temp;
