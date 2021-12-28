@@ -2,6 +2,6 @@
   "meta": {
     "opStatus": "deprecated",
     "opType": "raytk.operators.convert.sdfToFloat",
-    "opVersion": 8
+    "opVersion": 9
   }
 }
