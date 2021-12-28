@@ -1,4 +1,4 @@
-vec4 thismap(vec2 p, ContextT ctx) {
+ReturnT thismap(CoordT p, ContextT ctx) {
 	float d = adaptAsFloat(inputOp1(p, ctx));
 	vec4 color;
 

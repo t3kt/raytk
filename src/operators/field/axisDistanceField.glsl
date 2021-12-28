@@ -1,4 +1,4 @@
-float thismap(CoordT p, ContextT ctx) {
+ReturnT thismap(CoordT p, ContextT ctx) {
 	#pragma r:if THIS_COORD_TYPE_float
 	return abs(p - THIS_Center);
 	#pragma r:else

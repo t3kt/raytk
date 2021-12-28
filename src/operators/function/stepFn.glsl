@@ -1,4 +1,4 @@
-ReturnT thismap(float p, ContextT ctx) {
+ReturnT thismap(CoordT p, ContextT ctx) {
 	ReturnT res;
 	#ifdef THIS_Function_smoothstep
 	float low = THIS_Edge - THIS_Blend * 0.5;

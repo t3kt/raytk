@@ -1,4 +1,4 @@
-ReturnT thismap(float p, ContextT ctx) {
+ReturnT thismap(CoordT p, ContextT ctx) {
 	ReturnT res;
 	initDefVal(res);
 	#if THIS_INPUT_COUNT == 0

@@ -1,4 +1,4 @@
-﻿Sdf thismap(vec3 p, ContextT ctx) {
+﻿ReturnT thismap(CoordT p, ContextT ctx) {
 	vec4 c = vec4(THIS_C1, THIS_C2, THIS_C3, THIS_C4);
 	vec4 z = vec4(p, 0);
 	float md2 = 1.;

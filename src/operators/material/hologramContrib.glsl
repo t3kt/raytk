@@ -1,4 +1,4 @@
-ReturnT thismap(CoordT p, MaterialContext ctx) {
+ReturnT thismap(CoordT p, ContextT ctx) {
 	vec3 ro = ctx.ray.pos;
 	vec3 rd = ctx.ray.dir;
 	float lum = 1.;

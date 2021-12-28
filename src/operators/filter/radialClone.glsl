@@ -1,4 +1,4 @@
-Sdf thismap(CoordT p, ContextT ctx) {
+ReturnT thismap(CoordT p, ContextT ctx) {
 	Sdf merged;
 	int n = int(THIS_Count);
 	float rot = THIS_Angleoffset;

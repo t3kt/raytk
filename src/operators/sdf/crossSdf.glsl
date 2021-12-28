@@ -1,4 +1,4 @@
-Sdf thismap(CoordT p, ContextT ctx) {
+ReturnT thismap(CoordT p, ContextT ctx) {
 	p -= THIS_Translate;
 	#pragma r:if THIS_HAS_INPUT_sizeField
 	vec3 size = THIS_Size * fillToVec3(inputOp_sizeField(p, ctx));

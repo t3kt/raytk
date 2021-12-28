@@ -1,4 +1,4 @@
-Sdf thismap(CoordT p, ContextT ctx) {
+ReturnT thismap(CoordT p, ContextT ctx) {
 	#ifdef THIS_HAS_INPUT_endpoint1
 	vec3 pt1 = inputOp_endpoint1(p, ctx).xyz;
 	#else

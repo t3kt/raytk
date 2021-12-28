@@ -1,5 +1,5 @@
 #define __MANDELBULB_V2
-Sdf thismap(vec3 p, ContextT ctx) {
+ReturnT thismap(CoordT p, ContextT ctx) {
 	vec4 orb;
 	p -= THIS_Translate;
 	float power = THIS_Power;

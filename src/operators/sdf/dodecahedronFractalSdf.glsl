@@ -1,4 +1,4 @@
-Sdf thismap(vec3 p, ContextT ctx) {
+ReturnT thismap(CoordT p, ContextT ctx) {
 	mat3 fracRotation1 = TDRotateOnAxis(THIS_Rotate1, THIS_Rotateaxis1);
 	mat3 fracRotation2 = TDRotateOnAxis(THIS_Rotate2, THIS_Rotateaxis2);
 	int n = int(THIS_Iterations);

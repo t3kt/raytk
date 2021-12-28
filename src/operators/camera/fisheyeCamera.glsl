@@ -1,6 +1,6 @@
 // based on https://www.shadertoy.com/view/MtV3Dd
 
-Ray thismap(vec2 p, CameraContext ctx) {
+ReturnT thismap(CoordT p, ContextT ctx) {
 	vec2 size = ctx.resolution;
 	// fragment coords remapped to -1,1 range
 	vec2 screenPos = -1.0 + 2.0 * p / size;
