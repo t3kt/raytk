@@ -72,6 +72,7 @@ class TestEditor:
 			return
 		processTest(comp, log=None)
 		comp.clearScriptErrors(recurse=True)
+		self.reloadOutputs()
 		iop.testInspectorCore.GetFindings()
 
 	def _loadTest(self, name: str, toxPath: Path):
