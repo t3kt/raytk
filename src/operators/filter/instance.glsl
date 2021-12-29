@@ -12,19 +12,23 @@ CoordT THIS_transform(CoordT p, int i) {
 	return p;
 }
 
+void THIS_exposeIndex(ContextT ctx, int i, int n) {
+	setIterationIndex(ctx, i);
+	#pragma r:if THIS_EXPOSE_index
+	THIS_index = i;
+	#pragma r:endif
+	#pragma r:if THIS_EXPOSE_normindex
+	THIS_normindex = float(i) / float(n - 1);
+	#pragma r:endif
+}
+
 ReturnT thismap(CoordT p, ContextT ctx) {
 	int n = int(THIS_Instancecount);
-	setIterationIndex(ctx, 0);
+	THIS_exposeIndex(ctx, 0, n);
 	CoordT q = THIS_transform(p, 0);
 	ReturnT res1 = inputOp1(q, ctx);
 	for (int i = 1; i < n; i++) {
-		setIterationIndex(ctx, i);
-		#pragma r:if THIS_EXPOSE_index
-		THIS_index = i;
-		#pragma r:endif
-		#pragma r:if THIS_EXPOSE_normindex
-		THIS_normindex = float(i) / float(n - 1);
-		#pragma r:endif
+		THIS_exposeIndex(ctx, i, n);
 		q = THIS_transform(p, i);
 		ReturnT res2 = inputOp1(q, ctx);
 		#pragma r:if THIS_HAS_INPUT_radiusField
