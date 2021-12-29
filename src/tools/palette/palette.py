@@ -233,8 +233,6 @@ class Palette:
 			refOp.par.Outputop.readOnly = True
 			refOp.par.Outputbuffer.val = outputName
 			refOp.par.Outputbuffer.readOnly = True
-			refOp.par.Lockbuffermenu.val = True
-			refOp.par.Lockbuffermenu.readOnly = True
 		self.createItem(
 			'/raytk/operators/output/renderSelect',
 			postSetup=initSel
