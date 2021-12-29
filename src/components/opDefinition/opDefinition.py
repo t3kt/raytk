@@ -644,9 +644,12 @@ def updateOP():
 		updater.UpdateOP(host)
 		return
 	if not host.par.clone:
+		msg = 'Unable to update OP because master is not found in the loaded toolkit.'
+		if parentPar().Raytkopstatus == 'deprecated':
+			msg += '\nNOTE: This OP has been marked as "Deprecated", so it may have been removed from the toolkit.'
 		_popDialog().Open(
 			title='Warning',
-			text='Unable to update OP because master is not found in the loaded toolkit.',
+			text=msg,
 			escOnClickAway=True,
 		)
 		return
