@@ -8,6 +8,9 @@
   * The palette now has a toggle to enable showing thumbnail images next to each type of
     operator. These make it easier to find the operators you're looking for, and see what's available. Not all operators
     have thumnbnails (e.g. it's hard to represent things like floatToVector in an image).
+* Shortcuts in the palette.
+  * Common operators now have shortcuts that can be typed into the palette for quick access.
+  * Shortcuts are shown in the palette next to operator names.
 * Variables are a whole new way to control and vary the behavior of operators.
   * These will eventually replace Iteration.
   * They use more explicit connections and support multiple levels of values. For example, you can repeat a shape radially
@@ -23,9 +26,11 @@
     * bend
     * bezierSdf
     * bezierSdf2d
+    * capsuleSdf
     * cylinderSdf
     * extrude
     * flip
+    * flowerSdf2d
     * helixSdf
     * instance
     * iteratedTransform
@@ -33,36 +38,50 @@
     * mirrorOctant
     * mirrorQuadrant
     * mobiusSdf
+    * modularMat
     * modulo1d
     * modulo2d
     * modulo3d
     * moduloDistance
     * moduloPolar
+    * pieSdf2d
     * providePosition
     * provideVariable
     * quadTreeRepeat
     * radialClone
     * reflect
     * revolve
+    * starSdf2d
     * torusSdf
     * variableReference
     * Helper buttons to create references
     * Validation for references
   * New ops
+    * exposeValue (#499)
     * flowerSdf2d (#748)
+    * mirrorAxes (#641)
     * moduloSpherical
     * provideVariable
     * variableReference
+    * wedgeSdf2d
   * New field inputs (#588)
-    * bezierSdf2d point field inputs
+    * bezierSdf and bezierSdf2d point field inputs (#726)
+    * blend seprate source field parameter (#413)
+    * blobbyCrossSdf2d
     * crossSdf2d
+    * dogBoneSdf2d
+    * flowerSdf2d
     * parabolaSdf2d
+    * parallelogramSdf2d
+    * pieSdf2d
     * planeSdf2d
     * quadSdf2d
     * spikeSdf2d
+    * starSdf2d
     * switch (#413)
     * vesicaSdf2d
   * New parameters
+    * cellTileField coord types (#766)
     * headSdf blinking (#116)
     * spikeSdf2d direction and center
     * reflect blending (#53)
@@ -74,17 +93,24 @@
   * Add help to some operators
   * Show thumbnail images in the doc site
   * Surface normal output in render2D (#560)
-  * Shorcut parameters to create renderSelects similar to the variable shortcuts
+  * Shortcut parameters to create renderSelects similar to the variable shortcuts
+  * Shortcuts for common operators in the palette (#764)
 * Changes (potentially breaking)
   * Move spikeSdf2d to the correct category. This will break Update OP for those operators.
   * Reflect handling of Offset changed, resulting in slightly reduced offsets.
   * Remove 1D coord support in cylinderSdf, since variables do the same thing (#521, #574)
+  * renderSelect menu handling has changed a bit, so updates may break operators. Use the "Select..." shortcuts on the renderer to create replacements. (#598)
 * Fixes
   * Fix broken help in palette (#731)
   * Fix broken color output in pointMapRender (#757)
   * Fix height field input in cylinderSdf (#767)
   * Fix compile error in adjustColor (#775)
   * Fix parameter ordering in fieldRender
+  * Fix compile error in quantizeValue
+  * Fix compile error in waveletNoiseField
+  * Don't show an error on combine when only first input is connected (#777)
+  * Detach inspector when target op is destroyed or window closes.
+  * Fix issues with output buffer menu in renderSelect (#598)
 * Infrastructure / internals
   * Support for variables and references (#574, #712)
   * Refactoring and cleanup of token replacement in opDefinition
@@ -94,6 +120,7 @@
     * Generate thumbnails from tests
   * Log files for builds with verbosity settings (#732)
   * Consolidate input name columns in op definition tables (#299)
+  * Standardize use of type aliases for primary function declarations
 
 ## v0.19
 
