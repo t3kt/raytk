@@ -80,6 +80,7 @@ op:
       input 2, etc.
   summary: A camera that splits the viewport into several zones, each using a separate
     camera.
+  thumb: assets/images/reference/operators/camera/splitCamera_thumb.png
 
 ---
 

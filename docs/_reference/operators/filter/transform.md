@@ -102,6 +102,8 @@ op:
     - label: Uniform
       name: uniform
     name: Scaletype
+  shortcuts:
+  - tfm
   summary: Transform the coordinates of the input, with rotation, scaling, and translation.
 
 ---

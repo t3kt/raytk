@@ -67,6 +67,8 @@ op:
     name: Mult
   - label: Post Add
     name: Postadd
+  shortcuts:
+  - rf
   summary: Rescales the values produced by a field.
 
 ---

@@ -87,6 +87,8 @@ op:
   - label: Side Index (0/1)
     name: Createrefindex
     summary: 'Create reference to variable: Side Index (0/1)'
+  shortcuts:
+  - ref
   summary: Reflects space across a plane.
   thumb: assets/images/reference/operators/filter/reflect_thumb.png
 

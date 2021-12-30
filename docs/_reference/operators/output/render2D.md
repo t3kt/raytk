@@ -149,7 +149,10 @@ op:
   - label: Select Normal
     name: Createrselnormalout
     summary: 'Create renderSelect for output: Normal'
+  shortcuts:
+  - r2
   summary: Renders a 2D image by evaluating the input field for each pixel.
+  thumb: assets/images/reference/operators/output/render2D_material_thumb.png
 
 ---
 

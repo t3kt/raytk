@@ -23,6 +23,8 @@ cat:
     status: beta
     summary: Light that is based on a standard Light COMP.
   - name: pointLight
+    shortcuts:
+    - pl
     summary: Light eminating from a single point in space, with optional distance
       attentuation.
   - name: softShadow

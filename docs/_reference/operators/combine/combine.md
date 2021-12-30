@@ -45,7 +45,6 @@ op:
     - vec3
     label: definition_in_2
     name: input2
-    required: true
     returnTypes:
     - Sdf
   - contextTypes:
@@ -157,6 +156,8 @@ op:
       the blending regions.
   - label: Offset
     name: Offset
+  shortcuts:
+  - cmb
   summary: Combines SDFs in various ways.
   thumb: assets/images/reference/operators/combine/combine_thumb.png
 

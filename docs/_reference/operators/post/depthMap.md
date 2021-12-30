@@ -32,5 +32,6 @@ op:
     name: Expval
   - label: Output OP
     name: Outputop
+  thumb: assets/images/reference/operators/post/depthMap_thumb.png
 
 ---

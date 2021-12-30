@@ -130,6 +130,8 @@ op:
   - label: Cell Coord
     name: Createrefcellcoord
     summary: 'Create reference to variable: Cell Coord'
+  shortcuts:
+  - m3
   summary: Repeats space along all 3 axes.
   thumb: assets/images/reference/operators/filter/modulo3D_thumb.png
 

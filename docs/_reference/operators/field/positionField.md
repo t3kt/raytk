@@ -56,6 +56,8 @@ op:
     - label: Z
       name: z
     name: Axis
+  shortcuts:
+  - pos
   summary: A vector field that produces the coordinates in space where it is checked.
   thumb: assets/images/reference/operators/field/positionField_thumb.png
 

@@ -76,6 +76,8 @@ op:
     - label: 3D
       name: vec3
     name: Coordtype
+  shortcuts:
+  - tr
   summary: Translates coordinates of the input ROP.
 
 ---

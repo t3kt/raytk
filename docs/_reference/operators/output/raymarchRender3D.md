@@ -333,6 +333,8 @@ op:
     summary: 'Create renderSelect for output: Custom 2'
   - label: Customize Shader Config
     name: Customizeshaderconfig
+  shortcuts:
+  - rr3
   summary: Renders a scene using 3D raymarching.
 
 ---

@@ -111,6 +111,7 @@ op:
   - label: Swap Inputs
     name: Swapinputs
   summary: Combines two vector fields using color compositing.
+  thumb: assets/images/reference/operators/combine/compositeFields_thumb.png
 
 ---
 

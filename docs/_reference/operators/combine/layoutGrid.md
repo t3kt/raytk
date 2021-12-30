@@ -124,6 +124,7 @@ op:
     name: Prescale
     summary: Scales the inputs within their cells.
   summary: Slices space into a grid, and places each input in a separate cell.
+  thumb: assets/images/reference/operators/combine/layoutGrid_thumb.png
 
 ---
 

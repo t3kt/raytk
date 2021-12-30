@@ -14,7 +14,11 @@ cat:
   operators:
   - name: arcSdf2d
   - name: arrowSdf2d
-  - name: bezierSdf2d
+  - keywords:
+    - bezier
+    - curve
+    - line
+    name: bezierSdf2d
     status: beta
   - name: blobbyCrossSdf2d
   - name: circleSdf
@@ -65,6 +69,8 @@ cat:
   - name: vesicaSdf2d
     summary: SDF for a 2d vesica, which is a shape based on the overlap between two
       circles.
+  - name: wedgeSdf2d
+    status: beta
   summary: 'Signed distances functions which define geometry in 2D space, by calculating
 
     the distance from the edge of the shape at any given point.'

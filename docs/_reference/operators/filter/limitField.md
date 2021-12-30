@@ -53,6 +53,7 @@ op:
   - label: Input High
     name: High
   summary: Limits the values produced by a float or vector field.
+  thumb: assets/images/reference/operators/filter/limitField_thumb.png
 
 ---
 

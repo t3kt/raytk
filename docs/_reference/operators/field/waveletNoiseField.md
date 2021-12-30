@@ -66,5 +66,6 @@ op:
     name: Amplitude
   - label: Offset
     name: Offset
+  thumb: assets/images/reference/operators/field/waveletNoiseField_thumb.png
 
 ---

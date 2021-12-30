@@ -91,6 +91,8 @@ op:
   - label: Normalized Offset
     name: Createrefnormoffset
     summary: 'Create reference to variable: Normalized Offset'
+  shortcuts:
+  - ext
   summary: Creates a 3D SDF by extruding a 2D SDF along along an axis.
   thumb: assets/images/reference/operators/convert/extrude_thumb.png
 

@@ -158,6 +158,8 @@ op:
   - label: Cell Index
     name: Createrefcellcoord
     summary: 'Create reference to variable: Cell Index'
+  shortcuts:
+  - m1
   summary: Repeats space along one axis.
   thumb: assets/images/reference/operators/filter/modulo1D_thumb.png
 

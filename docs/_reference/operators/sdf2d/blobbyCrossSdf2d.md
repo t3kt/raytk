@@ -8,6 +8,33 @@ redirect_from:
   - /reference/opType/raytk.operators.sdf2d.blobbyCrossSdf2d/
 op:
   category: sdf2d
+  inputs:
+  - contextTypes:
+    - Context
+    - MaterialContext
+    - CameraContext
+    - LightContext
+    - RayContext
+    - ParticleContext
+    coordTypes:
+    - vec2
+    label: Tightness Field
+    name: tightnessField
+    returnTypes:
+    - float
+  - contextTypes:
+    - Context
+    - MaterialContext
+    - CameraContext
+    - LightContext
+    - RayContext
+    - ParticleContext
+    coordTypes:
+    - vec2
+    label: Rounding Field
+    name: tightnessField1
+    returnTypes:
+    - float
   name: blobbyCrossSdf2d
   opType: raytk.operators.sdf2d.blobbyCrossSdf2d
   parameters:

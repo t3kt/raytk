@@ -50,6 +50,8 @@ op:
     summary: Whether to apply the shadow to the color/level produced by this element.
   - label: Use Surface Color
     name: Usesurfacecolor
+  shortcuts:
+  - dc
   summary: A material element that provides diffuse light contribution.
   thumb: assets/images/reference/operators/material/diffuseContrib_thumb.png
 

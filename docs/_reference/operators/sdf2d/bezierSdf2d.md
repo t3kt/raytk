@@ -61,6 +61,10 @@ op:
     name: radiusField
     returnTypes:
     - float
+  keywords:
+  - bezier
+  - curve
+  - line
   name: bezierSdf2d
   opType: raytk.operators.sdf2d.bezierSdf2d
   parameters:

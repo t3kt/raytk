@@ -57,6 +57,10 @@ op:
     - float
     - vec4
     - Sdf
+  keywords:
+  - point
+  - render
+  - volumetric
   name: pointMapRender
   opType: raytk.operators.output.pointMapRender
   parameters:
@@ -160,8 +164,11 @@ op:
     name: Normalsmoothing
   - label: Customize Shader Config
     name: Customizeshaderconfig
+  shortcuts:
+  - pmr
   summary: Renderer that takes in a TOP of coordinates and evaluates the scene at
     each point.
+  thumb: assets/images/reference/operators/output/pointMapRender_thumb.png
 
 ---
 

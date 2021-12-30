@@ -163,6 +163,7 @@ op:
     name: Createrselcolorout
     summary: 'Create renderSelect for output: Color'
   summary: Visualizes the graph of a function operator.
+  thumb: assets/images/reference/operators/output/functionGraphRender_thumb.png
 
 ---
 

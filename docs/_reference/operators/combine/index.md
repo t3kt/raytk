@@ -29,6 +29,8 @@ cat:
     - stairs
     - union
     name: combine
+    shortcuts:
+    - cmb
     summary: Combines SDFs in various ways.
   - name: combineChamfer
     status: deprecated
@@ -77,6 +79,8 @@ cat:
   - name: simpleIntersect
     summary: Combines SDFs using the intersect operator.
   - name: simpleUnion
+    shortcuts:
+    - su
     summary: Combines several SDFs using the union operator.
   - name: smoothUnion
     summary: Combines SDFs using a smooth union operator.

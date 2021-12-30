@@ -1,0 +1,23 @@
+---
+layout: operator
+title: wedgeSdf2d
+parent: Sdf2d Operators
+grand_parent: Operators
+permalink: /reference/operators/sdf2d/wedgeSdf2d
+redirect_from:
+  - /reference/opType/raytk.operators.sdf2d.wedgeSdf2d/
+op:
+  category: sdf2d
+  name: wedgeSdf2d
+  opType: raytk.operators.sdf2d.wedgeSdf2d
+  parameters:
+  - label: End Point 1
+    name: Endpoint1
+  - label: Center Point
+    name: Centerpoint
+  - label: End Point 2
+    name: Endpoint2
+  status: beta
+  thumb: assets/images/reference/operators/sdf2d/wedgeSdf2d_thumb.png
+
+---

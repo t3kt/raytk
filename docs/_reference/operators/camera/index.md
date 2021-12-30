@@ -15,12 +15,22 @@ cat:
   operators:
   - name: basicCamera
     status: deprecated
-  - name: fisheyeCamera
+  - keywords:
+    - '360'
+    - cubemap
+    - dome
+    - equiangular
+    - equirectangular
+    - pinhole
+    - stereographic
+    name: fisheyeCamera
     summary: A 360 fisheye camera, that shows all directions from a specific point
       in space.
   - name: linkedCamera
     summary: A camera that is linked to an existing TD Camera COMP.
   - name: lookAtCamera
+    shortcuts:
+    - lac
     summary: A camera that focuses on a specific point in space.
   - name: orthoCamera
     status: beta

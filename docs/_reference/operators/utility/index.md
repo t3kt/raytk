@@ -8,6 +8,8 @@ permalink: /reference/operators/utility/
 cat:
   name: utility
   operators:
+  - name: exposeValue
+    status: beta
   - name: injectGlobalPosition
     summary: Calls its input using the untransformed global position.
   - name: injectObjectId

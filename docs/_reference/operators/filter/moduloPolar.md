@@ -160,6 +160,8 @@ op:
   - label: Normalized Step (0..1)
     name: Createrefnormstep
     summary: 'Create reference to variable: Normalized Step (0..1)'
+  shortcuts:
+  - mp
   summary: Repeats space radially, like a kaleidoscope.
   thumb: assets/images/reference/operators/filter/moduloPolar_thumb.png
 

@@ -11,6 +11,8 @@ cat:
   - name: coordTo2D
   - name: coordTo3D
   - name: extrude
+    shortcuts:
+    - ext
     summary: Creates a 3D SDF by extruding a 2D SDF along along an axis.
   - name: floatToSdf
     summary: Converts a float value field into an SDF.

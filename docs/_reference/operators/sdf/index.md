@@ -20,7 +20,11 @@ cat:
     name: apollonianSdf
   - name: archSdf
     status: beta
-  - name: bezierSdf
+  - keywords:
+    - bezier
+    - curve
+    - line
+    name: bezierSdf
     status: beta
   - keywords:
     - box
@@ -29,6 +33,8 @@ cat:
     - rectangle
     - square
     name: boxFrameSdf
+    shortcuts:
+    - bfs
     summary: SDF for the squared frame of the edges of a box.
   - keywords:
     - box
@@ -36,6 +42,8 @@ cat:
     - rectangle
     - square
     name: boxSdf
+    shortcuts:
+    - box
     summary: SDF for a box, optionally infinite one one axis.
   - name: bunnySdf
     summary: SDF for a bunny.
@@ -186,6 +194,8 @@ cat:
     summary: A conical slice of a sphere.
   - name: sphereFbmSdf
   - name: sphereSdf
+    shortcuts:
+    - sph
     summary: SDF in 3D space for a uniform sphere.
   - keywords:
     - coil
