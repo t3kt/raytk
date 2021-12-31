@@ -8,22 +8,24 @@ context = args[0]  # type: BuildTaskContext
 
 def runStage(stage: int):
 	if stage == 0:
+		context.detachTox(parent())
+	elif stage == 1:
 		context.log('Replicating thumbnail TOPs')
 		repl = op('thumbFileReplicator')
 		repl.par.recreateall.pulse()
-	elif stage == 1:
+	elif stage == 2:
 		repl = op('thumbFileReplicator')
 		context.log(f'Destroying replicator {repl}')
 		context.safeDestroyOp(repl)
 		thumbs = ops('thumbImages/thumb_*')
 		context.log(f'Post replication, have {len(thumbs)} thumb images')
-	elif stage == 2:
+	elif stage == 3:
 		context.log('Reloading images')
 		thumbs = ops('thumbImages/thumb_*')
 		context.log(f'Found {len(thumbs)} images')
 		for o in thumbs:
 			o.par.reloadpulse.pulse()
-	elif stage == 3:
+	elif stage == 4:
 		context.log('Locking images')
 		thumbs = ops('thumbImages/thumb_*')
 		context.lockOps(thumbs)
