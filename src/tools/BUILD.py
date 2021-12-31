@@ -27,6 +27,11 @@ def runStage(stage: int):
 			context.safeDestroyOp(op('sceneEditor'))
 		context.queueAction(runStage, stage + 1)
 	elif stage == 4:
+		if not context.experimental:
+			context.log('Stripping out the editorTools')
+			context.safeDestroyOp(op('editorTools'))
+		context.queueAction(runStage, stage + 1)
+	elif stage == 5:
 		context.runBuildScript(
 			op('palette/BUILD'),
 			thenRun=context.finishTask,
