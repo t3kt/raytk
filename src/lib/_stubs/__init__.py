@@ -1668,7 +1668,7 @@ panelCOMP = PanelCOMP
 mergeDAT = nullDAT = parameterexecuteDAT = parameterDAT = tableDAT = textDAT = scriptDAT = DAT
 inDAT = outDAT = infoDAT = substituteDAT = DAT
 parameterCHOP = nullCHOP = selectCHOP = inCHOP = outCHOP = CHOP
-inTOP = outTOP = TOP
+inTOP = outTOP = nullTOP = TOP
 importselectSOP = SOP
 
 class animationCOMP(COMP):

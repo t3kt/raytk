@@ -135,7 +135,7 @@ class ROPInfo:
 			self.opDef = o
 			# noinspection PyTypeChecker
 			self.opDefPar = self.opDef.par
-		elif _isRComp(o):
+		elif isRComp(o):
 			self.rop = o
 			self.opDef = o.op('compDefinition')
 			# noinspection PyTypeChecker
@@ -216,7 +216,7 @@ class ROPInfo:
 
 	@property
 	def isRComp(self):
-		return _isRComp(self.rop)
+		return isRComp(self.rop)
 
 	@property
 	def _statusInParam(self):
@@ -579,7 +579,7 @@ class CategoryInfo:
 def isROP(o: 'OP'):
 	return bool(o) and o.isCOMP and RaytkTags.raytkOP.isOn(o)
 
-def _isRComp(o: 'OP'):
+def isRComp(o: 'OP'):
 	return bool(o) and o.isCOMP and RaytkTags.raytkComp.isOn(o)
 
 def isROPDef(o: 'OP'):
@@ -591,11 +591,11 @@ def _isRCompDef(o: 'OP'):
 def _getROP(comp: 'COMP', checkParents=True):
 	if not comp or comp is root:
 		return None
-	if isROP(comp) or _isRComp(comp):
+	if isROP(comp) or isRComp(comp):
 		return comp
 	if isROPDef(comp) or _isRCompDef(comp):
 		host = op(comp.par['Hostop'])
-		if isROP(host) or _isRComp(host):
+		if isROP(host) or isRComp(host):
 			return host
 	if checkParents:
 		return _getROP(comp.parent(), checkParents=checkParents)
