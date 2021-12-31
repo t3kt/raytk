@@ -264,6 +264,8 @@ op:
     name: Backgroundfield
   - label: Use Background Field Alpha
     name: Usebackgroundfieldalpha
+  - label: Distance Correction Factor
+    name: Distfactor
   - label: Enable Normal Smoothing
     name: Enablenormalsmoothing
   - label: Normal Smoothing
