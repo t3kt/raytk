@@ -6,11 +6,7 @@ if False:
 	# noinspection PyUnresolvedReferences
 	from _stubs import *
 	from _typeAliases import *
-	from devel.toolkitEditor.toolkitEditor import ToolkitEditor
 	from components.opPicker.opPicker import OpPicker, PickerItem
-
-	# noinspection PyTypeHints
-	op.raytkDevelEditor = ToolkitEditor(COMP())  # type: Optional[Union[ToolkitEditor, COMP]]
 
 	ext.opPicker = OpPicker(COMP())
 
@@ -118,7 +114,7 @@ class Palette:
 		if shortcutName == 'esc':
 			self.close()
 
-	def createItem(self, templatePath: str, postSetup: 'Optional[Callable[[COMP], None]]' = None):
+	def CreateItem(self, templatePath: str, postSetup: 'Optional[Callable[[COMP], None]]' = None):
 		template = self._getTemplate(templatePath)
 		if not template:
 			self._printAndStatus(f'Unable to find template for path: {templatePath}')
@@ -222,7 +218,7 @@ class Palette:
 			refOp.par.Variable.readOnly = True
 			refOp.par.Datatype = dataType
 			refOp.par.Datatype.readOnly = True
-		self.createItem(
+		self.CreateItem(
 			'/raytk/operators/utility/variableReference',
 			postSetup=initRef
 		)
@@ -233,7 +229,7 @@ class Palette:
 			refOp.par.Outputop.readOnly = True
 			refOp.par.Outputbuffer.val = outputName
 			refOp.par.Outputbuffer.readOnly = True
-		self.createItem(
+		self.CreateItem(
 			'/raytk/operators/output/renderSelect',
 			postSetup=initSel
 		)
@@ -246,6 +242,8 @@ class Palette:
 	def _getTemplate(path: str):
 		if not path:
 			return
+		if path.startswith('raytk.operators.'):
+			path = '/' + path.replace('.', '/')
 		if not path.startswith('/raytk/'):
 			return op(path)
 		context = RaytkContext()
@@ -262,7 +260,7 @@ class Palette:
 		if item.isCategory:
 			# TODO: maybe expand/collapse?
 			return
-		self.createItem(item.path)
+		self.CreateItem(item.path)
 
 	def onRolloverItem(self, item: 'Optional[PickerItem]'):
 		self.ownerComp.op('thumbImage').cook(force=True)
