@@ -1,0 +1,20 @@
+name	label	code	params
+none	None		
+simpleUnion	Simple Union	res1 = cmb_simpleUnion(res1, res2);	Swapinputs
+simpleIntersect	Simple Intersect	res1 = cmb_simpleIntersect(res1, res2);	Swapinputs
+simpleDiff	Simple Difference	res1 = cmb_simpleDiff(res1, res2);	Swapinputs
+smoothUnion	Smooth Union	res1 = cmb_smoothUnion(res1, res2, r);	Swapinputs Radius
+smoothIntersect	Smooth Intersect	res1 = cmb_smoothIntersect(res1, res2, r);	Swapinputs Radius
+smoothDiff	Smooth Difference	res1 = cmb_smoothDiff(res1, res2, r);	Swapinputs Radius
+roundUnion	Round Union	res1 = cmb_roundUnion(res1, res2, r);	Swapinputs Radius
+roundIntersect	Round Intersect	res1 = cmb_roundIntersect(res1, res2, r);	Swapinputs Radius
+roundDiff	Round Difference	res1 = cmb_roundDiff(res1, res2, r);	Swapinputs Radius
+chamferUnion	Chamfer Union	res1 = cmb_chamferUnion(res1, res2, r);	Swapinputs Radius
+chamferIntersect	Chamfer Intersect	res1 = cmb_chamferIntersect(res1, res2, r);	Swapinputs Radius
+chamferDiff	Chamfer Difference	res1 = cmb_chamferDiff(res1, res2, r);	Swapinputs Radius
+stairUnion	Stair Union	res1 = cmb_stairUnion(res1, res2, r, n, o);	Swapinputs Radius Number Offset
+stairIntersect	Stair Intersect	res1 = cmb_stairIntersect(res1, res2, r, n, o);	Swapinputs Radius Number Offset
+stairDiff	Stair Difference	res1 = cmb_stairDiff(res1, res2, r, n, o);	Swapinputs Radius Number Offset
+columnUnion	Column Union	res1 = cmb_columnUnion(res1, res2, r, n, o);	Swapinputs Radius Number Offset
+columnIntersect	Column Intersect	res1 = cmb_columnDiff(res1, res2, r, n, o);	Swapinputs Radius Number Offset
+columnDiff	Column Difference	res1 = cmb_columnIntersect(res1, res2, r, n, o);	Swapinputs Radius Number Offset

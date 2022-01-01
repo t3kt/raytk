@@ -19,6 +19,10 @@ def _effectiveMode():
 		mode = 'inline'if par is None or par.readOnly else 'switch'
 	return mode
 
+def buildStateTable(dat: 'DAT'):
+	dat.clear()
+	dat.appendRow(['effectiveMode', _effectiveMode()])
+
 def buildParametersTable(dat: 'DAT'):
 	dat.clear()
 	mode = _effectiveMode()
