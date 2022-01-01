@@ -54,6 +54,8 @@ op:
   - label: Attenuation End
     name: Attenuationend
     summary: The distance at which the light is fully dimmed.
+  shortcuts:
+  - pl
   summary: Light eminating from a single point in space, with optional distance attentuation.
 
 ---

@@ -180,6 +180,7 @@ op:
     summary: 'How to handle iteration values outside the 0..(N-1) range. '
   summary: Switches between inputs based on the iteration value provided by a downstream
     operator.
+  thumb: assets/images/reference/operators/combine/iterationSwitch_thumb.png
 
 ---
 

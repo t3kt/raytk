@@ -51,6 +51,7 @@ op:
     summary: Offsets the twisting along the axis, effectively rotating everything
       equally around it.
   summary: Twists space around an axis.
+  thumb: assets/images/reference/operators/filter/twist_thumb.png
 
 ---
 

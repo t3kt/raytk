@@ -50,6 +50,7 @@ op:
     name: Offset
     summary: Noise value offset.
   summary: Curl noise field.
+  thumb: assets/images/reference/operators/field/curlNoiseField_thumb.png
 
 ---
 

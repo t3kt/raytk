@@ -52,6 +52,7 @@ op:
       name: RayContext
     name: Contexttype
   summary: Metaball value field.
+  thumb: assets/images/reference/operators/field/metaballField_thumb.png
 
 ---
 

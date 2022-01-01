@@ -31,6 +31,7 @@ _opDefParamNames = [
 	'Help',
 	'Helpurl',
 	'Keywords',
+	'Shortcuts',
 	'Callbacks',
 	'Raytkoptype',
 	'Raytkopversion',
@@ -65,8 +66,10 @@ def buildOpInfoTable(dat: 'DAT'):
 			'Contexttype',
 		] + _opDefParamNames + [
 			'macroCols',
+			'hasThumb',
 		]
 	)
+	opThumbs = op('opThumbs')
 	context = RaytkContext()
 	for rop in context.allMasterOperators():
 		info = ROPInfo(rop)
@@ -81,7 +84,7 @@ def buildOpInfoTable(dat: 'DAT'):
 			hasHelp = False
 		dat.appendRow([
 			rop.path,
-			_ropKind(info),
+			info.ropKind or '',
 			info.statusLabel or 'stable',
 			hasHelp,
 			info.hasROPInputs,
@@ -99,16 +102,7 @@ def buildOpInfoTable(dat: 'DAT'):
 			macros = info.opDefPar.Macrotable.eval()
 			if macros:
 				dat[rop.path, 'macroCols'] = macros.numCols
-
-def _ropKind(info: 'ROPInfo'):
-	if info.isOutput:
-		return 'ROutput'
-	elif info.isROP:
-		return 'ROP'
-	elif info.isRComp:
-		return 'RComp'
-	else:
-		return ''
+		dat[rop.path, 'hasThumb'] = bool(opThumbs[rop.path, 'thumb'])
 
 def buildOpParamsTable(dat: 'DAT'):
 	dat.clear()
@@ -119,7 +113,7 @@ def buildOpParamsTable(dat: 'DAT'):
 			continue
 		dat.appendRow([
 			info.path,
-			_ropKind(info)
+			info.ropKind or '',
 		])
 		for tuplet in info.rop.customTuplets:
 			par = tuplet[0]
@@ -130,6 +124,28 @@ def buildOpParamsTable(dat: 'DAT'):
 				dat.appendCol([par.tupletName])
 				cell = dat[info.path, par.tupletName]
 			cell.val = par.style
+
+def buildOpVariablesTable(dat: 'DAT'):
+	dat.clear()
+	dat.appendRow(['path'])
+	for rop in RaytkContext().allMasterOperators():
+		info = ROPInfo(rop)
+		if not info.isROP:
+			continue
+		varTable = info.opDefPar.Variabletable.eval()
+		if varTable and isinstance(varTable, evaluateDAT):
+			varTable = varTable.inputs[0]
+		if not varTable:
+			continue
+		dat.appendRow([info.path])
+		for i in range(1, varTable.numRows):
+			name = varTable[i, 'name'] or varTable[i, 0]
+			dataType = varTable[i, 'dataType'] or varTable[i, 2]
+			cell = dat[info.path, name]
+			if cell is None:
+				dat.appendCol([name])
+				cell = dat[info.path, name]
+			cell.val = dataType
 
 def buildOpInputsTable(dat: 'DAT'):
 	dat.clear()

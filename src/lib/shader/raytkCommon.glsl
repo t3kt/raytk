@@ -12,6 +12,11 @@ mat3 rotateMatrix(vec3 r) {
 	return TDRotateX(r.x) * TDRotateY(r.y) * TDRotateZ(r.z);
 }
 
+mat2 rotateMatrix2d(float a) {
+	float ca = cos(a), sa = sin(a);
+	return mat2(ca, -sa, sa, ca);
+}
+
 
 void pRotateOnXYZ(inout vec3 p, vec3 rotation) {
 	vec2 temp;
@@ -94,6 +99,10 @@ mat4 lookAtViewMatrix(vec3 eye, vec3 center, vec3 up) {
 }
 
 float ndot(vec2 a, vec2 b ) { return a.x*b.x - a.y*b.y; }
+
+vec3 sgn(vec3 v) {
+	return vec3((v.x<0)?-1:1, (v.y<0)?-1:1, (v.z<0)?-1:1);
+}
 
 // https://iquilezles.org/www/articles/smoothstepintegral/smoothstepintegral.htm
 float smoothstepIntegral(float b, float x) {
@@ -216,6 +225,23 @@ vec3 intHash3( uvec3 x )
 	return vec3(x)*(1.0/float(0xffffffffU));
 }
 
+// Smooth abs() - https://www.shadertoy.com/view/tlcfRn
+float sabs(float x, float k) {
+	if (x == 0.) return abs(x);
+	return 2.0 * k * log(exp(-abs(x) / k) + 1.0) + abs(x);
+}
+
+// https://github.com/rreusser/glsl-hypot
+float hypot (vec2 z) {
+	float t;
+	float x = abs(z.x);
+	float y = abs(z.y);
+	t = min(x, y);
+	x = max(x, y);
+	t = t / x;
+	return (z.x == 0.0 && z.y == 0.0) ? 0.0 : x * sqrt(1.0 + t * t);
+}
+
 float adaptAsFloat(float p) { return p; }
 float adaptAsFloat(vec2 p) { return p.x; }
 float adaptAsFloat(vec3 p) { return p.x; }
@@ -245,6 +271,9 @@ vec2 fillToVec2(vec4 p) { return p.xy; }
 
 vec3 fillToVec3(float p) { return vec3(p); }
 vec3 fillToVec3(vec4 p) { return p.xyz; }
+
+vec4 fillToVec4(float p) { return vec4(p); }
+vec4 fillToVec4(vec4 p) { return p; }
 
 float extractOrUseAsX(float p) { return p; }
 float extractOrUseAsX(vec2 p) { return p.x; }

@@ -71,6 +71,8 @@ cat:
     status: beta
   - name: polarVectorField
   - name: positionField
+    shortcuts:
+    - pos
     summary: A vector field that produces the coordinates in space where it is checked.
   - name: rayField
     summary: Field that provides the ray direction or origin.

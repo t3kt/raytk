@@ -75,6 +75,7 @@ op:
   - label: Use Surface Color
     name: Usesurfacecolor
   summary: Material with a basic lighting model.
+  thumb: assets/images/reference/operators/material/basicMat_thumb.png
 
 ---
 

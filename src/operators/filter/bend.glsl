@@ -1,5 +1,11 @@
 ReturnT thismap(CoordT p, ContextT ctx) {
 	vec3 q = adaptAsVec3(p).THIS_Direction;
+	#ifdef THIS_EXPOSE_axispos
+	THIS_axispos = q.x;
+	#endif
+	#ifdef THIS_EXPOSE_bendpos
+	THIS_bendpos = q.y;
+	#endif
 	#ifdef THIS_HAS_INPUT_bendField
 		#if defined(inputOp_bendField_COORD_TYPE_float)
 		float fieldP = q.x;

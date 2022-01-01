@@ -8,6 +8,46 @@ redirect_from:
   - /reference/opType/raytk.operators.sdf2d.dogBoneSdf2d/
 op:
   category: sdf2d
+  inputs:
+  - contextTypes:
+    - Context
+    - MaterialContext
+    - CameraContext
+    - LightContext
+    - RayContext
+    - ParticleContext
+    coordTypes:
+    - vec2
+    label: Radius Field
+    name: radiusField
+    returnTypes:
+    - float
+  - contextTypes:
+    - Context
+    - MaterialContext
+    - CameraContext
+    - LightContext
+    - RayContext
+    - ParticleContext
+    coordTypes:
+    - vec2
+    label: Length Field
+    name: lengthField
+    returnTypes:
+    - float
+  - contextTypes:
+    - Context
+    - MaterialContext
+    - CameraContext
+    - LightContext
+    - RayContext
+    - ParticleContext
+    coordTypes:
+    - vec2
+    label: Bulge Field
+    name: bulgeField
+    returnTypes:
+    - float
   name: dogBoneSdf2d
   opType: raytk.operators.sdf2d.dogBoneSdf2d
   parameters:
@@ -24,7 +64,15 @@ op:
     name: Bulge
     summary: Negative values pull the connection tighter, positive values bulge out
       perpendicular to the main axis.
+  - label: Axis
+    menuOptions:
+    - label: X
+      name: x
+    - label: Y
+      name: y
+    name: Axis
   summary: 2D SDF for two connected circles.
+  thumb: assets/images/reference/operators/sdf2d/dogBoneSdf2d_thumb.png
 
 ---
 

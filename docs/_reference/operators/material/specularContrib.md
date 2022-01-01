@@ -64,7 +64,10 @@ op:
     summary: Whether to apply the shadow to the color/level produced by this element.
   - label: Use Surface Color
     name: Usesurfacecolor
+  shortcuts:
+  - sc
   summary: A material element that provides specular light contribution.
+  thumb: assets/images/reference/operators/material/specularContrib_thumb.png
 
 ---
 

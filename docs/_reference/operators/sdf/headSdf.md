@@ -15,6 +15,8 @@ op:
     name: Enableears
   - label: Enable Eyes
     name: Enableeyes
+  - label: Blink
+    name: Blink
   - label: Enable Surface Color
     name: Enablesurfacecolor
   - label: Main Color
@@ -22,5 +24,6 @@ op:
   - label: Eye Color
     name: Eyecolor
   status: beta
+  thumb: assets/images/reference/operators/sdf/headSdf_thumb.png
 
 ---

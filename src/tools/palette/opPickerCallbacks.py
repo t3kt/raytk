@@ -12,5 +12,5 @@ def onKeyboardShortcut(info: dict):
 def onPickItem(info: dict):
 	ext.palette.onPickItem(info.get('item'))
 
-def onEditItem(info: dict):
-	ext.palette.onEditItem(info.get('item'))
+def onRolloverItem(info: dict):
+	ext.palette.onRolloverItem(info.get('item'))

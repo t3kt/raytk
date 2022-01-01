@@ -1,6 +1,6 @@
 ReturnT thismap(CoordT p, ContextT ctx) {
-	ReturnT res1 = inputOp1(p, ctx);
-	ReturnT res2 = inputOp2(p, ctx);
+	ReturnT res1 = fillToVec4(inputOp1(p, ctx));
+	ReturnT res2 = fillToVec4(inputOp2(p, ctx));
 	if (THIS_Swapinputs > 0.) {
 		ReturnT tmp = res1;
 		res1 = res2;

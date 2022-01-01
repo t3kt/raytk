@@ -24,12 +24,12 @@ op:
     name: Samplecoords
   - label: Grid Center
     name: Gridcenter
+  - label: Grid Size
+    name: Gridsize
   - label: Grid Resolution X
     name: Gridresolutionx
   - label: Grid Resolution Y
     name: Gridresolutiony
-  - label: Grid Size
-    name: Gridsize
   - label: Grid Resolution Z
     name: Gridresolutionz
   - label: Unit Shape
@@ -57,5 +57,6 @@ op:
   - label: Customize Shader Config
     name: Customizeshaderconfig
   status: beta
+  thumb: assets/images/reference/operators/output/fieldRender_thumb.png
 
 ---

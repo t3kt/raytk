@@ -31,6 +31,7 @@ op:
     name: Iterations
     summary: The number of steps used when refining the fractal.
   summary: Mandelbulb fractal.
+  thumb: assets/images/reference/operators/sdf/mandelbulbSdf_thumb.png
 
 ---
 

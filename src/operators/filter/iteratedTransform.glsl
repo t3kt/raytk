@@ -25,6 +25,12 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 	#pragma r:elif THIS_Iterationtype_ratio
 		setIterationIndex(ctx, ratio);
 	#pragma r:endif
+	#pragma r:if THIS_EXPOSE_step
+		THIS_step = i;
+	#pragma r:endif
+		#pragma r:if THIS_EXPOSE_normstep
+		THIS_normstep = ratio;
+	#pragma r:endif
 	#pragma r:if THIS_Enablerotate && THIS_HAS_INPUT_rotateField
 		#pragma r:if inputOp_rotateField_COORD_TYPE_float
 		rotate = baseRot + inputOp_rotateField(ratio, ctx).xyz;

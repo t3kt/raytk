@@ -30,5 +30,6 @@ op:
     name: Translate
   - label: Size
     name: Size
+  thumb: assets/images/reference/operators/pattern/checkerPattern_thumb.png
 
 ---

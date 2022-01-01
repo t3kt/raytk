@@ -30,5 +30,6 @@ op:
   - label: Hide Frame Bottom
     name: Hideframebottom
   status: beta
+  thumb: assets/images/reference/operators/sdf/archSdf_thumb.png
 
 ---

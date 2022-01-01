@@ -38,6 +38,7 @@ op:
     name: Radius
     summary: The distance from the center to each edge.
   summary: SDF for several types of 2D polygons.
+  thumb: assets/images/reference/operators/sdf2d/polygonSdf2d_thumb.png
 
 ---
 

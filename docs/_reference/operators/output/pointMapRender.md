@@ -57,6 +57,10 @@ op:
     - float
     - vec4
     - Sdf
+  keywords:
+  - point
+  - render
+  - volumetric
   name: pointMapRender
   opType: raytk.operators.output.pointMapRender
   parameters:
@@ -139,14 +143,32 @@ op:
     - label: 3D
       name: vec3
     name: Coordtype
+  - label: Select SDF Result
+    name: Createrselsdfout
+    summary: 'Create renderSelect for output: SDF Result'
+  - label: Select Color
+    name: Createrselcolorout
+    summary: 'Create renderSelect for output: Color'
+  - label: Select Value
+    name: Createrselvalueout
+    summary: 'Create renderSelect for output: Value'
+  - label: Select Normal
+    name: Createrselnormalout
+    summary: 'Create renderSelect for output: Normal'
+  - label: Select Object Id
+    name: Createrselobjectidout
+    summary: 'Create renderSelect for output: Object Id'
   - label: Enable Normal Smoothing
     name: Enablenormalsmoothing
   - label: Normal Smoothing
     name: Normalsmoothing
   - label: Customize Shader Config
     name: Customizeshaderconfig
+  shortcuts:
+  - pmr
   summary: Renderer that takes in a TOP of coordinates and evaluates the scene at
     each point.
+  thumb: assets/images/reference/operators/output/pointMapRender_thumb.png
 
 ---
 

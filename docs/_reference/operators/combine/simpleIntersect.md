@@ -144,6 +144,7 @@ op:
   - label: Enable
     name: Enable
   summary: Combines SDFs using the intersect operator.
+  thumb: assets/images/reference/operators/combine/simpleIntersect_thumb.png
 
 ---
 

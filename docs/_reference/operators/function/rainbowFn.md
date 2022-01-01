@@ -13,5 +13,6 @@ op:
   parameters:
   - label: Phase
     name: Phase
+  thumb: assets/images/reference/operators/function/rainbowFn_thumb.png
 
 ---

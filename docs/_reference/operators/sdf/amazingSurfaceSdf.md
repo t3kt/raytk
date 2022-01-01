@@ -21,5 +21,6 @@ op:
     name: Steprotate
   - label: Step Clamp Range
     name: Stepclamprange
+  thumb: assets/images/reference/operators/sdf/amazingSurfaceSdf_thumb.png
 
 ---

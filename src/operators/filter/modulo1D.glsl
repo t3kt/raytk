@@ -54,6 +54,9 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 	#pragma r:elif THIS_Iterationtype_alternatingcoord
 	setIterationIndex(ctx, mod(c, 2.));
 	#pragma r:endif
+	#pragma r:if THIS_EXPOSE_cellcoord
+	THIS_cellcoord = int(c);
+	#pragma r:endif
 
 	// offset field can use iteration
 	float o = THIS_Offset;

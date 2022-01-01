@@ -31,16 +31,20 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 	q *= mod(c, vec3(2.))*2. - vec3(1.);
 	#pragma r:endif
 
+	#pragma r:if THIS_Iterationtype_cellcoord
+	setIterationCell(ctx, c);
+	#pragma r:elif THIS_Iterationtype_alternatingcoord
+	setIterationCell(ctx, mod(c, 2.));
+	#pragma r:endif
+	#pragma r:if THIS_EXPOSE_cellcoord
+	THIS_cellcoord = ivec3(c);
+	#pragma r:endif
+
 	// offset field can use iteration
 	vec3 o = THIS_Offset;
 	#pragma r:if THIS_HAS_INPUT_offsetField
 	o += fillToVec3(inputOp_offsetField(p, ctx));
 	#pragma r:endif
 	p = q - o;
-	#pragma r:if THIS_Iterationtype_cellcoord
-	setIterationCell(ctx, c);
-	#pragma r:elif THIS_Iterationtype_alternatingcoord
-	setIterationCell(ctx, mod(c, 2.));
-	#pragma r:endif
 	return inputOp1(p, ctx);
 }

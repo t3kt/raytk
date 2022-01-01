@@ -1,4 +1,4 @@
-Sdf thismap(CoordT p, ContextT ctx) {
+ReturnT thismap(CoordT p, ContextT ctx) {
 	p -= THIS_Translate;
 	float len = THIS_Length;
 	float radius = THIS_Radius;

@@ -62,23 +62,25 @@ def buildTypeTable(dat: 'scriptDAT', supportedTypes: 'DAT', inputDefs: 'DAT'):
 		['contextType', _evalType('contextType', supportedTypes, inputDefs)],
 	])
 
+def _inputDefsFromPar():
+	return parentPar().Inputdefs.evalOPs()
+
 def buildInputTable(dat: 'DAT', inDats: 'List[DAT]'):
 	dat.clear()
-	dat.appendRow(['slot', 'inputFunc', 'name', 'path', 'coordType', 'contextType', 'returnType'])
-	for i, inDat in enumerate(inDats):
-		slot = f'inputName{i + 1}'
-		if inDat.numRows < 2 or not inDat[1, 'name']:
-			dat.appendRow([slot])
-		else:
-			dat.appendRow([
-				slot,
-				inDat[1, 'input:alias'] or f'inputOp{i + 1}',
-				inDat[1, 'name'],
-				inDat[1, 'path'],
-				inDat[1, 'coordType'],
-				inDat[1, 'contextType'],
-				inDat[1, 'returnType'],
-			])
+	dat.appendRow(['inputFunc', 'name', 'path', 'coordType', 'contextType', 'returnType', 'placeholder'])
+	for i, inDat in enumerate(inDats + _inputDefsFromPar()):
+		if not inDat[1, 'name']:
+			continue
+		func = str(inDat[1, 'input:alias'] or f'inputOp{i + 1}')
+		dat.appendRow([
+			func,
+			inDat[1, 'name'],
+			inDat[1, 'path'],
+			inDat[1, 'coordType'],
+			inDat[1, 'contextType'],
+			inDat[1, 'returnType'],
+			('inputOp_' + func) if not func.startswith('inputOp') else func,
+		])
 
 def combineInputDefinitions(
 		dat: 'DAT',
@@ -86,6 +88,7 @@ def combineInputDefinitions(
 		defFields: 'DAT',
 ):
 	dat.clear()
+	inDats += _inputDefsFromPar()
 	if not inDats:
 		return
 	cols = defFields.col(0)
@@ -356,61 +359,33 @@ def buildParamChopNamesTable(dat: 'DAT', paramSpecTable: 'DAT'):
 	dat.appendRow(['special', ' '.join(specialNames)])
 	dat.appendRow(['angle', ' '.join(angleNames)])
 
-def _getReplacements(inputTable: 'DAT', materialTable: 'DAT'):
-	name = parentPar().Name.eval()
-	repls = {
-		'thismap': name,
-		'THIS_': name + '_',
-	}
-	mat = materialTable[1, 'material']
-	if mat:
-		repls['THISMAT'] = str(mat)
-	for i in range(inputTable.numRows):
-		key = str(inputTable[i, 'inputFunc'])
-		val = inputTable[i, 'name']
-		if val:
-			if not key.startswith('inputOp'):
-				key = 'inputOp_' + key
-			repls[str(key)] = str(val)
-	return repls
-
-def prepareCode(
-		dat: 'DAT',
-		inputTable: 'DAT',
-		materialTable: 'DAT',
-):
-	if not dat.inputs:
-		dat.text = ''
-		return
-	dat.clear()
-	repls = _getReplacements(inputTable, materialTable)
-	text = _prepareText(dat.inputs[0].text, repls)
-	dat.write(text)
-
-def prepareTable(
-		dat: 'DAT',
-		inputTable: 'DAT',
-		materialTable: 'DAT',
-):
-	dat.copy(dat.inputs[0])
-	if dat.numRows < 1:
-		return
-	repls = _getReplacements(inputTable, materialTable)
-	for row in dat.rows():
-		for cell in row:
-			cell.val = _prepareText(cell.val, repls)
-
 _typePattern = re.compile(r'\b[CR][a-z]+T\b')
 _typeRepls = {'CoordT': 'THIS_CoordT', 'ContextT': 'THIS_ContextT', 'ReturnT': 'THIS_ReturnT'}
 def _typeRepl(m): return _typeRepls.get(m.group(0), m.group(0))
 
-def _prepareText(text: str, repls: 'Dict[str, str]'):
-	if not text:
-		return ''
+def prepareCode(dat: 'DAT'):
+	if not dat.inputs:
+		dat.text = ''
+		return
+	dat.clear()
+	text = dat.inputs[0].text
 	text = _typePattern.sub(_typeRepl, text)
-	for find, repl in repls.items():
-		text = text.replace(find, repl)
-	return text
+	# text = _prepareVarExposure(text)
+	dat.write(text)
+
+# _exposePattern = re.compile(r'^\s*\bEXPOSE_(\w+)\s*\((.*)\);$', re.MULTILINE)
+# def _exposeRepl(m):
+# 	return f'''#ifdef THIS_EXPOSE_{m.group(1)}
+# THIS_{m.group(1)} = {m.group(2)};
+# #endif
+# '''
+#
+# def _prepareVarExposure(text: str):
+# 	if not text:
+# 		return ''
+# 	if 'EXPOSE' not in text:
+# 		return text
+# 	return _exposePattern.sub(_exposeRepl, text)
 
 def updateLibraryMenuPar(libsComp: 'COMP'):
 	p = parentPar().Librarynames  # type: Par
@@ -669,11 +644,64 @@ def updateOP():
 		updater.UpdateOP(host)
 		return
 	if not host.par.clone:
+		msg = 'Unable to update OP because master is not found in the loaded toolkit.'
+		if parentPar().Raytkopstatus == 'deprecated':
+			msg += '\nNOTE: This OP has been marked as "Deprecated", so it may have been removed from the toolkit.'
 		_popDialog().Open(
 			title='Warning',
-			text='Unable to update OP because master is not found in the loaded toolkit.',
+			text=msg,
 			escOnClickAway=True,
 		)
 		return
 	if host and host.par.clone:
 		host.par.enablecloningpulse.pulse()
+
+def _getPalette():
+	if not hasattr(op, 'raytk'):
+		_popDialog().Open(
+			title='Warning',
+			text='Unable to create reference because RayTK toolkit is not available.',
+			escOnClickAway=True,
+		)
+		return
+	return op.raytk.op('tools/palette')
+
+_varTypes = {
+	'float': 'float',
+	'int': 'float',
+	'bool': 'float',
+	'vec2': 'vec4',
+	'vec3': 'vec4',
+	'vec4': 'vec4',
+	'ivec2': 'vec4',
+	'ivec3': 'vec4',
+	'ivec4': 'vec4',
+}
+
+def createVarRef(name: str):
+	palette = _getPalette()
+	if not palette:
+		return
+	host = _host()
+	varTable = op('variable_table')
+	for i in range(1, varTable.numRows):
+		if varTable[i, 'localName'].val.lower() == name:
+			dataType = varTable[i, 'dataType'].val
+			dataType = _varTypes.get(dataType, dataType)
+			palette.CreateVariableReference(host, varTable[i, 'localName'].val, dataType)
+			return
+	raise Exception(f'Variable not found: {name}')
+
+def createRenderSel(name: str):
+	palette = _getPalette()
+	if not palette:
+		return
+	host = _host()
+	bufTable = op('../output_buffers')
+	if bufTable:
+		name = name.lower()
+		for i in range(1, bufTable.numRows):
+			if bufTable[i, 'name'].val.lower() == name:
+				palette.CreateRenderSelect(host, bufTable[i, 'name'].val)
+				return
+	raise Exception(f'Output buffer not found: {name}')

@@ -10,7 +10,7 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 	}
 	#pragma r:elif THIS_RETURN_TYPE_float
 	{
-		#pragma r:ifdef THIS_Enablesmoothing
+		#pragma r:if THIS_Enablesmoothing
 		res = quantize(res, THIS_Size.x, THIS_Offset.x, THIS_Smoothing.x);
 		#pragma r:else
 		res = quantizeHard(res, THIS_Size.x, THIS_Offset.x);

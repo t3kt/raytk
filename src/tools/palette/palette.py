@@ -1,4 +1,4 @@
-from typing import Optional
+from typing import Callable, Optional
 from raytkUtil import RaytkContext, detachTox, focusFirstCustomParameterPage, ROPInfo, IconColors
 
 # noinspection PyUnreachableCode
@@ -6,11 +6,7 @@ if False:
 	# noinspection PyUnresolvedReferences
 	from _stubs import *
 	from _typeAliases import *
-	from devel.toolkitEditor.toolkitEditor import ToolkitEditor
 	from components.opPicker.opPicker import OpPicker, PickerItem
-
-	# noinspection PyTypeHints
-	op.raytkDevelEditor = ToolkitEditor(COMP())  # type: Optional[Union[ToolkitEditor, COMP]]
 
 	ext.opPicker = OpPicker(COMP())
 
@@ -118,15 +114,10 @@ class Palette:
 		if shortcutName == 'esc':
 			self.close()
 
-	def createItem(self, item: 'PickerItem'):
-		if not item:
-			return
-		if item.isCategory:
-			# TODO: maybe expand/collapse?
-			return
-		template = self._getTemplate(item)
+	def CreateItem(self, templatePath: str, postSetup: 'Optional[Callable[[COMP], None]]' = None):
+		template = self._getTemplate(templatePath)
 		if not template:
-			self._printAndStatus(f'Unable to find template for path: {item.path}')
+			self._printAndStatus(f'Unable to find template for path: {templatePath}')
 			return
 		pane = RaytkContext().activeEditor()
 		dest = pane.owner if pane else None
@@ -139,20 +130,27 @@ class Palette:
 			nodeX=pane.x,
 			nodeY=pane.y,
 			name=template.name + ('1' if tdu.digits(template.name) is None else ''),
+			postSetup=postSetup,
 		)
-		ui.undo.startBlock(f'Create ROP {item.shortName}')
+		ui.undo.startBlock(f'Create ROP {template.name}')
 		ui.undo.addCallback(self._createItemDoHandler, {
 			'template': template,
 			'dest': dest,
 			'nodeX': pane.x,
 			'nodeY': pane.y,
 			'name': newOp.name,
+			'postSetup': postSetup,
 		})
 		ui.undo.endBlock()
 		if not ipar.uiState.Pinopen:
 			self.close()
 
-	def _createROP(self, template: 'COMP', dest: 'COMP', nodeX: int, nodeY: int, name: str):
+	def _createROP(
+			self,
+			template: 'COMP', dest: 'COMP',
+			nodeX: int, nodeY: int, name: str,
+			postSetup: 'Optional[Callable[[COMP], None]]' = None,
+	):
 		newOp = dest.copy(
 			template,
 			name=name,
@@ -183,6 +181,8 @@ class Palette:
 				par.val = par.default
 		newOp.allowCooking = True
 		newOp.color = IconColors.defaultBgColor
+		if postSetup:
+			postSetup(newOp)
 		ropInfo = ROPInfo(newOp)
 		ropInfo.invokeCallback('onCreate', master=template)
 		self._printAndStatus(f'Created OP: {newOp} from {template}')
@@ -207,17 +207,43 @@ class Palette:
 				nodeX=info['nodeX'],
 				nodeY=info['nodeY'],
 				name=name,
+				postSetup=info['postSetup'],
 			)
+
+	def CreateVariableReference(self, fromOp: 'COMP', variable: str, dataType: str):
+		def initRef(refOp: 'COMP'):
+			refOp.par.Source.val = fromOp
+			refOp.par.Source.readOnly = True
+			refOp.par.Variable = variable
+			refOp.par.Variable.readOnly = True
+			refOp.par.Datatype = dataType
+			refOp.par.Datatype.readOnly = True
+		self.CreateItem(
+			'/raytk/operators/utility/variableReference',
+			postSetup=initRef
+		)
+
+	def CreateRenderSelect(self, fromOp: 'COMP', outputName: str):
+		def initSel(refOp: 'COMP'):
+			refOp.par.Outputop.val = fromOp
+			refOp.par.Outputop.readOnly = True
+			refOp.par.Outputbuffer.val = outputName
+			refOp.par.Outputbuffer.readOnly = True
+		self.CreateItem(
+			'/raytk/operators/output/renderSelect',
+			postSetup=initSel
+		)
 
 	def _printAndStatus(self, msg):
 		print(self.ownerComp, msg)
 		ui.status = msg
 
 	@staticmethod
-	def _getTemplate(item: 'PickerItem'):
-		if not item or not item.isOP:
+	def _getTemplate(path: str):
+		if not path:
 			return
-		path = item.path
+		if path.startswith('raytk.operators.'):
+			path = '/' + path.replace('.', '/')
 		if not path.startswith('/raytk/'):
 			return op(path)
 		context = RaytkContext()
@@ -229,13 +255,12 @@ class Palette:
 		return op(path.replace('/raytk/', f'/{toolkit.path}/', 1))
 
 	def onPickItem(self, item: 'PickerItem'):
-		self.createItem(item)
+		if not item:
+			return
+		if item.isCategory:
+			# TODO: maybe expand/collapse?
+			return
+		self.CreateItem(item.path)
 
-	def onEditItem(self, item: 'PickerItem'):
-		if not item or not item.isOP:
-			return
-		if not hasattr(op, 'raytkDevelEditor'):
-			return
-		template = self._getTemplate(item)
-		if template:
-			op.raytkDevelEditor.EditROP(template)
+	def onRolloverItem(self, item: 'Optional[PickerItem]'):
+		self.ownerComp.op('thumbImage').cook(force=True)

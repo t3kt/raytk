@@ -8,6 +8,34 @@ redirect_from:
   - /reference/opType/raytk.operators.sdf2d.parallelogramSdf2d/
 op:
   category: sdf2d
+  inputs:
+  - contextTypes:
+    - Context
+    - MaterialContext
+    - CameraContext
+    - LightContext
+    - RayContext
+    - ParticleContext
+    coordTypes:
+    - vec2
+    label: Size Field
+    name: sizeField
+    returnTypes:
+    - float
+    - vec4
+  - contextTypes:
+    - Context
+    - MaterialContext
+    - CameraContext
+    - LightContext
+    - RayContext
+    - ParticleContext
+    coordTypes:
+    - vec2
+    label: Skew Field
+    name: skewField
+    returnTypes:
+    - float
   name: parallelogramSdf2d
   opType: raytk.operators.sdf2d.parallelogramSdf2d
   parameters:
@@ -17,5 +45,6 @@ op:
     name: Height
   - label: Skew
     name: Skew
+  thumb: assets/images/reference/operators/sdf2d/parallelogramSdf2d_thumb.png
 
 ---

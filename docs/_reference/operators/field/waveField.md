@@ -137,6 +137,7 @@ op:
       name: RayContext
     name: Contexttype
   summary: A field that uses a periodic wave.
+  thumb: assets/images/reference/operators/field/waveField_thumb.png
 
 ---
 

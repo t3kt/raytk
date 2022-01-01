@@ -1,4 +1,4 @@
-Sdf thismap(vec3 p, ContextT ctx) {
+ReturnT thismap(CoordT p, ContextT ctx) {
 	vec3 tpos = p;
 	tpos.z = abs(3.-mod(tpos.z,6.));
 	vec4 modP = vec4(tpos,1.);

@@ -171,6 +171,7 @@ op:
     - label: Column Difference
       name: columnDiff
     name: Combine
+    summary: How the SDFs are combined.
   - label: Swap Inputs
     name: Swapinputs
   - label: Radius
@@ -181,20 +182,33 @@ op:
     name: Offset
   - label: Translate 1
     name: Translate1
+    summary: Moves the input SDF 1.
   - label: Translate 2
     name: Translate2
+    summary: Moves the input SDF 2.
   - label: Translate 3
     name: Translate3
+    summary: Moves the input SDF 3.
   - label: Translate 4
     name: Translate4
+    summary: Moves the input SDF 4.
   - label: Translate 5
     name: Translate5
+    summary: Moves the input SDF 5.
   - label: Translate 6
     name: Translate6
+    summary: Moves the input SDF 6.
   - label: Translate 7
     name: Translate7
+    summary: Moves the input SDF 7.
   - label: Translate 8
     name: Translate8
+    summary: Moves the input SDF 8.
   status: beta
+  summary: Combines multiple SDFs, with a different position for each.
+  thumb: assets/images/reference/operators/combine/arrange_thumb.png
 
 ---
+
+
+Combines multiple SDFs, with a different position for each.

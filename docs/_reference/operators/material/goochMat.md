@@ -40,6 +40,7 @@ op:
     name: Coolcolor
   status: beta
   summary: A material that uses the Gooch shading model.
+  thumb: assets/images/reference/operators/material/goochMat_thumb.png
 
 ---
 

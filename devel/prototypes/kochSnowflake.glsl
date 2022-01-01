@@ -16,7 +16,6 @@ ReturnT thismap(CoordT p, Context ctx) {
 		scale *= THIS_Scale;
 		p -= THIS_Shift;
 		p.x = abs(p.x);
-		p.x -= THIS_Shiftx;
 		pReflect(p, normVec, 0.);
 	}
 	Sdf res = inputOp1(p, ctx);

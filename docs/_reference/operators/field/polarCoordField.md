@@ -73,5 +73,6 @@ op:
       name: ParticleContext
     name: Contexttype
   status: beta
+  thumb: assets/images/reference/operators/field/polarCoordField_thumb.png
 
 ---

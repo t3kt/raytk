@@ -1,6 +1,6 @@
 // derived from Kali Generators https://www.shadertoy.com/view/Xtf3Rn
 
-ReturnT thismap(vec3 p, ContextT ctx) {
+ReturnT thismap(CoordT p, ContextT ctx) {
 	float d = 0.47 - abs (p.y - 3.5);
 	p.xz = abs (0.5 - mod ((2./3.) * p.xz, 1.));
 	float scale = 1.;

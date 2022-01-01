@@ -73,7 +73,10 @@ op:
     - label: Bounds XYZ
       name: bounds
     name: Uvmode
+  shortcuts:
+  - box
   summary: SDF for a box, optionally infinite one one axis.
+  thumb: assets/images/reference/operators/sdf/boxSdf_thumb.png
 
 ---
 

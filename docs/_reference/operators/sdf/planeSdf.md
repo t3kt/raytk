@@ -46,6 +46,7 @@ op:
   - label: Flip
     name: Flip
   summary: An infinite plane on the x, y, or z axis.
+  thumb: assets/images/reference/operators/sdf/planeSdf_thumb.png
 
 ---
 

@@ -27,6 +27,7 @@ op:
     name: Thickness
     summary: The thickness of the link.
   summary: SDF for a chain link shape (an elongated loop).
+  thumb: assets/images/reference/operators/sdf/linkSdf_thumb.png
 
 ---
 

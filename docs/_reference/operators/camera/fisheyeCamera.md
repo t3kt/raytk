@@ -8,20 +8,28 @@ redirect_from:
   - /reference/opType/raytk.operators.camera.fisheyeCamera/
 op:
   category: camera
+  keywords:
+  - '360'
+  - cubemap
+  - dome
+  - equiangular
+  - equirectangular
+  - pinhole
+  - stereographic
   name: fisheyeCamera
   opType: raytk.operators.camera.fisheyeCamera
   parameters:
   - label: Fisheye Mode
     menuOptions:
-    - label: pinhole
+    - label: Pinhole
       name: pinhole
-    - label: stereographic
+    - label: Stereographic
       name: stereographic
-    - label: equirectangular
+    - label: Equi-Angular
       name: equiangular
-    - label: equisolidangle
+    - label: Equi-Solid Angle
       name: equisolidangle
-    - label: orthographicfisheye
+    - label: Orthographic Fisheye
       name: orthographicfisheye
     name: Fisheyemode
   - label: Aperture
@@ -39,6 +47,7 @@ op:
     name: Camup
   summary: A 360 fisheye camera, that shows all directions from a specific point in
     space.
+  thumb: assets/images/reference/operators/camera/fisheyeCamera_thumb.png
 
 ---
 

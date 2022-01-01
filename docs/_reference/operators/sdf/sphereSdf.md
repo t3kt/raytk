@@ -42,7 +42,10 @@ op:
     - label: Sphere
       name: sphere
     name: Uvmode
+  shortcuts:
+  - sph
   summary: SDF in 3D space for a uniform sphere.
+  thumb: assets/images/reference/operators/sdf/sphereSdf_thumb.png
 
 ---
 

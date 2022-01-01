@@ -1,13 +1,12 @@
 // based on https://www.shadertoy.com/view/MtV3Dd
 
-Ray thismap(vec2 p, CameraContext ctx) {
+ReturnT thismap(CoordT p, ContextT ctx) {
 	vec2 size = ctx.resolution;
 	// fragment coords remapped to -1,1 range
 	vec2 screenPos = -1.0 + 2.0 * p / size;
 	// aspect correct
 	screenPos.x *= size.x / size.y;
-	
-	
+
 	Ray ray;
 	ray.pos = THIS_Campos;
 	// Calculate ray direction
@@ -23,18 +22,8 @@ Ray thismap(vec2 p, CameraContext ctx) {
 	float phi = atan(screenPos.y, screenPos.x);
 	float theta;
 	
-    #if defined(THIS_Fisheyemode_pinhole)
-    	theta = atan(r/f);
-    #elif defined(THIS_Fisheyemode_stereographic)
-    	theta = atan(r/(2.0*f))*2.0;
-    #elif defined(THIS_Fisheyemode_equiangular)
-    	theta = r/f;
-    #elif defined(THIS_Fisheyemode_equisolidangle)
-    	theta = asin(r/(2.0*f))*2.0;
-    #elif defined(THIS_Fisheyemode_orthographicfisheye)
-    	theta = asin(r/f);
-    #endif
-    vec3 worldDir = camOrient * vec3(sin(theta)*cos(phi), sin(theta)*sin(phi), cos(theta));
+	BODY();
+	vec3 worldDir = camOrient * vec3(sin(theta)*cos(phi), sin(theta)*sin(phi), cos(theta));
     
 	pRotateOnXYZ(worldDir, THIS_Camrot);
 	ray.dir = worldDir;

@@ -175,7 +175,9 @@ class ROPHelp:
 	isBeta: bool = False
 	isDeprecated: bool = False
 	keywords: List[str] = field(default_factory=list)
+	shortcuts: List[str] = field(default_factory=list)
 	images: List[str] = field(default_factory=list)
+	thumb: Optional[str] = None
 
 	@classmethod
 	def extractFromROP(cls, rop: 'COMP'):
@@ -208,6 +210,7 @@ class ROPHelp:
 			isBeta=info.isBeta,
 			isDeprecated=info.isDeprecated,
 			keywords=list(sorted(info.keywords)),
+			shortcuts=list(sorted(info.shortcuts)),
 		)
 
 	def formatAsMarkdown(self, headerOffset: int = 0):
@@ -288,10 +291,15 @@ redirect_from:
 			status = 'beta'
 		else:
 			status = None
+		summary = self.summary
+		# this is a hacky workaround since the doc processing
+		# in build is sort of a tangled mess
+		if summary and summary.startswith('## '):
+			summary = None
 		obj = cleanDict(mergeDicts(
 			{
 				'name': self.name,
-				'summary': self.summary,
+				'summary': summary,
 			},
 			{
 				'detail': self.detail,
@@ -301,6 +309,8 @@ redirect_from:
 			{
 				'status': status,
 				'keywords': list(sorted(self.keywords)),
+				'shortcuts': list(sorted(self.shortcuts)),
+				'thumb': self.thumb,
 			},
 			{
 				'inputs': [
@@ -615,7 +625,10 @@ class OpDocManager:
 			img = img.as_posix()
 			if img.startswith('docs/'):
 				img = img.replace('docs/', '', 1)
-			ropHelp.images.append(img)
+			if img.endswith('_thumb.png'):
+				ropHelp.thumb = img
+			else:
+				ropHelp.images.append(img)
 
 	def formatForBuild(self, imagesFolder: 'Path') -> str:
 		ropHelp = self._parseDAT()

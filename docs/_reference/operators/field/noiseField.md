@@ -141,6 +141,7 @@ op:
     name: Offset
     summary: Offsets (adds to) the amount produced by the noise.
   summary: A float or vector field that uses one of several noise functions.
+  thumb: assets/images/reference/operators/field/noiseField_thumb.png
 
 ---
 

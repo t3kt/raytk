@@ -25,6 +25,7 @@ op:
     summary: The constant value to use when the input is zero.
   summary: A mapping function that can change a value only when it's zero or very
     close to it, where it replaces the value with a small constant.
+  thumb: assets/images/reference/operators/function/almostIdentityFn_thumb.png
 
 ---
 

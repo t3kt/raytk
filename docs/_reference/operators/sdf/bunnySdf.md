@@ -16,6 +16,7 @@ op:
   name: bunnySdf
   opType: raytk.operators.sdf.bunnySdf
   summary: SDF for a bunny.
+  thumb: assets/images/reference/operators/sdf/bunnySdf_thumb.png
 
 ---
 

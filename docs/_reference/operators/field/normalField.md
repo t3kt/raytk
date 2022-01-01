@@ -12,6 +12,7 @@ op:
   name: normalField
   opType: raytk.operators.field.normalField
   summary: Vector field that produces the surface normal where it is evaluated.
+  thumb: assets/images/reference/operators/field/normalField_thumb.png
 
 ---
 

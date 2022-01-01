@@ -19,7 +19,7 @@ float _mengerCrossDist( in vec3 p, float crossScale, float boxScale ) {
 
 #endif
 
-Sdf thismap(CoordT p, ContextT ctx) {
+ReturnT thismap(CoordT p, ContextT ctx) {
 	p -= THIS_Translate;
 	const int n = int(THIS_Steps);
 	float scale = THIS_Scale;

@@ -45,6 +45,7 @@ op:
     name: Function
     summary: Advanced parameter that chooses between different types of calculations.
   summary: An octahedron, with its corners facing the axes.
+  thumb: assets/images/reference/operators/sdf/octahedronSdf_thumb.png
 
 ---
 

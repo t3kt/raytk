@@ -1,6 +1,5 @@
 float THIS_drawSphere(vec3 p) {
-	p = fract(p) - .5;
-	return dot(p, p);
+	return dot2(fract(p) - .5);
 }
 
 ReturnT thismap(CoordT p, ContextT ctx) {

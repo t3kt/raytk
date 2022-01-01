@@ -81,6 +81,7 @@ op:
       name: vbars
     name: Pattern
   summary: An infinite grid shape, along two axes.
+  thumb: assets/images/reference/operators/sdf/gridSdf_thumb.png
 
 ---
 

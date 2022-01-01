@@ -60,6 +60,7 @@ op:
       name: zx
     name: Axes
   summary: An SDF for a 3D cross of infinite length along each axis.
+  thumb: assets/images/reference/operators/sdf/crossSdf_thumb.png
 
 ---
 

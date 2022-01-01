@@ -8,6 +8,20 @@ redirect_from:
   - /reference/opType/raytk.operators.sdf2d.planeSdf2d/
 op:
   category: sdf2d
+  inputs:
+  - contextTypes:
+    - Context
+    - MaterialContext
+    - CameraContext
+    - LightContext
+    - RayContext
+    - ParticleContext
+    coordTypes:
+    - vec2
+    label: Offset Field
+    name: offsetField
+    returnTypes:
+    - float
   name: planeSdf2d
   opType: raytk.operators.sdf2d.planeSdf2d
   parameters:
@@ -24,5 +38,6 @@ op:
     name: Direction
   - label: Offset
     name: Offset
+  thumb: assets/images/reference/operators/sdf2d/planeSdf2d_thumb.png
 
 ---

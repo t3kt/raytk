@@ -44,6 +44,11 @@ class DatEditorPanel:
 		return graph and graph.sourceDat
 
 	@property
+	def currentEvalDat(self) -> 'Optional[evaluateDAT]':
+		graph = self._currentItemGraph
+		return graph and graph.evalDat
+
+	@property
 	def _currentItemGraph(self) -> 'Optional[EditorItemGraph]':
 		par = self._currentItemPar
 		if par is None:
@@ -74,6 +79,7 @@ class DatEditorPanel:
 			'endDat',
 			'sourceDat',
 			'hasEval',
+			'evalDat',
 			'supported',
 			'file',
 		])
@@ -83,6 +89,7 @@ class DatEditorPanel:
 			return
 		dat['endDat', 1] = graph.endDat or ''
 		dat['sourceDat', 1] = graph.sourceDat or ''
+		dat['evalDat', 1] = graph.evalDat or ''
 		dat['hasEval', 1] = int(graph.hasEval)
 		dat['supported', 1] = 1
 		dat['file', 1] = graph.file or ''
@@ -110,11 +117,16 @@ class DatEditorPanel:
 			else:
 				self._printAndStatus(f'Unsupported DAT type: {datType}')
 				return
+			template = op(self._itemTable[itemName, 'template'])
+			if template:
+				srcDat.copy(template)
 			srcDat.nodeY = -300 - (self._itemTable[itemName, 0].row * 300)
 			srcDat.nodeX = -475
 			evalDat = None
 			if evalName:
 				evalDat = info.rop.create(evaluateDAT, evalName)
+				if datType == 'table' and srcDat.numRows > 0 and srcDat.numCols > 0 and not any(c.val.startswith('\'') for c in srcDat.row(0)):
+					evalDat.par.xfirstrow = True
 				evalDat.nodeY = srcDat.nodeY
 				evalDat.nodeX = srcDat.nodeX + 200
 				evalDat.inputConnectors[0].connect(srcDat)

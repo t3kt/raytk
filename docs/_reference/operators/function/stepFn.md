@@ -31,6 +31,7 @@ op:
   - label: Invert
     name: Invert
   summary: A function that changes from zero to one at a cutoff point.
+  thumb: assets/images/reference/operators/function/stepFn_thumb.png
 
 ---
 

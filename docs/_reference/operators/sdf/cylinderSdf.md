@@ -17,7 +17,6 @@ op:
     - RayContext
     - ParticleContext
     coordTypes:
-    - float
     - vec3
     label: Radius Field
     name: radiusField
@@ -34,7 +33,6 @@ op:
     - RayContext
     - ParticleContext
     coordTypes:
-    - float
     - vec3
     label: Height Field
     name: heightField
@@ -67,7 +65,14 @@ op:
     name: Axis
   - label: Infinite Height
     name: Infiniteheight
+  - label: Position Along Axis
+    name: Createrefaxispos
+    summary: 'Create reference to variable: Position Along Axis'
+  - label: Normalized Axis Position (0..1)
+    name: Createrefnormoffset
+    summary: 'Create reference to variable: Normalized Axis Position (0..1)'
   summary: SDF for a cylinder.
+  thumb: assets/images/reference/operators/sdf/cylinderSdf_thumb.png
 
 ---
 

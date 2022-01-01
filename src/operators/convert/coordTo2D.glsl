@@ -1,4 +1,4 @@
-ReturnT thismap(vec2 p, ContextT ctx) {
+ReturnT thismap(CoordT p, ContextT ctx) {
 	#pragma r:if THIS_Mode_custom
 	vec3 q = vec3(THIS_PART_X, THIS_PART_Y, THIS_PART_Z);
 	#pragma r:else

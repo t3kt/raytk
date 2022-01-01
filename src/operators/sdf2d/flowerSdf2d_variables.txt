@@ -1,0 +1,2 @@
+name	label	dataType	enable
+normangle	Normalized Angle (0..1)	float	1

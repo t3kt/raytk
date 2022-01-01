@@ -33,6 +33,8 @@ cat:
     - modularmat
     - surface
     name: assignColor
+    shortcuts:
+    - ac
     summary: Assigns a surface color attribute to an SDF surface.
   - keywords:
     - material
@@ -99,10 +101,13 @@ cat:
     - polar
     - radial
     - repeat
+    - spiral
     name: logPolarRepeat
     status: beta
   - name: magnet
     summary: Pulls or twists space within an area.
+  - name: mirrorAxes
+    status: beta
   - name: mirrorOctant
     summary: Mirror coordinates across two axes and the diagonals.
   - name: mirrorQuadrant
@@ -124,18 +129,24 @@ cat:
     - modulo
     - repeat
     name: modulo1D
+    shortcuts:
+    - m1
     summary: Repeats space along one axis.
   - keywords:
     - grid
     - modulo
     - repeat
     name: modulo2D
+    shortcuts:
+    - m2
     summary: Repeats space along 2 axes.
   - keywords:
     - grid
     - modulo
     - repeat
     name: modulo3D
+    shortcuts:
+    - m3
     summary: Repeats space along all 3 axes.
   - keywords:
     - distance
@@ -150,7 +161,11 @@ cat:
     - polar
     - repeat
     name: moduloPolar
+    shortcuts:
+    - mp
     summary: Repeats space radially, like a kaleidoscope.
+  - name: moduloSpherical
+    status: beta
   - keywords:
     - hollow
     - onion
@@ -159,6 +174,7 @@ cat:
     summary: Converts a solid SDF to a thin shell of the surface.
   - name: polarToCartesian
     status: beta
+    summary: Converts coordinates from polar to cartesian.
   - name: quadTreeRepeat
     status: beta
   - name: quantizeCoords
@@ -181,6 +197,8 @@ cat:
     - mirror
     - reflect
     name: reflect
+    shortcuts:
+    - ref
     summary: Reflects space across a plane.
   - name: remapCoords
     status: beta
@@ -192,6 +210,8 @@ cat:
     - remap
     - rescale
     name: rescaleField
+    shortcuts:
+    - rf
     summary: Rescales the values produced by a field.
   - name: reshapeValues
     status: beta
@@ -205,6 +225,8 @@ cat:
     - transform
     - twist
     name: rotate
+    shortcuts:
+    - rot
     summary: Transforms space with rotation.
   - keywords:
     - material
@@ -249,6 +271,8 @@ cat:
     - transform
     - translate
     name: transform
+    shortcuts:
+    - tfm
     summary: Transform the coordinates of the input, with rotation, scaling, and translation.
   - keywords:
     - move
@@ -256,6 +280,8 @@ cat:
     - transform
     - translate
     name: translate
+    shortcuts:
+    - tr
     summary: Translates coordinates of the input ROP.
   - name: twist
     summary: Twists space around an axis.

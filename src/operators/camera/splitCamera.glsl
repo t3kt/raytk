@@ -1,4 +1,4 @@
-Ray thismap(vec2 p, CameraContext ctx) {
+ReturnT thismap(CoordT p, ContextT ctx) {
 	Ray ray;
 
 	#if THIS_INPUT_COUNT == 1

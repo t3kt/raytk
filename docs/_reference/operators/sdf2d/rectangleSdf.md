@@ -47,6 +47,7 @@ op:
     name: Scale
     summary: The size of the rectangle on the x and y axes.
   summary: SDF for a 2D rectangle.
+  thumb: assets/images/reference/operators/sdf2d/rectangleSdf_thumb.png
 
 ---
 

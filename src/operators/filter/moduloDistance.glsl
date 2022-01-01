@@ -14,6 +14,14 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 	float cell = pMod1(d, THIS_Length*.5);
 	#pragma r:endif
 
+	#pragma r:if THIS_Iterateonrings && THIS_CONTEXT_TYPE_Context
+	setIterationIndex(ctx, cell);
+	#pragma r:endif
+
+	#pragma r:if THIS_EXPOSE_ring
+	THIS_ring = cell;
+	#pragma r:endif
+
 	#pragma r:if THIS_COORD_TYPE_vec2
 	float a = atan(p.y, p.x);
 	p = d * vec2(cos(a), sin(a)) - center;
@@ -27,10 +35,6 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 	#pragma r:else
 	float a = atan(p.THIS_PLANE_P2, p.THIS_PLANE_P1);
 	p.THIS_PLANE = d * vec2(cos(a), sin(a)) - center.THIS_PLANE;
-	#pragma r:endif
-
-	#pragma r:if THIS_Iterateonrings && THIS_CONTEXT_TYPE_Context
-	setIterationIndex(ctx, cell);
 	#pragma r:endif
 	return inputOp1(p, ctx);
 }

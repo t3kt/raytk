@@ -1,4 +1,4 @@
-float thismap(float p, ContextT ctx) {
+ReturnT thismap(CoordT p, ContextT ctx) {
 	float a = THIS_Balance;
 	float b = THIS_Slope;
 	#ifdef THIS_Normalizescale

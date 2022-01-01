@@ -1,4 +1,4 @@
-Ray thismap(vec2 p, CameraContext ctx) {
+ReturnT thismap(CoordT p, ContextT ctx) {
 	vec2 size = ctx.resolution;
 	vec2 screenPos = p - size / 2.0;
 	float z = size.y / tan(THIS_Camfov / 2.0);

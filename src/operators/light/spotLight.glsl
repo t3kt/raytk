@@ -1,7 +1,7 @@
 // https://www.shadertoy.com/view/wlcyzf
 // https://learnopengl.com/Lighting/Light-casters
 
-Light thismap(CoordT p, LightContext ctx) {
+ReturnT thismap(CoordT p, ContextT ctx) {
 	Light light;
 	light.pos = THIS_Position;
 	light.color = THIS_Color * THIS_Intensity;

@@ -109,6 +109,7 @@ op:
     name: Contexttype
   status: beta
   summary: A field that switches between two values at a threshold point.
+  thumb: assets/images/reference/operators/field/stepField_thumb.png
 
 ---
 

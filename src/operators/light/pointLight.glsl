@@ -1,4 +1,4 @@
-Light thismap(vec3 p, LightContext ctx) {
+ReturnT thismap(CoordT p, ContextT ctx) {
 	Light light;
 	light.pos = THIS_Position;
 	light.color = THIS_Color * THIS_Intensity;

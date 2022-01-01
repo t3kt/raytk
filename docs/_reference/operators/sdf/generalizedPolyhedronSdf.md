@@ -70,6 +70,7 @@ op:
     name: Exponent
     summary: Controls the sharpness or smoothness of the edges.
   summary: Generates one of several different types of polyhedra.
+  thumb: assets/images/reference/operators/sdf/generalizedPolyhedronSdf_thumb.png
 
 ---
 

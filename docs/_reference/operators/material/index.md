@@ -26,6 +26,8 @@ cat:
     - oren-nayar
     - shading
     name: diffuseContrib
+    shortcuts:
+    - dc
     summary: A material element that provides diffuse light contribution.
   - name: fieldMat
     status: deprecated
@@ -41,6 +43,8 @@ cat:
     status: beta
     summary: A material element that uses the Gooch shading model.
   - name: modularMat
+    shortcuts:
+    - mm
     summary: A material that is composed of one or more shading elements.
   - name: orenNayarMat
     status: deprecated
@@ -84,6 +88,8 @@ cat:
     - shading
     - specular
     name: specularContrib
+    shortcuts:
+    - sc
     summary: A material element that provides specular light contribution.
   - keywords:
     - color

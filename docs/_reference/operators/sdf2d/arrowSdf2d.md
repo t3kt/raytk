@@ -35,5 +35,6 @@ op:
     name: Headthickness
   - label: Head Ratio
     name: Headratio
+  thumb: assets/images/reference/operators/sdf2d/arrowSdf2d_thumb.png
 
 ---

@@ -8,6 +8,8 @@ redirect_from:
   - /reference/opType/raytk.operators.combine.addFields/
 op:
   category: combine
+  detail: If any of the fields is a vector field, all fields will be treated as vector
+    fields, with float values copied to each part of the vector.
   inputs:
   - contextTypes:
     - Context
@@ -139,5 +141,11 @@ op:
     - vec4
   name: addFields
   opType: raytk.operators.combine.addFields
+  summary: Adds the values of multiple fields.
 
 ---
+
+
+Adds the values of multiple fields.
+
+If any of the fields is a vector field, all fields will be treated as vector fields, with float values copied to each part of the vector.

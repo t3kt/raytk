@@ -20,5 +20,6 @@ op:
   - label: Thickness
     name: Thickness
   status: beta
+  thumb: assets/images/reference/operators/sdf/latticeSdf_thumb.png
 
 ---

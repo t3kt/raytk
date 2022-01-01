@@ -1,0 +1,4 @@
+before	after
+thismap	parent().par.Name
+THIS_	parent().par.Name + '_'
+THISMAT	op('material_table')[1, 'material'] or ''

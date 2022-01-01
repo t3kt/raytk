@@ -1,4 +1,4 @@
-vec4 thismap(CoordT p, ContextT ctx) {
+ReturnT thismap(CoordT p, ContextT ctx) {
 	#ifdef THIS_HAS_INPUT_coordField
 	float q = inputOp_coordField(p, ctx);
 	#elif defined(THIS_Axis_dist)

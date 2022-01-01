@@ -41,5 +41,6 @@ op:
       is provided, that will be used. Otherwise a default shadow function will be
       used.
   status: beta
+  thumb: assets/images/reference/operators/material/reflectMat_thumb.png
 
 ---

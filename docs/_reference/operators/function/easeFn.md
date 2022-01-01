@@ -13,5 +13,6 @@ op:
   parameters:
   - label: Exponent
     name: Exponent
+  thumb: assets/images/reference/operators/function/easeFn_thumb.png
 
 ---

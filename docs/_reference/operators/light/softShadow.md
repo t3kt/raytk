@@ -24,6 +24,7 @@ op:
   - label: Maximum Distance
     name: Maxdist
   summary: A soft-edged shadow.
+  thumb: assets/images/reference/operators/light/softShadow_thumb.png
 
 ---
 

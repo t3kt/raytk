@@ -79,5 +79,6 @@ op:
   - label: Use Local Position
     name: Uselocalpos
   status: beta
+  thumb: assets/images/reference/operators/material/pbrMat_thumb.png
 
 ---

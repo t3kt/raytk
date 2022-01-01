@@ -2,3 +2,4 @@ name	label	macro	enable	path
 sdfOut	SDF Result	OUTPUT_SDF		parent().path + '/render_glsl'
 colorOut	Color	OUTPUT_COLOR		parent().path + '/render_glsl'
 uvOut	UV	OUTPUT_UV	parent().par.Enableuvoutput	parent().path + '/render_glsl'
+normalOut	Normal	OUTPUT_NORMAL	parent().par.Enablenormaloutput	parent().path + '/render_glsl'

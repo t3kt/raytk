@@ -50,6 +50,7 @@ op:
     name: Rotateplane
     summary: Rotate the cut plane in XYZ. When in 2D, only the Z rotation is used.
   summary: Cuts off an SDF along a plane.
+  thumb: assets/images/reference/operators/filter/knife_thumb.png
 
 ---
 

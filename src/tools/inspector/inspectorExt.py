@@ -57,6 +57,9 @@ class Inspector:
 		u, v = previewPanel.panel.u, previewPanel.panel.v
 		iop.bufferInspector.Sample(u, v)
 
+	def onTargetDestroyed(self):
+		self.Reset()
+
 	@staticmethod
 	def buildSimplifiedNames(dat: 'DAT', inDat: 'DAT'):
 		dat.clear()

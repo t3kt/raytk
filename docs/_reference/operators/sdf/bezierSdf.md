@@ -23,6 +23,49 @@ op:
     name: radiusField
     returnTypes:
     - float
+  - contextTypes:
+    - Context
+    - MaterialContext
+    - CameraContext
+    - LightContext
+    - RayContext
+    - ParticleContext
+    coordTypes:
+    - vec3
+    label: Point 1 Field
+    name: point1Field
+    returnTypes:
+    - vec4
+  - contextTypes:
+    - Context
+    - MaterialContext
+    - CameraContext
+    - LightContext
+    - RayContext
+    - ParticleContext
+    coordTypes:
+    - vec3
+    label: Point 2 Field
+    name: point2Field
+    returnTypes:
+    - vec4
+  - contextTypes:
+    - Context
+    - MaterialContext
+    - CameraContext
+    - LightContext
+    - RayContext
+    - ParticleContext
+    coordTypes:
+    - vec3
+    label: Point 3 Field
+    name: point3Field
+    returnTypes:
+    - vec4
+  keywords:
+  - bezier
+  - curve
+  - line
   name: bezierSdf
   opType: raytk.operators.sdf.bezierSdf
   parameters:
@@ -36,6 +79,10 @@ op:
     name: Radiusstart
   - label: Radius End
     name: Radiusend
+  - label: Offset Along Curve (0..1)
+    name: Createrefnormoffset
+    summary: 'Create reference to variable: Offset Along Curve (0..1)'
   status: beta
+  thumb: assets/images/reference/operators/sdf/bezierSdf_thumb.png
 
 ---

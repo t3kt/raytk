@@ -1,6 +1,6 @@
 // https://www.shadertoy.com/view/wlVGRz
 
-Sdf thismap(CoordT p, ContextT ctx) {
+ReturnT thismap(CoordT p, ContextT ctx) {
 	pR(p.xz, THIS_Rotate);
 	float th = THIS_Thickness * .16;
 	vec3 n = normalize(vec3(1., 0., THIS_Width));

@@ -35,6 +35,14 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 	#else
 	#error invalidAxis
 	#endif
+
+	#ifdef THIS_EXPOSE_angle
+	THIS_angle = degrees(atan(p.x, p.z)) + 180.;
+	#endif
+	#ifdef THIS_EXPOSE_normangle
+	THIS_normangle = atan(p.x, p.z)/TAU - .5;
+	#endif
+
 	#ifdef THIS_HAS_INPUT_thicknessField
 	#if defined(inputOp_thicknessField_COORD_TYPE_float)
 	thickness *= inputOp_thicknessField(atan(p.z, p.x), ctx);

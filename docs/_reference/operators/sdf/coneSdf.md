@@ -72,6 +72,7 @@ op:
       name: z
     name: Axis
   summary: Defines a cone or capped cone shape.
+  thumb: assets/images/reference/operators/sdf/coneSdf_thumb.png
 
 ---
 

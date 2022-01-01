@@ -1,4 +1,4 @@
-Light thismap(vec3 p, LightContext ctx) {
+ReturnT thismap(CoordT p, ContextT ctx) {
 	mat4 lightMat = mat4(
 		THIS_m00, THIS_m10, THIS_m20, THIS_m30,
 		THIS_m01, THIS_m11, THIS_m21, THIS_m31,

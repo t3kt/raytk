@@ -1,4 +1,4 @@
-ReturnT thismap(CoordT p, MaterialContext ctx) {
+ReturnT thismap(CoordT p, ContextT ctx) {
 	vec3 lightVec = normalize(ctx.light.pos - p);
 	Ray shadowRay = Ray(p+ctx.normal * RAYTK_SURF_DIST*2., lightVec);
 	float shadowDist = castRayBasic(shadowRay, RAYTK_MAX_DIST).x;

@@ -29,8 +29,8 @@ op:
     name: definition_in_1
     required: true
     returnTypes:
+    - float
     - vec4
-    - Light
   - contextTypes:
     - Context
     - MaterialContext
@@ -46,8 +46,8 @@ op:
     name: definition_in_2
     required: true
     returnTypes:
+    - float
     - vec4
-    - Light
   name: compositeFields
   opType: raytk.operators.combine.compositeFields
   parameters:
@@ -111,6 +111,7 @@ op:
   - label: Swap Inputs
     name: Swapinputs
   summary: Combines two vector fields using color compositing.
+  thumb: assets/images/reference/operators/combine/compositeFields_thumb.png
 
 ---
 

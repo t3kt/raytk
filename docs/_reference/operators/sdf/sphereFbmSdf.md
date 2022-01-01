@@ -20,5 +20,6 @@ op:
     - label: Simplex
       name: simplex
     name: Noisetype
+  thumb: assets/images/reference/operators/sdf/sphereFbmSdf_thumb.png
 
 ---

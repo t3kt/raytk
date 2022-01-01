@@ -60,6 +60,13 @@ op:
     name: Iterationtype
   - label: Seed
     name: Seed
+  - label: Cell ID Hash (XY)
+    name: Createrefcell
+    summary: 'Create reference to variable: Cell ID Hash (XY)'
+  - label: Layer Index
+    name: Createreflayer
+    summary: 'Create reference to variable: Layer Index'
   status: beta
+  thumb: assets/images/reference/operators/filter/quadTreeRepeat_thumb.png
 
 ---

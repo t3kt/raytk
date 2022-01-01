@@ -7,7 +7,9 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 		return THIS_INPUT_1(p, ctx);
 	#else
 		float blend;
-		#if defined(THIS_Usefield) && defined(THIS_HAS_INPUT_4)
+		#if defined(THIS_HAS_INPUT_blendField)
+		blend = inputOp_blendField(p, ctx);
+		#elif defined(THIS_Usefield) && defined(THIS_HAS_INPUT_4)
 		blend = inputOp4(p, ctx);
 		#else
 		blend = THIS_Blend;

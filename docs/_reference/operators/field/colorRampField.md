@@ -75,6 +75,7 @@ op:
       name: mirror
     name: Extendmode
   summary: A vector field that maps an input field to values from a range of colors.
+  thumb: assets/images/reference/operators/field/colorRampField_thumb.png
 
 ---
 

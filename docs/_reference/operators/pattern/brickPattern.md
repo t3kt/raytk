@@ -36,5 +36,6 @@ op:
     name: Thickness
   - label: Blending
     name: Blending
+  thumb: assets/images/reference/operators/pattern/brickPattern_thumb.png
 
 ---

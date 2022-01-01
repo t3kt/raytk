@@ -9,5 +9,9 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 			#error invalidFieldReturnType
 		#pragma r:endif
 	#pragma r:endif
+	#pragma r:if THIS_HAS_INPUT_1
 	return inputOp1(p - t, ctx);
+	#pragma r:else
+	return adaptAsVec4(p - t);
+	#pragma r:endif
 }

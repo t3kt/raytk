@@ -1,5 +1,5 @@
 // https://www.shadertoy.com/view/4ds3zn
-Sdf thismap(vec3 p, ContextT ctx) {
+ReturnT thismap(CoordT p, ContextT ctx) {
 	vec4 orb = vec4(1000.0);
 	const vec3 offset = vec3(-1, -1, 0);
 

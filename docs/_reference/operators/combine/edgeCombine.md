@@ -93,5 +93,6 @@ op:
     name: Radius
   - label: Depth
     name: Depth
+  thumb: assets/images/reference/operators/combine/edgeCombine_thumb.png
 
 ---

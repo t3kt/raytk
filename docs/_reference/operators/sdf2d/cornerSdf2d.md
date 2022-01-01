@@ -28,6 +28,7 @@ op:
     summary: Moves the position of the corner.
   summary: 2D SDF for an infinite corner, like an infinite square positioned by one
     corner.
+  thumb: assets/images/reference/operators/sdf2d/cornerSdf2d_thumb.png
 
 ---
 

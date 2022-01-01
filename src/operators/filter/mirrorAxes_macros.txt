@@ -1,0 +1,2 @@
+	'THIS_mask'	op('axes')[parent().par.Axes.eval(), 'mask']
+	'THIS_dir'	f"vec3({op('directions')[parent().par.Dirx.eval(), 'dir']}, {op('directions')[parent().par.Diry.eval(), 'dir']}, {op('directions')[parent().par.Dirz.eval(), 'dir']})"

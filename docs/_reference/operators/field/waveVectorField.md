@@ -61,5 +61,6 @@ op:
   - label: Offset
     name: Offset
   status: beta
+  thumb: assets/images/reference/operators/field/waveVectorField_thumb.png
 
 ---

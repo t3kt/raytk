@@ -14,7 +14,11 @@ cat:
   operators:
   - name: arcSdf2d
   - name: arrowSdf2d
-  - name: bezierSdf2d
+  - keywords:
+    - bezier
+    - curve
+    - line
+    name: bezierSdf2d
     status: beta
   - name: blobbyCrossSdf2d
   - name: circleSdf
@@ -31,6 +35,7 @@ cat:
     - ellipse
     - oval
     name: ellipseSdf2d
+  - name: flowerSdf2d
   - name: heartSdf2d
   - name: horseshoeSdf2d
   - name: jointSdf2d
@@ -52,6 +57,7 @@ cat:
     summary: SDF for a 2D rhombus (diamond), with its corners aligned to the axes.
   - name: roundedRectangleSdf2d
     summary: SDF for a 2D rectangle with optionally rounded corners.
+  - name: spikeSdf2d
   - name: spiralSdf2d
     status: beta
   - name: starSdf2d
@@ -63,6 +69,8 @@ cat:
   - name: vesicaSdf2d
     summary: SDF for a 2d vesica, which is a shape based on the overlap between two
       circles.
+  - name: wedgeSdf2d
+    status: beta
   summary: 'Signed distances functions which define geometry in 2D space, by calculating
 
     the distance from the edge of the shape at any given point.'

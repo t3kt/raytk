@@ -42,5 +42,6 @@ op:
     name: Radius
   - label: Exponent
     name: Exponent
+  thumb: assets/images/reference/operators/sdf2d/superQuadSdf2d_thumb.png
 
 ---

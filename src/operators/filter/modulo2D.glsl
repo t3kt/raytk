@@ -47,12 +47,19 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 	c = floor(c/2);
 	#pragma r:endif
 
+	int quad = quadrantIndex(ivec2(mod(ivec2(c), 2)));
 	#pragma r:if THIS_Iterationtype_cellcoord
 	setIterationCell(ctx, c);
 	#pragma r:elif THIS_Iterationtype_tiledquadrant
-	setIterationIndex(ctx, quadrantIndex(ivec2(mod(ivec2(c), 2))));
+	setIterationIndex(ctx, quad);
 	#pragma r:elif THIS_Iterationtype_alternatingcoord
 	setIterationCell(ctx, mod(c, 2.));
+	#pragma r:endif
+	#pragma r:if THIS_EXPOSE_cellcoord
+	THIS_cellcoord = ivec2(c);
+	#pragma r:endif
+	#pragma r:if THIS_EXPOSE_tiledquad
+	THIS_tiledquad = quad;
 	#pragma r:endif
 	// offset field can use iteration
 	vec2 o = THIS_Offset;

@@ -41,6 +41,7 @@ op:
       name: polar
     name: Uvmode
   summary: 2D circle SDF.
+  thumb: assets/images/reference/operators/sdf2d/circleSdf_thumb.png
 
 ---
 

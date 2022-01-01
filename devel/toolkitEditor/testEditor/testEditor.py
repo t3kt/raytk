@@ -21,6 +21,7 @@ if False:
 		Selectedoptype: 'StrParamT'
 		Testcasefolder: 'StrParamT'
 		Snapshotsfolder: 'StrParamT'
+		Sourcefolder: 'StrParamT'
 
 	class _COMP(COMP):
 		par: _Par
@@ -62,6 +63,7 @@ class TestEditor:
 		iop.testInspectorCore.WriteSnapshots(
 			caseRootFolder=self.ownerComp.par.Testcasefolder.eval(),
 			imagesRootFolder=self.ownerComp.par.Snapshotsfolder.eval(),
+			sourceFolder=self.ownerComp.par.Sourcefolder.eval(),
 		)
 
 	def processTest(self):
@@ -70,6 +72,7 @@ class TestEditor:
 			return
 		processTest(comp, log=None)
 		comp.clearScriptErrors(recurse=True)
+		self.reloadOutputs()
 		iop.testInspectorCore.GetFindings()
 
 	def _loadTest(self, name: str, toxPath: Path):

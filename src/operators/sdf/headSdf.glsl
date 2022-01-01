@@ -6,7 +6,7 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 	bool isEye = false;
 	float d = tdh_headMain(p);
 	#ifdef THIS_Enableeyes
-	tdh_eye(p, d, isEye);
+	tdh_eye(p, d, isEye, THIS_Blink);
 	#endif
 	#ifdef THIS_Enableears
 	tdh_ear(p, d);

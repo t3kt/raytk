@@ -85,7 +85,16 @@ op:
     - label: Ratio
       name: ratio
     name: Iterationtype
+  - label: Position Along Axis
+    name: Createrefaxispos
+    summary: 'Create reference to variable: Position Along Axis'
+  - label: Normalized Offset
+    name: Createrefnormoffset
+    summary: 'Create reference to variable: Normalized Offset'
+  shortcuts:
+  - ext
   summary: Creates a 3D SDF by extruding a 2D SDF along along an axis.
+  thumb: assets/images/reference/operators/convert/extrude_thumb.png
 
 ---
 

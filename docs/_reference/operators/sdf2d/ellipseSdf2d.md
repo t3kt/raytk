@@ -39,5 +39,6 @@ op:
     - label: Bounds
       name: bounds
     name: Uvmode
+  thumb: assets/images/reference/operators/sdf2d/ellipseSdf2d_thumb.png
 
 ---

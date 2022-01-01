@@ -12,4 +12,5 @@ context = args[0]  # type: BuildTaskContext
 context.log('Updating library info')
 context.safeDestroyOps(ops('write_*'))
 ext.libraryInfo.Forcebuild()
+context.lockOps(ops('opTable', 'opCategoryTable', 'versionInfo', 'opHelpTable', 'info_text'))
 context.finishTask()

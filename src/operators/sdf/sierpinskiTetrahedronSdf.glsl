@@ -124,7 +124,7 @@ float sdSierpinskiTetrahedron(vec3 p, int n, out float address)
 
 	#endif  // RAYTK_SIERPINSKI_TETRAHEDRON
 
-Sdf thismap(CoordT p, ContextT ctx) {
+ReturnT thismap(CoordT p, ContextT ctx) {
 	float orbit;
 //	float d = sdSierpinskiTetrahedron(
 //		p - THIS_Translate,

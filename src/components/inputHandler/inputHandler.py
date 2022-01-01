@@ -50,6 +50,8 @@ def resolveSourceParDefinition(onError: 'Optional[Callable[[str], None]]' = None
 
 def buildValidationErrors(dat: 'DAT', inputDef: 'DAT'):
 	dat.clear()
+	if hasattr(parent, 'raytk'):
+		return
 
 	def _addError(msg):
 		if not dat.numRows:

@@ -44,5 +44,6 @@ op:
   - label: Enable Shadow
     name: Enableshadow
   status: beta
+  thumb: assets/images/reference/operators/light/lightVolume_thumb.png
 
 ---

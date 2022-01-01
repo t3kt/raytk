@@ -25,5 +25,6 @@ op:
   - label: Bend
     name: Bend
   status: beta
+  thumb: assets/images/reference/operators/sdf2d/jointSdf2d_thumb.png
 
 ---

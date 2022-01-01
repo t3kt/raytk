@@ -11,6 +11,3 @@ def onKeyboardShortcut(info: dict):
 
 def onPickItem(info: dict):
 	ext.ropEditor.onEditItem(info.get('item'))
-
-def onEditItem(info: dict):
-	ext.ropEditor.onEditItem(info.get('item'))

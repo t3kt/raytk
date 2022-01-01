@@ -1,3 +1,3 @@
-float thismap(float p, ContextT ctx) {
+ReturnT thismap(CoordT p, ContextT ctx) {
 	return THIS_EXPR;
 }

@@ -63,5 +63,6 @@ op:
     name: Offset
   - label: Spread
     name: Spread
+  thumb: assets/images/reference/operators/filter/kink_thumb.png
 
 ---

@@ -17,7 +17,13 @@ cat:
     status: beta
   - name: functionGraphRender
     summary: Visualizes the graph of a function operator.
-  - name: pointMapRender
+  - keywords:
+    - point
+    - render
+    - volumetric
+    name: pointMapRender
+    shortcuts:
+    - pmr
     summary: Renderer that takes in a TOP of coordinates and evaluates the scene at
       each point.
   - keywords:
@@ -28,8 +34,12 @@ cat:
     name: raymarchPreviewPanel
     status: beta
   - name: raymarchRender3D
+    shortcuts:
+    - rr3
     summary: Renders a scene using 3D raymarching.
   - name: render2D
+    shortcuts:
+    - r2
     summary: Renders a 2D image by evaluating the input field for each pixel.
   - name: renderSelect
   summary: 'Outputs are a special category of operator that takes in one or more

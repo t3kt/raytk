@@ -74,5 +74,6 @@ op:
       name: RayContext
     name: Contexttype
   status: beta
+  thumb: assets/images/reference/operators/field/texture3dField_thumb.png
 
 ---

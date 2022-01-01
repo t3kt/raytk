@@ -71,12 +71,17 @@ class CompDefParsT(_OpMetaPars):
 	Help: 'DatParamT'
 	Helpurl: 'StrParamT'
 	Keywords: 'StrParamT'
+	Shortcuts: 'StrParamT'
 	Rops: 'StrParamT'
+	Style: 'StrParamT'
+	Label: 'StrParamT'
 
 class OpDefParsT(_OpMetaPars):
 	Hostop: 'OPParamT'
 	Paramsop: 'OPParamT'
 	Name: 'StrParamT'
+	Style: 'StrParamT'
+	Label: 'StrParamT'
 	Enable: 'BoolParamT'
 	Opglobals: 'DatParamT'
 	Initcode: 'DatParamT'
@@ -99,8 +104,10 @@ class OpDefParsT(_OpMetaPars):
 	Help: 'DatParamT'
 	Helpurl: 'StrParamT'
 	Keywords: 'StrParamT'
+	Shortcuts: 'StrParamT'
 	Disableinspect: 'BoolParamT'
 	Typespec: 'CompParamT'
+	Inputdefs: 'StrParamT'
 
 class ROPInfo:
 	"""
@@ -128,7 +135,7 @@ class ROPInfo:
 			self.opDef = o
 			# noinspection PyTypeChecker
 			self.opDefPar = self.opDef.par
-		elif _isRComp(o):
+		elif isRComp(o):
 			self.rop = o
 			self.opDef = o.op('compDefinition')
 			# noinspection PyTypeChecker
@@ -176,6 +183,14 @@ class ROPInfo:
 		self.opDefPar.Raytkoptype = val
 
 	@property
+	def opStyle(self):
+		return str(self.opDefPar['Style'] or 'default')
+
+	@property
+	def opLabel(self):
+		return str(self.opDefPar['Label'])
+
+	@property
 	def helpUrl(self):
 		return str(self.opDefPar.Helpurl or '')
 
@@ -201,7 +216,7 @@ class ROPInfo:
 
 	@property
 	def isRComp(self):
-		return _isRComp(self.rop)
+		return isRComp(self.rop)
 
 	@property
 	def _statusInParam(self):
@@ -289,7 +304,39 @@ class ROPInfo:
 	def supportedTypeTable(self) -> 'Optional[DAT]':
 		if not self.isROP:
 			return None
-		return self.opDef.op('./supportedTypes')
+		return self.opDef.op('supportedTypes')
+
+	@property
+	def _variableTable(self) -> 'Optional[DAT]':
+		if not self.isROP:
+			return None
+		return self.opDef.op('variable_table')
+
+	@property
+	def variableNameAndLabels(self):
+		table = self._variableTable
+		if not table:
+			return []
+		return [
+			(table[i, 'localName'].val, table[i, 'label'].val)
+			for i in range(1, table.numRows)
+		]
+
+	@property
+	def _outputBufferTable(self) -> 'Optional[DAT]':
+		if not self.isOutput:
+			return None
+		return self.rop.op('outputBuffers')
+
+	@property
+	def outputBufferNamesAndLabels(self):
+		table = self._outputBufferTable
+		if not table:
+			return []
+		return [
+			(table[i, 'name'].val, table[i, 'label'].val)
+			for i in range(1, table.numRows)
+		]
 
 	@property
 	def subROPs(self):
@@ -314,16 +361,19 @@ class ROPInfo:
 
 	@property
 	def keywords(self) -> 'Set[str]':
-		if not self:
-			return set()
-		return set(tdu.split(self.opDefPar.Keywords))
+		return set(tdu.split(self.opDefPar.Keywords)) if self else set()
 
 	@keywords.setter
 	def keywords(self, keywords: 'Optional[Set[str]]'):
-		if not keywords:
-			self.opDefPar.Keywords = ''
-		else:
-			self.opDefPar.Keywords = ' '.join(sorted(keywords))
+		self.opDefPar.Keywords = ' '.join(sorted(keywords)) if keywords else ''
+
+	@property
+	def shortcuts(self) -> 'Set[str]':
+		return set(tdu.split(self.opDefPar.Shortcuts)) if self else set()
+
+	@shortcuts.setter
+	def shortcuts(self, shortcuts: 'Optional[Set[str]]'):
+		self.opDefPar.Shortcuts = ' '.join(sorted(shortcuts)) if shortcuts else ''
 
 	@property
 	def hasROPInputs(self):
@@ -383,6 +433,17 @@ class ROPInfo:
 		cb = self.callbacks
 		if cb and hasattr(cb, name):
 			getattr(cb, name)(**kwargs)
+
+	@property
+	def ropKind(self):
+		if not self:
+			return
+		if self.isOutput:
+			return RaytkTags.raytkOutput.name
+		if self.isROP:
+			return RaytkTags.raytkOP.name
+		if self.isRComp:
+			return RaytkTags.raytkComp.name
 
 class _InputHandlerParsT:
 	Source: 'OPParamT'
@@ -518,7 +579,7 @@ class CategoryInfo:
 def isROP(o: 'OP'):
 	return bool(o) and o.isCOMP and RaytkTags.raytkOP.isOn(o)
 
-def _isRComp(o: 'OP'):
+def isRComp(o: 'OP'):
 	return bool(o) and o.isCOMP and RaytkTags.raytkComp.isOn(o)
 
 def isROPDef(o: 'OP'):
@@ -530,11 +591,11 @@ def _isRCompDef(o: 'OP'):
 def _getROP(comp: 'COMP', checkParents=True):
 	if not comp or comp is root:
 		return None
-	if isROP(comp) or _isRComp(comp):
+	if isROP(comp) or isRComp(comp):
 		return comp
 	if isROPDef(comp) or _isRCompDef(comp):
 		host = op(comp.par['Hostop'])
-		if isROP(host) or _isRComp(host):
+		if isROP(host) or isRComp(host):
 			return host
 	if checkParents:
 		return _getROP(comp.parent(), checkParents=checkParents)

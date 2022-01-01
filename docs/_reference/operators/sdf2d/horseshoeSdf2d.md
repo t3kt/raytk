@@ -19,5 +19,6 @@ op:
     name: Length
   - label: Thickness
     name: Thickness
+  thumb: assets/images/reference/operators/sdf2d/horseshoeSdf2d_thumb.png
 
 ---

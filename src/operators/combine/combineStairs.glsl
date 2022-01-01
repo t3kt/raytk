@@ -1,4 +1,4 @@
-Sdf thismap(CoordT p, ContextT ctx) {
+ReturnT thismap(CoordT p, ContextT ctx) {
 	#ifdef THIS_HAS_INPUT_3
 	float r = THIS_Radius * inputOp3(p, ctx);
 	#else

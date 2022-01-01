@@ -8,6 +8,35 @@ redirect_from:
   - /reference/opType/raytk.operators.sdf2d.pieSdf2d/
 op:
   category: sdf2d
+  inputs:
+  - contextTypes:
+    - Context
+    - MaterialContext
+    - CameraContext
+    - LightContext
+    - RayContext
+    - ParticleContext
+    coordTypes:
+    - vec2
+    label: Angle Field
+    name: angleField
+    returnTypes:
+    - float
+  - contextTypes:
+    - Context
+    - MaterialContext
+    - CameraContext
+    - LightContext
+    - RayContext
+    - ParticleContext
+    coordTypes:
+    - vec2
+    label: Radius Field
+    name: radiusField
+    returnTypes:
+    - float
+    - vec4
+    summary: Radius field, either a float, or a vector with outer and inner radius
   name: pieSdf2d
   opType: raytk.operators.sdf2d.pieSdf2d
   parameters:
@@ -29,7 +58,11 @@ op:
     name: Shape
   - label: Inner Radius
     name: Innerradius
+  - label: Normalized Angle (0..1)
+    name: Createrefnormangle
+    summary: 'Create reference to variable: Normalized Angle (0..1)'
   summary: SDF for a 2D pie-slice shape.
+  thumb: assets/images/reference/operators/sdf2d/pieSdf2d_thumb.png
 
 ---
 

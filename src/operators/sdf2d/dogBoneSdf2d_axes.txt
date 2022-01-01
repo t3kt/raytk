@@ -1,0 +1,3 @@
+name	label
+x	X
+y	Y

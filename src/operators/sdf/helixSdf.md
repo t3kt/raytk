@@ -1,3 +1,5 @@
+SDF for a helix (an elongated spiral).
+
 ## Parameters
 
 * `Enable`

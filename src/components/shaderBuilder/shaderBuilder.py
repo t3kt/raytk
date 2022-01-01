@@ -614,6 +614,11 @@ class ShaderBuilder:
 
 	def buildValidationErrors(self, dat: 'DAT'):
 		dat.clear()
+		def addError(path, level, message):
+			if dat.numRows == 0:
+				dat.appendRow(['path', 'level', 'message'])
+			dat.appendRow([path, level, message])
+		self._validateVariableReferences(addError)
 		if _isInDevelMode():
 			return
 		toolkitVersions = {}  # type: Dict[str, int]
@@ -626,8 +631,21 @@ class ShaderBuilder:
 				toolkitVersions[version] = 1 + toolkitVersions.get(version, 0)
 		if len(toolkitVersions) > 1:
 			error = f'Toolkit version mismatch ({", ".join(list(toolkitVersions.keys()))})'
-			dat.appendRow(['path', 'level', 'message'])
-			dat.appendRow([parent().path, 'warning', error])
+			addError(parent().path, 'warning', error)
+
+	def _validateVariableReferences(self, addError: 'Callable[[str, str, str], None]'):
+		#  addError params (path, level, message)
+		varTable = self._variableTable()
+		refTable = self._referenceTable()
+		if refTable.numRows < 2:
+			return
+		defTable = self._definitionTable()
+		if defTable.numRows < 2:
+			return
+		checker = _VarRefChecker(
+			varTable, refTable, defTable, addError)
+		for refName in refTable.col('name')[1:]:
+			checker.checkRef(refName.val)
 
 	def V2_writeShader(
 			self,
@@ -654,6 +672,67 @@ class ShaderBuilder:
 			outputBufferTable=outputBufferTable,
 		)
 		writer.run()
+
+class _VarRefChecker:
+	def __init__(
+			self,
+			varTable: 'DAT', refTable: 'DAT',
+			defTable: 'DAT',
+			addError: 'Callable[[str, str, str], None]'):
+		self._addError = addError
+		self.varTable = varTable
+		self.refTable = refTable
+		self.defTable = defTable
+		self.opOutputs = {}  # type: Dict[str, List[str]]
+		for i in range(1, defTable.numRows):
+			name = defTable[i, 'name'].val
+			for inName in defTable[i, 'inputNames'].val.split():
+				if inName in self.opOutputs:
+					self.opOutputs[inName].append(name)
+				else:
+					self.opOutputs[inName] = [name]
+		self.endName = defTable[-1, 'name'].val
+
+	def addError(self, path, level, message):
+		self._addError(path, level, message)
+
+	def getPathsFromRefOwner(self, refOwnerName: str):
+		refOwnerPath = self.defTable[refOwnerName, 'path'].val
+		allPaths = []  # type: List[List[str]]
+
+		maxDepth = 50
+
+		def dfs(curPath: 'List[str]', n: str):
+			if n == self.endName:
+				allPaths.append(curPath[:])
+			else:
+				if len(curPath) >= maxDepth:
+					self.addError(refOwnerPath, 'warning', 'Exceeded path stack depth limit')
+					return
+				for nextNode in self.opOutputs.get(n) or []:
+					curPath.append(nextNode)
+					dfs(curPath, nextNode)
+					curPath.pop()
+
+		dfs([refOwnerName], refOwnerName)
+		return allPaths
+
+	def checkRef(self, refName: str):
+		refOwnerName = self.refTable[refName, 'owner'].val
+		refOwnerPath = self.defTable[refOwnerName, 'path'].val
+		srcName = self.refTable[refName, 'source'].val
+		srcOwner = self.varTable[srcName, 'owner']
+		if not srcOwner:
+			self.addError(
+				refOwnerPath, 'error', 'Invalid variable reference (not found)')
+			return
+		allPaths = self.getPathsFromRefOwner(refOwnerName)
+
+		if not allPaths:
+			self.addError(refOwnerPath, 'warning', 'No variable source found')
+		for path in allPaths:
+			if srcOwner not in path:
+				self.addError(refOwnerPath, 'warning', f'Variable source ({srcOwner}) missing in path ' + '->'.join(simplifyNames(path)))
 
 @dataclass
 class _V2_Writer:

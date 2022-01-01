@@ -1,0 +1,3 @@
+name	label	dataType	enable
+angle	Angle (0-360)	float	1
+normangle	Normalized Angle (0-1)	float	1

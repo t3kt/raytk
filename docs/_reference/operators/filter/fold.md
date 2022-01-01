@@ -42,5 +42,6 @@ op:
     name: Function
   - label: Distance
     name: Distance
+  thumb: assets/images/reference/operators/filter/fold_thumb.png
 
 ---

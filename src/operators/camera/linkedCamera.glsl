@@ -1,4 +1,4 @@
-Ray thismap(vec2 p, CameraContext ctx) {
+ReturnT thismap(CoordT p, ContextT ctx) {
 	mat4 camMat = mat4(
 		THIS_m00, THIS_m10, THIS_m20, THIS_m30,
 		THIS_m01, THIS_m11, THIS_m21, THIS_m31,

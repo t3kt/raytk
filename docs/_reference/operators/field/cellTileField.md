@@ -30,8 +30,20 @@ op:
     - label: Raw
       name: raw
     name: Cellstyle
+  - label: Coord Type
+    menuOptions:
+    - label: Auto
+      name: auto
+    - label: 1D
+      name: float
+    - label: 2D
+      name: vec2
+    - label: 3D
+      name: vec3
+    name: Coordtype
   summary: A value field that provides an approximation of repeating cellular (voronoi)
     noise.
+  thumb: assets/images/reference/operators/field/cellTileField_thumb.png
 
 ---
 

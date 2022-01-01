@@ -42,5 +42,6 @@ op:
   - label: Translate
     name: Translate
   status: beta
+  thumb: assets/images/reference/operators/sdf/quadSdf_thumb.png
 
 ---

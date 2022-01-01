@@ -80,6 +80,7 @@ op:
       name: geopos
     name: Faceoffsetfieldcoordmode
   summary: A geodesic polyhedron, optionally with a spike on each face.
+  thumb: assets/images/reference/operators/sdf/geodesicSdf_thumb.png
 
 ---
 

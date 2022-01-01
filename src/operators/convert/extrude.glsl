@@ -1,9 +1,15 @@
 ReturnT thismap(CoordT p, ContextT ctx) {
 	ReturnT res;
+	#pragma r:if THIS_EXPOSE_axispos
+	THIS_axispos = p.THIS_AXIS;
+	#pragma r:endif
 	#pragma r:if THIS_Infiniteheight
 	{
 		#pragma r:if THIS_Iterationtype_ratio
 		setIterationIndex(ctx, p.THIS_AXIS);
+		#pragma r:endif
+		#pragma r:if THIS_EXPOSE_normoffset
+		THIS_normoffset = p.THIS_AXIS;
 		#pragma r:endif
 		res = inputOp_crossSection(p.THIS_PLANE, ctx);
 		#pragma r:if RAYTK_USE_UV && THIS_Uvmode_depth
@@ -26,6 +32,9 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 		float ratio = map01(p.THIS_AXIS - o, -h/2., h/2.);
 		#pragma r:if THIS_Iterationtype_ratio
 		setIterationIndex(ctx, ratio);
+		#pragma r:endif
+		#pragma r:if THIS_EXPOSE_normoffset
+		THIS_normoffset = ratio;
 		#pragma r:endif
 		res = inputOp_crossSection(p.THIS_PLANE, ctx);
 		vec2 w = vec2(res.x, abs(p.THIS_AXIS - o) - h);

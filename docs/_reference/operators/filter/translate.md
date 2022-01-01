@@ -27,7 +27,6 @@ op:
     - vec3
     label: definition_in
     name: definition_in
-    required: true
     returnTypes:
     - float
     - vec4
@@ -68,6 +67,17 @@ op:
   - label: Translate
     name: Translate
     summary: Amount of translation along each axis. For 2D, only X and Y are used.
+  - label: Coord Type
+    menuOptions:
+    - label: Auto
+      name: auto
+    - label: 2D
+      name: vec2
+    - label: 3D
+      name: vec3
+    name: Coordtype
+  shortcuts:
+  - tr
   summary: Translates coordinates of the input ROP.
 
 ---

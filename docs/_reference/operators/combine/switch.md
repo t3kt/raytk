@@ -172,6 +172,22 @@ op:
     - Ray
     - Light
     - Particle
+  - contextTypes:
+    - Context
+    - MaterialContext
+    - CameraContext
+    - LightContext
+    - RayContext
+    - ParticleContext
+    coordTypes:
+    - float
+    - vec2
+    - vec3
+    label: Index Field
+    name: Indexfield
+    returnTypes:
+    - float
+    summary: Field used to choose the source index
   name: switch
   opType: raytk.operators.combine.switch
   parameters:
@@ -180,6 +196,8 @@ op:
   - label: Source
     name: Source
     summary: When 0, the first source is used, 1 for the second, etc.
+  - label: Index Field
+    name: Indexfield
   summary: Switches between several inputs, without the need to rebuild the shader,
     allowing for fast switching.
 

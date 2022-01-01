@@ -63,6 +63,7 @@ op:
   - label: Enable
     name: Enable
   summary: Creates a 3D SDF by sweeping a 2D SDF along the surface of another 2D SDF.
+  thumb: assets/images/reference/operators/convert/sweep_thumb.png
 
 ---
 

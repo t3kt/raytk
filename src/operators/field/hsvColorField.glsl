@@ -1,4 +1,4 @@
-vec4 thismap(CoordT p, ContextT ctx) {
+ReturnT thismap(CoordT p, ContextT ctx) {
 	vec3 hsv = vec3(THIS_Hueoffset * TAU, THIS_Saturation, THIS_Value);
 	#pragma r:if THIS_HAS_INPUT_hueField
 	hsv.x += inputOp_hueField(p, ctx);

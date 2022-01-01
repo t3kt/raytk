@@ -1,17 +1,6 @@
-// https://github.com/rreusser/glsl-hypot
-float domcol_hypot (vec2 z) {
-	float t;
-	float x = abs(z.x);
-	float y = abs(z.y);
-	t = min(x, y);
-	x = max(x, y);
-	t = t / x;
-	return (z.x == 0.0 && z.y == 0.0) ? 0.0 : x * sqrt(1.0 + t * t);
-}
-
 vec4 domainColoring (vec2 z, vec2 gridSpacing, float saturation, float gridStrength, float magStrength, float linePower) {
 	float carg = atan(z.y, z.x);
-	float cmod = domcol_hypot(z);
+	float cmod = hypot(z);
 
 	float rebrt = (fract(z.x / gridSpacing.x) - 0.5) * 2.0;
 	rebrt *= rebrt;

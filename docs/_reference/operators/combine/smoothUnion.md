@@ -74,6 +74,7 @@ op:
     name: Amount
     summary: Size of the blending region.
   summary: Combines SDFs using a smooth union operator.
+  thumb: assets/images/reference/operators/combine/smoothUnion_thumb.png
 
 ---
 

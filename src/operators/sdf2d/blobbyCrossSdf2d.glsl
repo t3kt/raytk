@@ -2,7 +2,11 @@
 // https://www.shadertoy.com/view/NssXWM
 
 ReturnT thismap(CoordT p, ContextT ctx) {
+	#ifdef THIS_HAS_INPUT_tightnessField
+	float he = inputOp_tightnessField(p, ctx);
+	#else
 	float he = THIS_Tightness;
+	#endif
 	p = abs(p);
 	p = vec2(abs(p.x-p.y),1.0-p.x-p.y)/sqrt(2.0);
 
@@ -16,5 +20,10 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 	x = min(x,sqrt(2.0)/2.0);
 
 	vec2 z = vec2(x,he*(1.0-2.0*x*x)) - p;
-	return createSdf(length(z) * sign(z.y) - THIS_Rounding);
+	#ifdef THIS_HAS_INPUT_roundingField
+	float r = inputOp_roundingField(p, ctx);
+	#else
+	float r = THIS_Rounding;
+	#endif
+	return createSdf(length(z) * sign(z.y) - r);
 }

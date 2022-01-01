@@ -1,7 +1,7 @@
 // Based on Spiral Tiling by Knightly
 // https://www.shadertoy.com/view/ls2GRz
 
-Sdf thismap(vec3 p, ContextT ctx) {
+ReturnT thismap(CoordT p, ContextT ctx) {
 	p = vec3(p.THIS_PLANE_P1, p.THIS_PLANE_P2, p.THIS_AXIS);
 	vec2 c = vec2(THIS_Branches, THIS_Bend);
 	float r=length(p.xy);

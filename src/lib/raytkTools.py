@@ -54,8 +54,7 @@ class RaytkTools(RaytkContext):
 			if tag.name in info.opDef.tags:
 				info.opDef.tags.remove(tag.name)
 
-	@staticmethod
-	def updateROPParams(rop: 'COMP'):
+	def updateROPParams(self, rop: 'COMP'):
 		info = ROPInfo(rop)
 		if not info or not info.isMaster:
 			return
@@ -98,6 +97,61 @@ class RaytkTools(RaytkContext):
 		updatePar.order = 1111
 		updatePar.enableExpr = toolkitAvailableExpr
 		updatePar.help = 'Update this OP to a new toolkit version.\nNew toolkit tox must be loaded in the project.'
+
+		self._updateVariableRefParams(rop)
+		self._updateRenderSelectParams(rop)
+
+	@staticmethod
+	def _updateVariableRefParams(rop: 'COMP'):
+		if rop.name == 'provideVariable':
+			return
+		varNamesAndLabels = ROPInfo(rop).variableNameAndLabels
+		if not varNamesAndLabels:
+			return
+		varNames = [nl[0] for nl in varNamesAndLabels]
+		toDelete = []
+		page = rop.appendCustomPage('Variables')
+		for par in list(page.pars):
+			if par.valid and par.name.startswith('Createref') and par.name.replace('Createref', '') not in varNames:
+				toDelete.append(par)
+		for i, nl in enumerate(varNamesAndLabels):
+			name, label = nl
+			par = page.appendPulse('Createref' + name.lower(), label=label)[0]
+			par.help = f'Create reference to variable: {label}'
+			par.enableExpr = "hasattr(op, 'raytk') and op.raytk.op('tools/palette')"
+			par.order = 777 + i
+		for par in toDelete:
+			if not par.valid:
+				continue
+			try:
+				par.destroy()
+			except:
+				pass
+
+	@staticmethod
+	def _updateRenderSelectParams(rop: 'COMP'):
+		namesAndLabels = ROPInfo(rop).outputBufferNamesAndLabels
+		if not namesAndLabels:
+			return
+		names = [nl[0] for nl in namesAndLabels]
+		toDelete = []
+		page = rop.appendCustomPage('Outputs')
+		for par in list(page.pars):
+			if par.valid and par.name.startswith('Creatersel') and par.name.replace('Creatersel', '') not in names:
+				toDelete.append(par)
+		for i, nl in enumerate(namesAndLabels):
+			name, label = nl
+			par = page.appendPulse('Creatersel' + name.lower(), label=f'Select {label}')[0]
+			par.help = f'Create renderSelect for output: {label}'
+			par.enableExpr = f"hasattr(op, 'raytk') and op.raytk.op('tools/palette') and '{name}' in op('./output_buffers').col('name')[1:]"
+			par.order = 888 + i
+		for par in toDelete:
+			if not par.valid:
+				continue
+			try:
+				par.destroy()
+			except:
+				pass
 
 	@staticmethod
 	def updateOPImage(rop: 'COMP'):

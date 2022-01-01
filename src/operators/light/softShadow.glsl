@@ -1,5 +1,5 @@
 // Soft shadow code from http://iquilezles.org/www/articles/rmshadows/rmshadows.htm
-float thismap(vec3 p, MaterialContext ctx) {
+ReturnT thismap(CoordT p, ContextT ctx) {
 	float mint = THIS_MIN_DIST;
 	float maxt = THIS_MAX_DIST;
 	float k = THIS_Hardness;

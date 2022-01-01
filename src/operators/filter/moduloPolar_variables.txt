@@ -1,0 +1,3 @@
+name	label	dataType	enable
+step	Step Index	float	1
+normstep	Normalized Step (0..1)	float	1

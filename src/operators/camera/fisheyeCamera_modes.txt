@@ -1,0 +1,6 @@
+name	label	code
+pinhole	Pinhole	theta = atan(r/f);
+stereographic	Stereographic	theta = atan(r/(2.0*f))*2.0;
+equiangular	Equi-Angular	theta = r/f;
+equisolidangle	Equi-Solid Angle	theta = asin(r/(2.0*f))*2.0;
+orthographicfisheye	Orthographic Fisheye	theta = asin(r/f);

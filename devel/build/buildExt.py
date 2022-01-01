@@ -1,7 +1,9 @@
+from datetime import datetime
+from pathlib import Path
 from raytkTools import RaytkTools
 from raytkUtil import RaytkTags, navigateTo, focusFirstCustomParameterPage, CategoryInfo, RaytkContext, IconColors
 from raytkBuild import BuildContext, DocProcessor
-from typing import Callable, List, Optional, Union
+from typing import Callable, List, Optional, TextIO
 
 # noinspection PyUnreachableCode
 if False:
@@ -15,6 +17,8 @@ class BuildManager:
 		self.context = None  # type: Optional[BuildContext]
 		self.docProcessor = None  # type: Optional[DocProcessor]
 		self.experimentalMode = False
+		self.logFile = None  # type: Optional[TextIO]
+		self.enableVerboseLogging = False
 
 	def OnInit(self):
 		self.ClearLog()
@@ -33,6 +37,20 @@ class BuildManager:
 
 	def ClearLog(self):
 		self.logTable.clear()
+		self.closeLogFile()
+
+	def closeLogFile(self):
+		if not self.logFile:
+			return
+		self.logFile.close()
+		self.logFile = None
+
+	def startNewLogFile(self):
+		stamp = datetime.now().strftime('%Y-%m-%d_%H-%M-%S')
+		fileName = f'build/log/build-{stamp}.txt'
+		filePath = Path(fileName)
+		filePath.parent.mkdir(parents=True, exist_ok=True)
+		self.logFile = filePath.open('a')
 
 	def ReloadToolkit(self):
 		self.logTable.clear()
@@ -41,9 +59,15 @@ class BuildManager:
 		self.queueMethodCall(self.reloadToolkit, toolkit)
 
 	def RunBuild(self):
-		self.logTable.clear()
-		self.log('Starting build')
 		self.experimentalMode = bool(self.ownerComp.op('experimental_toggle').par.Value0)
+		self.enableVerboseLogging = bool(self.ownerComp.op('verboseLogging_toggle').par.Value0)
+		self.logTable.clear()
+		self.closeLogFile()
+		if self.ownerComp.op('useLogFile_toggle').par.Value0:
+			self.startNewLogFile()
+		version = RaytkContext().toolkitVersion()
+		self.log('Starting build')
+		self.log(f'Version: {version}' + (' (experimental)' if self.experimentalMode else ''))
 		self.context = BuildContext(
 			self.log,
 			experimental=self.experimentalMode)
@@ -63,37 +87,61 @@ class BuildManager:
 			self.context.openNetworkPane()
 			self.queueMethodCall(self.runBuild_stage, stage + 1)
 		elif stage == 1:
+			self.logStageStart('Detach fileSync ops')
 			self.detachAllFileSyncDats(toolkit)
 			self.queueMethodCall(self.runBuild_stage, stage + 1)
 		elif stage == 2:
 			if self.docProcessor:
+				self.logStageStart('Clear old docs')
 				self.docProcessor.clearPreviousDocs()
 			self.queueMethodCall(self.runBuild_stage, stage + 1)
 		elif stage == 3:
-			self.updateLibraryInfo(toolkit, thenRun='runBuild_stage', runArgs=[stage + 1])
+			self.logStageStart('Process thumbnails')
+			self.context.runBuildScript(
+				toolkit.op('libraryThumbs/BUILD'),
+				thenRun=self.runBuild_stage, runArgs=[stage + 1])
 		elif stage == 4:
-			self.updateLibraryImage(toolkit, thenRun='runBuild_stage', runArgs=[stage + 1])
+			self.logStageStart('Update library info')
+			self.updateLibraryInfo(toolkit, thenRun=self.runBuild_stage, runArgs=[stage + 1])
 		elif stage == 5:
-			self.processOperators(toolkit.op('operators'), thenRun='runBuild_stage', runArgs=[stage + 1])
+			self.logStageStart('Update library image')
+			self.updateLibraryImage(toolkit, thenRun=self.runBuild_stage, runArgs=[stage + 1])
 		elif stage == 6:
-			self.processNestedOperators(toolkit.op('operators'), thenRun='runBuild_stage', runArgs=[stage + 1])
+			self.logStageStart('Process operators')
+			self.processOperators(toolkit.op('operators'), thenRun=self.runBuild_stage, runArgs=[stage + 1])
 		elif stage == 7:
-			self.processTools(toolkit.op('tools'), thenRun='runBuild_stage', runArgs=[stage + 1])
+			self.logStageStart('Process nested operators')
+			self.processNestedOperators(toolkit.op('operators'), thenRun=self.runBuild_stage, runArgs=[stage + 1])
 		elif stage == 8:
+			self.logStageStart('Lock library info')
+			self.lockLibraryInfo(toolkit, thenRun=self.runBuild_stage, runArgs=[stage + 1])
+		elif stage == 9:
+			self.logStageStart('Remove op help')
+			self.removeAllOpHelp(thenRun=self.runBuild_stage, runArgs=[stage + 1])
+		elif stage == 10:
+			self.logStageStart('Process tools')
+			self.processTools(toolkit.op('tools'), thenRun=self.runBuild_stage, runArgs=[stage + 1])
+		elif stage == 11:
+			self.logStageStart('Lock buildLock ops')
 			self.context.lockBuildLockOps(toolkit)
 			self.queueMethodCall(self.runBuild_stage, stage + 1)
-		elif stage == 9:
-			self.processComponents(toolkit.op('components'), thenRun='runBuild_stage', runArgs=[stage + 1])
-		elif stage == 10:
+		elif stage == 12:
+			self.logStageStart('Process components')
+			self.processComponents(toolkit.op('components'), thenRun=self.runBuild_stage, runArgs=[stage + 1])
+		elif stage == 13:
+			self.logStageStart('Remove buildExclude ops')
 			self.context.removeBuildExcludeOps(toolkit)
 			self.queueMethodCall(self.runBuild_stage, stage + 1)
-		elif stage == 11:
+		elif stage == 14:
+			self.logStageStart('Remove redundant python mods')
 			self.context.removeRedundantPythonModules(toolkit, toolkit.ops('tools', 'libraryInfo'))
 			self.queueMethodCall(self.runBuild_stage, stage + 1)
-		elif stage == 12:
+		elif stage == 15:
+			self.logStageStart('Finalize toolkit pars')
 			self.finalizeToolkitPars(toolkit)
 			self.queueMethodCall(self.runBuild_stage, stage + 1)
-		elif stage == 13:
+		elif stage == 16:
+			self.logStageStart('Finish build')
 			self.context.focusInNetworkPane(toolkit)
 			version = RaytkContext().toolkitVersion()
 			if self.experimentalMode:
@@ -105,6 +153,7 @@ class BuildManager:
 			toolkit.save(toxFile)
 			self.log('Build completed!')
 			self.log(f'Exported tox file: {toxFile}')
+			self.closeLogFile()
 
 	@staticmethod
 	def reloadToolkit(toolkit: 'COMP'):
@@ -127,7 +176,9 @@ class BuildManager:
 		toolkit.par.reloadbuiltin = True
 		focusFirstCustomParameterPage(toolkit)
 
-	def updateLibraryImage(self, toolkit: 'COMP', thenRun: str = None, runArgs: list = None):
+	def updateLibraryImage(
+			self, toolkit: 'COMP',
+			thenRun: 'Optional[Callable]' = None, runArgs: list = None):
 		self.log('Updating library image')
 		image = RaytkContext().libraryImage()
 		if image:
@@ -144,7 +195,9 @@ class BuildManager:
 		if thenRun:
 			self.queueMethodCall(thenRun, *(runArgs or []))
 
-	def updateLibraryInfo(self, toolkit: 'COMP', thenRun: str = None, runArgs: list = None):
+	def updateLibraryInfo(
+			self, toolkit: 'COMP',
+			thenRun: 'Optional[Callable]' = None, runArgs: list = None):
 		self.log('Updating library info')
 		if toolkit.par['Experimentalbuild'] is not None:
 			toolkit.par.Experimentalbuild.val = self.experimentalMode
@@ -157,16 +210,26 @@ class BuildManager:
 			thenRun=lambda: self.queueMethodCall(thenRun, *(runArgs or [])),
 			runArgs=[])
 
-	def processComponents(self, components: 'COMP', thenRun: str = None, runArgs: list = None):
+	def lockLibraryInfo(
+			self, toolkit: 'COMP',
+			thenRun: 'Optional[Callable]' = None, runArgs: list = None):
+		self.log('Locking library info')
+		self.context.lockOps(toolkit.ops(
+			'info', 'opTable', 'opCategoryTable', 'opHelpTable', 'buildInfo'))
+		if thenRun:
+			self.queueMethodCall(thenRun, *(runArgs or []))
+
+	def processComponents(
+			self, components: 'COMP',
+			thenRun: 'Optional[Callable]' = None, runArgs: list = None):
 		self.log(f'Processing components {components}')
 		self.context.focusInNetworkPane(components)
-		try:
-			components.destroy()
-		except:
-			pass
+		self.context.safeDestroyOp(components)
 		self.queueMethodCall(thenRun, *(runArgs or []))
 
-	def processOperators(self, comp: 'COMP', thenRun: str = None, runArgs: list = None):
+	def processOperators(
+			self, comp: 'COMP',
+			thenRun: 'Optional[Callable]' = None, runArgs: list = None):
 		self.log(f'Processing operators {comp}')
 		self.context.moveNetworkPane(comp)
 		self.context.detachTox(comp)
@@ -174,17 +237,23 @@ class BuildManager:
 		# categories.sort(key=lambda c: c.name)
 		if self.docProcessor:
 			self.docProcessor.writeCategoryListPage(categories)
-		self.queueMethodCall('processOperatorCategories_stage', categories, thenRun, runArgs)
+		self.queueMethodCall(self.processOperatorCategories_stage, categories, thenRun, runArgs)
 
-	def processOperatorCategories_stage(self, categories: List['COMP'], thenRun: str = None, runArgs: list = None):
+	def processOperatorCategories_stage(
+			self, categories: List['COMP'],
+			thenRun: 'Optional[Callable]' = None, runArgs: list = None):
 		if categories:
 			category = categories.pop()
 			self.processOperatorCategory(
-				category, thenRun='processOperatorCategories_stage', runArgs=[categories, thenRun, runArgs])
+				category,
+				thenRun=self.processOperatorCategories_stage,
+				runArgs=[categories, thenRun, runArgs])
 		elif thenRun:
 			self.queueMethodCall(thenRun, *(runArgs or []))
 
-	def processOperatorCategory(self, category: 'COMP', thenRun: str = None, runArgs: list = None):
+	def processOperatorCategory(
+			self, category: 'COMP',
+			thenRun: 'Optional[Callable]' = None, runArgs: list = None):
 		categoryInfo = CategoryInfo(category)
 		self.log(f'Processing operator category {category.name}')
 		self.context.moveNetworkPane(category)
@@ -196,20 +265,22 @@ class BuildManager:
 			self.context.removeAlphaOps(category)
 		comps = categoryInfo.operators
 		# comps.sort(key=lambda c: c.name)
-		if self.docProcessor:
-			self.docProcessor.processOpCategory(category)
-		self.context.removeCatHelp(category)
-		self.queueMethodCall(self.processOperatorCategory_stage, comps, thenRun, runArgs)
+		self.queueMethodCall(self.processOperatorCategory_stage, category, comps, thenRun, runArgs)
 
-	def processOperatorCategory_stage(self, components: List['COMP'], thenRun: str = None, runArgs: list = None):
+	def processOperatorCategory_stage(
+			self, category: 'COMP', components: List['COMP'],
+			thenRun: 'Optional[Callable]' = None, runArgs: list = None):
 		if components:
 			comp = components.pop()
 			self.processOperator(comp)
-			if components:
-				self.queueMethodCall(self.processOperatorCategory_stage, components, thenRun, runArgs)
-				return
-		if thenRun:
-			self.queueMethodCall(thenRun, *(runArgs or []))
+			self.queueMethodCall(self.processOperatorCategory_stage, category, components, thenRun, runArgs)
+		else:
+			# after finishing the operators in the category, process the category help
+			if self.docProcessor:
+				self.docProcessor.processOpCategory(category)
+			self.context.removeCatHelp(category)
+			if thenRun:
+				self.queueMethodCall(thenRun, *(runArgs or []))
 
 	def processOperator(self, comp: 'COMP'):
 		self.log(f'Processing operator {comp}')
@@ -242,30 +313,33 @@ class BuildManager:
 		comp.color = IconColors.defaultBgColor
 		if self.docProcessor:
 			self.docProcessor.processOp(comp)
-		self.context.removeOpHelp(comp)
 
 	def processOperatorSubCompChildrenOf(self, comp: 'COMP'):
 		subComps = comp.findChildren(type=COMP)
 		if not subComps:
 			return
-		self.context.log(f'Processing {len(subComps)} sub-comps in {comp}')
+		self.context.log(f'Processing {len(subComps)} sub-comps in {comp}', verbose=True)
 		for child in subComps:
 			self.processOperatorSubComp_2(child)
 
 	def processOperatorSubComp_2(self, comp: 'COMP'):
-		self.context.log(f'Processing {comp}')
+		self.context.log(f'Processing {comp}', verbose=True)
 		self.context.detachTox(comp)
 		self.context.reclone(comp)
 		self.context.disableCloning(comp)
 		self.processOperatorSubCompChildrenOf(comp)
 
-	def processNestedOperators(self, comp: 'COMP', thenRun: str = None, runArgs: list = None):
+	def processNestedOperators(
+			self, comp: 'COMP',
+			thenRun: 'Optional[Callable]' = None, runArgs: list = None):
 		self.log('Processing nested operators')
 		subOps = comp.findChildren(tags=[RaytkTags.raytkOP.name], depth=4)
 		self.log(f'found {len(subOps)} nested operators')
-		self.queueMethodCall('processNestedOperators_stage', subOps, thenRun, runArgs)
+		self.queueMethodCall(self.processNestedOperators_stage, subOps, thenRun, runArgs)
 
-	def processNestedOperators_stage(self, comps: List['COMP'], thenRun: str = None, runArgs: list = None):
+	def processNestedOperators_stage(
+			self, comps: List['COMP'],
+			thenRun: 'Optional[Callable]' = None, runArgs: list = None):
 		if comps:
 			comp = comps.pop()
 			self.processNestedOperator(comp)
@@ -281,12 +355,22 @@ class BuildManager:
 		self.context.detachTox(rop)
 		self.context.disableCloning(rop)
 
+	def removeAllOpHelp(
+			self,
+			thenRun: 'Optional[Callable]' = None, runArgs: list = None):
+		operators = RaytkContext().allMasterOperators()
+		for comp in operators:
+			self.context.removeOpHelp(comp)
+		self.queueMethodCall(thenRun, *(runArgs or []))
+
 	def detachAllFileSyncDats(self, toolkit: 'COMP'):
 		self.log('Detaching all fileSync DATs')
 		for o in toolkit.findChildren(tags=[RaytkTags.fileSync.name], type=DAT):
 			self.context.detachDat(o, reloadFirst=True)
 
-	def processTools(self, comp: 'COMP', thenRun: str = None, runArgs: list = None):
+	def processTools(
+			self, comp: 'COMP',
+			thenRun: 'Optional[Callable]' = None, runArgs: list = None):
 		self.log(f'Processing tools {comp}')
 		self.context.moveNetworkPane(comp)
 		self.context.reloadTox(comp)
@@ -296,14 +380,17 @@ class BuildManager:
 			thenRun=lambda: self.queueMethodCall(thenRun, *(runArgs or [])),
 			runArgs=[])
 
-	def log(self, message: str):
+	def log(self, message: str, verbose=False):
+		if verbose and not self.enableVerboseLogging:
+			return
 		print(message)
+		if self.logFile:
+			print(message, file=self.logFile)
 		self.logTable.appendRow([message])
 
-	def queueMethodCall(self, method: Union[str, Callable], *args):
-		if callable(method):
-			run('args[0](*(args[1:]))', method, *args, delayFrames=2, delayRef=root)
-		elif '.' in method:
-			run(method, *args, delayFrames=2, delayRef=root)
-		else:
-			run(f'args[0].{method}(*(args[1:]))', self, *args, delayFrames=2, delayRef=root)
+	def logStageStart(self, desc: str):
+		self.log(f'===[{desc}]===')
+
+	@staticmethod
+	def queueMethodCall(method: Callable, *args):
+		run('args[0](*(args[1:]))', method, *args, delayFrames=2, delayRef=root)

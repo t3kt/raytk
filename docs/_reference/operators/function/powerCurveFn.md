@@ -19,5 +19,6 @@ op:
     name: Normalizescale
   - label: Scale
     name: Scale
+  thumb: assets/images/reference/operators/function/powerCurveFn_thumb.png
 
 ---

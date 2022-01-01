@@ -62,6 +62,12 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 			#pragma r:if THIS_Iterationtype_cell
 			setIterationCell(ctx, vec3(rnd, float(k) / 3.));
 			#pragma r:endif
+			#pragma r:if THIS_EXPOSE_cell
+			THIS_cell = rnd;
+			#pragma r:endif
+			#pragma r:if THIS_EXPOSE_layer
+			THIS_layer = k;
+			#pragma r:endif
 
 			#pragma r:if THIS_COORD_TYPE_vec3
 			CoordT pForIn = p;

@@ -88,6 +88,22 @@ op:
     - Sdf
     - Ray
     - Light
+  - contextTypes:
+    - Context
+    - MaterialContext
+    - CameraContext
+    - LightContext
+    - RayContext
+    - ParticleContext
+    coordTypes:
+    - float
+    - vec2
+    - vec3
+    label: Blend Source
+    name: Blendsource
+    returnTypes:
+    - float
+    summary: Help not available.
   name: blend
   opType: raytk.operators.combine.blend
   parameters:
@@ -102,7 +118,10 @@ op:
     name: Usefield
     summary: Whether to use the 4th input as a field to determine the blending, instead
       of using it as just another input.
+  - label: Blend Source
+    name: Blendsource
   summary: Smoothly blends/morphs between up to 4 SDFs.
+  thumb: assets/images/reference/operators/combine/blend_thumb.png
 
 ---
 

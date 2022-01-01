@@ -45,6 +45,7 @@ op:
     name: Contexttype
   summary: A vector field that provides the distance from 4 specific points in space
     (one for each part of the vector).
+  thumb: assets/images/reference/operators/field/multiPointDistanceField_thumb.png
 
 ---
 

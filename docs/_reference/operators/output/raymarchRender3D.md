@@ -264,6 +264,8 @@ op:
     name: Backgroundfield
   - label: Use Background Field Alpha
     name: Usebackgroundfieldalpha
+  - label: Distance Correction Factor
+    name: Distfactor
   - label: Enable Normal Smoothing
     name: Enablenormalsmoothing
   - label: Normal Smoothing
@@ -280,8 +282,61 @@ op:
     name: Enablecustomoutput1
   - label: Enable Custom Output 2
     name: Enablecustomoutput2
+  - label: Select Color
+    name: Createrselcolorout
+    summary: 'Create renderSelect for output: Color'
+  - label: Select SDF Result
+    name: Createrselsdfout
+    summary: 'Create renderSelect for output: SDF Result'
+  - label: Select Depth
+    name: Createrseldepthout
+    summary: 'Create renderSelect for output: Depth'
+  - label: Select World Position
+    name: Createrselworldposout
+    summary: 'Create renderSelect for output: World Position'
+  - label: Select Normal
+    name: Createrselnormalout
+    summary: 'Create renderSelect for output: Normal'
+  - label: Select Ray Direction
+    name: Createrselraydirout
+    summary: 'Create renderSelect for output: Ray Direction'
+  - label: Select Ray Origin
+    name: Createrselrayoriginout
+    summary: 'Create renderSelect for output: Ray Origin'
+  - label: Select Orbit Trap
+    name: Createrselorbitout
+    summary: 'Create renderSelect for output: Orbit Trap'
+  - label: Select Near Hit
+    name: Createrselnearhitout
+    summary: 'Create renderSelect for output: Near Hit'
+  - label: Select Step Count
+    name: Createrselstepsout
+    summary: 'Create renderSelect for output: Step Count'
+  - label: Select Iteration
+    name: Createrseliterationout
+    summary: 'Create renderSelect for output: Iteration'
+  - label: Select Object Id
+    name: Createrselobjectidout
+    summary: 'Create renderSelect for output: Object Id'
+  - label: Select Debug
+    name: Createrseldebugout
+    summary: 'Create renderSelect for output: Debug'
+  - label: Select UV
+    name: Createrseluvout
+    summary: 'Create renderSelect for output: UV'
+  - label: Select Final Output
+    name: Createrselfinalout
+    summary: 'Create renderSelect for output: Final Output'
+  - label: Select Custom 1
+    name: Createrselcustomout1
+    summary: 'Create renderSelect for output: Custom 1'
+  - label: Select Custom 2
+    name: Createrselcustomout2
+    summary: 'Create renderSelect for output: Custom 2'
   - label: Customize Shader Config
     name: Customizeshaderconfig
+  shortcuts:
+  - rr3
   summary: Renders a scene using 3D raymarching.
 
 ---

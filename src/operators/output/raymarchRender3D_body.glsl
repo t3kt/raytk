@@ -28,7 +28,7 @@ Sdf map(vec3 q)
 	ctx.globalPos = q;
 	#endif
 	Sdf res = thismap(q, ctx);
-	res.x *= 0.5;
+	res.x *= THIS_Distfactor;
 	return res;
 }
 

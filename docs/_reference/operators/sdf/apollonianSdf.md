@@ -22,5 +22,6 @@ op:
     name: S
   - label: Iterations
     name: Iterations
+  thumb: assets/images/reference/operators/sdf/apollonianSdf_thumb.png
 
 ---

@@ -60,6 +60,7 @@ op:
     name: Enable
   summary: Adds to (or subtracts from) the size of an SDF, which has the effect of
     rounding it out or shrinking it.
+  thumb: assets/images/reference/operators/filter/round_thumb.png
 
 ---
 

@@ -115,8 +115,15 @@ op:
     name: Enabletranslate
   - label: Enable Rotate
     name: Enablerotate
+  - label: Index
+    name: Createrefindex
+    summary: 'Create reference to variable: Index'
+  - label: Normalized Index (0..1)
+    name: Createrefnormindex
+    summary: 'Create reference to variable: Normalized Index (0..1)'
   summary: Repeats its input some number of times, exposing the index as the iteration
     x value, and combines the results.
+  thumb: assets/images/reference/operators/filter/instance_thumb.png
 
 ---
 

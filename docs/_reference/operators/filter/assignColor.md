@@ -58,7 +58,10 @@ op:
     name: Enable
   - label: Color
     name: Color
+  shortcuts:
+  - ac
   summary: Assigns a surface color attribute to an SDF surface.
+  thumb: assets/images/reference/operators/filter/assignColor_thumb.png
 
 ---
 

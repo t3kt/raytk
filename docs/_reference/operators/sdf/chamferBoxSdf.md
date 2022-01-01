@@ -68,5 +68,6 @@ op:
     name: Scale
   - label: Round
     name: Round
+  thumb: assets/images/reference/operators/sdf/chamferBoxSdf_thumb.png
 
 ---
