@@ -38,8 +38,7 @@ class ActionContext:
 		sdfs = [rop for rop in rops if ROPState(rop).isSdf]
 		if not ignoreNonSdfs and len(sdfs) != len(rops):
 			return False
-		# return minCount <= len(sdfs) <= maxCount
-		return len(sdfs)
+		return minCount <= len(sdfs) <= maxCount
 
 @dataclass
 class _MenuItem:
