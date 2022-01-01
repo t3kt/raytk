@@ -12,7 +12,7 @@ CoordT THIS_transform(CoordT p, int i) {
 	return p;
 }
 
-void THIS_exposeIndex(ContextT ctx, int i, int n) {
+void THIS_exposeIndex(inout ContextT ctx, int i, int n) {
 	setIterationIndex(ctx, i);
 	#pragma r:if THIS_EXPOSE_index
 	THIS_index = i;
