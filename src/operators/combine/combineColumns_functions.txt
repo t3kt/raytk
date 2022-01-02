@@ -1,4 +1,0 @@
-name	label	code
-union	Union	res1.x = fOpUnionStairs(res1.x, res2.x, r, n, o)
-intersect	Intersect	res1.x = fOpIntersectionStairs(res1.x, res2.x, r, n, o)
-diff	Difference	res1.x = fOpDifferenceStairs(res1.x, res2.x, r, n, o)
