@@ -1,5 +1,5 @@
-from typing import Optional
-from raytkUtil import InputInfo, TypeTableHelper
+from typing import List, Optional
+from raytkUtil import InputInfo
 
 # noinspection PyUnreachableCode
 if False:
@@ -58,3 +58,26 @@ class InputEditor:
 	@property
 	def allReturnTypes(self):
 		return TypeTableHelper(self.ownerComp.op('typeTable')).returnTypes()
+
+class TypeTableHelper:
+	def __init__(self, table: 'DAT'):
+		self.table = table
+
+	def _getTypeNames(self, filterColumn: str) -> 'List[str]':
+		return [
+			self.table[row, 'name'].val
+			for row in range(1, self.table.numRows)
+			if self.table[row, filterColumn] == '1'
+		]
+
+	def isTypeAvailableForCategory(self, typeName: str, filterColumn: str):
+		return self.table[typeName, filterColumn] == '1'
+
+	def coordTypes(self):
+		return self._getTypeNames('isCoordType')
+
+	def contextTypes(self):
+		return self._getTypeNames('isContextType')
+
+	def returnTypes(self):
+		return self._getTypeNames('isReturnType')

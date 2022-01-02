@@ -774,7 +774,7 @@ class RaytkTags:
 	guideContent = Tag('raytkGuideContent', _guideColor)
 	generated = Tag('raytkGenerated')
 
-def _getActiveEditor() -> 'NetworkEditor':
+def getActiveEditor() -> 'NetworkEditor':
 	pane = ui.panes.current
 	if pane and pane.type == PaneType.NETWORKEDITOR:
 		return pane
@@ -791,7 +791,7 @@ def _getEditorPane(name: Optional[str] = None, popup=False):
 	if name:
 		pane = _getPaneByName(name)
 	else:
-		pane = _getActiveEditor()
+		pane = getActiveEditor()
 	if pane:
 		if popup:
 			return pane.floatingCopy()
@@ -882,29 +882,6 @@ class InspectorTargetTypes:
 		definitionTable,
 	]
 
-class TypeTableHelper:
-	def __init__(self, table: 'DAT'):
-		self.table = table
-
-	def _getTypeNames(self, filterColumn: str) -> 'List[str]':
-		return [
-			self.table[row, 'name'].val
-			for row in range(1, self.table.numRows)
-			if self.table[row, filterColumn] == '1'
-		]
-
-	def isTypeAvailableForCategory(self, typeName: str, filterColumn: str):
-		return self.table[typeName, filterColumn] == '1'
-
-	def coordTypes(self):
-		return self._getTypeNames('isCoordType')
-
-	def contextTypes(self):
-		return self._getTypeNames('isContextType')
-
-	def returnTypes(self):
-		return self._getTypeNames('isReturnType')
-
 class RaytkContext:
 	"""
 	Utility that accesses various parts of the toolkit and the current project.
@@ -935,7 +912,7 @@ class RaytkContext:
 
 	@staticmethod
 	def activeEditor():
-		return _getActiveEditor()
+		return getActiveEditor()
 
 	def opTable(self) -> 'Optional[DAT]':
 		toolkit = self.toolkit()
@@ -951,7 +928,7 @@ class RaytkContext:
 			exclude: Callable[['COMP'], None] = None,
 			masterOnly=False,
 	):
-		pane = _getActiveEditor()
+		pane = getActiveEditor()
 		if not pane:
 			return []
 		comp = pane.owner
@@ -972,22 +949,6 @@ class RaytkContext:
 			if rop and rop not in rops:
 				rops.append(rop)
 		return rops
-
-	def currentCategories(self):
-		pane = _getActiveEditor()
-		if not pane:
-			return None
-		comp = pane.owner
-		operators = self.operatorsRoot()
-		if comp.parent() == operators:
-			return [comp]
-		if comp != operators:
-			return []
-		cats = []
-		for child in comp.selectedChildren:
-			if child.isCOMP:
-				cats.append(child)
-		return cats
 
 	def allCategories(self):
 		return [
@@ -1101,12 +1062,3 @@ def mergeDicts(*parts):
 		if part:
 			x.update(part)
 	return x
-
-def excludeKeys(d, keys):
-	if not d:
-		return {}
-	return {
-		key: val
-		for key, val in d.items()
-		if key not in keys
-	}

@@ -8,7 +8,7 @@ from pathlib import Path
 from raytkDocs import OpDocManager
 from raytkModel import OpDefMeta_OLD, OpSpec_OLD, ROPSpec
 from raytkUtil import RaytkContext, ROPInfo, focusFirstCustomParameterPage, RaytkTags, CategoryInfo, ContextTypes, \
-	CoordTypes, ReturnTypes
+	CoordTypes, ReturnTypes, getActiveEditor
 from typing import Callable, List, Optional
 
 # noinspection PyUnreachableCode
@@ -406,6 +406,22 @@ class RaytkTools(RaytkContext):
 		if shouldUpdateVal:
 			par.val = defVal
 		ui.status = f'Updated {parName} on {ropInfo.rop}!'
+
+	def currentCategories(self):
+		pane = getActiveEditor()
+		if not pane:
+			return None
+		comp = pane.owner
+		operators = self.operatorsRoot()
+		if comp.parent() == operators:
+			return [comp]
+		if comp != operators:
+			return []
+		cats = []
+		for child in comp.selectedChildren:
+			if child.isCOMP:
+				cats.append(child)
+		return cats
 
 class ToolkitLoader(RaytkTools):
 	def __init__(self, log: 'Callable[[str], None]'):
