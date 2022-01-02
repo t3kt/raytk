@@ -180,17 +180,11 @@ class ShaderBuilder:
 			if not table or not table.numRows:
 				continue
 			for row in range(table.numRows):
-				if table.numCols == 3:
-					if table[row, 0] in ('0', 'False'):
-						continue
-					name = table[row, 1].val.strip()
-					if name:
-						dat.appendRow([name, table[row, 2]])
-				else:
-					name = table[row, 0].val.strip()
-					if not name:
-						continue
-					dat.appendRow([name, table[row, 1] if table.numCols > 1 else ''])
+				if table[row, 0] in ('0', 'False'):
+					continue
+				name = table[row, 1].val.strip()
+				if name:
+					dat.appendRow([name, table[row, 2]])
 		outputBufferTable = self._outputBufferTable()
 		for row in range(1, outputBufferTable.numRows):
 			name = outputBufferTable[row, 'macro'].val.strip()
