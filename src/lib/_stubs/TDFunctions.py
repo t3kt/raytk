@@ -572,7 +572,7 @@ def applyParInfo(targetOp, parInfo, setDefaults=False):
 				p.mode = mode
 			elif mode == ParMode.BIND:
 				if p.bindMaster is not None:
-					bindVal = p.bindMaster.eval()
+					bindVal = p.bindMaster
 				try:
 					p.val = val
 				except:

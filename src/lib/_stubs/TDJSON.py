@@ -190,7 +190,7 @@ def parameterToJSONPar(p, extraAttrs=None, forceAttrLists=False):
 	jDict = collections.OrderedDict()
 	# grab attrs
 	for attr in parAttrs:
-		if attr == 'size' and p.style in ('Int', 'Float'):
+		if attr == 'size' and (p.style in ('Int', 'Float') or not p.isCustom):
 			jDict['size'] = len(p.tuplet)
 			continue
 		elif attr == 'eval':
@@ -290,7 +290,8 @@ def opToJSONOp(op, extraAttrs=None, forceAttrLists=False,
 	return jOp
 
 def addParameterFromJSONDict(comp, jsonDict, replace=True, setValues=True,
-							 ignoreAttrErrors=True, fixParNames=True):
+							 ignoreAttrErrors=True, fixParNames=True,
+							 setBuiltIns=False):
 	"""
 	Add a parameter to comp as defined in a parameter JSON dict. To set values,
 	expressions, or bind expressions, provide 'val', 'expr', or 'bindExpr' in
@@ -298,6 +299,9 @@ def addParameterFromJSONDict(comp, jsonDict, replace=True, setValues=True,
 	If replace is False, will error out if the parameter already exists
 	If setValues is True, values will be set to provided default
 	If ignoreAttrErrors is True, no exceptions for bad attrs in json
+	If fixParNames is True, names will be automatically capitalized
+	If setBuiltIns is True, if par name matches a builtin par, change par's 
+		settings to match instead of creating a new par
 
 	returns a list of newly created parameters
 	"""
@@ -312,39 +316,51 @@ def addParameterFromJSONDict(comp, jsonDict, replace=True, setValues=True,
 		raise ValueError ('Parameter definition missing required '
 						  'attributes. (' + str(requiredKeys) + ')',
 						  jsonDict)
-	if fixParNames:
-		parName = parName.capitalize()
+
 	label = jsonDict.get('label', parName)
+	size = jsonDict.get('size', 1)
+	# check if we can just replace an already exising parameter
+	newPars = None
+	if replace:
+		def checkForPars(checkName):
+			retPars = None
+			if size > 1 or len(Page.styles[pStyle].suffixes) > 1:
+				# special search for multi-value pars
+				checkPars = comp.pars(checkName + '*')
+				if checkPars:
+					checkPar = checkPars[0]
+					if checkPar.tupletName == checkName and \
+							checkPar.style == pStyle \
+							and (len(checkPar.tuplet) == size 
+									or checkPar.style not in ('Int', 'Float')):
+						retPars = checkPar.tuplet
+			elif hasattr(comp.par, checkName) and \
+								getattr(comp.par, checkName).style == pStyle\
+					and len(getattr(comp.par, checkName).tuplet) == 1:
+				retPars = getattr(comp.par, checkName).tuplet
+			return retPars
+		if setBuiltIns:
+			newPars = checkForPars(parName)
+			if newPars is None and fixParNames:
+				parName = parName.capitalize()
+				newPars = checkForPars(parName)
+		else:
+			if fixParNames:
+				parName = parName.capitalize()
+			newPars = checkForPars(parName)
 	# set up page if necessary
 	page = None
 	for cPage in comp.customPages:
 		if cPage.name == pageName:
 			page = cPage
 			break
-	if page is None:
+	if page is None and parName == parName.capitalize():
 		page = comp.appendCustomPage(pageName)
-	try:
-		appendFunc = getattr(page, 'append' + pStyle )
-	except:
-		raise ValueError("Invalid parameter type in JSON dict", pStyle)
-
-	size = jsonDict.get('size', 1)
-	# check if we can just replace an already exising parameter
-	newPars = None
-	if replace:
-		if size > 1 or len(Page.styles[pStyle].suffixes) > 1:
-			# special search for multi-value pars
-			checkPars = comp.pars(parName + '*')
-			if checkPars:
-				checkPar = checkPars[0]
-				if checkPar.tupletName == parName and \
-						checkPar.style == pStyle \
-						and len(checkPar.tuplet) == size:
-					newPars = checkPar.tuplet
-		elif hasattr(comp.par, parName) and \
-							getattr(comp.par, parName).style == pStyle\
-				and len(getattr(comp.par, parName).tuplet) == 1:
-			newPars = getattr(comp.par, parName).tuplet
+	if parName == parName.capitalize():
+		try:
+			appendFunc = getattr(page, 'append' + pStyle )
+		except:
+			raise ValueError("Invalid parameter type in JSON dict", pStyle)			
 	# create parameter and stash newly created parameter(s) if necessary
 	if newPars is None:
 		if pStyle in ['Int', 'Float'] and size != 1:
@@ -352,12 +368,13 @@ def addParameterFromJSONDict(comp, jsonDict, replace=True, setValues=True,
 								 								replace=replace)
 		else:
 			newPars = appendFunc(parName, label=label, replace=replace)
-	else:
+	elif parName == parName.capitalize():
 		newPars[0].label = label
 		newPars[0].page = page
 
 	# set additional attributes if they're in parDict
 	# can have multi-vals:
+
 	listAttributes = LISTATTRS
 	for index, newPar in enumerate(newPars):
 		# go through other attributes
@@ -430,9 +447,12 @@ def addParameterFromJSONDict(comp, jsonDict, replace=True, setValues=True,
 			newPar.menuLabels = jsonDict['menuNames']
 	return newPars
 
+addParameterFromJSONPar = addParameterFromJSONDict
+
 def addParametersFromJSONList(comp, jsonList, replace=True, setValues=True,
 							  destroyOthers=False, newAtEnd=True,
-							  ignoreAttrErrors=True, fixParNames=True):
+							  ignoreAttrErrors=True, fixParNames=True,
+							  setBuiltIns=False):
 	"""
 	Add parameters to comp as defined in list of parameter JSON dicts.
 	If replace is False, will cause exception if the parameter already exists
@@ -440,14 +460,19 @@ def addParametersFromJSONList(comp, jsonList, replace=True, setValues=True,
 	If destroyOthers is True, pars and pages not in jsonList will be destroyed
 	If newAtEnd is True, new parameters will be sorted to end of page. This
 		should generally be False if you are using 'order' attribute in JSON
+	If ignoreAttrErrors is True, no exceptions for bad attrs in json
+	If fixParNames is True, names will be automatically capitalized
+	If setBuiltIns is True, if par name matches a builtin par, change par's 
+		settings to match instead of creating a new par	
 	"""
 	parNames = []
 	pageNames = set()
 	for jsonPar in jsonList:
 		newPars = addParameterFromJSONDict(comp, jsonPar, replace, setValues,
-										   ignoreAttrErrors, fixParNames)
-		parNames += [p.name for p in newPars]
-		pageNames.add(newPars[0].page.name)
+								ignoreAttrErrors, fixParNames, setBuiltIns)
+		if newPars:
+			parNames += [p.name for p in newPars]
+			pageNames.add(newPars[0].page.name)
 	if destroyOthers:
 		destroyOtherPagesAndParameters(comp, pageNames, parNames)
 	if newAtEnd:
@@ -456,7 +481,8 @@ def addParametersFromJSONList(comp, jsonList, replace=True, setValues=True,
 
 def addParametersFromJSONDict(comp, jsonDict, replace=True, setValues=True,
 							  destroyOthers=False, newAtEnd=True,
-							  ignoreAttrErrors=True, fixParNames=True):
+							  ignoreAttrErrors=True, fixParNames=True,
+							  setBuiltIns=False):
 	"""
 	Add parameters to comp as defined in dict of parameter JSON dicts.
 	If replace is False, will error out if the parameter already exists
@@ -464,14 +490,20 @@ def addParametersFromJSONDict(comp, jsonDict, replace=True, setValues=True,
 	If destroyOthers is True, pars and pages not in jsonDict will be destroyed
 	If newAtEnd is True, new parameters will be sorted to end of page. This
 		should generally be False if you are using 'order' attribute in JSON
+	If ignoreAttrErrors is True, no exceptions for bad attrs in json
+	If fixParNames is True, names will be automatically capitalized
+	If setBuiltIns is True, if par name matches a builtin par, change par's 
+		settings to match instead of creating a new par. 
 	"""
 	parNames = []
 	pageNames = set()
 	for jsonPar in jsonDict.values():
 		newPars = addParameterFromJSONDict(comp, jsonPar, replace, setValues,
-										   ignoreAttrErrors, fixParNames)
-		parNames += [p.name for p in newPars]
-		pageNames.add(newPars[0].page.name)
+										   ignoreAttrErrors, fixParNames,
+										   setBuiltIns)	
+		if newPars:
+			parNames += [p.name for p in newPars]
+			pageNames.add(newPars[0].page.name)
 	if destroyOthers:
 		destroyOtherPagesAndParameters(comp, pageNames, parNames)
 	if newAtEnd:
@@ -480,7 +512,8 @@ def addParametersFromJSONDict(comp, jsonDict, replace=True, setValues=True,
 
 def addParametersFromJSONOp(comp, jsonOp, replace=True, setValues=True,
 							  destroyOthers=False, newAtEnd=True,
-							ignoreAttrErrors=True, fixParNames=True):
+							ignoreAttrErrors=True, fixParNames=True,
+							setBuiltIns=False):
 	"""
 	Add parameters to comp as defined in dict of page JSON dicts.
 	If replace is False, will error out if the parameter already exists
@@ -488,6 +521,10 @@ def addParametersFromJSONOp(comp, jsonOp, replace=True, setValues=True,
 	If destroyOthers is True, pars and pages not in jsonOp will be destroyed
 	If newAtEnd is True, new parameters will be sorted to end of page. This
 		should generally be False if you are using 'order' attribute in JSON
+	If ignoreAttrErrors is True, no exceptions for bad attrs in json
+	If fixParNames is True, names will be automatically capitalized
+	If setBuiltIns is True, if par name matches a builtin par, change par's 
+		settings to match instead of creating a new par	
 	"""
 	parNames = []
 	pageNames = set()
@@ -495,7 +532,8 @@ def addParametersFromJSONOp(comp, jsonOp, replace=True, setValues=True,
 		newParNames, newPages = addParametersFromJSONDict(comp, jsonPage,
 										replace, setValues, newAtEnd=newAtEnd,
 										ignoreAttrErrors=ignoreAttrErrors,
-										fixParNames=fixParNames)
+										fixParNames=fixParNames,
+										setBuiltIns=setBuiltIns)
 		parNames += newParNames
 		pageNames.update(newPages)
 	if destroyOthers:
@@ -533,6 +571,8 @@ def sortNewPars(comp, pageNames, parNames):
 												for page in comp.customPages}
 	for parName in parNames:
 		par = getattr(comp.par, parName)
+		if not par.isCustom:
+			continue
 		if par.tupletName not in pageDict[par.page.name]['newPars']:
 			pageDict[par.page.name]['newPars'].append(par.tupletName)
 	for page in comp.customPages:

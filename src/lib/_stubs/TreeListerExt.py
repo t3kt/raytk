@@ -266,13 +266,16 @@ class TreeListerExt(ListerExt):
 		separator = self.treeListerComp.par.Pathseparator.eval()
 		if not separator:
 			self.SetError('Path Separator parameter required to load input.')
+			return
 		pathCell = table[0, 'path']
 		if pathCell is None:
 			self.treeListerComp.SetError('Input has no "path" column.')
+			return
 		if useWirePath:
 			wirePathCell = table[0, 'wirepath']
 			if wirePathCell is None:
 				self.treeListerComp.SetError('Input has no "wirepath" column.')
+				return
 		self.LoadTableWithPathCol(table, separator, useWirePath)
 
 	def LoadTableWithPathCol(self, table, separator, useWirePath=False):

@@ -294,7 +294,6 @@ class DependDict(DependMixin, MutableMapping):
 
 	@val.setter
 	def val(self, value):
-		self.clear()
 		try:
 			self.clear()
 			self.update(value)
