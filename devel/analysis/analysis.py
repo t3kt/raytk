@@ -65,7 +65,6 @@ def buildOpInfoTable(dat: 'DAT'):
 			'Returntype',
 			'Contexttype',
 		] + _opDefParamNames + [
-			'macroCols',
 			'hasThumb',
 		]
 	)
@@ -98,10 +97,6 @@ def buildOpInfoTable(dat: 'DAT'):
 			dat[rop.path, 'Returntype'] = types['returnType', 'spec']
 		for pn in _opDefParamNames:
 			dat[rop.path, pn] = _formatPar(info.opDefPar[pn])
-		if info.isROP:
-			macros = info.opDefPar.Macrotable.eval()
-			if macros:
-				dat[rop.path, 'macroCols'] = macros.numCols
 		dat[rop.path, 'hasThumb'] = bool(opThumbs[rop.path, 'thumb'])
 
 def buildOpParamsTable(dat: 'DAT'):
