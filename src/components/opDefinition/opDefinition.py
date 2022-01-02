@@ -194,7 +194,6 @@ def buildParamSpecTable(dat: 'scriptDAT', paramListTable: 'DAT'):
 			globalPrefix + name,
 			'special', 'Float', '', '', '0', '', 'runtime', '',
 			])
-	# TODO: tuplet placeholder special params ("_")?
 
 	# Update conversions from opDefinition Angleparams par
 	for par in _getRegularParams(getNamesFromListTable('angleParams')):
@@ -235,7 +234,6 @@ def _groupSpecialParamsIntoTuplets(dat: 'DAT'):
 	tupletIndex = 0
 	globalPrefix = parentPar().Name.eval() + '_'
 
-	# TODO: handle placeholders ???? "_"
 	def addTuplet():
 		tupletName = _getTupletName(parts) or f'special{tupletIndex}'
 		for vecIndex, part in enumerate(parts):
@@ -370,22 +368,7 @@ def prepareCode(dat: 'DAT'):
 	dat.clear()
 	text = dat.inputs[0].text
 	text = _typePattern.sub(_typeRepl, text)
-	# text = _prepareVarExposure(text)
 	dat.write(text)
-
-# _exposePattern = re.compile(r'^\s*\bEXPOSE_(\w+)\s*\((.*)\);$', re.MULTILINE)
-# def _exposeRepl(m):
-# 	return f'''#ifdef THIS_EXPOSE_{m.group(1)}
-# THIS_{m.group(1)} = {m.group(2)};
-# #endif
-# '''
-#
-# def _prepareVarExposure(text: str):
-# 	if not text:
-# 		return ''
-# 	if 'EXPOSE' not in text:
-# 		return text
-# 	return _exposePattern.sub(_exposeRepl, text)
 
 def updateLibraryMenuPar(libsComp: 'COMP'):
 	p = parentPar().Librarynames  # type: Par
