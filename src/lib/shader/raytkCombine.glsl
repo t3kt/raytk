@@ -91,7 +91,9 @@ Sdf cmb_stairIntersect(Sdf res1, Sdf res2, float r, float n, float o) {
 
 Sdf cmb_stairDiff(Sdf res1, Sdf res2, float r, float n, float o) {
 	float h = smoothBlendRatio(res1.x, res2.x, r);
-	res1.x = fOpDifferenceStairs(res1.x, res2.x, r, n, o);
+	float s = r/n;
+	float u = res2.x-r;
+	res1.x = -min(min(-res1.x,res2.x), 0.5 * (u - res1.x + abs ((mod (u + res1.x + s + o, 2 * s)) - s)));
 	blendInSdf(res1, res2, 1.0 - h);
 	return res1;
 }
