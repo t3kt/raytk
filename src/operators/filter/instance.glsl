@@ -22,6 +22,10 @@ void THIS_exposeIndex(inout ContextT ctx, int i, int n) {
 	#pragma r:endif
 }
 
+void THIS_combine(inout Sdf res1, in Sdf res2, in CoordT p, in ContextT ctx) {
+MERGE();
+}
+
 ReturnT thismap(CoordT p, ContextT ctx) {
 	int n = int(THIS_Instancecount);
 	THIS_exposeIndex(ctx, 0, n);
@@ -31,18 +35,7 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 		THIS_exposeIndex(ctx, i, n);
 		q = THIS_transform(p, i);
 		ReturnT res2 = inputOp1(q, ctx);
-		#pragma r:if THIS_HAS_INPUT_radiusField
-		float r = THIS_Radius * adaptAsFloat(inputOp_radiusField(q, ctx));
-		#pragma r:else
-		float r = THIS_Radius;
-		#pragma r:endif
-		#pragma r:if THIS_COMBINE_EXPR_IS_SDF
-		res1 = THIS_COMBINE_EXPR;
-		#pragma r:else
-		float h = smoothBlendRatio(res1.x, res2.x, r);
-		res1.x = THIS_COMBINE_EXPR;
-		blendInSdf(res1, res2, 1.0 - h);
-		#pragma r:endif
+		THIS_combine(res1, res2, q, ctx);
 	}
 	return res1;
 }
