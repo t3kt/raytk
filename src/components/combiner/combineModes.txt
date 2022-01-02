@@ -16,5 +16,5 @@ stairUnion	Stair Union	res1 = cmb_stairUnion(res1, res2, r, n, o);	Swapinputs Ra
 stairIntersect	Stair Intersect	res1 = cmb_stairIntersect(res1, res2, r, n, o);	Swapinputs Radius Number Offset
 stairDiff	Stair Difference	res1 = cmb_stairDiff(res1, res2, r, n, o);	Swapinputs Radius Number Offset
 columnUnion	Column Union	res1 = cmb_columnUnion(res1, res2, r, n, o);	Swapinputs Radius Number Offset
-columnIntersect	Column Intersect	res1 = cmb_columnDiff(res1, res2, r, n, o);	Swapinputs Radius Number Offset
-columnDiff	Column Difference	res1 = cmb_columnIntersect(res1, res2, r, n, o);	Swapinputs Radius Number Offset
+columnIntersect	Column Intersect	res1 = cmb_columnIntersect(res1, res2, r, n, o);	Swapinputs Radius Number Offset
+columnDiff	Column Difference	res1 = cmb_columnDiff(res1, res2, r, n, o);	Swapinputs Radius Number Offset
