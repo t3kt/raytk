@@ -8,43 +8,8 @@ float opSimpleUnion(float res1, float res2) {
 	return min(res1, res2);
 }
 
-Sdf opSimpleIntersect(Sdf res1, Sdf res2) {
-	return (res1.x>res2.x) ? res1 : res2;
-}
-
-float opSimpleIntersect(float res1, float res2) {
-	return max(res1, res2);
-}
-
-Sdf opSimpleDiff(Sdf res1, Sdf res2) {
-	Sdf res = res1;
-	res.x = max(-res2.x, res1.x);
-	return res;
-}
-
-float opSimpleDiff(float res1, float res2) {
-	return max(-res2, res1);
-}
-
 float smoothBlendRatio(float a, float b, float k) {
 	return clamp(0.5 + 0.5*(b-a)/k, 0.0, 1.0);
-}
-
-float opSmoothIntersect(float res1, float res2, float k) {
-	float h = clamp(0.5 - 0.5*(res2-res1)/k, 0., 1.);
-	return mix(res2, res1, h) + k*h*(1.0-h);
-}
-
-float opSmoothDiff(float res1, float res2, float k) {
-	return opSmoothIntersect(res1, -res2, k);
-}
-
-Sdf opSmoothIntersect(Sdf res1, Sdf res2, float k) {
-	Sdf res = res1;
-	float h = clamp(0.5 - 0.5*(res2.x-res1.x)/k, 0., 1.);
-	res.x = mix(res2.x, res1.x, h) + k*h*(1.0-h);
-	blendInSdf(res1, res2, h);
-	return res;
 }
 
 Sdf opSmoothUnionM(Sdf res1, Sdf res2, float k) {
@@ -81,64 +46,6 @@ float fOpIntersectionStairs(float a, float b, float r, float n, float o) {
 
 float fOpDifferenceStairs(float a, float b, float r, float n, float o) {
 	return -fOpUnionStairs(-a, b, r, n, o);
-}
-
-// version with offset
-float fOpUnionColumns(float a, float b, float r, float n, float o) {
-	if ((a < r) && (b < r)) {
-		vec2 p = vec2(a, b);
-		float columnradius = r*sqrt(2)/((n-1)*2+sqrt(2));
-		pR45(p);
-		p.x -= sqrt(2)/2*r;
-		p.x += columnradius*sqrt(2);
-		if (mod(n,2) == 1) {
-			p.y += columnradius;
-		}
-		// At this point, we have turned 45 degrees and moved at a point on the
-		// diagonal that we want to place the columns on.
-		// Now, repeat the domain along this direction and place a circle.
-		p.y += o;
-		pMod1(p.y, columnradius*2);
-		float result = length(p) - columnradius;
-		result = min(result, p.x);
-		result = min(result, a);
-		return min(result, b);
-	} else {
-		return min(a, b);
-	}
-}
-
-float fOpDifferenceColumns(float a, float b, float r, float n, float o) {
-	a = -a;
-	float m = min(a, b);
-	//avoid the expensive computation where not needed (produces discontinuity though)
-	if ((a < r) && (b < r)) {
-		vec2 p = vec2(a, b);
-		float columnradius = r*sqrt(2)/n/2.0;
-		columnradius = r*sqrt(2)/((n-1)*2+sqrt(2));
-
-		pR45(p);
-		p.y += columnradius;
-		p.x -= sqrt(2)/2*r;
-		p.x += -columnradius*sqrt(2)/2;
-
-		if (mod(n,2) == 1) {
-			p.y += columnradius;
-		}
-		p.y += o;
-		pMod1(p.y,columnradius*2);
-
-		float result = -length(p) + columnradius;
-		result = max(result, p.x);
-		result = min(result, a);
-		return -min(result, b);
-	} else {
-		return -m;
-	}
-}
-
-float fOpIntersectionColumns(float a, float b, float r, float n, float o) {
-	return fOpDifferenceColumns(a,-b,r, n, o);
 }
 
 float sdOctahedron( vec3 p, float s)
