@@ -1,22 +1,24 @@
-name
-path
-opType
-coordType
-contextType
-returnType
-opVersion
-toolkitVersion
-functionPath
-paramSource
-paramTable
-paramTupletTable
-materialTable
-macroTable
-textureTable
-bufferTable
-libraryNames
-initPath
-opGlobalsPath
-variableTable
-referenceTable
-inputNames
+field	inline
+name	1
+path	1
+opType	1
+coordType	1
+contextType	1
+returnType	1
+opVersion	0
+toolkitVersion	0
+functionPath	0
+paramSource	0
+paramTable	0
+paramTupletTable	0
+materialTable	0
+macroTable	0
+textureTable	0
+bufferTable	0
+libraryNames	0
+initPath	0
+opGlobalsPath	0
+variableTable	0
+referenceTable	0
+inputNames	0
+definitionPath	1

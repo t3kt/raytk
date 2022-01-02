@@ -72,9 +72,25 @@ class ShaderBuilder:
 		hostPar.val = config.name
 		ui.undo.endBlock()
 
-	def preprocessDefinitions(self, dat: 'scriptDAT'):
+	@staticmethod
+	def preprocessDefinitions(dat: 'scriptDAT'):
 		# BEFORE definitions are reversed, so a def's inputs are always BELOW it in the table
-		pass
+		knownCols = [c.val for c in dat.row(0)]
+		skipCols = ['name', 'path', 'coordType', 'contextType', 'returnType', 'definitionPath']
+		for row in range(1, dat.numRows):
+			defPath = str(dat[row, 'definitionPath'] or '')
+			defTable = op(defPath)
+			if not defTable or defTable.numRows < 2:
+				continue
+			if defTable.numRows > 2:
+				raise Exception(f'Invalid single-op definition table, too many rows: {defTable}')
+			for col, val in defTable.cols():
+				if col in skipCols:
+					continue
+				if col.val not in knownCols:
+					knownCols.append(col.val)
+					dat.appendCol([col])
+				dat[row, col].val = val
 
 	def _definitionTable(self) -> 'DAT':
 		# in reverse order (aka declaration order)
