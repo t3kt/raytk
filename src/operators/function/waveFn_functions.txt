@@ -1,6 +1,0 @@
-name	label	code
-sin	Sine	res = wave_sin(p)
-cos	Cosine	res = wave_cos(p)
-tri	Triangle	res = wave_tri(p)
-ramp	Ramp	res = wave_ramp(p)
-square	Square	res = wave_square(p)
