@@ -703,6 +703,8 @@ class _VarRefChecker:
 		for i in range(1, defTable.numRows):
 			name = defTable[i, 'name'].val
 			for inName in defTable[i, 'inputNames'].val.split():
+				if ':' in inName:
+					inName = inName.split(':')[-1]
 				if inName in self.opOutputs:
 					self.opOutputs[inName].append(name)
 				else:

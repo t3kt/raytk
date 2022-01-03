@@ -20,5 +20,5 @@ stageInitPath	(parent().path + '/stageInitCode') if parent().par.Stageinitcode e
 opGlobalsPath	(parent().path + '/opGlobals') if parent().par.Opglobals else ''
 variableTable	(parent().path + '/variable_table') if op('variable_table').numRows > 1 else ''
 referenceTable	(parent().path + '/reference_table') if op('reference_table').numRows > 1 else ''
-inputNames	op('input_table').col('name')[1:]
+inputNames	op('inputNameMap').text or ''
 definitionPath	parent().path + '/definition'
