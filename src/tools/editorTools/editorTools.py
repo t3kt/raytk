@@ -16,6 +16,6 @@ class EditorTools:
 		if not self.actions:
 			self.actions = createActionManager()
 
-	def Open(self):
+	def Open(self, _=None):
 		self.init()
 		self.actions.openMenu()

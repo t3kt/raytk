@@ -84,7 +84,8 @@ class ActionGroup(_Item, ABC):
 		)
 
 def _getPopMenu() -> 'PopMenuExt':
-	return op.TDResources.op('popMenu')
+	# noinspection PyTypeChecker
+	return op('popMenu')
 
 class ActionManager:
 	actions: List[Action]
@@ -155,28 +156,25 @@ class ActionManager:
 			item = getItem(info)
 			if item and item.callback:
 				item.callback()
-			popMenu.Close()
-
-		def onRollover(info: dict):
-			item = getItem(info)
-			if item and item.subItems:
+			elif item and item.subItems:
 				self._openMenu(
 					popMenu=popMenu,
 					items=item.subItems,
 					isSubMenu=True,
 				)
+			popMenu.Close()
 
 		if isSubMenu:
 			popMenu.OpenSubMenu(
 				items=itemNames,
 				callback=onSelect,
-				rolloverCallback=onRollover,
+				allowStickySubMenus=True,
 			)
 		else:
 			popMenu.Open(
 				items=itemNames,
 				callback=onSelect,
-				rolloverCallback=onRollover,
+				allowStickySubMenus=True,
 			)
 
 def _isRopOrComp(o: 'OP'):
@@ -233,6 +231,12 @@ class ActionUtils:
 				if fn:
 					fn(rop)
 		ActionUtils._palette().CreateItem(ropType, postSetup=init)
+
+	@staticmethod
+	def createVariableReference(fromRop: 'COMP', variable: str, dataType: str, init: _InitFunc = None):
+		ActionUtils._palette().CreateVariableReference(
+			fromRop, variable, dataType, init
+		)
 
 	@staticmethod
 	def moveAfter(o: 'OP', after: 'OP'):

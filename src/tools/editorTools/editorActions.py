@@ -87,11 +87,46 @@ class _CombineSdfsGroup(ActionGroup):
 		return ctx.hasSelectedSdfs(minCount=2, maxCount=2, ignoreNonSdfs=False)
 
 	def getActions(self, ctx: ActionContext) -> List[Action]:
-		table = op('combine_combineModes')  # type: DAT
+		table = op('combineModes')  # type: DAT
 		return [
 			_CombineSdfsAction(
 				table[i, 'label'].val,
 				table[i, 'name'].val,
+			)
+			for i in range(1, table.numRows)
+			if table[i, 'name'] != 'none'
+		]
+
+class _CreateVarRefAction(Action):
+	def __init__(self, text: str, variable: str, dataType: str):
+		super().__init__(text=text)
+		self.variable = variable
+		self.dataType = dataType
+
+	def isValid(self, ctx: ActionContext) -> bool: return True
+
+	def execute(self, ctx: ActionContext):
+		def init(refOp: 'COMP'):
+			fromOp = ctx.primaryRop
+			refOp.nodeCenterY = fromOp.nodeCenterY - 100
+			refOp.nodeX = fromOp.nodeX - refOp.nodeWidth - 150
+		ActionUtils.createVariableReference(
+			ctx.primaryRop, self.variable, self.dataType, init)
+
+class _CreateVarRefGroup(ActionGroup):
+	def isValid(self, ctx: ActionContext) -> bool:
+		table = ctx.primaryRopState.info.variableTable
+		return table and table.numRows > 1
+
+	def getActions(self, ctx: ActionContext) -> List[Action]:
+		table = ctx.primaryRopState.info.variableTable
+		if not table:
+			return []
+		return [
+			_CreateVarRefAction(
+				text=table[i, 'label'].val,
+				variable=table[i, 'localName'].val,
+				dataType=table[i, 'dataType'].val,
 			)
 			for i in range(1, table.numRows)
 		]
@@ -106,5 +141,6 @@ def createActionManager():
 	)
 	manager.addGroups(
 		_CombineSdfsGroup('Combine SDFs'),
+		_CreateVarRefGroup('Reference Variable'),
 	)
 	return manager

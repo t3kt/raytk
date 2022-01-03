@@ -124,8 +124,10 @@ class ROPInfo:
 	def __init__(self, o: 'Union[OP, str, Cell, Par]'):
 		o = op(o)
 		if not o:
-			return
-		if isROP(o):
+			self.rop = None
+			self.opDef = None
+			self.opDefPar = None
+		elif isROP(o):
 			self.rop = o
 			self.opDef = o.op('opDefinition')
 			# noinspection PyTypeChecker
@@ -307,14 +309,14 @@ class ROPInfo:
 		return self.opDef.op('supportedTypes')
 
 	@property
-	def _variableTable(self) -> 'Optional[DAT]':
+	def variableTable(self) -> 'Optional[DAT]':
 		if not self.isROP:
 			return None
 		return self.opDef.op('variable_table')
 
 	@property
 	def variableNameAndLabels(self):
-		table = self._variableTable
+		table = self.variableTable
 		if not table:
 			return []
 		return [

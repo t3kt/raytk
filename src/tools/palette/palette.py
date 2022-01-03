@@ -210,7 +210,10 @@ class Palette:
 				postSetup=info['postSetup'],
 			)
 
-	def CreateVariableReference(self, fromOp: 'COMP', variable: str, dataType: str):
+	def CreateVariableReference(
+			self,
+			fromOp: 'COMP', variable: str, dataType: str,
+			postSetup: 'Optional[Callable[[COMP], None]]' = None):
 		def initRef(refOp: 'COMP'):
 			refOp.par.Source.val = fromOp
 			refOp.par.Source.readOnly = True
@@ -218,6 +221,8 @@ class Palette:
 			refOp.par.Variable.readOnly = True
 			refOp.par.Datatype = dataType
 			refOp.par.Datatype.readOnly = True
+			if postSetup:
+				postSetup(refOp)
 		self.CreateItem(
 			'/raytk/operators/utility/variableReference',
 			postSetup=initRef
