@@ -1,7 +1,24 @@
+void THIS_exposeIndex(inout ContextT ctx, int i, int n) {
+	#pragma r:if THIS_Iterationtype_index
+	setIterationIndex(ctx, i);
+	#pragma r:endif
+	#pragma r:if THIS_EXPOSE_index
+	THIS_index = i;
+	#pragma r:endif
+	#pragma r:if THIS_EXPOSE_normindex
+	THIS_normindex = float(i) / float(n - 1);
+	#pragma r:endif
+}
+
+void THIS_combine(inout Sdf res1, in Sdf res2, in CoordT p, in ContextT ctx) {
+MERGE();
+}
+
 ReturnT thismap(CoordT p, ContextT ctx) {
-	Sdf merged;
+	Sdf res;
 	int n = int(THIS_Count);
 	float rot = THIS_Angleoffset;
+	float angleStep = THIS_Anglerange / THIS_Count;
 	CoordT q = p;
 #pragma r:if THIS_COORD_TYPE_vec2
 	pR(q, rot);
@@ -10,18 +27,10 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 	pR(q.THIS_PLANE, rot);
 	q.THIS_RADIUS_AXIS -= THIS_Radiusoffset;
 #pragma r:endif
-#pragma r:if THIS_Iterationtype_index
-	setIterationIndex(ctx, 0);
-#pragma r:endif
-#pragma r:if THIS_EXPOSE_index
-	THIS_index = 0;
-#pragma r:endif
-#pragma r:if THIS_EXPOSE_normindex
-	THIS_normindex = 0.;
-#pragma r:endif
-	merged = inputOp1(q, ctx);
+	THIS_exposeIndex(ctx, 0, n);
+	res = inputOp1(q, ctx);
 	for (int i = 1; i < n; i++) {
-		rot += THIS_Anglestep;
+		rot += angleStep;
 		q = p;
 		#pragma r:if THIS_COORD_TYPE_vec2
 			pR(q, rot);
@@ -30,21 +39,9 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 			pR(q.THIS_PLANE, rot);
 			q.THIS_RADIUS_AXIS -= THIS_Radiusoffset;
 		#pragma r:endif
-		#pragma r:if THIS_Iterationtype_index
-		setIterationIndex(ctx, float(i));
-		#pragma r:endif
-		#pragma r:if THIS_EXPOSE_index
-		THIS_index = i;
-		#pragma r:endif
-		#pragma r:if THIS_EXPOSE_normindex
-		THIS_normindex = float(i) / float(n - 1);
-		#pragma r:endif
-		Sdf res = inputOp1(q, ctx);
-		#pragma r:if THIS_Mergetype_smoothunion
-		merged = opSmoothUnionM(merged, res, THIS_Mergeradius);
-		#pragma r:elif THIS_Mergetype_union
-		merged = opSimpleUnion(merged, res);
-		#pragma r:endif
+		THIS_exposeIndex(ctx, i, n);
+		Sdf res2 = inputOp1(q, ctx);
+		THIS_combine(res, res2, q, ctx);
 	}
-	return merged;
+	return res;
 }
