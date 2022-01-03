@@ -1,0 +1,6 @@
+name	label	code	params
+sin	Sine	res = wave_sin(q)	Period Phase
+cos	Cosine	res = wave_cos(q)	Period Phase
+tri	Triangle	res = wave_tri(q)	Period Phase
+ramp	Ramp	res = wave_ramp(q)	Period Phase
+square	Square	res = wave_square(q)	Period Phase
