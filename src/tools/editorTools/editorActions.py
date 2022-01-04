@@ -94,7 +94,6 @@ class _CombineSdfsGroup(ActionGroup):
 				table[i, 'name'].val,
 			)
 			for i in range(1, table.numRows)
-			if table[i, 'name'] != 'none'
 		]
 
 class _CreateVarRefAction(Action):

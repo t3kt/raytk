@@ -84,8 +84,7 @@ class ActionGroup(_Item, ABC):
 		)
 
 def _getPopMenu() -> 'PopMenuExt':
-	# noinspection PyTypeChecker
-	return op('popMenu')
+	return op.TDResources.op('popMenu')
 
 class ActionManager:
 	actions: List[Action]
@@ -156,25 +155,30 @@ class ActionManager:
 			item = getItem(info)
 			if item and item.callback:
 				item.callback()
+				info['menu'].Close()
+				if popMenu != info['menu']:
+					popMenu.Close()
 			elif item and item.subItems:
 				self._openMenu(
-					popMenu=popMenu,
+					popMenu=info['menu'],
 					items=item.subItems,
 					isSubMenu=True,
 				)
-			popMenu.Close()
 
 		if isSubMenu:
 			popMenu.OpenSubMenu(
 				items=itemNames,
 				callback=onSelect,
-				allowStickySubMenus=True,
+				allowStickySubMenus=False,
+				autoClose=True,
 			)
 		else:
 			popMenu.Open(
 				items=itemNames,
 				callback=onSelect,
-				allowStickySubMenus=True,
+				subMenuItems=[item.text for item in items if item.subItems],
+				allowStickySubMenus=False,
+				autoClose=True,
 			)
 
 def _isRopOrComp(o: 'OP'):
@@ -272,6 +276,7 @@ class ActionUtils:
 			init: _InitFunc = None,
 			outputIndex: int = 0,
 	):
+		fromRops.sort(key=lambda r: r.nodeCenterY, reverse=True)
 		def placeAndAttach(combine: 'COMP'):
 			ActionUtils.moveAfterMultiple(combine, fromRops)
 			for i, fromRop in enumerate(fromRops):
