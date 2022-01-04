@@ -222,6 +222,10 @@ class ROPState:
 	@property
 	def isSdf(self): return bool(self and self.returnTypes == ['Sdf'])
 
+	@property
+	def canInspect(self):
+		return bool(self.rop and self.rop.par['Inspect'] is not None)
+
 _InitFunc = Optional[Callable[['COMP'], None]]
 
 class ActionUtils:

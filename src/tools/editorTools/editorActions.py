@@ -1,10 +1,23 @@
-from typing import List
-from editorToolsCommon import Action, ActionContext, ActionGroup, ActionManager, ActionUtils, ROPState
+from typing import Callable, List
+from editorToolsCommon import Action, ActionContext, ActionGroup, ActionManager, ActionUtils
 
 # noinspection PyUnreachableCode
 if False:
 	# noinspection PyUnresolvedReferences
 	from _stubs import *
+
+class _SimpleAction(Action):
+	def __init__(
+			self, text: str,
+			isValid: Callable[[ActionContext], bool],
+			execute: Callable[[ActionContext], None],
+	):
+		super().__init__(text)
+		self._isValid = isValid
+		self._execute = execute
+
+	def isValid(self, ctx: ActionContext) -> bool: return self._isValid(ctx)
+	def execute(self, ctx: ActionContext): self._execute(ctx)
 
 class _AppendNull(Action):
 	def execute(self, ctx: ActionContext):
@@ -134,6 +147,11 @@ def createActionManager():
 	manager = ActionManager()
 	manager.addActions(
 		_AppendNull('Append Null'),
+		_SimpleAction(
+			'Inspect',
+			isValid=lambda ctx: ctx.primaryRopState.canInspect,
+			execute=lambda ctx: ctx.primaryRop.par['Inspect'].pulse(),
+		),
 		_ConvertToFloatAction('Convert To Float'),
 		_RescaleFieldAction('Rescale Field'),
 		_RescaleFloatFieldAsVectorAction('Rescale As Vector'),
