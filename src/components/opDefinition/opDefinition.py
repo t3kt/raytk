@@ -67,7 +67,12 @@ def _inputDefsFromPar():
 
 def buildInputTable(dat: 'DAT', inDats: 'List[DAT]'):
 	dat.clear()
-	dat.appendRow(['inputFunc', 'name', 'path', 'coordType', 'contextType', 'returnType', 'placeholder'])
+	dat.appendRow([
+		'inputFunc', 'name', 'path',
+		'coordType', 'contextType', 'returnType',
+		'placeholder',
+		'vars', 'varInputs',
+	])
 	for i, inDat in enumerate(inDats + _inputDefsFromPar()):
 		if not inDat[1, 'name']:
 			continue
@@ -80,6 +85,8 @@ def buildInputTable(dat: 'DAT', inDats: 'List[DAT]'):
 			inDat[1, 'contextType'],
 			inDat[1, 'returnType'],
 			('inputOp_' + func) if not func.startswith('inputOp') else func,
+			inDat[1, 'input:vars'],
+			inDat[i, 'input:varInputs'],
 		])
 
 def combineInputDefinitions(

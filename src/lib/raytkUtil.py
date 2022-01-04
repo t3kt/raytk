@@ -450,6 +450,8 @@ class ROPInfo:
 class _InputHandlerParsT:
 	Source: 'OPParamT'
 	Required: 'BoolParamT'
+	Variables: 'StrParamT'
+	Variableinputs: 'StrParamT'
 
 class InputInfo:
 	"""
