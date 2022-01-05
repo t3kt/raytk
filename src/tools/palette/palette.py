@@ -263,6 +263,9 @@ class Palette:
 			return op(path)
 		return op(path.replace('/raytk/', f'/{toolkit.path}/', 1))
 
+	def IsKnownType(self, pathOrOpType: str):
+		return bool(self._getTemplate(pathOrOpType))
+
 	def onPickItem(self, item: 'PickerItem'):
 		if not item:
 			return
