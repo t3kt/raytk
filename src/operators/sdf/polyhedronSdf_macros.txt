@@ -1,3 +1,0 @@
-'Blendradius' in op('combine_switcher_params')['params', 1].val	'THIS_HAS_BLEND_RADIUS'	
-'Blendnumber' in op('combine_switcher_params')['params', 1].val	'THIS_HAS_BLEND_NUMBER'	
-'Blendoffset' in op('combine_switcher_params')['params', 1].val	'THIS_HAS_BLEND_OFFSET'	

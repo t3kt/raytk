@@ -30,32 +30,21 @@ Sdf THIS_D2Vertices(vec3 pos, ContextT ctx) {
 	#pragma r:endif
 }
 
-void THIS_combine(inout Sdf res1, Sdf res2) {
-	#pragma r:if THIS_HAS_BLEND_RADIUS
-	float r = THIS_Blendradius;
-	float h = smoothBlendRatio(res1.x, res2.x, r);
-	#else
-	#pragma r:endif
-	#pragma r:if THIS_HAS_BLEND_NUMBER
-	float n = THIS_Blendnumber;
-	#pragma r:endif
-	#pragma r:if THIS_HAS_BLEND_OFFSET
-	float o = THIS_Blendoffset;
-	#pragma r:endif
-	COMBINE();
+void THIS_combine(inout Sdf res1, in Sdf res2, in CoordT p, in ContextT ctx) {
+MERGE();
 }
 
 ReturnT thismap(CoordT p, ContextT ctx) {
 	p = THIS_fold(p);
 	Sdf res1 = createSdf(RAYTK_MAX_DIST);
 	if (THIS_Enablefaces > 0.5) {
-		THIS_combine(res1, createSdf(THIS_D2Planes(p)));
+		THIS_combine(res1, createSdf(THIS_D2Planes(p)), p, ctx);
 	}
 	if (THIS_Enablesegments > 0.5) {
-		THIS_combine(res1, createSdf(THIS_D2Segments(p)));
+		THIS_combine(res1, createSdf(THIS_D2Segments(p)), p, ctx);
 	}
 	if (THIS_Enablevertices > 0.5) {
-		THIS_combine(res1, THIS_D2Vertices(p, ctx));
+		THIS_combine(res1, THIS_D2Vertices(p, ctx), p, ctx);
 	}
 
 	return res1;
