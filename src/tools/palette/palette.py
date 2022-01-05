@@ -228,12 +228,16 @@ class Palette:
 			postSetup=initRef
 		)
 
-	def CreateRenderSelect(self, fromOp: 'COMP', outputName: str):
+	def CreateRenderSelect(
+			self, fromOp: 'COMP', outputName: str,
+			postSetup: 'Optional[Callable[[COMP], None]]' = None):
 		def initSel(refOp: 'COMP'):
 			refOp.par.Outputop.val = fromOp
 			refOp.par.Outputop.readOnly = True
 			refOp.par.Outputbuffer.val = outputName
 			refOp.par.Outputbuffer.readOnly = True
+			if postSetup:
+				postSetup(refOp)
 		self.CreateItem(
 			'/raytk/operators/output/renderSelect',
 			postSetup=initSel

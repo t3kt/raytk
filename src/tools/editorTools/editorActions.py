@@ -31,9 +31,11 @@ class _AppendNull(Action):
 			newType = nullCHOP
 		else:
 			raise TypeError(f'Output type not supported {conn.outOP}')
+		ui.undo.startBlock('Append null')
 		n = ctx.parentComp.create(newType)
 		ActionUtils.moveAfter(n, after=o)
 		conn.connect(n)
+		ui.undo.endBlock()
 
 	def isValid(self, ctx: ActionContext) -> bool:
 		return bool(ctx.primaryOp and ctx.primaryOp.outputConnectors)
@@ -109,21 +111,22 @@ class _CombineSdfsGroup(ActionGroup):
 			for i in range(1, table.numRows)
 		]
 
-class _CreateVarRefAction(Action):
-	def __init__(self, text: str, variable: str, dataType: str):
-		super().__init__(text=text)
-		self.variable = variable
-		self.dataType = dataType
-
-	def isValid(self, ctx: ActionContext) -> bool: return True
-
-	def execute(self, ctx: ActionContext):
+def _createVarRefAction(label: str, variable: str, dataType: str):
+	def execute(ctx: ActionContext):
 		def init(refOp: 'COMP'):
 			fromOp = ctx.primaryRop
 			refOp.nodeCenterY = fromOp.nodeCenterY - 100
 			refOp.nodeX = fromOp.nodeX - refOp.nodeWidth - 150
-		ActionUtils.createVariableReference(
-			ctx.primaryRop, self.variable, self.dataType, init)
+		ActionUtils.palette().CreateVariableReference(
+			ctx.primaryRop,
+			variable=variable,
+			dataType=dataType,
+			postSetup=init)
+	return _SimpleAction(
+		text=label,
+		isValid=lambda ctx: True,
+		execute=execute,
+	)
 
 class _CreateVarRefGroup(ActionGroup):
 	def isValid(self, ctx: ActionContext) -> bool:
@@ -135,13 +138,62 @@ class _CreateVarRefGroup(ActionGroup):
 		if not table:
 			return []
 		return [
-			_CreateVarRefAction(
-				text=table[i, 'label'].val,
+			_createVarRefAction(
+				label=table[i, 'label'].val,
 				variable=table[i, 'localName'].val,
 				dataType=table[i, 'dataType'].val,
 			)
 			for i in range(1, table.numRows)
 		]
+
+def _createRenderSelAction(label: str, name: str):
+	def execute(ctx: ActionContext):
+		def init(refOp: 'COMP'):
+			fromOp = ctx.primaryRop
+			refOp.nodeCenterY = fromOp.nodeCenterY - 200
+			refOp.nodeX = fromOp.nodeX + refOp.nodeWidth + 100
+		ActionUtils.palette().CreateRenderSelect(
+			ctx.primaryRop,
+			outputName=name,
+			postSetup=init,
+		)
+	return _SimpleAction(
+		text=label,
+		isValid=lambda ctx: True,
+		execute=execute,
+	)
+
+class _CreateRenderSelGroup(ActionGroup):
+	def isValid(self, ctx: ActionContext) -> bool:
+		return any(ctx.primaryRopState.info.outputBufferNamesAndLabels)
+
+	def getActions(self, ctx: ActionContext) -> List[Action]:
+		return [
+			_createRenderSelAction(label, name)
+			for name, label in ctx.primaryRopState.info.outputBufferNamesAndLabels
+		]
+
+def _pulsePrimaryRopParam(ctx: ActionContext, par: str):
+	rop = ctx.primaryRop
+	p = rop.par[par] if rop else None
+	if p is not None:
+		p.pulse()
+
+def _pulseSelectedRopParams(ctx: ActionContext, par: str):
+	for rop in ctx.selectedRops:
+		p = rop.par[par]
+		if p is not None:
+			p.pulse()
+
+def _primaryRopHasParam(ctx: ActionContext, par: str):
+	rop = ctx.primaryRop
+	return rop and rop.par[par] is not None
+
+def _anySelectedRopHasParam(ctx: ActionContext, par: str):
+	for rop in ctx.selectedRops:
+		if rop.par[par] is not None:
+			return True
+	return False
 
 def createActionManager():
 	manager = ActionManager()
@@ -149,8 +201,13 @@ def createActionManager():
 		_AppendNull('Append Null'),
 		_SimpleAction(
 			'Inspect',
-			isValid=lambda ctx: ctx.primaryRopState.canInspect,
-			execute=lambda ctx: ctx.primaryRop.par['Inspect'].pulse(),
+			isValid=lambda ctx: _primaryRopHasParam(ctx, 'Inspect'),
+			execute=lambda ctx: _pulsePrimaryRopParam(ctx, 'Inspect'),
+		),
+		_SimpleAction(
+			'Update OPs',
+			isValid=lambda ctx: _anySelectedRopHasParam(ctx, 'Updateop'),
+			execute=lambda ctx: _pulseSelectedRopParams(ctx, 'Updateop'),
 		),
 		_ConvertToFloatAction('Convert To Float'),
 		_RescaleFieldAction('Rescale Field'),
@@ -159,5 +216,6 @@ def createActionManager():
 	manager.addGroups(
 		_CombineSdfsGroup('Combine SDFs'),
 		_CreateVarRefGroup('Reference Variable'),
+		_CreateRenderSelGroup('Select Output Buffer'),
 	)
 	return manager

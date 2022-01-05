@@ -23,6 +23,10 @@ class ActionContext:
 		return [o for o in self.selectedOps if _isRopOrComp(o)]
 
 	@property
+	def selectedRopStates(self):
+		return [ROPState(o) for o in self.selectedOps if _isRopOrComp(o)]
+
+	@property
 	def primaryRop(self):
 		return self.primaryOp if _isRopOrComp(self.primaryOp) else None
 
@@ -121,11 +125,10 @@ class ActionManager:
 			allRops=RaytkContext().ropChildrenOf(comp),
 		)
 
-	def openMenu(self):
+	def openMenu(self, popMenu: 'PopMenuExt'):
 		ctx = self._getContext()
 		if not ctx:
 			return
-		popMenu = _getPopMenu()
 		items = [
 			action.createMenuItem(ctx)
 			for action in self.actions
@@ -222,15 +225,15 @@ class ROPState:
 	@property
 	def isSdf(self): return bool(self and self.returnTypes == ['Sdf'])
 
-	@property
-	def canInspect(self):
-		return bool(self.rop and self.rop.par['Inspect'] is not None)
+	def getParam(self, parName: str):
+		if self.rop:
+			return self.rop.par[parName]
 
 _InitFunc = Optional[Callable[['COMP'], None]]
 
 class ActionUtils:
 	@staticmethod
-	def _palette() -> 'Palette': return op.raytk.op('tools/palette')
+	def palette() -> 'Palette': return op.raytk.op('tools/palette')
 
 	@staticmethod
 	def createROP(ropType: str, *inits: _InitFunc):
@@ -238,13 +241,7 @@ class ActionUtils:
 			for fn in inits:
 				if fn:
 					fn(rop)
-		ActionUtils._palette().CreateItem(ropType, postSetup=init)
-
-	@staticmethod
-	def createVariableReference(fromRop: 'COMP', variable: str, dataType: str, init: _InitFunc = None):
-		ActionUtils._palette().CreateVariableReference(
-			fromRop, variable, dataType, init
-		)
+		ActionUtils.palette().CreateItem(ropType, postSetup=init)
 
 	@staticmethod
 	def moveAfter(o: 'OP', after: 'OP'):

@@ -18,4 +18,6 @@ class EditorTools:
 
 	def Open(self, _=None):
 		self.init()
-		self.actions.openMenu()
+		popMenu = self.ownerComp.op('popMenu')
+		# noinspection PyTypeChecker
+		self.actions.openMenu(popMenu)
