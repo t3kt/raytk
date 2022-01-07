@@ -225,6 +225,12 @@ class ROPState:
 	@property
 	def isSdf(self): return bool(self and self.returnTypes == ['Sdf'])
 
+	@property
+	def is2d(self): return 'vec2' in self.coordTypes
+
+	@property
+	def is3d(self): return 'vec3' in self.coordTypes
+
 	def getParam(self, parName: str):
 		if self.rop:
 			return self.rop.par[parName]
@@ -268,6 +274,20 @@ class ActionUtils:
 		def placeAndAttach(rop: 'COMP'):
 			ActionUtils.moveAfter(rop, after=fromRop)
 			rop.inputConnectors[inputIndex].connect(fromRop.outputConnectors[outputIndex])
+		ActionUtils.createROP(ropType, placeAndAttach, init)
+
+	@staticmethod
+	def createAndAttachToInput(
+			fromRop: 'OP',
+			ropType: str,
+			init: _InitFunc = None,
+			inputIndex: int = 0,
+			outputIndex: int = 0,
+	):
+		def placeAndAttach(rop: 'COMP'):
+			rop.nodeCenterY = fromRop.nodeCenterY - 100
+			rop.nodeX = fromRop.nodeX - rop.nodeWidth - 150
+			rop.outputConnectors[outputIndex].connect(fromRop.inputConnectors[inputIndex])
 		ActionUtils.createROP(ropType, placeAndAttach, init)
 
 	@staticmethod

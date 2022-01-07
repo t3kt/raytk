@@ -1,4 +1,4 @@
-from typing import Callable, List
+from typing import Callable, List, Optional
 from editorToolsCommon import Action, ActionContext, ActionGroup, ActionManager, ActionUtils
 
 # noinspection PyUnreachableCode
@@ -64,7 +64,7 @@ class _RescaleFieldAction(Action):
 	def execute(self, ctx: ActionContext):
 		ActionUtils.createAndAttachFromOutput(
 			fromRop=ctx.primaryRop,
-			ropType='raytk.operators.filter.rescaleField',
+			ropType=_RopTypes.rescaleField,
 		)
 
 class _RescaleFloatFieldAsVectorAction(Action):
@@ -76,7 +76,7 @@ class _RescaleFloatFieldAsVectorAction(Action):
 			rop.par.Returntype = 'vec4'
 		ActionUtils.createAndAttachFromOutput(
 			fromRop=ctx.primaryRop,
-			ropType='raytk.operators.filter.rescaleField',
+			ropType=_RopTypes.rescaleField,
 			init=init,
 		)
 
@@ -173,6 +173,51 @@ class _CreateRenderSelGroup(ActionGroup):
 			for name, label in ctx.primaryRopState.info.outputBufferNamesAndLabels
 		]
 
+def _createAddInputAction(
+		text: str,
+		matchTypes: List[str],
+		createType: str,
+		firstInput: int = 0,
+		lastInput: Optional[int] = None,
+		outputIndex: int = 0,
+):
+	def getConn(rop: 'OP'):
+		if lastInput is None:
+			return _firstOpenConnector(rop.inputConnectors[firstInput:])
+		return _firstOpenConnector(rop.inputConnectors[firstInput:(lastInput + 1)])
+
+	def isValid(ctx: ActionContext):
+		if not ctx.primaryRop:
+			return False
+		if ctx.primaryRopState.info.opType not in matchTypes:
+			return False
+		return bool(getConn(ctx.primaryRop))
+
+	def execute(ctx: ActionContext):
+		rop = ctx.primaryRop
+		conn = getConn(rop)
+		ActionUtils.createAndAttachToInput(
+			rop,
+			createType,
+			inputIndex=conn.index,
+			outputIndex=outputIndex,
+		)
+
+	return _SimpleAction(text, isValid, execute)
+
+def _firstOpenConnector(conns: List['Connector']):
+	for conn in conns:
+		if not conn.connections:
+			return conn
+
+def _createConvertFrom2dSdfAction(
+		text: str, ropType: str):
+	def isValid(ctx: ActionContext):
+		return ctx.primaryRopState.isSdf and ctx.primaryRopState.is2d
+	def execute(ctx: ActionContext):
+		ActionUtils.createAndAttachFromOutput(ctx.primaryRop, ropType)
+	return _SimpleAction(text, isValid, execute)
+
 def _pulsePrimaryRopParam(ctx: ActionContext, par: str):
 	rop = ctx.primaryRop
 	p = rop.par[par] if rop else None
@@ -195,6 +240,11 @@ def _anySelectedRopHasParam(ctx: ActionContext, par: str):
 			return True
 	return False
 
+class _RopTypes:
+	modularMat = 'raytk.operators.material.modularMat'
+	rescaleField = 'raytk.operators.filter.rescaleField'
+	raymarchRender3d = 'raytk.operators.output.raymarchRender3D'
+
 def createActionManager():
 	manager = ActionManager()
 	manager.addActions(
@@ -212,6 +262,38 @@ def createActionManager():
 		_ConvertToFloatAction('Convert To Float'),
 		_RescaleFieldAction('Rescale Field'),
 		_RescaleFloatFieldAsVectorAction('Rescale As Vector'),
+		_createAddInputAction(
+			'Add Diffuse',
+			[_RopTypes.modularMat],
+			'raytk.operators.material.diffuseContrib',
+			firstInput=1,
+		),
+		_createAddInputAction(
+			'Add Specular',
+			[_RopTypes.modularMat],
+			'raytk.operators.material.specularContrib',
+			firstInput=1,
+		),
+		_createAddInputAction(
+			'Add Look At Camera',
+			[_RopTypes.raymarchRender3d],
+			'raytk.operators.camera.lookAtCamera',
+			firstInput=1, lastInput=1,
+		),
+		_createAddInputAction(
+			'Add Point Light',
+			[_RopTypes.raymarchRender3d],
+			'raytk.operators.light.pointLight',
+			firstInput=2, lastInput=2,
+		),
+		_createConvertFrom2dSdfAction(
+			'Extrude',
+			'raytk.operators.convert.extrude'
+		),
+		_createConvertFrom2dSdfAction(
+			'Revolve',
+			'raytk.operators.convert.revolve'
+		),
 	)
 	manager.addGroups(
 		_CombineSdfsGroup('Combine SDFs'),
