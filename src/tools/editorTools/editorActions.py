@@ -19,6 +19,18 @@ class _SimpleAction(Action):
 	def isValid(self, ctx: ActionContext) -> bool: return self._isValid(ctx)
 	def execute(self, ctx: ActionContext): self._execute(ctx)
 
+class _SimpleGroup(ActionGroup):
+	def __init__(
+			self, text: str,
+			isValid: Callable[[ActionContext], bool],
+			getActions: Callable[[ActionContext], List[Action]]):
+		super().__init__(text)
+		self._isValid = isValid
+		self._getActions = getActions
+
+	def isValid(self, ctx: ActionContext) -> bool: return self._isValid(ctx)
+	def getActions(self, ctx: ActionContext) -> List[Action]: return self._getActions(ctx)
+
 class _AppendNull(Action):
 	def execute(self, ctx: ActionContext):
 		o = ctx.primaryOp
@@ -189,6 +201,8 @@ def _createAddInputAction(
 	def isValid(ctx: ActionContext):
 		if not ctx.primaryRop:
 			return False
+		if not ActionUtils.isKnownRopType(createType):
+			return False
 		if ctx.primaryRopState.info.opType not in matchTypes:
 			return False
 		return bool(getConn(ctx.primaryRop))
@@ -218,6 +232,58 @@ def _createConvertFrom2dSdfAction(
 		ActionUtils.createAndAttachFromOutput(ctx.primaryRop, ropType)
 	return _SimpleAction(text, isValid, execute)
 
+def _createAnimateParamWithSpeedAction(
+		text: str, tupletName: str,
+):
+	def getPars(ctx: ActionContext):
+		rop = ctx.primaryRop
+		if not rop:
+			return None
+		for tuplet in rop.customTuplets:
+			if tuplet[0].tupletName == tupletName:
+				return tuplet
+	def isValid(ctx: ActionContext):
+		if not ActionUtils.isKnownRopType(_RopTypes.speedGenerator):
+			return False
+		return bool(getPars(ctx))
+	def execute(ctx: ActionContext):
+		rop = ctx.primaryRop
+		pars = getPars(ctx)
+		if not pars:
+			return
+		def init(gen: 'COMP'):
+			gen.name = f'{rop.name}_{tupletName}_speedGen'
+			chop = gen.parent().create(nullCHOP, f'{rop.name}_{tupletName}_vals')
+			gen.par.Name = ' '.join(p.name for p in pars)
+			chop.inputConnectors[0].connect(gen.outputConnectors[0])
+			gen.nodeCenterY = rop.nodeCenterY - 100
+			gen.nodeX = rop.nodeX - gen.nodeWidth - 300
+			chop.nodeCenterY = gen.nodeCenterY
+			chop.nodeX = gen.nodeX + gen.nodeWidth + 100
+			chop.viewer = True
+			for par in pars:
+				par.expr = f"op('{chop.name}')['{par.name}']"
+		ActionUtils.createROP(_RopTypes.speedGenerator, init)
+	return _SimpleAction(text, isValid, execute)
+
+class _AnimateParamsWithSpeedGroup(ActionGroup):
+	def isValid(self, ctx: ActionContext) -> bool:
+		rop = ctx.primaryRop
+		if not rop or not rop.customTuplets:
+			return False
+		return ActionUtils.isKnownRopType(_RopTypes.speedGenerator)
+
+	def getActions(self, ctx: ActionContext) -> List[Action]:
+		rop = ctx.primaryRop
+		if not rop:
+			return []
+		return [
+			_createAnimateParamWithSpeedAction(
+				t[0].label, t[0].tupletName)
+			for t in rop.customTuplets
+			if t[0].isNumber
+		]
+
 def _pulsePrimaryRopParam(ctx: ActionContext, par: str):
 	rop = ctx.primaryRop
 	p = rop.par[par] if rop else None
@@ -244,6 +310,7 @@ class _RopTypes:
 	modularMat = 'raytk.operators.material.modularMat'
 	rescaleField = 'raytk.operators.filter.rescaleField'
 	raymarchRender3d = 'raytk.operators.output.raymarchRender3D'
+	speedGenerator = 'raytk.operators.utility.speedGenerator'
 
 def createActionManager():
 	manager = ActionManager()
@@ -299,5 +366,6 @@ def createActionManager():
 		_CombineSdfsGroup('Combine SDFs'),
 		_CreateVarRefGroup('Reference Variable'),
 		_CreateRenderSelGroup('Select Output Buffer'),
+		_AnimateParamsWithSpeedGroup('Animate With Speed'),
 	)
 	return manager

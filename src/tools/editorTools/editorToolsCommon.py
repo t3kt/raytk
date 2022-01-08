@@ -305,3 +305,7 @@ class ActionUtils:
 					break
 				combine.inputConnectors[i].connect(fromRop.outputConnectors[outputIndex])
 		ActionUtils.createROP(ropType, placeAndAttach, init)
+
+	@staticmethod
+	def isKnownRopType(pathOrOpType: str):
+		return ActionUtils.palette().IsKnownType(pathOrOpType)
