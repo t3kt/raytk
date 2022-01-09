@@ -15,10 +15,11 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 	if (THIS_Reverse > 0.) {
 		x = 1.0 - x;
 	}
+	ReturnT res;
 	#pragma r:if THIS_HAS_INPUT_waveFunction
-	x = inputOp_waveFunction(x, ctx);
+	res = inputOp_waveFunction(x, ctx);
 	#pragma r:else
-	x = THIS_WAVE_EXPR;
+	res = THIS_WAVE_EXPR;
 	#pragma r:endif
-	return THIS_Offset + (x * THIS_Amplitude);
+	return THIS_Offset + (res * THIS_Amplitude);
 }
