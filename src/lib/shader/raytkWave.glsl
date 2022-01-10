@@ -20,3 +20,24 @@ float wave_ramp(float x) { return fract(x); }
 vec2 wave_ramp(vec2 x) { return fract(x); }
 vec3 wave_ramp(vec3 x) { return fract(x); }
 vec4 wave_ramp(vec4 x) { return fract(x); }
+
+// https://www.shadertoy.com/view/wl3cDM
+const int wave_maxN = 8;
+float wave_addSquare(float x, int n) {
+	float sum = 0.;
+	for (int k=0; k<wave_maxN;k++) {
+		if (k < n) {
+			sum+=(1.-(2.*float(k)+1.)/(2.*float(n)+1.))*sin(mod(TAU*(2.*float(k)+1.)*x,2.*PI))/(2.*float(k)+1.);
+		}
+	}
+	return sum*4./PI;
+}
+vec4 wave_addSquare(vec4 x, int n) {
+	vec4 sum = vec4(0.);
+	for (int k=0; k<wave_maxN;k++) {
+		if (k < n) {
+			sum+=(1.-(2.*float(k)+1.)/(2.*float(n)+1.))*sin(mod(TAU*(2.*float(k)+1.)*x,2.*PI))/(2.*float(k)+1.);
+		}
+	}
+	return sum*4./PI;
+}
