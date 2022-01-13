@@ -9,6 +9,11 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 		float q = p.THIS_Axis;
 	#pragma r:endif
 	ReturnT res;
-	WAVE();
+	WAVE_PREP();
+	#pragma r:if THIS_HAS_INPUT_waveFunc
+	res = inputOp_waveFunc(fract(q), ctx);
+	#pragma r:else
+	WAVE_BODY();
+	#pragma r:endif
 	return (res * THIS_Amplitude) + THIS_Offset;
 }

@@ -4,14 +4,10 @@ if False:
 	from _stubs import *
 
 def onCook(dat: 'DAT'):
-	switcherCode = dat.inputs[0].text
-	paramTable = dat.inputs[1]  # type: DAT
-	effectiveMode = str(dat.inputs[2]['effectiveMode', 1])
+	paramTable = dat.inputs[0]  # type: DAT
+	effectiveMode = str(dat.inputs[1]['effectiveMode', 1])
 	config = parent()
 	dat.clear()
-	if switcherCode.strip() in ('', ';'):
-		dat.write(' ')
-		return
 
 	periodParam = config.par.Periodparam
 	phaseParam = config.par.Phaseparam
@@ -51,7 +47,6 @@ def onCook(dat: 'DAT'):
 			]
 	lines += [
 		'q = (q / period) + phase;',
-		switcherCode,
 	]
 
 	dat.write('\n'.join('\t' + line for line in lines))
