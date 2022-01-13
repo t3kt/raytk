@@ -21,10 +21,15 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 	#ifdef THIS_EXPOSE_sides
 	THIS_sides = sides;
 	#endif
+	#ifdef THIS_HAS_INPUT_flipSideField
+	ivec3 side = ivec3(round(fillToVec3(inputOp_flipSideField(p, ctx))));
+	#else
+	ivec3 side = ivec3(vec3(THIS_Flipsidex, THIS_Flipsidey, THIS_Flipsidez));
+	#endif
 	vec3 flipMask = vec3(
-		THIS_getSideMask(p, int(THIS_Flipsidex)),
-		THIS_getSideMask(p, int(THIS_Flipsidey)),
-		THIS_getSideMask(p, int(THIS_Flipsidez))
+		THIS_getSideMask(p, side.x),
+		THIS_getSideMask(p, side.y),
+		THIS_getSideMask(p, side.z)
 	);
 	q = mix(q, -q, flipMask);
 
