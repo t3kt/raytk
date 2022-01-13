@@ -1,7 +1,8 @@
-vec3 THIS_wave(vec3 q) {
-	vec3 amt;
-	BODY();
-	return amt;
+vec3 THIS_wave(CoordT p, ContextT ctx, vec3 q) {
+	vec3 res;
+	WAVE_PREP();
+	WAVE_BODY();
+	return res;
 }
 
 ReturnT thismap(CoordT p, ContextT ctx) {
@@ -12,9 +13,8 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 	#pragma r:else
 		float q0 = p.THIS_Axis;
 	#pragma r:endif
-	vec3 q = (vec3(q0) / THIS_Period) + THIS_Phase;
-	vec3 amt;
-	BODY();
+	vec3 q = vec3(q0);
+	vec3 amt = THIS_wave(p, ctx, q);
 	amt = (amt * THIS_Amplitude) + THIS_Offset;
 	p -= THIS_asCoordT(amt);
 	return inputOp1(p, ctx);

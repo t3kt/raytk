@@ -41,3 +41,12 @@ vec4 wave_addSquare(vec4 x, int n) {
 	}
 	return sum*4./PI;
 }
+vec3 wave_addSquare(vec3 x, int n) {
+	vec3 sum = vec3(0.);
+	for (int k=0; k<wave_maxN;k++) {
+		if (k < n) {
+			sum+=(1.-(2.*float(k)+1.)/(2.*float(n)+1.))*sin(mod(TAU*(2.*float(k)+1.)*x,2.*PI))/(2.*float(k)+1.);
+		}
+	}
+	return sum*4./PI;
+}

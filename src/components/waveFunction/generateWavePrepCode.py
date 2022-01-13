@@ -13,6 +13,7 @@ def onCook(dat: 'DAT'):
 	phaseParam = config.par.Phaseparam
 	periodField = config.par.Periodfield
 	phaseField = config.par.Phasefield
+	coordType = config.par.Coordtype or 'float'
 	isInline = effectiveMode == 'inline'
 
 	if isInline:
@@ -27,7 +28,7 @@ def onCook(dat: 'DAT'):
 
 	if needPeriod:
 		lines += [
-			f'float period = THIS_{periodParam};',
+			f'{coordType} period = THIS_{periodParam};',
 		]
 		if periodField:
 			lines += [
@@ -37,7 +38,7 @@ def onCook(dat: 'DAT'):
 			]
 	if needPhase:
 		lines += [
-			f'float phase = THIS_{phaseParam};'
+			f'{coordType} phase = THIS_{phaseParam};'
 		]
 		if phaseField:
 			lines += [

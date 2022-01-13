@@ -1,6 +1,0 @@
-name	label	expr	code
-sin	Sine	wave_sin	amt = wave_sin(q)
-cos	Cosine	wave_cos	amt = wave_cos(q)
-tri	Triangle	wave_tri	amt = wave_tri(q)
-ramp	Ramp	wave_ramp	amt = wave_ramp(q)
-square	Square	wave_square	amt = wave_square(q)
