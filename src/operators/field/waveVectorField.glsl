@@ -1,16 +1,16 @@
-CoordT THIS_wave(CoordT q) {
-	CoordT res;
-	BODY();
+vec3 THIS_wave(vec3 q) {
+	vec3 res;
+	WAVE_PREP();
+	WAVE_BODY();
 	return res;
 }
 
 ReturnT thismap(CoordT p, ContextT ctx) {
 	#pragma r:if THIS_HAS_INPUT_coordField
-	CoordT q = THIS_asCoordT(inputOp_coordField(p, ctx));
+	vec3 q = adaptAsVec3(inputOp_coordField(p, ctx));
 	#pragma r:else
-	CoordT q = p;
+	vec3 q = adaptAsVec3(p);
 	#pragma r:endif
-	q = THIS_asCoordT(THIS_Phase) + (q / THIS_asCoordT(THIS_Period));
-	CoordT val = THIS_asCoordT(THIS_Offset) + THIS_wave(q) * THIS_asCoordT(THIS_Amplitude);
+	CoordT val = THIS_asCoordT(THIS_Offset + THIS_wave(q) * THIS_Amplitude);
 	return adaptAsVec4(val);
 }
