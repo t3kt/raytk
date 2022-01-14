@@ -22,15 +22,19 @@ def runStage(stage: int):
 		context.safeDestroyOp(op('compiler'))
 		context.queueAction(runStage, stage + 1)
 	elif stage == 3:
-		if not context.experimental:
-			context.log('Stripping out the sceneEditor')
-			context.safeDestroyOp(op('sceneEditor'))
+		context.log('Stripping out the sceneEditor')
+		context.safeDestroyOp(op('sceneEditor'))
 		context.queueAction(runStage, stage + 1)
 	elif stage == 4:
 		if not context.experimental:
 			context.log('Stripping out the editorTools')
 			context.safeDestroyOp(op('editorTools'))
-		context.queueAction(runStage, stage + 1)
+			context.queueAction(runStage, stage + 1)
+		else:
+			context.runBuildScript(
+				op('editorTools/BUILD'),
+				thenRun=runStage,
+				runArgs=[stage + 1])
 	elif stage == 5:
 		context.runBuildScript(
 			op('palette/BUILD'),
