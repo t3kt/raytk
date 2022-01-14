@@ -1,0 +1,8 @@
+name	label	sourcetype	pattern	wave	params	isbipolar
+const	Constant	pattern	const	const		1
+ramp	Ramp	pattern	ramp	const	Phase Reverse	0
+sin	Sine	pattern	sin	const	Phase Reverse	1
+tri	Triangle	pattern	tri	const	Phase Reverse Bias	1
+square	Square	pattern	square	const	Phase Reverse Bias	1
+pulse	Pulse	pattern	pulse	const	Phase Reverse	0
+gaussian	Gaussian	wave	ramp	normal	Phase Reverse Bias	0

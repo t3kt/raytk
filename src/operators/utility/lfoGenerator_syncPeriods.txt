@@ -1,0 +1,13 @@
+name	label	period
+sixteenth	1/16	0.0625
+eighth	1/8	0.125
+fourth	1/4	0.25
+half	1/2	0.5
+one	1	1
+two	2	2
+four	4	4
+eight	8	8
+sixteen	16	16
+thirtytwo	32	32
+sixtyfour	64	64
+onetwentyeight	128	128

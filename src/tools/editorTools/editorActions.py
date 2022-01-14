@@ -232,8 +232,8 @@ def _createConvertFrom2dSdfAction(
 		ActionUtils.createAndAttachFromOutput(ctx.primaryRop, ropType)
 	return _SimpleAction(text, isValid, execute)
 
-def _createAnimateParamWithSpeedAction(
-		text: str, tupletName: str,
+def _createAnimateParamAction(
+		text: str, tupletName: str, ropType: str, nameSuffix: str,
 ):
 	def getPars(ctx: ActionContext):
 		rop = ctx.primaryRop
@@ -243,7 +243,7 @@ def _createAnimateParamWithSpeedAction(
 			if tuplet[0].tupletName == tupletName:
 				return tuplet
 	def isValid(ctx: ActionContext):
-		if not ActionUtils.isKnownRopType(_RopTypes.speedGenerator):
+		if not ActionUtils.isKnownRopType(ropType):
 			return False
 		return bool(getPars(ctx))
 	def execute(ctx: ActionContext):
@@ -252,7 +252,7 @@ def _createAnimateParamWithSpeedAction(
 		if not pars:
 			return
 		def init(gen: 'COMP'):
-			gen.name = f'{rop.name}_{tupletName}_speedGen'
+			gen.name = f'{rop.name}_{tupletName}_{nameSuffix}'
 			chop = gen.parent().create(nullCHOP, f'{rop.name}_{tupletName}_vals')
 			gen.par.Name = ' '.join(p.name for p in pars)
 			chop.inputConnectors[0].connect(gen.outputConnectors[0])
@@ -263,26 +263,28 @@ def _createAnimateParamWithSpeedAction(
 			chop.viewer = True
 			for par in pars:
 				par.expr = f"op('{chop.name}')['{par.name}']"
-		ActionUtils.createROP(_RopTypes.speedGenerator, init)
+		ActionUtils.createROP(ropType, init)
 	return _SimpleAction(text, isValid, execute)
 
-class _AnimateParamsWithSpeedGroup(ActionGroup):
-	def isValid(self, ctx: ActionContext) -> bool:
+def _createAnimateParamsGroup(text: str, ropType: str, nameSuffix: str):
+	def isValid(ctx: ActionContext) -> bool:
 		rop = ctx.primaryRop
 		if not rop or not rop.customTuplets:
 			return False
-		return ActionUtils.isKnownRopType(_RopTypes.speedGenerator)
+		return ActionUtils.isKnownRopType(ropType)
 
-	def getActions(self, ctx: ActionContext) -> List[Action]:
+	def getActions(ctx: ActionContext) -> List[Action]:
 		rop = ctx.primaryRop
 		if not rop:
 			return []
 		return [
-			_createAnimateParamWithSpeedAction(
-				t[0].label, t[0].tupletName)
+			_createAnimateParamAction(
+				t[0].label, t[0].tupletName,
+				ropType, nameSuffix)
 			for t in rop.customTuplets
 			if t[0].isNumber
 		]
+	return _SimpleGroup(text, isValid, getActions)
 
 def _pulsePrimaryRopParam(ctx: ActionContext, par: str):
 	rop = ctx.primaryRop
@@ -311,6 +313,7 @@ class _RopTypes:
 	rescaleField = 'raytk.operators.filter.rescaleField'
 	raymarchRender3d = 'raytk.operators.output.raymarchRender3D'
 	speedGenerator = 'raytk.operators.utility.speedGenerator'
+	lfoGenerator = 'raytk.operators.utility.lfoGenerator'
 
 def createActionManager():
 	manager = ActionManager()
@@ -366,6 +369,7 @@ def createActionManager():
 		_CombineSdfsGroup('Combine SDFs'),
 		_CreateVarRefGroup('Reference Variable'),
 		_CreateRenderSelGroup('Select Output Buffer'),
-		_AnimateParamsWithSpeedGroup('Animate With Speed'),
+		_createAnimateParamsGroup('Animate With Speed', _RopTypes.speedGenerator, 'speedGen'),
+		_createAnimateParamsGroup('Animate With LFO', _RopTypes.lfoGenerator, 'lfoGen'),
 	)
 	return manager
