@@ -23,9 +23,36 @@ def update():
 		for par in pars:
 			par.menuNames = names
 			par.menuLabels = labels
+		if parent().par.Manageparamstates:
+			updateParamEnableExprs(host, dat)
 	except BaseException as e:
 		print(f'Error attempting to update paramMenu in {parent()}: {e}')
 
+def updateParamEnableExprs(host: 'OP', table: 'DAT'):
+	hostPar = host.par[parent().par.Param]
+	if hostPar is None:
+		return
+	paramModes = _paramModes(table)
+	allValues = set(paramModes.keys())
+	for param, vals in paramModes.items():
+		par = host.par[param]
+		if set(vals) == allValues:
+			par.enableExpr = ''
+			par.enable = True
+		else:
+			par.enableExpr = f'me.par.{hostPar.name} in {repr(tuple(vals))}'
+
+def _paramModes(table: 'DAT'):
+	paramModes = {}
+	for i in range(1, table.numRows):
+		params = tdu.expand(table[i, 'params'].val)
+		val = table[i, 'name'].val
+		for param in params:
+			if param in paramModes:
+				paramModes[param].append(val)
+			else:
+				paramModes[param] = [val]
+	return paramModes
 
 def onValueChange(par, prev):
 	if par.name == 'Autoupdate' and par:
