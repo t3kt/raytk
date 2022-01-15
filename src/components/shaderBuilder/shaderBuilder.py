@@ -201,6 +201,8 @@ class ShaderBuilder:
 			ownerName = varTable[row, 'owner']
 			localName = varTable[row, 'localName']
 			dat.appendRow([f'{ownerName}_EXPOSE_{localName}', ''])
+			for part in tdu.split(varTable[row, 'macros']):
+				dat.appendRow([part, ''])
 		refTable = self._referenceTable()
 		for row in range(1, refTable.numRows):
 			ownerName = refTable[row, 'owner']
@@ -445,7 +447,7 @@ class ShaderBuilder:
 			rawVarTable: 'DAT',
 	):
 		dat.clear()
-		dat.appendRow(['name', 'owner', 'localName', 'dataType'])
+		dat.appendRow(['name', 'owner', 'localName', 'dataType', 'macros'])
 		refNames = set(c.val for c in procRefTable.col('source')[1:])
 		# rawVar columns: name, localName, label, dataType, owner
 		for i in range(1, rawVarTable.numRows):
@@ -455,7 +457,8 @@ class ShaderBuilder:
 					name,
 					rawVarTable[i, 'owner'],
 					rawVarTable[i, 'localName'],
-					rawVarTable[i, 'dataType']
+					rawVarTable[i, 'dataType'],
+					rawVarTable[i, 'macros'],
 				])
 
 	def buildPredeclarations(self):
