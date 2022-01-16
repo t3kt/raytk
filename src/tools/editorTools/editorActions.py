@@ -1,16 +1,21 @@
 from typing import Callable, List, Optional
-from editorToolsCommon import Action, ActionContext, ActionGroup, ActionManager, ActionUtils
+from editorToolsCommon import Action, ActionContext, ActionGroup, ActionManager, ActionUtils, ROPState
 
 # noinspection PyUnreachableCode
 if False:
 	# noinspection PyUnresolvedReferences
 	from _stubs import *
 
+_IsValidFunc = Callable[[ActionContext], bool]
+_ExecuteFunc = Callable[[ActionContext], None]
+_GetActionsFunc = Callable[[ActionContext], List[Action]]
+_OpPredicate = Callable[[OP], bool]
+
 class _SimpleAction(Action):
 	def __init__(
 			self, text: str,
-			isValid: Callable[[ActionContext], bool],
-			execute: Callable[[ActionContext], None],
+			isValid: _IsValidFunc,
+			execute: _ExecuteFunc,
 	):
 		super().__init__(text)
 		self._isValid = isValid
@@ -22,8 +27,9 @@ class _SimpleAction(Action):
 class _SimpleGroup(ActionGroup):
 	def __init__(
 			self, text: str,
-			isValid: Callable[[ActionContext], bool],
-			getActions: Callable[[ActionContext], List[Action]]):
+			isValid: _IsValidFunc,
+			getActions: _GetActionsFunc,
+	):
 		super().__init__(text)
 		self._isValid = isValid
 		self._getActions = getActions
@@ -92,36 +98,31 @@ class _RescaleFloatFieldAsVectorAction(Action):
 			init=init,
 		)
 
-class _CombineSdfsAction(Action):
-	def __init__(self, text: str, mode: str):
-		super().__init__(text=text)
-		self.mode = mode
-
-	def isValid(self, ctx: ActionContext) -> bool:
-		return ctx.hasSelectedSdfs(minCount=2, maxCount=2, ignoreNonSdfs=False)
-
-	def execute(self, ctx: ActionContext):
-		def init(combine: 'COMP'):
-			combine.par.Combine = self.mode
-		ActionUtils.createAndAttachFromMultiOutputs(
-			fromRops=ctx.selectedRops,
-			ropType='raytk.operators.combine.combine',
-			init=init,
-		)
-
-class _CombineSdfsGroup(ActionGroup):
-	def isValid(self, ctx: ActionContext) -> bool:
-		return ctx.hasSelectedSdfs(minCount=2, maxCount=2, ignoreNonSdfs=False)
-
-	def getActions(self, ctx: ActionContext) -> List[Action]:
-		table = op('combineModes')  # type: DAT
-		return [
-			_CombineSdfsAction(
-				table[i, 'label'].val,
-				table[i, 'name'].val,
-			)
-			for i in range(1, table.numRows)
-		]
+def _createCombineActionGroup(
+		text: str, ropType: str, paramName: str,
+		modeTable: 'DAT',
+		minCount: int, maxCount: Optional[int] = None,
+		ignoreNonMatches: bool = True,
+		matchPredicate: Optional[_OpPredicate] = None,
+):
+	def isValid(ctx: ActionContext):
+		if not ActionUtils.isKnownRopType(ropType):
+			return False
+		return ctx.hasSelectedOps(minCount, maxCount, matchPredicate, ignoreNonMatches)
+	def createAction(label: str, value: str):
+		def execute(ctx: ActionContext):
+			inputs = ctx.selectedRops
+			if matchPredicate:
+				inputs = [o for o in inputs if matchPredicate(o)]
+			def init(rop: 'COMP'):
+				rop.par[paramName] = value
+			ActionUtils.createAndAttachFromMultiOutputs(inputs, ropType, init)
+		return _SimpleAction(label, isValid, execute)
+	actions = [
+		createAction(modeTable[i, 'label'].val, modeTable[i, 'name'].val)
+		for i in range(1, modeTable.numRows)
+	]
+	return _SimpleGroup(text, isValid, lambda _: actions)
 
 def _createVarRefAction(label: str, variable: str, dataType: str):
 	def execute(ctx: ActionContext):
@@ -309,6 +310,8 @@ def _anySelectedRopHasParam(ctx: ActionContext, par: str):
 	return False
 
 class _RopTypes:
+	combine = 'raytk.operators.combine.combine'
+	combineFields = 'raytk.operators.combine.combineFields'
 	modularMat = 'raytk.operators.material.modularMat'
 	rescaleField = 'raytk.operators.filter.rescaleField'
 	raymarchRender3d = 'raytk.operators.output.raymarchRender3D'
@@ -366,7 +369,16 @@ def createActionManager():
 		),
 	)
 	manager.addGroups(
-		_CombineSdfsGroup('Combine SDFs'),
+		_createCombineActionGroup(
+			'Combine SDFs', _RopTypes.combine, 'Combine', op('sdfCombineModes'),
+			minCount=2, maxCount=2,
+			matchPredicate=lambda o: ROPState(o).isSdf,
+		),
+		_createCombineActionGroup(
+			'Combine Fields', _RopTypes.combineFields, 'Operation', op('fieldCombineModes'),
+			minCount=2, maxCount=2,
+			matchPredicate=lambda o: ROPState(o).isField,
+		),
 		_CreateVarRefGroup('Reference Variable'),
 		_CreateRenderSelGroup('Select Output Buffer'),
 		_createAnimateParamsGroup('Animate With Speed', _RopTypes.speedGenerator, 'speedGen'),

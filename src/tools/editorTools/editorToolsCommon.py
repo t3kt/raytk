@@ -33,16 +33,22 @@ class ActionContext:
 	@property
 	def primaryRopState(self): return ROPState(self.primaryRop)
 
-	def hasSelectedSdfs(
+	def hasSelectedOps(
 			self,
-			minCount: int = 1, maxCount: int = 1,
-			ignoreNonSdfs: bool = False,
-	):
-		rops = self.selectedRops
-		sdfs = [rop for rop in rops if ROPState(rop).isSdf]
-		if not ignoreNonSdfs and len(sdfs) != len(rops):
+			minCount: int = 1, maxCount: Optional[int] = None,
+			predicate: Callable[[OP], bool] = None,
+			ignoreNonMatches: bool = True):
+		selOps = self.selectedOps
+		matches = selOps
+		if predicate:
+			matches = [o for o in matches if predicate(o)]
+		if not ignoreNonMatches and len(matches) != len(selOps):
 			return False
-		return minCount <= len(sdfs) <= maxCount
+		if maxCount is not None and len(matches) > maxCount:
+			return False
+		if len(matches) < minCount:
+			return False
+		return True
 
 @dataclass
 class _MenuItem:
@@ -235,14 +241,14 @@ class ROPState:
 		if self.rop:
 			return self.rop.par[parName]
 
-_InitFunc = Optional[Callable[['COMP'], None]]
+InitFunc = Optional[Callable[['COMP'], None]]
 
 class ActionUtils:
 	@staticmethod
 	def palette() -> 'Palette': return op.raytk.op('tools/palette')
 
 	@staticmethod
-	def createROP(ropType: str, *inits: _InitFunc):
+	def createROP(ropType: str, *inits: InitFunc):
 		def init(rop: 'COMP'):
 			for fn in inits:
 				if fn:
@@ -267,7 +273,7 @@ class ActionUtils:
 	def createAndAttachFromOutput(
 			fromRop: 'OP',
 			ropType: str,
-			init: _InitFunc = None,
+			init: InitFunc = None,
 			inputIndex: int = 0,
 			outputIndex: int = 0,
 	):
@@ -280,7 +286,7 @@ class ActionUtils:
 	def createAndAttachToInput(
 			fromRop: 'OP',
 			ropType: str,
-			init: _InitFunc = None,
+			init: InitFunc = None,
 			inputIndex: int = 0,
 			outputIndex: int = 0,
 	):
@@ -294,7 +300,7 @@ class ActionUtils:
 	def createAndAttachFromMultiOutputs(
 			fromRops: List['OP'],
 			ropType: str,
-			init: _InitFunc = None,
+			init: InitFunc = None,
 			outputIndex: int = 0,
 	):
 		fromRops.sort(key=lambda r: r.nodeCenterY, reverse=True)
