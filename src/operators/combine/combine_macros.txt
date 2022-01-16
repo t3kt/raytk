@@ -1,3 +1,3 @@
-'Radius' in op('switcher_params')['params', 1].val	'THIS_HAS_RADIUS'	
-'Number' in op('switcher_params')['params', 1].val	'THIS_HAS_NUMBER'	
-'Offset' in op('switcher_params')['params', 1].val	'THIS_HAS_OFFSET'	
+'Radius' in op('mergeParams')['params', 1].val	'THIS_HAS_RADIUS'	
+'Number' in op('mergeParams')['params', 1].val	'THIS_HAS_NUMBER'	
+'Offset' in op('mergeParams')['params', 1].val	'THIS_HAS_OFFSET'	

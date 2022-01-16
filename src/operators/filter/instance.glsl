@@ -23,7 +23,8 @@ void THIS_exposeIndex(inout ContextT ctx, int i, int n) {
 }
 
 void THIS_combine(inout Sdf res1, in Sdf res2, in CoordT p, in ContextT ctx) {
-MERGE();
+MERGE_PREP();
+MERGE_BODY();
 }
 
 ReturnT thismap(CoordT p, ContextT ctx) {

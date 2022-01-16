@@ -1,5 +1,6 @@
 void THIS_merge(inout Sdf res1, in Sdf res2, CoordT p, ContextT ctx) {
-MERGE();
+MERGE_PREP();
+MERGE_BODY();
 }
 
 ReturnT thismap(CoordT p, ContextT ctx) {
