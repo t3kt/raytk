@@ -2,6 +2,6 @@
   "meta": {
     "opStatus": "beta",
     "opType": "raytk.operators.field.stepField",
-    "opVersion": 3
+    "opVersion": 5
   }
 }
