@@ -15,6 +15,11 @@ Sdf cmb_smoothUnion(Sdf res1, Sdf res2, float r) {
 	return res1;
 }
 
+float cmb_smoothUnion(float d1, float d2, float r) {
+	float h = smoothBlendRatio(d1, d2, r);
+	return mix(d2, d1, h) - r*h*(1.0-h);
+}
+
 Sdf cmb_smoothIntersect(Sdf res1, Sdf res2, float r) {
 	Sdf res = res1;
 	float h = clamp(0.5 - 0.5*(res2.x-res1.x)/r, 0., 1.);
