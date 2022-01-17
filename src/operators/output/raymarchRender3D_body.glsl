@@ -65,6 +65,7 @@ int DBG_refractCount = 0;
 
 int nearHitCount = 0;
 float nearHit = 0.;
+int stepCount = 0;
 
 Sdf castRay(Ray ray, float maxDist) {
 	int priorStage = pushStage(RAYTK_STAGE_PRIMARY);
@@ -72,7 +73,7 @@ Sdf castRay(Ray ray, float maxDist) {
 	Sdf res = createNonHitSdf();
 	int i;
 	nearHitCount = 0;
-	nearHit = 0;
+	nearHit = 0.;
 	for (i = 0; i < RAYTK_MAX_STEPS; i++) {
 		#ifdef THIS_USE_RAYMOD_FUNC
 		modifyRay(ray, res);
@@ -99,9 +100,7 @@ Sdf castRay(Ray ray, float maxDist) {
 			break;
 		}
 	}
-	#ifdef RAYTK_STEPS_IN_SDF
-	res.steps = i + 1;
-	#endif
+	stepCount = i + 1;
 	res.x = dist;
 	popStage(priorStage);
 	return res;
@@ -460,13 +459,7 @@ void main()
 			#endif
 
 			#ifdef OUTPUT_SDF
-			#ifdef RAYTK_STEPS_IN_SDF
-			sdfOut += vec4(res.x, resultMaterial1(res), res.steps, 1);
-			#else
-			// the raymarch ROP always switches on RAYTK_STEPS_IN_SDF if it's outputting
-			// SDF data, so this case never actually occurs.
-			sdfOut += vec4(res.x, resultMaterial1(res), 0, 1);
-			#endif
+			sdfOut += vec4(res.x, resultMaterial1(res), stepCount, 1);
 			#endif
 
 			#if defined(OUTPUT_COLOR) || defined(OUTPUT_NORMAL) || (defined(RAYTK_USE_REFLECTION) && defined(THIS_Enablereflection))
@@ -522,8 +515,8 @@ void main()
 			objectIdOut += res.objectId;
 			#endif
 		}
-		#if defined(OUTPUT_STEPS) && defined(RAYTK_STEPS_IN_SDF)
-		stepsOut += vec4(res.steps, float(res.steps)/float(RAYTK_MAX_STEPS), 0, 1);
+		#ifdef OUTPUT_STEPS
+		stepsOut += vec4(float(stepCount), float(stepCount)/float(RAYTK_MAX_STEPS), 0, 1);
 		#endif
 	#if THIS_Antialias > 1
 	}
@@ -562,7 +555,7 @@ void main()
 	#ifdef OUTPUT_COLOR
 	colorOut *= aa;
 	#endif
-	#if defined(OUTPUT_STEPS)
+	#ifdef OUTPUT_STEPS
 	stepsOut *= aa;
 	#endif
 }

@@ -104,7 +104,7 @@ Each ROP can have one explicitly defined macro table, and some number of generat
 
 ### Global Macros
 
-ROPs can also define a table of "global" macros. These differ from ROP-specific macros in that they are included earlier in the shader before library includes. They are intended to enable features within shared libraries. For example, `RAYTK_STEPS_IN_SDF` enables the `steps` field in the `Sdf` struct, and is used by ops that depend on it, allowing that field to be omitted if nothing is using it.
+ROPs can also define a table of "global" macros. These differ from ROP-specific macros in that they are included earlier in the shader before library includes. They are intended to enable features within shared libraries.
 
 ## Types
 

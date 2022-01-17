@@ -41,8 +41,6 @@ struct Sdf {
 	vec4 orbit;  // orbit trap value for fractals
 	#endif
 
-	int steps;
-
 	#ifdef RAYTK_ITERATION_IN_SDF
 	vec4 iteration;
 	#endif
@@ -101,7 +99,6 @@ Sdf createSdf(float dist) {
 	#ifdef RAYTK_ORBIT_IN_SDF
 	res.orbit = vec4(0);
 	#endif
-	res.steps = 0;
 	#ifdef RAYTK_ITERATION_IN_SDF
 	res.iteration = vec4(0);
 	#endif
