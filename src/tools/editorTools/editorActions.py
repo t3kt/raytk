@@ -37,8 +37,8 @@ class _SimpleGroup(ActionGroup):
 	def isValid(self, ctx: ActionContext) -> bool: return self._isValid(ctx)
 	def getActions(self, ctx: ActionContext) -> List[Action]: return self._getActions(ctx)
 
-class _AppendNull(Action):
-	def execute(self, ctx: ActionContext):
+def _createAppendNull(text: str):
+	def execute(ctx: ActionContext):
 		o = ctx.primaryOp
 		conn = o.outputConnectors[0]
 		if conn.outOP.isDAT:
@@ -55,15 +55,17 @@ class _AppendNull(Action):
 		conn.connect(n)
 		ui.undo.endBlock()
 
-	def isValid(self, ctx: ActionContext) -> bool:
+	def isValid(ctx: ActionContext) -> bool:
 		return bool(ctx.primaryOp and ctx.primaryOp.outputConnectors)
 
-class _ConvertToFloatAction(Action):
-	def isValid(self, ctx: ActionContext) -> bool:
+	return _SimpleAction(text, isValid, execute)
+
+def _createConvertToFloatAction(text: str):
+	def isValid(ctx: ActionContext) -> bool:
 		state = ctx.primaryRopState
 		return bool(state and state.isVectorField or state.isSdf)
 
-	def execute(self, ctx: ActionContext):
+	def execute(ctx: ActionContext):
 		state = ctx.primaryRopState
 		if state.isVectorField:
 			ropType = 'raytk.operators.convert.vectorToFloat'
@@ -75,28 +77,30 @@ class _ConvertToFloatAction(Action):
 			fromRop=ctx.primaryRop,
 			ropType=ropType)
 
-class _RescaleFieldAction(Action):
-	def isValid(self, ctx: ActionContext) -> bool:
-		return ctx.primaryRopState.isField
+	return _SimpleAction(text, isValid, execute)
 
-	def execute(self, ctx: ActionContext):
-		ActionUtils.createAndAttachFromOutput(
-			fromRop=ctx.primaryRop,
-			ropType=_RopTypes.rescaleField,
-		)
+def _createAddOutputAction(
+		text: str,
+		isValid: _IsValidFunc,
+		ropType: str,
+		paramVals: Optional[dict] = None,
+):
+	def isValidWrapper(ctx: ActionContext):
+		if not ActionUtils.isKnownRopType(ropType):
+			return False
+		return not isValid or isValid(ctx)
 
-class _RescaleFloatFieldAsVectorAction(Action):
-	def isValid(self, ctx: ActionContext) -> bool:
-		return ctx.primaryRopState.isFloatField
-
-	def execute(self, ctx: ActionContext):
+	def execute(ctx: ActionContext):
 		def init(rop: 'COMP'):
-			rop.par.Returntype = 'vec4'
+			if paramVals:
+				for name, val in paramVals.items():
+					rop.par[name] = val
 		ActionUtils.createAndAttachFromOutput(
 			fromRop=ctx.primaryRop,
-			ropType=_RopTypes.rescaleField,
+			ropType=ropType,
 			init=init,
 		)
+	return _SimpleAction(text, isValidWrapper, execute)
 
 def _createCombineActionGroup(
 		text: str, ropType: str, paramName: str,
@@ -141,12 +145,12 @@ def _createVarRefAction(label: str, variable: str, dataType: str):
 		execute=execute,
 	)
 
-class _CreateVarRefGroup(ActionGroup):
-	def isValid(self, ctx: ActionContext) -> bool:
+def _createVarRefGroup(text: str):
+	def isValid(ctx: ActionContext) -> bool:
 		table = ctx.primaryRopState.info.variableTable
 		return table and table.numRows > 1
 
-	def getActions(self, ctx: ActionContext) -> List[Action]:
+	def getActions(ctx: ActionContext) -> List[Action]:
 		table = ctx.primaryRopState.info.variableTable
 		if not table:
 			return []
@@ -158,6 +162,7 @@ class _CreateVarRefGroup(ActionGroup):
 			)
 			for i in range(1, table.numRows)
 		]
+	return _SimpleGroup(text, isValid, getActions)
 
 def _createRenderSelAction(label: str, name: str):
 	def execute(ctx: ActionContext):
@@ -176,15 +181,16 @@ def _createRenderSelAction(label: str, name: str):
 		execute=execute,
 	)
 
-class _CreateRenderSelGroup(ActionGroup):
-	def isValid(self, ctx: ActionContext) -> bool:
+def _createRenderSelGroup(text: str):
+	def isValid(ctx: ActionContext) -> bool:
 		return any(ctx.primaryRopState.info.outputBufferNamesAndLabels)
 
-	def getActions(self, ctx: ActionContext) -> List[Action]:
+	def getActions(ctx: ActionContext) -> List[Action]:
 		return [
 			_createRenderSelAction(label, name)
 			for name, label in ctx.primaryRopState.info.outputBufferNamesAndLabels
 		]
+	return _SimpleGroup(text, isValid, getActions)
 
 def _createAddInputAction(
 		text: str,
@@ -225,17 +231,13 @@ def _firstOpenConnector(conns: List['Connector']):
 		if not conn.connections:
 			return conn
 
-def _createConvertFrom2dSdfAction(
-		text: str, ropType: str):
+def _createConvertFrom2dSdfAction(text: str, ropType: str):
 	def isValid(ctx: ActionContext):
 		return ctx.primaryRopState.isSdf and ctx.primaryRopState.is2d
-	def execute(ctx: ActionContext):
-		ActionUtils.createAndAttachFromOutput(ctx.primaryRop, ropType)
-	return _SimpleAction(text, isValid, execute)
+	return _createAddOutputAction(text, isValid, ropType)
 
 def _createAnimateParamAction(
-		text: str, tupletName: str, ropType: str, nameSuffix: str,
-):
+		text: str, tupletName: str, ropType: str, nameSuffix: str):
 	def getPars(ctx: ActionContext):
 		rop = ctx.primaryRop
 		if not rop:
@@ -319,69 +321,62 @@ class _RopTypes:
 	lfoGenerator = 'raytk.operators.utility.lfoGenerator'
 
 def createActionManager():
-	manager = ActionManager()
-	manager.addActions(
-		_AppendNull('Append Null'),
+	manager = ActionManager(
+		_createAppendNull('Append Null'),
 		_SimpleAction(
 			'Inspect',
 			isValid=lambda ctx: _primaryRopHasParam(ctx, 'Inspect'),
-			execute=lambda ctx: _pulsePrimaryRopParam(ctx, 'Inspect'),
-		),
+			execute=lambda ctx: _pulsePrimaryRopParam(ctx, 'Inspect')),
 		_SimpleAction(
 			'Update OPs',
 			isValid=lambda ctx: _anySelectedRopHasParam(ctx, 'Updateop'),
-			execute=lambda ctx: _pulseSelectedRopParams(ctx, 'Updateop'),
-		),
-		_ConvertToFloatAction('Convert To Float'),
-		_RescaleFieldAction('Rescale Field'),
-		_RescaleFloatFieldAsVectorAction('Rescale As Vector'),
+			execute=lambda ctx: _pulseSelectedRopParams(ctx, 'Updateop')),
+		_createConvertToFloatAction('Convert To Float'),
+		_createAddOutputAction(
+			'Rescale Field',
+			isValid=lambda ctx: ctx.primaryRopState.isField,
+			ropType=_RopTypes.rescaleField),
+		_createAddOutputAction(
+			'Rescale As Vector',
+			isValid=lambda ctx: ctx.primaryRopState.isFloatField,
+			ropType=_RopTypes.rescaleField,
+			paramVals={'Returntype': 'vec4'}),
 		_createAddInputAction(
 			'Add Diffuse',
 			[_RopTypes.modularMat],
 			'raytk.operators.material.diffuseContrib',
-			firstInput=1,
-		),
+			firstInput=1),
 		_createAddInputAction(
 			'Add Specular',
 			[_RopTypes.modularMat],
 			'raytk.operators.material.specularContrib',
-			firstInput=1,
-		),
+			firstInput=1),
 		_createAddInputAction(
 			'Add Look At Camera',
 			[_RopTypes.raymarchRender3d],
 			'raytk.operators.camera.lookAtCamera',
-			firstInput=1, lastInput=1,
-		),
+			firstInput=1, lastInput=1),
 		_createAddInputAction(
 			'Add Point Light',
 			[_RopTypes.raymarchRender3d],
 			'raytk.operators.light.pointLight',
-			firstInput=2, lastInput=2,
-		),
-		_createConvertFrom2dSdfAction(
-			'Extrude',
-			'raytk.operators.convert.extrude'
-		),
-		_createConvertFrom2dSdfAction(
-			'Revolve',
-			'raytk.operators.convert.revolve'
-		),
-	)
-	manager.addGroups(
+			firstInput=2, lastInput=2),
+		_createConvertFrom2dSdfAction('Extrude', 'raytk.operators.convert.extrude'),
+		_createConvertFrom2dSdfAction('Revolve', 'raytk.operators.convert.revolve'),
+		_createConvertFrom2dSdfAction('Colorize 2D SDF', 'raytk.operators.material.colorizeSdf2d'),
 		_createCombineActionGroup(
 			'Combine SDFs', _RopTypes.combine, 'Combine', op('sdfCombineModes'),
 			minCount=2, maxCount=2,
-			matchPredicate=lambda o: ROPState(o).isSdf,
-		),
+			matchPredicate=lambda o: ROPState(o).isSdf),
 		_createCombineActionGroup(
 			'Combine Fields', _RopTypes.combineFields, 'Operation', op('fieldCombineModes'),
 			minCount=2, maxCount=2,
-			matchPredicate=lambda o: ROPState(o).isField,
-		),
-		_CreateVarRefGroup('Reference Variable'),
-		_CreateRenderSelGroup('Select Output Buffer'),
-		_createAnimateParamsGroup('Animate With Speed', _RopTypes.speedGenerator, 'speedGen'),
-		_createAnimateParamsGroup('Animate With LFO', _RopTypes.lfoGenerator, 'lfoGen'),
+			matchPredicate=lambda o: ROPState(o).isField),
+		_createVarRefGroup('Reference Variable'),
+		_createRenderSelGroup('Select Output Buffer'),
+		_createAnimateParamsGroup(
+			'Animate With Speed', _RopTypes.speedGenerator, 'speedGen'),
+		_createAnimateParamsGroup(
+			'Animate With LFO', _RopTypes.lfoGenerator, 'lfoGen'),
 	)
 	return manager

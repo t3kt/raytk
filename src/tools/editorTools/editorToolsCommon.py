@@ -97,18 +97,10 @@ def _getPopMenu() -> 'PopMenuExt':
 	return op.TDResources.op('popMenu')
 
 class ActionManager:
-	actions: List[Action]
-	groups: List[ActionGroup]
+	items: List[_Item]
 
-	def __init__(self):
-		self.actions = []
-		self.groups = []
-
-	def addActions(self, *actions: Action):
-		self.actions += actions
-
-	def addGroups(self, *groups: ActionGroup):
-		self.groups += groups
+	def __init__(self, *items: _Item):
+		self.items = list(items)
 
 	@staticmethod
 	def _getEditor():
@@ -137,14 +129,11 @@ class ActionManager:
 			return
 		items = [
 			action.createMenuItem(ctx)
-			for action in self.actions
+			for action in self.items
 			if action.isValid(ctx)
 		]
-		items += [
-			group.createMenuItem(ctx)
-			for group in self.groups
-			if group.isValid(ctx)
-		]
+		if not items:
+			return
 		self._openMenu(popMenu, items, isSubMenu=False)
 
 	def _openMenu(
