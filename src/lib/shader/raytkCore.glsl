@@ -43,11 +43,6 @@ struct Sdf {
 
 	int steps;
 
-	#ifdef RAYTK_NEAR_HITS_IN_SDF
-	int nearHitCount;
-	float nearHitAmount;
-	#endif
-
 	#ifdef RAYTK_ITERATION_IN_SDF
 	vec4 iteration;
 	#endif
@@ -107,10 +102,6 @@ Sdf createSdf(float dist) {
 	res.orbit = vec4(0);
 	#endif
 	res.steps = 0;
-	#ifdef RAYTK_NEAR_HITS_IN_SDF
-	res.nearHitCount = 0;
-	res.nearHitAmount = 0.;
-	#endif
 	#ifdef RAYTK_ITERATION_IN_SDF
 	res.iteration = vec4(0);
 	#endif
@@ -149,11 +140,6 @@ void blendInSdf(inout Sdf res1, in Sdf res2, in float amt) {
 
 	#ifdef RAYTK_ORBIT_IN_SDF
 	res1.orbit = mix(res1.orbit, res2.orbit, amt);
-	#endif
-
-	#ifdef RAYTK_NEAR_HITS_IN_SDF
-	res1.nearHitCount = int(round(mix(float(res1.nearHitCount), float(res2.nearHitCount), amt)));
-	res1.nearHitAmount = mix(res1.nearHitAmount, res2.nearHitAmount, amt);
 	#endif
 
 	#ifdef RAYTK_OBJECT_ID_IN_SDF

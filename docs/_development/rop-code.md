@@ -228,7 +228,7 @@ The `MaterialContext` is used in raymarching when calculating the color to use f
 
 The `Sdf` struct represents a ray hitting a surface (so a more accurate name might be `SurfaceHit`). It includes information about that surface and properties of the ray process that caused the hit. The struct is the only way that an SDF-based operator can pass value to the ROP that called it.
 
-The struct will contain different fields depending on whether those features are being used. For example, if the "near hit" output buffer is being used, it contains fields `nearHitCount` and `nearHitAmount`. Because the struct can contain different types of fields, it is important to use the provided functions for things like creating and modifying them, rather than manually constructing them.
+The struct will contain different fields depending on whether those features are being used. For example, if the "Object ID" output buffer is being used, it contains an `objectId` field. Because the struct can contain different types of fields, it is important to use the provided functions for things like creating and modifying them, rather than manually constructing them.
 
 This code is problematic because it fails to account for properties like material blending settings, reflection properties (if those are being used), near hit values (if those are being used), etc:
 

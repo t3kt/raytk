@@ -63,15 +63,16 @@ int DBG_refractCount = 0;
 //}
 #endif
 
+int nearHitCount = 0;
+float nearHit = 0.;
+
 Sdf castRay(Ray ray, float maxDist) {
 	int priorStage = pushStage(RAYTK_STAGE_PRIMARY);
 	float dist = 0;
 	Sdf res = createNonHitSdf();
 	int i;
-	#ifdef RAYTK_NEAR_HITS_IN_SDF
-	int nearHitCount = 0;
-	float nearHit = 0;
-	#endif
+	nearHitCount = 0;
+	nearHit = 0;
 	for (i = 0; i < RAYTK_MAX_STEPS; i++) {
 		#ifdef THIS_USE_RAYMOD_FUNC
 		modifyRay(ray, res);
@@ -83,7 +84,7 @@ Sdf castRay(Ray ray, float maxDist) {
 		res = map(ray.pos);
 		dist += res.x;
 		ray.pos += ray.dir * res.x;
-		#ifdef RAYTK_NEAR_HITS_IN_SDF
+		#ifdef OUTPUT_NEARHIT
 		float nearHitAmount = checkNearHit(res.x);
 		if (nearHitAmount > 0.) {
 			nearHitCount++;
@@ -102,10 +103,6 @@ Sdf castRay(Ray ray, float maxDist) {
 	res.steps = i + 1;
 	#endif
 	res.x = dist;
-	#ifdef RAYTK_NEAR_HITS_IN_SDF
-	res.nearHitCount = nearHitCount;
-	res.nearHitAmount = nearHit;
-	#endif
 	popStage(priorStage);
 	return res;
 }
@@ -442,8 +439,8 @@ void main()
 		#ifdef OUTPUT_DEPTH
 		depthOut += vec4(vec3(min(res.x, renderDepth)), 1);
 		#endif
-		#if defined(OUTPUT_NEARHIT) && defined(RAYTK_NEAR_HITS_IN_SDF)
-		nearHitOut += vec4(res.nearHitAmount, float(res.nearHitCount), 0, 1);
+		#ifdef OUTPUT_NEARHIT
+		nearHitOut += vec4(nearHit, float(nearHitCount), 0, 1);
 		#endif
 
 		matCtx.result = res;
