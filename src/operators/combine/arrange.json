@@ -1,7 +1,7 @@
 {
   "meta": {
-    "opStatus": "beta",
+    "opStatus": "default",
     "opType": "raytk.operators.combine.arrange",
-    "opVersion": 4
+    "opVersion": 5
   }
 }
