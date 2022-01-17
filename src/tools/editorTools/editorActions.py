@@ -1,5 +1,6 @@
 from typing import Callable, List, Optional
 from editorToolsCommon import Action, ActionContext, ActionGroup, ActionManager, ActionUtils, ROPState
+from raytkUtil import showPromptDialog
 
 # noinspection PyUnreachableCode
 if False:
@@ -237,14 +238,13 @@ def _createConvertFrom2dSdfAction(text: str, ropType: str):
 	return _createAddOutputAction(text, isValid, ropType)
 
 def _createAnimateParamAction(
-		text: str, tupletName: str, ropType: str, nameSuffix: str):
+		text: str,
+		parOrTuplet: Union['Par', 'ParTupletT'],
+		ropType: str, nameSuffix: str):
 	def getPars(ctx: ActionContext):
-		rop = ctx.primaryRop
-		if not rop:
-			return None
-		for tuplet in rop.customTuplets:
-			if tuplet[0].tupletName == tupletName:
-				return tuplet
+		if isinstance(parOrTuplet, Par):
+			return [parOrTuplet]
+		return list(parOrTuplet)
 	def isValid(ctx: ActionContext):
 		if not ActionUtils.isKnownRopType(ropType):
 			return False
@@ -254,9 +254,13 @@ def _createAnimateParamAction(
 		pars = getPars(ctx)
 		if not pars:
 			return
+		if len(pars) == 1:
+			parOrTupletName = pars[0].name
+		else:
+			parOrTupletName = pars[0].tupletName
 		def init(gen: 'COMP'):
-			gen.name = f'{rop.name}_{tupletName}_{nameSuffix}'
-			chop = gen.parent().create(nullCHOP, f'{rop.name}_{tupletName}_vals')
+			gen.name = f'{rop.name}_{parOrTupletName}_{nameSuffix}'
+			chop = gen.parent().create(nullCHOP, f'{rop.name}_{parOrTupletName}_vals')
 			gen.par.Name = ' '.join(p.name for p in pars)
 			chop.inputConnectors[0].connect(gen.outputConnectors[0])
 			gen.nodeCenterY = rop.nodeCenterY - 100
@@ -272,21 +276,22 @@ def _createAnimateParamAction(
 def _createAnimateParamsGroup(text: str, ropType: str, nameSuffix: str):
 	def isValid(ctx: ActionContext) -> bool:
 		rop = ctx.primaryRop
-		if not rop or not rop.customTuplets:
-			return False
-		return ActionUtils.isKnownRopType(ropType)
+		return bool(rop and rop.current and ActionUtils.isKnownRopType(ropType))
 
 	def getActions(ctx: ActionContext) -> List[Action]:
 		rop = ctx.primaryRop
 		if not rop:
 			return []
-		return [
-			_createAnimateParamAction(
-				t[0].label, t[0].tupletName,
-				ropType, nameSuffix)
-			for t in rop.customTuplets
-			if t[0].isNumber
-		]
+		actions = []
+		for t in rop.customTuplets:
+			if not t[0].isNumber:
+				continue
+			actions.append(_createAnimateParamAction(t[0].label, t, ropType, nameSuffix))
+			if len(t) > 1:
+				for p in t:
+					actions.append(_createAnimateParamAction(
+						f'{t[0].label} ({p.name[-1]})', p, ropType, nameSuffix))
+		return actions
 	return _SimpleGroup(text, isValid, getActions)
 
 def _pulsePrimaryRopParam(ctx: ActionContext, par: str):
