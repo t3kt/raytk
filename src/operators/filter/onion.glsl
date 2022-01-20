@@ -1,8 +1,18 @@
 ReturnT thismap(CoordT p, ContextT ctx) {
 	ReturnT res = inputOp1(p, ctx);
 	float val = adaptAsFloat(res);
-	for (int i = 0; i < int(THIS_Iterations); i++) {
-		val = abs(val) - THIS_Thickness / float(i + 1);
+	#ifdef THIS_HAS_INPUT_iterationsField
+	int n = int(inputOp_iterationsField(p, ctx));
+	#else
+	int n = int(THIS_Iterations);
+	#endif
+	#ifdef THIS_HAS_INPUT_thicknessField
+	float th = inputOp_thicknessField(p, ctx);
+	#else
+	float th = THIS_Thickness;
+	#endif
+	for (int i = 0; i < n; i++) {
+		val = abs(val) - th / float(i + 1);
 	}
 	setFromFloat(res, val);
 	return res;
