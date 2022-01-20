@@ -1,4 +1,4 @@
-from typing import Callable, List, Optional
+from typing import Callable, List, Optional, Union
 from editorToolsCommon import Action, ActionContext, ActionGroup, ActionManager, ActionUtils, ROPState
 from raytkUtil import showPromptDialog
 
