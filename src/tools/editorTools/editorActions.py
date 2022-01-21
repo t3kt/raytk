@@ -294,6 +294,45 @@ def _createAnimateParamsGroup(text: str, ropType: str, nameSuffix: str):
 		return actions
 	return _SimpleGroup(text, isValid, getActions)
 
+def _createExposeParamGroup(text: str):
+	def isValid(ctx: ActionContext):
+		o = ctx.primaryOp
+		return bool(o and o.customTuplets)
+	def createAction(parTuplet: 'ParTupletT'):
+		def execute(ctx: ActionContext):
+			scene = ctx.parentComp
+			showPromptDialog(
+				'Parameter Name Prefix',
+				'Provide a prefix for the exposed parameters',
+				ok=lambda prefix: _exposeParamTuplet(scene, parTuplet, prefix),
+			)
+		return _SimpleAction(parTuplet[0].label, isValid, execute)
+	def getActions(ctx: ActionContext):
+		o = ctx.primaryOp
+		if not o:
+			return []
+		return [createAction(t) for t in o.customTuplets]
+	return _SimpleGroup(text, isValid, getActions)
+
+def _exposeParamTuplet(
+		scene: 'COMP', parTuplet: 'ParTupletT', prefix: str):
+	ui.undo.startBlock(f'Exposing parameter {parTuplet[0].tupletName}')
+	scenePage = scene.customPages[0] if scene.customPages else scene.appendCustomPage(parTuplet[0].page.name)
+	label = (prefix + ' ' if prefix else '') + parTuplet[0].label
+	par = parTuplet[0]
+	if parTuplet[0].isMenu:
+		newPars = scenePage.appendMenu((prefix + par.name).capitalize(), label=label)
+		newPars[0].menuSource = scene.shortcutPath(parTuplet[0].owner, toParName=parTuplet[0].name)
+	elif len(parTuplet) == 1:
+		newPars = scenePage.appendPar(prefix + par.name, par=par, label=label)
+	else:
+		newPars = scenePage.appendPar(prefix + par.tupletName, par=par, label=label)
+	for i, newPar in enumerate(newPars):
+		par = parTuplet[i]
+		newPar.val = par.eval()
+		par.bindExpr = par.owner.shortcutPath(scene, toParName=newPar.name)
+	ui.undo.endBlock()
+
 def _pulsePrimaryRopParam(ctx: ActionContext, par: str):
 	rop = ctx.primaryRop
 	p = rop.par[par] if rop else None
@@ -383,5 +422,6 @@ def createActionManager():
 			'Animate With Speed', _RopTypes.speedGenerator, 'speedGen'),
 		_createAnimateParamsGroup(
 			'Animate With LFO', _RopTypes.lfoGenerator, 'lfoGen'),
+		_createExposeParamGroup('Expose Parameter'),
 	)
 	return manager
