@@ -1,6 +1,7 @@
 from pathlib import Path
 from raytkUtil import showPromptDialog, navigateTo
 from raytkTest import processTest
+from typing import Optional
 
 # noinspection PyUnreachableCode
 if False:
@@ -50,7 +51,10 @@ class TestEditor:
 		return iop.loader.ComponentTox
 
 	def Unload(self):
-		iop.loader.UnloadComponent()
+		try:
+			iop.loader.UnloadComponent()
+		except:
+			pass
 		self._reloadOutputsSoon()
 
 	def Save(self):
