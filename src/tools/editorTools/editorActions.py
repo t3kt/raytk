@@ -379,6 +379,7 @@ class _RopTypes:
 	modularMat = 'raytk.operators.material.modularMat'
 	rescaleField = 'raytk.operators.filter.rescaleField'
 	raymarchRender3d = 'raytk.operators.output.raymarchRender3D'
+	render2d = 'raytk.operators.output.render2D'
 	speedGenerator = 'raytk.operators.utility.speedGenerator'
 	lfoGenerator = 'raytk.operators.utility.lfoGenerator'
 
@@ -442,5 +443,10 @@ def createActionManager():
 			'Animate With LFO', _RopTypes.lfoGenerator, 'lfoGen'),
 		_createExposeParamGroup('Expose Parameter'),
 		_createCustomizeShaderConfigAction('Customize Shader Config'),
+		_createAddOutputAction(
+			'Add render2D',
+			lambda ctx: ctx.primaryRopState.is2d,
+			_RopTypes.render2d,
+		),
 	)
 	return manager
