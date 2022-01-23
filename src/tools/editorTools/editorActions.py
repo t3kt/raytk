@@ -333,6 +333,24 @@ def _exposeParamTuplet(
 		par.bindExpr = par.owner.shortcutPath(scene, toParName=newPar.name)
 	ui.undo.endBlock()
 
+def _createCustomizeShaderConfigAction(text: str):
+	def getTriggerPars(ctx: ActionContext):
+		pars = []
+		for rop in ctx.selectedRops:
+			if rop.par['Shaderbuilderconfig']:
+				continue
+			builder = rop.op('shaderBuilder')
+			if builder and builder.par['Createcustomconfig'] is not None:
+				pars.append(builder.par.Createcustomconfig)
+		return pars
+	def isValid(ctx: ActionContext):
+		return bool(getTriggerPars(ctx))
+	def execute(ctx: ActionContext):
+		pars = getTriggerPars(ctx)
+		for par in pars:
+			par.pulse()
+	return _SimpleAction(text, isValid, execute)
+
 def _pulsePrimaryRopParam(ctx: ActionContext, par: str):
 	rop = ctx.primaryRop
 	p = rop.par[par] if rop else None
@@ -423,5 +441,6 @@ def createActionManager():
 		_createAnimateParamsGroup(
 			'Animate With LFO', _RopTypes.lfoGenerator, 'lfoGen'),
 		_createExposeParamGroup('Expose Parameter'),
+		_createCustomizeShaderConfigAction('Customize Shader Config'),
 	)
 	return manager
