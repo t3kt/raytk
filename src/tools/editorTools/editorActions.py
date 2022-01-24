@@ -1,11 +1,11 @@
 from typing import Callable, List, Optional, Union
 from editorToolsCommon import Action, ActionContext, ActionGroup, ActionManager, ActionUtils, ROPState
-from raytkUtil import showPromptDialog
 
 # noinspection PyUnreachableCode
 if False:
 	# noinspection PyUnresolvedReferences
 	from _stubs import *
+	from .exposeParamDialog.exposeParamDialog import ExposeParamDialog
 
 _IsValidFunc = Callable[[ActionContext], bool]
 _ExecuteFunc = Callable[[ActionContext], None]
@@ -241,17 +241,17 @@ def _createAnimateParamAction(
 		text: str,
 		parOrTuplet: Union['Par', 'ParTupletT'],
 		ropType: str, nameSuffix: str):
-	def getPars(ctx: ActionContext):
+	def getPars():
 		if isinstance(parOrTuplet, Par):
 			return [parOrTuplet]
 		return list(parOrTuplet)
 	def isValid(ctx: ActionContext):
 		if not ActionUtils.isKnownRopType(ropType):
 			return False
-		return bool(getPars(ctx))
+		return bool(getPars())
 	def execute(ctx: ActionContext):
 		rop = ctx.primaryRop
-		pars = getPars(ctx)
+		pars = getPars()
 		if not pars:
 			return
 		if len(pars) == 1:
@@ -298,40 +298,39 @@ def _createExposeParamGroup(text: str):
 	def isValid(ctx: ActionContext):
 		o = ctx.primaryOp
 		return bool(o and o.customTuplets)
-	def createAction(parTuplet: 'ParTupletT'):
-		def execute(ctx: ActionContext):
-			scene = ctx.parentComp
-			showPromptDialog(
-				'Parameter Name Prefix',
-				'Provide a prefix for the exposed parameters',
-				ok=lambda prefix: _exposeParamTuplet(scene, parTuplet, prefix),
-			)
-		return _SimpleAction(parTuplet[0].label, isValid, execute)
+
+	ignorePars = ['Inspect', 'Updateop', 'Help']
+
 	def getActions(ctx: ActionContext):
 		o = ctx.primaryOp
 		if not o:
 			return []
-		return [createAction(t) for t in o.customTuplets]
+		actions = []
+		for parTuplet in o.customTuplets:
+			if parTuplet[0].name in ignorePars:
+				continue
+			if len(parTuplet) > 1:
+				actions.append(_createExposeParamOrTupletAction(parTuplet))
+			for par in parTuplet:
+				actions.append(_createExposeParamOrTupletAction(par))
+		return actions
+
 	return _SimpleGroup(text, isValid, getActions)
 
-def _exposeParamTuplet(
-		scene: 'COMP', parTuplet: 'ParTupletT', prefix: str):
-	ui.undo.startBlock(f'Exposing parameter {parTuplet[0].tupletName}')
-	scenePage = scene.customPages[0] if scene.customPages else scene.appendCustomPage(parTuplet[0].page.name)
-	label = (prefix + ' ' if prefix else '') + parTuplet[0].label
-	par = parTuplet[0]
-	if parTuplet[0].isMenu:
-		newPars = scenePage.appendMenu((prefix + par.name).capitalize(), label=label)
-		newPars[0].menuSource = scene.shortcutPath(parTuplet[0].owner, toParName=parTuplet[0].name)
-	elif len(parTuplet) == 1:
-		newPars = scenePage.appendPar(prefix + par.name, par=par, label=label)
+def _createExposeParamOrTupletAction(parOrTuplet: 'Union[Par, ParTupletT]'):
+	def execute(ctx: ActionContext):
+		dialog = op('exposeParamDialog')  # type: Union[COMP, ExposeParamDialog]
+		scene = ctx.parentComp
+		if isinstance(parOrTuplet, Par):
+			dialog.ShowForParam(parOrTuplet, scene)
+		else:
+			dialog.ShowForTuplet(parOrTuplet, scene)
+	if isinstance(parOrTuplet, Par):
+		suffix = parOrTuplet.name.replace(parOrTuplet.tupletName, '').upper()
+		text = f'{parOrTuplet.label} ({suffix})'
 	else:
-		newPars = scenePage.appendPar(prefix + par.tupletName, par=par, label=label)
-	for i, newPar in enumerate(newPars):
-		par = parTuplet[i]
-		newPar.val = par.eval()
-		par.bindExpr = par.owner.shortcutPath(scene, toParName=newPar.name)
-	ui.undo.endBlock()
+		text = parOrTuplet[0].label
+	return _SimpleAction(text, isValid=lambda c: True, execute=execute)
 
 def _createCustomizeShaderConfigAction(text: str):
 	def getTriggerPars(ctx: ActionContext):

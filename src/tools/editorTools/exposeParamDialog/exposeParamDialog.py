@@ -16,6 +16,7 @@ class ExposeParamDialog:
 		self.window = ownerComp.op('window')
 		self.sceneField = ownerComp.op('sceneField')
 		self.prefixField = ownerComp.op('prefixField')
+		self.pageDropDownField = ownerComp.op('pageDropDownField')
 		self.structureDropDownMenu = ownerComp.op('structureDropDownMenu')
 		self.targetPar = None  # type: Optional[Par]
 		self.targetTuplet = None  # type: Optional[ParTupletT]
@@ -48,18 +49,75 @@ class ExposeParamDialog:
 			self.structureDropDownMenu.par.enable = True
 		else:
 			return
+		pageNames = [page.name for page in scene.customPages]
+		self.pageDropDownField.par.Menunames = ' '.join(pageNames)
+		self.pageDropDownField.par.Value0 = pageNames[0] if pageNames else 'Scene'
 		self.structureDropDownMenu.par.Value0 = 'same'
-		self.sceneField.par.Value0 = scene or ''
+		self.sceneField.par.Value0 = scene.path if scene else ''
 		self.prefixField.par.Value0 = ''
 		self.window.par.winopen.pulse()
-		pass
 
 	def onOk(self):
-		pass
+		structure = self.structureDropDownMenu.par.Value0.eval()
+		scene = self.sceneField.par.Value0.eval()  # type: COMP
+		prefix = self.prefixField.par.Value0.eval()  # type: str
+		pageName = self.pageDropDownField.par.Value0.eval()  # type: str
+		if scene and (self.targetPar is not None or self.targetTuplet is not None):
+			self._exposeParams(structure, scene, prefix, pageName)
+		self.Close()
+
+	def _exposeParams(
+			self, structure: str, scene: 'COMP', prefix: str, pageName: str):
+		if not scene:
+			return
+		if self.targetPar is not None:
+			srcPars = [self.targetPar]
+			par1 = self.targetPar
+		elif self.targetTuplet is not None:
+			srcPars = self.targetTuplet
+			par1 = self.targetTuplet[0]
+		else:
+			return
+		label = (prefix + ' ' if prefix else '') + par1.label
+		prefix = prefix.replace(' ', '')
+		ui.undo.startBlock(f'Expose parameter {par1.label}')
+		scenePage = scene.appendCustomPage(pageName or 'Scene')
+		if par1.isMenu:
+			newPars = scenePage.appendMenu((prefix + par1.name).capitalize(), label=label)
+			newPars[0].menuSource = scene.shortcutPath(par1.owner, toParName=par1.name)
+		elif len(srcPars) == 1:
+			newPars = scenePage.appendPar((prefix + par1.name).capitalize(), par=par1, label=label)
+		elif structure == 'separate':
+			newPars = []
+			for i in range(0, 1):
+				srcPar = srcPars[i]
+				newName = (prefix + srcPar.name).capitalize()
+				suffix = srcPar.name.replace(srcPar.tupletName, '').capitalize()
+				if srcPar.isInt:
+					newPar = scenePage.appendInt(newName, label=label + ' ' + suffix.upper())[0]
+				else:
+					newPar = scenePage.appendFloat(newName, label=label + ' ' + suffix.upper())[0]
+				_copySettings(newPar, srcPar)
+				newPars.append(newPar)
+		else:
+			newPars = scenePage.appendPar((prefix + par1.tupletName).capitalize(), par=par1, label=label)
+		for i, newPar in enumerate(newPars):
+			srcPar = srcPars[i]
+			newPar.val = srcPar.eval()
+			srcPar.bindExpr = srcPar.owner.shortcutPath(scene, toParName=newPar.name)
+		ui.undo.endBlock()
 
 	def onCancel(self):
 		self.Close()
 
 	def Close(self):
 		self.window.par.winclose.pulse()
-		pass
+
+def _copySettings(newPar: 'Par', srcPar: 'Par'):
+	newPar.default = srcPar.default
+	newPar.min = srcPar.min
+	newPar.max = srcPar.max
+	newPar.normMin = srcPar.normMin
+	newPar.normMax = srcPar.normMax
+	newPar.clampMin = srcPar.clampMin
+	newPar.clampMax = srcPar.clampMax
