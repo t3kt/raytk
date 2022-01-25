@@ -52,5 +52,11 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 	#pragma r:else
 	p = q;
 	#pragma r:endif
-	return inputOp1(p, ctx);
+	ReturnT res;
+	#pragma r:if THIS_HAS_INPUT_1
+	res = inputOp1(p, ctx);
+	#pragma r:else
+	res = adaptAsVec4(p);
+	#pragma r:endif
+	return res;
 }
