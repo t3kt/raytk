@@ -666,6 +666,7 @@ _varTypes = {
 	'ivec2': 'vec4',
 	'ivec3': 'vec4',
 	'ivec4': 'vec4',
+	'Sdf': 'Sdf',
 }
 
 def createVarRef(name: str):

@@ -2,6 +2,6 @@
   "meta": {
     "opStatus": "beta",
     "opType": "raytk.operators.utility.provideVariable",
-    "opVersion": 3
+    "opVersion": 4
   }
 }

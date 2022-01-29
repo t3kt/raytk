@@ -341,13 +341,10 @@ class ShaderBuilder:
 	def buildTypedefMacroTable(self, dat: 'scriptDAT'):
 		dat.clear()
 		defsTable = self._definitionTable()
-		coordTypeAdaptFuncs = {
+		typeAdaptFuncs = {
 			'float': 'adaptAsFloat',
 			'vec2': 'adaptAsVec2',
 			'vec3': 'adaptAsVec3',
-		}
-		returnTypeAdaptFuncs = {
-			'float': 'adaptAsFloat',
 			'vec4': 'adaptAsVec4',
 			'Sdf': 'adaptAsSdf',
 		}
@@ -362,10 +359,18 @@ class ShaderBuilder:
 			dat.appendRow([name + '_COORD_TYPE_' + coordType, '', 'macro'])
 			dat.appendRow([name + '_CONTEXT_TYPE_' + contextType, '', 'macro'])
 			dat.appendRow([name + '_RETURN_TYPE_' + returnType, '', 'macro'])
-			if coordType in coordTypeAdaptFuncs:
-				dat.appendRow([name + '_asCoordT', coordTypeAdaptFuncs[coordType], 'macro'])
-			if returnType in returnTypeAdaptFuncs:
-				dat.appendRow([name + '_asReturnT', returnTypeAdaptFuncs[returnType], 'macro'])
+			if coordType in typeAdaptFuncs:
+				dat.appendRow([name + '_asCoordT', typeAdaptFuncs[coordType], 'macro'])
+			if returnType in typeAdaptFuncs:
+				dat.appendRow([name + '_asReturnT', typeAdaptFuncs[returnType], 'macro'])
+		varTable = self._variableTable()
+		for row in range(1, varTable.numRows):
+			name = str(varTable[row, 'name'])
+			dataType = str(varTable[row, 'dataType'])
+			dat.appendRow([name + '_VarT', dataType, 'typedef'])
+			dat.appendRow([name + '_TYPE_' + dataType, '', 'macro'])
+			if dataType in typeAdaptFuncs:
+				dat.appendRow([name + '_asVarT', typeAdaptFuncs[dataType], 'macro'])
 
 	def inlineTypedefs(self, code: str, typeDefMacroTable: 'DAT') -> str:
 		if not self.configPar()['Inlinetypedefs']:
