@@ -26,10 +26,11 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 	#else
 	ivec3 side = ivec3(vec3(THIS_Flipsidex, THIS_Flipsidey, THIS_Flipsidez));
 	#endif
+	vec3 maskPos = adaptAsVec3(p);
 	vec3 flipMask = vec3(
-		THIS_getSideMask(p, side.x),
-		THIS_getSideMask(p, side.y),
-		THIS_getSideMask(p, side.z)
+		THIS_getSideMask(maskPos, side.x),
+		THIS_getSideMask(maskPos, side.y),
+		THIS_getSideMask(maskPos, side.z)
 	);
 	q = mix(q, -q, flipMask);
 
