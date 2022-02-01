@@ -1,5 +1,85 @@
 # Release Notes
 
+## v0.21
+
+### Highlights
+
+* 
+
+### Details
+
+* Improvements / additions
+  * Variables (#574)
+    * arcSdf2d
+    * discSdf
+    * mandelbulbSdf
+    * provideVariable - support Sdf values
+  * New ops
+    * crossSection (#214, #759)
+    * transformLoop (#791)
+  * New field inputs (#588, #693)
+    * arcSdf2d - orientation, aperture
+    * cellTileField - coords
+    * horseshoeSdf2d - angle, radius, length
+    * linkSdf - length, radius, thickness
+    * mandelbulbSdf - shift
+    * mirrorAxes - flip sides (#641, #668)
+    * onion - iterations, thickness
+    * provideVariable - value
+    * tetrahedronSdf - scale
+    * trapezoidSdf2d - height, width, points
+  * New parameters
+    * mirrorAxes side flipping (#641, #668)
+  * Standardized SDF combining across the toolkit, with new modes and parameters (#784)
+    * arrange
+    * combine
+    * flip - compatiblity warning: this changes the menu options for the Merge Type parameter, so updates may reset it
+    * instance
+    * polyhedronSdf
+    * radialClone - compatiblity warning: Merge Type parameter opions changed
+  * Standardized wave functions across the toolkit, with new shapes and parameters (#787)
+    * lfoField
+    * waveField
+    * waveFn
+    * waveVectorField
+    * waveWarp
+    * additive square waves
+    * wave shape function inputs
+  * Editor tools (#772)
+    * 
+  * Control utility components (#788)
+    * lfoGenerator
+    * paramFilter
+    * speedGenerator
+  * Custom and debug output buffers in render2d
+  * Transform sequences / loops (#791)
+    * bend
+    * fold
+    * kink
+    * mirrorAxes
+    * mirrorOctant
+    * mirrorQuadrant
+    * rangeTransform
+    * reflect
+    * rotate
+    * scale
+    * transform
+    * twist
+    * waveWarp
+  * Vector output for lfoField when wave function input returns a vector
+* Changes (potentially breaking)
+  * Remove deprecated operators
+    * combineChamfer, combineColumns, combineStairs, edgeEngrave, edgeGroove, edgePipe
+* Fixes
+  * Fix iteration index bug in instance operator (#785)
+  * Fix height field bug in prismSdf
+  * Fix coordinate type bug in stepField
+  * Fix axis swaping in discSdf - compatibility warning, axis behavior changed
+  * Fix bug with filter text and shortcuts in palette (#795)
+  * Fix 2d support in mirrorAxes (#799)
+* Infrastructure / internals
+  * Move most columns out of the definition tables passed between ROPs (#758)
+
 ## v0.20
 
 ### Highlights
