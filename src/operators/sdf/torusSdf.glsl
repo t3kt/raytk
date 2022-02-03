@@ -27,8 +27,11 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 	#pragma r:endif
 
 	#pragma r:if THIS_Enablecaps
+	vec2 sc = vec2(sin(THIS_Anglewidth/2.), cos(THIS_Anglewidth/2.));
+	vec3 q = p;
+	pR(q.xz, THIS_Angleoffset);
 	ReturnT res = createSdf(sdCappedTorus(
-		p, vec2(THIS_Startangle, THIS_Endangle), r, t));
+		q.xzy, sc, r, t));
 	#pragma r:else
 	ReturnT res = createSdf(fTorus(p, t, r));
 	#pragma r:endif
