@@ -1,3 +1,0 @@
-name	label	dataType	enable
-step	Step Index	int	1
-normstep	Normalized Step (0..1)	float	1
