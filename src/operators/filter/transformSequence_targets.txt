@@ -1,0 +1,6 @@
+name	label	contextType	returnType
+coords	Coordinates	*	*
+sdfuv	SDF UV	*	Sdf
+sdfuv2	SDF Secondary UV	*	Sdf
+matuv	UV In Material	MaterialContext	*
+value	Field Values	*	vec4
