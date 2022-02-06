@@ -1,3 +1,3 @@
 name	label	code	params
 lambert	Lambert	amount = lambertDiffuse(-lightDir, norm)	
-orennayar	Oren-Nayar	amount = orenNayarDiffuse(-lightDir, viewDir, norm, THIS_Roughness, THIS_Albedo)	Roughness Albedo
+orennayar	Oren-Nayar	amount = orenNayarDiffuse(-lightDir, viewDir, norm, roughness, albedo)	Roughness Albedo

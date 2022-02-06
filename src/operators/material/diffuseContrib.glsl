@@ -2,6 +2,16 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 	vec3 lightDir = normalize(p - ctx.light.pos);
 	vec3 viewDir = normalize(-ctx.ray.dir);
 	vec3 norm = normalize(ctx.normal);
+	#pragma r:if THIS_HAS_INPUT_roughnessField
+	float roughness = inputOp_roughnessField(p, ctx);
+	#pragma r:else
+	float roughness = THIS_Roughness;
+	#pragma r:endif
+	#pragma r:if THIS_HAS_INPUT_albedoField
+	float albedo = inputOp_albedoField(p, ctx);
+	#pragma r:else
+	float albedo = THIS_Albedo;
+	#pragma r:endif
 	float amount;
 	BODY();
 	amount *= THIS_Level;
