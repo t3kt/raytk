@@ -501,7 +501,7 @@ def prepareMaterialTable(dat: 'scriptDAT'):
 
 def prepareVariableTable(dat: 'scriptDAT'):
 	dat.clear()
-	dat.appendRow(['name', 'localName', 'label', 'dataType', 'owner'])
+	dat.appendRow(['name', 'localName', 'label', 'dataType', 'owner', 'macros'])
 	table = parentPar().Variabletable.eval()
 	if not table or table.numRows < 2:
 		return
@@ -517,6 +517,7 @@ def prepareVariableTable(dat: 'scriptDAT'):
 			table[i, 'label'] or localName,
 			table[i, 'dataType'],
 			hostName,
+			table[i, 'macros'] or '',
 		])
 
 def prepareReferenceTable(dat: 'scriptDAT'):
