@@ -165,12 +165,14 @@ def _createVarRefGroup(text: str):
 		]
 	return _SimpleGroup(text, isValid, getActions)
 
-def _createRenderSelAction(label: str, name: str):
+def _createRenderSelAction(label: str, name: str, enablePar: str):
 	def execute(ctx: ActionContext):
 		def init(refOp: 'COMP'):
 			fromOp = ctx.primaryRop
 			refOp.nodeCenterY = fromOp.nodeCenterY - 200
 			refOp.nodeX = fromOp.nodeX + refOp.nodeWidth + 100
+			if enablePar:
+				fromOp.par[enablePar] = True
 		ActionUtils.palette().CreateRenderSelect(
 			ctx.primaryRop,
 			outputName=name,
@@ -184,12 +186,20 @@ def _createRenderSelAction(label: str, name: str):
 
 def _createRenderSelGroup(text: str):
 	def isValid(ctx: ActionContext) -> bool:
-		return any(ctx.primaryRopState.info.outputBufferNamesAndLabels)
+		table = ctx.primaryRopState.info.outputBufferTable
+		return bool(table and table.numRows > 1)
 
 	def getActions(ctx: ActionContext) -> List[Action]:
+		table = ctx.primaryRopState.info.outputBufferTable
+		if not table:
+			return []
 		return [
-			_createRenderSelAction(label, name)
-			for name, label in ctx.primaryRopState.info.outputBufferNamesAndLabels
+			_createRenderSelAction(
+				str(table[i, 'name']),
+				str(table[i, 'label']),
+				str(table[i, 'enablePar'] or ''))
+			for i in range(1, table.numRows)
+			if table[i, 'available'] != 'False'
 		]
 	return _SimpleGroup(text, isValid, getActions)
 

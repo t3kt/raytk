@@ -325,20 +325,10 @@ class ROPInfo:
 		]
 
 	@property
-	def _outputBufferTable(self) -> 'Optional[DAT]':
+	def outputBufferTable(self) -> 'Optional[DAT]':
 		if not self.isOutput:
 			return None
 		return self.rop.op('outputBuffers')
-
-	@property
-	def outputBufferNamesAndLabels(self):
-		table = self._outputBufferTable
-		if not table:
-			return []
-		return [
-			(table[i, 'name'].val, table[i, 'label'].val)
-			for i in range(1, table.numRows)
-		]
 
 	@property
 	def subROPs(self):

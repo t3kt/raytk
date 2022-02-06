@@ -1,18 +1,18 @@
-name	label	macro	special	enable	path
-colorOut	Color				parent().path + '/render_glsl'
-sdfOut	SDF Result	OUTPUT_SDF		parent().par.Enablesdfoutput	parent().path + '/render_glsl'
-depthOut	Depth	OUTPUT_DEPTH		parent().par.Enabledepthoutput	parent().path + '/render_glsl'
-worldPosOut	World Position	OUTPUT_WORLDPOS		parent().par.Enableworldposoutput	parent().path + '/render_glsl'
-normalOut	Normal	OUTPUT_NORMAL		parent().par.Enablenormaloutput	parent().path + '/render_glsl'
-rayDirOut	Ray Direction	OUTPUT_RAYDIR		parent().par.Enableraydiroutput	parent().path + '/render_glsl'
-rayOriginOut	Ray Origin	OUTPUT_RAYORIGIN		parent().par.Enablerayoriginoutput	parent().path + '/render_glsl'
-orbitOut	Orbit Trap	OUTPUT_ORBIT		parent().par.Enableorbitoutput	parent().path + '/render_glsl'
-nearHitOut	Near Hit	OUTPUT_NEARHIT		parent().par.Enablenearhitoutput	parent().path + '/render_glsl'
-stepsOut	Step Count	OUTPUT_STEPS		parent().par.Enablestepoutput	parent().path + '/render_glsl'
-iterationOut	Iteration	OUTPUT_ITERATION		parent().par.Enableiterationoutput	parent().path + '/render_glsl'
-objectIdOut	Object Id	OUTPUT_OBJECTID		parent().par.Enableobjectidoutput	parent().path + '/render_glsl'
-debugOut	Debug	OUTPUT_DEBUG		parent().par.Enabledebugoutput	parent().path + '/render_glsl'
-uvOut	UV	OUTPUT_UV		parent().par.Enableuvoutput	parent().path + '/render_glsl'
-finalOut	Final Output		1		parent().path + '/render_glsl'
-customOut1	Custom 1	OUTPUT_CUSTOM_1		parent().par.Enablecustomoutput1	parent().path + '/render_glsl'
-customOut2	Custom 2	OUTPUT_CUSTOM_2		parent().par.Enablecustomoutput2	parent().path + '/render_glsl'
+name	label	macro	special	enable	path	enablePar	available
+colorOut	Color				parent().path + '/render_glsl'		
+sdfOut	SDF Result	OUTPUT_SDF		parent().par.Enablesdfoutput	parent().path + '/render_glsl'	Enablesdfoutput	
+depthOut	Depth	OUTPUT_DEPTH		parent().par.Enabledepthoutput	parent().path + '/render_glsl'	Enabledepthoutput	
+worldPosOut	World Position	OUTPUT_WORLDPOS		parent().par.Enableworldposoutput	parent().path + '/render_glsl'	Enableworldposoutput	
+normalOut	Normal	OUTPUT_NORMAL		parent().par.Enablenormaloutput	parent().path + '/render_glsl'	Enablenormaloutput	
+rayDirOut	Ray Direction	OUTPUT_RAYDIR		parent().par.Enableraydiroutput	parent().path + '/render_glsl'	Enableraydiroutput	
+rayOriginOut	Ray Origin	OUTPUT_RAYORIGIN		parent().par.Enablerayoriginoutput	parent().path + '/render_glsl'	Enablerayoriginoutput	
+orbitOut	Orbit Trap	OUTPUT_ORBIT		parent().par.Enableorbitoutput	parent().path + '/render_glsl'	Enableorbitoutput	
+nearHitOut	Near Hit	OUTPUT_NEARHIT		parent().par.Enablenearhitoutput	parent().path + '/render_glsl'	Enablenearhitoutput	
+stepsOut	Step Count	OUTPUT_STEPS		parent().par.Enablestepoutput	parent().path + '/render_glsl'	Enablestepoutput	
+iterationOut	Iteration	OUTPUT_ITERATION		parent().par.Enableiterationoutput	parent().path + '/render_glsl'	Enableiterationoutput	
+objectIdOut	Object Id	OUTPUT_OBJECTID		parent().par.Enableobjectidoutput	parent().path + '/render_glsl'	Enableobjectidoutput	
+debugOut	Debug	OUTPUT_DEBUG		parent().par.Enabledebugoutput	parent().path + '/render_glsl'	Enabledebugoutput	
+uvOut	UV	OUTPUT_UV		parent().par.Enableuvoutput	parent().path + '/render_glsl'	Enableuvoutput	
+finalOut	Final Output		1		parent().path + '/render_glsl'		
+customOut1	Custom 1	OUTPUT_CUSTOM_1		parent().par.Enablecustomoutput1	parent().path + '/render_glsl'	Enablecustomoutput1	
+customOut2	Custom 2	OUTPUT_CUSTOM_2		parent().par.Enablecustomoutput2	parent().path + '/render_glsl'	Enablecustomoutput2	
