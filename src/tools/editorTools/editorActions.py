@@ -61,25 +61,6 @@ def _createAppendNull(text: str):
 
 	return _SimpleAction(text, isValid, execute)
 
-def _createConvertToFloatAction(text: str):
-	def isValid(ctx: ActionContext) -> bool:
-		state = ctx.primaryRopState
-		return bool(state and state.isVectorField or state.isSdf)
-
-	def execute(ctx: ActionContext):
-		state = ctx.primaryRopState
-		if state.isVectorField:
-			ropType = 'raytk.operators.convert.vectorToFloat'
-		elif state.isSdf:
-			ropType = 'raytk.operators.field.sdfField'
-		else:
-			raise Exception('Invalid target')
-		ActionUtils.createAndAttachFromOutput(
-			fromRop=ctx.primaryRop,
-			ropType=ropType)
-
-	return _SimpleAction(text, isValid, execute)
-
 def _createAddOutputAction(
 		text: str,
 		isValid: _IsValidFunc,
@@ -255,10 +236,8 @@ def _createAnimateParamAction(
 		if isinstance(parOrTuplet, Par):
 			return [parOrTuplet]
 		return list(parOrTuplet)
-	def isValid(ctx: ActionContext):
-		if not ActionUtils.isKnownRopType(ropType):
-			return False
-		return bool(getPars())
+	def isValid(_):
+		return ActionUtils.isKnownRopType(ropType) and bool(getPars())
 	def execute(ctx: ActionContext):
 		rop = ctx.primaryRop
 		pars = getPars()
@@ -360,6 +339,20 @@ def _createCustomizeShaderConfigAction(text: str):
 			par.pulse()
 	return _SimpleAction(text, isValid, execute)
 
+def _createSelectVectorPartGroup(text: str, table: 'DAT'):
+	def isValid(ctx: ActionContext):
+		return ctx.primaryRopState.isVectorField
+	def getActions(_):
+		return [
+			_createAddOutputAction(
+				str(table[i, 'label']),
+				isValid=lambda _: True,
+				ropType=_RopTypes.vectorToFloat,
+				paramVals={'Usepart': str(table[i, 'name'])})
+			for i in range(1, table.numRows)
+		]
+	return _SimpleGroup(text, isValid, getActions)
+
 def _pulsePrimaryRopParam(ctx: ActionContext, par: str):
 	rop = ctx.primaryRop
 	p = rop.par[par] if rop else None
@@ -377,10 +370,7 @@ def _primaryRopHasParam(ctx: ActionContext, par: str):
 	return rop and rop.par[par] is not None
 
 def _anySelectedRopHasParam(ctx: ActionContext, par: str):
-	for rop in ctx.selectedRops:
-		if rop.par[par] is not None:
-			return True
-	return False
+	return any(rop.par[par] is not None for rop in ctx.selectedRops)
 
 class _RopTypes:
 	combine = 'raytk.operators.combine.combine'
@@ -391,6 +381,7 @@ class _RopTypes:
 	render2d = 'raytk.operators.output.render2D'
 	speedGenerator = 'raytk.operators.utility.speedGenerator'
 	lfoGenerator = 'raytk.operators.utility.lfoGenerator'
+	vectorToFloat = 'raytk.operators.convert.vectorToFloat'
 
 def createActionManager():
 	manager = ActionManager(
@@ -403,7 +394,11 @@ def createActionManager():
 			'Update OPs',
 			isValid=lambda ctx: _anySelectedRopHasParam(ctx, 'Updateop'),
 			execute=lambda ctx: _pulseSelectedRopParams(ctx, 'Updateop')),
-		_createConvertToFloatAction('Convert To Float'),
+		_createAddOutputAction(
+			'Convert To Float',
+			isValid=lambda ctx: ctx.primaryRopState.isSdf,
+			ropType='raytk.operators.field.sdfField'),
+		_createSelectVectorPartGroup('To Vector Part', op('vectorToFloatParts')),
 		_createAddOutputAction(
 			'Rescale Field',
 			isValid=lambda ctx: ctx.primaryRopState.isField,
@@ -455,7 +450,6 @@ def createActionManager():
 		_createAddOutputAction(
 			'Add render2D',
 			lambda ctx: ctx.primaryRopState.is2d,
-			_RopTypes.render2d,
-		),
+			_RopTypes.render2d),
 	)
 	return manager
