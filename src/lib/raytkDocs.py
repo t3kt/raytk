@@ -7,7 +7,7 @@ This should only be used within development tools.
 from dataclasses import dataclass, field
 from pathlib import Path
 import re
-from typing import Dict, Iterable, List, Optional, Tuple
+from typing import Dict, Iterable, List, Optional, Tuple, Union
 import yaml
 
 from raytkUtil import ROPInfo, CategoryInfo, RaytkTags, InputInfo, cleanDict, mergeDicts
@@ -103,6 +103,49 @@ class ROPParamHelp:
 		})
 
 @dataclass
+class VariableHelp:
+	name: Optional[str] = None
+	label: Optional[str] = None
+	summary: Optional[str] = None
+
+	def formatMarkdownListItem(self, forBuild=False):
+		text = f'* `{self.name}`'
+		if forBuild and self.label:
+			text += f' *{self.label}*'
+		text += ': '
+		if self.summary:
+			text += f' {self.summary}'
+		return text
+
+	@classmethod
+	def extractFromTable(cls, variableTable: 'DAT'):
+		if not variableTable:
+			return []
+		varHelps = []
+		for i in range(1, variableTable.numRows):
+			name = str(variableTable[i, 'localName'])
+			varHelps.append(cls(
+				name=name,
+				label=str(variableTable[i, 'label'] or name),
+			))
+		return varHelps
+
+	def mergeFrom(self, other: 'VariableHelp'):
+		if self.name != other.name:
+			self.name = other.name
+		if other.label and not self.label:
+			self.label = other.label
+		if other.summary and not self.summary:
+			self.summary = other.summary
+
+	def toFrontMatterData(self):
+		return cleanDict({
+			'name': self.name,
+			'label': self.label or self.name,
+			'summary': self.summary,
+		})
+
+@dataclass
 class InputHelp:
 	name: Optional[str] = None
 	label: Optional[str] = None
@@ -171,6 +214,7 @@ class ROPHelp:
 	category: Optional[str] = None
 	parameters: List[ROPParamHelp] = field(default_factory=list)
 	inputs: List[InputHelp] = field(default_factory=list)
+	variables: List[VariableHelp] = field(default_factory=list)
 	isAlpha: bool = False
 	isBeta: bool = False
 	isDeprecated: bool = False
@@ -213,31 +257,6 @@ class ROPHelp:
 			shortcuts=list(sorted(info.shortcuts)),
 		)
 
-	def formatAsMarkdown(self, headerOffset: int = 0):
-		headerPrefix = '#' * headerOffset
-		parts = [
-			f'{headerPrefix}# {self.name}',
-		]
-		if self.isAlpha:
-			parts.append('alpha\n{: .label .status-alpha }')
-		elif self.isBeta:
-			parts.append('beta\n{: .label .status-beta }')
-		elif self.isDeprecated:
-			parts.append('deprecated\n{: .label .status-deprecated }')
-		parts += [
-			self.summary,
-			self.detail,
-		]
-		if self.parameters:
-			parts += [
-				'## Parameters',
-				'\n'.join([
-					parHelp.formatMarkdownListItem()
-					for parHelp in self.parameters
-				])
-			]
-		return _mergeMarkdownChunks(parts)
-
 	def formatMainText(self):
 		parts = [
 			self.summary,
@@ -258,6 +277,14 @@ class ROPHelp:
 				'\n'.join([
 					inHelp.formatMarkdownListItem()
 					for inHelp in self.inputs
+				])
+			]
+		if self.variables:
+			parts += [
+				'## Variables',
+				'\n'.join([
+					varHelp.formatMarkdownListItem()
+					for varHelp in self.variables
 				])
 			]
 		return _mergeMarkdownChunks(parts)
@@ -321,6 +348,10 @@ redirect_from:
 					parHelp.toFrontMatterData()
 					for parHelp in self.parameters
 					if parHelp.name not in _ignorePars
+				],
+				'variables': [
+					varHelp.toFrontMatterData()
+					for varHelp in self.variables
 				],
 				'images': self.images or [],
 			} if full else None,
@@ -430,6 +461,8 @@ def _extractHelpSummaryAndDetail(docText: str) -> 'Tuple[str, str]':
 			detail = detail.split('## Parameters', maxsplit=1)[0]
 		elif '## Inputs' in detail:
 			detail = detail.split('## Inputs', maxsplit=1)[0]
+		elif '## Variables' in detail:
+			detail = detail.split('## variables', maxsplit=1)[0]
 	return summary, detail
 
 def _mergeMarkdownChunks(parts: Iterable[str]):
@@ -455,14 +488,15 @@ class OpDocManager:
 		docText = docText.strip()
 		docText = _stripFrontMatter(docText).strip()
 		docText = _stripFirstMarkdownHeader(docText)
-		sections = _parseMarkdownSections(docText, sectionNames=['Parameters', 'Inputs'])
+		sections = _parseMarkdownSections(docText, sectionNames=['Parameters', 'Inputs', 'Variables'])
 		if '' in sections:
 			ropHelp.summary, ropHelp.detail = _extractHelpSummaryAndDetail(sections[''])
 		if 'Parameters' in sections:
 			self._parseParamListInto(ropHelp, sections['Parameters'])
-			pass
 		if 'Inputs' in sections:
 			self._parseInputListInto(ropHelp, sections['Inputs'])
+		if 'Variables' in sections:
+			self._parseVariableListInto(ropHelp, sections['Variables'])
 		return ropHelp
 
 	def _writeToDAT(self, ropHelp: 'ROPHelp'):
@@ -492,6 +526,14 @@ class OpDocManager:
 				'\n'.join([
 					parHelp.formatMarkdownListItem()
 					for parHelp in ropHelp.parameters
+				])
+			]
+		if ropHelp.variables:
+			parts += [
+				'## Variables',
+				'\n'.join([
+					varHelp.formatMarkdownListItem()
+					for varHelp in ropHelp.variables
 				])
 			]
 		return _mergeMarkdownChunks(parts)
@@ -544,7 +586,7 @@ class OpDocManager:
 		for item in items:
 			name, label, desc = _parseNamedListItem(item)
 			if not name:
-				raise Exception(f'Invalid param list item: {item!r}')
+				raise Exception(f'Invalid input list item: {item!r}')
 			if ' ' in name:
 				name = name.replace(' ', '').capitalize()
 			ropHelp.inputs.append(InputHelp(
@@ -553,13 +595,28 @@ class OpDocManager:
 				desc,
 			))
 
+	@staticmethod
+	def _parseVariableListInto(ropHelp: 'ROPHelp', text: str):
+		ropHelp.variables.clear()
+		text = text.strip()
+		if not text:
+			return
+		if '*' not in text:
+			raise Exception('Invalid variables section')
+		items = _parseMarkdownListItems(text)
+		for item in items:
+			name, label, desc = _parseNamedListItem(item)
+			if not name:
+				raise Exception(f'Invalid variable list item: {item!r}')
+			ropHelp.variables.append(VariableHelp(name, label, desc))
+
 	def _pullFromMissingParamsInto(self, ropHelp: 'ROPHelp'):
 		paramHelps = {
 			paramHelp.name: paramHelp
 			for paramHelp in ropHelp.parameters
 		}
 		for parTuplet in self.rop.customTuplets:
-			if parTuplet[0].readOnly:
+			if parTuplet[0].readOnly or parTuplet[0].name.startswith('Createref') or parTuplet[0].name.startswith('Creatersel'):
 				continue
 			name = parTuplet[0].tupletName
 			helpText = parTuplet[0].help
@@ -583,10 +640,26 @@ class OpDocManager:
 			else:
 				inHelps.append(extractedHelp)
 
+	def _pullFromMissingVariablesInto(self, ropHelp: 'ROPHelp'):
+		varHelps = {
+			varHelp.name: varHelp
+			for varHelp in ropHelp.variables
+		}  # type: Dict[str, VariableHelp]
+		extractedVars = VariableHelp.extractFromTable(self.info.variableTable)
+		debug('known vars: ', varHelps)
+		debug('extracted vars: ', extractedVars)
+		for extractedVar in extractedVars:
+			if extractedVar.name in varHelps:
+				varHelps[extractedVar.name].mergeFrom(extractedVar)
+			else:
+				varHelps[extractedVar.name] = extractedVar
+		ropHelp.variables = list(varHelps.values())
+
 	def setUpMissingParts(self):
 		ropHelp = self._parseDAT()
 		self._pullFromMissingParamsInto(ropHelp)
 		self._pullFromMissingInputsInto(ropHelp)
+		self._pullFromMissingVariablesInto(ropHelp)
 		self._writeToDAT(ropHelp)
 
 	def _getRopParByTupletName(self, tupletName: str) -> 'Optional[Par]':
