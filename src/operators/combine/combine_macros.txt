@@ -1,3 +1,0 @@
-'Radius' in op('mergeParams')['params', 1].val	'THIS_HAS_RADIUS'	
-'Number' in op('mergeParams')['params', 1].val	'THIS_HAS_NUMBER'	
-'Offset' in op('mergeParams')['params', 1].val	'THIS_HAS_OFFSET'	
