@@ -45,6 +45,10 @@ class ShaderBuilder:
 		# noinspection PyTypeChecker
 		return o or self.ownerComp.op('default_shaderBuilderConfig')
 
+	def _configValid(self):
+		o = self._config()
+		return bool(o is not None and o.valid)
+
 	def configPar(self) -> '_ConfigPar':
 		return self._config().par
 
@@ -114,6 +118,8 @@ class ShaderBuilder:
 	def buildNameReplacementTable(self, dat: 'scriptDAT'):
 		dat.clear()
 		dat.appendRow(['before', 'after'])
+		if not self._configValid():
+			return
 		if not self.configPar().Simplifynames:
 			return
 		origNames = [c.val for c in self._definitionTable().col('name')[1:]]
@@ -128,18 +134,21 @@ class ShaderBuilder:
 		return wrapCodeSection(self.ownerComp.par.Globalprefix.eval(), 'globalPrefix')
 
 	def _createParamProcessor(self) -> '_ParameterProcessor':
-		mode = self.configPar().Parammode.eval()
+		if not self._configValid():
+			mode = 'uniformarray'
+		else:
+			mode = self.configPar().Parammode.eval()
 		if mode == 'uniformarray':
 			return _VectorArrayParameterProcessor(
 				self._parameterDetailTable(),
 				self._allParamVals(),
-				self.configPar(),
+				self.configPar() if self._configValid() else None,
 			)
 		elif mode == 'separateuniforms':
 			return _SeparateUniformsParameterProcessor(
 				self._parameterDetailTable(),
 				self._allParamVals(),
-				self.configPar(),
+				self.configPar() if self._configValid() else None,
 			)
 		else:
 			raise NotImplementedError(f'Parameter processor not available for mode: {mode!r}')
@@ -285,7 +294,10 @@ class ShaderBuilder:
 		return dats
 
 	def buildLibraryIncludes(self, onWarning: Callable[[str], None] = None):
-		mode = str(self.configPar()['Includemode'] or 'includelibs')
+		if not self._configValid():
+			mode = 'includelibs'
+		else:
+			mode = str(self.configPar()['Includemode'] or 'includelibs')
 		supportsInclude = self.ownerComp.op('support_table')['include', 1] == '1'
 		if mode == 'includelibs' and not supportsInclude:
 			inlineAll = True
@@ -305,7 +317,10 @@ class ShaderBuilder:
 		return wrapCodeSection(libBlocks, 'libraries')
 
 	def buildOpDataTypedefBlock(self, typeDefMacroTable: 'DAT'):
-		inline = self.configPar()['Inlinetypedefs']
+		if not self._configValid():
+			inline = False
+		else:
+			inline = self.configPar()['Inlinetypedefs']
 		if typeDefMacroTable.numRows:
 			typedefs = {}
 			macros = {}
@@ -373,7 +388,7 @@ class ShaderBuilder:
 				dat.appendRow([name + '_asVarT', typeAdaptFuncs[dataType], 'macro'])
 
 	def inlineTypedefs(self, code: str, typeDefMacroTable: 'DAT') -> str:
-		if not self.configPar()['Inlinetypedefs']:
+		if not self._configValid() or not self.configPar()['Inlinetypedefs']:
 			return code
 		if not typeDefMacroTable.numRows:
 			return code
@@ -393,7 +408,10 @@ class ShaderBuilder:
 		return code
 
 	def _createCodeFilter(self, typeDefMacroTable: 'DAT') -> 'CodeFilter':
-		mode = self.configPar()['Filtermode']
+		if not self._configValid():
+			mode = 'macroize'
+		else:
+			mode = self.configPar()['Filtermode']
 		if mode == 'filter':
 			macroTable = self.ownerComp.op('macroTable')
 			cells = macroTable.col(0) or []
@@ -1150,14 +1168,14 @@ class _ParameterProcessor:
 			self,
 			paramDetailTable: 'DAT',
 			paramVals: 'CHOP',
-			configPar: '_ConfigPar',
+			configPar: 'Optional[_ConfigPar]',
 	):
 		self.paramDetailTable = paramDetailTable
 		self.hasParams = paramDetailTable.numRows > 1
-		self.useConstantReadOnly = configPar.Inlinereadonlyparameters
-		self.inlineAliases = configPar.Inlineparameteraliases
+		self.useConstantReadOnly = configPar.Inlinereadonlyparameters if configPar else False
+		self.inlineAliases = configPar.Inlineparameteraliases if configPar else False
 		self.paramVals = paramVals
-		self.aliasMode = str(configPar['Paramaliasmode'] or 'macro')
+		self.aliasMode = str(configPar['Paramaliasmode'] or 'macro') if configPar else 'macro'
 		self.paramExprs = None  # type: Optional[Dict[str, _ParamExpr]]
 
 	def globalDeclarations(self) -> List[str]:
