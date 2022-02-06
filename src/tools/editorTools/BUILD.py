@@ -11,4 +11,6 @@ comp = parent()
 
 context.detachTox(comp)
 
+context.detachTox(op('exposeParamDialog'))
+
 context.finishTask()
