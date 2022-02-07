@@ -1,7 +1,7 @@
 {
   "meta": {
-    "opStatus": "alpha",
+    "opStatus": "beta",
     "opType": "raytk.operators.utility.lfoGenerator",
-    "opVersion": 0
+    "opVersion": 1
   }
 }
