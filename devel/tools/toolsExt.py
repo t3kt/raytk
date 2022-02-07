@@ -1,7 +1,7 @@
 import popMenu
 from raytkTools import RaytkTools
-from raytkUtil import RaytkTags, Tag, navigateTo, recloneComp, RaytkContext, TypeTableHelper, CategoryInfo, Version
-from typing import List, Tuple, Union
+from raytkUtil import RaytkTags, Tag, navigateTo, recloneComp, RaytkContext, Version
+from typing import Union
 
 # noinspection PyUnreachableCode
 if False:

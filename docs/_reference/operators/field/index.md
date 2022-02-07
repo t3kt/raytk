@@ -22,7 +22,10 @@ cat:
       a single axis.
   - name: bandField
     summary: Field that applies values based on a band/slice of an axis.
-  - name: cellTileField
+  - keywords:
+    - cellular
+    - voronoi
+    name: cellTileField
     summary: A value field that provides an approximation of repeating cellular (voronoi)
       noise.
   - name: chopField
@@ -42,7 +45,7 @@ cat:
   - name: constantSwitchField
     status: beta
   - name: contextValueField
-    status: beta
+    status: deprecated
     summary: Field that returns various fields from the context, from a downstream
       OP.
   - name: curlNoiseField
@@ -83,7 +86,6 @@ cat:
   - name: sdfNormalField
     status: beta
   - name: stepField
-    status: beta
     summary: A field that switches between two values at a threshold point.
   - name: texture3dField
     status: beta

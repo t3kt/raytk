@@ -53,6 +53,6 @@ op:
     name: Usepivot
   - label: Pivot
     name: Pivot
-  status: beta
+  status: deprecated
 
 ---

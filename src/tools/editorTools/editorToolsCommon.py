@@ -23,23 +23,36 @@ class ActionContext:
 		return [o for o in self.selectedOps if _isRopOrComp(o)]
 
 	@property
+	def selectedRopStates(self):
+		return [ROPState(o) for o in self.selectedOps if _isRopOrComp(o)]
+
+	@property
+	def allRopStates(self):
+		return [ROPState(o) for o in self.allRops]
+
+	@property
 	def primaryRop(self):
 		return self.primaryOp if _isRopOrComp(self.primaryOp) else None
 
 	@property
 	def primaryRopState(self): return ROPState(self.primaryRop)
 
-	def hasSelectedSdfs(
+	def hasSelectedOps(
 			self,
-			minCount: int = 1, maxCount: int = 1,
-			ignoreNonSdfs: bool = False,
-	):
-		rops = self.selectedRops
-		sdfs = [rop for rop in rops if ROPState(rop).isSdf]
-		if not ignoreNonSdfs and len(sdfs) != len(rops):
+			minCount: int = 1, maxCount: Optional[int] = None,
+			predicate: Callable[[OP], bool] = None,
+			ignoreNonMatches: bool = True):
+		selOps = self.selectedOps
+		matches = selOps
+		if predicate:
+			matches = [o for o in matches if predicate(o)]
+		if not ignoreNonMatches and len(matches) != len(selOps):
 			return False
-		# return minCount <= len(sdfs) <= maxCount
-		return len(sdfs)
+		if maxCount is not None and len(matches) > maxCount:
+			return False
+		if len(matches) < minCount:
+			return False
+		return True
 
 @dataclass
 class _MenuItem:
@@ -88,18 +101,10 @@ def _getPopMenu() -> 'PopMenuExt':
 	return op.TDResources.op('popMenu')
 
 class ActionManager:
-	actions: List[Action]
-	groups: List[ActionGroup]
+	items: List[_Item]
 
-	def __init__(self):
-		self.actions = []
-		self.groups = []
-
-	def addActions(self, *actions: Action):
-		self.actions += actions
-
-	def addGroups(self, *groups: ActionGroup):
-		self.groups += groups
+	def __init__(self, *items: _Item):
+		self.items = list(items)
 
 	@staticmethod
 	def _getEditor():
@@ -122,21 +127,17 @@ class ActionManager:
 			allRops=RaytkContext().ropChildrenOf(comp),
 		)
 
-	def openMenu(self):
+	def openMenu(self, popMenu: 'PopMenuExt'):
 		ctx = self._getContext()
 		if not ctx:
 			return
-		popMenu = _getPopMenu()
 		items = [
 			action.createMenuItem(ctx)
-			for action in self.actions
+			for action in self.items
 			if action.isValid(ctx)
 		]
-		items += [
-			group.createMenuItem(ctx)
-			for group in self.groups
-			if group.isValid(ctx)
-		]
+		if not items:
+			return
 		self._openMenu(popMenu, items, isSubMenu=False)
 
 	def _openMenu(
@@ -156,13 +157,12 @@ class ActionManager:
 			item = getItem(info)
 			if item and item.callback:
 				item.callback()
-			popMenu.Close()
-
-		def onRollover(info: dict):
-			item = getItem(info)
-			if item and item.subItems:
+				info['menu'].Close()
+				if popMenu != info['menu']:
+					popMenu.Close()
+			elif item and item.subItems:
 				self._openMenu(
-					popMenu=popMenu,
+					popMenu=info['menu'],
 					items=item.subItems,
 					isSubMenu=True,
 				)
@@ -171,13 +171,16 @@ class ActionManager:
 			popMenu.OpenSubMenu(
 				items=itemNames,
 				callback=onSelect,
-				rolloverCallback=onRollover,
+				allowStickySubMenus=False,
+				autoClose=True,
 			)
 		else:
 			popMenu.Open(
 				items=itemNames,
 				callback=onSelect,
-				rolloverCallback=onRollover,
+				subMenuItems=[item.text for item in items if item.subItems],
+				allowStickySubMenus=False,
+				autoClose=True,
 			)
 
 def _isRopOrComp(o: 'OP'):
@@ -221,19 +224,29 @@ class ROPState:
 	@property
 	def isSdf(self): return bool(self and self.returnTypes == ['Sdf'])
 
-_InitFunc = Optional[Callable[['COMP'], None]]
+	@property
+	def is2d(self): return 'vec2' in self.coordTypes
+
+	@property
+	def is3d(self): return 'vec3' in self.coordTypes
+
+	def getParam(self, parName: str):
+		if self.rop:
+			return self.rop.par[parName]
+
+InitFunc = Optional[Callable[['COMP'], None]]
 
 class ActionUtils:
 	@staticmethod
-	def _palette() -> 'Palette': return op.raytk.op('tools/palette')
+	def palette() -> 'Palette': return op.raytk.op('tools/palette')
 
 	@staticmethod
-	def createROP(ropType: str, *inits: _InitFunc):
+	def createROP(ropType: str, *inits: InitFunc):
 		def init(rop: 'COMP'):
 			for fn in inits:
 				if fn:
 					fn(rop)
-		ActionUtils._palette().CreateItem(ropType, postSetup=init)
+		ActionUtils.palette().CreateItem(ropType, postSetup=init)
 
 	@staticmethod
 	def moveAfter(o: 'OP', after: 'OP'):
@@ -253,7 +266,7 @@ class ActionUtils:
 	def createAndAttachFromOutput(
 			fromRop: 'OP',
 			ropType: str,
-			init: _InitFunc = None,
+			init: InitFunc = None,
 			inputIndex: int = 0,
 			outputIndex: int = 0,
 	):
@@ -263,12 +276,27 @@ class ActionUtils:
 		ActionUtils.createROP(ropType, placeAndAttach, init)
 
 	@staticmethod
+	def createAndAttachToInput(
+			fromRop: 'OP',
+			ropType: str,
+			init: InitFunc = None,
+			inputIndex: int = 0,
+			outputIndex: int = 0,
+	):
+		def placeAndAttach(rop: 'COMP'):
+			rop.nodeCenterY = fromRop.nodeCenterY - 100
+			rop.nodeX = fromRop.nodeX - rop.nodeWidth - 150
+			rop.outputConnectors[outputIndex].connect(fromRop.inputConnectors[inputIndex])
+		ActionUtils.createROP(ropType, placeAndAttach, init)
+
+	@staticmethod
 	def createAndAttachFromMultiOutputs(
 			fromRops: List['OP'],
 			ropType: str,
-			init: _InitFunc = None,
+			init: InitFunc = None,
 			outputIndex: int = 0,
 	):
+		fromRops.sort(key=lambda r: r.nodeCenterY, reverse=True)
 		def placeAndAttach(combine: 'COMP'):
 			ActionUtils.moveAfterMultiple(combine, fromRops)
 			for i, fromRop in enumerate(fromRops):
@@ -276,3 +304,7 @@ class ActionUtils:
 					break
 				combine.inputConnectors[i].connect(fromRop.outputConnectors[outputIndex])
 		ActionUtils.createROP(ropType, placeAndAttach, init)
+
+	@staticmethod
+	def isKnownRopType(pathOrOpType: str):
+		return ActionUtils.palette().IsKnownType(pathOrOpType)

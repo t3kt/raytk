@@ -87,17 +87,15 @@ op:
     name: Dualspread
   - label: Reverse
     name: Reverse
-  - label: Offset Along Axis
-    name: Createrefaxisoffset
-    summary: 'Create reference to variable: Offset Along Axis'
-  - label: Angle Around Axis (Deg)
-    name: Createrefangle
-    summary: 'Create reference to variable: Angle Around Axis (Deg)'
-  - label: Normalized Angle (0..1)
-    name: Createrefnormangle
-    summary: 'Create reference to variable: Normalized Angle (0..1)'
   summary: SDF for a helix (an elongated spiral).
   thumb: assets/images/reference/operators/sdf/helixSdf_thumb.png
+  variables:
+  - label: axisoffset
+    name: axisoffset
+  - label: angle
+    name: angle
+  - label: normangle
+    name: normangle
 
 ---
 

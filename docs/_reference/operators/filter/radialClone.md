@@ -62,13 +62,42 @@ op:
       be centered on the axis.
   - label: Merge Type
     menuOptions:
-    - description: Show all the shapes, without any special treatment for overlap
-        between them.
-      label: Union
-      name: union
-    - description: Smooths overlaps between the copies.
-      label: Smooth Union
-      name: smoothunion
+    - label: Simple Union
+      name: simpleUnion
+    - label: Simple Intersect
+      name: simpleIntersect
+    - label: Simple Difference
+      name: simpleDiff
+    - label: Smooth Union
+      name: smoothUnion
+    - label: Smooth Intersect
+      name: smoothIntersect
+    - label: Smooth Difference
+      name: smoothDiff
+    - label: Round Union
+      name: roundUnion
+    - label: Round Intersect
+      name: roundIntersect
+    - label: Round Difference
+      name: roundDiff
+    - label: Chamfer Union
+      name: chamferUnion
+    - label: Chamfer Intersect
+      name: chamferIntersect
+    - label: Chamfer Difference
+      name: chamferDiff
+    - label: Stair Union
+      name: stairUnion
+    - label: Stair Intersect
+      name: stairIntersect
+    - label: Stair Difference
+      name: stairDiff
+    - label: Column Union
+      name: columnUnion
+    - label: Column Intersect
+      name: columnIntersect
+    - label: Column Difference
+      name: columnDiff
     name: Mergetype
     summary: How to merge the copies.
   - label: Merge Radius
@@ -84,14 +113,17 @@ op:
       name: index
     name: Iterationtype
     summary: Whether and how to expose iteration values to upstream operators.
-  - label: Index
-    name: Createrefindex
-    summary: 'Create reference to variable: Index'
-  - label: Normalized Index (0..1)
-    name: Createrefnormindex
-    summary: 'Create reference to variable: Normalized Index (0..1)'
+  - label: Merge Number
+    name: Mergenumber
+  - label: Merge Offset
+    name: Mergeoffset
   summary: Repeats an SDF radially around an axis, combining the resulting shapes.
   thumb: assets/images/reference/operators/filter/radialClone_thumb.png
+  variables:
+  - label: index
+    name: index
+  - label: normindex
+    name: normindex
 
 ---
 

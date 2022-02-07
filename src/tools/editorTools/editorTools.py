@@ -16,6 +16,8 @@ class EditorTools:
 		if not self.actions:
 			self.actions = createActionManager()
 
-	def Open(self):
+	def Open(self, _=None):
 		self.init()
-		self.actions.openMenu()
+		popMenu = self.ownerComp.op('popMenu')
+		# noinspection PyTypeChecker
+		self.actions.openMenu(popMenu)

@@ -1,5 +1,125 @@
 # Release Notes
 
+## v0.21
+
+### Highlights
+
+* Editor actions are contextual actions available in a menu using the new `ALT+SHIFT+R` shortcut. They include things like:
+  * Add common material elements when a `modularMat` is selected.
+  * Add a `lookAtCamera` or `pointLight` when a `raymarchRender3d` is selected.
+  * Combine selected SDFs or fields.
+  * Navigating to the source of a `variableReference`.
+  * Converting a vector field to a float field, and vice versa.
+  * Exposing and binding parameters on the parent COMP.
+  * Adding animation to parameters.
+* Transform sequences are a new way to apply groups of transforms to spatial coordinates or uv coordinates, including support for repeating the transforms in a loop! It's like a much more flexible version of `iteratedTransform`.
+* Standardized SDF combine options across various ROPs that combine SDFs. This means that the full features like stair union with offset control are available in ROPs like `flip` or `radialClone`.
+* Standardized wave function options across various ROPs. This means that `waveField`, `waveFunction`, `lfoField`, etc all have the same wave shape options.
+* Control utility components are a set of general-purpose tools that can be used with RayTK or non-RayTK operators. Most of them have associated editor actions, including:
+  * `lfoGenerator` which can be applied to any numeric parameter using the "Animate with LFO" action.
+  * `speedGenerator` which can be applied to any numeric parmaeter using the "Animate with Speed" action.
+
+### Details
+
+* Improvements / additions
+  * Variables (#574)
+    * arcSdf2d
+    * discSdf
+    * mandelbulbSdf
+    * provideVariable - support Sdf values
+  * New ops
+    * crossSection (#214, #759)
+    * lfoGenerator (#788)
+    * speedGenerator (#788)
+    * transformSequence (#791)
+  * New field inputs (#588, #693, #806)
+    * arcSdf2d - orientation, aperture
+    * cellTileField - coords
+    * diffuseContrib - roughness, albedo
+    * horseshoeSdf2d - angle, radius, length
+    * linkSdf - length, radius, thickness
+    * mandelbulbSdf - shift
+    * mirrorAxes - flip sides (#641, #668)
+    * onion - iterations, thickness
+    * provideVariable - value
+    * specularContrib - shininess, roughness, fresnel
+    * tetrahedronSdf - scale
+    * trapezoidSdf2d - height, width, points
+  * New parameters
+    * mirrorAxes side flipping (#641, #668)
+    * torusSdf capped mode - note that UVs and variable scaling may be incorrect for capped mode (#221)
+  * Standardized SDF combining across the toolkit, with new modes and parameters (#784)
+    * arrange
+    * combine
+    * flip - compatiblity warning: this changes the menu options for the Merge Type parameter, so updates may reset it
+    * instance
+    * polyhedronSdf
+    * radialClone - compatiblity warning: Merge Type parameter opions changed
+  * Standardized wave functions across the toolkit, with new shapes and parameters (#787)
+    * lfoField
+    * waveField
+    * waveFn
+    * waveVectorField
+    * waveWarp
+    * additive square waves
+    * wave shape function inputs
+  * Editor actions (#772)
+    * Append null (works for ROPs or regular CHOP/DAT/etc)
+    * Inspect
+    * Update OPs
+    * Convert SDF to float
+    * Convert vector to float for various parts
+    * Rescale field
+    * Rescale field with conversion to vector
+    * Add diffuseContrib/specularContrib for modularMat
+    * Add lookAtCamera/pointLight for raymarchRender3d
+    * Extrude/Revolve 2D SDF
+    * Colorize 2D SDF
+    * Combine 2 SDFs
+    * Combine 2 fields
+    * Reference variable
+    * Animate param with speedGenerator/lfoGenerator
+    * Expose parameter on parent COMP
+    * Customize shader config
+    * Add render2D for 2D SDFs
+    * Go to
+      * Variable source
+      * Variable references
+  * Control utility components (#788)
+    * lfoGenerator
+    * paramFilter
+    * speedGenerator
+  * Custom and debug output buffers in render2d
+  * Transform sequences / loops (#791)
+    * bend
+    * fold
+    * kink
+    * mirrorAxes
+    * mirrorOctant
+    * mirrorQuadrant
+    * rangeTransform
+    * reflect
+    * rotate
+    * scale
+    * transform
+    * twist
+    * waveWarp
+  * Vector output for lfoField when wave function input returns a vector
+* Changes (potentially breaking)
+  * Remove deprecated operators
+    * combineChamfer, combineColumns, combineStairs, edgeEngrave, edgeGroove, edgePipe
+* Fixes
+  * Fix iteration index bug in instance operator (#785)
+  * Fix height field bug in prismSdf
+  * Fix coordinate type bug in stepField
+  * Fix axis swaping in discSdf - compatibility warning, axis behavior changed
+  * Fix bug with filter text and shortcuts in palette (#795)
+  * Fix 2d support in mirrorAxes (#799)
+  * Fix broken field input in scale (#805)
+* Infrastructure / internals
+  * Move most columns out of the definition tables passed between ROPs (#758)
+  * Help support for variables (#763)
+
 ## v0.20
 
 ### Highlights

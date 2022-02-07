@@ -1,0 +1,10 @@
+name	label	code	coordType
+x	X	q = inputOp1_asCoordT(p3.x)	float
+y	Y	q = inputOp1_asCoordT(p3.y)	float
+z	Z	q = inputOp1_asCoordT(p3.z)	float
+xy	XY	q = inputOp1_asCoordT(p3.xy)	vec2
+yx	YX	q = inputOp1_asCoordT(p3.yx)	vec2
+yz	YZ	q = inputOp1_asCoordT(p3.yz)	vec2
+zy	ZY	q = inputOp1_asCoordT(p3.zy)	vec2
+xz	XZ	q = inputOp1_asCoordT(p3.xz)	vec2
+zx	ZX	q = inputOp1_asCoordT(p3.zx)	vec2

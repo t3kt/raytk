@@ -63,8 +63,8 @@ op:
     name: Center
   - label: Iterate On Rings
     name: Iterateonrings
-  - label: Ring Index
-    name: Createrefring
-    summary: 'Create reference to variable: Ring Index'
+  variables:
+  - label: ring
+    name: ring
 
 ---

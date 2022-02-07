@@ -61,15 +61,14 @@ op:
     - label: Z
       name: z
     name: Axis
-  - label: Angle (0-360)
-    name: Createrefangle
-    summary: 'Create reference to variable: Angle (0-360)'
-  - label: Normalized Angle (0-1)
-    name: Createrefnormangle
-    summary: 'Create reference to variable: Normalized Angle (0-1)'
   summary: SDF for a squared mobius ring, which is like a rectangular bar twisted
     and then bent into a ring.
   thumb: assets/images/reference/operators/sdf/mobiusRingSdf_thumb.png
+  variables:
+  - label: angle
+    name: angle
+  - label: normangle
+    name: normangle
 
 ---
 

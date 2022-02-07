@@ -97,12 +97,14 @@ class OpPicker:
 		elif shortcutName == 'down':
 			self.impl.offsetSelection(x=0, y=1)
 		elif shortcutName == 'enter':
-			self.onPickItem()
+			self.onPickItem(isKeyboard=True)
 		else:
 			ext.callbacks.DoCallback('onKeyboardShortcut', {'shortcut': shortcutName})
 
-	def onPickItem(self):
-		item = self.impl.selectFilterShortcutItem()
+	def onPickItem(self, isKeyboard: bool = False):
+		item = None
+		if isKeyboard:
+			item = self.impl.selectFilterShortcutItem()
 		if not item:
 			item = self.impl.getSelectedItem()
 		if not item:

@@ -83,10 +83,10 @@ op:
     - label: Cell Coordinate for Distance and Ratio for Radial
       name: cellcoordandratio
     name: Iterationtype
-  - label: Cell Coord
-    name: Createrefcellcoord
-    summary: 'Create reference to variable: Cell Coord'
   status: beta
   thumb: assets/images/reference/operators/filter/logPolarRepeat_thumb.png
+  variables:
+  - label: cellcoord
+    name: cellcoord
 
 ---

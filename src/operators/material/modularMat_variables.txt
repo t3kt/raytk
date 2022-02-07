@@ -1,9 +1,9 @@
-name	label	dataType	enable
-lightcolor	Light Color	vec3	1
-lightpos	Light Position	vec3	1
-surfacecolor	Surface Color (r, g, b, is set)	vec4	1
-surfaceuv	Surface UV (u, v, w, is set)	vec4	1
-ao	Ambient Occlusion	float	1
-shadedlevel	Shaded Level (0: full shadow, 1: none)	float	1
-normal	Surface Normal	vec3	1
-reflectcolor	Reflection Color	vec3	1
+name	label	dataType	enable	macros
+lightcolor	Light Color	vec3	1	
+lightpos	Light Position	vec3	1	
+surfacecolor	Surface Color (r, g, b, is set)	vec4	1	RAYTK_USE_SURFACE_COLOR
+surfaceuv	Surface UV (u, v, w, is set)	vec4	1	RAYTK_USE_UV
+ao	Ambient Occlusion	float	1	
+shadedlevel	Shaded Level (0: full shadow, 1: none)	float	1	RAYTK_USE_SHADOW
+normal	Surface Normal	vec3	1	
+reflectcolor	Reflection Color	vec3	1	RAYTK_USE_REFLECTION

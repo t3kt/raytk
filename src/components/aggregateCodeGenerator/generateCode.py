@@ -9,30 +9,34 @@ def onCook(dat):
 	stepStmt = _prepStatement(parent().par.Stepstmt)
 	initMode = parent().par.Initmode
 	numMode = parent().par.Numberingmode
+	startIndex = int(parent().par.Startindex)
+	exprIndexOffset = int(parent().par.Exprindexoffset)
 	if numMode == 'available':
 		indices = [
 			tdu.digits(ch.name)
-			for ch in info.chans('hasInput*')
+			for ch in info.chans('hasInput*')[startIndex:]
 			if ch
 		]
 		n = len(indices)
 	else:  # sequential
-		n = int(info['inputCount'] or 0)
-		indices = list(range(1, n + 1))
+		n = int((info['inputCount'] or 0 - startIndex))
+		indices = list(range(startIndex + 1, startIndex + n + 1))
 	if initMode == 'firststep':
 		if n == 0:
-			return _prepStatement(parent().par.Defaultstmt)
+			dat.write(_prepStatement(parent().par.Defaultstmt))
+			return
 		firstStmt = _prepStatement(parent().par.Firststepstmt)
 		if n == 1:
-			return _injectIndex(firstStmt, indices[0])
-		lines = [_injectIndex(firstStmt, indices[0])] + [
-			_injectIndex(stepStmt, i)
+			dat.write(_injectIndex(firstStmt, indices[0] + exprIndexOffset))
+			return
+		lines = [_injectIndex(firstStmt, indices[0] + exprIndexOffset)] + [
+			_injectIndex(stepStmt, i + exprIndexOffset)
 			for i in indices[1:]
 		]
 	else:  # separate
 		startStmt = _prepStatement(parent().par.Startstmt)
 		lines = [startStmt] + [
-			_injectIndex(stepStmt, i)
+			_injectIndex(stepStmt, i + exprIndexOffset)
 			for i in indices
 		]
 	dat.write('\n'.join(lines))

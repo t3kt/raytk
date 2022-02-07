@@ -69,11 +69,11 @@ op:
   - label: Radius
     name: Radius
     summary: The thickness of the capsule.
-  - label: Normalized Offset (0..1)
-    name: Createrefnormoffset
-    summary: 'Create reference to variable: Normalized Offset (0..1)'
   summary: A cylinder with rounded ends, between two points.
   thumb: assets/images/reference/operators/sdf/capsuleSdf_thumb.png
+  variables:
+  - label: normoffset
+    name: normoffset
 
 ---
 

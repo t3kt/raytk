@@ -1,24 +1,25 @@
 ReturnT thismap(CoordT p, ContextT ctx) {
 	Time time = THIS_TIME;
 	#pragma r:if THIS_Intervaltype_seconds
-	float x = time_seconds(time);
+	float q = time_seconds(time);
 	#pragma r:elif THIS_Intervaltype_frames
-	float x = time_frame(time);
+	float q = time_frame(time);
 	#pragma r:elif THIS_Intervaltype_absseconds
-	float x = time_absSeconds(time);
+	float q = time_absSeconds(time);
 	#pragma r:elif THIS_Intervaltype_absframes
-	float x = time_absFrame(time);
+	float q = time_absFrame(time);
 	#pragma r:else
 	#error invalidIntervalType
 	#pragma r:endif
-	x = fract((x + THIS_Phase*THIS_Period)/ THIS_Period);
+	WAVE_PREP();
 	if (THIS_Reverse > 0.) {
-		x = 1.0 - x;
+		q = 1.0 - q;
 	}
+	ReturnT res;
 	#pragma r:if THIS_HAS_INPUT_waveFunction
-	x = inputOp_waveFunction(x, ctx);
+	res = inputOp_waveFunction(fract(q), ctx);
 	#pragma r:else
-	x = THIS_WAVE_EXPR;
+	WAVE_BODY();
 	#pragma r:endif
-	return THIS_Offset + (x * THIS_Amplitude);
+	return THIS_Offset + (res * THIS_Amplitude);
 }

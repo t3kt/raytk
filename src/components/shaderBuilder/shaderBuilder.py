@@ -45,6 +45,10 @@ class ShaderBuilder:
 		# noinspection PyTypeChecker
 		return o or self.ownerComp.op('default_shaderBuilderConfig')
 
+	def _configValid(self):
+		o = self._config()
+		return bool(o is not None and o.valid)
+
 	def configPar(self) -> '_ConfigPar':
 		return self._config().par
 
@@ -72,9 +76,25 @@ class ShaderBuilder:
 		hostPar.val = config.name
 		ui.undo.endBlock()
 
-	def preprocessDefinitions(self, dat: 'scriptDAT'):
+	@staticmethod
+	def preprocessDefinitions(dat: 'scriptDAT'):
 		# BEFORE definitions are reversed, so a def's inputs are always BELOW it in the table
-		pass
+		knownCols = [c.val for c in dat.row(0)]
+		skipCols = ['name', 'path', 'coordType', 'contextType', 'returnType', 'definitionPath']
+		for row in range(1, dat.numRows):
+			defPath = str(dat[row, 'definitionPath'] or '')
+			defTable = op(defPath)
+			if not defTable or defTable.numRows < 2:
+				continue
+			if defTable.numRows > 2:
+				raise Exception(f'Invalid single-op definition table, too many rows: {defTable}')
+			for col, val in defTable.cols():
+				if col in skipCols:
+					continue
+				if col.val not in knownCols:
+					knownCols.append(col.val)
+					dat.appendCol([col])
+				dat[row, col].val = val
 
 	def _definitionTable(self) -> 'DAT':
 		# in reverse order (aka declaration order)
@@ -98,6 +118,8 @@ class ShaderBuilder:
 	def buildNameReplacementTable(self, dat: 'scriptDAT'):
 		dat.clear()
 		dat.appendRow(['before', 'after'])
+		if not self._configValid():
+			return
 		if not self.configPar().Simplifynames:
 			return
 		origNames = [c.val for c in self._definitionTable().col('name')[1:]]
@@ -112,18 +134,21 @@ class ShaderBuilder:
 		return wrapCodeSection(self.ownerComp.par.Globalprefix.eval(), 'globalPrefix')
 
 	def _createParamProcessor(self) -> '_ParameterProcessor':
-		mode = self.configPar().Parammode.eval()
+		if not self._configValid():
+			mode = 'uniformarray'
+		else:
+			mode = self.configPar().Parammode.eval()
 		if mode == 'uniformarray':
 			return _VectorArrayParameterProcessor(
 				self._parameterDetailTable(),
 				self._allParamVals(),
-				self.configPar(),
+				self.configPar() if self._configValid() else None,
 			)
 		elif mode == 'separateuniforms':
 			return _SeparateUniformsParameterProcessor(
 				self._parameterDetailTable(),
 				self._allParamVals(),
-				self.configPar(),
+				self.configPar() if self._configValid() else None,
 			)
 		else:
 			raise NotImplementedError(f'Parameter processor not available for mode: {mode!r}')
@@ -185,6 +210,8 @@ class ShaderBuilder:
 			ownerName = varTable[row, 'owner']
 			localName = varTable[row, 'localName']
 			dat.appendRow([f'{ownerName}_EXPOSE_{localName}', ''])
+			for part in tdu.split(varTable[row, 'macros']):
+				dat.appendRow([part, ''])
 		refTable = self._referenceTable()
 		for row in range(1, refTable.numRows):
 			ownerName = refTable[row, 'owner']
@@ -267,7 +294,10 @@ class ShaderBuilder:
 		return dats
 
 	def buildLibraryIncludes(self, onWarning: Callable[[str], None] = None):
-		mode = str(self.configPar()['Includemode'] or 'includelibs')
+		if not self._configValid():
+			mode = 'includelibs'
+		else:
+			mode = str(self.configPar()['Includemode'] or 'includelibs')
 		supportsInclude = self.ownerComp.op('support_table')['include', 1] == '1'
 		if mode == 'includelibs' and not supportsInclude:
 			inlineAll = True
@@ -287,7 +317,10 @@ class ShaderBuilder:
 		return wrapCodeSection(libBlocks, 'libraries')
 
 	def buildOpDataTypedefBlock(self, typeDefMacroTable: 'DAT'):
-		inline = self.configPar()['Inlinetypedefs']
+		if not self._configValid():
+			inline = False
+		else:
+			inline = self.configPar()['Inlinetypedefs']
 		if typeDefMacroTable.numRows:
 			typedefs = {}
 			macros = {}
@@ -323,13 +356,10 @@ class ShaderBuilder:
 	def buildTypedefMacroTable(self, dat: 'scriptDAT'):
 		dat.clear()
 		defsTable = self._definitionTable()
-		coordTypeAdaptFuncs = {
+		typeAdaptFuncs = {
 			'float': 'adaptAsFloat',
 			'vec2': 'adaptAsVec2',
 			'vec3': 'adaptAsVec3',
-		}
-		returnTypeAdaptFuncs = {
-			'float': 'adaptAsFloat',
 			'vec4': 'adaptAsVec4',
 			'Sdf': 'adaptAsSdf',
 		}
@@ -344,13 +374,21 @@ class ShaderBuilder:
 			dat.appendRow([name + '_COORD_TYPE_' + coordType, '', 'macro'])
 			dat.appendRow([name + '_CONTEXT_TYPE_' + contextType, '', 'macro'])
 			dat.appendRow([name + '_RETURN_TYPE_' + returnType, '', 'macro'])
-			if coordType in coordTypeAdaptFuncs:
-				dat.appendRow([name + '_asCoordT', coordTypeAdaptFuncs[coordType], 'macro'])
-			if returnType in returnTypeAdaptFuncs:
-				dat.appendRow([name + '_asReturnT', returnTypeAdaptFuncs[returnType], 'macro'])
+			if coordType in typeAdaptFuncs:
+				dat.appendRow([name + '_asCoordT', typeAdaptFuncs[coordType], 'macro'])
+			if returnType in typeAdaptFuncs:
+				dat.appendRow([name + '_asReturnT', typeAdaptFuncs[returnType], 'macro'])
+		varTable = self._variableTable()
+		for row in range(1, varTable.numRows):
+			name = str(varTable[row, 'name'])
+			dataType = str(varTable[row, 'dataType'])
+			dat.appendRow([name + '_VarT', dataType, 'typedef'])
+			dat.appendRow([name + '_TYPE_' + dataType, '', 'macro'])
+			if dataType in typeAdaptFuncs:
+				dat.appendRow([name + '_asVarT', typeAdaptFuncs[dataType], 'macro'])
 
 	def inlineTypedefs(self, code: str, typeDefMacroTable: 'DAT') -> str:
-		if not self.configPar()['Inlinetypedefs']:
+		if not self._configValid() or not self.configPar()['Inlinetypedefs']:
 			return code
 		if not typeDefMacroTable.numRows:
 			return code
@@ -370,7 +408,10 @@ class ShaderBuilder:
 		return code
 
 	def _createCodeFilter(self, typeDefMacroTable: 'DAT') -> 'CodeFilter':
-		mode = self.configPar()['Filtermode']
+		if not self._configValid():
+			mode = 'macroize'
+		else:
+			mode = self.configPar()['Filtermode']
 		if mode == 'filter':
 			macroTable = self.ownerComp.op('macroTable')
 			cells = macroTable.col(0) or []
@@ -429,7 +470,7 @@ class ShaderBuilder:
 			rawVarTable: 'DAT',
 	):
 		dat.clear()
-		dat.appendRow(['name', 'owner', 'localName', 'dataType'])
+		dat.appendRow(['name', 'owner', 'localName', 'dataType', 'macros'])
 		refNames = set(c.val for c in procRefTable.col('source')[1:])
 		# rawVar columns: name, localName, label, dataType, owner
 		for i in range(1, rawVarTable.numRows):
@@ -439,7 +480,8 @@ class ShaderBuilder:
 					name,
 					rawVarTable[i, 'owner'],
 					rawVarTable[i, 'localName'],
-					rawVarTable[i, 'dataType']
+					rawVarTable[i, 'dataType'],
+					rawVarTable[i, 'macros'],
 				])
 
 	def buildPredeclarations(self):
@@ -687,6 +729,8 @@ class _VarRefChecker:
 		for i in range(1, defTable.numRows):
 			name = defTable[i, 'name'].val
 			for inName in defTable[i, 'inputNames'].val.split():
+				if ':' in inName:
+					inName = inName.split(':')[-1]
 				if inName in self.opOutputs:
 					self.opOutputs[inName].append(name)
 				else:
@@ -733,6 +777,17 @@ class _VarRefChecker:
 		for path in allPaths:
 			if srcOwner not in path:
 				self.addError(refOwnerPath, 'warning', f'Variable source ({srcOwner}) missing in path ' + '->'.join(simplifyNames(path)))
+
+class _VarRefChecker_2:
+	def __init__(
+			self,
+			varTable: 'DAT', refTable: 'DAT', defTable: 'DAT',
+			addError: 'Callable[[str, str, str], None]'):
+		self._addError = addError
+		self.varTable = varTable
+		self.refTable = refTable
+		self.defTable = defTable
+		pass
 
 @dataclass
 class _V2_Writer:
@@ -1113,14 +1168,14 @@ class _ParameterProcessor:
 			self,
 			paramDetailTable: 'DAT',
 			paramVals: 'CHOP',
-			configPar: '_ConfigPar',
+			configPar: 'Optional[_ConfigPar]',
 	):
 		self.paramDetailTable = paramDetailTable
 		self.hasParams = paramDetailTable.numRows > 1
-		self.useConstantReadOnly = configPar.Inlinereadonlyparameters
-		self.inlineAliases = configPar.Inlineparameteraliases
+		self.useConstantReadOnly = configPar.Inlinereadonlyparameters if configPar else False
+		self.inlineAliases = configPar.Inlineparameteraliases if configPar else False
 		self.paramVals = paramVals
-		self.aliasMode = str(configPar['Paramaliasmode'] or 'macro')
+		self.aliasMode = str(configPar['Paramaliasmode'] or 'macro') if configPar else 'macro'
 		self.paramExprs = None  # type: Optional[Dict[str, _ParamExpr]]
 
 	def globalDeclarations(self) -> List[str]:

@@ -1,2 +1,0 @@
-'1'	'THIS_EXPOSE_VAR'	'THIS_EXPOSE_' + (parent().par.Name or 'var')
-'1'	'THIS_VAR'	'THIS_' + (parent().par.Name or 'var')

@@ -1,3 +1,0 @@
-name	label	params
-union	Union	
-smoothunion	Smooth Union	Mergeradius

@@ -1,12 +1,8 @@
 name	label	contextType	returnType	expr	macro
 iteration	Iteration	Context	vec4	ctx.iteration	
 matorbit	Orbit Trap (Material)	MaterialContext	vec4	ctx.result.orbit	RAYTK_ORBIT_IN_SDF
-matsteps	Step Count (Material)	MaterialContext	float	float(ctx.result.steps)	RAYTK_STEPS_IN_SDF
-matnearhits	Near Hits (Material)	MaterialContext	vec4	vec4(float(nearHitCount), nearHitAmount, 0, 0)	RAYTK_NEAR_HITS_IN_SDF
 matiteration	Iteration (Material)	MaterialContext	vec4	ctx.result.iteration	RAYTK_ITERATION_IN_SDF
 matobjectid	Object ID (Material)	MaterialContext	vec4	ctx.result.objectId	RAYTK_OBJECT_ID_IN_SDF
 lightorbit	Orbit Trap (Light)	LightContext	vec4	ctx.result.orbit	RAYTK_ORBIT_IN_SDF
-lightsteps	Step Count (Light)	LightContext	float	float(ctx.result.steps)	RAYTK_STEPS_IN_SDF
-lightnearhits	Near Hits (Light)	LightContext	vec4	vec4(float(nearHitCount), nearHitAmount, 0, 0)	RAYTK_NEAR_HITS_IN_SDF
 lightiteration	Iteration (Light)	LightContext	vec4	ctx.result.iteration	RAYTK_ITERATION_IN_SDF
 lightobjectid	Object ID (Light)	Lightontext	vec4	ctx.result.objectId	RAYTK_OBJECT_ID_IN_SDF

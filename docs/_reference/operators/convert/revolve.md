@@ -94,14 +94,13 @@ op:
     - label: Ratio
       name: ratio
     name: Iterationtype
-  - label: Angle
-    name: Createrefangle
-    summary: 'Create reference to variable: Angle'
-  - label: Normalized Angle
-    name: Createrefnormangle
-    summary: 'Create reference to variable: Normalized Angle'
   summary: Creates a 3D SDF by revolving a 2D cross-section SDF around an axis.
   thumb: assets/images/reference/operators/convert/revolve_thumb.png
+  variables:
+  - label: angle
+    name: angle
+  - label: normangle
+    name: normangle
 
 ---
 

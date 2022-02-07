@@ -1,8 +1,5 @@
 	'RAYTK_MAX_STEPS'	int(parent().par.Maxsteps)
 	'RAYTK_MAX_DIST'	parent().par.Maxdist
 	'RAYTK_SURF_DIST'	parent().par.Surfdist
-parent().par.Enablesdfoutput	'RAYTK_STEPS_IN_SDF'
-parent().par.Enablenearhitoutput	'RAYTK_NEAR_HITS_IN_SDF'
 parent().par.Enableiterationoutput	'RAYTK_ITERATION_IN_SDF'
-parent().par.Enablestepoutput	'RAYTK_STEPS_IN_SDF'
 parent().par.Enablecoloroutput	'OUTPUT_COLOR'

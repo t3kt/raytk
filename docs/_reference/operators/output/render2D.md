@@ -137,18 +137,12 @@ op:
     name: Enableuvoutput
   - label: Enable Normal Output
     name: Enablenormaloutput
-  - label: Select SDF Result
-    name: Createrselsdfout
-    summary: 'Create renderSelect for output: SDF Result'
-  - label: Select Color
-    name: Createrselcolorout
-    summary: 'Create renderSelect for output: Color'
-  - label: Select UV
-    name: Createrseluvout
-    summary: 'Create renderSelect for output: UV'
-  - label: Select Normal
-    name: Createrselnormalout
-    summary: 'Create renderSelect for output: Normal'
+  - label: Enable Debug Output
+    name: Enabledebugoutput
+  - label: Enable Custom Output 1
+    name: Enablecustomoutput1
+  - label: Enable Custom Output 2
+    name: Enablecustomoutput2
   shortcuts:
   - r2
   summary: Renders a 2D image by evaluating the input field for each pixel.

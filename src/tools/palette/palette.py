@@ -210,7 +210,10 @@ class Palette:
 				postSetup=info['postSetup'],
 			)
 
-	def CreateVariableReference(self, fromOp: 'COMP', variable: str, dataType: str):
+	def CreateVariableReference(
+			self,
+			fromOp: 'COMP', variable: str, dataType: str,
+			postSetup: 'Optional[Callable[[COMP], None]]' = None):
 		def initRef(refOp: 'COMP'):
 			refOp.par.Source.val = fromOp
 			refOp.par.Source.readOnly = True
@@ -218,17 +221,23 @@ class Palette:
 			refOp.par.Variable.readOnly = True
 			refOp.par.Datatype = dataType
 			refOp.par.Datatype.readOnly = True
+			if postSetup:
+				postSetup(refOp)
 		self.CreateItem(
 			'/raytk/operators/utility/variableReference',
 			postSetup=initRef
 		)
 
-	def CreateRenderSelect(self, fromOp: 'COMP', outputName: str):
+	def CreateRenderSelect(
+			self, fromOp: 'COMP', outputName: str,
+			postSetup: 'Optional[Callable[[COMP], None]]' = None):
 		def initSel(refOp: 'COMP'):
 			refOp.par.Outputop.val = fromOp
 			refOp.par.Outputop.readOnly = True
 			refOp.par.Outputbuffer.val = outputName
 			refOp.par.Outputbuffer.readOnly = True
+			if postSetup:
+				postSetup(refOp)
 		self.CreateItem(
 			'/raytk/operators/output/renderSelect',
 			postSetup=initSel
@@ -253,6 +262,9 @@ class Palette:
 		if not toolkit:
 			return op(path)
 		return op(path.replace('/raytk/', f'/{toolkit.path}/', 1))
+
+	def IsKnownType(self, pathOrOpType: str):
+		return bool(self._getTemplate(pathOrOpType))
 
 	def onPickItem(self, item: 'PickerItem'):
 		if not item:

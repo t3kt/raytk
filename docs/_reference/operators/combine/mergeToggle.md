@@ -149,7 +149,6 @@ op:
     name: Enable7
   - label: Enable 8
     name: Enable8
-  status: beta
   summary: Combines multiple SDFs with a toggle to show/hide each without a shader
     rebuild.
 

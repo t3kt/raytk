@@ -8,6 +8,20 @@ redirect_from:
   - /reference/opType/raytk.operators.sdf.tetrahedronSdf/
 op:
   category: sdf
+  inputs:
+  - contextTypes:
+    - Context
+    - MaterialContext
+    - CameraContext
+    - LightContext
+    - RayContext
+    - ParticleContext
+    coordTypes:
+    - vec3
+    label: Scale Field
+    name: scaleField
+    returnTypes:
+    - float
   name: tetrahedronSdf
   opType: raytk.operators.sdf.tetrahedronSdf
   parameters:

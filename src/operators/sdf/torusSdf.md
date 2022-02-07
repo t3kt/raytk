@@ -10,5 +10,3 @@ SDF for a torus.
 * `Thickness`
 * `Translate`
 * `Enablecaps`
-* `Startangle`
-* `Endangle`

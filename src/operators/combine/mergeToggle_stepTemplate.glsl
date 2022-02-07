@@ -1,3 +1,3 @@
 if (THIS_Enable$ > 0.5) {
-  res = opSimpleUnion(res, inputOp$(p, ctx));
+  res = cmb_simpleUnion(res, inputOp$(p, ctx));
 }

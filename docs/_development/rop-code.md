@@ -104,7 +104,7 @@ Each ROP can have one explicitly defined macro table, and some number of generat
 
 ### Global Macros
 
-ROPs can also define a table of "global" macros. These differ from ROP-specific macros in that they are included earlier in the shader before library includes. They are intended to enable features within shared libraries. For example, `RAYTK_STEPS_IN_SDF` enables the `steps` field in the `Sdf` struct, and is used by ops that depend on it, allowing that field to be omitted if nothing is using it.
+ROPs can also define a table of "global" macros. These differ from ROP-specific macros in that they are included earlier in the shader before library includes. They are intended to enable features within shared libraries.
 
 ## Types
 
@@ -228,7 +228,7 @@ The `MaterialContext` is used in raymarching when calculating the color to use f
 
 The `Sdf` struct represents a ray hitting a surface (so a more accurate name might be `SurfaceHit`). It includes information about that surface and properties of the ray process that caused the hit. The struct is the only way that an SDF-based operator can pass value to the ROP that called it.
 
-The struct will contain different fields depending on whether those features are being used. For example, if the "near hit" output buffer is being used, it contains fields `nearHitCount` and `nearHitAmount`. Because the struct can contain different types of fields, it is important to use the provided functions for things like creating and modifying them, rather than manually constructing them.
+The struct will contain different fields depending on whether those features are being used. For example, if the "Object ID" output buffer is being used, it contains an `objectId` field. Because the struct can contain different types of fields, it is important to use the provided functions for things like creating and modifying them, rather than manually constructing them.
 
 This code is problematic because it fails to account for properties like material blending settings, reflection properties (if those are being used), near hit values (if those are being used), etc:
 

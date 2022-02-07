@@ -35,6 +35,32 @@ op:
     name: thicknessField
     returnTypes:
     - float
+  - contextTypes:
+    - Context
+    - MaterialContext
+    - CameraContext
+    - LightContext
+    - RayContext
+    - ParticleContext
+    coordTypes:
+    - vec3
+    label: Angle Width Field
+    name: angleWidthField
+    returnTypes:
+    - float
+  - contextTypes:
+    - Context
+    - MaterialContext
+    - CameraContext
+    - LightContext
+    - RayContext
+    - ParticleContext
+    coordTypes:
+    - vec3
+    label: Angle Offset Field
+    name: angleOffsetField
+    returnTypes:
+    - float
   keywords:
   - donut
   - ring
@@ -59,10 +85,10 @@ op:
     name: Translate
   - label: Enable Caps
     name: Enablecaps
-  - label: Start Angle
-    name: Startangle
-  - label: End Angle
-    name: Endangle
+  - label: Angle Width
+    name: Anglewidth
+  - label: Angle Offset
+    name: Angleoffset
   - label: UV Mode
     menuOptions:
     - label: None
@@ -70,14 +96,13 @@ op:
     - label: Torus
       name: torus
     name: Uvmode
-  - label: Angle (0-360)
-    name: Createrefangle
-    summary: 'Create reference to variable: Angle (0-360)'
-  - label: Normalized Angle (0-1)
-    name: Createrefnormangle
-    summary: 'Create reference to variable: Normalized Angle (0-1)'
   summary: SDF for a torus.
   thumb: assets/images/reference/operators/sdf/torusSdf_thumb.png
+  variables:
+  - label: angle
+    name: angle
+  - label: normangle
+    name: normangle
 
 ---
 

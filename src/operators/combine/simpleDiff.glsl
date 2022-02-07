@@ -1,3 +1,8 @@
 ReturnT thismap(CoordT p, ContextT ctx) {
-	return opSimpleDiff(THIS_INPUT_OP_1(p, ctx), THIS_INPUT_OP_2(p, ctx));
+	Sdf res1 = inputOp1(p, ctx);
+	Sdf res2 = inputOp2(p, ctx);
+	if (THIS_Swaporder > 0.) {
+		swap(res1, res2);
+	}
+	return cmb_simpleDiff(res1, res2);
 }

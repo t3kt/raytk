@@ -204,7 +204,6 @@ op:
   - label: Translate 8
     name: Translate8
     summary: Moves the input SDF 8.
-  status: beta
   summary: Combines multiple SDFs, with a different position for each.
   thumb: assets/images/reference/operators/combine/arrange_thumb.png
 

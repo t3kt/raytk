@@ -58,11 +58,11 @@ op:
     name: Shape
   - label: Inner Radius
     name: Innerradius
-  - label: Normalized Angle (0..1)
-    name: Createrefnormangle
-    summary: 'Create reference to variable: Normalized Angle (0..1)'
   summary: SDF for a 2D pie-slice shape.
   thumb: assets/images/reference/operators/sdf2d/pieSdf2d_thumb.png
+  variables:
+  - label: normangle
+    name: normangle
 
 ---
 

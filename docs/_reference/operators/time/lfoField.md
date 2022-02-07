@@ -22,6 +22,7 @@ op:
     name: waveFunction
     returnTypes:
     - float
+    - vec4
   name: lfoField
   opType: raytk.operators.time.lfoField
   parameters:

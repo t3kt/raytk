@@ -23,6 +23,8 @@ op:
       name: float
     - label: Vector
       name: vec4
+    - label: Sdf
+      name: Sdf
     name: Datatype
   - label: Use Part
     menuOptions:
@@ -39,6 +41,5 @@ op:
     name: Part
   - label: Default Value
     name: Defaultval
-  status: beta
 
 ---

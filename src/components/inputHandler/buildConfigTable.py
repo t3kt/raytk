@@ -11,6 +11,8 @@ if False:
 		Label: StrParamT
 		Localalias: StrParamT
 		Help: StrParamT
+		Variables: StrParamT
+		Variableinputs: StrParamT
 
 # Everything in this table gets frozen at build time.
 def onCook(dat: 'scriptDAT'):
@@ -56,6 +58,8 @@ def onCook(dat: 'scriptDAT'):
 		['label', label],
 		['alias', alias],
 		['help', helpText],
+		['vars', _parentPar().Variables],
+		['varInputs', _parentPar().Variableinputs],
 	])
 
 

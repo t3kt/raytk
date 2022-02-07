@@ -14,6 +14,25 @@ op:
     by ensuring the objects wrap around the edges.
 
     It isn''t perfect but it is low cost.'
+  inputs:
+  - contextTypes:
+    - Context
+    - MaterialContext
+    - CameraContext
+    - LightContext
+    - RayContext
+    - ParticleContext
+    coordTypes:
+    - float
+    - vec2
+    - vec3
+    label: Coordinate Field
+    name: coordField
+    returnTypes:
+    - vec4
+  keywords:
+  - cellular
+  - voronoi
   name: cellTileField
   opType: raytk.operators.field.cellTileField
   parameters:

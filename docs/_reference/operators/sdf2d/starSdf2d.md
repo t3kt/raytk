@@ -72,11 +72,11 @@ op:
     - label: Polar
       name: polar
     name: Uvmode
-  - label: Normalized Angle (0..1)
-    name: Createrefnormangle
-    summary: 'Create reference to variable: Normalized Angle (0..1)'
   summary: SDF for a 2D star shape.
   thumb: assets/images/reference/operators/sdf2d/starSdf2d_thumb.png
+  variables:
+  - label: normangle
+    name: normangle
 
 ---
 

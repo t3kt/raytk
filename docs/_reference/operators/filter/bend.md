@@ -32,7 +32,6 @@ op:
     - vec3
     label: definition_in
     name: definition_in
-    required: true
     returnTypes:
     - float
     - vec4
@@ -87,14 +86,13 @@ op:
   - label: Shift
     name: Shift
     summary: Shifts the axis to bend along and the axis to bend towards.
-  - label: Position Along Axis
-    name: Createrefaxispos
-    summary: 'Create reference to variable: Position Along Axis'
-  - label: Position On Bend Axis
-    name: Createrefbendpos
-    summary: 'Create reference to variable: Position On Bend Axis'
   summary: Bends space, along a main axis, towards a second axis.
   thumb: assets/images/reference/operators/filter/bend_thumb.png
+  variables:
+  - label: axispos
+    name: axispos
+  - label: bendpos
+    name: bendpos
 
 ---
 

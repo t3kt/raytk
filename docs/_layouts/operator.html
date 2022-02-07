@@ -111,6 +111,18 @@ layout: page
 	</ul>
 {% endif %}
 
+{% if page.op.variables %}
+	<h2>Variables</h2>
+	<ul>
+		{% for variable in page.op.variables %}
+			<li>
+				<code class="variable-name" title="{{ variable.name }}">{{ variable.label }}</code>:
+				<span class="variable-name">{{ variable-name.summary }}</span>
+			</li>
+		{% endfor %}
+	</ul>
+{% endif %}
+
 {% if page.op.images %}
 	<h2>Images</h2>
 	{% for img in page.op.images %}

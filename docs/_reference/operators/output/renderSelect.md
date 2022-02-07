@@ -27,6 +27,12 @@ op:
       name: normalOut
     - label: Object Id
       name: objectIdOut
+    - label: Custom 1
+      name: customOut1
+    - label: Custom 2
+      name: customOut2
+    - label: Debug
+      name: debugOut
     - label: Depth
       name: depthOut
     - label: World Position
@@ -43,16 +49,10 @@ op:
       name: stepsOut
     - label: Iteration
       name: iterationOut
-    - label: Debug
-      name: debugOut
     - label: UV
       name: uvOut
     - label: Final Output
       name: finalOut
-    - label: Custom 1
-      name: customOut1
-    - label: Custom 2
-      name: customOut2
     name: Outputbuffer
 
 ---

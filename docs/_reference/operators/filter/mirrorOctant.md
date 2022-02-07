@@ -21,7 +21,6 @@ op:
     - vec3
     label: definition_in
     name: definition_in
-    required: true
     returnTypes:
     - float
     - vec4
@@ -100,14 +99,13 @@ op:
     - label: Signed Axes (-1/1, -1/1)
       name: sign
     name: Iterationtype
-  - label: Quadrant Index (0..3)
-    name: Createrefindex
-    summary: 'Create reference to variable: Quadrant Index (0..3)'
-  - label: Signed XY Axes (-1, 1)
-    name: Createrefsign
-    summary: 'Create reference to variable: Signed XY Axes (-1, 1)'
   summary: Mirror coordinates across two axes and the diagonals.
   thumb: assets/images/reference/operators/filter/mirrorOctant_thumb.png
+  variables:
+  - label: index
+    name: index
+  - label: sign
+    name: sign
 
 ---
 

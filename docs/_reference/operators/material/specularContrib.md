@@ -15,6 +15,37 @@ op:
   - assets/images/reference/operators/material/specularContrib_gaussian.png
   - assets/images/reference/operators/material/specularContrib_ggx.png
   - assets/images/reference/operators/material/specularContrib_phong.png
+  inputs:
+  - contextTypes:
+    - MaterialContext
+    coordTypes:
+    - float
+    - vec2
+    - vec3
+    label: Shininess
+    name: shininessField
+    returnTypes:
+    - float
+  - contextTypes:
+    - MaterialContext
+    coordTypes:
+    - float
+    - vec2
+    - vec3
+    label: Roughness
+    name: roughnessField
+    returnTypes:
+    - float
+  - contextTypes:
+    - MaterialContext
+    coordTypes:
+    - float
+    - vec2
+    - vec3
+    label: Fresnel
+    name: fresnelField
+    returnTypes:
+    - float
   keywords:
   - ggx
   - lighting

@@ -79,10 +79,10 @@ op:
     name: Radiusstart
   - label: Radius End
     name: Radiusend
-  - label: Offset Along Curve (0..1)
-    name: Createrefnormoffset
-    summary: 'Create reference to variable: Offset Along Curve (0..1)'
   status: beta
   thumb: assets/images/reference/operators/sdf/bezierSdf_thumb.png
+  variables:
+  - label: normoffset
+    name: normoffset
 
 ---

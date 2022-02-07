@@ -21,7 +21,6 @@ op:
     - vec3
     label: definition_in
     name: definition_in
-    required: true
     returnTypes:
     - float
     - vec4
@@ -81,16 +80,15 @@ op:
     - label: Signed (-1/1)
       name: sign
     name: Iterationtype
-  - label: Side Sign (-1/1)
-    name: Createrefsign
-    summary: 'Create reference to variable: Side Sign (-1/1)'
-  - label: Side Index (0/1)
-    name: Createrefindex
-    summary: 'Create reference to variable: Side Index (0/1)'
   shortcuts:
   - ref
   summary: Reflects space across a plane.
   thumb: assets/images/reference/operators/filter/reflect_thumb.png
+  variables:
+  - label: sign
+    name: sign
+  - label: index
+    name: index
 
 ---
 

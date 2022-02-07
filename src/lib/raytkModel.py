@@ -777,9 +777,9 @@ class ROPSpecLoader:
 		self._loadTextSetting(p.Functemplate, d.function, defaultName='function', x=x, y=200)
 		self._loadTextSetting(p.Opglobals, d.opGlobals, defaultName='globals', x=x, y=y)
 		y -= 150
-		self._loadTextSetting(p.Initcode, d.initCode, defaultName='init', x=x, y=y)
+		self._loadTextSetting(p.Initcode, d.init, defaultName='init', x=x, y=y)
 		y -= 150
-		self._loadTextSetting(p.Stageinitcode, d.stageInitCode, defaultName='stageInit', x=x, y=y)
+		self._loadTextSetting(p.Stageinitcode, d.stageInit, defaultName='stageInit', x=x, y=y)
 		y -= 150
 		self._loadTextSetting(p.Materialcode, d.material, defaultName='material', x=x, y=y)
 		self._loadTextSetting(p.Callbacks, d.callbacks, defaultName='callbacks', x=200, y=200)

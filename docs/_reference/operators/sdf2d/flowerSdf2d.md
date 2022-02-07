@@ -57,9 +57,9 @@ op:
     name: Amplitude
   - label: Petals
     name: Petals
-  - label: Normalized Angle (0..1)
-    name: Createrefnormangle
-    summary: 'Create reference to variable: Normalized Angle (0..1)'
   thumb: assets/images/reference/operators/sdf2d/flowerSdf2d_thumb.png
+  variables:
+  - label: normangle
+    name: normangle
 
 ---

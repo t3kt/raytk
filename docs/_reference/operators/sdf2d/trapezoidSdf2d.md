@@ -8,6 +8,47 @@ redirect_from:
   - /reference/opType/raytk.operators.sdf2d.trapezoidSdf2d/
 op:
   category: sdf2d
+  inputs:
+  - contextTypes:
+    - Context
+    - MaterialContext
+    - CameraContext
+    - LightContext
+    - RayContext
+    - ParticleContext
+    coordTypes:
+    - vec2
+    label: Point 1+2 Coords Field
+    name: pointsField
+    returnTypes:
+    - vec4
+  - contextTypes:
+    - Context
+    - MaterialContext
+    - CameraContext
+    - LightContext
+    - RayContext
+    - ParticleContext
+    coordTypes:
+    - vec2
+    label: Height Field
+    name: heightField
+    returnTypes:
+    - float
+  - contextTypes:
+    - Context
+    - MaterialContext
+    - CameraContext
+    - LightContext
+    - RayContext
+    - ParticleContext
+    coordTypes:
+    - vec2
+    label: Width Field
+    name: widthField
+    returnTypes:
+    - float
+    - vec4
   name: trapezoidSdf2d
   opType: raytk.operators.sdf2d.trapezoidSdf2d
   parameters:

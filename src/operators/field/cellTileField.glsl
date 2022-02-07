@@ -3,7 +3,11 @@ float THIS_drawSphere(vec3 p) {
 }
 
 ReturnT thismap(CoordT p, ContextT ctx) {
+	#pragma r:if THIS_HAS_INPUT_coordField
+	vec3 q = adaptAsVec3(inputOp_coordField(p, ctx));
+	#pragma r:else
 	vec3 q = adaptAsVec3(p);
+	#pragma r:endif
 	q -= THIS_Translate;
 	q /= THIS_Scale;
 	// Draw four overlapping objects (spheres, in this case) at various positions throughout the tile.

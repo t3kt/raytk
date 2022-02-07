@@ -2,6 +2,6 @@
   "meta": {
     "opStatus": "default",
     "opType": "raytk.operators.function.waveFn",
-    "opVersion": 7
+    "opVersion": 10
   }
 }

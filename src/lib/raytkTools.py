@@ -8,7 +8,7 @@ from pathlib import Path
 from raytkDocs import OpDocManager
 from raytkModel import OpDefMeta_OLD, OpSpec_OLD, ROPSpec
 from raytkUtil import RaytkContext, ROPInfo, focusFirstCustomParameterPage, RaytkTags, CategoryInfo, ContextTypes, \
-	CoordTypes, ReturnTypes
+	CoordTypes, ReturnTypes, getActiveEditor
 from typing import Callable, List, Optional
 
 # noinspection PyUnreachableCode
@@ -130,17 +130,18 @@ class RaytkTools(RaytkContext):
 
 	@staticmethod
 	def _updateRenderSelectParams(rop: 'COMP'):
-		namesAndLabels = ROPInfo(rop).outputBufferNamesAndLabels
-		if not namesAndLabels:
+		table = ROPInfo(rop).outputBufferTable
+		if not table:
 			return
-		names = [nl[0] for nl in namesAndLabels]
+		names = [str(c) for c in table.col('name')[1:]]
 		toDelete = []
 		page = rop.appendCustomPage('Outputs')
 		for par in list(page.pars):
 			if par.valid and par.name.startswith('Creatersel') and par.name.replace('Creatersel', '') not in names:
 				toDelete.append(par)
-		for i, nl in enumerate(namesAndLabels):
-			name, label = nl
+		for i in range(1, table.numRows):
+			name = str(table[i, 'name'])
+			label = str(table[i, 'label'])
 			par = page.appendPulse('Creatersel' + name.lower(), label=f'Select {label}')[0]
 			par.help = f'Create renderSelect for output: {label}'
 			par.enableExpr = f"hasattr(op, 'raytk') and op.raytk.op('tools/palette') and '{name}' in op('./output_buffers').col('name')[1:]"
@@ -406,6 +407,22 @@ class RaytkTools(RaytkContext):
 		if shouldUpdateVal:
 			par.val = defVal
 		ui.status = f'Updated {parName} on {ropInfo.rop}!'
+
+	def currentCategories(self):
+		pane = getActiveEditor()
+		if not pane:
+			return None
+		comp = pane.owner
+		operators = self.operatorsRoot()
+		if comp.parent() == operators:
+			return [comp]
+		if comp != operators:
+			return []
+		cats = []
+		for child in comp.selectedChildren:
+			if child.isCOMP:
+				cats.append(child)
+		return cats
 
 class ToolkitLoader(RaytkTools):
 	def __init__(self, log: 'Callable[[str], None]'):

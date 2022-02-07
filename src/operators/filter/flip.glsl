@@ -1,3 +1,8 @@
+void THIS_merge(inout Sdf res1, in Sdf res2, CoordT p, ContextT ctx) {
+MERGE_PREP();
+MERGE_BODY();
+}
+
 ReturnT thismap(CoordT p, ContextT ctx) {
 	CoordT q = p;
 	q.THIS_AXIS += THIS_Shift;
@@ -32,10 +37,7 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 		THIS_index = 1;
 		#pragma r:endif
 		Sdf res2 = inputOp1(q, ctx);
-		#pragma r:if THIS_Mergetype_smoothUnion
-			return opSmoothUnionM(res1, res2, THIS_Mergeradius);
-		#pragma r:else
-			return opSimpleUnion(res1, res2);
-		#pragma r:endif
+		THIS_merge(res1, res2, p, ctx);
+		return res1;
 	#pragma r:endif
 }

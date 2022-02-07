@@ -1,5 +1,8 @@
-name	label	macro	enable	path
-sdfOut	SDF Result	OUTPUT_SDF		parent().path + '/render_glsl'
-colorOut	Color	OUTPUT_COLOR		parent().path + '/render_glsl'
-uvOut	UV	OUTPUT_UV	parent().par.Enableuvoutput	parent().path + '/render_glsl'
-normalOut	Normal	OUTPUT_NORMAL	parent().par.Enablenormaloutput	parent().path + '/render_glsl'
+name	label	macro	enable	path	enablePar	available
+sdfOut	SDF Result	OUTPUT_SDF		parent().path + '/render_glsl'		op('definition')[1, 'returnType'] == 'Sdf'
+colorOut	Color	OUTPUT_COLOR		parent().path + '/render_glsl'		
+uvOut	UV	OUTPUT_UV	parent().par.Enableuvoutput	parent().path + '/render_glsl'	Enableuvoutput	op('definition')[1, 'returnType'] == 'Sdf'
+normalOut	Normal	OUTPUT_NORMAL	parent().par.Enablenormaloutput	parent().path + '/render_glsl'	Enablenormaloutput	op('definition')[1, 'returnType'] == 'Sdf'
+customOut1	Custom 1	OUTPUT_CUSTOM_1	parent().par.Enablecustomoutput1	parent().path + '/render_glsl'	Enablecustomoutput1	
+customOut2	Custom 2	OUTPUT_CUSTOM_2	parent().par.Enablecustomoutput2	parent().path + '/render_glsl'	Enablecustomoutput2	
+debugOut	Debug	OUTPUT_DEBUG	parent().par.Enabledebugoutput	parent().path + '/render_glsl'	Enabledebugoutput	

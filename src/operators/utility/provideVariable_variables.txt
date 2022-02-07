@@ -1,2 +1,2 @@
 'name'	'label'	'dataType'	'enable'
-parent().par.Name or 'var'	parent().par.Label or parent().par.Name or 'Variable'	parent().par.Datatype	int(parent().par.Enable)
+parent().par.Name or 'var'	parent().par.Label or parent().par.Name or 'Variable'	op('value_definition')[1, 'returnType'] or parent().par.Datatype	int(parent().par.Enable)

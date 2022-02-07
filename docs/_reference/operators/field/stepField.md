@@ -53,6 +53,8 @@ op:
     name: Enable
   - label: Coord Type
     menuOptions:
+    - label: Auto
+      name: auto
     - label: 1D
       name: float
     - label: 2D
@@ -107,7 +109,6 @@ op:
     - label: RayContext
       name: RayContext
     name: Contexttype
-  status: beta
   summary: A field that switches between two values at a threshold point.
   thumb: assets/images/reference/operators/field/stepField_thumb.png
 

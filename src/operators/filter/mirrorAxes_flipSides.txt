@@ -1,0 +1,8 @@
+name	label
+none	None
+xpos	X+
+xneg	X-
+ypos	Y+
+yneg	Y-
+zpos	Z+
+zneg	Z-

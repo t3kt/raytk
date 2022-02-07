@@ -48,10 +48,42 @@ op:
     menuOptions:
     - label: None
       name: none
-    - label: Union
-      name: union
+    - label: Simple Union
+      name: simpleUnion
+    - label: Simple Intersect
+      name: simpleIntersect
+    - label: Simple Difference
+      name: simpleDiff
     - label: Smooth Union
       name: smoothUnion
+    - label: Smooth Intersect
+      name: smoothIntersect
+    - label: Smooth Difference
+      name: smoothDiff
+    - label: Round Union
+      name: roundUnion
+    - label: Round Intersect
+      name: roundIntersect
+    - label: Round Difference
+      name: roundDiff
+    - label: Chamfer Union
+      name: chamferUnion
+    - label: Chamfer Intersect
+      name: chamferIntersect
+    - label: Chamfer Difference
+      name: chamferDiff
+    - label: Stair Union
+      name: stairUnion
+    - label: Stair Intersect
+      name: stairIntersect
+    - label: Stair Difference
+      name: stairDiff
+    - label: Column Union
+      name: columnUnion
+    - label: Column Intersect
+      name: columnIntersect
+    - label: Column Difference
+      name: columnDiff
     name: Mergetype
     summary: Whether to just flip the input or flip it and merge that with the original.
   - label: Merge Radius
@@ -68,14 +100,17 @@ op:
       name: sign
     name: Iterationtype
     summary: What kind of iteration values should be provided for upstream ops.
-  - label: Side Sign (-1/1)
-    name: Createrefsign
-    summary: 'Create reference to variable: Side Sign (-1/1)'
-  - label: Side Index (0/1)
-    name: Createrefindex
-    summary: 'Create reference to variable: Side Index (0/1)'
+  - label: Merge Number
+    name: Mergenumber
+  - label: Merge Offset
+    name: Mergeoffset
   summary: Flips the input across an axis, either on its own or merged with the original.
   thumb: assets/images/reference/operators/filter/flip_thumb.png
+  variables:
+  - label: sign
+    name: sign
+  - label: index
+    name: index
 
 ---
 
