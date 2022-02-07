@@ -374,7 +374,7 @@ def _createGoToAction(text: str, getTargets: Callable[[ActionContext], List[OP]]
 
 def _createGoToGroup(text: str):
 	def _getVariableSource(ctx: ActionContext):
-		if ctx.primaryRopState.info.opType != _RopTypes.variableReference:
+		if not ctx.primaryRopState or ctx.primaryRopState.info.opType != _RopTypes.variableReference:
 			return []
 		source = ctx.primaryRop.par.Source.eval()
 		return [source] if source else []
@@ -389,8 +389,13 @@ def _createGoToGroup(text: str):
 		_createGoToAction('Variable Source', getTargets=_getVariableSource),
 		_createGoToAction('Variable References', getTargets=_getVariableReferences),
 	]
+	def isValid(ctx: ActionContext):
+		return any([action.isValid(ctx) for action in actions])
 	return _SimpleGroup(
-		text, isValid=lambda _: True, getActions=lambda _: actions)
+		text,
+		isValid=isValid,
+		getActions=lambda _: actions,
+	)
 
 def _pulsePrimaryRopParam(ctx: ActionContext, par: str):
 	rop = ctx.primaryRop
