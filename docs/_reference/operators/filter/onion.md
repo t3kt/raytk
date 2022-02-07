@@ -28,6 +28,7 @@ op:
     - RayContext
     - ParticleContext
     coordTypes:
+    - float
     - vec2
     - vec3
     label: definition_in
@@ -37,6 +38,36 @@ op:
     - float
     - vec4
     - Sdf
+  - contextTypes:
+    - Context
+    - MaterialContext
+    - CameraContext
+    - LightContext
+    - RayContext
+    - ParticleContext
+    coordTypes:
+    - float
+    - vec2
+    - vec3
+    label: Thickness Field
+    name: thicknessField
+    returnTypes:
+    - float
+  - contextTypes:
+    - Context
+    - MaterialContext
+    - CameraContext
+    - LightContext
+    - RayContext
+    - ParticleContext
+    coordTypes:
+    - float
+    - vec2
+    - vec3
+    label: Iterations Field
+    name: iterationsField
+    returnTypes:
+    - float
   keywords:
   - hollow
   - onion

@@ -10,6 +10,8 @@ cat:
   operators:
   - name: coordTo2D
   - name: coordTo3D
+  - name: crossSection
+    status: beta
   - name: extrude
     shortcuts:
     - ext

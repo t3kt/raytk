@@ -65,6 +65,20 @@ op:
     name: phaseField
     returnTypes:
     - float
+  - contextTypes:
+    - Context
+    - MaterialContext
+    - CameraContext
+    - LightContext
+    - RayContext
+    - ParticleContext
+    coordTypes:
+    - float
+    label: Wave Function
+    name: waveFunc
+    returnTypes:
+    - float
+    - vec4
   name: waveField
   opType: raytk.operators.field.waveField
   parameters:
@@ -82,6 +96,12 @@ op:
       name: ramp
     - label: Square
       name: square
+    - label: Additive Square (2)
+      name: addsquare2
+    - label: Additive Square (4)
+      name: addsquare4
+    - label: Additive Square (8)
+      name: addsquare8
     name: Function
     summary: The type of wave.
   - label: Axis

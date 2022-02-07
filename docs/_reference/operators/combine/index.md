@@ -14,7 +14,6 @@ cat:
   - name: addFields
     summary: Adds the values of multiple fields.
   - name: arrange
-    status: beta
     summary: Combines multiple SDFs, with a different position for each.
   - name: blend
     summary: Smoothly blends/morphs between up to 4 SDFs.
@@ -32,33 +31,11 @@ cat:
     shortcuts:
     - cmb
     summary: Combines SDFs in various ways.
-  - name: combineChamfer
-    status: deprecated
-    summary: Chamfer SDF combine, producing a flat surface at a 45 degree angle along
-      the blend region.
-  - name: combineColumns
-    status: deprecated
-    summary: Columns SDF combine, producing n-1 circular columns/ridges at a 45 degree
-      angles along the blend region.
   - name: combineFields
     summary: Combines float or vector fields using one of several mathematical operations.
-  - name: combineStairs
-    status: deprecated
-    summary: Stair SDF combine, producing steps along the blend region.
   - name: compositeFields
     summary: Combines two vector fields using color compositing.
   - name: edgeCombine
-  - name: edgeEngrave
-    status: deprecated
-    summary: Carves a v-shaped groove where the second input intersects with the first.
-  - name: edgeGroove
-    status: deprecated
-    summary: Creates a raised bar or indented groove where the second input intersects
-      with the first.
-  - name: edgePipe
-    status: deprecated
-    summary: Produces a cylindrical pipe along the blend region, replacing the input
-      shapes entirely.
   - name: iterationSwitch
     summary: Switches between inputs based on the iteration value provided by a downstream
       operator.
@@ -68,7 +45,6 @@ cat:
     summary: Merges multiple vector fields, using different fields for each vector
       part.
   - name: mergeToggle
-    status: beta
     summary: Combines multiple SDFs with a toggle to show/hide each without a shader
       rebuild.
   - name: shapedCombine

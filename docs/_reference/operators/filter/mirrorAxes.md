@@ -22,7 +22,6 @@ op:
     - vec3
     label: definition_in
     name: definition_in
-    required: true
     returnTypes:
     - float
     - vec4
@@ -59,6 +58,22 @@ op:
     - vec3
     label: Direction Field
     name: directionField
+    returnTypes:
+    - float
+    - vec4
+  - contextTypes:
+    - Context
+    - MaterialContext
+    - CameraContext
+    - LightContext
+    - RayContext
+    - ParticleContext
+    coordTypes:
+    - float
+    - vec2
+    - vec3
+    label: Flip Sides Field
+    name: flipSideField
     returnTypes:
     - float
     - vec4
@@ -105,14 +120,65 @@ op:
     - label: Negative
       name: neg
     name: Dirz
+  - label: Flip X On Side
+    menuOptions:
+    - label: None
+      name: none
+    - label: X+
+      name: xpos
+    - label: X-
+      name: xneg
+    - label: Y+
+      name: ypos
+    - label: Y-
+      name: yneg
+    - label: Z+
+      name: zpos
+    - label: Z-
+      name: zneg
+    name: Flipsidex
+  - label: Flip Y On Side
+    menuOptions:
+    - label: None
+      name: none
+    - label: X+
+      name: xpos
+    - label: X-
+      name: xneg
+    - label: Y+
+      name: ypos
+    - label: Y-
+      name: yneg
+    - label: Z+
+      name: zpos
+    - label: Z-
+      name: zneg
+    name: Flipsidey
+  - label: Flip Z On Side
+    menuOptions:
+    - label: None
+      name: none
+    - label: X+
+      name: xpos
+    - label: X-
+      name: xneg
+    - label: Y+
+      name: ypos
+    - label: Y-
+      name: yneg
+    - label: Z+
+      name: zpos
+    - label: Z-
+      name: zneg
+    name: Flipsidez
   - label: Center
     name: Center
   - label: Offset
     name: Offset
-  - label: Axis Sides (+/- 1)
-    name: Createrefsides
-    summary: 'Create reference to variable: Axis Sides (+/- 1)'
   status: beta
   thumb: assets/images/reference/operators/filter/mirrorAxes_thumb.png
+  variables:
+  - label: sides
+    name: sides
 
 ---

@@ -73,33 +73,26 @@ op:
     name: Enableao
   - label: Enable Reflection
     name: Enablereflection
-  - label: Light Color
-    name: Createreflightcolor
-    summary: 'Create reference to variable: Light Color'
-  - label: Light Position
-    name: Createreflightpos
-    summary: 'Create reference to variable: Light Position'
-  - label: Surface Color (r, g, b, is set)
-    name: Createrefsurfacecolor
-    summary: 'Create reference to variable: Surface Color (r, g, b, is set)'
-  - label: Surface UV (u, v, w, is set)
-    name: Createrefsurfaceuv
-    summary: 'Create reference to variable: Surface UV (u, v, w, is set)'
-  - label: Ambient Occlusion
-    name: Createrefao
-    summary: 'Create reference to variable: Ambient Occlusion'
-  - label: 'Shaded Level (0: full shadow, 1: none)'
-    name: Createrefshadedlevel
-    summary: 'Create reference to variable: Shaded Level (0: full shadow, 1: none)'
-  - label: Surface Normal
-    name: Createrefnormal
-    summary: 'Create reference to variable: Surface Normal'
-  - label: Reflection Color
-    name: Createrefreflectcolor
-    summary: 'Create reference to variable: Reflection Color'
   shortcuts:
   - mm
   summary: A material that is composed of one or more shading elements.
+  variables:
+  - label: lightcolor
+    name: lightcolor
+  - label: lightpos
+    name: lightpos
+  - label: surfacecolor
+    name: surfacecolor
+  - label: surfaceuv
+    name: surfaceuv
+  - label: ao
+    name: ao
+  - label: shadedlevel
+    name: shadedlevel
+  - label: normal
+    name: normal
+  - label: reflectcolor
+    name: reflectcolor
 
 ---
 

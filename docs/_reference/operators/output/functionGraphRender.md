@@ -156,12 +156,6 @@ op:
     name: Timerefop
   - label: Customize Shader Config
     name: Customizeshaderconfig
-  - label: Select GUI
-    name: Createrselguiout
-    summary: 'Create renderSelect for output: GUI'
-  - label: Select Color
-    name: Createrselcolorout
-    summary: 'Create renderSelect for output: Color'
   summary: Visualizes the graph of a function operator.
   thumb: assets/images/reference/operators/output/functionGraphRender_thumb.png
 

@@ -23,6 +23,12 @@ op:
       name: ramp
     - label: Square
       name: square
+    - label: Additive Square (2)
+      name: addsquare2
+    - label: Additive Square (4)
+      name: addsquare4
+    - label: Additive Square (8)
+      name: addsquare8
     name: Function
   - label: Coord Type
     menuOptions:

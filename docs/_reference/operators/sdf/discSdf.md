@@ -59,6 +59,13 @@ op:
     name: Thickness
   summary: A flat disc facing the Y axis.
   thumb: assets/images/reference/operators/sdf/discSdf_thumb.png
+  variables:
+  - label: angle
+    name: angle
+  - label: normangle
+    name: normangle
+  - label: normaxisdist
+    name: normaxisdist
 
 ---
 

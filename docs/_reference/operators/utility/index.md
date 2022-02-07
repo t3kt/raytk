@@ -18,11 +18,12 @@ cat:
       later
 
       be extracted from rendered output.'
+  - name: paramFilter
+    status: beta
   - name: provideVariable
     status: beta
   - name: toggleSwitch
   - name: variableReference
-    status: beta
   summary: Advanced operators that change how ROP chains behave.
 
 ---

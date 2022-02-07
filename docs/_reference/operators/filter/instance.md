@@ -73,6 +73,8 @@ op:
     summary: The number of copies to produce and merge.
   - label: Combine
     menuOptions:
+    - label: None
+      name: none
     - description: Combines the shapes so that all of their volumes are included.
       label: Simple Union
       name: simpleUnion
@@ -102,11 +104,27 @@ op:
       name: chamferIntersect
     - label: Chamfer Difference
       name: chamferDiff
+    - label: Stair Union
+      name: stairUnion
+    - label: Stair Intersect
+      name: stairIntersect
+    - label: Stair Difference
+      name: stairDiff
+    - label: Column Union
+      name: columnUnion
+    - label: Column Intersect
+      name: columnIntersect
+    - label: Column Difference
+      name: columnDiff
     name: Combine
     summary: How to combine the copies. Only the "simple" options are guaranteed to
       work properly. The others may produce unexpected and problematic results.
   - label: Radius
     name: Radius
+  - label: Number
+    name: Mergenumber
+  - label: Offset
+    name: Mergeoffset
   - label: Enable Transform
     name: Enabletransform
   - label: Transform CHOP
@@ -115,15 +133,14 @@ op:
     name: Enabletranslate
   - label: Enable Rotate
     name: Enablerotate
-  - label: Index
-    name: Createrefindex
-    summary: 'Create reference to variable: Index'
-  - label: Normalized Index (0..1)
-    name: Createrefnormindex
-    summary: 'Create reference to variable: Normalized Index (0..1)'
   summary: Repeats its input some number of times, exposing the index as the iteration
     x value, and combines the results.
   thumb: assets/images/reference/operators/filter/instance_thumb.png
+  variables:
+  - label: index
+    name: index
+  - label: normindex
+    name: normindex
 
 ---
 

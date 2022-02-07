@@ -8,6 +8,21 @@ redirect_from:
   - /reference/opType/raytk.operators.sdf.mandelbulbSdf/
 op:
   category: sdf
+  inputs:
+  - contextTypes:
+    - Context
+    - MaterialContext
+    - CameraContext
+    - LightContext
+    - RayContext
+    - ParticleContext
+    coordTypes:
+    - vec3
+    label: Shift (Theta, Phi) field
+    name: shiftField
+    returnTypes:
+    - float
+    - vec4
   keywords:
   - fractal
   - mandelbrot
@@ -32,6 +47,11 @@ op:
     summary: The number of steps used when refining the fractal.
   summary: Mandelbulb fractal.
   thumb: assets/images/reference/operators/sdf/mandelbulbSdf_thumb.png
+  variables:
+  - label: step
+    name: step
+  - label: normstep
+    name: normstep
 
 ---
 

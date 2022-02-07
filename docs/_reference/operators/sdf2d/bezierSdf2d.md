@@ -76,10 +76,10 @@ op:
     name: Pointc
   - label: Radius
     name: Radius
-  - label: Offset Along Curve (0..1)
-    name: Createrefnormoffset
-    summary: 'Create reference to variable: Offset Along Curve (0..1)'
   status: beta
   thumb: assets/images/reference/operators/sdf2d/bezierSdf2d_thumb.png
+  variables:
+  - label: normoffset
+    name: normoffset
 
 ---

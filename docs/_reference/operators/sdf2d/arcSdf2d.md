@@ -8,6 +8,59 @@ redirect_from:
   - /reference/opType/raytk.operators.sdf2d.arcSdf2d/
 op:
   category: sdf2d
+  inputs:
+  - contextTypes:
+    - Context
+    - MaterialContext
+    - CameraContext
+    - LightContext
+    - RayContext
+    - ParticleContext
+    coordTypes:
+    - vec2
+    label: Radius Field
+    name: radiusField
+    returnTypes:
+    - float
+  - contextTypes:
+    - Context
+    - MaterialContext
+    - CameraContext
+    - LightContext
+    - RayContext
+    - ParticleContext
+    coordTypes:
+    - vec2
+    label: Thickness Field
+    name: thicknessField
+    returnTypes:
+    - float
+  - contextTypes:
+    - Context
+    - MaterialContext
+    - CameraContext
+    - LightContext
+    - RayContext
+    - ParticleContext
+    coordTypes:
+    - vec2
+    label: Orientation Field
+    name: orientationField
+    returnTypes:
+    - float
+  - contextTypes:
+    - Context
+    - MaterialContext
+    - CameraContext
+    - LightContext
+    - RayContext
+    - ParticleContext
+    coordTypes:
+    - vec2
+    label: Aperture Field
+    name: apertureField
+    returnTypes:
+    - float
   name: arcSdf2d
   opType: raytk.operators.sdf2d.arcSdf2d
   parameters:
@@ -22,5 +75,8 @@ op:
   - label: Thickness
     name: Thickness
   thumb: assets/images/reference/operators/sdf2d/arcSdf2d_thumb.png
+  variables:
+  - label: normangle
+    name: normangle
 
 ---

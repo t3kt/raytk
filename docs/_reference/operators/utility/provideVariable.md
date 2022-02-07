@@ -30,6 +30,26 @@ op:
     - Ray
     - Light
     - Particle
+  - contextTypes:
+    - Context
+    - MaterialContext
+    - CameraContext
+    - LightContext
+    - RayContext
+    - ParticleContext
+    coordTypes:
+    - float
+    - vec2
+    - vec3
+    label: Value Field
+    name: valueField
+    returnTypes:
+    - float
+    - vec4
+    - Sdf
+    - Ray
+    - Light
+    - Particle
   name: provideVariable
   opType: raytk.operators.utility.provideVariable
   parameters:
@@ -49,5 +69,8 @@ op:
   - label: Value
     name: Value
   status: beta
+  variables:
+  - label: var
+    name: var
 
 ---

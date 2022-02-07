@@ -11,6 +11,27 @@ op:
   images:
   - assets/images/reference/operators/material/diffuseContrib_lambert.png
   - assets/images/reference/operators/material/diffuseContrib_orennayar.png
+  inputs:
+  - contextTypes:
+    - MaterialContext
+    coordTypes:
+    - float
+    - vec2
+    - vec3
+    label: Roughness
+    name: roughnessField
+    returnTypes:
+    - float
+  - contextTypes:
+    - MaterialContext
+    coordTypes:
+    - float
+    - vec2
+    - vec3
+    label: Albedo
+    name: albedoField
+    returnTypes:
+    - float
   keywords:
   - diffuse
   - lambert
