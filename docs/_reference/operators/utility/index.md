@@ -18,9 +18,13 @@ cat:
       later
 
       be extracted from rendered output.'
+  - name: lfoGenerator
+    status: beta
   - name: paramFilter
     status: beta
   - name: provideVariable
+    status: beta
+  - name: speedGenerator
     status: beta
   - name: toggleSwitch
   - name: variableReference
