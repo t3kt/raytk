@@ -29,6 +29,8 @@
     * provideVariable - support Sdf values
   * New ops
     * crossSection (#214, #759)
+    * lfoGenerator (#788)
+    * speedGenerator (#788)
     * transformSequence (#791)
   * New field inputs (#588, #693, #806)
     * arcSdf2d - orientation, aperture
