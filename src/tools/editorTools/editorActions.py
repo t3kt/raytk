@@ -353,6 +353,45 @@ def _createSelectVectorPartGroup(text: str, table: 'DAT'):
 		]
 	return _SimpleGroup(text, isValid, getActions)
 
+def _createGoToAction(text: str, getTargets: Callable[[ActionContext], List[OP]]):
+	def isValid(ctx: ActionContext):
+		return bool(getTargets(ctx))
+	def execute(ctx: ActionContext):
+		targets = getTargets(ctx)
+		if not targets:
+			return
+		targets[0].current = True
+		if len(targets) == 1:
+			ctx.pane.home(zoom=True, op=targets[0])
+		else:
+			for o in list(ctx.parentComp.selectedChildren):
+				if o not in targets:
+					o.selected = False
+			for o in targets:
+				o.selected = True
+			ctx.pane.homeSelected(zoom=True)
+	return _SimpleAction(text, isValid, execute)
+
+def _createGoToGroup(text: str):
+	def _getVariableSource(ctx: ActionContext):
+		if ctx.primaryRopState.info.opType != _RopTypes.variableReference:
+			return []
+		source = ctx.primaryRop.par.Source.eval()
+		return [source] if source else []
+	def _getVariableReferences(ctx: ActionContext):
+		sources = ctx.selectedRops
+		return [
+			ropState.rop
+			for ropState in ctx.allRopStates
+			if ropState.info.opType == _RopTypes.variableReference and ropState.rop.par.Source.eval() in sources
+		]
+	actions = [
+		_createGoToAction('Variable Source', getTargets=_getVariableSource),
+		_createGoToAction('Variable References', getTargets=_getVariableReferences),
+	]
+	return _SimpleGroup(
+		text, isValid=lambda _: True, getActions=lambda _: actions)
+
 def _pulsePrimaryRopParam(ctx: ActionContext, par: str):
 	rop = ctx.primaryRop
 	p = rop.par[par] if rop else None
@@ -382,6 +421,7 @@ class _RopTypes:
 	speedGenerator = 'raytk.operators.utility.speedGenerator'
 	lfoGenerator = 'raytk.operators.utility.lfoGenerator'
 	vectorToFloat = 'raytk.operators.convert.vectorToFloat'
+	variableReference = 'raytk.operators.utility.variableReference'
 
 def createActionManager():
 	manager = ActionManager(
@@ -451,5 +491,6 @@ def createActionManager():
 			'Add render2D',
 			lambda ctx: ctx.primaryRopState.is2d,
 			_RopTypes.render2d),
+		_createGoToGroup('Go to'),
 	)
 	return manager

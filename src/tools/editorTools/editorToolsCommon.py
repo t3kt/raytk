@@ -27,6 +27,10 @@ class ActionContext:
 		return [ROPState(o) for o in self.selectedOps if _isRopOrComp(o)]
 
 	@property
+	def allRopStates(self):
+		return [ROPState(o) for o in self.allRops]
+
+	@property
 	def primaryRop(self):
 		return self.primaryOp if _isRopOrComp(self.primaryOp) else None
 
