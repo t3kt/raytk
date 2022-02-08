@@ -1,7 +1,15 @@
 ReturnT thismap(CoordT p, ContextT ctx) {
-	CoordT t = THIS_asCoordT(THIS_Center);
-	p += t;
+	#ifdef THIS_HAS_INPUT_sizeField
+	CoordT h = THIS_asCoordT(inputOp_sizeField(p, ctx));
+	#else
 	CoordT h = THIS_asCoordT(THIS_Size);
+	#endif
+	#ifdef THIS_HAS_INPUT_centerField
+	CoordT t = THIS_asCoordT(inputOp_centerField(p, ctx));
+	#else
+	CoordT t = THIS_asCoordT(THIS_Center);
+	#endif
+	p += t;
 	CoordT q = abs(p) - h;
 	p = max(q, 0.);
 	p -= t;
