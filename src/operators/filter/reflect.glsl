@@ -26,7 +26,11 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 	vec3 q = p;
 	#pragma r:endif
 	planeNormal = normalize(planeNormal);
-	q -= planeNormal * THIS_Shift * THIS_DIR;
+	float shift = THIS_Shift;
+	#pragma r:if THIS_HAS_INPUT_shiftField
+	shift += inputOp_shiftField(p, ctx);
+	#pragma r:endif
+	q -= planeNormal * shift * THIS_DIR;
 
 	#pragma r:if THIS_Direction_custom
 	{
@@ -45,6 +49,9 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 	}
 	#pragma r:endif
 	float offset = THIS_Offset;
+	#pragma r:if THIS_HAS_INPUT_offsetField
+	offset += inputOp_offsetField(p, ctx);
+	#pragma r:endif
 	q -= planeNormal * offset * THIS_DIR;
 
 	#pragma r:if THIS_COORD_TYPE_vec2
