@@ -9,11 +9,18 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 	#else
 	#error invalidCoordType
 	#endif
+	#ifdef THIS_HAS_INPUT_pointField
+	vec2 point = adaptAsVec2(inputOp_pointField(p, ctx));
+	#else
+	vec2 point = THIS_Point;
+	#endif
+	#ifdef THIS_HAS_INPUT_centerField
+	vec2 center = adaptAsVec2(inputOp_centerField(p, ctx));
+	#else
+	vec2 center = THIS_Center;
+	#endif
 
-	q = mobiusTransform(
-		q,
-		THIS_Point,
-		THIS_Center);
+	q = mobiusTransform(q, point, center);
 
 	#if defined(THIS_COORD_TYPE_vec2)
 	return inputOp1(q, ctx);
