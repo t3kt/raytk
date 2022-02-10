@@ -7,27 +7,15 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 	THIS_bendpos = q.y;
 	#endif
 	#ifdef THIS_HAS_INPUT_bendField
-		#if defined(inputOp_bendField_COORD_TYPE_float)
-		float fieldP = q.x;
-		#elif defined(inputOp_bendField_COORD_TYPE_vec2)
-		vec2 fieldP = q.xy;
-		#elif defined(inputOp_bendField_COORD_TYPE_vec3)
-		vec3 fieldP = q;
-		#else
-		#error unsupportedFieldCoordType
-		#endif
-		
-		#if defined(inputOp_bendField_RETURN_TYPE_Sdf)
-		float amt = inputOp_bendField(fieldP, ctx).x;
-		#elif defined(inputOp_bendField_RETURN_TYPE_float)
-		float amt = inputOp_bendField(fieldP, ctx);
-		#else
-		#error unsupportedInputReturnType
-		#endif
+	float amt = adaptAsFloat(inputOp_bendField(inputOp_bendField_asCoordT(p), ctx));
 	#else
 	float amt = THIS_Amount;
 	#endif
-	q.x += THIS_Shift;
+	float shift = THIS_Shift;
+	#ifdef THIS_HAS_INPUT_shiftField
+	shift += adaptAsFloat(inputOp_shiftField(inputOp_shiftField_asCoordT(p), ctx));
+	#endif
+	q.x += shift;
 
 	// opCheapBendPos
 	float c = cos(amt*q.x);
@@ -35,7 +23,7 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 	mat2 m = mat2(c, -s, s, c);
 	q = vec3(m*q.xy, q.z);
 
-	q.x -= THIS_Shift;
+	q.x -= shift;
 	#if defined(THIS_COORD_TYPE_vec2)
 	p.THIS_Toward = q.y;
 	#elif defined(THIS_COORD_TYPE_vec3)
