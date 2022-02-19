@@ -1,27 +1,24 @@
 ReturnT thismap(CoordT p, ContextT ctx) {
-	#pragma r:if THIS_Usepivot
+	CoordT pivot = CoordT(0.);
+	if (THIS_Usepivot > 0.5) {
 		#pragma r:if THIS_HAS_INPUT_pivotField
-			CoordT pivot = THIS_asCoordT(inputOp_pivotField(p, ctx));
+		pivot = THIS_asCoordT(inputOp_pivotField(p, ctx));
 		#pragma r:else
-			CoordT pivot = THIS_asCoordT(THIS_Pivot);
+		pivot = THIS_asCoordT(THIS_Pivot);
 		#pragma r:endif
-	#pragma r:endif
-#if defined(THIS_COORD_TYPE_vec2) || defined(THIS_Rotatemode_axis)
+	}
+#if defined(THIS_Rotatemode_axis)
 	float r = THIS_Rotate;
 	#pragma r:if THIS_HAS_INPUT_rotateField
 		r += adaptAsFloat(inputOp_rotateField(p, ctx));
 	#pragma r:endif
-	#pragma r:if THIS_Usepivot
 	p -= pivot;
-	#pragma r:endif
 	#pragma r:if THIS_COORD_TYPE_vec2
 		pR(p, radians(r));
 	#pragma r:else
 		p *= TDRotateOnAxis(radians(r), normalize(THIS_Axis));
 	#pragma r:endif
-	#pragma r:if THIS_Usepivot
 	p += pivot;
-	#pragma r:endif
 #elif defined(THIS_Rotatemode_euler)
 	vec3 r = vec3(THIS_ROT_1, THIS_ROT_2, THIS_ROT_3);
 	#pragma r:if THIS_HAS_INPUT_rotateField
@@ -36,15 +33,15 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 		#error invalidFieldReturnType
 		#pragma r:endif
 	#pragma r:endif
-	#pragma r:if THIS_Usepivot
 	p -= pivot;
-	#pragma r:endif
+	#pragma r:if THIS_COORD_TYPE_vec2
+	pR(p, radians(r[2]));
+	#pragma r:else
 	p *= TDRotateOnAxis(radians(r[0]), THIS_AXIS_1)
 		* TDRotateOnAxis(radians(r[1]), THIS_AXIS_2)
 		* TDRotateOnAxis(radians(r[2]), THIS_AXIS_3);
-	#pragma r:if THIS_Usepivot
-	p += pivot;
 	#pragma r:endif
+	p += pivot;
 #else
 	#error invalidRotateMode
 #endif
