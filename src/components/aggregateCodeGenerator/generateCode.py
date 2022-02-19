@@ -21,6 +21,8 @@ def onCook(dat):
 	else:  # sequential
 		n = int((info['inputCount'] or 0 - startIndex))
 		indices = list(range(startIndex + 1, startIndex + n + 1))
+	if parent().par.Reverseorder:
+		indices = list(reversed(indices))
 	if initMode == 'firststep':
 		if n == 0:
 			dat.write(_prepStatement(parent().par.Defaultstmt))
