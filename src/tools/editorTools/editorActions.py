@@ -176,8 +176,8 @@ def _createRenderSelGroup(text: str):
 			return []
 		return [
 			_createRenderSelAction(
-				str(table[i, 'name']),
 				str(table[i, 'label']),
+				str(table[i, 'name']),
 				str(table[i, 'enablePar'] or ''))
 			for i in range(1, table.numRows)
 			if table[i, 'available'] != 'False'
