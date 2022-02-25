@@ -356,6 +356,32 @@ _TableSetting = Union[TableData, Expr, None]
 _TextSetting = Union[TextData, Expr, None]
 
 @dataclass
+class ExternalSpec(ModelObject):
+	yaml_tag = u'!external'
+
+	file: str
+
+	def resolve(self):
+		if not self.file:
+			return None
+		file = Path(self.file)
+		text = file.read_text()
+		if not text.strip():
+			return None
+		return yaml.load(text)
+
+@dataclass
+class NoneSpec(ModelObject):
+	"""
+
+	This makes it possible to differentiate between a setting being omitted (and
+	therefore kept as it is in the tox) vs it being intentionally set to being empty
+	or missing (which would cause it to be cleared out in the tox).
+	"""
+
+	yaml_tag = u'!none'
+
+@dataclass
 class ROPDef(ModelObject):
 	# noinspection PyUnresolvedReferences
 	"""Definition for a ROP.
@@ -399,7 +425,7 @@ class ROPDef(ModelObject):
 	paramsOp: ValueOrExprT = None
 	disableInspect: bool = False
 
-	typeSpec: Optional[ROPTypeSpec] = None
+	typeSpec: Union[ROPTypeSpec, ExternalSpec, None] = None
 
 	opGlobals: _TextSetting = None
 	init: _TextSetting = None
@@ -429,6 +455,10 @@ class ROPDef(ModelObject):
 	help: _TextSetting = None
 	keywords: ValueOrListOrExprT = None
 	shortcuts: ValueOrListOrExprT = None
+
+	def resolveExternalSpecs(self):
+		if isinstance(self.typeSpec, ExternalSpec):
+			self.typeSpec = self.typeSpec.resolve()
 
 @dataclass
 class ParamPage(ModelObject):
@@ -477,13 +507,25 @@ def _cleanParamSpecObj(obj: dict):
 class ROPSpec(ModelObject):
 	yaml_tag = u'!rop'
 
-	meta: Optional[ROPMeta] = None
-	opDef: ROPDef = field(default_factory=ROPDef)
+	meta: Union[ROPMeta, ExternalSpec, None] = None
+	opDef: Union[ROPDef, ExternalSpec] = field(default_factory=ROPDef)
 
-	paramPages: List[ParamPage] = field(default_factory=list)
+	paramPages: Union[List[ParamPage], ExternalSpec, None] = field(default_factory=list)
 
-	multiInput: Optional[MultiInputSpec] = None
-	inputs: Optional[List[InputSpec]] = field(default_factory=list)
+	multiInput: Union[MultiInputSpec, ExternalSpec, None] = None
+	inputs: Union[List[InputSpec], ExternalSpec] = field(default_factory=list)
+
+	def resolveExternalSpecs(self):
+		if isinstance(self.meta, ExternalSpec):
+			self.meta = self.meta.resolve()
+		if isinstance(self.opDef, ExternalSpec):
+			self.opDef = self.opDef.resolve()
+		if isinstance(self.paramPages, ExternalSpec):
+			self.paramPages = self.paramPages.resolve()
+		if isinstance(self.multiInput, ExternalSpec):
+			self.multiInput = self.multiInput.resolve()
+		if isinstance(self.inputs, ExternalSpec):
+			self.inputs = self.inputs.resolve()
 
 	@classmethod
 	def extract_OLD(cls, rop: 'COMP', skipParams=False) -> 'ROPSpec':
@@ -558,8 +600,8 @@ def _extractInputSpec(handler: 'COMP') -> InputSpec:
 		Label=info.label,
 		Required=info.required,
 		coordType=_extractInputSupportSetting(info.handlerPar.Supportcoordtypes, info.supportedCoordTypes),
-		returnTypes=_extractInputSupportSetting(info.handlerPar.Supportreturntypes, info.supportedReturnTypes),
-		contextTypes=_extractInputSupportSetting(info.handlerPar.Supportcontexttypes, info.supportedContextTypes),
+		returnType=_extractInputSupportSetting(info.handlerPar.Supportreturntypes, info.supportedReturnTypes),
+		contextType=_extractInputSupportSetting(info.handlerPar.Supportcontexttypes, info.supportedContextTypes),
 	)
 
 def _extractInputSupportSetting(par: 'Par', expandedList: List[str]) -> ValueOrExprT:
@@ -1017,4 +1059,3 @@ class _SpecExtractor:
 			p.name: self._valOrExprFromPar(p)
 			for p in pars
 		}
-
