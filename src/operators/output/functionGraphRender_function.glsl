@@ -41,7 +41,7 @@ float smoothCalc4(vec2 p, Context ctx, float e) {
 }
 #endif
 
-vec4 thismap(vec2 p, ContextT ctx) {
+ReturnT thismap(CoordT p, ContextT ctx) {
 	float q = mapRange(p.x, 0., 1., THIS_Domainlow, THIS_Domainhigh);
 
 	vec2 resolution = uTDOutputInfo.res.zw;
