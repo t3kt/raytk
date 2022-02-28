@@ -373,6 +373,7 @@ class ExternalSpec(ModelObject):
 @dataclass
 class NoneSpec(ModelObject):
 	"""
+	Indicates that something is explicitly being set as None or an empty list/dict.
 
 	This makes it possible to differentiate between a setting being omitted (and
 	therefore kept as it is in the tox) vs it being intentionally set to being empty
