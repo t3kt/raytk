@@ -423,6 +423,7 @@ class ROPDef(ModelObject):
 	yaml_tag = u'!def'
 
 	enable: ValueOrExprT = None
+	useRuntimeBypass: ValueOrExprT = False
 	paramsOp: ValueOrExprT = None
 	disableInspect: bool = False
 
@@ -539,6 +540,7 @@ class ROPSpec(ModelObject):
 			),
 			opDef=ROPDef(
 				typeSpec=ROPTypeSpec.extract(info.opDefPar.Typespec.eval()),
+				useRuntimeBypass=info.opDefPar.Useruntimebypass.eval(),
 				disableInspect=info.opDefPar.Disableinspect.eval(),
 				useParams=_valueOrExprFromPar(info.opDefPar.Params),
 				specialParams=_valueOrExprFromPar(info.opDefPar.Specialparams),
@@ -804,6 +806,7 @@ class ROPSpecLoader:
 		p = self.info.opDefPar
 		d = self.spec.opDef
 		# TODO: typeSpec support
+		_updatePar(p.Useruntimebypass, d.useRuntimeBypass)
 		_updatePar(p.Disableinspect, d.disableInspect)
 
 		_updatePar(p.Params, d.useParams)
@@ -941,6 +944,7 @@ class _SpecExtractor:
 		pars = self.ropInfo.opDefPar
 		return ROPDef(
 			enable=self._valOrExprFromPar(pars.Enable),
+			useRuntimeBypass=self._valOrExprFromPar(pars.Useruntimebypass),
 			paramsOp=self._valOrExprFromPar(pars.Paramsop),
 
 			typeSpec=self._extractTypeSpec(),

@@ -77,6 +77,7 @@ class CompDefParsT(_OpMetaPars):
 	Label: 'StrParamT'
 
 class OpDefParsT(_OpMetaPars):
+	Useruntimebypass: 'BoolParamT'
 	Hostop: 'OPParamT'
 	Paramsop: 'OPParamT'
 	Name: 'StrParamT'

@@ -193,6 +193,10 @@ def buildParamSpecTable(dat: 'scriptDAT', paramListTable: 'DAT'):
 	for par in _getRegularParams(getNamesFromListTable('macroParams')):
 		addPar(par, handling='macro')
 
+	# Add runtime bypass
+	if parentPar().Useruntimebypass:
+		addPar(parentPar().Enable, handling='runtime')
+
 	# Add special params from opDefinition Specialparams par
 	specialNames = getNamesFromListTable('specialParams')
 	for name in specialNames:
