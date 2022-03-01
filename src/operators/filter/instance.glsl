@@ -28,15 +28,21 @@ MERGE_BODY();
 }
 
 ReturnT thismap(CoordT p, ContextT ctx) {
-	int n = int(THIS_Instancecount);
-	THIS_exposeIndex(ctx, 0, n);
-	CoordT q = THIS_transform(p, 0);
-	ReturnT res1 = inputOp1(q, ctx);
-	for (int i = 1; i < n; i++) {
-		THIS_exposeIndex(ctx, i, n);
-		q = THIS_transform(p, i);
-		ReturnT res2 = inputOp1(q, ctx);
-		THIS_combine(res1, res2, q, ctx);
+	ReturnT res;
+	if (THIS_Enable < 0.5) {
+		THIS_exposeIndex(ctx, 0, 1);
+		res = inputOp1(p, ctx);
+	} else {
+		int n = int(THIS_Instancecount);
+		THIS_exposeIndex(ctx, 0, n);
+		CoordT q = THIS_transform(p, 0);
+		res = inputOp1(q, ctx);
+		for (int i = 1; i < n; i++) {
+			THIS_exposeIndex(ctx, i, n);
+			q = THIS_transform(p, i);
+			ReturnT res2 = inputOp1(q, ctx);
+			THIS_combine(res, res2, q, ctx);
+		}
 	}
-	return res1;
+	return res;
 }
