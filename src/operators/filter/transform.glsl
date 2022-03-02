@@ -1,6 +1,8 @@
 ReturnT thismap(CoordT p, ContextT ctx) {
 	float valueAdjust = 1.0;
-	TRANSFORM_CODE();
+	if (THIS_Enable >= 0.5) {
+		TRANSFORM_CODE();
+	}
 	ReturnT res;
 	#pragma r:if THIS_HAS_INPUT_1
 	{
