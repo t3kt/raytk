@@ -1,0 +1,235 @@
+!rop
+meta: !meta
+  opType: raytk.operators.output.customRender
+  opVersion: '12'
+  opStatus: alpha
+opDef: !def
+  enable: true
+  typeSpec: !ropTypes
+    Useinputcoordtype: false
+    Useinputcontexttype: false
+    Useinputreturntype: false
+    coordType: !coordT
+      Allcoordtype: false
+      Coordtypefloat: false
+      Coordtypevec2: false
+      Coordtypevec3: true
+    contextType: !contextT
+      Allcontexttype: false
+      Contexttypecontext: true
+      Contexttypematerialcontext: false
+      Contexttypecameracontext: false
+      Contexttypelightcontext: false
+      Contexttyperaycontext: false
+      Contexttypeparticlecontext: false
+    returnType: !returnT
+      Allreturntype: false
+      Returntypesdf: true
+      Returntypefloat: false
+      Returntypevec4: false
+      Returntyperay: false
+      Returntypelight: false
+      Returntypeparticle: false
+  function: !text
+    name: functionTemplate
+    text: '#define thismap inputOp1'
+paramPages:
+- !page
+  name: Render
+  pars:
+    Bodytemplate:
+      name: Bodytemplate
+      label: Body Template
+      style: DAT
+      default: ''
+    Createbodytemplate:
+      name: Createbodytemplate
+      label: Create Body Template
+      style: Pulse
+      default: false
+    Outputbuffertable:
+      name: Outputbuffertable
+      label: Output Buffer Table
+      style: DAT
+      default: ''
+    Createoutputbuffertable:
+      name: Createoutputbuffertable
+      label: Create Output Buffer Table
+      style: Pulse
+      default: false
+    Librarynames:
+      name: Librarynames
+      label: Library Names
+      style: StrMenu
+      default: hg_sdf raytkCore raytkCommon raytkSdf
+      menuNames:
+      - hg_sdf
+      - raytkCommon
+      - raytkSdf
+      - raytkMaterial
+      - ' raytkCore'
+      menuLabels:
+      - hg_sdf
+      - raytkCommon
+      - raytkSdf
+      - raytkMaterial
+      - Label 5
+    Typespec:
+      name: Typespec
+      label: Type Spec
+      style: COMP
+      default: ''
+    Timerefop:
+      name: Timerefop
+      label: Time Reference Operator
+      style: OP
+      default: ''
+    Format:
+      name: Format
+      label: Pixel Format
+      style: Menu
+      default: rgba32float
+      menuNames:
+      - useinput
+      - rgba8fixed
+      - srgba8fixed
+      - rgba16float
+      - rgba32float
+      - _separator_
+      - rgb10a2fixed
+      - rgba16fixed
+      - rgba11float
+      - rgb16float
+      - rgb32float
+      - mono8fixed
+      - mono16fixed
+      - mono16float
+      - mono32float
+      - rg8fixed
+      - rg16fixed
+      - rg16float
+      - rg32float
+      - a8fixed
+      - a16fixed
+      - a16float
+      - a32float
+      - monoalpha8fixed
+      - monoalpha16fixed
+      - monoalpha16float
+      - monoalpha32float
+      menuLabels:
+      - Use Input
+      - 8-bit fixed (RGBA)
+      - sRGB 8-bit fixed (RGBA)
+      - 16-bit float (RGBA)
+      - 32-bit float (RGBA)
+      - _separator_
+      - 10-bit RGB, 2-bit Alpha, fixed (RGBA)
+      - 16-bit fixed (RGBA)
+      - 11-bit float (RGB), Positive Values Only
+      - 16-bit float (RGB)
+      - 32-bit float (RGB)
+      - 8-bit fixed (Mono)
+      - 16-bit fixed (Mono)
+      - 16-bit float (Mono)
+      - 32-bit float (Mono)
+      - 8-bit fixed (RG)
+      - 16-bit fixed (RG)
+      - 16-bit float (RG)
+      - 32-bit float (RG)
+      - 8-bit fixed (A)
+      - 16-bit fixed (A)
+      - 16-bit float (A)
+      - 32-bit float (A)
+      - 8-bit fixed (Mono+Alpha)
+      - 16-bit fixed (Mono+Alpha)
+      - 16-bit float (Mono+Alpha)
+      - 32-bit float (Mono+Alpha)
+    Res:
+      name: Res
+      label: Resolution
+      style: XY
+      default:
+      - 1920.0
+      - 1080.0
+      startSection: true
+      normMin: 0.0
+      normMax:
+      - 3840.0
+      - 2160.0
+    Inputfiltertype:
+      name: Inputfiltertype
+      label: Input Smoothness
+      style: Menu
+      default: linear
+      menuNames:
+      - nearest
+      - linear
+      - mipmap
+      menuLabels:
+      - Nearest Pixel
+      - Interpolate Pixels
+      - Mipmap Pixels
+    Shaderbuilderconfig:
+      name: Shaderbuilderconfig
+      label: Shader Builder Config
+      style: COMP
+      default: ''
+      startSection: true
+- !page
+  name: Info
+  pars:
+    Shaderinfo:
+      name: Shaderinfo
+      label: Shader Info
+      style: DAT
+      default: ./shader_info
+      readOnly: true
+    Shadercode:
+      name: Shadercode
+      label: Shader Code
+      style: DAT
+      default: ./shader_code
+      readOnly: true
+    Shadertop:
+      name: Shadertop
+      label: Shader TOP
+      style: TOP
+      default: ./render_glsl
+      readOnly: true
+    Outputtable:
+      name: Outputtable
+      label: Output Table
+      style: DAT
+      default: ./output_table
+      readOnly: true
+    Shaderbuilder:
+      name: Shaderbuilder
+      label: Shader Builder
+      style: COMP
+      default: ./shaderBuilder
+      readOnly: true
+inputs:
+- !input
+  Required: true
+  coordType: !coordT
+    Allcoordtype: true
+    Coordtypefloat: false
+    Coordtypevec2: false
+    Coordtypevec3: true
+  contextType: !contextT
+    Allcontexttype: true
+    Contexttypecontext: true
+    Contexttypematerialcontext: false
+    Contexttypecameracontext: false
+    Contexttypelightcontext: false
+    Contexttyperaycontext: false
+    Contexttypeparticlecontext: false
+  returnType: !returnT
+    Allreturntype: true
+    Returntypesdf: false
+    Returntypefloat: true
+    Returntypevec4: true
+    Returntyperay: false
+    Returntypelight: false
+    Returntypeparticle: false
