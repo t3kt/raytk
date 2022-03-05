@@ -158,7 +158,29 @@ class EvalDatOptions(ModelObject):
 	excludeFirstRow: bool = False
 	excludeFirstCol: bool = False
 	rows: Optional[str] = '*'
-	cols: Optional[str] = '*' 
+	cols: Optional[str] = '*'
+
+	@classmethod
+	def fromDat(cls, dat: 'Optional[evaluateDAT]'):
+		if not dat:
+			return None
+		return cls(
+			excludeFirstRow=dat.par.xfirstrow.eval(),
+			excludeFirstCol=dat.par.xfirstcol.eval(),
+			rows=_extractDatEvalPart(dat.par.extractrows, dat.par.rownames),
+			cols=_extractDatEvalPart(dat.par.extractcols, dat.par.colnames),
+		)
+
+def _extractDatEvalPart(modePar: 'Par', namesPar: 'Par'):
+	if modePar.mode != ParMode.CONSTANT:
+		raise Exception(f'Unsupported mode for {modePar!r}')
+	if namesPar.mode != ParMode.CONSTANT:
+		raise Exception(f'Unsupported mode for {namesPar!r}')
+	if modePar == 'all':
+		return '*'
+	elif modePar == 'bynames':
+		return namesPar.val
+	raise Exception(f'Unsupported eval dat scope mode: {modePar!r}')
 
 @dataclass
 class TableData(ModelObject):
@@ -663,56 +685,6 @@ class ROPSpec(ModelObject):
 			self.inputs = self.inputs.resolve()
 
 	@classmethod
-	def extract_OLD(cls, rop: 'COMP', skipParams=False) -> 'ROPSpec':
-		info = ROPInfo(rop)
-		spec = ROPSpec(
-			meta=ROPMeta(
-				opType=info.opType,
-				opVersion=int(info.opVersion),
-				opStatus=info.statusLabel,
-			),
-			opDef=ROPDef(
-				typeSpec=ROPTypeSpec.extract(info.opDefPar.Typespec.eval()),
-				useRuntimeBypass=info.opDefPar.Useruntimebypass.eval(),
-				disableInspect=info.opDefPar.Disableinspect.eval(),
-				useParams=_valueOrExprFromPar(info.opDefPar.Params),
-				specialParams=_valueOrExprFromPar(info.opDefPar.Specialparams),
-				angleParams=_valueOrExprFromPar(info.opDefPar.Angleparams),
-				macroParams=_valueOrExprFromPar(info.opDefPar.Macroparams),
-				libraryNames=_valueOrExprFromPar(info.opDefPar.Librarynames),
-				opGlobals=_extractDatSetting(info.opDefPar.Opglobals, isText=True),
-				init=_extractDatSetting(info.opDefPar.Initcode, isText=True),
-				stageInit=_extractDatSetting(info.opDefPar.Stageinitcode, isText=True),
-				function=_extractDatSetting(info.opDefPar.Functemplate, isText=True),
-				material=_extractDatSetting(info.opDefPar.Materialcode, isText=True),
-				help=_extractDatSetting(info.opDefPar.Help, isText=True),
-				callbacks=_extractDatSetting(info.opDefPar.Callbacks, isText=True),
-				bufferTable=_extractDatSetting(info.opDefPar.Buffertable, isText=False),
-				macroTable=_extractDatSetting(info.opDefPar.Macrotable, isText=False),
-				textureTable=_extractDatSetting(info.opDefPar.Texturetable, isText=False),
-				variableTable=_extractDatSetting(info.opDefPar.Variabletable, isText=False),
-				referenceTable=_extractDatSetting(info.opDefPar.Referencetable, isText=False),
-			),
-		)
-		if not skipParams:
-			spec.paramPages = [
-				_extractParamPage(page)
-				for page in rop.customPages
-			]
-		multiHandler = info.multiInputHandler
-		if multiHandler:
-			spec.multiInput = MultiInputSpec(
-				Minimuminputs=multiHandler.par.Minimuminputs.eval() if multiHandler.par.Minimuminputs > 0 else None,
-			)
-		for inputHandler in info.inputHandlers:
-			inputInfo = InputInfo(inputHandler)
-			if inputInfo.multiHandler:
-				spec.multiInput.inputs.append(_extractInputSpec(inputHandler))
-			else:
-				spec.inputs.append(_extractInputSpec(inputHandler))
-		return spec
-
-	@classmethod
 	def extract(cls, rop: 'COMP', skipParams=False):
 		ropInfo = ROPInfo(rop)
 		return ROPSpec(
@@ -722,76 +694,6 @@ class ROPSpec(ModelObject):
 			multiInput=MultiInputSpec.fromComps(ropInfo.multiInputHandler, ropInfo.inputHandlers),
 			inputs=InputSpec.fromCompList(ropInfo.inputHandlers, False),
 		)
-
-_ignorePars = 'Help', 'Inspect', 'Updateop'
-
-def _extractParamPage(page: 'Page') -> ParamPage:
-	return ParamPage(
-		name=page.name,
-		pars={
-			parTuplet[0].tupletName: dict(TDJSON.parameterToJSONPar(parTuplet[0]))
-			for parTuplet in page.parTuplets
-			if parTuplet[0].tupletName not in _ignorePars
-		},
-	)
-
-def _extractInputSpec(handler: 'COMP') -> InputSpec:
-	info = InputInfo(handler)
-	return InputSpec(
-		Name=info.name,
-		Label=info.label,
-		Required=info.required,
-		coordType=_extractInputSupportSetting(info.handlerPar.Supportcoordtypes, info.supportedCoordTypes),
-		returnType=_extractInputSupportSetting(info.handlerPar.Supportreturntypes, info.supportedReturnTypes),
-		contextType=_extractInputSupportSetting(info.handlerPar.Supportcontexttypes, info.supportedContextTypes),
-	)
-
-def _extractInputSupportSetting(par: 'Par', expandedList: List[str]) -> ValueOrExprT:
-	if par.mode == ParMode.EXPRESSION:
-		return Expr(par.expr)
-	elif par.mode == ParMode.CONSTANT:
-		if par.val == '*':
-			return '*'
-		return ' '.join(expandedList)
-	else:
-		raise Exception(f'Unsupported input supported type parameter mode {par.mode} for {par!r}')
-
-def _valueOrExprFromPar(par: Optional['Par']) -> ValueOrExprT:
-	if par is None:
-		return None
-	if par.mode == ParMode.CONSTANT:
-		if par.val == '':
-			return None
-		return par.val
-	if par.mode == ParMode.EXPRESSION:
-		return Expr(par.expr)
-	raise Exception(f'Parameter mode {par.mode} not supported for {par!r}')
-
-def _loadFieldsFromPars(obj: 'ModelObject', pars: 'Iterable[Par]'):
-	for p in pars:
-		v = _valueOrExprFromPar(p)
-		setattr(obj, p.name, v)
-
-def _extractDatEvalPart(modePar: 'Par', namesPar: 'Par'):
-	if modePar.mode != ParMode.CONSTANT:
-		raise Exception(f'Unsupported mode for {modePar!r}')
-	if namesPar.mode != ParMode.CONSTANT:
-		raise Exception(f'Unsupported mode for {namesPar!r}')
-	if modePar == 'all':
-		return '*'
-	elif modePar == 'bynames':
-		return namesPar.val
-	raise Exception(f'Unsupported eval dat scope mode: {modePar!r}')
-
-def _extractEvalOpts(dat: 'Optional[evaluateDAT]'):
-	if not dat:
-		return None
-	return EvalDatOptions(
-		excludeFirstRow=dat.par.xfirstrow.eval(),
-		excludeFirstCol=dat.par.xfirstcol.eval(),
-		rows=_extractDatEvalPart(dat.par.extractrows, dat.par.rownames),
-		cols=_extractDatEvalPart(dat.par.extractcols, dat.par.colnames),
-	)
 
 def _extractDatSetting(par: Optional['Par'], isText: bool) -> Union[TextData, TableData, Expr, None]:
 	if par is None:
@@ -807,7 +709,7 @@ def _extractDatSetting(par: Optional['Par'], isText: bool) -> Union[TextData, Ta
 		raise Exception(f'DAT setup not supported for {par!r}')
 	evalOpts = None
 	if graph.evalDat:
-		evalOpts = _extractEvalOpts(graph.evalDat)
+		evalOpts = EvalDatOptions.fromDat(graph.evalDat)
 	if graph.file:
 		if isText:
 			return TextData(
