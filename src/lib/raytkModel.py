@@ -6,13 +6,14 @@ This should only be used within development tools.
 
 from dataclasses import dataclass, field
 import dataclasses
+from io import StringIO
 import json
 from pathlib import Path
 import re
 from typing import Dict, Iterable, List, Optional, Union
 import yaml
 
-from raytkUtil import cleanDict, ROPInfo, InputInfo, RaytkTags
+from raytkUtil import cleanDict, ROPInfo, InputInfo, RaytkTags, OpDefParsT
 
 # noinspection PyUnreachableCode
 if False:
@@ -107,6 +108,10 @@ class ModelObject(yaml.YAMLObject):
 	def to_yaml(cls, dumper: 'yaml.Dumper', data):
 		return dumper.represent_mapping(cls.yaml_tag, data.toYamlDict())
 
+	@classmethod
+	def parseFromText(cls, text: str):
+		return yaml.load(StringIO(text))
+
 	def toYamlDict(self):
 		d = {}
 		for f in dataclasses.fields(self):
@@ -138,7 +143,7 @@ class Expr(ModelObject):
 def _exprRepresenter(dumper: 'yaml.Dumper', data: 'Expr'):
 	return dumper.represent_scalar(Expr.yaml_tag, data.expr, style='')
 
-yaml.add_representer(Expr, _exprRepresenter)
+# yaml.add_representer(Expr, _exprRepresenter)
 yaml.add_implicit_resolver(Expr.yaml_tag, regexp=re.compile(r'^\$.*$'))
 
 ValueOrExprT = Union[Expr, str, int, float, bool, None]
@@ -153,7 +158,7 @@ class EvalDatOptions(ModelObject):
 	excludeFirstRow: bool = False
 	excludeFirstCol: bool = False
 	rows: Optional[str] = '*'
-	cols: Optional[str] = '*'
+	cols: Optional[str] = '*' 
 
 @dataclass
 class TableData(ModelObject):
@@ -200,6 +205,14 @@ class ROPMeta(ModelObject):
 	opType: str
 	opVersion: int
 	opStatus: Optional[str] = None
+	
+	@classmethod
+	def fromRopInfo(cls, ropInfo: ROPInfo):
+		return cls(
+			opType=ropInfo.opType,
+			opVersion=ropInfo.opVersion,
+			opStatus=ropInfo.statusLabel,
+		)
 
 @dataclass
 class CoordTypes(ModelObject):
@@ -209,6 +222,10 @@ class CoordTypes(ModelObject):
 	Coordtypefloat: ValueOrExprT = None
 	Coordtypevec2: ValueOrExprT = None
 	Coordtypevec3: ValueOrExprT = None
+
+	@classmethod
+	def fromComp(cls, specComp: 'COMP'):
+		return cls(**_valOrExprDictFromPars(specComp.pars('Allcoordtype', 'Coordtype*')))
 
 @dataclass
 class ContextTypes(ModelObject):
@@ -222,6 +239,10 @@ class ContextTypes(ModelObject):
 	Contexttyperaycontext: ValueOrExprT = None
 	Contexttypeparticlecontext: ValueOrExprT = None
 
+	@classmethod
+	def fromComp(cls, specComp: 'COMP'):
+		return cls(**_valOrExprDictFromPars(specComp.pars('Allcontexttype', 'Contexttype*')))
+
 @dataclass
 class ReturnTypes(ModelObject):
 	yaml_tag = u'!returnT'
@@ -233,6 +254,10 @@ class ReturnTypes(ModelObject):
 	Returntyperay: ValueOrExprT = None
 	Returntypelight: ValueOrExprT = None
 	Returntypeparticle: ValueOrExprT = None
+
+	@classmethod
+	def fromComp(cls, specComp: 'COMP'):
+		return ReturnTypes(**_valOrExprDictFromPars(specComp.pars('Allreturntype', 'Returntype*')))
 
 @dataclass
 class InputSpec(ModelObject):
@@ -265,6 +290,23 @@ class InputSpec(ModelObject):
 	contextType: Optional[ContextTypes] = None
 	returnType: Optional[ReturnTypes] = None
 
+	@classmethod
+	def fromComp(cls, handler: 'COMP'):
+		return cls(
+			coordType=CoordTypes.fromComp(handler),
+			contextType=ContextTypes.fromComp(handler),
+			returnType=ReturnTypes.fromComp(handler),
+			**_valOrExprDictFromPars(handler.pars(
+				'Source', 'Name', 'Label', 'Localalias', 'Help', 'Required')))
+
+	@classmethod
+	def fromCompList(cls, handlers: 'List[COMP]', forMulti: bool):
+		return [
+			cls.fromComp(handler)
+			for handler in handlers
+			if forMulti == (InputInfo(handler).multiHandler is not None)
+		]
+
 @dataclass
 class MultiInputSpec(ModelObject):
 	# noinspection PyUnresolvedReferences
@@ -291,6 +333,16 @@ class MultiInputSpec(ModelObject):
 	Returntypepreference: ValueOrListOrExprT = None
 
 	inputs: List[InputSpec] = field(default_factory=list)
+
+	@classmethod
+	def fromComps(cls, multiHandler: 'COMP', inputHandlers: 'List[COMP]'):
+		if not multiHandler:
+			return None
+		return cls(
+			inputs=InputSpec.fromCompList(inputHandlers, True),
+			**_valOrExprDictFromPars(multiHandler.pars(
+				'Minimuminputs', 'Coordtype*', 'Contexttype*', 'Returntype*'))
+		)
 
 def _getParValsDict(pars: 'Iterable[Par]'):
 	return {
@@ -331,6 +383,16 @@ class ROPTypeSpec(ModelObject):
 		else:
 			spec.returnType = ReturnTypes(**_getParValsDict(specComp.pars('Returntype*')))
 		return spec
+
+	@classmethod
+	def fromComp(cls, specComp: 'COMP'):
+		if not specComp:
+			return None
+		return cls(
+			coordType=CoordTypes.fromComp(specComp),
+			contextType=ContextTypes.fromComp(specComp),
+			returnType=ReturnTypes.fromComp(specComp),
+			**_valOrExprDictFromPars(specComp.pars('Useinput*')))
 
 	def applyTo(self, specComp: 'COMP'):
 		specComp.par.Useinputcoordtype = self.Useinputcoordtype
@@ -462,6 +524,48 @@ class ROPDef(ModelObject):
 		if isinstance(self.typeSpec, ExternalSpec):
 			self.typeSpec = self.typeSpec.resolve()
 
+	@classmethod
+	def fromComp(cls, opDefComp: 'COMP'):
+		# noinspection PyTypeChecker
+		pars = opDefComp.par  # type: OpDefParsT
+		return cls(
+			enable=_valOrExprFromPar(pars.Enable),
+			useRuntimeBypass=_valOrExprFromPar(pars.Useruntimebypass),
+			paramsOp=_valOrExprFromPar(pars.Paramsop),
+
+			typeSpec=ROPTypeSpec.fromComp(pars.Typespec.eval()),
+
+			opGlobals=_extractDatSetting(pars.Opglobals, isText=True),
+			init=_extractDatSetting(pars.Initcode, isText=True),
+			stageInit=_extractDatSetting(pars.Stageinitcode, isText=True),
+			function=_extractDatSetting(pars.Functemplate, isText=True),
+			material=_extractDatSetting(pars.Materialcode, isText=True),
+			callbacks=_extractDatSetting(pars.Callbacks, isText=True),
+
+			useParams=_valOrExprFromPar(pars.Params, useList=True),
+			specialParams=_valOrExprFromPar(pars.Specialparams, useList=True),
+			angleParams=_valOrExprFromPar(pars.Angleparams, useList=True),
+			macroParams=_valOrExprFromPar(pars.Macroparams, useList=True),
+			lockParams=_valOrExprFromPar(pars.Lockpars, useList=True),
+
+			paramListTable=_valOrExprFromPar(pars.Paramlisttable),
+
+			libraryNames=_valOrExprFromPar(pars.Librarynames, useList=True),
+
+			bufferTable=_extractDatSetting(pars.Buffertable, isText=False),
+			textureTable=_extractDatSetting(pars.Texturetable, isText=False),
+			macroTable=_extractDatSetting(pars.Macrotable, isText=False),
+			variableTable=_extractDatSetting(pars.Variabletable, isText=False),
+			referenceTable=_extractDatSetting(pars.Referencetable, isText=False),
+
+			generatedMacroTables=_valOrExprFromPar(pars.Generatedmacrotables),
+
+			help=_valOrExprFromPar(pars.Help),
+			keywords=_valOrExprFromPar(pars.Keywords, useList=True),
+			shortcuts=_valOrExprFromPar(pars.Shortcuts, useList=True),
+		)
+
+
 @dataclass
 class ParamPage(ModelObject):
 	# noinspection PyUnresolvedReferences
@@ -480,6 +584,35 @@ class ParamPage(ModelObject):
 	def __post_init__(self):
 		for parObj in self.pars.values():
 			_cleanParamSpecObj(parObj)
+
+	@staticmethod
+	def _isIncluded(parTuplet: 'ParTupletT'):
+		ignorePars = 'Help', 'Inspect', 'Updateop'
+		if parTuplet[0].tupletName in ignorePars:
+			return False
+		if parTuplet[0].name.startswith('Createref') or  parTuplet[0].name.startswith('Creatersel'):
+			return False
+		return True
+
+	@classmethod
+	def fromPage(cls, page: 'Page'):
+		return cls(
+			name=page.name,
+			pars={
+				parTuplet[0].tupletName: dict(TDJSON.parameterToJSONPar(parTuplet[0]))
+				for parTuplet in page.parTuplets
+				if cls._isIncluded(parTuplet)
+			},
+		)
+
+	@classmethod
+	def fromCustomPages(cls, comp: 'OP'):
+		paramPages = []
+		for page in comp.customPages:
+			paramPage = cls.fromPage(page)
+			if paramPage.pars:
+				paramPages.append(paramPage)
+		return paramPages
 
 def _cleanParamSpecObj(obj: dict):
 	if not obj:
@@ -581,8 +714,14 @@ class ROPSpec(ModelObject):
 
 	@classmethod
 	def extract(cls, rop: 'COMP', skipParams=False):
-		extractor = _SpecExtractor(rop)
-		return extractor.extract(skipParams)
+		ropInfo = ROPInfo(rop)
+		return ROPSpec(
+			meta=ROPMeta.fromRopInfo(ropInfo),
+			opDef=ROPDef.fromComp(ropInfo.opDef),
+			paramPages=None if skipParams else ParamPage.fromCustomPages(rop),
+			multiInput=MultiInputSpec.fromComps(ropInfo.multiInputHandler, ropInfo.inputHandlers),
+			inputs=InputSpec.fromCompList(ropInfo.inputHandlers, False),
+		)
 
 _ignorePars = 'Help', 'Inspect', 'Updateop'
 
@@ -919,148 +1058,19 @@ def _setParExpr(par: 'Par', expr: str):
 	par.expr = expr
 	par.mode = ParMode.EXPRESSION
 
-class _SpecExtractor:
-	def __init__(self, rop: 'COMP'):
-		self.rop = rop
-		self.ropInfo = ROPInfo(rop)
+def _valOrExprFromPar(par: 'Optional[Par]', useList=False):
+	if par is None:
+		return None
+	if par.mode == ParMode.CONSTANT:
+		if useList and par.isString and ' ' in par.val:
+			return par.val.split(' ')
+		return par.val
+	if par.mode == ParMode.EXPRESSION:
+		return Expr(par.expr)
+	raise Exception(f'Parameter mode {par.mode} not supported for {par!r}')
 
-	def extract(self, skipParams=False) -> 'ROPSpec':
-		return ROPSpec(
-			meta=self._extractMeta(),
-			opDef=self._extractOpDef(),
-			paramPages=None if skipParams else self._extractParamPages(),
-			multiInput=self._extractMultiInput(),
-			inputs=self._extractInputs(forMulti=False),
-		)
-
-	def _extractMeta(self):
-		return ROPMeta(
-			opType=self.ropInfo.opType,
-			opVersion=self.ropInfo.opVersion,
-			opStatus=self.ropInfo.statusLabel,
-		)
-
-	def _extractOpDef(self) -> 'ROPDef':
-		pars = self.ropInfo.opDefPar
-		return ROPDef(
-			enable=self._valOrExprFromPar(pars.Enable),
-			useRuntimeBypass=self._valOrExprFromPar(pars.Useruntimebypass),
-			paramsOp=self._valOrExprFromPar(pars.Paramsop),
-
-			typeSpec=self._extractTypeSpec(),
-
-			opGlobals=self._datSettingFromPar(pars.Opglobals, isText=True),
-			init=self._datSettingFromPar(pars.Initcode, isText=True),
-			stageInit=self._datSettingFromPar(pars.Stageinitcode, isText=True),
-			function=self._datSettingFromPar(pars.Functemplate, isText=True),
-			material=self._datSettingFromPar(pars.Materialcode, isText=True),
-			callbacks=self._datSettingFromPar(pars.Callbacks, isText=True),
-
-			useParams=self._valOrExprFromPar(pars.Params, useList=True),
-			specialParams=self._valOrExprFromPar(pars.Specialparams, useList=True),
-			angleParams=self._valOrExprFromPar(pars.Angleparams, useList=True),
-			macroParams=self._valOrExprFromPar(pars.Macroparams, useList=True),
-			lockParams=self._valOrExprFromPar(pars.Lockpars, useList=True),
-
-			paramListTable=self._valOrExprFromPar(pars.Paramlisttable),
-
-			libraryNames=self._valOrExprFromPar(pars.Librarynames, useList=True),
-
-			bufferTable=self._valOrExprFromPar(pars.Buffertable, useList=True),
-			textureTable=self._valOrExprFromPar(pars.Texturetable, useList=True),
-			macroTable=self._valOrExprFromPar(pars.Macrotable, useList=True),
-			variableTable=self._valOrExprFromPar(pars.Variabletable, useList=True),
-			referenceTable=self._valOrExprFromPar(pars.Referencetable, useList=True),
-
-			generatedMacroTables=self._valOrExprFromPar(pars.Generatedmacrotables),
-
-			help=self._valOrExprFromPar(pars.Help),
-			keywords=self._valOrExprFromPar(pars.Keywords, useList=True),
-			shortcuts=self._valOrExprFromPar(pars.Shortcuts, useList=True),
-		)
-
-	def _extractTypeSpec(self) -> 'ROPTypeSpec':
-		specComp = self.ropInfo.typeSpec
-		return ROPTypeSpec(
-			coordType=self._extractCoordTypes(specComp),
-			contextType=self._extractContextTypes(specComp),
-			returnType=self._extractReturnTypes(specComp),
-			**self._valOrExprDictFromPars(specComp.pars('Useinput*')))
-
-	def _extractCoordTypes(self, specComp: 'COMP'):
-		return CoordTypes(**self._valOrExprDictFromPars(specComp.pars('Allcoordtype', 'Coordtype*')))
-
-	def _extractContextTypes(self, specComp: 'COMP'):
-		return ContextTypes(**self._valOrExprDictFromPars(specComp.pars('Allcontexttype', 'Contexttype*')))
-
-	def _extractReturnTypes(self, specComp: 'COMP'):
-		return ReturnTypes(**self._valOrExprDictFromPars(specComp.pars('Allreturntype', 'Returntype*')))
-
-	def _extractParamPages(self) -> 'List[ParamPage]':
-		paramPages = []
-		for page in self.rop.customPages:
-			paramPage = self._extractParamPage(page)
-			if paramPage:
-				paramPages.append(paramPage)
-		return paramPages
-
-	@staticmethod
-	def _extractParamPage(page: 'Page') -> 'Optional[ParamPage]':
-		ignorePars = 'Help', 'Inspect', 'Updateop'
-		return ParamPage(
-			name=page.name,
-			pars={
-				parTuplet[0].tupletName: dict(TDJSON.parameterToJSONPar(parTuplet[0]))
-				for parTuplet in page.parTuplets
-				if parTuplet[0].tupletName not in ignorePars
-			},
-		)
-
-	def _extractMultiInput(self) -> 'Optional[MultiInputSpec]':
-		multiHandler = self.ropInfo.multiInputHandler
-		if not multiHandler:
-			return None
-		return MultiInputSpec(
-			inputs=self._extractInputs(forMulti=True),
-			**self._valOrExprDictFromPars(multiHandler.pars(
-				'Minimuminputs', 'Coordtype*', 'Contexttype*', 'Returntype*'))
-		)
-
-	def _extractInputs(self, forMulti: bool) -> 'List[InputSpec]':
-		return [
-			self._extractInput(handler)
-			for handler in self.ropInfo.inputHandlers
-			if forMulti == (InputInfo(handler).multiHandler is not None)
-		]
-
-	def _extractInput(self, handler: 'COMP') -> 'InputSpec':
-		return InputSpec(
-			coordType=self._extractCoordTypes(handler),
-			contextType=self._extractContextTypes(handler),
-			returnType=self._extractReturnTypes(handler),
-			**self._valOrExprDictFromPars(handler.pars(
-				'Source', 'Name', 'Label', 'Localalias', 'Help', 'Required'))
-		)
-
-	@staticmethod
-	def _datSettingFromPar(
-			par: 'Optional[Par]', isText: bool) -> 'Union[TextData, TableData, Expr, None]':
-		return _extractDatSetting(par, isText)
-
-	@staticmethod
-	def _valOrExprFromPar(par: 'Optional[Par]', useList=False):
-		if par is None:
-			return None
-		if par.mode == ParMode.CONSTANT:
-			if useList and par.isString and ' ' in par.val:
-				return par.val.split(' ')
-			return par.val
-		if par.mode == ParMode.EXPRESSION:
-			return Expr(par.expr)
-		raise Exception(f'Parameter mode {par.mode} not supported for {par!r}')
-
-	def _valOrExprDictFromPars(self, pars: 'Iterable[Par]'):
-		return {
-			p.name: self._valOrExprFromPar(p)
-			for p in pars
-		}
+def _valOrExprDictFromPars(pars: 'Iterable[Par]'):
+	return {
+		p.name: _valOrExprFromPar(p)
+		for p in pars
+	}
