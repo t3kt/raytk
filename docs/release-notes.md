@@ -1,5 +1,67 @@
 # Release Notes
 
+## v0.22
+
+### Highlights
+
+* Matcap materials
+
+### Details
+
+* Improvements / additions
+  * New ops
+    * arbitraryPolygonSdf2d (#816)
+    * matCapContrib (#798)
+    * moonSdf2d
+    * stairSdf2d (#815)
+  * New field inputs (#812)
+    * bend - shift
+    * elongate/extend - size, center
+    * fold - distance
+    * mobiusTransform - center, point
+    * reflect - shift, offset
+  * New parameters
+    * transformSequence - reverse order (#819)
+  * Runtime bypass - faster enable/disable for filters (#755)
+    * bend
+    * elongate
+    * extend
+    * flip
+    * fold
+    * instance
+    * invert
+    * kink
+    * knife
+    * limitField
+    * onion
+    * reflect
+    * rotate
+    * rotateNormals
+    * round
+    * scale
+    * slice
+    * sphericalMobiusTransform
+    * spiralZoom
+    * transform
+    * translate
+    * twist
+    * uvTransform
+    * waveWarp
+  * Documentation
+    * Added optimization guide (#750)
+* Changes (potentially breaking)
+  * Remove deprecated operators
+    * spin
+  * Change how rotate handles 2D coords (#821)
+    * This may cause behavior changes for 2d.
+    * Instead of automatically using axis-based rotation when the input is 2d, instead use the mode parameter to choose between types (like for 3d). For 3d, only the Z axis rotation is used.
+* Fixes
+  * Fix broken "Create render select" editor action (#822, #772)
+  * Fix coord type resolution in coordTo2D and coordTo3D (#717)
+  * Fix 1D coord support in modulo1D (#823)
+  * Fix compile error in simpleIntersect
+* Infrastructure / internals
+
 ## v0.21
 
 ### Highlights
