@@ -172,7 +172,7 @@ class RaytkTools(RaytkContext):
 		self.updateROPParams(rop)
 		self.updateOPImage(rop)
 		self.saveROPSpec(rop)
-		# self.saveROPSpec_NEW(rop)
+		self.saveROPSpec_NEW(rop)
 		OpDocManager(info).pushToParamsAndInputs()
 		focusFirstCustomParameterPage(rop)
 		tox = info.toxFile
@@ -238,24 +238,7 @@ class RaytkTools(RaytkContext):
 		info = ROPInfo(rop)
 		if not info or not info.isMaster:
 			return
-		info.opDefPar.Raytkopstatus = status or 'default'
-		# note: since applying with status false resets the color, the false ones have to be done before the true one
-		if status == 'alpha':
-			RaytkTags.beta.apply(info.rop, False)
-			RaytkTags.deprecated.apply(info.rop, False)
-			RaytkTags.alpha.apply(info.rop, True)
-		elif status == 'beta':
-			RaytkTags.alpha.apply(info.rop, False)
-			RaytkTags.deprecated.apply(info.rop, False)
-			RaytkTags.beta.apply(info.rop, True)
-		elif status == 'deprecated':
-			RaytkTags.alpha.apply(info.rop, False)
-			RaytkTags.beta.apply(info.rop, False)
-			RaytkTags.deprecated.apply(info.rop, True)
-		else:
-			RaytkTags.alpha.apply(info.rop, False)
-			RaytkTags.beta.apply(info.rop, False)
-			RaytkTags.deprecated.apply(info.rop, False)
+		info.setOpStatus(status)
 
 	@staticmethod
 	def _getROPRelatedFile(rop: 'COMP', fileSuffix: str, checkExists: bool) -> 'Optional[Path]':

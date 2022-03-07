@@ -104,13 +104,15 @@ class OpSpec_OLD(_DataObject_OLD):
 
 @dataclass
 class ModelObject(yaml.YAMLObject):
+	yaml_loader = yaml.FullLoader
+
 	@classmethod
 	def to_yaml(cls, dumper: 'yaml.Dumper', data):
 		return dumper.represent_mapping(cls.yaml_tag, data.toYamlDict())
 
 	@classmethod
 	def parseFromText(cls, text: str):
-		return yaml.load(StringIO(text))
+		return yaml.load(StringIO(text), Loader=cls.yaml_loader)
 
 	def toYamlDict(self):
 		d = {}
@@ -122,8 +124,11 @@ class ModelObject(yaml.YAMLObject):
 
 	def writeToFile(self, file: 'Union[Path, str]'):
 		file = Path(file)
-		text = yaml.dump(self, default_style='', sort_keys=False)
+		text = self.toYamlText()
 		file.write_text(text)
+
+	def toYamlText(self):
+		return yaml.dump(self, default_style='', sort_keys=False)
 
 def _shouldInclude(val):
 	if val is None or val == '':
@@ -144,7 +149,7 @@ def _exprRepresenter(dumper: 'yaml.Dumper', data: 'Expr'):
 	return dumper.represent_scalar(Expr.yaml_tag, data.expr, style='')
 
 # yaml.add_representer(Expr, _exprRepresenter)
-yaml.add_implicit_resolver(Expr.yaml_tag, regexp=re.compile(r'^\$.*$'))
+yaml.add_implicit_resolver(Expr.yaml_tag, regexp=re.compile(r'^\$.*$'), Loader=ModelObject.yaml_loader)
 
 ValueOrExprT = Union[Expr, str, int, float, bool, None]
 ValueOrListOrExprT = Union[ValueOrExprT, List[str]]
@@ -224,17 +229,25 @@ class TextData(ModelObject):
 class ROPMeta(ModelObject):
 	yaml_tag = u'!meta'
 
-	opType: str
-	opVersion: int
+	opType: str = ''
+	opVersion: int = 0
 	opStatus: Optional[str] = None
 	
 	@classmethod
 	def fromRopInfo(cls, ropInfo: ROPInfo):
-		return cls(
-			opType=ropInfo.opType,
-			opVersion=ropInfo.opVersion,
-			opStatus=ropInfo.statusLabel,
-		)
+		obj = cls()
+		obj.updateFromRopInfo(ropInfo)
+		return obj
+
+	def updateFromRopInfo(self, ropInfo: ROPInfo):
+		self.opType = ropInfo.opType
+		self.opVersion = ropInfo.opVersion
+		self.opStatus = ropInfo.statusLabel
+
+	def applyToRopInfo(self, ropInfo: ROPInfo):
+		ropInfo.opType = self.opType
+		ropInfo.opVersion = self.opVersion
+		ropInfo.setOpStatus(self.opStatus)
 
 @dataclass
 class CoordTypes(ModelObject):
@@ -542,50 +555,78 @@ class ROPDef(ModelObject):
 	keywords: ValueOrListOrExprT = None
 	shortcuts: ValueOrListOrExprT = None
 
-	def resolveExternalSpecs(self):
-		if isinstance(self.typeSpec, ExternalSpec):
-			self.typeSpec = self.typeSpec.resolve()
-
 	@classmethod
 	def fromComp(cls, opDefComp: 'COMP'):
+		obj = cls()
+		obj.updateFromComp(opDefComp)
+		return obj
+
+	def updateFromComp(self, opDefComp: 'COMP'):
 		# noinspection PyTypeChecker
 		pars = opDefComp.par  # type: OpDefParsT
-		return cls(
-			enable=_valOrExprFromPar(pars.Enable),
-			useRuntimeBypass=_valOrExprFromPar(pars.Useruntimebypass),
-			paramsOp=_valOrExprFromPar(pars.Paramsop),
+		self.enable = _valOrExprFromPar(pars.Enable)
+		self.useRuntimeBypass = _valOrExprFromPar(pars.Useruntimebypass)
+		self.paramsOp = _valOrExprFromPar(pars.Paramsop)
 
-			typeSpec=ROPTypeSpec.fromComp(pars.Typespec.eval()),
+		self.typeSpec = ROPTypeSpec.fromComp(pars.Typespec.eval())
 
-			opGlobals=_extractDatSetting(pars.Opglobals, isText=True),
-			init=_extractDatSetting(pars.Initcode, isText=True),
-			stageInit=_extractDatSetting(pars.Stageinitcode, isText=True),
-			function=_extractDatSetting(pars.Functemplate, isText=True),
-			material=_extractDatSetting(pars.Materialcode, isText=True),
-			callbacks=_extractDatSetting(pars.Callbacks, isText=True),
+		self.opGlobals = _extractDatSetting(pars.Opglobals, isText=True)
+		self.init = _extractDatSetting(pars.Initcode, isText=True)
+		self.stageInit = _extractDatSetting(pars.Stageinitcode, isText=True)
+		self.function = _extractDatSetting(pars.Functemplate, isText=True)
+		self.material = _extractDatSetting(pars.Materialcode, isText=True)
+		self.callbacks = _extractDatSetting(pars.Callbacks, isText=True)
 
-			useParams=_valOrExprFromPar(pars.Params, useList=True),
-			specialParams=_valOrExprFromPar(pars.Specialparams, useList=True),
-			angleParams=_valOrExprFromPar(pars.Angleparams, useList=True),
-			macroParams=_valOrExprFromPar(pars.Macroparams, useList=True),
-			lockParams=_valOrExprFromPar(pars.Lockpars, useList=True),
+		self.useParams = _valOrExprFromPar(pars.Params, useList=True)
+		self.specialParams = _valOrExprFromPar(pars.Specialparams, useList=True)
+		self.angleParams = _valOrExprFromPar(pars.Angleparams, useList=True)
+		self.macroParams = _valOrExprFromPar(pars.Macroparams, useList=True)
+		self.lockParams = _valOrExprFromPar(pars.Lockpars, useList=True)
 
-			paramListTable=_valOrExprFromPar(pars.Paramlisttable),
+		self.paramListTable = _valOrExprFromPar(pars.Paramlisttable)
 
-			libraryNames=_valOrExprFromPar(pars.Librarynames, useList=True),
+		self.libraryNames = _valOrExprFromPar(pars.Librarynames, useList=True)
 
-			bufferTable=_extractDatSetting(pars.Buffertable, isText=False),
-			textureTable=_extractDatSetting(pars.Texturetable, isText=False),
-			macroTable=_extractDatSetting(pars.Macrotable, isText=False),
-			variableTable=_extractDatSetting(pars.Variabletable, isText=False),
-			referenceTable=_extractDatSetting(pars.Referencetable, isText=False),
+		self.bufferTable = _extractDatSetting(pars.Buffertable, isText=False)
+		self.textureTable = _extractDatSetting(pars.Texturetable, isText=False)
+		self.macroTable = _extractDatSetting(pars.Macrotable, isText=False)
+		self.variableTable = _extractDatSetting(pars.Variabletable, isText=False)
+		self.referenceTable = _extractDatSetting(pars.Referencetable, isText=False)
 
-			generatedMacroTables=_valOrExprFromPar(pars.Generatedmacrotables),
+		self.generatedMacroTables = _valOrExprFromPar(pars.Generatedmacrotables)
 
-			help=_valOrExprFromPar(pars.Help),
-			keywords=_valOrExprFromPar(pars.Keywords, useList=True),
-			shortcuts=_valOrExprFromPar(pars.Shortcuts, useList=True),
-		)
+		self.help = _extractDatSetting(pars.Help, isText=True)
+		self.keywords = _valOrExprFromPar(pars.Keywords, useList=True)
+		self.shortcuts = _valOrExprFromPar(pars.Shortcuts, useList=True)
+
+	def applyToComp(self, opDefComp: 'COMP'):
+		# noinspection PyTypeChecker
+		pars = opDefComp.par  # type: OpDefParsT
+
+		_updatePar(pars.Enable, self.enable)
+		_updatePar(pars.Useruntimebypass, self.useRuntimeBypass)
+		_updatePar(pars.Paramsop, self.paramsOp)
+
+		if self.typeSpec:
+			typeSpecComp = pars.Typespec.eval()
+			self.typeSpec.applyTo(typeSpecComp)
+
+		_updatePar(pars.Params, self.useParams)
+		_updatePar(pars.Specialparams, self.specialParams)
+		_updatePar(pars.Angleparams, self.angleParams)
+		_updatePar(pars.Macroparams, self.macroParams)
+		_updatePar(pars.Lockpars, self.lockParams)
+
+		_updatePar(pars.Paramlisttable, self.paramListTable)
+
+		_updatePar(pars.Librarynames, self.libraryNames)
+
+		_updatePar(pars.Generatedmacrotables, self.generatedMacroTables)
+
+		_updatePar(pars.Keywords, self.keywords)
+		_updatePar(pars.Shortcuts, self.shortcuts)
+
+		# TODO: DAT-based params
 
 
 @dataclass
@@ -664,36 +705,32 @@ def _cleanParamSpecObj(obj: dict):
 class ROPSpec(ModelObject):
 	yaml_tag = u'!rop'
 
-	meta: Union[ROPMeta, ExternalSpec, None] = None
-	opDef: Union[ROPDef, ExternalSpec] = field(default_factory=ROPDef)
+	meta: Optional[ROPMeta] = None
+	opDef: ROPDef = field(default_factory=ROPDef)
 
-	paramPages: Union[List[ParamPage], ExternalSpec, None] = field(default_factory=list)
+	paramPages: Optional[List[ParamPage]] = field(default_factory=list)
 
-	multiInput: Union[MultiInputSpec, ExternalSpec, None] = None
-	inputs: Union[List[InputSpec], ExternalSpec] = field(default_factory=list)
-
-	def resolveExternalSpecs(self):
-		if isinstance(self.meta, ExternalSpec):
-			self.meta = self.meta.resolve()
-		if isinstance(self.opDef, ExternalSpec):
-			self.opDef = self.opDef.resolve()
-		if isinstance(self.paramPages, ExternalSpec):
-			self.paramPages = self.paramPages.resolve()
-		if isinstance(self.multiInput, ExternalSpec):
-			self.multiInput = self.multiInput.resolve()
-		if isinstance(self.inputs, ExternalSpec):
-			self.inputs = self.inputs.resolve()
+	multiInput: Optional[MultiInputSpec] = None
+	inputs: List[InputSpec] = field(default_factory=list)
 
 	@classmethod
 	def extract(cls, rop: 'COMP', skipParams=False):
 		ropInfo = ROPInfo(rop)
-		return ROPSpec(
-			meta=ROPMeta.fromRopInfo(ropInfo),
-			opDef=ROPDef.fromComp(ropInfo.opDef),
-			paramPages=None if skipParams else ParamPage.fromCustomPages(rop),
-			multiInput=MultiInputSpec.fromComps(ropInfo.multiInputHandler, ropInfo.inputHandlers),
-			inputs=InputSpec.fromCompList(ropInfo.inputHandlers, False),
-		)
+		spec = ROPSpec()
+		spec.updateFromRop(rop, skipParams)
+		return spec
+
+	def updateFromRop(self, rop: 'COMP', skipParams=False):
+		ropInfo = ROPInfo(rop)
+		if self.meta:
+			self.meta.updateFromRopInfo(ropInfo)
+		else:
+			self.meta = ROPMeta.fromRopInfo(ropInfo)
+		self.opDef.updateFromComp(ropInfo.opDef)
+		if not skipParams:
+			self.paramPages = ParamPage.fromCustomPages(rop)
+		self.multiInput = MultiInputSpec.fromComps(ropInfo.multiInputHandler, ropInfo.inputHandlers)
+		self.inputs = InputSpec.fromCompList(ropInfo.inputHandlers, forMulti=False)
 
 def _extractDatSetting(par: Optional['Par'], isText: bool) -> Union[TextData, TableData, Expr, None]:
 	if par is None:

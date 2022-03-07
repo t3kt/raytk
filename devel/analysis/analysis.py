@@ -11,6 +11,7 @@ if False:
 
 _opDefParamNames = [
 	'Typespec',
+	'Useruntimebypass',
 	'Disableinspect',
 	'Opglobals',
 	'Initcode',

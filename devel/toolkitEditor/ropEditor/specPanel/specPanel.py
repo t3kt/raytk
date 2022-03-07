@@ -28,7 +28,7 @@ class SpecPanel:
 		if not info:
 			return None
 		spec = ROPSpec.extract(info.rop, skipParams=not ipar.specPanelState.Includeparams)
-		return yaml.dump(spec, default_style='')
+		return yaml.dump(spec, default_style='', sort_keys=False)
 
 	def Update(self):
 		self.ownerComp.op('generateSpec').cook(force=True)
