@@ -6,7 +6,7 @@ This should only be used within development tools.
 
 from pathlib import Path
 from raytkDocs import OpDocManager
-from raytkModel import OpDefMeta_OLD, OpSpec_OLD, ROPSpec
+from raytkModel import OpDefMeta_OLD, OpSpec_OLD, ROPSpec, ROPDef, ROPMeta
 from raytkUtil import RaytkContext, ROPInfo, focusFirstCustomParameterPage, RaytkTags, CategoryInfo, ContextTypes, \
 	CoordTypes, ReturnTypes, getActiveEditor
 from typing import Callable, List, Optional
@@ -273,9 +273,45 @@ class RaytkTools(RaytkContext):
 		if specFile and spec:
 			specFile.write_text(spec.toJsonStr(minify=False))
 
+	def loadROPSpec_NEW(self, rop: 'COMP', checkExists: bool) -> Optional[ROPSpec]:
+		specFile = self._getROPRelatedFile(rop, '.yaml', checkExists=False)
+		if checkExists and not specFile.exists():
+			ui.status = f'No ROPSpec file {specFile.as_posix()}'
+			return
+		text = specFile.read_text()
+		spec = ROPSpec.parseFromText(text)
+		return spec
+
+	def applyROPSpec(self, rop: 'COMP'):
+		try:
+			ropInfo = ROPInfo(rop)
+			if not ropInfo:
+				raise Exception(f'Invalid ROP: {rop!r}')
+			spec = self.loadROPSpec_NEW(rop, checkExists=True)
+			if not spec:
+				raise Exception(f'No spec found for {rop}')
+			if spec.opDef:
+				spec.opDef.applyToComp(ropInfo.opDef)
+			if spec.meta:
+				spec.meta.applyToRopInfo(ropInfo)
+			# TODO: inputs, params, etc.
+		except Exception as err:
+			ui.status = f'Failed to load ROPSpec for {rop}: {err}'
+			print(f'Failed to load ROPSpec for {rop}:\n{err}')
+
 	def saveROPSpec_NEW(self, rop: 'COMP'):
 		try:
-			spec = ROPSpec.extract(rop, skipParams=False)
+			ropInfo = ROPInfo(rop)
+			if not ropInfo:
+				raise Exception(f'Invalid ROP: {rop!r}')
+			spec = self.loadROPSpec_NEW(rop, checkExists=False) or ROPSpec()
+			if not spec.opDef:
+				spec.opDef = ROPDef()
+			spec.opDef.updateFromComp(ropInfo.opDef)
+			if not spec.meta:
+				spec.meta = ROPMeta()
+			spec.meta.updateFromRopInfo(ropInfo)
+			# TODO: inputs, params, etc.
 			specFile = self._getROPRelatedFile(rop, '.yaml', checkExists=False)
 			spec.writeToFile(specFile)
 		except Exception as err:
