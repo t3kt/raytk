@@ -1,6 +1,6 @@
 ReturnT thismap(CoordT p, ContextT ctx) {
 	ReturnT res = inputOp1(p, ctx);
-	if (!isDistanceOnlyStage()) {
+	if (THIS_Enable >= 0.5 && !isDistanceOnlyStage()) {
 		#pragma r:if THIS_HAS_INPUT_colorField
 		assignColor(res, inputOp_colorField(p, ctx).rgb);
 		#pragma r:else

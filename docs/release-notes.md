@@ -23,12 +23,18 @@
   * New parameters
     * transformSequence - reverse order (#819)
   * Runtime bypass - faster enable/disable for filters (#755)
+    * adjustColor
+    * assignColor
+    * assignUV
     * bend
+    * cartesianToPolar
     * elongate
     * extend
+    * fieldFunction
     * flip
     * fold
     * instance
+    * iteratedTransform
     * invert
     * kink
     * knife
