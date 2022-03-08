@@ -39,6 +39,11 @@
     * kink
     * knife
     * limitField
+    * mirrorAxes
+    * mirrorOctant
+    * mirrorQuadrant
+    * mobiusTransform
+    * modifyNormals
     * onion
     * reflect
     * rotate
