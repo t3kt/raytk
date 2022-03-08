@@ -16,8 +16,10 @@ MERGE_BODY();
 }
 
 ReturnT thismap(CoordT p, ContextT ctx) {
-	Sdf res;
 	int n = int(THIS_Count);
+	THIS_exposeIndex(ctx, 0, n);
+	if (THIS_Enable >= 0.5) { return inputOp1(p, ctx); }
+	Sdf res;
 	float rot = THIS_Angleoffset;
 	float angleStep = THIS_Anglerange / THIS_Count;
 	CoordT q = p;
@@ -28,7 +30,6 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 	pR(q.THIS_PLANE, rot);
 	q.THIS_RADIUS_AXIS -= THIS_Radiusoffset;
 #pragma r:endif
-	THIS_exposeIndex(ctx, 0, n);
 	res = inputOp1(q, ctx);
 	for (int i = 1; i < n; i++) {
 		rot += angleStep;

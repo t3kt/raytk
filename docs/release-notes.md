@@ -44,8 +44,16 @@
     * mirrorQuadrant
     * mobiusTransform
     * modifyNormals
+    * modulo1D / modulo2D / modulo3D / moduloDistance / moduloPolar / moduloSpherical
     * onion
+    * polarToCartesian
+    * quadTreeRepeat
+    * quantizeCoords / quantizeValue
+    * radialClone
+    * rangeTransform
     * reflect
+    * remapCoords
+    * rescaleField
     * rotate
     * rotateNormals
     * round

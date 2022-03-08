@@ -1,4 +1,4 @@
-ReturnT thismap(CoordT p, ContextT ctx) {
+void THIS_apply(inout CoordT p, inout ContextT ctx) {
 	CoordT center = THIS_asCoordT(THIS_Center);
 	#pragma r:if THIS_COORD_TYPE_vec2 || THIS_Distancemode_spherical
 	p += center;
@@ -36,5 +36,11 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 	float a = atan(p.THIS_PLANE_P2, p.THIS_PLANE_P1);
 	p.THIS_PLANE = d * vec2(cos(a), sin(a)) - center.THIS_PLANE;
 	#pragma r:endif
+}
+
+ReturnT thismap(CoordT p, ContextT ctx) {
+	if (THIS_Enable >= 0.5) {
+		THIS_apply(p, ctx);
+	}
 	return inputOp1(p, ctx);
 }

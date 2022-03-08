@@ -1,4 +1,4 @@
-ReturnT thismap(CoordT p, ContextT ctx) {
+void THIS_apply(inout CoordT p, inout ContextT ctx) {
 	vec2 q = p.THIS_PLANE;
 	vec2 size = THIS_Size;
 	#pragma r:if THIS_HAS_INPUT_sizeField
@@ -75,5 +75,11 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 	}
 	#pragma r:endif
 	p.THIS_PLANE = q - o;
+}
+
+ReturnT thismap(CoordT p, ContextT ctx) {
+	if (THIS_Enable >= 0.5) {
+		THIS_apply(p, ctx);
+	}
 	return inputOp1(p, ctx);
 }

@@ -1,4 +1,4 @@
-ReturnT thismap(CoordT p, ContextT ctx) {
+void THIS_apply(inout CoordT p, inout ContextT ctx) {
 	vec3 q = p;
 	vec3 size = THIS_Size;
 	#pragma r:if THIS_HAS_INPUT_sizeField
@@ -46,5 +46,11 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 	o += fillToVec3(inputOp_offsetField(p, ctx));
 	#pragma r:endif
 	p = q - o;
+}
+
+ReturnT thismap(CoordT p, ContextT ctx) {
+	if (THIS_Enable >= 0.5) {
+		THIS_apply(p, ctx);
+	}
 	return inputOp1(p, ctx);
 }
