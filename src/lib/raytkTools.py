@@ -275,9 +275,11 @@ class RaytkTools(RaytkContext):
 
 	def loadROPSpec_NEW(self, rop: 'COMP', checkExists: bool) -> Optional[ROPSpec]:
 		specFile = self._getROPRelatedFile(rop, '.yaml', checkExists=False)
-		if checkExists and not specFile.exists():
-			ui.status = f'No ROPSpec file {specFile.as_posix()}'
-			return
+		if not specFile.exists():
+			if checkExists:
+				ui.status = f'No ROPSpec file {specFile.as_posix()}'
+				return
+			return None
 		text = specFile.read_text()
 		spec = ROPSpec.parseFromText(text)
 		return spec
