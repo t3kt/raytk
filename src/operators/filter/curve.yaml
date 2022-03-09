@@ -1,0 +1,22 @@
+!rop
+meta: !meta
+  opType: raytk.operators.filter.curve
+  opVersion: '1'
+  opStatus: alpha
+opDef: !def
+  enable: !expr
+    expr: op('..').par.Enable
+  useRuntimeBypass: true
+  typeSpec: !ropTypes
+    coordType: !coordT
+      Coordtypevec3: true
+    contextType: !contextT
+      Allcontexttype: true
+    returnType: !returnT
+      Allreturntype: true
+  function: !text
+    file: src/operators/filter/curve.glsl
+    name: function
+  useParams:
+  - H
+  - R[xyz]

@@ -1,0 +1,40 @@
+!rop
+meta: !meta
+  opType: raytk.operators.filter.rescaleField
+  opVersion: '19'
+  opStatus: default
+opDef: !def
+  enable: !expr
+    expr: op('..').par.Enable
+  useRuntimeBypass: true
+  typeSpec: !ropTypes
+    Useinputreturntype: !expr
+      expr: parent().par.Returntype == 'auto'
+    coordType: !coordT
+      Allcoordtype: true
+    contextType: !contextT
+      Allcontexttype: true
+    returnType: !returnT
+      Returntypefloat: !expr
+        expr: parent().par.Returntype in ('auto', 'float')
+      Returntypevec4: !expr
+        expr: parent().par.Returntype in ('auto', 'vec4')
+  function: !text
+    file: src/operators/filter/rescaleField.glsl
+    name: functionTemplate
+  useParams:
+  - Inputlow[1-4]
+  - Inputhigh[1-4]
+  - Outputlow[1-4]
+  - Outputhigh[1-4]
+  - Mult[1-4]
+  - Postadd[1-4]
+  - Multiply
+  help: !text
+    file: src/operators/filter/rescaleField.md
+    name: help
+  keywords:
+  - rescale
+  - remap
+  - range
+  shortcuts: rf

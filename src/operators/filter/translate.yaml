@@ -1,0 +1,121 @@
+!rop
+meta: !meta
+  opType: raytk.operators.filter.translate
+  opVersion: '16'
+  opStatus: default
+opDef: !def
+  enable: !expr 'op(''..'').par.Enable'
+  useRuntimeBypass: true
+  typeSpec: !ropTypes
+    Useinputreturntype: !expr 'op(''definition_1'').numRows > 1'
+    coordType: !coordT
+      Allcoordtype: false
+      Coordtypefloat: false
+      Coordtypevec2: !expr 'op(''definition_1'').numRows > 1 or parent().par.Coordtype
+        in (''auto'',''vec2'')'
+      Coordtypevec3: !expr 'op(''definition_1'').numRows > 1 or parent().par.Coordtype
+        in (''auto'',''vec3'')'
+    contextType: !contextT
+      Allcontexttype: true
+      Contexttypecontext: false
+      Contexttypematerialcontext: true
+      Contexttypecameracontext: false
+      Contexttypelightcontext: false
+      Contexttyperaycontext: false
+      Contexttypeparticlecontext: false
+    returnType: !returnT
+      Allreturntype: !expr 'op(''definition_1'').numRows > 1'
+      Returntypesdf: false
+      Returntypefloat: false
+      Returntypevec4: true
+      Returntyperay: false
+      Returntypelight: false
+      Returntypeparticle: false
+  function: !text
+    file: src/operators/filter/translate.glsl
+    name: function
+  useParams: Translate[xyz]
+  help: help
+  keywords:
+  - transform
+  - translate
+  - move
+  - position
+  shortcuts: tr
+paramPages:
+- !page
+  name: Filter
+  pars:
+    Enable:
+      name: Enable
+      label: Enable
+      style: Toggle
+      default: true
+    Translate:
+      name: Translate
+      label: Translate
+      style: XYZ
+      default: 0.0
+      normMin: -1.0
+      normMax: 1.0
+    Coordtype:
+      name: Coordtype
+      label: Coord Type
+      style: Menu
+      default: auto
+      startSection: true
+      enableExpr: op('./definition_1').numRows < 2
+      menuNames:
+      - auto
+      - vec2
+      - vec3
+      menuLabels:
+      - Auto
+      - 2D
+      - 3D
+inputs:
+- !input
+  coordType: !coordT
+    Allcoordtype: false
+    Coordtypefloat: false
+    Coordtypevec2: true
+    Coordtypevec3: true
+  contextType: !contextT
+    Allcontexttype: true
+    Contexttypecontext: true
+    Contexttypematerialcontext: false
+    Contexttypecameracontext: false
+    Contexttypelightcontext: false
+    Contexttyperaycontext: false
+    Contexttypeparticlecontext: false
+  returnType: !returnT
+    Allreturntype: true
+    Returntypesdf: false
+    Returntypefloat: true
+    Returntypevec4: true
+    Returntyperay: false
+    Returntypelight: false
+    Returntypeparticle: false
+- !input
+  Localalias: translateField
+  coordType: !coordT
+    Allcoordtype: false
+    Coordtypefloat: false
+    Coordtypevec2: true
+    Coordtypevec3: true
+  contextType: !contextT
+    Allcontexttype: true
+    Contexttypecontext: true
+    Contexttypematerialcontext: false
+    Contexttypecameracontext: false
+    Contexttypelightcontext: false
+    Contexttyperaycontext: false
+    Contexttypeparticlecontext: false
+  returnType: !returnT
+    Allreturntype: false
+    Returntypesdf: true
+    Returntypefloat: true
+    Returntypevec4: true
+    Returntyperay: false
+    Returntypelight: false
+    Returntypeparticle: false

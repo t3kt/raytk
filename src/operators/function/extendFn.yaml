@@ -1,0 +1,27 @@
+!rop
+meta: !meta
+  opType: raytk.operators.function.extendFn
+  opVersion: '3'
+  opStatus: beta
+opDef: !def
+  enable: !expr
+    expr: op('..').par.Enable
+  typeSpec: !ropTypes
+    coordType: !coordT
+      Allcoordtype: true
+    contextType: !contextT
+      Allcontexttype: true
+    returnType: !returnT
+      Allreturntype: true
+  function: !text
+    file: src/operators/function/extendFn.glsl
+    name: function
+  useParams:
+  - Range[1-2]
+  - Defval
+  macroParams: Extend
+  libraryNames: !expr
+    expr: '[op(''modZigZag''), op(''extendFn_lib'')]'
+  help: !text
+    file: src/operators/function/extendFn.md
+    name: help

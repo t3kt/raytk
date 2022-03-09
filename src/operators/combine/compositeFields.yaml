@@ -1,0 +1,27 @@
+!rop
+meta: !meta
+  opType: raytk.operators.combine.compositeFields
+  opVersion: '6'
+  opStatus: default
+opDef: !def
+  enable: !expr
+    expr: op('..').par.Enable
+  typeSpec: !ropTypes
+    coordType: !coordT
+      Allcoordtype: true
+    contextType: !contextT
+      Allcontexttype: true
+    returnType: !returnT
+      Returntypevec4: true
+  function: !text
+    file: src/operators/combine/compositeFields.glsl
+    name: functionTemplate
+  useParams: !expr
+    expr: '''Blend Swapinputs '' + op(''params'')[''params'', 1]'
+  macroParams: !expr
+    expr: op('params')['macroParams', 1]
+  libraryNames: !expr
+    expr: op('glslBlend')
+  help: !text
+    file: src/operators/combine/compositeFields.md
+    name: help

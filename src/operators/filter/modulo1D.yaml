@@ -1,0 +1,273 @@
+!rop
+meta: !meta
+  opType: raytk.operators.filter.modulo1D
+  opVersion: '22'
+  opStatus: default
+opDef: !def
+  enable: !expr 'op(''..'').par.Enable'
+  typeSpec: !ropTypes
+    coordType: !coordT
+      Allcoordtype: false
+      Coordtypefloat: false
+      Coordtypevec2: true
+      Coordtypevec3: true
+    contextType: !contextT
+      Allcontexttype: true
+      Contexttypecontext: false
+      Contexttypematerialcontext: true
+      Contexttypecameracontext: false
+      Contexttypelightcontext: false
+      Contexttyperaycontext: false
+      Contexttypeparticlecontext: false
+    returnType: !returnT
+      Allreturntype: true
+      Returntypesdf: false
+      Returntypefloat: true
+      Returntypevec4: true
+      Returntyperay: false
+      Returntypelight: false
+      Returntypeparticle: false
+  function: !text
+    file: src/operators/filter/modulo1D.glsl
+    name: function
+  useParams:
+  - Size
+  - Offset
+  - Shift
+  macroParams:
+  - Uselimit
+  - Limittype
+  - Iterationtype
+  - Axis
+  - Mirrortype
+  paramListTable: switcher_params
+  variableTable: eval_variables
+  help: help
+  keywords:
+  - modulo
+  - repeat
+  shortcuts: m1
+paramPages:
+- !page
+  name: Filter
+  pars:
+    Enable:
+      name: Enable
+      label: Enable
+      style: Toggle
+      default: true
+    Axis:
+      name: Axis
+      label: Axis
+      style: Menu
+      default: x
+      menuNames:
+      - x
+      - y
+      - z
+      menuLabels:
+      - X
+      - Y
+      - Z
+    Size:
+      name: Size
+      label: Size
+      style: Float
+      size: 1
+      default: 1.0
+      normMin: 0.0
+      normMax: 4.0
+    Offset:
+      name: Offset
+      label: Offset
+      style: Float
+      size: 1
+      default: 0.0
+      normMin: -4.0
+      normMax: 4.0
+    Shift:
+      name: Shift
+      label: Shift
+      style: Float
+      size: 1
+      default: 0.0
+      normMin: -4.0
+      normMax: 4.0
+    Mirrortype:
+      name: Mirrortype
+      label: Mirror Type
+      style: Menu
+      default: none
+      menuNames:
+      - none
+      - mirror
+      menuLabels:
+      - None
+      - Mirror
+    Uselimit:
+      name: Uselimit
+      label: Use Limit
+      style: Toggle
+      default: false
+      startSection: true
+    Limittype:
+      name: Limittype
+      label: Limit Type
+      style: Menu
+      default: both
+      enable: false
+      enableExpr: me.par.Uselimit
+      menuNames:
+      - both
+      - start
+      - stop
+      menuLabels:
+      - Both
+      - Start Only
+      - Stop Only
+    Limitstart:
+      name: Limitstart
+      label: Limit Start
+      style: Float
+      size: 1
+      default: -5.0
+      enable: false
+      enableExpr: me.par.Uselimit and me.par.Limittype in ('both', 'start')
+      normMin: -5.0
+      normMax: 5.0
+    Limitstop:
+      name: Limitstop
+      label: Limit Stop
+      style: Float
+      size: 1
+      default: 5.0
+      enable: false
+      enableExpr: me.par.Uselimit and me.par.Limittype in ('both', 'stop')
+      normMin: -5.0
+      normMax: 5.0
+    Limitoffset:
+      name: Limitoffset
+      label: Limit Offset
+      style: Float
+      size: 1
+      default: 0.0
+      enable: false
+      enableExpr: me.par.Uselimit and me.par.Limittype in ('both', 'start', 'stop')
+      normMin: -5.0
+      normMax: 5.0
+    Iterationtype:
+      name: Iterationtype
+      label: Iteration Type
+      style: Menu
+      default: none
+      startSection: true
+      menuNames:
+      - none
+      - cellcoord
+      - alternatingcoord
+      menuLabels:
+      - None
+      - Cell Coordinate
+      - Alternating Cell Coordinate (0,1,0,1)
+- !page
+  name: Variables
+  pars:
+    Createrefcellcoord:
+      name: Createrefcellcoord
+      label: Cell Index
+      style: Pulse
+      default: false
+      enableExpr: hasattr(op, 'raytk') and op.raytk.op('tools/palette')
+inputs:
+- !input
+  Required: true
+  coordType: !coordT
+    Allcoordtype: false
+    Coordtypefloat: true
+    Coordtypevec2: true
+    Coordtypevec3: true
+  contextType: !contextT
+    Allcontexttype: true
+    Contexttypecontext: true
+    Contexttypematerialcontext: false
+    Contexttypecameracontext: false
+    Contexttypelightcontext: false
+    Contexttyperaycontext: false
+    Contexttypeparticlecontext: false
+  returnType: !returnT
+    Allreturntype: true
+    Returntypesdf: true
+    Returntypefloat: true
+    Returntypevec4: true
+    Returntyperay: false
+    Returntypelight: false
+    Returntypeparticle: false
+- !input
+  Localalias: sizeField
+  coordType: !coordT
+    Allcoordtype: false
+    Coordtypefloat: true
+    Coordtypevec2: true
+    Coordtypevec3: true
+  contextType: !contextT
+    Allcontexttype: true
+    Contexttypecontext: true
+    Contexttypematerialcontext: false
+    Contexttypecameracontext: false
+    Contexttypelightcontext: false
+    Contexttyperaycontext: false
+    Contexttypeparticlecontext: false
+  returnType: !returnT
+    Allreturntype: false
+    Returntypesdf: false
+    Returntypefloat: true
+    Returntypevec4: false
+    Returntyperay: false
+    Returntypelight: false
+    Returntypeparticle: false
+- !input
+  Localalias: offsetField
+  coordType: !coordT
+    Allcoordtype: false
+    Coordtypefloat: true
+    Coordtypevec2: true
+    Coordtypevec3: true
+  contextType: !contextT
+    Allcontexttype: true
+    Contexttypecontext: true
+    Contexttypematerialcontext: false
+    Contexttypecameracontext: false
+    Contexttypelightcontext: false
+    Contexttyperaycontext: false
+    Contexttypeparticlecontext: false
+  returnType: !returnT
+    Allreturntype: false
+    Returntypesdf: false
+    Returntypefloat: true
+    Returntypevec4: false
+    Returntyperay: false
+    Returntypelight: false
+    Returntypeparticle: false
+- !input
+  Localalias: shiftField
+  coordType: !coordT
+    Allcoordtype: false
+    Coordtypefloat: true
+    Coordtypevec2: true
+    Coordtypevec3: true
+  contextType: !contextT
+    Allcontexttype: true
+    Contexttypecontext: true
+    Contexttypematerialcontext: false
+    Contexttypecameracontext: false
+    Contexttypelightcontext: false
+    Contexttyperaycontext: false
+    Contexttypeparticlecontext: false
+  returnType: !returnT
+    Allreturntype: false
+    Returntypesdf: false
+    Returntypefloat: true
+    Returntypevec4: false
+    Returntyperay: false
+    Returntypelight: false
+    Returntypeparticle: false

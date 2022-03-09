@@ -1,0 +1,25 @@
+!rop
+meta: !meta
+  opType: raytk.operators.utility.provideVariable
+  opVersion: '4'
+  opStatus: beta
+opDef: !def
+  enable: !expr
+    expr: op('..').par.Enable
+  typeSpec: !ropTypes
+    coordType: !coordT
+      Allcoordtype: true
+    contextType: !contextT
+      Allcontexttype: true
+    returnType: !returnT
+      Allreturntype: true
+  function: !text
+    file: src/operators/utility/provideVariable.glsl
+    name: functionTemplate
+  useParams: Value[1-4]
+  macroParams: Datatype
+  variableTable: !table
+    file: src/operators/utility/provideVariable_variables.txt
+    name: variable_exprs
+    evaluate: true
+    evalOpts: !evalOpts {}

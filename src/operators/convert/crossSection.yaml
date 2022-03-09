@@ -1,0 +1,23 @@
+!rop
+meta: !meta
+  opType: raytk.operators.convert.crossSection
+  opVersion: '0'
+  opStatus: beta
+opDef: !def
+  enable: !expr
+    expr: op('..').par.Enable
+  typeSpec: !ropTypes
+    coordType: !coordT
+      Coordtypefloat: !expr
+        expr: op('switcher_info')[1, 'coordType'] == 'float'
+      Coordtypevec2: !expr
+        expr: op('switcher_info')[1, 'coordType'] == 'vec2'
+    contextType: !contextT
+      Allcontexttype: true
+    returnType: !returnT
+      Allreturntype: true
+  function: !text
+    file: src/operators/convert/crossSection.glsl
+    name: functionTemplate
+  useParams: Offset[xyz]
+  paramListTable: switcher_params

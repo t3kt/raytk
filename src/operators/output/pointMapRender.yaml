@@ -1,0 +1,31 @@
+!rop
+meta: !meta
+  opType: raytk.operators.output.pointMapRender
+  opVersion: '51'
+  opStatus: default
+opDef: !def
+  enable: true
+  typeSpec: !ropTypes
+    coordType: !coordT
+      Coordtypevec2: true
+      Coordtypevec3: true
+    contextType: !contextT
+      Contexttypecontext: true
+    returnType: !returnT
+      Returntypesdf: true
+      Returntypefloat: true
+      Returntypevec4: true
+  function: !text
+    file: src/operators/output/pointMapRender_func.glsl
+    name: functionTemplate
+  useParams: Normalsmoothing
+  macroParams: Enablenormalsmoothing
+  help: !text
+    file: src/operators/output/pointMapRender.md
+    name: help
+  keywords:
+  - point
+  - volumetric
+  - render
+  - ''
+  shortcuts: pmr

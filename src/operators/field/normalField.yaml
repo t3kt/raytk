@@ -1,0 +1,21 @@
+!rop
+meta: !meta
+  opType: raytk.operators.field.normalField
+  opVersion: '1'
+  opStatus: default
+opDef: !def
+  enable: true
+  typeSpec: !ropTypes
+    coordType: !coordT
+      Allcoordtype: true
+    contextType: !contextT
+      Contexttypematerialcontext: true
+      Contexttypelightcontext: true
+    returnType: !returnT
+      Returntypevec4: true
+  function: !text
+    file: src/operators/field/normalField.glsl
+    name: function
+  help: !text
+    file: src/operators/field/normalField.md
+    name: help

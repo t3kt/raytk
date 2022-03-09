@@ -1,0 +1,49 @@
+!rop
+meta: !meta
+  opType: raytk.operators.material.diffuseContrib
+  opVersion: '13'
+  opStatus: default
+opDef: !def
+  enable: true
+  typeSpec: !ropTypes
+    coordType: !coordT
+      Coordtypevec3: true
+    contextType: !contextT
+      Contexttypematerialcontext: true
+    returnType: !returnT
+      Returntypefloat: !expr
+        expr: not parent().par.Usecolor
+      Returntypevec4: !expr
+        expr: parent().par.Usecolor
+  function: !text
+    file: src/operators/material/diffuseContrib.glsl
+    name: functionTemplate
+  useParams:
+  - Color[rgb]
+  - Level
+  macroParams:
+  - Uselightcolor
+  - Usesurfacecolor
+  - Enableshadow
+  paramListTable: !expr
+    expr: op('switcher_params')
+  libraryNames: !expr
+    expr: op('diffuseContrib_lib')
+  macroTable: !table
+    file: src/operators/material/diffuseContrib_macros.txt
+    name: macro_exprs
+    evaluate: true
+    evalOpts: !evalOpts {}
+  generatedMacroTables: sel_expr_macros
+  help: !text
+    file: src/operators/material/diffuseContrib.md
+    name: help
+  keywords:
+  - material
+  - lighting
+  - diffuse
+  - lambert
+  - oren-nayar
+  - shading
+  - modularmat
+  shortcuts: dc

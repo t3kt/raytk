@@ -1,0 +1,20 @@
+!rop
+meta: !meta
+  opType: raytk.operators.particles.particleBehaviorChain
+  opVersion: '0'
+  opStatus: alpha
+opDef: !def
+  enable: true
+  typeSpec: !ropTypes
+    coordType: !coordT
+      Allcoordtype: true
+    contextType: !contextT
+      Contexttypeparticlecontext: true
+    returnType: !returnT
+      Returntypeparticle: true
+  function: !text
+    file: src/operators/particles/particleBehaviorChain.glsl
+    name: functionTemplate
+  useParams:
+  - Active
+  - Haltondeath

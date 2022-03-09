@@ -1,0 +1,38 @@
+!rop
+meta: !meta
+  opType: raytk.operators.material.shadowContrib
+  opVersion: '3'
+  opStatus: beta
+opDef: !def
+  enable: true
+  typeSpec: !ropTypes
+    coordType: !coordT
+      Coordtypevec3: true
+    contextType: !contextT
+      Contexttypematerialcontext: true
+    returnType: !returnT
+      Returntypefloat: !expr
+        expr: not parent().par.Usecolor
+      Returntypevec4: !expr
+        expr: parent().par.Usecolor
+  function: !text
+    file: src/operators/material/shadowContrib.glsl
+    name: function
+  useParams:
+  - Color[rgb]
+  - Invert
+  macroParams: Usecolor
+  macroTable: !table
+    file: src/operators/material/shadowContrib_macros.txt
+    name: macro_exprs
+    evaluate: true
+    evalOpts: !evalOpts {}
+  help: !text
+    file: src/operators/material/shadowContrib.md
+    name: help
+  keywords:
+  - material
+  - lighting
+  - shadow
+  - shading
+  - modularmat

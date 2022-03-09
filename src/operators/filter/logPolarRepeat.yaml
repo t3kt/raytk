@@ -1,0 +1,42 @@
+!rop
+meta: !meta
+  opType: raytk.operators.filter.logPolarRepeat
+  opVersion: '3'
+  opStatus: beta
+opDef: !def
+  enable: !expr
+    expr: op('..').par.Enable
+  typeSpec: !ropTypes
+    coordType: !coordT
+      Coordtypevec2: true
+      Coordtypevec3: true
+    contextType: !contextT
+      Allcontexttype: true
+    returnType: !returnT
+      Allreturntype: true
+  function: !text
+    file: src/operators/filter/logPolarRepeat.glsl
+    name: functionTemplate
+  useParams:
+  - Rhooffset
+  - Thetaoffset
+  - Radialreps
+  - Distspacing
+  macroParams:
+  - Mirrortype
+  - Iterationtype
+  paramListTable: switcher_params
+  variableTable: !table
+    file: src/operators/filter/logPolarRepeat_variables.txt
+    name: variable_exprs
+    evaluate: true
+    evalOpts: !evalOpts
+      excludeFirstRow: true
+  generatedMacroTables: sel_axis_macros
+  keywords:
+  - polar
+  - radial
+  - log
+  - repeat
+  - modulo
+  - spiral

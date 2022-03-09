@@ -1,0 +1,30 @@
+!rop
+meta: !meta
+  opType: raytk.operators.field.waveletNoiseField
+  opVersion: '6'
+  opStatus: default
+opDef: !def
+  enable: true
+  typeSpec: !ropTypes
+    coordType: !coordT
+      Coordtypevec2: !expr
+        expr: parent().par.Coordtype in ('auto', 'vec2')
+      Coordtypevec3: !expr
+        expr: parent().par.Coordtype in ('auto', 'vec3')
+    contextType: !contextT
+      Allcontexttype: true
+    returnType: !returnT
+      Returntypefloat: true
+  function: !text
+    file: src/operators/field/waveletNoiseField.glsl
+    name: functionTemplate
+  useParams:
+  - Translate[1-3]
+  - Period[1-3]
+  - Phase
+  - Scalefactor
+  - Amplitude
+  - Offset
+  macroParams:
+  - Iterations
+  - Enablevorticity

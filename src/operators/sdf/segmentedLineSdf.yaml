@@ -1,0 +1,37 @@
+!rop
+meta: !meta
+  opType: raytk.operators.sdf.segmentedLineSdf
+  opVersion: '5'
+  opStatus: default
+opDef: !def
+  enable: true
+  typeSpec: !ropTypes
+    coordType: !coordT
+      Coordtypevec3: true
+    contextType: !contextT
+      Allcontexttype: true
+    returnType: !returnT
+      Returntypesdf: true
+  function: !text
+    file: src/operators/sdf/segmentedLineSdf.glsl
+    name: function
+  useParams:
+  - Point[1-8][xyz]
+  - Radius
+  macroParams:
+  - Segments
+  - Source
+  - Closepath
+  bufferTable: !table
+    file: src/operators/sdf/segmentedLineSdf_buffers.txt
+    name: buffer_table
+    evaluate: true
+    evalOpts: !evalOpts {}
+  help: !text
+    file: src/operators/sdf/segmentedLineSdf.md
+    name: help
+  keywords:
+  - line
+  - segments
+  - path
+  - points

@@ -1,0 +1,25 @@
+!rop
+meta: !meta
+  opType: raytk.operators.sdf.pyramidSdf
+  opVersion: '7'
+  opStatus: default
+opDef: !def
+  enable: true
+  typeSpec: !ropTypes
+    coordType: !coordT
+      Coordtypevec3: true
+    contextType: !contextT
+      Allcontexttype: true
+    returnType: !returnT
+      Returntypesdf: true
+  function: !text
+    file: src/operators/sdf/pyramidSdf.glsl
+    name: functionTemplate
+  useParams:
+  - Translate[xyz]
+  - Height
+  - Width
+  generatedMacroTables: sel_axis_macros
+  help: !text
+    file: src/operators/sdf/pyramidSdf.md
+    name: help

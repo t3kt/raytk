@@ -1,0 +1,23 @@
+!rop
+meta: !meta
+  opType: raytk.operators.sdf.tetrahedronSdf
+  opVersion: '6'
+  opStatus: default
+opDef: !def
+  enable: true
+  typeSpec: !ropTypes
+    coordType: !coordT
+      Coordtypevec3: true
+    contextType: !contextT
+      Allcontexttype: true
+    returnType: !returnT
+      Returntypesdf: true
+  function: !text
+    file: src/operators/sdf/tetrahedronSdf.glsl
+    name: functionTemplate
+  useParams:
+  - Translate[xyz]
+  - Scale
+  help: !text
+    file: src/operators/sdf/tetrahedronSdf.md
+    name: help

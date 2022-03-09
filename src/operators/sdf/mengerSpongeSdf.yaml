@@ -1,0 +1,26 @@
+!rop
+meta: !meta
+  opType: raytk.operators.sdf.mengerSpongeSdf
+  opVersion: '5'
+  opStatus: default
+opDef: !def
+  enable: true
+  typeSpec: !ropTypes
+    coordType: !coordT
+      Coordtypevec3: true
+    contextType: !contextT
+      Allcontexttype: true
+    returnType: !returnT
+      Returntypesdf: true
+  function: !text
+    file: src/operators/sdf/mengerSpongeSdf.glsl
+    name: functionTemplate
+  useParams:
+  - Translate[xyz]
+  - Scale
+  - Crossscale
+  - Boxscale
+  macroParams: Steps
+  help: !text
+    file: src/operators/sdf/mengerSpongeSdf.md
+    name: help

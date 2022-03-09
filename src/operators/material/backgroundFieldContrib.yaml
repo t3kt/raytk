@@ -1,0 +1,18 @@
+!rop
+meta: !meta
+  opType: raytk.operators.material.backgroundFieldContrib
+  opVersion: '1'
+  opStatus: beta
+opDef: !def
+  enable: true
+  typeSpec: !ropTypes
+    coordType: !coordT
+      Coordtypevec3: true
+    contextType: !contextT
+      Contexttypematerialcontext: true
+    returnType: !returnT
+      Returntypevec4: true
+  function: !text
+    file: src/operators/material/backgroundFieldContrib.glsl
+    name: function
+  useParams: Level

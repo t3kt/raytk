@@ -1,0 +1,28 @@
+!rop
+meta: !meta
+  opType: raytk.operators.filter.quantizeValue
+  opVersion: '10'
+  opStatus: default
+opDef: !def
+  enable: !expr
+    expr: op('..').par.Enable
+  useRuntimeBypass: true
+  typeSpec: !ropTypes
+    coordType: !coordT
+      Allcoordtype: true
+    contextType: !contextT
+      Allcontexttype: true
+    returnType: !returnT
+      Returntypesdf: true
+      Returntypefloat: true
+      Returntypevec4: true
+  function: !text
+    file: src/operators/filter/quantizeValue.glsl
+    name: function
+  useParams:
+  - Smoothing[1-4]
+  - Size[1-4]
+  - Offset[1-4]
+  macroParams: Enablesmoothing
+  libraryNames: !expr
+    expr: op('quantize')

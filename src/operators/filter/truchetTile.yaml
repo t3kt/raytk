@@ -1,0 +1,21 @@
+!rop
+meta: !meta
+  opType: raytk.operators.filter.truchetTile
+  opVersion: '3'
+  opStatus: alpha
+opDef: !def
+  enable: !expr
+    expr: op('..').par.Enable
+  useRuntimeBypass: true
+  typeSpec: !ropTypes
+    coordType: !coordT
+      Coordtypevec2: true
+      Coordtypevec3: true
+    contextType: !contextT
+      Allcontexttype: true
+    returnType: !returnT
+      Allreturntype: true
+  function: !text
+    file: src/operators/filter/truchetTile.glsl
+    name: function
+  generatedMacroTables: sel_axis_macros

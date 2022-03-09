@@ -1,0 +1,26 @@
+!rop
+meta: !meta
+  opType: raytk.operators.material.surfaceColorContrib
+  opVersion: '4'
+  opStatus: default
+opDef: !def
+  enable: true
+  typeSpec: !ropTypes
+    coordType: !coordT
+      Allcoordtype: true
+    contextType: !contextT
+      Contexttypematerialcontext: true
+    returnType: !returnT
+      Returntypevec4: true
+  function: !text
+    file: src/operators/material/surfaceColorContrib.glsl
+    name: function
+  useParams: Defaultcolor[rgb]
+  help: !text
+    file: src/operators/material/surfaceColorContrib.md
+    name: help
+  keywords:
+  - material
+  - surface
+  - color
+  - modularmat

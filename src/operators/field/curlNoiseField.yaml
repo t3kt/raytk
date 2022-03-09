@@ -1,0 +1,36 @@
+!rop
+meta: !meta
+  opType: raytk.operators.field.curlNoiseField
+  opVersion: '4'
+  opStatus: default
+opDef: !def
+  enable: true
+  typeSpec: !ropTypes
+    coordType: !coordT
+      Coordtypefloat: !expr
+        expr: parent().par.Coordtype == 'float'
+      Coordtypevec2: !expr
+        expr: parent().par.Coordtype == 'vec2'
+      Coordtypevec3: !expr
+        expr: parent().par.Coordtype == 'vec3'
+    contextType: !contextT
+      Allcontexttype: true
+    returnType: !returnT
+      Returntypevec4: true
+  function: !text
+    file: src/operators/field/curlNoiseField.glsl
+    name: functionTemplate
+  useParams:
+  - Translate[1-3]
+  - Scale[1-3]
+  - Amplitude
+  - Offset
+  libraryNames: !expr
+    expr: op('glslNoise')
+  macroTable: !table
+    file: src/operators/field/curlNoiseField_macros.txt
+    name: macros
+  generatedMacroTables: sel_axis_macros
+  help: !text
+    file: src/operators/field/curlNoiseField.md
+    name: help

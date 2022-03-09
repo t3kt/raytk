@@ -1,0 +1,30 @@
+!rop
+meta: !meta
+  opType: raytk.operators.light.spotLight
+  opVersion: '5'
+  opStatus: beta
+opDef: !def
+  enable: true
+  typeSpec: !ropTypes
+    coordType: !coordT
+      Coordtypevec3: true
+    contextType: !contextT
+      Contexttypelightcontext: true
+    returnType: !returnT
+      Returntypelight: true
+  function: !text
+    file: src/operators/light/spotLight.glsl
+    name: function
+  useParams:
+  - Position[xyz]
+  - Direction[xyz]
+  - Color[rgb]
+  - Intensity
+  - Coneangle
+  - Conedelta
+  - Attenuationstart
+  - Attenuationend
+  macroParams: Enableattenuation
+  help: !text
+    file: src/operators/light/spotLight.md
+    name: help

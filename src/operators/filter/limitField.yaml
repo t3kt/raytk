@@ -1,0 +1,107 @@
+!rop
+meta: !meta
+  opType: raytk.operators.filter.limitField
+  opVersion: '13'
+  opStatus: default
+opDef: !def
+  enable: !expr 'op(''..'').par.Enable'
+  useRuntimeBypass: true
+  typeSpec: !ropTypes
+    coordType: !coordT
+      Allcoordtype: true
+      Coordtypefloat: true
+      Coordtypevec2: true
+      Coordtypevec3: true
+    contextType: !contextT
+      Allcontexttype: true
+      Contexttypecontext: true
+      Contexttypematerialcontext: false
+      Contexttypecameracontext: false
+      Contexttypelightcontext: false
+      Contexttyperaycontext: false
+      Contexttypeparticlecontext: false
+    returnType: !returnT
+      Allreturntype: false
+      Returntypesdf: true
+      Returntypefloat: true
+      Returntypevec4: true
+      Returntyperay: false
+      Returntypelight: false
+      Returntypeparticle: false
+  function: !text
+    file: src/operators/filter/limitField.glsl
+    name: functionTemplate
+  useParams:
+  - Low[1-4]
+  - High[1-4]
+  macroParams: Limittype
+  libraryNames: !expr 'op(''modZigZag'')'
+  help: help
+  keywords:
+  - limit
+  - value
+  - clamp
+  - loop
+  - zigzag
+paramPages:
+- !page
+  name: Filter
+  pars:
+    Enable:
+      name: Enable
+      label: Enable
+      style: Toggle
+      default: true
+    Limittype:
+      name: Limittype
+      label: Limit Type
+      style: Menu
+      default: clamp
+      menuNames:
+      - clamp
+      - loop
+      - zigzag
+      menuLabels:
+      - Clamp
+      - Loop
+      - Zig-Zag
+    Low:
+      name: Low
+      label: Input Low
+      style: Float
+      size: 4
+      default: 0.0
+      normMin: 0.0
+      normMax: 1.0
+    High:
+      name: High
+      label: Input High
+      style: Float
+      size: 4
+      default: 1.0
+      normMin: 0.0
+      normMax: 1.0
+inputs:
+- !input
+  Required: true
+  coordType: !coordT
+    Allcoordtype: true
+    Coordtypefloat: true
+    Coordtypevec2: true
+    Coordtypevec3: true
+  contextType: !contextT
+    Allcontexttype: true
+    Contexttypecontext: true
+    Contexttypematerialcontext: false
+    Contexttypecameracontext: false
+    Contexttypelightcontext: false
+    Contexttyperaycontext: false
+    Contexttypeparticlecontext: false
+  returnType: !returnT
+    Allreturntype: false
+    Returntypesdf: true
+    Returntypefloat: true
+    Returntypevec4: true
+    Returntyperay: false
+    Returntypelight: false
+    Returntypeparticle: false

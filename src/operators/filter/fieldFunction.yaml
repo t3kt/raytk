@@ -1,0 +1,25 @@
+!rop
+meta: !meta
+  opType: raytk.operators.filter.fieldFunction
+  opVersion: '4'
+  opStatus: beta
+opDef: !def
+  enable: !expr
+    expr: op('..').par.Enable
+  useRuntimeBypass: true
+  typeSpec: !ropTypes
+    coordType: !coordT
+      Allcoordtype: true
+    contextType: !contextT
+      Allcontexttype: true
+    returnType: !returnT
+      Returntypefloat: !expr
+        expr: not me.par.Returntypevec4
+      Returntypevec4: !expr
+        expr: op('definition_1')[1, 'returnType'] == 'vec4' or op('definition_2')[1,
+          'returnType'] == 'vec4'
+  function: !text
+    file: src/operators/filter/fieldFunction.glsl
+    name: function
+  useParams: Value[1-2]
+  generatedMacroTables: sel_expr_macros

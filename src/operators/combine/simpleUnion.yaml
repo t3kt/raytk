@@ -1,0 +1,25 @@
+!rop
+meta: !meta
+  opType: raytk.operators.combine.simpleUnion
+  opVersion: '17'
+  opStatus: default
+opDef: !def
+  enable: !expr
+    expr: op('..').par.Enable
+  typeSpec: !ropTypes
+    coordType: !coordT
+      Allcoordtype: true
+    contextType: !contextT
+      Allcontexttype: true
+    returnType: !returnT
+      Returntypesdf: true
+      Returntypefloat: true
+  function: !text
+    file: src/operators/combine/simpleUnion.glsl
+    name: functionTemplate
+  libraryNames: raytkCombine
+  generatedMacroTables: multiInputHandler_macros
+  help: !text
+    file: src/operators/combine/simpleUnion.md
+    name: help
+  shortcuts: su

@@ -1,0 +1,42 @@
+!rop
+meta: !meta
+  opType: raytk.operators.field.triPlanarTextureField
+  opVersion: '12'
+  opStatus: default
+opDef: !def
+  enable: !expr
+    expr: op('..').par.Enable
+  typeSpec: !ropTypes
+    coordType: !coordT
+      Coordtypevec3: true
+    contextType: !contextT
+      Contexttypematerialcontext: true
+    returnType: !returnT
+      Returntypefloat: !expr
+        expr: parent().par.Returntype == 'float'
+      Returntypevec4: !expr
+        expr: parent().par.Returntype == 'vec4'
+  function: !text
+    file: src/operators/field/triPlanarTextureField.glsl
+    name: functionTemplate
+  useParams:
+  - Translateu
+  - Translatev
+  - Translatew
+  - Scaleu
+  - Scalev
+  - Scalew
+  macroParams:
+  - Extendmode
+  - Useseparatetextures
+  - Blendmode
+  libraryNames: !expr
+    expr: op('modZigZag')
+  textureTable: !table
+    file: src/operators/field/triPlanarTextureField_textures.txt
+    name: texture_exprs
+    evaluate: true
+    evalOpts: !evalOpts {}
+  help: !text
+    file: src/operators/field/triPlanarTextureField.md
+    name: help

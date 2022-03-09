@@ -1,0 +1,268 @@
+!rop
+meta: !meta
+  opType: raytk.operators.output.functionGraphRender
+  opVersion: '25'
+  opStatus: default
+opDef: !def
+  enable: true
+  typeSpec: !ropTypes
+    coordType: !coordT
+      Coordtypevec2: true
+    contextType: !contextT
+      Contexttypecontext: true
+    returnType: !returnT
+      Returntypevec4: true
+  function: !text
+    file: src/operators/output/functionGraphRender_function.glsl
+    name: functionTemplate
+  useParams:
+  - Domainlow
+  - Domainhigh
+  - Rangelow
+  - Rangehigh
+  - Linethickness
+  - Lineblending
+  macroParams:
+  - Show
+  - Axes
+  macroTable: macros
+  help: !text
+    file: src/operators/output/functionGraphRender.md
+    name: help
+paramPages:
+- !page
+  name: Render
+  pars:
+    Res:
+      name: Res
+      label: Resolution
+      style: XY
+      default:
+      - 1920.0
+      - 1080.0
+      normMin: 0.0
+      normMax:
+      - 3840.0
+      - 2160.0
+    Format:
+      name: Format
+      label: Pixel Format
+      style: Menu
+      default: useinput
+      menuNames:
+      - useinput
+      - rgba8fixed
+      - srgba8fixed
+      - rgba16float
+      - rgba32float
+      - _separator_
+      - rgb10a2fixed
+      - rgba16fixed
+      - rgba11float
+      - rgb16float
+      - rgb32float
+      - mono8fixed
+      - mono16fixed
+      - mono16float
+      - mono32float
+      - rg8fixed
+      - rg16fixed
+      - rg16float
+      - rg32float
+      - a8fixed
+      - a16fixed
+      - a16float
+      - a32float
+      - monoalpha8fixed
+      - monoalpha16fixed
+      - monoalpha16float
+      - monoalpha32float
+      menuLabels:
+      - Use Input
+      - 8-bit fixed (RGBA)
+      - sRGB 8-bit fixed (RGBA)
+      - 16-bit float (RGBA)
+      - 32-bit float (RGBA)
+      - _separator_
+      - 10-bit RGB, 2-bit Alpha, fixed (RGBA)
+      - 16-bit fixed (RGBA)
+      - 11-bit float (RGB), Positive Values Only
+      - 16-bit float (RGB)
+      - 32-bit float (RGB)
+      - 8-bit fixed (Mono)
+      - 16-bit fixed (Mono)
+      - 16-bit float (Mono)
+      - 32-bit float (Mono)
+      - 8-bit fixed (RG)
+      - 16-bit fixed (RG)
+      - 16-bit float (RG)
+      - 32-bit float (RG)
+      - 8-bit fixed (A)
+      - 16-bit fixed (A)
+      - 16-bit float (A)
+      - 32-bit float (A)
+      - 8-bit fixed (Mono+Alpha)
+      - 16-bit fixed (Mono+Alpha)
+      - 16-bit float (Mono+Alpha)
+      - 32-bit float (Mono+Alpha)
+    Domainlow:
+      name: Domainlow
+      label: Domain Low
+      style: Float
+      size: 1
+      default: -1.0
+      startSection: true
+      normMin: -1.0
+      normMax: 1.0
+    Domainhigh:
+      name: Domainhigh
+      label: Domain High
+      style: Float
+      size: 1
+      default: 1.0
+      normMin: -1.0
+      normMax: 1.0
+    Rangelow:
+      name: Rangelow
+      label: Range Low
+      style: Float
+      size: 1
+      default: -1.0
+      normMin: -1.0
+      normMax: 1.0
+    Rangehigh:
+      name: Rangehigh
+      label: Range High
+      style: Float
+      size: 1
+      default: 1.0
+      normMin: -1.0
+      normMax: 1.0
+    Linethickness:
+      name: Linethickness
+      label: Line Thickness
+      style: Float
+      size: 1
+      default: 5.0
+      startSection: true
+      normMin: 0.0
+      normMax: 10.0
+    Lineblending:
+      name: Lineblending
+      label: Line Blending
+      style: Float
+      size: 1
+      default: 5.0
+      normMin: 0.0
+      normMax: 20.0
+    Showaxes:
+      name: Showaxes
+      label: Show Axes
+      style: Toggle
+      default: true
+      startSection: true
+    Showaxislabels:
+      name: Showaxislabels
+      label: Show Axis Labels
+      style: Toggle
+      default: false
+    Timerefop:
+      name: Timerefop
+      label: Time Reference Operator
+      style: OP
+      default: ''
+      startSection: true
+    Shaderbuilderconfig:
+      name: Shaderbuilderconfig
+      label: Shader Builder Config
+      style: COMP
+      default: ''
+    Customizeshaderconfig:
+      name: Customizeshaderconfig
+      label: Customize Shader Config
+      style: Pulse
+      default: false
+- !page
+  name: Info
+  pars:
+    Shaderinfo:
+      name: Shaderinfo
+      label: Shader Info
+      style: DAT
+      default: ./shader_info
+      readOnly: true
+    Shadercode:
+      name: Shadercode
+      label: Shader Code
+      style: DAT
+      default: ./shader_code
+      readOnly: true
+    Shadertop:
+      name: Shadertop
+      label: Shader TOP
+      style: TOP
+      default: ./render_glsl
+      readOnly: true
+    Outputtable:
+      name: Outputtable
+      label: Output Table
+      style: DAT
+      default: ./output_table
+      readOnly: true
+    Shaderbuilder:
+      name: Shaderbuilder
+      label: Shader Builder
+      style: COMP
+      default: ./shaderBuilder
+      readOnly: true
+- !page
+  name: Outputs
+  pars:
+    Createrselguiout:
+      name: Createrselguiout
+      label: Select GUI
+      style: Pulse
+      default: false
+      enable: false
+      enableExpr: hasattr(op, 'raytk') and op.raytk.op('tools/palette') and 'guiOut'
+        in op('./output_buffers').col('name')[1:]
+    Createrselcolorout:
+      name: Createrselcolorout
+      label: Select Color
+      style: Pulse
+      default: false
+      enableExpr: hasattr(op, 'raytk') and op.raytk.op('tools/palette') and 'colorOut'
+        in op('./output_buffers').col('name')[1:]
+inputs:
+- !input
+  coordType: !coordT
+    Coordtypefloat: true
+  contextType: !contextT
+    Contexttypecontext: true
+  returnType: !returnT
+    Returntypefloat: true
+    Returntypevec4: true
+- !input
+  coordType: !coordT
+    Coordtypefloat: true
+  contextType: !contextT
+    Contexttypecontext: true
+  returnType: !returnT
+    Returntypefloat: true
+    Returntypevec4: true
+- !input
+  coordType: !coordT
+    Coordtypefloat: true
+  contextType: !contextT
+    Contexttypecontext: true
+  returnType: !returnT
+    Returntypefloat: true
+    Returntypevec4: true
+- !input
+  coordType: !coordT
+    Coordtypefloat: true
+  contextType: !contextT
+    Contexttypecontext: true
+  returnType: !returnT
+    Returntypefloat: true
+    Returntypevec4: true

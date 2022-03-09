@@ -1,0 +1,38 @@
+!rop
+meta: !meta
+  opType: raytk.operators.material.pbrMat
+  opVersion: '8'
+  opStatus: beta
+opDef: !def
+  enable: !expr
+    expr: op('..').par.Enable
+  useRuntimeBypass: true
+  typeSpec: !ropTypes
+    coordType: !coordT
+      Coordtypevec3: true
+    contextType: !contextT
+      Contexttypecontext: true
+    returnType: !returnT
+      Returntypesdf: true
+  function: !text
+    file: src/operators/material/pbrMat.glsl
+    name: function
+  material: !text
+    file: src/operators/material/pbrMat_material.glsl
+    name: material
+  useParams:
+  - Basecolor[rgb]
+  - Roughness
+  - Albedo
+  - Metallic
+  macroParams:
+  - Enableshadow
+  - Uselocalpos
+  - Usesurfacecolor
+  libraryNames: !expr
+    expr: op('pbrMat_lib')
+  macroTable: !table
+    file: src/operators/material/pbrMat_macros.txt
+    name: macro_exprs
+    evaluate: true
+    evalOpts: !evalOpts {}

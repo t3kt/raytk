@@ -1,0 +1,23 @@
+!rop
+meta: !meta
+  opType: raytk.operators.utility.extractDebugValues
+  opVersion: '3'
+  opStatus: alpha
+opDef: !def
+  enable: !expr
+    expr: op('..').par.Enable
+  typeSpec: !ropTypes
+    coordType: !coordT
+      Allcoordtype: true
+    contextType: !contextT
+      Allcontexttype: true
+    returnType: !returnT
+      Allreturntype: true
+  function: !text
+    file: src/operators/utility/extractDebugValues.glsl
+    name: function
+  macroTable: !table
+    file: src/operators/utility/extractDebugValues_macros.txt
+    name: macro_exprs
+    evaluate: true
+    evalOpts: !evalOpts {}

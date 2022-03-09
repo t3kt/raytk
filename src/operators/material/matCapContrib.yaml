@@ -1,0 +1,27 @@
+!rop
+meta: !meta
+  opType: raytk.operators.material.matCapContrib
+  opVersion: '0'
+  opStatus: alpha
+opDef: !def
+  enable: true
+  typeSpec: !ropTypes
+    coordType: !coordT
+      Allcoordtype: true
+    contextType: !contextT
+      Contexttypematerialcontext: true
+    returnType: !returnT
+      Returntypevec4: true
+  function: !text
+    file: src/operators/material/matCapContrib.glsl
+    name: function
+  useParams:
+  - Enable
+  - Level
+  textureTable: !table
+    file: src/operators/material/matCapContrib_textures.txt
+    name: texture_exprs
+    evaluate: true
+    evalOpts: !evalOpts
+      excludeFirstRow: true
+      cols: path

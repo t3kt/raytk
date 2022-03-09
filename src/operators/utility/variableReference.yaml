@@ -1,0 +1,32 @@
+!rop
+meta: !meta
+  opType: raytk.operators.utility.variableReference
+  opVersion: '7'
+  opStatus: default
+opDef: !def
+  enable: !expr
+    expr: op('..').par.Enable
+  typeSpec: !ropTypes
+    coordType: !coordT
+      Allcoordtype: true
+    contextType: !contextT
+      Allcontexttype: true
+    returnType: !returnT
+      Returntypesdf: !expr
+        expr: parent().par.Datatype == 'Sdf'
+      Returntypefloat: !expr
+        expr: parent().par.Datatype == 'float' or parent().par.Part != 'vec'
+      Returntypevec4: !expr
+        expr: parent().par.Datatype == 'vec4' and parent().par.Part == 'vec'
+  function: !text
+    file: src/operators/utility/variableReference.glsl
+    name: function
+  useParams: Defaultval[1-4]
+  macroParams:
+  - Datatype
+  - Part
+  referenceTable: !table
+    file: src/operators/utility/variableReference_references.txt
+    name: reference_exprs
+    evaluate: true
+    evalOpts: !evalOpts {}

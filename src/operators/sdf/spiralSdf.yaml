@@ -1,0 +1,31 @@
+!rop
+meta: !meta
+  opType: raytk.operators.sdf.spiralSdf
+  opVersion: '5'
+  opStatus: default
+opDef: !def
+  enable: true
+  typeSpec: !ropTypes
+    coordType: !coordT
+      Coordtypevec3: true
+    contextType: !contextT
+      Allcontexttype: true
+    returnType: !returnT
+      Returntypesdf: true
+  function: !text
+    file: src/operators/sdf/spiralSdf.glsl
+    name: functionTemplate
+  useParams:
+  - Branches
+  - Bend
+  - Twist
+  - Thickness
+  - Exponent
+  generatedMacroTables: sel_axis_macros
+  help: !text
+    file: src/operators/sdf/spiralSdf.md
+    name: help
+  keywords:
+  - spiral
+  - swirl
+  - coil

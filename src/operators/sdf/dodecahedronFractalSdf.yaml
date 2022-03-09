@@ -1,0 +1,27 @@
+!rop
+meta: !meta
+  opType: raytk.operators.sdf.dodecahedronFractalSdf
+  opVersion: '2'
+  opStatus: beta
+opDef: !def
+  enable: true
+  typeSpec: !ropTypes
+    coordType: !coordT
+      Coordtypevec3: true
+    contextType: !contextT
+      Allcontexttype: true
+    returnType: !returnT
+      Returntypesdf: true
+  function: !text
+    file: src/operators/sdf/dodecahedronFractalSdf.glsl
+    name: functionTemplate
+  useParams:
+  - Scale
+  - Phi
+  - Bailout
+  - Rotate1
+  - Rotateaxis1[xyz]
+  - Rotate2
+  - Rotateaxis2[xyz]
+  - Offset[xyz]
+  - Iterations

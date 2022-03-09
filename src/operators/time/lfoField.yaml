@@ -1,0 +1,34 @@
+!rop
+meta: !meta
+  opType: raytk.operators.time.lfoField
+  opVersion: '12'
+  opStatus: default
+opDef: !def
+  enable: !expr
+    expr: op('..').par.Enable
+  typeSpec: !ropTypes
+    coordType: !coordT
+      Allcoordtype: true
+    contextType: !contextT
+      Allcontexttype: true
+    returnType: !returnT
+      Returntypefloat: true
+      Returntypevec4: !expr
+        expr: '''vec4'' in str(op(''wave_definition'')[1, ''returnType''] or '''')'
+  function: !text
+    file: src/operators/time/lfoField.glsl
+    name: functionTemplate
+  useParams:
+  - Amplitude
+  - Offset
+  - Reverse
+  macroParams: Intervaltype
+  paramListTable: waveParams
+  libraryNames: !expr
+    expr: '[op(''raytkWave''), ''raytkTime'']'
+  macroTable: !table
+    file: src/operators/time/lfoField_macros.txt
+    name: macro_exprs
+    evaluate: true
+    evalOpts: !evalOpts {}
+  generatedMacroTables: sel_timeSource_macros timeSource_macros

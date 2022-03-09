@@ -1,0 +1,23 @@
+!rop
+meta: !meta
+  opType: raytk.operators.combine.switch
+  opVersion: '11'
+  opStatus: default
+opDef: !def
+  enable: !expr
+    expr: op('..').par.Enable
+  typeSpec: !ropTypes
+    coordType: !coordT
+      Allcoordtype: true
+    contextType: !contextT
+      Allcontexttype: true
+    returnType: !returnT
+      Allreturntype: true
+  function: !text
+    file: src/operators/combine/switch.glsl
+    name: function
+  useParams: Source
+  generatedMacroTables: multiInputHandler_macros
+  help: !text
+    file: src/operators/combine/switch.md
+    name: help

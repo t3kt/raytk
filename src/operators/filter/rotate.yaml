@@ -1,0 +1,205 @@
+!rop
+meta: !meta
+  opType: raytk.operators.filter.rotate
+  opVersion: '23'
+  opStatus: default
+opDef: !def
+  enable: !expr 'op(''..'').par.Enable'
+  useRuntimeBypass: true
+  typeSpec: !ropTypes
+    coordType: !coordT
+      Allcoordtype: false
+      Coordtypefloat: false
+      Coordtypevec2: true
+      Coordtypevec3: true
+    contextType: !contextT
+      Allcontexttype: true
+      Contexttypecontext: true
+      Contexttypematerialcontext: false
+      Contexttypecameracontext: false
+      Contexttypelightcontext: false
+      Contexttyperaycontext: false
+      Contexttypeparticlecontext: false
+    returnType: !returnT
+      Allreturntype: !expr 'op(''definition_1'').numRows > 1'
+      Returntypesdf: false
+      Returntypefloat: false
+      Returntypevec4: true
+      Returntyperay: false
+      Returntypelight: false
+      Returntypeparticle: false
+  function: !text
+    file: src/operators/filter/rotate.glsl
+    name: function
+  useParams:
+  - Rotate
+  - Rot[xyz]
+  - Axis[xyz]
+  - Pivot[xyz]
+  - Usepivot
+  macroParams: Rotatemode
+  macroTable: eval_macros
+  help: help
+  keywords:
+  - transform
+  - rotate
+  - spin
+  - twist
+  shortcuts: rot
+paramPages:
+- !page
+  name: Filter
+  pars:
+    Enable:
+      name: Enable
+      label: Enable
+      style: Toggle
+      default: true
+    Rotatemode:
+      name: Rotatemode
+      label: Rotate Mode
+      style: Menu
+      default: euler
+      menuNames:
+      - axis
+      - euler
+      menuLabels:
+      - Axis
+      - Euler
+    Axis:
+      name: Axis
+      label: Axis
+      style: XYZ
+      default:
+      - 0.0
+      - 1.0
+      - 0.0
+      enable: false
+      startSection: true
+      enableExpr: me.par.Rotatemode == 'axis' and (not op('./definition_1')[1, 'coordType']
+        or op('./definition_1')[1, 'coordType']!= 'vec2')
+      normMin: 0.0
+      normMax: 1.0
+    Rotate:
+      name: Rotate
+      label: Rotate
+      style: Float
+      size: 1
+      default: 0.0
+      enable: false
+      enableExpr: me.par.Rotatemode == 'axis'
+      normMin: -180.0
+      normMax: 180.0
+    Rord:
+      name: Rord
+      label: Rotate Order
+      style: Menu
+      default: xyz
+      startSection: true
+      enableExpr: me.par.Rotatemode == 'euler'
+      menuNames:
+      - xyz
+      - xzy
+      - yxz
+      - yzx
+      - zxy
+      - zyx
+      menuLabels:
+      - Rx Ry Rz
+      - Rx Rz Ry
+      - Ry Rx Rz
+      - Ry Rz Rx
+      - Rz Rx Ry
+      - Rz Ry Rx
+    Rot:
+      name: Rot
+      label: Rotate XYZ
+      style: XYZ
+      default: 0.0
+      enableExpr: me.par.Rotatemode == 'euler'
+      normMin: 0.0
+      normMax: 1.0
+    Usepivot:
+      name: Usepivot
+      label: Use Pivot
+      style: Toggle
+      default: false
+      startSection: true
+    Pivot:
+      name: Pivot
+      label: Pivot
+      style: XYZ
+      default: 0.0
+      enable: false
+      enableExpr: me.par.Usepivot
+      normMin: 0.0
+      normMax: 1.0
+inputs:
+- !input
+  coordType: !coordT
+    Allcoordtype: false
+    Coordtypefloat: false
+    Coordtypevec2: true
+    Coordtypevec3: true
+  contextType: !contextT
+    Allcontexttype: true
+    Contexttypecontext: true
+    Contexttypematerialcontext: false
+    Contexttypecameracontext: false
+    Contexttypelightcontext: false
+    Contexttyperaycontext: false
+    Contexttypeparticlecontext: false
+  returnType: !returnT
+    Allreturntype: true
+    Returntypesdf: false
+    Returntypefloat: true
+    Returntypevec4: true
+    Returntyperay: false
+    Returntypelight: false
+    Returntypeparticle: false
+- !input
+  Localalias: rotateField
+  coordType: !coordT
+    Allcoordtype: false
+    Coordtypefloat: false
+    Coordtypevec2: true
+    Coordtypevec3: true
+  contextType: !contextT
+    Allcontexttype: true
+    Contexttypecontext: true
+    Contexttypematerialcontext: false
+    Contexttypecameracontext: false
+    Contexttypelightcontext: false
+    Contexttyperaycontext: false
+    Contexttypeparticlecontext: false
+  returnType: !returnT
+    Allreturntype: false
+    Returntypesdf: true
+    Returntypefloat: true
+    Returntypevec4: true
+    Returntyperay: false
+    Returntypelight: false
+    Returntypeparticle: false
+- !input
+  Localalias: pivotField
+  coordType: !coordT
+    Allcoordtype: false
+    Coordtypefloat: false
+    Coordtypevec2: true
+    Coordtypevec3: true
+  contextType: !contextT
+    Allcontexttype: true
+    Contexttypecontext: true
+    Contexttypematerialcontext: false
+    Contexttypecameracontext: false
+    Contexttypelightcontext: false
+    Contexttyperaycontext: false
+    Contexttypeparticlecontext: false
+  returnType: !returnT
+    Allreturntype: false
+    Returntypesdf: false
+    Returntypefloat: false
+    Returntypevec4: true
+    Returntyperay: false
+    Returntypelight: false
+    Returntypeparticle: false

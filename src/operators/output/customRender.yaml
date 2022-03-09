@@ -6,30 +6,12 @@ meta: !meta
 opDef: !def
   enable: true
   typeSpec: !ropTypes
-    Useinputcoordtype: false
-    Useinputcontexttype: false
-    Useinputreturntype: false
     coordType: !coordT
-      Allcoordtype: false
-      Coordtypefloat: false
-      Coordtypevec2: false
       Coordtypevec3: true
     contextType: !contextT
-      Allcontexttype: false
       Contexttypecontext: true
-      Contexttypematerialcontext: false
-      Contexttypecameracontext: false
-      Contexttypelightcontext: false
-      Contexttyperaycontext: false
-      Contexttypeparticlecontext: false
     returnType: !returnT
-      Allreturntype: false
       Returntypesdf: true
-      Returntypefloat: false
-      Returntypevec4: false
-      Returntyperay: false
-      Returntypelight: false
-      Returntypeparticle: false
   function: !text
     name: functionTemplate
     text: '#define thismap inputOp1'
@@ -214,22 +196,7 @@ inputs:
   Required: true
   coordType: !coordT
     Allcoordtype: true
-    Coordtypefloat: false
-    Coordtypevec2: false
-    Coordtypevec3: true
   contextType: !contextT
     Allcontexttype: true
-    Contexttypecontext: true
-    Contexttypematerialcontext: false
-    Contexttypecameracontext: false
-    Contexttypelightcontext: false
-    Contexttyperaycontext: false
-    Contexttypeparticlecontext: false
   returnType: !returnT
     Allreturntype: true
-    Returntypesdf: false
-    Returntypefloat: true
-    Returntypevec4: true
-    Returntyperay: false
-    Returntypelight: false
-    Returntypeparticle: false

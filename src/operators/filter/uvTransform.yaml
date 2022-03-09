@@ -1,0 +1,202 @@
+!rop
+meta: !meta
+  opType: raytk.operators.filter.uvTransform
+  opVersion: '7'
+  opStatus: beta
+opDef: !def
+  enable: !expr 'op(''..'').par.Enable'
+  useRuntimeBypass: true
+  typeSpec: !ropTypes
+    Useinputreturntype: false
+    coordType: !coordT
+      Allcoordtype: true
+      Coordtypefloat: true
+      Coordtypevec2: true
+      Coordtypevec3: true
+    contextType: !contextT
+      Allcontexttype: true
+      Contexttypecontext: true
+      Contexttypematerialcontext: false
+      Contexttypecameracontext: false
+      Contexttypelightcontext: false
+      Contexttyperaycontext: false
+      Contexttypeparticlecontext: false
+    returnType: !returnT
+      Allreturntype: false
+      Returntypesdf: true
+      Returntypefloat: false
+      Returntypevec4: false
+      Returntyperay: false
+      Returntypelight: false
+      Returntypeparticle: false
+  function: !text
+    file: src/operators/filter/uvTransform.glsl
+    name: function_template
+  angleParams: Rotate[xyz]
+  macroParams:
+  - Transformprimary
+  - Transformsecondary
+  paramListTable: paramListTable
+  help: help
+paramPages:
+- !page
+  name: Filter
+  pars:
+    Enable:
+      name: Enable
+      label: Enable
+      style: Toggle
+      default: true
+    Transformprimary:
+      name: Transformprimary
+      label: Transform Primary UVs
+      style: Toggle
+      default: true
+    Transformsecondary:
+      name: Transformsecondary
+      label: Transform Secondary UVs
+      style: Toggle
+      default: false
+    Enabletranslate:
+      name: Enabletranslate
+      label: Enable Translate
+      style: Toggle
+      default: true
+      startSection: true
+    Enablerotate:
+      name: Enablerotate
+      label: Enable Rotate
+      style: Toggle
+      default: true
+    Enablescale:
+      name: Enablescale
+      label: Enable Scale
+      style: Toggle
+      default: false
+    Enablepivot:
+      name: Enablepivot
+      label: Enable Pivot
+      style: Toggle
+      default: false
+    Translate:
+      name: Translate
+      label: Translate
+      style: XYZ
+      default: 0.0
+      startSection: true
+      enableExpr: me.par.Enabletranslate
+      normMin: -1.0
+      normMax: 1.0
+    Rotate:
+      name: Rotate
+      label: Rotate
+      style: XYZ
+      default: 0.0
+      enableExpr: me.par.Enablerotate
+      normMin: 0.0
+      normMax: 1.0
+    Scale:
+      name: Scale
+      label: Scale
+      style: XYZ
+      default: 1.0
+      enable: false
+      enableExpr: me.par.Enablescale and me.par.Scaletype == 'separate'
+      normMin: 0.0
+      normMax: 2.0
+    Uniformscale:
+      name: Uniformscale
+      label: Uniform Scale
+      style: Float
+      size: 1
+      default: 1.0
+      enable: false
+      enableExpr: me.par.Enablescale and me.par.Scaletype == 'uniform'
+      normMin: 0.0
+      normMax: 2.0
+    Pivot:
+      name: Pivot
+      label: Pivot
+      style: XYZ
+      default: 0.0
+      enable: false
+      enableExpr: me.par.Enablepivot
+      normMin: -1.0
+      normMax: 1.0
+    Transformorder:
+      name: Transformorder
+      label: Transform Order
+      style: Menu
+      default: srt
+      startSection: true
+      menuNames:
+      - srt
+      - str
+      - rst
+      - rts
+      - tsr
+      - trs
+      menuLabels:
+      - Scale Rotate Translate
+      - Scale Translate Rotate
+      - Rotate Scale Translate
+      - Rotate Translate Scale
+      - Translate Scale Rotate
+      - Translate Rotate Scale
+    Rotateorder:
+      name: Rotateorder
+      label: Rotate Order
+      style: Menu
+      default: xyz
+      enableExpr: me.par.Enablerotate
+      menuNames:
+      - xyz
+      - xzy
+      - yxz
+      - yzx
+      - zxy
+      - zyx
+      menuLabels:
+      - Rx Ry Rz
+      - Rx Rz Ry
+      - Ry Rx Rz
+      - Ry Rz Rx
+      - Rz Rx Ry
+      - Rz Ry Rx
+    Scaletype:
+      name: Scaletype
+      label: Scale Type
+      style: Menu
+      default: uniform
+      enable: false
+      enableExpr: me.par.Enablescale
+      menuNames:
+      - separate
+      - uniform
+      menuLabels:
+      - Separate XYZ
+      - Uniform
+inputs:
+- !input
+  Required: true
+  coordType: !coordT
+    Allcoordtype: true
+    Coordtypefloat: false
+    Coordtypevec2: true
+    Coordtypevec3: true
+  contextType: !contextT
+    Allcontexttype: true
+    Contexttypecontext: true
+    Contexttypematerialcontext: false
+    Contexttypecameracontext: false
+    Contexttypelightcontext: false
+    Contexttyperaycontext: false
+    Contexttypeparticlecontext: false
+  returnType: !returnT
+    Allreturntype: true
+    Returntypesdf: false
+    Returntypefloat: true
+    Returntypevec4: true
+    Returntyperay: false
+    Returntypelight: false
+    Returntypeparticle: false

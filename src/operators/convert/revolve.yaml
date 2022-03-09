@@ -1,0 +1,31 @@
+!rop
+meta: !meta
+  opType: raytk.operators.convert.revolve
+  opVersion: '9'
+  opStatus: default
+opDef: !def
+  enable: true
+  typeSpec: !ropTypes
+    coordType: !coordT
+      Coordtypevec3: true
+    contextType: !contextT
+      Allcontexttype: true
+    returnType: !returnT
+      Allreturntype: true
+  function: !text
+    file: src/operators/convert/revolve.glsl
+    name: function
+  useParams:
+  - Radialoffset
+  - Axisoffset
+  macroParams: Iterationtype
+  variableTable: !table
+    file: src/operators/convert/revolve_variables.txt
+    name: variable_exprs
+    evaluate: true
+    evalOpts: !evalOpts
+      excludeFirstRow: true
+  generatedMacroTables: sel_axis_macros
+  help: !text
+    file: src/operators/convert/revolve.md
+    name: help

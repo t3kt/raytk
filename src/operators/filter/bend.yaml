@@ -1,0 +1,169 @@
+!rop
+meta: !meta
+  opType: raytk.operators.filter.bend
+  opVersion: '12'
+  opStatus: default
+opDef: !def
+  enable: !expr 'op(''..'').par.Enable'
+  useRuntimeBypass: true
+  typeSpec: !ropTypes
+    coordType: !coordT
+      Allcoordtype: false
+      Coordtypefloat: false
+      Coordtypevec2: true
+      Coordtypevec3: true
+    contextType: !contextT
+      Allcontexttype: true
+      Contexttypecontext: true
+      Contexttypematerialcontext: false
+      Contexttypecameracontext: false
+      Contexttypelightcontext: false
+      Contexttyperaycontext: false
+      Contexttypeparticlecontext: false
+    returnType: !returnT
+      Allreturntype: !expr 'op(''definition_1'').numRows > 1'
+      Returntypesdf: false
+      Returntypefloat: false
+      Returntypevec4: true
+      Returntyperay: false
+      Returntypelight: false
+      Returntypeparticle: false
+  function: !text
+    file: src/operators/filter/bend.glsl
+    name: function
+  useParams:
+  - Amount
+  - Shift
+  macroParams: Direction
+  macroTable: eval_macros
+  variableTable: eval_variables
+  help: help
+paramPages:
+- !page
+  name: Filter
+  pars:
+    Enable:
+      name: Enable
+      label: Enable
+      style: Toggle
+      default: true
+    Direction:
+      name: Direction
+      label: Direction
+      style: Menu
+      default: xyz
+      menuNames:
+      - xyz
+      - xzy
+      - yxz
+      - yzx
+      - zxy
+      - zyx
+      menuLabels:
+      - Along X Toward Y
+      - Along X Toward Z
+      - Along Y Toward X
+      - Along Y Toward Z
+      - Along Z Toward X
+      - Along Z Toward Y
+    Amount:
+      name: Amount
+      label: Amount
+      style: Float
+      size: 1
+      default: 0.25
+      enableExpr: op('./definition_2').numRows < 2
+      normMin: -1.0
+      normMax: 1.0
+    Shift:
+      name: Shift
+      label: Shift
+      style: Float
+      size: 1
+      default: 0.0
+      normMin: -4.0
+      normMax: 4.0
+- !page
+  name: Variables
+  pars:
+    Createrefaxispos:
+      name: Createrefaxispos
+      label: Position Along Axis
+      style: Pulse
+      default: false
+      enableExpr: hasattr(op, 'raytk') and op.raytk.op('tools/palette')
+    Createrefbendpos:
+      name: Createrefbendpos
+      label: Position On Bend Axis
+      style: Pulse
+      default: false
+      enableExpr: hasattr(op, 'raytk') and op.raytk.op('tools/palette')
+inputs:
+- !input
+  coordType: !coordT
+    Allcoordtype: false
+    Coordtypefloat: false
+    Coordtypevec2: true
+    Coordtypevec3: true
+  contextType: !contextT
+    Allcontexttype: true
+    Contexttypecontext: true
+    Contexttypematerialcontext: false
+    Contexttypecameracontext: false
+    Contexttypelightcontext: false
+    Contexttyperaycontext: false
+    Contexttypeparticlecontext: false
+  returnType: !returnT
+    Allreturntype: true
+    Returntypesdf: false
+    Returntypefloat: false
+    Returntypevec4: true
+    Returntyperay: false
+    Returntypelight: false
+    Returntypeparticle: false
+- !input
+  Localalias: bendField
+  coordType: !coordT
+    Allcoordtype: false
+    Coordtypefloat: true
+    Coordtypevec2: true
+    Coordtypevec3: true
+  contextType: !contextT
+    Allcontexttype: true
+    Contexttypecontext: true
+    Contexttypematerialcontext: false
+    Contexttypecameracontext: false
+    Contexttypelightcontext: false
+    Contexttyperaycontext: false
+    Contexttypeparticlecontext: false
+  returnType: !returnT
+    Allreturntype: false
+    Returntypesdf: true
+    Returntypefloat: true
+    Returntypevec4: false
+    Returntyperay: false
+    Returntypelight: false
+    Returntypeparticle: false
+- !input
+  Localalias: shiftField
+  coordType: !coordT
+    Allcoordtype: false
+    Coordtypefloat: true
+    Coordtypevec2: true
+    Coordtypevec3: true
+  contextType: !contextT
+    Allcontexttype: true
+    Contexttypecontext: true
+    Contexttypematerialcontext: false
+    Contexttypecameracontext: false
+    Contexttypelightcontext: false
+    Contexttyperaycontext: false
+    Contexttypeparticlecontext: false
+  returnType: !returnT
+    Allreturntype: false
+    Returntypesdf: true
+    Returntypefloat: true
+    Returntypevec4: false
+    Returntyperay: false
+    Returntypelight: false
+    Returntypeparticle: false

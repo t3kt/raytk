@@ -1,0 +1,37 @@
+!rop
+meta: !meta
+  opType: raytk.operators.material.sampledPointMat
+  opVersion: '18'
+  opStatus: beta
+opDef: !def
+  enable: !expr
+    expr: op('..').par.Enable
+  useRuntimeBypass: true
+  typeSpec: !ropTypes
+    coordType: !coordT
+      Coordtypevec2: true
+      Coordtypevec3: true
+    contextType: !contextT
+      Contexttypecontext: true
+    returnType: !returnT
+      Returntypesdf: true
+  function: !text
+    file: src/operators/material/sampledPointMat.glsl
+    name: function
+  material: !text
+    file: src/operators/material/sampledPointMat_material.glsl
+    name: material
+  useParams:
+  - Fillcolor[rgb]
+  - Blending
+  - Edgecolor[rgb]
+  - Edgethickness
+  - Offset
+  macroParams:
+  - Uselocalpos
+  - Enablefill
+  - Enableedge
+  libraryNames: raytkMaterial
+  help: !text
+    file: src/operators/material/sampledPointMat.md
+    name: help

@@ -1,0 +1,29 @@
+!rop
+meta: !meta
+  opType: raytk.operators.light.softShadow
+  opVersion: '8'
+  opStatus: default
+opDef: !def
+  enable: true
+  typeSpec: !ropTypes
+    coordType: !coordT
+      Coordtypevec3: true
+    contextType: !contextT
+      Contexttypematerialcontext: true
+    returnType: !returnT
+      Returntypefloat: true
+  function: !text
+    file: src/operators/light/softShadow.glsl
+    name: functionTemplate
+  useParams:
+  - Hardness
+  - Mindist
+  - Maxdist
+  macroTable: !table
+    file: src/operators/light/softShadow_macros.txt
+    name: macro_exprs
+    evaluate: true
+    evalOpts: !evalOpts {}
+  help: !text
+    file: src/operators/light/softShadow.md
+    name: help

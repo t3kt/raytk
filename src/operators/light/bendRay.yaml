@@ -1,0 +1,19 @@
+!rop
+meta: !meta
+  opType: raytk.operators.light.bendRay
+  opVersion: '3'
+  opStatus: alpha
+opDef: !def
+  enable: !expr
+    expr: op('..').par.Enable
+  typeSpec: !ropTypes
+    coordType: !coordT
+      Coordtypevec3: true
+    contextType: !contextT
+      Contexttyperaycontext: true
+    returnType: !returnT
+      Returntyperay: true
+  function: !text
+    file: src/operators/light/bendRay.glsl
+    name: functionTemplate
+  useParams: Amount

@@ -1,0 +1,24 @@
+!rop
+meta: !meta
+  opType: raytk.operators.light.directionalLight
+  opVersion: '4'
+  opStatus: default
+opDef: !def
+  enable: true
+  typeSpec: !ropTypes
+    coordType: !coordT
+      Coordtypevec3: true
+    contextType: !contextT
+      Contexttypelightcontext: true
+    returnType: !returnT
+      Returntypelight: true
+  function: !text
+    file: src/operators/light/directionalLight.glsl
+    name: functionTemplate
+  useParams:
+  - Direction[xyz]
+  - Color[rgb]
+  - Intensity
+  help: !text
+    file: src/operators/light/directionalLight.md
+    name: help

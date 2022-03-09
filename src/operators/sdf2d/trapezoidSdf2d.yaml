@@ -1,0 +1,24 @@
+!rop
+meta: !meta
+  opType: raytk.operators.sdf2d.trapezoidSdf2d
+  opVersion: '3'
+  opStatus: default
+opDef: !def
+  enable: true
+  typeSpec: !ropTypes
+    coordType: !coordT
+      Coordtypevec2: true
+    contextType: !contextT
+      Allcontexttype: true
+    returnType: !returnT
+      Returntypesdf: true
+  function: !text
+    file: src/operators/sdf2d/trapezoidSdf2d.glsl
+    name: function
+  useParams:
+  - Height
+  - Width[1-2]
+  - Point[1-2][xy]
+  macroParams: Mode
+  libraryNames: !expr
+    expr: op('trapezoidSdf2d_lib')

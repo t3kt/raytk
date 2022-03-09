@@ -1,0 +1,43 @@
+!rop
+meta: !meta
+  opType: raytk.operators.field.textureField
+  opVersion: '17'
+  opStatus: default
+opDef: !def
+  enable: !expr
+    expr: op('..').par.Enable
+  typeSpec: !ropTypes
+    coordType: !coordT
+      Coordtypefloat: !expr
+        expr: parent().par.Coordtype == 'float'
+      Coordtypevec2: !expr
+        expr: parent().par.Coordtype == 'vec2'
+      Coordtypevec3: !expr
+        expr: parent().par.Coordtype == 'vec3'
+    contextType: !contextT
+      Allcontexttype: true
+    returnType: !returnT
+      Returntypefloat: !expr
+        expr: parent().par.Returntype == 'float'
+      Returntypevec4: !expr
+        expr: parent().par.Returntype == 'vec4'
+  function: !text
+    file: src/operators/field/textureField.glsl
+    name: functionTemplate
+  useParams:
+  - Translateu
+  - Translatev
+  - Scaleu
+  - Scalev
+  macroParams: Extendmode
+  libraryNames: !expr
+    expr: op('modZigZag')
+  textureTable: !table
+    file: src/operators/field/textureField_textures.txt
+    name: texture_exprs
+    evaluate: true
+    evalOpts: !evalOpts {}
+  generatedMacroTables: sel_axis_macros
+  help: !text
+    file: src/operators/field/textureField.md
+    name: help

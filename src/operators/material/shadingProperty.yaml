@@ -1,0 +1,22 @@
+!rop
+meta: !meta
+  opType: raytk.operators.material.shadingProperty
+  opVersion: '1'
+  opStatus: alpha
+opDef: !def
+  enable: true
+  typeSpec: !ropTypes
+    coordType: !coordT
+      Allcoordtype: true
+    contextType: !contextT
+      Contexttypematerialcontext: true
+    returnType: !returnT
+      Returntypefloat: !expr
+        expr: op('expr_info')[1, 'returnType'] == 'float'
+      Returntypevec4: !expr
+        expr: op('expr_info')[1, 'returnType'] == 'vec4'
+  function: !text
+    file: src/operators/material/shadingProperty.glsl
+    name: function
+  libraryNames: raytkMaterial
+  generatedMacroTables: sel_expr_macros

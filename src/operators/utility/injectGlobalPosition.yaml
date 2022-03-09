@@ -1,0 +1,26 @@
+!rop
+meta: !meta
+  opType: raytk.operators.utility.injectGlobalPosition
+  opVersion: '2'
+  opStatus: default
+opDef: !def
+  enable: !expr
+    expr: op('..').par.Enable
+  typeSpec: !ropTypes
+    coordType: !coordT
+      Allcoordtype: true
+    contextType: !contextT
+      Contexttypecontext: true
+    returnType: !returnT
+      Allreturntype: true
+  function: !text
+    file: src/operators/utility/injectGlobalPosition.glsl
+    name: function
+  macroTable: !table
+    file: src/operators/utility/injectGlobalPosition_macros.txt
+    name: macro_exprs
+    evaluate: true
+    evalOpts: !evalOpts {}
+  help: !text
+    file: src/operators/utility/injectGlobalPosition.md
+    name: help

@@ -1,0 +1,34 @@
+!rop
+meta: !meta
+  opType: raytk.operators.function.waveFn
+  opVersion: '10'
+  opStatus: default
+opDef: !def
+  enable: true
+  typeSpec: !ropTypes
+    coordType: !coordT
+      Coordtypefloat: !expr
+        expr: parent().par.Coordtype == 'float'
+      Coordtypevec2: !expr
+        expr: parent().par.Coordtype == 'vec2'
+      Coordtypevec3: !expr
+        expr: parent().par.Coordtype == 'vec3'
+    contextType: !contextT
+      Allcontexttype: true
+    returnType: !returnT
+      Returntypefloat: !expr
+        expr: parent().par.Coordtype == 'float'
+      Returntypevec4: !expr
+        expr: parent().par.Coordtype in ('vec2', 'vec3')
+  function: !text
+    file: src/operators/function/waveFn.glsl
+    name: functionTemplate
+  useParams:
+  - Amplitude
+  - Offset
+  paramListTable: waveParams
+  libraryNames: !expr
+    expr: op('raytkWave')
+  help: !text
+    file: src/operators/function/waveFn.md
+    name: help

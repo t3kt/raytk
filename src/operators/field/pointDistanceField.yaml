@@ -1,0 +1,27 @@
+!rop
+meta: !meta
+  opType: raytk.operators.field.pointDistanceField
+  opVersion: '12'
+  opStatus: default
+opDef: !def
+  enable: true
+  typeSpec: !ropTypes
+    coordType: !coordT
+      Coordtypefloat: !expr
+        expr: parent().par.Coordtype == 'float'
+      Coordtypevec2: !expr
+        expr: parent().par.Coordtype == 'vec2'
+      Coordtypevec3: !expr
+        expr: parent().par.Coordtype == 'vec3'
+    contextType: !contextT
+      Allcontexttype: true
+    returnType: !returnT
+      Returntypefloat: true
+  function: !text
+    file: src/operators/field/pointDistanceField.glsl
+    name: functionTemplate
+  useParams: Center[xyz]
+  macroParams: Axes
+  help: !text
+    file: src/operators/field/pointDistanceField.md
+    name: help

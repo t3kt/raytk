@@ -1,0 +1,22 @@
+!rop
+meta: !meta
+  opType: raytk.operators.field.voronoiField
+  opVersion: '1'
+  opStatus: alpha
+opDef: !def
+  enable: true
+  typeSpec: !ropTypes
+    coordType: !coordT
+      Coordtypevec2: true
+      Coordtypevec3: true
+    contextType: !contextT
+      Allcontexttype: true
+    returnType: !returnT
+      Returntypevec4: true
+  function: !text
+    file: src/operators/field/voronoiField.glsl
+    name: functionTemplate
+  useParams: Hashoffset[xy]
+  paramListTable: switcher_params
+  libraryNames: !expr
+    expr: op('voronoiField_lib')

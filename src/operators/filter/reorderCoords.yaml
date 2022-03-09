@@ -1,0 +1,28 @@
+!rop
+meta: !meta
+  opType: raytk.operators.filter.reorderCoords
+  opVersion: '6'
+  opStatus: default
+opDef: !def
+  enable: !expr
+    expr: op('..').par.Enable
+  useRuntimeBypass: true
+  typeSpec: !ropTypes
+    coordType: !coordT
+      Coordtypevec2: true
+      Coordtypevec3: true
+    contextType: !contextT
+      Allcontexttype: true
+    returnType: !returnT
+      Allreturntype: true
+  function: !text
+    file: src/operators/filter/reorderCoords.glsl
+    name: function
+  macroTable: !table
+    file: src/operators/filter/reorderCoords_macros.txt
+    name: macro_exprs
+    evaluate: true
+    evalOpts: !evalOpts {}
+  help: !text
+    file: src/operators/filter/reorderCoords.md
+    name: help

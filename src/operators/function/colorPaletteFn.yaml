@@ -1,0 +1,24 @@
+!rop
+meta: !meta
+  opType: raytk.operators.function.colorPaletteFn
+  opVersion: '4'
+  opStatus: beta
+opDef: !def
+  enable: true
+  typeSpec: !ropTypes
+    coordType: !coordT
+      Coordtypefloat: true
+    contextType: !contextT
+      Allcontexttype: true
+    returnType: !returnT
+      Returntypevec4: true
+  function: !text
+    file: src/operators/function/colorPaletteFn.glsl
+    name: function
+  useParams:
+  - Color1[rgb]
+  - Color2[rgb]
+  - Color3[rgb]
+  - Color4[rgb]
+  - Phase
+  - Period

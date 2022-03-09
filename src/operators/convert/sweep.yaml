@@ -1,0 +1,21 @@
+!rop
+meta: !meta
+  opType: raytk.operators.convert.sweep
+  opVersion: '3'
+  opStatus: default
+opDef: !def
+  enable: true
+  typeSpec: !ropTypes
+    coordType: !coordT
+      Coordtypevec3: true
+    contextType: !contextT
+      Allcontexttype: true
+    returnType: !returnT
+      Returntypesdf: true
+  function: !text
+    file: src/operators/convert/sweep.glsl
+    name: functionTemplate
+  paramListTable: switcher_params
+  help: !text
+    file: src/operators/convert/sweep.md
+    name: help

@@ -1,0 +1,37 @@
+!rop
+meta: !meta
+  opType: raytk.operators.sdf.boxSdf
+  opVersion: '15'
+  opStatus: default
+opDef: !def
+  enable: true
+  typeSpec: !ropTypes
+    coordType: !coordT
+      Coordtypevec3: true
+    contextType: !contextT
+      Allcontexttype: true
+    returnType: !returnT
+      Returntypesdf: true
+  function: !text
+    file: src/operators/sdf/boxSdf.glsl
+    name: functionTemplate
+  useParams:
+  - Translate[xyz]
+  - Scale[xyz]
+  - Uniformscale
+  macroParams: Uvmode
+  macroTable: !table
+    file: src/operators/sdf/boxSdf_macros.txt
+    name: macro_exprs
+    evaluate: true
+    evalOpts: !evalOpts {}
+  generatedMacroTables: sel_axis_macros
+  help: !text
+    file: src/operators/sdf/boxSdf.md
+    name: help
+  keywords:
+  - box
+  - cube
+  - rectangle
+  - square
+  shortcuts: box

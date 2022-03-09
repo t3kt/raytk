@@ -1,0 +1,19 @@
+!rop
+meta: !meta
+  opType: raytk.operators.sdf.sphereFbmSdf
+  opVersion: '1'
+  opStatus: default
+opDef: !def
+  enable: true
+  typeSpec: !ropTypes
+    coordType: !coordT
+      Coordtypevec3: true
+    contextType: !contextT
+      Allcontexttype: true
+    returnType: !returnT
+      Returntypesdf: true
+  function: !text
+    file: src/operators/sdf/sphereFbmSdf.glsl
+    name: functionTemplate
+  useParams: Translate[xyz]
+  macroParams: Noisetype

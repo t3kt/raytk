@@ -1,0 +1,40 @@
+!rop
+meta: !meta
+  opType: raytk.operators.material.basicMat
+  opVersion: '22'
+  opStatus: default
+opDef: !def
+  enable: !expr
+    expr: op('..').par.Enable
+  useRuntimeBypass: true
+  typeSpec: !ropTypes
+    coordType: !coordT
+      Coordtypevec3: true
+    contextType: !contextT
+      Contexttypecontext: true
+    returnType: !returnT
+      Returntypesdf: true
+  function: !text
+    file: src/operators/material/basicMat.glsl
+    name: function
+  material: !text
+    file: src/operators/material/basicMat_material.glsl
+    name: material
+  useParams:
+  - Specularamount
+  - Skydir[xyz]
+  - Skycolor[rgb]
+  - Specularexp
+  - Basecolor[rgb]
+  macroParams:
+  - Uselocalpos
+  - Enableshadow
+  - Usesurfacecolor
+  macroTable: !table
+    file: src/operators/material/basicMat_macros.txt
+    name: macro_exprs
+    evaluate: true
+    evalOpts: !evalOpts {}
+  help: !text
+    file: src/operators/material/basicMat.md
+    name: help

@@ -1,0 +1,24 @@
+!rop
+meta: !meta
+  opType: raytk.operators.sdf.latticeSdf
+  opVersion: '1'
+  opStatus: beta
+opDef: !def
+  enable: true
+  typeSpec: !ropTypes
+    coordType: !coordT
+      Coordtypevec3: true
+    contextType: !contextT
+      Allcontexttype: true
+    returnType: !returnT
+      Returntypesdf: true
+  function: !text
+    file: src/operators/sdf/latticeSdf.glsl
+    name: function
+  useParams:
+  - Shape
+  - Thickness
+  - Spacing
+  - Blendradius
+  libraryNames: !expr
+    expr: '[op(''latticeSdf_lib''), ''raytkCombine'']'

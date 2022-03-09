@@ -1,0 +1,21 @@
+!rop
+meta: !meta
+  opType: raytk.operators.convert.projectPlane
+  opVersion: '1'
+  opStatus: beta
+opDef: !def
+  enable: true
+  typeSpec: !ropTypes
+    coordType: !coordT
+      Coordtypevec3: true
+    contextType: !contextT
+      Allcontexttype: true
+    returnType: !returnT
+      Allreturntype: true
+  function: !text
+    file: src/operators/convert/projectPlane.glsl
+    name: functionTemplate
+  paramListTable: switcher_params
+  help: !text
+    file: src/operators/convert/projectPlane.md
+    name: help

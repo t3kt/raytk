@@ -1,0 +1,28 @@
+!rop
+meta: !meta
+  opType: raytk.operators.light.pointLight
+  opVersion: '9'
+  opStatus: default
+opDef: !def
+  enable: true
+  typeSpec: !ropTypes
+    coordType: !coordT
+      Coordtypevec3: true
+    contextType: !contextT
+      Contexttypelightcontext: true
+    returnType: !returnT
+      Returntypelight: true
+  function: !text
+    file: src/operators/light/pointLight.glsl
+    name: functionTemplate
+  useParams:
+  - Position[xyz]
+  - Color[rgb]
+  - Intensity
+  - Attenuationstart
+  - Attenuationend
+  macroParams: Enableattenuation
+  help: !text
+    file: src/operators/light/pointLight.md
+    name: help
+  shortcuts: pl

@@ -1,0 +1,43 @@
+!rop
+meta: !meta
+  opType: raytk.operators.material.modularMat
+  opVersion: '15'
+  opStatus: default
+opDef: !def
+  enable: !expr
+    expr: op('..').par.Enable
+  useRuntimeBypass: true
+  typeSpec: !ropTypes
+    coordType: !coordT
+      Coordtypevec3: true
+    contextType: !contextT
+      Contexttypecontext: true
+    returnType: !returnT
+      Returntypesdf: true
+  function: !text
+    file: src/operators/material/modularMat.glsl
+    name: function
+  material: !text
+    file: src/operators/material/modularMat_material.glsl
+    name: material
+  useParams: Basecolor[rgb]
+  macroParams:
+  - Uselightcolor
+  - Uselocalpos
+  - Enableao
+  - Enablereflection
+  macroTable: !table
+    file: src/operators/material/modularMat_macros.txt
+    name: macro_exprs
+    evaluate: true
+    evalOpts: !evalOpts {}
+  variableTable: !table
+    file: src/operators/material/modularMat_variables.txt
+    name: variable_exprs
+    evaluate: true
+    evalOpts: !evalOpts
+      excludeFirstRow: true
+  help: !text
+    file: src/operators/material/modularMat.md
+    name: help
+  shortcuts: mm

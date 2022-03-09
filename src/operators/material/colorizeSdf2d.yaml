@@ -1,0 +1,35 @@
+!rop
+meta: !meta
+  opType: raytk.operators.material.colorizeSdf2d
+  opVersion: '6'
+  opStatus: default
+opDef: !def
+  enable: !expr
+    expr: parent().par.Enable
+  typeSpec: !ropTypes
+    coordType: !coordT
+      Coordtypevec2: true
+      Coordtypevec3: true
+    contextType: !contextT
+      Allcontexttype: true
+    returnType: !returnT
+      Returntypevec4: true
+  function: !text
+    file: src/operators/material/colorizeSdf2d.glsl
+    name: function
+  useParams:
+  - Edgecolor[rgba]
+  - Insidecolor1[rgba]
+  - Insidecolor2[rgba]
+  - Outsidecolor1[rgba]
+  - Outsidecolor2[rgba]
+  - Edgethickness
+  - Edgeblending
+  - Insideperiod
+  - Outsideperiod
+  - Insidephase
+  - Outsidephase
+  macroParams: Enableedge
+  help: !text
+    file: src/operators/material/colorizeSdf2d.md
+    name: help

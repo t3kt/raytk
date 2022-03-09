@@ -1,0 +1,23 @@
+!rop
+meta: !meta
+  opType: raytk.operators.function.crossFn
+  opVersion: '6'
+  opStatus: default
+opDef: !def
+  enable: !expr
+    expr: op('..').par.Enable
+  typeSpec: !ropTypes
+    coordType: !coordT
+      Allcoordtype: true
+    contextType: !contextT
+      Allcontexttype: true
+    returnType: !returnT
+      Returntypefloat: true
+      Returntypevec4: true
+  function: !text
+    file: src/operators/function/crossFn.glsl
+    name: functionTemplate
+  useParams: Mix
+  help: !text
+    file: src/operators/function/crossFn.md
+    name: help

@@ -1,0 +1,34 @@
+!rop
+meta: !meta
+  opType: raytk.operators.sdf2d.bezierSdf2d
+  opVersion: '3'
+  opStatus: beta
+opDef: !def
+  enable: true
+  typeSpec: !ropTypes
+    coordType: !coordT
+      Coordtypevec2: true
+    contextType: !contextT
+      Allcontexttype: true
+    returnType: !returnT
+      Returntypesdf: true
+  function: !text
+    file: src/operators/sdf2d/bezierSdf2d.glsl
+    name: function
+  useParams:
+  - Pointa[xy]
+  - Pointb[xy]
+  - Pointc[xy]
+  - Radius
+  libraryNames: !expr
+    expr: op('bezierSfd2d_lib')
+  variableTable: !table
+    file: src/operators/sdf2d/bezierSdf2d_variables.txt
+    name: variable_exprs
+    evaluate: true
+    evalOpts: !evalOpts
+      excludeFirstRow: true
+  keywords:
+  - bezier
+  - curve
+  - line

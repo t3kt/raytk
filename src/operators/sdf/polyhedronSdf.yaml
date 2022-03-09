@@ -1,0 +1,39 @@
+!rop
+meta: !meta
+  opType: raytk.operators.sdf.polyhedronSdf
+  opVersion: '6'
+  opStatus: beta
+opDef: !def
+  enable: true
+  typeSpec: !ropTypes
+    coordType: !coordT
+      Coordtypevec3: true
+    contextType: !contextT
+      Allcontexttype: true
+    returnType: !returnT
+      Returntypesdf: true
+  opGlobals: !text
+    file: src/operators/sdf/polyhedronSdf_globals.glsl
+    name: globals
+  init: !text
+    file: src/operators/sdf/polyhedronSdf_init.glsl
+    name: init
+  function: !text
+    file: src/operators/sdf/polyhedronSdf.glsl
+    name: functionTemplate
+  useParams:
+  - Type
+  - U
+  - V
+  - W
+  - Enablefaces
+  - Enablesegments
+  - Enablevertices
+  - Segmentsize
+  - Vertexsize
+  - Radius
+  - Faceradius
+  - Segmentradius
+  - Vertexradius
+  paramListTable: mergeParams
+  libraryNames: raytkCombine

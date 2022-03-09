@@ -1,0 +1,22 @@
+!rop
+meta: !meta
+  opType: raytk.operators.field.polarVectorField
+  opVersion: '1'
+  opStatus: default
+opDef: !def
+  enable: true
+  typeSpec: !ropTypes
+    coordType: !coordT
+      Coordtypevec2: true
+      Coordtypevec3: true
+    contextType: !contextT
+      Allcontexttype: true
+    returnType: !returnT
+      Returntypevec4: true
+  function: !text
+    file: src/operators/field/polarVectorField.glsl
+    name: function
+  useParams:
+  - Thetaoffset
+  - Phioffset
+  - Length

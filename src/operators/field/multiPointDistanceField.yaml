@@ -1,0 +1,27 @@
+!rop
+meta: !meta
+  opType: raytk.operators.field.multiPointDistanceField
+  opVersion: '2'
+  opStatus: default
+opDef: !def
+  enable: true
+  typeSpec: !ropTypes
+    coordType: !coordT
+      Coordtypefloat: !expr
+        expr: parent().par.Coordtype == 'float'
+      Coordtypevec2: !expr
+        expr: parent().par.Coordtype == 'vec2'
+      Coordtypevec3: !expr
+        expr: parent().par.Coordtype == 'vec3'
+    contextType: !contextT
+      Allcontexttype: true
+    returnType: !returnT
+      Returntypevec4: true
+  function: !text
+    file: src/operators/field/multiPointDistanceField.glsl
+    name: functionTemplate
+  useParams: !expr
+    expr: '''Point1[X] Point2[X] Point3[X] Point4[X]''.replace(''X'', ''xyz''[:parent().par.Coordtype.menuIndex+1])'
+  help: !text
+    file: src/operators/field/multiPointDistanceField.md
+    name: help

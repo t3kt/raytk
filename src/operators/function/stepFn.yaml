@@ -1,0 +1,27 @@
+!rop
+meta: !meta
+  opType: raytk.operators.function.stepFn
+  opVersion: '6'
+  opStatus: default
+opDef: !def
+  enable: true
+  typeSpec: !ropTypes
+    coordType: !coordT
+      Coordtypefloat: true
+    contextType: !contextT
+      Allcontexttype: true
+    returnType: !returnT
+      Returntypefloat: true
+  function: !text
+    file: src/operators/function/stepFn.glsl
+    name: functionTemplate
+  useParams:
+  - Edge
+  - Blend
+  macroParams:
+  - Invert
+  - Function
+  generatedMacroTables: expr_macros
+  help: !text
+    file: src/operators/function/stepFn.md
+    name: help

@@ -1,0 +1,31 @@
+!rop
+meta: !meta
+  opType: raytk.operators.sdf.discSdf
+  opVersion: '6'
+  opStatus: default
+opDef: !def
+  enable: true
+  typeSpec: !ropTypes
+    coordType: !coordT
+      Coordtypevec3: true
+    contextType: !contextT
+      Allcontexttype: true
+    returnType: !returnT
+      Returntypesdf: true
+  function: !text
+    file: src/operators/sdf/discSdf.glsl
+    name: functionTemplate
+  useParams:
+  - Translate[xyz]
+  - Radius
+  - Thickness
+  variableTable: !table
+    file: src/operators/sdf/discSdf_variables.txt
+    name: variable_exprs
+    evaluate: true
+    evalOpts: !evalOpts
+      excludeFirstRow: true
+  generatedMacroTables: sel_axis_macros
+  help: !text
+    file: src/operators/sdf/discSdf.md
+    name: help

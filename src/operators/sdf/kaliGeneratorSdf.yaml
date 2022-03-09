@@ -1,0 +1,27 @@
+!rop
+meta: !meta
+  opType: raytk.operators.sdf.kaliGeneratorSdf
+  opVersion: '3'
+  opStatus: default
+opDef: !def
+  enable: true
+  typeSpec: !ropTypes
+    coordType: !coordT
+      Coordtypevec3: true
+    contextType: !contextT
+      Allcontexttype: true
+    returnType: !returnT
+      Returntypesdf: true
+  function: !text
+    file: src/operators/sdf/kaliGeneratorSdf.glsl
+    name: functionTemplate
+  useParams:
+  - Steptranslate[xyz]
+  - Steps
+  - Boxsize[xyz]
+  - Fractalangle
+  - Boxround
+  angleParams: Fractalangle
+  help: !text
+    file: src/operators/sdf/kaliGeneratorSdf.md
+    name: help
