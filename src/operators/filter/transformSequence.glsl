@@ -3,6 +3,7 @@ void THIS_transformStep(inout vec4 q, CoordT p, inout ContextT ctx) {
 }
 
 void THIS_transform(inout vec4 q, CoordT p, inout ContextT ctx) {
+	if (THIS_Enable < 0.5) { return; }
 	#ifdef THIS_Enableloop
 	int n = int(THIS_Iterations);
 	for (int i = 0; i < n; i++) {

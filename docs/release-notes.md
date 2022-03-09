@@ -54,6 +54,7 @@
     * reflect
     * remapCoords
     * rescaleField
+    * restrictStage
     * rotate
     * rotateNormals
     * round
@@ -62,6 +63,7 @@
     * sphericalMobiusTransform
     * spiralZoom
     * transform
+    * transformSequence
     * translate
     * twist
     * uvTransform

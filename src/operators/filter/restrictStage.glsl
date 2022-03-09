@@ -35,7 +35,7 @@ bool THIS_check() {
 
 ReturnT thismap(CoordT p, ContextT ctx) {
 	ReturnT res;
-	if (THIS_check()) {
+	if (THIS_Enable >= 0.5 && THIS_check()) {
 		res = inputOp1(p, ctx);
 	} else {
 		#ifdef THIS_HAS_INPUT_2
