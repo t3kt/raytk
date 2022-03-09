@@ -6,9 +6,11 @@ if False:
 	# noinspection PyUnresolvedReferences
 	from _stubs import *
 	from _typeAliases import *
+	from ..toolkitEditor import ToolkitEditor
 	from ..ropEditor.ropEditor import ROPEditor
 	from ..createRopDialog.createRopDialog import CreateRopDialog
 	ext.ropEditor = ROPEditor(COMP())
+	ext.toolkitEditor = ToolkitEditor(COMP())
 
 	class _UiStatePar(ParCollection):
 		Showroppicker: 'BoolParamT'
@@ -79,6 +81,14 @@ class MainMenu:
 					checked='ipar.uiState.Showscenepicker',
 					getPar=lambda: ipar.uiState.Showscenepicker,
 				),
+			],
+			'Tools': [
+				_MenuItem(
+					'saveAllRopSpecs',
+					'Save All ROP Specs',
+					menuName='Tools',
+					action=lambda: ext.toolkitEditor.saveAllROPSpecs(),
+				)
 			],
 		}
 

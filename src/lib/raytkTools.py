@@ -320,6 +320,12 @@ class RaytkTools(RaytkContext):
 			ui.status = f'Failed to generate ROPSpec for {rop}: {err}'
 			print(f'Failed to generate ROPSpec for {rop}:\n{err}')
 
+	def saveAllROPSpecs(self):
+		rops = self.allMasterOperators()
+		for rop in rops:
+			print(f'Saving ROP spec for {rop}')
+			self.saveROPSpec_NEW(rop)
+
 	def updateAllROPToolkitVersions(self):
 		version = self.toolkitVersion()
 		for rop in self.allMasterOperators():

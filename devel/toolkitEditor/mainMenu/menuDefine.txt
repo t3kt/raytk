@@ -1,6 +1,7 @@
 button	item1	item2	callback	dividerAfter	disable	checked	highlight	shortcut	rowCallback	menuName	itemName				
 File										File					
 									getMenuItems	File					2
-Edit										Edit					
 View										View					
 									getMenuItems	View					
+Tools										Tools					
+									getMenuItems	Tools					
