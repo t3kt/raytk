@@ -117,7 +117,7 @@ class ModelObject(yaml.YAMLObject):
 	def toYamlDict(self):
 		d = {}
 		for f in dataclasses.fields(self):
-			val = getattr(self, f.name)
+			val = getattr(self, f.name, None)
 			if _shouldInclude(val) and val != f.default:
 				d[f.name] = val
 		return d
@@ -176,6 +176,11 @@ class EvalDatOptions(ModelObject):
 			cols=_extractDatEvalPart(dat.par.extractcols, dat.par.colnames),
 		)
 
+	def isAllDefaults(self):
+		if self.excludeFirstRow or self.excludeFirstCol:
+			return False
+		return self.rows != '*' or self.cols != '*'
+
 def _extractDatEvalPart(modePar: 'Par', namesPar: 'Par'):
 	if modePar.mode != ParMode.CONSTANT:
 		raise Exception(f'Unsupported mode for {modePar!r}')
@@ -207,6 +212,14 @@ class TableData(ModelObject):
 	rows: List[List[CellValueT]] = field(default_factory=list)
 	evaluate: Optional[bool] = None
 	evalOpts: Optional[EvalDatOptions] = None
+
+	def toYamlDict(self):
+		obj = super().toYamlDict()
+		if not obj.get('evaluate') and 'evalOpts' in obj:
+			del obj['evalOpts']
+		elif self.evalOpts and self.evalOpts.isAllDefaults():
+			del obj['evalOpts']
+		return obj
 
 @dataclass
 class TextData(ModelObject):
@@ -262,6 +275,11 @@ class CoordTypes(ModelObject):
 	def fromComp(cls, specComp: 'COMP'):
 		return cls(**_valOrExprDictFromPars(specComp.pars('Allcoordtype', 'Coordtype*')))
 
+	def toYamlDict(self):
+		if self.Allcoordtype:
+			return {'Allcoordtype': True}
+		return _excludeFalseVals(super().toYamlDict())
+
 @dataclass
 class ContextTypes(ModelObject):
 	yaml_tag = u'!contextT'
@@ -278,6 +296,11 @@ class ContextTypes(ModelObject):
 	def fromComp(cls, specComp: 'COMP'):
 		return cls(**_valOrExprDictFromPars(specComp.pars('Allcontexttype', 'Contexttype*')))
 
+	def toYamlDict(self):
+		if self.Allcontexttype:
+			return {'Allcontexttype': True}
+		return _excludeFalseVals(super().toYamlDict())
+
 @dataclass
 class ReturnTypes(ModelObject):
 	yaml_tag = u'!returnT'
@@ -293,6 +316,21 @@ class ReturnTypes(ModelObject):
 	@classmethod
 	def fromComp(cls, specComp: 'COMP'):
 		return ReturnTypes(**_valOrExprDictFromPars(specComp.pars('Allreturntype', 'Returntype*')))
+
+	def toYamlDict(self):
+		if self.Allreturntype:
+			return {'Allreturntype': True}
+		return _excludeFalseVals(super().toYamlDict())
+
+def _excludeFalseVals(obj: dict):
+	if not obj:
+		return obj
+	return {
+		key: val
+		for key, val in obj.items()
+		if val is not False
+	}
+	pass
 
 @dataclass
 class InputSpec(ModelObject):
@@ -402,24 +440,6 @@ class ROPTypeSpec(ModelObject):
 	returnType: Optional[ReturnTypes] = None
 
 	@classmethod
-	def extract(cls, specComp: 'COMP'):
-		spec = cls(
-			**_getParValsDict(specComp.pars('Useinput*')))
-		if specComp.par.Allcoordtype:
-			spec.coordType = '*'
-		else:
-			spec.coordType = CoordTypes(**_getParValsDict(specComp.pars('Coordtype*')))
-		if specComp.par.Allcontexttype:
-			spec.contextType = '*'
-		else:
-			spec.contextType = ContextTypes(**_getParValsDict(specComp.pars('Contexttype*')))
-		if specComp.par.Allreturntype:
-			spec.returnType = '*'
-		else:
-			spec.returnType = ReturnTypes(**_getParValsDict(specComp.pars('Returntype*')))
-		return spec
-
-	@classmethod
 	def fromComp(cls, specComp: 'COMP'):
 		if not specComp:
 			return None
@@ -448,6 +468,13 @@ class ROPTypeSpec(ModelObject):
 		else:
 			specComp.par.Allreturntype = False
 			_setParValsFromDict(specComp, self.returnType.toYamlDict())
+
+	def toYamlDict(self):
+		obj = super().toYamlDict()
+		for key in ('Useinputcoordtype', 'Useinputcontexttype', 'Useinputreturntype'):
+			if obj.get(key) is False:
+				del obj[key]
+		return obj
 
 _TableSetting = Union[TableData, Expr, None]
 _TextSetting = Union[TextData, Expr, None]
@@ -715,7 +742,6 @@ class ROPSpec(ModelObject):
 
 	@classmethod
 	def extract(cls, rop: 'COMP', skipParams=False):
-		ropInfo = ROPInfo(rop)
 		spec = ROPSpec()
 		spec.updateFromRop(rop, skipParams)
 		return spec
@@ -743,7 +769,8 @@ def _extractDatSetting(par: Optional['Par'], isText: bool) -> Union[TextData, Ta
 		return None
 	graph = EditorItemGraph.fromPar(par)
 	if not graph.supported:
-		raise Exception(f'DAT setup not supported for {par!r}')
+		print(f'DAT setup not supported for {par!r}')
+		return _valOrExprFromPar(par)
 	evalOpts = None
 	if graph.evalDat:
 		evalOpts = EvalDatOptions.fromDat(graph.evalDat)

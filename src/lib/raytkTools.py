@@ -323,6 +323,8 @@ class RaytkTools(RaytkContext):
 	def saveAllROPSpecs(self):
 		rops = self.allMasterOperators()
 		for rop in rops:
+			if not ROPInfo(rop).isROP:
+				continue
 			print(f'Saving ROP spec for {rop}')
 			self.saveROPSpec_NEW(rop)
 
