@@ -68,6 +68,7 @@
     * twist
     * uvTransform
     * waveWarp
+    * basicMat / goochMat / modularMat / pbrMat / phongMat / reflectMat / refractMat / sampledPointMat
   * Documentation
     * Added optimization guide (#750)
 * Changes (potentially breaking)
