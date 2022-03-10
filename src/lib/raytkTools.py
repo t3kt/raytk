@@ -172,7 +172,8 @@ class RaytkTools(RaytkContext):
 		self.updateROPParams(rop)
 		self.updateOPImage(rop)
 		self.saveROPSpec(rop)
-		self.saveROPSpec_NEW(rop)
+		if info.isROP:
+			self.saveROPSpec_NEW(rop)
 		OpDocManager(info).pushToParamsAndInputs()
 		focusFirstCustomParameterPage(rop)
 		tox = info.toxFile
