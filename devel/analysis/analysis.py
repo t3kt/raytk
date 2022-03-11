@@ -67,6 +67,7 @@ def buildOpInfoTable(dat: 'DAT'):
 			'Contexttype',
 		] + _opDefParamNames + [
 			'hasThumb',
+			'paramPages',
 		]
 	)
 	opThumbs = op('opThumbs')
@@ -99,6 +100,7 @@ def buildOpInfoTable(dat: 'DAT'):
 		for pn in _opDefParamNames:
 			dat[rop.path, pn] = _formatPar(info.opDefPar[pn])
 		dat[rop.path, 'hasThumb'] = bool(opThumbs[rop.path, 'thumb'])
+		dat[rop.path, 'paramPages'] = ' '.join([page.name for page in rop.customPages])
 
 def buildOpParamsTable(dat: 'DAT'):
 	dat.clear()
