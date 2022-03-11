@@ -1,5 +1,5 @@
 ReturnT thismap(CoordT p, ContextT ctx) {
-	if (THIS_Enable >= 0.5) { return inputOp1(p, ctx); }
+	if (THIS_Enable < 0.5) { return inputOp1(p, ctx); }
 	CoordT p2 = THIS_asCoordT(inputOp_coordField(p, ctx));
 	#pragma r:if THIS_Remapmode_replace
 	CoordT q = p2;
