@@ -12,6 +12,22 @@ op:
     used in a 3D raymarching scene.
 
     Based on https://github.com/cabbibo/glsl-curl-noise'
+  inputs:
+  - contextTypes:
+    - Context
+    - MaterialContext
+    - CameraContext
+    - LightContext
+    - RayContext
+    - ParticleContext
+    coordTypes:
+    - float
+    - vec2
+    - vec3
+    label: Coordinate Field
+    name: coordField
+    returnTypes:
+    - vec4
   name: curlNoiseField
   opType: raytk.operators.field.curlNoiseField
   parameters:
@@ -36,6 +52,8 @@ op:
       name: LightContext
     - label: RayContext
       name: RayContext
+    - label: ParticleContext
+      name: ParticleContext
     name: Contexttype
   - label: Translate
     name: Translate

@@ -65,6 +65,8 @@ cat:
     summary: Defines a cone or capped cone shape.
   - name: crossSdf
     summary: An SDF for a 3D cross of infinite length along each axis.
+  - name: cutSphereSdf
+    status: beta
   - keywords:
     - column
     - cylinder

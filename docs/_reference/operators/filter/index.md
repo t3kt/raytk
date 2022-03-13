@@ -252,11 +252,6 @@ cat:
   - name: sphericalMobiusTransform
     status: beta
   - keywords:
-    - rotate
-    - spin
-    name: spin
-    status: deprecated
-  - keywords:
     - log
     - polar
     - spiral

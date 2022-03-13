@@ -28,6 +28,34 @@ op:
     - Ray
     - Light
     - Particle
+  - contextTypes:
+    - Context
+    - MaterialContext
+    - CameraContext
+    - LightContext
+    - RayContext
+    - ParticleContext
+    coordTypes:
+    - vec2
+    - vec3
+    label: Offset Field
+    name: offsetField
+    returnTypes:
+    - float
+  - contextTypes:
+    - Context
+    - MaterialContext
+    - CameraContext
+    - LightContext
+    - RayContext
+    - ParticleContext
+    coordTypes:
+    - vec2
+    - vec3
+    label: Shift Field
+    name: shiftField
+    returnTypes:
+    - float
   keywords:
   - flip
   - mirror

@@ -30,6 +30,34 @@ op:
     - Ray
     - Light
     - Particle
+  - contextTypes:
+    - Context
+    - MaterialContext
+    - CameraContext
+    - LightContext
+    - RayContext
+    - ParticleContext
+    coordTypes:
+    - vec2
+    - vec3
+    label: Center Field
+    name: centerField
+    returnTypes:
+    - vec4
+  - contextTypes:
+    - Context
+    - MaterialContext
+    - CameraContext
+    - LightContext
+    - RayContext
+    - ParticleContext
+    coordTypes:
+    - vec2
+    - vec3
+    label: Size Field
+    name: sizeField
+    returnTypes:
+    - vec4
   keywords:
   - extend
   - stretch

@@ -23,6 +23,20 @@ op:
     name: phaseField
     returnTypes:
     - float
+  - contextTypes:
+    - Context
+    - MaterialContext
+    - CameraContext
+    - LightContext
+    - RayContext
+    - ParticleContext
+    coordTypes:
+    - vec2
+    - vec3
+    label: Coordinate Field
+    name: coordField
+    returnTypes:
+    - vec4
   name: waveletNoiseField
   opType: raytk.operators.field.waveletNoiseField
   parameters:
@@ -32,8 +46,6 @@ op:
       name: vec2
     - label: 3D
       name: vec3
-    - label: Auto
-      name: auto
     name: Coordtype
   - label: Context Type
     menuOptions:

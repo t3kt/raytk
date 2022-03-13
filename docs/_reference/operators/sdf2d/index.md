@@ -12,6 +12,8 @@ cat:
     3D geometry such as by extrusion.'
   name: sdf2d
   operators:
+  - name: arbitraryPolygonSdf2d
+    status: beta
   - name: arcSdf2d
   - name: arrowSdf2d
   - keywords:
@@ -28,6 +30,8 @@ cat:
       one corner.
   - name: crossSdf2d
     summary: 2D cross shape SDF, with 4 arms and option rounding of the intersections.
+  - name: cutDiscSdf2d
+    status: beta
   - name: dogBoneSdf2d
     summary: 2D SDF for two connected circles.
   - keywords:
@@ -42,6 +46,8 @@ cat:
     status: beta
   - name: lineSegmentSdf2d
     summary: 2D line segment SDF.
+  - name: moonSdf2d
+    status: beta
   - name: parabolaSdf2d
   - name: parallelogramSdf2d
   - name: pieSdf2d
@@ -59,6 +65,8 @@ cat:
     summary: SDF for a 2D rectangle with optionally rounded corners.
   - name: spikeSdf2d
   - name: spiralSdf2d
+    status: beta
+  - name: stairSdf2d
     status: beta
   - name: starSdf2d
     summary: SDF for a 2D star shape.
