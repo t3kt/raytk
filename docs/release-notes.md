@@ -5,13 +5,15 @@
 ### Highlights
 
 * Matcap materials
+* Faster enable/disable for lots of filters
+* New 2D and 3D SDFs
 
 ### Details
 
 * Improvements / additions
   * New ops
     * arbitraryPolygonSdf2d (#816)
-    * cutDiscSdf2d (#817)
+    * cutDiscSdf2d / cutSphereSdf (#817)
     * matCapContrib (#798)
     * moonSdf2d
     * stairSdf2d (#815)
