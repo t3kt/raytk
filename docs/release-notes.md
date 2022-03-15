@@ -11,15 +11,18 @@
 * Improvements / additions
   * New ops
     * arbitraryPolygonSdf2d (#816)
+    * cutDiscSdf2d (#817)
     * matCapContrib (#798)
     * moonSdf2d
     * stairSdf2d (#815)
   * New field inputs (#812)
     * bend - shift
+    * curlNoiseField - coordinates (#829)
     * elongate/extend - size, center
     * fold - distance
     * mobiusTransform - center, point
     * reflect - shift, offset
+    * waveletNoiseField (#829)
   * New parameters
     * transformSequence - reverse order (#819)
   * Runtime bypass - faster enable/disable for filters (#755)
@@ -69,6 +72,7 @@
     * uvTransform
     * waveWarp
     * basicMat / goochMat / modularMat / pbrMat / phongMat / reflectMat / refractMat / sampledPointMat
+  * UV support in cylinderSdf (#830)
   * Documentation
     * Added optimization guide (#750)
 * Changes (potentially breaking)
@@ -82,7 +86,9 @@
   * Fix coord type resolution in coordTo2D and coordTo3D (#717)
   * Fix 1D coord support in modulo1D (#823)
   * Fix compile error in simpleIntersect
+  * Fix for version error in raymarchPreviewPanel (#827, #436)
 * Infrastructure / internals
+  * Part way through migration to yaml-based ROP definitions (#76)
 
 ## v0.21
 
