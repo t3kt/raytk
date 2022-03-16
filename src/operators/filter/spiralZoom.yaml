@@ -1,0 +1,130 @@
+!rop
+meta: !meta
+  opType: raytk.operators.filter.spiralZoom
+  opVersion: '6'
+  opStatus: default
+opDef: !def
+  enable: !expr 'op(''..'').par.Enable'
+  useRuntimeBypass: true
+  typeSpec: !ropTypes
+    coordType: !coordT
+      Allcoordtype: false
+      Coordtypefloat: false
+      Coordtypevec2: true
+      Coordtypevec3: true
+    contextType: !contextT
+      Allcontexttype: true
+      Contexttypecontext: false
+      Contexttypematerialcontext: true
+      Contexttypecameracontext: false
+      Contexttypelightcontext: false
+      Contexttyperaycontext: false
+      Contexttypeparticlecontext: false
+    returnType: !returnT
+      Allreturntype: true
+      Returntypesdf: false
+      Returntypefloat: true
+      Returntypevec4: true
+      Returntyperay: false
+      Returntypelight: false
+      Returntypeparticle: false
+  function: !text
+    file: src/operators/filter/spiralZoom.glsl
+    name: function
+  useParams:
+  - Center[1-2]
+  - Phase[1-2]
+  - Twist[1-2]
+  - Branches
+  generatedMacroTables: sel_axis_macros
+  help: help
+  keywords:
+  - polar
+  - spiral
+  - log
+paramPages:
+- !page
+  name: Filter
+  pars:
+    Enable:
+      name: Enable
+      label: Enable
+      style: Toggle
+      default: true
+    Axis:
+      name: Axis
+      label: Axis
+      style: Menu
+      default: z
+      menuNames:
+      - x
+      - y
+      - z
+      menuLabels:
+      - X
+      - Y
+      - Z
+    Center:
+      name: Center
+      label: Center
+      style: Float
+      size: 2
+      default: 0.0
+      normMin: 0.0
+      normMax: 1.0
+    Twist1:
+      name: Twist1
+      label: Twist 1
+      style: Float
+      size: 1
+      default: 0.5
+      normMin: -1.0
+      normMax: 1.0
+    Twist2:
+      name: Twist2
+      label: Twist 2
+      style: Float
+      size: 1
+      default: 0.5
+      normMin: -1.0
+      normMax: 1.0
+    Branches:
+      name: Branches
+      label: Branches
+      style: Float
+      size: 1
+      default: 4.0
+      normMin: 1.0
+      normMax: 8.0
+    Phase:
+      name: Phase
+      label: Phase
+      style: Float
+      size: 2
+      default: 0.0
+      normMin: 0.0
+      normMax: 1.0
+inputs:
+- !input
+  Required: true
+  coordType: !coordT
+    Allcoordtype: false
+    Coordtypefloat: false
+    Coordtypevec2: true
+    Coordtypevec3: true
+  contextType: !contextT
+    Allcontexttype: true
+    Contexttypecontext: true
+    Contexttypematerialcontext: false
+    Contexttypecameracontext: false
+    Contexttypelightcontext: false
+    Contexttyperaycontext: false
+    Contexttypeparticlecontext: false
+  returnType: !returnT
+    Allreturntype: true
+    Returntypesdf: false
+    Returntypefloat: true
+    Returntypevec4: true
+    Returntyperay: false
+    Returntypelight: false
+    Returntypeparticle: false

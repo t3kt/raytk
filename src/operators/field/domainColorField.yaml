@@ -1,0 +1,26 @@
+!rop
+meta: !meta
+  opType: raytk.operators.field.domainColorField
+  opVersion: '2'
+  opStatus: beta
+opDef: !def
+  enable: !expr
+    expr: op('..').par.Enable
+  typeSpec: !ropTypes
+    coordType: !coordT
+      Coordtypevec2: true
+    contextType: !contextT
+      Allcontexttype: true
+    returnType: !returnT
+      Returntypevec4: true
+  function: !text
+    file: src/operators/field/domainColorField.glsl
+    name: function
+  useParams:
+  - Gridspacing[1-2]
+  - Saturation
+  - Gridstrength
+  - Magstrength
+  - Linepower
+  libraryNames: !expr
+    expr: op('domainColorField_lib')

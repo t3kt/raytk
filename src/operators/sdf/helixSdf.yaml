@@ -1,0 +1,38 @@
+!rop
+meta: !meta
+  opType: raytk.operators.sdf.helixSdf
+  opVersion: '10'
+  opStatus: default
+opDef: !def
+  enable: true
+  typeSpec: !ropTypes
+    coordType: !coordT
+      Coordtypevec3: true
+    contextType: !contextT
+      Allcontexttype: true
+    returnType: !returnT
+      Returntypesdf: true
+  function: !text
+    file: src/operators/sdf/helixSdf.glsl
+    name: functionTemplate
+  useParams:
+  - Translate[xyz]
+  - Radius
+  - Thickness
+  - Spread
+  - Dualspread
+  - Reverse
+  variableTable: !table
+    file: src/operators/sdf/helixSdf_variables.txt
+    name: variable_exprs
+    evaluate: true
+    evalOpts: !evalOpts
+      excludeFirstRow: true
+  generatedMacroTables: sel_axis_macros
+  help: !text
+    file: src/operators/sdf/helixSdf.md
+    name: help
+  keywords:
+  - helix
+  - spiral
+  - coil

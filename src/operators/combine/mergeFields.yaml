@@ -1,0 +1,27 @@
+!rop
+meta: !meta
+  opType: raytk.operators.combine.mergeFields
+  opVersion: '7'
+  opStatus: default
+opDef: !def
+  enable: !expr
+    expr: op('..').par.Enable
+  typeSpec: !ropTypes
+    coordType: !coordT
+      Allcoordtype: true
+    contextType: !contextT
+      Allcontexttype: true
+    returnType: !returnT
+      Returntypevec4: true
+  function: !text
+    file: src/operators/combine/mergeFields.glsl
+    name: function
+  macroParams: Source[xyzw]
+  macroTable: !table
+    file: src/operators/combine/mergeFields_macros.txt
+    name: macro_exprs
+    evaluate: true
+    evalOpts: !evalOpts {}
+  help: !text
+    file: src/operators/combine/mergeFields.md
+    name: help

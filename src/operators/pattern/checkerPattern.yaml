@@ -1,0 +1,20 @@
+!rop
+meta: !meta
+  opType: raytk.operators.pattern.checkerPattern
+  opVersion: '3'
+  opStatus: default
+opDef: !def
+  enable: true
+  typeSpec: !ropTypes
+    coordType: !coordT
+      Allcoordtype: true
+    contextType: !contextT
+      Allcontexttype: true
+    returnType: !returnT
+      Returntypefloat: true
+  function: !text
+    file: src/operators/pattern/checkerPattern.glsl
+    name: functionTemplate
+  useParams:
+  - Translate[xy]
+  - Size[xy]

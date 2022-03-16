@@ -1,0 +1,46 @@
+!rop
+meta: !meta
+  opType: raytk.operators.filter.fieldExpr
+  opVersion: '10'
+  opStatus: beta
+opDef: !def
+  enable: !expr
+    expr: op('..').par.Enable
+  typeSpec: !ropTypes
+    Useinputcoordtype: !expr
+      expr: parent().par.Coordtype == 'useinput'
+    Useinputcontexttype: !expr
+      expr: parent().par.Contexttype == 'useinput'
+    Useinputreturntype: !expr
+      expr: parent().par.Returntype == 'useinput'
+    coordType: !coordT
+      Coordtypefloat: !expr
+        expr: parent().par.Coordtype == 'float'
+      Coordtypevec2: !expr
+        expr: parent().par.Coordtype == 'vec2'
+      Coordtypevec3: !expr
+        expr: parent().par.Coordtype == 'vec3'
+    contextType: !contextT
+      Allcontexttype: true
+    returnType: !returnT
+      Returntypesdf: !expr
+        expr: parent().par.Returntype == 'Sdf'
+      Returntypefloat: !expr
+        expr: parent().par.Returntype == 'float'
+      Returntypevec4: !expr
+        expr: parent().par.Returntype == 'vec4'
+      Returntyperay: !expr
+        expr: parent().par.Returntype == 'Ray'
+      Returntypelight: !expr
+        expr: parent().par.Returntype == 'Light'
+  function: !text
+    file: src/operators/filter/fieldExpr.glsl
+    name: functionTemplate
+  useParams:
+  - Param[1-2]
+  - Vecparam[1-2][1-4]
+  macroTable: !table
+    file: src/operators/filter/fieldExpr_macros.txt
+    name: macro_exprs
+    evaluate: true
+    evalOpts: !evalOpts {}

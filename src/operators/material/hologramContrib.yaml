@@ -1,0 +1,23 @@
+!rop
+meta: !meta
+  opType: raytk.operators.material.hologramContrib
+  opVersion: '2'
+  opStatus: alpha
+opDef: !def
+  enable: !expr
+    expr: op('..').par.Enable
+  typeSpec: !ropTypes
+    coordType: !coordT
+      Coordtypevec3: true
+    contextType: !contextT
+      Contexttypematerialcontext: true
+    returnType: !returnT
+      Returntypevec4: true
+  function: !text
+    file: src/operators/material/hologramContrib.glsl
+    name: function
+  useParams:
+  - Period[xyz]
+  - Phase
+  - Step
+  macroParams: Iterations

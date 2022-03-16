@@ -73,8 +73,6 @@ op:
     summary: The number of copies to produce and merge.
   - label: Combine
     menuOptions:
-    - label: None
-      name: none
     - description: Combines the shapes so that all of their volumes are included.
       label: Simple Union
       name: simpleUnion

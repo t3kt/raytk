@@ -6,7 +6,7 @@ This should only be used within development tools.
 
 from pathlib import Path
 from raytkDocs import OpDocManager
-from raytkModel import OpDefMeta_OLD, OpSpec_OLD, ROPSpec
+from raytkModel import OpDefMeta_OLD, OpSpec_OLD, ROPSpec, ROPDef, ROPMeta
 from raytkUtil import RaytkContext, ROPInfo, focusFirstCustomParameterPage, RaytkTags, CategoryInfo, ContextTypes, \
 	CoordTypes, ReturnTypes, getActiveEditor
 from typing import Callable, List, Optional
@@ -172,7 +172,8 @@ class RaytkTools(RaytkContext):
 		self.updateROPParams(rop)
 		self.updateOPImage(rop)
 		self.saveROPSpec(rop)
-		# self.saveROPSpec_NEW(rop)
+		if info.isROP:
+			self.saveROPSpec_NEW(rop)
 		OpDocManager(info).pushToParamsAndInputs()
 		focusFirstCustomParameterPage(rop)
 		tox = info.toxFile
@@ -238,24 +239,7 @@ class RaytkTools(RaytkContext):
 		info = ROPInfo(rop)
 		if not info or not info.isMaster:
 			return
-		info.opDefPar.Raytkopstatus = status or 'default'
-		# note: since applying with status false resets the color, the false ones have to be done before the true one
-		if status == 'alpha':
-			RaytkTags.beta.apply(info.rop, False)
-			RaytkTags.deprecated.apply(info.rop, False)
-			RaytkTags.alpha.apply(info.rop, True)
-		elif status == 'beta':
-			RaytkTags.alpha.apply(info.rop, False)
-			RaytkTags.deprecated.apply(info.rop, False)
-			RaytkTags.beta.apply(info.rop, True)
-		elif status == 'deprecated':
-			RaytkTags.alpha.apply(info.rop, False)
-			RaytkTags.beta.apply(info.rop, False)
-			RaytkTags.deprecated.apply(info.rop, True)
-		else:
-			RaytkTags.alpha.apply(info.rop, False)
-			RaytkTags.beta.apply(info.rop, False)
-			RaytkTags.deprecated.apply(info.rop, False)
+		info.setOpStatus(status)
 
 	@staticmethod
 	def _getROPRelatedFile(rop: 'COMP', fileSuffix: str, checkExists: bool) -> 'Optional[Path]':
@@ -290,14 +274,60 @@ class RaytkTools(RaytkContext):
 		if specFile and spec:
 			specFile.write_text(spec.toJsonStr(minify=False))
 
+	def loadROPSpec_NEW(self, rop: 'COMP', checkExists: bool) -> Optional[ROPSpec]:
+		specFile = self._getROPRelatedFile(rop, '.yaml', checkExists=False)
+		if not specFile.exists():
+			if checkExists:
+				ui.status = f'No ROPSpec file {specFile.as_posix()}'
+				return
+			return None
+		text = specFile.read_text()
+		spec = ROPSpec.parseFromText(text)
+		return spec
+
+	def applyROPSpec(self, rop: 'COMP'):
+		try:
+			ropInfo = ROPInfo(rop)
+			if not ropInfo:
+				raise Exception(f'Invalid ROP: {rop!r}')
+			spec = self.loadROPSpec_NEW(rop, checkExists=True)
+			if not spec:
+				raise Exception(f'No spec found for {rop}')
+			if spec.opDef:
+				spec.opDef.applyToComp(ropInfo.opDef)
+			if spec.meta:
+				spec.meta.applyToRopInfo(ropInfo)
+			# TODO: inputs, params, etc.
+		except Exception as err:
+			ui.status = f'Failed to load ROPSpec for {rop}: {err}'
+			print(f'Failed to load ROPSpec for {rop}:\n{err}')
+
 	def saveROPSpec_NEW(self, rop: 'COMP'):
 		try:
-			spec = ROPSpec.extract(rop, skipParams=False)
+			ropInfo = ROPInfo(rop)
+			if not ropInfo:
+				raise Exception(f'Invalid ROP: {rop!r}')
+			spec = self.loadROPSpec_NEW(rop, checkExists=False) or ROPSpec()
+			if not spec.opDef:
+				spec.opDef = ROPDef()
+			spec.opDef.updateFromComp(ropInfo.opDef)
+			if not spec.meta:
+				spec.meta = ROPMeta()
+			spec.meta.updateFromRopInfo(ropInfo)
+			# TODO: inputs, params, etc.
 			specFile = self._getROPRelatedFile(rop, '.yaml', checkExists=False)
 			spec.writeToFile(specFile)
 		except Exception as err:
 			ui.status = f'Failed to generate ROPSpec for {rop}: {err}'
 			print(f'Failed to generate ROPSpec for {rop}:\n{err}')
+
+	def saveAllROPSpecs(self):
+		rops = self.allMasterOperators()
+		for rop in rops:
+			if not ROPInfo(rop).isROP:
+				continue
+			print(f'Saving ROP spec for {rop}')
+			self.saveROPSpec_NEW(rop)
 
 	def updateAllROPToolkitVersions(self):
 		version = self.toolkitVersion()

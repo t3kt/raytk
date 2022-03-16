@@ -1,0 +1,2 @@
+name	path	type
+texture	op(parent().par.Texturetop) or (op('moviefilein') if parent().par.Texturefile else op('blank'))	2d

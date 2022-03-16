@@ -1,0 +1,28 @@
+!rop
+meta: !meta
+  opType: raytk.operators.field.constantSwitchField
+  opVersion: '1'
+  opStatus: beta
+opDef: !def
+  enable: true
+  typeSpec: !ropTypes
+    coordType: !coordT
+      Allcoordtype: true
+    contextType: !contextT
+      Allcontexttype: true
+    returnType: !returnT
+      Returntypefloat: !expr
+        expr: parent().par.Returntype == 'float'
+      Returntypevec4: !expr
+        expr: parent().par.Returntype == 'vec4'
+  function: !text
+    file: src/operators/field/constantSwitchField.glsl
+    name: functionTemplate
+  useParams:
+  - Value[1-8][1-4]
+  - Count
+  - Blendindices
+  - Offset
+  paramListTable: switcher_params
+  libraryNames: !expr
+    expr: op('modZigZag')

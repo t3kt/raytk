@@ -1,0 +1,30 @@
+!rop
+meta: !meta
+  opType: raytk.operators.time.timeField
+  opVersion: '10'
+  opStatus: default
+opDef: !def
+  enable: true
+  typeSpec: !ropTypes
+    coordType: !coordT
+      Allcoordtype: true
+    contextType: !contextT
+      Allcontexttype: true
+    returnType: !returnT
+      Returntypefloat: !expr
+        expr: op('expr_info')[1, 'returnType'] == 'float'
+      Returntypevec4: !expr
+        expr: op('expr_info')[1, 'returnType'] == 'vec4'
+  function: !text
+    file: src/operators/time/timeField.glsl
+    name: functionTemplate
+  libraryNames: raytkTime
+  macroTable: !table
+    file: src/operators/time/timeField_macros.txt
+    name: macro_exprs
+    evaluate: true
+    evalOpts: !evalOpts {}
+  generatedMacroTables: sel_timeSource_macros timeSource_macros part_macros
+  help: !text
+    file: src/operators/time/timeField.md
+    name: help

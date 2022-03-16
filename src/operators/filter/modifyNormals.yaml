@@ -1,0 +1,35 @@
+!rop
+meta: !meta
+  opType: raytk.operators.filter.modifyNormals
+  opVersion: '5'
+  opStatus: beta
+opDef: !def
+  enable: !expr
+    expr: op('..').par.Enable
+  useRuntimeBypass: true
+  typeSpec: !ropTypes
+    coordType: !coordT
+      Allcoordtype: true
+    contextType: !contextT
+      Contexttypematerialcontext: true
+      Contexttypelightcontext: true
+    returnType: !returnT
+      Allreturntype: true
+  function: !text
+    file: src/operators/filter/modifyNormals.glsl
+    name: functionTemplate
+  useParams: !expr
+    expr: '''Mix '' + op(''switcher_params'')[''params'', 1]'
+  macroParams: !expr
+    expr: op('switcher_params')['macroParams', 1]
+  help: !text
+    file: src/operators/filter/modifyNormals.md
+    name: help
+  keywords:
+  - material
+  - normals
+  - bumpmap
+  - surface
+  - texture
+  - shading
+  - modularmat

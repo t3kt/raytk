@@ -1,0 +1,38 @@
+!rop
+meta: !meta
+  opType: raytk.operators.sdf.mobiusRingSdf
+  opVersion: '9'
+  opStatus: default
+opDef: !def
+  enable: true
+  typeSpec: !ropTypes
+    coordType: !coordT
+      Coordtypevec3: true
+    contextType: !contextT
+      Allcontexttype: true
+    returnType: !returnT
+      Returntypesdf: true
+  function: !text
+    file: src/operators/sdf/mobiusRingSdf.glsl
+    name: functionTemplate
+  useParams:
+  - Translate[xyz]
+  - Radius
+  - Thickness
+  - Rounding
+  - Twist
+  - Twistphase
+  macroParams: Axis
+  variableTable: !table
+    file: src/operators/sdf/mobiusRingSdf_variables.txt
+    name: variable_exprs
+    evaluate: true
+    evalOpts: !evalOpts
+      excludeFirstRow: true
+  help: !text
+    file: src/operators/sdf/mobiusRingSdf.md
+    name: help
+  keywords:
+  - ring
+  - twist
+  - mobius

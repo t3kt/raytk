@@ -1,0 +1,48 @@
+!rop
+meta: !meta
+  opType: raytk.operators.filter.moduloPolar
+  opVersion: '19'
+  opStatus: default
+opDef: !def
+  enable: !expr
+    expr: op('..').par.Enable
+  useRuntimeBypass: true
+  typeSpec: !ropTypes
+    coordType: !coordT
+      Coordtypevec2: true
+      Coordtypevec3: true
+    contextType: !contextT
+      Allcontexttype: true
+    returnType: !returnT
+      Allreturntype: true
+  function: !text
+    file: src/operators/filter/moduloPolar.glsl
+    name: function
+  useParams:
+  - Repetitions
+  - Rotate
+  - Prerotate
+  - Offset[1-2]
+  - Pivot[1-2]
+  - Limitlow
+  - Limithigh
+  macroParams:
+  - Iterationtype
+  - Uselimit
+  - Mirrortype
+  variableTable: !table
+    file: src/operators/filter/moduloPolar_variables.txt
+    name: variable_exprs
+    evaluate: true
+    evalOpts: !evalOpts
+      excludeFirstRow: true
+  generatedMacroTables: sel_axis_macros
+  help: !text
+    file: src/operators/filter/moduloPolar.md
+    name: help
+  keywords:
+  - modulo
+  - polar
+  - repeat
+  - kaleidoscope
+  shortcuts: mp

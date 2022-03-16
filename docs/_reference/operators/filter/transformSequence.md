@@ -138,6 +138,8 @@ op:
     - label: Field Values
       name: value
     name: Target
+  - label: Reverse Order
+    name: Reverseorder
   - label: Enable Loop
     name: Enableloop
   - label: Iterations

@@ -1,0 +1,23 @@
+!rop
+meta: !meta
+  opType: raytk.operators.particles.particleSystem
+  opVersion: '6'
+  opStatus: alpha
+opDef: !def
+  enable: true
+  typeSpec: !ropTypes
+    coordType: !coordT
+      Coordtypevec3: true
+    contextType: !contextT
+      Contexttypeparticlecontext: true
+    returnType: !returnT
+      Returntypeparticle: true
+  function: !text
+    file: src/operators/particles/particleSystem_func.glsl
+    name: function
+  libraryNames: raytkParticles
+  macroTable: !table
+    file: src/operators/particles/particleSystem_macros.txt
+    name: macro_exprs
+    evaluate: true
+    evalOpts: !evalOpts {}

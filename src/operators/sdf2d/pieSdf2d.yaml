@@ -1,0 +1,37 @@
+!rop
+meta: !meta
+  opType: raytk.operators.sdf2d.pieSdf2d
+  opVersion: '4'
+  opStatus: default
+opDef: !def
+  enable: true
+  typeSpec: !ropTypes
+    coordType: !coordT
+      Coordtypevec2: true
+    contextType: !contextT
+      Allcontexttype: true
+    returnType: !returnT
+      Returntypesdf: true
+  function: !text
+    file: src/operators/sdf2d/pieSdf2d.glsl
+    name: functionTemplate
+  useParams:
+  - Radius
+  - Rotate
+  - Angle
+  specialParams:
+  - C1
+  - C2
+  angleParams:
+  - Rotate
+  - Angle
+  paramListTable: switcher_params
+  variableTable: !table
+    file: src/operators/sdf2d/pieSdf2d_variables.txt
+    name: variable_exprs
+    evaluate: true
+    evalOpts: !evalOpts
+      excludeFirstRow: true
+  help: !text
+    file: src/operators/sdf2d/pieSdf2d.md
+    name: help

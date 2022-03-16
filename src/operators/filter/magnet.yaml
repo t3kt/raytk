@@ -1,0 +1,29 @@
+!rop
+meta: !meta
+  opType: raytk.operators.filter.magnet
+  opVersion: '7'
+  opStatus: default
+opDef: !def
+  enable: !expr
+    expr: op('..').par.Enable
+  typeSpec: !ropTypes
+    coordType: !coordT
+      Coordtypevec2: true
+      Coordtypevec3: true
+    contextType: !contextT
+      Allcontexttype: true
+    returnType: !returnT
+      Allreturntype: true
+  function: !text
+    file: src/operators/filter/magnet.glsl
+    name: function
+  useParams:
+  - Center[xyz]
+  - Scale[xyz]
+  - Rotate[xyz]
+  - Amount
+  - Radius
+  - Fade
+  help: !text
+    file: src/operators/filter/magnet.md
+    name: help

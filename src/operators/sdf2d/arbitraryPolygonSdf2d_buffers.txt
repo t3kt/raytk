@@ -1,0 +1,2 @@
+name	enable	type	chop	uniformType	length
+'points'	parent().par.Source == 'chop'	'vec2'	op('points')	'uniformarray'	int(parent().par.Maxpointcount)

@@ -1,0 +1,29 @@
+!rop
+meta: !meta
+  opType: raytk.operators.filter.reshapeValues
+  opVersion: '3'
+  opStatus: beta
+opDef: !def
+  enable: !expr
+    expr: op('..').par.Enable
+  typeSpec: !ropTypes
+    coordType: !coordT
+      Allcoordtype: true
+    contextType: !contextT
+      Allcontexttype: true
+    returnType: !returnT
+      Returntypesdf: !expr
+        expr: '''Sdf'' == op(''definition_1'')[1, ''returnType'']'
+      Returntypefloat: !expr
+        expr: '''float'' == op(''definition_1'')[1, ''returnType''] and ''float''
+          == op(''definition_2'')[1, ''returnType'']'
+      Returntypevec4: !expr
+        expr: ('vec4' in [op('definition_1')[1, 'returnType'], op('definition_2')[1,
+          'returnType']]) or (op('definition_1').numRows < 2 and op('definition_2').numRows
+          < 2)
+  function: !text
+    file: src/operators/filter/reshapeValues.glsl
+    name: function
+  help: !text
+    file: src/operators/filter/reshapeValues.md
+    name: help

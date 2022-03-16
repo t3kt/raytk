@@ -1,0 +1,212 @@
+!rop
+meta: !meta
+  opType: raytk.operators.filter.flip
+  opVersion: '12'
+  opStatus: default
+opDef: !def
+  enable: !expr 'op(''..'').par.Enable'
+  useRuntimeBypass: true
+  typeSpec: !ropTypes
+    coordType: !coordT
+      Allcoordtype: false
+      Coordtypefloat: false
+      Coordtypevec2: true
+      Coordtypevec3: true
+    contextType: !contextT
+      Allcontexttype: true
+      Contexttypecontext: true
+      Contexttypematerialcontext: false
+      Contexttypecameracontext: false
+      Contexttypelightcontext: false
+      Contexttyperaycontext: false
+      Contexttypeparticlecontext: false
+    returnType: !returnT
+      Allreturntype: false
+      Returntypesdf: true
+      Returntypefloat: false
+      Returntypevec4: false
+      Returntyperay: false
+      Returntypelight: false
+      Returntypeparticle: false
+  function: !text
+    file: src/operators/filter/flip.glsl
+    name: functionTemplate
+  useParams:
+  - Offset
+  - Shift
+  macroParams: Iterationtype
+  paramListTable: mergeParams
+  libraryNames: raytkCombine
+  variableTable: eval_variables
+  generatedMacroTables: sel_axis_macros
+  help: help
+paramPages:
+- !page
+  name: Filter
+  pars:
+    Enable:
+      name: Enable
+      label: Enable
+      style: Toggle
+      default: true
+    Axis:
+      name: Axis
+      label: Axis
+      style: Menu
+      default: x
+      menuNames:
+      - x
+      - y
+      - z
+      menuLabels:
+      - X
+      - Y
+      - Z
+    Offset:
+      name: Offset
+      label: Offset
+      style: Float
+      size: 1
+      default: 0.0
+      normMin: -4.0
+      normMax: 4.0
+    Shift:
+      name: Shift
+      label: Shift
+      style: Float
+      size: 1
+      default: 0.0
+      normMin: -4.0
+      normMax: 4.0
+    Mergetype:
+      name: Mergetype
+      label: Merge Type
+      style: Menu
+      default: none
+      menuNames:
+      - none
+      - simpleUnion
+      - simpleIntersect
+      - simpleDiff
+      - smoothUnion
+      - smoothIntersect
+      - smoothDiff
+      - roundUnion
+      - roundIntersect
+      - roundDiff
+      - chamferUnion
+      - chamferIntersect
+      - chamferDiff
+      - stairUnion
+      - stairIntersect
+      - stairDiff
+      - columnUnion
+      - columnIntersect
+      - columnDiff
+      menuLabels:
+      - None
+      - Simple Union
+      - Simple Intersect
+      - Simple Difference
+      - Smooth Union
+      - Smooth Intersect
+      - Smooth Difference
+      - Round Union
+      - Round Intersect
+      - Round Difference
+      - Chamfer Union
+      - Chamfer Intersect
+      - Chamfer Difference
+      - Stair Union
+      - Stair Intersect
+      - Stair Difference
+      - Column Union
+      - Column Intersect
+      - Column Difference
+    Mergeradius:
+      name: Mergeradius
+      label: Merge Radius
+      style: Float
+      size: 1
+      default: 0.2
+      enable: false
+      enableExpr: me.par.Mergetype in ('smoothUnion', 'smoothIntersect', 'smoothDiff',
+        'roundUnion', 'roundIntersect', 'roundDiff', 'chamferUnion', 'chamferIntersect',
+        'chamferDiff', 'stairUnion', 'stairIntersect', 'stairDiff', 'columnUnion',
+        'columnIntersect', 'columnDiff')
+      normMin: 0.0
+      normMax: 2.0
+    Mergenumber:
+      name: Mergenumber
+      label: Merge Number
+      style: Float
+      size: 1
+      default: 3.0
+      enable: false
+      enableExpr: me.par.Mergetype in ('stairUnion', 'stairIntersect', 'stairDiff',
+        'columnUnion', 'columnIntersect', 'columnDiff')
+      normMin: 0.0
+      normMax: 10.0
+    Mergeoffset:
+      name: Mergeoffset
+      label: Merge Offset
+      style: Float
+      size: 1
+      default: 0.0
+      enable: false
+      enableExpr: me.par.Mergetype in ('stairUnion', 'stairIntersect', 'stairDiff',
+        'columnUnion', 'columnIntersect', 'columnDiff')
+      normMin: 0.0
+      normMax: 1.0
+    Iterationtype:
+      name: Iterationtype
+      label: Iteration Type
+      style: Menu
+      default: none
+      menuNames:
+      - none
+      - index
+      - sign
+      menuLabels:
+      - None
+      - Index (0/1)
+      - Signed (-1/1)
+- !page
+  name: Variables
+  pars:
+    Createrefsign:
+      name: Createrefsign
+      label: Side Sign (-1/1)
+      style: Pulse
+      default: false
+      enableExpr: hasattr(op, 'raytk') and op.raytk.op('tools/palette')
+    Createrefindex:
+      name: Createrefindex
+      label: Side Index (0/1)
+      style: Pulse
+      default: false
+      enableExpr: hasattr(op, 'raytk') and op.raytk.op('tools/palette')
+inputs:
+- !input
+  Required: true
+  coordType: !coordT
+    Allcoordtype: false
+    Coordtypefloat: false
+    Coordtypevec2: true
+    Coordtypevec3: true
+  contextType: !contextT
+    Allcontexttype: true
+    Contexttypecontext: true
+    Contexttypematerialcontext: false
+    Contexttypecameracontext: false
+    Contexttypelightcontext: false
+    Contexttyperaycontext: false
+    Contexttypeparticlecontext: false
+  returnType: !returnT
+    Allreturntype: false
+    Returntypesdf: true
+    Returntypefloat: false
+    Returntypevec4: false
+    Returntyperay: false
+    Returntypelight: false
+    Returntypeparticle: false

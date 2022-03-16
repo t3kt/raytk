@@ -1,0 +1,27 @@
+!rop
+meta: !meta
+  opType: raytk.operators.utility.exposeValue
+  opVersion: '3'
+  opStatus: beta
+opDef: !def
+  enable: !expr
+    expr: op('..').par.Enable
+  typeSpec: !ropTypes
+    coordType: !coordT
+      Allcoordtype: true
+    contextType: !contextT
+      Allcontexttype: true
+    returnType: !returnT
+      Allreturntype: true
+  function: !text
+    file: src/operators/utility/exposeValue.glsl
+    name: function
+  macroParams:
+  - Valuesource
+  - Outputbuffer
+  - Onlyonsurfacehit
+  macroTable: !table
+    file: src/operators/utility/exposeValue_macros.txt
+    name: macro_exprs
+    evaluate: true
+    evalOpts: !evalOpts {}

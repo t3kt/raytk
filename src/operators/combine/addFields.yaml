@@ -1,0 +1,24 @@
+!rop
+meta: !meta
+  opType: raytk.operators.combine.addFields
+  opVersion: '4'
+  opStatus: default
+opDef: !def
+  enable: true
+  typeSpec: !ropTypes
+    coordType: !coordT
+      Allcoordtype: true
+    contextType: !contextT
+      Allcontexttype: true
+    returnType: !returnT
+      Returntypefloat: !expr
+        expr: not me.par.Returntypevec4
+      Returntypevec4: !expr
+        expr: any([op('definition_'+str(i))[1, 'returnType'] == 'vec4' for i in range(1,9)])
+  function: !text
+    file: src/operators/combine/addFields.glsl
+    name: functionTemplate
+  generatedMacroTables: multiInput_macros
+  help: !text
+    file: src/operators/combine/addFields.md
+    name: help

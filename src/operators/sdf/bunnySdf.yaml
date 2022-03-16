@@ -1,0 +1,20 @@
+!rop
+meta: !meta
+  opType: raytk.operators.sdf.bunnySdf
+  opVersion: '4'
+  opStatus: default
+opDef: !def
+  enable: true
+  typeSpec: !ropTypes
+    coordType: !coordT
+      Coordtypevec3: true
+    contextType: !contextT
+      Allcontexttype: true
+    returnType: !returnT
+      Returntypesdf: true
+  function: !text
+    file: src/operators/sdf/bunnySdf.glsl
+    name: functionTemplate
+  help: !text
+    file: src/operators/sdf/bunnySdf.md
+    name: help

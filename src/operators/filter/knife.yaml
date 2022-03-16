@@ -1,0 +1,102 @@
+!rop
+meta: !meta
+  opType: raytk.operators.filter.knife
+  opVersion: '8'
+  opStatus: default
+opDef: !def
+  enable: !expr 'op(''..'').par.Enable'
+  useRuntimeBypass: true
+  typeSpec: !ropTypes
+    coordType: !coordT
+      Allcoordtype: false
+      Coordtypefloat: false
+      Coordtypevec2: true
+      Coordtypevec3: true
+    contextType: !contextT
+      Allcontexttype: true
+      Contexttypecontext: true
+      Contexttypematerialcontext: false
+      Contexttypecameracontext: false
+      Contexttypelightcontext: false
+      Contexttyperaycontext: false
+      Contexttypeparticlecontext: false
+    returnType: !returnT
+      Allreturntype: false
+      Returntypesdf: true
+      Returntypefloat: true
+      Returntypevec4: true
+      Returntyperay: false
+      Returntypelight: false
+      Returntypeparticle: false
+  function: !text
+    file: src/operators/filter/knife.glsl
+    name: function
+  useParams:
+  - Rotateplane[xyz]
+  - Offset
+  - ''
+  macroParams: Side
+  help: help
+  keywords:
+  - slice
+  - crop
+  - knife
+paramPages:
+- !page
+  name: Filter
+  pars:
+    Enable:
+      name: Enable
+      label: Enable
+      style: Toggle
+      default: true
+    Side:
+      name: Side
+      label: Keep Side
+      style: Menu
+      default: above
+      menuNames:
+      - above
+      - below
+      menuLabels:
+      - Above Plane
+      - Below Plane
+    Offset:
+      name: Offset
+      label: Offset
+      style: Float
+      size: 1
+      default: 0.0
+      normMin: -1.0
+      normMax: 1.0
+    Rotateplane:
+      name: Rotateplane
+      label: Rotate Plane
+      style: XYZ
+      default: 0.0
+      normMin: 0.0
+      normMax: 360.0
+inputs:
+- !input
+  Required: true
+  coordType: !coordT
+    Allcoordtype: false
+    Coordtypefloat: false
+    Coordtypevec2: true
+    Coordtypevec3: true
+  contextType: !contextT
+    Allcontexttype: true
+    Contexttypecontext: true
+    Contexttypematerialcontext: false
+    Contexttypecameracontext: false
+    Contexttypelightcontext: false
+    Contexttyperaycontext: false
+    Contexttypeparticlecontext: false
+  returnType: !returnT
+    Allreturntype: false
+    Returntypesdf: true
+    Returntypefloat: true
+    Returntypevec4: true
+    Returntyperay: false
+    Returntypelight: false
+    Returntypeparticle: false

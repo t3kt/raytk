@@ -1,0 +1,28 @@
+!rop
+meta: !meta
+  opType: raytk.operators.sdf.linkSdf
+  opVersion: '9'
+  opStatus: default
+opDef: !def
+  enable: true
+  typeSpec: !ropTypes
+    coordType: !coordT
+      Coordtypevec3: true
+    contextType: !contextT
+      Allcontexttype: true
+    returnType: !returnT
+      Returntypesdf: true
+  function: !text
+    file: src/operators/sdf/linkSdf.glsl
+    name: functionTemplate
+  useParams:
+  - Translate[xyz]
+  - Length
+  - Radius
+  - Thickness
+  help: !text
+    file: src/operators/sdf/linkSdf.md
+    name: help
+  keywords:
+  - link
+  - chain

@@ -1,0 +1,26 @@
+!rop
+meta: !meta
+  opType: raytk.operators.field.waveVectorField
+  opVersion: '3'
+  opStatus: beta
+opDef: !def
+  enable: true
+  typeSpec: !ropTypes
+    coordType: !coordT
+      Allcoordtype: true
+    contextType: !contextT
+      Allcontexttype: true
+    returnType: !returnT
+      Returntypevec4: true
+  function: !text
+    file: src/operators/field/waveVectorField.glsl
+    name: functionTemplate
+  useParams:
+  - Period[xyz]
+  - Phase[xyz]
+  - Amplitude[xyz]
+  - Offset[xyz]
+  macroParams: Axis
+  paramListTable: waveParams
+  libraryNames: !expr
+    expr: op('raytkWave')

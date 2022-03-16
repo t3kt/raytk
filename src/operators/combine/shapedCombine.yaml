@@ -1,0 +1,23 @@
+!rop
+meta: !meta
+  opType: raytk.operators.combine.shapedCombine
+  opVersion: '5'
+  opStatus: beta
+opDef: !def
+  enable: !expr
+    expr: op('..').par.Enable
+  typeSpec: !ropTypes
+    coordType: !coordT
+      Coordtypevec3: true
+    contextType: !contextT
+      Allcontexttype: true
+    returnType: !returnT
+      Returntypesdf: true
+      Returntypefloat: true
+  function: !text
+    file: src/operators/combine/shapedCombine.glsl
+    name: function
+  useParams: Radius
+  help: !text
+    file: src/operators/combine/shapedCombine.md
+    name: help

@@ -1,0 +1,135 @@
+!rop
+meta: !meta
+  opType: raytk.operators.filter.extend
+  opVersion: '7'
+  opStatus: default
+opDef: !def
+  enable: !expr 'op(''..'').par.Enable'
+  useRuntimeBypass: true
+  typeSpec: !ropTypes
+    coordType: !coordT
+      Allcoordtype: true
+      Coordtypefloat: false
+      Coordtypevec2: true
+      Coordtypevec3: true
+    contextType: !contextT
+      Allcontexttype: true
+      Contexttypecontext: true
+      Contexttypematerialcontext: false
+      Contexttypecameracontext: false
+      Contexttypelightcontext: false
+      Contexttyperaycontext: false
+      Contexttypeparticlecontext: false
+    returnType: !returnT
+      Allreturntype: true
+      Returntypesdf: true
+      Returntypefloat: false
+      Returntypevec4: false
+      Returntyperay: false
+      Returntypelight: false
+      Returntypeparticle: false
+  function: !text
+    file: src/operators/filter/extend.glsl
+    name: function
+  useParams:
+  - Center[xyz]
+  - Size[xyz]
+  help: help
+  keywords:
+  - extend
+  - stretch
+paramPages:
+- !page
+  name: Filter
+  pars:
+    Enable:
+      name: Enable
+      label: Enable
+      style: Toggle
+      default: true
+    Center:
+      name: Center
+      label: Center
+      style: XYZ
+      default: 0.0
+      enableExpr: op('./center_definition').numRows < 2
+      normMin: 0.0
+      normMax: 1.0
+    Size:
+      name: Size
+      label: Size
+      style: XYZ
+      default: 0.5
+      enableExpr: op('./size_definition').numRows < 2
+      normMin: 0.0
+      normMax: 1.0
+inputs:
+- !input
+  Required: true
+  coordType: !coordT
+    Allcoordtype: true
+    Coordtypefloat: true
+    Coordtypevec2: true
+    Coordtypevec3: true
+  contextType: !contextT
+    Allcontexttype: true
+    Contexttypecontext: true
+    Contexttypematerialcontext: false
+    Contexttypecameracontext: false
+    Contexttypelightcontext: false
+    Contexttyperaycontext: false
+    Contexttypeparticlecontext: false
+  returnType: !returnT
+    Allreturntype: true
+    Returntypesdf: false
+    Returntypefloat: false
+    Returntypevec4: true
+    Returntyperay: false
+    Returntypelight: false
+    Returntypeparticle: false
+- !input
+  Localalias: centerField
+  coordType: !coordT
+    Allcoordtype: false
+    Coordtypefloat: false
+    Coordtypevec2: true
+    Coordtypevec3: true
+  contextType: !contextT
+    Allcontexttype: true
+    Contexttypecontext: true
+    Contexttypematerialcontext: false
+    Contexttypecameracontext: false
+    Contexttypelightcontext: false
+    Contexttyperaycontext: false
+    Contexttypeparticlecontext: false
+  returnType: !returnT
+    Allreturntype: false
+    Returntypesdf: false
+    Returntypefloat: false
+    Returntypevec4: true
+    Returntyperay: false
+    Returntypelight: false
+    Returntypeparticle: false
+- !input
+  Localalias: sizeField
+  coordType: !coordT
+    Allcoordtype: false
+    Coordtypefloat: false
+    Coordtypevec2: true
+    Coordtypevec3: true
+  contextType: !contextT
+    Allcontexttype: true
+    Contexttypecontext: true
+    Contexttypematerialcontext: false
+    Contexttypecameracontext: false
+    Contexttypelightcontext: false
+    Contexttyperaycontext: false
+    Contexttypeparticlecontext: false
+  returnType: !returnT
+    Allreturntype: false
+    Returntypesdf: false
+    Returntypefloat: false
+    Returntypevec4: true
+    Returntyperay: false
+    Returntypelight: false
+    Returntypeparticle: false

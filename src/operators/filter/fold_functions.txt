@@ -1,3 +1,3 @@
 name	label	code	params
-boxfold	Box Fold	p = boxFold(p, THIS_Distance)	Distance
-mengerfold	Menger Fold	p = mengerFold(p)	
+boxfold	Box Fold	q = boxFold(q, d)	Distance
+mengerfold	Menger Fold	q = mengerFold(q)

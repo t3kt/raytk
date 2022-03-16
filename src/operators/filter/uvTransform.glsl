@@ -8,13 +8,15 @@ void THIS_apply(inout vec4 uv) {
 
 ReturnT thismap(CoordT p, ContextT ctx) {
 	ReturnT res = inputOp1(p, ctx);
-	#pragma r:if RAYTK_USE_UV
-		#pragma r:if THIS_Transformprimary
-		THIS_apply(res.uv);
+	if (THIS_Enable >= 0.5) {
+		#pragma r:if RAYTK_USE_UV
+			#pragma r:if THIS_Transformprimary
+			THIS_apply(res.uv);
+			#pragma r:endif
+			#pragma r:if THIS_Transformsecondary
+			THIS_apply(res.uv2);
+			#pragma r:endif
 		#pragma r:endif
-		#pragma r:if THIS_Transformsecondary
-		THIS_apply(res.uv2);
-		#pragma r:endif
-	#pragma r:endif
+	}
 	return res;
 }

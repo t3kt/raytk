@@ -1,0 +1,31 @@
+!rop
+meta: !meta
+  opType: raytk.operators.material.phongMat
+  opVersion: '14'
+  opStatus: default
+opDef: !def
+  enable: !expr
+    expr: op('..').par.Enable
+  useRuntimeBypass: true
+  typeSpec: !ropTypes
+    coordType: !coordT
+      Coordtypevec3: true
+    contextType: !contextT
+      Contexttypecontext: true
+    returnType: !returnT
+      Returntypesdf: true
+  function: !text
+    file: src/operators/material/phongMat.glsl
+    name: function
+  material: !text
+    file: src/operators/material/phongMat_material.glsl
+    name: material
+  useParams:
+  - Diffusecolor[rgb]
+  - Specularcolor[rgb]
+  - Ambientcolor[rgb]
+  - Shine
+  macroParams: Enableshadow
+  help: !text
+    file: src/operators/material/phongMat.md
+    name: help

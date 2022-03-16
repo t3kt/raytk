@@ -1,0 +1,28 @@
+!rop
+meta: !meta
+  opType: raytk.operators.filter.spread
+  opVersion: '0'
+  opStatus: alpha
+opDef: !def
+  enable: !expr
+    expr: op('..').par.Enable
+  typeSpec: !ropTypes
+    coordType: !coordT
+      Coordtypefloat: !expr
+        expr: '''float'' in op(''switcher_info'')[1, ''coordType''].val'
+      Coordtypevec2: !expr
+        expr: '''vec2'' in op(''switcher_info'')[1, ''coordType''].val'
+      Coordtypevec3: !expr
+        expr: '''vec3'' in op(''switcher_info'')[1, ''coordType''].val'
+    contextType: !contextT
+      Allcontexttype: true
+    returnType: !returnT
+      Allreturntype: true
+  function: !text
+    file: src/operators/filter/spread.glsl
+    name: function
+  useParams:
+  - Center[xyz]
+  - Width[xyz]
+  - Blending[xyz]
+  paramListTable: switcher_params

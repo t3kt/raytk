@@ -1,0 +1,19 @@
+!rop
+meta: !meta
+  opType: raytk.operators.sdf.aexionSdf
+  opVersion: '1'
+  opStatus: alpha
+opDef: !def
+  enable: true
+  typeSpec: !ropTypes
+    coordType: !coordT
+      Coordtypevec3: true
+    contextType: !contextT
+      Allcontexttype: true
+    returnType: !returnT
+      Returntypesdf: true
+  function: !text
+    file: src/operators/sdf/aexionSdf.glsl
+    name: function
+  useParams: Maxdist
+  macroParams: Iterations

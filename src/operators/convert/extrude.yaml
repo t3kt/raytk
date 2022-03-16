@@ -1,0 +1,124 @@
+!rop
+meta: !meta
+  opType: raytk.operators.convert.extrude
+  opVersion: '15'
+  opStatus: default
+opDef: !def
+  enable: true
+  typeSpec: !ropTypes
+    coordType: !coordT
+      Coordtypevec3: true
+    contextType: !contextT
+      Allcontexttype: true
+    returnType: !returnT
+      Returntypesdf: true
+  function: !text
+    file: src/operators/convert/extrude.glsl
+    name: function
+  useParams:
+  - Height
+  - Offset
+  macroParams:
+  - Infiniteheight
+  - Uvmode
+  - Iterationtype
+  lockParams: Uvmode
+  variableTable: !table
+    file: src/operators/convert/extrude_variables.txt
+    name: variable_exprs
+    evaluate: true
+    evalOpts: !evalOpts
+      excludeFirstRow: true
+  generatedMacroTables: sel_axis_macros
+  help: !text
+    file: src/operators/convert/extrude.md
+    name: help
+  shortcuts: ext
+paramPages:
+- !page
+  name: Filter
+  pars:
+    Axis:
+      name: Axis
+      label: Axis
+      style: Menu
+      default: z
+      menuNames:
+      - x
+      - y
+      - z
+      menuLabels:
+      - X
+      - Y
+      - Z
+    Infiniteheight:
+      name: Infiniteheight
+      label: Infinite Height
+      style: Toggle
+      default: false
+    Height:
+      name: Height
+      label: Height
+      style: Float
+      size: 1
+      default: 0.1
+      enableExpr: not me.par.Infiniteheight
+      normMin: 0.0
+      normMax: 2.0
+    Offset:
+      name: Offset
+      label: Offset
+      style: Float
+      size: 1
+      default: 0.0
+      enableExpr: not me.par.Infiniteheight
+      normMin: -1.0
+      normMax: 1.0
+    Uvmode:
+      name: Uvmode
+      label: UV Mode
+      style: Menu
+      default: flat
+      menuNames:
+      - flat
+      - depth
+      menuLabels:
+      - Flat
+      - Depth
+    Iterationtype:
+      name: Iterationtype
+      label: Iteration Type
+      style: Menu
+      default: none
+      menuNames:
+      - none
+      - ratio
+      menuLabels:
+      - None
+      - Ratio
+inputs:
+- !input
+  Localalias: crossSection
+  Required: true
+  coordType: !coordT
+    Coordtypevec2: true
+  contextType: !contextT
+    Allcontexttype: true
+  returnType: !returnT
+    Returntypesdf: true
+- !input
+  Localalias: heightField
+  coordType: !coordT
+    Coordtypevec3: true
+  contextType: !contextT
+    Allcontexttype: true
+  returnType: !returnT
+    Returntypefloat: true
+- !input
+  Localalias: offsetField
+  coordType: !coordT
+    Coordtypevec3: true
+  contextType: !contextT
+    Allcontexttype: true
+  returnType: !returnT
+    Returntypefloat: true

@@ -1,0 +1,31 @@
+!rop
+meta: !meta
+  opType: raytk.operators.field.metaballField
+  opVersion: '3'
+  opStatus: default
+opDef: !def
+  enable: true
+  typeSpec: !ropTypes
+    coordType: !coordT
+      Coordtypefloat: !expr
+        expr: parent().par.Coordtype == 'float'
+      Coordtypevec2: !expr
+        expr: parent().par.Coordtype == 'vec2'
+      Coordtypevec3: !expr
+        expr: parent().par.Coordtype == 'vec3'
+    contextType: !contextT
+      Allcontexttype: true
+    returnType: !returnT
+      Returntypefloat: true
+  function: !text
+    file: src/operators/field/metaballField.glsl
+    name: functionTemplate
+  useParams:
+  - Center[xyz]
+  - Radius[xyz]
+  - Radiusscale
+  - Exponent[xyz]
+  - Weight
+  help: !text
+    file: src/operators/field/metaballField.md
+    name: help

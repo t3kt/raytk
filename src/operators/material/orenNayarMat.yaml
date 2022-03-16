@@ -1,0 +1,36 @@
+!rop
+meta: !meta
+  opType: raytk.operators.material.orenNayarMat
+  opVersion: '7'
+  opStatus: deprecated
+opDef: !def
+  enable: !expr
+    expr: op('..').par.Enable
+  typeSpec: !ropTypes
+    coordType: !coordT
+      Coordtypevec3: true
+    contextType: !contextT
+      Contexttypecontext: true
+    returnType: !returnT
+      Returntypesdf: true
+  function: !text
+    file: src/operators/material/orenNayarMat.glsl
+    name: function
+  material: !text
+    file: src/operators/material/orenNayarMat_material.glsl
+    name: material
+  useParams:
+  - Basecolor[rgb]
+  - Roughness
+  - Albedo
+  - Diffuse
+  macroParams:
+  - Enableshadow
+  - Uselocalpos
+  libraryNames: !expr
+    expr: op('diffuseContrib_lib')
+  macroTable: !table
+    file: src/operators/material/orenNayarMat_macros.txt
+    name: macro_exprs
+    evaluate: true
+    evalOpts: !evalOpts {}

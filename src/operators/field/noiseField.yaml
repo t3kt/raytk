@@ -1,0 +1,42 @@
+!rop
+meta: !meta
+  opType: raytk.operators.field.noiseField
+  opVersion: '16'
+  opStatus: default
+opDef: !def
+  enable: true
+  typeSpec: !ropTypes
+    coordType: !coordT
+      Coordtypefloat: !expr
+        expr: parent().par.Coordtype == 'float'
+      Coordtypevec2: !expr
+        expr: parent().par.Coordtype == 'vec2'
+      Coordtypevec3: !expr
+        expr: parent().par.Coordtype == 'vec3'
+    contextType: !contextT
+      Allcontexttype: true
+    returnType: !returnT
+      Returntypefloat: !expr
+        expr: op('switcher_info')[1, 'returnType'] == 'float'
+      Returntypevec4: !expr
+        expr: op('switcher_info')[1, 'returnType'] == 'vec4'
+  function: !text
+    file: src/operators/field/noiseField.glsl
+    name: functionTemplate
+  useParams:
+  - Amplitude
+  - Offset
+  - Translate[1-4]
+  - Scale[1-4]
+  paramListTable: switcher_params
+  libraryNames: !expr
+    expr: op(op('switcher_info')[1, 'libraryNames']) or ''
+  macroTable: !table
+    file: src/operators/field/noiseField_macros.txt
+    name: macro_exprs
+    evaluate: true
+    evalOpts: !evalOpts {}
+  generatedMacroTables: sel_axis_macros
+  help: !text
+    file: src/operators/field/noiseField.md
+    name: help

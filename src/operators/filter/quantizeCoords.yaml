@@ -1,0 +1,30 @@
+!rop
+meta: !meta
+  opType: raytk.operators.filter.quantizeCoords
+  opVersion: '8'
+  opStatus: default
+opDef: !def
+  enable: !expr
+    expr: op('..').par.Enable
+  useRuntimeBypass: true
+  typeSpec: !ropTypes
+    coordType: !coordT
+      Coordtypefloat: true
+      Coordtypevec2: true
+      Coordtypevec3: true
+    contextType: !contextT
+      Allcontexttype: true
+    returnType: !returnT
+      Allreturntype: true
+  function: !text
+    file: src/operators/filter/quantizeCoords.glsl
+    name: function
+  useParams:
+  - Size[xyz]
+  - Offset[xyz]
+  - Smoothing[xyz]
+  libraryNames: !expr
+    expr: op('quantize')
+  help: !text
+    file: src/operators/filter/quantizeCoords.md
+    name: help

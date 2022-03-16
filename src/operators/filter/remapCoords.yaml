@@ -1,0 +1,26 @@
+!rop
+meta: !meta
+  opType: raytk.operators.filter.remapCoords
+  opVersion: '6'
+  opStatus: beta
+opDef: !def
+  enable: !expr
+    expr: op('..').par.Enable
+  useRuntimeBypass: true
+  typeSpec: !ropTypes
+    coordType: !coordT
+      Coordtypefloat: true
+      Coordtypevec2: true
+      Coordtypevec3: true
+    contextType: !contextT
+      Allcontexttype: true
+    returnType: !returnT
+      Allreturntype: true
+  function: !text
+    file: src/operators/filter/remapCoords.glsl
+    name: function
+  useParams: Mix
+  macroParams: Remapmode
+  help: !text
+    file: src/operators/filter/remapCoords.md
+    name: help

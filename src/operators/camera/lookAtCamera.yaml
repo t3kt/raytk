@@ -1,0 +1,30 @@
+!rop
+meta: !meta
+  opType: raytk.operators.camera.lookAtCamera
+  opVersion: '7'
+  opStatus: default
+opDef: !def
+  enable: true
+  typeSpec: !ropTypes
+    coordType: !coordT
+      Coordtypevec2: true
+    contextType: !contextT
+      Contexttypecameracontext: true
+    returnType: !returnT
+      Returntyperay: true
+  function: !text
+    file: src/operators/camera/lookAtCamera.glsl
+    name: functionTemplate
+  useParams:
+  - Campos[xyz]
+  - Camrot[xyz]
+  - Lookatpos[xyz]
+  - Camup[xyz]
+  - Camfov
+  angleParams:
+  - Camfov
+  - Camrot[xyz]
+  help: !text
+    file: src/operators/camera/lookAtCamera.md
+    name: help
+  shortcuts: lac

@@ -59,6 +59,22 @@ op:
       it is passed the position along the bend axis. For 2D coords, both the bend
       axis and the bend direction are passed. For 3D coords, the relative XYZ position
       is passed.
+  - contextTypes:
+    - Context
+    - MaterialContext
+    - CameraContext
+    - LightContext
+    - RayContext
+    - ParticleContext
+    coordTypes:
+    - float
+    - vec2
+    - vec3
+    label: Shift Field
+    name: shiftField
+    returnTypes:
+    - float
+    - Sdf
   name: bend
   opType: raytk.operators.filter.bend
   parameters:

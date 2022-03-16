@@ -24,5 +24,12 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 	#else
 	res = createSdf(fCylinder(q, r, h));
 	#endif
+	#ifdef RAYTK_USE_UV
+	vec3 uv = vec3(atan(q.x, q.z), q.y, length(q.xz));
+	#ifndef THIS_Infiniteheight
+	uv.y = map01(uv.y, -h*.5, h*.5);
+	#endif
+	assignUV(res, uv);
+	#endif
 	return res;
 }

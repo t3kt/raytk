@@ -1,0 +1,37 @@
+!rop
+meta: !meta
+  opType: raytk.operators.camera.fisheyeCamera
+  opVersion: '6'
+  opStatus: default
+opDef: !def
+  enable: true
+  typeSpec: !ropTypes
+    coordType: !coordT
+      Coordtypevec2: true
+    contextType: !contextT
+      Contexttypecameracontext: true
+    returnType: !returnT
+      Returntyperay: true
+  function: !text
+    file: src/operators/camera/fisheyeCamera.glsl
+    name: functionTemplate
+  useParams:
+  - Campos[xyz]
+  - Camrot[xyz]
+  - Lookatpos[xyz]
+  - Camup[xyz]
+  - Camfov
+  - Aperture
+  angleParams: Camrot[xyz]
+  paramListTable: switcher_params
+  help: !text
+    file: src/operators/camera/fisheyeCamera.md
+    name: help
+  keywords:
+  - dome
+  - '360'
+  - cubemap
+  - equirectangular
+  - equiangular
+  - stereographic
+  - pinhole

@@ -1,0 +1,22 @@
+!rop
+meta: !meta
+  opType: raytk.operators.field.valuePointsField
+  opVersion: '3'
+  opStatus: alpha
+opDef: !def
+  enable: true
+  typeSpec: !ropTypes
+    coordType: !coordT
+      Allcoordtype: true
+    contextType: !contextT
+      Allcontexttype: true
+    returnType: !returnT
+      Returntypevec4: true
+  function: !text
+    file: src/operators/field/valuePointsField.glsl
+    name: functionTemplate
+  useParams: !expr
+    expr: tdu.expand('Value[1-4][rgba] Point[1-4][_]'.replace('_', 'xyz'[:parent().par.Coordtype.menuIndex+1]))
+  macroParams: Weightmode
+  libraryNames: !expr
+    expr: op('valuePointsField_lib')

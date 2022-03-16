@@ -1,0 +1,30 @@
+!rop
+meta: !meta
+  opType: raytk.operators.sdf.crossSdf
+  opVersion: '8'
+  opStatus: default
+opDef: !def
+  enable: true
+  typeSpec: !ropTypes
+    coordType: !coordT
+      Coordtypevec3: true
+    contextType: !contextT
+      Allcontexttype: true
+    returnType: !returnT
+      Returntypesdf: true
+  function: !text
+    file: src/operators/sdf/crossSdf.glsl
+    name: functionTemplate
+  useParams:
+  - Translate[xyz]
+  - Size[xyz]
+  - Smoothradius
+  macroParams: Axes
+  macroTable: !table
+    file: src/operators/sdf/crossSdf_macros.txt
+    name: macro_exprs
+    evaluate: true
+    evalOpts: !evalOpts {}
+  help: !text
+    file: src/operators/sdf/crossSdf.md
+    name: help

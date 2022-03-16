@@ -1,0 +1,23 @@
+!rop
+meta: !meta
+  opType: raytk.operators.sdf2d.lineSegmentSdf2d
+  opVersion: '3'
+  opStatus: default
+opDef: !def
+  enable: true
+  typeSpec: !ropTypes
+    coordType: !coordT
+      Coordtypevec2: true
+    contextType: !contextT
+      Allcontexttype: true
+    returnType: !returnT
+      Returntypesdf: true
+  function: !text
+    file: src/operators/sdf2d/lineSegmentSdf2d.glsl
+    name: function
+  useParams:
+  - Pointa[xy]
+  - Pointb[xy]
+  help: !text
+    file: src/operators/sdf2d/lineSegmentSdf2d.md
+    name: help

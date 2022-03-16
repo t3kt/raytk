@@ -1,0 +1,28 @@
+!rop
+meta: !meta
+  opType: raytk.operators.combine.iterationSwitch
+  opVersion: '18'
+  opStatus: default
+opDef: !def
+  enable: !expr
+    expr: op('..').par.Enable
+  typeSpec: !ropTypes
+    coordType: !coordT
+      Allcoordtype: true
+    contextType: !contextT
+      Contexttypecontext: true
+      Contexttypematerialcontext: true
+    returnType: !returnT
+      Allreturntype: true
+  function: !text
+    file: src/operators/combine/iterationSwitch.glsl
+    name: functionTemplate
+  macroParams:
+  - Extend
+  - Iterationpart
+  libraryNames: !expr
+    expr: op('modZigZag')
+  generatedMacroTables: multiInputHandler_macros
+  help: !text
+    file: src/operators/combine/iterationSwitch.md
+    name: help

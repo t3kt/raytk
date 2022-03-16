@@ -6,6 +6,7 @@ vec2 THIS_hash22(vec2 p){
 }
 
 ReturnT thismap(CoordT p, ContextT ctx) {
+	if (THIS_Enable < 0.5) { return inputOp1(p, ctx); }
 	ReturnT res;
 	#pragma r:if THIS_COORD_TYPE_vec3
 	vec2 q = p.THIS_PLANE;

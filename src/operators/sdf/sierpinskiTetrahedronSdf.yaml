@@ -1,0 +1,27 @@
+!rop
+meta: !meta
+  opType: raytk.operators.sdf.sierpinskiTetrahedronSdf
+  opVersion: '6'
+  opStatus: alpha
+opDef: !def
+  enable: true
+  typeSpec: !ropTypes
+    coordType: !coordT
+      Coordtypevec3: true
+    contextType: !contextT
+      Allcontexttype: true
+    returnType: !returnT
+      Returntypesdf: true
+  function: !text
+    file: src/operators/sdf/sierpinskiTetrahedronSdf.glsl
+    name: functionTemplate
+  useParams:
+  - Translate[xyz]
+  - Scale
+  - Iterations
+  macroTable: !table
+    name: macros
+    rows:
+    - - ''
+      - RAYTK_USE_SIERPINSKI_TETRAHEDRON
+      - ''

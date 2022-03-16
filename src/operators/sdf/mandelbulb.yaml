@@ -1,0 +1,39 @@
+!rop
+meta: !meta
+  opType: raytk.operators.sdf.mandelbulbSdf
+  opVersion: '8'
+  opStatus: default
+opDef: !def
+  enable: true
+  typeSpec: !ropTypes
+    coordType: !coordT
+      Coordtypevec3: true
+    contextType: !contextT
+      Allcontexttype: true
+    returnType: !returnT
+      Returntypesdf: true
+  function: !text
+    file: src/operators/sdf/mandelbulbSdf.glsl
+    name: functionTemplate
+  useParams:
+  - Translate[xyz]
+  - Power
+  - Thetashift
+  - Phishift
+  angleParams:
+  - Thetashift
+  - Phishift
+  macroParams: Iterations
+  variableTable: !table
+    file: src/operators/sdf/mandelbulb_variables.txt
+    name: variable_exprs
+    evaluate: true
+    evalOpts: !evalOpts
+      excludeFirstRow: true
+  help: !text
+    file: src/operators/sdf/mandelbulb.md
+    name: help
+  keywords:
+  - fractal
+  - mandelbulb
+  - mandelbrot

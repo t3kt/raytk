@@ -1,0 +1,36 @@
+!rop
+meta: !meta
+  opType: raytk.operators.sdf.prismSdf
+  opVersion: '12'
+  opStatus: default
+opDef: !def
+  enable: true
+  typeSpec: !ropTypes
+    coordType: !coordT
+      Coordtypevec3: true
+    contextType: !contextT
+      Allcontexttype: true
+    returnType: !returnT
+      Returntypesdf: true
+  function: !text
+    file: src/operators/sdf/prismSdf.glsl
+    name: functionTemplate
+  useParams:
+  - Translate[xyz]
+  - Radius
+  - Height
+  paramListTable: switcher_params
+  libraryNames: !expr
+    expr: op('prismSdf_lib')
+  generatedMacroTables: sel_axis_macros
+  help: !text
+    file: src/operators/sdf/prismSdf.md
+    name: help
+  keywords:
+  - prism
+  - hexagon
+  - triangle
+  - octagon
+  - square
+  - column
+  - cylinder

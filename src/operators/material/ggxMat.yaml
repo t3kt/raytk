@@ -1,0 +1,28 @@
+!rop
+meta: !meta
+  opType: raytk.operators.material.ggxMat
+  opVersion: '6'
+  opStatus: deprecated
+opDef: !def
+  enable: !expr
+    expr: op('..').par.Enable
+  typeSpec: !ropTypes
+    coordType: !coordT
+      Coordtypevec3: true
+    contextType: !contextT
+      Contexttypecontext: true
+    returnType: !returnT
+      Returntypesdf: true
+  function: !text
+    file: src/operators/material/ggxMat.glsl
+    name: function
+  material: !text
+    file: src/operators/material/ggxMat_material.glsl
+    name: material
+  useParams:
+  - Basecolor[rgb]
+  - Roughness
+  - Diffuse
+  - Fresnel
+  libraryNames: !expr
+    expr: op('specularContrib_lib')

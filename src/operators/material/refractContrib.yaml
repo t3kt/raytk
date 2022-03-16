@@ -1,0 +1,23 @@
+!rop
+meta: !meta
+  opType: raytk.operators.material.refractContrib
+  opVersion: '1'
+  opStatus: alpha
+opDef: !def
+  enable: true
+  typeSpec: !ropTypes
+    coordType: !coordT
+      Coordtypevec3: true
+    contextType: !contextT
+      Contexttypematerialcontext: true
+    returnType: !returnT
+      Returntypevec4: true
+  function: !text
+    file: src/operators/material/refractContrib.glsl
+    name: function
+  useParams: Level
+  macroTable: !table
+    file: src/operators/material/refractContrib_macros.txt
+    name: macro_exprs
+    evaluate: true
+    evalOpts: !evalOpts {}

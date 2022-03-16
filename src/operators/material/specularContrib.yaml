@@ -1,0 +1,48 @@
+!rop
+meta: !meta
+  opType: raytk.operators.material.specularContrib
+  opVersion: '14'
+  opStatus: default
+opDef: !def
+  enable: true
+  typeSpec: !ropTypes
+    coordType: !coordT
+      Coordtypevec3: true
+    contextType: !contextT
+      Contexttypematerialcontext: true
+    returnType: !returnT
+      Returntypefloat: !expr
+        expr: not parent().par.Usecolor
+      Returntypevec4: !expr
+        expr: parent().par.Usecolor
+  function: !text
+    file: src/operators/material/specularContrib.glsl
+    name: functionTemplate
+  useParams:
+  - Color[rgb]
+  - Level
+  macroParams:
+  - Uselightcolor
+  - Usesurfacecolor
+  - Enableshadow
+  paramListTable: !expr
+    expr: op('switcher_params')
+  libraryNames: !expr
+    expr: op('specularContrib_lib')
+  macroTable: !table
+    file: src/operators/material/specularContrib_macros.txt
+    name: macro_exprs
+    evaluate: true
+    evalOpts: !evalOpts {}
+  help: !text
+    file: src/operators/material/specularContrib.md
+    name: help
+  keywords:
+  - material
+  - lighting
+  - specular
+  - phong
+  - ggx
+  - shading
+  - modularmat
+  shortcuts: sc

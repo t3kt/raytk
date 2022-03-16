@@ -1,0 +1,24 @@
+!rop
+meta: !meta
+  opType: raytk.operators.filter.moduloSpherical
+  opVersion: '1'
+  opStatus: beta
+opDef: !def
+  enable: !expr
+    expr: op('..').par.Enable
+  useRuntimeBypass: true
+  typeSpec: !ropTypes
+    coordType: !coordT
+      Coordtypevec3: true
+    contextType: !contextT
+      Allcontexttype: true
+    returnType: !returnT
+      Allreturntype: true
+  function: !text
+    file: src/operators/filter/moduloSpherical.glsl
+    name: function
+  useParams:
+  - Pivot[xyz]
+  - Repetitions[1-2]
+  - Offset[1-2]
+  - Shift[1-2]

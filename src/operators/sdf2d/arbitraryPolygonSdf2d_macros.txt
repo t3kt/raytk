@@ -1,0 +1,1 @@
+	'THIS_N'	8 if parent().par.Source == 'params' else int(parent().par.Maxpointcount)

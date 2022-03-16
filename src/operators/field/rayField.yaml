@@ -1,0 +1,24 @@
+!rop
+meta: !meta
+  opType: raytk.operators.field.rayField
+  opVersion: '3'
+  opStatus: default
+opDef: !def
+  enable: true
+  typeSpec: !ropTypes
+    coordType: !coordT
+      Coordtypevec3: true
+    contextType: !contextT
+      Contexttypematerialcontext: !expr
+        expr: parent().par.Contexttype in ('auto', 'MaterialContext')
+      Contexttyperaycontext: !expr
+        expr: parent().par.Contexttype in ('auto', 'RayContext')
+    returnType: !returnT
+      Returntypevec4: true
+  function: !text
+    file: src/operators/field/rayField.glsl
+    name: function
+  macroParams: Raypart
+  help: !text
+    file: src/operators/field/rayField.md
+    name: help

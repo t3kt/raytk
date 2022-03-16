@@ -1,0 +1,24 @@
+!rop
+meta: !meta
+  opType: raytk.operators.filter.polarToCartesian
+  opVersion: '4'
+  opStatus: beta
+opDef: !def
+  enable: !expr
+    expr: op('..').par.Enable
+  useRuntimeBypass: true
+  typeSpec: !ropTypes
+    coordType: !coordT
+      Coordtypevec2: true
+      Coordtypevec3: true
+    contextType: !contextT
+      Allcontexttype: true
+    returnType: !returnT
+      Allreturntype: true
+  function: !text
+    file: src/operators/filter/polarToCartesian.glsl
+    name: functionTemplate
+  paramListTable: switcher_params
+  help: !text
+    file: src/operators/filter/polarToCartesian.md
+    name: help

@@ -1,0 +1,109 @@
+!rop
+meta: !meta
+  opType: raytk.operators.sdf.cutSphereSdf
+  opVersion: '0'
+  opStatus: beta
+opDef: !def
+  enable: true
+  typeSpec: !ropTypes
+    coordType: !coordT
+      Coordtypevec3: true
+    contextType: !contextT
+      Allcontexttype: true
+    returnType: !returnT
+      Returntypesdf: true
+  function: !text
+    file: src/operators/sdf/cutSphereSdf.glsl
+    name: functionTemplate
+  useParams:
+  - Radius
+  - Offset
+  - Rotate[xyz]
+  angleParams: Rotate[xyz]
+  paramListTable: switcher_params
+  libraryNames: !expr
+    expr: op('cutSphereSdf_lib')
+paramPages:
+- !page
+  name: SDF
+  pars:
+    Shape:
+      name: Shape
+      label: Shape
+      style: Menu
+      default: solid
+      menuNames:
+      - solid
+      - hollow
+      menuLabels:
+      - Solid
+      - Hollow
+    Radius:
+      name: Radius
+      label: Radius
+      style: Float
+      size: 1
+      default: 0.5
+      enableExpr: op('./radius_definition').numRows < 2
+      normMin: 0.0
+      normMax: 2.0
+    Offset:
+      name: Offset
+      label: Cut Offset
+      style: Float
+      size: 1
+      default: 0.5
+      enableExpr: op('./offset_definition').numRows < 2
+      normMin: 0.0
+      normMax: 1.0
+    Thickness:
+      name: Thickness
+      label: Thickness
+      style: Float
+      size: 1
+      default: 0.05
+      enable: false
+      enableExpr: me.par.Shape in ('hollow',)
+      normMin: 0.0
+      normMax: 0.4
+    Rotate:
+      name: Rotate
+      label: Rotate
+      style: XYZ
+      default: 0.0
+      enableExpr: op('./rotate_definition').numRows < 2
+      normMin: 0.0
+      normMax: 1.0
+inputs:
+- !input
+  Localalias: radiusField
+  coordType: !coordT
+    Coordtypevec3: true
+  contextType: !contextT
+    Allcontexttype: true
+  returnType: !returnT
+    Returntypefloat: true
+- !input
+  Localalias: thicknessField
+  coordType: !coordT
+    Coordtypevec3: true
+  contextType: !contextT
+    Allcontexttype: true
+  returnType: !returnT
+    Returntypefloat: true
+- !input
+  Localalias: offsetField
+  coordType: !coordT
+    Coordtypevec3: true
+  contextType: !contextT
+    Allcontexttype: true
+  returnType: !returnT
+    Returntypefloat: true
+- !input
+  Localalias: rotateField
+  coordType: !coordT
+    Coordtypevec3: true
+  contextType: !contextT
+    Allcontexttype: true
+  returnType: !returnT
+    Returntypevec4: true

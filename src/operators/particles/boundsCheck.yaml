@@ -1,0 +1,21 @@
+!rop
+meta: !meta
+  opType: raytk.operators.particles.boundsCheck
+  opVersion: '0'
+  opStatus: alpha
+opDef: !def
+  enable: true
+  typeSpec: !ropTypes
+    coordType: !coordT
+      Allcoordtype: true
+    contextType: !contextT
+      Contexttypeparticlecontext: true
+    returnType: !returnT
+      Returntypeparticle: true
+  function: !text
+    file: src/operators/particles/boundsCheck.glsl
+    name: function
+  useParams:
+  - Boundcenter[xyz]
+  - Boundboxsize[xyz]
+  - Active

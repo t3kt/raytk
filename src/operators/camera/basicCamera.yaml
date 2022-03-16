@@ -1,0 +1,27 @@
+!rop
+meta: !meta
+  opType: raytk.operators.camera.basicCamera
+  opVersion: '3'
+  opStatus: deprecated
+opDef: !def
+  enable: true
+  typeSpec: !ropTypes
+    coordType: !coordT
+      Coordtypevec2: true
+    contextType: !contextT
+      Contexttypecameracontext: true
+    returnType: !returnT
+      Returntyperay: true
+  function: !text
+    file: src/operators/camera/basicCamera.glsl
+    name: functionTemplate
+  useParams:
+  - Campos[xyz]
+  - Camrot[xyz]
+  - Lookatpos[xyz]
+  - Camup[xyz]
+  - Camfov
+  - Aperture
+  angleParams:
+  - Camrot[xyz]
+  - Camfov

@@ -1,0 +1,21 @@
+!rop
+meta: !meta
+  opType: raytk.operators.convert.sdfToFloat
+  opVersion: '9'
+  opStatus: deprecated
+opDef: !def
+  enable: !expr
+    expr: op('..').par.Enable
+  typeSpec: !ropTypes
+    coordType: !coordT
+      Allcoordtype: true
+    contextType: !contextT
+      Allcontexttype: true
+    returnType: !returnT
+      Returntypefloat: true
+  function: !text
+    file: src/operators/convert/sdfToFloat.glsl
+    name: function
+  help: !text
+    file: src/operators/convert/sdfToFloat.md
+    name: help

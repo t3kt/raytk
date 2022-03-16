@@ -1,0 +1,21 @@
+!rop
+meta: !meta
+  opType: raytk.operators.light.hardShadow
+  opVersion: '5'
+  opStatus: default
+opDef: !def
+  enable: true
+  typeSpec: !ropTypes
+    coordType: !coordT
+      Coordtypevec3: true
+    contextType: !contextT
+      Contexttypematerialcontext: true
+    returnType: !returnT
+      Returntypefloat: true
+  function: !text
+    file: src/operators/light/hardShadow.glsl
+    name: functionTemplate
+  useParams: Shadowlevel
+  help: !text
+    file: src/operators/light/hardShadow.md
+    name: help

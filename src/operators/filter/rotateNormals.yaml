@@ -1,0 +1,103 @@
+!rop
+meta: !meta
+  opType: raytk.operators.filter.rotateNormals
+  opVersion: '5'
+  opStatus: beta
+opDef: !def
+  enable: !expr 'op(''..'').par.Enable'
+  useRuntimeBypass: true
+  typeSpec: !ropTypes
+    coordType: !coordT
+      Allcoordtype: false
+      Coordtypefloat: false
+      Coordtypevec2: false
+      Coordtypevec3: true
+    contextType: !contextT
+      Allcontexttype: false
+      Contexttypecontext: false
+      Contexttypematerialcontext: true
+      Contexttypecameracontext: false
+      Contexttypelightcontext: false
+      Contexttyperaycontext: false
+      Contexttypeparticlecontext: false
+    returnType: !returnT
+      Allreturntype: true
+      Returntypesdf: false
+      Returntypefloat: true
+      Returntypevec4: true
+      Returntyperay: false
+      Returntypelight: false
+      Returntypeparticle: false
+  function: !text
+    file: src/operators/filter/rotateNormals.glsl
+    name: function_template
+  angleParams: Rotate[xyz]
+  paramListTable: paramListTable
+  help: help
+  keywords:
+  - transform
+  - rotate
+  - spin
+  - normals
+  - material
+  - modularmat
+paramPages:
+- !page
+  name: Filter
+  pars:
+    Enable:
+      name: Enable
+      label: Enable
+      style: Toggle
+      default: true
+    Rord:
+      name: Rord
+      label: Rotate Order
+      style: Menu
+      default: xyz
+      startSection: true
+      menuNames:
+      - xyz
+      - xzy
+      - yxz
+      - yzx
+      - zxy
+      - zyx
+      menuLabels:
+      - Rx Ry Rz
+      - Rx Rz Ry
+      - Ry Rx Rz
+      - Ry Rz Rx
+      - Rz Rx Ry
+      - Rz Ry Rx
+    Rotate:
+      name: Rotate
+      label: Rotate XYZ
+      style: XYZ
+      default: 0.0
+      normMin: 0.0
+      normMax: 1.0
+inputs:
+- !input
+  Required: true
+  coordType: !coordT
+    Allcoordtype: false
+    Coordtypefloat: false
+    Coordtypevec2: false
+    Coordtypevec3: true
+  contextType: !contextT
+    Allcontexttype: false
+    Contexttypecontext: false
+    Contexttypematerialcontext: true
+    Contexttypecameracontext: false
+    Contexttypelightcontext: false
+    Contexttyperaycontext: false
+    Contexttypeparticlecontext: false
+  returnType: !returnT
+    Allreturntype: true
+    Returntypesdf: false
+    Returntypefloat: true
+    Returntypevec4: true
+    Returntyperay: false
+    Returntypelight: false
+    Returntypeparticle: false

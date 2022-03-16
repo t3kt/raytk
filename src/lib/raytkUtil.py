@@ -77,6 +77,7 @@ class CompDefParsT(_OpMetaPars):
 	Label: 'StrParamT'
 
 class OpDefParsT(_OpMetaPars):
+	Useruntimebypass: 'BoolParamT'
 	Hostop: 'OPParamT'
 	Paramsop: 'OPParamT'
 	Name: 'StrParamT'
@@ -260,6 +261,28 @@ class ROPInfo:
 			return 'beta'
 		else:
 			return 'default'
+
+	def setOpStatus(self, status: Optional[str]):
+		if not self:
+			return
+		self.opDefPar.Raytkopstatus = status or 'default'
+		# note: since applying with status false resets the color, the false ones have to be done before the true one
+		if status == 'alpha':
+			RaytkTags.beta.apply(self.rop, False)
+			RaytkTags.deprecated.apply(self.rop, False)
+			RaytkTags.alpha.apply(self.rop, True)
+		elif status == 'beta':
+			RaytkTags.alpha.apply(self.rop, False)
+			RaytkTags.deprecated.apply(self.rop, False)
+			RaytkTags.beta.apply(self.rop, True)
+		elif status == 'deprecated':
+			RaytkTags.alpha.apply(self.rop, False)
+			RaytkTags.beta.apply(self.rop, False)
+			RaytkTags.deprecated.apply(self.rop, True)
+		else:
+			RaytkTags.alpha.apply(self.rop, False)
+			RaytkTags.beta.apply(self.rop, False)
+			RaytkTags.deprecated.apply(self.rop, False)
 
 	@property
 	def isMaster(self):

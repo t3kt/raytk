@@ -1,0 +1,23 @@
+!rop
+meta: !meta
+  opType: raytk.operators.combine.mergeToggle
+  opVersion: '4'
+  opStatus: default
+opDef: !def
+  enable: true
+  typeSpec: !ropTypes
+    coordType: !coordT
+      Allcoordtype: true
+    contextType: !contextT
+      Allcontexttype: true
+    returnType: !returnT
+      Returntypesdf: true
+  function: !text
+    file: src/operators/combine/mergeToggle.glsl
+    name: functionTemplate
+  useParams: Enable[1-8]
+  libraryNames: raytkCombine
+  generatedMacroTables: multiInputHandler_macros
+  help: !text
+    file: src/operators/combine/mergeToggle.md
+    name: help

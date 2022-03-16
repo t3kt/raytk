@@ -1,9 +1,5 @@
-ReturnT thismap(CoordT p, ContextT ctx) {
-	float valueAdjust = 1.0;
+void THIS_apply(inout CoordT p, inout ContextT ctx, inout float valueAdjust, out vec4 orb) {
 	int n = int(THIS_Iterations);
-	#pragma r:if RAYTK_ORBIT_IN_SDF
-	vec4 orb = vec4(1000);
-	#pragma r:endif
 	TRANSFORM_INIT();
 	#pragma r:if THIS_Enablerotate && THIS_HAS_INPUT_rotateField
 	vec3 baseRot = rotate;
@@ -20,32 +16,32 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 	#pragma r:endif
 	for (int i = 0; i < n; i++) {
 		float ratio = float(i) / float(n - 1);
-	#pragma r:if THIS_Iterationtype_index
+		#pragma r:if THIS_Iterationtype_index
 		setIterationIndex(ctx, float(i));
-	#pragma r:elif THIS_Iterationtype_ratio
+		#pragma r:elif THIS_Iterationtype_ratio
 		setIterationIndex(ctx, ratio);
-	#pragma r:endif
-	#pragma r:if THIS_EXPOSE_step
+		#pragma r:endif
+		#pragma r:if THIS_EXPOSE_step
 		THIS_step = i;
-	#pragma r:endif
+		#pragma r:endif
 		#pragma r:if THIS_EXPOSE_normstep
 		THIS_normstep = ratio;
-	#pragma r:endif
-	#pragma r:if THIS_Enablerotate && THIS_HAS_INPUT_rotateField
+		#pragma r:endif
+		#pragma r:if THIS_Enablerotate && THIS_HAS_INPUT_rotateField
 		#pragma r:if inputOp_rotateField_COORD_TYPE_float
 		rotate = baseRot + inputOp_rotateField(ratio, ctx).xyz;
 		#pragma r:else
 		rotate = baseRot + inputOp_rotateField(p, ctx).xyz;
 		#pragma r:endif
-	#pragma r:endif
-	#pragma r:if THIS_Enabletranslate && THIS_HAS_INPUT_translateField
+		#pragma r:endif
+		#pragma r:if THIS_Enabletranslate && THIS_HAS_INPUT_translateField
 		#pragma r:if inputOp_translateField_COORD_TYPE_float
 		translate = baseT + inputOp_translateField(ratio, ctx).xyz;
 		#pragma r:else
 		translate = baseT + inputOp_translateField(p, ctx).xyz;
 		#pragma r:endif
-	#pragma r:endif
-	#pragma r:if THIS_Enablescale && THIS_HAS_INPUT_scaleField
+		#pragma r:endif
+		#pragma r:if THIS_Enablescale && THIS_HAS_INPUT_scaleField
 		{
 			#pragma r:if inputOp_scaleField_COORD_TYPE_float
 			inputOp_scaleField_CoordT q0 = ratio;
@@ -58,16 +54,20 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 			scale = baseS * fillToVec3(inputOp_scaleField(q0, ctx));
 			#pragma r:endif
 		}
-	#pragma r:endif
-	#pragma r:if RAYTK_ORBIT_IN_SDF
-		CoordT q = p;
-	#pragma r:endif
+			#pragma r:endif
+		CoordT preReflectP = p;
 		THIS_REFLECT();
-	#pragma r:if RAYTK_ORBIT_IN_SDF
-		orb = min(orb, vec4(abs(q - p), length(p)));
-	#pragma r:endif
+		orb = min(orb, vec4(abs(preReflectP - p), length(p)));
 		TRANSFORM_CODE();
 		CUSTOM_CODE();
+	}
+}
+
+ReturnT thismap(CoordT p, ContextT ctx) {
+	float valueAdjust = 1.0;
+	vec4 orb = vec4(1000);
+	if (THIS_Enable >= 0.5) {
+		THIS_apply(p, ctx, valueAdjust, orb);
 	}
 	ReturnT res = inputOp1(p, ctx);
 #pragma r:if RAYTK_ORBIT_IN_SDF

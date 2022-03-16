@@ -1,0 +1,136 @@
+!rop
+meta: !meta
+  opType: raytk.operators.filter.slice
+  opVersion: '9'
+  opStatus: default
+opDef: !def
+  enable: !expr 'op(''..'').par.Enable'
+  useRuntimeBypass: true
+  typeSpec: !ropTypes
+    coordType: !coordT
+      Allcoordtype: false
+      Coordtypefloat: false
+      Coordtypevec2: true
+      Coordtypevec3: true
+    contextType: !contextT
+      Allcontexttype: true
+      Contexttypecontext: false
+      Contexttypematerialcontext: true
+      Contexttypecameracontext: false
+      Contexttypelightcontext: false
+      Contexttyperaycontext: false
+      Contexttypeparticlecontext: false
+    returnType: !returnT
+      Allreturntype: true
+      Returntypesdf: false
+      Returntypefloat: true
+      Returntypevec4: true
+      Returntyperay: false
+      Returntypelight: false
+      Returntypeparticle: false
+  function: !text
+    file: src/operators/filter/slice.glsl
+    name: function
+  useParams:
+  - Offset
+  - Thickness
+  - Smoothradius
+  macroParams:
+  - Enablesmoothing
+  - Enablemirror
+  - Operation
+  generatedMacroTables: sel_axis_macros
+  help: help
+paramPages:
+- !page
+  name: Filter
+  pars:
+    Enable:
+      name: Enable
+      label: Enable
+      style: Toggle
+      default: true
+    Axis:
+      name: Axis
+      label: Axis
+      style: Menu
+      default: x
+      menuNames:
+      - x
+      - y
+      - z
+      menuLabels:
+      - X
+      - Y
+      - Z
+    Offset:
+      name: Offset
+      label: Offset
+      style: Float
+      size: 1
+      default: 0.0
+      normMin: -4.0
+      normMax: 4.0
+    Thickness:
+      name: Thickness
+      label: Thickness
+      style: Float
+      size: 1
+      default: 0.1
+      normMin: 0.0
+      normMax: 1.0
+    Enablesmoothing:
+      name: Enablesmoothing
+      label: Enable Smoothing
+      style: Toggle
+      default: false
+    Smoothradius:
+      name: Smoothradius
+      label: Smooth Radius
+      style: Float
+      size: 1
+      default: 0.2
+      enable: false
+      enableExpr: me.par.Enablesmoothing
+      normMin: 0.0
+      normMax: 2.0
+    Enablemirror:
+      name: Enablemirror
+      label: Enable Mirror
+      style: Toggle
+      default: false
+    Operation:
+      name: Operation
+      label: Operation
+      style: Menu
+      default: intersect
+      menuNames:
+      - intersect
+      - diff
+      menuLabels:
+      - Intersect
+      - Difference
+inputs:
+- !input
+  Required: true
+  coordType: !coordT
+    Allcoordtype: false
+    Coordtypefloat: false
+    Coordtypevec2: true
+    Coordtypevec3: true
+  contextType: !contextT
+    Allcontexttype: true
+    Contexttypecontext: true
+    Contexttypematerialcontext: false
+    Contexttypecameracontext: false
+    Contexttypelightcontext: false
+    Contexttyperaycontext: false
+    Contexttypeparticlecontext: false
+  returnType: !returnT
+    Allreturntype: false
+    Returntypesdf: true
+    Returntypefloat: false
+    Returntypevec4: false
+    Returntyperay: false
+    Returntypelight: false
+    Returntypeparticle: false

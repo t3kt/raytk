@@ -1,4 +1,4 @@
-ReturnT thismap(CoordT p, ContextT ctx) {
+void THIS_apply(inout CoordT p, inout ContextT ctx) {
 	#pragma r:if THIS_HAS_INPUT_indexField
 	float i = inputOp_indexField(p, ctx);
 	#pragma r:else
@@ -33,7 +33,12 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 	p += piv;
 	#pragma r:endif
 	#pragma r:endif
+}
 
+ReturnT thismap(CoordT p, ContextT ctx) {
+	if (THIS_Enable >= 0.5) {
+		THIS_apply(p, ctx);
+	}
 	ReturnT res;
 	#ifdef THIS_HAS_INPUT_1
 	res = inputOp1(p, ctx);

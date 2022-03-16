@@ -1,0 +1,33 @@
+!rop
+meta: !meta
+  opType: raytk.operators.field.waveField
+  opVersion: '23'
+  opStatus: default
+opDef: !def
+  enable: !expr
+    expr: parent().par.Enable
+  typeSpec: !ropTypes
+    coordType: !coordT
+      Allcoordtype: true
+    contextType: !contextT
+      Allcontexttype: true
+    returnType: !returnT
+      Returntypefloat: !expr
+        expr: not op('wave_func_definition')[1, 'returnType'] or 'float' in str(op('wave_func_definition')[1,
+          'returnType'] or '')
+      Returntypevec4: !expr
+        expr: '''vec4'' in str(op(''wave_func_definition'')[1, ''returnType''] or
+          '''')'
+  function: !text
+    file: src/operators/field/waveField.glsl
+    name: functionTemplate
+  useParams:
+  - Amplitude
+  - Offset
+  macroParams: Axis
+  paramListTable: waveParams
+  libraryNames: !expr
+    expr: op('raytkWave')
+  help: !text
+    file: src/operators/field/waveField.md
+    name: help

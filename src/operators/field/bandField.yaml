@@ -1,0 +1,41 @@
+!rop
+meta: !meta
+  opType: raytk.operators.field.bandField
+  opVersion: '5'
+  opStatus: default
+opDef: !def
+  enable: !expr
+    expr: parent().par.Enable
+  typeSpec: !ropTypes
+    coordType: !coordT
+      Coordtypefloat: !expr
+        expr: parent().par.Coordtype == 'float'
+      Coordtypevec2: !expr
+        expr: parent().par.Coordtype == 'vec2'
+      Coordtypevec3: !expr
+        expr: parent().par.Coordtype == 'vec3'
+    contextType: !contextT
+      Allcontexttype: true
+    returnType: !returnT
+      Returntypefloat: !expr
+        expr: parent().par.Returntype == 'float'
+      Returntypevec4: !expr
+        expr: parent().par.Returntype == 'vec4'
+  function: !text
+    file: src/operators/field/bandField.glsl
+    name: function
+  useParams:
+  - Insidevalue[rgba]
+  - Outsidevalue[rgba]
+  - Width
+  - Blending
+  - Center
+  - Repeatsize
+  - Repeatshift
+  macroParams:
+  - Axis
+  - Enableblending
+  - Enablerepeat
+  help: !text
+    file: src/operators/field/bandField.md
+    name: help

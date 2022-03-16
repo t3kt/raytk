@@ -1,0 +1,33 @@
+!rop
+meta: !meta
+  opType: raytk.operators.field.hsvColorField
+  opVersion: '5'
+  opStatus: beta
+opDef: !def
+  enable: true
+  typeSpec: !ropTypes
+    Useinputcoordtype: !expr
+      expr: parent().par.Coordtype == 'useinput'
+    Useinputcontexttype: !expr
+      expr: parent().par.Contexttype == 'useinput'
+    coordType: !coordT
+      Coordtypefloat: !expr
+        expr: parent().par.Coordtype == 'float'
+      Coordtypevec2: !expr
+        expr: parent().par.Coordtype == 'vec2'
+      Coordtypevec3: !expr
+        expr: parent().par.Coordtype == 'vec3'
+    contextType: !contextT
+      Allcontexttype: true
+    returnType: !returnT
+      Returntypevec4: true
+  function: !text
+    file: src/operators/field/hsvColorField.glsl
+    name: function
+  useParams:
+  - Hueoffset
+  - Value
+  - Saturation
+  help: !text
+    file: src/operators/field/hsvColorField.md
+    name: help

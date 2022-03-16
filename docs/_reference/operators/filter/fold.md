@@ -17,6 +17,7 @@ op:
     - RayContext
     - ParticleContext
     coordTypes:
+    - vec2
     - vec3
     label: definition_in
     name: definition_in
@@ -27,6 +28,20 @@ op:
     - Ray
     - Light
     - Particle
+  - contextTypes:
+    - Context
+    - MaterialContext
+    - CameraContext
+    - LightContext
+    - RayContext
+    - ParticleContext
+    coordTypes:
+    - vec2
+    - vec3
+    label: Distance Field
+    name: distanceField
+    returnTypes:
+    - float
   name: fold
   opType: raytk.operators.filter.fold
   parameters:

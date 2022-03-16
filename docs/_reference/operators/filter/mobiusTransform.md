@@ -29,6 +29,34 @@ op:
     - Ray
     - Light
     - Particle
+  - contextTypes:
+    - Context
+    - MaterialContext
+    - CameraContext
+    - LightContext
+    - RayContext
+    - ParticleContext
+    coordTypes:
+    - vec2
+    - vec3
+    label: Center Field
+    name: centerField
+    returnTypes:
+    - vec4
+  - contextTypes:
+    - Context
+    - MaterialContext
+    - CameraContext
+    - LightContext
+    - RayContext
+    - ParticleContext
+    coordTypes:
+    - vec2
+    - vec3
+    label: Point Field
+    name: pointField
+    returnTypes:
+    - vec4
   name: mobiusTransform
   opType: raytk.operators.filter.mobiusTransform
   parameters:

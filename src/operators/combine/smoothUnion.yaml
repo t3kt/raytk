@@ -1,0 +1,24 @@
+!rop
+meta: !meta
+  opType: raytk.operators.combine.smoothUnion
+  opVersion: '14'
+  opStatus: default
+opDef: !def
+  enable: !expr
+    expr: op('..').par.Enable
+  typeSpec: !ropTypes
+    coordType: !coordT
+      Allcoordtype: true
+    contextType: !contextT
+      Allcontexttype: true
+    returnType: !returnT
+      Returntypesdf: true
+      Returntypefloat: true
+  function: !text
+    file: src/operators/combine/smoothUnion.glsl
+    name: function
+  useParams: Amount
+  libraryNames: raytkCombine
+  help: !text
+    file: src/operators/combine/smoothUnion.md
+    name: help

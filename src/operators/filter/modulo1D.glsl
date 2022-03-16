@@ -1,4 +1,4 @@
-ReturnT thismap(CoordT p, ContextT ctx) {
+void THIS_apply(inout CoordT p, inout ContextT ctx) {
 	#pragma r:if THIS_COORD_TYPE_float
 	float q = p;
 	#pragma r:else
@@ -76,6 +76,11 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 	#pragma r:else
 	p.THIS_Axis = q - o;
 	#pragma r:endif
+}
 
+ReturnT thismap(CoordT p, ContextT ctx) {
+	if (THIS_Enable >= 0.5) {
+		THIS_apply(p, ctx);
+	}
 	return inputOp1(p, ctx);
 }

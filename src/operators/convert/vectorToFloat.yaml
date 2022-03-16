@@ -1,0 +1,26 @@
+!rop
+meta: !meta
+  opType: raytk.operators.convert.vectorToFloat
+  opVersion: '12'
+  opStatus: default
+opDef: !def
+  enable: !expr
+    expr: op('..').par.Enable
+  typeSpec: !ropTypes
+    coordType: !coordT
+      Allcoordtype: true
+    contextType: !contextT
+      Allcontexttype: true
+    returnType: !returnT
+      Returntypefloat: true
+  function: !text
+    file: src/operators/convert/vectorToFloat.glsl
+    name: function
+  macroTable: !table
+    file: src/operators/convert/vectorToFloat_macros.txt
+    name: macro_exprs
+    evaluate: true
+    evalOpts: !evalOpts {}
+  help: !text
+    file: src/operators/convert/vectorToFloat.md
+    name: help

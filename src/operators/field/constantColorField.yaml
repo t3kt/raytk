@@ -1,0 +1,23 @@
+!rop
+meta: !meta
+  opType: raytk.operators.field.constantColorField
+  opVersion: '4'
+  opStatus: default
+opDef: !def
+  enable: true
+  typeSpec: !ropTypes
+    coordType: !coordT
+      Allcoordtype: true
+    contextType: !contextT
+      Allcontexttype: true
+    returnType: !returnT
+      Returntypevec4: true
+  function: !text
+    file: src/operators/field/constantColorField.glsl
+    name: functionTemplate
+  useParams:
+  - Color[rgb]
+  - Alpha
+  help: !text
+    file: src/operators/field/constantColorField.md
+    name: help

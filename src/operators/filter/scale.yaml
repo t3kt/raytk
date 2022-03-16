@@ -1,0 +1,92 @@
+!rop
+meta: !meta
+  opType: raytk.operators.filter.scale
+  opVersion: '19'
+  opStatus: default
+opDef: !def
+  enable: !expr
+    expr: op('..').par.Enable
+  useRuntimeBypass: true
+  typeSpec: !ropTypes
+    coordType: !coordT
+      Coordtypefloat: true
+      Coordtypevec2: true
+      Coordtypevec3: true
+    contextType: !contextT
+      Allcontexttype: true
+    returnType: !returnT
+      Allreturntype: true
+  function: !text
+    file: src/operators/filter/scale.glsl
+    name: function
+  useParams:
+  - Scale[xyz]
+  - Uniformscale
+  macroParams: Scaletype
+  help: !text
+    file: src/operators/filter/scale.md
+    name: help
+  keywords:
+  - transform
+  - scale
+paramPages:
+- !page
+  name: Filter
+  pars:
+    Enable:
+      name: Enable
+      label: Enable
+      style: Toggle
+      default: true
+    Scaletype:
+      name: Scaletype
+      label: Scale Type
+      style: Menu
+      default: uniform
+      menuNames:
+      - separate
+      - uniform
+      menuLabels:
+      - Separate XYZ
+      - Uniform
+    Uniformscale:
+      name: Uniformscale
+      label: Uniform Scale
+      style: Float
+      size: 1
+      default: 1.0
+      enableExpr: me.par.Scaletype in ('uniform',)
+      normMin: 0.0
+      normMax: 2.0
+    Scale:
+      name: Scale
+      label: Scale
+      style: XYZ
+      default: 1.0
+      enable: false
+      enableExpr: me.par.Scaletype in ('separate',)
+      normMin: 0.0
+      normMax: 2.0
+inputs:
+- !input
+  coordType: !coordT
+    Coordtypefloat: true
+    Coordtypevec2: true
+    Coordtypevec3: true
+  contextType: !contextT
+    Allcontexttype: true
+  returnType: !returnT
+    Allreturntype: true
+- !input
+  Localalias: scaleField
+  coordType: !coordT
+    Coordtypefloat: true
+    Coordtypevec2: true
+    Coordtypevec3: true
+  contextType: !contextT
+    Allcontexttype: true
+  returnType: !returnT
+    Returntypesdf: true
+    Returntypefloat: true
+    Returntypevec4: !expr
+      expr: parent().par.Scaletype == 'separate'

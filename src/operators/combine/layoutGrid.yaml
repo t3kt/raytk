@@ -1,0 +1,32 @@
+!rop
+meta: !meta
+  opType: raytk.operators.combine.layoutGrid
+  opVersion: '9'
+  opStatus: default
+opDef: !def
+  enable: !expr
+    expr: op('..').par.Enable
+  typeSpec: !ropTypes
+    coordType: !coordT
+      Coordtypevec2: true
+      Coordtypevec3: true
+    contextType: !contextT
+      Allcontexttype: true
+    returnType: !returnT
+      Allreturntype: true
+  function: !text
+    file: src/operators/combine/layoutGrid.glsl
+    name: function
+  useParams:
+  - Size1
+  - Size2
+  - Prescale[xyz]
+  macroTable: !table
+    file: src/operators/combine/layoutGrid_macros.txt
+    name: macro_exprs
+    evaluate: true
+    evalOpts: !evalOpts {}
+  generatedMacroTables: sel_axis_macros input_macros
+  help: !text
+    file: src/operators/combine/layoutGrid.md
+    name: help

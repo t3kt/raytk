@@ -1,10 +1,8 @@
 ReturnT thismap(CoordT p, ContextT ctx) {
-	#if defined(THIS_COORD_TYPE_vec2)
-	vec3 q = vec3(p, 0.);
-	#elif defined(THIS_COORD_TYPE_vec3)
-	vec3 q = p;
+	#ifdef THIS_HAS_INPUT_coordField
+	vec3 q = adaptAsVec3(inputOp_coordField(p, ctx));
 	#else
-	#error invalidCoordType
+	vec3 q = adaptAsVec3(p);
 	#endif
 	q -= THIS_Translate;
 	q /= THIS_Scale;

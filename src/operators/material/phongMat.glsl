@@ -2,7 +2,7 @@ vec4 THIS_iterationCapture = vec4(0.);
 
 ReturnT thismap(CoordT p, ContextT ctx) {
 	Sdf res = inputOp1(p, ctx);
-	if (isDistanceOnlyStage()) { return res; }
+	if (THIS_Enable < 0.5 || isDistanceOnlyStage()) { return res; }
 	assignMaterial(res, THISMAT);
 	captureIterationFromMaterial(THIS_iterationCapture, ctx);
 	#pragma r:if THIS_Enableshadow && RAYTK_USE_SHADOW

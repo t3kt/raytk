@@ -1,0 +1,21 @@
+!rop
+meta: !meta
+  opType: raytk.operators.camera.isoCamera
+  opVersion: '1'
+  opStatus: alpha
+opDef: !def
+  enable: true
+  typeSpec: !ropTypes
+    coordType: !coordT
+      Coordtypevec2: true
+    contextType: !contextT
+      Contexttypecameracontext: true
+    returnType: !returnT
+      Returntyperay: true
+  function: !text
+    file: src/operators/camera/isoCamera.glsl
+    name: function
+  useParams:
+  - Campos[xyz]
+  - Camrot[xyz]
+  angleParams: Camrot[xyz]

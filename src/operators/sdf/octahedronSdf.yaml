@@ -1,0 +1,28 @@
+!rop
+meta: !meta
+  opType: raytk.operators.sdf.octahedronSdf
+  opVersion: '6'
+  opStatus: default
+opDef: !def
+  enable: true
+  typeSpec: !ropTypes
+    coordType: !coordT
+      Coordtypevec3: true
+    contextType: !contextT
+      Allcontexttype: true
+    returnType: !returnT
+      Returntypesdf: true
+  function: !text
+    file: src/operators/sdf/octahedronSdf.glsl
+    name: functionTemplate
+  useParams:
+  - Translate[xyz]
+  - Radius
+  paramListTable: !expr
+    expr: op('switcher_params')
+  help: !text
+    file: src/operators/sdf/octahedronSdf.md
+    name: help
+  keywords:
+  - polyhedron
+  - octahedron

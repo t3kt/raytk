@@ -1,0 +1,20 @@
+!rop
+meta: !meta
+  opType: raytk.operators.light.refractionRayCast
+  opVersion: '0'
+  opStatus: alpha
+opDef: !def
+  enable: true
+  typeSpec: !ropTypes
+    coordType: !coordT
+      Coordtypevec3: true
+    contextType: !contextT
+      Contexttypematerialcontext: true
+    returnType: !returnT
+      Returntypevec4: true
+  function: !text
+    file: src/operators/light/refractionRayCast.glsl
+    name: function
+  macroParams:
+  - Enablerefraction
+  - Refractionpasses

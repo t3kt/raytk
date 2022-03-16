@@ -1,0 +1,43 @@
+!rop
+meta: !meta
+  opType: raytk.operators.filter.modulo2D
+  opVersion: '19'
+  opStatus: default
+opDef: !def
+  enable: !expr
+    expr: op('..').par.Enable
+  useRuntimeBypass: true
+  typeSpec: !ropTypes
+    coordType: !coordT
+      Coordtypevec2: true
+      Coordtypevec3: true
+    contextType: !contextT
+      Allcontexttype: true
+    returnType: !returnT
+      Allreturntype: true
+  function: !text
+    file: src/operators/filter/modulo2D.glsl
+    name: function
+  useParams:
+  - Size[1-2]
+  - Offset[1-2]
+  - Shift[1-2]
+  macroParams:
+  - Iterationtype
+  - Mirrortype
+  paramListTable: switcher_params
+  variableTable: !table
+    file: src/operators/filter/modulo2D_variables.txt
+    name: variable_exprs
+    evaluate: true
+    evalOpts: !evalOpts
+      excludeFirstRow: true
+  generatedMacroTables: sel_axis_macros
+  help: !text
+    file: src/operators/filter/modulo2D.md
+    name: help
+  keywords:
+  - modulo
+  - repeat
+  - grid
+  shortcuts: m2

@@ -1,0 +1,28 @@
+!rop
+meta: !meta
+  opType: raytk.operators.combine.blend
+  opVersion: '14'
+  opStatus: default
+opDef: !def
+  enable: !expr
+    expr: op('..').par.Enable
+  typeSpec: !ropTypes
+    coordType: !coordT
+      Allcoordtype: true
+    contextType: !contextT
+      Allcontexttype: true
+    returnType: !returnT
+      Returntypesdf: true
+      Returntypefloat: true
+      Returntypevec4: true
+      Returntyperay: true
+      Returntypelight: true
+  function: !text
+    file: src/operators/combine/blend.glsl
+    name: function
+  useParams: Blend
+  macroParams: Usefield
+  generatedMacroTables: multiInputHandler_macros
+  help: !text
+    file: src/operators/combine/blend.md
+    name: help

@@ -1,0 +1,47 @@
+!rop
+meta: !meta
+  opType: raytk.operators.output.raymarchRender3D
+  opVersion: '110'
+  opStatus: default
+opDef: !def
+  enable: true
+  typeSpec: !ropTypes
+    coordType: !coordT
+      Coordtypevec3: true
+    contextType: !contextT
+      Contexttypecontext: true
+    returnType: !returnT
+      Returntypesdf: true
+  function: !text
+    file: src/operators/output/raymarchRender3D_func.glsl
+    name: functionTemplate
+  useParams:
+  - Limitboxmin[xyz]
+  - Limitboxmax[xyz]
+  - Nearhitrange
+  - Nearhitfade
+  - Nearhitmindist
+  - Normalsmoothing
+  - Distfactor
+  macroParams:
+  - Enablereflection
+  - Reflectionpasses
+  - Enablenearhitmindist
+  - Enableshadow
+  - Enablerefraction
+  - Refractionpasses
+  - Antialias
+  - Enablenormalsmoothing
+  - Usebackgroundfieldalpha
+  lockParams:
+  - Enablecustomoutput*
+  - Raymodifier
+  macroTable: !table
+    file: src/operators/output/raymarchRender3D_macros.txt
+    name: op_macro_exprs
+    evaluate: true
+    evalOpts: !evalOpts {}
+  help: !text
+    file: src/operators/output/raymarchRender3D.md
+    name: help
+  shortcuts: rr3

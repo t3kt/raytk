@@ -1,3 +1,5 @@
+from raytkTools import RaytkTools
+
 # noinspection PyUnreachableCode
 if False:
 	# noinspection PyUnresolvedReferences
@@ -18,3 +20,7 @@ class ToolkitEditor:
 	def EditROP(self, rop: 'COMP'):
 		self.Open()
 		iop.ropEditor.LoadROP(rop)
+
+	@staticmethod
+	def saveAllROPSpecs():
+		RaytkTools().saveAllROPSpecs()

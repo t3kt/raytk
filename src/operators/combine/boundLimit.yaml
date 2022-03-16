@@ -1,0 +1,20 @@
+!rop
+meta: !meta
+  opType: raytk.operators.combine.boundLimit
+  opVersion: '6'
+  opStatus: alpha
+opDef: !def
+  enable: !expr
+    expr: op('..').par.Enable
+  typeSpec: !ropTypes
+    coordType: !coordT
+      Coordtypevec2: true
+      Coordtypevec3: true
+    contextType: !contextT
+      Allcontexttype: true
+    returnType: !returnT
+      Returntypesdf: true
+      Returntypefloat: true
+  function: !text
+    file: src/operators/combine/boundLimit.glsl
+    name: function

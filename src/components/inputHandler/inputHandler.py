@@ -20,7 +20,7 @@ def shouldBypass() -> bool:
 	opDef = host and host.op('opDefinition')
 	if not opDef or opDef.par['Enable'] is None:
 		return False
-	return not opDef.par.Enable
+	return not opDef.par.Enable and not opDef.par['Useruntimebypass']
 
 def _isValidDefinitionDat(o: 'Optional[Union[OP, DAT]]'):
 	if not o or not o.isDAT:

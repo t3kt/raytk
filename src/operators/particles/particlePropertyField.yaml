@@ -1,0 +1,26 @@
+!rop
+meta: !meta
+  opType: raytk.operators.particles.particlePropertyField
+  opVersion: '2'
+  opStatus: alpha
+opDef: !def
+  enable: true
+  typeSpec: !ropTypes
+    coordType: !coordT
+      Allcoordtype: true
+    contextType: !contextT
+      Contexttypeparticlecontext: true
+    returnType: !returnT
+      Returntypefloat: !expr
+        expr: op('switcher_info')[1, 'returnType'] == 'float'
+      Returntypevec4: !expr
+        expr: op('switcher_info')[1, 'returnType'] == 'vec4'
+      Returntyperay: !expr
+        expr: op('switcher_info')[1, 'returnType'] == 'Ray'
+      Returntypeparticle: !expr
+        expr: op('switcher_info')[1, 'returnType'] == 'Particle'
+  function: !text
+    file: src/operators/particles/particlePropertyField.glsl
+    name: functionTemplate
+  paramListTable: switcher_params
+  generatedMacroTables: sel_switcher_macros

@@ -1,0 +1,26 @@
+!rop
+meta: !meta
+  opType: raytk.operators.sdf.sopSdf
+  opVersion: '3'
+  opStatus: alpha
+opDef: !def
+  enable: true
+  typeSpec: !ropTypes
+    coordType: !coordT
+      Coordtypevec3: true
+    contextType: !contextT
+      Allcontexttype: true
+    returnType: !returnT
+      Returntypesdf: true
+  function: !text
+    file: src/operators/sdf/sopSdf.glsl
+    name: function
+  useParams:
+  - Voxelorigin[xyz]
+  - Boundingboxsize[xyz]
+  - Collisionradius
+  textureTable: !table
+    file: src/operators/sdf/sopSdf_textures.txt
+    name: texture_exprs
+    evaluate: true
+    evalOpts: !evalOpts {}

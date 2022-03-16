@@ -1,0 +1,24 @@
+!rop
+meta: !meta
+  opType: raytk.operators.sdf2d.triangleSdf2d
+  opVersion: '5'
+  opStatus: default
+opDef: !def
+  enable: true
+  typeSpec: !ropTypes
+    coordType: !coordT
+      Coordtypevec2: true
+    contextType: !contextT
+      Allcontexttype: true
+    returnType: !returnT
+      Returntypesdf: true
+  function: !text
+    file: src/operators/sdf2d/triangleSdf2d.glsl
+    name: functionTemplate
+  paramListTable: !expr
+    expr: op('switcher_params')
+  libraryNames: !expr
+    expr: op('triangleSdf2d_lib')
+  help: !text
+    file: src/operators/sdf2d/triangleSdf2d.md
+    name: help
