@@ -1,3 +1,4 @@
+import itertools
 from dataclasses import dataclass
 from typing import List, Optional
 
@@ -32,6 +33,15 @@ class DataType:
 	isVariable: bool = True
 	vectorLength: Optional[int] = None
 	fields: List[Field] = None
+	defaultExpr: Optional[str] = None
+
+	@property
+	def returnAsType(self):
+		return self.returnConversion.toType if self.returnConversion else self.name
+
+	@property
+	def returnExpr(self):
+		return self.returnConversion.expr if self.returnConversion else 'val'
 
 	@classmethod
 	def scalar(cls, name, label, **kwargs):
@@ -50,22 +60,27 @@ class DataType:
 
 class _Conversions:
 	adaptAsFloat = Conversion(
-		fromTypes=['float', 'vec2', 'vec3', 'vec4', 'Sdf'],
+		name='adaptAsFloat',
+		fromTypes=tdu.expand('float bool int uint vec[2-4] [biu]vec[2-4] Sdf'),
 		toType='float',
 		expr='adaptAsFloat(val)')
 	adaptAsVec2 = Conversion(
-		fromTypes=['float', 'vec2', 'vec3', 'vec4', 'Sdf'],
+		name='adaptAsVec2',
+		fromTypes=tdu.expand('float vec[2-4]'),
 		toType='vec2',
 		expr='adaptAsVec2(val)')
 	adaptAsVec3 = Conversion(
-		fromTypes=['float', 'vec2', 'vec3', 'vec4', 'Sdf'],
+		name='adaptAsVec3',
+		fromTypes=tdu.expand('float vec[2-4]'),
 		toType='vec3',
 		expr='adaptAsVec3(val)')
 	adaptAsVec4 = Conversion(
-		fromTypes=['float', 'vec2', 'vec3', 'vec4', 'Sdf'],
+		name='adaptAsVec4',
+		fromTypes=tdu.expand('float bool int uint vec[2-4] [biu]vec[2-4]'),
 		toType='vec4',
 		expr='adaptAsVec4(val)')
 	adaptAsSdf = Conversion(
+		name='adaptAsSdf',
 		fromTypes=['float', 'Sdf'],
 		toType='Sdf',
 		expr='adaptAsSdf(val)')
@@ -78,40 +93,51 @@ _allConversions = [
 	_Conversions.adaptAsSdf,
 ]
 
-def _createScalarAndVector(scalarName: str, vectorPrefix: str, label: str):
+def _createScalarAndVector(scalarName: str, vectorPrefix: str, label: str, defaultVal: str):
 	return [
 		DataType.scalar(
-			scalarName, label, returnConversion=_Conversions.adaptAsFloat),
+			scalarName, label, returnConversion=_Conversions.adaptAsFloat, defaultExpr=defaultVal),
 		DataType.vector(
 			f'{vectorPrefix}2', f'{label}Vector2', partType=scalarName, parts='xy',
-			returnConversion=_Conversions.adaptAsVec4),
+			returnConversion=_Conversions.adaptAsVec4,
+			defaultExpr=f'{vectorPrefix}2({defaultVal})',
+		),
 		DataType.vector(
 			f'{vectorPrefix}3', f'{label}Vector3', partType=scalarName, parts='xyz',
-			returnConversion=_Conversions.adaptAsVec4),
+			returnConversion=_Conversions.adaptAsVec4,
+			defaultExpr=f'{vectorPrefix}3({defaultVal})',
+		),
 		DataType.vector(
 			f'{vectorPrefix}4', f'{label}Vector4', partType=scalarName, parts='xyzw',
-			returnConversion=_Conversions.adaptAsVec4),
+			returnConversion=_Conversions.adaptAsVec4,
+			defaultExpr=f'{vectorPrefix}4({defaultVal})',
+		),
 	]
 
 _allTypes = [
-	DataType.scalar('float', 'Float', labelForCoord='1D', isCoord=True, isReturn=True),
+	DataType.scalar('float', 'Float', labelForCoord='1D', isCoord=True, isReturn=True, defaultExpr='0.'),
 	DataType.vector(
 		'vec2', 'Vector2', labelForCoord='2D', isCoord=True,
 		partType='float', parts='xy',
-		returnConversion=_Conversions.adaptAsVec4),
+		returnConversion=_Conversions.adaptAsVec4,
+		defaultExpr='vec2(0.)',
+	),
 	DataType.vector(
 		'vec3', 'Vector3', labelForCoord='3D', isCoord=True,
 		partType='float', parts='xyz',
-		returnConversion=_Conversions.adaptAsVec4),
+		returnConversion=_Conversions.adaptAsVec4,
+		defaultExpr='vec3(0.)',
+	),
 	DataType.vector(
 		'vec4', 'Vector', isReturn=True,
-		partType='float', parts='xyzw'),
+		partType='float', parts='xyzw',
+		defaultExpr='vec4(0.)',
+	),
 ]
 
-_allTypes += _createScalarAndVector('int', 'ivec', 'Int')
-_allTypes += _createScalarAndVector('bool', 'bvec', 'Bool')
-_allTypes += _createScalarAndVector('uint', 'uvec', 'UInt')
-_allTypes += _createScalarAndVector('double', 'dvec', 'Double')
+_allTypes += _createScalarAndVector('bool', 'bvec', 'Bool', 'false')
+_allTypes += _createScalarAndVector('int', 'ivec', 'Int', '0')
+_allTypes += _createScalarAndVector('uint', 'uvec', 'UInt', '0')
 
 _allTypes += [
 	DataType(
@@ -200,30 +226,43 @@ def buildCoreTypeTable(dat: 'scriptDAT'):
 
 def buildVariableTypeTable(dat: 'scriptDAT'):
 	dat.clear()
-	dat.appendRow(['name', 'label', 'returnAs'])
+	dat.appendRow(['name', 'label', 'returnAs', 'defaultExpr'])
 	for dt in _allTypes:
 		if not dt.isVariable:
 			continue
 		dat.appendRow([
 			dt.name,
 			dt.label,
-			dt.returnConversion.toType if dt.returnConversion else dt.name,
+			dt.returnAsType,
+			dt.defaultExpr or '',
 		])
 
 def buildVariableTypeFieldTable(dat: 'scriptDAT'):
 	dat.clear()
-	dat.appendRow(['parentType', 'name', 'label', 'type'])
+	dat.appendRow(['parentType', 'name', 'label', 'type', 'accessExpr', 'returnAs', 'returnExpr'])
 	for dt in _allTypes:
 		if not dt.isVariable:
 			continue
-		dat.appendRow([dt.name, '', '(value)', dt.name])
+		dat.appendRow([
+			dt.name, 'this', '(value)',
+			dt.name,
+			'val',
+			dt.returnAsType,
+			dt.returnExpr,
+		])
 		if not dt.fields:
 			continue
 		for field in dt.fields:
 			fieldType = _getType(field.type)
 			if not fieldType or not fieldType.isReturn:
 				pass
-			dat.appendRow([dt.name, field.name, field.label, field.type])
+			dat.appendRow([
+				dt.name, field.name, field.label,
+				field.type,
+				f'val.{field.name}',
+				fieldType.returnAsType,
+				fieldType.returnExpr,
+			])
 
 def _conversionsFrom(fromType: str):
 	return [

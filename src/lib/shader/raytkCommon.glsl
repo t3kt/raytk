@@ -248,6 +248,22 @@ float adaptAsFloat(vec3 p) { return p.x; }
 float adaptAsFloat(vec4 p) { return p.x; }
 float adaptAsFloat(Sdf res) { return res.x; }
 
+float adaptAsFloat(bool p) { return float(p); }
+float adaptAsFloat(int p) { return float(p); }
+float adaptAsFloat(uint p) { return float(p); }
+
+float adaptAsFloat(bvec2 p) { return float(p.x); }
+float adaptAsFloat(ivec2 p) { return float(p.x); }
+float adaptAsFloat(uvec2 p) { return float(p.x); }
+
+float adaptAsFloat(bvec3 p) { return float(p.x); }
+float adaptAsFloat(ivec3 p) { return float(p.x); }
+float adaptAsFloat(uvec3 p) { return float(p.x); }
+
+float adaptAsFloat(bvec4 p) { return float(p.x); }
+float adaptAsFloat(ivec4 p) { return float(p.x); }
+float adaptAsFloat(uvec4 p) { return float(p.x); }
+
 vec2 adaptAsVec2(float p) { return vec2(p, 0.); }
 vec2 adaptAsVec2(vec2 p) { return p; }
 vec2 adaptAsVec2(vec3 p) { return p.xy; }
@@ -262,6 +278,23 @@ vec4 adaptAsVec4(float p) { return vec4(p, 0., 0., 0.); }
 vec4 adaptAsVec4(vec2 p) { return vec4(p, 0., 0.); }
 vec4 adaptAsVec4(vec3 p) { return vec4(p, 0.); }
 vec4 adaptAsVec4(vec4 p) { return p; }
+
+vec4 adaptAsVec4(int p) { return vec4(float(p), vec3(0.)); }
+vec4 adaptAsVec4(bool p) { return vec4(float(p), vec3(0.)); }
+vec4 adaptAsVec4(uint p) { return vec4(float(p), vec3(0.)); }
+
+vec4 adaptAsVec4(ivec2 p) { return vec4(vec2(p), vec2(0.)); }
+vec4 adaptAsVec4(bvec2 p) { return vec4(vec2(p), vec2(0.)); }
+vec4 adaptAsVec4(uvec2 p) { return vec4(vec2(p), vec2(0.)); }
+
+vec4 adaptAsVec4(ivec3 p) { return vec4(vec3(p), 0.); }
+vec4 adaptAsVec4(bvec3 p) { return vec4(vec3(p), 0.); }
+vec4 adaptAsVec4(uvec3 p) { return vec4(vec3(p), 0.); }
+
+vec4 adaptAsVec4(ivec4 p) { return vec4(p); }
+vec4 adaptAsVec4(bvec4 p) { return vec4(p); }
+vec4 adaptAsVec4(uvec4 p) { return vec4(p); }
+
 
 Sdf adaptAsSdf(float p) { return createSdf(p); }
 Sdf adaptAsSdf(Sdf res) { return res; }
