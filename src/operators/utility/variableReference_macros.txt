@@ -1,2 +1,0 @@
-1	'THIS_VarT'	parent().par.Variabletype.eval()
-1	'THIS_convert(val)'	op('currentField')[1, 'returnExpr']

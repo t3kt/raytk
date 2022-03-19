@@ -34,6 +34,7 @@ class DataType:
 	vectorLength: Optional[int] = None
 	fields: List[Field] = None
 	defaultExpr: Optional[str] = None
+	conversionFromParam: Optional[Conversion] = None
 
 	@property
 	def returnAsType(self):
@@ -43,9 +44,16 @@ class DataType:
 	def returnExpr(self):
 		return self.returnConversion.expr if self.returnConversion else 'val'
 
+	@property
+	def paramExpr(self):
+		return self.conversionFromParam.expr if self.conversionFromParam else ''
+
 	@classmethod
 	def scalar(cls, name, label, **kwargs):
-		return cls(name, label, vectorLength=1, **kwargs)
+		return cls(
+			name, label,
+			vectorLength=1,
+			**kwargs)
 
 	@classmethod
 	def vector(cls, name, label, partType: str, parts: str, **kwargs):
@@ -96,42 +104,48 @@ _allConversions = [
 def _createScalarAndVector(scalarName: str, vectorPrefix: str, label: str, defaultVal: str):
 	return [
 		DataType.scalar(
-			scalarName, label, returnConversion=_Conversions.adaptAsFloat, defaultExpr=defaultVal),
+			scalarName, label,
+			returnConversion=_Conversions.adaptAsFloat,
+			defaultExpr=defaultVal,
+			conversionFromParam=Conversion(fromTypes=['vec4'], toType=scalarName, expr=f'{scalarName}(val.x)'),
+		)
+	] + [
 		DataType.vector(
-			f'{vectorPrefix}2', f'{label}Vector2', partType=scalarName, parts='xy',
+			f'{vectorPrefix}{i}', f'{label}Vector{i}', partType=scalarName, parts='xyzw'[:i],
 			returnConversion=_Conversions.adaptAsVec4,
-			defaultExpr=f'{vectorPrefix}2({defaultVal})',
-		),
-		DataType.vector(
-			f'{vectorPrefix}3', f'{label}Vector3', partType=scalarName, parts='xyz',
-			returnConversion=_Conversions.adaptAsVec4,
-			defaultExpr=f'{vectorPrefix}3({defaultVal})',
-		),
-		DataType.vector(
-			f'{vectorPrefix}4', f'{label}Vector4', partType=scalarName, parts='xyzw',
-			returnConversion=_Conversions.adaptAsVec4,
-			defaultExpr=f'{vectorPrefix}4({defaultVal})',
-		),
+			defaultExpr=f'{vectorPrefix}{i}({defaultVal})',
+			conversionFromParam=Conversion(
+				fromTypes=['vec4'], toType=f'{vectorPrefix}{i}',
+				expr=f'{vectorPrefix}{i}(val.{"xyzw"[:i]})' if i < 4 else f'{vectorPrefix}4(val)',
+			),
+		)
+		for i in range(2, 5)
 	]
 
 _allTypes = [
-	DataType.scalar('float', 'Float', labelForCoord='1D', isCoord=True, isReturn=True, defaultExpr='0.'),
+	DataType.scalar(
+		'float', 'Float', labelForCoord='1D', isCoord=True, isReturn=True, defaultExpr='0.',
+		conversionFromParam=Conversion(fromTypes=['vec4'], toType='float', expr='val.x'),
+	),
 	DataType.vector(
 		'vec2', 'Vector2', labelForCoord='2D', isCoord=True,
 		partType='float', parts='xy',
 		returnConversion=_Conversions.adaptAsVec4,
 		defaultExpr='vec2(0.)',
+		conversionFromParam=Conversion(fromTypes=['vec4'], toType='vec2', expr='val.xy'),
 	),
 	DataType.vector(
 		'vec3', 'Vector3', labelForCoord='3D', isCoord=True,
 		partType='float', parts='xyz',
 		returnConversion=_Conversions.adaptAsVec4,
 		defaultExpr='vec3(0.)',
+		conversionFromParam=Conversion(fromTypes=['vec4'], toType='vec3', expr='val.xyz'),
 	),
 	DataType.vector(
 		'vec4', 'Vector', isReturn=True,
 		partType='float', parts='xyzw',
 		defaultExpr='vec4(0.)',
+		conversionFromParam=Conversion(fromTypes=['vec4'], toType='vec4', expr='val'),
 	),
 ]
 
@@ -226,7 +240,7 @@ def buildCoreTypeTable(dat: 'scriptDAT'):
 
 def buildVariableTypeTable(dat: 'scriptDAT'):
 	dat.clear()
-	dat.appendRow(['name', 'label', 'returnAs', 'defaultExpr'])
+	dat.appendRow(['name', 'label', 'returnAs', 'defaultExpr', 'paramExpr'])
 	for dt in _allTypes:
 		if not dt.isVariable:
 			continue
@@ -235,11 +249,15 @@ def buildVariableTypeTable(dat: 'scriptDAT'):
 			dt.label,
 			dt.returnAsType,
 			dt.defaultExpr or '',
+			dt.paramExpr or '',
 		])
 
 def buildVariableTypeFieldTable(dat: 'scriptDAT'):
 	dat.clear()
-	dat.appendRow(['parentType', 'name', 'label', 'type', 'accessExpr', 'returnAs', 'returnExpr'])
+	dat.appendRow([
+		'parentType', 'name', 'label', 'type',
+		'accessExpr', 'returnAs', 'returnExpr', 'defaultExpr', 'paramExpr'
+	])
 	for dt in _allTypes:
 		if not dt.isVariable:
 			continue
@@ -249,6 +267,8 @@ def buildVariableTypeFieldTable(dat: 'scriptDAT'):
 			'val',
 			dt.returnAsType,
 			dt.returnExpr,
+			dt.defaultExpr or '',
+			dt.paramExpr or '',
 		])
 		if not dt.fields:
 			continue
@@ -262,6 +282,8 @@ def buildVariableTypeFieldTable(dat: 'scriptDAT'):
 				f'val.{field.name}',
 				fieldType.returnAsType,
 				fieldType.returnExpr,
+				fieldType.defaultExpr or '',
+				fieldType.paramExpr or '',
 			])
 
 def _conversionsFrom(fromType: str):

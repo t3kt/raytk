@@ -219,8 +219,12 @@ class Palette:
 			refOp.par.Source.readOnly = True
 			refOp.par.Variable = variable
 			refOp.par.Variable.readOnly = True
-			refOp.par.Datatype = dataType
-			refOp.par.Datatype.readOnly = True
+			refOp.par.Variabletype = dataType
+			refOp.par.Variabletype.readOnly = True
+			if refOp.par['Datatype'] is not None:
+				refOp.par.Datatype.enable = False
+			if refOp.par['Part'] is not None:
+				refOp.par.Part.enable = False
 			if postSetup:
 				postSetup(refOp)
 		self.CreateItem(

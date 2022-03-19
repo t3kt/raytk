@@ -1,6 +1,0 @@
-name	label
-all	Whole Vector
-x	X
-y	Y
-z	Z
-w	W

@@ -661,19 +661,6 @@ def _getPalette():
 		return
 	return op.raytk.op('tools/palette')
 
-_varTypes = {
-	'float': 'float',
-	'int': 'float',
-	'bool': 'float',
-	'vec2': 'vec4',
-	'vec3': 'vec4',
-	'vec4': 'vec4',
-	'ivec2': 'vec4',
-	'ivec3': 'vec4',
-	'ivec4': 'vec4',
-	'Sdf': 'Sdf',
-}
-
 def createVarRef(name: str):
 	palette = _getPalette()
 	if not palette:
@@ -683,7 +670,6 @@ def createVarRef(name: str):
 	for i in range(1, varTable.numRows):
 		if varTable[i, 'localName'].val.lower() == name:
 			dataType = varTable[i, 'dataType'].val
-			dataType = _varTypes.get(dataType, dataType)
 			palette.CreateVariableReference(host, varTable[i, 'localName'].val, dataType)
 			return
 	raise Exception(f'Variable not found: {name}')

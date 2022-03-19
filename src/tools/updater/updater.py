@@ -29,12 +29,33 @@ class Updater:
 				return
 			o.par.clone = master
 		self._log(f'Updating {o} using master {master}')
+		postAction = self._getPostUpdateAction(info)
 		o.par.enablecloningpulse.pulse()
+		if postAction:
+			postAction(o)
 		img = o.op('*Definition/opImage')
 		if img:
 			o.par.opviewer.val = img
 			o.viewer = True
 		o.par.clone = master.par.clone.val
+
+	def _getPostUpdateAction(self, info: 'ROPInfo'):
+		if info.opType == 'raytk.operators.utility.variableReference':
+			if info.rop.par['Datatype'] is not None:
+				originalType = info.rop.par.Datatype.eval()
+				originalPart = info.rop.par.Part.eval()
+				def _action(rop: 'COMP'):
+					self._log('Converting params for variableReference')
+					rop.par.Variabletype = originalType
+					if originalPart == 'vec':
+						rop.par.Field = ''
+					else:
+						rop.par.Field = originalPart
+					rop.par.Variabletype.readOnly = True
+					rop.par.Datatype.readOnly = False
+					rop.par.Datatype.enable = False
+					rop.par.Part.enable = False
+				return _action
 
 	def _showError(self, msg: str):
 		self._log(msg)

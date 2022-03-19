@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.utility.variableReference
-  opVersion: '8'
+  opVersion: '9'
   opStatus: default
 opDef: !def
   enable: !expr
@@ -26,16 +26,11 @@ opDef: !def
         expr: op('currentField')[1, 'returnAs'] == 'Particle'
   function: !text
     file: src/operators/utility/variableReference.glsl
-    name: function
+    name: functionTemplate
   useParams: Defaultval[1-4]
   macroParams:
   - Datatype
   - Part
-  macroTable: !table
-    file: src/operators/utility/variableReference_macros.txt
-    name: macro_exprs
-    evaluate: true
-    evalOpts: !evalOpts {}
   referenceTable: !table
     file: src/operators/utility/variableReference_references.txt
     name: reference_exprs
