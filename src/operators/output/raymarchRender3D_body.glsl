@@ -393,6 +393,22 @@ vec3 getReflectionColor(MaterialContext matCtx, vec3 p) {
 //}
 //#endif
 
+vec4 prepareFinalColor(vec3 p, MaterialContext matCtx) {
+	#if defined(RAYTK_USE_REFLECTION) && defined(THIS_Enablereflection)
+	matCtx.reflectColor = getReflectionColor(matCtx, p);
+	#else
+	matCtx.reflectColor = vec3(0);
+	#endif
+
+	#if defined(RAYTK_USE_REFRACTION) && defined(THIS_Enablerefraction)
+	matCtx.refractColor = getRefractionColor(p, matCtx);
+	#else
+	matCtx.refractColor = vec3(0);
+	#endif
+	vec4 col = getColor(p, matCtx);
+	return col;
+}
+
 void main()
 {
 	#ifdef RAYTK_HAS_INIT
@@ -465,35 +481,31 @@ void main()
 			#if defined(OUTPUT_COLOR) || defined(OUTPUT_NORMAL) || (defined(RAYTK_USE_REFLECTION) && defined(THIS_Enablereflection))
 			matCtx.normal = calcNormal(p);
 			#endif
-			#if defined(OUTPUT_COLOR)
-			LightContext lightCtx = createLightContext(res, matCtx.normal);
-			matCtx.light = getLight(p, lightCtx);
-			#endif
-
 			#ifdef OUTPUT_NORMAL
 			normalOut += vec4(matCtx.normal, 0);
 			#endif
+
 			#ifdef OUTPUT_COLOR
 			{
-				#if defined(RAYTK_USE_REFLECTION) && defined(THIS_Enablereflection)
-				matCtx.reflectColor = getReflectionColor(matCtx, p);
-				#else
-				matCtx.reflectColor = vec3(0);
-				#endif
+				LightContext lightCtx = createLightContext(res, matCtx.normal);
+				matCtx.light = getLight(p, lightCtx);
+				vec4 col = prepareFinalColor(p, matCtx);
 
-				#if defined(RAYTK_USE_REFRACTION) && defined(THIS_Enablerefraction)
-				matCtx.refractColor = getRefractionColor(p, matCtx);
-				#else
-				matCtx.refractColor = vec3(0);
+				#ifdef THIS_HAS_INPUT_secondaryLight
+				if (THIS_Enablesecondarylight > 0.) {
+					MaterialContext matCtx2 = matCtx;
+					matCtx2.light = getLight2(p, lightCtx);
+					vec4 col2 = prepareFinalColor(p, matCtx2);
+					col.rgb += col2.rgb;
+				}
 				#endif
-
-				vec4 col = getColor(p, matCtx);
-				vec4 color2 = castSecondaryRay(matCtx);
-				colorOut.rgb += color2.rgb;
 
 				vec2 fragCoord = vUV.st*uTDOutputInfo.res.zw;
 				col.rgb += (1.0/255.0)*hash1(fragCoord);
 				colorOut += col;
+
+				vec4 color2 = castSecondaryRay(matCtx);
+				colorOut.rgb += color2.rgb;
 			}
 			#endif
 			#ifdef OUTPUT_UV

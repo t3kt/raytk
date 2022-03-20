@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.output.raymarchRender3D
-  opVersion: '110'
+  opVersion: '111'
   opStatus: default
 opDef: !def
   enable: true
@@ -23,6 +23,7 @@ opDef: !def
   - Nearhitmindist
   - Normalsmoothing
   - Distfactor
+  - Enablesecondarylight
   macroParams:
   - Enablereflection
   - Reflectionpasses
