@@ -250,7 +250,7 @@ vec4 getColor(vec3 p, MaterialContext matCtx) {
 	resolveUV(matCtx, uv1, uv2);
 	#endif
 	#if defined(THIS_Enableshadow) && defined(RAYTK_USE_SHADOW)
-	if (matCtx.result.useShadow) {
+	if (matCtx.result.useShadow && matCtx.light.supportShadow) {
 		int priorStage = pushStage(RAYTK_STAGE_SHADOW);
 		matCtx.shadedLevel = calcShadedLevel(p, matCtx);
 		popStage(priorStage);
@@ -296,9 +296,7 @@ vec4 getColor(vec3 p, MaterialContext matCtx) {
 
 #ifndef THIS_USE_LIGHT_FUNC
 Light getLight(vec3 p, LightContext lightCtx) {
-	Light light;
-	light.pos = uLightPos1;
-	light.color = uLightColor1;
+	Light light = createLight(uLightPos1, uLightColor1);
 	return light;
 }
 #endif
@@ -393,7 +391,10 @@ vec3 getReflectionColor(MaterialContext matCtx, vec3 p) {
 //}
 //#endif
 
-vec4 prepareFinalColor(vec3 p, MaterialContext matCtx) {
+vec4 getColorWithLight(vec3 p, MaterialContext matCtx) {
+	if (matCtx.light.absent) {
+		return vec4(0.);
+	}
 	#if defined(RAYTK_USE_REFLECTION) && defined(THIS_Enablereflection)
 	matCtx.reflectColor = getReflectionColor(matCtx, p);
 	#else
@@ -488,14 +489,24 @@ void main()
 			#ifdef OUTPUT_COLOR
 			{
 				LightContext lightCtx = createLightContext(res, matCtx.normal);
+				vec4 col;
+				#ifndef RAYTK_LIGHT_COUNT
 				matCtx.light = getLight(p, lightCtx);
-				vec4 col = prepareFinalColor(p, matCtx);
+				col = getColorWithLight(p, matCtx);
+				#else
+				col = vec4(0., 0., 0., 1.);
+				for (int i = 0; i < RAYTK_LIGHT_COUNT; i++) {
+					lightCtx.index = i;
+					matCtx.light = getLight(p, lightCtx);
+					col.rgb += getColorWithLight(p, matCtx).rgb;
+				}
+				#endif
 
 				#ifdef THIS_HAS_INPUT_secondaryLight
 				if (THIS_Enablesecondarylight > 0.) {
 					MaterialContext matCtx2 = matCtx;
 					matCtx2.light = getLight2(p, lightCtx);
-					vec4 col2 = prepareFinalColor(p, matCtx2);
+					vec4 col2 = getColorWithLight(p, matCtx2);
 					col.rgb += col2.rgb;
 				}
 				#endif
