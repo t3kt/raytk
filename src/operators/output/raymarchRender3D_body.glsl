@@ -490,7 +490,7 @@ void main()
 			{
 				LightContext lightCtx = createLightContext(res, matCtx.normal);
 				vec4 col;
-				#ifndef RAYTK_LIGHT_COUNT
+				#if !defined(RAYTK_LIGHT_COUNT) || RAYTK_LIGHT_COUNT == 1
 				matCtx.light = getLight(p, lightCtx);
 				col = getColorWithLight(p, matCtx);
 				#else
@@ -499,15 +499,6 @@ void main()
 					lightCtx.index = i;
 					matCtx.light = getLight(p, lightCtx);
 					col.rgb += getColorWithLight(p, matCtx).rgb;
-				}
-				#endif
-
-				#ifdef THIS_HAS_INPUT_secondaryLight
-				if (THIS_Enablesecondarylight > 0.) {
-					MaterialContext matCtx2 = matCtx;
-					matCtx2.light = getLight2(p, lightCtx);
-					vec4 col2 = getColorWithLight(p, matCtx2);
-					col.rgb += col2.rgb;
 				}
 				#endif
 
