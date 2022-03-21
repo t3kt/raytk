@@ -89,7 +89,7 @@ class ExposeParamDialog:
 			newPars = scenePage.appendPar((prefix + par1.name).capitalize(), par=par1, label=label)
 		elif structure == 'separate':
 			newPars = []
-			for i in range(0, 1):
+			for i, srcPar in enumerate(srcPars):
 				srcPar = srcPars[i]
 				newName = (prefix + srcPar.name).capitalize()
 				suffix = srcPar.name.replace(srcPar.tupletName, '').capitalize()
