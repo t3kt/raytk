@@ -11,6 +11,9 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 	#pragma r:endif
 	p -= THIS_Translate;
 	p = vec3(p.THIS_PLANE_P2, p.THIS_PLANE_P1, p.THIS_AXIS);
+	if (IS_TRUE(THIS_Infiniteheight)) {
+		p.z = 0.;
+	}
 	float d;
 	BODY();
 	return createSdf(d);

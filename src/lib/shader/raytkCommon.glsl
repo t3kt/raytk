@@ -330,3 +330,6 @@ void swap(inout Sdf a, inout Sdf b) {
 	a = b;
 	b = tmp;
 }
+
+#define IS_TRUE(x)  (x >= 0.5)
+#define IS_FALSE(x) (x < 0.5)
