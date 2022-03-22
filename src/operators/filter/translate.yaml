@@ -4,7 +4,8 @@ meta: !meta
   opVersion: '16'
   opStatus: default
 opDef: !def
-  enable: !expr 'op(''..'').par.Enable'
+  enable: !expr
+    expr: 'op(''..'').par.Enable'
   useRuntimeBypass: true
   typeSpec: !ropTypes
     Useinputreturntype: !expr 'op(''definition_1'').numRows > 1'
