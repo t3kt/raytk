@@ -421,7 +421,7 @@ def prepareMacroTable(dat: 'scriptDAT', inputTable: 'DAT', paramSpecTable: 'DAT'
 			dat.appendRow(['', f'THIS_{name}', val])
 		elif style == 'Toggle':
 			if val:
-				dat.appendRow(['', f'THIS_{name}', ''])
+				dat.appendRow(['', f'THIS_{name}', '1'])
 		else:
 			dat.appendRow(['', f'THIS_{name}', val])
 	for table in [op(parentPar().Macrotable)] + parentPar().Generatedmacrotables.evalOPs():
