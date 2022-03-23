@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.combine.arrange
-  opVersion: '6'
+  opVersion: '7'
   opStatus: default
 opDef: !def
   enable: true
@@ -15,7 +15,9 @@ opDef: !def
   function: !text
     file: src/operators/combine/arrange.glsl
     name: functionTemplate
-  useParams: Translate[1-8][xyz]
+  useParams:
+  - Translate[1-8][xyz]
+  - Enable[1-8]
   paramListTable: mergeParams
   libraryNames: raytkCombine
   generatedMacroTables: multiInputHandler_macros

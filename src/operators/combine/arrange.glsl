@@ -4,6 +4,7 @@ MERGE_BODY();
 
 ReturnT thismap(CoordT p, ContextT ctx) {
 	MERGE_PREP();
+	ReturnT res1 = createNonHitSdf();
 	AGGREGATE_BODY();
 	return res1;
 }
