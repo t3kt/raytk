@@ -3,6 +3,7 @@
 
 ReturnT thismap(CoordT p, ContextT ctx) {
 	Light light = createLight(THIS_Position, THIS_Color * THIS_Intensity);
+	light.supportShadow = IS_TRUE(THIS_Enableshadow);
 	#pragma r:if THIS_HAS_INPUT_colorField
 	light.color *= fillToVec3(inputOp_colorField(p, ctx));
 	#pragma r:endif
@@ -16,8 +17,7 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 		float theta = dot(-lightDir, spotDir);
 		light.color *= clamp((theta - outerCutoffCos) / (innerCutoffCos - outerCutoffCos), 0.0, 1.0);
 	}
-	#pragma r:if THIS_Enableattenuation
-	{
+	if (IS_TRUE(THIS_Enableattenuation)) {
 		float d = length(p - light.pos);
 		float start = THIS_Attenuationstart;
 		float end = THIS_Attenuationend;
@@ -28,6 +28,5 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 		light.color *= atten;
 		#pragma r:endif
 	}
-	#pragma r:endif
 	return light;
 }

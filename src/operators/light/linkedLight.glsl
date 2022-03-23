@@ -6,6 +6,7 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 		THIS_m03, THIS_m13, THIS_m23, THIS_m33
 	);
 	Light light = createLight(vec3(0.), vec3(THIS_cr, THIS_cg, THIS_cb));
+	light.supportShadow = IS_TRUE(THIS_Enableshadow);
 	#pragma r:if THIS_lighttype_point
 	{
 		light.pos = lightMat[3].xyz;

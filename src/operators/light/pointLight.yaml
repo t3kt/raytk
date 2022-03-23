@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.light.pointLight
-  opVersion: '9'
+  opVersion: '10'
   opStatus: default
 opDef: !def
   enable: true
@@ -21,7 +21,8 @@ opDef: !def
   - Intensity
   - Attenuationstart
   - Attenuationend
-  macroParams: Enableattenuation
+  - Enableattenuation
+  - Enableshadow
   help: !text
     file: src/operators/light/pointLight.md
     name: help
