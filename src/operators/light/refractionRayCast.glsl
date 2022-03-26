@@ -6,7 +6,8 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 	if (!ctx.result.refract) return res;
 	int priorStage = pushStage(RAYTK_STAGE_REFRACT);
 	bool hit = false;
-	for (int i = 0; i < THIS_Refractionpasses; i++) {
+	int n = int(THIS_Refractionpasses);
+	for (int i = 0; i < n; i++) {
 		if (!ctx.result.refract) {
 			break;
 		}
@@ -28,14 +29,20 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 			ctx.ray.dir = reflect(rayInside.dir, nExit);
 		}
 		p = pExit;
+//		#ifdef OUTPUT_DEBUG
+//		debugOut.rgb = ctx.ray.dir * 2.;
+//		#endif
 		ctx.normal = nExit;
-		ctx.ray.pos += ctx.ray.dir * RAYTK_SURF_DIST * 2.;
+//		ctx.ray.pos += ctx.ray.dir * RAYTK_SURF_DIST * 2.;
 		hit = true;
 	}
 	if (hit) {
 		res = getColor(ctx.ray.pos, ctx);
+		setDebugOut(vec4(0, 0.9, 0., 1));
 		#ifdef OUTPUT_DEBUG
-		debugOut.r = 0.9;
+//		debugOut.rgb = ctx.ray.pos;
+//		debugOut.r = 0.9;
+//		debugOut.g = float(n);
 		#endif
 	} else {
 		#ifdef OUTPUT_DEBUG

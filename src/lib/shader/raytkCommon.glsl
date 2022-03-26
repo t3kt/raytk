@@ -333,3 +333,9 @@ void swap(inout Sdf a, inout Sdf b) {
 
 #define IS_TRUE(x)  (x >= 0.5)
 #define IS_FALSE(x) (x < 0.5)
+
+#ifdef OUTPUT_DEBUG
+	#define setDebugOut(val) (debugOut = val);
+#else
+	#define setDebugOut(val)
+#endif
