@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.convert.crossSection
-  opVersion: '0'
+  opVersion: '1'
   opStatus: beta
 opDef: !def
   enable: !expr
@@ -21,3 +21,6 @@ opDef: !def
     name: functionTemplate
   useParams: Offset[xyz]
   paramListTable: switcher_params
+  help: !text
+    file: src/operators/convert/crossSection.md
+    name: help
