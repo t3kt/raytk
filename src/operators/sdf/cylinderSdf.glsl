@@ -1,6 +1,11 @@
 ReturnT thismap(CoordT p, ContextT ctx) {
 	p -= THIS_Translate;
-	vec3 q = vec3(p.THIS_PLANE_P1, p.THIS_AXIS, p.THIS_PLANE_P2);
+	vec3 q;
+	switch (int(THIS_Axis)) {
+		case 0: q = p.yxz; break;
+		case 1: q = p.zyx; break;
+		case 2: q = p.xzy; break;
+	}
 	#ifdef THIS_EXPOSE_axispos
 	THIS_axispos = q.y;
 	#endif

@@ -10,7 +10,11 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 	float r = THIS_Radius;
 	#pragma r:endif
 	p -= THIS_Translate;
-	p = vec3(p.THIS_PLANE_P2, p.THIS_PLANE_P1, p.THIS_AXIS);
+	switch (int(THIS_Axis)) {
+		case 0: p = p.zyx; break;
+		case 1: p = p.xzy; break;
+		case 2: p = p.yxz; break;
+	}
 	if (IS_TRUE(THIS_Infiniteheight)) {
 		p.z = 0.;
 	}

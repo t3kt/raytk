@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.sdf.cylinderSdf
-  opVersion: '17'
+  opVersion: '18'
   opStatus: default
 opDef: !def
   enable: true
@@ -20,6 +20,7 @@ opDef: !def
   - Radius
   - Height
   - Infiniteheight
+  - Axis
   variableTable: !table
     file: src/operators/sdf/cylinderSdf_variables.txt
     name: variable_exprs
@@ -27,7 +28,6 @@ opDef: !def
     evalOpts: !evalOpts
       excludeFirstRow: true
       cols: enable
-  generatedMacroTables: sel_axis_macros
   help: !text
     file: src/operators/sdf/cylinderSdf.md
     name: help

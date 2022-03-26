@@ -4,21 +4,47 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 	scale *= fillToVec3(inputOp_scaleField(p, ctx));
 	#pragma r:endif
 	p -= THIS_Translate;
-#pragma r:if THIS_INF_PLANE
-	vec2 q = p.THIS_INF_PLANE;
-	vec2 s = scale.THIS_INF_PLANE;
-	Sdf res = createSdf(THIS_BOX_FUNC(q, s));
-	#pragma r:if THIS_Uvmode_bounds
-	vec3 uv;
-	uv.THIS_INF_PLANE = map01(q, -s/2., s/2.);
-	uv.THIS_AXIS = p.THIS_AXIS;
-	assignUV(res, uv);
-	#pragma r:endif
-#pragma r:else
-	Sdf res = createSdf(THIS_BOX_FUNC(p, scale));
-	#pragma r:if THIS_Uvmode_bounds
-	assignUV(res, map01(p, -scale/2., scale/2.));
-	#pragma r:endif
-#pragma r:endif
+	Sdf res;
+	int infAxis = int(THIS_Infiniteaxis);
+	if (infAxis == 0) {
+		res = createSdf(THIS_BOX_FUNC_3D(p, scale));
+		#pragma r:if THIS_Uvmode_bounds
+		assignUV(res, map01(p, -scale/2., scale/2.));
+		#pragma r:endif
+	} else {
+		vec2 q;
+		vec2 s;
+		vec3 uv;
+		switch (infAxis - 1) {
+			case 0:
+				q = p.yz;
+				s = scale.yz;
+				#pragma r:if THIS_Uvmode_bounds
+				uv.yz = map01(q, -s/2., s/2.);
+				uv.x = p.x;
+				#pragma r:endif
+			break;
+			case 1:
+				q = p.zx;
+				s = scale.zx;
+				#pragma r:if THIS_Uvmode_bounds
+				uv.zx = map01(q, -s/2., s/2.);
+				uv.y = p.y;
+				#pragma r:endif
+			break;
+			case 2:
+				q = p.xy;
+				s = scale.xy;
+				#pragma r:if THIS_Uvmode_bounds
+				uv.xy = map01(q, -s/2., s/2.);
+				uv.z = p.z;
+				#pragma r:endif
+			break;
+		}
+		res = createSdf(THIS_BOX_FUNC_2D(q, s));
+		#pragma r:if THIS_Uvmode_bounds
+		assignUV(res, uv);
+		#pragma r:endif
+	}
 	return res;
 }

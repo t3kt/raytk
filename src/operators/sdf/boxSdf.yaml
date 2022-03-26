@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.sdf.boxSdf
-  opVersion: '15'
+  opVersion: '16'
   opStatus: default
 opDef: !def
   enable: true
@@ -19,13 +19,13 @@ opDef: !def
   - Translate[xyz]
   - Scale[xyz]
   - Uniformscale
+  - Infiniteaxis
   macroParams: Uvmode
   macroTable: !table
     file: src/operators/sdf/boxSdf_macros.txt
     name: macro_exprs
     evaluate: true
     evalOpts: !evalOpts {}
-  generatedMacroTables: sel_axis_macros
   help: !text
     file: src/operators/sdf/boxSdf.md
     name: help
