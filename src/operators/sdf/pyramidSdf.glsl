@@ -1,14 +1,19 @@
 ReturnT thismap(CoordT p, ContextT ctx) {
 	p -= THIS_Translate;
-	p.yzx = p.THIS_AXIS_PLANE_SWIZZLE;
+	CoordT p0 = p;
+	switch (int(THIS_Axis)) {
+		case 0: p = p.zxy; break;
+		case 1: p = p.xyz; break;
+		case 2: p = p.yzx; break;
+	}
 	float pd = -p.y;
 	float h = THIS_Height;
 	float w = THIS_Width;
 	#pragma r:if THIS_HAS_INPUT_heightField
-	h *= inputOp_heightField(p, ctx);
+	h *= inputOp_heightField(p0, ctx);
 	#pragma r:endif
 	#pragma r:if THIS_HAS_INPUT_widthField
-	w *= inputOp_widthField(p, ctx);
+	w *= inputOp_widthField(p0, ctx);
 	#pragma r:endif
 	p /= vec3(w, 1., w);
 	float m2 = h*h + 0.25;

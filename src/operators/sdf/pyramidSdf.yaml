@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.sdf.pyramidSdf
-  opVersion: '7'
+  opVersion: '8'
   opStatus: default
 opDef: !def
   enable: true
@@ -19,7 +19,7 @@ opDef: !def
   - Translate[xyz]
   - Height
   - Width
-  generatedMacroTables: sel_axis_macros
+  - Axis
   help: !text
     file: src/operators/sdf/pyramidSdf.md
     name: help

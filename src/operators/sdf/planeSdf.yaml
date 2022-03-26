@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.sdf.planeSdf
-  opVersion: '11'
+  opVersion: '12'
   opStatus: default
 opDef: !def
   enable: true
@@ -18,7 +18,7 @@ opDef: !def
   useParams:
   - Offset
   - Flip
-  generatedMacroTables: sel_axis_macros
+  - Axis
   help: !text
     file: src/operators/sdf/planeSdf.md
     name: help
