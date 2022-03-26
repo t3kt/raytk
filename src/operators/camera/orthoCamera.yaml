@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.camera.orthoCamera
-  opVersion: '8'
+  opVersion: '9'
   opStatus: beta
 opDef: !def
   enable: true
@@ -19,12 +19,7 @@ opDef: !def
   - Campos[xyz]
   - Rotate
   angleParams: Rotate
-  macroTable: !table
-    file: src/operators/camera/orthoCamera_macros.txt
-    name: macro_exprs
-    evaluate: true
-    evalOpts: !evalOpts {}
-  generatedMacroTables: axis_macros
+  paramListTable: switcher_params
   help: !text
     file: src/operators/camera/orthoCamera.md
     name: help

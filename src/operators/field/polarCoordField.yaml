@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.field.polarCoordField
-  opVersion: '1'
+  opVersion: '2'
   opStatus: beta
 opDef: !def
   enable: true
@@ -18,10 +18,11 @@ opDef: !def
   function: !text
     file: src/operators/field/polarCoordField.glsl
     name: functionTemplate
-  useParams: Center[xyz]
+  useParams:
+  - Center[xyz]
+  - Axis
   macroParams: Angleunit
   paramListTable: switcher_params
-  generatedMacroTables: sel_axis_macros
   help: !text
     file: src/operators/field/polarCoordField.md
     name: help

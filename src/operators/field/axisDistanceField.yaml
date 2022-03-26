@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.field.axisDistanceField
-  opVersion: '12'
+  opVersion: '13'
   opStatus: default
 opDef: !def
   enable: true
@@ -20,8 +20,9 @@ opDef: !def
   function: !text
     file: src/operators/field/axisDistanceField.glsl
     name: functionTemplate
-  useParams: Center
-  generatedMacroTables: sel_axis_macros
+  useParams:
+  - Center
+  - Axis
   help: !text
     file: src/operators/field/axisDistanceField.md
     name: help

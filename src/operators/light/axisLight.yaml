@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.light.axisLight
-  opVersion: '3'
+  opVersion: '4'
   opStatus: beta
 opDef: !def
   enable: true
@@ -23,4 +23,4 @@ opDef: !def
   - Attenuationstart
   - Attenuationend
   - Enableshadow
-  generatedMacroTables: sel_axis_macros
+  - Axis
