@@ -339,3 +339,66 @@ void swap(inout Sdf a, inout Sdf b) {
 #else
 	#define setDebugOut(val)
 #endif
+
+float getAxis(vec2 p, int axis) {
+	return (axis >= 0 && axis <= 2) ? p[axis] : 0.;
+}
+
+float getAxis(vec3 p, int axis) {
+	return (axis >= 0 && axis <= 3) ? p[axis] : 0.;
+}
+
+void setAxis(inout vec2 p, int axis, float val) {
+	p[axis] = val;
+}
+
+void setAxis(inout vec3 p, int axis, float val) {
+	p[axis] = val;
+}
+
+vec2 getAxisVec2(int axis) {
+	switch (axis) {
+		case 0: return vec2(1., 0.);
+		case 1: return vec2(0., 1.);
+		default: return vec2(0.);
+	}
+}
+
+vec3 getAxisVec3(int axis) {
+	switch (axis) {
+		case 0: return vec3(1., 0., 0.);
+		case 1: return vec3(0., 1., 0.);
+		case 2: return vec3(0., 0., 1.);
+		default: return vec3(0.);
+	}
+}
+
+vec2 getAxisPlane(vec2 p, int axis) {
+	switch (axis) {
+		case 2: return p;
+		default: return vec2(0.);
+	}
+}
+
+vec2 getAxisPlane(vec3 p, int axis) {
+	switch (axis) {
+		case 0: return p.yz;
+		case 1: return p.zx;
+		case 2: return p.xy;
+		default: return vec2(0.);
+	}
+}
+
+void setAxisPlane(inout vec2 p, int axis, vec2 val) {
+	switch (axis) {
+		case 2: p = val; break;
+	}
+}
+
+void setAxisPlane(inout vec3 p, int axis, vec2 val) {
+	switch (axis) {
+		case 0: p.yz = val; break;
+		case 1: p.zx = val; break;
+		case 2: p.xy = val; break;
+	}
+}
