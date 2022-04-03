@@ -1,5 +1,7 @@
 Material that uses phong shading.
 
+Deprecated in favor of using Phong mode in specularContrib in a modularMat.
+
 ## Parameters
 
 * `Enable`

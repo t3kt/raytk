@@ -1,7 +1,7 @@
 {
   "meta": {
-    "opStatus": "default",
+    "opStatus": "deprecated",
     "opType": "raytk.operators.material.phongMat",
-    "opVersion": 14
+    "opVersion": 15
   }
 }
