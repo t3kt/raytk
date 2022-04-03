@@ -1,1 +1,0 @@
-parent().par.Uselocalpos	'RAYTK_USE_MATERIAL_POS'	
