@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.combine.arrange
-  opVersion: '7'
+  opVersion: '8'
   opStatus: default
 opDef: !def
   enable: true
@@ -20,6 +20,12 @@ opDef: !def
   - Enable[1-8]
   paramListTable: mergeParams
   libraryNames: raytkCombine
+  variableTable: !table
+    file: src/operators/combine/arrange_variables.txt
+    name: variable_exprs
+    evaluate: true
+    evalOpts: !evalOpts
+      excludeFirstRow: true
   generatedMacroTables: multiInputHandler_macros
   help: !text
     file: src/operators/combine/arrange.md
