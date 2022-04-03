@@ -276,7 +276,7 @@ class CoordTypes(ModelObject):
 		return cls(**_valOrExprDictFromPars(specComp.pars('Allcoordtype', 'Coordtype*')))
 
 	def toYamlDict(self):
-		if self.Allcoordtype:
+		if self.Allcoordtype is True:
 			return {'Allcoordtype': True}
 		return _excludeFalseVals(super().toYamlDict())
 
@@ -297,7 +297,7 @@ class ContextTypes(ModelObject):
 		return cls(**_valOrExprDictFromPars(specComp.pars('Allcontexttype', 'Contexttype*')))
 
 	def toYamlDict(self):
-		if self.Allcontexttype:
+		if self.Allcontexttype is True:
 			return {'Allcontexttype': True}
 		return _excludeFalseVals(super().toYamlDict())
 
@@ -318,7 +318,7 @@ class ReturnTypes(ModelObject):
 		return ReturnTypes(**_valOrExprDictFromPars(specComp.pars('Allreturntype', 'Returntype*')))
 
 	def toYamlDict(self):
-		if self.Allreturntype:
+		if self.Allreturntype is True:
 			return {'Allreturntype': True}
 		return _excludeFalseVals(super().toYamlDict())
 
