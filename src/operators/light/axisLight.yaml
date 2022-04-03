@@ -1,8 +1,8 @@
 !rop
 meta: !meta
   opType: raytk.operators.light.axisLight
-  opVersion: '4'
-  opStatus: beta
+  opVersion: '5'
+  opStatus: default
 opDef: !def
   enable: true
   typeSpec: !ropTypes
