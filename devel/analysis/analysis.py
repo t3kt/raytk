@@ -115,13 +115,17 @@ def buildOpParamsTable(dat: 'DAT'):
 		])
 		for tuplet in info.rop.customTuplets:
 			par = tuplet[0]
-			if par.name in ('Inspect', 'Help'):
+			if par.name in ('Inspect', 'Help', 'Updateop'):
 				continue
 			cell = dat[info.path, par.tupletName]
 			if cell is None:
 				dat.appendCol([par.tupletName])
 				cell = dat[info.path, par.tupletName]
-			cell.val = par.style
+			if par.isMenu:
+				opts = ','.join(par.menuNames)
+				cell.val = f'Menu: {opts}'
+			else:
+				cell.val = par.style
 
 def buildOpVariablesTable(dat: 'DAT'):
 	dat.clear()
