@@ -19,12 +19,10 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 		p /= scale;
 	}
 
-		#pragma r:if THIS_HAS_INPUT_1
+	#pragma r:if THIS_HAS_INPUT_1
 	ReturnT res = inputOp1(p, ctx);
-	#pragma r:if THIS_RETURN_TYPE_float
-	res *= adjust;
-	#pragma r:else
-	res.x *= adjust;
+	#pragma r:if THIS_RETURN_TYPE_Sdf
+	res = withAdjustedScale(res, adjust);
 	#pragma r:endif
 	#pragma r:else
 	ReturnT res = adaptAsVec4(p);
