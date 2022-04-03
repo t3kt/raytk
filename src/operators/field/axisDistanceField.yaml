@@ -1,12 +1,14 @@
 !rop
 meta: !meta
   opType: raytk.operators.field.axisDistanceField
-  opVersion: '13'
+  opVersion: '14'
   opStatus: default
 opDef: !def
   enable: true
   typeSpec: !ropTypes
     coordType: !coordT
+      Allcoordtype: !expr
+        expr: parent().par.Coordtype == 'auto'
       Coordtypefloat: !expr
         expr: parent().par.Coordtype == 'float'
       Coordtypevec2: !expr
