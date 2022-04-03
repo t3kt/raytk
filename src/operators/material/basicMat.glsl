@@ -20,9 +20,36 @@ vec3 THIS_getColor(vec3 p, MaterialContext matCtx) {
 	vec3 sunDir = normalize(matCtx.light.pos);
 	float occ = calcAO(p, matCtx.normal);
 	vec3 baseColor = THIS_Basecolor;
+	#pragma r:if THIS_EXPOSE_normal
+	THIS_normal = matCtx.normal;
+	#pragma r:endif
+	#pragma r:if THIS_EXPOSE_lightcolor
+	THIS_lightcolor = matCtx.light.color;
+	#pragma r:endif
+	#pragma r:if THIS_EXPOSE_lightpos
+	THIS_lightpos = matCtx.light.pos;
+	#pragma r:endif
 	#pragma r:if THIS_Usesurfacecolor && RAYTK_USE_SURFACE_COLOR
 	if (matCtx.result.color.w > 0.) {
 		baseColor *= matCtx.result.color.rgb;
+	}
+	#pragma r:endif
+	#pragma r:if THIS_EXPOSE_surfacecolor
+	{
+		#pragma r:if RAYTK_USE_SURFACE_COLOR
+		THIS_surfacecolor = matCtx.result.color;
+		#pragma r:else
+		THIS_surfacecolor = vec4(1., 1., 1., 0.);
+		#pragma r:endif
+	}
+	#pragma r:endif
+	#pragma r:if THIS_EXPOSE_surfaceuv
+	{
+		#pragma r:if RAYTK_USE_UV
+		THIS_surfaceuv = matCtx.uv;
+		#pragma r:else
+		THIS_surfaceuv = vec4(0.);
+		#pragma r:endif
 	}
 	#pragma r:endif
 	#pragma r:if THIS_USE_BASE_COLOR_FIELD
