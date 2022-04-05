@@ -58,6 +58,12 @@ op:
     name: Axes
   - label: Offset
     name: Offset
+    summary: Offsets the plane or axis where the input is sampled.
   status: beta
+  summary: Takes a 3D (or 2D) operator and take a cross section of it across a plane
+    or a single axis.
 
 ---
+
+
+Takes a 3D (or 2D) operator and take a cross section of it across a plane or a single axis.

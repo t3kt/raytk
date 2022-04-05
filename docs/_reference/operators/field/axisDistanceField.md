@@ -8,6 +8,23 @@ redirect_from:
   - /reference/opType/raytk.operators.field.axisDistanceField/
 op:
   category: field
+  inputs:
+  - contextTypes:
+    - Context
+    - MaterialContext
+    - CameraContext
+    - LightContext
+    - RayContext
+    - ParticleContext
+    coordTypes:
+    - float
+    - vec2
+    - vec3
+    label: Coord Field
+    name: coordField
+    returnTypes:
+    - float
+    - vec4
   name: axisDistanceField
   opType: raytk.operators.field.axisDistanceField
   parameters:
@@ -25,6 +42,8 @@ op:
     summary: The position along the axis from which the distance is calculated.
   - label: Coord Type
     menuOptions:
+    - label: Auto
+      name: auto
     - label: 1D
       name: float
     - label: 2D

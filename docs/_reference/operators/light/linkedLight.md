@@ -22,6 +22,8 @@ op:
   - label: Create Light
     name: Createlight
     summary: Creates and attaches a new Light COMP.
+  - label: Enable Shadow
+    name: Enableshadow
   status: beta
   summary: Light that is based on a standard Light COMP.
 

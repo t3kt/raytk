@@ -67,11 +67,13 @@ cat:
   - name: noiseField
     summary: A float or vector field that uses one of several noise functions.
   - name: normalField
+    status: deprecated
     summary: Vector field that produces the surface normal where it is evaluated.
   - name: pointDistanceField
     summary: A float field that provides the distance from a specific point in space.
   - name: polarCoordField
     status: beta
+    summary: A field that produces various types of polar coordinates.
   - name: polarVectorField
   - name: positionField
     shortcuts:
@@ -95,6 +97,7 @@ cat:
     summary: Texture field that uses surface normals (or other blending techniques)
       to apply a texture facing each axis.
   - name: uvField
+    status: deprecated
     summary: Field that produces surface UV coordinates, if available.
   - name: waveField
     summary: A field that uses a periodic wave.

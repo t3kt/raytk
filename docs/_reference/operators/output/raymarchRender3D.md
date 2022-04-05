@@ -254,36 +254,58 @@ op:
     name: Nearhitfade
   - label: Enable Color Output
     name: Enablecoloroutput
+  - label: Format
+    name: Headerformat
+  - label: Compositing
+    name: Headercompositing
+  - label: Reflection
+    name: Headerreflection
+  - label: Refraction
+    name: Headerrefraction
   - label: Enable Refraction
     name: Enablerefraction
   - label: Refraction Passes
     name: Refractionpasses
   - label: Refraction Ray Cast
     name: Refractionraycast
+  - label: Background
+    name: Headerbackground
   - label: Background Field
     name: Backgroundfield
   - label: Use Background Field Alpha
     name: Usebackgroundfieldalpha
+  - label: Shadow
+    name: Headershadow
+  - label: Ray Marching
+    name: Headerraymarching
   - label: Distance Correction Factor
     name: Distfactor
+  - label: Limits
+    name: Headerlimits
+  - label: Near Hit
+    name: Headernearhit
+  - label: Normals
+    name: Headernormals
   - label: Enable Normal Smoothing
     name: Enablenormalsmoothing
   - label: Normal Smoothing
     name: Normalsmoothing
-  - label: Ray Modifier
-    name: Raymodifier
+  - label: Volumetrics
+    name: Headervolumetrics
   - label: Enable Secondary Ray Cast
     name: Enablesecondaryraycast
   - label: Secondary Ray Cast
     name: Secondaryraycast
+  - label: Ray Modifier
+    name: Raymodifier
+  - label: Customize Shader Config
+    name: Customizeshaderconfig
   - label: Enable UV Output
     name: Enableuvoutput
   - label: Enable Custom Output 1
     name: Enablecustomoutput1
   - label: Enable Custom Output 2
     name: Enablecustomoutput2
-  - label: Customize Shader Config
-    name: Customizeshaderconfig
   shortcuts:
   - rr3
   summary: Renders a scene using 3D raymarching.

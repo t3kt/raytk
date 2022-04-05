@@ -204,8 +204,27 @@ op:
   - label: Translate 8
     name: Translate8
     summary: Moves the input SDF 8.
+  - label: Enable 1
+    name: Enable1
+  - label: Enable 2
+    name: Enable2
+  - label: Enable 3
+    name: Enable3
+  - label: Enable 4
+    name: Enable4
+  - label: Enable 5
+    name: Enable5
+  - label: Enable 6
+    name: Enable6
+  - label: Enable 7
+    name: Enable7
+  - label: Enable 8
+    name: Enable8
   summary: Combines multiple SDFs, with a different position for each.
   thumb: assets/images/reference/operators/combine/arrange_thumb.png
+  variables:
+  - label: index
+    name: index
 
 ---
 

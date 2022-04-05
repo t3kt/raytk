@@ -38,7 +38,7 @@ op:
     name: Warmcolor
   - label: Cool Color
     name: Coolcolor
-  status: beta
+  status: deprecated
   summary: A material that uses the Gooch shading model.
   thumb: assets/images/reference/operators/material/goochMat_thumb.png
 

@@ -76,6 +76,17 @@ op:
     name: Usesurfacecolor
   summary: Material with a basic lighting model.
   thumb: assets/images/reference/operators/material/basicMat_thumb.png
+  variables:
+  - label: lightcolor
+    name: lightcolor
+  - label: lightpos
+    name: lightpos
+  - label: surfacecolor
+    name: surfacecolor
+  - label: surfaceuv
+    name: surfaceuv
+  - label: normal
+    name: normal
 
 ---
 
