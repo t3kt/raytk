@@ -1,10 +1,52 @@
 # Release Notes
 
-## v0.22
+## v0.23
 
 ### Highlights
 
 * Matcap materials
+* Multiple light sources!
+* Faster parameter changes for lots of operators
+
+### Details
+
+* Improvements / additions
+  * New ops
+    * matCapContrib (#798)
+    * multiLight!!! (#711)
+  * New feaures in existing ops
+    * Infinite height option for cylinderSdf and prismSdf (#648)
+    * Enable toggles in arrange (#755), mostly deprecating mergeToggle
+    * Shadow toggles in axisLight, directionalLight, linkedLight, pointLight, spotLight (#711)
+    * Index variable in arrange
+    * Variable support basicMat
+    * Coord field input in axisDistanceField (#829)
+  * More flexible variable types and access to fields (#833)
+  * Faster parameter changes (#629, #586)
+    * instance - combine modes
+    * axisLight, pointLight, spotLight - attenuation (#405)
+    * boxSdf - infinite axis
+    * axisDistanceField, axisLight, coneSdf, cylinderSdf, discSdf, gridSdf, helixSdf, planeSdf, polarCoordField, prismSdf, pyramidSdf, slice, spiralSdf, spiralZoom, twist - axis
+    * flip, orthoCamera - direction
+    * textureField - plane
+* Changes (potentially breaking)
+  * Changes to variable type handling may cause compatibility issues for variableReference operators. To fix this, re-create them, which will assign the correct types.
+  * The scale operator no longer rescales float values, only coordinates (#840)
+  * Removed deprecated operators
+    * ggxMat, orenNayarMat, sdfToFloat (replaced with sdfField)
+  * Mark operators as deprecated
+    * normalField
+    * phongMat
+    * uvField
+* Fixes
+  * matCapContrib should have been included in the previous release but wasn't (#798)
+  * scale operator should not rescale float values (#840)
+* Infrastructure / internals
+
+## v0.22
+
+### Highlights
+
 * Faster enable/disable for lots of filters
 * New 2D and 3D SDFs
 
