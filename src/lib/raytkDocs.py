@@ -205,6 +205,11 @@ class InputHelp:
 
 _ignorePars = 'Help', 'Inspect', 'Updateop'
 
+def _shouldIgnorePar(par: 'Par'):
+	if par.name in _ignorePars:
+		return True
+	return par.style == 'Header' or par.readOnly
+
 @dataclass
 class ROPHelp:
 	name: Optional[str] = None
@@ -229,14 +234,13 @@ class ROPHelp:
 		parTuples = [
 			pt
 			for pt in rop.customTuplets
-			if not pt[0].readOnly
+			if not _shouldIgnorePar(pt[0])
 		]
 		parTuples.sort(key=lambda pt: (pt[0].page.index * 1000) + pt[0].order)
 		ropHelp = cls.fromInfoOnly(info)
 		ropHelp.parameters = [
 			ROPParamHelp.extractFromPar(pt[0])
 			for pt in parTuples
-			if pt[0].name not in _ignorePars
 		]
 		dat = info.helpDAT
 		if dat:

@@ -2,7 +2,11 @@
 // https://www.shadertoy.com/view/ls2GRz
 
 ReturnT thismap(CoordT p, ContextT ctx) {
-	p = vec3(p.THIS_PLANE_P1, p.THIS_PLANE_P2, p.THIS_AXIS);
+	switch (int(THIS_Axis)) {
+		case 0: p = p.yzx; break;
+		case 1: p = p.zxy; break;
+		case 2: p = p.xyz; break;
+	}
 	vec2 c = vec2(THIS_Branches, THIS_Bend);
 	float r=length(p.xy);
 	vec2 f=vec2(log(r),atan(p.y,p.x))*0.5/PI;//Log-polar coordinates
@@ -16,14 +20,15 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 	mat2 m=mat2(vec2(cos(a),-sin(a)), vec2(sin(a),cos(a)));
 	pp=m*pp;//apply twist
 	pp=abs(pp);
+	ReturnT res;
 	#pragma r:if inputOp_crossSection_RETURN_TYPE_Sdf
-	Sdf res = inputOp_crossSection(pp.xy, ctx);
-	return res;
+	res = inputOp_crossSection(pp.xy, ctx);
 	#pragma r:elif inputOp_crossSection_RETURN_float
-	return createSdf(0.9 * (inputOp_crossSection(pp.xy, ctx) - THIS_Thickness));
+	res = createSdf(0.9 * (inputOp_crossSection(pp.xy, ctx) - THIS_Thickness));
 	#pragma r:else
 	float e = THIS_Exponent;//superquadric param
-	float res= 0.9*(pow(pow(pp.x,e)+pow(pp.y,e),1./e)-THIS_Thickness*r);//distance have to be scaled down because this is just an approximation.
-	return createSdf(res);
+	float d1= 0.9*(pow(pow(pp.x,e)+pow(pp.y,e),1./e)-THIS_Thickness*r);//distance have to be scaled down because this is just an approximation.
+	res = createSdf(d1);
 	#pragma r:endif
+	return res;
 }

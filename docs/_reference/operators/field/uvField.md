@@ -8,7 +8,11 @@ redirect_from:
   - /reference/opType/raytk.operators.field.uvField/
 op:
   category: field
-  detail: 'This can be used within modular materials for texture lookups.
+  detail: 'This has been deprecated in favor of using the Surface UV variable in the
+    material context.
+
+
+    This can be used within modular materials for texture lookups.
 
 
     For surfaces that have assigned UV coordinates, the W part of the produced vector
@@ -26,6 +30,7 @@ op:
     - label: 3D
       name: vec3
     name: Coordtype
+  status: deprecated
   summary: Field that produces surface UV coordinates, if available.
   thumb: assets/images/reference/operators/field/uvField_thumb.png
 
@@ -33,6 +38,8 @@ op:
 
 
 Field that produces surface UV coordinates, if available.
+
+This has been deprecated in favor of using the Surface UV variable in the material context.
 
 This can be used within modular materials for texture lookups.
 

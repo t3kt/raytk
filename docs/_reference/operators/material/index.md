@@ -34,23 +34,22 @@ cat:
     summary: 'A material that uses a vector field input to determine
 
       the color.'
-  - name: ggxMat
-    status: deprecated
   - name: goochMat
-    status: beta
+    status: deprecated
     summary: A material that uses the Gooch shading model.
   - name: goochShadingContrib
     status: beta
     summary: A material element that uses the Gooch shading model.
+  - name: matCapContrib
+    status: beta
   - name: modularMat
     shortcuts:
     - mm
     summary: A material that is composed of one or more shading elements.
-  - name: orenNayarMat
-    status: deprecated
   - name: pbrMat
     status: beta
   - name: phongMat
+    status: deprecated
     summary: Material that uses phong shading.
   - keywords:
     - lighting

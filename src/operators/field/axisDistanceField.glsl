@@ -1,7 +1,8 @@
 ReturnT thismap(CoordT p, ContextT ctx) {
-	#pragma r:if THIS_COORD_TYPE_float
-	return abs(p - THIS_Center);
+	#pragma r:if THIS_HAS_INPUT_coordField
+	vec3 q = adaptAsVec3(inputOp_coordField(p, ctx));
 	#pragma r:else
-	return length(p.THIS_AXIS - THIS_Center);
+	vec3 q = adaptAsVec3(p);
 	#pragma r:endif
+	return length(getAxis(q, int(THIS_Axis)) - THIS_Center);
 }

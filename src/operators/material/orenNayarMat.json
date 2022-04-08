@@ -1,7 +1,0 @@
-{
-  "meta": {
-    "opStatus": "deprecated",
-    "opType": "raytk.operators.material.orenNayarMat",
-    "opVersion": 7
-  }
-}

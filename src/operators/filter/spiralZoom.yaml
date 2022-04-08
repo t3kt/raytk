@@ -1,33 +1,20 @@
 !rop
 meta: !meta
   opType: raytk.operators.filter.spiralZoom
-  opVersion: '6'
+  opVersion: '7'
   opStatus: default
 opDef: !def
-  enable: !expr 'op(''..'').par.Enable'
+  enable: !expr
+    expr: op('..').par.Enable
   useRuntimeBypass: true
   typeSpec: !ropTypes
     coordType: !coordT
-      Allcoordtype: false
-      Coordtypefloat: false
       Coordtypevec2: true
       Coordtypevec3: true
     contextType: !contextT
       Allcontexttype: true
-      Contexttypecontext: false
-      Contexttypematerialcontext: true
-      Contexttypecameracontext: false
-      Contexttypelightcontext: false
-      Contexttyperaycontext: false
-      Contexttypeparticlecontext: false
     returnType: !returnT
       Allreturntype: true
-      Returntypesdf: false
-      Returntypefloat: true
-      Returntypevec4: true
-      Returntyperay: false
-      Returntypelight: false
-      Returntypeparticle: false
   function: !text
     file: src/operators/filter/spiralZoom.glsl
     name: function
@@ -36,8 +23,10 @@ opDef: !def
   - Phase[1-2]
   - Twist[1-2]
   - Branches
-  generatedMacroTables: sel_axis_macros
-  help: help
+  - Axis
+  help: !text
+    file: src/operators/filter/spiralZoom.md
+    name: help
   keywords:
   - polar
   - spiral
@@ -108,23 +97,9 @@ inputs:
 - !input
   Required: true
   coordType: !coordT
-    Allcoordtype: false
-    Coordtypefloat: false
     Coordtypevec2: true
     Coordtypevec3: true
   contextType: !contextT
     Allcontexttype: true
-    Contexttypecontext: true
-    Contexttypematerialcontext: false
-    Contexttypecameracontext: false
-    Contexttypelightcontext: false
-    Contexttyperaycontext: false
-    Contexttypeparticlecontext: false
   returnType: !returnT
     Allreturntype: true
-    Returntypesdf: false
-    Returntypefloat: true
-    Returntypevec4: true
-    Returntyperay: false
-    Returntypelight: false
-    Returntypeparticle: false

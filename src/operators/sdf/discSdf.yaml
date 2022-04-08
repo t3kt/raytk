@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.sdf.discSdf
-  opVersion: '6'
+  opVersion: '7'
   opStatus: default
 opDef: !def
   enable: true
@@ -19,13 +19,13 @@ opDef: !def
   - Translate[xyz]
   - Radius
   - Thickness
+  - Axis
   variableTable: !table
     file: src/operators/sdf/discSdf_variables.txt
     name: variable_exprs
     evaluate: true
     evalOpts: !evalOpts
       excludeFirstRow: true
-  generatedMacroTables: sel_axis_macros
   help: !text
     file: src/operators/sdf/discSdf.md
     name: help

@@ -1,2 +1,2 @@
-'THIS_BOX_FUNC'	op('func_name')[0,0]
-'THIS_INF_PLANE' if parent().par.Infiniteaxis != 'none' else ''	op('axis_info')['plane',1] if parent().par.Infiniteaxis != 'none' else ''
+'THIS_BOX_FUNC_2D'	op('boxTypes')[parent().par.Boxtype.eval(), 'func2d']
+'THIS_BOX_FUNC_3D'	op('boxTypes')[parent().par.Boxtype.eval(), 'func3d']

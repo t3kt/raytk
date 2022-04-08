@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.sdf.helixSdf
-  opVersion: '10'
+  opVersion: '11'
   opStatus: default
 opDef: !def
   enable: true
@@ -22,13 +22,13 @@ opDef: !def
   - Spread
   - Dualspread
   - Reverse
+  - Axis
   variableTable: !table
     file: src/operators/sdf/helixSdf_variables.txt
     name: variable_exprs
     evaluate: true
     evalOpts: !evalOpts
       excludeFirstRow: true
-  generatedMacroTables: sel_axis_macros
   help: !text
     file: src/operators/sdf/helixSdf.md
     name: help

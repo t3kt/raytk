@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.light.linkedLight
-  opVersion: '5'
+  opVersion: '6'
   opStatus: beta
 opDef: !def
   enable: true
@@ -15,6 +15,7 @@ opDef: !def
   function: !text
     file: src/operators/light/linkedLight.glsl
     name: functionTemplate
+  useParams: Enableshadow
   specialParams:
   - c[rgb]
   - attenuationstart

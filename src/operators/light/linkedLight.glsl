@@ -5,8 +5,8 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 		THIS_m02, THIS_m12, THIS_m22, THIS_m32,
 		THIS_m03, THIS_m13, THIS_m23, THIS_m33
 	);
-	Light light;
-	light.color = vec3(THIS_cr, THIS_cg, THIS_cb);
+	Light light = createLight(vec3(0.), vec3(THIS_cr, THIS_cg, THIS_cb));
+	light.supportShadow = IS_TRUE(THIS_Enableshadow);
 	#pragma r:if THIS_lighttype_point
 	{
 		light.pos = lightMat[3].xyz;

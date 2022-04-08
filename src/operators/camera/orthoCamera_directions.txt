@@ -1,0 +1,7 @@
+name	label	axis	dir	code
+xpos	Left (X+)	x	1	ray.pos.yz += xy / abs(ray.pos.x); ray.dir = vec3(1., 0., 0.);
+xneg	Right (X-)	x	-1	ray.pos.yz += xy / abs(ray.pos.x); ray.dir = vec3(-1., 0., 0.);
+ypos	Bottom (Y+)	y	1	ray.pos.zx += xy / abs(ray.pos.y); ray.dir = vec3(0., 1., 0.);
+yneg	Top (Y-)	y	-1	ray.pos.zx += xy / abs(ray.pos.y); ray.dir = vec3(0., -1., 0.);
+zpos	Back (Z+)	z	1	ray.pos.xy += xy / abs(ray.pos.z); ray.dir = vec3(0., 0., 1.);
+zneg	Front (Z-)	z	-1	ray.pos.xy += xy / abs(ray.pos.z); ray.dir = vec3(0., 0., -1.);

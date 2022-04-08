@@ -51,6 +51,7 @@ op:
     name: Attenuationstart
   - label: Attenuation End
     name: Attenuationend
-  status: beta
+  - label: Enable Shadow
+    name: Enableshadow
 
 ---

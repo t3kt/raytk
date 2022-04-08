@@ -1,8 +1,8 @@
 !rop
 meta: !meta
   opType: raytk.operators.light.spotLight
-  opVersion: '5'
-  opStatus: beta
+  opVersion: '7'
+  opStatus: default
 opDef: !def
   enable: true
   typeSpec: !ropTypes
@@ -22,9 +22,10 @@ opDef: !def
   - Intensity
   - Coneangle
   - Conedelta
+  - Enableattenuation
   - Attenuationstart
   - Attenuationend
-  macroParams: Enableattenuation
+  - Enableshadow
   help: !text
     file: src/operators/light/spotLight.md
     name: help

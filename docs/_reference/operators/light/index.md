@@ -12,7 +12,6 @@ cat:
   name: light
   operators:
   - name: axisLight
-    status: beta
   - name: directionalLight
     summary: A directional light.
   - name: hardShadow
@@ -22,6 +21,8 @@ cat:
   - name: linkedLight
     status: beta
     summary: Light that is based on a standard Light COMP.
+  - name: multiLight
+    status: beta
   - name: pointLight
     shortcuts:
     - pl
@@ -30,7 +31,6 @@ cat:
   - name: softShadow
     summary: A soft-edged shadow.
   - name: spotLight
-    status: beta
     summary: Cone-shaped spotlight.
   - name: volumetricRayCast
     status: beta

@@ -1,6 +1,10 @@
 ReturnT thismap(CoordT p, ContextT ctx) {
 	CoordT q = p - THIS_Translate;
-	q = vec3(q.THIS_PLANE_P1, q.THIS_AXIS, q.THIS_PLANE_P2);
+	switch (int(THIS_Axis)) {
+		case 0: q = q.yxz; break;
+		case 1: q = q.zyx; break;
+		case 2: q = q.xzy; break;
+	}
 
 	#pragma r:if THIS_EXPOSE_angle
 	THIS_angle = degrees(atan(q.x, q.z)) + 180.;

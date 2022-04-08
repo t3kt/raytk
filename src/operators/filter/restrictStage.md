@@ -10,7 +10,7 @@ The default value is "non-hit" for SDFs, and `0` / `vec4(0)` etc for other types
 ## Parameters
 
 * `Enable`
-* `Includeprimary`: Whether the operator should 
+* `Includeprimary`
 * `Includeshadow`
 * `Includereflect`
 * `Includematerial`

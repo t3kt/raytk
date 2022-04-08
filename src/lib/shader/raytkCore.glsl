@@ -265,20 +265,29 @@ void setIterationCell(inout Context ctx, vec3 cell) {
 struct Light {
 	vec3 pos;
 	vec3 color;  // Includes brightness. May be determined specific to a particular point in space (such as attentuation).
+	bool supportShadow;
+	bool absent;
 };
 
+Light createLight(vec3 pos, vec3 col) {
+	return Light(pos, col, true, false);
+}
+
 void initDefVal(out Light val) {
-	val = Light(vec3(0.), vec3(0.));
+	val = Light(vec3(0.), vec3(0.), true, false);
 }
 
 Light mixVals(in Light res1, in Light res2, float amt) {
 	Light res;
 	res.pos = mix(res1.pos, res2.pos, amt);
 	res.color = mix(res1.color, res2.color, amt);
+	res.supportShadow = res1.supportShadow || res2.supportShadow;
+	res.absent = res1.absent && res2.absent;
 	return res;
 }
 
 struct LightContext {
+	int index;
 	Sdf result;
 	vec3 normal;
 
@@ -288,7 +297,7 @@ struct LightContext {
 };
 
 LightContext createLightContext(Sdf res, vec3 norm) {
-	return LightContext(res, norm
+	return LightContext(0, res, norm
 	#if defined(RAYTK_TIME_IN_CONTEXT) || defined(RAYTK_USE_TIME)
 	, getGlobalTime()
 	#endif

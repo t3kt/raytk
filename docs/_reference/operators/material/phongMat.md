@@ -8,6 +8,7 @@ redirect_from:
   - /reference/opType/raytk.operators.material.phongMat/
 op:
   category: material
+  detail: Deprecated in favor of using Phong mode in specularContrib in a modularMat.
   inputs:
   - contextTypes:
     - Context
@@ -40,9 +41,12 @@ op:
     summary: Whether to use shadows. When enabled, if the *Shadow Definition* input
       is provided, that will be used. Otherwise a default shadow function will be
       used.
+  status: deprecated
   summary: Material that uses phong shading.
 
 ---
 
 
 Material that uses phong shading.
+
+Deprecated in favor of using Phong mode in specularContrib in a modularMat.

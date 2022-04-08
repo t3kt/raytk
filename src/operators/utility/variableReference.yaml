@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.utility.variableReference
-  opVersion: '7'
+  opVersion: '9'
   opStatus: default
 opDef: !def
   enable: !expr
@@ -13,14 +13,20 @@ opDef: !def
       Allcontexttype: true
     returnType: !returnT
       Returntypesdf: !expr
-        expr: parent().par.Datatype == 'Sdf'
+        expr: op('currentField')[1, 'returnAs'] == 'Sdf'
       Returntypefloat: !expr
-        expr: parent().par.Datatype == 'float' or parent().par.Part != 'vec'
+        expr: op('currentField')[1, 'returnAs'] == 'float'
       Returntypevec4: !expr
-        expr: parent().par.Datatype == 'vec4' and parent().par.Part == 'vec'
+        expr: op('currentField')[1, 'returnAs'] == 'vec4'
+      Returntyperay: !expr
+        expr: op('currentField')[1, 'returnAs'] == 'Ray'
+      Returntypelight: !expr
+        expr: op('currentField')[1, 'returnAs'] == 'Light'
+      Returntypeparticle: !expr
+        expr: op('currentField')[1, 'returnAs'] == 'Particle'
   function: !text
     file: src/operators/utility/variableReference.glsl
-    name: function
+    name: functionTemplate
   useParams: Defaultval[1-4]
   macroParams:
   - Datatype

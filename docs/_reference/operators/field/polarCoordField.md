@@ -44,6 +44,7 @@ op:
     name: Axis
   - label: Center
     name: Center
+    summary: The center point of the polar coordinates.
   - label: Coord Type
     menuOptions:
     - label: Auto
@@ -73,6 +74,10 @@ op:
       name: ParticleContext
     name: Contexttype
   status: beta
+  summary: A field that produces various types of polar coordinates.
   thumb: assets/images/reference/operators/field/polarCoordField_thumb.png
 
 ---
+
+
+A field that produces various types of polar coordinates.

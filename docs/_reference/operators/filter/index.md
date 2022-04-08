@@ -189,7 +189,6 @@ cat:
     name: radialClone
     summary: Repeats an SDF radially around an axis, combining the resulting shapes.
   - name: rangeTransform
-    status: beta
     summary: Applies a transform based on a range of settings, mapped with either
       the iteration value or a field input.
   - keywords:
@@ -217,7 +216,6 @@ cat:
     status: beta
     summary: Reshapes the values produced by a field by applying a function.
   - name: restrictStage
-    status: beta
     summary: Restricts which render stages an operator is used in.
   - keywords:
     - rotate

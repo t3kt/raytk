@@ -5,7 +5,7 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 		#if defined(THIS_COORD_TYPE_vec2)
 		vec2 q = p;
 		#elif defined(THIS_COORD_TYPE_vec3)
-		vec2 q = p.THIS_PLANE;
+		vec2 q = getAxisPlane(p, int(THIS_Axis));
 		#else
 		#error invalidCoordType
 		#endif
@@ -22,7 +22,7 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 		#if defined(THIS_COORD_TYPE_vec2)
 		p = q;
 		#elif defined(THIS_COORD_TYPE_vec3)
-		p.THIS_PLANE = q;
+		setAxisPlane(p, int(THIS_Axis), q);
 		#else
 		#error invalidCoordType
 		#endif

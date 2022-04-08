@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.material.basicMat
-  opVersion: '22'
+  opVersion: '23'
   opStatus: default
 opDef: !def
   enable: !expr
@@ -35,6 +35,12 @@ opDef: !def
     name: macro_exprs
     evaluate: true
     evalOpts: !evalOpts {}
+  variableTable: !table
+    file: src/operators/material/basicMat_variables.txt
+    name: variable_exprs
+    evaluate: true
+    evalOpts: !evalOpts
+      excludeFirstRow: true
   help: !text
     file: src/operators/material/basicMat.md
     name: help

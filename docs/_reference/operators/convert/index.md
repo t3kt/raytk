@@ -12,6 +12,8 @@ cat:
   - name: coordTo3D
   - name: crossSection
     status: beta
+    summary: Takes a 3D (or 2D) operator and take a cross section of it across a plane
+      or a single axis.
   - name: extrude
     shortcuts:
     - ext
@@ -27,9 +29,6 @@ cat:
       it to a plane within 3D space.
   - name: revolve
     summary: Creates a 3D SDF by revolving a 2D cross-section SDF around an axis.
-  - name: sdfToFloat
-    status: deprecated
-    summary: Converts an SDF into a float value field, based on the SDF surface distance.
   - name: sweep
     summary: Creates a 3D SDF by sweeping a 2D SDF along the surface of another 2D
       SDF.

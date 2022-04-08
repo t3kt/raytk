@@ -10,7 +10,11 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 	#else
 	const float radiusMod = 1.;
 	#endif
-	p = vec3(p.THIS_PLANE_P1, p.THIS_AXIS, p.THIS_PLANE_P2);
+	switch (int(THIS_Axis)) {
+		case 0: p = p.yxz; break;
+		case 1: p = p.zyx; break;
+		case 2: p = p.xzy; break;
+	}
 	ReturnT res;
 	BODY();
 	return res;

@@ -248,6 +248,22 @@ float adaptAsFloat(vec3 p) { return p.x; }
 float adaptAsFloat(vec4 p) { return p.x; }
 float adaptAsFloat(Sdf res) { return res.x; }
 
+float adaptAsFloat(bool p) { return float(p); }
+float adaptAsFloat(int p) { return float(p); }
+float adaptAsFloat(uint p) { return float(p); }
+
+float adaptAsFloat(bvec2 p) { return float(p.x); }
+float adaptAsFloat(ivec2 p) { return float(p.x); }
+float adaptAsFloat(uvec2 p) { return float(p.x); }
+
+float adaptAsFloat(bvec3 p) { return float(p.x); }
+float adaptAsFloat(ivec3 p) { return float(p.x); }
+float adaptAsFloat(uvec3 p) { return float(p.x); }
+
+float adaptAsFloat(bvec4 p) { return float(p.x); }
+float adaptAsFloat(ivec4 p) { return float(p.x); }
+float adaptAsFloat(uvec4 p) { return float(p.x); }
+
 vec2 adaptAsVec2(float p) { return vec2(p, 0.); }
 vec2 adaptAsVec2(vec2 p) { return p; }
 vec2 adaptAsVec2(vec3 p) { return p.xy; }
@@ -262,6 +278,23 @@ vec4 adaptAsVec4(float p) { return vec4(p, 0., 0., 0.); }
 vec4 adaptAsVec4(vec2 p) { return vec4(p, 0., 0.); }
 vec4 adaptAsVec4(vec3 p) { return vec4(p, 0.); }
 vec4 adaptAsVec4(vec4 p) { return p; }
+
+vec4 adaptAsVec4(int p) { return vec4(float(p), vec3(0.)); }
+vec4 adaptAsVec4(bool p) { return vec4(float(p), vec3(0.)); }
+vec4 adaptAsVec4(uint p) { return vec4(float(p), vec3(0.)); }
+
+vec4 adaptAsVec4(ivec2 p) { return vec4(vec2(p), vec2(0.)); }
+vec4 adaptAsVec4(bvec2 p) { return vec4(vec2(p), vec2(0.)); }
+vec4 adaptAsVec4(uvec2 p) { return vec4(vec2(p), vec2(0.)); }
+
+vec4 adaptAsVec4(ivec3 p) { return vec4(vec3(p), 0.); }
+vec4 adaptAsVec4(bvec3 p) { return vec4(vec3(p), 0.); }
+vec4 adaptAsVec4(uvec3 p) { return vec4(vec3(p), 0.); }
+
+vec4 adaptAsVec4(ivec4 p) { return vec4(p); }
+vec4 adaptAsVec4(bvec4 p) { return vec4(p); }
+vec4 adaptAsVec4(uvec4 p) { return vec4(p); }
+
 
 Sdf adaptAsSdf(float p) { return createSdf(p); }
 Sdf adaptAsSdf(Sdf res) { return res; }
@@ -296,4 +329,76 @@ void swap(inout Sdf a, inout Sdf b) {
 	Sdf tmp = a;
 	a = b;
 	b = tmp;
+}
+
+#define IS_TRUE(x)  (x >= 0.5)
+#define IS_FALSE(x) (x < 0.5)
+
+#ifdef OUTPUT_DEBUG
+	#define setDebugOut(val) (debugOut = val);
+#else
+	#define setDebugOut(val)
+#endif
+
+float getAxis(vec2 p, int axis) {
+	return (axis >= 0 && axis <= 2) ? p[axis] : 0.;
+}
+
+float getAxis(vec3 p, int axis) {
+	return (axis >= 0 && axis <= 3) ? p[axis] : 0.;
+}
+
+void setAxis(inout vec2 p, int axis, float val) {
+	p[axis] = val;
+}
+
+void setAxis(inout vec3 p, int axis, float val) {
+	p[axis] = val;
+}
+
+vec2 getAxisVec2(int axis) {
+	switch (axis) {
+		case 0: return vec2(1., 0.);
+		case 1: return vec2(0., 1.);
+		default: return vec2(0.);
+	}
+}
+
+vec3 getAxisVec3(int axis) {
+	switch (axis) {
+		case 0: return vec3(1., 0., 0.);
+		case 1: return vec3(0., 1., 0.);
+		case 2: return vec3(0., 0., 1.);
+		default: return vec3(0.);
+	}
+}
+
+vec2 getAxisPlane(vec2 p, int axis) {
+	switch (axis) {
+		case 2: return p;
+		default: return vec2(0.);
+	}
+}
+
+vec2 getAxisPlane(vec3 p, int axis) {
+	switch (axis) {
+		case 0: return p.yz;
+		case 1: return p.zx;
+		case 2: return p.xy;
+		default: return vec2(0.);
+	}
+}
+
+void setAxisPlane(inout vec2 p, int axis, vec2 val) {
+	switch (axis) {
+		case 2: p = val; break;
+	}
+}
+
+void setAxisPlane(inout vec3 p, int axis, vec2 val) {
+	switch (axis) {
+		case 0: p.yz = val; break;
+		case 1: p.zx = val; break;
+		case 2: p.xy = val; break;
+	}
 }

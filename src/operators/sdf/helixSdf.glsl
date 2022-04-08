@@ -1,25 +1,11 @@
-#ifndef RAYTK_HELIX
-#define RAYTK_HELIX
-
-//Eiffie
-vec2 sdHelixCoords(vec3 p, float r1, float m, float dualSpread) {
-	float halfm = m*.5,
-	b = mod(p.y, PI*m) - PI*halfm,
-	a = abs(atan(p.x, p.z) * halfm - b);
-	if (a > PI*halfm) a = PI*m - a;
-
-	//optimisation from Shane
-	p.xy = vec2(length(p.xz) - r1, a);
-	p.x = abs(p.x) - dualSpread;
-	return p.xy;
-}
-
-#endif
-
 ReturnT thismap(CoordT p, ContextT ctx) {
 	ReturnT res;
 	p -= THIS_Translate;
-	p = vec3(p.THIS_PLANE_P1, p.THIS_AXIS, p.THIS_PLANE_P2);
+	switch (int(THIS_Axis)) {
+		case 0: p = p.yxz; break;
+		case 1: p = p.zyx; break;
+		case 2: p = p.xzy; break;
+	}
 	if (THIS_Reverse > 0.5) {
 		p.x *= -1;
 	}
@@ -58,11 +44,20 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 		#endif
 	}
 	#endif
-	vec2 q = sdHelixCoords(p, radius, THIS_Spread, THIS_Dualspread * radius);
-	#if !defined(THIS_HAS_INPUT_crossSection)
-	res = createSdf(length(q) - thickness);
-	#else
+	float m = THIS_Spread;
+	float dualSpread = THIS_Dualspread * radius;
+	float halfm = m*.5,
+	b = mod(p.y, PI*m) - PI*halfm,
+	a = abs(atan(p.x, p.z) * halfm - b);
+	if (a > PI*halfm) a = PI*m - a;
+	//optimisation from Shane
+	p.xy = vec2(length(p.xz) - radius, a);
+	p.x = abs(p.x) - dualSpread;
+	vec2 q = p.xy;
+	#ifdef THIS_HAS_INPUT_crossSection
 	res = adaptAsSdf(inputOp_crossSection(q, ctx));
+	#else
+	res = createSdf(length(q) - thickness);
 	#endif
 	return res;
 }

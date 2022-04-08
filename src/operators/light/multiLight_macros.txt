@@ -1,0 +1,1 @@
+1	'RAYTK_LIGHT_COUNT'	max([0] + [tdu.digits(ch.name) for ch in op('multiInputInfo').chans('hasInput*') if ch > 0])

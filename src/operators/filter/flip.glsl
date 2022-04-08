@@ -9,11 +9,22 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 		res = inputOp1(p, ctx);
 	} else {
 		CoordT q = p;
-		q.THIS_AXIS += THIS_Shift;
-		q.THIS_AXIS *= -1;
-		q.THIS_AXIS -= THIS_Offset;
-		p.THIS_AXIS += THIS_Offset;
-		p.THIS_AXIS -= THIS_Shift;
+		switch (int(THIS_Axis)) {
+			case 0:
+			q.x = (q.x + THIS_Shift) * -1. - THIS_Offset;
+			p.x = p.x + THIS_Offset - THIS_Shift;
+			break;
+			case 1:
+			q.y = (q.y + THIS_Shift) * -1. - THIS_Offset;
+			p.y = p.y + THIS_Offset - THIS_Shift;
+			break;
+			#ifdef THIS_COORD_TYPE_vec3
+			case 2:
+			q.z = (q.z + THIS_Shift) * -1. - THIS_Offset;
+			p.z = p.z + THIS_Offset - THIS_Shift;
+			break;
+			#endif
+		}
 		#pragma r:if THIS_Iterationtype_sign
 		setIterationIndex(ctx, 1);
 		const int iterB = -1;

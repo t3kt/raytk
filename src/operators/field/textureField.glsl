@@ -6,7 +6,12 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 	#elif defined(THIS_COORD_TYPE_vec2)
 	vec2 uv = p;
 	#else
-	vec2 uv = p.THIS_PLANE;
+	vec2 uv;
+	switch (int(THIS_Axis)) {
+		case 0: uv = p.yz; break;
+		case 1: uv = p.zx; break;
+		case 2: uv = p.xy; break;
+	}
 	#endif
 	uv = (uv - THIS_Translate) / THIS_Scale;
 	#if defined(THIS_Extendmode_hold)

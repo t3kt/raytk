@@ -1,8 +1,8 @@
 !rop
 meta: !meta
   opType: raytk.operators.filter.rangeTransform
-  opVersion: '10'
-  opStatus: beta
+  opVersion: '11'
+  opStatus: default
 opDef: !def
   enable: !expr
     expr: op('..').par.Enable

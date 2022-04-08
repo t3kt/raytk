@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.field.textureField
-  opVersion: '17'
+  opVersion: '18'
   opStatus: default
 opDef: !def
   enable: !expr
@@ -29,6 +29,7 @@ opDef: !def
   - Translatev
   - Scaleu
   - Scalev
+  - Axis
   macroParams: Extendmode
   libraryNames: !expr
     expr: op('modZigZag')
@@ -37,7 +38,6 @@ opDef: !def
     name: texture_exprs
     evaluate: true
     evalOpts: !evalOpts {}
-  generatedMacroTables: sel_axis_macros
   help: !text
     file: src/operators/field/textureField.md
     name: help

@@ -83,7 +83,6 @@ op:
     name: Includevolumetricshadow
   - label: Include Normal
     name: Includenormal
-  status: beta
   summary: Restricts which render stages an operator is used in.
 
 ---

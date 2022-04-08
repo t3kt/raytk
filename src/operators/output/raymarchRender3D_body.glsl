@@ -250,7 +250,7 @@ vec4 getColor(vec3 p, MaterialContext matCtx) {
 	resolveUV(matCtx, uv1, uv2);
 	#endif
 	#if defined(THIS_Enableshadow) && defined(RAYTK_USE_SHADOW)
-	if (matCtx.result.useShadow) {
+	if (matCtx.result.useShadow && matCtx.light.supportShadow) {
 		int priorStage = pushStage(RAYTK_STAGE_SHADOW);
 		matCtx.shadedLevel = calcShadedLevel(p, matCtx);
 		popStage(priorStage);
@@ -296,9 +296,7 @@ vec4 getColor(vec3 p, MaterialContext matCtx) {
 
 #ifndef THIS_USE_LIGHT_FUNC
 Light getLight(vec3 p, LightContext lightCtx) {
-	Light light;
-	light.pos = uLightPos1;
-	light.color = uLightColor1;
+	Light light = createLight(uLightPos1, uLightColor1);
 	return light;
 }
 #endif
@@ -393,6 +391,25 @@ vec3 getReflectionColor(MaterialContext matCtx, vec3 p) {
 //}
 //#endif
 
+vec4 getColorWithLight(vec3 p, MaterialContext matCtx) {
+	if (matCtx.light.absent) {
+		return vec4(0.);
+	}
+	#if defined(RAYTK_USE_REFLECTION) && defined(THIS_Enablereflection)
+	matCtx.reflectColor = getReflectionColor(matCtx, p);
+	#else
+	matCtx.reflectColor = vec3(0);
+	#endif
+
+	#if defined(RAYTK_USE_REFRACTION) && defined(THIS_Enablerefraction)
+	matCtx.refractColor = getRefractionColor(p, matCtx);
+	#else
+	matCtx.refractColor = vec3(0);
+	#endif
+	vec4 col = getColor(p, matCtx);
+	return col;
+}
+
 void main()
 {
 	#ifdef RAYTK_HAS_INIT
@@ -465,35 +482,32 @@ void main()
 			#if defined(OUTPUT_COLOR) || defined(OUTPUT_NORMAL) || (defined(RAYTK_USE_REFLECTION) && defined(THIS_Enablereflection))
 			matCtx.normal = calcNormal(p);
 			#endif
-			#if defined(OUTPUT_COLOR)
-			LightContext lightCtx = createLightContext(res, matCtx.normal);
-			matCtx.light = getLight(p, lightCtx);
-			#endif
-
 			#ifdef OUTPUT_NORMAL
 			normalOut += vec4(matCtx.normal, 0);
 			#endif
+
 			#ifdef OUTPUT_COLOR
 			{
-				#if defined(RAYTK_USE_REFLECTION) && defined(THIS_Enablereflection)
-				matCtx.reflectColor = getReflectionColor(matCtx, p);
+				LightContext lightCtx = createLightContext(res, matCtx.normal);
+				vec4 col;
+				#if !defined(RAYTK_LIGHT_COUNT) || RAYTK_LIGHT_COUNT == 1
+				matCtx.light = getLight(p, lightCtx);
+				col = getColorWithLight(p, matCtx);
 				#else
-				matCtx.reflectColor = vec3(0);
+				col = vec4(0., 0., 0., 1.);
+				for (int i = 0; i < RAYTK_LIGHT_COUNT; i++) {
+					lightCtx.index = i;
+					matCtx.light = getLight(p, lightCtx);
+					col.rgb += getColorWithLight(p, matCtx).rgb;
+				}
 				#endif
-
-				#if defined(RAYTK_USE_REFRACTION) && defined(THIS_Enablerefraction)
-				matCtx.refractColor = getRefractionColor(p, matCtx);
-				#else
-				matCtx.refractColor = vec3(0);
-				#endif
-
-				vec4 col = getColor(p, matCtx);
-				vec4 color2 = castSecondaryRay(matCtx);
-				colorOut.rgb += color2.rgb;
 
 				vec2 fragCoord = vUV.st*uTDOutputInfo.res.zw;
 				col.rgb += (1.0/255.0)*hash1(fragCoord);
 				colorOut += col;
+
+				vec4 color2 = castSecondaryRay(matCtx);
+				colorOut.rgb += color2.rgb;
 			}
 			#endif
 			#ifdef OUTPUT_UV
