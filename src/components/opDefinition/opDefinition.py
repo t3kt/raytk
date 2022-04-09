@@ -571,6 +571,23 @@ def _prepareReferences(
 				hostName,
 			])
 
+def prepareDispatchTable(dat: 'scriptDAT'):
+	dat.clear()
+	dat.appendRow(['name', 'category', 'code'])
+	table = parentPar().Dispatchtable.eval()
+	if not table or table.numRows < 2:
+		return
+	namePrefix = parentPar().Name.eval() + '_'
+	for i in range(1, table.numRows):
+		name = table[i, 'name']
+		if not name or table[i, 'enable'] in ('0', 'False'):
+			continue
+		dat.appendRow([
+			namePrefix + name.val,
+			table[i, 'category'],
+			table[i, 'code'],
+		])
+
 def _isMaster():
 	host = _host()
 	return host and host.par.clone == host
