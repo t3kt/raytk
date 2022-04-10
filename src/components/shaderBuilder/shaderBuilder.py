@@ -573,7 +573,7 @@ class ShaderBuilder:
 	@staticmethod
 	def _buildNameIdDeclarations(offset: int, names: List['Cell']):
 		return [
-			f'const int {name} = {offset + (name.row - 1)}'
+			f'const int {name} = {offset + (name.row - 1)};'
 			for name in names
 		]
 
