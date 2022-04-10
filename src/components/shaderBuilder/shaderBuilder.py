@@ -684,7 +684,10 @@ class ShaderBuilder:
 				continue
 			name = dispatchTable[i, 'name']
 			code = dispatchTable[i, 'code'] or ''
-			output += f'else if (i == {name}) {{\n{code}\n}}'
+			output = f'case {name}: {{\n'
+			if code:
+				output += code + ';'
+			output += 'break;}\n'
 		return output
 
 	def buildValidationErrors(self, dat: 'DAT'):
@@ -1102,10 +1105,11 @@ class _V2_Writer:
 			name = self.dispatchTable[i, 'name']
 			if not name:
 				continue
-			self._write(f'else if(i == {name}) {{\n')
+			self._write(f'case {name}: {{\n')
 			code = self.dispatchTable[i, 'code']
 			if code:
-				self._write(code, '\n}')
+				self._write(code, ';')
+			self._write(code, '\n} break;\n')
 
 	def _write(self, *args):
 		self.out.write(*args)
