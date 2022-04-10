@@ -1,37 +1,23 @@
 !rop
 meta: !meta
   opType: raytk.operators.filter.reflect
-  opVersion: '23'
+  opVersion: '24'
   opStatus: default
 opDef: !def
   enable: !expr
-    expr: 'op(''..'').par.Enable'
+    expr: op('..').par.Enable
   useRuntimeBypass: true
   typeSpec: !ropTypes
     coordType: !coordT
-      Allcoordtype: false
-      Coordtypefloat: false
       Coordtypevec2: true
       Coordtypevec3: true
     contextType: !contextT
       Allcontexttype: true
-      Contexttypecontext: true
-      Contexttypematerialcontext: false
-      Contexttypecameracontext: false
-      Contexttypelightcontext: false
-      Contexttyperaycontext: false
-      Contexttypeparticlecontext: false
     returnType: !returnT
       Allreturntype: true
-      Returntypesdf: true
-      Returntypefloat: true
-      Returntypevec4: true
-      Returntyperay: false
-      Returntypelight: false
-      Returntypeparticle: false
   function: !text
     file: src/operators/filter/reflect.glsl
-    name: function
+    name: functionTemplate
   useParams:
   - Planenormal[xyz]
   - Offset
@@ -39,13 +25,18 @@ opDef: !def
   - Enableblend
   - Blend
   macroParams:
-  - Direction
   - Iterationtype
   - ''
-  macroTable: eval_macros
-  variableTable: eval_variables
-  generatedMacroTables: sel_axis_macros
-  help: help
+  paramListTable: switcher_params
+  variableTable: !table
+    file: src/operators/filter/reflect_variables.txt
+    name: variable_exprs
+    evaluate: true
+    evalOpts: !evalOpts
+      excludeFirstRow: true
+  help: !text
+    file: src/operators/filter/reflect.md
+    name: help
   keywords:
   - reflect
   - flip
@@ -158,69 +149,27 @@ paramPages:
 inputs:
 - !input
   coordType: !coordT
-    Allcoordtype: false
-    Coordtypefloat: false
     Coordtypevec2: true
     Coordtypevec3: true
   contextType: !contextT
     Allcontexttype: true
-    Contexttypecontext: true
-    Contexttypematerialcontext: false
-    Contexttypecameracontext: false
-    Contexttypelightcontext: false
-    Contexttyperaycontext: false
-    Contexttypeparticlecontext: false
   returnType: !returnT
     Allreturntype: true
-    Returntypesdf: true
-    Returntypefloat: true
-    Returntypevec4: true
-    Returntyperay: false
-    Returntypelight: false
-    Returntypeparticle: false
 - !input
   Localalias: offsetField
   coordType: !coordT
-    Allcoordtype: false
-    Coordtypefloat: false
     Coordtypevec2: true
     Coordtypevec3: true
   contextType: !contextT
     Allcontexttype: true
-    Contexttypecontext: true
-    Contexttypematerialcontext: false
-    Contexttypecameracontext: false
-    Contexttypelightcontext: false
-    Contexttyperaycontext: false
-    Contexttypeparticlecontext: false
   returnType: !returnT
-    Allreturntype: false
-    Returntypesdf: false
     Returntypefloat: true
-    Returntypevec4: false
-    Returntyperay: false
-    Returntypelight: false
-    Returntypeparticle: false
 - !input
   Localalias: shiftField
   coordType: !coordT
-    Allcoordtype: false
-    Coordtypefloat: false
     Coordtypevec2: true
     Coordtypevec3: true
   contextType: !contextT
     Allcontexttype: true
-    Contexttypecontext: true
-    Contexttypematerialcontext: false
-    Contexttypecameracontext: false
-    Contexttypelightcontext: false
-    Contexttyperaycontext: false
-    Contexttypeparticlecontext: false
   returnType: !returnT
-    Allreturntype: false
-    Returntypesdf: false
     Returntypefloat: true
-    Returntypevec4: false
-    Returntyperay: false
-    Returntypelight: false
-    Returntypeparticle: false
