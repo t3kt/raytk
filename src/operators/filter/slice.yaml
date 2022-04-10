@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.filter.slice
-  opVersion: '10'
+  opVersion: '11'
   opStatus: default
 opDef: !def
   enable: !expr
@@ -26,7 +26,6 @@ opDef: !def
   - Enablemirror
   - Enablesmoothing
   macroParams: Operation
-  generatedMacroTables: sel_axis_macros
   help: !text
     file: src/operators/filter/slice.md
     name: help
