@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.filter.modulo2D
-  opVersion: '19'
+  opVersion: '20'
   opStatus: default
 opDef: !def
   enable: !expr
@@ -22,6 +22,7 @@ opDef: !def
   - Size[1-2]
   - Offset[1-2]
   - Shift[1-2]
+  - Axis
   macroParams:
   - Iterationtype
   - Mirrortype
@@ -32,7 +33,6 @@ opDef: !def
     evaluate: true
     evalOpts: !evalOpts
       excludeFirstRow: true
-  generatedMacroTables: sel_axis_macros
   help: !text
     file: src/operators/filter/modulo2D.md
     name: help
