@@ -1,11 +1,12 @@
 !rop
 meta: !meta
   opType: raytk.operators.combine.simpleUnion
-  opVersion: '17'
+  opVersion: '18'
   opStatus: default
 opDef: !def
   enable: !expr
     expr: op('..').par.Enable
+  useRuntimeBypass: true
   typeSpec: !ropTypes
     coordType: !coordT
       Allcoordtype: true

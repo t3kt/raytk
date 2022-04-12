@@ -1,11 +1,12 @@
 !rop
 meta: !meta
   opType: raytk.operators.combine.compositeFields
-  opVersion: '6'
+  opVersion: '7'
   opStatus: default
 opDef: !def
   enable: !expr
     expr: op('..').par.Enable
+  useRuntimeBypass: true
   typeSpec: !ropTypes
     coordType: !coordT
       Allcoordtype: true
@@ -16,10 +17,10 @@ opDef: !def
   function: !text
     file: src/operators/combine/compositeFields.glsl
     name: functionTemplate
-  useParams: !expr
-    expr: '''Blend Swapinputs '' + op(''params'')[''params'', 1]'
-  macroParams: !expr
-    expr: op('params')['macroParams', 1]
+  useParams:
+  - Blend
+  - Swapinputs
+  paramListTable: switcher_params
   libraryNames: !expr
     expr: op('glslBlend')
   help: !text

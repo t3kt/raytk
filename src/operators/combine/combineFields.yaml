@@ -1,11 +1,12 @@
 !rop
 meta: !meta
   opType: raytk.operators.combine.combineFields
-  opVersion: '13'
+  opVersion: '14'
   opStatus: default
 opDef: !def
   enable: !expr
     expr: op('..').par.Enable
+  useRuntimeBypass: true
   typeSpec: !ropTypes
     coordType: !coordT
       Allcoordtype: true
@@ -20,10 +21,8 @@ opDef: !def
   function: !text
     file: src/operators/combine/combineFields.glsl
     name: functionTemplate
-  useParams: !expr
-    expr: '''Swaporder '' + op(''switcher_params'')[''params'', 1]'
-  macroParams: !expr
-    expr: op('switcher_params')['macroParams', 1]
+  useParams: Swaporder
+  paramListTable: switcher_params
   help: !text
     file: src/operators/combine/combineFields.md
     name: help
