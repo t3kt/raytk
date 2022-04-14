@@ -1,0 +1,3 @@
+name	label	dataType	enable	macros
+res	Resolution	vec2	1	
+aspect	Aspect Ratio	float	1	
