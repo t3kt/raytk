@@ -1,0 +1,5 @@
+name	label	dataType	enable	macros
+res	Resolution	vec2	1	
+aspect	Aspect Ratio	float	1	
+depth	Depth	float	1	
+firstslice	First Slice	float	1	
