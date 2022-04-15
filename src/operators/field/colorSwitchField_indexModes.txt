@@ -1,0 +1,5 @@
+name	label	code
+zeroindex	Index (0 .. N-1)	
+oneindex	Index (1 .. N)	i -= 1.;
+norm	Normalized (0 .. 1)	i /= (n - 1);
+zigzag	Zig-Zag	i = modZigZag(i / float(n - 1)) * float(n - 1)
