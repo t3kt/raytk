@@ -160,7 +160,10 @@ def buildParamSpecTable(dat: 'scriptDAT', paramListTable: 'DAT'):
 	])
 	globalPrefix = parentPar().Name.eval() + '_'
 
-	def addPar(p: 'Par', handling: str):
+	def addPar(p: 'Par', handling: str, skipExisting=False):
+		if skipExisting and dat[p.name, 0] is not None:
+			# skip params that are already loaded
+			return
 		dat.appendRow([
 			p.name,
 			globalPrefix + p.name,
@@ -175,8 +178,10 @@ def buildParamSpecTable(dat: 'scriptDAT', paramListTable: 'DAT'):
 		])
 
 
-	def getNamesFromListTable(category: str):
-		rowCells = paramListTable.row(category)
+	def getNamesFromListTable(table: 'DAT', category: str):
+		if not table:
+			return []
+		rowCells = table.row(category)
 		if not rowCells:
 			return []
 		names = []
@@ -186,37 +191,46 @@ def buildParamSpecTable(dat: 'scriptDAT', paramListTable: 'DAT'):
 					names.append(n)
 		return names
 
-	# Add regular params from Paramlisttable
-	for par in _getRegularParams(getNamesFromListTable('params')):
-		addPar(par, handling='runtime')
-	# Add macro params from Paramlisttable
-	for par in _getRegularParams(getNamesFromListTable('macroParams')):
-		addPar(par, handling='macro')
-
 	# Add runtime bypass
 	if parentPar().Useruntimebypass:
 		addPar(parentPar().Enable, handling='runtime')
 
-	# Add special params from opDefinition Specialparams par
-	specialNames = getNamesFromListTable('specialParams')
-	for name in specialNames:
-		dat.appendRow([
-			name,
-			globalPrefix + name,
-			'special', 'Float', '', '', '0', '', 'runtime', '',
-			])
+	def addFromListTable(table: 'DAT', skipExisting=False):
+		# Add regular params from Paramlisttable
+		for par in _getRegularParams(getNamesFromListTable(table, 'params')):
+			addPar(par, handling='runtime', skipExisting=skipExisting)
+		# Add macro params from Paramlisttable
+		for par in _getRegularParams(getNamesFromListTable(table, 'macroParams')):
+			addPar(par, handling='macro', skipExisting=skipExisting)
 
-	# Update conversions from opDefinition Angleparams par
-	for par in _getRegularParams(getNamesFromListTable('angleParams')):
-		cell = dat[par.name, 'conversion']
-		if cell is not None:
-			cell.val = 'angle'
+		# Add special params from opDefinition Specialparams par
+		specialNames = getNamesFromListTable(table, 'specialParams')
+		for name in specialNames:
+			dat.appendRow([
+				name,
+				globalPrefix + name,
+				'special', 'Float', '', '', '0', '', 'runtime', '',
+				])
+
+		# Update conversions from opDefinition Angleparams par
+		for par in _getRegularParams(getNamesFromListTable(table, 'angleParams')):
+			cell = dat[par.name, 'conversion']
+			if cell is not None:
+				cell.val = 'angle'
+
+	addFromListTable(paramListTable)
+
+	for t in _getOpElementTable().col('paramListTable')[1:]:
+		addFromListTable(op(t), skipExisting=True)
 
 	# Update param statuses based on tuplets
 	_fillParamStatuses(dat)
 
 	# Group special parameters into tuplets
 	_groupSpecialParamsIntoTuplets(dat)
+
+def _getOpElementTable() -> 'DAT':
+	return op('opElements')
 
 def _fillParamStatuses(dat: 'DAT'):
 	parsByTuplet = {}  # type: Dict[str, List[Par]]
