@@ -340,6 +340,10 @@ void swap(inout Sdf a, inout Sdf b) {
 	#define setDebugOut(val)
 #endif
 
+float getAxis(float p, int axis) {
+	return axis == 0 ? p : 0.;
+}
+
 float getAxis(vec2 p, int axis) {
 	return (axis >= 0 && axis <= 2) ? p[axis] : 0.;
 }
