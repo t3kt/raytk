@@ -21,15 +21,6 @@ ReturnT thismap(CoordT p, ContextT ctx)  {
 }
 ```
 
-Alternatively if you know that the ROP will always use some specific type, you can use that explicit type, as long as
-that type is supported for that kind of use.
-
-```glsl
-Sdf thismap(vec2 p, ContextT ctx) {
-  return createSdf(length(p) - THIS_Radius);
-}
-```
-
 ### Prefixes and Uniqueness
 
 Any functions, global variables, and macros defined in the shader code will be inserted into the generated shader. This
