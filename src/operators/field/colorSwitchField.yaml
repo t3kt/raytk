@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.field.colorSwitchField
-  opVersion: '5'
+  opVersion: '6'
   opStatus: beta
 opDef: !def
   enable: true
@@ -14,13 +14,12 @@ opDef: !def
       Returntypevec4: true
   function: !text
     file: src/operators/field/colorSwitchField.glsl
-    name: functionTemplate
+    name: function
   useParams:
   - Color[1-8][rgba]
   - Count
   - Blendindices
   - Offset
-  paramListTable: switcher_params
   libraryNames: !expr
     expr: op('modZigZag')
   help: !text
