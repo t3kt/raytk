@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.filter.assignUV
-  opVersion: '10'
+  opVersion: '11'
   opStatus: default
 opDef: !def
   enable: !expr
@@ -16,8 +16,7 @@ opDef: !def
       Returntypesdf: true
   function: !text
     file: src/operators/filter/assignUV.glsl
-    name: functionTemplate
-  paramListTable: switcher_params
+    name: function
   help: !text
     file: src/operators/filter/assignUV.md
     name: help

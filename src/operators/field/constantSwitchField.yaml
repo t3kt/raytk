@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.field.constantSwitchField
-  opVersion: '1'
+  opVersion: '2'
   opStatus: beta
 opDef: !def
   enable: true
@@ -17,12 +17,11 @@ opDef: !def
         expr: parent().par.Returntype == 'vec4'
   function: !text
     file: src/operators/field/constantSwitchField.glsl
-    name: functionTemplate
+    name: function
   useParams:
   - Value[1-8][1-4]
   - Count
   - Blendindices
   - Offset
-  paramListTable: switcher_params
   libraryNames: !expr
     expr: op('modZigZag')
