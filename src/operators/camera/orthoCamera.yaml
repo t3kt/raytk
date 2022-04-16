@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.camera.orthoCamera
-  opVersion: '9'
+  opVersion: '10'
   opStatus: beta
 opDef: !def
   enable: true
@@ -14,12 +14,11 @@ opDef: !def
       Returntyperay: true
   function: !text
     file: src/operators/camera/orthoCamera.glsl
-    name: functionTemplate
+    name: function
   useParams:
   - Campos[xyz]
   - Rotate
   angleParams: Rotate
-  paramListTable: switcher_params
   help: !text
     file: src/operators/camera/orthoCamera.md
     name: help

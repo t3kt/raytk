@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.filter.reflect
-  opVersion: '24'
+  opVersion: '25'
   opStatus: default
 opDef: !def
   enable: !expr
@@ -17,7 +17,7 @@ opDef: !def
       Allreturntype: true
   function: !text
     file: src/operators/filter/reflect.glsl
-    name: functionTemplate
+    name: function
   useParams:
   - Planenormal[xyz]
   - Offset
@@ -27,7 +27,6 @@ opDef: !def
   macroParams:
   - Iterationtype
   - ''
-  paramListTable: switcher_params
   variableTable: !table
     file: src/operators/filter/reflect_variables.txt
     name: variable_exprs

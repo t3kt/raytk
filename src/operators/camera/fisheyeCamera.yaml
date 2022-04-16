@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.camera.fisheyeCamera
-  opVersion: '6'
+  opVersion: '7'
   opStatus: default
 opDef: !def
   enable: true
@@ -14,7 +14,7 @@ opDef: !def
       Returntyperay: true
   function: !text
     file: src/operators/camera/fisheyeCamera.glsl
-    name: functionTemplate
+    name: function
   useParams:
   - Campos[xyz]
   - Camrot[xyz]
@@ -23,7 +23,6 @@ opDef: !def
   - Camfov
   - Aperture
   angleParams: Camrot[xyz]
-  paramListTable: switcher_params
   help: !text
     file: src/operators/camera/fisheyeCamera.md
     name: help

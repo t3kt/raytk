@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.sdf.octahedronSdf
-  opVersion: '6'
+  opVersion: '7'
   opStatus: default
 opDef: !def
   enable: true
@@ -14,12 +14,10 @@ opDef: !def
       Returntypesdf: true
   function: !text
     file: src/operators/sdf/octahedronSdf.glsl
-    name: functionTemplate
+    name: function
   useParams:
   - Translate[xyz]
   - Radius
-  paramListTable: !expr
-    expr: op('switcher_params')
   help: !text
     file: src/operators/sdf/octahedronSdf.md
     name: help

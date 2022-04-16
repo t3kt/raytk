@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.sdf2d.pieSdf2d
-  opVersion: '4'
+  opVersion: '5'
   opStatus: default
 opDef: !def
   enable: true
@@ -14,7 +14,7 @@ opDef: !def
       Returntypesdf: true
   function: !text
     file: src/operators/sdf2d/pieSdf2d.glsl
-    name: functionTemplate
+    name: function
   useParams:
   - Radius
   - Rotate
@@ -25,7 +25,6 @@ opDef: !def
   angleParams:
   - Rotate
   - Angle
-  paramListTable: switcher_params
   variableTable: !table
     file: src/operators/sdf2d/pieSdf2d_variables.txt
     name: variable_exprs

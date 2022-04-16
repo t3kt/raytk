@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.sdf.prismSdf
-  opVersion: '14'
+  opVersion: '15'
   opStatus: default
 opDef: !def
   enable: true
@@ -14,14 +14,13 @@ opDef: !def
       Returntypesdf: true
   function: !text
     file: src/operators/sdf/prismSdf.glsl
-    name: functionTemplate
+    name: function
   useParams:
   - Translate[xyz]
   - Radius
   - Height
   - Infiniteheight
   - Axis
-  paramListTable: switcher_params
   libraryNames: !expr
     expr: op('prismSdf_lib')
   help: !text

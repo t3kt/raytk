@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.sdf.coneSdf
-  opVersion: '12'
+  opVersion: '13'
   opStatus: default
 opDef: !def
   enable: true
@@ -14,10 +14,8 @@ opDef: !def
       Returntypesdf: true
   function: !text
     file: src/operators/sdf/coneSdf.glsl
-    name: functionTemplate
+    name: function
   useParams: Axis
-  paramListTable: !expr
-    expr: op('shape_params')
   help: !text
     file: src/operators/sdf/coneSdf.md
     name: help

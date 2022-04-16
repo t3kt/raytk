@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.sdf2d.planeSdf2d
-  opVersion: '3'
+  opVersion: '4'
   opStatus: default
 opDef: !def
   enable: true
@@ -14,6 +14,5 @@ opDef: !def
       Returntypesdf: true
   function: !text
     file: src/operators/sdf2d/planeSdf2d.glsl
-    name: functionTemplate
+    name: function
   useParams: Offset
-  paramListTable: switcher_params

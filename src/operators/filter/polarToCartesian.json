@@ -2,6 +2,6 @@
   "meta": {
     "opStatus": "beta",
     "opType": "raytk.operators.filter.polarToCartesian",
-    "opVersion": 4
+    "opVersion": 5
   }
 }

@@ -1,15 +1,35 @@
 !rop
 meta: !meta
   opType: raytk.operators.field.polarCoordField
-  opVersion: '2'
+  opVersion: '3'
   opStatus: beta
 opDef: !def
   enable: true
   typeSpec: !ropTypes
     coordType: !coordT
-      Allcoordtype: true
+      Allcoordtype: !expr
+        expr: parent().par.Coordtype == 'auto'
+      Coordtypefloat: !expr
+        expr: parent().par.Coordtype == 'float'
+      Coordtypevec2: !expr
+        expr: parent().par.Coordtype == 'vec2'
+      Coordtypevec3: !expr
+        expr: parent().par.Coordtype == 'vec3'
     contextType: !contextT
-      Allcontexttype: true
+      Allcontexttype: !expr
+        expr: parent().par.Contexttype == 'auto'
+      Contexttypecontext: !expr
+        expr: parent().par.Contexttype == 'Context'
+      Contexttypematerialcontext: !expr
+        expr: parent().par.Contexttype == 'MaterialContext'
+      Contexttypecameracontext: !expr
+        expr: parent().par.Contexttype == 'CameraContext'
+      Contexttypelightcontext: !expr
+        expr: parent().par.Contexttype == 'LightContext'
+      Contexttyperaycontext: !expr
+        expr: parent().par.Contexttype == 'RayContext'
+      Contexttypeparticlecontext: !expr
+        expr: parent().par.Contexttype == 'ParticleContext'
     returnType: !returnT
       Returntypefloat: !expr
         expr: op('switcher_info')[1, 'returnType'] == 'float'
@@ -17,12 +37,11 @@ opDef: !def
         expr: op('switcher_info')[1, 'returnType'] == 'vec4'
   function: !text
     file: src/operators/field/polarCoordField.glsl
-    name: functionTemplate
+    name: function
   useParams:
   - Center[xyz]
   - Axis
   macroParams: Angleunit
-  paramListTable: switcher_params
   help: !text
     file: src/operators/field/polarCoordField.md
     name: help
