@@ -393,7 +393,21 @@ def prepareCode(dat: 'DAT'):
 	dat.clear()
 	text = dat.inputs[0].text
 	text = _typePattern.sub(_typeRepl, text)
+	text = _replaceElementPlaceholders(text)
 	dat.write(text)
+
+def _replaceElementPlaceholders(text: str):
+	elementTable = _getOpElementTable()
+	for phCol in elementTable.cells(0, 'placeholder*'):
+		i = tdu.digits(phCol.val)
+		for row in range(1, elementTable.numRows):
+			placeholder = elementTable[row, phCol].val
+			if not placeholder or placeholder not in text:
+				continue
+			codeDat = op(elementTable[row, f'code{i}'])
+			code = codeDat.text if codeDat else ''
+			text = text.replace(placeholder, code)
+	return text
 
 def updateLibraryMenuPar(libsComp: 'COMP'):
 	p = parentPar().Librarynames  # type: Par
@@ -438,7 +452,10 @@ def prepareMacroTable(dat: 'scriptDAT', inputTable: 'DAT', paramSpecTable: 'DAT'
 				dat.appendRow(['', f'THIS_{name}', '1'])
 		else:
 			dat.appendRow(['', f'THIS_{name}', val])
-	for table in [op(parentPar().Macrotable)] + parentPar().Generatedmacrotables.evalOPs():
+	tables = [op(parentPar().Macrotable)] + parentPar().Generatedmacrotables.evalOPs() + [
+		op(c) for c in _getOpElementTable().col('macroTable')[1:]
+	]
+	for table in tables:
 		if not table or table.numCols == 0 or table.numRows == 0:
 			continue
 		elif table.numCols == 3:
