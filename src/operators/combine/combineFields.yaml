@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.combine.combineFields
-  opVersion: '14'
+  opVersion: '15'
   opStatus: default
 opDef: !def
   enable: !expr
@@ -20,9 +20,8 @@ opDef: !def
           'returnType'] == 'vec4'
   function: !text
     file: src/operators/combine/combineFields.glsl
-    name: functionTemplate
+    name: function
   useParams: Swaporder
-  paramListTable: switcher_params
   help: !text
     file: src/operators/combine/combineFields.md
     name: help

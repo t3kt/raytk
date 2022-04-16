@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.combine.compositeFields
-  opVersion: '7'
+  opVersion: '8'
   opStatus: default
 opDef: !def
   enable: !expr
@@ -16,11 +16,10 @@ opDef: !def
       Returntypevec4: true
   function: !text
     file: src/operators/combine/compositeFields.glsl
-    name: functionTemplate
+    name: function
   useParams:
   - Blend
   - Swapinputs
-  paramListTable: switcher_params
   libraryNames: !expr
     expr: op('glslBlend')
   help: !text
