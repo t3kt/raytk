@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.convert.projectPlane
-  opVersion: '1'
+  opVersion: '2'
   opStatus: beta
 opDef: !def
   enable: true
@@ -14,8 +14,7 @@ opDef: !def
       Allreturntype: true
   function: !text
     file: src/operators/convert/projectPlane.glsl
-    name: functionTemplate
-  paramListTable: switcher_params
+    name: function
   help: !text
     file: src/operators/convert/projectPlane.md
     name: help

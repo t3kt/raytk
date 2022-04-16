@@ -2,6 +2,6 @@
   "meta": {
     "opStatus": "default",
     "opType": "raytk.operators.pattern.hexagonalTruchetPattern",
-    "opVersion": 4
+    "opVersion": 5
   }
 }

@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.material.specularContrib
-  opVersion: '14'
+  opVersion: '15'
   opStatus: default
 opDef: !def
   enable: true
@@ -17,7 +17,7 @@ opDef: !def
         expr: parent().par.Usecolor
   function: !text
     file: src/operators/material/specularContrib.glsl
-    name: functionTemplate
+    name: function
   useParams:
   - Color[rgb]
   - Level
@@ -25,8 +25,6 @@ opDef: !def
   - Uselightcolor
   - Usesurfacecolor
   - Enableshadow
-  paramListTable: !expr
-    expr: op('switcher_params')
   libraryNames: !expr
     expr: op('specularContrib_lib')
   macroTable: !table
