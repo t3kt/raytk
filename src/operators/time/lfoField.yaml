@@ -1,29 +1,48 @@
 !rop
 meta: !meta
   opType: raytk.operators.time.lfoField
-  opVersion: '12'
+  opVersion: '13'
   opStatus: default
 opDef: !def
   enable: !expr
     expr: op('..').par.Enable
   typeSpec: !ropTypes
     coordType: !coordT
-      Allcoordtype: true
+      Allcoordtype: !expr
+        expr: parent().par.Coordtype == 'auto'
+      Coordtypefloat: !expr
+        expr: parent().par.Coordtype == 'float'
+      Coordtypevec2: !expr
+        expr: parent().par.Coordtype == 'vec2'
+      Coordtypevec3: !expr
+        expr: parent().par.Coordtype == 'vec3'
     contextType: !contextT
-      Allcontexttype: true
+      Allcontexttype: !expr
+        expr: parent().par.Contexttype == 'auto'
+      Contexttypecontext: !expr
+        expr: parent().par.Contexttype == 'Context'
+      Contexttypematerialcontext: !expr
+        expr: parent().par.Contexttype == 'MaterialContext'
+      Contexttypecameracontext: !expr
+        expr: parent().par.Contexttype == 'CameraContext'
+      Contexttypelightcontext: !expr
+        expr: parent().par.Contexttype == 'LightContext'
+      Contexttyperaycontext: !expr
+        expr: parent().par.Contexttype == 'RayContext'
+      Contexttypeparticlecontext: !expr
+        expr: parent().par.Contexttype == 'ParticleContext'
     returnType: !returnT
       Returntypefloat: true
       Returntypevec4: !expr
         expr: '''vec4'' in str(op(''wave_definition'')[1, ''returnType''] or '''')'
   function: !text
     file: src/operators/time/lfoField.glsl
-    name: functionTemplate
+    name: function
   useParams:
   - Amplitude
   - Offset
   - Reverse
   macroParams: Intervaltype
-  paramListTable: waveParams
   libraryNames: !expr
     expr: '[op(''raytkWave''), ''raytkTime'']'
   macroTable: !table
