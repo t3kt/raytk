@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.filter.radialClone
-  opVersion: '16'
+  opVersion: '17'
   opStatus: default
 opDef: !def
   enable: !expr
@@ -17,7 +17,7 @@ opDef: !def
       Allreturntype: true
   function: !text
     file: src/operators/filter/radialClone.glsl
-    name: functionTemplate
+    name: function
   useParams:
   - Count
   - Angleoffset
@@ -27,7 +27,6 @@ opDef: !def
   - Anglerange
   - Angleoffset
   macroParams: Iterationtype
-  paramListTable: mergeParams
   libraryNames: raytkCombine
   macroTable: !table
     file: src/operators/filter/radialClone_macros.txt

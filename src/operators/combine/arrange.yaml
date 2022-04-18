@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.combine.arrange
-  opVersion: '8'
+  opVersion: '9'
   opStatus: default
 opDef: !def
   enable: true
@@ -18,7 +18,6 @@ opDef: !def
   useParams:
   - Translate[1-8][xyz]
   - Enable[1-8]
-  paramListTable: mergeParams
   libraryNames: raytkCombine
   variableTable: !table
     file: src/operators/combine/arrange_variables.txt

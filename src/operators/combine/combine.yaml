@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.combine.combine
-  opVersion: '22'
+  opVersion: '23'
   opStatus: default
 opDef: !def
   enable: !expr
@@ -16,8 +16,7 @@ opDef: !def
       Returntypesdf: true
   function: !text
     file: src/operators/combine/combine.glsl
-    name: functionTemplate
-  paramListTable: mergeParams
+    name: function
   libraryNames: raytkCombine
   help: !text
     file: src/operators/combine/combine.md

@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.filter.instance
-  opVersion: '18'
+  opVersion: '19'
   opStatus: default
 opDef: !def
   enable: !expr
@@ -16,9 +16,8 @@ opDef: !def
       Returntypesdf: true
   function: !text
     file: src/operators/filter/instance.glsl
-    name: functionTemplate
+    name: function
   useParams: Instancecount
-  paramListTable: mergeParams
   libraryNames: raytkCombine
   bufferTable: !table
     file: src/operators/filter/instance_buffers.txt
