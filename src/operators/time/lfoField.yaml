@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.time.lfoField
-  opVersion: '13'
+  opVersion: '14'
   opStatus: default
 opDef: !def
   enable: !expr
@@ -50,4 +50,3 @@ opDef: !def
     name: macro_exprs
     evaluate: true
     evalOpts: !evalOpts {}
-  generatedMacroTables: sel_timeSource_macros timeSource_macros

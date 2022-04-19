@@ -1,0 +1,5 @@
+name	label	code
+seconds	Seconds (Timeline)	time_setSeconds(time, wrapRange(time_seconds(time) + shift, (time_start(time)-1)*time_rate(time), (time_end(time)-1)*time_rate(time)));
+frames	Frames (Timeline)	time_setFrame(time, wrapRange(time_frame(time) + shift, time_start(time), time_end(time)));
+absseconds	Seconds (Absolute)	time_setAbsSeconds(time, time_absSeconds(time) + shift);
+absframes	Frames (Absolute)	time_setAbsFrame(time, time_absFrame(time) + shift);

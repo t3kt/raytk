@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.time.timeShift
-  opVersion: '7'
+  opVersion: '8'
   opStatus: default
 opDef: !def
   enable: !expr
@@ -17,7 +17,6 @@ opDef: !def
     file: src/operators/time/timeShift.glsl
     name: functionTemplate
   useParams: Shift
-  macroParams: Intervaltype
   libraryNames: raytkTime
   help: !text
     file: src/operators/time/timeShift.md

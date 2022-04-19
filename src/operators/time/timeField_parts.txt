@@ -1,12 +1,12 @@
-name	label	expr	returnType	absolute
-seconds	Seconds	time_seconds(time)	float	0
-frame	Frame	time_frame(time)	float	0
-start	Start Frame	time_start(time)	float	0
-end	End Frame	time_end(time)	float	0
-fraction	Fraction	time_fraction(time)	float	0
-rate	Frame Rate	time_rate(time)	float	0
-bpm	BPM	time_bpm(time)	float	0
-absFrame	Absolute Frame	time_absFrame(time)	float	1
-absSeconds	Absolute Seconds	time_absSeconds(time)	float	1
-absStepFrames	Absolute Step Frames	time_absStepFrames(time)	float	1
-absStepSeconds	Absolute Step Seconds	time_absStepSeconds(time)	float	1
+name	label	expr	code	returnType	absolute
+seconds	Seconds	time_seconds(time)	res = time_seconds(time);	float	0
+frame	Frame	time_frame(time)	res = time_frame(time);	float	0
+start	Start Frame	time_start(time)	res = time_start(time);	float	0
+end	End Frame	time_end(time)	res = time_end(time);	float	0
+fraction	Fraction	time_fraction(time)	res = time_fraction(time);	float	0
+rate	Frame Rate	time_rate(time)	res = time_rate(time);	float	0
+bpm	BPM	time_bpm(time)	res = time_bpm(time);	float	0
+absFrame	Absolute Frame	time_absFrame(time)	res = time_absFrame(time);	float	1
+absSeconds	Absolute Seconds	time_absSeconds(time)	res = time_absSeconds(time);	float	1
+absStepFrames	Absolute Step Frames	time_absStepFrames(time)	res = time_absStepFrames(time);	float	1
+absStepSeconds	Absolute Step Seconds	time_absStepSeconds(time)	res = time_absStepSeconds(time);	float	1

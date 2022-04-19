@@ -1,16 +1,8 @@
 ReturnT thismap(CoordT p, ContextT ctx) {
-	Time time = THIS_TIME;
-	#pragma r:if THIS_Intervaltype_seconds
-	float q = time_seconds(time);
-	#pragma r:elif THIS_Intervaltype_frames
-	float q = time_frame(time);
-	#pragma r:elif THIS_Intervaltype_absseconds
-	float q = time_absSeconds(time);
-	#pragma r:elif THIS_Intervaltype_absframes
-	float q = time_absFrame(time);
-	#pragma r:else
-	#error invalidIntervalType
-	#pragma r:endif
+	Time time;
+	GET_TIME();
+	float q;
+	GET_INTERVAL();
 	WAVE_PREP();
 	if (THIS_Reverse > 0.) {
 		q = 1.0 - q;
