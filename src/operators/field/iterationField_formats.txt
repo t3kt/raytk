@@ -1,6 +1,6 @@
-name	label	returnType
-full	Full Vector	vec4
-x	X	float
-y	Y	float
-z	Z	float
-w	W	float
+name	label	code	returnType
+full	Full Vector	return extractIteration(ctx);	vec4
+x	X	return extractIteration(ctx).x;	float
+y	Y	return extractIteration(ctx).y;	float
+z	Z	return extractIteration(ctx).z;	float
+w	W	return extractIteration(ctx).w;	float

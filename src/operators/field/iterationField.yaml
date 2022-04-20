@@ -1,13 +1,20 @@
 !rop
 meta: !meta
   opType: raytk.operators.field.iterationField
-  opVersion: '9'
+  opVersion: '10'
   opStatus: default
 opDef: !def
   enable: true
   typeSpec: !ropTypes
     coordType: !coordT
-      Allcoordtype: true
+      Allcoordtype: !expr
+        expr: parent().par.Coordtype == 'auto'
+      Coordtypefloat: !expr
+        expr: parent().par.Coordtype == 'float'
+      Coordtypevec2: !expr
+        expr: parent().par.Coordtype == 'vec2'
+      Coordtypevec3: !expr
+        expr: parent().par.Coordtype == 'vec3'
     contextType: !contextT
       Allcontexttype: true
     returnType: !returnT
@@ -18,7 +25,6 @@ opDef: !def
   function: !text
     file: src/operators/field/iterationField.glsl
     name: functionTemplate
-  macroParams: Format
   help: !text
     file: src/operators/field/iterationField.md
     name: help
