@@ -34,7 +34,7 @@ def buildParametersTable(dat: 'DAT'):
 	else:
 		macroParams.append(name)
 	if parent().par.Manageparamstates:
-		if mode == 'switch':
+		if mode == 'switch' or parent().par.Alwaysincludeallparams:
 			params += list(_paramModes().keys())
 		else:
 			params.append(str(op('currentItemInfo')[1, 'params'] or ''))
