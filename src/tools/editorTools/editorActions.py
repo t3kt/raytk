@@ -1,5 +1,5 @@
 from typing import Callable, List, Optional, Union
-from editorToolsCommon import Action, ActionContext, ActionGroup, ActionManager, ActionUtils, ROPState
+from editorToolsCommon import Action, ActionContext, ActionGroup, ActionManager, ActionUtils, InitFunc, ROPState
 
 # noinspection PyUnreachableCode
 if False:
@@ -110,6 +110,32 @@ def _createCombineActionGroup(
 	]
 	return _SimpleGroup(text, isValid, lambda _: actions)
 
+def _createMaterialContribActionGroup(
+		text: str, ropType: str, paramName: str,
+		table: 'DAT',
+):
+	def isValid(ctx: ActionContext):
+		if not ActionUtils.isKnownRopType(ropType):
+			return False
+		if ctx.primaryRopState.info.opType not in [_RopTypes.modularMat]:
+			return False
+		return True
+	def createAction(label: str, value: str):
+		def init(rop: 'COMP'):
+			rop.par[paramName] = value
+		return _createAddInputAction(
+			text=label,
+			matchTypes=[_RopTypes.modularMat],
+			createType=ropType,
+			firstInput=1,
+			init=init,
+		)
+	actions = [
+		createAction(table[i, 'label'].val, table[i, 'name'].val)
+		for i in range(1, table.numRows)
+	]
+	return _SimpleGroup(text, isValid, lambda _: actions)
+
 def _createVarRefAction(label: str, variable: str, dataType: str):
 	def execute(ctx: ActionContext):
 		def init(refOp: 'COMP'):
@@ -191,6 +217,7 @@ def _createAddInputAction(
 		firstInput: int = 0,
 		lastInput: Optional[int] = None,
 		outputIndex: int = 0,
+		init: InitFunc = None,
 ):
 	def getConn(rop: 'OP'):
 		if lastInput is None:
@@ -214,6 +241,7 @@ def _createAddInputAction(
 			createType,
 			inputIndex=conn.index,
 			outputIndex=outputIndex,
+			init=init,
 		)
 
 	return _SimpleAction(text, isValid, execute)
@@ -419,10 +447,12 @@ def _anySelectedRopHasParam(ctx: ActionContext, par: str):
 class _RopTypes:
 	combine = 'raytk.operators.combine.combine'
 	combineFields = 'raytk.operators.combine.combineFields'
+	diffuseContrib = 'raytk.operators.material.diffuseContrib'
 	modularMat = 'raytk.operators.material.modularMat'
 	rescaleField = 'raytk.operators.filter.rescaleField'
 	raymarchRender3d = 'raytk.operators.output.raymarchRender3D'
 	render2d = 'raytk.operators.output.render2D'
+	specularContrib = 'raytk.operators.material.specularContrib'
 	speedGenerator = 'raytk.operators.utility.speedGenerator'
 	lfoGenerator = 'raytk.operators.utility.lfoGenerator'
 	vectorToFloat = 'raytk.operators.convert.vectorToFloat'
@@ -453,16 +483,16 @@ def createActionManager():
 			isValid=lambda ctx: ctx.primaryRopState.isFloatField,
 			ropType=_RopTypes.rescaleField,
 			paramVals={'Returntype': 'vec4'}),
-		_createAddInputAction(
+		_createMaterialContribActionGroup(
 			'Add Diffuse',
-			[_RopTypes.modularMat],
-			'raytk.operators.material.diffuseContrib',
-			firstInput=1),
-		_createAddInputAction(
+			_RopTypes.diffuseContrib,
+			paramName='Method',
+			table=op('diffuseContribMethods')),
+		_createMaterialContribActionGroup(
 			'Add Specular',
-			[_RopTypes.modularMat],
-			'raytk.operators.material.specularContrib',
-			firstInput=1),
+			_RopTypes.specularContrib,
+			paramName='Method',
+			table=op('specularContribMethods')),
 		_createAddInputAction(
 			'Add Look At Camera',
 			[_RopTypes.raymarchRender3d],
