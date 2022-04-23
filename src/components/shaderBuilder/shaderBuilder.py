@@ -1306,8 +1306,8 @@ class _ParameterProcessor:
 							f'{parType}({paramRef}.{suffixes[:size]})',
 							parType
 						)
-					for partI, partName in enumerate(paramTuplet.parts):
-						self.paramExprs[partName] = _ParamExpr(f'{paramRef}.{suffixes[partI]}', 'float')
+					# for partI, partName in enumerate(paramTuplet.parts):
+					# 	self.paramExprs[partName] = _ParamExpr(f'{paramRef}.{suffixes[partI]}', 'float')
 
 	def _paramReference(self, i: int, paramTuplet: _ParamTupletSpec) -> str:
 		raise NotImplementedError()
