@@ -1295,8 +1295,6 @@ class _ParameterProcessor:
 					valsExpr = ','.join(str(v) for v in partVals)
 					parType = f'vec{size}'
 					self.paramExprs[paramTuplet.tuplet] = _ParamExpr(f'{parType}({valsExpr})', parType)
-					for partI, partVal in enumerate(partVals):
-						self.paramExprs[paramTuplet.parts[partI]] = _ParamExpr(partVal, 'float')
 				else:
 					if size == 4:
 						self.paramExprs[paramTuplet.tuplet] = _ParamExpr(paramRef, 'vec4')
@@ -1306,8 +1304,6 @@ class _ParameterProcessor:
 							f'{parType}({paramRef}.{suffixes[:size]})',
 							parType
 						)
-					# for partI, partName in enumerate(paramTuplet.parts):
-					# 	self.paramExprs[partName] = _ParamExpr(f'{paramRef}.{suffixes[partI]}', 'float')
 
 	def _paramReference(self, i: int, paramTuplet: _ParamTupletSpec) -> str:
 		raise NotImplementedError()
