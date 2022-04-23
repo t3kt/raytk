@@ -1,5 +1,5 @@
 ReturnT thismap(CoordT p, ContextT ctx) {
-	p = mapRange(p, THIS_Range1, THIS_Range2, 0., 1.);
+	p = mapRange(p, THIS_Range.x, THIS_Range.y, 0., 1.);
 	#if defined(THIS_Extendmode_hold)
 	p = clamp(p, 0.0005, 0.9995);
 	#elif defined(THIS_Extendmode_repeat)

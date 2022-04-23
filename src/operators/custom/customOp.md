@@ -74,9 +74,9 @@ The `customOp`'s "Tools" parameter page includes several pulse parameters that c
 custom parameters based on the shader code. For example, 'Createmissingparams' will add new custom parameters that are
 referenced in the shader code but are missing on the "params" COMP.
 
-For multi-part parameters (`Par` styles including `XYZ`, `RGBA`, `UV` and `Float`/`Int` with more than 1 part), you
-can either refer to the individual parts (such as `THIS_Sizex`), or to the tuplet name which represents a value of the
-relevant `vec*` type, which combines all of those parts (e.g. `THIS_Size` could be a `vec3`).
+For multi-part parameters (`Par` styles including `XYZ`, `RGBA`, `UV` and `Float`/`Int` with more than 1 part) the
+alias evaluates to a value of the relevant `vec*` type, with the name of the tuplet without any suffix, which combines
+all of those parts (e.g. `THIS_Translate`).
 
 ## Parameters
 

@@ -10,13 +10,13 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 	#else
 	{
 		#if defined(THIS_ROW)
-		float cellSize = THIS_Size1 / float(THIS_INPUT_COUNT);
-		float cellPos = p.THIS_PLANE_P1 + THIS_Size1 * 0.25;
+		float cellSize = THIS_Size.x / float(THIS_INPUT_COUNT);
+		float cellPos = p.THIS_PLANE_P1 + THIS_Size.x * 0.25;
 		int cell = clamp(int(pModInterval1(cellPos, cellSize, 0, THIS_INPUT_COUNT - 1.)), 0, THIS_INPUT_COUNT - 1);
 		p.THIS_PLANE_P1 = cellPos;
 		#elif defined(THIS_COL)
-		float cellSize = THIS_Size2 / float(THIS_INPUT_COUNT);
-		float cellPos = p.THIS_PLANE_P2 + THIS_Size2 * 0.5;
+		float cellSize = THIS_Size.y / float(THIS_INPUT_COUNT);
+		float cellPos = p.THIS_PLANE_P2 + THIS_Size.y * 0.5;
 		int cell = clamp(int(pModInterval1(cellPos, cellSize, 0, THIS_INPUT_COUNT - 1.)), 0, THIS_INPUT_COUNT - 1);
 		p.THIS_PLANE_P2 = cellPos;
 		#elif defined(THIS_GRID_ROWS)

@@ -4,7 +4,7 @@ void THIS_apply(inout CoordT p, inout ContextT ctx) {
 	#pragma r:else
 	float i = extractIteration(ctx).x;
 	#pragma r:endif
-	i = mapRange(i, THIS_Indexrange1, THIS_Indexrange2, 0., 1.);
+	i = mapRange(i, THIS_Indexrange.x, THIS_Indexrange.y, 0., 1.);
 	#pragma r:if THIS_Extendmode_linear
 	#pragma r:elif THIS_Extendmode_clamp
 	i = clamp(i, 0., 1.);
