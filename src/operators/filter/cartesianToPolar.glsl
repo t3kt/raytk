@@ -1,3 +1,7 @@
+float THIS_ang(float a) {
+	CONVERT_ANGLE();
+	return a;
+}
 ReturnT thismap(CoordT p, ContextT ctx) {
 	if (THIS_Enable >= 0.5) {
 		vec3 q = adaptAsVec3(p);

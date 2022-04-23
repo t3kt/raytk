@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.field.polarCoordField
-  opVersion: '3'
+  opVersion: '4'
   opStatus: beta
 opDef: !def
   enable: true
