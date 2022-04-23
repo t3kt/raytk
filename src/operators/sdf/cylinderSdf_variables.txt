@@ -1,3 +1,4 @@
 name	label	dataType	enable
 axispos	Position Along Axis	float	1
 normoffset	Normalized Axis Position (0..1)	float	int(not parent().par.Infiniteheight)
+normangle	Normalized Angle (0..1)	float	1

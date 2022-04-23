@@ -1,11 +1,11 @@
-from typing import Callable, List, Optional, Union
+from typing import Any, Callable, Dict, List, Optional, Union
 from editorToolsCommon import Action, ActionContext, ActionGroup, ActionManager, ActionUtils, InitFunc, ROPState
 
 # noinspection PyUnreachableCode
 if False:
 	# noinspection PyUnresolvedReferences
 	from _stubs import *
-	from .exposeParamDialog.exposeParamDialog import ExposeParamDialog
+	from exposeParamDialog.exposeParamDialog import ExposeParamDialog
 
 _IsValidFunc = Callable[[ActionContext], bool]
 _ExecuteFunc = Callable[[ActionContext], None]
@@ -15,27 +15,30 @@ _OpPredicate = Callable[[OP], bool]
 class _SimpleAction(Action):
 	def __init__(
 			self, text: str,
-			isValid: _IsValidFunc,
+			isValid: Optional[_IsValidFunc],
 			execute: _ExecuteFunc,
 	):
 		super().__init__(text)
 		self._isValid = isValid
 		self._execute = execute
 
-	def isValid(self, ctx: ActionContext) -> bool: return self._isValid(ctx)
+	def isValid(self, ctx: ActionContext) -> bool: return self._isValid is None or self._isValid(ctx)
 	def execute(self, ctx: ActionContext): self._execute(ctx)
 
 class _SimpleGroup(ActionGroup):
 	def __init__(
 			self, text: str,
-			isValid: _IsValidFunc,
-			getActions: _GetActionsFunc,
+			isValid: Optional[_IsValidFunc],
+			getActions: Union[_GetActionsFunc, List[Action]],
 	):
 		super().__init__(text)
 		self._isValid = isValid
-		self._getActions = getActions
+		if isinstance(getActions, list):
+			self._getActions = lambda _: getActions
+		else:
+			self._getActions = getActions
 
-	def isValid(self, ctx: ActionContext) -> bool: return self._isValid(ctx)
+	def isValid(self, ctx: ActionContext) -> bool: return self._isValid is None or self._isValid(ctx)
 	def getActions(self, ctx: ActionContext) -> List[Action]: return self._getActions(ctx)
 
 def _createAppendNull(text: str):
@@ -63,7 +66,7 @@ def _createAppendNull(text: str):
 
 def _createAddOutputAction(
 		text: str,
-		isValid: _IsValidFunc,
+		isValid: Optional[_IsValidFunc],
 		ropType: str,
 		paramVals: Optional[dict] = None,
 ):
@@ -110,28 +113,27 @@ def _createCombineActionGroup(
 	]
 	return _SimpleGroup(text, isValid, lambda _: actions)
 
-def _createMaterialContribActionGroup(
-		text: str, ropType: str, paramName: str,
+def _createAddInputActionGroup(
+		text: str,
+		createType: str,
+		paramName: str,
+		matchTypes: List[str],
 		table: 'DAT',
+		firstInput: int = 0,
+		lastInput: Optional[int] = None,
+		outputIndex: int = 0,
 ):
 	def isValid(ctx: ActionContext):
-		if not ActionUtils.isKnownRopType(ropType):
+		if not ActionUtils.isKnownRopType(createType):
 			return False
-		if ctx.primaryRopState.info.opType not in [_RopTypes.modularMat]:
-			return False
-		return True
-	def createAction(label: str, value: str):
-		def init(rop: 'COMP'):
-			rop.par[paramName] = value
-		return _createAddInputAction(
-			text=label,
-			matchTypes=[_RopTypes.modularMat],
-			createType=ropType,
-			firstInput=1,
-			init=init,
-		)
+		return not matchTypes or ctx.primaryRopState.info.opType in matchTypes
 	actions = [
-		createAction(table[i, 'label'].val, table[i, 'name'].val)
+		_createAddInputAction(
+			table[i, 'label'].val,
+			matchTypes=matchTypes, createType=createType,
+			firstInput=firstInput, lastInput=lastInput, outputIndex=outputIndex,
+			params={paramName: table[i, 'name'].val},
+		)
 		for i in range(1, table.numRows)
 	]
 	return _SimpleGroup(text, isValid, lambda _: actions)
@@ -149,7 +151,6 @@ def _createVarRefAction(label: str, variable: str, dataType: str):
 			postSetup=init)
 	return _SimpleAction(
 		text=label,
-		isValid=lambda ctx: True,
 		execute=execute,
 	)
 
@@ -187,7 +188,6 @@ def _createRenderSelAction(label: str, name: str, enablePar: str):
 		)
 	return _SimpleAction(
 		text=label,
-		isValid=lambda ctx: True,
 		execute=execute,
 	)
 
@@ -217,6 +217,7 @@ def _createAddInputAction(
 		firstInput: int = 0,
 		lastInput: Optional[int] = None,
 		outputIndex: int = 0,
+		params: Dict[str, Any] = None,
 		init: InitFunc = None,
 ):
 	def getConn(rop: 'OP'):
@@ -236,12 +237,16 @@ def _createAddInputAction(
 	def execute(ctx: ActionContext):
 		rop = ctx.primaryRop
 		conn = getConn(rop)
+		def updateParams(c: 'COMP'):
+			if params:
+				for k, v in params.items():
+					c.par[k] = v
 		ActionUtils.createAndAttachToInput(
 			rop,
 			createType,
 			inputIndex=conn.index,
 			outputIndex=outputIndex,
-			init=init,
+			inits=[updateParams, init],
 		)
 
 	return _SimpleAction(text, isValid, execute)
@@ -347,7 +352,7 @@ def _createExposeParamOrTupletAction(parOrTuplet: 'Union[Par, ParTupletT]'):
 		text = f'{parOrTuplet.label} ({suffix})'
 	else:
 		text = parOrTuplet[0].label
-	return _SimpleAction(text, isValid=lambda c: True, execute=execute)
+	return _SimpleAction(text, execute=execute)
 
 def _createCustomizeShaderConfigAction(text: str):
 	def getTriggerPars(ctx: ActionContext):
@@ -374,7 +379,7 @@ def _createSelectVectorPartGroup(text: str, table: 'DAT'):
 		return [
 			_createAddOutputAction(
 				str(table[i, 'label']),
-				isValid=lambda _: True,
+				isValid=None,
 				ropType=_RopTypes.vectorToFloat,
 				paramVals={'Usepart': str(table[i, 'name'])})
 			for i in range(1, table.numRows)
@@ -483,15 +488,17 @@ def createActionManager():
 			isValid=lambda ctx: ctx.primaryRopState.isFloatField,
 			ropType=_RopTypes.rescaleField,
 			paramVals={'Returntype': 'vec4'}),
-		_createMaterialContribActionGroup(
+		_createAddInputActionGroup(
 			'Add Diffuse',
 			_RopTypes.diffuseContrib,
 			paramName='Method',
+			matchTypes=[_RopTypes.modularMat],
 			table=op('diffuseContribMethods')),
-		_createMaterialContribActionGroup(
+		_createAddInputActionGroup(
 			'Add Specular',
 			_RopTypes.specularContrib,
 			paramName='Method',
+			matchTypes=[_RopTypes.modularMat],
 			table=op('specularContribMethods')),
 		_createAddInputAction(
 			'Add Look At Camera',

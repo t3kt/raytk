@@ -279,7 +279,7 @@ class ActionUtils:
 	def createAndAttachToInput(
 			fromRop: 'OP',
 			ropType: str,
-			init: InitFunc = None,
+			inits: List[InitFunc] = None,
 			inputIndex: int = 0,
 			outputIndex: int = 0,
 	):
@@ -287,7 +287,7 @@ class ActionUtils:
 			rop.nodeCenterY = fromRop.nodeCenterY - 100
 			rop.nodeX = fromRop.nodeX - rop.nodeWidth - 150
 			rop.outputConnectors[outputIndex].connect(fromRop.inputConnectors[inputIndex])
-		ActionUtils.createROP(ropType, placeAndAttach, init)
+		ActionUtils.createROP(ropType, placeAndAttach, *(inits or []))
 
 	@staticmethod
 	def createAndAttachFromMultiOutputs(

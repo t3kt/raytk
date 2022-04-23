@@ -9,6 +9,9 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 	#ifdef THIS_EXPOSE_axispos
 	THIS_axispos = q.y;
 	#endif
+	#pragma r:if THIS_EXPOSE_normangle
+	THIS_normangle = atan(q.x, q.z)/TAU - .5;
+	#pragma r:endif
 	float r = THIS_Radius;
 	float h;
 	if (IS_FALSE(THIS_Infiniteheight)) {
