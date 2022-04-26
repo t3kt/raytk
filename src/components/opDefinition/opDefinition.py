@@ -392,8 +392,8 @@ def prepareCode(dat: 'DAT'):
 		return
 	dat.clear()
 	text = dat.inputs[0].text
-	text = _typePattern.sub(_typeRepl, text)
 	text = _replaceElementPlaceholders(text)
+	text = _typePattern.sub(_typeRepl, text)
 	dat.write(text)
 
 def _replaceElementPlaceholders(text: str):
