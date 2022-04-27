@@ -12,6 +12,7 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 	} else {
 		q = getAxis(q0, axis);
 	}
+	q = map01(q, THIS_Range.x, THIS_Range.y);
 	#if defined(THIS_Extendmode_hold)
 	q = clamp(q, 0, 1);
 	#elif defined(THIS_Extendmode_repeat)

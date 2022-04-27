@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.field.colorRampField
-  opVersion: '11'
+  opVersion: '12'
   opStatus: default
 opDef: !def
   enable: !expr
@@ -29,6 +29,8 @@ opDef: !def
   - Alpha1
   - Alpha2
   - Axis
+  - Range1
+  - Range2
   macroParams: Extendmode
   libraryNames: !expr
     expr: op('modZigZag')
@@ -39,3 +41,13 @@ opDef: !def
   - color
   - gradient
   - ramp
+inputs:
+- !input
+  Localalias: coordField
+  coordType: !coordT
+    Allcoordtype: true
+  contextType: !contextT
+    Allcontexttype: true
+  returnType: !returnT
+    Returntypefloat: true
+    Returntypevec4: true
