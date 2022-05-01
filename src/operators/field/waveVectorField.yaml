@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.field.waveVectorField
-  opVersion: '4'
+  opVersion: '5'
   opStatus: beta
 opDef: !def
   enable: true
@@ -30,3 +30,28 @@ opDef: !def
   macroParams: Axis
   libraryNames: !expr
     expr: op('raytkWave')
+inputs:
+- !input
+  Localalias: coordField
+  coordType: !coordT
+    Allcoordtype: true
+  contextType: !contextT
+    Allcontexttype: true
+  returnType: !returnT
+    Returntypefloat: true
+    Returntypevec4: true
+elements:
+- !opElement
+  name: waveFunction
+  elementType: waveFunction
+  params:
+    Waveparam: Function
+    Periodparam: Period
+    Phaseparam: Phase
+    Periodfield: ''
+    Phasefield: ''
+    Switchmode: auto
+    Coordtype: vec3
+    Manageparamstates: false
+    Prepcodeplaceholder: WAVE_PREP();
+    Bodycodeplaceholder: WAVE_BODY();

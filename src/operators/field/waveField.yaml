@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.field.waveField
-  opVersion: '24'
+  opVersion: '25'
   opStatus: default
 opDef: !def
   enable: !expr
@@ -48,3 +48,53 @@ opDef: !def
   help: !text
     file: src/operators/field/waveField.md
     name: help
+inputs:
+- !input
+  Localalias: coordField
+  coordType: !coordT
+    Allcoordtype: true
+  contextType: !contextT
+    Allcontexttype: true
+  returnType: !returnT
+    Returntypefloat: true
+    Returntypevec4: true
+- !input
+  Localalias: periodField
+  coordType: !coordT
+    Allcoordtype: true
+  contextType: !contextT
+    Allcontexttype: true
+  returnType: !returnT
+    Returntypefloat: true
+- !input
+  Localalias: phaseField
+  coordType: !coordT
+    Allcoordtype: true
+  contextType: !contextT
+    Allcontexttype: true
+  returnType: !returnT
+    Returntypefloat: true
+- !input
+  Localalias: waveFunc
+  coordType: !coordT
+    Coordtypefloat: true
+  contextType: !contextT
+    Allcontexttype: true
+  returnType: !returnT
+    Returntypefloat: true
+    Returntypevec4: true
+elements:
+- !opElement
+  name: waveFunction
+  elementType: waveFunction
+  params:
+    Waveparam: Function
+    Periodparam: Period
+    Phaseparam: Phase
+    Periodfield: periodField
+    Phasefield: phaseField
+    Switchmode: auto
+    Coordtype: float
+    Manageparamstates: true
+    Prepcodeplaceholder: WAVE_PREP();
+    Bodycodeplaceholder: WAVE_BODY();

@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.function.waveFn
-  opVersion: '11'
+  opVersion: '12'
   opStatus: default
 opDef: !def
   enable: true
@@ -31,3 +31,18 @@ opDef: !def
   help: !text
     file: src/operators/function/waveFn.md
     name: help
+elements:
+- !opElement
+  name: waveFunction
+  elementType: waveFunction
+  params:
+    Waveparam: Function
+    Periodparam: Period
+    Phaseparam: Phase
+    Periodfield: ''
+    Phasefield: ''
+    Switchmode: auto
+    Coordtype: float
+    Manageparamstates: true
+    Prepcodeplaceholder: WAVE_PREP();
+    Bodycodeplaceholder: WAVE_BODY();
