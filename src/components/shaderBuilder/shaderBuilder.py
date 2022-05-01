@@ -492,6 +492,18 @@ class ShaderBuilder:
 		decls = paramProcessor.paramAliases()
 		return wrapCodeSection(decls, 'paramAliases')
 
+	def buildParamUniformTable(self, dat: 'DAT'):
+		dat.clear()
+		dat.appendRow(['name', 'type', 'chop', 'uniformType', 'expr1', 'expr2', 'expr3', 'expr4'])
+		paramProcessor = self._createParamProcessor()
+		specs = paramProcessor.paramUniforms()
+		for spec in specs:
+			dat.appendRow([
+				spec.name, spec.dataType, spec.chop or '',
+				spec.uniformType,
+				spec.expr1 or '', spec.expr2 or '', spec.expr3 or '', spec.expr4 or ''
+			])
+
 	def processParametersInCode(self, code: str):
 		paramProcessor = self._createParamProcessor()
 		return paramProcessor.processCodeBlock(code)
@@ -1244,7 +1256,10 @@ class _ParameterProcessor:
 		self.paramExprs = None  # type: Optional[Dict[str, _ParamExpr]]
 
 	def globalDeclarations(self) -> List[str]:
-		raise NotImplementedError()
+		return [
+			spec.declaration()
+			for spec in self.paramUniforms()
+		]
 
 	def paramAliases(self) -> List[str]:
 		if not self.hasParams:
@@ -1308,14 +1323,20 @@ class _ParameterProcessor:
 	def _paramReference(self, i: int, paramTuplet: _ParamTupletSpec) -> str:
 		raise NotImplementedError()
 
+	def paramUniforms(self) -> 'List[_UniformSpec]':
+		raise NotImplementedError()
+
 class _VectorArrayParameterProcessor(_ParameterProcessor):
 	def _paramReference(self, i: int, paramTuplet: _ParamTupletSpec) -> str:
 		return f'vecParams[{i}]'
 
-	def globalDeclarations(self) -> List[str]:
+	def paramUniforms(self) -> 'List[_UniformSpec]':
 		paramCount = max(1, self.paramDetailTable.numRows - 1)
 		return [
-			f'uniform vec4 vecParams[{paramCount}];',
+			_UniformSpec(
+				'vecParams', 'vec4', 'uniformarray', paramCount,
+				parent().path + '/merged_vector_param_vals'
+			)
 		]
 
 class _SeparateUniformsParameterProcessor(_ParameterProcessor):
@@ -1334,6 +1355,24 @@ class _SeparateUniformsParameterProcessor(_ParameterProcessor):
 
 	def _paramReference(self, i: int, paramTuplet: _ParamTupletSpec) -> str:
 		return paramTuplet.tuplet
+
+	def paramUniforms(self) -> 'List[_UniformSpec]':
+		if not self.hasParams:
+			return []
+		chopPath = parent().path + '/merged_vector_param_vals'
+		specs = []
+		for row in range(1, self.paramDetailTable.numRows):
+			name = self.paramDetailTable[row, 'tuplet'].val
+			size = int(self.paramDetailTable[row, 'size'])
+			if size == 1:
+				specs.append(_UniformSpec(name, 'float', 'vector', chop=chopPath))
+			else:
+				specs.append(_UniformSpec(name, f'vec{size}', 'vector', chop=chopPath))
+		return specs
+
+_splitArrayCount = 10
+class _SplitVectorArrayParameterProcessor(_ParameterProcessor):
+	pass
 
 def _stringify(val: 'Union[str, DAT]'):
 	if val is None:
