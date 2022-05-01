@@ -152,6 +152,7 @@ def _createVarRefAction(label: str, variable: str, dataType: str):
 	return _SimpleAction(
 		text=label,
 		execute=execute,
+		isValid=None,
 	)
 
 def _createVarRefGroup(text: str):
@@ -189,6 +190,7 @@ def _createRenderSelAction(label: str, name: str, enablePar: str):
 	return _SimpleAction(
 		text=label,
 		execute=execute,
+		isValid=None,
 	)
 
 def _createRenderSelGroup(text: str):
@@ -352,7 +354,7 @@ def _createExposeParamOrTupletAction(parOrTuplet: 'Union[Par, ParTupletT]'):
 		text = f'{parOrTuplet.label} ({suffix})'
 	else:
 		text = parOrTuplet[0].label
-	return _SimpleAction(text, execute=execute)
+	return _SimpleAction(text, execute=execute, isValid=None)
 
 def _createCustomizeShaderConfigAction(text: str):
 	def getTriggerPars(ctx: ActionContext):
