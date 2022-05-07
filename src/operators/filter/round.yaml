@@ -20,6 +20,12 @@ opDef: !def
     file: src/operators/filter/round.glsl
     name: function
   useParams: Amount
+  variableTable: !table
+    file: src/operators/filter/round_variables.txt
+    name: variable_exprs
+    evaluate: true
+    evalOpts: !evalOpts
+      excludeFirstRow: true
   help: !text
     file: src/operators/filter/round.md
     name: help

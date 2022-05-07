@@ -163,7 +163,13 @@ _allTypes += [
 			Field('x', 'Distance', 'float'),
 			Field('mat', 'Material', 'vec3'),
 			Field('uv', 'Primary UV', 'vec4', macros='RAYTK_USE_UV'),
+			Field('uv.x', 'Primary UV (X)', 'float', macros='RAYTK_USE_UV'),
+			Field('uv.y', 'Primary UV (Y)', 'float', macros='RAYTK_USE_UV'),
+			Field('uv.z', 'Primary UV (Z)', 'float', macros='RAYTK_USE_UV'),
 			Field('uv2', 'Secondary UV', 'vec4', macros='RAYTK_USE_UV'),
+			Field('uv2.x', 'Secondary UV (X)', 'float', macros='RAYTK_USE_UV'),
+			Field('uv2.y', 'Secondary UV (Y)', 'float', macros='RAYTK_USE_UV'),
+			Field('uv2.z', 'Secondary UV (Z)', 'float', macros='RAYTK_USE_UV'),
 			Field('color', 'Surface Color', 'vec4', macros='RAYTK_USE_SURFACE_COLOR'),
 			# TODO: sdf fields
 		]),
