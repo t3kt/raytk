@@ -21,3 +21,43 @@ opDef: !def
   help: !text
     file: src/operators/function/addFn.md
     name: help
+multiInput: !multiInput
+  Minimuminputs: 1
+  Coordtypereductionmode: common
+  Coordtypereductionscope: '*'
+  Contexttypereductionmode: common
+  Contexttypereductionscope: '*'
+  Returntypereductionmode: none
+  inputs:
+  - !input
+    coordType: !coordT
+      Allcoordtype: true
+    contextType: !contextT
+      Allcontexttype: true
+    returnType: !returnT
+      Returntypefloat: true
+      Returntypevec4: true
+  - !input
+    coordType: !coordT
+      Allcoordtype: true
+    contextType: !contextT
+      Allcontexttype: true
+    returnType: !returnT
+      Returntypefloat: true
+      Returntypevec4: true
+  - !input
+    coordType: !coordT
+      Allcoordtype: true
+    contextType: !contextT
+      Allcontexttype: true
+    returnType: !returnT
+      Returntypefloat: true
+      Returntypevec4: true
+  - !input
+    coordType: !coordT
+      Allcoordtype: true
+    contextType: !contextT
+      Allcontexttype: true
+    returnType: !returnT
+      Returntypefloat: true
+      Returntypevec4: true

@@ -22,3 +22,17 @@ opDef: !def
   help: !text
     file: src/operators/camera/orthoCamera.md
     name: help
+elements:
+- !opElement
+  name: codeSwitcher_Direction
+  elementType: codeSwitcher
+  params:
+    Table: !table
+      file: src/operators/camera/orthoCamera_directions.txt
+      name: directions
+    Param: Direction
+    Autoupdateparams: true
+    Manageparamstates: true
+    Alwaysincludeallparams: false
+    Switchmode: auto
+    Placeholder: BODY();

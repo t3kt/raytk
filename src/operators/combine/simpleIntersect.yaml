@@ -105,3 +105,18 @@ multiInput: !multiInput
     returnType: !returnT
       Returntypesdf: true
       Returntypefloat: true
+elements:
+- !opElement
+  name: aggregateCodeGenerator
+  elementType: aggregateCodeGenerator
+  params:
+    Startindex: 0
+    Exprindexoffset: 0
+    Reverseorder: false
+    Initmode: firststep
+    Numberingmode: sequential
+    Startstmt: ReturnT res = createSdf(0);
+    Defaultstmt: ReturnT res = createNonHitSdf();
+    Firststepstmt: ReturnT res = THIS_INPUT_$(p, ctx);
+    Stepstmt: res = cmb_simpleIntersect(res, THIS_INPUT_$(p, ctx));
+    Bodycodeplaceholder: ''

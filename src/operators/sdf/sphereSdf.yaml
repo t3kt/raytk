@@ -23,3 +23,12 @@ opDef: !def
     file: src/operators/sdf/sphereSdf.md
     name: help
   shortcuts: sph
+inputs:
+- !input
+  Localalias: radiusField
+  coordType: !coordT
+    Coordtypevec3: true
+  contextType: !contextT
+    Allcontexttype: true
+  returnType: !returnT
+    Returntypefloat: true

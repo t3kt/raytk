@@ -1,21 +1,14 @@
 !rop
 meta: !meta
-  opType: raytk.operators.field.stepField
-  opVersion: '6'
+  opType: raytk.operators.convert.floatToVector
+  opVersion: '11'
   opStatus: default
 opDef: !def
   enable: !expr
     expr: op('..').par.Enable
   typeSpec: !ropTypes
     coordType: !coordT
-      Allcoordtype: !expr
-        expr: parent().par.Coordtype == 'auto' or op('definition_1').numRows > 1
-      Coordtypefloat: !expr
-        expr: parent().par.Coordtype == 'float'
-      Coordtypevec2: !expr
-        expr: parent().par.Coordtype == 'vec2'
-      Coordtypevec3: !expr
-        expr: parent().par.Coordtype == 'vec3'
+      Allcoordtype: true
     contextType: !contextT
       Allcontexttype: !expr
         expr: parent().par.Contexttype == 'auto'
@@ -30,36 +23,37 @@ opDef: !def
       Contexttyperaycontext: !expr
         expr: parent().par.Contexttype == 'RayContext'
     returnType: !returnT
-      Returntypefloat: !expr
-        expr: parent().par.Returntype == 'float'
-      Returntypevec4: !expr
-        expr: parent().par.Returntype == 'vec4'
+      Returntypevec4: true
   function: !text
-    file: src/operators/field/stepField.glsl
+    file: src/operators/convert/floatToVector.glsl
     name: function
-  useParams:
-  - Edge
-  - Blend
-  - Value[1-2][1-4]
-  macroParams:
-  - Axis
-  - Enableblend
-  - Reverse
+  macroTable: macros
   help: !text
-    file: src/operators/field/stepField.md
+    file: src/operators/convert/floatToVector.md
     name: help
 inputs:
 - !input
-  Localalias: coordField
   coordType: !coordT
     Allcoordtype: true
   contextType: !contextT
     Allcontexttype: true
   returnType: !returnT
     Returntypefloat: true
-    Returntypevec4: true
 - !input
-  Localalias: edgeField
+  coordType: !coordT
+    Allcoordtype: true
+  contextType: !contextT
+    Allcontexttype: true
+  returnType: !returnT
+    Returntypefloat: true
+- !input
+  coordType: !coordT
+    Allcoordtype: true
+  contextType: !contextT
+    Allcontexttype: true
+  returnType: !returnT
+    Returntypefloat: true
+- !input
   coordType: !coordT
     Allcoordtype: true
   contextType: !contextT

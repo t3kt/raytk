@@ -19,3 +19,13 @@ opDef: !def
   - Boundcenter[xyz]
   - Boundboxsize[xyz]
   - Active
+inputs:
+- !input
+  Localalias: bounds
+  coordType: !coordT
+    Allcoordtype: true
+  contextType: !contextT
+    Contexttypeparticlecontext: true
+  returnType: !returnT
+    Returntypesdf: true
+    Returntypefloat: true

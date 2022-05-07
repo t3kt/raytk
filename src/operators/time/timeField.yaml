@@ -28,3 +28,30 @@ opDef: !def
   help: !text
     file: src/operators/time/timeField.md
     name: help
+elements:
+- !opElement
+  name: codeSwitcher_Part
+  elementType: codeSwitcher
+  params:
+    Table: !table
+      file: src/operators/time/timeField_parts.txt
+      name: time_parts
+    Param: Part
+    Autoupdateparams: true
+    Manageparamstates: false
+    Alwaysincludeallparams: false
+    Switchmode: auto
+    Placeholder: BODY();
+- !opElement
+  name: codeSwitcher_Timesource
+  elementType: codeSwitcher
+  params:
+    Table: !table
+      file: src/operators/time/timeSources.txt
+      name: timeSources
+    Param: Timesource
+    Autoupdateparams: true
+    Manageparamstates: false
+    Alwaysincludeallparams: false
+    Switchmode: auto
+    Placeholder: GET_TIME();

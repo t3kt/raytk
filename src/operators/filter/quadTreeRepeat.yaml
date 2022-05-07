@@ -32,3 +32,13 @@ opDef: !def
     evalOpts: !evalOpts
       excludeFirstRow: true
   generatedMacroTables: sel_axis_macros
+inputs:
+- !input
+  Required: true
+  coordType: !coordT
+    Coordtypevec2: true
+    Coordtypevec3: true
+  contextType: !contextT
+    Allcontexttype: true
+  returnType: !returnT
+    Allreturntype: true

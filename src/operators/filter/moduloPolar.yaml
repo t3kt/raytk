@@ -46,3 +46,41 @@ opDef: !def
   - repeat
   - kaleidoscope
   shortcuts: mp
+inputs:
+- !input
+  Required: true
+  coordType: !coordT
+    Coordtypevec2: true
+    Coordtypevec3: true
+  contextType: !contextT
+    Allcontexttype: true
+  returnType: !returnT
+    Allreturntype: true
+- !input
+  Localalias: preRotateField
+  coordType: !coordT
+    Coordtypevec2: true
+    Coordtypevec3: true
+  contextType: !contextT
+    Allcontexttype: true
+  returnType: !returnT
+    Returntypefloat: true
+- !input
+  Localalias: offsetField
+  coordType: !coordT
+    Coordtypevec2: true
+    Coordtypevec3: true
+  contextType: !contextT
+    Allcontexttype: true
+  returnType: !returnT
+    Returntypefloat: true
+    Returntypevec4: true
+- !input
+  Localalias: rotateField
+  coordType: !coordT
+    Coordtypevec2: true
+    Coordtypevec3: true
+  contextType: !contextT
+    Allcontexttype: true
+  returnType: !returnT
+    Returntypefloat: true

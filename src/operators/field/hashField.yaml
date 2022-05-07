@@ -7,9 +7,27 @@ opDef: !def
   enable: true
   typeSpec: !ropTypes
     coordType: !coordT
-      Allcoordtype: true
+      Allcoordtype: !expr
+        expr: op('definition_1').numRows > 1
+      Coordtypefloat: !expr
+        expr: parent().par.Coordtype == 'float' or op('definition_1').numRows > 1
+      Coordtypevec2: !expr
+        expr: parent().par.Coordtype == 'vec2' or op('definition_1').numRows > 1
+      Coordtypevec3: !expr
+        expr: parent().par.Coordtype == 'vec3' or op('definition_1').numRows > 1
     contextType: !contextT
-      Allcontexttype: true
+      Allcontexttype: !expr
+        expr: parent().par.Contexttype == 'auto'
+      Contexttypecontext: !expr
+        expr: parent().par.Contexttype == 'Context'
+      Contexttypematerialcontext: !expr
+        expr: parent().par.Contexttype == 'MaterialContext'
+      Contexttypecameracontext: !expr
+        expr: parent().par.Contexttype == 'CameraContext'
+      Contexttypelightcontext: !expr
+        expr: parent().par.Contexttype == 'LightContext'
+      Contexttyperaycontext: !expr
+        expr: parent().par.Contexttype == 'RayContext'
     returnType: !returnT
       Returntypevec4: true
   function: !text
@@ -17,3 +35,27 @@ opDef: !def
     name: functionTemplate
   libraryNames: !expr
     expr: op('hash')
+inputs:
+- !input
+  Localalias: coordField
+  coordType: !coordT
+    Allcoordtype: true
+  contextType: !contextT
+    Allcontexttype: true
+  returnType: !returnT
+    Returntypefloat: true
+    Returntypevec4: true
+elements:
+- !opElement
+  name: codeSwitcher_Function
+  elementType: codeSwitcher
+  params:
+    Table: !table
+      file: src/operators/field/hashField_hashFunctions.txt
+      name: hashFunctions
+    Param: Function
+    Autoupdateparams: true
+    Manageparamstates: false
+    Alwaysincludeallparams: false
+    Switchmode: inline
+    Placeholder: ''

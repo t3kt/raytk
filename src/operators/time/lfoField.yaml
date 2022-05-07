@@ -50,3 +50,54 @@ opDef: !def
     name: macro_exprs
     evaluate: true
     evalOpts: !evalOpts {}
+inputs:
+- !input
+  Localalias: waveFunction
+  coordType: !coordT
+    Coordtypefloat: true
+  contextType: !contextT
+    Allcontexttype: true
+  returnType: !returnT
+    Returntypefloat: true
+    Returntypevec4: true
+elements:
+- !opElement
+  name: waveFunction
+  elementType: waveFunction
+  params:
+    Waveparam: Wavetype
+    Periodparam: Period
+    Phaseparam: Phase
+    Periodfield: ''
+    Phasefield: ''
+    Switchmode: auto
+    Coordtype: float
+    Manageparamstates: true
+    Prepcodeplaceholder: WAVE_PREP();
+    Bodycodeplaceholder: WAVE_BODY();
+- !opElement
+  name: codeSwitcher_Timesource
+  elementType: codeSwitcher
+  params:
+    Table: !table
+      file: src/operators/time/timeSources.txt
+      name: timeSources
+    Param: Timesource
+    Autoupdateparams: true
+    Manageparamstates: false
+    Alwaysincludeallparams: false
+    Switchmode: auto
+    Placeholder: GET_TIME();
+- !opElement
+  name: codeSwitcher_Intervaltype
+  elementType: codeSwitcher
+  params:
+    Table: !table
+      file: src/operators/time/lfoField_intervalTypes.txt
+      name: intervalTypes
+    Param: ''
+    Autoupdateparams: true
+    Manageparamstates: false
+    Alwaysincludeallparams: false
+    Switchmode: auto
+    Placeholder: GET_INTERVAL();

@@ -34,3 +34,28 @@ opDef: !def
   - line
   - segment
   - points
+inputs:
+- !input
+  Localalias: endpoint1
+  coordType: !coordT
+    Coordtypevec3: true
+  contextType: !contextT
+    Allcontexttype: true
+  returnType: !returnT
+    Returntypevec4: true
+- !input
+  Localalias: endpoint2
+  coordType: !coordT
+    Coordtypevec3: true
+  contextType: !contextT
+    Allcontexttype: true
+  returnType: !returnT
+    Returntypevec4: true
+- !input
+  Localalias: radiusField
+  coordType: !coordT
+    Coordtypevec3: true
+  contextType: !contextT
+    Allcontexttype: true
+  returnType: !returnT
+    Returntypefloat: true

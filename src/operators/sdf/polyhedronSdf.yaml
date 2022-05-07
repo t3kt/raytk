@@ -36,3 +36,30 @@ opDef: !def
   - Segmentradius
   - Vertexradius
   libraryNames: raytkCombine
+inputs:
+- !input
+  Localalias: vertexShape
+  coordType: !coordT
+    Coordtypevec3: true
+  contextType: !contextT
+    Allcontexttype: true
+  returnType: !returnT
+    Returntypesdf: true
+elements:
+- !opElement
+  name: combiner
+  elementType: combiner
+  params:
+    Includenone: false
+    Modeparam: Combine
+    Swapinputsparam: ''
+    Radiusparam: Blendradius
+    Numberparam: Blendnumber
+    Offsetparam: Blendoffset
+    Radiusfield: ''
+    Offsetfield: ''
+    Numberfield: ''
+    Manageparamstates: true
+    Switchmode: auto
+    Prepcodeplaceholder: MERGE_PREP();
+    Bodycodeplaceholder: MERGE_BODY();

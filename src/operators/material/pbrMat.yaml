@@ -36,3 +36,53 @@ opDef: !def
     name: macro_exprs
     evaluate: true
     evalOpts: !evalOpts {}
+inputs:
+- !input
+  Required: true
+  coordType: !coordT
+    Coordtypevec3: true
+  contextType: !contextT
+    Contexttypecontext: true
+  returnType: !returnT
+    Returntypesdf: true
+- !input
+  Localalias: irradianceField
+  coordType: !coordT
+    Coordtypevec3: true
+  contextType: !contextT
+    Contexttypematerialcontext: true
+  returnType: !returnT
+    Returntypevec4: true
+- !input
+  Localalias: reflectanceField
+  coordType: !coordT
+    Coordtypevec3: true
+  contextType: !contextT
+    Contexttypematerialcontext: true
+  returnType: !returnT
+    Returntypevec4: true
+- !input
+  Localalias: baseColorField
+  coordType: !coordT
+    Coordtypevec3: true
+  contextType: !contextT
+    Contexttypematerialcontext: true
+  returnType: !returnT
+    Returntypefloat: true
+    Returntypevec4: true
+- !input
+  Localalias: roughnessField
+  coordType: !coordT
+    Coordtypevec3: true
+  contextType: !contextT
+    Contexttypematerialcontext: true
+  returnType: !returnT
+    Returntypefloat: true
+- !input
+  Localalias: metallicField
+  coordType: !coordT
+    Coordtypevec3: true
+  contextType: !contextT
+    Contexttypematerialcontext: true
+  returnType: !returnT
+    Returntypefloat: true

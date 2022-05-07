@@ -21,3 +21,26 @@ opDef: !def
   help: !text
     file: src/operators/sdf2d/polygonSdf2d.md
     name: help
+inputs:
+- !input
+  Localalias: radiusField
+  coordType: !coordT
+    Coordtypevec2: true
+  contextType: !contextT
+    Allcontexttype: true
+  returnType: !returnT
+    Returntypefloat: true
+elements:
+- !opElement
+  name: codeSwitcher_Shape
+  elementType: codeSwitcher
+  params:
+    Table: !table
+      file: src/operators/sdf2d/polygonSdf2d_shapes.txt
+      name: shapes
+    Param: Shape
+    Autoupdateparams: true
+    Manageparamstates: false
+    Alwaysincludeallparams: false
+    Switchmode: auto
+    Placeholder: BODY();

@@ -29,3 +29,37 @@ opDef: !def
   help: !text
     file: src/operators/convert/revolve.md
     name: help
+inputs:
+- !input
+  Localalias: crossSection
+  Required: true
+  coordType: !coordT
+    Coordtypevec2: true
+  contextType: !contextT
+    Allcontexttype: true
+  returnType: !returnT
+    Returntypesdf: true
+- !input
+  Localalias: rotateField
+  coordType: !coordT
+    Coordtypefloat: true
+  contextType: !contextT
+    Allcontexttype: true
+  returnType: !returnT
+    Returntypefloat: true
+- !input
+  Localalias: scaleField
+  coordType: !coordT
+    Coordtypefloat: true
+  contextType: !contextT
+    Allcontexttype: true
+  returnType: !returnT
+    Returntypefloat: true
+- !input
+  Localalias: translateField
+  coordType: !coordT
+    Coordtypefloat: true
+  contextType: !contextT
+    Allcontexttype: true
+  returnType: !returnT
+    Returntypevec4: true

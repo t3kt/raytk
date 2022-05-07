@@ -27,3 +27,12 @@ opDef: !def
   help: !text
     file: src/operators/material/goochMat.md
     name: help
+inputs:
+- !input
+  Required: true
+  coordType: !coordT
+    Coordtypevec3: true
+  contextType: !contextT
+    Contexttypecontext: true
+  returnType: !returnT
+    Returntypesdf: true

@@ -25,3 +25,34 @@ opDef: !def
   - surface
   - material
   - modularmat
+inputs:
+- !input
+  Required: true
+  coordType: !coordT
+    Allcoordtype: true
+  contextType: !contextT
+    Allcontexttype: true
+  returnType: !returnT
+    Returntypesdf: true
+- !input
+  Localalias: uvField
+  coordType: !coordT
+    Allcoordtype: true
+  contextType: !contextT
+    Allcontexttype: true
+  returnType: !returnT
+    Returntypevec4: true
+elements:
+- !opElement
+  name: codeSwitcher_Uvmode
+  elementType: codeSwitcher
+  params:
+    Table: !table
+      file: src/operators/filter/assignUV_uvModes.txt
+      name: uvModes
+    Param: Uvmode
+    Autoupdateparams: true
+    Manageparamstates: false
+    Alwaysincludeallparams: false
+    Switchmode: auto
+    Placeholder: BODY();

@@ -39,3 +39,53 @@ opDef: !def
   - repeat
   - grid
   shortcuts: m3
+inputs:
+- !input
+  Required: true
+  coordType: !coordT
+    Coordtypevec3: true
+  contextType: !contextT
+    Allcontexttype: true
+  returnType: !returnT
+    Allreturntype: true
+- !input
+  Localalias: sizeField
+  coordType: !coordT
+    Coordtypevec3: true
+  contextType: !contextT
+    Allcontexttype: true
+  returnType: !returnT
+    Returntypefloat: true
+    Returntypevec4: true
+- !input
+  Localalias: offsetField
+  coordType: !coordT
+    Coordtypevec3: true
+  contextType: !contextT
+    Allcontexttype: true
+  returnType: !returnT
+    Returntypefloat: true
+    Returntypevec4: true
+- !input
+  Localalias: shiftField
+  coordType: !coordT
+    Coordtypevec3: true
+  contextType: !contextT
+    Allcontexttype: true
+  returnType: !returnT
+    Returntypefloat: true
+    Returntypevec4: true
+elements:
+- !opElement
+  name: codeSwitcher_Limittype
+  elementType: codeSwitcher
+  params:
+    Table: !table
+      file: src/operators/filter/modulo3D_limitTypes.txt
+      name: limitTypes
+    Param: Limittype
+    Autoupdateparams: true
+    Manageparamstates: true
+    Alwaysincludeallparams: false
+    Switchmode: inline
+    Placeholder: ''

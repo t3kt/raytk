@@ -28,3 +28,17 @@ opDef: !def
   help: !text
     file: src/operators/field/iterationField.md
     name: help
+elements:
+- !opElement
+  name: codeSwitcher_Format
+  elementType: codeSwitcher
+  params:
+    Table: !table
+      file: src/operators/field/iterationField_formats.txt
+      name: formats
+    Param: Format
+    Autoupdateparams: true
+    Manageparamstates: false
+    Alwaysincludeallparams: false
+    Switchmode: inline
+    Placeholder: BODY();

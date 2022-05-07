@@ -39,3 +39,14 @@ opDef: !def
     file: src/operators/output/render2D.md
     name: help
   shortcuts: r2
+inputs:
+- !input
+  coordType: !coordT
+    Coordtypefloat: true
+    Coordtypevec2: true
+  contextType: !contextT
+    Contexttypecontext: true
+  returnType: !returnT
+    Returntypesdf: true
+    Returntypefloat: true
+    Returntypevec4: true

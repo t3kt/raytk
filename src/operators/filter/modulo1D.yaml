@@ -214,3 +214,17 @@ inputs:
     Allcontexttype: true
   returnType: !returnT
     Returntypefloat: true
+elements:
+- !opElement
+  name: codeSwitcher_Limittype
+  elementType: codeSwitcher
+  params:
+    Table: !table
+      file: src/operators/filter/modulo1D_limitTypes.txt
+      name: limitTypes
+    Param: Limittype
+    Autoupdateparams: true
+    Manageparamstates: true
+    Alwaysincludeallparams: false
+    Switchmode: inline
+    Placeholder: ''

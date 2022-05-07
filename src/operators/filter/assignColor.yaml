@@ -32,3 +32,22 @@ opDef: !def
   - material
   - modularmat
   shortcuts: ac
+inputs:
+- !input
+  Required: true
+  coordType: !coordT
+    Allcoordtype: true
+  contextType: !contextT
+    Allcontexttype: true
+  returnType: !returnT
+    Returntypesdf: true
+    Returntypeparticle: true
+- !input
+  Localalias: colorField
+  coordType: !coordT
+    Allcoordtype: true
+  contextType: !contextT
+    Allcontexttype: true
+  returnType: !returnT
+    Returntypefloat: true
+    Returntypevec4: true

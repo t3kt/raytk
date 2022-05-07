@@ -21,3 +21,39 @@ opDef: !def
   help: !text
     file: src/operators/function/crossFn.md
     name: help
+multiInput: !multiInput
+  Minimuminputs: 0
+  Coordtypereductionmode: common
+  Coordtypereductionscope: '*'
+  Contexttypereductionmode: common
+  Contexttypereductionscope: '*'
+  Returntypereductionmode: besteach
+  Returntypereductionscope: '*'
+  Returntypepreference: vec4 float
+  inputs:
+  - !input
+    Required: true
+    coordType: !coordT
+      Allcoordtype: true
+    contextType: !contextT
+      Allcontexttype: true
+    returnType: !returnT
+      Returntypefloat: true
+      Returntypevec4: true
+  - !input
+    Required: true
+    coordType: !coordT
+      Allcoordtype: true
+    contextType: !contextT
+      Allcontexttype: true
+    returnType: !returnT
+      Returntypefloat: true
+      Returntypevec4: true
+  - !input
+    coordType: !coordT
+      Allcoordtype: true
+    contextType: !contextT
+      Allcontexttype: true
+    returnType: !returnT
+      Returntypefloat: true
+      Returntypevec4: true

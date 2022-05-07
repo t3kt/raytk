@@ -25,3 +25,45 @@ opDef: !def
   help: !text
     file: src/operators/combine/compositeFields.md
     name: help
+multiInput: !multiInput
+  Minimuminputs: 2
+  Coordtypereductionmode: common
+  Coordtypereductionscope: '*'
+  Contexttypereductionmode: common
+  Contexttypereductionscope: '*'
+  Returntypereductionmode: bestcommon
+  Returntypereductionscope: '*'
+  Returntypepreference: vec4 float
+  inputs:
+  - !input
+    Required: true
+    coordType: !coordT
+      Allcoordtype: true
+    contextType: !contextT
+      Allcontexttype: true
+    returnType: !returnT
+      Returntypefloat: true
+      Returntypevec4: true
+  - !input
+    Required: true
+    coordType: !coordT
+      Allcoordtype: true
+    contextType: !contextT
+      Allcontexttype: true
+    returnType: !returnT
+      Returntypefloat: true
+      Returntypevec4: true
+elements:
+- !opElement
+  name: codeSwitcher_Blendmode
+  elementType: codeSwitcher
+  params:
+    Table: !table
+      file: src/operators/combine/compositeFields_blendModes.txt
+      name: blendModes
+    Param: Blendmode
+    Autoupdateparams: true
+    Manageparamstates: false
+    Alwaysincludeallparams: false
+    Switchmode: auto
+    Placeholder: BODY();

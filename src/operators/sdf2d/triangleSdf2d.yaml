@@ -20,3 +20,17 @@ opDef: !def
   help: !text
     file: src/operators/sdf2d/triangleSdf2d.md
     name: help
+elements:
+- !opElement
+  name: codeSwitcher_Shape
+  elementType: codeSwitcher
+  params:
+    Table: !table
+      file: src/operators/sdf2d/triangleSdf2d_shapes.txt
+      name: shapes
+    Param: Shape
+    Autoupdateparams: true
+    Manageparamstates: true
+    Alwaysincludeallparams: false
+    Switchmode: auto
+    Placeholder: BODY();

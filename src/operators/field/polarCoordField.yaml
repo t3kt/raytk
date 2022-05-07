@@ -45,3 +45,30 @@ opDef: !def
   help: !text
     file: src/operators/field/polarCoordField.md
     name: help
+elements:
+- !opElement
+  name: codeSwitcher_Format
+  elementType: codeSwitcher
+  params:
+    Table: !table
+      file: src/operators/field/polarCoordField_formats.txt
+      name: formats
+    Param: Format
+    Autoupdateparams: true
+    Manageparamstates: true
+    Alwaysincludeallparams: false
+    Switchmode: inline
+    Placeholder: BODY();
+- !opElement
+  name: codeSwitcher_Angleunit
+  elementType: codeSwitcher
+  params:
+    Table: !table
+      file: src/operators/field/polarCoordField_angleUnits.txt
+      name: angleUnits
+    Param: Angleunit
+    Autoupdateparams: true
+    Manageparamstates: true
+    Alwaysincludeallparams: false
+    Switchmode: auto
+    Placeholder: CONVERT_ANGLE();

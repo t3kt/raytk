@@ -36,3 +36,12 @@ opDef: !def
   - hue
   - brightness
   - contrast
+inputs:
+- !input
+  Required: true
+  coordType: !coordT
+    Allcoordtype: true
+  contextType: !contextT
+    Allcontexttype: true
+  returnType: !returnT
+    Returntypevec4: true

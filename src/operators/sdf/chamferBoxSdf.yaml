@@ -26,3 +26,29 @@ opDef: !def
   - box
   - cube
   - chamfer
+inputs:
+- !input
+  Localalias: scaleField
+  coordType: !coordT
+    Coordtypevec3: true
+  contextType: !contextT
+    Allcontexttype: true
+  returnType: !returnT
+    Returntypefloat: true
+    Returntypevec4: true
+- !input
+  Localalias: chamferField
+  coordType: !coordT
+    Coordtypevec3: true
+  contextType: !contextT
+    Allcontexttype: true
+  returnType: !returnT
+    Returntypefloat: true
+- !input
+  Localalias: roundingField
+  coordType: !coordT
+    Coordtypevec3: true
+  contextType: !contextT
+    Allcontexttype: true
+  returnType: !returnT
+    Returntypefloat: true

@@ -24,3 +24,22 @@ opDef: !def
   help: !text
     file: src/operators/sdf2d/roundedRectangleSdf2d.md
     name: help
+inputs:
+- !input
+  Localalias: scaleField
+  coordType: !coordT
+    Coordtypevec2: true
+  contextType: !contextT
+    Allcontexttype: true
+  returnType: !returnT
+    Returntypefloat: true
+    Returntypevec4: true
+- !input
+  Localalias: roundingField
+  coordType: !coordT
+    Coordtypevec2: true
+  contextType: !contextT
+    Allcontexttype: true
+  returnType: !returnT
+    Returntypefloat: true
+    Returntypevec4: true

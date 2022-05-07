@@ -23,3 +23,13 @@ opDef: !def
   help: !text
     file: src/operators/light/directionalLight.md
     name: help
+inputs:
+- !input
+  Localalias: colorField
+  coordType: !coordT
+    Coordtypevec3: true
+  contextType: !contextT
+    Contexttypelightcontext: true
+  returnType: !returnT
+    Returntypefloat: true
+    Returntypevec4: true

@@ -34,3 +34,13 @@ opDef: !def
   - m13
   - m23
   - m33
+inputs:
+- !input
+  Required: true
+  coordType: !coordT
+    Coordtypevec2: true
+    Coordtypevec3: true
+  contextType: !contextT
+    Allcontexttype: true
+  returnType: !returnT
+    Allreturntype: true

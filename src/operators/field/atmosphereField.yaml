@@ -33,3 +33,12 @@ opDef: !def
   help: !text
     file: src/operators/field/atmosphereField.md
     name: help
+inputs:
+- !input
+  Localalias: rayDirectionField
+  coordType: !coordT
+    Coordtypevec3: true
+  contextType: !contextT
+    Allcontexttype: true
+  returnType: !returnT
+    Returntypevec4: true

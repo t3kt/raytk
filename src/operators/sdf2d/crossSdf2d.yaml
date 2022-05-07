@@ -22,3 +22,28 @@ opDef: !def
   help: !text
     file: src/operators/sdf2d/crossSdf2d.md
     name: help
+inputs:
+- !input
+  Localalias: outerSizeField
+  coordType: !coordT
+    Coordtypevec2: true
+  contextType: !contextT
+    Allcontexttype: true
+  returnType: !returnT
+    Returntypefloat: true
+- !input
+  Localalias: innerSizeField
+  coordType: !coordT
+    Coordtypevec2: true
+  contextType: !contextT
+    Allcontexttype: true
+  returnType: !returnT
+    Returntypefloat: true
+- !input
+  Localalias: roundnessField
+  coordType: !coordT
+    Coordtypevec2: true
+  contextType: !contextT
+    Allcontexttype: true
+  returnType: !returnT
+    Returntypefloat: true

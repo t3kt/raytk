@@ -41,3 +41,36 @@ opDef: !def
     file: src/operators/material/modularMat.md
     name: help
   shortcuts: mm
+inputs:
+- !input
+  Required: true
+  coordType: !coordT
+    Coordtypevec3: true
+  contextType: !contextT
+    Contexttypecontext: true
+  returnType: !returnT
+    Returntypesdf: true
+- !input
+  coordType: !coordT
+    Coordtypevec3: true
+  contextType: !contextT
+    Contexttypematerialcontext: true
+  returnType: !returnT
+    Returntypefloat: true
+    Returntypevec4: true
+- !input
+  coordType: !coordT
+    Coordtypevec3: true
+  contextType: !contextT
+    Contexttypematerialcontext: true
+  returnType: !returnT
+    Returntypefloat: true
+    Returntypevec4: true
+- !input
+  coordType: !coordT
+    Coordtypevec3: true
+  contextType: !contextT
+    Contexttypematerialcontext: true
+  returnType: !returnT
+    Returntypefloat: true
+    Returntypevec4: true

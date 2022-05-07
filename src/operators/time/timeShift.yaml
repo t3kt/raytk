@@ -21,3 +21,34 @@ opDef: !def
   help: !text
     file: src/operators/time/timeShift.md
     name: help
+inputs:
+- !input
+  Required: true
+  coordType: !coordT
+    Allcoordtype: true
+  contextType: !contextT
+    Allcontexttype: true
+  returnType: !returnT
+    Allreturntype: true
+- !input
+  Localalias: shiftField
+  coordType: !coordT
+    Allcoordtype: true
+  contextType: !contextT
+    Allcontexttype: true
+  returnType: !returnT
+    Returntypefloat: true
+elements:
+- !opElement
+  name: codeSwitcher_Intervaltype
+  elementType: codeSwitcher
+  params:
+    Table: !table
+      file: src/operators/time/timeShift_intervalTypes.txt
+      name: intervalTypes
+    Param: ''
+    Autoupdateparams: true
+    Manageparamstates: false
+    Alwaysincludeallparams: false
+    Switchmode: auto
+    Placeholder: BODY();

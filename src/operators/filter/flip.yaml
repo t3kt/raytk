@@ -189,3 +189,21 @@ inputs:
     Allcontexttype: true
   returnType: !returnT
     Returntypesdf: true
+elements:
+- !opElement
+  name: combiner
+  elementType: combiner
+  params:
+    Includenone: true
+    Modeparam: Mergetype
+    Swapinputsparam: ''
+    Radiusparam: Mergeradius
+    Numberparam: Mergenumber
+    Offsetparam: Mergeoffset
+    Radiusfield: ''
+    Offsetfield: ''
+    Numberfield: ''
+    Manageparamstates: true
+    Switchmode: auto
+    Prepcodeplaceholder: MERGE_PREP();
+    Bodycodeplaceholder: MERGE_BODY();

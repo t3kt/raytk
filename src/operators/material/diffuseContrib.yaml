@@ -45,3 +45,34 @@ opDef: !def
   - shading
   - modularmat
   shortcuts: dc
+inputs:
+- !input
+  Localalias: roughnessField
+  coordType: !coordT
+    Allcoordtype: true
+  contextType: !contextT
+    Contexttypematerialcontext: true
+  returnType: !returnT
+    Returntypefloat: true
+- !input
+  Localalias: albedoField
+  coordType: !coordT
+    Allcoordtype: true
+  contextType: !contextT
+    Contexttypematerialcontext: true
+  returnType: !returnT
+    Returntypefloat: true
+elements:
+- !opElement
+  name: codeSwitcher_Operation
+  elementType: codeSwitcher
+  params:
+    Table: !table
+      file: src/operators/material/diffuseContrib_methods.txt
+      name: methods
+    Param: Method
+    Autoupdateparams: true
+    Manageparamstates: true
+    Alwaysincludeallparams: true
+    Switchmode: auto
+    Placeholder: BODY();

@@ -43,3 +43,46 @@ opDef: !def
   help: !text
     file: src/operators/filter/iteratedTransform.md
     name: help
+inputs:
+- !input
+  Required: true
+  coordType: !coordT
+    Coordtypevec2: true
+    Coordtypevec3: true
+  contextType: !contextT
+    Allcontexttype: true
+  returnType: !returnT
+    Returntypesdf: true
+    Returntypefloat: true
+    Returntypevec4: true
+- !input
+  Localalias: rotateField
+  coordType: !coordT
+    Coordtypefloat: true
+    Coordtypevec2: true
+    Coordtypevec3: true
+  contextType: !contextT
+    Allcontexttype: true
+  returnType: !returnT
+    Returntypevec4: true
+- !input
+  Localalias: translateField
+  coordType: !coordT
+    Coordtypefloat: true
+    Coordtypevec2: true
+    Coordtypevec3: true
+  contextType: !contextT
+    Allcontexttype: true
+  returnType: !returnT
+    Returntypevec4: true
+- !input
+  Localalias: scaleField
+  coordType: !coordT
+    Coordtypefloat: true
+    Coordtypevec2: true
+    Coordtypevec3: true
+  contextType: !contextT
+    Allcontexttype: true
+  returnType: !returnT
+    Returntypefloat: true
+    Returntypevec4: true

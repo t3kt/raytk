@@ -36,3 +36,13 @@ opDef: !def
   - ring
   - twist
   - mobius
+inputs:
+- !input
+  Localalias: thicknessField
+  coordType: !coordT
+    Coordtypefloat: true
+    Coordtypevec3: true
+  contextType: !contextT
+    Allcontexttype: true
+  returnType: !returnT
+    Returntypefloat: true

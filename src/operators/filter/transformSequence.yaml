@@ -27,3 +27,105 @@ opDef: !def
     evaluate: true
     evalOpts: !evalOpts
       excludeFirstRow: true
+multiInput: !multiInput
+  Minimuminputs: 1
+  Coordtypereductionmode: common
+  Coordtypereductionscope: '*'
+  Contexttypereductionmode: common
+  Contexttypereductionscope: '*'
+  Returntypereductionmode: none
+  Returntypereductionscope: '*'
+  inputs:
+  - !input
+    Required: true
+    coordType: !coordT
+      Allcoordtype: true
+    contextType: !contextT
+      Allcontexttype: !expr
+        expr: op('targetInfo')[1, 'contextType'] == '*'
+      Contexttypematerialcontext: !expr
+        expr: op('targetInfo')[1, 'contextType'] == 'MaterialContext'
+    returnType: !returnT
+      Allreturntype: !expr
+        expr: op('targetInfo')[1, 'returnType'] == '*'
+      Returntypesdf: !expr
+        expr: op('targetInfo')[1, 'returnType'] == 'Sdf'
+      Returntypevec4: !expr
+        expr: op('targetInfo')[1, 'returnType'] == 'vec4'
+  - !input
+    Localalias: transform1
+    coordType: !coordT
+      Allcoordtype: true
+    contextType: !contextT
+      Allcontexttype: true
+    returnType: !returnT
+      Returntypevec4: true
+  - !input
+    Localalias: transform2
+    coordType: !coordT
+      Allcoordtype: true
+    contextType: !contextT
+      Allcontexttype: true
+    returnType: !returnT
+      Returntypevec4: true
+  - !input
+    Localalias: transform3
+    coordType: !coordT
+      Allcoordtype: true
+    contextType: !contextT
+      Allcontexttype: true
+    returnType: !returnT
+      Returntypevec4: true
+  - !input
+    Localalias: transform4
+    coordType: !coordT
+      Allcoordtype: true
+    contextType: !contextT
+      Allcontexttype: true
+    returnType: !returnT
+      Returntypevec4: true
+  - !input
+    Localalias: transform5
+    coordType: !coordT
+      Allcoordtype: true
+    contextType: !contextT
+      Allcontexttype: true
+    returnType: !returnT
+      Returntypevec4: true
+  - !input
+    Localalias: transform6
+    coordType: !coordT
+      Allcoordtype: true
+    contextType: !contextT
+      Allcontexttype: true
+    returnType: !returnT
+      Returntypevec4: true
+elements:
+- !opElement
+  name: codeSwitcher_Target
+  elementType: codeSwitcher
+  params:
+    Table: !table
+      file: src/operators/filter/transformSequence_targets.txt
+      name: targets
+    Param: Target
+    Autoupdateparams: true
+    Manageparamstates: false
+    Alwaysincludeallparams: false
+    Switchmode: inline
+    Placeholder: ''
+- !opElement
+  name: aggregateCodeGenerator
+  elementType: aggregateCodeGenerator
+  params:
+    Startindex: 1
+    Exprindexoffset: -1
+    Reverseorder: !expr
+      expr: parent().par.Reverseorder
+    Initmode: separate
+    Numberingmode: available
+    Startstmt: ''
+    Defaultstmt: ''
+    Firststepstmt: ''
+    Stepstmt: q = adaptAsVec4(inputOp_transform$(THIS_asCoordT(q), ctx));
+    Bodycodeplaceholder: ''

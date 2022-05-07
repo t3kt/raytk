@@ -34,3 +34,34 @@ opDef: !def
   - square
   - column
   - cylinder
+inputs:
+- !input
+  Localalias: heightField
+  coordType: !coordT
+    Coordtypevec3: true
+  contextType: !contextT
+    Allcontexttype: true
+  returnType: !returnT
+    Returntypefloat: true
+- !input
+  Localalias: radiusField
+  coordType: !coordT
+    Coordtypevec3: true
+  contextType: !contextT
+    Allcontexttype: true
+  returnType: !returnT
+    Returntypefloat: true
+elements:
+- !opElement
+  name: codeSwitcher_Combine
+  elementType: codeSwitcher
+  params:
+    Table: !table
+      file: src/operators/sdf/prismSdf_functions.txt
+      name: prism_funcs
+    Param: Prismtype
+    Autoupdateparams: true
+    Manageparamstates: true
+    Alwaysincludeallparams: false
+    Switchmode: auto
+    Placeholder: BODY();

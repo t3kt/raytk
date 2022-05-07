@@ -32,3 +32,22 @@ opDef: !def
   help: !text
     file: src/operators/material/fieldMat.md
     name: help
+inputs:
+- !input
+  Required: true
+  coordType: !coordT
+    Coordtypevec2: true
+    Coordtypevec3: true
+  contextType: !contextT
+    Contexttypecontext: true
+  returnType: !returnT
+    Returntypesdf: true
+- !input
+  coordType: !coordT
+    Coordtypevec2: true
+    Coordtypevec3: true
+  contextType: !contextT
+    Contexttypematerialcontext: true
+  returnType: !returnT
+    Returntypefloat: true
+    Returntypevec4: true

@@ -30,3 +30,14 @@ opDef: !def
   help: !text
     file: src/operators/material/toonShadingContrib.md
     name: help
+inputs:
+- !input
+  Localalias: colorRamp
+  Required: true
+  coordType: !coordT
+    Coordtypefloat: true
+  contextType: !contextT
+    Contexttypematerialcontext: true
+  returnType: !returnT
+    Returntypefloat: true
+    Returntypevec4: true

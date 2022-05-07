@@ -27,3 +27,28 @@ opDef: !def
     evaluate: true
     evalOpts: !evalOpts
       excludeFirstRow: true
+inputs:
+- !input
+  Localalias: radiusField
+  coordType: !coordT
+    Coordtypevec2: true
+  contextType: !contextT
+    Allcontexttype: true
+  returnType: !returnT
+    Returntypefloat: true
+- !input
+  Localalias: amplitudeField
+  coordType: !coordT
+    Coordtypevec2: true
+  contextType: !contextT
+    Allcontexttype: true
+  returnType: !returnT
+    Returntypefloat: true
+- !input
+  Localalias: petalsField
+  coordType: !coordT
+    Coordtypevec2: true
+  contextType: !contextT
+    Allcontexttype: true
+  returnType: !returnT
+    Returntypefloat: true

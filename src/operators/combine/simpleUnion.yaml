@@ -24,3 +24,91 @@ opDef: !def
     file: src/operators/combine/simpleUnion.md
     name: help
   shortcuts: su
+multiInput: !multiInput
+  Minimuminputs: 1
+  Coordtypereductionmode: common
+  Coordtypereductionscope: '*'
+  Contexttypereductionmode: common
+  Contexttypereductionscope: '*'
+  Returntypereductionmode: common
+  Returntypereductionscope: '*'
+  inputs:
+  - !input
+    coordType: !coordT
+      Allcoordtype: true
+    contextType: !contextT
+      Allcontexttype: true
+    returnType: !returnT
+      Returntypesdf: true
+      Returntypefloat: true
+  - !input
+    coordType: !coordT
+      Allcoordtype: true
+    contextType: !contextT
+      Allcontexttype: true
+    returnType: !returnT
+      Returntypesdf: true
+      Returntypefloat: true
+  - !input
+    coordType: !coordT
+      Allcoordtype: true
+    contextType: !contextT
+      Allcontexttype: true
+    returnType: !returnT
+      Returntypesdf: true
+      Returntypefloat: true
+  - !input
+    coordType: !coordT
+      Allcoordtype: true
+    contextType: !contextT
+      Allcontexttype: true
+    returnType: !returnT
+      Returntypesdf: true
+      Returntypefloat: true
+  - !input
+    coordType: !coordT
+      Allcoordtype: true
+    contextType: !contextT
+      Allcontexttype: true
+    returnType: !returnT
+      Returntypesdf: true
+      Returntypefloat: true
+  - !input
+    coordType: !coordT
+      Allcoordtype: true
+    contextType: !contextT
+      Allcontexttype: true
+    returnType: !returnT
+      Returntypesdf: true
+      Returntypefloat: true
+  - !input
+    coordType: !coordT
+      Allcoordtype: true
+    contextType: !contextT
+      Allcontexttype: true
+    returnType: !returnT
+      Returntypesdf: true
+      Returntypefloat: true
+  - !input
+    coordType: !coordT
+      Allcoordtype: true
+    contextType: !contextT
+      Allcontexttype: true
+    returnType: !returnT
+      Returntypesdf: true
+      Returntypefloat: true
+elements:
+- !opElement
+  name: aggregateCodeGenerator
+  elementType: aggregateCodeGenerator
+  params:
+    Startindex: 0
+    Exprindexoffset: 0
+    Reverseorder: false
+    Initmode: separate
+    Numberingmode: sequential
+    Startstmt: ReturnT res = createNonHitSdf();
+    Defaultstmt: ''
+    Firststepstmt: ''
+    Stepstmt: res = cmb_simpleUnion(res, THIS_INPUT_$(p, ctx));
+    Bodycodeplaceholder: ''

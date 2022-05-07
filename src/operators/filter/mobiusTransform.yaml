@@ -22,3 +22,37 @@ opDef: !def
   - Center[1-2]
   - Point[1-2]
   generatedMacroTables: sel_axis_macros
+multiInput: !multiInput
+  Minimuminputs: 0
+  Coordtypereductionmode: common
+  Coordtypereductionscope: '*'
+  Contexttypereductionmode: none
+  Returntypereductionmode: none
+  inputs:
+  - !input
+    Required: true
+    coordType: !coordT
+      Coordtypevec2: true
+      Coordtypevec3: true
+    contextType: !contextT
+      Allcontexttype: true
+    returnType: !returnT
+      Allreturntype: true
+  - !input
+    Localalias: centerField
+    coordType: !coordT
+      Coordtypevec2: true
+      Coordtypevec3: true
+    contextType: !contextT
+      Allcontexttype: true
+    returnType: !returnT
+      Returntypevec4: true
+  - !input
+    Localalias: pointField
+    coordType: !coordT
+      Coordtypevec2: true
+      Coordtypevec3: true
+    contextType: !contextT
+      Allcontexttype: true
+    returnType: !returnT
+      Returntypevec4: true

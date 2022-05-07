@@ -144,7 +144,6 @@ multiInput: !multiInput
     returnType: !returnT
       Returntypesdf: true
   - !input
-    Required: true
     coordType: !coordT
       Allcoordtype: true
     contextType: !contextT
@@ -169,3 +168,21 @@ inputs:
     Allcontexttype: true
   returnType: !returnT
     Returntypefloat: true
+elements:
+- !opElement
+  name: combiner
+  elementType: combiner
+  params:
+    Includenone: false
+    Modeparam: Combine
+    Swapinputsparam: Swapinputs
+    Radiusparam: Radius
+    Numberparam: Number
+    Offsetparam: Offset
+    Radiusfield: radiusField
+    Offsetfield: offsetField
+    Numberfield: ''
+    Manageparamstates: true
+    Switchmode: auto
+    Prepcodeplaceholder: MERGE_PREP();
+    Bodycodeplaceholder: MERGE_BODY();

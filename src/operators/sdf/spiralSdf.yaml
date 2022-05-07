@@ -29,3 +29,13 @@ opDef: !def
   - spiral
   - swirl
   - coil
+inputs:
+- !input
+  Localalias: crossSection
+  coordType: !coordT
+    Coordtypevec2: true
+  contextType: !contextT
+    Allcontexttype: true
+  returnType: !returnT
+    Returntypesdf: true
+    Returntypefloat: true

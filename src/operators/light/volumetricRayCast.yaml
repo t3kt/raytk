@@ -32,3 +32,14 @@ opDef: !def
     name: macro_exprs
     evaluate: true
     evalOpts: !evalOpts {}
+inputs:
+- !input
+  Label: Light Volume
+  Localalias: lightVolume
+  coordType: !coordT
+    Coordtypevec3: true
+  contextType: !contextT
+    Contexttypematerialcontext: true
+  returnType: !returnT
+    Returntypefloat: true
+    Returntypevec4: true

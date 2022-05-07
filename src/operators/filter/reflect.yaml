@@ -172,3 +172,17 @@ inputs:
     Allcontexttype: true
   returnType: !returnT
     Returntypefloat: true
+elements:
+- !opElement
+  name: codeSwitcher_Direction
+  elementType: codeSwitcher
+  params:
+    Table: !table
+      file: src/operators/filter/reflect_directions.txt
+      name: directions
+    Param: Direction
+    Autoupdateparams: true
+    Manageparamstates: true
+    Alwaysincludeallparams: false
+    Switchmode: auto
+    Placeholder: DIRECTION_BODY();

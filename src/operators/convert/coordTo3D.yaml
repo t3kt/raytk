@@ -21,3 +21,20 @@ opDef: !def
     name: macro_exprs
     evaluate: true
     evalOpts: !evalOpts {}
+multiInput: !multiInput
+  Minimuminputs: 0
+  Coordtypereductionmode: besteach
+  Coordtypereductionscope: '*'
+  Coordtypepreference: vec3 vec2 float
+  Contexttypereductionmode: none
+  Returntypereductionmode: none
+  inputs:
+  - !input
+    Required: true
+    coordType: !coordT
+      Coordtypefloat: true
+      Coordtypevec2: true
+    contextType: !contextT
+      Allcontexttype: true
+    returnType: !returnT
+      Allreturntype: true

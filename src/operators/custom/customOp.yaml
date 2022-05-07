@@ -1,19 +1,23 @@
 !rop
 meta: !meta
-  opType: raytk.operators.filter.fieldExpr
-  opVersion: '10'
+  opType: raytk.operators.custom.customOp
+  opVersion: '12'
   opStatus: beta
 opDef: !def
   enable: !expr
     expr: op('..').par.Enable
+  paramsOp: !expr
+    expr: parent().par.Paramsop or ''
   typeSpec: !ropTypes
     Useinputcoordtype: !expr
-      expr: parent().par.Coordtype == 'useinput'
+      expr: parent().par.Useinputcoordtype
     Useinputcontexttype: !expr
-      expr: parent().par.Contexttype == 'useinput'
+      expr: parent().par.Useinputcontexttype
     Useinputreturntype: !expr
-      expr: parent().par.Returntype == 'useinput'
+      expr: parent().par.Useinputreturntype
     coordType: !coordT
+      Allcoordtype: !expr
+        expr: parent().par.Coordtype == 'auto'
       Coordtypefloat: !expr
         expr: parent().par.Coordtype == 'float'
       Coordtypevec2: !expr
@@ -44,17 +48,31 @@ opDef: !def
         expr: parent().par.Returntype == 'Ray'
       Returntypelight: !expr
         expr: parent().par.Returntype == 'Light'
-  function: !text
-    file: src/operators/filter/fieldExpr.glsl
-    name: functionTemplate
-  useParams:
-  - Param[1-2]
-  - Vecparam[1-2][1-4]
-  macroTable: !table
-    file: src/operators/filter/fieldExpr_macros.txt
-    name: macro_exprs
-    evaluate: true
-    evalOpts: !evalOpts {}
+  opGlobals: !expr
+    expr: parent().par.Opglobals or ''
+  init: !expr
+    expr: parent().par.Initcode or ''
+  stageInit: !expr
+    expr: parent().par.Stageinitcode or ''
+  function: function
+  material: !expr
+    expr: parent().par.Materialcode or ''
+  callbacks: !text
+    file: src/operators/custom/customOp_callbacks.py
+    name: callbacks
+  useParams: !expr
+    expr: op('param_names')[0,0] or ''
+  libraryNames: !expr
+    expr: parent().par.Librarynames
+  bufferTable: !expr
+    expr: parent().par.Buffertable or ''
+  textureTable: !expr
+    expr: parent().par.Texturetable or ''
+  macroTable: !expr
+    expr: parent().par.Macrotable or ''
+  help: !text
+    file: src/operators/custom/customOp.md
+    name: help
 inputs:
 - !input
   coordType: !coordT

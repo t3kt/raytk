@@ -21,3 +21,29 @@ opDef: !def
   - Life
   - Lifejitter
   macroParams: Positionmode
+inputs:
+- !input
+  Localalias: positionField
+  coordType: !coordT
+    Allcoordtype: true
+  contextType: !contextT
+    Contexttypeparticlecontext: true
+  returnType: !returnT
+    Returntypevec4: true
+- !input
+  Localalias: directionField
+  coordType: !coordT
+    Allcoordtype: true
+  contextType: !contextT
+    Contexttypeparticlecontext: true
+  returnType: !returnT
+    Returntypevec4: true
+- !input
+  Localalias: velocityField
+  coordType: !coordT
+    Allcoordtype: true
+  contextType: !contextT
+    Contexttypeparticlecontext: true
+  returnType: !returnT
+    Returntypefloat: true
+    Returntypevec4: true

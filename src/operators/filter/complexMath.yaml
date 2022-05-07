@@ -24,3 +24,32 @@ opDef: !def
     name: macro_exprs
     evaluate: true
     evalOpts: !evalOpts {}
+inputs:
+- !input
+  coordType: !coordT
+    Allcoordtype: true
+  contextType: !contextT
+    Allcontexttype: true
+  returnType: !returnT
+    Returntypevec4: true
+- !input
+  coordType: !coordT
+    Allcoordtype: true
+  contextType: !contextT
+    Allcontexttype: true
+  returnType: !returnT
+    Returntypevec4: true
+elements:
+- !opElement
+  name: codeSwitcher_Function
+  elementType: codeSwitcher
+  params:
+    Table: !table
+      file: src/operators/filter/complexMath_functions.txt
+      name: functions
+    Param: Function
+    Autoupdateparams: true
+    Manageparamstates: false
+    Alwaysincludeallparams: false
+    Switchmode: inline
+    Placeholder: ''

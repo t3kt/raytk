@@ -38,3 +38,12 @@ opDef: !def
   - repeat
   - radial
   - distance
+inputs:
+- !input
+  coordType: !coordT
+    Coordtypevec2: true
+    Coordtypevec3: true
+  contextType: !contextT
+    Allcontexttype: true
+  returnType: !returnT
+    Allreturntype: true

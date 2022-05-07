@@ -39,3 +39,29 @@ opDef: !def
   - repeat
   - modulo
   - spiral
+inputs:
+- !input
+  Required: true
+  coordType: !coordT
+    Coordtypevec2: !expr
+      expr: '''vec2'' in str(op(''switcher_info'')[1, ''coordType''] or '''')'
+    Coordtypevec3: !expr
+      expr: '''vec3'' in str(op(''switcher_info'')[1, ''coordType''] or '''')'
+  contextType: !contextT
+    Allcontexttype: true
+  returnType: !returnT
+    Allreturntype: true
+elements:
+- !opElement
+  name: codeSwitcher_Mode
+  elementType: codeSwitcher
+  params:
+    Table: !table
+      file: src/operators/filter/logPolarRepeat_modes.txt
+      name: modes
+    Param: Mode
+    Autoupdateparams: true
+    Manageparamstates: false
+    Alwaysincludeallparams: false
+    Switchmode: inline
+    Placeholder: BODY();

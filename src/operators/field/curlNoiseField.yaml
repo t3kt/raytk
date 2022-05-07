@@ -14,7 +14,18 @@ opDef: !def
       Coordtypevec3: !expr
         expr: parent().par.Coordtype == 'vec3'
     contextType: !contextT
-      Allcontexttype: true
+      Allcontexttype: !expr
+        expr: parent().par.Contexttype == 'auto'
+      Contexttypecontext: !expr
+        expr: parent().par.Contexttype == 'Context'
+      Contexttypematerialcontext: !expr
+        expr: parent().par.Contexttype == 'MaterialContext'
+      Contexttypecameracontext: !expr
+        expr: parent().par.Contexttype == 'CameraContext'
+      Contexttypelightcontext: !expr
+        expr: parent().par.Contexttype == 'LightContext'
+      Contexttyperaycontext: !expr
+        expr: parent().par.Contexttype == 'RayContext'
     returnType: !returnT
       Returntypevec4: true
   function: !text
@@ -34,3 +45,12 @@ opDef: !def
   help: !text
     file: src/operators/field/curlNoiseField.md
     name: help
+inputs:
+- !input
+  Localalias: coordField
+  coordType: !coordT
+    Allcoordtype: true
+  contextType: !contextT
+    Allcontexttype: true
+  returnType: !returnT
+    Returntypevec4: true

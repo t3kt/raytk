@@ -13,7 +13,9 @@ opDef: !def
     contextType: !contextT
       Allcontexttype: true
     returnType: !returnT
-      Allreturntype: true
+      Allreturntype: !expr
+        expr: op('definition_1').numRows > 1
+      Returntypevec4: true
   function: !text
     file: src/operators/filter/mirrorAxes.glsl
     name: function
@@ -32,3 +34,52 @@ opDef: !def
     evaluate: true
     evalOpts: !evalOpts
       excludeFirstRow: true
+inputs:
+- !input
+  coordType: !coordT
+    Allcoordtype: true
+  contextType: !contextT
+    Allcontexttype: true
+  returnType: !returnT
+    Allreturntype: true
+- !input
+  Localalias: offsetField
+  coordType: !coordT
+    Allcoordtype: true
+  contextType: !contextT
+    Allcontexttype: true
+  returnType: !returnT
+    Returntypefloat: true
+    Returntypevec4: true
+- !input
+  Localalias: directionField
+  coordType: !coordT
+    Allcoordtype: true
+  contextType: !contextT
+    Allcontexttype: true
+  returnType: !returnT
+    Returntypefloat: true
+    Returntypevec4: true
+- !input
+  Localalias: flipSideField
+  coordType: !coordT
+    Allcoordtype: true
+  contextType: !contextT
+    Allcontexttype: true
+  returnType: !returnT
+    Returntypefloat: true
+    Returntypevec4: true
+elements:
+- !opElement
+  name: codeSwitcher_Axes
+  elementType: codeSwitcher
+  params:
+    Table: !table
+      file: src/operators/filter/mirrorAxes_axes.txt
+      name: axes
+    Param: Axes
+    Autoupdateparams: true
+    Manageparamstates: true
+    Alwaysincludeallparams: false
+    Switchmode: auto
+    Placeholder: ''

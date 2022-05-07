@@ -20,3 +20,12 @@ opDef: !def
   useParams:
   - H
   - R[xyz]
+inputs:
+- !input
+  Required: true
+  coordType: !coordT
+    Allcoordtype: true
+  contextType: !contextT
+    Allcontexttype: true
+  returnType: !returnT
+    Allreturntype: true

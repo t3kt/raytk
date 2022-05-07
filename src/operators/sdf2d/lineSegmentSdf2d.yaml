@@ -21,3 +21,12 @@ opDef: !def
   help: !text
     file: src/operators/sdf2d/lineSegmentSdf2d.md
     name: help
+inputs:
+- !input
+  Localalias: points
+  coordType: !coordT
+    Coordtypevec2: true
+  contextType: !contextT
+    Allcontexttype: true
+  returnType: !returnT
+    Returntypevec4: true

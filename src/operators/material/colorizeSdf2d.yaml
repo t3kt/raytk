@@ -33,3 +33,13 @@ opDef: !def
   help: !text
     file: src/operators/material/colorizeSdf2d.md
     name: help
+inputs:
+- !input
+  Required: true
+  coordType: !coordT
+    Allcoordtype: true
+  contextType: !contextT
+    Allcontexttype: true
+  returnType: !returnT
+    Returntypesdf: true
+    Returntypefloat: true

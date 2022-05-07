@@ -22,7 +22,8 @@ opDef: !def
       Contexttyperaycontext: false
       Contexttypeparticlecontext: false
     returnType: !returnT
-      Allreturntype: !expr 'op(''definition_1'').numRows > 1'
+      Allreturntype: !expr
+        expr: op('definition_1').numRows > 1
       Returntypesdf: false
       Returntypefloat: false
       Returntypevec4: true

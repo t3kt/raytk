@@ -17,3 +17,12 @@ opDef: !def
     file: src/operators/light/bendRay.glsl
     name: functionTemplate
   useParams: Amount
+inputs:
+- !input
+  Localalias: rotateField
+  coordType: !coordT
+    Coordtypevec3: true
+  contextType: !contextT
+    Contexttyperaycontext: true
+  returnType: !returnT
+    Returntypevec4: true

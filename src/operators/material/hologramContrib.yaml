@@ -21,3 +21,13 @@ opDef: !def
   - Phase
   - Step
   macroParams: Iterations
+inputs:
+- !input
+  Localalias: baseColorField
+  coordType: !coordT
+    Coordtypevec3: true
+  contextType: !contextT
+    Contexttypematerialcontext: true
+  returnType: !returnT
+    Returntypefloat: true
+    Returntypevec4: true

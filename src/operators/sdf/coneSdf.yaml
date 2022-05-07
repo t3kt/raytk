@@ -19,3 +19,34 @@ opDef: !def
   help: !text
     file: src/operators/sdf/coneSdf.md
     name: help
+inputs:
+- !input
+  Localalias: heightField
+  coordType: !coordT
+    Coordtypevec3: true
+  contextType: !contextT
+    Allcontexttype: true
+  returnType: !returnT
+    Returntypefloat: true
+- !input
+  Localalias: radiusField
+  coordType: !coordT
+    Coordtypevec3: true
+  contextType: !contextT
+    Allcontexttype: true
+  returnType: !returnT
+    Returntypefloat: true
+elements:
+- !opElement
+  name: codeSwitcher_Shape
+  elementType: codeSwitcher
+  params:
+    Table: !table
+      file: src/operators/sdf/coneSdf_shapes.txt
+      name: shapes
+    Param: Shape
+    Autoupdateparams: true
+    Manageparamstates: true
+    Alwaysincludeallparams: false
+    Switchmode: auto
+    Placeholder: BODY();

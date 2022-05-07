@@ -17,3 +17,12 @@ opDef: !def
     name: function
   useParams: Normalsmoothing
   macroParams: Enablenormalsmoothing
+inputs:
+- !input
+  Required: true
+  coordType: !coordT
+    Coordtypevec3: true
+  contextType: !contextT
+    Allcontexttype: true
+  returnType: !returnT
+    Returntypesdf: true

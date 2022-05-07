@@ -21,3 +21,27 @@ opDef: !def
   help: !text
     file: src/operators/filter/polarToCartesian.md
     name: help
+inputs:
+- !input
+  Required: true
+  coordType: !coordT
+    Coordtypevec2: true
+    Coordtypevec3: true
+  contextType: !contextT
+    Allcontexttype: true
+  returnType: !returnT
+    Allreturntype: true
+elements:
+- !opElement
+  name: codeSwitcher_Conversion
+  elementType: codeSwitcher
+  params:
+    Table: !table
+      file: src/operators/filter/polarToCartesian_conversions.txt
+      name: conversions
+    Param: Conversion
+    Autoupdateparams: true
+    Manageparamstates: false
+    Alwaysincludeallparams: false
+    Switchmode: auto
+    Placeholder: BODY();

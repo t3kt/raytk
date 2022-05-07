@@ -20,3 +20,55 @@ opDef: !def
   - Radius
   - Depth
   generatedMacroTables: multiInputHandler_macros
+multiInput: !multiInput
+  Minimuminputs: 1
+  Coordtypereductionmode: common
+  Coordtypereductionscope: '*'
+  Contexttypereductionmode: none
+  Returntypereductionmode: none
+  inputs:
+  - !input
+    Required: true
+    coordType: !coordT
+      Allcoordtype: true
+    contextType: !contextT
+      Allcontexttype: true
+    returnType: !returnT
+      Returntypesdf: true
+  - !input
+    Required: true
+    coordType: !coordT
+      Allcoordtype: true
+    contextType: !contextT
+      Allcontexttype: true
+    returnType: !returnT
+      Returntypesdf: true
+inputs:
+- !input
+  coordType: !coordT
+    Allcoordtype: true
+  contextType: !contextT
+    Allcontexttype: true
+  returnType: !returnT
+    Returntypefloat: true
+- !input
+  coordType: !coordT
+    Allcoordtype: true
+  contextType: !contextT
+    Allcontexttype: true
+  returnType: !returnT
+    Returntypefloat: true
+elements:
+- !opElement
+  name: codeSwitcher_Combine
+  elementType: codeSwitcher
+  params:
+    Table: !table
+      file: src/operators/combine/edgeCombine_modes.txt
+      name: modes
+    Param: Combine
+    Autoupdateparams: true
+    Manageparamstates: false
+    Alwaysincludeallparams: false
+    Switchmode: auto
+    Placeholder: BODY();

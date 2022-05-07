@@ -24,3 +24,26 @@ opDef: !def
   keywords:
   - polyhedron
   - octahedron
+inputs:
+- !input
+  Localalias: radiusField
+  coordType: !coordT
+    Coordtypevec3: true
+  contextType: !contextT
+    Allcontexttype: true
+  returnType: !returnT
+    Returntypefloat: true
+elements:
+- !opElement
+  name: codeSwitcher_Combine
+  elementType: codeSwitcher
+  params:
+    Table: !table
+      file: src/operators/sdf/octahedronSdf_functions.txt
+      name: functions
+    Param: Function
+    Autoupdateparams: true
+    Manageparamstates: true
+    Alwaysincludeallparams: false
+    Switchmode: auto
+    Placeholder: BODY();

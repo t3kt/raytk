@@ -19,3 +19,39 @@ opDef: !def
   help: !text
     file: src/operators/convert/sweep.md
     name: help
+inputs:
+- !input
+  Localalias: crossSection
+  Required: true
+  coordType: !coordT
+    Coordtypevec2: true
+  contextType: !contextT
+    Allcontexttype: true
+  returnType: !returnT
+    Returntypesdf: true
+    Returntypefloat: true
+    Returntypevec4: true
+- !input
+  Localalias: path
+  Required: true
+  coordType: !coordT
+    Coordtypevec2: true
+  contextType: !contextT
+    Allcontexttype: true
+  returnType: !returnT
+    Returntypesdf: true
+    Returntypefloat: true
+elements:
+- !opElement
+  name: codeSwitcher_Plane
+  elementType: codeSwitcher
+  params:
+    Table: !table
+      file: src/operators/convert/sweep_planes.txt
+      name: planes
+    Param: Plane
+    Autoupdateparams: true
+    Manageparamstates: false
+    Alwaysincludeallparams: false
+    Switchmode: auto
+    Placeholder: ''

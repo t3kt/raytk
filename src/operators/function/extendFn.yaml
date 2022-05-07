@@ -25,3 +25,12 @@ opDef: !def
   help: !text
     file: src/operators/function/extendFn.md
     name: help
+inputs:
+- !input
+  Required: true
+  coordType: !coordT
+    Allcoordtype: true
+  contextType: !contextT
+    Allcontexttype: true
+  returnType: !returnT
+    Allreturntype: true

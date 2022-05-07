@@ -48,3 +48,31 @@ opDef: !def
   - radial
   - clone
   - repeat
+inputs:
+- !input
+  Required: true
+  coordType: !coordT
+    Coordtypevec2: true
+    Coordtypevec3: true
+  contextType: !contextT
+    Allcontexttype: true
+  returnType: !returnT
+    Returntypesdf: true
+elements:
+- !opElement
+  name: combiner
+  elementType: combiner
+  params:
+    Includenone: false
+    Modeparam: Mergetype
+    Swapinputsparam: ''
+    Radiusparam: Mergeradius
+    Numberparam: Mergenumber
+    Offsetparam: Mergeoffset
+    Radiusfield: ''
+    Offsetfield: ''
+    Numberfield: ''
+    Manageparamstates: true
+    Switchmode: inline
+    Prepcodeplaceholder: MERGE_PREP();
+    Bodycodeplaceholder: MERGE_BODY();

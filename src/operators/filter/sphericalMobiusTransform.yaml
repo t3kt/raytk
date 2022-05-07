@@ -40,7 +40,8 @@ opDef: !def
   angleParams:
   - Rotate[xyz]
   - Rotationamount
-  libraryNames: !expr 'op(''sphericalMobiusTransform_lib'')'
+  libraryNames: !expr
+    expr: op('sphericalMobiusTransform_lib')
 paramPages:
 - !page
   name: Filter

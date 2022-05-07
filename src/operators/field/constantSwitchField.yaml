@@ -25,3 +25,28 @@ opDef: !def
   - Offset
   libraryNames: !expr
     expr: op('modZigZag')
+inputs:
+- !input
+  Localalias: indexField
+  Required: true
+  coordType: !coordT
+    Allcoordtype: true
+  contextType: !contextT
+    Contexttypecontext: true
+    Contexttypematerialcontext: true
+  returnType: !returnT
+    Returntypefloat: true
+elements:
+- !opElement
+  name: codeSwitcher_Extend
+  elementType: codeSwitcher
+  params:
+    Table: !table
+      file: src/operators/field/constantSwitchField_extendModes.txt
+      name: extendModes
+    Param: Extend
+    Autoupdateparams: true
+    Manageparamstates: false
+    Alwaysincludeallparams: false
+    Switchmode: auto
+    Placeholder: EXTEND();

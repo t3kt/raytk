@@ -23,3 +23,13 @@ opDef: !def
   macroParams:
   - Pattern
   - Randomize
+inputs:
+- !input
+  Localalias: coordField
+  coordType: !coordT
+    Coordtypevec2: true
+    Coordtypevec3: true
+  contextType: !contextT
+    Allcontexttype: true
+  returnType: !returnT
+    Returntypevec4: true

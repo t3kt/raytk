@@ -44,3 +44,21 @@ opDef: !def
   help: !text
     file: src/operators/material/basicMat.md
     name: help
+inputs:
+- !input
+  Required: true
+  coordType: !coordT
+    Coordtypevec3: true
+  contextType: !contextT
+    Contexttypecontext: true
+  returnType: !returnT
+    Returntypesdf: true
+- !input
+  Localalias: baseColorField
+  coordType: !coordT
+    Coordtypevec3: true
+  contextType: !contextT
+    Contexttypematerialcontext: true
+  returnType: !returnT
+    Returntypefloat: true
+    Returntypevec4: true

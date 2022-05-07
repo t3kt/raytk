@@ -1,56 +1,59 @@
 !rop
 meta: !meta
-  opType: raytk.operators.sdf2d.horseshoeSdf2d
-  opVersion: '2'
-  opStatus: default
+  opType: raytk.operators.field.reorderField
+  opVersion: '4'
+  opStatus: beta
 opDef: !def
-  enable: true
+  enable: !expr
+    expr: parent().par.Enable
   typeSpec: !ropTypes
     coordType: !coordT
-      Coordtypevec2: true
+      Allcoordtype: true
     contextType: !contextT
       Allcontexttype: true
     returnType: !returnT
-      Returntypesdf: true
+      Returntypevec4: true
   function: !text
-    file: src/operators/sdf2d/horseshoeSdf2d.glsl
-    name: function
-  useParams:
-  - Radius
-  - Length
-  - Thickness
-  - Angle
-  angleParams: Angle
+    file: src/operators/field/reorderField.glsl
+    name: functionTemplate
+  macroTable: macros
+multiInput: !multiInput
+  Minimuminputs: 0
+  Coordtypereductionmode: common
+  Coordtypereductionscope: '*'
+  Contexttypereductionmode: common
+  Contexttypereductionscope: '*'
+  Returntypereductionmode: none
 inputs:
 - !input
-  Localalias: radiusField
   coordType: !coordT
-    Coordtypevec2: true
+    Allcoordtype: true
   contextType: !contextT
     Allcontexttype: true
   returnType: !returnT
     Returntypefloat: true
+    Returntypevec4: true
 - !input
-  Localalias: thicknessField
   coordType: !coordT
-    Coordtypevec2: true
+    Allcoordtype: true
   contextType: !contextT
     Allcontexttype: true
   returnType: !returnT
     Returntypefloat: true
+    Returntypevec4: true
 - !input
-  Localalias: lengthField
   coordType: !coordT
-    Coordtypevec2: true
+    Allcoordtype: true
   contextType: !contextT
     Allcontexttype: true
   returnType: !returnT
     Returntypefloat: true
+    Returntypevec4: true
 - !input
-  Localalias: angleField
   coordType: !coordT
-    Coordtypevec2: true
+    Allcoordtype: true
   contextType: !contextT
     Allcontexttype: true
   returnType: !returnT
     Returntypefloat: true
+    Returntypevec4: true

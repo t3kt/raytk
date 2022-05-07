@@ -24,3 +24,17 @@ opDef: !def
     name: functionTemplate
   paramListTable: switcher_params
   generatedMacroTables: sel_switcher_macros
+elements:
+- !opElement
+  name: codeSwitcher_Property
+  elementType: codeSwitcher
+  params:
+    Table: !table
+      file: src/operators/particles/particlePropertyField_properties.txt
+      name: properties
+    Param: Property
+    Autoupdateparams: true
+    Manageparamstates: false
+    Alwaysincludeallparams: false
+    Switchmode: inline
+    Placeholder: ''

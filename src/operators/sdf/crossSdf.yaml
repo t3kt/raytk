@@ -22,3 +22,35 @@ opDef: !def
   help: !text
     file: src/operators/sdf/crossSdf.md
     name: help
+inputs:
+- !input
+  Localalias: sizeField
+  coordType: !coordT
+    Coordtypevec3: true
+  contextType: !contextT
+    Allcontexttype: true
+  returnType: !returnT
+    Returntypefloat: true
+    Returntypevec4: true
+- !input
+  Localalias: smoothRadiusField
+  coordType: !coordT
+    Coordtypevec3: true
+  contextType: !contextT
+    Allcontexttype: true
+  returnType: !returnT
+    Returntypefloat: true
+elements:
+- !opElement
+  name: codeSwitcher_Axes
+  elementType: codeSwitcher
+  params:
+    Table: !table
+      file: src/operators/sdf/crossSdf_axes.txt
+      name: axes
+    Param: Axes
+    Autoupdateparams: true
+    Manageparamstates: false
+    Alwaysincludeallparams: false
+    Switchmode: auto
+    Placeholder: BODY();

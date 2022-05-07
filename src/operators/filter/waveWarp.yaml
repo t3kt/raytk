@@ -5,7 +5,7 @@ meta: !meta
   opStatus: beta
 opDef: !def
   enable: !expr
-    expr: 'op(''..'').par.Enable'
+    expr: op('..').par.Enable
   useRuntimeBypass: true
   typeSpec: !ropTypes
     coordType: !coordT
@@ -39,7 +39,8 @@ opDef: !def
   - Offset[xyz]
   macroParams: Axis
   paramListTable: waveParams
-  libraryNames: !expr 'op(''raytkWave'')'
+  libraryNames: !expr
+    expr: op('raytkWave')
   help: help
   keywords:
   - wave

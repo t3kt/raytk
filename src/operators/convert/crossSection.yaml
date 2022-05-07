@@ -23,3 +23,26 @@ opDef: !def
   help: !text
     file: src/operators/convert/crossSection.md
     name: help
+inputs:
+- !input
+  Required: true
+  coordType: !coordT
+    Allcoordtype: true
+  contextType: !contextT
+    Allcontexttype: true
+  returnType: !returnT
+    Allreturntype: true
+elements:
+- !opElement
+  name: codeSwitcher_Axes
+  elementType: codeSwitcher
+  params:
+    Table: !table
+      file: src/operators/convert/crossSection_axes.txt
+      name: axes
+    Param: Axes
+    Autoupdateparams: true
+    Manageparamstates: false
+    Alwaysincludeallparams: false
+    Switchmode: auto
+    Placeholder: BODY();

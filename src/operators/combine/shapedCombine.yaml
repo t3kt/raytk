@@ -21,3 +21,40 @@ opDef: !def
   help: !text
     file: src/operators/combine/shapedCombine.md
     name: help
+multiInput: !multiInput
+  Minimuminputs: 0
+  Coordtypereductionmode: common
+  Coordtypereductionscope: 1 2
+  Contexttypereductionmode: common
+  Contexttypereductionscope: '*'
+  Returntypereductionmode: common
+  Returntypereductionscope: 1 2
+  inputs:
+  - !input
+    Required: true
+    coordType: !coordT
+      Allcoordtype: true
+    contextType: !contextT
+      Allcontexttype: true
+    returnType: !returnT
+      Returntypesdf: true
+      Returntypefloat: true
+  - !input
+    Required: true
+    coordType: !coordT
+      Allcoordtype: true
+    contextType: !contextT
+      Allcontexttype: true
+    returnType: !returnT
+      Returntypesdf: true
+      Returntypefloat: true
+  - !input
+    Localalias: blendShape
+    Required: true
+    coordType: !coordT
+      Coordtypevec2: true
+    contextType: !contextT
+      Allcontexttype: true
+    returnType: !returnT
+      Returntypesdf: true
+      Returntypefloat: true

@@ -61,3 +61,12 @@ opDef: !def
   help: !text
     file: src/operators/field/textureField.md
     name: help
+inputs:
+- !input
+  Localalias: uvField
+  coordType: !coordT
+    Allcoordtype: true
+  contextType: !contextT
+    Allcontexttype: true
+  returnType: !returnT
+    Returntypevec4: true

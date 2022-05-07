@@ -29,3 +29,100 @@ opDef: !def
   help: !text
     file: src/operators/combine/arrange.md
     name: help
+multiInput: !multiInput
+  Minimuminputs: 1
+  Coordtypereductionmode: common
+  Coordtypereductionscope: '*'
+  Contexttypereductionmode: common
+  Contexttypereductionscope: '*'
+  Returntypereductionmode: none
+  inputs:
+  - !input
+    coordType: !coordT
+      Allcoordtype: true
+    contextType: !contextT
+      Allcontexttype: true
+    returnType: !returnT
+      Returntypesdf: true
+  - !input
+    coordType: !coordT
+      Allcoordtype: true
+    contextType: !contextT
+      Allcontexttype: true
+    returnType: !returnT
+      Returntypesdf: true
+  - !input
+    coordType: !coordT
+      Allcoordtype: true
+    contextType: !contextT
+      Allcontexttype: true
+    returnType: !returnT
+      Returntypesdf: true
+  - !input
+    coordType: !coordT
+      Allcoordtype: true
+    contextType: !contextT
+      Allcontexttype: true
+    returnType: !returnT
+      Returntypesdf: true
+  - !input
+    coordType: !coordT
+      Allcoordtype: true
+    contextType: !contextT
+      Allcontexttype: true
+    returnType: !returnT
+      Returntypesdf: true
+  - !input
+    coordType: !coordT
+      Allcoordtype: true
+    contextType: !contextT
+      Allcontexttype: true
+    returnType: !returnT
+      Returntypesdf: true
+  - !input
+    coordType: !coordT
+      Allcoordtype: true
+    contextType: !contextT
+      Allcontexttype: true
+    returnType: !returnT
+      Returntypesdf: true
+  - !input
+    coordType: !coordT
+      Allcoordtype: true
+    contextType: !contextT
+      Allcontexttype: true
+    returnType: !returnT
+      Returntypesdf: true
+elements:
+- !opElement
+  name: combiner
+  elementType: combiner
+  params:
+    Includenone: false
+    Modeparam: Combine
+    Swapinputsparam: ''
+    Radiusparam: Radius
+    Numberparam: Number
+    Offsetparam: Offset
+    Radiusfield: ''
+    Offsetfield: ''
+    Numberfield: ''
+    Manageparamstates: true
+    Switchmode: switch
+    Prepcodeplaceholder: MERGE_PREP();
+    Bodycodeplaceholder: MERGE_BODY();
+- !opElement
+  name: aggregateCodeGenerator
+  elementType: aggregateCodeGenerator
+  params:
+    Startindex: 0
+    Exprindexoffset: 0
+    Reverseorder: false
+    Initmode: separate
+    Numberingmode: available
+    Startstmt: ''
+    Defaultstmt: ''
+    Firststepstmt: ''
+    Stepstmt: !expr
+      expr: op('stepTemplate').text
+    Bodycodeplaceholder: ''

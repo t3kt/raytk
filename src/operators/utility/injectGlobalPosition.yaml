@@ -24,3 +24,12 @@ opDef: !def
   help: !text
     file: src/operators/utility/injectGlobalPosition.md
     name: help
+inputs:
+- !input
+  Required: true
+  coordType: !coordT
+    Allcoordtype: true
+  contextType: !contextT
+    Contexttypecontext: true
+  returnType: !returnT
+    Allreturntype: true

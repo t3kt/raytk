@@ -19,3 +19,34 @@ opDef: !def
   - Height
   - Offset
   - Center
+inputs:
+- !input
+  Localalias: heightField
+  coordType: !coordT
+    Coordtypevec2: true
+  contextType: !contextT
+    Allcontexttype: true
+  returnType: !returnT
+    Returntypefloat: true
+- !input
+  Localalias: offsetField
+  coordType: !coordT
+    Coordtypevec2: true
+  contextType: !contextT
+    Allcontexttype: true
+  returnType: !returnT
+    Returntypefloat: true
+elements:
+- !opElement
+  name: codeSwitcher_Direction
+  elementType: codeSwitcher
+  params:
+    Table: !table
+      file: src/operators/sdf2d/spikeSdf2d_directions.txt
+      name: directions
+    Param: Direction
+    Autoupdateparams: true
+    Manageparamstates: false
+    Alwaysincludeallparams: false
+    Switchmode: auto
+    Placeholder: CONVERSION();

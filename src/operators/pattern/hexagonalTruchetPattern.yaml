@@ -22,3 +22,27 @@ opDef: !def
   - Translate[xy]
   - Size
   - Seed
+inputs:
+- !input
+  Localalias: coordField
+  coordType: !coordT
+    Coordtypevec2: true
+    Coordtypevec3: true
+  contextType: !contextT
+    Allcontexttype: true
+  returnType: !returnT
+    Returntypevec4: true
+elements:
+- !opElement
+  name: codeSwitcher_Pattern
+  elementType: codeSwitcher
+  params:
+    Table: !table
+      file: src/operators/pattern/hexagonalTruchetPattern_patterns.txt
+      name: patterns
+    Param: Pattern
+    Autoupdateparams: true
+    Manageparamstates: true
+    Alwaysincludeallparams: false
+    Switchmode: inline
+    Placeholder: BODY();

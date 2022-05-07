@@ -19,3 +19,13 @@ opDef: !def
   - Translate[xy]
   - Size
   - Glow
+inputs:
+- !input
+  Localalias: coordField
+  coordType: !coordT
+    Coordtypevec2: true
+    Coordtypevec3: true
+  contextType: !contextT
+    Allcontexttype: true
+  returnType: !returnT
+    Returntypevec4: true

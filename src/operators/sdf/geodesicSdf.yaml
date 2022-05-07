@@ -39,3 +39,20 @@ opDef: !def
   - polyhedron
   - geodesic
   - spikes
+inputs:
+- !input
+  Localalias: spikeSdf
+  coordType: !coordT
+    Coordtypevec3: true
+  contextType: !contextT
+    Contexttypecontext: true
+  returnType: !returnT
+    Returntypesdf: true
+- !input
+  Localalias: faceOffset
+  coordType: !coordT
+    Coordtypevec3: true
+  contextType: !contextT
+    Allcontexttype: true
+  returnType: !returnT
+    Returntypefloat: true

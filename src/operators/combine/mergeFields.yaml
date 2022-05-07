@@ -25,3 +25,44 @@ opDef: !def
   help: !text
     file: src/operators/combine/mergeFields.md
     name: help
+multiInput: !multiInput
+  Minimuminputs: 0
+  Coordtypereductionmode: common
+  Coordtypereductionscope: '*'
+  Contexttypereductionmode: common
+  Contexttypereductionscope: '*'
+  Returntypereductionmode: none
+  Returntypereductionscope: '*'
+  inputs:
+  - !input
+    coordType: !coordT
+      Allcoordtype: true
+    contextType: !contextT
+      Allcontexttype: true
+    returnType: !returnT
+      Returntypefloat: true
+      Returntypevec4: true
+  - !input
+    coordType: !coordT
+      Allcoordtype: true
+    contextType: !contextT
+      Allcontexttype: true
+    returnType: !returnT
+      Returntypefloat: true
+      Returntypevec4: true
+  - !input
+    coordType: !coordT
+      Allcoordtype: true
+    contextType: !contextT
+      Allcontexttype: true
+    returnType: !returnT
+      Returntypefloat: true
+      Returntypevec4: true
+  - !input
+    coordType: !coordT
+      Allcoordtype: true
+    contextType: !contextT
+      Allcontexttype: true
+    returnType: !returnT
+      Returntypefloat: true
+      Returntypevec4: true

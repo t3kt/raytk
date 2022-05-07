@@ -7,7 +7,14 @@ opDef: !def
   enable: true
   typeSpec: !ropTypes
     coordType: !coordT
-      Allcoordtype: true
+      Allcoordtype: !expr
+        expr: parent().par.Coordtype == 'auto'
+      Coordtypefloat: !expr
+        expr: parent().par.Coordtype in ('auto', 'float')
+      Coordtypevec2: !expr
+        expr: parent().par.Coordtype in ('auto', 'vec2')
+      Coordtypevec3: !expr
+        expr: parent().par.Coordtype in ('auto', 'vec3')
     contextType: !contextT
       Allcontexttype: true
     returnType: !returnT
@@ -25,3 +32,12 @@ opDef: !def
   keywords:
   - cellular
   - voronoi
+inputs:
+- !input
+  Localalias: coordField
+  coordType: !coordT
+    Allcoordtype: true
+  contextType: !contextT
+    Allcontexttype: true
+  returnType: !returnT
+    Returntypevec4: true

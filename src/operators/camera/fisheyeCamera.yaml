@@ -34,3 +34,17 @@ opDef: !def
   - equiangular
   - stereographic
   - pinhole
+elements:
+- !opElement
+  name: codeSwitcher_Fisheyemode
+  elementType: codeSwitcher
+  params:
+    Table: !table
+      file: src/operators/camera/fisheyeCamera_modes.txt
+      name: modes
+    Param: Fisheyemode
+    Autoupdateparams: true
+    Manageparamstates: true
+    Alwaysincludeallparams: false
+    Switchmode: auto
+    Placeholder: BODY();

@@ -21,3 +21,20 @@ opDef: !def
   help: !text
     file: src/operators/sdf2d/vesicaSdf2d.md
     name: help
+inputs:
+- !input
+  Localalias: radiusField
+  coordType: !coordT
+    Coordtypevec2: true
+  contextType: !contextT
+    Allcontexttype: true
+  returnType: !returnT
+    Returntypefloat: true
+- !input
+  Localalias: distanceField
+  coordType: !coordT
+    Coordtypevec2: true
+  contextType: !contextT
+    Allcontexttype: true
+  returnType: !returnT
+    Returntypefloat: true

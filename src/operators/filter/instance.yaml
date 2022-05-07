@@ -199,3 +199,21 @@ inputs:
   returnType: !returnT
     Returntypesdf: true
     Returntypefloat: true
+elements:
+- !opElement
+  name: combiner
+  elementType: combiner
+  params:
+    Includenone: false
+    Modeparam: Combine
+    Swapinputsparam: ''
+    Radiusparam: Radius
+    Numberparam: Mergenumber
+    Offsetparam: Mergeoffset
+    Radiusfield: radiusField
+    Offsetfield: ''
+    Numberfield: ''
+    Manageparamstates: true
+    Switchmode: auto
+    Prepcodeplaceholder: MERGE_PREP();
+    Bodycodeplaceholder: MERGE_BODY();

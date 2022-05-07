@@ -43,3 +43,35 @@ opDef: !def
   - Amount
   - Radius
   - Fade
+inputs:
+- !input
+  Localalias: coordField
+  coordType: !coordT
+    Allcoordtype: true
+  contextType: !contextT
+    Allcontexttype: true
+  returnType: !returnT
+    Returntypefloat: true
+    Returntypevec4: true
+- !input
+  Localalias: easing
+  coordType: !coordT
+    Coordtypefloat: true
+  contextType: !contextT
+    Allcontexttype: true
+  returnType: !returnT
+    Returntypefloat: true
+elements:
+- !opElement
+  name: codeSwitcher_Format
+  elementType: codeSwitcher
+  params:
+    Table: !table
+      file: src/operators/field/magnetField_formats.txt
+      name: formats
+    Param: Format
+    Autoupdateparams: true
+    Manageparamstates: false
+    Alwaysincludeallparams: false
+    Switchmode: inline
+    Placeholder: BODY();

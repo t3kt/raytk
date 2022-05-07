@@ -38,3 +38,27 @@ opDef: !def
   help: !text
     file: src/operators/filter/rangeTransform.md
     name: help
+inputs:
+- !input
+  coordType: !coordT
+    Coordtypevec3: true
+  contextType: !contextT
+    Allcontexttype: true
+  returnType: !returnT
+    Allreturntype: true
+- !input
+  Localalias: indexField
+  coordType: !coordT
+    Coordtypevec3: true
+  contextType: !contextT
+    Allcontexttype: true
+  returnType: !returnT
+    Returntypefloat: true
+- !input
+  Localalias: easingFunction
+  coordType: !coordT
+    Coordtypefloat: true
+  contextType: !contextT
+    Allcontexttype: true
+  returnType: !returnT
+    Returntypefloat: true

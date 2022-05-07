@@ -42,3 +42,39 @@ opDef: !def
   help: !text
     file: src/operators/camera/splitCamera.md
     name: help
+multiInput: !multiInput
+  Minimuminputs: 1
+  Coordtypereductionmode: common
+  Coordtypereductionscope: '*'
+  Contexttypereductionmode: none
+  Returntypereductionmode: none
+  inputs:
+  - !input
+    Required: true
+    coordType: !coordT
+      Coordtypevec2: true
+    contextType: !contextT
+      Contexttypecameracontext: true
+    returnType: !returnT
+      Returntyperay: true
+  - !input
+    coordType: !coordT
+      Coordtypevec2: true
+    contextType: !contextT
+      Contexttypecameracontext: true
+    returnType: !returnT
+      Returntyperay: true
+  - !input
+    coordType: !coordT
+      Coordtypevec2: true
+    contextType: !contextT
+      Contexttypecameracontext: true
+    returnType: !returnT
+      Returntyperay: true
+  - !input
+    coordType: !coordT
+      Coordtypevec2: true
+    contextType: !contextT
+      Contexttypecameracontext: true
+    returnType: !returnT
+      Returntyperay: true

@@ -38,3 +38,14 @@ opDef: !def
   - remap
   - range
   shortcuts: rf
+inputs:
+- !input
+  Required: true
+  coordType: !coordT
+    Allcoordtype: true
+  contextType: !contextT
+    Allcontexttype: true
+  returnType: !returnT
+    Returntypefloat: true
+    Returntypevec4: !expr
+      expr: parent().par.Returntype in ('auto', 'vec4')

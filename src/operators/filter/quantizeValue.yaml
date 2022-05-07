@@ -26,3 +26,14 @@ opDef: !def
   macroParams: Enablesmoothing
   libraryNames: !expr
     expr: op('quantize')
+inputs:
+- !input
+  Required: true
+  coordType: !coordT
+    Allcoordtype: true
+  contextType: !contextT
+    Allcontexttype: true
+  returnType: !returnT
+    Returntypesdf: true
+    Returntypefloat: true
+    Returntypevec4: true

@@ -27,3 +27,22 @@ opDef: !def
     file: src/operators/light/pointLight.md
     name: help
   shortcuts: pl
+inputs:
+- !input
+  Localalias: colorField
+  coordType: !coordT
+    Coordtypevec3: true
+  contextType: !contextT
+    Contexttypelightcontext: true
+  returnType: !returnT
+    Returntypefloat: true
+    Returntypevec4: true
+- !input
+  Localalias: attenuationField
+  coordType: !coordT
+    Coordtypefloat: true
+  contextType: !contextT
+    Contexttypelightcontext: true
+  returnType: !returnT
+    Returntypefloat: true
+    Returntypevec4: true

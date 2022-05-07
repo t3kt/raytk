@@ -29,3 +29,20 @@ opDef: !def
   - render
   - ''
   shortcuts: pmr
+inputs:
+- !input
+  coordType: !coordT
+    Allcoordtype: !expr
+      expr: parent().par.Coordtype == 'auto'
+    Coordtypefloat: !expr
+      expr: parent().par.Coordtype == 'float'
+    Coordtypevec2: !expr
+      expr: parent().par.Coordtype == 'vec2'
+    Coordtypevec3: !expr
+      expr: parent().par.Coordtype == 'vec3'
+  contextType: !contextT
+    Contexttypecontext: true
+  returnType: !returnT
+    Returntypesdf: true
+    Returntypefloat: true
+    Returntypevec4: true

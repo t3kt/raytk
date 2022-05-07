@@ -21,3 +21,12 @@ opDef: !def
   help: !text
     file: src/operators/sdf/tetrahedronSdf.md
     name: help
+inputs:
+- !input
+  Localalias: scaleField
+  coordType: !coordT
+    Coordtypevec3: true
+  contextType: !contextT
+    Allcontexttype: true
+  returnType: !returnT
+    Returntypefloat: true

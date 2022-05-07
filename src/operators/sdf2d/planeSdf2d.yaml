@@ -16,3 +16,26 @@ opDef: !def
     file: src/operators/sdf2d/planeSdf2d.glsl
     name: function
   useParams: Offset
+inputs:
+- !input
+  Localalias: offsetField
+  coordType: !coordT
+    Coordtypevec2: true
+  contextType: !contextT
+    Allcontexttype: true
+  returnType: !returnT
+    Returntypefloat: true
+elements:
+- !opElement
+  name: codeSwitcher_Direction
+  elementType: codeSwitcher
+  params:
+    Table: !table
+      file: src/operators/sdf2d/planeSdf2d_directions.txt
+      name: directions
+    Param: Direction
+    Autoupdateparams: true
+    Manageparamstates: false
+    Alwaysincludeallparams: false
+    Switchmode: auto
+    Placeholder: BODY();

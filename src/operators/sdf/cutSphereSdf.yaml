@@ -106,3 +106,17 @@ inputs:
     Allcontexttype: true
   returnType: !returnT
     Returntypevec4: true
+elements:
+- !opElement
+  name: codeSwitcher_Shape
+  elementType: codeSwitcher
+  params:
+    Table: !table
+      file: src/operators/sdf/cutSphereSdf_shapes.txt
+      name: shapes
+    Param: Shape
+    Autoupdateparams: true
+    Manageparamstates: true
+    Alwaysincludeallparams: false
+    Switchmode: auto
+    Placeholder: BODY();
