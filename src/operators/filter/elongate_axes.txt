@@ -1,0 +1,8 @@
+name	label	code
+xyz	XYZ	mask = vec3(1.);
+xy	XY	mask = vec3(1., 1., 0.);
+yz	YZ	mask = vec3(0., 1., 1.);
+xz	XZ	mask = vec3(1., 0., 1.);
+x	X	mask = vec3(1., 0., 0.);
+y	Y	mask = vec3(0., 1., 0.);
+z	Z	mask = vec3(0., 0., 1.);

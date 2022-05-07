@@ -1,21 +1,26 @@
 ReturnT thismap(CoordT p, ContextT ctx) {
 	float adjust = 0.;
 	if (THIS_Enable >= 0.5) {
+		vec3 p0 = adaptAsVec3(p);
 		#ifdef THIS_HAS_INPUT_sizeField
-		CoordT h = THIS_asCoordT(inputOp_sizeField(p, ctx));
+		vec3 h = adaptAsVec3(inputOp_sizeField(p, ctx));
 		#else
-		CoordT h = THIS_asCoordT(THIS_Size);
+		vec3 h = THIS_Size;
 		#endif
 		#ifdef THIS_HAS_INPUT_centerField
-		CoordT t = THIS_asCoordT(inputOp_centerField(p, ctx));
+		vec3 t = adaptAsVec3(inputOp_centerField(p, ctx));
 		#else
-		CoordT t = THIS_asCoordT(THIS_Center);
+		vec3 t = THIS_Center;
 		#endif
-		p += t;
-		CoordT q = abs(p) - h;
-		adjust = min(vmax(q),0.0);
-		p = max(q, 0.);
-		p -= t;
+		vec3 mask = vec3(1.);
+		AXIS_MASK();
+		vec3 q = p0 + t;
+		q = abs(q) - h;
+		adjust = min(vmax(q * mask),0.0);
+		q = max(q, 0.);
+		q -= t;
+		q = mix(p0, q, mask);
+		p = THIS_asCoordT(q);
 	}
 	ReturnT res = inputOp1(p, ctx);
 	#ifdef THIS_RETURN_TYPE_Sdf
