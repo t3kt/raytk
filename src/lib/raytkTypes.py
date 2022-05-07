@@ -20,6 +20,8 @@ class Field:
 	name: str
 	label: Optional[str]
 	type: str
+	accessExpr: Optional[str] = None
+	macros: Optional[str] = None
 
 @dataclass
 class DataType:
@@ -35,6 +37,7 @@ class DataType:
 	fields: List[Field] = None
 	defaultExpr: Optional[str] = None
 	conversionFromParam: Optional[Conversion] = None
+	macros: Optional[str] = None
 
 	@property
 	def returnAsType(self):
@@ -159,6 +162,9 @@ _allTypes += [
 		fields=[
 			Field('x', 'Distance', 'float'),
 			Field('mat', 'Material', 'vec3'),
+			Field('uv', 'Primary UV', 'vec4', macros='RAYTK_USE_UV'),
+			Field('uv2', 'Secondary UV', 'vec4', macros='RAYTK_USE_UV'),
+			Field('color', 'Surface Color', 'vec4', macros='RAYTK_USE_SURFACE_COLOR'),
 			# TODO: sdf fields
 		]),
 	DataType(
@@ -256,7 +262,8 @@ def buildVariableTypeFieldTable(dat: 'scriptDAT'):
 	dat.clear()
 	dat.appendRow([
 		'parentType', 'name', 'label', 'type',
-		'accessExpr', 'returnAs', 'returnExpr', 'defaultExpr', 'paramExpr'
+		'accessExpr', 'returnAs', 'returnExpr', 'defaultExpr', 'paramExpr',
+		'macros',
 	])
 	for dt in _allTypes:
 		if not dt.isVariable:
@@ -269,6 +276,7 @@ def buildVariableTypeFieldTable(dat: 'scriptDAT'):
 			dt.returnExpr,
 			dt.defaultExpr or '',
 			dt.paramExpr or '',
+			dt.macros or '',
 		])
 		if not dt.fields:
 			continue
@@ -276,14 +284,21 @@ def buildVariableTypeFieldTable(dat: 'scriptDAT'):
 			fieldType = _getType(field.type)
 			if not fieldType or not fieldType.isReturn:
 				pass
+			macros = dt.macros or ''
+			if field.macros:
+				if macros:
+					macros += ' ' + field.macros
+				else:
+					macros = field.macros
 			dat.appendRow([
 				dt.name, field.name, field.label,
 				field.type,
-				f'val.{field.name}',
+				field.accessExpr or f'val.{field.name}',
 				fieldType.returnAsType,
 				fieldType.returnExpr,
 				fieldType.defaultExpr or '',
 				fieldType.paramExpr or '',
+				macros,
 			])
 
 def _conversionsFrom(fromType: str):
