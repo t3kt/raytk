@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.filter.complexMath
-  opVersion: '0'
+  opVersion: '1'
   opStatus: alpha
 opDef: !def
   enable: !expr
@@ -15,8 +15,7 @@ opDef: !def
       Returntypevec4: true
   function: !text
     file: src/operators/filter/complexMath.glsl
-    name: functionTemplate
-  paramListTable: switcher_params
+    name: function
   libraryNames: !expr
     expr: op('complex')
   macroTable: !table
@@ -52,4 +51,4 @@ elements:
     Manageparamstates: false
     Alwaysincludeallparams: false
     Switchmode: inline
-    Placeholder: ''
+    Placeholder: BODY();

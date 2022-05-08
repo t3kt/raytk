@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.field.noiseField
-  opVersion: '16'
+  opVersion: '17'
   opStatus: default
 opDef: !def
   enable: true
@@ -22,13 +22,12 @@ opDef: !def
         expr: op('switcher_info')[1, 'returnType'] == 'vec4'
   function: !text
     file: src/operators/field/noiseField.glsl
-    name: functionTemplate
+    name: function
   useParams:
   - Amplitude
   - Offset
   - Translate[1-4]
   - Scale[1-4]
-  paramListTable: switcher_params
   libraryNames: !expr
     expr: op(op('switcher_info')[1, 'libraryNames']) or ''
   macroTable: !table
@@ -63,4 +62,4 @@ elements:
     Manageparamstates: false
     Alwaysincludeallparams: false
     Switchmode: inline
-    Placeholder: ''
+    Placeholder: BODY();
