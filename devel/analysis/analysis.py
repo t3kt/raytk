@@ -23,6 +23,7 @@ _opDefParamNames = [
 	'Specialparams',
 	'Angleparams',
 	'Macroparams',
+	'Paramlisttable',
 	'Buffertable',
 	'Texturetable',
 	'Macrotable',
