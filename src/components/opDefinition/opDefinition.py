@@ -154,7 +154,6 @@ def buildParamSpecTable(dat: 'scriptDAT', paramListTable: 'DAT'):
 		'tupletName',
 		'tupletGlobalName',
 		'vecIndex',
-		'status',
 		'handling',
 		'conversion',
 	])
@@ -172,7 +171,6 @@ def buildParamSpecTable(dat: 'scriptDAT', paramListTable: 'DAT'):
 			p.tupletName,
 			globalPrefix + p.tupletName,
 			p.vecIndex,
-			'',
 			handling,
 			'',
 		])
@@ -209,7 +207,7 @@ def buildParamSpecTable(dat: 'scriptDAT', paramListTable: 'DAT'):
 			dat.appendRow([
 				name,
 				globalPrefix + name,
-				'special', 'Float', '', '', '0', '', 'runtime', '',
+				'special', 'Float', '', '', '0', 'runtime', '',
 				])
 
 		# Update conversions from opDefinition Angleparams par
@@ -303,7 +301,7 @@ def buildParamTable(dat: 'DAT', paramSpecTable: 'DAT'):
 # Builds a table of parameters organized into tuplets.
 def buildParamDetailTable(dat: 'DAT', paramSpecTable: 'DAT'):
 	dat.clear()
-	dat.appendRow(['tuplet', 'source', 'size', 'part1', 'part2', 'part3', 'part4', 'status', 'conversion', 'localNames'])
+	dat.appendRow(['tuplet', 'source', 'size', 'part1', 'part2', 'part3', 'part4', 'conversion', 'localNames'])
 	namesByTupletName = {}  # type: Dict[str, List[str]]
 	for i in range(1, paramSpecTable.numRows):
 		tupletName = paramSpecTable[i, 'tupletName'].val
@@ -331,7 +329,6 @@ def buildParamDetailTable(dat: 'DAT', paramSpecTable: 'DAT'):
 			paramSpecTable[parts[1], 'globalName'] or '',
 			paramSpecTable[parts[2], 'globalName'] or '',
 			paramSpecTable[parts[3], 'globalName'] or '',
-			paramSpecTable[parts[0], 'status'],
 			paramSpecTable[parts[0], 'conversion'],
 			' '.join(p for p in parts if p),
 		])
