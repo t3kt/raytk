@@ -1,0 +1,3 @@
+names	source	handling	readOnlyHandling	conversion	enable
+Enable[1-8]	param	runtime	macro		1
+Translate[1-8][xyz]	param	runtime	macro		1

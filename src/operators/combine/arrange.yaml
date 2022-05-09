@@ -14,10 +14,8 @@ opDef: !def
       Returntypesdf: true
   function: !text
     file: src/operators/combine/arrange.glsl
-    name: functionTemplate
-  useParams:
-  - Translate[1-8][xyz]
-  - Enable[1-8]
+    name: function
+  paramGroupTable: eval_params
   libraryNames: raytkCombine
   variableTable: !table
     file: src/operators/combine/arrange_variables.txt
@@ -125,4 +123,4 @@ elements:
     Firststepstmt: ''
     Stepstmt: !expr
       expr: op('stepTemplate').text
-    Bodycodeplaceholder: ''
+    Bodycodeplaceholder: AGGREGATE_BODY();
