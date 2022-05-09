@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.filter.limitField
-  opVersion: '13'
+  opVersion: '14'
   opStatus: default
 opDef: !def
   enable: !expr
@@ -19,10 +19,7 @@ opDef: !def
   function: !text
     file: src/operators/filter/limitField.glsl
     name: functionTemplate
-  useParams:
-  - Low[1-4]
-  - High[1-4]
-  macroParams: Limittype
+  paramGroupTable: eval_params
   libraryNames: !expr
     expr: op('modZigZag')
   help: !text

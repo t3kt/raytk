@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.camera.lookAtCamera
-  opVersion: '7'
+  opVersion: '8'
   opStatus: default
 opDef: !def
   enable: true
@@ -15,15 +15,7 @@ opDef: !def
   function: !text
     file: src/operators/camera/lookAtCamera.glsl
     name: functionTemplate
-  useParams:
-  - Campos[xyz]
-  - Camrot[xyz]
-  - Lookatpos[xyz]
-  - Camup[xyz]
-  - Camfov
-  angleParams:
-  - Camfov
-  - Camrot[xyz]
+  paramGroupTable: eval_params
   help: !text
     file: src/operators/camera/lookAtCamera.md
     name: help

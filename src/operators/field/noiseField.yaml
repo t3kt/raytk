@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.field.noiseField
-  opVersion: '17'
+  opVersion: '18'
   opStatus: default
 opDef: !def
   enable: true
@@ -23,11 +23,7 @@ opDef: !def
   function: !text
     file: src/operators/field/noiseField.glsl
     name: function
-  useParams:
-  - Amplitude
-  - Offset
-  - Translate[1-4]
-  - Scale[1-4]
+  paramGroupTable: eval_params
   libraryNames: !expr
     expr: op(op('switcher_info')[1, 'libraryNames']) or ''
   macroTable: !table
