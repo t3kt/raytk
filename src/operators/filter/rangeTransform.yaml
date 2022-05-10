@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.filter.rangeTransform
-  opVersion: '12'
+  opVersion: '13'
   opStatus: default
 opDef: !def
   enable: !expr
@@ -19,22 +19,6 @@ opDef: !def
   function: !text
     file: src/operators/filter/rangeTransform.glsl
     name: function
-  useParams:
-  - Indexrange[1-2]
-  - Translate1[xyz]
-  - Translate2[xyz]
-  - Rotate1[xyz]
-  - Rotate2[xyz]
-  - Pivot1[xyz]
-  - Pivot2[xyz]
-  angleParams:
-  - Rotate1[xyz]
-  - Rotate2[xyz]
-  macroParams:
-  - Extendmode
-  - Enabletranslate
-  - Enablerotate
-  - Usepivot
   help: !text
     file: src/operators/filter/rangeTransform.md
     name: help
