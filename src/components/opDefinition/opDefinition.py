@@ -1,3 +1,4 @@
+import math
 import re
 
 # noinspection PyUnreachableCode
@@ -460,16 +461,23 @@ def prepareMacroTable(dat: 'scriptDAT', inputTable: 'DAT', paramSpecTable: 'DAT'
 		])
 	macroParams = []
 	host = _getParamsOp()
+	angleParamNames = []
 	for i in range(1, paramSpecTable.numRows):
 		if paramSpecTable[i, 'handling'] != 'macro':
 			continue
 		par = host.par[paramSpecTable[i, 'localName']]
-		if par is not None:
-			macroParams.append(par)
+		if par is None:
+			continue
+		macroParams.append(par)
+		if paramSpecTable[i, 'conversion'] == 'angle':
+			angleParamNames.append(par.name)
+
 	macroParamVals = {}
 	for par in macroParams:
 		name = par.name
 		val = par.eval()
+		if name in angleParamNames:
+			val = math.radians(val)
 		macroParamVals[name] = val
 		style = par.style
 		if style in ('Menu', 'Str', 'StrMenu'):
