@@ -1186,6 +1186,7 @@ class _ParamTupletSpec:
 	tuplet: str
 	parts: Tuple[str]
 	isReadOnly: bool
+	isSpecial: bool = False
 
 	def isPresentInChop(self, chop: 'CHOP'):
 		return any([chop[part] is not None for part in self.parts])
@@ -1202,6 +1203,7 @@ class _ParamTupletSpec:
 			tuplet=str(dat[row, 'tuplet']),
 			parts=tuple(parts),
 			isReadOnly='readOnly' in str(dat[row, 'status'] or ''),
+			isSpecial=dat[row, 'source'] == 'special',
 		)
 
 	@classmethod
@@ -1319,6 +1321,9 @@ class _ParameterProcessor:
 							f'{parType}({paramRef}.{suffixes[:size]})',
 							parType
 						)
+				if paramTuplet.isSpecial:
+					for partI, partName in enumerate(paramTuplet.parts):
+						self.paramExprs[partName] = _ParamExpr(f'{paramRef}.{suffixes[partI]}', 'float')
 
 	def _paramReference(self, i: int, paramTuplet: _ParamTupletSpec) -> str:
 		raise NotImplementedError()
