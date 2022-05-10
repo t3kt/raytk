@@ -160,7 +160,7 @@ def buildParamSpecTable(dat: 'scriptDAT', paramListTable: 'DAT', paramGroupTable
 	])
 	globalPrefix = parentPar().Name.eval() + '_'
 
-	def addPar(p: 'Par', handling: str, skipExisting=False):
+	def addPar(p: 'Par', handling: str, skipExisting=False, conversion=''):
 		if skipExisting and dat[p.name, 0] is not None:
 			# skip params that are already loaded
 			return
@@ -174,7 +174,7 @@ def buildParamSpecTable(dat: 'scriptDAT', paramListTable: 'DAT', paramGroupTable
 			p.vecIndex,
 			'',
 			handling,
-			'',
+			conversion,
 		])
 
 	def addSpecialPar(name: str):
@@ -233,11 +233,10 @@ def buildParamSpecTable(dat: 'scriptDAT', paramListTable: 'DAT', paramGroupTable
 					addSpecialPar(name)
 			else:  # if source == 'param':
 				for par in _getRegularParams([table[row, 'names'].val]):
-					addPar(
-						par,
-						handling=table[row, 'readOnlyHandling' if par.readOnly else 'handling'].val,
-						skipExisting=False,
-					)
+					handling = table[row, 'handling']
+					if par.readOnly:
+						handling = table[row, 'readOnlyHandling'] or handling
+					addPar(par, handling=handling.val, skipExisting=False, conversion=table[row, 'conversion'].val)
 
 	addFromGroupTable(paramGroupTable)
 
