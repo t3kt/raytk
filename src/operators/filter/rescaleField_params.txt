@@ -1,0 +1,2 @@
+names	source	handling	readOnlyHandling	conversion	enable
+Inputlow[1-4] Inputhigh[1-4] Outputlow[1-4] Outputhigh[1-4] Mult[1-4] Postadd[1-4] Multiply	param	runtime	macro		1

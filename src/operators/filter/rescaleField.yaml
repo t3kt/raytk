@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.filter.rescaleField
-  opVersion: '20'
+  opVersion: '21'
   opStatus: default
 opDef: !def
   enable: !expr
@@ -22,14 +22,6 @@ opDef: !def
   function: !text
     file: src/operators/filter/rescaleField.glsl
     name: functionTemplate
-  useParams:
-  - Inputlow[1-4]
-  - Inputhigh[1-4]
-  - Outputlow[1-4]
-  - Outputhigh[1-4]
-  - Mult[1-4]
-  - Postadd[1-4]
-  - Multiply
   help: !text
     file: src/operators/filter/rescaleField.md
     name: help
