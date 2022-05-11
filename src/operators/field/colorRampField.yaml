@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.field.colorRampField
-  opVersion: '12'
+  opVersion: '13'
   opStatus: default
 opDef: !def
   enable: !expr
@@ -23,15 +23,7 @@ opDef: !def
   function: !text
     file: src/operators/field/colorRampField.glsl
     name: functionTemplate
-  useParams:
-  - Color1[rgb]
-  - Color2[rgb]
-  - Alpha1
-  - Alpha2
-  - Axis
-  - Range1
-  - Range2
-  macroParams: Extendmode
+  paramGroupTable: eval_params
   libraryNames: !expr
     expr: op('modZigZag')
   help: !text

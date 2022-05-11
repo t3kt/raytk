@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.field.hsvColorField
-  opVersion: '5'
+  opVersion: '6'
   opStatus: beta
 opDef: !def
   enable: true
@@ -35,10 +35,7 @@ opDef: !def
   function: !text
     file: src/operators/field/hsvColorField.glsl
     name: function
-  useParams:
-  - Hueoffset
-  - Value
-  - Saturation
+  paramGroupTable: eval_params
   help: !text
     file: src/operators/field/hsvColorField.md
     name: help
