@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.field.stepField
-  opVersion: '6'
+  opVersion: '7'
   opStatus: default
 opDef: !def
   enable: !expr
@@ -37,14 +37,7 @@ opDef: !def
   function: !text
     file: src/operators/field/stepField.glsl
     name: function
-  useParams:
-  - Edge
-  - Blend
-  - Value[1-2][1-4]
-  macroParams:
-  - Axis
-  - Enableblend
-  - Reverse
+  paramGroupTable: eval_params
   help: !text
     file: src/operators/field/stepField.md
     name: help

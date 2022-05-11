@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.field.constantField
-  opVersion: '16'
+  opVersion: '17'
   opStatus: default
 opDef: !def
   enable: true
@@ -25,7 +25,7 @@ opDef: !def
   function: !text
     file: src/operators/field/constantField.glsl
     name: functionTemplate
-  useParams: Value[1-4]
+  paramGroupTable: eval_params
   help: !text
     file: src/operators/field/constantField.md
     name: help
