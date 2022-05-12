@@ -41,6 +41,23 @@ def buildParametersTable(dat: 'DAT'):
 	dat.appendRow(['params', ' '.join(params)])
 	dat.appendRow(['macroParams', ' '.join(macroParams)])
 
+def buildParameterGroupTable(dat: 'DAT'):
+	dat.clear()
+	dat.appendRow(['names', 'source', 'handling', 'readOnlyHandling', 'conversion', 'enable'])
+	dat.appendRow([parent().par.Param, 'param', 'runtime', '', '', '1'])
+	mode = _effectiveMode()
+	if parent().par.Manageparamstates:
+		if mode == 'switch' or parent().par.Alwaysincludeallparams:
+			dat.appendRow([
+				' '.join(_paramModes().keys()),
+				'param', 'runtime', 'macro', '', '1'
+			])
+		else:
+			dat.appendRow([
+				op('currentItemInfo')[1, 'params'] or '',
+				'param', 'runtime', 'macro', '', '1'
+			])
+
 def buildCode():
 	par = _hostPar()
 	if par is None:
