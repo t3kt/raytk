@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.material.diffuseContrib
-  opVersion: '16'
+  opVersion: '17'
   opStatus: default
 opDef: !def
   enable: true
@@ -18,13 +18,7 @@ opDef: !def
   function: !text
     file: src/operators/material/diffuseContrib.glsl
     name: function
-  useParams:
-  - Color[rgb]
-  - Level
-  macroParams:
-  - Uselightcolor
-  - Usesurfacecolor
-  - Enableshadow
+  paramGroupTable: eval_params
   libraryNames: !expr
     expr: op('diffuseContrib_lib')
   macroTable: !table
