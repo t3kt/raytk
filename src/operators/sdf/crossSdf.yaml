@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.sdf.crossSdf
-  opVersion: '9'
+  opVersion: '10'
   opStatus: default
 opDef: !def
   enable: true
@@ -15,10 +15,7 @@ opDef: !def
   function: !text
     file: src/operators/sdf/crossSdf.glsl
     name: functionTemplate
-  useParams:
-  - Translate[xyz]
-  - Size[xyz]
-  - Smoothradius
+  paramGroupTable: eval_params
   help: !text
     file: src/operators/sdf/crossSdf.md
     name: help

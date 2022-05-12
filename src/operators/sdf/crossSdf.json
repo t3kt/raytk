@@ -2,6 +2,6 @@
   "meta": {
     "opStatus": "default",
     "opType": "raytk.operators.sdf.crossSdf",
-    "opVersion": 9
+    "opVersion": 10
   }
 }

@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.sdf2d.horseshoeSdf2d
-  opVersion: '2'
+  opVersion: '3'
   opStatus: default
 opDef: !def
   enable: true
@@ -15,12 +15,7 @@ opDef: !def
   function: !text
     file: src/operators/sdf2d/horseshoeSdf2d.glsl
     name: function
-  useParams:
-  - Radius
-  - Length
-  - Thickness
-  - Angle
-  angleParams: Angle
+  paramGroupTable: eval_params
 inputs:
 - !input
   Localalias: radiusField

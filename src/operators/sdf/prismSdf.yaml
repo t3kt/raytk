@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.sdf.prismSdf
-  opVersion: '15'
+  opVersion: '16'
   opStatus: default
 opDef: !def
   enable: true
@@ -15,12 +15,7 @@ opDef: !def
   function: !text
     file: src/operators/sdf/prismSdf.glsl
     name: function
-  useParams:
-  - Translate[xyz]
-  - Radius
-  - Height
-  - Infiniteheight
-  - Axis
+  paramGroupTable: eval_params
   libraryNames: !expr
     expr: op('prismSdf_lib')
   help: !text

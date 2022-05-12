@@ -1,0 +1,3 @@
+names	source	handling	readOnlyHandling	conversion	enable
+Spacing[1-2] Offset[1-2] Thickness Axisoffset Axis	param	runtime	macro		1
+Crosssectionshape Pattern	param	macro			1

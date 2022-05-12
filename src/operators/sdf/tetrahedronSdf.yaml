@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.sdf.tetrahedronSdf
-  opVersion: '6'
+  opVersion: '7'
   opStatus: default
 opDef: !def
   enable: true
@@ -15,9 +15,7 @@ opDef: !def
   function: !text
     file: src/operators/sdf/tetrahedronSdf.glsl
     name: functionTemplate
-  useParams:
-  - Translate[xyz]
-  - Scale
+  paramGroupTable: eval_params
   help: !text
     file: src/operators/sdf/tetrahedronSdf.md
     name: help

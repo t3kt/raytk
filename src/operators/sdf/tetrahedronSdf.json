@@ -2,6 +2,6 @@
   "meta": {
     "opStatus": "default",
     "opType": "raytk.operators.sdf.tetrahedronSdf",
-    "opVersion": 6
+    "opVersion": 7
   }
 }
