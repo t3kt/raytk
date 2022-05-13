@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.combine.combine
-  opVersion: '23'
+  opVersion: '24'
   opStatus: default
 opDef: !def
   enable: !expr
@@ -150,24 +150,23 @@ multiInput: !multiInput
       Allcontexttype: true
     returnType: !returnT
       Returntypesdf: true
-inputs:
-- !input
-  Localalias: radiusField
-  coordType: !coordT
-    Allcoordtype: true
-  contextType: !contextT
-    Allcontexttype: true
-  returnType: !returnT
-    Returntypesdf: true
-    Returntypefloat: true
-- !input
-  Localalias: offsetField
-  coordType: !coordT
-    Allcoordtype: true
-  contextType: !contextT
-    Allcontexttype: true
-  returnType: !returnT
-    Returntypefloat: true
+  - !input
+    Localalias: radiusField
+    coordType: !coordT
+      Allcoordtype: true
+    contextType: !contextT
+      Allcontexttype: true
+    returnType: !returnT
+      Returntypesdf: true
+      Returntypefloat: true
+  - !input
+    Localalias: offsetField
+    coordType: !coordT
+      Allcoordtype: true
+    contextType: !contextT
+      Allcontexttype: true
+    returnType: !returnT
+      Returntypefloat: true
 elements:
 - !opElement
   name: combiner
