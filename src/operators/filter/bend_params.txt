@@ -1,0 +1,3 @@
+names	source	handling	readOnlyHandling	conversion	enable
+Amount Shift	param	runtime	macro		1
+Direction	param	macro			1

@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.filter.flip
-  opVersion: '14'
+  opVersion: '15'
   opStatus: default
 opDef: !def
   enable: !expr
@@ -18,11 +18,7 @@ opDef: !def
   function: !text
     file: src/operators/filter/flip.glsl
     name: function
-  useParams:
-  - Offset
-  - Shift
-  - Axis
-  macroParams: Iterationtype
+  paramGroupTable: eval_params
   libraryNames: raytkCombine
   variableTable: !table
     file: src/operators/filter/flip_variables.txt

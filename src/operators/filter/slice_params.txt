@@ -1,0 +1,3 @@
+names	source	handling	readOnlyHandling	conversion	enable
+Offset Thickness Smoothradius Axis Enablemirror Enablesmoothing	param	runtime	macro		1
+Operation	param	macro			1

@@ -2,6 +2,6 @@
   "meta": {
     "opStatus": "default",
     "opType": "raytk.operators.filter.reflect",
-    "opVersion": 25
+    "opVersion": 26
   }
 }

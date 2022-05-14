@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.filter.spiralZoom
-  opVersion: '7'
+  opVersion: '8'
   opStatus: default
 opDef: !def
   enable: !expr
@@ -18,12 +18,7 @@ opDef: !def
   function: !text
     file: src/operators/filter/spiralZoom.glsl
     name: function
-  useParams:
-  - Center[1-2]
-  - Phase[1-2]
-  - Twist[1-2]
-  - Branches
-  - Axis
+  paramGroupTable: eval_params
   help: !text
     file: src/operators/filter/spiralZoom.md
     name: help

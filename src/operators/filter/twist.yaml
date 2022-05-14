@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.filter.twist
-  opVersion: '10'
+  opVersion: '11'
   opStatus: default
 opDef: !def
   enable: !expr
@@ -19,10 +19,7 @@ opDef: !def
   function: !text
     file: src/operators/filter/twist.glsl
     name: function
-  useParams:
-  - Amount
-  - Shift
-  - Axis
+  paramGroupTable: eval_params
   help: !text
     file: src/operators/filter/twist.md
     name: help

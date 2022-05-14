@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.filter.elongate
-  opVersion: '10'
+  opVersion: '11'
   opStatus: default
 opDef: !def
   enable: !expr
@@ -18,9 +18,7 @@ opDef: !def
   function: !text
     file: src/operators/filter/elongate.glsl
     name: function
-  useParams:
-  - Center[xyz]
-  - Size[xyz]
+  paramGroupTable: eval_params
   help: !text
     file: src/operators/filter/elongate.md
     name: help
