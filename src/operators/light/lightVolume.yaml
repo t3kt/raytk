@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.light.lightVolume
-  opVersion: '6'
+  opVersion: '7'
   opStatus: beta
 opDef: !def
   enable: true
@@ -15,15 +15,7 @@ opDef: !def
   function: !text
     file: src/operators/light/lightVolume.glsl
     name: function
-  useParams:
-  - Color[rgb]
-  - Level
-  - Blending
-  - Offset
-  macroParams:
-  - Enableshadow
-  - Uselightcolor
-  - Usesdfcolor
+  paramGroupTable: eval_params
   macroTable: !table
     file: src/operators/light/lightVolume_macros.txt
     name: macro_exprs

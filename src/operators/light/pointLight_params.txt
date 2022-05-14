@@ -1,0 +1,2 @@
+names	source	handling	readOnlyHandling	conversion	enable
+Position[xyz] Color[rgb] Intensity Attenuationstart Attenuationend Enableattenuation Enableshadow	param	runtime	macro		1

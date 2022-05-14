@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.light.directionalLight
-  opVersion: '5'
+  opVersion: '6'
   opStatus: default
 opDef: !def
   enable: true
@@ -15,11 +15,7 @@ opDef: !def
   function: !text
     file: src/operators/light/directionalLight.glsl
     name: functionTemplate
-  useParams:
-  - Direction[xyz]
-  - Color[rgb]
-  - Intensity
-  - Enableshadow
+  paramGroupTable: eval_params
   help: !text
     file: src/operators/light/directionalLight.md
     name: help
