@@ -1,4 +1,18 @@
 names	source	handling	readOnlyHandling	conversion	enable
-Enable[1-8]	param	runtime	macro		1
-Translate[1-8][xyz]	param	runtime	macro		parent().par.Enabletranslate
+Enable1	param	runtime	macro		op('definition_1').numRows > 1
+Enable2	param	runtime	macro		op('definition_2').numRows > 1
+Enable3	param	runtime	macro		op('definition_3').numRows > 1
+Enable4	param	runtime	macro		op('definition_4').numRows > 1
+Enable5	param	runtime	macro		op('definition_5').numRows > 1
+Enable6	param	runtime	macro		op('definition_6').numRows > 1
+Enable7	param	runtime	macro		op('definition_7').numRows > 1
+Enable8	param	runtime	macro		op('definition_8').numRows > 1
 Enabletranslate	param	macro			1
+Translate1[xyz]	param	runtime	macro		parent().par.Enabletranslate and op('definition_1').numRows > 1
+Translate2[xyz]	param	runtime	macro		parent().par.Enabletranslate and op('definition_2').numRows > 1
+Translate3[xyz]	param	runtime	macro		parent().par.Enabletranslate and op('definition_3').numRows > 1
+Translate4[xyz]	param	runtime	macro		parent().par.Enabletranslate and op('definition_4').numRows > 1
+Translate5[xyz]	param	runtime	macro		parent().par.Enabletranslate and op('definition_5').numRows > 1
+Translate6[xyz]	param	runtime	macro		parent().par.Enabletranslate and op('definition_6').numRows > 1
+Translate7[xyz]	param	runtime	macro		parent().par.Enabletranslate and op('definition_7').numRows > 1
+Translate8[xyz]	param	runtime	macro		parent().par.Enabletranslate and op('definition_8').numRows > 1
