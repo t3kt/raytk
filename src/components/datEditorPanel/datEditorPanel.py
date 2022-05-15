@@ -24,6 +24,8 @@ class DatEditorPanel:
 
 	@property
 	def opDef(self) -> 'Optional[COMP]':
+		if not hasattr(ext, 'ropEditor'):
+			return
 		info = ext.ropEditor.ROPInfo
 		return info and info.opDef
 
@@ -37,6 +39,16 @@ class DatEditorPanel:
 		name = self.ownerComp.par.Selecteditem.eval()
 		if name:
 			return info.opDef.par[name]
+
+	def prepareItemTable(self, dat: 'scriptDAT'):
+		dat.copy(dat.inputs[0])
+		opDef = self.opDef
+		if not opDef:
+			return
+		for i in range(1, dat.numRows):
+			name = dat[i, 'name']
+			if opDef.par[name]:
+				dat[i, 'label'] = '* ' + dat[i, 'label'].val + ' *'
 
 	@property
 	def currentSourceDat(self) -> 'Optional[DAT]':
