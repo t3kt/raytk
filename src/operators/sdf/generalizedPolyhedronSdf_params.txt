@@ -1,0 +1,4 @@
+names	source	handling	readOnlyHandling	conversion	enable
+Translate[xyz] Radius Begin End	param	runtime	macro		1
+Useexponent	param	macro			1
+Exponent	param	runtime	macro		parent().par.Useexponent

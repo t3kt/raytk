@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.sdf.cylinderSdf
-  opVersion: '19'
+  opVersion: '20'
   opStatus: default
 opDef: !def
   enable: true
@@ -15,12 +15,7 @@ opDef: !def
   function: !text
     file: src/operators/sdf/cylinderSdf.glsl
     name: functionTemplate
-  useParams:
-  - Translate[xyz]
-  - Radius
-  - Height
-  - Infiniteheight
-  - Axis
+  paramGroupTable: eval_params
   variableTable: !table
     file: src/operators/sdf/cylinderSdf_variables.txt
     name: variable_exprs
