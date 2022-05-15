@@ -18,7 +18,7 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 	vec2 s1 = vec2(max(s.x, s.y)) / 2.;
 	uv = vec3(map01(p, -s1, s1), 0.);
 	#pragma r:elif THIS_Uvmode_wrapedge
-	
+
 	#pragma r:endif
 	assignUV(res, uv);
 	#pragma r:endif
