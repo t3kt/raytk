@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.sdf2d.spiralSdf2d
-  opVersion: '2'
+  opVersion: '3'
   opStatus: beta
 opDef: !def
   enable: true
@@ -15,10 +15,4 @@ opDef: !def
   function: !text
     file: src/operators/sdf2d/spiralSdf2d.glsl
     name: function
-  useParams:
-  - Rotate
-  - Thickness
-  - Radiuslimit
-  - Spread
-  angleParams: Rotate
-  macroParams: Useradiuslimit
+  paramGroupTable: eval_params

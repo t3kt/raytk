@@ -1,0 +1,2 @@
+names	source	handling	readOnlyHandling	conversion	enable
+Pointa[xy] Pointb[xy]	param	runtime	macro		1

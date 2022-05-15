@@ -1,0 +1,5 @@
+names	source	handling	readOnlyHandling	conversion	enable
+Thickness Spread	param	runtime	macro		1
+Rotate	param	runtime	macro	angle	1
+Useradiuslimit	param	macro			1
+Radiuslimit	param	runtime	macro		parent().par.Useradiuslimit
