@@ -295,6 +295,9 @@ vec4 adaptAsVec4(ivec4 p) { return vec4(p); }
 vec4 adaptAsVec4(bvec4 p) { return vec4(p); }
 vec4 adaptAsVec4(uvec4 p) { return vec4(p); }
 
+int adaptAsInt(float p) { return int(p); }
+int adaptAsInt(vec4 p) { return int(p.x); }
+
 
 Sdf adaptAsSdf(float p) { return createSdf(p); }
 Sdf adaptAsSdf(Sdf res) { return res; }

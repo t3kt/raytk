@@ -330,25 +330,14 @@ class ShaderBuilder:
 				else:
 					macros[cells[0].val] = cells[1].val
 			lines = []
-			if not inline:
-				# Primary typedef macros are not needed when they're being inlined
-				lines += [
-					f'#define {name}  {val}'
-					for name, val in typedefs.items()
-				]
-			# Macros like FOO_COORD_TYPE_float are always needed
 			lines += [
-				f'#define {name}'
-				for name, val in macros.items()
-				if val == ''
+				f'#define {name} {val}'
+				for name, val in typedefs.items()
 			]
-			if not inline:
-				# Replacement macros like FOO_asCoordT are not needed when they're being inlined
-				lines += [
-					f'#define {name} {val}'
-					for name, val in macros.items()
-					if val != ''
-				]
+			lines += [
+				f'#define {name} {val}'
+				for name, val in macros.items()
+			]
 		else:
 			lines = []
 		return wrapCodeSection(lines, 'opDataTypedefs')
@@ -362,6 +351,7 @@ class ShaderBuilder:
 			'vec3': 'adaptAsVec3',
 			'vec4': 'adaptAsVec4',
 			'Sdf': 'adaptAsSdf',
+			'int': 'adaptAsInt',
 		}
 		for row in range(1, defsTable.numRows):
 			name = str(defsTable[row, 'name'])
@@ -384,6 +374,7 @@ class ShaderBuilder:
 			dataType = str(varTable[row, 'dataType'])
 			dat.appendRow([name + '_VarT', dataType, 'typedef'])
 			dat.appendRow([name + '_TYPE_' + dataType, '', 'macro'])
+			debug(f'checking for type {dataType} in {typeAdaptFuncs}')
 			if dataType in typeAdaptFuncs:
 				dat.appendRow([name + '_asVarT', typeAdaptFuncs[dataType], 'macro'])
 
