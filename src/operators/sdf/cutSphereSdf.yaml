@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.sdf.cutSphereSdf
-  opVersion: '1'
+  opVersion: '2'
   opStatus: beta
 opDef: !def
   enable: true
@@ -15,11 +15,7 @@ opDef: !def
   function: !text
     file: src/operators/sdf/cutSphereSdf.glsl
     name: function
-  useParams:
-  - Radius
-  - Offset
-  - Rotate[xyz]
-  angleParams: Rotate[xyz]
+  paramGroupTable: eval_params
   libraryNames: !expr
     expr: op('cutSphereSdf_lib')
 paramPages:

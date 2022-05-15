@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.sdf.chainSdf
-  opVersion: '0'
+  opVersion: '1'
   opStatus: beta
 opDef: !def
   enable: true
@@ -15,7 +15,4 @@ opDef: !def
   function: !text
     file: src/operators/sdf/chainSdf.glsl
     name: function
-  useParams:
-  - Length
-  - Radius
-  - Thickness
+  paramGroupTable: eval_params

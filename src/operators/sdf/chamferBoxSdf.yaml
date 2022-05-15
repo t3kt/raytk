@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.sdf.chamferBoxSdf
-  opVersion: '6'
+  opVersion: '7'
   opStatus: default
 opDef: !def
   enable: !expr
@@ -16,12 +16,7 @@ opDef: !def
   function: !text
     file: src/operators/sdf/chamferBoxSdf.glsl
     name: function
-  useParams:
-  - Translate[xyz]
-  - Scale[xyz]
-  - Uniformscale
-  - Chamfer
-  - Round
+  paramGroupTable: eval_params
   keywords:
   - box
   - cube

@@ -1,0 +1,4 @@
+names	source	handling	readOnlyHandling	conversion	enable
+Translate[xyz] Radius	param	runtime	macro		1
+Endpoint1[xyz]	param	runtime	macro		op('definition_1').numRows < 2
+Endpoint2[xyz]	param	runtime	macro		op('definition_2').numRows < 2

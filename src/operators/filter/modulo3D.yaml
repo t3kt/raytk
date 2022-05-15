@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.filter.modulo3D
-  opVersion: '17'
+  opVersion: '18'
   opStatus: default
 opDef: !def
   enable: !expr
@@ -17,13 +17,7 @@ opDef: !def
   function: !text
     file: src/operators/filter/modulo3D.glsl
     name: function
-  useParams:
-  - Size[xyz]
-  - Offset[xyz]
-  - Shift[xyz]
-  macroParams:
-  - Iterationtype
-  - Mirrortype
+  paramGroupTable: eval_params
   paramListTable: switcher_params
   variableTable: !table
     file: src/operators/filter/modulo3D_variables.txt
