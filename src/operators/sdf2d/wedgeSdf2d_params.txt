@@ -1,0 +1,2 @@
+names	source	handling	readOnlyHandling	conversion	enable
+Centerpoint[xy] Endpoint[1-2][xy]	param	runtime	macro		1
