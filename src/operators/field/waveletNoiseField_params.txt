@@ -1,0 +1,3 @@
+names	source	handling	readOnlyHandling	conversion	enable
+Translate[1-3] Period[1-3] Phase Scalefactor Amplitude Offset	param	runtime	macro		1
+Iterations Enablevorticity	param	macro			1

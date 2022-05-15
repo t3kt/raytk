@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.convert.revolve
-  opVersion: '9'
+  opVersion: '10'
   opStatus: default
 opDef: !def
   enable: true
@@ -15,10 +15,7 @@ opDef: !def
   function: !text
     file: src/operators/convert/revolve.glsl
     name: function
-  useParams:
-  - Radialoffset
-  - Axisoffset
-  macroParams: Iterationtype
+  paramGroupTable: eval_params
   variableTable: !table
     file: src/operators/convert/revolve_variables.txt
     name: variable_exprs

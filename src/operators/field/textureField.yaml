@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.field.textureField
-  opVersion: '19'
+  opVersion: '20'
   opStatus: default
 opDef: !def
   enable: !expr
@@ -38,13 +38,7 @@ opDef: !def
   function: !text
     file: src/operators/field/textureField.glsl
     name: functionTemplate
-  useParams:
-  - Translateu
-  - Translatev
-  - Scaleu
-  - Scalev
-  - Axis
-  macroParams: Extendmode
+  paramGroupTable: eval_params
   libraryNames: !expr
     expr: op('modZigZag')
   textureTable: !table

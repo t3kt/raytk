@@ -1,0 +1,3 @@
+names	source	handling	readOnlyHandling	conversion	enable
+Offset Thickness Blending	param	runtime	macro		1
+Fieldtype	param	macro			1

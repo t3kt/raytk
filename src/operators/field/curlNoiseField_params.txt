@@ -1,0 +1,2 @@
+names	source	handling	readOnlyHandling	conversion	enable
+Translate[1-3] Scale[1-3] Amplitude Offset	param	runtime	macro		1

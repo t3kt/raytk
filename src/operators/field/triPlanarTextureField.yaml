@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.field.triPlanarTextureField
-  opVersion: '12'
+  opVersion: '13'
   opStatus: default
 opDef: !def
   enable: !expr
@@ -19,17 +19,7 @@ opDef: !def
   function: !text
     file: src/operators/field/triPlanarTextureField.glsl
     name: functionTemplate
-  useParams:
-  - Translateu
-  - Translatev
-  - Translatew
-  - Scaleu
-  - Scalev
-  - Scalew
-  macroParams:
-  - Extendmode
-  - Useseparatetextures
-  - Blendmode
+  paramGroupTable: eval_params
   libraryNames: !expr
     expr: op('modZigZag')
   textureTable: !table
