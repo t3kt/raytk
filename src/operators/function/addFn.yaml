@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.function.addFn
-  opVersion: '6'
+  opVersion: '7'
   opStatus: default
 opDef: !def
   enable: !expr
@@ -16,7 +16,7 @@ opDef: !def
   function: !text
     file: src/operators/function/addFn.glsl
     name: functionTemplate
-  useParams: Add
+  paramGroupTable: eval_params
   generatedMacroTables: multiInputHandler_macros
   help: !text
     file: src/operators/function/addFn.md

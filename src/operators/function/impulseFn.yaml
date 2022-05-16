@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.function.impulseFn
-  opVersion: '6'
+  opVersion: '7'
   opStatus: default
 opDef: !def
   enable: true
@@ -15,11 +15,22 @@ opDef: !def
   function: !text
     file: src/operators/function/impulseFn.glsl
     name: functionTemplate
-  useParams: !expr
-    expr: op('params')[0,0]
   libraryNames: !expr
     expr: op('impulseFn_lib')
-  generatedMacroTables: expr_macros
   help: !text
     file: src/operators/function/impulseFn.md
     name: help
+elements:
+- !opElement
+  name: codeSwitcher_Function
+  elementType: codeSwitcher
+  params:
+    Table: !table
+      file: src/operators/function/impulseFn_function_table.txt
+      name: function_table
+    Param: Function
+    Autoupdateparams: true
+    Manageparamstates: true
+    Alwaysincludeallparams: false
+    Switchmode: inline
+    Placeholder: BODY();

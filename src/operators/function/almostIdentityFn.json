@@ -2,6 +2,6 @@
   "meta": {
     "opStatus": "default",
     "opType": "raytk.operators.function.almostIdentityFn",
-    "opVersion": 5
+    "opVersion": 6
   }
 }

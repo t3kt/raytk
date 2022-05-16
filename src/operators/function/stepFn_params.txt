@@ -1,0 +1,3 @@
+names	source	handling	readOnlyHandling	conversion	enable
+Edge Blend	param	runtime	macro		1
+Invert Function	param	macro			1

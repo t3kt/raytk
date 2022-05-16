@@ -1,0 +1,2 @@
+names	source	handling	readOnlyHandling	conversion	enable
+Color1[rgb] Color2[rgb] Color3[rgb] Color4[rgb] Phase Period	param	runtime	macro		1
