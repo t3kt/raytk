@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.pattern.spiralPattern
-  opVersion: '2'
+  opVersion: '3'
   opStatus: default
 opDef: !def
   enable: true
@@ -15,11 +15,7 @@ opDef: !def
   function: !text
     file: src/operators/pattern/spiralPattern.glsl
     name: functionTemplate
-  useParams:
-  - Center[xy]
-  - Scale
-  - Spin
-  angleParams: Spin
+  paramGroupTable: eval_params
 inputs:
 - !input
   Localalias: coordField

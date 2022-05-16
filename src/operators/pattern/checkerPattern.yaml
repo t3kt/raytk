@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.pattern.checkerPattern
-  opVersion: '3'
+  opVersion: '4'
   opStatus: default
 opDef: !def
   enable: true
@@ -15,9 +15,7 @@ opDef: !def
   function: !text
     file: src/operators/pattern/checkerPattern.glsl
     name: functionTemplate
-  useParams:
-  - Translate[xy]
-  - Size[xy]
+  paramGroupTable: eval_params
 inputs:
 - !input
   Localalias: coordField

@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.pattern.brickPattern
-  opVersion: '3'
+  opVersion: '4'
   opStatus: default
 opDef: !def
   enable: true
@@ -16,12 +16,7 @@ opDef: !def
   function: !text
     file: src/operators/pattern/brickPattern.glsl
     name: functionTemplate
-  useParams:
-  - Translate[xy]
-  - Size[xy]
-  - Shift
-  - Thickness
-  - Blending
+  paramGroupTable: eval_params
 inputs:
 - !input
   Localalias: coordField
