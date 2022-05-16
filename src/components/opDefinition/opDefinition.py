@@ -240,6 +240,8 @@ def buildParamSpecTable(dat: 'scriptDAT', paramListTable: 'DAT', paramGroupTable
 					addPar(par, handling=handling.val, skipExisting=False, conversion=table[row, 'conversion'].val)
 
 	addFromGroupTable(paramGroupTable)
+	for path in _getOpElementTable().col('paramGroupTable')[1:]:
+		addFromGroupTable(op(path))
 
 	# Add runtime bypass
 	if parentPar().Useruntimebypass:
