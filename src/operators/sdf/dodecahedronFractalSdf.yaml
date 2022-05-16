@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.sdf.dodecahedronFractalSdf
-  opVersion: '2'
+  opVersion: '3'
   opStatus: beta
 opDef: !def
   enable: true
@@ -15,13 +15,4 @@ opDef: !def
   function: !text
     file: src/operators/sdf/dodecahedronFractalSdf.glsl
     name: functionTemplate
-  useParams:
-  - Scale
-  - Phi
-  - Bailout
-  - Rotate1
-  - Rotateaxis1[xyz]
-  - Rotate2
-  - Rotateaxis2[xyz]
-  - Offset[xyz]
-  - Iterations
+  paramGroupTable: eval_params

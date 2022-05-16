@@ -1,0 +1,2 @@
+names	source	handling	readOnlyHandling	conversion	enable
+Scale Phi Bailout Rotate1 Rotateaxis1[xyz] Rotate2 Rotateaxis2[xyz] Offset[xyz] Iterations	param	runtime	macro		1
