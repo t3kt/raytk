@@ -1,0 +1,4 @@
+names	source	handling	readOnlyHandling	conversion	enable
+Translate[xyz] Radius Thickness	param	runtime	macro		1
+Anglewidth Angleoffset	param	runtime	macro	angle	1
+Axis Enablecaps Uvmode	param	macro			1

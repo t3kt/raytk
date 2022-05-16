@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.sdf.spiralSdf
-  opVersion: '6'
+  opVersion: '7'
   opStatus: default
 opDef: !def
   enable: true
@@ -15,13 +15,7 @@ opDef: !def
   function: !text
     file: src/operators/sdf/spiralSdf.glsl
     name: functionTemplate
-  useParams:
-  - Branches
-  - Bend
-  - Twist
-  - Thickness
-  - Exponent
-  - Axis
+  paramGroupTable: eval_params
   help: !text
     file: src/operators/sdf/spiralSdf.md
     name: help
