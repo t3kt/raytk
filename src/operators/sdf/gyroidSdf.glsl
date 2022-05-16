@@ -5,9 +5,9 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 	p += THIS_asCoordT(THIS_Phase1);
 	q += THIS_asCoordT(THIS_Phase2);
 	#pragma r:endif
+	#pragma r:if THIS_Enableperiod
 	CoordT per1 = THIS_asCoordT(THIS_Period1);
 	CoordT per2 = THIS_asCoordT(THIS_Period2);
-	#pragma r:if THIS_Enableperiod
 	p /= per1;
 	q /= per2;
 	#pragma r:endif

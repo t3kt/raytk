@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.sdf.polyhedronSdf
-  opVersion: '7'
+  opVersion: '8'
   opStatus: beta
 opDef: !def
   enable: true
@@ -21,20 +21,7 @@ opDef: !def
   function: !text
     file: src/operators/sdf/polyhedronSdf.glsl
     name: function
-  useParams:
-  - Type
-  - U
-  - V
-  - W
-  - Enablefaces
-  - Enablesegments
-  - Enablevertices
-  - Segmentsize
-  - Vertexsize
-  - Radius
-  - Faceradius
-  - Segmentradius
-  - Vertexradius
+  paramGroupTable: eval_params
   libraryNames: raytkCombine
 inputs:
 - !input

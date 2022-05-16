@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.sdf.sierpinskiTetrahedronSdf
-  opVersion: '6'
+  opVersion: '7'
   opStatus: alpha
 opDef: !def
   enable: true
@@ -15,10 +15,7 @@ opDef: !def
   function: !text
     file: src/operators/sdf/sierpinskiTetrahedronSdf.glsl
     name: functionTemplate
-  useParams:
-  - Translate[xyz]
-  - Scale
-  - Iterations
+  paramGroupTable: eval_params
   macroTable: !table
     name: macros
     rows:

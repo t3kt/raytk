@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.sdf.quadSdf
-  opVersion: '1'
+  opVersion: '2'
   opStatus: beta
 opDef: !def
   enable: true
@@ -15,12 +15,7 @@ opDef: !def
   function: !text
     file: src/operators/sdf/quadSdf.glsl
     name: function
-  useParams:
-  - Translate[xyz]
-  - Point[1-4][xyz]
-  - Size[1-2]
-  - Thickness
-  macroParams: Plane
+  paramGroupTable: eval_params
   macroTable: !table
     file: src/operators/sdf/quadSdf_macros.txt
     name: macro_exprs

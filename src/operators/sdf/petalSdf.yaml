@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.sdf.petalSdf
-  opVersion: '2'
+  opVersion: '3'
   opStatus: default
 opDef: !def
   enable: true
@@ -15,12 +15,7 @@ opDef: !def
   function: !text
     file: src/operators/sdf/petalSdf.glsl
     name: functionTemplate
-  useParams:
-  - Thickness
-  - Width
-  - Wrap
-  - Radius
-  - Rotate
+  paramGroupTable: eval_params
   help: !text
     file: src/operators/sdf/petalSdf.md
     name: help
