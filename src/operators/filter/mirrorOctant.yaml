@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.filter.mirrorOctant
-  opVersion: '13'
+  opVersion: '14'
   opStatus: default
 opDef: !def
   enable: !expr
@@ -20,12 +20,7 @@ opDef: !def
   function: !text
     file: src/operators/filter/mirrorOctant.glsl
     name: function
-  useParams:
-  - Size[1-2]
-  - Offset[1-2]
-  - Rotateaxis
-  angleParams: Rotateaxis
-  macroParams: Iterationtype
+  paramGroupTable: eval_params
   variableTable: !table
     file: src/operators/filter/mirrorOctant_variables.txt
     name: variable_exprs

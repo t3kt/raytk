@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.filter.knife
-  opVersion: '9'
+  opVersion: '10'
   opStatus: default
 opDef: !def
   enable: !expr
@@ -20,11 +20,7 @@ opDef: !def
   function: !text
     file: src/operators/filter/knife.glsl
     name: function
-  useParams:
-  - Rotateplane[xyz]
-  - Offset
-  - ''
-  macroParams: Side
+  paramGroupTable: eval_params
   help: !text
     file: src/operators/filter/knife.md
     name: help

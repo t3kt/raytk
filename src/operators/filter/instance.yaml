@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.filter.instance
-  opVersion: '19'
+  opVersion: '20'
   opStatus: default
 opDef: !def
   enable: !expr
@@ -17,7 +17,7 @@ opDef: !def
   function: !text
     file: src/operators/filter/instance.glsl
     name: function
-  useParams: Instancecount
+  paramGroupTable: eval_params
   libraryNames: raytkCombine
   bufferTable: !table
     file: src/operators/filter/instance_buffers.txt

@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.filter.magnet
-  opVersion: '8'
+  opVersion: '9'
   opStatus: default
 opDef: !def
   enable: !expr
@@ -17,13 +17,7 @@ opDef: !def
   function: !text
     file: src/operators/filter/magnet.glsl
     name: function
-  useParams:
-  - Center[xyz]
-  - Scale[xyz]
-  - Rotate[xyz]
-  - Amount
-  - Radius
-  - Fade
+  paramGroupTable: eval_params
   help: !text
     file: src/operators/filter/magnet.md
     name: help

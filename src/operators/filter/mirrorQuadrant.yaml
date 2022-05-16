@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.filter.mirrorQuadrant
-  opVersion: '7'
+  opVersion: '8'
   opStatus: default
 opDef: !def
   enable: !expr
@@ -20,12 +20,7 @@ opDef: !def
   function: !text
     file: src/operators/filter/mirrorQuadrant.glsl
     name: function
-  useParams:
-  - Size[1-2]
-  - Offset[1-2]
-  - Rotateaxis
-  angleParams: Rotateaxis
-  macroParams: Iterationtype
+  paramGroupTable: eval_params
   variableTable: !table
     file: src/operators/filter/mirrorQuadrant_variables.txt
     name: variable_exprs

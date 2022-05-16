@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.filter.logPolarRepeat
-  opVersion: '4'
+  opVersion: '5'
   opStatus: beta
 opDef: !def
   enable: !expr
@@ -17,14 +17,7 @@ opDef: !def
   function: !text
     file: src/operators/filter/logPolarRepeat.glsl
     name: function
-  useParams:
-  - Rhooffset
-  - Thetaoffset
-  - Radialreps
-  - Distspacing
-  macroParams:
-  - Mirrortype
-  - Iterationtype
+  paramGroupTable: eval_params
   variableTable: !table
     file: src/operators/filter/logPolarRepeat_variables.txt
     name: variable_exprs
