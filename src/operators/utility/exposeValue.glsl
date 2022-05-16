@@ -26,7 +26,7 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 		}
 		#elif defined(THIS_Valuesource_fieldvalue)
 		{
-			#if defined(inputOp_valueField_ReturnT) || defined(inputOp_valueField_ReturnT)
+			#if defined(inputOp_valueField_RETURN_TYPE_vec4) || defined(inputOp_valueField_RETURN_TYPE_float)
 			val = adaptAsVec4(valRes);
 			#else
 			#error fieldValueNotSupportedForReturnType
