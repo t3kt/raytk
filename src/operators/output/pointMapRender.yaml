@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.output.pointMapRender
-  opVersion: '51'
+  opVersion: '52'
   opStatus: default
 opDef: !def
   enable: true
@@ -18,8 +18,7 @@ opDef: !def
   function: !text
     file: src/operators/output/pointMapRender_func.glsl
     name: functionTemplate
-  useParams: Normalsmoothing
-  macroParams: Enablenormalsmoothing
+  paramGroupTable: eval_params
   help: !text
     file: src/operators/output/pointMapRender.md
     name: help

@@ -1,0 +1,3 @@
+names	source	handling	readOnlyHandling	conversion	enable
+Domainlow Domainhigh Rangelow Rangehigh Linethickness Lineblending	param	runtime	macro		1
+Show Axes	param	macro			1
