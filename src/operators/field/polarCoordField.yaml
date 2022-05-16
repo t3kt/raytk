@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.field.polarCoordField
-  opVersion: '4'
+  opVersion: '5'
   opStatus: beta
 opDef: !def
   enable: true
@@ -38,10 +38,7 @@ opDef: !def
   function: !text
     file: src/operators/field/polarCoordField.glsl
     name: function
-  useParams:
-  - Center[xyz]
-  - Axis
-  macroParams: Angleunit
+  paramGroupTable: eval_params
   help: !text
     file: src/operators/field/polarCoordField.md
     name: help
@@ -70,5 +67,5 @@ elements:
     Autoupdateparams: true
     Manageparamstates: true
     Alwaysincludeallparams: false
-    Switchmode: auto
+    Switchmode: inline
     Placeholder: CONVERT_ANGLE();
