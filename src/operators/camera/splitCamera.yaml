@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.camera.splitCamera
-  opVersion: '13'
+  opVersion: '14'
   opStatus: default
 opDef: !def
   enable: !expr
@@ -16,12 +16,7 @@ opDef: !def
   function: !text
     file: src/operators/camera/splitCamera.glsl
     name: functionTemplate
-  useParams:
-  - Campos[xyz]
-  - Rotate
-  macroParams:
-  - Layout
-  - Rescale
+  paramGroupTable: eval_params
   textureTable: !table
     name: texture_exprs
     rows:
