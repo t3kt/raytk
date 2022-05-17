@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.filter.adjustColor
-  opVersion: '6'
+  opVersion: '7'
   opStatus: beta
 opDef: !def
   enable: !expr
@@ -17,12 +17,7 @@ opDef: !def
   function: !text
     file: src/operators/filter/adjustColor.glsl
     name: function
-  useParams:
-  - Saturation
-  - Hueoffset
-  - Brightness
-  - Contrast
-  - Gamma
+  paramGroupTable: eval_params
   libraryNames: !expr
     expr: op('czm_color')
   help: !text

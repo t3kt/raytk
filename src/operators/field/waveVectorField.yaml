@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.field.waveVectorField
-  opVersion: '5'
+  opVersion: '6'
   opStatus: beta
 opDef: !def
   enable: true
@@ -22,12 +22,7 @@ opDef: !def
   function: !text
     file: src/operators/field/waveVectorField.glsl
     name: function
-  useParams:
-  - Period[xyz]
-  - Phase[xyz]
-  - Amplitude[xyz]
-  - Offset[xyz]
-  macroParams: Axis
+  paramGroupTable: eval_params
   libraryNames: !expr
     expr: op('raytkWave')
 inputs:

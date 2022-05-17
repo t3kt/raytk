@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.field.voronoiField
-  opVersion: '2'
+  opVersion: '3'
   opStatus: alpha
 opDef: !def
   enable: true
@@ -16,7 +16,7 @@ opDef: !def
   function: !text
     file: src/operators/field/voronoiField.glsl
     name: function
-  useParams: Hashoffset[xy]
+  paramGroupTable: eval_params
   libraryNames: !expr
     expr: op('voronoiField_lib')
 inputs:

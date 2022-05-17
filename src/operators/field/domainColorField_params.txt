@@ -1,0 +1,2 @@
+names	source	handling	readOnlyHandling	conversion	enable
+Gridspacing[1-2] Saturation Gridstrength Magstrength Linepower	param	runtime	macro		1

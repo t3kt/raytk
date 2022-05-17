@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.filter.quantizeCoords
-  opVersion: '8'
+  opVersion: '9'
   opStatus: default
 opDef: !def
   enable: !expr
@@ -19,10 +19,7 @@ opDef: !def
   function: !text
     file: src/operators/filter/quantizeCoords.glsl
     name: function
-  useParams:
-  - Size[xyz]
-  - Offset[xyz]
-  - Smoothing[xyz]
+  paramGroupTable: eval_params
   libraryNames: !expr
     expr: op('quantize')
   help: !text

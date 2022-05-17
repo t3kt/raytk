@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.field.axisDistanceField
-  opVersion: '14'
+  opVersion: '15'
   opStatus: default
 opDef: !def
   enable: true
@@ -22,9 +22,7 @@ opDef: !def
   function: !text
     file: src/operators/field/axisDistanceField.glsl
     name: functionTemplate
-  useParams:
-  - Center
-  - Axis
+  paramGroupTable: eval_params
   help: !text
     file: src/operators/field/axisDistanceField.md
     name: help
