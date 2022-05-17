@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.filter.transformSequence
-  opVersion: '3'
+  opVersion: '4'
   opStatus: beta
 opDef: !def
   enable: !expr
@@ -17,10 +17,7 @@ opDef: !def
   function: !text
     file: src/operators/filter/transformSequence.glsl
     name: functionTemplate
-  useParams: Iterations
-  macroParams:
-  - Target
-  - Enableloop
+  paramGroupTable: eval_params
   variableTable: !table
     file: src/operators/filter/transformSequence_variables.txt
     name: variable_exprs

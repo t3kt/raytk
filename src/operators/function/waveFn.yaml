@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.function.waveFn
-  opVersion: '12'
+  opVersion: '13'
   opStatus: default
 opDef: !def
   enable: true
@@ -23,9 +23,7 @@ opDef: !def
   function: !text
     file: src/operators/function/waveFn.glsl
     name: function
-  useParams:
-  - Amplitude
-  - Offset
+  paramGroupTable: eval_params
   libraryNames: !expr
     expr: op('raytkWave')
   help: !text
