@@ -1,0 +1,17 @@
+names	source	handling	readOnlyHandling	conversion	enable
+Enable1	param	runtime	macro		op('definition_1').numRows > 1
+Enable2	param	runtime	macro		op('definition_2').numRows > 1
+Enable3	param	runtime	macro		op('definition_3').numRows > 1
+Enable4	param	runtime	macro		op('definition_4').numRows > 1
+Enable5	param	runtime	macro		op('definition_5').numRows > 1
+Enable6	param	runtime	macro		op('definition_6').numRows > 1
+Enable7	param	runtime	macro		op('definition_7').numRows > 1
+Enable8	param	runtime	macro		op('definition_8').numRows > 1
+Level1	param	runtime	macro		op('definition_1').numRows > 1
+Level2	param	runtime	macro		op('definition_2').numRows > 1
+Level3	param	runtime	macro		op('definition_3').numRows > 1
+Level4	param	runtime	macro		op('definition_4').numRows > 1
+Level5	param	runtime	macro		op('definition_5').numRows > 1
+Level6	param	runtime	macro		op('definition_6').numRows > 1
+Level7	param	runtime	macro		op('definition_7').numRows > 1
+Level8	param	runtime	macro		op('definition_8').numRows > 1
