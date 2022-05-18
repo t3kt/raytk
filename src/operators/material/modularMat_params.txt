@@ -1,0 +1,3 @@
+names	source	handling	readOnlyHandling	conversion	enable
+Basecolor[rgb]	param	runtime	macro		1
+Uselightcolor Uselocalpos Enableao Enablereflection	param	macro			1

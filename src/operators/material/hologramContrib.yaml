@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.material.hologramContrib
-  opVersion: '2'
+  opVersion: '3'
   opStatus: alpha
 opDef: !def
   enable: !expr
@@ -16,11 +16,7 @@ opDef: !def
   function: !text
     file: src/operators/material/hologramContrib.glsl
     name: function
-  useParams:
-  - Period[xyz]
-  - Phase
-  - Step
-  macroParams: Iterations
+  paramGroupTable: eval_params
 inputs:
 - !input
   Localalias: baseColorField

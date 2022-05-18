@@ -1,0 +1,3 @@
+names	source	handling	readOnlyHandling	conversion	enable
+Color[rgb] Shine Ks Reflectionamount Fresnel	param	runtime	macro		1
+Enableshadow	param	macro			1

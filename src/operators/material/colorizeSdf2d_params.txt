@@ -1,0 +1,4 @@
+names	source	handling	readOnlyHandling	conversion	enable
+Insidecolor1[rgba] Insidecolor2[rgba] Outsidecolor1[rgba] Outsidecolor2[rgba] Insideperiod Outsideperiod Insidephase Outsidephase	param	runtime	macro		1
+Enableedge	param	macro			1
+Edgecolor[rgba] Edgethickness Edgeblending	param	runtime	macro		parent().par.Enableedge

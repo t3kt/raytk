@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.material.backgroundFieldContrib
-  opVersion: '1'
+  opVersion: '2'
   opStatus: beta
 opDef: !def
   enable: true
@@ -15,4 +15,4 @@ opDef: !def
   function: !text
     file: src/operators/material/backgroundFieldContrib.glsl
     name: function
-  useParams: Level
+  paramGroupTable: eval_params

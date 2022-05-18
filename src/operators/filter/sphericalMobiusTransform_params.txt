@@ -1,0 +1,3 @@
+names	source	handling	readOnlyHandling	conversion	enable
+Center[xyz] Radius	param	runtime	macro		1
+Rotate[xyz] Rotationamount	param	runtime	macro	angle	1
