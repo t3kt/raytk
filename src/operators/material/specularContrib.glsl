@@ -26,6 +26,9 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 	#pragma r:elif THIS_RETURN_TYPE_vec4
 	{
 		res = vec4(amount * THIS_Color, 0.0);
+		#pragma r:if THIS_HAS_INPUT_colorField
+		res.rgb *= fillToVec3(inputOp_colorField(p, ctx));
+		#pragma r:endif
 		#pragma r:if THIS_Uselightcolor
 		res.rgb *= ctx.light.color;
 		#pragma r:endif

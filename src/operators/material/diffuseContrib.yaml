@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.material.diffuseContrib
-  opVersion: '17'
+  opVersion: '18'
   opStatus: default
 opDef: !def
   enable: true
@@ -56,6 +56,14 @@ inputs:
     Contexttypematerialcontext: true
   returnType: !returnT
     Returntypefloat: true
+- !input
+  Localalias: colorField
+  coordType: !coordT
+    Allcoordtype: true
+  contextType: !contextT
+    Contexttypematerialcontext: true
+  returnType: !returnT
+    Returntypevec4: true
 elements:
 - !opElement
   name: codeSwitcher_Operation
