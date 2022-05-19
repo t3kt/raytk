@@ -80,6 +80,8 @@ def _buildRuntimeSwitch(table: 'DAT'):
 	for i in range(1, table.numRows):
 		name = str(table[i, 'name'])
 		itemCode = _prepareItemCode(table[i, 'code'])
+		if not itemCode.strip():
+			continue
 		code += f'\tcase {i - 1}: /*{name}*/\n'
 		code += f'\t\t{itemCode};\n'
 		code += '\t\tbreak;\n'
