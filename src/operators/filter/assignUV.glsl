@@ -7,7 +7,7 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 		#pragma r:if THIS_HAS_INPUT_uvField
 		uv = inputOp_uvField(p, ctx).xyz;
 		#pragma r:else
-		vec3 q = adaptAsVec3(p);
+		vec3 q = adaptAsVec3(p) - THIS_Center;
 		BODY();
 		#pragma r:endif
 		#pragma r:if THIS_RETURN_TYPE_Sdf
