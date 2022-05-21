@@ -1,3 +1,4 @@
 name	label	code	params
-slice	Slice		
-ring	Ring	d = max(-length(p)+r.y, d)	Innerradius
+slice	Slice	m = length(p-c*clamp(dot(p,c),0.0,r.x));d = max(l,m*sign(c.y*p.x-c.x*p.y));	Radius
+ring	Ring	m = length(p-c*clamp(dot(p,c),0.0,r.x));d = max(l,m*sign(c.y*p.x-c.x*p.y)); d = max(-length(p)+r.y, d);	Radius Innerradius
+infinite	Infinite	m = length(p-c*dot(p,c)); d = m*sign(c.y*p.x-c.x*p.y);	

@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.sdf2d.pieSdf2d
-  opVersion: '5'
+  opVersion: '6'
   opStatus: default
 opDef: !def
   enable: true
@@ -15,16 +15,7 @@ opDef: !def
   function: !text
     file: src/operators/sdf2d/pieSdf2d.glsl
     name: function
-  useParams:
-  - Radius
-  - Rotate
-  - Angle
-  specialParams:
-  - C1
-  - C2
-  angleParams:
-  - Rotate
-  - Angle
+  paramGroupTable: eval_params
   variableTable: !table
     file: src/operators/sdf2d/pieSdf2d_variables.txt
     name: variable_exprs
@@ -64,6 +55,6 @@ elements:
     Param: Shape
     Autoupdateparams: true
     Manageparamstates: true
-    Alwaysincludeallparams: false
+    Alwaysincludeallparams: true
     Switchmode: auto
     Placeholder: BODY();
