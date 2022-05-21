@@ -1,5 +1,6 @@
 names	source	handling	readOnlyHandling	conversion	enable
-Thickness Spread	param	runtime	macro		1
-Rotate	param	runtime	macro	angle	1
+Spread	param	runtime	macro		op('spread_definition').numRows < 2
+Thickness	param	runtime	macro		op('thickness_definition').numRows < 2
+Rotate	param	runtime	macro	angle	op('rotate_definition').numRows < 2
 Useradiuslimit	param	macro			1
-Radiuslimit	param	runtime	macro		parent().par.Useradiuslimit
+Radiuslimit	param	runtime	macro		parent().par.Useradiuslimit and op('radiusLimit_definition').numRows < 2
