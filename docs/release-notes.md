@@ -4,7 +4,10 @@
 
 ### Highlights
 
-* 
+* Parameter optimization. For many parameters, if they're marked as read-only, RayTK will bake them into the shader. 
+  * This significantly improves performance, but means that if they change the shader has to recompile.
+  * The new `sceneState` component helps with switching scenes between a "locked" optimized state and an "unlocked"
+    editing state.
 
 ### Details
 
