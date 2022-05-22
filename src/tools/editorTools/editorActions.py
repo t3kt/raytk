@@ -452,6 +452,7 @@ def _anySelectedRopHasParam(ctx: ActionContext, par: str):
 	return any(rop.par[par] is not None for rop in ctx.selectedRops)
 
 class _RopTypes:
+	arrange = 'raytk.operators.combine.arrange'
 	combine = 'raytk.operators.combine.combine'
 	combineFields = 'raytk.operators.combine.combineFields'
 	diffuseContrib = 'raytk.operators.material.diffuseContrib'
@@ -520,6 +521,10 @@ def createActionManager():
 			minCount=2, maxCount=2,
 			matchPredicate=lambda o: ROPState(o).isSdf),
 		_createCombineActionGroup(
+			'Arrange SDFs', _RopTypes.arrange, 'Combine', op('sdfCombineModes'),
+			minCount=2, maxCount=8,
+			matchPredicate=lambda o: ROPState(o).isSdf),
+		_createCombineActionGroup(
 			'Combine Fields', _RopTypes.combineFields, 'Operation', op('fieldCombineModes'),
 			minCount=2, maxCount=2,
 			matchPredicate=lambda o: ROPState(o).isField),
@@ -534,6 +539,10 @@ def createActionManager():
 		_createAddOutputAction(
 			'Add render2D',
 			lambda ctx: ctx.primaryRopState.is2d,
+			_RopTypes.render2d),
+		_createAddOutputAction(
+			'Add raymarchRender3d',
+			lambda ctx: ctx.primaryRopState.is3d and ctx.primaryRopState.isSdf,
 			_RopTypes.render2d),
 		_createGoToGroup('Go to'),
 	)
