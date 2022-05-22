@@ -26,11 +26,13 @@
     * instance - combine modes
     * axisLight, pointLight, spotLight - attenuation (#405)
     * boxSdf - infinite axis
-    * axisDistanceField, axisLight, coneSdf, cylinderSdf, discSdf, gridSdf, helixSdf, planeSdf, polarCoordField, prismSdf, pyramidSdf, slice, spiralSdf, spiralZoom, twist - axis
+    * axisDistanceField, axisLight, coneSdf, cylinderSdf, discSdf, gridSdf, helixSdf, planeSdf, polarCoordField,
+      prismSdf, pyramidSdf, slice, spiralSdf, spiralZoom, twist - axis
     * flip, orthoCamera - direction
     * textureField - plane
 * Changes (potentially breaking)
-  * Changes to variable type handling may cause compatibility issues for variableReference operators. To fix this, re-create them, which will assign the correct types.
+  * Changes to variable type handling may cause compatibility issues for variableReference operators. To fix this,
+    re-create them, which will assign the correct types.
   * The scale operator no longer rescales float values, only coordinates (#840)
   * Removed deprecated operators
     * ggxMat, orenNayarMat, sdfToFloat (replaced with sdfField)
@@ -124,7 +126,8 @@
     * spin
   * Change how rotate handles 2D coords (#821)
     * This may cause behavior changes for 2d.
-    * Instead of automatically using axis-based rotation when the input is 2d, instead use the mode parameter to choose between types (like for 3d). For 3d, only the Z axis rotation is used.
+    * Instead of automatically using axis-based rotation when the input is 2d, instead use the mode parameter to choose
+      between types (like for 3d). For 3d, only the Z axis rotation is used.
 * Fixes
   * Fix broken "Create render select" editor action (#822, #772)
   * Fix coord type resolution in coordTo2D and coordTo3D (#717)
@@ -138,7 +141,8 @@
 
 ### Highlights
 
-* Editor actions are contextual actions available in a menu using the new `ALT+SHIFT+R` shortcut. They include things like:
+* Editor actions are contextual actions available in a menu using the new `ALT+SHIFT+R` shortcut. They include things
+  like:
   * Add common material elements when a `modularMat` is selected.
   * Add a `lookAtCamera` or `pointLight` when a `raymarchRender3d` is selected.
   * Combine selected SDFs or fields.
@@ -146,10 +150,14 @@
   * Converting a vector field to a float field, and vice versa.
   * Exposing and binding parameters on the parent COMP.
   * Adding animation to parameters.
-* Transform sequences are a new way to apply groups of transforms to spatial coordinates or uv coordinates, including support for repeating the transforms in a loop! It's like a much more flexible version of `iteratedTransform`.
-* Standardized SDF combine options across various ROPs that combine SDFs. This means that the full features like stair union with offset control are available in ROPs like `flip` or `radialClone`.
-* Standardized wave function options across various ROPs. This means that `waveField`, `waveFunction`, `lfoField`, etc all have the same wave shape options.
-* Control utility components are a set of general-purpose tools that can be used with RayTK or non-RayTK operators. Most of them have associated editor actions, including:
+* Transform sequences are a new way to apply groups of transforms to spatial coordinates or uv coordinates, including
+  support for repeating the transforms in a loop! It's like a much more flexible version of `iteratedTransform`.
+* Standardized SDF combine options across various ROPs that combine SDFs. This means that the full features like stair
+  union with offset control are available in ROPs like `flip` or `radialClone`.
+* Standardized wave function options across various ROPs. This means that `waveField`, `waveFunction`, `lfoField`, etc
+  all have the same wave shape options.
+* Control utility components are a set of general-purpose tools that can be used with RayTK or non-RayTK operators. Most
+  of them have associated editor actions, including:
   * `lfoGenerator` which can be applied to any numeric parameter using the "Animate with LFO" action.
   * `speedGenerator` which can be applied to any numeric parmaeter using the "Animate with Speed" action.
 
@@ -259,19 +267,19 @@
 ### Highlights
 
 * Thumbnail images in the palette!
-  * The palette now has a toggle to enable showing thumbnail images next to each type of
-    operator. These make it easier to find the operators you're looking for, and see what's available. Not all operators
-    have thumnbnails (e.g. it's hard to represent things like floatToVector in an image).
+  * The palette now has a toggle to enable showing thumbnail images next to each type of operator. These make it easier
+    to find the operators you're looking for, and see what's available. Not all operators have thumnbnails (e.g. it's
+    hard to represent things like floatToVector in an image).
 * Shortcuts in the palette.
   * Common operators now have shortcuts that can be typed into the palette for quick access.
   * Shortcuts are shown in the palette next to operator names.
 * Variables are a whole new way to control and vary the behavior of operators.
   * These will eventually replace Iteration.
-  * They use more explicit connections and support multiple levels of values. For example, you can repeat a shape radially
-    using modulorPolar, then repeat that in a grid using modulo2d, and the input shapes can be based on both the grid cell
-    and the radial slice.
-  * Operators that support them have a "Variables" parameter page with buttons to create references to them which can
-    be used by upstream operators.
+  * They use more explicit connections and support multiple levels of values. For example, you can repeat a shape
+    radially using modulorPolar, then repeat that in a grid using modulo2d, and the input shapes can be based on both
+    the grid cell and the radial slice.
+  * Operators that support them have a "Variables" parameter page with buttons to create references to them which can be
+    used by upstream operators.
 
 ### Details
 
@@ -353,7 +361,8 @@
   * Move spikeSdf2d to the correct category. This will break Update OP for those operators.
   * Reflect handling of Offset changed, resulting in slightly reduced offsets.
   * Remove 1D coord support in cylinderSdf, since variables do the same thing (#521, #574)
-  * renderSelect menu handling has changed a bit, so updates may break operators. Use the "Select..." shortcuts on the renderer to create replacements. (#598)
+  * renderSelect menu handling has changed a bit, so updates may break operators. Use the "Select..." shortcuts on the
+    renderer to create replacements. (#598)
 * Fixes
   * Fix broken help in palette (#731)
   * Fix broken color output in pointMapRender (#757)
@@ -389,54 +398,55 @@
 ### Details
 
 * Improvements / additions
-    * New ops
-        * 3D bezierSdf (#726)
-        * backgroundFieldContrib (#733)
-        * constantSwitchField
-        * headSdf based on tdhooper's model (#116)
-        * logPolarRepeat (#738)
-        * polarCoordField (#699)
-        * polyhedronSdf (#715)
-        * quadTreeRepeat (#725)
-        * sdfNormalField
-        * spikeSdf2d
-    * New field inputs
-        * Face offset input field for geodesicSdf (#693)
-        * Smooth radius and size in crossSdf (#693)
-        * Scale in ellipsoidSdf (#693)
-        * Offset in planeSdf (#693)
-        * Radius and thickness in discSdf (#693)
-        * Shift and offset in modulo1D (#722)
-        * Blend radius in instance (#721)
-    * New parameters
-        * Reverse parameter in helixSdf (#704)
-        * Expand to vec4 / collapse to float in rescaleField
-        * Enable toggle in bandField (#724)
-        * Logarithmic conversions in cartesianToPolar (#738)
-    * Optimization
-        * Skip material processing, property blending when it isn't needed (e.g. in shadow checks and calculating normals)
+  * New ops
+    * 3D bezierSdf (#726)
+    * backgroundFieldContrib (#733)
+    * constantSwitchField
+    * headSdf based on tdhooper's model (#116)
+    * logPolarRepeat (#738)
+    * polarCoordField (#699)
+    * polyhedronSdf (#715)
+    * quadTreeRepeat (#725)
+    * sdfNormalField
+    * spikeSdf2d
+  * New field inputs
+    * Face offset input field for geodesicSdf (#693)
+    * Smooth radius and size in crossSdf (#693)
+    * Scale in ellipsoidSdf (#693)
+    * Offset in planeSdf (#693)
+    * Radius and thickness in discSdf (#693)
+    * Shift and offset in modulo1D (#722)
+    * Blend radius in instance (#721)
+  * New parameters
+    * Reverse parameter in helixSdf (#704)
+    * Expand to vec4 / collapse to float in rescaleField
+    * Enable toggle in bandField (#724)
+    * Logarithmic conversions in cartesianToPolar (#738)
+  * Optimization
+    * Skip material processing, property blending when it isn't needed (e.g. in shadow checks and calculating normals)
 * Fixes
-    * Fix missing translate parameters in arrange (#709)
-    * Fix hidden built-in parameters in panel comps (#708)
+  * Fix missing translate parameters in arrange (#709)
+  * Fix hidden built-in parameters in panel comps (#708)
 * Infrastructure / internals
-    * Code filtering, which reduces the amount of shader code sent to the GPU, which should help with recompile times.
-      Currently disabled by default. (#710)
-    * Improved test handling in toolkit editor
-    * Simplification and optimization in shaderBuilder
-    * Clean up buffer/texture table format
-    * Reduce build / tox size
-        * Remove unnecessary copies of shared python
-        * Python code cleanup
-        * Remove unnecessary data and copies of operator tables
-        * Clean out internal metadata during build
-        * Strip out full help DATs during build
-    * Support for variables / references, as a more flexible alternative to iteration values (#574, #712)
+  * Code filtering, which reduces the amount of shader code sent to the GPU, which should help with recompile times.
+    Currently disabled by default. (#710)
+  * Improved test handling in toolkit editor
+  * Simplification and optimization in shaderBuilder
+  * Clean up buffer/texture table format
+  * Reduce build / tox size
+    * Remove unnecessary copies of shared python
+    * Python code cleanup
+    * Remove unnecessary data and copies of operator tables
+    * Clean out internal metadata during build
+    * Strip out full help DATs during build
+  * Support for variables / references, as a more flexible alternative to iteration values (#574, #712)
 
 ## v0.18
 
 ### Highlights
 
-* Easier workflows with CHOPs, including instance positioning, easier indexing in chopField, and CHOP input in constantField
+* Easier workflows with CHOPs, including instance positioning, easier indexing in chopField, and CHOP input in
+  constantField
 * Cel-shading for modular materials with toonShadingContrib
 * Easier coordinate mapping of pattern operators
 * New noise types in noiseField
@@ -446,55 +456,56 @@
 ### Details
 
 * Improvements / additions
-    * New ops
-        * arrange (#655)
-        * axisLight (#663)
-        * magnetField (#680)
-        * mergeToggle (#666)
-        * polarVectorField (#676)
-        * toggleSwitch (#658)
-        * toonShadingContrib, for cel-shading in modular materials (#465)
-        * waveVectorField (#671)
-    * New field inputs
-        * Coordinate fields in all pattern ops (#254, #691)
-        * Edge in stepField
-        * Offset in combine (#684)
-        * Radius and thickness in torusSdf (#693)
-        * Radius in octahedronSdf and generalizedPolyhedronSdf (#693)
-        * Size, shift, offset in modulo1D, modulo2D, modulo3D (#695)
-    * New parameters
-        * Flip option in planeSdf (#679)
-        * Limiting options for modulo2D and modulo3D (#660)
-        * Mirroring support in modulo3D
-        * Normal calculation exclusion for restrictStage (#667)
-        * Optional coord type in iterationField (#672)
-        * Pivot in moduloPolar (#681)
-        * Repeat option in bandField (#687)
-        * Replace mode in modifyNormals (#673)
-        * Ring mode in pieSdf2d, for pie chart-style shapes (#669)
-        * Zoom and offset in render2d
-    * Better index support in chopField (#613, #659)
-    * New noise types in noiseField using the Wombat library
-    * Added CHOP-based transforms in instance (#613)
-    * Added CHOP input in constantField for a quick way to get up to 4 values into a field (#682)
-    * Added new pattern variants to hexagonalTruchetPattern (#255)
-    * Support for proper iteration for upstream fields in iteratedTransform (#705, #94)
+  * New ops
+    * arrange (#655)
+    * axisLight (#663)
+    * magnetField (#680)
+    * mergeToggle (#666)
+    * polarVectorField (#676)
+    * toggleSwitch (#658)
+    * toonShadingContrib, for cel-shading in modular materials (#465)
+    * waveVectorField (#671)
+  * New field inputs
+    * Coordinate fields in all pattern ops (#254, #691)
+    * Edge in stepField
+    * Offset in combine (#684)
+    * Radius and thickness in torusSdf (#693)
+    * Radius in octahedronSdf and generalizedPolyhedronSdf (#693)
+    * Size, shift, offset in modulo1D, modulo2D, modulo3D (#695)
+  * New parameters
+    * Flip option in planeSdf (#679)
+    * Limiting options for modulo2D and modulo3D (#660)
+    * Mirroring support in modulo3D
+    * Normal calculation exclusion for restrictStage (#667)
+    * Optional coord type in iterationField (#672)
+    * Pivot in moduloPolar (#681)
+    * Repeat option in bandField (#687)
+    * Replace mode in modifyNormals (#673)
+    * Ring mode in pieSdf2d, for pie chart-style shapes (#669)
+    * Zoom and offset in render2d
+  * Better index support in chopField (#613, #659)
+  * New noise types in noiseField using the Wombat library
+  * Added CHOP-based transforms in instance (#613)
+  * Added CHOP input in constantField for a quick way to get up to 4 values into a field (#682)
+  * Added new pattern variants to hexagonalTruchetPattern (#255)
+  * Support for proper iteration for upstream fields in iteratedTransform (#705, #94)
 * Changes (potentially breaking)
-    * Mark combineChamfer, combineColumns, combineStairs as deprecated since their features are all supported in the combine op.
+  * Mark combineChamfer, combineColumns, combineStairs as deprecated since their features are all supported in the
+    combine op.
 * Fixes
-    * Fix swapped inputs in pbrMat
-    * Fix underside of pyramidSdf (#677)
-    * Fix bypass indicator in opImage (#700)
-    * Fix type handling bugs in mergeFields
+  * Fix swapped inputs in pbrMat
+  * Fix underside of pyramidSdf (#677)
+  * Fix bypass indicator in opImage (#700)
+  * Fix type handling bugs in mergeFields
 * Infrastructure / internals
-    * Replaced all inputHandlers with new implementation
-    * Improvements to multiInputHandler
-    * Improvements to aggregateCodeGenerator
-    * Support for compute shaders
-    * Added build / test support for experimental builds (#674)
-    * Reduced lots of redundant copies of python modules, decreasing tox size (#701)
-    * Remove deprecated type settings in opDefinition
-    * Support for experimental builds (#674)
+  * Replaced all inputHandlers with new implementation
+  * Improvements to multiInputHandler
+  * Improvements to aggregateCodeGenerator
+  * Support for compute shaders
+  * Added build / test support for experimental builds (#674)
+  * Reduced lots of redundant copies of python modules, decreasing tox size (#701)
+  * Remove deprecated type settings in opDefinition
+  * Support for experimental builds (#674)
 
 ## v0.17
 
@@ -508,72 +519,73 @@
 ### Details
 
 * Improvements / additions
-    * Improved runtime menu switching (#571, #586)
-        * assignUV
-        * cartesianToPolar
-        * cornerSdf2d
-        * octahedronSdf
-        * planeSdf2d
-        * polarToCartesian
-        * polygonSdf2d
-        * prismSdf
-        * sweep
-        * triangleSdf2d
-    * Auto-disable Inspect/Updateop parameter when unavailable (#630)
-    * New fields/functions
-        * colorSwitchField (#647)
-        * pausingWaveFn
-    * Specialized UV support in SDFs
-        * sphereSdf (#526)
-    * Consolidate edgeEngrave, edgeGroove, edgePipe into a single edgeCombine op (#635)
-    * Added pbrMat (#636)
-    * Volumetric lighting (#637, #11)
-        * lightVolume
-        * volumetricRayCast
-    * Improve type handling
-        * addFields, combineFields, compositeFields
-        * blend, iterationSwitch, switch
-        * circleSdf
-        * axisDistanceField, bandField, cellTileField, colorRampField, constantColorField, constantField, iterationField, waveField
-        * combine, combineChamfer, combineColumns, combineStairs
-        * fieldRender, pointMapRender
-        * moduloPolar, rotate
-    * New control field inputs in ops
-        * Phase input for waveField (#644)
-    * Option to use surface color in diffuseContrib and specularContrib (#645)
-    * Added simplified raymarch preview panel (#543)
-    * Added projectPlane, a simplified version of coordTo3D (#214)
-    * New SDFs
-        * latticeSdf
+  * Improved runtime menu switching (#571, #586)
+    * assignUV
+    * cartesianToPolar
+    * cornerSdf2d
+    * octahedronSdf
+    * planeSdf2d
+    * polarToCartesian
+    * polygonSdf2d
+    * prismSdf
+    * sweep
+    * triangleSdf2d
+  * Auto-disable Inspect/Updateop parameter when unavailable (#630)
+  * New fields/functions
+    * colorSwitchField (#647)
+    * pausingWaveFn
+  * Specialized UV support in SDFs
+    * sphereSdf (#526)
+  * Consolidate edgeEngrave, edgeGroove, edgePipe into a single edgeCombine op (#635)
+  * Added pbrMat (#636)
+  * Volumetric lighting (#637, #11)
+    * lightVolume
+    * volumetricRayCast
+  * Improve type handling
+    * addFields, combineFields, compositeFields
+    * blend, iterationSwitch, switch
+    * circleSdf
+    * axisDistanceField, bandField, cellTileField, colorRampField, constantColorField, constantField, iterationField,
+      waveField
+    * combine, combineChamfer, combineColumns, combineStairs
+    * fieldRender, pointMapRender
+    * moduloPolar, rotate
+  * New control field inputs in ops
+    * Phase input for waveField (#644)
+  * Option to use surface color in diffuseContrib and specularContrib (#645)
+  * Added simplified raymarch preview panel (#543)
+  * Added projectPlane, a simplified version of coordTo3D (#214)
+  * New SDFs
+    * latticeSdf
 * Changes (potentially breaking)
-    * Support for auto-choosing a coordinate type, as well as manually specifying one to force auto-typed inputs
-        * fieldRender
-        * pointMapRender
+  * Support for auto-choosing a coordinate type, as well as manually specifying one to force auto-typed inputs
+    * fieldRender
+    * pointMapRender
 * Fixes
-    * Fix parameter state management in diffuseContrib (#633)
-    * Fix menu optimization in combine (#634)
-    * Fix coord type handling in spin (#638)
-    * Fix typedef and parameter alias inlining options for shaderBuilder (#650)
+  * Fix parameter state management in diffuseContrib (#633)
+  * Fix menu optimization in combine (#634)
+  * Fix coord type handling in spin (#638)
+  * Fix typedef and parameter alias inlining options for shaderBuilder (#650)
 * Infrastructure / internals
-    * Cleanup and refactoring in opDefinition parameter handling
-    * Migrate more ops to aggregateCodeGenerator
-    * Type handling cleanup in many operators
-    * Starting migration to new inputHandler
-    * Support for generating snapshot images from tests to use in docs (#643)
-    * Move code out of shared libraries and split it into more granular units to reduce unnecessary code (#70, #13)
-        * almostIdentityFn, colorPaletteFn, cubicPulseFn, easeFn, extendFn, gainFn, impulseFn, sincCurveFn
-        * archSdf, chainSdf, generalizePolyhedronSdf, geodesicSdf, prismSdf
-        * bend, elongate, kink, moduloPolar, onion, sphericalMobiusTransform, spiralZoom
-        * chopField, chopFn
-        * colorRampField, curlNoiseField, domainColorField, valuePointsField
-        * compositeFields
-        * diffuseContrib, ggxMat, orenNayarMat, phongMat, pbrMat, specularContrib
-        * iterationSwitch
-        * limitField
-        * polygonSdf2d, rhombusSdf2d, trapezoidSdf2d, triangleSdf2d
-        * quantizeCoords, quantizeValue
-        * texture3dField, textureField, triPlanarTextureField
-        * waveField, waveWarp, waveFn, lfoField
+  * Cleanup and refactoring in opDefinition parameter handling
+  * Migrate more ops to aggregateCodeGenerator
+  * Type handling cleanup in many operators
+  * Starting migration to new inputHandler
+  * Support for generating snapshot images from tests to use in docs (#643)
+  * Move code out of shared libraries and split it into more granular units to reduce unnecessary code (#70, #13)
+    * almostIdentityFn, colorPaletteFn, cubicPulseFn, easeFn, extendFn, gainFn, impulseFn, sincCurveFn
+    * archSdf, chainSdf, generalizePolyhedronSdf, geodesicSdf, prismSdf
+    * bend, elongate, kink, moduloPolar, onion, sphericalMobiusTransform, spiralZoom
+    * chopField, chopFn
+    * colorRampField, curlNoiseField, domainColorField, valuePointsField
+    * compositeFields
+    * diffuseContrib, ggxMat, orenNayarMat, phongMat, pbrMat, specularContrib
+    * iterationSwitch
+    * limitField
+    * polygonSdf2d, rhombusSdf2d, trapezoidSdf2d, triangleSdf2d
+    * quantizeCoords, quantizeValue
+    * texture3dField, textureField, triPlanarTextureField
+    * waveField, waveWarp, waveFn, lfoField
 
 ## v0.16
 
@@ -581,73 +593,76 @@
 
 * Faster switching for menu parameters with optional optimization for parameters marked as read-only.
 * New field inputs to control lots of operators.
-* Keyword searching in palette: palette searches now show ops matching keywords in addition to matching names / initials. Try searching for "ring", and `torusSdf` will show up!
+* Keyword searching in palette: palette searches now show ops matching keywords in addition to matching names /
+  initials. Try searching for "ring", and `torusSdf` will show up!
 * Updated to TD v2021.14360.
-* Breaking change: Fixed handling of the Period and Phase parameters in waveField. This may change the behavior and scaling of the field.
-* Breaking change: Added "Iteration Type"  setting to moduloPolar, which replaces the previous "Iterate on Cells" toggle. Updating OPs will default to iteration being switched off, regardless of original toggle setting.
+* Breaking change: Fixed handling of the Period and Phase parameters in waveField. This may change the behavior and
+  scaling of the field.
+* Breaking change: Added "Iteration Type"  setting to moduloPolar, which replaces the previous "Iterate on Cells"
+  toggle. Updating OPs will default to iteration being switched off, regardless of original toggle setting.
 
 ### Details
 
 * Improvements / additions
-    * Show bypass indicator in opImages (#599)
-    * Added "Customize Shader Config" to renderers (#594)
-    * Option to change the palette shortcut and manually trigger the palette (#552)
-    * Improved runtime menu switching (#571, #586)
-      * combine
-      * combineChamfer
-      * combineColumns
-      * combineFields
-      * combineStairs
-      * compositeFields
-      * coneSdf
-      * diffuseContrib
-      * specularContrib
-      * waveField
-      * waveFn
-    * New filters / combines
-      * addFields (#606)
-      * adjustColor (#587)
-      * kink (variation on bend)
-      * fieldFunction
-      * modifyNormals (#403, #620)
-    * New SDFs
-      * arrowSdf2d (#612)
-      * quadSdf2d
-    * New fields
-      * domainColorField (#401)
-    * Added field inputs to operators (#588)
-      * capsuleSdf
-      * circleSdf
-      * chamferBoxSdf (#627)
-      * moduloPolar (#624)
-      * noiseField (#619)
-      * polygonSdf2d
-      * rhombusSdf2d
-      * roundedRectangleSdf2d
-      * starSdf2d
-      * superQuadSdf2d
-    * New parameters in operators
-      * colorizeSdf2d phase (#608)
-      * rescaleField multiplier and post-add
-    * Automatic coord/context type settings for operators
-      * timeField (#141)
-    * Keyword support in palette and generated docs (#378)
-    * New convenience operators, which simplify common operations
-      * spin
-      * waveWarp
+  * Show bypass indicator in opImages (#599)
+  * Added "Customize Shader Config" to renderers (#594)
+  * Option to change the palette shortcut and manually trigger the palette (#552)
+  * Improved runtime menu switching (#571, #586)
+    * combine
+    * combineChamfer
+    * combineColumns
+    * combineFields
+    * combineStairs
+    * compositeFields
+    * coneSdf
+    * diffuseContrib
+    * specularContrib
+    * waveField
+    * waveFn
+  * New filters / combines
+    * addFields (#606)
+    * adjustColor (#587)
+    * kink (variation on bend)
+    * fieldFunction
+    * modifyNormals (#403, #620)
+  * New SDFs
+    * arrowSdf2d (#612)
+    * quadSdf2d
+  * New fields
+    * domainColorField (#401)
+  * Added field inputs to operators (#588)
+    * capsuleSdf
+    * circleSdf
+    * chamferBoxSdf (#627)
+    * moduloPolar (#624)
+    * noiseField (#619)
+    * polygonSdf2d
+    * rhombusSdf2d
+    * roundedRectangleSdf2d
+    * starSdf2d
+    * superQuadSdf2d
+  * New parameters in operators
+    * colorizeSdf2d phase (#608)
+    * rescaleField multiplier and post-add
+  * Automatic coord/context type settings for operators
+    * timeField (#141)
+  * Keyword support in palette and generated docs (#378)
+  * New convenience operators, which simplify common operations
+    * spin
+    * waveWarp
 * Changes
-    * Fixed handling of the Period and Phase parameters in waveField (#604). 
-    * New iteration type setting in moduloPolar replaces toggle (#622)
-    * Update to TD v2021.14360
+  * Fixed handling of the Period and Phase parameters in waveField (#604).
+  * New iteration type setting in moduloPolar replaces toggle (#622)
+  * Update to TD v2021.14360
 * Fixes
-    * Workaround for color banding issue in reflections (#579)
-    * Fixed breakage and incorrect SDF output in fieldRender (#611)
-    * Possible fix for feature support detection for AMD GPUs (#589, #34)
-    * Pass surface attributes through from input SDF in geodesicSdf (#615)
-    * Fixed 2D handling in flip (#609)
-    * Fixed edge discontinuity with textureFields (#617)
-    * Remove workaround for parameter page issue now that TD has fixed the bug (#487)
-    * Fixed parameter defaults and state handling in scale (#623)
+  * Workaround for color banding issue in reflections (#579)
+  * Fixed breakage and incorrect SDF output in fieldRender (#611)
+  * Possible fix for feature support detection for AMD GPUs (#589, #34)
+  * Pass surface attributes through from input SDF in geodesicSdf (#615)
+  * Fixed 2D handling in flip (#609)
+  * Fixed edge discontinuity with textureFields (#617)
+  * Remove workaround for parameter page issue now that TD has fixed the bug (#487)
+  * Fixed parameter defaults and state handling in scale (#623)
 
 ## v0.15
 
@@ -659,47 +674,56 @@
   * Not all materials work for 2D shapes, and things like surface normals and lighting are not available.
 * Surface UVs
   * Surfaces can now have UV coordinates, which can be used by materials for things like texture lookups.
-  * Some SDFs have a "UV Mode" option to generate shape-specific UVs, such as `boxSdf` and `sphereSdf`, as well as some 2D SDFs including `rectangleSdf`.
-  * There's a "UV" output from renderers that accesses the UV coordinates for each surface point in the rendered output. This can be used for things like applying textures using post-processing with TOPs.
+  * Some SDFs have a "UV Mode" option to generate shape-specific UVs, such as `boxSdf` and `sphereSdf`, as well as some
+    2D SDFs including `rectangleSdf`.
+  * There's a "UV" output from renderers that accesses the UV coordinates for each surface point in the rendered output.
+    This can be used for things like applying textures using post-processing with TOPs.
   * UV coordinates can be assigned to any surface using `assignUV`, and modified using `uvTransform`.
   * UV coordinates can be accessed within materials using operators like `uvField`.
 * Surface colors
-  * Surfaces can now have a "Color" attribute, which can be assigned using `assignColor`, either with a constant color or using a field.
+  * Surfaces can now have a "Color" attribute, which can be assigned using `assignColor`, either with a constant color
+    or using a field.
   * Surface colors can be used by various types of materials.
-  * Within modular materials (`modularMat`), the `surfaceColorContrib` operator provides access to the surface color values.
+  * Within modular materials (`modularMat`), the `surfaceColorContrib` operator provides access to the surface color
+    values.
 * Background fields
-  * The `raymarchRender3d` operator now has a "Background Field" parameter which can be assigned to certain types of fields.
+  * The `raymarchRender3d` operator now has a "Background Field" parameter which can be assigned to certain types of
+    fields.
   * The background field is used to calculate a color for rays that don't hit any surface before they give up.
-  * The `atmosphereField` is designed for use with the "Background Field" feature. It produces a simulation of a sky with a sun, including some advanced atmosphere-based coloration. It's great for creating sunsets.
-  * The `texture3dField` also supports being used as a background field. It can be used to apply environment lighting with cube-maps and other types of 3D textures.
-  * The background color is used for reflection-based rays as well as primary rays, so the background colors will show up on reflective surfaces.
-  * The `rayField` operator can be used within background fields to access the direction of the ray that hit the background, as well as in materials where it uses the ray that hit the surface.
+  * The `atmosphereField` is designed for use with the "Background Field" feature. It produces a simulation of a sky
+    with a sun, including some advanced atmosphere-based coloration. It's great for creating sunsets.
+  * The `texture3dField` also supports being used as a background field. It can be used to apply environment lighting
+    with cube-maps and other types of 3D textures.
+  * The background color is used for reflection-based rays as well as primary rays, so the background colors will show
+    up on reflective surfaces.
+  * The `rayField` operator can be used within background fields to access the direction of the ray that hit the
+    background, as well as in materials where it uses the ray that hit the surface.
 
 ### Details
 
 * Improvements / additions
   * Material support in 2D rendering (#531)
   * Surface UVs (#526, #2, #345)
-      * uvField
-      * assignUV
-      * UV support in:
-        * boxFrameSdf
-        * boxSdf
-        * circleSdf
-        * ellipseSdf2d
-        * extrude
-        * jointSdf2d
-        * planeSdf
-        * quadSdf
-        * rectangleSdf
-        * render2D
-        * roundedRectangleSdf
-        * sphereSdf
-        * starSdf2d
-        * torusSdf
-      * UV output in raymarchRender3D and render2D (#345)
-      * uvTransform
-      * UV field input in triPlanarTextureField (#370)
+    * uvField
+    * assignUV
+    * UV support in:
+      * boxFrameSdf
+      * boxSdf
+      * circleSdf
+      * ellipseSdf2d
+      * extrude
+      * jointSdf2d
+      * planeSdf
+      * quadSdf
+      * rectangleSdf
+      * render2D
+      * roundedRectangleSdf
+      * sphereSdf
+      * starSdf2d
+      * torusSdf
+    * UV output in raymarchRender3D and render2D (#345)
+    * uvTransform
+    * UV field input in triPlanarTextureField (#370)
   * CHOP-based buffers
   * New SDFs
     * chainSdf
@@ -791,7 +815,8 @@
   * Added shapedCombine (#444)
   * Added infinite height option in cylinderSdf (#520)
 * Changes
-  * pointMapRender's SDF output will no longer contain material identifiers. The RGB channels will all contain the distance, with A indicating whether the point existed in the input. (#541)
+  * pointMapRender's SDF output will no longer contain material identifiers. The RGB channels will all contain the
+    distance, with A indicating whether the point existed in the input. (#541)
 * Fixes
   * Fix inspector support for inputs 5-8
   * Fix errors in blend (#469)
@@ -874,9 +899,11 @@
   * Added multi-step support in onion (#457)
 * Changes
   * Restructure the whole shadow system. (#445, #427).
-    * NOTE: This is a breaking change. Shadows are no longer specified at the material level. Instead they are attached to the renderer.
+    * NOTE: This is a breaking change. Shadows are no longer specified at the material level. Instead they are attached
+      to the renderer.
   * Removed the deprecated customFilter and customGen
-  * Disable the "Camera" parameter on raymarchRender3d. Instead, create a linkedCamera and connect it to the Camera input on the renderer. (#436)
+  * Disable the "Camera" parameter on raymarchRender3d. Instead, create a linkedCamera and connect it to the Camera
+    input on the renderer. (#436)
 * Fixes
   * Fix performance issue with shader support detection (#418, #34)
   * Fix iteration values not working for material field inputs (#397)
@@ -898,7 +925,8 @@
 * Improve detection of support for `#include`, which should help for some older AMD GPUs (#34)
 * Show validation errors directly on the ops where they occur, making debugging easier (#319)
 * Support inspecting 2D/3D value fields using instanced geometry. (#148)
-* There was an issue with the "Update OP" tool, so for this release it won't work. For future upgrades from 0.12 and later to newer versions, it will work.
+* There was an issue with the "Update OP" tool, so for this release it won't work. For future upgrades from 0.12 and
+  later to newer versions, it will work.
 
 ### Details
 
@@ -929,7 +957,8 @@
   * Add support for separate textures in triPlanarTextureField (#349)
   * Added uniform scale options in transform and iteratedTransform (#325)
 * Changes
-  * Separate custom parameters from customOp instances (#297). This may cause problems for instances of customOp from older versions.
+  * Separate custom parameters from customOp instances (#297). This may cause problems for instances of customOp from
+    older versions.
   * Cleanup and redesign of iteration value handling throughout toolkit (#310)
   * Inverted the meaning of the Bulge parameter on dogBoneSdf2d to match the name
 * Fixes
@@ -1007,7 +1036,8 @@
   * New component test editor system (#151)
   * Ability to set minimum required inputs for multi-input ops (#225)
   * Added op icons for viewers in networks (#235, #41)
-  * Added "Update OP" parameter to ops, that can be used to upgrade ops to a newer toolkit version. *still in beta* (#19)
+  * Added "Update OP" parameter to ops, that can be used to upgrade ops to a newer toolkit version. *still in beta* (
+    #19)
   * Added macros tab in inspector (#248)
 
 ## v0.10
@@ -1025,13 +1055,16 @@
   * Added metaballField (#137)
   * New time OPs for efficient access to time entirely within the shader (#146)
   * Documentation for data types and vector fields (#37)
-  * New palette for creating ops, replacing old createMenu, featuring integrated help, pinning, collapsible categories (#160)
+  * New palette for creating ops, replacing old createMenu, featuring integrated help, pinning, collapsible categories (
+    #160)
   * Added linkedCamera and swap it into raymarchRender3d (#?????)
   * Support for marking ops as deprecated (#125)
   * Differentiate between required and optional inputs (#153)
   * Added sphereFbmSdf
 * Changes
-  * Got rid of `Usefield` param for round, combineChamfer, combineColumns, combineStairs, edgeEngrave, edgeGroove, edgePipe, rotate, scale, translate (#40). Note that this could change behavior if there's a round with a field connected but that parameter is switched off.
+  * Got rid of `Usefield` param for round, combineChamfer, combineColumns, combineStairs, edgeEngrave, edgeGroove,
+    edgePipe, rotate, scale, translate (#40). Note that this could change behavior if there's a round with a field
+    connected but that parameter is switched off.
 * Fixes
   * Fix twist operator: got the shift parameter working (#114)
   * Fix antialias changing depth values (#103)
