@@ -1,3 +1,4 @@
+from dataclasses import dataclass, field
 from typing import Any, Callable, Dict, List, Optional, Union
 from editorToolsCommon import Action, ActionContext, ActionGroup, ActionManager, ActionUtils, InitFunc, ROPState
 
@@ -259,9 +260,15 @@ def _firstOpenConnector(conns: List['Connector']):
 			return conn
 
 def _createConvertFrom2dSdfAction(text: str, ropType: str):
-	def isValid(ctx: ActionContext):
-		return ctx.primaryRopState.isSdf and ctx.primaryRopState.is2d
-	return _createAddOutputAction(text, isValid, ropType)
+	return _ActionImpl(
+		text,
+		ropType,
+		select=_OpSelect(
+			coordTypes=['vec2'],
+			returnTypes=['Sdf'],
+		),
+		attach=_AttachOutFromExisting(),
+	)
 
 def _createAnimateParamAction(
 		text: str,
@@ -547,3 +554,92 @@ def createActionManager():
 		_createGoToGroup('Go to'),
 	)
 	return manager
+
+@dataclass
+class _OpSelect:
+	ropTypes: Optional[List[str]] = None
+	coordTypes: Optional[List[str]] = None
+	returnTypes: Optional[List[str]] = None
+	multi: bool = False
+	test: Optional[Callable[[ROPState], bool]] = None
+
+	def _matches(self, opState: ROPState) -> bool:
+		if not opState:
+			return False
+		if self.ropTypes and opState.info.opType not in self.ropTypes:
+			return False
+		if self.coordTypes and not opState.hasCoordType(*self.coordTypes):
+			return False
+		if self.returnTypes and not opState.hasReturnType(*self.returnTypes):
+			return False
+		if self.test and not self.test(opState):
+			return False
+		return True
+
+	def getOps(self, ctx: ActionContext):
+		matches = []
+		primaryRopState = ctx.primaryRopState
+		if primaryRopState and self._matches(primaryRopState):
+			matches.append(ctx.primaryRopState.rop)
+		if self.multi:
+			for opState in ctx.selectedRopStates:
+				if opState.rop != primaryRopState and self._matches(opState):
+					matches.append(opState.rop)
+		return matches
+
+@dataclass
+class _OpAttach:
+	inputIndex: int = 0
+	outputIndex: int = 0
+
+	def placeAndAttach(self, newOp: 'COMP', fromOps: 'List[COMP]'):
+		raise NotImplementedError()
+
+@dataclass
+class _AttachIntoExisting(_OpAttach):
+	useNextInput: bool = False
+
+	def _nextInput(self, fromOp: 'COMP'):
+		inIndex = self.inputIndex
+		if not self.useNextInput:
+			return inIndex
+		for conn in fromOp.inputConnectors[inIndex:]:
+			if not conn.connections:
+				return conn.index
+
+	def placeAndAttach(self, newOp: 'COMP', fromOps: 'List[COMP]'):
+		for fromOp in fromOps:
+			i = self._nextInput(fromOp)
+			if i is None:
+				raise Exception('No input connector available')
+			newOp.nodeCenterY = fromOp.nodeCenterY - (150 * i)
+			newOp.nodeX = fromOp.nodeX - newOp.nodeWidth - 150
+			newOp.outputConnectors[self.outputIndex].connect(fromOp.inputConnectors[i])
+
+@dataclass
+class _AttachOutFromExisting(_OpAttach):
+	def placeAndAttach(self, newOp: 'COMP', fromOps: 'List[COMP]'):
+		newOp.nodeX = max(o.nodeX + o.nodeWidth for o in fromOps) + 100
+		newOp.nodeCenterY = sum(o.nodeCenterY for o in fromOps) / len(fromOps)
+		for i, fromOp in enumerate(fromOps):
+			newOp.inputConnectors[self.inputIndex].connect(fromOp.outputConnectors[self.outputIndex])
+
+@dataclass
+class _ActionImpl(Action):
+	ropType: str
+	select: _OpSelect
+	attach: _OpAttach
+	init: InitFunc = None
+	params: Dict[str, Any] = field(default_factory=dict)
+
+	def isValid(self, ctx: ActionContext) -> bool:
+		return ActionUtils.isKnownRopType(self.ropType) and bool(self.select.getOps(ctx))
+
+	def execute(self, ctx: ActionContext):
+		fromOps = self.select.getOps(ctx)
+		def init(o: 'COMP'):
+			self.attach.placeAndAttach(o, fromOps)
+			for name, val in self.params:
+				o.par[name] = val
+		ActionUtils.createROP(self.ropType, init)
+

@@ -230,6 +230,12 @@ class ROPState:
 	@property
 	def is3d(self): return 'vec3' in self.coordTypes
 
+	def hasCoordType(self, *types: str):
+		return any([t in self.coordTypes for t in types])
+
+	def hasReturnType(self, *types: str):
+		return any([t in self.returnTypes for t in types])
+
 	def getParam(self, parName: str):
 		if self.rop:
 			return self.rop.par[parName]
