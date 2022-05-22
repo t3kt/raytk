@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.filter.waveWarp
-  opVersion: '11'
+  opVersion: '12'
   opStatus: beta
 opDef: !def
   enable: !expr
@@ -18,6 +18,7 @@ opDef: !def
   function: !text
     file: src/operators/filter/waveWarp.glsl
     name: function
+  paramGroupTable: eval_params
   libraryNames: !expr
     expr: op('raytkWave')
   help: !text
