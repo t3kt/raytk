@@ -374,7 +374,6 @@ class ShaderBuilder:
 			dataType = str(varTable[row, 'dataType'])
 			dat.appendRow([name + '_VarT', dataType, 'typedef'])
 			dat.appendRow([name + '_TYPE_' + dataType, '', 'macro'])
-			debug(f'checking for type {dataType} in {typeAdaptFuncs}')
 			if dataType in typeAdaptFuncs:
 				dat.appendRow([name + '_asVarT', typeAdaptFuncs[dataType], 'macro'])
 
