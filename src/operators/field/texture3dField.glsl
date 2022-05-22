@@ -1,12 +1,13 @@
 ReturnT thismap(CoordT p, ContextT ctx) {
 	#if defined(THIS_HAS_INPUT_coordField)
-	vec3 uv = inputOp_coordField(p, ctx).xyz;
+	vec3 uv = adaptAsVec3(inputOp_coordField(p, ctx));
 	#elif defined(THIS_CONTEXT_TYPE_RayContext)
 	vec3 uv = ctx.ray.dir;
 	#else
 	vec3 uv = adaptAsVec3(p);
 	#endif
 	uv = (uv - THIS_Translate) / THIS_Scale;
+	ZMODE();
 	#if defined(THIS_Extendmode_hold)
 	uv = clamp(uv, -0.5, 0.5);
 	#elif defined(THIS_Extendmode_repeat)
@@ -15,11 +16,7 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 	uv = modZigZag(uv+0.5)-0.5;
 	#elif defined(THIS_Extendmode_zero)
 	if (uv.x < -0.5 || uv.x > 0.5 || uv.y < -0.5 || uv.y > 0.5 || uv.z < -0.5 || uv.z > 0.5) {
-		#if defined(THIS_RETURN_TYPE_float)
-		return 0;
-		#else
-		return vec4(0);
-		#endif
+		return THIS_asReturnT(0.);
 	}
 	#endif
 	#if defined(RAYTK_LOD_IN_MATERIAL_CONTEXT) && defined(THIS_CONTEXT_TYPE_MaterialContext)
@@ -27,9 +24,5 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 	#else
 	vec4 value = texture(THIS_texture, uv + 0.5);
 	#endif
-	#ifdef THIS_RETURN_TYPE_float
-	return value.x;
-	#else
-	return value;
-	#endif
+	return THIS_asReturnT(value);
 }

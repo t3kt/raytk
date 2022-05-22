@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.field.texture3dField
-  opVersion: '5'
+  opVersion: '6'
   opStatus: beta
 opDef: !def
   enable: !expr
@@ -32,13 +32,15 @@ opDef: !def
     name: init
   function: !text
     file: src/operators/field/texture3dField.glsl
-    name: function
+    name: functionTemplate
   useParams:
   - Translate[xyz]
   - Scale[xyz]
   macroParams:
   - Extendmode
   - Texturetype
+  lockParams: Zmode
+  paramListTable: switcher_params
   libraryNames: !expr
     expr: op('modZigZag')
   textureTable: !table
@@ -52,3 +54,26 @@ opDef: !def
     evaluate: true
     evalOpts: !evalOpts
       excludeFirstRow: true
+inputs:
+- !input
+  Localalias: coordField
+  coordType: !coordT
+    Allcoordtype: true
+  contextType: !contextT
+    Allcontexttype: true
+  returnType: !returnT
+    Returntypevec4: true
+elements:
+- !opElement
+  name: codeSwitcher_Zmode
+  elementType: codeSwitcher
+  params:
+    Table: !table
+      file: src/operators/field/texture3dField_zmodes.txt
+      name: zmodes
+    Param: Zmode
+    Autoupdateparams: true
+    Manageparamstates: true
+    Alwaysincludeallparams: false
+    Switchmode: auto
+    Placeholder: ''

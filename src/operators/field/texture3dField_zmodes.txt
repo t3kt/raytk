@@ -1,0 +1,4 @@
+name	label	code
+raw	Raw	
+norm	Normalized (0..1)	uv.z *= THIS_texture_info.depth.x;
+depthoffset	Depth (With Offset)	uv.z = fract(uv.z + THIS_texture_info.depth.x * 0.5 + THIS_texture_info.depth.z);
