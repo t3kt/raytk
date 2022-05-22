@@ -242,6 +242,12 @@ float hypot (vec2 z) {
 	return (z.x == 0.0 && z.y == 0.0) ? 0.0 : x * sqrt(1.0 + t * t);
 }
 
+// Complex multiply
+// TODO: unify with complex.glsl
+vec2 cpxMul(vec2 a, vec2 b) {
+	return vec2(a.x * b.x - a.y * b.y, a.x * b.y + a.y * b.x);
+}
+
 float adaptAsFloat(float p) { return p; }
 float adaptAsFloat(vec2 p) { return p.x; }
 float adaptAsFloat(vec3 p) { return p.x; }
