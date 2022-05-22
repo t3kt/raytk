@@ -386,11 +386,12 @@ def _createSelectVectorPartGroup(text: str, table: 'DAT'):
 		return ctx.primaryRopState.isVectorField
 	def getActions(_):
 		return [
-			_createAddOutputAction(
+			_ActionImpl(
 				str(table[i, 'label']),
-				isValid=None,
 				ropType=_RopTypes.vectorToFloat,
-				paramVals={'Usepart': str(table[i, 'name'])})
+				select=_OpSelect(returnTypes=['vec4']),
+				attach=_AttachOutFromExisting(),
+				params={'Usepart': str(table[i, 'name'])})
 			for i in range(1, table.numRows)
 		]
 	return _SimpleGroup(text, isValid, getActions)
@@ -484,20 +485,32 @@ def createActionManager():
 			'Update OPs',
 			isValid=lambda ctx: _anySelectedRopHasParam(ctx, 'Updateop'),
 			execute=lambda ctx: _pulseSelectedRopParams(ctx, 'Updateop')),
-		_createAddOutputAction(
+		_ActionImpl(
 			'Convert To Float',
-			isValid=lambda ctx: ctx.primaryRopState.isSdf,
-			ropType='raytk.operators.field.sdfField'),
+			'raytk.operators.field.sdfField',
+			select=_OpSelect(returnTypes=['Sdf']),
+			attach=_AttachOutFromExisting(),
+		),
+		_ActionImpl(
+			'Convert To SDF',
+			'raytk.operators.field.floatToSdf',
+			select=_OpSelect(returnTypes=['float']),
+			attach=_AttachOutFromExisting(),
+		),
 		_createSelectVectorPartGroup('To Vector Part', op('vectorToFloatParts')),
-		_createAddOutputAction(
+		_ActionImpl(
 			'Rescale Field',
-			isValid=lambda ctx: ctx.primaryRopState.isField,
-			ropType=_RopTypes.rescaleField),
-		_createAddOutputAction(
+			_RopTypes.rescaleField,
+			select=_OpSelect(returnTypes=['float', 'vec4']),
+			attach=_AttachOutFromExisting(),
+		),
+		_ActionImpl(
 			'Rescale As Vector',
-			isValid=lambda ctx: ctx.primaryRopState.isFloatField,
-			ropType=_RopTypes.rescaleField,
-			paramVals={'Returntype': 'vec4'}),
+			_RopTypes.rescaleField,
+			select=_OpSelect(returnTypes=['float']),
+			attach=_AttachOutFromExisting(),
+			params={'Returntype': 'vec4'},
+		),
 		_createAddInputActionGroup(
 			'Add Diffuse',
 			_RopTypes.diffuseContrib,
@@ -510,11 +523,12 @@ def createActionManager():
 			paramName='Method',
 			matchTypes=[_RopTypes.modularMat],
 			table=op('specularContribMethods')),
-		_createAddInputAction(
+		_ActionImpl(
 			'Add Look At Camera',
-			[_RopTypes.raymarchRender3d],
-			'raytk.operators.camera.lookAtCamera',
-			firstInput=1, lastInput=1),
+			ropType='raytk.operators.camera.lookAtCamera',
+			select=_OpSelect(ropTypes=[_RopTypes.raymarchRender3d]),
+			attach=_AttachIntoExisting(inputIndex=1),
+		),
 		_createAddInputAction(
 			'Add Point Light',
 			[_RopTypes.raymarchRender3d],
@@ -543,14 +557,18 @@ def createActionManager():
 			'Animate With LFO', _RopTypes.lfoGenerator, 'lfoGen'),
 		_createExposeParamGroup('Expose Parameter'),
 		_createCustomizeShaderConfigAction('Customize Shader Config'),
-		_createAddOutputAction(
+		_ActionImpl(
 			'Add render2D',
-			lambda ctx: ctx.primaryRopState.is2d,
-			_RopTypes.render2d),
-		_createAddOutputAction(
+			ropType=_RopTypes.render2d,
+			select=_OpSelect(coordTypes=['vec2']),
+			attach=_AttachOutFromExisting(),
+		),
+		_ActionImpl(
 			'Add raymarchRender3d',
-			lambda ctx: ctx.primaryRopState.is3d and ctx.primaryRopState.isSdf,
-			_RopTypes.render2d),
+			ropType=_RopTypes.raymarchRender3d,
+			select=_OpSelect(coordTypes=['vec3'], returnTypes=['Sdf']),
+			attach=_AttachOutFromExisting(),
+		),
 		_createGoToGroup('Go to'),
 	)
 	return manager
@@ -639,7 +657,7 @@ class _ActionImpl(Action):
 		fromOps = self.select.getOps(ctx)
 		def init(o: 'COMP'):
 			self.attach.placeAndAttach(o, fromOps)
-			for name, val in self.params:
+			for name, val in self.params.items():
 				o.par[name] = val
 		ActionUtils.createROP(self.ropType, init)
 
