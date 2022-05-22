@@ -1,0 +1,3 @@
+name	label	code
+square	Square	distAndUV = sdJoint3DFlat(p, le, an, wi);
+round	Round	distAndUV = sdJoint3DSphere(p, le, an, wi);
