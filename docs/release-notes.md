@@ -1,5 +1,66 @@
 # Release Notes
 
+## v0.24
+
+### Highlights
+
+* 
+
+### Details
+
+* Improvements / additions
+  * Faster parameter switching (#571)
+    * combine, combineFields, compositeFields, simpleDiff, simpleIntersect, simpleUnion, smoothUnion
+    * colorRampField
+    * modulo1d, modulo2d, reflect
+    * crossSdf
+    * lfoField, timeField, timeShift
+  * Conditional parameter optimization (#571, #629)
+    * Most operators
+  * Variable support
+    * cylinderSdf - angle (#856)
+    * assignColor, round - SDF (#865)
+    * texture3DField, textureField - resolution (#847, #848)
+    * Support accessing fields from SDF variables (#865)
+  * New parameters
+    * assignUV - center position (#875)
+    * colorSwitchField - index scaling
+    * colorRampField - coordinate range (#844)
+    * elongate - axis masking (#858)
+    * pieSdf2d - infinite mode (#801)
+    * rectangleSdf - uv modes
+    * switch - index and extend modes (#860)
+  * Editor actions
+    * Sub-menus for diffuseContrib and specularContrib (#772)
+  * Support 3+ inputs in combineFields
+  * Scene locking tool (sceneState) (#869)
+  * Field inputs
+    * diffuseContrib, specularContrib - color (#866)
+    * spiralSdf2d (#588)
+  * New operators
+    * crescentSdf
+    * kochSnowflakeSdf (#884)
+    * mandelbrotSdf2d (#883)
+* Changes (potentially breaking)
+  * Changes to default unit (ratio instead of radians) in polarCoordField and cartesianToPolar
+  * Change to input numbering in switch when some inputs are missing (#860)
+* Fixes
+  * Fix 2d coord handling in iteratedTransform (#846)
+  * Fix coord type handling in colorRampField (#849)
+  * Fix amplitude multipliers in lfoGenerator (#851)
+  * Fix parameter optimization in diffuseContrib and specularContrib (#852)
+  * Fix depthMap's buffer selection (#855, #436)
+  * Fix field input on magnet (#861)
+  * Fix type macro error in exposeValue
+  * Fix enable bypass in radialClone (#882)
+* Infrastructure / internals
+  * opElements which generalize and automate the code gen features of codeSwitcher, combiner, aggregateCodeGenerator, etc.
+    * Include in yaml specs
+  * Stop using parameter part aliases (except for special params) (#857)
+  * Inline typedefs by default
+  * New table-based parameter definitions.
+    * Supports conditional optimization of parameters (#571, #629)
+
 ## v0.23
 
 ### Highlights
