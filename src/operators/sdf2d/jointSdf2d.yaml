@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.sdf2d.jointSdf2d
-  opVersion: '3'
+  opVersion: '4'
   opStatus: beta
 opDef: !def
   enable: true
@@ -16,3 +16,19 @@ opDef: !def
     file: src/operators/sdf2d/jointSdf2d.glsl
     name: function
   paramGroupTable: eval_params
+  libraryNames: !expr
+    expr: op('jointSdf2d_lib')
+elements:
+- !opElement
+  name: codeSwitcher_Shape
+  elementType: codeSwitcher
+  params:
+    Table: !table
+      file: src/operators/sdf2d/jointSdf2d_shapes.txt
+      name: shapes
+    Param: Shape
+    Autoupdateparams: true
+    Manageparamstates: false
+    Alwaysincludeallparams: false
+    Switchmode: inline
+    Placeholder: BODY();
