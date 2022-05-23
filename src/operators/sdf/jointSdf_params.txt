@@ -1,3 +1,4 @@
 names	source	handling	readOnlyHandling	conversion	enable
-Length Thickness	param	runtime	macro		1
-Angle	param	runtime	macro	angle	1
+Length	param	runtime	macro		op('length_definition').numRows < 2
+Thickness	param	runtime	macro		op('thickness_definition').numRows < 2
+Angle	param	runtime	macro	angle	op('angle_definition').numRows < 2
