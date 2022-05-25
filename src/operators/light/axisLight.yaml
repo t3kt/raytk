@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.light.axisLight
-  opVersion: '5'
+  opVersion: '6'
   opStatus: default
 opDef: !def
   enable: true
@@ -15,15 +15,7 @@ opDef: !def
   function: !text
     file: src/operators/light/axisLight.glsl
     name: function
-  useParams:
-  - Position[xyz]
-  - Intensity
-  - Color[rgb]
-  - Enableattenuation
-  - Attenuationstart
-  - Attenuationend
-  - Enableshadow
-  - Axis
+  paramGroupTable: eval_params
 inputs:
 - !input
   Localalias: colorField

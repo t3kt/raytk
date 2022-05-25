@@ -1,0 +1,3 @@
+names	source	handling	readOnlyHandling	conversion	enable
+Steptranslate[xyz] Stepclamprange1 Stepclamprange2 Steps	param	runtime	macro		1
+Steprotate[xyz]	param	runtime	macro	angle	1

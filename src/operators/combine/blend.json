@@ -2,6 +2,6 @@
   "meta": {
     "opStatus": "default",
     "opType": "raytk.operators.combine.blend",
-    "opVersion": 14
+    "opVersion": 15
   }
 }

@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.sdf2d.bezierSdf2d
-  opVersion: '3'
+  opVersion: '4'
   opStatus: beta
 opDef: !def
   enable: true
@@ -15,11 +15,7 @@ opDef: !def
   function: !text
     file: src/operators/sdf2d/bezierSdf2d.glsl
     name: function
-  useParams:
-  - Pointa[xy]
-  - Pointb[xy]
-  - Pointc[xy]
-  - Radius
+  paramGroupTable: eval_params
   libraryNames: !expr
     expr: op('bezierSfd2d_lib')
   variableTable: !table

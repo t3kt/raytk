@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.filter.modifyNormals
-  opVersion: '5'
+  opVersion: '6'
   opStatus: beta
 opDef: !def
   enable: !expr
@@ -18,10 +18,7 @@ opDef: !def
   function: !text
     file: src/operators/filter/modifyNormals.glsl
     name: functionTemplate
-  useParams: !expr
-    expr: '''Mix '' + op(''switcher_params'')[''params'', 1]'
-  macroParams: !expr
-    expr: op('switcher_params')['macroParams', 1]
+  paramGroupTable: eval_params
   help: !text
     file: src/operators/filter/modifyNormals.md
     name: help
@@ -67,4 +64,4 @@ elements:
     Manageparamstates: false
     Alwaysincludeallparams: false
     Switchmode: auto
-    Placeholder: ''
+    Placeholder: BODY();

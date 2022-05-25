@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.convert.crossSection
-  opVersion: '2'
+  opVersion: '3'
   opStatus: beta
 opDef: !def
   enable: !expr
@@ -19,7 +19,7 @@ opDef: !def
   function: !text
     file: src/operators/convert/crossSection.glsl
     name: function
-  useParams: Offset[xyz]
+  paramGroupTable: eval_params
   help: !text
     file: src/operators/convert/crossSection.md
     name: help

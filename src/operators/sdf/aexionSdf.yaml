@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.sdf.aexionSdf
-  opVersion: '1'
+  opVersion: '2'
   opStatus: alpha
 opDef: !def
   enable: true
@@ -15,5 +15,4 @@ opDef: !def
   function: !text
     file: src/operators/sdf/aexionSdf.glsl
     name: function
-  useParams: Maxdist
-  macroParams: Iterations
+  paramGroupTable: eval_params
