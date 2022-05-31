@@ -22,7 +22,7 @@
     * Most operators
   * Variable support
     * cylinderSdf - angle (#856)
-    * assignColor, round - SDF (#865)
+    * assignColor, assignUV, round - SDF (#865)
     * texture3DField, textureField - resolution (#847, #848)
     * Support accessing fields from SDF variables (#865)
   * New parameters
@@ -33,17 +33,24 @@
     * pieSdf2d - infinite mode (#801)
     * rectangleSdf - uv modes
     * switch - index and extend modes (#860)
-  * Editor actions
-    * Sub-menus for diffuseContrib and specularContrib (#772)
+    * waveWarp - amplitude multiplier (#734)
+  * Editor actions (#772)
+    * Sub-menus for diffuseContrib and specularContrib
+    * Action for combining SDFs with arrange
+    * Parameter locking actions (#869)
   * Support 3+ inputs in combineFields
   * Scene locking tool (sceneState) (#869)
   * Field inputs
     * diffuseContrib, specularContrib - color (#866)
+    * generalizedPolyhedronSdf (#821)
+    * slice - offset, thickness (#812)
     * spiralSdf2d (#588)
   * New operators
     * crescentSdf
+    * jointSdf (#527)
     * kochSnowflakeSdf (#884)
     * mandelbrotSdf2d (#883)
+    * sceneState - utility for working with parameter locking (#869)
 * Changes (potentially breaking)
   * Changes to default unit (ratio instead of radians) in polarCoordField and cartesianToPolar
   * Change to input numbering in switch when some inputs are missing (#860)
