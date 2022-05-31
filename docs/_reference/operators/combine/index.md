@@ -59,6 +59,7 @@ cat:
     - su
     summary: Combines several SDFs using the union operator.
   - name: smoothUnion
+    status: deprecated
     summary: Combines SDFs using a smooth union operator.
   - name: switch
     summary: Switches between several inputs, without the need to rebuild the shader,

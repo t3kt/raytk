@@ -62,6 +62,19 @@ op:
     name: Color7
   - label: Color 8
     name: Color8
+  - label: Index Mode
+    menuOptions:
+    - label: Index (0 .. N-1)
+      name: zeroindex
+    - label: Index (1 .. N)
+      name: oneindex
+    - label: Normalized (0 .. 1)
+      name: norm
+    name: Indexmode
   status: beta
+  summary: Switches or fades between a list of colors based on an index field.
 
 ---
+
+
+Switches or fades between a list of colors based on an index field.

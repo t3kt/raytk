@@ -24,6 +24,7 @@ op:
     name: coordField
     returnTypes:
     - float
+    - vec4
   keywords:
   - color
   - gradient
@@ -63,6 +64,8 @@ op:
     name: Color2
   - label: Alpha 2
     name: Alpha2
+  - label: Coordinate Range
+    name: Range
   - label: Extend Mode
     menuOptions:
     - label: Hold

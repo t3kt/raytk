@@ -106,6 +106,11 @@ op:
     summary: How to handle UV coordinates outside the 0..1 range.
   summary: A float or vector field that looks up values from a texture.
   thumb: assets/images/reference/operators/field/textureField_thumb.png
+  variables:
+  - label: res
+    name: res
+  - label: aspect
+    name: aspect
 
 ---
 

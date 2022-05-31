@@ -79,6 +79,23 @@ op:
   - label: Size
     name: Size
     summary: The distance that that parts are pushed apart from the origin.
+  - label: Axes
+    menuOptions:
+    - label: XYZ
+      name: xyz
+    - label: XY
+      name: xy
+    - label: YZ
+      name: yz
+    - label: XZ
+      name: xz
+    - label: X
+      name: x
+    - label: Y
+      name: y
+    - label: Z
+      name: z
+    name: Axes
   summary: Stretches a shape by splitting it into pieces, moves them apart, and connects
     them.
   thumb: assets/images/reference/operators/filter/elongate_thumb.png

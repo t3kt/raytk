@@ -79,8 +79,13 @@ op:
     - label: Spherical
       name: spherical
     name: Uvmode
+  - label: Center
+    name: Center
   summary: Assigns UV coordinates to an SDF surface.
   thumb: assets/images/reference/operators/filter/assignUV_thumb.png
+  variables:
+  - label: sdf
+    name: sdf
 
 ---
 

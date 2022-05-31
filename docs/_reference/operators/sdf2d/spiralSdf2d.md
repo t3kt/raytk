@@ -8,15 +8,68 @@ redirect_from:
   - /reference/opType/raytk.operators.sdf2d.spiralSdf2d/
 op:
   category: sdf2d
+  inputs:
+  - contextTypes:
+    - Context
+    - MaterialContext
+    - CameraContext
+    - LightContext
+    - RayContext
+    - ParticleContext
+    coordTypes:
+    - vec2
+    label: Spread Field
+    name: spreadField
+    returnTypes:
+    - float
+  - contextTypes:
+    - Context
+    - MaterialContext
+    - CameraContext
+    - LightContext
+    - RayContext
+    - ParticleContext
+    coordTypes:
+    - vec2
+    label: Thickness Field
+    name: thicknessField
+    returnTypes:
+    - float
+  - contextTypes:
+    - Context
+    - MaterialContext
+    - CameraContext
+    - LightContext
+    - RayContext
+    - ParticleContext
+    coordTypes:
+    - vec2
+    label: Rotate Field
+    name: rotateField
+    returnTypes:
+    - float
+  - contextTypes:
+    - Context
+    - MaterialContext
+    - CameraContext
+    - LightContext
+    - RayContext
+    - ParticleContext
+    coordTypes:
+    - vec2
+    label: Radius Limit Field
+    name: radiusLimitField
+    returnTypes:
+    - float
   name: spiralSdf2d
   opType: raytk.operators.sdf2d.spiralSdf2d
   parameters:
   - label: Spread
     name: Spread
-  - label: Rotate
-    name: Rotate
   - label: Thickness
     name: Thickness
+  - label: Rotate
+    name: Rotate
   - label: Use Radius Limit
     name: Useradiuslimit
   - label: Radius Limit

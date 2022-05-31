@@ -32,6 +32,16 @@ op:
     name: albedoField
     returnTypes:
     - float
+  - contextTypes:
+    - MaterialContext
+    coordTypes:
+    - float
+    - vec2
+    - vec3
+    label: Color
+    name: colorField
+    returnTypes:
+    - vec4
   keywords:
   - diffuse
   - lambert

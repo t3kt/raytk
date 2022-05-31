@@ -17,20 +17,17 @@ op:
     \ and `ReturnT` are replaced with the actual types that the OP is using. This\n\
     allows you to define an OP as using whatever kind of coordinates its input uses\
     \ (e.g. `vec2` or `vec3`) without having\nto change the code.\n\n```glsl\nReturnT\
-    \ thismap(CoordT p, ContextT ctx)  {\n  // custom code goes here\n}\n```\n\nAlternatively\
-    \ if you know that the ROP will always use some specific type, you can use that\
-    \ explicit type, as long as\nthat type is supported for that kind of use.\n\n\
-    ```glsl\nSdf thismap(vec2 p, ContextT ctx) {\n  return createSdf(length(p) - THIS_Radius);\n\
-    }\n```\n\n### Prefixes and Uniqueness\n\nAny functions, global variables, and\
-    \ macros defined in the shader code will be inserted into the generated shader.\
-    \ This\nmeans that they cannot conflict with things defined in any other OP or\
-    \ in the toolkit's libraries. This can be a problem\nwhen copying and pasting\
-    \ code from Shadertoy or elsewhere.\n\nTo avoid this, when defining any functions,\
-    \ global variables, or macros, use the prefix `THIS_`, which gets replaced\nwith\
-    \ a unique op-specific prefix.\n\n```glsl\nfloat THIS_helperFunc(vec2 foo) {\n\
-    \  return foo.x * 12 + foo.y;\n}\n#define THIS_helperMacro    1.2345\nfloat THIS_globalVar\
-    \ = 3;\n\nReturnT thismap(CoordT p, ContextT ctx) {\n  if (p.y > THIS_globalVar)\
-    \ {\n    THIS_globalVar = p.y;\n  }\n  return vec4(THIS_helperFunc(p.xy), THIS_helperMacro,\
+    \ thismap(CoordT p, ContextT ctx)  {\n  // custom code goes here\n}\n```\n\n###\
+    \ Prefixes and Uniqueness\n\nAny functions, global variables, and macros defined\
+    \ in the shader code will be inserted into the generated shader. This\nmeans that\
+    \ they cannot conflict with things defined in any other OP or in the toolkit's\
+    \ libraries. This can be a problem\nwhen copying and pasting code from Shadertoy\
+    \ or elsewhere.\n\nTo avoid this, when defining any functions, global variables,\
+    \ or macros, use the prefix `THIS_`, which gets replaced\nwith a unique op-specific\
+    \ prefix.\n\n```glsl\nfloat THIS_helperFunc(vec2 foo) {\n  return foo.x * 12 +\
+    \ foo.y;\n}\n#define THIS_helperMacro    1.2345\nfloat THIS_globalVar = 3;\n\n\
+    ReturnT thismap(CoordT p, ContextT ctx) {\n  if (p.y > THIS_globalVar) {\n   \
+    \ THIS_globalVar = p.y;\n  }\n  return vec4(THIS_helperFunc(p.xy), THIS_helperMacro,\
     \ THIS_globalVar, 0.);\n}\n```\n\n### Using Inputs\n\nROPs connected to the inputs\
     \ of the `customOp` are available to be called as functions named `inputOp1`,\
     \ `inputOp2`,\netc. When calling these, pass in some type of coordinate value\
@@ -47,10 +44,9 @@ op:
     \ manage these\ncustom parameters based on the shader code. For example, 'Createmissingparams'\
     \ will add new custom parameters that are\nreferenced in the shader code but are\
     \ missing on the \"params\" COMP.\n\nFor multi-part parameters (`Par` styles including\
-    \ `XYZ`, `RGBA`, `UV` and `Float`/`Int` with more than 1 part), you\ncan either\
-    \ refer to the individual parts (such as `THIS_Sizex`), or to the tuplet name\
-    \ which represents a value of the\nrelevant `vec*` type, which combines all of\
-    \ those parts (e.g. `THIS_Size` could be a `vec3`)."
+    \ `XYZ`, `RGBA`, `UV` and `Float`/`Int` with more than 1 part) the\nalias evaluates\
+    \ to a value of the relevant `vec*` type, with the name of the tuplet without\
+    \ any suffix, which combines\nall of those parts (e.g. `THIS_Translate`)."
   inputs:
   - contextTypes:
     - Context
@@ -278,15 +274,6 @@ ReturnT thismap(CoordT p, ContextT ctx)  {
 }
 ```
 
-Alternatively if you know that the ROP will always use some specific type, you can use that explicit type, as long as
-that type is supported for that kind of use.
-
-```glsl
-Sdf thismap(vec2 p, ContextT ctx) {
-  return createSdf(length(p) - THIS_Radius);
-}
-```
-
 ### Prefixes and Uniqueness
 
 Any functions, global variables, and macros defined in the shader code will be inserted into the generated shader. This
@@ -340,6 +327,6 @@ The `customOp`'s "Tools" parameter page includes several pulse parameters that c
 custom parameters based on the shader code. For example, 'Createmissingparams' will add new custom parameters that are
 referenced in the shader code but are missing on the "params" COMP.
 
-For multi-part parameters (`Par` styles including `XYZ`, `RGBA`, `UV` and `Float`/`Int` with more than 1 part), you
-can either refer to the individual parts (such as `THIS_Sizex`), or to the tuplet name which represents a value of the
-relevant `vec*` type, which combines all of those parts (e.g. `THIS_Size` could be a `vec3`).
+For multi-part parameters (`Par` styles including `XYZ`, `RGBA`, `UV` and `Float`/`Int` with more than 1 part) the
+alias evaluates to a value of the relevant `vec*` type, with the name of the tuplet without any suffix, which combines
+all of those parts (e.g. `THIS_Translate`).

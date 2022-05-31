@@ -204,6 +204,8 @@ op:
   - label: Translate 8
     name: Translate8
     summary: Moves the input SDF 8.
+  - label: Enable Translate
+    name: Enabletranslate
   - label: Enable 1
     name: Enable1
   - label: Enable 2

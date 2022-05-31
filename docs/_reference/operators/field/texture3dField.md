@@ -60,6 +60,15 @@ op:
     - label: Mirror
       name: mirror
     name: Extendmode
+  - label: Z Coord Mode
+    menuOptions:
+    - label: Raw
+      name: raw
+    - label: Normalized (0..1)
+      name: norm
+    - label: Depth (With Offset)
+      name: depthoffset
+    name: Zmode
   - label: Context Type
     menuOptions:
     - label: Auto
@@ -75,5 +84,14 @@ op:
     name: Contexttype
   status: beta
   thumb: assets/images/reference/operators/field/texture3dField_thumb.png
+  variables:
+  - label: res
+    name: res
+  - label: aspect
+    name: aspect
+  - label: depth
+    name: depth
+  - label: firstslice
+    name: firstslice
 
 ---

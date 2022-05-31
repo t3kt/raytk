@@ -72,6 +72,8 @@ op:
     name: axispos
   - label: normoffset
     name: normoffset
+  - label: normangle
+    name: normangle
 
 ---
 

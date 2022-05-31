@@ -38,6 +38,7 @@ cat:
     summary: A vector field that maps an input field to values from a range of colors.
   - name: colorSwitchField
     status: beta
+    summary: Switches or fades between a list of colors based on an index field.
   - name: constantColorField
     summary: A vector field that evaluates to a constant color value.
   - name: constantField
