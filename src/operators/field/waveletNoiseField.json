@@ -2,6 +2,6 @@
   "meta": {
     "opStatus": "default",
     "opType": "raytk.operators.field.waveletNoiseField",
-    "opVersion": 7
+    "opVersion": 8
   }
 }

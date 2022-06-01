@@ -308,12 +308,7 @@ class RaytkTools(RaytkContext):
 			if not ropInfo:
 				raise Exception(f'Invalid ROP: {rop!r}')
 			spec = self.loadROPSpec_NEW(rop, checkExists=False) or ROPSpec()
-			if not spec.opDef:
-				spec.opDef = ROPDef()
-			spec.opDef.updateFromComp(ropInfo.opDef)
-			if not spec.meta:
-				spec.meta = ROPMeta()
-			spec.meta.updateFromRopInfo(ropInfo)
+			spec.updateFromRop(ropInfo.rop, skipParams=True)
 			# TODO: inputs, params, etc.
 			specFile = self._getROPRelatedFile(rop, '.yaml', checkExists=False)
 			spec.writeToFile(specFile)

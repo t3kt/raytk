@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.field.textureField
-  opVersion: '18'
+  opVersion: '20'
   opStatus: default
 opDef: !def
   enable: !expr
@@ -15,22 +15,30 @@ opDef: !def
       Coordtypevec3: !expr
         expr: parent().par.Coordtype == 'vec3'
     contextType: !contextT
-      Allcontexttype: true
+      Allcontexttype: !expr
+        expr: parent().par.Contexttype == 'auto'
+      Contexttypecontext: !expr
+        expr: parent().par.Contexttype == 'Context'
+      Contexttypematerialcontext: !expr
+        expr: parent().par.Contexttype == 'MaterialContext'
+      Contexttypecameracontext: !expr
+        expr: parent().par.Contexttype == 'CameraContext'
+      Contexttypelightcontext: !expr
+        expr: parent().par.Contexttype == 'LightContext'
+      Contexttyperaycontext: !expr
+        expr: parent().par.Contexttype == 'RayContext'
     returnType: !returnT
       Returntypefloat: !expr
         expr: parent().par.Returntype == 'float'
       Returntypevec4: !expr
         expr: parent().par.Returntype == 'vec4'
+  init: !text
+    file: src/operators/field/textureField_init.glsl
+    name: init
   function: !text
     file: src/operators/field/textureField.glsl
     name: functionTemplate
-  useParams:
-  - Translateu
-  - Translatev
-  - Scaleu
-  - Scalev
-  - Axis
-  macroParams: Extendmode
+  paramGroupTable: eval_params
   libraryNames: !expr
     expr: op('modZigZag')
   textureTable: !table
@@ -38,6 +46,21 @@ opDef: !def
     name: texture_exprs
     evaluate: true
     evalOpts: !evalOpts {}
+  variableTable: !table
+    file: src/operators/field/textureField_variables.txt
+    name: variable_exprs
+    evaluate: true
+    evalOpts: !evalOpts
+      excludeFirstRow: true
   help: !text
     file: src/operators/field/textureField.md
     name: help
+inputs:
+- !input
+  Localalias: uvField
+  coordType: !coordT
+    Allcoordtype: true
+  contextType: !contextT
+    Allcontexttype: true
+  returnType: !returnT
+    Returntypevec4: true

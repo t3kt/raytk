@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.field.voronoiField
-  opVersion: '1'
+  opVersion: '3'
   opStatus: alpha
 opDef: !def
   enable: true
@@ -15,8 +15,31 @@ opDef: !def
       Returntypevec4: true
   function: !text
     file: src/operators/field/voronoiField.glsl
-    name: functionTemplate
-  useParams: Hashoffset[xy]
-  paramListTable: switcher_params
+    name: function
+  paramGroupTable: eval_params
   libraryNames: !expr
     expr: op('voronoiField_lib')
+inputs:
+- !input
+  Localalias: coordField
+  coordType: !coordT
+    Coordtypevec2: true
+    Coordtypevec3: true
+  contextType: !contextT
+    Allcontexttype: true
+  returnType: !returnT
+    Returntypevec4: true
+elements:
+- !opElement
+  name: codeSwitcher_Mode
+  elementType: codeSwitcher
+  params:
+    Table: !table
+      file: src/operators/field/voronoiField_modes.txt
+      name: modes
+    Param: Mode
+    Autoupdateparams: true
+    Manageparamstates: false
+    Alwaysincludeallparams: false
+    Switchmode: auto
+    Placeholder: BODY();

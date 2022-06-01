@@ -1,0 +1,3 @@
+names	source	handling	readOnlyHandling	conversion	enable
+Translate[xyz] Radius Thickness Rounding Twist Twistphase	param	runtime	macro		1
+Axis	param	macro			1

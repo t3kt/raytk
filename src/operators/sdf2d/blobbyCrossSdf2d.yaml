@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.sdf2d.blobbyCrossSdf2d
-  opVersion: '1'
+  opVersion: '2'
   opStatus: default
 opDef: !def
   enable: true
@@ -15,6 +15,21 @@ opDef: !def
   function: !text
     file: src/operators/sdf2d/blobbyCrossSdf2d.glsl
     name: function
-  useParams:
-  - Tightness
-  - Rounding
+  paramGroupTable: eval_params
+inputs:
+- !input
+  Localalias: tightnessField
+  coordType: !coordT
+    Coordtypevec2: true
+  contextType: !contextT
+    Allcontexttype: true
+  returnType: !returnT
+    Returntypefloat: true
+- !input
+  Localalias: roundingField
+  coordType: !coordT
+    Coordtypevec2: true
+  contextType: !contextT
+    Allcontexttype: true
+  returnType: !returnT
+    Returntypefloat: true

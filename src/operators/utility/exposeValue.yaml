@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.utility.exposeValue
-  opVersion: '3'
+  opVersion: '4'
   opStatus: beta
 opDef: !def
   enable: !expr
@@ -16,12 +16,30 @@ opDef: !def
   function: !text
     file: src/operators/utility/exposeValue.glsl
     name: function
-  macroParams:
-  - Valuesource
-  - Outputbuffer
-  - Onlyonsurfacehit
+  paramGroupTable: eval_params
   macroTable: !table
     file: src/operators/utility/exposeValue_macros.txt
     name: macro_exprs
     evaluate: true
     evalOpts: !evalOpts {}
+inputs:
+- !input
+  Required: true
+  coordType: !coordT
+    Allcoordtype: true
+  contextType: !contextT
+    Allcontexttype: true
+  returnType: !returnT
+    Returntypesdf: true
+    Returntypefloat: true
+    Returntypevec4: true
+    Returntyperay: true
+- !input
+  Localalias: valueField
+  coordType: !coordT
+    Allcoordtype: true
+  contextType: !contextT
+    Allcontexttype: true
+  returnType: !returnT
+    Returntypefloat: true
+    Returntypevec4: true

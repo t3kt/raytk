@@ -1,1 +1,0 @@
-op('expr_info')[1, 'dir'] != ''	'THIS_DIR'	op('expr_info')[1, 'dir'] or ''

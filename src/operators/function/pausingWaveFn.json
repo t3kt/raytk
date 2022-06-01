@@ -2,6 +2,6 @@
   "meta": {
     "opStatus": "default",
     "opType": "raytk.operators.function.pausingWaveFn",
-    "opVersion": 0
+    "opVersion": 1
   }
 }

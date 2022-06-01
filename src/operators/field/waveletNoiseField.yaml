@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.field.waveletNoiseField
-  opVersion: '7'
+  opVersion: '8'
   opStatus: default
 opDef: !def
   enable: true
@@ -12,19 +12,40 @@ opDef: !def
       Coordtypevec3: !expr
         expr: parent().par.Coordtype in ('auto', 'vec3')
     contextType: !contextT
-      Allcontexttype: true
+      Allcontexttype: !expr
+        expr: parent().par.Contexttype == 'auto'
+      Contexttypecontext: !expr
+        expr: parent().par.Contexttype == 'Context'
+      Contexttypematerialcontext: !expr
+        expr: parent().par.Contexttype == 'MaterialContext'
+      Contexttypecameracontext: !expr
+        expr: parent().par.Contexttype == 'CameraContext'
+      Contexttypelightcontext: !expr
+        expr: parent().par.Contexttype == 'LightContext'
+      Contexttyperaycontext: !expr
+        expr: parent().par.Contexttype == 'RayContext'
     returnType: !returnT
       Returntypefloat: true
   function: !text
     file: src/operators/field/waveletNoiseField.glsl
     name: functionTemplate
-  useParams:
-  - Translate[1-3]
-  - Period[1-3]
-  - Phase
-  - Scalefactor
-  - Amplitude
-  - Offset
-  macroParams:
-  - Iterations
-  - Enablevorticity
+  paramGroupTable: eval_params
+inputs:
+- !input
+  Localalias: phaseField
+  coordType: !coordT
+    Coordtypevec2: true
+    Coordtypevec3: true
+  contextType: !contextT
+    Allcontexttype: true
+  returnType: !returnT
+    Returntypefloat: true
+- !input
+  Localalias: coordField
+  coordType: !coordT
+    Coordtypevec2: true
+    Coordtypevec3: true
+  contextType: !contextT
+    Allcontexttype: true
+  returnType: !returnT
+    Returntypevec4: true

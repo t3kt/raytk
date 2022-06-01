@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.convert.extrude
-  opVersion: '15'
+  opVersion: '16'
   opStatus: default
 opDef: !def
   enable: true
@@ -15,14 +15,8 @@ opDef: !def
   function: !text
     file: src/operators/convert/extrude.glsl
     name: function
-  useParams:
-  - Height
-  - Offset
-  macroParams:
-  - Infiniteheight
-  - Uvmode
-  - Iterationtype
   lockParams: Uvmode
+  paramGroupTable: eval_params
   variableTable: !table
     file: src/operators/convert/extrude_variables.txt
     name: variable_exprs

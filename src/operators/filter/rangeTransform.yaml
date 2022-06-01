@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.filter.rangeTransform
-  opVersion: '11'
+  opVersion: '13'
   opStatus: default
 opDef: !def
   enable: !expr
@@ -13,26 +13,36 @@ opDef: !def
     contextType: !contextT
       Allcontexttype: true
     returnType: !returnT
-      Allreturntype: true
+      Allreturntype: !expr
+        expr: op('definition_1').numRows > 1
+      Returntypevec4: true
   function: !text
     file: src/operators/filter/rangeTransform.glsl
     name: function
-  useParams:
-  - Indexrange[1-2]
-  - Translate1[xyz]
-  - Translate2[xyz]
-  - Rotate1[xyz]
-  - Rotate2[xyz]
-  - Pivot1[xyz]
-  - Pivot2[xyz]
-  angleParams:
-  - Rotate1[xyz]
-  - Rotate2[xyz]
-  macroParams:
-  - Extendmode
-  - Enabletranslate
-  - Enablerotate
-  - Usepivot
   help: !text
     file: src/operators/filter/rangeTransform.md
     name: help
+inputs:
+- !input
+  coordType: !coordT
+    Coordtypevec3: true
+  contextType: !contextT
+    Allcontexttype: true
+  returnType: !returnT
+    Allreturntype: true
+- !input
+  Localalias: indexField
+  coordType: !coordT
+    Coordtypevec3: true
+  contextType: !contextT
+    Allcontexttype: true
+  returnType: !returnT
+    Returntypefloat: true
+- !input
+  Localalias: easingFunction
+  coordType: !coordT
+    Coordtypefloat: true
+  contextType: !contextT
+    Allcontexttype: true
+  returnType: !returnT
+    Returntypefloat: true

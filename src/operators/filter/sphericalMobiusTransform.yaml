@@ -1,46 +1,25 @@
 !rop
 meta: !meta
   opType: raytk.operators.filter.sphericalMobiusTransform
-  opVersion: '4'
+  opVersion: '5'
   opStatus: beta
 opDef: !def
   enable: !expr
-    expr: 'op(''..'').par.Enable'
+    expr: op('..').par.Enable
   useRuntimeBypass: true
   typeSpec: !ropTypes
     coordType: !coordT
-      Allcoordtype: false
-      Coordtypefloat: false
-      Coordtypevec2: false
       Coordtypevec3: true
     contextType: !contextT
       Allcontexttype: true
-      Contexttypecontext: false
-      Contexttypematerialcontext: true
-      Contexttypecameracontext: false
-      Contexttypelightcontext: false
-      Contexttyperaycontext: false
-      Contexttypeparticlecontext: false
     returnType: !returnT
       Allreturntype: true
-      Returntypesdf: false
-      Returntypefloat: true
-      Returntypevec4: true
-      Returntyperay: false
-      Returntypelight: false
-      Returntypeparticle: false
   function: !text
     file: src/operators/filter/sphericalMobiusTransform.glsl
     name: function
-  useParams:
-  - Center[xyz]
-  - Radius
-  - Rotate[xyz]
-  - Rotationamount
-  angleParams:
-  - Rotate[xyz]
-  - Rotationamount
-  libraryNames: !expr 'op(''sphericalMobiusTransform_lib'')'
+  paramGroupTable: eval_params
+  libraryNames: !expr
+    expr: op('sphericalMobiusTransform_lib')
 paramPages:
 - !page
   name: Filter
@@ -84,23 +63,8 @@ inputs:
 - !input
   Required: true
   coordType: !coordT
-    Allcoordtype: false
-    Coordtypefloat: false
-    Coordtypevec2: false
     Coordtypevec3: true
   contextType: !contextT
     Allcontexttype: true
-    Contexttypecontext: true
-    Contexttypematerialcontext: false
-    Contexttypecameracontext: false
-    Contexttypelightcontext: false
-    Contexttyperaycontext: false
-    Contexttypeparticlecontext: false
   returnType: !returnT
     Allreturntype: true
-    Returntypesdf: false
-    Returntypefloat: true
-    Returntypevec4: true
-    Returntyperay: false
-    Returntypelight: false
-    Returntypeparticle: false

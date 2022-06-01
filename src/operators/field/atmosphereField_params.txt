@@ -1,0 +1,4 @@
+names	source	handling	readOnlyHandling	conversion	enable
+Sunpos[xyz] Sunlevel Planetradius Atmosthickness Rayleighcoeff[xyz] Miecoeff Rayleighscale Miescale Mieprefdir	param	runtime	macro		1
+Rotate[xyz]	param	runtime	macro	angle	1
+Primarysteps Secondarysteps	param	macro			1

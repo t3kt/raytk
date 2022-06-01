@@ -1,0 +1,2 @@
+names	source	handling	readOnlyHandling	conversion	enable
+Translate[xyz] Radius Height Infiniteheight Axis	param	runtime	macro		1

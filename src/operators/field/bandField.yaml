@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.field.bandField
-  opVersion: '5'
+  opVersion: '6'
   opStatus: default
 opDef: !def
   enable: !expr
@@ -24,18 +24,42 @@ opDef: !def
   function: !text
     file: src/operators/field/bandField.glsl
     name: function
-  useParams:
-  - Insidevalue[rgba]
-  - Outsidevalue[rgba]
-  - Width
-  - Blending
-  - Center
-  - Repeatsize
-  - Repeatshift
-  macroParams:
-  - Axis
-  - Enableblending
-  - Enablerepeat
+  paramGroupTable: eval_params
   help: !text
     file: src/operators/field/bandField.md
     name: help
+inputs:
+- !input
+  Localalias: coordField
+  coordType: !coordT
+    Allcoordtype: true
+  contextType: !contextT
+    Allcontexttype: true
+  returnType: !returnT
+    Returntypefloat: true
+- !input
+  Localalias: insideValue
+  coordType: !coordT
+    Allcoordtype: true
+  contextType: !contextT
+    Allcontexttype: true
+  returnType: !returnT
+    Returntypefloat: true
+    Returntypevec4: true
+- !input
+  Localalias: outsideValue
+  coordType: !coordT
+    Allcoordtype: true
+  contextType: !contextT
+    Allcontexttype: true
+  returnType: !returnT
+    Returntypefloat: true
+    Returntypevec4: true
+- !input
+  Localalias: blendFunction
+  coordType: !coordT
+    Coordtypefloat: true
+  contextType: !contextT
+    Allcontexttype: true
+  returnType: !returnT
+    Returntypefloat: true

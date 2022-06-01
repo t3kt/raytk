@@ -230,6 +230,12 @@ class ROPState:
 	@property
 	def is3d(self): return 'vec3' in self.coordTypes
 
+	def hasCoordType(self, *types: str):
+		return any([t in self.coordTypes for t in types])
+
+	def hasReturnType(self, *types: str):
+		return any([t in self.returnTypes for t in types])
+
 	def getParam(self, parName: str):
 		if self.rop:
 			return self.rop.par[parName]
@@ -279,7 +285,7 @@ class ActionUtils:
 	def createAndAttachToInput(
 			fromRop: 'OP',
 			ropType: str,
-			init: InitFunc = None,
+			inits: List[InitFunc] = None,
 			inputIndex: int = 0,
 			outputIndex: int = 0,
 	):
@@ -287,7 +293,7 @@ class ActionUtils:
 			rop.nodeCenterY = fromRop.nodeCenterY - 100
 			rop.nodeX = fromRop.nodeX - rop.nodeWidth - 150
 			rop.outputConnectors[outputIndex].connect(fromRop.inputConnectors[inputIndex])
-		ActionUtils.createROP(ropType, placeAndAttach, init)
+		ActionUtils.createROP(ropType, placeAndAttach, *(inits or []))
 
 	@staticmethod
 	def createAndAttachFromMultiOutputs(

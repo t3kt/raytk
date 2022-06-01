@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.sdf2d.rhombusSdf2d
-  opVersion: '8'
+  opVersion: '9'
   opStatus: default
 opDef: !def
   enable: true
@@ -15,7 +15,17 @@ opDef: !def
   function: !text
     file: src/operators/sdf2d/rhombusSdf2d.glsl
     name: functionTemplate
-  useParams: Scale[xy]
+  paramGroupTable: eval_params
   help: !text
     file: src/operators/sdf2d/rhombusSdf2d.md
     name: help
+inputs:
+- !input
+  Localalias: scaleField
+  coordType: !coordT
+    Coordtypevec2: true
+  contextType: !contextT
+    Allcontexttype: true
+  returnType: !returnT
+    Returntypefloat: true
+    Returntypevec4: true

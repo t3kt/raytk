@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.sdf2d.rectangleSdf
-  opVersion: '7'
+  opVersion: '9'
   opStatus: default
 opDef: !def
   enable: true
@@ -15,9 +15,40 @@ opDef: !def
   function: !text
     file: src/operators/sdf2d/rectangleSdf.glsl
     name: functionTemplate
-  useParams:
-  - Translate[xy]
-  - Scale[xy]
+  paramGroupTable: eval_params
   help: !text
     file: src/operators/sdf2d/rectangleSdf.md
     name: help
+inputs:
+- !input
+  Localalias: scaleField
+  coordType: !coordT
+    Coordtypevec2: true
+  contextType: !contextT
+    Allcontexttype: true
+  returnType: !returnT
+    Returntypefloat: true
+    Returntypevec4: true
+- !input
+  Localalias: translateField
+  coordType: !coordT
+    Coordtypevec2: true
+  contextType: !contextT
+    Allcontexttype: true
+  returnType: !returnT
+    Returntypefloat: true
+    Returntypevec4: true
+elements:
+- !opElement
+  name: codeSwitcher_Uvmode
+  elementType: codeSwitcher
+  params:
+    Table: !table
+      file: src/operators/sdf2d/rectangleSdf_uvModes.txt
+      name: uvModes
+    Param: Uvmode
+    Autoupdateparams: true
+    Manageparamstates: false
+    Alwaysincludeallparams: false
+    Switchmode: inline
+    Placeholder: ''

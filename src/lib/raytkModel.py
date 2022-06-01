@@ -566,6 +566,7 @@ class ROPDef(ModelObject):
 	macroParams: ValueOrListOrExprT = None
 	lockParams: ValueOrListOrExprT = None
 
+	paramGroupTable: _TableSetting = None
 	paramListTable: _TableSetting = None
 
 	libraryNames: ValueOrListOrExprT = None
@@ -575,6 +576,7 @@ class ROPDef(ModelObject):
 	macroTable: _TableSetting = None
 	variableTable: _TableSetting = None
 	referenceTable: _TableSetting = None
+	dispatchTable: _TableSetting = None
 
 	generatedMacroTables: ValueOrExprT = None
 
@@ -597,12 +599,12 @@ class ROPDef(ModelObject):
 
 		self.typeSpec = ROPTypeSpec.fromComp(pars.Typespec.eval())
 
-		self.opGlobals = _extractDatSetting(pars.Opglobals, isText=True)
-		self.init = _extractDatSetting(pars.Initcode, isText=True)
-		self.stageInit = _extractDatSetting(pars.Stageinitcode, isText=True)
-		self.function = _extractDatSetting(pars.Functemplate, isText=True)
-		self.material = _extractDatSetting(pars.Materialcode, isText=True)
-		self.callbacks = _extractDatSetting(pars.Callbacks, isText=True)
+		self.opGlobals = _extractDatSetting(pars.Opglobals)
+		self.init = _extractDatSetting(pars.Initcode)
+		self.stageInit = _extractDatSetting(pars.Stageinitcode)
+		self.function = _extractDatSetting(pars.Functemplate)
+		self.material = _extractDatSetting(pars.Materialcode)
+		self.callbacks = _extractDatSetting(pars.Callbacks)
 
 		self.useParams = _valOrExprFromPar(pars.Params, useList=True)
 		self.specialParams = _valOrExprFromPar(pars.Specialparams, useList=True)
@@ -610,19 +612,21 @@ class ROPDef(ModelObject):
 		self.macroParams = _valOrExprFromPar(pars.Macroparams, useList=True)
 		self.lockParams = _valOrExprFromPar(pars.Lockpars, useList=True)
 
+		self.paramGroupTable = _valOrExprFromPar(pars.Paramgrouptable)
 		self.paramListTable = _valOrExprFromPar(pars.Paramlisttable)
 
 		self.libraryNames = _valOrExprFromPar(pars.Librarynames, useList=True)
 
-		self.bufferTable = _extractDatSetting(pars.Buffertable, isText=False)
-		self.textureTable = _extractDatSetting(pars.Texturetable, isText=False)
-		self.macroTable = _extractDatSetting(pars.Macrotable, isText=False)
-		self.variableTable = _extractDatSetting(pars.Variabletable, isText=False)
-		self.referenceTable = _extractDatSetting(pars.Referencetable, isText=False)
+		self.bufferTable = _extractDatSetting(pars.Buffertable)
+		self.textureTable = _extractDatSetting(pars.Texturetable)
+		self.macroTable = _extractDatSetting(pars.Macrotable)
+		self.variableTable = _extractDatSetting(pars.Variabletable)
+		self.referenceTable = _extractDatSetting(pars.Referencetable)
+		self.dispatchTable = _extractDatSetting(pars.Dispatchtable)
 
 		self.generatedMacroTables = _valOrExprFromPar(pars.Generatedmacrotables)
 
-		self.help = _extractDatSetting(pars.Help, isText=True)
+		self.help = _extractDatSetting(pars.Help)
 		self.keywords = _valOrExprFromPar(pars.Keywords, useList=True)
 		self.shortcuts = _valOrExprFromPar(pars.Shortcuts, useList=True)
 
@@ -644,6 +648,7 @@ class ROPDef(ModelObject):
 		_updatePar(pars.Macroparams, self.macroParams)
 		_updatePar(pars.Lockpars, self.lockParams)
 
+		_updatePar(pars.Paramgrouptable, self.paramGroupTable)
 		_updatePar(pars.Paramlisttable, self.paramListTable)
 
 		_updatePar(pars.Librarynames, self.libraryNames)
@@ -728,6 +733,42 @@ def _cleanParamSpecObj(obj: dict):
 		if 'menuLabels' in obj:
 			del obj['menuLabels']
 
+_ValueOrExprOrDatT = Union[None, ValueOrExprT, TableData, TextData]
+
+@dataclass
+class OpElementSpec(ModelObject):
+	yaml_tag = u'!opElement'
+
+	name: str
+	elementType: str
+	params: Dict[str, _ValueOrExprOrDatT] = field(default_factory=dict)
+
+	@classmethod
+	def extract(cls, comp: 'COMP'):
+		opElement = comp.op('opElement')
+		spec = cls(comp.name, opElement.par.Elementtype.eval())
+		spec.updateFromComp(comp)
+		return spec
+
+	def updateFromComp(self, comp: 'COMP'):
+		for par in comp.customPars:
+			if par.isPulse or par.isMomentary:
+				continue
+			if par.name == 'Hostop':
+				continue
+			if par.style == 'DAT':
+				val = _extractDatSetting(par)
+			else:
+				val = _valOrExprFromPar(par)
+			self.params[par.name] = val
+
+	@classmethod
+	def findAndExtract(cls, rop: 'COMP'):
+		return [
+			cls.extract(opElement.parent())
+			for opElement in rop.ops('*/opElement')
+		]
+
 @dataclass
 class ROPSpec(ModelObject):
 	yaml_tag = u'!rop'
@@ -739,6 +780,8 @@ class ROPSpec(ModelObject):
 
 	multiInput: Optional[MultiInputSpec] = None
 	inputs: List[InputSpec] = field(default_factory=list)
+
+	elements: List[OpElementSpec] = field(default_factory=list)
 
 	@classmethod
 	def extract(cls, rop: 'COMP', skipParams=False):
@@ -757,8 +800,9 @@ class ROPSpec(ModelObject):
 			self.paramPages = ParamPage.fromCustomPages(rop)
 		self.multiInput = MultiInputSpec.fromComps(ropInfo.multiInputHandler, ropInfo.inputHandlers)
 		self.inputs = InputSpec.fromCompList(ropInfo.inputHandlers, forMulti=False)
+		self.elements = OpElementSpec.findAndExtract(rop)
 
-def _extractDatSetting(par: Optional['Par'], isText: bool) -> Union[TextData, TableData, Expr, None]:
+def _extractDatSetting(par: Optional['Par']) -> Union[TextData, TableData, Expr, None]:
 	if par is None:
 		return None
 	if par.mode == ParMode.EXPRESSION:
@@ -775,7 +819,7 @@ def _extractDatSetting(par: Optional['Par'], isText: bool) -> Union[TextData, Ta
 	if graph.evalDat:
 		evalOpts = EvalDatOptions.fromDat(graph.evalDat)
 	if graph.file:
-		if isText:
+		if graph.sourceDat.isText:
 			return TextData(
 				file=graph.file.eval(),
 				name=graph.sourceDat.name,

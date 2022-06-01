@@ -33,7 +33,7 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 		#if defined(THIS_Coordmode_position)
 		u = (u - THIS_Translate) / THIS_Scale;
 		#elif defined(THIS_Coordmode_scaledindex)
-		u = map01(u,  THIS_Indexrange1, THIS_Indexrange2);
+		u = map01(u,  THIS_Indexrange.x, THIS_Indexrange.y);
 		#elif defined(THIS_Coordmode_scaledindex)
 		u = map01(u, 0, THIS_Length - 1);
 		#endif

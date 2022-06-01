@@ -5,36 +5,23 @@ meta: !meta
   opStatus: beta
 opDef: !def
   enable: !expr
-    expr: 'op(''..'').par.Enable'
+    expr: op('..').par.Enable
   useRuntimeBypass: true
   typeSpec: !ropTypes
     coordType: !coordT
-      Allcoordtype: false
-      Coordtypefloat: false
-      Coordtypevec2: false
       Coordtypevec3: true
     contextType: !contextT
-      Allcontexttype: false
-      Contexttypecontext: false
       Contexttypematerialcontext: true
-      Contexttypecameracontext: false
-      Contexttypelightcontext: false
-      Contexttyperaycontext: false
-      Contexttypeparticlecontext: false
     returnType: !returnT
       Allreturntype: true
-      Returntypesdf: false
-      Returntypefloat: true
-      Returntypevec4: true
-      Returntyperay: false
-      Returntypelight: false
-      Returntypeparticle: false
   function: !text
     file: src/operators/filter/rotateNormals.glsl
     name: function_template
   angleParams: Rotate[xyz]
   paramListTable: paramListTable
-  help: help
+  help: !text
+    file: src/operators/filter/rotateNormals.md
+    name: help
   keywords:
   - transform
   - rotate
@@ -82,23 +69,8 @@ inputs:
 - !input
   Required: true
   coordType: !coordT
-    Allcoordtype: false
-    Coordtypefloat: false
-    Coordtypevec2: false
     Coordtypevec3: true
   contextType: !contextT
-    Allcontexttype: false
-    Contexttypecontext: false
     Contexttypematerialcontext: true
-    Contexttypecameracontext: false
-    Contexttypelightcontext: false
-    Contexttyperaycontext: false
-    Contexttypeparticlecontext: false
   returnType: !returnT
     Allreturntype: true
-    Returntypesdf: false
-    Returntypefloat: true
-    Returntypevec4: true
-    Returntyperay: false
-    Returntypelight: false
-    Returntypeparticle: false

@@ -2,6 +2,6 @@
   "meta": {
     "opStatus": "beta",
     "opType": "raytk.operators.filter.waveWarp",
-    "opVersion": 8
+    "opVersion": 12
   }
 }

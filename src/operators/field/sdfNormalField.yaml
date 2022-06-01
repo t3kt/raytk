@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.field.sdfNormalField
-  opVersion: '0'
+  opVersion: '1'
   opStatus: beta
 opDef: !def
   enable: true
@@ -15,5 +15,13 @@ opDef: !def
   function: !text
     file: src/operators/field/sdfNormalField.glsl
     name: function
-  useParams: Normalsmoothing
-  macroParams: Enablenormalsmoothing
+  paramGroupTable: eval_params
+inputs:
+- !input
+  Required: true
+  coordType: !coordT
+    Coordtypevec3: true
+  contextType: !contextT
+    Allcontexttype: true
+  returnType: !returnT
+    Returntypesdf: true

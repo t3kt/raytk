@@ -57,7 +57,7 @@ void THIS_apply(inout CoordT p, inout ContextT ctx, inout float valueAdjust, out
 			#pragma r:endif
 		CoordT preReflectP = p;
 		THIS_REFLECT();
-		orb = min(orb, vec4(abs(preReflectP - p), length(p)));
+		orb = min(orb, vec4(adaptAsVec3(abs(preReflectP - p)), length(p)));
 		TRANSFORM_CODE();
 		CUSTOM_CODE();
 	}
@@ -66,7 +66,7 @@ void THIS_apply(inout CoordT p, inout ContextT ctx, inout float valueAdjust, out
 ReturnT thismap(CoordT p, ContextT ctx) {
 	float valueAdjust = 1.0;
 	vec4 orb = vec4(1000);
-	if (THIS_Enable >= 0.5) {
+	if (IS_TRUE(THIS_Enable)) {
 		THIS_apply(p, ctx, valueAdjust, orb);
 	}
 	ReturnT res = inputOp1(p, ctx);
@@ -74,9 +74,7 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 	res.orbit = vec4(orb);
 #pragma r:endif
 #pragma r:if THIS_RETURN_TYPE_Sdf
-	res.x *= valueAdjust;
-	return res;
-#pragma r:else
-	return res * valueAdjust;
+	res = withAdjustedScale(res, valueAdjust);
 #pragma r:endif
+	return res;
 }

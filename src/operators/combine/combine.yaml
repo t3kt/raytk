@@ -1,39 +1,26 @@
 !rop
 meta: !meta
   opType: raytk.operators.combine.combine
-  opVersion: '16'
+  opVersion: '24'
   opStatus: default
 opDef: !def
   enable: !expr
-    expr: 'op(''..'').par.Enable'
+    expr: op('..').par.Enable
+  useRuntimeBypass: true
   typeSpec: !ropTypes
     coordType: !coordT
       Allcoordtype: true
-      Coordtypefloat: false
-      Coordtypevec2: true
-      Coordtypevec3: false
     contextType: !contextT
       Allcontexttype: true
-      Contexttypecontext: false
-      Contexttypematerialcontext: false
-      Contexttypecameracontext: false
-      Contexttypelightcontext: false
-      Contexttyperaycontext: false
-      Contexttypeparticlecontext: false
     returnType: !returnT
-      Allreturntype: false
       Returntypesdf: true
-      Returntypefloat: false
-      Returntypevec4: false
-      Returntyperay: false
-      Returntypelight: false
-      Returntypeparticle: false
   function: !text
     file: src/operators/combine/combine.glsl
-    name: functionTemplate
-  paramListTable: switcher_params
-  macroTable: eval_macros
-  help: help
+    name: function
+  libraryNames: raytkCombine
+  help: !text
+    file: src/operators/combine/combine.md
+    name: help
   keywords:
   - combine
   - union
@@ -44,6 +31,7 @@ opDef: !def
   - chamfer
   - stairs
   - columns
+  shortcuts: cmb
 paramPages:
 - !page
   name: Combine
@@ -151,92 +139,49 @@ multiInput: !multiInput
     Required: true
     coordType: !coordT
       Allcoordtype: true
-      Coordtypefloat: false
-      Coordtypevec2: true
-      Coordtypevec3: true
     contextType: !contextT
       Allcontexttype: true
-      Contexttypecontext: true
-      Contexttypematerialcontext: false
-      Contexttypecameracontext: false
-      Contexttypelightcontext: false
-      Contexttyperaycontext: false
-      Contexttypeparticlecontext: false
     returnType: !returnT
-      Allreturntype: false
       Returntypesdf: true
-      Returntypefloat: false
-      Returntypevec4: false
-      Returntyperay: false
-      Returntypelight: false
-      Returntypeparticle: false
   - !input
-    Required: true
     coordType: !coordT
       Allcoordtype: true
-      Coordtypefloat: false
-      Coordtypevec2: true
-      Coordtypevec3: true
     contextType: !contextT
       Allcontexttype: true
-      Contexttypecontext: true
-      Contexttypematerialcontext: false
-      Contexttypecameracontext: false
-      Contexttypelightcontext: false
-      Contexttyperaycontext: false
-      Contexttypeparticlecontext: false
     returnType: !returnT
-      Allreturntype: false
       Returntypesdf: true
-      Returntypefloat: false
-      Returntypevec4: false
-      Returntyperay: false
-      Returntypelight: false
-      Returntypeparticle: false
-inputs:
-- !input
-  Localalias: radiusField
-  coordType: !coordT
-    Allcoordtype: true
-    Coordtypefloat: false
-    Coordtypevec2: true
-    Coordtypevec3: true
-  contextType: !contextT
-    Allcontexttype: true
-    Contexttypecontext: true
-    Contexttypematerialcontext: false
-    Contexttypecameracontext: false
-    Contexttypelightcontext: false
-    Contexttyperaycontext: false
-    Contexttypeparticlecontext: false
-  returnType: !returnT
-    Allreturntype: false
-    Returntypesdf: true
-    Returntypefloat: true
-    Returntypevec4: false
-    Returntyperay: false
-    Returntypelight: false
-    Returntypeparticle: false
-- !input
-  Localalias: offsetField
-  coordType: !coordT
-    Allcoordtype: true
-    Coordtypefloat: false
-    Coordtypevec2: false
-    Coordtypevec3: true
-  contextType: !contextT
-    Allcontexttype: true
-    Contexttypecontext: true
-    Contexttypematerialcontext: false
-    Contexttypecameracontext: false
-    Contexttypelightcontext: false
-    Contexttyperaycontext: false
-    Contexttypeparticlecontext: false
-  returnType: !returnT
-    Allreturntype: false
-    Returntypesdf: false
-    Returntypefloat: true
-    Returntypevec4: false
-    Returntyperay: false
-    Returntypelight: false
-    Returntypeparticle: false
+  - !input
+    Localalias: radiusField
+    coordType: !coordT
+      Allcoordtype: true
+    contextType: !contextT
+      Allcontexttype: true
+    returnType: !returnT
+      Returntypesdf: true
+      Returntypefloat: true
+  - !input
+    Localalias: offsetField
+    coordType: !coordT
+      Allcoordtype: true
+    contextType: !contextT
+      Allcontexttype: true
+    returnType: !returnT
+      Returntypefloat: true
+elements:
+- !opElement
+  name: combiner
+  elementType: combiner
+  params:
+    Includenone: false
+    Modeparam: Combine
+    Swapinputsparam: Swapinputs
+    Radiusparam: Radius
+    Numberparam: Number
+    Offsetparam: Offset
+    Radiusfield: radiusField
+    Offsetfield: offsetField
+    Numberfield: ''
+    Manageparamstates: true
+    Switchmode: auto
+    Prepcodeplaceholder: MERGE_PREP();
+    Bodycodeplaceholder: MERGE_BODY();

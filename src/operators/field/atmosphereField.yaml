@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.field.atmosphereField
-  opVersion: '4'
+  opVersion: '5'
   opStatus: beta
 opDef: !def
   enable: true
@@ -15,21 +15,16 @@ opDef: !def
   function: !text
     file: src/operators/field/atmosphereField.glsl
     name: function
-  useParams:
-  - Sunpos[xyz]
-  - Sunlevel
-  - Planetradius
-  - Atmosthickness
-  - Rayleighcoeff[xyz]
-  - Miecoeff
-  - Rayleighscale
-  - Miescale
-  - Mieprefdir
-  - Rotate[xyz]
-  angleParams: Rotate[xyz]
-  macroParams:
-  - Primarysteps
-  - Secondarysteps
+  paramGroupTable: eval_params
   help: !text
     file: src/operators/field/atmosphereField.md
     name: help
+inputs:
+- !input
+  Localalias: rayDirectionField
+  coordType: !coordT
+    Coordtypevec3: true
+  contextType: !contextT
+    Allcontexttype: true
+  returnType: !returnT
+    Returntypevec4: true

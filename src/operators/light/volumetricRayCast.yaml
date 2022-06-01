@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.light.volumetricRayCast
-  opVersion: '4'
+  opVersion: '5'
   opStatus: beta
 opDef: !def
   enable: true
@@ -15,20 +15,20 @@ opDef: !def
   function: !text
     file: src/operators/light/volumetricRayCast.glsl
     name: function
-  useParams:
-  - Maxsteps
-  - Fixedstep
-  - Stepdivisions
-  - Raymissdist
-  - Skipmissedrays
-  - Level
-  macroParams:
-  - Enablevolumetric
-  - Marchmode
-  - Recalculatelight
-  - Enableshadow
+  paramGroupTable: eval_params
   macroTable: !table
     file: src/operators/light/volumetricRayCast_macros.txt
     name: macro_exprs
     evaluate: true
     evalOpts: !evalOpts {}
+inputs:
+- !input
+  Label: Light Volume
+  Localalias: lightVolume
+  coordType: !coordT
+    Coordtypevec3: true
+  contextType: !contextT
+    Contexttypematerialcontext: true
+  returnType: !returnT
+    Returntypefloat: true
+    Returntypevec4: true

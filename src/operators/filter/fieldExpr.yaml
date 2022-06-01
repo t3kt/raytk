@@ -21,7 +21,18 @@ opDef: !def
       Coordtypevec3: !expr
         expr: parent().par.Coordtype == 'vec3'
     contextType: !contextT
-      Allcontexttype: true
+      Allcontexttype: !expr
+        expr: parent().par.Contexttype == 'auto'
+      Contexttypecontext: !expr
+        expr: parent().par.Contexttype == 'Context'
+      Contexttypematerialcontext: !expr
+        expr: parent().par.Contexttype == 'MaterialContext'
+      Contexttypecameracontext: !expr
+        expr: parent().par.Contexttype == 'CameraContext'
+      Contexttypelightcontext: !expr
+        expr: parent().par.Contexttype == 'LightContext'
+      Contexttyperaycontext: !expr
+        expr: parent().par.Contexttype == 'RayContext'
     returnType: !returnT
       Returntypesdf: !expr
         expr: parent().par.Returntype == 'Sdf'
@@ -44,3 +55,32 @@ opDef: !def
     name: macro_exprs
     evaluate: true
     evalOpts: !evalOpts {}
+inputs:
+- !input
+  coordType: !coordT
+    Allcoordtype: true
+  contextType: !contextT
+    Allcontexttype: true
+  returnType: !returnT
+    Allreturntype: true
+- !input
+  coordType: !coordT
+    Allcoordtype: true
+  contextType: !contextT
+    Allcontexttype: true
+  returnType: !returnT
+    Allreturntype: true
+- !input
+  coordType: !coordT
+    Allcoordtype: true
+  contextType: !contextT
+    Allcontexttype: true
+  returnType: !returnT
+    Allreturntype: true
+- !input
+  coordType: !coordT
+    Allcoordtype: true
+  contextType: !contextT
+    Allcontexttype: true
+  returnType: !returnT
+    Allreturntype: true

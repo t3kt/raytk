@@ -1,0 +1,5 @@
+names	source	handling	readOnlyHandling	conversion	enable
+Axis[xyz] Pivot[xyz] Usepivot	param	runtime	macro		1
+Rotatemode	param	macro			1
+Rotate	param	runtime	macro		parent().par.Rotatemode == 'axis'
+Rot[xyz]	param	runtime	macro		parent().par.Rotatemode == 'euler'

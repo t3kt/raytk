@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.field.hsvColorField
-  opVersion: '5'
+  opVersion: '6'
   opStatus: beta
 opDef: !def
   enable: true
@@ -18,16 +18,49 @@ opDef: !def
       Coordtypevec3: !expr
         expr: parent().par.Coordtype == 'vec3'
     contextType: !contextT
-      Allcontexttype: true
+      Allcontexttype: !expr
+        expr: parent().par.Contexttype == 'auto'
+      Contexttypecontext: !expr
+        expr: parent().par.Contexttype == 'Context'
+      Contexttypematerialcontext: !expr
+        expr: parent().par.Contexttype == 'MaterialContext'
+      Contexttypecameracontext: !expr
+        expr: parent().par.Contexttype == 'CameraContext'
+      Contexttypelightcontext: !expr
+        expr: parent().par.Contexttype == 'LightContext'
+      Contexttyperaycontext: !expr
+        expr: parent().par.Contexttype == 'RayContext'
     returnType: !returnT
       Returntypevec4: true
   function: !text
     file: src/operators/field/hsvColorField.glsl
     name: function
-  useParams:
-  - Hueoffset
-  - Value
-  - Saturation
+  paramGroupTable: eval_params
   help: !text
     file: src/operators/field/hsvColorField.md
     name: help
+inputs:
+- !input
+  Localalias: hueField
+  coordType: !coordT
+    Allcoordtype: true
+  contextType: !contextT
+    Allcontexttype: true
+  returnType: !returnT
+    Returntypefloat: true
+- !input
+  Localalias: saturationField
+  coordType: !coordT
+    Allcoordtype: true
+  contextType: !contextT
+    Allcontexttype: true
+  returnType: !returnT
+    Returntypefloat: true
+- !input
+  Localalias: valueField
+  coordType: !coordT
+    Allcoordtype: true
+  contextType: !contextT
+    Allcontexttype: true
+  returnType: !returnT
+    Returntypefloat: true

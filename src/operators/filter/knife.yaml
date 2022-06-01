@@ -1,43 +1,29 @@
 !rop
 meta: !meta
   opType: raytk.operators.filter.knife
-  opVersion: '8'
+  opVersion: '10'
   opStatus: default
 opDef: !def
   enable: !expr
-    expr: 'op(''..'').par.Enable'
+    expr: op('..').par.Enable
   useRuntimeBypass: true
   typeSpec: !ropTypes
     coordType: !coordT
-      Allcoordtype: false
-      Coordtypefloat: false
       Coordtypevec2: true
       Coordtypevec3: true
     contextType: !contextT
       Allcontexttype: true
-      Contexttypecontext: true
-      Contexttypematerialcontext: false
-      Contexttypecameracontext: false
-      Contexttypelightcontext: false
-      Contexttyperaycontext: false
-      Contexttypeparticlecontext: false
     returnType: !returnT
-      Allreturntype: false
       Returntypesdf: true
       Returntypefloat: true
       Returntypevec4: true
-      Returntyperay: false
-      Returntypelight: false
-      Returntypeparticle: false
   function: !text
     file: src/operators/filter/knife.glsl
     name: function
-  useParams:
-  - Rotateplane[xyz]
-  - Offset
-  - ''
-  macroParams: Side
-  help: help
+  paramGroupTable: eval_params
+  help: !text
+    file: src/operators/filter/knife.md
+    name: help
   keywords:
   - slice
   - crop
@@ -81,23 +67,11 @@ inputs:
 - !input
   Required: true
   coordType: !coordT
-    Allcoordtype: false
-    Coordtypefloat: false
     Coordtypevec2: true
     Coordtypevec3: true
   contextType: !contextT
     Allcontexttype: true
-    Contexttypecontext: true
-    Contexttypematerialcontext: false
-    Contexttypecameracontext: false
-    Contexttypelightcontext: false
-    Contexttyperaycontext: false
-    Contexttypeparticlecontext: false
   returnType: !returnT
-    Allreturntype: false
     Returntypesdf: true
     Returntypefloat: true
     Returntypevec4: true
-    Returntyperay: false
-    Returntypelight: false
-    Returntypeparticle: false

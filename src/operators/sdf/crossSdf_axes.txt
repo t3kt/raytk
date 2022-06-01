@@ -1,5 +1,5 @@
-name	label	swizzle
-xyz	All Axes	xyz
-xy	XY	xyz
-yz	YZ	yzx
-zx	ZX	zxy
+name	label	code
+xyz	All Axes	d = fOpUnionRound(fBox2(p.xy,s.xy),fOpUnionRound(fBox2(p.yz,s.yz),fBox2(p.zx,s.zx),r),r);
+xy	XY	d = max(fOpUnionRound(fBox2(p.yz,s.yz),fBox2(p.zx,s.zx),r),abs(p.z)-s.z);
+yz	YZ	d = max(fOpUnionRound(fBox2(p.zx,s.zx),fBox2(p.xy,s.xy),r),abs(p.x)-s.x);
+zx	ZX	d = max(fOpUnionRound(fBox2(p.xy,s.xy),fBox2(p.yz,s.yz),r),abs(p.y)-s.y);

@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.filter.spread
-  opVersion: '0'
+  opVersion: '1'
   opStatus: alpha
 opDef: !def
   enable: !expr
@@ -21,8 +21,28 @@ opDef: !def
   function: !text
     file: src/operators/filter/spread.glsl
     name: function
-  useParams:
-  - Center[xyz]
-  - Width[xyz]
-  - Blending[xyz]
+  paramGroupTable: eval_params
   paramListTable: switcher_params
+inputs:
+- !input
+  Required: true
+  coordType: !coordT
+    Allcoordtype: true
+  contextType: !contextT
+    Allcontexttype: true
+  returnType: !returnT
+    Allreturntype: true
+elements:
+- !opElement
+  name: codeSwitcher_Spreadaxes
+  elementType: codeSwitcher
+  params:
+    Table: !table
+      file: src/operators/filter/spread_axes.txt
+      name: axes
+    Param: Spreadaxes
+    Autoupdateparams: true
+    Manageparamstates: true
+    Alwaysincludeallparams: false
+    Switchmode: inline
+    Placeholder: ''

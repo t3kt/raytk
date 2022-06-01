@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.combine.layoutGrid
-  opVersion: '9'
+  opVersion: '10'
   opStatus: default
 opDef: !def
   enable: !expr
@@ -30,3 +30,42 @@ opDef: !def
   help: !text
     file: src/operators/combine/layoutGrid.md
     name: help
+multiInput: !multiInput
+  Minimuminputs: 1
+  Coordtypereductionmode: common
+  Coordtypereductionscope: '*'
+  Contexttypereductionmode: none
+  Returntypereductionmode: none
+  inputs:
+  - !input
+    coordType: !coordT
+      Coordtypevec2: true
+      Coordtypevec3: true
+    contextType: !contextT
+      Allcontexttype: true
+    returnType: !returnT
+      Allreturntype: true
+  - !input
+    coordType: !coordT
+      Coordtypevec2: true
+      Coordtypevec3: true
+    contextType: !contextT
+      Allcontexttype: true
+    returnType: !returnT
+      Allreturntype: true
+  - !input
+    coordType: !coordT
+      Coordtypevec2: true
+      Coordtypevec3: true
+    contextType: !contextT
+      Allcontexttype: true
+    returnType: !returnT
+      Allreturntype: true
+  - !input
+    coordType: !coordT
+      Coordtypevec2: true
+      Coordtypevec3: true
+    contextType: !contextT
+      Allcontexttype: true
+    returnType: !returnT
+      Allreturntype: true

@@ -1,13 +1,20 @@
 !rop
 meta: !meta
   opType: raytk.operators.field.constantField
-  opVersion: '16'
+  opVersion: '17'
   opStatus: default
 opDef: !def
   enable: true
   typeSpec: !ropTypes
     coordType: !coordT
-      Allcoordtype: true
+      Allcoordtype: !expr
+        expr: parent().par.Coordtype == 'auto'
+      Coordtypefloat: !expr
+        expr: parent().par.Coordtype == 'float'
+      Coordtypevec2: !expr
+        expr: parent().par.Coordtype == 'vec2'
+      Coordtypevec3: !expr
+        expr: parent().par.Coordtype == 'vec3'
     contextType: !contextT
       Allcontexttype: true
     returnType: !returnT
@@ -18,7 +25,7 @@ opDef: !def
   function: !text
     file: src/operators/field/constantField.glsl
     name: functionTemplate
-  useParams: Value[1-4]
+  paramGroupTable: eval_params
   help: !text
     file: src/operators/field/constantField.md
     name: help

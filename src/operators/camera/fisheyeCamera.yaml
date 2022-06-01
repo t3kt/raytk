@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.camera.fisheyeCamera
-  opVersion: '6'
+  opVersion: '8'
   opStatus: default
 opDef: !def
   enable: true
@@ -14,16 +14,8 @@ opDef: !def
       Returntyperay: true
   function: !text
     file: src/operators/camera/fisheyeCamera.glsl
-    name: functionTemplate
-  useParams:
-  - Campos[xyz]
-  - Camrot[xyz]
-  - Lookatpos[xyz]
-  - Camup[xyz]
-  - Camfov
-  - Aperture
-  angleParams: Camrot[xyz]
-  paramListTable: switcher_params
+    name: function
+  paramGroupTable: eval_params
   help: !text
     file: src/operators/camera/fisheyeCamera.md
     name: help
@@ -35,3 +27,17 @@ opDef: !def
   - equiangular
   - stereographic
   - pinhole
+elements:
+- !opElement
+  name: codeSwitcher_Fisheyemode
+  elementType: codeSwitcher
+  params:
+    Table: !table
+      file: src/operators/camera/fisheyeCamera_modes.txt
+      name: modes
+    Param: Fisheyemode
+    Autoupdateparams: true
+    Manageparamstates: true
+    Alwaysincludeallparams: false
+    Switchmode: auto
+    Placeholder: BODY();

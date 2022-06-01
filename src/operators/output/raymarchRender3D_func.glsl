@@ -44,12 +44,12 @@ Light getLight(vec3 p, LightContext ctx) {
 
 #ifdef THIS_USE_LIMIT_BOX
 bool checkLimit(vec3 p) {
-	return p.x >= THIS_Limitboxminx &&
-		p.x <= THIS_Limitboxmaxx &&
-		p.x >= THIS_Limitboxminy &&
-		p.x <= THIS_Limitboxmaxy &&
-		p.x >= THIS_Limitboxminz &&
-		p.x <= THIS_Limitboxmaxz;
+	return p.x >= THIS_Limitboxmin.x &&
+		p.x <= THIS_Limitboxmax.x &&
+		p.x >= THIS_Limitboxmin.y &&
+		p.x <= THIS_Limitboxmax.y &&
+		p.x >= THIS_Limitboxmin.z &&
+		p.x <= THIS_Limitboxmax.z;
 }
 #else
 #define checkLimit(p) (true)

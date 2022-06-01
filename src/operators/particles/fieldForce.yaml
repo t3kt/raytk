@@ -18,3 +18,12 @@ opDef: !def
   useParams:
   - Active
   - Amount
+inputs:
+- !input
+  Localalias: forceField
+  coordType: !coordT
+    Allcoordtype: true
+  contextType: !contextT
+    Contexttypeparticlecontext: true
+  returnType: !returnT
+    Returntypevec4: true

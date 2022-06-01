@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.material.specularContrib
-  opVersion: '14'
+  opVersion: '18'
   opStatus: default
 opDef: !def
   enable: true
@@ -17,16 +17,8 @@ opDef: !def
         expr: parent().par.Usecolor
   function: !text
     file: src/operators/material/specularContrib.glsl
-    name: functionTemplate
-  useParams:
-  - Color[rgb]
-  - Level
-  macroParams:
-  - Uselightcolor
-  - Usesurfacecolor
-  - Enableshadow
-  paramListTable: !expr
-    expr: op('switcher_params')
+    name: function
+  paramGroupTable: eval_params
   libraryNames: !expr
     expr: op('specularContrib_lib')
   macroTable: !table
@@ -46,3 +38,50 @@ opDef: !def
   - shading
   - modularmat
   shortcuts: sc
+inputs:
+- !input
+  Localalias: shininessField
+  coordType: !coordT
+    Allcoordtype: true
+  contextType: !contextT
+    Contexttypematerialcontext: true
+  returnType: !returnT
+    Returntypefloat: true
+- !input
+  Localalias: roughnessField
+  coordType: !coordT
+    Allcoordtype: true
+  contextType: !contextT
+    Contexttypematerialcontext: true
+  returnType: !returnT
+    Returntypefloat: true
+- !input
+  Localalias: fresnelField
+  coordType: !coordT
+    Allcoordtype: true
+  contextType: !contextT
+    Contexttypematerialcontext: true
+  returnType: !returnT
+    Returntypefloat: true
+- !input
+  Localalias: colorField
+  coordType: !coordT
+    Allcoordtype: true
+  contextType: !contextT
+    Contexttypematerialcontext: true
+  returnType: !returnT
+    Returntypevec4: true
+elements:
+- !opElement
+  name: codeSwitcher_Operation
+  elementType: codeSwitcher
+  params:
+    Table: !table
+      file: src/operators/material/specularContrib_methods.txt
+      name: methods
+    Param: Method
+    Autoupdateparams: true
+    Manageparamstates: true
+    Alwaysincludeallparams: true
+    Switchmode: auto
+    Placeholder: BODY();

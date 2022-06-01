@@ -1,0 +1,104 @@
+!rop
+meta: !meta
+  opType: raytk.operators.custom.customOp
+  opVersion: '12'
+  opStatus: beta
+opDef: !def
+  enable: !expr
+    expr: op('..').par.Enable
+  paramsOp: !expr
+    expr: parent().par.Paramsop or ''
+  typeSpec: !ropTypes
+    Useinputcoordtype: !expr
+      expr: parent().par.Useinputcoordtype
+    Useinputcontexttype: !expr
+      expr: parent().par.Useinputcontexttype
+    Useinputreturntype: !expr
+      expr: parent().par.Useinputreturntype
+    coordType: !coordT
+      Allcoordtype: !expr
+        expr: parent().par.Coordtype == 'auto'
+      Coordtypefloat: !expr
+        expr: parent().par.Coordtype == 'float'
+      Coordtypevec2: !expr
+        expr: parent().par.Coordtype == 'vec2'
+      Coordtypevec3: !expr
+        expr: parent().par.Coordtype == 'vec3'
+    contextType: !contextT
+      Allcontexttype: !expr
+        expr: parent().par.Contexttype == 'auto'
+      Contexttypecontext: !expr
+        expr: parent().par.Contexttype == 'Context'
+      Contexttypematerialcontext: !expr
+        expr: parent().par.Contexttype == 'MaterialContext'
+      Contexttypecameracontext: !expr
+        expr: parent().par.Contexttype == 'CameraContext'
+      Contexttypelightcontext: !expr
+        expr: parent().par.Contexttype == 'LightContext'
+      Contexttyperaycontext: !expr
+        expr: parent().par.Contexttype == 'RayContext'
+    returnType: !returnT
+      Returntypesdf: !expr
+        expr: parent().par.Returntype == 'Sdf'
+      Returntypefloat: !expr
+        expr: parent().par.Returntype == 'float'
+      Returntypevec4: !expr
+        expr: parent().par.Returntype == 'vec4'
+      Returntyperay: !expr
+        expr: parent().par.Returntype == 'Ray'
+      Returntypelight: !expr
+        expr: parent().par.Returntype == 'Light'
+  opGlobals: !expr
+    expr: parent().par.Opglobals or ''
+  init: !expr
+    expr: parent().par.Initcode or ''
+  stageInit: !expr
+    expr: parent().par.Stageinitcode or ''
+  function: function
+  material: !expr
+    expr: parent().par.Materialcode or ''
+  callbacks: !text
+    file: src/operators/custom/customOp_callbacks.py
+    name: callbacks
+  useParams: !expr
+    expr: op('param_names')[0,0] or ''
+  libraryNames: !expr
+    expr: parent().par.Librarynames
+  bufferTable: !expr
+    expr: parent().par.Buffertable or ''
+  textureTable: !expr
+    expr: parent().par.Texturetable or ''
+  macroTable: !expr
+    expr: parent().par.Macrotable or ''
+  help: !text
+    file: src/operators/custom/customOp.md
+    name: help
+inputs:
+- !input
+  coordType: !coordT
+    Allcoordtype: true
+  contextType: !contextT
+    Allcontexttype: true
+  returnType: !returnT
+    Allreturntype: true
+- !input
+  coordType: !coordT
+    Allcoordtype: true
+  contextType: !contextT
+    Allcontexttype: true
+  returnType: !returnT
+    Allreturntype: true
+- !input
+  coordType: !coordT
+    Allcoordtype: true
+  contextType: !contextT
+    Allcontexttype: true
+  returnType: !returnT
+    Allreturntype: true
+- !input
+  coordType: !coordT
+    Allcoordtype: true
+  contextType: !contextT
+    Allcontexttype: true
+  returnType: !returnT
+    Allreturntype: true

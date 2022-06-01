@@ -2,6 +2,6 @@
   "meta": {
     "opStatus": "default",
     "opType": "raytk.operators.field.noiseField",
-    "opVersion": 16
+    "opVersion": 18
   }
 }

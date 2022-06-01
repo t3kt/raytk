@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.sdf.boxFrameSdf
-  opVersion: '14'
+  opVersion: '15'
   opStatus: default
 opDef: !def
   enable: true
@@ -15,11 +15,6 @@ opDef: !def
   function: !text
     file: src/operators/sdf/boxFrameSdf.glsl
     name: functionTemplate
-  useParams:
-  - Translate[xyz]
-  - Scale[xyz]
-  - Thickness
-  macroParams: Uvmode
   help: !text
     file: src/operators/sdf/boxFrameSdf.md
     name: help
@@ -30,3 +25,21 @@ opDef: !def
   - rectangle
   - square
   shortcuts: bfs
+inputs:
+- !input
+  Localalias: scaleField
+  coordType: !coordT
+    Coordtypevec3: true
+  contextType: !contextT
+    Allcontexttype: true
+  returnType: !returnT
+    Returntypefloat: true
+    Returntypevec4: true
+- !input
+  Localalias: thicknessField
+  coordType: !coordT
+    Coordtypevec3: true
+  contextType: !contextT
+    Allcontexttype: true
+  returnType: !returnT
+    Returntypefloat: true

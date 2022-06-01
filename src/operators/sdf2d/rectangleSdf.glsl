@@ -11,7 +11,16 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 	vec2 d = abs(p)-s;
 	ReturnT res = createSdf(length(max(d,0.0)) + min(max(d.x,d.y),0.0));
 	#pragma r:if RAYTK_USE_UV
-	assignUV(res, vec3(map01(p, -s/2., s/2.), 0.));
+	vec3 uv;
+	#pragma r:if THIS_Uvmode_normxy
+	uv = vec3(map01(p, -s/2., s/2.), 0.);
+	#pragma r:elif THIS_Uvmode_outerxy
+	vec2 s1 = vec2(max(s.x, s.y)) / 2.;
+	uv = vec3(map01(p, -s1, s1), 0.);
+	#pragma r:elif THIS_Uvmode_wrapedge
+
+	#pragma r:endif
+	assignUV(res, uv);
 	#pragma r:endif
 	return res;
 }

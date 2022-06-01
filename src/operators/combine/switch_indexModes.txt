@@ -1,0 +1,4 @@
+name	label	code
+zeroindex	Index (0 .. N-1)	
+oneindex	Index (1 .. N)	source -= 1.;
+norm	Normalized (0 .. 1)	source *= (n - 1);

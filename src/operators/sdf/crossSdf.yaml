@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.sdf.crossSdf
-  opVersion: '8'
+  opVersion: '10'
   opStatus: default
 opDef: !def
   enable: true
@@ -15,16 +15,39 @@ opDef: !def
   function: !text
     file: src/operators/sdf/crossSdf.glsl
     name: functionTemplate
-  useParams:
-  - Translate[xyz]
-  - Size[xyz]
-  - Smoothradius
-  macroParams: Axes
-  macroTable: !table
-    file: src/operators/sdf/crossSdf_macros.txt
-    name: macro_exprs
-    evaluate: true
-    evalOpts: !evalOpts {}
+  paramGroupTable: eval_params
   help: !text
     file: src/operators/sdf/crossSdf.md
     name: help
+inputs:
+- !input
+  Localalias: sizeField
+  coordType: !coordT
+    Coordtypevec3: true
+  contextType: !contextT
+    Allcontexttype: true
+  returnType: !returnT
+    Returntypefloat: true
+    Returntypevec4: true
+- !input
+  Localalias: smoothRadiusField
+  coordType: !coordT
+    Coordtypevec3: true
+  contextType: !contextT
+    Allcontexttype: true
+  returnType: !returnT
+    Returntypefloat: true
+elements:
+- !opElement
+  name: codeSwitcher_Axes
+  elementType: codeSwitcher
+  params:
+    Table: !table
+      file: src/operators/sdf/crossSdf_axes.txt
+      name: axes
+    Param: Axes
+    Autoupdateparams: true
+    Manageparamstates: false
+    Alwaysincludeallparams: false
+    Switchmode: auto
+    Placeholder: BODY();

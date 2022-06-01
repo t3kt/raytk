@@ -15,8 +15,11 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 	#endif
 	p.x = abs(p.x);
 	float l = length(p) - r.x;
-	float m = length(p-c*clamp(dot(p,c),0.0,r.x));
-	float d = max(l,m*sign(c.y*p.x-c.x*p.y));
+	float m;
+	m = length(p-c*clamp(dot(p,c),0.0,r.x));
+	float d;
+//	float m = length(p-c*dot(p,c));
+//	float d = m*sign(c.y*p.x-c.x*p.y);
 	BODY();
 	return createSdf(d);
 }

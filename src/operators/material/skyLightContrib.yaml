@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.material.skyLightContrib
-  opVersion: '7'
+  opVersion: '8'
   opStatus: default
 opDef: !def
   enable: true
@@ -18,10 +18,7 @@ opDef: !def
   function: !text
     file: src/operators/material/skyLightContrib.glsl
     name: function
-  useParams:
-  - Color[rgb]
-  - Dir[xyz]
-  - Level
+  paramGroupTable: eval_params
   help: !text
     file: src/operators/material/skyLightContrib.md
     name: help

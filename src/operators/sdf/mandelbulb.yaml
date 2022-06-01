@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.sdf.mandelbulbSdf
-  opVersion: '8'
+  opVersion: '9'
   opStatus: default
 opDef: !def
   enable: true
@@ -15,15 +15,7 @@ opDef: !def
   function: !text
     file: src/operators/sdf/mandelbulbSdf.glsl
     name: functionTemplate
-  useParams:
-  - Translate[xyz]
-  - Power
-  - Thetashift
-  - Phishift
-  angleParams:
-  - Thetashift
-  - Phishift
-  macroParams: Iterations
+  paramGroupTable: eval_params
   variableTable: !table
     file: src/operators/sdf/mandelbulb_variables.txt
     name: variable_exprs
@@ -37,3 +29,13 @@ opDef: !def
   - fractal
   - mandelbulb
   - mandelbrot
+inputs:
+- !input
+  Localalias: shiftField
+  coordType: !coordT
+    Coordtypevec3: true
+  contextType: !contextT
+    Allcontexttype: true
+  returnType: !returnT
+    Returntypefloat: true
+    Returntypevec4: true

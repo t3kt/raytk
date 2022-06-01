@@ -2,6 +2,6 @@
   "meta": {
     "opStatus": "beta",
     "opType": "raytk.operators.sdf.cutSphereSdf",
-    "opVersion": 0
+    "opVersion": 2
   }
 }

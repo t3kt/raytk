@@ -55,6 +55,8 @@ op:
       name: slice
     - label: Ring
       name: ring
+    - label: Infinite
+      name: infinite
     name: Shape
   - label: Inner Radius
     name: Innerradius

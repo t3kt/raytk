@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.filter.mirrorQuadrant
-  opVersion: '6'
+  opVersion: '8'
   opStatus: default
 opDef: !def
   enable: !expr
@@ -14,16 +14,13 @@ opDef: !def
     contextType: !contextT
       Allcontexttype: true
     returnType: !returnT
-      Allreturntype: true
+      Allreturntype: !expr
+        expr: op('definition_1').numRows > 1
+      Returntypevec4: true
   function: !text
     file: src/operators/filter/mirrorQuadrant.glsl
     name: function
-  useParams:
-  - Size[1-2]
-  - Offset[1-2]
-  - Rotateaxis
-  angleParams: Rotateaxis
-  macroParams: Iterationtype
+  paramGroupTable: eval_params
   variableTable: !table
     file: src/operators/filter/mirrorQuadrant_variables.txt
     name: variable_exprs
@@ -34,3 +31,33 @@ opDef: !def
   help: !text
     file: src/operators/filter/mirrorQuadrant.md
     name: help
+inputs:
+- !input
+  coordType: !coordT
+    Coordtypevec2: true
+    Coordtypevec3: true
+  contextType: !contextT
+    Allcontexttype: true
+  returnType: !returnT
+    Allreturntype: true
+- !input
+  Localalias: rotateField
+  coordType: !coordT
+    Coordtypefloat: true
+    Coordtypevec2: true
+    Coordtypevec3: true
+  contextType: !contextT
+    Allcontexttype: true
+  returnType: !returnT
+    Returntypesdf: true
+    Returntypefloat: true
+- !input
+  Localalias: offsetField
+  coordType: !coordT
+    Coordtypefloat: true
+    Coordtypevec3: true
+  contextType: !contextT
+    Allcontexttype: true
+  returnType: !returnT
+    Returntypefloat: true
+    Returntypevec4: true

@@ -1,0 +1,6 @@
+names	source	handling	readOnlyHandling	conversion	enable
+Indexrange[1-2]	param	runtime	macro		1
+Translate1[xyz] Translate2[xyz]	param	runtime	macro		parent().par.Enabletranslate
+Rotate1[xyz] Rotate2[xyz]	param	runtime	macro	angle	parent().par.Enablerotate
+Pivot1[xyz] Pivot2[xyz]	param	runtime	macro		parent().par.Enablerotate and parent().par.Usepivot
+Extendmode Enabletranslate Enablerotate Usepivot	param	macro			1

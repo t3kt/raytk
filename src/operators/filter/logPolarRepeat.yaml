@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.filter.logPolarRepeat
-  opVersion: '3'
+  opVersion: '5'
   opStatus: beta
 opDef: !def
   enable: !expr
@@ -16,16 +16,8 @@ opDef: !def
       Allreturntype: true
   function: !text
     file: src/operators/filter/logPolarRepeat.glsl
-    name: functionTemplate
-  useParams:
-  - Rhooffset
-  - Thetaoffset
-  - Radialreps
-  - Distspacing
-  macroParams:
-  - Mirrortype
-  - Iterationtype
-  paramListTable: switcher_params
+    name: function
+  paramGroupTable: eval_params
   variableTable: !table
     file: src/operators/filter/logPolarRepeat_variables.txt
     name: variable_exprs
@@ -40,3 +32,29 @@ opDef: !def
   - repeat
   - modulo
   - spiral
+inputs:
+- !input
+  Required: true
+  coordType: !coordT
+    Coordtypevec2: !expr
+      expr: '''vec2'' in str(op(''switcher_info'')[1, ''coordType''] or '''')'
+    Coordtypevec3: !expr
+      expr: '''vec3'' in str(op(''switcher_info'')[1, ''coordType''] or '''')'
+  contextType: !contextT
+    Allcontexttype: true
+  returnType: !returnT
+    Allreturntype: true
+elements:
+- !opElement
+  name: codeSwitcher_Mode
+  elementType: codeSwitcher
+  params:
+    Table: !table
+      file: src/operators/filter/logPolarRepeat_modes.txt
+      name: modes
+    Param: Mode
+    Autoupdateparams: true
+    Manageparamstates: false
+    Alwaysincludeallparams: false
+    Switchmode: inline
+    Placeholder: BODY();

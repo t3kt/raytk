@@ -1,5 +1,5 @@
 void THIS_apply(inout CoordT p, inout ContextT ctx) {
-	vec2 q = p.THIS_PLANE;
+	vec2 q = getAxisPlane(p, int(THIS_Axis));
 	vec2 size = THIS_Size;
 	#pragma r:if THIS_HAS_INPUT_sizeField
 	{
@@ -74,7 +74,7 @@ void THIS_apply(inout CoordT p, inout ContextT ctx) {
 		o += fillToVec2(inputOp_offsetField(q1, ctx));
 	}
 	#pragma r:endif
-	p.THIS_PLANE = q - o;
+	setAxisPlane(p, int(THIS_Axis), q - o);
 }
 
 ReturnT thismap(CoordT p, ContextT ctx) {

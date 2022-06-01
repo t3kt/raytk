@@ -18,3 +18,11 @@ opDef: !def
   useParams:
   - Drag
   - Active
+inputs:
+- !input
+  coordType: !coordT
+    Allcoordtype: true
+  contextType: !contextT
+    Contexttypeparticlecontext: true
+  returnType: !returnT
+    Returntypeparticle: true

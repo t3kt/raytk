@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.filter.assignColor
-  opVersion: '11'
+  opVersion: '13'
   opStatus: default
 opDef: !def
   enable: !expr
@@ -17,12 +17,18 @@ opDef: !def
   function: !text
     file: src/operators/filter/assignColor.glsl
     name: function
-  useParams: Color[rgb]
+  paramGroupTable: eval_params
   macroTable: !table
     file: src/operators/filter/assignColor_macros.txt
     name: macro_exprs
     evaluate: true
     evalOpts: !evalOpts {}
+  variableTable: !table
+    file: src/operators/filter/assignColor_variables.txt
+    name: variable_exprs
+    evaluate: true
+    evalOpts: !evalOpts
+      excludeFirstRow: true
   help: !text
     file: src/operators/filter/assignColor.md
     name: help
@@ -32,3 +38,22 @@ opDef: !def
   - material
   - modularmat
   shortcuts: ac
+inputs:
+- !input
+  Required: true
+  coordType: !coordT
+    Allcoordtype: true
+  contextType: !contextT
+    Allcontexttype: true
+  returnType: !returnT
+    Returntypesdf: true
+    Returntypeparticle: true
+- !input
+  Localalias: colorField
+  coordType: !coordT
+    Allcoordtype: true
+  contextType: !contextT
+    Allcontexttype: true
+  returnType: !returnT
+    Returntypefloat: true
+    Returntypevec4: true

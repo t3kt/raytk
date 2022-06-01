@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.pattern.hexagonalTruchetPattern
-  opVersion: '4'
+  opVersion: '6'
   opStatus: default
 opDef: !def
   enable: true
@@ -17,9 +17,29 @@ opDef: !def
         expr: op('switcher_info')[1, 'returnType'] == 'vec4'
   function: !text
     file: src/operators/pattern/hexagonalTruchetPattern.glsl
-    name: functionTemplate
-  useParams:
-  - Translate[xy]
-  - Size
-  - Seed
-  paramListTable: switcher_params
+    name: function
+  paramGroupTable: eval_params
+inputs:
+- !input
+  Localalias: coordField
+  coordType: !coordT
+    Coordtypevec2: true
+    Coordtypevec3: true
+  contextType: !contextT
+    Allcontexttype: true
+  returnType: !returnT
+    Returntypevec4: true
+elements:
+- !opElement
+  name: codeSwitcher_Pattern
+  elementType: codeSwitcher
+  params:
+    Table: !table
+      file: src/operators/pattern/hexagonalTruchetPattern_patterns.txt
+      name: patterns
+    Param: Pattern
+    Autoupdateparams: true
+    Manageparamstates: true
+    Alwaysincludeallparams: false
+    Switchmode: inline
+    Placeholder: BODY();

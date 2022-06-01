@@ -24,6 +24,19 @@ op:
     name: radiusField
     returnTypes:
     - float
+  - contextTypes:
+    - Context
+    - MaterialContext
+    - CameraContext
+    - LightContext
+    - RayContext
+    - ParticleContext
+    coordTypes:
+    - vec3
+    label: Begin End Field
+    name: beginEndField
+    returnTypes:
+    - vec4
   keywords:
   - dodecahedron
   - icosahedron

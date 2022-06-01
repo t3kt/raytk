@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.sdf.planeSdf
-  opVersion: '12'
+  opVersion: '13'
   opStatus: default
 opDef: !def
   enable: true
@@ -15,10 +15,7 @@ opDef: !def
   function: !text
     file: src/operators/sdf/planeSdf.glsl
     name: functionTemplate
-  useParams:
-  - Offset
-  - Flip
-  - Axis
+  paramGroupTable: eval_params
   help: !text
     file: src/operators/sdf/planeSdf.md
     name: help
@@ -26,3 +23,13 @@ opDef: !def
   - plane
   - sheet
   - floor
+inputs:
+- !input
+  Localalias: offsetField
+  coordType: !coordT
+    Coordtypevec2: true
+    Coordtypevec3: true
+  contextType: !contextT
+    Allcontexttype: true
+  returnType: !returnT
+    Returntypefloat: true

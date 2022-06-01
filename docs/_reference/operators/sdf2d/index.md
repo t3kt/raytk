@@ -44,6 +44,8 @@ cat:
   - name: horseshoeSdf2d
   - name: jointSdf2d
     status: beta
+  - name: kochSnowflakeSdf2d
+    status: beta
   - name: lineSegmentSdf2d
     summary: 2D line segment SDF.
   - name: moonSdf2d

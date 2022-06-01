@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.sdf2d.starSdf2d
-  opVersion: '7'
+  opVersion: '8'
   opStatus: default
 opDef: !def
   enable: true
@@ -15,11 +15,7 @@ opDef: !def
   function: !text
     file: src/operators/sdf2d/starSdf2d.glsl
     name: functionTemplate
-  useParams:
-  - Radius
-  - Points
-  - Tightness
-  macroParams: Uvmode
+  paramGroupTable: eval_params
   variableTable: !table
     file: src/operators/sdf2d/starSdf2d_variables.txt
     name: variable_exprs
@@ -29,3 +25,28 @@ opDef: !def
   help: !text
     file: src/operators/sdf2d/starSdf2d.md
     name: help
+inputs:
+- !input
+  Localalias: radiusField
+  coordType: !coordT
+    Coordtypevec2: true
+  contextType: !contextT
+    Allcontexttype: true
+  returnType: !returnT
+    Returntypefloat: true
+- !input
+  Localalias: tightnessField
+  coordType: !coordT
+    Coordtypevec2: true
+  contextType: !contextT
+    Allcontexttype: true
+  returnType: !returnT
+    Returntypefloat: true
+- !input
+  Localalias: pointsField
+  coordType: !coordT
+    Coordtypevec2: true
+  contextType: !contextT
+    Allcontexttype: true
+  returnType: !returnT
+    Returntypefloat: true

@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.sdf.latticeSdf
-  opVersion: '1'
+  opVersion: '2'
   opStatus: beta
 opDef: !def
   enable: true
@@ -15,10 +15,6 @@ opDef: !def
   function: !text
     file: src/operators/sdf/latticeSdf.glsl
     name: function
-  useParams:
-  - Shape
-  - Thickness
-  - Spacing
-  - Blendradius
+  paramGroupTable: eval_params
   libraryNames: !expr
     expr: '[op(''latticeSdf_lib''), ''raytkCombine'']'

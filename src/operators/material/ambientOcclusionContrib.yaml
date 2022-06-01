@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.material.ambientOcclusionContrib
-  opVersion: '0'
+  opVersion: '1'
   opStatus: alpha
 opDef: !def
   enable: !expr
@@ -16,7 +16,4 @@ opDef: !def
   function: !text
     file: src/operators/material/ambientOcclusionContrib.glsl
     name: function
-  useParams:
-  - Steps
-  - Occ
-  - Sca
+  paramGroupTable: eval_params

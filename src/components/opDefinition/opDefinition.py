@@ -1,3 +1,4 @@
+import math
 import re
 
 # noinspection PyUnreachableCode
@@ -144,7 +145,7 @@ def _getParamsOp() -> 'Optional[COMP]':
 
 # Builds the primary table from which all other parameter tables are built.
 # This table contains regular parameters and special parameters, with both runtime and macro handling.
-def buildParamSpecTable(dat: 'scriptDAT', paramListTable: 'DAT'):
+def buildParamSpecTable(dat: 'scriptDAT', paramListTable: 'DAT', paramGroupTable: 'DAT'):
 	dat.clear()
 	dat.appendRow([
 		'localName',
@@ -160,7 +161,10 @@ def buildParamSpecTable(dat: 'scriptDAT', paramListTable: 'DAT'):
 	])
 	globalPrefix = parentPar().Name.eval() + '_'
 
-	def addPar(p: 'Par', handling: str):
+	def addPar(p: 'Par', handling: str, skipExisting=False, conversion=''):
+		if skipExisting and dat[p.name, 0] is not None:
+			# skip params that are already loaded
+			return
 		dat.appendRow([
 			p.name,
 			globalPrefix + p.name,
@@ -171,12 +175,20 @@ def buildParamSpecTable(dat: 'scriptDAT', paramListTable: 'DAT'):
 			p.vecIndex,
 			'',
 			handling,
-			'',
+			conversion,
 		])
 
+	def addSpecialPar(name: str):
+		dat.appendRow([
+			name,
+			globalPrefix + name,
+			'special', 'Float', '', '', '0', '', 'runtime', '',
+		])
 
-	def getNamesFromListTable(category: str):
-		rowCells = paramListTable.row(category)
+	def getNamesFromListTable(table: 'DAT', category: str):
+		if not table:
+			return []
+		rowCells = table.row(category)
 		if not rowCells:
 			return []
 		names = []
@@ -186,37 +198,63 @@ def buildParamSpecTable(dat: 'scriptDAT', paramListTable: 'DAT'):
 					names.append(n)
 		return names
 
-	# Add regular params from Paramlisttable
-	for par in _getRegularParams(getNamesFromListTable('params')):
-		addPar(par, handling='runtime')
-	# Add macro params from Paramlisttable
-	for par in _getRegularParams(getNamesFromListTable('macroParams')):
-		addPar(par, handling='macro')
+	def addFromListTable(table: 'DAT', skipExisting=False):
+		# Add regular params from Paramlisttable
+		for par in _getRegularParams(getNamesFromListTable(table, 'params')):
+			addPar(par, handling='runtime', skipExisting=skipExisting)
+		# Add macro params from Paramlisttable
+		for par in _getRegularParams(getNamesFromListTable(table, 'macroParams')):
+			addPar(par, handling='macro', skipExisting=skipExisting)
+
+		# Add special params from opDefinition Specialparams par
+		specialNames = getNamesFromListTable(table, 'specialParams')
+		for name in specialNames:
+			addSpecialPar(name)
+
+		# Update conversions from opDefinition Angleparams par
+		for par in _getRegularParams(getNamesFromListTable(table, 'angleParams')):
+			cell = dat[par.name, 'conversion']
+			if cell is not None:
+				cell.val = 'angle'
+
+	addFromListTable(paramListTable)
+
+	for t in _getOpElementTable().col('paramListTable')[1:]:
+		addFromListTable(op(t), skipExisting=True)
+
+	def addFromGroupTable(table: 'DAT'):
+		if not table:
+			return
+		for row in range(1, table.numRows):
+			if table[row, 'enable'] in ('0', 'False'):
+				continue
+			source = table[row, 'source'] or 'param'
+			if source == 'special':
+				for name in tdu.expand(table[row, 'names'].val):
+					addSpecialPar(name)
+			else:  # if source == 'param':
+				for par in _getRegularParams([table[row, 'names'].val]):
+					handling = table[row, 'handling']
+					if par.readOnly:
+						handling = table[row, 'readOnlyHandling'] or handling
+					addPar(par, handling=handling.val, skipExisting=False, conversion=table[row, 'conversion'].val)
+
+	addFromGroupTable(paramGroupTable)
+	for path in _getOpElementTable().col('paramGroupTable')[1:]:
+		addFromGroupTable(op(path))
 
 	# Add runtime bypass
 	if parentPar().Useruntimebypass:
-		addPar(parentPar().Enable, handling='runtime')
-
-	# Add special params from opDefinition Specialparams par
-	specialNames = getNamesFromListTable('specialParams')
-	for name in specialNames:
-		dat.appendRow([
-			name,
-			globalPrefix + name,
-			'special', 'Float', '', '', '0', '', 'runtime', '',
-			])
-
-	# Update conversions from opDefinition Angleparams par
-	for par in _getRegularParams(getNamesFromListTable('angleParams')):
-		cell = dat[par.name, 'conversion']
-		if cell is not None:
-			cell.val = 'angle'
+		addPar(parentPar().Enable, handling='runtime', skipExisting=True)
 
 	# Update param statuses based on tuplets
 	_fillParamStatuses(dat)
 
 	# Group special parameters into tuplets
 	_groupSpecialParamsIntoTuplets(dat)
+
+def _getOpElementTable() -> 'DAT':
+	return op('opElements')
 
 def _fillParamStatuses(dat: 'DAT'):
 	parsByTuplet = {}  # type: Dict[str, List[Par]]
@@ -289,7 +327,12 @@ def buildParamTable(dat: 'DAT', paramSpecTable: 'DAT'):
 # Builds a table of parameters organized into tuplets.
 def buildParamDetailTable(dat: 'DAT', paramSpecTable: 'DAT'):
 	dat.clear()
-	dat.appendRow(['tuplet', 'source', 'size', 'part1', 'part2', 'part3', 'part4', 'status', 'conversion', 'localNames'])
+	dat.appendRow([
+		'tuplet', 'tupletLocalName',
+		'source', 'size',
+		'part1', 'part2', 'part3', 'part4',
+		'status', 'conversion', 'localNames', 'handling',
+	])
 	namesByTupletName = {}  # type: Dict[str, List[str]]
 	for i in range(1, paramSpecTable.numRows):
 		tupletName = paramSpecTable[i, 'tupletName'].val
@@ -301,8 +344,6 @@ def buildParamDetailTable(dat: 'DAT', paramSpecTable: 'DAT'):
 		namesByTupletName[tupletName][vecIndex] = paramSpecTable[i, 'localName'].val
 
 	for tupletName, parts in namesByTupletName.items():
-		if paramSpecTable[parts[0], 'handling'] != 'runtime':
-			continue
 		size = 0
 		for part in parts:
 			if part:
@@ -311,6 +352,7 @@ def buildParamDetailTable(dat: 'DAT', paramSpecTable: 'DAT'):
 				break
 		dat.appendRow([
 			paramSpecTable[parts[0], 'tupletGlobalName'],
+			paramSpecTable[parts[0], 'tupletName'],
 			paramSpecTable[parts[0], 'source'],
 			size,
 			paramSpecTable[parts[0], 'globalName'] or '',
@@ -320,6 +362,7 @@ def buildParamDetailTable(dat: 'DAT', paramSpecTable: 'DAT'):
 			paramSpecTable[parts[0], 'status'],
 			paramSpecTable[parts[0], 'conversion'],
 			' '.join(p for p in parts if p),
+			paramSpecTable[parts[0], 'handling'],
 		])
 
 
@@ -378,8 +421,22 @@ def prepareCode(dat: 'DAT'):
 		return
 	dat.clear()
 	text = dat.inputs[0].text
+	text = _replaceElementPlaceholders(text)
 	text = _typePattern.sub(_typeRepl, text)
 	dat.write(text)
+
+def _replaceElementPlaceholders(text: str):
+	elementTable = _getOpElementTable()
+	for phCol in elementTable.cells(0, 'placeholder*'):
+		i = tdu.digits(phCol.val)
+		for row in range(1, elementTable.numRows):
+			placeholder = elementTable[row, phCol].val
+			if not placeholder or placeholder not in text:
+				continue
+			codeDat = op(elementTable[row, f'code{i}'])
+			code = codeDat.text if codeDat else ''
+			text = text.replace(placeholder, code)
+	return text
 
 def updateLibraryMenuPar(libsComp: 'COMP'):
 	p = parentPar().Librarynames  # type: Par
@@ -394,7 +451,7 @@ def _getHasInputMacroName(inputAlias: str):
 			return f'THIS_HAS_INPUT_{i}'
 	return f'THIS_HAS_INPUT_{inputAlias}'
 
-def prepareMacroTable(dat: 'scriptDAT', inputTable: 'DAT', paramSpecTable: 'DAT'):
+def prepareMacroTable(dat: 'scriptDAT', inputTable: 'DAT', paramSpecTable: 'DAT', paramTupletTable: 'DAT'=None):
 	dat.clear()
 	for cell in inputTable.col('inputFunc')[1:]:
 		if not cell.val:
@@ -406,15 +463,24 @@ def prepareMacroTable(dat: 'scriptDAT', inputTable: 'DAT', paramSpecTable: 'DAT'
 		])
 	macroParams = []
 	host = _getParamsOp()
+	angleParamNames = []
 	for i in range(1, paramSpecTable.numRows):
 		if paramSpecTable[i, 'handling'] != 'macro':
 			continue
 		par = host.par[paramSpecTable[i, 'localName']]
-		if par is not None:
-			macroParams.append(par)
+		if par is None:
+			continue
+		macroParams.append(par)
+		if paramSpecTable[i, 'conversion'] == 'angle':
+			angleParamNames.append(par.name)
+
+	macroParamVals = {}
 	for par in macroParams:
 		name = par.name
 		val = par.eval()
+		if name in angleParamNames:
+			val = math.radians(val)
+		macroParamVals[name] = val
 		style = par.style
 		if style in ('Menu', 'Str', 'StrMenu'):
 			dat.appendRow(['', f'THIS_{name}_{val}', ''])
@@ -424,7 +490,23 @@ def prepareMacroTable(dat: 'scriptDAT', inputTable: 'DAT', paramSpecTable: 'DAT'
 				dat.appendRow(['', f'THIS_{name}', '1'])
 		else:
 			dat.appendRow(['', f'THIS_{name}', val])
-	for table in [op(parentPar().Macrotable)] + parentPar().Generatedmacrotables.evalOPs():
+	for i in range(1, paramTupletTable.numRows):
+		if paramTupletTable[i, 'handling'] != 'macro':
+			continue
+		size = int(paramTupletTable[i, 'size'])
+		if size < 2:
+			continue
+		tuplet = paramTupletTable[i, 'tupletLocalName']
+		parts = [
+			repr(macroParamVals[p])
+			for p in paramTupletTable[i, 'localNames'].val.split(' ')
+		]
+		partsJoined = ','.join(parts)
+		dat.appendRow(['', f'THIS_{tuplet}', f'vec{size}({partsJoined})'])
+	tables = [op(parentPar().Macrotable)] + parentPar().Generatedmacrotables.evalOPs() + [
+		op(c) for c in _getOpElementTable().col('macroTable')[1:]
+	]
+	for table in tables:
 		if not table or table.numCols == 0 or table.numRows == 0:
 			continue
 		elif table.numCols == 3:
@@ -570,6 +652,23 @@ def _prepareReferences(
 				dataType,
 				hostName,
 			])
+
+def prepareDispatchTable(dat: 'scriptDAT'):
+	dat.clear()
+	dat.appendRow(['name', 'category', 'code'])
+	table = parentPar().Dispatchtable.eval()
+	if not table or table.numRows < 2:
+		return
+	namePrefix = parentPar().Name.eval() + '_'
+	for i in range(1, table.numRows):
+		name = table[i, 'name']
+		if not name or table[i, 'enable'] in ('0', 'False'):
+			continue
+		dat.appendRow([
+			namePrefix + name.val,
+			table[i, 'category'],
+			table[i, 'code'],
+		])
 
 def _isMaster():
 	host = _host()

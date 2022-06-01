@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.sdf.geodesicSdf
-  opVersion: '11'
+  opVersion: '13'
   opStatus: default
 opDef: !def
   enable: !expr
@@ -19,17 +19,7 @@ opDef: !def
   function: !text
     file: src/operators/sdf/geodesicSdf.glsl
     name: functionTemplate
-  useParams:
-  - Divisions
-  - Faceoffset
-  - Spikelength
-  - Spikeoffset
-  - Spikeradius
-  macroParams:
-  - Shape
-  - Enablespikes
-  - Enablefaces
-  - Faceoffsetfieldcoordmode
+  paramGroupTable: eval_params
   libraryNames: !expr
     expr: op('geodesicSdf_lib')
   help: !text
@@ -39,3 +29,20 @@ opDef: !def
   - polyhedron
   - geodesic
   - spikes
+inputs:
+- !input
+  Localalias: spikeSdf
+  coordType: !coordT
+    Coordtypevec3: true
+  contextType: !contextT
+    Contexttypecontext: true
+  returnType: !returnT
+    Returntypesdf: true
+- !input
+  Localalias: faceOffset
+  coordType: !coordT
+    Coordtypevec3: true
+  contextType: !contextT
+    Allcontexttype: true
+  returnType: !returnT
+    Returntypefloat: true

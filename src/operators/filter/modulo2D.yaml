@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.filter.modulo2D
-  opVersion: '19'
+  opVersion: '21'
   opStatus: default
 opDef: !def
   enable: !expr
@@ -18,13 +18,7 @@ opDef: !def
   function: !text
     file: src/operators/filter/modulo2D.glsl
     name: function
-  useParams:
-  - Size[1-2]
-  - Offset[1-2]
-  - Shift[1-2]
-  macroParams:
-  - Iterationtype
-  - Mirrortype
+  paramGroupTable: eval_params
   paramListTable: switcher_params
   variableTable: !table
     file: src/operators/filter/modulo2D_variables.txt
@@ -32,7 +26,6 @@ opDef: !def
     evaluate: true
     evalOpts: !evalOpts
       excludeFirstRow: true
-  generatedMacroTables: sel_axis_macros
   help: !text
     file: src/operators/filter/modulo2D.md
     name: help
@@ -41,3 +34,57 @@ opDef: !def
   - repeat
   - grid
   shortcuts: m2
+inputs:
+- !input
+  Required: true
+  coordType: !coordT
+    Coordtypevec2: true
+    Coordtypevec3: true
+  contextType: !contextT
+    Allcontexttype: true
+  returnType: !returnT
+    Allreturntype: true
+- !input
+  Localalias: sizeField
+  coordType: !coordT
+    Coordtypevec2: true
+    Coordtypevec3: true
+  contextType: !contextT
+    Allcontexttype: true
+  returnType: !returnT
+    Returntypefloat: true
+    Returntypevec4: true
+- !input
+  Localalias: offsetField
+  coordType: !coordT
+    Coordtypevec2: true
+    Coordtypevec3: true
+  contextType: !contextT
+    Allcontexttype: true
+  returnType: !returnT
+    Returntypefloat: true
+    Returntypevec4: true
+- !input
+  Localalias: shiftField
+  coordType: !coordT
+    Coordtypevec2: true
+    Coordtypevec3: true
+  contextType: !contextT
+    Allcontexttype: true
+  returnType: !returnT
+    Returntypefloat: true
+    Returntypevec4: true
+elements:
+- !opElement
+  name: codeSwitcher_Limittype
+  elementType: codeSwitcher
+  params:
+    Table: !table
+      file: src/operators/filter/modulo2D_limitTypes.txt
+      name: limitTypes
+    Param: Limittype
+    Autoupdateparams: true
+    Manageparamstates: true
+    Alwaysincludeallparams: false
+    Switchmode: inline
+    Placeholder: ''

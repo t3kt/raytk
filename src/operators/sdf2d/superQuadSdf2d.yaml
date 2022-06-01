@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.sdf2d.superQuadSdf2d
-  opVersion: '5'
+  opVersion: '6'
   opStatus: default
 opDef: !def
   enable: true
@@ -15,6 +15,21 @@ opDef: !def
   function: !text
     file: src/operators/sdf2d/superQuadSdf2d.glsl
     name: functionTemplate
-  useParams:
-  - Exponent
-  - Radius
+  paramGroupTable: eval_params
+inputs:
+- !input
+  Localalias: radiusField
+  coordType: !coordT
+    Coordtypevec2: true
+  contextType: !contextT
+    Allcontexttype: true
+  returnType: !returnT
+    Returntypefloat: true
+- !input
+  Localalias: exponentField
+  coordType: !coordT
+    Coordtypevec2: true
+  contextType: !contextT
+    Allcontexttype: true
+  returnType: !returnT
+    Returntypefloat: true

@@ -1,11 +1,12 @@
 !rop
 meta: !meta
   opType: raytk.operators.combine.compositeFields
-  opVersion: '6'
+  opVersion: '8'
   opStatus: default
 opDef: !def
   enable: !expr
     expr: op('..').par.Enable
+  useRuntimeBypass: true
   typeSpec: !ropTypes
     coordType: !coordT
       Allcoordtype: true
@@ -15,13 +16,54 @@ opDef: !def
       Returntypevec4: true
   function: !text
     file: src/operators/combine/compositeFields.glsl
-    name: functionTemplate
-  useParams: !expr
-    expr: '''Blend Swapinputs '' + op(''params'')[''params'', 1]'
-  macroParams: !expr
-    expr: op('params')['macroParams', 1]
+    name: function
+  useParams:
+  - Blend
+  - Swapinputs
   libraryNames: !expr
     expr: op('glslBlend')
   help: !text
     file: src/operators/combine/compositeFields.md
     name: help
+multiInput: !multiInput
+  Minimuminputs: 2
+  Coordtypereductionmode: common
+  Coordtypereductionscope: '*'
+  Contexttypereductionmode: common
+  Contexttypereductionscope: '*'
+  Returntypereductionmode: bestcommon
+  Returntypereductionscope: '*'
+  Returntypepreference: vec4 float
+  inputs:
+  - !input
+    Required: true
+    coordType: !coordT
+      Allcoordtype: true
+    contextType: !contextT
+      Allcontexttype: true
+    returnType: !returnT
+      Returntypefloat: true
+      Returntypevec4: true
+  - !input
+    Required: true
+    coordType: !coordT
+      Allcoordtype: true
+    contextType: !contextT
+      Allcontexttype: true
+    returnType: !returnT
+      Returntypefloat: true
+      Returntypevec4: true
+elements:
+- !opElement
+  name: codeSwitcher_Blendmode
+  elementType: codeSwitcher
+  params:
+    Table: !table
+      file: src/operators/combine/compositeFields_blendModes.txt
+      name: blendModes
+    Param: Blendmode
+    Autoupdateparams: true
+    Manageparamstates: false
+    Alwaysincludeallparams: false
+    Switchmode: auto
+    Placeholder: BODY();

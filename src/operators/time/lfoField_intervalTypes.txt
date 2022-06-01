@@ -1,0 +1,5 @@
+name	label	code
+seconds	Seconds (Timeline)	q = time_seconds(time);
+frames	Frames (Timeline)	q = time_frame(time);
+absseconds	Seconds (Absolute)	q = time_absSeconds(time);
+absframes	Frames (Absolute)	q = time_absFrame(time);

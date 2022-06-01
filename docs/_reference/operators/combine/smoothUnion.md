@@ -42,7 +42,6 @@ op:
     - vec3
     label: definition_in_2
     name: definition_in_2
-    required: true
     returnTypes:
     - float
     - Sdf
@@ -73,6 +72,7 @@ op:
   - label: Amount
     name: Amount
     summary: Size of the blending region.
+  status: deprecated
   summary: Combines SDFs using a smooth union operator.
   thumb: assets/images/reference/operators/combine/smoothUnion_thumb.png
 

@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.light.pointLight
-  opVersion: '10'
+  opVersion: '11'
   opStatus: default
 opDef: !def
   enable: true
@@ -15,15 +15,27 @@ opDef: !def
   function: !text
     file: src/operators/light/pointLight.glsl
     name: functionTemplate
-  useParams:
-  - Position[xyz]
-  - Color[rgb]
-  - Intensity
-  - Attenuationstart
-  - Attenuationend
-  - Enableattenuation
-  - Enableshadow
+  paramGroupTable: eval_params
   help: !text
     file: src/operators/light/pointLight.md
     name: help
   shortcuts: pl
+inputs:
+- !input
+  Localalias: colorField
+  coordType: !coordT
+    Coordtypevec3: true
+  contextType: !contextT
+    Contexttypelightcontext: true
+  returnType: !returnT
+    Returntypefloat: true
+    Returntypevec4: true
+- !input
+  Localalias: attenuationField
+  coordType: !coordT
+    Coordtypefloat: true
+  contextType: !contextT
+    Contexttypelightcontext: true
+  returnType: !returnT
+    Returntypefloat: true
+    Returntypevec4: true

@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.filter.complexMath
-  opVersion: '0'
+  opVersion: '1'
   opStatus: alpha
 opDef: !def
   enable: !expr
@@ -15,8 +15,7 @@ opDef: !def
       Returntypevec4: true
   function: !text
     file: src/operators/filter/complexMath.glsl
-    name: functionTemplate
-  paramListTable: switcher_params
+    name: function
   libraryNames: !expr
     expr: op('complex')
   macroTable: !table
@@ -24,3 +23,32 @@ opDef: !def
     name: macro_exprs
     evaluate: true
     evalOpts: !evalOpts {}
+inputs:
+- !input
+  coordType: !coordT
+    Allcoordtype: true
+  contextType: !contextT
+    Allcontexttype: true
+  returnType: !returnT
+    Returntypevec4: true
+- !input
+  coordType: !coordT
+    Allcoordtype: true
+  contextType: !contextT
+    Allcontexttype: true
+  returnType: !returnT
+    Returntypevec4: true
+elements:
+- !opElement
+  name: codeSwitcher_Function
+  elementType: codeSwitcher
+  params:
+    Table: !table
+      file: src/operators/filter/complexMath_functions.txt
+      name: functions
+    Param: Function
+    Autoupdateparams: true
+    Manageparamstates: false
+    Alwaysincludeallparams: false
+    Switchmode: inline
+    Placeholder: BODY();

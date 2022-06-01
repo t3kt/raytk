@@ -1,0 +1,4 @@
+names	source	handling	readOnlyHandling	conversion	enable
+Radius	param	runtime	macro		op('radius_definition').numRows < 2
+Thickness	param	runtime	macro		op('thickness_definition').numRows < 2
+Rotate	param	runtime	macro	angle	1

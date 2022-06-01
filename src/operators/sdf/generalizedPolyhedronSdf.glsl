@@ -3,6 +3,9 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 	#ifdef THIS_HAS_INPUT_radiusField
 	r *= inputOp_radiusField(p, ctx);
 	#endif
+	#ifdef THIS_HAS_INPUT_beginEndField
+	vec2 beginEnd = inputOp_beginEndField(p, ctx).xy;
+	#endif
 	#ifdef THIS_Useexponent
 		return createSdf(fGDF(p - THIS_Translate, r, THIS_Exponent, int(THIS_BEGIN), int(THIS_END)));
 	#else

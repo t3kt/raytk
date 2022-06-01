@@ -1,0 +1,3 @@
+names	source	handling	readOnlyHandling	conversion	enable
+Translate[xy] Size Thickness Seed	param	runtime	macro		1
+Pattern Randomize	param	macro			1

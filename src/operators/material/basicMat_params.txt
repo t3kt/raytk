@@ -1,0 +1,3 @@
+names	source	handling	readOnlyHandling	conversion	enable
+Specularamount Skydir[xyz] Skycolor[rgb] Specularexp Basecolor[rgb]	param	runtime	macro		1
+Uselocalpos Enableshadow Usesurfacecolor	param	macro			1

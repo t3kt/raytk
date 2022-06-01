@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.combine.edgeCombine
-  opVersion: '1'
+  opVersion: '3'
   opStatus: default
 opDef: !def
   enable: true
@@ -14,10 +14,58 @@ opDef: !def
       Returntypesdf: true
   function: !text
     file: src/operators/combine/edgeCombine.glsl
-    name: functionTemplate
-  useParams:
-  - Swapinputs
-  - Radius
-  - Depth
-  paramListTable: switcher_params
+    name: function
+  paramGroupTable: eval_params
   generatedMacroTables: multiInputHandler_macros
+multiInput: !multiInput
+  Minimuminputs: 1
+  Coordtypereductionmode: common
+  Coordtypereductionscope: '*'
+  Contexttypereductionmode: none
+  Returntypereductionmode: none
+  inputs:
+  - !input
+    Required: true
+    coordType: !coordT
+      Allcoordtype: true
+    contextType: !contextT
+      Allcontexttype: true
+    returnType: !returnT
+      Returntypesdf: true
+  - !input
+    Required: true
+    coordType: !coordT
+      Allcoordtype: true
+    contextType: !contextT
+      Allcontexttype: true
+    returnType: !returnT
+      Returntypesdf: true
+inputs:
+- !input
+  coordType: !coordT
+    Allcoordtype: true
+  contextType: !contextT
+    Allcontexttype: true
+  returnType: !returnT
+    Returntypefloat: true
+- !input
+  coordType: !coordT
+    Allcoordtype: true
+  contextType: !contextT
+    Allcontexttype: true
+  returnType: !returnT
+    Returntypefloat: true
+elements:
+- !opElement
+  name: codeSwitcher_Combine
+  elementType: codeSwitcher
+  params:
+    Table: !table
+      file: src/operators/combine/edgeCombine_modes.txt
+      name: modes
+    Param: Combine
+    Autoupdateparams: true
+    Manageparamstates: false
+    Alwaysincludeallparams: false
+    Switchmode: auto
+    Placeholder: BODY();

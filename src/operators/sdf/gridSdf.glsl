@@ -9,8 +9,8 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 	#endif
 	p.xy -= THIS_Offset;
 	p = abs(p);
-	float len1 = THIS_Spacing1;
-	float len2 = THIS_Spacing2;
+	float len1 = THIS_Spacing.x;
+	float len2 = THIS_Spacing.y;
 	#if defined(THIS_Pattern_grid) || defined(THIS_Pattern_hbars)
 	float floor1 = abs(p.x - len1 * floor(p.x / len1 + 0.5));
 	#endif

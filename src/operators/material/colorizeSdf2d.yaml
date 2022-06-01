@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.material.colorizeSdf2d
-  opVersion: '6'
+  opVersion: '7'
   opStatus: default
 opDef: !def
   enable: !expr
@@ -17,19 +17,17 @@ opDef: !def
   function: !text
     file: src/operators/material/colorizeSdf2d.glsl
     name: function
-  useParams:
-  - Edgecolor[rgba]
-  - Insidecolor1[rgba]
-  - Insidecolor2[rgba]
-  - Outsidecolor1[rgba]
-  - Outsidecolor2[rgba]
-  - Edgethickness
-  - Edgeblending
-  - Insideperiod
-  - Outsideperiod
-  - Insidephase
-  - Outsidephase
-  macroParams: Enableedge
+  paramGroupTable: eval_params
   help: !text
     file: src/operators/material/colorizeSdf2d.md
     name: help
+inputs:
+- !input
+  Required: true
+  coordType: !coordT
+    Allcoordtype: true
+  contextType: !contextT
+    Allcontexttype: true
+  returnType: !returnT
+    Returntypesdf: true
+    Returntypefloat: true

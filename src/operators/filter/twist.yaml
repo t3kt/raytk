@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.filter.twist
-  opVersion: '10'
+  opVersion: '11'
   opStatus: default
 opDef: !def
   enable: !expr
@@ -13,14 +13,13 @@ opDef: !def
     contextType: !contextT
       Allcontexttype: true
     returnType: !returnT
-      Allreturntype: true
+      Allreturntype: !expr
+        expr: op('definition_1').numRows > 1
+      Returntypevec4: true
   function: !text
     file: src/operators/filter/twist.glsl
     name: function
-  useParams:
-  - Amount
-  - Shift
-  - Axis
+  paramGroupTable: eval_params
   help: !text
     file: src/operators/filter/twist.md
     name: help

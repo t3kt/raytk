@@ -1,13 +1,20 @@
 !rop
 meta: !meta
   opType: raytk.operators.field.cellTileField
-  opVersion: '6'
+  opVersion: '7'
   opStatus: default
 opDef: !def
   enable: true
   typeSpec: !ropTypes
     coordType: !coordT
-      Allcoordtype: true
+      Allcoordtype: !expr
+        expr: parent().par.Coordtype == 'auto'
+      Coordtypefloat: !expr
+        expr: parent().par.Coordtype in ('auto', 'float')
+      Coordtypevec2: !expr
+        expr: parent().par.Coordtype in ('auto', 'vec2')
+      Coordtypevec3: !expr
+        expr: parent().par.Coordtype in ('auto', 'vec3')
     contextType: !contextT
       Allcontexttype: true
     returnType: !returnT
@@ -15,13 +22,19 @@ opDef: !def
   function: !text
     file: src/operators/field/cellTileField.glsl
     name: functionTemplate
-  useParams:
-  - Translate[xyz]
-  - Scale[xyz]
-  macroParams: Cellstyle
+  paramGroupTable: eval_params
   help: !text
     file: src/operators/field/cellTileField.md
     name: help
   keywords:
   - cellular
   - voronoi
+inputs:
+- !input
+  Localalias: coordField
+  coordType: !coordT
+    Allcoordtype: true
+  contextType: !contextT
+    Allcontexttype: true
+  returnType: !returnT
+    Returntypevec4: true

@@ -2,6 +2,6 @@
   "meta": {
     "opStatus": "default",
     "opType": "raytk.operators.function.parabolaFn",
-    "opVersion": 2
+    "opVersion": 3
   }
 }

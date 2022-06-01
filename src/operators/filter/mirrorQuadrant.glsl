@@ -2,8 +2,8 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 	if (THIS_Enable >= 0.5) {
 		vec2 q = p.THIS_PLANE;
 		vec2 cell = sgn(q);
-		pMirror(q.x, THIS_Size1);
-		pMirror(q.y, THIS_Size2);
+		pMirror(q.x, THIS_Size.x);
+		pMirror(q.y, THIS_Size.y);
 		#pragma r:if THIS_Iterationtype_sign
 
 		setIterationCell(ctx, cell);

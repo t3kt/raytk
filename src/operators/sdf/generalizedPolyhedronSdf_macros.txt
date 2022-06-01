@@ -1,2 +1,2 @@
-	'THIS_BEGIN'	op('shapes')[parent().par.Shape.eval(), 'begin'].val or 'THIS_Begin'
-	'THIS_END'	op('shapes')[parent().par.Shape.eval(), 'end'].val or 'THIS_End'
+	'THIS_BEGIN'	(op('shapes')[parent().par.Shape.eval(), 'begin'].val if op('beginEnd_definition').numRows < 2 else 'beginEnd.x') or 'THIS_Begin'
+	'THIS_END'	(op('shapes')[parent().par.Shape.eval(), 'end'].val if op('beginEnd_definition').numRows < 2 else 'beginEnd.y') or 'THIS_End'

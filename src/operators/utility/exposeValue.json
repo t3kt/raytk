@@ -2,6 +2,6 @@
   "meta": {
     "opStatus": "beta",
     "opType": "raytk.operators.utility.exposeValue",
-    "opVersion": 3
+    "opVersion": 4
   }
 }

@@ -22,3 +22,12 @@ opDef: !def
   useParams:
   - Diffusecolor[rgb]
   - Specularcolor[rgb]
+inputs:
+- !input
+  Required: true
+  coordType: !coordT
+    Coordtypevec3: true
+  contextType: !contextT
+    Contexttypecontext: true
+  returnType: !returnT
+    Returntypesdf: true

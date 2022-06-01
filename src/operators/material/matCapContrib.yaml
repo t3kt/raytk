@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.material.matCapContrib
-  opVersion: '2'
+  opVersion: '3'
   opStatus: beta
 opDef: !def
   enable: true
@@ -15,9 +15,7 @@ opDef: !def
   function: !text
     file: src/operators/material/matCapContrib.glsl
     name: function
-  useParams:
-  - Enable
-  - Level
+  paramGroupTable: eval_params
   textureTable: !table
     file: src/operators/material/matCapContrib_textures.txt
     name: texture_exprs

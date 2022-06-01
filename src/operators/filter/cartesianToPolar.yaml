@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.filter.cartesianToPolar
-  opVersion: '8'
+  opVersion: '10'
   opStatus: default
 opDef: !def
   enable: !expr
@@ -17,5 +17,41 @@ opDef: !def
       Allreturntype: true
   function: !text
     file: src/operators/filter/cartesianToPolar.glsl
-    name: functionTemplate
-  paramListTable: switcher_params
+    name: function
+inputs:
+- !input
+  Required: true
+  coordType: !coordT
+    Coordtypevec2: true
+    Coordtypevec3: true
+  contextType: !contextT
+    Allcontexttype: true
+  returnType: !returnT
+    Allreturntype: true
+elements:
+- !opElement
+  name: codeSwitcher_Angleunit
+  elementType: codeSwitcher
+  params:
+    Table: !table
+      file: src/operators/filter/cartesianToPolar_angleUnits.txt
+      name: angleUnits
+    Param: Angleunit
+    Autoupdateparams: true
+    Manageparamstates: true
+    Alwaysincludeallparams: false
+    Switchmode: auto
+    Placeholder: CONVERT_ANGLE();
+- !opElement
+  name: codeSwitcher_Conversion
+  elementType: codeSwitcher
+  params:
+    Table: !table
+      file: src/operators/filter/cartesianToPolar_conversions.txt
+      name: conversions
+    Param: Conversion
+    Autoupdateparams: true
+    Manageparamstates: false
+    Alwaysincludeallparams: false
+    Switchmode: auto
+    Placeholder: BODY();

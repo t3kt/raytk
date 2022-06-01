@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.sdf2d.cornerSdf2d
-  opVersion: '2'
+  opVersion: '4'
   opStatus: default
 opDef: !def
   enable: true
@@ -14,10 +14,22 @@ opDef: !def
       Returntypesdf: true
   function: !text
     file: src/operators/sdf2d/cornerSdf2d.glsl
-    name: functionTemplate
-  useParams: Translate[xy]
-  paramListTable: !expr
-    expr: op('switcher_params')
+    name: function
+  paramGroupTable: eval_params
   help: !text
     file: src/operators/sdf2d/cornerSdf2d.md
     name: help
+elements:
+- !opElement
+  name: codeSwitcher_Combine
+  elementType: codeSwitcher
+  params:
+    Table: !table
+      file: src/operators/sdf2d/cornerSdf2d_corners.txt
+      name: corners
+    Param: Corner
+    Autoupdateparams: true
+    Manageparamstates: true
+    Alwaysincludeallparams: false
+    Switchmode: auto
+    Placeholder: BODY();

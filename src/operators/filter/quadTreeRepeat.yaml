@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.filter.quadTreeRepeat
-  opVersion: '3'
+  opVersion: '4'
   opStatus: beta
 opDef: !def
   enable: !expr
@@ -18,13 +18,7 @@ opDef: !def
   function: !text
     file: src/operators/filter/quadTreeRepeat.glsl
     name: function
-  useParams:
-  - Chance[1-2]
-  - Division
-  macroParams:
-  - Seed
-  - Iterationtype
-  - Enablerescale
+  paramGroupTable: eval_params
   variableTable: !table
     file: src/operators/filter/quadTreeRepeat_variables.txt
     name: variable_exprs
@@ -32,3 +26,13 @@ opDef: !def
     evalOpts: !evalOpts
       excludeFirstRow: true
   generatedMacroTables: sel_axis_macros
+inputs:
+- !input
+  Required: true
+  coordType: !coordT
+    Coordtypevec2: true
+    Coordtypevec3: true
+  contextType: !contextT
+    Allcontexttype: true
+  returnType: !returnT
+    Allreturntype: true

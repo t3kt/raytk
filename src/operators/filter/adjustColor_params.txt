@@ -1,0 +1,2 @@
+names	source	handling	readOnlyHandling	conversion	enable
+Saturation Hueoffset Brightness Contrast Gamma	param	runtime	macro		1

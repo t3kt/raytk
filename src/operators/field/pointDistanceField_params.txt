@@ -1,0 +1,3 @@
+names	source	handling	readOnlyHandling	conversion	enable
+Center[xyz]	param	runtime	macro		1
+Axes	param	macro			1

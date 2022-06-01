@@ -1,0 +1,2 @@
+names	source	handling	readOnlyHandling	conversion	enable
+Color[1-8][rgba] Count Blendindices Offset	param	runtime	macro		1

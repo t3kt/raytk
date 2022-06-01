@@ -51,6 +51,15 @@ op:
     - label: Log-Cylindrical Z
       name: logcylindricalz
     name: Conversion
+  - label: Angle Unit
+    menuOptions:
+    - label: Ratio (0..1)
+      name: ratio
+    - label: Degrees
+      name: degrees
+    - label: Radians
+      name: radians
+    name: Angleunit
   thumb: assets/images/reference/operators/filter/cartesianToPolar_thumb.png
 
 ---

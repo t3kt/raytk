@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.sdf.archSdf
-  opVersion: '4'
+  opVersion: '5'
   opStatus: beta
 opDef: !def
   enable: true
@@ -15,14 +15,4 @@ opDef: !def
   function: !text
     file: src/operators/sdf/archSdf.glsl
     name: function
-  useParams:
-  - Height
-  - Width
-  - Rounding
-  - Paneldepth
-  - Framedepth
-  - Framethickness
-  macroParams:
-  - Enableframe
-  - Enablepanel
-  - Hideframebottom
+  paramGroupTable: eval_params

@@ -1,0 +1,2 @@
+names	source	handling	readOnlyHandling	conversion	enable
+Size[xyz] Offset[xyz] Smoothing[xyz]	param	runtime	macro		1

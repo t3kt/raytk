@@ -18,3 +18,70 @@ opDef: !def
   useParams:
   - Active
   - Haltondeath
+multiInput: !multiInput
+  Minimuminputs: 0
+  Coordtypereductionmode: common
+  Coordtypereductionscope: '*'
+  Contexttypereductionmode: common
+  Contexttypereductionscope: '*'
+  Returntypereductionmode: common
+  Returntypereductionscope: '*'
+  inputs:
+  - !input
+    coordType: !coordT
+      Allcoordtype: true
+    contextType: !contextT
+      Contexttypeparticlecontext: true
+    returnType: !returnT
+      Returntypeparticle: true
+  - !input
+    coordType: !coordT
+      Allcoordtype: true
+    contextType: !contextT
+      Contexttypeparticlecontext: true
+    returnType: !returnT
+      Returntypeparticle: true
+  - !input
+    coordType: !coordT
+      Allcoordtype: true
+    contextType: !contextT
+      Contexttypeparticlecontext: true
+    returnType: !returnT
+      Returntypeparticle: true
+  - !input
+    coordType: !coordT
+      Allcoordtype: true
+    contextType: !contextT
+      Contexttypeparticlecontext: true
+    returnType: !returnT
+      Returntypeparticle: true
+  - !input
+    coordType: !coordT
+      Allcoordtype: true
+    contextType: !contextT
+      Contexttypeparticlecontext: true
+    returnType: !returnT
+      Returntypeparticle: true
+  - !input
+    coordType: !coordT
+      Allcoordtype: true
+    contextType: !contextT
+      Contexttypeparticlecontext: true
+    returnType: !returnT
+      Returntypeparticle: true
+elements:
+- !opElement
+  name: aggregateCodeGenerator
+  elementType: aggregateCodeGenerator
+  params:
+    Startindex: 0
+    Exprindexoffset: 0
+    Reverseorder: false
+    Initmode: separate
+    Numberingmode: sequential
+    Startstmt: ''
+    Defaultstmt: ''
+    Firststepstmt: ''
+    Stepstmt: !expr
+      expr: op('stepTemplate').text
+    Bodycodeplaceholder: ''

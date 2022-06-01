@@ -1,0 +1,2 @@
+names	source	handling	readOnlyHandling	conversion	enable
+Outersize Innersize Roundness	param	runtime	macro		1

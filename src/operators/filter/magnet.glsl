@@ -25,7 +25,7 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 
 	p -= center;
 	#if defined(THIS_COORD_TYPE_vec2)
-	pR(p, THIS_Rotatez * d);
+	pR(p, THIS_Rotate.z * d);
 	#elif defined(THIS_COORD_TYPE_vec3)
 	p *= rotateMatrix(THIS_Rotate * d);
 	#endif

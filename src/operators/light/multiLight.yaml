@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.light.multiLight
-  opVersion: '0'
+  opVersion: '1'
   opStatus: beta
 opDef: !def
   enable: true
@@ -15,11 +15,90 @@ opDef: !def
   function: !text
     file: src/operators/light/multiLight.glsl
     name: functionTemplate
-  useParams:
-  - Enable[1-8]
-  - Level[1-8]
+  paramGroupTable: eval_params
   macroTable: !table
     file: src/operators/light/multiLight_macros.txt
     name: macro_exprs
     evaluate: true
     evalOpts: !evalOpts {}
+multiInput: !multiInput
+  Minimuminputs: 0
+  Coordtypereductionmode: common
+  Coordtypereductionscope: '*'
+  Contexttypereductionmode: common
+  Contexttypereductionscope: '*'
+  Returntypereductionmode: common
+  Returntypereductionscope: '*'
+  inputs:
+  - !input
+    coordType: !coordT
+      Allcoordtype: true
+    contextType: !contextT
+      Contexttypelightcontext: true
+    returnType: !returnT
+      Returntypelight: true
+  - !input
+    coordType: !coordT
+      Allcoordtype: true
+    contextType: !contextT
+      Contexttypelightcontext: true
+    returnType: !returnT
+      Returntypelight: true
+  - !input
+    coordType: !coordT
+      Allcoordtype: true
+    contextType: !contextT
+      Contexttypelightcontext: true
+    returnType: !returnT
+      Returntypelight: true
+  - !input
+    coordType: !coordT
+      Allcoordtype: true
+    contextType: !contextT
+      Contexttypelightcontext: true
+    returnType: !returnT
+      Returntypelight: true
+  - !input
+    coordType: !coordT
+      Allcoordtype: true
+    contextType: !contextT
+      Contexttypelightcontext: true
+    returnType: !returnT
+      Returntypelight: true
+  - !input
+    coordType: !coordT
+      Allcoordtype: true
+    contextType: !contextT
+      Contexttypelightcontext: true
+    returnType: !returnT
+      Returntypelight: true
+  - !input
+    coordType: !coordT
+      Allcoordtype: true
+    contextType: !contextT
+      Contexttypelightcontext: true
+    returnType: !returnT
+      Returntypelight: true
+  - !input
+    coordType: !coordT
+      Allcoordtype: true
+    contextType: !contextT
+      Contexttypelightcontext: true
+    returnType: !returnT
+      Returntypelight: true
+elements:
+- !opElement
+  name: aggregateCodeGenerator
+  elementType: aggregateCodeGenerator
+  params:
+    Startindex: 0
+    Exprindexoffset: 0
+    Reverseorder: false
+    Initmode: separate
+    Numberingmode: available
+    Startstmt: ''
+    Defaultstmt: ''
+    Firststepstmt: ''
+    Stepstmt: !expr
+      expr: op('stepTemplate').text
+    Bodycodeplaceholder: ''

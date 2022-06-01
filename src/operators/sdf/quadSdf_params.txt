@@ -1,0 +1,3 @@
+names	source	handling	readOnlyHandling	conversion	enable
+Translate[xyz] Point[1-4][xyz] Size[1-2] Thickness	param	runtime	macro		1
+Plane	param	macro			1

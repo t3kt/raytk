@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.sdf2d.arrowSdf2d
-  opVersion: '2'
+  opVersion: '3'
   opStatus: default
 opDef: !def
   enable: true
@@ -15,8 +15,13 @@ opDef: !def
   function: !text
     file: src/operators/sdf2d/arrowSdf2d.glsl
     name: function
-  useParams:
-  - Point[ab][xy]
-  - Thickness
-  - Headthickness
-  - Headratio
+  paramGroupTable: eval_params
+inputs:
+- !input
+  Localalias: points
+  coordType: !coordT
+    Coordtypevec2: true
+  contextType: !contextT
+    Allcontexttype: true
+  returnType: !returnT
+    Returntypevec4: true

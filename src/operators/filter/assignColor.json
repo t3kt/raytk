@@ -2,6 +2,6 @@
   "meta": {
     "opStatus": "default",
     "opType": "raytk.operators.filter.assignColor",
-    "opVersion": 11
+    "opVersion": 13
   }
 }

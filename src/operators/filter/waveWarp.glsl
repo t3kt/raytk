@@ -16,7 +16,7 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 		#pragma r:endif
 		vec3 q = vec3(q0);
 		vec3 amt = THIS_wave(p, ctx, q);
-		amt = (amt * THIS_Amplitude) + THIS_Offset;
+		amt = (amt * THIS_Amplitude * THIS_Amplitudemult) + THIS_Offset;
 		p -= THIS_asCoordT(amt);
 	}
 	ReturnT res;

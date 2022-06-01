@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.filter.mobiusTransform
-  opVersion: '5'
+  opVersion: '6'
   opStatus: default
 opDef: !def
   enable: !expr
@@ -18,7 +18,39 @@ opDef: !def
   function: !text
     file: src/operators/filter/mobiusTransform.glsl
     name: function
-  useParams:
-  - Center[1-2]
-  - Point[1-2]
+  paramGroupTable: eval_params
   generatedMacroTables: sel_axis_macros
+multiInput: !multiInput
+  Minimuminputs: 0
+  Coordtypereductionmode: common
+  Coordtypereductionscope: '*'
+  Contexttypereductionmode: none
+  Returntypereductionmode: none
+  inputs:
+  - !input
+    Required: true
+    coordType: !coordT
+      Coordtypevec2: true
+      Coordtypevec3: true
+    contextType: !contextT
+      Allcontexttype: true
+    returnType: !returnT
+      Allreturntype: true
+  - !input
+    Localalias: centerField
+    coordType: !coordT
+      Coordtypevec2: true
+      Coordtypevec3: true
+    contextType: !contextT
+      Allcontexttype: true
+    returnType: !returnT
+      Returntypevec4: true
+  - !input
+    Localalias: pointField
+    coordType: !coordT
+      Coordtypevec2: true
+      Coordtypevec3: true
+    contextType: !contextT
+      Allcontexttype: true
+    returnType: !returnT
+      Returntypevec4: true

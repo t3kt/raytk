@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.time.timeField
-  opVersion: '10'
+  opVersion: '11'
   opStatus: default
 opDef: !def
   enable: true
@@ -24,7 +24,34 @@ opDef: !def
     name: macro_exprs
     evaluate: true
     evalOpts: !evalOpts {}
-  generatedMacroTables: sel_timeSource_macros timeSource_macros part_macros
+  generatedMacroTables: part_macros
   help: !text
     file: src/operators/time/timeField.md
     name: help
+elements:
+- !opElement
+  name: codeSwitcher_Part
+  elementType: codeSwitcher
+  params:
+    Table: !table
+      file: src/operators/time/timeField_parts.txt
+      name: time_parts
+    Param: Part
+    Autoupdateparams: true
+    Manageparamstates: false
+    Alwaysincludeallparams: false
+    Switchmode: auto
+    Placeholder: BODY();
+- !opElement
+  name: codeSwitcher_Timesource
+  elementType: codeSwitcher
+  params:
+    Table: !table
+      file: src/operators/time/timeSources.txt
+      name: timeSources
+    Param: Timesource
+    Autoupdateparams: true
+    Manageparamstates: false
+    Alwaysincludeallparams: false
+    Switchmode: auto
+    Placeholder: GET_TIME();

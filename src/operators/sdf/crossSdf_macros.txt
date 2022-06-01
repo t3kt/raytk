@@ -1,1 +1,0 @@
-parent().par.Axes != 'xyz'	'THIS_SWIZZLE'	op('axes_expr_info')[1, 'swizzle']

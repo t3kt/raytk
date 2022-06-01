@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.combine.switch
-  opVersion: '11'
+  opVersion: '12'
   opStatus: default
 opDef: !def
   enable: !expr
@@ -17,7 +17,132 @@ opDef: !def
     file: src/operators/combine/switch.glsl
     name: function
   useParams: Source
+  libraryNames: !expr
+    expr: op('modZigZag')
+  macroTable: !table
+    file: src/operators/combine/switch_macros.txt
+    name: macro_exprs
+    evaluate: true
+    evalOpts: !evalOpts {}
   generatedMacroTables: multiInputHandler_macros
   help: !text
     file: src/operators/combine/switch.md
     name: help
+multiInput: !multiInput
+  Minimuminputs: 1
+  Coordtypereductionmode: common
+  Coordtypereductionscope: '*'
+  Contexttypereductionmode: common
+  Contexttypereductionscope: '*'
+  Returntypereductionmode: common
+  Returntypereductionscope: '*'
+  inputs:
+  - !input
+    coordType: !coordT
+      Allcoordtype: true
+    contextType: !contextT
+      Allcontexttype: true
+    returnType: !returnT
+      Allreturntype: true
+  - !input
+    coordType: !coordT
+      Allcoordtype: true
+    contextType: !contextT
+      Allcontexttype: true
+    returnType: !returnT
+      Allreturntype: true
+  - !input
+    coordType: !coordT
+      Allcoordtype: true
+    contextType: !contextT
+      Allcontexttype: true
+    returnType: !returnT
+      Allreturntype: true
+  - !input
+    coordType: !coordT
+      Allcoordtype: true
+    contextType: !contextT
+      Allcontexttype: true
+    returnType: !returnT
+      Allreturntype: true
+  - !input
+    coordType: !coordT
+      Allcoordtype: true
+    contextType: !contextT
+      Allcontexttype: true
+    returnType: !returnT
+      Allreturntype: true
+  - !input
+    coordType: !coordT
+      Allcoordtype: true
+    contextType: !contextT
+      Allcontexttype: true
+    returnType: !returnT
+      Allreturntype: true
+  - !input
+    coordType: !coordT
+      Allcoordtype: true
+    contextType: !contextT
+      Allcontexttype: true
+    returnType: !returnT
+      Allreturntype: true
+  - !input
+    coordType: !coordT
+      Allcoordtype: true
+    contextType: !contextT
+      Allcontexttype: true
+    returnType: !returnT
+      Allreturntype: true
+inputs:
+- !input
+  Source: !expr
+    expr: parent().par.Indexfield or ''
+  Localalias: indexField
+  Help: Field used to choose the source index
+  coordType: !coordT
+    Allcoordtype: true
+  contextType: !contextT
+    Allcontexttype: true
+  returnType: !returnT
+    Returntypefloat: true
+elements:
+- !opElement
+  name: codeSwitcher_Extend
+  elementType: codeSwitcher
+  params:
+    Table: !table
+      file: src/operators/combine/switch_extendModes.txt
+      name: extendModes
+    Param: Extend
+    Autoupdateparams: true
+    Manageparamstates: false
+    Alwaysincludeallparams: false
+    Switchmode: auto
+    Placeholder: EXTEND();
+- !opElement
+  name: aggregateCodeGenerator
+  elementType: aggregateCodeGenerator
+  params:
+    Startindex: 0
+    Exprindexoffset: 0
+    Reverseorder: false
+    Initmode: separate
+    Numberingmode: available
+    Startstmt: ''
+    Defaultstmt: ''
+    Firststepstmt: ''
+    Stepstmt: 'case $: res = THIS_asReturnT(inputOp$(p, ctx)); break;'
+    Bodycodeplaceholder: AGGREGATE_BODY();
+- !opElement
+  name: codeSwitcher_Indexmode
+  elementType: codeSwitcher
+  params:
+    Table: !table
+      file: src/operators/combine/switch_indexModes.txt
+      name: indexModes
+    Param: Indexmode
+    Autoupdateparams: true
+    Manageparamstates: false
+    Alwaysincludeallparams: false
+    Switchmode: auto
+    Placeholder: RESCALEINDEX();

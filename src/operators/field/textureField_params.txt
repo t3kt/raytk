@@ -1,0 +1,3 @@
+names	source	handling	readOnlyHandling	conversion	enable
+Translateu Translatev Scaleu Scalev Axis	param	runtime	macro		1
+Extendmode	param	macro			1

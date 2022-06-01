@@ -1,39 +1,34 @@
 !rop
 meta: !meta
   opType: raytk.operators.filter.round
-  opVersion: '11'
+  opVersion: '12'
   opStatus: default
 opDef: !def
   enable: !expr
-    expr: 'op(''..'').par.Enable'
+    expr: op('..').par.Enable
   useRuntimeBypass: true
   typeSpec: !ropTypes
     coordType: !coordT
       Allcoordtype: true
-      Coordtypefloat: true
-      Coordtypevec2: true
-      Coordtypevec3: true
     contextType: !contextT
       Allcontexttype: true
-      Contexttypecontext: false
-      Contexttypematerialcontext: true
-      Contexttypecameracontext: false
-      Contexttypelightcontext: false
-      Contexttyperaycontext: false
-      Contexttypeparticlecontext: false
     returnType: !returnT
-      Allreturntype: false
       Returntypesdf: true
       Returntypefloat: true
       Returntypevec4: true
-      Returntyperay: false
-      Returntypelight: false
-      Returntypeparticle: false
   function: !text
     file: src/operators/filter/round.glsl
     name: function
-  useParams: Amount
-  help: help
+  paramGroupTable: eval_params
+  variableTable: !table
+    file: src/operators/filter/round_variables.txt
+    name: variable_exprs
+    evaluate: true
+    evalOpts: !evalOpts
+      excludeFirstRow: true
+  help: !text
+    file: src/operators/filter/round.md
+    name: help
 paramPages:
 - !page
   name: Filter
@@ -56,45 +51,17 @@ inputs:
   Required: true
   coordType: !coordT
     Allcoordtype: true
-    Coordtypefloat: false
-    Coordtypevec2: true
-    Coordtypevec3: true
   contextType: !contextT
     Allcontexttype: true
-    Contexttypecontext: true
-    Contexttypematerialcontext: false
-    Contexttypecameracontext: false
-    Contexttypelightcontext: false
-    Contexttyperaycontext: false
-    Contexttypeparticlecontext: false
   returnType: !returnT
-    Allreturntype: false
     Returntypesdf: true
     Returntypefloat: true
     Returntypevec4: true
-    Returntyperay: false
-    Returntypelight: false
-    Returntypeparticle: false
 - !input
   Localalias: amountField
   coordType: !coordT
     Allcoordtype: true
-    Coordtypefloat: false
-    Coordtypevec2: true
-    Coordtypevec3: true
   contextType: !contextT
     Allcontexttype: true
-    Contexttypecontext: true
-    Contexttypematerialcontext: false
-    Contexttypecameracontext: false
-    Contexttypelightcontext: false
-    Contexttyperaycontext: false
-    Contexttypeparticlecontext: false
   returnType: !returnT
-    Allreturntype: false
-    Returntypesdf: false
     Returntypefloat: true
-    Returntypevec4: false
-    Returntyperay: false
-    Returntypelight: false
-    Returntypeparticle: false

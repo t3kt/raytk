@@ -1,40 +1,28 @@
 !rop
 meta: !meta
   opType: raytk.operators.filter.transform
-  opVersion: '14'
+  opVersion: '15'
   opStatus: default
 opDef: !def
   enable: !expr
-    expr: 'op(''..'').par.Enable'
+    expr: op('..').par.Enable
   useRuntimeBypass: true
   typeSpec: !ropTypes
     coordType: !coordT
-      Allcoordtype: false
-      Coordtypefloat: false
       Coordtypevec2: true
       Coordtypevec3: true
     contextType: !contextT
       Allcontexttype: true
-      Contexttypecontext: false
-      Contexttypematerialcontext: true
-      Contexttypecameracontext: false
-      Contexttypelightcontext: false
-      Contexttyperaycontext: false
-      Contexttypeparticlecontext: false
     returnType: !returnT
-      Allreturntype: !expr 'op(''definition_1'').numRows > 1'
-      Returntypesdf: false
-      Returntypefloat: false
+      Allreturntype: !expr
+        expr: op('definition_1').numRows > 1
       Returntypevec4: true
-      Returntyperay: false
-      Returntypelight: false
-      Returntypeparticle: false
   function: !text
     file: src/operators/filter/transform.glsl
     name: function_template
-  angleParams: Rotate[xyz]
-  paramListTable: paramListTable
-  help: help
+  help: !text
+    file: src/operators/filter/transform.md
+    name: help
   keywords:
   - transform
   - translate
@@ -173,23 +161,33 @@ paramPages:
 inputs:
 - !input
   coordType: !coordT
-    Allcoordtype: false
-    Coordtypefloat: false
     Coordtypevec2: true
     Coordtypevec3: true
   contextType: !contextT
     Allcontexttype: true
-    Contexttypecontext: true
-    Contexttypematerialcontext: false
-    Contexttypecameracontext: false
-    Contexttypelightcontext: false
-    Contexttyperaycontext: false
-    Contexttypeparticlecontext: false
   returnType: !returnT
     Allreturntype: true
-    Returntypesdf: false
-    Returntypefloat: true
-    Returntypevec4: true
-    Returntyperay: false
-    Returntypelight: false
-    Returntypeparticle: false
+elements:
+- !opElement
+  name: transformCodeGenerator
+  elementType: transformCodeGenerator
+  params:
+    Transformorder: !expr
+      expr: parent().par.Transformorder.eval()
+    Rotateorder: !expr
+      expr: parent().par.Rotateorder.eval()
+    Enabletranslate: !expr
+      expr: parent().par.Enabletranslate
+    Enablerotate: !expr
+      expr: parent().par.Enablerotate
+    Enablescale: !expr
+      expr: parent().par.Enablescale
+    Enablepivot: !expr
+      expr: parent().par.Enablepivot
+    Scaletype: !expr
+      expr: parent().par.Scaletype.eval()
+    Varname: p
+    Useparamvars: false
+    Force3d: false
+    Prepcodeplaceholder: ''
+    Bodycodeplaceholder: TRANSFORM_CODE();

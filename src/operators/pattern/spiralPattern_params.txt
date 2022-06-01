@@ -1,0 +1,3 @@
+names	source	handling	readOnlyHandling	conversion	enable
+Center[xy] Scale	param	runtime	macro		1
+Spin	param	runtime	macro	angle	1

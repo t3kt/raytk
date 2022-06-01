@@ -1,0 +1,3 @@
+names	source	handling	readOnlyHandling	conversion	enable
+Maincolor[rgb] Eyecolor[rgb] Blink	param	runtime	macro		1
+Enableears Enableeyes Enablesurfacecolor	param	macro			1

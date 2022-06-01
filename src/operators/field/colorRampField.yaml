@@ -1,14 +1,21 @@
 !rop
 meta: !meta
   opType: raytk.operators.field.colorRampField
-  opVersion: '10'
+  opVersion: '13'
   opStatus: default
 opDef: !def
   enable: !expr
     expr: op('..').par.Enable
   typeSpec: !ropTypes
     coordType: !coordT
-      Allcoordtype: true
+      Allcoordtype: !expr
+        expr: parent().par.Coordtype == 'auto'
+      Coordtypefloat: !expr
+        expr: parent().par.Coordtype == 'float'
+      Coordtypevec2: !expr
+        expr: parent().par.Coordtype == 'vec2'
+      Coordtypevec3: !expr
+        expr: parent().par.Coordtype == 'vec3'
     contextType: !contextT
       Allcontexttype: true
     returnType: !returnT
@@ -16,14 +23,7 @@ opDef: !def
   function: !text
     file: src/operators/field/colorRampField.glsl
     name: functionTemplate
-  useParams:
-  - Color1[rgb]
-  - Color2[rgb]
-  - Alpha1
-  - Alpha2
-  macroParams:
-  - Extendmode
-  - Axis
+  paramGroupTable: eval_params
   libraryNames: !expr
     expr: op('modZigZag')
   help: !text
@@ -33,3 +33,13 @@ opDef: !def
   - color
   - gradient
   - ramp
+inputs:
+- !input
+  Localalias: coordField
+  coordType: !coordT
+    Allcoordtype: true
+  contextType: !contextT
+    Allcontexttype: true
+  returnType: !returnT
+    Returntypefloat: true
+    Returntypevec4: true

@@ -1,11 +1,18 @@
 ReturnT thismap(CoordT p, ContextT ctx) {
+	vec3 q0;
 	#ifdef THIS_HAS_INPUT_coordField
-	float q = inputOp_coordField(p, ctx);
-	#elif defined(THIS_Axis_dist)
-	float q = length(p);
+	q0 = adaptAsVec3(inputOp_coordField(p, ctx));
 	#else
-	float q = p.THIS_Axis;
+	q0 = adaptAsVec3(p);
 	#endif
+	int axis = int(THIS_Axis);
+	float q;
+	if (axis == 3) {
+		q = length(q0);
+	} else {
+		q = getAxis(q0, axis);
+	}
+	q = map01(q, THIS_Range.x, THIS_Range.y);
 	#if defined(THIS_Extendmode_hold)
 	q = clamp(q, 0, 1);
 	#elif defined(THIS_Extendmode_repeat)

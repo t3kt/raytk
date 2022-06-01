@@ -183,8 +183,8 @@ op:
     - float
     - vec2
     - vec3
-    label: Index Field
-    name: Indexfield
+    label: indexField
+    name: indexField
     returnTypes:
     - float
     summary: Field used to choose the source index
@@ -198,6 +198,24 @@ op:
     summary: When 0, the first source is used, 1 for the second, etc.
   - label: Index Field
     name: Indexfield
+  - label: Index Mode
+    menuOptions:
+    - label: Index (0 .. N-1)
+      name: zeroindex
+    - label: Index (1 .. N)
+      name: oneindex
+    - label: Normalized (0 .. 1)
+      name: norm
+    name: Indexmode
+  - label: Extend
+    menuOptions:
+    - label: Clamp
+      name: clamp
+    - label: Loop
+      name: loop
+    - label: Zig-Zag
+      name: zigzag
+    name: Extend
   summary: Switches between several inputs, without the need to rebuild the shader,
     allowing for fast switching.
 

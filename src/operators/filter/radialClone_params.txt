@@ -1,0 +1,4 @@
+names	source	handling	readOnlyHandling	conversion	enable
+Count Radiusoffset	param	runtime	macro		1
+Angleoffset Anglerange	param	runtime	macro	angle	1
+Iterationtype	param	macro			1

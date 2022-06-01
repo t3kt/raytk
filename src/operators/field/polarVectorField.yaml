@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.field.polarVectorField
-  opVersion: '1'
+  opVersion: '2'
   opStatus: default
 opDef: !def
   enable: true
@@ -16,7 +16,38 @@ opDef: !def
   function: !text
     file: src/operators/field/polarVectorField.glsl
     name: function
-  useParams:
-  - Thetaoffset
-  - Phioffset
-  - Length
+  paramGroupTable: eval_params
+multiInput: !multiInput
+  Minimuminputs: 0
+  Coordtypereductionmode: common
+  Coordtypereductionscope: '*'
+  Contexttypereductionmode: common
+  Contexttypereductionscope: '*'
+  Returntypereductionmode: none
+  inputs:
+  - !input
+    Localalias: thetaField
+    coordType: !coordT
+      Coordtypevec2: true
+      Coordtypevec3: true
+    contextType: !contextT
+      Allcontexttype: true
+    returnType: !returnT
+      Returntypefloat: true
+  - !input
+    Localalias: phiField
+    coordType: !coordT
+      Coordtypevec3: true
+    contextType: !contextT
+      Allcontexttype: true
+    returnType: !returnT
+      Returntypefloat: true
+  - !input
+    Localalias: lengthField
+    coordType: !coordT
+      Coordtypevec2: true
+      Coordtypevec3: true
+    contextType: !contextT
+      Allcontexttype: true
+    returnType: !returnT
+      Returntypefloat: true

@@ -2,6 +2,6 @@
   "meta": {
     "opStatus": "beta",
     "opType": "raytk.operators.convert.projectPlane",
-    "opVersion": 1
+    "opVersion": 2
   }
 }

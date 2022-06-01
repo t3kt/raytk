@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.filter.assignUV
-  opVersion: '10'
+  opVersion: '13'
   opStatus: default
 opDef: !def
   enable: !expr
@@ -16,8 +16,14 @@ opDef: !def
       Returntypesdf: true
   function: !text
     file: src/operators/filter/assignUV.glsl
-    name: functionTemplate
-  paramListTable: switcher_params
+    name: function
+  paramGroupTable: eval_params
+  variableTable: !table
+    file: src/operators/filter/assignUV_variables.txt
+    name: variable_exprs
+    evaluate: true
+    evalOpts: !evalOpts
+      excludeFirstRow: true
   help: !text
     file: src/operators/filter/assignUV.md
     name: help
@@ -26,3 +32,34 @@ opDef: !def
   - surface
   - material
   - modularmat
+inputs:
+- !input
+  Required: true
+  coordType: !coordT
+    Allcoordtype: true
+  contextType: !contextT
+    Allcontexttype: true
+  returnType: !returnT
+    Returntypesdf: true
+- !input
+  Localalias: uvField
+  coordType: !coordT
+    Allcoordtype: true
+  contextType: !contextT
+    Allcontexttype: true
+  returnType: !returnT
+    Returntypevec4: true
+elements:
+- !opElement
+  name: codeSwitcher_Uvmode
+  elementType: codeSwitcher
+  params:
+    Table: !table
+      file: src/operators/filter/assignUV_uvModes.txt
+      name: uvModes
+    Param: Uvmode
+    Autoupdateparams: true
+    Manageparamstates: false
+    Alwaysincludeallparams: false
+    Switchmode: auto
+    Placeholder: BODY();

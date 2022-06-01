@@ -1,0 +1,2 @@
+names	source	handling	readOnlyHandling	conversion	enable
+Valuesource Outputbuffer Onlyonsurfacehit	param	macro			1

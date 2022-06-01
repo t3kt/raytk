@@ -1,43 +1,30 @@
 !rop
 meta: !meta
   opType: raytk.operators.filter.limitField
-  opVersion: '13'
+  opVersion: '14'
   opStatus: default
 opDef: !def
   enable: !expr
-    expr: 'op(''..'').par.Enable'
+    expr: op('..').par.Enable
   useRuntimeBypass: true
   typeSpec: !ropTypes
     coordType: !coordT
       Allcoordtype: true
-      Coordtypefloat: true
-      Coordtypevec2: true
-      Coordtypevec3: true
     contextType: !contextT
       Allcontexttype: true
-      Contexttypecontext: true
-      Contexttypematerialcontext: false
-      Contexttypecameracontext: false
-      Contexttypelightcontext: false
-      Contexttyperaycontext: false
-      Contexttypeparticlecontext: false
     returnType: !returnT
-      Allreturntype: false
       Returntypesdf: true
       Returntypefloat: true
       Returntypevec4: true
-      Returntyperay: false
-      Returntypelight: false
-      Returntypeparticle: false
   function: !text
     file: src/operators/filter/limitField.glsl
     name: functionTemplate
-  useParams:
-  - Low[1-4]
-  - High[1-4]
-  macroParams: Limittype
-  libraryNames: !expr 'op(''modZigZag'')'
-  help: help
+  paramGroupTable: eval_params
+  libraryNames: !expr
+    expr: op('modZigZag')
+  help: !text
+    file: src/operators/filter/limitField.md
+    name: help
   keywords:
   - limit
   - value
@@ -87,22 +74,9 @@ inputs:
   Required: true
   coordType: !coordT
     Allcoordtype: true
-    Coordtypefloat: true
-    Coordtypevec2: true
-    Coordtypevec3: true
   contextType: !contextT
     Allcontexttype: true
-    Contexttypecontext: true
-    Contexttypematerialcontext: false
-    Contexttypecameracontext: false
-    Contexttypelightcontext: false
-    Contexttyperaycontext: false
-    Contexttypeparticlecontext: false
   returnType: !returnT
-    Allreturntype: false
     Returntypesdf: true
     Returntypefloat: true
     Returntypevec4: true
-    Returntyperay: false
-    Returntypelight: false
-    Returntypeparticle: false

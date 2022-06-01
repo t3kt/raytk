@@ -1,0 +1,2 @@
+names	source	handling	readOnlyHandling	conversion	enable
+Thickness Width Wrap Radius Rotate	param	runtime	macro		1

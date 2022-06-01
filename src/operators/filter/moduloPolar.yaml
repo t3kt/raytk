@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.filter.moduloPolar
-  opVersion: '19'
+  opVersion: '20'
   opStatus: default
 opDef: !def
   enable: !expr
@@ -18,18 +18,7 @@ opDef: !def
   function: !text
     file: src/operators/filter/moduloPolar.glsl
     name: function
-  useParams:
-  - Repetitions
-  - Rotate
-  - Prerotate
-  - Offset[1-2]
-  - Pivot[1-2]
-  - Limitlow
-  - Limithigh
-  macroParams:
-  - Iterationtype
-  - Uselimit
-  - Mirrortype
+  paramGroupTable: eval_params
   variableTable: !table
     file: src/operators/filter/moduloPolar_variables.txt
     name: variable_exprs
@@ -46,3 +35,41 @@ opDef: !def
   - repeat
   - kaleidoscope
   shortcuts: mp
+inputs:
+- !input
+  Required: true
+  coordType: !coordT
+    Coordtypevec2: true
+    Coordtypevec3: true
+  contextType: !contextT
+    Allcontexttype: true
+  returnType: !returnT
+    Allreturntype: true
+- !input
+  Localalias: preRotateField
+  coordType: !coordT
+    Coordtypevec2: true
+    Coordtypevec3: true
+  contextType: !contextT
+    Allcontexttype: true
+  returnType: !returnT
+    Returntypefloat: true
+- !input
+  Localalias: offsetField
+  coordType: !coordT
+    Coordtypevec2: true
+    Coordtypevec3: true
+  contextType: !contextT
+    Allcontexttype: true
+  returnType: !returnT
+    Returntypefloat: true
+    Returntypevec4: true
+- !input
+  Localalias: rotateField
+  coordType: !coordT
+    Coordtypevec2: true
+    Coordtypevec3: true
+  contextType: !contextT
+    Allcontexttype: true
+  returnType: !returnT
+    Returntypefloat: true

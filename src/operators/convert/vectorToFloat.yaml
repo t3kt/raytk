@@ -24,3 +24,12 @@ opDef: !def
   help: !text
     file: src/operators/convert/vectorToFloat.md
     name: help
+inputs:
+- !input
+  Required: true
+  coordType: !coordT
+    Allcoordtype: true
+  contextType: !contextT
+    Allcontexttype: true
+  returnType: !returnT
+    Returntypevec4: true

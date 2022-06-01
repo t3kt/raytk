@@ -1,0 +1,2 @@
+names	source	handling	readOnlyHandling	conversion	enable
+Center[xyz] Radius[xyz] Radiusscale Exponent[xyz] Weight	param	runtime	macro		1

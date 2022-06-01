@@ -1,15 +1,35 @@
 !rop
 meta: !meta
   opType: raytk.operators.field.magnetField
-  opVersion: '1'
+  opVersion: '3'
   opStatus: beta
 opDef: !def
   enable: true
   typeSpec: !ropTypes
     coordType: !coordT
-      Allcoordtype: true
+      Allcoordtype: !expr
+        expr: parent().par.Coordtype == 'auto'
+      Coordtypefloat: !expr
+        expr: parent().par.Coordtype == 'float'
+      Coordtypevec2: !expr
+        expr: parent().par.Coordtype == 'vec2'
+      Coordtypevec3: !expr
+        expr: parent().par.Coordtype == 'vec3'
     contextType: !contextT
-      Allcontexttype: true
+      Allcontexttype: !expr
+        expr: parent().par.Contexttype == 'auto'
+      Contexttypecontext: !expr
+        expr: parent().par.Contexttype == 'Context'
+      Contexttypematerialcontext: !expr
+        expr: parent().par.Contexttype == 'MaterialContext'
+      Contexttypecameracontext: !expr
+        expr: parent().par.Contexttype == 'CameraContext'
+      Contexttypelightcontext: !expr
+        expr: parent().par.Contexttype == 'LightContext'
+      Contexttyperaycontext: !expr
+        expr: parent().par.Contexttype == 'RayContext'
+      Contexttypeparticlecontext: !expr
+        expr: parent().par.Contexttype == 'ParticleContext'
     returnType: !returnT
       Returntypefloat: !expr
         expr: op('switcher_info')[1, 'returnType'] == 'float'
@@ -17,10 +37,37 @@ opDef: !def
         expr: op('switcher_info')[1, 'returnType'] == 'vec4'
   function: !text
     file: src/operators/field/magnetField.glsl
-    name: functionTemplate
-  useParams:
-  - Center[xyz]
-  - Amount
-  - Radius
-  - Fade
-  paramListTable: switcher_params
+    name: function
+  paramGroupTable: eval_params
+inputs:
+- !input
+  Localalias: coordField
+  coordType: !coordT
+    Allcoordtype: true
+  contextType: !contextT
+    Allcontexttype: true
+  returnType: !returnT
+    Returntypefloat: true
+    Returntypevec4: true
+- !input
+  Localalias: easing
+  coordType: !coordT
+    Coordtypefloat: true
+  contextType: !contextT
+    Allcontexttype: true
+  returnType: !returnT
+    Returntypefloat: true
+elements:
+- !opElement
+  name: codeSwitcher_Format
+  elementType: codeSwitcher
+  params:
+    Table: !table
+      file: src/operators/field/magnetField_formats.txt
+      name: formats
+    Param: Format
+    Autoupdateparams: true
+    Manageparamstates: false
+    Alwaysincludeallparams: false
+    Switchmode: inline
+    Placeholder: BODY();

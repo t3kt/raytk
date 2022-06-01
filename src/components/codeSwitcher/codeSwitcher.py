@@ -34,12 +34,29 @@ def buildParametersTable(dat: 'DAT'):
 	else:
 		macroParams.append(name)
 	if parent().par.Manageparamstates:
-		if mode == 'switch':
+		if mode == 'switch' or parent().par.Alwaysincludeallparams:
 			params += list(_paramModes().keys())
 		else:
 			params.append(str(op('currentItemInfo')[1, 'params'] or ''))
 	dat.appendRow(['params', ' '.join(params)])
 	dat.appendRow(['macroParams', ' '.join(macroParams)])
+
+def buildParameterGroupTable(dat: 'DAT'):
+	dat.clear()
+	dat.appendRow(['names', 'source', 'handling', 'readOnlyHandling', 'conversion', 'enable'])
+	dat.appendRow([parent().par.Param, 'param', 'runtime', '', '', '1'])
+	mode = _effectiveMode()
+	if parent().par.Manageparamstates:
+		if mode == 'switch' or parent().par.Alwaysincludeallparams:
+			dat.appendRow([
+				' '.join(_paramModes().keys()),
+				'param', 'runtime', 'macro', '', '1'
+			])
+		else:
+			dat.appendRow([
+				op('currentItemInfo')[1, 'params'] or '',
+				'param', 'runtime', 'macro', '', '1'
+			])
 
 def buildCode():
 	par = _hostPar()
@@ -63,6 +80,8 @@ def _buildRuntimeSwitch(table: 'DAT'):
 	for i in range(1, table.numRows):
 		name = str(table[i, 'name'])
 		itemCode = _prepareItemCode(table[i, 'code'])
+		if not itemCode.strip():
+			continue
 		code += f'\tcase {i - 1}: /*{name}*/\n'
 		code += f'\t\t{itemCode};\n'
 		code += '\t\tbreak;\n'

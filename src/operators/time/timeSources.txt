@@ -1,3 +1,3 @@
-name	label	expr	macro
-global	Global	getGlobalTime()	
-context	Context	contextTime(ctx)	RAYTK_TIME_IN_CONTEXT
+name	label	expr	code	macro
+global	Global	getGlobalTime()	time = getGlobalTime();	
+context	Context	contextTime(ctx)	time = contextTime(ctx);	RAYTK_TIME_IN_CONTEXT

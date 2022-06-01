@@ -1,0 +1,3 @@
+names	source	handling	readOnlyHandling	conversion	enable
+Enable Level Basecolor[rgb] Warmcolor[rgb] Coolcolor[rgb]	param	runtime	macro		1
+Enableshadow Uselightcolor	param	macro			1

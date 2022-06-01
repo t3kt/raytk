@@ -1,16 +1,34 @@
 !rop
 meta: !meta
   opType: raytk.operators.field.waveField
-  opVersion: '23'
+  opVersion: '26'
   opStatus: default
 opDef: !def
   enable: !expr
     expr: parent().par.Enable
   typeSpec: !ropTypes
     coordType: !coordT
-      Allcoordtype: true
+      Allcoordtype: !expr
+        expr: op('definition_1').numRows > 1
+      Coordtypefloat: !expr
+        expr: parent().par.Coordtype == 'float' or op('definition_1').numRows > 1
+      Coordtypevec2: !expr
+        expr: parent().par.Coordtype == 'vec2' or op('definition_1').numRows > 1
+      Coordtypevec3: !expr
+        expr: parent().par.Coordtype == 'vec3' or op('definition_1').numRows > 1
     contextType: !contextT
-      Allcontexttype: true
+      Allcontexttype: !expr
+        expr: parent().par.Contexttype == 'auto'
+      Contexttypecontext: !expr
+        expr: parent().par.Contexttype == 'Context'
+      Contexttypematerialcontext: !expr
+        expr: parent().par.Contexttype == 'MaterialContext'
+      Contexttypecameracontext: !expr
+        expr: parent().par.Contexttype == 'CameraContext'
+      Contexttypelightcontext: !expr
+        expr: parent().par.Contexttype == 'LightContext'
+      Contexttyperaycontext: !expr
+        expr: parent().par.Contexttype == 'RayContext'
     returnType: !returnT
       Returntypefloat: !expr
         expr: not op('wave_func_definition')[1, 'returnType'] or 'float' in str(op('wave_func_definition')[1,
@@ -20,14 +38,60 @@ opDef: !def
           '''')'
   function: !text
     file: src/operators/field/waveField.glsl
-    name: functionTemplate
-  useParams:
-  - Amplitude
-  - Offset
-  macroParams: Axis
-  paramListTable: waveParams
+    name: function
+  paramGroupTable: eval_params
   libraryNames: !expr
     expr: op('raytkWave')
   help: !text
     file: src/operators/field/waveField.md
     name: help
+inputs:
+- !input
+  Localalias: coordField
+  coordType: !coordT
+    Allcoordtype: true
+  contextType: !contextT
+    Allcontexttype: true
+  returnType: !returnT
+    Returntypefloat: true
+    Returntypevec4: true
+- !input
+  Localalias: periodField
+  coordType: !coordT
+    Allcoordtype: true
+  contextType: !contextT
+    Allcontexttype: true
+  returnType: !returnT
+    Returntypefloat: true
+- !input
+  Localalias: phaseField
+  coordType: !coordT
+    Allcoordtype: true
+  contextType: !contextT
+    Allcontexttype: true
+  returnType: !returnT
+    Returntypefloat: true
+- !input
+  Localalias: waveFunc
+  coordType: !coordT
+    Coordtypefloat: true
+  contextType: !contextT
+    Allcontexttype: true
+  returnType: !returnT
+    Returntypefloat: true
+    Returntypevec4: true
+elements:
+- !opElement
+  name: waveFunction
+  elementType: waveFunction
+  params:
+    Waveparam: Function
+    Periodparam: Period
+    Phaseparam: Phase
+    Periodfield: periodField
+    Phasefield: phaseField
+    Switchmode: auto
+    Coordtype: float
+    Manageparamstates: true
+    Prepcodeplaceholder: WAVE_PREP();
+    Bodycodeplaceholder: WAVE_BODY();

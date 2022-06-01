@@ -1,0 +1,3 @@
+names	source	handling	readOnlyHandling	conversion	enable
+Translate[xyz]	param	runtime	macro		1
+Noisetype	param	macro			1

@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.output.render2D
-  opVersion: '56'
+  opVersion: '57'
   opStatus: default
 opDef: !def
   enable: true
@@ -18,12 +18,7 @@ opDef: !def
   function: !text
     file: src/operators/output/render2D_function.glsl
     name: functionTemplate
-  useParams:
-  - Zoom
-  - Offset[xy]
-  macroParams:
-  - Alignment
-  - Scaling
+  paramGroupTable: eval_params
   libraryNames: raytkMaterial
   textureTable: !table
     file: src/operators/output/render2D_textures.txt
@@ -39,3 +34,14 @@ opDef: !def
     file: src/operators/output/render2D.md
     name: help
   shortcuts: r2
+inputs:
+- !input
+  coordType: !coordT
+    Coordtypefloat: true
+    Coordtypevec2: true
+  contextType: !contextT
+    Contexttypecontext: true
+  returnType: !returnT
+    Returntypesdf: true
+    Returntypefloat: true
+    Returntypevec4: true

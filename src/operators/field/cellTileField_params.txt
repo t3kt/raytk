@@ -1,0 +1,3 @@
+names	source	handling	readOnlyHandling	conversion	enable
+Translate[xyz] Scale[xyz]	param	runtime	macro		1
+Cellstyle	param	macro			1

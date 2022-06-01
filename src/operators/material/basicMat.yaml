@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.material.basicMat
-  opVersion: '23'
+  opVersion: '25'
   opStatus: default
 opDef: !def
   enable: !expr
@@ -20,16 +20,7 @@ opDef: !def
   material: !text
     file: src/operators/material/basicMat_material.glsl
     name: material
-  useParams:
-  - Specularamount
-  - Skydir[xyz]
-  - Skycolor[rgb]
-  - Specularexp
-  - Basecolor[rgb]
-  macroParams:
-  - Uselocalpos
-  - Enableshadow
-  - Usesurfacecolor
+  paramGroupTable: eval_params
   macroTable: !table
     file: src/operators/material/basicMat_macros.txt
     name: macro_exprs
@@ -44,3 +35,21 @@ opDef: !def
   help: !text
     file: src/operators/material/basicMat.md
     name: help
+inputs:
+- !input
+  Required: true
+  coordType: !coordT
+    Coordtypevec3: true
+  contextType: !contextT
+    Contexttypecontext: true
+  returnType: !returnT
+    Returntypesdf: true
+- !input
+  Localalias: baseColorField
+  coordType: !coordT
+    Coordtypevec3: true
+  contextType: !contextT
+    Contexttypematerialcontext: true
+  returnType: !returnT
+    Returntypefloat: true
+    Returntypevec4: true

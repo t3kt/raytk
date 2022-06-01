@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.field.chopField
-  opVersion: '12'
+  opVersion: '14'
   opStatus: default
 opDef: !def
   enable: true
@@ -27,7 +27,6 @@ opDef: !def
   macroParams:
   - Extendmode
   - Axis
-  paramListTable: switcher_params
   libraryNames: !expr
     expr: op('modZigZag')
   textureTable: !table
@@ -38,3 +37,26 @@ opDef: !def
   help: !text
     file: src/operators/field/chopField.md
     name: help
+inputs:
+- !input
+  Localalias: coordField
+  coordType: !coordT
+    Allcoordtype: true
+  contextType: !contextT
+    Allcontexttype: true
+  returnType: !returnT
+    Returntypefloat: true
+elements:
+- !opElement
+  name: codeSwitcher_Coordmode
+  elementType: codeSwitcher
+  params:
+    Table: !table
+      file: src/operators/field/chopField_coordMode.txt
+      name: coordModes
+    Param: Coordmode
+    Autoupdateparams: true
+    Manageparamstates: true
+    Alwaysincludeallparams: false
+    Switchmode: inline
+    Placeholder: ''

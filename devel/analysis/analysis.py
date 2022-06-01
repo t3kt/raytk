@@ -23,11 +23,14 @@ _opDefParamNames = [
 	'Specialparams',
 	'Angleparams',
 	'Macroparams',
+	'Paramgrouptable',
+	'Paramlisttable',
 	'Buffertable',
 	'Texturetable',
 	'Macrotable',
 	'Variabletable',
 	'Referencetable',
+	'Dispatchtable',
 	'Librarynames',
 	'Help',
 	'Helpurl',
@@ -115,7 +118,7 @@ def buildOpParamsTable(dat: 'DAT'):
 		])
 		for tuplet in info.rop.customTuplets:
 			par = tuplet[0]
-			if par.name in ('Inspect', 'Help', 'Updateop'):
+			if par.name in ('Inspect', 'Help', 'Updateop') or par.name.startswith('Createref') or par.name.startswith('Creatersel'):
 				continue
 			cell = dat[info.path, par.tupletName]
 			if cell is None:

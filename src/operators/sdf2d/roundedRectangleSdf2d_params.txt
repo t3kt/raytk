@@ -1,0 +1,2 @@
+names	source	handling	readOnlyHandling	conversion	enable
+Scale[xy] Roundness1 Roundness2 Roundness3 Roundness4	param	runtime	macro		1

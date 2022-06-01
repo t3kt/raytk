@@ -17,3 +17,27 @@ opDef: !def
     name: functionTemplate
   useParams: Active
   paramListTable: switcher_params
+inputs:
+- !input
+  Localalias: surface
+  Required: true
+  coordType: !coordT
+    Coordtypevec3: true
+  contextType: !contextT
+    Contexttypeparticlecontext: true
+  returnType: !returnT
+    Returntypesdf: true
+elements:
+- !opElement
+  name: codeSwitcher_Combine
+  elementType: codeSwitcher
+  params:
+    Table: !table
+      file: src/operators/particles/collisionSurface_behaviors.txt
+      name: behaviors
+    Param: Behavior
+    Autoupdateparams: true
+    Manageparamstates: true
+    Alwaysincludeallparams: false
+    Switchmode: auto
+    Placeholder: ''

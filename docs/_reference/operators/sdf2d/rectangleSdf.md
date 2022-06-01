@@ -46,6 +46,13 @@ op:
   - label: Scale
     name: Scale
     summary: The size of the rectangle on the x and y axes.
+  - label: UV Mode
+    menuOptions:
+    - label: XY Normalized
+      name: normxy
+    - label: XY Fit to Outside
+      name: outerxy
+    name: Uvmode
   summary: SDF for a 2D rectangle.
   thumb: assets/images/reference/operators/sdf2d/rectangleSdf_thumb.png
 

@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.sdf.linkSdf
-  opVersion: '9'
+  opVersion: '10'
   opStatus: default
 opDef: !def
   enable: true
@@ -15,14 +15,35 @@ opDef: !def
   function: !text
     file: src/operators/sdf/linkSdf.glsl
     name: functionTemplate
-  useParams:
-  - Translate[xyz]
-  - Length
-  - Radius
-  - Thickness
+  paramGroupTable: eval_params
   help: !text
     file: src/operators/sdf/linkSdf.md
     name: help
   keywords:
   - link
   - chain
+inputs:
+- !input
+  Localalias: lengthField
+  coordType: !coordT
+    Coordtypevec3: true
+  contextType: !contextT
+    Allcontexttype: true
+  returnType: !returnT
+    Returntypefloat: true
+- !input
+  Localalias: radiusField
+  coordType: !coordT
+    Coordtypevec3: true
+  contextType: !contextT
+    Allcontexttype: true
+  returnType: !returnT
+    Returntypefloat: true
+- !input
+  Localalias: thicknessField
+  coordType: !coordT
+    Coordtypevec3: true
+  contextType: !contextT
+    Allcontexttype: true
+  returnType: !returnT
+    Returntypefloat: true

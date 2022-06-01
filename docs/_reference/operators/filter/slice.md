@@ -24,6 +24,34 @@ op:
     required: true
     returnTypes:
     - Sdf
+  - contextTypes:
+    - Context
+    - MaterialContext
+    - CameraContext
+    - LightContext
+    - RayContext
+    - ParticleContext
+    coordTypes:
+    - vec2
+    - vec3
+    label: Offset Field
+    name: offsetField
+    returnTypes:
+    - float
+  - contextTypes:
+    - Context
+    - MaterialContext
+    - CameraContext
+    - LightContext
+    - RayContext
+    - ParticleContext
+    coordTypes:
+    - vec2
+    - vec3
+    label: Thickness Field
+    name: thicknessField
+    returnTypes:
+    - float
   name: slice
   opType: raytk.operators.filter.slice
   parameters:

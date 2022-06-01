@@ -7,7 +7,7 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 		float plane = (p * rotateMatrix(radians(THIS_Rotateplane))).y - THIS_Offset;
 		#elif defined(THIS_COORD_TYPE_vec2)
 		vec2 q = p;
-		pR(q, THIS_Rotateplanez);
+		pR(q, THIS_Rotateplane.z);
 		float plane = q.y - THIS_Offset;
 		#else
 		#error invalidCoordType

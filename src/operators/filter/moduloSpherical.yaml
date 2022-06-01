@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.filter.moduloSpherical
-  opVersion: '1'
+  opVersion: '2'
   opStatus: beta
 opDef: !def
   enable: !expr
@@ -17,8 +17,13 @@ opDef: !def
   function: !text
     file: src/operators/filter/moduloSpherical.glsl
     name: function
-  useParams:
-  - Pivot[xyz]
-  - Repetitions[1-2]
-  - Offset[1-2]
-  - Shift[1-2]
+  paramGroupTable: eval_params
+inputs:
+- !input
+  Required: true
+  coordType: !coordT
+    Coordtypevec3: true
+  contextType: !contextT
+    Allcontexttype: true
+  returnType: !returnT
+    Allreturntype: true

@@ -2,7 +2,7 @@ void THIS_apply(inout CoordT p, inout ContextT ctx) {
 	#pragma r:if THIS_COORD_TYPE_float
 	float q = p;
 	#pragma r:else
-	float q = p.THIS_Axis;
+	float q = getAxis(p, int(THIS_Axis));
 	#pragma r:endif
 	float size = THIS_Size;
 	#pragma r:if THIS_HAS_INPUT_sizeField
@@ -74,7 +74,7 @@ void THIS_apply(inout CoordT p, inout ContextT ctx) {
 	#pragma r:if THIS_COORD_TYPE_float
 	p = q - o;
 	#pragma r:else
-	p.THIS_Axis = q - o;
+	setAxis(p, int(THIS_Axis), q - o);
 	#pragma r:endif
 }
 

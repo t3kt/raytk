@@ -11,6 +11,9 @@ void THIS_exposeIndex(int i) {
 ReturnT thismap(CoordT p, ContextT ctx) {
 	MERGE_PREP();
 	ReturnT res1 = createNonHitSdf();
+	MERGE_DEFAULT_INIT();
+	CoordT p1 = p;
 	AGGREGATE_BODY();
+	MERGE_POST_PROC();
 	return res1;
 }

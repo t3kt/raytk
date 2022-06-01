@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.sdf.apollonianSdf
-  opVersion: '8'
+  opVersion: '9'
   opStatus: default
 opDef: !def
   enable: true
@@ -15,11 +15,7 @@ opDef: !def
   function: !text
     file: src/operators/sdf/apollonianSdf.glsl
     name: functionTemplate
-  useParams:
-  - Translate[xyz]
-  - Scale
-  - S
-  macroParams: Iterations
+  paramGroupTable: eval_params
   keywords:
   - apollonian
   - fractal

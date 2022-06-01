@@ -1,42 +1,32 @@
 !rop
 meta: !meta
   opType: raytk.operators.filter.translate
-  opVersion: '16'
+  opVersion: '17'
   opStatus: default
 opDef: !def
   enable: !expr
-    expr: 'op(''..'').par.Enable'
+    expr: op('..').par.Enable
   useRuntimeBypass: true
   typeSpec: !ropTypes
-    Useinputreturntype: !expr 'op(''definition_1'').numRows > 1'
+    Useinputreturntype: !expr
+      expr: op('definition_1').numRows > 1
     coordType: !coordT
-      Allcoordtype: false
-      Coordtypefloat: false
-      Coordtypevec2: !expr 'op(''definition_1'').numRows > 1 or parent().par.Coordtype
-        in (''auto'',''vec2'')'
-      Coordtypevec3: !expr 'op(''definition_1'').numRows > 1 or parent().par.Coordtype
-        in (''auto'',''vec3'')'
+      Coordtypevec2: !expr
+        expr: op('definition_1').numRows > 1 or parent().par.Coordtype in ('auto','vec2')
+      Coordtypevec3: !expr
+        expr: op('definition_1').numRows > 1 or parent().par.Coordtype in ('auto','vec3')
     contextType: !contextT
       Allcontexttype: true
-      Contexttypecontext: false
-      Contexttypematerialcontext: true
-      Contexttypecameracontext: false
-      Contexttypelightcontext: false
-      Contexttyperaycontext: false
-      Contexttypeparticlecontext: false
     returnType: !returnT
-      Allreturntype: !expr 'op(''definition_1'').numRows > 1'
-      Returntypesdf: false
-      Returntypefloat: false
+      Allreturntype: !expr
+        expr: op('definition_1').numRows > 1
       Returntypevec4: true
-      Returntyperay: false
-      Returntypelight: false
-      Returntypeparticle: false
   function: !text
     file: src/operators/filter/translate.glsl
     name: function
-  useParams: Translate[xyz]
-  help: help
+  help: !text
+    file: src/operators/filter/translate.md
+    name: help
   keywords:
   - transform
   - translate
@@ -77,46 +67,20 @@ paramPages:
 inputs:
 - !input
   coordType: !coordT
-    Allcoordtype: false
-    Coordtypefloat: false
     Coordtypevec2: true
     Coordtypevec3: true
   contextType: !contextT
     Allcontexttype: true
-    Contexttypecontext: true
-    Contexttypematerialcontext: false
-    Contexttypecameracontext: false
-    Contexttypelightcontext: false
-    Contexttyperaycontext: false
-    Contexttypeparticlecontext: false
   returnType: !returnT
     Allreturntype: true
-    Returntypesdf: false
-    Returntypefloat: true
-    Returntypevec4: true
-    Returntyperay: false
-    Returntypelight: false
-    Returntypeparticle: false
 - !input
   Localalias: translateField
   coordType: !coordT
-    Allcoordtype: false
-    Coordtypefloat: false
     Coordtypevec2: true
     Coordtypevec3: true
   contextType: !contextT
     Allcontexttype: true
-    Contexttypecontext: true
-    Contexttypematerialcontext: false
-    Contexttypecameracontext: false
-    Contexttypelightcontext: false
-    Contexttyperaycontext: false
-    Contexttypeparticlecontext: false
   returnType: !returnT
-    Allreturntype: false
     Returntypesdf: true
     Returntypefloat: true
     Returntypevec4: true
-    Returntyperay: false
-    Returntypelight: false
-    Returntypeparticle: false

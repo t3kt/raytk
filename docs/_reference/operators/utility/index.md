@@ -24,6 +24,8 @@ cat:
     status: beta
   - name: provideVariable
     status: beta
+  - name: sceneState
+    status: beta
   - name: speedGenerator
     status: beta
   - name: toggleSwitch

@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.filter.radialClone
-  opVersion: '16'
+  opVersion: '19'
   opStatus: default
 opDef: !def
   enable: !expr
@@ -17,17 +17,8 @@ opDef: !def
       Allreturntype: true
   function: !text
     file: src/operators/filter/radialClone.glsl
-    name: functionTemplate
-  useParams:
-  - Count
-  - Angleoffset
-  - Anglerange
-  - Radiusoffset
-  angleParams:
-  - Anglerange
-  - Angleoffset
-  macroParams: Iterationtype
-  paramListTable: mergeParams
+    name: function
+  paramGroupTable: eval_params
   libraryNames: raytkCombine
   macroTable: !table
     file: src/operators/filter/radialClone_macros.txt
@@ -49,3 +40,31 @@ opDef: !def
   - radial
   - clone
   - repeat
+inputs:
+- !input
+  Required: true
+  coordType: !coordT
+    Coordtypevec2: true
+    Coordtypevec3: true
+  contextType: !contextT
+    Allcontexttype: true
+  returnType: !returnT
+    Returntypesdf: true
+elements:
+- !opElement
+  name: combiner
+  elementType: combiner
+  params:
+    Includenone: false
+    Modeparam: Mergetype
+    Swapinputsparam: ''
+    Radiusparam: Mergeradius
+    Numberparam: Mergenumber
+    Offsetparam: Mergeoffset
+    Radiusfield: ''
+    Offsetfield: ''
+    Numberfield: ''
+    Manageparamstates: true
+    Switchmode: inline
+    Prepcodeplaceholder: MERGE_PREP();
+    Bodycodeplaceholder: MERGE_BODY();

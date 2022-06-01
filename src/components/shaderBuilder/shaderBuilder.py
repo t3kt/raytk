@@ -330,25 +330,14 @@ class ShaderBuilder:
 				else:
 					macros[cells[0].val] = cells[1].val
 			lines = []
-			if not inline:
-				# Primary typedef macros are not needed when they're being inlined
-				lines += [
-					f'#define {name}  {val}'
-					for name, val in typedefs.items()
-				]
-			# Macros like FOO_COORD_TYPE_float are always needed
 			lines += [
-				f'#define {name}'
-				for name, val in macros.items()
-				if val == ''
+				f'#define {name} {val}'
+				for name, val in typedefs.items()
 			]
-			if not inline:
-				# Replacement macros like FOO_asCoordT are not needed when they're being inlined
-				lines += [
-					f'#define {name} {val}'
-					for name, val in macros.items()
-					if val != ''
-				]
+			lines += [
+				f'#define {name} {val}'
+				for name, val in macros.items()
+			]
 		else:
 			lines = []
 		return wrapCodeSection(lines, 'opDataTypedefs')
@@ -362,6 +351,7 @@ class ShaderBuilder:
 			'vec3': 'adaptAsVec3',
 			'vec4': 'adaptAsVec4',
 			'Sdf': 'adaptAsSdf',
+			'int': 'adaptAsInt',
 		}
 		for row in range(1, defsTable.numRows):
 			name = str(defsTable[row, 'name'])
@@ -492,6 +482,18 @@ class ShaderBuilder:
 		decls = paramProcessor.paramAliases()
 		return wrapCodeSection(decls, 'paramAliases')
 
+	def buildParamUniformTable(self, dat: 'DAT'):
+		dat.clear()
+		dat.appendRow(['name', 'type', 'chop', 'uniformType', 'expr1', 'expr2', 'expr3', 'expr4'])
+		paramProcessor = self._createParamProcessor()
+		specs = paramProcessor.paramUniforms()
+		for spec in specs:
+			dat.appendRow([
+				spec.name, spec.dataType, spec.chop or '',
+				spec.uniformType,
+				spec.expr1 or '', spec.expr2 or '', spec.expr3 or '', spec.expr4 or ''
+			])
+
 	def processParametersInCode(self, code: str):
 		paramProcessor = self._createParamProcessor()
 		return paramProcessor.processCodeBlock(code)
@@ -556,12 +558,26 @@ class ShaderBuilder:
 		materialTable = self.ownerComp.op('material_table')
 		if materialTable.numRows < 2:
 			return ' '
-		i = 1001
-		decls = []
-		for name in materialTable.col('material')[1:]:
-			decls.append(f'#define {name} {i}')
-			i += 1
+		decls = self._buildNameIdDeclarations(
+			offset=1001,
+			names=materialTable.col('material')[1:])
 		return wrapCodeSection(decls, 'materials')
+
+	def buildDispatchDeclarations(self):
+		dispatchTable = self.ownerComp.op('dispatch_table')
+		if dispatchTable.numRows < 2:
+			return ' '
+		decls = self._buildNameIdDeclarations(
+			offset=2001,
+			names=dispatchTable.col('name')[1:])
+		return wrapCodeSection(decls, 'dispatch')
+
+	@staticmethod
+	def _buildNameIdDeclarations(offset: int, names: List['Cell']):
+		return [
+			f'const int {name} = {offset + (name.row - 1)};'
+			for name in names
+		]
 
 	def buildOutputBufferDeclarations(self):
 		outputBufferTable = self._outputBufferTable()
@@ -629,7 +645,7 @@ class ShaderBuilder:
 		dats = self.getOpsFromDefinitionColumn('functionPath')
 		return wrapCodeSection(dats, 'functions')
 
-	def buildBodyBlock(self, materialTable: 'DAT'):
+	def buildBodyBlock(self, materialTable: 'DAT', dispatchTable: 'DAT'):
 		bodyDat = self.ownerComp.par.Bodytemplate.eval()
 		code = bodyDat.text if bodyDat else ''
 		if not code:
@@ -638,6 +654,12 @@ class ShaderBuilder:
 		if placeholder in code:
 			materialBlock = self._buildMaterialBlock(materialTable)
 			code = code.replace(placeholder, materialBlock, 1)
+		def _replaceDispatchInclude(m: re.Match):
+			category = m.group(1)
+			if not category:
+				return '\n'
+			return self._buildDispatchBlock(dispatchTable, category)
+		code = re.sub(r'\s*// #include <dispatch/(\w+)>\n', _replaceDispatchInclude, code)
 		return wrapCodeSection(code, 'body')
 
 	@staticmethod
@@ -652,6 +674,22 @@ class ShaderBuilder:
 			materialCode = codeDat.text if codeDat else ''
 			output += f'else if(m == {nameCell.val}) {{\n'
 			output += materialCode + '\n}'
+		return output
+
+	@staticmethod
+	def _buildDispatchBlock(dispatchTable: 'DAT', category: str):
+		if dispatchTable.numRows < 2:
+			return ''
+		output = ''
+		for i in range(1, dispatchTable.numRows):
+			if dispatchTable[i, 'category'] != category:
+				continue
+			name = dispatchTable[i, 'name']
+			code = dispatchTable[i, 'code'] or ''
+			output = f'case {name}: {{\n'
+			if code:
+				output += code + ';'
+			output += 'break;}\n'
 		return output
 
 	def buildValidationErrors(self, dat: 'DAT'):
@@ -697,6 +735,7 @@ class ShaderBuilder:
 			textureTable: 'DAT',
 			bufferTable: 'DAT',
 			materialTable: 'DAT',
+			dispatchTable: 'DAT',
 			outputBufferTable: 'DAT',
 	):
 		writer = _V2_Writer(
@@ -711,6 +750,7 @@ class ShaderBuilder:
 			textureTable=textureTable,
 			bufferTable=bufferTable,
 			materialTable=materialTable,
+			dispatchTable=dispatchTable,
 			outputBufferTable=outputBufferTable,
 		)
 		writer.run()
@@ -802,6 +842,7 @@ class _V2_Writer:
 	textureTable: 'DAT'
 	bufferTable: 'DAT'
 	materialTable: 'DAT'
+	dispatchTable: 'DAT'
 	outputBufferTable: 'DAT'
 
 	inlineTypedefRepls: 'Optional[Dict[str, str]]' = None
@@ -833,6 +874,7 @@ class _V2_Writer:
 		self._writeTextureDeclarations()
 		self._writeBufferDeclarations()
 		self._writeMaterialDeclarations()
+		self._writeDispatchDeclarations()
 		self._writeOutputBufferDeclarations()
 
 
@@ -972,6 +1014,14 @@ class _V2_Writer:
 			self._writeMacro(name, 1001 + (name.row - 1))
 		self._endBlock('materials')
 
+	def _writeDispatchDeclarations(self):
+		if self.dispatchTable.numRows < 2:
+			return
+		self._startBlock('dispatch')
+		for name in self.dispatchTable.col('name')[1:]:
+			self._writeMacro(name, 1001 + (name.row - 1))
+		self._endBlock('dispatch')
+
 	def _writeOutputBufferDeclarations(self):
 		if self.outputBufferTable.numRows < 2:
 			return
@@ -1031,7 +1081,11 @@ class _V2_Writer:
 			if line.endswith('// #include <materialParagraph>\n'):
 				self._writeMaterialBody()
 			else:
-				self._write(line)
+				match = re.fullmatch(r'\s*// #include <dispatch/(\w+)>\n', line)
+				if match:
+					self._writeDispatchBody(match.group(1))
+				else:
+					self._write(line)
 		self._endBlock('body')
 
 	def _writeMaterialBody(self):
@@ -1045,6 +1099,19 @@ class _V2_Writer:
 			if dat:
 				# Intentionally skipping typedef inlining and code filtering for these since no materials need it.
 				self._write(dat.text, '\n}')
+
+	def _writeDispatchBody(self, category: str):
+		for i in range(1, self.dispatchTable.numRows):
+			if self.dispatchTable[i, 'category'] != category:
+				continue
+			name = self.dispatchTable[i, 'name']
+			if not name:
+				continue
+			self._write(f'case {name}: {{\n')
+			code = self.dispatchTable[i, 'code']
+			if code:
+				self._write(code, ';')
+			self._write(code, '\n} break;\n')
 
 	def _write(self, *args):
 		self.out.write(*args)
@@ -1109,6 +1176,7 @@ class _ParamTupletSpec:
 	tuplet: str
 	parts: Tuple[str]
 	isReadOnly: bool
+	isSpecial: bool = False
 
 	def isPresentInChop(self, chop: 'CHOP'):
 		return any([chop[part] is not None for part in self.parts])
@@ -1125,6 +1193,7 @@ class _ParamTupletSpec:
 			tuplet=str(dat[row, 'tuplet']),
 			parts=tuple(parts),
 			isReadOnly='readOnly' in str(dat[row, 'status'] or ''),
+			isSpecial=dat[row, 'source'] == 'special',
 		)
 
 	@classmethod
@@ -1179,7 +1248,10 @@ class _ParameterProcessor:
 		self.paramExprs = None  # type: Optional[Dict[str, _ParamExpr]]
 
 	def globalDeclarations(self) -> List[str]:
-		raise NotImplementedError()
+		return [
+			spec.declaration()
+			for spec in self.paramUniforms()
+		]
 
 	def paramAliases(self) -> List[str]:
 		if not self.hasParams:
@@ -1230,8 +1302,6 @@ class _ParameterProcessor:
 					valsExpr = ','.join(str(v) for v in partVals)
 					parType = f'vec{size}'
 					self.paramExprs[paramTuplet.tuplet] = _ParamExpr(f'{parType}({valsExpr})', parType)
-					for partI, partVal in enumerate(partVals):
-						self.paramExprs[paramTuplet.parts[partI]] = _ParamExpr(partVal, 'float')
 				else:
 					if size == 4:
 						self.paramExprs[paramTuplet.tuplet] = _ParamExpr(paramRef, 'vec4')
@@ -1241,20 +1311,27 @@ class _ParameterProcessor:
 							f'{parType}({paramRef}.{suffixes[:size]})',
 							parType
 						)
+				if paramTuplet.isSpecial:
 					for partI, partName in enumerate(paramTuplet.parts):
 						self.paramExprs[partName] = _ParamExpr(f'{paramRef}.{suffixes[partI]}', 'float')
 
 	def _paramReference(self, i: int, paramTuplet: _ParamTupletSpec) -> str:
 		raise NotImplementedError()
 
+	def paramUniforms(self) -> 'List[_UniformSpec]':
+		raise NotImplementedError()
+
 class _VectorArrayParameterProcessor(_ParameterProcessor):
 	def _paramReference(self, i: int, paramTuplet: _ParamTupletSpec) -> str:
 		return f'vecParams[{i}]'
 
-	def globalDeclarations(self) -> List[str]:
+	def paramUniforms(self) -> 'List[_UniformSpec]':
 		paramCount = max(1, self.paramDetailTable.numRows - 1)
 		return [
-			f'uniform vec4 vecParams[{paramCount}];',
+			_UniformSpec(
+				'vecParams', 'vec4', 'uniformarray', paramCount,
+				parent().path + '/merged_vector_param_vals'
+			)
 		]
 
 class _SeparateUniformsParameterProcessor(_ParameterProcessor):
@@ -1273,6 +1350,24 @@ class _SeparateUniformsParameterProcessor(_ParameterProcessor):
 
 	def _paramReference(self, i: int, paramTuplet: _ParamTupletSpec) -> str:
 		return paramTuplet.tuplet
+
+	def paramUniforms(self) -> 'List[_UniformSpec]':
+		if not self.hasParams:
+			return []
+		chopPath = parent().path + '/merged_vector_param_vals'
+		specs = []
+		for row in range(1, self.paramDetailTable.numRows):
+			name = self.paramDetailTable[row, 'tuplet'].val
+			size = int(self.paramDetailTable[row, 'size'])
+			if size == 1:
+				specs.append(_UniformSpec(name, 'float', 'vector', chop=chopPath))
+			else:
+				specs.append(_UniformSpec(name, f'vec{size}', 'vector', chop=chopPath))
+		return specs
+
+_splitArrayCount = 10
+class _SplitVectorArrayParameterProcessor(_ParameterProcessor):
+	pass
 
 def _stringify(val: 'Union[str, DAT]'):
 	if val is None:

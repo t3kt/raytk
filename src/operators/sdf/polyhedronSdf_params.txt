@@ -1,0 +1,2 @@
+names	source	handling	readOnlyHandling	conversion	enable
+Type U V W Enablefaces Enablesegments Enablevertices Segmentsize Vertexsize Radius Faceradius Segmentradius Vertexradius	param	runtime	macro		1

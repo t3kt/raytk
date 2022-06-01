@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.material.pbrMat
-  opVersion: '8'
+  opVersion: '9'
   opStatus: beta
 opDef: !def
   enable: !expr
@@ -20,15 +20,7 @@ opDef: !def
   material: !text
     file: src/operators/material/pbrMat_material.glsl
     name: material
-  useParams:
-  - Basecolor[rgb]
-  - Roughness
-  - Albedo
-  - Metallic
-  macroParams:
-  - Enableshadow
-  - Uselocalpos
-  - Usesurfacecolor
+  paramGroupTable: eval_params
   libraryNames: !expr
     expr: op('pbrMat_lib')
   macroTable: !table
@@ -36,3 +28,53 @@ opDef: !def
     name: macro_exprs
     evaluate: true
     evalOpts: !evalOpts {}
+inputs:
+- !input
+  Required: true
+  coordType: !coordT
+    Coordtypevec3: true
+  contextType: !contextT
+    Contexttypecontext: true
+  returnType: !returnT
+    Returntypesdf: true
+- !input
+  Localalias: irradianceField
+  coordType: !coordT
+    Coordtypevec3: true
+  contextType: !contextT
+    Contexttypematerialcontext: true
+  returnType: !returnT
+    Returntypevec4: true
+- !input
+  Localalias: reflectanceField
+  coordType: !coordT
+    Coordtypevec3: true
+  contextType: !contextT
+    Contexttypematerialcontext: true
+  returnType: !returnT
+    Returntypevec4: true
+- !input
+  Localalias: baseColorField
+  coordType: !coordT
+    Coordtypevec3: true
+  contextType: !contextT
+    Contexttypematerialcontext: true
+  returnType: !returnT
+    Returntypefloat: true
+    Returntypevec4: true
+- !input
+  Localalias: roughnessField
+  coordType: !coordT
+    Coordtypevec3: true
+  contextType: !contextT
+    Contexttypematerialcontext: true
+  returnType: !returnT
+    Returntypefloat: true
+- !input
+  Localalias: metallicField
+  coordType: !coordT
+    Coordtypevec3: true
+  contextType: !contextT
+    Contexttypematerialcontext: true
+  returnType: !returnT
+    Returntypefloat: true

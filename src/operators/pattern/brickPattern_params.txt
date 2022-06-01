@@ -1,0 +1,2 @@
+names	source	handling	readOnlyHandling	conversion	enable
+Translate[xy] Size[xy] Shift Thickness Blending	param	runtime	macro		1

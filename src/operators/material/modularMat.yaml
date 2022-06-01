@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.material.modularMat
-  opVersion: '15'
+  opVersion: '16'
   opStatus: default
 opDef: !def
   enable: !expr
@@ -20,12 +20,7 @@ opDef: !def
   material: !text
     file: src/operators/material/modularMat_material.glsl
     name: material
-  useParams: Basecolor[rgb]
-  macroParams:
-  - Uselightcolor
-  - Uselocalpos
-  - Enableao
-  - Enablereflection
+  paramGroupTable: eval_params
   macroTable: !table
     file: src/operators/material/modularMat_macros.txt
     name: macro_exprs
@@ -41,3 +36,36 @@ opDef: !def
     file: src/operators/material/modularMat.md
     name: help
   shortcuts: mm
+inputs:
+- !input
+  Required: true
+  coordType: !coordT
+    Coordtypevec3: true
+  contextType: !contextT
+    Contexttypecontext: true
+  returnType: !returnT
+    Returntypesdf: true
+- !input
+  coordType: !coordT
+    Coordtypevec3: true
+  contextType: !contextT
+    Contexttypematerialcontext: true
+  returnType: !returnT
+    Returntypefloat: true
+    Returntypevec4: true
+- !input
+  coordType: !coordT
+    Coordtypevec3: true
+  contextType: !contextT
+    Contexttypematerialcontext: true
+  returnType: !returnT
+    Returntypefloat: true
+    Returntypevec4: true
+- !input
+  coordType: !coordT
+    Coordtypevec3: true
+  contextType: !contextT
+    Contexttypematerialcontext: true
+  returnType: !returnT
+    Returntypefloat: true
+    Returntypevec4: true

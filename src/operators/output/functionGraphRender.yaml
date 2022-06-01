@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.output.functionGraphRender
-  opVersion: '25'
+  opVersion: '26'
   opStatus: default
 opDef: !def
   enable: true
@@ -15,16 +15,7 @@ opDef: !def
   function: !text
     file: src/operators/output/functionGraphRender_function.glsl
     name: functionTemplate
-  useParams:
-  - Domainlow
-  - Domainhigh
-  - Rangelow
-  - Rangehigh
-  - Linethickness
-  - Lineblending
-  macroParams:
-  - Show
-  - Axes
+  paramGroupTable: eval_params
   macroTable: macros
   help: !text
     file: src/operators/output/functionGraphRender.md

@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.sdf.octahedronSdf
-  opVersion: '6'
+  opVersion: '8'
   opStatus: default
 opDef: !def
   enable: true
@@ -14,15 +14,34 @@ opDef: !def
       Returntypesdf: true
   function: !text
     file: src/operators/sdf/octahedronSdf.glsl
-    name: functionTemplate
-  useParams:
-  - Translate[xyz]
-  - Radius
-  paramListTable: !expr
-    expr: op('switcher_params')
+    name: function
+  paramGroupTable: eval_params
   help: !text
     file: src/operators/sdf/octahedronSdf.md
     name: help
   keywords:
   - polyhedron
   - octahedron
+inputs:
+- !input
+  Localalias: radiusField
+  coordType: !coordT
+    Coordtypevec3: true
+  contextType: !contextT
+    Allcontexttype: true
+  returnType: !returnT
+    Returntypefloat: true
+elements:
+- !opElement
+  name: codeSwitcher_Combine
+  elementType: codeSwitcher
+  params:
+    Table: !table
+      file: src/operators/sdf/octahedronSdf_functions.txt
+      name: functions
+    Param: Function
+    Autoupdateparams: true
+    Manageparamstates: true
+    Alwaysincludeallparams: false
+    Switchmode: auto
+    Placeholder: BODY();

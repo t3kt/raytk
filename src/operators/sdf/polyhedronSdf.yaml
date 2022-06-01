@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.sdf.polyhedronSdf
-  opVersion: '6'
+  opVersion: '8'
   opStatus: beta
 opDef: !def
   enable: true
@@ -20,20 +20,33 @@ opDef: !def
     name: init
   function: !text
     file: src/operators/sdf/polyhedronSdf.glsl
-    name: functionTemplate
-  useParams:
-  - Type
-  - U
-  - V
-  - W
-  - Enablefaces
-  - Enablesegments
-  - Enablevertices
-  - Segmentsize
-  - Vertexsize
-  - Radius
-  - Faceradius
-  - Segmentradius
-  - Vertexradius
-  paramListTable: mergeParams
+    name: function
+  paramGroupTable: eval_params
   libraryNames: raytkCombine
+inputs:
+- !input
+  Localalias: vertexShape
+  coordType: !coordT
+    Coordtypevec3: true
+  contextType: !contextT
+    Allcontexttype: true
+  returnType: !returnT
+    Returntypesdf: true
+elements:
+- !opElement
+  name: combiner
+  elementType: combiner
+  params:
+    Includenone: false
+    Modeparam: Combine
+    Swapinputsparam: ''
+    Radiusparam: Blendradius
+    Numberparam: Blendnumber
+    Offsetparam: Blendoffset
+    Radiusfield: ''
+    Offsetfield: ''
+    Numberfield: ''
+    Manageparamstates: true
+    Switchmode: auto
+    Prepcodeplaceholder: MERGE_PREP();
+    Bodycodeplaceholder: MERGE_BODY();

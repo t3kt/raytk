@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.sdf.kaliGeneratorSdf
-  opVersion: '3'
+  opVersion: '4'
   opStatus: default
 opDef: !def
   enable: true
@@ -15,13 +15,7 @@ opDef: !def
   function: !text
     file: src/operators/sdf/kaliGeneratorSdf.glsl
     name: functionTemplate
-  useParams:
-  - Steptranslate[xyz]
-  - Steps
-  - Boxsize[xyz]
-  - Fractalangle
-  - Boxround
-  angleParams: Fractalangle
+  paramGroupTable: eval_params
   help: !text
     file: src/operators/sdf/kaliGeneratorSdf.md
     name: help

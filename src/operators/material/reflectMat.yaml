@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.material.reflectMat
-  opVersion: '9'
+  opVersion: '10'
   opStatus: beta
 opDef: !def
   enable: !expr
@@ -20,15 +20,18 @@ opDef: !def
   material: !text
     file: src/operators/material/reflectMat_material.glsl
     name: material
-  useParams:
-  - Color[rgb]
-  - Shine
-  - Ks
-  - Reflectionamount
-  - Fresnel
-  macroParams: Enableshadow
+  paramGroupTable: eval_params
   macroTable: !table
     file: src/operators/material/reflectMat_macros.txt
     name: macro_exprs
     evaluate: true
     evalOpts: !evalOpts {}
+inputs:
+- !input
+  Required: true
+  coordType: !coordT
+    Coordtypevec3: true
+  contextType: !contextT
+    Contexttypecontext: true
+  returnType: !returnT
+    Returntypesdf: true

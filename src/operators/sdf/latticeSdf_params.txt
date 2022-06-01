@@ -1,0 +1,2 @@
+names	source	handling	readOnlyHandling	conversion	enable
+Shape Thickness Spacing Blendradius	param	runtime	macro		1

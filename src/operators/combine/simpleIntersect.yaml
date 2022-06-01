@@ -1,39 +1,28 @@
 !rop
 meta: !meta
   opType: raytk.operators.combine.simpleIntersect
-  opVersion: '12'
+  opVersion: '13'
   opStatus: default
 opDef: !def
   enable: !expr
-    expr: 'op(''..'').par.Enable'
+    expr: op('..').par.Enable
+  useRuntimeBypass: true
   typeSpec: !ropTypes
     coordType: !coordT
       Allcoordtype: true
-      Coordtypefloat: false
-      Coordtypevec2: false
-      Coordtypevec3: true
     contextType: !contextT
       Allcontexttype: true
-      Contexttypecontext: true
-      Contexttypematerialcontext: false
-      Contexttypecameracontext: false
-      Contexttypelightcontext: false
-      Contexttyperaycontext: false
-      Contexttypeparticlecontext: false
     returnType: !returnT
-      Allreturntype: false
       Returntypesdf: true
       Returntypefloat: true
-      Returntypevec4: false
-      Returntyperay: false
-      Returntypelight: false
-      Returntypeparticle: false
   function: !text
     file: src/operators/combine/simpleIntersect.glsl
     name: functionTemplate
   libraryNames: raytkCombine
   generatedMacroTables: multiInputHandler_macros
-  help: help
+  help: !text
+    file: src/operators/combine/simpleIntersect.md
+    name: help
 paramPages:
 - !page
   name: Combine
@@ -55,176 +44,79 @@ multiInput: !multiInput
   - !input
     coordType: !coordT
       Allcoordtype: true
-      Coordtypefloat: false
-      Coordtypevec2: true
-      Coordtypevec3: true
     contextType: !contextT
       Allcontexttype: true
-      Contexttypecontext: true
-      Contexttypematerialcontext: true
-      Contexttypecameracontext: true
-      Contexttypelightcontext: true
-      Contexttyperaycontext: true
-      Contexttypeparticlecontext: false
     returnType: !returnT
-      Allreturntype: false
       Returntypesdf: true
       Returntypefloat: true
-      Returntypevec4: false
-      Returntyperay: false
-      Returntypelight: false
-      Returntypeparticle: false
   - !input
     coordType: !coordT
       Allcoordtype: true
-      Coordtypefloat: false
-      Coordtypevec2: true
-      Coordtypevec3: true
     contextType: !contextT
       Allcontexttype: true
-      Contexttypecontext: true
-      Contexttypematerialcontext: true
-      Contexttypecameracontext: true
-      Contexttypelightcontext: true
-      Contexttyperaycontext: true
-      Contexttypeparticlecontext: false
     returnType: !returnT
-      Allreturntype: false
       Returntypesdf: true
       Returntypefloat: true
-      Returntypevec4: false
-      Returntyperay: false
-      Returntypelight: false
-      Returntypeparticle: false
   - !input
     coordType: !coordT
       Allcoordtype: true
-      Coordtypefloat: false
-      Coordtypevec2: true
-      Coordtypevec3: true
     contextType: !contextT
       Allcontexttype: true
-      Contexttypecontext: true
-      Contexttypematerialcontext: true
-      Contexttypecameracontext: true
-      Contexttypelightcontext: true
-      Contexttyperaycontext: true
-      Contexttypeparticlecontext: false
     returnType: !returnT
-      Allreturntype: false
       Returntypesdf: true
       Returntypefloat: true
-      Returntypevec4: false
-      Returntyperay: false
-      Returntypelight: false
-      Returntypeparticle: false
   - !input
     coordType: !coordT
       Allcoordtype: true
-      Coordtypefloat: false
-      Coordtypevec2: true
-      Coordtypevec3: true
     contextType: !contextT
       Allcontexttype: true
-      Contexttypecontext: true
-      Contexttypematerialcontext: true
-      Contexttypecameracontext: true
-      Contexttypelightcontext: true
-      Contexttyperaycontext: true
-      Contexttypeparticlecontext: false
     returnType: !returnT
-      Allreturntype: false
       Returntypesdf: true
       Returntypefloat: true
-      Returntypevec4: false
-      Returntyperay: false
-      Returntypelight: false
-      Returntypeparticle: false
   - !input
     coordType: !coordT
       Allcoordtype: true
-      Coordtypefloat: false
-      Coordtypevec2: true
-      Coordtypevec3: true
     contextType: !contextT
       Allcontexttype: true
-      Contexttypecontext: true
-      Contexttypematerialcontext: true
-      Contexttypecameracontext: true
-      Contexttypelightcontext: true
-      Contexttyperaycontext: true
-      Contexttypeparticlecontext: false
     returnType: !returnT
-      Allreturntype: false
       Returntypesdf: true
       Returntypefloat: true
-      Returntypevec4: false
-      Returntyperay: false
-      Returntypelight: false
-      Returntypeparticle: false
   - !input
     coordType: !coordT
       Allcoordtype: true
-      Coordtypefloat: false
-      Coordtypevec2: true
-      Coordtypevec3: true
     contextType: !contextT
       Allcontexttype: true
-      Contexttypecontext: true
-      Contexttypematerialcontext: true
-      Contexttypecameracontext: true
-      Contexttypelightcontext: true
-      Contexttyperaycontext: true
-      Contexttypeparticlecontext: false
     returnType: !returnT
-      Allreturntype: false
       Returntypesdf: true
       Returntypefloat: true
-      Returntypevec4: false
-      Returntyperay: false
-      Returntypelight: false
-      Returntypeparticle: false
   - !input
     coordType: !coordT
       Allcoordtype: true
-      Coordtypefloat: false
-      Coordtypevec2: true
-      Coordtypevec3: true
     contextType: !contextT
       Allcontexttype: true
-      Contexttypecontext: true
-      Contexttypematerialcontext: true
-      Contexttypecameracontext: true
-      Contexttypelightcontext: true
-      Contexttyperaycontext: true
-      Contexttypeparticlecontext: false
     returnType: !returnT
-      Allreturntype: false
       Returntypesdf: true
       Returntypefloat: true
-      Returntypevec4: false
-      Returntyperay: false
-      Returntypelight: false
-      Returntypeparticle: false
   - !input
     coordType: !coordT
       Allcoordtype: true
-      Coordtypefloat: false
-      Coordtypevec2: true
-      Coordtypevec3: true
     contextType: !contextT
       Allcontexttype: true
-      Contexttypecontext: true
-      Contexttypematerialcontext: true
-      Contexttypecameracontext: true
-      Contexttypelightcontext: true
-      Contexttyperaycontext: true
-      Contexttypeparticlecontext: false
     returnType: !returnT
-      Allreturntype: false
       Returntypesdf: true
       Returntypefloat: true
-      Returntypevec4: false
-      Returntyperay: false
-      Returntypelight: false
-      Returntypeparticle: false
+elements:
+- !opElement
+  name: aggregateCodeGenerator
+  elementType: aggregateCodeGenerator
+  params:
+    Startindex: 0
+    Exprindexoffset: 0
+    Reverseorder: false
+    Initmode: firststep
+    Numberingmode: sequential
+    Startstmt: ReturnT res = createSdf(0);
+    Defaultstmt: ReturnT res = createNonHitSdf();
+    Firststepstmt: ReturnT res = THIS_INPUT_$(p, ctx);
+    Stepstmt: res = cmb_simpleIntersect(res, THIS_INPUT_$(p, ctx));
+    Bodycodeplaceholder: ''

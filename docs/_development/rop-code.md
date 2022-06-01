@@ -54,7 +54,7 @@ The generated shader contains combined elements from all of the blocks of all of
 
 Each parameter defined by a ROP and listed in the definition's parameter list and special parameter list will be made available to all code as an alias macro like `THIS_Paramname` that references whatever the source of the parameter value is. Typically this will be a reference to the uniform array that is used to pass in parameter values. In some cases they could also be inlined values.
 
-For multi-part parameters (`Par` styles including `XYZ`, `RGBA`, `UV` and `Float`/`Int` with more than 1 part), several aliases are generated. Each part in the macro will have its own alias, using each parameter's tuplet suffix (e.g. `THIS_Translatex`). There will also be an alias that evaluates to a value of the relevant `vec*` type, with the name of the tuplet without any suffix, which combines all of those parts (e.g. `THIS_Translate`).
+For multi-part parameters (`Par` styles including `XYZ`, `RGBA`, `UV` and `Float`/`Int` with more than 1 part) the alias evaluates to a value of the relevant `vec*` type, with the name of the tuplet without any suffix, which combines all of those parts (e.g. `THIS_Translate`).
 
 For parameters in the definition's "macro" parameter list, an alias will be generated that evaluates to the literal inlined value of that parameter. For numeric parameters, this will be a simple inline float/int value.
 

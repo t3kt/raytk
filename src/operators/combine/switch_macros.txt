@@ -1,0 +1,1 @@
+'1'	'THIS_lastInput'	1 if op('multiInput_info')['inputCount']==0 else max(tdu.digits(ch.name) for ch in op('multiInput_info').chans('hasInput*') if ch > 0)

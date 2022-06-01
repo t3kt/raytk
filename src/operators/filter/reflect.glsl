@@ -17,11 +17,14 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 	if (THIS_Enable <= 0.5) {
 		THIS_exposeSide(ctx, 1.);
 	} else {
-		#pragma r:if THIS_Direction_custom
-		vec3 planeNormal = THIS_Planenormal;
-		#pragma r:else
-		vec3 planeNormal = THIS_AXIS_VEC * THIS_DIR;
+		float shift = THIS_Shift;
+		#pragma r:if THIS_HAS_INPUT_shiftField
+		shift += inputOp_shiftField(p, ctx);
 		#pragma r:endif
+		vec3 planeNormal;
+		int axis;
+		float dir;
+		DIRECTION_BODY();
 		#pragma r:if THIS_COORD_TYPE_vec2
 		vec3 q = vec3(p, 0.);
 		planeNormal.z = 0.;
@@ -29,33 +32,25 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 		vec3 q = p;
 		#pragma r:endif
 		planeNormal = normalize(planeNormal);
-		float shift = THIS_Shift;
-		#pragma r:if THIS_HAS_INPUT_shiftField
-		shift += inputOp_shiftField(p, ctx);
-		#pragma r:endif
-		q -= planeNormal * shift * THIS_DIR;
+		q -= planeNormal * shift * dir;
 
-		#pragma r:if THIS_Direction_custom
-		{
+		if (axis == -1) {
 			float t = pReflect(q, planeNormal, 0.);
 			THIS_exposeSide(ctx, t);
-		}
-		#pragma r:else
-		{
-			float q0 = q.THIS_AXIS * THIS_DIR;
+		} else {
+			float q0 = getAxis(q, axis) * dir;
 			THIS_exposeSide(ctx, sgn(q0));
 
 			float b = THIS_Blend * THIS_Enableblend;
 			q0 = sabs(q0, b);
 
-			q.THIS_AXIS = q0 * THIS_DIR;
+			setAxis(q, axis, q0 * dir);
 		}
-		#pragma r:endif
 		float offset = THIS_Offset;
 		#pragma r:if THIS_HAS_INPUT_offsetField
 		offset += inputOp_offsetField(p, ctx);
 		#pragma r:endif
-		q -= planeNormal * offset * THIS_DIR;
+		q -= planeNormal * offset * dir;
 
 		#pragma r:if THIS_COORD_TYPE_vec2
 		p = q.xy;

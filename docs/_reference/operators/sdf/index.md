@@ -63,6 +63,8 @@ cat:
     name: chamferBoxSdf
   - name: coneSdf
     summary: Defines a cone or capped cone shape.
+  - name: crescentSdf
+    status: beta
   - name: crossSdf
     summary: An SDF for a 3D cross of infinite length along each axis.
   - name: cutSphereSdf
@@ -116,6 +118,8 @@ cat:
     - spiral
     name: helixSdf
     summary: SDF for a helix (an elongated spiral).
+  - name: jointSdf
+    status: beta
   - keywords:
     - fractal
     - julia

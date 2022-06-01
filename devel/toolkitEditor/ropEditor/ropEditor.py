@@ -95,3 +95,4 @@ class ROPEditor:
 
 	def updateReturnTypeParMenu(self):
 		RaytkTools().updateReturnTypeParMenu(self.ROPInfo)
+		info = self.ROPInfo

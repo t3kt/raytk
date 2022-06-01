@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.combine.blend
-  opVersion: '14'
+  opVersion: '15'
   opStatus: default
 opDef: !def
   enable: !expr
@@ -20,9 +20,72 @@ opDef: !def
   function: !text
     file: src/operators/combine/blend.glsl
     name: function
-  useParams: Blend
-  macroParams: Usefield
+  paramGroupTable: eval_params
   generatedMacroTables: multiInputHandler_macros
   help: !text
     file: src/operators/combine/blend.md
     name: help
+multiInput: !multiInput
+  Minimuminputs: 1
+  Coordtypereductionmode: common
+  Coordtypereductionscope: '*'
+  Contexttypereductionmode: common
+  Contexttypereductionscope: '*'
+  Returntypereductionmode: common
+  Returntypereductionscope: '*'
+  inputs:
+  - !input
+    coordType: !coordT
+      Allcoordtype: true
+    contextType: !contextT
+      Allcontexttype: true
+    returnType: !returnT
+      Returntypesdf: true
+      Returntypefloat: true
+      Returntypevec4: true
+      Returntyperay: true
+      Returntypelight: true
+  - !input
+    coordType: !coordT
+      Allcoordtype: true
+    contextType: !contextT
+      Allcontexttype: true
+    returnType: !returnT
+      Returntypesdf: true
+      Returntypefloat: true
+      Returntypevec4: true
+      Returntyperay: true
+      Returntypelight: true
+  - !input
+    coordType: !coordT
+      Allcoordtype: true
+    contextType: !contextT
+      Allcontexttype: true
+    returnType: !returnT
+      Returntypesdf: true
+      Returntypefloat: true
+      Returntypevec4: true
+      Returntyperay: true
+      Returntypelight: true
+inputs:
+- !input
+  coordType: !coordT
+    Allcoordtype: true
+  contextType: !contextT
+    Allcontexttype: true
+  returnType: !returnT
+    Returntypesdf: true
+    Returntypefloat: true
+    Returntypevec4: true
+    Returntyperay: true
+    Returntypelight: true
+- !input
+  Source: !expr
+    expr: parent().par.Blendsource or ''
+  Localalias: blendField
+  coordType: !coordT
+    Allcoordtype: true
+  contextType: !contextT
+    Allcontexttype: true
+  returnType: !returnT
+    Returntypefloat: true

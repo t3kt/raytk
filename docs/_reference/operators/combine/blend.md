@@ -99,11 +99,10 @@ op:
     - float
     - vec2
     - vec3
-    label: Blend Source
-    name: Blendsource
+    label: blendField
+    name: blendField
     returnTypes:
     - float
-    summary: Help not available.
   name: blend
   opType: raytk.operators.combine.blend
   parameters:

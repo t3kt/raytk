@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.sdf.generalizedPolyhedronSdf
-  opVersion: '7'
+  opVersion: '9'
   opStatus: default
 opDef: !def
   enable: true
@@ -15,13 +15,7 @@ opDef: !def
   function: !text
     file: src/operators/sdf/generalizedPolyhedronSdf.glsl
     name: functionTemplate
-  useParams:
-  - Translate[xyz]
-  - Radius
-  - Begin
-  - End
-  - Exponent
-  macroParams: Useexponent
+  paramGroupTable: eval_params
   libraryNames: !expr
     expr: op('generalizedPolyhedronSdf_lib')
   macroTable: !table
@@ -37,3 +31,20 @@ opDef: !def
   - octahedron
   - dodecahedron
   - icosahedron
+inputs:
+- !input
+  Localalias: radiusField
+  coordType: !coordT
+    Coordtypevec3: true
+  contextType: !contextT
+    Allcontexttype: true
+  returnType: !returnT
+    Returntypefloat: true
+- !input
+  Localalias: beginEndField
+  coordType: !coordT
+    Coordtypevec3: true
+  contextType: !contextT
+    Allcontexttype: true
+  returnType: !returnT
+    Returntypevec4: true
