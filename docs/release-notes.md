@@ -8,6 +8,8 @@
   * This significantly improves performance, but means that if they change the shader has to recompile.
   * The new `sceneState` component helps with switching scenes between a "locked" optimized state and an "unlocked"
     editing state.
+* New SDFs and other operators.
+* New parameters and field inputs.
 
 ### Details
 
