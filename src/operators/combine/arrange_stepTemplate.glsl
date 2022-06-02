@@ -3,5 +3,11 @@ if (THIS_Enable$ > 0.5) {
   #ifdef THIS_Enabletranslate
   p1 = p - THIS_asCoordT(THIS_Translate$);
   #endif
-  THIS_merge(res1, inputOp$(p1, ctx), r, n, o);
+  res2 = inputOp$(p1, ctx);
+  if (initialized) {
+    THIS_merge(res1, res2, r, n, o);
+  } else {
+    res1 = res2;
+    initialized = true;
+  }
 }
