@@ -1004,7 +1004,7 @@ def _isMaster(o: 'COMP'):
 
 def focusFirstCustomParameterPage(o: 'COMP'):
 	if o and o.customPages:
-		o.par.pageindex = len(o.pages)
+		o.currentPage = o.customPages[0]
 
 def detachTox(comp: 'COMP'):
 	if not comp or comp.par['externaltox'] is None:
