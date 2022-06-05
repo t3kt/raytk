@@ -46,14 +46,7 @@ class OutputOp:
 		renderTop = self._renderTop()
 		if not renderTop:
 			return
-		for conn in renderTop.inputConnectors:
-			while conn.connections:
-				conn.disconnect()
-		fixedInputs = self.ownerComp.par.Fixedtexinputs.evalOPs()  # type: List[TOP]
-		if fixedInputs:
-			for inputTop in fixedInputs:
-				if inputTop:
-					inputTop.outputConnectors[0].connect(renderTop)
+		inputs = self.ownerComp.par.Fixedtexinputs.evalOPs()  # type: List[TOP]
 		host = self._host()
 		host.clearScriptErrors(error='texerr*')
 		texSources = self.ownerComp.op('textureSources')  # type: DAT
@@ -62,7 +55,5 @@ class OutputOp:
 			if i >= len(selectors):
 				host.addScriptError(f'texerr: Too many texture sources (failed on #{i})')
 				return
-			select = selectors[i]
-			while select.outputConnectors[0].connections:
-				select.outputConnectors[0].disconnect()
-			select.outputConnectors[0].connect(renderTop)
+			inputs.append(selectors[i])
+		renderTop.setInputs(inputs)
