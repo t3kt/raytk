@@ -34,13 +34,13 @@ Ray getViewRay(vec2 shift) {
 	return evaluateCamera(fragCoord, ctx);
 }
 
-#ifdef THIS_USE_LIGHT_FUNC
-
 Light getLight(vec3 p, LightContext ctx) {
+#ifdef THIS_USE_LIGHT_FUNC
 	return inputOp3(p, ctx);
-}
-
+#else
+	return createLight(vec3(0.), vec3(5.8, 4., 3.5));
 #endif
+}
 
 #ifdef THIS_USE_LIMIT_BOX
 bool checkLimit(vec3 p) {

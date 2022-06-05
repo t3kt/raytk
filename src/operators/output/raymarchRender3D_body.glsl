@@ -1,15 +1,4 @@
-uniform vec3 uCamPos;
-uniform vec3 uCamRot;  // in radians
-uniform float uCamFov;  // in radians
-
-#ifndef THIS_USE_LIGHT_FUNC
-uniform vec3 uLightPos1;
-uniform vec3 uLightColor1 = vec3(1);
-#endif
-
 uniform float uUseRenderDepth;
-
-
 
 float hash1( float n )
 {
@@ -293,13 +282,6 @@ vec4 getColor(vec3 p, MaterialContext matCtx) {
 	popStage(priorStage);
 	return vec4(col, 1.);
 }
-
-#ifndef THIS_USE_LIGHT_FUNC
-Light getLight(vec3 p, LightContext lightCtx) {
-	Light light = createLight(uLightPos1, uLightColor1);
-	return light;
-}
-#endif
 
 #if defined(RAYTK_USE_REFLECTION) && defined(THIS_Enablereflection)
 
