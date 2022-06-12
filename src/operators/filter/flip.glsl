@@ -38,22 +38,22 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 		#pragma r:if THIS_EXPOSE_index
 		THIS_index = 0;
 		#pragma r:endif
-		#pragma r:if THIS_Mergetype_none
-		res = inputOp1(q, ctx);
-		#pragma r:else
-		res = inputOp1(p, ctx);
-		#pragma r:if !THIS_Iterationtype_none
-		setIterationIndex(ctx, iterB);
-		#pragma r:endif
-		#pragma r:if THIS_EXPOSE_sign
-		THIS_sign = -1;
-		#pragma r:endif
-		#pragma r:if THIS_EXPOSE_index
-		THIS_index = 1;
-		#pragma r:endif
-		Sdf res2 = inputOp1(q, ctx);
-		THIS_merge(res, res2, p, ctx);
-		#pragma r:endif
+		if (int(THIS_Mergetype) == 0) {
+			res = inputOp1(q, ctx);
+		} else {
+			res = inputOp1(p, ctx);
+			#pragma r:if !THIS_Iterationtype_none
+			setIterationIndex(ctx, iterB);
+			#pragma r:endif
+			#pragma r:if THIS_EXPOSE_sign
+			THIS_sign = -1;
+			#pragma r:endif
+			#pragma r:if THIS_EXPOSE_index
+			THIS_index = 1;
+			#pragma r:endif
+			Sdf res2 = inputOp1(q, ctx);
+			THIS_merge(res, res2, p, ctx);
+		}
 	}
 	return res;
 }
