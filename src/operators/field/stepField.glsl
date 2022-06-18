@@ -29,5 +29,17 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 	x = 1.0 - x;
 	#endif
 
-	return mix(THIS_asReturnT(THIS_Value1), THIS_asReturnT(THIS_Value2), x);
+	#ifdef THIS_HAS_INPUT_lowValue
+	ReturnT low = THIS_asReturnT(inputOp_lowValue(p, ctx));
+	#else
+	ReturnT low = THIS_asReturnT(THIS_Value1);
+	#endif
+
+	#ifdef THIS_HAS_INPUT_highValue
+	ReturnT high = THIS_asReturnT(inputOp_highValue(p, ctx));
+	#else
+	ReturnT high = THIS_asReturnT(THIS_Value2);
+	#endif
+
+	return mix(low, high, x);
 }
