@@ -61,6 +61,19 @@ void THIS_apply(inout CoordT p, inout ContextT ctx) {
 	#pragma r:if THIS_EXPOSE_tiledquad
 	THIS_tiledquad = quad;
 	#pragma r:endif
+	#pragma r:if THIS_EXPOSE_normcoord
+	{
+		#pragma r:if !THIS_Uselimit
+		THIS_normcoord = c;
+		#pragma r:elif THIS_Limittype_start
+		THIS_normcoord = c - start;
+		#pragma r:elif THIS_Limittype_stop
+		THIS_normcoord = -c + stop;
+		#pragma r:elif THIS_Limittype_both
+		THIS_normcoord = map01(c, start, stop);
+		#pragma r:endif
+	}
+	#pragma r:endif
 	// offset field can use iteration
 	vec2 o = THIS_Offset;
 	#pragma r:if THIS_HAS_INPUT_offsetField
