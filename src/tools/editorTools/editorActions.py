@@ -695,3 +695,11 @@ class _ActionImpl(Action):
 				o.par[name] = val
 		ActionUtils.createROP(self.ropType, init)
 
+def _createConvertAction(text: str, oldType: str, newType: str):
+	def isValid(ctx: ActionContext):
+		return ctx.primaryRopState and ctx.primaryRopState.info.opType == oldType and ActionUtils.isKnownRopType(newType)
+
+	def execute(ctx: ActionContext):
+		oldOp = ctx.primaryRop
+		pass
+	pass
