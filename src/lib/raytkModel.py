@@ -529,8 +529,6 @@ class ROPDef(ModelObject):
 				shader and made available to the ROP.
 			specialParams: Spec for the names of values that come from a CHOP input
 				and are made available to the ROP.
-			angleParams: Spec for names of ROP Pars that should be converted to
-				radians before being passed to the shader.
 			macroParams: Spec for names of ROP Pars that should be made available to
 				the ROP as preprocessor definitions.
 			libraryNames: Spec for names of shared libraries that the ROP depends on.
@@ -562,7 +560,6 @@ class ROPDef(ModelObject):
 
 	useParams: ValueOrListOrExprT = None
 	specialParams: ValueOrListOrExprT = None
-	angleParams: ValueOrListOrExprT = None
 	macroParams: ValueOrListOrExprT = None
 	lockParams: ValueOrListOrExprT = None
 
@@ -607,7 +604,6 @@ class ROPDef(ModelObject):
 
 		self.useParams = _valOrExprFromPar(pars.Params, useList=True)
 		self.specialParams = _valOrExprFromPar(pars.Specialparams, useList=True)
-		self.angleParams = _valOrExprFromPar(pars.Angleparams, useList=True)
 		self.macroParams = _valOrExprFromPar(pars.Macroparams, useList=True)
 		self.lockParams = _valOrExprFromPar(pars.Lockpars, useList=True)
 
@@ -642,7 +638,6 @@ class ROPDef(ModelObject):
 
 		_updatePar(pars.Params, self.useParams)
 		_updatePar(pars.Specialparams, self.specialParams)
-		_updatePar(pars.Angleparams, self.angleParams)
 		_updatePar(pars.Macroparams, self.macroParams)
 		_updatePar(pars.Lockpars, self.lockParams)
 
@@ -957,7 +952,6 @@ class ROPSpecLoader:
 
 		_updatePar(p.Params, d.useParams)
 		_updatePar(p.Specialparams, d.specialParams)
-		_updatePar(p.Angleparams, d.angleParams)
 		_updatePar(p.Macroparams, d.macroParams)
 		_updatePar(p.Librarynames, d.libraryNames)
 

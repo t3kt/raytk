@@ -21,7 +21,6 @@ _opDefParamNames = [
 	'Paramsop',
 	'Params',
 	'Specialparams',
-	'Angleparams',
 	'Macroparams',
 	'Paramgrouptable',
 	'Buffertable',

@@ -211,12 +211,6 @@ def buildParamSpecTable(dat: 'scriptDAT', paramListTable: 'DAT', paramGroupTable
 		for name in specialNames:
 			addSpecialPar(name)
 
-		# Update conversions from opDefinition Angleparams par
-		for par in _getRegularParams(getNamesFromListTable(table, 'angleParams')):
-			cell = dat[par.name, 'conversion']
-			if cell is not None:
-				cell.val = 'angle'
-
 	addFromListTable(paramListTable)
 
 	def addFromGroupTable(table: 'DAT'):

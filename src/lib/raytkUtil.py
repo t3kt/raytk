@@ -99,7 +99,6 @@ class OpDefParsT(_OpMetaPars):
 	Paramgrouptable: 'DatParamT'
 	Params: 'StrParamT'
 	Specialparams: 'StrParamT'
-	Angleparams: 'StrParamT'
 	Macroparams: 'StrParamT'
 	Callbacks: 'DatParamT'
 	Librarynames: 'StrParamT'
