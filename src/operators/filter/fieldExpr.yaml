@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.filter.fieldExpr
-  opVersion: '10'
+  opVersion: '11'
   opStatus: beta
 opDef: !def
   enable: !expr
@@ -47,9 +47,7 @@ opDef: !def
   function: !text
     file: src/operators/filter/fieldExpr.glsl
     name: functionTemplate
-  useParams:
-  - Param[1-2]
-  - Vecparam[1-2][1-4]
+  paramGroupTable: eval_params
   macroTable: !table
     file: src/operators/filter/fieldExpr_macros.txt
     name: macro_exprs

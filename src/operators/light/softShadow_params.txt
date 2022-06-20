@@ -1,0 +1,2 @@
+names	source	handling	readOnlyHandling	conversion	enable
+Hardness Mindist Maxdist	param	runtime	macro		1

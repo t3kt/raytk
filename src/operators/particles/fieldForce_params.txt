@@ -1,0 +1,2 @@
+names	source	handling	readOnlyHandling	conversion	enable
+Active Amount	param	runtime	macro		1

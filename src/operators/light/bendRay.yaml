@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.light.bendRay
-  opVersion: '3'
+  opVersion: '4'
   opStatus: alpha
 opDef: !def
   enable: !expr
@@ -16,7 +16,7 @@ opDef: !def
   function: !text
     file: src/operators/light/bendRay.glsl
     name: functionTemplate
-  useParams: Amount
+  paramGroupTable: eval_params
 inputs:
 - !input
   Localalias: rotateField

@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.particles.collisionSurface
-  opVersion: '1'
+  opVersion: '2'
   opStatus: alpha
 opDef: !def
   enable: true
@@ -15,7 +15,7 @@ opDef: !def
   function: !text
     file: src/operators/particles/collisionSurface.glsl
     name: functionTemplate
-  useParams: Active
+  paramGroupTable: eval_params
 inputs:
 - !input
   Localalias: surface

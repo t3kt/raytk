@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.material.reflectContrib
-  opVersion: '5'
+  opVersion: '6'
   opStatus: beta
 opDef: !def
   enable: true
@@ -15,10 +15,7 @@ opDef: !def
   function: !text
     file: src/operators/material/reflectContrib.glsl
     name: function
-  useParams:
-  - Level
-  - Ks
-  - Fresnel
+  paramGroupTable: eval_params
   macroTable: !table
     file: src/operators/material/reflectContrib_macros.txt
     name: macro_exprs

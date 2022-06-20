@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.field.multiPointDistanceField
-  opVersion: '2'
+  opVersion: '3'
   opStatus: default
 opDef: !def
   enable: true
@@ -31,8 +31,7 @@ opDef: !def
   function: !text
     file: src/operators/field/multiPointDistanceField.glsl
     name: functionTemplate
-  useParams: !expr
-    expr: '''Point1[X] Point2[X] Point3[X] Point4[X]''.replace(''X'', ''xyz''[:parent().par.Coordtype.menuIndex+1])'
+  paramGroupTable: eval_params
   help: !text
     file: src/operators/field/multiPointDistanceField.md
     name: help

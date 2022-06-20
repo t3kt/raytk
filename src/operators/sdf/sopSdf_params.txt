@@ -1,0 +1,2 @@
+names	source	handling	readOnlyHandling	conversion	enable
+Voxelorigin[xyz] Boundingboxsize[xyz] Collisionradius	param	runtime	macro		1

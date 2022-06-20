@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.material.goochMat
-  opVersion: '9'
+  opVersion: '10'
   opStatus: deprecated
 opDef: !def
   enable: !expr
@@ -20,10 +20,7 @@ opDef: !def
   material: !text
     file: src/operators/material/goochMat_material.glsl
     name: material
-  useParams:
-  - Basecolor[rgb]
-  - Warmcolor[rgb]
-  - Coolcolor[rgb]
+  paramGroupTable: eval_params
   help: !text
     file: src/operators/material/goochMat.md
     name: help

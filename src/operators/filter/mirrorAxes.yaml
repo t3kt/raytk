@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.filter.mirrorAxes
-  opVersion: '5'
+  opVersion: '6'
   opStatus: beta
 opDef: !def
   enable: !expr
@@ -19,10 +19,7 @@ opDef: !def
   function: !text
     file: src/operators/filter/mirrorAxes.glsl
     name: function
-  useParams:
-  - Center[xyz]
-  - Offset[xyz]
-  - Flipside[xyz]
+  paramGroupTable: eval_params
   macroTable: !table
     file: src/operators/filter/mirrorAxes_macros.txt
     name: macro_exprs
