@@ -2,6 +2,6 @@
   "meta": {
     "opStatus": "default",
     "opType": "raytk.operators.camera.linkedCamera",
-    "opVersion": 4
+    "opVersion": 5
   }
 }

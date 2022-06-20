@@ -1,0 +1,2 @@
+names	source	handling	readOnlyHandling	conversion	enable
+Size1 Size2 Prescale[xyz]	param	runtime	macro		1

@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.combine.combineFields
-  opVersion: '16'
+  opVersion: '17'
   opStatus: default
 opDef: !def
   enable: !expr
@@ -21,7 +21,7 @@ opDef: !def
   function: !text
     file: src/operators/combine/combineFields.glsl
     name: function
-  useParams: Swaporder
+  paramGroupTable: eval_params
   help: !text
     file: src/operators/combine/combineFields.md
     name: help
