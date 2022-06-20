@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.filter.iteratedTransform
-  opVersion: '17'
+  opVersion: '18'
   opStatus: default
 opDef: !def
   enable: !expr
@@ -28,7 +28,6 @@ opDef: !def
   - Enablescale
   - Scaletype
   - Iterationtype
-  paramListTable: paramListTable
   macroTable: !table
     file: src/operators/filter/iteratedTransform_macros.txt
     name: macro_exprs
@@ -86,3 +85,27 @@ inputs:
   returnType: !returnT
     Returntypefloat: true
     Returntypevec4: true
+elements:
+- !opElement
+  name: transformCodeGenerator
+  elementType: transformCodeGenerator
+  params:
+    Transformorder: !expr
+      expr: parent().par.Transformorder.eval()
+    Rotateorder: !expr
+      expr: parent().par.Rotateorder.eval()
+    Enabletranslate: !expr
+      expr: parent().par.Enabletranslate
+    Enablerotate: !expr
+      expr: parent().par.Enablerotate
+    Enablescale: !expr
+      expr: parent().par.Enablescale
+    Enablepivot: !expr
+      expr: parent().par.Enablepivot
+    Scaletype: !expr
+      expr: parent().par.Scaletype.eval()
+    Varname: p
+    Useparamvars: true
+    Force3d: false
+    Prepcodeplaceholder: TRANSFORM_INIT();
+    Bodycodeplaceholder: TRANSFORM_CODE();

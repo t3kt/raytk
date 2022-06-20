@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.filter.spread
-  opVersion: '1'
+  opVersion: '2'
   opStatus: alpha
 opDef: !def
   enable: !expr
@@ -22,7 +22,6 @@ opDef: !def
     file: src/operators/filter/spread.glsl
     name: function
   paramGroupTable: eval_params
-  paramListTable: switcher_params
 inputs:
 - !input
   Required: true

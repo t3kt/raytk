@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.field.texture3dField
-  opVersion: '6'
+  opVersion: '7'
   opStatus: beta
 opDef: !def
   enable: !expr
@@ -32,7 +32,7 @@ opDef: !def
     name: init
   function: !text
     file: src/operators/field/texture3dField.glsl
-    name: functionTemplate
+    name: function
   useParams:
   - Translate[xyz]
   - Scale[xyz]
@@ -40,7 +40,6 @@ opDef: !def
   - Extendmode
   - Texturetype
   lockParams: Zmode
-  paramListTable: switcher_params
   libraryNames: !expr
     expr: op('modZigZag')
   textureTable: !table
@@ -76,4 +75,4 @@ elements:
     Manageparamstates: true
     Alwaysincludeallparams: false
     Switchmode: auto
-    Placeholder: ''
+    Placeholder: ZMODE();

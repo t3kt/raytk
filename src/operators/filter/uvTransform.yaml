@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.filter.uvTransform
-  opVersion: '7'
+  opVersion: '8'
   opStatus: beta
 opDef: !def
   enable: !expr
@@ -21,7 +21,6 @@ opDef: !def
   macroParams:
   - Transformprimary
   - Transformsecondary
-  paramListTable: paramListTable
   help: !text
     file: src/operators/filter/uvTransform.md
     name: help
@@ -172,3 +171,27 @@ inputs:
     Allcontexttype: true
   returnType: !returnT
     Allreturntype: true
+elements:
+- !opElement
+  name: transformCodeGenerator
+  elementType: transformCodeGenerator
+  params:
+    Transformorder: !expr
+      expr: parent().par.Transformorder.eval()
+    Rotateorder: !expr
+      expr: parent().par.Rotateorder.eval()
+    Enabletranslate: !expr
+      expr: parent().par.Enabletranslate
+    Enablerotate: !expr
+      expr: parent().par.Enablerotate
+    Enablescale: !expr
+      expr: parent().par.Enablescale
+    Enablepivot: !expr
+      expr: parent().par.Enablepivot
+    Scaletype: !expr
+      expr: parent().par.Scaletype.eval()
+    Varname: p
+    Useparamvars: false
+    Force3d: true
+    Prepcodeplaceholder: ''
+    Bodycodeplaceholder: ''
