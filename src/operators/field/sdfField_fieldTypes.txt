@@ -1,7 +1,9 @@
-name	label
-dist	Distance
-inside	Inside
-outside	Outside
-surface	Surface
-surfaceinside	Surface Inside
-surfaceoutside	Surface Outside
+name	label	returnType	code	params	macro
+dist	Distance	float	res = d;	Offset	
+inside	Inside	float	res = smoothstep(0., b, -d);	Offset Blending	
+outside	Outside	float	res = smoothstep(0., b, d);	Offset Blending	
+surface	Surface	float	res = 1.0-smoothstep(0., b, abs(d) - t);	Offset Thickness Blending	
+surfaceinside	Surface Inside	float	res = (1.0 - smoothstep(0., b, abs(d) - t)) * (1.0-step(0., d));	Offset Thickness Blending	
+surfaceoutside	Surface Outside	float	res = (1.0 - smoothstep(0., b, abs(d) - t)) * (1.0-step(0., -d));	Offset Thickness Blending	
+uv	Surface Primary UV	vec4	res = sdfRes.uv;		RAYTK_USE_UV
+uv2	Surface Secondary UV	vec4	res = sdfRes.uv2;		RAYTK_USE_UV
