@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.field.valuePointsField
-  opVersion: '4'
+  opVersion: '5'
   opStatus: alpha
 opDef: !def
   enable: true
@@ -33,7 +33,6 @@ opDef: !def
   function: !text
     file: src/operators/field/valuePointsField.glsl
     name: functionTemplate
-  macroParams: Weightmode
   paramGroupTable: eval_params
   libraryNames: !expr
     expr: op('valuePointsField_lib')
