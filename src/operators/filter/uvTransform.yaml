@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.filter.uvTransform
-  opVersion: '8'
+  opVersion: '9'
   opStatus: beta
 opDef: !def
   enable: !expr
@@ -17,10 +17,7 @@ opDef: !def
   function: !text
     file: src/operators/filter/uvTransform.glsl
     name: function_template
-  angleParams: Rotate[xyz]
-  macroParams:
-  - Transformprimary
-  - Transformsecondary
+  paramGroupTable: eval_params
   help: !text
     file: src/operators/filter/uvTransform.md
     name: help

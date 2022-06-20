@@ -1,0 +1,4 @@
+names	source	handling	readOnlyHandling	conversion	enable
+'Enablerotate Enabletranslate Enablescale Scaletype Iterationtype'	'param'	'macro'			1
+'Iterations'	'param'	'runtime'	'macro'		1
+(op('custom_params').col(0) if op('custom_params').numRows > 0 else [])	'param'	'runtime'			1

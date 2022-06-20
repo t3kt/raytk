@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.filter.rotateNormals
-  opVersion: '6'
+  opVersion: '7'
   opStatus: beta
 opDef: !def
   enable: !expr
@@ -17,7 +17,6 @@ opDef: !def
   function: !text
     file: src/operators/filter/rotateNormals.glsl
     name: function_template
-  angleParams: Rotate[xyz]
   help: !text
     file: src/operators/filter/rotateNormals.md
     name: help

@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.filter.iteratedTransform
-  opVersion: '18'
+  opVersion: '19'
   opStatus: default
 opDef: !def
   enable: !expr
@@ -18,16 +18,7 @@ opDef: !def
   function: !text
     file: src/operators/filter/iteratedTransform.glsl
     name: function_template
-  useParams: !expr
-    expr: '[''Iterations''] + (op(''custom_params'').col(0) if op(''custom_params'').numRows
-      > 0 else [])'
-  angleParams: Rotate[xyz]
-  macroParams:
-  - Enablerotate
-  - Enabletranslate
-  - Enablescale
-  - Scaletype
-  - Iterationtype
+  paramGroupTable: eval_params
   macroTable: !table
     file: src/operators/filter/iteratedTransform_macros.txt
     name: macro_exprs
