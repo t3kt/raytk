@@ -1,12 +1,11 @@
 def onInitGetColumnNames(dat):
 	return [
-		'paramListTable', 'paramGroupTable', 'macroTable',
+		'paramGroupTable', 'macroTable',
 		'placeholder1', 'code1', 'placeholder2', 'code2', 'placeholder3', 'code3', 'placeholder4', 'code4'
 	]
 
 def onFindOPGetValues(dat, curOp, row):
 	return [
-		curOp.par['Paramlisttable'] or '',
 		curOp.par['Paramgrouptable'] or '',
 		curOp.par['Macrotable'] or '',
 		curOp.par['Placeholder1'] or '',

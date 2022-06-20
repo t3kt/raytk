@@ -567,7 +567,6 @@ class ROPDef(ModelObject):
 	lockParams: ValueOrListOrExprT = None
 
 	paramGroupTable: _TableSetting = None
-	paramListTable: _TableSetting = None
 
 	libraryNames: ValueOrListOrExprT = None
 
@@ -613,7 +612,6 @@ class ROPDef(ModelObject):
 		self.lockParams = _valOrExprFromPar(pars.Lockpars, useList=True)
 
 		self.paramGroupTable = _valOrExprFromPar(pars.Paramgrouptable)
-		self.paramListTable = _valOrExprFromPar(pars.Paramlisttable)
 
 		self.libraryNames = _valOrExprFromPar(pars.Librarynames, useList=True)
 
@@ -649,7 +647,6 @@ class ROPDef(ModelObject):
 		_updatePar(pars.Lockpars, self.lockParams)
 
 		_updatePar(pars.Paramgrouptable, self.paramGroupTable)
-		_updatePar(pars.Paramlisttable, self.paramListTable)
 
 		_updatePar(pars.Librarynames, self.libraryNames)
 

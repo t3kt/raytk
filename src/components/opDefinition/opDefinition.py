@@ -219,9 +219,6 @@ def buildParamSpecTable(dat: 'scriptDAT', paramListTable: 'DAT', paramGroupTable
 
 	addFromListTable(paramListTable)
 
-	for t in _getOpElementTable().col('paramListTable')[1:]:
-		addFromListTable(op(t), skipExisting=True)
-
 	def addFromGroupTable(table: 'DAT'):
 		if not table:
 			return
