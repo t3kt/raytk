@@ -19,7 +19,6 @@ _opDefParamNames = [
 	'Functemplate',
 	'Materialcode',
 	'Paramsop',
-	'Params',
 	'Specialparams',
 	'Macroparams',
 	'Paramgrouptable',
@@ -187,7 +186,7 @@ def buildOpInputsTable(dat: 'DAT'):
 
 def buildOpCurrentExpandedParamsTable(dat: 'DAT'):
 	dat.clear()
-	dat.appendRow(['path', 'expr', 'expandedParams'])
+	dat.appendRow(['path', 'expandedParams'])
 	for rop in RaytkContext().allMasterOperators():
 		info = ROPInfo(rop)
 		if not info or not info.isROP:
@@ -198,7 +197,6 @@ def buildOpCurrentExpandedParamsTable(dat: 'DAT'):
 		])
 		dat.appendRow([
 			info.path,
-			_formatPar(info.opDefPar.Params),
 			expanded,
 		])
 
