@@ -44,8 +44,11 @@ def buildParametersTable(dat: 'DAT'):
 def buildParameterGroupTable(dat: 'DAT'):
 	dat.clear()
 	dat.appendRow(['names', 'source', 'handling', 'readOnlyHandling', 'conversion', 'enable'])
-	dat.appendRow([parent().par.Param, 'param', 'runtime', '', '', '1'])
 	mode = _effectiveMode()
+	if mode == 'none':
+		dat.appendRow([parent().par.Param, 'param', 'macro', '', '', '1'])
+	else:
+		dat.appendRow([parent().par.Param, 'param', 'runtime', '', '', '1'])
 	if parent().par.Manageparamstates:
 		if mode == 'switch' or parent().par.Alwaysincludeallparams:
 			dat.appendRow([
@@ -66,8 +69,10 @@ def buildCode():
 	table = op('table')
 	if mode == 'switch':
 		return _buildRuntimeSwitch(table)
-	else:  # inline
+	elif mode == 'inline':
 		return _prepareItemCode(table[par.eval(), 'code']) + ';'
+	else:  # none
+		return ''
 
 def _prepareItemCode(code: 'Cell'):
 	code = str(code or '')
