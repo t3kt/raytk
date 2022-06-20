@@ -19,7 +19,6 @@ _opDefParamNames = [
 	'Functemplate',
 	'Materialcode',
 	'Paramsop',
-	'Specialparams',
 	'Macroparams',
 	'Paramgrouptable',
 	'Buffertable',
