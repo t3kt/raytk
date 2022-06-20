@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.material.shadowContrib
-  opVersion: '3'
+  opVersion: '4'
   opStatus: beta
 opDef: !def
   enable: true
@@ -18,10 +18,7 @@ opDef: !def
   function: !text
     file: src/operators/material/shadowContrib.glsl
     name: function
-  useParams:
-  - Color[rgb]
-  - Invert
-  macroParams: Usecolor
+  paramGroupTable: eval_params
   macroTable: !table
     file: src/operators/material/shadowContrib_macros.txt
     name: macro_exprs

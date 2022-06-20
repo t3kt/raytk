@@ -1,0 +1,3 @@
+names	source	handling	readOnlyHandling	conversion	enable
+Enableshadow	param	macro			1
+Diffusecolor[rgb] Specularcolor[rgb] Ambientcolor[rgb] Shine	param	runtime	macro		1

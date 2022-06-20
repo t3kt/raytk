@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.light.refractionRayCast
-  opVersion: '0'
+  opVersion: '1'
   opStatus: alpha
 opDef: !def
   enable: true
@@ -15,6 +15,4 @@ opDef: !def
   function: !text
     file: src/operators/light/refractionRayCast.glsl
     name: function
-  macroParams:
-  - Enablerefraction
-  - Refractionpasses
+  paramGroupTable: eval_params

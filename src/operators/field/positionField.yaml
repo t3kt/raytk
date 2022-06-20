@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.field.positionField
-  opVersion: '13'
+  opVersion: '14'
   opStatus: default
 opDef: !def
   enable: true
@@ -36,7 +36,7 @@ opDef: !def
   function: !text
     file: src/operators/field/positionField.glsl
     name: functionTemplate
-  macroParams: Axis
+  paramGroupTable: eval_params
   help: !text
     file: src/operators/field/positionField.md
     name: help

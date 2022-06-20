@@ -1,0 +1,4 @@
+names	source	handling	readOnlyHandling	conversion	enable
+Source	param	macro			1
+Pointcount Point[1-8][xy]	param	runtime	macro		1
+choplen	special	runtime			1

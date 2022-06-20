@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.utility.provideVariable
-  opVersion: '4'
+  opVersion: '5'
   opStatus: beta
 opDef: !def
   enable: !expr
@@ -16,8 +16,7 @@ opDef: !def
   function: !text
     file: src/operators/utility/provideVariable.glsl
     name: functionTemplate
-  useParams: Value[1-4]
-  macroParams: Datatype
+  paramGroupTable: eval_params
   variableTable: !table
     file: src/operators/utility/provideVariable_variables.txt
     name: variable_exprs

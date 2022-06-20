@@ -2,6 +2,6 @@
   "meta": {
     "opStatus": "default",
     "opType": "raytk.operators.utility.variableReference",
-    "opVersion": 10
+    "opVersion": 11
   }
 }

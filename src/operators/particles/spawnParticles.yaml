@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.particles.spawnParticles
-  opVersion: '3'
+  opVersion: '4'
   opStatus: alpha
 opDef: !def
   enable: true
@@ -15,12 +15,7 @@ opDef: !def
   function: !text
     file: src/operators/particles/spawnParticles.glsl
     name: function
-  useParams:
-  - Active
-  - Point[xyz]
-  - Life
-  - Lifejitter
-  macroParams: Positionmode
+  paramGroupTable: eval_params
 inputs:
 - !input
   Localalias: positionField
