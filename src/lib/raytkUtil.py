@@ -97,7 +97,6 @@ class OpDefParsT(_OpMetaPars):
 	Dispatchtable: 'DatParamT'
 	Generatedmacrotables: 'StrParamT'
 	Paramgrouptable: 'DatParamT'
-	Macroparams: 'StrParamT'
 	Callbacks: 'DatParamT'
 	Librarynames: 'StrParamT'
 	Help: 'DatParamT'

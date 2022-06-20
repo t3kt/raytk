@@ -525,8 +525,6 @@ class ROPDef(ModelObject):
 			function: Code block for the ROP's primary function.
 			material: Code block for the ROP's material block.
 
-			macroParams: Spec for names of ROP Pars that should be made available to
-				the ROP as preprocessor definitions.
 			libraryNames: Spec for names of shared libraries that the ROP depends on.
 
 			bufferTable: Spec for a table of CHOP-based buffers passed to the shader.
@@ -554,7 +552,6 @@ class ROPDef(ModelObject):
 	material: _TextSetting = None
 	callbacks: _TextSetting = None
 
-	macroParams: ValueOrListOrExprT = None
 	lockParams: ValueOrListOrExprT = None
 
 	paramGroupTable: _TableSetting = None
@@ -596,7 +593,6 @@ class ROPDef(ModelObject):
 		self.material = _extractDatSetting(pars.Materialcode)
 		self.callbacks = _extractDatSetting(pars.Callbacks)
 
-		self.macroParams = _valOrExprFromPar(pars.Macroparams, useList=True)
 		self.lockParams = _valOrExprFromPar(pars.Lockpars, useList=True)
 
 		self.paramGroupTable = _valOrExprFromPar(pars.Paramgrouptable)
@@ -628,7 +624,6 @@ class ROPDef(ModelObject):
 			typeSpecComp = pars.Typespec.eval()
 			self.typeSpec.applyTo(typeSpecComp)
 
-		_updatePar(pars.Macroparams, self.macroParams)
 		_updatePar(pars.Lockpars, self.lockParams)
 
 		_updatePar(pars.Paramgrouptable, self.paramGroupTable)
@@ -940,7 +935,6 @@ class ROPSpecLoader:
 		_updatePar(p.Useruntimebypass, d.useRuntimeBypass)
 		_updatePar(p.Disableinspect, d.disableInspect)
 
-		_updatePar(p.Macroparams, d.macroParams)
 		_updatePar(p.Librarynames, d.libraryNames)
 
 	def _loadOpDefTextBlocks(self):
