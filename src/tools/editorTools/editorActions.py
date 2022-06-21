@@ -127,7 +127,7 @@ def _createAddInputActionGroup(
 	def isValid(ctx: ActionContext):
 		if not ActionUtils.isKnownRopType(createType):
 			return False
-		return not matchTypes or ctx.primaryRopState.info.opType in matchTypes
+		return not matchTypes or (ctx.primaryRopState.info and ctx.primaryRopState.info.opType) in matchTypes
 	actions = [
 		_createAddInputAction(
 			table[i, 'label'].val,
