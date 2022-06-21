@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.filter.rotateNormals
-  opVersion: '7'
+  opVersion: '8'
   opStatus: beta
 opDef: !def
   enable: !expr
@@ -67,11 +67,21 @@ inputs:
 - !input
   Required: true
   coordType: !coordT
+    Coordtypevec2: true
     Coordtypevec3: true
   contextType: !contextT
     Contexttypematerialcontext: true
   returnType: !returnT
     Allreturntype: true
+- !input
+  Localalias: rotateField
+  coordType: !coordT
+    Coordtypevec2: true
+    Coordtypevec3: true
+  contextType: !contextT
+    Contexttypematerialcontext: true
+  returnType: !returnT
+    Returntypevec4: true
 elements:
 - !opElement
   name: transformCodeGenerator
@@ -86,7 +96,7 @@ elements:
     Enablepivot: false
     Scaletype: separate
     Varname: n
-    Useparamvars: false
+    Useparamvars: true
     Force3d: false
     Prepcodeplaceholder: ''
     Bodycodeplaceholder: ''
