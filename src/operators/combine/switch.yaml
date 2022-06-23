@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.combine.switch
-  opVersion: '13'
+  opVersion: '14'
   opStatus: default
 opDef: !def
   enable: !expr
@@ -131,7 +131,8 @@ elements:
     Startstmt: ''
     Defaultstmt: ''
     Firststepstmt: ''
-    Stepstmt: 'case $: res = THIS_asReturnT(inputOp$(p, ctx)); break;'
+    Stepstmt: !expr
+      expr: op('stepTemplate').text
     Bodycodeplaceholder: AGGREGATE_BODY();
 - !opElement
   name: codeSwitcher_Indexmode

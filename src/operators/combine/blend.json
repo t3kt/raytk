@@ -1,7 +1,7 @@
 {
   "meta": {
-    "opStatus": "default",
+    "opStatus": "deprecated",
     "opType": "raytk.operators.combine.blend",
-    "opVersion": 15
+    "opVersion": 16
   }
 }
