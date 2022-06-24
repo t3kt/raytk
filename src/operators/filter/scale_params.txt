@@ -1,3 +1,4 @@
 names	source	handling	readOnlyHandling	conversion	enable
 Scale[xyz] Uniformscale	param	runtime	macro		1
 Scaletype	param	macro			1
+Pivot[xyz] Usepivot	param	runtime	macro		1

@@ -1,6 +1,14 @@
 ReturnT thismap(CoordT p, ContextT ctx) {
 	float adjust = 1.;
-	if (THIS_Enable >= 0.5) {
+	if (IS_TRUE(THIS_Enable)) {
+		CoordT pivot = CoordT(0.);
+		if (IS_TRUE(THIS_Usepivot)) {
+			#pragma r:if THIS_HAS_INPUT_pivotField
+			pivot = THIS_asCoordT(inputOp_pivotField(p, ctx));
+			#pragma r:else
+			pivot = THIS_asCoordT(THIS_Pivot);
+			#pragma r:endif
+		}
 		#pragma r:if THIS_Scaletype_uniform
 		float scale = THIS_Uniformscale;
 		#pragma r:if THIS_HAS_INPUT_scaleField
@@ -16,7 +24,9 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 		#pragma r:else
 		#error invalidScaleType
 		#pragma r:endif
+		p -= pivot;
 		p /= scale;
+		p += pivot;
 	}
 
 	#pragma r:if THIS_HAS_INPUT_1
