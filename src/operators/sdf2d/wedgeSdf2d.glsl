@@ -8,12 +8,21 @@ float THIS_cro2( in vec2 a, in vec2 b ) { return a.x*b.y - a.y*b.x; }
 ReturnT thismap(CoordT p, ContextT ctx) {
 	CoordT q = p;
 
-	vec2 a;
-	vec2 c;
-	vec2 b;
-	a = THIS_Endpoint1;
-	b = THIS_Endpoint2;
-	c = THIS_Centerpoint;
+	#ifdef THIS_HAS_INPUT_endPoint1
+	vec2 a = inputOp_endPoint1(p, ctx).xy;
+	#else
+	vec2 a = THIS_Endpoint1;
+	#endif
+	#ifdef THIS_HAS_INPUT_centerPoint
+	vec2 c = inputOp_centerPoint(p, ctx).xy;
+	#else
+	vec2 c = THIS_Centerpoint;
+	#endif
+	#ifdef THIS_HAS_INPUT_endPoint2
+	vec2 b = inputOp_endPoint2(p, ctx).xy;
+	#else
+	vec2 b = THIS_Endpoint2;
+	#endif
 
 	// Make sure our geometry has the right winding order.
 //	if( THIS_cro2(a-b,c-b)<0.0 ) { vec2 tmp=a;a=c;c=tmp; }
