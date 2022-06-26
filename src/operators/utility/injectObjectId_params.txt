@@ -1,2 +1,2 @@
 names	source	handling	readOnlyHandling	conversion	enable
-Objectid	param	runtime	macro		1
+Objectid	param	runtime	macro		op('id_definition').numRows < 2

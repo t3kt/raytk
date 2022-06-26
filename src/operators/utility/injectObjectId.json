@@ -2,6 +2,6 @@
   "meta": {
     "opStatus": "beta",
     "opType": "raytk.operators.utility.injectObjectId",
-    "opVersion": 5
+    "opVersion": 7
   }
 }
