@@ -846,11 +846,13 @@ class _ArcBall:
 	def setTransform(self, matrix: _Matrix) -> None: pass
 	def identity(self) -> None: pass
 
-class _PathInfo(str):
+class _FileInfo(str):
 	path: str
 	ext: str  # includes "."
+	baseName: str
 	fileType: str
 	absPath: str
+	dir: str
 	exists: bool
 	isDir: bool
 	isFile: bool
@@ -894,7 +896,8 @@ class tdu:
 	Vector = _Vector
 	Color = _Color
 	Matrix = _Matrix
-	PathInfo = _PathInfo
+	PathInfo = _FileInfo  # alias for FileInfo
+	FileInfo = _FileInfo
 
 	# noinspection PyShadowingBuiltins
 	@staticmethod
