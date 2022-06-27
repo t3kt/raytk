@@ -1,0 +1,4 @@
+[c or '_' for c in op('param_tuplets').col('part1')[1:] if c.owner[c.row, 'handling'] == 'runtime']
+[c or '_' for c in op('param_tuplets').col('part2')[1:] if c.owner[c.row, 'handling'] == 'runtime']
+[c or '_' for c in op('param_tuplets').col('part3')[1:] if c.owner[c.row, 'handling'] == 'runtime']
+[c or '_' for c in op('param_tuplets').col('part4')[1:] if c.owner[c.row, 'handling'] == 'runtime']

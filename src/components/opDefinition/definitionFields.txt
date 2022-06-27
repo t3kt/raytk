@@ -9,6 +9,7 @@ opVersion	0
 toolkitVersion	0
 functionPath	0
 paramSource	0
+paramVectors	0
 paramTable	0
 paramTupletTable	0
 materialTable	0
