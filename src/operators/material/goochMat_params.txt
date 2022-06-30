@@ -1,2 +1,0 @@
-names	source	handling	readOnlyHandling	conversion	enable
-Basecolor[rgb] Warmcolor[rgb] Coolcolor[rgb]	param	runtime	macro		1
