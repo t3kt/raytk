@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.output.render2D
-  opVersion: '58'
+  opVersion: '59'
   opStatus: default
 opDef: !def
   enable: true

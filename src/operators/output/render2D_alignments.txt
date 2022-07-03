@@ -1,4 +1,4 @@
 name	label
+center	Center
 legacy	Legacy
 bottomleft	Bottom Left
-center	Center
