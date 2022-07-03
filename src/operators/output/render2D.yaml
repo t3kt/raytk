@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.output.render2D
-  opVersion: '59'
+  opVersion: '60'
   opStatus: default
 opDef: !def
   enable: true
@@ -13,8 +13,10 @@ opDef: !def
     contextType: !contextT
       Contexttypecontext: true
     returnType: !returnT
-      Returntypesdf: true
-      Returntypefloat: true
+      Returntypesdf: !expr
+        expr: bool(op('reduce_multi_coordType')[1, 'returnType'])
+      Returntypefloat: !expr
+        expr: bool(op('reduce_multi_coordType')[1, 'returnType'])
       Returntypevec4: true
   function: !text
     file: src/operators/output/render2D_function.glsl
