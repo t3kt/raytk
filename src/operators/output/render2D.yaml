@@ -1,13 +1,14 @@
 !rop
 meta: !meta
   opType: raytk.operators.output.render2D
-  opVersion: '57'
+  opVersion: '58'
   opStatus: default
 opDef: !def
   enable: true
   typeSpec: !ropTypes
     coordType: !coordT
-      Coordtypefloat: true
+      Coordtypefloat: !expr
+        expr: bool(op('reduce_multi_coordType')[1, 'coordType'])
       Coordtypevec2: true
     contextType: !contextT
       Contexttypecontext: true
