@@ -352,6 +352,8 @@ class ShaderBuilder:
 			'vec4': 'adaptAsVec4',
 			'Sdf': 'adaptAsSdf',
 			'int': 'adaptAsInt',
+			'Ray': 'adaptAsRay',
+			'Light': 'adaptAsLight',
 		}
 		for row in range(1, defsTable.numRows):
 			name = str(defsTable[row, 'name'])
