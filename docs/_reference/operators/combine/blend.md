@@ -119,6 +119,7 @@ op:
       of using it as just another input.
   - label: Blend Source
     name: Blendsource
+  status: deprecated
   summary: Smoothly blends/morphs between up to 4 SDFs.
   thumb: assets/images/reference/operators/combine/blend_thumb.png
 

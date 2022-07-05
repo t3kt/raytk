@@ -28,6 +28,21 @@ op:
     required: true
     returnTypes:
     - Sdf
+  - contextTypes:
+    - Context
+    - MaterialContext
+    - CameraContext
+    - LightContext
+    - RayContext
+    - ParticleContext
+    coordTypes:
+    - float
+    - vec2
+    - vec3
+    label: ID Field
+    name: idField
+    returnTypes:
+    - float
   name: injectObjectId
   opType: raytk.operators.utility.injectObjectId
   parameters:

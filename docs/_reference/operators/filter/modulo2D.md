@@ -173,6 +173,8 @@ op:
     name: cellcoord
   - label: tiledquad
     name: tiledquad
+  - label: normcoord
+    name: normcoord
 
 ---
 

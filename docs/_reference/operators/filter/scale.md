@@ -50,6 +50,20 @@ op:
       in space. If the field returns float values, the value of all the `Scale` parameters
       are multiplied by that value. If it returns vec4 values, each part of the `Scale`
       parameter is multiplied by the corresponding value in the vec4.
+  - contextTypes:
+    - Context
+    - MaterialContext
+    - CameraContext
+    - LightContext
+    - RayContext
+    - ParticleContext
+    coordTypes:
+    - vec2
+    - vec3
+    label: Pivot Field
+    name: pivotField
+    returnTypes:
+    - vec4
   keywords:
   - scale
   - transform
@@ -70,6 +84,14 @@ op:
     name: Scaletype
   - label: Uniform Scale
     name: Uniformscale
+  - label: Use Pivot
+    name: Usepivot
+    summary: Optionally pivot the rotation around a specific point instead of around
+      the origin (0, 0, 0).
+  - label: Pivot
+    name: Pivot
+    summary: The point around which to apply the rotation. For 2D coordinates, only
+      the X and Y parts are used.
   summary: Scales space.
 
 ---

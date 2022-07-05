@@ -39,7 +39,13 @@ op:
       name: cartesian
     - label: Polar
       name: polar
+    - label: External Parameterization
+      name: extparam
+    - label: Normalized Extern Parameterization
+      name: normextparam
     name: Uvmode
+  - label: External Band Size
+    name: Externalbandsize
   summary: 2D circle SDF.
   thumb: assets/images/reference/operators/sdf2d/circleSdf_thumb.png
 

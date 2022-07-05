@@ -29,6 +29,51 @@ op:
     - Ray
     - Light
     - Particle
+  - contextTypes:
+    - Context
+    - MaterialContext
+    - CameraContext
+    - LightContext
+    - RayContext
+    - ParticleContext
+    coordTypes:
+    - float
+    - vec2
+    - vec3
+    label: Amount Field
+    name: amountField
+    returnTypes:
+    - float
+  - contextTypes:
+    - Context
+    - MaterialContext
+    - CameraContext
+    - LightContext
+    - RayContext
+    - ParticleContext
+    coordTypes:
+    - float
+    - vec2
+    - vec3
+    label: Offset Field
+    name: offsetField
+    returnTypes:
+    - float
+  - contextTypes:
+    - Context
+    - MaterialContext
+    - CameraContext
+    - LightContext
+    - RayContext
+    - ParticleContext
+    coordTypes:
+    - float
+    - vec2
+    - vec3
+    label: Spread Field
+    name: spreadField
+    returnTypes:
+    - float
   name: kink
   opType: raytk.operators.filter.kink
   parameters:

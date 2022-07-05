@@ -24,8 +24,22 @@ op:
     required: true
     returnTypes:
     - float
-    - vec4
     - Sdf
+  - contextTypes:
+    - Context
+    - MaterialContext
+    - CameraContext
+    - LightContext
+    - RayContext
+    - ParticleContext
+    coordTypes:
+    - float
+    - vec2
+    - vec3
+    label: Offset Field
+    name: offsetField
+    returnTypes:
+    - float
   keywords:
   - crop
   - knife
@@ -49,6 +63,15 @@ op:
   - label: Rotate Plane
     name: Rotateplane
     summary: Rotate the cut plane in XYZ. When in 2D, only the Z rotation is used.
+  - label: Direction
+    menuOptions:
+    - label: X
+      name: x
+    - label: Y
+      name: y
+    - label: Z
+      name: z
+    name: Axis
   summary: Cuts off an SDF along a plane.
   thumb: assets/images/reference/operators/filter/knife_thumb.png
 

@@ -40,7 +40,7 @@ op:
     - MaterialContext
     coordTypes:
     - vec3
-    label: Color Contribution 1
+    label: Color Contribution 2
     name: contrib_definition_in_2
     returnTypes:
     - float
@@ -50,12 +50,48 @@ op:
     - MaterialContext
     coordTypes:
     - vec3
-    label: Color Contribution 1
+    label: Color Contribution 3
     name: contrib_definition_in_3
     returnTypes:
     - float
     - vec4
     summary: Third shading element.
+  - contextTypes:
+    - MaterialContext
+    coordTypes:
+    - vec3
+    label: Color Contribution 3
+    name: contrib_definition_in_4
+    returnTypes:
+    - float
+    - vec4
+  - contextTypes:
+    - MaterialContext
+    coordTypes:
+    - vec3
+    label: Color Contribution 3
+    name: contrib_definition_in_5
+    returnTypes:
+    - float
+    - vec4
+  - contextTypes:
+    - MaterialContext
+    coordTypes:
+    - vec3
+    label: Color Contribution 3
+    name: contrib_definition_in_6
+    returnTypes:
+    - float
+    - vec4
+  - contextTypes:
+    - MaterialContext
+    coordTypes:
+    - vec3
+    label: Color Contribution 3
+    name: contrib_definition_in_7
+    returnTypes:
+    - float
+    - vec4
   name: modularMat
   opType: raytk.operators.material.modularMat
   parameters:

@@ -8,6 +8,46 @@ redirect_from:
   - /reference/opType/raytk.operators.sdf2d.wedgeSdf2d/
 op:
   category: sdf2d
+  inputs:
+  - contextTypes:
+    - Context
+    - MaterialContext
+    - CameraContext
+    - LightContext
+    - RayContext
+    - ParticleContext
+    coordTypes:
+    - vec2
+    label: Endpoint 1 Field
+    name: endPoint1
+    returnTypes:
+    - vec4
+  - contextTypes:
+    - Context
+    - MaterialContext
+    - CameraContext
+    - LightContext
+    - RayContext
+    - ParticleContext
+    coordTypes:
+    - vec2
+    label: Endpoint 1 Field
+    name: centerPoint
+    returnTypes:
+    - vec4
+  - contextTypes:
+    - Context
+    - MaterialContext
+    - CameraContext
+    - LightContext
+    - RayContext
+    - ParticleContext
+    coordTypes:
+    - vec2
+    label: Endpoint 2 Field
+    name: endPoint2
+    returnTypes:
+    - vec4
   name: wedgeSdf2d
   opType: raytk.operators.sdf2d.wedgeSdf2d
   parameters:

@@ -44,6 +44,10 @@ op:
       name: surfaceinside
     - label: Surface Outside
       name: surfaceoutside
+    - label: Surface Primary UV
+      name: uv
+    - label: Surface Secondary UV
+      name: uv2
     name: Fieldtype
   - label: Offset
     name: Offset
