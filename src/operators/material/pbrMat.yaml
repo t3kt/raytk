@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.material.pbrMat
-  opVersion: '9'
+  opVersion: '10'
   opStatus: beta
 opDef: !def
   enable: !expr
@@ -28,6 +28,12 @@ opDef: !def
     name: macro_exprs
     evaluate: true
     evalOpts: !evalOpts {}
+  variableTable: !table
+    file: src/operators/material/pbrMat_variables.txt
+    name: variable_exprs
+    evaluate: true
+    evalOpts: !evalOpts
+      excludeFirstRow: true
 inputs:
 - !input
   Required: true
