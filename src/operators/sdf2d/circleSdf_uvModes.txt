@@ -2,3 +2,5 @@ name	label
 none	None
 cartesian	Cartesian
 polar	Polar
+extparam	External Parameterization
+normextparam	Normalized Extern Parameterization

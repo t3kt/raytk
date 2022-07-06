@@ -94,13 +94,13 @@ op:
     - description: Places 0,0 in the center of the frame.
       label: Center
       name: center
-    - description: Places 0,0 at the bottom left of the frame.
-      label: Bottom Left
-      name: bottomleft
     - description: Old default behavior. Note that when used, `Scaling` is ignored.
         When in doubt, don't use this.
       label: Legacy
       name: legacy
+    - description: Places 0,0 at the bottom left of the frame.
+      label: Bottom Left
+      name: bottomleft
     name: Alignment
     summary: How coordinates are positioned within the render frame.
   - label: Scaling

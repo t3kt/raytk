@@ -46,6 +46,38 @@ op:
     name: edgeField
     returnTypes:
     - float
+  - contextTypes:
+    - Context
+    - MaterialContext
+    - CameraContext
+    - LightContext
+    - RayContext
+    - ParticleContext
+    coordTypes:
+    - float
+    - vec2
+    - vec3
+    label: Low Value Field
+    name: lowValue
+    returnTypes:
+    - float
+    - vec4
+  - contextTypes:
+    - Context
+    - MaterialContext
+    - CameraContext
+    - LightContext
+    - RayContext
+    - ParticleContext
+    coordTypes:
+    - float
+    - vec2
+    - vec3
+    label: High Value Field
+    name: highValue
+    returnTypes:
+    - float
+    - vec4
   name: stepField
   opType: raytk.operators.field.stepField
   parameters:
@@ -88,10 +120,10 @@ op:
     - label: Vector
       name: vec4
     name: Returntype
-  - label: Value 1
+  - label: Low Value
     name: Value1
     summary: Value used when below `Edge`
-  - label: Value 2
+  - label: High Value
     name: Value2
     summary: Value used when above `Edge`
   - label: Context Type

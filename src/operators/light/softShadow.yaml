@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.light.softShadow
-  opVersion: '8'
+  opVersion: '9'
   opStatus: default
 opDef: !def
   enable: true
@@ -15,10 +15,7 @@ opDef: !def
   function: !text
     file: src/operators/light/softShadow.glsl
     name: functionTemplate
-  useParams:
-  - Hardness
-  - Mindist
-  - Maxdist
+  paramGroupTable: eval_params
   macroTable: !table
     file: src/operators/light/softShadow_macros.txt
     name: macro_exprs

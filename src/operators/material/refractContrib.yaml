@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.material.refractContrib
-  opVersion: '1'
+  opVersion: '2'
   opStatus: alpha
 opDef: !def
   enable: true
@@ -15,7 +15,7 @@ opDef: !def
   function: !text
     file: src/operators/material/refractContrib.glsl
     name: function
-  useParams: Level
+  paramGroupTable: eval_params
   macroTable: !table
     file: src/operators/material/refractContrib_macros.txt
     name: macro_exprs

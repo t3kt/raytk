@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.combine.simpleDiff
-  opVersion: '11'
+  opVersion: '12'
   opStatus: default
 opDef: !def
   enable: !expr
@@ -18,7 +18,7 @@ opDef: !def
   function: !text
     file: src/operators/combine/simpleDiff.glsl
     name: function
-  useParams: Swaporder
+  paramGroupTable: eval_params
   libraryNames: raytkCombine
   macroTable: !table
     file: src/operators/combine/simpleDiff_macros.txt

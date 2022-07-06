@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.sdf2d.wedgeSdf2d
-  opVersion: '1'
+  opVersion: '2'
   opStatus: beta
 opDef: !def
   enable: true
@@ -16,3 +16,28 @@ opDef: !def
     file: src/operators/sdf2d/wedgeSdf2d.glsl
     name: function
   paramGroupTable: eval_params
+inputs:
+- !input
+  Localalias: endPoint1
+  coordType: !coordT
+    Coordtypevec2: true
+  contextType: !contextT
+    Allcontexttype: true
+  returnType: !returnT
+    Returntypevec4: true
+- !input
+  Localalias: centerPoint
+  coordType: !coordT
+    Coordtypevec2: true
+  contextType: !contextT
+    Allcontexttype: true
+  returnType: !returnT
+    Returntypevec4: true
+- !input
+  Localalias: endPoint2
+  coordType: !coordT
+    Coordtypevec2: true
+  contextType: !contextT
+    Allcontexttype: true
+  returnType: !returnT
+    Returntypevec4: true

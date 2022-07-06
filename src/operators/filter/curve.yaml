@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.filter.curve
-  opVersion: '1'
+  opVersion: '2'
   opStatus: alpha
 opDef: !def
   enable: !expr
@@ -17,9 +17,7 @@ opDef: !def
   function: !text
     file: src/operators/filter/curve.glsl
     name: function
-  useParams:
-  - H
-  - R[xyz]
+  paramGroupTable: eval_params
 inputs:
 - !input
   Required: true

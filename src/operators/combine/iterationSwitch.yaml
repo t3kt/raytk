@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.combine.iterationSwitch
-  opVersion: '18'
+  opVersion: '19'
   opStatus: default
 opDef: !def
   enable: !expr
@@ -17,9 +17,7 @@ opDef: !def
   function: !text
     file: src/operators/combine/iterationSwitch.glsl
     name: functionTemplate
-  macroParams:
-  - Extend
-  - Iterationpart
+  paramGroupTable: eval_params
   libraryNames: !expr
     expr: op('modZigZag')
   generatedMacroTables: multiInputHandler_macros

@@ -216,6 +216,12 @@ def processTest(comp, log: 'Callable[[str], None]' = None):
 		recloneComp(rop)
 		if rop.par['Updateop'] is not None:
 			rop.par.Updateop.pulse()
+	for o in comp.ops('raymarchRender3D*/linkedCamera'):
+		if o and o.valid:
+			try:
+				o.destroy()
+			except:
+				pass
 	for rop in RaytkContext().ropOutputChildrenOf(comp, maxDepth=4):
 		if not rop.valid:
 			continue

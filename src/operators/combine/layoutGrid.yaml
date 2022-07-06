@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.combine.layoutGrid
-  opVersion: '10'
+  opVersion: '11'
   opStatus: default
 opDef: !def
   enable: !expr
@@ -17,10 +17,7 @@ opDef: !def
   function: !text
     file: src/operators/combine/layoutGrid.glsl
     name: function
-  useParams:
-  - Size1
-  - Size2
-  - Prescale[xyz]
+  paramGroupTable: eval_params
   macroTable: !table
     file: src/operators/combine/layoutGrid_macros.txt
     name: macro_exprs

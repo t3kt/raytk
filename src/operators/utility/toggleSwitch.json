@@ -2,6 +2,6 @@
   "meta": {
     "opStatus": "default",
     "opType": "raytk.operators.utility.toggleSwitch",
-    "opVersion": 0
+    "opVersion": 1
   }
 }

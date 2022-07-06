@@ -8,6 +8,20 @@ redirect_from:
   - /reference/opType/raytk.operators.sdf2d.kochSnowflakeSdf2d/
 op:
   category: sdf2d
+  inputs:
+  - contextTypes:
+    - Context
+    - MaterialContext
+    - CameraContext
+    - LightContext
+    - RayContext
+    - ParticleContext
+    coordTypes:
+    - vec2
+    label: Steps Field
+    name: stepsField
+    returnTypes:
+    - float
   name: kochSnowflakeSdf2d
   opType: raytk.operators.sdf2d.kochSnowflakeSdf2d
   parameters:

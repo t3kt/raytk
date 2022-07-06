@@ -1,8 +1,8 @@
 !rop
 meta: !meta
   opType: raytk.operators.combine.blend
-  opVersion: '15'
-  opStatus: default
+  opVersion: '16'
+  opStatus: deprecated
 opDef: !def
   enable: !expr
     expr: op('..').par.Enable

@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.utility.toggleSwitch
-  opVersion: '0'
+  opVersion: '1'
   opStatus: default
 opDef: !def
   enable: true
@@ -15,9 +15,7 @@ opDef: !def
   function: !text
     file: src/operators/utility/toggleSwitch.glsl
     name: function
-  useParams:
-  - Defaultvalue[1-4]
-  - Enable
+  paramGroupTable: eval_params
 multiInput: !multiInput
   Minimuminputs: 0
   Coordtypereductionmode: common

@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.particles.boundsCheck
-  opVersion: '0'
+  opVersion: '1'
   opStatus: alpha
 opDef: !def
   enable: true
@@ -15,10 +15,7 @@ opDef: !def
   function: !text
     file: src/operators/particles/boundsCheck.glsl
     name: function
-  useParams:
-  - Boundcenter[xyz]
-  - Boundboxsize[xyz]
-  - Active
+  paramGroupTable: eval_params
 inputs:
 - !input
   Localalias: bounds

@@ -9,19 +9,27 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 		res = inputOp1(p, ctx);
 	} else {
 		CoordT q = p;
+		float s = THIS_Shift;
+		float o = THIS_Offset;
+		#pragma r:if THIS_HAS_INPUT_shiftField
+		s += inputOp_shiftField(p, ctx);
+		#pragma r:endif
+		#pragma r:if THIS_HAS_INPUT_offsetField
+		o += inputOp_offsetField(p, ctx);
+		#pragma r:endif
 		switch (int(THIS_Axis)) {
 			case 0:
-			q.x = (q.x + THIS_Shift) * -1. - THIS_Offset;
-			p.x = p.x + THIS_Offset - THIS_Shift;
+			q.x = (q.x + s) * -1. - o;
+			p.x = p.x + o - s;
 			break;
 			case 1:
-			q.y = (q.y + THIS_Shift) * -1. - THIS_Offset;
-			p.y = p.y + THIS_Offset - THIS_Shift;
+			q.y = (q.y + s) * -1. - o;
+			p.y = p.y + o - s;
 			break;
 			#ifdef THIS_COORD_TYPE_vec3
 			case 2:
-			q.z = (q.z + THIS_Shift) * -1. - THIS_Offset;
-			p.z = p.z + THIS_Offset - THIS_Shift;
+			q.z = (q.z + s) * -1. - o;
+			p.z = p.z + o - s;
 			break;
 			#endif
 		}

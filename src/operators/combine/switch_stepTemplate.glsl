@@ -1,0 +1,1 @@
+case $: res = THIS_asReturnT(inputOp$(p, ctx)); break;

@@ -1,0 +1,3 @@
+names	source	handling	readOnlyHandling	conversion	enable
+Usecolor	param	macro			1
+Color[rgb] Invert	param	runtime	macro		1

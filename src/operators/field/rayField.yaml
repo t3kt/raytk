@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.field.rayField
-  opVersion: '3'
+  opVersion: '4'
   opStatus: default
 opDef: !def
   enable: true
@@ -18,7 +18,7 @@ opDef: !def
   function: !text
     file: src/operators/field/rayField.glsl
     name: function
-  macroParams: Raypart
+  paramGroupTable: eval_params
   help: !text
     file: src/operators/field/rayField.md
     name: help

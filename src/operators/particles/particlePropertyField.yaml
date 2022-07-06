@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.particles.particlePropertyField
-  opVersion: '2'
+  opVersion: '3'
   opStatus: alpha
 opDef: !def
   enable: true
@@ -22,7 +22,6 @@ opDef: !def
   function: !text
     file: src/operators/particles/particlePropertyField.glsl
     name: functionTemplate
-  paramListTable: switcher_params
   generatedMacroTables: sel_switcher_macros
 elements:
 - !opElement

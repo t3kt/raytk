@@ -2,6 +2,6 @@
   "meta": {
     "opStatus": "alpha",
     "opType": "raytk.operators.particles.collisionSurface",
-    "opVersion": 0
+    "opVersion": 2
   }
 }

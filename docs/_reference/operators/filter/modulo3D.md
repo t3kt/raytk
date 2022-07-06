@@ -134,6 +134,8 @@ op:
   variables:
   - label: cellcoord
     name: cellcoord
+  - label: normcoord
+    name: normcoord
 
 ---
 

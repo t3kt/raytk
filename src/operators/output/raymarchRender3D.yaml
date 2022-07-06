@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.output.raymarchRender3D
-  opVersion: '113'
+  opVersion: '114'
   opStatus: default
 opDef: !def
   enable: true
@@ -15,27 +15,10 @@ opDef: !def
   function: !text
     file: src/operators/output/raymarchRender3D_func.glsl
     name: functionTemplate
-  useParams:
-  - Limitboxmin[xyz]
-  - Limitboxmax[xyz]
-  - Nearhitrange
-  - Nearhitfade
-  - Nearhitmindist
-  - Normalsmoothing
-  - Distfactor
-  macroParams:
-  - Enablereflection
-  - Reflectionpasses
-  - Enablenearhitmindist
-  - Enableshadow
-  - Enablerefraction
-  - Refractionpasses
-  - Antialias
-  - Enablenormalsmoothing
-  - Usebackgroundfieldalpha
   lockParams:
   - Enablecustomoutput*
   - Raymodifier
+  paramGroupTable: eval_params
   macroTable: !table
     file: src/operators/output/raymarchRender3D_macros.txt
     name: op_macro_exprs
@@ -45,3 +28,78 @@ opDef: !def
     file: src/operators/output/raymarchRender3D.md
     name: help
   shortcuts: rr3
+inputs:
+- !input
+  coordType: !coordT
+    Coordtypevec3: true
+  contextType: !contextT
+    Contexttypecontext: true
+  returnType: !returnT
+    Returntypesdf: true
+    Returntypefloat: true
+    Returntypevec4: true
+- !input
+  Localalias: camera
+  coordType: !coordT
+    Coordtypevec2: true
+  contextType: !contextT
+    Contexttypecameracontext: true
+  returnType: !returnT
+    Returntyperay: true
+- !input
+  coordType: !coordT
+    Coordtypevec3: true
+  contextType: !contextT
+    Contexttypelightcontext: true
+  returnType: !returnT
+    Returntypelight: true
+- !input
+  Source: !expr
+    expr: parent().par.Raymodifier or ''
+  coordType: !coordT
+    Coordtypevec3: true
+  contextType: !contextT
+    Contexttyperaycontext: true
+  returnType: !returnT
+    Returntyperay: true
+- !input
+  Localalias: shadow
+  coordType: !coordT
+    Coordtypevec3: true
+  contextType: !contextT
+    Contexttypematerialcontext: true
+  returnType: !returnT
+    Returntypefloat: true
+- !input
+  Source: !expr
+    expr: parent().par.Backgroundfield or ''
+  Localalias: backgroundField
+  coordType: !coordT
+    Coordtypevec3: true
+  contextType: !contextT
+    Contexttyperaycontext: true
+  returnType: !returnT
+    Returntypefloat: true
+    Returntypevec4: true
+- !input
+  Source: !expr
+    expr: parent().par.Secondaryraycast or ''
+  Localalias: secondaryRayCast
+  coordType: !coordT
+    Coordtypevec3: true
+  contextType: !contextT
+    Contexttypematerialcontext: true
+  returnType: !returnT
+    Returntypefloat: true
+    Returntypevec4: true
+- !input
+  Source: !expr
+    expr: parent().par.Refractionraycast or ''
+  Localalias: refractionRayCast
+  coordType: !coordT
+    Coordtypevec3: true
+  contextType: !contextT
+    Contexttypematerialcontext: true
+  returnType: !returnT
+    Returntypefloat: true
+    Returntypevec4: true

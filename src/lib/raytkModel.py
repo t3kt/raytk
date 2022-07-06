@@ -525,14 +525,6 @@ class ROPDef(ModelObject):
 			function: Code block for the ROP's primary function.
 			material: Code block for the ROP's material block.
 
-			useParams: Spec for the names of ROP Pars that should be fed into the
-				shader and made available to the ROP.
-			specialParams: Spec for the names of values that come from a CHOP input
-				and are made available to the ROP.
-			angleParams: Spec for names of ROP Pars that should be converted to
-				radians before being passed to the shader.
-			macroParams: Spec for names of ROP Pars that should be made available to
-				the ROP as preprocessor definitions.
 			libraryNames: Spec for names of shared libraries that the ROP depends on.
 
 			bufferTable: Spec for a table of CHOP-based buffers passed to the shader.
@@ -560,14 +552,9 @@ class ROPDef(ModelObject):
 	material: _TextSetting = None
 	callbacks: _TextSetting = None
 
-	useParams: ValueOrListOrExprT = None
-	specialParams: ValueOrListOrExprT = None
-	angleParams: ValueOrListOrExprT = None
-	macroParams: ValueOrListOrExprT = None
 	lockParams: ValueOrListOrExprT = None
 
 	paramGroupTable: _TableSetting = None
-	paramListTable: _TableSetting = None
 
 	libraryNames: ValueOrListOrExprT = None
 
@@ -606,14 +593,9 @@ class ROPDef(ModelObject):
 		self.material = _extractDatSetting(pars.Materialcode)
 		self.callbacks = _extractDatSetting(pars.Callbacks)
 
-		self.useParams = _valOrExprFromPar(pars.Params, useList=True)
-		self.specialParams = _valOrExprFromPar(pars.Specialparams, useList=True)
-		self.angleParams = _valOrExprFromPar(pars.Angleparams, useList=True)
-		self.macroParams = _valOrExprFromPar(pars.Macroparams, useList=True)
 		self.lockParams = _valOrExprFromPar(pars.Lockpars, useList=True)
 
 		self.paramGroupTable = _valOrExprFromPar(pars.Paramgrouptable)
-		self.paramListTable = _valOrExprFromPar(pars.Paramlisttable)
 
 		self.libraryNames = _valOrExprFromPar(pars.Librarynames, useList=True)
 
@@ -642,14 +624,9 @@ class ROPDef(ModelObject):
 			typeSpecComp = pars.Typespec.eval()
 			self.typeSpec.applyTo(typeSpecComp)
 
-		_updatePar(pars.Params, self.useParams)
-		_updatePar(pars.Specialparams, self.specialParams)
-		_updatePar(pars.Angleparams, self.angleParams)
-		_updatePar(pars.Macroparams, self.macroParams)
 		_updatePar(pars.Lockpars, self.lockParams)
 
 		_updatePar(pars.Paramgrouptable, self.paramGroupTable)
-		_updatePar(pars.Paramlisttable, self.paramListTable)
 
 		_updatePar(pars.Librarynames, self.libraryNames)
 
@@ -958,10 +935,6 @@ class ROPSpecLoader:
 		_updatePar(p.Useruntimebypass, d.useRuntimeBypass)
 		_updatePar(p.Disableinspect, d.disableInspect)
 
-		_updatePar(p.Params, d.useParams)
-		_updatePar(p.Specialparams, d.specialParams)
-		_updatePar(p.Angleparams, d.angleParams)
-		_updatePar(p.Macroparams, d.macroParams)
 		_updatePar(p.Librarynames, d.libraryNames)
 
 	def _loadOpDefTextBlocks(self):

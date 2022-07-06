@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.material.checkerboardMat
-  opVersion: '8'
+  opVersion: '9'
   opStatus: alpha
 opDef: !def
   enable: !expr
@@ -19,9 +19,7 @@ opDef: !def
   material: !text
     file: src/operators/material/checkerboardMat_material.glsl
     name: material
-  useParams:
-  - Diffusecolor[rgb]
-  - Specularcolor[rgb]
+  paramGroupTable: eval_params
 inputs:
 - !input
   Required: true

@@ -650,7 +650,7 @@ class _DefaultPickerImpl(_PickerImpl):
 			attribs.help = item.helpSummary or ''
 			attribs.bottomBorderInColor = _configColor('Bordercolor')
 			if col == layout.labelCol:
-				attribs.textOffsetX = 20
+				attribs.textOffsetX = 5
 				attribs.text = item.shortName
 				if item.shortcuts:
 					attribs.text += f' ({item.shortcuts[0]})'

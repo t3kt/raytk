@@ -1,0 +1,2 @@
+names	source	handling	readOnlyHandling	conversion	enable
+Boundcenter[xyz] Boundboxsize[xyz] Active	param	runtime	macro		1

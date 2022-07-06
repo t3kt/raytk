@@ -97,11 +97,6 @@ class OpDefParsT(_OpMetaPars):
 	Dispatchtable: 'DatParamT'
 	Generatedmacrotables: 'StrParamT'
 	Paramgrouptable: 'DatParamT'
-	Params: 'StrParamT'
-	Specialparams: 'StrParamT'
-	Angleparams: 'StrParamT'
-	Macroparams: 'StrParamT'
-	Paramlisttable: 'OPParamT'
 	Callbacks: 'DatParamT'
 	Librarynames: 'StrParamT'
 	Help: 'DatParamT'
@@ -1004,7 +999,7 @@ def _isMaster(o: 'COMP'):
 
 def focusFirstCustomParameterPage(o: 'COMP'):
 	if o and o.customPages:
-		o.par.pageindex = len(o.pages)
+		o.currentPage = o.customPages[0]
 
 def detachTox(comp: 'COMP'):
 	if not comp or comp.par['externaltox'] is None:

@@ -1,0 +1,3 @@
+names	source	handling	readOnlyHandling	conversion	enable
+Positionmode	param	macro			1
+Active Point[xyz] Life Lifejitter	param	runtime	macro		1

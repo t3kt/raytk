@@ -105,11 +105,11 @@ op:
     summary: The type of noise function.
   - label: Coord Type
     menuOptions:
-    - label: float
+    - label: 1D
       name: float
-    - label: vec2
+    - label: 2D
       name: vec2
-    - label: vec3
+    - label: 3D
       name: vec3
     name: Coordtype
     summary: The type of coordinates that the op supports.

@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.field.chopField
-  opVersion: '14'
+  opVersion: '16'
   opStatus: default
 opDef: !def
   enable: true
@@ -23,10 +23,7 @@ opDef: !def
   function: !text
     file: src/operators/field/chopField.glsl
     name: functionTemplate
-  specialParams: Length
-  macroParams:
-  - Extendmode
-  - Axis
+  paramGroupTable: eval_params
   libraryNames: !expr
     expr: op('modZigZag')
   textureTable: !table
@@ -58,5 +55,5 @@ elements:
     Autoupdateparams: true
     Manageparamstates: true
     Alwaysincludeallparams: false
-    Switchmode: inline
+    Switchmode: none
     Placeholder: ''

@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.material.modularMat
-  opVersion: '16'
+  opVersion: '17'
   opStatus: default
 opDef: !def
   enable: !expr
@@ -45,6 +45,38 @@ inputs:
     Contexttypecontext: true
   returnType: !returnT
     Returntypesdf: true
+- !input
+  coordType: !coordT
+    Coordtypevec3: true
+  contextType: !contextT
+    Contexttypematerialcontext: true
+  returnType: !returnT
+    Returntypefloat: true
+    Returntypevec4: true
+- !input
+  coordType: !coordT
+    Coordtypevec3: true
+  contextType: !contextT
+    Contexttypematerialcontext: true
+  returnType: !returnT
+    Returntypefloat: true
+    Returntypevec4: true
+- !input
+  coordType: !coordT
+    Coordtypevec3: true
+  contextType: !contextT
+    Contexttypematerialcontext: true
+  returnType: !returnT
+    Returntypefloat: true
+    Returntypevec4: true
+- !input
+  coordType: !coordT
+    Coordtypevec3: true
+  contextType: !contextT
+    Contexttypematerialcontext: true
+  returnType: !returnT
+    Returntypefloat: true
+    Returntypevec4: true
 - !input
   coordType: !coordT
     Coordtypevec3: true

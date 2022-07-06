@@ -34,9 +34,6 @@ cat:
     summary: 'A material that uses a vector field input to determine
 
       the color.'
-  - name: goochMat
-    status: deprecated
-    summary: A material that uses the Gooch shading model.
   - name: goochShadingContrib
     status: beta
     summary: A material element that uses the Gooch shading model.

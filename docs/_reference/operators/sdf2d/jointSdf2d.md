@@ -8,6 +8,46 @@ redirect_from:
   - /reference/opType/raytk.operators.sdf2d.jointSdf2d/
 op:
   category: sdf2d
+  inputs:
+  - contextTypes:
+    - Context
+    - MaterialContext
+    - CameraContext
+    - LightContext
+    - RayContext
+    - ParticleContext
+    coordTypes:
+    - vec2
+    label: Thickness Field
+    name: thicknessField
+    returnTypes:
+    - float
+  - contextTypes:
+    - Context
+    - MaterialContext
+    - CameraContext
+    - LightContext
+    - RayContext
+    - ParticleContext
+    coordTypes:
+    - vec2
+    label: Length Field
+    name: lengthField
+    returnTypes:
+    - float
+  - contextTypes:
+    - Context
+    - MaterialContext
+    - CameraContext
+    - LightContext
+    - RayContext
+    - ParticleContext
+    coordTypes:
+    - vec2
+    label: Bend Field
+    name: bendField
+    returnTypes:
+    - float
   name: jointSdf2d
   opType: raytk.operators.sdf2d.jointSdf2d
   parameters:

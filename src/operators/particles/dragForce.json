@@ -2,6 +2,6 @@
   "meta": {
     "opStatus": "alpha",
     "opType": "raytk.operators.particles.dragForce",
-    "opVersion": 0
+    "opVersion": 1
   }
 }

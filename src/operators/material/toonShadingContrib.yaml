@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.material.toonShadingContrib
-  opVersion: '4'
+  opVersion: '5'
   opStatus: beta
 opDef: !def
   enable: true
@@ -15,13 +15,7 @@ opDef: !def
   function: !text
     file: src/operators/material/toonShadingContrib.glsl
     name: function
-  useParams:
-  - Color[rgb]
-  - Level
-  macroParams:
-  - Uselightcolor
-  - Enableshadow
-  - Usesurfacecolor
+  paramGroupTable: eval_params
   macroTable: !table
     file: src/operators/material/toonShadingContrib_macros.txt
     name: macro_exprs

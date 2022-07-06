@@ -5,7 +5,7 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 		THIS_sdf = res;
 		#endif
 		#pragma r:if THIS_HAS_INPUT_colorField
-		assignColor(res, inputOp_colorField(p, ctx).rgb);
+		assignColor(res, fillToVec3(inputOp_colorField(p, ctx)));
 		#pragma r:else
 		assignColor(res, THIS_Color);
 		#pragma r:endif

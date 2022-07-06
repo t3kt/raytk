@@ -1,0 +1,4 @@
+name	label	dir	code
+x	X	1	q = q.yxz;
+y	Y	1	
+z	Z	1	q = q.xzy;

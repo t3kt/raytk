@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.filter.rotateNormals
-  opVersion: '5'
+  opVersion: '8'
   opStatus: beta
 opDef: !def
   enable: !expr
@@ -17,8 +17,6 @@ opDef: !def
   function: !text
     file: src/operators/filter/rotateNormals.glsl
     name: function_template
-  angleParams: Rotate[xyz]
-  paramListTable: paramListTable
   help: !text
     file: src/operators/filter/rotateNormals.md
     name: help
@@ -69,8 +67,36 @@ inputs:
 - !input
   Required: true
   coordType: !coordT
+    Coordtypevec2: true
     Coordtypevec3: true
   contextType: !contextT
     Contexttypematerialcontext: true
   returnType: !returnT
     Allreturntype: true
+- !input
+  Localalias: rotateField
+  coordType: !coordT
+    Coordtypevec2: true
+    Coordtypevec3: true
+  contextType: !contextT
+    Contexttypematerialcontext: true
+  returnType: !returnT
+    Returntypevec4: true
+elements:
+- !opElement
+  name: transformCodeGenerator
+  elementType: transformCodeGenerator
+  params:
+    Transformorder: srt
+    Rotateorder: !expr
+      expr: parent().par.Rord.eval()
+    Enabletranslate: false
+    Enablerotate: true
+    Enablescale: false
+    Enablepivot: false
+    Scaletype: separate
+    Varname: n
+    Useparamvars: true
+    Force3d: false
+    Prepcodeplaceholder: ''
+    Bodycodeplaceholder: ''

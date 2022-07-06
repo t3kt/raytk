@@ -1,0 +1,3 @@
+names	source	handling	readOnlyHandling	conversion	enable
+Datatype Part	param	macro			1
+Defaultval[1-4]	param	runtime	macro		1

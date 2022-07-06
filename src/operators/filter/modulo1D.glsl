@@ -32,14 +32,15 @@ void THIS_apply(inout CoordT p, inout ContextT ctx) {
 
 	float c = floor((q + halfsize)/size);
 	q = mod(q+halfsize, size) - halfsize;
+	float start, stop;
 	#pragma r:if THIS_Uselimit
 	{
 		#pragma r:if THIS_Limittype_start || THIS_Limittype_both
-		float start = THIS_Limitstart + THIS_Limitoffset;
+		start = THIS_Limitstart + THIS_Limitoffset;
 		if (c < start) applyModLimit(q, c, size, start);
 		#pragma r:endif
 		#pragma r:if THIS_Limittype_stop || THIS_Limittype_both
-		float stop = THIS_Limitstop + THIS_Limitoffset;
+		stop = THIS_Limitstop + THIS_Limitoffset;
 		if (c > stop) applyModLimit(q, c, size, stop);
 		#pragma r:endif
 	}
@@ -56,6 +57,19 @@ void THIS_apply(inout CoordT p, inout ContextT ctx) {
 	#pragma r:endif
 	#pragma r:if THIS_EXPOSE_cellcoord
 	THIS_cellcoord = int(c);
+	#pragma r:endif
+	#pragma r:if THIS_EXPOSE_normcoord
+	{
+		#pragma r:if !THIS_Uselimit
+		THIS_normcoord = c;
+		#pragma r:elif THIS_Limittype_start
+		THIS_normcoord = c - start;
+		#pragma r:elif THIS_Limittype_stop
+		THIS_normcoord = -c + stop;
+		#pragma r:elif THIS_Limittype_both
+		THIS_normcoord = map01(c, start, stop);
+		#pragma r:endif
+	}
 	#pragma r:endif
 
 	// offset field can use iteration

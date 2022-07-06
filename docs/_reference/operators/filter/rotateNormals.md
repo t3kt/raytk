@@ -12,6 +12,7 @@ op:
   - contextTypes:
     - MaterialContext
     coordTypes:
+    - vec2
     - vec3
     label: definition_in
     name: definition_in
@@ -23,6 +24,15 @@ op:
     - Ray
     - Light
     - Particle
+  - contextTypes:
+    - MaterialContext
+    coordTypes:
+    - vec2
+    - vec3
+    label: Rotate Field
+    name: rotateField
+    returnTypes:
+    - vec4
   keywords:
   - material
   - modularmat

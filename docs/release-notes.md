@@ -1,5 +1,66 @@
 # Release Notes
 
+## v0.25
+
+### Highlights
+
+* Updated to TD 2022.25370 Vulkan build.
+* Lots of bug fixes.
+* New field inputs for lots of operators.
+* Improved blending options in switch.
+
+### Details
+
+* Improvements / additions
+  * New field inputs (#812, #588)
+    * adjustColor - brightness/contrast, hue/saturation
+    * flip - shift, offset
+    * injectObjectId - id
+    * jointSdf2d - bend, length, thickness
+    * kink - amount, offset, spread
+    * knife - offset
+    * kochSnowflakeSdf2d - steps
+    * modularMat - more shading elements
+    * rotateNormals - rotate
+    * stepField - values
+    * wedgeSdf2d - end points, center point
+  * Variables
+    * normalized cell coordinates for modulo1d/2d/3d (#898)
+    * pbrMat - light color, light position, surface color, surface uv, shaded level, surface normal
+  * Show toolkit version in palette header
+  * New op features
+    * circleSdf - parameterized UV mode (#903)
+    * knife - axis setting (#191)
+    * scale - pivot setting
+    * sdfField - option to return UVs
+    * switch - input blending, replaces (now deprecated) blend operator (#905)
+* Changes (potentially breaking)
+  * Updated to TD 2022.25370 Vulkan build. The toolkit will no longer be compatible with pre-Vulkan TD builds.
+  * Remove deprecated light and camera parameters in raymarchRender3d. The `Light` parameter is no longer supported. To get similar functionality use a `linkedLight`.
+  * Remove deprecated ops
+    * goochMat - replaced by goochShadingContrib / modularMat
+    * smoothUnion - replaced by combine
+* Fixes
+  * Fix incorrect selection of default param page after palette creation and in toolkit editor (#109)
+  * Fix merge type bug in flip (#892)
+  * Fix param enable states in generalizedPolyhedronSdf (#896)
+  * Fix handling of float fields in assignColor (#894)
+  * Fix defaultExpr being set to invalid expression when geodesicSdf is created (#895)
+  * Fix normals output in pointMapRender (#904)
+  * Fix error tolerance in variableReference menu sources
+  * Fix render2d erroring when no input is attached (#911)
+  * Fix default alignment for render2d (#911)
+  * Fix coord type menu labels in noiseFIeld (#913)
+  * Fix error with camera / light return types in switch
+  * Fix coord mode handling in chopField (#914)
+  * Fix outdated TD palette components (#912)
+* Infrastructure / internals
+  * Add development-only network boxes in infra components
+  * Replace all remaining uses of old param list tables, and param opDef settings
+  * Incomplete changes to how parameters are collected into vectors, current inactive (#907)
+  * Cleaning up lots of tests
+  * Reduce use of opFind DATs in ROPs and development tools
+
 ## v0.24
 
 ### Highlights

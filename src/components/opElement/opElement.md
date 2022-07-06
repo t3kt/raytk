@@ -12,7 +12,6 @@ Provided properties include:
 
 * Paramgrouptable - Parameters used by the element, matching the same format
   as the equivalent table in opDefinition's settings.
-* Paramlisttable - (Deprecated) alternate format parameter list table
 * Macrotable - Macros produced by the element.
 * Placeholder1/2 - Placeholder text that gets replaced in the ROP's code. E.g. `BODY();`
 * Code1/2 - DAT with code that gets swapped in.

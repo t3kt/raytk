@@ -52,6 +52,44 @@ vec3 THIS_getColor(vec3 p, MaterialContext matCtx) {
 	restoreIterationFromMaterial(matCtx, THIS_iterationCapture);
 	vec3 mp = getPosForMaterial(p, matCtx);
 
+	#pragma r:if THIS_EXPOSE_normal
+	THIS_normal = matCtx.normal;
+	#pragma r:endif
+	#pragma r:if THIS_EXPOSE_shadedlevel
+	{
+		THIS_shadedlevel = 1.;
+		#pragma r:if RAYTK_USE_SHADOW
+		if (matCtx.result.useShadow) {
+			THIS_shadedlevel = matCtx.shadedLevel;
+		}
+			#pragma r:endif
+	}
+	#pragma r:endif
+	#pragma r:if THIS_EXPOSE_lightcolor
+	THIS_lightcolor = matCtx.light.color;
+	#pragma r:endif
+	#pragma r:if THIS_EXPOSE_lightpos
+	THIS_lightpos = matCtx.light.pos;
+	#pragma r:endif
+	#pragma r:if THIS_EXPOSE_surfacecolor
+	{
+		#pragma r:if RAYTK_USE_SURFACE_COLOR
+		THIS_surfacecolor = matCtx.result.color;
+		#pragma r:else
+		THIS_surfacecolor = vec4(1., 1., 1., 0.);
+		#pragma r:endif
+	}
+	#pragma r:endif
+	#pragma r:if THIS_EXPOSE_surfaceuv
+	{
+		#pragma r:if RAYTK_USE_UV
+		THIS_surfaceuv = matCtx.uv;
+		#pragma r:else
+		THIS_surfaceuv = vec4(0.);
+		#pragma r:endif
+	}
+	#pragma r:endif
+
 	vec3 lightDir = normalize(p - matCtx.light.pos);
 	vec3 viewDir = normalize(-matCtx.ray.dir);
 

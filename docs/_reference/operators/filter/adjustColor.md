@@ -26,6 +26,38 @@ op:
     required: true
     returnTypes:
     - vec4
+  - contextTypes:
+    - Context
+    - MaterialContext
+    - CameraContext
+    - LightContext
+    - RayContext
+    - ParticleContext
+    coordTypes:
+    - float
+    - vec2
+    - vec3
+    label: Brightness & Contrast Field
+    name: brightnessContrastField
+    returnTypes:
+    - float
+    - vec4
+  - contextTypes:
+    - Context
+    - MaterialContext
+    - CameraContext
+    - LightContext
+    - RayContext
+    - ParticleContext
+    coordTypes:
+    - float
+    - vec2
+    - vec3
+    label: Hue & Saturation Field
+    name: hueSaturationField
+    returnTypes:
+    - float
+    - vec4
   keywords:
   - adjust
   - brightness

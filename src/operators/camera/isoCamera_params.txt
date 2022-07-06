@@ -1,0 +1,3 @@
+names	source	handling	readOnlyHandling	conversion	enable
+Campos[xyz]	param	runtime	macro		1
+Camrot[xyz]	param	runtime	macro	angle	1

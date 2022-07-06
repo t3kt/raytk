@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.material.fieldMat
-  opVersion: '13'
+  opVersion: '14'
   opStatus: deprecated
 opDef: !def
   enable: !expr
@@ -20,9 +20,7 @@ opDef: !def
   material: !text
     file: src/operators/material/fieldMat_material.glsl
     name: material
-  macroParams:
-  - Uselocalpos
-  - Uselightcolor
+  paramGroupTable: eval_params
   libraryNames: raytkMaterial
   macroTable: !table
     file: src/operators/material/fieldMat_macros.txt

@@ -23,6 +23,18 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 		#pragma r:if THIS_HAS_INPUT_4 && inputOp4_Enableshadow
 		res.useShadow = true;
 		#pragma r:endif
+		#pragma r:if THIS_HAS_INPUT_5 && inputOp5_Enableshadow
+		res.useShadow = true;
+		#pragma r:endif
+		#pragma r:if THIS_HAS_INPUT_6 && inputOp6_Enableshadow
+		res.useShadow = true;
+		#pragma r:endif
+		#pragma r:if THIS_HAS_INPUT_7 && inputOp7_Enableshadow
+		res.useShadow = true;
+		#pragma r:endif
+		#pragma r:if THIS_HAS_INPUT_8 && inputOp8_Enableshadow
+		res.useShadow = true;
+		#pragma r:endif
 	}
 	#pragma r:endif
 	return res;
@@ -100,6 +112,18 @@ vec3 THIS_getColor(vec3 p, MaterialContext matCtx) {
 	#pragma r:endif
 	#pragma r:if THIS_HAS_INPUT_4
 	col += fillToVec3(inputOp4(mp, matCtx));
+	#pragma r:endif
+	#pragma r:if THIS_HAS_INPUT_5
+	col += fillToVec3(inputOp5(mp, matCtx));
+	#pragma r:endif
+	#pragma r:if THIS_HAS_INPUT_6
+	col += fillToVec3(inputOp6(mp, matCtx));
+	#pragma r:endif
+	#pragma r:if THIS_HAS_INPUT_7
+	col += fillToVec3(inputOp7(mp, matCtx));
+	#pragma r:endif
+	#pragma r:if THIS_HAS_INPUT_8
+	col += fillToVec3(inputOp8(mp, matCtx));
 	#pragma r:endif
 	#pragma r:if THIS_Enableao
 	col *= sqrt(ao);

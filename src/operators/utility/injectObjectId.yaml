@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.utility.injectObjectId
-  opVersion: '4'
+  opVersion: '7'
   opStatus: beta
 opDef: !def
   enable: !expr
@@ -16,7 +16,7 @@ opDef: !def
   function: !text
     file: src/operators/utility/injectObjectId.glsl
     name: function
-  useParams: Objectid
+  paramGroupTable: eval_params
   macroTable: !table
     file: src/operators/utility/injectObjectId_macros.txt
     name: macro_exprs
@@ -34,3 +34,11 @@ inputs:
     Allcontexttype: true
   returnType: !returnT
     Returntypesdf: true
+- !input
+  Localalias: idField
+  coordType: !coordT
+    Allcoordtype: true
+  contextType: !contextT
+    Allcontexttype: true
+  returnType: !returnT
+    Returntypefloat: true

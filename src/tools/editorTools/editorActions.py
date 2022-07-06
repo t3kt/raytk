@@ -127,7 +127,7 @@ def _createAddInputActionGroup(
 	def isValid(ctx: ActionContext):
 		if not ActionUtils.isKnownRopType(createType):
 			return False
-		return not matchTypes or ctx.primaryRopState.info.opType in matchTypes
+		return not matchTypes or (ctx.primaryRopState.info and ctx.primaryRopState.info.opType) in matchTypes
 	actions = [
 		_createAddInputAction(
 			table[i, 'label'].val,
@@ -695,3 +695,11 @@ class _ActionImpl(Action):
 				o.par[name] = val
 		ActionUtils.createROP(self.ropType, init)
 
+def _createConvertAction(text: str, oldType: str, newType: str):
+	def isValid(ctx: ActionContext):
+		return ctx.primaryRopState and ctx.primaryRopState.info.opType == oldType and ActionUtils.isKnownRopType(newType)
+
+	def execute(ctx: ActionContext):
+		oldOp = ctx.primaryRop
+		pass
+	pass

@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.filter.flip
-  opVersion: '16'
+  opVersion: '17'
   opStatus: default
 opDef: !def
   enable: !expr
@@ -185,6 +185,26 @@ inputs:
     Allcontexttype: true
   returnType: !returnT
     Returntypesdf: true
+- !input
+  Localalias: offsetField
+  coordType: !coordT
+    Coordtypefloat: true
+    Coordtypevec2: true
+    Coordtypevec3: true
+  contextType: !contextT
+    Allcontexttype: true
+  returnType: !returnT
+    Returntypefloat: true
+- !input
+  Localalias: shiftField
+  coordType: !coordT
+    Coordtypefloat: true
+    Coordtypevec2: true
+    Coordtypevec3: true
+  contextType: !contextT
+    Allcontexttype: true
+  returnType: !returnT
+    Returntypefloat: true
 elements:
 - !opElement
   name: combiner

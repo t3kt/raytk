@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.time.lfoField
-  opVersion: '14'
+  opVersion: '15'
   opStatus: default
 opDef: !def
   enable: !expr
@@ -38,11 +38,7 @@ opDef: !def
   function: !text
     file: src/operators/time/lfoField.glsl
     name: function
-  useParams:
-  - Amplitude
-  - Offset
-  - Reverse
-  macroParams: Intervaltype
+  paramGroupTable: eval_params
   libraryNames: !expr
     expr: '[op(''raytkWave''), ''raytkTime'']'
   macroTable: !table

@@ -308,6 +308,9 @@ int adaptAsInt(vec4 p) { return int(p.x); }
 Sdf adaptAsSdf(float p) { return createSdf(p); }
 Sdf adaptAsSdf(Sdf res) { return res; }
 
+Ray adaptAsRay(Ray ray) { return ray; }
+Light adaptAsLight(Light light) { return light; }
+
 vec2 fillToVec2(float p) { return vec2(p); }
 vec2 fillToVec2(vec4 p) { return p.xy; }
 

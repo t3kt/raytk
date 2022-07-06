@@ -171,6 +171,7 @@ class RaytkTools(RaytkContext):
 		self.updateROPMetadata(rop, incrementVersion)
 		self.updateROPParams(rop)
 		self.updateOPImage(rop)
+		self.updateROPDATLanguages(rop)
 		self.saveROPSpec(rop)
 		if info.isROP:
 			self.saveROPSpec_NEW(rop)
@@ -186,6 +187,24 @@ class RaytkTools(RaytkContext):
 		rop.par.reloadbuiltin.val = True
 		rop.save(tox)
 		ui.status = f'Saved TOX {tox} (version: {info.opVersion})'
+
+	@staticmethod
+	def updateROPDATLanguages(rop: 'COMP'):
+		info = ROPInfo(rop)
+		if not info.isROP or not info.isMaster:
+			return
+		for par in [
+			info.opDefPar.Opglobals,
+			info.opDefPar.Initcode,
+			info.opDefPar.Stageinitcode,
+			info.opDefPar.Functemplate,
+			info.opDefPar.Materialcode,
+		]:
+			dat = par.eval()
+			if dat and isinstance(dat, textDAT):
+				langPar = dat.par['language']
+				if langPar == 'input':
+					dat.par.language = 'glsl'
 
 	@staticmethod
 	def setUpHelp(rop: 'COMP'):

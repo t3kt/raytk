@@ -42,8 +42,8 @@ op:
     - RayContext
     coordTypes:
     - vec3
-    label: Ray Modifier
-    name: Raymodifier
+    label: rayModifier
+    name: rayModifier
     returnTypes:
     - Ray
     summary: Advanced feature, not ready for use.
@@ -59,32 +59,29 @@ op:
     - RayContext
     coordTypes:
     - vec3
-    label: Background Field
-    name: Backgroundfield
+    label: backgroundField
+    name: backgroundField
     returnTypes:
     - float
     - vec4
-    summary: Help not available.
   - contextTypes:
     - MaterialContext
     coordTypes:
     - vec3
-    label: Secondary Ray Cast
-    name: Secondaryraycast
+    label: secondaryRayCast
+    name: secondaryRayCast
     returnTypes:
     - float
     - vec4
-    summary: Help not available.
   - contextTypes:
     - MaterialContext
     coordTypes:
     - vec3
-    label: Refraction Ray Cast
-    name: Refractionraycast
+    label: refractionRayCast
+    name: refractionRayCast
     returnTypes:
     - float
     - vec4
-    summary: Help not available.
   name: raymarchRender3D
   opType: raytk.operators.output.raymarchRender3D
   parameters:
@@ -95,12 +92,10 @@ op:
     name: Antialias
     summary: Number of antialiasing steps. Increasing this improves render quality
       but can be costly.
-  - label: Camera
-    name: Camera
+  - name: Camera
     summary: Standard TD Camera COMP, used if the `Camera` input isn't connected.
       This camera is not yet fully functional.
-  - label: Light
-    name: Light1
+  - name: Light1
     summary: Standard TD Light COMP, used if the `Light` input isn't connected. Only
       point lights work, and they don't yet support distance attenuation (though the
       `pointLight` ROP does).

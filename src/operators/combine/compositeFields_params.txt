@@ -1,0 +1,2 @@
+names	source	handling	readOnlyHandling	conversion	enable
+Blend Swapinputs	param	runtime	macro		1

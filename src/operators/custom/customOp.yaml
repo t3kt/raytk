@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.custom.customOp
-  opVersion: '12'
+  opVersion: '13'
   opStatus: beta
 opDef: !def
   enable: !expr
@@ -60,8 +60,7 @@ opDef: !def
   callbacks: !text
     file: src/operators/custom/customOp_callbacks.py
     name: callbacks
-  useParams: !expr
-    expr: op('param_names')[0,0] or ''
+  paramGroupTable: eval_params
   libraryNames: !expr
     expr: parent().par.Librarynames
   bufferTable: !expr

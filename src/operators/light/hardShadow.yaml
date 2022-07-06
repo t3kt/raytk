@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.light.hardShadow
-  opVersion: '5'
+  opVersion: '6'
   opStatus: default
 opDef: !def
   enable: true
@@ -15,7 +15,7 @@ opDef: !def
   function: !text
     file: src/operators/light/hardShadow.glsl
     name: functionTemplate
-  useParams: Shadowlevel
+  paramGroupTable: eval_params
   help: !text
     file: src/operators/light/hardShadow.md
     name: help

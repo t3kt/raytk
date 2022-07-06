@@ -1,0 +1,2 @@
+names	source	handling	readOnlyHandling	conversion	enable
+Includeprimary Includeshadow Includereflect Includematerial Includeocclusion Includevolumetric Includevolumetricshadow Includenormal	param	macro			1

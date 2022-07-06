@@ -3,8 +3,22 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 	ReturnT res;
 	if (THIS_Enable > 0.5) {
 		vec2 q = p.THIS_Direction;
+		#ifdef THIS_HAS_INPUT_amountField
+		float amt = 1. - inputOp_amountField(p, ctx);
+		#else
 		float amt = 1. - THIS_Amount;
-		vec2 c = vec2(THIS_Offset, -THIS_Spread);
+		#endif
+		vec2 c;
+		#ifdef THIS_HAS_INPUT_offsetField
+		c.x = inputOp_offsetField(p, ctx);
+		#else
+		c.x = THIS_Offset;
+		#endif
+		#ifdef THIS_HAS_INPUT_spreadField
+		c.y = -inputOp_spreadField(p, ctx);
+		#else
+		c.y = -THIS_Spread;
+		#endif
 
 		#ifdef THIS_Side_pos
 		q.y *= -1.;

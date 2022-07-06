@@ -1,0 +1,5 @@
+name	label
+switch	Switch
+inline	Inline
+auto	Auto
+none	No Code

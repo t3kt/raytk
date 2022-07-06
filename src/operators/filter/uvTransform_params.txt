@@ -1,0 +1,2 @@
+names	source	handling	readOnlyHandling	conversion	enable
+Transformprimary Transformsecondary	param	macro			1

@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.field.sdfField
-  opVersion: '3'
+  opVersion: '4'
   opStatus: default
 opDef: !def
   enable: true
@@ -11,11 +11,19 @@ opDef: !def
     contextType: !contextT
       Allcontexttype: true
     returnType: !returnT
-      Returntypefloat: true
+      Returntypefloat: !expr
+        expr: op('Fieldtype_info')[1, 'returnType'] == 'float'
+      Returntypevec4: !expr
+        expr: op('Fieldtype_info')[1, 'returnType'] == 'vec4'
   function: !text
     file: src/operators/field/sdfField.glsl
     name: function
   paramGroupTable: eval_params
+  macroTable: !table
+    file: src/operators/field/sdfField_macros.txt
+    name: macro_exprs
+    evaluate: true
+    evalOpts: !evalOpts {}
   help: !text
     file: src/operators/field/sdfField.md
     name: help
@@ -29,3 +37,17 @@ inputs:
   returnType: !returnT
     Returntypesdf: true
     Returntypefloat: true
+elements:
+- !opElement
+  name: codeSwitcher_Fieldtype
+  elementType: codeSwitcher
+  params:
+    Table: !table
+      file: src/operators/field/sdfField_fieldTypes.txt
+      name: fieldTypes
+    Param: Fieldtype
+    Autoupdateparams: true
+    Manageparamstates: false
+    Alwaysincludeallparams: true
+    Switchmode: inline
+    Placeholder: BODY();

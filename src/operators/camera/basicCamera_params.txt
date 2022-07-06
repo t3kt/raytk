@@ -1,0 +1,3 @@
+names	source	handling	readOnlyHandling	conversion	enable
+Campos[xyz] Lookatpos[xyz] Camup[xyz] Aperture	param	runtime	macro		1
+Camrot[xyz] Camfov	param	runtime	macro	angle	1

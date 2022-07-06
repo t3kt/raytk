@@ -196,6 +196,8 @@ op:
   - label: Source
     name: Source
     summary: When 0, the first source is used, 1 for the second, etc.
+  - label: Blend Between Inputs
+    name: Blend
   - label: Index Field
     name: Indexfield
   - label: Index Mode
