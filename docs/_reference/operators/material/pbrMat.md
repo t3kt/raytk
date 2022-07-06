@@ -80,5 +80,18 @@ op:
     name: Uselocalpos
   status: beta
   thumb: assets/images/reference/operators/material/pbrMat_thumb.png
+  variables:
+  - label: lightcolor
+    name: lightcolor
+  - label: lightpos
+    name: lightpos
+  - label: surfacecolor
+    name: surfacecolor
+  - label: surfaceuv
+    name: surfaceuv
+  - label: shadedlevel
+    name: shadedlevel
+  - label: normal
+    name: normal
 
 ---
