@@ -15,17 +15,22 @@ vec4 THIS_getHex(vec2 p){
 	: vec4(b, hC.zw+.5);
 }
 
-float THIS_mask( vec2 p) {
+float THIS_mask( vec2 p, float thickness) {
 	float ia = floor( atan(p.y,p.x) *3./TAU) + .5;
 	pR(p, ia * TAU / 3.);
 	p.x -= 1.;
 	float rad2 = .666;
 
-	rad2 = mix(.85, .49, THIS_Thickness);
+	rad2 = mix(.85, .49, thickness);
 	return length(p) - rad2;
 }
 
 ReturnT thismap(CoordT p, ContextT ctx) {
+	#ifdef THIS_HAS_INPUT_thicknessField
+	float thickness = adaptAsFloat(inputOp_thicknessField(p, ctx));
+	#else
+	float thickness = THIS_Thickness;
+	#endif
 	#ifdef THIS_HAS_INPUT_coordField
 	vec2 q = adaptAsVec2(inputOp_coordField(p, ctx));
 	#else
@@ -40,7 +45,7 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 
 	vec2 hp2 = hp.xy;
 	pR(hp2, -TAU/6.);
-	vec2 D = vec2( THIS_mask(hp.xy), THIS_mask(hp2) );      // axial distance of the 2 layers
+	vec2 D = vec2( THIS_mask(hp.xy, thickness), THIS_mask(hp2, thickness) );      // axial distance of the 2 layers
 	vec2 M = smoothstep(-5./R.y,5./R.y, D);                       // masks
 	vec2 B = smoothstep(0.,.05, D);                               // border decoration
 	// B = smoothstep(0., 1., (.65 + D*D*4.)*B);                     // shaded relief
