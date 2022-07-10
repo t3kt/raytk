@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.pattern.rosettePattern
-  opVersion: '4'
+  opVersion: '5'
   opStatus: default
 opDef: !def
   enable: true
@@ -19,6 +19,33 @@ opDef: !def
 inputs:
 - !input
   Localalias: coordField
+  coordType: !coordT
+    Coordtypevec2: true
+    Coordtypevec3: true
+  contextType: !contextT
+    Allcontexttype: true
+  returnType: !returnT
+    Returntypevec4: true
+- !input
+  Localalias: glowField
+  coordType: !coordT
+    Coordtypevec2: true
+    Coordtypevec3: true
+  contextType: !contextT
+    Allcontexttype: true
+  returnType: !returnT
+    Returntypefloat: true
+- !input
+  Localalias: radiusField
+  coordType: !coordT
+    Coordtypevec2: true
+    Coordtypevec3: true
+  contextType: !contextT
+    Allcontexttype: true
+  returnType: !returnT
+    Returntypefloat: true
+- !input
+  Localalias: spreadField
   coordType: !coordT
     Coordtypevec2: true
     Coordtypevec3: true
