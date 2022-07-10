@@ -25,5 +25,6 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 	q.y += 0.5 * mod(floor(q.x), 2.0);
 	q = abs(fract(q) - 0.5);
 	float d = abs(max(q.x*1.5 + q.y, q.y*2.0) - 1.0);
-	return smoothstep(t, t+b, d);
+	BODY();
+	return d;
 }

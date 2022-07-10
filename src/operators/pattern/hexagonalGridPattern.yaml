@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.pattern.hexagonalGridPattern
-  opVersion: '5'
+  opVersion: '6'
   opStatus: default
 opDef: !def
   enable: true
@@ -44,3 +44,17 @@ inputs:
     Allcontexttype: true
   returnType: !returnT
     Returntypefloat: true
+elements:
+- !opElement
+  name: codeSwitcher_Pattern
+  elementType: codeSwitcher
+  params:
+    Table: !table
+      file: src/operators/pattern/hexagonalGridPattern_patterns.txt
+      name: patterns
+    Param: Pattern
+    Autoupdateparams: true
+    Manageparamstates: true
+    Alwaysincludeallparams: true
+    Switchmode: auto
+    Placeholder: BODY();
