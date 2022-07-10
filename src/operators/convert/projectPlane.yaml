@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.convert.projectPlane
-  opVersion: '2'
+  opVersion: '4'
   opStatus: beta
 opDef: !def
   enable: true
@@ -22,7 +22,8 @@ inputs:
 - !input
   Required: true
   coordType: !coordT
-    Coordtypefloat: true
+    Coordtypefloat: !expr
+      expr: op('definition_in')[1, 'coordType'] == 'float'
     Coordtypevec2: true
   contextType: !contextT
     Allcontexttype: true
