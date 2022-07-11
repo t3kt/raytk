@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.pattern.hexagonalGridPattern
-  opVersion: '6'
+  opVersion: '7'
   opStatus: default
 opDef: !def
   enable: true
@@ -11,11 +11,16 @@ opDef: !def
     contextType: !contextT
       Allcontexttype: true
     returnType: !returnT
-      Returntypefloat: true
+      Returntypefloat: !expr
+        expr: op('pattern_info')[1, 'returnType'] != 'vec4'
+      Returntypevec4: !expr
+        expr: op('pattern_info')[1, 'returnType'] == 'vec4'
   function: !text
     file: src/operators/pattern/hexagonalGridPattern.glsl
     name: functionTemplate
   paramGroupTable: eval_params
+  libraryNames: !expr
+    expr: op('hexagonalGridPattern_lib')
 inputs:
 - !input
   Localalias: coordField
@@ -55,6 +60,6 @@ elements:
     Param: Pattern
     Autoupdateparams: true
     Manageparamstates: true
-    Alwaysincludeallparams: true
-    Switchmode: auto
+    Alwaysincludeallparams: false
+    Switchmode: inline
     Placeholder: BODY();
