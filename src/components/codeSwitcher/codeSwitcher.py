@@ -61,6 +61,16 @@ def buildParameterGroupTable(dat: 'DAT'):
 				'param', 'runtime', 'macro', '', '1'
 			])
 
+def buildMacroTable(dat: 'DAT', itemInfo: 'DAT'):
+	dat.clear()
+	if itemInfo.numRows < 2:
+		return
+	val = str(itemInfo[1, 'macros'] or '')
+	if not val:
+		return
+	for v in val.split():
+		dat.appendRow(['', v, ''])
+
 def buildCode():
 	par = _hostPar()
 	if par is None:
