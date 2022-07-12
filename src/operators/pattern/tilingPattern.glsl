@@ -10,10 +10,10 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 	q -= THIS_Translate;
 	q /= THIS_Size;
 
+	// TODO: parameters
+	float vertex_dot_radius = THIS_Vertexradius;
 
-	float vertex_dot_radius = .06; // TODO: parameter
-
-	float w = 0.05; // TODO: this is originally using length(fwidth(uv)) * 2.
+	float w = 0.05; // TODO: this is originally using length(fwidth(q)) * 2.
 	ivec4 sym;  // Wythoff symbol
 	SYMBOL_BODY();
 
@@ -177,13 +177,59 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 		poly = (side[0] > 0. && side[1] < 0.) ? 0 : (side[1] > 0. && side[2] < 0.) ? 1 : 2;
 	}
 
-	vec3 polycol = (poly == 0) ? vec3(1, .25, .25) : (poly == 1) ? vec3(.25, 1, .25) : vec3(.25, .25, 1);
+	vec3 polycol = (poly == 0) ? THIS_Polycolor1 : (poly == 1) ? THIS_Polycolor2 : THIS_Polycolor3;
 
 	polycol *= mix(.85, 1., float(reflcount & 1));
 
 	col = mix(polycol, vec3(.05), outline);
 
+	// Dual / Laves
+	// Interestingly, this is also the voronoi diagram of the vertices
+	float dual_outline_dist = 1e4;
+	#ifdef THIS_USE_DUAL_TILING
+	{
+		if(sym.w == 3)
+		{
+			dual_outline_dist = min(dual_outline_dist, abs(dot(q, dirs[2].xy) - dirs[2].z));
+			dual_outline_dist = min(dual_outline_dist, abs(dot(q, dirs[1].xy) - dirs[1].z));
+			dual_outline_dist = min(dual_outline_dist, abs(dot(q, dirs[0].xy) - dirs[0].z));
+		}
+		else if(sym.w == 2)
+		{
+			dual_outline_dist = min(dual_outline_dist, abs(dot(q, dirs[2].xy) - dirs[2].z));
+			dual_outline_dist = min(dual_outline_dist, abs(dot(q, dirs[0].xy) - dirs[0].z));
+		}
+		else if(sym.w == 1)
+		{
+			dual_outline_dist = min(dual_outline_dist, abs(dot(q, dirs[2].xy) - dirs[2].z));
+		}
+		else if(sym.w == 0)
+		{
+			if((reflcount & 1) == 1)
+			{
+				dual_outline_dist = min(dual_outline_dist, tile_segment(q, fermat_point, vec2(0)));
+				dual_outline_dist = min(dual_outline_dist, tile_segment(q, fermat_point, tb));
+				dual_outline_dist = min(dual_outline_dist, tile_segment(q, fermat_point, tc));
+			}
+			else
+			{
+				for(int i = 0; i < 3; ++i)
+				{
+					vec2 uv2 = q;
+					vec2 dir = dirs[i].xy;
+					float d = dot(uv2, dir) - dirs[i].z;
+					uv2 -= dir * d * 2.;
+					dual_outline_dist = min(dual_outline_dist, tile_segment(uv2, fermat_point, vec2(0)));
+					dual_outline_dist = min(dual_outline_dist, tile_segment(uv2, fermat_point, tb));
+					dual_outline_dist = min(dual_outline_dist, tile_segment(uv2, fermat_point, tc));
+				}
+			}
+		}
+		col = mix(col, THIS_Dualoutlinecolor, 1. - smoothstep(0., w, dual_outline_dist));
+	}
+	#endif
+
 	ReturnT res;
-	res = vec4(col, 1.);
+	FORMAT_BODY();
 	return res;
 }

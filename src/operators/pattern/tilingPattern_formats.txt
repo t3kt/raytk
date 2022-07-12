@@ -1,0 +1,4 @@
+name	label	code	params	macros
+polycolor	Poly Color	res = vec4(col, 1.);	Polycolor[1-3][rgb] Outlinecolor[rgb]	
+dualpolycolor	Dual Tiling Poly Color	res = vec4(col, 1.);	Polycolor[1-3][rgb] Outlinecolor[rgb] Dualoutlinecolor[rgb]	THIS_USE_DUAL_TILING
+polyreflline	Poly Number, Refl Side, Outline	res = vec4(float(poly) / 2., float(reflcount & 1), outline, 1.);		
