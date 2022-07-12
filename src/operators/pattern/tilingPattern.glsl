@@ -10,10 +10,10 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 	q -= THIS_Translate;
 	q /= THIS_Size;
 
-	// TODO: parameters
 	float vertex_dot_radius = THIS_Vertexradius;
+	float oThick = THIS_Outlinethickness;
+	float oBlend = THIS_Outlineblending;
 
-	float w = 0.05; // TODO: this is originally using length(fwidth(q)) * 2.
 	ivec4 sym;  // Wythoff symbol
 	SYMBOL_BODY();
 
@@ -119,8 +119,8 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 				poly = 2;
 			}
 
-			outline = mix(outline, 1., 1. - smoothstep(0., w, linedist));
-			outline = mix(outline, 1., 1. - smoothstep(0., w, length(q - snubpoint) - vertex_dot_radius));
+			outline = mix(outline, 1., 1. - smoothstep(0., oBlend, linedist - oThick));
+			outline = mix(outline, 1., 1. - smoothstep(0., oBlend, length(q - snubpoint) - vertex_dot_radius));
 		}
 		else
 		{
@@ -156,7 +156,7 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 				poly = 1;
 			}
 
-			outline = mix(outline, 1., 1. - smoothstep(0., w, linedist));
+			outline = mix(outline, 1., 1. - smoothstep(0., oBlend, linedist - oThick));
 		}
 	}
 	else
@@ -170,10 +170,10 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 		{
 			side[i] = dot(q - pp, dirs[i].yx * vec2(-1, 1));
 			if(dot(q - pp, dirs[i].xy) > 0.)
-			outline = mix(outline, 1., 1. - smoothstep(0., w, abs(side[i])));
+			outline = mix(outline, 1., 1. - smoothstep(0., oBlend, abs(side[i]) - oThick));
 		}
 
-		outline = mix(outline, 1., 1. - smoothstep(0., w, length(q - pp) - vertex_dot_radius));
+		outline = mix(outline, 1., 1. - smoothstep(0., oBlend, length(q - pp) - vertex_dot_radius));
 		poly = (side[0] > 0. && side[1] < 0.) ? 0 : (side[1] > 0. && side[2] < 0.) ? 1 : 2;
 	}
 
@@ -225,7 +225,7 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 				}
 			}
 		}
-		col = mix(col, THIS_Dualoutlinecolor, 1. - smoothstep(0., w, dual_outline_dist));
+		col = mix(col, THIS_Dualoutlinecolor, 1. - smoothstep(0., oBlend, dual_outline_dist - oThick));
 	}
 	#endif
 
