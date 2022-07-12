@@ -1,8 +1,8 @@
 !rop
 meta: !meta
   opType: raytk.operators.pattern.tilingPattern
-  opVersion: '0'
-  opStatus: alpha
+  opVersion: '1'
+  opStatus: beta
 opDef: !def
   enable: true
   typeSpec: !ropTypes
@@ -30,6 +30,19 @@ inputs:
   returnType: !returnT
     Returntypevec4: true
 elements:
+- !opElement
+  name: codeSwitcher_Format
+  elementType: codeSwitcher
+  params:
+    Table: !table
+      file: src/operators/pattern/tilingPattern_formats.txt
+      name: formats
+    Param: Format
+    Autoupdateparams: true
+    Manageparamstates: true
+    Alwaysincludeallparams: true
+    Switchmode: inline
+    Placeholder: FORMAT_BODY();
 - !opElement
   name: codeSwitcher_Pattern
   elementType: codeSwitcher
