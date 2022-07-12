@@ -24,3 +24,4 @@ referenceTable	(parent().path + '/reference_table') if op('reference_table').num
 dispatchTable	(parent().path + '/dispatch_table') if op('dispatch_table').numRows > 1 else ''
 inputNames	op('inputNameMap').text or ''
 definitionPath	parent().path + '/definition'
+elementTable	(parent().path + '/opElements') if op('opElements').numRows > 1 else ''
