@@ -12,13 +12,18 @@ def onCook(dat: 'DAT'):
 	dat.clear()
 	dat.appendRow([
 		'relPath',
+		'elementRoot', 'isNested',
 		'paramGroupTable', 'macroTable',
 		'placeholder1', 'code1', 'placeholder2', 'code2', 'placeholder3', 'code3', 'placeholder4', 'code4',
 	])
 	elements = dat.par.Elements.evalOPs()  # type: List[OP]
 	for element in elements:
+		elementRoot = op(element.par['Elementroot'] or element.parent())
 		dat.appendRow([
 			dat.relativePath(element),
+
+			elementRoot,
+			int(elementRoot is not element.parent()),
 			element.par['Paramgrouptable'] or '',
 			element.par['Macrotable'] or '',
 			element.par['Placeholder1'] or '',
