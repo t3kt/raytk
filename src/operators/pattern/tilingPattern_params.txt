@@ -1,4 +1,5 @@
 names	source	handling	readOnlyHandling	conversion	enable
-Translate[xy] Size Vertexradius	param	runtime	macro		1
+Translate[xy] Size	param	runtime	macro		1
+Vertexradius Outlinethickness Outlineblending	param	runtime	macro		1
 Polycolor[1-3][rgb] Outlinecolor[rgb]	param	runtime	macro		1
 Dualoutlinecolor[rgb]	param	runtime	macro		1
