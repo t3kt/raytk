@@ -5,5 +5,6 @@ typeSpec	Type Spec	params_panel	ext.ropEditor.ROPInfo.typeSpec or ''
 code	Code	codeEditorPanel	
 inputs	Inputs	inputsPanel	
 tables	Tables	tableEditorPanel	
+elements	Elements	elementsPanel	
 help	Help	helpEditorPanel	
 spec	ROP Spec	specPanel	

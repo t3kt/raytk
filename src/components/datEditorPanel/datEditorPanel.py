@@ -23,7 +23,7 @@ class DatEditorPanel:
 		self.ownerComp = ownerComp
 
 	@property
-	def opDef(self) -> 'Optional[COMP]':
+	def _opDef(self) -> 'Optional[COMP]':
 		if not hasattr(ext, 'ropEditor'):
 			return
 		info = ext.ropEditor.ROPInfo
@@ -31,23 +31,30 @@ class DatEditorPanel:
 
 	@property
 	def _currentItemPar(self) -> 'Optional[Par]':
-		if not hasattr(ext, 'ropEditor'):
+		currentTable = self._currentItemTable
+		if currentTable.numRows < 2:
 			return
-		info = ext.ropEditor.ROPInfo
-		if not info or not info.opDef:
-			return
-		name = self.ownerComp.par.Selecteditem.eval()
-		if name:
-			return info.opDef.par[name]
+		hostOp = op(currentTable[1, 'hostOp'])
+		parName = currentTable[1, 'parName']
+		if hostOp and parName:
+			return hostOp.par[parName]
 
 	def prepareItemTable(self, dat: 'scriptDAT'):
 		dat.copy(dat.inputs[0])
-		opDef = self.opDef
+		opDef = self._opDef
 		if not opDef:
 			return
 		for i in range(1, dat.numRows):
 			name = dat[i, 'name']
-			if opDef.par[name]:
+			if dat[i, 'hostOp']:
+				hostOp = op(dat[i, 'hostOp'])
+			else:
+				hostOp = opDef
+				dat[i, 'hostOp'] = opDef or ''
+			dat[i, 'parName'] = dat[i, 'parName'] or name
+			if not hostOp:
+				continue
+			if hostOp.par[name]:
 				dat[i, 'label'] = '* ' + dat[i, 'label'].val + ' *'
 
 	@property
@@ -84,6 +91,10 @@ class DatEditorPanel:
 	@property
 	def _itemTable(self) -> 'DAT':
 		return self.ownerComp.op('itemTable')
+
+	@property
+	def _currentItemTable(self) -> 'DAT':
+		return self.ownerComp.op('currentItem')
 
 	def buildItemGraphInfo(self, dat: 'DAT'):
 		dat.clear()
