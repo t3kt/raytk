@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.output.raymarchRender3D
-  opVersion: '115'
+  opVersion: '116'
   opStatus: default
 opDef: !def
   enable: true
@@ -15,9 +15,7 @@ opDef: !def
   function: !text
     file: src/operators/output/raymarchRender3D_func.glsl
     name: functionTemplate
-  lockParams:
-  - Enablecustomoutput*
-  - Raymodifier
+  lockParams: Enablecustomoutput*
   paramGroupTable: eval_params
   macroTable: !table
     file: src/operators/output/raymarchRender3D_macros.txt
@@ -53,15 +51,6 @@ inputs:
     Contexttypelightcontext: true
   returnType: !returnT
     Returntypelight: true
-- !input
-  Source: !expr
-    expr: parent().par.Raymodifier or ''
-  coordType: !coordT
-    Coordtypevec3: true
-  contextType: !contextT
-    Contexttyperaycontext: true
-  returnType: !returnT
-    Returntyperay: true
 - !input
   Localalias: shadow
   coordType: !coordT

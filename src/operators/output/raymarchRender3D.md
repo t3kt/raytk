@@ -71,5 +71,4 @@ Renders a scene using 3D raymarching.
 * `definition_in`:  SDF definition the shapes in the scene.
 * `camera_definition_in`:  Camera used for render frame.
 * `light_definition_in`:  Light definition that can be used by supporting materials.
-* `rayModifier_definition_in`:  Advanced feature, not ready for use.
 * `shadow_definition_in`: 
