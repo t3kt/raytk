@@ -64,9 +64,6 @@ Sdf castRay(Ray ray, float maxDist) {
 	nearHitCount = 0;
 	nearHit = 0.;
 	for (i = 0; i < RAYTK_MAX_STEPS; i++) {
-		#ifdef THIS_USE_RAYMOD_FUNC
-		modifyRay(ray, res);
-		#endif
 		if (!checkLimit(ray.pos)) {
 			popStage(priorStage);
 			return createNonHitSdf();
@@ -99,9 +96,6 @@ Sdf castRayBasic(Ray ray, float maxDist, float side) {
 	float dist = 0;
 	Sdf res;
 	for (int i = 0; i < RAYTK_MAX_STEPS; i++) {
-		#ifdef THIS_USE_RAYMOD_FUNC
-		modifyRay(ray, res);
-		#endif
 		if (!checkLimit(ray.pos)) {
 			return createNonHitSdf();
 		}
