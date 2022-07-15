@@ -216,9 +216,6 @@ vec3 getColorInner(vec3 p, MaterialContext matCtx, int m) {
 }
 
 vec4 getColor(vec3 p, MaterialContext matCtx) {
-	if (isNonHitSdf(matCtx.result)) {
-		return getBackgroundColor(matCtx.ray);
-	}
 	vec3 col = vec3(0);
 	float ratio = resultMaterialInterp(matCtx.result);
 	int m1 = resultMaterial1(matCtx.result);
@@ -445,7 +442,9 @@ void main()
 		matCtx.ray = ray;
 		if (res.x >= renderDepth && renderDepth == RAYTK_MAX_DIST) {
 			#ifdef OUTPUT_COLOR
-			colorOut += getBackgroundColor(ray);
+			if (IS_TRUE(THIS_Showbackground)) {
+				colorOut += getBackgroundColor(ray);
+			}
 			vec4 color2 = castSecondaryRay(matCtx);
 			colorOut.rgb += color2.rgb;
 			// TODO: alpha?
