@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.sdf.mengerSpongeSdf
-  opVersion: '6'
+  opVersion: '7'
   opStatus: default
 opDef: !def
   enable: true
@@ -16,6 +16,40 @@ opDef: !def
     file: src/operators/sdf/mengerSpongeSdf.glsl
     name: functionTemplate
   paramGroupTable: eval_params
+  libraryNames: !expr
+    expr: op('mengerSpongeSdf_lib')
+  variableTable: !table
+    file: src/operators/sdf/mengerSpongeSdf_variables.txt
+    name: variable_exprs
+    evaluate: true
+    evalOpts: !evalOpts
+      excludeFirstRow: true
+      cols: enable
   help: !text
     file: src/operators/sdf/mengerSpongeSdf.md
     name: help
+inputs:
+- !input
+  Localalias: stepOffsetField
+  coordType: !coordT
+    Coordtypevec3: true
+  contextType: !contextT
+    Allcontexttype: true
+  returnType: !returnT
+    Returntypevec4: true
+- !input
+  Localalias: boxScaleField
+  coordType: !coordT
+    Coordtypevec3: true
+  contextType: !contextT
+    Allcontexttype: true
+  returnType: !returnT
+    Returntypefloat: true
+- !input
+  Localalias: crossScaleField
+  coordType: !coordT
+    Coordtypevec3: true
+  contextType: !contextT
+    Allcontexttype: true
+  returnType: !returnT
+    Returntypefloat: true
