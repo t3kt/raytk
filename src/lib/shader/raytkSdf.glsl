@@ -83,3 +83,11 @@ float sdRoundedBox( in vec2 p, in vec2 b, in vec4 r )
 float fCorner2(vec2 p) {
 	return length(max(p, vec2(0))) + vmax(min(p, vec2(0)));
 }
+
+float fCapsule(vec2 p, vec2 a, vec2 b) {
+	vec2 pa = p - a;
+	vec2 ba = b - a;
+	float h = clamp(dot(pa, ba) / dot(ba, ba), 0.0, 1.0);
+	float d = length(pa - ba * h);
+	return d;
+}
