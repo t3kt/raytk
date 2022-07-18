@@ -1,0 +1,5 @@
+names	source	handling	readOnlyHandling	conversion	enable
+Size Tilingshift[xy]	param	runtime	macro		1
+Polycolor[1-4][rgb] Outlinecolor[rgb] Dualoutlinecolor[rgb]	param	runtime	macro		1
+Enableoutline Enabledualoutline	param	runtime	macro		1
+Outlinethickness Outlineblending Dualoutlinethickness Dualoutlineblending	param	runtime	macro		1
