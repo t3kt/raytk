@@ -1,0 +1,2 @@
+names	source	handling	readOnlyHandling	conversion	enable
+Campos[xyz]	param	runtime	macro		op('position_definition').numRows < 2
