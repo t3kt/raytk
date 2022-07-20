@@ -1,5 +1,42 @@
 # Release Notes
 
+## v0.26
+
+### Highlights
+
+* New pattern generators (tilingPattern, snubQuadrilePattern) and field-based pattern controls
+
+### Details
+
+* Improvements / additions
+  * New field inputs (#812, #588, #921, #693)
+    * brickPattern - blending, shift, thickness
+    * gyroidSdf - bias, phase1-2, thickness
+    * hexagonalGridPattern - blending, thickness
+    * hexagonalWeavePattern - thickness
+    * mengerSpongeSdf - cross scale, box scale, step offset
+    * rosettePattern - glow, radius, spread
+    * weavePattern - thickness
+  * New ops
+    * fieldCamera (#228)
+    * snubQuadrilePattern (#254, #926)
+    * tilingPattern (#923)
+  * New op features
+    * hexagonalGridPattern - separate blending and thickness, raw distance output, color settings (#254)
+    * mengerSpongeSdf - step offset, step variables (#698)
+    * raymarchRender3d - option to disable showing background color for ray misses
+    * reorderCoords - option to zero out axes (#213)
+    * rosettePattern - spread and radius
+* Fixes
+  * Fix rotate angle scaling in orthoCamera (#918)
+  * Fix coord type collapsing in projectPlane (#920)
+  * Show errors out both outputs of render2d (#922)
+* Infrastructure / internals
+  * Added support for adding mode-specific macros in codeSwitcher
+  * Toolkit editor support for opElements (#925)
+  * Lots of test cleanup
+  * Remove bendRay and ray modifier functionality
+
 ## v0.25
 
 ### Highlights
