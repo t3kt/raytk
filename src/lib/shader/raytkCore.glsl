@@ -324,8 +324,6 @@ struct MaterialContext {
 	#ifdef RAYTK_LOD_IN_MATERIAL_CONTEXT
 	float lod;
 	#endif
-	// x: AO value, y: has been calculated
-	vec2 ao;
 };
 
 void setIterationIndex(inout MaterialContext ctx, float index) {
