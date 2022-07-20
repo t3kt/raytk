@@ -24,10 +24,22 @@ vec3 THIS_getcol(int i) {
 }
 
 ReturnT thismap(CoordT p, ContextT ctx) {
-	vec2 q = p;
+	#ifdef THIS_HAS_INPUT_coordField
+	vec2 q = adaptAsVec2(inputOp_coordField(p, ctx));
+	#else
+	vec2 q = adaptAsVec2(p);
+	#endif
+	#ifdef THIS_HAS_INPUT_sizeField
+	q /= adaptAsFloat(inputOp_sizeField(p, ctx));
+	#else
 	q /= THIS_Size;
+	#endif
 	vec2 wythoffPoint = vec2(0.64, 0.36);
+	#ifdef THIS_HAS_INPUT_tilingShiftField
+	wythoffPoint += fillToVec2(inputOp_tilingShiftField(p, ctx));
+	#else
 	wythoffPoint += THIS_Tilingshift;
+	#endif
 	wythoffPoint = clamp(wythoffPoint, 0., 1.);
 	q = mod(q,2.)-1.; // Fold down to ±1 square
 	bool parity = (q.y < 0.0) != (q.x < 0.0); // Need reflection?
