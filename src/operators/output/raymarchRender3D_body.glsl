@@ -1,5 +1,3 @@
-uniform float uUseRenderDepth;
-
 float hash1( float n )
 {
 	return fract(sin(n)*43758.5453123);
@@ -405,7 +403,7 @@ void main()
 	vec2 shift = vec2(0);
 	bool writeUV = true;
 	#endif
-		float renderDepth = uUseRenderDepth > 0 ?
+		float renderDepth = IS_TRUE(THIS_Userenderdepth) ?
 			min(texture(sTD2DInputs[0], vUV.st).r, RAYTK_MAX_DIST) :
 			RAYTK_MAX_DIST;
 		//-----------------------------------------------------

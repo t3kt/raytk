@@ -5,3 +5,4 @@ Showbackground	param	runtime	macro		1
 Enablereflection Reflectionpasses Enablenearhitmindist Enableshadow	param	macro			1
 Enablerefraction Refractionpasses Antialias	param	macro			1
 Enablenormalsmoothing Usebackgroundfieldalpha	param	macro			1
+Userenderdepth	param	runtime	macro		1
