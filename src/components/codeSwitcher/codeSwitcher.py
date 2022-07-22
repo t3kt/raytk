@@ -15,7 +15,7 @@ def _hostPar() -> 'Optional[Par]':
 def _effectiveMode():
 	mode = parent().par.Switchmode.eval()
 	par = _hostPar()
-	if mode == 'auto':
+	if par is not None and mode == 'auto':
 		mode = 'inline'if par is None or par.readOnly else 'switch'
 	return mode
 
@@ -73,7 +73,7 @@ def buildMacroTable(dat: 'DAT', itemInfo: 'DAT'):
 
 def buildCode():
 	par = _hostPar()
-	if par is None:
+	if par is None and not parent().par.Indexexpr:
 		return ''
 	mode = _effectiveMode()
 	table = op('table')
@@ -91,7 +91,8 @@ def _prepareItemCode(code: 'Cell'):
 	return code.replace(';', ';\n')
 
 def _buildRuntimeSwitch(table: 'DAT'):
-	code = f'switch (int(THIS_{parent().par.Param})) {{\n'
+	expr = parent().par.Indexexpr or f'int(THIS_{parent().par.Param})'
+	code = f'switch ({expr}) {{\n'
 	for i in range(1, table.numRows):
 		name = str(table[i, 'name'])
 		itemCode = _prepareItemCode(table[i, 'code'])
