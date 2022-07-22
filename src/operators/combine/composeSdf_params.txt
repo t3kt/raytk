@@ -1,0 +1,5 @@
+names	source	handling	readOnlyHandling	conversion	enable
+Enable[1-8]	param	runtime	macro		1
+Combine[1-8]	param	runtime	macro		1
+Blendradius[1-8] Blendnumber[1-8] Blendoffset[1-8]	param	runtime	macro		1
+Input[1-8]	param	runtime			1

@@ -8,9 +8,15 @@ if False:
 def _table() -> 'DAT':
 	return op('table')
 
-def _hostPar() -> 'Optional[Par]':
+def _allHostPars() -> 'List[Par]':
 	host = parent().par.Hostop.eval()
-	return host and host.par[parent().par.Param]
+	if not host:
+		return []
+	return host.pars(*tdu.expand(parent().par.Param.eval()))
+
+def _hostPar() -> 'Optional[Par]':
+	for p in _allHostPars():
+		return p
 
 def _effectiveMode():
 	mode = parent().par.Switchmode.eval()
@@ -138,14 +144,14 @@ def _updateParamEnableExprs():
 			par.enableExpr = f'me.par.{hostPar.name} in {repr(tuple(vals))}'
 
 def _updateParamMenu():
-	hostPar = _hostPar()
-	if hostPar is None:
-		return
 	table = _table()
 	if table.numRows < 2:
 		return
-	hostPar.menuNames = [c.val for c in table.col('name')[1:]]
-	hostPar.menuLabels = [c.val for c in table.col('label')[1:]]
+	names = [c.val for c in table.col('name')[1:]]
+	labels = [c.val for c in table.col('label')[1:]]
+	for hostPar in _allHostPars():
+		hostPar.menuNames = names
+		hostPar.menuLabels = labels
 
 def updateParams():
 	_updateParamMenu()

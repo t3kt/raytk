@@ -1,0 +1,9 @@
+name	label
+input1	Input 1
+input2	Input 2
+input3	Input 3
+input4	Input 4
+input5	Input 5
+input6	Input 6
+input7	Input 7
+input8	Input 8

@@ -1,0 +1,7 @@
+{
+  "meta": {
+    "opStatus": "alpha",
+    "opType": "raytk.operators.combine.composeSdf",
+    "opVersion": 0
+  }
+}
