@@ -19,7 +19,7 @@ def update():
 				continue
 			names.append(name)
 			labels.append(dat[i, 'label'].val)
-		pars = host.pars(*(mod.tdu.split(parent().par.Param)))
+		pars = host.pars(*(mod.tdu.expand(parent().par.Param)))
 		for par in pars:
 			par.menuNames = names
 			par.menuLabels = labels
