@@ -2,6 +2,6 @@
   "meta": {
     "opStatus": "beta",
     "opType": "raytk.operators.light.multiLight",
-    "opVersion": 1
+    "opVersion": 2
   }
 }
