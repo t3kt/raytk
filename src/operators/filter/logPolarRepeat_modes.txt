@@ -1,2 +1,2 @@
-name	label	coordType	code
-logpolar	Log Polar	vec2 vec3	q = vec2(log(length(q)), atan(q.y, q.x)); q = fract(q) - 0.5;
+name	label	coordType
+logpolar	Log Polar	vec2 vec3

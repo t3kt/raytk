@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.filter.logPolarRepeat
-  opVersion: '5'
+  opVersion: '6'
   opStatus: beta
 opDef: !def
   enable: !expr
@@ -49,6 +49,7 @@ elements:
   name: codeSwitcher_Mode
   elementType: codeSwitcher
   params:
+    Elementroot: ''
     Table: !table
       file: src/operators/filter/logPolarRepeat_modes.txt
       name: modes
@@ -56,5 +57,6 @@ elements:
     Autoupdateparams: true
     Manageparamstates: false
     Alwaysincludeallparams: false
-    Switchmode: inline
-    Placeholder: BODY();
+    Switchmode: none
+    Indexexpr: ''
+    Placeholder: ''
