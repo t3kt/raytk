@@ -50,8 +50,15 @@ class TestEditor:
 	def currentTox(self):
 		return iop.loader.ComponentTox
 
+	@staticmethod
+	def _disableComponentCooking():
+		comp = iop.loader.Component  # type: COMP
+		if comp:
+			comp.allowCooking = False
+
 	def Unload(self):
 		try:
+			self._disableComponentCooking()
 			iop.loader.UnloadComponent()
 		except:
 			pass
@@ -84,6 +91,7 @@ class TestEditor:
 			name = name.replace(' ', '_')
 			if not name.endswith('_test') and not name.endswith('_snippet'):
 				name += '_test'
+		self._disableComponentCooking()
 		iop.loader.LoadComponent(tox=toxPath, name=name)
 		self._reloadOutputsSoon()
 		self.ownerComp.op('findingsPanel').cook(force=True)
