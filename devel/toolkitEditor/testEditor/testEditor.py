@@ -88,31 +88,6 @@ class TestEditor:
 		self._reloadOutputsSoon()
 		self.ownerComp.op('findingsPanel').cook(force=True)
 
-	@staticmethod
-	def prepareTestTable(dat: 'DAT', inDat: 'DAT', opTable: 'DAT'):
-		dat.clear()
-		dat.appendRow([
-			'name', 'label', 'path', 'opType',
-		])
-		for i in range(1, inDat.numRows):
-			baseName = str(inDat[i, 'basename'])
-			if baseName == 'index':
-				continue
-			if inDat[i, 'type'] == 'File folder':
-				continue
-			group = inDat[i, 'group']
-			rootFolder = Path(str(inDat[i, 'rootfolder']))
-			relPath = str(inDat[i, 'relpath'])
-			opType = ''
-			if group in ('test', 'snippet'):
-				opType = str(opTable[baseName.split('_')[0], 'opType'] or '')
-			dat.appendRow([
-				(rootFolder / relPath).stem.replace('_', ' '),
-				f'{group}: {relPath.replace(".tox", "")}',
-				(rootFolder / relPath).as_posix(),
-				opType,
-			])
-
 	def createTest(self):
 		self._create('test')
 
