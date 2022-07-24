@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.filter.limitField
-  opVersion: '14'
+  opVersion: '15'
   opStatus: default
 opDef: !def
   enable: !expr
@@ -13,7 +13,6 @@ opDef: !def
     contextType: !contextT
       Allcontexttype: true
     returnType: !returnT
-      Returntypesdf: true
       Returntypefloat: true
       Returntypevec4: true
   function: !text
@@ -80,3 +79,19 @@ inputs:
     Returntypesdf: true
     Returntypefloat: true
     Returntypevec4: true
+elements:
+- !opElement
+  name: codeSwitcher_Limittype
+  elementType: codeSwitcher
+  params:
+    Elementroot: ''
+    Table: !table
+      file: src/operators/filter/limitField_limitTypes.txt
+      name: limitTypes
+    Param: Limittype
+    Autoupdateparams: true
+    Manageparamstates: true
+    Alwaysincludeallparams: false
+    Switchmode: auto
+    Indexexpr: ''
+    Placeholder: BODY();

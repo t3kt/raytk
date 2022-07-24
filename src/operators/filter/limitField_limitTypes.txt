@@ -1,0 +1,6 @@
+name	label	code	params
+clamp	Clamp	val = clamp(val, low, high);	Low[1-4] High[1-4]
+loop	Loop	val = wrapRange(val, low, high);	Low[1-4] High[1-4]
+zigzag	Zig-Zag	val = modZigZag(val, low, high);	Low[1-4] High[1-4]
+clamplow	Clamp Low	val = max(val, low);	Low[1-4]
+clamphigh	Clamp High	val = min(val, high);	High[1-4]

@@ -1,3 +1,1 @@
 names	source	handling	readOnlyHandling	conversion	enable
-Low[1-4] High[1-4]	param	runtime	macro		1
-Limittype	param	macro			1
