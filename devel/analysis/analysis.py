@@ -150,7 +150,6 @@ def buildOpInputsTable(dat: 'DAT'):
 	dat.clear()
 	parNames = [
 		'Source',
-		'Name',
 		'Label',
 		'Localalias',
 		'Variables',

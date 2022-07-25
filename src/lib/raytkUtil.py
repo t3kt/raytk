@@ -494,10 +494,6 @@ class InputInfo:
 	def name(self) -> 'Optional[str]':
 		return self._configTableVal('name')
 
-	@name.setter
-	def name(self, val: Optional[str]):
-		self.handlerPar.Name = val or ''
-
 	@property
 	def label(self) -> 'Optional[str]':
 		return self._configTableVal('label')

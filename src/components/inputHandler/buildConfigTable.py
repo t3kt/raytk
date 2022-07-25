@@ -24,9 +24,7 @@ def onCook(dat: 'scriptDAT'):
 
 	index = _determineAutoIndex(host=host, ownIn=ownIn, baseName=baseName)
 	defaultName = f'inputOp{index}'
-	if _parentPar().Name:
-		name = _parentPar().Name
-	elif sourcePar is not None:
+	if sourcePar is not None:
 		name = sourcePar.name
 	elif localName:
 		name = localName
