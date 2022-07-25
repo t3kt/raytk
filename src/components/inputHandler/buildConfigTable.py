@@ -51,7 +51,6 @@ def onCook(dat: 'scriptDAT'):
 	else:
 		helpText = ''
 	dat.appendRows([
-		['index', index],
 		['name', name],
 		['label', label],
 		['alias', alias],
