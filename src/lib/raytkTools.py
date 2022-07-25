@@ -175,7 +175,7 @@ class RaytkTools(RaytkContext):
 		self.saveROPSpec(rop)
 		if info.isROP:
 			self.saveROPSpec_NEW(rop)
-		OpDocManager(info).pushToParamsAndInputs()
+		OpDocManager(info).pushToParams()
 		focusFirstCustomParameterPage(rop)
 		tox = info.toxFile
 		rop.par.savebackup = False
@@ -225,7 +225,7 @@ class RaytkTools(RaytkContext):
 		manager = OpDocManager(info.rop)
 		ui.undo.startBlock('Apply ROP help to params for ' + info.rop.path)
 		try:
-			manager.pushToParamsAndInputs()
+			manager.pushToParams()
 		finally:
 			ui.undo.endBlock()
 

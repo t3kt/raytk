@@ -173,7 +173,6 @@ class InputHelp:
 		return cls(
 			name=info.name,
 			label=info.label,
-			summary=info.helpText,
 			required=info.required,
 			coordTypes=info.supportedCoordTypes,
 			contextTypes=info.supportedContextTypes,
@@ -671,7 +670,7 @@ class OpDocManager:
 			if parTuple[0].tupletName == tupletName:
 				return parTuple[0]
 
-	def pushToParamsAndInputs(self):
+	def pushToParams(self):
 		ropHelp = self._parseDAT()
 		for parHelp in ropHelp.parameters:
 			if not parHelp.summary:
@@ -685,12 +684,6 @@ class OpDocManager:
 				par = self._getRopParByTupletName(parHelp.name)
 				if par is not None:
 					par.help = parHelp.summary
-		for inHelp in ropHelp.inputs:
-			if not inHelp.inputHandler:
-				continue
-			inInfo = InputInfo(inHelp.inputHandler)
-			if inHelp.summary:
-				inInfo.helpText = inHelp.summary
 
 	def _gatherImages(self, ropHelp: ROPHelp, imagesFolder: 'Path'):
 		folder = imagesFolder / f'reference/operators/{self.info.categoryName}'

@@ -503,14 +503,6 @@ class InputInfo:
 		self.handlerPar.Label = val or ''
 
 	@property
-	def helpText(self) -> 'Optional[str]':
-		return self._configTableVal('help')
-
-	@helpText.setter
-	def helpText(self, val: Optional[str]):
-		self.handlerPar.Help = val or ''
-
-	@property
 	def multiHandler(self) -> 'Optional[COMP]':
 		"""
 		:return: The `multiInputHandler` that this input flows into, if any.

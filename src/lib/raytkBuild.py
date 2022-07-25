@@ -326,7 +326,7 @@ class DocProcessor:
 			return
 		docManager = OpDocManager(ropInfo)
 		docManager.setUpMissingParts()
-		docManager.pushToParamsAndInputs()
+		docManager.pushToParams()
 		docText = docManager.formatForBuild(
 			imagesFolder=self.imagesFolder)
 		self._writeDocs(

@@ -4,13 +4,11 @@ if False:
 	from _stubs import *
 	from _typeAliases import *
 	from typing import Optional
-	from .inputHandler import _HandlerPar
+	from inputHandler import _HandlerPar
 
 	class _HandlerParFull(_HandlerPar):
-		Name: StrParamT
 		Label: StrParamT
 		Localalias: StrParamT
-		Help: StrParamT
 		Variables: StrParamT
 		Variableinputs: StrParamT
 
@@ -44,17 +42,10 @@ def onCook(dat: 'scriptDAT'):
 		alias = _parentPar().Localalias
 	else:
 		alias = defaultName
-	if _parentPar().Help:
-		helpText = _parentPar().Help
-	elif sourcePar is not None and sourcePar.help:
-		helpText = sourcePar.help
-	else:
-		helpText = ''
 	dat.appendRows([
 		['name', name],
 		['label', label],
 		['alias', alias],
-		['help', helpText],
 		['vars', _parentPar().Variables],
 		['varInputs', _parentPar().Variableinputs],
 	])
