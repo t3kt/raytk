@@ -18,7 +18,6 @@ textureTable	0
 bufferTable	0
 libraryNames	0
 initPath	0
-stageInitPath	0
 opGlobalsPath	0
 variableTable	0
 referenceTable	0

@@ -196,7 +196,6 @@ class RaytkTools(RaytkContext):
 		for par in [
 			info.opDefPar.Opglobals,
 			info.opDefPar.Initcode,
-			info.opDefPar.Stageinitcode,
 			info.opDefPar.Functemplate,
 			info.opDefPar.Materialcode,
 		]:

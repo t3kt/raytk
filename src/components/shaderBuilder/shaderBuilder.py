@@ -631,18 +631,6 @@ class ShaderBuilder:
 			'}',
 		], 'init')
 
-	def buildStageInitBlock(self):
-		dats = self.getOpsFromDefinitionColumn('stageInitPath')
-		code = _combineCode(dats)
-		if not code.strip():
-			return ' '
-		return wrapCodeSection([
-			'#define RAYTK_HAS_STAGE_INIT',
-			'void stageInit(int stage) {',
-			code,
-			'}',
-		], 'stageInit')
-
 	def buildFunctionsBlock(self):
 		dats = self.getOpsFromDefinitionColumn('functionPath')
 		return wrapCodeSection(dats, 'functions')
@@ -883,7 +871,6 @@ class _V2_Writer:
 		self._writeOutputInit()
 		self._writeOpGlobals()
 		self._writeInit()
-		self._writeStageInit()
 		self._writeFunctions()
 		self._writeBody()
 
@@ -1055,16 +1042,6 @@ class _V2_Writer:
 			prefixes=[
 				'#define RAYTK_HAS_INIT',
 				'void init() {',
-			],
-			suffixes=['}'],
-		)
-
-	def _writeStageInit(self):
-		self._writeCodeDatsFromCol(
-			'stageInit', col='stageInitPath',
-			prefixes=[
-				'#define RAYTK_HAS_STAGE_INIT',
-				'void stageInit(int stage) {',
 			],
 			suffixes=['}'],
 		)

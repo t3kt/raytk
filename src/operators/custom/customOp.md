@@ -84,7 +84,6 @@ all of those parts (e.g. `THIS_Translate`).
 * `Codeheader`
 * `Opglobals`
 * `Initcode`
-* `Stageinitcode`
 * `Function`: DAT with the main shader function.
 * `Materialcode`: DAT with the optional material snippet.
 * `Settingsheader`
@@ -118,7 +117,6 @@ all of those parts (e.g. `THIS_Translate`).
 * `Paramsop`: The COMP that contains any custom parameters used by the op.
 * `Createopglobals`
 * `Createinit`
-* `Createstageinit`
 * `Createfunction`
 * `Creatematerial`
 * `Createparamsop`: Creates and attaches a new COMP for `Paramsop`, if there is none.
