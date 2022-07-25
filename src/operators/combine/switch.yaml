@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.combine.switch
-  opVersion: '14'
+  opVersion: '15'
   opStatus: default
 opDef: !def
   enable: !expr
@@ -98,7 +98,6 @@ inputs:
   Source: !expr
     expr: parent().par.Indexfield or ''
   Localalias: indexField
-  Help: Field used to choose the source index
   coordType: !coordT
     Allcoordtype: true
   contextType: !contextT
@@ -110,6 +109,7 @@ elements:
   name: codeSwitcher_Extend
   elementType: codeSwitcher
   params:
+    Elementroot: ''
     Table: !table
       file: src/operators/combine/switch_extendModes.txt
       name: extendModes
@@ -118,6 +118,7 @@ elements:
     Manageparamstates: false
     Alwaysincludeallparams: false
     Switchmode: auto
+    Indexexpr: ''
     Placeholder: EXTEND();
 - !opElement
   name: aggregateCodeGenerator
@@ -138,6 +139,7 @@ elements:
   name: codeSwitcher_Indexmode
   elementType: codeSwitcher
   params:
+    Elementroot: ''
     Table: !table
       file: src/operators/combine/switch_indexModes.txt
       name: indexModes
@@ -146,4 +148,5 @@ elements:
     Manageparamstates: false
     Alwaysincludeallparams: false
     Switchmode: auto
+    Indexexpr: ''
     Placeholder: RESCALEINDEX();

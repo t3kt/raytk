@@ -6,6 +6,16 @@ Note that inputs that are not connected are skipped over when assigning numbers 
 
 * `Enable`
 * `Source`: When 0, the first source is used, 1 for the second, etc.
+* `Blend`
+* `Indexfield`
+* `Indexmode`
+  * `zeroindex`
+  * `oneindex`
+  * `norm`
+* `Extend`
+  * `clamp`
+  * `loop`
+  * `zigzag`
 
 ## Inputs
 
@@ -13,3 +23,8 @@ Note that inputs that are not connected are skipped over when assigning numbers 
 * `definition_in_2`: 
 * `definition_in_3`: 
 * `definition_in_4`: 
+* `definition_in_5`: 
+* `definition_in_6`: 
+* `definition_in_7`: 
+* `definition_in_8`: 
+* `indexField`:  Field used to choose the source index
