@@ -10,8 +10,16 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 	q -= THIS_Translate;
 	q /= THIS_Size;
 
+	#ifdef THIS_HAS_INPUT_vertexRadiusField
+	float vertex_dot_radius = inputOp_vertexRadiusField(p, ctx);
+	#else
 	float vertex_dot_radius = THIS_Vertexradius;
+	#endif
+	#ifdef THIS_HAS_INPUT_outlineThicknessField
+	float oThick = inputOp_outlineThicknessField(p, ctx);
+	#else
 	float oThick = THIS_Outlinethickness;
+	#endif
 	float oBlend = THIS_Outlineblending;
 
 	ivec4 sym;  // Wythoff symbol
@@ -176,12 +184,32 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 		outline = mix(outline, 1., 1. - smoothstep(0., oBlend, length(q - pp) - vertex_dot_radius));
 		poly = (side[0] > 0. && side[1] < 0.) ? 0 : (side[1] > 0. && side[2] < 0.) ? 1 : 2;
 	}
+	#ifdef THIS_HAS_INPUT_polyColor1Field
+	vec3 polyCol1 = fillToVec3(inputOp_polyColor1Field(p, ctx));
+	#else
+	vec3 polyCol1 = THIS_Polycolor1;
+	#endif
+	#ifdef THIS_HAS_INPUT_polyColor2Field
+	vec3 polyCol2 = fillToVec3(inputOp_polyColor2Field(p, ctx));
+	#else
+	vec3 polyCol2 = THIS_Polycolor2;
+	#endif
+	#ifdef THIS_HAS_INPUT_polyColor3Field
+	vec3 polyCol3 = fillToVec3(inputOp_polyColor3Field(p, ctx));
+	#else
+	vec3 polyCol3 = THIS_Polycolor3;
+	#endif
 
-	vec3 polycol = (poly == 0) ? THIS_Polycolor1 : (poly == 1) ? THIS_Polycolor2 : THIS_Polycolor3;
+	vec3 polycol = (poly == 0) ? polyCol1 : (poly == 1) ? polyCol2 : polyCol3;
 
 	polycol *= mix(.85, 1., float(reflcount & 1));
 
-	col = mix(polycol, vec3(.05), outline);
+	#ifdef THIS_HAS_INPUT_outlineColorField
+	vec3 oColor = fillToVec3(inputOp_outlineColorField(p, ctx));
+	#else
+	vec3 oColor = THIS_Outlinecolor;
+	#endif
+	col = mix(polycol, oColor, outline);
 
 	// Dual / Laves
 	// Interestingly, this is also the voronoi diagram of the vertices
@@ -225,7 +253,12 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 				}
 			}
 		}
-		col = mix(col, THIS_Dualoutlinecolor, 1. - smoothstep(0., oBlend, dual_outline_dist - oThick));
+		#ifdef THIS_HAS_INPUT_dualOutlineColorField
+		vec3 doColor = fillToVec3(inputOp_dualOutlineColorField(p, ctx));
+		#else
+		vec3 doColor = THIS_Dualoutlinecolor;
+		#endif
+		col = mix(col, doColor, 1. - smoothstep(0., oBlend, dual_outline_dist - oThick));
 	}
 	#endif
 
