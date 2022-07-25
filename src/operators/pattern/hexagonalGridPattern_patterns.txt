@@ -2,4 +2,4 @@ name	label	returnType	code	params	macros
 hexgrid	Hex Grid	float	res = smoothstep(t, t+b, hexagonalGridDist(q));	Thickness Blending	THIS_USE_THICKNESS THIS_USE_BLENDING
 hexdist	Hex Distance	float	res = hexagonalGridDist(q);		THIS_USE_THICKNESS THIS_USE_BLENDING
 hex3	Hex 3 Pattern	float	res = hexagonal3Pattern(q);		
-hex3color	Hex 3 Color Pattern	vec4	res = vec4(THIS_colorize(hexagonal3Pattern(q)), 1.);	Color1[rgb] Color2[rgb] Color3[rgb]	THIS_USE_COLORIZE
+hex3color	Hex 3 Color Pattern	vec4	res = vec4(THIS_colorize(hexagonal3Pattern(q), p, ctx), 1.);	Polycolor1[rgb] Polycolor2[rgb] Polycolor3[rgb]	THIS_USE_COLORIZE

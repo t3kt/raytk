@@ -2,10 +2,26 @@
 // https://www.shadertoy.com/view/4dfyzf
 
 #ifdef THIS_USE_COLORIZE
-vec3 THIS_colorize(float v) {
-	if (v == 0.5) return THIS_Color2;
-	if (v == 1.0) return THIS_Color3;
-	return THIS_Color1;
+vec3 THIS_colorize(float v, CoordT p, ContextT ctx) {
+	if (v == 0.5) {
+		#ifdef THIS_HAS_INPUT_polyColor2Field
+		return fillToVec3(inputOp_polyColor2Field(p, ctx));
+		#else
+		return THIS_Polycolor2;
+		#endif
+	}
+	if (v == 1.0) {
+		#ifdef THIS_HAS_INPUT_polyColor3Field
+		return fillToVec3(inputOp_polyColor3Field(p, ctx));
+		#else
+		return THIS_Polycolor3;
+		#endif
+	}
+	#ifdef THIS_HAS_INPUT_polyColor1Field
+	return fillToVec3(inputOp_polyColor1Field(p, ctx));
+	#else
+	return THIS_Polycolor1;
+	#endif
 }
 #endif
 
