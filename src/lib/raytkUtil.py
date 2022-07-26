@@ -800,7 +800,7 @@ def _getEditorPane(name: Optional[str] = None, popup=False):
 	else:
 		return ui.panes.createFloating(type=PaneType.NETWORKEDITOR, name=name)
 
-def navigateTo(o: 'Union[OP, COMP]', name: Optional[str] = None, popup=False, goInto=True):
+def navigateTo(o: 'Union[OP, COMP]', name: Optional[str] = None, popup=False, goInto=True) -> 'Optional[NetworkEditor]':
 	if not o:
 		return
 	pane = _getEditorPane(name, popup)
@@ -813,6 +813,7 @@ def navigateTo(o: 'Union[OP, COMP]', name: Optional[str] = None, popup=False, go
 		o.current = True
 		o.selected = True
 		pane.homeSelected(zoom=False)
+	return pane
 
 class VisualizerTypes:
 	none = 'none'

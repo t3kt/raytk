@@ -57,7 +57,8 @@ class Navigator:
 			return
 		snippet = self.ownerComp.par.Snippetsroot.eval().op(relPath)
 		self._updateSnippetCooking(snippet)
-		navigateTo(snippet, name='raytkSnippet', popup=True, goInto=True)
+		pane = navigateTo(snippet, name='raytkSnippet', popup=True, goInto=True)
+		self._focusSnippetNetworkBoxes(snippet, pane)
 
 	def _updateSnippetCooking(self, targetSnippet: 'Optional[COMP]'):
 		snippetsRoot = self.ownerComp.par.Snippetsroot.eval()
@@ -67,6 +68,18 @@ class Navigator:
 				o.allowCooking = False
 		if targetSnippet and not targetSnippet.allowCooking:
 			targetSnippet.allowCooking = True
+
+	@staticmethod
+	def _focusSnippetNetworkBoxes(snippet: 'COMP', pane: 'NetworkEditor'):
+		if not snippet:
+			return
+		annotations = snippet.findChildren(type=annotateCOMP, depth=1, includeUtility=True)
+		if not annotations:
+			return
+		annotations[0].current = True
+		for a in annotations:
+			a.selected = True
+		pane.homeSelected(zoom=True)
 
 	def Open(self, _=None):
 		self.ownerComp.op('window').par.winopen.pulse()
