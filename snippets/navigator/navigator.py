@@ -67,3 +67,6 @@ class Navigator:
 				o.allowCooking = False
 		if targetSnippet and not targetSnippet.allowCooking:
 			targetSnippet.allowCooking = True
+
+	def Open(self, _=None):
+		self.ownerComp.op('window').par.winopen.pulse()
