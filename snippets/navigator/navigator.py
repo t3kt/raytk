@@ -3,6 +3,7 @@ if False:
 	# noinspection PyUnresolvedReferences
 	from _stubs import *
 	from _typeAliases import *
+	from components.opPicker.opPicker import PickerItem
 
 	class _Pars:
 		Snippetfolder: StrParamT
@@ -10,6 +11,12 @@ if False:
 
 	class _Comp(COMP):
 		par: _Pars
+
+	class _StatePars:
+		Selectedoptype: StrParamT
+		Selectedsnippet: StrParamT
+
+	ipar.navigatorState = _StatePars()
 
 class Navigator:
 	def __init__(self, ownerComp: 'COMP'):
@@ -30,3 +37,10 @@ class Navigator:
 				relPath,
 				name.replace('_', ' ')
 			])
+
+	def onPickItem(self, item: 'PickerItem'):
+		if item.isCategory:
+			return
+		ipar.navigatorState.Selectedoptype = item.opType
+		self.ownerComp.op('snippetList').par.Refresh.pulse()
+		ipar.navigatorState.Selectedsnippet = self.ownerComp.op('currentSnippets')[1, 'name'] or ''
