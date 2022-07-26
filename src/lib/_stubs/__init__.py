@@ -1097,6 +1097,7 @@ class COMP(OP):
 			parName: str = None,
 			onlyNonDefaults: bool = False,
 			key: _T.Callable[['_AnyOpT'], bool] = None,
+			includeUtility: bool = False,
 	) -> '_T.List[_AnyOpT]': pass
 	def copy(self, o: '_AnyOpT', name: str = None, includeDocked=True) -> 'op': pass
 	def create(self, OPtype: _T.Union[str, _T.Type['_AnyOpT']], name: _T.Optional[str] = None, initialize=True) -> '_AnyOpT': pass
@@ -1256,6 +1257,14 @@ class containerCOMP(PanelCOMP):
 	def clickChild(self, childIndex, clickCount=1, force=False, left=False, middle=False, right=False, group=None): pass
 
 widgetCOMP = containerCOMP
+
+class annotateCOMP(COMP):
+	enclosedOPs: _T.List['_AnyOpT']
+	height: float
+	utility: bool
+	width: float
+	x: float
+	y: float
 
 class listCOMP(PanelCOMP):
 	attribs: 'ListAttributes'
