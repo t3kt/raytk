@@ -10,7 +10,7 @@ def onKeyboardShortcut(info: dict):
 	pass
 
 def onPickItem(info: dict):
-	ext.navigator.onPickItem(info.get('item'))
+	ext.navigator.onOpPickerPickItem(info.get('item'))
 
 def onRolloverItem(info: dict):
 	pass
