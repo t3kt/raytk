@@ -2,33 +2,27 @@
 if False:
 	# noinspection PyUnresolvedReferences
 	from raytkBuild import BuildTaskContext
-	from palette import Palette
-	from _stubs import *
+	from navigator import Navigator
 	from typing import Union
+	from _stubs import *
 	from components.opPicker.opPicker import OpPicker
-	ext.palette = Palette(COMP())
-
+	ext.navigator = Navigator(COMP())
 
 context = args[0]  # type: BuildTaskContext
 
+context.log('Processing navigator')
 
-ext.palette.resetState()
+ext.navigator.resetState()
 comp = parent()
 context.detachTox(comp)
-if context.experimental:
-	comp.par.Defaultshowalpha = True
-	comp.par.Defaultshowbeta = True
-	comp.par.Defaultshowdeprecated = True
-else:
-	comp.par.Defaultshowalpha = False
-	comp.par.Defaultshowbeta = True
-	comp.par.Defaultshowdeprecated = False
+context.detachAllFileSyncDatsIn(comp, reloadFirst=True)
+context.lockBuildLockOps(comp)
 
 o = op('opPicker')  # type: Union[OpPicker, COMP]
 context.disableCloning(o)
 context.detachTox(o)
 if context.experimental:
 	o.SetFilterToggles(alpha=True, beta=True, deprecated=True)
-o.SetThumbToggle(True)
 
+context.log('Finished processing navigator')
 context.finishTask()

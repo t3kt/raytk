@@ -107,6 +107,13 @@ class BuildContext:
 		dat.par.file.expr = ''
 		dat.par.file.val = ''
 
+	def detachAllFileSyncDatsIn(self, scope: 'COMP', reloadFirst=False, verbose=True):
+		if not scope:
+			return
+		self.log(f'Detaching all fileSync DATs in {scope}')
+		for o in scope.findChildren(tags=[RaytkTags.fileSync.name], type=DAT):
+			self.detachDat(o, reloadFirst=reloadFirst, verbose=verbose)
+
 	def resetCustomPars(self, o: 'OP'):
 		if not o:
 			return

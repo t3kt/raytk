@@ -29,6 +29,11 @@ class Navigator:
 		self.fullSnippetTable = ownerComp.op('snippetTable')  # type: DAT
 
 	@staticmethod
+	def resetState():
+		ipar.navigatorState.Selectedoptype = ''
+		ipar.navigatorState.Selectedsnippet = ''
+
+	@staticmethod
 	def buildSnippetTable(dat: 'DAT', snippetTable: 'DAT', opTable: 'DAT'):
 		dat.clear()
 		dat.appendRow(['opType', 'name', 'relPath', 'label'])
