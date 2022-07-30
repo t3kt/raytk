@@ -159,11 +159,13 @@ class _BuilderBase:
 		toRemove = scope.findChildren(tags=[RaytkTags.buildExclude.name])
 		chunks = [list(chunk) for chunk in chunked_iterable(toRemove, 30)]
 		self.log(f'Found {len(toRemove)} ops to remove in {len(chunks)} chunks')
+		total = len(chunks)
 		def runPart():
 			if not chunks:
 				queueCall(thenRun)
 			else:
 				chunk = chunks.pop()
+				self.log(f'Processing chunk {total - len(chunks)} / {total}')
 				self.context.safeDestroyOps(chunk, verbose=True)
 				queueCall(runPart)
 		runPart()
@@ -223,9 +225,10 @@ class ToolkitBuilder(_BuilderBase):
 			snippets = getattr(op, 'raytkSnippets', None)
 			if snippets:
 				snippets.allowCooking = False
-			self.log('NOT ************   Reloading toolkit')
-			# self.reloadToolkit(toolkit)
+			# self.log('NOT ************   Reloading toolkit')
 			# WARNING: SKIPPING RELOAD!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+			self.log('Reloading toolkit')
+			self.reloadToolkit(toolkit)
 			self.context.openNetworkPane()
 			queueCall(self.runBuild_stage, stage + 1)
 		elif stage == 1:
@@ -342,10 +345,14 @@ class ToolkitBuilder(_BuilderBase):
 			thenRun: 'Optional[Callable]' = None, runArgs: list = None):
 		self.log(f'Prepocessing components {components}')
 		self.context.focusInNetworkPane(components)
-		# this one has a buildLock typeTable that isn't instance-specific
+		shared = components.op('shared')
+		self.context.lockBuildLockOps(shared)
+		# this one has a buildLock typeTable that isn't instance-specific,
 		# so we lock it first then delete the stuff that built it
 		typeSpec = components.op('typeSpec')
 		self.context.lockBuildLockOps(typeSpec)
+		opDef = components.op('opDefinition')
+		self.context.lockBuildLockOps(opDef)
 		comps = components.ops(
 			'typeSpec', 'typeResolver', 'typeRestrictor',
 			# 'opImage',  # this has some instance-dependent stuff
@@ -356,7 +363,8 @@ class ToolkitBuilder(_BuilderBase):
 			'opElement', 'transformCodeGenerator', 'timeProvider',
 			'axisHelper', 'supportDetector', 'expresssionSwitcher', 'parMenuUpdater',
 			'codeSwitcher', 'aggregateCodeGenerator',
-			# 'combiner',  # don't process combiner since it has instance-specific buildLock things depending on buildExclude
+			# 'combiner',  # don't process combiner since it has instance-specific buildLock things depending
+			# on buildExclude
 			'waveFunction',
 		)
 		def nextStage():
@@ -585,6 +593,9 @@ class SnippetsBuilder(_BuilderBase):
 			if not comp.isCOMP:
 				continue
 			self.context.detachTox(comp)
+			comp.allowCooking = True
+		operatorsRoot.allowCooking = True
+		snippetsRoot.allowCooking = True
 
 	def processSnippets(self, snippets: 'COMP', thenRun: Callable, runArgs: list):
 		self.log('Processing snippets')
@@ -623,7 +634,7 @@ class SnippetsBuilder(_BuilderBase):
 				rops = RaytkContext().ropChildrenOf(snippet)
 				self.log(f'Updating {len(rops)} ROPs')
 				for rop in rops:
-					self.context.updateOrReclone(rop)
+					self.processRop(rop)
 			elif stage == 2:
 				self.log('Disabling snippet cooking')
 				snippet.allowCooking = False
@@ -633,6 +644,12 @@ class SnippetsBuilder(_BuilderBase):
 			queueCall(processSnippetStage, stage + 1)
 
 		queueCall(processSnippetStage, 0)
+
+	def processRop(self, rop: 'COMP'):
+		rop.par.enablecloning = False
+		if not rop.isPanel and not rop.isObject:
+			rop.showCustomOnly = True
+		self.context.updateOrReclone(rop)
 
 def queueCall(action: Callable, *args):
 	run('args[0](*(args[1:]))', action, *args, delayFrames=10, delayRef=root)
