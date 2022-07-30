@@ -282,10 +282,14 @@ def _getRegularParams(specs: 'List[str]') -> 'List[Par]':
 # Builds a table that lists global names of runtime-based parameters.
 def buildParamTable(dat: 'DAT', paramSpecTable: 'DAT'):
 	dat.clear()
+	foundNames = set()
 	for i in range(1, paramSpecTable.numRows):
 		if paramSpecTable[i, 'handling'] != 'runtime':
 			continue
-		dat.appendRow([paramSpecTable[i, 'globalName']])
+		name = paramSpecTable[i, 'globalName'].val
+		if name not in foundNames:
+			dat.appendRow([name])
+			foundNames.add(name)
 
 # Builds a table of parameters organized into tuplets.
 def buildParamDetailTable(dat: 'DAT', paramSpecTable: 'DAT'):
