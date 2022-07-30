@@ -27,7 +27,7 @@ def _isValidDefinitionDat(o: 'Optional[Union[OP, DAT]]'):
 		return False
 	return o and o.isDAT and o.isTable and o.numRows > 0 and o[0, 0] == 'name'
 
-def resolveSourceParDefinition(onError: 'Optional[Callable[[str], None]]' = None) -> 'Optional[DAT]':
+def resolveSourceParDefinition(errorTable: 'Optional[DAT]' = None) -> 'Optional[DAT]':
 	p = _parentPar().Source
 	if p.bindMaster is not None:
 		p = p.bindMaster
@@ -40,22 +40,16 @@ def resolveSourceParDefinition(onError: 'Optional[Callable[[str], None]]' = None
 		d = o.op('definition')
 		if _isValidDefinitionDat(d):
 			return d
-	if onError:
+	if errorTable:
 		mp = parent().par.Source.bindMaster
 		if mp is None:
 			msg = 'Invalid input source.'
 		else:
 			msg = f'Invalid {mp.label} source.'
-		onError(msg + ' Only ROPs and defintion DATs are allowed.')
+		msg += ' Only ROPs and defintion DATs are allowed.'
+		errorTable.appendRow([parent().path, 'error', msg])
 
 def buildValidationErrors(dat: 'DAT'):
 	dat.clear()
-	if hasattr(parent, 'raytk'):
-		return
-
-	def _addError(msg):
-		if not dat.numRows:
-			dat.appendRow(['path', 'level', 'message'])
-		dat.appendRow([parent().path, 'error', msg])
-
-	resolveSourceParDefinition(_addError)
+	if not hasattr(parent, 'raytk'):
+		resolveSourceParDefinition(dat)
