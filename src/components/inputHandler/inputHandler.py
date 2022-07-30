@@ -48,7 +48,7 @@ def resolveSourceParDefinition(onError: 'Optional[Callable[[str], None]]' = None
 			msg = f'Invalid {mp.label} source.'
 		onError(msg + ' Only ROPs and defintion DATs are allowed.')
 
-def buildValidationErrors(dat: 'DAT', inputDef: 'DAT'):
+def buildValidationErrors(dat: 'DAT'):
 	dat.clear()
 	if hasattr(parent, 'raytk'):
 		return
