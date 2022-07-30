@@ -4,6 +4,7 @@ Utilities used within the build process.
 This should only be used in the build tool, and component BUILD scripts.
 """
 
+import itertools
 from pathlib import Path
 import shutil
 from typing import Callable
@@ -392,3 +393,10 @@ def _extractSummary(dat: 'Optional[DAT]'):
 			return block
 	return ''
 
+def chunked_iterable(iterable, size):
+	it = iter(iterable)
+	while True:
+		chunk = tuple(itertools.islice(it, size))
+		if not chunk:
+			break
+		yield chunk

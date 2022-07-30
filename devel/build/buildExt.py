@@ -2,7 +2,7 @@ from datetime import datetime
 from pathlib import Path
 from raytkTools import RaytkTools
 from raytkUtil import RaytkTags, navigateTo, focusFirstCustomParameterPage, CategoryInfo, RaytkContext, IconColors
-from raytkBuild import BuildContext, DocProcessor
+from raytkBuild import BuildContext, DocProcessor, chunked_iterable
 from typing import Callable, List, Optional, TextIO
 
 # noinspection PyUnreachableCode
@@ -17,7 +17,6 @@ class BuildManager:
 		self.context = None  # type: Optional[BuildContext]
 		self.docProcessor = None  # type: Optional[DocProcessor]
 		self.experimentalMode = False
-		self.processSnippets = False
 		self.logFile = None  # type: Optional[TextIO]
 		self.enableVerboseLogging = False
 
@@ -59,29 +58,57 @@ class BuildManager:
 		toolkit = RaytkContext().toolkit()
 		queueCall(self.reloadToolkit, toolkit)
 
-	def RunBuild(self):
+	def ReloadSnippets(self):
+		self.logTable.clear()
+		self.log('Reloading snippets')
+		snippets = getattr(op, 'raytkSnippets')
+		queueCall(self.reloadSnippets, snippets)
+
+	def prepareForBuild(self):
 		self.experimentalMode = bool(self.ownerComp.op('experimental_toggle').par.Value0)
 		self.enableVerboseLogging = bool(self.ownerComp.op('verboseLogging_toggle').par.Value0)
-		self.processSnippets = bool(self.ownerComp.op('snippets_toggle').par.Value0)
 		self.logTable.clear()
 		self.closeLogFile()
 		if self.ownerComp.op('useLogFile_toggle').par.Value0:
 			self.startNewLogFile()
+		self.context = BuildContext(self.log, self.experimentalMode)
+
+	def runToolkitBuildOnly(self):
+		self.prepareForBuild()
 		def afterBuild():
+			self.log('Finished toolkit build process')
+			self.closeLogFile()
+		builder = ToolkitBuilder(
+			self.context,
+			reloadToolkit=self.reloadToolkit,
+		)
+		builder.runBuild(thenRun=afterBuild)
+
+	def runSnippetBuildOnly(self):
+		self.prepareForBuild()
+		def afterBuild():
+			self.log('Finished snippets build process')
+			self.closeLogFile()
+		builder = SnippetsBuilder(
+			self.context,
+			reloadSnippets=self.reloadSnippets,
+		)
+		builder.runBuild(thenRun=afterBuild)
+
+	def runToolkitAndSnippetBuilds(self):
+		self.prepareForBuild()
+		def afterBuild():
+			self.log('Finished full build process')
 			self.closeLogFile()
 		def afterToolkitBuild():
-			if self.processSnippets:
-				snippetsBuilder = SnippetsBuilder(
-					log=self.log,
-					experimentalMode=self.experimentalMode,
-					reloadSnippets=self.reloadSnippets,
-				)
-				snippetsBuilder.runBuild(thenRun=afterBuild)
-			else:
-				afterBuild()
+			self.log('After toolkit has built, Processing snippets...')
+			snippetsBuilder = SnippetsBuilder(
+				self.context,
+				reloadSnippets=self.reloadSnippets,
+			)
+			snippetsBuilder.runBuild(thenRun=afterBuild)
 		builder = ToolkitBuilder(
-			log=self.log,
-			experimentalMode=self.experimentalMode,
+			self.context,
 			reloadToolkit=self.reloadToolkit,
 		)
 		builder.runBuild(thenRun=afterToolkitBuild)
@@ -105,9 +132,10 @@ class BuildManager:
 	def log(self, message: str, verbose=False):
 		if verbose and not self.enableVerboseLogging:
 			return
-		print(message)
+		print(message, flush=True)
 		if self.logFile:
-			print(message, file=self.logFile)
+			stamp = datetime.now().strftime('%Y-%m-%d_%H-%M-%S')
+			print(stamp, message, file=self.logFile, flush=True)
 		self.logTable.appendRow([message])
 
 	@staticmethod
@@ -117,22 +145,32 @@ class BuildManager:
 class _BuilderBase:
 	def __init__(
 			self,
-			log: Callable,
-			experimentalMode: bool,
+			context: BuildContext,
 	):
-		self.experimentalMode = experimentalMode
-		self.context = BuildContext(
-			log,
-			experimental=experimentalMode)
+		self.context = context
 		self.afterBuild = None  # type: Optional[Callable]
 
 	def runBuild(self, thenRun: Callable):
 		self.afterBuild = thenRun
 		pass
 
+	def removeBuildExcludeOpsIn(self, scope: 'COMP', thenRun: Callable):
+		self.log(f'Removing buildExclude ops in {scope} (deep)')
+		toRemove = scope.findChildren(tags=[RaytkTags.buildExclude.name])
+		chunks = [list(chunk) for chunk in chunked_iterable(toRemove, 30)]
+		self.log(f'Found {len(toRemove)} ops to remove in {len(chunks)} chunks')
+		def runPart():
+			if not chunks:
+				queueCall(thenRun)
+			else:
+				chunk = chunks.pop()
+				self.context.safeDestroyOps(chunk, verbose=True)
+				queueCall(runPart)
+		runPart()
+
 	def getOutputToxPath(self, baseName: str):
 		version = RaytkContext().toolkitVersion()
-		if self.experimentalMode:
+		if self.context.experimental:
 			suffix = '-exp'
 		else:
 			suffix = ''
@@ -158,14 +196,13 @@ class _BuilderBase:
 class ToolkitBuilder(_BuilderBase):
 	def __init__(
 			self,
-			log: Callable,
-			experimentalMode: bool,
+			context: BuildContext,
 			reloadToolkit: Callable,
 	):
-		super().__init__(log, experimentalMode)
+		super().__init__(context)
 		self.reloadToolkit = reloadToolkit
 		self.docProcessor = None  # type: Optional[DocProcessor]
-		if not self.experimentalMode:
+		if not self.context.experimental:
 			self.docProcessor = DocProcessor(
 				self.context,
 				outputFolder='docs/_reference',
@@ -176,14 +213,19 @@ class ToolkitBuilder(_BuilderBase):
 		super().runBuild(thenRun)
 		version = RaytkContext().toolkitVersion()
 		self.log('Starting build')
-		self.log(f'Version: {version}' + (' (experimental)' if self.experimentalMode else ''))
+		self.log(f'Version: {version}' + (' (experimental)' if self.context.experimental else ''))
 		queueCall(self.runBuild_stage, 0)
 
 	def runBuild_stage(self, stage: int):
 		toolkit = RaytkContext().toolkit()
 		if stage == 0:
-			self.log('Reloading toolkit')
-			self.reloadToolkit(toolkit)
+			self.log('Disabling snippets')
+			snippets = getattr(op, 'raytkSnippets', None)
+			if snippets:
+				snippets.allowCooking = False
+			self.log('NOT ************   Reloading toolkit')
+			# self.reloadToolkit(toolkit)
+			# WARNING: SKIPPING RELOAD!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 			self.context.openNetworkPane()
 			queueCall(self.runBuild_stage, stage + 1)
 		elif stage == 1:
@@ -207,40 +249,42 @@ class ToolkitBuilder(_BuilderBase):
 			self.logStageStart('Update library image')
 			self.updateLibraryImage(toolkit, thenRun=self.runBuild_stage, runArgs=[stage + 1])
 		elif stage == 6:
+			self.logStageStart('Preprocessing components')
+			self.preProcessComponents(toolkit.op('components'), thenRun=self.runBuild_stage, runArgs=[stage + 1])
+		elif stage == 7:
 			self.logStageStart('Process operators')
 			self.processOperators(toolkit.op('operators'), thenRun=self.runBuild_stage, runArgs=[stage + 1])
-		elif stage == 7:
+		elif stage == 8:
 			self.logStageStart('Process nested operators')
 			self.processNestedOperators(toolkit.op('operators'), thenRun=self.runBuild_stage, runArgs=[stage + 1])
-		elif stage == 8:
+		elif stage == 9:
 			self.logStageStart('Lock library info')
 			self.lockLibraryInfo(toolkit, thenRun=self.runBuild_stage, runArgs=[stage + 1])
-		elif stage == 9:
+		elif stage == 10:
 			self.logStageStart('Remove op help')
 			self.removeAllOpHelp(thenRun=self.runBuild_stage, runArgs=[stage + 1])
-		elif stage == 10:
+		elif stage == 11:
 			self.logStageStart('Process tools')
 			self.processTools(toolkit.op('tools'), thenRun=self.runBuild_stage, runArgs=[stage + 1])
-		elif stage == 11:
+		elif stage == 12:
 			self.logStageStart('Lock buildLock ops')
 			self.context.lockBuildLockOps(toolkit)
 			queueCall(self.runBuild_stage, stage + 1)
-		elif stage == 12:
+		elif stage == 13:
 			self.logStageStart('Process components')
 			self.processComponents(toolkit.op('components'), thenRun=self.runBuild_stage, runArgs=[stage + 1])
-		elif stage == 13:
-			self.logStageStart('Remove buildExclude ops')
-			self.context.removeBuildExcludeOps(toolkit)
-			queueCall(self.runBuild_stage, stage + 1)
 		elif stage == 14:
+			self.logStageStart('Remove buildExclude ops')
+			self.removeBuildExcludeOpsIn(toolkit, thenRun=lambda: self.runBuild_stage(stage + 1))
+		elif stage == 15:
 			self.logStageStart('Remove redundant python mods')
 			self.context.removeRedundantPythonModules(toolkit, toolkit.ops('tools', 'libraryInfo'))
 			queueCall(self.runBuild_stage, stage + 1)
-		elif stage == 15:
+		elif stage == 16:
 			self.logStageStart('Finalize toolkit pars')
 			self.finalizeRootPars(toolkit)
 			queueCall(self.runBuild_stage, stage + 1)
-		elif stage == 16:
+		elif stage == 17:
 			self.logStageStart('Finish build')
 			self.context.focusInNetworkPane(toolkit)
 			toxFile = self.getOutputToxPath('RayTK')
@@ -248,6 +292,7 @@ class ToolkitBuilder(_BuilderBase):
 			toolkit.save(toxFile)
 			self.log('Build completed!')
 			self.log(f'Exported tox file: {toxFile}')
+			queueCall(self.afterBuild)
 
 	def updateLibraryImage(
 			self, toolkit: 'COMP',
@@ -273,7 +318,7 @@ class ToolkitBuilder(_BuilderBase):
 			thenRun: 'Optional[Callable]' = None, runArgs: list = None):
 		self.log('Updating library info')
 		if toolkit.par['Experimentalbuild'] is not None:
-			toolkit.par.Experimentalbuild.val = self.experimentalMode
+			toolkit.par.Experimentalbuild.val = self.context.experimental
 			toolkit.par.Experimentalbuild.readOnly = True
 		libraryInfo = toolkit.op('libraryInfo')
 		libraryInfo.par.Forcebuild.pulse()
@@ -291,6 +336,36 @@ class ToolkitBuilder(_BuilderBase):
 			'info', 'opTable', 'opCategoryTable', 'opHelpTable', 'buildInfo'))
 		if thenRun:
 			queueCall(thenRun, *(runArgs or []))
+
+	def preProcessComponents(
+			self, components: 'COMP',
+			thenRun: 'Optional[Callable]' = None, runArgs: list = None):
+		self.log(f'Prepocessing components {components}')
+		self.context.focusInNetworkPane(components)
+		# this one has a buildLock typeTable that isn't instance-specific
+		# so we lock it first then delete the stuff that built it
+		typeSpec = components.op('typeSpec')
+		self.context.lockBuildLockOps(typeSpec)
+		comps = components.ops(
+			'typeSpec', 'typeResolver', 'typeRestrictor',
+			# 'opImage',  # this has some instance-dependent stuff
+			'opDefinition', 'compDefinition',
+			# 'inputHandler',  # don't process inputHandler since it uses buildExclude for the config tables, which
+			# won't have been locked yet when this stage runs
+			'shaderBuilder',
+			'opElement', 'transformCodeGenerator', 'timeProvider',
+			'axisHelper', 'supportDetector', 'expresssionSwitcher', 'parMenuUpdater',
+			'codeSwitcher', 'aggregateCodeGenerator',
+			# 'combiner',  # don't process combiner since it has instance-specific buildLock things depending on buildExclude
+			'waveFunction',
+		)
+		def nextStage():
+			if not comps:
+				queueCall(thenRun, *(runArgs or []))
+			else:
+				o = comps.pop()
+				self.removeBuildExcludeOpsIn(o, thenRun=nextStage)
+		queueCall(nextStage)
 
 	def processComponents(
 			self, components: 'COMP',
@@ -334,7 +409,7 @@ class ToolkitBuilder(_BuilderBase):
 		template = category.op('__template')
 		if template:
 			template.destroy()
-		if not self.experimentalMode:
+		if not self.context.experimental:
 			self.context.removeAlphaOps(category)
 		comps = categoryInfo.operators
 		# comps.sort(key=lambda c: c.name)
@@ -451,11 +526,10 @@ class ToolkitBuilder(_BuilderBase):
 class SnippetsBuilder(_BuilderBase):
 	def __init__(
 			self,
-			log: Callable,
-			experimentalMode: bool,
+			context: BuildContext,
 			reloadSnippets: Callable,
 	):
-		super().__init__(log, experimentalMode)
+		super().__init__(context)
 		self.reloadSnippets = reloadSnippets
 
 	def runBuild(self, thenRun: Callable):
@@ -469,8 +543,12 @@ class SnippetsBuilder(_BuilderBase):
 			self.context.log('ERROR: Snippets not found!')
 			raise Exception('Snippets not found!')
 		if stage == 0:
-			self.log('Reloading snippets root')
-			self.reloadSnippets(snippets)
+			self.log('NOT *********************** Reloading snippets root')
+			# WARNING: NOT RELOADING SNIPPETS!!!
+			# self.reloadSnippets(snippets)
+			if not snippets.allowCooking:
+				self.log('Enabling cooking for snippets root')
+				snippets.allowCooking = True
 			queueCall(self.runBuild_stage, stage + 1)
 		elif stage == 1:
 			self.logStageStart('Process navigator')
@@ -484,8 +562,7 @@ class SnippetsBuilder(_BuilderBase):
 			self.processSnippets(snippets, thenRun=self.runBuild_stage, runArgs=[stage + 1])
 		elif stage == 4:
 			self.logStageStart('Remove buildExclude ops')
-			self.context.removeBuildExcludeOps(snippets)
-			queueCall(self.runBuild_stage, stage + 1)
+			self.removeBuildExcludeOpsIn(snippets, thenRun=lambda: self.runBuild_stage(stage + 1))
 		elif stage == 5:
 			self.logStageStart('Finalize snippets root pars')
 			self.finalizeRootPars(snippets)
@@ -531,7 +608,7 @@ class SnippetsBuilder(_BuilderBase):
 					self.context.safeDestroyOp(snippet)
 					queueCall(processSnippetsStage, row + 1)
 				else:
-					queueCall(self.processSnippet, snippet, processSnippetsStage, row + 1)
+					queueCall(self.processSnippet, snippet, processSnippetsStage, [row + 1])
 
 		queueCall(processSnippetsStage, 1)
 
@@ -558,4 +635,4 @@ class SnippetsBuilder(_BuilderBase):
 		queueCall(processSnippetStage, 0)
 
 def queueCall(action: Callable, *args):
-	run('args[0](*(args[1:]))', action, *args, delayFrames=2, delayRef=root)
+	run('args[0](*(args[1:]))', action, *args, delayFrames=10, delayRef=root)
