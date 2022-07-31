@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.combine.arrange
-  opVersion: '13'
+  opVersion: '14'
   opStatus: default
 opDef: !def
   enable: true
@@ -98,7 +98,7 @@ elements:
   params:
     Includenone: false
     Modeparam: Combine
-    Swapinputsparam: ''
+    Swapinputsparam: Swapinputs
     Radiusparam: Radius
     Numberparam: Number
     Offsetparam: Offset
@@ -108,6 +108,7 @@ elements:
     Manageparamstates: true
     Alwaysincludeallparams: true
     Switchmode: auto
+    Indexexpr: ''
     Prepcodeplaceholder: MERGE_PREP();
     Bodycodeplaceholder: MERGE_BODY();
     Defaultinitcodeplaceholder: MERGE_DEFAULT_INIT();
