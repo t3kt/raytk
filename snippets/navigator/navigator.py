@@ -54,7 +54,10 @@ class Navigator:
 			return
 		ipar.navigatorState.Selectedoptype = item.opType
 		self.ownerComp.op('snippetList').par.Refresh.pulse()
-		ipar.navigatorState.Selectedsnippet = self.currentSnippetTable[1, 'name'] or ''
+		if self.currentSnippetTable.numRows == 2:
+			self.onSnippetListSelect(self.currentSnippetTable[1, 'name'].val)
+		else:
+			ipar.navigatorState.Selectedsnippet = self.currentSnippetTable[1, 'name'] or ''
 
 	def onSnippetListSelect(self, snippetName: str):
 		relPath = self.currentSnippetTable[snippetName, 'relPath']
