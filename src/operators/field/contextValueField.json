@@ -1,7 +1,0 @@
-{
-  "meta": {
-    "opStatus": "deprecated",
-    "opType": "raytk.operators.field.contextValueField",
-    "opVersion": 5
-  }
-}
