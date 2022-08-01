@@ -3,7 +3,7 @@ if False:
 	# noinspection PyUnresolvedReferences
 	from _stubs import *
 	from _typeAliases import *
-	from typing import Callable, Optional, Union
+	from typing import List, Optional, Union
 
 	class _HandlerPar:
 		Hostop: OPParamT
@@ -53,3 +53,15 @@ def buildValidationErrors(dat: 'DAT'):
 	dat.clear()
 	if not hasattr(parent, 'raytk'):
 		resolveSourceParDefinition(dat)
+
+def restrictDefinitionTypes(dat: 'scriptDAT', inputDefs: 'DAT', supportedTypes: 'DAT'):
+	dat.copy(inputDefs)
+	if dat.numRows < 2:
+		return
+	for column in ('coordType', 'contextType', 'returnType'):
+		cell = dat[1, column]
+		if cell:
+			cell.val = _restrictExpandedTypes(cell.val, supportedTypes[column, 'types'].val.split(' '))
+
+def _restrictExpandedTypes(expandedTypes: str, supportedTypes: 'List[str]') -> str:
+	return ' '.join([t for t in expandedTypes.split(' ') if t in supportedTypes])
