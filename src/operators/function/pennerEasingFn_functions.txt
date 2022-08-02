@@ -1,32 +1,32 @@
-name	label	expr
-backInOut	Back In Out	ease_backInOut(p)
-backIn	Back In	ease_backIn(p)
-backOut	Back Out	ease_backOut(p)
-bounceOut	Bounce Out	ease_bounceOut(p)
-bounceIn	Bounce In	ease_bounceIn(p)
-bounceInOut	Bounce In Out	ease_bounceInOut(p)
-circularInOut	Circular In Out	ease_circularInOut(p)
-circularIn	Circular In	ease_circularIn(p)
-circularOut	Circular Out	ease_circularOut(p)
-cubicInOut	Cubic In Out	ease_cubicInOut(p)
-cubicIn	Cubic In	ease_cubicIn(p)
-cubicOut	Cubic Out	ease_cubicOut(p)
-elasticInOut	Elastic In Out	ease_elasticInOut(p)
-elasticIn	Elastic In	ease_elasticIn(p)
-elasticOut	Elastic Out	ease_elasticOut(p)
-exponentialInOut	Exponential In Out	ease_exponentialInOut(p)
-exponentialIn	Exponential In	ease_exponentialIn(p)
-exponentialOut	Exponential Out	ease_exponentialOut(p)
-linear	Linear 	ease_linear(p)
-quadraticInOut	Quadratic In Out	ease_quadraticInOut(p)
-quadraticIn	Quadratic In	ease_quadraticIn(p)
-quadraticOut	Quadratic Out	ease_quadraticOut(p)
-quarticInOut	Quartic In Out	ease_quarticInOut(p)
-quarticIn	Quartic In	ease_quarticIn(p)
-quarticOut	Quartic Out	ease_quarticOut(p)
-qinticInOut	Qintic In Out	ease_qinticInOut(p)
-qinticIn	Qintic In	ease_qinticIn(p)
-qinticOut	Qintic Out	ease_qinticOut(p)
-sineInOut	Sine In Out	ease_sineInOut(p)
-sineIn	Sine In	ease_sineIn(p)
-sineOut	Sine Out	ease_sineOut(p)
+name	label	code
+backInOut	Back In Out	res = ease_backInOut(p);
+backIn	Back In	res = ease_backIn(p);
+backOut	Back Out	res = ease_backOut(p);
+bounceOut	Bounce Out	res = ease_bounceOut(p);
+bounceIn	Bounce In	res = ease_bounceIn(p);
+bounceInOut	Bounce In Out	res = ease_bounceInOut(p);
+circularInOut	Circular In Out	res = ease_circularInOut(p);
+circularIn	Circular In	res = ease_circularIn(p);
+circularOut	Circular Out	res = ease_circularOut(p);
+cubicInOut	Cubic In Out	res = ease_cubicInOut(p);
+cubicIn	Cubic In	res = ease_cubicIn(p);
+cubicOut	Cubic Out	res = ease_cubicOut(p);
+elasticInOut	Elastic In Out	res = ease_elasticInOut(p);
+elasticIn	Elastic In	res = ease_elasticIn(p);
+elasticOut	Elastic Out	res = ease_elasticOut(p);
+exponentialInOut	Exponential In Out	res = ease_exponentialInOut(p);
+exponentialIn	Exponential In	res = ease_exponentialIn(p);
+exponentialOut	Exponential Out	res = ease_exponentialOut(p);
+linear	Linear 	res = ease_linear(p);
+quadraticInOut	Quadratic In Out	res = ease_quadraticInOut(p);
+quadraticIn	Quadratic In	res = ease_quadraticIn(p);
+quadraticOut	Quadratic Out	res = ease_quadraticOut(p);
+quarticInOut	Quartic In Out	res = ease_quarticInOut(p);
+quarticIn	Quartic In	res = ease_quarticIn(p);
+quarticOut	Quartic Out	res = ease_quarticOut(p);
+qinticInOut	Qintic In Out	res = ease_qinticInOut(p);
+qinticIn	Qintic In	res = ease_qinticIn(p);
+qinticOut	Qintic Out	res = ease_qinticOut(p);
+sineInOut	Sine In Out	res = ease_sineInOut(p);
+sineIn	Sine In	res = ease_sineIn(p);
+sineOut	Sine Out	res = ease_sineOut(p);

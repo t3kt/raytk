@@ -1,3 +1,5 @@
 ReturnT thismap(CoordT p, ContextT ctx) {
-	return THIS_EXPR;
+	ReturnT res;
+	BODY();
+	return res;
 }
