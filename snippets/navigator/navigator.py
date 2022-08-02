@@ -65,7 +65,7 @@ class Navigator:
 			return
 		snippet = self.ownerComp.par.Snippetsroot.eval().op(relPath)
 		self._updateSnippetCooking(snippet)
-		pane = navigateTo(snippet, name='raytkSnippet', popup=True, goInto=True)
+		pane = navigateTo(snippet, name='raytkSnippet', popup=False, goInto=True)
 		self._focusSnippetNetworkBoxes(snippet, pane)
 
 	def _updateSnippetCooking(self, targetSnippet: 'Optional[COMP]'):
