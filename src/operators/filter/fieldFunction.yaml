@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.filter.fieldFunction
-  opVersion: '6'
+  opVersion: '7'
   opStatus: beta
 opDef: !def
   enable: !expr
@@ -22,7 +22,6 @@ opDef: !def
     file: src/operators/filter/fieldFunction.glsl
     name: function
   paramGroupTable: eval_params
-  generatedMacroTables: sel_expr_macros
 multiInput: !multiInput
   Minimuminputs: 0
   Coordtypereductionmode: common

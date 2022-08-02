@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.material.shadingProperty
-  opVersion: '1'
+  opVersion: '2'
   opStatus: alpha
 opDef: !def
   enable: true
@@ -19,4 +19,19 @@ opDef: !def
     file: src/operators/material/shadingProperty.glsl
     name: function
   libraryNames: raytkMaterial
-  generatedMacroTables: sel_expr_macros
+elements:
+- !opElement
+  name: codeSwitcher_Property
+  elementType: codeSwitcher
+  params:
+    Elementroot: ''
+    Table: !table
+      file: src/operators/material/shadingProperty_properties.txt
+      name: properties
+    Param: Property
+    Autoupdateparams: true
+    Manageparamstates: false
+    Alwaysincludeallparams: false
+    Switchmode: inline
+    Indexexpr: ''
+    Placeholder: BODY();
