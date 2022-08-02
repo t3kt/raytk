@@ -651,5 +651,13 @@ class SnippetsBuilder(_BuilderBase):
 			rop.showCustomOnly = True
 		self.context.updateOrReclone(rop)
 
+	def finalizeRootPars(self, comp: 'COMP'):
+		super().finalizeRootPars(comp)
+		version = RaytkContext().toolkitVersion()
+		comp.par.Raytkversion = version
+		comp.par.Raytkversion.default = version
+		comp.par.Experimentalbuild = self.context.experimental
+		comp.par.Experimentalbuild.default = self.context.experimental
+
 def queueCall(action: Callable, *args):
 	run('args[0](*(args[1:]))', action, *args, delayFrames=10, delayRef=root)
