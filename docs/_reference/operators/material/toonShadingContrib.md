@@ -35,6 +35,7 @@ op:
   status: beta
   summary: Modular shading element which uses a cell/toon shading technique with a
     color ramp.
+  thumb: assets/images/reference/operators/material/toonShadingContrib_thumb.png
 
 ---
 

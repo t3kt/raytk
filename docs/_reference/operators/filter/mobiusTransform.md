@@ -62,16 +62,16 @@ op:
   parameters:
   - label: Enable
     name: Enable
-  - label: Axis
+  - label: Plane
     menuOptions:
-    - label: X
+    - label: YZ
       name: x
-    - label: Y
+    - label: XZ
       name: y
-    - label: Z
+    - label: XY
       name: z
     name: Axis
-    summary: The axis around which to twist.
+    summary: The plane whose axes will be transformed.
   - label: Center
     name: Center
   - label: Point

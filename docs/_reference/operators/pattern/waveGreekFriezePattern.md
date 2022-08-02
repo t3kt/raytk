@@ -1,11 +1,11 @@
 ---
 layout: operator
-title: brickPattern
+title: waveGreekFriezePattern
 parent: Pattern Operators
 grand_parent: Operators
-permalink: /reference/operators/pattern/brickPattern
+permalink: /reference/operators/pattern/waveGreekFriezePattern
 redirect_from:
-  - /reference/opType/raytk.operators.pattern.brickPattern/
+  - /reference/opType/raytk.operators.pattern.waveGreekFriezePattern/
 op:
   category: pattern
   inputs:
@@ -33,8 +33,8 @@ op:
     coordTypes:
     - vec2
     - vec3
-    label: Thickness Field
-    name: thicknessField
+    label: Twist Field
+    name: twistField
     returnTypes:
     - float
   - contextTypes:
@@ -51,33 +51,18 @@ op:
     name: blendingField
     returnTypes:
     - float
-  - contextTypes:
-    - Context
-    - MaterialContext
-    - CameraContext
-    - LightContext
-    - RayContext
-    - ParticleContext
-    coordTypes:
-    - vec2
-    - vec3
-    label: Shift Field
-    name: shiftField
-    returnTypes:
-    - float
-  name: brickPattern
-  opType: raytk.operators.pattern.brickPattern
+  name: waveGreekFriezePattern
+  opType: raytk.operators.pattern.waveGreekFriezePattern
   parameters:
-  - label: Shift
-    name: Shift
   - label: Translate
     name: Translate
   - label: Size
     name: Size
-  - label: Thickness
-    name: Thickness
+  - label: Twist
+    name: Twist
   - label: Blending
     name: Blending
-  thumb: assets/images/reference/operators/pattern/brickPattern_thumb.png
+  status: beta
+  thumb: assets/images/reference/operators/pattern/waveGreekFriezePattern_thumb.png
 
 ---

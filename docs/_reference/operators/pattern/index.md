@@ -14,8 +14,14 @@ cat:
   - name: hexagonalTruchetPattern
   - name: hexagonalWeavePattern
   - name: rosettePattern
+  - name: snubQuadrilePattern
+    status: beta
   - name: spiralPattern
+  - name: tilingPattern
+    status: beta
   - name: triangleCheckerPattern
+  - name: waveGreekFriezePattern
+    status: beta
   - name: weavePattern
   summary: '2D pattern generators, which can be used for things like textures.
 

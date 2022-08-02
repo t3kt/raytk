@@ -89,6 +89,86 @@ op:
     name: definition_in_8
     returnTypes:
     - Light
+  - contextTypes:
+    - LightContext
+    coordTypes:
+    - float
+    - vec2
+    - vec3
+    label: bounds1
+    name: bounds1
+    returnTypes:
+    - Sdf
+  - contextTypes:
+    - LightContext
+    coordTypes:
+    - float
+    - vec2
+    - vec3
+    label: bounds2
+    name: bounds2
+    returnTypes:
+    - Sdf
+  - contextTypes:
+    - LightContext
+    coordTypes:
+    - float
+    - vec2
+    - vec3
+    label: bounds3
+    name: bounds3
+    returnTypes:
+    - Sdf
+  - contextTypes:
+    - LightContext
+    coordTypes:
+    - float
+    - vec2
+    - vec3
+    label: bounds4
+    name: bounds4
+    returnTypes:
+    - Sdf
+  - contextTypes:
+    - LightContext
+    coordTypes:
+    - float
+    - vec2
+    - vec3
+    label: bounds5
+    name: bounds5
+    returnTypes:
+    - Sdf
+  - contextTypes:
+    - LightContext
+    coordTypes:
+    - float
+    - vec2
+    - vec3
+    label: bounds6
+    name: bounds6
+    returnTypes:
+    - Sdf
+  - contextTypes:
+    - LightContext
+    coordTypes:
+    - float
+    - vec2
+    - vec3
+    label: bounds7
+    name: bounds7
+    returnTypes:
+    - Sdf
+  - contextTypes:
+    - LightContext
+    coordTypes:
+    - float
+    - vec2
+    - vec3
+    label: bounds8
+    name: bounds8
+    returnTypes:
+    - Sdf
   name: multiLight
   opType: raytk.operators.light.multiLight
   parameters:
@@ -96,34 +176,50 @@ op:
     name: Enable1
   - label: Level 1
     name: Level1
+  - label: Bounds 1
+    name: Bounds1
   - label: Enable 2
     name: Enable2
   - label: Level 2
     name: Level2
+  - label: Bounds 2
+    name: Bounds2
   - label: Enable 3
     name: Enable3
   - label: Level 3
     name: Level3
+  - label: Bounds 3
+    name: Bounds3
   - label: Enable 4
     name: Enable4
   - label: Level 4
     name: Level4
+  - label: Bounds 4
+    name: Bounds4
   - label: Enable 5
     name: Enable5
   - label: Level 5
     name: Level5
+  - label: Bounds 5
+    name: Bounds5
   - label: Enable 6
     name: Enable6
   - label: Level 6
     name: Level6
+  - label: Bounds 6
+    name: Bounds6
   - label: Enable 7
     name: Enable7
   - label: Level 7
     name: Level7
+  - label: Bounds 7
+    name: Bounds7
   - label: Enable 8
     name: Enable8
   - label: Level 8
     name: Level8
+  - label: Bounds 8
+    name: Bounds8
   status: beta
 
 ---

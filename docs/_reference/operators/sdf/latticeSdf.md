@@ -8,6 +8,8 @@ redirect_from:
   - /reference/opType/raytk.operators.sdf.latticeSdf/
 op:
   category: sdf
+  keywords:
+  - grid
   name: latticeSdf
   opType: raytk.operators.sdf.latticeSdf
   parameters:
@@ -19,7 +21,6 @@ op:
     name: Blendradius
   - label: Thickness
     name: Thickness
-  status: beta
   thumb: assets/images/reference/operators/sdf/latticeSdf_thumb.png
 
 ---

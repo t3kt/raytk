@@ -41,6 +41,8 @@ op:
       name: y
     - label: Z
       name: z
+    - label: Zero
+      name: zero
     name: Axisx
     summary: Which axis should be used as the new X axis.
   - label: Y Axis
@@ -51,6 +53,8 @@ op:
       name: y
     - label: Z
       name: z
+    - label: Zero
+      name: zero
     name: Axisy
     summary: Which axis should be used as the new Y axis.
   - label: Z Axis
@@ -61,6 +65,8 @@ op:
       name: y
     - label: Z
       name: z
+    - label: Zero
+      name: zero
     name: Axisz
     summary: Which axis should be used as the new Z axis.
   summary: Swaps axes for the input.

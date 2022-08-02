@@ -23,6 +23,48 @@ op:
     name: coordField
     returnTypes:
     - vec4
+  - contextTypes:
+    - Context
+    - MaterialContext
+    - CameraContext
+    - LightContext
+    - RayContext
+    - ParticleContext
+    coordTypes:
+    - vec2
+    - vec3
+    label: Glow Field
+    name: glowField
+    returnTypes:
+    - float
+  - contextTypes:
+    - Context
+    - MaterialContext
+    - CameraContext
+    - LightContext
+    - RayContext
+    - ParticleContext
+    coordTypes:
+    - vec2
+    - vec3
+    label: Radius Field
+    name: radiusField
+    returnTypes:
+    - float
+  - contextTypes:
+    - Context
+    - MaterialContext
+    - CameraContext
+    - LightContext
+    - RayContext
+    - ParticleContext
+    coordTypes:
+    - vec2
+    - vec3
+    label: Spread Field
+    name: spreadField
+    returnTypes:
+    - vec4
   name: rosettePattern
   opType: raytk.operators.pattern.rosettePattern
   parameters:
@@ -32,6 +74,10 @@ op:
     name: Size
   - label: Glow
     name: Glow
+  - label: Radius
+    name: Radius
+  - label: Spread
+    name: Spread
   thumb: assets/images/reference/operators/pattern/rosettePattern_thumb.png
 
 ---
