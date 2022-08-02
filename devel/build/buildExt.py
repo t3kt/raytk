@@ -362,7 +362,8 @@ class ToolkitBuilder(_BuilderBase):
 			'shaderBuilder',
 			'opElement', 'transformCodeGenerator', 'timeProvider',
 			'axisHelper', 'supportDetector', 'expresssionSwitcher', 'parMenuUpdater',
-			'codeSwitcher', 'aggregateCodeGenerator',
+			# 'codeSwitcher',
+			'aggregateCodeGenerator',
 			# 'combiner',  # don't process combiner since it has instance-specific buildLock things depending
 			# on buildExclude
 			'waveFunction',
