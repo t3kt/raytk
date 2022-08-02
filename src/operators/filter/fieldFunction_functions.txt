@@ -1,29 +1,29 @@
-name	label	expr	useVal2
-abs	abs(x)            Absolute Value	abs(a)
-ceil	ceil(x)           Ceiling (Round Up)	ceil(a)
-floor	floor(x)          Floor (Round Down)	floor(a)
-sign	sign(x)           Sign	sign(a)
-exp	e^x               Natural Exponentiation	exp(a)
-exp2	2^x               2 To The Power Of	exp2(a)
-fract	fract(x)          Fractional Part	fract(a)
-mod	mod(x,y)         Modulo	mod(a, b)	1
-inversesqrt	inversesqrt(x)    Inverse Square Root	inversesqrt(a)
-pow	pow(x,y)         To The Power Of	pow(a, b)	1
-round	round(x)          Round	round(a)
-roundEven	roundEven(x)      Round To Even Integer	roundEven(a)
-sqrt	sqrt(x)           Square Root	sqrt(a)
-trunc	trunc(x)          Truncate (Integer <=)	trunc(a)
-cos	cos(x)            Cosine	cos(a)
-sin	sin(x)            Sine	sin(a)
-tan	tan(x)            Tangent	tan(a)
-acos	acos(x)           Arccosine	acos(a)
-asin	asin(x)           Arcsine	asin(a)
-atan	atan(x)           Arctan( Input1 )	atan(a)
-atan2	atan(x,y)        Arctan( Input1 )	atan(a / b)	1
-cosh	cosh(x)           Hyperbolic Cosine	cosh(a)
-sinh	sinh(x)           Hyperbolic Sine	sinh(a)
-tanh	tanh(x)           Hyperbolic Tangent	tanh(a)
-log2	log2(x)           Log Base 2	log2(a)
-log	log(x)            Natural Log	log(a)
-degrees	degrees(x)        Radians to Degrees	degrees(a)
-radians	radians(x)        Degrees to Radians	radians(a)
+name	label	code	params
+abs	abs(x)            Absolute Value	res = abs(a);	
+ceil	ceil(x)           Ceiling (Round Up)	res = ceil(a);	
+floor	floor(x)          Floor (Round Down)	res = floor(a);	
+sign	sign(x)           Sign	res = sign(a);	
+exp	e^x               Natural Exponentiation	res = exp(a);	
+exp2	2^x               2 To The Power Of	res = exp2(a);	
+fract	fract(x)          Fractional Part	res = fract(a);	
+mod	mod(x,y)         Modulo	res = mod(a, b);	Value2
+inversesqrt	inversesqrt(x)    Inverse Square Root	res = inversesqrt(a);	
+pow	pow(x,y)         To The Power Of	res = pow(a, b);	Value2
+round	round(x)          Round	res = round(a);	
+roundEven	roundEven(x)      Round To Even Integer	res = roundEven(a);	
+sqrt	sqrt(x)           Square Root	res = sqrt(a);	
+trunc	trunc(x)          Truncate (Integer <=)	res = trunc(a);	
+cos	cos(x)            Cosine	res = cos(a);	
+sin	sin(x)            Sine	res = sin(a);	
+tan	tan(x)            Tangent	res = tan(a);	
+acos	acos(x)           Arccosine	res = acos(a);	
+asin	asin(x)           Arcsine	res = asin(a);	
+atan	atan(x)           Arctan( Input1 )	res = atan(a);	
+atan2	atan(x,y)        Arctan( Input1 )	res = atan(a / b);	Value2
+cosh	cosh(x)           Hyperbolic Cosine	res = cosh(a);	
+sinh	sinh(x)           Hyperbolic Sine	res = sinh(a);	
+tanh	tanh(x)           Hyperbolic Tangent	res = tanh(a);	
+log2	log2(x)           Log Base 2	res = log2(a);	
+log	log(x)            Natural Log	res = log(a);	
+degrees	degrees(x)        Radians to Degrees	res = degrees(a);	
+radians	radians(x)        Degrees to Radians	res = radians(a);	

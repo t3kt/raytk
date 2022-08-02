@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.filter.fieldFunction
-  opVersion: '5'
+  opVersion: '6'
   opStatus: beta
 opDef: !def
   enable: !expr
@@ -39,12 +39,27 @@ multiInput: !multiInput
     returnType: !returnT
       Returntypefloat: true
       Returntypevec4: true
-inputs:
-- !input
-  coordType: !coordT
-    Allcoordtype: true
-  contextType: !contextT
-    Allcontexttype: true
-  returnType: !returnT
-    Returntypefloat: true
-    Returntypevec4: true
+  - !input
+    coordType: !coordT
+      Allcoordtype: true
+    contextType: !contextT
+      Allcontexttype: true
+    returnType: !returnT
+      Returntypefloat: true
+      Returntypevec4: true
+elements:
+- !opElement
+  name: codeSwitcher_Function
+  elementType: codeSwitcher
+  params:
+    Elementroot: ''
+    Table: !table
+      file: src/operators/filter/fieldFunction_functions.txt
+      name: functions
+    Param: Function
+    Autoupdateparams: true
+    Manageparamstates: false
+    Alwaysincludeallparams: false
+    Switchmode: inline
+    Indexexpr: ''
+    Placeholder: BODY();
