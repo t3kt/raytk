@@ -45,10 +45,6 @@ cat:
     summary: A float or vector field that evaluates to a constant value.
   - name: constantSwitchField
     status: beta
-  - name: contextValueField
-    status: deprecated
-    summary: Field that returns various fields from the context, from a downstream
-      OP.
   - name: curlNoiseField
     summary: Curl noise field.
   - name: domainColorField

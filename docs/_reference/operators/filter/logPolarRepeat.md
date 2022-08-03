@@ -16,6 +16,9 @@ op:
     - LightContext
     - RayContext
     - ParticleContext
+    coordTypes:
+    - vec2
+    - vec3
     label: definition_in
     name: definition_in
     required: true

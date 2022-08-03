@@ -9,13 +9,27 @@ redirect_from:
 op:
   category: filter
   inputs:
-  - coordTypes:
+  - contextTypes:
+    - Context
+    - MaterialContext
+    - CameraContext
+    - LightContext
+    - RayContext
+    - ParticleContext
+    coordTypes:
     - float
     - vec2
     - vec3
     label: definition_in
     name: definition_in
     required: true
+    returnTypes:
+    - float
+    - vec4
+    - Sdf
+    - Ray
+    - Light
+    - Particle
   - contextTypes:
     - Context
     - MaterialContext
