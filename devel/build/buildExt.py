@@ -552,9 +552,8 @@ class SnippetsBuilder(_BuilderBase):
 			self.context.log('ERROR: Snippets not found!')
 			raise Exception('Snippets not found!')
 		if stage == 0:
-			self.log('NOT *********************** Reloading snippets root')
-			# WARNING: NOT RELOADING SNIPPETS!!!
-			# self.reloadSnippets(snippets)
+			self.log('Reloading snippets root')
+			self.reloadSnippets(snippets)
 			if not snippets.allowCooking:
 				self.log('Enabling cooking for snippets root')
 				snippets.allowCooking = True
