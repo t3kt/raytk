@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.filter.modulo1D
-  opVersion: '26'
+  opVersion: '27'
   opStatus: default
 opDef: !def
   enable: !expr
@@ -209,6 +209,7 @@ elements:
   name: codeSwitcher_Limittype
   elementType: codeSwitcher
   params:
+    Elementroot: ''
     Table: !table
       file: src/operators/filter/modulo1D_limitTypes.txt
       name: limitTypes
@@ -217,4 +218,5 @@ elements:
     Manageparamstates: true
     Alwaysincludeallparams: false
     Switchmode: inline
+    Indexexpr: ''
     Placeholder: ''
