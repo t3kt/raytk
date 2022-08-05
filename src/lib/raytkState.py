@@ -149,7 +149,7 @@ class Buffer(_StateObject):
 	type: str
 	chop: str
 	uniformType: str
-	length: int
+	length: Optional[int]
 	expr1: Optional[str] = None
 	expr2: Optional[str] = None
 	expr3: Optional[str] = None

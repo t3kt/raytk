@@ -542,25 +542,35 @@ class ShaderBuilder:
 		return wrapCodeSection(decls, 'textures')
 
 	def buildBufferDeclarations(self):
-		bufferTable = self.ownerComp.op('buffer_table')
 		decls = []
-		for i in range(1, bufferTable.numRows):
-			name = bufferTable[i, 'name']
-			dataType = bufferTable[i, 'type']
-			uniType = bufferTable[i, 'uniformType']
-			if uniType == 'uniformarray':
-				lengthVal = str(bufferTable[i, 'length'] or '')
-				if lengthVal == '':
-					c = op(bufferTable[i, 'chop'])
-					n = c.numSamples if c else 1
+		for state in self._parseOpStates():
+			if not state.buffers:
+				continue
+			for buffer in state.buffers:
+				if buffer.uniformType == 'uniformarray':
+					if buffer.length is None:
+						c = op(buffer.chop)
+						n = c.numSamples if c else 1
+					else:
+						n = buffer.length
+					decls.append(f'uniform {buffer.type} {buffer.name}[{n}];')
+				elif buffer.uniformType == 'texturebuffer':
+					decls.append(f'uniform samplerBuffer {buffer.name};')
 				else:
-					n = int(lengthVal)
-				decls.append(f'uniform {dataType} {name}[{n}];')
-			elif uniType == 'texturebuffer':
-				decls.append(f'uniform samplerBuffer {name};')
-			else:
-				raise Exception(f'Invalid uniform type: {uniType}')
+					raise Exception(f'Invalid uniform type: {buffer.uniformType}')
 		return wrapCodeSection(decls, 'buffers')
+
+	def buildBufferUniformTable(self, dat: 'DAT'):
+		dat.clear()
+		dat.appendRow(['name', 'type', 'chop', 'uniformType', 'expr1', 'expr2', 'expr3', 'expr4'])
+		for state in self._parseOpStates():
+			if not state.buffers:
+				continue
+			for buffer in state.buffers:
+				dat.appendRow([
+					buffer.name, buffer.type, buffer.chop or '', buffer.uniformType,
+					buffer.expr1 or '', buffer.expr2 or '', buffer.expr3 or '', buffer.expr4 or '',
+				])
 
 	def buildMaterialDeclarations(self):
 		if not self.ownerComp.par.Supportmaterials:
@@ -743,7 +753,6 @@ class ShaderBuilder:
 			macroTable: 'DAT',
 			typeDefMacroTable: 'DAT',
 			textureTable: 'DAT',
-			bufferTable: 'DAT',
 			dispatchTable: 'DAT',
 			outputBufferTable: 'DAT',
 	):
@@ -758,7 +767,6 @@ class ShaderBuilder:
 			typeDefMacroTable=typeDefMacroTable,
 			libraryDats=self._getLibraryDats(),
 			textureTable=textureTable,
-			bufferTable=bufferTable,
 			dispatchTable=dispatchTable,
 			outputBufferTable=outputBufferTable,
 		)
@@ -850,7 +858,6 @@ class _V2_Writer:
 	typeDefMacroTable: 'DAT'
 	libraryDats: 'List[DAT]'
 	textureTable: 'DAT'
-	bufferTable: 'DAT'
 	dispatchTable: 'DAT'
 	outputBufferTable: 'DAT'
 
@@ -995,23 +1002,24 @@ class _V2_Writer:
 		self._endBlock('textures')
 
 	def _writeBufferDeclarations(self):
-		if self.bufferTable.numRows < 2:
+		buffers = [
+			b
+			for state in self.opStates
+			for b in state.buffers
+		]
+		if not buffers:
 			return
 		self._startBlock('buffers')
-		for i in range(1, self.bufferTable.numRows):
-			name = self.bufferTable[i, 'name']
-			dataType = self.bufferTable[i, 'type']
-			uniType = self.bufferTable[i, 'uniformType']
-			if uniType == 'uniformarray':
-				lengthVal = str(self.bufferTable[i, 'length'] or '')
-				if lengthVal == '':
-					c = op(self.bufferTable[i, 'chop'])
+		for buffer in buffers:
+			if buffer.uniformType == 'uniformarray':
+				if buffer.length is None:
+					c = op(buffer.chop)
 					n = c.numSamples if c else 1
 				else:
-					n = int(lengthVal)
-				self._write(f'uniform {dataType} {name}[{n}];\n')
-			elif uniType == 'texturebuffer':
-				self._write(f'uniform samplerBuffer {name};\n')
+					n = buffer.length
+				self._write(f'uniform {buffer.type} {buffer.name}[{n}];\n')
+			elif buffer.uniformType == 'texturebuffer':
+				self._write(f'uniform samplerBuffer {buffer.name};')
 		self._endBlock('buffers')
 
 	def _writeMaterialDeclarations(self):

@@ -12,7 +12,6 @@ paramVectors	parent().path + '/param_vector_vals'
 paramTable	parent().path + '/params'
 paramTupletTable	parent().path + '/param_tuplets'
 materialTable	(parent().path + '/material_table') if op('materialCode').text.strip() else ''
-bufferTable	op('buffer_table').path if parent().par.Buffertable and parent().par.Buffertable.eval().numRows > 0 else ''
 libraryNames	parent().par.Librarynames
 initPath	(parent().path + '/initCode') if parent().par.Initcode else ''
 opGlobalsPath	(parent().path + '/opGlobals') if parent().par.Opglobals else ''

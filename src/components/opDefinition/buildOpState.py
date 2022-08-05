@@ -199,7 +199,7 @@ class _Builder:
 				type=str(table[i, 'type'] or 'vec4'),
 				chop=path,
 				uniformType=str(table[i, 'uniformType'] or 'uniformarray'),
-				length=int(table[i, 'length']),
+				length=int(table[i, 'length']) if table[i, 'length'] != '' else None,
 				expr1=expr1,
 				expr2=expr2,
 				expr3=expr3,
