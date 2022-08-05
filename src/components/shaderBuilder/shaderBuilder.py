@@ -763,6 +763,7 @@ class ShaderBuilder:
 			typeDefMacroTable: 'DAT',
 			textureTable: 'DAT',
 			outputBufferTable: 'DAT',
+			variableTable: 'DAT',
 	):
 		writer = _V2_Writer(
 			sb=self,
@@ -776,6 +777,7 @@ class ShaderBuilder:
 			libraryDats=self._getLibraryDats(),
 			textureTable=textureTable,
 			outputBufferTable=outputBufferTable,
+			variableTable=variableTable,
 		)
 		writer.run()
 
@@ -866,6 +868,7 @@ class _V2_Writer:
 	libraryDats: 'List[DAT]'
 	textureTable: 'DAT'
 	outputBufferTable: 'DAT'
+	variableTable: 'DAT'
 
 	inlineTypedefRepls: 'Optional[Dict[str, str]]' = None
 	inlineTypedefPattern: 'Optional[re.Pattern]' = None
@@ -905,7 +908,7 @@ class _V2_Writer:
 		self._writeMaterialDeclarations()
 		self._writeDispatchDeclarations()
 		self._writeOutputBufferDeclarations()
-
+		self._writeVariableDeclarations()
 
 		self._writeOutputInit()
 		self._writeOpGlobals()
@@ -1066,6 +1069,16 @@ class _V2_Writer:
 			for name in self.outputBufferTable.col('name')[1:]:
 				self._write(f'layout(location = {name.row - 1}) out vec4 {name};\n')
 		self._endBlock('outputBuffers')
+
+	def _writeVariableDeclarations(self):
+		if self.variableTable.numRows < 2:
+			return
+		self._startBlock('variables')
+		for i in range(1, self.variableTable.numRows):
+			name = self.variableTable[i, 'name']
+			dataType = self.variableTable[i, 'dataType']
+			self._write(f'{dataType} {name};')
+		self._endBlock('variables')
 
 	def _writeOutputInit(self):
 		if self.ownerComp.par.Shadertype == 'compute' or self.outputBufferTable.numRows < 2:
