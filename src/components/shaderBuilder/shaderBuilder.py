@@ -921,7 +921,8 @@ class _V2_Writer:
 		self._endBlock('globals')
 
 	def _writeOpDataTypedefs(self):
-		inline = self.configPar['Inlinetypedefs']
+		# inline = self.configPar['Inlinetypedefs']
+		inline = False
 		if not self.typeDefMacroTable.numRows:
 			return
 		self._startBlock('opDataTypedefs')
