@@ -1,4 +1,4 @@
 name	label	returnType	code
 default	Default (FabriceNeyret2)	float	res = .2 / abs(l-.5);
 variant1	Variant 1 (Shane)	float	res = cos(l*25.1);
-variant2	Variant 2 (Shane)	vec4	res = vec4(sqrt(2.*cos(vec3(1, 3, 3)*l*6.28)), 1.);
+variant2	Variant 2 (Shane)	vec4	res = vec4(sqrt(2.*cos(vec3(1, 3, 3)*l*TAU)), 1.);

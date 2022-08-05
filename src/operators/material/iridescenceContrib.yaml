@@ -1,0 +1,29 @@
+!rop
+meta: !meta
+  opType: raytk.operators.material.iridescenceContrib
+  opVersion: '0'
+  opStatus: beta
+opDef: !def
+  enable: !expr
+    expr: op('..').par.Enable
+  useRuntimeBypass: true
+  typeSpec: !ropTypes
+    coordType: !coordT
+      Allcoordtype: true
+    contextType: !contextT
+      Contexttypematerialcontext: true
+    returnType: !returnT
+      Returntypevec4: true
+  function: !text
+    file: src/operators/material/iridescenceContrib.glsl
+    name: function
+  paramGroupTable: eval_params
+inputs:
+- !input
+  Localalias: phaseField
+  coordType: !coordT
+    Allcoordtype: true
+  contextType: !contextT
+    Contexttypematerialcontext: true
+  returnType: !returnT
+    Returntypefloat: true

@@ -1,0 +1,11 @@
+name	label	code
+rhombitrihexagonal	Rhombitrihexagonal	sym = ivec4(3, 6, 2, 2);
+truncatedsquare	Truncated Square	sym = ivec4(2, 4, 4, 3);
+hexagonal	Hexagonal	sym = ivec4(3, 3, 3, 3);
+trihexagonal	Trihexagonal	sym = ivec4(2, 6, 3, 1);
+truncatedhexagonal	Truncated Hexagonal	sym = ivec4(2, 3, 6, 2);
+triangular	Triangular	sym = ivec4(3, 3, 3, 1);
+square	Square	sym = ivec4(4, 2, 4, 1);
+truncatedtrihexagonal	Truncated Trihexagonal	sym = ivec4(2, 6, 3, 3);
+snubtrihexagonal	Snub Trihexagonal	sym = ivec4(6, 3, 2, 0);
+snubsquare	Snub Square	sym = ivec4(4, 4, 2, 0);

@@ -1,0 +1,5 @@
+name	label	code
+flipdomain	Flip Domain	res = inputOp1(-p, ctx);
+fliprange	Flip Range	res = -inputOp1(p, ctx);
+mirrorposdomain	Mirror Positive Domain	res = inputOp1(abs(p), ctx);
+flipnegdomain	Flip Negative Domain	res = sign(p) * inputOp1(abs(p), ctx);

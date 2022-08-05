@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.sdf2d.pieSdf2d
-  opVersion: '6'
+  opVersion: '7'
   opStatus: default
 opDef: !def
   enable: true
@@ -36,7 +36,6 @@ inputs:
     Returntypefloat: true
 - !input
   Localalias: radiusField
-  Help: Radius field, either a float, or a vector with outer and inner radius
   coordType: !coordT
     Coordtypevec2: true
   contextType: !contextT
@@ -49,6 +48,7 @@ elements:
   name: codeSwitcher_Shape
   elementType: codeSwitcher
   params:
+    Elementroot: ''
     Table: !table
       file: src/operators/sdf2d/pieSdf2d_shapes.txt
       name: shapes
@@ -57,4 +57,5 @@ elements:
     Manageparamstates: true
     Alwaysincludeallparams: true
     Switchmode: auto
+    Indexexpr: ''
     Placeholder: BODY();

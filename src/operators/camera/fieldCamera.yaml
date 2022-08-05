@@ -1,0 +1,36 @@
+!rop
+meta: !meta
+  opType: raytk.operators.camera.fieldCamera
+  opVersion: '0'
+  opStatus: beta
+opDef: !def
+  enable: true
+  typeSpec: !ropTypes
+    coordType: !coordT
+      Allcoordtype: true
+    contextType: !contextT
+      Allcontexttype: true
+    returnType: !returnT
+      Returntyperay: true
+  function: !text
+    file: src/operators/camera/fieldCamera.glsl
+    name: function
+  paramGroupTable: eval_params
+inputs:
+- !input
+  Localalias: directionField
+  Required: true
+  coordType: !coordT
+    Coordtypevec2: true
+  contextType: !contextT
+    Contexttypecameracontext: true
+  returnType: !returnT
+    Returntypevec4: true
+- !input
+  Localalias: positionField
+  coordType: !coordT
+    Coordtypevec2: true
+  contextType: !contextT
+    Contexttypecameracontext: true
+  returnType: !returnT
+    Returntypevec4: true

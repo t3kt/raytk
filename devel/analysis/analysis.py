@@ -15,7 +15,6 @@ _opDefParamNames = [
 	'Disableinspect',
 	'Opglobals',
 	'Initcode',
-	'Stageinitcode',
 	'Functemplate',
 	'Materialcode',
 	'Paramsop',
@@ -149,6 +148,14 @@ def buildOpVariablesTable(dat: 'DAT'):
 
 def buildOpInputsTable(dat: 'DAT'):
 	dat.clear()
+	parNames = [
+		'Source',
+		'Label',
+		'Localalias',
+		'Variables',
+		'Variableinputs',
+		'Help',
+	]
 	dat.appendRow([
 		'path',
 		'index',
@@ -161,7 +168,7 @@ def buildOpInputsTable(dat: 'DAT'):
 		'contextTypes',
 		'returnTypes',
 		'hasExprs',
-	])
+	] + parNames)
 	for rop in RaytkContext().allMasterOperators():
 		info = ROPInfo(rop)
 		if not info:
@@ -180,6 +187,9 @@ def buildOpInputsTable(dat: 'DAT'):
 				' '.join(inInfo.supportedContextTypes),
 				' '.join(inInfo.supportedReturnTypes),
 				any([p.mode != ParMode.CONSTANT for p in handler.customPars]),
+			] + [
+				_formatPar(inInfo.handlerPar[parName])
+				for parName in parNames
 			])
 
 def buildOpCurrentExpandedParamsTable(dat: 'DAT'):
@@ -208,7 +218,7 @@ def buildOpTestTable(dat: 'DAT', testTable: 'DAT'):
 	testsByOpType = {}  # type: Dict[str, List[str]]
 	for i in range(1, testTable.numRows):
 		opType = str(testTable[i, 'opType'])
-		name = str(testTable[i, 'path']).rsplit('/', maxsplit=1)[1].replace('.tox', '')
+		name = str(testTable[i, 'filePath']).rsplit('/', maxsplit=1)[1].replace('.tox', '')
 		if not opType:
 			continue
 		elif opType not in testsByOpType:

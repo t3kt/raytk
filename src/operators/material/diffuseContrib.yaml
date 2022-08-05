@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.material.diffuseContrib
-  opVersion: '18'
+  opVersion: '19'
   opStatus: default
 opDef: !def
   enable: true
@@ -63,12 +63,14 @@ inputs:
   contextType: !contextT
     Contexttypematerialcontext: true
   returnType: !returnT
+    Returntypefloat: true
     Returntypevec4: true
 elements:
 - !opElement
   name: codeSwitcher_Operation
   elementType: codeSwitcher
   params:
+    Elementroot: ''
     Table: !table
       file: src/operators/material/diffuseContrib_methods.txt
       name: methods
@@ -77,4 +79,5 @@ elements:
     Manageparamstates: true
     Alwaysincludeallparams: true
     Switchmode: auto
+    Indexexpr: ''
     Placeholder: BODY();

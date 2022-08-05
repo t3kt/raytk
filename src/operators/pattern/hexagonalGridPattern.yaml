@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.pattern.hexagonalGridPattern
-  opVersion: '4'
+  opVersion: '8'
   opStatus: default
 opDef: !def
   enable: true
@@ -11,11 +11,16 @@ opDef: !def
     contextType: !contextT
       Allcontexttype: true
     returnType: !returnT
-      Returntypefloat: true
+      Returntypefloat: !expr
+        expr: op('pattern_info')[1, 'returnType'] != 'vec4'
+      Returntypevec4: !expr
+        expr: op('pattern_info')[1, 'returnType'] == 'vec4'
   function: !text
     file: src/operators/pattern/hexagonalGridPattern.glsl
     name: functionTemplate
   paramGroupTable: eval_params
+  libraryNames: !expr
+    expr: op('hexagonalGridPattern_lib')
 inputs:
 - !input
   Localalias: coordField
@@ -26,3 +31,67 @@ inputs:
     Allcontexttype: true
   returnType: !returnT
     Returntypevec4: true
+- !input
+  Localalias: thicknessField
+  coordType: !coordT
+    Coordtypevec2: true
+    Coordtypevec3: true
+  contextType: !contextT
+    Allcontexttype: true
+  returnType: !returnT
+    Returntypefloat: true
+- !input
+  Localalias: blendingField
+  coordType: !coordT
+    Coordtypevec2: true
+    Coordtypevec3: true
+  contextType: !contextT
+    Allcontexttype: true
+  returnType: !returnT
+    Returntypefloat: true
+- !input
+  Localalias: polyColor1Field
+  coordType: !coordT
+    Coordtypevec2: true
+    Coordtypevec3: true
+  contextType: !contextT
+    Allcontexttype: true
+  returnType: !returnT
+    Returntypefloat: true
+    Returntypevec4: true
+- !input
+  Localalias: polyColor2Field
+  coordType: !coordT
+    Coordtypevec2: true
+    Coordtypevec3: true
+  contextType: !contextT
+    Allcontexttype: true
+  returnType: !returnT
+    Returntypefloat: true
+    Returntypevec4: true
+- !input
+  Localalias: polyColor3Field
+  coordType: !coordT
+    Coordtypevec2: true
+    Coordtypevec3: true
+  contextType: !contextT
+    Allcontexttype: true
+  returnType: !returnT
+    Returntypefloat: true
+    Returntypevec4: true
+elements:
+- !opElement
+  name: codeSwitcher_Pattern
+  elementType: codeSwitcher
+  params:
+    Elementroot: ''
+    Table: !table
+      file: src/operators/pattern/hexagonalGridPattern_patterns.txt
+      name: patterns
+    Param: Pattern
+    Autoupdateparams: true
+    Manageparamstates: false
+    Alwaysincludeallparams: false
+    Switchmode: inline
+    Indexexpr: ''
+    Placeholder: BODY();

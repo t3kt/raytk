@@ -4,13 +4,11 @@ if False:
 	from _stubs import *
 	from _typeAliases import *
 	from typing import Optional
-	from .inputHandler import _HandlerPar
+	from inputHandler import _HandlerPar
 
 	class _HandlerParFull(_HandlerPar):
-		Name: StrParamT
 		Label: StrParamT
 		Localalias: StrParamT
-		Help: StrParamT
 		Variables: StrParamT
 		Variableinputs: StrParamT
 
@@ -24,9 +22,7 @@ def onCook(dat: 'scriptDAT'):
 
 	index = _determineAutoIndex(host=host, ownIn=ownIn, baseName=baseName)
 	defaultName = f'inputOp{index}'
-	if _parentPar().Name:
-		name = _parentPar().Name
-	elif sourcePar is not None:
+	if sourcePar is not None:
 		name = sourcePar.name
 	elif localName:
 		name = localName
@@ -46,18 +42,10 @@ def onCook(dat: 'scriptDAT'):
 		alias = _parentPar().Localalias
 	else:
 		alias = defaultName
-	if _parentPar().Help:
-		helpText = _parentPar().Help
-	elif sourcePar is not None and sourcePar.help:
-		helpText = sourcePar.help
-	else:
-		helpText = ''
 	dat.appendRows([
-		['index', index],
 		['name', name],
 		['label', label],
 		['alias', alias],
-		['help', helpText],
 		['vars', _parentPar().Variables],
 		['varInputs', _parentPar().Variableinputs],
 	])

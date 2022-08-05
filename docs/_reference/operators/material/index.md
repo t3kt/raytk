@@ -37,6 +37,8 @@ cat:
   - name: goochShadingContrib
     status: beta
     summary: A material element that uses the Gooch shading model.
+  - name: iridescenceContrib
+    status: beta
   - name: matCapContrib
     status: beta
   - name: modularMat

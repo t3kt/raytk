@@ -8,14 +8,20 @@ if False:
 def _table() -> 'DAT':
 	return op('table')
 
-def _hostPar() -> 'Optional[Par]':
+def _allHostPars() -> 'List[Par]':
 	host = parent().par.Hostop.eval()
-	return host and host.par[parent().par.Param]
+	if not host:
+		return []
+	return host.pars(*tdu.expand(parent().par.Param.eval()))
+
+def _hostPar() -> 'Optional[Par]':
+	for p in _allHostPars():
+		return p
 
 def _effectiveMode():
 	mode = parent().par.Switchmode.eval()
 	par = _hostPar()
-	if mode == 'auto':
+	if par is not None and mode == 'auto':
 		mode = 'inline'if par is None or par.readOnly else 'switch'
 	return mode
 
@@ -61,9 +67,19 @@ def buildParameterGroupTable(dat: 'DAT'):
 				'param', 'runtime', 'macro', '', '1'
 			])
 
+def buildMacroTable(dat: 'DAT', itemInfo: 'DAT'):
+	dat.clear()
+	if itemInfo.numRows < 2:
+		return
+	val = str(itemInfo[1, 'macros'] or '')
+	if not val:
+		return
+	for v in val.split():
+		dat.appendRow(['', v, ''])
+
 def buildCode():
 	par = _hostPar()
-	if par is None:
+	if par is None and not parent().par.Indexexpr:
 		return ''
 	mode = _effectiveMode()
 	table = op('table')
@@ -81,7 +97,8 @@ def _prepareItemCode(code: 'Cell'):
 	return code.replace(';', ';\n')
 
 def _buildRuntimeSwitch(table: 'DAT'):
-	code = f'switch (int(THIS_{parent().par.Param})) {{\n'
+	expr = parent().par.Indexexpr or f'int(THIS_{parent().par.Param})'
+	code = f'switch ({expr}) {{\n'
 	for i in range(1, table.numRows):
 		name = str(table[i, 'name'])
 		itemCode = _prepareItemCode(table[i, 'code'])
@@ -127,14 +144,14 @@ def _updateParamEnableExprs():
 			par.enableExpr = f'me.par.{hostPar.name} in {repr(tuple(vals))}'
 
 def _updateParamMenu():
-	hostPar = _hostPar()
-	if hostPar is None:
-		return
 	table = _table()
 	if table.numRows < 2:
 		return
-	hostPar.menuNames = [c.val for c in table.col('name')[1:]]
-	hostPar.menuLabels = [c.val for c in table.col('label')[1:]]
+	names = [c.val for c in table.col('name')[1:]]
+	labels = [c.val for c in table.col('label')[1:]]
+	for hostPar in _allHostPars():
+		hostPar.menuNames = names
+		hostPar.menuLabels = labels
 
 def updateParams():
 	_updateParamMenu()

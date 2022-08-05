@@ -1,8 +1,8 @@
 !rop
 meta: !meta
   opType: raytk.operators.sdf.latticeSdf
-  opVersion: '2'
-  opStatus: beta
+  opVersion: '3'
+  opStatus: default
 opDef: !def
   enable: true
   typeSpec: !ropTypes
@@ -18,3 +18,4 @@ opDef: !def
   paramGroupTable: eval_params
   libraryNames: !expr
     expr: '[op(''latticeSdf_lib''), ''raytkCombine'']'
+  keywords: grid

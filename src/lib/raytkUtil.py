@@ -86,7 +86,6 @@ class OpDefParsT(_OpMetaPars):
 	Enable: 'BoolParamT'
 	Opglobals: 'DatParamT'
 	Initcode: 'DatParamT'
-	Stageinitcode: 'DatParamT'
 	Functemplate: 'DatParamT'
 	Materialcode: 'DatParamT'
 	Macrotable: 'DatParamT'
@@ -495,10 +494,6 @@ class InputInfo:
 	def name(self) -> 'Optional[str]':
 		return self._configTableVal('name')
 
-	@name.setter
-	def name(self, val: Optional[str]):
-		self.handlerPar.Name = val or ''
-
 	@property
 	def label(self) -> 'Optional[str]':
 		return self._configTableVal('label')
@@ -506,14 +501,6 @@ class InputInfo:
 	@label.setter
 	def label(self, val: Optional[str]):
 		self.handlerPar.Label = val or ''
-
-	@property
-	def helpText(self) -> 'Optional[str]':
-		return self._configTableVal('help')
-
-	@helpText.setter
-	def helpText(self, val: Optional[str]):
-		self.handlerPar.Help = val or ''
 
 	@property
 	def multiHandler(self) -> 'Optional[COMP]':
@@ -813,7 +800,7 @@ def _getEditorPane(name: Optional[str] = None, popup=False):
 	else:
 		return ui.panes.createFloating(type=PaneType.NETWORKEDITOR, name=name)
 
-def navigateTo(o: 'Union[OP, COMP]', name: Optional[str] = None, popup=False, goInto=True):
+def navigateTo(o: 'Union[OP, COMP]', name: Optional[str] = None, popup=False, goInto=True) -> 'Optional[NetworkEditor]':
 	if not o:
 		return
 	pane = _getEditorPane(name, popup)
@@ -826,6 +813,7 @@ def navigateTo(o: 'Union[OP, COMP]', name: Optional[str] = None, popup=False, go
 		o.current = True
 		o.selected = True
 		pane.homeSelected(zoom=False)
+	return pane
 
 class VisualizerTypes:
 	none = 'none'

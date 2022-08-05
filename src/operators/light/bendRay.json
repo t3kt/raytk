@@ -1,7 +1,0 @@
-{
-  "meta": {
-    "opStatus": "alpha",
-    "opType": "raytk.operators.light.bendRay",
-    "opVersion": 4
-  }
-}

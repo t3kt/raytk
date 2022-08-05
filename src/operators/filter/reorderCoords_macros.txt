@@ -1,1 +1,2 @@
-	'THIS_SWIZZLE'	(parent().par.Axisx + parent().par.Axisy + parent().par.Axisz)[:2 if op('definition_1')[1, 'coordType'] == 'vec2' else 3]
+	'THIS_SWIZZLE'	parent().par.Axisx.eval().replace('zero', 'x') + parent().par.Axisy.eval().replace('zero', 'x') + parent().par.Axisz.eval().replace('zero', 'x')
+	'THIS_MASK'	f"vec3({0 if parent().par.Axisx == 'zero' else 1}, {0 if parent().par.Axisy == 'zero' else 1}, {0 if parent().par.Axisz == 'zero' else 1})"

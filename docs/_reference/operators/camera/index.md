@@ -15,6 +15,8 @@ cat:
   operators:
   - name: basicCamera
     status: deprecated
+  - name: fieldCamera
+    status: beta
   - keywords:
     - '360'
     - cubemap

@@ -4,6 +4,7 @@ Utilities used within the build process.
 This should only be used in the build tool, and component BUILD scripts.
 """
 
+import itertools
 from pathlib import Path
 import shutil
 from typing import Callable
@@ -106,6 +107,13 @@ class BuildContext:
 			dat.par.loadonstartpulse.pulse()
 		dat.par.file.expr = ''
 		dat.par.file.val = ''
+
+	def detachAllFileSyncDatsIn(self, scope: 'COMP', reloadFirst=False, verbose=True):
+		if not scope:
+			return
+		self.log(f'Detaching all fileSync DATs in {scope}')
+		for o in scope.findChildren(tags=[RaytkTags.fileSync.name], type=DAT):
+			self.detachDat(o, reloadFirst=reloadFirst, verbose=verbose)
 
 	def resetCustomPars(self, o: 'OP'):
 		if not o:
@@ -326,7 +334,7 @@ class DocProcessor:
 			return
 		docManager = OpDocManager(ropInfo)
 		docManager.setUpMissingParts()
-		docManager.pushToParamsAndInputs()
+		docManager.pushToParams()
 		docText = docManager.formatForBuild(
 			imagesFolder=self.imagesFolder)
 		self._writeDocs(
@@ -385,3 +393,10 @@ def _extractSummary(dat: 'Optional[DAT]'):
 			return block
 	return ''
 
+def chunked_iterable(iterable, size):
+	it = iter(iterable)
+	while True:
+		chunk = tuple(itertools.islice(it, size))
+		if not chunk:
+			break
+		yield chunk

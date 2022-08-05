@@ -9,6 +9,6 @@ if False:
 def onCook(dat):
 	ext.navigator.buildSnippetTable(
 		dat,
-		folderDat=dat.inputs[0],
+		snippetTable=dat.inputs[0],
 		opTable=dat.inputs[1],
 	)

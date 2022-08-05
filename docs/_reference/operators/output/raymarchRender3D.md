@@ -39,15 +39,6 @@ op:
     - Light
     summary: Light definition that can be used by supporting materials.
   - contextTypes:
-    - RayContext
-    coordTypes:
-    - vec3
-    label: rayModifier
-    name: rayModifier
-    returnTypes:
-    - Ray
-    summary: Advanced feature, not ready for use.
-  - contextTypes:
     - MaterialContext
     coordTypes:
     - vec3
@@ -269,6 +260,8 @@ op:
     name: Backgroundfield
   - label: Use Background Field Alpha
     name: Usebackgroundfieldalpha
+  - label: Show Background
+    name: Showbackground
   - label: Shadow
     name: Headershadow
   - label: Ray Marching
@@ -291,8 +284,6 @@ op:
     name: Enablesecondaryraycast
   - label: Secondary Ray Cast
     name: Secondaryraycast
-  - label: Ray Modifier
-    name: Raymodifier
   - label: Customize Shader Config
     name: Customizeshaderconfig
   - label: Enable UV Output

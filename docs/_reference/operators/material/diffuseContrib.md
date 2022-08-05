@@ -41,6 +41,7 @@ op:
     label: Color
     name: colorField
     returnTypes:
+    - float
     - vec4
   keywords:
   - diffuse

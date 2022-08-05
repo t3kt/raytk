@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.light.multiLight
-  opVersion: '1'
+  opVersion: '2'
   opStatus: beta
 opDef: !def
   enable: true
@@ -14,7 +14,7 @@ opDef: !def
       Returntypelight: true
   function: !text
     file: src/operators/light/multiLight.glsl
-    name: functionTemplate
+    name: function
   paramGroupTable: eval_params
   macroTable: !table
     file: src/operators/light/multiLight_macros.txt
@@ -86,6 +86,87 @@ multiInput: !multiInput
       Contexttypelightcontext: true
     returnType: !returnT
       Returntypelight: true
+inputs:
+- !input
+  Source: !expr
+    expr: parent().par.Bounds1 or ''
+  Localalias: bounds1
+  coordType: !coordT
+    Allcoordtype: true
+  contextType: !contextT
+    Contexttypelightcontext: true
+  returnType: !returnT
+    Returntypesdf: true
+- !input
+  Source: !expr
+    expr: parent().par.Bounds2 or ''
+  Localalias: bounds2
+  coordType: !coordT
+    Allcoordtype: true
+  contextType: !contextT
+    Contexttypelightcontext: true
+  returnType: !returnT
+    Returntypesdf: true
+- !input
+  Source: !expr
+    expr: parent().par.Bounds3 or ''
+  Localalias: bounds3
+  coordType: !coordT
+    Allcoordtype: true
+  contextType: !contextT
+    Contexttypelightcontext: true
+  returnType: !returnT
+    Returntypesdf: true
+- !input
+  Source: !expr
+    expr: parent().par.Bounds4 or ''
+  Localalias: bounds4
+  coordType: !coordT
+    Allcoordtype: true
+  contextType: !contextT
+    Contexttypelightcontext: true
+  returnType: !returnT
+    Returntypesdf: true
+- !input
+  Source: !expr
+    expr: parent().par.Bounds5 or ''
+  Localalias: bounds5
+  coordType: !coordT
+    Allcoordtype: true
+  contextType: !contextT
+    Contexttypelightcontext: true
+  returnType: !returnT
+    Returntypesdf: true
+- !input
+  Source: !expr
+    expr: parent().par.Bounds6 or ''
+  Localalias: bounds6
+  coordType: !coordT
+    Allcoordtype: true
+  contextType: !contextT
+    Contexttypelightcontext: true
+  returnType: !returnT
+    Returntypesdf: true
+- !input
+  Source: !expr
+    expr: parent().par.Bounds7 or ''
+  Localalias: bounds7
+  coordType: !coordT
+    Allcoordtype: true
+  contextType: !contextT
+    Contexttypelightcontext: true
+  returnType: !returnT
+    Returntypesdf: true
+- !input
+  Source: !expr
+    expr: parent().par.Bounds8 or ''
+  Localalias: bounds8
+  coordType: !coordT
+    Allcoordtype: true
+  contextType: !contextT
+    Contexttypelightcontext: true
+  returnType: !returnT
+    Returntypesdf: true
 elements:
 - !opElement
   name: aggregateCodeGenerator
@@ -101,4 +182,4 @@ elements:
     Firststepstmt: ''
     Stepstmt: !expr
       expr: op('stepTemplate').text
-    Bodycodeplaceholder: ''
+    Bodycodeplaceholder: BODY();

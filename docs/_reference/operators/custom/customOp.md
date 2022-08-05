@@ -139,8 +139,6 @@ op:
     name: Opglobals
   - label: Init Code
     name: Initcode
-  - label: Stage Init Code
-    name: Stageinitcode
   - label: Function
     name: Function
     summary: DAT with the main shader function.
@@ -218,8 +216,6 @@ op:
     name: Createopglobals
   - label: Create Init
     name: Createinit
-  - label: Create Stage Init
-    name: Createstageinit
   - label: Create Function
     name: Createfunction
   - label: Create Material
@@ -244,6 +240,8 @@ op:
     name: Useinputreturntype
   - label: Use Input Context Type
     name: Useinputcontexttype
+  - label: Create Stage Init
+    name: Createstageinit
   status: beta
   summary: A custom operator that integrates blocks of custom shader code into a RayTK
     network.

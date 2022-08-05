@@ -99,7 +99,7 @@ def combineInputDefinitions(
 	inDats += _inputDefsFromPar()
 	if not inDats:
 		return
-	cols = defFields.col(0)
+	cols = defFields.col(0) + ['input:handler']
 	dat.appendRow(cols)
 	inDats = [d for d in inDats if d.numRows > 1]
 	if not inDats:
@@ -282,10 +282,14 @@ def _getRegularParams(specs: 'List[str]') -> 'List[Par]':
 # Builds a table that lists global names of runtime-based parameters.
 def buildParamTable(dat: 'DAT', paramSpecTable: 'DAT'):
 	dat.clear()
+	foundNames = set()
 	for i in range(1, paramSpecTable.numRows):
 		if paramSpecTable[i, 'handling'] != 'runtime':
 			continue
-		dat.appendRow([paramSpecTable[i, 'globalName']])
+		name = paramSpecTable[i, 'globalName'].val
+		if name not in foundNames:
+			dat.appendRow([name])
+			foundNames.add(name)
 
 # Builds a table of parameters organized into tuplets.
 def buildParamDetailTable(dat: 'DAT', paramSpecTable: 'DAT'):
@@ -591,7 +595,6 @@ def _prepareReferences(
 		return []
 	hostName = parentPar().Name.eval()
 	namePrefix = hostName + '_'
-	hostPath = _host().path
 	for i in range(1, table.numRows):
 		localName = str(table[1, 'name'])
 		if localName == 'none' or not localName:
@@ -615,6 +618,40 @@ def _prepareReferences(
 				dataType,
 				hostName,
 			])
+
+def validateInputs(dat: 'scriptDAT', inputDefinitions: 'DAT'):
+	dat.clear()
+	dat.appendRow(['path', 'level', 'message'])
+	if hasattr(parent, 'raytk'):
+		return
+	for handlerPath in inputDefinitions.col('input:handler')[1:]:
+		handler = op(handlerPath)
+		if not handler:
+			continue
+		for error in _validateInput(handler):
+			if error:
+				dat.appendRow([handlerPath, 'error', error])
+
+def _validateInput(handler: 'COMP'):
+	inputDef = handler.op('inputDefinition')
+	return [
+		_checkInputType(handler, str(inputDef[1, 'coordType'] or ''), 'coordType'),
+		_checkInputType(handler, str(inputDef[1, 'contextType'] or ''), 'contextType'),
+		_checkInputType(handler, str(inputDef[1, 'returnType'] or ''), 'returnType'),
+		'Required input is missing' if handler.par.Required and inputDef.numRows < 2 else None,
+	]
+
+def _checkInputType(handler: 'COMP', typeName: str, typeCategory: str):
+	if not typeName:
+		return
+	supported = tdu.split(handler.op('supportedTypes')[typeCategory, 'types'] or '')
+	if ' ' in typeName:
+		if any(t in supported for t in typeName.split(' ')):
+			return
+	else:
+		if typeName in supported:
+			return
+	return f'Input does not support {typeCategory} {typeName}'
 
 def prepareDispatchTable(dat: 'scriptDAT'):
 	dat.clear()

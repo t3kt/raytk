@@ -23,6 +23,20 @@ op:
     name: coordField
     returnTypes:
     - vec4
+  - contextTypes:
+    - Context
+    - MaterialContext
+    - CameraContext
+    - LightContext
+    - RayContext
+    - ParticleContext
+    coordTypes:
+    - vec2
+    - vec3
+    label: Thickness Field
+    name: thicknessField
+    returnTypes:
+    - float
   name: hexagonalWeavePattern
   opType: raytk.operators.pattern.hexagonalWeavePattern
   parameters:

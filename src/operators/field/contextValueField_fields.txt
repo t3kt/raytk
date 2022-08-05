@@ -1,8 +1,0 @@
-name	label	contextType	returnType	expr	macro
-iteration	Iteration	Context	vec4	ctx.iteration	
-matorbit	Orbit Trap (Material)	MaterialContext	vec4	ctx.result.orbit	RAYTK_ORBIT_IN_SDF
-matiteration	Iteration (Material)	MaterialContext	vec4	ctx.result.iteration	RAYTK_ITERATION_IN_SDF
-matobjectid	Object ID (Material)	MaterialContext	vec4	ctx.result.objectId	RAYTK_OBJECT_ID_IN_SDF
-lightorbit	Orbit Trap (Light)	LightContext	vec4	ctx.result.orbit	RAYTK_ORBIT_IN_SDF
-lightiteration	Iteration (Light)	LightContext	vec4	ctx.result.iteration	RAYTK_ITERATION_IN_SDF
-lightobjectid	Object ID (Light)	Lightontext	vec4	ctx.result.objectId	RAYTK_OBJECT_ID_IN_SDF

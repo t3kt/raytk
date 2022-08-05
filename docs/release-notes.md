@@ -1,5 +1,79 @@
 # Release Notes
 
+## v0.26
+
+### Highlights
+
+* Operator snippets! Usage examples that show different ways to use operators.
+* New pattern generators (tilingPattern, snubQuadrilePattern) and field-based pattern controls
+* New OP (composeSdf) for building SDFs composed of multiple other SDFs
+* New iridescence shading element
+* New pattern operators and field inputs for pattern operators.
+
+### Details
+
+* Improvements / additions
+  * OP Snippets (#132, #845)
+    * New tox containing examples of how to use operators
+    * combine: switch
+    * convert: extrude, revolve
+    * field: atmosphereField, axisDistanceField, bandField, colorRampField, colorSwitchField, metaballField, multiPointDistanceField, sdfField
+    * filter: adjustColor, elongate, flip, instance, invert, kink, knife, mirrorOctant, mobiusTransform, modulo1D, onion, quantizeValue, restrictStage, round
+    * light: lightVolume, pointLight, volumetricRayCast
+    * material: diffuseContrib, toonShadingContrib
+    * pattern: brickPattern
+    * sdf: boxSdf, coneSdf, cylinderSdf, planeSdf
+    * sdf2d: lineSegmentSdf2d, pieSdf2d
+  * New field inputs (#812, #588, #921, #693)
+    * brickPattern - blending, shift, thickness
+    * gyroidSdf - bias, phase1-2, thickness
+    * hexagonalGridPattern - blending, thickness, colors
+    * hexagonalWeavePattern - thickness
+    * mengerSpongeSdf - cross scale, box scale, step offset
+    * rosettePattern - glow, radius, spread
+    * spiralZoom - phase, twist
+    * weavePattern - thickness
+  * New ops
+    * composeSdf (#678)
+    * fieldCamera (#228)
+    * iridescenceContrib (#864)
+    * snubQuadrilePattern (#254, #926)
+    * tilingPattern (#923)
+    * waveGreekFriezePattern (#930)
+  * New op features
+    * hexagonalGridPattern - separate blending and thickness, raw distance output, color settings (#254)
+    * limitField - single-sided limit modes (#931)
+    * mengerSpongeSdf - step offset, step variables (#698)
+    * metaballField - auto coord type
+    * multiLight - bounding volume limits (#908)
+    * multiPointDistanceField - auto coord type
+    * raymarchRender3d - option to disable showing background color for ray misses
+    * reorderCoords - option to zero out axes (#213)
+    * rosettePattern - spread and radius
+* Fixes
+  * Fix rotate angle scaling in orthoCamera (#918)
+  * Fix coord type collapsing in projectPlane (#920)
+  * Show errors out both outputs of render2d (#922)
+  * Fix how render depth enable/disable is handled in raymarchRender3d
+  * Fix logPolarRepeat not applying spatial remapping (#928)
+  * Fix Swap Inputs not working in arrange
+* Changes (potentially breaking)
+  * Disable shadows by default in raymarchRender3d
+  * Remove stage init code support from customOp (#933)
+* Infrastructure / internals
+  * Added support for adding mode-specific macros in codeSwitcher
+  * Toolkit editor support for opElements (#925)
+  * Lots of test cleanup
+  * Remove bendRay and ray modifier functionality
+  * Start a separate project file for op snippets (#132)
+  * Remove support for stage init code (#933)
+  * Remove unused settings in inputHandler (#933)
+  * Add a build process for op snippets (#132)
+  * Build process crash reduction (#935)
+    * Spreading deletions over more frames
+  * Reduce unnecessary cruft in common infrastructure (#933, #935)
+  * Move inputValidation out of inputHandler into opDefinition (#933)
+
 ## v0.25
 
 ### Highlights

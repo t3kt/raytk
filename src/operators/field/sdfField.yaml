@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.field.sdfField
-  opVersion: '4'
+  opVersion: '5'
   opStatus: default
 opDef: !def
   enable: true
@@ -42,6 +42,7 @@ elements:
   name: codeSwitcher_Fieldtype
   elementType: codeSwitcher
   params:
+    Elementroot: ''
     Table: !table
       file: src/operators/field/sdfField_fieldTypes.txt
       name: fieldTypes
@@ -50,4 +51,5 @@ elements:
     Manageparamstates: false
     Alwaysincludeallparams: true
     Switchmode: inline
+    Indexexpr: ''
     Placeholder: BODY();

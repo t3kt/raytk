@@ -8,6 +8,10 @@ vec2 THIS_closestHexCenters(vec2 p) {
 	return  v<.6 ?   v<.3 ?  p  :  ++p  :  p + step(f.yx,f) ;
 }
 
+// dist to neighbor 1,3,5 or 2,4,6
+float THIS_L2(vec2 q, float s, vec2 xy) {
+	return length(q - s*xy);
+}
 
 ReturnT thismap(CoordT p, ContextT ctx) {
 	#ifdef THIS_HAS_INPUT_coordField
@@ -26,11 +30,10 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 	// s = sign( fract(1e5*cos(h.x+9.*h.y)) -.5 );
 	s = sign( cos(1e5*cos(h.x+THIS_Seed*h.y)) );   // rnd (tile) = -1 or 1
 
-	#define THIS_L(x,y)  length( q - s*vec2(x,y) )            // dist to neighbor 1,3,5 or 2,4,6
 	//#define L(a)  length( q - s*sin(a+vec2(1.57,0)) )  // variant L(0), L(2.1), L(-2.1)
-	float l = min(min(THIS_L(-1, 0  ),                    // closest neigthborh (even or odd set, dep. s)
-	THIS_L(.5, .87)),                   // 1/2, sqrt(3)/2
-	THIS_L(.5,-.87));
+	float l = min(min(THIS_L2(q, s, vec2(-1, 0) ),                    // closest neigthborh (even or odd set, dep. s)
+	THIS_L2(q, s, vec2(.5, .87))),                   // 1/2, sqrt(3)/2
+	THIS_L2(q, s, vec2(.5,-.87)));
 //return l;
 
 //o -=o-- -.2 / abs(l-.5);

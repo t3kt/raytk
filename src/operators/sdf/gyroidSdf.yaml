@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.sdf.gyroidSdf
-  opVersion: '8'
+  opVersion: '9'
   opStatus: default
 opDef: !def
   enable: true
@@ -26,3 +26,50 @@ opDef: !def
   - gyroid
   - sine
   - wave
+inputs:
+- !input
+  Localalias: biasField
+  coordType: !coordT
+    Coordtypevec2: !expr
+      expr: parent().par.Coordtype == 'vec2'
+    Coordtypevec3: !expr
+      expr: parent().par.Coordtype == 'vec3'
+  contextType: !contextT
+    Allcontexttype: true
+  returnType: !returnT
+    Returntypefloat: true
+- !input
+  Localalias: thicknessField
+  coordType: !coordT
+    Coordtypevec2: !expr
+      expr: parent().par.Coordtype == 'vec2'
+    Coordtypevec3: !expr
+      expr: parent().par.Coordtype == 'vec3'
+  contextType: !contextT
+    Allcontexttype: true
+  returnType: !returnT
+    Returntypefloat: true
+- !input
+  Localalias: phase1Field
+  coordType: !coordT
+    Coordtypevec2: !expr
+      expr: parent().par.Coordtype == 'vec2'
+    Coordtypevec3: !expr
+      expr: parent().par.Coordtype == 'vec3'
+  contextType: !contextT
+    Allcontexttype: true
+  returnType: !returnT
+    Returntypefloat: true
+    Returntypevec4: true
+- !input
+  Localalias: phase2Field
+  coordType: !coordT
+    Coordtypevec2: !expr
+      expr: parent().par.Coordtype == 'vec2'
+    Coordtypevec3: !expr
+      expr: parent().par.Coordtype == 'vec3'
+  contextType: !contextT
+    Allcontexttype: true
+  returnType: !returnT
+    Returntypefloat: true
+    Returntypevec4: true

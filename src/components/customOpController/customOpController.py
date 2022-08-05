@@ -53,15 +53,6 @@ class CustomOp:
 			-120)
 		host.par.Initcode = dat
 
-	def Createstageinit(self, _=None):
-		host = self.host()
-		dat = _createCodeDat(
-			host,
-			self.ownerComp.par.Defaultstageinit.eval(),
-			'_stageInit',
-			-120)
-		host.par.Stageinitcode = dat
-
 	def Createfunction(self, _=None):
 		host = self.host()
 		dat = _createCodeDat(

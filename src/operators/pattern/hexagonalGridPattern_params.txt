@@ -1,2 +1,3 @@
 names	source	handling	readOnlyHandling	conversion	enable
-Translate[xy] Size Thickness	param	runtime	macro		1
+Translate[xy] Size Thickness Blending	param	runtime	macro		1
+Polycolor[1-3][rgb]	param	runtime	macro		int(parent().par.Pattern == 'hex3color')

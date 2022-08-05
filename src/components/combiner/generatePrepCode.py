@@ -30,20 +30,6 @@ def onCook(dat: 'DAT'):
 
 	lines = []
 
-	if swapInputsParam:
-		if isInline:
-			lines += [
-				f'#ifdef THIS_{swapInputsParam}',
-				'swap(res1, res2);',
-				'#endif',
-			]
-		else:
-			lines += [
-				f'if (THIS_{swapInputsParam} > 0.5) {{',
-				'	swap(res1, res2);',
-				'}',
-			]
-
 	if needRadius:
 		lines += [
 			f'float r = THIS_{radiusParam};',

@@ -2,7 +2,7 @@
 if False:
 	# noinspection PyUnresolvedReferences
 	from raytkBuild import BuildTaskContext
-	from .palette import Palette
+	from palette import Palette
 	from _stubs import *
 	from typing import Union
 	from components.opPicker.opPicker import OpPicker

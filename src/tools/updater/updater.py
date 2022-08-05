@@ -32,7 +32,7 @@ class Updater:
 		postAction = self._getPostUpdateAction(info)
 		o.par.enablecloningpulse.pulse()
 		if postAction:
-			postAction(o)
+			run(lambda: postAction(o), delayFrames=2)
 		img = o.op('*Definition/opImage')
 		if img:
 			o.par.opviewer.val = img
@@ -55,6 +55,14 @@ class Updater:
 					rop.par.Datatype.readOnly = False
 					rop.par.Datatype.enable = False
 					rop.par.Part.enable = False
+				return _action
+			elif info.rop.par['Variabletype'] is not None:
+				origType = info.rop.par.Variabletype.eval()
+				origField = info.rop.par.Field.eval()
+				def _action(rop: 'COMP'):
+					self._log(f'Restoring params for variableReference ({origType}, {origField})')
+					rop.par.Variabletype = origType
+					rop.par.Field = origField
 				return _action
 
 	def _showError(self, msg: str):

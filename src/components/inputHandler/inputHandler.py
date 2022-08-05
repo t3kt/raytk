@@ -3,7 +3,7 @@ if False:
 	# noinspection PyUnresolvedReferences
 	from _stubs import *
 	from _typeAliases import *
-	from typing import Callable, Optional, Union
+	from typing import List, Optional, Union
 
 	class _HandlerPar:
 		Hostop: OPParamT
@@ -27,7 +27,7 @@ def _isValidDefinitionDat(o: 'Optional[Union[OP, DAT]]'):
 		return False
 	return o and o.isDAT and o.isTable and o.numRows > 0 and o[0, 0] == 'name'
 
-def resolveSourceParDefinition(onError: 'Optional[Callable[[str], None]]' = None) -> 'Optional[DAT]':
+def resolveSourceParDefinition(errorTable: 'Optional[DAT]' = None) -> 'Optional[DAT]':
 	p = _parentPar().Source
 	if p.bindMaster is not None:
 		p = p.bindMaster
@@ -40,49 +40,28 @@ def resolveSourceParDefinition(onError: 'Optional[Callable[[str], None]]' = None
 		d = o.op('definition')
 		if _isValidDefinitionDat(d):
 			return d
-	if onError:
+	if errorTable:
 		mp = parent().par.Source.bindMaster
 		if mp is None:
 			msg = 'Invalid input source.'
 		else:
 			msg = f'Invalid {mp.label} source.'
-		onError(msg + ' Only ROPs and defintion DATs are allowed.')
+		msg += ' Only ROPs and defintion DATs are allowed.'
+		errorTable.appendRow([parent().path, 'error', msg])
 
-def buildValidationErrors(dat: 'DAT', inputDef: 'DAT'):
+def buildValidationErrors(dat: 'DAT'):
 	dat.clear()
-	if hasattr(parent, 'raytk'):
+	if not hasattr(parent, 'raytk'):
+		resolveSourceParDefinition(dat)
+
+def restrictDefinitionTypes(dat: 'scriptDAT', inputDefs: 'DAT', supportedTypes: 'DAT'):
+	dat.copy(inputDefs)
+	if dat.numRows < 2:
 		return
+	for column in ('coordType', 'contextType', 'returnType'):
+		cell = dat[1, column]
+		if cell:
+			cell.val = _restrictExpandedTypes(cell.val, supportedTypes[column, 'types'].val.split(' '))
 
-	def _addError(msg):
-		if not dat.numRows:
-			dat.appendRow(['path', 'level', 'message'])
-		dat.appendRow([parent().path, 'error', msg])
-
-	resolveSourceParDefinition(_addError)
-	if parent().par.Required and inputDef.numRows < 2:
-		_addError('Required input is missing')
-	_checkTableTypes(inputDef, _addError, ignoreEmpty=True)
-
-def _checkType(typeName: str, typeCategory: str, onError: 'Optional[Callable[[str], None]]', ignoreEmpty: bool):
-	if not typeName:
-		if ignoreEmpty:
-			return True
-		if onError:
-			onError(f'Invalid input {typeCategory}: {typeName!r}')
-		return False
-	supported = tdu.split(op('supportedTypes')[typeCategory, 'types'] or '')
-	if ' ' in typeName:
-		if any(t in supported for t in typeName.split(' ')):
-			return True
-	else:
-		if typeName in supported:
-			return True
-	if onError:
-		onError(f'Input does not support {typeCategory} {typeName}')
-	return False
-
-def _checkTableTypes(dat: 'DAT', onError: 'Optional[Callable[[str], None]]', ignoreEmpty: bool):
-	validCoord = _checkType(str(dat[1, 'coordType'] or ''), 'coordType', onError, ignoreEmpty)
-	validContext = _checkType(str(dat[1, 'contextType'] or ''), 'contextType', onError, ignoreEmpty)
-	validReturn = _checkType(str(dat[1, 'returnType'] or ''), 'returnType', onError, ignoreEmpty)
-	return validCoord and validContext and validReturn
+def _restrictExpandedTypes(expandedTypes: str, supportedTypes: 'List[str]') -> str:
+	return ' '.join([t for t in expandedTypes.split(' ') if t in supportedTypes])

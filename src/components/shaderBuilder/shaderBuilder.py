@@ -76,8 +76,7 @@ class ShaderBuilder:
 		hostPar.val = config.name
 		ui.undo.endBlock()
 
-	@staticmethod
-	def preprocessDefinitions(dat: 'scriptDAT'):
+	def preprocessDefinitions(self, dat: 'scriptDAT'):
 		# BEFORE definitions are reversed, so a def's inputs are always BELOW it in the table
 		knownCols = [c.val for c in dat.row(0)]
 		skipCols = ['name', 'path', 'coordType', 'contextType', 'returnType', 'definitionPath']
@@ -95,6 +94,25 @@ class ShaderBuilder:
 					knownCols.append(col.val)
 					dat.appendCol([col])
 				dat[row, col].val = val
+		self._resolveTypes(dat, 'coordType')
+		self._resolveTypes(dat, 'contextType')
+		self._resolveTypes(dat, 'returnType')
+
+	@staticmethod
+	def _resolveTypes(dat: 'scriptDAT', column: str):
+		# BEFORE definitions are reversed, so a def's inputs are always BELOW it in the table
+		typesByName = {}  # type: Dict[str, str]
+		cells = dat.col(column)
+		if not cells:
+			return
+		for cell in cells[1:]:
+			name = dat[cell.row, 'name'].val
+			if cell.val.startswith('@'):
+				refName = cell.val.replace('@', '', 1)
+				if refName not in typesByName:
+					raise Exception(f'Type resolution error for {name}: {cell.val!r}')
+				cell.val = typesByName[refName]
+			typesByName[name] = cell.val
 
 	def _definitionTable(self) -> 'DAT':
 		# in reverse order (aka declaration order)
@@ -631,18 +649,6 @@ class ShaderBuilder:
 			'}',
 		], 'init')
 
-	def buildStageInitBlock(self):
-		dats = self.getOpsFromDefinitionColumn('stageInitPath')
-		code = _combineCode(dats)
-		if not code.strip():
-			return ' '
-		return wrapCodeSection([
-			'#define RAYTK_HAS_STAGE_INIT',
-			'void stageInit(int stage) {',
-			code,
-			'}',
-		], 'stageInit')
-
 	def buildFunctionsBlock(self):
 		dats = self.getOpsFromDefinitionColumn('functionPath')
 		return wrapCodeSection(dats, 'functions')
@@ -883,7 +889,6 @@ class _V2_Writer:
 		self._writeOutputInit()
 		self._writeOpGlobals()
 		self._writeInit()
-		self._writeStageInit()
 		self._writeFunctions()
 		self._writeBody()
 
@@ -1055,16 +1060,6 @@ class _V2_Writer:
 			prefixes=[
 				'#define RAYTK_HAS_INIT',
 				'void init() {',
-			],
-			suffixes=['}'],
-		)
-
-	def _writeStageInit(self):
-		self._writeCodeDatsFromCol(
-			'stageInit', col='stageInitPath',
-			prefixes=[
-				'#define RAYTK_HAS_STAGE_INIT',
-				'void stageInit(int stage) {',
 			],
 			suffixes=['}'],
 		)

@@ -72,13 +72,6 @@ float checkNearHit(float d) {
 
 #endif
 
-#ifdef THIS_USE_RAYMOD_FUNC
-void modifyRay(inout Ray ray, in Sdf res) {
-	RayContext rCtx = createRayContext(ray, res);
-	ray = inputOp4(ray.pos, rCtx);
-}
-#endif
-
 vec4 getBackgroundColor(in Ray ray) {
 	#ifdef THIS_USE_BACKGROUND_FIELD
 	RayContext ctx = createRayContext(ray, createNonHitSdf());

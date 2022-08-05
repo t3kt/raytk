@@ -34,6 +34,8 @@ cat:
     summary: Combines SDFs in various ways.
   - name: combineFields
     summary: Combines float or vector fields using one of several mathematical operations.
+  - name: composeSdf
+    status: beta
   - name: compositeFields
     summary: Combines two vector fields using color compositing.
   - name: edgeCombine

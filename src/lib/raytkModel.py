@@ -520,8 +520,6 @@ class ROPDef(ModelObject):
 				an external file.
 			initCode: Code block for initialization code that the ROP needs to run
 				once per shader execution.
-			stageInitCode: Code block for initialization code that the ROP needs to
-				run before each render stage.
 			function: Code block for the ROP's primary function.
 			material: Code block for the ROP's material block.
 
@@ -547,7 +545,6 @@ class ROPDef(ModelObject):
 
 	opGlobals: _TextSetting = None
 	init: _TextSetting = None
-	stageInit: _TextSetting = None
 	function: _TextSetting = None
 	material: _TextSetting = None
 	callbacks: _TextSetting = None
@@ -588,7 +585,6 @@ class ROPDef(ModelObject):
 
 		self.opGlobals = _extractDatSetting(pars.Opglobals)
 		self.init = _extractDatSetting(pars.Initcode)
-		self.stageInit = _extractDatSetting(pars.Stageinitcode)
 		self.function = _extractDatSetting(pars.Functemplate)
 		self.material = _extractDatSetting(pars.Materialcode)
 		self.callbacks = _extractDatSetting(pars.Callbacks)
@@ -946,8 +942,6 @@ class ROPSpecLoader:
 		self._loadTextSetting(p.Opglobals, d.opGlobals, defaultName='globals', x=x, y=y)
 		y -= 150
 		self._loadTextSetting(p.Initcode, d.init, defaultName='init', x=x, y=y)
-		y -= 150
-		self._loadTextSetting(p.Stageinitcode, d.stageInit, defaultName='stageInit', x=x, y=y)
 		y -= 150
 		self._loadTextSetting(p.Materialcode, d.material, defaultName='material', x=x, y=y)
 		self._loadTextSetting(p.Callbacks, d.callbacks, defaultName='callbacks', x=200, y=200)

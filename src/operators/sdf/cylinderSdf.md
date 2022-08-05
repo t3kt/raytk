@@ -9,7 +9,15 @@ SDF for a cylinder.
   * `x`
   * `y`
   * `z`
+* `Infiniteheight`
 
 ## Inputs
 
-* `radius_definition_in`: Optional field used to control the radius of the cylinder. If it uses 1D coordinates, it is given the position along the axis. For 3D coordinates, it is given the raw position.
+* `radiusField`:  Optional field used to control the radius of the cylinder. If it uses 1D coordinates, it is given the position along the axis. For 3D coordinates, it is given the raw position.
+* `heightField`: 
+
+## Variables
+
+* `axispos`: 
+* `normoffset`: 
+* `normangle`: 

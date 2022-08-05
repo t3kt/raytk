@@ -21,6 +21,8 @@ op:
     name: Point4
   - label: Coord Type
     menuOptions:
+    - label: Auto
+      name: auto
     - label: 1D
       name: float
     - label: 2D

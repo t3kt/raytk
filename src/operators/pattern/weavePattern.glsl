@@ -1,8 +1,17 @@
 // weaving 4 by FabriceNeyret2
 // https://www.shadertoy.com/view/llfyDn
-#define THIS_S(x,y)   abs(fract(x)-.5) < THIS_Thickness  ? .7 + .3* sin(3.14* (y + ceil(x) )) : 0.
+
+float THIS_s(float x, float y, float th) {
+	if (abs(fract(x)-.5) >= th) return 0.;
+	return .7 + .3 * sin(PI*(y + ceil(x)));
+}
 
 ReturnT thismap(CoordT p, ContextT ctx) {
+	#ifdef THIS_HAS_INPUT_thicknessField
+	float th = adaptAsFloat(inputOp_thicknessField(p, ctx));
+	#else
+	float th = THIS_Thickness;
+	#endif
 	#ifdef THIS_HAS_INPUT_coordField
 	vec2 q = adaptAsVec2(inputOp_coordField(p, ctx));
 	#else
@@ -11,5 +20,5 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 	q -= THIS_Translate;
 	q /= THIS_Size;
 
-	return max(THIS_S(q.x,q.y), THIS_S(-q.y,q.x));
+	return max(THIS_s(q.x, q.y, th), THIS_s(-q.y, q.x, th));
 }

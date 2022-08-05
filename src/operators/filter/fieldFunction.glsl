@@ -10,5 +10,7 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 	#else
 	ReturnT b = THIS_asReturnT(THIS_Value2);
 	#endif
-	return THIS_EXPR;
+	ReturnT res;
+	BODY();
+	return res;
 }

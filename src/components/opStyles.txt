@@ -1,3 +1,0 @@
-name	label
-default	Default
-variable	Variable

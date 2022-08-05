@@ -1,2 +1,2 @@
 names	source	handling	readOnlyHandling	conversion	enable
-Translate[xy] Size Glow	param	runtime	macro		1
+Translate[xy] Size Glow Spread[1-2] Radius	param	runtime	macro		1

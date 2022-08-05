@@ -47,10 +47,14 @@ op:
       name: loop
     - label: Zig-Zag
       name: zigzag
+    - label: Clamp Low
+      name: clamplow
+    - label: Clamp High
+      name: clamphigh
     name: Limittype
-  - label: Input Low
+  - label: Low Bound
     name: Low
-  - label: Input High
+  - label: High Bound
     name: High
   summary: Limits the values produced by a float or vector field.
   thumb: assets/images/reference/operators/filter/limitField_thumb.png
