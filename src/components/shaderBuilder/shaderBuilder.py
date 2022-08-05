@@ -208,6 +208,24 @@ class ShaderBuilder:
 			for m in state.macros:
 				if m.enable:
 					dat.appendRow([m.name, m.value if m.value is not None else ''])
+		outputBufferTable = self._outputBufferTable()
+		for row in range(1, outputBufferTable.numRows):
+			name = outputBufferTable[row, 'macro'].val.strip()
+			if name:
+				dat.appendRow([name, ''])
+		varTable = self._variableTable()
+		for row in range(1, varTable.numRows):
+			ownerName = varTable[row, 'owner']
+			localName = varTable[row, 'localName']
+			dat.appendRow([f'{ownerName}_EXPOSE_{localName}', ''])
+			for part in tdu.split(varTable[row, 'macros']):
+				dat.appendRow([part, ''])
+		refTable = self._referenceTable()
+		for row in range(1, refTable.numRows):
+			ownerName = refTable[row, 'owner']
+			localName = refTable[row, 'localName']
+			dat.appendRow([refTable[row, 'name'], refTable[row, 'source']])
+			dat.appendRow([f'{ownerName}_HAS_REF_{localName}', ''])
 
 	def buildVariableDeclarations(self):
 		varTable = self.ownerComp.op('variable_table')

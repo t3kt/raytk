@@ -90,6 +90,8 @@ class _Builder:
 	def loadMacros(self, paramSpecTable: 'DAT', paramTupletTable: 'DAT', opElementTable: 'DAT'):
 		macros = []
 		def addMacro(m: Macro):
+			if not m.name:
+				return
 			m.name = self.replaceNames(m.name)
 			if isinstance(m.value, str):
 				m.value = self.replaceNames(m.value)
