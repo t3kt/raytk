@@ -8,7 +8,7 @@ if False:
 	# noinspection PyUnresolvedReferences
 	from _stubs import *
 	from raytkUtil import OpDefParsT
-	from typing import List, Optional
+	from typing import Dict, List, Optional
 
 class _Builder:
 	def __init__(
@@ -33,28 +33,44 @@ class _Builder:
 		if self.defPar.Materialcode:
 			self.opState.materialId = 'MAT_' + self.opState.name
 		self.inputs = []  # type: List[_InputInfo]
-		# self.replacements = {}  # type: Dict[str, str]
+		self.replacements = {
+			'thismap': self.opName,
+			'THIS_': self.namePrefix,
+		}  # type: Dict[str, str]
+		if self.opState.materialId:
+			self.replacements['THISMAT'] = self.opState.materialId
 
 	def loadInputs(self, inDats: 'List[DAT]'):
 		for i, inDat in enumerate(inDats + self.defPar.Inputdefs.evalOPs()):
 			if not inDat[1, 'name']:
 				continue
 			func = str(inDat[1, 'input:alias'] or f'inputOp{i + 1}')
+			placeholder = f'inputOp_{func}' if not func.startswith('inputOp') else func
+			name = str(inDat[i, 'name'])
 			self.inputs.append(_InputInfo(
 				inputFunc=func,
-				name=str(inDat[i, 'name']),
+				name=name,
 				path=str(inDat[i, 'path']),
 				coordType=str(inDat[i, 'coordType']),
 				contextType=str(inDat[i, 'contextType']),
 				returnType=str(inDat[i, 'returnType']),
-				placeholder=f'inputOp_{func}' if not func.startswith('inputOp') else func,
+				placeholder=placeholder,
 				vars=str(inDat[i, 'input:vars']),
 				varInputs=str(inDat[i, 'input:varInputs']),
 			))
+			self.replacements[placeholder] = name
 
 	def addError(self, message: str, path: 'Optional[str]' = None, level: str = 'error'):
 		self.opState.validationErrors.append(ValidationError(
 			path=path or parent(2).path, level=level, message=message))
+
+	def replaceNames(self, val: str):
+		# TODO: there must be a more efficent way to handle this
+		if not val:
+			return ''
+		for k, v in self.replacements.items():
+			val = val.replace(k, v)
+		return val
 
 	def loadCode(
 			self,
@@ -70,8 +86,13 @@ class _Builder:
 
 	def loadMacros(self, paramSpecTable: 'DAT', paramTupletTable: 'DAT', opElementTable: 'DAT'):
 		macros = []
+		def addMacro(m: Macro):
+			m.name = self.replaceNames(m.name)
+			if isinstance(m.value, str):
+				m.value = self.replaceNames(m.value)
+			macros.append(m)
 		for inputInfo in self.inputs:
-			macros.append(Macro(_getHasInputMacroName(inputInfo.inputFunc)))
+			addMacro(Macro(_getHasInputMacroName(inputInfo.inputFunc)))
 		macroParams = []
 		angleParamNames = []
 		for i in range(1, paramSpecTable.numRows):
@@ -92,13 +113,13 @@ class _Builder:
 			macroParamVals[name] = val
 			style = par.style
 			if style in ('Menu', 'Str', 'StrMenu'):
-				macros.append(Macro(f'{self.namePrefix}{name}_{val}'))
-				macros.append(Macro(self.namePrefix + name, val))
+				addMacro(Macro(f'{self.namePrefix}{name}_{val}'))
+				addMacro(Macro(self.namePrefix + name, val))
 			elif style == 'Toggle':
 				if val:
-					macros.append(Macro(self.namePrefix + name, 1))
+					addMacro(Macro(self.namePrefix + name, 1))
 			else:
-				macros.append(Macro(self.namePrefix + name, val))
+				addMacro(Macro(self.namePrefix + name, val))
 		for i in range(1, paramTupletTable.numRows):
 			if paramTupletTable[i, 'handling'] != 'macro':
 				continue
@@ -111,7 +132,7 @@ class _Builder:
 				for p in paramTupletTable[i, 'localNames'].val.split(' ')
 			]
 			partsJoined = ','.join(parts)
-			macros.append(Macro(self.namePrefix + tuplet, f'vec{size}({partsJoined})'))
+			addMacro(Macro(self.namePrefix + tuplet, f'vec{size}({partsJoined})'))
 		tables = [self.defPar.Macrotable.eval()] + self.defPar.Generatedmacrotables.evalOPs() + [
 			op(c) for c in opElementTable.col('macroTable')[1:]
 		]
@@ -120,16 +141,16 @@ class _Builder:
 				continue
 			if table.numCols == 3:
 				for row in table.rows():
-					macros.append(Macro(row[1].val, row[2].val, not _isFalseStr(row[0])))
+					addMacro(Macro(row[1].val, row[2].val, not _isFalseStr(row[0])))
 			elif table.numCols == 1:
 				for cell in table.col(0):
-					macros.append(Macro(cell.val))
+					addMacro(Macro(cell.val))
 			elif table.numCols == 2:
 				for row in table.rows():
-					macros.append(Macro(row[0].val, row[1].val))
+					addMacro(Macro(row[0].val, row[1].val))
 			else:
 				for row in table.rows():
-					macros.append(Macro(row[1].val, ' '.join([c.val for c in row[2:]]), not _isFalseStr(row[0])))
+					addMacro(Macro(row[1].val, ' '.join([c.val for c in row[2:]]), not _isFalseStr(row[0])))
 		self.opState.macros = macros
 
 	def loadTextures(self):
@@ -298,6 +319,7 @@ def onCook(dat: 'DAT'):
 	builder = _Builder(
 		typeTable=op('types'),
 	)
+	builder.loadInputs(ops('input_def_*'))
 	# builder.loadCode(
 	# 	functionCode=op('function'),
 	# 	materialCode=op('materialCode'),

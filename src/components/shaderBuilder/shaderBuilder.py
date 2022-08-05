@@ -201,40 +201,13 @@ class ShaderBuilder:
 
 	def buildMacroTable(self, dat: 'DAT'):
 		dat.clear()
-		tables = self.getOpsFromDefinitionColumn('macroTable')
-		for table in tables:
-			if not table or not table.numRows:
+		states = self._parseOpStates()
+		for state in states:
+			if not state.macros:
 				continue
-			for row in range(table.numRows):
-				if table.numCols == 3:
-					if table[row, 0] in ('0', 'False'):
-						continue
-					name = table[row, 1].val.strip()
-					if name:
-						dat.appendRow([name, table[row, 2]])
-				else:
-					name = table[row, 0].val.strip()
-					if not name:
-						continue
-					dat.appendRow([name, table[row, 1] if table.numCols > 1 else ''])
-		outputBufferTable = self._outputBufferTable()
-		for row in range(1, outputBufferTable.numRows):
-			name = outputBufferTable[row, 'macro'].val.strip()
-			if name:
-				dat.appendRow([name, ''])
-		varTable = self._variableTable()
-		for row in range(1, varTable.numRows):
-			ownerName = varTable[row, 'owner']
-			localName = varTable[row, 'localName']
-			dat.appendRow([f'{ownerName}_EXPOSE_{localName}', ''])
-			for part in tdu.split(varTable[row, 'macros']):
-				dat.appendRow([part, ''])
-		refTable = self._referenceTable()
-		for row in range(1, refTable.numRows):
-			ownerName = refTable[row, 'owner']
-			localName = refTable[row, 'localName']
-			dat.appendRow([refTable[row, 'name'], refTable[row, 'source']])
-			dat.appendRow([f'{ownerName}_HAS_REF_{localName}', ''])
+			for m in state.macros:
+				if m.enable:
+					dat.appendRow([m.name, m.value if m.value is not None else ''])
 
 	def buildVariableDeclarations(self):
 		varTable = self.ownerComp.op('variable_table')
