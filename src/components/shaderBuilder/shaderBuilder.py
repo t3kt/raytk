@@ -449,7 +449,7 @@ class ShaderBuilder:
 			for t in state.textures:
 				dat.appendRow([t.name, t.path, t.type])
 
-	def V2_writeShader(
+	def writeShader(
 			self,
 			dat: 'scriptDAT',
 			macroTable: 'DAT',
