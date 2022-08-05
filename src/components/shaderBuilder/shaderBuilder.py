@@ -1018,7 +1018,7 @@ class _V2_Writer:
 		buffers = [
 			b
 			for state in self.opStates
-			for b in state.buffers
+			for b in (state.buffers or [])
 		]
 		if not buffers:
 			return
