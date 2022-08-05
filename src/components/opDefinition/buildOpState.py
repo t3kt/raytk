@@ -46,17 +46,17 @@ class _Builder:
 				continue
 			func = str(inDat[1, 'input:alias'] or f'inputOp{i + 1}')
 			placeholder = f'inputOp_{func}' if not func.startswith('inputOp') else func
-			name = str(inDat[i, 'name'])
+			name = str(inDat[1, 'name'])
 			self.inputs.append(_InputInfo(
 				inputFunc=func,
 				name=name,
-				path=str(inDat[i, 'path']),
-				coordType=str(inDat[i, 'coordType']),
-				contextType=str(inDat[i, 'contextType']),
-				returnType=str(inDat[i, 'returnType']),
+				path=str(inDat[1, 'path']),
+				coordType=str(inDat[1, 'coordType']),
+				contextType=str(inDat[1, 'contextType']),
+				returnType=str(inDat[1, 'returnType']),
 				placeholder=placeholder,
-				vars=str(inDat[i, 'input:vars']),
-				varInputs=str(inDat[i, 'input:varInputs']),
+				vars=str(inDat[1, 'input:vars']),
+				varInputs=str(inDat[1, 'input:varInputs']),
 			))
 			self.replacements[placeholder] = name
 
@@ -155,7 +155,7 @@ class _Builder:
 					addMacro(Macro(row[0].val, row[1].val))
 			else:
 				for row in table.rows():
-					addMacro(Macro(row[1].val, ' '.join([c.val for c in row[2:]]), not _isFalseStr(row[0])))
+					addMacro(Macro(row[1].val, ' '.join([c.val or '' for c in row[2:]]), not _isFalseStr(row[0])))
 		self.opState.macros = macros
 
 	def loadTextures(self):
