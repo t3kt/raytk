@@ -1,5 +1,6 @@
 from dataclasses import dataclass
 from raytkShader import simplifyNames, CodeFilter
+from raytkState import RopState
 import re
 from typing import Callable, Dict, List, Tuple, Union, Optional
 
@@ -734,6 +735,23 @@ class ShaderBuilder:
 			varTable, refTable, defTable, addError)
 		for refName in refTable.col('name')[1:]:
 			checker.checkRef(refName.val)
+
+	def _parseOpStates(self):
+		states = []
+		for dat in self.getOpsFromDefinitionColumn('statePath'):
+			state = RopState.fromJson(dat.text)
+			states.append(state)
+		return states
+
+	def V3_buildTextureTable(self, dat: 'DAT'):
+		dat.clear()
+		dat.appendRow(['name', 'path', 'type'])
+		states = self._parseOpStates()
+		for state in states:
+			if not state.textures:
+				continue
+			for t in state.textures:
+				dat.appendRow([t.name, t.path, t.type])
 
 	def V2_writeShader(
 			self,
