@@ -23,7 +23,6 @@ if False:
 		Globalprefix: DatParamT
 		Predeclarations: DatParamT
 		Textureindexoffset: IntParamT
-		Globalmacrotable: DatParamT
 		Libraries: StrParamT
 		Bodytemplate: DatParamT
 		Outputbuffertable: DatParamT
@@ -202,8 +201,7 @@ class ShaderBuilder:
 
 	def buildMacroTable(self, dat: 'DAT'):
 		dat.clear()
-		tables = [self.ownerComp.par.Globalmacrotable.eval()]
-		tables += self.getOpsFromDefinitionColumn('macroTable')
+		tables = self.getOpsFromDefinitionColumn('macroTable')
 		for table in tables:
 			if not table or not table.numRows:
 				continue
