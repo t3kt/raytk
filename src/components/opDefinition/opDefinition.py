@@ -543,15 +543,6 @@ def prepareBufferTable(dat: 'scriptDAT'):
 			expr1, expr2, expr2, expr3,
 			])
 
-def prepareMaterialTable(dat: 'scriptDAT'):
-	dat.clear()
-	dat.appendRow(['material', 'materialCode'])
-	if parentPar().Materialcode:
-		dat.appendRow([
-			'MAT_' + parentPar().Name.eval(),
-			parent().path + '/materialCode',
-		])
-
 def prepareVariableTable(dat: 'scriptDAT'):
 	dat.clear()
 	dat.appendRow(['name', 'localName', 'label', 'dataType', 'owner', 'macros'])

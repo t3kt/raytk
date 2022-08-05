@@ -79,10 +79,13 @@ class _Builder:
 			initCode: 'DAT',
 			opGlobals: 'DAT',
 	):
-		self.opState.functionCode = functionCode.text
-		self.opState.materialCode = materialCode.text
-		self.opState.initCode = initCode.text
-		self.opState.opGlobals = opGlobals.text
+		# self.opState.functionCode = self.processCode(functionCode.text)
+		self.opState.materialCode = self.processCode(materialCode.text)
+		# self.opState.initCode = self.processCode(initCode.text)
+		# self.opState.opGlobals = self.processCode(opGlobals.text)
+
+	def processCode(self, code: str):
+		return self.replaceNames(code)
 
 	def loadMacros(self, paramSpecTable: 'DAT', paramTupletTable: 'DAT', opElementTable: 'DAT'):
 		macros = []
@@ -320,12 +323,12 @@ def onCook(dat: 'DAT'):
 		typeTable=op('types'),
 	)
 	builder.loadInputs(ops('input_def_*'))
-	# builder.loadCode(
-	# 	functionCode=op('function'),
-	# 	materialCode=op('materialCode'),
-	# 	initCode=op('initCode'),
-	# 	opGlobals=op('opGlobals'),
-	# )
+	builder.loadCode(
+		functionCode=op('function'),
+		materialCode=op('materialCode'),
+		initCode=op('initCode'),
+		opGlobals=op('opGlobals'),
+	)
 	builder.loadMacros(
 		paramSpecTable=op('paramSpecTable'),
 		paramTupletTable=op('param_tuplets'),

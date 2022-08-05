@@ -547,12 +547,10 @@ class ShaderBuilder:
 	def buildMaterialDeclarations(self):
 		if not self.ownerComp.par.Supportmaterials:
 			return ' '
-		materialTable = self.ownerComp.op('material_table')
-		if materialTable.numRows < 2:
-			return ' '
+		states = self._parseOpStates()
 		decls = self._buildNameIdDeclarations(
 			offset=1001,
-			names=materialTable.col('material')[1:])
+			names=[s.materialId for s in states if s.materialId])
 		return wrapCodeSection(decls, 'materials')
 
 	def buildDispatchDeclarations(self):
@@ -567,8 +565,8 @@ class ShaderBuilder:
 	@staticmethod
 	def _buildNameIdDeclarations(offset: int, names: List['Cell']):
 		return [
-			f'const int {name} = {offset + (name.row - 1)};'
-			for name in names
+			f'const int {name} = {offset + i};'
+			for i, name in enumerate(names)
 		]
 
 	def buildOutputBufferDeclarations(self):
@@ -625,14 +623,14 @@ class ShaderBuilder:
 		dats = self.getOpsFromDefinitionColumn('functionPath')
 		return wrapCodeSection(dats, 'functions')
 
-	def buildBodyBlock(self, materialTable: 'DAT', dispatchTable: 'DAT'):
+	def buildBodyBlock(self, dispatchTable: 'DAT'):
 		bodyDat = self.ownerComp.par.Bodytemplate.eval()
 		code = bodyDat.text if bodyDat else ''
 		if not code:
 			return ' '
 		placeholder = '// #include <materialParagraph>'
 		if placeholder in code:
-			materialBlock = self._buildMaterialBlock(materialTable)
+			materialBlock = self._buildMaterialBlock()
 			code = code.replace(placeholder, materialBlock, 1)
 		def _replaceDispatchInclude(m: re.Match):
 			category = m.group(1)
@@ -642,18 +640,15 @@ class ShaderBuilder:
 		code = re.sub(r'\s*// #include <dispatch/(\w+)>\n', _replaceDispatchInclude, code)
 		return wrapCodeSection(code, 'body')
 
-	@staticmethod
-	def _buildMaterialBlock(materialTable: 'DAT'):
-		if materialTable.numRows < 2:
-			return ''
+	def _buildMaterialBlock(self):
 		output = ''
-		for nameCell, pathCell in materialTable.rows()[1:]:
-			if not nameCell:
+		states = self._parseOpStates()
+		for state in states:
+			if not state.materialId:
 				continue
-			codeDat = op(pathCell)
-			materialCode = codeDat.text if codeDat else ''
-			output += f'else if(m == {nameCell.val}) {{\n'
-			output += materialCode + '\n}'
+			code = state.materialCode or ''
+			output += f'else if(m == {state.materialId}) {{\n'
+			output += code + '\n}'
 		return output
 
 	@staticmethod
@@ -731,12 +726,12 @@ class ShaderBuilder:
 			typeDefMacroTable: 'DAT',
 			textureTable: 'DAT',
 			bufferTable: 'DAT',
-			materialTable: 'DAT',
 			dispatchTable: 'DAT',
 			outputBufferTable: 'DAT',
 	):
 		writer = _V2_Writer(
 			sb=self,
+			opStates=self._parseOpStates(),
 			out=dat,
 			defTable=self._definitionTable(),
 			paramProc=self._createParamProcessor(),
@@ -746,7 +741,6 @@ class ShaderBuilder:
 			libraryDats=self._getLibraryDats(),
 			textureTable=textureTable,
 			bufferTable=bufferTable,
-			materialTable=materialTable,
 			dispatchTable=dispatchTable,
 			outputBufferTable=outputBufferTable,
 		)
@@ -829,6 +823,7 @@ class _VarRefChecker_2:
 @dataclass
 class _V2_Writer:
 	sb: 'ShaderBuilder'
+	opStates: 'List[RopState]'
 	out: 'scriptDAT'
 	defTable: 'DAT'
 	paramProc: '_ParameterProcessor'
@@ -838,7 +833,6 @@ class _V2_Writer:
 	libraryDats: 'List[DAT]'
 	textureTable: 'DAT'
 	bufferTable: 'DAT'
-	materialTable: 'DAT'
 	dispatchTable: 'DAT'
 	outputBufferTable: 'DAT'
 
@@ -1003,11 +997,14 @@ class _V2_Writer:
 		self._endBlock('buffers')
 
 	def _writeMaterialDeclarations(self):
-		if not self.ownerComp.par.Supportmaterials or self.materialTable.numRows < 2:
+		if not self.ownerComp.par.Supportmaterials:
 			return
 		self._startBlock('materials')
-		for name in self.materialTable.col('material')[1:]:
-			self._writeMacro(name, 1001 + (name.row - 1))
+		i = 1001
+		for state in self.opStates:
+			if state.materialId:
+				self._writeMacro(state.materialId, i)
+				i += 1
 		self._endBlock('materials')
 
 	def _writeDispatchDeclarations(self):
@@ -1075,16 +1072,12 @@ class _V2_Writer:
 		self._endBlock('body')
 
 	def _writeMaterialBody(self):
-		if self.materialTable.numRows < 2:
-			return
-		for name, path in self.materialTable.rows()[1:]:
-			if not name:
+		for state in self.opStates:
+			if not state.materialId:
 				continue
-			self._write(f'else if(m == {name}) {{\n')
-			dat = op(path)
-			if dat:
-				# Intentionally skipping typedef inlining and code filtering for these since no materials need it.
-				self._write(dat.text, '\n}')
+			self._write(f'else if(m == {state.materialId}) {{\n')
+			# Intentionally skipping typedef inlining and code filtering for these since no materials need it.
+			self._write(state.materialCode, '\n}')
 
 	def _writeDispatchBody(self, category: str):
 		for i in range(1, self.dispatchTable.numRows):
