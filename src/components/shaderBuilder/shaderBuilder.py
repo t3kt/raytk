@@ -1,6 +1,6 @@
 from dataclasses import dataclass
 from raytkShader import simplifyNames, CodeFilter
-from raytkState import RopState
+from raytkState import RopState, Dispatch
 import re
 from typing import Callable, Dict, List, Tuple, Union, Optional
 
@@ -582,16 +582,21 @@ class ShaderBuilder:
 		return wrapCodeSection(decls, 'materials')
 
 	def buildDispatchDeclarations(self):
-		dispatchTable = self.ownerComp.op('dispatch_table')
-		if dispatchTable.numRows < 2:
+		dispatchNames = [
+			d.name
+			for state in self._parseOpStates()
+			for d in (state.dispatchBlocks or [])
+			if d.name
+		]
+		if not dispatchNames:
 			return ' '
 		decls = self._buildNameIdDeclarations(
 			offset=2001,
-			names=dispatchTable.col('name')[1:])
+			names=dispatchNames)
 		return wrapCodeSection(decls, 'dispatch')
 
 	@staticmethod
-	def _buildNameIdDeclarations(offset: int, names: List['Cell']):
+	def _buildNameIdDeclarations(offset: int, names: List[str]):
 		return [
 			f'const int {name} = {offset + i};'
 			for i, name in enumerate(names)
@@ -651,7 +656,7 @@ class ShaderBuilder:
 		dats = self.getOpsFromDefinitionColumn('functionPath')
 		return wrapCodeSection(dats, 'functions')
 
-	def buildBodyBlock(self, dispatchTable: 'DAT'):
+	def buildBodyBlock(self):
 		bodyDat = self.ownerComp.par.Bodytemplate.eval()
 		code = bodyDat.text if bodyDat else ''
 		if not code:
@@ -660,11 +665,17 @@ class ShaderBuilder:
 		if placeholder in code:
 			materialBlock = self._buildMaterialBlock()
 			code = code.replace(placeholder, materialBlock, 1)
+		dispatchBlocks = [
+			d
+			for state in self._parseOpStates()
+			for d in (state.dispatchBlocks or [])
+			if d.name
+		]
 		def _replaceDispatchInclude(m: re.Match):
 			category = m.group(1)
 			if not category:
 				return '\n'
-			return self._buildDispatchBlock(dispatchTable, category)
+			return self._buildDispatchBlock(dispatchBlocks, category)
 		code = re.sub(r'\s*// #include <dispatch/(\w+)>\n', _replaceDispatchInclude, code)
 		return wrapCodeSection(code, 'body')
 
@@ -680,18 +691,16 @@ class ShaderBuilder:
 		return output
 
 	@staticmethod
-	def _buildDispatchBlock(dispatchTable: 'DAT', category: str):
-		if dispatchTable.numRows < 2:
+	def _buildDispatchBlock(dispatchBlocks: 'List[Dispatch]', category: str):
+		if not dispatchBlocks:
 			return ''
 		output = ''
-		for i in range(1, dispatchTable.numRows):
-			if dispatchTable[i, 'category'] != category:
+		for dispatchBlock in dispatchBlocks:
+			if dispatchBlock.category != category:
 				continue
-			name = dispatchTable[i, 'name']
-			code = dispatchTable[i, 'code'] or ''
-			output = f'case {name}: {{\n'
-			if code:
-				output += code + ';'
+			output = f'case {dispatchBlock.name}: {{\n'
+			if dispatchBlock.code:
+				output += dispatchBlock.code + ';'
 			output += 'break;}\n'
 		return output
 
@@ -753,7 +762,6 @@ class ShaderBuilder:
 			macroTable: 'DAT',
 			typeDefMacroTable: 'DAT',
 			textureTable: 'DAT',
-			dispatchTable: 'DAT',
 			outputBufferTable: 'DAT',
 	):
 		writer = _V2_Writer(
@@ -767,7 +775,6 @@ class ShaderBuilder:
 			typeDefMacroTable=typeDefMacroTable,
 			libraryDats=self._getLibraryDats(),
 			textureTable=textureTable,
-			dispatchTable=dispatchTable,
 			outputBufferTable=outputBufferTable,
 		)
 		writer.run()
@@ -858,11 +865,11 @@ class _V2_Writer:
 	typeDefMacroTable: 'DAT'
 	libraryDats: 'List[DAT]'
 	textureTable: 'DAT'
-	dispatchTable: 'DAT'
 	outputBufferTable: 'DAT'
 
 	inlineTypedefRepls: 'Optional[Dict[str, str]]' = None
 	inlineTypedefPattern: 'Optional[re.Pattern]' = None
+	dispatchBlocks: 'Optional[List[Dispatch]]' = None
 
 	def __post_init__(self):
 		self.configPar = self.sb.configPar()
@@ -874,6 +881,12 @@ class _V2_Writer:
 				if cells[1]
 			}
 			self.inlineTypedefPattern = re.compile(r'\b[\w_]+_(as)?(CoordT|ContextT|ReturnT)\b')
+			self.dispatchBlocks = [
+				d
+				for state in self.opStates
+				for d in (state.dispatchBlocks or [])
+				if d.name
+			]
 
 	def run(self):
 		self.out.clear()
@@ -1034,11 +1047,11 @@ class _V2_Writer:
 		self._endBlock('materials')
 
 	def _writeDispatchDeclarations(self):
-		if self.dispatchTable.numRows < 2:
+		if not self.dispatchBlocks:
 			return
 		self._startBlock('dispatch')
-		for name in self.dispatchTable.col('name')[1:]:
-			self._writeMacro(name, 1001 + (name.row - 1))
+		for i, dispatchBlock in enumerate(self.dispatchBlocks):
+			self._writeMacro(dispatchBlock.name, 1001 + i)
 		self._endBlock('dispatch')
 
 	def _writeOutputBufferDeclarations(self):
@@ -1106,17 +1119,13 @@ class _V2_Writer:
 			self._write(state.materialCode, '\n}')
 
 	def _writeDispatchBody(self, category: str):
-		for i in range(1, self.dispatchTable.numRows):
-			if self.dispatchTable[i, 'category'] != category:
+		for dispatchBlock in self.dispatchBlocks:
+			if dispatchBlock.category != category:
 				continue
-			name = self.dispatchTable[i, 'name']
-			if not name:
-				continue
-			self._write(f'case {name}: {{\n')
-			code = self.dispatchTable[i, 'code']
-			if code:
-				self._write(code, ';')
-			self._write(code, '\n} break;\n')
+			self._write(f'case {dispatchBlock.name}: {{\n')
+			if dispatchBlock.code:
+				self._write(dispatchBlock.code, ';')
+			self._write('\n} break;\n')
 
 	def _write(self, *args):
 		self.out.write(*args)

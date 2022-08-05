@@ -18,7 +18,6 @@ initPath	0
 opGlobalsPath	0
 variableTable	0
 referenceTable	0
-dispatchTable	0
 inputNames	0
 definitionPath	1
 elementTable	0

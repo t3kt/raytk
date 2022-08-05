@@ -259,7 +259,7 @@ class _Builder:
 			self.opState.dispatchBlocks.append(Dispatch(
 				name=self.namePrefix + name,
 				category=table[i, 'category'].val,
-				code=table[i, 'code'].val,
+				code=self.replaceNames(table[i, 'code'].val),
 			))
 
 	def loadInputNames(self, definition: 'DAT'):
