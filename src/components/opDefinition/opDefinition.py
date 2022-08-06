@@ -511,9 +511,7 @@ def onHostNameChange():
 	op('sel_funcTemplate').cook(force=True)
 
 def buildOpState():
-	builder = _Builder(
-		typeTable=op('types'),
-	)
+	builder = _Builder()
 	builder.loadInputs(ops('input_def_*'))
 	builder.loadOpElements(op('opElements'))
 	builder.loadCode()
@@ -532,22 +530,13 @@ def buildOpState():
 	return builder.opState
 
 class _Builder:
-	def __init__(
-			self,
-			typeTable: 'DAT',
-	):
+	def __init__(self):
 		# noinspection PyTypeChecker
 		self.defPar = parent().par  # type: OpDefParsT
 		self.hostOp = self.defPar.Hostop.eval()
 		self.paramsOp = self.defPar.Paramsop.eval() or self.hostOp
 		self.opState = RopState(
-			opType=self.defPar.Raytkoptype.eval(),
-			toolkitVersion=self.defPar.Raytkversion.eval(),
 			name=self.defPar.Name.eval(),
-
-			coordType=typeTable['coordType', 1].val,
-			contextType=typeTable['contextType', 1].val,
-			returnType=typeTable['returnType', 1].val,
 		)
 		self.opName = self.opState.name
 		self.namePrefix = self.opName + '_'

@@ -52,13 +52,7 @@ def _shouldInclude(val):
 
 @dataclass
 class RopState(_StateObject):
-	opType: str
-	toolkitVersion: str
 	name: str
-
-	coordType: _TypeSpecT
-	contextType: _TypeSpecT
-	returnType: _TypeSpecT
 
 	functionCode: Optional[str] = None
 	materialCode: Optional[str] = None
