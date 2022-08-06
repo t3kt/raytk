@@ -1,4 +1,0 @@
-before	after
-thismap	parent().par.Name
-THIS_	parent().par.Name + '_'
-THISMAT	f'MAT_{parent().par.Name}' if parent().par.Materialcode else ''
