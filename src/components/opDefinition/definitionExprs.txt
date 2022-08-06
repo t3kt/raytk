@@ -6,15 +6,12 @@ contextType	op('types')['contextType', 1]
 returnType	op('types')['returnType', 1]
 opVersion	parent().par.Raytkopversion or 0
 toolkitVersion	parent().par.Raytkversion or ''
-functionPath	parent().path + '/function'
 paramSource	parent().path + '/param_vals'
 paramVectors	parent().path + '/param_vector_vals'
 paramTable	parent().path + '/params'
 paramTupletTable	parent().path + '/param_tuplets'
 materialTable	(parent().path + '/material_table') if op('materialCode').text.strip() else ''
 libraryNames	parent().par.Librarynames
-initPath	(parent().path + '/initCode') if parent().par.Initcode else ''
-opGlobalsPath	(parent().path + '/opGlobals') if parent().par.Opglobals else ''
 variableTable	(parent().path + '/variable_table') if op('variable_table').numRows > 1 else ''
 referenceTable	(parent().path + '/reference_table') if op('reference_table').numRows > 1 else ''
 inputNames	op('inputNameMap').text or ''

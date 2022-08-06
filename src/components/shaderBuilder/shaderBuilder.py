@@ -614,8 +614,7 @@ class _V2_Writer:
 		self._endBlock('globals')
 
 	def _writeOpDataTypedefs(self):
-		# inline = self.configPar['Inlinetypedefs']
-		inline = False
+		inline = self.configPar['Inlinetypedefs']
 		if not self.typeDefMacroTable.numRows:
 			return
 		self._startBlock('opDataTypedefs')
@@ -786,20 +785,49 @@ class _V2_Writer:
 		self._endBlock('outputInit')
 
 	def _writeOpGlobals(self):
-		self._writeCodeDatsFromCol('opGlobals', col='opGlobals')
+		self._writeCodeBlocks('opGlobals', [
+			state.opGlobals
+			for state in self.opStates
+			if state.opGlobals
+		])
 
 	def _writeInit(self):
-		self._writeCodeDatsFromCol(
-			'init', col='initPath',
+		self._writeCodeBlocks(
+			'init',
+			[
+				state.initCode
+				for state in self.opStates
+				if state.initCode
+			],
 			prefixes=[
 				'#define RAYTK_HAS_INIT',
 				'void init() {',
 			],
-			suffixes=['}'],
-		)
+			suffixes=['}'])
 
 	def _writeFunctions(self):
-		self._writeCodeDatsFromCol('functions', col='functionPath')
+		self._writeCodeBlocks('functions', [
+			state.functionCode
+			for state in self.opStates
+			if state.functionCode
+		])
+
+	def _writeCodeBlocks(
+			self, section: str, blocks: List[str],
+			prefixes: List[str] = None, suffixes: List[str] = None
+	):
+		if not blocks:
+			return
+		self._startBlock(section)
+		if prefixes:
+			for prefix in prefixes:
+				self._write(prefix, '\n')
+		for block in blocks:
+			self._write(self._processCode(block), '\n')
+		if suffixes:
+			for suffix in suffixes:
+				self._write(suffix, '\n')
+		self._endBlock(section)
 
 	def _writeBody(self):
 		dat = self.ownerComp.par.Bodytemplate.eval()
@@ -860,26 +888,7 @@ class _V2_Writer:
 		if not dat or not dat.text:
 			return
 		self._startBlock(blockName)
-		code = self._inlineTypedefs(dat.text)
-		code = self.codeFilter.processCodeBlock(code)
-		self._write(code, '\n')
-		self._endBlock(blockName)
-
-	def _writeCodeDatsFromCol(
-			self, blockName: str, col: str,
-			prefixes: 'Optional[List[str]]' = None,
-			suffixes: 'Optional[List[str]]' = None,
-	):
-		dats = self.sb.getOpsFromDefinitionColumn(col)
-		if not dats:
-			return
-		self._startBlock(blockName)
-		self._writeLines(prefixes)
-		for dat in dats:
-			code = self._inlineTypedefs(dat.text)
-			code = self.codeFilter.processCodeBlock(code)
-			self._write(code, '\n')
-		self._writeLines(suffixes)
+		self._write(self._processCode(dat.text), '\n')
 		self._endBlock(blockName)
 
 	def _replaceInlineTypedefMatch(self, m: 're.Match'):
@@ -890,8 +899,9 @@ class _V2_Writer:
 			return code
 		return self.inlineTypedefPattern.sub(self._replaceInlineTypedefMatch, code)
 
-	# def _processCodeBlock(self, code: str):
-	# 	pass
+	def _processCode(self, code: str):
+		code = self._inlineTypedefs(code)
+		return self.codeFilter.processCodeBlock(code)
 
 
 @dataclass

@@ -39,6 +39,7 @@ class _Builder:
 		}  # type: Dict[str, str]
 		if self.opState.materialId:
 			self.replacements['THISMAT'] = self.opState.materialId
+		self.elementReplacements = {}
 
 	def loadInputs(self, inDats: 'List[DAT]'):
 		for i, inDat in enumerate(inDats + self.defPar.Inputdefs.evalOPs()):
@@ -60,6 +61,16 @@ class _Builder:
 			))
 			self.replacements[placeholder] = name
 
+	def loadOpElements(self, elementTable: 'DAT'):
+		for phCol in elementTable.cells(0, 'placeholder*'):
+			i = tdu.digits(phCol.val)
+			for row in range(1, elementTable.numRows):
+				placeholder = elementTable[row, phCol].val
+				if not placeholder:
+					continue
+				codeDat = op(elementTable[row, f'code{i}'])
+				self.elementReplacements[placeholder] = codeDat.text if codeDat else ''
+
 	def addError(self, message: str, path: 'Optional[str]' = None, level: str = 'error'):
 		self.opState.validationErrors.append(ValidationError(
 			path=path or parent(2).path, level=level, message=message))
@@ -79,12 +90,17 @@ class _Builder:
 			initCode: 'DAT',
 			opGlobals: 'DAT',
 	):
-		# self.opState.functionCode = self.processCode(functionCode.text)
+		self.opState.functionCode = self.processCode(functionCode.text)
 		self.opState.materialCode = self.processCode(materialCode.text)
-		# self.opState.initCode = self.processCode(initCode.text)
-		# self.opState.opGlobals = self.processCode(opGlobals.text)
+		self.opState.initCode = self.processCode(initCode.text)
+		self.opState.opGlobals = self.processCode(opGlobals.text)
 
 	def processCode(self, code: str):
+		if not code:
+			return ''
+		for placeholder, val in self.elementReplacements.items():
+			code = code.replace(placeholder, val)
+		code = _typePattern.sub(_typeRepl, code)
 		return self.replaceNames(code)
 
 	def loadMacros(self, paramSpecTable: 'DAT', paramTupletTable: 'DAT', opElementTable: 'DAT'):
@@ -325,6 +341,7 @@ def onCook(dat: 'DAT'):
 		typeTable=op('types'),
 	)
 	builder.loadInputs(ops('input_def_*'))
+	builder.loadOpElements(op('opElements'))
 	builder.loadCode(
 		functionCode=op('function'),
 		materialCode=op('materialCode'),
