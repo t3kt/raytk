@@ -1,6 +1,6 @@
 from dataclasses import dataclass
 from raytkShader import simplifyNames, CodeFilter
-from raytkState import RopState, Dispatch
+from raytkState import RopState, Dispatch, Texture, Buffer
 import re
 from io import StringIO
 from typing import Callable, Dict, List, Tuple, Union, Optional
@@ -564,6 +564,8 @@ class _V2_Writer:
 	inlineTypedefRepls: 'Optional[Dict[str, str]]' = None
 	inlineTypedefPattern: 'Optional[re.Pattern]' = None
 	dispatchBlocks: 'Optional[List[Dispatch]]' = None
+	textures: 'Optional[List[Texture]]' = None
+	buffers: 'Optional[List[Buffer]]' = None
 	out: 'Optional[StringIO]' = None
 
 	def __post_init__(self):
@@ -577,12 +579,16 @@ class _V2_Writer:
 				if cells[1]
 			}
 			self.inlineTypedefPattern = re.compile(r'\b[\w_]+_(as)?(CoordT|ContextT|ReturnT)\b')
-			self.dispatchBlocks = [
-				d
-				for state in self.opStates
-				for d in (state.dispatchBlocks or [])
-				if d.name
-			]
+		self.textures = []
+		self.buffers = []
+		self.dispatchBlocks = []
+		for state in self.opStates:
+			if state.dispatchBlocks:
+				self.dispatchBlocks += state.dispatchBlocks
+			if state.textures:
+				self.textures += state.textures
+			if state.buffers:
+				self.buffers += state.buffers
 
 	def run(self, dat: 'scriptDAT'):
 		if self.defTable.numRows < 2:
@@ -680,12 +686,7 @@ class _V2_Writer:
 		self._endBlock('paramAliases')
 
 	def _writeTextureDeclarations(self):
-		textures = [
-			t
-			for state in self.opStates
-			for t in (state.textures or [])
-		]
-		if not textures:
+		if not self.textures:
 			return
 		offset = int(self.ownerComp.par.Textureindexoffset)
 		indexByType: 'Dict[str, int]' = {
@@ -707,7 +708,7 @@ class _V2_Writer:
 			'2darray': 'uTD2DArrayInfos',
 		}
 		self._startBlock('textures')
-		for texture in textures:
+		for texture in self.textures:
 			texType = texture.type or '2d'
 			if texType not in indexByType:
 				raise Exception(f'Invalid texture type for {texture.name}: {texType!r}')
@@ -718,15 +719,10 @@ class _V2_Writer:
 		self._endBlock('textures')
 
 	def _writeBufferDeclarations(self):
-		buffers = [
-			b
-			for state in self.opStates
-			for b in (state.buffers or [])
-		]
-		if not buffers:
+		if not self.buffers:
 			return
 		self._startBlock('buffers')
-		for buffer in buffers:
+		for buffer in self.buffers:
 			if buffer.uniformType == 'uniformarray':
 				if buffer.length is None:
 					c = op(buffer.chop)
