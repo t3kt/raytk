@@ -29,15 +29,15 @@ class _Category:
 		self.useInputToggle = 'Useinput' + name.lower()
 		self.allTypes = _getAllTypesInCategory(_typeTable(), name)
 
-	def getSpec(self):
-		isAll = bool(parent().par[self.allToggle])
+	def getSpec(self, parHost: 'OP'):
+		isAll = bool(parHost and parHost.par[self.allToggle])
 		return TypeSpec(
-			useInput=bool(parent().par[self.useInputToggle]),
+			useInput=bool(parHost and parHost.par[self.useInputToggle]),
 			supportsAll=isAll,
 			supported=[] if isAll else [
 				t
 				for t in self.allTypes
-				if parent().par[self.togglePrefix + t.lower()]
+				if parHost and parHost.par[self.togglePrefix + t.lower()]
 			],
 		)
 
@@ -47,11 +47,11 @@ _categories = [
 	_Category('returnType'),
 ]
 
-def buildSupportedTypeTable(dat: 'scriptDAT'):
+def buildSupportedTypeTable(dat: 'scriptDAT', parHost: 'OP'):
 	dat.clear()
 	dat.appendRow(['category', 'spec', 'types'])
 	for cat in _categories:
-		typeSpec = cat.getSpec()
+		typeSpec = cat.getSpec(parHost)
 		dat.appendRow([
 			cat.name,
 			typeSpec.formatSpec(cat.allTypes),
