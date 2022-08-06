@@ -2,6 +2,7 @@ from dataclasses import dataclass
 from raytkShader import simplifyNames, CodeFilter
 from raytkState import RopState, Dispatch
 import re
+from io import StringIO
 from typing import Callable, Dict, List, Tuple, Union, Optional
 
 # noinspection PyUnreachableCode
@@ -460,7 +461,6 @@ class ShaderBuilder:
 		writer = _V2_Writer(
 			sb=self,
 			opStates=self._parseOpStates(),
-			out=dat,
 			defTable=self._definitionTable(),
 			paramProc=self._createParamProcessor(),
 			codeFilter=self._createCodeFilter(typeDefMacroTable=typeDefMacroTable),
@@ -470,7 +470,9 @@ class ShaderBuilder:
 			outputBufferTable=outputBufferTable,
 			variableTable=variableTable,
 		)
-		writer.run()
+		# import cProfile
+		# cProfile.runctx('writer.run(dat)', globals(), locals())
+		writer.run(dat)
 
 class _VarRefChecker:
 	def __init__(
@@ -550,7 +552,6 @@ class _VarRefChecker_2:
 class _V2_Writer:
 	sb: 'ShaderBuilder'
 	opStates: 'List[RopState]'
-	out: 'scriptDAT'
 	defTable: 'DAT'
 	paramProc: '_ParameterProcessor'
 	codeFilter: 'CodeFilter'
@@ -563,8 +564,10 @@ class _V2_Writer:
 	inlineTypedefRepls: 'Optional[Dict[str, str]]' = None
 	inlineTypedefPattern: 'Optional[re.Pattern]' = None
 	dispatchBlocks: 'Optional[List[Dispatch]]' = None
+	out: 'Optional[StringIO]' = None
 
 	def __post_init__(self):
+		self.out = StringIO()
 		self.configPar = self.sb.configPar()
 		self.ownerComp = self.sb.ownerComp
 		if self.configPar['Inlinetypedefs'] and self.typeDefMacroTable.numRows > 1:
@@ -581,8 +584,7 @@ class _V2_Writer:
 				if d.name
 			]
 
-	def run(self):
-		self.out.clear()
+	def run(self, dat: 'scriptDAT'):
 		if self.defTable.numRows < 2:
 			self._write('#error No input definition\n')
 			return
@@ -605,6 +607,9 @@ class _V2_Writer:
 		self._writeInit()
 		self._writeFunctions()
 		self._writeBody()
+
+		dat.clear()
+		dat.write(self.out.getvalue())
 
 	def _writeGlobalDecls(self):
 		mainName = self.defTable[-1, 'name']
@@ -865,7 +870,7 @@ class _V2_Writer:
 			self._write('\n} break;\n')
 
 	def _write(self, *args):
-		self.out.write(*args)
+		print(*args, file=self.out)
 
 	def _writeLines(self, lines: 'Optional[List[str]]'):
 		if lines:
