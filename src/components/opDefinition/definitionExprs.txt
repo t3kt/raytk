@@ -10,7 +10,6 @@ paramSource	parent().path + '/param_vals'
 paramVectors	parent().path + '/param_vector_vals'
 paramTable	parent().path + '/params'
 paramTupletTable	parent().path + '/param_tuplets'
-materialTable	(parent().path + '/material_table') if op('materialCode').text.strip() else ''
 libraryNames	parent().par.Librarynames
 variableTable	(parent().path + '/variable_table') if op('variable_table').numRows > 1 else ''
 referenceTable	(parent().path + '/reference_table') if op('reference_table').numRows > 1 else ''

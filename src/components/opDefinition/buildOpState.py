@@ -83,21 +83,16 @@ class _Builder:
 			val = val.replace(k, v)
 		return val
 
-	def loadCode(
-			self,
-			functionCode: 'DAT',
-			materialCode: 'DAT',
-			initCode: 'DAT',
-			opGlobals: 'DAT',
-	):
-		self.opState.functionCode = self.processCode(functionCode.text)
-		self.opState.materialCode = self.processCode(materialCode.text)
-		self.opState.initCode = self.processCode(initCode.text)
-		self.opState.opGlobals = self.processCode(opGlobals.text)
+	def loadCode(self):
+		self.opState.functionCode = self.processCode(self.defPar.Functemplate.eval())
+		self.opState.materialCode = self.processCode(self.defPar.Materialcode.eval())
+		self.opState.initCode = self.processCode(self.defPar.Initcode.eval())
+		self.opState.opGlobals = self.processCode(self.defPar.Opglobals.eval())
 
-	def processCode(self, code: str):
-		if not code:
+	def processCode(self, codeDat: 'DAT'):
+		if not codeDat or not codeDat.text:
 			return ''
+		code = codeDat.text
 		for placeholder, val in self.elementReplacements.items():
 			code = code.replace(placeholder, val)
 		code = _typePattern.sub(_typeRepl, code)
@@ -342,12 +337,7 @@ def onCook(dat: 'DAT'):
 	)
 	builder.loadInputs(ops('input_def_*'))
 	builder.loadOpElements(op('opElements'))
-	builder.loadCode(
-		functionCode=op('function'),
-		materialCode=op('materialCode'),
-		initCode=op('initCode'),
-		opGlobals=op('opGlobals'),
-	)
+	builder.loadCode()
 	builder.loadMacros(
 		paramSpecTable=op('paramSpecTable'),
 		paramTupletTable=op('param_tuplets'),

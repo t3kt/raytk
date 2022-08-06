@@ -378,33 +378,6 @@ def buildParamChopNamesTable(dat: 'DAT', paramSpecTable: 'DAT'):
 	dat.appendRow(['special', ' '.join(specialNames)])
 	dat.appendRow(['angle', ' '.join(angleNames)])
 
-_typePattern = re.compile(r'\b[CR][a-z]+T\b')
-_typeRepls = {'CoordT': 'THIS_CoordT', 'ContextT': 'THIS_ContextT', 'ReturnT': 'THIS_ReturnT'}
-def _typeRepl(m): return _typeRepls.get(m.group(0), m.group(0))
-
-def prepareCode(dat: 'DAT'):
-	if not dat.inputs:
-		dat.text = ''
-		return
-	dat.clear()
-	text = dat.inputs[0].text
-	text = _replaceElementPlaceholders(text)
-	text = _typePattern.sub(_typeRepl, text)
-	dat.write(text)
-
-def _replaceElementPlaceholders(text: str):
-	elementTable = _getOpElementTable()
-	for phCol in elementTable.cells(0, 'placeholder*'):
-		i = tdu.digits(phCol.val)
-		for row in range(1, elementTable.numRows):
-			placeholder = elementTable[row, phCol].val
-			if not placeholder or placeholder not in text:
-				continue
-			codeDat = op(elementTable[row, f'code{i}'])
-			code = codeDat.text if codeDat else ''
-			text = text.replace(placeholder, code)
-	return text
-
 def updateLibraryMenuPar(libsComp: 'COMP'):
 	p = parentPar().Librarynames  # type: Par
 	libs = libsComp.findChildren(type=DAT, maxDepth=1, tags=['library'])

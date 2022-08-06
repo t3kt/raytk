@@ -11,7 +11,6 @@ paramSource	0
 paramVectors	0
 paramTable	0
 paramTupletTable	0
-materialTable	0
 libraryNames	0
 variableTable	0
 referenceTable	0
