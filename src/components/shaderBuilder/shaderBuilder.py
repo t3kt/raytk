@@ -454,7 +454,6 @@ class ShaderBuilder:
 			dat: 'scriptDAT',
 			macroTable: 'DAT',
 			typeDefMacroTable: 'DAT',
-			textureTable: 'DAT',
 			outputBufferTable: 'DAT',
 			variableTable: 'DAT',
 	):
@@ -468,7 +467,6 @@ class ShaderBuilder:
 			macroTable=macroTable,
 			typeDefMacroTable=typeDefMacroTable,
 			libraryDats=self._getLibraryDats(),
-			textureTable=textureTable,
 			outputBufferTable=outputBufferTable,
 			variableTable=variableTable,
 		)
@@ -559,7 +557,6 @@ class _V2_Writer:
 	macroTable: 'DAT'
 	typeDefMacroTable: 'DAT'
 	libraryDats: 'List[DAT]'
-	textureTable: 'DAT'
 	outputBufferTable: 'DAT'
 	variableTable: 'DAT'
 
@@ -679,7 +676,12 @@ class _V2_Writer:
 		self._endBlock('paramAliases')
 
 	def _writeTextureDeclarations(self):
-		if self.textureTable.numRows < 2:
+		textures = [
+			t
+			for state in self.opStates
+			for t in (state.textures or [])
+		]
+		if not textures:
 			return
 		offset = int(self.ownerComp.par.Textureindexoffset)
 		indexByType: 'Dict[str, int]' = {
@@ -701,14 +703,14 @@ class _V2_Writer:
 			'2darray': 'uTD2DArrayInfos',
 		}
 		self._startBlock('textures')
-		for name, path, texType in self.textureTable.rows()[1:]:
-			texType = texType.val or '2d'
+		for texture in textures:
+			texType = texture.type or '2d'
 			if texType not in indexByType:
-				raise Exception(f'Invalid texture type for {name}: {texType!r}')
+				raise Exception(f'Invalid texture type for {texture.name}: {texType!r}')
 			index = indexByType[texType]
 			indexByType[texType] = index + 1
-			self._writeMacro(name, f'{arrayByType[texType]}[{index}]')
-			self._writeMacro(name + '_info', f'{infoByType[texType]}[{index}]')
+			self._writeMacro(texture.name, f'{arrayByType[texType]}[{index}]')
+			self._writeMacro(texture.name + '_info', f'{infoByType[texType]}[{index}]')
 		self._endBlock('textures')
 
 	def _writeBufferDeclarations(self):

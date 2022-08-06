@@ -10,7 +10,6 @@ def onCook(dat):
 		dat,
 		macroTable=dat.inputs[0],
 		typeDefMacroTable=dat.inputs[1],
-		textureTable=dat.inputs[2],
-		outputBufferTable=dat.inputs[3],
-		variableTable=dat.inputs[4],
+		outputBufferTable=dat.inputs[2],
+		variableTable=dat.inputs[3],
 	)
