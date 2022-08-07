@@ -28,21 +28,6 @@ class _StateObject:
 		obj = self.toDict()
 		return json.dumps(obj, indent='  ' if pretty else None, sort_keys=True)
 
-	@classmethod
-	def fromJson(cls, text):
-		obj = json.loads(text)
-		return cls.fromDict(obj)
-
-	@classmethod
-	def fromDict(cls, obj: Optional[dict]):
-		if not obj:
-			return None
-		return cls(**obj)
-
-	@classmethod
-	def fromDictList(cls, objs: List[dict]):
-		return [cls.fromDict(o) for o in objs] if objs else None
-
 def _shouldInclude(val):
 	if val is None or val == '':
 		return False
@@ -74,19 +59,6 @@ class RopState(_StateObject):
 	paramSource: Optional[str] = None
 
 	validationErrors: Optional[List['ValidationError']] = field(default_factory=list)
-
-	@classmethod
-	def fromDict(cls, obj: dict):
-		return cls(
-			macros=Macro.fromDictList(obj.get('macros')),
-			textures=Texture.fromDictList(obj.get('textures')),
-			buffers=Buffer.fromDictList(obj.get('buffers')),
-			references=Reference.fromDictList(obj.get('references')),
-			variables=Variable.fromDictList(obj.get('variables')),
-			dispatchBlocks=Dispatch.fromDictList(obj.get('dispatchBlocks')),
-			validationErrors=ValidationError.fromDictList(obj.get('validationErrors')),
-			**_excludeKeys(obj, ['macros', 'textures', 'buffers', 'references', 'variables', 'dispatchBlocks', 'validationErrors'])
-		)
 
 def _excludeKeys(d, keys):
 	return {
