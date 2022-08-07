@@ -1,4 +1,4 @@
-void THIS_apply(inout CoordT p, inout ContextT ctx) {
+vec3 THIS_apply(in vec3 p, inout ContextT ctx) {
 	#pragma r:if THIS_HAS_INPUT_indexField
 	float i = inputOp_indexField(p, ctx);
 	#pragma r:else
@@ -18,26 +18,27 @@ void THIS_apply(inout CoordT p, inout ContextT ctx) {
 	#pragma r:endif
 
 	#pragma r:if THIS_Enabletranslate
-	CoordT t = mix(THIS_Translate1, THIS_Translate2, i);
+	vec3 t = mix(THIS_Translate1, THIS_Translate2, i);
 	p -= t;
 	#pragma r:endif
 
 	#pragma r:if THIS_Enablerotate
 	#pragma r:if THIS_Usepivot
-	CoordT piv = mix(THIS_Pivot1, THIS_Pivot2, i);
+	vec3 piv = mix(THIS_Pivot1, THIS_Pivot2, i);
 	p -= piv;
 	#pragma r:endif
-	CoordT r = mix(THIS_Rotate1, THIS_Rotate2, i);
+	vec3 r = mix(THIS_Rotate1, THIS_Rotate2, i);
 	pRotateOnXYZ(p, r);
 	#pragma r:if THIS_Usepivot
 	p += piv;
 	#pragma r:endif
 	#pragma r:endif
+	return p;
 }
 
 ReturnT thismap(CoordT p, ContextT ctx) {
-	if (THIS_Enable >= 0.5) {
-		THIS_apply(p, ctx);
+	if (IS_TRUE(THIS_Enable)) {
+		p = THIS_asCoordT(THIS_apply(adaptAsVec3(p), ctx));
 	}
 	ReturnT res;
 	#ifdef THIS_HAS_INPUT_1
