@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.combine.composeSdf
-  opVersion: '1'
+  opVersion: '2'
   opStatus: beta
 opDef: !def
   enable: true
@@ -12,10 +12,8 @@ opDef: !def
       Allcontexttype: true
     returnType: !returnT
       Returntypesdf: true
-  function: !text
-    file: src/operators/combine/composeSdf.glsl
-    name: function
-  paramGroupTable: eval_params
+  function: function
+  paramGroupTable: params
   libraryNames: raytkCombine
   generatedMacroTables: multiInputHandler_macros
 multiInput: !multiInput
@@ -88,7 +86,7 @@ elements:
   elementType: combiner
   params:
     Includenone: false
-    Modeparam: Combine[1-8]
+    Modeparam: ''
     Swapinputsparam: ''
     Radiusparam: ''
     Numberparam: ''
