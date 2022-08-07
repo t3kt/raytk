@@ -593,7 +593,7 @@ class _V2_Writer:
 
 	def run(self, dat: 'scriptDAT'):
 		if self.defTable.numRows < 2:
-			self._write('#error No input definition\n')
+			self._writeLine('#error No input definition')
 			return
 		self._writeCodeDat('globalPrefix', self.ownerComp.par.Globalprefix.eval())
 		self._writeGlobalDecls()
@@ -622,7 +622,7 @@ class _V2_Writer:
 		mainName = self.defTable[-1, 'name']
 		self._startBlock('globals')
 		self._writeLines(self.paramProc.globalDeclarations())
-		self._write(f'#define thismap {mainName}\n')
+		self._writeLine(f'#define thismap {mainName}')
 		self._endBlock('globals')
 
 	def _writeOpDataTypedefs(self):
@@ -672,10 +672,11 @@ class _V2_Writer:
 			inlineAll = mode == 'inlineall'
 		if inlineAll:
 			for lib in self.libraryDats:
-				self._write(f'/// Library: <{lib.path}>\n', lib.text, '\n')
+				self._writeLine(f'/// Library: <{lib.path}>')
+				self._writeLine(lib.text)
 		else:
 			for lib in self.libraryDats:
-				self._write(f'#include <{lib.path}>\n')
+				self._writeLine(f'#include <{lib.path}>')
 		self._endBlock('libraries')
 
 	def _writeParameterAliases(self):
@@ -730,9 +731,9 @@ class _V2_Writer:
 					n = c.numSamples if c else 1
 				else:
 					n = buffer.length
-				self._write(f'uniform {buffer.type} {buffer.name}[{n}];\n')
+				self._writeLine(f'uniform {buffer.type} {buffer.name}[{n}];')
 			elif buffer.uniformType == 'texturebuffer':
-				self._write(f'uniform samplerBuffer {buffer.name};')
+				self._writeLine(f'uniform samplerBuffer {buffer.name};')
 		self._endBlock('buffers')
 
 	def _writeMaterialDeclarations(self):
@@ -763,7 +764,7 @@ class _V2_Writer:
 				self._writeMacro(name, f'mTDComputeOutputs[{name.row - 1}]')
 		else:
 			for name in self.outputBufferTable.col('name')[1:]:
-				self._write(f'layout(location = {name.row - 1}) out vec4 {name};\n')
+				self._writeLine(f'layout(location = {name.row - 1}) out vec4 {name};')
 		self._endBlock('outputBuffers')
 
 	def _writeVariableDeclarations(self):
@@ -773,17 +774,17 @@ class _V2_Writer:
 		for i in range(1, self.variableTable.numRows):
 			name = self.variableTable[i, 'name']
 			dataType = self.variableTable[i, 'dataType']
-			self._write(f'{dataType} {name};')
+			self._writeLine(f'{dataType} {name};')
 		self._endBlock('variables')
 
 	def _writeOutputInit(self):
 		if self.ownerComp.par.Shadertype == 'compute' or self.outputBufferTable.numRows < 2:
 			return
 		self._startBlock('outputInit')
-		self._write('void initOutputs() {\n')
+		self._writeLine('void initOutputs() {')
 		for name in self.outputBufferTable.col('name')[1:]:
-			self._write(f'{name} = vec4(0.);\n')
-		self._write('}\n')
+			self._writeLine(f'{name} = vec4(0.);')
+		self._writeLine('}')
 		self._endBlock('outputInit')
 
 	def _writeOpGlobals(self):
@@ -822,13 +823,11 @@ class _V2_Writer:
 			return
 		self._startBlock(section)
 		if prefixes:
-			for prefix in prefixes:
-				self._write(prefix, '\n')
+			self._writeLines(prefixes)
 		for block in blocks:
-			self._write(self._processCode(block), '\n')
+			self._writeLine(self._processCode(block))
 		if suffixes:
-			for suffix in suffixes:
-				self._write(suffix, '\n')
+			self._writeLines(suffixes)
 		self._endBlock(section)
 
 	def _writeBody(self):
@@ -853,44 +852,49 @@ class _V2_Writer:
 		for state in self.opStates:
 			if not state.materialId:
 				continue
-			self._write(f'else if(m == {state.materialId}) {{\n')
+			self._writeLine(f'else if(m == {state.materialId}) {{')
 			# Intentionally skipping typedef inlining and code filtering for these since no materials need it.
-			self._write(state.materialCode, '\n}')
+			self._writeLine(state.materialCode + '\n}')
 
 	def _writeDispatchBody(self, category: str):
 		for dispatchBlock in self.dispatchBlocks:
 			if dispatchBlock.category != category:
 				continue
-			self._write(f'case {dispatchBlock.name}: {{\n')
+			self._writeLine(f'case {dispatchBlock.name}: {{')
 			if dispatchBlock.code:
-				self._write(dispatchBlock.code, ';')
-			self._write('\n} break;\n')
+				self._writeLine(dispatchBlock.code + ';')
+			self._writeLine('} break;')
 
-	def _write(self, *args):
-		print(*args, file=self.out)
+	def _write(self, arg):
+		self.out.write(arg)
+
+	def _writeLine(self, line: str):
+		self.out.write(line)
+		self.out.write('\n')
 
 	def _writeLines(self, lines: 'Optional[List[str]]'):
 		if lines:
 			for line in lines:
-				self._write(line, '\n')
+				self.out.write(line)
+				self.out.write('\n')
 
 	def _writeMacro(self, name: 'Union[str, Cell]', val: 'Union[str, Cell, None, int]' = None):
 		if val == '' or val is None:
-			self._write('#define ', name, '\n')
+			self._writeLine(f'#define {name}')
 		else:
-			self._write('#define ', name, ' ', val, '\n')
+			self._writeLine(f'#define {name} {val}')
 
 	def _startBlock(self, name: str):
-		self._write(f'///----BEGIN {name}\n')
+		self._writeLine(f'///----BEGIN {name}')
 
 	def _endBlock(self, name: str):
-		self._write(f'///----END {name}\n')
+		self._writeLine(f'///----END {name}')
 
 	def _writeCodeDat(self, blockName: str, dat: 'Optional[DAT]'):
 		if not dat or not dat.text:
 			return
 		self._startBlock(blockName)
-		self._write(self._processCode(dat.text), '\n')
+		self._writeLine(self._processCode(dat.text))
 		self._endBlock(blockName)
 
 	def _replaceInlineTypedefMatch(self, m: 're.Match'):
