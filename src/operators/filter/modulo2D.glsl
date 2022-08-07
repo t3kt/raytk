@@ -91,7 +91,7 @@ void THIS_apply(inout CoordT p, inout ContextT ctx) {
 }
 
 ReturnT thismap(CoordT p, ContextT ctx) {
-	if (THIS_Enable >= 0.5) {
+	if (IS_TRUE(THIS_Enable)) {
 		THIS_apply(p, ctx);
 	}
 	return inputOp1(p, ctx);

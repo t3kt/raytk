@@ -1,6 +1,6 @@
 ReturnT thismap(CoordT p, ContextT ctx) {
 	ReturnT res;
-	if (THIS_Enable < 0.5 || isDistanceOnlyStage()) { return inputOp1(p, ctx); }
+	if (IS_FALSE(THIS_Enable) || isDistanceOnlyStage()) { return inputOp1(p, ctx); }
 	#pragma r:if RAYTK_USE_UV
 	{
 		#ifdef THIS_EXPOSE_sdf

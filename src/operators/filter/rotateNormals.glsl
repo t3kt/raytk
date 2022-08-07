@@ -1,5 +1,5 @@
 ReturnT thismap(CoordT p, ContextT ctx) {
-	if (THIS_Enable >= 0.5) {
+	if (IS_TRUE(THIS_Enable)) {
 		vec3 n = ctx.normal;
 		#ifdef THIS_HAS_INPUT_rotateField
 		vec3 rotate = radians(fillToVec3(inputOp_rotateField(p, ctx)));

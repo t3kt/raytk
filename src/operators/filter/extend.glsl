@@ -1,5 +1,5 @@
 ReturnT thismap(CoordT p, ContextT ctx) {
-	if (THIS_Enable >= 0.5) {
+	if (IS_TRUE(THIS_Enable)) {
 		#ifdef THIS_HAS_INPUT_sizeField
 		CoordT size = THIS_asCoordT(inputOp_sizeField(p, ctx));
 		#else

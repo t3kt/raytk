@@ -18,7 +18,7 @@ MERGE_BODY();
 ReturnT thismap(CoordT p, ContextT ctx) {
 	int n = int(THIS_Count);
 	THIS_exposeIndex(ctx, 0, n);
-	if (THIS_Enable < 0.5) { return inputOp1(p, ctx); }
+	if (IS_FALSE(THIS_Enable)) { return inputOp1(p, ctx); }
 	Sdf res;
 	float rot = THIS_Angleoffset;
 	float angleStep = THIS_Anglerange / THIS_Count;

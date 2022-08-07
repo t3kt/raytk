@@ -1,5 +1,5 @@
 ReturnT thismap(CoordT p, ContextT ctx) {
-	if (THIS_Enable >= 0.5) {
+	if (IS_TRUE(THIS_Enable)) {
 		vec2 q = p.THIS_PLANE;
 		vec2 cell = pMirrorOctant(q, THIS_Size);
 		#pragma r:if THIS_Iterationtype_sign

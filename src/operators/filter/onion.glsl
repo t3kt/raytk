@@ -1,6 +1,6 @@
 ReturnT thismap(CoordT p, ContextT ctx) {
 	ReturnT res = inputOp1(p, ctx);
-	if (THIS_Enable >= 0.5) {
+	if (IS_TRUE(THIS_Enable)) {
 		float val = adaptAsFloat(res);
 		#ifdef THIS_HAS_INPUT_iterationsField
 		int n = int(inputOp_iterationsField(p, ctx));

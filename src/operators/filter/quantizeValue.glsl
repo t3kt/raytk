@@ -1,6 +1,6 @@
 ReturnT thismap(CoordT p, ContextT ctx) {
 	ReturnT res = inputOp1(p, ctx);
-	if (THIS_Enable >= 0.5) {
+	if (IS_TRUE(THIS_Enable)) {
 		#pragma r:if THIS_RETURN_TYPE_Sdf
 		{
 			#pragma r:if THIS_Enablesmoothing

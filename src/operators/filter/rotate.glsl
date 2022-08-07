@@ -1,5 +1,5 @@
 ReturnT thismap(CoordT p, ContextT ctx) {
-	if (THIS_Enable >= 0.5) {
+	if (IS_TRUE(THIS_Enable)) {
 		CoordT pivot = CoordT(0.);
 		if (THIS_Usepivot > 0.5) {
 			#pragma r:if THIS_HAS_INPUT_pivotField

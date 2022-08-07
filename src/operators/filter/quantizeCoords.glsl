@@ -1,5 +1,5 @@
 ReturnT thismap(CoordT p, ContextT ctx) {
-	if (THIS_Enable >= 0.5) {
+	if (IS_TRUE(THIS_Enable)) {
 		p = quantize(p,
 			THIS_asCoordT(THIS_Size),
 			THIS_asCoordT(THIS_Offset),

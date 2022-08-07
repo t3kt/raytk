@@ -1,5 +1,5 @@
 ReturnT thismap(CoordT p, ContextT ctx) {
-	if (THIS_Enable >= 0.5) {
+	if (IS_TRUE(THIS_Enable)) {
 		CoordT t = THIS_asCoordT(THIS_Translate);
 		#pragma r:if THIS_HAS_INPUT_translateField
 		#pragma r:if inputOp_translateField_RETURN_TYPE_float || inputOp_translateField_RETURN_TYPE_Sdf

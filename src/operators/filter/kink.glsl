@@ -1,7 +1,7 @@
 // https://www.shadertoy.com/view/3llfRl
 ReturnT thismap(CoordT p, ContextT ctx) {
 	ReturnT res;
-	if (THIS_Enable > 0.5) {
+	if (IS_TRUE(THIS_Enable)) {
 		vec2 q = p.THIS_Direction;
 		#ifdef THIS_HAS_INPUT_amountField
 		float amt = 1. - inputOp_amountField(p, ctx);

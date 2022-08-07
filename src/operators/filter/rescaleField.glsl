@@ -4,7 +4,7 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 	#else
 	ReturnT res = THIS_asReturnT(inputOp1(p, ctx));
 	#endif
-	if (THIS_Enable >= 0.5) {
+	if (IS_TRUE(THIS_Enable)) {
 		res = mapRange(res,
 			THIS_asReturnT(THIS_Inputlow), THIS_asReturnT(THIS_Inputhigh),
 			THIS_asReturnT(THIS_Outputlow), THIS_asReturnT(THIS_Outputhigh));

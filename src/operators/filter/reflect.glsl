@@ -14,7 +14,7 @@ void THIS_exposeSide(inout ContextT ctx, float i) {
 }
 
 ReturnT thismap(CoordT p, ContextT ctx) {
-	if (THIS_Enable <= 0.5) {
+	if (IS_FALSE(THIS_Enable)) {
 		THIS_exposeSide(ctx, 1.);
 	} else {
 		float shift = THIS_Shift;
