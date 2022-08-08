@@ -1,5 +1,5 @@
 from dataclasses import dataclass, field, fields
-from typing import List, Optional, Union
+from typing import Dict, List, Optional, Union
 
 # noinspection PyUnreachableCode
 if False:

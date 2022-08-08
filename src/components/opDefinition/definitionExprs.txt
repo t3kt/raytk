@@ -13,7 +13,7 @@ paramTupletTable	parent().path + '/param_tuplets'
 libraryNames	parent().par.Librarynames
 variableTable	(parent().path + '/variable_table') if op('variable_table').numRows > 1 else ''
 referenceTable	(parent().path + '/reference_table') if op('reference_table').numRows > 1 else ''
-inputNames	op('inputNameMap').text or ''
+inputNames	' '.join([c.val for c in op('input_table').col('name')[1:]])
 definitionPath	parent().path + '/definition'
 elementTable	(parent().path + '/opElements') if op('opElements').numRows > 1 else ''
 statePath	parent().path + '/opState'

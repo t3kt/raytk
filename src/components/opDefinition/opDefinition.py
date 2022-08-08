@@ -525,7 +525,6 @@ def buildOpState():
 	builder.loadReferences()
 	builder.loadVariables()
 	builder.loadDispatchBlocks()
-	builder.loadInputNames(op('definition'))
 
 	return builder.opState
 
@@ -552,6 +551,7 @@ class _Builder:
 		self.elementReplacements = {}
 
 	def loadInputs(self, inDats: 'List[DAT]'):
+		self.opState.inputNames = []
 		for i, inDat in enumerate(inDats + self.defPar.Inputdefs.evalOPs()):
 			if not inDat[1, 'name']:
 				continue
@@ -570,6 +570,7 @@ class _Builder:
 				varInputs=str(inDat[1, 'input:varInputs']),
 			))
 			self.replacements[placeholder] = name
+			self.opState.inputNames.append(name)
 
 	def loadOpElements(self, elementTable: 'DAT'):
 		for phCol in elementTable.cells(0, 'placeholder*'):
@@ -782,9 +783,6 @@ class _Builder:
 				category=table[i, 'category'].val,
 				code=self.replaceNames(table[i, 'code'].val),
 			))
-
-	def loadInputNames(self, definition: 'DAT'):
-		self.opState.inputNames = tdu.split(definition[1, 'inputNames'])
 
 _typePattern = re.compile(r'\b[CR][a-z]+T\b')
 _typeRepls = {'CoordT': 'THIS_CoordT', 'ContextT': 'THIS_ContextT', 'ReturnT': 'THIS_ReturnT'}
