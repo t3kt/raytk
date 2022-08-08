@@ -29,24 +29,6 @@ def buildStateTable(dat: 'DAT'):
 	dat.clear()
 	dat.appendRow(['effectiveMode', _effectiveMode()])
 
-def buildParametersTable(dat: 'DAT'):
-	dat.clear()
-	mode = _effectiveMode()
-	params = []
-	macroParams = []
-	name = parent().par.Param.eval()
-	if mode == 'switch':
-		params.append(name)
-	else:
-		macroParams.append(name)
-	if parent().par.Manageparamstates:
-		if mode == 'switch' or parent().par.Alwaysincludeallparams:
-			params += list(_paramModes().keys())
-		else:
-			params.append(str(op('currentItemInfo')[1, 'params'] or ''))
-	dat.appendRow(['params', ' '.join(params)])
-	dat.appendRow(['macroParams', ' '.join(macroParams)])
-
 def buildParameterGroupTable(dat: 'DAT'):
 	dat.clear()
 	dat.appendRow(['names', 'source', 'handling', 'readOnlyHandling', 'conversion', 'enable'])
@@ -57,13 +39,15 @@ def buildParameterGroupTable(dat: 'DAT'):
 		dat.appendRow([parent().par.Param, 'param', 'runtime', '', '', '1'])
 	if parent().par.Manageparamstates:
 		if mode == 'switch' or parent().par.Alwaysincludeallparams:
-			dat.appendRow([
-				' '.join(_paramModes().keys()),
-				'param', 'runtime', 'macro', '', '1'
-			])
+			paramModes = _paramModes()
+			if paramModes:
+				dat.appendRow([
+					' '.join(_paramModes().keys()).strip(),
+					'param', 'runtime', 'macro', '', '1'
+				])
 		else:
 			dat.appendRow([
-				op('currentItemInfo')[1, 'params'] or '',
+				str(op('currentItemInfo')[1, 'params'] or '').strip(),
 				'param', 'runtime', 'macro', '', '1'
 			])
 
