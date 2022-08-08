@@ -33,23 +33,18 @@ def buildParameterGroupTable(dat: 'DAT'):
 	dat.clear()
 	dat.appendRow(['names', 'source', 'handling', 'readOnlyHandling', 'conversion', 'enable'])
 	mode = _effectiveMode()
-	if mode == 'none':
-		dat.appendRow([parent().par.Param, 'param', 'macro', '', '', '1'])
-	else:
-		dat.appendRow([parent().par.Param, 'param', 'runtime', '', '', '1'])
+	if parent().par.Param:
+		if mode == 'none':
+			dat.appendRow([parent().par.Param, 'param', 'macro', '', '', '1'])
+		else:
+			dat.appendRow([parent().par.Param, 'param', 'runtime', '', '', '1'])
 	if parent().par.Manageparamstates:
 		if mode == 'switch' or parent().par.Alwaysincludeallparams:
-			paramModes = _paramModes()
-			if paramModes:
-				dat.appendRow([
-					' '.join(_paramModes().keys()).strip(),
-					'param', 'runtime', 'macro', '', '1'
-				])
+			params = ' '.join(_paramModes().keys()).strip()
 		else:
-			dat.appendRow([
-				str(op('currentItemInfo')[1, 'params'] or '').strip(),
-				'param', 'runtime', 'macro', '', '1'
-			])
+			params = str(op('currentItemInfo')[1, 'params'] or '').strip()
+		if params:
+			dat.appendRow([params, 'param', 'runtime', 'macro', '', '1'])
 
 def buildMacroTable(dat: 'DAT', itemInfo: 'DAT'):
 	dat.clear()
