@@ -1,6 +1,4 @@
-from dataclasses import dataclass, field
-import dataclasses
-import json
+from dataclasses import dataclass, field, fields
 from typing import List, Optional, Union
 
 # noinspection PyUnreachableCode
@@ -8,13 +6,11 @@ if False:
 	# noinspection PyUnresolvedReferences
 	from _stubs import *
 
-_TypeSpecT = Union[str, List[str]]
-
 @dataclass
 class _StateObject:
 	def toDict(self):
 		d = {}
-		for f in dataclasses.fields(self):
+		for f in fields(self):
 			val = getattr(self, f.name, None)
 			if _shouldInclude(val) and val != f.default:
 				if isinstance(val, list) and isinstance(val[0], _StateObject):
@@ -23,10 +19,6 @@ class _StateObject:
 					val = val.toDict()
 				d[f.name] = val
 		return d
-
-	def toJson(self, pretty=False):
-		obj = self.toDict()
-		return json.dumps(obj, indent='  ' if pretty else None, sort_keys=True)
 
 def _shouldInclude(val):
 	if val is None or val == '':

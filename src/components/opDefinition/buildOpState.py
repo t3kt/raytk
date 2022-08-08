@@ -1,4 +1,5 @@
 from opDefinition import buildOpState
+import json
 
 # noinspection PyUnreachableCode
 if False:
@@ -12,4 +13,5 @@ def onSetupParameters(dat: 'scriptDAT'):
 def onCook(dat: 'DAT'):
 	dat.clear()
 	state = buildOpState()
-	dat.write(state.toJson(pretty=dat.par.Pretty.eval()))
+	obj = state.toDict()
+	dat.write(json.dumps(obj, indent='  ' if dat.par.Pretty.eval() else None))
