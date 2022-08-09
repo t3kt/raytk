@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.time.lfoField
-  opVersion: '15'
+  opVersion: '16'
   opStatus: default
 opDef: !def
   enable: !expr
@@ -75,6 +75,7 @@ elements:
   name: codeSwitcher_Timesource
   elementType: codeSwitcher
   params:
+    Elementroot: ''
     Table: !table
       file: src/operators/time/timeSources.txt
       name: timeSources
@@ -83,17 +84,20 @@ elements:
     Manageparamstates: false
     Alwaysincludeallparams: false
     Switchmode: auto
+    Indexexpr: ''
     Placeholder: GET_TIME();
 - !opElement
   name: codeSwitcher_Intervaltype
   elementType: codeSwitcher
   params:
+    Elementroot: ''
     Table: !table
       file: src/operators/time/lfoField_intervalTypes.txt
       name: intervalTypes
-    Param: ''
+    Param: Timesource
     Autoupdateparams: true
     Manageparamstates: false
     Alwaysincludeallparams: false
     Switchmode: auto
+    Indexexpr: ''
     Placeholder: GET_INTERVAL();
