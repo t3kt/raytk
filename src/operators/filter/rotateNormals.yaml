@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.filter.rotateNormals
-  opVersion: '8'
+  opVersion: '9'
   opStatus: beta
 opDef: !def
   enable: !expr
@@ -16,7 +16,7 @@ opDef: !def
       Allreturntype: true
   function: !text
     file: src/operators/filter/rotateNormals.glsl
-    name: function_template
+    name: function
   help: !text
     file: src/operators/filter/rotateNormals.md
     name: help
@@ -99,4 +99,4 @@ elements:
     Useparamvars: true
     Force3d: false
     Prepcodeplaceholder: ''
-    Bodycodeplaceholder: ''
+    Bodycodeplaceholder: TRANSFORM_CODE();

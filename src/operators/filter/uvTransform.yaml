@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.filter.uvTransform
-  opVersion: '9'
+  opVersion: '10'
   opStatus: beta
 opDef: !def
   enable: !expr
@@ -16,7 +16,7 @@ opDef: !def
       Returntypesdf: true
   function: !text
     file: src/operators/filter/uvTransform.glsl
-    name: function_template
+    name: function
   paramGroupTable: eval_params
   help: !text
     file: src/operators/filter/uvTransform.md
@@ -191,4 +191,4 @@ elements:
     Useparamvars: false
     Force3d: true
     Prepcodeplaceholder: ''
-    Bodycodeplaceholder: ''
+    Bodycodeplaceholder: TRANSFORM_CODE();

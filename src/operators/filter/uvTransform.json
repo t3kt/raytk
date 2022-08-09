@@ -2,6 +2,6 @@
   "meta": {
     "opStatus": "beta",
     "opType": "raytk.operators.filter.uvTransform",
-    "opVersion": 9
+    "opVersion": 10
   }
 }
