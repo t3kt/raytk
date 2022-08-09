@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.combine.simpleUnion
-  opVersion: '18'
+  opVersion: '19'
   opStatus: default
 opDef: !def
   enable: !expr
@@ -17,7 +17,7 @@ opDef: !def
       Returntypefloat: true
   function: !text
     file: src/operators/combine/simpleUnion.glsl
-    name: functionTemplate
+    name: function
   libraryNames: raytkCombine
   generatedMacroTables: multiInputHandler_macros
   help: !text
@@ -111,4 +111,4 @@ elements:
     Defaultstmt: ''
     Firststepstmt: ''
     Stepstmt: res = cmb_simpleUnion(res, THIS_INPUT_$(p, ctx));
-    Bodycodeplaceholder: ''
+    Bodycodeplaceholder: BODY();

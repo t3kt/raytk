@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.combine.mergeToggle
-  opVersion: '5'
+  opVersion: '6'
   opStatus: default
 opDef: !def
   enable: true
@@ -14,7 +14,7 @@ opDef: !def
       Returntypesdf: true
   function: !text
     file: src/operators/combine/mergeToggle.glsl
-    name: functionTemplate
+    name: function
   paramGroupTable: eval_params
   libraryNames: raytkCombine
   generatedMacroTables: multiInputHandler_macros
@@ -101,4 +101,4 @@ elements:
     Firststepstmt: ''
     Stepstmt: !expr
       expr: op('stepTemplate').text
-    Bodycodeplaceholder: ''
+    Bodycodeplaceholder: BODY();

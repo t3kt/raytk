@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.combine.simpleIntersect
-  opVersion: '13'
+  opVersion: '14'
   opStatus: default
 opDef: !def
   enable: !expr
@@ -17,7 +17,7 @@ opDef: !def
       Returntypefloat: true
   function: !text
     file: src/operators/combine/simpleIntersect.glsl
-    name: functionTemplate
+    name: function
   libraryNames: raytkCombine
   generatedMacroTables: multiInputHandler_macros
   help: !text
@@ -119,4 +119,4 @@ elements:
     Defaultstmt: ReturnT res = createNonHitSdf();
     Firststepstmt: ReturnT res = THIS_INPUT_$(p, ctx);
     Stepstmt: res = cmb_simpleIntersect(res, THIS_INPUT_$(p, ctx));
-    Bodycodeplaceholder: ''
+    Bodycodeplaceholder: BODY();

@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.particles.particleBehaviorChain
-  opVersion: '1'
+  opVersion: '2'
   opStatus: alpha
 opDef: !def
   enable: true
@@ -14,7 +14,7 @@ opDef: !def
       Returntypeparticle: true
   function: !text
     file: src/operators/particles/particleBehaviorChain.glsl
-    name: functionTemplate
+    name: function
   paramGroupTable: eval_params
 multiInput: !multiInput
   Minimuminputs: 0
@@ -82,4 +82,4 @@ elements:
     Firststepstmt: ''
     Stepstmt: !expr
       expr: op('stepTemplate').text
-    Bodycodeplaceholder: ''
+    Bodycodeplaceholder: BODY();
