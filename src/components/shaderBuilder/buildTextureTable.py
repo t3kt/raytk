@@ -7,4 +7,4 @@ if False:
 
 def onCook(dat):
 	dat.clear()
-	ext.shaderBuilder.V3_buildTextureTable(dat)
+	ext.shaderBuilder.buildTextureTable(dat)

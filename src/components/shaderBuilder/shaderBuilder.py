@@ -441,7 +441,7 @@ class ShaderBuilder:
 			states.append(state)
 		return states
 
-	def V3_buildTextureTable(self, dat: 'DAT'):
+	def buildTextureTable(self, dat: 'DAT'):
 		dat.clear()
 		dat.appendRow(['name', 'path', 'type'])
 		states = self._parseOpStates()
@@ -459,7 +459,7 @@ class ShaderBuilder:
 			outputBufferTable: 'DAT',
 			variableTable: 'DAT',
 	):
-		writer = _V2_Writer(
+		writer = _Writer(
 			sb=self,
 			opStates=self._parseOpStates(),
 			defTable=self._definitionTable(),
@@ -550,7 +550,7 @@ class _VarRefChecker_2:
 		pass
 
 @dataclass
-class _V2_Writer:
+class _Writer:
 	sb: 'ShaderBuilder'
 	opStates: 'List[RopState]'
 	defTable: 'DAT'
