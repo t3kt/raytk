@@ -26,9 +26,6 @@ class Stage:
 def _isConst(par: 'Par'):
 	return par.mode == ParMode.CONSTANT
 
-def _parOrConst(par: 'Par'):
-	return par.eval() if _isConst(par) else par
-
 @dataclass
 class State:
 	cmb: str
