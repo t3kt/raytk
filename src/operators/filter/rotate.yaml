@@ -1,12 +1,13 @@
 !rop
 meta: !meta
   opType: raytk.operators.filter.rotate
-  opVersion: '25'
+  opVersion: '26'
   opStatus: default
 opDef: !def
   enable: !expr
     expr: op('..').par.Enable
-  useRuntimeBypass: true
+  useRuntimeBypass: !expr
+    expr: not parent().par.Optimize
   typeSpec: !ropTypes
     coordType: !coordT
       Coordtypevec2: true
@@ -17,10 +18,8 @@ opDef: !def
       Allreturntype: !expr
         expr: op('definition_1').numRows > 1
       Returntypevec4: true
-  function: !text
-    file: src/operators/filter/rotate.glsl
-    name: function
-  paramGroupTable: eval_params
+  function: function
+  paramGroupTable: params
   macroTable: !table
     file: src/operators/filter/rotate_macros.txt
     name: macro_exprs
