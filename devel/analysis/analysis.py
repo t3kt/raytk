@@ -64,11 +64,14 @@ def buildOpInfoTable(dat: 'DAT'):
 			'Contexttype',
 		] + _opDefParamNames + [
 			'hasThumb',
+			'hasSnippet',
 			'paramPages',
 		]
 	)
 	opThumbs = op('opThumbs')
 	context = RaytkContext()
+	snippetTable = op('snippetTable')
+	snippetTypes = set([c.val for c in snippetTable.col('opType')[1:]])
 	for rop in context.allMasterOperators():
 		info = ROPInfo(rop)
 		if not info:
@@ -90,13 +93,14 @@ def buildOpInfoTable(dat: 'DAT'):
 		])
 		typeSpec = info.typeSpec
 		if typeSpec:
-			types = typeSpec.op('supportedTypes')
+			types = info.opDef.op('supportedTypes')
 			dat[rop.path, 'Coordtype'] = types['coordType', 'spec']
 			dat[rop.path, 'Contexttype'] = types['contextType', 'spec']
 			dat[rop.path, 'Returntype'] = types['returnType', 'spec']
 		for pn in _opDefParamNames:
 			dat[rop.path, pn] = _formatPar(info.opDefPar[pn])
 		dat[rop.path, 'hasThumb'] = bool(opThumbs[rop.path, 'thumb'])
+		dat[rop.path, 'hasSnippet'] = bool(info.opType in snippetTypes)
 		dat[rop.path, 'paramPages'] = ' '.join([page.name for page in rop.customPages])
 
 def buildOpParamsTable(dat: 'DAT'):
