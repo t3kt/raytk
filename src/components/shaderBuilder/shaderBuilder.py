@@ -654,12 +654,7 @@ class _Writer:
 			return
 		self._startBlock('libraries')
 		mode = str(self.configPar['Includemode'] or 'includelibs')
-		supportsInclude = self.ownerComp.op('support_table')['include', 1] == '1'
-		if mode == 'includelibs' and not supportsInclude:
-			inlineAll = True
-		else:
-			inlineAll = mode == 'inlineall'
-		if inlineAll:
+		if mode == 'inlineall':
 			for lib in self.libraryDats:
 				self._writeLine(f'/// Library: <{lib.path}>')
 				self._writeLine(lib.text)
