@@ -538,17 +538,6 @@ class _VarRefChecker:
 			if srcOwner not in path:
 				self.addError(refOwnerPath, 'warning', f'Variable source ({srcOwner}) missing in path ' + '->'.join(simplifyNames(path)))
 
-class _VarRefChecker_2:
-	def __init__(
-			self,
-			varTable: 'DAT', refTable: 'DAT', defTable: 'DAT',
-			addError: 'Callable[[str, str, str], None]'):
-		self._addError = addError
-		self.varTable = varTable
-		self.refTable = refTable
-		self.defTable = defTable
-		pass
-
 @dataclass
 class _Writer:
 	sb: 'ShaderBuilder'
@@ -908,7 +897,6 @@ class _Writer:
 	def _processCode(self, code: str):
 		code = self._inlineTypedefs(code)
 		return self.codeFilter.processCodeBlock(code)
-
 
 @dataclass
 class _ParamTupletSpec:
