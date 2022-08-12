@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.output.raymarchRender3D
-  opVersion: '119'
+  opVersion: '120'
   opStatus: default
 opDef: !def
   enable: true
@@ -52,6 +52,8 @@ inputs:
   returnType: !returnT
     Returntypelight: true
 - !input
+  Source: !expr
+    expr: parent().par.Shadow.eval() or op('shadow_definition_in')
   Localalias: shadow
   coordType: !coordT
     Coordtypevec3: true
