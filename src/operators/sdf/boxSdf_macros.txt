@@ -1,2 +1,2 @@
-'THIS_BOX_FUNC_2D'	op('boxTypes')[parent().par.Boxtype.eval(), 'func2d']
-'THIS_BOX_FUNC_3D'	op('boxTypes')[parent().par.Boxtype.eval(), 'func3d']
+not parent().par.Optimize	'THIS_BOX_FUNC_2D'	op('boxTypes')[parent().par.Boxtype.eval(), 'func2d']
+not parent().par.Optimize	'THIS_BOX_FUNC_3D'	op('boxTypes')[parent().par.Boxtype.eval(), 'func3d']
