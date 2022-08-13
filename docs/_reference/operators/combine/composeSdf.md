@@ -132,6 +132,8 @@ op:
   name: composeSdf
   opType: raytk.operators.combine.composeSdf
   parameters:
+  - label: Optimize
+    name: Optimize
   - label: Enable 1
     name: Enable1
   - label: Input 1

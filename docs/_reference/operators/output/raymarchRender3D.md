@@ -42,7 +42,7 @@ op:
     - MaterialContext
     coordTypes:
     - vec3
-    label: Shadow
+    label: shadow
     name: shadow
     returnTypes:
     - float
@@ -264,6 +264,8 @@ op:
     name: Showbackground
   - label: Shadow
     name: Headershadow
+  - label: Shadow
+    name: Shadow
   - label: Ray Marching
     name: Headerraymarching
   - label: Distance Correction Factor
