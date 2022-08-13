@@ -1,14 +1,13 @@
 void THIS_apply(inout vec2 p, out float cell) {
 	float repetitions = THIS_Repetitions;
-	float angle = 2*PI/repetitions;
+	float angle = TAU/repetitions;
 	float a = atan(p.y, p.x) + angle/2.;
-	float r = length(p);
 	cell = floor(a/angle);
 	#pragma r:if THIS_Uselimit
 	{
 		float start = THIS_Limitlow;
 		float stop = THIS_Limithigh;
-		float a2 = mod(a, 2.*PI)/angle;
+		float a2 = mod(a, TAU)/angle;
 		if (a2 < start) {
 			cell = -1.;
 			return;
@@ -42,7 +41,7 @@ void THIS_apply(inout vec2 p, out float cell) {
 		#pragma r:endif
 	}
 	#pragma r:endif
-	p = vec2(cos(a), sin(a))*r;
+	p = vec2(cos(a), sin(a))*length(p);
 	// For an odd number of repetitions, fix cell index of the cell in -x direction
 	// (cell index would be e.g. -5 and 5 in the two halves of the cell):
 	if (abs(cell) >= (repetitions/2)) cell = abs(cell);
