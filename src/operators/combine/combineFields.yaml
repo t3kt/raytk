@@ -1,12 +1,13 @@
 !rop
 meta: !meta
   opType: raytk.operators.combine.combineFields
-  opVersion: '17'
+  opVersion: '18'
   opStatus: default
 opDef: !def
   enable: !expr
     expr: op('..').par.Enable
-  useRuntimeBypass: true
+  useRuntimeBypass: !expr
+    expr: not parent().par.Optimize
   typeSpec: !ropTypes
     coordType: !coordT
       Allcoordtype: true
@@ -18,9 +19,7 @@ opDef: !def
       Returntypevec4: !expr
         expr: op('definition_1')[1, 'returnType'] == 'vec4' or op('definition_2')[1,
           'returnType'] == 'vec4'
-  function: !text
-    file: src/operators/combine/combineFields.glsl
-    name: function
+  function: function
   paramGroupTable: eval_params
   help: !text
     file: src/operators/combine/combineFields.md
@@ -118,6 +117,7 @@ elements:
   name: codeSwitcher_Operation
   elementType: codeSwitcher
   params:
+    Elementroot: ''
     Table: !table
       file: src/operators/combine/combineFields_operations.txt
       name: operations
@@ -126,4 +126,5 @@ elements:
     Manageparamstates: false
     Alwaysincludeallparams: false
     Switchmode: auto
+    Indexexpr: ''
     Placeholder: BODY();
