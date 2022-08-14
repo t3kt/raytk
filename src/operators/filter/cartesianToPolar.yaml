@@ -18,6 +18,9 @@ opDef: !def
   function: !text
     file: src/operators/filter/cartesianToPolar.glsl
     name: function
+  help: !text
+    file: src/operators/filter/cartesianToPolar.md
+    name: help
 inputs:
 - !input
   Required: true
@@ -33,6 +36,7 @@ elements:
   name: codeSwitcher_Angleunit
   elementType: codeSwitcher
   params:
+    Elementroot: ''
     Table: !table
       file: src/operators/filter/cartesianToPolar_angleUnits.txt
       name: angleUnits
@@ -41,11 +45,13 @@ elements:
     Manageparamstates: true
     Alwaysincludeallparams: false
     Switchmode: auto
+    Indexexpr: ''
     Placeholder: CONVERT_ANGLE();
 - !opElement
   name: codeSwitcher_Conversion
   elementType: codeSwitcher
   params:
+    Elementroot: ''
     Table: !table
       file: src/operators/filter/cartesianToPolar_conversions.txt
       name: conversions
@@ -54,4 +60,5 @@ elements:
     Manageparamstates: false
     Alwaysincludeallparams: false
     Switchmode: auto
+    Indexexpr: ''
     Placeholder: BODY();
