@@ -231,6 +231,11 @@ float sabs(float x, float k) {
 	return 2.0 * k * log(exp(-abs(x) / k) + 1.0) + abs(x);
 }
 
+float expLength(vec2 p, float k) {
+	p = abs(p);
+	return pow(pow(p.x,k)+pow(p.y,k), 1./k);
+}
+
 // https://github.com/rreusser/glsl-hypot
 float hypot (vec2 z) {
 	float t;
