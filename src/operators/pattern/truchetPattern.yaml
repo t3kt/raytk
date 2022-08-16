@@ -1,8 +1,8 @@
 !rop
 meta: !meta
   opType: raytk.operators.pattern.truchetPattern
-  opVersion: '3'
-  opStatus: alpha
+  opVersion: '4'
+  opStatus: beta
 opDef: !def
   enable: true
   typeSpec: !ropTypes
