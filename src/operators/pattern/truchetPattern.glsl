@@ -48,9 +48,25 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 	float depth = cos(a*2.)*.5+.5;
 	float check = mod(id.x+id.y, 2.)*2.-1.;  // alternating checkerboard
 
+	#ifdef THIS_USE_COLOR
 
-	vec4 res = vec4(0.);
-	res.rgb = vec3(contour);
+	#ifdef THIS_HAS_INPUT_pathColorField
+	vec3 pathColor = fillToVec3(inputOp_pathColorField(p, ctx));
+	#else
+	vec3 pathColor = THIS_Pathcolor;
+	#endif
+
+	#ifdef THIS_HAS_INPUT_bgColorField
+	vec3 bgColor = fillToVec3(inputOp_bgColorField(p, ctx));
+	#else
+	vec3 bgColor = THIS_Bgcolor;
+	#endif
+
+	#endif
+
+	ReturnT res;
+
+	FORMAT_BODY();
 
 	return res;
 }
