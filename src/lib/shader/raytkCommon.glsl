@@ -347,6 +347,11 @@ void swap(inout Sdf a, inout Sdf b) {
 	a = b;
 	b = tmp;
 }
+void swap(inout vec4 a, inout vec4 b) {
+	vec4 tmp = a;
+	a = b;
+	b = tmp;
+}
 
 #define IS_TRUE(x)  (x >= 0.5)
 #define IS_FALSE(x) (x < 0.5)
