@@ -7,7 +7,21 @@ float THIS_hash(vec2 p) {
 }
 
 ReturnT thismap(CoordT p, ContextT ctx) {
-	float curve = THIS_Curve;
+
+	#ifdef THIS_HAS_INPUT_coordField
+	vec2 q = adaptAsVec2(inputOp_coordField(p, ctx));
+	#else
+	vec2 q = adaptAsVec2(p);
+	#endif
+	q -= THIS_Translate;
+	q /= THIS_Size;
+
+	vec2 id = floor(q);
+	float rnd = THIS_hash(id);
+
+	#ifdef THIS_EXPOSE_cell
+	THIS_cell = rnd;
+	#endif
 
 	#ifdef THIS_HAS_INPUT_thicknessField
 	float t = adaptAsFloat(inputOp_thicknessField(p, ctx));
@@ -21,22 +35,17 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 	#endif
 	b = max(0., b);
 
-	#ifdef THIS_HAS_INPUT_coordField
-	vec2 q = adaptAsVec2(inputOp_coordField(p, ctx));
-	#else
-	vec2 q = adaptAsVec2(p);
-	#endif
-	q -= THIS_Translate;
-	q /= THIS_Size;
-
-	vec2 id = floor(q);
-	float rnd = THIS_hash(id);
 
 	q = fract(q) - 0.5;
 
 	if (rnd < 0.5) {
 		q.x *= -1.;
 	}
+	#ifdef THIS_HAS_INPUT_curveField
+	float curve = inputOp_curveField(p, ctx);
+	#else
+	float curve = THIS_Curve;
+	#endif
 
 	float s = q.x>-q.y?1.:-1.; // corner selection
 	vec2 cp = q-vec2(0.5)*s; // circle coords
@@ -44,9 +53,18 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 	float ed = abs(cd-0.5)-t;  // edge dist
 	float contour = smoothstep(b, -b, ed);
 
+	#ifdef THIS_EXPOSE_contour
+	THIS_contour = contour;
+	#endif
+
 	float a = atan(cp.x, cp.y);
+
 	float depth = cos(a*2.)*.5+.5;
 	float check = mod(id.x+id.y, 2.)*2.-1.;  // alternating checkerboard
+
+	#ifdef THIS_EXPOSE_normangle
+	THIS_normangle = (a/TAU) * 2. * check;
+	#endif
 
 	#ifdef THIS_USE_COLOR
 
