@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.combine.compositeFields
-  opVersion: '10'
+  opVersion: '11'
   opStatus: default
 opDef: !def
   enable: !expr
@@ -30,7 +30,7 @@ multiInput: !multiInput
   Contexttypereductionmode: common
   Contexttypereductionscope: '*'
   Returntypereductionmode: bestcommon
-  Returntypereductionscope: '*'
+  Returntypereductionscope: 1 2
   Returntypepreference: vec4 float
   inputs:
   - !input
@@ -51,6 +51,17 @@ multiInput: !multiInput
     returnType: !returnT
       Returntypefloat: true
       Returntypevec4: true
+  - !input
+    Source: !expr
+      expr: parent().par.Blendfield.eval() or ''
+    Localalias: blendField
+    Required: true
+    coordType: !coordT
+      Allcoordtype: true
+    contextType: !contextT
+      Allcontexttype: true
+    returnType: !returnT
+      Returntypefloat: true
 elements:
 - !opElement
   name: codeSwitcher_Blendmode

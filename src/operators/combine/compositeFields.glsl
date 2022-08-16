@@ -5,7 +5,11 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 	if (IS_TRUE(THIS_Swapinputs)) {
 		swap(res1, res2);
 	}
+	#ifdef THIS_HAS_INPUT_blendField
+	float amt = inputOp_blendField(p, ctx);
+	#else
 	float amt = THIS_Blend;
+	#endif
 	ReturnT res;
 	BODY();
 	return res;
