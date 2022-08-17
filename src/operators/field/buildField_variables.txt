@@ -1,0 +1,15 @@
+name	label	dataType	enable	macros
+res1f	Result 1 (Float)	float	op('definition_1').numRows > 1
+res1v	Result 1 (Vector)	vec4	op('definition_1').numRows > 1
+res2f	Result 2 (Float)	float	op('definition_2').numRows > 1
+res2v	Result 2 (Vector)	vec4	op('definition_2').numRows > 1
+res3f	Result 3 (Float)	float	op('definition_3').numRows > 1
+res3v	Result 3 (Vector)	vec4	op('definition_3').numRows > 1
+res4f	Result 4 (Float)	float	op('definition_4').numRows > 1
+res4v	Result 4 (Vector)	vec4	op('definition_4').numRows > 1
+res5f	Result 5 (Float)	float	op('definition_5').numRows > 1
+res5v	Result 5 (Vector)	vec4	op('definition_5').numRows > 1
+res6f	Result 6 (Float)	float	op('definition_6').numRows > 1
+res6v	Result 6 (Vector)	vec4	op('definition_6').numRows > 1
+res7f	Result 7 (Float)	float	op('definition_7').numRows > 1
+res7v	Result 7 (Vector)	vec4	op('definition_7').numRows > 1
