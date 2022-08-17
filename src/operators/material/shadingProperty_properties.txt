@@ -1,16 +1,19 @@
-﻿name	label	code	returnType
-normal	Surface Normal	res = vec4(ctx.normal, 0.);	vec4
-matpos	Material Position	res = vec4(getPosForMaterial(p, ctx), 0.);	vec4
-shaded	Shaded Level	res = getShadedLevel(ctx);	float
-useshadow	Surface Uses Shadow	res = float(resultUsesShadow(ctx.result));	float
-raypos	Ray Origin	res = vec4(ctx.ray.pos, 0.);	vec4
-raydir	Ray Direction	res = vec4(normalize(ctx.ray.dir), 0.);	vec4
-viewdir	View Direction	res = vec4(normalize(-ctx.ray.dir), 0.);	vec4
-lightpos	Light Position	res = vec4(ctx.light.pos, 0.);	vec4
-lightcol	Light Color	res = vec4(ctx.light.color, 0.);	vec4
-lightdir	Light Direction	res = vec4(normalize(p - ctx.light.pos), 0.);	vec4
+﻿name	label	code	returnType	macros
+normal	Surface Normal	res = vec4(ctx.normal, 0.);	vec4	
+matpos	Material Position	res = vec4(getPosForMaterial(p, ctx), 0.);	vec4	
+shaded	Shaded Level	res = getShadedLevel(ctx);	float	
+useshadow	Surface Uses Shadow	res = float(resultUsesShadow(ctx.result));	float	
+raypos	Ray Origin	res = vec4(ctx.ray.pos, 0.);	vec4	
+raydir	Ray Direction	res = vec4(normalize(ctx.ray.dir), 0.);	vec4	
+viewdir	View Direction	res = vec4(normalize(-ctx.ray.dir), 0.);	vec4	
+lightpos	Light Position	res = vec4(ctx.light.pos, 0.);	vec4	
+lightcol	Light Color	res = vec4(ctx.light.color, 0.);	vec4	
+lightdir	Light Direction	res = vec4(normalize(p - ctx.light.pos), 0.);	vec4	
+surfacecolor	Surface Color	res = ctx.result.color;	vec4	RAYTK_USE_SURFACE_COLOR
+uv	Surface UV	res = ctx.uv;	vec4	RAYTK_USE_UV
+reflcolor	Reflection Color	res = vec4(ctx.reflectColor, 0.);	vec4
 halfangle	Half Angle Vector	res = vec4(normalize(normalize(p - ctx.light.pos) + normalize(-ctx.ray.dir)), 0.);	vec4
-ndotl	N · L	res = dot(ctx.normal, normalize(p - ctx.light.pos));	float
-ndotv	N · V	res = dot(ctx.normal, normalize(-ctx.ray.dir));	float
-ldotv	L · V	res = dot(normalize(p - ctx.light.pos), normalize(-ctx.ray.dir));	float
-hdotn	H · N	res = dot(normalize(normalize(p - ctx.light.pos) + normalize(-ctx.ray.dir)), ctx.normal);	float
+ndotl	N · L	res = dot(ctx.normal, normalize(p - ctx.light.pos));	float	
+ndotv	N · V	res = dot(ctx.normal, normalize(-ctx.ray.dir));	float	
+ldotv	L · V	res = dot(normalize(p - ctx.light.pos), normalize(-ctx.ray.dir));	float	
+hdotn	H · N	res = dot(normalize(normalize(p - ctx.light.pos) + normalize(-ctx.ray.dir)), ctx.normal);	float	
