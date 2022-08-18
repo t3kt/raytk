@@ -51,6 +51,11 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 	vec2 cp = q-vec2(0.5)*s; // circle coords
 	float cd = expLength(cp, curve); // circle dist
 	float ed = abs(cd-0.5)-t;  // edge dist
+
+	#ifdef THIS_EXPOSE_edgedist
+	THIS_edgedist = ed;
+	#endif
+
 	float contour = smoothstep(b, -b, ed);
 
 	#ifdef THIS_EXPOSE_contour
@@ -60,24 +65,33 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 	float a = atan(cp.x, cp.y);
 
 	float depth = cos(a*2.)*.5+.5;
+
+	#ifdef THIS_EXPOSE_depth
+	THIS_depth = depth;
+	#endif
+
 	float check = mod(id.x+id.y, 2.)*2.-1.;  // alternating checkerboard
 
 	#ifdef THIS_EXPOSE_normangle
 	THIS_normangle = (a/TAU) * 2. * check;
 	#endif
 
-	#ifdef THIS_USE_COLOR
+	#ifdef THIS_USE_PATH_COLOR
 
 	#ifdef THIS_HAS_INPUT_pathColorField
-	vec3 pathColor = fillToVec3(inputOp_pathColorField(p, ctx));
+	vec4 pathColor = fillToVec4(inputOp_pathColorField(p, ctx));
 	#else
-	vec3 pathColor = THIS_Pathcolor;
+	vec4 pathColor = vec4(THIS_Pathcolor, 1.);
 	#endif
 
+	#endif
+
+	#ifdef THIS_USE_BG_COLOR
+
 	#ifdef THIS_HAS_INPUT_bgColorField
-	vec3 bgColor = fillToVec3(inputOp_bgColorField(p, ctx));
+	vec4 bgColor = fillToVec4(inputOp_bgColorField(p, ctx));
 	#else
-	vec3 bgColor = THIS_Bgcolor;
+	vec4 bgColor = vec4(THIS_Bgcolor, 1.);
 	#endif
 
 	#endif

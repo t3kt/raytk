@@ -1,4 +1,6 @@
 name	label	dataType	enable	macros
 cell	Cell ID	float	1	
-contour	Contour	float	1
-normangle	Normalized Angle (0..1)	float	1
+contour	Contour	float	1	
+normangle	Normalized Angle (0..1)	float	1	
+depth	Depth	float	1
+edgedist	Edge Distance	float	1
