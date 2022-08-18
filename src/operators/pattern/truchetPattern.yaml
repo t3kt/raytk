@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.pattern.truchetPattern
-  opVersion: '5'
+  opVersion: '6'
   opStatus: beta
 opDef: !def
   enable: true

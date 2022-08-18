@@ -1,7 +1,6 @@
 name	label	code	returnType	macros
 contour	Contour	res = contour;	float	
 edgedist	Edge Distance	res = ed;	float	
-color	Color	res = vec4(mix(bgColor.rgb, pathColor.rgb, contour), 1.);	vec4	THIS_USE_PATH_COLOR THIS_USE_BG_COLOR
 colordepth	Color & Depth	res = vec4(mix(bgColor.rgb, pathColor.rgb, contour), depth);	vec4	THIS_USE_PATH_COLOR THIS_USE_BG_COLOR
 colordepthcontour	Color & Depth * Contour	res = vec4(mix(bgColor.rgb, pathColor.rgb, contour), depth) * contour;	vec4	THIS_USE_PATH_COLOR THIS_USE_BG_COLOR
 customcolor	Custom Override Color	res = pathColor;	vec4	THIS_USE_PATH_COLOR
