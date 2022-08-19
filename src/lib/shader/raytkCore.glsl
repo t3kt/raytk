@@ -441,11 +441,3 @@ void restoreIterationFromMaterial(inout MaterialContext matCtx, in vec4 store) {
 		matCtx.context.iteration = store;
 	}
 }
-
-#ifdef RAYTK_USE_SPLIT_CAMERA
-int _currentCamera = 0;
-int getCameraIndex() { return _currentCamera; }
-void setCameraIndex(int i) { _currentCamera = i; }
-#else
-int getCameraIndex() { return 0; }
-#endif
