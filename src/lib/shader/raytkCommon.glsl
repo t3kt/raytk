@@ -192,12 +192,6 @@ vec3 map01(vec3 value, vec3 inMin, vec3 inMax) {
 	return (value - inMin) / (inMax - inMin);
 }
 
-// Standard Mobius transform: f(z) = (az + b)/(cz + d). Slightly obfuscated.
-vec2 mobiusTransform(vec2 p, vec2 z1, vec2 z2) {
-	z1 = p - z1; p -= z2;
-	return vec2(dot(z1, p), z1.y*p.x - z1.x*p.y) / dot(p, p);
-}
-
 Ray createStandardCameraRay(vec2 p, vec2 size, int viewAngleMethod, float fov, mat4 camMat) {
 	vec2 uv = p / size;
 	float z = mix(size.x, size.y, float(viewAngleMethod)) / tan(radians(fov) * 0.5) * 0.5;
