@@ -1,0 +1,3 @@
+name	label	dataType	enable	macros
+axialdist	Axial Distances	vec2	1	
+mask	Masks	vec3	1	

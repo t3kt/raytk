@@ -1,0 +1,3 @@
+name	label
+color	Color
+customcolor	Custom Override Color
