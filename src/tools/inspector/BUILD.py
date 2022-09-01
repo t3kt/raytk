@@ -33,7 +33,7 @@ context.log(f'Found {len(subComps)} child components in inspector')
 
 for comp in subComps:
 	context.log(f'Processing inspector child: {comp}')
-# 	context.updateOrReclone(comp)
+	context.updateOrReclone(comp)
 	context.disableCloning(comp)
 	context.detachTox(comp)
 	context.log(f'Processing sub-components in {comp}')
