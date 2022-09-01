@@ -47,9 +47,12 @@ class ShaderBuilder:
 		# noinspection PyTypeChecker
 		return o or self.ownerComp.op('default_shaderBuilderConfig')
 
-	def _configValid(self):
+	def configValid(self):
 		o = self._config()
-		return bool(o is not None and o.valid)
+		try:
+			return bool(o is not None and o.valid)
+		except:
+			return False
 
 	def configPar(self) -> '_ConfigPar':
 		return self._config().par
@@ -138,7 +141,7 @@ class ShaderBuilder:
 	def buildNameReplacementTable(self, dat: 'scriptDAT'):
 		dat.clear()
 		dat.appendRow(['before', 'after'])
-		if not self._configValid():
+		if not self.configValid():
 			return
 		if not self.configPar().Simplifynames:
 			return
@@ -151,7 +154,7 @@ class ShaderBuilder:
 		dat.appendCol(['after'] + simpleNames)
 
 	def _createParamProcessor(self) -> '_ParameterProcessor':
-		if not self._configValid():
+		if not self.configValid():
 			mode = 'uniformarray'
 		else:
 			mode = self.configPar().Parammode.eval()
@@ -159,13 +162,13 @@ class ShaderBuilder:
 			return _VectorArrayParameterProcessor(
 				self._parameterDetailTable(),
 				self._allParamVals(),
-				self.configPar() if self._configValid() else None,
+				self.configPar() if self.configValid() else None,
 			)
 		elif mode == 'separateuniforms':
 			return _SeparateUniformsParameterProcessor(
 				self._parameterDetailTable(),
 				self._allParamVals(),
-				self.configPar() if self._configValid() else None,
+				self.configPar() if self.configValid() else None,
 			)
 		else:
 			raise NotImplementedError(f'Parameter processor not available for mode: {mode!r}')
@@ -303,7 +306,7 @@ class ShaderBuilder:
 				dat.appendRow([name + '_asVarT', typeAdaptFuncs[dataType], 'macro'])
 
 	def _createCodeFilter(self, typeDefMacroTable: 'DAT') -> 'CodeFilter':
-		if not self._configValid():
+		if not self.configValid():
 			mode = 'macroize'
 		else:
 			mode = self.configPar()['Filtermode']
@@ -459,6 +462,8 @@ class ShaderBuilder:
 			outputBufferTable: 'DAT',
 			variableTable: 'DAT',
 	):
+		dat.clear()
+		dat.write(' ')
 		writer = _Writer(
 			sb=self,
 			opStates=self._parseOpStates(),
@@ -560,9 +565,9 @@ class _Writer:
 
 	def __post_init__(self):
 		self.out = StringIO()
-		self.configPar = self.sb.configPar()
+		self.configPar = self.sb.configPar() if self.sb.configValid() else None
 		self.ownerComp = self.sb.ownerComp
-		if self.configPar['Inlinetypedefs'] and self.typeDefMacroTable.numRows > 1:
+		if self.configPar and self.configPar['Inlinetypedefs'] and self.typeDefMacroTable.numRows > 1:
 			self.inlineTypedefRepls = {
 				str(cells[0]): str(cells[1])
 				for cells in self.typeDefMacroTable.rows()
@@ -615,7 +620,7 @@ class _Writer:
 		self._endBlock('globals')
 
 	def _writeOpDataTypedefs(self):
-		inline = self.configPar['Inlinetypedefs']
+		inline = self.configPar and self.configPar['Inlinetypedefs']
 		if not self.typeDefMacroTable.numRows:
 			return
 		self._startBlock('opDataTypedefs')
@@ -653,7 +658,7 @@ class _Writer:
 		if not self.libraryDats:
 			return
 		self._startBlock('libraries')
-		mode = str(self.configPar['Includemode'] or 'includelibs')
+		mode = str((self.configPar and self.configPar['Includemode']) or 'includelibs')
 		if mode == 'inlineall':
 			for lib in self.libraryDats:
 				self._writeLine(f'/// Library: <{lib.path}>')
