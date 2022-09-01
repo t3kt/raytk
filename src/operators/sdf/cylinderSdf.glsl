@@ -28,10 +28,19 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 	r *= inputOp_radiusField(p, ctx);
 	#endif
 	ReturnT res;
-	if (THIS_Infiniteheight > 0.5) {
+	if (IS_TRUE(THIS_Infiniteheight)) {
 		res = createSdf(fCylinder(q * vec3(1., 0., 1.), r, 1.));
 	} else {
 		res = createSdf(fCylinder(q, r, h));
+	}
+	if (IS_TRUE(THIS_Hollow)) {
+		#ifdef THIS_HAS_INPUT_thicknessField
+		float th = inputOp_thicknessField(p, ctx);
+		#else
+		float th = THIS_Thickness;
+		#endif
+		// simple diff
+		res.x = max(-fCylinder(q * vec3(1., 0., 1.), r - th, 1.), res.x);
 	}
 	#ifdef RAYTK_USE_UV
 	vec3 uv = vec3(atan(q.x, q.z), q.y, length(q.xz));
