@@ -1,7 +1,8 @@
-name	label	macro1	macro2
-x	X	THIS_PART x	
-y	Y	THIS_PART y	
-z	Z	THIS_PART z	
-w	W	THIS_PART w	
-lengthxyz	Length(XYZ)	THIS_PARTS xyz	THIS_USE_LENGTH
-lengthxyzw	Length(XYZW)	THIS_PARTS xyzw	THIS_USE_LENGTH
+name	label	macro1	macro2	code
+x	X	THIS_PART x		res = val.x
+y	Y	THIS_PART y		res = val.y
+z	Z	THIS_PART z		res = val.z
+w	W	THIS_PART w		res = val.w
+lengthxy	Length(XY)	THIS_PARTS xy	THIS_USE_LENGTH	res = length(val.xy)
+lengthxyz	Length(XYZ)	THIS_PARTS xyz	THIS_USE_LENGTH	res = length(val.xyz)
+lengthxyzw	Length(XYZW)	THIS_PARTS xyzw	THIS_USE_LENGTH	res = length(val.xyzw)

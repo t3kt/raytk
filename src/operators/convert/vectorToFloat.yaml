@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.convert.vectorToFloat
-  opVersion: '12'
+  opVersion: '13'
   opStatus: default
 opDef: !def
   enable: !expr
@@ -16,11 +16,6 @@ opDef: !def
   function: !text
     file: src/operators/convert/vectorToFloat.glsl
     name: function
-  macroTable: !table
-    file: src/operators/convert/vectorToFloat_macros.txt
-    name: macro_exprs
-    evaluate: true
-    evalOpts: !evalOpts {}
   help: !text
     file: src/operators/convert/vectorToFloat.md
     name: help
@@ -33,3 +28,19 @@ inputs:
     Allcontexttype: true
   returnType: !returnT
     Returntypevec4: true
+elements:
+- !opElement
+  name: codeSwitcher
+  elementType: codeSwitcher
+  params:
+    Elementroot: ''
+    Table: !table
+      file: src/operators/convert/vectorToFloat_parts.txt
+      name: parts
+    Param: Usepart
+    Autoupdateparams: true
+    Manageparamstates: false
+    Alwaysincludeallparams: false
+    Switchmode: inline
+    Indexexpr: ''
+    Placeholder: BODY();

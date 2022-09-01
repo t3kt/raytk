@@ -1,2 +1,0 @@
-	op('parts_table')[parent().par.Usepart.eval(), 'macro1']	
-	op('parts_table')[parent().par.Usepart.eval(), 'macro2']	
