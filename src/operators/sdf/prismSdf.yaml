@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.sdf.prismSdf
-  opVersion: '16'
+  opVersion: '17'
   opStatus: default
 opDef: !def
   enable: true
@@ -46,11 +46,20 @@ inputs:
     Allcontexttype: true
   returnType: !returnT
     Returntypefloat: true
+- !input
+  Localalias: thicknessField
+  coordType: !coordT
+    Coordtypevec3: true
+  contextType: !contextT
+    Allcontexttype: true
+  returnType: !returnT
+    Returntypefloat: true
 elements:
 - !opElement
-  name: codeSwitcher_Combine
+  name: codeSwitcher_Prismtype
   elementType: codeSwitcher
   params:
+    Elementroot: ''
     Table: !table
       file: src/operators/sdf/prismSdf_functions.txt
       name: prism_funcs
@@ -59,4 +68,5 @@ elements:
     Manageparamstates: true
     Alwaysincludeallparams: false
     Switchmode: auto
+    Indexexpr: ''
     Placeholder: BODY();
