@@ -1,3 +1,4 @@
+import json
 from raytkShader import simplifyNames
 
 # noinspection PyUnreachableCode
@@ -17,28 +18,57 @@ class ShaderPanel:
 		self.ownerComp = ownerComp
 
 	@staticmethod
-	def prepareCode(dat: 'DAT', definition: 'DAT'):
-		code = dat.text
-		if not ipar.inspectorState.Simplifynames or not code or definition.numRows < 2:
-			return
+	def _processCode(code: str, definition: 'DAT'):
+		if not code:
+			return ''
+		if not ipar.inspectorState.Simplifynames or definition.numRows < 2:
+			return code
 		rawNames = [str(c) for c in definition.col('name')[1:]]
 		names = simplifyNames(rawNames)
 		for rawName, name in zip(rawNames, names):
 			code = code.replace(rawName, name)
-		dat.text = code
+		return code
 
 	@staticmethod
-	def buildCodeBlockTable(dat: 'DAT', includes: 'DAT', preparedCode: 'DAT'):
+	def buildCodeBlockTable(dat: 'DAT', includes: 'DAT', mainCode: 'DAT', definition: 'DAT'):
 		dat.clear()
-		dat.appendRow(['name', 'label', 'path'])
-		dat.appendRow(['main', 'main', preparedCode])
-		if includes.numRows < 2:
-			return
+		dat.appendRow(['name', 'label', 'path', 'category'])
+		dat.appendRow(['main', 'main', mainCode, 'main'])
 		for row in range(1, includes.numRows):
 			name = includes[row, 'name']
 			path = includes[row, 'path']
 			dat.appendRow([
 				name,
-				f'{name} ({path})',
+				f'include {name} ({path})',
 				path,
+				'include',
 			])
+		for row in range(1, definition.numRows):
+			stateDat = op(definition[row, 'statePath'])
+			if stateDat and 'functionCode' in stateDat.text:
+				opName = definition[row, 'name'].val
+				dat.appendRow([
+					opName + '_functionCode',
+					f'ROP Function: {opName}',
+					stateDat.path,
+					'opFunction',
+				])
+
+	def fillPreparedCode(self, dat: 'DAT', codeBlocks: 'DAT', selectedName: str, definition: 'DAT'):
+		dat.clear()
+		category = codeBlocks[selectedName, 'category']
+		srcDat = op(codeBlocks[selectedName, 'path'])
+		if not category or not srcDat:
+			dat.write(' ')
+			return
+		if category == 'opFunction':
+			try:
+				obj = json.loads(srcDat.text)
+			except:
+				obj = None
+			code = obj.get('functionCode') if obj else None
+		else:
+			code = srcDat.text
+		if category in ('main', 'opFunction'):
+			code = self._processCode(code, definition)
+		dat.write(code or ' ')
