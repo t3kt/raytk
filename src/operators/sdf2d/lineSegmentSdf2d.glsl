@@ -8,6 +8,19 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 	vec2 b = THIS_Pointb;
 	#pragma r:endif
 	vec2 pa = p-a, ba = b-a;
-	float h = clamp( dot(pa,ba)/dot(ba,ba), 0.0, 1.0 );
-	return createSdf(length( pa - ba*h ));
+	#ifdef THIS_EXPOSE_normoffset
+	{
+		// Not sure if this is correct.
+		float d1 = length(ba);
+		float d2 = length(pa);
+		THIS_normoffset = saturate(d1 / (d1 + d2));
+	}
+	#endif
+	#ifdef THIS_HAS_INPUT_thicknessField
+	float th = inputOp_thicknessField(p, ctx);
+	#else
+	float th = THIS_Thickness;
+	#endif
+	float h = saturate(dot(pa,ba)/dot(ba,ba));
+	return createSdf(length( pa - ba*h ) - th);
 }
