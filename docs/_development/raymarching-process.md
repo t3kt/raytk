@@ -49,7 +49,7 @@ For these cases, some operators will skip work that isn't needed (like calculati
 
 When a ray has hit a surface, the renderer needs to calculate a color for that spot on the surface.
 
-### Materials
+### Choosing and Assigning Materials
 
 This is where materials come in. Material operators (such as `basicMat` or `modularMat`) insert their unique ID number into the surface properties.
 The renderer uses those IDs to pick which function (provided by the material operator) it should call to get the color.
@@ -84,3 +84,14 @@ Lights can produce different colors for different surface hits.
 Lights can also produce different positions for different surface hits. The `directionalLight` uses this to produce a position that is always in the same direction relative to the surface hit.
 
 When multiple lights are used (via `multiLight`) the renderer repeats the colorization process separately for each light, and then adds the results to get the final color.
+
+### Using Materials to Produce Colors
+
+When the renderer asks the relevant material for a color for a surface hit, it passes along the info in the `MaterialContext`.
+
+Different materials use different calculations to produce their color.
+
+Many materials support inputs that it can call to get parameters (like the base color, or roughness). When they do so, they pass in the `MaterialContext`, so anything upstream from them can use its properties.
+
+The `modularMat`, when calculating a color, essentially just calls several inputs and adds up the resulting colors. Those inputs are typically operators like `specularContrib`, but they can be any float/vector field that can work with `MaterialContext`.
+
