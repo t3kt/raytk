@@ -62,6 +62,8 @@ cat:
     - su
     summary: Combines several SDFs using the union operator.
   - name: switch
+    shortcuts:
+    - blend
     summary: Switches between several inputs, without the need to rebuild the shader,
       allowing for fast switching.
   summary: 'Operators that take two or more inputs and combine them into a single

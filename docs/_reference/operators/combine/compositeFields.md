@@ -48,6 +48,22 @@ op:
     returnTypes:
     - float
     - vec4
+  - contextTypes:
+    - Context
+    - MaterialContext
+    - CameraContext
+    - LightContext
+    - RayContext
+    - ParticleContext
+    coordTypes:
+    - float
+    - vec2
+    - vec3
+    label: blendField
+    name: blendField
+    required: true
+    returnTypes:
+    - float
   name: compositeFields
   opType: raytk.operators.combine.compositeFields
   parameters:
@@ -110,6 +126,8 @@ op:
     name: Blend
   - label: Swap Inputs
     name: Swapinputs
+  - label: Blend Field
+    name: Blendfield
   summary: Combines two vector fields using color compositing.
   thumb: assets/images/reference/operators/combine/compositeFields_thumb.png
 

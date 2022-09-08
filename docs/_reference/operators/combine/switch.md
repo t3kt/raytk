@@ -218,6 +218,8 @@ op:
     - label: Zig-Zag
       name: zigzag
     name: Extend
+  shortcuts:
+  - blend
   summary: Switches between several inputs, without the need to rebuild the shader,
     allowing for fast switching.
 

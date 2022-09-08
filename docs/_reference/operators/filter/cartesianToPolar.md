@@ -60,6 +60,10 @@ op:
     - label: Radians
       name: radians
     name: Angleunit
+  summary: Convert from cartesian space to various types of polar spaces.
   thumb: assets/images/reference/operators/filter/cartesianToPolar_thumb.png
 
 ---
+
+
+Convert from cartesian space to various types of polar spaces.

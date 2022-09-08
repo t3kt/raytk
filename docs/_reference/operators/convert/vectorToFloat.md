@@ -40,6 +40,8 @@ op:
       name: z
     - label: W
       name: w
+    - label: Length(XY)
+      name: lengthxy
     - description: Use the length of the XYZ part of the vector.
       label: Length(XYZ)
       name: lengthxyz

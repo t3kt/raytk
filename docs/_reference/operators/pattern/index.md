@@ -20,6 +20,8 @@ cat:
   - name: tilingPattern
     status: beta
   - name: triangleCheckerPattern
+  - name: truchetPattern
+    status: beta
   - name: waveGreekFriezePattern
     status: beta
   - name: weavePattern

@@ -1,11 +1,11 @@
 ---
 layout: operator
-title: hexagonalWeavePattern
+title: truchetPattern
 parent: Pattern Operators
 grand_parent: Operators
-permalink: /reference/operators/pattern/hexagonalWeavePattern
+permalink: /reference/operators/pattern/truchetPattern
 redirect_from:
-  - /reference/opType/raytk.operators.pattern.hexagonalWeavePattern/
+  - /reference/opType/raytk.operators.pattern.truchetPattern/
 op:
   category: pattern
   inputs:
@@ -61,23 +61,8 @@ op:
     coordTypes:
     - vec2
     - vec3
-    label: Color 1 Field / Replacement Color
-    name: color1Field
-    returnTypes:
-    - float
-    - vec4
-  - contextTypes:
-    - Context
-    - MaterialContext
-    - CameraContext
-    - LightContext
-    - RayContext
-    - ParticleContext
-    coordTypes:
-    - vec2
-    - vec3
-    label: Color 2 Field
-    name: color2Field
+    label: Path Color Field / Custom Color Field
+    name: pathColorField
     returnTypes:
     - float
     - vec4
@@ -96,44 +81,64 @@ op:
     returnTypes:
     - float
     - vec4
-  name: hexagonalWeavePattern
-  opType: raytk.operators.pattern.hexagonalWeavePattern
+  - contextTypes:
+    - Context
+    - MaterialContext
+    - CameraContext
+    - LightContext
+    - RayContext
+    - ParticleContext
+    coordTypes:
+    - vec2
+    - vec3
+    label: Blending Field
+    name: curveField
+    returnTypes:
+    - float
+  name: truchetPattern
+  opType: raytk.operators.pattern.truchetPattern
   parameters:
-  - label: Pattern
-    menuOptions:
-    - label: Two Layer
-      name: twolayer
-    name: Pattern
   - label: Translate
     name: Translate
   - label: Size
     name: Size
+  - label: Curve
+    name: Curve
   - label: Thickness
     name: Thickness
   - label: Blending
     name: Blending
-  - label: Randomize
-    name: Randomize
-  - label: Seed
-    name: Seed
   - label: Format
     menuOptions:
-    - label: Color
-      name: color
+    - label: Contour
+      name: contour
+    - label: Edge Distance
+      name: edgedist
+    - label: Color & Depth
+      name: colordepth
+    - label: Color & Depth * Contour
+      name: colordepthcontour
     - label: Custom Override Color
       name: customcolor
     name: Format
-  - label: Color 1
-    name: Color1
-  - label: Color 2
-    name: Color2
+  - label: Path Color
+    name: Pathcolor
   - label: Background Color
     name: Bgcolor
-  thumb: assets/images/reference/operators/pattern/hexagonalWeavePattern_thumb.png
+  - label: Seed
+    name: Seed
+  status: beta
+  thumb: assets/images/reference/operators/pattern/truchetPattern_thumb.png
   variables:
-  - label: axialdist
-    name: axialdist
-  - label: mask
-    name: mask
+  - label: cell
+    name: cell
+  - label: contour
+    name: contour
+  - label: normangle
+    name: normangle
+  - label: depth
+    name: depth
+  - label: edgedist
+    name: edgedist
 
 ---

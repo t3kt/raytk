@@ -87,6 +87,8 @@ op:
   - label: Offset
     name: Offset
     summary: Offsets the movement for each axis.
+  - label: Phase Offset
+    name: Phaseoffset
   - label: Amplitude Multiplier
     name: Amplitudemult
   status: beta

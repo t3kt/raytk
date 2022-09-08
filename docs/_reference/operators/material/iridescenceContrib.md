@@ -28,6 +28,8 @@ op:
     name: Level
   - label: Phase
     name: Phase
+  - label: Period
+    name: Period
   - label: Spread
     name: Spread
   status: beta

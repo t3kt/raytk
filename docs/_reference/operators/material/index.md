@@ -66,6 +66,8 @@ cat:
     status: beta
     summary: A material that produces color for volumetric points relative to the
       input shape.
+  - name: shadingProperty
+    status: beta
   - keywords:
     - lighting
     - material
