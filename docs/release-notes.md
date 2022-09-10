@@ -1,5 +1,91 @@
 # Release Notes
 
+## v0.27
+
+### Highlights
+
+* Internal overhaul that should improve performance when creating / editing / deleting operators
+* Lots of new OP snippets
+* Optimized mode for some operators (especially composeSdf)
+
+### Details
+
+* Improvements / additions
+  * New OPs
+    * providePosition
+    * shadingProperty
+    * truchetPattern (#948)
+  * New OP snippets (#132)
+    * axisLight
+    * boxSdf
+    * capsuleSdf
+    * cartesianToPolar
+    * cellTileField
+    * combine
+    * crossSdf
+    * discSdf
+    * edgeCombine
+    * geodesicSdf
+    * iridesenceContrib
+    * logPolarRepeat
+    * matCapContrib
+    * rangeTransform
+    * reflect
+    * reorderCoords
+    * segmentedLineSdf
+    * skyLightContrib
+    * softShadow
+    * spiralZoom
+    * texture3dField
+    * translate
+    * trapezoidSdf2d
+    * truchetPattern
+  * Optimized mode for OPs (#943)
+    * arrange
+    * combineFields
+    * compositeSdf - significant performance improvement
+    * extrude - replaced implementation (no Optimize toggle)
+    * rotate
+  * New OP features
+    * compositeFields - new modes (atop, over, under, xor), blend field
+    * cylinderSdf - hollow mode, thickness field
+    * hexagonalWeavePattern - color settings, variables
+    * iridesenceContrib - spread param, period param
+    * lfoGenerator - value offset param
+    * lineSegmentSdf2d - thickness, variable
+    * prismSdf - hollow mode, thickness field
+    * truchetPattern - alternate formats and variables (#948)
+    * waveWarp - phase offset param
+    * vectorToFloat - length(xy) mode
+  * Editor tools (#772)
+    * add depthMap
+  * Inspector individual ROP code viewing
+  * Added developer/systems documentation (#31)
+* Fixes
+  * Fix 2D support in rangeTransform (#942)
+  * Fix snippet navigator window positioning (#132)
+  * Fix compile error in lfoField (#944)
+  * Fix defaultExpr for enable on shapedCombine
+  * Fix broken swap inputs in combine when using optimized/read-only mode (#947)
+  * Fix local positioning in modularMat (#916)
+* Changes (potentially breaking)
+  * Update to TD 2022.28040
+  * Remove 1D coord support from fields in iteratedTransform
+    * Instead, use variableReference to access iteration index
+  * Add shadow field parameter in raymarchRender3d, which will eventually replace the Shadow input
+* Infrastructure / internals
+  * Replaced large portions of opDefition and shaderBuilder with more Python-based implementations. (#939)
+    * Significant reduction of the number of OPs inside each ROP
+    * Reduced build size
+    * Restructured shader construction code to perform more in a single operation vs spreading it across many operators.
+    * Removal of unused infrastructure
+    * Cleanup in shared components including aggregateCodeGenerator, codeSwitcher, combiner, transformCodeGenerator, waveFunction
+  * Remove support for global macros in shaderBuilder
+  * Alternative "Optimize" mode for some operators that uses codegen
+    * Produces only the needed parts of code and inlines as much as possible
+  * Remove unnecessary supportDetector
+    * https://forum.derivative.ca/t/2022-26590-long-freeze-when-loading-raytk-scene/277745/6
+
 ## v0.26
 
 ### Highlights

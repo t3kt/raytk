@@ -357,7 +357,7 @@ void tdh_ear(vec3 p, inout float d) {
 	float edgeoin = smax(abs(pRi(p.zy, .15).y + .035) - .01, -p.z-.01, .01);
 	edgeo = smax(edgeo, -edgeoin, .05);
 
-	float eedent = smoothstep(-.05, .05, -p.z) * smoothstep(.06, 0., fCorner2(vec2(-p.z, p.y)));
+	float eedent = smoothstep(-.05, .05, -p.z) * smoothstep(.06, 0., fCorner(vec2(-p.z, p.y)));
 	eedent += smoothstep(.1, -.1, -p.z) * .2;
 	eedent += smoothstep(.1, -.1, p.y) * smoothstep(-.03, .0, p.z) * .3;
 	eedent = min(eedent, 1.);

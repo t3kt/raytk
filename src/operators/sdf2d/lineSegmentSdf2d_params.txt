@@ -1,2 +1,2 @@
 names	source	handling	readOnlyHandling	conversion	enable
-Pointa[xy] Pointb[xy]	param	runtime	macro		1
+Pointa[xy] Pointb[xy] Thickness	param	runtime	macro		1

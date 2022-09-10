@@ -1,5 +1,5 @@
 ReturnT thismap(CoordT p, ContextT ctx) {
-	if (THIS_Enable >= 0.5) {
+	if (IS_TRUE(THIS_Enable)) {
 		vec2 q = p.THIS_PLANE;
 		vec2 cell = sgn(q);
 		pMirror(q.x, THIS_Size.x);
@@ -30,13 +30,7 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 			#error invalidRotateAxisCoordType
 			#pragma r:endif
 
-			#pragma r:if inputOp_rotateField_RETURN_TYPE_Sdf
-			r += radians(inputOp_rotateField(q2, ctx).x);
-			#pragma r:elif inputOp_rotateField_RETURN_TYPE_float
 			r += radians(inputOp_rotateField(q2, ctx));
-			#pragma r:else
-			#error invalidRotateAxisReturnType
-			#pragma r:endif
 		}
 		#pragma r:endif
 		pR(q, r);
@@ -53,13 +47,7 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 			#error invalidOffsetCoordType
 			#pragma r:endif
 
-			#pragma r:if inputOp_offsetField_RETURN_TYPE_float
-			offset += vec2(inputOp_offsetField(q3, ctx));
-			#pragma r:elif inputOp_offsetField_RETURN_TYPE_vec4
-			offset += inputOp_offsetField(q3, ctx).xy;
-			#pragma r:else
-			#error invalidOffsetReturnType
-			#pragma r:endif
+			offset += fillToVec2(inputOp_offsetField(q3, ctx));
 		}
 		#pragma r:endif
 

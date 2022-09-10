@@ -46,6 +46,7 @@ cat:
   - name: bend
     summary: Bends space, along a main axis, towards a second axis.
   - name: cartesianToPolar
+    summary: Convert from cartesian space to various types of polar spaces.
   - keywords:
     - elongate
     - extend

@@ -1,5 +1,5 @@
 ReturnT thismap(CoordT p, ContextT ctx) {
-	if (THIS_Enable >= 0.5) {
+	if (IS_TRUE(THIS_Enable)) {
 		vec3 q = adaptAsVec3(p).THIS_Direction;
 		#ifdef THIS_EXPOSE_axispos
 		THIS_axispos = q.x;

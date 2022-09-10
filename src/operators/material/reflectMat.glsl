@@ -2,7 +2,7 @@ vec4 THIS_iterationCapture = vec4(0.);
 
 ReturnT thismap(CoordT p, ContextT ctx) {
 	Sdf res = inputOp1(p, ctx);
-	if (THIS_Enable < 0.5 || isDistanceOnlyStage()) { return res; }
+	if (IS_FALSE(THIS_Enable) || isDistanceOnlyStage()) { return res; }
 	assignMaterial(res, THISMAT);
 	res.reflect = true;
 	captureIterationFromMaterial(THIS_iterationCapture, ctx);

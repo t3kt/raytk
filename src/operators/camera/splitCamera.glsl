@@ -2,14 +2,12 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 	Ray ray;
 
 	#if THIS_INPUT_COUNT == 1
-	setCameraIndex(0);
 	ray = inputOp1(p, ctx);
 	#elif defined(THIS_cameraMap)
   {
 		float mapVal = texture(THIS_cameraMap, p / ctx.resolution).r;
 		int i = int(round(mapVal * (THIS_INPUT_COUNT - 1)));
 		i = clamp(i, 0, THIS_INPUT_COUNT - 1);
-		setCameraIndex(i);
 		if (i <= 0) {
 			ray = THIS_INPUT_1(p, ctx);
 		} else {
@@ -46,18 +44,14 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 			#endif
 			if (uv.x > 0.) {
 				if (uv.y > 0.) {
-					setCameraIndex(1);
 					ray = THIS_INPUT_2(p, ctx);
 				} else {
-					setCameraIndex(3);
 					ray = THIS_INPUT_4(p, ctx);
 				}
 			} else {
 				if (uv.y > 0.) {
-					setCameraIndex(0);
 					ray = THIS_INPUT_1(p, ctx);
 				} else {
-					setCameraIndex(2);
 					ray = THIS_INPUT_3(p, ctx);
 				}
 			}

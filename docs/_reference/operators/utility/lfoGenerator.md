@@ -69,6 +69,8 @@ op:
     name: Bias
   - label: Amplitude
     name: Amplitude
+  - label: Offset
+    name: Offset
   - label: Amplitude Multipliers
     name: Partamp
   - label: Name

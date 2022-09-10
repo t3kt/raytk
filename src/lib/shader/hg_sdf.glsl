@@ -25,6 +25,7 @@ vec2 sgn(vec2 v) {
 	return vec2((v.x<0)?-1:1, (v.y<0)?-1:1);
 }
 
+#if 0
 float square (float x) {
 	return x*x;
 }
@@ -40,6 +41,7 @@ vec3 square (vec3 x) {
 float lengthSqr(vec3 x) {
 	return dot(x, x);
 }
+#endif
 
 
 // Maximum/minumum elements of a vector
@@ -67,9 +69,11 @@ float vmin(vec4 v) {
 	return min(min(v.x, v.y), min(v.z, v.w));
 }
 
+#if 0
 float fSphere(vec3 p, float r) {
 	return length(p) - r;
 }
+#endif
 
 // Plane with normal n (n is normalized) at some distance from the origin
 float fPlane(vec3 p, vec3 n, float distanceFromOrigin) {
@@ -103,6 +107,7 @@ float fCorner (vec2 p) {
 	return length(max(p, vec2(0))) + vmax(min(p, vec2(0)));
 }
 
+#if 0
 // Blobby ball object. You've probably seen it somewhere. This is not a correct distance bound, beware.
 float fBlob(vec3 p) {
 	p = abs(p);
@@ -116,6 +121,7 @@ float fBlob(vec3 p) {
 	float l = length(p);
 	return l - 1.5 - 0.2 * (1.5 / 2)* cos(min(sqrt(1.01 - b / l)*(PI / 0.25), PI));
 }
+#endif
 
 // Cylinder standing upright on the xz plane
 float fCylinder(vec3 p, float r, float height) {
@@ -146,11 +152,13 @@ float fTorus(vec3 p, float smallRadius, float largeRadius) {
 	return length(vec2(length(p.xz) - largeRadius, p.y)) - smallRadius;
 }
 
+#if 0
 // A circle line. Can also be used to make a torus by subtracting the smaller radius of the torus.
 float fCircle(vec3 p, float r) {
 	float l = length(p.xz) - r;
 	return length(vec2(p.y, l));
 }
+#endif
 
 // A circular disc with no thickness (i.e. a cylinder with no height).
 // Subtract some value to make a flat disc with rounded edge.
@@ -159,6 +167,7 @@ float fDisc(vec3 p, float r) {
 	return l < 0 ? abs(p.y) : length(vec2(p.y, l));
 }
 
+	#if 0
 // Hexagonal prism, circumcircle variant
 float fHexagonCircumcircle(vec3 p, vec2 h) {
 	vec3 q = abs(p);
@@ -171,6 +180,7 @@ float fHexagonCircumcircle(vec3 p, vec2 h) {
 float fHexagonIncircle(vec3 p, vec2 h) {
 	return fHexagonCircumcircle(p, vec2(h.x*sqrt(3)*0.5, h.y));
 }
+#endif
 
 // Cone with correct distances to tip and base circle. Y is up, 0 is in the middle of the base.
 float fCone(vec3 p, float radius, float height) {
@@ -356,6 +366,7 @@ float fOpDifferenceRound (float a, float b, float r) {
 	return fOpIntersectionRound(a, -b, r);
 }
 
+#if 0
 // The "Columns" flavour makes n-1 circular columns at a 45 degree angle:
 float fOpUnionColumns(float a, float b, float r, float n) {
 	if ((a < r) && (b < r)) {
@@ -436,7 +447,7 @@ float fOpUnionSoft(float a, float b, float r) {
 	float e = max(r - abs(a - b), 0);
 	return min(a, b) - e*e*0.25/r;
 }
-
+#endif
 
 // produces a cylindical pipe that runs along the intersection.
 // No objects remain, only the pipe. This is not a boolean operator.

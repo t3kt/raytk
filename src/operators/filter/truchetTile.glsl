@@ -4,7 +4,7 @@
 float THIS_hash21(vec2 p){ return fract(sin(dot(p, vec2(141.213, 289.867)))*43758.5453); }
 
 ReturnT thismap(CoordT p, ContextT ctx) {
-	if (THIS_Enable >= 0.5) {
+	if (IS_TRUE(THIS_Enable)) {
 		#ifdef THIS_COORD_TYPE_vec2
 		vec2 q = p;
 		#else

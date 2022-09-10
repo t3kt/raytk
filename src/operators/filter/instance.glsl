@@ -29,7 +29,7 @@ MERGE_BODY();
 
 ReturnT thismap(CoordT p, ContextT ctx) {
 	ReturnT res;
-	if (THIS_Enable < 0.5) {
+	if (IS_FALSE(THIS_Enable)) {
 		THIS_exposeIndex(ctx, 0, 1);
 		res = inputOp1(p, ctx);
 	} else {

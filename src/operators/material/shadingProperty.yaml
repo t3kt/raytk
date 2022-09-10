@@ -1,8 +1,8 @@
 !rop
 meta: !meta
   opType: raytk.operators.material.shadingProperty
-  opVersion: '2'
-  opStatus: alpha
+  opVersion: '3'
+  opStatus: beta
 opDef: !def
   enable: true
   typeSpec: !ropTypes

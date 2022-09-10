@@ -174,6 +174,8 @@ op:
     name: Swaporder
     summary: Swaps the two inputs. This is only relevant for some of the `Operation`
       values.
+  - label: Optimize
+    name: Optimize
   summary: Combines float or vector fields using one of several mathematical operations.
 
 ---

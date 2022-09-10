@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.combine.arrange
-  opVersion: '14'
+  opVersion: '15'
   opStatus: default
 opDef: !def
   enable: true
@@ -12,10 +12,8 @@ opDef: !def
       Allcontexttype: true
     returnType: !returnT
       Returntypesdf: true
-  function: !text
-    file: src/operators/combine/arrange.glsl
-    name: function
-  paramGroupTable: eval_params
+  function: function
+  paramGroupTable: params
   libraryNames: raytkCombine
   variableTable: !table
     file: src/operators/combine/arrange_variables.txt

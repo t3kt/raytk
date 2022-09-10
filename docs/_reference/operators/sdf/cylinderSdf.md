@@ -38,6 +38,19 @@ op:
     name: heightField
     returnTypes:
     - float
+  - contextTypes:
+    - Context
+    - MaterialContext
+    - CameraContext
+    - LightContext
+    - RayContext
+    - ParticleContext
+    coordTypes:
+    - vec3
+    label: Thickness Field
+    name: thicknessField
+    returnTypes:
+    - float
   keywords:
   - column
   - cylinder
@@ -65,6 +78,10 @@ op:
     name: Axis
   - label: Infinite Height
     name: Infiniteheight
+  - label: Hollow
+    name: Hollow
+  - label: Thickness
+    name: Thickness
   summary: SDF for a cylinder.
   thumb: assets/images/reference/operators/sdf/cylinderSdf_thumb.png
   variables:

@@ -1014,6 +1014,11 @@ class DAT(OP):
 	isText: bool
 	locals: _T.Dict[str, _T.Any]
 
+class scriptDAT(DAT):
+	def destroyCustomPars(self): pass
+	def sortCustomPages(self, *pages): pass
+	def appendCustomPage(self, name: str) -> 'Page': pass
+
 class evaluateDAT(DAT):
 	exprCell: 'Cell'
 	exprCol: int
@@ -1677,7 +1682,7 @@ _AnyOpT = _T.Union[OP, DAT, COMP, CHOP, SOP, TOP, MAT, '_AnyCompT']
 
 baseCOMP = COMP
 panelCOMP = PanelCOMP
-mergeDAT = nullDAT = parameterexecuteDAT = parameterDAT = tableDAT = textDAT = scriptDAT = DAT
+mergeDAT = nullDAT = parameterexecuteDAT = parameterDAT = tableDAT = textDAT = DAT
 inDAT = outDAT = infoDAT = substituteDAT = DAT
 parameterCHOP = nullCHOP = selectCHOP = inCHOP = outCHOP = CHOP
 inTOP = outTOP = nullTOP = TOP

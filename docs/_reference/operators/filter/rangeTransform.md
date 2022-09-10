@@ -39,6 +39,7 @@ op:
     - RayContext
     - ParticleContext
     coordTypes:
+    - vec2
     - vec3
     label: definition_in
     name: definition_in
@@ -57,6 +58,7 @@ op:
     - RayContext
     - ParticleContext
     coordTypes:
+    - vec2
     - vec3
     label: Index Field
     name: indexField

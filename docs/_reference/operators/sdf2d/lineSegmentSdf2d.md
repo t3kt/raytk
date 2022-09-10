@@ -31,6 +31,19 @@ op:
     summary: If connected, this field will be used to pick both points. The first
       point comes from the X and Y components of the vector that comes out of the
       field, and the second point will use the Z and W components.
+  - contextTypes:
+    - Context
+    - MaterialContext
+    - CameraContext
+    - LightContext
+    - RayContext
+    - ParticleContext
+    coordTypes:
+    - vec2
+    label: Thickness Field
+    name: thicknessField
+    returnTypes:
+    - float
   name: lineSegmentSdf2d
   opType: raytk.operators.sdf2d.lineSegmentSdf2d
   parameters:
@@ -38,8 +51,13 @@ op:
     name: Pointa
   - label: Point B
     name: Pointb
+  - label: Thickness
+    name: Thickness
   summary: 2D line segment SDF.
   thumb: assets/images/reference/operators/sdf2d/lineSegmentSdf2d_thumb.png
+  variables:
+  - label: normoffset
+    name: normoffset
 
 ---
 

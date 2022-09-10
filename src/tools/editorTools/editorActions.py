@@ -569,6 +569,12 @@ def createActionManager():
 			matchPredicate=lambda o: ROPState(o).isField),
 		_createVarRefGroup('Reference Variable'),
 		_createRenderSelGroup('Select Output Buffer'),
+		_ActionImpl(
+			'Select Depth Map',
+			ropType='raytk.operators.post.depthMap',
+			select=_OpSelect(ropTypes=[_RopTypes.raymarchRender3d]),
+			attach=_AttachOutFromExisting(inputIndex=0, outputIndex=2),
+		),
 		_createAnimateParamsGroup(
 			'Animate With Speed', _RopTypes.speedGenerator, 'speedGen'),
 		_createAnimateParamsGroup(

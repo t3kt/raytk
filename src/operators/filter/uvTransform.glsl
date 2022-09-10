@@ -8,7 +8,7 @@ void THIS_apply(inout vec4 uv) {
 
 ReturnT thismap(CoordT p, ContextT ctx) {
 	ReturnT res = inputOp1(p, ctx);
-	if (THIS_Enable >= 0.5) {
+	if (IS_TRUE(THIS_Enable)) {
 		#pragma r:if RAYTK_USE_UV
 			#pragma r:if THIS_Transformprimary
 			THIS_apply(res.uv);

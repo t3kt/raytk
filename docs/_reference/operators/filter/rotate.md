@@ -118,6 +118,8 @@ op:
     name: Pivot
     summary: The point around which to apply the rotation. For 2D coordinates, only
       the X and Y parts are used.
+  - label: Optimize
+    name: Optimize
   shortcuts:
   - rot
   summary: Transforms space with rotation.

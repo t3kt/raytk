@@ -1,6 +1,6 @@
 ReturnT thismap(CoordT p, ContextT ctx) {
 	Sdf res = inputOp1(p, ctx);
-	if (THIS_Enable >= 0.5) {
+	if (IS_TRUE(THIS_Enable)) {
 		float q;
 		switch (int(THIS_Axis)) {
 			case 0: q = p.x; break;

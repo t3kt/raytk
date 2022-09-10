@@ -1,7 +1,7 @@
 // from Logarithmic Mobius Transform by Shane
 // https://www.shadertoy.com/view/4dcSWs
 ReturnT thismap(CoordT p, ContextT ctx) {
-	if (THIS_Enable >= 0.5) {
+	if (IS_TRUE(THIS_Enable)) {
 		#if defined(THIS_COORD_TYPE_vec2)
 		vec2 q = p;
 		#elif defined(THIS_COORD_TYPE_vec3)

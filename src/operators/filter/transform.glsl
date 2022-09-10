@@ -1,6 +1,6 @@
 ReturnT thismap(CoordT p, ContextT ctx) {
 	float valueAdjust = 1.0;
-	if (THIS_Enable >= 0.5) {
+	if (IS_TRUE(THIS_Enable)) {
 		TRANSFORM_CODE();
 	}
 	ReturnT res;

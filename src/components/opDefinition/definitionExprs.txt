@@ -6,21 +6,14 @@ contextType	op('types')['contextType', 1]
 returnType	op('types')['returnType', 1]
 opVersion	parent().par.Raytkopversion or 0
 toolkitVersion	parent().par.Raytkversion or ''
-functionPath	parent().path + '/function'
 paramSource	parent().path + '/param_vals'
 paramVectors	parent().path + '/param_vector_vals'
 paramTable	parent().path + '/params'
 paramTupletTable	parent().path + '/param_tuplets'
-materialTable	(parent().path + '/material_table') if op('materialCode').text.strip() else ''
-macroTable	parent().path + '/macro_table'
-textureTable	op('texture_table').path if parent().par.Texturetable and parent().par.Texturetable.eval().numRows > 0 else ''
-bufferTable	op('buffer_table').path if parent().par.Buffertable and parent().par.Buffertable.eval().numRows > 0 else ''
 libraryNames	parent().par.Librarynames
-initPath	(parent().path + '/initCode') if parent().par.Initcode else ''
-opGlobalsPath	(parent().path + '/opGlobals') if parent().par.Opglobals else ''
 variableTable	(parent().path + '/variable_table') if op('variable_table').numRows > 1 else ''
 referenceTable	(parent().path + '/reference_table') if op('reference_table').numRows > 1 else ''
-dispatchTable	(parent().path + '/dispatch_table') if op('dispatch_table').numRows > 1 else ''
-inputNames	op('inputNameMap').text or ''
+inputNames	' '.join([c.val for c in op('input_table').col('name')[1:]])
 definitionPath	parent().path + '/definition'
 elementTable	(parent().path + '/opElements') if op('opElements').numRows > 1 else ''
+statePath	parent().path + '/opState'

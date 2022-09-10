@@ -1,7 +1,7 @@
 // https://www.shadertoy.com/view/wtVyRG
 
 ReturnT thismap(CoordT p, ContextT ctx) {
-	if (THIS_Enable >= 0.5) {
+	if (IS_TRUE(THIS_Enable)) {
 		vec3 pivot = THIS_Pivot;
 		p -= pivot;
 		vec2 sh = THIS_Shift * TAU;

@@ -28,30 +28,17 @@ void THIS_apply(inout CoordT p, inout ContextT ctx, inout float valueAdjust, out
 		THIS_normstep = ratio;
 		#pragma r:endif
 		#pragma r:if THIS_Enablerotate && THIS_HAS_INPUT_rotateField
-		#pragma r:if inputOp_rotateField_COORD_TYPE_float
-		rotate = baseRot + inputOp_rotateField(ratio, ctx).xyz;
-		#pragma r:else
 		rotate = baseRot + inputOp_rotateField(p, ctx).xyz;
 		#pragma r:endif
-		#pragma r:endif
 		#pragma r:if THIS_Enabletranslate && THIS_HAS_INPUT_translateField
-		#pragma r:if inputOp_translateField_COORD_TYPE_float
-		translate = baseT + inputOp_translateField(ratio, ctx).xyz;
-		#pragma r:else
 		translate = baseT + inputOp_translateField(p, ctx).xyz;
-		#pragma r:endif
 		#pragma r:endif
 		#pragma r:if THIS_Enablescale && THIS_HAS_INPUT_scaleField
 		{
-			#pragma r:if inputOp_scaleField_COORD_TYPE_float
-			inputOp_scaleField_CoordT q0 = ratio;
-			#pragma r:else
-			inputOp_scaleField_CoordT q0 = p;
-			#pragma r:endif
 			#pragma r:if THIS_Scaletype_uniform
-			uniformscale = baseS * adaptAsFloat(inputOp_scaleField(q0, ctx));
+			uniformscale = baseS * adaptAsFloat(inputOp_scaleField(p, ctx));
 			#pragma r:else
-			scale = baseS * fillToVec3(inputOp_scaleField(q0, ctx));
+			scale = baseS * fillToVec3(inputOp_scaleField(p, ctx));
 			#pragma r:endif
 		}
 			#pragma r:endif

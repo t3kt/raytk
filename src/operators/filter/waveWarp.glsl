@@ -6,7 +6,7 @@ vec3 THIS_wave(CoordT p, ContextT ctx, vec3 q) {
 }
 
 ReturnT thismap(CoordT p, ContextT ctx) {
-	if (THIS_Enable >= 0.5) {
+	if (IS_TRUE(THIS_Enable)) {
 		#pragma r:if THIS_COORD_TYPE_float
 		float q0 = p;
 		#pragma r:elif THIS_Axis_dist

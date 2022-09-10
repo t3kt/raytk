@@ -1,2 +1,2 @@
 names	source	handling	readOnlyHandling	conversion	enable
-Swaporder	param	runtime	macro		1
+Swaporder	param	runtime	macro		not parent().par.Optimize

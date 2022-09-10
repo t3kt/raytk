@@ -36,7 +36,6 @@ op:
     - RayContext
     - ParticleContext
     coordTypes:
-    - float
     - vec2
     - vec3
     label: Rotate Field
@@ -56,7 +55,6 @@ op:
     - RayContext
     - ParticleContext
     coordTypes:
-    - float
     - vec2
     - vec3
     label: Translate Field
@@ -71,7 +69,6 @@ op:
     - RayContext
     - ParticleContext
     coordTypes:
-    - float
     - vec2
     - vec3
     label: Scale Field

@@ -54,14 +54,18 @@ def buildValidationErrors(dat: 'DAT'):
 	if not hasattr(parent, 'raytk'):
 		resolveSourceParDefinition(dat)
 
-def restrictDefinitionTypes(dat: 'scriptDAT', inputDefs: 'DAT', supportedTypes: 'DAT'):
+def _restrictExpandedTypes(expandedTypes: str, supportedTypes: 'List[str]') -> str:
+	return ' '.join([t for t in expandedTypes.split(' ') if t in supportedTypes])
+
+def processDefinitions(dat: 'DAT', inputDefs: 'DAT', supportedTypes: 'DAT', config: 'DAT'):
 	dat.copy(inputDefs)
-	if dat.numRows < 2:
+	if dat.numRows < 2 or shouldBypass():
 		return
 	for column in ('coordType', 'contextType', 'returnType'):
 		cell = dat[1, column]
 		if cell:
 			cell.val = _restrictExpandedTypes(cell.val, supportedTypes[column, 'types'].val.split(' '))
-
-def _restrictExpandedTypes(expandedTypes: str, supportedTypes: 'List[str]') -> str:
-	return ' '.join([t for t in expandedTypes.split(' ') if t in supportedTypes])
+	dat.appendCol(['input:alias', config['alias', 1]])
+	dat.appendCol(['input:vars', config['vars', 1]])
+	dat.appendCol(['input:varInputs', config['varInputs', 1]])
+	dat.appendCol(['input:handler', parent()])

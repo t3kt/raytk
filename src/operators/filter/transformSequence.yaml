@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.filter.transformSequence
-  opVersion: '4'
+  opVersion: '5'
   opStatus: beta
 opDef: !def
   enable: !expr
@@ -16,7 +16,7 @@ opDef: !def
       Allreturntype: true
   function: !text
     file: src/operators/filter/transformSequence.glsl
-    name: functionTemplate
+    name: function
   paramGroupTable: eval_params
   variableTable: !table
     file: src/operators/filter/transformSequence_variables.txt
@@ -102,6 +102,7 @@ elements:
   name: codeSwitcher_Target
   elementType: codeSwitcher
   params:
+    Elementroot: ''
     Table: !table
       file: src/operators/filter/transformSequence_targets.txt
       name: targets
@@ -110,6 +111,7 @@ elements:
     Manageparamstates: false
     Alwaysincludeallparams: false
     Switchmode: inline
+    Indexexpr: ''
     Placeholder: ''
 - !opElement
   name: aggregateCodeGenerator
@@ -125,4 +127,4 @@ elements:
     Defaultstmt: ''
     Firststepstmt: ''
     Stepstmt: q = adaptAsVec4(inputOp_transform$(THIS_asCoordT(q), ctx));
-    Bodycodeplaceholder: ''
+    Bodycodeplaceholder: BODY();

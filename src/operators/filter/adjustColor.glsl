@@ -1,6 +1,6 @@
 ReturnT thismap(CoordT p, ContextT ctx) {
 	ReturnT col = inputOp1(p, ctx);
-	if (THIS_Enable >= 0.5) {
+	if (IS_TRUE(THIS_Enable)) {
 		#ifdef inputOp_brightnessContrastField_RETURN_TYPE_vec4
 		vec2 bc = inputOp_brightnessContrastField(p, ctx).xy;
 		#elif defined(inputOp_brightnessContrastField_RETURN_TYPE_float)

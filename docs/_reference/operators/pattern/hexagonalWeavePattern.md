@@ -37,6 +37,65 @@ op:
     name: thicknessField
     returnTypes:
     - float
+  - contextTypes:
+    - Context
+    - MaterialContext
+    - CameraContext
+    - LightContext
+    - RayContext
+    - ParticleContext
+    coordTypes:
+    - vec2
+    - vec3
+    label: Blending Field
+    name: blendingField
+    returnTypes:
+    - float
+  - contextTypes:
+    - Context
+    - MaterialContext
+    - CameraContext
+    - LightContext
+    - RayContext
+    - ParticleContext
+    coordTypes:
+    - vec2
+    - vec3
+    label: Color 1 Field / Replacement Color
+    name: color1Field
+    returnTypes:
+    - float
+    - vec4
+  - contextTypes:
+    - Context
+    - MaterialContext
+    - CameraContext
+    - LightContext
+    - RayContext
+    - ParticleContext
+    coordTypes:
+    - vec2
+    - vec3
+    label: Color 2 Field
+    name: color2Field
+    returnTypes:
+    - float
+    - vec4
+  - contextTypes:
+    - Context
+    - MaterialContext
+    - CameraContext
+    - LightContext
+    - RayContext
+    - ParticleContext
+    coordTypes:
+    - vec2
+    - vec3
+    label: Background Color Field
+    name: bgColorField
+    returnTypes:
+    - float
+    - vec4
   name: hexagonalWeavePattern
   opType: raytk.operators.pattern.hexagonalWeavePattern
   parameters:
@@ -51,10 +110,30 @@ op:
     name: Size
   - label: Thickness
     name: Thickness
+  - label: Blending
+    name: Blending
   - label: Randomize
     name: Randomize
   - label: Seed
     name: Seed
+  - label: Format
+    menuOptions:
+    - label: Color
+      name: color
+    - label: Custom Override Color
+      name: customcolor
+    name: Format
+  - label: Color 1
+    name: Color1
+  - label: Color 2
+    name: Color2
+  - label: Background Color
+    name: Bgcolor
   thumb: assets/images/reference/operators/pattern/hexagonalWeavePattern_thumb.png
+  variables:
+  - label: axialdist
+    name: axialdist
+  - label: mask
+    name: mask
 
 ---

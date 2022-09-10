@@ -490,7 +490,7 @@ class ToolkitBuilder(_BuilderBase):
 			self, comp: 'COMP',
 			thenRun: 'Optional[Callable]' = None, runArgs: list = None):
 		self.log('Processing nested operators')
-		subOps = comp.findChildren(tags=[RaytkTags.raytkOP.name], depth=4)
+		subOps = comp.findChildren(tags=[RaytkTags.raytkOP.name], depth=3)
 		self.log(f'found {len(subOps)} nested operators')
 		queueCall(self.processNestedOperators_stage, subOps, thenRun, runArgs)
 
@@ -646,10 +646,12 @@ class SnippetsBuilder(_BuilderBase):
 		queueCall(processSnippetStage, 0)
 
 	def processRop(self, rop: 'COMP'):
+		self.log(f'Processing ROP {rop}', verbose=True)
+		rop.par.enablecloningpulse.pulse()
+		# self.context.reclone(rop, verbose=True)
 		rop.par.enablecloning = False
 		if not rop.isPanel and not rop.isObject:
 			rop.showCustomOnly = True
-		self.context.updateOrReclone(rop)
 
 	def finalizeRootPars(self, comp: 'COMP'):
 		super().finalizeRootPars(comp)

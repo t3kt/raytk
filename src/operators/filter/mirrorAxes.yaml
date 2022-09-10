@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.filter.mirrorAxes
-  opVersion: '6'
+  opVersion: '7'
   opStatus: beta
 opDef: !def
   enable: !expr
@@ -71,6 +71,7 @@ elements:
   name: codeSwitcher_Axes
   elementType: codeSwitcher
   params:
+    Elementroot: ''
     Table: !table
       file: src/operators/filter/mirrorAxes_axes.txt
       name: axes
@@ -79,4 +80,5 @@ elements:
     Manageparamstates: true
     Alwaysincludeallparams: false
     Switchmode: auto
-    Placeholder: ''
+    Indexexpr: ''
+    Placeholder: BODY();

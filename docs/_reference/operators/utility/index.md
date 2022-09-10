@@ -22,6 +22,7 @@ cat:
     status: beta
   - name: paramFilter
     status: beta
+  - name: providePosition
   - name: provideVariable
     status: beta
   - name: sceneState

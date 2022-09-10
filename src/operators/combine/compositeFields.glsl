@@ -2,15 +2,15 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 	ReturnT res1 = fillToVec4(inputOp1(p, ctx));
 	if (IS_FALSE(THIS_Enable)) { return res1; }
 	ReturnT res2 = fillToVec4(inputOp2(p, ctx));
-	if (THIS_Swapinputs > 0.) {
-		ReturnT tmp = res1;
-		res1 = res2;
-		res2 = tmp;
+	if (IS_TRUE(THIS_Swapinputs)) {
+		swap(res1, res2);
 	}
-	vec3 col1 = res1.rgb;
-	vec3 col2 = res2.rgb;
+	#ifdef THIS_HAS_INPUT_blendField
+	float amt = inputOp_blendField(p, ctx);
+	#else
 	float amt = THIS_Blend;
-	vec3 col;
+	#endif
+	ReturnT res;
 	BODY();
-	return vec4(col, mix(res1.a, res2.a, amt));
+	return res;
 }

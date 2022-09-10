@@ -1,6 +1,6 @@
 ReturnT thismap(CoordT p, ContextT ctx) {
 	float adjust = 0.;
-	if (THIS_Enable >= 0.5) {
+	if (IS_TRUE(THIS_Enable)) {
 		vec3 p0 = adaptAsVec3(p);
 		#ifdef THIS_HAS_INPUT_sizeField
 		vec3 h = adaptAsVec3(inputOp_sizeField(p, ctx));

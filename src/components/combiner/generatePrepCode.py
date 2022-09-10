@@ -4,12 +4,11 @@ if False:
 	from _stubs import *
 
 def onCook(dat: 'DAT'):
-	paramTable = dat.inputs[0]  # type: DAT
+	paramGroupTable = dat.inputs[0]  # type: DAT
 	effectiveMode = str(dat.inputs[1]['effectiveMode', 1])
 	config = parent()
 	dat.clear()
 
-	swapInputsParam = config.par.Swapinputsparam
 	radiusParam = config.par.Radiusparam
 	numberParam = config.par.Numberparam
 	offsetParam = config.par.Offsetparam
@@ -19,7 +18,10 @@ def onCook(dat: 'DAT'):
 	isInline = effectiveMode == 'inline'
 
 	if isInline:
-		usedParams = tdu.split(paramTable['params', 1])
+		usedParams = []
+		for row in range(1, paramGroupTable.numRows):
+			if paramGroupTable[row, 'handling'] == 'runtime':
+				usedParams += tdu.split(paramGroupTable[row, 'names'])
 		needRadius = radiusParam in usedParams
 		needNumber = numberParam in usedParams
 		needOffset = offsetParam in usedParams

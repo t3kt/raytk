@@ -1,5 +1,5 @@
 ReturnT thismap(CoordT p, ContextT ctx) {
-	if (THIS_Enable >= 0.5) {
+	if (IS_TRUE(THIS_Enable)) {
 		float d = THIS_Distance;
 		#ifdef THIS_HAS_INPUT_distanceField
 		d += inputOp_distanceField(p, ctx);

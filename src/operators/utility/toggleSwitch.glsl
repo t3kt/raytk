@@ -1,6 +1,6 @@
 ReturnT thismap(CoordT p, ContextT ctx) {
 	#if defined(THIS_HAS_INPUT_1)
-	if (THIS_Enable > 0.) {
+	if (IS_TRUE(THIS_Enable)) {
 		return THIS_asReturnT(inputOp1(p, ctx));
 	}
 	#endif

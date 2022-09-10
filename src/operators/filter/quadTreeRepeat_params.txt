@@ -1,3 +1,3 @@
 names	source	handling	readOnlyHandling	conversion	enable
-Chance[1-2] Division	param	runtime	macro		1
-Seed Iterationtype Enablerescale	param	macro			1
+Chance[1-2] Division Seed	param	runtime	macro		1
+Iterationtype Enablerescale	param	macro			1

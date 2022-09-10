@@ -37,6 +37,19 @@ op:
     returnTypes:
     - float
     summary: Float value field that controls the radius of the prism.
+  - contextTypes:
+    - Context
+    - MaterialContext
+    - CameraContext
+    - LightContext
+    - RayContext
+    - ParticleContext
+    coordTypes:
+    - vec3
+    label: Thickness Field
+    name: thicknessField
+    returnTypes:
+    - float
   keywords:
   - column
   - cylinder
@@ -82,6 +95,10 @@ op:
     name: Axis
   - label: Infinite Height
     name: Infiniteheight
+  - label: Hollow
+    name: Hollow
+  - label: Thickness
+    name: Thickness
   summary: A prism shape, like a cylinder but with flat sides, along the z axis.
   thumb: assets/images/reference/operators/sdf/prismSdf_thumb.png
 

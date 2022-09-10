@@ -1,4 +1,6 @@
+from dataclasses import dataclass
 import math
+from raytkState import RopState, Macro, Texture, Reference, Variable, Dispatch, Buffer, ValidationError
 import re
 
 # noinspection PyUnreachableCode
@@ -378,179 +380,11 @@ def buildParamChopNamesTable(dat: 'DAT', paramSpecTable: 'DAT'):
 	dat.appendRow(['special', ' '.join(specialNames)])
 	dat.appendRow(['angle', ' '.join(angleNames)])
 
-_typePattern = re.compile(r'\b[CR][a-z]+T\b')
-_typeRepls = {'CoordT': 'THIS_CoordT', 'ContextT': 'THIS_ContextT', 'ReturnT': 'THIS_ReturnT'}
-def _typeRepl(m): return _typeRepls.get(m.group(0), m.group(0))
-
-def prepareCode(dat: 'DAT'):
-	if not dat.inputs:
-		dat.text = ''
-		return
-	dat.clear()
-	text = dat.inputs[0].text
-	text = _replaceElementPlaceholders(text)
-	text = _typePattern.sub(_typeRepl, text)
-	dat.write(text)
-
-def _replaceElementPlaceholders(text: str):
-	elementTable = _getOpElementTable()
-	for phCol in elementTable.cells(0, 'placeholder*'):
-		i = tdu.digits(phCol.val)
-		for row in range(1, elementTable.numRows):
-			placeholder = elementTable[row, phCol].val
-			if not placeholder or placeholder not in text:
-				continue
-			codeDat = op(elementTable[row, f'code{i}'])
-			code = codeDat.text if codeDat else ''
-			text = text.replace(placeholder, code)
-	return text
-
 def updateLibraryMenuPar(libsComp: 'COMP'):
 	p = parentPar().Librarynames  # type: Par
 	libs = libsComp.findChildren(type=DAT, maxDepth=1, tags=['library'])
 	libs.sort(key=lambda l: -l.nodeY)
 	p.menuNames = [lib.name for lib in libs]
-
-def _getHasInputMacroName(inputAlias: str):
-	if tdu.base(inputAlias) == 'inputOp':
-		i = tdu.digits(inputAlias)
-		if i is not None:
-			return f'THIS_HAS_INPUT_{i}'
-	return f'THIS_HAS_INPUT_{inputAlias}'
-
-def prepareMacroTable(dat: 'scriptDAT', inputTable: 'DAT', paramSpecTable: 'DAT', paramTupletTable: 'DAT'=None):
-	dat.clear()
-	for cell in inputTable.col('inputFunc')[1:]:
-		if not cell.val:
-			continue
-		dat.appendRow([
-			'',
-			_getHasInputMacroName(cell.val),
-			'',
-		])
-	macroParams = []
-	host = _getParamsOp()
-	angleParamNames = []
-	for i in range(1, paramSpecTable.numRows):
-		if paramSpecTable[i, 'handling'] != 'macro':
-			continue
-		par = host.par[paramSpecTable[i, 'localName']]
-		if par is None:
-			continue
-		macroParams.append(par)
-		if paramSpecTable[i, 'conversion'] == 'angle':
-			angleParamNames.append(par.name)
-
-	macroParamVals = {}
-	for par in macroParams:
-		name = par.name
-		val = par.eval()
-		if name in angleParamNames:
-			val = math.radians(val)
-		macroParamVals[name] = val
-		style = par.style
-		if style in ('Menu', 'Str', 'StrMenu'):
-			dat.appendRow(['', f'THIS_{name}_{val}', ''])
-			dat.appendRow(['', f'THIS_{name}', val])
-		elif style == 'Toggle':
-			if val:
-				dat.appendRow(['', f'THIS_{name}', '1'])
-		else:
-			dat.appendRow(['', f'THIS_{name}', val])
-	for i in range(1, paramTupletTable.numRows):
-		if paramTupletTable[i, 'handling'] != 'macro':
-			continue
-		size = int(paramTupletTable[i, 'size'])
-		if size < 2:
-			continue
-		tuplet = paramTupletTable[i, 'tupletLocalName']
-		parts = [
-			repr(macroParamVals[p])
-			for p in paramTupletTable[i, 'localNames'].val.split(' ')
-		]
-		partsJoined = ','.join(parts)
-		dat.appendRow(['', f'THIS_{tuplet}', f'vec{size}({partsJoined})'])
-	tables = [op(parentPar().Macrotable)] + parentPar().Generatedmacrotables.evalOPs() + [
-		op(c) for c in _getOpElementTable().col('macroTable')[1:]
-	]
-	for table in tables:
-		if not table or table.numCols == 0 or table.numRows == 0:
-			continue
-		elif table.numCols == 3:
-			dat.appendRows(table.rows())
-		elif table.numCols == 1:
-			dat.appendRows([
-				['', c.val, '']
-				for c in table.col(0)
-			])
-		elif table.numCols == 2:
-			dat.appendRows([
-				['', cells[0], cells[1]]
-				for cells in table.rows()
-			])
-		else:
-			dat.appendRows([
-				[cells[0], cells[1], ' '.join([c.val for c in cells[2:]])]
-				for cells in table.rows()
-			])
-
-def prepareTextureTable(dat: 'scriptDAT'):
-	dat.clear()
-	dat.appendRow(['name', 'path', 'type'])
-	table = parentPar().Texturetable.eval()
-	if not table or table.numRows < 2:
-		return
-	namePrefix = parentPar().Name.eval() + '_'
-	for i in range(1, table.numRows):
-		if table[i, 'enable'] in ('0', 'False'):
-			continue
-		name = table[i, 'name']
-		path = table[i, 'path']
-		if not name or not path:
-			continue
-		dat.appendRow([
-			namePrefix + name.val,
-			path,
-			table[i, 'type'] or '2d',
-		])
-
-def prepareBufferTable(dat: 'scriptDAT'):
-	dat.clear()
-	dat.appendRow(['name', 'type', 'chop', 'uniformType', 'length', 'expr1', 'expr2', 'expr3', 'expr4'])
-	table = parentPar().Buffertable.eval()
-	if not table or table.numRows < 2:
-		return
-	namePrefix = parentPar().Name.eval() + '_'
-	for i in range(1, table.numRows):
-		if table[i, 'enable'] in ('0', 'False'):
-			continue
-		name = str(table[i, 'name'] or '')
-		path = str(table[i, 'chop'] or '')
-		expr1 = str(table[i, 'expr1'] or '')
-		expr2 = str(table[i, 'expr2'] or '')
-		expr3 = str(table[i, 'expr3'] or '')
-		expr4 = str(table[i, 'expr4'] or '')
-		if not name:
-			continue
-		if not path and not expr1 and not expr2 and not expr3 and not expr4:
-			continue
-		dat.appendRow([
-			namePrefix + name,
-			table[i, 'type'] or 'vec4',
-			path,
-			table[i, 'uniformType'] or 'uniformarray',
-			table[i, 'length'],
-			expr1, expr2, expr2, expr3,
-			])
-
-def prepareMaterialTable(dat: 'scriptDAT'):
-	dat.clear()
-	dat.appendRow(['material', 'materialCode'])
-	if parentPar().Materialcode:
-		dat.appendRow([
-			'MAT_' + parentPar().Name.eval(),
-			parent().path + '/materialCode',
-		])
 
 def prepareVariableTable(dat: 'scriptDAT'):
 	dat.clear()
@@ -653,23 +487,6 @@ def _checkInputType(handler: 'COMP', typeName: str, typeCategory: str):
 			return
 	return f'Input does not support {typeCategory} {typeName}'
 
-def prepareDispatchTable(dat: 'scriptDAT'):
-	dat.clear()
-	dat.appendRow(['name', 'category', 'code'])
-	table = parentPar().Dispatchtable.eval()
-	if not table or table.numRows < 2:
-		return
-	namePrefix = parentPar().Name.eval() + '_'
-	for i in range(1, table.numRows):
-		name = table[i, 'name']
-		if not name or table[i, 'enable'] in ('0', 'False'):
-			continue
-		dat.appendRow([
-			namePrefix + name.val,
-			table[i, 'category'],
-			table[i, 'code'],
-		])
-
 def _isMaster():
 	host = _host()
 	return host and host.par.clone == host
@@ -692,6 +509,306 @@ def onValidationChange(dat: 'DAT'):
 def onHostNameChange():
 	# Workaround for dependency update issue (#295) when the host is renamed.
 	op('sel_funcTemplate').cook(force=True)
+
+def buildOpState():
+	builder = _Builder()
+	builder.loadInputs(ops('input_def_*'))
+	builder.loadOpElements(op('opElements'))
+	builder.loadCode()
+	builder.loadMacros(
+		paramSpecTable=op('paramSpecTable'),
+		paramTupletTable=op('param_tuplets'),
+		opElementTable=op('opElements'),
+	)
+	builder.loadTextures()
+	builder.loadBuffers()
+	builder.loadReferences()
+	builder.loadVariables()
+	builder.loadDispatchBlocks()
+
+	return builder.opState
+
+class _Builder:
+	def __init__(self):
+		# noinspection PyTypeChecker
+		self.defPar = parent().par  # type: OpDefParsT
+		self.hostOp = self.defPar.Hostop.eval()
+		self.paramsOp = self.defPar.Paramsop.eval() or self.hostOp
+		self.opState = RopState(
+			name=self.defPar.Name.eval(),
+		)
+		self.opName = self.opState.name
+		self.namePrefix = self.opName + '_'
+		if self.defPar.Materialcode:
+			self.opState.materialId = 'MAT_' + self.opState.name
+		self.inputs = []  # type: List[_InputInfo]
+		self.replacements = {
+			'thismap': self.opName,
+			'THIS_': self.namePrefix,
+		}  # type: Dict[str, str]
+		if self.opState.materialId:
+			self.replacements['THISMAT'] = self.opState.materialId
+		self.elementReplacements = {}
+
+	def loadInputs(self, inDats: 'List[DAT]'):
+		self.opState.inputNames = []
+		for i, inDat in enumerate(inDats + self.defPar.Inputdefs.evalOPs()):
+			if not inDat[1, 'name']:
+				continue
+			func = str(inDat[1, 'input:alias'] or f'inputOp{i + 1}')
+			placeholder = f'inputOp_{func}' if not func.startswith('inputOp') else func
+			name = str(inDat[1, 'name'])
+			self.inputs.append(_InputInfo(
+				inputFunc=func,
+				name=name,
+				path=str(inDat[1, 'path']),
+				coordType=str(inDat[1, 'coordType']),
+				contextType=str(inDat[1, 'contextType']),
+				returnType=str(inDat[1, 'returnType']),
+				placeholder=placeholder,
+				vars=str(inDat[1, 'input:vars']),
+				varInputs=str(inDat[1, 'input:varInputs']),
+			))
+			self.replacements[placeholder] = name
+			self.opState.inputNames.append(name)
+
+	def loadOpElements(self, elementTable: 'DAT'):
+		for phCol in elementTable.cells(0, 'placeholder*'):
+			i = tdu.digits(phCol.val)
+			for row in range(1, elementTable.numRows):
+				placeholder = elementTable[row, phCol].val
+				if not placeholder:
+					continue
+				codeDat = op(elementTable[row, f'code{i}'])
+				self.elementReplacements[placeholder] = codeDat.text if codeDat else ''
+
+	def addError(self, message: str, path: 'Optional[str]' = None, level: str = 'error'):
+		self.opState.validationErrors.append(ValidationError(
+			path=path or parent(2).path, level=level, message=message))
+
+	def replaceNames(self, val: str):
+		# TODO: there must be a more efficent way to handle this
+		if not val:
+			return ''
+		for k, v in self.replacements.items():
+			val = val.replace(k, v)
+		return val
+
+	def loadCode(self):
+		self.opState.functionCode = self.processCode(self.defPar.Functemplate.eval())
+		self.opState.materialCode = self.processCode(self.defPar.Materialcode.eval())
+		self.opState.initCode = self.processCode(self.defPar.Initcode.eval())
+		self.opState.opGlobals = self.processCode(self.defPar.Opglobals.eval())
+
+	def processCode(self, codeDat: 'DAT'):
+		if not codeDat or not codeDat.text:
+			return ''
+		code = codeDat.text
+		for placeholder, val in self.elementReplacements.items():
+			code = code.replace(placeholder, val)
+		code = _typePattern.sub(_typeRepl, code)
+		return self.replaceNames(code)
+
+	def loadMacros(self, paramSpecTable: 'DAT', paramTupletTable: 'DAT', opElementTable: 'DAT'):
+		macros = []
+		def addMacro(m: Macro):
+			if not m.name:
+				return
+			m.name = self.replaceNames(m.name)
+			if isinstance(m.value, str):
+				m.value = self.replaceNames(m.value)
+			macros.append(m)
+		for inputInfo in self.inputs:
+			addMacro(Macro(_getHasInputMacroName(inputInfo.inputFunc)))
+		macroParams = []
+		angleParamNames = []
+		for i in range(1, paramSpecTable.numRows):
+			if paramSpecTable[i, 'handling'] != 'macro':
+				continue
+			par = self.paramsOp.par[paramSpecTable[i, 'localName']]
+			if par is None:
+				continue
+			macroParams.append(par)
+			if paramSpecTable[i, 'conversion'] == 'angle':
+				angleParamNames.append(par.name)
+		macroParamVals = {}
+		for par in macroParams:
+			name = par.name
+			val = par.eval()
+			if name in angleParamNames:
+				val = math.radians(val)
+			macroParamVals[name] = val
+			style = par.style
+			if style in ('Menu', 'Str', 'StrMenu'):
+				addMacro(Macro(f'{self.namePrefix}{name}_{val}'))
+				addMacro(Macro(self.namePrefix + name, val))
+			elif style == 'Toggle':
+				if val:
+					addMacro(Macro(self.namePrefix + name, 1))
+			else:
+				addMacro(Macro(self.namePrefix + name, val))
+		for i in range(1, paramTupletTable.numRows):
+			if paramTupletTable[i, 'handling'] != 'macro':
+				continue
+			size = int(paramTupletTable[i, 'size'])
+			if size < 2:
+				continue
+			tuplet = paramTupletTable[i, 'tupletLocalName'].val
+			parts = [
+				repr(macroParamVals[p])
+				for p in paramTupletTable[i, 'localNames'].val.split(' ')
+			]
+			partsJoined = ','.join(parts)
+			addMacro(Macro(self.namePrefix + tuplet, f'vec{size}({partsJoined})'))
+		tables = [self.defPar.Macrotable.eval()] + self.defPar.Generatedmacrotables.evalOPs() + [
+			op(c) for c in opElementTable.col('macroTable')[1:]
+		]
+		for table in tables:
+			if not table or not table.numCols or not table.numRows:
+				continue
+			if table.numCols == 3:
+				for row in table.rows():
+					addMacro(Macro(row[1].val, row[2].val, not _isFalseStr(row[0])))
+			elif table.numCols == 1:
+				for cell in table.col(0):
+					addMacro(Macro(cell.val))
+			elif table.numCols == 2:
+				for row in table.rows():
+					addMacro(Macro(row[0].val, row[1].val))
+			else:
+				for row in table.rows():
+					addMacro(Macro(row[1].val, ' '.join([c.val or '' for c in row[2:]]), not _isFalseStr(row[0])))
+		self.opState.macros = macros
+
+	def loadTextures(self):
+		self.opState.textures = []
+		table = self.defPar.Texturetable.eval()
+		if not table or table.numRows < 2:
+			return
+		for i in range(1, table.numRows):
+			if _isFalseStr(table[i, 'enable']):
+				continue
+			name = table[i, 'name']
+			path = table[i, 'path']
+			if not name or not path:
+				continue
+			self.opState.textures.append(Texture(
+				name=self.namePrefix + name.val,
+				path=path.val,
+				type=str(table[i, 'type'] or '2d')
+			))
+
+	def loadBuffers(self):
+		self.opState.buffers = []
+		table = self.defPar.Buffertable.eval()
+		if not table or table.numRows < 2:
+			return
+		for i in range(1, table.numRows):
+			if _isFalseStr(table[i, 'enable']):
+				continue
+			name = str(table[i, 'name'] or '')
+			path = str(table[i, 'chop'] or '')
+			expr1 = str(table[i, 'expr1'] or '')
+			expr2 = str(table[i, 'expr2'] or '')
+			expr3 = str(table[i, 'expr3'] or '')
+			expr4 = str(table[i, 'expr4'] or '')
+			if not name:
+				continue
+			if not path and not expr1 and not expr2 and not expr3 and not expr4:
+				continue
+			self.opState.buffers.append(Buffer(
+				name=self.namePrefix + name,
+				type=str(table[i, 'type'] or 'vec4'),
+				chop=path,
+				uniformType=str(table[i, 'uniformType'] or 'uniformarray'),
+				length=int(table[i, 'length']) if table[i, 'length'] != '' else None,
+				expr1=expr1,
+				expr2=expr2,
+				expr3=expr3,
+				expr4=expr4,
+			))
+
+	def loadReferences(self):
+		self.opState.references = []
+		table = self.defPar.Referencetable.eval()
+		if not table or table.numRows < 2:
+			return
+		for i in range(1, table.numRows):
+			localName = str(table[1, 'name'])
+			sourcePath = str(table[1, 'sourcePath'])
+			if localName == 'none' or not localName or not sourcePath:
+				continue
+			sourceOp = op(sourcePath)
+			if not sourceOp:
+				self.addError(f'Invalid source path for reference {localName}')
+				continue
+			self.opState.references.append(Reference(
+				name=self.namePrefix + localName,
+				localName=localName,
+				sourcePath=sourcePath,
+				sourceName=str(table[i, 'sourceName']),
+				dataType=str(table[i, 'dataType']),
+				owner=self.opName,
+			))
+
+	def loadVariables(self):
+		self.opState.variables = []
+		table = self.defPar.Variabletable.eval()
+		if not table or table.numRows < 2:
+			return
+		for i in range(1, table.numRows):
+			if _isFalseStr(table[i, 'enable']):
+				continue
+			localName = table[i, 'name'].val
+			self.opState.variables.append(Variable(
+				name=self.namePrefix + localName,
+				localName=localName,
+				label=table[i, 'label'].val or localName,
+				dataType=table[i, 'dataType'].val,
+				owner=self.opName,
+				macros=str(table[i, 'macros'] or ''),
+			))
+
+	def loadDispatchBlocks(self):
+		self.opState.dispatchBlocks = []
+		table = self.defPar.Dispatchtable.eval()
+		if not table or table.numRows < 2:
+			return
+		for i in range(1, table.numRows):
+			name = str(table[i, 'name'] or '')
+			if not name or _isFalseStr(table[i, 'enable']):
+				continue
+			self.opState.dispatchBlocks.append(Dispatch(
+				name=self.namePrefix + name,
+				category=table[i, 'category'].val,
+				code=self.replaceNames(table[i, 'code'].val),
+			))
+
+_typePattern = re.compile(r'\b[CR][a-z]+T\b')
+_typeRepls = {'CoordT': 'THIS_CoordT', 'ContextT': 'THIS_ContextT', 'ReturnT': 'THIS_ReturnT'}
+def _typeRepl(m): return _typeRepls.get(m.group(0), m.group(0))
+
+def _isFalseStr(val):
+	return val in ('0', 'False')
+
+def _getHasInputMacroName(inputAlias: str):
+	if tdu.base(inputAlias) == 'inputOp':
+		i = tdu.digits(inputAlias)
+		if i is not None:
+			return f'THIS_HAS_INPUT_{i}'
+	return f'THIS_HAS_INPUT_{inputAlias}'
+
+@dataclass
+class _InputInfo:
+	inputFunc: str
+	name: str
+	path: str
+	coordType: str
+	contextType: str
+	returnType: str
+	placeholder: str
+	vars: str
+	varInputs: str
 
 def _popDialog() -> 'PopDialogExt':
 	# noinspection PyUnresolvedReferences

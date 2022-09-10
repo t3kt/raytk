@@ -1,6 +1,9 @@
 from dataclasses import dataclass
+import json
 from raytkShader import simplifyNames, CodeFilter
+from raytkState import RopState, Dispatch, Texture, Buffer, Macro, Reference, Variable, ValidationError
 import re
+from io import StringIO
 from typing import Callable, Dict, List, Tuple, Union, Optional
 
 # noinspection PyUnreachableCode
@@ -22,7 +25,6 @@ if False:
 		Globalprefix: DatParamT
 		Predeclarations: DatParamT
 		Textureindexoffset: IntParamT
-		Globalmacrotable: DatParamT
 		Libraries: StrParamT
 		Bodytemplate: DatParamT
 		Outputbuffertable: DatParamT
@@ -45,9 +47,12 @@ class ShaderBuilder:
 		# noinspection PyTypeChecker
 		return o or self.ownerComp.op('default_shaderBuilderConfig')
 
-	def _configValid(self):
+	def configValid(self):
 		o = self._config()
-		return bool(o is not None and o.valid)
+		try:
+			return bool(o is not None and o.valid)
+		except:
+			return False
 
 	def configPar(self) -> '_ConfigPar':
 		return self._config().par
@@ -136,7 +141,7 @@ class ShaderBuilder:
 	def buildNameReplacementTable(self, dat: 'scriptDAT'):
 		dat.clear()
 		dat.appendRow(['before', 'after'])
-		if not self._configValid():
+		if not self.configValid():
 			return
 		if not self.configPar().Simplifynames:
 			return
@@ -148,11 +153,8 @@ class ShaderBuilder:
 		dat.appendCol(['before'] + origNames)
 		dat.appendCol(['after'] + simpleNames)
 
-	def buildGlobalPrefix(self):
-		return wrapCodeSection(self.ownerComp.par.Globalprefix.eval(), 'globalPrefix')
-
 	def _createParamProcessor(self) -> '_ParameterProcessor':
-		if not self._configValid():
+		if not self.configValid():
 			mode = 'uniformarray'
 		else:
 			mode = self.configPar().Parammode.eval()
@@ -160,29 +162,16 @@ class ShaderBuilder:
 			return _VectorArrayParameterProcessor(
 				self._parameterDetailTable(),
 				self._allParamVals(),
-				self.configPar() if self._configValid() else None,
+				self.configPar() if self.configValid() else None,
 			)
 		elif mode == 'separateuniforms':
 			return _SeparateUniformsParameterProcessor(
 				self._parameterDetailTable(),
 				self._allParamVals(),
-				self.configPar() if self._configValid() else None,
+				self.configPar() if self.configValid() else None,
 			)
 		else:
 			raise NotImplementedError(f'Parameter processor not available for mode: {mode!r}')
-
-	def buildGlobalDeclarations(self):
-		defsTable = self._definitionTable()
-		if defsTable.numRows < 2:
-			code = ['#error No input definition']
-		else:
-			mainName = defsTable[-1, 'name']
-			paramProcessor = self._createParamProcessor()
-			code = paramProcessor.globalDeclarations()
-			code += [
-				f'#define thismap {mainName}'
-			]
-		return wrapCodeSection(code, 'globals')
 
 	def getOpsFromDefinitionColumn(self, column: str):
 		defsTable = self._definitionTable()
@@ -201,23 +190,13 @@ class ShaderBuilder:
 
 	def buildMacroTable(self, dat: 'DAT'):
 		dat.clear()
-		tables = [self.ownerComp.par.Globalmacrotable.eval()]
-		tables += self.getOpsFromDefinitionColumn('macroTable')
-		for table in tables:
-			if not table or not table.numRows:
+		states = self._parseOpStates()
+		for state in states:
+			if not state.macros:
 				continue
-			for row in range(table.numRows):
-				if table.numCols == 3:
-					if table[row, 0] in ('0', 'False'):
-						continue
-					name = table[row, 1].val.strip()
-					if name:
-						dat.appendRow([name, table[row, 2]])
-				else:
-					name = table[row, 0].val.strip()
-					if not name:
-						continue
-					dat.appendRow([name, table[row, 1] if table.numCols > 1 else ''])
+			for m in state.macros:
+				if m.enable:
+					dat.appendRow([m.name, m.value if m.value is not None else ''])
 		outputBufferTable = self._outputBufferTable()
 		for row in range(1, outputBufferTable.numRows):
 			name = outputBufferTable[row, 'macro'].val.strip()
@@ -236,28 +215,6 @@ class ShaderBuilder:
 			localName = refTable[row, 'localName']
 			dat.appendRow([refTable[row, 'name'], refTable[row, 'source']])
 			dat.appendRow([f'{ownerName}_HAS_REF_{localName}', ''])
-
-	def buildVariableDeclarations(self):
-		varTable = self.ownerComp.op('variable_table')
-		decls = []
-		for i in range(1, varTable.numRows):
-			name = varTable[i, 'name']
-			dataType = varTable[i, 'dataType']
-			decls.append(f'{dataType} {name};')
-		return wrapCodeSection(decls, 'variables')
-
-	@staticmethod
-	def buildMacroBlock(macroTable: 'DAT'):
-		decls = [
-			f'#define {macroTable[i, 0]} {macroTable[i, 1]}'
-			for i in range(macroTable.numRows)
-		]
-		decls = _uniqueList(decls)
-		code = wrapCodeSection(decls, 'macros')
-		# if self.configPar().Inlineparameteraliases:
-		# 	processor = self._createParamProcessor()
-		# 	return processor.processCodeBlock(code)
-		return code
 
 	def _getLibraryDats(self, onWarning: Callable[[str], None] = None) -> 'List[DAT]':
 		requiredLibNames = self.ownerComp.par.Librarynames.eval().strip().split(' ')  # type: List[str]
@@ -311,55 +268,6 @@ class ShaderBuilder:
 		dats = dedupedDats
 		return dats
 
-	def buildLibraryIncludes(self, onWarning: Callable[[str], None] = None):
-		if not self._configValid():
-			mode = 'includelibs'
-		else:
-			mode = str(self.configPar()['Includemode'] or 'includelibs')
-		supportsInclude = self.ownerComp.op('support_table')['include', 1] == '1'
-		if mode == 'includelibs' and not supportsInclude:
-			inlineAll = True
-		else:
-			inlineAll = mode == 'inlineall'
-		libraries = self._getLibraryDats(onWarning)
-		if inlineAll:
-			libBlocks = [
-				f'// Library: <{lib.path}>\n{lib.text}'
-				for lib in libraries
-			]
-		else:
-			libBlocks = [
-				f'#include <{lib.path}>'
-				for lib in libraries
-			]
-		return wrapCodeSection(libBlocks, 'libraries')
-
-	def buildOpDataTypedefBlock(self, typeDefMacroTable: 'DAT'):
-		if not self._configValid():
-			inline = False
-		else:
-			inline = self.configPar()['Inlinetypedefs']
-		if typeDefMacroTable.numRows:
-			typedefs = {}
-			macros = {}
-			for cells in typeDefMacroTable.rows():
-				if cells[2] == 'typedef':
-					typedefs[cells[0].val] = cells[1].val
-				else:
-					macros[cells[0].val] = cells[1].val
-			lines = []
-			lines += [
-				f'#define {name} {val}'
-				for name, val in typedefs.items()
-			]
-			lines += [
-				f'#define {name} {val}'
-				for name, val in macros.items()
-			]
-		else:
-			lines = []
-		return wrapCodeSection(lines, 'opDataTypedefs')
-
 	def buildTypedefMacroTable(self, dat: 'scriptDAT'):
 		dat.clear()
 		defsTable = self._definitionTable()
@@ -397,28 +305,8 @@ class ShaderBuilder:
 			if dataType in typeAdaptFuncs:
 				dat.appendRow([name + '_asVarT', typeAdaptFuncs[dataType], 'macro'])
 
-	def inlineTypedefs(self, code: str, typeDefMacroTable: 'DAT') -> str:
-		if not self._configValid() or not self.configPar()['Inlinetypedefs']:
-			return code
-		if not typeDefMacroTable.numRows:
-			return code
-
-		replacements = {
-			str(cells[0]): str(cells[1])
-			for cells in typeDefMacroTable.rows()
-		}
-
-		def replace(m: re.Match):
-			return replacements.get(m.group(0)) or m.group(0)
-
-		pattern = r'\b[\w_]+_(as)?(CoordT|ContextT|ReturnT)\b'
-
-		code = re.sub(pattern, replace, code)
-
-		return code
-
 	def _createCodeFilter(self, typeDefMacroTable: 'DAT') -> 'CodeFilter':
-		if not self._configValid():
+		if not self.configValid():
 			mode = 'macroize'
 		else:
 			mode = self.configPar()['Filtermode']
@@ -430,14 +318,6 @@ class ShaderBuilder:
 			return CodeFilter.reducer(macros)
 		else:  # macroize
 			return CodeFilter.macroizer()
-
-	def filterCode(self, code: str, typeDefMacroTable: 'DAT') -> str:
-		if not code:
-			return ''
-		if '#pragma' not in code:
-			return code
-		filt = self._createCodeFilter(typeDefMacroTable)
-		return filt.processCodeBlock(code)
 
 	def processReferenceTable(
 			self,
@@ -494,14 +374,6 @@ class ShaderBuilder:
 					rawVarTable[i, 'macros'],
 				])
 
-	def buildPredeclarations(self):
-		return wrapCodeSection(self.ownerComp.par.Predeclarations.eval(), 'predeclarations')
-
-	def buildParameterAliases(self):
-		paramProcessor = self._createParamProcessor()
-		decls = paramProcessor.paramAliases()
-		return wrapCodeSection(decls, 'paramAliases')
-
 	def buildParamUniformTable(self, dat: 'DAT'):
 		dat.clear()
 		dat.appendRow(['name', 'type', 'chop', 'uniformType', 'expr1', 'expr2', 'expr3', 'expr4'])
@@ -518,187 +390,17 @@ class ShaderBuilder:
 		paramProcessor = self._createParamProcessor()
 		return paramProcessor.processCodeBlock(code)
 
-	def buildTextureDeclarations(self):
-		textureTable = self.ownerComp.op('texture_table')
-		offset = int(self.ownerComp.par.Textureindexoffset)
-		indexByType: 'Dict[str, int]' = {
-			'2d': offset,
-			'3d': 0,
-			'cube': 0,
-			'2darray': 0,
-		}
-		arrayByType = {
-			'2d': 'sTD2DInputs',
-			'3d': 'sTD3DInputs',
-			'cube': 'sTDCubeInputs',
-			'2darray': 'sTD2DArrayInputs',
-		}
-		infoByType = {
-			'2d': 'uTD2DInfos',
-			'3d': 'uTD3DInfos',
-			'cube': 'uTDCubeInfos',
-			'2darray': 'uTD2DArrayInfos',
-		}
-		decls = []
-		for i in range(1, textureTable.numRows):
-			name = str(textureTable[i, 'name'])
-			texType = str(textureTable[i, 'type'] or '2d')
-			if texType not in indexByType:
-				raise Exception(f'Invalid texture type for {name}: {texType!r}')
-			index = indexByType[texType]
-			decls.append(f'#define {name} {arrayByType[texType]}[{index}]')
-			decls.append(f'#define {name}_info {infoByType[texType]}[{index}]')
-			indexByType[texType] = index + 1
-		return wrapCodeSection(decls, 'textures')
-
-	def buildBufferDeclarations(self):
-		bufferTable = self.ownerComp.op('buffer_table')
-		decls = []
-		for i in range(1, bufferTable.numRows):
-			name = bufferTable[i, 'name']
-			dataType = bufferTable[i, 'type']
-			uniType = bufferTable[i, 'uniformType']
-			if uniType == 'uniformarray':
-				lengthVal = str(bufferTable[i, 'length'] or '')
-				if lengthVal == '':
-					c = op(bufferTable[i, 'chop'])
-					n = c.numSamples if c else 1
-				else:
-					n = int(lengthVal)
-				decls.append(f'uniform {dataType} {name}[{n}];')
-			elif uniType == 'texturebuffer':
-				decls.append(f'uniform samplerBuffer {name};')
-			else:
-				raise Exception(f'Invalid uniform type: {uniType}')
-		return wrapCodeSection(decls, 'buffers')
-
-	def buildMaterialDeclarations(self):
-		if not self.ownerComp.par.Supportmaterials:
-			return ' '
-		materialTable = self.ownerComp.op('material_table')
-		if materialTable.numRows < 2:
-			return ' '
-		decls = self._buildNameIdDeclarations(
-			offset=1001,
-			names=materialTable.col('material')[1:])
-		return wrapCodeSection(decls, 'materials')
-
-	def buildDispatchDeclarations(self):
-		dispatchTable = self.ownerComp.op('dispatch_table')
-		if dispatchTable.numRows < 2:
-			return ' '
-		decls = self._buildNameIdDeclarations(
-			offset=2001,
-			names=dispatchTable.col('name')[1:])
-		return wrapCodeSection(decls, 'dispatch')
-
-	@staticmethod
-	def _buildNameIdDeclarations(offset: int, names: List['Cell']):
-		return [
-			f'const int {name} = {offset + (name.row - 1)};'
-			for name in names
-		]
-
-	def buildOutputBufferDeclarations(self):
-		outputBufferTable = self._outputBufferTable()
-		if outputBufferTable.numRows <= 1:
-			return ' '
-
-		outputBuffers = self._outputBufferTable()
-		if outputBuffers.numRows < 2:
-			return ' '
-		if self.ownerComp.par.Shadertype == 'compute':
-			decls = [
-				f'#define {outputBufferTable[row, "name"]} mTDComputeOutputs[{row - 1}]'
-				for row in range(1, outputBufferTable.numRows)
-			]
-		else:
-			decls = [
-				f'layout(location = {row - 1}) out vec4 {outputBufferTable[row, "name"]};'
-				for row in range(1, outputBufferTable.numRows)
-			]
-
-		return wrapCodeSection(decls, 'outputBuffers')
-
-	def buildOutputInitBlock(self):
-		outputBuffers = self._outputBufferTable()
-		lines = ['void initOutputs() {']
-		if self.ownerComp.par.Shadertype != 'compute':
-			lines += [
-				f'{cell.val} = vec4(0.);'
-				for cell in outputBuffers.col('name')[1:]
-			]
-		return wrapCodeSection(
-			lines + ['}'],
-			'outputInit',
-		)
-
-	def buildOpGlobalsBlock(self):
-		dats = self.getOpsFromDefinitionColumn('opGlobalsPath')
-		return wrapCodeSection(dats, 'opGlobals')
-
-	def buildInitBlock(self):
-		dats = self.getOpsFromDefinitionColumn('initPath')
-		code = _combineCode(dats)
-		if not code.strip():
-			return ' '
-		return wrapCodeSection([
-			'#define RAYTK_HAS_INIT',
-			'void init() {',
-			code,
-			'}',
-		], 'init')
-
-	def buildFunctionsBlock(self):
-		dats = self.getOpsFromDefinitionColumn('functionPath')
-		return wrapCodeSection(dats, 'functions')
-
-	def buildBodyBlock(self, materialTable: 'DAT', dispatchTable: 'DAT'):
-		bodyDat = self.ownerComp.par.Bodytemplate.eval()
-		code = bodyDat.text if bodyDat else ''
-		if not code:
-			return ' '
-		placeholder = '// #include <materialParagraph>'
-		if placeholder in code:
-			materialBlock = self._buildMaterialBlock(materialTable)
-			code = code.replace(placeholder, materialBlock, 1)
-		def _replaceDispatchInclude(m: re.Match):
-			category = m.group(1)
-			if not category:
-				return '\n'
-			return self._buildDispatchBlock(dispatchTable, category)
-		code = re.sub(r'\s*// #include <dispatch/(\w+)>\n', _replaceDispatchInclude, code)
-		return wrapCodeSection(code, 'body')
-
-	@staticmethod
-	def _buildMaterialBlock(materialTable: 'DAT'):
-		if materialTable.numRows < 2:
-			return ''
-		output = ''
-		for nameCell, pathCell in materialTable.rows()[1:]:
-			if not nameCell:
+	def buildBufferUniformTable(self, dat: 'DAT'):
+		dat.clear()
+		dat.appendRow(['name', 'type', 'chop', 'uniformType', 'expr1', 'expr2', 'expr3', 'expr4'])
+		for state in self._parseOpStates():
+			if not state.buffers:
 				continue
-			codeDat = op(pathCell)
-			materialCode = codeDat.text if codeDat else ''
-			output += f'else if(m == {nameCell.val}) {{\n'
-			output += materialCode + '\n}'
-		return output
-
-	@staticmethod
-	def _buildDispatchBlock(dispatchTable: 'DAT', category: str):
-		if dispatchTable.numRows < 2:
-			return ''
-		output = ''
-		for i in range(1, dispatchTable.numRows):
-			if dispatchTable[i, 'category'] != category:
-				continue
-			name = dispatchTable[i, 'name']
-			code = dispatchTable[i, 'code'] or ''
-			output = f'case {name}: {{\n'
-			if code:
-				output += code + ';'
-			output += 'break;}\n'
-		return output
+			for buffer in state.buffers:
+				dat.appendRow([
+					buffer.name, buffer.type, buffer.chop or '', buffer.uniformType,
+					buffer.expr1 or '', buffer.expr2 or '', buffer.expr3 or '', buffer.expr4 or '',
+				])
 
 	def buildValidationErrors(self, dat: 'DAT'):
 		dat.clear()
@@ -735,33 +437,48 @@ class ShaderBuilder:
 		for refName in refTable.col('name')[1:]:
 			checker.checkRef(refName.val)
 
-	def V2_writeShader(
+	def _parseOpStates(self):
+		states = []
+		for dat in self.getOpsFromDefinitionColumn('statePath'):
+			state = _parseOpStateJson(dat.text)
+			states.append(state)
+		return states
+
+	def buildTextureTable(self, dat: 'DAT'):
+		dat.clear()
+		dat.appendRow(['name', 'path', 'type'])
+		states = self._parseOpStates()
+		for state in states:
+			if not state.textures:
+				continue
+			for t in state.textures:
+				dat.appendRow([t.name, t.path, t.type])
+
+	def writeShader(
 			self,
 			dat: 'scriptDAT',
 			macroTable: 'DAT',
 			typeDefMacroTable: 'DAT',
-			textureTable: 'DAT',
-			bufferTable: 'DAT',
-			materialTable: 'DAT',
-			dispatchTable: 'DAT',
 			outputBufferTable: 'DAT',
+			variableTable: 'DAT',
 	):
-		writer = _V2_Writer(
+		dat.clear()
+		dat.write(' ')
+		writer = _Writer(
 			sb=self,
-			out=dat,
+			opStates=self._parseOpStates(),
 			defTable=self._definitionTable(),
 			paramProc=self._createParamProcessor(),
 			codeFilter=self._createCodeFilter(typeDefMacroTable=typeDefMacroTable),
 			macroTable=macroTable,
 			typeDefMacroTable=typeDefMacroTable,
 			libraryDats=self._getLibraryDats(),
-			textureTable=textureTable,
-			bufferTable=bufferTable,
-			materialTable=materialTable,
-			dispatchTable=dispatchTable,
 			outputBufferTable=outputBufferTable,
+			variableTable=variableTable,
 		)
-		writer.run()
+		# import cProfile
+		# cProfile.runctx('writer.run(dat)', globals(), locals())
+		writer.run(dat)
 
 class _VarRefChecker:
 	def __init__(
@@ -826,51 +543,51 @@ class _VarRefChecker:
 			if srcOwner not in path:
 				self.addError(refOwnerPath, 'warning', f'Variable source ({srcOwner}) missing in path ' + '->'.join(simplifyNames(path)))
 
-class _VarRefChecker_2:
-	def __init__(
-			self,
-			varTable: 'DAT', refTable: 'DAT', defTable: 'DAT',
-			addError: 'Callable[[str, str, str], None]'):
-		self._addError = addError
-		self.varTable = varTable
-		self.refTable = refTable
-		self.defTable = defTable
-		pass
-
 @dataclass
-class _V2_Writer:
+class _Writer:
 	sb: 'ShaderBuilder'
-	out: 'scriptDAT'
+	opStates: 'List[RopState]'
 	defTable: 'DAT'
 	paramProc: '_ParameterProcessor'
 	codeFilter: 'CodeFilter'
 	macroTable: 'DAT'
 	typeDefMacroTable: 'DAT'
 	libraryDats: 'List[DAT]'
-	textureTable: 'DAT'
-	bufferTable: 'DAT'
-	materialTable: 'DAT'
-	dispatchTable: 'DAT'
 	outputBufferTable: 'DAT'
+	variableTable: 'DAT'
 
 	inlineTypedefRepls: 'Optional[Dict[str, str]]' = None
 	inlineTypedefPattern: 'Optional[re.Pattern]' = None
+	dispatchBlocks: 'Optional[List[Dispatch]]' = None
+	textures: 'Optional[List[Texture]]' = None
+	buffers: 'Optional[List[Buffer]]' = None
+	out: 'Optional[StringIO]' = None
 
 	def __post_init__(self):
-		self.configPar = self.sb.configPar()
+		self.out = StringIO()
+		self.configPar = self.sb.configPar() if self.sb.configValid() else None
 		self.ownerComp = self.sb.ownerComp
-		if self.configPar['Inlinetypedefs'] and self.typeDefMacroTable.numRows > 1:
+		if self.configPar and self.configPar['Inlinetypedefs'] and self.typeDefMacroTable.numRows > 1:
 			self.inlineTypedefRepls = {
 				str(cells[0]): str(cells[1])
 				for cells in self.typeDefMacroTable.rows()
 				if cells[1]
 			}
 			self.inlineTypedefPattern = re.compile(r'\b[\w_]+_(as)?(CoordT|ContextT|ReturnT)\b')
+		self.textures = []
+		self.buffers = []
+		self.dispatchBlocks = []
+		for state in self.opStates:
+			if state.dispatchBlocks:
+				self.dispatchBlocks += state.dispatchBlocks
+			if state.textures:
+				self.textures += state.textures
+			if state.buffers:
+				self.buffers += state.buffers
 
-	def run(self):
-		self.out.clear()
+	def run(self, dat: 'scriptDAT'):
 		if self.defTable.numRows < 2:
-			self._write('#error No input definition\n')
+			self._writeLine('#error No input definition')
 			return
 		self._writeCodeDat('globalPrefix', self.ownerComp.par.Globalprefix.eval())
 		self._writeGlobalDecls()
@@ -884,7 +601,7 @@ class _V2_Writer:
 		self._writeMaterialDeclarations()
 		self._writeDispatchDeclarations()
 		self._writeOutputBufferDeclarations()
-
+		self._writeVariableDeclarations()
 
 		self._writeOutputInit()
 		self._writeOpGlobals()
@@ -892,15 +609,18 @@ class _V2_Writer:
 		self._writeFunctions()
 		self._writeBody()
 
+		dat.clear()
+		dat.write(self.out.getvalue())
+
 	def _writeGlobalDecls(self):
 		mainName = self.defTable[-1, 'name']
 		self._startBlock('globals')
 		self._writeLines(self.paramProc.globalDeclarations())
-		self._write(f'#define thismap {mainName}\n')
+		self._writeLine(f'#define thismap {mainName}')
 		self._endBlock('globals')
 
 	def _writeOpDataTypedefs(self):
-		inline = self.configPar['Inlinetypedefs']
+		inline = self.configPar and self.configPar['Inlinetypedefs']
 		if not self.typeDefMacroTable.numRows:
 			return
 		self._startBlock('opDataTypedefs')
@@ -938,18 +658,14 @@ class _V2_Writer:
 		if not self.libraryDats:
 			return
 		self._startBlock('libraries')
-		mode = str(self.configPar['Includemode'] or 'includelibs')
-		supportsInclude = self.ownerComp.op('support_table')['include', 1] == '1'
-		if mode == 'includelibs' and not supportsInclude:
-			inlineAll = True
-		else:
-			inlineAll = mode == 'inlineall'
-		if inlineAll:
+		mode = str((self.configPar and self.configPar['Includemode']) or 'includelibs')
+		if mode == 'inlineall':
 			for lib in self.libraryDats:
-				self._write(f'/// Library: <{lib.path}>\n', lib.text, '\n')
+				self._writeLine(f'/// Library: <{lib.path}>')
+				self._writeLine(lib.text)
 		else:
 			for lib in self.libraryDats:
-				self._write(f'#include <{lib.path}>\n')
+				self._writeLine(f'#include <{lib.path}>')
 		self._endBlock('libraries')
 
 	def _writeParameterAliases(self):
@@ -961,7 +677,7 @@ class _V2_Writer:
 		self._endBlock('paramAliases')
 
 	def _writeTextureDeclarations(self):
-		if self.textureTable.numRows < 2:
+		if not self.textures:
 			return
 		offset = int(self.ownerComp.par.Textureindexoffset)
 		indexByType: 'Dict[str, int]' = {
@@ -983,50 +699,49 @@ class _V2_Writer:
 			'2darray': 'uTD2DArrayInfos',
 		}
 		self._startBlock('textures')
-		for name, path, texType in self.textureTable.rows()[1:]:
-			texType = texType.val or '2d'
+		for texture in self.textures:
+			texType = texture.type or '2d'
 			if texType not in indexByType:
-				raise Exception(f'Invalid texture type for {name}: {texType!r}')
+				raise Exception(f'Invalid texture type for {texture.name}: {texType!r}')
 			index = indexByType[texType]
 			indexByType[texType] = index + 1
-			self._writeMacro(name, f'{arrayByType[texType]}[{index}]')
-			self._writeMacro(name + '_info', f'{infoByType[texType]}[{index}]')
+			self._writeMacro(texture.name, f'{arrayByType[texType]}[{index}]')
+			self._writeMacro(texture.name + '_info', f'{infoByType[texType]}[{index}]')
 		self._endBlock('textures')
 
 	def _writeBufferDeclarations(self):
-		if self.bufferTable.numRows < 2:
+		if not self.buffers:
 			return
 		self._startBlock('buffers')
-		for i in range(1, self.bufferTable.numRows):
-			name = self.bufferTable[i, 'name']
-			dataType = self.bufferTable[i, 'type']
-			uniType = self.bufferTable[i, 'uniformType']
-			if uniType == 'uniformarray':
-				lengthVal = str(self.bufferTable[i, 'length'] or '')
-				if lengthVal == '':
-					c = op(self.bufferTable[i, 'chop'])
+		for buffer in self.buffers:
+			if buffer.uniformType == 'uniformarray':
+				if buffer.length is None:
+					c = op(buffer.chop)
 					n = c.numSamples if c else 1
 				else:
-					n = int(lengthVal)
-				self._write(f'uniform {dataType} {name}[{n}];\n')
-			elif uniType == 'texturebuffer':
-				self._write(f'uniform samplerBuffer {name};\n')
+					n = buffer.length
+				self._writeLine(f'uniform {buffer.type} {buffer.name}[{n}];')
+			elif buffer.uniformType == 'texturebuffer':
+				self._writeLine(f'uniform samplerBuffer {buffer.name};')
 		self._endBlock('buffers')
 
 	def _writeMaterialDeclarations(self):
-		if not self.ownerComp.par.Supportmaterials or self.materialTable.numRows < 2:
+		if not self.ownerComp.par.Supportmaterials:
 			return
 		self._startBlock('materials')
-		for name in self.materialTable.col('material')[1:]:
-			self._writeMacro(name, 1001 + (name.row - 1))
+		i = 1001
+		for state in self.opStates:
+			if state.materialId:
+				self._writeMacro(state.materialId, i)
+				i += 1
 		self._endBlock('materials')
 
 	def _writeDispatchDeclarations(self):
-		if self.dispatchTable.numRows < 2:
+		if not self.dispatchBlocks:
 			return
 		self._startBlock('dispatch')
-		for name in self.dispatchTable.col('name')[1:]:
-			self._writeMacro(name, 1001 + (name.row - 1))
+		for i, dispatchBlock in enumerate(self.dispatchBlocks):
+			self._writeMacro(dispatchBlock.name, 1001 + i)
 		self._endBlock('dispatch')
 
 	def _writeOutputBufferDeclarations(self):
@@ -1038,34 +753,71 @@ class _V2_Writer:
 				self._writeMacro(name, f'mTDComputeOutputs[{name.row - 1}]')
 		else:
 			for name in self.outputBufferTable.col('name')[1:]:
-				self._write(f'layout(location = {name.row - 1}) out vec4 {name};\n')
+				self._writeLine(f'layout(location = {name.row - 1}) out vec4 {name};')
 		self._endBlock('outputBuffers')
+
+	def _writeVariableDeclarations(self):
+		if self.variableTable.numRows < 2:
+			return
+		self._startBlock('variables')
+		for i in range(1, self.variableTable.numRows):
+			name = self.variableTable[i, 'name']
+			dataType = self.variableTable[i, 'dataType']
+			self._writeLine(f'{dataType} {name};')
+		self._endBlock('variables')
 
 	def _writeOutputInit(self):
 		if self.ownerComp.par.Shadertype == 'compute' or self.outputBufferTable.numRows < 2:
 			return
 		self._startBlock('outputInit')
-		self._write('void initOutputs() {\n')
+		self._writeLine('void initOutputs() {')
 		for name in self.outputBufferTable.col('name')[1:]:
-			self._write(f'{name} = vec4(0.);\n')
-		self._write('}\n')
+			self._writeLine(f'{name} = vec4(0.);')
+		self._writeLine('}')
 		self._endBlock('outputInit')
 
 	def _writeOpGlobals(self):
-		self._writeCodeDatsFromCol('opGlobals', col='opGlobals')
+		self._writeCodeBlocks('opGlobals', [
+			state.opGlobals
+			for state in self.opStates
+			if state.opGlobals
+		])
 
 	def _writeInit(self):
-		self._writeCodeDatsFromCol(
-			'init', col='initPath',
+		self._writeCodeBlocks(
+			'init',
+			[
+				state.initCode
+				for state in self.opStates
+				if state.initCode
+			],
 			prefixes=[
 				'#define RAYTK_HAS_INIT',
 				'void init() {',
 			],
-			suffixes=['}'],
-		)
+			suffixes=['}'])
 
 	def _writeFunctions(self):
-		self._writeCodeDatsFromCol('functions', col='functionPath')
+		self._writeCodeBlocks('functions', [
+			state.functionCode
+			for state in self.opStates
+			if state.functionCode
+		])
+
+	def _writeCodeBlocks(
+			self, section: str, blocks: List[str],
+			prefixes: List[str] = None, suffixes: List[str] = None
+	):
+		if not blocks:
+			return
+		self._startBlock(section)
+		if prefixes:
+			self._writeLines(prefixes)
+		for block in blocks:
+			self._writeLine(self._processCode(block))
+		if suffixes:
+			self._writeLines(suffixes)
+		self._endBlock(section)
 
 	def _writeBody(self):
 		dat = self.ownerComp.par.Bodytemplate.eval()
@@ -1086,74 +838,52 @@ class _V2_Writer:
 		self._endBlock('body')
 
 	def _writeMaterialBody(self):
-		if self.materialTable.numRows < 2:
-			return
-		for name, path in self.materialTable.rows()[1:]:
-			if not name:
+		for state in self.opStates:
+			if not state.materialId:
 				continue
-			self._write(f'else if(m == {name}) {{\n')
-			dat = op(path)
-			if dat:
-				# Intentionally skipping typedef inlining and code filtering for these since no materials need it.
-				self._write(dat.text, '\n}')
+			self._writeLine(f'else if(m == {state.materialId}) {{')
+			# Intentionally skipping typedef inlining and code filtering for these since no materials need it.
+			self._writeLine(state.materialCode + '\n}')
 
 	def _writeDispatchBody(self, category: str):
-		for i in range(1, self.dispatchTable.numRows):
-			if self.dispatchTable[i, 'category'] != category:
+		for dispatchBlock in self.dispatchBlocks:
+			if dispatchBlock.category != category:
 				continue
-			name = self.dispatchTable[i, 'name']
-			if not name:
-				continue
-			self._write(f'case {name}: {{\n')
-			code = self.dispatchTable[i, 'code']
-			if code:
-				self._write(code, ';')
-			self._write(code, '\n} break;\n')
+			self._writeLine(f'case {dispatchBlock.name}: {{')
+			if dispatchBlock.code:
+				self._writeLine(dispatchBlock.code + ';')
+			self._writeLine('} break;')
 
-	def _write(self, *args):
-		self.out.write(*args)
+	def _write(self, arg):
+		self.out.write(arg)
+
+	def _writeLine(self, line: str):
+		self.out.write(line)
+		self.out.write('\n')
 
 	def _writeLines(self, lines: 'Optional[List[str]]'):
 		if lines:
 			for line in lines:
-				self._write(line, '\n')
+				self.out.write(line)
+				self.out.write('\n')
 
 	def _writeMacro(self, name: 'Union[str, Cell]', val: 'Union[str, Cell, None, int]' = None):
 		if val == '' or val is None:
-			self._write('#define ', name, '\n')
+			self._writeLine(f'#define {name}')
 		else:
-			self._write('#define ', name, ' ', val, '\n')
+			self._writeLine(f'#define {name} {val}')
 
 	def _startBlock(self, name: str):
-		self._write(f'///----BEGIN {name}\n')
+		self._writeLine(f'///----BEGIN {name}')
 
 	def _endBlock(self, name: str):
-		self._write(f'///----END {name}\n')
+		self._writeLine(f'///----END {name}')
 
 	def _writeCodeDat(self, blockName: str, dat: 'Optional[DAT]'):
 		if not dat or not dat.text:
 			return
 		self._startBlock(blockName)
-		code = self._inlineTypedefs(dat.text)
-		code = self.codeFilter.processCodeBlock(code)
-		self._write(code, '\n')
-		self._endBlock(blockName)
-
-	def _writeCodeDatsFromCol(
-			self, blockName: str, col: str,
-			prefixes: 'Optional[List[str]]' = None,
-			suffixes: 'Optional[List[str]]' = None,
-	):
-		dats = self.sb.getOpsFromDefinitionColumn(col)
-		if not dats:
-			return
-		self._startBlock(blockName)
-		self._writeLines(prefixes)
-		for dat in dats:
-			code = self._inlineTypedefs(dat.text)
-			code = self.codeFilter.processCodeBlock(code)
-			self._write(code, '\n')
-		self._writeLines(suffixes)
+		self._writeLine(self._processCode(dat.text))
 		self._endBlock(blockName)
 
 	def _replaceInlineTypedefMatch(self, m: 're.Match'):
@@ -1164,9 +894,9 @@ class _V2_Writer:
 			return code
 		return self.inlineTypedefPattern.sub(self._replaceInlineTypedefMatch, code)
 
-	# def _processCodeBlock(self, code: str):
-	# 	pass
-
+	def _processCode(self, code: str):
+		code = self._inlineTypedefs(code)
+		return self.codeFilter.processCodeBlock(code)
 
 @dataclass
 class _ParamTupletSpec:
@@ -1400,3 +1130,72 @@ def _uniqueList(items: list):
 
 def _isInDevelMode():
 	return hasattr(op, 'raytk') and bool(op.raytk.par['Devel'])
+
+def _parseOpStateJson(text: str):
+	if not text:
+		return
+	obj = json.loads(text)
+
+	state = RopState(
+		name=obj['name'],
+		functionCode=obj['functionCode'],
+		materialCode=obj.get('materialCode'),
+		initCode=obj.get('initCode'),
+		opGlobals=obj.get('opGlobals'),
+		materialId=obj.get('materialId'),
+		inputNames=obj.get('inputNames'),
+		libraryNames=obj.get('libraryNames'),
+		paramSource=obj.get('paramSource'),
+	)
+	arr = obj.get('macros')
+	if arr:
+		state.macros = [
+			# Macro(o['name'], o.get('value'), o.get('enable'))
+			Macro(**o)
+			for o in arr
+		]
+	arr = obj.get('textures')
+	if arr:
+		state.textures = [
+			# Texture(o['name'], o['path'], o.get('type'))
+			Texture(**o)
+			for o in arr
+		]
+	arr = obj.get('buffers')
+	if arr:
+		state.buffers = [
+			# Buffer(
+			# 	o['name'], o['type'], o['chop'], o['uniformType'],
+			# 	o.get('length'), o.get('expr1'), o.get('expr2'), o.get('expr3'), o.get('expr4'))
+			Buffer(**o)
+			for o in arr
+		]
+	arr = obj.get('references')
+	if arr:
+		state.references = [
+			# Reference(o['name'], o['localName'], o['sourcePath'], o['sourceName'], o['dataType'], o['owner'])
+			Reference(**o)
+			for o in arr
+		]
+	arr = obj.get('variables')
+	if arr:
+		state.variables = [
+			# Variable(o['name'], o['localName'], o.get('label'), o['dataType'], o['owner'], o.get('macros'))
+			Variable(**o)
+			for o in arr
+		]
+	arr = obj.get('dispatchBlocks')
+	if arr:
+		state.dispatchBlocks = [
+			# Dispatch(o['name'], o['category'], o['code'])
+			Dispatch(**o)
+			for o in arr
+		]
+	arr = obj.get('validationErrors')
+	if arr:
+		state.validationErrors = [
+			# ValidationError(o['path'], o['level'], o['message'])
+			ValidationError(**o)
+			for o in arr
+		]
+	return state

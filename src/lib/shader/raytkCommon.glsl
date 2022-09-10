@@ -192,12 +192,6 @@ vec3 map01(vec3 value, vec3 inMin, vec3 inMax) {
 	return (value - inMin) / (inMax - inMin);
 }
 
-// Standard Mobius transform: f(z) = (az + b)/(cz + d). Slightly obfuscated.
-vec2 mobiusTransform(vec2 p, vec2 z1, vec2 z2) {
-	z1 = p - z1; p -= z2;
-	return vec2(dot(z1, p), z1.y*p.x - z1.x*p.y) / dot(p, p);
-}
-
 Ray createStandardCameraRay(vec2 p, vec2 size, int viewAngleMethod, float fov, mat4 camMat) {
 	vec2 uv = p / size;
 	float z = mix(size.x, size.y, float(viewAngleMethod)) / tan(radians(fov) * 0.5) * 0.5;
@@ -229,6 +223,11 @@ vec3 intHash3( uvec3 x )
 float sabs(float x, float k) {
 	if (x == 0.) return abs(x);
 	return 2.0 * k * log(exp(-abs(x) / k) + 1.0) + abs(x);
+}
+
+float expLength(vec2 p, float k) {
+	p = abs(p);
+	return pow(pow(p.x,k)+pow(p.y,k), 1./k);
 }
 
 // https://github.com/rreusser/glsl-hypot
@@ -339,6 +338,11 @@ void setFromFloat(inout Sdf x, float val) { x.x = val; }
 
 void swap(inout Sdf a, inout Sdf b) {
 	Sdf tmp = a;
+	a = b;
+	b = tmp;
+}
+void swap(inout vec4 a, inout vec4 b) {
+	vec4 tmp = a;
 	a = b;
 	b = tmp;
 }

@@ -2,7 +2,7 @@
 // https://www.shadertoy.com/view/4dcSWs
 
 ReturnT thismap(CoordT p, ContextT ctx) {
-	if (THIS_Enable >= 0.5) {
+	if (IS_TRUE(THIS_Enable)) {
 		#if defined(THIS_COORD_TYPE_vec2)
 		vec2 q = p;
 		#elif defined(THIS_COORD_TYPE_vec3)
@@ -21,7 +21,10 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 		vec2 center = THIS_Center;
 		#endif
 
-		q = mobiusTransform(q, point, center);
+		// Standard Mobius transform: f(z) = (az + b)/(cz + d). Slightly obfuscated.
+		point = q - point;
+		vec2 q1 = q - center;
+		q = vec2(dot(point, q1), point.y*q1.x - point.x*q1.y) / dot(q1, q1);
 
 		#if defined(THIS_COORD_TYPE_vec2)
 		p = q;

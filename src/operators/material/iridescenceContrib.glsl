@@ -13,8 +13,9 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 	#ifdef THIS_HAS_INPUT_phaseField
 	phase += inputOp_phaseField(p, ctx);
 	#endif
-	vec3 color = cos((height + vec3(0., .33, .67) * PI + (phase * TAU)) * 2.) * .5 + .5;
-	color *= smoothstep(.95, .25, abs(n.z));
+	vec3 color = cos((height/THIS_Period + vec3(0., .33, .67) * PI + (phase * TAU)) * 2.) * .5 + .5;
+	vec2 spread = THIS_Spread;
+	color *= smoothstep(max(spread.x, spread.y), min(spread.x, spread.y), abs(n.z));
 	color *= THIS_Level;
 	return vec4(color, 1.);
 }

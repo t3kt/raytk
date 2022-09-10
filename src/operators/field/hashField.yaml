@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.field.hashField
-  opVersion: '0'
+  opVersion: '1'
   opStatus: alpha
 opDef: !def
   enable: true
@@ -32,7 +32,7 @@ opDef: !def
       Returntypevec4: true
   function: !text
     file: src/operators/field/hashField.glsl
-    name: functionTemplate
+    name: function
   libraryNames: !expr
     expr: op('hash')
 inputs:
@@ -50,6 +50,7 @@ elements:
   name: codeSwitcher_Function
   elementType: codeSwitcher
   params:
+    Elementroot: ''
     Table: !table
       file: src/operators/field/hashField_hashFunctions.txt
       name: hashFunctions
@@ -58,4 +59,5 @@ elements:
     Manageparamstates: false
     Alwaysincludeallparams: false
     Switchmode: inline
+    Indexexpr: ''
     Placeholder: ''
