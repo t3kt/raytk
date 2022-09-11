@@ -1,4 +1,4 @@
-float THIS_shape(CoordT p, float h, float r) {
+float THIS_shape(CoordT p, float h, float r, float n) {
 	float d;
 	BODY();
 	return d;
@@ -20,6 +20,7 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 	#pragma r:else
 	float th = THIS_Thickness;
 	#pragma r:endif
+	float n = THIS_Sides;
 	p -= THIS_Translate;
 	switch (int(THIS_Axis)) {
 		case 0: p = p.zyx; break;
@@ -29,9 +30,9 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 	if (IS_TRUE(THIS_Infiniteheight)) {
 		p.z = 0.;
 	}
-	float d = THIS_shape(p, h, r);
+	float d = THIS_shape(p, h, r, n);
 	if (IS_TRUE(THIS_Hollow)) {
-		d = max(-THIS_shape(p * vec3(1., 1., 0.), 1., r - th), d);
+		d = max(-THIS_shape(p * vec3(1., 1., 0.), 1., r - th, n), d);
 	}
 	return createSdf(d);
 }
