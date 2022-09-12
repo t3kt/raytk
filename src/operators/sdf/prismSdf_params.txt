@@ -1,2 +1,3 @@
 names	source	handling	readOnlyHandling	conversion	enable
 Translate[xyz] Radius Height Infiniteheight Axis Hollow Thickness Sides	param	runtime	macro		1
+Uvmode	param	macro			1

@@ -47,5 +47,15 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 	if (IS_TRUE(THIS_Hollow)) {
 		d = max(-THIS_shape(q * vec3(1., 1., 0.), 1., r - th, n), d);
 	}
-	return createSdf(d);
+	Sdf res = createSdf(d);
+	#ifdef RAYTK_USE_UV
+	#ifdef THIS_Uvmode_cylindrical
+	vec3 uv = vec3(atan(q.x, q.y), q.z, length(q.xy));
+	if (IS_FALSE(THIS_Infiniteheight)) {
+		uv.y = map01(uv.y, -h*.5, h*.5);
+	}
+	assignUV(res, uv);
+	#endif
+	#endif
+	return res;
 }
