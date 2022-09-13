@@ -32,7 +32,7 @@ class Updater:
 		postAction = self._getPostUpdateAction(info)
 		o.par.enablecloningpulse.pulse()
 		if postAction:
-			run(lambda: postAction(o), delayFrames=2)
+			run('args[0](args[1])', postAction, o, delayFrames=2)
 		img = o.op('*Definition/opImage')
 		if img:
 			o.par.opviewer.val = img
