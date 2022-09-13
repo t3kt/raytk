@@ -57,7 +57,7 @@ vec3 getColor(THIS_CoordT p, MaterialContext matCtx) {
 	return col;
 }
 
-vec3 calcNormal(CoordT pos)
+vec3 calcNormal(THIS_CoordT pos)
 {
 	int priorStage = pushStage(RAYTK_STAGE_NORMAL);
 	#ifdef THIS_Enablenormalsmoothing
