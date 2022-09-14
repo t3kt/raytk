@@ -573,7 +573,7 @@ class _Writer:
 				for cells in self.typeDefMacroTable.rows()
 				if cells[1]
 			}
-			self.inlineTypedefPattern = re.compile(r'\b[\w_]+_(as)?(CoordT|ContextT|ReturnT)\b')
+			self.inlineTypedefPattern = re.compile(r'\b[\w_]+_(as)?(CoordT|ContextT|ReturnT|VarT)\b')
 		self.textures = []
 		self.buffers = []
 		self.dispatchBlocks = []
