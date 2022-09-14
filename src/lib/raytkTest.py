@@ -193,7 +193,7 @@ def _cleanShaderErrorLine(line: str) -> str:
 	message = match.group(1) if match else None
 	return message or line
 
-def processTest(comp, log: 'Callable[[str], None]' = None):
+def processTest(comp: 'COMP', thenRun: 'Callable', log: 'Callable[[str], None]' = None):
 	if not comp:
 		return
 	if not comp.valid:
@@ -201,30 +201,40 @@ def processTest(comp, log: 'Callable[[str], None]' = None):
 		return
 	rops = RaytkContext().ropChildrenOf(comp, maxDepth=2)
 	log and log(f'Found {len(rops)} ROPs in test')
-	# This is breaking connections made by outputOpController on initialization
-	for rop in rops:
-		if not rop.valid:
-			log and log(f'For some reason {rop!r} is invalid!')
-			continue
-		o = rop.op('opDefinition/paramHelpEditor')
-		if o and o.valid:
-			try:
-				o.destroy()
-			except:
-				pass
-		rop.par.reinitnet.pulse()
-		recloneComp(rop)
-		if rop.par['Updateop'] is not None:
-			rop.par.Updateop.pulse()
-	for o in comp.ops('raymarchRender3D*/linkedCamera'):
-		if o and o.valid:
-			try:
-				o.destroy()
-			except:
-				pass
-	for rop in RaytkContext().ropOutputChildrenOf(comp, maxDepth=4):
-		if not rop.valid:
-			continue
-		for o in rop.outputs:
-			if o.valid:
-				o.cook(force=True)
+
+	def runStage(stage: int):
+		if stage == 0:
+			for rop in rops:
+				if not rop.valid:
+					log and log(f'For some reason {rop!r} is invalid!')
+					continue
+				o = rop.op('opDefinition/paramHelpEditor')
+				if o and o.valid:
+					try:
+						o.destroy()
+					except:
+						pass
+				rop.par.reinitnet.pulse()
+				recloneComp(rop)
+				if rop.par['Updateop'] is not None:
+					rop.par.Updateop.pulse()
+		elif stage == 1:
+			for o in comp.ops('raymarchRender3D*/linkedCamera'):
+				if o and o.valid:
+					try:
+						o.destroy()
+					except:
+						pass
+		elif stage == 2:
+			for rop in RaytkContext().ropOutputChildrenOf(comp, maxDepth=4):
+				if not rop.valid:
+					continue
+				for o in rop.outputs:
+					if o.valid:
+						o.cook(force=True)
+		else:
+			run('args[0]()', thenRun, delayFrames=10)
+			return
+		run('args[0](args[1])', runStage, stage + 1, delayFrames=5)
+
+	run('args[0](args[1])', runStage, 0, delayFrames=5)

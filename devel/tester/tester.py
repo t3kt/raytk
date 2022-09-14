@@ -255,8 +255,7 @@ class TestManager:
 			self.loadTestTox(str(tox))
 			self._queueCall(self._runNextTest_stage, stage + 1, name, continueAfter)
 		elif stage == 1:
-			self._processTest()
-			self._queueCall(self._runNextTest_stage, stage + 1, name, continueAfter, delayFrames=20)
+			self._processTest(lambda: self._runNextTest_stage(stage + 1, name, continueAfter))
 		elif stage == 2:
 			result = self._buildTestCaseResult()
 			if result.hasError:
@@ -296,9 +295,9 @@ class TestManager:
 		host.loadTox(toxPath)
 		self.log(f'Finished loading {toxPath}')
 
-	def _processTest(self):
+	def _processTest(self, thenRun: 'Callable'):
 		comp = self._testComp
-		processTest(comp, log=self.log)
+		processTest(comp, thenRun, log=self.log)
 
 	def _buildTestCaseResult(self) -> 'Optional[TestCaseResult]':
 		comp = self._testComp

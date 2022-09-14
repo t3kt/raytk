@@ -81,10 +81,11 @@ class TestEditor:
 		comp = self.hostedComponent
 		if not comp:
 			return
-		processTest(comp, log=None)
-		comp.clearScriptErrors(recurse=True)
-		self._reloadOutputsSoon()
-		self._refreshFindings()
+		def afterProcess():
+			comp.clearScriptErrors(recurse=True)
+			self._reloadOutputsSoon()
+			self._refreshFindings()
+		processTest(comp, afterProcess, log=None)
 
 	def _loadTest(self, name: str, toxPath: Path):
 		if name:
