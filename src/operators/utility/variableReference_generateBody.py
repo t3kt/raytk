@@ -27,7 +27,7 @@ def onCook(dat: 'DAT'):
 		'#else',
 	]
 	if paramExpr:
-		expr = returnExpr.replace('val', paramExpr.replace('val', 'THIS_Defaultval'))
+		expr = returnExpr.replace('val', paramExpr.replace('val', 'THIS_Defaultval')) + ';'
 		lines.append(f'res = {expr}')
 	elif defaultExpr:
 		expr = returnExpr.replace('val', defaultExpr)
