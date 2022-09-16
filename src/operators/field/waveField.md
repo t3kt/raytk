@@ -12,7 +12,7 @@ Without an input, the Axis is used to run the wave function on the position alon
   * `tri`
   * `ramp`
   * `square`
-* `Axis`: If there is no input, the coordinate along this axis is used for the wave function phase.
+* `Axis`: Axis used for the wave function phase. If there is a coordinate field, this controls which part of the returned value is used. Otherwise it controls which part of the position in used.
   * `x`
   * `y`
   * `z`
