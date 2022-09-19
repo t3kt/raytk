@@ -1,5 +1,32 @@
 # Release Notes
 
+## v0.28
+
+### Highlights
+
+### Details
+
+* Improvements / additions
+  * New OPs
+    * circularRepeat (#962)
+  * New OP features
+    * prismSdf - variable support (#950), arbitrary side count (#951), UV coordinates (#952)
+    * uvField - auto coord mode
+    * waveField - axis selection when using vector coord input
+  * Snippets (#132)
+    * assignUV
+* Fixes
+  * directionalLight shadow distance bug (#960)
+  * impulseFn error (#959)
+  * lfoGenerator channel count bug (#955)
+  * pointMapRender coord type error for SDFs (#956)
+  * pointMapRender macro error
+  * variableReferences broken during snippet build (#954)
+  * variableReference default value error
+  * variable typedef macro error (#957)
+* Changes (potentially breaking)
+* Infrastructure / internals
+
 ## v0.27
 
 ### Highlights
