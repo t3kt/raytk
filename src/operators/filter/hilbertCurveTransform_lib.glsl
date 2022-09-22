@@ -29,7 +29,7 @@ ivec2 hilb_rot90ccw(ivec2 uv, int n)
 	return uv;
 }
 
-int hilb_getCellNumber(vec2 uv, int steps, out int pos,out int neg)
+int hilb_getCellNumber(vec2 uv, int steps, out int pos,out int neg, out int ln)
 {
 	int n = 0;
 	int r = 0;
@@ -46,7 +46,7 @@ int hilb_getCellNumber(vec2 uv, int steps, out int pos,out int neg)
 	{
 		bvec2 c = bvec2(uv.x >= 0., uv.y >= 0.);
 
-		int ln = 0;
+		ln = 0;
 
 		uv = fract(uv)*2.-1.;
 
