@@ -9,11 +9,14 @@
 * Improvements / additions
   * New OPs
     * circularRepeat (#962)
+    * hilbertCurveTransform (#963)
+    * rotate4D (#966)
   * New OP features
     * prismSdf - variable support (#950), arbitrary side count (#951), UV coordinates (#952)
     * uvField - auto coord mode
     * waveField - axis selection when using vector coord input
   * Snippets (#132)
+    * assignColor
     * assignUV
 * Fixes
   * directionalLight shadow distance bug (#960)
