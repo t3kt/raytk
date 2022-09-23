@@ -1,8 +1,8 @@
 !rop
 meta: !meta
   opType: raytk.operators.filter.hilbertCurveTransform
-  opVersion: '1'
-  opStatus: alpha
+  opVersion: '2'
+  opStatus: beta
 opDef: !def
   enable: !expr
     expr: op('..').par.Enable
