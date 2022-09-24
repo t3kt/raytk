@@ -1,6 +1,6 @@
 from dataclasses import dataclass
 import json
-from raytkShader import simplifyNames, CodeFilter
+from raytkShader import simplifyNames
 from raytkState import RopState, Dispatch, Texture, Buffer, Macro, Reference, Variable, ValidationError
 import re
 from io import StringIO
@@ -18,7 +18,6 @@ if False:
 		Simplifynames: BoolParamT
 		Inlinetypedefs: BoolParamT
 		Includemode: StrParamT
-		Filtermode: StrParamT
 
 	class _OwnerCompPar(_ConfigPar):
 		Globalprefix: DatParamT
@@ -291,20 +290,6 @@ class ShaderBuilder:
 			if dataType in typeAdaptFuncs:
 				dat.appendRow([name + '_asVarT', typeAdaptFuncs[dataType], 'macro'])
 
-	def _createCodeFilter(self, typeDefMacroTable: 'DAT') -> 'CodeFilter':
-		if not self.configValid():
-			mode = 'macroize'
-		else:
-			mode = self.configPar()['Filtermode']
-		if mode == 'filter':
-			macroTable = self.ownerComp.op('macroTable')
-			cells = macroTable.col(0) or []
-			cells += typeDefMacroTable.col(0) or []
-			macros = set(c.val for c in cells)
-			return CodeFilter.reducer(macros)
-		else:  # macroize
-			return CodeFilter.macroizer()
-
 	def processReferenceTable(
 			self,
 			dat: 'scriptDAT',
@@ -455,7 +440,6 @@ class ShaderBuilder:
 			opStates=self._parseOpStates(),
 			defTable=self._definitionTable(),
 			paramProc=self._createParamProcessor(),
-			codeFilter=self._createCodeFilter(typeDefMacroTable=typeDefMacroTable),
 			macroTable=macroTable,
 			typeDefMacroTable=typeDefMacroTable,
 			libraryDats=self._getLibraryDats(),
@@ -535,7 +519,6 @@ class _Writer:
 	opStates: 'List[RopState]'
 	defTable: 'DAT'
 	paramProc: '_ParameterProcessor'
-	codeFilter: 'CodeFilter'
 	macroTable: 'DAT'
 	typeDefMacroTable: 'DAT'
 	libraryDats: 'List[DAT]'
@@ -811,7 +794,6 @@ class _Writer:
 			return
 		self._startBlock('body')
 		code = self._inlineTypedefs(dat.text)
-		code = self.codeFilter.processCodeBlock(code)
 		for line in code.splitlines(keepends=True):
 			if line.endswith('// #include <materialParagraph>\n'):
 				self._writeMaterialBody()
@@ -828,7 +810,7 @@ class _Writer:
 			if not state.materialId:
 				continue
 			self._writeLine(f'else if(m == {state.materialId}) {{')
-			# Intentionally skipping typedef inlining and code filtering for these since no materials need it.
+			# Intentionally skipping typedef inlining for these since no materials need it.
 			self._writeLine(state.materialCode + '\n}')
 
 	def _writeDispatchBody(self, category: str):
@@ -881,8 +863,7 @@ class _Writer:
 		return self.inlineTypedefPattern.sub(self._replaceInlineTypedefMatch, code)
 
 	def _processCode(self, code: str):
-		code = self._inlineTypedefs(code)
-		return self.codeFilter.processCodeBlock(code)
+		return self._inlineTypedefs(code)
 
 @dataclass
 class _ParamTupletSpec:
