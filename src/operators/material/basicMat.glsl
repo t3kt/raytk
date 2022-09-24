@@ -3,14 +3,14 @@ vec4 THIS_iterationCapture = vec4(0.);
 ReturnT thismap(CoordT p, ContextT ctx) {
 	Sdf res = inputOp1(p, ctx);
 	if (IS_FALSE(THIS_Enable) || isDistanceOnlyStage()) { return res; }
-	#pragma r:if THIS_Uselocalpos && RAYTK_USE_MATERIAL_POS
+	#if defined(THIS_Uselocalpos) && defined(RAYTK_USE_MATERIAL_POS)
 	assignMaterialWithPos(res, THISMAT, p);
-	#pragma r:else
+	#else
 	assignMaterial(res, THISMAT);
-	#pragma r:endif
-	#pragma r:if THIS_Enableshadow && RAYTK_USE_SHADOW
+	#endif
+	#if defined(THIS_Enableshadow) && defined(RAYTK_USE_SHADOW)
 	res.useShadow = true;
-	#pragma r:endif
+	#endif
 	captureIterationFromMaterial(THIS_iterationCapture, ctx);
 	return res;
 }
@@ -20,58 +20,58 @@ vec3 THIS_getColor(vec3 p, MaterialContext matCtx) {
 	vec3 sunDir = normalize(matCtx.light.pos);
 	float occ = calcAO(p, matCtx.normal);
 	vec3 baseColor = THIS_Basecolor;
-	#pragma r:if THIS_EXPOSE_normal
+	#ifdef THIS_EXPOSE_normal
 	THIS_normal = matCtx.normal;
-	#pragma r:endif
-	#pragma r:if THIS_EXPOSE_lightcolor
+	#endif
+	#ifdef THIS_EXPOSE_lightcolor
 	THIS_lightcolor = matCtx.light.color;
-	#pragma r:endif
-	#pragma r:if THIS_EXPOSE_lightpos
+	#endif
+	#ifdef THIS_EXPOSE_lightpos
 	THIS_lightpos = matCtx.light.pos;
-	#pragma r:endif
-	#pragma r:if THIS_Usesurfacecolor && RAYTK_USE_SURFACE_COLOR
+	#endif
+	#if defined(THIS_Usesurfacecolor) && defined(RAYTK_USE_SURFACE_COLOR)
 	if (matCtx.result.color.w > 0.) {
 		baseColor *= matCtx.result.color.rgb;
 	}
-	#pragma r:endif
-	#pragma r:if THIS_EXPOSE_surfacecolor
+	#endif
+	#ifdef THIS_EXPOSE_surfacecolor
 	{
-		#pragma r:if RAYTK_USE_SURFACE_COLOR
+		#ifdef RAYTK_USE_SURFACE_COLOR
 		THIS_surfacecolor = matCtx.result.color;
-		#pragma r:else
+		#else
 		THIS_surfacecolor = vec4(1., 1., 1., 0.);
-		#pragma r:endif
+		#endif
 	}
-	#pragma r:endif
-	#pragma r:if THIS_EXPOSE_surfaceuv
+	#endif
+	#ifdef THIS_EXPOSE_surfaceuv
 	{
-		#pragma r:if RAYTK_USE_UV
+		#ifdef RAYTK_USE_UV
 		THIS_surfaceuv = matCtx.uv;
-		#pragma r:else
+		#else
 		THIS_surfaceuv = vec4(0.);
-		#pragma r:endif
+		#endif
 	}
-	#pragma r:endif
-	#pragma r:if THIS_USE_BASE_COLOR_FIELD
+	#endif
+	#ifdef THIS_USE_BASE_COLOR_FIELD
 	{
 		vec3 mp = getPosForMaterial(p, matCtx);
-		#pragma r:if inputOp_baseColorField_RETURN_TYPE_vec4
+		#if defined(inputOp_baseColorField_RETURN_TYPE_vec4)
 		baseColor += inputOp_baseColorField(mp, matCtx).rgb;
-		#pragma r:elif inputOp_baseColorField_RETURN_TYPE_float
+		#elif defined(inputOp_baseColorField_RETURN_TYPE_float)
 		baseColor += vec3(inputOp_baseColorField(mp, matCtx));
-		#pragma r:else
+		#else
 		#error invalidColorFieldReturnType
-		#pragma r:endif
+		#endif
 	}
-	#pragma r:endif
+	#endif
 	vec3 mate = baseColor;
 	vec3 sunColor = matCtx.light.color;
 	vec3 skyColor = THIS_Skycolor;
 	float sunDiffuse = clamp(dot(matCtx.normal, sunDir), 0, 1.);
 	float sunShadow = 1.;
-	#pragma r:if THIS_Enableshadow && RAYTK_USE_SHADOW
+	#if defined(THIS_Enableshadow) && defined(RAYTK_USE_SHADOW)
 	sunShadow = matCtx.shadedLevel;
-	#pragma r:endif
+	#endif
 	float skyDiffuse = clamp(0.5+0.5*dot(matCtx.normal, THIS_Skydir), 0, 1);
 	float sunSpec = pow(max(dot(-matCtx.ray.dir, matCtx.normal), 0.), THIS_Specularexp) * THIS_Specularamount;
 	vec3 col = mate * sunColor * sunDiffuse * sunShadow;

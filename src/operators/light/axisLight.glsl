@@ -6,9 +6,9 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 		case 2: light.pos.z = p.z; break;
 	}
 	light.supportShadow = IS_TRUE(THIS_Enableshadow);
-	#pragma r:if THIS_HAS_INPUT_colorField
+	#ifdef THIS_HAS_INPUT_colorField
 	light.color *= fillToVec3(inputOp_colorField(p, ctx));
-	#pragma r:endif
+	#endif
 	if (IS_TRUE(THIS_Enableattenuation)) {
 		float d;
 		switch (int(THIS_Axis)) {
@@ -19,11 +19,11 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 		float start = THIS_Attenuationstart;
 		float end = THIS_Attenuationend;
 		float atten = smoothstep(end, start, d);
-		#pragma r:if THIS_HAS_INPUT_attenuationField
+		#ifdef THIS_HAS_INPUT_attenuationField
 		light.color *= fillToVec3(inputOp_attenuationField(atten, ctx));
-		#pragma r:else
+		#else
 		light.color *= atten;
-		#pragma r:endif
+		#endif
 	}
 	return light;
 }

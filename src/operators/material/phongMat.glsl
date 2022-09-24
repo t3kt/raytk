@@ -5,18 +5,18 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 	if (IS_FALSE(THIS_Enable) || isDistanceOnlyStage()) { return res; }
 	assignMaterial(res, THISMAT);
 	captureIterationFromMaterial(THIS_iterationCapture, ctx);
-	#pragma r:if THIS_Enableshadow && RAYTK_USE_SHADOW
+	#if defined(THIS_Enableshadow) && defined(RAYTK_USE_SHADOW)
 	res.useShadow = true;
-	#pragma r:endif
+	#endif
 	return res;
 }
 
 vec3 THIS_getColor(vec3 p, MaterialContext matCtx) {
 	restoreIterationFromMaterial(matCtx, THIS_iterationCapture);
 	float sunShadow = 1.;
-	#pragma r:if THIS_Enableshadow && RAYTK_USE_SHADOW
+	#if defined(THIS_Enableshadow) && defined(RAYTK_USE_SHADOW)
 	sunShadow = matCtx.shadedLevel;
-	#pragma r:endif
+	#endif
 	vec3 diffColor = THIS_Diffusecolor * sunShadow;
 	vec3 specColor = THIS_Specularcolor * sunShadow;
 	float alpha = THIS_Shine;
