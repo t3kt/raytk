@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.sdf.polyhedronSdf
-  opVersion: '8'
+  opVersion: '9'
   opStatus: beta
 opDef: !def
   enable: true
@@ -32,6 +32,64 @@ inputs:
     Allcontexttype: true
   returnType: !returnT
     Returntypesdf: true
+- !input
+  Localalias: radiusField
+  coordType: !coordT
+    Coordtypevec3: true
+  contextType: !contextT
+    Allcontexttype: true
+  returnType: !returnT
+    Returntypefloat: true
+- !input
+  Source: !expr
+    expr: parent().par.Faceradiusfield or ''
+  Localalias: faceRadiusField
+  coordType: !coordT
+    Coordtypevec3: true
+  contextType: !contextT
+    Allcontexttype: true
+  returnType: !returnT
+    Returntypefloat: true
+- !input
+  Source: !expr
+    expr: parent().par.Segmentradiusfield or ''
+  Localalias: segmentRadiusField
+  coordType: !coordT
+    Coordtypevec3: true
+  contextType: !contextT
+    Allcontexttype: true
+  returnType: !returnT
+    Returntypefloat: true
+- !input
+  Source: !expr
+    expr: parent().par.Segmentsizefield or ''
+  Localalias: segmentSizeField
+  coordType: !coordT
+    Coordtypevec3: true
+  contextType: !contextT
+    Allcontexttype: true
+  returnType: !returnT
+    Returntypefloat: true
+- !input
+  Source: !expr
+    expr: parent().par.Vertexradiusfield or ''
+  Localalias: vertexRadiusField
+  coordType: !coordT
+    Coordtypevec3: true
+  contextType: !contextT
+    Allcontexttype: true
+  returnType: !returnT
+    Returntypefloat: true
+- !input
+  Source: !expr
+    expr: parent().par.Vertexsizefield or ''
+  Localalias: vertexSizeField
+  coordType: !coordT
+    Coordtypevec3: true
+  contextType: !contextT
+    Allcontexttype: true
+  returnType: !returnT
+    Returntypefloat: true
 elements:
 - !opElement
   name: combiner
@@ -47,6 +105,9 @@ elements:
     Offsetfield: ''
     Numberfield: ''
     Manageparamstates: true
+    Alwaysincludeallparams: false
     Switchmode: auto
+    Indexexpr: ''
     Prepcodeplaceholder: MERGE_PREP();
     Bodycodeplaceholder: MERGE_BODY();
+    Defaultinitcodeplaceholder: ''
