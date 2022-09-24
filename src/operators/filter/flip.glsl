@@ -11,12 +11,12 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 		CoordT q = p;
 		float s = THIS_Shift;
 		float o = THIS_Offset;
-		#pragma r:if THIS_HAS_INPUT_shiftField
+		#ifdef THIS_HAS_INPUT_shiftField
 		s += inputOp_shiftField(p, ctx);
-		#pragma r:endif
-		#pragma r:if THIS_HAS_INPUT_offsetField
+		#endif
+		#ifdef THIS_HAS_INPUT_offsetField
 		o += inputOp_offsetField(p, ctx);
-		#pragma r:endif
+		#endif
 		switch (int(THIS_Axis)) {
 			case 0:
 			q.x = (q.x + s) * -1. - o;
@@ -33,32 +33,32 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 			break;
 			#endif
 		}
-		#pragma r:if THIS_Iterationtype_sign
+		#if defined(THIS_Iterationtype_sign)
 		setIterationIndex(ctx, 1);
 		const int iterB = -1;
-		#pragma r:elif THIS_Iterationtype_index
+		#elif defined(THIS_Iterationtype_index)
 		setIterationIndex(ctx, 0);
 		const int iterB = 1;
-		#pragma r:endif
-		#pragma r:if THIS_EXPOSE_sign
+		#endif
+		#ifdef THIS_EXPOSE_sign
 		THIS_sign = 1;
-		#pragma r:endif
-		#pragma r:if THIS_EXPOSE_index
+		#endif
+		#ifdef THIS_EXPOSE_index
 		THIS_index = 0;
-		#pragma r:endif
+		#endif
 		if (int(THIS_Mergetype) == 0) {
 			res = inputOp1(q, ctx);
 		} else {
 			res = inputOp1(p, ctx);
-			#pragma r:if !THIS_Iterationtype_none
+			#if !defined(THIS_Iterationtype_none)
 			setIterationIndex(ctx, iterB);
-			#pragma r:endif
-			#pragma r:if THIS_EXPOSE_sign
+			#endif
+			#ifdef THIS_EXPOSE_sign
 			THIS_sign = -1;
-			#pragma r:endif
-			#pragma r:if THIS_EXPOSE_index
+			#endif
+			#ifdef THIS_EXPOSE_index
 			THIS_index = 1;
-			#pragma r:endif
+			#endif
 			Sdf res2 = inputOp1(q, ctx);
 			THIS_merge(res, res2, p, ctx);
 		}

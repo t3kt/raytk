@@ -1,17 +1,17 @@
 ReturnT thismap(CoordT p, ContextT ctx) {
 	Ray ray;
-	#pragma r:if THIS_CONTEXT_TYPE_MaterialContext || THIS_CONTEXT_TYPE_RayContext
+	#if defined(THIS_CONTEXT_TYPE_MaterialContext) || defined(THIS_CONTEXT_TYPE_RayContext)
 	ray = ctx.ray;
-	#pragma r:else
+	#else
 	#error invalidContextType
-	#pragma r:endif
+	#endif
 	vec3 val;
-	#pragma r:if THIS_Raypart_dir
+	#if defined(THIS_Raypart_dir)
 	val = ray.dir;
-	#pragma r:elif THIS_Raypart_pos
+	#elif defined(THIS_Raypart_pos)
 	val = ray.pos;
-	#pragma r:else
+	#else
 	#error invalidRayPart
-	#pragma r:endif
+	#endif
 	return ReturnT(val, 0.);
 }
