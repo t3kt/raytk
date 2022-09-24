@@ -5,13 +5,13 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 		case 1: p = p.yzx; break;
 		case 2: p = p.zxy; break;
 	}
-	#pragma r:if !THIS_HAS_INPUT_offsetField
+	#if !defined(THIS_HAS_INPUT_offsetField)
 	float d = p.x - THIS_Offset;
-	#pragma r:elif inputOp_offsetField_COORD_TYPE_vec2
+	#elif defined(inputOp_offsetField_COORD_TYPE_vec2)
 	float d = p.x - THIS_Offset - inputOp_offsetField(p.yz, ctx);
-	#pragma r:else
+	#else
 	float d = p.x - THIS_Offset - inputOp_offsetField(p0, ctx);
-	#pragma r:endif
+	#endif
 	if (THIS_Flip > 0.5) {
 		d *= -1.;
 	}

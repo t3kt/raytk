@@ -8,10 +8,10 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 		q = 1.0 - q;
 	}
 	ReturnT res;
-	#pragma r:if THIS_HAS_INPUT_waveFunction
+	#ifdef THIS_HAS_INPUT_waveFunction
 	res = inputOp_waveFunction(fract(q), ctx);
-	#pragma r:else
+	#else
 	WAVE_BODY();
-	#pragma r:endif
+	#endif
 	return THIS_Offset + (res * THIS_Amplitude);
 }

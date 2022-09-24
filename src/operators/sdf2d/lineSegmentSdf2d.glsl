@@ -1,12 +1,12 @@
 ReturnT thismap(CoordT p, ContextT ctx) {
-	#pragma r:if THIS_HAS_INPUT_points
+	#ifdef THIS_HAS_INPUT_points
 	vec4 pts = inputOp_points(p, ctx);
 	vec2 a = pts.xy;
 	vec2 b = pts.zw;
-	#pragma r:else
+	#else
 	vec2 a = THIS_Pointa;
 	vec2 b = THIS_Pointb;
-	#pragma r:endif
+	#endif
 	vec2 pa = p-a, ba = b-a;
 	#ifdef THIS_EXPOSE_normoffset
 	{

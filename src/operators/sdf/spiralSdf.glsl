@@ -21,14 +21,14 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 	pp=m*pp;//apply twist
 	pp=abs(pp);
 	ReturnT res;
-	#pragma r:if inputOp_crossSection_RETURN_TYPE_Sdf
+	#if defined(inputOp_crossSection_RETURN_TYPE_Sdf)
 	res = inputOp_crossSection(pp.xy, ctx);
-	#pragma r:elif inputOp_crossSection_RETURN_float
+	#elif defined(inputOp_crossSection_RETURN_float)
 	res = createSdf(0.9 * (inputOp_crossSection(pp.xy, ctx) - THIS_Thickness));
-	#pragma r:else
+	#else
 	float e = THIS_Exponent;//superquadric param
 	float d1= 0.9*(pow(pow(pp.x,e)+pow(pp.y,e),1./e)-THIS_Thickness*r);//distance have to be scaled down because this is just an approximation.
 	res = createSdf(d1);
-	#pragma r:endif
+	#endif
 	return res;
 }
