@@ -9,14 +9,14 @@ void THIS_apply(inout vec4 uv) {
 ReturnT thismap(CoordT p, ContextT ctx) {
 	ReturnT res = inputOp1(p, ctx);
 	if (IS_TRUE(THIS_Enable)) {
-		#pragma r:if RAYTK_USE_UV
-			#pragma r:if THIS_Transformprimary
+		#ifdef RAYTK_USE_UV
+			#ifdef THIS_Transformprimary
 			THIS_apply(res.uv);
-			#pragma r:endif
-			#pragma r:if THIS_Transformsecondary
+			#endif
+			#ifdef THIS_Transformsecondary
 			THIS_apply(res.uv2);
-			#pragma r:endif
-		#pragma r:endif
+			#endif
+		#endif
 	}
 	return res;
 }

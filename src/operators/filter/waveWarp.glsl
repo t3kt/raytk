@@ -7,13 +7,13 @@ vec3 THIS_wave(CoordT p, ContextT ctx, vec3 q) {
 
 ReturnT thismap(CoordT p, ContextT ctx) {
 	if (IS_TRUE(THIS_Enable)) {
-		#pragma r:if THIS_COORD_TYPE_float
+		#if defined(THIS_COORD_TYPE_float)
 		float q0 = p;
-		#pragma r:elif THIS_Axis_dist
+		#elif defined(THIS_Axis_dist)
 		float q0 = length(p);
-		#pragma r:else
+		#else
 		float q0 = p.THIS_Axis;
-		#pragma r:endif
+		#endif
 		vec3 q = vec3(q0);
 		vec3 amt = THIS_wave(p, ctx, q);
 		amt = (amt * THIS_Amplitude * THIS_Amplitudemult) + THIS_Offset;

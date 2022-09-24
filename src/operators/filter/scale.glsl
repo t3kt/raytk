@@ -3,39 +3,39 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 	if (IS_TRUE(THIS_Enable)) {
 		CoordT pivot = CoordT(0.);
 		if (IS_TRUE(THIS_Usepivot)) {
-			#pragma r:if THIS_HAS_INPUT_pivotField
+			#ifdef THIS_HAS_INPUT_pivotField
 			pivot = THIS_asCoordT(inputOp_pivotField(p, ctx));
-			#pragma r:else
+			#else
 			pivot = THIS_asCoordT(THIS_Pivot);
-			#pragma r:endif
+			#endif
 		}
-		#pragma r:if THIS_Scaletype_uniform
+		#if defined(THIS_Scaletype_uniform)
 		float scale = THIS_Uniformscale;
-		#pragma r:if THIS_HAS_INPUT_scaleField
+		#ifdef THIS_HAS_INPUT_scaleField
 		scale *= adaptAsFloat(inputOp_scaleField(p, ctx));
-		#pragma r:endif
+		#endif
 		adjust = scale;
-		#pragma r:elif THIS_Scaletype_separate
+		#elif defined(THIS_Scaletype_separate)
 		CoordT scale = THIS_asCoordT(THIS_Scale);
-		#pragma r:if THIS_HAS_INPUT_scaleField
+		#ifdef THIS_HAS_INPUT_scaleField
 		scale *= THIS_asCoordT(fillToVec3(inputOp_scaleField(p, ctx)));
-		#pragma r:endif
+		#endif
 		adjust = vmin(scale);
-		#pragma r:else
+		#else
 		#error invalidScaleType
-		#pragma r:endif
+		#endif
 		p -= pivot;
 		p /= scale;
 		p += pivot;
 	}
 
-	#pragma r:if THIS_HAS_INPUT_1
+	#ifdef THIS_HAS_INPUT_1
 	ReturnT res = inputOp1(p, ctx);
-	#pragma r:if THIS_RETURN_TYPE_Sdf
+	#ifdef THIS_RETURN_TYPE_Sdf
 	res = withAdjustedScale(res, adjust);
-	#pragma r:endif
-	#pragma r:else
+	#endif
+	#else
 	ReturnT res = adaptAsVec4(p);
-	#pragma r:endif
+	#endif
 	return res;
 }

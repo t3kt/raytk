@@ -1,38 +1,38 @@
 vec3 THIS_apply(in vec3 p, inout ContextT ctx) {
-	#pragma r:if THIS_HAS_INPUT_indexField
+	#ifdef THIS_HAS_INPUT_indexField
 	float i = inputOp_indexField(p, ctx);
-	#pragma r:else
+	#else
 	float i = extractIteration(ctx).x;
-	#pragma r:endif
+	#endif
 	i = mapRange(i, THIS_Indexrange.x, THIS_Indexrange.y, 0., 1.);
-	#pragma r:if THIS_Extendmode_linear
-	#pragma r:elif THIS_Extendmode_clamp
+	#if defined(THIS_Extendmode_linear)
+	#elif defined(THIS_Extendmode_clamp)
 	i = clamp(i, 0., 1.);
-	#pragma r:elif THIS_Extendmode_loop
+	#elif defined(THIS_Extendmode_loop)
 	i = fract(i);
-	#pragma r:else
+	#else
 	#error invalidExtendMode
-	#pragma r:endif
-	#pragma r:if THIS_HAS_INPUT_easingFunction
+	#endif
+	#ifdef THIS_HAS_INPUT_easingFunction
 	i = inputOp_easingFunction(i, ctx);
-	#pragma r:endif
+	#endif
 
-	#pragma r:if THIS_Enabletranslate
+	#ifdef THIS_Enabletranslate
 	vec3 t = mix(THIS_Translate1, THIS_Translate2, i);
 	p -= t;
-	#pragma r:endif
+	#endif
 
-	#pragma r:if THIS_Enablerotate
-	#pragma r:if THIS_Usepivot
+	#ifdef THIS_Enablerotate
+	#ifdef THIS_Usepivot
 	vec3 piv = mix(THIS_Pivot1, THIS_Pivot2, i);
 	p -= piv;
-	#pragma r:endif
+	#endif
 	vec3 r = mix(THIS_Rotate1, THIS_Rotate2, i);
 	pRotateOnXYZ(p, r);
-	#pragma r:if THIS_Usepivot
+	#ifdef THIS_Usepivot
 	p += piv;
-	#pragma r:endif
-	#pragma r:endif
+	#endif
+	#endif
 	return p;
 }
 

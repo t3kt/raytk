@@ -1,15 +1,15 @@
 ReturnT thismap(CoordT p, ContextT ctx) {
 	if (IS_FALSE(THIS_Enable)) { return inputOp1(p, ctx); }
 	CoordT p2 = THIS_asCoordT(inputOp_coordField(p, ctx));
-	#pragma r:if THIS_Remapmode_replace
+	#if defined(THIS_Remapmode_replace)
 	CoordT q = p2;
-	#pragma r:elif THIS_Remapmode_add
+	#elif defined(THIS_Remapmode_add)
 	CoordT q = p + p2;
-	#pragma r:elif THIS_Remapmode_multiply
+	#elif defined(THIS_Remapmode_multiply)
 	CoordT q = p * p2;
-	#pragma r:else
+	#else
 	#error invalidRemapMode
-	#pragma r:endif
+	#endif
 	q = mix(p, q, THIS_Mix);
 	return inputOp1(q, ctx);
 }
