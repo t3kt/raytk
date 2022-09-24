@@ -1,27 +1,27 @@
 ReturnT thismap(CoordT p, ContextT ctx) {
 	ReturnT res;
-	#pragma r:if THIS_USE_SINGLE_SOURCE
+	#ifdef THIS_USE_SINGLE_SOURCE
 	{
-		#pragma r:if THIS_INPUT_OP
+		#ifdef THIS_INPUT_OP
 			res = vec4(THIS_INPUT_OP(p, ctx));
-		#pragma r:else
+		#else
 			res = vec4(THIS_SOURCE);
-		#pragma r:endif
+		#endif
 	}
-	#pragma r:else
+	#else
 	{
-		#pragma r:if THIS_USE_INPUT_1
+		#ifdef THIS_USE_INPUT_1
 		float input1 = inputOp1(p, ctx);
-		#pragma r:endif
-		#pragma r:if THIS_USE_INPUT_2
+		#endif
+		#ifdef THIS_USE_INPUT_2
 		float input2 = inputOp2(p, ctx);
-		#pragma r:endif
-		#pragma r:if THIS_USE_INPUT_3
+		#endif
+		#ifdef THIS_USE_INPUT_3
 		float input3 = inputOp3(p, ctx);
-		#pragma r:endif
-		#pragma r:if THIS_USE_INPUT_4
+		#endif
+		#ifdef THIS_USE_INPUT_4
 		float input4 = inputOp4(p, ctx);
-		#pragma r:endif
+		#endif
 		res = vec4(
 			THIS_SOURCE_X,
 			THIS_SOURCE_Y,
@@ -29,6 +29,6 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 			THIS_SOURCE_W
 		);
 	}
-	#pragma r:endif
+	#endif
 	return res;
 }
