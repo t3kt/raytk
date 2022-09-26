@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.material.matCapContrib
-  opVersion: '3'
+  opVersion: '4'
   opStatus: beta
 opDef: !def
   enable: true
@@ -23,3 +23,12 @@ opDef: !def
     evalOpts: !evalOpts
       excludeFirstRow: true
       cols: path
+inputs:
+- !input
+  Localalias: rotateField
+  coordType: !coordT
+    Allcoordtype: true
+  contextType: !contextT
+    Contexttypematerialcontext: true
+  returnType: !returnT
+    Returntypefloat: true
