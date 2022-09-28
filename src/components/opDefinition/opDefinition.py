@@ -1,6 +1,6 @@
 from dataclasses import dataclass
 import math
-from raytkState import RopState, Macro, Texture, Reference, Variable, Dispatch, Buffer, ValidationError
+from raytkState import RopState, Macro, Texture, Reference, Variable, Dispatch, Buffer, ValidationError, Constant
 import re
 
 # noinspection PyUnreachableCode
@@ -365,12 +365,19 @@ def buildParamChopNamesTable(dat: 'DAT', paramSpecTable: 'DAT'):
 	regularNames = []
 	specialNames = []
 	angleNames = []
+	constantNames = []
 	for i in range(1, paramSpecTable.numRows):
-		if paramSpecTable[i, 'handling'] != 'runtime':
+		handling = paramSpecTable[i, 'handling']
+		if handling == 'macro':
 			continue
 		name = paramSpecTable[i, 'localName'].val
 		source = paramSpecTable[i, 'source']
-		if source == 'param':
+		if handling == 'constant':
+			if source != 'param':
+				raise Exception(f'Constants must come from parameters {name} {source}')
+			else:
+				constantNames.append(name)
+		elif source == 'param':
 			regularNames.append(name)
 		elif source == 'special':
 			specialNames.append(name)
@@ -379,6 +386,7 @@ def buildParamChopNamesTable(dat: 'DAT', paramSpecTable: 'DAT'):
 	dat.appendRow(['regular', ' '.join(regularNames)])
 	dat.appendRow(['special', ' '.join(specialNames)])
 	dat.appendRow(['angle', ' '.join(angleNames)])
+	dat.appendRow(['constant', ' '.join(constantNames)])
 
 def updateLibraryMenuPar(libsComp: 'COMP'):
 	p = parentPar().Librarynames  # type: Par
@@ -519,6 +527,9 @@ def buildOpState():
 		paramSpecTable=op('paramSpecTable'),
 		paramTupletTable=op('param_tuplets'),
 		opElementTable=op('opElements'),
+	)
+	builder.loadConstants(
+		paramSpecTable=op('paramSpecTable'),
 	)
 	builder.loadTextures()
 	builder.loadBuffers()
@@ -679,6 +690,36 @@ class _Builder:
 				for row in table.rows():
 					addMacro(Macro(row[1].val, ' '.join([c.val or '' for c in row[2:]]), not _isFalseStr(row[0])))
 		self.opState.macros = macros
+
+	def loadConstants(self, paramSpecTable: 'DAT'):
+		self.opState.constants = []
+		if paramSpecTable.numRows < 2:
+			return
+		for i in range(1, paramSpecTable.numRows):
+			if paramSpecTable[i, 'handling'] != 'constant':
+				continue
+			globalName = paramSpecTable[i, 'globalName'].val
+			style = paramSpecTable[i, 'style']
+			if style == 'Int':
+				self.opState.constants.append(Constant(
+					globalName, 'int'
+				))
+			elif style == 'Float':
+				self.opState.constants.append(Constant(
+					globalName, 'float'
+				))
+			elif style == 'Toggle':
+				self.opState.constants.append(Constant(
+					globalName, 'bool'
+				))
+			elif style == 'Menu':
+				par = self.paramsOp.par[paramSpecTable[i, 'localName']]
+				self.opState.constants.append(Constant(
+					globalName, 'int',
+					menuOptions=par.menuNames
+				))
+			else:
+				raise Exception(f'Invalid constant style {globalName} {style}')
 
 	def loadTextures(self):
 		self.opState.textures = []

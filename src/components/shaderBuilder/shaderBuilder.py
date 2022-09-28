@@ -1,7 +1,7 @@
 from dataclasses import dataclass
 import json
 from raytkShader import simplifyNames
-from raytkState import RopState, Dispatch, Texture, Buffer, Macro, Reference, Variable, ValidationError
+from raytkState import RopState, Dispatch, Texture, Buffer, Macro, Reference, Variable, ValidationError, Constant
 import re
 from io import StringIO
 from typing import Callable, Dict, List, Tuple, Union, Optional
@@ -156,6 +156,7 @@ class ShaderBuilder:
 			self._parameterDetailTable(),
 			self._allParamVals(),
 			self.configPar() if self.configValid() else None,
+			self._parseOpStates(),
 		)
 
 	def getOpsFromDefinitionColumn(self, column: str):
@@ -200,6 +201,17 @@ class ShaderBuilder:
 			localName = refTable[row, 'localName']
 			dat.appendRow([refTable[row, 'name'], refTable[row, 'source']])
 			dat.appendRow([f'{ownerName}_HAS_REF_{localName}', ''])
+		for state in states:
+			if not state.constants:
+				continue
+			for const in state.constants:
+				if const.menuOptions:
+					for i, opt in enumerate(const.menuOptions):
+						dat.appendRow([f'{const.name}_{opt}', i])
+						pass
+					pass
+				pass
+			pass
 
 	def _getLibraryDats(self, onWarning: Callable[[str], None] = None) -> 'List[DAT]':
 		requiredLibNames = self.ownerComp.par.Librarynames.eval().strip().split(' ')  # type: List[str]
@@ -871,6 +883,7 @@ class _ParamTupletSpec:
 	parts: Tuple[str]
 	isReadOnly: bool
 	isSpecial: bool = False
+	isSpecializationConstant: bool = False
 
 	def isPresentInChop(self, chop: 'CHOP'):
 		return any([chop[part] is not None for part in self.parts])
@@ -888,15 +901,17 @@ class _ParamTupletSpec:
 			parts=tuple(parts),
 			isReadOnly='readOnly' in str(dat[row, 'status'] or ''),
 			isSpecial=dat[row, 'source'] == 'special',
+			isSpecializationConstant=dat[row, 'handling'] == 'constant',
 		)
 
 	@classmethod
-	def fromTableRows(cls, dat: 'DAT') -> 'List[_ParamTupletSpec]':
+	def fromTableRows(cls, dat: 'DAT', handlingTypes: 'List[str]') -> 'List[_ParamTupletSpec]':
 		if not dat or dat.numRows < 2:
 			return []
 		return [
 			cls.fromRow(dat, row)
 			for row in range(1, dat.numRows)
+			if dat[row, 'handling'].val in handlingTypes
 		]
 
 @dataclass
@@ -907,20 +922,31 @@ class _ParamExpr:
 @dataclass
 class _UniformSpec:
 	name: str
-	dataType: str  # float | vec2 | vec3 | vec4
-	uniformType: str  # vector | uniformarray
+	dataType: str  # float | vec2 | vec3 | vec4 | int | bool
+	uniformType: str  # vector | uniformarray | constant
 	arrayLength: int = 1
 	chop: Optional[str] = None
 	expr1: Optional[str] = None
 	expr2: Optional[str] = None
 	expr3: Optional[str] = None
 	expr4: Optional[str] = None
+	constIndex: int = 0
 
 	def declaration(self):
 		if self.uniformType == 'vector':
 			return f'uniform {self.dataType} {self.name};'
 		elif self.uniformType == 'uniformarray':
 			return f'uniform {self.dataType} {self.name}[{self.arrayLength}];'
+		elif self.uniformType == 'constant':
+			if self.dataType == 'int':
+				defVal = '0'
+			elif self.dataType == 'float':
+				defVal = '0.0'
+			elif self.dataType == 'bool':
+				defVal = 'false'
+			else:
+				raise Exception(f'Invalid data type for specialization constant: {self.dataType}')
+			return f'layout(constant_id = {self.constIndex}) const {self.dataType} {self.name} = {defVal};'
 		else:
 			raise Exception(f'Invalid uniformType: {self.uniformType!r}')
 
@@ -932,6 +958,7 @@ class _ParameterProcessor:
 			paramDetailTable: 'DAT',
 			paramVals: 'CHOP',
 			configPar: 'Optional[_ConfigPar]',
+			opStates: 'List[RopState]'
 	):
 		self.paramDetailTable = paramDetailTable
 		self.hasParams = paramDetailTable.numRows > 1
@@ -940,6 +967,7 @@ class _ParameterProcessor:
 		self.paramVals = paramVals
 		self.aliasMode = str(configPar['Paramaliasmode'] or 'macro') if configPar else 'macro'
 		self.paramExprs = None  # type: Optional[Dict[str, _ParamExpr]]
+		self.opStates = opStates
 
 	def globalDeclarations(self) -> List[str]:
 		return [
@@ -979,7 +1007,9 @@ class _ParameterProcessor:
 			return
 		self.paramExprs = {}
 		suffixes = 'xyzw'
-		paramTuplets = _ParamTupletSpec.fromTableRows(self.paramDetailTable)
+		paramTuplets = _ParamTupletSpec.fromTableRows(
+			self.paramDetailTable,
+			handlingTypes=['runtime', 'macro'])
 		for i, paramTuplet in enumerate(paramTuplets):
 			useConstant = self.useConstantReadOnly and paramTuplet.isReadOnly and paramTuplet.isPresentInChop(self.paramVals)
 			size = len(paramTuplet.parts)
@@ -1011,12 +1041,26 @@ class _ParameterProcessor:
 
 	def paramUniforms(self) -> 'List[_UniformSpec]':
 		paramCount = max(1, self.paramDetailTable.numRows - 1)
-		return [
+		uniforms = [
 			_UniformSpec(
 				'vecParams', 'vec4', 'uniformarray', paramCount,
 				parent().path + '/merged_vector_param_vals'
 			)
 		]
+		constCount = 0
+		constPath = parent().path + '/constant_param_vals'
+		for opState in self.opStates:
+			if opState.constants:
+				for const in opState.constants:
+					uniforms.append(_UniformSpec(
+						name=const.name,
+						dataType=const.type,
+						uniformType='constant',
+						expr1=f'op("{constPath}")["{const.name}"]',
+						constIndex=constCount
+					))
+					constCount += 1
+		return uniforms
 
 def _stringify(val: 'Union[str, DAT]'):
 	if val is None:
@@ -1074,6 +1118,13 @@ def _parseOpStateJson(text: str):
 		state.macros = [
 			# Macro(o['name'], o.get('value'), o.get('enable'))
 			Macro(**o)
+			for o in arr
+		]
+	arr = obj.get('constants')
+	if arr:
+		state.constants = [
+			# Constant(o['name'], o['type'], o.get('menuOptions'))
+			Constant(**o)
 			for o in arr
 		]
 	arr = obj.get('textures')
