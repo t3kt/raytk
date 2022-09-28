@@ -6,7 +6,7 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 	#if defined(THIS_COORD_TYPE_vec2)
 		q = THIS_asNoiseCoordT(p);
 	#elif defined(THIS_COORD_TYPE_vec3)
-		#if THIS_NOISE_COORD_vec2
+		#ifdef THIS_NOISE_COORD_vec2
 		q = p.THIS_PLANE;
 		#else
 		q = THIS_asNoiseCoordT(p);

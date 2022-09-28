@@ -8,7 +8,7 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 	ReturnT res = createSdf(d);
 	#if defined(THIS_Uvmode_cartesian)
 	assignUV(res, vec3(map01(p, -vec2(r/2.), vec2(r/2.)), 0.));
-	#elif THIS_Uvmode_polar
+	#elif defined(THIS_Uvmode_polar)
 	assignUV(res, vec3(
 		length(p) / r,
 		atan(p.y, p.x),
