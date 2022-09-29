@@ -43,6 +43,7 @@ def buildExportTable(dat: 'DAT', uniformTable: 'DAT'):
 				name=uniformTable[row, 'name'].val,
 				expr=uniformTable[row, 'expr1'].val or '0',
 			)
+			constIndex += 1
 		else:
 			raise Exception(f'Invalid uniform type: {uniType}')
 

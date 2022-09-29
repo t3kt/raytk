@@ -33,6 +33,7 @@ class OutputOp:
 	def onInit(self):
 		self.updateTextureInputs()
 		self.resetInfoParams()
+		self.updateConstantParams()
 
 	def resetInfoParams(self):
 		host = self._host()
@@ -57,3 +58,18 @@ class OutputOp:
 				return
 			inputs.append(selectors[i])
 		renderTop.setInputs(inputs)
+
+	def updateConstantParams(self):
+		renderTop = self._renderTop()
+		if not renderTop:
+			return
+		table = self.ownerComp.op('uniforms')
+		if table.numRows < 2:
+			return
+		count = 0
+		for i in range(1, table.numRows):
+			if table[i, 'uniformType'] == 'constant':
+				count += 1
+		sequence = renderTop.par.constname0.sequence  # type: Sequence
+		if count > sequence.numBlocks:
+			sequence.numBlocks = count
