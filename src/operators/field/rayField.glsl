@@ -6,12 +6,13 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 	#error invalidContextType
 	#endif
 	vec3 val;
-	#if defined(THIS_Raypart_dir)
-	val = ray.dir;
-	#elif defined(THIS_Raypart_pos)
-	val = ray.pos;
-	#else
-	#error invalidRayPart
-	#endif
+	switch (THIS_Raypart) {
+		case THIS_Raypart_dir:
+			val = ray.dir;
+			break;
+		case THIS_Raypart_pos:
+			val = ray.pos;
+			break;
+	}
 	return ReturnT(val, 0.);
 }

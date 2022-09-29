@@ -1,2 +1,2 @@
 names	source	handling	readOnlyHandling	conversion	enable
-Raypart	param	macro			1
+Raypart	param	constant			1

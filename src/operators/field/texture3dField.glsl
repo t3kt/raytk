@@ -8,17 +8,22 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 	#endif
 	uv = (uv - THIS_Translate) / THIS_Scale;
 	ZMODE();
-	#if defined(THIS_Extendmode_hold)
-	uv = clamp(uv, -0.5, 0.5);
-	#elif defined(THIS_Extendmode_repeat)
-	uv = fract(uv+0.5)-0.5;
-	#elif defined(THIS_Extendmode_mirror)
-	uv = modZigZag(uv+0.5)-0.5;
-	#elif defined(THIS_Extendmode_zero)
-	if (uv.x < -0.5 || uv.x > 0.5 || uv.y < -0.5 || uv.y > 0.5 || uv.z < -0.5 || uv.z > 0.5) {
-		return THIS_asReturnT(0.);
+	switch (THIS_Extendmode) {
+		case THIS_Extendmode_hold:
+			uv = clamp(uv, -0.5, 0.5);
+			break;
+		case THIS_Extendmode_repeat:
+			uv = fract(uv+0.5)-0.5;
+			break;
+		case THIS_Extendmode_mirror:
+			uv = modZigZag(uv+0.5)-0.5;
+			break;
+		case THIS_Extendmode_zero:
+			if (uv.x < -0.5 || uv.x > 0.5 || uv.y < -0.5 || uv.y > 0.5 || uv.z < -0.5 || uv.z > 0.5) {
+				return THIS_asReturnT(0.);
+			}
+			break;
 	}
-	#endif
 	#if defined(RAYTK_LOD_IN_MATERIAL_CONTEXT) && defined(THIS_CONTEXT_TYPE_MaterialContext)
 	vec4 value = textureLod(THIS_texture, uv + 0.5, ctx.lod);
 	#else
