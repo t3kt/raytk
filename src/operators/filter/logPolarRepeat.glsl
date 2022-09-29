@@ -20,18 +20,18 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 	scaleAdj = r / scale;
 	#endif
 	switch (THIS_Mirrortype) {
-		case THIS_Mirrortype_none:
+		case THISTYPE_Mirrortype_none:
 			cell = pMod2(q, size);
 			break;
-		case THIS_Mirrortype_mirror:
+		case THISTYPE_Mirrortype_mirror:
 			cell = pModMirror2(q, size);
 			break;
-		case THIS_Mirrortype_grid:
+		case THISTYPE_Mirrortype_grid:
 			cell = pModGrid2(q, size);
 			break;
 	}
 
-	if (THIS_Iterationtype == THIS_Iterationtype_cellcoord) {
+	if (THIS_Iterationtype == THISTYPE_Iterationtype_cellcoord) {
 		setIterationCell(ctx, cell);
 	}
 

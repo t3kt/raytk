@@ -17,16 +17,16 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 	vec3 valMult = vec3(1.0);
 	uv = (uv - THIS_Translate) / THIS_Scale;
 	switch (THIS_Extendmode) {
-		case THIS_Extendmode_hold:
+		case THISTYPE_Extendmode_hold:
 			uv = clamp(uv, -0.5, 0.5);
 			break;
-		case THIS_Extendmode_repeat:
+		case THISTYPE_Extendmode_repeat:
 			uv = fract(uv+0.5)-0.5;
 			break;
-		case THIS_Extendmode_mirror:
+		case THISTYPE_Extendmode_mirror:
 			uv = modZigZag(uv+0.5)-0.5;
 			break;
-		case THIS_Extendmode_zero:
+		case THISTYPE_Extendmode_zero:
 			bvec3 isOut = bvec3(
 				uv.x < -0.5 || uv.x > 0.5,
 				uv.y < -0.5 || uv.y > 0.5,
@@ -53,21 +53,21 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 
 	vec3 col;
 	switch (THIS_Blendmode) {
-		case THIS_Blendmode_normals:
+		case THISTYPE_Blendmode_normals:
 			col = colXY * n.z * valMult.z + colYZ * n.x * valMult.x + colZX * n.y * valMult.y;
 			break;
-		case THIS_Blendmode_add:
+		case THISTYPE_Blendmode_add:
 			col = colXY + colYZ + colZX;
 			break;
-		case THIS_Blendmode_max:
+		case THISTYPE_Blendmode_max:
 			col = max(max(colXY, colYZ), colZX);
 			break;
-		case THIS_Blendmode_avg:
+		case THISTYPE_Blendmode_avg:
 			col = (colXY + colYZ + colZX) / 3.0;
 			break;
 	}
 
-	#ifdef THIS_RETURN_TYPE_float
+	#ifdef THISTYPE_RETURN_TYPE_float
 	return col.x;
 	#else
 	return vec4(col, 1);

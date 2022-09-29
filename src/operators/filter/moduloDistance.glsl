@@ -9,7 +9,7 @@ void THIS_apply(inout CoordT p, inout ContextT ctx) {
 	#endif
 
 	float cell;
-	if (THIS_Mirrortype == THIS_Mirrortype_mirror) {
+	if (THIS_Mirrortype == THISTYPE_Mirrortype_mirror) {
 		cell = pModMirror1(d, THIS_Length);
 	} else {
 		cell = pMod1(d, THIS_Length*.5);
@@ -29,7 +29,7 @@ void THIS_apply(inout CoordT p, inout ContextT ctx) {
 	float a = atan(p.y, p.x);
 	p = d * vec2(cos(a), sin(a)) - center;
 	#else
-	if (THIS_Distancemode == THIS_Distancemode_spherical) {
+	if (THIS_Distancemode == THISTYPE_Distancemode_spherical) {
 		float alpha = atan(p.y, p.x);
 		float polar = atan(p.x, p.z);
 		p = d * vec3(

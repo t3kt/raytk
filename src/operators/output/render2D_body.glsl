@@ -106,25 +106,25 @@ vec2 getCoord() {
 	}
 	#else
 	{
-		if (THIS_Alignment == THIS_Alignment_legacy) {
+		if (THIS_Alignment == THISTYPE_Alignment_legacy) {
 			fragCoord.x *= uTDOutputInfo.res.z/uTDOutputInfo.res.w;
 			p = fragCoord*2. - vec2(1.);
 		} else  {
 			p = fragCoord;
-			if (THIS_Alignment == THIS_Alignment_center) {
+			if (THIS_Alignment == THISTYPE_Alignment_center) {
 				p -= vec2(0.5);
 			}
 			switch (THIS_Scaling) {
-				case THIS_Scaling_fill:
+				case THISTYPE_Scaling_fill:
 					break;
-				case THIS_Scaling_fitinside:
+				case THISTYPE_Scaling_fitinside:
 					if (resolution.x > resolution.y) {
 						p.x *= resolution.x / resolution.y;
 					} else {
 						p.y *= resolution.y / resolution.x;
 					}
 					break;
-				case THIS_Scaling_fitoutside:
+				case THISTYPE_Scaling_fitoutside:
 					if (resolution.x > resolution.y) {
 						p.y *= resolution.y / resolution.x;
 					} else {

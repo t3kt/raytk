@@ -9,16 +9,16 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 	uv = (uv - THIS_Translate) / THIS_Scale;
 	ZMODE();
 	switch (THIS_Extendmode) {
-		case THIS_Extendmode_hold:
+		case THISTYPE_Extendmode_hold:
 			uv = clamp(uv, -0.5, 0.5);
 			break;
-		case THIS_Extendmode_repeat:
+		case THISTYPE_Extendmode_repeat:
 			uv = fract(uv+0.5)-0.5;
 			break;
-		case THIS_Extendmode_mirror:
+		case THISTYPE_Extendmode_mirror:
 			uv = modZigZag(uv+0.5)-0.5;
 			break;
-		case THIS_Extendmode_zero:
+		case THISTYPE_Extendmode_zero:
 			if (uv.x < -0.5 || uv.x > 0.5 || uv.y < -0.5 || uv.y > 0.5 || uv.z < -0.5 || uv.z > 0.5) {
 				return THIS_asReturnT(0.);
 			}

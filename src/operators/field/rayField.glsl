@@ -7,10 +7,10 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 	#endif
 	vec3 val;
 	switch (THIS_Raypart) {
-		case THIS_Raypart_dir:
+		case THISTYPE_Raypart_dir:
 			val = ray.dir;
 			break;
-		case THIS_Raypart_pos:
+		case THISTYPE_Raypart_pos:
 			val = ray.pos;
 			break;
 	}

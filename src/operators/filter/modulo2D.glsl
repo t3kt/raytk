@@ -39,10 +39,10 @@ void THIS_apply(inout CoordT p, inout ContextT ctx) {
 	#endif
 
 	switch (THIS_Mirrortype) {
-		case THIS_Mirrortype_mirror:
+		case THISTYPE_Mirrortype_mirror:
 			q *= mod(c,vec2(2))*2 - vec2(1);
 			break;
-		case THIS_Mirrortype_grid:
+		case THISTYPE_Mirrortype_grid:
 			q *= mod(c,vec2(2))*2 - vec2(1);
 			q -= halfsize;
 			if (q.x > q.y) q.xy = q.yx;
@@ -52,13 +52,13 @@ void THIS_apply(inout CoordT p, inout ContextT ctx) {
 
 	int quad = quadrantIndex(ivec2(mod(ivec2(c), 2)));
 	switch (THIS_Iterationtype) {
-		case THIS_Iterationtype_cellcoord:
+		case THISTYPE_Iterationtype_cellcoord:
 			setIterationCell(ctx, c);
 			break;
-		case THIS_Iterationtype_tiledquadrant:
+		case THISTYPE_Iterationtype_tiledquadrant:
 			setIterationIndex(ctx, quad);
 			break;
-		case THIS_Iterationtype_alternatingcoord:
+		case THISTYPE_Iterationtype_alternatingcoord:
 			setIterationCell(ctx, mod(c, 2.));
 			break;
 	}

@@ -15,7 +15,7 @@ void THIS_apply(inout vec2 p, out float cell) {
 			cell = repetitions + 1.;
 			return;
 		}
-		if (THIS_Mirrortype == THIS_Mirrortype_mirror) {
+		if (THIS_Mirrortype == THISTYPE_Mirrortype_mirror) {
 			float a1 = mod(a, angle * 2);
 			if (a1 >= angle) {
 				a1 = angle - a1;
@@ -25,7 +25,7 @@ void THIS_apply(inout vec2 p, out float cell) {
 			a = mod(a, angle) - angle/2.;
 		}
 	} else {
-		if (THIS_Mirrortype == THIS_Mirrortype_mirror) {
+		if (THIS_Mirrortype == THISTYPE_Mirrortype_mirror) {
 			// no limit + mirror
 			float a1 = mod(a, angle * 2);
 			if (a1 >= angle) {
@@ -56,10 +56,10 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 		float cell;
 		THIS_apply(q, cell);
 		switch (THIS_Iterationtype) {
-			case THIS_Iterationtype_index:
+			case THISTYPE_Iterationtype_index:
 				setIterationIndex(ctx, cell);
 				break;
-			case THIS_Iterationtype_ratio:
+			case THISTYPE_Iterationtype_ratio:
 				setIterationIndex(ctx, cell / (THIS_Repetitions - 1.));
 				break;
 		}

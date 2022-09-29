@@ -46,15 +46,15 @@ void THIS_apply(inout CoordT p, inout ContextT ctx) {
 	}
 	#endif
 
-	if (THIS_Mirrortype == THIS_Mirrortype_mirror) {
+	if (THIS_Mirrortype == THISTYPE_Mirrortype_mirror) {
 		q *= mod(c, 2.0)*2 - 1;
 	}
 
 	switch (THIS_Iterationtype) {
-		case THIS_Iterationtype_cellcoord:
+		case THISTYPE_Iterationtype_cellcoord:
 			setIterationIndex(ctx, c);
 			break;
-		case THIS_Iterationtype_alternatingcoord:
+		case THISTYPE_Iterationtype_alternatingcoord:
 			setIterationIndex(ctx, mod(c, 2.));
 			break;
 	}
