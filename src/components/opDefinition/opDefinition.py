@@ -545,8 +545,12 @@ class _Builder:
 		self.defPar = parent().par  # type: OpDefParsT
 		self.hostOp = self.defPar.Hostop.eval()
 		self.paramsOp = self.defPar.Paramsop.eval() or self.hostOp
+		opType = self.defPar.Raytkoptype.eval()
+		if opType and '.' in opType:
+			opType = opType.rsplit('.', maxsplit=1)[1]
 		self.opState = RopState(
 			name=self.defPar.Name.eval(),
+			ropType=opType,
 		)
 		self.opName = self.opState.name
 		self.namePrefix = self.opName + '_'
@@ -557,6 +561,8 @@ class _Builder:
 			'thismap': self.opName,
 			'THIS_': self.namePrefix,
 		}  # type: Dict[str, str]
+		if opType:
+			self.replacements['THISTYPE_'] = opType + '_'
 		if self.opState.materialId:
 			self.replacements['THISMAT'] = self.opState.materialId
 		self.elementReplacements = {}
@@ -699,23 +705,24 @@ class _Builder:
 			if paramSpecTable[i, 'handling'] != 'constant':
 				continue
 			globalName = paramSpecTable[i, 'globalName'].val
+			localName = paramSpecTable[i, 'localName'].val
 			style = paramSpecTable[i, 'style']
 			if style == 'Int':
 				self.opState.constants.append(Constant(
-					globalName, 'int'
+					globalName, localName, 'int'
 				))
 			elif style == 'Float':
 				self.opState.constants.append(Constant(
-					globalName, 'float'
+					globalName, localName, 'float'
 				))
 			elif style == 'Toggle':
 				self.opState.constants.append(Constant(
-					globalName, 'bool'
+					globalName, localName, 'bool'
 				))
 			elif style == 'Menu':
 				par = self.paramsOp.par[paramSpecTable[i, 'localName']]
 				self.opState.constants.append(Constant(
-					globalName, 'int',
+					globalName, localName, 'int',
 					menuOptions=par.menuNames
 				))
 			else:

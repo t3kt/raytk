@@ -207,11 +207,10 @@ class ShaderBuilder:
 			for const in state.constants:
 				if const.menuOptions:
 					for i, opt in enumerate(const.menuOptions):
+						# TODO: REMOVE THIS VERSION:
 						dat.appendRow([f'{const.name}_{opt}', i])
-						pass
-					pass
-				pass
-			pass
+
+						dat.appendRow([f'{state.ropType}_{const.localName}_{opt}', i])
 
 	def _getLibraryDats(self, onWarning: Callable[[str], None] = None) -> 'List[DAT]':
 		requiredLibNames = self.ownerComp.par.Librarynames.eval().strip().split(' ')  # type: List[str]
@@ -1104,6 +1103,7 @@ def _parseOpStateJson(text: str):
 
 	state = RopState(
 		name=obj['name'],
+		ropType=obj['ropType'],
 		functionCode=obj['functionCode'],
 		materialCode=obj.get('materialCode'),
 		initCode=obj.get('initCode'),

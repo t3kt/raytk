@@ -30,6 +30,7 @@ def _shouldInclude(val):
 @dataclass
 class RopState(_StateObject):
 	name: str
+	ropType: str
 
 	functionCode: Optional[str] = None
 	materialCode: Optional[str] = None
@@ -76,6 +77,7 @@ class Macro(_StateObject):
 @dataclass
 class Constant(_StateObject):
 	name: str
+	localName: str
 	type: str
 	menuOptions: Optional[List[str]] = None
 
