@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.combine.combineFields
-  opVersion: '18'
+  opVersion: '19'
   opStatus: default
 opDef: !def
   enable: !expr
@@ -125,6 +125,6 @@ elements:
     Autoupdateparams: false
     Manageparamstates: false
     Alwaysincludeallparams: false
-    Switchmode: auto
+    Switchmode: autoconst
     Indexexpr: ''
     Placeholder: BODY();
