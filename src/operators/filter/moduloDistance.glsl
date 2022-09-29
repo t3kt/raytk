@@ -8,14 +8,17 @@ void THIS_apply(inout CoordT p, inout ContextT ctx) {
 	float d = length(p.THIS_PLANE);
 	#endif
 
-	#ifdef THIS_Mirrortype_mirror
-	float cell = pModMirror1(d, THIS_Length);
-	#else
-	float cell = pMod1(d, THIS_Length*.5);
-	#endif
+	float cell;
+	if (THIS_Mirrortype == THIS_Mirrortype_mirror) {
+		cell = pModMirror1(d, THIS_Length);
+	} else {
+		cell = pMod1(d, THIS_Length*.5);
+	}
 
-	#if defined(THIS_Iterateonrings) && defined(THIS_CONTEXT_TYPE_Context)
-	setIterationIndex(ctx, cell);
+	#ifdef THIS_CONTEXT_TYPE_Context
+	if (THIS_Iterateonrings) {
+		setIterationIndex(ctx, cell);
+	}
 	#endif
 
 	#ifdef THIS_EXPOSE_ring
@@ -25,16 +28,19 @@ void THIS_apply(inout CoordT p, inout ContextT ctx) {
 	#if defined(THIS_COORD_TYPE_vec2)
 	float a = atan(p.y, p.x);
 	p = d * vec2(cos(a), sin(a)) - center;
-	#elif defined(THIS_Distancemode_spherical)
-	float alpha = atan(p.y, p.x);
-	float polar = atan(p.x, p.z);
-	p = d * vec3(
+	#else
+	if (THIS_Distancemode == THIS_Distancemode_spherical) {
+		float alpha = atan(p.y, p.x);
+		float polar = atan(p.x, p.z);
+		p = d * vec3(
 		sin(polar) * cos(alpha),
 		sin(polar) * sin(alpha),
 		cos(polar)) - center;
-	#else
-	float a = atan(p.THIS_PLANE_P2, p.THIS_PLANE_P1);
-	p.THIS_PLANE = d * vec2(cos(a), sin(a)) - center.THIS_PLANE;
+	} else {
+		vec2 q = p.THIS_PLANE;
+		float a = atan(q.y, q.x);
+		p.THIS_PLANE = d * vec2(cos(a), sin(a)) - center.THIS_PLANE;
+	}
 	#endif
 }
 
