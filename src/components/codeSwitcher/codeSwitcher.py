@@ -21,8 +21,11 @@ def _hostPar() -> 'Optional[Par]':
 def _effectiveMode():
 	mode = parent().par.Switchmode.eval()
 	par = _hostPar()
-	if par is not None and mode == 'auto':
-		mode = 'inline'if par is None or par.readOnly else 'switch'
+	if par is not None:
+		if mode == 'auto':
+			mode = 'inline'if par is None or par.readOnly else 'switch'
+		elif mode == 'autoconst':
+			mode = 'constswitch' if par is None or par.readOnly else 'switch'
 	return mode
 
 def buildStateTable(dat: 'DAT'):
@@ -36,10 +39,12 @@ def buildParameterGroupTable(dat: 'DAT'):
 	if parent().par.Param:
 		if mode == 'none':
 			dat.appendRow([parent().par.Param, 'param', 'macro', '', '', '1'])
+		elif mode == 'constswitch':
+			dat.appendRow([parent().par.Param, 'param', 'constant', '', '', '1'])
 		else:
 			dat.appendRow([parent().par.Param, 'param', 'runtime', '', '', '1'])
 	if parent().par.Manageparamstates:
-		if mode == 'switch' or parent().par.Alwaysincludeallparams:
+		if mode == 'switch' or mode == 'constswitch' or parent().par.Alwaysincludeallparams:
 			params = ' '.join(_paramModes().keys()).strip()
 		else:
 			params = str(op('currentItemInfo')[1, 'params'] or '').strip()
@@ -64,6 +69,8 @@ def buildCode():
 	table = op('table')
 	if mode == 'switch':
 		return _buildRuntimeSwitch(table)
+	elif mode == 'constswitch':
+		return _buildRuntimeSwitch(table, isConstant=True)
 	elif mode == 'inline':
 		return _prepareItemCode(table[par.eval(), 'code']) + ';'
 	else:  # none
@@ -75,15 +82,19 @@ def _prepareItemCode(code: 'Cell'):
 		code = code[:-1]
 	return code.replace(';', ';\n')
 
-def _buildRuntimeSwitch(table: 'DAT'):
-	expr = parent().par.Indexexpr or f'int(THIS_{parent().par.Param})'
+def _buildRuntimeSwitch(table: 'DAT', isConstant=False):
+	paramName = parent().par.Param
+	expr = parent().par.Indexexpr or f'int(THIS_{paramName})'
 	code = f'switch ({expr}) {{\n'
 	for i in range(1, table.numRows):
 		name = str(table[i, 'name'])
 		itemCode = _prepareItemCode(table[i, 'code'])
 		if not itemCode.strip():
 			continue
-		code += f'\tcase {i - 1}: /*{name}*/\n'
+		if isConstant and paramName:
+			code += f'\tcase THISTYPE_{paramName}_{name}:\n'
+		else:
+			code += f'\tcase {i - 1}: /*{name}*/\n'
 		code += f'\t\t{itemCode};\n'
 		code += '\t\tbreak;\n'
 	code += '}\n'
