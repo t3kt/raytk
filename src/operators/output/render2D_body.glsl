@@ -106,40 +106,33 @@ vec2 getCoord() {
 	}
 	#else
 	{
-		#if defined(THIS_Alignment_legacy)
-		{
+		if (THIS_Alignment == THIS_Alignment_legacy) {
 			fragCoord.x *= uTDOutputInfo.res.z/uTDOutputInfo.res.w;
 			p = fragCoord*2. - vec2(1.);
-		}
-		#else
-		{
+		} else  {
 			p = fragCoord;
-			#if defined(THIS_Alignment_bottomleft)
-			#elif defined(THIS_Alignment_center)
-			p -= vec2(0.5);
-			#else
-			#error invalidAlignment
-			#endif
-			#if defined(THIS_Scaling_fill)
-			#elif defined(THIS_Scaling_fitinside)
-			{
-				if (resolution.x > resolution.y) {
-					p.x *= resolution.x / resolution.y;
-				} else {
-					p.y *= resolution.y / resolution.x;
-				}
+			if (THIS_Alignment == THIS_Alignment_center) {
+				p -= vec2(0.5);
 			}
-			#elif defined(THIS_Scaling_fitoutside)
-			{
-				if (resolution.x > resolution.y) {
-					p.y *= resolution.y / resolution.x;
-				} else {
-					p.x *= resolution.x / resolution.y;
-				}
+			switch (THIS_Scaling) {
+				case THIS_Scaling_fill:
+					break;
+				case THIS_Scaling_fitinside:
+					if (resolution.x > resolution.y) {
+						p.x *= resolution.x / resolution.y;
+					} else {
+						p.y *= resolution.y / resolution.x;
+					}
+					break;
+				case THIS_Scaling_fitoutside:
+					if (resolution.x > resolution.y) {
+						p.y *= resolution.y / resolution.x;
+					} else {
+						p.x *= resolution.x / resolution.y;
+					}
+					break;
 			}
-			#endif
 		}
-		#endif
 	}
 	#endif
 	return p;
