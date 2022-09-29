@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.sdf.prismSdf
-  opVersion: '20'
+  opVersion: '21'
   opStatus: default
 opDef: !def
   enable: true
@@ -74,6 +74,6 @@ elements:
     Autoupdateparams: true
     Manageparamstates: true
     Alwaysincludeallparams: false
-    Switchmode: auto
+    Switchmode: autoconst
     Indexexpr: ''
     Placeholder: BODY();

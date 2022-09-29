@@ -49,13 +49,13 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 	}
 	Sdf res = createSdf(d);
 	#ifdef RAYTK_USE_UV
-	#ifdef THIS_Uvmode_cylindrical
-	vec3 uv = vec3(atan(q.x, q.y), q.z, length(q.xy));
-	if (IS_FALSE(THIS_Infiniteheight)) {
-		uv.y = map01(uv.y, -h*.5, h*.5);
+	if (THIS_Uvmode == THISTYPE_Uvmode_cylindrical) {
+		vec3 uv = vec3(atan(q.x, q.y), q.z, length(q.xy));
+		if (IS_FALSE(THIS_Infiniteheight)) {
+			uv.y = map01(uv.y, -h*.5, h*.5);
+		}
+		assignUV(res, uv);
 	}
-	assignUV(res, uv);
-	#endif
 	#endif
 	return res;
 }
