@@ -14,7 +14,7 @@ void THIS_apply(inout CoordT p, inout ContextT ctx) {
 	float cell = pMod1(d, THIS_Length*.5);
 	#endif
 
-	#ifdef THIS_Iterateonrings && THIS_CONTEXT_TYPE_Context
+	#if defined(THIS_Iterateonrings) && defined(THIS_CONTEXT_TYPE_Context)
 	setIterationIndex(ctx, cell);
 	#endif
 
