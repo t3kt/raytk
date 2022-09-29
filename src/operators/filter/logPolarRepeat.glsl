@@ -19,17 +19,21 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 	q.y *= scale;
 	scaleAdj = r / scale;
 	#endif
-	#if defined(THIS_Mirrortype_none)
-	cell = pMod2(q, size);
-	#elif defined(THIS_Mirrortype_mirror)
-	cell = pModMirror2(q, size);
-	#elif defined(THIS_Mirrortype_grid)
-	cell = pModGrid2(q, size);
-	#endif
+	switch (THIS_Mirrortype) {
+		case THIS_Mirrortype_none:
+			cell = pMod2(q, size);
+			break;
+		case THIS_Mirrortype_mirror:
+			cell = pModMirror2(q, size);
+			break;
+		case THIS_Mirrortype_grid:
+			cell = pModGrid2(q, size);
+			break;
+	}
 
-	#if defined(THIS_Iterationtype_cellcoord)
-	setIterationCell(ctx, cell);
-	#endif
+	if (THIS_Iterationtype == THIS_Iterationtype_cellcoord) {
+		setIterationCell(ctx, cell);
+	}
 
 	#ifdef THIS_EXPOSE_cellcoord
 	THIS_cellcoord = ivec2(cell);
