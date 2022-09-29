@@ -2,6 +2,6 @@
   "meta": {
     "opStatus": "default",
     "opType": "raytk.operators.output.pointMapRender",
-    "opVersion": 55
+    "opVersion": 56
   }
 }
