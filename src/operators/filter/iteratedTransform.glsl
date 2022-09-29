@@ -33,7 +33,7 @@ void THIS_apply(inout CoordT p, inout ContextT ctx, inout float valueAdjust, out
 		#if defined(THIS_Enabletranslate) && defined(THIS_HAS_INPUT_translateField)
 		translate = baseT + inputOp_translateField(p, ctx).xyz;
 		#endif
-		#ifdef THIS_Enablescale && THIS_HAS_INPUT_scaleField
+		#if defined(THIS_Enablescale) && defined(THIS_HAS_INPUT_scaleField)
 		{
 			#ifdef THIS_Scaletype_uniform
 			uniformscale = baseS * adaptAsFloat(inputOp_scaleField(p, ctx));
