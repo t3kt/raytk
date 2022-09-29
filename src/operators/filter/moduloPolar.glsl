@@ -3,8 +3,7 @@ void THIS_apply(inout vec2 p, out float cell) {
 	float angle = TAU/repetitions;
 	float a = atan(p.y, p.x) + angle/2.;
 	cell = floor(a/angle);
-	#ifdef THIS_Uselimit
-	{
+	if (THIS_Uselimit) {
 		float start = THIS_Limitlow;
 		float stop = THIS_Limithigh;
 		float a2 = mod(a, TAU)/angle;
@@ -16,31 +15,28 @@ void THIS_apply(inout vec2 p, out float cell) {
 			cell = repetitions + 1.;
 			return;
 		}
-		#ifdef THIS_Mirrortype_mirror
-		float a1 = mod(a, angle * 2);
-		if (a1 >= angle) {
-			a1 = angle - a1;
+		if (THIS_Mirrortype == THIS_Mirrortype_mirror) {
+			float a1 = mod(a, angle * 2);
+			if (a1 >= angle) {
+				a1 = angle - a1;
+			}
+			a = mod(a1, angle) - angle/2.;
+		} else {
+			a = mod(a, angle) - angle/2.;
 		}
-		a = mod(a1, angle) - angle/2.;
-		#else
-		a = mod(a, angle) - angle/2.;
-		#endif
-	}
-	#else
-  {
-		#ifdef THIS_Mirrortype_mirror
-		// no limit + mirror
-		float a1 = mod(a, angle * 2);
-		if (a1 >= angle) {
-			a1 = angle - a1;
+	} else {
+		if (THIS_Mirrortype == THIS_Mirrortype_mirror) {
+			// no limit + mirror
+			float a1 = mod(a, angle * 2);
+			if (a1 >= angle) {
+				a1 = angle - a1;
+			}
+			a = mod(a1, angle) - angle/2.;
+		} else {
+			// no limit no mirror
+			a = mod(a, angle) - angle/2.;
 		}
-		a = mod(a1, angle) - angle/2.;
-		#else
-		// no limit no mirror
-		a = mod(a, angle) - angle/2.;
-		#endif
 	}
-	#endif
 	p = vec2(cos(a), sin(a))*length(p);
 	// For an odd number of repetitions, fix cell index of the cell in -x direction
 	// (cell index would be e.g. -5 and 5 in the two halves of the cell):
@@ -59,11 +55,14 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 		pR(q, r);
 		float cell;
 		THIS_apply(q, cell);
-		#if defined(THIS_Iterationtype_index)
-		setIterationIndex(ctx, cell);
-		#elif defined(THIS_Iterationtype_ratio)
-		setIterationIndex(ctx, cell / (THIS_Repetitions - 1.));
-		#endif
+		switch (THIS_Iterationtype) {
+			case THIS_Iterationtype_index:
+				setIterationIndex(ctx, cell);
+				break;
+			case THIS_Iterationtype_ratio:
+				setIterationIndex(ctx, cell / (THIS_Repetitions - 1.));
+				break;
+		}
 		#ifdef THIS_EXPOSE_step
 		THIS_step = cell;
 		#endif
