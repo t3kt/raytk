@@ -27,15 +27,18 @@ void THIS_apply(inout CoordT p, inout ContextT ctx) {
 	if (c.z > stop.z) applyModLimit(q.z, c.z, size.z, stop.z);
 	#endif
 
-	#ifdef THIS_Mirrortype_mirror
-	q *= mod(c, vec3(2.))*2. - vec3(1.);
-	#endif
+	if (THIS_Mirrortype == THIS_Mirrortype_mirror) {
+		q *= mod(c, vec3(2.))*2. - vec3(1.);
+	}
 
-	#if defined(THIS_Iterationtype_cellcoord)
-	setIterationCell(ctx, c);
-	#elif defined(THIS_Iterationtype_alternatingcoord)
-	setIterationCell(ctx, mod(c, 2.));
-	#endif
+	switch (THIS_Iterationtype) {
+		case THIS_Iterationtype_cellcoord:
+			setIterationCell(ctx, c);
+			break;
+		case THIS_Iterationtype_alternatingcoord:
+			setIterationCell(ctx, mod(c, 2.));
+			break;
+	}
 	#ifdef THIS_EXPOSE_cellcoord
 	THIS_cellcoord = ivec3(c);
 	#endif

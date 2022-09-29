@@ -38,23 +38,30 @@ void THIS_apply(inout CoordT p, inout ContextT ctx) {
 	if (c.y > stop.y) applyModLimit(q.y, c.y, size.y, stop.y);
 	#endif
 
-	#if defined(THIS_Mirrortype_mirror)
-	q *= mod(c,vec2(2))*2 - vec2(1);
-	#elif defined(THIS_Mirrortype_grid)
-	q *= mod(c,vec2(2))*2 - vec2(1);
-	q -= halfsize;
-	if (q.x > q.y) q.xy = q.yx;
-	c = floor(c/2);
-	#endif
+	switch (THIS_Mirrortype) {
+		case THIS_Mirrortype_mirror:
+			q *= mod(c,vec2(2))*2 - vec2(1);
+			break;
+		case THIS_Mirrortype_grid:
+			q *= mod(c,vec2(2))*2 - vec2(1);
+			q -= halfsize;
+			if (q.x > q.y) q.xy = q.yx;
+			c = floor(c/2);
+			break;
+	}
 
 	int quad = quadrantIndex(ivec2(mod(ivec2(c), 2)));
-	#if defined(THIS_Iterationtype_cellcoord)
-	setIterationCell(ctx, c);
-	#elif defined(THIS_Iterationtype_tiledquadrant)
-	setIterationIndex(ctx, quad);
-	#elif defined(THIS_Iterationtype_alternatingcoord)
-	setIterationCell(ctx, mod(c, 2.));
-	#endif
+	switch (THIS_Iterationtype) {
+		case THIS_Iterationtype_cellcoord:
+			setIterationCell(ctx, c);
+			break;
+		case THIS_Iterationtype_tiledquadrant:
+			setIterationIndex(ctx, quad);
+			break;
+		case THIS_Iterationtype_alternatingcoord:
+			setIterationCell(ctx, mod(c, 2.));
+			break;
+	}
 	#ifdef THIS_EXPOSE_cellcoord
 	THIS_cellcoord = ivec2(c);
 	#endif
