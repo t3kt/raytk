@@ -42,9 +42,9 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 			break;
 		}
 		res = createSdf(THIS_BOX_FUNC_2D(q, s));
-		#ifdef THIS_Uvmode_bounds
-		assignUV(res, uv);
-		#endif
+		if (THIS_Uvmode == THISTYPE_Uvmode_bounds) {
+			assignUV(res, uv);
+		}
 	}
 	return res;
 }
