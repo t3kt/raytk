@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.field.texture3dField
-  opVersion: '9'
+  opVersion: '10'
   opStatus: beta
 opDef: !def
   enable: !expr
@@ -70,6 +70,6 @@ elements:
     Autoupdateparams: true
     Manageparamstates: true
     Alwaysincludeallparams: false
-    Switchmode: auto
+    Switchmode: autoconst
     Indexexpr: ''
     Placeholder: ZMODE();

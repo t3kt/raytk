@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.convert.sweep
-  opVersion: '4'
+  opVersion: '5'
   opStatus: default
 opDef: !def
   enable: true
@@ -45,6 +45,7 @@ elements:
   name: codeSwitcher_Plane
   elementType: codeSwitcher
   params:
+    Elementroot: ''
     Table: !table
       file: src/operators/convert/sweep_planes.txt
       name: planes
@@ -52,5 +53,6 @@ elements:
     Autoupdateparams: true
     Manageparamstates: false
     Alwaysincludeallparams: false
-    Switchmode: auto
+    Switchmode: autoconst
+    Indexexpr: ''
     Placeholder: BODY();

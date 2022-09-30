@@ -2,6 +2,6 @@
   "meta": {
     "opStatus": "default",
     "opType": "raytk.operators.convert.sweep",
-    "opVersion": 4
+    "opVersion": 5
   }
 }
