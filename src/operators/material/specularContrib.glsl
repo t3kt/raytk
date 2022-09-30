@@ -29,11 +29,13 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 		#ifdef THIS_HAS_INPUT_colorField
 		res.rgb *= fillToVec3(inputOp_colorField(p, ctx));
 		#endif
-		#ifdef THIS_Uselightcolor
-		res.rgb *= ctx.light.color;
-		#endif
-		#if defined(THIS_Usesurfacecolor) && defined(RAYTK_USE_SURFACE_COLOR)
-		res.rgb *= mix(vec3(1.), ctx.result.color.rgb, ctx.result.color.a);
+		if (THIS_Uselightcolor) {
+			res.rgb *= ctx.light.color;
+		}
+		#ifdef RAYTK_USE_SURFACE_COLOR
+		if (THIS_Usesurfacecolor) {
+			res.rgb *= mix(vec3(1.), ctx.result.color.rgb, ctx.result.color.a);
+		}
 		#endif
 	}
 	#else

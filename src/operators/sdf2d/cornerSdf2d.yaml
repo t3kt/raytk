@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.sdf2d.cornerSdf2d
-  opVersion: '4'
+  opVersion: '5'
   opStatus: default
 opDef: !def
   enable: true
@@ -21,9 +21,10 @@ opDef: !def
     name: help
 elements:
 - !opElement
-  name: codeSwitcher_Combine
+  name: codeSwitcher_Corner
   elementType: codeSwitcher
   params:
+    Elementroot: ''
     Table: !table
       file: src/operators/sdf2d/cornerSdf2d_corners.txt
       name: corners
@@ -31,5 +32,6 @@ elements:
     Autoupdateparams: true
     Manageparamstates: true
     Alwaysincludeallparams: false
-    Switchmode: auto
+    Switchmode: autoconst
+    Indexexpr: ''
     Placeholder: BODY();
