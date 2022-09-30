@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.filter.polarToCartesian
-  opVersion: '5'
+  opVersion: '6'
   opStatus: beta
 opDef: !def
   enable: !expr
@@ -36,6 +36,7 @@ elements:
   name: codeSwitcher_Conversion
   elementType: codeSwitcher
   params:
+    Elementroot: ''
     Table: !table
       file: src/operators/filter/polarToCartesian_conversions.txt
       name: conversions
@@ -43,5 +44,6 @@ elements:
     Autoupdateparams: true
     Manageparamstates: false
     Alwaysincludeallparams: false
-    Switchmode: auto
+    Switchmode: autoconst
+    Indexexpr: ''
     Placeholder: BODY();

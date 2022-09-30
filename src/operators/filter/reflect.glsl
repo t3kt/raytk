@@ -1,10 +1,13 @@
 void THIS_exposeSide(inout ContextT ctx, float i) {
-	#if defined(THIS_Iterationtype_sign)
-	setIterationIndex(ctx, i);
-	#elif defined(THIS_Iterationtype_index)
-	//  (-1, 1)  --> (1, 0)
-	setIterationIndex(ctx, (i < 0) ? 1: 0);
-	#endif
+	switch (THIS_Iterationtype) {
+		case THIS_Iterationtype_sign:
+			setIterationIndex(ctx, i);
+			break;
+		case THIS_Iterationtype_index:
+			//  (-1, 1)  --> (1, 0)
+			setIterationIndex(ctx, (i < 0) ? 1: 0);
+			break;
+	}
 	#ifdef THIS_EXPOSE_sign
 	THIS_sign = i;
 	#endif
