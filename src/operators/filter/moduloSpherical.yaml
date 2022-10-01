@@ -2,7 +2,7 @@
 meta: !meta
   opType: raytk.operators.filter.moduloSpherical
   opVersion: '2'
-  opStatus: beta
+  opStatus: default
 opDef: !def
   enable: !expr
     expr: op('..').par.Enable
@@ -18,6 +18,13 @@ opDef: !def
     file: src/operators/filter/moduloSpherical.glsl
     name: function
   paramGroupTable: eval_params
+  variableTable: !table
+    file: src/operators/filter/moduloSpherical_variables.txt
+    name: variable_exprs
+    evaluate: true
+    evalOpts: !evalOpts
+      excludeFirstRow: true
+      cols: enable
 inputs:
 - !input
   Required: true

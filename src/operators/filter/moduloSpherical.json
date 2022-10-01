@@ -1,6 +1,6 @@
 {
   "meta": {
-    "opStatus": "beta",
+    "opStatus": "default",
     "opType": "raytk.operators.filter.moduloSpherical",
     "opVersion": 2
   }
