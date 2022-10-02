@@ -1,4 +1,5 @@
 from dataclasses import dataclass
+import json
 import math
 from raytkState import RopState, Macro, Texture, Reference, Variable, Dispatch, Buffer, ValidationError, Constant
 import re
@@ -393,27 +394,6 @@ def updateLibraryMenuPar(libsComp: 'COMP'):
 	libs = libsComp.findChildren(type=DAT, maxDepth=1, tags=['library'])
 	libs.sort(key=lambda l: -l.nodeY)
 	p.menuNames = [lib.name for lib in libs]
-
-def prepareVariableTable(dat: 'scriptDAT'):
-	dat.clear()
-	dat.appendRow(['name', 'localName', 'label', 'dataType', 'owner', 'macros'])
-	table = parentPar().Variabletable.eval()
-	if not table or table.numRows < 2:
-		return
-	hostName = parentPar().Name.eval()
-	namePrefix = hostName + '_'
-	for i in range(1, table.numRows):
-		if table[i, 'enable'] in ('0', 'False'):
-			continue
-		localName = table[i, 'name'].val
-		dat.appendRow([
-			namePrefix + localName,
-			localName,
-			table[i, 'label'] or localName,
-			table[i, 'dataType'],
-			hostName,
-			table[i, 'macros'] or '',
-		])
 
 def validateReferences(dat: 'scriptDAT'):
 	dat.clear()
@@ -925,11 +905,12 @@ def createVarRef(name: str):
 	if not palette:
 		return
 	host = _host()
-	varTable = op('variable_table')
-	for i in range(1, varTable.numRows):
-		if varTable[i, 'localName'].val.lower() == name:
-			dataType = varTable[i, 'dataType'].val
-			palette.CreateVariableReference(host, varTable[i, 'localName'].val, dataType)
+	stateText = op('opState').text
+	stateObj = json.loads(stateText)
+	variableObjs = stateObj.get('variables') or []
+	for variableObj in variableObjs:
+		if variableObj['localName'].lower() == name:
+			palette.CreateVariableReference(host, variableObj['localName'], variableObj['dataType'])
 			return
 	raise Exception(f'Variable not found: {name}')
 

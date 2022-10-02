@@ -1,4 +1,5 @@
 from dataclasses import dataclass, field
+import json
 from typing import Any, Callable, Dict, List, Optional, Union
 from editorToolsCommon import Action, ActionContext, ActionGroup, ActionManager, ActionUtils, InitFunc, ROPState
 
@@ -157,21 +158,25 @@ def _createVarRefAction(label: str, variable: str, dataType: str):
 	)
 
 def _createVarRefGroup(text: str):
+	def getVariableObjs(ctx: ActionContext) -> List[dict]:
+		stateText = ctx.primaryRopState.info.opStateText
+		if not stateText:
+			return []
+		stateObj = json.loads(stateText)
+		if not stateObj.get('variables'):
+			return []
+		return stateObj.get('variables')
 	def isValid(ctx: ActionContext) -> bool:
-		table = ctx.primaryRopState.info.variableTable
-		return table and table.numRows > 1
+		return bool(getVariableObjs(ctx))
 
 	def getActions(ctx: ActionContext) -> List[Action]:
-		table = ctx.primaryRopState.info.variableTable
-		if not table:
-			return []
 		return [
 			_createVarRefAction(
-				label=table[i, 'label'].val,
-				variable=table[i, 'localName'].val,
-				dataType=table[i, 'dataType'].val,
+				label=variableObj['label'],
+				variable=variableObj['localName'],
+				dataType=variableObj['dataType'],
 			)
-			for i in range(1, table.numRows)
+			for variableObj in getVariableObjs(ctx)
 		]
 	return _SimpleGroup(text, isValid, getActions)
 
