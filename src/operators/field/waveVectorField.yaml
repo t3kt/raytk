@@ -45,7 +45,7 @@ elements:
     Phaseparam: Phase
     Periodfield: ''
     Phasefield: ''
-    Switchmode: auto
+    Switchmode: constswitch
     Coordtype: vec3
     Manageparamstates: false
     Prepcodeplaceholder: WAVE_PREP();
