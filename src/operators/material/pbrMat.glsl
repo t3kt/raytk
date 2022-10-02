@@ -13,6 +13,9 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 	assignMaterial(res, THISMAT);
 	#endif
 	captureIterationFromMaterial(THIS_iterationCapture, ctx);
+	#if defined(RAYTK_REFLECT_IN_SDF) && defined(THIS_Enablereflection)
+	res.reflect = true;
+	#endif
 	return res;
 }
 
