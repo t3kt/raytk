@@ -8,10 +8,14 @@
 
 * Improvements / additions
   * New OPs
+    * circleWaveSdf2d
     * circularRepeat (#962)
     * hilbertCurveTransform (#963)
     * rotate4D (#966)
   * New OP features
+    * matCapContrib - rotation param and field input
+    * moduloSpherical - variables (#746)
+    * polyhedronSdf - radius, face radius, segment radius, segment size, vertex radius, vertex size field inputs (#693)
     * prismSdf - variable support (#950), arbitrary side count (#951), UV coordinates (#952)
     * uvField - auto coord mode
     * waveField - axis selection when using vector coord input
@@ -29,6 +33,10 @@
   * variable typedef macro error (#957)
 * Changes (potentially breaking)
 * Infrastructure / internals
+  * Remove code filtering pragmas since they weren't helping (#710)
+  * Remove incomplete support for using separate uniforms for parameters (#863)
+  * Vulkan specialization constants! (#970)
+  * Type-prefixed symbols to share things like menu option names across instances within a scene
 
 ## v0.27
 
