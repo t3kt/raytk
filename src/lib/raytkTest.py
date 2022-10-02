@@ -208,12 +208,12 @@ def processTest(comp: 'COMP', thenRun: 'Callable', log: 'Callable[[str], None]' 
 				if not rop.valid:
 					log and log(f'For some reason {rop!r} is invalid!')
 					continue
-				o = rop.op('opDefinition/paramHelpEditor')
-				if o and o.valid:
-					try:
-						o.destroy()
-					except:
-						pass
+				for o in rop.ops('opDefinition/paramHelpEditor', 'shaderBuilder/supportDetector'):
+					if o and o.valid:
+						try:
+							o.destroy()
+						except:
+							pass
 				rop.par.reinitnet.pulse()
 				recloneComp(rop)
 				if rop.par['Updateop'] is not None:

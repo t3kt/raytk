@@ -453,6 +453,7 @@ class ToolkitBuilder(_BuilderBase):
 
 		# This really shouldn't be necessary but there's something strange with old cloned components...
 		self.context.safeDestroyOp(comp.op('opDefinition/paramHelpEditor'))
+		self.context.safeDestroyOp(comp.op('shaderBuilder/supportDetector'))
 
 		# self.context.moveNetworkPane(comp)
 		self.processOperatorSubCompChildrenOf(comp)
