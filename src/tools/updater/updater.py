@@ -39,11 +39,22 @@ class Updater:
 
 	def _getPostUpdateAction(self, info: 'ROPInfo'):
 		if info.opType == 'raytk.operators.utility.variableReference':
-			if info.rop.par['Datatype'] is not None:
+			if info.rop.par['Variabletype'] is not None:
+				origType = info.rop.par.Variabletype.eval()
+				origField = info.rop.par.Field.eval()
+				def _action(rop: 'COMP'):
+					self._log(f'Restoring params for variableReference {info.rop} (origType: {origType}, origField: {origField})')
+					rop.par.Variabletype = origType
+					rop.par.Field = origField
+					def _after():
+						self._log(f'Afterwards... {info.rop} (newType: {rop.par.Variabletype}, newField: {rop.par.Field})')
+					run('args[0]()', _after, delayFrames=3)
+				return _action
+			elif info.rop.par['Datatype'] is not None:
 				originalType = info.rop.par.Datatype.eval()
 				originalPart = info.rop.par.Part.eval()
 				def _action(rop: 'COMP'):
-					self._log('Converting params for variableReference')
+					self._log(f'Converting params for variableReference {info.rop} (origType: {originalType}, origPart: {originalPart})')
 					rop.par.Variabletype = originalType
 					if originalPart == 'vec':
 						rop.par.Field = ''
@@ -53,14 +64,6 @@ class Updater:
 					rop.par.Datatype.readOnly = False
 					rop.par.Datatype.enable = False
 					rop.par.Part.enable = False
-				return _action
-			elif info.rop.par['Variabletype'] is not None:
-				origType = info.rop.par.Variabletype.eval()
-				origField = info.rop.par.Field.eval()
-				def _action(rop: 'COMP'):
-					self._log(f'Restoring params for variableReference ({origType}, {origField})')
-					rop.par.Variabletype = origType
-					rop.par.Field = origField
 				return _action
 
 	def _showError(self, msg: str):
