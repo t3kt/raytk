@@ -415,11 +415,6 @@ def prepareVariableTable(dat: 'scriptDAT'):
 			table[i, 'macros'] or '',
 		])
 
-def prepareReferenceTable(dat: 'scriptDAT'):
-	dat.clear()
-	dat.appendRow(['name', 'localName', 'sourcePath', 'sourceName', 'dataType', 'owner'])
-	_prepareReferences(dat=dat, onError=None)
-
 def validateReferences(dat: 'scriptDAT'):
 	dat.clear()
 	dat.appendRow(['path', 'level', 'message'])

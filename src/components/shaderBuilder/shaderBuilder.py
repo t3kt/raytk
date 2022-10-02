@@ -298,60 +298,59 @@ class ShaderBuilder:
 			if dataType in typeAdaptFuncs:
 				dat.appendRow([name + '_asVarT', typeAdaptFuncs[dataType], 'macro'])
 
-	def processReferenceTable(
-			self,
-			dat: 'scriptDAT',
-			rawRefTable: 'DAT',
-			rawVarTable: 'DAT',
-	):
+	def processReferenceTable(self, dat: 'scriptDAT'):
 		dat.clear()
 		dat.appendRow(['name', 'owner', 'localName', 'source', 'dataType'])
 		defTable = self._definitionTable()
-		# rawRef columns: name, localName, sourcePath, sourceName, dataType, owner
-		# rawVar columns: name, localName, label, dataType, owner
 		varNames = {}
-		for i in range(1, rawVarTable.numRows):
-			varOwnerName = rawVarTable[i, 'owner']
-			varOwnerPath = defTable[varOwnerName, 'path'].val
-			varNames[(varOwnerPath, rawVarTable[i, 'localName'].val)] = rawVarTable[i, 'name'].val
-		for i in range(1, rawRefTable.numRows):
-			sourcePath = rawRefTable[i, 'sourcePath'].val
-			sourceName = rawRefTable[i, 'sourceName'].val
-			if not sourcePath or not sourceName:
+		states = self._parseOpStates()
+		for state in states:
+			if not state.variables:
 				continue
-			sourceName = varNames.get((sourcePath, sourceName), None)
-			if not sourceName:
-				# TODO: report invalid ref
+			for variable in state.variables:
+				varOwnerName = variable.owner
+				varOwnerPath = defTable[varOwnerName, 'path'].val
+				varNames[(varOwnerPath, variable.localName)] = variable.name
+		for state in states:
+			if not state.references:
 				continue
-			# TODO: validate dataType match
-			dat.appendRow([
-				rawRefTable[i, 'name'],
-				rawRefTable[i, 'owner'],
-				rawRefTable[i, 'localName'],
-				sourceName,
-				rawRefTable[i, 'dataType']
-			])
+			for reference in state.references:
+				if not reference.sourcePath or not reference.sourceName:
+					continue
+				sourceName = varNames.get((reference.sourcePath, reference.sourceName), None)
+				if not sourceName:
+					# TODO: report invalid ref
+					continue
+				# TODO: validate dataType match
+				dat.appendRow([
+					reference.name,
+					reference.owner,
+					reference.localName,
+					sourceName,
+					reference.dataType,
+				])
 
-	@staticmethod
 	def processVariableTable(
+			self,
 			dat: 'scriptDAT',
 			procRefTable: 'DAT',
-			rawVarTable: 'DAT',
 	):
 		dat.clear()
 		dat.appendRow(['name', 'owner', 'localName', 'dataType', 'macros'])
 		refNames = set(c.val for c in procRefTable.col('source')[1:])
-		# rawVar columns: name, localName, label, dataType, owner
-		for i in range(1, rawVarTable.numRows):
-			name = rawVarTable[i, 'name'].val
-			if name in refNames:
-				dat.appendRow([
-					name,
-					rawVarTable[i, 'owner'],
-					rawVarTable[i, 'localName'],
-					rawVarTable[i, 'dataType'],
-					rawVarTable[i, 'macros'],
-				])
+		states = self._parseOpStates()
+		for state in states:
+			if not state.variables:
+				continue
+			for variable in state.variables:
+				if variable.name in refNames:
+					dat.appendRow([
+						variable.name,
+						variable.owner,
+						variable.localName,
+						variable.dataType,
+						variable.macros,
+					])
 
 	def buildParamUniformTable(self, dat: 'DAT'):
 		dat.clear()

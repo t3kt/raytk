@@ -13,8 +13,6 @@ paramVectors	0
 paramTable	0
 paramTupletTable	0
 libraryNames	0
-variableTable	0
-referenceTable	0
 inputNames	0
 definitionPath	1
 elementTable	0
