@@ -1,13 +1,13 @@
 op('definition_3').numRows > 1	'THIS_USE_LIGHT_FUNC'	
-op('definition_6').numRows > 1	'THIS_USE_BACKGROUND_FIELD'
+op('definition_6').numRows > 1	'THIS_USE_BACKGROUND_FIELD'	
 parent().par.Enableorbitoutput	'RAYTK_ORBIT_IN_SDF'	
 parent().par.Uselimitbox	'THIS_USE_LIMIT_BOX'	
 parent().par.Enablenearhitoutput	'THIS_USE_NEAR_HIT'	
 parent().par.Enableshadow	'RAYTK_USE_SHADOW'	
 parent().par.Enableuvoutput	'RAYTK_USE_UV'	
 op('definition_7').numRows > 1	'RAYTK_USE_SECONDARY_RAY_CAST'	
-	'RAYTK_MAX_STEPS'	int(parent().par.Maxsteps)
-	'RAYTK_MAX_DIST'	parent().par.Maxdist
-	'RAYTK_SURF_DIST'	parent().par.Surfdist
-parent().par.Enableiterationoutput	'RAYTK_ITERATION_IN_SDF'
-parent().par.Enablecoloroutput	'OUTPUT_COLOR'
+	'RAYTK_MAX_STEPS'	'THIS_Maxsteps'
+	'RAYTK_MAX_DIST'	'THIS_Maxdist'
+	'RAYTK_SURF_DIST'	'THIS_Surfdist'
+parent().par.Enableiterationoutput	'RAYTK_ITERATION_IN_SDF'	
+parent().par.Enablecoloroutput	'OUTPUT_COLOR'	

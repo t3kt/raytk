@@ -6,3 +6,4 @@ Enablereflection Reflectionpasses Enablenearhitmindist Enableshadow	param	macro	
 Enablerefraction Refractionpasses Antialias	param	macro			1
 Enablenormalsmoothing Usebackgroundfieldalpha	param	macro			1
 Userenderdepth	param	runtime	macro		1
+Maxdist Maxsteps Surfdist	param	constant			1
