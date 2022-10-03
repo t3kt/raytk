@@ -1,5 +1,5 @@
 from dataclasses import dataclass, field, fields
-from typing import Dict, List, Optional, Union
+from typing import List, Optional, Union
 
 # noinspection PyUnreachableCode
 if False:
@@ -54,13 +54,6 @@ class RopState(_StateObject):
 	constantSource: Optional[str] = None
 
 	validationErrors: Optional[List['ValidationError']] = field(default_factory=list)
-
-def _excludeKeys(d, keys):
-	return {
-		key: val
-		for key, val in d.items()
-		if key not in keys
-	} if d else {}
 
 @dataclass
 class ValidationError(_StateObject):
