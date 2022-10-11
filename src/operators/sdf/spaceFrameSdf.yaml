@@ -1,0 +1,17 @@
+!rop
+meta: !meta
+  opType: raytk.operators.sdf.spaceFrameSdf
+  opVersion: '0'
+  opStatus: alpha
+opDef: !def
+  enable: true
+  typeSpec: !ropTypes
+    coordType: !coordT
+      Coordtypevec3: true
+    contextType: !contextT
+      Allcontexttype: true
+    returnType: !returnT
+      Returntypesdf: true
+  function: !text
+    file: src/operators/sdf/spaceFrameSdf.glsl
+    name: function
