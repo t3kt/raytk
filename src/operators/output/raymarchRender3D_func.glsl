@@ -76,9 +76,9 @@ vec4 getBackgroundColor(in Ray ray) {
 	#ifdef THIS_USE_BACKGROUND_FIELD
 	RayContext ctx = createRayContext(ray, createNonHitSdf());
 	vec4 col = inputOp_backgroundField(ray.pos, ctx);
-	#ifndef THIS_Usebackgroundfieldalpha
-	col.a = 1.;
-	#endif
+	if (IS_FALSE(THIS_Usebackgroundfieldalpha)) {
+		col.a = 1.;
+	}
 	return col;
 	#else
 	return vec4(0.);
