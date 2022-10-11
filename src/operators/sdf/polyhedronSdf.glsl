@@ -44,6 +44,10 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 	#else
 	float rad = THIS_Radius;
 	#endif
+	#ifdef THIS_HAS_INPUT_uvwField
+	vec3 uvw = inputOp_uvwField(p, ctx).xyz;
+	THIS_p=normalize((uvw.x*THIS_pab+uvw.y*THIS_pbc+uvw.z*THIS_pca));//U,V and W are the 'barycentric' coordinates (coted barycentric word because I'm not sure if they are really barycentric... have to check)
+	#endif
 	p = THIS_fold(p);
 	Sdf res1 = createSdf(RAYTK_MAX_DIST);
 	if (IS_TRUE(THIS_Enablefaces)) {

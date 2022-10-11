@@ -1,8 +1,8 @@
 !rop
 meta: !meta
   opType: raytk.operators.sdf.polyhedronSdf
-  opVersion: '9'
-  opStatus: beta
+  opVersion: '10'
+  opStatus: default
 opDef: !def
   enable: true
   typeSpec: !ropTypes
@@ -90,6 +90,16 @@ inputs:
     Allcontexttype: true
   returnType: !returnT
     Returntypefloat: true
+- !input
+  Source: !expr
+    expr: parent().par.Uvwfield or ''
+  Localalias: uvwField
+  coordType: !coordT
+    Coordtypevec3: true
+  contextType: !contextT
+    Allcontexttype: true
+  returnType: !returnT
+    Returntypevec4: true
 elements:
 - !opElement
   name: combiner
