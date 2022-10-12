@@ -32,6 +32,7 @@
   * lfoGenerator channel count bug (#955)
   * pointMapRender coord type error for SDFs (#956)
   * pointMapRender macro error
+  * pyramidSdf fix broken height field
   * variableReferences broken during snippet build (#954)
   * variableReference default value error
   * variable typedef macro error (#957)
