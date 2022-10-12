@@ -15,6 +15,7 @@
   * New OP features
     * gridSdf - thickness and spacing field inputs (#693)
     * matCapContrib - rotation param and field input
+    * mobiusRingSdf - radius field input (#693)
     * moduloSpherical - variables, shift field, offset field, repetitions field (#746)
     * pbrMat - enable reflection setting (#971)
     * polyhedronSdf - radius, face radius, segment radius, segment size, vertex radius, vertex size, uvw field inputs (#693)

@@ -26,7 +26,12 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 	float thickness = THIS_Thickness;
 	#endif
 
+	#ifdef THIS_HAS_INPUT_radiusField
+	float radius = inputOp_radiusField(p0, ctx);
+	#else
 	float radius = THIS_Radius;
+	#endif
+
 	float rounding = THIS_Rounding;
 	float twist = THIS_Twist;
 	float twistPhase = THIS_Twistphase;
