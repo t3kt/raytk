@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.convert.sweep
-  opVersion: '5'
+  opVersion: '6'
   opStatus: default
 opDef: !def
   enable: true
@@ -15,6 +15,13 @@ opDef: !def
   function: !text
     file: src/operators/convert/sweep.glsl
     name: function
+  variableTable: !table
+    file: src/operators/convert/sweep_variables.txt
+    name: variable_exprs
+    evaluate: true
+    evalOpts: !evalOpts
+      excludeFirstRow: true
+      cols: enable
   help: !text
     file: src/operators/convert/sweep.md
     name: help
