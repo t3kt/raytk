@@ -39,6 +39,7 @@
   * variableReference default value error
   * variable typedef macro error (#957)
 * Changes (potentially breaking)
+  * mobiusRingSdf - remove support for 1D coords in thickness field (same thing can be done with variables), and stop combining the thickness parameter with the field (it now only uses field or parameter).
   * moduloSpherical - swap the x and y axes for the input so it makes more sense (Y = outward)
 * Infrastructure / internals
   * Remove code filtering pragmas since they weren't helping (#710)

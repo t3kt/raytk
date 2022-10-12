@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.sdf.mobiusRingSdf
-  opVersion: '10'
+  opVersion: '11'
   opStatus: default
 opDef: !def
   enable: true
@@ -33,7 +33,6 @@ inputs:
 - !input
   Localalias: thicknessField
   coordType: !coordT
-    Coordtypefloat: true
     Coordtypevec3: true
   contextType: !contextT
     Allcontexttype: true
