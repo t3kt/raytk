@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.combine.edgeCombine
-  opVersion: '3'
+  opVersion: '4'
   opStatus: default
 opDef: !def
   enable: true
@@ -42,6 +42,7 @@ multiInput: !multiInput
       Returntypesdf: true
 inputs:
 - !input
+  Localalias: radiusField
   coordType: !coordT
     Allcoordtype: true
   contextType: !contextT
@@ -49,6 +50,7 @@ inputs:
   returnType: !returnT
     Returntypefloat: true
 - !input
+  Localalias: depthField
   coordType: !coordT
     Allcoordtype: true
   contextType: !contextT
@@ -60,6 +62,7 @@ elements:
   name: codeSwitcher_Combine
   elementType: codeSwitcher
   params:
+    Elementroot: ''
     Table: !table
       file: src/operators/combine/edgeCombine_modes.txt
       name: modes
@@ -68,4 +71,5 @@ elements:
     Manageparamstates: false
     Alwaysincludeallparams: false
     Switchmode: auto
+    Indexexpr: ''
     Placeholder: BODY();
