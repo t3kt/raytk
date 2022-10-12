@@ -13,6 +13,7 @@
     * hilbertCurveTransform (#963)
     * rotate4D (#966)
   * New OP features
+    * gridSdf - thickness and spacing field inputs (#693)
     * matCapContrib - rotation param and field input
     * moduloSpherical - variables, shift field, offset field, repetitions field (#746)
     * pbrMat - enable reflection setting (#971)
