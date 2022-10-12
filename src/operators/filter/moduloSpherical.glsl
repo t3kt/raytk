@@ -26,5 +26,6 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 		THIS_normcell = cell / r;
 		#endif
 	}
+	p.xyz = p.yxz;
 	return inputOp1(p, ctx);
 }
