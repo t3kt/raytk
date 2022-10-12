@@ -25,6 +25,7 @@
   * Snippets (#132)
     * assignColor
     * assignUV
+    * moduloSpherical
 * Fixes
   * directionalLight shadow distance bug (#960)
   * impulseFn error (#959)
@@ -35,6 +36,7 @@
   * variableReference default value error
   * variable typedef macro error (#957)
 * Changes (potentially breaking)
+  * moduloSpherical - swap the x and y axes for the input so it makes more sense (Y = outward)
 * Infrastructure / internals
   * Remove code filtering pragmas since they weren't helping (#710)
   * Remove incomplete support for using separate uniforms for parameters (#863)
