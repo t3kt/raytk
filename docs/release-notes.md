@@ -15,8 +15,10 @@
   * New OP features
     * matCapContrib - rotation param and field input
     * moduloSpherical - variables (#746)
-    * polyhedronSdf - radius, face radius, segment radius, segment size, vertex radius, vertex size field inputs (#693)
+    * pbrMat - enable reflection setting (#971)
+    * polyhedronSdf - radius, face radius, segment radius, segment size, vertex radius, vertex size, uvw field inputs (#693)
     * prismSdf - variable support (#950), arbitrary side count (#951), UV coordinates (#952)
+    * raymarchRender3D - faster changes for max dist, surface dist, step limit, near hit, pass counts (#970)
     * uvField - auto coord mode
     * waveField - axis selection when using vector coord input
   * Snippets (#132)
@@ -37,6 +39,7 @@
   * Remove incomplete support for using separate uniforms for parameters (#863)
   * Vulkan specialization constants! (#970)
   * Type-prefixed symbols to share things like menu option names across instances within a scene
+  * Use opState approach for variables (#939)
 
 ## v0.27
 
