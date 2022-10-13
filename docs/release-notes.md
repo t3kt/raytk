@@ -18,6 +18,7 @@
     * mobiusRingSdf - radius field input (#693)
     * moduloSpherical - variables, shift field, offset field, repetitions field (#746)
     * pbrMat - enable reflection setting (#971)
+    * petalSdf - thickness and radius field input (#693)
     * polyhedronSdf - radius, face radius, segment radius, segment size, vertex radius, vertex size, uvw field inputs (#693)
     * prismSdf - variable support (#950), arbitrary side count (#951), UV coordinates (#952)
     * raymarchRender3D - faster changes for max dist, surface dist, step limit, near hit, pass counts (#970)
