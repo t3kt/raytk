@@ -16,16 +16,34 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 		#else
 		vec2 r = THIS_Repetitions;
 		#endif
-		vec2 a = TAU / (r * vec2(1., 2.));
-		vec2 ha = 0.5 * a;
+		vec2 angle = TAU / (r * vec2(1., 2.));
+		vec2 ha = 0.5 * angle;
 		vec2 cell = vec2(0.);
-		float a2 = atan(p.z, p.x) + ha.x;
-		cell.y = floor(a2 / a.x);
-		p.xz = sin(mod(a2, a.x) - ha.x + vec2(PHI, 0.0)) * length(p.xz);
+		float a = atan(p.z, p.x) + ha.x;
+		cell.y = floor(a / angle.x);
+		if (THIS_Mirrortype == THISTYPE_Mirrortype_cols || THIS_Mirrortype == THISTYPE_Mirrortype_grid) {
+			float a1 = mod(a, angle.x * 2);
+			if (a1 >= angle.x) {
+				a1 = angle.x - a1;
+			}
+			a = mod(a1, angle.x) - angle.x/2.;
+		} else {
+			a = mod(a, angle.x);
+		}
+		p.xz = sin(a - ha.x + vec2(PHI, 0.0)) * length(p.xz);
 		pR(p.xy, sh.y);
-		a2 = atan(p.y, p.x) + ha.y;
-		cell.x = floor(a2 / a.y);
-		p.xy = sin(mod(a2, a.y) - ha.y + vec2(PHI, 0.0)) * length(p.xy);
+		a = atan(p.y, p.x) + ha.y;
+		cell.x = floor(a / angle.y);
+		if (THIS_Mirrortype == THISTYPE_Mirrortype_rows || THIS_Mirrortype == THISTYPE_Mirrortype_grid) {
+			float a1 = mod(a, angle.y * 2);
+			if (a1 >= angle.y) {
+				a1 = angle.y - a1;
+			}
+			a = mod(a1, angle.y) - angle.y/2.;
+		} else {
+			a = mod(a, angle.y);
+		}
+		p.xy = sin(a - ha.y + vec2(PHI, 0.0)) * length(p.xy);
 		#ifdef THIS_EXPOSE_cell
 		THIS_cell = cell;
 		#endif
