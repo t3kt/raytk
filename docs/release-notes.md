@@ -13,6 +13,7 @@
     * hilbertCurveTransform (#963)
     * rotate4D (#966)
   * New OP features
+    * bandField - faster axis/blending/reverse changes, allow selecting axis for coordinate input field
     * gridSdf - thickness and spacing field inputs (#693)
     * matCapContrib - rotation param and field input
     * mobiusRingSdf - radius field input (#693)
