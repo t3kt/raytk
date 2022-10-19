@@ -23,6 +23,7 @@
     * prismSdf - variable support (#950), arbitrary side count (#951), UV coordinates (#952)
     * raymarchRender3D - faster changes for max dist, surface dist, step limit, near hit, pass counts (#970)
     * solidAngleSdf - radius, angle field inputs (#693)
+    * stepField - faster axis/blending/reverse changes, allow selecting axis for coordinate input field
     * sweep - path Sdf / position variables
     * uvField - auto coord mode
     * waveField - axis selection when using vector coord input
