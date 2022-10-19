@@ -1,16 +1,17 @@
 ReturnT thismap(CoordT p, ContextT ctx) {
+	float q;
 	vec3 q0;
 	#if defined(THIS_HAS_INPUT_coordField)
-		q0 = adaptAsVec3(inputOp_coordField(p, ctx));
+	q0 = adaptAsVec3(inputOp_coordField(p, ctx));
 	#else
-		q0 = adaptAsVec3(p);
+	q0 = adaptAsVec3(p);
 	#endif
-
-	#ifdef THIS_Axis_dist
-		float q = length(q0);
-	#else
-		float q = q0.THIS_Axis;
-	#endif
+	switch (int(THIS_Axis)) {
+		case THISTYPE_Axis_x: q = q0.x; break;
+		case THISTYPE_Axis_y: q = q0.y; break;
+		case THISTYPE_Axis_z: q = q0.z; break;
+		case THISTYPE_Axis_dist: q = length(q0); break;
+	}
 	ReturnT res;
 	WAVE_PREP();
 	#ifdef THIS_HAS_INPUT_waveFunc
