@@ -1,9 +1,9 @@
 void THIS_exposeSide(inout ContextT ctx, float i) {
 	switch (THIS_Iterationtype) {
-		case THIS_Iterationtype_sign:
+		case THISTYPE_Iterationtype_sign:
 			setIterationIndex(ctx, i);
 			break;
-		case THIS_Iterationtype_index:
+		case THISTYPE_Iterationtype_index:
 			//  (-1, 1)  --> (1, 0)
 			setIterationIndex(ctx, (i < 0) ? 1: 0);
 			break;
