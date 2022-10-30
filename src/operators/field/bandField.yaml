@@ -1,13 +1,15 @@
 !rop
 meta: !meta
   opType: raytk.operators.field.bandField
-  opVersion: '7'
+  opVersion: '8'
   opStatus: default
 opDef: !def
   enable: !expr
     expr: parent().par.Enable
   typeSpec: !ropTypes
     coordType: !coordT
+      Allcoordtype: !expr
+        expr: op('definition_1').numRows > 1
       Coordtypefloat: !expr
         expr: parent().par.Coordtype == 'float'
       Coordtypevec2: !expr
