@@ -1,3 +1,2 @@
 names	source	handling	readOnlyHandling	conversion	enable
 Period[xyz] Phase[xyz] Amplitude[xyz] Offset[xyz]	param	runtime	macro		1
-Axis	param	macro			1
