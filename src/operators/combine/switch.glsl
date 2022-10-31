@@ -25,17 +25,17 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 		#endif
 		int n = int(THIS_lastInput);
 		RESCALEINDEX();
-		#ifndef THIS_Blend
-		res = THIS_getInput(source, n, p, ctx);
-		#else
-		float source1 = floor(source);
-		float source2 = ceil(source);
-		res = THIS_getInput(source1, n, p, ctx);
-		if (source1 != source2) {
-			ReturnT res2 = THIS_getInput(source2, n, p, ctx);
-			res = mixVals(res, res2, fract(source));
+		if (IS_FALSE(THIS_Blend)) {
+			res = THIS_getInput(source, n, p, ctx);
+		} else {
+			float source1 = floor(source);
+			float source2 = ceil(source);
+			res = THIS_getInput(source1, n, p, ctx);
+			if (source1 != source2) {
+				ReturnT res2 = THIS_getInput(source2, n, p, ctx);
+				res = mixVals(res, res2, fract(source));
+			}
 		}
-		#endif
 	#endif
 	return res;
 }

@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.combine.switch
-  opVersion: '17'
+  opVersion: '18'
   opStatus: default
 opDef: !def
   enable: !expr

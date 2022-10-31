@@ -4,12 +4,14 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 		vec2 cell = sgn(q);
 		pMirror(q.x, THIS_Size.x);
 		pMirror(q.y, THIS_Size.y);
-		#if defined(THIS_Iterationtype_sign)
-
-		setIterationCell(ctx, cell);
-		#elif defined(THIS_Iterationtype_index)
-		setIterationIndex(ctx, quadrantIndex(ivec2(cell)));
-		#endif
+		switch (THIS_Iterationtype) {
+			case THISTYPE_Iterationtype_sign:
+				setIterationCell(ctx, cell);
+				break;
+			case THISTYPE_Iterationtype_index:
+				setIterationIndex(ctx, quadrantIndex(ivec2(cell)));
+				break;
+		}
 		#ifdef THIS_EXPOSE_index
 		THIS_index = quadrantIndex(ivec2(cell));
 		#endif

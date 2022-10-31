@@ -1,7 +1,7 @@
 void THIS_exposeIndex(inout ContextT ctx, int i, int n) {
-	#ifdef THIS_Iterationtype_index
-	setIterationIndex(ctx, i);
-	#endif
+	if (THIS_Iterationtype == THISTYPE_Iterationtype_index) {
+		setIterationIndex(ctx, i);
+	}
 	#ifdef THIS_EXPOSE_index
 	THIS_index = i;
 	#endif
