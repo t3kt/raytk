@@ -33,15 +33,16 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 	float lower_r = a * exp(b * (t + 2.0 * PI * n));
 	float upper_r = lower_r * exp(2.0 * PI * b);
 
-	#ifdef THIS_Useradiuslimit
-	#ifdef THIS_HAS_INPUT_radiusLimitField
-	float r2 = r - inputOp_radiusLimitField(p, ctx);
-	#else
-	float r2 = r - THIS_Radiuslimit;
-	#endif
-	#else
-	float r2 = -r;
-	#endif
+	float r2;
+	if (IS_TRUE(THIS_Useradiuslimit)) {
+		#ifdef THIS_HAS_INPUT_radiusLimitField
+		r2 = r - inputOp_radiusLimitField(p, ctx);
+		#else
+		r2 = r - THIS_Radiuslimit;
+		#endif
+	} else {
+		r2 = -r;
+	}
 
 	#ifdef THIS_HAS_INPUT_thicknessField
 	float th = inputOp_thicknessField(p, ctx);

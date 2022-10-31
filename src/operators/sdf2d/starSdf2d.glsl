@@ -28,14 +28,17 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 	p -= r*acs;
 	p += ecs*clamp( -dot(p,ecs), 0.0, r*acs.y/ecs.y);
 	ReturnT res = createSdf(length(p)*sign(p.x));
-	#if defined(THIS_Uvmode_cartesian)
-	assignUV(res, vec3(map01(p0, -vec2(THIS_Radius/2.), vec2(THIS_Radius/2.)), 0.));
-	#elif defined(THIS_Uvmode_polar)
-	assignUV(res, vec3(
-		length(p0) / THIS_Radius,
-		atan(p0.y, p0.x),
-		0.
-	));
-	#endif
+	switch (THIS_Uvmode) {
+		case THISTYPE_Uvmode_cartesian:
+			assignUV(res, vec3(map01(p0, -vec2(THIS_Radius/2.), vec2(THIS_Radius/2.)), 0.));
+			break;
+		case THISTYPE_Uvmode_polar:
+			assignUV(res, vec3(
+				length(p0) / THIS_Radius,
+				atan(p0.y, p0.x),
+				0.
+			));
+			break;
+	}
 	return res;
 }
