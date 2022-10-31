@@ -6,9 +6,11 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 	#ifdef THIS_HAS_INPUT_beginEndField
 	vec2 beginEnd = inputOp_beginEndField(p, ctx).xy;
 	#endif
-	#ifdef THIS_Useexponent
-		return createSdf(fGDF(p - THIS_Translate, r, THIS_Exponent, int(THIS_BEGIN), int(THIS_END)));
-	#else
-		return createSdf(fGDF(p - THIS_Translate, r, int(THIS_BEGIN), int(THIS_END)));
-	#endif
+	float d;
+	if (IS_TRUE(THIS_Useexponent)) {
+		d = fGDF(p - THIS_Translate, r, THIS_Exponent, int(THIS_BEGIN), int(THIS_END));
+	} else {
+		d = fGDF(p - THIS_Translate, r, int(THIS_BEGIN), int(THIS_END));
+	}
+	return createSdf(d);
 }

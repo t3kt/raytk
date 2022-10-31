@@ -3,15 +3,7 @@
 ReturnT thismap(CoordT p, ContextT ctx) {
 	CoordT p0 = p;
 	p -= THIS_Translate;
-	// standard axis swizzle macros don't match what this needs
-	#if defined(THIS_Axis_x)
-	p = p.yxz;
-	#elif defined(THIS_Axis_y)
-	#elif defined(THIS_Axis_z)
-	p = p.yzx;
-	#else
-	#error invalidAxis
-	#endif
+	AXIS_BODY();
 
 	#ifdef THIS_EXPOSE_angle
 	THIS_angle = degrees(atan(p.x, p.z)) + 180.;

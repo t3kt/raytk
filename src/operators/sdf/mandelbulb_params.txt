@@ -1,4 +1,4 @@
 names	source	handling	readOnlyHandling	conversion	enable
 Translate[xyz] Power	param	runtime	macro		1
 Thetashift Phishift	param	runtime	macro	angle	1
-Iterations	param	macro			1
+Iterations	param	constant			1

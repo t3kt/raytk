@@ -40,11 +40,9 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 		vec2 r = ab * vec2(co, sqrt(1.0-co*co));
 		res = createSdf(length(r-p) * sign(p.y-r.y));
 	}
-	#ifdef THIS_Uvmode_bounds
-	{
+	if (THIS_Uvmode == THISTYPE_Uvmode_bounds) {
 		vec2 bnd = ab / 2.;
 		assignUV(res, vec3(map01(p0, -bnd, bnd), 0.));
 	}
-	#endif
 	return res;
 }
