@@ -1,3 +1,2 @@
 names	source	handling	readOnlyHandling	conversion	enable
-Enablenormalsmoothing	param	macro			1
-Normalsmoothing	param	runtime	macro		parent().par.Enablenormalsmoothing
+Enablenormalsmoothing Normalsmoothing	param	runtime	macro		1

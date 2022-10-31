@@ -25,9 +25,9 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 		CoordT q = p*s, g=fract(floor(q)*seed);
 		g += dot(g, g+23.234);
 		a = fract(g.x*g.y)*1e3;
-		#ifdef THIS_Enablevorticity
-		a += z*(mod(g.x+g.y, 2.)-1.); // add vorticity
-		#endif
+		if (IS_TRUE(THIS_Enablevorticity)) {
+			a += z*(mod(g.x+g.y, 2.)-1.);// add vorticity
+		}
 		q = (fract(q)-.5);
 	#if defined(THIS_COORD_TYPE_vec2)
 		q *= rotateMatrix2d(a);
