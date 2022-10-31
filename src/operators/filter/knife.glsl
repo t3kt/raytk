@@ -16,9 +16,7 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 		float o = THIS_Offset;
 		#endif
 		float plane = q.y - o;
-		#ifdef THIS_Side_above
-		plane *= -1.;
-		#endif
+		SIDE_BODY();
 		#if defined(THIS_RETURN_TYPE_float)
 		res = max(plane, res);
 		#elif defined(THIS_RETURN_TYPE_Sdf)
