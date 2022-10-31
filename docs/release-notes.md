@@ -27,7 +27,7 @@
     * stepField - faster axis/blending/reverse changes, allow selecting axis for coordinate input field
     * sweep - path Sdf / position variables
     * uvField - auto coord mode
-    * waveField - axis selection when using vector coord input
+    * waveField - faster axis changes, allow selecting axis for coordinate input field
   * Snippets (#132)
     * assignColor
     * assignUV
