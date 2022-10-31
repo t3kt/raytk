@@ -50,7 +50,7 @@ vec3 THIS_atmosphere(
 	float pMie = 3.0 / (8.0 * PI) * ((1.0 - gg) * (mumu + 1.0)) / (pow(1.0 + gg - 2.0 * mu * g, 1.5) * (2.0 + gg));
 
 	// Sample the primary ray.
-	for (int i = 0; i < THIS_Primarysteps; i++) {
+	for (int i = 0; i < int(THIS_Primarysteps); i++) {
 
 		// Calculate the primary ray sample position.
 		vec3 iPos = r0 + r * (iTime + iStepSize * 0.5);
@@ -77,7 +77,7 @@ vec3 THIS_atmosphere(
 		float jOdMie = 0.0;
 
 		// Sample the secondary ray.
-		for (int j = 0; j < THIS_Secondarysteps; j++) {
+		for (int j = 0; j < int(THIS_Secondarysteps); j++) {
 
 			// Calculate the secondary ray sample position.
 			vec3 jPos = iPos + pSun * (jTime + jStepSize * 0.5);
