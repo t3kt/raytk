@@ -97,9 +97,6 @@ class ActionGroup(_Item, ABC):
 			],
 		)
 
-def _getPopMenu() -> 'PopMenuExt':
-	return op.TDResources.op('popMenu')
-
 class ActionManager:
 	items: List[_Item]
 

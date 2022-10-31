@@ -32,6 +32,8 @@
     * assignColor
     * assignUV
     * moduloSpherical
+  * Editor actions (#772)
+    * show fields in variable reference menu
 * Fixes
   * directionalLight shadow distance bug (#960)
   * impulseFn error (#959)
