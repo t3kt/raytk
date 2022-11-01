@@ -139,7 +139,7 @@ class VariableHelp:
 		if not variableObjs:
 			return []
 		return [
-			cls(variableObj['name'], variableObj['label'])
+			cls(variableObj['localName'], variableObj['label'])
 			for variableObj in variableObjs
 		]
 
