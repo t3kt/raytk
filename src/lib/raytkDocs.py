@@ -657,6 +657,8 @@ class OpDocManager:
 				inHelps.append(extractedHelp)
 
 	def _pullFromMissingVariablesInto(self, ropHelp: 'ROPHelp'):
+		if not self.info.isROP:
+			return
 		varHelps = {
 			varHelp.name: varHelp
 			for varHelp in ropHelp.variables
