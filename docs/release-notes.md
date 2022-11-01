@@ -4,6 +4,10 @@
 
 ### Highlights
 
+* Core improvements - Vulkan specialization constants improve the performance of changes to menu parameters. Not all operators have been updated but many have.
+* New operators including 4D rotation, hilbert curves, circular fill repetition, and more!
+* New field inputs for lots of operators!
+
 ### Details
 
 * Improvements / additions
@@ -46,7 +50,7 @@
   * variable typedef macro error (#957)
 * Changes (potentially breaking)
   * mobiusRingSdf - remove support for 1D coords in thickness field (same thing can be done with variables), and stop combining the thickness parameter with the field (it now only uses field or parameter).
-  * moduloSpherical - swap the x and y axes for the input so it makes more sense (Y = outward)
+  * moduloSpherical - swap the x and y axes for the input, so it makes more sense (Y = outward)
 * Infrastructure / internals
   * Remove code filtering pragmas since they weren't helping (#710)
   * Remove incomplete support for using separate uniforms for parameters (#863)
