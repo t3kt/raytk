@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.filter.circularRepeat
-  opVersion: '0'
+  opVersion: '1'
   opStatus: beta
 opDef: !def
   enable: !expr
@@ -9,6 +9,7 @@ opDef: !def
   typeSpec: !ropTypes
     coordType: !coordT
       Coordtypevec2: true
+      Coordtypevec3: true
     contextType: !contextT
       Allcontexttype: true
     returnType: !returnT
@@ -25,11 +26,15 @@ opDef: !def
     evalOpts: !evalOpts
       excludeFirstRow: true
       cols: enable
+  help: !text
+    file: src/operators/filter/circularRepeat.md
+    name: help
 inputs:
 - !input
   Required: true
   coordType: !coordT
     Coordtypevec2: true
+    Coordtypevec3: true
   contextType: !contextT
     Allcontexttype: true
   returnType: !returnT
