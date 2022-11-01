@@ -86,6 +86,8 @@ op:
   parameters:
   - label: Coord Type
     menuOptions:
+    - label: Auto
+      name: auto
     - label: 1D
       name: float
     - label: 2D

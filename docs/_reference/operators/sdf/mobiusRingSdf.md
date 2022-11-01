@@ -17,15 +17,26 @@ op:
     - RayContext
     - ParticleContext
     coordTypes:
-    - float
     - vec3
     label: Thickness Field
     name: thicknessField
     returnTypes:
     - float
-    summary: Value field that can be used to vary the thickness of the ring. A 1D
-      field will use the angle of the ring as the coordinate, scaled to a 0..1 range.
-      A 3D field will use the absolute XYZ coordinates.
+    summary: Value field that can be used to vary the thickness of the ring.
+  - contextTypes:
+    - Context
+    - MaterialContext
+    - CameraContext
+    - LightContext
+    - RayContext
+    - ParticleContext
+    coordTypes:
+    - vec3
+    label: Radius Field
+    name: radiusField
+    returnTypes:
+    - float
+    summary: Value field that can be used to vary the radius of the ring.
   keywords:
   - mobius
   - ring

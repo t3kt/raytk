@@ -9,6 +9,33 @@ redirect_from:
 op:
   category: sdf
   detail: Based on [Echeveria](https://www.shadertoy.com/view/wlVGRz) by tdhooper.
+  inputs:
+  - contextTypes:
+    - Context
+    - MaterialContext
+    - CameraContext
+    - LightContext
+    - RayContext
+    - ParticleContext
+    coordTypes:
+    - vec3
+    label: Thickness Field
+    name: thicknessField
+    returnTypes:
+    - float
+  - contextTypes:
+    - Context
+    - MaterialContext
+    - CameraContext
+    - LightContext
+    - RayContext
+    - ParticleContext
+    coordTypes:
+    - vec3
+    label: Radius Field
+    name: radiusField
+    returnTypes:
+    - float
   name: petalSdf
   opType: raytk.operators.sdf.petalSdf
   parameters:

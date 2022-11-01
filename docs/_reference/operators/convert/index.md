@@ -24,7 +24,6 @@ cat:
     summary: Converts one or more float value field inputs into a single vector value
       field.
   - name: projectPlane
-    status: beta
     summary: Takes a 1D or 2D operator and converts it to a 3D operator by mapping
       it to a plane within 3D space.
   - name: revolve

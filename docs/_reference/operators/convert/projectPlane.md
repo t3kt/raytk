@@ -54,7 +54,6 @@ op:
     - label: ZX
       name: zx
     name: Plane
-  status: beta
   summary: Takes a 1D or 2D operator and converts it to a 3D operator by mapping it
     to a plane within 3D space.
 

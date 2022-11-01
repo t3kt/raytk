@@ -71,6 +71,8 @@ op:
       name: hex
     - label: Octogon
       name: octogon
+    - label: Custom
+      name: custom
     name: Prismtype
     summary: The number of sides of the prism.
   - label: Translate
@@ -93,14 +95,28 @@ op:
     - label: Z
       name: z
     name: Axis
+  - label: Sides
+    name: Sides
   - label: Infinite Height
     name: Infiniteheight
   - label: Hollow
     name: Hollow
   - label: Thickness
     name: Thickness
+  - label: UV Mode
+    menuOptions:
+    - label: Cylindrical
+      name: cylindrical
+    name: Uvmode
   summary: A prism shape, like a cylinder but with flat sides, along the z axis.
   thumb: assets/images/reference/operators/sdf/prismSdf_thumb.png
+  variables:
+  - label: axispos
+    name: axispos
+  - label: normoffset
+    name: normoffset
+  - label: normangle
+    name: normangle
 
 ---
 

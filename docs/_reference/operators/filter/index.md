@@ -47,6 +47,9 @@ cat:
     summary: Bends space, along a main axis, towards a second axis.
   - name: cartesianToPolar
     summary: Convert from cartesian space to various types of polar spaces.
+  - name: circularRepeat
+    status: beta
+    summary: Repeat an SDF to fill a 2D circular area.
   - keywords:
     - elongate
     - extend
@@ -68,6 +71,8 @@ cat:
     summary: Flips the input across an axis, either on its own or merged with the
       original.
   - name: fold
+  - name: hilbertCurveTransform
+    status: beta
   - keywords:
     - copy
     - instance
@@ -166,7 +171,6 @@ cat:
     - mp
     summary: Repeats space radially, like a kaleidoscope.
   - name: moduloSpherical
-    status: beta
   - keywords:
     - hollow
     - onion
@@ -227,6 +231,8 @@ cat:
     shortcuts:
     - rot
     summary: Transforms space with rotation.
+  - name: rotate4D
+    status: beta
   - keywords:
     - material
     - modularmat

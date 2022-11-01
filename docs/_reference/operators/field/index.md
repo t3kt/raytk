@@ -94,7 +94,6 @@ cat:
     summary: Texture field that uses surface normals (or other blending techniques)
       to apply a texture facing each axis.
   - name: uvField
-    status: deprecated
     summary: Field that produces surface UV coordinates, if available.
   - name: waveField
     summary: A field that uses a periodic wave.

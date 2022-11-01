@@ -9,6 +9,33 @@ redirect_from:
 op:
   category: sdf
   detail: Similar to `coneSdf` but with the base rounded.
+  inputs:
+  - contextTypes:
+    - Context
+    - MaterialContext
+    - CameraContext
+    - LightContext
+    - RayContext
+    - ParticleContext
+    coordTypes:
+    - vec3
+    label: Radius Field
+    name: radiusField
+    returnTypes:
+    - float
+  - contextTypes:
+    - Context
+    - MaterialContext
+    - CameraContext
+    - LightContext
+    - RayContext
+    - ParticleContext
+    coordTypes:
+    - vec3
+    label: Angle Field
+    name: angleField
+    returnTypes:
+    - float
   keywords:
   - cone
   - pie
