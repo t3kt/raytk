@@ -1,2 +1,0 @@
-name	label	dataType	enable	macros
-pos4d	4D Position	vec4	1	

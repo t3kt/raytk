@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.filter.rotate
-  opVersion: '27'
+  opVersion: '26'
   opStatus: default
 opDef: !def
   enable: !expr
@@ -25,13 +25,6 @@ opDef: !def
     name: macro_exprs
     evaluate: true
     evalOpts: !evalOpts {}
-  variableTable: !table
-    file: src/operators/filter/rotate_variables.txt
-    name: variable_exprs
-    evaluate: true
-    evalOpts: !evalOpts
-      excludeFirstRow: true
-      cols: enable
   help: !text
     file: src/operators/filter/rotate.md
     name: help
