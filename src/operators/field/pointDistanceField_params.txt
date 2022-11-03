@@ -1,3 +1,2 @@
 names	source	handling	readOnlyHandling	conversion	enable
-Center[xyz]	param	runtime	macro		1
-Axes	param	macro			1
+Center[xyz]	param	runtime	macro		op('center_definition').numRows < 2
