@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.filter.reflect
-  opVersion: '26'
+  opVersion: '28'
   opStatus: default
 opDef: !def
   enable: !expr
@@ -169,6 +169,7 @@ elements:
   name: codeSwitcher_Direction
   elementType: codeSwitcher
   params:
+    Elementroot: ''
     Table: !table
       file: src/operators/filter/reflect_directions.txt
       name: directions
@@ -176,5 +177,6 @@ elements:
     Autoupdateparams: true
     Manageparamstates: true
     Alwaysincludeallparams: false
-    Switchmode: auto
+    Switchmode: autoconst
+    Indexexpr: ''
     Placeholder: DIRECTION_BODY();

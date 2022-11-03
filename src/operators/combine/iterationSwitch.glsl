@@ -6,16 +6,24 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 	#else
 	{
 		vec4 ival = extractIteration(ctx);
-		float i = ival.THIS_Iterationpart;
-		#if defined(THIS_Extend_clamp)
-		i = clamp(i, 0., THIS_INPUT_COUNT - 1);
-		#elif defined(THIS_Extend_loop)
-		i = mod(i, THIS_INPUT_COUNT);
-		#elif defined(THIS_Extend_zigzag)
-		i = modZigZag(i / float(THIS_INPUT_COUNT - 1)) * float(THIS_INPUT_COUNT - 1);
-		#else
-		#error invalidExtend
-		#endif
+		float i;
+		switch (THIS_Iterationpart) {
+			case THISTYPE_Iterationpart_x: i = ival.x; break;
+			case THISTYPE_Iterationpart_y: i = ival.y; break;
+			case THISTYPE_Iterationpart_z: i = ival.z; break;
+			case THISTYPE_Iterationpart_w: i = ival.w; break;
+		}
+		switch (THIS_Extend) {
+			case THISTYPE_Extend_clamp:
+				i = clamp(i, 0., THIS_INPUT_COUNT - 1);
+				break;
+			case THISTYPE_Extend_loop:
+				i = mod(i, THIS_INPUT_COUNT);
+				break;
+			case THISTYPE_Extend_zigzag:
+				i = modZigZag(i / float(THIS_INPUT_COUNT - 1)) * float(THIS_INPUT_COUNT - 1);
+				break;
+		}
 		int index = int(round(i));
 
 		switch (index) {

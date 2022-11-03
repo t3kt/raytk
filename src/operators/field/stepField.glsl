@@ -1,33 +1,33 @@
 ReturnT thismap(CoordT p, ContextT ctx) {
 	float q;
+	vec3 q0;
 	#if defined(THIS_HAS_INPUT_coordField)
-	q = inputOp_coordField(p, ctx);
-	#elif defined(THIS_Axis_dist)
-	q = length(p);
-	#elif defined(THIS_Axis_x) || defined(THIS_COORD_TYPE_float) || (defined(THIS_Axis_z) && defined(THIS_COORD_TYPE_vec2))
-	q = extractOrUseAsX(p);
-	#elif defined(THIS_Axis_y)
-	q = p.y;
-	#elif defined(THIS_Axis_z)
-	q = p.z;
+	q0 = adaptAsVec3(inputOp_coordField(p, ctx));
 	#else
-	#error invalidCoordinateSource
+	q0 = adaptAsVec3(p);
 	#endif
+	switch (int(THIS_Axis)) {
+		case THISTYPE_Axis_x: q = q0.x; break;
+		case THISTYPE_Axis_y: q = q0.y; break;
+		case THISTYPE_Axis_z: q = q0.z; break;
+		case THISTYPE_Axis_dist: q = length(q0); break;
+	}
 
 	#ifdef THIS_HAS_INPUT_edgeField
 	float edge = inputOp_edgeField(p, ctx);
 	#else
 	float edge = THIS_Edge;
 	#endif
-	#ifdef THIS_Enableblend
-	float x = smoothstep(0, THIS_Blend, q - edge);
-	#else
-	float x = step(edge, q);
-	#endif
+	float x;
+	if (IS_TRUE(THIS_Enableblend)) {
+		x = smoothstep(0, THIS_Blend, q - edge);
+	} else {
+		x = step(edge, q);
+	}
 
-	#ifdef THIS_Reverse
-	x = 1.0 - x;
-	#endif
+	if (IS_TRUE(THIS_Reverse)) {
+		x = 1.0 - x;
+	}
 
 	#ifdef THIS_HAS_INPUT_lowValue
 	ReturnT low = THIS_asReturnT(inputOp_lowValue(p, ctx));

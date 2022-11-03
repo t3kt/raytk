@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.sdf.mobiusRingSdf
-  opVersion: '10'
+  opVersion: '13'
   opStatus: default
 opDef: !def
   enable: true
@@ -33,9 +33,32 @@ inputs:
 - !input
   Localalias: thicknessField
   coordType: !coordT
-    Coordtypefloat: true
     Coordtypevec3: true
   contextType: !contextT
     Allcontexttype: true
   returnType: !returnT
     Returntypefloat: true
+- !input
+  Localalias: radiusField
+  coordType: !coordT
+    Coordtypevec3: true
+  contextType: !contextT
+    Allcontexttype: true
+  returnType: !returnT
+    Returntypefloat: true
+elements:
+- !opElement
+  name: codeSwitcher_Axes
+  elementType: codeSwitcher
+  params:
+    Elementroot: ''
+    Table: !table
+      file: src/operators/sdf/mobiusRingSdf_axes.txt
+      name: axes
+    Param: Axis
+    Autoupdateparams: true
+    Manageparamstates: false
+    Alwaysincludeallparams: false
+    Switchmode: autoconst
+    Indexexpr: ''
+    Placeholder: AXIS_BODY();

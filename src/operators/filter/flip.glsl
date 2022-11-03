@@ -8,59 +8,62 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 	if (IS_FALSE(THIS_Enable)) {
 		res = inputOp1(p, ctx);
 	} else {
-		CoordT q = p;
+		vec3 q = adaptAsVec3(p);
+		vec3 p3 = q;
 		float s = THIS_Shift;
 		float o = THIS_Offset;
-		#pragma r:if THIS_HAS_INPUT_shiftField
+		#ifdef THIS_HAS_INPUT_shiftField
 		s += inputOp_shiftField(p, ctx);
-		#pragma r:endif
-		#pragma r:if THIS_HAS_INPUT_offsetField
+		#endif
+		#ifdef THIS_HAS_INPUT_offsetField
 		o += inputOp_offsetField(p, ctx);
-		#pragma r:endif
-		switch (int(THIS_Axis)) {
-			case 0:
-			q.x = (q.x + s) * -1. - o;
-			p.x = p.x + o - s;
-			break;
-			case 1:
-			q.y = (q.y + s) * -1. - o;
-			p.y = p.y + o - s;
-			break;
-			#ifdef THIS_COORD_TYPE_vec3
-			case 2:
-			q.z = (q.z + s) * -1. - o;
-			p.z = p.z + o - s;
-			break;
-			#endif
+		#endif
+		switch (THIS_Axis) {
+			case THISTYPE_Axis_x:
+				q.x = (q.x + s) * -1. - o;
+				p3.x += o - s;
+				break;
+			case THISTYPE_Axis_y:
+				q.y = (q.y + s) * -1. - o;
+				p3.y += o - s;
+				break;
+			case THISTYPE_Axis_z:
+				q.z = (q.z + s) * -1. - o;
+				p3.z += o - s;
+				break;
 		}
-		#pragma r:if THIS_Iterationtype_sign
-		setIterationIndex(ctx, 1);
-		const int iterB = -1;
-		#pragma r:elif THIS_Iterationtype_index
-		setIterationIndex(ctx, 0);
-		const int iterB = 1;
-		#pragma r:endif
-		#pragma r:if THIS_EXPOSE_sign
+		int iterB;
+		switch (THIS_Iterationtype) {
+			case THISTYPE_Iterationtype_sign:
+				setIterationIndex(ctx, 1);
+				iterB = -1;
+				break;
+			case THISTYPE_Iterationtype_index:
+				setIterationIndex(ctx, 0);
+				iterB = 1;
+				break;
+		}
+		#ifdef THIS_EXPOSE_sign
 		THIS_sign = 1;
-		#pragma r:endif
-		#pragma r:if THIS_EXPOSE_index
+		#endif
+		#ifdef THIS_EXPOSE_index
 		THIS_index = 0;
-		#pragma r:endif
+		#endif
 		if (int(THIS_Mergetype) == 0) {
-			res = inputOp1(q, ctx);
+			res = inputOp1(THIS_asCoordT(q), ctx);
 		} else {
-			res = inputOp1(p, ctx);
-			#pragma r:if !THIS_Iterationtype_none
-			setIterationIndex(ctx, iterB);
-			#pragma r:endif
-			#pragma r:if THIS_EXPOSE_sign
+			res = inputOp1(THIS_asCoordT(p3), ctx);
+			if (THIS_Iterationtype != THISTYPE_Iterationtype_none) {
+				setIterationIndex(ctx, iterB);
+			}
+			#ifdef THIS_EXPOSE_sign
 			THIS_sign = -1;
-			#pragma r:endif
-			#pragma r:if THIS_EXPOSE_index
+			#endif
+			#ifdef THIS_EXPOSE_index
 			THIS_index = 1;
-			#pragma r:endif
-			Sdf res2 = inputOp1(q, ctx);
-			THIS_merge(res, res2, p, ctx);
+			#endif
+			Sdf res2 = inputOp1(THIS_asCoordT(q), ctx);
+			THIS_merge(res, res2, THIS_asCoordT(p3), ctx);
 		}
 	}
 	return res;

@@ -5,6 +5,7 @@ This should only be used within development tools.
 """
 
 from dataclasses import dataclass, field
+import json
 from pathlib import Path
 import re
 from typing import Dict, Iterable, List, Optional, Tuple, Union
@@ -129,6 +130,18 @@ class VariableHelp:
 				label=str(variableTable[i, 'label'] or name),
 			))
 		return varHelps
+
+	@classmethod
+	def extractFromOpStateDict(cls, ropStateObj: dict):
+		if not ropStateObj:
+			return []
+		variableObjs = ropStateObj.get('variables')
+		if not variableObjs:
+			return []
+		return [
+			cls(variableObj['localName'], variableObj['label'])
+			for variableObj in variableObjs
+		]
 
 	def mergeFrom(self, other: 'VariableHelp'):
 		if self.name != other.name:
@@ -644,11 +657,15 @@ class OpDocManager:
 				inHelps.append(extractedHelp)
 
 	def _pullFromMissingVariablesInto(self, ropHelp: 'ROPHelp'):
+		if not self.info.isROP:
+			return
 		varHelps = {
 			varHelp.name: varHelp
 			for varHelp in ropHelp.variables
 		}  # type: Dict[str, VariableHelp]
-		extractedVars = VariableHelp.extractFromTable(self.info.variableTable)
+		stateText = self.info.opStateText
+		stateObj = json.loads(stateText)
+		extractedVars = VariableHelp.extractFromOpStateDict(stateObj)
 		debug('known vars: ', varHelps)
 		debug('extracted vars: ', extractedVars)
 		for extractedVar in extractedVars:

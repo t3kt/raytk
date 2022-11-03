@@ -328,20 +328,10 @@ class ROPInfo:
 		return self.opDef.op('supportedTypes')
 
 	@property
-	def variableTable(self) -> 'Optional[DAT]':
+	def opStateText(self):
 		if not self.isROP:
 			return None
-		return self.opDef.op('variable_table')
-
-	@property
-	def variableNameAndLabels(self):
-		table = self.variableTable
-		if not table:
-			return []
-		return [
-			(table[i, 'localName'].val, table[i, 'label'].val)
-			for i in range(1, table.numRows)
-		]
+		return self.opDef.op('opState').text
 
 	@property
 	def outputBufferTable(self) -> 'Optional[DAT]':

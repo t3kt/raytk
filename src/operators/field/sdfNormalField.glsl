@@ -1,10 +1,8 @@
 ReturnT thismap(CoordT p, ContextT ctx) {
 	int priorStage = pushStage(RAYTK_STAGE_NORMAL);
-	#ifdef THIS_Enablenormalsmoothing
-	vec2 e = vec2(1.0, -1.0) * (0.5773*0.005 + THIS_Normalsmoothing);
-	#else
-	const vec2 e = vec2(1.0, -1.0)*0.5773*0.005;
-	#endif
+	float s = THIS_Normalsmoothing;
+	if (IS_FALSE(THIS_Enablenormalsmoothing)) { s = 0.0; }
+	vec2 e = vec2(1.0, -1.0) * (0.5773*0.005 + s);
 	vec3 n = normalize(
 		e.xyy*inputOp1(p + e.xyy, ctx).x +
 		e.yyx*inputOp1(p + e.yyx, ctx).x +

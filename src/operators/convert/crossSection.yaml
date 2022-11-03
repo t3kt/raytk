@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.convert.crossSection
-  opVersion: '3'
+  opVersion: '4'
   opStatus: beta
 opDef: !def
   enable: !expr
@@ -37,6 +37,7 @@ elements:
   name: codeSwitcher_Axes
   elementType: codeSwitcher
   params:
+    Elementroot: ''
     Table: !table
       file: src/operators/convert/crossSection_axes.txt
       name: axes
@@ -44,5 +45,6 @@ elements:
     Autoupdateparams: true
     Manageparamstates: false
     Alwaysincludeallparams: false
-    Switchmode: auto
+    Switchmode: autoconst
+    Indexexpr: ''
     Placeholder: BODY();

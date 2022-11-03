@@ -100,11 +100,11 @@ def _branchByCoordType(code2d, code3d):
 	if _configPar().Force3d:
 		return [code3d]
 	return [
-		'#pragma r:if THIS_COORD_TYPE_vec2',
+		'#ifdef THIS_COORD_TYPE_vec2',
 		code2d,
-		'#pragma r:else',
+		'#else',
 		code3d,
-		'#pragma r:endif',
+		'#endif',
 	]
 
 def getParams() -> 'List[str]':

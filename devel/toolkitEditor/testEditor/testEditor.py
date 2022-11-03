@@ -81,10 +81,11 @@ class TestEditor:
 		comp = self.hostedComponent
 		if not comp:
 			return
-		processTest(comp, log=None)
-		comp.clearScriptErrors(recurse=True)
-		self.reloadOutputs()
-		iop.testInspectorCore.GetFindings()
+		def afterProcess():
+			comp.clearScriptErrors(recurse=True)
+			self._reloadOutputsSoon()
+			self._refreshFindings()
+		processTest(comp, afterProcess, log=None)
 
 	def _loadTest(self, name: str, toxPath: Path):
 		if name:
@@ -94,7 +95,7 @@ class TestEditor:
 		self._disableComponentCooking()
 		iop.loader.LoadComponent(tox=toxPath, name=name)
 		self._reloadOutputsSoon()
-		self.ownerComp.op('findingsPanel').cook(force=True)
+		self._refreshFindings()
 
 	def createTest(self):
 		self._create('test')
@@ -154,6 +155,11 @@ class TestEditor:
 
 	def reloadOutputs(self):
 		self.ownerComp.op('layout_test_outputs').cook(force=True)
+		run('args[0]()', self._refreshFindings, delayFrames=5, delayRef=root)
+
+	def _refreshFindings(self):
+		self.ownerComp.op('testFindings').cook(force=True)
+		self.ownerComp.op('findingsPanel').cook(force=True)
 
 	def listOnSelectRow(self, info: dict):
 		# rowData = info['rowData']

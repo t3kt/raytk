@@ -4,6 +4,7 @@ Tools for working with the toolkit in a development environment.
 This should only be used within development tools.
 """
 
+import json
 from pathlib import Path
 from raytkDocs import OpDocManager
 from raytkModel import OpDefMeta_OLD, OpSpec_OLD, ROPSpec, ROPDef, ROPMeta
@@ -105,7 +106,17 @@ class RaytkTools(RaytkContext):
 	def _updateVariableRefParams(rop: 'COMP'):
 		if rop.name == 'provideVariable':
 			return
-		varNamesAndLabels = ROPInfo(rop).variableNameAndLabels
+		stateText = ROPInfo(rop).opStateText
+		if not stateText:
+			return
+		stateObj = json.loads(stateText)
+		variableObjs = stateObj.get('variables')
+		if not variableObjs:
+			return
+		varNamesAndLabels = [
+			(variableObj['localName'], variableObj['label'])
+			for variableObj in variableObjs
+		]
 		if not varNamesAndLabels:
 			return
 		varNames = [nl[0] for nl in varNamesAndLabels]

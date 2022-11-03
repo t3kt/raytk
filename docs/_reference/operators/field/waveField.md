@@ -116,8 +116,9 @@ op:
       label: Distance From Origin
       name: dist
     name: Axis
-    summary: If there is no input, the coordinate along this axis is used for the
-      wave function phase.
+    summary: Axis used for the wave function phase. If there is a coordinate field,
+      this controls which part of the returned value is used. Otherwise it controls
+      which part of the position in used.
   - label: Coord Type
     menuOptions:
     - label: 1D

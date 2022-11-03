@@ -188,6 +188,7 @@ def _createCodeDat(host: 'COMP', template: 'Optional[DAT]', nameSuffix: str, off
 		host, textDAT,
 		template, nameSuffix,
 		offsetX, -150,
+		language='glsl',
 	)
 
 def _createDat(
@@ -195,7 +196,8 @@ def _createDat(
 		opType: 'Type[DAT]',
 		template: 'Optional[DAT]',
 		nameSuffix: str,
-		offsetX: int, offsetY: int) -> 'DAT':
+		offsetX: int, offsetY: int,
+		language: 'Optional[str]') -> 'DAT':
 	dat = host.parent().create(opType, host.name + nameSuffix)
 	if template:
 		dat.copy(template)
@@ -211,6 +213,8 @@ def _createDat(
 	host.showDocked = True
 	dat.viewer = True
 	dat.activeViewer = True
+	if language:
+		dat.par.language = language
 	return dat
 
 _paramPattern = re.compile(r'\bTHIS_([A-Z][a-z0-9]*)\b')

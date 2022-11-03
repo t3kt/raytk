@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.sdf.coneSdf
-  opVersion: '14'
+  opVersion: '15'
   opStatus: default
 opDef: !def
   enable: true
@@ -41,6 +41,7 @@ elements:
   name: codeSwitcher_Shape
   elementType: codeSwitcher
   params:
+    Elementroot: ''
     Table: !table
       file: src/operators/sdf/coneSdf_shapes.txt
       name: shapes
@@ -48,5 +49,6 @@ elements:
     Autoupdateparams: true
     Manageparamstates: true
     Alwaysincludeallparams: false
-    Switchmode: auto
+    Switchmode: autoconst
+    Indexexpr: ''
     Placeholder: BODY();

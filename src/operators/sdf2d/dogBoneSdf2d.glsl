@@ -18,9 +18,9 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 	float b = -THIS_Bulge;
 	#endif
 
-	#ifdef THIS_Axis_y
-	p.xy = p.yx;
-	#endif
+	if (THIS_Axis == THISTYPE_Axis_y) {
+		p.xy = p.yx;
+	}
 
 	p -= THIS_Translate;
 

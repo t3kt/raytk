@@ -2,6 +2,6 @@
   "meta": {
     "opStatus": "beta",
     "opType": "raytk.operators.pattern.truchetPattern",
-    "opVersion": 7
+    "opVersion": 8
   }
 }

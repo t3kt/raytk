@@ -1,20 +1,20 @@
 ReturnT thismap(CoordT p, ContextT ctx) {
 	if (IS_TRUE(THIS_Enable)) {
 		CoordT t = THIS_asCoordT(THIS_Translate);
-		#pragma r:if THIS_HAS_INPUT_translateField
-		#pragma r:if inputOp_translateField_RETURN_TYPE_float || inputOp_translateField_RETURN_TYPE_Sdf
+		#ifdef THIS_HAS_INPUT_translateField
+		#if defined(inputOp_translateField_RETURN_TYPE_float) || defined(inputOp_translateField_RETURN_TYPE_Sdf)
 			t *= adaptAsFloat(inputOp_translateField(p, ctx));
-		#pragma r:elif inputOp_translateField_RETURN_TYPE_vec4
+		#elif defined(inputOp_translateField_RETURN_TYPE_vec4)
 			t += THIS_asCoordT(inputOp_translateField(p, ctx));
-		#pragma r:else
+		#else
 			#error invalidFieldReturnType
-		#pragma r:endif
-		#pragma r:endif
+		#endif
+		#endif
 		p -= t;
 	}
-	#pragma r:if THIS_HAS_INPUT_1
+	#ifdef THIS_HAS_INPUT_1
 	return inputOp1(p, ctx);
-	#pragma r:else
+	#else
 	return adaptAsVec4(p);
-	#pragma r:endif
+	#endif
 }

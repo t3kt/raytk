@@ -20,12 +20,12 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 
 		float r = length(w);
 
-		#pragma r:if THIS_EXPOSE_step
+		#ifdef THIS_EXPOSE_step
 		THIS_step = i;
-		#pragma r:endif
-		#pragma r:if THIS_EXPOSE_normstep
+		#endif
+		#ifdef THIS_EXPOSE_normstep
 		THIS_normstep = float(i) / float(n - 1);
-		#pragma r:endif
+		#endif
 
 		#ifdef THIS_HAS_INPUT_shiftField
 		shift = shift0 + radians(adaptAsVec2(inputOp_shiftField(p, ctx)));

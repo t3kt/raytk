@@ -1,6 +1,6 @@
-uniform vec4 uTime1 = vec4(0., 1., 1., 1.);     // frame, seconds, start, end
-uniform vec4 uTime2 = vec4(60., 120., 1., 0.);  // rate, bpm, absFrame, absSeconds
-uniform vec4 uTime3 = vec4(0, 0, 0, 0);         // absStep, absStepSeconds
+uniform vec4 uTime1;     // frame, seconds, start, end
+uniform vec4 uTime2;  // rate, bpm, absFrame, absSeconds
+uniform vec4 uTime3;         // absStep, absStepSeconds
 
 Time getGlobalTime() {
 	return Time(uTime1, uTime2, uTime3);

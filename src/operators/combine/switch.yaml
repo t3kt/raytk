@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.combine.switch
-  opVersion: '16'
+  opVersion: '18'
   opStatus: default
 opDef: !def
   enable: !expr
@@ -28,7 +28,7 @@ opDef: !def
   help: !text
     file: src/operators/combine/switch.md
     name: help
-  shortcuts: blend
+  keywords: blend
 multiInput: !multiInput
   Minimuminputs: 1
   Coordtypereductionmode: common

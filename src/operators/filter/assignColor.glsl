@@ -4,11 +4,11 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 		#ifdef THIS_EXPOSE_sdf
 		THIS_sdf = res;
 		#endif
-		#pragma r:if THIS_HAS_INPUT_colorField
+		#ifdef THIS_HAS_INPUT_colorField
 		assignColor(res, fillToVec3(inputOp_colorField(p, ctx)));
-		#pragma r:else
+		#else
 		assignColor(res, THIS_Color);
-		#pragma r:endif
+		#endif
 	}
 	return res;
 }

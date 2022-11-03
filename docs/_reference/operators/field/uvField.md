@@ -23,6 +23,8 @@ op:
   parameters:
   - label: Coord Type
     menuOptions:
+    - label: Auto
+      name: auto
     - label: 1D
       name: float
     - label: 2D
@@ -30,7 +32,6 @@ op:
     - label: 3D
       name: vec3
     name: Coordtype
-  status: deprecated
   summary: Field that produces surface UV coordinates, if available.
   thumb: assets/images/reference/operators/field/uvField_thumb.png
 

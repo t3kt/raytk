@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.sdf.jointSdf
-  opVersion: '1'
+  opVersion: '2'
   opStatus: beta
 opDef: !def
   enable: true
@@ -48,6 +48,7 @@ elements:
   name: codeSwitcher_Shape
   elementType: codeSwitcher
   params:
+    Elementroot: ''
     Table: !table
       file: src/operators/sdf/jointSdf_shapes.txt
       name: shapes
@@ -55,5 +56,6 @@ elements:
     Autoupdateparams: true
     Manageparamstates: false
     Alwaysincludeallparams: false
-    Switchmode: auto
+    Switchmode: autoconst
+    Indexexpr: ''
     Placeholder: BODY();

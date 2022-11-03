@@ -1,3 +1,3 @@
 names	source	handling	readOnlyHandling	conversion	enable
 Zoom Offset[xy]	param	runtime	macro		1
-Alignment Scaling	param	macro			1
+Alignment Scaling	param	constant			1

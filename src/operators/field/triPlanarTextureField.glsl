@@ -16,24 +16,29 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 	#endif
 	vec3 valMult = vec3(1.0);
 	uv = (uv - THIS_Translate) / THIS_Scale;
-	#if defined(THIS_Extendmode_hold)
-	uv = clamp(uv, -0.5, 0.5);
-	#elif defined(THIS_Extendmode_repeat)
-	uv = fract(uv+0.5)-0.5;
-	#elif defined(THIS_Extendmode_mirror)
-	uv = modZigZag(uv+0.5)-0.5;
-	#elif defined(THIS_Extendmode_zero)
-		bvec3 isOut = bvec3(
-			uv.x < -0.5 || uv.x > 0.5,
-			uv.y < -0.5 || uv.y > 0.5,
-			uv.z < -0.5 || uv.z > 0.5
-		);
-		valMult = vec3(
-			!(isOut.y || isOut.z),
-			!(isOut.x || isOut.z),
-			!(isOut.x || isOut.y)
-		);
-	#endif
+	switch (THIS_Extendmode) {
+		case THISTYPE_Extendmode_hold:
+			uv = clamp(uv, -0.5, 0.5);
+			break;
+		case THISTYPE_Extendmode_repeat:
+			uv = fract(uv+0.5)-0.5;
+			break;
+		case THISTYPE_Extendmode_mirror:
+			uv = modZigZag(uv+0.5)-0.5;
+			break;
+		case THISTYPE_Extendmode_zero:
+			bvec3 isOut = bvec3(
+				uv.x < -0.5 || uv.x > 0.5,
+				uv.y < -0.5 || uv.y > 0.5,
+				uv.z < -0.5 || uv.z > 0.5
+			);
+			valMult = vec3(
+				!(isOut.y || isOut.z),
+				!(isOut.x || isOut.z),
+				!(isOut.x || isOut.y)
+			);
+			break;
+	}
 	vec3 n = abs(ctx.normal);
 	n *= n;
 	#ifdef THIS_Useseparatetextures
@@ -46,19 +51,23 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 	vec3 colZX = texture(THIS_texture, uv.zx + 0.5).rgb;
 	#endif
 
-	#if defined(THIS_Blendmode_normals)
-	vec3 col = colXY * n.z * valMult.z + colYZ * n.x * valMult.x + colZX * n.y * valMult.y;
-	#elif defined(THIS_Blendmode_add)
-	vec3 col = colXY + colYZ + colZX;
-	#elif defined(THIS_Blendmode_max)
-	vec3 col = max(max(colXY, colYZ), colZX);
-	#elif defined(THIS_Blendmode_avg)
-	vec3 col = (colXY + colYZ + colZX) / 3.0;
-	#else
-	#error invalidBlendMode
-	#endif
+	vec3 col;
+	switch (THIS_Blendmode) {
+		case THISTYPE_Blendmode_normals:
+			col = colXY * n.z * valMult.z + colYZ * n.x * valMult.x + colZX * n.y * valMult.y;
+			break;
+		case THISTYPE_Blendmode_add:
+			col = colXY + colYZ + colZX;
+			break;
+		case THISTYPE_Blendmode_max:
+			col = max(max(colXY, colYZ), colZX);
+			break;
+		case THISTYPE_Blendmode_avg:
+			col = (colXY + colYZ + colZX) / 3.0;
+			break;
+	}
 
-	#ifdef THIS_RETURN_TYPE_float
+	#ifdef THISTYPE_RETURN_TYPE_float
 	return col.x;
 	#else
 	return vec4(col, 1);

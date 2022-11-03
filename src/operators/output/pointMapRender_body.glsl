@@ -57,7 +57,7 @@ vec3 getColor(THIS_CoordT p, MaterialContext matCtx) {
 	return col;
 }
 
-vec3 calcNormal(CoordT pos)
+vec3 calcNormal(THIS_CoordT pos)
 {
 	int priorStage = pushStage(RAYTK_STAGE_NORMAL);
 	#ifdef THIS_Enablenormalsmoothing
@@ -71,7 +71,7 @@ vec3 calcNormal(CoordT pos)
 		e.yyx*map(pos + e.yyx).x +
 		e.yxy*map(pos + e.yxy).x +
 		e.xxx*map(pos + e.xxx).x);
-	#elif THIS_COORD_TYPE_vec2
+	#elif defined(THIS_COORD_TYPE_vec2)
 	vec2 n = normalize(
 		e.xy*map(pos + e.xy).x +
 		e.yy*map(pos + e.yy).x +
@@ -79,7 +79,7 @@ vec3 calcNormal(CoordT pos)
 		e.xx*map(pos + e.xx).x);
 	#endif
 	popStage(priorStage);
-	return n;
+	return adaptAsVec3(n);
 }
 
 void main() {

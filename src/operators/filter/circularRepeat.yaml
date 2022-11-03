@@ -1,8 +1,8 @@
 !rop
 meta: !meta
-  opType: raytk.operators.filter.linkedTransform
-  opVersion: '2'
-  opStatus: alpha
+  opType: raytk.operators.filter.circularRepeat
+  opVersion: '1'
+  opStatus: beta
 opDef: !def
   enable: !expr
     expr: op('..').par.Enable
@@ -15,9 +15,20 @@ opDef: !def
     returnType: !returnT
       Allreturntype: true
   function: !text
-    file: src/operators/filter/linkedTransform.glsl
+    file: src/operators/filter/circularRepeat.glsl
     name: function
   paramGroupTable: eval_params
+  libraryNames: raytkCombine
+  variableTable: !table
+    file: src/operators/filter/circularRepeat_variables.txt
+    name: variable_exprs
+    evaluate: true
+    evalOpts: !evalOpts
+      excludeFirstRow: true
+      cols: enable
+  help: !text
+    file: src/operators/filter/circularRepeat.md
+    name: help
 inputs:
 - !input
   Required: true

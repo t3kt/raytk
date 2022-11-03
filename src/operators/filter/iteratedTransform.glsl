@@ -1,47 +1,47 @@
 void THIS_apply(inout CoordT p, inout ContextT ctx, inout float valueAdjust, out vec4 orb) {
 	int n = int(THIS_Iterations);
 	TRANSFORM_INIT();
-	#pragma r:if THIS_Enablerotate && THIS_HAS_INPUT_rotateField
+	#if defined(THIS_Enablerotate) && defined(THIS_HAS_INPUT_rotateField)
 	vec3 baseRot = rotate;
-	#pragma r:endif
-	#pragma r:if THIS_Enabletranslate && THIS_HAS_INPUT_translateField
+	#endif
+	#if defined(THIS_Enabletranslate) && defined(THIS_HAS_INPUT_translateField)
 	vec3 baseT = translate;
-	#pragma r:endif
-	#pragma r:if THIS_Enablescale && THIS_HAS_INPUT_scaleField
-	#pragma r:if THIS_Scaletype_uniform
+	#endif
+	#if defined(THIS_Enablescale) && defined(THIS_HAS_INPUT_scaleField)
+	#ifdef THIS_Scaletype_uniform
 	float baseS = uniformscale;
-	#pragma r:else
+	#else
 	vec3 baseS = scale;
-	#pragma r:endif
-	#pragma r:endif
+	#endif
+	#endif
 	for (int i = 0; i < n; i++) {
 		float ratio = float(i) / float(n - 1);
-		#pragma r:if THIS_Iterationtype_index
+		#if defined(THIS_Iterationtype_index)
 		setIterationIndex(ctx, float(i));
-		#pragma r:elif THIS_Iterationtype_ratio
+		#elif defined(THIS_Iterationtype_ratio)
 		setIterationIndex(ctx, ratio);
-		#pragma r:endif
-		#pragma r:if THIS_EXPOSE_step
+		#endif
+		#ifdef THIS_EXPOSE_step
 		THIS_step = i;
-		#pragma r:endif
-		#pragma r:if THIS_EXPOSE_normstep
+		#endif
+		#ifdef THIS_EXPOSE_normstep
 		THIS_normstep = ratio;
-		#pragma r:endif
-		#pragma r:if THIS_Enablerotate && THIS_HAS_INPUT_rotateField
+		#endif
+		#if defined(THIS_Enablerotate) && defined(THIS_HAS_INPUT_rotateField)
 		rotate = baseRot + inputOp_rotateField(p, ctx).xyz;
-		#pragma r:endif
-		#pragma r:if THIS_Enabletranslate && THIS_HAS_INPUT_translateField
+		#endif
+		#if defined(THIS_Enabletranslate) && defined(THIS_HAS_INPUT_translateField)
 		translate = baseT + inputOp_translateField(p, ctx).xyz;
-		#pragma r:endif
-		#pragma r:if THIS_Enablescale && THIS_HAS_INPUT_scaleField
+		#endif
+		#if defined(THIS_Enablescale) && defined(THIS_HAS_INPUT_scaleField)
 		{
-			#pragma r:if THIS_Scaletype_uniform
+			#ifdef THIS_Scaletype_uniform
 			uniformscale = baseS * adaptAsFloat(inputOp_scaleField(p, ctx));
-			#pragma r:else
+			#else
 			scale = baseS * fillToVec3(inputOp_scaleField(p, ctx));
-			#pragma r:endif
+			#endif
 		}
-			#pragma r:endif
+		#endif
 		CoordT preReflectP = p;
 		THIS_REFLECT();
 		orb = min(orb, vec4(adaptAsVec3(abs(preReflectP - p)), length(p)));
@@ -57,11 +57,11 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 		THIS_apply(p, ctx, valueAdjust, orb);
 	}
 	ReturnT res = inputOp1(p, ctx);
-#pragma r:if RAYTK_ORBIT_IN_SDF
+#ifdef RAYTK_ORBIT_IN_SDF
 	res.orbit = vec4(orb);
-#pragma r:endif
-#pragma r:if THIS_RETURN_TYPE_Sdf
+#endif
+#ifdef THIS_RETURN_TYPE_Sdf
 	res = withAdjustedScale(res, valueAdjust);
-#pragma r:endif
+#endif
 	return res;
 }

@@ -1,92 +1,98 @@
 void THIS_apply(inout CoordT p, inout ContextT ctx) {
 	vec2 q = getAxisPlane(p, int(THIS_Axis));
 	vec2 size = THIS_Size;
-	#pragma r:if THIS_HAS_INPUT_sizeField
+	#ifdef THIS_HAS_INPUT_sizeField
 	{
-		#pragma r:if inputOp_sizeField_COORD_TYPE_vec2
+		#ifdef inputOp_sizeField_COORD_TYPE_vec2
 		vec2 q1 = q;
-		#pragma r:else
+		#else
 		inputOp_sizeField_CoordT q1 = inputOp_sizeField_asCoordT(p);
-		#pragma r:endif
+		#endif
 		size *= fillToVec2(inputOp_sizeField(q1, ctx));
 	}
-	#pragma r:endif
+	#endif
 	vec2 halfsize = size * 0.5;
 
 	vec2 sh = THIS_Shift;
-	#pragma r:if THIS_HAS_INPUT_shiftField
+	#ifdef THIS_HAS_INPUT_shiftField
 	{
-		#pragma r:if inputOp_shiftField_COORD_TYPE_vec2
+		#ifdef inputOp_shiftField_COORD_TYPE_vec2
 		vec2 q1 = q;
-		#pragma r:else
+		#else
 		inputOp_shiftField_CoordT q1 = inputOp_shiftField_asCoordT(p);
-		#pragma r:endif
+		#endif
 		sh += fillToVec2(inputOp_shiftField(q1, ctx));
 	}
-	#pragma r:endif
+	#endif
 	q += sh;
 	vec2 c = floor((q + halfsize)/size);
 	q = mod(q + halfsize, size) - halfsize;
-	#pragma r:if THIS_Limittype_both || THIS_Limittype_start
+	#if defined(THIS_Limittype_both) || defined(THIS_Limittype_start)
 	vec2 start = THIS_Limitstart + THIS_Limitoffset;
 	if (c.x < start.x) applyModLimit(q.x, c.x, size.x, start.x);
 	if (c.y < start.y) applyModLimit(q.y, c.y, size.y, start.y);
-	#pragma r:endif
-	#pragma r:if THIS_Limittype_both || THIS_Limittype_stop
+	#endif
+	#if defined(THIS_Limittype_both) || defined(THIS_Limittype_stop)
 	vec2 stop = THIS_Limitstop + THIS_Limitoffset;
 	if (c.x > stop.x) applyModLimit(q.x, c.x, size.x, stop.x);
 	if (c.y > stop.y) applyModLimit(q.y, c.y, size.y, stop.y);
-	#pragma r:endif
+	#endif
 
-	#pragma r:if THIS_Mirrortype_mirror
-	q *= mod(c,vec2(2))*2 - vec2(1);
-	#pragma r:elif THIS_Mirrortype_grid
-	q *= mod(c,vec2(2))*2 - vec2(1);
-	q -= halfsize;
-	if (q.x > q.y) q.xy = q.yx;
-	c = floor(c/2);
-	#pragma r:endif
+	switch (THIS_Mirrortype) {
+		case THISTYPE_Mirrortype_mirror:
+			q *= mod(c,vec2(2))*2 - vec2(1);
+			break;
+		case THISTYPE_Mirrortype_grid:
+			q *= mod(c,vec2(2))*2 - vec2(1);
+			q -= halfsize;
+			if (q.x > q.y) q.xy = q.yx;
+			c = floor(c/2);
+			break;
+	}
 
 	int quad = quadrantIndex(ivec2(mod(ivec2(c), 2)));
-	#pragma r:if THIS_Iterationtype_cellcoord
-	setIterationCell(ctx, c);
-	#pragma r:elif THIS_Iterationtype_tiledquadrant
-	setIterationIndex(ctx, quad);
-	#pragma r:elif THIS_Iterationtype_alternatingcoord
-	setIterationCell(ctx, mod(c, 2.));
-	#pragma r:endif
-	#pragma r:if THIS_EXPOSE_cellcoord
-	THIS_cellcoord = ivec2(c);
-	#pragma r:endif
-	#pragma r:if THIS_EXPOSE_tiledquad
-	THIS_tiledquad = quad;
-	#pragma r:endif
-	#pragma r:if THIS_EXPOSE_normcoord
-	{
-		#pragma r:if !THIS_Uselimit
-		THIS_normcoord = c;
-		#pragma r:elif THIS_Limittype_start
-		THIS_normcoord = c - start;
-		#pragma r:elif THIS_Limittype_stop
-		THIS_normcoord = -c + stop;
-		#pragma r:elif THIS_Limittype_both
-		THIS_normcoord = map01(c, start, stop);
-		#pragma r:endif
+	switch (THIS_Iterationtype) {
+		case THISTYPE_Iterationtype_cellcoord:
+			setIterationCell(ctx, c);
+			break;
+		case THISTYPE_Iterationtype_tiledquadrant:
+			setIterationIndex(ctx, quad);
+			break;
+		case THISTYPE_Iterationtype_alternatingcoord:
+			setIterationCell(ctx, mod(c, 2.));
+			break;
 	}
-	#pragma r:endif
+	#ifdef THIS_EXPOSE_cellcoord
+	THIS_cellcoord = ivec2(c);
+	#endif
+	#ifdef THIS_EXPOSE_tiledquad
+	THIS_tiledquad = quad;
+	#endif
+	#ifdef THIS_EXPOSE_normcoord
+	{
+		#if !defined(THIS_Uselimit)
+		THIS_normcoord = c;
+		#elif defined(THIS_Limittype_start)
+		THIS_normcoord = c - start;
+		#elif defined(THIS_Limittype_stop)
+		THIS_normcoord = -c + stop;
+		#elif defined(THIS_Limittype_both)
+		THIS_normcoord = map01(c, start, stop);
+		#endif
+	}
+	#endif
 	// offset field can use iteration
 	vec2 o = THIS_Offset;
-	#pragma r:if THIS_HAS_INPUT_offsetField
+	#ifdef THIS_HAS_INPUT_offsetField
 	{
-
-		#pragma r:if inputOp_offsetField_COORD_TYPE_vec2
+		#ifdef inputOp_offsetField_COORD_TYPE_vec2
 		vec2 q1 = q;
-		#pragma r:else
+		#else
 		inputOp_offsetField_CoordT q1 = inputOp_offsetField_asCoordT(p);
-		#pragma r:endif
+		#endif
 		o += fillToVec2(inputOp_offsetField(q1, ctx));
 	}
-	#pragma r:endif
+	#endif
 	setAxisPlane(p, int(THIS_Axis), q - o);
 }
 

@@ -347,8 +347,12 @@ void swap(inout vec4 a, inout vec4 b) {
 	b = tmp;
 }
 
-#define IS_TRUE(x)  (x >= 0.5)
-#define IS_FALSE(x) (x < 0.5)
+bool IS_TRUE(float x) { return x >= 0.5; }
+bool IS_TRUE(int x) { return x > 0; }
+bool IS_TRUE(bool x) { return x; }
+bool IS_FALSE(float x) { return x < 0.5; }
+bool IS_FALSE(int x) { return x == 0; }
+bool IS_FALSE(bool x) { return !x; }
 
 #ifdef OUTPUT_DEBUG
 	#define setDebugOut(val) (debugOut = val);

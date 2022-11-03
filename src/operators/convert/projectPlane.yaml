@@ -1,8 +1,8 @@
 !rop
 meta: !meta
   opType: raytk.operators.convert.projectPlane
-  opVersion: '4'
-  opStatus: beta
+  opVersion: '6'
+  opStatus: default
 opDef: !def
   enable: true
   typeSpec: !ropTypes
@@ -34,6 +34,7 @@ elements:
   name: codeSwitcher_Plane
   elementType: codeSwitcher
   params:
+    Elementroot: ''
     Table: !table
       file: src/operators/convert/projectPlane_planes.txt
       name: planes
@@ -41,5 +42,6 @@ elements:
     Autoupdateparams: true
     Manageparamstates: false
     Alwaysincludeallparams: false
-    Switchmode: auto
+    Switchmode: autoconst
+    Indexexpr: ''
     Placeholder: BODY();

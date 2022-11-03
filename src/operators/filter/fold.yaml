@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.filter.fold
-  opVersion: '9'
+  opVersion: '10'
   opStatus: default
 opDef: !def
   enable: !expr
@@ -73,6 +73,7 @@ elements:
   name: codeSwitcher_Function
   elementType: codeSwitcher
   params:
+    Elementroot: ''
     Table: !table
       file: src/operators/filter/fold_functions.txt
       name: functions
@@ -80,5 +81,6 @@ elements:
     Autoupdateparams: true
     Manageparamstates: true
     Alwaysincludeallparams: false
-    Switchmode: auto
+    Switchmode: autoconst
+    Indexexpr: ''
     Placeholder: BODY();

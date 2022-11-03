@@ -6,18 +6,18 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 	assignMaterial(res, THISMAT);
 	res.reflect = true;
 	captureIterationFromMaterial(THIS_iterationCapture, ctx);
-	#pragma r:if THIS_Enableshadow && RAYTK_USE_SHADOW
+	#if defined(THIS_Enableshadow) && defined(RAYTK_USE_SHADOW)
 	res.useShadow = true;
-	#pragma r:endif
+	#endif
 	return res;
 }
 
 vec3 THIS_getColor(vec3 p, MaterialContext matCtx) {
 	restoreIterationFromMaterial(matCtx, THIS_iterationCapture);
 	float sunShadow = 1.;
-	#pragma r:if THIS_Enableshadow && RAYTK_USE_SHADOW
+	#if defined(THIS_Enableshadow) && defined(RAYTK_USE_SHADOW)
 	sunShadow = matCtx.shadedLevel;
-	#pragma r:endif
+	#endif
 	vec3 col = THIS_Color;
 	float ks = THIS_Ks;
 	float sky = 0.5 + 0.5 * matCtx.normal.y;

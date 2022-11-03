@@ -1,3 +1,2 @@
 names	source	handling	readOnlyHandling	conversion	enable
 Thickness Length Bend	param	runtime	macro		1
-Shape	param	macro			1

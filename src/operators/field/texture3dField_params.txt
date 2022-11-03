@@ -1,3 +1,3 @@
 names	source	handling	readOnlyHandling	conversion	enable
-Extendmode Texturetype	param	macro			1
+Extendmode	param	constant			1
 Translate[xyz] Scale[xyz]	param	runtime	macro		1

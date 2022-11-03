@@ -34,3 +34,8 @@ float sdSquarePrism(vec3 p, vec2 h) {
 	return fBox(p, h.xxy);
 }
 
+float sdArbitraryPrism(vec3 p, float r, float h, float n) {
+	pModPolar(p.xy, n);
+	return max(p.x - r, abs(p.z)-h);
+}
+

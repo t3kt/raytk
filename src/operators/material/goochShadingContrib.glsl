@@ -12,13 +12,13 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 		THIS_Warmcolor * level,
 		THIS_Basecolor * level);
 
-	#pragma r:if THIS_Uselightcolor
+	#ifdef THIS_Uselightcolor
 	col *= ctx.light.color;
-	#pragma r:endif
+	#endif
 
-	#pragma r:if THIS_Enableshadow && RAYTK_USE_SHADOW
+	#if defined(THIS_Enableshadow) && defined(RAYTK_USE_SHADOW)
 	col *= ctx.shadedLevel;
-	#pragma r:endif
+	#endif
 
 	return vec4(col * THIS_Enable, 0.);
 }

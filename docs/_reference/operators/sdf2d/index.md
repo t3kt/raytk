@@ -25,6 +25,8 @@ cat:
   - name: blobbyCrossSdf2d
   - name: circleSdf
     summary: 2D circle SDF.
+  - name: circleWaveSdf2d
+    status: beta
   - name: cornerSdf2d
     summary: 2D SDF for an infinite corner, like an infinite square positioned by
       one corner.

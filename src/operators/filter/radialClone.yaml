@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.filter.radialClone
-  opVersion: '19'
+  opVersion: '20'
   opStatus: default
 opDef: !def
   enable: !expr
@@ -65,6 +65,9 @@ elements:
     Offsetfield: ''
     Numberfield: ''
     Manageparamstates: true
+    Alwaysincludeallparams: false
     Switchmode: inline
+    Indexexpr: ''
     Prepcodeplaceholder: MERGE_PREP();
     Bodycodeplaceholder: MERGE_BODY();
+    Defaultinitcodeplaceholder: ''

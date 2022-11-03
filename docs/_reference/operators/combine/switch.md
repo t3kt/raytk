@@ -188,6 +188,8 @@ op:
     returnTypes:
     - float
     summary: Field used to choose the source index
+  keywords:
+  - blend
   name: switch
   opType: raytk.operators.combine.switch
   parameters:
@@ -218,8 +220,6 @@ op:
     - label: Zig-Zag
       name: zigzag
     name: Extend
-  shortcuts:
-  - blend
   summary: Switches between several inputs, without the need to rebuild the shader,
     allowing for fast switching.
 

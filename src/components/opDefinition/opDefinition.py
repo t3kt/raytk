@@ -1,6 +1,7 @@
 from dataclasses import dataclass
+import json
 import math
-from raytkState import RopState, Macro, Texture, Reference, Variable, Dispatch, Buffer, ValidationError
+from raytkState import RopState, Macro, Texture, Reference, Variable, Dispatch, Buffer, ValidationError, Constant
 import re
 
 # noinspection PyUnreachableCode
@@ -365,12 +366,19 @@ def buildParamChopNamesTable(dat: 'DAT', paramSpecTable: 'DAT'):
 	regularNames = []
 	specialNames = []
 	angleNames = []
+	constantNames = []
 	for i in range(1, paramSpecTable.numRows):
-		if paramSpecTable[i, 'handling'] != 'runtime':
+		handling = paramSpecTable[i, 'handling']
+		if handling == 'macro':
 			continue
 		name = paramSpecTable[i, 'localName'].val
 		source = paramSpecTable[i, 'source']
-		if source == 'param':
+		if handling == 'constant':
+			if source != 'param':
+				raise Exception(f'Constants must come from parameters {name} {source}')
+			else:
+				constantNames.append(name)
+		elif source == 'param':
 			regularNames.append(name)
 		elif source == 'special':
 			specialNames.append(name)
@@ -379,38 +387,13 @@ def buildParamChopNamesTable(dat: 'DAT', paramSpecTable: 'DAT'):
 	dat.appendRow(['regular', ' '.join(regularNames)])
 	dat.appendRow(['special', ' '.join(specialNames)])
 	dat.appendRow(['angle', ' '.join(angleNames)])
+	dat.appendRow(['constant', ' '.join(constantNames)])
 
 def updateLibraryMenuPar(libsComp: 'COMP'):
 	p = parentPar().Librarynames  # type: Par
 	libs = libsComp.findChildren(type=DAT, maxDepth=1, tags=['library'])
 	libs.sort(key=lambda l: -l.nodeY)
 	p.menuNames = [lib.name for lib in libs]
-
-def prepareVariableTable(dat: 'scriptDAT'):
-	dat.clear()
-	dat.appendRow(['name', 'localName', 'label', 'dataType', 'owner', 'macros'])
-	table = parentPar().Variabletable.eval()
-	if not table or table.numRows < 2:
-		return
-	hostName = parentPar().Name.eval()
-	namePrefix = hostName + '_'
-	for i in range(1, table.numRows):
-		if table[i, 'enable'] in ('0', 'False'):
-			continue
-		localName = table[i, 'name'].val
-		dat.appendRow([
-			namePrefix + localName,
-			localName,
-			table[i, 'label'] or localName,
-			table[i, 'dataType'],
-			hostName,
-			table[i, 'macros'] or '',
-		])
-
-def prepareReferenceTable(dat: 'scriptDAT'):
-	dat.clear()
-	dat.appendRow(['name', 'localName', 'sourcePath', 'sourceName', 'dataType', 'owner'])
-	_prepareReferences(dat=dat, onError=None)
 
 def validateReferences(dat: 'scriptDAT'):
 	dat.clear()
@@ -520,6 +503,9 @@ def buildOpState():
 		paramTupletTable=op('param_tuplets'),
 		opElementTable=op('opElements'),
 	)
+	builder.loadConstants(
+		paramSpecTable=op('paramSpecTable'),
+	)
 	builder.loadTextures()
 	builder.loadBuffers()
 	builder.loadReferences()
@@ -534,8 +520,12 @@ class _Builder:
 		self.defPar = parent().par  # type: OpDefParsT
 		self.hostOp = self.defPar.Hostop.eval()
 		self.paramsOp = self.defPar.Paramsop.eval() or self.hostOp
+		opType = self.defPar.Raytkoptype.eval()
+		if opType and '.' in opType:
+			opType = opType.rsplit('.', maxsplit=1)[1]
 		self.opState = RopState(
 			name=self.defPar.Name.eval(),
+			ropType=opType,
 		)
 		self.opName = self.opState.name
 		self.namePrefix = self.opName + '_'
@@ -546,6 +536,8 @@ class _Builder:
 			'thismap': self.opName,
 			'THIS_': self.namePrefix,
 		}  # type: Dict[str, str]
+		if opType:
+			self.replacements['THISTYPE_'] = opType + '_'
 		if self.opState.materialId:
 			self.replacements['THISMAT'] = self.opState.materialId
 		self.elementReplacements = {}
@@ -679,6 +671,37 @@ class _Builder:
 				for row in table.rows():
 					addMacro(Macro(row[1].val, ' '.join([c.val or '' for c in row[2:]]), not _isFalseStr(row[0])))
 		self.opState.macros = macros
+
+	def loadConstants(self, paramSpecTable: 'DAT'):
+		self.opState.constants = []
+		if paramSpecTable.numRows < 2:
+			return
+		for i in range(1, paramSpecTable.numRows):
+			if paramSpecTable[i, 'handling'] != 'constant':
+				continue
+			globalName = paramSpecTable[i, 'globalName'].val
+			localName = paramSpecTable[i, 'localName'].val
+			style = paramSpecTable[i, 'style']
+			if style == 'Int':
+				self.opState.constants.append(Constant(
+					globalName, localName, 'int'
+				))
+			elif style == 'Float':
+				self.opState.constants.append(Constant(
+					globalName, localName, 'float'
+				))
+			elif style == 'Toggle':
+				self.opState.constants.append(Constant(
+					globalName, localName, 'bool'
+				))
+			elif style == 'Menu':
+				par = self.paramsOp.par[paramSpecTable[i, 'localName']]
+				self.opState.constants.append(Constant(
+					globalName, localName, 'int',
+					menuOptions=par.menuNames
+				))
+			else:
+				raise Exception(f'Invalid constant style {globalName} {style}')
 
 	def loadTextures(self):
 		self.opState.textures = []
@@ -882,11 +905,12 @@ def createVarRef(name: str):
 	if not palette:
 		return
 	host = _host()
-	varTable = op('variable_table')
-	for i in range(1, varTable.numRows):
-		if varTable[i, 'localName'].val.lower() == name:
-			dataType = varTable[i, 'dataType'].val
-			palette.CreateVariableReference(host, varTable[i, 'localName'].val, dataType)
+	stateText = op('opState').text
+	stateObj = json.loads(stateText)
+	variableObjs = stateObj.get('variables') or []
+	for variableObj in variableObjs:
+		if variableObj['localName'].lower() == name:
+			palette.CreateVariableReference(host, variableObj['localName'], variableObj['dataType'])
 			return
 	raise Exception(f'Variable not found: {name}')
 

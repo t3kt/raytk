@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.function.impulseFn
-  opVersion: '7'
+  opVersion: '8'
   opStatus: default
 opDef: !def
   enable: true
@@ -25,6 +25,7 @@ elements:
   name: codeSwitcher_Function
   elementType: codeSwitcher
   params:
+    Elementroot: ''
     Table: !table
       file: src/operators/function/impulseFn_function_table.txt
       name: function_table
@@ -33,4 +34,5 @@ elements:
     Manageparamstates: true
     Alwaysincludeallparams: false
     Switchmode: inline
+    Indexexpr: ''
     Placeholder: BODY();

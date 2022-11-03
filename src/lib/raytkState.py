@@ -1,5 +1,5 @@
 from dataclasses import dataclass, field, fields
-from typing import Dict, List, Optional, Union
+from typing import List, Optional, Union
 
 # noinspection PyUnreachableCode
 if False:
@@ -30,6 +30,7 @@ def _shouldInclude(val):
 @dataclass
 class RopState(_StateObject):
 	name: str
+	ropType: str
 
 	functionCode: Optional[str] = None
 	materialCode: Optional[str] = None
@@ -37,6 +38,7 @@ class RopState(_StateObject):
 	opGlobals: Optional[str] = None
 
 	macros: Optional[List['Macro']] = None
+	constants: Optional[List['Constant']] = None
 	textures: Optional[List['Texture']] = None
 	buffers: Optional[List['Buffer']] = None
 	references: Optional[List['Reference']] = None
@@ -49,15 +51,9 @@ class RopState(_StateObject):
 	libraryNames: Optional[List[str]] = None
 
 	paramSource: Optional[str] = None
+	constantSource: Optional[str] = None
 
 	validationErrors: Optional[List['ValidationError']] = field(default_factory=list)
-
-def _excludeKeys(d, keys):
-	return {
-		key: val
-		for key, val in d.items()
-		if key not in keys
-	} if d else {}
 
 @dataclass
 class ValidationError(_StateObject):
@@ -70,6 +66,13 @@ class Macro(_StateObject):
 	name: str
 	value: Union[None, str, int, bool, float] = None
 	enable: bool = True
+
+@dataclass
+class Constant(_StateObject):
+	name: str
+	localName: str
+	type: str
+	menuOptions: Optional[List[str]] = None
 
 @dataclass
 class Texture(_StateObject):

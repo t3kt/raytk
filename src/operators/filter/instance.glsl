@@ -1,25 +1,25 @@
 CoordT THIS_transform(CoordT p, int i) {
-	#pragma r:if THIS_HAS_TRANSLATE
+	#ifdef THIS_HAS_TRANSLATE
 	p -= THIS_asCoordT(THIS_translates[i]);
-	#pragma r:endif
-	#pragma r:if THIS_HAS_ROTATE
-	#pragma r:if THIS_COORD_TYPE_vec3
+	#endif
+	#ifdef THIS_HAS_ROTATE
+	#if defined(THIS_COORD_TYPE_vec3)
 	pRotateOnXYZ(p, radians(THIS_rotates[i]));
-	#pragma r:elif THIS_COORD_TYPE_vec2
+	#elif defined(THIS_COORD_TYPE_vec2)
 	pR(p, radians(THIS_rotates[i].z));
-	#pragma r:endif
-	#pragma r:endif
+	#endif
+	#endif
 	return p;
 }
 
 void THIS_exposeIndex(inout ContextT ctx, int i, int n) {
 	setIterationIndex(ctx, i);
-	#pragma r:if THIS_EXPOSE_index
+	#ifdef THIS_EXPOSE_index
 	THIS_index = i;
-	#pragma r:endif
-	#pragma r:if THIS_EXPOSE_normindex
+	#endif
+	#ifdef THIS_EXPOSE_normindex
 	THIS_normindex = float(i) / float(n - 1);
-	#pragma r:endif
+	#endif
 }
 
 void THIS_combine(inout Sdf res1, in Sdf res2, in CoordT p, in ContextT ctx) {

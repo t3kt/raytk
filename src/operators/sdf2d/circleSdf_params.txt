@@ -1,4 +1,4 @@
 names	source	handling	readOnlyHandling	conversion	enable
 Translate[xy] Radius	param	runtime	macro		1
-Uvmode	param	macro			1
-Externalbandsize	param	runtime	macro		parent().par.Uvmode in ('extparam', 'normextparam')
+Uvmode	param	constant			1
+Externalbandsize	param	runtime	macro		1

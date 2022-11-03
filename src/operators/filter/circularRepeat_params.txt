@@ -1,0 +1,3 @@
+names	source	handling	readOnlyHandling	conversion	enable
+Radius Cellsize	param	runtime	macro		1
+Plane	param	constant			1

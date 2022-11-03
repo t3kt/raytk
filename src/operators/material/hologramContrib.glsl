@@ -10,13 +10,13 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 	vec3 period = THIS_Period;
 	for (int i = 0; i < THIS_Iterations; i++) {
 		q = ro + rd * stepDist * float(i);
-		#pragma r:if THIS_HAS_INPUT_baseColorField
+		#ifdef THIS_HAS_INPUT_baseColorField
 		val = vec4(inputOp_baseColorField(q, ctx));
 		res.rgb += val.rgb;// / lum;
-		#pragma r:else
+		#else
 		lum += abs(sin(q.x / period.x) + sin(q.y / period.y) + sin(q.z / period.z));// + sin( p.y * 3. ) + sin( p.z * 5.);
 		res.rgb += TDHSVToRGB(vec3(lum / 10. + phase, 1., 1.));// / lum;
-		#pragma r:endif
+		#endif
 	}
 	res.rgb /= float(THIS_Iterations);
 

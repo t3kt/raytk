@@ -1,5 +1,5 @@
 names	source	handling	readOnlyHandling	conversion	enable
 Height Width Rounding	param	runtime	macro		1
-Enableframe Enablepanel Hideframebottom	param	macro			1
-Framethickness Framedepth	param	runtime	macro		parent().par.Enableframe
-Paneldepth	param	runtime	macro		parent().par.Enablepanel
+Enableframe Enablepanel Hideframebottom	param	constant			1
+Framethickness Framedepth	param	runtime	macro		1
+Paneldepth	param	runtime	macro		1

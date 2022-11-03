@@ -10,25 +10,23 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 		if (IS_TRUE(THIS_Enablemirror)) {
 			q = abs(q);
 		}
-		#pragma r:if THIS_HAS_INPUT_offsetField
+		#ifdef THIS_HAS_INPUT_offsetField
 		float o = inputOp_offsetField(p, ctx);
-		#pragma r:else
+		#else
 		float o = THIS_Offset;
-		#pragma r:endif
-		#pragma r:if THIS_HAS_INPUT_thicknessField
+		#endif
+		#ifdef THIS_HAS_INPUT_thicknessField
 		float th = inputOp_thicknessField(p, ctx);
-		#pragma r:else
+		#else
 		float th = THIS_Thickness;
-		#pragma r:endif
+		#endif
 		float d = abs(q - o) - th;
-		#pragma r:if THIS_Operation_intersect
-		#pragma r:elif THIS_Operation_diff
-		{
-			d = -d;
-		}
-		#pragma r:else
+		#if defined(THIS_Operation_intersect)
+		#elif defined(THIS_Operation_diff)
+		d = -d;
+		#else
 		#error invalidOperation
-		#pragma r:endif
+		#endif
 		if (IS_TRUE(THIS_Enablesmoothing)) {
 			res.x = fOpIntersectionRound(res.x, d, THIS_Smoothradius);
 		} else {

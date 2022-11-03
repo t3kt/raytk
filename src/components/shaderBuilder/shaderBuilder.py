@@ -1,7 +1,7 @@
 from dataclasses import dataclass
 import json
-from raytkShader import simplifyNames, CodeFilter
-from raytkState import RopState, Dispatch, Texture, Buffer, Macro, Reference, Variable, ValidationError
+from raytkShader import simplifyNames
+from raytkState import RopState, Dispatch, Texture, Buffer, Macro, Reference, Variable, ValidationError, Constant
 import re
 from io import StringIO
 from typing import Callable, Dict, List, Tuple, Union, Optional
@@ -13,13 +13,11 @@ if False:
 	from _typeAliases import *
 
 	class _ConfigPar(ParCollection):
-		Parammode: StrParamT
 		Inlineparameteraliases: BoolParamT
 		Inlinereadonlyparameters: BoolParamT
 		Simplifynames: BoolParamT
 		Inlinetypedefs: BoolParamT
 		Includemode: StrParamT
-		Filtermode: StrParamT
 
 	class _OwnerCompPar(_ConfigPar):
 		Globalprefix: DatParamT
@@ -154,24 +152,12 @@ class ShaderBuilder:
 		dat.appendCol(['after'] + simpleNames)
 
 	def _createParamProcessor(self) -> '_ParameterProcessor':
-		if not self.configValid():
-			mode = 'uniformarray'
-		else:
-			mode = self.configPar().Parammode.eval()
-		if mode == 'uniformarray':
-			return _VectorArrayParameterProcessor(
-				self._parameterDetailTable(),
-				self._allParamVals(),
-				self.configPar() if self.configValid() else None,
-			)
-		elif mode == 'separateuniforms':
-			return _SeparateUniformsParameterProcessor(
-				self._parameterDetailTable(),
-				self._allParamVals(),
-				self.configPar() if self.configValid() else None,
-			)
-		else:
-			raise NotImplementedError(f'Parameter processor not available for mode: {mode!r}')
+		return _ParameterProcessor(
+			self._parameterDetailTable(),
+			self._allParamVals(),
+			self.configPar() if self.configValid() else None,
+			self._parseOpStates(),
+		)
 
 	def getOpsFromDefinitionColumn(self, column: str):
 		defsTable = self._definitionTable()
@@ -215,6 +201,13 @@ class ShaderBuilder:
 			localName = refTable[row, 'localName']
 			dat.appendRow([refTable[row, 'name'], refTable[row, 'source']])
 			dat.appendRow([f'{ownerName}_HAS_REF_{localName}', ''])
+		for state in states:
+			if not state.constants:
+				continue
+			for const in state.constants:
+				if const.menuOptions:
+					for i, opt in enumerate(const.menuOptions):
+						dat.appendRow([f'{state.ropType}_{const.localName}_{opt}', i])
 
 	def _getLibraryDats(self, onWarning: Callable[[str], None] = None) -> 'List[DAT]':
 		requiredLibNames = self.ownerComp.par.Librarynames.eval().strip().split(' ')  # type: List[str]
@@ -305,74 +298,59 @@ class ShaderBuilder:
 			if dataType in typeAdaptFuncs:
 				dat.appendRow([name + '_asVarT', typeAdaptFuncs[dataType], 'macro'])
 
-	def _createCodeFilter(self, typeDefMacroTable: 'DAT') -> 'CodeFilter':
-		if not self.configValid():
-			mode = 'macroize'
-		else:
-			mode = self.configPar()['Filtermode']
-		if mode == 'filter':
-			macroTable = self.ownerComp.op('macroTable')
-			cells = macroTable.col(0) or []
-			cells += typeDefMacroTable.col(0) or []
-			macros = set(c.val for c in cells)
-			return CodeFilter.reducer(macros)
-		else:  # macroize
-			return CodeFilter.macroizer()
-
-	def processReferenceTable(
-			self,
-			dat: 'scriptDAT',
-			rawRefTable: 'DAT',
-			rawVarTable: 'DAT',
-	):
+	def processReferenceTable(self, dat: 'scriptDAT'):
 		dat.clear()
 		dat.appendRow(['name', 'owner', 'localName', 'source', 'dataType'])
 		defTable = self._definitionTable()
-		# rawRef columns: name, localName, sourcePath, sourceName, dataType, owner
-		# rawVar columns: name, localName, label, dataType, owner
 		varNames = {}
-		for i in range(1, rawVarTable.numRows):
-			varOwnerName = rawVarTable[i, 'owner']
-			varOwnerPath = defTable[varOwnerName, 'path'].val
-			varNames[(varOwnerPath, rawVarTable[i, 'localName'].val)] = rawVarTable[i, 'name'].val
-		for i in range(1, rawRefTable.numRows):
-			sourcePath = rawRefTable[i, 'sourcePath'].val
-			sourceName = rawRefTable[i, 'sourceName'].val
-			if not sourcePath or not sourceName:
+		states = self._parseOpStates()
+		for state in states:
+			if not state.variables:
 				continue
-			sourceName = varNames.get((sourcePath, sourceName), None)
-			if not sourceName:
-				# TODO: report invalid ref
+			for variable in state.variables:
+				varOwnerName = variable.owner
+				varOwnerPath = defTable[varOwnerName, 'path'].val
+				varNames[(varOwnerPath, variable.localName)] = variable.name
+		for state in states:
+			if not state.references:
 				continue
-			# TODO: validate dataType match
-			dat.appendRow([
-				rawRefTable[i, 'name'],
-				rawRefTable[i, 'owner'],
-				rawRefTable[i, 'localName'],
-				sourceName,
-				rawRefTable[i, 'dataType']
-			])
+			for reference in state.references:
+				if not reference.sourcePath or not reference.sourceName:
+					continue
+				sourceName = varNames.get((reference.sourcePath, reference.sourceName), None)
+				if not sourceName:
+					# TODO: report invalid ref
+					continue
+				# TODO: validate dataType match
+				dat.appendRow([
+					reference.name,
+					reference.owner,
+					reference.localName,
+					sourceName,
+					reference.dataType,
+				])
 
-	@staticmethod
 	def processVariableTable(
+			self,
 			dat: 'scriptDAT',
 			procRefTable: 'DAT',
-			rawVarTable: 'DAT',
 	):
 		dat.clear()
 		dat.appendRow(['name', 'owner', 'localName', 'dataType', 'macros'])
 		refNames = set(c.val for c in procRefTable.col('source')[1:])
-		# rawVar columns: name, localName, label, dataType, owner
-		for i in range(1, rawVarTable.numRows):
-			name = rawVarTable[i, 'name'].val
-			if name in refNames:
-				dat.appendRow([
-					name,
-					rawVarTable[i, 'owner'],
-					rawVarTable[i, 'localName'],
-					rawVarTable[i, 'dataType'],
-					rawVarTable[i, 'macros'],
-				])
+		states = self._parseOpStates()
+		for state in states:
+			if not state.variables:
+				continue
+			for variable in state.variables:
+				if variable.name in refNames:
+					dat.appendRow([
+						variable.name,
+						variable.owner,
+						variable.localName,
+						variable.dataType,
+						variable.macros,
+					])
 
 	def buildParamUniformTable(self, dat: 'DAT'):
 		dat.clear()
@@ -469,7 +447,6 @@ class ShaderBuilder:
 			opStates=self._parseOpStates(),
 			defTable=self._definitionTable(),
 			paramProc=self._createParamProcessor(),
-			codeFilter=self._createCodeFilter(typeDefMacroTable=typeDefMacroTable),
 			macroTable=macroTable,
 			typeDefMacroTable=typeDefMacroTable,
 			libraryDats=self._getLibraryDats(),
@@ -549,7 +526,6 @@ class _Writer:
 	opStates: 'List[RopState]'
 	defTable: 'DAT'
 	paramProc: '_ParameterProcessor'
-	codeFilter: 'CodeFilter'
 	macroTable: 'DAT'
 	typeDefMacroTable: 'DAT'
 	libraryDats: 'List[DAT]'
@@ -573,7 +549,7 @@ class _Writer:
 				for cells in self.typeDefMacroTable.rows()
 				if cells[1]
 			}
-			self.inlineTypedefPattern = re.compile(r'\b[\w_]+_(as)?(CoordT|ContextT|ReturnT)\b')
+			self.inlineTypedefPattern = re.compile(r'\b[\w_]+_(as)?(CoordT|ContextT|ReturnT|VarT)\b')
 		self.textures = []
 		self.buffers = []
 		self.dispatchBlocks = []
@@ -825,7 +801,6 @@ class _Writer:
 			return
 		self._startBlock('body')
 		code = self._inlineTypedefs(dat.text)
-		code = self.codeFilter.processCodeBlock(code)
 		for line in code.splitlines(keepends=True):
 			if line.endswith('// #include <materialParagraph>\n'):
 				self._writeMaterialBody()
@@ -842,7 +817,7 @@ class _Writer:
 			if not state.materialId:
 				continue
 			self._writeLine(f'else if(m == {state.materialId}) {{')
-			# Intentionally skipping typedef inlining and code filtering for these since no materials need it.
+			# Intentionally skipping typedef inlining for these since no materials need it.
 			self._writeLine(state.materialCode + '\n}')
 
 	def _writeDispatchBody(self, category: str):
@@ -895,8 +870,7 @@ class _Writer:
 		return self.inlineTypedefPattern.sub(self._replaceInlineTypedefMatch, code)
 
 	def _processCode(self, code: str):
-		code = self._inlineTypedefs(code)
-		return self.codeFilter.processCodeBlock(code)
+		return self._inlineTypedefs(code)
 
 @dataclass
 class _ParamTupletSpec:
@@ -904,6 +878,7 @@ class _ParamTupletSpec:
 	parts: Tuple[str]
 	isReadOnly: bool
 	isSpecial: bool = False
+	isSpecializationConstant: bool = False
 
 	def isPresentInChop(self, chop: 'CHOP'):
 		return any([chop[part] is not None for part in self.parts])
@@ -921,15 +896,17 @@ class _ParamTupletSpec:
 			parts=tuple(parts),
 			isReadOnly='readOnly' in str(dat[row, 'status'] or ''),
 			isSpecial=dat[row, 'source'] == 'special',
+			isSpecializationConstant=dat[row, 'handling'] == 'constant',
 		)
 
 	@classmethod
-	def fromTableRows(cls, dat: 'DAT') -> 'List[_ParamTupletSpec]':
+	def fromTableRows(cls, dat: 'DAT', handlingTypes: 'List[str]') -> 'List[_ParamTupletSpec]':
 		if not dat or dat.numRows < 2:
 			return []
 		return [
 			cls.fromRow(dat, row)
 			for row in range(1, dat.numRows)
+			if dat[row, 'handling'].val in handlingTypes
 		]
 
 @dataclass
@@ -940,20 +917,31 @@ class _ParamExpr:
 @dataclass
 class _UniformSpec:
 	name: str
-	dataType: str  # float | vec2 | vec3 | vec4
-	uniformType: str  # vector | uniformarray
+	dataType: str  # float | vec2 | vec3 | vec4 | int | bool
+	uniformType: str  # vector | uniformarray | constant
 	arrayLength: int = 1
 	chop: Optional[str] = None
 	expr1: Optional[str] = None
 	expr2: Optional[str] = None
 	expr3: Optional[str] = None
 	expr4: Optional[str] = None
+	constIndex: int = 0
 
 	def declaration(self):
 		if self.uniformType == 'vector':
 			return f'uniform {self.dataType} {self.name};'
 		elif self.uniformType == 'uniformarray':
 			return f'uniform {self.dataType} {self.name}[{self.arrayLength}];'
+		elif self.uniformType == 'constant':
+			if self.dataType == 'int':
+				defVal = '0'
+			elif self.dataType == 'float':
+				defVal = '0.0'
+			elif self.dataType == 'bool':
+				defVal = 'false'
+			else:
+				raise Exception(f'Invalid data type for specialization constant: {self.dataType}')
+			return f'layout(constant_id = {self.constIndex}) const {self.dataType} {self.name} = {defVal};'
 		else:
 			raise Exception(f'Invalid uniformType: {self.uniformType!r}')
 
@@ -965,6 +953,7 @@ class _ParameterProcessor:
 			paramDetailTable: 'DAT',
 			paramVals: 'CHOP',
 			configPar: 'Optional[_ConfigPar]',
+			opStates: 'List[RopState]'
 	):
 		self.paramDetailTable = paramDetailTable
 		self.hasParams = paramDetailTable.numRows > 1
@@ -973,6 +962,7 @@ class _ParameterProcessor:
 		self.paramVals = paramVals
 		self.aliasMode = str(configPar['Paramaliasmode'] or 'macro') if configPar else 'macro'
 		self.paramExprs = None  # type: Optional[Dict[str, _ParamExpr]]
+		self.opStates = opStates
 
 	def globalDeclarations(self) -> List[str]:
 		return [
@@ -1012,11 +1002,13 @@ class _ParameterProcessor:
 			return
 		self.paramExprs = {}
 		suffixes = 'xyzw'
-		paramTuplets = _ParamTupletSpec.fromTableRows(self.paramDetailTable)
+		paramTuplets = _ParamTupletSpec.fromTableRows(
+			self.paramDetailTable,
+			handlingTypes=['runtime', 'macro'])
 		for i, paramTuplet in enumerate(paramTuplets):
 			useConstant = self.useConstantReadOnly and paramTuplet.isReadOnly and paramTuplet.isPresentInChop(self.paramVals)
 			size = len(paramTuplet.parts)
-			paramRef = self._paramReference(i, paramTuplet)
+			paramRef = f'vecParams[{i}]'
 			if size == 1:
 				name = paramTuplet.parts[0]
 				self.paramExprs[name] = _ParamExpr(
@@ -1042,59 +1034,28 @@ class _ParameterProcessor:
 					for partI, partName in enumerate(paramTuplet.parts):
 						self.paramExprs[partName] = _ParamExpr(f'{paramRef}.{suffixes[partI]}', 'float')
 
-	def _paramReference(self, i: int, paramTuplet: _ParamTupletSpec) -> str:
-		raise NotImplementedError()
-
-	def paramUniforms(self) -> 'List[_UniformSpec]':
-		raise NotImplementedError()
-
-class _VectorArrayParameterProcessor(_ParameterProcessor):
-	def _paramReference(self, i: int, paramTuplet: _ParamTupletSpec) -> str:
-		return f'vecParams[{i}]'
-
 	def paramUniforms(self) -> 'List[_UniformSpec]':
 		paramCount = max(1, self.paramDetailTable.numRows - 1)
-		return [
+		uniforms = [
 			_UniformSpec(
 				'vecParams', 'vec4', 'uniformarray', paramCount,
 				parent().path + '/merged_vector_param_vals'
 			)
 		]
-
-class _SeparateUniformsParameterProcessor(_ParameterProcessor):
-	def globalDeclarations(self) -> List[str]:
-		if not self.hasParams:
-			return []
-		decls = []
-		for row in range(1, self.paramDetailTable.numRows):
-			name = self.paramDetailTable[row, 'tuplet'].val
-			size = int(self.paramDetailTable[row, 'size'])
-			if size == 1:
-				decls.append(f'uniform float {name};')
-			else:
-				decls.append(f'uniform vec{size} {name};')
-		return decls
-
-	def _paramReference(self, i: int, paramTuplet: _ParamTupletSpec) -> str:
-		return paramTuplet.tuplet
-
-	def paramUniforms(self) -> 'List[_UniformSpec]':
-		if not self.hasParams:
-			return []
-		chopPath = parent().path + '/merged_vector_param_vals'
-		specs = []
-		for row in range(1, self.paramDetailTable.numRows):
-			name = self.paramDetailTable[row, 'tuplet'].val
-			size = int(self.paramDetailTable[row, 'size'])
-			if size == 1:
-				specs.append(_UniformSpec(name, 'float', 'vector', chop=chopPath))
-			else:
-				specs.append(_UniformSpec(name, f'vec{size}', 'vector', chop=chopPath))
-		return specs
-
-_splitArrayCount = 10
-class _SplitVectorArrayParameterProcessor(_ParameterProcessor):
-	pass
+		constCount = 0
+		constPath = parent().path + '/constant_param_vals'
+		for opState in self.opStates:
+			if opState.constants:
+				for const in opState.constants:
+					uniforms.append(_UniformSpec(
+						name=const.name,
+						dataType=const.type,
+						uniformType='constant',
+						expr1=f'op("{constPath}")["{const.name}"]',
+						constIndex=constCount
+					))
+					constCount += 1
+		return uniforms
 
 def _stringify(val: 'Union[str, DAT]'):
 	if val is None:
@@ -1138,6 +1099,7 @@ def _parseOpStateJson(text: str):
 
 	state = RopState(
 		name=obj['name'],
+		ropType=obj['ropType'],
 		functionCode=obj['functionCode'],
 		materialCode=obj.get('materialCode'),
 		initCode=obj.get('initCode'),
@@ -1152,6 +1114,13 @@ def _parseOpStateJson(text: str):
 		state.macros = [
 			# Macro(o['name'], o.get('value'), o.get('enable'))
 			Macro(**o)
+			for o in arr
+		]
+	arr = obj.get('constants')
+	if arr:
+		state.constants = [
+			# Constant(o['name'], o['type'], o.get('menuOptions'))
+			Constant(**o)
 			for o in arr
 		]
 	arr = obj.get('textures')

@@ -1,0 +1,37 @@
+!rop
+meta: !meta
+  opType: raytk.operators.filter.hilbertCurveTransform
+  opVersion: '2'
+  opStatus: beta
+opDef: !def
+  enable: !expr
+    expr: op('..').par.Enable
+  typeSpec: !ropTypes
+    coordType: !coordT
+      Coordtypevec2: true
+    contextType: !contextT
+      Allcontexttype: true
+    returnType: !returnT
+      Allreturntype: true
+  function: !text
+    file: src/operators/filter/hilbertCurveTransform.glsl
+    name: function
+  paramGroupTable: eval_params
+  libraryNames: !expr
+    expr: op('hilbertCurveTransform_lib')
+  variableTable: !table
+    file: src/operators/filter/hilbertCurveTransform_variables.txt
+    name: variable_exprs
+    evaluate: true
+    evalOpts: !evalOpts
+      excludeFirstRow: true
+      cols: enable
+inputs:
+- !input
+  Required: true
+  coordType: !coordT
+    Allcoordtype: true
+  contextType: !contextT
+    Allcontexttype: true
+  returnType: !returnT
+    Allreturntype: true

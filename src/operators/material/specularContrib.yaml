@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.material.specularContrib
-  opVersion: '19'
+  opVersion: '20'
   opStatus: default
 opDef: !def
   enable: true
@@ -73,7 +73,7 @@ inputs:
     Returntypevec4: true
 elements:
 - !opElement
-  name: codeSwitcher_Operation
+  name: codeSwitcher_Method
   elementType: codeSwitcher
   params:
     Elementroot: ''
@@ -84,6 +84,6 @@ elements:
     Autoupdateparams: true
     Manageparamstates: true
     Alwaysincludeallparams: true
-    Switchmode: auto
+    Switchmode: autoconst
     Indexexpr: ''
     Placeholder: BODY();

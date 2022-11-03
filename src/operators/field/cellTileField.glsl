@@ -3,11 +3,11 @@ float THIS_drawSphere(vec3 p) {
 }
 
 ReturnT thismap(CoordT p, ContextT ctx) {
-	#pragma r:if THIS_HAS_INPUT_coordField
+	#ifdef THIS_HAS_INPUT_coordField
 	vec3 q = adaptAsVec3(inputOp_coordField(p, ctx));
-	#pragma r:else
+	#else
 	vec3 q = adaptAsVec3(p);
-	#pragma r:endif
+	#endif
 	q -= THIS_Translate;
 	q /= THIS_Scale;
 	// Draw four overlapping objects (spheres, in this case) at various positions throughout the tile.
@@ -22,11 +22,14 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 
 	v.xy = min(d.xz, d.yw), v.z = min(max(d.x, d.y), max(d.z, d.w)), v.w = max(v.x, v.y);
 
-	#pragma r:if THIS_Cellstyle_beveledvoronoi
-	d.x =  min(v.z, v.w) - min(v.x, v.y);// First minus second order, for that beveled Voronoi look. Range [0, 1].
-	#pragma r:elif THIS_Cellstyle_cellular
-	d.x =  min(v.x, v.y); // Minimum, for the cellular look.
-	#pragma r:endif
+	switch (THIS_Cellstyle) {
+		case THISTYPE_Cellstyle_beveledvoronoi:
+			d.x =  min(v.z, v.w) - min(v.x, v.y);// First minus second order, for that beveled Voronoi look. Range [0, 1].
+			break;
+		case THISTYPE_Cellstyle_cellular:
+			d.x =  min(v.x, v.y); // Minimum, for the cellular look.
+			break;
+	}
 
 	float val = d.x*2.66;// Normalize... roughly.
 	val /= length(THIS_Scale);

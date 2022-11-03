@@ -8,6 +8,36 @@ redirect_from:
   - /reference/opType/raytk.operators.sdf.gridSdf/
 op:
   category: sdf
+  inputs:
+  - contextTypes:
+    - Context
+    - MaterialContext
+    - CameraContext
+    - LightContext
+    - RayContext
+    - ParticleContext
+    coordTypes:
+    - vec2
+    - vec3
+    label: Thickness Field
+    name: thicknessField
+    returnTypes:
+    - float
+  - contextTypes:
+    - Context
+    - MaterialContext
+    - CameraContext
+    - LightContext
+    - RayContext
+    - ParticleContext
+    coordTypes:
+    - vec2
+    - vec3
+    label: Spacing Field
+    name: spacingField
+    returnTypes:
+    - float
+    - vec4
   keywords:
   - bars
   - grid
@@ -55,20 +85,12 @@ op:
   - label: Thickness
     name: Thickness
     summary: the thickness of the bars.
-  - label: Context Type
-    menuOptions:
-    - label: Auto
-      name: auto
-    - label: Context
-      name: Context
-    - label: MaterialContext
-      name: MaterialContext
-    - label: CameraContext
-      name: CameraContext
-    - label: LightContext
-      name: LightContext
-    - label: RayContext
-      name: RayContext
+  - menuOptions:
+    - name: none
+    - name: Context
+    - name: MaterialContext
+    - name: CameraContext
+    - name: LightContext
     name: Contexttype
     summary: advanced parameter that should usually just be set to `Context`
   - label: Pattern

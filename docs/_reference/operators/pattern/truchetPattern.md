@@ -91,7 +91,7 @@ op:
     coordTypes:
     - vec2
     - vec3
-    label: Blending Field
+    label: Curve Field
     name: curveField
     returnTypes:
     - float

@@ -17,8 +17,8 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 		length(max(vec3(p.x,q.y,q.z),0.0))+min(max(p.x,max(q.y,q.z)),0.0),
 		length(max(vec3(q.x,p.y,q.z),0.0))+min(max(q.x,max(p.y,q.z)),0.0)),
 		length(max(vec3(q.x,q.y,p.z),0.0))+min(max(q.x,max(q.y,p.z)),0.0)));
-	#ifdef THIS_Uvmode_bounds
-	assignUV(res, map01(p0, -b/2., b/2.));
-	#endif
+	if (THIS_Uvmode == THISTYPE_Uvmode_bounds) {
+		assignUV(res, map01(p0, -b/2., b/2.));
+	}
 	return res;
 }

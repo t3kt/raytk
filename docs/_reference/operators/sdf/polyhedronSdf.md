@@ -22,6 +22,97 @@ op:
     name: vertexShape
     returnTypes:
     - Sdf
+  - contextTypes:
+    - Context
+    - MaterialContext
+    - CameraContext
+    - LightContext
+    - RayContext
+    - ParticleContext
+    coordTypes:
+    - vec3
+    label: Radius Field
+    name: radiusField
+    returnTypes:
+    - float
+  - contextTypes:
+    - Context
+    - MaterialContext
+    - CameraContext
+    - LightContext
+    - RayContext
+    - ParticleContext
+    coordTypes:
+    - vec3
+    label: faceRadiusField
+    name: faceRadiusField
+    returnTypes:
+    - float
+  - contextTypes:
+    - Context
+    - MaterialContext
+    - CameraContext
+    - LightContext
+    - RayContext
+    - ParticleContext
+    coordTypes:
+    - vec3
+    label: segmentRadiusField
+    name: segmentRadiusField
+    returnTypes:
+    - float
+  - contextTypes:
+    - Context
+    - MaterialContext
+    - CameraContext
+    - LightContext
+    - RayContext
+    - ParticleContext
+    coordTypes:
+    - vec3
+    label: segmentSizeField
+    name: segmentSizeField
+    returnTypes:
+    - float
+  - contextTypes:
+    - Context
+    - MaterialContext
+    - CameraContext
+    - LightContext
+    - RayContext
+    - ParticleContext
+    coordTypes:
+    - vec3
+    label: vertexRadiusField
+    name: vertexRadiusField
+    returnTypes:
+    - float
+  - contextTypes:
+    - Context
+    - MaterialContext
+    - CameraContext
+    - LightContext
+    - RayContext
+    - ParticleContext
+    coordTypes:
+    - vec3
+    label: vertexSizeField
+    name: vertexSizeField
+    returnTypes:
+    - float
+  - contextTypes:
+    - Context
+    - MaterialContext
+    - CameraContext
+    - LightContext
+    - RayContext
+    - ParticleContext
+    coordTypes:
+    - vec3
+    label: uvwField
+    name: uvwField
+    returnTypes:
+    - vec4
   name: polyhedronSdf
   opType: raytk.operators.sdf.polyhedronSdf
   parameters:
@@ -96,7 +187,18 @@ op:
     name: Blendnumber
   - label: Blend Offset
     name: Blendoffset
-  status: beta
+  - label: UVW Field
+    name: Uvwfield
+  - label: Face Radius Field
+    name: Faceradiusfield
+  - label: Segment Radius Field
+    name: Segmentradiusfield
+  - label: Segment Size Field
+    name: Segmentsizefield
+  - label: Vertex Radius Field
+    name: Vertexradiusfield
+  - label: Vertex Size Field
+    name: Vertexsizefield
   thumb: assets/images/reference/operators/sdf/polyhedronSdf_thumb.png
 
 ---

@@ -1,5 +1,5 @@
-name	label	expr
-exponential	Exponential Impulse	expImpulse(p, THIS_Attack)
-sustained	Sustained Impulse	expSustainedImpulse(p, THIS_Attack, THIS_Release)
-quad	Quad Impulse	quaImpulse(p, THIS_Falloff)
-poly	Polynomial Impulse	polyImpulse(p, THIS_Polydegree, THIS_Falloff)
+name	label	code	params
+exponential	Exponential Impulse	res = expImpulse(p, THIS_Attack);	Attack
+sustained	Sustained Impulse	res = expSustainedImpulse(p, THIS_Attack, THIS_Release);	Attack Release
+quad	Quad Impulse	res = quaImpulse(p, THIS_Falloff);	Falloff
+poly	Polynomial Impulse	res = polyImpulse(p, THIS_Polydegree, THIS_Falloff);	Polydegree Falloff

@@ -1,4 +1,5 @@
 from dataclasses import dataclass, field
+import json
 from typing import Any, Callable, Dict, List, Optional, Union
 from editorToolsCommon import Action, ActionContext, ActionGroup, ActionManager, ActionUtils, InitFunc, ROPState
 
@@ -139,9 +140,11 @@ def _createAddInputActionGroup(
 	]
 	return _SimpleGroup(text, isValid, lambda _: actions)
 
-def _createVarRefAction(label: str, variable: str, dataType: str):
+def _createVarRefAction(label: str, variable: str, dataType: str, fieldName: Optional[str] = None):
 	def execute(ctx: ActionContext):
 		def init(refOp: 'COMP'):
+			if fieldName:
+				refOp.par.Field = fieldName
 			fromOp = ctx.primaryRop
 			refOp.nodeCenterY = fromOp.nodeCenterY - 100
 			refOp.nodeX = fromOp.nodeX - refOp.nodeWidth - 150
@@ -156,23 +159,57 @@ def _createVarRefAction(label: str, variable: str, dataType: str):
 		isValid=None,
 	)
 
+def _loadTypeFields():
+	typeFields = {}
+	table = op('typeFields')  # type: DAT
+	for i in range(1, table.numRows):
+		typeName = table[i, 'parentType'].val
+		fieldName = table[i, 'name'].val
+		fieldLabel = table[i, 'label'].val
+		if fieldName == 'this':
+			continue
+		if typeName in typeFields:
+			typeFields[typeName].append((fieldName, fieldLabel))
+		else:
+			typeFields[typeName] = [(fieldName, fieldLabel)]
+	return typeFields
+
+_typeFields = _loadTypeFields()
+
 def _createVarRefGroup(text: str):
+	def getVariableObjs(ctx: ActionContext) -> List[dict]:
+		stateText = ctx.primaryRopState.info.opStateText
+		if not stateText:
+			return []
+		stateObj = json.loads(stateText)
+		if not stateObj.get('variables'):
+			return []
+		return stateObj.get('variables')
 	def isValid(ctx: ActionContext) -> bool:
-		table = ctx.primaryRopState.info.variableTable
-		return table and table.numRows > 1
+		return bool(getVariableObjs(ctx))
 
 	def getActions(ctx: ActionContext) -> List[Action]:
-		table = ctx.primaryRopState.info.variableTable
-		if not table:
-			return []
-		return [
-			_createVarRefAction(
-				label=table[i, 'label'].val,
-				variable=table[i, 'localName'].val,
-				dataType=table[i, 'dataType'].val,
+		actions = []
+		for variableObj in getVariableObjs(ctx):
+			dataType = variableObj['dataType']
+			varName = variableObj['localName']
+			actions.append(
+				_createVarRefAction(
+					label=variableObj['label'],
+					variable=varName,
+					dataType=dataType,
+				)
 			)
-			for i in range(1, table.numRows)
-		]
+			for fieldName, fieldLabel in _typeFields.get(dataType) or ():
+				actions.append(
+					_createVarRefAction(
+						label='  ' + fieldLabel,
+						variable=varName,
+						dataType=dataType,
+						fieldName=fieldName,
+					)
+				)
+		return actions
 	return _SimpleGroup(text, isValid, getActions)
 
 def _createRenderSelAction(label: str, name: str, enablePar: str):

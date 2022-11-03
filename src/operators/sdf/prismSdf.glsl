@@ -1,37 +1,61 @@
-float THIS_shape(CoordT p, float h, float r) {
+float THIS_shape(CoordT p, float h, float r, float n) {
 	float d;
 	BODY();
 	return d;
 }
 
 ReturnT thismap(CoordT p, ContextT ctx) {
-	#pragma r:if THIS_HAS_INPUT_heightField
-	float h = inputOp_heightField(p, ctx);
-	#pragma r:else
-	float h = THIS_Height;
-	#pragma r:endif
-	#pragma r:if THIS_HAS_INPUT_radiusField
-	float r = inputOp_radiusField(p, ctx);
-	#pragma r:else
-	float r = THIS_Radius;
-	#pragma r:endif
-	#pragma r:if THIS_HAS_INPUT_thicknessField
-	float th = inputOp_thicknessField(p, ctx);
-	#pragma r:else
-	float th = THIS_Thickness;
-	#pragma r:endif
-	p -= THIS_Translate;
+	vec3 q = p - THIS_Translate;
 	switch (int(THIS_Axis)) {
-		case 0: p = p.zyx; break;
-		case 1: p = p.xzy; break;
-		case 2: p = p.yxz; break;
+		case 0: q = q.zyx; break;
+		case 1: q = q.xzy; break;
+		case 2: q = q.yxz; break;
 	}
+	#ifdef THIS_EXPOSE_axispos
+	THIS_axispos = q.z;
+	#endif
+	#ifdef THIS_EXPOSE_normangle
+	THIS_normangle = atan(q.x, q.y)/TAU - .5;
+	#endif
+	#ifdef THIS_HAS_INPUT_heightField
+	float h = inputOp_heightField(p, ctx);
+	#else
+	float h = THIS_Height;
+	#endif
+	#ifdef THIS_EXPOSE_normoffset
 	if (IS_TRUE(THIS_Infiniteheight)) {
-		p.z = 0.;
+		THIS_normoffset = q.z;
+	} else {
+		THIS_normoffset = saturate(map01(q.z, -h, h));
 	}
-	float d = THIS_shape(p, h, r);
+	#endif
+	#ifdef THIS_HAS_INPUT_radiusField
+	float r = inputOp_radiusField(p, ctx);
+	#else
+	float r = THIS_Radius;
+	#endif
+	#ifdef THIS_HAS_INPUT_thicknessField
+	float th = inputOp_thicknessField(p, ctx);
+	#else
+	float th = THIS_Thickness;
+	#endif
+	float n = THIS_Sides;
+	if (IS_TRUE(THIS_Infiniteheight)) {
+		q.z = 0.;
+	}
+	float d = THIS_shape(q, h, r, n);
 	if (IS_TRUE(THIS_Hollow)) {
-		d = max(-THIS_shape(p * vec3(1., 1., 0.), 1., r - th), d);
+		d = max(-THIS_shape(q * vec3(1., 1., 0.), 1., r - th, n), d);
 	}
-	return createSdf(d);
+	Sdf res = createSdf(d);
+	#ifdef RAYTK_USE_UV
+	if (THIS_Uvmode == THISTYPE_Uvmode_cylindrical) {
+		vec3 uv = vec3(atan(q.x, q.y), q.z, length(q.xy));
+		if (IS_FALSE(THIS_Infiniteheight)) {
+			uv.y = map01(uv.y, -h*.5, h*.5);
+		}
+		assignUV(res, uv);
+	}
+	#endif
+	return res;
 }

@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.sdf.cutSphereSdf
-  opVersion: '2'
+  opVersion: '3'
   opStatus: beta
 opDef: !def
   enable: true
@@ -107,6 +107,7 @@ elements:
   name: codeSwitcher_Shape
   elementType: codeSwitcher
   params:
+    Elementroot: ''
     Table: !table
       file: src/operators/sdf/cutSphereSdf_shapes.txt
       name: shapes
@@ -114,5 +115,6 @@ elements:
     Autoupdateparams: true
     Manageparamstates: true
     Alwaysincludeallparams: false
-    Switchmode: auto
+    Switchmode: autoconst
+    Indexexpr: ''
     Placeholder: BODY();

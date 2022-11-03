@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.filter.logPolarRepeat
-  opVersion: '6'
+  opVersion: '7'
   opStatus: beta
 opDef: !def
   enable: !expr

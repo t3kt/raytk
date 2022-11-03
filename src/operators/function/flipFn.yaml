@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.function.flipFn
-  opVersion: '8'
+  opVersion: '9'
   opStatus: default
 opDef: !def
   enable: !expr
@@ -43,6 +43,6 @@ elements:
     Autoupdateparams: true
     Manageparamstates: false
     Alwaysincludeallparams: false
-    Switchmode: auto
+    Switchmode: autoconst
     Indexexpr: ''
     Placeholder: BODY();

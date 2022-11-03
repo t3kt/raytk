@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.field.waveVectorField
-  opVersion: '6'
+  opVersion: '7'
   opStatus: beta
 opDef: !def
   enable: true
@@ -45,7 +45,7 @@ elements:
     Phaseparam: Phase
     Periodfield: ''
     Phasefield: ''
-    Switchmode: auto
+    Switchmode: constswitch
     Coordtype: vec3
     Manageparamstates: false
     Prepcodeplaceholder: WAVE_PREP();

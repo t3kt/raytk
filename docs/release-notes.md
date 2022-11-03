@@ -1,5 +1,63 @@
 # Release Notes
 
+## v0.28
+
+### Highlights
+
+* Core improvements - Vulkan specialization constants improve the performance of changes to menu parameters. Not all operators have been updated but many have.
+* New operators including 4D rotation, hilbert curves, circular fill repetition, and more!
+* New field inputs for lots of operators!
+
+### Details
+
+* Improvements / additions
+  * New OPs
+    * circleWaveSdf2d
+    * circularRepeat (#962)
+    * hilbertCurveTransform (#963)
+    * rotate4D (#966)
+  * New OP features
+    * bandField - faster axis/blending/reverse changes, allow selecting axis for coordinate input field
+    * gridSdf - thickness and spacing field inputs (#693)
+    * matCapContrib - rotation param and field input
+    * mobiusRingSdf - radius field input (#693)
+    * moduloSpherical - variables, shift field, offset field, repetitions field (#746), mirroring
+    * pbrMat - enable reflection setting (#971)
+    * petalSdf - thickness and radius field input (#693)
+    * polyhedronSdf - radius, face radius, segment radius, segment size, vertex radius, vertex size, uvw field inputs (#693)
+    * prismSdf - variable support (#950), arbitrary side count (#951), UV coordinates (#952)
+    * raymarchRender3D - faster changes for max dist, surface dist, step limit, near hit, pass counts (#970)
+    * solidAngleSdf - radius, angle field inputs (#693)
+    * stepField - faster axis/blending/reverse changes, allow selecting axis for coordinate input field
+    * sweep - path Sdf / position variables
+    * uvField - auto coord mode
+    * waveField - faster axis changes, allow selecting axis for coordinate input field
+  * Snippets (#132)
+    * assignColor
+    * assignUV
+    * moduloSpherical
+  * Editor actions (#772)
+    * show fields in variable reference menu
+* Fixes
+  * directionalLight shadow distance bug (#960)
+  * impulseFn error (#959)
+  * lfoGenerator channel count bug (#955)
+  * pointMapRender coord type error for SDFs (#956)
+  * pointMapRender macro error
+  * pyramidSdf fix broken height field
+  * variableReferences broken during snippet build (#954)
+  * variableReference default value error
+  * variable typedef macro error (#957)
+* Changes (potentially breaking)
+  * mobiusRingSdf - remove support for 1D coords in thickness field (same thing can be done with variables), and stop combining the thickness parameter with the field (it now only uses field or parameter).
+  * moduloSpherical - swap the x and y axes for the input, so it makes more sense (Y = outward)
+* Infrastructure / internals
+  * Remove code filtering pragmas since they weren't helping (#710)
+  * Remove incomplete support for using separate uniforms for parameters (#863)
+  * Vulkan specialization constants! (#970)
+  * Type-prefixed symbols to share things like menu option names across instances within a scene
+  * Use opState approach for variables (#939)
+
 ## v0.27
 
 ### Highlights

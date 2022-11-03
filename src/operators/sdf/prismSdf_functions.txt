@@ -1,5 +1,6 @@
-name	label	code
-tri	Triangle	d = sdTriPrism(p, vec2(r, h))
-square	Square	d = sdSquarePrism(p, vec2(r, h))
-hex	Hexagon	d = sdHexPrism(p, vec2(r, h))
-octogon	Octogon	d = sdOctogonPrism(p, r, h)
+name	label	code	params
+tri	Triangle	d = sdTriPrism(p, vec2(r, h))	
+square	Square	d = sdSquarePrism(p, vec2(r, h))	
+hex	Hexagon	d = sdHexPrism(p, vec2(r, h))	
+octogon	Octogon	d = sdOctogonPrism(p, r, h)	
+custom	Custom	d = sdArbitraryPrism(p, r, h, n)	Sides

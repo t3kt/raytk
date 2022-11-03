@@ -1,95 +1,98 @@
 void THIS_apply(inout CoordT p, inout ContextT ctx) {
-	#pragma r:if THIS_COORD_TYPE_float
+	#ifdef THIS_COORD_TYPE_float
 	float q = p;
-	#pragma r:else
+	#else
 	float q = getAxis(p, int(THIS_Axis));
-	#pragma r:endif
+	#endif
 	float size = THIS_Size;
-	#pragma r:if THIS_HAS_INPUT_sizeField
+	#ifdef THIS_HAS_INPUT_sizeField
 	{
-		#pragma r:if inputOp_sizeField_COORD_TYPE_float
+		#ifdef inputOp_sizeField_COORD_TYPE_float
 		size *= inputOp_sizeField(q, ctx);
-		#pragma r:else
+		#else
 		size *= inputOp_sizeField(p, ctx);
-		#pragma r:endif
+		#endif
 	}
-	#pragma r:endif
+	#endif
 	float halfsize = size*0.5;
 
 
 	float sh = THIS_Shift;
-	#pragma r:if THIS_HAS_INPUT_shiftField
+	#ifdef THIS_HAS_INPUT_shiftField
 	{
-		#pragma r:if inputOp_shiftField_COORD_TYPE_float
+		#ifdef inputOp_shiftField_COORD_TYPE_float
 		float q1 = q;
-		#pragma r:else
+		#else
 		inputOp_shiftField_CoordT q1 = inputOp_shiftField_asCoordT(p);
-		#pragma r:endif
+		#endif
 		sh += inputOp_shiftField(q1, ctx);
 	}
-	#pragma r:endif
+	#endif
 	q += sh;
 
 	float c = floor((q + halfsize)/size);
 	q = mod(q+halfsize, size) - halfsize;
 	float start, stop;
-	#pragma r:if THIS_Uselimit
+	#ifdef THIS_Uselimit
 	{
-		#pragma r:if THIS_Limittype_start || THIS_Limittype_both
+		#if defined(THIS_Limittype_start) || defined(THIS_Limittype_both)
 		start = THIS_Limitstart + THIS_Limitoffset;
 		if (c < start) applyModLimit(q, c, size, start);
-		#pragma r:endif
-		#pragma r:if THIS_Limittype_stop || THIS_Limittype_both
+		#endif
+		#if defined(THIS_Limittype_stop) || defined(THIS_Limittype_both)
 		stop = THIS_Limitstop + THIS_Limitoffset;
 		if (c > stop) applyModLimit(q, c, size, stop);
-		#pragma r:endif
+		#endif
 	}
-	#pragma r:endif
+	#endif
 
-	#pragma r:if THIS_Mirrortype_mirror
-	q *= mod(c, 2.0)*2 - 1;
-	#pragma r:endif
+	if (THIS_Mirrortype == THISTYPE_Mirrortype_mirror) {
+		q *= mod(c, 2.0)*2 - 1;
+	}
 
-	#pragma r:if THIS_Iterationtype_cellcoord
-	setIterationIndex(ctx, c);
-	#pragma r:elif THIS_Iterationtype_alternatingcoord
-	setIterationIndex(ctx, mod(c, 2.));
-	#pragma r:endif
-	#pragma r:if THIS_EXPOSE_cellcoord
+	switch (THIS_Iterationtype) {
+		case THISTYPE_Iterationtype_cellcoord:
+			setIterationIndex(ctx, c);
+			break;
+		case THISTYPE_Iterationtype_alternatingcoord:
+			setIterationIndex(ctx, mod(c, 2.));
+			break;
+	}
+	#ifdef THIS_EXPOSE_cellcoord
 	THIS_cellcoord = int(c);
-	#pragma r:endif
-	#pragma r:if THIS_EXPOSE_normcoord
+	#endif
+	#ifdef THIS_EXPOSE_normcoord
 	{
-		#pragma r:if !THIS_Uselimit
+		#if !defined(THIS_Uselimit)
 		THIS_normcoord = c;
-		#pragma r:elif THIS_Limittype_start
+		#elif defined(THIS_Limittype_start)
 		THIS_normcoord = c - start;
-		#pragma r:elif THIS_Limittype_stop
+		#elif defined(THIS_Limittype_stop)
 		THIS_normcoord = -c + stop;
-		#pragma r:elif THIS_Limittype_both
+		#elif defined(THIS_Limittype_both)
 		THIS_normcoord = map01(c, start, stop);
-		#pragma r:endif
+		#endif
 	}
-	#pragma r:endif
+	#endif
 
 	// offset field can use iteration
 	float o = THIS_Offset;
-	#pragma r:if THIS_HAS_INPUT_offsetField
+	#ifdef THIS_HAS_INPUT_offsetField
 	{
-		#pragma r:if inputOp_offsetField_COORD_TYPE_float
+		#ifdef inputOp_offsetField_COORD_TYPE_float
 		float q1 = q;
-		#pragma r:else
+		#else
 		inputOp_offsetField_CoordT q1 = inputOp_offsetField_asCoordT(p);
-		#pragma r:endif
+		#endif
 		o += inputOp_offsetField(q1, ctx);
 	}
-	#pragma r:endif
+	#endif
 
-	#pragma r:if THIS_COORD_TYPE_float
+	#ifdef THIS_COORD_TYPE_float
 	p = q - o;
-	#pragma r:else
+	#else
 	setAxis(p, int(THIS_Axis), q - o);
-	#pragma r:endif
+	#endif
 }
 
 ReturnT thismap(CoordT p, ContextT ctx) {

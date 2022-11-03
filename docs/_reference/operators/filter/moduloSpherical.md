@@ -28,6 +28,47 @@ op:
     - Ray
     - Light
     - Particle
+  - contextTypes:
+    - Context
+    - MaterialContext
+    - CameraContext
+    - LightContext
+    - RayContext
+    - ParticleContext
+    coordTypes:
+    - vec3
+    label: Repetitions Field
+    name: repetitionsField
+    returnTypes:
+    - float
+    - vec4
+  - contextTypes:
+    - Context
+    - MaterialContext
+    - CameraContext
+    - LightContext
+    - RayContext
+    - ParticleContext
+    coordTypes:
+    - vec3
+    label: Offset Field
+    name: offsetField
+    returnTypes:
+    - vec4
+  - contextTypes:
+    - Context
+    - MaterialContext
+    - CameraContext
+    - LightContext
+    - RayContext
+    - ParticleContext
+    coordTypes:
+    - vec3
+    label: Shift Field
+    name: shiftField
+    returnTypes:
+    - float
+    - vec4
   name: moduloSpherical
   opType: raytk.operators.filter.moduloSpherical
   parameters:
@@ -41,6 +82,21 @@ op:
     name: Offset
   - label: Pivot
     name: Pivot
-  status: beta
+  - label: Mirror Type
+    menuOptions:
+    - label: None
+      name: none
+    - label: Rows
+      name: rows
+    - label: Columns
+      name: cols
+    - label: Grid
+      name: grid
+    name: Mirrortype
+  variables:
+  - label: cell
+    name: cell
+  - label: normcell
+    name: normcell
 
 ---

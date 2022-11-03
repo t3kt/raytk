@@ -9,6 +9,7 @@ def buildExportTable(dat: 'DAT', uniformTable: 'DAT'):
 	path = str(parent().par.Exportpath)
 	arrayIndex = int(parent().par.Firstarrayindex)
 	vectorIndex = int(parent().par.Firstvectorindex)
+	constIndex = 0
 	for row in range(1, uniformTable.numRows):
 		uniType = str(uniformTable[row, 'uniformType'])
 		if uniType == 'vector':
@@ -23,7 +24,7 @@ def buildExportTable(dat: 'DAT', uniformTable: 'DAT'):
 				expr4=uniformTable[row, 'expr4'] or '0',
 			)
 			vectorIndex += 1
-		else:
+		elif uniType == 'uniformarray':
 			_addArray(
 				dat,
 				path=path,
@@ -34,6 +35,17 @@ def buildExportTable(dat: 'DAT', uniformTable: 'DAT'):
 				mode=uniType,
 			)
 			arrayIndex += 1
+		elif uniType == 'constant':
+			_addConstant(
+				dat,
+				path=path,
+				i=constIndex,
+				name=uniformTable[row, 'name'].val,
+				expr=uniformTable[row, 'expr1'].val or '0',
+			)
+			constIndex += 1
+		else:
+			raise Exception(f'Invalid uniform type: {uniType}')
 
 def _addArray(dat: 'DAT', path: str, i: int, name: str, chop: str, unitType: str, mode: str):
 	dat.appendRow([path, f'chopuniname{i}', repr(name)])
@@ -41,9 +53,13 @@ def _addArray(dat: 'DAT', path: str, i: int, name: str, chop: str, unitType: str
 	dat.appendRow([path, f'chop{i}', repr(chop)])
 	dat.appendRow([path, f'choparraytype{i}', mode])
 
-def _addVector(dat: 'DAT', path, i, name, expr1, expr2, expr3, expr4):
+def _addVector(dat: 'DAT', path: str, i: int, name: str, expr1: str, expr2: str, expr3: str, expr4: str):
 	dat.appendRow([path, f'uniname{i}', repr(name)])
 	dat.appendRow([path, f'value{i}x', expr1])
 	dat.appendRow([path, f'value{i}y', expr2])
 	dat.appendRow([path, f'value{i}z', expr3])
 	dat.appendRow([path, f'value{i}w', expr4])
+
+def _addConstant(dat: 'DAT', path: str, i: int, name: str, expr: str):
+	dat.appendRow([path, f'constname{i}', repr(name)])
+	dat.appendRow([path, f'constvalue{i}', expr])

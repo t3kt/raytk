@@ -8,11 +8,11 @@ vec2 THIS_hash22(vec2 p){
 ReturnT thismap(CoordT p, ContextT ctx) {
 	if (IS_FALSE(THIS_Enable)) { return inputOp1(p, ctx); }
 	ReturnT res;
-	#pragma r:if THIS_COORD_TYPE_vec3
+	#ifdef THIS_COORD_TYPE_vec3
 	vec2 q = p.THIS_PLANE;
-	#pragma r:else
+	#else
 	vec2 q = p;
-	#pragma r:endif
+	#endif
 
 	// Distance file values.
 //	vec4 d = vec4(1e5);
@@ -60,29 +60,29 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 //			const float lwg = .015;
 //			d.y = abs(max(abs(locP.x), abs(locP.y)) - .5/dim) - lwg/2.;
 
-			#pragma r:if THIS_Iterationtype_cell
-			setIterationCell(ctx, vec3(rnd, float(k) / 3.));
-			#pragma r:endif
-			#pragma r:if THIS_EXPOSE_cell
+			if (THIS_Iterationtype == THISTYPE_Iterationtype_cell) {
+				setIterationCell(ctx, vec3(rnd, float(k) / 3.));
+			}
+			#ifdef THIS_EXPOSE_cell
 			THIS_cell = rnd;
-			#pragma r:endif
-			#pragma r:if THIS_EXPOSE_layer
+			#endif
+			#ifdef THIS_EXPOSE_layer
 			THIS_layer = k;
-			#pragma r:endif
+			#endif
 
-			#pragma r:if THIS_COORD_TYPE_vec3
+			#ifdef THIS_COORD_TYPE_vec3
 			CoordT pForIn = p;
 			pForIn.THIS_PLANE = locP;
-			#pragma r:else
+			#else
 			CoordT pForIn = locP;
-			#pragma r:endif
-			#pragma r:if THIS_Enablerescale
-			pForIn *= dim * div;
-			#pragma r:endif
+			#endif
+			if (IS_TRUE(THIS_Enablerescale)) {
+				pForIn *= dim * div;
+			}
 			res = inputOp1(pForIn, ctx);
-			#pragma r:if inputOp1_RETURN_TYPE_Sdf
+			#ifdef inputOp1_RETURN_TYPE_Sdf
 			res = withAdjustedScale(res, 1./dim/div);
-			#pragma r:endif
+			#endif
 			return res;
 		}
 

@@ -11,15 +11,15 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 	}
 	float thickness = THIS_Thickness;
 	float radius = THIS_Radius;
-	#pragma r:if THIS_EXPOSE_axisoffset
+	#ifdef THIS_EXPOSE_axisoffset
 	THIS_axisoffset = p.y;
-	#pragma r:endif
-	#pragma r:if THIS_EXPOSE_angle
+	#endif
+	#ifdef THIS_EXPOSE_angle
 	THIS_angle = degrees(atan(p.z, p.x)) + 180;
-	#pragma r:endif
-	#pragma r:if THIS_EXPOSE_normangle
+	#endif
+	#ifdef THIS_EXPOSE_normangle
 	THIS_normangle = (atan(p.z, p.x) / TAU) + .5;
-	#pragma r:endif
+	#endif
 	#ifdef THIS_HAS_INPUT_thicknessField
     {
 		#if defined(inputOp_thicknessField_COORD_TYPE_float)

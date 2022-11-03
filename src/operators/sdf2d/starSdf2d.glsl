@@ -1,21 +1,21 @@
 ReturnT thismap(CoordT p, ContextT ctx) {
 	CoordT p0 = p;
-	#pragma r:if THIS_EXPOSE_normangle
+	#ifdef THIS_EXPOSE_normangle
 	THIS_normangle = atan(p.y, p.x) / TAU + 0.5;
-	#pragma r:endif
+	#endif
 	float r = THIS_Radius;
-	#pragma r:if THIS_HAS_INPUT_pointsField
+	#ifdef THIS_HAS_INPUT_pointsField
 	float n = inputOp_pointsField(p, ctx);
-	#pragma r:else
+	#else
 	float n = THIS_Points;
-	#pragma r:endif
+	#endif
 	float t = THIS_Tightness;
-	#pragma r:if THIS_HAS_INPUT_radiusField
+	#ifdef THIS_HAS_INPUT_radiusField
 	r *= inputOp_radiusField(p, ctx);
-	#pragma r:endif
-	#pragma r:if THIS_HAS_INPUT_tightnessField
+	#endif
+	#ifdef THIS_HAS_INPUT_tightnessField
 	t *= inputOp_tightnessField(p, ctx);
-	#pragma r:endif
+	#endif
 	float m = mapRange(t, 0., 1., 2., n);
 	// next 4 lines can be precomputed for a given shape
 	float an = PI/n;
@@ -28,14 +28,17 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 	p -= r*acs;
 	p += ecs*clamp( -dot(p,ecs), 0.0, r*acs.y/ecs.y);
 	ReturnT res = createSdf(length(p)*sign(p.x));
-	#pragma r:if THIS_Uvmode_cartesian
-	assignUV(res, vec3(map01(p0, -vec2(THIS_Radius/2.), vec2(THIS_Radius/2.)), 0.));
-	#pragma r:elif THIS_Uvmode_polar
-	assignUV(res, vec3(
-		length(p0) / THIS_Radius,
-		atan(p0.y, p0.x),
-		0.
-	));
-	#pragma r:endif
+	switch (THIS_Uvmode) {
+		case THISTYPE_Uvmode_cartesian:
+			assignUV(res, vec3(map01(p0, -vec2(THIS_Radius/2.), vec2(THIS_Radius/2.)), 0.));
+			break;
+		case THISTYPE_Uvmode_polar:
+			assignUV(res, vec3(
+				length(p0) / THIS_Radius,
+				atan(p0.y, p0.x),
+				0.
+			));
+			break;
+	}
 	return res;
 }

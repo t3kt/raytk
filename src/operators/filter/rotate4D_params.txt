@@ -1,0 +1,4 @@
+names	source	handling	readOnlyHandling	conversion	enable
+Rotate	param	runtime	macro	angle	1
+Plane	param	macro			1
+Pivot[xyz] Pivotw	param	runtime	macro		1

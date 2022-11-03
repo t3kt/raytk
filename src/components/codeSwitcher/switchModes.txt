@@ -3,3 +3,5 @@ switch	Switch
 inline	Inline
 auto	Auto
 none	No Code
+constswitch	Constant Switch
+autoconst	Auto Constant

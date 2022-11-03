@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.field.waveField
-  opVersion: '26'
+  opVersion: '28'
   opStatus: default
 opDef: !def
   enable: !expr

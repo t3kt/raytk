@@ -2,9 +2,9 @@
 ReturnT thismap(CoordT p, ContextT ctx) {
 	vec2 ab = THIS_Scale;
 	CoordT p0 = p;
-	#pragma r:if THIS_HAS_INPUT_scaleField
+	#ifdef THIS_HAS_INPUT_scaleField
 	ab *= fillToVec2(inputOp_scaleField(p, ctx));
-	#pragma r:endif
+	#endif
 	ReturnT res;
 	if (ab.x == ab.y) {
 		res = createSdf(length(p) - ab.x);
@@ -40,11 +40,9 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 		vec2 r = ab * vec2(co, sqrt(1.0-co*co));
 		res = createSdf(length(r-p) * sign(p.y-r.y));
 	}
-	#pragma r:if THIS_Uvmode_bounds
-	{
+	if (THIS_Uvmode == THISTYPE_Uvmode_bounds) {
 		vec2 bnd = ab / 2.;
 		assignUV(res, vec3(map01(p0, -bnd, bnd), 0.));
 	}
-	#pragma r:endif
 	return res;
 }

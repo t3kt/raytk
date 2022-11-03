@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.field.colorSwitchField
-  opVersion: '8'
+  opVersion: '9'
   opStatus: beta
 opDef: !def
   enable: true
@@ -37,6 +37,7 @@ elements:
   name: codeSwitcher_Extend
   elementType: codeSwitcher
   params:
+    Elementroot: ''
     Table: !table
       file: src/operators/field/colorSwitchField_extendModes.txt
       name: extendModes
@@ -44,12 +45,14 @@ elements:
     Autoupdateparams: true
     Manageparamstates: false
     Alwaysincludeallparams: false
-    Switchmode: auto
+    Switchmode: autoconst
+    Indexexpr: ''
     Placeholder: EXTEND();
 - !opElement
   name: codeSwitcher_Indexmode
   elementType: codeSwitcher
   params:
+    Elementroot: ''
     Table: !table
       file: src/operators/field/colorSwitchField_indexModes.txt
       name: indexModes
@@ -57,5 +60,6 @@ elements:
     Autoupdateparams: true
     Manageparamstates: false
     Alwaysincludeallparams: false
-    Switchmode: auto
+    Switchmode: autoconst
+    Indexexpr: ''
     Placeholder: RESCALEINDEX();

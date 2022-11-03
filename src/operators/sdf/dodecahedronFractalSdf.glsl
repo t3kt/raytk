@@ -1,7 +1,7 @@
 ReturnT thismap(CoordT p, ContextT ctx) {
-	mat3 fracRotation1 = TDRotateOnAxis(THIS_Rotate1, THIS_Rotateaxis1);
-	mat3 fracRotation2 = TDRotateOnAxis(THIS_Rotate2, THIS_Rotateaxis2);
 	int n = int(THIS_Iterations);
+	mat3 fracRotation1 = TDRotateOnAxis(THIS_Rotate1 / float(n), THIS_Rotateaxis1);
+	mat3 fracRotation2 = TDRotateOnAxis(THIS_Rotate2 / float(n), THIS_Rotateaxis2);
 	float bailout = pow(10., THIS_Bailout);
 	float phi = THIS_Phi;
 	float scale = THIS_Scale;
@@ -20,13 +20,13 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 	int i = 0;
 	for (; i < n; i++) {
 		p *= fracRotation1;
-		p-=2.0 * min(0.0, dot(p, n1)) * n1;
+		p-= 2.0 * min(0.0, dot(p, n1)) * n1;
 		p-= 2.0 * min(0.0, dot(p, n2)) * n2;
 		p-= 2.0 * min(0.0, dot(p, n3)) * n3;
-		p-=2.0 * min(0.0, dot(p, n1)) * n1;
+		p-= 2.0 * min(0.0, dot(p, n1)) * n1;
 		p-= 2.0 * min(0.0, dot(p, n2)) * n2;
 		p-= 2.0 * min(0.0, dot(p, n3)) * n3;
-		p-=2.0 * min(0.0, dot(p, n1)) * n1;
+		p-= 2.0 * min(0.0, dot(p, n1)) * n1;
 		p-= 2.0 * min(0.0, dot(p, n2)) * n2;
 		p-= 2.0 * min(0.0, dot(p, n3)) * n3;
 
@@ -37,7 +37,7 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 		if (r > bailout) break;
 	}
 
-	float d = (length(p) ) * pow(scale,  float(-i-1));
+	float d = length(p) * pow(scale,  float(-i-1));
 	Sdf res = createSdf(d);
 	#ifdef RAYTK_ORBIT_IN_SDF
 	res.orbit = orbitTrap;

@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.filter.knife
-  opVersion: '11'
+  opVersion: '13'
   opStatus: default
 opDef: !def
   enable: !expr
@@ -88,6 +88,7 @@ elements:
   name: codeSwitcher_Axis
   elementType: codeSwitcher
   params:
+    Elementroot: ''
     Table: !table
       file: src/operators/filter/knife_axes.txt
       name: axes
@@ -95,5 +96,21 @@ elements:
     Autoupdateparams: true
     Manageparamstates: true
     Alwaysincludeallparams: false
-    Switchmode: auto
+    Switchmode: autoconst
+    Indexexpr: ''
     Placeholder: AXIS_BODY();
+- !opElement
+  name: codeSwitcher_Side
+  elementType: codeSwitcher
+  params:
+    Elementroot: ''
+    Table: !table
+      file: src/operators/filter/knife_sides.txt
+      name: sides
+    Param: Side
+    Autoupdateparams: true
+    Manageparamstates: true
+    Alwaysincludeallparams: false
+    Switchmode: autoconst
+    Indexexpr: ''
+    Placeholder: SIDE_BODY();

@@ -165,7 +165,6 @@ cat:
     name: planeSdf
     summary: An infinite plane on the x, y, or z axis.
   - name: polyhedronSdf
-    status: beta
   - keywords:
     - column
     - cylinder

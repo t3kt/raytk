@@ -1,0 +1,3 @@
+name	label	dataType	enable	macros
+pathsdf	Path SDF	Sdf	1	
+pathpos	Path Position	vec2	1	

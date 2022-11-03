@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.sdf2d.planeSdf2d
-  opVersion: '5'
+  opVersion: '6'
   opStatus: default
 opDef: !def
   enable: true
@@ -30,6 +30,7 @@ elements:
   name: codeSwitcher_Direction
   elementType: codeSwitcher
   params:
+    Elementroot: ''
     Table: !table
       file: src/operators/sdf2d/planeSdf2d_directions.txt
       name: directions
@@ -37,5 +38,6 @@ elements:
     Autoupdateparams: true
     Manageparamstates: false
     Alwaysincludeallparams: false
-    Switchmode: auto
+    Switchmode: autoconst
+    Indexexpr: ''
     Placeholder: BODY();

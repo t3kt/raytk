@@ -8,6 +8,17 @@ redirect_from:
   - /reference/opType/raytk.operators.material.matCapContrib/
 op:
   category: material
+  inputs:
+  - contextTypes:
+    - MaterialContext
+    coordTypes:
+    - float
+    - vec2
+    - vec3
+    label: Rotate Field
+    name: rotateField
+    returnTypes:
+    - float
   name: matCapContrib
   opType: raytk.operators.material.matCapContrib
   parameters:
@@ -15,6 +26,8 @@ op:
     name: Enable
   - label: Level
     name: Level
+  - label: Rotate
+    name: Rotate
   - label: Mat Cap Texture TOP
     name: Texturetop
   - label: Map Cap Texture File

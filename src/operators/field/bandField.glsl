@@ -1,39 +1,41 @@
 ReturnT thismap(CoordT p, ContextT ctx) {
-	#pragma r:if THIS_HAS_INPUT_coordField
-	float q = inputOp_coordField(p, ctx);
-	#pragma r:elif THIS_Axis_dist
-	float q = length(p);
-	#pragma r:elif THIS_COORD_TYPE_float
-	float q = p;
-	#pragma r:else
-	float q = p.THIS_Axis;
-	#pragma r:endif
-	#pragma r:if THIS_Enablerepeat
-	q = mod(q + THIS_Repeatshift, THIS_Repeatsize);
-	#pragma r:endif
+	float q;
+	vec3 q0;
+	#if defined(THIS_HAS_INPUT_coordField)
+	q0 = adaptAsVec3(inputOp_coordField(p, ctx));
+	#else
+	q0 = adaptAsVec3(p);
+	#endif
+	switch (int(THIS_Axis)) {
+		case THISTYPE_Axis_x: q = q0.x; break;
+		case THISTYPE_Axis_y: q = q0.y; break;
+		case THISTYPE_Axis_z: q = q0.z; break;
+		case THISTYPE_Axis_dist: q = length(q0); break;
+	}
+	if (IS_TRUE(THIS_Enablerepeat)) {
+		q = mod(q + THIS_Repeatshift, THIS_Repeatsize);
+	}
 	q = abs(q - THIS_Center);
 	float w = THIS_Width / 2.;
 	float amt;
-	#pragma r:if THIS_Enableblending
-	{
-		#pragma r:if THIS_HAS_INPUT_blendFunction
+	if (IS_TRUE(THIS_Enableblending)) {
+		#ifdef THIS_HAS_INPUT_blendFunction
 		amt = clamp(inputOp_blendFunction(clamp(map01(q - w, 0., THIS_Blending), 0., 1.), ctx), 0., 1.);
-		#pragma r:else
+		#else
 		amt = smoothstep(0, THIS_Blending, q - w);
-		#pragma r:endif
+		#endif
+	} else {
+		amt = step(w, q);
 	}
-	#pragma r:else
-	amt = step(w, q);
-	#pragma r:endif
-	#pragma r:if THIS_HAS_INPUT_insideValue
+	#ifdef THIS_HAS_INPUT_insideValue
 	ReturnT inVal = THIS_asReturnT(inputOp_insideValue(p, ctx));
-	#pragma r:else
+	#else
 	ReturnT inVal = THIS_asReturnT(THIS_Insidevalue);
-	#pragma r:endif
-	#pragma r:if THIS_HAS_INPUT_outsideValue
+	#endif
+	#ifdef THIS_HAS_INPUT_outsideValue
 	ReturnT outVal = THIS_asReturnT(inputOp_outsideValue(p, ctx));
-	#pragma r:else
+	#else
 	ReturnT outVal = THIS_asReturnT(THIS_Outsidevalue);
-	#pragma r:endif
+	#endif
 	return mix(inVal, outVal, amt);
 }
