@@ -1,2 +1,2 @@
 names	source	handling	readOnlyHandling	conversion	enable
-Curl Radius Thickness	param	runtime	macro		1
+Curl Radius Thickness Offset	param	runtime	macro		1
