@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.sdf2d.triangleSdf2d
-  opVersion: '7'
+  opVersion: '8'
   opStatus: default
 opDef: !def
   enable: true
@@ -15,11 +15,29 @@ opDef: !def
   function: !text
     file: src/operators/sdf2d/triangleSdf2d.glsl
     name: function
+  paramGroupTable: eval_params
   libraryNames: !expr
     expr: op('triangleSdf2d_lib')
   help: !text
     file: src/operators/sdf2d/triangleSdf2d.md
     name: help
+inputs:
+- !input
+  Localalias: radiusField
+  coordType: !coordT
+    Coordtypevec2: true
+  contextType: !contextT
+    Allcontexttype: true
+  returnType: !returnT
+    Returntypefloat: true
+- !input
+  Localalias: sizeField
+  coordType: !coordT
+    Coordtypevec2: true
+  contextType: !contextT
+    Allcontexttype: true
+  returnType: !returnT
+    Returntypefloat: true
 elements:
 - !opElement
   name: codeSwitcher_Shape
@@ -31,8 +49,8 @@ elements:
       name: shapes
     Param: Shape
     Autoupdateparams: true
-    Manageparamstates: true
+    Manageparamstates: false
     Alwaysincludeallparams: false
-    Switchmode: autoconst
+    Switchmode: constswitch
     Indexexpr: ''
     Placeholder: BODY();
