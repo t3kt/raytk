@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.filter.adjustColor
-  opVersion: '8'
+  opVersion: '9'
   opStatus: beta
 opDef: !def
   enable: !expr
@@ -41,20 +41,34 @@ inputs:
   returnType: !returnT
     Returntypevec4: true
 - !input
-  Localalias: brightnessContrastField
+  Localalias: brightnessField
   coordType: !coordT
     Allcoordtype: true
   contextType: !contextT
     Allcontexttype: true
   returnType: !returnT
     Returntypefloat: true
-    Returntypevec4: true
 - !input
-  Localalias: hueSaturationField
+  Localalias: contrastField
   coordType: !coordT
     Allcoordtype: true
   contextType: !contextT
     Allcontexttype: true
   returnType: !returnT
     Returntypefloat: true
-    Returntypevec4: true
+- !input
+  Localalias: hueField
+  coordType: !coordT
+    Allcoordtype: true
+  contextType: !contextT
+    Allcontexttype: true
+  returnType: !returnT
+    Returntypefloat: true
+- !input
+  Localalias: saturationField
+  coordType: !coordT
+    Allcoordtype: true
+  contextType: !contextT
+    Allcontexttype: true
+  returnType: !returnT
+    Returntypefloat: true
