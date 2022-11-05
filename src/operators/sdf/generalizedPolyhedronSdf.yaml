@@ -18,11 +18,6 @@ opDef: !def
   paramGroupTable: eval_params
   libraryNames: !expr
     expr: op('generalizedPolyhedronSdf_lib')
-  macroTable: !table
-    file: src/operators/sdf/generalizedPolyhedronSdf_macros.txt
-    name: macro_exprs
-    evaluate: true
-    evalOpts: !evalOpts {}
   help: !text
     file: src/operators/sdf/generalizedPolyhedronSdf.md
     name: help
@@ -48,3 +43,27 @@ inputs:
     Allcontexttype: true
   returnType: !returnT
     Returntypevec4: true
+- !input
+  Localalias: exponentField
+  coordType: !coordT
+    Coordtypevec3: true
+  contextType: !contextT
+    Allcontexttype: true
+  returnType: !returnT
+    Returntypefloat: true
+elements:
+- !opElement
+  name: codeSwitcher_Shape
+  elementType: codeSwitcher
+  params:
+    Elementroot: ''
+    Table: !table
+      file: src/operators/sdf/generalizedPolyhedronSdf_shapes.txt
+      name: shapes
+    Param: Shape
+    Autoupdateparams: true
+    Manageparamstates: false
+    Alwaysincludeallparams: false
+    Switchmode: constswitch
+    Indexexpr: ''
+    Placeholder: BODY();

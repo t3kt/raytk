@@ -1,5 +1,5 @@
 names	source	handling	readOnlyHandling	conversion	enable
 Translate[xyz] Radius	param	runtime	macro		1
-Begin End	param	runtime	macro		op('beginEnd_definition').numRows < 2 and parent().par.Shape != 'custom'
+Begin End	param	runtime	macro		op('beginEnd_definition').numRows < 2
 Useexponent	param	constant			1
 Exponent	param	runtime	macro		1
