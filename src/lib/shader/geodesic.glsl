@@ -11,11 +11,6 @@ void geo_init() {//setup folding planes and vertex
 	geo_pbc=normalize(geo_pbc);	geo_pca=normalize(geo_pca);//for slightly better DE. In reality it's not necesary to apply normalization :)
 }
 
-// Barycentric to Cartesian
-vec3 bToC(vec3 A, vec3 B, vec3 C, vec3 barycentric) {
-	return barycentric.x * A + barycentric.y * B + barycentric.z * C;
-}
-
 // Repeat space to form subdivisions of an icosahedron
 // Return normal of the face
 vec3 pIcosahedron(inout vec3 p, int subdivisions) {
@@ -70,7 +65,6 @@ vec3 pIcosahedron(inout vec3 p, int subdivisions) {
 
 	return geo_pca;
 }
-
 
 // Repeat space to form subdivisions of a dodecahedron
 // Return normal of the face

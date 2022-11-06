@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.sdf.generalizedPolyhedronSdf
-  opVersion: '11'
+  opVersion: '12'
   opStatus: default
 opDef: !def
   enable: true
@@ -17,7 +17,7 @@ opDef: !def
     name: functionTemplate
   paramGroupTable: eval_params
   libraryNames: !expr
-    expr: op('generalizedPolyhedronSdf_lib')
+    expr: op('gdf_lib')
   help: !text
     file: src/operators/sdf/generalizedPolyhedronSdf.md
     name: help
