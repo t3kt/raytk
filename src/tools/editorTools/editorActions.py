@@ -418,20 +418,25 @@ def _createCustomizeShaderConfigAction(text: str):
 			par.pulse()
 	return _SimpleAction(text, isValid, execute)
 
-def _createSelectVectorPartGroup(text: str, table: 'DAT'):
-	def isValid(ctx: ActionContext):
-		return ctx.primaryRopState.isVectorField
+def _createTableBasedGroup(
+		text: str, table: 'DAT',
+		ropType: str,
+		paramName: str,
+		select: '_OpSelect',
+		attach: '_OpAttach',
+):
 	def getActions(_):
 		return [
 			_ActionImpl(
 				str(table[i, 'label']),
-				ropType=_RopTypes.vectorToFloat,
-				select=_OpSelect(returnTypes=['vec4']),
-				attach=_AttachOutFromExisting(),
-				params={'Usepart': str(table[i, 'name'])})
+				ropType=ropType,
+				select=select,
+				attach=attach,
+				params={paramName: str(table[i, 'name'])},
+			)
 			for i in range(1, table.numRows)
 		]
-	return _SimpleGroup(text, isValid, getActions)
+	return _GroupImpl(text, select, getActions)
 
 def _createGoToAction(text: str, getTargets: Callable[[ActionContext], List[OP]]):
 	def isValid(ctx: ActionContext):
@@ -518,8 +523,10 @@ class _RopTypes:
 	arrange = 'raytk.operators.combine.arrange'
 	combine = 'raytk.operators.combine.combine'
 	combineFields = 'raytk.operators.combine.combineFields'
+	crossSection = 'raytk.operators.convert.crossSection'
 	diffuseContrib = 'raytk.operators.material.diffuseContrib'
 	modularMat = 'raytk.operators.material.modularMat'
+	projectPlane = 'raytk.operators.convert.projectPlane'
 	rescaleField = 'raytk.operators.filter.rescaleField'
 	raymarchRender3d = 'raytk.operators.output.raymarchRender3D'
 	render2d = 'raytk.operators.output.render2D'
@@ -552,7 +559,11 @@ def createActionManager():
 			select=_OpSelect(returnTypes=['float']),
 			attach=_AttachOutFromExisting(),
 		),
-		_createSelectVectorPartGroup('To Vector Part', op('vectorToFloatParts')),
+		_createTableBasedGroup(
+			'To Vector Part', op('vectorToFloatParts'), _RopTypes.vectorToFloat, 'Usepart',
+			select=_OpSelect(returnTypes=['vec4']),
+			attach=_AttachOutFromExisting(),
+		),
 		_ActionImpl(
 			'Rescale Field',
 			_RopTypes.rescaleField,
@@ -565,6 +576,16 @@ def createActionManager():
 			select=_OpSelect(returnTypes=['float']),
 			attach=_AttachOutFromExisting(),
 			params={'Returntype': 'vec4'},
+		),
+		_createTableBasedGroup(
+			'Project Plane', op('projectPlanes'), _RopTypes.projectPlane, 'Plane',
+			select=_OpSelect(coordTypes=['vec2']),
+			attach=_AttachOutFromExisting(),
+		),
+		_createTableBasedGroup(
+			'Cross Section', op('crossSectionAxes'), _RopTypes.crossSection, 'Axes',
+			select=_OpSelect(coordTypes=['vec3']),
+			attach=_AttachOutFromExisting(),
 		),
 		_createAddInputActionGroup(
 			'Add Diffuse',
@@ -746,3 +767,17 @@ def _createConvertAction(text: str, oldType: str, newType: str):
 		oldOp = ctx.primaryRop
 		pass
 	pass
+
+@dataclass
+class _GroupImpl(ActionGroup):
+	select: _OpSelect
+	actions: Union[_GetActionsFunc, List[Action]]
+
+	def isValid(self, ctx: ActionContext) -> bool:
+		return bool(self.select.getOps(ctx))
+
+	def getActions(self, ctx: ActionContext) -> List[Action]:
+		if isinstance(self.actions, list):
+			return self.actions
+		else:
+			return self.actions(ctx)
