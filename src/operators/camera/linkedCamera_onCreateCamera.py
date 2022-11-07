@@ -6,20 +6,21 @@ if False:
 import os.path
 
 def _findCameraTox():
-	for path in (
-			app.samplesFolder + '/Palette/Tools/cameraViewport.tox',
-			app.samplesFolder + '/Palette/Tools/camera.tox',
-			app.samplesFolder + '/Comp/Tools/camera.tox',
+	for path, pattern in (
+			(app.samplesFolder + '/Palette/Tools/cameraViewport.tox', 'cameraViewport'),
+			(app.samplesFolder + '/Palette/Tools/camera.tox', None),
+			(app.samplesFolder + '/Comp/Tools/camera.tox', None),
 	):
 		if os.path.exists(path):
-			return path
+			return path, pattern
+		return None, None
 
 def onPulse(par):
 	ui.undo.startBlock('Create camera')
 	if par.name == 'Createcamera':
-		path = _findCameraTox()
+		path, pattern = _findCameraTox()
 		if path:
-			cam = parent(2).loadTox(path)
+			cam = parent(2).loadTox(path, pattern=pattern)
 		else:
 			msg = 'Unable to find camera tox from palette, using basic Camera COMP'
 			ui.status = msg
