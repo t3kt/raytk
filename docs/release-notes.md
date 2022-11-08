@@ -1,5 +1,35 @@
 # Release Notes
 
+## v0.29
+
+### Highlights
+
+### Details
+
+* Improvements / additions
+  * New OPs
+    * gridPattern (#254)
+    * hexagonalGridSdf2d
+    * rhombilleTilingSdf2d
+    * triangularGridSdf2d
+  * New OP features
+    * axisLight - rotation (#961)
+    * chainSdf - length, radius, thickness field inputs (#693)
+    * circleWaveSdf2d - offset parameter, curl, radius, thickness, offset field inputs (#588)
+    * generalizedPolyhedronSdf - exponent field (#693)
+    * juliaSdf - C field input, step variables (#693)
+    * metaballField - coord, center, exponent, radius, weight field inputs
+    * pointDistanceField - coords and center field inputs (#978)
+    * triangleSdf2d - radius and size field inputs (#588)
+    * waveField - auto coord type
+  * Editor tools (#772)
+    * crossSection and projectPlane
+* Fixes
+  * linkedCamera - fix creating linked cameraViewport (#979)
+* Changes (potentially breaking)
+  * adjustColor - separated out the hue/saturation and brightness/contrast field inputs
+* Infrastructure / internals
+
 ## v0.28
 
 ### Highlights
