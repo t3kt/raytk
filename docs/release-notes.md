@@ -8,6 +8,7 @@
 
 * Improvements / additions
   * New OPs
+    * eggSdf2d
     * gridPattern (#254)
     * hexagonalGridSdf2d
     * rhombilleTilingSdf2d
@@ -20,6 +21,7 @@
     * juliaSdf - C field input, step variables (#693)
     * metaballField - coord, center, exponent, radius, weight field inputs
     * pointDistanceField - coords and center field inputs (#978)
+    * revolve - radial offset, axis offset field inputs (#812), faster axis switching (#970)
     * triangleSdf2d - radius and size field inputs (#588)
     * waveField - auto coord type
   * Editor tools (#772)
