@@ -4,6 +4,8 @@ title: Getting Started With RayTK
 nav_order: 1
 ---
 
+# Getting Started With RayTK
+
 ## Download the Library
 
 The first step to using RayTK is to download the latest tox file, from the [repository](https://github.com/t3kt/raytk/releases).
@@ -17,7 +19,7 @@ Drag the tox file into the project.
 
 ## Creating a Network
 
-To create your first ROP, use the keyboard shortcut `alt + r` to open up the editor tools popup. It will show a list of available ROPs, organized into categories. You can search by typing a name. This popup is like the main TouchDesigner "OP Create Dialog" (using `tab`), but it shows the available ROPs rather than the standard TouchDesigner OPs.
+To create your first ROP, use the keyboard shortcut `alt + r` to open up the RayTK [Palette]. It will show a list of available ROPs, organized into categories. You can search by typing a name. This popup is like the main TouchDesigner "OP Create Dialog" (using `tab`), but it shows the available ROPs rather than the standard TouchDesigner OPs.
 
 ![Create OP Menu](/raytk/assets/images/guide/intro-createOpMenu.png)
 
@@ -75,4 +77,5 @@ All the ROPs are totally self-contained! That means that if you save out scenes 
 
 However some editing tools such as the Palette and the [Inspector] are only available if the toolkit itself is loaded
 
+[Palette]: /raytk/guide/palette
 [Inspector]: /raytk/guide/inspector
