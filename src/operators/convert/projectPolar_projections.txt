@@ -1,0 +1,4 @@
+name	label	code	params
+spherical	Spherical	q = vec3(THIS_ang(atan(p3.y, p3.x)), THIS_ang(acos(p3.z / length(p3))), length(p3));	
+cylindrical	Cylindrical	q = vec3(THIS_ang(atan(p3.y, p3.x)), p3.z, length(p3.xy));	
+toroid	Toroid	float d0 = length(p.xy) - ra; q = vec3(THIS_ang(atan(p3.y, p3.x)), THIS_ang(atan(d0, p3.z)) + 0.5, length(vec2(d0, p.z)) / th);	Radius Thickness
