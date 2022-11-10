@@ -11,6 +11,7 @@
     * eggSdf2d
     * gridPattern (#254)
     * hexagonalGridSdf2d
+    * projectPolar
     * rhombilleTilingSdf2d
     * triangularGridSdf2d
   * New OP features
