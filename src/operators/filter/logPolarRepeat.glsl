@@ -4,7 +4,12 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 	#ifdef THIS_COORD_TYPE_vec2
 	vec2 q = p;
 	#else
-	vec2 q = p.THIS_PLANE;
+		vec2 q;
+		switch (THIS_Axis) {
+			case THISTYPE_Axis_x: q = p.yz; break;
+			case THISTYPE_Axis_y: q = p.zx; break;
+			case THISTYPE_Axis_z: q = p.xy; break;
+		}
 	#endif
 
 	float scale = THIS_Radialreps/TAU;
@@ -42,8 +47,11 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 	#ifdef THIS_COORD_TYPE_vec2
 	p = q;
 	#else
-	p.THIS_PLANE = q;
-	p.THIS_AXIS /= scaleAdj;
+	switch (THIS_Axis) {
+		case THISTYPE_Axis_x: p.yz = q; p.x /= scaleAdj; break;
+		case THISTYPE_Axis_y: p.zx = q; p.y /= scaleAdj; break;
+		case THISTYPE_Axis_z: p.xy = q; p.z /= scaleAdj; break;
+	}
 	#endif
 	ReturnT res = inputOp1(p, ctx);
 	#ifdef THIS_RETURN_TYPE_Sdf
