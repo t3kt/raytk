@@ -1,6 +1,13 @@
 ReturnT thismap(CoordT p, ContextT ctx) {
 	if (IS_TRUE(THIS_Enable)) {
-		vec2 q = p.THIS_PLANE;
+		vec3 p3 = adaptAsVec3(p);
+		vec2 q;
+		float ap;
+		switch (THIS_Axis) {
+			case THISTYPE_Axis_x: q = p3.yz; ap = p3.x; break;
+			case THISTYPE_Axis_y: q = p3.zx; ap = p3.y; break;
+			case THISTYPE_Axis_z: q = p3.xy; ap = p3.z; break;
+		}
 		vec2 cell = pMirrorOctant(q, THIS_Size);
 		switch (THIS_Iterationtype) {
 			case THISTYPE_Iterationtype_sign:
@@ -21,11 +28,11 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 		#ifdef THIS_HAS_INPUT_rotateField
 		{
 			#if defined(inputOp_rotateField_COORD_TYPE_float)
-			float q2 = length(p.THIS_PLANE);
+			float q2 = length(q);
 			#elif defined(inputOp_rotateField_COORD_TYPE_vec2)
-			vec2 q2 = p.THIS_PLANE;
+			vec2 q2 = q;
 			#elif defined(inputOp_rotateField_COORD_TYPE_vec3)
-			vec3 q2 = p;
+			vec3 q2 = p3;
 			#else
 			#error invalidRotateAxisCoordType
 			#endif
@@ -40,9 +47,9 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 		#ifdef THIS_HAS_INPUT_offsetField
 		{
 			#if defined(inputOp_offsetField_COORD_TYPE_float)
-			float q3 = p.THIS_AXIS;
+			float q3 = ap;
 			#elif defined(inputOp_offsetField_COORD_TYPE_vec3)
-			vec3 q3 = p;
+			vec3 q3 = p3;
 			#else
 			#error invalidOffsetCoordType
 			#endif
@@ -50,7 +57,12 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 		}
 		#endif
 
-		p.THIS_PLANE = q - offset;
+		switch (THIS_Axis) {
+			case THISTYPE_Axis_x: p3.yz = q - offset; break;
+			case THISTYPE_Axis_y: p3.zx = q - offset; break;
+			case THISTYPE_Axis_z: p3.xy = q - offset; break;
+		}
+		p = THIS_asCoordT(p3);
 	}
 	ReturnT res;
 	#ifdef THIS_HAS_INPUT_1
