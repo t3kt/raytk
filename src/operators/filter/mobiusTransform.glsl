@@ -3,13 +3,13 @@
 
 ReturnT thismap(CoordT p, ContextT ctx) {
 	if (IS_TRUE(THIS_Enable)) {
-		#if defined(THIS_COORD_TYPE_vec2)
-		vec2 q = p;
-		#elif defined(THIS_COORD_TYPE_vec3)
-		vec2 q = p.THIS_PLANE;
-		#else
-		#error invalidCoordType
-		#endif
+		vec3 p3 = adaptAsVec3(p);
+		vec2 q;
+		switch (THIS_Axis) {
+			case THISTYPE_Axis_x: q = p3.yz; break;
+			case THISTYPE_Axis_y: q = p3.zx; break;
+			case THISTYPE_Axis_z: q = p3.xy; break;
+		}
 		#ifdef THIS_HAS_INPUT_pointField
 		vec2 point = adaptAsVec2(inputOp_pointField(p, ctx));
 		#else
@@ -26,13 +26,12 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 		vec2 q1 = q - center;
 		q = vec2(dot(point, q1), point.y*q1.x - point.x*q1.y) / dot(q1, q1);
 
-		#if defined(THIS_COORD_TYPE_vec2)
-		p = q;
-		#elif defined(THIS_COORD_TYPE_vec3)
-		p.THIS_PLANE = q;
-		#else
-		#error invalidCoordType
-		#endif
+		switch (THIS_Axis) {
+			case THISTYPE_Axis_x: p3.yz = q; break;
+			case THISTYPE_Axis_y: p3.zx = q; break;
+			case THISTYPE_Axis_z: p3.xy = q; break;
+		}
+		p = THIS_asCoordT(p3);
 	}
 	return inputOp1(p, ctx);
 }

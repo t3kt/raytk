@@ -1,2 +1,3 @@
 names	source	handling	readOnlyHandling	conversion	enable
 Center[1-2] Point[1-2]	param	runtime	macro		1
+Axis	param	constant			1
