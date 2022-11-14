@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.filter.radialClone
-  opVersion: '20'
+  opVersion: '21'
   opStatus: default
 opDef: !def
   enable: !expr
@@ -20,18 +20,12 @@ opDef: !def
     name: function
   paramGroupTable: eval_params
   libraryNames: raytkCombine
-  macroTable: !table
-    file: src/operators/filter/radialClone_macros.txt
-    name: macro_exprs
-    evaluate: true
-    evalOpts: !evalOpts {}
   variableTable: !table
     file: src/operators/filter/radialClone_variables.txt
     name: variable_exprs
     evaluate: true
     evalOpts: !evalOpts
       excludeFirstRow: true
-  generatedMacroTables: sel_axis_macros
   help: !text
     file: src/operators/filter/radialClone.md
     name: help
@@ -66,7 +60,7 @@ elements:
     Numberfield: ''
     Manageparamstates: true
     Alwaysincludeallparams: false
-    Switchmode: inline
+    Switchmode: constswitch
     Indexexpr: ''
     Prepcodeplaceholder: MERGE_PREP();
     Bodycodeplaceholder: MERGE_BODY();
