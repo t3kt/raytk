@@ -9,7 +9,7 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 	assignMaterial(res, THISMAT);
 	#endif
 	captureIterationFromMaterial(THIS_iterationCapture, ctx);
-	#if defined(RAYTK_REFLECT_IN_SDF) && defined(THIS_Enablereflection)
+	#if defined(RAYTK_REFLECT_IN_SDF) && (defined(THIS_Enablereflection) || defined(THIS_HAS_TAG_usereflect))
 	res.reflect = true;
 	#endif
 	#ifdef RAYTK_USE_SHADOW
@@ -74,7 +74,7 @@ vec3 THIS_getColor(vec3 p, MaterialContext matCtx) {
 	#ifdef THIS_EXPOSE_reflectcolor
 	{
 		THIS_reflectcolor = vec3(0.);
-		#if defined(RAYTK_REFLECT_IN_SDF) && defined(THIS_Enablereflection)
+		#if defined(RAYTK_REFLECT_IN_SDF) && (defined(THIS_Enablereflection) || defined(THIS_HAS_TAG_usereflect))
 		res.reflect = true;
 		if (res.reflect) {
 			THIS_reflectcolor = matCtx.reflectColor;
