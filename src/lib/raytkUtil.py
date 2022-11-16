@@ -94,6 +94,7 @@ class OpDefParsT(_OpMetaPars):
 	Variabletable: 'DatParamT'
 	Referencetable: 'DatParamT'
 	Dispatchtable: 'DatParamT'
+	Tagtable: 'DatParamT'
 	Generatedmacrotables: 'StrParamT'
 	Paramgrouptable: 'DatParamT'
 	Callbacks: 'DatParamT'

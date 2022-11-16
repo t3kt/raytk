@@ -76,6 +76,7 @@ def buildInputTable(dat: 'DAT', inDats: 'List[DAT]'):
 		'coordType', 'contextType', 'returnType',
 		'placeholder',
 		'vars', 'varInputs',
+		'tags',
 	])
 	for i, inDat in enumerate(inDats + _inputDefsFromPar()):
 		if not inDat[1, 'name']:
@@ -90,8 +91,21 @@ def buildInputTable(dat: 'DAT', inDats: 'List[DAT]'):
 			inDat[1, 'returnType'],
 			('inputOp_' + func) if not func.startswith('inputOp') else func,
 			inDat[1, 'input:vars'],
-			inDat[i, 'input:varInputs'],
+			inDat[1, 'input:varInputs'],
+			inDat[1, 'tags'] or '',
 		])
+
+def getCombinedTags(inputTable: 'DAT'):
+	tags = set()
+	for i in range(1, inputTable.numRows):
+		tags.update(tdu.split(inputTable[i, 'tags']))
+	table = parentPar().Tagtable.eval()
+	if table and table.numRows > 1:
+		for i in range(1, table.numRows):
+			if _isFalseStr(table[i, 'enable']):
+				continue
+			tags.add(table[i, 'name'].val)
+	return list(sorted(tags))
 
 def combineInputDefinitions(
 		dat: 'DAT',
@@ -502,6 +516,7 @@ def buildOpState():
 		paramSpecTable=op('paramSpecTable'),
 		paramTupletTable=op('param_tuplets'),
 		opElementTable=op('opElements'),
+		inputTable=op('input_table'),
 	)
 	builder.loadConstants(
 		paramSpecTable=op('paramSpecTable'),
@@ -601,7 +616,7 @@ class _Builder:
 		code = _typePattern.sub(_typeRepl, code)
 		return self.replaceNames(code)
 
-	def loadMacros(self, paramSpecTable: 'DAT', paramTupletTable: 'DAT', opElementTable: 'DAT'):
+	def loadMacros(self, paramSpecTable: 'DAT', paramTupletTable: 'DAT', opElementTable: 'DAT', inputTable: 'DAT'):
 		macros = []
 		def addMacro(m: Macro):
 			if not m.name:
@@ -612,6 +627,9 @@ class _Builder:
 			macros.append(m)
 		for inputInfo in self.inputs:
 			addMacro(Macro(_getHasInputMacroName(inputInfo.inputFunc)))
+		tags = getCombinedTags(inputTable)
+		for tag in tags:
+			addMacro(Macro(f'THIS_HAS_TAG_{tag}'))
 		macroParams = []
 		angleParamNames = []
 		for i in range(1, paramSpecTable.numRows):
