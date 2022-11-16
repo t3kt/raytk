@@ -17,27 +17,6 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 		#ifdef THIS_HAS_TAG_useshadow
 		res.useShadow = true;
 		#endif
-		#if defined(THIS_HAS_INPUT_2) && defined(inputOp2_Enableshadow)
-		res.useShadow = true;
-		#endif
-		#if defined(THIS_HAS_INPUT_3) && defined(inputOp3_Enableshadow)
-		res.useShadow = true;
-		#endif
-		#if defined(THIS_HAS_INPUT_4) && defined(inputOp4_Enableshadow)
-		res.useShadow = true;
-		#endif
-		#if defined(THIS_HAS_INPUT_5) && defined(inputOp5_Enableshadow)
-		res.useShadow = true;
-		#endif
-		#if defined(THIS_HAS_INPUT_6) && defined(inputOp6_Enableshadow)
-		res.useShadow = true;
-		#endif
-		#if defined(THIS_HAS_INPUT_7) && defined(inputOp7_Enableshadow)
-		res.useShadow = true;
-		#endif
-		#if defined(THIS_HAS_INPUT_8) && defined(inputOp8_Enableshadow)
-		res.useShadow = true;
-		#endif
 	}
 	#endif
 	return res;
