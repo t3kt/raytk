@@ -14,6 +14,9 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 	#endif
 	#ifdef RAYTK_USE_SHADOW
 	{
+		#ifdef THIS_HAS_TAG_useshadow
+		res.useShadow = true;
+		#endif
 		#if defined(THIS_HAS_INPUT_2) && defined(inputOp2_Enableshadow)
 		res.useShadow = true;
 		#endif

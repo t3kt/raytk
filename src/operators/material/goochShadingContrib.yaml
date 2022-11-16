@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.material.goochShadingContrib
-  opVersion: '6'
+  opVersion: '7'
   opStatus: beta
 opDef: !def
   enable: true
@@ -16,6 +16,13 @@ opDef: !def
     file: src/operators/material/goochShadingContrib.glsl
     name: function
   paramGroupTable: eval_params
+  tagTable: !table
+    file: src/operators/material/goochShadingContrib_tags.txt
+    name: tag_exprs
+    evaluate: true
+    evalOpts: !evalOpts
+      excludeFirstRow: true
+      cols: enable
   help: !text
     file: src/operators/material/goochShadingContrib.md
     name: help
