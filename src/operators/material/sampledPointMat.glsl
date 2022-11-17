@@ -57,8 +57,7 @@ vec3 THIS_getColor(CoordT p, MaterialContext matCtx) {
 	#endif
 	vec3 col = vec3(0.);
 	float d = matCtx.result.x - THIS_Offset;
-	#ifdef THIS_Enablefill
-	{
+	if (IS_TRUE(THIS_Enablefill)) {
 		vec3 fillColor = THIS_Fillcolor;
 		#ifdef THIS_HAS_INPUT_fillColorField
 		{
@@ -72,9 +71,7 @@ vec3 THIS_getColor(CoordT p, MaterialContext matCtx) {
 			#endif
 		col += fillColor * (1.0 - smoothstep(0, THIS_Blending, max(d, 0.)));
 	}
-	#endif
-	#ifdef THIS_Enableedge
-	{
+	if (IS_TRUE(THIS_Enableedge)) {
 		vec3 edgeColor = THIS_Edgecolor;
 		#ifdef THIS_HAS_INPUT_edgeColorField
 		{
@@ -88,6 +85,5 @@ vec3 THIS_getColor(CoordT p, MaterialContext matCtx) {
 		#endif
 		col += edgeColor * (1.0 - smoothstep(THIS_Edgethickness - THIS_Blending / 2., THIS_Edgethickness + THIS_Blending/2., abs(d)));
 	}
-	#endif
 	return col;
 }
