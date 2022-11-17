@@ -104,8 +104,13 @@ void main() {
 	Sdf res = map(p);
 
 	MaterialContext matCtx = createMaterialContext();
-	#if defined(OUTPUT_COLOR) || defined(OUTPUT_NORMAL)
+	matCtx.ray = getViewRay(vec2(0.));
+	#if defined(OUTPUT_COLOR) || defined(OUTPUT_NORMAL) || defined(THIS_HAS_TAG_uselight)
 	matCtx.normal = calcNormal(p);
+	#endif
+	#ifdef THIS_HAS_TAG_uselight
+	LightContext lightCtx = createLightContext(res, matCtx.normal);
+	matCtx.light = getLight(p, lightCtx);
 	#endif
 
 	#ifdef OUTPUT_COLOR

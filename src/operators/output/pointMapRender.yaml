@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.output.pointMapRender
-  opVersion: '56'
+  opVersion: '57'
   opStatus: default
 opDef: !def
   enable: true
@@ -45,3 +45,19 @@ inputs:
     Returntypesdf: true
     Returntypefloat: true
     Returntypevec4: true
+- !input
+  Localalias: camera
+  coordType: !coordT
+    Coordtypevec2: true
+  contextType: !contextT
+    Contexttypecameracontext: true
+  returnType: !returnT
+    Returntyperay: true
+- !input
+  Localalias: light
+  coordType: !coordT
+    Coordtypevec3: true
+  contextType: !contextT
+    Contexttypelightcontext: true
+  returnType: !returnT
+    Returntypelight: true
