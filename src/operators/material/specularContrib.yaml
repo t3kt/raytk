@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.material.specularContrib
-  opVersion: '21'
+  opVersion: '22'
   opStatus: default
 opDef: !def
   enable: true

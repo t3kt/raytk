@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.material.pbrMat
-  opVersion: '13'
+  opVersion: '14'
   opStatus: beta
 opDef: !def
   enable: !expr

@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.material.hologramContrib
-  opVersion: '3'
+  opVersion: '4'
   opStatus: alpha
 opDef: !def
   enable: !expr
@@ -17,6 +17,13 @@ opDef: !def
     file: src/operators/material/hologramContrib.glsl
     name: function
   paramGroupTable: eval_params
+  tagTable: !table
+    file: src/operators/material/hologramContrib_tags.txt
+    name: tag_exprs
+    evaluate: true
+    evalOpts: !evalOpts
+      excludeFirstRow: true
+      cols: enable
 inputs:
 - !input
   Localalias: baseColorField

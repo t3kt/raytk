@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.material.reflectMat
-  opVersion: '12'
+  opVersion: '13'
   opStatus: beta
 opDef: !def
   enable: !expr
