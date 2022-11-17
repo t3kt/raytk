@@ -240,6 +240,34 @@ def buildOpTestTable(dat: 'DAT', testTable: 'DAT'):
 	for cell in dat.row(0)[2:]:
 		cell.val = 'test' + str(cell.col - 1)
 
+def buildOpTagTable(dat: 'DAT'):
+	dat.clear()
+	opPaths = []  # type: List[str]
+	opTagExprs = {}  # type: Dict[str, Dict[str, str]]
+	for rop in RaytkContext().allMasterOperators():
+		info = ROPInfo(rop)
+		if not info or not info.isROP:
+			continue
+		tagTable = info.opDefPar.Tagtable.eval()
+		if not tagTable:
+			continue
+		if tagTable.inputs:
+			tagTable = tagTable.inputs[0]
+		for i in range(1, tagTable.numRows):
+			tag = tagTable[i, 'name'].val
+			expr = tagTable[i, 'enable'].val
+			if tag in opTagExprs:
+				opTagExprs[tag][info.path] = expr
+			else:
+				opTagExprs[tag] = {info.path: expr}
+		opPaths.append(info.path)
+	opPaths.sort()
+	dat.appendRow(['path'] + list(sorted(opTagExprs.keys())))
+	for path in opPaths:
+		dat.appendRow([path])
+		for tag, pathExprs in opTagExprs.items():
+			dat[dat.numRows - 1, tag] = pathExprs.get(path, '')
+
 def buildToolkitIndexJson():
 	toolkitIndex = {
 		'categories': {
