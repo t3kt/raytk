@@ -85,5 +85,10 @@ vec3 THIS_getColor(CoordT p, MaterialContext matCtx) {
 		#endif
 		col += edgeColor * (1.0 - smoothstep(THIS_Edgethickness - THIS_Blending / 2., THIS_Edgethickness + THIS_Blending/2., abs(d)));
 	}
+	#ifdef RAYTK_USE_SURFACE_COLOR
+	if (IS_TRUE(THIS_Usesurfacecolor) && matCtx.result.color.w > 0.) {
+		col *= matCtx.result.color.rgb;
+	}
+	#endif
 	return col;
 }
