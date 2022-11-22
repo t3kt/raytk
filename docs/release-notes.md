@@ -4,11 +4,19 @@
 
 ### Highlights
 
+* Lots of improvements to volumetric sampling using pointMapRender.
+  * Support for lighting and shading in materials.
+  * Variables from sampledPointMat to customize shading.
+  * Easier access to data textures using dataTextureField.
+* New 2D SDFs including eggSdf2d, hexagonalGridSdf2d, rhombileGridSdf2d, and triangularGridSdf2d.
+
 ### Details
 
 * Improvements / additions
   * New OPs
+    * dataTextureField
     * eggSdf2d
+    * geometricSeriesSquareTile
     * gridPattern (#254)
     * hexagonalGridSdf2d
     * projectPolar
@@ -18,20 +26,32 @@
     * axisLight - rotation (#961)
     * chainSdf - length, radius, thickness field inputs (#693)
     * circleWaveSdf2d - offset parameter, curl, radius, thickness, offset field inputs (#588)
+    * cylinderSdf - allow optimizing axis
     * generalizedPolyhedronSdf - exponent field (#693)
+    * headSdf - faster parameter switching (#970)
     * juliaSdf - C field input, step variables (#693)
+    * logPolarRepeat - faster axis switching (#970)
     * metaballField - coord, center, exponent, radius, weight field inputs
+    * mirrorOctant/mirrorQuadrant - faster axis switching (#970)
+    * mobiusTransform - faster axis switching (#970)
     * pointDistanceField - coords and center field inputs (#978)
+    * pointMapRender - lighting and shading support (#981), variables for data position
+    * radialClone - faster axis switching (#970)
     * revolve - radial offset, axis offset field inputs (#812), faster axis switching (#970)
+    * sampledPointMat - faster parameter switching (#970), variables equivalent to modularMat, surface color support
     * triangleSdf2d - radius and size field inputs (#588)
+    * truchetTile - faster plane switching (#970)
+    * variableReference - show field name in label (#980), clean up parameters
     * waveField - auto coord type
   * Editor tools (#772)
     * crossSection and projectPlane
 * Fixes
   * linkedCamera - fix creating linked cameraViewport (#979)
+  * modularMat - fix shadows not being activated when shading elements are not directly connected to modularMat (#982)
 * Changes (potentially breaking)
   * adjustColor - separated out the hue/saturation and brightness/contrast field inputs
 * Infrastructure / internals
+  * Operator tags which allow operators to indicate features that they depend on (e.g. lighting) (#982, #971)
 
 ## v0.28
 
