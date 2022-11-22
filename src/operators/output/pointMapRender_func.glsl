@@ -41,3 +41,15 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 	return createNonHitSdf();
 	#endif
 }
+
+void exposeDataPosition(vec2 resolution, vec2 fragCoord) {
+	#ifdef THIS_EXPOSE_datapos
+	THIS_datapos = round(fragCoord * resolution);
+	#endif
+	#ifdef THIS_EXPOSE_datauv
+	THIS_datauv = fragCoord;
+	#endif
+	#ifdef THIS_EXPOSE_datares
+	THIS_datares = resolution;
+	#endif
+}

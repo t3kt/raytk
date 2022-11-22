@@ -82,6 +82,8 @@ vec3 calcNormal(THIS_CoordT pos)
 	return adaptAsVec3(n);
 }
 
+#endif
+
 void main() {
 	#ifdef RAYTK_HAS_INIT
 	init();
@@ -89,6 +91,9 @@ void main() {
 	initOutputs();
 	vec2 resolution = uTDOutputInfo.res.zw;
 	vec2 fragCoord = vUV.st;
+
+	exposeDataPosition(resolution, fragCoord);
+
 	vec4 posAndExists = texture(sTD2DInputs[0], fragCoord);
 
 	if (posAndExists.a == 0) {
@@ -101,6 +106,9 @@ void main() {
 	#else
 	#error invalidCoordType
 	#endif
+
+	#if defined(THIS_RETURN_TYPE_Sdf)
+
 	Sdf res = map(p);
 
 	MaterialContext matCtx = createMaterialContext();
@@ -132,32 +140,14 @@ void main() {
 	#if defined(OUTPUT_OBJECTID) && defined(RAYTK_OBJECT_ID_IN_SDF)
 	objectIdOut += res.objectId;
 	#endif
-}
-#elif defined(THIS_RETURN_TYPE_vec4) || defined(THIS_RETURN_TYPE_float)
-void main() {
-	#ifdef RAYTK_HAS_INIT
-	init();
-	#endif
-	initOutputs();
-	vec2 resolution = uTDOutputInfo.res.zw;
-	vec2 fragCoord = vUV.st;
-	vec4 posAndExists = texture(sTD2DInputs[0], fragCoord);
 
-	if (posAndExists.a == 0) {
-		return;
-	}
-	#if defined(THIS_COORD_TYPE_vec3)
-	vec3 p = posAndExists.xyz;
-	#elif defined(THIS_COORD_TYPE_vec2)
-	vec2 p = posAndExists.xy;
-	#else
-	#error invalidCoordType
-	#endif
+	#elif defined(THIS_RETURN_TYPE_vec4) || defined(THIS_RETURN_TYPE_float)
+
 	#ifdef OUTPUT_VALUE
 	valueOut = vec4(thismap(p, createDefaultContext()));
 	#endif
-}
 
-#else
-	#error invalidReturnType
-#endif
+	#else
+		#error invalidReturnType
+	#endif
+}
