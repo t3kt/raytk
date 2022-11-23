@@ -1,3 +1,6 @@
 names	source	handling	readOnlyHandling	conversion	enable
-Edge Blend Value[1-2][1-4]	param	runtime	macro		1
+Blend	param	runtime	macro		1
+Edge	param	runtime	macro		op('edge_definition').numRows < 2
+Value1[1-4]	param	runtime	macro		op('low_value_definition').numRows < 2
+Value2[1-4]	param	runtime	macro		op('high_value_definition').numRows < 2
 Axis Enableblend Reverse	param	constant			1
