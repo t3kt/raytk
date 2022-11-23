@@ -42,9 +42,13 @@
     * modulo1D/modulo2D/modulo3D/moduloDistance/moduloPolar - faster parameter switching (#970)
     * pointDistanceField - coords and center field inputs (#978)
     * pointMapRender - lighting and shading support (#981), variables for data position
+    * quadTreeRepeat - faster parameter switching (#970)
     * radialClone - faster axis switching (#970)
+    * remapCoords - faster parameter switching (#970)
     * revolve - radial offset, axis offset field inputs (#812), faster axis switching (#970)
+    * rotate4D - faster parameter switching (#970)
     * sampledPointMat - faster parameter switching (#970), variables equivalent to modularMat, surface color support
+    * slice - faster parameter switching (#970)
     * textureField - faster parameter switching (#970)
     * triangleSdf2d - radius and size field inputs (#588)
     * truchetTile - faster plane switching (#970)

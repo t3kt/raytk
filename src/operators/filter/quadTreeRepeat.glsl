@@ -8,10 +8,15 @@ vec2 THIS_hash22(vec2 p){
 ReturnT thismap(CoordT p, ContextT ctx) {
 	if (IS_FALSE(THIS_Enable)) { return inputOp1(p, ctx); }
 	ReturnT res;
+	vec2 q;
 	#ifdef THIS_COORD_TYPE_vec3
-	vec2 q = p.THIS_PLANE;
+	switch (int(THIS_Axis)) {
+		case THISTYPE_Axis_x: q = p.yz; break;
+		case THISTYPE_Axis_y: q = p.zx; break;
+		case THISTYPE_Axis_z: q = p.xy; break;
+	}
 	#else
-	vec2 q = p;
+	q = p;
 	#endif
 
 	// Distance file values.
@@ -72,7 +77,11 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 
 			#ifdef THIS_COORD_TYPE_vec3
 			CoordT pForIn = p;
-			pForIn.THIS_PLANE = locP;
+			switch (int(THIS_Axis)) {
+				case THISTYPE_Axis_x: pForIn.yz = locP; break;
+				case THISTYPE_Axis_y: pForIn.zx = locP; break;
+				case THISTYPE_Axis_z: pForIn.xy = locP; break;
+			}
 			#else
 			CoordT pForIn = locP;
 			#endif

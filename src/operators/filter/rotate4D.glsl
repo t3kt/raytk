@@ -20,7 +20,11 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 	#endif
 
 	p4 -= piv;
-	pR(p4.THIS_Plane, r);
+	switch (int(THIS_Plane)) {
+		case THISTYPE_Plane_xw: pR(p4.xw, r); break;
+		case THISTYPE_Plane_yw: pR(p4.yw, r); break;
+		case THISTYPE_Plane_zw: pR(p4.zw, r); break;
+	}
 	p4 += piv;
 	p3 = stereographic(p4);
 
