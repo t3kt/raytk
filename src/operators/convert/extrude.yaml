@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.convert.extrude
-  opVersion: '17'
+  opVersion: '18'
   opStatus: default
 opDef: !def
   enable: true
@@ -12,7 +12,7 @@ opDef: !def
       Allcontexttype: true
     returnType: !returnT
       Returntypesdf: true
-  function: function
+  function: processedFunction
   lockParams: Uvmode
   paramGroupTable: eval_params
   variableTable: !table

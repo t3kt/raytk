@@ -27,6 +27,7 @@
     * chainSdf - length, radius, thickness field inputs (#693)
     * circleWaveSdf2d - offset parameter, curl, radius, thickness, offset field inputs (#588)
     * cylinderSdf - allow optimizing axis
+    * extrude - faster axis and other parameter switching (#970)
     * generalizedPolyhedronSdf - exponent field (#693)
     * headSdf - faster parameter switching (#970)
     * juliaSdf - C field input, step variables (#693)
