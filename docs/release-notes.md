@@ -24,6 +24,7 @@
     * triangularGridSdf2d
   * New OP features
     * axisLight - rotation (#961)
+    * bend - faster parameter switching (#970)
     * chainSdf - length, radius, thickness field inputs (#693)
     * circleWaveSdf2d - offset parameter, curl, radius, thickness, offset field inputs (#588)
     * cylinderSdf - allow optimizing axis
@@ -31,6 +32,7 @@
     * generalizedPolyhedronSdf - exponent field (#693)
     * headSdf - faster parameter switching (#970)
     * juliaSdf - C field input, step variables (#693)
+    * kink - faster parameter switching (#970)
     * logPolarRepeat - faster axis switching (#970)
     * metaballField - coord, center, exponent, radius, weight field inputs
     * mirrorOctant/mirrorQuadrant - faster axis switching (#970)
@@ -40,6 +42,7 @@
     * radialClone - faster axis switching (#970)
     * revolve - radial offset, axis offset field inputs (#812), faster axis switching (#970)
     * sampledPointMat - faster parameter switching (#970), variables equivalent to modularMat, surface color support
+    * textureField - faster parameter switching (#970)
     * triangleSdf2d - radius and size field inputs (#588)
     * truchetTile - faster plane switching (#970)
     * variableReference - show field name in label (#980), clean up parameters

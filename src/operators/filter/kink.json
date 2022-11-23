@@ -2,6 +2,6 @@
   "meta": {
     "opStatus": "default",
     "opType": "raytk.operators.filter.kink",
-    "opVersion": 6
+    "opVersion": 7
   }
 }
