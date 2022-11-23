@@ -25,35 +25,38 @@
     * triangularGridSdf2d
   * New OP features
     * axisLight - rotation (#961)
-    * bend - faster parameter switching (#970)
     * chainSdf - length, radius, thickness field inputs (#693)
     * circleWaveSdf2d - offset parameter, curl, radius, thickness, offset field inputs (#588)
     * cylinderSdf - allow optimizing axis
-    * extrude - faster axis and other parameter switching (#970)
     * generalizedPolyhedronSdf - exponent field (#693)
-    * headSdf - faster parameter switching (#970)
     * juliaSdf - C field input, step variables (#693)
-    * kink - faster parameter switching (#970)
-    * logPolarRepeat - faster axis switching (#970)
     * metaballField - coord, center, exponent, radius, weight field inputs
-    * mirrorAxes - faster parameter switching (#970)
-    * mirrorOctant/mirrorQuadrant - faster axis switching (#970)
-    * mobiusTransform - faster axis switching (#970)
-    * modulo1D/modulo2D/modulo3D/moduloDistance/moduloPolar - faster parameter switching (#970)
     * pointDistanceField - coords and center field inputs (#978)
     * pointMapRender - lighting and shading support (#981), variables for data position
-    * quadTreeRepeat - faster parameter switching (#970)
-    * radialClone - faster axis switching (#970)
-    * remapCoords - faster parameter switching (#970)
-    * revolve - radial offset, axis offset field inputs (#812), faster axis switching (#970)
-    * rotate4D - faster parameter switching (#970)
-    * sampledPointMat - faster parameter switching (#970), variables equivalent to modularMat, surface color support
-    * slice - faster parameter switching (#970)
-    * textureField - faster parameter switching (#970)
+    * revolve - radial offset, axis offset field inputs (#812)
+    * sampledPointMat - variables equivalent to modularMat, surface color support
     * triangleSdf2d - radius and size field inputs (#588)
-    * truchetTile - faster plane switching (#970)
     * variableReference - show field name in label (#980), clean up parameters
     * waveField - auto coord type
+  * Faster parameter switching (especially menus) (#970)
+    * bend
+    * extrude
+    * headSdf
+    * kink
+    * logPolarRepeat
+    * mirrorAxes
+    * mirrorOctant/mirrorQuadrant
+    * mobiusTransform
+    * modulo1D/modulo2D/modulo3D/moduloDistance/moduloPolar
+    * quadTreeRepeat
+    * radialClone
+    * remapCoords
+    * revolve
+    * rotate4D
+    * sampledPointMat
+    * slice
+    * textureField
+    * truchetTile
   * Editor tools (#772)
     * crossSection and projectPlane
 * Fixes
