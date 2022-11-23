@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.filter.moduloPolar
-  opVersion: '22'
+  opVersion: '23'
   opStatus: default
 opDef: !def
   enable: !expr
@@ -25,7 +25,6 @@ opDef: !def
     evaluate: true
     evalOpts: !evalOpts
       excludeFirstRow: true
-  generatedMacroTables: sel_axis_macros
   help: !text
     file: src/operators/filter/moduloPolar.md
     name: help

@@ -45,8 +45,14 @@ void THIS_apply(inout vec2 p, out float cell) {
 
 ReturnT thismap(CoordT p, ContextT ctx) {
 	if (IS_TRUE(THIS_Enable)) {
+		vec3 p3 = adaptAsVec3(p);
 		vec2 pivot = THIS_Pivot;
-		vec2 q = p.THIS_PLANE;
+		vec2 q;
+		switch (int(THIS_Axis)) {
+			case THISTYPE_Axis_x: q = p3.zx; break;
+			case THISTYPE_Axis_y: q = p3.zy; break;
+			case THISTYPE_Axis_z: q = p3.xy; break;
+		}
 		q -= pivot;
 		float r = THIS_Rotate;
 		#ifdef THIS_HAS_INPUT_rotateField
@@ -78,7 +84,13 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 		#ifdef THIS_HAS_INPUT_offsetField
 		o += inputOp_offsetField(p, ctx).xy;
 		#endif
-		p.THIS_PLANE = q - o + pivot;
+		q = q - o + pivot;
+		switch (int(THIS_Axis)) {
+			case THISTYPE_Axis_x: p3.zx = q; break;
+			case THISTYPE_Axis_y: p3.zy = q; break;
+			case THISTYPE_Axis_z: p3.xy = q; break;
+		}
+		p = THIS_asCoordT(p3);
 	}
 	return inputOp1(p, ctx);
 }
