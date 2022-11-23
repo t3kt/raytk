@@ -1,8 +1,8 @@
-name	label	mask	params
-x	X	vec3(1.,0.,0.)	Dirx
-y	Y	vec3(0.,1.,0.)	Diry
-z	Z	vec3(0.,0.,1.)	Dirz
-xy	XY	vec3(1.,1.,0.)	Dirx Diry
-yz	YZ	vec3(0.,1.,1.)	Diry Dirz
-zx	ZX	vec3(1.,0.,1.)	Dirz Dirx
-xyz	XYZ	vec3(1.)	Dirx Diry Dirz
+name	label	params	code
+x	X	Dirx	mask = vec3(1.,0.,0.);
+y	Y	Diry	mask = vec3(0.,1.,0.);
+z	Z	Dirz	mask = vec3(0.,0.,1.);
+xy	XY	Dirx Diry	mask = vec3(1.,1.,0.);
+yz	YZ	Diry Dirz	mask = vec3(0.,1.,1.);
+zx	ZX	Dirz Dirx	mask = vec3(1.,0.,1.);
+xyz	XYZ	Dirx Diry Dirz	mask = vec3(1.);

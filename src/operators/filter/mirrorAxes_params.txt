@@ -1,2 +1,3 @@
 names	source	handling	readOnlyHandling	conversion	enable
 Center[xyz] Offset[xyz] Flipside[xyz]	param	runtime	macro		1
+Dir[xyz]	param	constant			1

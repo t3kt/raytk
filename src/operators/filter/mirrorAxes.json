@@ -2,6 +2,6 @@
   "meta": {
     "opStatus": "beta",
     "opType": "raytk.operators.filter.mirrorAxes",
-    "opVersion": 7
+    "opVersion": 8
   }
 }

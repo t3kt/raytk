@@ -1,4 +1,4 @@
 names	source	handling	readOnlyHandling	conversion	enable
 Size Offset Shift Axis	param	runtime	macro		1
-Uselimit Limittype	param	macro			1
+Uselimit Limittype	param	constant			1
 Iterationtype Mirrortype	param	constant			1

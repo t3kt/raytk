@@ -9,6 +9,7 @@
   * Variables from sampledPointMat to customize shading.
   * Easier access to data textures using dataTextureField.
 * New 2D SDFs including eggSdf2d, hexagonalGridSdf2d, rhombileGridSdf2d, and triangularGridSdf2d.
+* Faster parameter changes for lots of operators (especially menu parameters).
 
 ### Details
 
@@ -35,8 +36,10 @@
     * kink - faster parameter switching (#970)
     * logPolarRepeat - faster axis switching (#970)
     * metaballField - coord, center, exponent, radius, weight field inputs
+    * mirrorAxes - faster parameter switching (#970)
     * mirrorOctant/mirrorQuadrant - faster axis switching (#970)
     * mobiusTransform - faster axis switching (#970)
+    * modulo1D/modulo2D/modulo3D/moduloDistance - faster parameter switching (#970)
     * pointDistanceField - coords and center field inputs (#978)
     * pointMapRender - lighting and shading support (#981), variables for data position
     * radialClone - faster axis switching (#970)

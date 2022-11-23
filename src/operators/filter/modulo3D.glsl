@@ -14,18 +14,19 @@ void THIS_apply(inout CoordT p, inout ContextT ctx) {
 	vec3 c = floor((q + halfsize) / size);
 	q = mod(q + halfsize, size) - halfsize;
 
-	#if defined(THIS_Limittype_both) || defined(THIS_Limittype_start)
-	vec3 start = THIS_Limitstart + THIS_Limitoffset;
-	if (c.x < start.x) applyModLimit(q.x, c.x, size.x, start.x);
-	if (c.y < start.y) applyModLimit(q.y, c.y, size.y, start.y);
-	if (c.z < start.z) applyModLimit(q.z, c.z, size.z, start.z);
-	#endif
-	#if defined(THIS_Limittype_both) || defined(THIS_Limittype_stop)
-	vec3 stop = THIS_Limitstop + THIS_Limitoffset;
-	if (c.x > stop.x) applyModLimit(q.x, c.x, size.x, stop.x);
-	if (c.y > stop.y) applyModLimit(q.y, c.y, size.y, stop.y);
-	if (c.z > stop.z) applyModLimit(q.z, c.z, size.z, stop.z);
-	#endif
+	vec3 start, stop;
+	if (THIS_Limittype == THISTYPE_Limittype_start || THIS_Limittype == THISTYPE_Limittype_both) {
+		start = THIS_Limitstart + THIS_Limitoffset;
+		if (c.x < start.x) applyModLimit(q.x, c.x, size.x, start.x);
+		if (c.y < start.y) applyModLimit(q.y, c.y, size.y, start.y);
+		if (c.z < start.z) applyModLimit(q.z, c.z, size.z, start.z);
+	}
+	if (THIS_Limittype == THISTYPE_Limittype_stop || THIS_Limittype == THISTYPE_Limittype_both) {
+		stop = THIS_Limitstop + THIS_Limitoffset;
+		if (c.x > stop.x) applyModLimit(q.x, c.x, size.x, stop.x);
+		if (c.y > stop.y) applyModLimit(q.y, c.y, size.y, stop.y);
+		if (c.z > stop.z) applyModLimit(q.z, c.z, size.z, stop.z);
+	}
 
 	if (THIS_Mirrortype == THISTYPE_Mirrortype_mirror) {
 		q *= mod(c, vec3(2.))*2. - vec3(1.);
@@ -44,15 +45,20 @@ void THIS_apply(inout CoordT p, inout ContextT ctx) {
 	#endif
 	#ifdef THIS_EXPOSE_normcoord
 	{
-		#if !defined(THIS_Uselimit)
-		THIS_normcoord = c;
-		#elif defined(THIS_Limittype_start)
-		THIS_normcoord = c - start;
-		#elif defined(THIS_Limittype_stop)
-		THIS_normcoord = -c + stop;
-		#elif defined(THIS_Limittype_both)
-		THIS_normcoord = map01(c, start, stop);
-		#endif
+		switch (int(THIS_Limittype)) {
+			case THISTYPE_Limittype_none:
+				THIS_normcoord = c;
+				break;
+			case THISTYPE_Limittype_start:
+				THIS_normcoord = c - start;
+				break;
+			case THISTYPE_Limittype_stop:
+				THIS_normcoord = -c + stop;
+				break;
+			case THISTYPE_Limittype_both:
+				THIS_normcoord = map01(c, start, stop);
+				break;
+		}
 	}
 	#endif
 
