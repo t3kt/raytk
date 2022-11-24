@@ -1,3 +1,3 @@
 names	source	handling	readOnlyHandling	conversion	enable
 Blend	param	constant			1
-Source	param	runtime	macro		1
+Source	param	runtime	macro		op('definition_indexField').numRows < 2
