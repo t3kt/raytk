@@ -1,2 +1,4 @@
 names	source	handling	readOnlyHandling	conversion	enable
-Translate[xyz] Scale[xyz] Uniformscale Chamfer Round	param	runtime	macro		1
+Translate[xyz] Scale[xyz] Uniformscale	param	runtime	macro		1
+Chamfer	param	runtime	macro		op('chamfer_definition').numRows < 2
+Round	param	runtime	macro		op('rounding_definition').numRows < 2

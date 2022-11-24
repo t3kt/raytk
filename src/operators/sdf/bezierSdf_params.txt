@@ -1,2 +1,5 @@
 names	source	handling	readOnlyHandling	conversion	enable
-Point[1-3][xyz] Radiusstart Radiusend	param	runtime	macro		1
+Radiusstart Radiusend	param	runtime	macro		1
+Point1[xyz]	param	runtime	macro		op('point_1_definition').numRows < 2
+Point2[xyz]	param	runtime	macro		op('point_2_definition').numRows < 2
+Point3[xyz]	param	runtime	macro		op('point_3_definition').numRows < 2
