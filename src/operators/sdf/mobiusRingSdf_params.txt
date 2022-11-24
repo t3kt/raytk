@@ -1,2 +1,4 @@
 names	source	handling	readOnlyHandling	conversion	enable
-Translate[xyz] Radius Thickness Rounding Twist Twistphase	param	runtime	macro		1
+Translate[xyz] Rounding Twist Twistphase	param	runtime	macro		1
+Radius	param	runtime	macro		op('radius_definition').numRows < 2
+Thickness	param	runtime	macro		op('thickness_definition').numRows < 2

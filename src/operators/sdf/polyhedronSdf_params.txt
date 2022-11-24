@@ -1,2 +1,9 @@
 names	source	handling	readOnlyHandling	conversion	enable
-Type U V W Enablefaces Enablesegments Enablevertices Segmentsize Vertexsize Radius Faceradius Segmentradius Vertexradius	param	runtime	macro		1
+Type Enablefaces Enablesegments Enablevertices	param	runtime	macro		1
+Radius	param	runtime	macro		op('radius_definition').numRows < 2
+Faceradius	param	runtime	macro		op('faceRadius_definition').numRows < 2
+Segmentradius	param	runtime	macro		op('segmentRadius_definition').numRows < 2
+Segmentsize	param	runtime	macro		op('segmentSize_definition').numRows < 2
+Vertexsize	param	runtime	macro		op('vertexSize_definition').numRows < 2
+Vertexradius	param	runtime	macro		op('vertexRadius_definition').numRows < 2
+U V W	param	runtime	macro		op('uvw_definition').numRows < 2

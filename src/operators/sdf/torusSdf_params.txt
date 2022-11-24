@@ -1,4 +1,5 @@
 names	source	handling	readOnlyHandling	conversion	enable
 Translate[xyz] Radius Thickness	param	runtime	macro		1
-Anglewidth Angleoffset	param	runtime	macro	angle	1
+Anglewidth	param	runtime	macro	angle	op('angleWidth_definition').numRows < 2
+Angleoffset	param	runtime	macro	angle	op('angleOffset_definition').numRows < 2
 Axis Enablecaps Uvmode	param	constant			1

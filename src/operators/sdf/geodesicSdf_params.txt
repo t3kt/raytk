@@ -2,5 +2,5 @@ names	source	handling	readOnlyHandling	conversion	enable
 Divisions	param	runtime	macro		1
 Shape Enablespikes Enablefaces	param	macro			1
 Spikelength Spikeoffset Spikeradius	param	runtime	macro		parent().par.Enablespikes
-Faceoffset	param	runtime	macro		parent().par.Enablefaces and op('definition_2').numRows < 2
-Faceoffsetfieldcoordmode	param	macro			parent().par.Enablefaces and op('definition_2').numRows >= 2
+Faceoffset	param	runtime	macro		parent().par.Enablefaces and op('faceOffset_definition').numRows < 2
+Faceoffsetfieldcoordmode	param	macro			parent().par.Enablefaces and op('faceOffset_definition').numRows >= 2

@@ -1,5 +1,7 @@
 names	source	handling	readOnlyHandling	conversion	enable
 Enableperiod Enablephase	param	macro			1
-Translate[xyz] Scale[xyz] Bias Thickness	param	runtime	macro		1
+Translate[xyz] Scale[xyz]	param	runtime	macro		1
+Bias	param	runtime	macro		op('bias_definition').numRows < 2
+Thickness	param	runtime	macro		op('thickness_definition').numRows < 2
 Period1[xyz] Period2[xyz]	param	runtime	macro		parent().par.Enableperiod
 Phase1[xyz] Phase2[xyz]	param	runtime	macro		parent().par.Enablephase

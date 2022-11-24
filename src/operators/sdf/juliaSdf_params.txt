@@ -1,3 +1,3 @@
 names	source	handling	readOnlyHandling	conversion	enable
-C1 C2 C3 C4	param	runtime	macro		1
+C1 C2 C3 C4	param	runtime	macro		op('c_definition').numRows < 2
 Iterations	param	constant			1
