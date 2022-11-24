@@ -1,2 +1,3 @@
 names	source	handling	readOnlyHandling	conversion	enable
-Rotateplane[xyz] Offset	param	runtime	macro		1
+Rotateplane[xyz]	param	runtime	macro		1
+Offset	param	runtime	macro		op('offset_definition').numRows < 2

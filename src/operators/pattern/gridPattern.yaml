@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.pattern.gridPattern
-  opVersion: '0'
+  opVersion: '1'
   opStatus: beta
 opDef: !def
   enable: true

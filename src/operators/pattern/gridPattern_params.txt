@@ -1,2 +1,3 @@
 names	source	handling	readOnlyHandling	conversion	enable
-Translate[xy] Spacing[xy]	param	runtime	macro		1
+Translate[xy]	param	runtime	macro		1
+Spacing[xy]	param	runtime	macro		op('spacing_definition').numRows < 2

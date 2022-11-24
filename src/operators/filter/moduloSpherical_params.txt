@@ -1,3 +1,6 @@
 names	source	handling	readOnlyHandling	conversion	enable
-Pivot[xyz] Repetitions[1-2] Offset[1-2] Shift[1-2]	param	runtime	macro		1
+Pivot[xyz]	param	runtime	macro		1
+Repetitions[1-2]	param	runtime	macro		op('repetitions_definition').numRows < 2
+Offset[1-2]	param	runtime	macro		op('offset_definition').numRows < 2
+Shift[1-2]	param	runtime	macro		op('shift_definition').numRows < 2
 Mirrortype	param	constant			1

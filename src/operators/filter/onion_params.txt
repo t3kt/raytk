@@ -1,2 +1,3 @@
 names	source	handling	readOnlyHandling	conversion	enable
-Thickness Iterations	param	runtime	macro		1
+Thickness	param	runtime	macro		op('thickness_definition').numRows < 2
+Iterations	param	runtime	macro		op('iterations_definition').numRows < 2

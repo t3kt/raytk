@@ -1,2 +1,5 @@
 names	source	handling	readOnlyHandling	conversion	enable
-Translate[xy] Size Glow Spread[1-2] Radius	param	runtime	macro		1
+Translate[xy] Size	param	runtime	macro		1
+Glow	param	runtime	macro		op('glow_definition').numRows < 2
+Spread[1-2]	param	runtime	macro		op('spread_definition').numRows < 2
+Radius	param	runtime	macro		op('radius_definition').numRows < 2

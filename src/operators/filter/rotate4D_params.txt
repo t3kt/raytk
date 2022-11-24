@@ -1,4 +1,4 @@
 names	source	handling	readOnlyHandling	conversion	enable
-Rotate	param	runtime	macro	angle	1
+Rotate	param	runtime	macro	angle	op('rotate_definition').numRows < 2
 Plane	param	constant			1
-Pivot[xyz] Pivotw	param	runtime	macro		1
+Pivot[xyz] Pivotw	param	runtime	macro		op('pivot_definition').numRows < 2

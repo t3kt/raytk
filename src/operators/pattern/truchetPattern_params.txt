@@ -1,5 +1,7 @@
 names	source	handling	readOnlyHandling	conversion	enable
-Translate[xy] Size Curve Seed	param	runtime	macro		1
-Thickness Blending	param	runtime	macro		1
-Pathcolor[rgb]	param	runtime	macro		parent().par.Pathcolorr.enable
-Bgcolor[rgb]	param	runtime	macro		parent().par.Bgcolorr.enable
+Translate[xy] Size Seed	param	runtime	macro		1
+Curve	param	runtime	macro		op('curve_definition').numRows < 2
+Thickness	param	runtime	macro		op('thickness_definition').numRows < 2
+Blending	param	runtime	macro		op('blending_definition').numRows < 2
+Pathcolor[rgb]	param	runtime	macro		parent().par.Pathcolorr.enable and op('pathColor_definition').numRows < 2
+Bgcolor[rgb]	param	runtime	macro		parent().par.Bgcolorr.enable and op('bgColor_definition').numRows < 2

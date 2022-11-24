@@ -1,2 +1,5 @@
 names	source	handling	readOnlyHandling	conversion	enable
-Translate[xy] Size[xy] Shift Thickness Blending	param	runtime	macro		1
+Translate[xy] Size[xy]	param	runtime	macro		1
+Shift	param	runtime	macro		op('shift_definition').numRows < 2
+Thickness	param	runtime	macro		op('thickness_definition').numRows < 2
+Blending	param	runtime	macro		op('blending_definition').numRows < 2

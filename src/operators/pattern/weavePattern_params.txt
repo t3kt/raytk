@@ -1,2 +1,3 @@
 names	source	handling	readOnlyHandling	conversion	enable
-Translate[xy] Size[xy] Thickness	param	runtime	macro		1
+Translate[xy] Size[xy]	param	runtime	macro		1
+Thickness	param	runtime	macro		op('thickness_definition').numRows < 2

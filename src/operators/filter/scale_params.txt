@@ -1,4 +1,5 @@
 names	source	handling	readOnlyHandling	conversion	enable
 Scale[xyz] Uniformscale	param	runtime	macro		1
 Scaletype	param	constant			1
-Pivot[xyz] Usepivot	param	runtime	macro		1
+Usepivot	param	runtime	macro		1
+Pivot[xyz]	param	runtime	macro		op('pivot_field_definition').numRows < 2

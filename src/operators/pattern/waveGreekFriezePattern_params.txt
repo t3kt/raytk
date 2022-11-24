@@ -1,2 +1,4 @@
 names	source	handling	readOnlyHandling	conversion	enable
-Translate[xy] Size Twist Blending	param	runtime	macro		1
+Translate[xy] Size	param	runtime	macro		1
+Twist	param	runtime	macro		op('twist_definition').numRows < 2
+Blending	param	runtime	macro		op('blending_definition').numRows < 2
