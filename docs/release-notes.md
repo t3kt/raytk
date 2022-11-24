@@ -42,6 +42,7 @@
     * bend
     * extrude
     * headSdf
+    * iteratedTransform
     * kink
     * logPolarRepeat
     * mirrorAxes
