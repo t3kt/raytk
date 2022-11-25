@@ -1,2 +1,3 @@
 names	source	handling	readOnlyHandling	conversion	enable
-Point[ab][xy] Thickness Headthickness Headratio	param	runtime	macro		1
+Thickness Headthickness Headratio	param	runtime	macro		1
+Point[ab][xy]	param	runtime	macro		op('points_definition').numRows < 2
