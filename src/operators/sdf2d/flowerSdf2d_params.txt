@@ -1,2 +1,3 @@
 names	source	handling	readOnlyHandling	conversion	enable
-Radius Amplitude Petals	param	runtime	macro		1
+Radius Amplitude	param	runtime	macro		1
+Petals	param	runtime	macro		op('petals_definition').numRows < 2

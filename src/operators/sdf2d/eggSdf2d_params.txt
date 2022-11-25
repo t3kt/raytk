@@ -1,2 +1,3 @@
 names	source	handling	readOnlyHandling	conversion	enable
-Radius Rounding	param	runtime	macro		1
+Radius	param	runtime	macro		op('radius_definition').numRows < 2
+Rounding	param	runtime	macro		op('rounding_definition').numRows < 2

@@ -1,2 +1,5 @@
 names	source	handling	readOnlyHandling	conversion	enable
-Curl Radius Thickness Offset	param	runtime	macro		1
+Curl	param	runtime	macro		op('curl_definition').numRows < 2
+Radius	param	runtime	macro		op('radius_definition').numRows < 2
+Thickness	param	runtime	macro		op('thickness_definition').numRows < 2
+Offset	param	runtime	macro		op('offset_definition').numRows < 2

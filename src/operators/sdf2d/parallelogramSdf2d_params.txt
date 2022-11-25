@@ -1,2 +1,3 @@
 names	source	handling	readOnlyHandling	conversion	enable
-Width Height Skew	param	runtime	macro		1
+Width Height	param	runtime	macro		1
+Skew	param	runtime	macro		op('skew_definition').numRows < 2

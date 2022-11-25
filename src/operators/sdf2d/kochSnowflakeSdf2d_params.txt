@@ -1,2 +1,2 @@
 names	source	handling	readOnlyHandling	conversion	enable
-Steps	param	runtime	macro		1
+Steps	param	runtime	macro		op('steps_definition').numRows < 2

@@ -1,2 +1,4 @@
 names	source	handling	readOnlyHandling	conversion	enable
-Centerpoint[xy] Endpoint[1-2][xy]	param	runtime	macro		1
+Centerpoint[xy]	param	runtime	macro		op('centerPoint_definition').numRows < 2
+Endpoint1[xy]	param	runtime	macro		op('endPoint1_definition').numRows < 2
+Endpoint2[xy]	param	runtime	macro		op('endPoint2_definition').numRows < 2
