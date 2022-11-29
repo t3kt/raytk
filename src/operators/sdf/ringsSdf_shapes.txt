@@ -1,0 +1,4 @@
+name	label	code
+circle	Circle	THIS_prepareCircle(p0, space, shift, cell);
+square	Square	THIS_prepareSquare(p0, space, shift, cell);
+diamond	Diamond	THIS_prepareDiamond(p0, space, shift, cell);
