@@ -15,6 +15,7 @@
 
 * Improvements / additions
   * New OPs
+    * boundLimit (#30)
     * dataTextureField
     * eggSdf2d
     * geometricSeriesSquareTile
@@ -22,6 +23,7 @@
     * hexagonalGridSdf2d
     * projectPolar
     * rhombilleTilingSdf2d
+    * ringsSdf
     * triangularGridSdf2d
   * New OP features
     * axisLight - rotation (#961)
@@ -60,9 +62,11 @@
     * truchetTile
   * Editor tools (#772)
     * crossSection and projectPlane
+  * Reducing unnecessary parameters (#907)
 * Fixes
   * linkedCamera - fix creating linked cameraViewport (#979)
   * modularMat - fix shadows not being activated when shading elements are not directly connected to modularMat (#982)
+  * pointDistanceField - fix table buildExclude bug
 * Changes (potentially breaking)
   * adjustColor - separated out the hue/saturation and brightness/contrast field inputs
 * Infrastructure / internals
