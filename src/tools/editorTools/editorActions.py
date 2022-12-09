@@ -212,7 +212,7 @@ def _createVarRefGroup(text: str):
 		return actions
 	return _SimpleGroup(text, isValid, getActions)
 
-def _createRenderSelAction(label: str, name: str, enablePar: str):
+def _createRenderSelAction(label: str, name: str, enablePar: str, templatePath: Optional[str] = None):
 	def execute(ctx: ActionContext):
 		def init(refOp: 'COMP'):
 			fromOp = ctx.primaryRop
@@ -249,6 +249,19 @@ def _createRenderSelGroup(text: str):
 			if table[i, 'available'] != 'False'
 		]
 	return _SimpleGroup(text, isValid, getActions)
+
+def _createObjectIdMaskAction(text):
+	def isValid(ctx: ActionContext):
+		return ctx.primaryRopState and ctx.primaryRopState.info.opType == _RopTypes.raymarchRender3d
+	def execute(ctx: ActionContext):
+		def init(refOp: 'COMP'):
+			fromOp = ctx.primaryRop
+			refOp.nodeCenterY = fromOp.nodeCenterY - 200
+			refOp.nodeX = fromOp.nodeX + refOp.nodeWidth + 100
+			fromOp.par.Enableobjectidoutput = True
+			refOp.par.Outputop = fromOp
+		ActionUtils.createROP('raytk.operators.post.objectIdMask', init)
+	return _SimpleAction(text, isValid, execute)
 
 def _createAddInputAction(
 		text: str,
@@ -633,6 +646,7 @@ def createActionManager():
 			select=_OpSelect(ropTypes=[_RopTypes.raymarchRender3d]),
 			attach=_AttachOutFromExisting(inputIndex=0, outputIndex=2),
 		),
+		_createObjectIdMaskAction('Select Object Id Mask'),
 		_createAnimateParamsGroup(
 			'Animate With Speed', _RopTypes.speedGenerator, 'speedGen'),
 		_createAnimateParamsGroup(
