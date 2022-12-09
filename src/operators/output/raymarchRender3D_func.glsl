@@ -60,14 +60,14 @@ bool checkLimit(vec3 p) {
 float checkNearHit(float d) {
 	float fade = THIS_Nearhitfade;
 	float maxD = THIS_Nearhitrange;
-	#ifdef THIS_Enablenearhitmindist
-	float minD = THIS_Nearhitmindist;
-	if (d < minD || d > maxD) { return 0.; }
-	if (d < minD + fade) { return smoothstep(0., fade, d - minD); }
-	return 1. - smoothstep(maxD - fade, maxD, d);
-	#else
-	return 1. - smoothstep(0., fade, d - maxD);
-	#endif
+	if (IS_TRUE(THIS_Enablenearhitmindist)) {
+		float minD = THIS_Nearhitmindist;
+		if (d < minD || d > maxD) { return 0.; }
+		if (d < minD + fade) { return smoothstep(0., fade, d - minD); }
+		return 1. - smoothstep(maxD - fade, maxD, d);
+	} else {
+		return 1. - smoothstep(0., fade, d - maxD);
+	}
 }
 
 #endif
