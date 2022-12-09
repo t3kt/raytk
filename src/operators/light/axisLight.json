@@ -2,6 +2,6 @@
   "meta": {
     "opStatus": "default",
     "opType": "raytk.operators.light.axisLight",
-    "opVersion": 7
+    "opVersion": 8
   }
 }

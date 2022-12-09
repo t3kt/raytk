@@ -1,0 +1,283 @@
+Combine multiple SDFs using different combination modes into a single SDF.
+
+This is essentially a replacement for long chains of `combine` operators.
+Once you've set up all the inputs and combine modes, switch on the `Optimize` setting which will compile down the generated code so that it runs much faster, but will make changes to settings much slower.
+
+## Parameters
+
+* `Optimize`
+* `Enable1`
+* `Input1`
+  * `input1`
+  * `input2`
+  * `input3`
+  * `input4`
+  * `input5`
+  * `input6`
+  * `input7`
+  * `input8`
+* `Translate1`
+* `Combine1`
+  * `simpleUnion`
+  * `simpleIntersect`
+  * `simpleDiff`
+  * `smoothUnion`
+  * `smoothIntersect`
+  * `smoothDiff`
+  * `roundUnion`
+  * `roundIntersect`
+  * `roundDiff`
+  * `chamferUnion`
+  * `chamferIntersect`
+  * `chamferDiff`
+  * `stairUnion`
+  * `stairIntersect`
+  * `stairDiff`
+  * `columnUnion`
+  * `columnIntersect`
+  * `columnDiff`
+* `Blendradius1`
+* `Blendnumber1`
+* `Blendoffset1`
+* `Enable2`
+* `Input2`
+  * `input1`
+  * `input2`
+  * `input3`
+  * `input4`
+  * `input5`
+  * `input6`
+  * `input7`
+  * `input8`
+* `Translate2`
+* `Combine2`
+  * `simpleUnion`
+  * `simpleIntersect`
+  * `simpleDiff`
+  * `smoothUnion`
+  * `smoothIntersect`
+  * `smoothDiff`
+  * `roundUnion`
+  * `roundIntersect`
+  * `roundDiff`
+  * `chamferUnion`
+  * `chamferIntersect`
+  * `chamferDiff`
+  * `stairUnion`
+  * `stairIntersect`
+  * `stairDiff`
+  * `columnUnion`
+  * `columnIntersect`
+  * `columnDiff`
+* `Blendradius2`
+* `Blendnumber2`
+* `Blendoffset2`
+* `Enable3`
+* `Input3`
+  * `input1`
+  * `input2`
+  * `input3`
+  * `input4`
+  * `input5`
+  * `input6`
+  * `input7`
+  * `input8`
+* `Translate3`
+* `Combine3`
+  * `simpleUnion`
+  * `simpleIntersect`
+  * `simpleDiff`
+  * `smoothUnion`
+  * `smoothIntersect`
+  * `smoothDiff`
+  * `roundUnion`
+  * `roundIntersect`
+  * `roundDiff`
+  * `chamferUnion`
+  * `chamferIntersect`
+  * `chamferDiff`
+  * `stairUnion`
+  * `stairIntersect`
+  * `stairDiff`
+  * `columnUnion`
+  * `columnIntersect`
+  * `columnDiff`
+* `Blendradius3`
+* `Blendnumber3`
+* `Blendoffset3`
+* `Enable4`
+* `Input4`
+  * `input1`
+  * `input2`
+  * `input3`
+  * `input4`
+  * `input5`
+  * `input6`
+  * `input7`
+  * `input8`
+* `Translate4`
+* `Combine4`
+  * `simpleUnion`
+  * `simpleIntersect`
+  * `simpleDiff`
+  * `smoothUnion`
+  * `smoothIntersect`
+  * `smoothDiff`
+  * `roundUnion`
+  * `roundIntersect`
+  * `roundDiff`
+  * `chamferUnion`
+  * `chamferIntersect`
+  * `chamferDiff`
+  * `stairUnion`
+  * `stairIntersect`
+  * `stairDiff`
+  * `columnUnion`
+  * `columnIntersect`
+  * `columnDiff`
+* `Blendradius4`
+* `Blendnumber4`
+* `Blendoffset4`
+* `Enable5`
+* `Input5`
+  * `input1`
+  * `input2`
+  * `input3`
+  * `input4`
+  * `input5`
+  * `input6`
+  * `input7`
+  * `input8`
+* `Translate5`
+* `Combine5`
+  * `simpleUnion`
+  * `simpleIntersect`
+  * `simpleDiff`
+  * `smoothUnion`
+  * `smoothIntersect`
+  * `smoothDiff`
+  * `roundUnion`
+  * `roundIntersect`
+  * `roundDiff`
+  * `chamferUnion`
+  * `chamferIntersect`
+  * `chamferDiff`
+  * `stairUnion`
+  * `stairIntersect`
+  * `stairDiff`
+  * `columnUnion`
+  * `columnIntersect`
+  * `columnDiff`
+* `Blendradius5`
+* `Blendnumber5`
+* `Blendoffset5`
+* `Enable6`
+* `Input6`
+  * `input1`
+  * `input2`
+  * `input3`
+  * `input4`
+  * `input5`
+  * `input6`
+  * `input7`
+  * `input8`
+* `Translate6`
+* `Combine6`
+  * `simpleUnion`
+  * `simpleIntersect`
+  * `simpleDiff`
+  * `smoothUnion`
+  * `smoothIntersect`
+  * `smoothDiff`
+  * `roundUnion`
+  * `roundIntersect`
+  * `roundDiff`
+  * `chamferUnion`
+  * `chamferIntersect`
+  * `chamferDiff`
+  * `stairUnion`
+  * `stairIntersect`
+  * `stairDiff`
+  * `columnUnion`
+  * `columnIntersect`
+  * `columnDiff`
+* `Blendradius6`
+* `Blendnumber6`
+* `Blendoffset6`
+* `Enable7`
+* `Input7`
+  * `input1`
+  * `input2`
+  * `input3`
+  * `input4`
+  * `input5`
+  * `input6`
+  * `input7`
+  * `input8`
+* `Translate7`
+* `Combine7`
+  * `simpleUnion`
+  * `simpleIntersect`
+  * `simpleDiff`
+  * `smoothUnion`
+  * `smoothIntersect`
+  * `smoothDiff`
+  * `roundUnion`
+  * `roundIntersect`
+  * `roundDiff`
+  * `chamferUnion`
+  * `chamferIntersect`
+  * `chamferDiff`
+  * `stairUnion`
+  * `stairIntersect`
+  * `stairDiff`
+  * `columnUnion`
+  * `columnIntersect`
+  * `columnDiff`
+* `Blendradius7`
+* `Blendnumber7`
+* `Blendoffset7`
+* `Enable8`
+* `Input8`
+  * `input1`
+  * `input2`
+  * `input3`
+  * `input4`
+  * `input5`
+  * `input6`
+  * `input7`
+  * `input8`
+* `Translate8`
+* `Combine8`
+  * `simpleUnion`
+  * `simpleIntersect`
+  * `simpleDiff`
+  * `smoothUnion`
+  * `smoothIntersect`
+  * `smoothDiff`
+  * `roundUnion`
+  * `roundIntersect`
+  * `roundDiff`
+  * `chamferUnion`
+  * `chamferIntersect`
+  * `chamferDiff`
+  * `stairUnion`
+  * `stairIntersect`
+  * `stairDiff`
+  * `columnUnion`
+  * `columnIntersect`
+  * `columnDiff`
+* `Blendradius8`
+* `Blendnumber8`
+* `Blendoffset8`
+
+## Inputs
+
+* `definition_in_1`: 
+* `definition_in_2`: 
+* `definition_in_3`: 
+* `definition_in_4`: 
+* `definition_in_5`: 
+* `definition_in_6`: 
+* `definition_in_7`: 
+* `definition_in_8`: 

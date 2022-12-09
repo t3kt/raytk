@@ -2,6 +2,6 @@
   "meta": {
     "opStatus": "default",
     "opType": "raytk.operators.convert.coordTo2D",
-    "opVersion": 15
+    "opVersion": 16
   }
 }

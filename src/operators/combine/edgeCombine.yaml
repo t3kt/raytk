@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.combine.edgeCombine
-  opVersion: '5'
+  opVersion: '6'
   opStatus: default
 opDef: !def
   enable: true
@@ -17,6 +17,9 @@ opDef: !def
     name: function
   paramGroupTable: eval_params
   generatedMacroTables: multiInputHandler_macros
+  help: !text
+    file: src/operators/combine/edgeCombine.md
+    name: help
 multiInput: !multiInput
   Minimuminputs: 1
   Coordtypereductionmode: common

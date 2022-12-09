@@ -2,6 +2,6 @@
   "meta": {
     "opStatus": "beta",
     "opType": "raytk.operators.filter.rotate4D",
-    "opVersion": 3
+    "opVersion": 4
   }
 }

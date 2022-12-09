@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.light.multiLight
-  opVersion: '2'
+  opVersion: '3'
   opStatus: beta
 opDef: !def
   enable: true
@@ -21,6 +21,9 @@ opDef: !def
     name: macro_exprs
     evaluate: true
     evalOpts: !evalOpts {}
+  help: !text
+    file: src/operators/light/multiLight.md
+    name: help
 multiInput: !multiInput
   Minimuminputs: 0
   Coordtypereductionmode: common
