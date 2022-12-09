@@ -21,6 +21,7 @@
     * geometricSeriesSquareTile
     * gridPattern (#254)
     * hexagonalGridSdf2d
+    * objectIdMask
     * projectPolar
     * rhombilleTilingSdf2d
     * ringsSdf
