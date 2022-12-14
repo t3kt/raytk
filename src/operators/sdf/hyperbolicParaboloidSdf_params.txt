@@ -1,0 +1,3 @@
+names	source	handling	readOnlyHandling	conversion	enable
+Infinitesize	param	constant			
+Size[xyz]	param	runtime	macro		
