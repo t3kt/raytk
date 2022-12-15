@@ -618,6 +618,12 @@ def createActionManager():
 			select=_OpSelect(ropTypes=[_RopTypes.raymarchRender3d]),
 			attach=_AttachIntoExisting(inputIndex=1),
 		),
+		_ActionImpl(
+			'Add Basic Camera',
+			ropType='raytk.operators.camera.basicCamera',
+			select=_OpSelect(ropTypes=[_RopTypes.raymarchRender3d]),
+			attach=_AttachIntoExisting(inputIndex=1),
+		),
 		_createAddInputAction(
 			'Add Point Light',
 			[_RopTypes.raymarchRender3d],

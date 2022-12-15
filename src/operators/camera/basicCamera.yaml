@@ -1,8 +1,8 @@
 !rop
 meta: !meta
   opType: raytk.operators.camera.basicCamera
-  opVersion: '5'
-  opStatus: deprecated
+  opVersion: '6'
+  opStatus: default
 opDef: !def
   enable: true
   typeSpec: !ropTypes
