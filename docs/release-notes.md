@@ -66,6 +66,7 @@
     * crossSection and projectPlane
   * Reducing unnecessary parameters (#907)
 * Fixes
+  * editor tools - fix incorrect attachment of specular/diffuse to modularMat without a primary input
   * linkedCamera - fix creating linked cameraViewport (#979)
   * modularMat - fix shadows not being activated when shading elements are not directly connected to modularMat (#982)
   * pointDistanceField - fix table buildExclude bug
