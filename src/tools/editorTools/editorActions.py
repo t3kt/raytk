@@ -392,24 +392,6 @@ def _primaryRopHasParam(ctx: ActionContext, par: str):
 def _anySelectedRopHasParam(ctx: ActionContext, par: str):
 	return any(rop.par[par] is not None for rop in ctx.selectedRops)
 
-def _createChangeParamLockAction(
-		text: str,
-		filterPar: Callable[[Par], bool],
-		state: bool):
-	def getPars(ctx: ActionContext):
-		return [
-			t[0]
-			for o in ctx.selectedRops
-			for t in o.customTuplets
-			if filterPar(t[0]) and t[0].style not in ('Momentary', 'Pulse', 'Header') and not t[0].isOP
-		]
-	def isValid(ctx: ActionContext):
-		return bool(getPars(ctx))
-	def execute(ctx: ActionContext):
-		for par in getPars(ctx):
-			par.readOnly = state
-	return _SimpleAction(text, isValid=isValid, execute=execute)
-
 class _RopTypes:
 	crossSection = 'raytk.operators.convert.crossSection'
 	modularMat = 'raytk.operators.material.modularMat'
@@ -594,22 +576,6 @@ def createActionManager():
 			attach=_AttachOutFromExisting(),
 		),
 		_createGoToGroup('Go to'),
-		_createChangeParamLockAction(
-			'Unlock all pars',
-			filterPar=lambda p: True,
-			state=False),
-		_createChangeParamLockAction(
-			'Unlock non-constant pars',
-			filterPar=lambda p: p.mode != ParMode.CONSTANT,
-			state=False),
-		_createChangeParamLockAction(
-			'Lock all constant pars',
-			filterPar=lambda p: p.mode == ParMode.CONSTANT,
-			state=True),
-		_createChangeParamLockAction(
-			'Lock all pars',
-			filterPar=lambda p: True,
-			state=True),
 	)
 	return manager
 

@@ -72,6 +72,7 @@
   * pointDistanceField - fix table buildExclude bug
 * Changes (potentially breaking)
   * adjustColor - separated out the hue/saturation and brightness/contrast field inputs
+  * remove editor tools related to parameter locking
 * Infrastructure / internals
   * Operator tags which allow operators to indicate features that they depend on (e.g. lighting) (#982, #971)
 
