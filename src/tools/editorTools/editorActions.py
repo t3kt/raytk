@@ -316,8 +316,10 @@ def _createTableBasedGroup(
 		select: '_OpSelect',
 		attach: '_OpAttach',
 ):
-	def getActions(_):
-		return [
+	return _GroupImpl(
+		text,
+		select,
+		[
 			_ActionImpl(
 				str(table[i, 'label']),
 				ropType=ropType,
@@ -326,8 +328,7 @@ def _createTableBasedGroup(
 				params={paramName: str(table[i, 'name'])},
 			)
 			for i in range(1, table.numRows)
-		]
-	return _GroupImpl(text, select, getActions)
+		])
 
 def _createGoToAction(text: str, getTargets: Callable[[ActionContext], List[OP]]):
 	def isValid(ctx: ActionContext):
