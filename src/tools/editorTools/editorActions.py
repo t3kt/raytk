@@ -548,6 +548,15 @@ def createActionManager():
 				returnTypes=['float', 'vec4'],
 				multi=True, minCount=True, maxCount=None),
 			attach=_AttachOutFromExisting()),
+		_createTableBasedGroup(
+			'Combine Fields',
+			ropType='raytk.operators.combine.compositeFields',
+			paramName='Operation',
+			table=op('compositeModes'),
+			select=_OpSelect(
+				returnTypes=['vec4'],
+				multi=True, minCount=True, maxCount=None),
+			attach=_AttachOutFromExisting()),
 		_createVarRefGroup('Reference Variable'),
 		_createRenderSelGroup('Select Output Buffer'),
 		_ActionImpl(
