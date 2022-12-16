@@ -66,55 +66,6 @@ def _createAppendNull(text: str):
 
 	return _SimpleAction(text, isValid, execute)
 
-def _createAddOutputAction(
-		text: str,
-		isValid: Optional[_IsValidFunc],
-		ropType: str,
-		paramVals: Optional[dict] = None,
-):
-	def isValidWrapper(ctx: ActionContext):
-		if not ActionUtils.isKnownRopType(ropType):
-			return False
-		return not isValid or isValid(ctx)
-
-	def execute(ctx: ActionContext):
-		def init(rop: 'COMP'):
-			if paramVals:
-				for name, val in paramVals.items():
-					rop.par[name] = val
-		ActionUtils.createAndAttachFromOutput(
-			fromRop=ctx.primaryRop,
-			ropType=ropType,
-			init=init,
-		)
-	return _SimpleAction(text, isValidWrapper, execute)
-
-def _createCombineActionGroup(
-		text: str, ropType: str, paramName: str,
-		modeTable: 'DAT',
-		minCount: int, maxCount: Optional[int] = None,
-		ignoreNonMatches: bool = True,
-		matchPredicate: Optional[_OpPredicate] = None,
-):
-	def isValid(ctx: ActionContext):
-		if not ActionUtils.isKnownRopType(ropType):
-			return False
-		return ctx.hasSelectedOps(minCount, maxCount, matchPredicate, ignoreNonMatches)
-	def createAction(label: str, value: str):
-		def execute(ctx: ActionContext):
-			inputs = ctx.selectedRops
-			if matchPredicate:
-				inputs = [o for o in inputs if matchPredicate(o)]
-			def init(rop: 'COMP'):
-				rop.par[paramName] = value
-			ActionUtils.createAndAttachFromMultiOutputs(inputs, ropType, init)
-		return _SimpleAction(label, isValid, execute)
-	actions = [
-		createAction(modeTable[i, 'label'].val, modeTable[i, 'name'].val)
-		for i in range(1, modeTable.numRows)
-	]
-	return _SimpleGroup(text, isValid, lambda _: actions)
-
 def _createAddInputActionGroup(
 		text: str,
 		createType: str,
@@ -246,63 +197,6 @@ def _createRenderSelGroup(text: str):
 			if table[i, 'available'] != 'False'
 		]
 	return _SimpleGroup(text, isValid, getActions)
-
-def _createAddInputAction(
-		text: str,
-		matchTypes: List[str],
-		createType: str,
-		firstInput: int = 0,
-		lastInput: Optional[int] = None,
-		outputIndex: int = 0,
-		params: Dict[str, Any] = None,
-		init: InitFunc = None,
-):
-	def getConn(rop: 'OP'):
-		if lastInput is None:
-			return _firstOpenConnector(rop.inputConnectors[firstInput:])
-		return _firstOpenConnector(rop.inputConnectors[firstInput:(lastInput + 1)])
-
-	def isValid(ctx: ActionContext):
-		if not ctx.primaryRop:
-			return False
-		if not ActionUtils.isKnownRopType(createType):
-			return False
-		if ctx.primaryRopState.info.opType not in matchTypes:
-			return False
-		return bool(getConn(ctx.primaryRop))
-
-	def execute(ctx: ActionContext):
-		rop = ctx.primaryRop
-		conn = getConn(rop)
-		def updateParams(c: 'COMP'):
-			if params:
-				for k, v in params.items():
-					c.par[k] = v
-		ActionUtils.createAndAttachToInput(
-			rop,
-			createType,
-			inputIndex=conn.index,
-			outputIndex=outputIndex,
-			inits=[updateParams, init],
-		)
-
-	return _SimpleAction(text, isValid, execute)
-
-def _firstOpenConnector(conns: List['Connector']):
-	for conn in conns:
-		if not conn.connections:
-			return conn
-
-def _createConvertFrom2dSdfAction(text: str, ropType: str):
-	return _ActionImpl(
-		text,
-		ropType,
-		select=_OpSelect(
-			coordTypes=['vec2'],
-			returnTypes=['Sdf'],
-		),
-		attach=_AttachOutFromExisting(),
-	)
 
 def _createAnimateParamAction(
 		text: str,
@@ -517,9 +411,6 @@ def _createChangeParamLockAction(
 	return _SimpleAction(text, isValid=isValid, execute=execute)
 
 class _RopTypes:
-	arrange = 'raytk.operators.combine.arrange'
-	combine = 'raytk.operators.combine.combine'
-	combineFields = 'raytk.operators.combine.combineFields'
 	crossSection = 'raytk.operators.convert.crossSection'
 	modularMat = 'raytk.operators.material.modularMat'
 	projectPlane = 'raytk.operators.convert.projectPlane'
@@ -612,21 +503,51 @@ def createActionManager():
 			select=_OpSelect(ropTypes=[_RopTypes.raymarchRender3d]),
 			attach=_AttachIntoExisting(inputIndex=2),
 		),
-		_createConvertFrom2dSdfAction('Extrude', 'raytk.operators.convert.extrude'),
-		_createConvertFrom2dSdfAction('Revolve', 'raytk.operators.convert.revolve'),
-		_createConvertFrom2dSdfAction('Colorize 2D SDF', 'raytk.operators.material.colorizeSdf2d'),
-		_createCombineActionGroup(
-			'Combine SDFs', _RopTypes.combine, 'Combine', op('sdfCombineModes'),
-			minCount=2, maxCount=2,
-			matchPredicate=lambda o: ROPState(o).isSdf),
-		_createCombineActionGroup(
-			'Arrange SDFs', _RopTypes.arrange, 'Combine', op('sdfCombineModes'),
-			minCount=2, maxCount=8,
-			matchPredicate=lambda o: ROPState(o).isSdf),
-		_createCombineActionGroup(
-			'Combine Fields', _RopTypes.combineFields, 'Operation', op('fieldCombineModes'),
-			minCount=2, maxCount=2,
-			matchPredicate=lambda o: ROPState(o).isField),
+		_ActionImpl(
+			'Extrude',
+			'raytk.operators.convert.extrude',
+			select=_OpSelect(coordTypes=['vec2'], returnTypes=['Sdf']),
+			attach=_AttachOutFromExisting(),
+		),
+		_ActionImpl(
+			'Revolve',
+			'raytk.operators.convert.revolve',
+			select=_OpSelect(coordTypes=['vec2'], returnTypes=['Sdf']),
+			attach=_AttachOutFromExisting(),
+		),
+		_ActionImpl(
+			'Colorize 2D SDF',
+			'raytk.operators.material.colorizeSdf2d',
+			select=_OpSelect(coordTypes=['vec2'], returnTypes=['Sdf']),
+			attach=_AttachOutFromExisting(),
+		),
+		_createTableBasedGroup(
+			'Combine SDFs',
+			ropType='raytk.operators.combine.combine',
+			paramName='Combine',
+			table=op('sdfCombineModes'),
+			select=_OpSelect(
+				returnTypes=['Sdf'],
+				multi=True, minCount=2, maxCount=2),
+			attach=_AttachOutFromExisting()),
+		_createTableBasedGroup(
+			'Arrange SDFs',
+			ropType='raytk.operators.combine.arrange',
+			paramName='Combine',
+			table=op('sdfCombineModes'),
+			select=_OpSelect(
+				returnTypes=['Sdf'],
+				multi=True, minCount=2, maxCount=None),
+			attach=_AttachOutFromExisting()),
+		_createTableBasedGroup(
+			'Combine Fields',
+			ropType='raytk.operators.combine.combineFields',
+			paramName='Operation',
+			table=op('fieldCombineModes'),
+			select=_OpSelect(
+				returnTypes=['float', 'vec4'],
+				multi=True, minCount=True, maxCount=None),
+			attach=_AttachOutFromExisting()),
 		_createVarRefGroup('Reference Variable'),
 		_createRenderSelGroup('Select Output Buffer'),
 		_ActionImpl(
@@ -690,6 +611,8 @@ class _OpSelect:
 	returnTypes: Optional[List[str]] = None
 	multi: bool = False
 	test: Optional[Callable[[ROPState], bool]] = None
+	minCount: int = 1
+	maxCount: Optional[int] = None
 	all: bool = False
 
 	def _matches(self, opState: ROPState) -> bool:
@@ -714,8 +637,12 @@ class _OpSelect:
 			matches.append(ctx.primaryRopState.rop)
 		if self.multi:
 			for opState in ctx.selectedRopStates:
-				if opState.rop != primaryRopState and self._matches(opState):
+				if opState.rop not in matches and self._matches(opState):
 					matches.append(opState.rop)
+		if len(matches) < self.minCount:
+			return None
+		if self.maxCount is not None and len(matches) > self.maxCount:
+			return None
 		return matches
 
 @dataclass
@@ -754,8 +681,10 @@ class _AttachOutFromExisting(_OpAttach):
 	def placeAndAttach(self, newOp: 'COMP', fromOps: 'List[COMP]'):
 		newOp.nodeX = max(o.nodeX + o.nodeWidth for o in fromOps) + 100
 		newOp.nodeCenterY = sum(o.nodeCenterY for o in fromOps) / len(fromOps)
-		for i, fromOp in enumerate(fromOps):
-			newOp.inputConnectors[self.inputIndex].connect(fromOp.outputConnectors[self.outputIndex])
+		inputIndex = self.inputIndex
+		for i, fromOp in enumerate(sorted(fromOps, key=lambda r: r.nodeCenterY, reverse=True)):
+			newOp.inputConnectors[inputIndex].connect(fromOp.outputConnectors[self.outputIndex])
+			inputIndex += 1
 
 @dataclass
 class _AttachOutputSelector(_OpAttach):
