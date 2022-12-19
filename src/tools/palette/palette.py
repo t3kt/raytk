@@ -181,6 +181,10 @@ class Palette:
 				par.val = par.default
 		newOp.allowCooking = True
 		newOp.color = IconColors.defaultBgColor
+		if ROPInfo(newOp).isOutput and newOp.par['Resx'] is not None:
+			if _isNonCommercial():
+				newOp.par.Resx = 1280
+				newOp.par.Resy = 720
 		if postSetup:
 			postSetup(newOp)
 		ropInfo = ROPInfo(newOp)
@@ -280,3 +284,9 @@ class Palette:
 
 	def onRolloverItem(self, item: 'Optional[PickerItem]'):
 		self.ownerComp.op('thumbImage').cook(force=True)
+
+def _isNonCommercial():
+	for license in td.licenses:
+		if license.isEnabled and license.type in ('Pro', 'Commercial'):
+			return False
+	return True
