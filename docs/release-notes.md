@@ -43,7 +43,9 @@
     * variableReference - show field name in label (#980), clean up parameters
     * waveField - auto coord type
   * Faster parameter switching (especially menus) (#970)
+    * axisDistanceField
     * bend
+    * colorRampField
     * extrude
     * headSdf
     * iteratedTransform
