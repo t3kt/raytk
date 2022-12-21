@@ -16,6 +16,9 @@ opDef: !def
   function: !text
     file: src/operators/camera/cameraRemap.glsl
     name: function
+  help: !text
+    file: src/operators/camera/cameraRemap.md
+    name: help
 inputs:
 - !input
   Localalias: camera
