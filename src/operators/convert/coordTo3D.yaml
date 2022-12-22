@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.convert.coordTo3D
-  opVersion: '12'
+  opVersion: '13'
   opStatus: default
 opDef: !def
   enable: !expr
@@ -21,6 +21,9 @@ opDef: !def
     name: macro_exprs
     evaluate: true
     evalOpts: !evalOpts {}
+  help: !text
+    file: src/operators/convert/coordTo3D.md
+    name: help
 multiInput: !multiInput
   Minimuminputs: 0
   Coordtypereductionmode: besteach

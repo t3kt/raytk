@@ -1,0 +1,4 @@
+name	label	code
+x	X	p3 = p3.yzx;
+y	Y	p3 = p3.xzy;
+z	Z	p3 = p3.xyz;

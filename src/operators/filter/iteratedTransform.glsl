@@ -1,3 +1,9 @@
+void THIS_reflect(inout CoordT p0) {
+	vec3 p = adaptAsVec3(p0);
+	REFLECT_BODY();
+	p0 = THIS_asCoordT(p);
+}
+
 void THIS_apply(inout CoordT p, inout ContextT ctx, inout float valueAdjust, out vec4 orb) {
 	int n = int(THIS_Iterations);
 	TRANSFORM_INIT();
@@ -16,11 +22,14 @@ void THIS_apply(inout CoordT p, inout ContextT ctx, inout float valueAdjust, out
 	#endif
 	for (int i = 0; i < n; i++) {
 		float ratio = float(i) / float(n - 1);
-		#if defined(THIS_Iterationtype_index)
-		setIterationIndex(ctx, float(i));
-		#elif defined(THIS_Iterationtype_ratio)
-		setIterationIndex(ctx, ratio);
-		#endif
+		switch (int(THIS_Iterationtype)) {
+			case THISTYPE_Iterationtype_index:
+				setIterationIndex(ctx, float(i));
+				break;
+			case THISTYPE_Iterationtype_ratio:
+				setIterationIndex(ctx, ratio);
+				break;
+		}
 		#ifdef THIS_EXPOSE_step
 		THIS_step = i;
 		#endif
@@ -43,7 +52,7 @@ void THIS_apply(inout CoordT p, inout ContextT ctx, inout float valueAdjust, out
 		}
 		#endif
 		CoordT preReflectP = p;
-		THIS_REFLECT();
+		THIS_reflect(p);
 		orb = min(orb, vec4(adaptAsVec3(abs(preReflectP - p)), length(p)));
 		TRANSFORM_CODE();
 		CUSTOM_CODE();

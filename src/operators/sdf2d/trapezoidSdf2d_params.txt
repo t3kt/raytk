@@ -1,3 +1,4 @@
 names	source	handling	readOnlyHandling	conversion	enable
-Height Width[1-2] Point[1-2][xy]	param	runtime	macro		1
+Height Width[1-2]	param	runtime	macro		1
+Point[1-2][xy]	param	runtime	macro		op('points_definition').numRows < 2
 Mode	param	constant			1

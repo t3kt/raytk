@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.filter.mobiusTransform
-  opVersion: '7'
+  opVersion: '9'
   opStatus: default
 opDef: !def
   enable: !expr
@@ -19,7 +19,6 @@ opDef: !def
     file: src/operators/filter/mobiusTransform.glsl
     name: function
   paramGroupTable: eval_params
-  generatedMacroTables: sel_axis_macros
 multiInput: !multiInput
   Minimuminputs: 0
   Coordtypereductionmode: common

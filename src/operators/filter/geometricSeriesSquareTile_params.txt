@@ -1,0 +1,3 @@
+names	source	handling	readOnlyHandling	conversion	enable
+Density Zoom	param	runtime	macro		1
+Axis	param	constant			1

@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.material.specularContrib
-  opVersion: '20'
+  opVersion: '22'
   opStatus: default
 opDef: !def
   enable: true
@@ -26,6 +26,13 @@ opDef: !def
     name: macro_exprs
     evaluate: true
     evalOpts: !evalOpts {}
+  tagTable: !table
+    file: src/operators/material/specularContrib_tags.txt
+    name: tag_exprs
+    evaluate: true
+    evalOpts: !evalOpts
+      excludeFirstRow: true
+      cols: enable
   help: !text
     file: src/operators/material/specularContrib.md
     name: help

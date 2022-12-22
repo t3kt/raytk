@@ -1,0 +1,40 @@
+!rop
+meta: !meta
+  opType: raytk.operators.camera.cameraRemap
+  opVersion: '0'
+  opStatus: beta
+opDef: !def
+  enable: !expr
+    expr: op('..').par.Enable
+  typeSpec: !ropTypes
+    coordType: !coordT
+      Coordtypevec2: true
+    contextType: !contextT
+      Contexttypecameracontext: true
+    returnType: !returnT
+      Returntyperay: true
+  function: !text
+    file: src/operators/camera/cameraRemap.glsl
+    name: function
+  help: !text
+    file: src/operators/camera/cameraRemap.md
+    name: help
+inputs:
+- !input
+  Localalias: camera
+  Required: true
+  coordType: !coordT
+    Coordtypevec2: true
+  contextType: !contextT
+    Contexttypecameracontext: true
+  returnType: !returnT
+    Returntyperay: true
+- !input
+  Localalias: pixelMap
+  Required: true
+  coordType: !coordT
+    Coordtypevec2: true
+  contextType: !contextT
+    Contexttypecameracontext: true
+  returnType: !returnT
+    Returntypevec4: true

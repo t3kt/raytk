@@ -1,3 +1,6 @@
 names	source	handling	readOnlyHandling	conversion	enable
-Translate[xyz] Scale Crossscale Boxscale Stepoffset[xyz]	param	runtime	macro		1
+Translate[xyz] Scale	param	runtime	macro		1
+Crossscale	param	runtime	macro		op('crossScale_definition').numRows < 2
+Boxscale	param	runtime	macro		op('boxScale_definition').numRows < 2
+Stepoffset[xyz]	param	runtime	macro		op('stepOffset_definition').numRows < 2
 Steps	param	runtime	macro		1

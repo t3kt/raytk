@@ -9,12 +9,10 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 	ray.pos = THIS_Campos;
 	// Calculate ray direction
 	vec3 viewDir = normalize(vec3(screenPos, -z));
-	mat4 viewToWorld = lookAtViewMatrix(ray.pos, THIS_Lookatpos, THIS_Camup);
-	vec3 worldDir = (viewToWorld * vec4(viewDir, 0.)).xyz;
-	worldDir *= TDRotateOnAxis(-THIS_Camrot.x, vec3(1., 0., 0.));
-	worldDir *= TDRotateOnAxis(-THIS_Camrot.y, vec3(0., 1., 0.));
-	worldDir *= TDRotateOnAxis(-THIS_Camrot.z, vec3(0., 0., 1.));
-//	pRotateOnXYZ(worldDir, vec3(1.) * THIS_Camrot);
-	ray.dir = worldDir;
+	viewDir *= TDRotateOnAxis(-THIS_Camrot.x, vec3(1., 0., 0.));
+	viewDir *= TDRotateOnAxis(-THIS_Camrot.y, vec3(0., 1., 0.));
+	viewDir *= TDRotateOnAxis(-THIS_Camrot.z, vec3(0., 0., 1.));
+//	pRotateOnXYZ(viewDir, -THIS_Camrot);
+	ray.dir = viewDir;
 	return ray;
 }

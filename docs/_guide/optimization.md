@@ -1,7 +1,7 @@
 ---
 layout: page
 title: Optimization Tips
-nav_order: 11
+nav_order: 12
 ---
 
 # Optimizing RayTK Scenes

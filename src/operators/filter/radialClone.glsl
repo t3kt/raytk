@@ -27,8 +27,11 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 	pR(q, rot);
 	q.y -= THIS_Radiusoffset;
 #else
-	pR(q.THIS_PLANE, rot);
-	q.THIS_RADIUS_AXIS -= THIS_Radiusoffset;
+	switch (THIS_Axis) {
+		case THISTYPE_Axis_x: pR(q.yz, rot); q.y -= THIS_Radiusoffset; break;
+		case THISTYPE_Axis_y: pR(q.zx, rot); q.z -= THIS_Radiusoffset; break;
+		case THISTYPE_Axis_z: pR(q.xy, rot); q.x -= THIS_Radiusoffset; break;
+	}
 #endif
 	res = inputOp1(q, ctx);
 	for (int i = 1; i < n; i++) {
@@ -38,8 +41,11 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 			pR(q, rot);
 			q.y -= THIS_Radiusoffset;
 		#else
-			pR(q.THIS_PLANE, rot);
-			q.THIS_RADIUS_AXIS -= THIS_Radiusoffset;
+			switch (THIS_Axis) {
+				case THISTYPE_Axis_x: pR(q.yz, rot); q.y -= THIS_Radiusoffset; break;
+				case THISTYPE_Axis_y: pR(q.zx, rot); q.z -= THIS_Radiusoffset; break;
+				case THISTYPE_Axis_z: pR(q.xy, rot); q.x -= THIS_Radiusoffset; break;
+			}
 		#endif
 		THIS_exposeIndex(ctx, i, n);
 		Sdf res2 = inputOp1(q, ctx);

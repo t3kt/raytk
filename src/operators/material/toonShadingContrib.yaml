@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.material.toonShadingContrib
-  opVersion: '5'
+  opVersion: '7'
   opStatus: beta
 opDef: !def
   enable: true
@@ -21,6 +21,13 @@ opDef: !def
     name: macro_exprs
     evaluate: true
     evalOpts: !evalOpts {}
+  tagTable: !table
+    file: src/operators/material/toonShadingContrib_tags.txt
+    name: tag_exprs
+    evaluate: true
+    evalOpts: !evalOpts
+      excludeFirstRow: true
+      cols: enable
   help: !text
     file: src/operators/material/toonShadingContrib.md
     name: help

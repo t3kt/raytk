@@ -1,3 +1,5 @@
 names	source	handling	readOnlyHandling	conversion	enable
-Thickness Width Wrap Radius	param	runtime	macro		1
+Width Wrap	param	runtime	macro		1
+Radius	param	runtime	macro		op('radius_definition').numRows < 2
+Thickness	param	runtime	macro		op('thickness_definition').numRows < 2
 Rotate	param	runtime	macro	angle	1

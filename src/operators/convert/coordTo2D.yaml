@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.convert.coordTo2D
-  opVersion: '15'
+  opVersion: '16'
   opStatus: default
 opDef: !def
   enable: !expr
@@ -22,6 +22,9 @@ opDef: !def
     name: macro_exprs
     evaluate: true
     evalOpts: !evalOpts {}
+  help: !text
+    file: src/operators/convert/coordTo2D.md
+    name: help
 paramPages:
 - !page
   name: Filter

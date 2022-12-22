@@ -33,18 +33,16 @@ void THIS_apply(inout CoordT p, inout ContextT ctx) {
 	float c = floor((q + halfsize)/size);
 	q = mod(q+halfsize, size) - halfsize;
 	float start, stop;
-	#ifdef THIS_Uselimit
-	{
-		#if defined(THIS_Limittype_start) || defined(THIS_Limittype_both)
-		start = THIS_Limitstart + THIS_Limitoffset;
-		if (c < start) applyModLimit(q, c, size, start);
-		#endif
-		#if defined(THIS_Limittype_stop) || defined(THIS_Limittype_both)
-		stop = THIS_Limitstop + THIS_Limitoffset;
-		if (c > stop) applyModLimit(q, c, size, stop);
-		#endif
+	if (IS_TRUE(THIS_Uselimit)) {
+		if (THIS_Limittype == THISTYPE_Limittype_start || THIS_Limittype == THISTYPE_Limittype_both) {
+			start = THIS_Limitstart + THIS_Limitoffset;
+			if (c < start) applyModLimit(q, c, size, start);
+		}
+		if (THIS_Limittype == THISTYPE_Limittype_stop || THIS_Limittype == THISTYPE_Limittype_both) {
+			stop = THIS_Limitstop + THIS_Limitoffset;
+			if (c > stop) applyModLimit(q, c, size, stop);
+		}
 	}
-	#endif
 
 	if (THIS_Mirrortype == THISTYPE_Mirrortype_mirror) {
 		q *= mod(c, 2.0)*2 - 1;
@@ -63,15 +61,15 @@ void THIS_apply(inout CoordT p, inout ContextT ctx) {
 	#endif
 	#ifdef THIS_EXPOSE_normcoord
 	{
-		#if !defined(THIS_Uselimit)
-		THIS_normcoord = c;
-		#elif defined(THIS_Limittype_start)
-		THIS_normcoord = c - start;
-		#elif defined(THIS_Limittype_stop)
-		THIS_normcoord = -c + stop;
-		#elif defined(THIS_Limittype_both)
-		THIS_normcoord = map01(c, start, stop);
-		#endif
+		if (IS_FALSE(THIS_Uselimit)) {
+			THIS_normcoord = c;
+		} else if (THIS_Limittype == THISTYPE_Limittype_start) {
+			THIS_normcoord = c - start;
+		} else if (THIS_Limittype == THISTYPE_Limittype_stop) {
+			THIS_normcoord = -c + stop;
+		} else if (THIS_Limittype == THISTYPE_Limittype_both) {
+			THIS_normcoord = map01(c, start, stop);
+		}
 	}
 	#endif
 

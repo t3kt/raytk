@@ -1,2 +1,4 @@
 names	source	handling	readOnlyHandling	conversion	enable
-Swapinputs Radius Depth	param	runtime	macro		1
+Swapinputs	param	runtime	macro		1
+Radius	param	runtime	macro		op('radius_field_definition').numRows < 2
+Depth	param	runtime	macro		op('depth_field_definition').numRows < 2

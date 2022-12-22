@@ -1,0 +1,4 @@
+name	label	dataType	enable	macros
+datapos	Data Coord (Pixels)	vec2	1	
+datauv	Data Coord (0..1)	vec2	1	
+datares	Data Resolution (Pixels)	vec2	1	

@@ -1,2 +1,4 @@
 names	source	handling	readOnlyHandling	conversion	enable
-Thickness Length Bend	param	runtime	macro		1
+Thickness	param	runtime	macro		op('thickness_definition').numRows < 2
+Length	param	runtime	macro		op('length_definition').numRows < 2
+Bend	param	runtime	macro		op('bend_definition').numRows < 2

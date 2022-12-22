@@ -1,0 +1,5 @@
+name	label	returnType	code	params	macros
+edge	Grid Edges	float	res = 1. - smoothstep(t-b/2., t+b/2., d);	Thickness Blending	THIS_USE_THICKNESS THIS_USE_BLENDING
+dist	Grid Distance	float	res = d;		
+normdist	Grid Normalized Distance	float	res = vmin(partDist / space * 2.);		
+color	Grid Color	vec4	res = vec4(mix(edgeColor, fillColor, smoothstep(t-b/2., t+b/2., d)), 1.);	Thickness Blending Edgecolor[rgb] Fillcolor[rgb]	THIS_USE_THICKNESS THIS_USE_BLENDING THIS_USE_COLOR

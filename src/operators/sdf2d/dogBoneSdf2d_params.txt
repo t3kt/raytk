@@ -1,3 +1,6 @@
 names	source	handling	readOnlyHandling	conversion	enable
-Translate[xy] Radius Length Bulge	param	runtime	macro		1
+Translate[xy]	param	runtime	macro		1
+Radius	param	runtime	macro		op('radius_definition').numRows < 2
+Length	param	runtime	macro		op('length_definition').numRows < 2
+Bulge	param	runtime	macro		op('bulge_definition').numRows < 2
 Axis	param	constant			1

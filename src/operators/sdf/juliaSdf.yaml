@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.sdf.juliaSdf
-  opVersion: '5'
+  opVersion: '7'
   opStatus: beta
 opDef: !def
   enable: true
@@ -16,7 +16,23 @@ opDef: !def
     file: src/operators/sdf/juliaSdf.glsl
     name: functionTemplate
   paramGroupTable: eval_params
+  variableTable: !table
+    file: src/operators/sdf/juliaSdf_variables.txt
+    name: variable_exprs
+    evaluate: true
+    evalOpts: !evalOpts
+      excludeFirstRow: true
+      cols: enable
   keywords:
   - julia
   - fractal
   - quaternion
+inputs:
+- !input
+  Localalias: cField
+  coordType: !coordT
+    Coordtypevec3: true
+  contextType: !contextT
+    Allcontexttype: true
+  returnType: !returnT
+    Returntypevec4: true

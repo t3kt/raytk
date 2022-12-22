@@ -1,7 +1,7 @@
-name	label	begin	end
-custom	Custom		
-octahedron	Octahedron	3	6
-dodecahedron	Dodecahedron	13	18
-icosahedron	Icosahedron	3	12
-truncatedoctahedron	Truncated Octahedron	0	6
-truncatedicosahedron	Truncated Icosahedron	3	18
+name	label	code
+custom	Custom	
+octahedron	Octahedron	be = ivec2(3, 6);
+dodecahedron	Dodecahedron	be = ivec2(13, 18);
+icosahedron	Icosahedron	be = ivec2(3, 12);
+truncatedoctahedron	Truncated Octahedron	be = ivec2(0, 6);
+truncatedicosahedron	Truncated Icosahedron	be = ivec2(3, 18);

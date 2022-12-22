@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.sdf.chainSdf
-  opVersion: '1'
+  opVersion: '3'
   opStatus: beta
 opDef: !def
   enable: true
@@ -16,3 +16,28 @@ opDef: !def
     file: src/operators/sdf/chainSdf.glsl
     name: function
   paramGroupTable: eval_params
+inputs:
+- !input
+  Localalias: lengthField
+  coordType: !coordT
+    Coordtypevec3: true
+  contextType: !contextT
+    Allcontexttype: true
+  returnType: !returnT
+    Returntypefloat: true
+- !input
+  Localalias: radiusField
+  coordType: !coordT
+    Coordtypevec3: true
+  contextType: !contextT
+    Allcontexttype: true
+  returnType: !returnT
+    Returntypefloat: true
+- !input
+  Localalias: thicknessField
+  coordType: !coordT
+    Coordtypevec3: true
+  contextType: !contextT
+    Allcontexttype: true
+  returnType: !returnT
+    Returntypefloat: true

@@ -1,2 +1,6 @@
 names	source	handling	readOnlyHandling	conversion	enable
-Saturation Hueoffset Brightness Contrast Gamma	param	runtime	macro		1
+Saturation	param	runtime	macro		op('saturation_definition').numRows < 2
+Hueoffset	param	runtime	macro		op('hue_definition').numRows < 2
+Brightness	param	runtime	macro		op('brightness_definition').numRows < 2
+Contrast	param	runtime	macro		op('contrast_definition').numRows < 2
+Gamma	param	runtime	macro		1

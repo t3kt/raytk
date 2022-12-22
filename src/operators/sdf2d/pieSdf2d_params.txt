@@ -1,2 +1,3 @@
 names	source	handling	readOnlyHandling	conversion	enable
-Rotate Angle	param	runtime	macro	angle	1
+Rotate	param	runtime	macro	angle	1
+Angle	param	runtime	macro	angle	op('angle_definition').numRows < 2

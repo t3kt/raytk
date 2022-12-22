@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.filter.iteratedTransform
-  opVersion: '21'
+  opVersion: '22'
   opStatus: default
 opDef: !def
   enable: !expr
@@ -19,11 +19,6 @@ opDef: !def
     file: src/operators/filter/iteratedTransform.glsl
     name: function_template
   paramGroupTable: eval_params
-  macroTable: !table
-    file: src/operators/filter/iteratedTransform_macros.txt
-    name: macro_exprs
-    evaluate: true
-    evalOpts: !evalOpts {}
   variableTable: !table
     file: src/operators/filter/iteratedTransform_variables.txt
     name: variable_exprs
@@ -97,3 +92,18 @@ elements:
     Force3d: false
     Prepcodeplaceholder: TRANSFORM_INIT();
     Bodycodeplaceholder: TRANSFORM_CODE();
+- !opElement
+  name: codeSwitcher_Reflectmode
+  elementType: codeSwitcher
+  params:
+    Elementroot: ''
+    Table: !table
+      file: src/operators/filter/iteratedTransform_reflects.txt
+      name: reflectModes
+    Param: Reflectmode
+    Autoupdateparams: true
+    Manageparamstates: false
+    Alwaysincludeallparams: false
+    Switchmode: auto
+    Indexexpr: ''
+    Placeholder: REFLECT_BODY();

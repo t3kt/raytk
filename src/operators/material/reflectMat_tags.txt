@@ -1,0 +1,5 @@
+name	enable
+useshadow	parent().par.Enableshadow
+usereflect	1
+uselight	1
+useray	1

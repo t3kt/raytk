@@ -426,3 +426,8 @@ void setAxisPlane(inout vec3 p, int axis, vec2 val) {
 		case 2: p.xy = val; break;
 	}
 }
+
+// Barycentric to Cartesian
+vec3 bToC(vec3 A, vec3 B, vec3 C, vec3 barycentric) {
+	return barycentric.x * A + barycentric.y * B + barycentric.z * C;
+}

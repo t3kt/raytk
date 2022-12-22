@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.convert.revolve
-  opVersion: '11'
+  opVersion: '12'
   opStatus: default
 opDef: !def
   enable: true
@@ -22,7 +22,6 @@ opDef: !def
     evaluate: true
     evalOpts: !evalOpts
       excludeFirstRow: true
-  generatedMacroTables: sel_axis_macros
   help: !text
     file: src/operators/convert/revolve.md
     name: help
@@ -40,6 +39,7 @@ inputs:
   Localalias: rotateField
   coordType: !coordT
     Coordtypefloat: true
+    Coordtypevec3: true
   contextType: !contextT
     Allcontexttype: true
   returnType: !returnT
@@ -48,6 +48,7 @@ inputs:
   Localalias: scaleField
   coordType: !coordT
     Coordtypefloat: true
+    Coordtypevec3: true
   contextType: !contextT
     Allcontexttype: true
   returnType: !returnT
@@ -56,7 +57,24 @@ inputs:
   Localalias: translateField
   coordType: !coordT
     Coordtypefloat: true
+    Coordtypevec3: true
   contextType: !contextT
     Allcontexttype: true
   returnType: !returnT
     Returntypevec4: true
+- !input
+  Localalias: radialOffsetField
+  coordType: !coordT
+    Coordtypevec3: true
+  contextType: !contextT
+    Allcontexttype: true
+  returnType: !returnT
+    Returntypefloat: true
+- !input
+  Localalias: axisOffsetField
+  coordType: !coordT
+    Coordtypevec3: true
+  contextType: !contextT
+    Allcontexttype: true
+  returnType: !returnT
+    Returntypefloat: true

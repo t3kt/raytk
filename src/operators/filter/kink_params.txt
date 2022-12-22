@@ -1,3 +1,5 @@
 names	source	handling	readOnlyHandling	conversion	enable
-Amount Offset Spread	param	runtime	macro		1
-Direction Side	param	macro			1
+Amount	param	runtime	macro		op('amount_definition').numRows < 2
+Offset	param	runtime	macro		op('offset_definition').numRows < 2
+Spread	param	runtime	macro		op('spread_definition').numRows < 2
+Direction Side	param	constant			1

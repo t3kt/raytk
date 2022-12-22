@@ -9,30 +9,12 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 	assignMaterial(res, THISMAT);
 	#endif
 	captureIterationFromMaterial(THIS_iterationCapture, ctx);
-	#if defined(RAYTK_REFLECT_IN_SDF) && defined(THIS_Enablereflection)
+	#if defined(RAYTK_REFLECT_IN_SDF) && (defined(THIS_Enablereflection) || defined(THIS_HAS_TAG_usereflect))
 	res.reflect = true;
 	#endif
 	#ifdef RAYTK_USE_SHADOW
 	{
-		#if defined(THIS_HAS_INPUT_2) && defined(inputOp2_Enableshadow)
-		res.useShadow = true;
-		#endif
-		#if defined(THIS_HAS_INPUT_3) && defined(inputOp3_Enableshadow)
-		res.useShadow = true;
-		#endif
-		#if defined(THIS_HAS_INPUT_4) && defined(inputOp4_Enableshadow)
-		res.useShadow = true;
-		#endif
-		#if defined(THIS_HAS_INPUT_5) && defined(inputOp5_Enableshadow)
-		res.useShadow = true;
-		#endif
-		#if defined(THIS_HAS_INPUT_6) && defined(inputOp6_Enableshadow)
-		res.useShadow = true;
-		#endif
-		#if defined(THIS_HAS_INPUT_7) && defined(inputOp7_Enableshadow)
-		res.useShadow = true;
-		#endif
-		#if defined(THIS_HAS_INPUT_8) && defined(inputOp8_Enableshadow)
+		#ifdef THIS_HAS_TAG_useshadow
 		res.useShadow = true;
 		#endif
 	}
@@ -92,7 +74,7 @@ vec3 THIS_getColor(vec3 p, MaterialContext matCtx) {
 	#ifdef THIS_EXPOSE_reflectcolor
 	{
 		THIS_reflectcolor = vec3(0.);
-		#if defined(RAYTK_REFLECT_IN_SDF) && defined(THIS_Enablereflection)
+		#if defined(RAYTK_REFLECT_IN_SDF) && (defined(THIS_Enablereflection) || defined(THIS_HAS_TAG_usereflect))
 		res.reflect = true;
 		if (res.reflect) {
 			THIS_reflectcolor = matCtx.reflectColor;

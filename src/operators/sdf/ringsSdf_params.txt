@@ -1,0 +1,5 @@
+names	source	handling	readOnlyHandling	conversion	enable
+Spacing	param	runtime	macro		op('spacing_definition').numRows < 2
+Shift	param	runtime	macro		op('shift_definition').numRows < 2
+Thickness	param	runtime	macro		op('crossSection_definition').numRows < 2 and op('thickness_definition').numRows < 2
+Axis	param	constant			1

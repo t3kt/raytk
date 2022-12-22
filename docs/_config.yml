@@ -35,7 +35,7 @@ plugins:
   - jemoji
 #  - jekyll-feed
 
-remote_theme: pmarsceill/just-the-docs
+theme: just-the-docs
 
 # Exclude from processing.
 # The following items will not be processed, by default.

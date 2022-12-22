@@ -21,12 +21,10 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 		float th = THIS_Thickness;
 		#endif
 		float d = abs(q - o) - th;
-		#if defined(THIS_Operation_intersect)
-		#elif defined(THIS_Operation_diff)
-		d = -d;
-		#else
-		#error invalidOperation
-		#endif
+		switch (int(THIS_Operation)) {
+			case THISTYPE_Operation_diff: d = -d; break;
+			case THISTYPE_Operation_intersect: break;
+		}
 		if (IS_TRUE(THIS_Enablesmoothing)) {
 			res.x = fOpIntersectionRound(res.x, d, THIS_Smoothradius);
 		} else {

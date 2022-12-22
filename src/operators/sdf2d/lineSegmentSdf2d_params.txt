@@ -1,2 +1,3 @@
 names	source	handling	readOnlyHandling	conversion	enable
-Pointa[xy] Pointb[xy] Thickness	param	runtime	macro		1
+Pointa[xy] Pointb[xy]	param	runtime	macro		op('points_definition').numRows < 2
+Thickness	param	runtime	macro		op('thickness_definition').numRows < 2

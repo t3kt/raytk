@@ -1,4 +1,8 @@
 names	source	handling	readOnlyHandling	conversion	enable
-Translate[xy] Size Thickness Seed Blending	param	runtime	macro		1
+Translate[xy] Size Seed	param	runtime	macro		1
+Thickness	param	runtime	macro		op('thickness_definition').numRows < 2
+Blending	param	runtime	macro		op('blending_definition').numRows < 2
 Pattern Format Randomize	param	macro			1
-Color1[rgb] Color2[rgb] Bgcolor[rgb]	param	runtime	macro		1
+Color1[rgb]	param	runtime	macro		op('color_1_definition').numRows < 2
+Color2[rgb]	param	runtime	macro		op('color_2_definition').numRows < 2
+Bgcolor[rgb]	param	runtime	macro		op('bgColor_definition').numRows < 2

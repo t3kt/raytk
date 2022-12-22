@@ -1,0 +1,3 @@
+name	label	dataType	enable	macros
+step	Step	int	1	
+normstep	Normalized Step (0..1)	float	1	

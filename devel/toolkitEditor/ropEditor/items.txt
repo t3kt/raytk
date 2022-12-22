@@ -1,7 +1,7 @@
 name	label	category	type	datName	evalDatName	fileSuffix	template
 Opglobals	Op Globals	code	text	globals		_globals.glsl	
 Initcode	Init Code	code	text	init		_init.glsl	
-Functemplate	Function	code	text	function		.glsl
+Functemplate	Function	code	text	function		.glsl	
 Materialcode	Material	code	text	material		_material.glsl	
 Callbacks	Callbacks	code	text	callbacks		_callbacks.py	
 Paramgrouptable	Params	table	table	param_exprs	eval_params	_params.txt	/raytk/components/shared/paramGroupTableExample
@@ -11,4 +11,5 @@ Buffertable	Buffers	table	table	buffer_table	eval_buffers	_buffers.txt	/raytk/co
 Variabletable	Variables	table	table	variable_exprs	eval_variables	_variables.txt	/raytk/components/shared/variable_table_example
 Referencetable	References	table	table	reference_exprs	eval_references	_references.txt	/raytk/components/shared/reference_table_example
 Dispatchtable	Dispatch Blocks	table	table	dispatch_exprs	eval_dispatch	_dispatch.txt	/raytk/components/shared/dispatch_table_example
+Tagtable	Tags	table	table	tag_exprs	eval_tags	_tags.txt	/raytk/components/shared/tag_table_example
 Help	Help	help	text	help		.md	

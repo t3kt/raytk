@@ -4,11 +4,9 @@ Renders a scene using 3D raymarching.
 
 * `Res`: Rendering resolution
 * `Antialias`: Number of antialiasing steps. Increasing this improves render quality but can be costly.
-* `Camera`: Standard TD Camera COMP, used if the `Camera` input isn't connected. This camera is not yet fully functional.
-* `Light1`: Standard TD Light COMP, used if the `Light` input isn't connected. Only point lights work, and they don't yet support distance attenuation (though the `pointLight` ROP does).
-* `Userenderdepth`: Whether to use the provided Render TOP for a base depth. Not ready for use.
-* `Overlayrender`: Whether to mix the provided Render TOP with the scene using depth. Not ready for use.
-* `Rendertop`: Connect a Render TOP to mix with the scene based on depth. Not ready for use.
+* `Userenderdepth`: Whether to use the provided Render TOP for a base depth.
+* `Overlayrender`: Whether to mix the provided Render TOP with the scene using depth.
+* `Rendertop`: Connect a Render TOP to mix with the scene based on depth.
 * `Maxsteps`: Maximum number of marching steps.
 * `Surfdist`: Minimum surface distance. Smaller values increase accuracy at the cost of performance.
 * `Maxdist`: Maximum distance. Rays that don't hit anything will stop at this distance. If this is too high, rays that don't hit anything will continue for a long time, causing a performance drain.
@@ -25,10 +23,10 @@ Renders a scene using 3D raymarching.
 * `Enableraydiroutput`: Enables the ray direction output buffer.
 * `Enablerayoriginoutput`: Enables the ray origin (camera position) output buffer.
 * `Enableorbitoutput`: Enables the fractal orbit trap output buffer (only supported for certain SDFs).
-* `Enablenearhitoutput`: Advance feature, not ready for use.
-* `Enablestepoutput`: Advance feature, not ready for use.
+* `Enablenearhitoutput`: Enables near hit output which shows where rays got close to hitting surfaces.
+* `Enablestepoutput`: Enables step count output which shows how many steps each ray took while marching through the scene.
 * `Enableiterationoutput`: Advance feature, not ready for use.
-* `Enableobjectidoutput`: Advance feature, not ready for use.
+* `Enableobjectidoutput`: Enables object id output which shows id values assigned using `injectObjectId`.
 * `Enabledebugoutput`: Advance feature, not ready for use.
 * `Format`
   * `useinput`

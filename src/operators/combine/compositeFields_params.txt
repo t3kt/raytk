@@ -1,2 +1,3 @@
 names	source	handling	readOnlyHandling	conversion	enable
-Blend Swapinputs	param	runtime	macro		1
+Blend	param	runtime	macro		op('blend_definition').numRows < 2
+Swapinputs	param	runtime	macro		1

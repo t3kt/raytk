@@ -1,2 +1,2 @@
 'name'	'dataType'	'sourcePath'	'sourceName'	'enable'
-'var'	parent().par.Datatype	parent().par.Source	parent().par.Variable	int(parent().par.Enable)
+'var'	parent().par.Variabletype	parent().par.Source or ''	parent().par.Variable	int(parent().par.Enable)

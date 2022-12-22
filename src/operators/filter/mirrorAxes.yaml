@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.filter.mirrorAxes
-  opVersion: '7'
+  opVersion: '9'
   opStatus: beta
 opDef: !def
   enable: !expr
@@ -20,11 +20,8 @@ opDef: !def
     file: src/operators/filter/mirrorAxes.glsl
     name: function
   paramGroupTable: eval_params
-  macroTable: !table
-    file: src/operators/filter/mirrorAxes_macros.txt
-    name: macro_exprs
-    evaluate: true
-    evalOpts: !evalOpts {}
+  libraryNames: !expr
+    expr: op('mirrorAxes_lib')
   variableTable: !table
     file: src/operators/filter/mirrorAxes_variables.txt
     name: variable_exprs
@@ -79,6 +76,6 @@ elements:
     Autoupdateparams: true
     Manageparamstates: true
     Alwaysincludeallparams: false
-    Switchmode: auto
+    Switchmode: constswitch
     Indexexpr: ''
-    Placeholder: BODY();
+    Placeholder: AXES_BODY();

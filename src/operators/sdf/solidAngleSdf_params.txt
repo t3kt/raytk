@@ -1,3 +1,4 @@
 names	source	handling	readOnlyHandling	conversion	enable
-Translate[xyz] Radius	param	runtime	macro		1
-Angle	param	runtime	macro	angle	1
+Translate[xyz]	param	runtime	macro		1
+Radius	param	runtime	macro		op('radius_definition').numRows < 2
+Angle	param	runtime	macro	angle	op('angle_definition').numRows < 2

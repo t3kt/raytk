@@ -1,0 +1,5 @@
+name	label	dataType	enable
+angle	Angle	float	1
+normangle	Normalized Angle	float	1
+axispos	Position Along Axis	float	1
+ring	Ring Index	int	1

@@ -1,8 +1,15 @@
 ReturnT thismap(CoordT p, ContextT ctx) {
-	CoordT c = THIS_asCoordT(THIS_Center);
-	#if defined(THIS_COORD_TYPE_vec3) && !defined(THIS_Axes_xyz)
-	return length(p.THIS_Axes - c.THIS_Axes);
+	#ifdef THIS_HAS_INPUT_coordField
+	vec4 q = adaptAsVec4(inputOp_coordField(p, ctx));
 	#else
-	return length(p - c);
+	vec4 q = adaptAsVec4(p);
 	#endif
+	#ifdef THIS_HAS_INPUT_centerField
+	vec4 c = adaptAsVec4(inputOp_centerField(p, ctx));
+	#else
+	vec4 c = adaptAsVec4(THIS_Center);
+	#endif
+	float res;
+	BODY();
+	return res;
 }

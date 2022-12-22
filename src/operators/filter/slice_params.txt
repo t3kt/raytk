@@ -2,4 +2,4 @@ names	source	handling	readOnlyHandling	conversion	enable
 Offset	param	runtime	macro		op('offset_definition').numRows < 2
 Thickness	param	runtime	macro		op('thickness_definition').numRows < 2
 Smoothradius Axis Enablemirror Enablesmoothing	param	runtime	macro		1
-Operation	param	macro			1
+Operation	param	constant			1

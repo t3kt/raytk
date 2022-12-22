@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.filter.modulo3D
-  opVersion: '22'
+  opVersion: '23'
   opStatus: default
 opDef: !def
   enable: !expr
@@ -80,7 +80,7 @@ elements:
     Param: Limittype
     Autoupdateparams: true
     Manageparamstates: true
-    Alwaysincludeallparams: false
-    Switchmode: none
+    Alwaysincludeallparams: true
+    Switchmode: constswitch
     Indexexpr: ''
     Placeholder: ''

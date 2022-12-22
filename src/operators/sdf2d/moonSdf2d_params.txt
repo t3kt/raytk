@@ -1,3 +1,5 @@
 names	source	handling	readOnlyHandling	conversion	enable
-Offset Radius Innerratio	param	runtime	macro		1
-Rotate	param	runtime	macro	angle	1
+Offset	param	runtime	macro		op('offset_definition').numRows < 2
+Radius	param	runtime	macro		op('radius_definition').numRows < 2
+Innerratio	param	runtime	macro		op('ratio_definition').numRows < 2
+Rotate	param	runtime	macro	angle	op('rotate_definition').numRows < 2

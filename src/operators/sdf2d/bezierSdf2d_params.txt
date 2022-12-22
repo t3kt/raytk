@@ -1,2 +1,5 @@
 names	source	handling	readOnlyHandling	conversion	enable
-Pointa[xy] Pointb[xy] Pointc[xy] Radius	param	runtime	macro		1
+Pointa[xy]	param	runtime	macro		op('pointA_definition').numRows < 2
+Pointb[xy]	param	runtime	macro		op('pointB_definition').numRows < 2
+Pointc[xy]	param	runtime	macro		op('pointC_definition').numRows < 2
+Radius	param	runtime	macro		1

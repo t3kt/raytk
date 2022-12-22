@@ -5,12 +5,12 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 	#else
 	q0 = adaptAsVec3(p);
 	#endif
-	int axis = int(THIS_Axis);
 	float q;
-	if (axis == 3) {
-		q = length(q0);
-	} else {
-		q = getAxis(q0, axis);
+	switch (int(THIS_Axis)) {
+		case THISTYPE_Axis_x: q = q0.x; break;
+		case THISTYPE_Axis_y: q = q0.y; break;
+		case THISTYPE_Axis_z: q = q0.z; break;
+		case THISTYPE_Axis_dist: q = length(q0); break;
 	}
 	q = map01(q, THIS_Range.x, THIS_Range.y);
 	switch (THIS_Extendmode) {

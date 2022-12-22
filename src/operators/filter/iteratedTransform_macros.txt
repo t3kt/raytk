@@ -1,1 +1,0 @@
-	'THIS_REFLECT()'	op('reflect_modes')[parent().par.Reflectmode.eval(), 'expr']

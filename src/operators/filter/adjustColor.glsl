@@ -1,24 +1,30 @@
 ReturnT thismap(CoordT p, ContextT ctx) {
 	ReturnT col = inputOp1(p, ctx);
 	if (IS_TRUE(THIS_Enable)) {
-		#ifdef inputOp_brightnessContrastField_RETURN_TYPE_vec4
-		vec2 bc = inputOp_brightnessContrastField(p, ctx).xy;
-		#elif defined(inputOp_brightnessContrastField_RETURN_TYPE_float)
-		vec2 bc = vec2(inputOp_brightnessContrastField(p, ctx), THIS_Contrast);
+		#ifdef THIS_HAS_INPUT_brightnessField
+		float br = inputOp_brightnessField(p, ctx);
 		#else
-		vec2 bc = vec2(THIS_Brightness, THIS_Contrast);
+		float br = THIS_Brightness;
 		#endif
-		#ifdef inputOp_hueSaturationField_RETURN_TYPE_vec4
-		vec2 hs = inputOp_hueSaturationField(p, ctx).xy;
-		#elif defined(inputOp_hueSaturationField_RETURN_TYPE_float)
-		vec2 hs = vec2(inputOp_hueSaturationField(p, ctx), THIS_Saturation);
+		#ifdef THIS_HAS_INPUT_contrastField
+		float cn = inputOp_contrastField(p, ctx);
 		#else
-		vec2 hs = vec2(THIS_Hueoffset, THIS_Saturation);
+		float cn = THIS_Contrast;
 		#endif
-		col.rgb = czm_saturation(col.rgb, hs.y);
-		col.rgb = czm_hue(col.rgb, radians(hs.x));
-		col.rgb *= bc.x;
-		col.rgb = ((col.rgb - 0.5) * bc.y) + 0.5;
+		#ifdef THIS_HAS_INPUT_hueField
+		float hu = inputOp_hueField(p, ctx);
+		#else
+		float hu = THIS_Hueoffset;
+		#endif
+		#ifdef THIS_HAS_INPUT_saturationField
+		float sa = inputOp_saturationField(p, ctx);
+		#else
+		float sa = THIS_Saturation;
+		#endif
+		col.rgb = czm_saturation(col.rgb, sa);
+		col.rgb = czm_hue(col.rgb, radians(hu));
+		col.rgb *= br.x;
+		col.rgb = ((col.rgb - 0.5) * cn) + 0.5;
 		col.rgb = pow(col.rgb, vec3(1.0 / THIS_Gamma));
 	}
 	return col;

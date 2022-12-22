@@ -1,11 +1,10 @@
 !rop
 meta: !meta
   opType: raytk.operators.sdf.chamferBoxSdf
-  opVersion: '7'
+  opVersion: '8'
   opStatus: default
 opDef: !def
-  enable: !expr
-    expr: op('..').par.Enable
+  enable: true
   typeSpec: !ropTypes
     coordType: !coordT
       Coordtypevec3: true

@@ -2,6 +2,6 @@
   "meta": {
     "opStatus": "default",
     "opType": "raytk.operators.filter.moduloPolar",
-    "opVersion": 22
+    "opVersion": 23
   }
 }

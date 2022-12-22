@@ -1,6 +1,15 @@
 ReturnT thismap(CoordT p, ContextT ctx) {
 	if (IS_TRUE(THIS_Enable)) {
-		vec3 q = adaptAsVec3(p).THIS_Direction;
+		vec3 p3 = adaptAsVec3(p);
+		vec3 q;
+		switch (int(THIS_Direction)) {
+			case THISTYPE_Direction_xyz: q = p3.xyz; break;
+			case THISTYPE_Direction_xzy: q = p3.xzy; break;
+			case THISTYPE_Direction_yxz: q = p3.yxz; break;
+			case THISTYPE_Direction_yzx: q = p3.yzx; break;
+			case THISTYPE_Direction_zxy: q = p3.zxy; break;
+			case THISTYPE_Direction_zyx: q = p3.zyx; break;
+		}
 		#ifdef THIS_EXPOSE_axispos
 		THIS_axispos = q.x;
 		#endif
@@ -26,9 +35,25 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 
 		q.x -= shift;
 		#if defined(THIS_COORD_TYPE_vec2)
-		p.THIS_Toward = q.y;
+		switch (int(THIS_Direction)) {
+			case THISTYPE_Direction_xyz: p3.y = q.y; break;
+			case THISTYPE_Direction_xzy: p3.z = q.y; break;
+			case THISTYPE_Direction_yxz: p3.x = q.y; break;
+			case THISTYPE_Direction_yzx: p3.z = q.y; break;
+			case THISTYPE_Direction_zxy: p3.x = q.y; break;
+			case THISTYPE_Direction_zyx: p3.y = q.y; break;
+		}
+		p = adaptAsVec2(p3);
 		#elif defined(THIS_COORD_TYPE_vec3)
-		p.THIS_Direction = q;
+		switch (int(THIS_Direction)) {
+			case THISTYPE_Direction_xyz: p3.xyz = q; break;
+			case THISTYPE_Direction_xzy: p3.xzy = q; break;
+			case THISTYPE_Direction_yxz: p3.yxz = q; break;
+			case THISTYPE_Direction_yzx: p3.yzx = q; break;
+			case THISTYPE_Direction_zxy: p3.zxy = q; break;
+			case THISTYPE_Direction_zyx: p3.zyx = q; break;
+		}
+		p = p3;
 		#else
 		#error invalidCoordType
 		#endif

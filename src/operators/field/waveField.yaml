@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.field.waveField
-  opVersion: '28'
+  opVersion: '29'
   opStatus: default
 opDef: !def
   enable: !expr
@@ -9,7 +9,7 @@ opDef: !def
   typeSpec: !ropTypes
     coordType: !coordT
       Allcoordtype: !expr
-        expr: op('definition_1').numRows > 1
+        expr: parent().par.Coordtype == 'auto' or op('definition_1').numRows > 1
       Coordtypefloat: !expr
         expr: parent().par.Coordtype == 'float' or op('definition_1').numRows > 1
       Coordtypevec2: !expr

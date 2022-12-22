@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.material.matCapContrib
-  opVersion: '4'
+  opVersion: '6'
   opStatus: beta
 opDef: !def
   enable: true
@@ -23,6 +23,13 @@ opDef: !def
     evalOpts: !evalOpts
       excludeFirstRow: true
       cols: path
+  tagTable: !table
+    file: src/operators/material/matCapContrib_tags.txt
+    name: tag_exprs
+    evaluate: true
+    evalOpts: !evalOpts
+      excludeFirstRow: true
+      cols: enable
 inputs:
 - !input
   Localalias: rotateField

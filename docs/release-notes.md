@@ -1,5 +1,83 @@
 # Release Notes
 
+## v0.29
+
+### Highlights
+
+* Lots of improvements to volumetric sampling using pointMapRender.
+  * Support for lighting and shading in materials.
+  * Variables from sampledPointMat to customize shading.
+  * Easier access to data textures using dataTextureField.
+* New 2D SDFs including eggSdf2d, hexagonalGridSdf2d, rhombileGridSdf2d, and triangularGridSdf2d.
+* Faster parameter changes for lots of operators (especially menu parameters).
+
+### Details
+
+* Improvements / additions
+  * New OPs
+    * boundLimit (#30)
+    * dataTextureField
+    * eggSdf2d
+    * geometricSeriesSquareTile
+    * gridPattern (#254)
+    * hexagonalGridSdf2d
+    * hyperbolicParaboloidSdf
+    * objectIdMask
+    * projectPolar
+    * rhombilleTilingSdf2d
+    * ringsSdf
+    * triangularGridSdf2d
+  * New OP features
+    * axisLight - rotation (#961)
+    * chainSdf - length, radius, thickness field inputs (#693)
+    * circleWaveSdf2d - offset parameter, curl, radius, thickness, offset field inputs (#588)
+    * cylinderSdf - allow optimizing axis
+    * generalizedPolyhedronSdf - exponent field (#693)
+    * juliaSdf - C field input, step variables (#693)
+    * metaballField - coord, center, exponent, radius, weight field inputs
+    * pointDistanceField - coords and center field inputs (#978)
+    * pointMapRender - lighting and shading support (#981), variables for data position
+    * revolve - radial offset, axis offset field inputs (#812)
+    * sampledPointMat - variables equivalent to modularMat, surface color support
+    * triangleSdf2d - radius and size field inputs (#588)
+    * variableReference - show field name in label (#980), clean up parameters
+    * waveField - auto coord type
+  * Faster parameter switching (especially menus) (#970)
+    * axisDistanceField
+    * bend
+    * colorRampField
+    * extrude
+    * headSdf
+    * iteratedTransform
+    * kink
+    * logPolarRepeat
+    * mirrorAxes
+    * mirrorOctant/mirrorQuadrant
+    * mobiusTransform
+    * modulo1D/modulo2D/modulo3D/moduloDistance/moduloPolar
+    * quadTreeRepeat
+    * radialClone
+    * remapCoords
+    * revolve
+    * rotate4D
+    * sampledPointMat
+    * slice
+    * textureField
+    * truchetTile
+  * Editor tools (#772)
+    * crossSection and projectPlane
+  * Reducing unnecessary parameters (#907)
+* Fixes
+  * editor tools - fix incorrect attachment of specular/diffuse to modularMat without a primary input
+  * linkedCamera - fix creating linked cameraViewport (#979)
+  * modularMat - fix shadows not being activated when shading elements are not directly connected to modularMat (#982)
+  * pointDistanceField - fix table buildExclude bug
+* Changes (potentially breaking)
+  * adjustColor - separated out the hue/saturation and brightness/contrast field inputs
+  * remove editor tools related to parameter locking
+* Infrastructure / internals
+  * Operator tags which allow operators to indicate features that they depend on (e.g. lighting) (#982, #971)
+
 ## v0.28
 
 ### Highlights

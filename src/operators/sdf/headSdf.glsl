@@ -5,12 +5,12 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 
 	bool isEye = false;
 	float d = tdh_headMain(p);
-	#ifdef THIS_Enableeyes
-	tdh_eye(p, d, isEye, THIS_Blink);
-	#endif
-	#ifdef THIS_Enableears
-	tdh_ear(p, d);
-	#endif
+	if (IS_TRUE(THIS_Enableeyes)) {
+		tdh_eye(p, d, isEye, THIS_Blink);
+	}
+	if (IS_TRUE(THIS_Enableears)) {
+		tdh_ear(p, d);
+	}
 
 	ReturnT res = createSdf(d);
 	#ifdef THIS_Enablesurfacecolor

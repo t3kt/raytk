@@ -1,2 +1,2 @@
 names	source	handling	readOnlyHandling	conversion	enable
-Color[rgb]	param	runtime	macro		1
+Color[rgb]	param	runtime	macro		op('color_definition').numRows < 2

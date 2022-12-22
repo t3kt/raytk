@@ -1,2 +1,4 @@
 names	source	handling	readOnlyHandling	conversion	enable
-Center[1-2] Point[1-2]	param	runtime	macro		1
+Center[1-2]	param	runtime	macro		op('center_definition').numRows < 2
+Point[1-2]	param	runtime	macro		op('point_definition').numRows < 2
+Axis	param	constant			1

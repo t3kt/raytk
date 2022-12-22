@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.material.pbrMat
-  opVersion: '11'
+  opVersion: '14'
   opStatus: beta
 opDef: !def
   enable: !expr
@@ -34,6 +34,13 @@ opDef: !def
     evaluate: true
     evalOpts: !evalOpts
       excludeFirstRow: true
+  tagTable: !table
+    file: src/operators/material/pbrMat_tags.txt
+    name: tag_exprs
+    evaluate: true
+    evalOpts: !evalOpts
+      excludeFirstRow: true
+      cols: enable
 inputs:
 - !input
   Required: true

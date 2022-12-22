@@ -2,6 +2,6 @@
   "meta": {
     "opStatus": "default",
     "opType": "raytk.operators.sdf2d.triangleSdf2d",
-    "opVersion": 7
+    "opVersion": 9
   }
 }

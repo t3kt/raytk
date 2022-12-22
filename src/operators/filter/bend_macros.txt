@@ -1,2 +1,0 @@
-	'THIS_Along'	parent().par.Direction.eval()[0]
-	'THIS_Toward'	parent().par.Direction.eval()[1]
