@@ -65,28 +65,6 @@ op:
     - label: (value)
       name: this
     name: Field
-  - label: Data Type
-    menuOptions:
-    - label: Float
-      name: float
-    - label: Vector
-      name: vec4
-    - label: Sdf
-      name: Sdf
-    name: Datatype
-  - label: Use Part
-    menuOptions:
-    - label: Whole Vector
-      name: vec
-    - label: X
-      name: x
-    - label: Y
-      name: y
-    - label: Z
-      name: z
-    - label: W
-      name: w
-    name: Part
   - label: Default Value
     name: Defaultval
 

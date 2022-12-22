@@ -57,6 +57,22 @@ op:
     - float
     - vec4
     - Sdf
+  - contextTypes:
+    - CameraContext
+    coordTypes:
+    - vec2
+    label: Camera
+    name: camera
+    returnTypes:
+    - Ray
+  - contextTypes:
+    - LightContext
+    coordTypes:
+    - vec3
+    label: Light
+    name: light
+    returnTypes:
+    - Light
   keywords:
   - point
   - render
@@ -160,6 +176,13 @@ op:
   summary: Renderer that takes in a TOP of coordinates and evaluates the scene at
     each point.
   thumb: assets/images/reference/operators/output/pointMapRender_thumb.png
+  variables:
+  - label: datapos
+    name: datapos
+  - label: datauv
+    name: datauv
+  - label: datares
+    name: datares
 
 ---
 

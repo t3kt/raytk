@@ -1,11 +1,11 @@
 ---
 layout: operator
-title: hilbertCurveTransform
+title: geometricSeriesSquareTile
 parent: Filter Operators
 grand_parent: Operators
-permalink: /reference/operators/filter/hilbertCurveTransform
+permalink: /reference/operators/filter/geometricSeriesSquareTile
 redirect_from:
-  - /reference/opType/raytk.operators.filter.hilbertCurveTransform/
+  - /reference/opType/raytk.operators.filter.geometricSeriesSquareTile/
 op:
   category: filter
   inputs:
@@ -17,6 +17,7 @@ op:
     - RayContext
     - ParticleContext
     coordTypes:
+    - float
     - vec2
     - vec3
     label: definition_in
@@ -29,8 +30,8 @@ op:
     - Ray
     - Light
     - Particle
-  name: hilbertCurveTransform
-  opType: raytk.operators.filter.hilbertCurveTransform
+  name: geometricSeriesSquareTile
+  opType: raytk.operators.filter.geometricSeriesSquareTile
   parameters:
   - label: Enable
     name: Enable
@@ -43,19 +44,18 @@ op:
     - label: XY
       name: z
     name: Axis
-    summary: The axis facing the plane along which space is repeated.
-  - label: Steps
-    name: Steps
-  - label: Offset
-    name: Offset
+  - label: Density
+    name: Density
+  - label: Zoom
+    name: Zoom
   status: beta
-  thumb: assets/images/reference/operators/filter/hilbertCurveTransform_thumb.png
+  summary: Repeats space in a square arrangement that gets smaller in the center.
+  thumb: assets/images/reference/operators/filter/geometricSeriesSquareTile_thumb.png
   variables:
-  - label: localuv
-    name: localuv
-  - label: cell
-    name: cell
-  - label: localcell
-    name: localcell
+  - label: scale
+    name: scale
 
 ---
+
+
+Repeats space in a square arrangement that gets smaller in the center.

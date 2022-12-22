@@ -85,6 +85,8 @@ op:
     - label: Ratio
       name: ratio
     name: Iterationtype
+  - label: Optimize
+    name: Optimize
   shortcuts:
   - ext
   summary: Creates a 3D SDF by extruding a 2D SDF along along an axis.

@@ -10,6 +10,9 @@ cat:
   operators:
   - name: brickPattern
   - name: checkerPattern
+  - name: gridPattern
+    status: beta
+    summary: Rectangular grid pattern.
   - name: hexagonalGridPattern
   - name: hexagonalTruchetPattern
   - name: hexagonalWeavePattern

@@ -9,6 +9,7 @@ cat:
   name: post
   operators:
   - name: depthMap
+  - name: objectIdMask
   - name: worldPosMap
 
 ---

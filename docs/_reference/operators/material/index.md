@@ -13,6 +13,8 @@ cat:
   operators:
   - name: backgroundFieldContrib
     status: beta
+    summary: Accesses color from the background field of the renderer, which is based
+      on the surface normal, for use in a modularMat.
   - name: basicMat
     summary: Material with a basic lighting model.
   - name: colorizeSdf2d

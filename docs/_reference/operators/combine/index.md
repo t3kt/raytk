@@ -18,6 +18,8 @@ cat:
   - name: blend
     status: deprecated
     summary: Smoothly blends/morphs between up to 4 SDFs.
+  - name: boundLimit
+    status: beta
   - keywords:
     - chamfer
     - columns
@@ -36,9 +38,12 @@ cat:
     summary: Combines float or vector fields using one of several mathematical operations.
   - name: composeSdf
     status: beta
+    summary: Combine multiple SDFs using different combination modes into a single
+      SDF.
   - name: compositeFields
     summary: Combines two vector fields using color compositing.
   - name: edgeCombine
+    summary: Combines two SDFs in ways that use the intersection areas.
   - name: iterationSwitch
     summary: Switches between inputs based on the iteration value provided by a downstream
       operator.

@@ -45,8 +45,12 @@ cat:
     summary: A float or vector field that evaluates to a constant value.
   - name: constantSwitchField
     status: beta
+    summary: Switches or blends between constant values based on an index field.
   - name: curlNoiseField
     summary: Curl noise field.
+  - name: dataTextureField
+    status: beta
+    summary: Accesses data from a texture with the same layout as the renderer.
   - name: domainColorField
     status: beta
   - name: hsvColorField
@@ -67,7 +71,8 @@ cat:
     status: deprecated
     summary: Vector field that produces the surface normal where it is evaluated.
   - name: pointDistanceField
-    summary: A float field that provides the distance from a specific point in space.
+    summary: A float field that provides the distance from a specific point in space
+      from either the current position or from another point.
   - name: polarCoordField
     status: beta
     summary: A field that produces various types of polar coordinates.

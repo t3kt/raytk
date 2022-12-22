@@ -37,6 +37,19 @@ op:
     name: beginEndField
     returnTypes:
     - vec4
+  - contextTypes:
+    - Context
+    - MaterialContext
+    - CameraContext
+    - LightContext
+    - RayContext
+    - ParticleContext
+    coordTypes:
+    - vec3
+    label: Exponent Field
+    name: exponentField
+    returnTypes:
+    - float
   keywords:
   - dodecahedron
   - icosahedron

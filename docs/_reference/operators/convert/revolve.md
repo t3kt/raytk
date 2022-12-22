@@ -33,6 +33,7 @@ op:
     - ParticleContext
     coordTypes:
     - float
+    - vec3
     label: Rotate Field
     name: rotateField
     returnTypes:
@@ -48,6 +49,7 @@ op:
     - ParticleContext
     coordTypes:
     - float
+    - vec3
     label: Scale Field
     name: scaleField
     returnTypes:
@@ -63,12 +65,39 @@ op:
     - ParticleContext
     coordTypes:
     - float
+    - vec3
     label: Translate Field
     name: translateField
     returnTypes:
     - vec4
     summary: Optional field that controls translate of the cross-section as it goes
       around the axis.
+  - contextTypes:
+    - Context
+    - MaterialContext
+    - CameraContext
+    - LightContext
+    - RayContext
+    - ParticleContext
+    coordTypes:
+    - vec3
+    label: Radial Offset Field
+    name: radialOffsetField
+    returnTypes:
+    - float
+  - contextTypes:
+    - Context
+    - MaterialContext
+    - CameraContext
+    - LightContext
+    - RayContext
+    - ParticleContext
+    coordTypes:
+    - vec3
+    label: Axis Offset Field
+    name: axisOffsetField
+    returnTypes:
+    - float
   name: revolve
   opType: raytk.operators.convert.revolve
   parameters:

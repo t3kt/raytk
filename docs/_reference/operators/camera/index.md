@@ -14,7 +14,10 @@ cat:
   name: camera
   operators:
   - name: basicCamera
-    status: deprecated
+  - name: cameraRemap
+    status: beta
+    summary: Modifies a camera by replacing the pixel UV coordinates that are used
+      when calculating ray origins and directions.
   - name: fieldCamera
     status: beta
   - keywords:

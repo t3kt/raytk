@@ -41,6 +41,8 @@ op:
     name: Axis
   - label: Position
     name: Position
+  - label: Rotate
+    name: Rotate
   - label: Intensity
     name: Intensity
   - label: Color
@@ -53,5 +55,10 @@ op:
     name: Attenuationend
   - label: Enable Shadow
     name: Enableshadow
+  summary: Light that emits from along an axis, similar to an infinitely long tube
+    light.
 
 ---
+
+
+Light that emits from along an axis, similar to an infinitely long tube light.

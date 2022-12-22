@@ -8,6 +8,11 @@ redirect_from:
   - /reference/opType/raytk.operators.combine.composeSdf/
 op:
   category: combine
+  detail: 'This is essentially a replacement for long chains of `combine` operators.
+
+    Once you''ve set up all the inputs and combine modes, switch on the `Optimize`
+    setting which will compile down the generated code so that it runs much faster,
+    but will make changes to settings much slower.'
   inputs:
   - contextTypes:
     - Context
@@ -679,5 +684,12 @@ op:
   - label: Offset 8
     name: Blendoffset8
   status: beta
+  summary: Combine multiple SDFs using different combination modes into a single SDF.
 
 ---
+
+
+Combine multiple SDFs using different combination modes into a single SDF.
+
+This is essentially a replacement for long chains of `combine` operators.
+Once you've set up all the inputs and combine modes, switch on the `Optimize` setting which will compile down the generated code so that it runs much faster, but will make changes to settings much slower.

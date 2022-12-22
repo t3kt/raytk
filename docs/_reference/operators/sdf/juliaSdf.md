@@ -8,6 +8,20 @@ redirect_from:
   - /reference/opType/raytk.operators.sdf.juliaSdf/
 op:
   category: sdf
+  inputs:
+  - contextTypes:
+    - Context
+    - MaterialContext
+    - CameraContext
+    - LightContext
+    - RayContext
+    - ParticleContext
+    coordTypes:
+    - vec3
+    label: C Field
+    name: cField
+    returnTypes:
+    - vec4
   keywords:
   - fractal
   - julia
@@ -27,5 +41,10 @@ op:
     name: Iterations
   status: beta
   thumb: assets/images/reference/operators/sdf/juliaSdf_thumb.png
+  variables:
+  - label: step
+    name: step
+  - label: normstep
+    name: normstep
 
 ---

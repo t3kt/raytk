@@ -36,6 +36,7 @@ cat:
     status: beta
   - name: dogBoneSdf2d
     summary: 2D SDF for two connected circles.
+  - name: eggSdf2d
   - keywords:
     - circle
     - ellipse
@@ -43,6 +44,7 @@ cat:
     name: ellipseSdf2d
   - name: flowerSdf2d
   - name: heartSdf2d
+  - name: hexagonalGridSdf2d
   - name: horseshoeSdf2d
   - name: jointSdf2d
     status: beta
@@ -63,6 +65,7 @@ cat:
     summary: SDF for a 2D quad with arbitrary corners.
   - name: rectangleSdf
     summary: SDF for a 2D rectangle.
+  - name: rhombilleTilingSdf2d
   - name: rhombusSdf2d
     summary: SDF for a 2D rhombus (diamond), with its corners aligned to the axes.
   - name: roundedRectangleSdf2d
@@ -78,6 +81,7 @@ cat:
   - name: trapezoidSdf2d
   - name: triangleSdf2d
     summary: SDF for a 2D triangle.
+  - name: triangularGridSdf2d
   - name: vesicaSdf2d
     summary: SDF for a 2d vesica, which is a shape based on the overlap between two
       circles.

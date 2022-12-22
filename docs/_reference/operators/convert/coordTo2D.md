@@ -81,5 +81,9 @@ op:
     - label: Zero
       name: zero
     name: Partz
+  summary: Converts a 3D (or 1D) operator to work in a 2D plane on the chosen axes.
 
 ---
+
+
+Converts a 3D (or 1D) operator to work in a 2D plane on the chosen axes.

@@ -8,6 +8,16 @@ redirect_from:
   - /reference/opType/raytk.operators.light.multiLight/
 op:
   category: light
+  detail: 'This causes the renderer to repeat the surface shading process for each
+    light and then combine the results.
+
+
+    If shadows are enabled, this can have a significant impact on performance.
+
+
+    Each light source can optionally specify an SDF that defines the bounds of the
+    area where that light is used. This can help to optimize rendering if one light
+    is only needed in certain areas.'
   inputs:
   - contextTypes:
     - LightContext
@@ -221,5 +231,15 @@ op:
   - label: Bounds 8
     name: Bounds8
   status: beta
+  summary: Combines multiple light sources.
 
 ---
+
+
+Combines multiple light sources.
+
+This causes the renderer to repeat the surface shading process for each light and then combine the results.
+
+If shadows are enabled, this can have a significant impact on performance.
+
+Each light source can optionally specify an SDF that defines the bounds of the area where that light is used. This can help to optimize rendering if one light is only needed in certain areas.

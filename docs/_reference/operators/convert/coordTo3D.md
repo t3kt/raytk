@@ -56,5 +56,9 @@ op:
     - label: Zero
       name: zero
     name: Party
+  summary: Converts a 2D (or 1D) operator to work in a 3D context.
 
 ---
+
+
+Converts a 2D (or 1D) operator to work in a 3D context.
