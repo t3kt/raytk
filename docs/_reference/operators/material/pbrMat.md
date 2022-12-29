@@ -76,8 +76,6 @@ op:
     name: Metallic
   - label: Enable Shadow
     name: Enableshadow
-  - label: Enable Reflection
-    name: Enablereflection
   - label: Use Local Position
     name: Uselocalpos
   status: beta

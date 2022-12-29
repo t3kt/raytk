@@ -11,18 +11,11 @@ op:
   name: basicCamera
   opType: raytk.operators.camera.basicCamera
   parameters:
-  - label: Camera
-    name: Camera
   - label: FOV Angle
     name: Camfov
   - label: Position
     name: Campos
   - label: Rotate
     name: Camrot
-  - label: Look At Position
-    name: Lookatpos
-  - label: Up Vector
-    name: Camup
-  status: deprecated
 
 ---

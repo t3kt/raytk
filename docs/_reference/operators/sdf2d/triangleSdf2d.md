@@ -8,6 +8,33 @@ redirect_from:
   - /reference/opType/raytk.operators.sdf2d.triangleSdf2d/
 op:
   category: sdf2d
+  inputs:
+  - contextTypes:
+    - Context
+    - MaterialContext
+    - CameraContext
+    - LightContext
+    - RayContext
+    - ParticleContext
+    coordTypes:
+    - vec2
+    label: Radius Field
+    name: radiusField
+    returnTypes:
+    - float
+  - contextTypes:
+    - Context
+    - MaterialContext
+    - CameraContext
+    - LightContext
+    - RayContext
+    - ParticleContext
+    coordTypes:
+    - vec2
+    label: Height/Width Field
+    name: sizeField
+    returnTypes:
+    - float
   name: triangleSdf2d
   opType: raytk.operators.sdf2d.triangleSdf2d
   parameters:

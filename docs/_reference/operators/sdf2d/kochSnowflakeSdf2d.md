@@ -28,5 +28,6 @@ op:
   - label: Steps
     name: Steps
   status: beta
+  thumb: assets/images/reference/operators/sdf2d/kochSnowflakeSdf2d_thumb.png
 
 ---

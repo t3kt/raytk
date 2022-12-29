@@ -63,5 +63,9 @@ op:
   - label: Value 8
     name: Value8
   status: beta
+  summary: Switches or blends between constant values based on an index field.
 
 ---
+
+
+Switches or blends between constant values based on an index field.

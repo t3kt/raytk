@@ -12,6 +12,8 @@ cat:
   name: light
   operators:
   - name: axisLight
+    summary: Light that emits from along an axis, similar to an infinitely long tube
+      light.
   - name: directionalLight
     summary: A directional light.
   - name: hardShadow
@@ -23,6 +25,7 @@ cat:
     summary: Light that is based on a standard Light COMP.
   - name: multiLight
     status: beta
+    summary: Combines multiple light sources.
   - name: pointLight
     shortcuts:
     - pl

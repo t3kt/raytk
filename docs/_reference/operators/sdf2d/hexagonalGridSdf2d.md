@@ -1,13 +1,13 @@
 ---
 layout: operator
-title: chainSdf
-parent: Sdf Operators
+title: hexagonalGridSdf2d
+parent: Sdf2d Operators
 grand_parent: Operators
-permalink: /reference/operators/sdf/chainSdf
+permalink: /reference/operators/sdf2d/hexagonalGridSdf2d
 redirect_from:
-  - /reference/opType/raytk.operators.sdf.chainSdf/
+  - /reference/opType/raytk.operators.sdf2d.hexagonalGridSdf2d/
 op:
-  category: sdf
+  category: sdf2d
   inputs:
   - contextTypes:
     - Context
@@ -17,20 +17,7 @@ op:
     - RayContext
     - ParticleContext
     coordTypes:
-    - vec3
-    label: Length Field
-    name: lengthField
-    returnTypes:
-    - float
-  - contextTypes:
-    - Context
-    - MaterialContext
-    - CameraContext
-    - LightContext
-    - RayContext
-    - ParticleContext
-    coordTypes:
-    - vec3
+    - vec2
     label: Radius Field
     name: radiusField
     returnTypes:
@@ -43,21 +30,33 @@ op:
     - RayContext
     - ParticleContext
     coordTypes:
-    - vec3
-    label: Thickness Field
-    name: thicknessField
+    - vec2
+    label: Spacing Field
+    name: spacingField
     returnTypes:
     - float
-  name: chainSdf
-  opType: raytk.operators.sdf.chainSdf
+  - contextTypes:
+    - Context
+    - MaterialContext
+    - CameraContext
+    - LightContext
+    - RayContext
+    - ParticleContext
+    coordTypes:
+    - vec2
+    label: Rounding Field
+    name: roundingField
+    returnTypes:
+    - float
+  name: hexagonalGridSdf2d
+  opType: raytk.operators.sdf2d.hexagonalGridSdf2d
   parameters:
-  - label: Length
-    name: Length
   - label: Radius
     name: Radius
-  - label: Thickness
-    name: Thickness
-  status: beta
-  thumb: assets/images/reference/operators/sdf/chainSdf_thumb.png
+  - label: Spacing
+    name: Spacing
+  - label: Rounding
+    name: Rounding
+  thumb: assets/images/reference/operators/sdf2d/hexagonalGridSdf2d_thumb.png
 
 ---

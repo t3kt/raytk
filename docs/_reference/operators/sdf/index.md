@@ -118,6 +118,7 @@ cat:
     - spiral
     name: helixSdf
     summary: SDF for a helix (an elongated spiral).
+  - name: hyperbolicParaboloidSdf
   - name: jointSdf
     status: beta
   - keywords:
@@ -183,6 +184,8 @@ cat:
     - rectangle
     - square
     name: quadSdf
+    status: beta
+  - name: ringsSdf
     status: beta
   - keywords:
     - line

@@ -56,16 +56,14 @@ op:
   name: chamferBoxSdf
   opType: raytk.operators.sdf.chamferBoxSdf
   parameters:
-  - label: Enable
-    name: Enable
   - label: Translate
     name: Translate
+  - label: Scale
+    name: Scale
   - label: Uniform Scale
     name: Uniformscale
   - label: Chamfer
     name: Chamfer
-  - label: Scale
-    name: Scale
   - label: Round
     name: Round
   thumb: assets/images/reference/operators/sdf/chamferBoxSdf_thumb.png

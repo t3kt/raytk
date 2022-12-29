@@ -71,6 +71,9 @@ cat:
     summary: Flips the input across an axis, either on its own or merged with the
       original.
   - name: fold
+  - name: geometricSeriesSquareTile
+    status: beta
+    summary: Repeats space in a square arrangement that gets smaller in the center.
   - name: hilbertCurveTransform
     status: beta
   - keywords:
@@ -233,6 +236,8 @@ cat:
     summary: Transforms space with rotation.
   - name: rotate4D
     status: beta
+    summary: Projects 3D space into 4D space, applies rotation along two axes and
+      then projects back into 3D space.
   - keywords:
     - material
     - modularmat

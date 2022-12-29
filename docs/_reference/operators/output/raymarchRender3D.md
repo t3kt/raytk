@@ -83,25 +83,15 @@ op:
     name: Antialias
     summary: Number of antialiasing steps. Increasing this improves render quality
       but can be costly.
-  - name: Camera
-    summary: Standard TD Camera COMP, used if the `Camera` input isn't connected.
-      This camera is not yet fully functional.
-  - name: Light1
-    summary: Standard TD Light COMP, used if the `Light` input isn't connected. Only
-      point lights work, and they don't yet support distance attenuation (though the
-      `pointLight` ROP does).
   - label: Use Render Depth
     name: Userenderdepth
-    summary: Whether to use the provided Render TOP for a base depth. Not ready for
-      use.
+    summary: Whether to use the provided Render TOP for a base depth.
   - label: Overlay Render
     name: Overlayrender
-    summary: Whether to mix the provided Render TOP with the scene using depth. Not
-      ready for use.
+    summary: Whether to mix the provided Render TOP with the scene using depth.
   - label: Render TOP
     name: Rendertop
-    summary: Connect a Render TOP to mix with the scene based on depth. Not ready
-      for use.
+    summary: Connect a Render TOP to mix with the scene based on depth.
   - label: Max Steps
     name: Maxsteps
     summary: Maximum number of marching steps.
@@ -156,16 +146,17 @@ op:
       SDFs).
   - label: Enable Near Hit Output
     name: Enablenearhitoutput
-    summary: Advance feature, not ready for use.
+    summary: Enables near hit output which shows where rays got close to hitting surfaces.
   - label: Enable Step Output
     name: Enablestepoutput
-    summary: Advance feature, not ready for use.
+    summary: Enables step count output which shows how many steps each ray took while
+      marching through the scene.
   - label: Enable Iteration Output
     name: Enableiterationoutput
     summary: Advance feature, not ready for use.
   - label: Enable Object Id Output
     name: Enableobjectidoutput
-    summary: Advance feature, not ready for use.
+    summary: Enables object id output which shows id values assigned using `injectObjectId`.
   - label: Enable Debug Output
     name: Enabledebugoutput
     summary: Advance feature, not ready for use.

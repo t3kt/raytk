@@ -19,9 +19,9 @@ op:
     name: Camera
     summary: The camera to match. This can either be a Camera COMP, or an arcBallCamera,
       or the `camera` from the palette.
-  - label: Create Camera
+  - label: Create Camera Viewport
     name: Createcamera
-    summary: Creates and attaches an instance of the `camera` palette component.
+    summary: Creates and attaches an instance of the `cameraViewport` palette component.
   - label: Create Basic Camera
     name: Createbasiccamera
     summary: Creates and attaches a standard Camera COMP.

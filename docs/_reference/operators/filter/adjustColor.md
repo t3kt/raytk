@@ -37,11 +37,10 @@ op:
     - float
     - vec2
     - vec3
-    label: Brightness & Contrast Field
-    name: brightnessContrastField
+    label: Brightness Field
+    name: brightnessField
     returnTypes:
     - float
-    - vec4
   - contextTypes:
     - Context
     - MaterialContext
@@ -53,11 +52,40 @@ op:
     - float
     - vec2
     - vec3
-    label: Hue & Saturation Field
-    name: hueSaturationField
+    label: Contrast Field
+    name: contrastField
     returnTypes:
     - float
-    - vec4
+  - contextTypes:
+    - Context
+    - MaterialContext
+    - CameraContext
+    - LightContext
+    - RayContext
+    - ParticleContext
+    coordTypes:
+    - float
+    - vec2
+    - vec3
+    label: Hue Field
+    name: hueField
+    returnTypes:
+    - float
+  - contextTypes:
+    - Context
+    - MaterialContext
+    - CameraContext
+    - LightContext
+    - RayContext
+    - ParticleContext
+    coordTypes:
+    - float
+    - vec2
+    - vec3
+    label: Saturation Field
+    name: saturationField
+    returnTypes:
+    - float
   keywords:
   - adjust
   - brightness

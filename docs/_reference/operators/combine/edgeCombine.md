@@ -91,8 +91,14 @@ op:
     name: Swapinputs
   - label: Radius
     name: Radius
+    summary: Width of the edge overlap area.
   - label: Depth
     name: Depth
+    summary: Depth of the groove / tongue.
+  summary: Combines two SDFs in ways that use the intersection areas.
   thumb: assets/images/reference/operators/combine/edgeCombine_thumb.png
 
 ---
+
+
+Combines two SDFs in ways that use the intersection areas.
