@@ -65,8 +65,8 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 				#ifdef THIS_Rescale
 				ctx.resolution.y /= THIS_INPUT_COUNT;
 				p.y = mod(p.y, ctx.resolution.y);
+				#endif
 			}
-			#endif
 			#elif defined(THIS_Layout_horz) || (defined(THIS_Layout_grid) && THIS_INPUT_COUNT < 4)
 			{
 				j = p.x / ctx.resolution.x;
