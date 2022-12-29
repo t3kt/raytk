@@ -286,6 +286,7 @@ class Palette:
 		self.ownerComp.op('thumbImage').cook(force=True)
 
 def _isNonCommercial():
+	import td
 	for license in td.licenses:
 		if license.isEnabled and license.type in ('Pro', 'Commercial'):
 			return False
