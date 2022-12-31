@@ -522,6 +522,12 @@ def createActionManager():
 				returnTypes=['Sdf'],
 				multi=True, minCount=2, maxCount=None),
 			attach=_AttachOutFromExisting()),
+		_ActionImpl(
+			'Switch OPs',
+			ropType='raytk.operators.combine.switch',
+			select=_OpSelect(
+				multi=True, minCount=2, maxCount=None),
+			attach=_AttachOutFromExisting()),
 		_createTableBasedGroup(
 			'Combine Fields',
 			ropType='raytk.operators.combine.combineFields',
