@@ -525,9 +525,14 @@ def createActionManager():
 		_ActionImpl(
 			'Switch OPs',
 			ropType='raytk.operators.combine.switch',
-			select=_OpSelect(
-				multi=True, minCount=2, maxCount=None),
+			select=_OpSelect(multi=True, minCount=2, maxCount=None),
 			attach=_AttachOutFromExisting()),
+		_ActionImpl(
+			'Blend OPs',
+			ropType='raytk.operators.combine.switch',
+			select=_OpSelect(multi=True, minCount=2, maxCount=None),
+			attach=_AttachOutFromExisting(),
+			params={'Blend': True}),
 		_createTableBasedGroup(
 			'Combine Fields',
 			ropType='raytk.operators.combine.combineFields',
