@@ -1,12 +1,14 @@
 !rop
 meta: !meta
   opType: raytk.operators.field.curlNoiseField
-  opVersion: '6'
+  opVersion: '7'
   opStatus: default
 opDef: !def
   enable: true
   typeSpec: !ropTypes
     coordType: !coordT
+      Allcoordtype: !expr
+        expr: parent().par.Coordtype == 'auto'
       Coordtypefloat: !expr
         expr: parent().par.Coordtype == 'float'
       Coordtypevec2: !expr
