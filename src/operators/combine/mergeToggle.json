@@ -1,7 +1,7 @@
 {
   "meta": {
-    "opStatus": "default",
+    "opStatus": "deprecated",
     "opType": "raytk.operators.combine.mergeToggle",
-    "opVersion": 6
+    "opVersion": 7
   }
 }
