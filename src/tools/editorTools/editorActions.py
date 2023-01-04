@@ -543,7 +543,7 @@ def createActionManager():
 				multi=True, minCount=True, maxCount=None),
 			attach=_AttachOutFromExisting()),
 		_createTableBasedGroup(
-			'Combine Fields',
+			'Composite Fields',
 			ropType='raytk.operators.combine.compositeFields',
 			paramName='Operation',
 			table=op('compositeModes'),
