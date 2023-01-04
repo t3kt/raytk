@@ -17,5 +17,8 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 	vec2 spread = THIS_Spread;
 	color *= smoothstep(max(spread.x, spread.y), min(spread.x, spread.y), abs(n.z));
 	color *= THIS_Level;
+	#if defined(THIS_Enableshadow) && defined(RAYTK_USE_SHADOW)
+	color *= ctx.shadedLevel;
+	#endif
 	return vec4(color, 1.);
 }

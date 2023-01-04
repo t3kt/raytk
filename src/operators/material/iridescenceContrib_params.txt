@@ -1,2 +1,3 @@
 names	source	handling	readOnlyHandling	conversion	enable
 Level Phase Period Spread[1-2]	param	runtime	macro		1
+Enableshadow	param	macro			1
