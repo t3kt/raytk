@@ -17,5 +17,9 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 	vec4 value = texture(THIS_texture, uv);
 	#endif
 	value.rgb *= level;
+
+	#if defined(THIS_Enableshadow) && defined(RAYTK_USE_SHADOW)
+	value.rgb *= ctx.shadedLevel;
+	#endif
 	return value;
 }
