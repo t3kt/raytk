@@ -53,7 +53,7 @@ vec3 goochShading(
 
 	vec3 kcool = min(coolColor + baseColor, 1.0);
 	vec3 kwarm = min(warmColor + baseColor, 1.0);
-	vec3 kfinal = mix(kcool, kwarm, NdotL);
+	vec3 kfinal = mix(kwarm, kcool, NdotL);
 	float spec = max(dot(normalize(reflectVec), viewDirection), 0.0);
 	spec = pow(spec, 32.0);
 
