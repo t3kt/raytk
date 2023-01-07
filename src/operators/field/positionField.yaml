@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.field.positionField
-  opVersion: '14'
+  opVersion: '15'
   opStatus: default
 opDef: !def
   enable: true
@@ -37,7 +37,29 @@ opDef: !def
     file: src/operators/field/positionField.glsl
     name: functionTemplate
   paramGroupTable: eval_params
+  macroTable: !table
+    file: src/operators/field/positionField_macros.txt
+    name: macro_exprs
+    evaluate: true
+    evalOpts: !evalOpts
+      excludeFirstRow: true
   help: !text
     file: src/operators/field/positionField.md
     name: help
   shortcuts: pos
+elements:
+- !opElement
+  name: codeSwitcher_Positiontype
+  elementType: codeSwitcher
+  params:
+    Elementroot: ''
+    Table: !table
+      file: src/operators/field/positionField_positionTypes.txt
+      name: positionTypes
+    Param: Positiontype
+    Autoupdateparams: true
+    Manageparamstates: false
+    Alwaysincludeallparams: false
+    Switchmode: switch
+    Indexexpr: ''
+    Placeholder: POSITION_TYPE_BODY();

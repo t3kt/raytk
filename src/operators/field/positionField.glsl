@@ -1,13 +1,11 @@
 ReturnT thismap(CoordT p, ContextT ctx) {
+	vec3 p0;
+	POSITION_TYPE_BODY();
+	ReturnT res;
 	#ifdef THIS_RETURN_TYPE_float
-		#ifdef THIS_COORD_TYPE_float
-			return p;
-		#elif defined(THIS_COORD_TYPE_vec2) && defined(THIS_Axis_z)
-			return p.x;
-		#else
-			return p.THIS_Axis;
-		#endif
+		res = getAxis(p0, int(THIS_Axis));
 	#else
-		return adaptAsVec4(p);
+		res = adaptAsVec4(p0);
 	#endif
+	return res;
 }
