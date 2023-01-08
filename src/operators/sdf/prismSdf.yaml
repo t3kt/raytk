@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.sdf.prismSdf
-  opVersion: '22'
+  opVersion: '23'
   opStatus: default
 opDef: !def
   enable: true
@@ -55,6 +55,14 @@ inputs:
     Returntypefloat: true
 - !input
   Localalias: thicknessField
+  coordType: !coordT
+    Coordtypevec3: true
+  contextType: !contextT
+    Allcontexttype: true
+  returnType: !returnT
+    Returntypefloat: true
+- !input
+  Localalias: sidesField
   coordType: !coordT
     Coordtypevec3: true
   contextType: !contextT
