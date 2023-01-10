@@ -1,4 +1,5 @@
 ReturnT thismap(CoordT p, ContextT ctx) {
+	CoordT p0 = p;
 	CoordT q = p - THIS_Translate;
 	switch (int(THIS_Axis)) {
 		case 0: q = q.yxz; break;
@@ -14,7 +15,7 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 	#endif
 
 	#ifdef THIS_HAS_INPUT_radiusField
-	float r = THIS_Radius * inputOp_radiusField(p, ctx);
+	float r = THIS_Radius * inputOp_radiusField(p0, ctx);
 	#else
 	float r = THIS_Radius;
 	#endif
@@ -24,7 +25,7 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 	#endif
 
 	#ifdef THIS_HAS_INPUT_thicknessField
-	float t = THIS_Thickness * inputOp_thicknessField(p, ctx);
+	float t = THIS_Thickness * inputOp_thicknessField(p0, ctx);
 	#else
 	float t = THIS_Thickness;
 	#endif

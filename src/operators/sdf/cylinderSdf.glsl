@@ -1,4 +1,5 @@
 ReturnT thismap(CoordT p, ContextT ctx) {
+	CoordT p0 = p;
 	p -= THIS_Translate;
 	vec3 q;
 	switch (int(THIS_Axis)) {
@@ -17,7 +18,7 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 	if (IS_FALSE(THIS_Infiniteheight)) {
 		h = THIS_Height;
 		#if defined(THIS_HAS_INPUT_heightField)
-		h *= inputOp_heightField(p, ctx);
+		h *= inputOp_heightField(p0, ctx);
 		#endif
 		#ifdef THIS_EXPOSE_normoffset
 		THIS_normoffset = map01(q.y, -h*.5, h*.5);
@@ -25,7 +26,7 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 	}
 
 	#if defined(THIS_HAS_INPUT_radiusField)
-	r *= inputOp_radiusField(p, ctx);
+	r *= inputOp_radiusField(p0, ctx);
 	#endif
 	ReturnT res;
 	if (IS_TRUE(THIS_Infiniteheight)) {
@@ -35,7 +36,7 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 	}
 	if (IS_TRUE(THIS_Hollow)) {
 		#ifdef THIS_HAS_INPUT_thicknessField
-		float th = inputOp_thicknessField(p, ctx);
+		float th = inputOp_thicknessField(p0, ctx);
 		#else
 		float th = THIS_Thickness;
 		#endif

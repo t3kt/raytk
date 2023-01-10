@@ -1,9 +1,9 @@
 // https://iquilezles.org/www/articles/distfunctions2d/distfunctions2d.htm
 ReturnT thismap(CoordT p, ContextT ctx) {
-	vec2 ab = THIS_Scale;
 	CoordT p0 = p;
+	vec2 ab = THIS_Scale;
 	#ifdef THIS_HAS_INPUT_scaleField
-	ab *= fillToVec2(inputOp_scaleField(p, ctx));
+	ab *= fillToVec2(inputOp_scaleField(p0, ctx));
 	#endif
 	ReturnT res;
 	if (ab.x == ab.y) {

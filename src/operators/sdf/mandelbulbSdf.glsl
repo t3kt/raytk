@@ -1,5 +1,6 @@
 ReturnT thismap(CoordT p, ContextT ctx) {
 	vec4 orb;
+	CoordT p0 = p;
 	p -= THIS_Translate;
 	float power = THIS_Power;
 	vec2 shift0 = vec2(THIS_Thetashift, THIS_Phishift);
@@ -28,7 +29,7 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 		#endif
 
 		#ifdef THIS_HAS_INPUT_shiftField
-		shift = shift0 + radians(adaptAsVec2(inputOp_shiftField(p, ctx)));
+		shift = shift0 + radians(adaptAsVec2(inputOp_shiftField(p0, ctx)));
 		#endif
 
 		float theta = (power*acos(w.y/r) + shift.x);
