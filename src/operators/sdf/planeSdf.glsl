@@ -12,7 +12,7 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 	#else
 	float d = p.x - THIS_Offset - inputOp_offsetField(p0, ctx);
 	#endif
-	if (THIS_Flip > 0.5) {
+	if (IS_TRUE(THIS_Flip)) {
 		d *= -1.;
 	}
 	ReturnT res = createSdf(d);
