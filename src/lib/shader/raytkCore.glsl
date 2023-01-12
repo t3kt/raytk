@@ -290,7 +290,9 @@ struct LightContext {
 	int index;
 	Sdf result;
 	vec3 normal;
-
+	#ifdef RAYTK_GLOBAL_POS_IN_CONTEXT
+	vec3 globalPos;
+	#endif
 	#if defined(RAYTK_TIME_IN_CONTEXT) || defined(RAYTK_USE_TIME)
 	Time time;
 	#endif
@@ -298,6 +300,9 @@ struct LightContext {
 
 LightContext createLightContext(Sdf res, vec3 norm) {
 	return LightContext(0, res, norm
+	#ifdef RAYTK_GLOBAL_POS_IN_CONTEXT
+	, vec3(0.)
+	#endif
 	#if defined(RAYTK_TIME_IN_CONTEXT) || defined(RAYTK_USE_TIME)
 	, getGlobalTime()
 	#endif
@@ -312,6 +317,9 @@ struct MaterialContext {
 	vec3 normal;
 	vec3 reflectColor;
 	vec3 refractColor;
+	#ifdef RAYTK_GLOBAL_POS_IN_CONTEXT
+	vec3 globalPos;
+	#endif
 	#ifdef RAYTK_USE_MATERIAL_POS
 	vec3 materialPos;
 	#endif
@@ -351,6 +359,9 @@ MaterialContext createMaterialContext() {
 	matCtx.ray = Ray(vec3(0.), vec3(0.));
 	matCtx.normal = vec3(0.);
 	matCtx.reflectColor = vec3(0.);
+	#ifdef RAYTK_GLOBAL_POS_IN_CONTEXT
+	matCtx.globalPos = vec3(0);
+	#endif
 	#ifdef RAYTK_USE_MATERIAL_POS
 	matCtx.materialPos = vec3(0.);
 	#endif
@@ -387,6 +398,9 @@ struct RayContext {
 	Sdf result;
 	Ray ray;
 
+	#ifdef RAYTK_GLOBAL_POS_IN_CONTEXT
+	vec3 globalPos;
+	#endif
 	#if defined(RAYTK_TIME_IN_CONTEXT) || defined(RAYTK_USE_TIME)
 	Time time;
 	#endif
@@ -396,6 +410,9 @@ RayContext createRayContext(Ray ray, Sdf result) {
 	RayContext rCtx;
 	rCtx.ray = ray;
 	rCtx.result = result;
+	#ifdef RAYTK_GLOBAL_POS_IN_CONTEXT
+	rCtx.globalPos = vec3(0.);
+	#endif
 	#if defined(RAYTK_TIME_IN_CONTEXT) || defined(RAYTK_USE_TIME)
 	rCtx.time = getGlobalTime();
 	#endif

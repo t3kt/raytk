@@ -447,6 +447,9 @@ void main()
 			#ifdef OUTPUT_WORLDPOS
 			worldPosOut += vec4(p, 1);
 			#endif
+			#ifdef RAYTK_GLOBAL_POS_IN_CONTEXT
+			matCtx.globalPos = p;
+			#endif
 
 			#ifdef OUTPUT_SDF
 			sdfOut += vec4(res.x, resultMaterial1(res), stepCount, 1);
@@ -462,6 +465,9 @@ void main()
 			#ifdef OUTPUT_COLOR
 			{
 				LightContext lightCtx = createLightContext(res, matCtx.normal);
+				#ifdef RAYTK_GLOBAL_POS_IN_CONTEXT
+				lightCtx.globalPos = matCtx.globalPos;
+				#endif
 				vec4 col;
 				#if !defined(RAYTK_LIGHT_COUNT) || RAYTK_LIGHT_COUNT == 1
 				matCtx.light = getLight(p, lightCtx);

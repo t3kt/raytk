@@ -159,6 +159,9 @@ vec2 p = getCoord();
 #ifdef THIS_RETURN_TYPE_Sdf
 	Sdf res = map(p);
 	MaterialContext matCtx = createMaterialContext();
+	#ifdef RAYTK_GLOBAL_POS_IN_CONTEXT
+	matCtx.globalPos = adaptAsVec3(p);
+	#endif
 	float exists = isNonHitSdf(res) ? 0. : 1.;
 
 	#ifdef OUTPUT_COLOR

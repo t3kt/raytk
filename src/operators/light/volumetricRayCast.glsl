@@ -10,6 +10,9 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 	float level = THIS_Level;
 	Ray ray = ctx.ray;
 	LightContext lightCtx = createLightContext(ctx.result, ctx.normal);
+	#ifdef RAYTK_GLOBAL_POS_IN_CONTEXT
+	lightCtx.globalPos = ctx.globalPos;
+	#endif
 	#if !defined(THIS_Recalculatelight)
 	// For non-hits, this won't be populated by default.
 	// and if Recalculatelight isn't used, it won't be updated within the loop below.
