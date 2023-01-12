@@ -1,0 +1,5 @@
+parent().par.Enableshadow	'RAYTK_USE_SHADOW'	
+parent().par.Enableuvoutput	'RAYTK_USE_UV'	
+	'RAYTK_MAX_STEPS'	'THIS_Maxsteps'
+	'RAYTK_MAX_DIST'	'THIS_Maxdist'
+	'RAYTK_SURF_DIST'	'THIS_Surfdist'

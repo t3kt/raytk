@@ -1,0 +1,4 @@
+names	source	handling	readOnlyHandling	conversion	enable
+Uselimitbox	param	macro			1
+Limitboxmin[xyz] Limitboxmax[xyz]	param	runtime	macro		parent().par.Uselimitbox
+Distfactor	param	runtime	macro		1
