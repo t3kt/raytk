@@ -5,8 +5,8 @@ vec3 viewDirection,
 vec3 surfaceNormal,
 float shininess) {
 	//Calculate Phong power
-	vec3 R = -reflect(lightDirection, surfaceNormal);
-	return pow(max(0.0, dot(viewDirection, R)), shininess);
+	vec3 R = normalize(reflect(-lightDirection, surfaceNormal));
+	return pow(max(0.0, dot(-viewDirection, R)), shininess);
 }
 
 // https://github.com/glslify/glsl-specular-beckmann
