@@ -2,6 +2,6 @@
   "meta": {
     "opStatus": "default",
     "opType": "raytk.operators.sdf.prismSdf",
-    "opVersion": 23
+    "opVersion": 24
   }
 }
