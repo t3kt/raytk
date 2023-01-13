@@ -10,6 +10,7 @@ Sdf map(vec3 p) {
 
 Sdf castRay(Ray ray, float maxDist, float surfDist) {
 	int priorStage = pushStage(RAYTK_STAGE_PRIMARY);
+	float dist = 0.;
 	Sdf res = createNonHitSdf();
 	int i;
 	for (i = 0; i < RAYTK_MAX_STEPS; i++) {
@@ -17,10 +18,37 @@ Sdf castRay(Ray ray, float maxDist, float surfDist) {
 			popStage(priorStage);
 			return createNonHitSdf();
 		}
+		res = map(ray.pos);
+		dist += res.x;
+		ray.pos += ray.dir * res.x;
+		// TODO: near hit
+		if (res.x < surfDist) break;
+		if (dist > maxDist) {
+			res = createNonHitSdf();
+			break;
+		}
 	}
-
+	// TODO: Step count
+	res.x = dist;
 	popStage(priorStage);
 	return res;
+}
+
+vec3 calcNormal(in vec3 pos)
+{
+	int priorStage = pushStage(RAYTK_STAGE_NORMAL);
+	#ifdef THIS_Enablenormalsmoothing
+	vec2 e = vec2(1.0, -1.0) * (0.5773*0.005 + THIS_Normalsmoothing);
+	#else
+	const vec2 e = vec2(1.0, -1.0)*0.5773*0.005;
+	#endif
+	vec3 n = normalize(
+		e.xyy*map(pos + e.xyy).x +
+		e.yyx*map(pos + e.yyx).x +
+		e.yxy*map(pos + e.yxy).x +
+		e.xxx*map(pos + e.xxx).x);
+	popStage(priorStage);
+	return n;
 }
 
 // compute ambient occlusion value at given position/normal
@@ -161,6 +189,7 @@ vec3 renderSurfaceHit(Sdf res, vec3 p, MaterialContext matCtx) {
 	matCtx.refractColor = renderSurfaceRefraction(p, matCtx);
 
 	vec3 col = getSurfaceColorAllLights(p, matCtx);
+
 	return col;
 }
 
@@ -233,6 +262,7 @@ void main() {
 			#ifdef OUTPUT_COLOR
 			vec3 stepColor = renderSurfaceHit(res, p, matCtx);
 			// TODO: color summing and output
+			colorOut.rgb += stepColor;
 			#endif
 		}
 

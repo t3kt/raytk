@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.output.experimentalRaymarchRender3D
-  opVersion: '0'
+  opVersion: '1'
   opStatus: alpha
 opDef: !def
   enable: true
@@ -40,6 +40,7 @@ inputs:
   returnType: !returnT
     Returntyperay: true
 - !input
+  Localalias: light
   coordType: !coordT
     Coordtypevec3: true
   contextType: !contextT
