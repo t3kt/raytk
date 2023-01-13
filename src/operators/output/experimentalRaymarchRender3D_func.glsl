@@ -58,3 +58,13 @@ bool checkLimit(vec3 p) {
 	#endif
 	return res;
 }
+
+void processShadow(vec3 p, inout MaterialContext matCtx) {
+	#if defined(THIS_Enableshadow) && defined(RAYTK_USE_SHADOW)
+	if (matCtx.result.useShadow && matCtx.light.supportShadow) {
+		int priorStage = pushStage(RAYTK_STAGE_SHADOW);
+		matCtx.shadedLevel = calcShadedLevel(p, matCtx);
+		popStage(priorStage);
+	}
+	#endif
+}

@@ -382,6 +382,15 @@ void resolveUV(MaterialContext matCtx, out vec4 uv1, out vec4 uv2) {
 }
 #endif
 
+void setMaterialContextPosAndUV(inout MaterialContext matCtx, vec3 mp, vec4 uv) {
+	#ifdef RAYTK_USE_MATERIAL_POS
+	matCtx.materialPos = mp;
+	#endif
+	#ifdef RAYTK_USE_UV
+	matCtx.uv = uv;
+	#endif
+}
+
 vec4 extractIteration(Context ctx) { return ctx.iteration; }
 
 vec4 extractIteration(MaterialContext ctx) { return ctx.context.iteration; }
