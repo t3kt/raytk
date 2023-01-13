@@ -1,10 +1,25 @@
 Sdf map(vec3 p) {
 	Context ctx = createDefaultContext();
 	#ifdef RAYTK_GLOBAL_POS_IN_CONTEXT
-	ctx.globalPos = q;
+	ctx.globalPos = p;
 	#endif
-	Sdf res = thismap(q, ctx);
+	Sdf res = thismap(p, ctx);
 	res.x *= THIS_Distfactor;
+	return res;
+}
+
+Sdf castRay(Ray ray, float maxDist, float surfDist) {
+	int priorStage = pushStage(RAYTK_STAGE_PRIMARY);
+	Sdf res = createNonHitSdf();
+	int i;
+	for (i = 0; i < RAYTK_MAX_STEPS; i++) {
+		if (!checkLimit(ray.pos)) {
+			popStage(priorStage);
+			return createNonHitSdf();
+		}
+	}
+
+	popStage(priorStage);
 	return res;
 }
 
@@ -108,7 +123,7 @@ vec3 getSurfaceColorForSingleLight(vec3 p, MaterialContext matCtx) {
 }
 
 vec3 getSurfaceColorAllLights(vec3 p, MaterialContext matCtx) {
-	LightContext lightCtx = createLightContext(res, matCtx.normal);
+	LightContext lightCtx = createLightContext(matCtx.result, matCtx.normal);
 	#ifdef RAYTK_GLOBAL_POS_IN_CONTEXT
 	lightCtx.globalPos = p;
 	#endif
@@ -183,7 +198,7 @@ void main() {
 		#endif
 
 		// Raymarch
-		Sdf res = castRay(ray, renderDepth);
+		Sdf res = castRay(ray, renderDepth, THIS_Surfdist);
 		#ifdef OUTPUT_DEPTH
 		depthOut += vec4(vec3(min(res.x, renderDepth)), 1);
 		#endif
