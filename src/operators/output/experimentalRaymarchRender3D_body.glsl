@@ -34,6 +34,41 @@ Sdf castRay(Ray ray, float maxDist, float surfDist) {
 	return res;
 }
 
+Sdf castRayBasic(Ray ray, float maxDist, float surfDist) {
+	float dist = 0.;
+	Sdf res = createNonHitSdf();
+	int i;
+	for (i = 0; i < RAYTK_MAX_STEPS; i++) {
+		if (!checkLimit(ray.pos)) {
+			return createNonHitSdf();
+		}
+		res = map(ray.pos);
+		dist += res.x;
+		ray.pos += ray.dir * res.x;
+		if (res.x < surfDist) break;
+		if (dist > maxDist) {
+			res = createNonHitSdf();
+			break;
+		}
+	}
+	res.x = dist;
+	return res;
+}
+
+Sdf castRayInside(Ray ray) {
+	Sdf res;
+	float t = 0.5;
+	for (int i = 0; i < RAYTK_MAX_STEPS; i++) {
+		vec3 pos = ray.pos + ray.dir * t;
+		res = map(pos);
+		res.x *= -1.;
+		t += res.x;
+		if (res.x < 0.) break;
+		if (!checkLimit(pos)) break;
+	}
+	return res;
+}
+
 vec3 calcNormal(in vec3 pos)
 {
 	int priorStage = pushStage(RAYTK_STAGE_NORMAL);
@@ -169,15 +204,68 @@ vec3 getSurfaceColorAllLights(vec3 p, MaterialContext matCtx) {
 	return col;
 }
 
+// Extra offset to fix banding. Not sure if this will be correct for all cases.
+const float reflectStartOffsetMult = 4.0;
+
 vec3 renderSurfaceReflection(vec3 p, MaterialContext matCtx) {
 	vec3 col = vec3(0.);
-	// TODO
+#if defined(RAYTK_USE_REFLECTION) && defined(THIS_Enablereflection)
+	if (!matCtx.result.reflect) return vec3(0.);
+	int priorStage = pushStage(RAYTK_STAGE_REFLECT);
+	matCtx.ray = Ray(p, matCtx.normal);
+	for (int k = 0; k < THIS_Reflectionpasses; k++) {
+		if (!matCtx.result.reflect) break;
+		matCtx.ray.dir = reflect(matCtx.ray.dir, matCtx.normal);
+		matCtx.ray.pos = p + matCtx.normal * RAYTK_SURF_DIST * reflectStartOffsetMult;
+		matCtx.result = castRayBasic(matCtx.ray, RAYTK_MAX_DIST, RAYTK_SURF_DIST);
+		if (isNonHitSdf(matCtx.result)) {
+			// TODO: BACKGROUND
+			col += vec3(0., 0., 0.5);
+			break;
+		}
+		p = matCtx.ray.pos + matCtx.normal * matCtx.result.x;
+		matCtx.normal = calcNormal(p);
+		matCtx.reflectColor = getSurfaceColorAllLights(p, matCtx);
+		col += matCtx.reflectColor;
+	}
+	popStage(priorStage);
+#endif
 	return col;
 }
 
 vec3 renderSurfaceRefraction(vec3 p, MaterialContext matCtx) {
 	vec3 col = vec3(0.);
+#if defined(RAYTK_USE_REFRACTION) && defined(THIS_Enablerefraction)
+	if (!matCtx.result.refract) return vec3(0.);
+	int priorStage = pushStage(RAYTK_STAGE_REFRACT);
+	vec3 firstDir = matCtx.ray.dir;
+	vec3 firstNorm = matCtx.normal;
+	vec3 firstPos = p;
+	Sdf res = matCtx.result;
+	float ior = 1.;
+	for (int i = 0; i < THIS_Refractionpasses; i++) {
+		if (res.refract) {
+			ior = res.ior;
+			vec3 insideDir = refract(firstDir, firstNorm, ior);
+			Sdf insideRes = castInside(Ray(firstPos+firstDir*0.1, insideDir));
+			vec3 posRefrOut = firstPos + insideDir * insideRes.x;
+			vec3 norOut = calcNormal(posRefrOut);
+			vec3 outsideDir = refract(insideDir, -1.*norOut, 1/ior);
+			res = castRay(Ray(posRefrOut+firstDir*0.05, outsideDir), RAYTK_MAX_DIST, 0.01*2.*i);
+			float tRefr = res.x;
+			vec3 posFin = posRefrOut+outsideDir*tRefr;
+			vec3 norRefr = calcNormal(posFin);
+			float travelAtten = clamp(1.-tRefr*0.05, 0., 1.);
+			matCtx.ray = Ray(posFin, norRefr);
+			matCtx.reflectColor = vec3(0.);
+			matCtx.refractColor = col;
+			// TODO: maybe more setup in matCtx?
+			col += travelAtten * getSurfaceColorAllLights(posFin, matCtx);
+		}
+	}
 	// TODO
+	popStage(priorStage);
+#endif
 	return col;
 }
 
@@ -241,6 +329,7 @@ void main() {
 			// If result was a hit and didn't exceed render depth...
 			MaterialContext matCtx = createMaterialContext();
 			matCtx.result = res;
+			matCtx.ray = ray;
 			vec3 p = ray.pos + ray.dir * res.x;
 			#ifdef OUTPUT_WORLDPOS
 			worldPosOut += vec4(p, 1);
