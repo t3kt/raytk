@@ -247,7 +247,7 @@ vec3 renderSurfaceRefraction(vec3 p, MaterialContext matCtx) {
 		if (res.refract) {
 			ior = res.ior;
 			vec3 insideDir = refract(firstDir, firstNorm, ior);
-			Sdf insideRes = castInside(Ray(firstPos+firstDir*0.1, insideDir));
+			Sdf insideRes = castRayInside(Ray(firstPos+firstDir*0.1, insideDir));
 			vec3 posRefrOut = firstPos + insideDir * insideRes.x;
 			vec3 norOut = calcNormal(posRefrOut);
 			vec3 outsideDir = refract(insideDir, -1.*norOut, 1/ior);
@@ -269,7 +269,7 @@ vec3 renderSurfaceRefraction(vec3 p, MaterialContext matCtx) {
 	return col;
 }
 
-vec3 renderSurfaceHit(Sdf res, vec3 p, MaterialContext matCtx) {
+vec4 renderSurfaceHit(Sdf res, vec3 p, MaterialContext matCtx) {
 	// TODO: Calculate AO once it's centralized
 
 	matCtx.reflectColor = renderSurfaceReflection(p, matCtx);
@@ -278,7 +278,7 @@ vec3 renderSurfaceHit(Sdf res, vec3 p, MaterialContext matCtx) {
 
 	vec3 col = getSurfaceColorAllLights(p, matCtx);
 
-	return col;
+	return vec4(col, 1.);
 }
 
 void main() {
@@ -349,9 +349,9 @@ void main() {
 			#endif
 
 			#ifdef OUTPUT_COLOR
-			vec3 stepColor = renderSurfaceHit(res, p, matCtx);
+			vec4 stepColor = renderSurfaceHit(res, p, matCtx);
 			// TODO: color summing and output
-			colorOut.rgb += stepColor;
+			colorOut += stepColor;
 			#endif
 		}
 
