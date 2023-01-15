@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.output.experimentalRaymarchRender3D
-  opVersion: '4'
+  opVersion: '5'
   opStatus: alpha
 opDef: !def
   enable: true
@@ -47,3 +47,14 @@ inputs:
     Contexttypelightcontext: true
   returnType: !returnT
     Returntypelight: true
+- !input
+  Source: !expr
+    expr: parent().par.Backgroundfield or ''
+  Localalias: backgroundField
+  coordType: !coordT
+    Coordtypevec3: true
+  contextType: !contextT
+    Contexttyperaycontext: true
+  returnType: !returnT
+    Returntypefloat: true
+    Returntypevec4: true

@@ -2,5 +2,5 @@ names	source	handling	readOnlyHandling	conversion	enable
 Uselimitbox	param	macro			1
 Limitboxmin[xyz] Limitboxmax[xyz]	param	runtime	macro		parent().par.Uselimitbox
 Distfactor Userenderdepth	param	runtime	macro		1
-Maxdist Maxsteps Surfdist Reflectionpasses Refractionpasses	param	constant			1
-Enablereflection Enablerefraction	param	macro			1
+Maxdist Maxsteps Surfdist Reflectionpasses Refractionpasses Usebackgroundfieldalpha	param	constant			1
+Enablereflection Enablerefraction Showbackground	param	macro			1

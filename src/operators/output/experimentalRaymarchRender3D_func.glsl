@@ -68,3 +68,15 @@ void processShadow(vec3 p, inout MaterialContext matCtx) {
 	}
 	#endif
 }
+
+vec4 getBackgroundColor(Ray ray) {
+	vec4 col = vec4(0.);
+	#ifdef THIS_HAS_INPUT_backgroundField
+	RayContext ctx = createRayContext(ray, createNonHitSdf());
+	col = inputOp_backgroundField(ray.pos, ctx);
+	if (IS_FALSE(THIS_Usebackgroundfieldalpha)) {
+		col.a = 1.;
+	}
+	#endif
+	return col;
+}

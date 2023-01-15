@@ -220,7 +220,7 @@ vec3 renderSurfaceReflection(vec3 p, MaterialContext matCtx) {
 		matCtx.result = castRayBasic(matCtx.ray, RAYTK_MAX_DIST, RAYTK_SURF_DIST);
 		if (isNonHitSdf(matCtx.result)) {
 			// TODO: BACKGROUND
-			col += vec3(0., 0., 0.5);
+			col += getBackgroundColor(matCtx.ray).rgb;
 			break;
 		}
 		p = matCtx.ray.pos + matCtx.normal * matCtx.result.x;
@@ -323,8 +323,12 @@ void main() {
 		// Render
 		if (res.x >= renderDepth && renderDepth == RAYTK_MAX_DIST) {
 			// If result exceeded render depth and we aren't using a depth input..
-			// TODO: background / non-hit stuff
+			#ifdef OUTPUT_COLOR
+			if (IS_TRUE(THIS_Showbackground)) {
+				colorOut += getBackgroundColor(ray);
+			}
 			// TODO: secondary ray stuff
+			#endif
 		} else if (res.x > 0.0 && res.x < renderDepth) {
 			// If result was a hit and didn't exceed render depth...
 			MaterialContext matCtx = createMaterialContext();
