@@ -551,6 +551,13 @@ def createActionManager():
 				returnTypes=['vec4'],
 				multi=True, minCount=True, maxCount=None),
 			attach=_AttachOutFromExisting()),
+		_ActionImpl(
+			'Combine Lights',
+			ropType='raytk.operators.light.multiLight',
+			select=_OpSelect(
+				returnTypes=['Light'],
+				multi=True, minCount=True, maxCount=None),
+			attach=_AttachOutFromExisting()),
 		_createVarRefGroup('Reference Variable'),
 		_createRenderSelGroup('Select Output Buffer'),
 		_ActionImpl(
