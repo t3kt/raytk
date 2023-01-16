@@ -1,12 +1,14 @@
 !rop
 meta: !meta
   opType: raytk.operators.field.chopField
-  opVersion: '16'
+  opVersion: '17'
   opStatus: default
 opDef: !def
   enable: true
   typeSpec: !ropTypes
     coordType: !coordT
+      Allcoordtype: !expr
+        expr: parent().par.Coordtype == 'auto'
       Coordtypefloat: !expr
         expr: parent().par.Coordtype == 'float'
       Coordtypevec2: !expr
@@ -48,6 +50,7 @@ elements:
   name: codeSwitcher_Coordmode
   elementType: codeSwitcher
   params:
+    Elementroot: ''
     Table: !table
       file: src/operators/field/chopField_coordMode.txt
       name: coordModes
@@ -56,4 +59,5 @@ elements:
     Manageparamstates: true
     Alwaysincludeallparams: false
     Switchmode: none
+    Indexexpr: ''
     Placeholder: ''
