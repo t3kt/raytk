@@ -21,3 +21,7 @@ class EditorTools:
 		popMenu = self.ownerComp.op('popMenu')
 		# noinspection PyTypeChecker
 		self.actions.openMenu(popMenu)
+
+	def buildActionTable(self, dat: 'scriptDAT'):
+		self.init()
+		self.actions.buildTable(dat)
