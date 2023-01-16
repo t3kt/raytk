@@ -7,7 +7,7 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 		case 1: p = p.zyx; break;
 		case 2: p = p.xzy; break;
 	}
-	if (THIS_Reverse > 0.5) {
+	if (IS_TRUE(THIS_Reverse)) {
 		p.x *= -1;
 	}
 	float thickness = THIS_Thickness;

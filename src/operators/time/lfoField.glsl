@@ -4,7 +4,7 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 	float q;
 	GET_INTERVAL();
 	WAVE_PREP();
-	if (THIS_Reverse > 0.) {
+	if (IS_TRUE(THIS_Reverse)) {
 		q = 1.0 - q;
 	}
 	ReturnT res;
