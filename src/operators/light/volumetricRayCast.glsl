@@ -3,7 +3,7 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 	#ifdef THIS_Enablevolumetric
 	float totalDist = ctx.result.x;
 	bool isMiss = isNonHitSdfDist(totalDist);
-	if (THIS_Skipmissedrays > 0. && isMiss) {
+	if (IS_TRUE(THIS_Skipmissedrays) && isMiss) {
 		return ReturnT(0.);
 	}
 	int priorStage = pushStage(RAYTK_STAGE_VOLUMETRIC);
