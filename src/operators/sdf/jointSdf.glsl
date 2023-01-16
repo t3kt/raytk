@@ -11,6 +11,7 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 	#else
 	float an = THIS_Angle;
 	#endif
+	an *= 0.5;
 	#ifdef THIS_HAS_INPUT_thicknessField
 	float wi = inputOp_thicknessField(p, ctx);
 	#else
