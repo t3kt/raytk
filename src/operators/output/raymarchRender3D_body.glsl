@@ -455,7 +455,7 @@ void main()
 			sdfOut += vec4(res.x, resultMaterial1(res), stepCount, 1);
 			#endif
 
-			#if defined(OUTPUT_COLOR) || defined(OUTPUT_NORMAL) || (defined(RAYTK_USE_REFLECTION) && defined(THIS_Enablereflection))
+			#if defined(OUTPUT_COLOR) || defined(OUTPUT_NORMAL) || (defined(RAYTK_USE_REFLECTION) && defined(THIS_Enablereflection)) || (defined(RAYTK_USE_REFRACTION) && defined(THIS_Enablerefraction))
 			matCtx.normal = calcNormal(p);
 			#endif
 			#ifdef OUTPUT_NORMAL
