@@ -49,6 +49,9 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 		#ifdef THIS_EXPOSE_index
 		THIS_index = 0;
 		#endif
+		#ifndef THIS_RETURN_TYPE_Sdf
+		res = inputOp1(THIS_asCoordT(q), ctx);
+		#else
 		if (int(THIS_Mergetype) == 0) {
 			res = inputOp1(THIS_asCoordT(q), ctx);
 		} else {
@@ -65,6 +68,7 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 			Sdf res2 = inputOp1(THIS_asCoordT(q), ctx);
 			THIS_merge(res, res2, THIS_asCoordT(p3), ctx);
 		}
+		#endif
 	}
 	return res;
 }
