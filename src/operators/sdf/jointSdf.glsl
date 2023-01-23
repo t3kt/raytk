@@ -17,6 +17,7 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 	#else
 	float wi = THIS_Thickness;
 	#endif
+	DIRECTION_BODY();
 	BODY();
 	ReturnT res = createSdf(distAndUV.x);
 	distAndUV.z /= le;
