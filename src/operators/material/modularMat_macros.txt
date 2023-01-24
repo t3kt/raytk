@@ -1,1 +1,2 @@
 parent().par.Uselocalpos	'RAYTK_USE_MATERIAL_POS'	
+'1'	'RAYTK_USE_AO'

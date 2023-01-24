@@ -172,7 +172,6 @@ float calcAO( in vec3 pos, in vec3 nor )
 
 vec3 getColorDefault(vec3 p, MaterialContext matCtx) {
 	vec3 sunDir = normalize(matCtx.light.pos);
-	float occ = calcAO(p, matCtx.normal);
 	vec3 mate = vec3(0.28);
 	#ifdef RAYTK_USE_SURFACE_COLOR
 	mate = mix(mate, matCtx.result.color.rgb, matCtx.result.color.w);
@@ -188,6 +187,7 @@ vec3 getColorDefault(vec3 p, MaterialContext matCtx) {
 	#endif
 	col += mate * skyColor * skyDiffuse;
 	col += mate * sunColor * sunSpec;
+	float occ = matCtx.ao;
 	col *= mix(vec3(0.5), vec3(1.5), occ);
 	return col;
 }
@@ -232,6 +232,11 @@ vec4 getColor(vec3 p, MaterialContext matCtx) {
 		int priorStage = pushStage(RAYTK_STAGE_SHADOW);
 		matCtx.shadedLevel = calcShadedLevel(p, matCtx);
 		popStage(priorStage);
+	}
+	#endif
+	#ifdef RAYTK_USE_AO
+	if (matCtx.result.useAO) {
+		matCtx.ao = calcAO(p, matCtx.normal);
 	}
 	#endif
 	int priorStage = pushStage(RAYTK_STAGE_MATERIAL);

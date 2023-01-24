@@ -19,6 +19,11 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 		#endif
 	}
 	#endif
+	#if defined(THIS_Enableao) || defined(THIS_EXPOSE_ao) || defined(THIS_HAS_TAG_useao)
+		res.useAO = true;
+	#else
+		res.useAO = false;
+	#endif
 	return res;
 }
 
@@ -28,7 +33,7 @@ vec3 THIS_getColor(vec3 p, MaterialContext matCtx) {
 	float ao;
 	#if defined(THIS_Enableao) || defined(THIS_EXPOSE_ao)
 	{
-		ao = calcAO(mp, matCtx.normal);
+		ao = matCtx.ao;
 		#ifdef THIS_EXPOSE_ao
 		THIS_ao = ao;
 		#endif

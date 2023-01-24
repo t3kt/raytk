@@ -112,8 +112,7 @@ float calcAO( in vec3 pos, in vec3 nor )
 
 vec3 getSurfaceColorDefault(vec3 p, MaterialContext matCtx) {
 	vec3 sunDir = normalize(matCtx.light.pos);
-	// TODO: centralize AO
-	float occ = calcAO(p, matCtx.normal);
+	float occ = matCtx.ao;
 	vec3 mate = vec3(0.28);
 	#ifdef RAYTK_USE_SURFACE_COLOR
 	mate = mix(mate, matCtx.result.color.rgb, matCtx.result.color.w);
@@ -167,6 +166,11 @@ vec3 getSurfaceColorForSingleLight(vec3 p, MaterialContext matCtx) {
 	resolveUV(matCtx, uv1, uv2);
 	#endif
 	processShadow(p, matCtx);
+	#ifdef RAYTK_USE_AO
+	if (matCtx.result.useAO) {
+		matCtx.ao = calcAO(p, matCtx.normal);
+	}
+	#endif
 	int priorStage = pushStage(RAYTK_STAGE_MATERIAL);
 	if (ratio <= 0 || m1 == m2) {
 		setMaterialContextPosAndUV(matCtx, p1, uv1);

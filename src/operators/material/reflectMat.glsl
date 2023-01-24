@@ -9,6 +9,9 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 	#if defined(THIS_Enableshadow) && defined(RAYTK_USE_SHADOW)
 	res.useShadow = true;
 	#endif
+	#if defined(THIS_Enableao)
+		res.useAO = true;
+	#endif
 	return res;
 }
 
@@ -24,7 +27,7 @@ vec3 THIS_getColor(vec3 p, MaterialContext matCtx) {
 	float fre = clamp(1.0 + dot(matCtx.normal, matCtx.ray.dir), 0.0, 1.0);
 	vec3 lightDir = normalize(matCtx.light.pos - p);
 	float spe = pow(max(dot(matCtx.ray.dir, reflect(lightDir, matCtx.normal)), 0), THIS_Shine);
-	float occ = calcAO(p, matCtx.normal);
+	float occ = matCtx.ao;
 	vec3 lin = 3.0*vec3(0.7,0.80,1.00)*sky*occ;
 	lin += 1.0*fre*vec3(1.2,0.70,0.60)*(0.1+0.9*occ);
 	col += 0.3*ks*4.0*vec3(0.7,0.8,1.00)*smoothstep(0.0,0.2,matCtx.reflectColor.y)*(0.05+0.95*pow(fre,5.0))*(0.5+0.5*matCtx.normal.y)*occ;
