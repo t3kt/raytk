@@ -53,3 +53,15 @@ void exposeDataPosition(vec2 resolution, vec2 fragCoord) {
 	THIS_datares = resolution;
 	#endif
 }
+
+float getLevel(vec3 p, MaterialContext matCtx) {
+	float level = 1.0;
+	float b = 0.;
+	float t = THIS_Thickness / 2.;
+	if (IS_TRUE(THIS_Enableblending)) {
+		b = THIS_Blending;
+	}
+	float d = matCtx.result.x;
+	MATERIAL_MODE_BODY();
+	return level;
+}

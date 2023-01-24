@@ -129,8 +129,13 @@ void main() {
 
 	#ifdef OUTPUT_COLOR
 	matCtx.result = res;
-	vec3 col = getColor(p, matCtx);
-	colorOut = vec4(col, 1.);
+	float level = getLevel(adaptAsVec3(p), matCtx);
+	if (level <= 0.) {
+		colorOut = vec4(0.);
+	} else {
+		vec3 col = getColor(adaptAsVec3(p), matCtx);
+		colorOut = vec4(col * level, level);
+	}
 	#endif
 
 	#ifdef OUTPUT_SDF
