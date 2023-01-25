@@ -489,16 +489,15 @@ def createActionManager():
 			paramName='Method',
 			matchTypes=[_RopTypes.modularMat],
 			table=op('specularContribMethods')),
-		_ActionImpl(
-			'Add Look At Camera',
-			ropType='raytk.operators.camera.lookAtCamera',
-			select=_OpSelect(ropTypes=[_RopTypes.raymarchRender3d]),
-			attach=_AttachIntoExisting(inputIndex=1),
-		),
-		_ActionImpl(
-			'Add Basic Camera',
-			ropType='raytk.operators.camera.basicCamera',
-			select=_OpSelect(ropTypes=[_RopTypes.raymarchRender3d]),
+		_createTypeListGroup(
+			'Add Camera',
+			typesAndLabels=[
+				('raytk.operators.camera.basicCamera', 'Basic Camera'),
+				('raytk.operators.camera.fisheyeCamera', 'Fisheye Camera'),
+				('raytk.operators.camera.linkedCamera', 'Linked Camera'),
+				('raytk.operators.camera.lookAtCamera', 'Look At Camera'),
+			],
+			select=_OpSelect(ropTypes=[_RopTypes.raymarchRender3d, _RopTypes.pointMapRender]),
 			attach=_AttachIntoExisting(inputIndex=1),
 		),
 		_createTypeListGroup(
@@ -506,6 +505,7 @@ def createActionManager():
 			typesAndLabels=[
 				('raytk.operators.light.axisLight', 'Axis Light'),
 				('raytk.operators.light.directionalLight', 'Directional Light'),
+				('raytk.operators.light.linkedLight', 'Linked Light'),
 				('raytk.operators.light.pointLight', 'Point Light'),
 				('raytk.operators.light.spotLight', 'Spot Light'),
 			],
