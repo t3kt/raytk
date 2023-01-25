@@ -1,6 +1,6 @@
 from dataclasses import dataclass, field
 import json
-from typing import Any, Callable, Dict, List, Optional, Union
+from typing import Any, Callable, Dict, List, Optional, Tuple, Union
 from editorToolsCommon import Action, ActionContext, ActionGroup, ActionManager, ActionUtils, InitFunc, ROPState
 
 # noinspection PyUnreachableCode
@@ -330,6 +330,26 @@ def _createTableBasedGroup(
 			for i in range(1, table.numRows)
 		])
 
+def _createTypeListGroup(
+		text: str,
+		typesAndLabels: List[Tuple[str, str]],
+		select: '_OpSelect',
+		attach: '_OpAttach',
+):
+	return _GroupImpl(
+		text,
+		select,
+		[
+			_ActionImpl(
+				label,
+				ropType=ropType,
+				select=select,
+				attach=attach
+			)
+			for ropType, label in typesAndLabels
+		]
+	)
+
 def _createGoToAction(text: str, getTargets: Callable[[ActionContext], List[OP]]):
 	def isValid(ctx: ActionContext):
 		return bool(getTargets(ctx))
@@ -396,6 +416,7 @@ def _anySelectedRopHasParam(ctx: ActionContext, par: str):
 class _RopTypes:
 	crossSection = 'raytk.operators.convert.crossSection'
 	modularMat = 'raytk.operators.material.modularMat'
+	pointMapRender = 'raytk.operators.output.pointMapRender'
 	projectPlane = 'raytk.operators.convert.projectPlane'
 	rescaleField = 'raytk.operators.filter.rescaleField'
 	raymarchRender3d = 'raytk.operators.output.raymarchRender3D'
@@ -480,10 +501,15 @@ def createActionManager():
 			select=_OpSelect(ropTypes=[_RopTypes.raymarchRender3d]),
 			attach=_AttachIntoExisting(inputIndex=1),
 		),
-		_ActionImpl(
-			'Add Point Light',
-			ropType='raytk.operators.light.pointLight',
-			select=_OpSelect(ropTypes=[_RopTypes.raymarchRender3d]),
+		_createTypeListGroup(
+			'Add Light',
+			typesAndLabels=[
+				('raytk.operators.light.axisLight', 'Axis Light'),
+				('raytk.operators.light.directionalLight', 'Directional Light'),
+				('raytk.operators.light.pointLight', 'Point Light'),
+				('raytk.operators.light.spotLight', 'Spot Light'),
+			],
+			select=_OpSelect(ropTypes=[_RopTypes.raymarchRender3d, _RopTypes.pointMapRender]),
 			attach=_AttachIntoExisting(inputIndex=2),
 		),
 		_ActionImpl(
