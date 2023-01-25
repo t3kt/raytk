@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.sdf.segmentedLineSdf
-  opVersion: '6'
+  opVersion: '7'
   opStatus: default
 opDef: !def
   enable: true
@@ -12,6 +12,12 @@ opDef: !def
       Allcontexttype: true
     returnType: !returnT
       Returntypesdf: true
+  opGlobals: !text
+    file: src/operators/sdf/segmentedLineSdf_globals.glsl
+    name: globals
+  init: !text
+    file: src/operators/sdf/segmentedLineSdf_init.glsl
+    name: init
   function: !text
     file: src/operators/sdf/segmentedLineSdf.glsl
     name: function
@@ -21,6 +27,13 @@ opDef: !def
     name: buffer_table
     evaluate: true
     evalOpts: !evalOpts {}
+  variableTable: !table
+    file: src/operators/sdf/segmentedLineSdf_variables.txt
+    name: variable_exprs
+    evaluate: true
+    evalOpts: !evalOpts
+      excludeFirstRow: true
+      cols: enable
   help: !text
     file: src/operators/sdf/segmentedLineSdf.md
     name: help
@@ -29,3 +42,13 @@ opDef: !def
   - segments
   - path
   - points
+inputs:
+- !input
+  Localalias: radiusField
+  coordType: !coordT
+    Coordtypefloat: true
+    Coordtypevec3: true
+  contextType: !contextT
+    Allcontexttype: true
+  returnType: !returnT
+    Returntypefloat: true
