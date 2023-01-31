@@ -1,5 +1,79 @@
 # Release Notes
 
+## v0.30
+
+### Highlights
+
+* Improved material handling for pointMapRender.
+* More consistent handling of axes in field inputs.
+
+### Details
+
+* Improvements / additions
+  * Editor tools (#772)
+    * Create switch (with / without blending)
+    * Expose toolkit setting for editor tools keyboard shortcut
+    * Combine lights with multiLight
+    * Create various types of cameras/lights
+  * New OP features
+    * curlNoiseField/noiseField/waveletNoiseField - auto coord type
+    * directionalLight/spotLight - rotation support
+    * flip - non-SDF support (when not using merging) (#996)
+    * iridescenceContrib/matCapContrib - shadow support
+    * jointSdf - direction setting (#995)
+    * pointMapRender - material fill modes and other material settings (#998)
+    * positionField - global position mode (#991)
+    * segmentedLineSdf - variables and radius field (#1000)
+* Fixes
+  * Fix label for composite fields editor action (#772)
+  * Fixing parameter optimization
+    * chopField - axis
+    * colorSwitchField/constantSwitchField - blend indices
+    * discSdf - axis
+    * helixSdf - axis, reverse
+    * lfoField - reverse
+    * mirrorAxis - flip side
+    * modulo1D/modulo2D - axis
+    * planeSdf - axis, flip
+    * prismSdf - axis, infinite height
+    * pyramidSdf - axis
+    * scale - use pivot
+    * shadowContrib - invert
+    * slice - axis
+    * spiralSdf - axis
+    * twist - axis
+    * volumetricRayCast - skip missed rays
+  * Fix interpretation of axes in field inputs (#992)
+    * arcSdf2d
+    * blobbyCrossSdf2d
+    * circleSdf
+    * coneSdf
+    * crossSdf
+    * cylinderSdf
+    * discSdf
+    * ellipseSdf2d
+    * helixSdf
+    * linkSdf
+    * mandelbulbSdf
+    * mengerSpongeSdf
+    * octahedronSdf
+    * pieSdf2d
+    * torusSdf
+  * goochShadingContrib - fix warm/cool colors swapped (#989)
+  * iridescenceContrib - fix doubled period
+  * jointSdf - fix doubled angle (#994)
+  * noiseField - clarify option labels (#987)
+  * specularContrib - fix phong mode (#909)
+* Changes (potentially breaking)
+  * Fix warm/cool colors swapped in goochShadingContrib (#989)
+  * Fix interpretation of axes in field inputs (#992)
+  * Fix doubled period in iridescenceContrib
+  * Fix doubled angle in jointSdf (#994)
+  * Clean up context type parameters on many ops
+* Infrastructure / internals
+  * Lots of test cleanup and optimization
+  * Centralized ambient occlusion calculation (#455)
+
 ## v0.29
 
 ### Highlights
