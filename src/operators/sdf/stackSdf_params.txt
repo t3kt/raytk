@@ -1,2 +1,2 @@
 names	source	handling	readOnlyHandling	conversion	enable
-Count	param	runtime	constant		1
+Sizemult[xyz] Sizeoffset[xyz] Count	param	runtime	constant		1

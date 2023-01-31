@@ -15,6 +15,8 @@
     * Expose toolkit setting for editor tools keyboard shortcut
     * Combine lights with multiLight
     * Create various types of cameras/lights
+  * New OPs
+    * stackSdf (#1002)
   * New OP features
     * curlNoiseField/noiseField/waveletNoiseField - auto coord type
     * directionalLight/spotLight - rotation support
