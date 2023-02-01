@@ -64,6 +64,7 @@
   * goochShadingContrib - fix warm/cool colors swapped (#989)
   * iridescenceContrib - fix doubled period
   * jointSdf - fix doubled angle (#994)
+  * moduloPolar - fix swapped x and y axes (#1003)
   * noiseField - clarify option labels (#987)
   * specularContrib - fix phong mode (#909)
 * Changes (potentially breaking)
@@ -71,6 +72,7 @@
   * Fix interpretation of axes in field inputs (#992)
   * Fix doubled period in iridescenceContrib
   * Fix doubled angle in jointSdf (#994)
+  * Fix swapped X and Y axes in moduloPolar (#1003)
   * Clean up context type parameters on many ops
 * Infrastructure / internals
   * Lots of test cleanup and optimization

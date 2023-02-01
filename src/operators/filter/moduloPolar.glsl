@@ -49,8 +49,8 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 		vec2 pivot = THIS_Pivot;
 		vec2 q;
 		switch (int(THIS_Axis)) {
-			case THISTYPE_Axis_x: q = p3.zx; break;
-			case THISTYPE_Axis_y: q = p3.zy; break;
+			case THISTYPE_Axis_x: q = p3.zy; break;
+			case THISTYPE_Axis_y: q = p3.zx; break;
 			case THISTYPE_Axis_z: q = p3.xy; break;
 		}
 		q -= pivot;
@@ -86,8 +86,8 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 		#endif
 		q = q - o + pivot;
 		switch (int(THIS_Axis)) {
-			case THISTYPE_Axis_x: p3.zx = q; break;
-			case THISTYPE_Axis_y: p3.zy = q; break;
+			case THISTYPE_Axis_x: p3.zy = q; break;
+			case THISTYPE_Axis_y: p3.zx = q; break;
 			case THISTYPE_Axis_z: p3.xy = q; break;
 		}
 		p = THIS_asCoordT(p3);
