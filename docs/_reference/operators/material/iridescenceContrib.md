@@ -32,6 +32,8 @@ op:
     name: Period
   - label: Spread
     name: Spread
+  - label: Enable Shadow
+    name: Enableshadow
   status: beta
   thumb: assets/images/reference/operators/material/iridescenceContrib_thumb.png
 

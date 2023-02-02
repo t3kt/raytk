@@ -23,7 +23,12 @@ op:
     name: definition_in
     required: true
     returnTypes:
+    - float
+    - vec4
     - Sdf
+    - Ray
+    - Light
+    - Particle
   - contextTypes:
     - Context
     - MaterialContext

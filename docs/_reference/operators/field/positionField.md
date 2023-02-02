@@ -22,23 +22,7 @@ op:
     - label: 3D
       name: vec3
     name: Coordtype
-  - label: Context Type
-    menuOptions:
-    - label: Auto
-      name: auto
-    - label: Context
-      name: Context
-    - label: MaterialContext
-      name: MaterialContext
-    - label: CameraContext
-      name: CameraContext
-    - label: LightContext
-      name: LightContext
-    - label: RayContext
-      name: RayContext
-    - label: ParticleContext
-      name: ParticleContext
-    name: Contexttype
+  - name: Contexttype
   - label: Return Type
     menuOptions:
     - label: Float
@@ -56,6 +40,13 @@ op:
     - label: Z
       name: z
     name: Axis
+  - label: Position Type
+    menuOptions:
+    - label: Local Position
+      name: local
+    - label: Global Position
+      name: global
+    name: Positiontype
   shortcuts:
   - pos
   summary: A vector field that produces the coordinates in space where it is checked.

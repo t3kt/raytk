@@ -34,6 +34,8 @@ op:
     name: Enable
   - label: Coord Type
     menuOptions:
+    - label: Auto
+      name: auto
     - description: Uses the 1D coordinate as U and 0 for V.
       label: 1D
       name: float
@@ -53,20 +55,12 @@ op:
     - label: Vector
       name: vec4
     name: Returntype
-  - label: Context Type
-    menuOptions:
-    - label: Auto
-      name: auto
-    - label: Context
-      name: Context
-    - label: MaterialContext
-      name: MaterialContext
-    - label: CameraContext
-      name: CameraContext
-    - label: LightContext
-      name: LightContext
-    - label: RayContext
-      name: RayContext
+  - menuOptions:
+    - name: none
+    - name: Context
+    - name: MaterialContext
+    - name: CameraContext
+    - name: LightContext
     name: Contexttype
     summary: When used for materials, set to `MaterialContext`, otherwise use `Context`.
   - label: Plane

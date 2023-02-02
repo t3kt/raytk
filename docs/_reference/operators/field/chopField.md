@@ -31,6 +31,8 @@ op:
   parameters:
   - label: Coord Type
     menuOptions:
+    - label: Auto
+      name: auto
     - label: 1D
       name: float
     - label: 2D
@@ -45,19 +47,7 @@ op:
     - label: Vector
       name: vec4
     name: Returntype
-  - label: Context Type
-    menuOptions:
-    - label: Context
-      name: Context
-    - label: Material Context
-      name: MaterialContext
-    - label: Camera Context
-      name: CameraContext
-    - label: Light Context
-      name: LightContext
-    - label: Ray Context
-      name: RayContext
-    name: Contexttype
+  - name: Contexttype
   - label: Axis
     menuOptions:
     - label: X

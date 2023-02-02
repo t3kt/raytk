@@ -42,26 +42,15 @@ op:
   parameters:
   - label: Coord Type
     menuOptions:
+    - label: Auto
+      name: auto
+    - label: 1D
+      name: float
     - label: 2D
       name: vec2
     - label: 3D
       name: vec3
     name: Coordtype
-  - label: Context Type
-    menuOptions:
-    - label: Auto
-      name: auto
-    - label: Context
-      name: Context
-    - label: MaterialContext
-      name: MaterialContext
-    - label: CameraContext
-      name: CameraContext
-    - label: LightContext
-      name: LightContext
-    - label: RayContext
-      name: RayContext
-    name: Contexttype
   - label: Iterations
     name: Iterations
   - label: Translate

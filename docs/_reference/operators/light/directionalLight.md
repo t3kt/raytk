@@ -29,6 +29,8 @@ op:
     name: Intensity
   - label: Color
     name: Color
+  - label: Rotate
+    name: Rotate
   - label: Enable Shadow
     name: Enableshadow
   summary: A directional light.

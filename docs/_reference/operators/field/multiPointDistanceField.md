@@ -30,21 +30,6 @@ op:
     - label: 3D
       name: vec3
     name: Coordtype
-  - label: Context Type
-    menuOptions:
-    - label: Auto
-      name: auto
-    - label: Context
-      name: Context
-    - label: MaterialContext
-      name: MaterialContext
-    - label: CameraContext
-      name: CameraContext
-    - label: LightContext
-      name: LightContext
-    - label: RayContext
-      name: RayContext
-    name: Contexttype
   summary: A vector field that provides the distance from 4 specific points in space
     (one for each part of the vector).
   thumb: assets/images/reference/operators/field/multiPointDistanceField_thumb.png

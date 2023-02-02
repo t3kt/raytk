@@ -53,6 +53,8 @@ op:
     summary: The point from which distance is measured.
   - label: Coord Type
     menuOptions:
+    - label: Auto
+      name: auto
     - label: 1D
       name: float
     - label: 2D

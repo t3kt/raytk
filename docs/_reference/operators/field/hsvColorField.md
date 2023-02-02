@@ -72,8 +72,8 @@ op:
     name: Value
   - label: Coord Type
     menuOptions:
-    - label: Use Input
-      name: useinput
+    - label: Auto
+      name: auto
     - label: 1D
       name: float
     - label: 2D
@@ -81,23 +81,7 @@ op:
     - label: 3D
       name: vec3
     name: Coordtype
-  - label: Context Type
-    menuOptions:
-    - label: Use Input
-      name: useinput
-    - label: Auto
-      name: auto
-    - label: Context
-      name: Context
-    - label: Material Context
-      name: MaterialContext
-    - label: Camera Context
-      name: CameraContext
-    - label: Light Context
-      name: LightContext
-    - label: Ray Context
-      name: RayContext
-    name: Contexttype
+  - name: Contexttype
   status: beta
   summary: A field that uses HSV-based parameters to produce colors.
   thumb: assets/images/reference/operators/field/hsvColorField_thumb.png

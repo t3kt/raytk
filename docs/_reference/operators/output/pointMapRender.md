@@ -169,6 +169,21 @@ op:
     name: Enablenormalsmoothing
   - label: Normal Smoothing
     name: Normalsmoothing
+  - label: Material Mode
+    menuOptions:
+    - label: Only Inside SDF
+      name: inside
+    - label: Only SDF Surface
+      name: surface
+    - label: Fill Everwhere
+      name: everywhere
+    name: Materialmode
+  - label: Enable Blending
+    name: Enableblending
+  - label: Blending
+    name: Blending
+  - label: Thickness
+    name: Thickness
   - label: Customize Shader Config
     name: Customizeshaderconfig
   shortcuts:

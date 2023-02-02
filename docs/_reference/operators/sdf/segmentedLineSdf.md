@@ -10,6 +10,21 @@ op:
   category: sdf
   detail: The line is defined my a list of points, which are either defined by parameters
     or by CHOP channels.
+  inputs:
+  - contextTypes:
+    - Context
+    - MaterialContext
+    - CameraContext
+    - LightContext
+    - RayContext
+    - ParticleContext
+    coordTypes:
+    - float
+    - vec3
+    label: Radius Field
+    name: radiusField
+    returnTypes:
+    - float
   keywords:
   - line
   - path
@@ -59,6 +74,17 @@ op:
     name: Point8
   summary: Multi-segment line SDF.
   thumb: assets/images/reference/operators/sdf/segmentedLineSdf_thumb.png
+  variables:
+  - label: stepindex
+    name: stepindex
+  - label: normstepindex
+    name: normstepindex
+  - label: stepinterp
+    name: stepinterp
+  - label: normoffset
+    name: normoffset
+  - label: offset
+    name: offset
 
 ---
 

@@ -53,6 +53,7 @@ cat:
     summary: Merges multiple vector fields, using different fields for each vector
       part.
   - name: mergeToggle
+    status: deprecated
     summary: Combines multiple SDFs with a toggle to show/hide each without a shader
       rebuild.
   - name: shapedCombine

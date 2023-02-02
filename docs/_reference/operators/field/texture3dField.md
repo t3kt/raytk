@@ -69,19 +69,6 @@ op:
     - label: Depth (With Offset)
       name: depthoffset
     name: Zmode
-  - label: Context Type
-    menuOptions:
-    - label: Auto
-      name: auto
-    - label: Context
-      name: Context
-    - label: Material Context
-      name: MaterialContext
-    - label: Light Context
-      name: LightContext
-    - label: Ray Context
-      name: RayContext
-    name: Contexttype
   status: beta
   thumb: assets/images/reference/operators/field/texture3dField_thumb.png
   variables:

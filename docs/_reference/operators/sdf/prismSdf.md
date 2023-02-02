@@ -50,6 +50,19 @@ op:
     name: thicknessField
     returnTypes:
     - float
+  - contextTypes:
+    - Context
+    - MaterialContext
+    - CameraContext
+    - LightContext
+    - RayContext
+    - ParticleContext
+    coordTypes:
+    - vec3
+    label: Sides Field
+    name: sidesField
+    returnTypes:
+    - float
   keywords:
   - column
   - cylinder
