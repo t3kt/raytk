@@ -6,6 +6,8 @@
 
 * Improved material handling for pointMapRender.
 * More consistent handling of axes in field inputs.
+* New stackSdf.
+* Lots of bug fixes.
 
 ### Details
 
