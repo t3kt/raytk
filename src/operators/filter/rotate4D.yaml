@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.filter.rotate4D
-  opVersion: '4'
+  opVersion: '5'
   opStatus: beta
 opDef: !def
   enable: !expr
@@ -17,8 +17,6 @@ opDef: !def
     file: src/operators/filter/rotate4D.glsl
     name: function
   paramGroupTable: eval_params
-  libraryNames: !expr
-    expr: op('rotate4D_lib')
   variableTable: !table
     file: src/operators/filter/rotate4D_variables.txt
     name: variable_exprs

@@ -1,0 +1,40 @@
+!rop
+meta: !meta
+  opType: raytk.operators.convert.project4D
+  opVersion: '0'
+  opStatus: alpha
+opDef: !def
+  enable: true
+  typeSpec: !ropTypes
+    coordType: !coordT
+      Coordtypefloat: !expr
+        expr: '''float'' in op(''conversions'')[parent().par.Conversion.eval(), ''outputCoordType''].val'
+      Coordtypevec2: !expr
+        expr: '''vec2'' in op(''conversions'')[parent().par.Conversion.eval(), ''outputCoordType''].val'
+      Coordtypevec3: !expr
+        expr: '''vec3'' in op(''conversions'')[parent().par.Conversion.eval(), ''outputCoordType''].val'
+      Coordtypevec4: !expr
+        expr: '''vec4'' in op(''conversions'')[parent().par.Conversion.eval(), ''outputCoordType''].val'
+    contextType: !contextT
+      Allcontexttype: true
+    returnType: !returnT
+      Allreturntype: true
+  function: !text
+    file: src/operators/convert/project4D.glsl
+    name: function
+inputs:
+- !input
+  Required: true
+  coordType: !coordT
+    Coordtypefloat: !expr
+      expr: '''float'' in op(''conversions'')[parent().par.Conversion.eval(), ''inputCoordType''].val'
+    Coordtypevec2: !expr
+      expr: '''vec2'' in op(''conversions'')[parent().par.Conversion.eval(), ''inputCoordType''].val'
+    Coordtypevec3: !expr
+      expr: '''vec3'' in op(''conversions'')[parent().par.Conversion.eval(), ''inputCoordType''].val'
+    Coordtypevec4: !expr
+      expr: '''vec4'' in op(''conversions'')[parent().par.Conversion.eval(), ''inputCoordType''].val'
+  contextType: !contextT
+    Allcontexttype: true
+  returnType: !returnT
+    Allreturntype: true
