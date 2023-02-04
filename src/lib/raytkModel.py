@@ -270,6 +270,7 @@ class CoordTypes(ModelObject):
 	Coordtypefloat: ValueOrExprT = None
 	Coordtypevec2: ValueOrExprT = None
 	Coordtypevec3: ValueOrExprT = None
+	Coordtypevec4: ValueOrExprT = None
 
 	@classmethod
 	def fromComp(cls, specComp: 'COMP'):

@@ -840,11 +840,13 @@ class CoordTypes:
 	float = 'float'
 	vec2 = 'vec2'
 	vec3 = 'vec3'
+	vec4 = 'vec4'
 
 	values = [
 		float,
 		vec2,
 		vec3,
+		vec4,
 	]
 
 class ContextTypes:
