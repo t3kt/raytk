@@ -61,6 +61,8 @@ op:
     name: Attenuationend
     summary: The end of the blending range, outside which the light will be at zero
       intensity.
+  - label: Rotate
+    name: Rotate
   - label: Enable Shadow
     name: Enableshadow
   summary: Cone-shaped spotlight.

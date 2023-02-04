@@ -43,6 +43,9 @@ float smoothCalc4(vec2 p, Context ctx, float e) {
 
 ReturnT thismap(CoordT p, ContextT ctx) {
 	float q = mapRange(p.x, 0., 1., THIS_Domainlow, THIS_Domainhigh);
+	#ifdef RAYTK_GLOBAL_POS_IN_CONTEXT
+	ctx.globalPos = adaptAsVec3(q);
+	#endif
 
 	vec2 resolution = uTDOutputInfo.res.zw;
 	float stepRange1 = THIS_Linethickness / resolution.y;

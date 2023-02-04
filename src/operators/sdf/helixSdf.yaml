@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.sdf.helixSdf
-  opVersion: '12'
+  opVersion: '15'
   opStatus: default
 opDef: !def
   enable: true

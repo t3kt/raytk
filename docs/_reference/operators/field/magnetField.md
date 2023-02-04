@@ -71,23 +71,6 @@ op:
     name: Radius
   - label: Fade
     name: Fade
-  - label: Context Type
-    menuOptions:
-    - label: Auto
-      name: auto
-    - label: Context
-      name: Context
-    - label: MaterialContext
-      name: MaterialContext
-    - label: CameraContext
-      name: CameraContext
-    - label: LightContext
-      name: LightContext
-    - label: RayContext
-      name: RayContext
-    - label: ParticleContext
-      name: ParticleContext
-    name: Contexttype
   status: beta
   thumb: assets/images/reference/operators/field/magnetField_thumb.png
 

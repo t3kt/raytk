@@ -3,13 +3,16 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 	#ifdef THIS_Enablevolumetric
 	float totalDist = ctx.result.x;
 	bool isMiss = isNonHitSdfDist(totalDist);
-	if (THIS_Skipmissedrays > 0. && isMiss) {
+	if (IS_TRUE(THIS_Skipmissedrays) && isMiss) {
 		return ReturnT(0.);
 	}
 	int priorStage = pushStage(RAYTK_STAGE_VOLUMETRIC);
 	float level = THIS_Level;
 	Ray ray = ctx.ray;
 	LightContext lightCtx = createLightContext(ctx.result, ctx.normal);
+	#ifdef RAYTK_GLOBAL_POS_IN_CONTEXT
+	lightCtx.globalPos = ctx.globalPos;
+	#endif
 	#if !defined(THIS_Recalculatelight)
 	// For non-hits, this won't be populated by default.
 	// and if Recalculatelight isn't used, it won't be updated within the loop below.

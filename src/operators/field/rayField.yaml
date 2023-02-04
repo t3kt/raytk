@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.field.rayField
-  opVersion: '5'
+  opVersion: '6'
   opStatus: default
 opDef: !def
   enable: true
@@ -9,10 +9,8 @@ opDef: !def
     coordType: !coordT
       Coordtypevec3: true
     contextType: !contextT
-      Contexttypematerialcontext: !expr
-        expr: parent().par.Contexttype in ('auto', 'MaterialContext')
-      Contexttyperaycontext: !expr
-        expr: parent().par.Contexttype in ('auto', 'RayContext')
+      Contexttypematerialcontext: true
+      Contexttyperaycontext: true
     returnType: !returnT
       Returntypevec4: true
   function: !text

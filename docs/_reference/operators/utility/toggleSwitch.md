@@ -56,5 +56,6 @@ op:
     name: Enable
   - label: Default Value
     name: Defaultvalue
+  status: deprecated
 
 ---

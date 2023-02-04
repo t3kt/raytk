@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.material.phongMat
-  opVersion: '18'
+  opVersion: '19'
   opStatus: deprecated
 opDef: !def
   enable: !expr
@@ -21,6 +21,11 @@ opDef: !def
     file: src/operators/material/phongMat_material.glsl
     name: material
   paramGroupTable: eval_params
+  macroTable: !table
+    file: src/operators/material/phongMat_macros.txt
+    name: macro_exprs
+    evaluate: true
+    evalOpts: !evalOpts {}
   tagTable: !table
     file: src/operators/material/phongMat_tags.txt
     name: tag_exprs

@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.convert.extrude
-  opVersion: '19'
+  opVersion: '20'
   opStatus: default
 opDef: !def
   enable: true

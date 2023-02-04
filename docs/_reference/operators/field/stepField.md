@@ -126,21 +126,7 @@ op:
   - label: High Value
     name: Value2
     summary: Value used when above `Edge`
-  - label: Context Type
-    menuOptions:
-    - label: Auto
-      name: auto
-    - label: Context
-      name: Context
-    - label: MaterialContext
-      name: MaterialContext
-    - label: CameraContext
-      name: CameraContext
-    - label: LightContext
-      name: LightContext
-    - label: RayContext
-      name: RayContext
-    name: Contexttype
+  - name: Contexttype
   summary: A field that switches between two values at a threshold point.
   thumb: assets/images/reference/operators/field/stepField_thumb.png
 

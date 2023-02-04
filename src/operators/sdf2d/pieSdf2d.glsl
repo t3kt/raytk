@@ -1,7 +1,8 @@
 ReturnT thismap(CoordT p, ContextT ctx) {
+	CoordT p0 = p;
 	pR(p, THIS_Rotate);
 	#ifdef THIS_HAS_INPUT_angleField
-	float a = radians(inputOp_angleField(p, ctx));
+	float a = radians(inputOp_angleField(p0, ctx));
 	#else
 	float a = THIS_Angle;
 	#endif
@@ -11,7 +12,7 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 	vec2 c = vec2(sin(a * .5), cos(a * .5));
 	vec2 r = vec2(THIS_Radius, THIS_Innerradius);
 	#ifdef THIS_HAS_INPUT_radiusField
-	r *= fillToVec2(inputOp_radiusField(p, ctx));
+	r *= fillToVec2(inputOp_radiusField(p0, ctx));
 	#endif
 	p.x = abs(p.x);
 	float l = length(p) - r.x;

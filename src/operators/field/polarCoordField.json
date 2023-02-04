@@ -2,6 +2,6 @@
   "meta": {
     "opStatus": "beta",
     "opType": "raytk.operators.field.polarCoordField",
-    "opVersion": 5
+    "opVersion": 6
   }
 }

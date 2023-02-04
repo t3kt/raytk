@@ -13,9 +13,12 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 	#ifdef THIS_HAS_INPUT_phaseField
 	phase += inputOp_phaseField(p, ctx);
 	#endif
-	vec3 color = cos((height/THIS_Period + vec3(0., .33, .67) * PI + (phase * TAU)) * 2.) * .5 + .5;
+	vec3 color = cos((height/THIS_Period*0.5 + vec3(0., .33, .67) * PI + (phase * TAU)) * 2.) * .5 + .5;
 	vec2 spread = THIS_Spread;
 	color *= smoothstep(max(spread.x, spread.y), min(spread.x, spread.y), abs(n.z));
 	color *= THIS_Level;
+	#if defined(THIS_Enableshadow) && defined(RAYTK_USE_SHADOW)
+	color *= ctx.shadedLevel;
+	#endif
 	return vec4(color, 1.);
 }

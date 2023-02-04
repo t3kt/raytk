@@ -57,54 +57,56 @@ op:
   parameters:
   - label: Noise Type
     menuOptions:
-    - label: Simplex 2D
+    - label: Simplex 2D (TD)
       name: TDSimplexNoise2d
-    - label: Simplex 3D
+    - label: Simplex 3D (TD)
       name: TDSimplexNoise3d
-    - label: Simplex 4D
+    - label: Simplex 4D (TD)
       name: TDSimplexNoise4d
-    - label: Perlin 2D
+    - label: Perlin 2D (TD)
       name: TDPerlinNoise2d
-    - label: Perlin 3D
+    - label: Perlin 3D (TD)
       name: TDPerlinNoise3d
-    - label: Perlin 4D
+    - label: Perlin 4D (TD)
       name: TDPerlinNoise4d
-    - label: Classic Perlin 2D
+    - label: Classic Perlin 2D (glslNoise)
       name: classicperlin2d
-    - label: Classic Perlin 3D
+    - label: Classic Perlin 3D (glslNoise)
       name: classicperlin3d
-    - label: Classic Perlin 4D
+    - label: Classic Perlin 4D (glslNoise)
       name: classicperlin4d
-    - label: Simplex 2D
+    - label: Simplex 2D (glslNoise)
       name: simplex2d
-    - label: Simplex 3D
+    - label: Simplex 3D (glslNoise)
       name: simplex3d
-    - label: Simplex 4D
+    - label: Simplex 4D (glslNoise)
       name: simplex4d
-    - label: Cheap Random Lookup
+    - label: Cheap Random Lookup (TD)
       name: cheapNoiseLookup
-    - label: Cellular 2D
+    - label: Cellular 2D (wombat)
       name: wbtcellular2d
-    - label: Cellular 2D Deriv
+    - label: Cellular 2D Deriv (wombat)
       name: wbtcellular2dderiv
-    - label: Cellular 3D
+    - label: Cellular 3D (wombat)
       name: wbtcellular3d
-    - label: Cellular 3D Deriv
+    - label: Cellular 3D Deriv (wombat)
       name: wbtcellular3dderiv
-    - label: Value 2D
+    - label: Value 2D (wombat)
       name: wbtvalue2d
-    - label: Value 2D Deriv
+    - label: Value 2D Deriv (wombat)
       name: wbtvalue2dderiv
-    - label: Value 3D
+    - label: Value 3D (wombat)
       name: wbtvalue3d
-    - label: Value 3D Deriv
+    - label: Value 3D Deriv (wombat)
       name: wbtvalue3dderiv
-    - label: Value 4D
+    - label: Value 4D (wombat)
       name: wbtvalue4d
     name: Noisetype
     summary: The type of noise function.
   - label: Coord Type
     menuOptions:
+    - label: Auto
+      name: auto
     - label: 1D
       name: float
     - label: 2D

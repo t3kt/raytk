@@ -1,7 +1,7 @@
 ReturnT thismap(CoordT p, ContextT ctx) {
 	if (IS_TRUE(THIS_Enable)) {
 		CoordT pivot = CoordT(0.);
-		if (THIS_Usepivot > 0.5) {
+		if (IS_TRUE(THIS_Usepivot)) {
 			#ifdef THIS_HAS_INPUT_pivotField
 			pivot = THIS_asCoordT(inputOp_pivotField(p, ctx));
 			#else

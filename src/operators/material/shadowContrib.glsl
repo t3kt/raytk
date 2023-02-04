@@ -1,7 +1,7 @@
 ReturnT thismap(CoordT p, ContextT ctx) {
 	ReturnT res;
 	float level = ctx.shadedLevel;
-	if (THIS_Invert > 0.) {
+	if (IS_TRUE(THIS_Invert)) {
 		level = 1.0 - level;
 	}
 

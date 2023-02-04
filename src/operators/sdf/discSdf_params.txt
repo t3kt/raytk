@@ -1,2 +1,3 @@
 names	source	handling	readOnlyHandling	conversion	enable
-Translate[xyz] Radius Thickness Axis	param	runtime	macro		1
+Translate[xyz] Radius Thickness	param	runtime	macro		1
+Axis	param	runtime	constant		1

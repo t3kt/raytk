@@ -1,5 +1,4 @@
 ReturnT thismap(CoordT p, ContextT ctx) {
-	p -= THIS_Translate;
 	float len = THIS_Length;
 	#ifdef THIS_HAS_INPUT_lengthField
 	len *= inputOp_lengthField(p, ctx);
@@ -12,6 +11,7 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 	#ifdef THIS_HAS_INPUT_thicknessField
 	thick *= inputOp_thicknessField(p, ctx);
 	#endif
+	p -= THIS_Translate;
 	vec3 q = vec3(p.x, max(abs(p.y)-len,0.0), p.z);
 	return createSdf(length(vec2(length(q.xy)-radius,q.z)) - thick);
 }

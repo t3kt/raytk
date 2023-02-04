@@ -22,7 +22,7 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 	float n = THIS_Count;
 	ReturnT res;
 	float i = inputOp_indexField(p, ctx);
-	if (THIS_Blendindices > 0.) {
+	if (IS_TRUE(THIS_Blendindices)) {
 		i += THIS_Offset;
 		i = THIS_applyExtend(i, n);
 		int iA = int(floor(i));

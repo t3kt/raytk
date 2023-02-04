@@ -1,2 +1,2 @@
 names	source	handling	readOnlyHandling	conversion	enable
-Axis	param	macro			1
+Axis	param	runtime	constant		1

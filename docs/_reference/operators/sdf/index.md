@@ -212,6 +212,8 @@ cat:
     - swirl
     name: spiralSdf
     summary: A tapering spiral squared tube.
+  - name: stackSdf
+    status: beta
   - name: tetrahedronSdf
     summary: Tetrahedron shape.
   - keywords:

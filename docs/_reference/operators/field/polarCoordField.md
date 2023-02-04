@@ -56,23 +56,7 @@ op:
     - label: 3D
       name: vec3
     name: Coordtype
-  - label: Context Type
-    menuOptions:
-    - label: Auto
-      name: auto
-    - label: Context
-      name: Context
-    - label: MaterialContext
-      name: MaterialContext
-    - label: CameraContext
-      name: CameraContext
-    - label: LightContext
-      name: LightContext
-    - label: RayContext
-      name: RayContext
-    - label: ParticleContext
-      name: ParticleContext
-    name: Contexttype
+  - name: Contexttype
   status: beta
   summary: A field that produces various types of polar coordinates.
   thumb: assets/images/reference/operators/field/polarCoordField_thumb.png

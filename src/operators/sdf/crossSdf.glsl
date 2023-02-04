@@ -1,5 +1,4 @@
 ReturnT thismap(CoordT p, ContextT ctx) {
-	p -= THIS_Translate;
 	#ifdef THIS_HAS_INPUT_sizeField
 	vec3 s = THIS_Size * fillToVec3(inputOp_sizeField(p, ctx));
 	#else
@@ -10,6 +9,7 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 	#else
 	float r = THIS_Smoothradius;
 	#endif
+	p -= THIS_Translate;
 	float d;
 	BODY();
 	return createSdf(d);

@@ -32,6 +32,8 @@ op:
     name: Texturetop
   - label: Map Cap Texture File
     name: Texturefile
+  - label: Enable Shadow
+    name: Enableshadow
   status: beta
 
 ---

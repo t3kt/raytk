@@ -1,14 +1,10 @@
 ReturnT thismap(CoordT p, ContextT ctx) {
-	float u;
 	#if defined(THIS_HAS_INPUT_coordField)
-		u = inputOp_coordField(p, ctx);
-	#elif defined(THIS_COORD_TYPE_float)
-		u = p;
-	#elif defined(THIS_COORD_TYPE_vec2) && defined(THIS_Axis_z)
-		u = p.x;
+	vec3 q = adaptAsVec3(inputOp_coordField(p, ctx));
 	#else
-		u = p.THIS_Axis;
+	vec3 q = adaptAsVec3(p);
 	#endif
+	float u = getAxis(q, int(THIS_Axis));
 	vec4 value;
 	#if defined(THIS_Coordmode_indextexel)
 	{

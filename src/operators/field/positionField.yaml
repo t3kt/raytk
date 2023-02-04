@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.field.positionField
-  opVersion: '14'
+  opVersion: '16'
   opStatus: default
 opDef: !def
   enable: true
@@ -16,18 +16,7 @@ opDef: !def
       Coordtypevec3: !expr
         expr: parent().par.Coordtype == 'vec3'
     contextType: !contextT
-      Allcontexttype: !expr
-        expr: parent().par.Contexttype == 'auto'
-      Contexttypecontext: !expr
-        expr: parent().par.Contexttype == 'Context'
-      Contexttypematerialcontext: !expr
-        expr: parent().par.Contexttype == 'MaterialContext'
-      Contexttypecameracontext: !expr
-        expr: parent().par.Contexttype == 'CameraContext'
-      Contexttypelightcontext: !expr
-        expr: parent().par.Contexttype == 'LightContext'
-      Contexttyperaycontext: !expr
-        expr: parent().par.Contexttype == 'RayContext'
+      Allcontexttype: true
     returnType: !returnT
       Returntypefloat: !expr
         expr: parent().par.Returntype == 'float'
@@ -37,7 +26,29 @@ opDef: !def
     file: src/operators/field/positionField.glsl
     name: functionTemplate
   paramGroupTable: eval_params
+  macroTable: !table
+    file: src/operators/field/positionField_macros.txt
+    name: macro_exprs
+    evaluate: true
+    evalOpts: !evalOpts
+      excludeFirstRow: true
   help: !text
     file: src/operators/field/positionField.md
     name: help
   shortcuts: pos
+elements:
+- !opElement
+  name: codeSwitcher_Positiontype
+  elementType: codeSwitcher
+  params:
+    Elementroot: ''
+    Table: !table
+      file: src/operators/field/positionField_positionTypes.txt
+      name: positionTypes
+    Param: Positiontype
+    Autoupdateparams: true
+    Manageparamstates: false
+    Alwaysincludeallparams: false
+    Switchmode: switch
+    Indexexpr: ''
+    Placeholder: POSITION_TYPE_BODY();

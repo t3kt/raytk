@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.filter.flip
-  opVersion: '18'
+  opVersion: '19'
   opStatus: default
 opDef: !def
   enable: !expr
@@ -14,6 +14,8 @@ opDef: !def
     contextType: !contextT
       Allcontexttype: true
     returnType: !returnT
+      Allreturntype: !expr
+        expr: parent().par.Mergetype == 'none'
       Returntypesdf: true
   function: !text
     file: src/operators/filter/flip.glsl
@@ -184,6 +186,8 @@ inputs:
   contextType: !contextT
     Allcontexttype: true
   returnType: !returnT
+    Allreturntype: !expr
+      expr: parent().par.Mergetype == 'none'
     Returntypesdf: true
 - !input
   Localalias: offsetField

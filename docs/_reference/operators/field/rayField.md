@@ -23,15 +23,7 @@ op:
     - label: Position
       name: pos
     name: Raypart
-  - label: Context Type
-    menuOptions:
-    - label: Auto
-      name: auto
-    - label: MaterialContext
-      name: MaterialContext
-    - label: RayContext
-      name: RayContext
-    name: Contexttype
+  - name: Contexttype
   summary: Field that provides the ray direction or origin.
   thumb: assets/images/reference/operators/field/rayField_thumb.png
 

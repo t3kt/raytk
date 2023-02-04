@@ -18,7 +18,8 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 		vec3 pEnter = ctx.ray.pos - ctx.normal * RAYTK_SURF_DIST * 1.1; // arbitrary multiplier
 		Ray rayInside = Ray(pEnter, refract(ctx.ray.dir, ctx.normal, 1.0 / ctx.result.ior));
 		Sdf resInside = castRayBasic(rayInside, RAYTK_MAX_DIST, -1.);
-		if (isNonHitSdfDist(-1. * resInside.x)) {
+		resInside.x *= -1.;
+		if (isNonHitSdfDist(resInside.x)) {
 			break;
 		}
 		vec3 pExit = pEnter + rayInside.dir * resInside.x;
@@ -29,25 +30,22 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 			ctx.ray.dir = reflect(rayInside.dir, nExit);
 		}
 		p = pExit;
-//		#ifdef OUTPUT_DEBUG
-//		debugOut.rgb = ctx.ray.dir * 2.;
-//		#endif
+//		setDebugOut(vec4(ctx.ray.dir * 2., 0.));
 		ctx.normal = nExit;
 //		ctx.ray.pos += ctx.ray.dir * RAYTK_SURF_DIST * 2.;
 		hit = true;
 	}
 	if (hit) {
 		res = getColor(ctx.ray.pos, ctx);
-		setDebugOut(vec4(0, 0.9, 0., 1));
+//		setDebugOut(vec4(1, 0.9, 0., 1));
 		#ifdef OUTPUT_DEBUG
 //		debugOut.rgb = ctx.ray.pos;
 //		debugOut.r = 0.9;
 //		debugOut.g = float(n);
 		#endif
+		setDebugOut(vec4(ctx.ray.dir, 0.));
 	} else {
-		#ifdef OUTPUT_DEBUG
-		debugOut.r = 0.2;
-		#endif
+		setDebugOut(vec4(0.2, 0., 0., 1.));
 	}
 	popStage(priorStage);
 	#endif

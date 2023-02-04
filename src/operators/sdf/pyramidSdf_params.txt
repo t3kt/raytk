@@ -1,2 +1,3 @@
 names	source	handling	readOnlyHandling	conversion	enable
-Translate[xyz] Height Width Axis	param	runtime	macro		1
+Translate[xyz] Height Width	param	runtime	macro		1
+Axis	param	runtime	constant		1

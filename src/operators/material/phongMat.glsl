@@ -8,6 +8,11 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 	#if defined(THIS_Enableshadow) && defined(RAYTK_USE_SHADOW)
 	res.useShadow = true;
 	#endif
+	#if defined(THIS_Enableao)
+		res.useAO = true;
+	#else
+		res.useAO = false;
+	#endif
 	return res;
 }
 
@@ -24,7 +29,7 @@ vec3 THIS_getColor(vec3 p, MaterialContext matCtx) {
 	vec3 lightPos = matCtx.light.pos;
 	vec3 lightIntensity = matCtx.light.color;
 	vec3 norm = matCtx.normal;
-	float occ = calcAO(p, matCtx.normal);
+	float occ = matCtx.ao;
 	vec3 lightVec = normalize(lightPos - p);
 	vec3 V = normalize(eye - p);
 	vec3 R = normalize(reflect(-lightVec, norm));

@@ -112,19 +112,30 @@ void main() {
 	Sdf res = map(p);
 
 	MaterialContext matCtx = createMaterialContext();
+	#ifdef RAYTK_GLOBAL_POS_IN_CONTEXT
+	matCtx.globalPos = adaptAsVec3(p);
+	#endif
 	matCtx.ray = getViewRay(vec2(0.));
 	#if defined(OUTPUT_COLOR) || defined(OUTPUT_NORMAL) || defined(THIS_HAS_TAG_uselight)
 	matCtx.normal = calcNormal(p);
 	#endif
 	#ifdef THIS_HAS_TAG_uselight
 	LightContext lightCtx = createLightContext(res, matCtx.normal);
+	#ifdef RAYTK_GLOBAL_POS_IN_CONTEXT
+	lightCtx.globalPos = adaptAsVec3(p);
+	#endif
 	matCtx.light = getLight(p, lightCtx);
 	#endif
 
 	#ifdef OUTPUT_COLOR
 	matCtx.result = res;
-	vec3 col = getColor(p, matCtx);
-	colorOut = vec4(col, 1.);
+	float level = getLevel(adaptAsVec3(p), matCtx);
+	if (level <= 0.) {
+		colorOut = vec4(0.);
+	} else {
+		vec3 col = getColor(adaptAsVec3(p), matCtx);
+		colorOut = vec4(col * level, level);
+	}
 	#endif
 
 	#ifdef OUTPUT_SDF

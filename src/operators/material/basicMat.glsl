@@ -15,13 +15,13 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 	#if defined(RAYTK_REFLECT_IN_SDF) && defined(THIS_HAS_TAG_usereflect)
 	res.reflect = true;
 	#endif
+	res.useAO = true;
 	return res;
 }
 
 vec3 THIS_getColor(vec3 p, MaterialContext matCtx) {
 	restoreIterationFromMaterial(matCtx, THIS_iterationCapture);
 	vec3 sunDir = normalize(matCtx.light.pos);
-	float occ = calcAO(p, matCtx.normal);
 	vec3 baseColor = THIS_Basecolor;
 	#ifdef THIS_EXPOSE_normal
 	THIS_normal = matCtx.normal;
@@ -80,6 +80,7 @@ vec3 THIS_getColor(vec3 p, MaterialContext matCtx) {
 	vec3 col = mate * sunColor * sunDiffuse * sunShadow;
 	col += mate * skyColor * skyDiffuse;
 	col += mate * sunColor * sunSpec;
+	float occ = matCtx.ao;
 	col *= mix(vec3(0.5), vec3(1.5), occ);
 	return col;
 }

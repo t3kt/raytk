@@ -1,3 +1,4 @@
 names	source	handling	readOnlyHandling	conversion	enable
 Intervaltype	param	macro			1
-Amplitude Offset Reverse	param	runtime	macro		1
+Amplitude Offset	param	runtime	macro		1
+Reverse	param	runtime	constant		1

@@ -1,2 +1,3 @@
 names	source	handling	readOnlyHandling	conversion	enable
-Value[1-8][1-4] Count Blendindices Offset	param	runtime	macro		1
+Value[1-8][1-4] Count Offset	param	runtime	macro		1
+Blendindices	param	runtime	constant		1

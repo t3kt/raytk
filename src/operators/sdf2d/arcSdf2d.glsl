@@ -4,10 +4,10 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 	CoordT p0 = p;
 	vec2 oa = vec2(THIS_Orientation, THIS_Aperture);
 	#ifdef THIS_HAS_INPUT_orientationField
-	oa.x += radians(inputOp_orientationField(p, ctx));
+	oa.x += radians(inputOp_orientationField(p0, ctx));
 	#endif
 	#ifdef THIS_HAS_INPUT_apertureField
-	oa.y = radians(inputOp_apertureField(p, ctx));
+	oa.y = radians(inputOp_apertureField(p0, ctx));
 	#endif
 	vec4 sc = vec4(sin(oa), cos(oa));
 	vec2 sca = sc.xz;

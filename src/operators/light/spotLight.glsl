@@ -9,6 +9,7 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 	#endif
 	{
 		vec3 spotDir = normalize(THIS_Direction);
+		pRotateOnXYZ(spotDir, THIS_Rotate);
 		float innerCutoffCos = cos(radians(THIS_Coneangle));
 		float outerCutoffCos = cos(radians(THIS_Coneangle + THIS_Conedelta));
 		vec3 lightDir = light.pos - p;

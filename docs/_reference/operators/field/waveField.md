@@ -144,21 +144,7 @@ op:
     name: Offset
     summary: Adds to the values produced by the wave. If this is set to 0.5 (and `Amplitude`
       is set to 1), a ramp wave will produce values from 0.5 to 1.5.
-  - label: Context Type
-    menuOptions:
-    - label: Auto
-      name: auto
-    - label: Context
-      name: Context
-    - label: MaterialContext
-      name: MaterialContext
-    - label: CameraContext
-      name: CameraContext
-    - label: LightContext
-      name: LightContext
-    - label: RayContext
-      name: RayContext
-    name: Contexttype
+  - name: Contexttype
   summary: A field that uses a periodic wave.
   thumb: assets/images/reference/operators/field/waveField_thumb.png
 

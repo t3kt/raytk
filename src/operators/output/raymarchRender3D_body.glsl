@@ -172,7 +172,6 @@ float calcAO( in vec3 pos, in vec3 nor )
 
 vec3 getColorDefault(vec3 p, MaterialContext matCtx) {
 	vec3 sunDir = normalize(matCtx.light.pos);
-	float occ = calcAO(p, matCtx.normal);
 	vec3 mate = vec3(0.28);
 	#ifdef RAYTK_USE_SURFACE_COLOR
 	mate = mix(mate, matCtx.result.color.rgb, matCtx.result.color.w);
@@ -188,6 +187,7 @@ vec3 getColorDefault(vec3 p, MaterialContext matCtx) {
 	#endif
 	col += mate * skyColor * skyDiffuse;
 	col += mate * sunColor * sunSpec;
+	float occ = matCtx.ao;
 	col *= mix(vec3(0.5), vec3(1.5), occ);
 	return col;
 }
@@ -232,6 +232,11 @@ vec4 getColor(vec3 p, MaterialContext matCtx) {
 		int priorStage = pushStage(RAYTK_STAGE_SHADOW);
 		matCtx.shadedLevel = calcShadedLevel(p, matCtx);
 		popStage(priorStage);
+	}
+	#endif
+	#ifdef RAYTK_USE_AO
+	if (matCtx.result.useAO) {
+		matCtx.ao = calcAO(p, matCtx.normal);
 	}
 	#endif
 	int priorStage = pushStage(RAYTK_STAGE_MATERIAL);
@@ -447,12 +452,15 @@ void main()
 			#ifdef OUTPUT_WORLDPOS
 			worldPosOut += vec4(p, 1);
 			#endif
+			#ifdef RAYTK_GLOBAL_POS_IN_CONTEXT
+			matCtx.globalPos = p;
+			#endif
 
 			#ifdef OUTPUT_SDF
 			sdfOut += vec4(res.x, resultMaterial1(res), stepCount, 1);
 			#endif
 
-			#if defined(OUTPUT_COLOR) || defined(OUTPUT_NORMAL) || (defined(RAYTK_USE_REFLECTION) && defined(THIS_Enablereflection))
+			#if defined(OUTPUT_COLOR) || defined(OUTPUT_NORMAL) || (defined(RAYTK_USE_REFLECTION) && defined(THIS_Enablereflection)) || (defined(RAYTK_USE_REFRACTION) && defined(THIS_Enablerefraction))
 			matCtx.normal = calcNormal(p);
 			#endif
 			#ifdef OUTPUT_NORMAL
@@ -462,6 +470,9 @@ void main()
 			#ifdef OUTPUT_COLOR
 			{
 				LightContext lightCtx = createLightContext(res, matCtx.normal);
+				#ifdef RAYTK_GLOBAL_POS_IN_CONTEXT
+				lightCtx.globalPos = matCtx.globalPos;
+				#endif
 				vec4 col;
 				#if !defined(RAYTK_LIGHT_COUNT) || RAYTK_LIGHT_COUNT == 1
 				matCtx.light = getLight(p, lightCtx);

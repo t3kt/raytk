@@ -1,0 +1,7 @@
+name	label	code
+xy	Along X Toward Y	p = p.yxz;
+xz	Along X Toward Z	p = p.zxy;
+yx	Along Y Toward X	p = p;
+yz	Along Y Toward Z	p = p.zyx;
+zx	Along Z Toward X	p = p.xzy;
+zy	Along Z Toward Y	p = p.yzx;

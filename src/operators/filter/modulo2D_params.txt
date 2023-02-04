@@ -1,3 +1,4 @@
 names	source	handling	readOnlyHandling	conversion	enable
-Size[1-2] Offset[1-2] Shift[1-2] Axis	param	runtime	macro		1
+Size[1-2] Offset[1-2] Shift[1-2]	param	runtime	macro		1
+Axis	param	runtime	constant		1
 Iterationtype Mirrortype	param	constant			1

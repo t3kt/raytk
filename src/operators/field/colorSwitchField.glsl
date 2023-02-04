@@ -19,11 +19,11 @@ float THIS_applyExtend(float i, float n) {
 }
 
 ReturnT thismap(CoordT p, ContextT ctx) {
-	float n = THIS_Count;
+	float n = float(THIS_Count);
 	ReturnT res;
 	float i = inputOp_indexField(p, ctx);
 	RESCALEINDEX();
-	if (THIS_Blendindices > 0.) {
+	if (IS_TRUE(THIS_Blendindices)) {
 		i += THIS_Offset;
 		i = THIS_applyExtend(i, n);
 		int iA = int(floor(i));

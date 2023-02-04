@@ -2,6 +2,6 @@
   "meta": {
     "opStatus": "alpha",
     "opType": "raytk.operators.material.ambientOcclusionContrib",
-    "opVersion": 1
+    "opVersion": 3
   }
 }

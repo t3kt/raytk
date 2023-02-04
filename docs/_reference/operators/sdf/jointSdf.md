@@ -58,6 +58,21 @@ op:
     - label: Round
       name: round
     name: Shape
+  - label: Direction
+    menuOptions:
+    - label: Along X Toward Y
+      name: xy
+    - label: Along X Toward Z
+      name: xz
+    - label: Along Y Toward X
+      name: yx
+    - label: Along Y Toward Z
+      name: yz
+    - label: Along Z Toward X
+      name: zx
+    - label: Along Z Toward Y
+      name: zy
+    name: Direction
   - label: Length
     name: Length
   - label: Thickness

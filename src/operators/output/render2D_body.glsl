@@ -1,7 +1,11 @@
 #ifdef THIS_RETURN_TYPE_Sdf
 Sdf map(vec2 p)
 {
-	Sdf res = thismap(prepCoord(p), createDefaultContext());
+	Context ctx = createDefaultContext();
+	#ifdef RAYTK_GLOBAL_POS_IN_CONTEXT
+	ctx.globalPos = adaptAsVec3(p);
+	#endif
+	Sdf res = thismap(prepCoord(p), ctx);
 	res.x *= 0.5;
 	return res;
 }
@@ -87,10 +91,14 @@ vec3 getColor(vec2 p, MaterialContext matCtx) {
 
 #else
 vec4 map(vec2 p) {
+	Context ctx = createDefaultContext();
+	#ifdef RAYTK_GLOBAL_POS_IN_CONTEXT
+	ctx.globalPos = adaptAsVec3(p);
+	#endif
 	#ifdef THIS_RETURN_TYPE_vec4
-	return thismap(prepCoord(p), createDefaultContext());
+	return thismap(prepCoord(p), ctx);
 	#else
-	return vec4(thismap(prepCoord(p), createDefaultContext()));
+	return vec4(thismap(prepCoord(p), ctx));
 	#endif
 }
 #endif
@@ -151,6 +159,9 @@ vec2 p = getCoord();
 #ifdef THIS_RETURN_TYPE_Sdf
 	Sdf res = map(p);
 	MaterialContext matCtx = createMaterialContext();
+	#ifdef RAYTK_GLOBAL_POS_IN_CONTEXT
+	matCtx.globalPos = adaptAsVec3(p);
+	#endif
 	float exists = isNonHitSdf(res) ? 0. : 1.;
 
 	#ifdef OUTPUT_COLOR

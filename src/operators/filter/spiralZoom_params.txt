@@ -1,4 +1,5 @@
 names	source	handling	readOnlyHandling	conversion	enable
-Center[1-2] Branches Axis	param	runtime	macro		1
-Phase[1-2] Branches Axis	param	runtime	macro		op('phase_definition').numRows < 2
-Twist[1-2] Branches Axis	param	runtime	macro		op('twist_definition').numRows < 2
+Center[1-2] Branches	param	runtime	macro		1
+Axis	param	runtime	constant		1
+Phase[1-2]	param	runtime	macro		op('phase_definition').numRows < 2
+Twist[1-2]	param	runtime	macro		op('twist_definition').numRows < 2

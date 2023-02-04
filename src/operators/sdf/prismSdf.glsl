@@ -39,7 +39,11 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 	#else
 	float th = THIS_Thickness;
 	#endif
+	#ifdef THIS_HAS_INPUT_sidesField
+	float n = inputOp_sidesField(p, ctx);
+	#else
 	float n = THIS_Sides;
+	#endif
 	if (IS_TRUE(THIS_Infiniteheight)) {
 		q.z = 0.;
 	}

@@ -1,12 +1,13 @@
 ReturnT thismap(CoordT p, ContextT ctx) {
 	ReturnT res;
+	CoordT p0 = p;
 	p -= THIS_Translate;
 	switch (int(THIS_Axis)) {
 		case 0: p = p.yxz; break;
 		case 1: p = p.zyx; break;
 		case 2: p = p.xzy; break;
 	}
-	if (THIS_Reverse > 0.5) {
+	if (IS_TRUE(THIS_Reverse)) {
 		p.x *= -1;
 	}
 	float thickness = THIS_Thickness;
@@ -27,7 +28,7 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 		#elif defined(inputOp_thicknessField_COORD_TYPE_vec2)
 		thickness *= inputOp_thicknessField(vec2(p.y, atan(p.z, p.x)), ctx);
 		#elif defined(inputOp_thicknessField_COORD_TYPE_vec3)
-		thickness *= inputOp_thicknessField(p, ctx);
+		thickness *= inputOp_thicknessField(p0, ctx);
 		#else
 		#error invalidThicknessCoordType
 		#endif
@@ -38,7 +39,7 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 		#if defined(inputOp_radiusField_COORD_TYPE_float)
 		radius *= inputOp_radiusField(p.y, ctx);
 		#elif defined(inputOp_radiusField_COORD_TYPE_vec3)
-		radius *= inputOp_radiusField(p, ctx);
+		radius *= inputOp_radiusField(p0, ctx);
 		#else
 		#error invalidRadiusCoordType
 		#endif

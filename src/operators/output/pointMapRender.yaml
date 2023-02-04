@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.output.pointMapRender
-  opVersion: '58'
+  opVersion: '60'
   opStatus: default
 opDef: !def
   enable: true
@@ -68,3 +68,19 @@ inputs:
     Contexttypelightcontext: true
   returnType: !returnT
     Returntypelight: true
+elements:
+- !opElement
+  name: codeSwitcher_Materialmode
+  elementType: codeSwitcher
+  params:
+    Elementroot: ''
+    Table: !table
+      file: src/operators/output/pointMapRender_materialModes.txt
+      name: materialModes
+    Param: Materialmode
+    Autoupdateparams: true
+    Manageparamstates: true
+    Alwaysincludeallparams: false
+    Switchmode: constswitch
+    Indexexpr: ''
+    Placeholder: MATERIAL_MODE_BODY();

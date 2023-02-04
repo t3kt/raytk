@@ -1,0 +1,2 @@
+name	enable	type	chop	uniformType	length	expr1	expr2	expr3	expr4
+sizes	1	vec3	op('sizes')	uniformarray	parent().par.Count				

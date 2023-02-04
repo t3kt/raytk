@@ -1,0 +1,60 @@
+!rop
+meta: !meta
+  opType: raytk.operators.output.experimentalRaymarchRender3D
+  opVersion: '6'
+  opStatus: alpha
+opDef: !def
+  enable: true
+  typeSpec: !ropTypes
+    coordType: !coordT
+      Coordtypevec3: true
+    contextType: !contextT
+      Contexttypecontext: true
+    returnType: !returnT
+      Returntypesdf: true
+  function: !text
+    file: src/operators/output/experimentalRaymarchRender3D_func.glsl
+    name: function
+  paramGroupTable: eval_params
+  macroTable: !table
+    file: src/operators/output/experimentalRaymarchRender3D_macros.txt
+    name: macro_exprs
+    evaluate: true
+    evalOpts: !evalOpts {}
+inputs:
+- !input
+  Localalias: sdf
+  Required: true
+  coordType: !coordT
+    Coordtypevec3: true
+  contextType: !contextT
+    Contexttypecontext: true
+  returnType: !returnT
+    Returntypesdf: true
+- !input
+  Localalias: camera
+  coordType: !coordT
+    Coordtypevec2: true
+  contextType: !contextT
+    Contexttypecameracontext: true
+  returnType: !returnT
+    Returntyperay: true
+- !input
+  Localalias: light
+  coordType: !coordT
+    Coordtypevec3: true
+  contextType: !contextT
+    Contexttypelightcontext: true
+  returnType: !returnT
+    Returntypelight: true
+- !input
+  Source: !expr
+    expr: parent().par.Backgroundfield or ''
+  Localalias: backgroundField
+  coordType: !coordT
+    Coordtypevec3: true
+  contextType: !contextT
+    Contexttyperaycontext: true
+  returnType: !returnT
+    Returntypefloat: true
+    Returntypevec4: true

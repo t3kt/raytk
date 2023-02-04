@@ -1,0 +1,4 @@
+name	label	params	code
+inside	Only Inside SDF	Enableblending Blending	level = smoothstep(0., b, -d);
+surface	Only SDF Surface	Enableblending Blending Thickness	level = 1.0-smoothstep(0., b, abs(d) - t);
+everywhere	Fill Everwhere		level = 1.;

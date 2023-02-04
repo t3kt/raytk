@@ -1,2 +1,3 @@
 names	source	handling	readOnlyHandling	conversion	enable
 Direction[xyz] Color[rgb] Intensity Enableshadow	param	runtime	macro		1
+Rotate[xyz]	param	runtime	macro	angle	1

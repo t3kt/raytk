@@ -1,0 +1,6 @@
+name	label	dataType	enable	macros
+stepindex	Segment Index	int	1	
+normstepindex	Normalized Segment Index	float	1	
+stepinterp	Interpolated Segment Index	float	1	
+normoffset	Normalized Distance Offset	float	1	
+offset	Distance Offset	float	1	

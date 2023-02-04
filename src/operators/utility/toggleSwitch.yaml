@@ -1,8 +1,8 @@
 !rop
 meta: !meta
   opType: raytk.operators.utility.toggleSwitch
-  opVersion: '1'
-  opStatus: default
+  opVersion: '2'
+  opStatus: deprecated
 opDef: !def
   enable: true
   typeSpec: !ropTypes

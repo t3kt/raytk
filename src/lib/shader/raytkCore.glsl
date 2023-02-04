@@ -57,6 +57,10 @@ struct Sdf {
 	bool useShadow;
 	#endif
 
+	#ifdef RAYTK_USE_AO
+	bool useAO;
+	#endif
+
 	#ifdef RAYTK_USE_UV
 	// For material 1
 	// xyz: UVW
@@ -109,6 +113,9 @@ Sdf createSdf(float dist) {
 	// Switching this on by default since the default material uses shadows.
 	res.useShadow = true;
 	#endif
+	#ifdef RAYTK_USE_AO
+	res.useAO = false;
+	#endif
 	#ifdef RAYTK_USE_UV
 	res.uv = vec4(0.);
 	res.uv2 = vec4(0.);
@@ -148,6 +155,10 @@ void blendInSdf(inout Sdf res1, in Sdf res2, in float amt) {
 
 	#ifdef RAYTK_USE_SHADOW
 	res1.useShadow = res1.useShadow || (res2.useShadow && resultMaterialInterp(res2) >= 1.0);
+	#endif
+
+	#ifdef RAYTK_USE_AO
+	res1.useAO = res1.useAO || (res2.useAO && resultMaterialInterp(res2) >= 1.0);
 	#endif
 
 	#ifdef RAYTK_USE_UV
@@ -290,7 +301,9 @@ struct LightContext {
 	int index;
 	Sdf result;
 	vec3 normal;
-
+	#ifdef RAYTK_GLOBAL_POS_IN_CONTEXT
+	vec3 globalPos;
+	#endif
 	#if defined(RAYTK_TIME_IN_CONTEXT) || defined(RAYTK_USE_TIME)
 	Time time;
 	#endif
@@ -298,6 +311,9 @@ struct LightContext {
 
 LightContext createLightContext(Sdf res, vec3 norm) {
 	return LightContext(0, res, norm
+	#ifdef RAYTK_GLOBAL_POS_IN_CONTEXT
+	, vec3(0.)
+	#endif
 	#if defined(RAYTK_TIME_IN_CONTEXT) || defined(RAYTK_USE_TIME)
 	, getGlobalTime()
 	#endif
@@ -312,10 +328,14 @@ struct MaterialContext {
 	vec3 normal;
 	vec3 reflectColor;
 	vec3 refractColor;
+	#ifdef RAYTK_GLOBAL_POS_IN_CONTEXT
+	vec3 globalPos;
+	#endif
 	#ifdef RAYTK_USE_MATERIAL_POS
 	vec3 materialPos;
 	#endif
 	float shadedLevel;
+	float ao;
 	#ifdef RAYTK_USE_UV
 	// xyz: UVW
 	// w: whether this has been set
@@ -351,10 +371,14 @@ MaterialContext createMaterialContext() {
 	matCtx.ray = Ray(vec3(0.), vec3(0.));
 	matCtx.normal = vec3(0.);
 	matCtx.reflectColor = vec3(0.);
+	#ifdef RAYTK_GLOBAL_POS_IN_CONTEXT
+	matCtx.globalPos = vec3(0);
+	#endif
 	#ifdef RAYTK_USE_MATERIAL_POS
 	matCtx.materialPos = vec3(0.);
 	#endif
 	matCtx.shadedLevel = 1.;
+	matCtx.ao = 0.5;
 	#ifdef RAYTK_USE_UV
 	matCtx.uv = vec4(0.);
 	#endif
@@ -370,6 +394,15 @@ void resolveUV(MaterialContext matCtx, out vec4 uv1, out vec4 uv2) {
 	uv2 = mix(matCtx.result.uv, matCtx.result.uv2, matCtx.result.uv2.w);
 }
 #endif
+
+void setMaterialContextPosAndUV(inout MaterialContext matCtx, vec3 mp, vec4 uv) {
+	#ifdef RAYTK_USE_MATERIAL_POS
+	matCtx.materialPos = mp;
+	#endif
+	#ifdef RAYTK_USE_UV
+	matCtx.uv = uv;
+	#endif
+}
 
 vec4 extractIteration(Context ctx) { return ctx.iteration; }
 
@@ -387,6 +420,9 @@ struct RayContext {
 	Sdf result;
 	Ray ray;
 
+	#ifdef RAYTK_GLOBAL_POS_IN_CONTEXT
+	vec3 globalPos;
+	#endif
 	#if defined(RAYTK_TIME_IN_CONTEXT) || defined(RAYTK_USE_TIME)
 	Time time;
 	#endif
@@ -396,6 +432,9 @@ RayContext createRayContext(Ray ray, Sdf result) {
 	RayContext rCtx;
 	rCtx.ray = ray;
 	rCtx.result = result;
+	#ifdef RAYTK_GLOBAL_POS_IN_CONTEXT
+	rCtx.globalPos = vec3(0.);
+	#endif
 	#if defined(RAYTK_TIME_IN_CONTEXT) || defined(RAYTK_USE_TIME)
 	rCtx.time = getGlobalTime();
 	#endif

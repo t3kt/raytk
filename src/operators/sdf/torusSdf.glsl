@@ -1,6 +1,6 @@
 ReturnT thismap(CoordT p, ContextT ctx) {
-	p -= THIS_Translate;
 	CoordT p0 = p;
+	p -= THIS_Translate;
 
 	// Convert to XZ plane expected by fTorus()
 	switch (THIS_Axis) {
@@ -14,12 +14,12 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 	float angleWidth, angleOffset;
 	if (IS_TRUE(THIS_Enablecaps)) {
 		#ifdef THIS_HAS_INPUT_angleWidthField
-		angleWidth = radians(inputOp_angleWidthField(p, ctx));
+		angleWidth = radians(inputOp_angleWidthField(p0, ctx));
 		#else
 		angleWidth = THIS_Anglewidth;
 		#endif
 		#ifdef THIS_HAS_INPUT_angleOffsetField
-		angleOffset = radians(inputOp_angleOffsetField(p, ctx));
+		angleOffset = radians(inputOp_angleOffsetField(p0, ctx));
 		#else
 		angleOffset = THIS_Angleoffset;
 		#endif
@@ -39,11 +39,11 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 
 	float r = THIS_Radius;
 	#ifdef THIS_HAS_INPUT_radiusField
-	r *= inputOp_radiusField(p, ctx);
+	r *= inputOp_radiusField(p0, ctx);
 	#endif
 	float t = THIS_Thickness;
 	#ifdef THIS_HAS_INPUT_thicknessField
-	t *= inputOp_thicknessField(p, ctx);
+	t *= inputOp_thicknessField(p0, ctx);
 	#endif
 
 	ReturnT res;

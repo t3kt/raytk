@@ -1,0 +1,4 @@
+name	label	returnType
+offset	Offset	float
+dist	Distance	float
+offsetdist	Offset And Distance	vec4

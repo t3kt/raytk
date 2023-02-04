@@ -1,0 +1,4 @@
+name	label	dataType	enable	macros
+index	Slice Index	int	1	
+normindex	Normalized Slice Index	float	1	
+size	Slice Size	vec3	1	
