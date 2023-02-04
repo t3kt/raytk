@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.filter.translate
-  opVersion: '17'
+  opVersion: '18'
   opStatus: default
 opDef: !def
   enable: !expr
@@ -24,6 +24,7 @@ opDef: !def
   function: !text
     file: src/operators/filter/translate.glsl
     name: function
+  paramGroupTable: eval_params
   help: !text
     file: src/operators/filter/translate.md
     name: help
@@ -81,6 +82,4 @@ inputs:
   contextType: !contextT
     Allcontexttype: true
   returnType: !returnT
-    Returntypesdf: true
-    Returntypefloat: true
     Returntypevec4: true

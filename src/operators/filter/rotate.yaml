@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.filter.rotate
-  opVersion: '27'
+  opVersion: '28'
   opStatus: default
 opDef: !def
   enable: !expr
@@ -139,9 +139,10 @@ inputs:
   contextType: !contextT
     Allcontexttype: true
   returnType: !returnT
-    Returntypesdf: true
-    Returntypefloat: true
-    Returntypevec4: true
+    Returntypefloat: !expr
+      expr: parent().par.Rotatemode == 'axis'
+    Returntypevec4: !expr
+      expr: parent().par.Rotatemode == 'euler'
 - !input
   Localalias: pivotField
   coordType: !coordT

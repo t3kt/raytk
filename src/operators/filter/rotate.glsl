@@ -23,16 +23,8 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 		#elif defined(THIS_Rotatemode_euler)
 			vec3 r = vec3(THIS_ROT_1, THIS_ROT_2, THIS_ROT_3);
 			#ifdef THIS_HAS_INPUT_rotateField
-				#if defined(inputOp_rotateField_RETURN_TYPE_vec4)
-					vec4 fieldVal = inputOp_rotateField(p, ctx);
-					r += vec3(THIS_FIELD_ROT_1, THIS_FIELD_ROT_2, THIS_FIELD_ROT_3);
-				#elif defined(inputOp_rotateField_RETURN_TYPE_float)
-					r *= inputOp_rotateField(p, ctx);
-				#elif defined(inputOp_rotateField_RETURN_TYPE_Sdf)
-					r *= inputOp_rotateField(p, ctx).x;
-				#else
-					#error invalidFieldReturnType
-				#endif
+				vec4 fieldVal = inputOp_rotateField(p, ctx);
+				r += vec3(THIS_FIELD_ROT_1, THIS_FIELD_ROT_2, THIS_FIELD_ROT_3);
 			#endif
 			p -= pivot;
 			#ifdef THIS_COORD_TYPE_vec2
