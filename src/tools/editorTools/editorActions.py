@@ -209,7 +209,7 @@ def _createAnimateParamAction(
 	def isValid(_):
 		return ActionUtils.isKnownRopType(ropType) and bool(getPars())
 	def execute(ctx: ActionContext):
-		rop = ctx.primaryRop
+		o = ctx.primaryOp
 		pars = getPars()
 		if not pars:
 			return
@@ -218,12 +218,12 @@ def _createAnimateParamAction(
 		else:
 			parOrTupletName = pars[0].tupletName
 		def init(gen: 'COMP'):
-			gen.name = f'{rop.name}_{parOrTupletName}_{nameSuffix}'
-			chop = gen.parent().create(nullCHOP, f'{rop.name}_{parOrTupletName}_vals')
+			gen.name = f'{o.name}_{parOrTupletName}_{nameSuffix}'
+			chop = gen.parent().create(nullCHOP, f'{o.name}_{parOrTupletName}_vals')
 			gen.par.Name = ' '.join(p.name for p in pars)
 			chop.inputConnectors[0].connect(gen.outputConnectors[0])
-			gen.nodeCenterY = rop.nodeCenterY - 100
-			gen.nodeX = rop.nodeX - gen.nodeWidth - 300
+			gen.nodeCenterY = o.nodeCenterY - 100
+			gen.nodeX = o.nodeX - gen.nodeWidth - 300
 			chop.nodeCenterY = gen.nodeCenterY
 			chop.nodeX = gen.nodeX + gen.nodeWidth + 100
 			chop.viewer = True
@@ -233,16 +233,18 @@ def _createAnimateParamAction(
 	return _SimpleAction(text, isValid, execute)
 
 def _createAnimateParamsGroup(text: str, ropType: str, nameSuffix: str):
-	def isValid(ctx: ActionContext) -> bool:
-		rop = ctx.primaryRop
-		return bool(rop and rop.current and ActionUtils.isKnownRopType(ropType))
-
 	def getActions(ctx: ActionContext) -> List[Action]:
-		rop = ctx.primaryRop
-		if not rop:
+		o = ctx.primaryOp
+		if not o:
 			return []
 		actions = []
-		for t in rop.customTuplets:
+		tuplets = o.customTuplets
+		if not tuplets:
+			for par in o.builtinPars:
+				if par.tuplet not in tuplets:
+					tuplets.append(par.tuplet)
+			tuplets.sort(key=lambda t: t[0].tupletName)
+		for t in tuplets:
 			if not t[0].isNumber:
 				continue
 			actions.append(_createAnimateParamAction(t[0].label, t, ropType, nameSuffix))
@@ -251,7 +253,7 @@ def _createAnimateParamsGroup(text: str, ropType: str, nameSuffix: str):
 					actions.append(_createAnimateParamAction(
 						f'{t[0].label} ({p.name[-1]})', p, ropType, nameSuffix))
 		return actions
-	return _SimpleGroup(text, isValid, getActions)
+	return _SimpleGroup(text, lambda _: True, getActions)
 
 def _createExposeParamGroup(text: str):
 	def isValid(ctx: ActionContext):
