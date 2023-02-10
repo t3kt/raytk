@@ -573,7 +573,7 @@ def createActionManager():
 		_createTableBasedGroup(
 			'Composite Fields',
 			ropType='raytk.operators.combine.compositeFields',
-			paramName='Operation',
+			paramName='Blendmode',
 			table=op('compositeModes'),
 			select=_OpSelect(
 				returnTypes=['vec4'],
