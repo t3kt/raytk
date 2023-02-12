@@ -62,7 +62,7 @@ def onCook(dat: 'DAT'):
 		if offsetField:
 			lines += [
 				f'#ifdef THIS_HAS_INPUT_{offsetField}',
-				f'o *= inputOp_{offsetField}(p, ctx);',
+				f'o += inputOp_{offsetField}(p, ctx);',
 				'#endif',
 			]
 
