@@ -1,8 +1,8 @@
 !rop
 meta: !meta
   opType: raytk.operators.sdf2d.subdivisionSdf2d
-  opVersion: '0'
-  opStatus: alpha
+  opVersion: '1'
+  opStatus: beta
 opDef: !def
   enable: true
   typeSpec: !ropTypes
@@ -16,3 +16,19 @@ opDef: !def
     file: src/operators/sdf2d/subdivisionSdf2d.glsl
     name: function
   paramGroupTable: eval_params
+  variableTable: !table
+    file: src/operators/sdf2d/subdivisionSdf2d_variables.txt
+    name: variable_exprs
+    evaluate: true
+    evalOpts: !evalOpts
+      excludeFirstRow: true
+      cols: enable
+inputs:
+- !input
+  Localalias: shape
+  coordType: !coordT
+    Coordtypevec2: true
+  contextType: !contextT
+    Allcontexttype: true
+  returnType: !returnT
+    Returntypesdf: true
