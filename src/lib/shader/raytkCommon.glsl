@@ -427,6 +427,36 @@ void setAxisPlane(inout vec3 p, int axis, vec2 val) {
 	}
 }
 
+void setAxisPlanePart1(inout vec2 p, int axis, float val) {
+	switch (axis) {
+		case 0: p.y = val; break;
+		case 2: p.x = val; break;
+	}
+}
+
+void setAxisPlanePart1(inout vec3 p, int axis, float val) {
+	switch (axis) {
+		case 0: p.y = val; break;
+		case 1: p.z = val; break;
+		case 2: p.x = val; break;
+	}
+}
+
+void setAxisPlanePart2(inout vec2 p, int axis, float val) {
+	switch (axis) {
+		case 1: p.x = val; break;
+		case 2: p.y = val; break;
+	}
+}
+
+void setAxisPlanePart2(inout vec3 p, int axis, float val) {
+	switch (axis) {
+		case 0: p.z = val; break;
+		case 1: p.x = val; break;
+		case 2: p.y = val; break;
+	}
+}
+
 // Barycentric to Cartesian
 vec3 bToC(vec3 A, vec3 B, vec3 C, vec3 barycentric) {
 	return barycentric.x * A + barycentric.y * B + barycentric.z * C;
