@@ -20,7 +20,6 @@ subComps += ops(
 	'fieldVisualizer',
 	'inspectorCore',
 	'bufferInspector',
-	'axisHelper',
 	'opBasicInfoPanel',
 	'shaderBuilderConfig',
 	'shaderPanel',

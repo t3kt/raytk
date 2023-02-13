@@ -361,7 +361,7 @@ class ToolkitBuilder(_BuilderBase):
 			# won't have been locked yet when this stage runs
 			'shaderBuilder',
 			'opElement', 'transformCodeGenerator', 'timeProvider',
-			'axisHelper', 'supportDetector', 'expresssionSwitcher', 'parMenuUpdater',
+			'supportDetector', 'expresssionSwitcher', 'parMenuUpdater',
 			# 'codeSwitcher',
 			'aggregateCodeGenerator',
 			# 'combiner',  # don't process combiner since it has instance-specific buildLock things depending

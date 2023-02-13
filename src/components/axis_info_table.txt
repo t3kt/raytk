@@ -1,4 +1,0 @@
-axis	plane	planePart1	planePart2	axisVec	axisPlaneSwizzle
-x	yz	y	z	vec3(1,0,0)	xyz
-y	zx	z	x	vec3(0,1,0)	yzx
-z	xy	x	y	vec3(0,0,1)	zxy
