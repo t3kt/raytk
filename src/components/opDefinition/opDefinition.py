@@ -509,7 +509,7 @@ def onHostNameChange():
 
 def buildOpState():
 	builder = _Builder()
-	builder.loadInputs(ops('input_def_*'))
+	builder.loadInputs(ops('input_def_[0-9]*'))
 	builder.loadOpElements(op('opElements'))
 	builder.loadCode()
 	builder.loadMacros(
