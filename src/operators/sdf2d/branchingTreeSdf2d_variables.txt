@@ -1,0 +1,4 @@
+name	label	dataType	enable	macros
+normdist	Normalized Distance (0..1)	float	1	
+forkindex	Fork Index	int	1	
+normforkindex	Normalized Fork Index (0..1)	float	1	
