@@ -1,0 +1,4 @@
+names	source	handling	readOnlyHandling	conversion	enable
+Branches Radius Forks	param	runtime	macro		1
+Thicknessinner Thicknessouter	param	runtime	macro		1
+Limitoutside	param	runtime	constant		1
