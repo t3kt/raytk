@@ -1,7 +1,8 @@
 from dataclasses import dataclass
 import json
 import math
-from raytkState import RopState, Macro, Texture, Reference, Variable, Dispatch, Buffer, ValidationError, Constant
+from raytkState import RopState, Macro, Texture, Reference, Variable, Dispatch, Buffer, ValidationError, Constant, \
+	InputState
 import re
 
 # noinspection PyUnreachableCode
@@ -559,13 +560,14 @@ class _Builder:
 
 	def loadInputs(self, inDats: 'List[DAT]'):
 		self.opState.inputNames = []
+		self.opState.inputStates = []
 		for i, inDat in enumerate(inDats + self.defPar.Inputdefs.evalOPs()):
 			if not inDat[1, 'name']:
 				continue
 			func = str(inDat[1, 'input:alias'] or f'inputOp{i + 1}')
 			placeholder = f'inputOp_{func}' if not func.startswith('inputOp') else func
 			name = str(inDat[1, 'name'])
-			self.inputs.append(_InputInfo(
+			inputInfo = _InputInfo(
 				inputFunc=func,
 				name=name,
 				path=str(inDat[1, 'path']),
@@ -575,9 +577,16 @@ class _Builder:
 				placeholder=placeholder,
 				vars=str(inDat[1, 'input:vars']),
 				varInputs=str(inDat[1, 'input:varInputs']),
-			))
+			)
+			self.inputs.append(inputInfo)
 			self.replacements[placeholder] = name
 			self.opState.inputNames.append(name)
+			self.opState.inputStates.append(InputState(
+				func,
+				name,
+				varNames=tdu.split(inputInfo.vars),
+				varInputNames=tdu.split(inputInfo.varInputs),
+			))
 
 	def loadOpElements(self, elementTable: 'DAT'):
 		for phCol in elementTable.cells(0, 'placeholder*'):
