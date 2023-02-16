@@ -1,0 +1,3 @@
+names	source	handling	readOnlyHandling	conversion	enable
+Point1[xyz]	param	runtime	macro		op('point_1_definition').numRows < 2
+Point2[xyz]	param	runtime	macro		op('point_2_definition').numRows < 2
