@@ -1,0 +1,23 @@
+!rop
+meta: !meta
+  opType: raytk.operators.sdf2d.polySplineSdf2d
+  opVersion: '0'
+  opStatus: beta
+opDef: !def
+  enable: true
+  typeSpec: !ropTypes
+    coordType: !coordT
+      Coordtypevec2: true
+    contextType: !contextT
+      Allcontexttype: true
+    returnType: !returnT
+      Returntypesdf: true
+  function: !text
+    file: src/operators/sdf2d/polySplineSdf2d.glsl
+    name: function
+  paramGroupTable: eval_params
+  bufferTable: !table
+    file: src/operators/sdf2d/polySplineSdf2d_buffers.txt
+    name: buffer_table
+    evaluate: true
+    evalOpts: !evalOpts {}
