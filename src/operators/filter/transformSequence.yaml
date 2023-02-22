@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.filter.transformSequence
-  opVersion: '5'
+  opVersion: '6'
   opStatus: beta
 opDef: !def
   enable: !expr
@@ -99,20 +99,12 @@ multiInput: !multiInput
       Returntypevec4: true
 elements:
 - !opElement
-  name: codeSwitcher_Target
-  elementType: codeSwitcher
+  name: transformTarget
+  elementType: transformTarget
   params:
-    Elementroot: ''
-    Table: !table
-      file: src/operators/filter/transformSequence_targets.txt
-      name: targets
-    Param: Target
-    Autoupdateparams: true
-    Manageparamstates: false
-    Alwaysincludeallparams: false
-    Switchmode: inline
-    Indexexpr: ''
-    Placeholder: ''
+    Targetparam: Target
+    Applyfunction: THIS_transform
+    Bodycodeplaceholder: APPLY_TO_TARGET();
 - !opElement
   name: aggregateCodeGenerator
   elementType: aggregateCodeGenerator
