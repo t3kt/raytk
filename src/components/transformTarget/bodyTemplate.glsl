@@ -1,9 +1,12 @@
-vec4 q;
 #if defined(THIS_Target_coords)
 {
 	q = adaptAsVec4(p);
 	THIS_APPLY(q, p, ctx);
+	#ifdef THIS_HAS_INPUT_1
 	res = inputOp1(THIS_asCoordT(q), ctx);
+	#else
+	res = THIS_asReturnT(THIS_asCoordT(q));
+	#endif
 }
 #elif defined(THIS_Target_sdfuv) || defined(THIS_Target_sdfuv2)
 {

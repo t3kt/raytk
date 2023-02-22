@@ -27,6 +27,7 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 	#ifdef THIS_EXPOSE_normstep
 	THIS_normstep = 0;
 	#endif
+	vec4 q;
 	ReturnT res;
 	APPLY_TO_TARGET();
 	return res;

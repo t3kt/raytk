@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.filter.translate
-  opVersion: '18'
+  opVersion: '19'
   opStatus: default
 opDef: !def
   enable: !expr
@@ -16,11 +16,19 @@ opDef: !def
       Coordtypevec3: !expr
         expr: op('definition_1').numRows > 1 or parent().par.Coordtype in ('auto','vec3')
     contextType: !contextT
-      Allcontexttype: true
+      Allcontexttype: !expr
+        expr: op('targetInfo')[1, 'contextType'] == '*'
+      Contexttypematerialcontext: !expr
+        expr: op('targetInfo')[1, 'contextType'] == 'MaterialContext'
     returnType: !returnT
       Allreturntype: !expr
-        expr: op('definition_1').numRows > 1
-      Returntypevec4: true
+        expr: op('definition_1').numRows > 1 and op('targetInfo')[1, 'returnType']
+          == '*'
+      Returntypesdf: !expr
+        expr: op('definition_1').numRows > 1 and op('targetInfo')[1, 'returnType']
+          in ('*', 'Sdf')
+      Returntypevec4: !expr
+        expr: op('targetInfo')[1, 'returnType'] in ('*', 'vec4')
   function: !text
     file: src/operators/filter/translate.glsl
     name: function
@@ -71,15 +79,36 @@ inputs:
     Coordtypevec2: true
     Coordtypevec3: true
   contextType: !contextT
-    Allcontexttype: true
+    Allcontexttype: !expr
+      expr: op('targetInfo')[1, 'contextType'] == '*'
+    Contexttypematerialcontext: !expr
+      expr: op('targetInfo')[1, 'contextType'] == 'MaterialContext'
   returnType: !returnT
-    Allreturntype: true
+    Allreturntype: !expr
+      expr: op('targetInfo')[1, 'returnType'] == '*'
+    Returntypesdf: !expr
+      expr: op('targetInfo')[1, 'returnType'] in ('*', 'Sdf')
+    Returntypefloat: !expr
+      expr: op('targetInfo')[1, 'returnType'] == '*'
+    Returntypevec4: !expr
+      expr: op('targetInfo')[1, 'returnType'] in ('*', 'vec4')
 - !input
   Localalias: translateField
   coordType: !coordT
     Coordtypevec2: true
     Coordtypevec3: true
   contextType: !contextT
-    Allcontexttype: true
+    Allcontexttype: !expr
+      expr: op('targetInfo')[1, 'contextType'] == '*'
+    Contexttypematerialcontext: !expr
+      expr: op('targetInfo')[1, 'contextType'] == 'MaterialContext'
   returnType: !returnT
     Returntypevec4: true
+elements:
+- !opElement
+  name: transformTarget
+  elementType: transformTarget
+  params:
+    Targetparam: Target
+    Applyfunction: THIS_transform
+    Bodycodeplaceholder: APPLY_TO_TARGET();
