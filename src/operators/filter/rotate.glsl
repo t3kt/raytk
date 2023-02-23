@@ -1,4 +1,4 @@
-void THIS_transform(inout vec4 q, CoordT p, inout ContextT ctx) {
+void THIS_transform(inout vec4 q, in CoordT p, inout ContextT ctx) {
 	vec3 pivot = vec3(0.);
 	if (IS_TRUE(THIS_Usepivot)) {
 		#ifdef THIS_HAS_INPUT_pivotField

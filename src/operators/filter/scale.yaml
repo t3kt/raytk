@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.filter.scale
-  opVersion: '25'
+  opVersion: '26'
   opStatus: default
 opDef: !def
   enable: !expr
@@ -98,3 +98,11 @@ inputs:
     Allcontexttype: true
   returnType: !returnT
     Returntypevec4: true
+elements:
+- !opElement
+  name: transformTarget
+  elementType: transformTarget
+  params:
+    Targetparam: Target
+    Applyfunction: THIS_transform
+    Bodycodeplaceholder: APPLY_TO_TARGET();
