@@ -124,6 +124,8 @@ paramPages:
       normMax: 1.0
 inputs:
 - !input
+  Required: !expr
+    expr: parent().par.Target != 'coords'
   coordType: !coordT
     Coordtypevec2: true
     Coordtypevec3: true
@@ -152,3 +154,11 @@ inputs:
     Allcontexttype: true
   returnType: !returnT
     Returntypevec4: true
+elements:
+- !opElement
+  name: transformTarget
+  elementType: transformTarget
+  params:
+    Targetparam: Target
+    Applyfunction: THIS_transform
+    Bodycodeplaceholder: APPLY_TO_TARGET();
