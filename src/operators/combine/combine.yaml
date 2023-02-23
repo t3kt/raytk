@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.combine.combine
-  opVersion: '24'
+  opVersion: '25'
   opStatus: default
 opDef: !def
   enable: !expr
@@ -26,11 +26,6 @@ opDef: !def
   - union
   - diff
   - intersect
-  - smooth
-  - round
-  - chamfer
-  - stairs
-  - columns
   shortcuts: cmb
 paramPages:
 - !page
@@ -182,6 +177,9 @@ elements:
     Offsetfield: offsetField
     Numberfield: ''
     Manageparamstates: true
+    Alwaysincludeallparams: false
     Switchmode: auto
+    Indexexpr: ''
     Prepcodeplaceholder: MERGE_PREP();
     Bodycodeplaceholder: MERGE_BODY();
+    Defaultinitcodeplaceholder: ''
