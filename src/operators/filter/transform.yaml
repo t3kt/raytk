@@ -169,6 +169,13 @@ inputs:
     Allreturntype: true
 elements:
 - !opElement
+  name: transformTarget
+  elementType: transformTarget
+  params:
+    Targetparam: Target
+    Applyfunction: THIS_transform
+    Bodycodeplaceholder: APPLY_TO_TARGET();
+- !opElement
   name: transformCodeGenerator
   elementType: transformCodeGenerator
   params:
@@ -186,7 +193,7 @@ elements:
       expr: parent().par.Enablepivot
     Scaletype: !expr
       expr: parent().par.Scaletype.eval()
-    Varname: p
+    Varname: q
     Useparamvars: false
     Force3d: false
     Prepcodeplaceholder: ''
