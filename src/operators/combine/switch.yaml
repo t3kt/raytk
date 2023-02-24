@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.combine.switch
-  opVersion: '19'
+  opVersion: '20'
   opStatus: default
 opDef: !def
   enable: !expr
@@ -98,6 +98,7 @@ inputs:
 - !input
   Source: !expr
     expr: parent().par.Indexfield or ''
+  Label: Index Field
   Localalias: indexField
   coordType: !coordT
     Allcoordtype: true

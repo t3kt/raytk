@@ -2,6 +2,6 @@
   "meta": {
     "opStatus": "default",
     "opType": "raytk.operators.combine.compositeFields",
-    "opVersion": 14
+    "opVersion": 15
   }
 }
