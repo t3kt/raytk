@@ -1,22 +1,32 @@
 !rop
 meta: !meta
   opType: raytk.operators.filter.transform
-  opVersion: '15'
+  opVersion: '16'
   opStatus: default
 opDef: !def
   enable: !expr
     expr: op('..').par.Enable
   useRuntimeBypass: true
   typeSpec: !ropTypes
+    Useinputreturntype: !expr
+      expr: op('definition_1').numRows > 1
     coordType: !coordT
       Coordtypevec2: true
       Coordtypevec3: true
     contextType: !contextT
-      Allcontexttype: true
+      Allcontexttype: !expr
+        expr: op('targetInfo')[1, 'contextType'] == '*'
+      Contexttypematerialcontext: !expr
+        expr: op('targetInfo')[1, 'contextType'] == 'MaterialContext'
     returnType: !returnT
       Allreturntype: !expr
-        expr: op('definition_1').numRows > 1
-      Returntypevec4: true
+        expr: op('definition_1').numRows > 1 and op('targetInfo')[1, 'returnType']
+          == '*'
+      Returntypesdf: !expr
+        expr: op('definition_1').numRows > 1 and op('targetInfo')[1, 'returnType']
+          in ('*', 'Sdf')
+      Returntypevec4: !expr
+        expr: op('targetInfo')[1, 'returnType'] in ('*', 'vec4')
   function: !text
     file: src/operators/filter/transform.glsl
     name: function_template
@@ -164,9 +174,19 @@ inputs:
     Coordtypevec2: true
     Coordtypevec3: true
   contextType: !contextT
-    Allcontexttype: true
+    Allcontexttype: !expr
+      expr: op('targetInfo')[1, 'contextType'] == '*'
+    Contexttypematerialcontext: !expr
+      expr: op('targetInfo')[1, 'contextType'] == 'MaterialContext'
   returnType: !returnT
-    Allreturntype: true
+    Allreturntype: !expr
+      expr: op('targetInfo')[1, 'returnType'] == '*'
+    Returntypesdf: !expr
+      expr: op('targetInfo')[1, 'returnType'] in ('*', 'Sdf')
+    Returntypefloat: !expr
+      expr: op('targetInfo')[1, 'returnType'] == '*'
+    Returntypevec4: !expr
+      expr: op('targetInfo')[1, 'returnType'] in ('*', 'vec4')
 elements:
 - !opElement
   name: transformTarget
