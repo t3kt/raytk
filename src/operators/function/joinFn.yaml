@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.function.joinFn
-  opVersion: '5'
+  opVersion: '6'
   opStatus: default
 opDef: !def
   enable: !expr

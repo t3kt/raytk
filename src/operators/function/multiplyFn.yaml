@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.function.multiplyFn
-  opVersion: '6'
+  opVersion: '7'
   opStatus: default
 opDef: !def
   enable: !expr
