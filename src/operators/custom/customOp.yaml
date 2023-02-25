@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.custom.customOp
-  opVersion: '14'
+  opVersion: '15'
   opStatus: beta
 opDef: !def
   enable: !expr
@@ -71,6 +71,34 @@ opDef: !def
     file: src/operators/custom/customOp.md
     name: help
 inputs:
+- !input
+  coordType: !coordT
+    Allcoordtype: true
+  contextType: !contextT
+    Allcontexttype: true
+  returnType: !returnT
+    Allreturntype: true
+- !input
+  coordType: !coordT
+    Allcoordtype: true
+  contextType: !contextT
+    Allcontexttype: true
+  returnType: !returnT
+    Allreturntype: true
+- !input
+  coordType: !coordT
+    Allcoordtype: true
+  contextType: !contextT
+    Allcontexttype: true
+  returnType: !returnT
+    Allreturntype: true
+- !input
+  coordType: !coordT
+    Allcoordtype: true
+  contextType: !contextT
+    Allcontexttype: true
+  returnType: !returnT
+    Allreturntype: true
 - !input
   coordType: !coordT
     Allcoordtype: true
