@@ -24,6 +24,8 @@
   content: ', ';
 }
 
+$status-default-bg-color: rgb(4.77%, 11.14%, 11.4%);
+$status-default-fg-color: rgb(13.5166%, 81.6%, 81.6%);
 $status-alpha-bg-color: rgb(24%, 30%, 40%);
 $status-alpha-fg-color: rgb(13%, 81%, 81%);
 $status-beta-bg-color: rgb(10%, 16%, 24%);
@@ -97,4 +99,72 @@ $status-deprecated-fg-color: rgb(64%, 81%, 81%);
 .category-ops img {
   width: 50px;
   height: 50px;
+}
+
+.op-thumb {
+  margin-right: 1em;
+}
+
+@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
+
+.operator-box-outer {
+  position: static;
+  display: flex;
+  flex-direction: row;
+  font-family: 'Roboto', sans-serif;
+  align-items: stretch;
+  margin: 1em;
+}
+.operator-box-inner {
+  border: 2px solid $status-default-fg-color;
+  border-radius: 1em;
+  padding: 1em;
+  display: flex;
+  flex-direction: column;
+  width: 320px;
+  height: 260px;
+  background-color: $status-default-bg-color;
+  color: $status-default-fg-color;
+  flex-grow: 0;
+  justify-content: space-between;
+}
+.operator-box-category {
+  font-style: italic;
+  font-size: 16pt;
+}
+.operator-box-name {
+  font-size: 20pt;
+  font-weight: bold;
+  text-align: center;
+}
+.operator-box-bottom-row {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  font-size: 14pt;
+}
+.operator-box-input-column {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding-top: 1em;
+  padding-bottom: 1em;
+}
+.operator-box-input {
+  display: flex;
+  flex-direction: row;
+}
+.operator-box-input-label {
+  font-size: 12pt;
+  flex-grow: 1;
+  margin-right: 1em;
+  white-space: nowrap;
+  text-decoration: none;
+}
+.operator-box-input-marker {
+  content: ' ';
+  width: 12px;
+  border-width: 10px 0 10px 0;
+  border-style: solid;
+  border-color: #666666;
 }

@@ -460,6 +460,18 @@ permalink: /reference/operators/{self.name}/
 			})
 		}
 
+@dataclass
+class ToolkitInfo:
+	toolkitVersion: str
+
+	def toData(self):
+		return {
+			'toolkitVersion': self.toolkitVersion,
+		}
+
+	def formatAsDataFile(self):
+		return _dumpYaml(self.toData())
+
 def _extractHelpSummaryAndDetail(docText: str) -> 'Tuple[str, str]':
 	if not docText:
 		return '', ''

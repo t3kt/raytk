@@ -32,7 +32,7 @@ layout: page
 	<div class="shortcuts-label">Shortcuts:</div>
 	<ul class="shortcuts-list">
 		{% for shortcut in page.op.shortcuts %}
-		<li>{{shorcut}}</li>
+		<li>{{shortcut}}</li>
 		{% endfor %}
 	</ul>
 </div>
@@ -48,6 +48,35 @@ layout: page
 	</ul>
 </div>
 {% endif %}
+
+<div class="operator-diagram-container">
+	<div class="operator-box-outer">
+		{% if page.op.inputs %}
+			<div class="operator-box-input-column">
+				{% for input in page.op.inputs %}
+				<div class="operator-box-input" title="{{input.summary}}">
+					<a class="operator-box-input-label" href="#input-{{input.name}}">
+						{{input.label}}
+					</a>
+					<div class="operator-box-input-marker"></div>
+				</div>
+				{% endfor %}
+			</div>
+		{% endif %}
+		<div class="operator-box-inner">
+			<div class="operator-box-category">
+				{{page.op.category}}
+			</div>
+			<div class="operator-box-name">
+				{{page.op.name}}
+			</div>
+			<div class="operator-box-bottom-row">
+				<div class="operator-box-toolkit-name">RayTK</div>
+				<div class="operator-box-toolkit-version">v{{site.data.toolkit.toolkitVersion}}</div>
+			</div>
+		</div>
+	</div>
+</div>
 
 {{ content }}
 
@@ -78,7 +107,7 @@ layout: page
 	<h2>Inputs</h2>
 	<ul>
 		{% for input in page.op.inputs %}
-			<li>
+			<li id="input-{{input.name}}">
 				<code class="input-name" title="{{ input.name }}">{{ input.label }}</code>:
 				{% if input.required %}
 					<span class="input-required">(required)</span>
