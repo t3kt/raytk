@@ -217,9 +217,11 @@ def _createAnimateParamAction(
 			parOrTupletName = pars[0].name
 		else:
 			parOrTupletName = pars[0].tupletName
+		undoInfo = {}
 		def init(gen: 'COMP'):
 			gen.name = f'{o.name}_{parOrTupletName}_{nameSuffix}'
 			chop = gen.parent().create(nullCHOP, f'{o.name}_{parOrTupletName}_vals')
+			undoInfo['chop'] = chop
 			gen.par.Name = ' '.join(p.name for p in pars)
 			chop.inputConnectors[0].connect(gen.outputConnectors[0])
 			gen.nodeCenterY = o.nodeCenterY - 100
@@ -227,9 +229,33 @@ def _createAnimateParamAction(
 			chop.nodeCenterY = gen.nodeCenterY
 			chop.nodeX = gen.nodeX + gen.nodeWidth + 100
 			chop.viewer = True
+			parStates = []
 			for par in pars:
+				parStates.append({
+					'name': par.name,
+					'mode': par.mode,
+					'val': par.val,
+					'expr': par.expr,
+					'bindExpr': par.bindExpr,
+				})
 				par.expr = f"op('{chop.name}')['{par.name}']"
-		ActionUtils.createROP(ropType, init)
+			undoInfo['parStates'] = parStates
+		def undo():
+			chop = undoInfo.get('chop')
+			if chop:
+				try:
+					chop.destroy()
+				except:
+					pass
+			parStates = undoInfo.get('parStates')
+			if parStates:
+				for i, par in enumerate(pars):
+					state = parStates[i]
+					par.val = state['val']
+					par.expr = state['expr']
+					par.bindExpr = state['bindExpr']
+					par.mode = state['mode']
+		ActionUtils.createROP(ropType, init, undo=undo)
 	return _SimpleAction(text, isValid, execute)
 
 def _createAnimateParamsGroup(text: str, ropType: str, nameSuffix: str):

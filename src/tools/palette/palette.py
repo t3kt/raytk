@@ -114,7 +114,11 @@ class Palette:
 		if shortcutName == 'esc':
 			self.close()
 
-	def CreateItem(self, templatePath: str, postSetup: 'Optional[Callable[[COMP], None]]' = None):
+	def CreateItem(
+			self, templatePath: str,
+			postSetup: 'Optional[Callable[[COMP], None]]' = None,
+			undoSetup: 'Optional[Callable[[], None]]' = None,
+	):
 		template = self._getTemplate(templatePath)
 		if not template:
 			self._printAndStatus(f'Unable to find template for path: {templatePath}')
@@ -140,6 +144,7 @@ class Palette:
 			'nodeY': pane.y,
 			'name': newOp.name,
 			'postSetup': postSetup,
+			'undoSetup': undoSetup,
 		})
 		ui.undo.endBlock()
 		if not ipar.uiState.Pinopen:
@@ -201,6 +206,12 @@ class Palette:
 			if newOp and newOp.valid:
 				try:
 					newOp.destroy()
+				except:
+					pass
+			undoSetup = info['undoSetup']
+			if undoSetup:
+				try:
+					undoSetup()
 				except:
 					pass
 		else:
