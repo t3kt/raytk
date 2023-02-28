@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.combine.compositeFields
-  opVersion: '15'
+  opVersion: '16'
   opStatus: default
 opDef: !def
   enable: !expr
@@ -29,7 +29,7 @@ multiInput: !multiInput
   Coordtypereductionscope: '*'
   Contexttypereductionmode: common
   Contexttypereductionscope: '*'
-  Returntypereductionmode: bestcommon
+  Returntypereductionmode: none
   Returntypereductionscope: 1 2
   Returntypepreference: vec4 float
   inputs:
