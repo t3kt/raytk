@@ -45,6 +45,10 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 	THIS_adjust = 1.;
 	if (IS_TRUE(THIS_Enable)) {
 		APPLY_TO_TARGET();
+	} else {
+		#ifdef THIS_HAS_INPUT_1
+		res = inputOp1(p, ctx);
+		#endif
 	}
 
 	#ifdef THIS_HAS_INPUT_1
