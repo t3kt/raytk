@@ -1,0 +1,5 @@
+name	label
+r	Red / X
+g	Green / Y
+b	Blue / Z
+a	Alpha / W
