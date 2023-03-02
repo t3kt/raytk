@@ -18,7 +18,6 @@ opDef: !def
   function: !text
     file: src/operators/filter/limitField.glsl
     name: functionTemplate
-  paramGroupTable: eval_params
   libraryNames: !expr
     expr: op('modZigZag')
   help: !text
@@ -76,7 +75,26 @@ inputs:
   contextType: !contextT
     Allcontexttype: true
   returnType: !returnT
-    Returntypesdf: true
+    Returntypefloat: true
+    Returntypevec4: true
+- !input
+  Localalias: lowField
+  Required: true
+  coordType: !coordT
+    Allcoordtype: true
+  contextType: !contextT
+    Allcontexttype: true
+  returnType: !returnT
+    Returntypefloat: true
+    Returntypevec4: true
+- !input
+  Localalias: highField
+  Required: true
+  coordType: !coordT
+    Allcoordtype: true
+  contextType: !contextT
+    Allcontexttype: true
+  returnType: !returnT
     Returntypefloat: true
     Returntypevec4: true
 elements:
