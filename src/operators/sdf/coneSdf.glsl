@@ -1,20 +1,52 @@
 ReturnT thismap(CoordT p, ContextT ctx) {
-	#ifdef THIS_HAS_INPUT_heightField
-	float height = THIS_Height * inputOp_heightField(p, ctx);
+	CoordT p0 = p;
+	float height;
+	vec3 base;
+
+	#ifdef THIS_HAS_INPUT_baseField
+	base = adaptAsVec3(inputOp_baseField(p0, ctx));
 	#else
-	float height = THIS_Height;
+	base = THIS_Translate;
 	#endif
+
+	float radius = THIS_Radius;
+	float radius2 = THIS_Radius2;
 	#ifdef THIS_HAS_INPUT_radiusField
-	float radiusMod = inputOp_radiusField(p, ctx);
-	#else
-	const float radiusMod = 1.;
+	float radiusMod = inputOp_radiusField(p0, ctx);
+	radius *= radiusMod;
+	radius2 *= radiusMod;
 	#endif
-	p -= THIS_Translate;
-	switch (int(THIS_Axis)) {
-		case 0: p = p.yxz; break;
-		case 1: p = p.zyx; break;
-		case 2: p = p.xzy; break;
+
+	p -= base;
+	#if defined(THIS_Mode_axis)
+	{
+		#ifdef THIS_HAS_INPUT_heightField
+		height = THIS_Height * inputOp_heightField(p0, ctx);
+		#else
+		height = THIS_Height;
+		#endif
+		switch (int(THIS_Axis)) {
+			case 0: p = p.yxz; break;
+			case 1: p = p.zyx; break;
+			case 2: p = p.xzy; break;
+		}
 	}
+	#elif defined(THIS_Mode_points)
+	{
+		#ifdef THIS_HAS_INPUT_topField
+		vec3 top = adaptAsVec3(inputOp_topField(p0, ctx));
+		#else
+		vec3 top = THIS_Top;
+		#endif
+		vec3 dir = top - base;
+		p *= TDRotateToVector(normalize(dir), vec3(0., 0., 1.));
+		p = p.xzy;
+		height = length(dir);
+	}
+	#else
+	#error invalidMode
+	#endif
+
 	ReturnT res;
 	BODY();
 	return res;
