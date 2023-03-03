@@ -292,7 +292,8 @@ class ToolkitBuilder(_BuilderBase):
 			queueCall(self.runBuild_stage, stage + 1)
 		elif stage == 17:
 			self.logStageStart('Write toolkit doc data')
-			self.docProcessor.writeToolkitDocData()
+			if self.docProcessor:
+				self.docProcessor.writeToolkitDocData()
 			queueCall(self.runBuild_stage, stage + 1)
 		elif stage == 18:
 			self.logStageStart('Finish build')
