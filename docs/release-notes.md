@@ -1,5 +1,57 @@
 # Release Notes
 
+## v0.31
+
+### Highlights
+
+* New 2D SDFs including branchingTreeSdf2d, polySplineSdf2d, and subdivisionSdf2d.
+* Easier ways to apply transform filters to UV coordinates or field values instead of coordinates.
+
+### Details
+
+* Improvements / additions
+  * Editor tools (#772)
+    * "Animate with ..." actions support non-ROPs
+    * Top-level pulse to open editor tools
+  * New OPs
+    * branchingTreeSdf2d (#1015)
+    * extrudeLine which extrudes a cross-section between two points (#1014)
+    * lookAtRotate (#1024)
+    * polySplineSdf2d (#747)
+    * subdivisionSdf2d (#885)
+  * New OP features
+    * Faster axis switching - layoutGrid, noiseField (#586)
+    * Transform targeting (apply to UVs, field values, etc, instead of to coordinates) (#1019)
+      * mirrorAxes
+      * rotate
+      * scale
+      * translate
+      * transform
+    * coneSdf - option to specify base and top points instead of height and axis (#1025)
+    * customOp - added 4 more inputs
+    * dataTextureField - channel selection
+    * limitField - field inputs for low/high bounds (#812)
+    * vectorToFloat - average / minimum / maximum modes
+    * waveField, waveFn, waveWarp, etc - added reverse ramp wave type
+  * Documentation
+    * Show operator diagrams with input labels on reference pages
+* Fixes
+  * Fix broken composite field editor action (#772)
+  * Fix incorrect handling of offset field input for combine-based operators (#1008)
+  * Fix 2D support in shapedCombine
+  * Fix incorrect parameter page names in many ops
+  * Fix incorrect input labels in many ops
+  * Fix undo for "Animate with..." editor actions
+  * Fix error in variableReference on initial load (#1020)
+  * Fix readonly optimization in diffuseContrib
+  * Fix handling of float inputs in compositeFields (#1001)
+  * Fix vec4 coord field input in bandField (#1023)
+  * Remove deprecated ops - mergeToggle, toggleSwitch
+* Changes (potentially breaking)
+  * Stop supporting float field input for rotate (except in axis mode) and translate (#1005)
+* Infrastructure / internals
+  * Initial steps towards 4D coordinates
+
 ## v0.30
 
 ### Highlights
