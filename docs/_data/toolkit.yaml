@@ -1,3 +1,1 @@
-toolkitVersion: !!python/object:/build/raytkUtil.Version
-  major: 0
-  minor: 31
+toolkitVersion: 0.31

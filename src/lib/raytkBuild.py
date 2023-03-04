@@ -389,7 +389,7 @@ permalink: /reference/operators/
 
 	def writeToolkitDocData(self):
 		self.context.log('Write toolkit data file')
-		info = ToolkitInfo(toolkitVersion=RaytkContext().toolkitVersion())
+		info = ToolkitInfo(toolkitVersion=str(RaytkContext().toolkitVersion()))
 		text = info.formatAsDataFile()
 		self.dataFolder.mkdir(parents=True, exist_ok=True)
 		outFile = self.dataFolder / 'toolkit.yaml'
