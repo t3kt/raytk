@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.field.colorSwitchField
-  opVersion: '10'
+  opVersion: '11'
   opStatus: beta
 opDef: !def
   enable: true
