@@ -25,7 +25,8 @@ op:
     - float
     - vec2
     - vec3
-    label: definition_in_1
+    - vec4
+    label: Light 1
     name: definition_in_1
     returnTypes:
     - Light
@@ -35,7 +36,8 @@ op:
     - float
     - vec2
     - vec3
-    label: definition_in_2
+    - vec4
+    label: Light 2
     name: definition_in_2
     returnTypes:
     - Light
@@ -45,7 +47,8 @@ op:
     - float
     - vec2
     - vec3
-    label: definition_in_3
+    - vec4
+    label: Light 3
     name: definition_in_3
     returnTypes:
     - Light
@@ -55,7 +58,8 @@ op:
     - float
     - vec2
     - vec3
-    label: definition_in_4
+    - vec4
+    label: Light 4
     name: definition_in_4
     returnTypes:
     - Light
@@ -65,7 +69,8 @@ op:
     - float
     - vec2
     - vec3
-    label: definition_in_5
+    - vec4
+    label: Light 5
     name: definition_in_5
     returnTypes:
     - Light
@@ -75,7 +80,8 @@ op:
     - float
     - vec2
     - vec3
-    label: definition_in_6
+    - vec4
+    label: Light 6
     name: definition_in_6
     returnTypes:
     - Light
@@ -85,7 +91,8 @@ op:
     - float
     - vec2
     - vec3
-    label: definition_in_7
+    - vec4
+    label: Light 7
     name: definition_in_7
     returnTypes:
     - Light
@@ -95,7 +102,8 @@ op:
     - float
     - vec2
     - vec3
-    label: definition_in_8
+    - vec4
+    label: Light 8
     name: definition_in_8
     returnTypes:
     - Light
@@ -105,7 +113,8 @@ op:
     - float
     - vec2
     - vec3
-    label: bounds1
+    - vec4
+    label: Bounds 1
     name: bounds1
     returnTypes:
     - Sdf
@@ -115,7 +124,8 @@ op:
     - float
     - vec2
     - vec3
-    label: bounds2
+    - vec4
+    label: Bounds 2
     name: bounds2
     returnTypes:
     - Sdf
@@ -125,7 +135,8 @@ op:
     - float
     - vec2
     - vec3
-    label: bounds3
+    - vec4
+    label: Bounds 3
     name: bounds3
     returnTypes:
     - Sdf
@@ -135,7 +146,8 @@ op:
     - float
     - vec2
     - vec3
-    label: bounds4
+    - vec4
+    label: Bounds 4
     name: bounds4
     returnTypes:
     - Sdf
@@ -145,7 +157,8 @@ op:
     - float
     - vec2
     - vec3
-    label: bounds5
+    - vec4
+    label: Bounds 5
     name: bounds5
     returnTypes:
     - Sdf
@@ -155,7 +168,8 @@ op:
     - float
     - vec2
     - vec3
-    label: bounds6
+    - vec4
+    label: Bounds 6
     name: bounds6
     returnTypes:
     - Sdf
@@ -165,7 +179,8 @@ op:
     - float
     - vec2
     - vec3
-    label: bounds7
+    - vec4
+    label: Bounds 7
     name: bounds7
     returnTypes:
     - Sdf
@@ -175,7 +190,8 @@ op:
     - float
     - vec2
     - vec3
-    label: bounds8
+    - vec4
+    label: Bounds 8
     name: bounds8
     returnTypes:
     - Sdf

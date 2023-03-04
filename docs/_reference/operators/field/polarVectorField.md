@@ -19,7 +19,7 @@ op:
     coordTypes:
     - vec2
     - vec3
-    label: theta_field_in
+    label: Theta Field
     name: thetaField
     returnTypes:
     - float
@@ -32,7 +32,7 @@ op:
     - ParticleContext
     coordTypes:
     - vec3
-    label: phi_field_in
+    label: Phi Field
     name: phiField
     returnTypes:
     - float
@@ -46,7 +46,7 @@ op:
     coordTypes:
     - vec2
     - vec3
-    label: length_field_in
+    label: Length Field
     name: lengthField
     returnTypes:
     - float

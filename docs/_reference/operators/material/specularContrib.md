@@ -22,6 +22,7 @@ op:
     - float
     - vec2
     - vec3
+    - vec4
     label: Shininess
     name: shininessField
     returnTypes:
@@ -32,6 +33,7 @@ op:
     - float
     - vec2
     - vec3
+    - vec4
     label: Roughness
     name: roughnessField
     returnTypes:
@@ -42,6 +44,7 @@ op:
     - float
     - vec2
     - vec3
+    - vec4
     label: Fresnel
     name: fresnelField
     returnTypes:
@@ -52,6 +55,7 @@ op:
     - float
     - vec2
     - vec3
+    - vec4
     label: Color
     name: colorField
     returnTypes:

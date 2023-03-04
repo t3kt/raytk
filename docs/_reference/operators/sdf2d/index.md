@@ -23,6 +23,8 @@ cat:
     name: bezierSdf2d
     status: beta
   - name: blobbyCrossSdf2d
+  - name: branchingTreeSdf2d
+    status: beta
   - name: circleSdf
     summary: 2D circle SDF.
   - name: circleWaveSdf2d
@@ -59,6 +61,8 @@ cat:
   - name: pieSdf2d
     summary: SDF for a 2D pie-slice shape.
   - name: planeSdf2d
+  - name: polySplineSdf2d
+    status: beta
   - name: polygonSdf2d
     summary: SDF for several types of 2D polygons.
   - name: quadSdf2d
@@ -77,6 +81,8 @@ cat:
     status: beta
   - name: starSdf2d
     summary: SDF for a 2D star shape.
+  - name: subdivisionSdf2d
+    status: beta
   - name: superQuadSdf2d
   - name: trapezoidSdf2d
   - name: triangleSdf2d

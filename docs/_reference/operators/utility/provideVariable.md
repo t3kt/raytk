@@ -20,6 +20,7 @@ op:
     - float
     - vec2
     - vec3
+    - vec4
     label: definition_in
     name: definition_in
     required: true
@@ -41,6 +42,7 @@ op:
     - float
     - vec2
     - vec3
+    - vec4
     label: Value Field
     name: valueField
     returnTypes:

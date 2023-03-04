@@ -113,6 +113,8 @@ cat:
     - spiral
     name: logPolarRepeat
     status: beta
+  - name: lookAtRotate
+    status: beta
   - name: magnet
     summary: Pulls or twists space within an area.
   - name: mirrorAxes

@@ -43,9 +43,7 @@ op:
     label: Rotate Field
     name: rotateField
     returnTypes:
-    - float
     - vec4
-    - Sdf
     summary: Optional field that can be used to control the amount of rotation. If
       in single axis mode, this must produce a single float value, which is added
       to the `Rotate` parameter. If in 3 axis mode, it can either produce a single
@@ -120,6 +118,19 @@ op:
       the X and Y parts are used.
   - label: Optimize
     name: Optimize
+  - label: Apply To
+    menuOptions:
+    - label: Coordinates
+      name: coords
+    - label: SDF UV
+      name: sdfuv
+    - label: SDF Secondary UV
+      name: sdfuv2
+    - label: UV In Material
+      name: matuv
+    - label: Field Values
+      name: value
+    name: Target
   shortcuts:
   - rot
   summary: Transforms space with rotation.

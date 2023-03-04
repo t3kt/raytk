@@ -23,7 +23,8 @@ op:
     - float
     - vec2
     - vec3
-    label: definition_in
+    - vec4
+    label: Index Field
     name: indexField
     required: true
     returnTypes:

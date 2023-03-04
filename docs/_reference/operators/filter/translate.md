@@ -47,9 +47,7 @@ op:
     label: Translate Field
     name: translateField
     returnTypes:
-    - float
     - vec4
-    - Sdf
     summary: If provided, this field is used to control the amount of translation
       at each point in space. If the field returns a float (or SDF), the `Translate`
       parameter is *multiplied* by that value. If it returns a vec4, the parts are
@@ -76,6 +74,19 @@ op:
     - label: 3D
       name: vec3
     name: Coordtype
+  - label: Apply To
+    menuOptions:
+    - label: Coordinates
+      name: coords
+    - label: SDF UV
+      name: sdfuv
+    - label: SDF Secondary UV
+      name: sdfuv2
+    - label: UV In Material
+      name: matuv
+    - label: Field Values
+      name: value
+    name: Target
   shortcuts:
   - tr
   summary: Translates coordinates of the input ROP.

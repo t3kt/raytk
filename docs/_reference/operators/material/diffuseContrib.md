@@ -18,6 +18,7 @@ op:
     - float
     - vec2
     - vec3
+    - vec4
     label: Roughness
     name: roughnessField
     returnTypes:
@@ -28,6 +29,7 @@ op:
     - float
     - vec2
     - vec3
+    - vec4
     label: Albedo
     name: albedoField
     returnTypes:
@@ -38,6 +40,7 @@ op:
     - float
     - vec2
     - vec3
+    - vec4
     label: Color
     name: colorField
     returnTypes:

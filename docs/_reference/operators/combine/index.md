@@ -21,14 +21,9 @@ cat:
   - name: boundLimit
     status: beta
   - keywords:
-    - chamfer
-    - columns
     - combine
     - diff
     - intersect
-    - round
-    - smooth
-    - stairs
     - union
     name: combine
     shortcuts:
@@ -52,10 +47,6 @@ cat:
   - name: mergeFields
     summary: Merges multiple vector fields, using different fields for each vector
       part.
-  - name: mergeToggle
-    status: deprecated
-    summary: Combines multiple SDFs with a toggle to show/hide each without a shader
-      rebuild.
   - name: shapedCombine
     status: beta
     summary: Combine two SDFs, using a 2D SDF to shape the blending region.

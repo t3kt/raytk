@@ -58,6 +58,7 @@ op:
     - RayContext
     - ParticleContext
     coordTypes:
+    - float
     - vec2
     - vec3
     label: Pivot Field
@@ -92,6 +93,19 @@ op:
     name: Pivot
     summary: The point around which to apply the rotation. For 2D coordinates, only
       the X and Y parts are used.
+  - label: Apply To
+    menuOptions:
+    - label: Coordinates
+      name: coords
+    - label: SDF UV
+      name: sdfuv
+    - label: SDF Secondary UV
+      name: sdfuv2
+    - label: UV In Material
+      name: matuv
+    - label: Field Values
+      name: value
+    name: Target
   summary: Scales space.
 
 ---

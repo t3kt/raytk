@@ -101,6 +101,19 @@ op:
     - label: Uniform
       name: uniform
     name: Scaletype
+  - label: Apply To
+    menuOptions:
+    - label: Coordinates
+      name: coords
+    - label: SDF UV
+      name: sdfuv
+    - label: SDF Secondary UV
+      name: sdfuv2
+    - label: UV In Material
+      name: matuv
+    - label: Field Values
+      name: value
+    name: Target
   shortcuts:
   - tfm
   summary: Transform the coordinates of the input, with rotation, scaling, and translation.

@@ -20,6 +20,7 @@ op:
     - float
     - vec2
     - vec3
+    - vec4
     label: Coordinate Field
     name: coordField
     returnTypes:
@@ -36,6 +37,7 @@ op:
     - float
     - vec2
     - vec3
+    - vec4
     label: Center Field
     name: centerField
     returnTypes:
@@ -52,6 +54,7 @@ op:
     - float
     - vec2
     - vec3
+    - vec4
     label: Radius Field
     name: radiusField
     returnTypes:
@@ -68,6 +71,7 @@ op:
     - float
     - vec2
     - vec3
+    - vec4
     label: Weight Field
     name: weightField
     returnTypes:
@@ -83,6 +87,7 @@ op:
     - float
     - vec2
     - vec3
+    - vec4
     label: Exponent Field
     name: exponentField
     returnTypes:

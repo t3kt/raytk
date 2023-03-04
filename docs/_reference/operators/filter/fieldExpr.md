@@ -20,6 +20,7 @@ op:
     - float
     - vec2
     - vec3
+    - vec4
     label: definition_in
     name: definition_in
     returnTypes:
@@ -40,6 +41,7 @@ op:
     - float
     - vec2
     - vec3
+    - vec4
     label: definition_in1
     name: definition_in1
     returnTypes:
@@ -60,6 +62,7 @@ op:
     - float
     - vec2
     - vec3
+    - vec4
     label: definition_in2
     name: definition_in2
     returnTypes:
@@ -80,6 +83,7 @@ op:
     - float
     - vec2
     - vec3
+    - vec4
     label: definition_in3
     name: definition_in3
     returnTypes:

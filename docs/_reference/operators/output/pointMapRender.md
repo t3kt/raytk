@@ -51,7 +51,8 @@ op:
     - float
     - vec2
     - vec3
-    label: definition_in
+    - vec4
+    label: SDF or Field
     name: definition_in
     returnTypes:
     - float

@@ -21,7 +21,8 @@ op:
     - float
     - vec2
     - vec3
-    label: definition_in
+    - vec4
+    label: Color Input
     name: definition_in
     required: true
     returnTypes:
@@ -37,6 +38,7 @@ op:
     - float
     - vec2
     - vec3
+    - vec4
     label: Brightness Field
     name: brightnessField
     returnTypes:
@@ -52,6 +54,7 @@ op:
     - float
     - vec2
     - vec3
+    - vec4
     label: Contrast Field
     name: contrastField
     returnTypes:
@@ -67,6 +70,7 @@ op:
     - float
     - vec2
     - vec3
+    - vec4
     label: Hue Field
     name: hueField
     returnTypes:
@@ -82,6 +86,7 @@ op:
     - float
     - vec2
     - vec3
+    - vec4
     label: Saturation Field
     name: saturationField
     returnTypes:

@@ -23,6 +23,17 @@ op:
     - label: Vector
       name: vec4
     name: Returntype
+  - label: Channel
+    menuOptions:
+    - label: Red / X
+      name: r
+    - label: Green / Y
+      name: g
+    - label: Blue / Z
+      name: b
+    - label: Alpha / W
+      name: a
+    name: Channel
   status: beta
   summary: Accesses data from a texture with the same layout as the renderer.
 

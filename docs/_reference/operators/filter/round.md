@@ -24,7 +24,8 @@ op:
     - float
     - vec2
     - vec3
-    label: definition_in
+    - vec4
+    label: SDF
     name: definition_in
     required: true
     returnTypes:
@@ -42,7 +43,8 @@ op:
     - float
     - vec2
     - vec3
-    label: amount_field_definition_in
+    - vec4
+    label: Amount Field
     name: amountField
     returnTypes:
     - float

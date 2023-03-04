@@ -1,13 +1,13 @@
 ---
 layout: operator
-title: joinFn
-parent: Function Operators
+title: lookAtRotate
+parent: Filter Operators
 grand_parent: Operators
-permalink: /reference/operators/function/joinFn
+permalink: /reference/operators/filter/lookAtRotate
 redirect_from:
-  - /reference/opType/raytk.operators.function.joinFn/
+  - /reference/opType/raytk.operators.filter.lookAtRotate/
 op:
-  category: function
+  category: filter
   inputs:
   - contextTypes:
     - Context
@@ -18,10 +18,34 @@ op:
     - ParticleContext
     coordTypes:
     - float
-    label: Function 1
-    name: definition_in_1
+    - vec2
+    - vec3
+    - vec4
+    label: definition_in
+    name: definition_in
+    required: true
     returnTypes:
     - float
+    - vec4
+    - Sdf
+    - Ray
+    - Light
+    - Particle
+  - contextTypes:
+    - Context
+    - MaterialContext
+    - CameraContext
+    - LightContext
+    - RayContext
+    - ParticleContext
+    coordTypes:
+    - float
+    - vec2
+    - vec3
+    - vec4
+    label: Source Point Field
+    name: sourcePointField
+    returnTypes:
     - vec4
   - contextTypes:
     - Context
@@ -32,10 +56,12 @@ op:
     - ParticleContext
     coordTypes:
     - float
-    label: Function 2
-    name: definition_in_2
+    - vec2
+    - vec3
+    - vec4
+    label: Target Point Field
+    name: targetPointField
     returnTypes:
-    - float
     - vec4
   - contextTypes:
     - Context
@@ -46,37 +72,24 @@ op:
     - ParticleContext
     coordTypes:
     - float
-    label: Function 3
-    name: definition_in_3
+    - vec2
+    - vec3
+    - vec4
+    label: Roll Field
+    name: rollField
     returnTypes:
     - float
-    - vec4
-  - contextTypes:
-    - Context
-    - MaterialContext
-    - CameraContext
-    - LightContext
-    - RayContext
-    - ParticleContext
-    coordTypes:
-    - float
-    label: Function 4
-    name: definition_in_4
-    returnTypes:
-    - float
-    - vec4
-  name: joinFn
-  opType: raytk.operators.function.joinFn
+  name: lookAtRotate
+  opType: raytk.operators.filter.lookAtRotate
   parameters:
   - label: Enable
     name: Enable
-  - label: Fit To Range
-    name: Fitrange
-    summary: When enabled, the combined function is scaled back to a 0..1 range. Otherwise,
-      coordinates 0..1 go to the first function, 1..2 to the second, etc.
-  summary: Joins functions end on end.
+  - label: Source Point
+    name: Sourcepoint
+  - label: Target Point
+    name: Targetpoint
+  - label: Roll
+    name: Roll
+  status: beta
 
 ---
-
-
-Joins functions end on end.

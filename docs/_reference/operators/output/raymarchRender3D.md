@@ -50,7 +50,7 @@ op:
     - RayContext
     coordTypes:
     - vec3
-    label: backgroundField
+    label: Background Field
     name: backgroundField
     returnTypes:
     - float
@@ -59,7 +59,7 @@ op:
     - MaterialContext
     coordTypes:
     - vec3
-    label: secondaryRayCast
+    label: Secondary Ray Cast
     name: secondaryRayCast
     returnTypes:
     - float
@@ -68,7 +68,7 @@ op:
     - MaterialContext
     coordTypes:
     - vec3
-    label: refractionRayCast
+    label: Refraction Ray Cast
     name: refractionRayCast
     returnTypes:
     - float

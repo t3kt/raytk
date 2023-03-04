@@ -20,6 +20,7 @@ op:
     - float
     - vec2
     - vec3
+    - vec4
     label: definition_in
     name: definition_in
     required: true
@@ -41,6 +42,7 @@ op:
     - float
     - vec2
     - vec3
+    - vec4
     label: Transform 1
     name: transform1
     returnTypes:
@@ -56,6 +58,7 @@ op:
     - float
     - vec2
     - vec3
+    - vec4
     label: Transform 2
     name: transform2
     returnTypes:
@@ -71,6 +74,7 @@ op:
     - float
     - vec2
     - vec3
+    - vec4
     label: Transform 3
     name: transform3
     returnTypes:
@@ -86,6 +90,7 @@ op:
     - float
     - vec2
     - vec3
+    - vec4
     label: Transform 4
     name: transform4
     returnTypes:
@@ -101,6 +106,7 @@ op:
     - float
     - vec2
     - vec3
+    - vec4
     label: Transform 5
     name: transform5
     returnTypes:
@@ -116,6 +122,7 @@ op:
     - float
     - vec2
     - vec3
+    - vec4
     label: Transform 6
     name: transform6
     returnTypes:

@@ -29,8 +29,6 @@ cat:
     status: beta
   - name: speedGenerator
     status: beta
-  - name: toggleSwitch
-    status: deprecated
   - name: variableReference
   summary: Advanced operators that change how ROP chains behave.
 

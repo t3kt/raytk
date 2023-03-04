@@ -24,6 +24,7 @@ op:
     - float
     - vec2
     - vec3
+    - vec4
     label: Coordinate Field
     name: coordField
     returnTypes:
@@ -42,6 +43,7 @@ op:
     - float
     - vec2
     - vec3
+    - vec4
     label: Edge Field
     name: edgeField
     returnTypes:
@@ -57,6 +59,7 @@ op:
     - float
     - vec2
     - vec3
+    - vec4
     label: Low Value Field
     name: lowValue
     returnTypes:
@@ -73,6 +76,7 @@ op:
     - float
     - vec2
     - vec3
+    - vec4
     label: High Value Field
     name: highValue
     returnTypes:

@@ -28,6 +28,7 @@ op:
     - float
     - vec2
     - vec3
+    - vec4
     label: Source
     name: source_definition_in
     required: true

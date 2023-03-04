@@ -20,7 +20,8 @@ op:
     - float
     - vec2
     - vec3
-    label: definition_in_1
+    - vec4
+    label: SDF 1
     name: definition_in_1
     returnTypes:
     - Sdf
@@ -35,7 +36,8 @@ op:
     - float
     - vec2
     - vec3
-    label: definition_in_2
+    - vec4
+    label: SDF 2
     name: definition_in_2
     returnTypes:
     - Sdf
@@ -50,7 +52,8 @@ op:
     - float
     - vec2
     - vec3
-    label: definition_in_3
+    - vec4
+    label: SDF 3
     name: definition_in_3
     returnTypes:
     - Sdf
@@ -65,7 +68,8 @@ op:
     - float
     - vec2
     - vec3
-    label: definition_in_4
+    - vec4
+    label: SDF 4
     name: definition_in_4
     returnTypes:
     - Sdf
@@ -80,7 +84,8 @@ op:
     - float
     - vec2
     - vec3
-    label: definition_in_5
+    - vec4
+    label: SDF 5
     name: definition_in_5
     returnTypes:
     - Sdf
@@ -95,7 +100,8 @@ op:
     - float
     - vec2
     - vec3
-    label: definition_in_6
+    - vec4
+    label: SDF 6
     name: definition_in_6
     returnTypes:
     - Sdf
@@ -110,7 +116,8 @@ op:
     - float
     - vec2
     - vec3
-    label: definition_in_7
+    - vec4
+    label: SDF 7
     name: definition_in_7
     returnTypes:
     - Sdf
@@ -125,7 +132,8 @@ op:
     - float
     - vec2
     - vec3
-    label: definition_in_8
+    - vec4
+    label: SDF 8
     name: definition_in_8
     returnTypes:
     - Sdf

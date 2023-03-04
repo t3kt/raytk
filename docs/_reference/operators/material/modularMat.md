@@ -21,7 +21,7 @@ op:
     - Context
     coordTypes:
     - vec3
-    label: definition_in
+    label: SDF
     name: sdf
     required: true
     returnTypes:
