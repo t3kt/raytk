@@ -30,6 +30,7 @@ def _shouldInclude(val):
 @dataclass
 class RopState(_StateObject):
 	name: str
+	path: str
 	ropType: str
 
 	functionCode: Optional[str] = None

@@ -541,6 +541,7 @@ class _Builder:
 			opType = opType.rsplit('.', maxsplit=1)[1]
 		self.opState = RopState(
 			name=self.defPar.Name.eval(),
+			path=self.hostOp.path,
 			ropType=opType,
 		)
 		self.opName = self.opState.name
