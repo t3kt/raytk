@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.filter.moduloDistance
-  opVersion: '15'
+  opVersion: '16'
   opStatus: default
 opDef: !def
   enable: !expr
@@ -33,6 +33,7 @@ opDef: !def
   - distance
 inputs:
 - !input
+  Variables: '*'
   coordType: !coordT
     Coordtypevec2: true
     Coordtypevec3: true
