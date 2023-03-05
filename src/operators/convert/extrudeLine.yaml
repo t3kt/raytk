@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.convert.extrudeLine
-  opVersion: '0'
+  opVersion: '1'
   opStatus: beta
 opDef: !def
   enable: true
@@ -26,6 +26,8 @@ opDef: !def
 inputs:
 - !input
   Localalias: crossSection
+  Variables: '*'
+  Variableinputs: '*'
   Required: true
   coordType: !coordT
     Coordtypevec2: true
@@ -43,6 +45,7 @@ inputs:
     Returntypevec4: true
 - !input
   Localalias: point2Field
+  Variableinputs: point1Field
   coordType: !coordT
     Coordtypevec3: true
   contextType: !contextT

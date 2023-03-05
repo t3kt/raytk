@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.convert.revolve
-  opVersion: '12'
+  opVersion: '13'
   opStatus: default
 opDef: !def
   enable: true
@@ -28,6 +28,8 @@ opDef: !def
 inputs:
 - !input
   Localalias: crossSection
+  Variables: '*'
+  Variableinputs: '*'
   Required: true
   coordType: !coordT
     Coordtypevec2: true
@@ -37,6 +39,7 @@ inputs:
     Returntypesdf: true
 - !input
   Localalias: rotateField
+  Variables: '*'
   coordType: !coordT
     Coordtypefloat: true
     Coordtypevec3: true
@@ -46,6 +49,8 @@ inputs:
     Returntypefloat: true
 - !input
   Localalias: scaleField
+  Variables: '*'
+  Variableinputs: rotateField
   coordType: !coordT
     Coordtypefloat: true
     Coordtypevec3: true
@@ -55,6 +60,8 @@ inputs:
     Returntypefloat: true
 - !input
   Localalias: translateField
+  Variables: '*'
+  Variableinputs: scaleField rotateField
   coordType: !coordT
     Coordtypefloat: true
     Coordtypevec3: true
@@ -64,6 +71,7 @@ inputs:
     Returntypevec4: true
 - !input
   Localalias: radialOffsetField
+  Variables: '*'
   coordType: !coordT
     Coordtypevec3: true
   contextType: !contextT
@@ -72,6 +80,7 @@ inputs:
     Returntypefloat: true
 - !input
   Localalias: axisOffsetField
+  Variables: '*'
   coordType: !coordT
     Coordtypevec3: true
   contextType: !contextT
