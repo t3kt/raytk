@@ -2,6 +2,6 @@
   "meta": {
     "opStatus": "default",
     "opType": "raytk.operators.utility.providePosition",
-    "opVersion": 1
+    "opVersion": 2
   }
 }

@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.utility.provideVariable
-  opVersion: '6'
+  opVersion: '7'
   opStatus: beta
 opDef: !def
   enable: !expr
@@ -24,6 +24,9 @@ opDef: !def
     evalOpts: !evalOpts {}
 inputs:
 - !input
+  Variables: !expr
+    expr: parent().par.Name or 'var'
+  Variableinputs: valueField
   Required: true
   coordType: !coordT
     Allcoordtype: true

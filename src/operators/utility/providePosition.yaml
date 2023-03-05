@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.utility.providePosition
-  opVersion: '1'
+  opVersion: '2'
   opStatus: default
 opDef: !def
   enable: true
@@ -23,6 +23,7 @@ opDef: !def
       excludeFirstRow: true
 inputs:
 - !input
+  Variables: pos
   Required: true
   coordType: !coordT
     Allcoordtype: true

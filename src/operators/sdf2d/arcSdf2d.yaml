@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.sdf2d.arcSdf2d
-  opVersion: '6'
+  opVersion: '7'
   opStatus: default
 opDef: !def
   enable: !expr
@@ -26,6 +26,8 @@ opDef: !def
 inputs:
 - !input
   Localalias: radiusField
+  Variables: normangle
+  Variableinputs: orientationField
   coordType: !coordT
     Coordtypevec2: true
   contextType: !contextT
@@ -34,6 +36,8 @@ inputs:
     Returntypefloat: true
 - !input
   Localalias: thicknessField
+  Variables: normangle
+  Variableinputs: orientationField radiusField
   coordType: !coordT
     Coordtypevec2: true
   contextType: !contextT
@@ -50,6 +54,7 @@ inputs:
     Returntypefloat: true
 - !input
   Localalias: apertureField
+  Variableinputs: orientationField
   coordType: !coordT
     Coordtypevec2: true
   contextType: !contextT

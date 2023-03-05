@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.sdf2d.starSdf2d
-  opVersion: '10'
+  opVersion: '11'
   opStatus: default
 opDef: !def
   enable: true
@@ -28,6 +28,8 @@ opDef: !def
 inputs:
 - !input
   Localalias: radiusField
+  Variables: normangle
+  Variableinputs: pointsField
   coordType: !coordT
     Coordtypevec2: true
   contextType: !contextT
@@ -36,6 +38,8 @@ inputs:
     Returntypefloat: true
 - !input
   Localalias: tightnessField
+  Variables: normangle
+  Variableinputs: pointsField radiusField
   coordType: !coordT
     Coordtypevec2: true
   contextType: !contextT
@@ -44,6 +48,7 @@ inputs:
     Returntypefloat: true
 - !input
   Localalias: pointsField
+  Variables: normangle
   coordType: !coordT
     Coordtypevec2: true
   contextType: !contextT
