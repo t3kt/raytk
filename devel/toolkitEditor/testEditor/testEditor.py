@@ -198,3 +198,4 @@ class TestEditor:
 		top = self.ownerComp.op('test_output')
 		image = tox.replace('.tox', '.png')
 		top.save(image)
+		self._loadOutputSnapshot()
