@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.sdf.discSdf
-  opVersion: '10'
+  opVersion: '11'
   opStatus: default
 opDef: !def
   enable: true
@@ -28,6 +28,7 @@ opDef: !def
 inputs:
 - !input
   Localalias: radiusField
+  Variables: angle normangle
   coordType: !coordT
     Coordtypevec3: true
   contextType: !contextT
@@ -36,6 +37,8 @@ inputs:
     Returntypefloat: true
 - !input
   Localalias: thicknessField
+  Variables: angle normangle normaxisdist
+  Variableinputs: radiusField
   coordType: !coordT
     Coordtypevec3: true
   contextType: !contextT
