@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.sdf.prismSdf
-  opVersion: '24'
+  opVersion: '25'
   opStatus: default
 opDef: !def
   enable: true
@@ -39,6 +39,7 @@ opDef: !def
 inputs:
 - !input
   Localalias: heightField
+  Variables: axispos normangle
   coordType: !coordT
     Coordtypevec3: true
   contextType: !contextT
@@ -47,6 +48,8 @@ inputs:
     Returntypefloat: true
 - !input
   Localalias: radiusField
+  Variables: axispos normangle normoffset
+  Variableinputs: heightField
   coordType: !coordT
     Coordtypevec3: true
   contextType: !contextT
@@ -55,6 +58,8 @@ inputs:
     Returntypefloat: true
 - !input
   Localalias: thicknessField
+  Variables: axispos normangle normoffset
+  Variableinputs: heightField radiusField
   coordType: !coordT
     Coordtypevec3: true
   contextType: !contextT
@@ -63,6 +68,8 @@ inputs:
     Returntypefloat: true
 - !input
   Localalias: sidesField
+  Variables: axispos normangle normoffset
+  Variableinputs: heightField radiusField thicknessField
   coordType: !coordT
     Coordtypevec3: true
   contextType: !contextT

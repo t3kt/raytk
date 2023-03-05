@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.sdf.stackSdf
-  opVersion: '1'
+  opVersion: '2'
   opStatus: beta
 opDef: !def
   enable: true
@@ -34,6 +34,7 @@ opDef: !def
 inputs:
 - !input
   Localalias: shape
+  Variables: '*'
   coordType: !coordT
     Coordtypevec3: true
   contextType: !contextT

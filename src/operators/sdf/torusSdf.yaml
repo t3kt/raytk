@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.sdf.torusSdf
-  opVersion: '20'
+  opVersion: '21'
   opStatus: default
 opDef: !def
   enable: true
@@ -33,6 +33,8 @@ opDef: !def
 inputs:
 - !input
   Localalias: radiusField
+  Variables: angle normangle
+  Variableinputs: angleWidthField angleOffsetField
   coordType: !coordT
     Coordtypevec3: true
   contextType: !contextT
@@ -41,6 +43,8 @@ inputs:
     Returntypefloat: true
 - !input
   Localalias: thicknessField
+  Variables: angle normangle
+  Variableinputs: angleWidthField angleOffsetField radiusField
   coordType: !coordT
     Coordtypevec3: true
   contextType: !contextT
@@ -57,6 +61,7 @@ inputs:
     Returntypefloat: true
 - !input
   Localalias: angleOffsetField
+  Variableinputs: angleWidthField
   coordType: !coordT
     Coordtypevec3: true
   contextType: !contextT
