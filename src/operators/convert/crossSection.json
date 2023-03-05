@@ -2,6 +2,6 @@
   "meta": {
     "opStatus": "beta",
     "opType": "raytk.operators.convert.crossSection",
-    "opVersion": 4
+    "opVersion": 5
   }
 }

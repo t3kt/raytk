@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.field.constantSwitchField
-  opVersion: '7'
+  opVersion: '8'
   opStatus: beta
 opDef: !def
   enable: true
@@ -31,8 +31,7 @@ inputs:
   coordType: !coordT
     Allcoordtype: true
   contextType: !contextT
-    Contexttypecontext: true
-    Contexttypematerialcontext: true
+    Allcontexttype: true
   returnType: !returnT
     Returntypefloat: true
 elements:

@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.field.colorSwitchField
-  opVersion: '11'
+  opVersion: '12'
   opStatus: beta
 opDef: !def
   enable: true
@@ -28,8 +28,7 @@ inputs:
   coordType: !coordT
     Allcoordtype: true
   contextType: !contextT
-    Contexttypecontext: true
-    Contexttypematerialcontext: true
+    Allcontexttype: true
   returnType: !returnT
     Returntypefloat: true
 elements:
