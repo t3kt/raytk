@@ -8,7 +8,7 @@ opVersion	parent().par.Raytkopversion or 0
 toolkitVersion	parent().par.Raytkversion or ''
 paramSource	parent().path + '/param_vals'
 constantParamSource	parent().path + '/constant_param_vals'
-paramVectors	parent().path + '/param_vector_vals' if (op('paramChopNames')['regular',1]!='' or op('paramChopNames')['special',1]!='') else ''
+paramVectors	parent().path + '/param_vector_vals'
 paramTable	parent().path + '/params'
 paramTupletTable	parent().path + '/param_tuplets'
 libraryNames	parent().par.Librarynames
