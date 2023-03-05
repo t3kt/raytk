@@ -60,6 +60,7 @@ class TestEditor:
 		try:
 			self._disableComponentCooking()
 			iop.loader.UnloadComponent()
+			self._loadOutputSnapshot()
 		except:
 			pass
 		self._reloadOutputsSoon()
@@ -96,6 +97,7 @@ class TestEditor:
 		iop.loader.LoadComponent(tox=toxPath, name=name)
 		self._reloadOutputsSoon()
 		self._refreshFindings()
+		self._loadOutputSnapshot()
 
 	def createTest(self):
 		self._create('test')
@@ -181,3 +183,18 @@ class TestEditor:
 		if not comp:
 			return
 		navigateTo(comp, goInto=True)
+
+	def _loadOutputSnapshot(self):
+		tox = self.currentTox
+		top = self.ownerComp.op('snapshot_image_file_in')
+		image = tox.replace('.tox', '.png') if tox else ''
+		top.par.file = image
+		top.par.reloadpulse.pulse()
+
+	def saveOutputSnapshot(self):
+		tox = self.currentTox
+		if not tox:
+			return
+		top = self.ownerComp.op('test_output')
+		image = tox.replace('.tox', '.png')
+		top.save(image)
