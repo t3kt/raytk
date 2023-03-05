@@ -520,9 +520,12 @@ class _VarRefChecker:
 								if i != inputNode
 							]
 						else:
+							varInputNames = []
+							for name in inputNode.inputState.varInputNames:
+								varInputNames += tdu.expand(name)
 							inputNode.varInputs = [
 								node.inputs[functionName]
-								for functionName in inputNode.inputState.varInputNames
+								for functionName in varInputNames
 								if functionName != inputNode.inputState.functionName and functionName in node.inputs
 							]
 		# for each node, fill output lists
