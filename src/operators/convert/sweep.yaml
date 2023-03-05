@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.convert.sweep
-  opVersion: '6'
+  opVersion: '7'
   opStatus: default
 opDef: !def
   enable: true
@@ -28,6 +28,8 @@ opDef: !def
 inputs:
 - !input
   Localalias: crossSection
+  Variables: '*'
+  Variableinputs: '*'
   Required: true
   coordType: !coordT
     Coordtypevec2: true

@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.filter.assignColor
-  opVersion: '16'
+  opVersion: '17'
   opStatus: default
 opDef: !def
   enable: !expr
@@ -50,6 +50,8 @@ inputs:
     Returntypeparticle: true
 - !input
   Localalias: colorField
+  Variables: sdf
+  Variableinputs: inputOp1
   coordType: !coordT
     Allcoordtype: true
   contextType: !contextT

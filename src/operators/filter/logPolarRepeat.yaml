@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.filter.logPolarRepeat
-  opVersion: '8'
+  opVersion: '9'
   opStatus: beta
 opDef: !def
   enable: !expr
@@ -33,6 +33,7 @@ opDef: !def
   - spiral
 inputs:
 - !input
+  Variables: '*'
   Required: true
   coordType: !coordT
     Coordtypevec2: !expr

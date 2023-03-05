@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.filter.instance
-  opVersion: '20'
+  opVersion: '21'
   opStatus: default
 opDef: !def
   enable: !expr
@@ -183,6 +183,7 @@ paramPages:
       enableExpr: hasattr(op, 'raytk') and op.raytk.op('tools/palette')
 inputs:
 - !input
+  Variables: '*'
   Required: true
   coordType: !coordT
     Allcoordtype: true
@@ -192,6 +193,7 @@ inputs:
     Returntypesdf: true
 - !input
   Localalias: radiusField
+  Variables: '*'
   coordType: !coordT
     Allcoordtype: true
   contextType: !contextT
@@ -214,6 +216,9 @@ elements:
     Offsetfield: ''
     Numberfield: ''
     Manageparamstates: true
+    Alwaysincludeallparams: false
     Switchmode: auto
+    Indexexpr: ''
     Prepcodeplaceholder: MERGE_PREP();
     Bodycodeplaceholder: MERGE_BODY();
+    Defaultinitcodeplaceholder: ''

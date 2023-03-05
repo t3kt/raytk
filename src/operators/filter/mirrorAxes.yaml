@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.filter.mirrorAxes
-  opVersion: '11'
+  opVersion: '12'
   opStatus: beta
 opDef: !def
   enable: !expr
@@ -41,6 +41,8 @@ opDef: !def
       excludeFirstRow: true
 inputs:
 - !input
+  Variables: '*'
+  Variableinputs: '*'
   coordType: !coordT
     Allcoordtype: true
   contextType: !contextT
@@ -59,6 +61,8 @@ inputs:
       expr: op('targetInfo')[1, 'returnType'] in ('*', 'vec4')
 - !input
   Localalias: offsetField
+  Variables: '*'
+  Variableinputs: directionField flipSideField
   coordType: !coordT
     Allcoordtype: true
   contextType: !contextT
@@ -71,6 +75,8 @@ inputs:
     Returntypevec4: true
 - !input
   Localalias: directionField
+  Variables: '*'
+  Variableinputs: flipSidesField
   coordType: !coordT
     Allcoordtype: true
   contextType: !contextT
@@ -83,6 +89,7 @@ inputs:
     Returntypevec4: true
 - !input
   Localalias: flipSideField
+  Variables: '*'
   coordType: !coordT
     Allcoordtype: true
   contextType: !contextT
