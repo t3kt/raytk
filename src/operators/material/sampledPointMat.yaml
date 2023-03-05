@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.material.sampledPointMat
-  opVersion: '23'
+  opVersion: '24'
   opStatus: beta
 opDef: !def
   enable: !expr
@@ -45,6 +45,7 @@ inputs:
     Returntypesdf: true
 - !input
   Localalias: fillColorField
+  Variables: '*'
   coordType: !coordT
     Coordtypefloat: true
     Coordtypevec2: true
@@ -56,6 +57,8 @@ inputs:
     Returntypevec4: true
 - !input
   Localalias: edgeColorField
+  Variables: '*'
+  Variableinputs: fillColorField
   coordType: !coordT
     Coordtypefloat: true
     Coordtypevec2: true

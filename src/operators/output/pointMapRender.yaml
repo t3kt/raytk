@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.output.pointMapRender
-  opVersion: '62'
+  opVersion: '63'
   opStatus: default
 opDef: !def
   enable: true
@@ -37,6 +37,7 @@ opDef: !def
   shortcuts: pmr
 inputs:
 - !input
+  Variables: '*'
   coordType: !coordT
     Allcoordtype: !expr
       expr: parent().par.Coordtype == 'auto'
@@ -54,6 +55,7 @@ inputs:
     Returntypevec4: true
 - !input
   Localalias: camera
+  Variables: '*'
   coordType: !coordT
     Coordtypevec2: true
   contextType: !contextT
@@ -62,6 +64,7 @@ inputs:
     Returntyperay: true
 - !input
   Localalias: light
+  Variables: '*'
   coordType: !coordT
     Coordtypevec3: true
   contextType: !contextT

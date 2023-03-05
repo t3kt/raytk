@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.filter.transformSequence
-  opVersion: '6'
+  opVersion: '7'
   opStatus: beta
 opDef: !def
   enable: !expr
@@ -34,6 +34,8 @@ multiInput: !multiInput
   Returntypereductionscope: '*'
   inputs:
   - !input
+    Variables: '*'
+    Variableinputs: '*'
     Required: true
     coordType: !coordT
       Allcoordtype: true
@@ -51,6 +53,7 @@ multiInput: !multiInput
         expr: op('targetInfo')[1, 'returnType'] == 'vec4'
   - !input
     Localalias: transform1
+    Variables: '*'
     coordType: !coordT
       Allcoordtype: true
     contextType: !contextT
@@ -59,6 +62,8 @@ multiInput: !multiInput
       Returntypevec4: true
   - !input
     Localalias: transform2
+    Variables: '*'
+    Variableinputs: transform1
     coordType: !coordT
       Allcoordtype: true
     contextType: !contextT
@@ -67,6 +72,8 @@ multiInput: !multiInput
       Returntypevec4: true
   - !input
     Localalias: transform3
+    Variables: '*'
+    Variableinputs: transform[1-2]
     coordType: !coordT
       Allcoordtype: true
     contextType: !contextT
@@ -75,6 +82,8 @@ multiInput: !multiInput
       Returntypevec4: true
   - !input
     Localalias: transform4
+    Variables: '*'
+    Variableinputs: transform[1-3]
     coordType: !coordT
       Allcoordtype: true
     contextType: !contextT
@@ -83,6 +92,8 @@ multiInput: !multiInput
       Returntypevec4: true
   - !input
     Localalias: transform5
+    Variables: '*'
+    Variableinputs: transform[1-4]
     coordType: !coordT
       Allcoordtype: true
     contextType: !contextT
@@ -91,6 +102,8 @@ multiInput: !multiInput
       Returntypevec4: true
   - !input
     Localalias: transform6
+    Variables: '*'
+    Variableinputs: transform[1-5]
     coordType: !coordT
       Allcoordtype: true
     contextType: !contextT

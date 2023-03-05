@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.filter.round
-  opVersion: '13'
+  opVersion: '14'
   opStatus: default
 opDef: !def
   enable: !expr
@@ -59,6 +59,8 @@ inputs:
     Returntypevec4: true
 - !input
   Localalias: amountField
+  Variables: sdf
+  Variableinputs: inputOp1
   coordType: !coordT
     Allcoordtype: true
   contextType: !contextT

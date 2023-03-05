@@ -2,6 +2,6 @@
   "meta": {
     "opStatus": "default",
     "opType": "raytk.operators.material.basicMat",
-    "opVersion": 28
+    "opVersion": 29
   }
 }

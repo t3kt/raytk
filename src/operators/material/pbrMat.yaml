@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.material.pbrMat
-  opVersion: '15'
+  opVersion: '16'
   opStatus: beta
 opDef: !def
   enable: !expr
@@ -52,6 +52,8 @@ inputs:
     Returntypesdf: true
 - !input
   Localalias: irradianceField
+  Variables: '*'
+  Variableinputs: metallicField roughnessField baseColorField
   coordType: !coordT
     Coordtypevec3: true
   contextType: !contextT
@@ -60,6 +62,8 @@ inputs:
     Returntypevec4: true
 - !input
   Localalias: reflectanceField
+  Variables: '*'
+  Variableinputs: metallicField roughnessField baseColorField irradianceField
   coordType: !coordT
     Coordtypevec3: true
   contextType: !contextT
@@ -68,6 +72,8 @@ inputs:
     Returntypevec4: true
 - !input
   Localalias: baseColorField
+  Variables: '*'
+  Variableinputs: metallicField roughnessField
   coordType: !coordT
     Coordtypevec3: true
   contextType: !contextT
@@ -77,6 +83,7 @@ inputs:
     Returntypevec4: true
 - !input
   Localalias: roughnessField
+  Variables: '*'
   coordType: !coordT
     Coordtypevec3: true
   contextType: !contextT
@@ -85,6 +92,8 @@ inputs:
     Returntypefloat: true
 - !input
   Localalias: metallicField
+  Variables: '*'
+  Variableinputs: roughnessField
   coordType: !coordT
     Coordtypevec3: true
   contextType: !contextT

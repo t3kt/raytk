@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.filter.rotate4D
-  opVersion: '5'
+  opVersion: '6'
   opStatus: beta
 opDef: !def
   enable: !expr
@@ -29,6 +29,8 @@ opDef: !def
     name: help
 inputs:
 - !input
+  Variables: '*'
+  Variableinputs: '*'
   Required: true
   coordType: !coordT
     Allcoordtype: true
@@ -38,6 +40,7 @@ inputs:
     Allreturntype: true
 - !input
   Localalias: rotateField
+  Variables: '*'
   coordType: !coordT
     Allcoordtype: true
   contextType: !contextT
@@ -46,6 +49,8 @@ inputs:
     Returntypefloat: true
 - !input
   Localalias: pivotField
+  Variables: '*'
+  Variableinputs: rotateField
   coordType: !coordT
     Allcoordtype: true
   contextType: !contextT

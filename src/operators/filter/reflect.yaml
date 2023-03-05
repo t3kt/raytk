@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.filter.reflect
-  opVersion: '28'
+  opVersion: '29'
   opStatus: default
 opDef: !def
   enable: !expr
@@ -139,6 +139,8 @@ paramPages:
       enableExpr: hasattr(op, 'raytk') and op.raytk.op('tools/palette')
 inputs:
 - !input
+  Variables: '*'
+  Variableinputs: '*'
   coordType: !coordT
     Coordtypevec2: true
     Coordtypevec3: true
@@ -148,6 +150,8 @@ inputs:
     Allreturntype: true
 - !input
   Localalias: offsetField
+  Variables: '*'
+  Variableinputs: shiftField
   coordType: !coordT
     Coordtypevec2: true
     Coordtypevec3: true

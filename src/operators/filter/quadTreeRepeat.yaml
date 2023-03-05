@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.filter.quadTreeRepeat
-  opVersion: '7'
+  opVersion: '8'
   opStatus: beta
 opDef: !def
   enable: !expr
@@ -27,6 +27,7 @@ opDef: !def
       excludeFirstRow: true
 inputs:
 - !input
+  Variables: '*'
   Required: true
   coordType: !coordT
     Coordtypevec2: true
