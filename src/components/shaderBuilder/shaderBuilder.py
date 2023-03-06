@@ -1153,9 +1153,8 @@ class _ParameterProcessor:
 							f'{parType}({paramRef}.{suffixes[:size]})',
 							parType
 						)
-				if paramTuplet.isSpecial:
-					for partI, partName in enumerate(paramTuplet.parts):
-						self.paramExprs[partName] = _ParamExpr(f'{paramRef}.{suffixes[partI]}', 'float')
+				for partI, partName in enumerate(paramTuplet.parts):
+					self.paramExprs[partName] = _ParamExpr(f'{paramRef}.{suffixes[partI]}', 'float')
 
 	def paramUniforms(self) -> 'List[_UniformSpec]':
 		paramCount = max(1, self.paramDetailTable.numRows - 1)
