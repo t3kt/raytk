@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.filter.waveWarp
-  opVersion: '15'
+  opVersion: '16'
   opStatus: beta
 opDef: !def
   enable: !expr
@@ -119,7 +119,7 @@ elements:
     Phaseparam: Phase
     Periodfield: periodField
     Phasefield: phaseField
-    Switchmode: auto
+    Switchmode: switch
     Coordtype: vec3
     Manageparamstates: false
     Prepcodeplaceholder: WAVE_PREP();
