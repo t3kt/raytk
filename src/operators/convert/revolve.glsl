@@ -5,7 +5,17 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 		case THISTYPE_Axis_y: p0 = p.xzy; break;
 		case THISTYPE_Axis_z: p0 = p; break;
 	}
-	vec2 q = vec2(length(p0.xy) - THIS_Radialoffset, p0.z - THIS_Axisoffset);
+	#ifdef THIS_HAS_INPUT_radialOffsetField
+	float rOffset = inputOp_radialOffsetField(p, ctx);
+	#else
+	float rOffset = THIS_Radialoffset;
+	#endif
+	#ifdef THIS_HAS_INPUT_axisOffsetField
+	float aOffset = inputOp_axisOffsetField(p, ctx);
+	#else
+	float aOffset = THIS_Axisoffset;
+	#endif
+	vec2 q = vec2(length(p0.xy) - rOffset, p0.z - aOffset);
 	float a = atan(p0.y, p0.x) / TAU;
 	if (THIS_Iterationtype == THISTYPE_Iterationtype_ratio) {
 		setIterationIndex(ctx, a);

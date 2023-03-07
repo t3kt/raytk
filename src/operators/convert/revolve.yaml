@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.convert.revolve
-  opVersion: '13'
+  opVersion: '14'
   opStatus: default
 opDef: !def
   enable: true
@@ -40,6 +40,7 @@ inputs:
 - !input
   Localalias: rotateField
   Variables: '*'
+  Variableinputs: radialOffsetField axisOffsetField
   coordType: !coordT
     Coordtypefloat: true
     Coordtypevec3: true
@@ -50,7 +51,7 @@ inputs:
 - !input
   Localalias: scaleField
   Variables: '*'
-  Variableinputs: rotateField
+  Variableinputs: rotateField radialOffsetField axisOffsetField
   coordType: !coordT
     Coordtypefloat: true
     Coordtypevec3: true
@@ -61,7 +62,7 @@ inputs:
 - !input
   Localalias: translateField
   Variables: '*'
-  Variableinputs: scaleField rotateField
+  Variableinputs: scaleField rotateField radialOffsetField axisOffsetField
   coordType: !coordT
     Coordtypefloat: true
     Coordtypevec3: true
@@ -81,6 +82,7 @@ inputs:
 - !input
   Localalias: axisOffsetField
   Variables: '*'
+  Variableinputs: radialOffsetField
   coordType: !coordT
     Coordtypevec3: true
   contextType: !contextT
