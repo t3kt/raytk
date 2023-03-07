@@ -1,8 +1,8 @@
 !rop
 meta: !meta
   opType: raytk.operators.filter.mirrorAxes
-  opVersion: '12'
-  opStatus: beta
+  opVersion: '13'
+  opStatus: default
 opDef: !def
   enable: !expr
     expr: op('..').par.Enable

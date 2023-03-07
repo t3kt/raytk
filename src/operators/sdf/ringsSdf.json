@@ -1,7 +1,7 @@
 {
   "meta": {
-    "opStatus": "beta",
+    "opStatus": "default",
     "opType": "raytk.operators.sdf.ringsSdf",
-    "opVersion": 1
+    "opVersion": 2
   }
 }

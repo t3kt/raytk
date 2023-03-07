@@ -1,8 +1,8 @@
 !rop
 meta: !meta
   opType: raytk.operators.convert.crossSection
-  opVersion: '5'
-  opStatus: beta
+  opVersion: '6'
+  opStatus: default
 opDef: !def
   enable: !expr
     expr: op('..').par.Enable

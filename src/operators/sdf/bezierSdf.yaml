@@ -1,8 +1,8 @@
 !rop
 meta: !meta
   opType: raytk.operators.sdf.bezierSdf
-  opVersion: '8'
-  opStatus: beta
+  opVersion: '9'
+  opStatus: default
 opDef: !def
   enable: true
   typeSpec: !ropTypes
