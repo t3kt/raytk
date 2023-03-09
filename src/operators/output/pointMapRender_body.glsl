@@ -133,7 +133,7 @@ void main() {
 			if (level <= 0.) {
 				colorOut = vec4(0.);
 			} else {
-				vec3 col = getColor(adaptAsVec3(p), matCtx);
+				vec3 col = getColor(THIS_asCoordT(p), matCtx);
 				colorOut = vec4(col * level, level);
 			}
 		#endif
