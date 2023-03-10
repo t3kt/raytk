@@ -21,7 +21,7 @@ op:
     - vec2
     - vec3
     - vec4
-    label: definition_in
+    label: 1D / 2D Input
     name: definition_in
     required: true
     returnTypes:
@@ -60,7 +60,6 @@ op:
   - label: Offset
     name: Offset
     summary: Offsets the plane or axis where the input is sampled.
-  status: beta
   summary: Takes a 3D (or 2D) operator and take a cross section of it across a plane
     or a single axis.
 

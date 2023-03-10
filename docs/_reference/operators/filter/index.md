@@ -25,7 +25,6 @@ cat:
     - hue
     - saturation
     name: adjustColor
-    status: beta
     summary: Adjust properties of color values.
   - keywords:
     - color
@@ -118,7 +117,6 @@ cat:
   - name: magnet
     summary: Pulls or twists space within an area.
   - name: mirrorAxes
-    status: beta
   - name: mirrorOctant
     summary: Mirror coordinates across two axes and the diagonals.
   - name: mirrorQuadrant
@@ -237,7 +235,6 @@ cat:
     - rot
     summary: Transforms space with rotation.
   - name: rotate4D
-    status: beta
     summary: Projects 3D space into 4D space, applies rotation along two axes and
       then projects back into 3D space.
   - keywords:

@@ -60,7 +60,6 @@ op:
     name: Primarysteps
   - label: Secondary Steps
     name: Secondarysteps
-  status: beta
   summary: Field that simulates a sun and sky.
   thumb: assets/images/reference/operators/field/atmosphereField_thumb.png
 

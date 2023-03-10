@@ -21,7 +21,6 @@ cat:
     - curve
     - line
     name: bezierSdf2d
-    status: beta
   - name: blobbyCrossSdf2d
   - name: branchingTreeSdf2d
     status: beta
@@ -35,7 +34,6 @@ cat:
   - name: crossSdf2d
     summary: 2D cross shape SDF, with 4 arms and option rounding of the intersections.
   - name: cutDiscSdf2d
-    status: beta
   - name: dogBoneSdf2d
     summary: 2D SDF for two connected circles.
   - name: eggSdf2d
@@ -49,13 +47,11 @@ cat:
   - name: hexagonalGridSdf2d
   - name: horseshoeSdf2d
   - name: jointSdf2d
-    status: beta
   - name: kochSnowflakeSdf2d
     status: beta
   - name: lineSegmentSdf2d
     summary: 2D line segment SDF.
   - name: moonSdf2d
-    status: beta
   - name: parabolaSdf2d
   - name: parallelogramSdf2d
   - name: pieSdf2d

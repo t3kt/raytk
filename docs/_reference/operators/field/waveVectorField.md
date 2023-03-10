@@ -50,6 +50,8 @@ op:
       name: tri
     - label: Ramp
       name: ramp
+    - label: Reverse Ramp
+      name: rramp
     - label: Square
       name: square
     - label: Additive Square (2)

@@ -70,7 +70,6 @@ op:
     - label: Depth (With Offset)
       name: depthoffset
     name: Zmode
-  status: beta
   thumb: assets/images/reference/operators/field/texture3dField_thumb.png
   variables:
   - label: res

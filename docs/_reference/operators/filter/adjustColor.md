@@ -114,7 +114,6 @@ op:
     name: Hueoffset
   - label: Gamma
     name: Gamma
-  status: beta
   summary: Adjust properties of color values.
   thumb: assets/images/reference/operators/filter/adjustColor_thumb.png
 

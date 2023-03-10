@@ -13,7 +13,6 @@ cat:
   - name: coordTo3D
     summary: Converts a 2D (or 1D) operator to work in a 3D context.
   - name: crossSection
-    status: beta
     summary: Takes a 3D (or 2D) operator and take a cross section of it across a plane
       or a single axis.
   - name: extrude

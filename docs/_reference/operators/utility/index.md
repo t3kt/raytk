@@ -24,7 +24,6 @@ cat:
     status: beta
   - name: providePosition
   - name: provideVariable
-    status: beta
   - name: sceneState
     status: beta
   - name: speedGenerator

@@ -23,7 +23,6 @@ op:
     name: Maincolor
   - label: Eye Color
     name: Eyecolor
-  status: beta
   thumb: assets/images/reference/operators/sdf/headSdf_thumb.png
 
 ---

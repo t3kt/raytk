@@ -19,7 +19,7 @@ op:
     coordTypes:
     - float
     - vec2
-    label: definition_in
+    label: 1D / 2D Input
     name: definition_in
     required: true
     returnTypes:

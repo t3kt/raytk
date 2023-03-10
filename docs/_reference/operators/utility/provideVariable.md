@@ -70,7 +70,6 @@ op:
     name: Datatype
   - label: Value
     name: Value
-  status: beta
   variables:
   - label: var
     name: var

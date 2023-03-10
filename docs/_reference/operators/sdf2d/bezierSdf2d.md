@@ -76,7 +76,6 @@ op:
     name: Pointc
   - label: Radius
     name: Radius
-  status: beta
   thumb: assets/images/reference/operators/sdf2d/bezierSdf2d_thumb.png
   variables:
   - label: normoffset

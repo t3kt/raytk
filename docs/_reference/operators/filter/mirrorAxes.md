@@ -192,7 +192,6 @@ op:
     - label: Field Values
       name: value
     name: Target
-  status: beta
   thumb: assets/images/reference/operators/filter/mirrorAxes_thumb.png
   variables:
   - label: sides

@@ -79,7 +79,6 @@ op:
     name: Radiusstart
   - label: Radius End
     name: Radiusend
-  status: beta
   thumb: assets/images/reference/operators/sdf/bezierSdf_thumb.png
   variables:
   - label: normoffset
