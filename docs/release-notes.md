@@ -5,7 +5,9 @@
 ### Highlights
 
 * New 2D SDFs including branchingTreeSdf2d, polySplineSdf2d, and subdivisionSdf2d.
-* Easier ways to apply transform filters to UV coordinates or field values instead of coordinates.
+* Transform targeting: easier ways to apply transform filters to UV coordinates or field values instead of coordinates.
+* Improved variable error messages and more flexible ways to use variables.
+* Tons of bug fixes.
 
 ### Details
 
@@ -46,11 +48,23 @@
   * Fix readonly optimization in diffuseContrib
   * Fix handling of float inputs in compositeFields (#1001)
   * Fix vec4 coord field input in bandField (#1023)
+  * Fix errors in waveVectorField and waveWarp related to reverse ramp wave type
+  * Fix auto coordinate type in bandField
+  * Fix error in rotate in optimized mode when some parts of params are expressions (#1028)
+  * Fix error in waveWarp with optimized wave type
+  * Fix data type erros in addFn
+  * Fix unused fields in revolve (#1027)
+  * Fix error in pointMapRender with 2D SDFs
   * Remove deprecated ops - mergeToggle, toggleSwitch
 * Changes (potentially breaking)
   * Stop supporting float field input for rotate (except in axis mode) and translate (#1005)
 * Infrastructure / internals
   * Initial steps towards 4D coordinates
+  * Overahaul of variable reference validation, supporting cross-input references and input availability settings. (#770, #12)
+    * Added per-input settings for which variables are available and which other inputs can provide variables
+  * Test output snapshotting / diff (#479)
+    * Updated nearly 100% of tests to reduce resolutions and fix snapshots
+  * Removed beta status from a bunch of ops
 
 ## v0.30
 
