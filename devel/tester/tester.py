@@ -267,6 +267,13 @@ class TestManager:
 			self._addResult(result)
 			self._queueCall(self._runNextTest_stage, stage + 1, name, continueAfter)
 		elif stage == 3:
+			self.log(f'Exporting snapshot from {name}')
+			tox = self._testTable[name, 'tox']
+			top = self.ownerComp.op('test_output')
+			image = tox.val.replace('.tox', '.png')
+			top.save(image)
+			self._queueCall(self._runNextTest_stage, stage + 1, name, continueAfter)
+		elif stage == 4:
 			self._unloadTestCase()
 			self.log(f'Finished running test {name}')
 			if continueAfter:
