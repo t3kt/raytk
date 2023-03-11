@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.material.modularMat
-  opVersion: '22'
+  opVersion: '25'
   opStatus: default
 opDef: !def
   enable: !expr
@@ -38,6 +38,7 @@ opDef: !def
   shortcuts: mm
 inputs:
 - !input
+  Localalias: sdf
   Required: true
   coordType: !coordT
     Coordtypevec3: true
@@ -46,6 +47,8 @@ inputs:
   returnType: !returnT
     Returntypesdf: true
 - !input
+  Localalias: shading1
+  Variables: '*'
   coordType: !coordT
     Coordtypevec3: true
   contextType: !contextT
@@ -54,6 +57,9 @@ inputs:
     Returntypefloat: true
     Returntypevec4: true
 - !input
+  Localalias: shading2
+  Variables: '*'
+  Variableinputs: shading1
   coordType: !coordT
     Coordtypevec3: true
   contextType: !contextT
@@ -62,6 +68,9 @@ inputs:
     Returntypefloat: true
     Returntypevec4: true
 - !input
+  Localalias: shading3
+  Variables: '*'
+  Variableinputs: shading[1-2]
   coordType: !coordT
     Coordtypevec3: true
   contextType: !contextT
@@ -70,6 +79,9 @@ inputs:
     Returntypefloat: true
     Returntypevec4: true
 - !input
+  Localalias: shading4
+  Variables: '*'
+  Variableinputs: shading[1-3]
   coordType: !coordT
     Coordtypevec3: true
   contextType: !contextT
@@ -78,6 +90,9 @@ inputs:
     Returntypefloat: true
     Returntypevec4: true
 - !input
+  Localalias: shading5
+  Variables: '*'
+  Variableinputs: shading[1-4]
   coordType: !coordT
     Coordtypevec3: true
   contextType: !contextT
@@ -86,6 +101,9 @@ inputs:
     Returntypefloat: true
     Returntypevec4: true
 - !input
+  Localalias: shading6
+  Variables: '*'
+  Variableinputs: shading[1-5]
   coordType: !coordT
     Coordtypevec3: true
   contextType: !contextT
@@ -94,6 +112,9 @@ inputs:
     Returntypefloat: true
     Returntypevec4: true
 - !input
+  Localalias: shading7
+  Variables: '*'
+  Variableinputs: shading[1-6]
   coordType: !coordT
     Coordtypevec3: true
   contextType: !contextT

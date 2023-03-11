@@ -1,21 +1,32 @@
 !rop
 meta: !meta
   opType: raytk.operators.filter.mirrorAxes
-  opVersion: '10'
-  opStatus: beta
+  opVersion: '13'
+  opStatus: default
 opDef: !def
   enable: !expr
     expr: op('..').par.Enable
   useRuntimeBypass: true
   typeSpec: !ropTypes
+    Useinputreturntype: !expr
+      expr: op('definition_1').numRows > 1
     coordType: !coordT
       Allcoordtype: true
     contextType: !contextT
-      Allcontexttype: true
+      Allcontexttype: !expr
+        expr: op('targetInfo')[1, 'contextType'] == '*'
+      Contexttypecontext: true
+      Contexttypematerialcontext: !expr
+        expr: op('targetInfo')[1, 'contextType'] == 'MaterialContext'
     returnType: !returnT
       Allreturntype: !expr
-        expr: op('definition_1').numRows > 1
-      Returntypevec4: true
+        expr: op('definition_1').numRows > 1 and op('targetInfo')[1, 'returnType']
+          == '*'
+      Returntypesdf: !expr
+        expr: op('definition_1').numRows > 1 and op('targetInfo')[1, 'returnType']
+          in ('*', 'Sdf')
+      Returntypevec4: !expr
+        expr: op('targetInfo')[1, 'returnType'] in ('*', 'vec4')
   function: !text
     file: src/operators/filter/mirrorAxes.glsl
     name: function
@@ -30,40 +41,73 @@ opDef: !def
       excludeFirstRow: true
 inputs:
 - !input
+  Variables: '*'
+  Variableinputs: '*'
   coordType: !coordT
     Allcoordtype: true
   contextType: !contextT
-    Allcontexttype: true
+    Allcontexttype: !expr
+      expr: op('targetInfo')[1, 'contextType'] == '*'
+    Contexttypematerialcontext: !expr
+      expr: op('targetInfo')[1, 'contextType'] == 'MaterialContext'
   returnType: !returnT
-    Allreturntype: true
+    Allreturntype: !expr
+      expr: op('targetInfo')[1, 'returnType'] == '*'
+    Returntypesdf: !expr
+      expr: op('targetInfo')[1, 'returnType'] in ('*', 'Sdf')
+    Returntypefloat: !expr
+      expr: op('targetInfo')[1, 'returnType'] == '*'
+    Returntypevec4: !expr
+      expr: op('targetInfo')[1, 'returnType'] in ('*', 'vec4')
 - !input
   Localalias: offsetField
+  Variables: '*'
+  Variableinputs: directionField flipSideField
   coordType: !coordT
     Allcoordtype: true
   contextType: !contextT
-    Allcontexttype: true
+    Allcontexttype: !expr
+      expr: op('targetInfo')[1, 'contextType'] == '*'
+    Contexttypematerialcontext: !expr
+      expr: op('targetInfo')[1, 'contextType'] == 'MaterialContext'
   returnType: !returnT
     Returntypefloat: true
     Returntypevec4: true
 - !input
   Localalias: directionField
+  Variables: '*'
+  Variableinputs: flipSidesField
   coordType: !coordT
     Allcoordtype: true
   contextType: !contextT
-    Allcontexttype: true
+    Allcontexttype: !expr
+      expr: op('targetInfo')[1, 'contextType'] == '*'
+    Contexttypematerialcontext: !expr
+      expr: op('targetInfo')[1, 'contextType'] == 'MaterialContext'
   returnType: !returnT
     Returntypefloat: true
     Returntypevec4: true
 - !input
   Localalias: flipSideField
+  Variables: '*'
   coordType: !coordT
     Allcoordtype: true
   contextType: !contextT
-    Allcontexttype: true
+    Allcontexttype: !expr
+      expr: op('targetInfo')[1, 'contextType'] == '*'
+    Contexttypematerialcontext: !expr
+      expr: op('targetInfo')[1, 'contextType'] == 'MaterialContext'
   returnType: !returnT
     Returntypefloat: true
     Returntypevec4: true
 elements:
+- !opElement
+  name: transformTarget
+  elementType: transformTarget
+  params:
+    Targetparam: Target
+    Applyfunction: THIS_transform
+    Bodycodeplaceholder: APPLY_TO_TARGET();
 - !opElement
   name: codeSwitcher_Axes
   elementType: codeSwitcher

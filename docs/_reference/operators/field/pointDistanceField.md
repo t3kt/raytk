@@ -20,6 +20,7 @@ op:
     - float
     - vec2
     - vec3
+    - vec4
     label: Coordinate Field
     name: coordField
     returnTypes:
@@ -38,6 +39,7 @@ op:
     - float
     - vec2
     - vec3
+    - vec4
     label: Center Field
     name: centerField
     returnTypes:

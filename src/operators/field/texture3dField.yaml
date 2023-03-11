@@ -1,8 +1,8 @@
 !rop
 meta: !meta
   opType: raytk.operators.field.texture3dField
-  opVersion: '11'
-  opStatus: beta
+  opVersion: '13'
+  opStatus: default
 opDef: !def
   enable: !expr
     expr: op('..').par.Enable
@@ -40,6 +40,7 @@ opDef: !def
 inputs:
 - !input
   Localalias: coordField
+  Variables: '*'
   coordType: !coordT
     Allcoordtype: true
   contextType: !contextT

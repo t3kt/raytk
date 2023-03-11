@@ -20,11 +20,11 @@ op:
     - float
     - vec2
     - vec3
-    label: definition_in
-    name: definition_in
+    - vec4
+    label: Function 1
+    name: definition_in_1
     returnTypes:
     - float
-    - vec4
   - contextTypes:
     - Context
     - MaterialContext
@@ -36,11 +36,11 @@ op:
     - float
     - vec2
     - vec3
-    label: definition_in_2
+    - vec4
+    label: Function 2
     name: definition_in_2
     returnTypes:
     - float
-    - vec4
   - contextTypes:
     - Context
     - MaterialContext
@@ -52,11 +52,11 @@ op:
     - float
     - vec2
     - vec3
-    label: definition_in_3
+    - vec4
+    label: Function 3
     name: definition_in_3
     returnTypes:
     - float
-    - vec4
   - contextTypes:
     - Context
     - MaterialContext
@@ -68,11 +68,11 @@ op:
     - float
     - vec2
     - vec3
-    label: definition_in_4
+    - vec4
+    label: Function 4
     name: definition_in_4
     returnTypes:
     - float
-    - vec4
   name: addFn
   opType: raytk.operators.function.addFn
   parameters:

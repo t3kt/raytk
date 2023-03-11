@@ -1,7 +1,8 @@
 from dataclasses import dataclass
 import json
 from raytkShader import simplifyNames
-from raytkState import RopState, Dispatch, Texture, Buffer, Macro, Reference, Variable, ValidationError, Constant
+from raytkState import RopState, Dispatch, Texture, Buffer, Macro, Reference, Variable, ValidationError, Constant, \
+	InputState
 import re
 from io import StringIO
 from typing import Callable, Dict, List, Tuple, Union, Optional
@@ -403,17 +404,15 @@ class ShaderBuilder:
 
 	def _validateVariableReferences(self, addError: 'Callable[[str, str, str], None]'):
 		#  addError params (path, level, message)
-		varTable = self._variableTable()
 		refTable = self._referenceTable()
 		if refTable.numRows < 2:
 			return
 		defTable = self._definitionTable()
 		if defTable.numRows < 2:
 			return
-		checker = _VarRefChecker(
-			varTable, refTable, defTable, addError)
-		for refName in refTable.col('name')[1:]:
-			checker.checkRef(refName.val)
+		checker = _VarRefChecker(self._parseOpStates(), defTable, addError)
+		checker.loadGraph()
+		checker.validateRefs()
 
 	def _parseOpStates(self):
 		states = []
@@ -460,65 +459,189 @@ class ShaderBuilder:
 class _VarRefChecker:
 	def __init__(
 			self,
-			varTable: 'DAT', refTable: 'DAT',
-			defTable: 'DAT',
+			opStates: List[RopState],
+			definitionTable: 'DAT',
 			addError: 'Callable[[str, str, str], None]'):
+		self.opStates = opStates
+		self.definitionTable = definitionTable  # used to look up paths by rop name
 		self._addError = addError
-		self.varTable = varTable
-		self.refTable = refTable
-		self.defTable = defTable
-		self.opOutputs = {}  # type: Dict[str, List[str]]
-		for i in range(1, defTable.numRows):
-			name = defTable[i, 'name'].val
-			for inName in defTable[i, 'inputNames'].val.split():
-				if ':' in inName:
-					inName = inName.split(':')[-1]
-				if inName in self.opOutputs:
-					self.opOutputs[inName].append(name)
-				else:
-					self.opOutputs[inName] = [name]
-		self.endName = defTable[-1, 'name'].val
+		self.nodesByName = {}  # type: Dict[str, _GraphROP]
+		self.nodesByPath = {}  # type: Dict[str, _GraphROP]
 
 	def addError(self, path, level, message):
 		self._addError(path, level, message)
 
-	def getPathsFromRefOwner(self, refOwnerName: str):
-		refOwnerPath = self.defTable[refOwnerName, 'path'].val
-		allPaths = []  # type: List[List[str]]
-
-		maxDepth = 50
-
-		def dfs(curPath: 'List[str]', n: str):
-			if n == self.endName:
-				allPaths.append(curPath[:])
-			else:
-				if len(curPath) >= maxDepth:
-					self.addError(refOwnerPath, 'warning', 'Exceeded path stack depth limit')
-					return
-				for nextNode in self.opOutputs.get(n) or []:
-					curPath.append(nextNode)
-					dfs(curPath, nextNode)
-					curPath.pop()
-
-		dfs([refOwnerName], refOwnerName)
-		return allPaths
-
-	def checkRef(self, refName: str):
-		refOwnerName = self.refTable[refName, 'owner'].val
-		refOwnerPath = self.defTable[refOwnerName, 'path'].val
-		srcName = self.refTable[refName, 'source'].val
-		srcOwner = self.varTable[srcName, 'owner']
-		if not srcOwner:
-			self.addError(
-				refOwnerPath, 'error', 'Invalid variable reference (not found)')
+	def loadGraph(self):
+		self.nodesByName = {}
+		self.nodesByPath = {}
+		if not self.opStates:
 			return
-		allPaths = self.getPathsFromRefOwner(refOwnerName)
+		# build lookup with a node for each ROP in the graph, without yet filling in full info
+		for opState in self.opStates:
+			node = _GraphROP(
+				opState, inputs={}, outputs=[],
+				ownVarGlobalNames={
+					v.localName: v.name
+					for v in opState.variables
+				} if opState.variables else {})
+			self.nodesByName[opState.name] = node
+			self.nodesByPath[opState.path] = node
+		# for each node, fill out the input lookups
+		for node in self.nodesByName.values():
+			opState = node.state
+			# fill out input states for the node
+			if opState.inputStates:
+				for inputState in opState.inputStates:
+					inputNode = _GraphROPInput(
+						inputState,
+						owner=node,
+						ownVarGlobalNames=[],
+						varInputs=[],
+						source=self.nodesByName.get(inputState.sourceName),
+					)
+					node.inputs[inputState.functionName] = inputNode
+					# fill out the global names of variables from the ROP itself which this input supports
+					if inputState.varNames:
+						if '*' in inputState.varNames:
+							inputNode.ownVarGlobalNames = list(node.ownVarGlobalNames.values())
+						else:
+							inputNode.ownVarGlobalNames = [
+								node.ownVarGlobalNames[localName]
+								for localName in inputState.varNames
+								if localName in node.ownVarGlobalNames
+							]
+				# after building the lookup of input nodes, attach the var input sources
+				for inputNode in node.inputs.values():
+					if inputNode.inputState.varInputNames:
+						if '*' in inputNode.inputState.varInputNames:
+							inputNode.varInputs = [
+								i
+								for i in node.inputs.values()
+								if i != inputNode
+							]
+						else:
+							varInputNames = []
+							for name in inputNode.inputState.varInputNames:
+								varInputNames += tdu.expand(name)
+							inputNode.varInputs = [
+								node.inputs[functionName]
+								for functionName in varInputNames
+								if functionName != inputNode.inputState.functionName and functionName in node.inputs
+							]
+		# for each node, fill output lists
+		for toNode in self.nodesByName.values():
+			if not toNode.inputs:
+				continue
+			for inputNode in toNode.inputs.values():
+				if inputNode.source:
+					inputNode.source.outputs.append(inputNode)
 
-		if not allPaths:
-			self.addError(refOwnerPath, 'warning', 'No variable source found')
-		for path in allPaths:
-			if srcOwner not in path:
-				self.addError(refOwnerPath, 'warning', f'Variable source ({srcOwner}) missing in path ' + '->'.join(simplifyNames(path)))
+	def validateRefs(self):
+		for node in self.nodesByName.values():
+			self._validateRefsFromNode(node)
+
+	def _validateRefsFromNode(self, node: '_GraphROP'):
+		if not node.state.references:
+			return
+		# print(f'Checking references from {node.state.name}')
+		# for each outgoing reference, check the graph along the ROPs outputs for a source
+		for reference in node.state.references:
+			# print(f' Checking reference {reference.name}')
+			refSourceNode = self.nodesByPath.get(reference.sourcePath)
+			if not refSourceNode:
+				refSourceGlobalName = None
+			else:
+				refSourceGlobalName = refSourceNode.ownVarGlobalNames.get(reference.sourceName)
+			if not self._validateRefFromNode(
+				refOwnerNode=node, reference=reference,
+				refSourceGlobalName=refSourceGlobalName):
+				path = self.definitionTable[node.state.name, 'path'].val
+				self.addError(
+					path=path,
+					level='error',
+					message=f'Variable {reference.sourceName} is not available to {path}')
+			# print(' ------ ')
+
+	def _validateRefFromNode(
+			self, refOwnerNode: '_GraphROP', reference: Reference, refSourceGlobalName: str) -> bool:
+		if not refSourceGlobalName:
+			return False
+		# Walk downstream from the node to the renderer (tree root)
+		# At each stop, it's checking through an input on a node.
+		#   Check whether that node provides the variable to that input, if so, done.
+		#   For each other input on the node that can provide variables to the target input,
+		#     Check that input node and all of its inputs for the variable
+		for outInput in refOwnerNode.outputs:
+			if self._walkDownstreamForRef(
+				refOwnerNode, reference, refSourceGlobalName,
+				throughInput=outInput,
+				checkedSourceNodes=[]):
+				return True
+
+	def _walkDownstreamForRef(
+			self,
+			refOwnerNode: '_GraphROP', reference: Reference, refSourceGlobalName: str,
+			throughInput: '_GraphROPInput',
+			checkedSourceNodes: 'List[_GraphROP]') -> bool:
+		# print(f'   Walking downstream on {throughInput.source.state.name} looking for {refSourceGlobalName}')
+		sourceNode = throughInput.owner
+		if sourceNode in checkedSourceNodes:
+			# print(f'     Already checked node {sourceNode.state.name}')
+			return False
+		# print(f'    Own input names to check: {throughInput.ownVarGlobalNames}')
+		# print(f'      looking for {refSourceGlobalName}')
+		if refSourceGlobalName in throughInput.ownVarGlobalNames:
+			# print(
+			# 	f'     Node {sourceNode.state.name} input {throughInput.inputState.functionName} \n'
+			# 	f'       provides variable {refSourceGlobalName}!!')
+			return True
+		# print(f'     Inputs to check: ', [i.inputState.functionName for i in throughInput.varInputs] or '---')
+		for neighborInput in throughInput.varInputs:
+			if not neighborInput.source:
+				continue
+			if self._walkUpstreamForRef(refOwnerNode, reference, refSourceGlobalName, neighborInput.source, checkedSourceNodes):
+				return True
+		for outInput in sourceNode.outputs:
+			if self._walkDownstreamForRef(refOwnerNode, reference, refSourceGlobalName, outInput, checkedSourceNodes):
+				return True
+		return False
+
+	def _walkUpstreamForRef(
+			self,
+			refOwnerNode: '_GraphROP', reference: Reference, refSourceGlobalName: str,
+			sourceNode: '_GraphROP',
+			checkedSourceNodes: 'List[_GraphROP]') -> bool:
+		# print(f'    Walking upstream on {sourceNode.state.name} looking for {refSourceGlobalName}')
+		if sourceNode in checkedSourceNodes:
+			# print(f'     Already checked node {sourceNode.state.name}')
+			return False
+		if refSourceGlobalName in sourceNode.ownVarGlobalNames.values():
+			# print(
+			# 	f'     Node {sourceNode.state.name} provides variable {refSourceGlobalName}!!')
+			return True
+		for sourceInput in sourceNode.inputs.values():
+			if not sourceInput.source:
+				continue
+			if self._walkUpstreamForRef(
+					refOwnerNode, reference, refSourceGlobalName,
+					sourceInput.source, checkedSourceNodes):
+				return True
+		return False
+
+@dataclass
+class _GraphROP:
+	state: RopState
+	inputs: 'Dict[str, _GraphROPInput]' = None
+	outputs: 'List[_GraphROPInput]' = None
+	ownVarGlobalNames: Dict[str, str] = None  # local name -> global name
+
+@dataclass
+class _GraphROPInput:
+	inputState: InputState
+	owner: '_GraphROP'
+	ownVarGlobalNames: List[str]
+	varInputs: 'List[_GraphROPInput]'
+	source: 'Optional[_GraphROP]' = None
 
 @dataclass
 class _Writer:
@@ -1030,9 +1153,8 @@ class _ParameterProcessor:
 							f'{parType}({paramRef}.{suffixes[:size]})',
 							parType
 						)
-				if paramTuplet.isSpecial:
-					for partI, partName in enumerate(paramTuplet.parts):
-						self.paramExprs[partName] = _ParamExpr(f'{paramRef}.{suffixes[partI]}', 'float')
+				for partI, partName in enumerate(paramTuplet.parts):
+					self.paramExprs[partName] = _ParamExpr(f'{paramRef}.{suffixes[partI]}', 'float')
 
 	def paramUniforms(self) -> 'List[_UniformSpec]':
 		paramCount = max(1, self.paramDetailTable.numRows - 1)
@@ -1099,6 +1221,7 @@ def _parseOpStateJson(text: str):
 
 	state = RopState(
 		name=obj['name'],
+		path=obj['path'],
 		ropType=obj['ropType'],
 		functionCode=obj['functionCode'],
 		materialCode=obj.get('materialCode'),
@@ -1121,6 +1244,12 @@ def _parseOpStateJson(text: str):
 		state.constants = [
 			# Constant(o['name'], o['type'], o.get('menuOptions'))
 			Constant(**o)
+			for o in arr
+		]
+	arr = obj.get('inputStates')
+	if arr:
+		state.inputStates = [
+			InputState(**o)
 			for o in arr
 		]
 	arr = obj.get('textures')

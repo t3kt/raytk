@@ -25,10 +25,12 @@ op:
     - float
     - vec2
     - vec3
+    - vec4
     label: Coordinate Field
     name: coordField
     returnTypes:
     - float
+    - vec4
     summary: Optional float field that can be used as an alternative coordinate source
       (instead of using the `Axis` parameter).
   - contextTypes:
@@ -42,6 +44,7 @@ op:
     - float
     - vec2
     - vec3
+    - vec4
     label: Inside Value Field
     name: insideValue
     returnTypes:
@@ -60,6 +63,7 @@ op:
     - float
     - vec2
     - vec3
+    - vec4
     label: Outside Value Field
     name: outsideValue
     returnTypes:

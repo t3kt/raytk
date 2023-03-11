@@ -1,13 +1,14 @@
 !rop
 meta: !meta
   opType: raytk.operators.combine.shapedCombine
-  opVersion: '7'
+  opVersion: '9'
   opStatus: beta
 opDef: !def
   enable: !expr
     expr: op('..').par.Enable
   typeSpec: !ropTypes
     coordType: !coordT
+      Coordtypevec2: true
       Coordtypevec3: true
     contextType: !contextT
       Allcontexttype: true

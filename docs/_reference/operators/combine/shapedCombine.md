@@ -20,7 +20,8 @@ op:
     - float
     - vec2
     - vec3
-    label: definition_in_1
+    - vec4
+    label: SDF 1
     name: definition_in_1
     required: true
     returnTypes:
@@ -37,7 +38,8 @@ op:
     - float
     - vec2
     - vec3
-    label: definition_in_2
+    - vec4
+    label: SDF 2
     name: definition_in_2
     required: true
     returnTypes:

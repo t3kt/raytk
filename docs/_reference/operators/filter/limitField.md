@@ -21,13 +21,49 @@ op:
     - float
     - vec2
     - vec3
-    label: definition_in
+    - vec4
+    label: Input Field
     name: definition_in
     required: true
     returnTypes:
     - float
     - vec4
-    - Sdf
+  - contextTypes:
+    - Context
+    - MaterialContext
+    - CameraContext
+    - LightContext
+    - RayContext
+    - ParticleContext
+    coordTypes:
+    - float
+    - vec2
+    - vec3
+    - vec4
+    label: Low Value Field
+    name: lowField
+    required: true
+    returnTypes:
+    - float
+    - vec4
+  - contextTypes:
+    - Context
+    - MaterialContext
+    - CameraContext
+    - LightContext
+    - RayContext
+    - ParticleContext
+    coordTypes:
+    - float
+    - vec2
+    - vec3
+    - vec4
+    label: High Value Field
+    name: highField
+    required: true
+    returnTypes:
+    - float
+    - vec4
   keywords:
   - clamp
   - limit

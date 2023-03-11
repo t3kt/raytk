@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.filter.hilbertCurveTransform
-  opVersion: '3'
+  opVersion: '4'
   opStatus: beta
 opDef: !def
   enable: !expr
@@ -29,6 +29,7 @@ opDef: !def
       cols: enable
 inputs:
 - !input
+  Variables: '*'
   Required: true
   coordType: !coordT
     Coordtypevec2: true

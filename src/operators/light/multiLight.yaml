@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.light.multiLight
-  opVersion: '3'
+  opVersion: '5'
   opStatus: beta
 opDef: !def
   enable: true
@@ -93,6 +93,7 @@ inputs:
 - !input
   Source: !expr
     expr: parent().par.Bounds1 or ''
+  Label: Bounds 1
   Localalias: bounds1
   coordType: !coordT
     Allcoordtype: true
@@ -103,6 +104,7 @@ inputs:
 - !input
   Source: !expr
     expr: parent().par.Bounds2 or ''
+  Label: Bounds 2
   Localalias: bounds2
   coordType: !coordT
     Allcoordtype: true
@@ -113,6 +115,7 @@ inputs:
 - !input
   Source: !expr
     expr: parent().par.Bounds3 or ''
+  Label: Bounds 3
   Localalias: bounds3
   coordType: !coordT
     Allcoordtype: true
@@ -123,6 +126,7 @@ inputs:
 - !input
   Source: !expr
     expr: parent().par.Bounds4 or ''
+  Label: Bounds 4
   Localalias: bounds4
   coordType: !coordT
     Allcoordtype: true
@@ -133,6 +137,7 @@ inputs:
 - !input
   Source: !expr
     expr: parent().par.Bounds5 or ''
+  Label: Bounds 5
   Localalias: bounds5
   coordType: !coordT
     Allcoordtype: true
@@ -143,6 +148,7 @@ inputs:
 - !input
   Source: !expr
     expr: parent().par.Bounds6 or ''
+  Label: Bounds 6
   Localalias: bounds6
   coordType: !coordT
     Allcoordtype: true
@@ -153,6 +159,7 @@ inputs:
 - !input
   Source: !expr
     expr: parent().par.Bounds7 or ''
+  Label: Bounds 7
   Localalias: bounds7
   coordType: !coordT
     Allcoordtype: true
@@ -163,6 +170,7 @@ inputs:
 - !input
   Source: !expr
     expr: parent().par.Bounds8 or ''
+  Label: Bounds 8
   Localalias: bounds8
   coordType: !coordT
     Allcoordtype: true

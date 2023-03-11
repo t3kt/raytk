@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.field.bandField
-  opVersion: '9'
+  opVersion: '11'
   opStatus: default
 opDef: !def
   enable: !expr
@@ -9,7 +9,7 @@ opDef: !def
   typeSpec: !ropTypes
     coordType: !coordT
       Allcoordtype: !expr
-        expr: op('definition_1').numRows > 1
+        expr: op('definition_1').numRows > 1 or parent().par.Coordtype == 'auto'
       Coordtypefloat: !expr
         expr: parent().par.Coordtype == 'float'
       Coordtypevec2: !expr
@@ -39,6 +39,7 @@ inputs:
     Allcontexttype: true
   returnType: !returnT
     Returntypefloat: true
+    Returntypevec4: true
 - !input
   Localalias: insideValue
   coordType: !coordT

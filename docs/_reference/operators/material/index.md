@@ -12,7 +12,6 @@ cat:
   name: material
   operators:
   - name: backgroundFieldContrib
-    status: beta
     summary: Accesses color from the background field of the renderer, which is based
       on the surface normal, for use in a modularMat.
   - name: basicMat
@@ -37,7 +36,6 @@ cat:
 
       the color.'
   - name: goochShadingContrib
-    status: beta
     summary: A material element that uses the Gooch shading model.
   - name: iridescenceContrib
     status: beta

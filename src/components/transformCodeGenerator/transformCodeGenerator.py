@@ -49,8 +49,8 @@ def generateCode():
 	v = _var()
 	if _configPar().Enablepivot:
 		parts += _branchByCoordType(
-			f'{v} -= {_param("pivot")}.xy;',
-			f'{v} -= {_param("pivot")};')
+			f'{v}.xy -= {_param("pivot")}.xy;',
+			f'{v}.xyz -= {_param("pivot")};')
 	for part in _configPar().Transformorder.eval():
 		if part == 's':
 			parts += _scaleCode()
@@ -60,8 +60,8 @@ def generateCode():
 			parts += _translateCode()
 	if _configPar().Enablepivot:
 		parts += _branchByCoordType(
-			f'{v} += {_param("pivot")}.xy;',
-			f'{v} += {_param("pivot")};')
+			f'{v}.xy += {_param("pivot")}.xy;',
+			f'{v}.xyz += {_param("pivot")};')
 	return '\n'.join(parts)
 
 def _scaleCode() -> 'List[str]':
@@ -74,17 +74,17 @@ def _scaleCode() -> 'List[str]':
 			f'valueAdjust /= {_param("uniformscale")};',
 		]
 	return _branchByCoordType(
-		f'{v} /= {_param("scale")}.xy;',
-		f'{v} /= {_param("scale")};')
+		f'{v}.xy /= {_param("scale")}.xy;',
+		f'{v}.xyz /= {_param("scale")};')
 
 def _rotateCode() -> 'List[str]':
 	if not _configPar().Enablerotate:
 		return []
 	v = _var()
 	return _branchByCoordType(
-		f'pR({v}, {_param("rotate")}.z);',
+		f'pR({v}.xy, {_param("rotate")}.z);',
 		'\n'.join([
-				f'{v} *= TDRotate{part.upper()}({_param("rotate")}.{part});'
+				f'{v}.xyz *= TDRotate{part.upper()}({_param("rotate")}.{part});'
 				for part in _configPar().Rotateorder.eval()
 		]))
 
@@ -93,8 +93,8 @@ def _translateCode() -> 'List[str]':
 		return []
 	v = _var()
 	return _branchByCoordType(
-		f'{v} -= {_param("translate")}.xy;',
-		f'{v} -= {_param("translate")};')
+		f'{v}.xy -= {_param("translate")}.xy;',
+		f'{v}.xyz -= {_param("translate")};')
 
 def _branchByCoordType(code2d, code3d):
 	if _configPar().Force3d:

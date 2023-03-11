@@ -20,6 +20,7 @@ op:
     - float
     - vec2
     - vec3
+    - vec4
     label: Function
     name: definition_in
     required: true
@@ -37,6 +38,7 @@ op:
     - float
     - vec2
     - vec3
+    - vec4
     label: Modulating Function
     name: definition_in_2
     required: true

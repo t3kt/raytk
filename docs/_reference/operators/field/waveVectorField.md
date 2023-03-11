@@ -20,6 +20,7 @@ op:
     - float
     - vec2
     - vec3
+    - vec4
     label: Coordinate Field
     name: coordField
     returnTypes:
@@ -49,6 +50,8 @@ op:
       name: tri
     - label: Ramp
       name: ramp
+    - label: Reverse Ramp
+      name: rramp
     - label: Square
       name: square
     - label: Additive Square (2)

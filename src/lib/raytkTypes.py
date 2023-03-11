@@ -145,7 +145,7 @@ _allTypes = [
 		conversionFromParam=Conversion(fromTypes=['vec4'], toType='vec3', expr='val.xyz'),
 	),
 	DataType.vector(
-		'vec4', 'Vector', isReturn=True,
+		'vec4', 'Vector', isReturn=True, isCoord=True,
 		partType='float', parts='xyzw',
 		defaultExpr='vec4(0.)',
 		conversionFromParam=Conversion(fromTypes=['vec4'], toType='vec4', expr='val'),

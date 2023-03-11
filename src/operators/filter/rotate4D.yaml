@@ -1,8 +1,8 @@
 !rop
 meta: !meta
   opType: raytk.operators.filter.rotate4D
-  opVersion: '4'
-  opStatus: beta
+  opVersion: '7'
+  opStatus: default
 opDef: !def
   enable: !expr
     expr: op('..').par.Enable
@@ -17,8 +17,6 @@ opDef: !def
     file: src/operators/filter/rotate4D.glsl
     name: function
   paramGroupTable: eval_params
-  libraryNames: !expr
-    expr: op('rotate4D_lib')
   variableTable: !table
     file: src/operators/filter/rotate4D_variables.txt
     name: variable_exprs
@@ -31,6 +29,8 @@ opDef: !def
     name: help
 inputs:
 - !input
+  Variables: '*'
+  Variableinputs: '*'
   Required: true
   coordType: !coordT
     Allcoordtype: true
@@ -40,6 +40,7 @@ inputs:
     Allreturntype: true
 - !input
   Localalias: rotateField
+  Variables: '*'
   coordType: !coordT
     Allcoordtype: true
   contextType: !contextT
@@ -48,6 +49,8 @@ inputs:
     Returntypefloat: true
 - !input
   Localalias: pivotField
+  Variables: '*'
+  Variableinputs: rotateField
   coordType: !coordT
     Allcoordtype: true
   contextType: !contextT

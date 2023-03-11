@@ -15,7 +15,6 @@ cat:
   name: field
   operators:
   - name: atmosphereField
-    status: beta
     summary: Field that simulates a sun and sky.
   - name: axisDistanceField
     summary: A float field that provides the distance from a specific point along
@@ -37,14 +36,12 @@ cat:
     name: colorRampField
     summary: A vector field that maps an input field to values from a range of colors.
   - name: colorSwitchField
-    status: beta
     summary: Switches or fades between a list of colors based on an index field.
   - name: constantColorField
     summary: A vector field that evaluates to a constant color value.
   - name: constantField
     summary: A float or vector field that evaluates to a constant value.
   - name: constantSwitchField
-    status: beta
     summary: Switches or blends between constant values based on an index field.
   - name: curlNoiseField
     summary: Curl noise field.
@@ -84,7 +81,6 @@ cat:
   - name: rayField
     summary: Field that provides the ray direction or origin.
   - name: reorderField
-    status: beta
   - name: sdfField
     summary: Value field based on an SDF shape.
   - name: sdfNormalField
@@ -92,7 +88,6 @@ cat:
   - name: stepField
     summary: A field that switches between two values at a threshold point.
   - name: texture3dField
-    status: beta
   - name: textureField
     summary: A float or vector field that looks up values from a texture.
   - name: triPlanarTextureField

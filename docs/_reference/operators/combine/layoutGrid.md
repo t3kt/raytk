@@ -22,7 +22,7 @@ op:
     coordTypes:
     - vec2
     - vec3
-    label: definition_in_1
+    label: Input 1
     name: definition_in_1
     returnTypes:
     - float
@@ -41,7 +41,7 @@ op:
     coordTypes:
     - vec2
     - vec3
-    label: definition_in_2
+    label: Input 2
     name: definition_in_2
     returnTypes:
     - float
@@ -60,7 +60,7 @@ op:
     coordTypes:
     - vec2
     - vec3
-    label: definition_in_3
+    label: Input 3
     name: definition_in_3
     returnTypes:
     - float
@@ -79,7 +79,7 @@ op:
     coordTypes:
     - vec2
     - vec3
-    label: definition_in_4
+    label: Input 4
     name: definition_in_4
     returnTypes:
     - float

@@ -20,6 +20,7 @@ op:
     - float
     - vec2
     - vec3
+    - vec4
     label: definition_in
     name: definition_in
     required: true
@@ -41,6 +42,7 @@ op:
     - float
     - vec2
     - vec3
+    - vec4
     label: Rotate Field
     name: rotateField
     returnTypes:
@@ -56,6 +58,7 @@ op:
     - float
     - vec2
     - vec3
+    - vec4
     label: Pivot Field
     name: pivotField
     returnTypes:
@@ -80,7 +83,6 @@ op:
     name: Pivot
   - label: Pivot 4D
     name: Pivotw
-  status: beta
   summary: Projects 3D space into 4D space, applies rotation along two axes and then
     projects back into 3D space.
   thumb: assets/images/reference/operators/filter/rotate4D_thumb.png

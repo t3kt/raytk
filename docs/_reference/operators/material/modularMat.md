@@ -21,7 +21,7 @@ op:
     - Context
     coordTypes:
     - vec3
-    label: definition_in
+    label: SDF
     name: sdf
     required: true
     returnTypes:
@@ -31,7 +31,7 @@ op:
     coordTypes:
     - vec3
     label: Color Contribution 1
-    name: contrib_definition_in_1
+    name: shading1
     returnTypes:
     - float
     - vec4
@@ -41,7 +41,7 @@ op:
     coordTypes:
     - vec3
     label: Color Contribution 2
-    name: contrib_definition_in_2
+    name: shading2
     returnTypes:
     - float
     - vec4
@@ -51,7 +51,7 @@ op:
     coordTypes:
     - vec3
     label: Color Contribution 3
-    name: contrib_definition_in_3
+    name: shading3
     returnTypes:
     - float
     - vec4
@@ -60,8 +60,8 @@ op:
     - MaterialContext
     coordTypes:
     - vec3
-    label: Color Contribution 3
-    name: contrib_definition_in_4
+    label: Color Contribution 4
+    name: shading4
     returnTypes:
     - float
     - vec4
@@ -69,8 +69,8 @@ op:
     - MaterialContext
     coordTypes:
     - vec3
-    label: Color Contribution 3
-    name: contrib_definition_in_5
+    label: Color Contribution 5
+    name: shading5
     returnTypes:
     - float
     - vec4
@@ -78,8 +78,8 @@ op:
     - MaterialContext
     coordTypes:
     - vec3
-    label: Color Contribution 3
-    name: contrib_definition_in_6
+    label: Color Contribution 6
+    name: shading6
     returnTypes:
     - float
     - vec4
@@ -87,8 +87,8 @@ op:
     - MaterialContext
     coordTypes:
     - vec3
-    label: Color Contribution 3
-    name: contrib_definition_in_7
+    label: Color Contribution 7
+    name: shading7
     returnTypes:
     - float
     - vec4

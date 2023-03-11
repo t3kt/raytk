@@ -30,7 +30,7 @@ op:
     coordTypes:
     - vec2
     - vec3
-    label: definition_in
+    label: Input
     name: definition_in
     returnTypes:
     - float

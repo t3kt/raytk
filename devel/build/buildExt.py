@@ -1,5 +1,7 @@
 from datetime import datetime
 from pathlib import Path
+
+from raytkDocs import ToolkitInfo
 from raytkTools import RaytkTools
 from raytkUtil import RaytkTags, navigateTo, focusFirstCustomParameterPage, CategoryInfo, RaytkContext, IconColors
 from raytkBuild import BuildContext, DocProcessor, chunked_iterable
@@ -207,7 +209,8 @@ class ToolkitBuilder(_BuilderBase):
 		if not self.context.experimental:
 			self.docProcessor = DocProcessor(
 				self.context,
-				outputFolder='docs/_reference',
+				dataFolder='docs/_data',
+				referenceFolder='docs/_reference',
 				imagesFolder='docs/assets/images',
 			)
 
@@ -288,6 +291,11 @@ class ToolkitBuilder(_BuilderBase):
 			self.finalizeRootPars(toolkit)
 			queueCall(self.runBuild_stage, stage + 1)
 		elif stage == 17:
+			self.logStageStart('Write toolkit doc data')
+			if self.docProcessor:
+				self.docProcessor.writeToolkitDocData()
+			queueCall(self.runBuild_stage, stage + 1)
+		elif stage == 18:
 			self.logStageStart('Finish build')
 			self.context.focusInNetworkPane(toolkit)
 			toxFile = self.getOutputToxPath('RayTK')
@@ -361,7 +369,7 @@ class ToolkitBuilder(_BuilderBase):
 			# won't have been locked yet when this stage runs
 			'shaderBuilder',
 			'opElement', 'transformCodeGenerator', 'timeProvider',
-			'axisHelper', 'supportDetector', 'expresssionSwitcher', 'parMenuUpdater',
+			'supportDetector', 'expresssionSwitcher', 'parMenuUpdater',
 			# 'codeSwitcher',
 			'aggregateCodeGenerator',
 			# 'combiner',  # don't process combiner since it has instance-specific buildLock things depending

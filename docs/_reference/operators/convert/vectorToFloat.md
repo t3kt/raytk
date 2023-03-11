@@ -20,6 +20,7 @@ op:
     - float
     - vec2
     - vec3
+    - vec4
     label: definition_in
     name: definition_in
     required: true
@@ -48,6 +49,24 @@ op:
     - description: Use the length of all 4 parts of the vector.
       label: Length(XYZW)
       name: lengthxyzw
+    - label: Minimum(XY)
+      name: minxy
+    - label: Minimum(XYZ)
+      name: minxyz
+    - label: Minimum(XYZW)
+      name: minxyzw
+    - label: Maximum(XY)
+      name: maxxy
+    - label: Maximum(XYZ)
+      name: maxxyz
+    - label: Maximum(XYZW)
+      name: maxxyzw
+    - label: Average(XY)
+      name: avgxy
+    - label: Average(XYZ)
+      name: avgxyz
+    - label: Average(XYZW)
+      name: avgxyzw
     name: Usepart
     summary: Which part of the vector to use for the float field.
   summary: Converts a vector value field to a float field using one part of the vector.

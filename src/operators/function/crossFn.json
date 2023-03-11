@@ -2,6 +2,6 @@
   "meta": {
     "opStatus": "default",
     "opType": "raytk.operators.function.crossFn",
-    "opVersion": 7
+    "opVersion": 8
   }
 }

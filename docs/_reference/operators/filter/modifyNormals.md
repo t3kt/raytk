@@ -26,6 +26,7 @@ op:
     - float
     - vec2
     - vec3
+    - vec4
     label: Shading Element
     name: shadingElement
     required: true
@@ -45,6 +46,7 @@ op:
     - float
     - vec2
     - vec3
+    - vec4
     label: Modifier Field
     name: modifierField
     returnTypes:

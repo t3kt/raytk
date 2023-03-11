@@ -9,7 +9,7 @@ from pathlib import Path
 import shutil
 from typing import Callable
 from raytkUtil import detachTox, CategoryInfo, ROPInfo, RaytkTags, RaytkContext
-from raytkDocs import CategoryHelp, OpDocManager
+from raytkDocs import CategoryHelp, OpDocManager, ToolkitInfo
 
 # noinspection PyUnreachableCode
 if False:
@@ -308,20 +308,22 @@ class DocProcessor:
 	def __init__(
 			self,
 			context: 'BuildContext',
-			outputFolder: 'Union[str, Path]',
+			dataFolder: 'Union[str, Path]',
+			referenceFolder: 'Union[str, Path]',
 			imagesFolder: 'Union[str, Path]',
 	):
 		self.context = context
-		self.outputFolder = Path(outputFolder)
+		self.dataFolder = Path(dataFolder)
+		self.referenceFolder = Path(referenceFolder)
 		self.imagesFolder = Path(imagesFolder)
 		self.toolkit = RaytkContext().toolkit()
 
 	def clearPreviousDocs(self):
-		if not self.outputFolder.exists():
-			self.context.log(f'No previous docs to clear in {self.outputFolder}')
+		if not self.referenceFolder.exists():
+			self.context.log(f'No previous docs to clear in {self.referenceFolder}')
 			return
-		self.context.log(f'Clearing docs from {self.outputFolder}')
-		paths = list(sorted(self.outputFolder.iterdir()))
+		self.context.log(f'Clearing docs from {self.referenceFolder}')
+		paths = list(sorted(self.referenceFolder.iterdir()))
 		for path in paths:
 			self.context.log(f'Clearing {path}')
 			shutil.rmtree(path)
@@ -342,7 +344,7 @@ class DocProcessor:
 			docText)
 
 	def _writeDocs(self, relativePath: 'Path', docText: str):
-		outFile = self.outputFolder / relativePath
+		outFile = self.referenceFolder / relativePath
 		outFile.parent.mkdir(parents=True, exist_ok=True)
 		self.context.log(f'Writing docs to {outFile}')
 		with outFile.open('w') as f:
@@ -384,6 +386,15 @@ permalink: /reference/operators/
 			for categoryInfo in categoryInfos
 		])
 		self._writeDocs(Path('operators/index.md'), docText)
+
+	def writeToolkitDocData(self):
+		self.context.log('Write toolkit data file')
+		info = ToolkitInfo(toolkitVersion=str(RaytkContext().toolkitVersion()))
+		text = info.formatAsDataFile()
+		self.dataFolder.mkdir(parents=True, exist_ok=True)
+		outFile = self.dataFolder / 'toolkit.yaml'
+		with outFile.open('w') as f:
+			f.write(text)
 
 def _extractSummary(dat: 'Optional[DAT]'):
 	if not dat or not dat.text:

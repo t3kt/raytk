@@ -13,13 +13,14 @@ cat:
   - name: coordTo3D
     summary: Converts a 2D (or 1D) operator to work in a 3D context.
   - name: crossSection
-    status: beta
     summary: Takes a 3D (or 2D) operator and take a cross section of it across a plane
       or a single axis.
   - name: extrude
     shortcuts:
     - ext
     summary: Creates a 3D SDF by extruding a 2D SDF along along an axis.
+  - name: extrudeLine
+    status: beta
   - name: floatToSdf
     summary: Converts a float value field into an SDF.
   - name: floatToVector

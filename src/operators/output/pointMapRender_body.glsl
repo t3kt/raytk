@@ -109,54 +109,54 @@ void main() {
 
 	#if defined(THIS_RETURN_TYPE_Sdf)
 
-	Sdf res = map(p);
+		Sdf res = map(p);
 
-	MaterialContext matCtx = createMaterialContext();
-	#ifdef RAYTK_GLOBAL_POS_IN_CONTEXT
-	matCtx.globalPos = adaptAsVec3(p);
-	#endif
-	matCtx.ray = getViewRay(vec2(0.));
-	#if defined(OUTPUT_COLOR) || defined(OUTPUT_NORMAL) || defined(THIS_HAS_TAG_uselight)
-	matCtx.normal = calcNormal(p);
-	#endif
-	#ifdef THIS_HAS_TAG_uselight
-	LightContext lightCtx = createLightContext(res, matCtx.normal);
-	#ifdef RAYTK_GLOBAL_POS_IN_CONTEXT
-	lightCtx.globalPos = adaptAsVec3(p);
-	#endif
-	matCtx.light = getLight(p, lightCtx);
-	#endif
+		MaterialContext matCtx = createMaterialContext();
+		#ifdef RAYTK_GLOBAL_POS_IN_CONTEXT
+			matCtx.globalPos = adaptAsVec3(p);
+		#endif
+		matCtx.ray = getViewRay(vec2(0.));
+		#if defined(OUTPUT_COLOR) || defined(OUTPUT_NORMAL) || defined(THIS_HAS_TAG_uselight)
+			matCtx.normal = calcNormal(p);
+		#endif
+		#ifdef THIS_HAS_TAG_uselight
+			LightContext lightCtx = createLightContext(res, matCtx.normal);
+			#ifdef RAYTK_GLOBAL_POS_IN_CONTEXT
+			lightCtx.globalPos = adaptAsVec3(p);
+			#endif
+			matCtx.light = getLight(p, lightCtx);
+		#endif
 
-	#ifdef OUTPUT_COLOR
-	matCtx.result = res;
-	float level = getLevel(adaptAsVec3(p), matCtx);
-	if (level <= 0.) {
-		colorOut = vec4(0.);
-	} else {
-		vec3 col = getColor(adaptAsVec3(p), matCtx);
-		colorOut = vec4(col * level, level);
-	}
-	#endif
+		#ifdef OUTPUT_COLOR
+			matCtx.result = res;
+			float level = getLevel(adaptAsVec3(p), matCtx);
+			if (level <= 0.) {
+				colorOut = vec4(0.);
+			} else {
+				vec3 col = getColor(THIS_asCoordT(p), matCtx);
+				colorOut = vec4(col * level, level);
+			}
+		#endif
 
-	#ifdef OUTPUT_SDF
-	if (isNonHitSdf(res)) {
-		sdfOut = vec4(0.);
-	} else {
-		sdfOut = vec4(vec3(res.x), 1.0);
-	}
-	#endif
-	#if defined(OUTPUT_NORMAL)
-	normalOut = vec4(calcNormal(p), 0.);
-	#endif
-	#if defined(OUTPUT_OBJECTID) && defined(RAYTK_OBJECT_ID_IN_SDF)
-	objectIdOut += res.objectId;
-	#endif
+		#ifdef OUTPUT_SDF
+			if (isNonHitSdf(res)) {
+				sdfOut = vec4(0.);
+			} else {
+				sdfOut = vec4(vec3(res.x), 1.0);
+			}
+		#endif
+		#if defined(OUTPUT_NORMAL)
+			normalOut = vec4(calcNormal(p), 0.);
+		#endif
+		#if defined(OUTPUT_OBJECTID) && defined(RAYTK_OBJECT_ID_IN_SDF)
+			objectIdOut += res.objectId;
+		#endif
 
 	#elif defined(THIS_RETURN_TYPE_vec4) || defined(THIS_RETURN_TYPE_float)
 
-	#ifdef OUTPUT_VALUE
-	valueOut = vec4(thismap(p, createDefaultContext()));
-	#endif
+		#ifdef OUTPUT_VALUE
+		valueOut = vec4(thismap(p, createDefaultContext()));
+		#endif
 
 	#else
 		#error invalidReturnType

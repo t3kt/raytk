@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.filter.bend
-  opVersion: '15'
+  opVersion: '17'
   opStatus: default
 opDef: !def
   enable: !expr
@@ -92,6 +92,8 @@ paramPages:
       enableExpr: hasattr(op, 'raytk') and op.raytk.op('tools/palette')
 inputs:
 - !input
+  Variables: '*'
+  Variableinputs: '*'
   coordType: !coordT
     Coordtypevec2: true
     Coordtypevec3: true
@@ -101,6 +103,7 @@ inputs:
     Allreturntype: true
 - !input
   Localalias: bendField
+  Variables: '*'
   coordType: !coordT
     Coordtypefloat: true
     Coordtypevec2: true
@@ -112,6 +115,8 @@ inputs:
     Returntypefloat: true
 - !input
   Localalias: shiftField
+  Variables: '*'
+  Variableinputs: bendField
   coordType: !coordT
     Coordtypefloat: true
     Coordtypevec2: true

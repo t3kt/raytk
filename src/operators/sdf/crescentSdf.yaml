@@ -1,8 +1,8 @@
 !rop
 meta: !meta
   opType: raytk.operators.sdf.crescentSdf
-  opVersion: '0'
-  opStatus: beta
+  opVersion: '1'
+  opStatus: default
 opDef: !def
   enable: true
   typeSpec: !ropTypes

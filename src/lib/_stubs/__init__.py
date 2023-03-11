@@ -1041,6 +1041,20 @@ class oscoutDAT(DAT):
 
 oscinDAT = oscoutDAT
 
+class webclientDAT(DAT):
+	connections: _T.List[int]
+
+	def request(
+			self, url: str, method: str, header: dict = None, data=None, pars: dict = None, authType: str = None,
+			username: str = None, password: str = None, appKey: str = None, appSecret: str = None,
+			oauth1Token: str = None, oauth1Secret: str = None, oauth2Token: str = None,
+			uploadFile=None, timeout: int = 60000) -> int:
+		pass
+
+	def closeConnection(self, id: int): pass
+
+_AnyDatT = _T.Union[DAT, scriptDAT, evaluateDAT, oscoutDAT, oscinDAT, webclientDAT, tcpipDAT]
+
 class CHOP(OP):
 	numChans: int
 	numSamples: int
@@ -1678,7 +1692,7 @@ class TextLine:
 class MAT(OP):
 	pass
 
-_AnyOpT = _T.Union[OP, DAT, COMP, CHOP, SOP, TOP, MAT, '_AnyCompT']
+_AnyOpT = _T.Union[OP, DAT, COMP, CHOP, SOP, TOP, MAT, '_AnyCompT', '_AnyDatT']
 
 baseCOMP = COMP
 panelCOMP = PanelCOMP

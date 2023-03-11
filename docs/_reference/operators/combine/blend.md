@@ -23,6 +23,7 @@ op:
     - float
     - vec2
     - vec3
+    - vec4
     label: definition_in_1
     name: definition_in_1
     returnTypes:
@@ -42,6 +43,7 @@ op:
     - float
     - vec2
     - vec3
+    - vec4
     label: definition_in_2
     name: definition_in_2
     returnTypes:
@@ -61,6 +63,7 @@ op:
     - float
     - vec2
     - vec3
+    - vec4
     label: definition_in_3
     name: definition_in_3
     returnTypes:
@@ -80,6 +83,7 @@ op:
     - float
     - vec2
     - vec3
+    - vec4
     label: definition_in_4
     name: definition_in_4
     returnTypes:
@@ -99,6 +103,7 @@ op:
     - float
     - vec2
     - vec3
+    - vec4
     label: blendField
     name: blendField
     returnTypes:

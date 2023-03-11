@@ -24,13 +24,10 @@ cat:
     status: beta
   - name: providePosition
   - name: provideVariable
-    status: beta
   - name: sceneState
     status: beta
   - name: speedGenerator
     status: beta
-  - name: toggleSwitch
-    status: deprecated
   - name: variableReference
   summary: Advanced operators that change how ROP chains behave.
 

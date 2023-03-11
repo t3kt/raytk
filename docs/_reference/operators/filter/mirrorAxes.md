@@ -20,6 +20,7 @@ op:
     - float
     - vec2
     - vec3
+    - vec4
     label: definition_in
     name: definition_in
     returnTypes:
@@ -40,6 +41,7 @@ op:
     - float
     - vec2
     - vec3
+    - vec4
     label: Offset Field
     name: offsetField
     returnTypes:
@@ -56,6 +58,7 @@ op:
     - float
     - vec2
     - vec3
+    - vec4
     label: Direction Field
     name: directionField
     returnTypes:
@@ -72,6 +75,7 @@ op:
     - float
     - vec2
     - vec3
+    - vec4
     label: Flip Sides Field
     name: flipSideField
     returnTypes:
@@ -175,7 +179,19 @@ op:
     name: Center
   - label: Offset
     name: Offset
-  status: beta
+  - label: Apply To
+    menuOptions:
+    - label: Coordinates
+      name: coords
+    - label: SDF UV
+      name: sdfuv
+    - label: SDF Secondary UV
+      name: sdfuv2
+    - label: UV In Material
+      name: matuv
+    - label: Field Values
+      name: value
+    name: Target
   thumb: assets/images/reference/operators/filter/mirrorAxes_thumb.png
   variables:
   - label: sides

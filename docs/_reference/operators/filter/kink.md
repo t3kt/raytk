@@ -20,6 +20,7 @@ op:
     - float
     - vec2
     - vec3
+    - vec4
     label: definition_in
     name: definition_in
     returnTypes:
@@ -40,6 +41,7 @@ op:
     - float
     - vec2
     - vec3
+    - vec4
     label: Amount Field
     name: amountField
     returnTypes:
@@ -55,6 +57,7 @@ op:
     - float
     - vec2
     - vec3
+    - vec4
     label: Offset Field
     name: offsetField
     returnTypes:
@@ -70,6 +73,7 @@ op:
     - float
     - vec2
     - vec3
+    - vec4
     label: Spread Field
     name: spreadField
     returnTypes:

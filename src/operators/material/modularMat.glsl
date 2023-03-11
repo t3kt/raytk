@@ -1,7 +1,7 @@
 vec4 THIS_iterationCapture = vec4(0.);
 
 ReturnT thismap(CoordT p, ContextT ctx) {
-	Sdf res = inputOp1(p, ctx);
+	Sdf res = inputOp_sdf(p, ctx);
 	if (IS_FALSE(THIS_Enable) || isDistanceOnlyStage()) { return res; }
 	#if defined(THIS_Uselocalpos) && defined(RAYTK_USE_MATERIAL_POS)
 	assignMaterialWithPos(res, THISMAT, p);
@@ -91,26 +91,26 @@ vec3 THIS_getColor(vec3 p, MaterialContext matCtx) {
 	#ifdef THIS_Uselightcolor
 	col *= matCtx.light.color;
 	#endif
-	#ifdef THIS_HAS_INPUT_2
-	col += fillToVec3(inputOp2(mp, matCtx));
+	#ifdef THIS_HAS_INPUT_shading1
+	col += fillToVec3(inputOp_shading1(mp, matCtx));
 	#endif
-	#ifdef THIS_HAS_INPUT_3
-	col += fillToVec3(inputOp3(mp, matCtx));
+	#ifdef THIS_HAS_INPUT_shading2
+	col += fillToVec3(inputOp_shading2(mp, matCtx));
 	#endif
-	#ifdef THIS_HAS_INPUT_4
-	col += fillToVec3(inputOp4(mp, matCtx));
+	#ifdef THIS_HAS_INPUT_shading3
+	col += fillToVec3(inputOp_shading3(mp, matCtx));
 	#endif
-	#ifdef THIS_HAS_INPUT_5
-	col += fillToVec3(inputOp5(mp, matCtx));
+	#ifdef THIS_HAS_INPUT_shading4
+	col += fillToVec3(inputOp_shading4(mp, matCtx));
 	#endif
-	#ifdef THIS_HAS_INPUT_6
-	col += fillToVec3(inputOp6(mp, matCtx));
+	#ifdef THIS_HAS_INPUT_shading5
+	col += fillToVec3(inputOp_shading5(mp, matCtx));
 	#endif
-	#ifdef THIS_HAS_INPUT_7
-	col += fillToVec3(inputOp7(mp, matCtx));
+	#ifdef THIS_HAS_INPUT_shading6
+	col += fillToVec3(inputOp_shading6(mp, matCtx));
 	#endif
-	#ifdef THIS_HAS_INPUT_8
-	col += fillToVec3(inputOp8(mp, matCtx));
+	#ifdef THIS_HAS_INPUT_shading7
+	col += fillToVec3(inputOp_shading7(mp, matCtx));
 	#endif
 	#ifdef THIS_Enableao
 	col *= sqrt(ao);

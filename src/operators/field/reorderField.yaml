@@ -1,8 +1,8 @@
 !rop
 meta: !meta
   opType: raytk.operators.field.reorderField
-  opVersion: '4'
-  opStatus: beta
+  opVersion: '6'
+  opStatus: default
 opDef: !def
   enable: !expr
     expr: parent().par.Enable

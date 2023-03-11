@@ -63,10 +63,23 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 		dim = dMax - dMin;
 	}
 
-	//Calculate 2d box sdf
 	vec2 center = (dMin + dMax)/2.0;
-	float a = fBox2(p-center,dim*0.5);
-	//a = length(p-center)-min(dim.x,dim.y)*0.5;
 
-	return createSdf(a);
+	#ifdef THIS_EXPOSE_cellsize
+	THIS_cellsize = dim;
+	#endif
+	#ifdef THIS_EXPOSE_cellid
+	THIS_cellid = id/100.;
+	#endif
+
+	Sdf res;
+	#ifdef THIS_HAS_INPUT_shape
+	res = inputOp_shape(p-center, ctx);
+	#else
+	float d = fBox2(p-center,dim*0.5);
+	//d = length(p-center)-min(dim.x,dim.y)*0.5;
+	res = createSdf(d);
+	#endif
+
+	return res;
 }

@@ -1,0 +1,95 @@
+---
+layout: operator
+title: lookAtRotate
+parent: Filter Operators
+grand_parent: Operators
+permalink: /reference/operators/filter/lookAtRotate
+redirect_from:
+  - /reference/opType/raytk.operators.filter.lookAtRotate/
+op:
+  category: filter
+  inputs:
+  - contextTypes:
+    - Context
+    - MaterialContext
+    - CameraContext
+    - LightContext
+    - RayContext
+    - ParticleContext
+    coordTypes:
+    - float
+    - vec2
+    - vec3
+    - vec4
+    label: definition_in
+    name: definition_in
+    required: true
+    returnTypes:
+    - float
+    - vec4
+    - Sdf
+    - Ray
+    - Light
+    - Particle
+  - contextTypes:
+    - Context
+    - MaterialContext
+    - CameraContext
+    - LightContext
+    - RayContext
+    - ParticleContext
+    coordTypes:
+    - float
+    - vec2
+    - vec3
+    - vec4
+    label: Source Point Field
+    name: sourcePointField
+    returnTypes:
+    - vec4
+  - contextTypes:
+    - Context
+    - MaterialContext
+    - CameraContext
+    - LightContext
+    - RayContext
+    - ParticleContext
+    coordTypes:
+    - float
+    - vec2
+    - vec3
+    - vec4
+    label: Target Point Field
+    name: targetPointField
+    returnTypes:
+    - vec4
+  - contextTypes:
+    - Context
+    - MaterialContext
+    - CameraContext
+    - LightContext
+    - RayContext
+    - ParticleContext
+    coordTypes:
+    - float
+    - vec2
+    - vec3
+    - vec4
+    label: Roll Field
+    name: rollField
+    returnTypes:
+    - float
+  name: lookAtRotate
+  opType: raytk.operators.filter.lookAtRotate
+  parameters:
+  - label: Enable
+    name: Enable
+  - label: Source Point
+    name: Sourcepoint
+  - label: Target Point
+    name: Targetpoint
+  - label: Roll
+    name: Roll
+  status: beta
+
+---

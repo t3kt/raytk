@@ -20,6 +20,10 @@ float wave_ramp(float x) { return fract(x); }
 vec2 wave_ramp(vec2 x) { return fract(x); }
 vec3 wave_ramp(vec3 x) { return fract(x); }
 vec4 wave_ramp(vec4 x) { return fract(x); }
+float wave_rramp(float x) { return 1. - fract(x); }
+vec2 wave_rramp(vec2 x) { return vec2(1.) - fract(x); }
+vec3 wave_rramp(vec3 x) { return vec3(1.) - fract(x); }
+vec4 wave_rramp(vec4 x) { return vec4(1.) - fract(x); }
 
 // https://www.shadertoy.com/view/wl3cDM
 const int wave_maxN = 8;

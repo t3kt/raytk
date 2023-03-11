@@ -1,0 +1,4 @@
+axis	planePart1	planePart2
+x	y	z
+y	z	x
+z	x	y

@@ -20,7 +20,8 @@ op:
     - float
     - vec2
     - vec3
-    label: coord_field_definition_in
+    - vec4
+    label: Coordinate Field
     name: coordField
     returnTypes:
     - float

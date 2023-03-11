@@ -270,6 +270,7 @@ class CoordTypes(ModelObject):
 	Coordtypefloat: ValueOrExprT = None
 	Coordtypevec2: ValueOrExprT = None
 	Coordtypevec3: ValueOrExprT = None
+	Coordtypevec4: ValueOrExprT = None
 
 	@classmethod
 	def fromComp(cls, specComp: 'COMP'):
@@ -356,6 +357,8 @@ class InputSpec(ModelObject):
 	Label: ValueOrExprT = None
 	Localalias: ValueOrExprT = None
 	Help: ValueOrExprT = None
+	Variables: ValueOrExprT = None
+	Variableinputs: ValueOrExprT = None
 
 	Required: ValueOrExprT = False
 
@@ -370,7 +373,7 @@ class InputSpec(ModelObject):
 			contextType=ContextTypes.fromComp(handler),
 			returnType=ReturnTypes.fromComp(handler),
 			**_valOrExprDictFromPars(handler.pars(
-				'Source', 'Name', 'Label', 'Localalias', 'Help', 'Required')))
+				'Source', 'Name', 'Label', 'Localalias', 'Help', 'Required', 'Variables', 'Variableinputs')))
 
 	@classmethod
 	def fromCompList(cls, handlers: 'List[COMP]', forMulti: bool):

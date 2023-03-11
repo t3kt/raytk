@@ -12,11 +12,16 @@ op:
   - contextTypes:
     - Context
     - MaterialContext
+    - CameraContext
+    - LightContext
+    - RayContext
+    - ParticleContext
     coordTypes:
     - float
     - vec2
     - vec3
-    label: definition_in
+    - vec4
+    label: Index Field
     name: indexField
     required: true
     returnTypes:
@@ -62,7 +67,6 @@ op:
     name: Value7
   - label: Value 8
     name: Value8
-  status: beta
   summary: Switches or blends between constant values based on an index field.
 
 ---

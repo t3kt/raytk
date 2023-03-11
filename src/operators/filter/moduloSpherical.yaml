@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.filter.moduloSpherical
-  opVersion: '6'
+  opVersion: '7'
   opStatus: default
 opDef: !def
   enable: !expr
@@ -27,6 +27,8 @@ opDef: !def
       cols: enable
 inputs:
 - !input
+  Variables: '*'
+  Variableinputs: '*'
   Required: true
   coordType: !coordT
     Coordtypevec3: true
@@ -36,6 +38,7 @@ inputs:
     Allreturntype: true
 - !input
   Localalias: repetitionsField
+  Variableinputs: shiftField
   coordType: !coordT
     Coordtypevec3: true
   contextType: !contextT
@@ -45,6 +48,8 @@ inputs:
     Returntypevec4: true
 - !input
   Localalias: offsetField
+  Variables: cell normcell
+  Variableinputs: shiftField repetitionsField
   coordType: !coordT
     Coordtypevec3: true
   contextType: !contextT

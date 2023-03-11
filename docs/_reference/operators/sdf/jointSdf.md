@@ -79,7 +79,6 @@ op:
     name: Thickness
   - label: Angle
     name: Angle
-  status: beta
   thumb: assets/images/reference/operators/sdf/jointSdf_thumb.png
 
 ---

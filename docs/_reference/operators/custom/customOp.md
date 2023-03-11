@@ -59,7 +59,8 @@ op:
     - float
     - vec2
     - vec3
-    label: definition_in1
+    - vec4
+    label: Input 1
     name: definition_in1
     returnTypes:
     - float
@@ -79,7 +80,8 @@ op:
     - float
     - vec2
     - vec3
-    label: definition_in2
+    - vec4
+    label: Input 2
     name: definition_in2
     returnTypes:
     - float
@@ -99,7 +101,8 @@ op:
     - float
     - vec2
     - vec3
-    label: definition_in3
+    - vec4
+    label: Input 3
     name: definition_in3
     returnTypes:
     - float
@@ -119,8 +122,93 @@ op:
     - float
     - vec2
     - vec3
-    label: definition_in4
+    - vec4
+    label: Input 4
     name: definition_in4
+    returnTypes:
+    - float
+    - vec4
+    - Sdf
+    - Ray
+    - Light
+    - Particle
+  - contextTypes:
+    - Context
+    - MaterialContext
+    - CameraContext
+    - LightContext
+    - RayContext
+    - ParticleContext
+    coordTypes:
+    - float
+    - vec2
+    - vec3
+    - vec4
+    label: Input 5
+    name: definition_in5
+    returnTypes:
+    - float
+    - vec4
+    - Sdf
+    - Ray
+    - Light
+    - Particle
+  - contextTypes:
+    - Context
+    - MaterialContext
+    - CameraContext
+    - LightContext
+    - RayContext
+    - ParticleContext
+    coordTypes:
+    - float
+    - vec2
+    - vec3
+    - vec4
+    label: Input 6
+    name: definition_in6
+    returnTypes:
+    - float
+    - vec4
+    - Sdf
+    - Ray
+    - Light
+    - Particle
+  - contextTypes:
+    - Context
+    - MaterialContext
+    - CameraContext
+    - LightContext
+    - RayContext
+    - ParticleContext
+    coordTypes:
+    - float
+    - vec2
+    - vec3
+    - vec4
+    label: Input 7
+    name: definition_in7
+    returnTypes:
+    - float
+    - vec4
+    - Sdf
+    - Ray
+    - Light
+    - Particle
+  - contextTypes:
+    - Context
+    - MaterialContext
+    - CameraContext
+    - LightContext
+    - RayContext
+    - ParticleContext
+    coordTypes:
+    - float
+    - vec2
+    - vec3
+    - vec4
+    label: Input 8
+    name: definition_in8
     returnTypes:
     - float
     - vec4

@@ -21,7 +21,7 @@ op:
     coordTypes:
     - float
     - vec2
-    label: definition_in
+    label: SDF or Field
     name: definition_in
     returnTypes:
     - float

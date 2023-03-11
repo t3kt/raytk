@@ -66,6 +66,7 @@ def buildOpInfoTable(dat: 'DAT'):
 			'hasThumb',
 			'hasSnippet',
 			'paramPages',
+			'hasInputVarSettings',
 		]
 	)
 	opThumbs = op('opThumbs')
@@ -102,6 +103,25 @@ def buildOpInfoTable(dat: 'DAT'):
 		dat[rop.path, 'hasThumb'] = bool(opThumbs[rop.path, 'thumb'])
 		dat[rop.path, 'hasSnippet'] = bool(info.opType in snippetTypes)
 		dat[rop.path, 'paramPages'] = ' '.join([page.name for page in rop.customPages])
+		dat[rop.path, 'hasInputVarSettings'] = _opHasInputVarSettings(info)
+
+def _opHasInputVarSettings(info: 'ROPInfo'):
+	inputs = info.inputHandlers
+	if not inputs:
+		return ''
+	for inputHandler in inputs:
+		if _parHasSetting(inputHandler.par.Variables):
+			return True
+		if _parHasSetting(inputHandler.par.Variableinputs):
+			return True
+	return False
+
+def _parHasSetting(par: 'Par'):
+	if par.eval():
+		return True
+	if par.expr or par.bindExpr:
+		return True
+	return False
 
 def buildOpParamsTable(dat: 'DAT'):
 	dat.clear()

@@ -2,6 +2,6 @@
   "meta": {
     "opStatus": "beta",
     "opType": "raytk.operators.sdf.stackSdf",
-    "opVersion": 1
+    "opVersion": 2
   }
 }

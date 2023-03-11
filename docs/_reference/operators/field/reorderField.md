@@ -20,7 +20,8 @@ op:
     - float
     - vec2
     - vec3
-    label: definition_in_1
+    - vec4
+    label: Input 1
     name: definition_in_1
     returnTypes:
     - float
@@ -36,7 +37,8 @@ op:
     - float
     - vec2
     - vec3
-    label: definition_in_2
+    - vec4
+    label: Input 2
     name: definition_in_2
     returnTypes:
     - float
@@ -52,7 +54,8 @@ op:
     - float
     - vec2
     - vec3
-    label: definition_in_3
+    - vec4
+    label: Input 3
     name: definition_in_3
     returnTypes:
     - float
@@ -68,7 +71,8 @@ op:
     - float
     - vec2
     - vec3
-    label: definition_in_4
+    - vec4
+    label: Input 4
     name: definition_in_4
     returnTypes:
     - float
@@ -190,6 +194,5 @@ op:
     - label: One
       name: one
     name: Part4
-  status: beta
 
 ---

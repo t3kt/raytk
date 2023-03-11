@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.function.addFn
-  opVersion: '7'
+  opVersion: '9'
   opStatus: default
 opDef: !def
   enable: !expr
@@ -12,7 +12,7 @@ opDef: !def
     contextType: !contextT
       Allcontexttype: true
     returnType: !returnT
-      Allreturntype: true
+      Returntypefloat: true
   function: !text
     file: src/operators/function/addFn.glsl
     name: functionTemplate
@@ -36,7 +36,6 @@ multiInput: !multiInput
       Allcontexttype: true
     returnType: !returnT
       Returntypefloat: true
-      Returntypevec4: true
   - !input
     coordType: !coordT
       Allcoordtype: true
@@ -44,7 +43,6 @@ multiInput: !multiInput
       Allcontexttype: true
     returnType: !returnT
       Returntypefloat: true
-      Returntypevec4: true
   - !input
     coordType: !coordT
       Allcoordtype: true
@@ -52,7 +50,6 @@ multiInput: !multiInput
       Allcontexttype: true
     returnType: !returnT
       Returntypefloat: true
-      Returntypevec4: true
   - !input
     coordType: !coordT
       Allcoordtype: true
@@ -60,4 +57,3 @@ multiInput: !multiInput
       Allcontexttype: true
     returnType: !returnT
       Returntypefloat: true
-      Returntypevec4: true

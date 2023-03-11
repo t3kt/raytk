@@ -1,0 +1,4 @@
+names	source	handling	readOnlyHandling	conversion	enable
+Sourcepoint[xyz]	param	runtime	macro		op('source_point_definition').numRows < 2
+Targetpoint[xyz]	param	runtime	macro		op('target_point_definition').numRows < 2
+Roll	param	runtime	macro	angle	op('roll_definition').numRows < 2

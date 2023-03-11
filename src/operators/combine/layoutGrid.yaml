@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.combine.layoutGrid
-  opVersion: '11'
+  opVersion: '13'
   opStatus: default
 opDef: !def
   enable: !expr
@@ -23,7 +23,7 @@ opDef: !def
     name: macro_exprs
     evaluate: true
     evalOpts: !evalOpts {}
-  generatedMacroTables: sel_axis_macros input_macros
+  generatedMacroTables: input_macros
   help: !text
     file: src/operators/combine/layoutGrid.md
     name: help

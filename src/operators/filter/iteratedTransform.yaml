@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.filter.iteratedTransform
-  opVersion: '23'
+  opVersion: '24'
   opStatus: default
 opDef: !def
   enable: !expr
@@ -30,6 +30,7 @@ opDef: !def
     name: help
 inputs:
 - !input
+  Variables: '*'
   Required: true
   coordType: !coordT
     Coordtypevec2: true
@@ -42,6 +43,7 @@ inputs:
     Returntypevec4: true
 - !input
   Localalias: rotateField
+  Variables: '*'
   coordType: !coordT
     Coordtypevec2: true
     Coordtypevec3: true
@@ -51,6 +53,7 @@ inputs:
     Returntypevec4: true
 - !input
   Localalias: translateField
+  Variables: '*'
   coordType: !coordT
     Coordtypevec2: true
     Coordtypevec3: true
@@ -60,6 +63,7 @@ inputs:
     Returntypevec4: true
 - !input
   Localalias: scaleField
+  Variables: '*'
   coordType: !coordT
     Coordtypevec2: true
     Coordtypevec3: true

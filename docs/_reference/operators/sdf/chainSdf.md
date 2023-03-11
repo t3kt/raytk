@@ -57,7 +57,6 @@ op:
     name: Radius
   - label: Thickness
     name: Thickness
-  status: beta
   thumb: assets/images/reference/operators/sdf/chainSdf_thumb.png
 
 ---

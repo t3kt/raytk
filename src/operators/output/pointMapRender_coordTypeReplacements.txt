@@ -1,0 +1,8 @@
+before	after
+float vec2	vec2
+float vec2 vec3	vec3
+float vec2 vec3 vec4	vec3
+vec2 vec3	vec3
+vec2 vec4	vec3
+float vec3	vec3
+float vec4	vec3

@@ -15,6 +15,7 @@ op:
     - float
     - vec2
     - vec3
+    - vec4
     label: Phase
     name: phaseField
     returnTypes:

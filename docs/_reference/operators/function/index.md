@@ -23,14 +23,12 @@ cat:
   - name: chopFn
     summary: Function that looks up values in a CHOP.
   - name: colorPaletteFn
-    status: beta
   - name: crossFn
     summary: Cross-fades between two input functions, either based on a parameter
       or on a third function.
   - name: cubicPulseFn
   - name: easeFn
   - name: extendFn
-    status: beta
     summary: Defines the behavior of a function outside the normal expected range
       of coordinates.
   - name: flipFn

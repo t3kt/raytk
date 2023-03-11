@@ -44,7 +44,6 @@ op:
     name: Thickness
   - label: Rotate
     name: Rotate
-  status: beta
   thumb: assets/images/reference/operators/sdf/crescentSdf_thumb.png
 
 ---

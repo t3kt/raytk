@@ -9,7 +9,7 @@ from pathlib import Path
 from raytkDocs import OpDocManager
 from raytkModel import OpDefMeta_OLD, OpSpec_OLD, ROPSpec, ROPDef, ROPMeta
 from raytkUtil import RaytkContext, ROPInfo, focusFirstCustomParameterPage, RaytkTags, CategoryInfo, ContextTypes, \
-	CoordTypes, ReturnTypes, getActiveEditor
+	CoordTypes, ReturnTypes, getActiveEditor, IconColors
 from typing import Callable, List, Optional
 
 # noinspection PyUnreachableCode
@@ -196,6 +196,7 @@ class RaytkTools(RaytkContext):
 		rop.par.reloadcustom.val = True
 		rop.par.reloadbuiltin.expr = ''
 		rop.par.reloadbuiltin.val = True
+		rop.color = IconColors.defaultBgColor
 		rop.save(tox)
 		ui.status = f'Saved TOX {tox} (version: {info.opVersion})'
 

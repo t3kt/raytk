@@ -97,6 +97,15 @@ mat4 lookAtViewMatrix(vec3 eye, vec3 center, vec3 up) {
 	vec4(0.0, 0.0, 0.0, 1)
 	);
 }
+// https://github.com/glslify/glsl-look-at/
+mat3 calcLookAtMatrix(vec3 origin, vec3 target, float roll) {
+  vec3 rr = vec3(sin(roll), cos(roll), 0.0);
+  vec3 ww = normalize(target - origin);
+  vec3 uu = normalize(cross(ww, rr));
+  vec3 vv = normalize(cross(uu, ww));
+
+  return mat3(uu, vv, ww);
+}
 
 float ndot(vec2 a, vec2 b ) { return a.x*b.x - a.y*b.y; }
 
@@ -427,7 +436,48 @@ void setAxisPlane(inout vec3 p, int axis, vec2 val) {
 	}
 }
 
+void setAxisPlanePart1(inout vec2 p, int axis, float val) {
+	switch (axis) {
+		case 0: p.y = val; break;
+		case 2: p.x = val; break;
+	}
+}
+
+void setAxisPlanePart1(inout vec3 p, int axis, float val) {
+	switch (axis) {
+		case 0: p.y = val; break;
+		case 1: p.z = val; break;
+		case 2: p.x = val; break;
+	}
+}
+
+void setAxisPlanePart2(inout vec2 p, int axis, float val) {
+	switch (axis) {
+		case 1: p.x = val; break;
+		case 2: p.y = val; break;
+	}
+}
+
+void setAxisPlanePart2(inout vec3 p, int axis, float val) {
+	switch (axis) {
+		case 0: p.z = val; break;
+		case 1: p.x = val; break;
+		case 2: p.y = val; break;
+	}
+}
+
 // Barycentric to Cartesian
 vec3 bToC(vec3 A, vec3 B, vec3 C, vec3 barycentric) {
 	return barycentric.x * A + barycentric.y * B + barycentric.z * C;
+}
+
+// https://www.shadertoy.com/view/fdfSDH
+// https://www.shadertoy.com/view/lsGyzm
+vec4 inverseStereographic(vec3 p) {
+  float k = 2.0/(1.0+dot(p,p));
+  return vec4(k*p,k-1.0);
+}
+vec3 stereographic(vec4 p4) {
+  float k = 1.0/(1.0+p4.w);
+  return k*p4.xyz;
 }

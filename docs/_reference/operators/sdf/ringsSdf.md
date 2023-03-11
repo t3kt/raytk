@@ -90,7 +90,6 @@ op:
     name: Shift
   - label: Thickness
     name: Thickness
-  status: beta
   variables:
   - label: angle
     name: angle

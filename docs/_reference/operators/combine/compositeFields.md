@@ -25,7 +25,8 @@ op:
     - float
     - vec2
     - vec3
-    label: definition_in_1
+    - vec4
+    label: Field 1
     name: definition_in_1
     required: true
     returnTypes:
@@ -42,7 +43,8 @@ op:
     - float
     - vec2
     - vec3
-    label: definition_in_2
+    - vec4
+    label: Field 2
     name: definition_in_2
     required: true
     returnTypes:
@@ -59,7 +61,8 @@ op:
     - float
     - vec2
     - vec3
-    label: blendField
+    - vec4
+    label: Blend Field
     name: blendField
     required: true
     returnTypes:

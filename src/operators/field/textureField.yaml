@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.field.textureField
-  opVersion: '23'
+  opVersion: '24'
   opStatus: default
 opDef: !def
   enable: !expr
@@ -49,6 +49,7 @@ opDef: !def
 inputs:
 - !input
   Localalias: uvField
+  Variables: '*'
   coordType: !coordT
     Allcoordtype: true
   contextType: !contextT

@@ -25,6 +25,7 @@ op:
     - float
     - vec2
     - vec3
+    - vec4
     label: definition_in
     name: definition_in
     required: true
@@ -55,7 +56,6 @@ op:
     name: Range
   - label: Default Value
     name: Defval
-  status: beta
   summary: Defines the behavior of a function outside the normal expected range of
     coordinates.
 

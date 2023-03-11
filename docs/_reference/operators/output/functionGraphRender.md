@@ -25,7 +25,7 @@ op:
     - Context
     coordTypes:
     - float
-    label: definition_in_1
+    label: Function 1
     name: definition_in_1
     returnTypes:
     - float
@@ -34,7 +34,7 @@ op:
     - Context
     coordTypes:
     - float
-    label: definition_in_2
+    label: Function 2
     name: definition_in_2
     returnTypes:
     - float
@@ -43,7 +43,7 @@ op:
     - Context
     coordTypes:
     - float
-    label: definition_in_3
+    label: Function 3
     name: definition_in_3
     returnTypes:
     - float
@@ -52,7 +52,7 @@ op:
     - Context
     coordTypes:
     - float
-    label: definition_in_4
+    label: Function 4
     name: definition_in_4
     returnTypes:
     - float

@@ -19,7 +19,7 @@ op:
     coordTypes:
     - vec2
     - vec3
-    label: definition_in_1
+    label: SDF
     name: definition_in_1
     required: true
     returnTypes:
@@ -34,7 +34,7 @@ op:
     coordTypes:
     - vec2
     - vec3
-    label: definition_in_2
+    label: Bounds SDF
     name: definition_in_2
     required: true
     returnTypes:

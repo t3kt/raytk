@@ -1,2 +1,6 @@
 names	source	handling	readOnlyHandling	conversion	enable
-Axis	param	runtime	constant		1
+Mode	param	macro			1
+Translate[xyz] Radius	param	runtime	macro		1
+Axis	param	runtime	constant		parent().par.Mode == 'axis'
+Height	param	runtime	macro		parent().par.Mode == 'axis'
+Top[xyz]	param	runtime	macro		parent().par.Mode == 'points'

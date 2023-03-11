@@ -1,8 +1,8 @@
 !rop
 meta: !meta
   opType: raytk.operators.field.atmosphereField
-  opVersion: '6'
-  opStatus: beta
+  opVersion: '7'
+  opStatus: default
 opDef: !def
   enable: true
   typeSpec: !ropTypes

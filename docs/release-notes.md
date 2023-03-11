@@ -1,5 +1,71 @@
 # Release Notes
 
+## v0.31
+
+### Highlights
+
+* New 2D SDFs including branchingTreeSdf2d, polySplineSdf2d, and subdivisionSdf2d.
+* Transform targeting: easier ways to apply transform filters to UV coordinates or field values instead of coordinates.
+* Improved variable error messages and more flexible ways to use variables.
+* Tons of bug fixes.
+
+### Details
+
+* Improvements / additions
+  * Editor tools (#772)
+    * "Animate with ..." actions support non-ROPs
+    * Top-level pulse to open editor tools
+  * New OPs
+    * branchingTreeSdf2d (#1015)
+    * extrudeLine which extrudes a cross-section between two points (#1014)
+    * lookAtRotate (#1024)
+    * polySplineSdf2d (#747)
+    * subdivisionSdf2d (#885)
+  * New OP features
+    * Faster axis switching - layoutGrid, noiseField (#586)
+    * Transform targeting (apply to UVs, field values, etc, instead of to coordinates) (#1019)
+      * mirrorAxes
+      * rotate
+      * scale
+      * translate
+      * transform
+    * coneSdf - option to specify base and top points instead of height and axis (#1025)
+    * customOp - added 4 more inputs
+    * dataTextureField - channel selection
+    * limitField - field inputs for low/high bounds (#812)
+    * vectorToFloat - average / minimum / maximum modes
+    * waveField, waveFn, waveWarp, etc - added reverse ramp wave type
+  * Documentation
+    * Show operator diagrams with input labels on reference pages
+* Fixes
+  * Fix broken composite field editor action (#772)
+  * Fix incorrect handling of offset field input for combine-based operators (#1008)
+  * Fix 2D support in shapedCombine
+  * Fix incorrect parameter page names in many ops
+  * Fix incorrect input labels in many ops
+  * Fix undo for "Animate with..." editor actions
+  * Fix error in variableReference on initial load (#1020)
+  * Fix readonly optimization in diffuseContrib
+  * Fix handling of float inputs in compositeFields (#1001)
+  * Fix vec4 coord field input in bandField (#1023)
+  * Fix errors in waveVectorField and waveWarp related to reverse ramp wave type
+  * Fix auto coordinate type in bandField
+  * Fix error in rotate in optimized mode when some parts of params are expressions (#1028)
+  * Fix error in waveWarp with optimized wave type
+  * Fix data type erros in addFn
+  * Fix unused fields in revolve (#1027)
+  * Fix error in pointMapRender with 2D SDFs
+  * Remove deprecated ops - mergeToggle, toggleSwitch
+* Changes (potentially breaking)
+  * Stop supporting float field input for rotate (except in axis mode) and translate (#1005)
+* Infrastructure / internals
+  * Initial steps towards 4D coordinates
+  * Overahaul of variable reference validation, supporting cross-input references and input availability settings. (#770, #12)
+    * Added per-input settings for which variables are available and which other inputs can provide variables
+  * Test output snapshotting / diff (#479)
+    * Updated nearly 100% of tests to reduce resolutions and fix snapshots
+  * Removed beta status from a bunch of ops
+
 ## v0.30
 
 ### Highlights

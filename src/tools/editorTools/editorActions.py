@@ -209,7 +209,7 @@ def _createAnimateParamAction(
 	def isValid(_):
 		return ActionUtils.isKnownRopType(ropType) and bool(getPars())
 	def execute(ctx: ActionContext):
-		rop = ctx.primaryRop
+		o = ctx.primaryOp
 		pars = getPars()
 		if not pars:
 			return
@@ -217,32 +217,60 @@ def _createAnimateParamAction(
 			parOrTupletName = pars[0].name
 		else:
 			parOrTupletName = pars[0].tupletName
+		undoInfo = {}
 		def init(gen: 'COMP'):
-			gen.name = f'{rop.name}_{parOrTupletName}_{nameSuffix}'
-			chop = gen.parent().create(nullCHOP, f'{rop.name}_{parOrTupletName}_vals')
+			gen.name = f'{o.name}_{parOrTupletName}_{nameSuffix}'
+			chop = gen.parent().create(nullCHOP, f'{o.name}_{parOrTupletName}_vals')
+			undoInfo['chop'] = chop
 			gen.par.Name = ' '.join(p.name for p in pars)
 			chop.inputConnectors[0].connect(gen.outputConnectors[0])
-			gen.nodeCenterY = rop.nodeCenterY - 100
-			gen.nodeX = rop.nodeX - gen.nodeWidth - 300
+			gen.nodeCenterY = o.nodeCenterY - 100
+			gen.nodeX = o.nodeX - gen.nodeWidth - 300
 			chop.nodeCenterY = gen.nodeCenterY
 			chop.nodeX = gen.nodeX + gen.nodeWidth + 100
 			chop.viewer = True
+			parStates = []
 			for par in pars:
+				parStates.append({
+					'name': par.name,
+					'mode': par.mode,
+					'val': par.val,
+					'expr': par.expr,
+					'bindExpr': par.bindExpr,
+				})
 				par.expr = f"op('{chop.name}')['{par.name}']"
-		ActionUtils.createROP(ropType, init)
+			undoInfo['parStates'] = parStates
+		def undo():
+			chop = undoInfo.get('chop')
+			if chop:
+				try:
+					chop.destroy()
+				except:
+					pass
+			parStates = undoInfo.get('parStates')
+			if parStates:
+				for i, par in enumerate(pars):
+					state = parStates[i]
+					par.val = state['val']
+					par.expr = state['expr']
+					par.bindExpr = state['bindExpr']
+					par.mode = state['mode']
+		ActionUtils.createROP(ropType, init, undo=undo)
 	return _SimpleAction(text, isValid, execute)
 
 def _createAnimateParamsGroup(text: str, ropType: str, nameSuffix: str):
-	def isValid(ctx: ActionContext) -> bool:
-		rop = ctx.primaryRop
-		return bool(rop and rop.current and ActionUtils.isKnownRopType(ropType))
-
 	def getActions(ctx: ActionContext) -> List[Action]:
-		rop = ctx.primaryRop
-		if not rop:
+		o = ctx.primaryOp
+		if not o:
 			return []
 		actions = []
-		for t in rop.customTuplets:
+		tuplets = o.customTuplets
+		if not tuplets:
+			for par in o.builtinPars:
+				if par.tuplet not in tuplets:
+					tuplets.append(par.tuplet)
+			tuplets.sort(key=lambda t: t[0].tupletName)
+		for t in tuplets:
 			if not t[0].isNumber:
 				continue
 			actions.append(_createAnimateParamAction(t[0].label, t, ropType, nameSuffix))
@@ -251,7 +279,7 @@ def _createAnimateParamsGroup(text: str, ropType: str, nameSuffix: str):
 					actions.append(_createAnimateParamAction(
 						f'{t[0].label} ({p.name[-1]})', p, ropType, nameSuffix))
 		return actions
-	return _SimpleGroup(text, isValid, getActions)
+	return _SimpleGroup(text, lambda _: True, getActions)
 
 def _createExposeParamGroup(text: str):
 	def isValid(ctx: ActionContext):
@@ -571,7 +599,7 @@ def createActionManager():
 		_createTableBasedGroup(
 			'Composite Fields',
 			ropType='raytk.operators.combine.compositeFields',
-			paramName='Operation',
+			paramName='Blendmode',
 			table=op('compositeModes'),
 			select=_OpSelect(
 				returnTypes=['vec4'],

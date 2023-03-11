@@ -43,6 +43,7 @@ elements:
   name: codeSwitcher_Intervaltype
   elementType: codeSwitcher
   params:
+    Elementroot: ''
     Table: !table
       file: src/operators/time/timeShift_intervalTypes.txt
       name: intervalTypes
@@ -51,4 +52,5 @@ elements:
     Manageparamstates: false
     Alwaysincludeallparams: false
     Switchmode: auto
+    Indexexpr: ''
     Placeholder: BODY();

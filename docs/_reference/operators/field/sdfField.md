@@ -21,6 +21,7 @@ op:
     - float
     - vec2
     - vec3
+    - vec4
     label: SDF
     name: definition_in
     required: true

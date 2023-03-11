@@ -20,7 +20,8 @@ op:
     - float
     - vec2
     - vec3
-    label: definition_in
+    - vec4
+    label: Float Field
     name: definition_in
     required: true
     returnTypes:

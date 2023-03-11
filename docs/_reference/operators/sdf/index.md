@@ -25,7 +25,6 @@ cat:
     - curve
     - line
     name: bezierSdf
-    status: beta
   - keywords:
     - box
     - cube
@@ -55,7 +54,6 @@ cat:
     name: capsuleSdf
     summary: A cylinder with rounded ends, between two points.
   - name: chainSdf
-    status: beta
   - keywords:
     - box
     - chamfer
@@ -64,11 +62,9 @@ cat:
   - name: coneSdf
     summary: Defines a cone or capped cone shape.
   - name: crescentSdf
-    status: beta
   - name: crossSdf
     summary: An SDF for a 3D cross of infinite length along each axis.
   - name: cutSphereSdf
-    status: beta
   - keywords:
     - column
     - cylinder
@@ -111,7 +107,6 @@ cat:
     name: gyroidSdf
     summary: Gyroid shape, which is an infinitely connected periodic surface.
   - name: headSdf
-    status: beta
   - keywords:
     - coil
     - helix
@@ -120,7 +115,6 @@ cat:
     summary: SDF for a helix (an elongated spiral).
   - name: hyperbolicParaboloidSdf
   - name: jointSdf
-    status: beta
   - keywords:
     - fractal
     - julia
@@ -186,7 +180,6 @@ cat:
     name: quadSdf
     status: beta
   - name: ringsSdf
-    status: beta
   - keywords:
     - line
     - path

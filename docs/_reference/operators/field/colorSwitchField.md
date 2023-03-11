@@ -19,11 +19,16 @@ op:
   - contextTypes:
     - Context
     - MaterialContext
+    - CameraContext
+    - LightContext
+    - RayContext
+    - ParticleContext
     coordTypes:
     - float
     - vec2
     - vec3
-    label: definition_in
+    - vec4
+    label: Index Field
     name: indexField
     required: true
     returnTypes:
@@ -71,7 +76,6 @@ op:
     - label: Normalized (0 .. 1)
       name: norm
     name: Indexmode
-  status: beta
   summary: Switches or fades between a list of colors based on an index field.
 
 ---

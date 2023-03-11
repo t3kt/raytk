@@ -1,4 +1,5 @@
 ReturnT thismap(CoordT p, ContextT ctx) {
+	int axis = int(THIS_Axis);
 	vec3 scale = THIS_Prescale;
 	float scaleMult = vmax(scale);
 	ReturnT res;
@@ -9,26 +10,28 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 		res = withAdjustedScale(inputOp1(p, ctx), scaleMult);
 	#else
 	{
+		vec2 planePos = getAxisPlane(p, axis);
 		#if defined(THIS_ROW)
 		float cellSize = THIS_Size.x / float(THIS_INPUT_COUNT);
-		float cellPos = p.THIS_PLANE_P1 + THIS_Size.x * 0.25;
+		float cellPos = planePos.x + THIS_Size.x * 0.25;
 		int cell = clamp(int(pModInterval1(cellPos, cellSize, 0, THIS_INPUT_COUNT - 1.)), 0, THIS_INPUT_COUNT - 1);
-		p.THIS_PLANE_P1 = cellPos;
+		setAxisPlanePart1(p, axis, cellPos);
 		#elif defined(THIS_COL)
 		float cellSize = THIS_Size.y / float(THIS_INPUT_COUNT);
-		float cellPos = p.THIS_PLANE_P2 + THIS_Size.y * 0.5;
+		float cellPos = planePos.y + THIS_Size.y * 0.5;
 		int cell = clamp(int(pModInterval1(cellPos, cellSize, 0, THIS_INPUT_COUNT - 1.)), 0, THIS_INPUT_COUNT - 1);
-		p.THIS_PLANE_P2 = cellPos;
+		setAxisPlanePart2(p, axis, cellPos);
 		#elif defined(THIS_GRID_ROWS)
 		vec2 cellSize = THIS_Size * 0.5;
 		int cell;
-		if (THIS_INPUT_COUNT == 3 && p.THIS_PLANE_P2 < 0.) {
+		if (THIS_INPUT_COUNT == 3 && planePos.y < 0.) {
 			cell = 2;
-			p.THIS_PLANE += cellSize;
+			planePos += cellSize;
 		} else {
-			cell = quadrantIndex(ivec2(sgn(p.THIS_PLANE)) * ivec2(1, -1));
-			p.THIS_PLANE -= cellSize * sgn(p.THIS_PLANE);
+			cell = quadrantIndex(ivec2(sgn(planePos)) * ivec2(1, -1));
+			planePos -= cellSize * sgn(planePos);
 		}
+		setAxisPlane(p, axis, planePos);
 		#else
 		#error invalidLayout
 		#endif

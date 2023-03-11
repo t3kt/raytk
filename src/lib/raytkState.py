@@ -30,6 +30,7 @@ def _shouldInclude(val):
 @dataclass
 class RopState(_StateObject):
 	name: str
+	path: str
 	ropType: str
 
 	functionCode: Optional[str] = None
@@ -48,12 +49,21 @@ class RopState(_StateObject):
 	materialId: Optional[str] = None
 
 	inputNames: Optional[List[str]] = None
+	inputStates: Optional[List['InputState']] = None
+
 	libraryNames: Optional[List[str]] = None
 
 	paramSource: Optional[str] = None
 	constantSource: Optional[str] = None
 
 	validationErrors: Optional[List['ValidationError']] = field(default_factory=list)
+
+@dataclass
+class InputState(_StateObject):
+	functionName: str
+	sourceName: Optional[str] = None
+	varNames: Optional[List[str]] = None
+	varInputNames: Optional[List[str]] = None
 
 @dataclass
 class ValidationError(_StateObject):

@@ -44,7 +44,7 @@ op:
     - ParticleContext
     coordTypes:
     - vec3
-    label: faceRadiusField
+    label: Face Radius Field
     name: faceRadiusField
     returnTypes:
     - float
@@ -57,7 +57,7 @@ op:
     - ParticleContext
     coordTypes:
     - vec3
-    label: segmentRadiusField
+    label: Segment Radius Field
     name: segmentRadiusField
     returnTypes:
     - float
@@ -70,7 +70,7 @@ op:
     - ParticleContext
     coordTypes:
     - vec3
-    label: segmentSizeField
+    label: Segment Size Field
     name: segmentSizeField
     returnTypes:
     - float
@@ -83,7 +83,7 @@ op:
     - ParticleContext
     coordTypes:
     - vec3
-    label: vertexRadiusField
+    label: Vertex Radius Field
     name: vertexRadiusField
     returnTypes:
     - float
@@ -96,7 +96,7 @@ op:
     - ParticleContext
     coordTypes:
     - vec3
-    label: vertexSizeField
+    label: Vertex Size Field
     name: vertexSizeField
     returnTypes:
     - float
@@ -109,7 +109,7 @@ op:
     - ParticleContext
     coordTypes:
     - vec3
-    label: uvwField
+    label: UVW Field
     name: uvwField
     returnTypes:
     - vec4

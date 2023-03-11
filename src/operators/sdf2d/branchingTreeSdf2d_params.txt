@@ -1,0 +1,5 @@
+names	source	handling	readOnlyHandling	conversion	enable
+Radius	param	runtime	macro		op('radius_definition').numRows < 2
+Branches Forks Exponent	param	runtime	macro		1
+Thicknessinner Thicknessouter	param	runtime	macro		op('thickness_definition').numRows < 2
+Limitoutside	param	runtime	constant		1

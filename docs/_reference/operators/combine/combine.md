@@ -27,7 +27,8 @@ op:
     - float
     - vec2
     - vec3
-    label: definition_in_1
+    - vec4
+    label: SDF 1
     name: input1
     required: true
     returnTypes:
@@ -43,7 +44,8 @@ op:
     - float
     - vec2
     - vec3
-    label: definition_in_2
+    - vec4
+    label: SDF 2
     name: input2
     returnTypes:
     - Sdf
@@ -58,6 +60,7 @@ op:
     - float
     - vec2
     - vec3
+    - vec4
     label: Radius Field
     name: radiusField
     returnTypes:
@@ -74,19 +77,15 @@ op:
     - float
     - vec2
     - vec3
+    - vec4
     label: Offset Field
     name: offsetField
     returnTypes:
     - float
   keywords:
-  - chamfer
-  - columns
   - combine
   - diff
   - intersect
-  - round
-  - smooth
-  - stairs
   - union
   name: combine
   opType: raytk.operators.combine.combine

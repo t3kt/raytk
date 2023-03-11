@@ -21,6 +21,7 @@ op:
     - float
     - vec2
     - vec3
+    - vec4
     label: Hue Field
     name: hueField
     returnTypes:
@@ -38,6 +39,7 @@ op:
     - float
     - vec2
     - vec3
+    - vec4
     label: Saturation Field
     name: saturationField
     returnTypes:
@@ -55,6 +57,7 @@ op:
     - float
     - vec2
     - vec3
+    - vec4
     label: Value Field
     name: valueField
     returnTypes:

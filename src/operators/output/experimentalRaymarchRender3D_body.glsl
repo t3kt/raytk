@@ -237,6 +237,8 @@ vec3 renderSurfaceReflection(vec3 p, MaterialContext matCtx) {
 	return col;
 }
 
+const float refractStartOffsetInsideMult = 0.1;
+const float refractStartOffsetOutsideMult = 0.05;
 vec3 renderSurfaceRefraction(vec3 p, MaterialContext matCtx) {
 	vec3 col = vec3(0.);
 #if defined(RAYTK_USE_REFRACTION) && defined(THIS_Enablerefraction)
@@ -251,17 +253,18 @@ vec3 renderSurfaceRefraction(vec3 p, MaterialContext matCtx) {
 		if (res.refract) {
 			ior = res.ior;
 			vec3 insideDir = refract(firstDir, firstNorm, ior);
-			Sdf insideRes = castRayInside(Ray(firstPos+firstDir*0.1, insideDir));
+			Sdf insideRes = castRayInside(Ray(firstPos+firstDir*refractStartOffsetInsideMult, insideDir));
 			vec3 posRefrOut = firstPos + insideDir * insideRes.x;
 			vec3 norOut = calcNormal(posRefrOut);
 			vec3 outsideDir = refract(insideDir, -1.*norOut, 1/ior);
-			res = castRay(Ray(posRefrOut+firstDir*0.05, outsideDir), RAYTK_MAX_DIST, 0.01*2.*i);
+			res = castRay(Ray(posRefrOut+firstDir*refractStartOffsetOutsideMult, outsideDir), RAYTK_MAX_DIST, 0.01*2.*i);
 			float tRefr = res.x;
 			vec3 posFin = posRefrOut+outsideDir*tRefr;
 			vec3 norRefr = calcNormal(posFin);
-			float travelAtten = clamp(1.-tRefr*0.05, 0., 1.);
+			float travelAtten = clamp(1.-tRefr*refractStartOffsetOutsideMult, 0., 1.);
 			matCtx.ray = Ray(posFin, norRefr);
 			matCtx.reflectColor = vec3(0.);
+			col.r += 0.2;
 			matCtx.refractColor = col;
 			// TODO: maybe more setup in matCtx?
 			col += travelAtten * getSurfaceColorAllLights(posFin, matCtx);

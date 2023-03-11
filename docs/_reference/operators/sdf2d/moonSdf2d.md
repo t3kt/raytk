@@ -72,7 +72,6 @@ op:
     name: Offset
   - label: Rotate
     name: Rotate
-  status: beta
   thumb: assets/images/reference/operators/sdf2d/moonSdf2d_thumb.png
 
 ---

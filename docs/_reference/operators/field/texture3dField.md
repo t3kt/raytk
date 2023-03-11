@@ -20,6 +20,7 @@ op:
     - float
     - vec2
     - vec3
+    - vec4
     label: Coordinate Field
     name: coordField
     returnTypes:
@@ -69,7 +70,6 @@ op:
     - label: Depth (With Offset)
       name: depthoffset
     name: Zmode
-  status: beta
   thumb: assets/images/reference/operators/field/texture3dField_thumb.png
   variables:
   - label: res

@@ -20,8 +20,9 @@ op:
     - float
     - vec2
     - vec3
-    label: definition_in
-    name: definition_in
+    - vec4
+    label: Input Field 1
+    name: definition_in_1
     returnTypes:
     - float
     - vec4
@@ -40,8 +41,9 @@ op:
     - float
     - vec2
     - vec3
-    label: definition_in1
-    name: definition_in1
+    - vec4
+    label: Input Field 2
+    name: definition_in_2
     returnTypes:
     - float
     - vec4
@@ -60,8 +62,9 @@ op:
     - float
     - vec2
     - vec3
-    label: definition_in2
-    name: definition_in2
+    - vec4
+    label: Input Field 3
+    name: definition_in_3
     returnTypes:
     - float
     - vec4
@@ -80,8 +83,9 @@ op:
     - float
     - vec2
     - vec3
-    label: definition_in3
-    name: definition_in3
+    - vec4
+    label: Input Field 4
+    name: definition_in_4
     returnTypes:
     - float
     - vec4

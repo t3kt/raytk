@@ -255,12 +255,12 @@ class ActionUtils:
 	def palette() -> 'Palette': return op.raytk.op('tools/palette')
 
 	@staticmethod
-	def createROP(ropType: str, *inits: InitFunc):
+	def createROP(ropType: str, *inits: InitFunc, undo: 'Optional[Callable[[], None]]' = None):
 		def init(rop: 'COMP'):
 			for fn in inits:
 				if fn:
 					fn(rop)
-		ActionUtils.palette().CreateItem(ropType, postSetup=init)
+		ActionUtils.palette().CreateItem(ropType, postSetup=init, undoSetup=undo)
 
 	@staticmethod
 	def moveAfter(o: 'OP', after: 'OP'):

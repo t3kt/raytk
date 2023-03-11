@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.filter.circularRepeat
-  opVersion: '1'
+  opVersion: '2'
   opStatus: beta
 opDef: !def
   enable: !expr
@@ -31,6 +31,7 @@ opDef: !def
     name: help
 inputs:
 - !input
+  Variables: '*'
   Required: true
   coordType: !coordT
     Coordtypevec2: true

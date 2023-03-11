@@ -34,7 +34,6 @@ op:
     name: Coolcolor
   - label: Enable
     name: Enable
-  status: beta
   summary: A material element that uses the Gooch shading model.
 
 ---

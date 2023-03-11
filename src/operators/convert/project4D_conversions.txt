@@ -1,0 +1,3 @@
+name	label	inputCoordType	outputCoordType
+stereographic	Stereographic (4D to 3D)	float vec2 vec3	vec4
+inversestereographic	Inverse Stereographic (3D to 4D)	vec4	float vec2 vec3

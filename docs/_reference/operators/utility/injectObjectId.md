@@ -23,7 +23,8 @@ op:
     - float
     - vec2
     - vec3
-    label: definition_in
+    - vec4
+    label: SDF
     name: definition_in
     required: true
     returnTypes:
@@ -39,6 +40,7 @@ op:
     - float
     - vec2
     - vec3
+    - vec4
     label: ID Field
     name: idField
     returnTypes:

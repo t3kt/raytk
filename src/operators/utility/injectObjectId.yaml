@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.utility.injectObjectId
-  opVersion: '7'
+  opVersion: '8'
   opStatus: beta
 opDef: !def
   enable: !expr

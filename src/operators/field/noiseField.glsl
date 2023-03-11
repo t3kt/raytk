@@ -7,7 +7,7 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 		q = THIS_asNoiseCoordT(p);
 	#elif defined(THIS_COORD_TYPE_vec3)
 		#ifdef THIS_NOISE_COORD_vec2
-		q = p.THIS_PLANE;
+		q = getAxisPlane(p, int(THIS_Axis));
 		#else
 		q = THIS_asNoiseCoordT(p);
 		#endif

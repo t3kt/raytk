@@ -1,7 +1,7 @@
 {
   "meta": {
-    "opStatus": "beta",
+    "opStatus": "default",
     "opType": "raytk.operators.field.colorSwitchField",
-    "opVersion": 10
+    "opVersion": 13
   }
 }

@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.sdf.segmentedLineSdf
-  opVersion: '8'
+  opVersion: '9'
   opStatus: default
 opDef: !def
   enable: true
@@ -45,6 +45,7 @@ opDef: !def
 inputs:
 - !input
   Localalias: radiusField
+  Variables: '*'
   coordType: !coordT
     Coordtypefloat: true
     Coordtypevec3: true

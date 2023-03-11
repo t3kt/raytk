@@ -1,8 +1,8 @@
 !rop
 meta: !meta
   opType: raytk.operators.sdf.bezierSdf
-  opVersion: '7'
-  opStatus: beta
+  opVersion: '9'
+  opStatus: default
 opDef: !def
   enable: true
   typeSpec: !ropTypes
@@ -31,6 +31,8 @@ opDef: !def
 inputs:
 - !input
   Localalias: radiusField
+  Variables: normoffset
+  Variableinputs: point1Field point2Field
   coordType: !coordT
     Coordtypefloat: true
     Coordtypevec3: true
@@ -48,6 +50,7 @@ inputs:
     Returntypevec4: true
 - !input
   Localalias: point2Field
+  Variableinputs: point1Field
   coordType: !coordT
     Coordtypevec3: true
   contextType: !contextT
@@ -56,6 +59,7 @@ inputs:
     Returntypevec4: true
 - !input
   Localalias: point3Field
+  Variableinputs: point1Field point2Field
   coordType: !coordT
     Coordtypevec3: true
   contextType: !contextT

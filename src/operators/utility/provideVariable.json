@@ -1,7 +1,7 @@
 {
   "meta": {
-    "opStatus": "beta",
+    "opStatus": "default",
     "opType": "raytk.operators.utility.provideVariable",
-    "opVersion": 6
+    "opVersion": 8
   }
 }
