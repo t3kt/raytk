@@ -1,0 +1,31 @@
+!rop
+meta: !meta
+  opType: raytk.operators.convert.sampleAlongLine
+  opVersion: '0'
+  opStatus: beta
+opDef: !def
+  enable: true
+  typeSpec: !ropTypes
+    coordType: !coordT
+      Coordtypefloat: true
+    contextType: !contextT
+      Allcontexttype: true
+    returnType: !returnT
+      Allreturntype: true
+  function: !text
+    file: src/operators/convert/sampleAlongLine.glsl
+    name: function
+  paramGroupTable: eval_params
+  help: !text
+    file: src/operators/convert/sampleAlongLine.md
+    name: help
+inputs:
+- !input
+  Required: true
+  coordType: !coordT
+    Coordtypevec2: true
+    Coordtypevec3: true
+  contextType: !contextT
+    Allcontexttype: true
+  returnType: !returnT
+    Allreturntype: true
