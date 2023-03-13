@@ -25,6 +25,9 @@ opDef: !def
     evalOpts: !evalOpts
       excludeFirstRow: true
       cols: enable
+  help: !text
+    file: src/operators/material/iridescenceContrib.md
+    name: help
 inputs:
 - !input
   Localalias: phaseField
