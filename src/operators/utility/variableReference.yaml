@@ -34,3 +34,6 @@ opDef: !def
     evaluate: true
     evalOpts: !evalOpts {}
   generatedMacroTables: typeMacros
+  help: !text
+    file: src/operators/utility/variableReference.md
+    name: help

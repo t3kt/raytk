@@ -16,6 +16,9 @@ opDef: !def
     file: src/operators/sdf/chamferBoxSdf.glsl
     name: function
   paramGroupTable: eval_params
+  help: !text
+    file: src/operators/sdf/chamferBoxSdf.md
+    name: help
   keywords:
   - box
   - cube
