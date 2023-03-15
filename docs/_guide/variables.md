@@ -14,7 +14,7 @@ Another example is the [`assignColor`](/raytk/reference/operators/filter/assignC
 
 Variables can be created in one of two ways:
 
-1. Selecting the operator providing the variable, and using the editor tools menu (`alt+shift+r`), with the "Reference Variable" sub-menu.
+1. Selecting the operator providing the variable, and using the [editor tools](/raytk/guide/tools/) menu (`alt+shift+r`), with the "Reference Variable" sub-menu.
 2. Clicking one of the buttons on the providing operator's "Variables" parameter page.
 
 Doing this will create a [`variableReference`](/raytk/reference/operators/utility/variableReference) operator, which access the value of the selected variable from the selected operator. This operator produces whatever type of value that variable uses, either in its entirety or just a single field within that value. For example, a vector variable can be accessed to produce either the whole vector, or just the Y part of the vector, depending on the settings on the `variableReference`.
