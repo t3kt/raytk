@@ -354,6 +354,9 @@ class DocProcessor:
 		self.context.log(f'Processing docs for category {categoryOp}')
 		categoryInfo = CategoryInfo(categoryOp)
 		catHelp = CategoryHelp.extractFromComp(categoryOp)
+		if not catHelp.operators:
+			self.context.log(f'Skipping docs for empty category {categoryOp}')
+			return
 		dat = categoryInfo.helpDAT
 		docText = catHelp.formatAsList()
 		if not dat:
