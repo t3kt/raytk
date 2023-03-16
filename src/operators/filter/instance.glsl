@@ -12,6 +12,14 @@ CoordT THIS_transform(CoordT p, int i) {
 	return p;
 }
 
+bool THIS_checkActive(int i) {
+	bool a = true;
+	#ifdef THIS_HAS_ACTIVE
+	a = THIS_actives[i] > 0.;
+	#endif
+	return a;
+}
+
 void THIS_exposeIndex(inout ContextT ctx, int i, int n) {
 	setIterationIndex(ctx, i);
 	#ifdef THIS_EXPOSE_index
@@ -34,14 +42,21 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 		res = inputOp1(p, ctx);
 	} else {
 		int n = int(THIS_Instancecount);
-		THIS_exposeIndex(ctx, 0, n);
-		CoordT q = THIS_transform(p, 0);
-		res = inputOp1(q, ctx);
-		for (int i = 1; i < n; i++) {
+		bool hasRes = false;
+		for (int i = 0; i < n; i++) {
 			THIS_exposeIndex(ctx, i, n);
-			q = THIS_transform(p, i);
-			ReturnT res2 = inputOp1(q, ctx);
-			THIS_combine(res, res2, q, ctx);
+			if (!THIS_checkActive(i)) continue;
+			CoordT q = THIS_transform(p, i);
+			ReturnT res1 = inputOp1(q, ctx);
+			if (!hasRes) {
+				res = res1;
+				hasRes = true;
+			} else {
+				THIS_combine(res, res1, q, ctx);
+			}
+		}
+		if (!hasRes) {
+			res = createNonHitSdf();
 		}
 	}
 	return res;

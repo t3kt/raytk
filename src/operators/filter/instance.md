@@ -26,8 +26,28 @@ iteration, which can cause a significant drain on resources if the input network
   * `chamferUnion`
   * `chamferIntersect`
   * `chamferDiff`
+  * `stairUnion`
+  * `stairIntersect`
+  * `stairDiff`
+  * `columnUnion`
+  * `columnIntersect`
+  * `columnDiff`
 * `Radius`
+* `Mergenumber`
+* `Mergeoffset`
+* `Enabletransform`
+* `Transformchop`: A CHOP containing channels `tx ty tz` and/or `rx ry rz` that specifies the translate and/or rotate for each instance.
+* `Enabletranslate`
+* `Enablerotate`
+* `Enableactivechop`
+* `Activechop`: A CHOP containing a channel named `active`, which is used to selectively turn instances off. Any instance with an active value of 0 or less will be excluded from the combined result.
 
 ## Inputs
 
 * `definition_in`: 
+* `radiusField`: 
+
+## Variables
+
+* `index`: 
+* `normindex`: 
