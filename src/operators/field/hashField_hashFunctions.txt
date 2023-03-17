@@ -1,38 +1,50 @@
-name	label	code	params	coordType	returnType
-bbs	BBS	bbs(q)		uint	uint
-city11	CityHash32 (1D)	city(q)		uint	uint
-city12	CityHash32 (2D)	city(q)		uvec2	uint
-city13	CityHash32 (3D)	city(q)		uvec3	uint
-city14	CityHash32 (4D)	city(q)		uvec4	uint
-esgtsa	Schechter and Bridson hash	esgtsa(q)		uint	uint
-fast	UE4 RandFast	fast(q)		vec2	float
-hashwithoutsine11	Hash without Sine 1:1			float	float
-hashwithoutsine12	Hash without Sine 2:1			vec2	float
-hashwithoutsine13	Hash without Sine 3:1			vec3	float
-hashwithoutsine21	Hash without Sine 1:2			float	vec2
-hashwithoutsine22	Hash without Sine 2:2			vec2	vec2
-hashwithoutsine23	Hash without Sine 3:2			vec2	vec2
-hashwithoutsine31	Hash without Sine 1:3			float	vec3
-hashwithoutsine32	Hash without Sine 2:3			vec2	vec3
-hashwithoutsine33	Hash without Sine 3:3			vec3	vec3
-hashwithoutsine41	Hash without Sine 1:4			float	vec4
-hashwithoutsine42	Hash without Sine 2:4			vec2	vec4
-hashwithoutsine43	Hash without Sine 3:4			vec3	vec4
-hashwithoutsine44	Hash without Sine 4:4			vec4	vec4
-hybridtaus	Hybrid Taus			uvec4	float
-ign	Interleaved Gradient Noise			vec2	float
-iqint1	Integer Hash I			uint	uint
-iqint2	Integer Hash II			uvec3	uvec3
-iqint3	Integer Hash III			uvec2	uint
-jkiss32	JKiss32			uvec2	uint
-lcg	Linear Congruential Generator			uint	uint
-md5	MD5GPU			uvec4	uvec4
-murmur311	Murmur Hash 3 1:1			uint	uint
-murmur312	Murmur Hash 3 2:1			uvec2	uint
-murmur313	Murmur Hash 3 3:1			uvec3	uint
-murmur314	Murmur Hash 3 4:1			uvec4	uint
-pcg	PCG Random			uint	uint
-pcg2d	PCG 2D			uvec2	uvec2
-pcg3d	PCG 3D			uvec3	uvec3
-pcg3d16	PCG 3D 16			uvec3	uvec3
-pcg4d	PCG 4D			uvec4	uvec4
+name	label	code	params	inputType	outputType
+bbs	BBS	outVal = bbs(uint(q.x));		uint	uint
+city11	CityHash32 (1D)	outVal = city(uint(q.x));		uint	uint
+city12	CityHash32 (2D)	outVal = city(uvec2(q.xy));		uvec2	uint
+city13	CityHash32 (3D)	outVal = city(uvec3(q.xyz));		uvec3	uint
+city14	CityHash32 (4D)	outVal = city(uvec4(q.xyzw));		uvec4	uint
+esgtsa	Schechter and Bridson hash	outVal = esgtsa(uint(q.x));		uint	uint
+fast	UE4 RandFast	outVal = fast(q.xy);		vec2	float
+hashwithoutsine11	Hash without Sine 1:1	outVal = hashwithoutsine11(q.x);		float	float
+hashwithoutsine12	Hash without Sine 2:1	outVal = hashwithoutsine12(q.xy);		vec2	float
+hashwithoutsine13	Hash without Sine 3:1	outVal = hashwithoutsine13(q.xyz);		vec3	float
+hashwithoutsine21	Hash without Sine 1:2	outVal = hashwithoutsine21(q.x);		float	vec2
+hashwithoutsine22	Hash without Sine 2:2	outVal = hashwithoutsine22(q.xy);		vec2	vec2
+hashwithoutsine23	Hash without Sine 3:2	outVal = hashwithoutsine23(q.xyz);		vec3	vec2
+hashwithoutsine31	Hash without Sine 1:3	outVal = hashwithoutsine31(q.x);		float	vec3
+hashwithoutsine32	Hash without Sine 2:3	outVal = hashwithoutsine32(q.xy);		vec2	vec3
+hashwithoutsine33	Hash without Sine 3:3	outVal = hashwithoutsine33(q.xyz);		vec3	vec3
+hashwithoutsine41	Hash without Sine 1:4	outVal = hashwithoutsine41(q.x);		float	vec4
+hashwithoutsine42	Hash without Sine 2:4	outVal = hashwithoutsine42(q.xy);		vec2	vec4
+hashwithoutsine43	Hash without Sine 3:4	outVal = hashwithoutsine43(q.xyz);		vec3	vec4
+hashwithoutsine44	Hash without Sine 4:4	outVal = hashwithoutsine44(q.xyzw);		vec4	vec4
+hybridtaus	Hybrid Taus	outVal = hybridtaus(uvec4(q.xyzw));		uvec4	float
+ign	Interleaved Gradient Noise	outVal = ign(q.xy);		vec2	float
+iqint1	Integer Hash I	outVal = iqint1(uint(q.x));		uint	uint
+iqint2	Integer Hash II	outVal = iqint2(uvec3(q.xyz));		uvec3	uvec3
+iqint3	Integer Hash III	outVal = iqint3(uvec2(q.xy));		uvec2	uint
+jkiss32	JKiss32	outVal = jkiss32(uvec2(q.xy));		uvec2	uint
+lcg	Linear Congruential Generator	outVal = lcg(uint(q.x));		uint	uint
+md5	MD5GPU	outVal = md5(uvec4(q.xyzw));		uvec4	uvec4
+murmur311	Murmur Hash 3 1:1	outVal = murmur3(uint(q.x));		uint	uint
+murmur312	Murmur Hash 3 2:1	outVal = murmur3(uvec2(q.xy));		uvec2	uint
+murmur313	Murmur Hash 3 3:1	outVal = murmur3(uvec3(q.xyz));		uvec3	uint
+murmur314	Murmur Hash 3 4:1	outVal = murmur3(uvec4(q.xyzw));		uvec4	uint
+pcg	PCG Random	outVal = pcg(uint(q.x));		uint	uint
+pcg2d	PCG 2D	outVal = pcg2d(uvec2(q.xy));		uvec2	uvec2
+pcg3d	PCG 3D	outVal = pcg3d(uvec3(q.xyz));		uvec3	uvec3
+pcg3d16	PCG 3D 16	outVal = pcg3d16(uvec3(q.xyz));		uvec3	uvec3
+pcg4d	PCG 4D	outVal = pcg4d(uvec4(q.xyzw));		uvec4	uvec4
+pseudo	UE4 PseudoRandom	outVal = pseudo(q.xy);		vec2	float
+ranlim32	RanLim 32	outVal = ranlim32(uint(q.x));		uint	uint
+superfast11	SuperFastHash 1:1	outVal = superfast(uint(q.x));		uint	uint
+superfast21	SuperFastHash 2:1	outVal = superfast(uvec2(q.xy));		uvec2	uint
+superfast31	SuperFastHash 3:1	outVal = superfast(uvec3(q.xyz));		uvec3	uint
+superfast41	SuperFastHash 4:1	outVal = superfast(uvec4(q.xyzw));		uvec4	uint
+trig21	Trig 2:1	outVal = trig(q.xy);		vec2	float
+wang11	Wang 1:1	outVal = wang(uint(q.x));		uint	uint
+xorshift128	128-bit XOR Shift	outVal = xorshift128(uvec4(q.xyzw));		uvec4	uint
+xorshift32	32-bit XOR Shift	outVal = xorshift32(uint(q.x));		uint	uint
+xxhash321	32-bit XX Hash 1:1	outVal = xxhash32(uint(q.x));		uint	uint
+xxhash322	32-bit XX Hash 2:1	outVal = xxhash32(uvec2(q.xy));		uvec2	uint
