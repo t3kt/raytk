@@ -13,16 +13,27 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 	THIS_hashseed = THIS_Seed;
 	#endif
 
+	vec2 size = THIS_Size;
+	#ifdef THIS_HAS_INPUT_sizeField
+	size *= fillToVec2(inputOp_sizeField(p, ctx));
+	#endif
+
 	float ITERS = THIS_Iterations;
 	vec2 dMin = vec2(-0.5);
 	vec2 dMax = vec2(0.5);
-	dMax = THIS_Size * 0.5;
+	dMax = size * 0.5;
 	dMin = -dMax;
 //	dMin.x*=R.x/R.y;
 //	dMax.x*=R.x/R.y;
 	vec2 dim = dMax - dMin;
 	float id = 0.;
-	float MIN_SIZE = 0.01;
+
+	#ifdef THIS_HAS_INPUT_minSizeField
+	float minSize = inputOp_minSizeField(p, ctx);
+	#else
+	float minSize = THIS_Minsize;
+	#endif
+
 	float MIN_ITERS = 1.;
 
 	float t = THIS_Patternshift;
@@ -49,14 +60,14 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 		vec2 divide = divHash * dim + dMin;
 
 		//Clamp division line
-		divide = clamp(divide, dMin + MIN_SIZE+0.01, dMax - MIN_SIZE-0.01);
+		divide = clamp(divide, dMin + minSize+0.01, dMax - minSize-0.01);
 
 		//Find the minimum dimension size
 		vec2 minAxis = min(abs(dMin - divide), abs(dMax - divide));
 		float minSize = min( minAxis.x, minAxis.y);
 
 		//if minimum dimension is too small break out
-		bool smallEnough = minSize < MIN_SIZE;
+		bool smallEnough = minSize < minSize;
 		if (smallEnough && i + 1. > MIN_ITERS) { break; }
 
 		// update the box domain
