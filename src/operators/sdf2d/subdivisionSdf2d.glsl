@@ -1,9 +1,18 @@
 // https://www.shadertoy.com/view/stdGz4
 // Fully Animated Subdivision
 
-float THIS_h11 (float a) { return fract(sin((a)*12.9898)*43758.5453123); }
+float THIS_hashseed = 0.;
+
+float THIS_h11 (float a) { return fract(sin((a)*12.9898)*(43758.5453123 + THIS_hashseed)); }
 
 ReturnT thismap(CoordT p, ContextT ctx) {
+
+	#ifdef THIS_HAS_INPUT_seedField
+	THIS_hashseed = inputOp_seedField(p, ctx);
+	#else
+	THIS_hashseed = THIS_Seed;
+	#endif
+
 	float ITERS = THIS_Iterations;
 	vec2 dMin = vec2(-0.5);
 	vec2 dMax = vec2(0.5);
@@ -13,11 +22,13 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 //	dMax.x*=R.x/R.y;
 	vec2 dim = dMax - dMin;
 	float id = 0.;
-	float seed = 0.4;
 	float MIN_SIZE = 0.01;
 	float MIN_ITERS = 1.;
 
 	float t = THIS_Patternshift;
+	#ifdef THIS_HAS_INPUT_patternShiftField
+	t += inputOp_patternShiftField(p, ctx);
+	#endif
 
 	//BIG THANKS to @0b5vr for letting me use his cleaner subdiv implementation
 	//https://www.shadertoy.com/view/NsKGDy
