@@ -8,11 +8,13 @@ Sdf map(vec3 p) {
 	return res;
 }
 
+vec3 accumColor = vec3(0.);
 Sdf castRay(Ray ray, float maxDist, float surfDist) {
 	int priorStage = pushStage(RAYTK_STAGE_PRIMARY);
 	float dist = 0.;
 	Sdf res = createNonHitSdf();
 	int i;
+	accumColor = vec3(0.);
 	for (i = 0; i < RAYTK_MAX_STEPS; i++) {
 		if (!checkLimit(ray.pos)) {
 			popStage(priorStage);
@@ -20,9 +22,10 @@ Sdf castRay(Ray ray, float maxDist, float surfDist) {
 		}
 		res = map(ray.pos);
 		dist += res.x;
+		if (res.x < surfDist) break;
+		// TODO: transparency
 		ray.pos += ray.dir * res.x;
 		// TODO: near hit
-		if (res.x < surfDist) break;
 		if (dist > maxDist) {
 			res = createNonHitSdf();
 			break;
@@ -361,6 +364,7 @@ void main() {
 
 			#ifdef OUTPUT_COLOR
 			vec4 stepColor = renderSurfaceHit(res, p, matCtx);
+			stepColor.rgb += accumColor;
 			// TODO: color summing and output
 			colorOut += stepColor;
 			#endif
