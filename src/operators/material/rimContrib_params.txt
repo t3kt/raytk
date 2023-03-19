@@ -1,0 +1,6 @@
+names	source	handling	readOnlyHandling	conversion	enable
+Thickness	param	runtime	macro		op('thickness_definition').numRows < 2
+Blending	param	runtime	macro		op('blending_definition').numRows < 2
+Color[rgb] Level	param	runtime	macro		1
+Usesurfacecolor	param	constant			1
+Enableshadow	param	macro			1
