@@ -1,7 +1,0 @@
-{
-  "meta": {
-    "opStatus": "alpha",
-    "opType": "raytk.operators.filter.isoRotate",
-    "opVersion": 0
-  }
-}

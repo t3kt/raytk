@@ -1,7 +1,0 @@
-{
-  "meta": {
-    "opStatus": "deprecated",
-    "opType": "raytk.operators.field.normalField",
-    "opVersion": 2
-  }
-}

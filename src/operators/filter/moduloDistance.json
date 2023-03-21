@@ -1,7 +1,0 @@
-{
-  "meta": {
-    "opStatus": "default",
-    "opType": "raytk.operators.filter.moduloDistance",
-    "opVersion": 16
-  }
-}

@@ -1,7 +1,0 @@
-{
-  "meta": {
-    "opStatus": "default",
-    "opType": "raytk.operators.filter.quantizeCoords",
-    "opVersion": 9
-  }
-}

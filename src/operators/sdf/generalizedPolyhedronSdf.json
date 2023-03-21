@@ -1,7 +1,0 @@
-{
-  "meta": {
-    "opStatus": "default",
-    "opType": "raytk.operators.sdf.generalizedPolyhedronSdf",
-    "opVersion": 13
-  }
-}

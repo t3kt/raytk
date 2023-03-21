@@ -1,7 +1,0 @@
-{
-  "meta": {
-    "opStatus": "default",
-    "opType": "raytk.operators.field.multiPointDistanceField",
-    "opVersion": 5
-  }
-}

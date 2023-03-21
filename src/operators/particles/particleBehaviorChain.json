@@ -1,7 +1,0 @@
-{
-  "meta": {
-    "opStatus": "alpha",
-    "opType": "raytk.operators.particles.particleBehaviorChain",
-    "opVersion": 2
-  }
-}

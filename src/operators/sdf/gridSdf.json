@@ -1,7 +1,0 @@
-{
-  "meta": {
-    "opStatus": "default",
-    "opType": "raytk.operators.sdf.gridSdf",
-    "opVersion": 15
-  }
-}
