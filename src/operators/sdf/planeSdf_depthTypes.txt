@@ -1,0 +1,3 @@
+name	label	params	code
+infinite	Infinite	Flip	d = (p.x - o) * (IS_TRUE(THIS_Flip) ? -1.: 1.);
+finite	Finite	Thickness	d = abs(p.x - o) - th;
