@@ -7,7 +7,7 @@ This should only be used within development tools.
 import json
 from pathlib import Path
 from raytkDocs import OpDocManager
-from raytkModel import OpDefMeta_OLD, OpSpec_OLD, ROPSpec, ROPDef, ROPMeta
+from raytkModel import ROPSpec, RCompSpec, ROPSpecBase
 from raytkUtil import RaytkContext, ROPInfo, focusFirstCustomParameterPage, RaytkTags, CategoryInfo, ContextTypes, \
 	CoordTypes, ReturnTypes, getActiveEditor, IconColors
 from typing import Callable, List, Optional
@@ -184,8 +184,6 @@ class RaytkTools(RaytkContext):
 		self.updateOPImage(rop)
 		self.updateROPDATLanguages(rop)
 		self.saveROPSpec(rop)
-		if info.isROP:
-			self.saveROPSpec_NEW(rop)
 		OpDocManager(info).pushToParams()
 		focusFirstCustomParameterPage(rop)
 		tox = info.toxFile
@@ -241,29 +239,6 @@ class RaytkTools(RaytkContext):
 		finally:
 			ui.undo.endBlock()
 
-	def _loadROPSpec(self, rop: 'COMP', useFile: bool, usePars: bool) -> 'Optional[OpSpec_OLD]':
-		info = ROPInfo(rop)
-		if not info or not info.isMaster:
-			return
-		spec = None
-		if useFile:
-			specFile = self._getROPRelatedFile(rop, fileSuffix='.json', checkExists=True)
-			if specFile:
-				text = specFile.read_text()
-				spec = OpSpec_OLD.parseJsonStr(text)
-		if not spec:
-			spec = OpSpec_OLD()
-		if not spec.meta:
-			spec.meta = OpDefMeta_OLD()
-		if usePars:
-			if not spec.meta.opType:
-				spec.meta.opType = info.opType or self.generateROPType(info.rop)
-			if spec.meta.opVersion is None:
-				v = info.opVersion
-				spec.meta.opVersion = int(v) if v else 0
-			spec.meta.opStatus = info.statusLabel
-		return spec
-
 	@staticmethod
 	def setROPStatus(rop: 'COMP', status: Optional[str]):
 		info = ROPInfo(rop)
@@ -284,27 +259,7 @@ class RaytkTools(RaytkContext):
 			return
 		return file
 
-	def reloadROPSpec(self, rop: 'COMP'):
-		info = ROPInfo(rop)
-		if not info:
-			return
-		spec = self._loadROPSpec(rop, useFile=True, usePars=True)
-		if not spec or not spec.meta:
-			return
-		info.opType = spec.meta.opType
-		info.opVersion = spec.meta.opVersion
-		self.setROPStatus(rop, spec.meta.opStatus)
-
-	def saveROPSpec(self, rop: 'COMP'):
-		info = ROPInfo(rop)
-		if not info:
-			return
-		spec = self._loadROPSpec(rop, useFile=False, usePars=True)
-		specFile = self._getROPRelatedFile(rop, '.json', checkExists=False)
-		if specFile and spec:
-			specFile.write_text(spec.toJsonStr(minify=False))
-
-	def loadROPSpec_NEW(self, rop: 'COMP', checkExists: bool) -> Optional[ROPSpec]:
+	def loadROPSpec(self, rop: 'COMP', checkExists: bool) -> Optional[ROPSpecBase]:
 		specFile = self._getROPRelatedFile(rop, '.yaml', checkExists=False)
 		if not specFile.exists():
 			if checkExists:
@@ -312,7 +267,10 @@ class RaytkTools(RaytkContext):
 				return
 			return None
 		text = specFile.read_text()
-		spec = ROPSpec.parseFromText(text)
+		if text.startswith('!rcomp'):
+			spec = RCompSpec.parseFromText(text)
+		else:
+			spec = ROPSpec.parseFromText(text)
 		return spec
 
 	def applyROPSpec(self, rop: 'COMP'):
@@ -320,11 +278,12 @@ class RaytkTools(RaytkContext):
 			ropInfo = ROPInfo(rop)
 			if not ropInfo:
 				raise Exception(f'Invalid ROP: {rop!r}')
-			spec = self.loadROPSpec_NEW(rop, checkExists=True)
+			spec = self.loadROPSpec(rop, checkExists=True)
 			if not spec:
 				raise Exception(f'No spec found for {rop}')
-			if spec.opDef:
-				spec.opDef.applyToComp(ropInfo.opDef)
+			if isinstance(spec, ROPSpec):
+				if spec.opDef:
+					spec.opDef.applyToComp(ropInfo.opDef)
 			if spec.meta:
 				spec.meta.applyToRopInfo(ropInfo)
 			# TODO: inputs, params, etc.
@@ -332,12 +291,17 @@ class RaytkTools(RaytkContext):
 			ui.status = f'Failed to load ROPSpec for {rop}: {err}'
 			print(f'Failed to load ROPSpec for {rop}:\n{err}')
 
-	def saveROPSpec_NEW(self, rop: 'COMP'):
+	def saveROPSpec(self, rop: 'COMP'):
 		try:
 			ropInfo = ROPInfo(rop)
 			if not ropInfo:
 				raise Exception(f'Invalid ROP: {rop!r}')
-			spec = self.loadROPSpec_NEW(rop, checkExists=False) or ROPSpec()
+			spec = self.loadROPSpec(rop, checkExists=False)
+			if not spec:
+				if ropInfo.isROP:
+					spec = ROPSpec()
+				else:
+					spec = RCompSpec()
 			spec.updateFromRop(ropInfo.rop, skipParams=True)
 			# TODO: inputs, params, etc.
 			specFile = self._getROPRelatedFile(rop, '.yaml', checkExists=False)
@@ -352,7 +316,7 @@ class RaytkTools(RaytkContext):
 			if not ROPInfo(rop).isROP:
 				continue
 			print(f'Saving ROP spec for {rop}')
-			self.saveROPSpec_NEW(rop)
+			self.saveROPSpec(rop)
 
 	def updateAllROPToolkitVersions(self):
 		version = self.toolkitVersion()

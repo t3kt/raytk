@@ -7,13 +7,12 @@ This should only be used within development tools.
 from dataclasses import dataclass, field
 import dataclasses
 from io import StringIO
-import json
 from pathlib import Path
 import re
 from typing import Dict, Iterable, List, Optional, Union
 import yaml
 
-from raytkUtil import cleanDict, ROPInfo, InputInfo, RaytkTags, OpDefParsT
+from raytkUtil import ROPInfo, InputInfo, RaytkTags, OpDefParsT
 
 # noinspection PyUnreachableCode
 if False:
@@ -24,83 +23,6 @@ if False:
 else:
 	# noinspection PyUnresolvedReferences,PyUnboundLocalVariable
 	TDJSON = op.TDModules.mod.TDJSON
-
-@dataclasses.dataclass
-class _DataObject_OLD:
-	def toObj(self):
-		raise NotImplementedError()
-
-	@classmethod
-	def fromObj(cls, obj):
-		raise NotImplementedError()
-
-	@classmethod
-	def fromObjs(cls, objs: List[Dict]):
-		return [cls.fromObj(obj) for obj in objs] if objs else []
-
-	@classmethod
-	def fromOptionalObj(cls, obj, default=None):
-		return cls.fromObj(obj) if obj else default
-
-	@classmethod
-	def toObjs(cls, nodes: 'Optional[Iterable[_DataObject_OLD]]'):
-		return [n.toObj() for n in nodes] if nodes else []
-
-	@classmethod
-	def toOptionalObj(cls, obj: '_DataObject_OLD'):
-		return obj.toObj() if obj is not None else None
-
-	@classmethod
-	def parseJsonStr(cls, jsonStr: str):
-		return cls.fromObj(_parseJson(jsonStr))
-
-	def toJsonStr(self, minify=True):
-		return _toJson(self.toObj(), minify=minify)
-
-def _toJson(obj, minify=True):
-	return '{}' if not obj else json.dumps(
-		obj,
-		indent=None if minify else '  ',
-		separators=(',', ':') if minify else (',', ': '),
-		sort_keys=True,
-	)
-
-def _parseJson(jsonStr: str):
-	if jsonStr:
-		jsonStr = jsonStr.strip()
-	return json.loads(jsonStr) if jsonStr else {}
-
-@dataclass
-class OpDefMeta_OLD(_DataObject_OLD):
-	opType: Optional[str] = None
-	opVersion: Optional[int] = None
-	opStatus: Optional[str] = None
-
-	def toObj(self):
-		return cleanDict({
-			'opType': self.opType,
-			'opVersion': self.opVersion,
-			'opStatus': self.opStatus,
-		})
-
-	@classmethod
-	def fromObj(cls, obj: dict):
-		return cls(**obj)
-
-@dataclass
-class OpSpec_OLD(_DataObject_OLD):
-	meta: Optional[OpDefMeta_OLD] = None
-
-	def toObj(self):
-		return cleanDict({
-			'meta': OpDefMeta_OLD.toOptionalObj(self.meta),
-		})
-
-	@classmethod
-	def fromObj(cls, obj: dict):
-		return cls(
-			meta=OpDefMeta_OLD.fromOptionalObj(obj.get('meta')),
-		)
 
 @dataclass
 class ModelObject(yaml.YAMLObject):
@@ -748,22 +670,13 @@ class OpElementSpec(ModelObject):
 		]
 
 @dataclass
-class ROPSpec(ModelObject):
-	yaml_tag = u'!rop'
-
+class ROPSpecBase(ModelObject):
 	meta: Optional[ROPMeta] = None
-	opDef: ROPDef = field(default_factory=ROPDef)
-
 	paramPages: Optional[List[ParamPage]] = field(default_factory=list)
-
-	multiInput: Optional[MultiInputSpec] = None
-	inputs: List[InputSpec] = field(default_factory=list)
-
-	elements: List[OpElementSpec] = field(default_factory=list)
 
 	@classmethod
 	def extract(cls, rop: 'COMP', skipParams=False):
-		spec = ROPSpec()
+		spec = cls()
 		spec.updateFromRop(rop, skipParams)
 		return spec
 
@@ -773,12 +686,31 @@ class ROPSpec(ModelObject):
 			self.meta.updateFromRopInfo(ropInfo)
 		else:
 			self.meta = ROPMeta.fromRopInfo(ropInfo)
-		self.opDef.updateFromComp(ropInfo.opDef)
 		if not skipParams:
 			self.paramPages = ParamPage.fromCustomPages(rop)
+
+@dataclass
+class ROPSpec(ROPSpecBase):
+	yaml_tag = u'!rop'
+
+	opDef: ROPDef = field(default_factory=ROPDef)
+
+	multiInput: Optional[MultiInputSpec] = None
+	inputs: List[InputSpec] = field(default_factory=list)
+
+	elements: List[OpElementSpec] = field(default_factory=list)
+
+	def updateFromRop(self, rop: 'COMP', skipParams=False):
+		ropInfo = ROPInfo(rop)
+		super().updateFromRop(rop, skipParams)
+		self.opDef.updateFromComp(ropInfo.opDef)
 		self.multiInput = MultiInputSpec.fromComps(ropInfo.multiInputHandler, ropInfo.inputHandlers)
 		self.inputs = InputSpec.fromCompList(ropInfo.inputHandlers, forMulti=False)
 		self.elements = OpElementSpec.findAndExtract(rop)
+
+@dataclass
+class RCompSpec(ROPSpecBase):
+	yaml_tag = u'!rcomp'
 
 def _extractDatSetting(par: Optional['Par']) -> Union[TextData, TableData, Expr, None]:
 	if par is None:
