@@ -1,0 +1,7 @@
+{
+  "meta": {
+    "opStatus": "beta",
+    "opType": "raytk.operators.sdf.springSdf",
+    "opVersion": 0
+  }
+}
