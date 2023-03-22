@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.filter.assignColor
-  opVersion: '17'
+  opVersion: '18'
   opStatus: default
 opDef: !def
   enable: !expr
@@ -59,3 +59,19 @@ inputs:
   returnType: !returnT
     Returntypefloat: true
     Returntypevec4: true
+elements:
+- !opElement
+  name: codeSwitcher_Condition
+  elementType: codeSwitcher
+  params:
+    Elementroot: ''
+    Table: !table
+      file: src/operators/filter/assignColor_conditions.txt
+      name: conditions
+    Param: Condition
+    Autoupdateparams: true
+    Manageparamstates: false
+    Alwaysincludeallparams: false
+    Switchmode: auto
+    Indexexpr: ''
+    Placeholder: CONDITION();

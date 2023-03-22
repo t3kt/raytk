@@ -1,6 +1,9 @@
 ReturnT thismap(CoordT p, ContextT ctx) {
 	ReturnT res = inputOp1(p, ctx);
 	if (IS_TRUE(THIS_Enable) && !isDistanceOnlyStage()) {
+		bool use = true;
+		CONDITION();
+		if (!use) return res;
 		#ifdef THIS_EXPOSE_sdf
 		THIS_sdf = res;
 		#endif
