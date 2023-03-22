@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.material.modularMat
-  opVersion: '26'
+  opVersion: '27'
   opStatus: default
 opDef: !def
   enable: !expr
@@ -128,3 +128,19 @@ multiInput: !multiInput
     returnType: !returnT
       Returntypefloat: true
       Returntypevec4: true
+elements:
+- !opElement
+  name: codeSwitcher_Condition
+  elementType: codeSwitcher
+  params:
+    Elementroot: ''
+    Table: !table
+      file: src/operators/material/modularMat_conditions.txt
+      name: conditions
+    Param: Condition
+    Autoupdateparams: true
+    Manageparamstates: false
+    Alwaysincludeallparams: false
+    Switchmode: auto
+    Indexexpr: ''
+    Placeholder: CONDITION();

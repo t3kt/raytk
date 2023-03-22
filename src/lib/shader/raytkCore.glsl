@@ -86,13 +86,14 @@ struct Sdf {
 int resultMaterial1(Sdf res) { return int(res.mat.x); }
 int resultMaterial2(Sdf res) { return int(res.mat.y); }
 float resultMaterialInterp(Sdf res) { return res.mat.z; }
+bool resultHasMaterial(Sdf res) { return res.mat.x >= 0. || res.mat.y >= 0.; }
 
 Sdf createSdf(float dist) {
 	Sdf res;
 	res.x = dist;
 	if (isDistanceOnlyStage()) { return res; }
 
-	res.mat = vec3(2., 0., 0.);
+	res.mat = vec3(-1., -1., 0.);
 	#ifdef RAYTK_USE_MATERIAL_POS
 	res.materialPos = vec4(0);
 	res.materialPos2 = vec4(0);
