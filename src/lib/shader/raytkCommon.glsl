@@ -389,23 +389,6 @@ void setAxis(inout vec3 p, int axis, float val) {
 	p[axis] = val;
 }
 
-vec2 getAxisVec2(int axis) {
-	switch (axis) {
-		case 0: return vec2(1., 0.);
-		case 1: return vec2(0., 1.);
-		default: return vec2(0.);
-	}
-}
-
-vec3 getAxisVec3(int axis) {
-	switch (axis) {
-		case 0: return vec3(1., 0., 0.);
-		case 1: return vec3(0., 1., 0.);
-		case 2: return vec3(0., 0., 1.);
-		default: return vec3(0.);
-	}
-}
-
 vec2 getAxisPlane(vec2 p, int axis) {
 	switch (axis) {
 		case 2: return p;
