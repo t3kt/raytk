@@ -1,2 +1,4 @@
 name	label
 cylindrical	Cylindrical
+cornercylindrical	Corner-Aligned Cylindrical
+faces	Faces
