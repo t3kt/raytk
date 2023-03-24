@@ -486,3 +486,10 @@ vec3 nearestEdge(vec3 p) {
 	vec3 a = v*mask.zxy, b = v*mask.yzx;
 	return distance(p, a)<distance(p, b)?a:b;
 }
+// https://www.shadertoy.com/view/3lcBD2
+// closest edge of 2D square to p
+vec2 nearestEdge(vec2 p) {
+	vec2 p2 = abs(p);
+	if (p2.x > p2.y) return vec2((p.x < 0.) ? -1. : 1., 0.);
+	else return vec2(0., (p.y < 0.) ? -1. : 1.);
+}

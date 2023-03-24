@@ -25,6 +25,12 @@ def buildCode():
 		out.write(f'Sdf res = createSdf({fn}(p, scale));\n')
 		if uvMode == 'bounds':
 			out.write('assignUV(res, map01(p, -scale/2., scale/2.));\n')
+		elif uvMode == 'faces':
+			out.write('vec3 pNorm = p / scale;\n')
+			out.write('vec3 boxFaces = nearestFace(pNorm);\n')
+			out.write('if (boxFaces.x != 0.) assignUV(res, vec3(pNorm.y * boxFaces.x, pNorm.z, 0.));')
+			out.write('else if (boxFaces.y != 0.) assignUV(res, vec3(pNorm.z * boxFaces.y, pNorm.x, 0.));')
+			out.write('else if (boxFaces.z != 0.) assignUV(res, vec3(pNorm.x * boxFaces.z, pNorm.y, 0.));')
 	else:
 		fn = 'fBox2Cheap' if boxType == 'boxcheap' else 'fBox2'
 		swiz = {'x': 'yz', 'y': 'zx', 'z': 'xy'}[axis]
@@ -32,6 +38,13 @@ def buildCode():
 		if uvMode == 'bounds':
 			out.write('vec3 uv = map01(p, -scale/2., scale/2.);\n')
 			out.write(f'uv.{axis} = p.{axis};\n')
+			out.write('assignUV(res, uv);\n')
+		elif uvMode == 'faces':
+			out.write(f'vec3 uv = vec3(0., p.{axis}, 0.);\n')
+			out.write(f'vec2 pNorm = p.{swiz} / scale.{swiz};\n')
+			out.write('vec2 edge = nearestEdge(pNorm);\n')
+			out.write(f'if (edge.x != 0.) uv.x = pNorm.y * edge.x;\n')
+			out.write(f'else uv.x = pNorm.x * edge.y;\n')
 			out.write('assignUV(res, uv);\n')
 	out.write('return res;\n')
 	out.write('}\n')
