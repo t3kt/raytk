@@ -8,6 +8,7 @@ vec2 THIS_hash22(vec2 p){
 ReturnT thismap(CoordT p, ContextT ctx) {
 	if (IS_FALSE(THIS_Enable)) { return inputOp1(p, ctx); }
 	ReturnT res;
+	CoordT p0 = p;
 	vec2 q;
 	#ifdef THIS_COORD_TYPE_vec3
 	switch (int(THIS_Axis)) {
@@ -17,6 +18,11 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 	}
 	#else
 	q = p;
+	#endif
+
+	q -= THIS_Shift;
+	#ifdef THIS_HAS_INPUT_shiftField
+	q -= adaptAsVec2(inputOp_shiftField(p0, ctx));
 	#endif
 
 	// Distance file values.
@@ -75,6 +81,10 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 			THIS_layer = k;
 			#endif
 
+			locP -= THIS_Offset;
+			#ifdef THIS_HAS_INPUT_offsetField
+			locP -= adaptAsVec2(inputOp_offsetField(p0, ctx));
+			#endif
 			#ifdef THIS_COORD_TYPE_vec3
 			CoordT pForIn = p;
 			switch (int(THIS_Axis)) {

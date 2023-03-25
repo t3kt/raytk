@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.filter.quadTreeRepeat
-  opVersion: '8'
+  opVersion: '9'
   opStatus: beta
 opDef: !def
   enable: !expr
@@ -28,6 +28,7 @@ opDef: !def
 inputs:
 - !input
   Variables: '*'
+  Variableinputs: offsetField shiftField
   Required: true
   coordType: !coordT
     Coordtypevec2: true
@@ -36,3 +37,25 @@ inputs:
     Allcontexttype: true
   returnType: !returnT
     Allreturntype: true
+- !input
+  Localalias: shiftField
+  Required: true
+  coordType: !coordT
+    Coordtypevec2: true
+    Coordtypevec3: true
+  contextType: !contextT
+    Allcontexttype: true
+  returnType: !returnT
+    Returntypevec4: true
+- !input
+  Localalias: offsetField
+  Variables: '*'
+  Variableinputs: shiftField
+  Required: true
+  coordType: !coordT
+    Coordtypevec2: true
+    Coordtypevec3: true
+  contextType: !contextT
+    Allcontexttype: true
+  returnType: !returnT
+    Returntypevec4: true
