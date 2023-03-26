@@ -3,3 +3,7 @@ names	source	handling	readOnlyHandling	conversion	enable
 'Iterationtype'	'param'	'constant'			1
 'Iterations'	'param'	'runtime'	'macro'		1
 (op('custom_params').col(0) if op('custom_params').numRows > 0 else [])	'param'	'runtime'			1
+'Enableaccumulate'	'param'	'macro'			1
+'Swapinputs'	'param'	'runtime'	'constant'		parent().par.Enableaccumulate
+'Combine'	'param'	'runtime'	'constant'		parent().par.Enableaccumulate
+'Blendradius Blendnumber Blendoffset'	'param'	'runtime'	'macro'		parent().par.Enableaccumulate

@@ -3,8 +3,14 @@ void THIS_reflect(inout CoordT p0) {
 	REFLECT_BODY();
 	p0 = THIS_asCoordT(p);
 }
+#ifdef THIS_Enableaccumulate
+void THIS_combine(inout Sdf res1, inout Sdf res2, in CoordT p, in ContextT ctx) {
+	MERGE_PREP();
+	MERGE_BODY();
+}
+#endif
 
-void THIS_apply(inout CoordT p, inout ContextT ctx, inout float valueAdjust, out vec4 orb) {
+void THIS_apply(inout CoordT p, inout ContextT ctx, inout float valueAdjust, out vec4 orb, out ReturnT res) {
 	int n = int(THIS_Iterations);
 	TRANSFORM_INIT();
 	#if defined(THIS_Enablerotate) && defined(THIS_HAS_INPUT_rotateField)
@@ -56,16 +62,28 @@ void THIS_apply(inout CoordT p, inout ContextT ctx, inout float valueAdjust, out
 		orb = min(orb, vec4(adaptAsVec3(abs(preReflectP - p)), length(p)));
 		TRANSFORM_CODE();
 		CUSTOM_CODE();
+
+		#ifdef THIS_Enableaccumulate
+		if (i == 0) {
+			res = inputOp1(p, ctx);
+		} else {
+			Sdf res1 = inputOp1(p, ctx);
+			THIS_combine(res, res1, p, ctx);
+		}
+		#endif
 	}
 }
 
 ReturnT thismap(CoordT p, ContextT ctx) {
 	float valueAdjust = 1.0;
 	vec4 orb = vec4(1000);
+	ReturnT res;
 	if (IS_TRUE(THIS_Enable)) {
-		THIS_apply(p, ctx, valueAdjust, orb);
+		THIS_apply(p, ctx, valueAdjust, orb, res);
 	}
-	ReturnT res = inputOp1(p, ctx);
+	#ifndef THIS_Enableaccumulate
+	res = inputOp1(p, ctx);
+	#endif
 #ifdef RAYTK_ORBIT_IN_SDF
 	res.orbit = vec4(orb);
 #endif

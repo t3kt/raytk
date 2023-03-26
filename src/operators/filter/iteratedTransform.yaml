@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.filter.iteratedTransform
-  opVersion: '24'
+  opVersion: '25'
   opStatus: default
 opDef: !def
   enable: !expr
@@ -14,11 +14,14 @@ opDef: !def
     contextType: !contextT
       Allcontexttype: true
     returnType: !returnT
-      Allreturntype: true
+      Allreturntype: !expr
+        expr: not parent().par.Enableaccumulate
+      Returntypesdf: true
   function: !text
     file: src/operators/filter/iteratedTransform.glsl
     name: function_template
   paramGroupTable: eval_params
+  libraryNames: raytkCombine
   variableTable: !table
     file: src/operators/filter/iteratedTransform_variables.txt
     name: variable_exprs
@@ -73,6 +76,26 @@ inputs:
     Returntypefloat: true
     Returntypevec4: true
 elements:
+- !opElement
+  name: combiner
+  elementType: combiner
+  params:
+    Includenone: false
+    Modeparam: Combine
+    Swapinputsparam: Swapinputs
+    Radiusparam: Blendradius
+    Numberparam: Blendnumber
+    Offsetparam: Blendoffset
+    Radiusfield: ''
+    Offsetfield: ''
+    Numberfield: ''
+    Manageparamstates: true
+    Alwaysincludeallparams: false
+    Switchmode: auto
+    Indexexpr: ''
+    Prepcodeplaceholder: MERGE_PREP();
+    Bodycodeplaceholder: MERGE_BODY();
+    Defaultinitcodeplaceholder: ''
 - !opElement
   name: transformCodeGenerator
   elementType: transformCodeGenerator
