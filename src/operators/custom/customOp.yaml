@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.custom.customOp
-  opVersion: '15'
+  opVersion: '16'
   opStatus: beta
 opDef: !def
   enable: !expr
@@ -67,6 +67,8 @@ opDef: !def
     expr: parent().par.Texturetable or ''
   macroTable: !expr
     expr: parent().par.Macrotable or ''
+  variableTable: !expr
+    expr: parent().par.Variabletable or ''
   help: !text
     file: src/operators/custom/customOp.md
     name: help
