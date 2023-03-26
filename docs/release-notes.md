@@ -1,5 +1,45 @@
 # Release Notes
 
+## v0.32
+
+### Highlights
+
+### Details
+
+* Improvements / additions
+  * New OPs
+    * axisRotate (#1047)
+    * hashField (#1041)
+    * pistonSdf2d, pistonSdf (#1042)
+    * lineSeriesSdf (#967)
+    * rimContrib (#353)
+    * sampleAlongLine (#1035)
+    * springSdf (#1044)
+  * New OP features
+    * assignColor - option conditionally apply only when missing
+    * basicMat/modularMat/pbrMat/reflectMat - option to conditionally apply only when missing (#1032)
+    * boxSdf - faces UV mode (#526)
+    * instance - CHOP for disabling instances (#1036)
+    * modularMat - 2D support (#1030)
+    * planeSdf - finite depth option
+    * prismSdf - improved uv modes (#952)
+    * projectPlane - axis position variable
+    * quadTreeRepeat - offset and shift parameters / field inputs (#765)
+    * subdivisionSdf2d - min size, size, seed, pattern shift parameters / field inputs (#885)
+    * translate - direction/distance mode (#1037)
+  * Documentation for various operators
+* Fixes
+  * Fix loading issues in variableReference by switching to StrMenu (#1020)
+  * Fix background color for code blocks on doc site
+  * Fix errors for optimization on parameters - combine/etc (#993)
+  * Fix input variable settings - onion
+  * Fix type settings in rotate
+  * Fix boxSdf UVs in optimized mode (#1029)
+* Changes (potentially breaking)
+* Infrastructure / internals
+  * Same metadata for RComps in yaml files
+  * Remove redundant json metadata files
+
 ## v0.31
 
 ### Highlights
