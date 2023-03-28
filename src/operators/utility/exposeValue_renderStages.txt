@@ -1,2 +1,11 @@
 name	label	macro
+any	Any
 primary	Primary	RAYTK_STAGE_PRIMARY
+material	Material	RAYTK_STAGE_MATERIAL
+normal	Normals	RAYTK_STAGE_NORMAL
+shadow	Shadow	RAYTK_STAGE_SHADOW
+reflect	Reflect	RAYTK_STAGE_REFLECT
+refract	Refract	RAYTK_STAGE_REFRACT
+occlusion	Occlusion	RAYTK_STAGE_OCCLUSION
+volumetric	Volumetric	RAYTK_STAGE_VOLUMETRIC
+volumetricshadow	Volumetric Shadow	RAYTK_STAGE_VOLUMETRIC_SHADOW

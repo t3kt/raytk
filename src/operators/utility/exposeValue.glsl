@@ -1,5 +1,7 @@
 bool THIS_check(ReturnT res, ContextT ctx) {
+	#ifdef THIS_RENDER_STAGE
 	if (getStage() != THIS_RENDER_STAGE) return false;
+	#endif
 	#if defined(THIS_Onlyonsurfacehit) && defined(THIS_RETURN_TYPE_Sdf)
 	#ifdef RAYTK_SURF_DIST
 	// Not sure why this needs to be multiplied by 2, so this may be incorrect.
