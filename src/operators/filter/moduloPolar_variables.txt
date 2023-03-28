@@ -1,3 +1,7 @@
 name	label	dataType	enable
 step	Step Index	float	1
 normstep	Normalized Step (0..1)	float	1
+globalangle	Global Angle (0..360)	float	1
+normglobalangle	Normalized Global Angle (0..1)	float	1
+normlocalangle	Normalized Local Angle (0..1)	float	1
+centerdist	Center Distance	float	1
