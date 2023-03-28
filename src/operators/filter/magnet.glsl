@@ -30,6 +30,9 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 	p *= rotateMatrix(THIS_Rotate * d);
 	#endif
 
+	CoordT translate = THIS_asCoordT(THIS_Translate) * d;
+	p -= translate;
+
 	CoordT scale = mix(CoordT(1.), THIS_asCoordT(THIS_Scale), d);
 	p /= scale;
 	p += center;

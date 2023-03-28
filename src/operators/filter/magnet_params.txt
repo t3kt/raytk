@@ -1,2 +1,2 @@
 names	source	handling	readOnlyHandling	conversion	enable
-Center[xyz] Scale[xyz] Rotate[xyz] Amount Radius Fade	param	runtime	macro		1
+Center[xyz] Translate[xyz] Scale[xyz] Rotate[xyz] Amount Radius Fade	param	runtime	macro		1
