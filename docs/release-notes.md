@@ -9,6 +9,8 @@
 * Improvements / additions
   * New OPs
     * axisRotate (#1047)
+    * blackbodyColorField
+    * blobRingPattern
     * hashField (#1041)
     * pistonSdf2d, pistonSdf (#1042)
     * lineSeriesSdf (#967)
@@ -19,8 +21,13 @@
     * assignColor - option conditionally apply only when missing
     * basicMat/modularMat/pbrMat/reflectMat - option to conditionally apply only when missing (#1032)
     * boxSdf - faces UV mode (#526)
+    * customOp - support for variables
+    * exposeValue - more options for render stage filtering
     * instance - CHOP for disabling instances (#1036)
+    * iteratedTransform - SDF accumulation mode (#1048)
+    * magnet - translate parameters
     * modularMat - 2D support (#1030)
+    * moduloPolar - angle / distance variables (#1040)
     * planeSdf - finite depth option
     * prismSdf - improved uv modes (#952)
     * projectPlane - axis position variable
