@@ -493,3 +493,24 @@ vec2 nearestEdge(vec2 p) {
 	if (p2.x > p2.y) return vec2((p.x < 0.) ? -1. : 1., 0.);
 	else return vec2(0., (p.y < 0.) ? -1. : 1.);
 }
+
+// https://lygia.xyz/math/pow5
+float pow5(const in float x) {
+	float x2 = x * x;
+	return x2 * x2 * x;
+}
+
+vec2 pow5(const in vec2 x) {
+	vec2 x2 = x * x;
+	return x2 * x2 * x;
+}
+
+vec3 pow5(const in vec3 x) {
+	vec3 x2 = x * x;
+	return x2 * x2 * x;
+}
+
+vec4 pow5(const in vec4 x) {
+	vec4 x2 = x * x;
+	return x2 * x2 * x;
+}

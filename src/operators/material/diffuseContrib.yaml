@@ -20,7 +20,7 @@ opDef: !def
     name: function
   paramGroupTable: eval_params
   libraryNames: !expr
-    expr: op('diffuseContrib_lib')
+    expr: op('diffuseContrib_lib'), 'raytkMaterial'
   macroTable: !table
     file: src/operators/material/diffuseContrib_macros.txt
     name: macro_exprs
