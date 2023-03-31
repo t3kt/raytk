@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.sdf2d.triangleSdf2d
-  opVersion: '9'
+  opVersion: '10'
   opStatus: default
 opDef: !def
   enable: true
@@ -54,3 +54,18 @@ elements:
     Switchmode: constswitch
     Indexexpr: ''
     Placeholder: BODY();
+- !opElement
+  name: codeSwitcher_Direction
+  elementType: codeSwitcher
+  params:
+    Elementroot: ''
+    Table: !table
+      file: src/operators/sdf2d/triangleSdf2d_directions.txt
+      name: directions
+    Param: Direction
+    Autoupdateparams: true
+    Manageparamstates: false
+    Alwaysincludeallparams: false
+    Switchmode: auto
+    Indexexpr: ''
+    Placeholder: DIRECTION_BODY();

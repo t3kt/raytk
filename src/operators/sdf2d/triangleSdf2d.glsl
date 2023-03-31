@@ -9,6 +9,7 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 	#else
 	vec2 sz = vec2(THIS_Width, THIS_Height);
 	#endif
+	DIRECTION_BODY();
 	float d;
 	BODY();
 	return createSdf(d);
