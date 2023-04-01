@@ -514,3 +514,11 @@ vec4 pow5(const in vec4 x) {
 	vec4 x2 = x * x;
 	return x2 * x2 * x;
 }
+
+// https://github.com/CesiumGS/cesium/blob/master/Source/Shaders/Builtin/Functions/
+float czm_luminance(vec3 rgb)
+{
+	// Algorithm from Chapter 10 of Graphics Shaders.
+	const vec3 W = vec3(0.2125, 0.7154, 0.0721);
+	return dot(rgb, W);
+}
