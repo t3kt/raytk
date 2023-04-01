@@ -1,0 +1,59 @@
+!rop
+meta: !meta
+  opType: raytk.operators.filter.linearClone
+  opVersion: '0'
+  opStatus: default
+opDef: !def
+  enable: !expr
+    expr: op('..').par.Enable
+  useRuntimeBypass: true
+  typeSpec: !ropTypes
+    coordType: !coordT
+      Allcoordtype: true
+    contextType: !contextT
+      Allcontexttype: true
+    returnType: !returnT
+      Returntypesdf: true
+  function: !text
+    file: src/operators/filter/linearClone.glsl
+    name: function
+  paramGroupTable: eval_params
+  libraryNames: raytkCombine
+  variableTable: !table
+    file: src/operators/filter/linearClone_variables.txt
+    name: variable_exprs
+    evaluate: true
+    evalOpts: !evalOpts
+      excludeFirstRow: true
+      cols: enable
+inputs:
+- !input
+  Variables: '*'
+  Required: true
+  coordType: !coordT
+    Allcoordtype: true
+  contextType: !contextT
+    Allcontexttype: true
+  returnType: !returnT
+    Returntypesdf: true
+elements:
+- !opElement
+  name: combiner
+  elementType: combiner
+  params:
+    Includenone: false
+    Modeparam: Mergetype
+    Swapinputsparam: ''
+    Radiusparam: Mergeradius
+    Numberparam: Mergenumber
+    Offsetparam: Mergeoffset
+    Radiusfield: ''
+    Offsetfield: ''
+    Numberfield: ''
+    Manageparamstates: true
+    Alwaysincludeallparams: false
+    Switchmode: constswitch
+    Indexexpr: ''
+    Prepcodeplaceholder: MERGE_PREP();
+    Bodycodeplaceholder: MERGE_BODY();
+    Defaultinitcodeplaceholder: ''
