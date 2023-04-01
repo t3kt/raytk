@@ -35,7 +35,7 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 		#else
 		#error invalidLayout
 		#endif
-		p /= scale;
+		p /= THIS_asCoordT(scale);
 		if (cell < 1) {
 			res = withAdjustedScale(inputOp1(p, ctx), scaleMult);
 		} else  if (cell < 2) {
