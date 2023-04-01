@@ -12,6 +12,7 @@
     * blackbodyColorField
     * blobRingPattern
     * hashField (#1041)
+    * linearClone (#316)
     * pistonSdf2d, pistonSdf (#1042)
     * lineSeriesSdf (#967)
     * rimContrib (#353)
@@ -21,7 +22,9 @@
     * assignColor - option conditionally apply only when missing
     * basicMat/modularMat/pbrMat/reflectMat - option to conditionally apply only when missing (#1032)
     * boxSdf - faces UV mode (#526)
-    * customOp - support for variables
+    * coneSdf - offset/angle variables
+    * customOp - support for variables, tools for creating tables
+    * diffuseContrib - burley shading method
     * exposeValue - more options for render stage filtering
     * instance - CHOP for disabling instances (#1036)
     * iteratedTransform - SDF accumulation mode (#1048)
@@ -34,6 +37,8 @@
     * quadTreeRepeat - offset and shift parameters / field inputs (#765)
     * subdivisionSdf2d - min size, size, seed, pattern shift parameters / field inputs (#885)
     * translate - direction/distance mode (#1037)
+    * triangleSdf2d - direction parameter and inverted isosceles mode (#1050)
+    * vectorToFloat - color-based modes (HSV, luminance)
   * Documentation for various operators
 * Fixes
   * Fix loading issues in variableReference by switching to StrMenu (#1020)
@@ -42,6 +47,7 @@
   * Fix input variable settings - onion
   * Fix type settings in rotate
   * Fix boxSdf UVs in optimized mode (#1029)
+  * Fix layoutGrid 2D support
 * Changes (potentially breaking)
 * Infrastructure / internals
   * Same metadata for RComps in yaml files
