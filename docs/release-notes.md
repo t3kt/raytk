@@ -4,6 +4,9 @@
 
 ### Highlights
 
+* New SDFs: pistonSdf, pistonSdf2d, lineSeriesSdf, springSdf
+* New noise and color fields.
+
 ### Details
 
 * Improvements / additions
@@ -18,6 +21,7 @@
     * rimContrib (#353)
     * sampleAlongLine (#1035)
     * springSdf (#1044)
+    * worleyNoiseField (#400)
   * New OP features
     * assignColor - option conditionally apply only when missing
     * basicMat/modularMat/pbrMat/reflectMat - option to conditionally apply only when missing (#1032)
@@ -35,6 +39,7 @@
     * prismSdf - improved uv modes (#952)
     * projectPlane - axis position variable
     * quadTreeRepeat - offset and shift parameters / field inputs (#765)
+    * splitCamera - camera index variable (#515)
     * subdivisionSdf2d - min size, size, seed, pattern shift parameters / field inputs (#885)
     * translate - direction/distance mode (#1037)
     * triangleSdf2d - direction parameter and inverted isosceles mode (#1050)
