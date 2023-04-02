@@ -1,0 +1,3 @@
+name	label	code
+euclidean	Euclidean	md = false;
+manhattan	Manhattan	md = true;

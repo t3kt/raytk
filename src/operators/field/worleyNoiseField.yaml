@@ -1,0 +1,74 @@
+!rop
+meta: !meta
+  opType: raytk.operators.field.worleyNoiseField
+  opVersion: '0'
+  opStatus: beta
+opDef: !def
+  enable: true
+  typeSpec: !ropTypes
+    coordType: !coordT
+      Allcoordtype: true
+    contextType: !contextT
+      Allcontexttype: true
+    returnType: !returnT
+      Returntypevec4: true
+  function: !text
+    file: src/operators/field/worleyNoiseField.glsl
+    name: function
+  paramGroupTable: eval_params
+  libraryNames: !expr
+    expr: op('worleyNoiseField_lib')
+  macroTable: !table
+    file: src/operators/field/worleyNoiseField_macros.txt
+    name: macro_exprs
+    evaluate: true
+    evalOpts: !evalOpts {}
+inputs:
+- !input
+  Localalias: coordField
+  coordType: !coordT
+    Allcoordtype: true
+  contextType: !contextT
+    Allcontexttype: true
+  returnType: !returnT
+    Returntypefloat: true
+    Returntypevec4: true
+- !input
+  Localalias: jitterField
+  coordType: !coordT
+    Allcoordtype: true
+  contextType: !contextT
+    Allcontexttype: true
+  returnType: !returnT
+    Returntypefloat: true
+elements:
+- !opElement
+  name: codeSwitcher_Noisetype
+  elementType: codeSwitcher
+  params:
+    Elementroot: ''
+    Table: !table
+      file: src/operators/field/worleyNoiseField_noiseTypes.txt
+      name: noiseTypes
+    Param: Noisetype
+    Autoupdateparams: true
+    Manageparamstates: false
+    Alwaysincludeallparams: false
+    Switchmode: inline
+    Indexexpr: ''
+    Placeholder: BODY();
+- !opElement
+  name: codeSwitcher_Distancetype
+  elementType: codeSwitcher
+  params:
+    Elementroot: ''
+    Table: !table
+      file: src/operators/field/worleyNoiseField_distanceTypes.txt
+      name: distanceTypes
+    Param: Distancetype
+    Autoupdateparams: true
+    Manageparamstates: false
+    Alwaysincludeallparams: false
+    Switchmode: auto
+    Indexexpr: ''
+    Placeholder: DISTANCE_TYPE_BODY();
