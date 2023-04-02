@@ -1,0 +1,60 @@
+!rop
+meta: !meta
+  opType: raytk.operators.field.spectralColorField
+  opVersion: '0'
+  opStatus: beta
+opDef: !def
+  enable: true
+  typeSpec: !ropTypes
+    coordType: !coordT
+      Allcoordtype: true
+    contextType: !contextT
+      Allcontexttype: true
+    returnType: !returnT
+      Returntypevec4: true
+  function: !text
+    file: src/operators/field/spectralColorField.glsl
+    name: function
+  paramGroupTable: eval_params
+  libraryNames: !expr
+    expr: op('spectralColorField_lib')
+inputs:
+- !input
+  Localalias: wavelengthField
+  coordType: !coordT
+    Allcoordtype: true
+  contextType: !contextT
+    Allcontexttype: true
+  returnType: !returnT
+    Returntypefloat: true
+elements:
+- !opElement
+  name: codeSwitcher_Spectrumtype
+  elementType: codeSwitcher
+  params:
+    Elementroot: ''
+    Table: !table
+      file: src/operators/field/spectralColorField_spectrumTypes.txt
+      name: spectrumTypes
+    Param: Spectrumtype
+    Autoupdateparams: true
+    Manageparamstates: false
+    Alwaysincludeallparams: false
+    Switchmode: auto
+    Indexexpr: ''
+    Placeholder: SPECTRUM_BODY();
+- !opElement
+  name: codeSwitcher_Wavelengthunit
+  elementType: codeSwitcher
+  params:
+    Elementroot: ''
+    Table: !table
+      file: src/operators/field/spectralColorField_wavelengthUnits.txt
+      name: wavelengthUnits
+    Param: Wavelengthunit
+    Autoupdateparams: true
+    Manageparamstates: false
+    Alwaysincludeallparams: false
+    Switchmode: auto
+    Indexexpr: ''
+    Placeholder: WAVELENGTH_UNIT();

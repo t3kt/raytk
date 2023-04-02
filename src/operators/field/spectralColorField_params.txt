@@ -1,0 +1,2 @@
+names	source	handling	readOnlyHandling	conversion	enable
+Wavelength	param	runtime	macro		op('wavelength_definition').numRows < 2

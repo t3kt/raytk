@@ -1,0 +1,7 @@
+name	label	code
+zucconi	Zucconi	res = vec4(spectral_zucconi(w), 0.);
+zucconi6	Zucconi 6	res = vec4(spectral_zucconi6(w), 0.);
+jet	MATLAB Jet Color Scheme	res = vec4(spectral_jet(w), 0.);
+gems	GPU Gems	res = vec4(spectral_gems(w), 0.);
+bruton	Bruton	res = vec4(spectral_bruton(w), 0.);
+spektre	Spektre	res = vec4(spectral_spektre(w), 0.);
