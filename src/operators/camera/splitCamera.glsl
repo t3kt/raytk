@@ -1,6 +1,13 @@
+void THIS_exposeIndex(int i) {
+	#ifdef THIS_EXPOSE_index
+	THIS_index = i;
+	#endif
+}
+
 ReturnT thismap(CoordT p, ContextT ctx) {
 	Ray ray;
 
+	THIS_exposeIndex(0);
 	#if THIS_INPUT_COUNT == 1
 	ray = inputOp1(p, ctx);
 	#elif defined(THIS_cameraMap)
@@ -9,21 +16,27 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 		int i = int(round(mapVal * (THIS_INPUT_COUNT - 1)));
 		i = clamp(i, 0, THIS_INPUT_COUNT - 1);
 		if (i <= 0) {
+			THIS_exposeIndex(0);
 			ray = THIS_INPUT_1(p, ctx);
 		} else {
 			#if THIS_INPUT_COUNT == 2
+			THIS_exposeIndex(1);
 			ray = inputOp2(p, ctx);
 			#else
       {
 				if (i <= 1) {
+					THIS_exposeIndex(1);
 					ray = THIS_INPUT_2(p, ctx);
 				} else {
 					#if THIS_INPUT_COUNT == 3
+					THIS_exposeIndex(2);
 					ray = THIS_INPUT_3(p, ctx);
 					#else
 					if (i <= 2) {
+						THIS_exposeIndex(2);
 						ray = THIS_INPUT_3(p, ctx);
 					} else {
+						THIS_exposeIndex(3);
 						ray = THIS_INPUT_4(p, ctx);
 					}
 					#endif
@@ -44,14 +57,18 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 			#endif
 			if (uv.x > 0.) {
 				if (uv.y > 0.) {
+					THIS_exposeIndex(1);
 					ray = THIS_INPUT_2(p, ctx);
 				} else {
+					THIS_exposeIndex(3);
 					ray = THIS_INPUT_4(p, ctx);
 				}
 			} else {
 				if (uv.y > 0.) {
+					THIS_exposeIndex(0);
 					ray = THIS_INPUT_1(p, ctx);
 				} else {
+					THIS_exposeIndex(2);
 					ray = THIS_INPUT_3(p, ctx);
 				}
 			}
@@ -81,20 +98,24 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 
 			int i = int(j * THIS_INPUT_COUNT);
 			if (i == 0) {
+				THIS_exposeIndex(0);
 				ray = THIS_INPUT_1(p, ctx);
 			}
 			#if THIS_INPUT_COUNT > 1
 			else if (i == 1) {
+				THIS_exposeIndex(1);
 				ray = THIS_INPUT_2(p, ctx);
 			}
 			#endif
 			#if THIS_INPUT_COUNT > 2
 			else if (i == 2) {
+				THIS_exposeIndex(2);
 				ray = THIS_INPUT_3(p, ctx);
 			}
 			#endif
 			#if THIS_INPUT_COUNT > 3
 			else if (i == 3) {
+				THIS_exposeIndex(3);
 				ray = THIS_INPUT_4(p, ctx);
 			}
 			#endif

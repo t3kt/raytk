@@ -1,0 +1,2 @@
+name	path	type
+cameraMap	op(parent().par.Cameramap) or ''	'2d'
