@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.filter.iteratedTransform
-  opVersion: '25'
+  opVersion: '26'
   opStatus: default
 opDef: !def
   enable: !expr
@@ -66,6 +66,17 @@ inputs:
     Returntypevec4: true
 - !input
   Localalias: scaleField
+  Variables: '*'
+  coordType: !coordT
+    Coordtypevec2: true
+    Coordtypevec3: true
+  contextType: !contextT
+    Allcontexttype: true
+  returnType: !returnT
+    Returntypefloat: true
+    Returntypevec4: true
+- !input
+  Localalias: transformField
   Variables: '*'
   coordType: !coordT
     Coordtypevec2: true

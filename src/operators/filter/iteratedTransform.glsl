@@ -60,6 +60,9 @@ void THIS_apply(inout CoordT p, inout ContextT ctx, inout float valueAdjust, out
 		CoordT preReflectP = p;
 		THIS_reflect(p);
 		orb = min(orb, vec4(adaptAsVec3(abs(preReflectP - p)), length(p)));
+		#ifdef THIS_HAS_INPUT_transformField
+		p = THIS_asCoordT(inputOp_transformField(p, ctx));
+		#endif
 		TRANSFORM_CODE();
 		CUSTOM_CODE();
 
