@@ -233,6 +233,9 @@ float sabs(float x, float k) {
 	if (x == 0.) return abs(x);
 	return 2.0 * k * log(exp(-abs(x) / k) + 1.0) + abs(x);
 }
+vec3 sabs(vec3 x, vec3 k) {
+	return vec3(sabs(x.x, k.x), sabs(x.y, k.y), sabs(x.z, k.z));
+}
 
 float expLength(vec2 p, float k) {
 	p = abs(p);

@@ -27,7 +27,18 @@ void THIS_transform(inout vec4 q, CoordT p, inout ContextT ctx) {
 	#endif
 	vec3 mask;
 	AXES_BODY();
-	q.xyz = mix(q.xyz, abs(q.xyz), mask);
+	vec3 mirrored;
+	if (IS_TRUE(THIS_Enableblend)) {
+		#ifdef THIS_HAS_INPUT_blendingField
+		vec3 b = fillToVec3(inputOp_blendingField(p, ctx));
+		#else
+		vec3 b = THIS_Blending;
+		#endif
+		mirrored = sabs(q.xyz, b);
+	} else {
+		mirrored = abs(q.xyz);
+	}
+	q.xyz = mix(q.xyz, mirrored, mask);
 	vec3 o = THIS_Offset;
 	#ifdef THIS_HAS_INPUT_offsetField
 	o += fillToVec3(inputOp_offsetField(p, ctx));
