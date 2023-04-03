@@ -56,6 +56,7 @@
   * Fix boxSdf UVs in optimized mode (#1029)
   * Fix layoutGrid 2D support
 * Changes (potentially breaking)
+  * Fix value scaling for rotate input on iteratedTransform. Previously it was treating inputs as radians rather than degrees.
 * Infrastructure / internals
   * Same metadata for RComps in yaml files
   * Remove redundant json metadata files

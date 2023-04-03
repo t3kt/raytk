@@ -43,7 +43,7 @@ void THIS_apply(inout CoordT p, inout ContextT ctx, inout float valueAdjust, out
 		THIS_normstep = ratio;
 		#endif
 		#if defined(THIS_Enablerotate) && defined(THIS_HAS_INPUT_rotateField)
-		rotate = baseRot + inputOp_rotateField(p, ctx).xyz;
+		rotate = baseRot + radians(inputOp_rotateField(p, ctx).xyz);
 		#endif
 		#if defined(THIS_Enabletranslate) && defined(THIS_HAS_INPUT_translateField)
 		translate = baseT + inputOp_translateField(p, ctx).xyz;
