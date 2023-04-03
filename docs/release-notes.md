@@ -6,6 +6,7 @@
 
 * New SDFs: pistonSdf, pistonSdf2d, lineSeriesSdf, springSdf
 * New noise and color fields.
+* Enhancements to KIFS fractals with iteratedTransform.
 
 ### Details
 
@@ -20,6 +21,7 @@
     * lineSeriesSdf (#967)
     * rimContrib (#353)
     * sampleAlongLine (#1035)
+    * spectralColorField
     * springSdf (#1044)
     * worleyNoiseField (#400)
   * New OP features
@@ -31,7 +33,7 @@
     * diffuseContrib - burley shading method
     * exposeValue - more options for render stage filtering
     * instance - CHOP for disabling instances (#1036)
-    * iteratedTransform - SDF accumulation mode (#1048)
+    * iteratedTransform - SDF accumulation mode, custom transform input (#1048)
     * magnet - translate parameters
     * modularMat - 2D support (#1030)
     * moduloPolar - angle / distance variables (#1040)
