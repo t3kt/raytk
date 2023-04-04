@@ -108,6 +108,13 @@ op:
     name: Top
   summary: Defines a cone or capped cone shape.
   thumb: assets/images/reference/operators/sdf/coneSdf_thumb.png
+  variables:
+  - label: axispos
+    name: axispos
+  - label: normoffset
+    name: normoffset
+  - label: normangle
+    name: normangle
 
 ---
 

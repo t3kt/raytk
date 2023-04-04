@@ -1,7 +1,0 @@
-{
-  "meta": {
-    "opStatus": "beta",
-    "opType": "raytk.operators.filter.sphericalMobiusTransform",
-    "opVersion": 5
-  }
-}

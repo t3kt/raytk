@@ -1,0 +1,5 @@
+name	label	code	coordType	coordLength
+worley2d	Worley 2D (Original)	res = THIS_asReturnT(worley2D(q, j, md));	vec2	2
+worley2x2	Worley 2D (Fast)	res = THIS_asReturnT(worley2x2(q, j, md));	vec2	2
+worley3d	Worley 3D (Original)	res = THIS_asReturnT(worley3D(q, j, md));	vec3	3
+worley2x2x2	Worley 3D (Fast)	res = THIS_asReturnT(worley2x2x2(q, j, md));	vec3	3

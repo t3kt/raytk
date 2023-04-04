@@ -1,7 +1,0 @@
-{
-  "meta": {
-    "opStatus": "default",
-    "opType": "raytk.operators.material.surfaceColorContrib",
-    "opVersion": 5
-  }
-}

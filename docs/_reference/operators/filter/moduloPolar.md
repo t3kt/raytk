@@ -163,6 +163,14 @@ op:
     name: step
   - label: normstep
     name: normstep
+  - label: globalangle
+    name: globalangle
+  - label: normglobalangle
+    name: normglobalangle
+  - label: normlocalangle
+    name: normlocalangle
+  - label: centerdist
+    name: centerdist
 
 ---
 

@@ -2,3 +2,5 @@ names	source	handling	readOnlyHandling	conversion	enable
 Center[xyz] Offset[xyz]	param	runtime	macro		1
 Flipside[xyz]	param	runtime	constant		op('flipSide_definition').numRows < 2
 Dir[xyz]	param	constant			1
+Enableblend	param	constant			1
+Blending[xyz]	param	runtime	macro		op('blending_definition').numRows < 2

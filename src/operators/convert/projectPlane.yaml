@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.convert.projectPlane
-  opVersion: '6'
+  opVersion: '7'
   opStatus: default
 opDef: !def
   enable: true
@@ -15,11 +15,19 @@ opDef: !def
   function: !text
     file: src/operators/convert/projectPlane.glsl
     name: function
+  variableTable: !table
+    file: src/operators/convert/projectPlane_variables.txt
+    name: variable_exprs
+    evaluate: true
+    evalOpts: !evalOpts
+      excludeFirstRow: true
+      cols: enable
   help: !text
     file: src/operators/convert/projectPlane.md
     name: help
 inputs:
 - !input
+  Variables: axispos
   Required: true
   coordType: !coordT
     Coordtypefloat: !expr

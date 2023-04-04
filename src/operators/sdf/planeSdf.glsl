@@ -5,16 +5,19 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 		case 1: p = p.yzx; break;
 		case 2: p = p.zxy; break;
 	}
-	#if !defined(THIS_HAS_INPUT_offsetField)
-	float d = p.x - THIS_Offset;
-	#elif defined(inputOp_offsetField_COORD_TYPE_vec2)
-	float d = p.x - THIS_Offset - inputOp_offsetField(p.yz, ctx);
-	#else
-	float d = p.x - THIS_Offset - inputOp_offsetField(p0, ctx);
+	float o = THIS_Offset;
+	#if defined(inputOp_offsetField_COORD_TYPE_vec2)
+	o += inputOp_offsetField(p.yz, ctx);
+	#elif defined(THIS_HAS_INPUT_offsetField)
+	o += inputOp_offsetField(p0, ctx);
 	#endif
-	if (IS_TRUE(THIS_Flip)) {
-		d *= -1.;
-	}
+	#ifdef THIS_HAS_INPUT_thicknessField
+	float th = inputOp_thicknessField(p0, ctx);
+	#else
+	float th = THIS_Thickness;
+	#endif
+	float d;
+	BODY();
 	ReturnT res = createSdf(d);
 	#ifdef RAYTK_USE_UV
 	assignUV(res, vec3(p.yz, 0.));

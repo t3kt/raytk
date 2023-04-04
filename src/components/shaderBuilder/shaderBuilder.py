@@ -388,12 +388,29 @@ class ShaderBuilder:
 				dat.appendRow(['path', 'level', 'message'])
 			dat.appendRow([path, level, message])
 		self._validateVariableReferences(addError)
-		if _isInDevelMode():
+		self._validateDefTypes(addError)
+		if _isInDevelMode() and hasattr(parent, 'raytk'):
 			return
-		toolkitVersions = {}  # type: Dict[str, int]
+		self._validateToolkitVersions(addError)
+
+	def _validateDefTypes(self, addError: 'Callable[[str, str, str], None]'):
+		defsTable = self._definitionTable()
+		if defsTable.numRows < 2:
+			return
+		for row in range(1, defsTable.numRows):
+			path = defsTable[row, 'path'].val
+			for category in ('coordType', 'contextType', 'returnType'):
+				val = defsTable[row, category].val
+				if not val:
+					addError(path, 'error', f'Internal error: No {category} defined in {path}')
+				elif ' ' in val and len(val.split()) > 1:
+					addError(path, 'error', f'Internal error: Multiple {category} defined: {val} in {path}')
+
+	def _validateToolkitVersions(self, addError: 'Callable[[str, str, str], None]'):
 		defsTable = self._definitionTable()
 		if defsTable.numRows < 2 or not defsTable[0, 'toolkitVersion']:
 			return
+		toolkitVersions = {}  # type: Dict[str, int]
 		for i in range(1, defsTable.numRows):
 			version = str(defsTable[i, 'toolkitVersion'] or '')
 			if version != '':

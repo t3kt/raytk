@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.material.basicMat
-  opVersion: '29'
+  opVersion: '30'
   opStatus: default
 opDef: !def
   enable: !expr
@@ -61,3 +61,19 @@ inputs:
   returnType: !returnT
     Returntypefloat: true
     Returntypevec4: true
+elements:
+- !opElement
+  name: codeSwitcher_Condition
+  elementType: codeSwitcher
+  params:
+    Elementroot: ''
+    Table: !table
+      file: src/operators/material/basicMat_conditions.txt
+      name: conditions
+    Param: Condition
+    Autoupdateparams: true
+    Manageparamstates: false
+    Alwaysincludeallparams: false
+    Switchmode: auto
+    Indexexpr: ''
+    Placeholder: CONDITION();

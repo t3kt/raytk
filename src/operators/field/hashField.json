@@ -1,7 +1,0 @@
-{
-  "meta": {
-    "opStatus": "alpha",
-    "opType": "raytk.operators.field.hashField",
-    "opVersion": 2
-  }
-}

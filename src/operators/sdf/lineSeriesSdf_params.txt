@@ -1,0 +1,12 @@
+names	source	handling	readOnlyHandling	conversion	enable
+Source	param	macro			1
+Count	param	macro			1
+Point[ab]1[xyz]	param	runtime	macro		parent().par.Source == 'params' and parent().par.Count >= 1
+Point[ab]2[xyz]	param	runtime	macro		parent().par.Source == 'params' and parent().par.Count >= 2
+Point[ab]3[xyz]	param	runtime	macro		parent().par.Source == 'params' and parent().par.Count >= 3
+Point[ab]4[xyz]	param	runtime	macro		parent().par.Source == 'params' and parent().par.Count >= 4
+Point[ab]5[xyz]	param	runtime	macro		parent().par.Source == 'params' and parent().par.Count >= 5
+Point[ab]6[xyz]	param	runtime	macro		parent().par.Source == 'params' and parent().par.Count >= 6
+Point[ab]7[xyz]	param	runtime	macro		parent().par.Source == 'params' and parent().par.Count >= 7
+Point[ab]8[xyz]	param	runtime	macro		parent().par.Source == 'params' and parent().par.Count >= 8
+Thickness	param	runtime	macro		1

@@ -1,0 +1,7 @@
+name	label	code
+xpos	X+ (Right)	q = p.zyx;
+xneg	X- (Left)	q = p.zyx * vec3(1.,1.,-1.);
+ypos	Y+ (Up)	q = p.zxy;
+yneg	Y- (Down)	q = p.zxy * vec3(1.,1.,-1.);
+zpos	Z+ (Forward)	q = p.yxz * vec3(1.,1.,-1.);
+zneg	Z- (Backward)	q = p.yxz;

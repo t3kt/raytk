@@ -1,0 +1,56 @@
+!rop
+meta: !meta
+  opType: raytk.operators.material.rimContrib
+  opVersion: '0'
+  opStatus: beta
+opDef: !def
+  enable: !expr
+    expr: op('..').par.Enable
+  useRuntimeBypass: true
+  typeSpec: !ropTypes
+    coordType: !coordT
+      Allcoordtype: true
+    contextType: !contextT
+      Contexttypematerialcontext: true
+    returnType: !returnT
+      Returntypefloat: !expr
+        expr: not parent().par.Usecolor
+      Returntypevec4: !expr
+        expr: parent().par.Usecolor
+  function: !text
+    file: src/operators/material/rimContrib.glsl
+    name: function
+  paramGroupTable: eval_params
+  tagTable: !table
+    file: src/operators/material/rimContrib_tags.txt
+    name: tag_exprs
+    evaluate: true
+    evalOpts: !evalOpts
+      excludeFirstRow: true
+      cols: enable
+inputs:
+- !input
+  Localalias: thicknessField
+  coordType: !coordT
+    Allcoordtype: true
+  contextType: !contextT
+    Contexttypematerialcontext: true
+  returnType: !returnT
+    Returntypefloat: true
+- !input
+  Localalias: blendingField
+  coordType: !coordT
+    Allcoordtype: true
+  contextType: !contextT
+    Contexttypematerialcontext: true
+  returnType: !returnT
+    Returntypefloat: true
+- !input
+  Localalias: colorField
+  coordType: !coordT
+    Allcoordtype: true
+  contextType: !contextT
+    Contexttypematerialcontext: true
+  returnType: !returnT
+    Returntypefloat: true
+    Returntypevec4: true

@@ -12,7 +12,10 @@ def _allHostPars() -> 'List[Par]':
 	host = parent().par.Hostop.eval()
 	if not host:
 		return []
-	return host.pars(*tdu.expand(parent().par.Param.eval()))
+	parName = parent().par.Param.eval()
+	if not parName:
+		return []
+	return host.pars(*tdu.expand(parName))
 
 def _hostPar() -> 'Optional[Par]':
 	for p in _allHostPars():
@@ -45,11 +48,15 @@ def buildParameterGroupTable(dat: 'DAT'):
 			dat.appendRow([parent().par.Param, 'param', 'runtime', '', '', '1'])
 	if parent().par.Manageparamstates:
 		if mode == 'switch' or mode == 'constswitch' or parent().par.Alwaysincludeallparams:
-			params = ' '.join(_paramModes().keys()).strip()
+			params = ' '.join(_paramModes('params').keys()).strip()
+			boolParams = ' '.join(_paramModes('boolParams').keys()).strip()
 		else:
 			params = str(op('currentItemInfo')[1, 'params'] or '').strip()
+			boolParams = str(op('currentItemInfo')[1, 'boolParams'] or '').strip()
 		if params:
 			dat.appendRow([params, 'param', 'runtime', 'macro', '', '1'])
+		if boolParams:
+			dat.appendRow([boolParams, 'param', 'runtime', 'constant', '', '1'])
 
 def buildMacroTable(dat: 'DAT', itemInfo: 'DAT'):
 	dat.clear()
@@ -100,13 +107,13 @@ def _buildRuntimeSwitch(table: 'DAT', isConstant=False):
 	code += '}\n'
 	return code
 
-def _paramModes() -> Dict[str, List[str]]:
+def _paramModes(column: str) -> Dict[str, List[str]]:
 	table = _table()
 	if table.numRows < 2:
 		return {}
 	paramModes = {}  # type: Dict[str, List[str]]
 	for i in range(1, table.numRows):
-		params = tdu.expand(table[i, 'params'].val)
+		params = tdu.expand(table[i, column] or '')
 		val = table[i, 'name'].val
 		for param in params:
 			if param in paramModes:
@@ -122,11 +129,14 @@ def _updateParamEnableExprs():
 	hostPar = _hostPar()
 	if hostPar is None:
 		return
-	paramModes = _paramModes()
+	paramModes = _paramModes('params')
+	paramModes.update(_paramModes('boolParams'))
 	allValues = set(paramModes.keys())
 	host = hostPar.owner
 	for param, vals in paramModes.items():
 		par = host.par[param]
+		if par is None:
+			continue
 		if set(vals) == allValues:
 			par.enableExpr = ''
 			par.enable = True

@@ -1,39 +1,8 @@
 !rop
 meta: !meta
   opType: raytk.operators.filter.rotate
-  opVersion: '29'
+  opVersion: '30'
   opStatus: default
-opDef: !def
-  enable: !expr
-    expr: op('..').par.Enable
-  useRuntimeBypass: !expr
-    expr: not parent().par.Optimize
-  typeSpec: !ropTypes
-    coordType: !coordT
-      Coordtypevec2: true
-      Coordtypevec3: true
-    contextType: !contextT
-      Allcontexttype: true
-    returnType: !returnT
-      Allreturntype: !expr
-        expr: op('definition_1').numRows > 1
-      Returntypevec4: true
-  function: function
-  paramGroupTable: params
-  macroTable: !table
-    file: src/operators/filter/rotate_macros.txt
-    name: macro_exprs
-    evaluate: true
-    evalOpts: !evalOpts {}
-  help: !text
-    file: src/operators/filter/rotate.md
-    name: help
-  keywords:
-  - transform
-  - rotate
-  - spin
-  - twist
-  shortcuts: rot
 paramPages:
 - !page
   name: Filter
@@ -122,6 +91,48 @@ paramPages:
       enableExpr: me.par.Usepivot
       normMin: 0.0
       normMax: 1.0
+opDef: !def
+  enable: !expr
+    expr: op('..').par.Enable
+  useRuntimeBypass: !expr
+    expr: not parent().par.Optimize
+  typeSpec: !ropTypes
+    Useinputreturntype: !expr
+      expr: op('definition_1').numRows > 1
+    coordType: !coordT
+      Coordtypevec2: true
+      Coordtypevec3: true
+    contextType: !contextT
+      Allcontexttype: !expr
+        expr: op('targetInfo')[1, 'contextType'] == '*'
+      Contexttypecontext: true
+      Contexttypematerialcontext: !expr
+        expr: op('targetInfo')[1, 'contextType'] == 'MaterialContext'
+    returnType: !returnT
+      Allreturntype: !expr
+        expr: op('definition_1').numRows > 1 and op('targetInfo')[1, 'returnType']
+          == '*'
+      Returntypesdf: !expr
+        expr: op('definition_1').numRows > 1 and op('targetInfo')[1, 'returnType']
+          in ('*', 'Sdf')
+      Returntypevec4: !expr
+        expr: op('targetInfo')[1, 'returnType'] in ('*', 'vec4')
+  function: function
+  paramGroupTable: params
+  macroTable: !table
+    file: src/operators/filter/rotate_macros.txt
+    name: macro_exprs
+    evaluate: true
+    evalOpts: !evalOpts {}
+  help: !text
+    file: src/operators/filter/rotate.md
+    name: help
+  keywords:
+  - transform
+  - rotate
+  - spin
+  - twist
+  shortcuts: rot
 inputs:
 - !input
   Required: !expr
@@ -130,16 +141,29 @@ inputs:
     Coordtypevec2: true
     Coordtypevec3: true
   contextType: !contextT
-    Allcontexttype: true
+    Allcontexttype: !expr
+      expr: op('targetInfo')[1, 'contextType'] == '*'
+    Contexttypematerialcontext: !expr
+      expr: op('targetInfo')[1, 'contextType'] == 'MaterialContext'
   returnType: !returnT
-    Allreturntype: true
+    Allreturntype: !expr
+      expr: op('targetInfo')[1, 'returnType'] == '*'
+    Returntypesdf: !expr
+      expr: op('targetInfo')[1, 'returnType'] in ('*', 'Sdf')
+    Returntypefloat: !expr
+      expr: op('targetInfo')[1, 'returnType'] == '*'
+    Returntypevec4: !expr
+      expr: op('targetInfo')[1, 'returnType'] in ('*', 'vec4')
 - !input
   Localalias: rotateField
   coordType: !coordT
     Coordtypevec2: true
     Coordtypevec3: true
   contextType: !contextT
-    Allcontexttype: true
+    Allcontexttype: !expr
+      expr: op('targetInfo')[1, 'contextType'] == '*'
+    Contexttypematerialcontext: !expr
+      expr: op('targetInfo')[1, 'contextType'] == 'MaterialContext'
   returnType: !returnT
     Returntypefloat: !expr
       expr: parent().par.Rotatemode == 'axis'
@@ -151,7 +175,10 @@ inputs:
     Coordtypevec2: true
     Coordtypevec3: true
   contextType: !contextT
-    Allcontexttype: true
+    Allcontexttype: !expr
+      expr: op('targetInfo')[1, 'contextType'] == '*'
+    Contexttypematerialcontext: !expr
+      expr: op('targetInfo')[1, 'contextType'] == 'MaterialContext'
   returnType: !returnT
     Returntypevec4: true
 elements:

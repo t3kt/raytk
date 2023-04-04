@@ -120,6 +120,10 @@ op:
     menuOptions:
     - label: Cylindrical
       name: cylindrical
+    - label: Corner-Aligned Cylindrical
+      name: cornercylindrical
+    - label: Faces
+      name: faces
     name: Uvmode
   summary: A prism shape, like a cylinder but with flat sides, along the z axis.
   thumb: assets/images/reference/operators/sdf/prismSdf_thumb.png

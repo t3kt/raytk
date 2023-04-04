@@ -42,6 +42,9 @@ cat:
     - texture
     name: assignUV
     summary: Assigns UV coordinates to an SDF surface.
+  - name: axisRotate
+    summary: A simplified and optimized version of `rotate`, which only supports rotating
+      around a single axis (x, y, or z).
   - name: bend
     summary: Bends space, along a main axis, towards a second axis.
   - name: cartesianToPolar
@@ -103,6 +106,7 @@ cat:
     - zigzag
     name: limitField
     summary: Limits the values produced by a float or vector field.
+  - name: linearClone
   - keywords:
     - log
     - modulo

@@ -1,2 +1,4 @@
 names	source	handling	readOnlyHandling	conversion	enable
 Iterations Size[xy] Patternshift	param	runtime	macro		1
+Seed	param	runtime	macro		op('seedField_definition').numRows < 2
+Minsize	param	runtime	macro		op('minSizeField_definition').numRows < 2

@@ -1,0 +1,3 @@
+name	label	code
+norm	Normalized (0..1)	w = mix(400.,700., w);
+nm	Nanometer (400..700)	

@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.filter.translate
-  opVersion: '20'
+  opVersion: '21'
   opStatus: default
 opDef: !def
   enable: !expr
@@ -104,7 +104,46 @@ inputs:
       expr: op('targetInfo')[1, 'contextType'] == 'MaterialContext'
   returnType: !returnT
     Returntypevec4: true
+- !input
+  Localalias: distanceField
+  coordType: !coordT
+    Coordtypevec2: true
+    Coordtypevec3: true
+  contextType: !contextT
+    Allcontexttype: !expr
+      expr: op('targetInfo')[1, 'contextType'] == '*'
+    Contexttypematerialcontext: !expr
+      expr: op('targetInfo')[1, 'contextType'] == 'MaterialContext'
+  returnType: !returnT
+    Returntypefloat: true
+- !input
+  Localalias: directionField
+  coordType: !coordT
+    Coordtypevec2: true
+    Coordtypevec3: true
+  contextType: !contextT
+    Allcontexttype: !expr
+      expr: op('targetInfo')[1, 'contextType'] == '*'
+    Contexttypematerialcontext: !expr
+      expr: op('targetInfo')[1, 'contextType'] == 'MaterialContext'
+  returnType: !returnT
+    Returntypevec4: true
 elements:
+- !opElement
+  name: codeSwitcher
+  elementType: codeSwitcher
+  params:
+    Elementroot: ''
+    Table: !table
+      file: src/operators/filter/translate_modes.txt
+      name: modes
+    Param: Translatemode
+    Autoupdateparams: true
+    Manageparamstates: false
+    Alwaysincludeallparams: false
+    Switchmode: none
+    Indexexpr: ''
+    Placeholder: ''
 - !opElement
   name: transformTarget
   elementType: transformTarget

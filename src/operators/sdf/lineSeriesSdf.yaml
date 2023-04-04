@@ -1,0 +1,64 @@
+!rop
+meta: !meta
+  opType: raytk.operators.sdf.lineSeriesSdf
+  opVersion: '0'
+  opStatus: beta
+opDef: !def
+  enable: true
+  typeSpec: !ropTypes
+    coordType: !coordT
+      Coordtypevec3: true
+    contextType: !contextT
+      Allcontexttype: true
+    returnType: !returnT
+      Returntypesdf: true
+  function: !text
+    file: src/operators/sdf/lineSeriesSdf.glsl
+    name: function
+  paramGroupTable: eval_params
+  bufferTable: !table
+    file: src/operators/sdf/lineSeriesSdf_buffers.txt
+    name: buffer_table
+    evaluate: true
+    evalOpts: !evalOpts
+      excludeFirstRow: true
+      cols: enable chop length
+  variableTable: !table
+    file: src/operators/sdf/lineSeriesSdf_variables.txt
+    name: variable_exprs
+    evaluate: true
+    evalOpts: !evalOpts
+      excludeFirstRow: true
+      cols: enable
+inputs:
+- !input
+  Localalias: pointAField
+  Variables: '*'
+  Required: !expr
+    expr: parent().par.Source == 'fields'
+  coordType: !coordT
+    Coordtypevec3: true
+  contextType: !contextT
+    Allcontexttype: true
+  returnType: !returnT
+    Returntypevec4: true
+- !input
+  Localalias: pointBField
+  Variables: '*'
+  Required: !expr
+    expr: parent().par.Source == 'fields'
+  coordType: !coordT
+    Coordtypevec3: true
+  contextType: !contextT
+    Allcontexttype: true
+  returnType: !returnT
+    Returntypevec4: true
+- !input
+  Localalias: thicknessField
+  Variables: '*'
+  coordType: !coordT
+    Coordtypevec3: true
+  contextType: !contextT
+    Allcontexttype: true
+  returnType: !returnT
+    Returntypefloat: true

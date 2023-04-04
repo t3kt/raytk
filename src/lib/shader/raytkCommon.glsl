@@ -233,6 +233,9 @@ float sabs(float x, float k) {
 	if (x == 0.) return abs(x);
 	return 2.0 * k * log(exp(-abs(x) / k) + 1.0) + abs(x);
 }
+vec3 sabs(vec3 x, vec3 k) {
+	return vec3(sabs(x.x, k.x), sabs(x.y, k.y), sabs(x.z, k.z));
+}
 
 float expLength(vec2 p, float k) {
 	p = abs(p);
@@ -389,23 +392,6 @@ void setAxis(inout vec3 p, int axis, float val) {
 	p[axis] = val;
 }
 
-vec2 getAxisVec2(int axis) {
-	switch (axis) {
-		case 0: return vec2(1., 0.);
-		case 1: return vec2(0., 1.);
-		default: return vec2(0.);
-	}
-}
-
-vec3 getAxisVec3(int axis) {
-	switch (axis) {
-		case 0: return vec3(1., 0., 0.);
-		case 1: return vec3(0., 1., 0.);
-		case 2: return vec3(0., 0., 1.);
-		default: return vec3(0.);
-	}
-}
-
 vec2 getAxisPlane(vec2 p, int axis) {
 	switch (axis) {
 		case 2: return p;
@@ -481,3 +467,63 @@ vec3 stereographic(vec4 p4) {
   float k = 1.0/(1.0+p4.w);
   return k*p4.xyz;
 }
+
+// https://www.shadertoy.com/view/3djBDh
+//the following functions assume that p is inside the cube of radius 1 centered at the origin
+//closest vertex of the cube to p
+vec3 nearestVertex(vec3 p) {
+	return max(sign(p), vec3(0))*2.-1.;
+}
+//closest face of the cube to p
+vec3 nearestFace(vec3 p) {
+	vec3 ap = abs(p);
+	if (ap.x>=max(ap.z, ap.y)) return vec3(sign(p.x), 0., 0.);
+	if (ap.y>=max(ap.z, ap.x)) return vec3(0., sign(p.y), 0.);
+	if (ap.z>=max(ap.x, ap.y)) return vec3(0., 0., sign(p.z));
+	return vec3(0);
+}
+//closest edge of the cube to p
+vec3 nearestEdge(vec3 p) {
+	vec3 mask = vec3(1)-abs(nearestFace(p));
+	vec3 v = nearestVertex(p);
+	vec3 a = v*mask.zxy, b = v*mask.yzx;
+	return distance(p, a)<distance(p, b)?a:b;
+}
+// https://www.shadertoy.com/view/3lcBD2
+// closest edge of 2D square to p
+vec2 nearestEdge(vec2 p) {
+	vec2 p2 = abs(p);
+	if (p2.x > p2.y) return vec2((p.x < 0.) ? -1. : 1., 0.);
+	else return vec2(0., (p.y < 0.) ? -1. : 1.);
+}
+
+// https://lygia.xyz/math/pow5
+float pow5(const in float x) {
+	float x2 = x * x;
+	return x2 * x2 * x;
+}
+
+vec2 pow5(const in vec2 x) {
+	vec2 x2 = x * x;
+	return x2 * x2 * x;
+}
+
+vec3 pow5(const in vec3 x) {
+	vec3 x2 = x * x;
+	return x2 * x2 * x;
+}
+
+vec4 pow5(const in vec4 x) {
+	vec4 x2 = x * x;
+	return x2 * x2 * x;
+}
+
+// https://github.com/CesiumGS/cesium/blob/master/Source/Shaders/Builtin/Functions/
+float czm_luminance(vec3 rgb)
+{
+	// Algorithm from Chapter 10 of Graphics Shaders.
+	const vec3 W = vec3(0.2125, 0.7154, 0.0721);
+	return dot(rgb, W);
+}
+
+vec3 saturate(vec3 x) { return clamp(x, vec3(0.), vec3(1.)); }

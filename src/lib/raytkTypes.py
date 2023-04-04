@@ -231,6 +231,9 @@ _typesByName = {
 def _getType(name: str) -> Optional[DataType]:
 	return _typesByName.get(name)
 
+def getAllTypes() -> List[DataType]:
+	return _allTypes
+
 def buildCoreTypeTable(dat: 'scriptDAT'):
 	dat.clear()
 	dat.appendRow(['name', 'isReturnType', 'isCoordType', 'isContextType'])

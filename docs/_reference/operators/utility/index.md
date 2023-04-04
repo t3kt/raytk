@@ -29,6 +29,7 @@ cat:
   - name: speedGenerator
     status: beta
   - name: variableReference
+    summary: Accesses the value of a variable provided by another operator.
   summary: Advanced operators that change how ROP chains behave.
 
 ---

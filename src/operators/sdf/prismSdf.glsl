@@ -1,4 +1,4 @@
-float THIS_shape(CoordT p, float h, float r, float n) {
+float THIS_shape(CoordT p, float h, float r, inout float n) {
 	float d;
 	BODY();
 	return d;
@@ -53,12 +53,29 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 	}
 	Sdf res = createSdf(d);
 	#ifdef RAYTK_USE_UV
-	if (THIS_Uvmode == THISTYPE_Uvmode_cylindrical) {
-		vec3 uv = vec3(atan(q.x, q.y), q.z, length(q.xy));
-		if (IS_FALSE(THIS_Infiniteheight)) {
-			uv.y = map01(uv.y, -h*.5, h*.5);
-		}
-		assignUV(res, uv);
+	vec3 uv = vec3(
+		map01(atan(q.x, q.y)*2., -TAU, TAU),
+		q.z,
+		length(q.xy));
+	switch (THIS_Uvmode) {
+		case THISTYPE_Uvmode_cylindrical:
+			uv.x = fract(uv.x);
+			break;
+		case THISTYPE_Uvmode_cornercylindrical:
+			uv.x = fract((uv.x - .5/n));
+			break;
+		case THISTYPE_Uvmode_faces:
+			uv.x = fract((uv.x - .5/n) * n);
+			break;
+	}
+	if (IS_FALSE(THIS_Infiniteheight)) {
+		uv.y = map01(uv.y, -h, h);
+	}
+	assignUV(res, uv);
+	if (IS_TRUE(THIS_Hollow)) {
+		uv.z = map01(uv.z, r-th, r);
+	} else {
+		uv.z /= r;
 	}
 	#endif
 	return res;

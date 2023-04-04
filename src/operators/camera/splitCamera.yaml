@@ -18,16 +18,19 @@ opDef: !def
     name: functionTemplate
   paramGroupTable: eval_params
   textureTable: !table
+    file: src/operators/camera/splitCamera_textures.txt
     name: texture_exprs
-    rows:
-    - - '''name'''
-      - '''path'''
-      - '''type'''
-    - - '''cameraMap'''
-      - op(parent().par.Cameramap) or ''
-      - '''2d'''
     evaluate: true
-    evalOpts: !evalOpts {}
+    evalOpts: !evalOpts
+      excludeFirstRow: true
+      excludeFirstCol: true
+  variableTable: !table
+    file: src/operators/camera/splitCamera_variables.txt
+    name: variable_exprs
+    evaluate: true
+    evalOpts: !evalOpts
+      excludeFirstRow: true
+      cols: enable
   generatedMacroTables: multiInputHandler_macros
   help: !text
     file: src/operators/camera/splitCamera.md

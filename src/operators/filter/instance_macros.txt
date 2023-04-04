@@ -1,2 +1,3 @@
 parent().par.Enabletransform and parent().par.Enabletranslate and bool(parent().par.Transformchop)	'THIS_HAS_TRANSLATE'	
 parent().par.Enabletransform and parent().par.Enablerotate and bool(parent().par.Transformchop)	'THIS_HAS_ROTATE'	
+parent().par.Enableactivechop and bool(parent().par.Activechop)	'THIS_HAS_ACTIVE'	

@@ -48,6 +48,8 @@ op:
         based on `Width` and `Height`. The tip of the triangle is placed at the origin.
       label: Isosceles Triangle
       name: isosceles
+    - label: Inverted Isosceles Triangle
+      name: invertisosceles
     - description: An arbitrary triangle based on 3 points.
       label: Abritrary Triangle
       name: arbitrary
@@ -74,6 +76,17 @@ op:
   - label: Point 3
     name: Point3
     summary: The third corner position, for an arbitrary triangle.
+  - label: Direction
+    menuOptions:
+    - label: Right (X+)
+      name: xpos
+    - label: Left (X-)
+      name: xneg
+    - label: Up (Y+)
+      name: ypos
+    - label: Down (Y-)
+      name: yneg
+    name: Direction
   summary: SDF for a 2D triangle.
   thumb: assets/images/reference/operators/sdf2d/triangleSdf2d_thumb.png
 

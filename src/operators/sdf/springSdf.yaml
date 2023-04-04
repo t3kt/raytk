@@ -1,0 +1,83 @@
+!rop
+meta: !meta
+  opType: raytk.operators.sdf.springSdf
+  opVersion: '1'
+  opStatus: beta
+opDef: !def
+  enable: true
+  typeSpec: !ropTypes
+    coordType: !coordT
+      Coordtypevec3: true
+    contextType: !contextT
+      Allcontexttype: true
+    returnType: !returnT
+      Returntypesdf: true
+  function: !text
+    file: src/operators/sdf/springSdf.glsl
+    name: function
+  paramGroupTable: eval_params
+  variableTable: !table
+    file: src/operators/sdf/springSdf_variables.txt
+    name: variable_exprs
+    evaluate: true
+    evalOpts: !evalOpts
+      excludeFirstRow: true
+      cols: enable
+  help: !text
+    file: src/operators/sdf/springSdf.md
+    name: help
+inputs:
+- !input
+  Localalias: heightField
+  Variables: axisoffset angle normangle
+  coordType: !coordT
+    Coordtypefloat: true
+    Coordtypevec3: true
+  contextType: !contextT
+    Allcontexttype: true
+  returnType: !returnT
+    Returntypefloat: true
+- !input
+  Localalias: radiusField
+  Variables: axisoffset normoffset angle normangle
+  Variableinputs: heightField
+  coordType: !coordT
+    Coordtypefloat: true
+    Coordtypevec3: true
+  contextType: !contextT
+    Allcontexttype: true
+  returnType: !returnT
+    Returntypefloat: true
+- !input
+  Localalias: coilsField
+  Variables: axisoffset normoffset angle normangle
+  Variableinputs: heightField radiusField
+  coordType: !coordT
+    Coordtypefloat: true
+    Coordtypevec3: true
+  contextType: !contextT
+    Allcontexttype: true
+  returnType: !returnT
+    Returntypefloat: true
+- !input
+  Localalias: thicknessField
+  Variables: axisoffset normoffset angle normangle
+  Variableinputs: heightField radiusField coilsField
+  coordType: !coordT
+    Coordtypefloat: true
+    Coordtypevec2: true
+    Coordtypevec3: true
+  contextType: !contextT
+    Allcontexttype: true
+  returnType: !returnT
+    Returntypefloat: true
+- !input
+  Localalias: crossSection
+  Variables: axisoffset normoffset angle normangle
+  Variableinputs: heightField radiusField coilsField
+  coordType: !coordT
+    Coordtypevec2: true
+  contextType: !contextT
+    Allcontexttype: true
+  returnType: !returnT
+    Returntypesdf: true

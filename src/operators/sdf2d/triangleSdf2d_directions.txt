@@ -1,0 +1,5 @@
+name	label	code
+xpos	Right (X+)	p = vec2(p.y, p.x);
+xneg	Left (X-)	p = vec2(p.y, -p.x);
+ypos	Up (Y+)	p = p;
+yneg	Down (Y-)	p = vec2(p.x, -p.y);

@@ -1,5 +1,3 @@
-from raytkUtil import ROPInfo
-from raytkModel import ROPSpec
 from raytkTools import RaytkTools
 from typing import Optional
 import yaml
@@ -25,7 +23,7 @@ class SpecPanel:
 		self.ownerComp = ownerComp
 
 	def generateSpec(self) -> Optional[str]:
-		spec = RaytkTools().loadROPSpec_NEW(ipar.inspectorCore.Targetcomp.eval(), checkExists=False)
+		spec = RaytkTools().loadROPSpec(ipar.inspectorCore.Targetcomp.eval(), checkExists=False)
 		if not spec:
 			return None
 		return yaml.dump(spec, default_style='', sort_keys=False)

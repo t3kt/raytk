@@ -1,0 +1,4 @@
+names	source	handling	readOnlyHandling	conversion	enable
+Amplitude Offset Translate[1-4] Scale[1-4]	param	runtime	macro		1
+Axis	param	runtime	constant		1
+Jitter	param	runtime	macro		op('jitter_definition').numRows < 2

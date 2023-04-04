@@ -1,0 +1,6 @@
+names	source	handling	readOnlyHandling	conversion	enable
+Axis Reverse	param	runtime	constant		1
+Radius	param	runtime	macro		op('radius_definition').numRows < 2
+Height	param	runtime	macro		op('height_definition').numRows < 2
+Coils	param	runtime	macro		op('coils_definition').numRows < 2
+Thickness	param	runtime	macro		op('thickness_definition').numRows < 2 and op('cross_section_definition').numRows < 2

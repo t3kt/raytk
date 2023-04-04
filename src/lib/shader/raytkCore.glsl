@@ -76,18 +76,24 @@ struct Sdf {
 	// xyz: RGB, w: has been set
 	vec4 color;
 	#endif
+
+	#ifdef RAYTK_USE_TRANSPARENCY
+	// x: 0/1 is transparent, y: (1 - alpha) inverted so defaults are better
+	vec2 transparent;
+	#endif
 };
 
 int resultMaterial1(Sdf res) { return int(res.mat.x); }
 int resultMaterial2(Sdf res) { return int(res.mat.y); }
 float resultMaterialInterp(Sdf res) { return res.mat.z; }
+bool resultHasMaterial(Sdf res) { return res.mat.x >= 0. || res.mat.y >= 0.; }
 
 Sdf createSdf(float dist) {
 	Sdf res;
 	res.x = dist;
 	if (isDistanceOnlyStage()) { return res; }
 
-	res.mat = vec3(2., 0., 0.);
+	res.mat = vec3(-1., -1., 0.);
 	#ifdef RAYTK_USE_MATERIAL_POS
 	res.materialPos = vec4(0);
 	res.materialPos2 = vec4(0);
@@ -122,6 +128,9 @@ Sdf createSdf(float dist) {
 	#endif
 	#ifdef RAYTK_USE_SURFACE_COLOR
 	res.color = vec4(0.);
+	#endif
+	#ifdef RAYTK_USE_TRANSPARENCY
+	res.transparent = vec2(0.);
 	#endif
 	return res;
 }
@@ -173,6 +182,11 @@ void blendInSdf(inout Sdf res1, in Sdf res2, in float amt) {
 		res1.color.rgb = mix(res1.color.rgb, res2.color.rgb, amt);
 	}
 	#endif
+
+	#ifdef RAYTK_USE_TRANSPARENCY
+	res1.transparent.x = max(res1.transparent.x, res2.transparent.x);
+	res1.transparent.y = mix(res1.transparent.y, res2.transparent.y, amt);
+	#endif
 }
 
 Sdf mixVals(in Sdf res1, in Sdf res2, float amt) {
@@ -185,6 +199,13 @@ void assignColor(inout Sdf res, vec3 color) {
 	#ifdef RAYTK_USE_SURFACE_COLOR
 	res.color = vec4(color, 1.);
 	#endif
+}
+
+bool hasColor(in Sdf res) {
+	#ifdef RAYTK_USE_SURFACE_COLOR
+	return res.color.a > 0.;
+	#endif
+	return false;
 }
 
 void assignMaterial(inout Sdf res, int materialId) {

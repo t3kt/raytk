@@ -35,42 +35,45 @@ class CustomOp:
 			page.appendPulse(par.name, label=par.label)
 
 	def Createopglobals(self, _=None):
-		host = self.host()
-		dat = _createCodeDat(
-			host,
-			self.ownerComp.par.Defaultopglobals.eval(),
-			'_globals',
-			-320
-		)
-		host.par.Opglobals = dat
+		self._createDat(
+			textDAT, self.ownerComp.par.Defaultopglobals.eval(),
+			'_globals', -320, -150, 'Opglobals')
 
 	def Createinit(self, _=None):
-		host = self.host()
-		dat = _createCodeDat(
-			host,
-			self.ownerComp.par.Defaultinit.eval(),
-			'_init',
-			-120)
-		host.par.Initcode = dat
+		self._createDat(
+			textDAT, self.ownerComp.par.Defaultinit.eval(),
+			'_init', -120, -150, 'Initcode')
 
 	def Createfunction(self, _=None):
-		host = self.host()
-		dat = _createCodeDat(
-			host,
+		self._createDat(
+			textDAT,
 			self.ownerComp.par.Defaultfunction.eval() or self.ownerComp.op('defaultFunctionTemplate'),
-			'_function',
-			0)
-		host.par.Function = dat
+			'_function', 0, -150, 'Function')
 
 	def Creatematerial(self, _=None):
-		host = self.host()
-		dat = _createCodeDat(
-			host,
-			self.ownerComp.par.Defaultmaterial.eval(),
-			'_material',
-			120
-		)
-		host.par.Materialcode = dat
+		self._createDat(
+			textDAT, self.ownerComp.par.Defaultmaterial.eval(),
+			'_material', 120, -150, 'Materialcode')
+
+	def Createbuffertable(self, _=None):
+		self._createDat(
+			tableDAT, self.ownerComp.op('bufferTableTemplate'),
+			'_buffers', -120, -250, 'Buffertable')
+
+	def Createmacrotable(self, _=None):
+		self._createDat(
+			tableDAT, self.ownerComp.op('macroTableTemplate'),
+			'_macros', 0, -250, 'Macrotable')
+
+	def Createtexturetable(self, _=None):
+		self._createDat(
+			tableDAT, self.ownerComp.op('textureTableTemplate'),
+			'_textures', 120, -250, 'Texturetable')
+
+	def Createvariabletable(self, _=None):
+		self._createDat(
+			tableDAT, self.ownerComp.op('variableTableTemplate'),
+			'_variables', 240, -250, 'Variabletable')
 
 	def Createmissingparams(self, _=None):
 		self._updateParams(removeUnused=False, createMissing=True)
@@ -183,39 +186,48 @@ class CustomOp:
 		paramsOp = self.paramsOp()
 		return paramsOp.customTuplets if paramsOp else []
 
-def _createCodeDat(host: 'COMP', template: 'Optional[DAT]', nameSuffix: str, offsetX: int) -> 'DAT':
-	return _createDat(
-		host, textDAT,
-		template, nameSuffix,
-		offsetX, -150,
-		language='glsl',
-	)
+	def _createDat(
+			self, opType: 'Type[DAT]',
+			template: 'Optional[DAT]', nameSuffix: str,
+			offsetX: int, offsetY: int,
+			hostParName: str
+	):
+		host = self.host()
+		name = host.name + nameSuffix
+		hostPar = host.par[hostParName]
 
-def _createDat(
-		host: 'COMP',
-		opType: 'Type[DAT]',
-		template: 'Optional[DAT]',
-		nameSuffix: str,
-		offsetX: int, offsetY: int,
-		language: 'Optional[str]') -> 'DAT':
-	dat = host.parent().create(opType, host.name + nameSuffix)
-	if template:
-		dat.copy(template)
-	elif dat.isText:
-		dat.text = ''
-	else:
-		dat.clear()
-	if dat.isText:
-		dat.par.extension = 'glsl'
-	dat.nodeX = host.nodeX + offsetX
-	dat.nodeY = host.nodeY + offsetY
-	dat.dock = host
-	host.showDocked = True
-	dat.viewer = True
-	dat.activeViewer = True
-	if language:
-		dat.par.language = language
-	return dat
+		def createOrUndo(isUndo: bool, _: dict):
+			dest = host.parent()
+			if isUndo:
+				print(self.ownerComp, f'undoing create OP: {name}')
+				newOp = dest.op(name)
+				if newOp and newOp.valid:
+					try:
+						newOp.destroy()
+					except:
+						pass
+				hostPar.val = ''
+			else:
+				dat = dest.create(opType, name)
+				if template:
+					dat.copy(template)
+				elif dat.isText:
+					dat.text = ''
+				else:
+					dat.clear()
+				dat.par.language = 'glsl' if dat.isText else 'txt'
+				dat.par.extension = dat.par.language
+				dat.nodeX = host.nodeX + offsetX
+				dat.nodeY = host.nodeY + offsetY
+				dat.dock = host
+				host.showDocked = True
+				dat.viewer = True
+				dat.activeViewer = True
+				hostPar.val = dat
+		ui.undo.startBlock(f'Create DAT {name}')
+		createOrUndo(False, {})
+		ui.undo.addCallback(createOrUndo, {})
+		ui.undo.endBlock()
 
 _paramPattern = re.compile(r'\bTHIS_([A-Z][a-z0-9]*)\b')
 # param spec format:

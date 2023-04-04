@@ -1,7 +1,7 @@
 name	label	code
-xy	XY	q = p.xy
-yx	YX	q = p.yx
-yz	YZ	q = p.yz
-zy	ZY	q = p.zy
-xz	XZ	q = p.xz
-zx	ZX	q = p.zx
+xy	XY	q = p.xy; z = p.z;
+yx	YX	q = p.yx; z = p.z;
+yz	YZ	q = p.yz; z = p.x;
+zy	ZY	q = p.zy; z = p.x;
+xz	XZ	q = p.xz; z = p.y;
+zx	ZX	q = p.zx; z = p.y;

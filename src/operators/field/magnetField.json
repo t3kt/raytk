@@ -1,7 +1,0 @@
-{
-  "meta": {
-    "opStatus": "beta",
-    "opType": "raytk.operators.field.magnetField",
-    "opVersion": 4
-  }
-}

@@ -81,6 +81,9 @@ op:
   summary: A camera that splits the viewport into several zones, each using a separate
     camera.
   thumb: assets/images/reference/operators/camera/splitCamera_thumb.png
+  variables:
+  - label: index
+    name: index
 
 ---
 

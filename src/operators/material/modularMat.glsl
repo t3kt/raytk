@@ -2,9 +2,11 @@ vec4 THIS_iterationCapture = vec4(0.);
 
 ReturnT thismap(CoordT p, ContextT ctx) {
 	Sdf res = inputOp_sdf(p, ctx);
-	if (IS_FALSE(THIS_Enable) || isDistanceOnlyStage()) { return res; }
+	bool use = true;
+	CONDITION();
+	if (!use || IS_FALSE(THIS_Enable) || isDistanceOnlyStage()) { return res; }
 	#if defined(THIS_Uselocalpos) && defined(RAYTK_USE_MATERIAL_POS)
-	assignMaterialWithPos(res, THISMAT, p);
+	assignMaterialWithPos(res, THISMAT, adaptAsVec3(p));
 	#else
 	assignMaterial(res, THISMAT);
 	#endif
@@ -27,9 +29,9 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 	return res;
 }
 
-vec3 THIS_getColor(vec3 p, MaterialContext matCtx) {
+vec3 THIS_getColor(CoordT p, MaterialContext matCtx) {
 	restoreIterationFromMaterial(matCtx, THIS_iterationCapture);
-	vec3 mp = getPosForMaterial(p, matCtx);
+	CoordT mp = THIS_asCoordT(getPosForMaterial(adaptAsVec3(p), matCtx));
 	float ao;
 	#if defined(THIS_Enableao) || defined(THIS_EXPOSE_ao)
 	{

@@ -328,8 +328,18 @@ op:
     name: Useinputreturntype
   - label: Use Input Context Type
     name: Useinputcontexttype
+  - label: Variable Table
+    name: Variabletable
   - label: Create Stage Init
     name: Createstageinit
+  - label: Create Buffer Table
+    name: Createbuffertable
+  - label: Create Macro Table
+    name: Createmacrotable
+  - label: Create Texture Table
+    name: Createtexturetable
+  - label: Create Variable Table
+    name: Createvariabletable
   status: beta
   summary: A custom operator that integrates blocks of custom shader code into a RayTK
     network.

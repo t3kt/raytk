@@ -1,29 +1,39 @@
 !rop
 meta: !meta
   opType: raytk.operators.field.hashField
-  opVersion: '2'
-  opStatus: alpha
+  opVersion: '3'
+  opStatus: beta
 opDef: !def
   enable: true
   typeSpec: !ropTypes
     coordType: !coordT
       Allcoordtype: !expr
-        expr: op('definition_1').numRows > 1
+        expr: op('coord_definition').numRows > 1 or parent().par.Coordtype == 'auto'
       Coordtypefloat: !expr
-        expr: parent().par.Coordtype == 'float' or op('definition_1').numRows > 1
+        expr: parent().par.Coordtype == 'float'
       Coordtypevec2: !expr
-        expr: parent().par.Coordtype == 'vec2' or op('definition_1').numRows > 1
+        expr: parent().par.Coordtype == 'vec2'
       Coordtypevec3: !expr
-        expr: parent().par.Coordtype == 'vec3' or op('definition_1').numRows > 1
+        expr: parent().par.Coordtype == 'vec3'
     contextType: !contextT
       Allcontexttype: true
     returnType: !returnT
-      Returntypevec4: true
+      Returntypefloat: !expr
+        expr: op('conversionTable')[op('functionInfo')[1, 'outputType'], 'returnAs']
+          == 'float'
+      Returntypevec4: !expr
+        expr: op('conversionTable')[op('functionInfo')[1, 'outputType'], 'returnAs']
+          == 'vec4'
   function: !text
     file: src/operators/field/hashField.glsl
     name: function
   libraryNames: !expr
     expr: op('hash')
+  macroTable: !table
+    file: src/operators/field/hashField_macros.txt
+    name: macro_exprs
+    evaluate: true
+    evalOpts: !evalOpts {}
 inputs:
 - !input
   Localalias: coordField
@@ -49,4 +59,4 @@ elements:
     Alwaysincludeallparams: false
     Switchmode: inline
     Indexexpr: ''
-    Placeholder: ''
+    Placeholder: BODY();

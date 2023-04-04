@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.output.raymarchRender3D
-  opVersion: '126'
+  opVersion: '127'
   opStatus: default
 opDef: !def
   enable: true
@@ -28,6 +28,7 @@ opDef: !def
   shortcuts: rr3
 inputs:
 - !input
+  Variableinputs: camera
   coordType: !coordT
     Coordtypevec3: true
   contextType: !contextT

@@ -16,3 +16,6 @@ opDef: !def
     file: src/operators/camera/basicCamera.glsl
     name: functionTemplate
   paramGroupTable: eval_params
+  help: !text
+    file: src/operators/camera/basicCamera.md
+    name: help

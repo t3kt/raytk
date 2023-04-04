@@ -1,7 +1,0 @@
-{
-  "meta": {
-    "opStatus": "beta",
-    "opType": "raytk.operators.sdf2d.spiralSdf2d",
-    "opVersion": 5
-  }
-}

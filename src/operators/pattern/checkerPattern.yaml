@@ -16,6 +16,9 @@ opDef: !def
     file: src/operators/pattern/checkerPattern.glsl
     name: functionTemplate
   paramGroupTable: eval_params
+  help: !text
+    file: src/operators/pattern/checkerPattern.md
+    name: help
 inputs:
 - !input
   Localalias: coordField

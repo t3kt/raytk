@@ -1,32 +1,8 @@
 !rop
 meta: !meta
   opType: raytk.operators.filter.onion
-  opVersion: '14'
+  opVersion: '15'
   opStatus: default
-opDef: !def
-  enable: !expr
-    expr: op('..').par.Enable
-  useRuntimeBypass: true
-  typeSpec: !ropTypes
-    coordType: !coordT
-      Allcoordtype: true
-    contextType: !contextT
-      Allcontexttype: true
-    returnType: !returnT
-      Returntypesdf: true
-      Returntypefloat: true
-      Returntypevec4: true
-  function: !text
-    file: src/operators/filter/onion.glsl
-    name: function
-  paramGroupTable: eval_params
-  help: !text
-    file: src/operators/filter/onion.md
-    name: help
-  keywords:
-  - onion
-  - shell
-  - hollow
 paramPages:
 - !page
   name: Filter
@@ -56,6 +32,30 @@ paramPages:
       enableExpr: op('./thickness_field_definition').numRows < 2
       normMin: 0.0
       normMax: 0.5
+opDef: !def
+  enable: !expr
+    expr: op('..').par.Enable
+  useRuntimeBypass: true
+  typeSpec: !ropTypes
+    coordType: !coordT
+      Allcoordtype: true
+    contextType: !contextT
+      Allcontexttype: true
+    returnType: !returnT
+      Returntypesdf: true
+      Returntypefloat: true
+      Returntypevec4: true
+  function: !text
+    file: src/operators/filter/onion.glsl
+    name: function
+  paramGroupTable: eval_params
+  help: !text
+    file: src/operators/filter/onion.md
+    name: help
+  keywords:
+  - onion
+  - shell
+  - hollow
 inputs:
 - !input
   Required: true
@@ -69,6 +69,7 @@ inputs:
     Returntypevec4: true
 - !input
   Localalias: thicknessField
+  Variableinputs: inputOp1
   coordType: !coordT
     Allcoordtype: true
   contextType: !contextT
@@ -77,6 +78,7 @@ inputs:
     Returntypefloat: true
 - !input
   Localalias: iterationsField
+  Variableinputs: inputOp1 thicknessField
   coordType: !coordT
     Allcoordtype: true
   contextType: !contextT

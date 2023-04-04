@@ -1,0 +1,28 @@
+!rop
+meta: !meta
+  opType: raytk.operators.field.blackbodyColorField
+  opVersion: '0'
+  opStatus: default
+opDef: !def
+  enable: true
+  typeSpec: !ropTypes
+    coordType: !coordT
+      Allcoordtype: true
+    contextType: !contextT
+      Allcontexttype: true
+    returnType: !returnT
+      Returntypevec4: true
+  function: !text
+    file: src/operators/field/blackbodyColorField.glsl
+    name: function
+  paramGroupTable: eval_params
+inputs:
+- !input
+  Localalias: tempField
+  Required: true
+  coordType: !coordT
+    Allcoordtype: true
+  contextType: !contextT
+    Allcontexttype: true
+  returnType: !returnT
+    Returntypefloat: true

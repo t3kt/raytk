@@ -23,6 +23,19 @@ op:
     name: offsetField
     returnTypes:
     - float
+  - contextTypes:
+    - Context
+    - MaterialContext
+    - CameraContext
+    - LightContext
+    - RayContext
+    - ParticleContext
+    coordTypes:
+    - vec3
+    label: Thickness Field
+    name: thicknessField
+    returnTypes:
+    - float
   keywords:
   - floor
   - plane
@@ -43,8 +56,17 @@ op:
   - label: Offset
     name: Offset
     summary: Shifts the plane forwards or backwards along the axis that it faces.
+  - label: Depth Type
+    menuOptions:
+    - label: Infinite
+      name: infinite
+    - label: Finite
+      name: finite
+    name: Depthtype
   - label: Flip
     name: Flip
+  - label: Thickness
+    name: Thickness
   summary: An infinite plane on the x, y, or z axis.
   thumb: assets/images/reference/operators/sdf/planeSdf_thumb.png
 

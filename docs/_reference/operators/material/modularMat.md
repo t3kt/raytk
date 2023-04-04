@@ -20,7 +20,10 @@ op:
   - contextTypes:
     - Context
     coordTypes:
+    - float
+    - vec2
     - vec3
+    - vec4
     label: SDF
     name: sdf
     required: true
@@ -29,7 +32,10 @@ op:
   - contextTypes:
     - MaterialContext
     coordTypes:
+    - float
+    - vec2
     - vec3
+    - vec4
     label: Color Contribution 1
     name: shading1
     returnTypes:
@@ -39,7 +45,10 @@ op:
   - contextTypes:
     - MaterialContext
     coordTypes:
+    - float
+    - vec2
     - vec3
+    - vec4
     label: Color Contribution 2
     name: shading2
     returnTypes:
@@ -49,7 +58,10 @@ op:
   - contextTypes:
     - MaterialContext
     coordTypes:
+    - float
+    - vec2
     - vec3
+    - vec4
     label: Color Contribution 3
     name: shading3
     returnTypes:
@@ -59,7 +71,10 @@ op:
   - contextTypes:
     - MaterialContext
     coordTypes:
+    - float
+    - vec2
     - vec3
+    - vec4
     label: Color Contribution 4
     name: shading4
     returnTypes:
@@ -68,7 +83,10 @@ op:
   - contextTypes:
     - MaterialContext
     coordTypes:
+    - float
+    - vec2
     - vec3
+    - vec4
     label: Color Contribution 5
     name: shading5
     returnTypes:
@@ -77,7 +95,10 @@ op:
   - contextTypes:
     - MaterialContext
     coordTypes:
+    - float
+    - vec2
     - vec3
+    - vec4
     label: Color Contribution 6
     name: shading6
     returnTypes:
@@ -86,7 +107,10 @@ op:
   - contextTypes:
     - MaterialContext
     coordTypes:
+    - float
+    - vec2
     - vec3
+    - vec4
     label: Color Contribution 7
     name: shading7
     returnTypes:
@@ -109,6 +133,13 @@ op:
     name: Enableao
   - label: Enable Reflection
     name: Enablereflection
+  - label: Apply When
+    menuOptions:
+    - label: Always
+      name: always
+    - label: Only If Unassigned
+      name: missing
+    name: Condition
   shortcuts:
   - mm
   summary: A material that is composed of one or more shading elements.

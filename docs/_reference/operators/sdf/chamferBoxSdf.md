@@ -66,6 +66,10 @@ op:
     name: Chamfer
   - label: Round
     name: Round
+  summary: A box with cropped corners at 45 degree angles.
   thumb: assets/images/reference/operators/sdf/chamferBoxSdf_thumb.png
 
 ---
+
+
+A box with cropped corners at 45 degree angles.

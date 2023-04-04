@@ -1,2 +1,4 @@
 names	source	handling	readOnlyHandling	conversion	enable
-Translate[xyz]	param	runtime	macro		1
+Translate[xyz]	param	runtime	macro		parent().par.Translatemode == 'axes'
+Direction[xyz]	param	runtime	macro		parent().par.Translatemode == 'dir' and op('direction_field_definition').numRows < 2
+Distance	param	runtime	macro		parent().par.Translatemode == 'dir'

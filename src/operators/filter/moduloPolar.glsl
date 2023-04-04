@@ -37,6 +37,9 @@ void THIS_apply(inout vec2 p, out float cell) {
 			a = mod(a, angle) - angle/2.;
 		}
 	}
+	#ifdef THIS_EXPOSE_normlocalangle
+	THIS_normlocalangle = a + .5;
+	#endif
 	p = vec2(cos(a), sin(a))*length(p);
 	// For an odd number of repetitions, fix cell index of the cell in -x direction
 	// (cell index would be e.g. -5 and 5 in the two halves of the cell):
@@ -54,11 +57,21 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 			case THISTYPE_Axis_z: q = p3.xy; break;
 		}
 		q -= pivot;
+		#ifdef THIS_EXPOSE_centerdist
+		THIS_centerdist = length(q);
+		#endif
 		float r = THIS_Rotate;
 		#ifdef THIS_HAS_INPUT_rotateField
 		r += radians(inputOp_rotateField(p, ctx));
 		#endif
 		pR(q, r);
+		float globalAngle = atan(q.y, q.x) / TAU;
+		#ifdef THIS_EXPOSE_globalangle
+		THIS_globalangle = globalAngle * 360.;
+		#endif
+		#ifdef THIS_EXPOSE_normglobalangle
+		THIS_normglobalangle = globalAngle + .5;
+		#endif
 		float cell;
 		THIS_apply(q, cell);
 		switch (THIS_Iterationtype) {

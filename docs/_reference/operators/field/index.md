@@ -21,6 +21,7 @@ cat:
       a single axis.
   - name: bandField
     summary: Field that applies values based on a band/slice of an axis.
+  - name: blackbodyColorField
   - keywords:
     - cellular
     - voronoi
@@ -49,6 +50,8 @@ cat:
     status: beta
     summary: Accesses data from a texture with the same layout as the renderer.
   - name: domainColorField
+    status: beta
+  - name: hashField
     status: beta
   - name: hsvColorField
     status: beta
@@ -85,6 +88,8 @@ cat:
     summary: Value field based on an SDF shape.
   - name: sdfNormalField
     status: beta
+  - name: spectralColorField
+    status: beta
   - name: stepField
     summary: A field that switches between two values at a threshold point.
   - name: texture3dField
@@ -100,6 +105,8 @@ cat:
   - name: waveVectorField
     status: beta
   - name: waveletNoiseField
+  - name: worleyNoiseField
+    status: beta
   summary: Float or vector fields, which provide values for the requested coordinates.
 
 ---

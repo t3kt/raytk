@@ -72,6 +72,8 @@ op:
       name: none
     - label: Bounds XYZ
       name: bounds
+    - label: Faces
+      name: faces
     name: Uvmode
   - label: Optimize
     name: Optimize

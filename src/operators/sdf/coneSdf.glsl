@@ -9,14 +9,6 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 	base = THIS_Translate;
 	#endif
 
-	float radius = THIS_Radius;
-	float radius2 = THIS_Radius2;
-	#ifdef THIS_HAS_INPUT_radiusField
-	float radiusMod = inputOp_radiusField(p0, ctx);
-	radius *= radiusMod;
-	radius2 *= radiusMod;
-	#endif
-
 	p -= base;
 	#if defined(THIS_Mode_axis)
 	{
@@ -45,6 +37,24 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 	}
 	#else
 	#error invalidMode
+	#endif
+
+	#ifdef THIS_EXPOSE_axispos
+	THIS_axispos = p.y;
+	#endif
+	#ifdef THIS_EXPOSE_normoffset
+	THIS_normoffset = saturate(p.y / height);
+	#endif
+	#ifdef THIS_EXPOSE_normangle
+	THIS_normangle = atan(p.x, p.z)/TAU + .5;
+	#endif
+
+	float radius = THIS_Radius;
+	float radius2 = THIS_Radius2;
+	#ifdef THIS_HAS_INPUT_radiusField
+	float radiusMod = inputOp_radiusField(p0, ctx);
+	radius *= radiusMod;
+	radius2 *= radiusMod;
 	#endif
 
 	ReturnT res;

@@ -1,0 +1,3 @@
+names	source	handling	readOnlyHandling	conversion	enable
+Temp	param	runtime	macro		op('temp_definition').numRows < 2
+Exp	param	runtime	macro		1
