@@ -81,6 +81,23 @@ op:
     returnTypes:
     - float
     - vec4
+  - contextTypes:
+    - Context
+    - MaterialContext
+    - CameraContext
+    - LightContext
+    - RayContext
+    - ParticleContext
+    coordTypes:
+    - float
+    - vec2
+    - vec3
+    - vec4
+    label: Blending Field
+    name: blendingField
+    returnTypes:
+    - float
+    - vec4
   name: mirrorAxes
   opType: raytk.operators.filter.mirrorAxes
   parameters:
@@ -179,6 +196,10 @@ op:
     name: Center
   - label: Offset
     name: Offset
+  - label: Enable Blend
+    name: Enableblend
+  - label: Blending
+    name: Blending
   - label: Apply To
     menuOptions:
     - label: Coordinates

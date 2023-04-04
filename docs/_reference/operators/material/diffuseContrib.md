@@ -67,6 +67,8 @@ op:
       name: lambert
     - label: Oren-Nayar
       name: orennayar
+    - label: Burley
+      name: burley
     name: Method
     summary: The type of diffuse shading to use. Different methods support different
       combinations of the other parameters.

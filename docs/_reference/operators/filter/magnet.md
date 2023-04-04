@@ -95,6 +95,9 @@ op:
   - label: Rotate
     name: Rotate
     summary: Rotation to be applied within the magnet area.
+  - label: Translate
+    name: Translate
+    summary: Amount of translation along each axis. For 2D, only X and Y are used.
   summary: Pulls or twists space within an area.
   thumb: assets/images/reference/operators/filter/magnet_thumb.png
 

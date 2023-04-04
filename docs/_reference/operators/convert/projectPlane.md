@@ -56,6 +56,9 @@ op:
     name: Plane
   summary: Takes a 1D or 2D operator and converts it to a 3D operator by mapping it
     to a plane within 3D space.
+  variables:
+  - label: axispos
+    name: axispos
 
 ---
 

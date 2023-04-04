@@ -59,6 +59,7 @@ cat:
     - chamfer
     - cube
     name: chamferBoxSdf
+    summary: A box with cropped corners at 45 degree angles.
   - name: coneSdf
     summary: Defines a cone or capped cone shape.
   - name: crescentSdf
@@ -126,6 +127,8 @@ cat:
   - keywords:
     - grid
     name: latticeSdf
+  - name: lineSeriesSdf
+    status: beta
   - keywords:
     - chain
     - link
@@ -153,6 +156,8 @@ cat:
     summary: An octahedron, with its corners facing the axes.
   - name: petalSdf
     summary: A flower petal or leaf shape.
+  - name: pistonSdf
+    status: beta
   - keywords:
     - floor
     - plane
@@ -205,6 +210,9 @@ cat:
     - swirl
     name: spiralSdf
     summary: A tapering spiral squared tube.
+  - name: springSdf
+    status: beta
+    summary: A coiled spring shape.
   - name: stackSdf
     status: beta
   - name: tetrahedronSdf

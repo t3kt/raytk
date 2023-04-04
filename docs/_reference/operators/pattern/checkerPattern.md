@@ -23,6 +23,8 @@ op:
     name: coordField
     returnTypes:
     - vec4
+    summary: Optional field that can provide alternative coordinates instead of using
+      the raw X/Y position.
   name: checkerPattern
   opType: raytk.operators.pattern.checkerPattern
   parameters:
@@ -30,6 +32,10 @@ op:
     name: Translate
   - label: Size
     name: Size
+  summary: Checkerboard pattern with alternating black and white rectangles.
   thumb: assets/images/reference/operators/pattern/checkerPattern_thumb.png
 
 ---
+
+
+Checkerboard pattern with alternating black and white rectangles.

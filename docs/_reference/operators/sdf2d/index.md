@@ -56,6 +56,8 @@ cat:
   - name: parallelogramSdf2d
   - name: pieSdf2d
     summary: SDF for a 2D pie-slice shape.
+  - name: pistonSdf2d
+    status: beta
   - name: planeSdf2d
   - name: polySplineSdf2d
     status: beta

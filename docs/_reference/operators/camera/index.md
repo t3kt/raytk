@@ -14,6 +14,8 @@ cat:
   name: camera
   operators:
   - name: basicCamera
+    summary: Standard camera equivalent to a traditional Camera COMP with default
+      settings.
   - name: cameraRemap
     status: beta
     summary: Modifies a camera by replacing the pixel UV coordinates that are used

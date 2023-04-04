@@ -78,6 +78,13 @@ op:
     name: Enableshadow
   - label: Use Local Position
     name: Uselocalpos
+  - label: Apply When
+    menuOptions:
+    - label: Always
+      name: always
+    - label: Only If Unassigned
+      name: missing
+    name: Condition
   status: beta
   thumb: assets/images/reference/operators/material/pbrMat_thumb.png
   variables:

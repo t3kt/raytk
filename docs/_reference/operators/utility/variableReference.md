@@ -8,6 +8,13 @@ redirect_from:
   - /reference/opType/raytk.operators.utility.variableReference/
 op:
   category: utility
+  detail: 'These operators are generally created using the "Reference Variable" option
+    in the editor tools menu.
+
+
+    <iframe width="560" height="315" src="https://www.youtube.com/embed/eqqOlSEk0YA"
+    frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media;
+    gyroscope; picture-in-picture" allowfullscreen></iframe>'
   name: variableReference
   opType: raytk.operators.utility.variableReference
   parameters:
@@ -67,5 +74,13 @@ op:
     name: Field
   - label: Default Value
     name: Defaultval
+  summary: Accesses the value of a variable provided by another operator.
 
 ---
+
+
+Accesses the value of a variable provided by another operator.
+
+These operators are generally created using the "Reference Variable" option in the editor tools menu.
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/eqqOlSEk0YA" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>

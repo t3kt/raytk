@@ -29,6 +29,36 @@ op:
     - Ray
     - Light
     - Particle
+  - contextTypes:
+    - Context
+    - MaterialContext
+    - CameraContext
+    - LightContext
+    - RayContext
+    - ParticleContext
+    coordTypes:
+    - vec2
+    - vec3
+    label: Shift Field
+    name: shiftField
+    required: true
+    returnTypes:
+    - vec4
+  - contextTypes:
+    - Context
+    - MaterialContext
+    - CameraContext
+    - LightContext
+    - RayContext
+    - ParticleContext
+    coordTypes:
+    - vec2
+    - vec3
+    label: Offset Field
+    name: offsetField
+    required: true
+    returnTypes:
+    - vec4
   name: quadTreeRepeat
   opType: raytk.operators.filter.quadTreeRepeat
   parameters:
@@ -49,6 +79,10 @@ op:
     name: Chance1
   - label: Level 2 Chance
     name: Chance2
+  - label: Offset
+    name: Offset
+  - label: Shift
+    name: Shift
   - label: Enable Rescale
     name: Enablerescale
   - label: Iteration Type

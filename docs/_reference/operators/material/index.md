@@ -39,6 +39,8 @@ cat:
     summary: A material element that uses the Gooch shading model.
   - name: iridescenceContrib
     status: beta
+    summary: Shading element that produces a rainbow pattern around the edges of shapes,
+      depending on which direction the surface is facing (the surface normal).
   - name: matCapContrib
     status: beta
   - name: modularMat
@@ -61,6 +63,8 @@ cat:
     summary: A material element that produces color based on light reflected from
       other surfaces.
   - name: reflectMat
+    status: beta
+  - name: rimContrib
     status: beta
   - name: sampledPointMat
     status: beta

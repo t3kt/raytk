@@ -40,6 +40,13 @@ op:
     summary: Whether to use shadows. When enabled, if the *Shadow Definition* input
       is provided, that will be used. Otherwise a default shadow function will be
       used.
+  - label: Apply When
+    menuOptions:
+    - label: Always
+      name: always
+    - label: Only If Unassigned
+      name: missing
+    name: Condition
   status: beta
   thumb: assets/images/reference/operators/material/reflectMat_thumb.png
 

@@ -13,9 +13,16 @@ op:
   parameters:
   - label: FOV Angle
     name: Camfov
+    summary: Width of the view angle.
   - label: Position
     name: Campos
+    summary: Position of the camera.
   - label: Rotate
     name: Camrot
+    summary: Rotation of the camera view direction.
+  summary: Standard camera equivalent to a traditional Camera COMP with default settings.
 
 ---
+
+
+Standard camera equivalent to a traditional Camera COMP with default settings.

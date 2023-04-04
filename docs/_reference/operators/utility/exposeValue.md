@@ -71,8 +71,26 @@ op:
     name: Valuesource
   - label: Render Stage
     menuOptions:
+    - label: Any
+      name: any
     - label: Primary
       name: primary
+    - label: Material
+      name: material
+    - label: Normals
+      name: normal
+    - label: Shadow
+      name: shadow
+    - label: Reflect
+      name: reflect
+    - label: Refract
+      name: refract
+    - label: Occlusion
+      name: occlusion
+    - label: Volumetric
+      name: volumetric
+    - label: Volumetric Shadow
+      name: volumetricshadow
     name: Renderstage
   - label: Only On Surface Hit
     name: Onlyonsurfacehit

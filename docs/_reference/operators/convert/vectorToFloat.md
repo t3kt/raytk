@@ -33,13 +33,13 @@ op:
     name: Enable
   - label: Use Part
     menuOptions:
-    - label: X
+    - label: X / Red
       name: x
-    - label: Y
+    - label: Y / Green
       name: y
-    - label: Z
+    - label: Z / Blue
       name: z
-    - label: W
+    - label: W / Alpha
       name: w
     - label: Length(XY)
       name: lengthxy
@@ -67,6 +67,14 @@ op:
       name: avgxyz
     - label: Average(XYZW)
       name: avgxyzw
+    - label: Hue
+      name: hue
+    - label: Saturation
+      name: sat
+    - label: Value
+      name: val
+    - label: Luminance
+      name: luma
     name: Usepart
     summary: Which part of the vector to use for the float field.
   summary: Converts a vector value field to a float field using one part of the vector.

@@ -60,6 +60,13 @@ op:
     name: Enable
   - label: Color
     name: Color
+  - label: Assign When
+    menuOptions:
+    - label: Always
+      name: always
+    - label: Only If Unassigned
+      name: missing
+    name: Condition
   shortcuts:
   - ac
   summary: Assigns a surface color attribute to an SDF surface.

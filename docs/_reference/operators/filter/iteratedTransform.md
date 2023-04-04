@@ -76,6 +76,21 @@ op:
     returnTypes:
     - float
     - vec4
+  - contextTypes:
+    - Context
+    - MaterialContext
+    - CameraContext
+    - LightContext
+    - RayContext
+    - ParticleContext
+    coordTypes:
+    - vec2
+    - vec3
+    label: Custom Transform Field
+    name: transformField
+    returnTypes:
+    - float
+    - vec4
   name: iteratedTransform
   opType: raytk.operators.filter.iteratedTransform
   parameters:
@@ -184,6 +199,60 @@ op:
     - label: Step Ratio
       name: ratio
     name: Iterationtype
+  - label: Enable Accumulate
+    name: Enableaccumulate
+  - label: Combine
+    menuOptions:
+    - label: Simple Union
+      name: simpleUnion
+    - label: Simple Intersect
+      name: simpleIntersect
+    - label: Simple Difference
+      name: simpleDiff
+    - label: Smooth Union
+      name: smoothUnion
+    - label: Smooth Intersect
+      name: smoothIntersect
+    - label: Smooth Difference
+      name: smoothDiff
+    - label: Round Union
+      name: roundUnion
+    - label: Round Intersect
+      name: roundIntersect
+    - label: Round Difference
+      name: roundDiff
+    - label: Chamfer Union
+      name: chamferUnion
+    - label: Chamfer Intersect
+      name: chamferIntersect
+    - label: Chamfer Difference
+      name: chamferDiff
+    - label: Stair Union
+      name: stairUnion
+    - label: Stair Intersect
+      name: stairIntersect
+    - label: Stair Difference
+      name: stairDiff
+    - label: Column Union
+      name: columnUnion
+    - label: Column Intersect
+      name: columnIntersect
+    - label: Column Difference
+      name: columnDiff
+    name: Combine
+    summary: The type of combination operation to perform.
+  - label: Swap Inputs
+    name: Swapinputs
+    summary: Swaps the order of the inputs. This is only relevant for "diff" modes.
+  - label: Blend Radius
+    name: Blendradius
+    summary: The size of the blending region.
+  - label: Blend Number
+    name: Blendnumber
+    summary: For stair and column modes, this controls how many steps are used in
+      the blending regions.
+  - label: Blend Offset
+    name: Blendoffset
   summary: Performs a transform multiple times, optionally reflecting across axes
     in between the steps.
   thumb: assets/images/reference/operators/filter/iteratedTransform_thumb.png

@@ -42,6 +42,7 @@ cat:
     - r2
     summary: Renders a 2D image by evaluating the input field for each pixel.
   - name: renderSelect
+    summary: Accesses a color output buffer from a renderer.
   summary: 'Outputs are a special category of operator that takes in one or more
 
     chains of OPs, generate a shader, and run it to produce some sort of

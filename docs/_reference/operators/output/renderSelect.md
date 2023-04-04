@@ -8,6 +8,7 @@ redirect_from:
   - /reference/opType/raytk.operators.output.renderSelect/
 op:
   category: output
+  detail: See [Output Buffers](/raytk/guide/output-buffers/) for more details.
   name: renderSelect
   opType: raytk.operators.output.renderSelect
   parameters:
@@ -64,5 +65,11 @@ op:
     - label: Life + State
       name: lifeStateOut
     name: Outputbuffer
+  summary: Accesses a color output buffer from a renderer.
 
 ---
+
+
+Accesses a color output buffer from a renderer.
+
+See [Output Buffers](/raytk/guide/output-buffers/) for more details.

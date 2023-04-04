@@ -74,6 +74,13 @@ op:
       render is used instead.
   - label: Use Surface Color
     name: Usesurfacecolor
+  - label: Apply When
+    menuOptions:
+    - label: Always
+      name: always
+    - label: Only If Unassigned
+      name: missing
+    name: Condition
   summary: Material with a basic lighting model.
   thumb: assets/images/reference/operators/material/basicMat_thumb.png
   variables:
