@@ -1,0 +1,4 @@
+names	source	handling	readOnlyHandling	conversion	enable
+Offset	param	runtime	macro		1
+Blending	param	runtime	macro		1
+Outsidevalue[xyzw]	param	runtime	macro		op('inside_definition')[1, 'returnType']!='Sdf'
