@@ -17,37 +17,21 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 	float blend = THIS_Blending;
 	insideAmount = smoothstep(0., blend, insideAmount);
 	ReturnT res;
-	#ifdef THIS_RETURN_TYPE_Sdf
-	{
-		if (round(insideAmount) > RAYTK_SURF_DIST) {
-			res = inputOp_inside(p, ctx);
+	if (insideAmount >= 1.) {
+		res = inputOp_inside(p, ctx);
+	} else {
+		ReturnT outRes;
+		#ifdef THIS_HAS_INPUT_outside
+		outRes = THIS_asReturnT(inputOp_outside(p, ctx));
+		#else
+		outRes = THIS_asReturnT(THIS_Outsidevalue);
+		#endif
+		if (insideAmount <= 0.) {
+			res = outRes;
 		} else {
-			#ifdef THIS_HAS_INPUT_outside
-			res = inputOp_outside(p, ctx);
-			#else
-			res = boundRes;
-			#endif
+			res = inputOp_inside(p, ctx);
+			res = mix(outRes, res, insideAmount);
 		}
 	}
-	#else
-	{
-		if (insideAmount >= 1.) {
-			res = inputOp_inside(p, ctx);
-		} else {
-			ReturnT outRes;
-			#ifdef THIS_HAS_INPUT_outside
-			outRes = THIS_asReturnT(inputOp_outside(p, ctx));
-			#else
-			outRes = THIS_asReturnT(THIS_Outsidevalue);
-			#endif
-			if (insideAmount <= 0.) {
-				res = outRes;
-			} else {
-				res = inputOp_inside(p, ctx);
-				res = mixVals(outRes, res, insideAmount);
-			}
-		}
-	}
-	#endif
 	return res;
 }

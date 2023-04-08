@@ -1,8 +1,8 @@
 !rop
 meta: !meta
   opType: raytk.operators.filter.limitArea
-  opVersion: '0'
-  opStatus: alpha
+  opVersion: '1'
+  opStatus: beta
 opDef: !def
   enable: !expr
     expr: op('..').par.Enable
@@ -33,7 +33,6 @@ multiInput: !multiInput
     contextType: !contextT
       Allcontexttype: true
     returnType: !returnT
-      Returntypesdf: true
       Returntypefloat: true
       Returntypevec4: true
   - !input
@@ -43,7 +42,6 @@ multiInput: !multiInput
     contextType: !contextT
       Allcontexttype: true
     returnType: !returnT
-      Returntypesdf: true
       Returntypefloat: true
       Returntypevec4: true
 inputs:
@@ -56,5 +54,4 @@ inputs:
     Allcontexttype: true
   returnType: !returnT
     Returntypesdf: true
-    Returntypefloat: !expr
-      expr: op('inside_definition')[1, 'returnType'] != 'Sdf'
+    Returntypefloat: true
