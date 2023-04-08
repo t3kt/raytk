@@ -6,6 +6,7 @@ if False:
 	from _stubs import *
 	from typing import Union
 	from raytkUtil import CompDefParsT
+	from _stubs.PopDialogExt import PopDialogExt
 
 def parentPar() -> 'Union[ParCollection, CompDefParsT]':
 	return parent().par
@@ -42,3 +43,36 @@ def launchHelp():
 		url = url.replace('https://t3kt.github.io/raytk/', 'http://localhost:4000/raytk/')
 	if url:
 		ui.viewFile(url)
+
+def _popDialog() -> 'PopDialogExt':
+	# noinspection PyUnresolvedReferences
+	return op.TDResources.op('popDialog')
+
+def updateOP():
+	if not hasattr(op, 'raytk'):
+		_popDialog().Open(
+			title='Warning',
+			text='Unable to update OP because RayTK toolkit is not available.',
+			escOnClickAway=True,
+		)
+		return
+	host = parentPar().Hostop.eval()
+	if not host:
+		return
+	toolkit = op.raytk
+	updater = toolkit.op('tools/updater')
+	if updater and hasattr(updater, 'UpdateOP'):
+		updater.UpdateOP(host)
+		return
+	if not host.par.clone:
+		msg = 'Unable to update OP because master is not found in the loaded toolkit.'
+		if parentPar().Raytkopstatus == 'deprecated':
+			msg += '\nNOTE: This OP has been marked as "Deprecated", so it may have been removed from the toolkit.'
+		_popDialog().Open(
+			title='Warning',
+			text=msg,
+			escOnClickAway=True,
+		)
+		return
+	if host and host.par.clone:
+		host.par.enablecloningpulse.pulse()
