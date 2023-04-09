@@ -350,7 +350,7 @@ class ShaderBuilder:
 						variable.owner,
 						variable.localName,
 						variable.dataType,
-						variable.macros,
+						variable.macros or '',
 					])
 
 	def buildParamUniformTable(self, dat: 'DAT'):
