@@ -1,2 +1,4 @@
 names	source	handling	readOnlyHandling	conversion	enable
 Hashoffset[xy]	param	runtime	macro		1
+Translate[xyz] Scale[xyz]	param	runtime	macro		1
+Axis	param	runtime	constant		1
