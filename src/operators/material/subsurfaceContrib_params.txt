@@ -1,0 +1,3 @@
+names	source	handling	readOnlyHandling	conversion	enable
+Level Density Exponent Scatter Offset Thickness	param	runtime	macro		1
+Color[rgb]	param	runtime	macro		parent().par.Usecolor
