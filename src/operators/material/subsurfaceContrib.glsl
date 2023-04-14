@@ -12,6 +12,7 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 	float len = 0.;
 
 	vec3 ro = ctx.ray.pos;
+	ro = closestPoint;
 	vec3 rd = ctx.ray.dir;
 	vec3 lightDir = normalize(p - ctx.light.pos);
 	vec3 norm = ctx.normal;
@@ -52,7 +53,6 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 	float t = len / samples;
 	t = exp(offset - t * density);
 	t = pow(t, exponent) * THIS_Level;
-	setDebugOut(vec4(t, 0., 0., 1.));
 
 	ReturnT res;
 	#ifdef THIS_RETURN_TYPE_float

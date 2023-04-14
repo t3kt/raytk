@@ -61,12 +61,17 @@ Sdf castRay(Ray ray, float maxDist) {
 	int i;
 	nearHitCount = 0;
 	nearHit = 0.;
+	float closestDist = maxDist;
 	for (i = 0; i < RAYTK_MAX_STEPS; i++) {
 		if (!checkLimit(ray.pos)) {
 			popStage(priorStage);
 			return createNonHitSdf();
 		}
 		res = map(ray.pos);
+		if (res.x < closestDist) {
+			closestDist = res.x;
+			closestPoint = ray.pos;
+		}
 		dist += res.x;
 		ray.pos += ray.dir * res.x;
 		#ifdef OUTPUT_NEARHIT
