@@ -1,3 +1,6 @@
+// Berry by kuvkar
+// https://www.shadertoy.com/view/ldcGWH
+
 float THIS_rand(vec2 co)
 {
 	return fract(sin(dot(co.xy ,vec2(12.9898,78.233))) * 43758.5453);
@@ -7,8 +10,8 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 	if (IS_FALSE(THIS_Enable) || THIS_Level == 0.) {
 		return ReturnT(0.);
 	}
-	const float samples = 12.;
-	const float sqs = sqrt(samples);
+	float samples = THIS_Samples;
+	float sqs = sqrt(samples);
 	float len = 0.;
 
 	vec3 ro = ctx.ray.pos;
@@ -25,6 +28,7 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 
 	vec3 startFrom = ro + (-norm * surfaceThickness);
 
+	int priorStage = pushStage(RAYTK_STAGE_SUBSURFACE);
 	for (float s = -samples / 2.; s < samples / 2.; s+= 1.0) {
 		vec3 rp = startFrom;
 		vec3 ld = lightDir;
@@ -39,8 +43,7 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 		ld = normalize(ld);
 		vec3 dir = ld;
 
-		for (int i = 0; i < 50; i++) {
-			// TODO: set render stage!
+		for (int i = 0; i < int(THIS_Maxsteps); i++) {
 			float dist = map(rp).x;
 			if (dist < 0.0) dist = min(dist, -0.0001);
 			if (dist >= 0.0) break;
@@ -50,6 +53,8 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 		}
 		len += length(ro - rp);
 	}
+	popStage(priorStage);
+
 	float t = len / samples;
 	t = exp(offset - t * density);
 	t = pow(t, exponent) * THIS_Level;
