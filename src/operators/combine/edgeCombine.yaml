@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.combine.edgeCombine
-  opVersion: '7'
+  opVersion: '8'
   opStatus: default
 opDef: !def
   enable: true
@@ -36,6 +36,7 @@ multiInput: !multiInput
     returnType: !returnT
       Returntypesdf: true
   - !input
+    Variableinputs: inputOp1
     Required: true
     coordType: !coordT
       Allcoordtype: true
@@ -46,6 +47,7 @@ multiInput: !multiInput
 inputs:
 - !input
   Localalias: radiusField
+  Variableinputs: inputOp[1-2]
   coordType: !coordT
     Allcoordtype: true
   contextType: !contextT
@@ -54,6 +56,7 @@ inputs:
     Returntypefloat: true
 - !input
   Localalias: depthField
+  Variableinputs: inputOp[1-2] radiusField
   coordType: !coordT
     Allcoordtype: true
   contextType: !contextT

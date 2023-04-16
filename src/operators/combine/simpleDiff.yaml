@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.combine.simpleDiff
-  opVersion: '13'
+  opVersion: '14'
   opStatus: default
 opDef: !def
   enable: !expr
@@ -47,6 +47,7 @@ multiInput: !multiInput
       Returntypesdf: true
       Returntypefloat: true
   - !input
+    Variableinputs: inputOp1
     Required: true
     coordType: !coordT
       Allcoordtype: true

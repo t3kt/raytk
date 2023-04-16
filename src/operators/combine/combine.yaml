@@ -1,32 +1,8 @@
 !rop
 meta: !meta
   opType: raytk.operators.combine.combine
-  opVersion: '26'
+  opVersion: '27'
   opStatus: default
-opDef: !def
-  enable: !expr
-    expr: op('..').par.Enable
-  useRuntimeBypass: true
-  typeSpec: !ropTypes
-    coordType: !coordT
-      Allcoordtype: true
-    contextType: !contextT
-      Allcontexttype: true
-    returnType: !returnT
-      Returntypesdf: true
-  function: !text
-    file: src/operators/combine/combine.glsl
-    name: function
-  libraryNames: raytkCombine
-  help: !text
-    file: src/operators/combine/combine.md
-    name: help
-  keywords:
-  - combine
-  - union
-  - diff
-  - intersect
-  shortcuts: cmb
 paramPages:
 - !page
   name: Combine
@@ -122,6 +98,30 @@ paramPages:
         'columnUnion', 'columnIntersect', 'columnDiff')
       normMin: 0.0
       normMax: 1.0
+opDef: !def
+  enable: !expr
+    expr: op('..').par.Enable
+  useRuntimeBypass: true
+  typeSpec: !ropTypes
+    coordType: !coordT
+      Allcoordtype: true
+    contextType: !contextT
+      Allcontexttype: true
+    returnType: !returnT
+      Returntypesdf: true
+  function: !text
+    file: src/operators/combine/combine.glsl
+    name: function
+  libraryNames: raytkCombine
+  help: !text
+    file: src/operators/combine/combine.md
+    name: help
+  keywords:
+  - combine
+  - union
+  - diff
+  - intersect
+  shortcuts: cmb
 multiInput: !multiInput
   Minimuminputs: 0
   Coordtypereductionmode: common
@@ -139,6 +139,7 @@ multiInput: !multiInput
     returnType: !returnT
       Returntypesdf: true
   - !input
+    Variableinputs: inputOp1
     coordType: !coordT
       Allcoordtype: true
     contextType: !contextT
@@ -147,6 +148,7 @@ multiInput: !multiInput
       Returntypesdf: true
   - !input
     Localalias: radiusField
+    Variableinputs: inputOp[1-2]
     coordType: !coordT
       Allcoordtype: true
     contextType: !contextT
@@ -156,6 +158,7 @@ multiInput: !multiInput
       Returntypefloat: true
   - !input
     Localalias: offsetField
+    Variableinputs: inputOp[1-2]
     coordType: !coordT
       Allcoordtype: true
     contextType: !contextT

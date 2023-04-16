@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.combine.shapedCombine
-  opVersion: '9'
+  opVersion: '10'
   opStatus: beta
 opDef: !def
   enable: !expr
@@ -41,6 +41,7 @@ multiInput: !multiInput
       Returntypesdf: true
       Returntypefloat: true
   - !input
+    Variableinputs: inputOp1
     Required: true
     coordType: !coordT
       Allcoordtype: true
@@ -51,6 +52,7 @@ multiInput: !multiInput
       Returntypefloat: true
   - !input
     Localalias: blendShape
+    Variableinputs: inputOp[1-2]
     Required: true
     coordType: !coordT
       Coordtypevec2: true
