@@ -16,20 +16,35 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 
 //	res1.x = cmb_stairUnion(res1.x, res2.x, r, n, o);
 //	res1.x = min(min(res1.x, res2.x), 0.5 * (u + res1.x + abs((mod(u - res1.x + s + o, 2 * s)) - s)));
-	res1.x = min(
-		min(res1.x, res2.x),
-		0.5 * (
-			u +
-			res1.x +
-			sabs(
-			(2 * s) - mod(
-					u - res1.x + s + o,
-					2 * s
-				) - s,
-				b
-			)
-		)
-	);
+//	res1.x = min(
+//		min(res1.x, res2.x),
+//		0.5 * (
+//			u +
+//			res1.x +
+//			sabs(
+//			(2 * s) - mod(
+//					u - res1.x + s + o,
+//					2 * s
+//				) - s,
+//				b
+//			)
+//		)
+//	);
+	vec2 q = vec2(res1.x, res2.x);
+	float columnRadius = r * sqrt(2)/((n-1)*2+sqrt(2));
+	pR45(q);
+	q.x -= sqrt(2)/2*r;
+	q.x += columnRadius * sqrt(2);
+	if (mod(n, 2) == 1) {
+		q.y += columnRadius;
+	}
+	q.y += o;
+	pMod1(q.y, columnRadius*2);
+	float result = length(q) - columnRadius;
+	result = min(result, q.x);
+	result = min(result, res1.x);
+	res1.x = min(result, res2.x);
+
 	float h = smoothBlendRatio(res1.x, res2.x, r);
 	blendInSdf(res1, res2, 1.0 - h);
 	return res1;
