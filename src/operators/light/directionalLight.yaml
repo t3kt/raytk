@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.light.directionalLight
-  opVersion: '8'
+  opVersion: '9'
   opStatus: default
 opDef: !def
   enable: true
@@ -16,12 +16,20 @@ opDef: !def
     file: src/operators/light/directionalLight.glsl
     name: functionTemplate
   paramGroupTable: eval_params
+  variableTable: !table
+    file: src/operators/light/directionalLight_variables.txt
+    name: variable_exprs
+    evaluate: true
+    evalOpts: !evalOpts
+      excludeFirstRow: true
+      cols: enable
   help: !text
     file: src/operators/light/directionalLight.md
     name: help
 inputs:
 - !input
   Localalias: colorField
+  Variables: lightdir
   coordType: !coordT
     Coordtypevec3: true
   contextType: !contextT
