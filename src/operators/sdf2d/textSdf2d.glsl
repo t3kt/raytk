@@ -5,6 +5,10 @@ void THIS_char(inout float d, vec2 p, int c) {
 	d = min(d, d1);
 }
 
+void THIS_align(inout vec2 p, float w, float n) {
+	ALIGN();
+}
+
 ReturnT thismap(CoordT p, ContextT ctx) {
 	float w = 0.45;
 	float d = RAYTK_MAX_DIST;

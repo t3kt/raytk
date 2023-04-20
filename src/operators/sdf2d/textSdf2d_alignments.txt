@@ -1,0 +1,4 @@
+name	label	code
+start	Start	p.x -= .5 * w;
+center	Center	p.x += (w * (n - .5)) * .5;
+end	End	p.x += (w * n);

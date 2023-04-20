@@ -7,7 +7,7 @@ def generateCode():
 	text = parent().par.Text.eval()
 	if not text:
 		return ''
-	code = []
+	code = [f'THIS_align(p, w, float({len(text)}));']
 	for c in text:
 		i = ord(c)
 		code.append(f'THIS_char(d, p, {i});')

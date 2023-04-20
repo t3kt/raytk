@@ -21,3 +21,19 @@ opDef: !def
     evaluate: true
     evalOpts: !evalOpts
       excludeFirstRow: true
+elements:
+- !opElement
+  name: codeSwitcher_Align
+  elementType: codeSwitcher
+  params:
+    Elementroot: ''
+    Table: !table
+      file: src/operators/sdf2d/textSdf2d_alignments.txt
+      name: alignments
+    Param: Align
+    Autoupdateparams: true
+    Manageparamstates: false
+    Alwaysincludeallparams: false
+    Switchmode: auto
+    Indexexpr: ''
+    Placeholder: ALIGN();
