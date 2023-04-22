@@ -1,5 +1,32 @@
 # Release Notes
 
+## v0.33
+
+### Highlights
+
+### Details
+
+* Improvements / additions
+  * New OPs
+    * instanceField (#774)
+    * limitArea (#1056)
+    * radialSlice
+    * rampField
+    * subsurfaceContrib (#945)
+  * New OP features
+    * axisLight / directionalLight / pointLight - light direction variable
+    * blackbodyColorField - unit option
+    * extend - axis selection
+    * hashField - clarified function labels (#1057)
+    * provideVariable - support for capturing primary input
+    * reflectContrib - shadow support (#1059)
+    * sweep - 3D position variable
+* Fixes
+  * Fix Update OP for non-ROPs (#1013)
+  * Fix input variable settings - combine, combineFields, compositeFields, edgeCombine, shapedCombine, simpleDiff, simpleIntersect, simpleUnion
+* Changes (potentially breaking)
+* Infrastructure / internals
+
 ## v0.32
 
 ### Highlights
