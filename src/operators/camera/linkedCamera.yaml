@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.camera.linkedCamera
-  opVersion: '6'
+  opVersion: '7'
   opStatus: default
 opDef: !def
   enable: true
@@ -16,6 +16,11 @@ opDef: !def
     file: src/operators/camera/linkedCamera.glsl
     name: functionTemplate
   paramGroupTable: eval_params
+  macroTable: !table
+    file: src/operators/camera/linkedCamera_macros.txt
+    name: macro_exprs
+    evaluate: true
+    evalOpts: !evalOpts {}
   help: !text
     file: src/operators/camera/linkedCamera.md
     name: help

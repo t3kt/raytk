@@ -3,5 +3,5 @@ if False:
 	# noinspection PyUnresolvedReferences
 	from _stubs import *
 
-def onPulse(par):
-	mod.linkedCamera.onCreatePulse(par)
+def onCook(chop):
+	mod.linkedCamera.buildCustomMatrixChans(chop)
