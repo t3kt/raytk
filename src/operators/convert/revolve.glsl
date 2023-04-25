@@ -21,7 +21,7 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 		setIterationIndex(ctx, a);
 	}
 	#ifdef THIS_EXPOSE_normangle
-	THIS_normangle = .5 + a*.5;
+	THIS_normangle = a;
 	#endif
 	#ifdef THIS_EXPOSE_angle
 	THIS_angle = 360. * a;
