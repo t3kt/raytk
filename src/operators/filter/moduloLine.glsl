@@ -1,12 +1,18 @@
 ReturnT thismap(CoordT p, ContextT ctx) {
 	if (IS_FALSE(THIS_Enable)) {
+		#ifdef THIS_EXPOSE_cellcoord
+		THIS_cellcoord = 0;
+		#endif
+		#ifdef THIS_EXPOSE_normcoord
+		THIS_normcoord = 0.;
+		#endif
 		return inputOp1(p, ctx);
 	}
 
 	vec3 pt1 = THIS_Point1;
 	vec3 pt2 = THIS_Point2;
 	float divs = THIS_Divisions;
-	float size = distance(pt1, pt2) / divs;
+	float size = distance(pt1, pt2) / (divs-1.);
 	float halfSize = size * 0.5;
 
 	vec3 dir = normalize(pt1 - pt2);
@@ -18,26 +24,26 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 
 	vec3 p3 = adaptAsVec3(p);
 	p3 -= pt1;
-	p3 = p3.zyx;
 	p3 *= rot;
-	p3 = p3.zyx;
 
-	float q = p3.x;
+	float q = p3.z;
 	float c = floor((q + halfSize)/size);
 	q = mod(q+halfSize, size) - halfSize;
 
-	float start = 0.;
-	float stop = divs - 1;
+	float start = -divs + 1.;
+	float stop = 0.;
 	if (c < start) applyModLimit(q, c, size, start);
 	if (c > stop) applyModLimit(q, c, size, stop);
 
-	p3.x = q;
-	p3 = p3.zyx;
-	p3 *= -rot;
-	p3 = p3.zyx;
-	p3 += pt1;
+	p3.z = q;
+	p = THIS_asCoordT(p3.zyx);
 
-	p = THIS_asCoordT(p3);
-
+	c *= -1.;
+	#ifdef THIS_EXPOSE_cellcoord
+	THIS_cellcoord = int(c);
+	#endif
+	#ifdef THIS_EXPOSE_normcoord
+	THIS_normcoord = c / (divs - 1.);
+	#endif
 	return inputOp1(p, ctx);
 }
