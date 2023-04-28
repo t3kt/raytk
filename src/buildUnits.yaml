@@ -1,0 +1,21 @@
+!buildUnits
+buildUnits:
+  - name: full
+    fileName: RayTK
+    compName: raytk
+    unitType: full
+    buildTypes: [release, experimental]
+  - name: main
+    fileName: RayTKMain
+    compName: raytkMain
+    unitType: core
+    buildTypes: [release, experimental]
+    include: ['*/*']
+    exclude:
+      - 'particles/*'
+  - name: particles
+    fileName: RayTKParticles
+    compName: raytkParticles
+    unitType: addon
+    buildTypes: [experimental]
+    include: ['particles/*']
