@@ -107,6 +107,8 @@ class Palette:
 			self._startCloseTimer()
 
 	def _resetState(self):
+		for finder in self.ownerComp.ops('findOpTables', 'findOpHelpTables'):
+			finder.par.cookpulse.pulse()
 		ext.opPicker.Resetstate()
 		self.isOpen.val = False
 
