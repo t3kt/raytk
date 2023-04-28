@@ -3,19 +3,21 @@ buildUnits:
   - name: full
     fileName: RayTK
     compName: raytk
+    globalShortcut: raytk
     unitType: full
     buildTypes: [release, experimental]
   - name: main
     fileName: RayTKMain
     compName: raytkMain
+    globalShortcut: raytk
     unitType: core
     buildTypes: [release, experimental]
     include: ['*/*']
-    exclude:
-      - 'particles/*'
+    exclude: ['particles/*']
   - name: particles
     fileName: RayTKParticles
     compName: raytkParticles
+    globalShortcut: raytkParticles
     unitType: addon
     buildTypes: [experimental]
     include: ['particles/*']

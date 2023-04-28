@@ -728,6 +728,7 @@ class BuildUnitSpec(ModelObject):
 	name: str
 	fileName: str
 	compName: str
+	globalShortcut: str
 	unitType: str = BuildUnitTypes.full
 	buildTypes: List[str] = field(default_factory=list)
 
