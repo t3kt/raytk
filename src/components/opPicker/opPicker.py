@@ -279,7 +279,7 @@ def _loadItemCategories(opTable: 'DAT', opHelpTable: 'DAT', useDisplayCategories
 	for categoryName in sorted(categoriesByName.keys()):
 		category = categoriesByName[categoryName]
 		categories.append(category)
-		category.ops.sort(key=lambda o: o.path)
+		category.ops.sort(key=lambda o: o.shortName)
 		category.isAlpha = all([o.isAlpha for o in category.ops])
 		category.isBeta = all([o.isBeta for o in category.ops])
 		category.isDeprecated = all([o.isDeprecated for o in category.ops])
