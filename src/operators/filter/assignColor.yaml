@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.filter.assignColor
-  opVersion: '18'
+  opVersion: '19'
   opStatus: default
 opDef: !def
   enable: !expr
@@ -38,6 +38,7 @@ opDef: !def
   - material
   - modularmat
   shortcuts: ac
+  displayCategory: Surface Attributes
 inputs:
 - !input
   Required: true

@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.filter.polarToCartesian
-  opVersion: '6'
+  opVersion: '7'
   opStatus: beta
 opDef: !def
   enable: !expr
@@ -21,6 +21,7 @@ opDef: !def
   help: !text
     file: src/operators/filter/polarToCartesian.md
     name: help
+  displayCategory: Convert
 inputs:
 - !input
   Required: true
