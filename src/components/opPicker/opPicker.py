@@ -491,6 +491,8 @@ class _PickerImpl:
 
 	@staticmethod
 	def _applyStatusTextColor(attribs: 'ListAttributes', item: '_AnyItemT'):
+		if item.isCategory:
+			return
 		if item.isAlpha:
 			attribs.textColor = _configColor('Alphacolor')
 		elif item.isBeta:
