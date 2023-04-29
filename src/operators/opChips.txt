@@ -1,0 +1,7 @@
+name	chip
+instanceField	new
+limitArea	new
+radialSlice	new
+rampField	new
+subsurfaceContrib	new
+extend	updated

@@ -44,13 +44,13 @@ class LibraryInfoBuilder:
 		dat.appendRow(['buildOsVersion', app.osVersion])
 
 	@staticmethod
-	def buildROPTable(dat: 'scriptDAT', thumbTable: 'DAT'):
+	def buildROPTable(dat: 'scriptDAT', thumbTable: 'DAT', chipTable: 'DAT'):
 		dat.clear()
 		opsRoot = RaytkContext().operatorsRoot()
 		rops = []  # type: List[COMP]
 		if opsRoot:
 			rops = opsRoot.findChildren(type=COMP, tags=['raytk*'], depth=2, maxDepth=2)
-		dat.appendRow(['name', 'path', 'tags', 'category', 'displayCategory', 'opType', 'opVersion', 'status', 'keywords', 'shortcuts', 'thumb'])
+		dat.appendRow(['name', 'path', 'tags', 'category', 'displayCategory', 'opType', 'opVersion', 'status', 'keywords', 'shortcuts', 'chip', 'thumb'])
 		if not rops:
 			return
 		rops.sort(key=lambda o: o.path.lower())
@@ -71,6 +71,7 @@ class LibraryInfoBuilder:
 				ropInfo.statusLabel,
 				' '.join(sorted(ropInfo.keywords)),
 				' '.join(sorted(ropInfo.shortcuts)),
+				chipTable[rop.name, 'chip'] or '',
 				thumbTable[rop.path, 'thumb'] or '',
 			])
 
