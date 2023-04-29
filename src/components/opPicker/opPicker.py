@@ -237,7 +237,7 @@ class _Filter:
 	beta: bool = False
 	deprecated: bool = False
 
-def _loadItemCategories(opTable: 'DAT', opHelpTable: 'DAT'):
+def _loadItemCategories(opTable: 'DAT', opHelpTable: 'DAT', useDisplayCategories=False):
 	categories = []
 	categoriesByName = {}  # type: Dict[str, PickerCategoryItem]
 
@@ -245,7 +245,13 @@ def _loadItemCategories(opTable: 'DAT', opHelpTable: 'DAT'):
 		shortName = str(opTable[row, 'name'])
 		path = str(opTable[row, 'path'])
 		status = str(opTable[row, 'status'])
-		categoryName = str(opTable[row, 'category'])
+		categoryName = None
+		if useDisplayCategories:
+			categoryName = opTable[row, 'displayCategory']
+		if not categoryName:
+			categoryName = str(opTable[row, 'category']).capitalize()
+		else:
+			categoryName = str(categoryName)
 		opItem = PickerOpItem(
 			shortName=shortName,
 			path=path,
@@ -308,10 +314,10 @@ class _ItemLibrary:
 			if item.isOP and shortcut in item.shortcuts:
 				return item
 
-	def loadTables(self, opTable: 'DAT', opHelpTable: 'DAT'):
+	def loadTables(self, opTable: 'DAT', opHelpTable: 'DAT', useDisplayCategories: bool):
 		self.categories = []
 		self.filteredItems = None
-		self.categories = _loadItemCategories(opTable, opHelpTable)
+		self.categories = _loadItemCategories(opTable, opHelpTable, useDisplayCategories)
 		self.allItems = self._buildFlatList(None)
 
 	def _buildFlatList(self, filt: 'Optional[_Filter]') -> 'List[_AnyItemT]':
@@ -516,7 +522,9 @@ class _DefaultPickerImpl(_PickerImpl):
 		self.itemLibrary = _ItemLibrary()
 
 	def loadItems(self, opTable: 'DAT', opHelpTable: 'DAT'):
-		self.itemLibrary.loadTables(opTable, opHelpTable)
+		self.itemLibrary.loadTables(
+			opTable, opHelpTable,
+			useDisplayCategories=self.ownerComp.par.Usedisplaycategories.eval())
 		self.refreshList()
 		self.applyFilter()
 		self.selectItem(None)
@@ -716,10 +724,10 @@ class _CategoryColumnLibrary:
 		self.allCategories = []
 		self.filteredColumns = None
 
-	def loadTables(self, opTable: 'DAT', opHelpTable: 'DAT'):
+	def loadTables(self, opTable: 'DAT', opHelpTable: 'DAT', useDisplayCategories: bool):
 		self.allItems = []
 		self.allColumns = []
-		for category in _loadItemCategories(opTable, opHelpTable):
+		for category in _loadItemCategories(opTable, opHelpTable, useDisplayCategories):
 			self.allColumns.append(_CategoryColumn(
 				category,
 				allOps=list(category.ops),
@@ -804,7 +812,9 @@ class _CategoryColumnPickerImpl(_PickerImpl):
 		return item
 
 	def loadItems(self, opTable: 'DAT', opHelpTable: 'DAT'):
-		self.itemLibrary.loadTables(opTable, opHelpTable)
+		self.itemLibrary.loadTables(
+			opTable, opHelpTable,
+			useDisplayCategories=self.ownerComp.par.Usedisplaycategory.eval())
 		self.refreshList()
 		self.applyFilter()
 		self.selectItem(None)
