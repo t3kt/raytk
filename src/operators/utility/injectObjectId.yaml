@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.utility.injectObjectId
-  opVersion: '8'
+  opVersion: '9'
   opStatus: beta
 opDef: !def
   enable: !expr
@@ -25,6 +25,7 @@ opDef: !def
   help: !text
     file: src/operators/utility/injectObjectId.md
     name: help
+  displayCategory: Surface Attributes
 inputs:
 - !input
   Required: true

@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.field.sdfField
-  opVersion: '5'
+  opVersion: '6'
   opStatus: default
 opDef: !def
   enable: true
@@ -27,6 +27,7 @@ opDef: !def
   help: !text
     file: src/operators/field/sdfField.md
     name: help
+  displayCategory: Convert
 inputs:
 - !input
   Required: true

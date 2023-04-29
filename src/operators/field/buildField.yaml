@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.field.buildField
-  opVersion: '0'
+  opVersion: '1'
   opStatus: alpha
 opDef: !def
   enable: !expr
@@ -31,6 +31,7 @@ opDef: !def
     evalOpts: !evalOpts
       excludeFirstRow: true
       cols: enable
+  displayCategory: Combine
 multiInput: !multiInput
   Minimuminputs: 0
   Coordtypereductionmode: common
