@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.filter.quantizeValue
-  opVersion: '12'
+  opVersion: '13'
   opStatus: default
 opDef: !def
   enable: !expr
@@ -22,6 +22,7 @@ opDef: !def
   paramGroupTable: eval_params
   libraryNames: !expr
     expr: op('quantize')
+  displayCategory: Field Modifier
 inputs:
 - !input
   Required: true
