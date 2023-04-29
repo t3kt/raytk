@@ -1,20 +1,8 @@
 !rop
 meta: !meta
   opType: raytk.operators.output.customRender
-  opVersion: '12'
+  opVersion: '13'
   opStatus: alpha
-opDef: !def
-  enable: true
-  typeSpec: !ropTypes
-    coordType: !coordT
-      Coordtypevec3: true
-    contextType: !contextT
-      Contexttypecontext: true
-    returnType: !returnT
-      Returntypesdf: true
-  function: !text
-    name: functionTemplate
-    text: '#define thismap inputOp1'
 paramPages:
 - !page
   name: Render
@@ -191,6 +179,19 @@ paramPages:
       style: COMP
       default: ./shaderBuilder
       readOnly: true
+opDef: !def
+  enable: true
+  typeSpec: !ropTypes
+    coordType: !coordT
+      Coordtypevec3: true
+    contextType: !contextT
+      Contexttypecontext: true
+    returnType: !returnT
+      Returntypesdf: true
+  function: !text
+    name: functionTemplate
+    text: '#define thismap inputOp1'
+  displayCategory: Render
 inputs:
 - !input
   Required: true

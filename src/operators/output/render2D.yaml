@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.output.render2D
-  opVersion: '69'
+  opVersion: '70'
   opStatus: default
 opDef: !def
   enable: true
@@ -37,6 +37,7 @@ opDef: !def
     file: src/operators/output/render2D.md
     name: help
   shortcuts: r2
+  displayCategory: Render
 inputs:
 - !input
   coordType: !coordT
