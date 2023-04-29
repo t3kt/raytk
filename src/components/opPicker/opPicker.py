@@ -167,7 +167,13 @@ class _LayoutSettings:
 	numCols: int
 
 	opRowHeight: int = 26
-	catRowHeight: int = 26
+	catRowHeight: int = 32
+
+	opFontSize: int = 18
+	catFontSize: int = 20
+
+	opFontBold: bool = False
+	catFontBold: bool = True
 
 	toggleColWidth: int = 26
 	statusColWidth: int = 30
@@ -472,7 +478,6 @@ class _PickerImpl:
 		attribs.bgColor = _configColor('Bgcolor')
 		attribs.textColor = _configColor('Textcolor')
 		attribs.fontFace = 'Roboto'
-		attribs.fontSizeX = 18
 		attribs.textJustify = JustifyType.CENTERLEFT
 
 	def initCol(self, col: int, attribs: 'ListAttributes'):
@@ -637,10 +642,15 @@ class _DefaultPickerImpl(_PickerImpl):
 			attribs.fontItalic = True
 		if isinstance(item, PickerCategoryItem):
 			attribs.rowHeight = layout.catRowHeight
+			attribs.fontSizeX = layout.catFontSize
+			attribs.fontBold = layout.catFontBold
+			attribs.textJustify = JustifyType.CENTER
 			attribs.textColor = _configColor('Categorytextcolor')
 			attribs.bgColor = _configColor('Categorybgcolor')
 		elif isinstance(item, PickerOpItem):
 			attribs.rowHeight = layout.opRowHeight
+			attribs.fontSizeX = layout.opFontSize
+			attribs.fontBold = layout.opFontBold
 		self._applyStatusTextColor(attribs, item)
 
 	def initCell(self, row: int, col: int, attribs: 'ListAttributes'):
@@ -905,10 +915,15 @@ class _CategoryColumnPickerImpl(_PickerImpl):
 		layout = self.getLayout()
 		if row == 0:
 			attribs.rowHeight = layout.catRowHeight
+			attribs.fontSizeX = layout.catFontSize
+			attribs.fontBold = layout.catFontBold
+			attribs.textJustify = JustifyType.CENTER
 			attribs.textColor = _configColor('Categorytextcolor')
 			attribs.bgColor = _configColor('Categorybgcolor')
 		else:
 			attribs.rowHeight = layout.opRowHeight
+			attribs.fontSizeX = layout.opFontSize
+			attribs.fontBold = layout.opFontBold
 
 	def initCell(self, row: int, col: int, attribs: 'ListAttributes'):
 		layout = self.getLayout()
