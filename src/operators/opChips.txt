@@ -5,3 +5,4 @@ radialSlice	new
 rampField	new
 subsurfaceContrib	new
 extend	updated
+ambientLight	new
