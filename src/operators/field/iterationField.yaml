@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.field.iterationField
-  opVersion: '10'
+  opVersion: '11'
   opStatus: default
 opDef: !def
   enable: true
@@ -28,11 +28,13 @@ opDef: !def
   help: !text
     file: src/operators/field/iterationField.md
     name: help
+  displayCategory: Context Field
 elements:
 - !opElement
   name: codeSwitcher_Format
   elementType: codeSwitcher
   params:
+    Elementroot: ''
     Table: !table
       file: src/operators/field/iterationField_formats.txt
       name: formats
@@ -41,4 +43,5 @@ elements:
     Manageparamstates: false
     Alwaysincludeallparams: false
     Switchmode: inline
+    Indexexpr: ''
     Placeholder: BODY();

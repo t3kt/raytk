@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.filter.isoRotate
-  opVersion: '0'
+  opVersion: '1'
   opStatus: alpha
 opDef: !def
   enable: !expr
@@ -16,6 +16,7 @@ opDef: !def
   function: !text
     file: src/operators/filter/isoRotate.glsl
     name: function
+  displayCategory: Transform
 inputs:
 - !input
   Required: true

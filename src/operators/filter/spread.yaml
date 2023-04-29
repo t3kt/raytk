@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.filter.spread
-  opVersion: '2'
+  opVersion: '3'
   opStatus: alpha
 opDef: !def
   enable: !expr
@@ -22,6 +22,7 @@ opDef: !def
     file: src/operators/filter/spread.glsl
     name: function
   paramGroupTable: eval_params
+  displayCategory: Spatial Modifier
 inputs:
 - !input
   Required: true
@@ -36,6 +37,7 @@ elements:
   name: codeSwitcher_Spreadaxes
   elementType: codeSwitcher
   params:
+    Elementroot: ''
     Table: !table
       file: src/operators/filter/spread_axes.txt
       name: axes
@@ -44,4 +46,5 @@ elements:
     Manageparamstates: true
     Alwaysincludeallparams: false
     Switchmode: inline
+    Indexexpr: ''
     Placeholder: ''

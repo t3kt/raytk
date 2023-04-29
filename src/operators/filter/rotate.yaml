@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.filter.rotate
-  opVersion: '30'
+  opVersion: '31'
   opStatus: default
 paramPages:
 - !page
@@ -133,6 +133,7 @@ opDef: !def
   - spin
   - twist
   shortcuts: rot
+  displayCategory: Transform
 inputs:
 - !input
   Required: !expr

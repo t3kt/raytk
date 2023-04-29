@@ -1,32 +1,8 @@
 !rop
 meta: !meta
   opType: raytk.operators.filter.knife
-  opVersion: '14'
+  opVersion: '15'
   opStatus: default
-opDef: !def
-  enable: !expr
-    expr: op('..').par.Enable
-  useRuntimeBypass: true
-  typeSpec: !ropTypes
-    coordType: !coordT
-      Coordtypevec2: true
-      Coordtypevec3: true
-    contextType: !contextT
-      Allcontexttype: true
-    returnType: !returnT
-      Returntypesdf: true
-      Returntypefloat: true
-  function: !text
-    file: src/operators/filter/knife.glsl
-    name: function
-  paramGroupTable: eval_params
-  help: !text
-    file: src/operators/filter/knife.md
-    name: help
-  keywords:
-  - slice
-  - crop
-  - knife
 paramPages:
 - !page
   name: Filter
@@ -62,6 +38,31 @@ paramPages:
       default: 0.0
       normMin: 0.0
       normMax: 360.0
+opDef: !def
+  enable: !expr
+    expr: op('..').par.Enable
+  useRuntimeBypass: true
+  typeSpec: !ropTypes
+    coordType: !coordT
+      Coordtypevec2: true
+      Coordtypevec3: true
+    contextType: !contextT
+      Allcontexttype: true
+    returnType: !returnT
+      Returntypesdf: true
+      Returntypefloat: true
+  function: !text
+    file: src/operators/filter/knife.glsl
+    name: function
+  paramGroupTable: eval_params
+  help: !text
+    file: src/operators/filter/knife.md
+    name: help
+  keywords:
+  - slice
+  - crop
+  - knife
+  displayCategory: Spatial Modifier
 inputs:
 - !input
   Required: true

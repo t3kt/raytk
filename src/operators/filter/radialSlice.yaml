@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.filter.radialSlice
-  opVersion: '0'
+  opVersion: '1'
   opStatus: default
 opDef: !def
   enable: !expr
@@ -19,6 +19,7 @@ opDef: !def
     file: src/operators/filter/radialSlice.glsl
     name: function
   paramGroupTable: eval_params
+  displayCategory: Spatial Modifier
 inputs:
 - !input
   Required: true

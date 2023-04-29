@@ -1,31 +1,8 @@
 !rop
 meta: !meta
   opType: raytk.operators.filter.elongate
-  opVersion: '13'
+  opVersion: '14'
   opStatus: default
-opDef: !def
-  enable: !expr
-    expr: op('..').par.Enable
-  useRuntimeBypass: true
-  typeSpec: !ropTypes
-    coordType: !coordT
-      Coordtypevec2: true
-      Coordtypevec3: true
-    contextType: !contextT
-      Allcontexttype: true
-    returnType: !returnT
-      Allreturntype: true
-  function: !text
-    file: src/operators/filter/elongate.glsl
-    name: function
-  paramGroupTable: eval_params
-  help: !text
-    file: src/operators/filter/elongate.md
-    name: help
-  keywords:
-  - elongate
-  - extend
-  - stretch
 paramPages:
 - !page
   name: Filter
@@ -51,6 +28,30 @@ paramPages:
       enableExpr: op('./size_definition').numRows < 2
       normMin: 0.0
       normMax: 1.0
+opDef: !def
+  enable: !expr
+    expr: op('..').par.Enable
+  useRuntimeBypass: true
+  typeSpec: !ropTypes
+    coordType: !coordT
+      Coordtypevec2: true
+      Coordtypevec3: true
+    contextType: !contextT
+      Allcontexttype: true
+    returnType: !returnT
+      Allreturntype: true
+  function: !text
+    file: src/operators/filter/elongate.glsl
+    name: function
+  paramGroupTable: eval_params
+  help: !text
+    file: src/operators/filter/elongate.md
+    name: help
+  keywords:
+  - elongate
+  - extend
+  - stretch
+  displayCategory: Spatial Modifier
 inputs:
 - !input
   Required: true

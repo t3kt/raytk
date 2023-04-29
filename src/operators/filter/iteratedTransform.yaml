@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.filter.iteratedTransform
-  opVersion: '27'
+  opVersion: '28'
   opStatus: default
 opDef: !def
   enable: !expr
@@ -31,6 +31,7 @@ opDef: !def
   help: !text
     file: src/operators/filter/iteratedTransform.md
     name: help
+  displayCategory: Transform
 inputs:
 - !input
   Variables: '*'

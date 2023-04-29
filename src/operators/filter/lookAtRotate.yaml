@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.filter.lookAtRotate
-  opVersion: '0'
+  opVersion: '1'
   opStatus: beta
 opDef: !def
   enable: !expr
@@ -17,6 +17,7 @@ opDef: !def
     file: src/operators/filter/lookAtRotate.glsl
     name: function
   paramGroupTable: eval_params
+  displayCategory: Transform
 inputs:
 - !input
   Required: true

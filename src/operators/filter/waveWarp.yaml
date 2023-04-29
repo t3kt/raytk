@@ -1,35 +1,8 @@
 !rop
 meta: !meta
   opType: raytk.operators.filter.waveWarp
-  opVersion: '16'
+  opVersion: '17'
   opStatus: beta
-opDef: !def
-  enable: !expr
-    expr: op('..').par.Enable
-  useRuntimeBypass: true
-  typeSpec: !ropTypes
-    coordType: !coordT
-      Coordtypevec2: true
-      Coordtypevec3: true
-    contextType: !contextT
-      Allcontexttype: true
-    returnType: !returnT
-      Allreturntype: true
-  function: !text
-    file: src/operators/filter/waveWarp.glsl
-    name: function
-  paramGroupTable: eval_params
-  libraryNames: !expr
-    expr: op('raytkWave')
-  help: !text
-    file: src/operators/filter/waveWarp.md
-    name: help
-  keywords:
-  - wave
-  - warp
-  - offset
-  - sine
-  - shift
 paramPages:
 - !page
   name: Filter
@@ -100,6 +73,34 @@ paramPages:
       default: 0.0
       normMin: -1.0
       normMax: 1.0
+opDef: !def
+  enable: !expr
+    expr: op('..').par.Enable
+  useRuntimeBypass: true
+  typeSpec: !ropTypes
+    coordType: !coordT
+      Coordtypevec2: true
+      Coordtypevec3: true
+    contextType: !contextT
+      Allcontexttype: true
+    returnType: !returnT
+      Allreturntype: true
+  function: !text
+    file: src/operators/filter/waveWarp.glsl
+    name: function
+  paramGroupTable: eval_params
+  libraryNames: !expr
+    expr: op('raytkWave')
+  help: !text
+    file: src/operators/filter/waveWarp.md
+    name: help
+  keywords:
+  - wave
+  - warp
+  - offset
+  - sine
+  - shift
+  displayCategory: Transform
 inputs:
 - !input
   coordType: !coordT

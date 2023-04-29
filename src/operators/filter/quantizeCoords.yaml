@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.filter.quantizeCoords
-  opVersion: '9'
+  opVersion: '10'
   opStatus: default
 opDef: !def
   enable: !expr
@@ -25,6 +25,7 @@ opDef: !def
   help: !text
     file: src/operators/filter/quantizeCoords.md
     name: help
+  displayCategory: Transform
 inputs:
 - !input
   Required: true
