@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.material.shadingProperty
-  opVersion: '3'
+  opVersion: '4'
   opStatus: beta
 opDef: !def
   enable: true
@@ -19,6 +19,7 @@ opDef: !def
     file: src/operators/material/shadingProperty.glsl
     name: function
   libraryNames: raytkMaterial
+  displayCategory: Material Element
 elements:
 - !opElement
   name: codeSwitcher_Property

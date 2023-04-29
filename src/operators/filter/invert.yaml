@@ -1,8 +1,17 @@
 !rop
 meta: !meta
   opType: raytk.operators.filter.invert
-  opVersion: '9'
+  opVersion: '10'
   opStatus: default
+paramPages:
+- !page
+  name: Filter
+  pars:
+    Enable:
+      name: Enable
+      label: Enable
+      style: Toggle
+      default: true
 opDef: !def
   enable: !expr
     expr: op('..').par.Enable
@@ -22,15 +31,7 @@ opDef: !def
   help: !text
     file: src/operators/filter/invert.md
     name: help
-paramPages:
-- !page
-  name: Filter
-  pars:
-    Enable:
-      name: Enable
-      label: Enable
-      style: Toggle
-      default: true
+  displayCategory: Surface Modifier
 inputs:
 - !input
   Required: true

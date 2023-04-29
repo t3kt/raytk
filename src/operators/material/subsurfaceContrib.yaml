@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.material.subsurfaceContrib
-  opVersion: '2'
+  opVersion: '3'
   opStatus: beta
 opDef: !def
   enable: !expr
@@ -21,6 +21,7 @@ opDef: !def
     file: src/operators/material/subsurfaceContrib.glsl
     name: function
   paramGroupTable: eval_params
+  displayCategory: Material Element
 inputs:
 - !input
   coordType: !coordT
