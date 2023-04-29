@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.filter.truchetTile
-  opVersion: '5'
+  opVersion: '6'
   opStatus: alpha
 opDef: !def
   enable: !expr
@@ -19,6 +19,7 @@ opDef: !def
     file: src/operators/filter/truchetTile.glsl
     name: function
   paramGroupTable: eval_params
+  displayCategory: Repeat
 inputs:
 - !input
   Required: true

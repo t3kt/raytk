@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.filter.modulo3D
-  opVersion: '24'
+  opVersion: '25'
   opStatus: default
 opDef: !def
   enable: !expr
@@ -32,6 +32,7 @@ opDef: !def
   - repeat
   - grid
   shortcuts: m3
+  displayCategory: Repeat
 inputs:
 - !input
   Variables: '*'

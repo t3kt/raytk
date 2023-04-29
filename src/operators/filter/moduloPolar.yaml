@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.filter.moduloPolar
-  opVersion: '26'
+  opVersion: '27'
   opStatus: default
 opDef: !def
   enable: !expr
@@ -34,6 +34,7 @@ opDef: !def
   - repeat
   - kaleidoscope
   shortcuts: mp
+  displayCategory: Repeat
 inputs:
 - !input
   Variables: '*'
