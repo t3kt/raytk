@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.filter.limitArea
-  opVersion: '1'
+  opVersion: '2'
   opStatus: beta
 opDef: !def
   enable: !expr
@@ -18,6 +18,7 @@ opDef: !def
     file: src/operators/filter/limitArea.glsl
     name: function
   paramGroupTable: eval_params
+  displayCategory: Restrict
 multiInput: !multiInput
   Minimuminputs: 0
   Coordtypereductionmode: common

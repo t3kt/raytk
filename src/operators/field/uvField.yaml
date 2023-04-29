@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.field.uvField
-  opVersion: '7'
+  opVersion: '8'
   opStatus: default
 opDef: !def
   enable: true
@@ -30,3 +30,4 @@ opDef: !def
   help: !text
     file: src/operators/field/uvField.md
     name: help
+  displayCategory: Material Element
