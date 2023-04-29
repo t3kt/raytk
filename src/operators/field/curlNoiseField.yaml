@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.field.curlNoiseField
-  opVersion: '8'
+  opVersion: '9'
   opStatus: default
 opDef: !def
   enable: true
@@ -32,6 +32,7 @@ opDef: !def
   help: !text
     file: src/operators/field/curlNoiseField.md
     name: help
+  displayCategory: Noise Field
 inputs:
 - !input
   Localalias: coordField

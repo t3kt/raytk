@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.field.bezierCurveField
-  opVersion: '0'
+  opVersion: '1'
   opStatus: alpha
 opDef: !def
   enable: true
@@ -21,6 +21,7 @@ opDef: !def
   paramGroupTable: eval_params
   libraryNames: !expr
     expr: op('bezier_lib')
+  displayCategory: Spatial Field
 inputs:
 - !input
   Localalias: point1Field

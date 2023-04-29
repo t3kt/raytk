@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.field.noiseField
-  opVersion: '24'
+  opVersion: '25'
   opStatus: default
 opDef: !def
   enable: true
@@ -36,6 +36,7 @@ opDef: !def
   help: !text
     file: src/operators/field/noiseField.md
     name: help
+  displayCategory: Noise Field
 inputs:
 - !input
   Localalias: coordField

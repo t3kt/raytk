@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.field.atmosphereField
-  opVersion: '7'
+  opVersion: '8'
   opStatus: default
 opDef: !def
   enable: true
@@ -19,6 +19,7 @@ opDef: !def
   help: !text
     file: src/operators/field/atmosphereField.md
     name: help
+  displayCategory: Color Field
 inputs:
 - !input
   Localalias: rayDirectionField

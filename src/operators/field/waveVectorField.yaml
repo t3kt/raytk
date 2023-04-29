@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.field.waveVectorField
-  opVersion: '8'
+  opVersion: '9'
   opStatus: beta
 opDef: !def
   enable: true
@@ -25,6 +25,7 @@ opDef: !def
   paramGroupTable: eval_params
   libraryNames: !expr
     expr: op('raytkWave')
+  displayCategory: Spatial Field
 inputs:
 - !input
   Localalias: coordField

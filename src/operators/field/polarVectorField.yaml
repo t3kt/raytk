@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.field.polarVectorField
-  opVersion: '3'
+  opVersion: '4'
   opStatus: default
 opDef: !def
   enable: true
@@ -17,6 +17,7 @@ opDef: !def
     file: src/operators/field/polarVectorField.glsl
     name: function
   paramGroupTable: eval_params
+  displayCategory: Spatial Field
 multiInput: !multiInput
   Minimuminputs: 0
   Coordtypereductionmode: common

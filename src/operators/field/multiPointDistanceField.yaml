@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.field.multiPointDistanceField
-  opVersion: '5'
+  opVersion: '6'
   opStatus: default
 opDef: !def
   enable: true
@@ -26,3 +26,4 @@ opDef: !def
   help: !text
     file: src/operators/field/multiPointDistanceField.md
     name: help
+  displayCategory: Spatial Field

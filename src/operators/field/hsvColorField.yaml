@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.field.hsvColorField
-  opVersion: '7'
+  opVersion: '8'
   opStatus: beta
 opDef: !def
   enable: true
@@ -26,6 +26,7 @@ opDef: !def
   help: !text
     file: src/operators/field/hsvColorField.md
     name: help
+  displayCategory: Color Field
 inputs:
 - !input
   Localalias: hueField

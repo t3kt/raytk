@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.field.metaballField
-  opVersion: '7'
+  opVersion: '8'
   opStatus: default
 opDef: !def
   enable: true
@@ -26,6 +26,7 @@ opDef: !def
   help: !text
     file: src/operators/field/metaballField.md
     name: help
+  displayCategory: Spatial Field
 inputs:
 - !input
   Localalias: coordField

@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.field.worleyNoiseField
-  opVersion: '0'
+  opVersion: '1'
   opStatus: beta
 opDef: !def
   enable: true
@@ -23,6 +23,7 @@ opDef: !def
     name: macro_exprs
     evaluate: true
     evalOpts: !evalOpts {}
+  displayCategory: Noise Field
 inputs:
 - !input
   Localalias: coordField

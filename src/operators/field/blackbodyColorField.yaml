@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.field.blackbodyColorField
-  opVersion: '1'
+  opVersion: '2'
   opStatus: default
 opDef: !def
   enable: true
@@ -16,6 +16,7 @@ opDef: !def
     file: src/operators/field/blackbodyColorField.glsl
     name: function
   paramGroupTable: eval_params
+  displayCategory: Color Field
 inputs:
 - !input
   Localalias: tempField
