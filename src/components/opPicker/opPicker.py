@@ -640,7 +640,7 @@ class _DefaultPickerImpl(_PickerImpl):
 		if not item:
 			return
 		layout = self.getLayout()
-		if item.isAlpha or item.isBeta or item.isDeprecated:
+		if item.isOP and (item.isAlpha or item.isBeta or item.isDeprecated):
 			attribs.fontItalic = True
 		if isinstance(item, PickerCategoryItem):
 			attribs.rowHeight = layout.catRowHeight
