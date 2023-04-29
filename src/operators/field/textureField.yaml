@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.field.textureField
-  opVersion: '25'
+  opVersion: '26'
   opStatus: default
 opDef: !def
   enable: !expr
@@ -46,6 +46,7 @@ opDef: !def
   help: !text
     file: src/operators/field/textureField.md
     name: help
+  displayCategory: Texture
 inputs:
 - !input
   Localalias: uvField

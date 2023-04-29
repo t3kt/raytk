@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.field.triPlanarTextureField
-  opVersion: '14'
+  opVersion: '15'
   opStatus: default
 opDef: !def
   enable: !expr
@@ -30,6 +30,7 @@ opDef: !def
   help: !text
     file: src/operators/field/triPlanarTextureField.md
     name: help
+  displayCategory: Texture
 inputs:
 - !input
   Localalias: uvField
