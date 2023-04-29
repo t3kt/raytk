@@ -1,4 +1,7 @@
 ReturnT thismap(CoordT p, ContextT ctx) {
+	if (IS_FALSE(THIS_Enable)) {
+		return inputOp1(p, ctx);
+	}
 	#if !defined(THIS_HAS_INPUT_magnet)
 		CoordT center = THIS_asCoordT(THIS_Center);
 		float d = length(p - center);
