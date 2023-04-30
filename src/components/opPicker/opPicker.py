@@ -20,6 +20,7 @@ if False:
 		Showhelp: 'BoolParamT'
 		Showthumbs: 'BoolParamT'
 		Showstatuschips: 'BoolParamT'
+		Usedisplaycategories: 'BoolParamT'
 		Pinopen: 'BoolParamT'
 
 	ipar.listConfig = ParCollection()
@@ -90,6 +91,8 @@ class OpPicker:
 			self.impl.applyFilter()
 		elif par.name == 'Showthumbs':
 			self.impl.refreshList()
+		elif par.name == 'Usedisplaycategories':
+			self.Loaditems()
 
 	def onKeyboardShortcut(self, shortcutName: str):
 		print(self.ownerComp, f'onKeyboardShortcut: {shortcutName}')
@@ -557,7 +560,7 @@ class _DefaultPickerImpl(_PickerImpl):
 	def loadItems(self, opTable: 'DAT', opHelpTable: 'DAT'):
 		self.itemLibrary.loadTables(
 			opTable, opHelpTable,
-			useDisplayCategories=self.ownerComp.par.Usedisplaycategories.eval())
+			useDisplayCategories=ipar.uiState.Usedisplaycategories.eval())
 		self.refreshList()
 		self.applyFilter()
 		self.selectItem(None)
@@ -856,7 +859,7 @@ class _CategoryColumnPickerImpl(_PickerImpl):
 	def loadItems(self, opTable: 'DAT', opHelpTable: 'DAT'):
 		self.itemLibrary.loadTables(
 			opTable, opHelpTable,
-			useDisplayCategories=self.ownerComp.par.Usedisplaycategory.eval())
+			useDisplayCategories=ipar.uiState.Usedisplaycategory.eval())
 		self.refreshList()
 		self.applyFilter()
 		self.selectItem(None)
