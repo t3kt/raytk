@@ -4,5 +4,13 @@ limitArea	new
 radialSlice	new
 rampField	new
 subsurfaceContrib	new
-extend	updated
 ambientLight	new
+moduloLine	new
+extend	updated
+axisLight	updated
+directionalLight	updated
+pointLight	updated
+extend	updated
+provideVariable	updated
+exposeValue	updated
+reflectContrib	updated

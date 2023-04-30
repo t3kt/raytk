@@ -4,12 +4,17 @@
 
 ### Highlights
 
+* Palette improvements: reorganized palette into more descriptive categories, ui styling, show which operators are new/updated
+* 
+
 ### Details
 
 * Improvements / additions
   * New OPs
+    * ambientLight
     * instanceField (#774)
     * limitArea (#1056)
+    * moduloLine (#1054)
     * radialSlice
     * rampField
     * subsurfaceContrib (#945)
@@ -21,11 +26,24 @@
     * provideVariable - support for capturing primary input
     * reflectContrib - shadow support (#1059)
     * sweep - 3D position variable
+  * Palette improvements
+    * Reorganized operator categories (#1066)
+    * UI style improvements
+    * Indicate which operators are new/updated (#1068)
+  * Runtime bypass support
+    * circularRepeat
+    * hilbertCurveTransform
+    * lookAtRotate
+    * magnet
+    * rotate4D
 * Fixes
   * Fix Update OP for non-ROPs (#1013)
   * Fix input variable settings - combine, combineFields, compositeFields, edgeCombine, shapedCombine, simpleDiff, simpleIntersect, simpleUnion
+  * Fix scaling of normalized angle variable in revolve (#1063)
+  * Fix exposing primary value via exposeValue
 * Changes (potentially breaking)
 * Infrastructure / internals
+  * Display category metadata and palette support (#1066)
 
 ## v0.32
 
