@@ -37,15 +37,9 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 	}
 	if (hit) {
 		res = getColor(ctx.ray.pos, ctx);
-//		setDebugOut(vec4(1, 0.9, 0., 1));
-		#ifdef OUTPUT_DEBUG
-//		debugOut.rgb = ctx.ray.pos;
-//		debugOut.r = 0.9;
-//		debugOut.g = float(n);
-		#endif
-		setDebugOut(vec4(ctx.ray.dir, 0.));
+		setDebugOut(vec4(ctx.ray.dir, 1.));
 	} else {
-		setDebugOut(vec4(0.2, 0., 0., 1.));
+		setDebugOut(vec4(0.2, 0., 0., 0.2));
 	}
 	popStage(priorStage);
 	#endif
