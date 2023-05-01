@@ -157,8 +157,12 @@ void blendInSdf(inout Sdf res1, in Sdf res2, in float amt) {
 
 	#ifdef RAYTK_OBJECT_ID_IN_SDF
 	if (res2.objectId.x != 0.) {
-		res1.objectId.y = res2.objectId.x;
-		res1.objectId.z = amt;
+		if (amt >= 1.) {
+			res1.objectId = res2.objectId;
+		} else if (amt >= 0.) {
+			res1.objectId.y = res2.objectId.x;
+			res1.objectId.z = amt;
+		}
 	}
 	#endif
 
