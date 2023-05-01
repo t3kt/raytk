@@ -677,7 +677,6 @@ class _DefaultPickerImpl(_PickerImpl):
 			attribs.rowHeight = layout.catRowHeight
 			attribs.fontSizeX = layout.catFontSize
 			attribs.fontBold = layout.catFontBold
-			attribs.textJustify = JustifyType.CENTER
 			attribs.textColor = _configColor('Categorytextcolor')
 			attribs.bgColor = _configColor('Categorybgcolor')
 		elif isinstance(item, PickerOpItem):
