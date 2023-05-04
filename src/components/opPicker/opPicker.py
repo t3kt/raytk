@@ -72,6 +72,16 @@ class OpPicker:
 			ipar.uiState.Showdeprecated = deprecated
 
 	@staticmethod
+	def SetViewOptions(
+			statusChips: 'Optional[bool]' = None,
+			displayCategories: 'Optional[bool]' = None,
+	):
+		if statusChips is not None:
+			ipar.uiState.Showstatuschips = statusChips
+		if displayCategories is not None:
+			ipar.uiState.Usedisplaycategories = displayCategories
+
+	@staticmethod
 	def SetThumbToggle(showThumbs: bool):
 		ipar.uiState.Showthumbs = showThumbs
 

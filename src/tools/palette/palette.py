@@ -44,6 +44,10 @@ class Palette:
 			beta=self.ownerComp.par.Defaultshowbeta.eval(),
 			deprecated=self.ownerComp.par.Defaultshowdeprecated.eval(),
 		)
+		ext.opPicker.SetViewOptions(
+			statusChips=True,
+			displayCategories=True,
+		)
 		ext.opPicker.Resetstate()
 
 	@property
