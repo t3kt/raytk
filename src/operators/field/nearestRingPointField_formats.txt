@@ -1,0 +1,4 @@
+name	label	code	returnType
+dist	Distance	res = d;	float
+abspos	Absolute Position	res = vec4(nearestPos, 0.);	vec4
+vec	Vector	res = vec4(vec, 0.);	vec4

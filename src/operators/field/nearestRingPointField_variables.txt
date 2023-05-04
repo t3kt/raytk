@@ -1,0 +1,5 @@
+name	label	dataType	enable	macros
+pos	Nearest Position	vec3	1	
+angle	Nearest Angle	float	1	
+dist	Distance	float	1	
+vector	Vector	vec3	1	
