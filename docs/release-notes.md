@@ -5,7 +5,8 @@
 ### Highlights
 
 * Palette improvements: reorganized palette into more descriptive categories, ui styling, show which operators are new/updated
-* 
+* New light operators
+* Field instancing
 
 ### Details
 
@@ -15,14 +16,17 @@
     * instanceField (#774)
     * limitArea (#1056)
     * moduloLine (#1054)
+    * nearestRingPointField (#1055)
     * radialSlice
     * rampField
+    * ringLight (#1064)
     * subsurfaceContrib (#945)
   * New OP features
     * axisLight / directionalLight / pointLight - light direction variable
     * blackbodyColorField - unit option
     * extend - axis selection
     * hashField - clarified function labels (#1057)
+    * onion - option to limit to inside/outside/both (#1051)
     * provideVariable - support for capturing primary input
     * reflectContrib - shadow support (#1059)
     * sweep - 3D position variable
@@ -41,7 +45,9 @@
   * Fix input variable settings - combine, combineFields, compositeFields, edgeCombine, shapedCombine, simpleDiff, simpleIntersect, simpleUnion
   * Fix scaling of normalized angle variable in revolve (#1063)
   * Fix exposing primary value via exposeValue
+  * Fix confusing object id blending in combiners (at least somewhat better than it was..)
 * Changes (potentially breaking)
+  * lineSegmentSdf2d - separated the field inputs for start and end points
 * Infrastructure / internals
   * Display category metadata and palette support (#1066)
 

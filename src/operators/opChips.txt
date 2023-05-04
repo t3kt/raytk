@@ -15,3 +15,5 @@ provideVariable	updated
 exposeValue	updated
 reflectContrib	updated
 ringLight	new
+onion	updated
+nearestRingPointField	new
