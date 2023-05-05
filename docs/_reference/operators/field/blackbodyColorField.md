@@ -31,6 +31,13 @@ op:
   parameters:
   - label: Temperature
     name: Temp
+  - label: Temperature Unit
+    menuOptions:
+    - label: Normalized (0..1)
+      name: norm
+    - label: Degrees Kelvin
+      name: deg
+    name: Tempunit
   - label: Exponent
     name: Exp
   thumb: assets/images/reference/operators/field/blackbodyColorField_thumb.png

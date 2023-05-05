@@ -74,6 +74,23 @@ op:
     name: Size
     summary: The size of the region outside which the coordinates are clamped. Within
       this area, the SDF will behave as it normally does.
+  - label: Axes
+    menuOptions:
+    - label: X
+      name: x
+    - label: Y
+      name: y
+    - label: Z
+      name: z
+    - label: XY
+      name: xy
+    - label: YZ
+      name: yz
+    - label: XZ
+      name: xz
+    - label: XYZ
+      name: xyz
+    name: Axes
   summary: Clamps coordinates around an SDF result, which causes their edges to be
     extended infinitely along each axis.
   thumb: assets/images/reference/operators/filter/extend_thumb.png

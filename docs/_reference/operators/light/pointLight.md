@@ -59,6 +59,9 @@ op:
   shortcuts:
   - pl
   summary: Light eminating from a single point in space, with optional distance attentuation.
+  variables:
+  - label: lightdir
+    name: lightdir
 
 ---
 

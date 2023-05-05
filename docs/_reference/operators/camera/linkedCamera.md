@@ -25,6 +25,9 @@ op:
   - label: Create Basic Camera
     name: Createbasiccamera
     summary: Creates and attaches a standard Camera COMP.
+  - label: Render Resolution (for custom matrix)
+    name: Res
+    summary: Rendering resolution
   summary: A camera that is linked to an existing TD Camera COMP.
 
 ---

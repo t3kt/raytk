@@ -11,6 +11,8 @@ cat:
     and may not support being fed through other OPs like filters.'
   name: light
   operators:
+  - name: ambientLight
+    status: beta
   - name: axisLight
     summary: Light that emits from along an axis, similar to an infinitely long tube
       light.
@@ -31,6 +33,8 @@ cat:
     - pl
     summary: Light eminating from a single point in space, with optional distance
       attentuation.
+  - name: ringLight
+    status: beta
   - name: softShadow
     summary: A soft-edged shadow.
   - name: spotLight

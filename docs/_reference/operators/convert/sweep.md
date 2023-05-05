@@ -69,6 +69,8 @@ op:
     name: pathsdf
   - label: pathpos
     name: pathpos
+  - label: pos3d
+    name: pos3d
 
 ---
 
