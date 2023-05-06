@@ -99,7 +99,7 @@ class OpPicker:
 	def onUIStateChange(self, par: 'Par'):
 		if par.name in ('Showalpha', 'Showbeta', 'Showdeprecated'):
 			self.impl.applyFilter()
-		elif par.name == 'Showthumbs':
+		elif par.name in ('Showthumbs', 'Showstatuschips'):
 			self.impl.refreshList()
 		elif par.name == 'Usedisplaycategories':
 			self.Loaditems()
