@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.filter.moduloLine
-  opVersion: '3'
+  opVersion: '4'
   opStatus: beta
 opDef: !def
   enable: !expr
@@ -37,3 +37,19 @@ inputs:
     Allcontexttype: true
   returnType: !returnT
     Allreturntype: true
+elements:
+- !opElement
+  name: codeSwitcher_Mirrortype
+  elementType: codeSwitcher
+  params:
+    Elementroot: ''
+    Table: !table
+      file: src/operators/filter/moduloLine_mirrorTypes.txt
+      name: mirrorTypes
+    Param: Mirrortype
+    Autoupdateparams: true
+    Manageparamstates: false
+    Alwaysincludeallparams: false
+    Switchmode: auto
+    Indexexpr: ''
+    Placeholder: MIRROR_BODY();

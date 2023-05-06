@@ -34,9 +34,7 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 	float stop = 0.;
 	if (c < start) applyModLimit(q, c, size, start);
 	if (c > stop) applyModLimit(q, c, size, stop);
-	if (THIS_Mirrortype == THISTYPE_Mirrortype_mirror) {
-		q *= mod(c, 2.0)*2 - 1;
-	}
+	MIRROR_BODY();
 
 	p3.z = q;
 	p = THIS_asCoordT(p3.zyx);

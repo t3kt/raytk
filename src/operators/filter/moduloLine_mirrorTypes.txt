@@ -1,0 +1,3 @@
+name	label	code
+none	None	
+mirror	Mirror	q *= mod(c, 2.0)*2 - 1;
