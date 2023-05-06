@@ -19,5 +19,9 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 	#else
 	WAVE_BODY();
 	#endif
-	return (res * THIS_Amplitude) + THIS_Offset;
+	float amp = THIS_Amplitude;
+	#ifdef THIS_HAS_INPUT_ampField
+	amp *= inputOp_ampField(p, ctx);
+	#endif
+	return (res * amp) + THIS_Offset;
 }
