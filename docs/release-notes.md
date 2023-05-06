@@ -30,6 +30,7 @@
     * provideVariable - support for capturing primary input
     * reflectContrib - shadow support (#1059)
     * sweep - 3D position variable
+    * waveField - amplitude field input
   * Palette improvements
     * Reorganized operator categories (#1066)
     * UI style improvements
