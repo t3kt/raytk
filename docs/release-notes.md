@@ -41,12 +41,21 @@
     * lookAtRotate
     * magnet
     * rotate4D
+  * Snippets
+    * ambientLight
+    * instanceField
+    * limitArea
+    * moduloLine
+    * nearestRingPointField
+    * radialSlice
+    * ringLight
 * Fixes
   * Fix Update OP for non-ROPs (#1013)
   * Fix input variable settings - combine, combineFields, compositeFields, edgeCombine, shapedCombine, simpleDiff, simpleIntersect, simpleUnion
   * Fix scaling of normalized angle variable in revolve (#1063)
   * Fix exposing primary value via exposeValue
   * Fix confusing object id blending in combiners (at least somewhat better than it was..)
+  * Fix param enableExprs in triangleSdf2d
 * Changes (potentially breaking)
   * lineSegmentSdf2d - separated the field inputs for start and end points
 * Infrastructure / internals
