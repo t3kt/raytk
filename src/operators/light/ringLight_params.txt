@@ -1,0 +1,5 @@
+names	source	handling	readOnlyHandling	conversion	enable
+Intensity Color[rgb] Position[xyz] Radius	param	runtime	macro		1
+Axis	param	constant			1
+Enableshadow	param	runtime	constant		1
+Attenuationstart Attenuationend Enableattenuation	param	runtime	constant		1

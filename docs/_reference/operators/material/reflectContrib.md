@@ -26,6 +26,9 @@ op:
     name: Ks
   - label: Fresnel
     name: Fresnel
+  - label: Enable Shadow
+    name: Enableshadow
+    summary: Whether to apply the shadow to the color/level produced by this element.
   status: beta
   summary: A material element that produces color based on light reflected from other
     surfaces.

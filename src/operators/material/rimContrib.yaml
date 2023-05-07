@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.material.rimContrib
-  opVersion: '0'
+  opVersion: '1'
   opStatus: beta
 opDef: !def
   enable: !expr
@@ -28,6 +28,7 @@ opDef: !def
     evalOpts: !evalOpts
       excludeFirstRow: true
       cols: enable
+  displayCategory: Material Element
 inputs:
 - !input
   Localalias: thicknessField

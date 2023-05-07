@@ -1,29 +1,8 @@
 !rop
 meta: !meta
   opType: raytk.operators.filter.extend
-  opVersion: '9'
+  opVersion: '11'
   opStatus: default
-opDef: !def
-  enable: !expr
-    expr: op('..').par.Enable
-  useRuntimeBypass: true
-  typeSpec: !ropTypes
-    coordType: !coordT
-      Allcoordtype: true
-    contextType: !contextT
-      Allcontexttype: true
-    returnType: !returnT
-      Allreturntype: true
-  function: !text
-    file: src/operators/filter/extend.glsl
-    name: function
-  paramGroupTable: eval_params
-  help: !text
-    file: src/operators/filter/extend.md
-    name: help
-  keywords:
-  - extend
-  - stretch
 paramPages:
 - !page
   name: Filter
@@ -49,6 +28,28 @@ paramPages:
       enableExpr: op('./size_definition').numRows < 2
       normMin: 0.0
       normMax: 1.0
+opDef: !def
+  enable: !expr
+    expr: op('..').par.Enable
+  useRuntimeBypass: true
+  typeSpec: !ropTypes
+    coordType: !coordT
+      Allcoordtype: true
+    contextType: !contextT
+      Allcontexttype: true
+    returnType: !returnT
+      Allreturntype: true
+  function: !text
+    file: src/operators/filter/extend.glsl
+    name: function
+  paramGroupTable: eval_params
+  help: !text
+    file: src/operators/filter/extend.md
+    name: help
+  keywords:
+  - extend
+  - stretch
+  displayCategory: Spatial Modifier
 inputs:
 - !input
   Required: true
@@ -76,3 +77,19 @@ inputs:
     Allcontexttype: true
   returnType: !returnT
     Returntypevec4: true
+elements:
+- !opElement
+  name: codeSwitcher_Axes
+  elementType: codeSwitcher
+  params:
+    Elementroot: ''
+    Table: !table
+      file: src/operators/filter/extend_axes.txt
+      name: axes
+    Param: Axes
+    Autoupdateparams: true
+    Manageparamstates: false
+    Alwaysincludeallparams: false
+    Switchmode: auto
+    Indexexpr: ''
+    Placeholder: AXES_BODY();

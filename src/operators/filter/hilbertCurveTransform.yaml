@@ -1,11 +1,12 @@
 !rop
 meta: !meta
   opType: raytk.operators.filter.hilbertCurveTransform
-  opVersion: '4'
+  opVersion: '6'
   opStatus: beta
 opDef: !def
   enable: !expr
     expr: op('..').par.Enable
+  useRuntimeBypass: true
   typeSpec: !ropTypes
     coordType: !coordT
       Coordtypevec2: true
@@ -27,6 +28,7 @@ opDef: !def
     evalOpts: !evalOpts
       excludeFirstRow: true
       cols: enable
+  displayCategory: Transform
 inputs:
 - !input
   Variables: '*'

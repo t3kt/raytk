@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.field.rayField
-  opVersion: '6'
+  opVersion: '7'
   opStatus: default
 opDef: !def
   enable: true
@@ -20,3 +20,4 @@ opDef: !def
   help: !text
     file: src/operators/field/rayField.md
     name: help
+  displayCategory: Context Field

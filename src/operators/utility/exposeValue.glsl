@@ -28,10 +28,22 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 		}
 		#elif defined(THIS_Valuesource_fieldvalue)
 		{
-			#if defined(inputOp_valueField_RETURN_TYPE_vec4) || defined(inputOp_valueField_RETURN_TYPE_float)
-			val = adaptAsVec4(valRes);
+			#if defined(THIS_HAS_INPUT_valueField)
+			{
+				#if defined(inputOp_valueField_RETURN_TYPE_vec4) || defined(inputOp_valueField_RETURN_TYPE_float)
+				val = adaptAsVec4(valRes);
+				#else
+				#error fieldValueNotSupportedForReturnType
+				#endif
+			}
 			#else
-			#error fieldValueNotSupportedForReturnType
+			{
+				#if defined(THIS_RETURN_TYPE_vec4) || defined(THIS_RETURN_TYPE_float)
+				val = adaptAsVec4(valRes);
+				#else
+				#error fieldValueNotSupportedForReturnType
+				#endif
+			}
 			#endif
 		}
 		#elif defined(THIS_Valuesource_iteration)

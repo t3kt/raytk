@@ -2,6 +2,9 @@
 // https://www.shadertoy.com/view/fdVBDw
 
 ReturnT thismap(CoordT p, ContextT ctx) {
+	if (IS_FALSE(THIS_Enable)) {
+		return inputOp1(p, ctx);
+	}
 	float cs = THIS_Cellsize;
 	float ra = THIS_Radius/cs;
 

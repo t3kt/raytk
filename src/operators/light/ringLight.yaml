@@ -1,0 +1,18 @@
+!rop
+meta: !meta
+  opType: raytk.operators.light.ringLight
+  opVersion: '0'
+  opStatus: beta
+opDef: !def
+  enable: true
+  typeSpec: !ropTypes
+    coordType: !coordT
+      Coordtypevec3: true
+    contextType: !contextT
+      Contexttypelightcontext: true
+    returnType: !returnT
+      Returntypelight: true
+  function: !text
+    file: src/operators/light/ringLight.glsl
+    name: function
+  paramGroupTable: eval_params

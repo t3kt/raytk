@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.utility.provideVariable
-  opVersion: '8'
+  opVersion: '10'
   opStatus: default
 opDef: !def
   enable: !expr
@@ -22,6 +22,7 @@ opDef: !def
     name: variable_exprs
     evaluate: true
     evalOpts: !evalOpts {}
+  displayCategory: Variable
 inputs:
 - !input
   Variables: !expr

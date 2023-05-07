@@ -1,11 +1,12 @@
 !rop
 meta: !meta
   opType: raytk.operators.filter.isoRotate
-  opVersion: '0'
+  opVersion: '2'
   opStatus: alpha
 opDef: !def
   enable: !expr
     expr: op('..').par.Enable
+  useRuntimeBypass: true
   typeSpec: !ropTypes
     coordType: !coordT
       Coordtypevec3: true
@@ -16,6 +17,7 @@ opDef: !def
   function: !text
     file: src/operators/filter/isoRotate.glsl
     name: function
+  displayCategory: Transform
 inputs:
 - !input
   Required: true

@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.light.hardShadow
-  opVersion: '6'
+  opVersion: '7'
   opStatus: default
 opDef: !def
   enable: true
@@ -19,3 +19,4 @@ opDef: !def
   help: !text
     file: src/operators/light/hardShadow.md
     name: help
+  displayCategory: Shadow

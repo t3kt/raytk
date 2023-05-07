@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.filter.logPolarRepeat
-  opVersion: '9'
+  opVersion: '10'
   opStatus: beta
 opDef: !def
   enable: !expr
@@ -31,6 +31,7 @@ opDef: !def
   - repeat
   - modulo
   - spiral
+  displayCategory: Repeat
 inputs:
 - !input
   Variables: '*'

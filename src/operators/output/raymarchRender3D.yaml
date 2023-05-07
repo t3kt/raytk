@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.output.raymarchRender3D
-  opVersion: '127'
+  opVersion: '130'
   opStatus: default
 opDef: !def
   enable: true
@@ -15,7 +15,6 @@ opDef: !def
   function: !text
     file: src/operators/output/raymarchRender3D_func.glsl
     name: functionTemplate
-  lockParams: Enablecustomoutput*
   paramGroupTable: eval_params
   macroTable: !table
     file: src/operators/output/raymarchRender3D_macros.txt
@@ -26,6 +25,7 @@ opDef: !def
     file: src/operators/output/raymarchRender3D.md
     name: help
   shortcuts: rr3
+  displayCategory: Render
 inputs:
 - !input
   Variableinputs: camera

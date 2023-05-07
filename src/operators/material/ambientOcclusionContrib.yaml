@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.material.ambientOcclusionContrib
-  opVersion: '3'
+  opVersion: '4'
   opStatus: alpha
 opDef: !def
   enable: !expr
@@ -29,3 +29,4 @@ opDef: !def
     evalOpts: !evalOpts
       excludeFirstRow: true
       cols: enable
+  displayCategory: Material Element

@@ -1,10 +1,12 @@
 ReturnT thismap(CoordT p, ContextT ctx) {
-	#ifdef THIS_HAS_INPUT_points
-	vec4 pts = inputOp_points(p, ctx);
-	vec2 a = pts.xy;
-	vec2 b = pts.zw;
+	#ifdef THIS_HAS_INPUT_point1Field
+	vec2 a = inputOp_point1Field(p, ctx).xy;
 	#else
 	vec2 a = THIS_Pointa;
+	#endif
+	#ifdef THIS_HAS_INPUT_point2Field
+	vec2 b = inputOp_point2Field(p, ctx).xy;
+	#else
 	vec2 b = THIS_Pointb;
 	#endif
 	vec2 pa = p-a, ba = b-a;

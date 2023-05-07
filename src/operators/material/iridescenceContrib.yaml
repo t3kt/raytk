@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.material.iridescenceContrib
-  opVersion: '5'
+  opVersion: '6'
   opStatus: beta
 opDef: !def
   enable: !expr
@@ -28,6 +28,7 @@ opDef: !def
   help: !text
     file: src/operators/material/iridescenceContrib.md
     name: help
+  displayCategory: Material Element
 inputs:
 - !input
   Localalias: phaseField

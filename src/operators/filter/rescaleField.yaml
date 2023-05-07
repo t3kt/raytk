@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.filter.rescaleField
-  opVersion: '21'
+  opVersion: '22'
   opStatus: default
 opDef: !def
   enable: !expr
@@ -22,6 +22,7 @@ opDef: !def
   function: !text
     file: src/operators/filter/rescaleField.glsl
     name: functionTemplate
+  paramGroupTable: eval_params
   help: !text
     file: src/operators/filter/rescaleField.md
     name: help
@@ -30,6 +31,7 @@ opDef: !def
   - remap
   - range
   shortcuts: rf
+  displayCategory: Field Modifier
 inputs:
 - !input
   Required: true

@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.field.domainColorField
-  opVersion: '3'
+  opVersion: '4'
   opStatus: beta
 opDef: !def
   enable: !expr
@@ -19,3 +19,4 @@ opDef: !def
   paramGroupTable: eval_params
   libraryNames: !expr
     expr: op('domainColorField_lib')
+  displayCategory: Color Field

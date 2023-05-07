@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.field.texture3dField
-  opVersion: '13'
+  opVersion: '14'
   opStatus: default
 opDef: !def
   enable: !expr
@@ -37,6 +37,7 @@ opDef: !def
     evaluate: true
     evalOpts: !evalOpts
       excludeFirstRow: true
+  displayCategory: Texture
 inputs:
 - !input
   Localalias: coordField

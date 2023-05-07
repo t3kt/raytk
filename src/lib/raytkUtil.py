@@ -70,6 +70,7 @@ class _OpMetaPars:
 class CompDefParsT(_OpMetaPars):
 	Help: 'DatParamT'
 	Helpurl: 'StrParamT'
+	Displaycategory: 'StrParamT'
 	Keywords: 'StrParamT'
 	Shortcuts: 'StrParamT'
 	Rops: 'StrParamT'
@@ -101,6 +102,7 @@ class OpDefParsT(_OpMetaPars):
 	Librarynames: 'StrParamT'
 	Help: 'DatParamT'
 	Helpurl: 'StrParamT'
+	Displaycategory: 'StrParamT'
 	Keywords: 'StrParamT'
 	Shortcuts: 'StrParamT'
 	Disableinspect: 'BoolParamT'
@@ -305,6 +307,13 @@ class ROPInfo:
 			return self.rop.parent().name
 		elif self.rop.par.clone:
 			return self.rop.par.clone.eval().parent().name
+
+	@property
+	def displayCategoryName(self):
+		if not self:
+			return None
+		p = self.opDefPar['Displaycategory']
+		return str(p) if p else None
 
 	@property
 	def shortName(self):

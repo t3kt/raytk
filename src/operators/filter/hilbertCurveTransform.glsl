@@ -41,6 +41,9 @@ vec2 THIS_apply(vec2 p) {
 }
 
 ReturnT thismap(CoordT p, ContextT ctx) {
+	if (IS_FALSE(THIS_Enable)) {
+		return inputOp1(p, ctx);
+	}
 	vec3 p3 = adaptAsVec3(p);
 	vec2 q;
 	switch (int(THIS_Axis)) {

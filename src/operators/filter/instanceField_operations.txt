@@ -1,0 +1,8 @@
+name	label	code
+add	Add	res = a + b
+sub	Subtract	res = a - b
+mul	Multiply	res = a * b
+div	Divide	res = a / b
+avg	Average	res = (a + b) / 2.
+min	Minimum	res = min(a, b)
+max	Maximum	res = max(a, b)

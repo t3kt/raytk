@@ -86,6 +86,8 @@ cat:
     name: instance
     summary: Repeats its input some number of times, exposing the index as the iteration
       x value, and combines the results.
+  - name: instanceField
+    status: beta
   - name: invert
     summary: Invert an SDF, so that the inside is the outside.
   - name: iteratedTransform
@@ -98,6 +100,8 @@ cat:
     - slice
     name: knife
     summary: Cuts off an SDF along a plane.
+  - name: limitArea
+    status: beta
   - keywords:
     - clamp
     - limit
@@ -168,6 +172,8 @@ cat:
     - radial
     - repeat
     name: moduloDistance
+  - name: moduloLine
+    status: beta
   - keywords:
     - kaleidoscope
     - modulo
@@ -200,6 +206,7 @@ cat:
     - repeat
     name: radialClone
     summary: Repeats an SDF radially around an axis, combining the resulting shapes.
+  - name: radialSlice
   - name: rangeTransform
     summary: Applies a transform based on a range of settings, mapped with either
       the iteration value or a field input.

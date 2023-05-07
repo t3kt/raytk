@@ -1,43 +1,8 @@
 !rop
 meta: !meta
   opType: raytk.operators.filter.scale
-  opVersion: '28'
+  opVersion: '29'
   opStatus: default
-opDef: !def
-  enable: !expr
-    expr: op('..').par.Enable
-  useRuntimeBypass: true
-  typeSpec: !ropTypes
-    Useinputreturntype: !expr
-      expr: op('definition_1').numRows > 1
-    coordType: !coordT
-      Coordtypefloat: true
-      Coordtypevec2: true
-      Coordtypevec3: true
-    contextType: !contextT
-      Allcontexttype: !expr
-        expr: op('targetInfo')[1, 'contextType'] == '*'
-      Contexttypematerialcontext: !expr
-        expr: op('targetInfo')[1, 'contextType'] == 'MaterialContext'
-    returnType: !returnT
-      Allreturntype: !expr
-        expr: op('definition_1').numRows > 1 and op('targetInfo')[1, 'returnType']
-          == '*'
-      Returntypesdf: !expr
-        expr: op('definition_1').numRows > 1 and op('targetInfo')[1, 'returnType']
-          in ('*', 'Sdf')
-      Returntypevec4: !expr
-        expr: op('targetInfo')[1, 'returnType'] in ('*', 'vec4')
-  function: !text
-    file: src/operators/filter/scale.glsl
-    name: function
-  paramGroupTable: eval_params
-  help: !text
-    file: src/operators/filter/scale.md
-    name: help
-  keywords:
-  - transform
-  - scale
 paramPages:
 - !page
   name: Filter
@@ -76,6 +41,42 @@ paramPages:
       enableExpr: me.par.Scaletype in ('separate',)
       normMin: 0.0
       normMax: 2.0
+opDef: !def
+  enable: !expr
+    expr: op('..').par.Enable
+  useRuntimeBypass: true
+  typeSpec: !ropTypes
+    Useinputreturntype: !expr
+      expr: op('definition_1').numRows > 1
+    coordType: !coordT
+      Coordtypefloat: true
+      Coordtypevec2: true
+      Coordtypevec3: true
+    contextType: !contextT
+      Allcontexttype: !expr
+        expr: op('targetInfo')[1, 'contextType'] == '*'
+      Contexttypematerialcontext: !expr
+        expr: op('targetInfo')[1, 'contextType'] == 'MaterialContext'
+    returnType: !returnT
+      Allreturntype: !expr
+        expr: op('definition_1').numRows > 1 and op('targetInfo')[1, 'returnType']
+          == '*'
+      Returntypesdf: !expr
+        expr: op('definition_1').numRows > 1 and op('targetInfo')[1, 'returnType']
+          in ('*', 'Sdf')
+      Returntypevec4: !expr
+        expr: op('targetInfo')[1, 'returnType'] in ('*', 'vec4')
+  function: !text
+    file: src/operators/filter/scale.glsl
+    name: function
+  paramGroupTable: eval_params
+  help: !text
+    file: src/operators/filter/scale.md
+    name: help
+  keywords:
+  - transform
+  - scale
+  displayCategory: Transform
 inputs:
 - !input
   coordType: !coordT

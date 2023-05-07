@@ -1,8 +1,39 @@
 !rop
 meta: !meta
   opType: raytk.operators.filter.translate
-  opVersion: '21'
+  opVersion: '22'
   opStatus: default
+paramPages:
+- !page
+  name: Filter
+  pars:
+    Enable:
+      name: Enable
+      label: Enable
+      style: Toggle
+      default: true
+    Translate:
+      name: Translate
+      label: Translate
+      style: XYZ
+      default: 0.0
+      normMin: -1.0
+      normMax: 1.0
+    Coordtype:
+      name: Coordtype
+      label: Coord Type
+      style: Menu
+      default: auto
+      startSection: true
+      enableExpr: op('./definition_1').numRows < 2
+      menuNames:
+      - auto
+      - vec2
+      - vec3
+      menuLabels:
+      - Auto
+      - 2D
+      - 3D
 opDef: !def
   enable: !expr
     expr: op('..').par.Enable
@@ -42,37 +73,7 @@ opDef: !def
   - move
   - position
   shortcuts: tr
-paramPages:
-- !page
-  name: Filter
-  pars:
-    Enable:
-      name: Enable
-      label: Enable
-      style: Toggle
-      default: true
-    Translate:
-      name: Translate
-      label: Translate
-      style: XYZ
-      default: 0.0
-      normMin: -1.0
-      normMax: 1.0
-    Coordtype:
-      name: Coordtype
-      label: Coord Type
-      style: Menu
-      default: auto
-      startSection: true
-      enableExpr: op('./definition_1').numRows < 2
-      menuNames:
-      - auto
-      - vec2
-      - vec3
-      menuLabels:
-      - Auto
-      - 2D
-      - 3D
+  displayCategory: Transform
 inputs:
 - !input
   coordType: !coordT

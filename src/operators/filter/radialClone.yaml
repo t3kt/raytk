@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.filter.radialClone
-  opVersion: '22'
+  opVersion: '23'
   opStatus: default
 opDef: !def
   enable: !expr
@@ -34,6 +34,7 @@ opDef: !def
   - radial
   - clone
   - repeat
+  displayCategory: Repeat
 inputs:
 - !input
   Variables: '*'

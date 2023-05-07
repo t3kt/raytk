@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.filter.rangeTransform
-  opVersion: '14'
+  opVersion: '15'
   opStatus: default
 opDef: !def
   enable: !expr
@@ -24,6 +24,7 @@ opDef: !def
   help: !text
     file: src/operators/filter/rangeTransform.md
     name: help
+  displayCategory: Transform
 inputs:
 - !input
   coordType: !coordT

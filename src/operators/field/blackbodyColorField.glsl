@@ -9,6 +9,7 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 	#else
 	temp = THIS_Temp;
 	#endif
+	TEMP_UNIT();
 	float exp = THIS_Exp;
 	temp = pow(temp, exp);
 	vec3 col = vec3(255.);

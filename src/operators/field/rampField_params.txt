@@ -1,0 +1,3 @@
+names	source	handling	readOnlyHandling	conversion	enable
+Value1[xyzw] Value2[xyzw] Range1 Range2	param	runtime	macro		1
+Extendmode Axis	param	constant			1

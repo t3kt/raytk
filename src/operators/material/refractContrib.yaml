@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.material.refractContrib
-  opVersion: '2'
+  opVersion: '3'
   opStatus: alpha
 opDef: !def
   enable: true
@@ -21,3 +21,4 @@ opDef: !def
     name: macro_exprs
     evaluate: true
     evalOpts: !evalOpts {}
+  displayCategory: Material Element

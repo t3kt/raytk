@@ -1,27 +1,8 @@
 !rop
 meta: !meta
   opType: raytk.operators.filter.slice
-  opVersion: '16'
+  opVersion: '17'
   opStatus: default
-opDef: !def
-  enable: !expr
-    expr: op('..').par.Enable
-  useRuntimeBypass: true
-  typeSpec: !ropTypes
-    coordType: !coordT
-      Coordtypevec2: true
-      Coordtypevec3: true
-    contextType: !contextT
-      Allcontexttype: true
-    returnType: !returnT
-      Allreturntype: true
-  function: !text
-    file: src/operators/filter/slice.glsl
-    name: function
-  paramGroupTable: eval_params
-  help: !text
-    file: src/operators/filter/slice.md
-    name: help
 paramPages:
 - !page
   name: Filter
@@ -91,6 +72,26 @@ paramPages:
       menuLabels:
       - Intersect
       - Difference
+opDef: !def
+  enable: !expr
+    expr: op('..').par.Enable
+  useRuntimeBypass: true
+  typeSpec: !ropTypes
+    coordType: !coordT
+      Coordtypevec2: true
+      Coordtypevec3: true
+    contextType: !contextT
+      Allcontexttype: true
+    returnType: !returnT
+      Allreturntype: true
+  function: !text
+    file: src/operators/filter/slice.glsl
+    name: function
+  paramGroupTable: eval_params
+  help: !text
+    file: src/operators/filter/slice.md
+    name: help
+  displayCategory: Spatial Modifier
 inputs:
 - !input
   Required: true

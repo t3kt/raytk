@@ -61,6 +61,13 @@ op:
     name: Name
   - label: Label
     name: Label
+  - label: Value Source
+    menuOptions:
+    - label: Primary Input
+      name: primary
+    - label: Secondary Input / Value Parameter
+      name: secondary
+    name: Valuesource
   - label: Data Type
     menuOptions:
     - label: float

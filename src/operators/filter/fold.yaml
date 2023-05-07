@@ -1,26 +1,8 @@
 !rop
 meta: !meta
   opType: raytk.operators.filter.fold
-  opVersion: '10'
+  opVersion: '11'
   opStatus: default
-opDef: !def
-  enable: !expr
-    expr: op('..').par.Enable
-  useRuntimeBypass: true
-  typeSpec: !ropTypes
-    coordType: !coordT
-      Coordtypevec2: true
-      Coordtypevec3: true
-    contextType: !contextT
-      Allcontexttype: true
-    returnType: !returnT
-      Allreturntype: !expr
-        expr: op('definition_1').numRows > 1
-      Returntypevec4: true
-  function: !text
-    file: src/operators/filter/fold.glsl
-    name: function
-  generatedMacroTables: expr_macros
 paramPages:
 - !page
   name: Filter
@@ -50,6 +32,25 @@ paramPages:
       enableExpr: me.par.Function in ('boxfold',)
       normMin: 0.0
       normMax: 1.0
+opDef: !def
+  enable: !expr
+    expr: op('..').par.Enable
+  useRuntimeBypass: true
+  typeSpec: !ropTypes
+    coordType: !coordT
+      Coordtypevec2: true
+      Coordtypevec3: true
+    contextType: !contextT
+      Allcontexttype: true
+    returnType: !returnT
+      Allreturntype: !expr
+        expr: op('definition_1').numRows > 1
+      Returntypevec4: true
+  function: !text
+    file: src/operators/filter/fold.glsl
+    name: function
+  generatedMacroTables: expr_macros
+  displayCategory: Transform
 inputs:
 - !input
   coordType: !coordT

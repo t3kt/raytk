@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.field.blackbodyColorField
-  opVersion: '0'
+  opVersion: '2'
   opStatus: default
 opDef: !def
   enable: true
@@ -16,6 +16,7 @@ opDef: !def
     file: src/operators/field/blackbodyColorField.glsl
     name: function
   paramGroupTable: eval_params
+  displayCategory: Color Field
 inputs:
 - !input
   Localalias: tempField
@@ -26,3 +27,19 @@ inputs:
     Allcontexttype: true
   returnType: !returnT
     Returntypefloat: true
+elements:
+- !opElement
+  name: codeSwitcher_Tempunit
+  elementType: codeSwitcher
+  params:
+    Elementroot: ''
+    Table: !table
+      file: src/operators/field/blackbodyColorField_tempUnits.txt
+      name: tempUnits
+    Param: Tempunit
+    Autoupdateparams: true
+    Manageparamstates: false
+    Alwaysincludeallparams: false
+    Switchmode: auto
+    Indexexpr: ''
+    Placeholder: TEMP_UNIT();

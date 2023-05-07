@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.material.diffuseContrib
-  opVersion: '24'
+  opVersion: '25'
   opStatus: default
 opDef: !def
   enable: true
@@ -46,6 +46,7 @@ opDef: !def
   - shading
   - modularmat
   shortcuts: dc
+  displayCategory: Material Element
 inputs:
 - !input
   Localalias: roughnessField

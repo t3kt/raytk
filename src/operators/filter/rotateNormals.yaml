@@ -1,32 +1,8 @@
 !rop
 meta: !meta
   opType: raytk.operators.filter.rotateNormals
-  opVersion: '9'
+  opVersion: '10'
   opStatus: beta
-opDef: !def
-  enable: !expr
-    expr: op('..').par.Enable
-  useRuntimeBypass: true
-  typeSpec: !ropTypes
-    coordType: !coordT
-      Coordtypevec3: true
-    contextType: !contextT
-      Contexttypematerialcontext: true
-    returnType: !returnT
-      Allreturntype: true
-  function: !text
-    file: src/operators/filter/rotateNormals.glsl
-    name: function
-  help: !text
-    file: src/operators/filter/rotateNormals.md
-    name: help
-  keywords:
-  - transform
-  - rotate
-  - spin
-  - normals
-  - material
-  - modularmat
 paramPages:
 - !page
   name: Filter
@@ -63,6 +39,31 @@ paramPages:
       default: 0.0
       normMin: 0.0
       normMax: 1.0
+opDef: !def
+  enable: !expr
+    expr: op('..').par.Enable
+  useRuntimeBypass: true
+  typeSpec: !ropTypes
+    coordType: !coordT
+      Coordtypevec3: true
+    contextType: !contextT
+      Contexttypematerialcontext: true
+    returnType: !returnT
+      Allreturntype: true
+  function: !text
+    file: src/operators/filter/rotateNormals.glsl
+    name: function
+  help: !text
+    file: src/operators/filter/rotateNormals.md
+    name: help
+  keywords:
+  - transform
+  - rotate
+  - spin
+  - normals
+  - material
+  - modularmat
+  displayCategory: Material Modifier
 inputs:
 - !input
   Required: true

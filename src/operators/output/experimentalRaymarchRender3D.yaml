@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.output.experimentalRaymarchRender3D
-  opVersion: '6'
+  opVersion: '7'
   opStatus: alpha
 opDef: !def
   enable: true
@@ -21,6 +21,7 @@ opDef: !def
     name: macro_exprs
     evaluate: true
     evalOpts: !evalOpts {}
+  displayCategory: Render
 inputs:
 - !input
   Localalias: sdf

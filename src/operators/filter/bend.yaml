@@ -1,35 +1,8 @@
 !rop
 meta: !meta
   opType: raytk.operators.filter.bend
-  opVersion: '17'
+  opVersion: '18'
   opStatus: default
-opDef: !def
-  enable: !expr
-    expr: op('..').par.Enable
-  useRuntimeBypass: true
-  typeSpec: !ropTypes
-    coordType: !coordT
-      Coordtypevec2: true
-      Coordtypevec3: true
-    contextType: !contextT
-      Allcontexttype: true
-    returnType: !returnT
-      Allreturntype: !expr
-        expr: op('definition_1').numRows > 1
-      Returntypevec4: true
-  function: !text
-    file: src/operators/filter/bend.glsl
-    name: function
-  paramGroupTable: eval_params
-  variableTable: !table
-    file: src/operators/filter/bend_variables.txt
-    name: variable_exprs
-    evaluate: true
-    evalOpts: !evalOpts
-      excludeFirstRow: true
-  help: !text
-    file: src/operators/filter/bend.md
-    name: help
 paramPages:
 - !page
   name: Filter
@@ -90,6 +63,34 @@ paramPages:
       style: Pulse
       default: false
       enableExpr: hasattr(op, 'raytk') and op.raytk.op('tools/palette')
+opDef: !def
+  enable: !expr
+    expr: op('..').par.Enable
+  useRuntimeBypass: true
+  typeSpec: !ropTypes
+    coordType: !coordT
+      Coordtypevec2: true
+      Coordtypevec3: true
+    contextType: !contextT
+      Allcontexttype: true
+    returnType: !returnT
+      Allreturntype: !expr
+        expr: op('definition_1').numRows > 1
+      Returntypevec4: true
+  function: !text
+    file: src/operators/filter/bend.glsl
+    name: function
+  paramGroupTable: eval_params
+  variableTable: !table
+    file: src/operators/filter/bend_variables.txt
+    name: variable_exprs
+    evaluate: true
+    evalOpts: !evalOpts
+      excludeFirstRow: true
+  help: !text
+    file: src/operators/filter/bend.md
+    name: help
+  displayCategory: Transform
 inputs:
 - !input
   Variables: '*'

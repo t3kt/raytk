@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.filter.mirrorQuadrant
-  opVersion: '12'
+  opVersion: '13'
   opStatus: default
 opDef: !def
   enable: !expr
@@ -30,6 +30,7 @@ opDef: !def
   help: !text
     file: src/operators/filter/mirrorQuadrant.md
     name: help
+  displayCategory: Repeat
 inputs:
 - !input
   Variables: '*'

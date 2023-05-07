@@ -1,25 +1,8 @@
 !rop
 meta: !meta
   opType: raytk.operators.filter.sphericalMobiusTransform
-  opVersion: '5'
+  opVersion: '6'
   opStatus: beta
-opDef: !def
-  enable: !expr
-    expr: op('..').par.Enable
-  useRuntimeBypass: true
-  typeSpec: !ropTypes
-    coordType: !coordT
-      Coordtypevec3: true
-    contextType: !contextT
-      Allcontexttype: true
-    returnType: !returnT
-      Allreturntype: true
-  function: !text
-    file: src/operators/filter/sphericalMobiusTransform.glsl
-    name: function
-  paramGroupTable: eval_params
-  libraryNames: !expr
-    expr: op('sphericalMobiusTransform_lib')
 paramPages:
 - !page
   name: Filter
@@ -59,6 +42,24 @@ paramPages:
       default: 0.0
       normMin: 0.0
       normMax: 360.0
+opDef: !def
+  enable: !expr
+    expr: op('..').par.Enable
+  useRuntimeBypass: true
+  typeSpec: !ropTypes
+    coordType: !coordT
+      Coordtypevec3: true
+    contextType: !contextT
+      Allcontexttype: true
+    returnType: !returnT
+      Allreturntype: true
+  function: !text
+    file: src/operators/filter/sphericalMobiusTransform.glsl
+    name: function
+  paramGroupTable: eval_params
+  libraryNames: !expr
+    expr: op('sphericalMobiusTransform_lib')
+  displayCategory: Transform
 inputs:
 - !input
   Required: true

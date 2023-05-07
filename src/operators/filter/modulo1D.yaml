@@ -1,37 +1,8 @@
 !rop
 meta: !meta
   opType: raytk.operators.filter.modulo1D
-  opVersion: '30'
+  opVersion: '31'
   opStatus: default
-opDef: !def
-  enable: !expr
-    expr: op('..').par.Enable
-  useRuntimeBypass: true
-  typeSpec: !ropTypes
-    coordType: !coordT
-      Coordtypevec2: true
-      Coordtypevec3: true
-    contextType: !contextT
-      Allcontexttype: true
-    returnType: !returnT
-      Allreturntype: true
-  function: !text
-    file: src/operators/filter/modulo1D.glsl
-    name: function
-  paramGroupTable: eval_params
-  variableTable: !table
-    file: src/operators/filter/modulo1D_variables.txt
-    name: variable_exprs
-    evaluate: true
-    evalOpts: !evalOpts
-      excludeFirstRow: true
-  help: !text
-    file: src/operators/filter/modulo1D.md
-    name: help
-  keywords:
-  - modulo
-  - repeat
-  shortcuts: m1
 paramPages:
 - !page
   name: Filter
@@ -163,6 +134,36 @@ paramPages:
       style: Pulse
       default: false
       enableExpr: hasattr(op, 'raytk') and op.raytk.op('tools/palette')
+opDef: !def
+  enable: !expr
+    expr: op('..').par.Enable
+  useRuntimeBypass: true
+  typeSpec: !ropTypes
+    coordType: !coordT
+      Coordtypevec2: true
+      Coordtypevec3: true
+    contextType: !contextT
+      Allcontexttype: true
+    returnType: !returnT
+      Allreturntype: true
+  function: !text
+    file: src/operators/filter/modulo1D.glsl
+    name: function
+  paramGroupTable: eval_params
+  variableTable: !table
+    file: src/operators/filter/modulo1D_variables.txt
+    name: variable_exprs
+    evaluate: true
+    evalOpts: !evalOpts
+      excludeFirstRow: true
+  help: !text
+    file: src/operators/filter/modulo1D.md
+    name: help
+  keywords:
+  - modulo
+  - repeat
+  shortcuts: m1
+  displayCategory: Repeat
 inputs:
 - !input
   Variables: '*'

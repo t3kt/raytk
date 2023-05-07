@@ -65,6 +65,8 @@ cat:
   - name: multiPointDistanceField
     summary: A vector field that provides the distance from 4 specific points in space
       (one for each part of the vector).
+  - name: nearestRingPointField
+    status: beta
   - name: noiseField
     summary: A float or vector field that uses one of several noise functions.
   - name: normalField
@@ -81,6 +83,8 @@ cat:
     shortcuts:
     - pos
     summary: A vector field that produces the coordinates in space where it is checked.
+  - name: rampField
+    status: beta
   - name: rayField
     summary: Field that provides the ray direction or origin.
   - name: reorderField

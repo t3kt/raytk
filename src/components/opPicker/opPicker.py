@@ -19,6 +19,8 @@ if False:
 		Showdeprecated: 'BoolParamT'
 		Showhelp: 'BoolParamT'
 		Showthumbs: 'BoolParamT'
+		Showstatuschips: 'BoolParamT'
+		Usedisplaycategories: 'BoolParamT'
 		Pinopen: 'BoolParamT'
 
 	ipar.listConfig = ParCollection()
@@ -70,6 +72,16 @@ class OpPicker:
 			ipar.uiState.Showdeprecated = deprecated
 
 	@staticmethod
+	def SetViewOptions(
+			statusChips: 'Optional[bool]' = None,
+			displayCategories: 'Optional[bool]' = None,
+	):
+		if statusChips is not None:
+			ipar.uiState.Showstatuschips = statusChips
+		if displayCategories is not None:
+			ipar.uiState.Usedisplaycategories = displayCategories
+
+	@staticmethod
 	def SetThumbToggle(showThumbs: bool):
 		ipar.uiState.Showthumbs = showThumbs
 
@@ -87,8 +99,10 @@ class OpPicker:
 	def onUIStateChange(self, par: 'Par'):
 		if par.name in ('Showalpha', 'Showbeta', 'Showdeprecated'):
 			self.impl.applyFilter()
-		elif par.name == 'Showthumbs':
+		elif par.name in ('Showthumbs', 'Showstatuschips'):
 			self.impl.refreshList()
+		elif par.name == 'Usedisplaycategories':
+			self.Loaditems()
 
 	def onKeyboardShortcut(self, shortcutName: str):
 		print(self.ownerComp, f'onKeyboardShortcut: {shortcutName}')
@@ -163,15 +177,26 @@ class _LayoutSettings:
 	labelCol: Optional[int]
 	statusCol: Optional[int]
 	thumbCol: Optional[int]
+	chipCol: Optional[int]
 
 	numCols: int
 
 	opRowHeight: int = 26
-	catRowHeight: int = 26
+	catRowHeight: int = 32
+
+	opFontSize: int = 18
+	catFontSize: int = 20
+	chipFontSize: int = 12
+
+	opFontBold: bool = False
+	catFontBold: bool = True
+	chipFontBold: bool = False
+	chipFontItalic: bool = False
 
 	toggleColWidth: int = 26
 	statusColWidth: int = 30
 	thumbColWidth: int = 50
+	chipColWidth: int = 60
 
 @dataclass
 class PickerItem:
@@ -200,6 +225,7 @@ class PickerOpItem(PickerItem):
 	words: List[str] = field(default_factory=list)
 	keywords: List[str] = field(default_factory=list)
 	shortcuts: List[str] = field(default_factory=list)
+	chip: Optional[str] = None
 	thumbPath: Optional[str] = None
 	isOP = True
 	isCategory = False
@@ -237,7 +263,7 @@ class _Filter:
 	beta: bool = False
 	deprecated: bool = False
 
-def _loadItemCategories(opTable: 'DAT', opHelpTable: 'DAT'):
+def _loadItemCategories(opTable: 'DAT', opHelpTable: 'DAT', useDisplayCategories=False):
 	categories = []
 	categoriesByName = {}  # type: Dict[str, PickerCategoryItem]
 
@@ -245,7 +271,13 @@ def _loadItemCategories(opTable: 'DAT', opHelpTable: 'DAT'):
 		shortName = str(opTable[row, 'name'])
 		path = str(opTable[row, 'path'])
 		status = str(opTable[row, 'status'])
-		categoryName = str(opTable[row, 'category'])
+		categoryName = None
+		if useDisplayCategories:
+			categoryName = opTable[row, 'displayCategory']
+		if not categoryName:
+			categoryName = str(opTable[row, 'category']).capitalize()
+		else:
+			categoryName = str(categoryName)
 		opItem = PickerOpItem(
 			shortName=shortName,
 			path=path,
@@ -256,6 +288,8 @@ def _loadItemCategories(opTable: 'DAT', opHelpTable: 'DAT'):
 			isBeta=status == 'beta',
 			isDeprecated=status == 'deprecated',
 			helpSummary=str(opHelpTable[path, 'summary'] or ''),
+			chip=str(opTable[row, 'chip']),
+			thumbPath=str(opTable[row, 'thumb'] or ''),
 		)
 		keywords = tdu.split(opTable[row, 'keywords'])
 		shortcuts = tdu.split(opTable[row, 'shortcuts'])
@@ -263,7 +297,6 @@ def _loadItemCategories(opTable: 'DAT', opHelpTable: 'DAT'):
 		opItem.words = [w.lower() for w in words]
 		opItem.keywords += [k.lower() for k in keywords]
 		opItem.shortcuts += [s.lower() for s in shortcuts]
-		opItem.thumbPath = str(opTable[row, 'thumb'] or '')
 		if categoryName in categoriesByName:
 			categoriesByName[categoryName].ops.append(opItem)
 		else:
@@ -273,7 +306,7 @@ def _loadItemCategories(opTable: 'DAT', opHelpTable: 'DAT'):
 	for categoryName in sorted(categoriesByName.keys()):
 		category = categoriesByName[categoryName]
 		categories.append(category)
-		category.ops.sort(key=lambda o: o.path)
+		category.ops.sort(key=lambda o: o.shortName)
 		category.isAlpha = all([o.isAlpha for o in category.ops])
 		category.isBeta = all([o.isBeta for o in category.ops])
 		category.isDeprecated = all([o.isDeprecated for o in category.ops])
@@ -308,10 +341,10 @@ class _ItemLibrary:
 			if item.isOP and shortcut in item.shortcuts:
 				return item
 
-	def loadTables(self, opTable: 'DAT', opHelpTable: 'DAT'):
+	def loadTables(self, opTable: 'DAT', opHelpTable: 'DAT', useDisplayCategories: bool):
 		self.categories = []
 		self.filteredItems = None
-		self.categories = _loadItemCategories(opTable, opHelpTable)
+		self.categories = _loadItemCategories(opTable, opHelpTable, useDisplayCategories)
 		self.allItems = self._buildFlatList(None)
 
 	def _buildFlatList(self, filt: 'Optional[_Filter]') -> 'List[_AnyItemT]':
@@ -435,11 +468,17 @@ class _PickerImpl:
 		layout = _LayoutSettings(
 			toggleCol=0,
 			labelCol=1,
-			statusCol=2,
+			statusCol=None,
 			thumbCol=None,
-			numCols=3,
+			chipCol=None,
+			numCols=2,
 			thumbColWidth=self.ownerComp.par.Thumbsize.eval(),
 		)
+		if ipar.uiState.Showstatuschips:
+			layout.chipCol = layout.numCols
+			layout.numCols += 1
+		layout.statusCol = layout.numCols
+		layout.numCols += 1
 		if ipar.uiState.Showthumbs:
 			layout.thumbCol = layout.numCols
 			layout.numCols += 1
@@ -466,7 +505,6 @@ class _PickerImpl:
 		attribs.bgColor = _configColor('Bgcolor')
 		attribs.textColor = _configColor('Textcolor')
 		attribs.fontFace = 'Roboto'
-		attribs.fontSizeX = 18
 		attribs.textJustify = JustifyType.CENTERLEFT
 
 	def initCol(self, col: int, attribs: 'ListAttributes'):
@@ -480,6 +518,8 @@ class _PickerImpl:
 
 	@staticmethod
 	def _applyStatusTextColor(attribs: 'ListAttributes', item: '_AnyItemT'):
+		if item.isCategory:
+			return
 		if item.isAlpha:
 			attribs.textColor = _configColor('Alphacolor')
 		elif item.isBeta:
@@ -510,13 +550,27 @@ class _PickerImpl:
 		if thumbRoot and item.thumbPath:
 			attribs.top = thumbRoot.op(item.thumbPath)
 
+	def _initChipCell(self, attribs: 'ListAttributes', item: 'PickerOpItem', layout: '_LayoutSettings'):
+		if not item.chip:
+			attribs.text = ''
+		else:
+			attribs.text = item.chip
+			attribs.fontItalic = layout.chipFontItalic
+			attribs.fontBold = layout.chipFontBold
+			attribs.fontSizeX = layout.chipFontSize
+			attribs.textJustify = JustifyType.CENTER
+			attribs.textColor = _configColor('Textcolor')
+			attribs.top = self.ownerComp.op('chipBackground')
+
 class _DefaultPickerImpl(_PickerImpl):
 	def __init__(self, ownerComp: 'COMP'):
 		super().__init__(ownerComp)
 		self.itemLibrary = _ItemLibrary()
 
 	def loadItems(self, opTable: 'DAT', opHelpTable: 'DAT'):
-		self.itemLibrary.loadTables(opTable, opHelpTable)
+		self.itemLibrary.loadTables(
+			opTable, opHelpTable,
+			useDisplayCategories=ipar.uiState.Usedisplaycategories.eval())
 		self.refreshList()
 		self.applyFilter()
 		self.selectItem(None)
@@ -619,20 +673,26 @@ class _DefaultPickerImpl(_PickerImpl):
 			attribs.colWidth = layout.statusColWidth
 		elif col == layout.thumbCol:
 			attribs.colWidth = layout.thumbColWidth
+		elif col == layout.chipCol:
+			attribs.colWidth = layout.chipColWidth
 
 	def initRow(self, row: int, attribs: 'ListAttributes'):
 		item = self.itemLibrary.itemForRow(row)
 		if not item:
 			return
 		layout = self.getLayout()
-		if item.isAlpha or item.isBeta or item.isDeprecated:
+		if item.isOP and (item.isAlpha or item.isBeta or item.isDeprecated):
 			attribs.fontItalic = True
 		if isinstance(item, PickerCategoryItem):
 			attribs.rowHeight = layout.catRowHeight
+			attribs.fontSizeX = layout.catFontSize
+			attribs.fontBold = layout.catFontBold
 			attribs.textColor = _configColor('Categorytextcolor')
 			attribs.bgColor = _configColor('Categorybgcolor')
 		elif isinstance(item, PickerOpItem):
 			attribs.rowHeight = layout.opRowHeight
+			attribs.fontSizeX = layout.opFontSize
+			attribs.fontBold = layout.opFontBold
 		self._applyStatusTextColor(attribs, item)
 
 	def initCell(self, row: int, col: int, attribs: 'ListAttributes'):
@@ -658,6 +718,8 @@ class _DefaultPickerImpl(_PickerImpl):
 				self._initStatusIconCell(attribs, item)
 			elif col == layout.thumbCol:
 				self._initThumbCell(attribs, item)
+			elif col == layout.chipCol:
+				self._initChipCell(attribs, item, layout)
 
 @dataclass
 class _CategoryColumn:
@@ -716,10 +778,10 @@ class _CategoryColumnLibrary:
 		self.allCategories = []
 		self.filteredColumns = None
 
-	def loadTables(self, opTable: 'DAT', opHelpTable: 'DAT'):
+	def loadTables(self, opTable: 'DAT', opHelpTable: 'DAT', useDisplayCategories: bool):
 		self.allItems = []
 		self.allColumns = []
-		for category in _loadItemCategories(opTable, opHelpTable):
+		for category in _loadItemCategories(opTable, opHelpTable, useDisplayCategories):
 			self.allColumns.append(_CategoryColumn(
 				category,
 				allOps=list(category.ops),
@@ -761,7 +823,7 @@ class _CategoryColumnLibrary:
 				return row, colI
 		return None, None
 
-	def getItemByPos(self, row:int, col: int) -> Optional[_AnyItemT]:
+	def getItemByPos(self, row: int, col: int) -> Optional[_AnyItemT]:
 		if col < 0:
 			return None
 		cols = self.currentColList
@@ -804,7 +866,9 @@ class _CategoryColumnPickerImpl(_PickerImpl):
 		return item
 
 	def loadItems(self, opTable: 'DAT', opHelpTable: 'DAT'):
-		self.itemLibrary.loadTables(opTable, opHelpTable)
+		self.itemLibrary.loadTables(
+			opTable, opHelpTable,
+			useDisplayCategories=ipar.uiState.Usedisplaycategory.eval())
 		self.refreshList()
 		self.applyFilter()
 		self.selectItem(None)
@@ -895,10 +959,15 @@ class _CategoryColumnPickerImpl(_PickerImpl):
 		layout = self.getLayout()
 		if row == 0:
 			attribs.rowHeight = layout.catRowHeight
+			attribs.fontSizeX = layout.catFontSize
+			attribs.fontBold = layout.catFontBold
+			attribs.textJustify = JustifyType.CENTER
 			attribs.textColor = _configColor('Categorytextcolor')
 			attribs.bgColor = _configColor('Categorybgcolor')
 		else:
 			attribs.rowHeight = layout.opRowHeight
+			attribs.fontSizeX = layout.opFontSize
+			attribs.fontBold = layout.opFontBold
 
 	def initCell(self, row: int, col: int, attribs: 'ListAttributes'):
 		layout = self.getLayout()
@@ -924,3 +993,5 @@ class _CategoryColumnPickerImpl(_PickerImpl):
 				self._initStatusIconCell(attribs, item)
 			elif colPart == layout.thumbCol:
 				self._initThumbCell(attribs, item)
+			elif colPart == layout.chipCol:
+				self._initChipCell(attribs, item, layout)

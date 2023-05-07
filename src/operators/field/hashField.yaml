@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.field.hashField
-  opVersion: '3'
+  opVersion: '5'
   opStatus: beta
 opDef: !def
   enable: true
@@ -34,6 +34,7 @@ opDef: !def
     name: macro_exprs
     evaluate: true
     evalOpts: !evalOpts {}
+  displayCategory: Noise Field
 inputs:
 - !input
   Localalias: coordField
@@ -50,9 +51,7 @@ elements:
   elementType: codeSwitcher
   params:
     Elementroot: ''
-    Table: !table
-      file: src/operators/field/hashField_hashFunctions.txt
-      name: hashFunctions
+    Table: processedHashFunctions
     Param: Function
     Autoupdateparams: true
     Manageparamstates: false

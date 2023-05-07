@@ -1,4 +1,7 @@
 ReturnT thismap(CoordT p, ContextT ctx) {
+	if (IS_FALSE(THIS_Enable)) {
+		return inputOp1(p, ctx);
+	}
 	vec3 p3 = adaptAsVec3(p);
 	float f = length(p3);
 

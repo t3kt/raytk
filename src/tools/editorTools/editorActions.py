@@ -531,6 +531,7 @@ def createActionManager():
 		_createTypeListGroup(
 			'Add Light',
 			typesAndLabels=[
+				('raytk.operators.light.ambientLight', 'Ambient Light'),
 				('raytk.operators.light.axisLight', 'Axis Light'),
 				('raytk.operators.light.directionalLight', 'Directional Light'),
 				('raytk.operators.light.linkedLight', 'Linked Light'),

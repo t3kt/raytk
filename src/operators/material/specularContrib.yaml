@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.material.specularContrib
-  opVersion: '23'
+  opVersion: '24'
   opStatus: default
 opDef: !def
   enable: true
@@ -45,6 +45,7 @@ opDef: !def
   - shading
   - modularmat
   shortcuts: sc
+  displayCategory: Material Element
 inputs:
 - !input
   Localalias: shininessField

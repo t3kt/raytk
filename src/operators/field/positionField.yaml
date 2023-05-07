@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.field.positionField
-  opVersion: '16'
+  opVersion: '17'
   opStatus: default
 opDef: !def
   enable: true
@@ -36,6 +36,7 @@ opDef: !def
     file: src/operators/field/positionField.md
     name: help
   shortcuts: pos
+  displayCategory: Spatial Field
 elements:
 - !opElement
   name: codeSwitcher_Positiontype

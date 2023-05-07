@@ -1,8 +1,25 @@
 !rop
 meta: !meta
   opType: raytk.operators.filter.round
-  opVersion: '14'
+  opVersion: '15'
   opStatus: default
+paramPages:
+- !page
+  name: Filter
+  pars:
+    Enable:
+      name: Enable
+      label: Enable
+      style: Toggle
+      default: true
+    Amount:
+      name: Amount
+      label: Amount
+      style: Float
+      size: 1
+      default: 0.0
+      normMin: -1.0
+      normMax: 1.0
 opDef: !def
   enable: !expr
     expr: op('..').par.Enable
@@ -29,23 +46,7 @@ opDef: !def
   help: !text
     file: src/operators/filter/round.md
     name: help
-paramPages:
-- !page
-  name: Filter
-  pars:
-    Enable:
-      name: Enable
-      label: Enable
-      style: Toggle
-      default: true
-    Amount:
-      name: Amount
-      label: Amount
-      style: Float
-      size: 1
-      default: 0.0
-      normMin: -1.0
-      normMax: 1.0
+  displayCategory: Surface Modifier
 inputs:
 - !input
   Required: true

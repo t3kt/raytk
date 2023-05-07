@@ -68,6 +68,8 @@ op:
       name: coords
     - label: Iteration
       name: iteration
+    - label: Primary Value
+      name: primaryvalue
     name: Valuesource
   - label: Render Stage
     menuOptions:

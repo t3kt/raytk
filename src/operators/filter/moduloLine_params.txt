@@ -1,0 +1,2 @@
+names	source	handling	readOnlyHandling	conversion	enable
+Point1[xyz] Point2[xyz] Divisions	param	runtime	macro		1

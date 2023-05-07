@@ -1,11 +1,12 @@
 !rop
 meta: !meta
   opType: raytk.operators.filter.magnet
-  opVersion: '10'
+  opVersion: '12'
   opStatus: default
 opDef: !def
   enable: !expr
     expr: op('..').par.Enable
+  useRuntimeBypass: true
   typeSpec: !ropTypes
     coordType: !coordT
       Coordtypevec2: true
@@ -21,6 +22,7 @@ opDef: !def
   help: !text
     file: src/operators/filter/magnet.md
     name: help
+  displayCategory: Transform
 inputs:
 - !input
   Required: true

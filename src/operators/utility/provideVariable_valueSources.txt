@@ -1,0 +1,3 @@
+name	label
+primary	Primary Input
+secondary	Secondary Input / Value Parameter

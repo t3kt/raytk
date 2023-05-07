@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.filter.modifyNormals
-  opVersion: '7'
+  opVersion: '8'
   opStatus: beta
 opDef: !def
   enable: !expr
@@ -30,6 +30,7 @@ opDef: !def
   - texture
   - shading
   - modularmat
+  displayCategory: Material Modifier
 inputs:
 - !input
   Localalias: shadingElement

@@ -85,6 +85,15 @@ op:
     summary: Thickness of the shell, centered on the input surface.
   - label: Iterations
     name: Iterations
+  - label: Side
+    menuOptions:
+    - label: Both
+      name: both
+    - label: Inside
+      name: inside
+    - label: Outside
+      name: outside
+    name: Side
   summary: Converts a solid SDF to a thin shell of the surface.
   thumb: assets/images/reference/operators/filter/onion_thumb.png
 

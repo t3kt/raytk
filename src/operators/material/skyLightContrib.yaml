@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.material.skyLightContrib
-  opVersion: '9'
+  opVersion: '10'
   opStatus: default
 opDef: !def
   enable: true
@@ -22,3 +22,4 @@ opDef: !def
   help: !text
     file: src/operators/material/skyLightContrib.md
     name: help
+  displayCategory: Material Element

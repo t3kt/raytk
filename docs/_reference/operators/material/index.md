@@ -95,6 +95,8 @@ cat:
     shortcuts:
     - sc
     summary: A material element that provides specular light contribution.
+  - name: subsurfaceContrib
+    status: beta
   - keywords:
     - color
     - material

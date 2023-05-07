@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.light.axisLight
-  opVersion: '8'
+  opVersion: '9'
   opStatus: default
 opDef: !def
   enable: true
@@ -16,12 +16,20 @@ opDef: !def
     file: src/operators/light/axisLight.glsl
     name: function
   paramGroupTable: eval_params
+  variableTable: !table
+    file: src/operators/light/axisLight_variables.txt
+    name: variable_exprs
+    evaluate: true
+    evalOpts: !evalOpts
+      excludeFirstRow: true
+      cols: enable
   help: !text
     file: src/operators/light/axisLight.md
     name: help
 inputs:
 - !input
   Localalias: colorField
+  Variables: lightdir
   coordType: !coordT
     Coordtypevec3: true
   contextType: !contextT
@@ -31,6 +39,8 @@ inputs:
     Returntypevec4: true
 - !input
   Localalias: attenuationField
+  Variables: lightdir
+  Variableinputs: colorField
   coordType: !coordT
     Coordtypefloat: true
   contextType: !contextT

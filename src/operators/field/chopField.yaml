@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.field.chopField
-  opVersion: '17'
+  opVersion: '18'
   opStatus: default
 opDef: !def
   enable: true
@@ -36,6 +36,7 @@ opDef: !def
   help: !text
     file: src/operators/field/chopField.md
     name: help
+  displayCategory: Value Field
 inputs:
 - !input
   Localalias: coordField

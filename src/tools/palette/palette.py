@@ -44,6 +44,10 @@ class Palette:
 			beta=self.ownerComp.par.Defaultshowbeta.eval(),
 			deprecated=self.ownerComp.par.Defaultshowdeprecated.eval(),
 		)
+		ext.opPicker.SetViewOptions(
+			statusChips=True,
+			displayCategories=True,
+		)
 		ext.opPicker.Resetstate()
 
 	@property
@@ -107,6 +111,8 @@ class Palette:
 			self._startCloseTimer()
 
 	def _resetState(self):
+		for finder in self.ownerComp.ops('findOpTables', 'findOpHelpTables'):
+			finder.par.cookpulse.pulse()
 		ext.opPicker.Resetstate()
 		self.isOpen.val = False
 

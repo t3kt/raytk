@@ -1,8 +1,17 @@
 !rop
 meta: !meta
   opType: raytk.operators.combine.simpleIntersect
-  opVersion: '15'
+  opVersion: '16'
   opStatus: default
+paramPages:
+- !page
+  name: Combine
+  pars:
+    Enable:
+      name: Enable
+      label: Enable
+      style: Toggle
+      default: true
 opDef: !def
   enable: !expr
     expr: op('..').par.Enable
@@ -23,15 +32,6 @@ opDef: !def
   help: !text
     file: src/operators/combine/simpleIntersect.md
     name: help
-paramPages:
-- !page
-  name: Combine
-  pars:
-    Enable:
-      name: Enable
-      label: Enable
-      style: Toggle
-      default: true
 multiInput: !multiInput
   Minimuminputs: 1
   Coordtypereductionmode: common
@@ -50,6 +50,7 @@ multiInput: !multiInput
       Returntypesdf: true
       Returntypefloat: true
   - !input
+    Variableinputs: inputOp1
     coordType: !coordT
       Allcoordtype: true
     contextType: !contextT
@@ -58,6 +59,7 @@ multiInput: !multiInput
       Returntypesdf: true
       Returntypefloat: true
   - !input
+    Variableinputs: inputOp[1-2]
     coordType: !coordT
       Allcoordtype: true
     contextType: !contextT
@@ -66,6 +68,7 @@ multiInput: !multiInput
       Returntypesdf: true
       Returntypefloat: true
   - !input
+    Variableinputs: inputOp[1-3]
     coordType: !coordT
       Allcoordtype: true
     contextType: !contextT
@@ -74,6 +77,7 @@ multiInput: !multiInput
       Returntypesdf: true
       Returntypefloat: true
   - !input
+    Variableinputs: inputOp[1-4]
     coordType: !coordT
       Allcoordtype: true
     contextType: !contextT
@@ -82,6 +86,7 @@ multiInput: !multiInput
       Returntypesdf: true
       Returntypefloat: true
   - !input
+    Variableinputs: inputOp[1-5]
     coordType: !coordT
       Allcoordtype: true
     contextType: !contextT
@@ -90,6 +95,7 @@ multiInput: !multiInput
       Returntypesdf: true
       Returntypefloat: true
   - !input
+    Variableinputs: inputOp[1-6]
     coordType: !coordT
       Allcoordtype: true
     contextType: !contextT
@@ -98,6 +104,7 @@ multiInput: !multiInput
       Returntypesdf: true
       Returntypefloat: true
   - !input
+    Variableinputs: inputOp[1-7]
     coordType: !coordT
       Allcoordtype: true
     contextType: !contextT

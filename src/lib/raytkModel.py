@@ -493,6 +493,7 @@ class ROPDef(ModelObject):
 	help: _TextSetting = None
 	keywords: ValueOrListOrExprT = None
 	shortcuts: ValueOrListOrExprT = None
+	displayCategory: ValueOrExprT = None
 
 	@classmethod
 	def fromComp(cls, opDefComp: 'COMP'):
@@ -534,6 +535,7 @@ class ROPDef(ModelObject):
 		self.help = _extractDatSetting(pars.Help)
 		self.keywords = _valOrExprFromPar(pars.Keywords, useList=True)
 		self.shortcuts = _valOrExprFromPar(pars.Shortcuts, useList=True)
+		self.displayCategory = _valOrExprFromPar(pars.Displaycategory)
 
 	def applyToComp(self, opDefComp: 'COMP'):
 		# noinspection PyTypeChecker
@@ -557,6 +559,7 @@ class ROPDef(ModelObject):
 
 		_updatePar(pars.Keywords, self.keywords)
 		_updatePar(pars.Shortcuts, self.shortcuts)
+		_updatePar(pars.Displaycategory, self.displayCategory)
 
 		# TODO: DAT-based params
 
@@ -711,6 +714,36 @@ class ROPSpec(ROPSpecBase):
 @dataclass
 class RCompSpec(ROPSpecBase):
 	yaml_tag = u'!rcomp'
+
+class BuildUnitTypes:
+	full = 'full'
+	core = 'core'
+	addon = 'addon'
+
+class BuildTypes:
+	release: 'release'
+	experimental: 'experimental'
+
+@dataclass
+class BuildUnitSpec(ModelObject):
+	yaml_tag = u'!buildUnit'
+
+	name: str
+	fileName: str
+	compName: str
+	globalShortcut: str
+	unitType: str = BuildUnitTypes.full
+	buildTypes: List[str] = field(default_factory=list)
+
+	# e.g. ['filter/*', 'field/foo*']
+	include: List[str] = field(default_factory=list)
+	exclude: List[str] = field(default_factory=list)
+
+@dataclass
+class BuildUnitList(ModelObject):
+	yaml_tag = u'!buildUnits'
+
+	buildUnits: List[BuildUnitSpec] = field(default_factory=list)
 
 def _extractDatSetting(par: Optional['Par']) -> Union[TextData, TableData, Expr, None]:
 	if par is None:

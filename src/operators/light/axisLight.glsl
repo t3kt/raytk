@@ -6,6 +6,9 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 		case 2: light.pos.z = p.z; break;
 	}
 	pRotateOnXYZ(light.pos, THIS_Rotate);
+	#ifdef THIS_EXPOSE_lightdir
+	THIS_lightdir = normalize(light.pos - p);
+	#endif
 	light.supportShadow = IS_TRUE(THIS_Enableshadow);
 	#ifdef THIS_HAS_INPUT_colorField
 	light.color *= fillToVec3(inputOp_colorField(p, ctx));

@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.material.reflectContrib
-  opVersion: '8'
+  opVersion: '10'
   opStatus: beta
 opDef: !def
   enable: true
@@ -37,3 +37,4 @@ opDef: !def
   - reflection
   - shading
   - modularmat
+  displayCategory: Material Element

@@ -1,47 +1,8 @@
 !rop
 meta: !meta
   opType: raytk.operators.filter.transform
-  opVersion: '17'
+  opVersion: '18'
   opStatus: default
-opDef: !def
-  enable: !expr
-    expr: op('..').par.Enable
-  useRuntimeBypass: true
-  typeSpec: !ropTypes
-    Useinputreturntype: !expr
-      expr: op('definition_1').numRows > 1
-    coordType: !coordT
-      Coordtypevec2: true
-      Coordtypevec3: true
-    contextType: !contextT
-      Allcontexttype: !expr
-        expr: op('targetInfo')[1, 'contextType'] == '*'
-      Contexttypematerialcontext: !expr
-        expr: op('targetInfo')[1, 'contextType'] == 'MaterialContext'
-    returnType: !returnT
-      Allreturntype: !expr
-        expr: op('definition_1').numRows > 1 and op('targetInfo')[1, 'returnType']
-          == '*'
-      Returntypesdf: !expr
-        expr: op('definition_1').numRows > 1 and op('targetInfo')[1, 'returnType']
-          in ('*', 'Sdf')
-      Returntypevec4: !expr
-        expr: op('targetInfo')[1, 'returnType'] in ('*', 'vec4')
-  function: !text
-    file: src/operators/filter/transform.glsl
-    name: function_template
-  help: !text
-    file: src/operators/filter/transform.md
-    name: help
-  keywords:
-  - transform
-  - translate
-  - rotate
-  - scale
-  - pivot
-  - move
-  - position
-  shortcuts: tfm
 paramPages:
 - !page
   name: Filter
@@ -168,6 +129,46 @@ paramPages:
       menuLabels:
       - Separate XYZ
       - Uniform
+opDef: !def
+  enable: !expr
+    expr: op('..').par.Enable
+  useRuntimeBypass: true
+  typeSpec: !ropTypes
+    Useinputreturntype: !expr
+      expr: op('definition_1').numRows > 1
+    coordType: !coordT
+      Coordtypevec2: true
+      Coordtypevec3: true
+    contextType: !contextT
+      Allcontexttype: !expr
+        expr: op('targetInfo')[1, 'contextType'] == '*'
+      Contexttypematerialcontext: !expr
+        expr: op('targetInfo')[1, 'contextType'] == 'MaterialContext'
+    returnType: !returnT
+      Allreturntype: !expr
+        expr: op('definition_1').numRows > 1 and op('targetInfo')[1, 'returnType']
+          == '*'
+      Returntypesdf: !expr
+        expr: op('definition_1').numRows > 1 and op('targetInfo')[1, 'returnType']
+          in ('*', 'Sdf')
+      Returntypevec4: !expr
+        expr: op('targetInfo')[1, 'returnType'] in ('*', 'vec4')
+  function: !text
+    file: src/operators/filter/transform.glsl
+    name: function_template
+  help: !text
+    file: src/operators/filter/transform.md
+    name: help
+  keywords:
+  - transform
+  - translate
+  - rotate
+  - scale
+  - pivot
+  - move
+  - position
+  shortcuts: tfm
+  displayCategory: Transform
 inputs:
 - !input
   coordType: !coordT

@@ -24,13 +24,26 @@ op:
     - ParticleContext
     coordTypes:
     - vec2
-    label: Point Coords Field
-    name: points
+    label: Point 1 Field
+    name: point1
     returnTypes:
     - vec4
     summary: If connected, this field will be used to pick both points. The first
       point comes from the X and Y components of the vector that comes out of the
       field, and the second point will use the Z and W components.
+  - contextTypes:
+    - Context
+    - MaterialContext
+    - CameraContext
+    - LightContext
+    - RayContext
+    - ParticleContext
+    coordTypes:
+    - vec2
+    label: Point 2 Field
+    name: point2
+    returnTypes:
+    - vec4
   - contextTypes:
     - Context
     - MaterialContext
@@ -47,9 +60,9 @@ op:
   name: lineSegmentSdf2d
   opType: raytk.operators.sdf2d.lineSegmentSdf2d
   parameters:
-  - label: Point A
+  - label: Point 1
     name: Pointa
-  - label: Point B
+  - label: Point 2
     name: Pointb
   - label: Thickness
     name: Thickness

@@ -34,6 +34,9 @@ op:
   - label: Enable Shadow
     name: Enableshadow
   summary: A directional light.
+  variables:
+  - label: lightdir
+    name: lightdir
 
 ---
 

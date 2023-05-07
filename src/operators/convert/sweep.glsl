@@ -2,6 +2,9 @@
 // https://www.shadertoy.com/view/MlyfRW
 
 ReturnT thismap(CoordT p, ContextT ctx) {
+	#ifdef THIS_EXPOSE_pos3d
+	THIS_pos3d = p;
+	#endif
 	BODY();
 	inputOp_path_ReturnT path = inputOp_path(p.xy, ctx);
 	#ifdef THIS_EXPOSE_pathsdf

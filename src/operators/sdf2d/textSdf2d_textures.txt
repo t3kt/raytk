@@ -1,0 +1,2 @@
+name	path	type
+'data'	op('dataTexture')	'2d'

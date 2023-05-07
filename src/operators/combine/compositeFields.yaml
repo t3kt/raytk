@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.combine.compositeFields
-  opVersion: '17'
+  opVersion: '18'
   opStatus: default
 opDef: !def
   enable: !expr
@@ -43,6 +43,7 @@ multiInput: !multiInput
       Returntypefloat: true
       Returntypevec4: true
   - !input
+    Variableinputs: inputOp1
     Required: true
     coordType: !coordT
       Allcoordtype: true
@@ -56,6 +57,7 @@ multiInput: !multiInput
       expr: parent().par.Blendfield.eval() or ''
     Label: Blend Field
     Localalias: blendField
+    Variableinputs: inputOp[1-2]
     Required: true
     coordType: !coordT
       Allcoordtype: true

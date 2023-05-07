@@ -1,0 +1,5 @@
+!rcomp
+meta: !meta
+  opType: raytk.operators.utility.speedGenerator
+  opVersion: '2'
+  opStatus: beta

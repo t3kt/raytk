@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.field.voronoiField
-  opVersion: '4'
+  opVersion: '5'
   opStatus: alpha
 opDef: !def
   enable: true
@@ -19,6 +19,7 @@ opDef: !def
   paramGroupTable: eval_params
   libraryNames: !expr
     expr: op('voronoiField_lib')
+  displayCategory: Noise Field
 inputs:
 - !input
   Localalias: coordField

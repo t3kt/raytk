@@ -76,6 +76,8 @@ op:
     menuOptions:
     - label: Add
       name: add
+    - label: Atop
+      name: atop
     - label: Average
       name: average
     - label: Color Burn
@@ -108,6 +110,8 @@ op:
       name: negation
     - label: Normal
       name: normal
+    - label: Over
+      name: over
     - label: Overlay
       name: overlay
     - label: Phoenix
@@ -122,8 +126,12 @@ op:
       name: softlight
     - label: Subtract
       name: subtract
+    - label: Under
+      name: under
     - label: VividLight
       name: vividlight
+    - label: Xor
+      name: xor
     name: Blendmode
   - label: Blend
     name: Blend

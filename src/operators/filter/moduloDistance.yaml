@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.filter.moduloDistance
-  opVersion: '16'
+  opVersion: '17'
   opStatus: default
 opDef: !def
   enable: !expr
@@ -31,6 +31,7 @@ opDef: !def
   - repeat
   - radial
   - distance
+  displayCategory: Repeat
 inputs:
 - !input
   Variables: '*'

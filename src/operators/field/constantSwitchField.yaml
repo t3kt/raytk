@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.field.constantSwitchField
-  opVersion: '9'
+  opVersion: '10'
   opStatus: default
 opDef: !def
   enable: true
@@ -24,6 +24,7 @@ opDef: !def
   help: !text
     file: src/operators/field/constantSwitchField.md
     name: help
+  displayCategory: Value Field
 inputs:
 - !input
   Localalias: indexField

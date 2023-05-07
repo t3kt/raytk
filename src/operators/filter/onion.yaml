@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.filter.onion
-  opVersion: '15'
+  opVersion: '17'
   opStatus: default
 paramPages:
 - !page
@@ -56,6 +56,7 @@ opDef: !def
   - onion
   - shell
   - hollow
+  displayCategory: Surface Modifier
 inputs:
 - !input
   Required: true
@@ -85,3 +86,19 @@ inputs:
     Allcontexttype: true
   returnType: !returnT
     Returntypefloat: true
+elements:
+- !opElement
+  name: codeSwitcher_Side
+  elementType: codeSwitcher
+  params:
+    Elementroot: ''
+    Table: !table
+      file: src/operators/filter/onion_sides.txt
+      name: sides
+    Param: Side
+    Autoupdateparams: true
+    Manageparamstates: false
+    Alwaysincludeallparams: false
+    Switchmode: auto
+    Indexexpr: ''
+    Placeholder: SIDE_BODY();

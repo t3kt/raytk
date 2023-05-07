@@ -1,0 +1,4 @@
+name	label	code
+both	Both	
+inside	Inside	val = max(val, val0);
+outside	Outside	val = max(val, -val0);

@@ -1,0 +1,9 @@
+names	source	handling	readOnlyHandling	conversion	enable
+Axis	param	runtime	constant		1
+Invert	param	runtime	macro		1
+Enablesmoothing	param	runtime	constant		1
+Smoothradius	param	runtime	macro		1
+Center	param	runtime	macro	angle	parent().par.Anglemode == 'width' and op('center_definition').numRows < 2
+Width	param	runtime	macro	angle	parent().par.Anglemode == 'width' and op('width_definition').numRows < 2
+Start	param	runtime	macro	angle	parent().par.Anglemode == 'sides' and op('start_definition').numRows < 2
+End	param	runtime	macro	angle	parent().par.Anglemode == 'sides' and op('end_definition').numRows < 2

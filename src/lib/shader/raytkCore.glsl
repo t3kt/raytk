@@ -157,8 +157,12 @@ void blendInSdf(inout Sdf res1, in Sdf res2, in float amt) {
 
 	#ifdef RAYTK_OBJECT_ID_IN_SDF
 	if (res2.objectId.x != 0.) {
-		res1.objectId.y = res2.objectId.x;
-		res1.objectId.z = amt;
+		if (amt >= 1.) {
+			res1.objectId = res2.objectId;
+		} else if (amt >= 0.) {
+			res1.objectId.y = res2.objectId.x;
+			res1.objectId.z = amt;
+		}
 	}
 	#endif
 
@@ -471,6 +475,7 @@ const int RAYTK_STAGE_OCCLUSION = 5;
 const int RAYTK_STAGE_VOLUMETRIC = 6;
 const int RAYTK_STAGE_VOLUMETRIC_SHADOW = 7;
 const int RAYTK_STAGE_NORMAL = 8;
+const int RAYTK_STAGE_SUBSURFACE = 9;
 
 int _raytkStage = RAYTK_STAGE_PRIMARY;
 
@@ -487,7 +492,8 @@ int getStage() { return _raytkStage; }
 bool isDistanceOnlyStage() {
 	return _raytkStage == RAYTK_STAGE_SHADOW ||
 	_raytkStage == RAYTK_STAGE_OCCLUSION ||
-	_raytkStage == RAYTK_STAGE_NORMAL;
+	_raytkStage == RAYTK_STAGE_NORMAL ||
+	_raytkStage == RAYTK_STAGE_SUBSURFACE;
 }
 
 void captureIterationFromMaterial(inout vec4 store, in Context ctx) {

@@ -10,3 +10,4 @@ float calcAO( in vec3 pos, in vec3 nor );
 Light getLight(vec3 p, LightContext ctx);
 vec4 getColor(vec3 p, MaterialContext matCtx);
 vec4 getBackgroundColor(in Ray ray);
+vec3 closestPoint = vec3(0.);

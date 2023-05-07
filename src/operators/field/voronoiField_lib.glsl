@@ -5,7 +5,7 @@ vec2 vor_hash2(vec2 p) {
 	return fract(sin(vec2(dot(p,vec2(127.1,311.7)),dot(p,vec2(269.5,183.3))))*43758.5453);
 }
 
-vec3 voronoi2d( in vec2 x, vec2 hashShift )
+vec3 voronoi2d(in vec2 x)
 {
 	vec2 n = floor(x);
 	vec2 f = fract(x);
@@ -21,7 +21,6 @@ vec3 voronoi2d( in vec2 x, vec2 hashShift )
 	{
 		vec2 g = vec2(float(i),float(j));
 		vec2 o = vor_hash2( n + g );
-		o += hashShift;
 //		#ifdef ANIMATE
 //		o = 0.5 + 0.5*sin( iTime + 6.2831*o );
 //		#endif
@@ -45,7 +44,6 @@ vec3 voronoi2d( in vec2 x, vec2 hashShift )
 	{
 		vec2 g = mg + vec2(float(i),float(j));
 		vec2 o = vor_hash2( n + g );
-		o += hashShift;
 //		#ifdef ANIMATE
 //		o = 0.5 + 0.5*sin( iTime + 6.2831*o );
 //		#endif

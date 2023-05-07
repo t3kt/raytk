@@ -1,3 +1,4 @@
 name	enable
 usereflect	1
 useray	1
+useshadow	parent().par.Enableshadow

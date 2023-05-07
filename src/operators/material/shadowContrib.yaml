@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.material.shadowContrib
-  opVersion: '6'
+  opVersion: '7'
   opStatus: beta
 opDef: !def
   enable: true
@@ -40,3 +40,4 @@ opDef: !def
   - shadow
   - shading
   - modularmat
+  displayCategory: Material Element

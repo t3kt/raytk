@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.filter.mirrorOctant
-  opVersion: '18'
+  opVersion: '19'
   opStatus: default
 opDef: !def
   enable: !expr
@@ -30,6 +30,7 @@ opDef: !def
   help: !text
     file: src/operators/filter/mirrorOctant.md
     name: help
+  displayCategory: Repeat
 inputs:
 - !input
   Variables: '*'

@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.material.backgroundFieldContrib
-  opVersion: '4'
+  opVersion: '5'
   opStatus: default
 opDef: !def
   enable: true
@@ -19,3 +19,4 @@ opDef: !def
   help: !text
     file: src/operators/material/backgroundFieldContrib.md
     name: help
+  displayCategory: Material Element

@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.output.pointMapRender
-  opVersion: '64'
+  opVersion: '65'
   opStatus: default
 opDef: !def
   enable: true
@@ -35,6 +35,7 @@ opDef: !def
   - render
   - ''
   shortcuts: pmr
+  displayCategory: Render
 inputs:
 - !input
   Variables: '*'

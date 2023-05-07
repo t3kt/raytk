@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.sdf2d.lineSegmentSdf2d
-  opVersion: '7'
+  opVersion: '8'
   opStatus: default
 opDef: !def
   enable: true
@@ -28,7 +28,15 @@ opDef: !def
     name: help
 inputs:
 - !input
-  Localalias: points
+  Localalias: point1Field
+  coordType: !coordT
+    Coordtypevec2: true
+  contextType: !contextT
+    Allcontexttype: true
+  returnType: !returnT
+    Returntypevec4: true
+- !input
+  Localalias: point2Field
   coordType: !coordT
     Coordtypevec2: true
   contextType: !contextT

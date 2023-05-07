@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.filter.transformSequence
-  opVersion: '7'
+  opVersion: '8'
   opStatus: beta
 opDef: !def
   enable: !expr
@@ -24,6 +24,7 @@ opDef: !def
     evaluate: true
     evalOpts: !evalOpts
       excludeFirstRow: true
+  displayCategory: Transform
 multiInput: !multiInput
   Minimuminputs: 1
   Coordtypereductionmode: common

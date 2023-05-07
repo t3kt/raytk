@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.combine.boundLimit
-  opVersion: '8'
+  opVersion: '9'
   opStatus: beta
 opDef: !def
   enable: !expr
@@ -19,6 +19,7 @@ opDef: !def
     file: src/operators/combine/boundLimit.glsl
     name: function
   paramGroupTable: eval_params
+  displayCategory: Restrict
 inputs:
 - !input
   Required: true
