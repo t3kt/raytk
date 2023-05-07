@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.filter.rotate
-  opVersion: '31'
+  opVersion: '32'
   opStatus: default
 paramPages:
 - !page
@@ -136,6 +136,7 @@ opDef: !def
   displayCategory: Transform
 inputs:
 - !input
+  Variableinputs: '*'
   Required: !expr
     expr: parent().par.Target != 'coords'
   coordType: !coordT
@@ -157,6 +158,7 @@ inputs:
       expr: op('targetInfo')[1, 'returnType'] in ('*', 'vec4')
 - !input
   Localalias: rotateField
+  Variableinputs: pivotField
   coordType: !coordT
     Coordtypevec2: true
     Coordtypevec3: true
