@@ -82,6 +82,22 @@ op:
     returnTypes:
     - float
     - vec4
+  - contextTypes:
+    - Context
+    - MaterialContext
+    - CameraContext
+    - LightContext
+    - RayContext
+    - ParticleContext
+    coordTypes:
+    - float
+    - vec2
+    - vec3
+    - vec4
+    label: Wave Function
+    name: amplitudeField
+    returnTypes:
+    - float
   name: waveField
   opType: raytk.operators.field.waveField
   parameters:
