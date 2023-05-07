@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.field.stepField
-  opVersion: '12'
+  opVersion: '13'
   opStatus: default
 opDef: !def
   enable: !expr
@@ -43,6 +43,7 @@ inputs:
     Returntypevec4: true
 - !input
   Localalias: edgeField
+  Variableinputs: coordField
   coordType: !coordT
     Allcoordtype: true
   contextType: !contextT
@@ -51,6 +52,7 @@ inputs:
     Returntypefloat: true
 - !input
   Localalias: lowValue
+  Variableinputs: coordField edgeField
   coordType: !coordT
     Allcoordtype: true
   contextType: !contextT
@@ -60,6 +62,7 @@ inputs:
     Returntypevec4: true
 - !input
   Localalias: highValue
+  Variableinputs: coordField edgeField lowValue
   coordType: !coordT
     Allcoordtype: true
   contextType: !contextT
