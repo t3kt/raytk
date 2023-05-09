@@ -37,7 +37,7 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 	THIS_pos = nearestPos;
 	#endif
 	#ifdef THIS_EXPOSE_angle
-	THIS_angle = nearestAngle;
+	THIS_angle = cell * degrees(angle);
 	#endif
 	#ifdef THIS_EXPOSE_dist
 	THIS_dist = d;
