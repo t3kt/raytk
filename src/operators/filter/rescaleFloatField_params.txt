@@ -1,0 +1,2 @@
+names	source	handling	readOnlyHandling	conversion	enable
+Inputrange[1-2] Outputrange[1-2] Multiply Postadd	param	runtime	macro		1
