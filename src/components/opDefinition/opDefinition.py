@@ -403,12 +403,6 @@ def buildParamChopNamesTable(dat: 'DAT', paramSpecTable: 'DAT'):
 	dat.appendRow(['angle', ' '.join(angleNames)])
 	dat.appendRow(['constant', ' '.join(constantNames)])
 
-def updateLibraryMenuPar(libsComp: 'COMP'):
-	p = parentPar().Librarynames  # type: Par
-	libs = libsComp.findChildren(type=DAT, maxDepth=1, tags=['library'])
-	libs.sort(key=lambda l: -l.nodeY)
-	p.menuNames = [lib.name for lib in libs]
-
 def validateReferences(dat: 'scriptDAT'):
 	dat.clear()
 	dat.appendRow(['path', 'level', 'message'])
@@ -479,9 +473,8 @@ def _checkInputType(handler: 'COMP', typeName: str, typeCategory: str):
 	if ' ' in typeName:
 		if any(t in supported for t in typeName.split(' ')):
 			return
-	else:
-		if typeName in supported:
-			return
+	elif typeName in supported:
+		return
 	return f'Input does not support {typeCategory} {typeName}'
 
 def _isMaster():
@@ -518,9 +511,7 @@ def buildOpState():
 		opElementTable=op('opElements'),
 		inputTable=op('input_table'),
 	)
-	builder.loadConstants(
-		paramSpecTable=op('paramSpecTable'),
-	)
+	builder.loadConstants(paramSpecTable=op('paramSpecTable'))
 	builder.loadTextures()
 	builder.loadBuffers()
 	builder.loadReferences()
@@ -547,10 +538,7 @@ class _Builder:
 		self.namePrefix = self.opName + '_'
 		if self.defPar.Materialcode:
 			self.opState.materialId = 'MAT_' + self.opState.name
-		self.replacements = {
-			'thismap': self.opName,
-			'THIS_': self.namePrefix,
-		}  # type: Dict[str, str]
+		self.replacements = {'thismap': self.opName, 'THIS_': self.namePrefix}
 		if opType:
 			self.replacements['THISTYPE_'] = opType + '_'
 		if self.opState.materialId:
