@@ -7,6 +7,7 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 	#endif
 	vec3 center = THIS_Center;
 	float r = THIS_Radius;
+	float rot = THIS_Rotate;
 
 	q -= center;
 
@@ -16,18 +17,26 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 		case THISTYPE_Axis_z: break;
 	}
 
+	pR(q.xy, rot);
+
 	float n = float(THIS_Points);
 	float angle = TAU / n;
-	float a = atan(q.y, q.x);
+	float a = atan(q.y, q.x) + angle / 2.;
 	float cell = floor(a / angle);
+	// there's definitely a cleaner way to do this
+	if (cell < 0.) {
+		cell = mapRange(cell, -n/2., 0., n/2., n);
+	}
 
 	float nearestAngle = cell * angle;
 
 	vec3 nearestPos = vec3(
-		r * cos(nearestAngle + angle / 2.),
-		r * sin(nearestAngle + angle / 2.),
+		r * cos(nearestAngle),
+		r * sin(nearestAngle),
 		0.
 	);
+	pR(q.xy, -rot);
+	pR(nearestPos.xy, -rot);
 	nearestPos += center;
 	q += center;
 	float d = distance(q, nearestPos);
@@ -45,9 +54,6 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 	#ifdef THIS_EXPOSE_vector
 	THIS_vector = vec;
 	#endif
-	// there's definitely a cleaner way to do this
-	cell += (n / 2.);
-	cell = (n-1.) - cell;
 	#ifdef THIS_EXPOSE_step
 	THIS_step = int(cell);
 	#endif
