@@ -1,4 +1,3 @@
-from dataclasses import dataclass
 import json
 import math
 from raytkState import RopState, Macro, Texture, Reference, Variable, Dispatch, Buffer, ValidationError, Constant, \
@@ -548,7 +547,6 @@ class _Builder:
 		self.namePrefix = self.opName + '_'
 		if self.defPar.Materialcode:
 			self.opState.materialId = 'MAT_' + self.opState.name
-		self.inputs = []  # type: List[_InputInfo]
 		self.replacements = {
 			'thismap': self.opName,
 			'THIS_': self.namePrefix,
@@ -568,25 +566,13 @@ class _Builder:
 			func = str(inDat[1, 'input:alias'] or f'inputOp{i + 1}')
 			placeholder = f'inputOp_{func}' if not func.startswith('inputOp') else func
 			name = str(inDat[1, 'name'])
-			inputInfo = _InputInfo(
-				inputFunc=func,
-				name=name,
-				path=str(inDat[1, 'path']),
-				coordType=str(inDat[1, 'coordType']),
-				contextType=str(inDat[1, 'contextType']),
-				returnType=str(inDat[1, 'returnType']),
-				placeholder=placeholder,
-				vars=str(inDat[1, 'input:vars']),
-				varInputs=str(inDat[1, 'input:varInputs']),
-			)
-			self.inputs.append(inputInfo)
 			self.replacements[placeholder] = name
 			self.opState.inputNames.append(name)
 			self.opState.inputStates.append(InputState(
 				func,
 				name,
-				varNames=tdu.split(inputInfo.vars),
-				varInputNames=tdu.split(inputInfo.varInputs),
+				varNames=tdu.split(inDat[1, 'input:vars']),
+				varInputNames=tdu.split(inDat[1, 'input:varInputs']),
 			))
 
 	def loadOpElements(self, elementTable: 'DAT'):
@@ -635,8 +621,8 @@ class _Builder:
 			if isinstance(m.value, str):
 				m.value = self.replaceNames(m.value)
 			macros.append(m)
-		for inputInfo in self.inputs:
-			addMacro(Macro(_getHasInputMacroName(inputInfo.inputFunc)))
+		for inputState in self.opState.inputStates:
+			addMacro(Macro(_getHasInputMacroName(inputState.functionName)))
 		tags = getCombinedTags(inputTable)
 		for tag in tags:
 			addMacro(Macro(f'THIS_HAS_TAG_{tag}'))
@@ -848,18 +834,6 @@ def _getHasInputMacroName(inputAlias: str):
 		if i is not None:
 			return f'THIS_HAS_INPUT_{i}'
 	return f'THIS_HAS_INPUT_{inputAlias}'
-
-@dataclass
-class _InputInfo:
-	inputFunc: str
-	name: str
-	path: str
-	coordType: str
-	contextType: str
-	returnType: str
-	placeholder: str
-	vars: str
-	varInputs: str
 
 def _popDialog() -> 'PopDialogExt':
 	# noinspection PyUnresolvedReferences
