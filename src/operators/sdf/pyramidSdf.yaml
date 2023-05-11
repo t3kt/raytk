@@ -16,6 +16,8 @@ opDef: !def
     file: src/operators/sdf/pyramidSdf.glsl
     name: functionTemplate
   paramGroupTable: eval_params
+  libraryNames: !expr
+    expr: op('pyramidSdf_lib')
   help: !text
     file: src/operators/sdf/pyramidSdf.md
     name: help
