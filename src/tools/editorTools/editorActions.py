@@ -631,6 +631,16 @@ def createActionManager():
 				_SetParamOnPrimaryRop('Enableobjectidoutput', True),
 			]
 		),
+		_ActionImpl(
+			'Select Near Hit Map',
+			ropType='raytk.operators.post.nearHitMap',
+			select=_OpSelect(ropTypes=[_RopTypes.raymarchRender3d]),
+			attach=_AttachOutputSelector(),
+			inits=[
+				_LinkPrimaryToParam('Outputop'),
+				_SetParamOnPrimaryRop('Enablenearhitoutput', True),
+			]
+		),
 		_createAnimateParamsGroup(
 			'Animate With Speed', _RopTypes.speedGenerator, 'speedGen'),
 		_createAnimateParamsGroup(
