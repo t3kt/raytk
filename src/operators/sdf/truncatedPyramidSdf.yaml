@@ -1,0 +1,56 @@
+!rop
+meta: !meta
+  opType: raytk.operators.sdf.truncatedPyramidSdf
+  opVersion: '0'
+  opStatus: default
+opDef: !def
+  enable: true
+  typeSpec: !ropTypes
+    coordType: !coordT
+      Coordtypevec3: true
+    contextType: !contextT
+      Allcontexttype: true
+    returnType: !returnT
+      Returntypesdf: true
+  function: !text
+    file: src/operators/sdf/truncatedPyramidSdf.glsl
+    name: function
+  paramGroupTable: eval_params
+  libraryNames: !expr
+    expr: op('truncatedPyramidSdf_lib')
+  variableTable: !table
+    file: src/operators/sdf/truncatedPyramidSdf_variables.txt
+    name: variable_exprs
+    evaluate: true
+    evalOpts: !evalOpts
+      excludeFirstRow: true
+      cols: enable
+inputs:
+- !input
+  Localalias: heightField
+  coordType: !coordT
+    Coordtypevec3: true
+  contextType: !contextT
+    Allcontexttype: true
+  returnType: !returnT
+    Returntypefloat: true
+- !input
+  Localalias: topSizeField
+  Variables: normoffset
+  coordType: !coordT
+    Coordtypevec3: true
+  contextType: !contextT
+    Allcontexttype: true
+  returnType: !returnT
+    Returntypefloat: true
+    Returntypevec4: true
+- !input
+  Localalias: bottomSizeField
+  Variables: normoffset
+  coordType: !coordT
+    Coordtypevec3: true
+  contextType: !contextT
+    Allcontexttype: true
+  returnType: !returnT
+    Returntypefloat: true
+    Returntypevec4: true
