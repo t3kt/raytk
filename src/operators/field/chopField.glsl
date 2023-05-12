@@ -48,7 +48,7 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 		}
 			#endif
 
-		value = texture(THIS_texture, vec2(u, 0));
+		value = textureLod(THIS_texture, vec2(u, 0.), 0);
 	}
 	#endif
 	return THIS_asReturnT(value);

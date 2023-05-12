@@ -2,7 +2,7 @@ vec3 THIS_sampleTexture(sampler2D tex, vec2 uv, ContextT ctx) {
 	#if defined(RAYTK_LOD_IN_MATERIAL_CONTEXT)
 	return textureLod(tex, uv + 0.5, ctx.lod).rgb;
 	#else
-	return texture(tex, uv + 0.5).rgb;
+	return textureLod(tex, uv + 0.5, 0).rgb;
 	#endif
 }
 

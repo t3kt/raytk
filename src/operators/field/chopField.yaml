@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.field.chopField
-  opVersion: '18'
+  opVersion: '19'
   opStatus: default
 opDef: !def
   enable: true
