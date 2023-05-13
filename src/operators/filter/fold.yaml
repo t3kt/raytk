@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.filter.fold
-  opVersion: '11'
+  opVersion: '12'
   opStatus: default
 paramPages:
 - !page
@@ -53,6 +53,7 @@ opDef: !def
   displayCategory: Transform
 inputs:
 - !input
+  Variableinputs: '*'
   coordType: !coordT
     Coordtypevec2: true
     Coordtypevec3: true

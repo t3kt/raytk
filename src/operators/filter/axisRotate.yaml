@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.filter.axisRotate
-  opVersion: '1'
+  opVersion: '2'
   opStatus: default
 opDef: !def
   enable: !expr
@@ -37,6 +37,7 @@ opDef: !def
   displayCategory: Transform
 inputs:
 - !input
+  Variableinputs: rotateField
   coordType: !coordT
     Coordtypevec2: true
     Coordtypevec3: true

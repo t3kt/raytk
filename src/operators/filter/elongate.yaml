@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.filter.elongate
-  opVersion: '14'
+  opVersion: '15'
   opStatus: default
 paramPages:
 - !page
@@ -54,6 +54,7 @@ opDef: !def
   displayCategory: Spatial Modifier
 inputs:
 - !input
+  Variableinputs: '*'
   Required: true
   coordType: !coordT
     Coordtypevec2: true
@@ -63,7 +64,7 @@ inputs:
   returnType: !returnT
     Allreturntype: true
 - !input
-  Localalias: centerField
+  Localalias: sizeField
   coordType: !coordT
     Coordtypevec2: true
     Coordtypevec3: true
@@ -72,7 +73,8 @@ inputs:
   returnType: !returnT
     Returntypevec4: true
 - !input
-  Localalias: sizeField
+  Localalias: centerField
+  Variableinputs: sizeField
   coordType: !coordT
     Coordtypevec2: true
     Coordtypevec3: true
