@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.material.rimContrib
-  opVersion: '1'
+  opVersion: '2'
   opStatus: beta
 opDef: !def
   enable: !expr
@@ -21,6 +21,13 @@ opDef: !def
     file: src/operators/material/rimContrib.glsl
     name: function
   paramGroupTable: eval_params
+  variableTable: !table
+    file: src/operators/material/rimContrib_variables.txt
+    name: variable_exprs
+    evaluate: true
+    evalOpts: !evalOpts
+      excludeFirstRow: true
+      cols: enable
   tagTable: !table
     file: src/operators/material/rimContrib_tags.txt
     name: tag_exprs
@@ -32,6 +39,7 @@ opDef: !def
 inputs:
 - !input
   Localalias: thicknessField
+  Variables: '*'
   coordType: !coordT
     Allcoordtype: true
   contextType: !contextT
@@ -40,6 +48,7 @@ inputs:
     Returntypefloat: true
 - !input
   Localalias: blendingField
+  Variables: '*'
   coordType: !coordT
     Allcoordtype: true
   contextType: !contextT
@@ -48,6 +57,7 @@ inputs:
     Returntypefloat: true
 - !input
   Localalias: colorField
+  Variables: '*'
   coordType: !coordT
     Allcoordtype: true
   contextType: !contextT

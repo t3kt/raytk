@@ -4,6 +4,9 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 	vec3 n = ctx.normal;
 	vec3 v = normalize(-ctx.ray.dir);
 	n *= TDRotateToVector(v, vec3(0., 1., 0.));
+	#ifdef THIS_EXPOSE_normangle
+	THIS_normangle = atan(n.y, n.x)/TAU + 0.5;
+	#endif
 
 	#ifdef THIS_HAS_INPUT_thicknessField
 	float th = inputOp_thicknessField(p, ctx);

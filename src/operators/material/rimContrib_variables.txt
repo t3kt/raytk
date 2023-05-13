@@ -1,0 +1,2 @@
+name	label	dataType	enable	macros
+normangle	Normalized Surface Angle (0..1)	float	1	
