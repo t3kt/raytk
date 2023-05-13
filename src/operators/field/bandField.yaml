@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.field.bandField
-  opVersion: '12'
+  opVersion: '13'
   opStatus: default
 opDef: !def
   enable: !expr
@@ -43,6 +43,7 @@ inputs:
     Returntypevec4: true
 - !input
   Localalias: insideValue
+  Variableinputs: coordField
   coordType: !coordT
     Allcoordtype: true
   contextType: !contextT
@@ -52,6 +53,7 @@ inputs:
     Returntypevec4: true
 - !input
   Localalias: outsideValue
+  Variableinputs: coordField insideValue
   coordType: !coordT
     Allcoordtype: true
   contextType: !contextT
@@ -61,6 +63,7 @@ inputs:
     Returntypevec4: true
 - !input
   Localalias: blendFunction
+  Variableinputs: coordField insideValue outsideValue
   coordType: !coordT
     Coordtypefloat: true
   contextType: !contextT
