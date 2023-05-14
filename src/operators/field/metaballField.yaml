@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.field.metaballField
-  opVersion: '8'
+  opVersion: '9'
   opStatus: default
 opDef: !def
   enable: true
@@ -39,6 +39,7 @@ inputs:
     Returntypevec4: true
 - !input
   Localalias: centerField
+  Variableinputs: coordField
   coordType: !coordT
     Allcoordtype: true
   contextType: !contextT
@@ -48,6 +49,7 @@ inputs:
     Returntypevec4: true
 - !input
   Localalias: radiusField
+  Variableinputs: coordField centerField
   coordType: !coordT
     Allcoordtype: true
   contextType: !contextT
@@ -57,6 +59,7 @@ inputs:
     Returntypevec4: true
 - !input
   Localalias: weightField
+  Variableinputs: coordField centerField radiusField
   coordType: !coordT
     Allcoordtype: true
   contextType: !contextT
@@ -65,6 +68,7 @@ inputs:
     Returntypefloat: true
 - !input
   Localalias: exponentField
+  Variableinputs: coordField centerField radiusField weightField
   coordType: !coordT
     Allcoordtype: true
   contextType: !contextT

@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.field.pointDistanceField
-  opVersion: '17'
+  opVersion: '18'
   opStatus: default
 opDef: !def
   enable: true
@@ -39,6 +39,7 @@ inputs:
     Returntypevec4: true
 - !input
   Localalias: centerField
+  Variableinputs: coordField
   coordType: !coordT
     Allcoordtype: true
   contextType: !contextT

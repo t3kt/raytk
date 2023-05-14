@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.field.waveField
-  opVersion: '33'
+  opVersion: '34'
   opStatus: default
 opDef: !def
   enable: !expr
@@ -47,6 +47,7 @@ inputs:
     Returntypevec4: true
 - !input
   Localalias: periodField
+  Variableinputs: coordField
   coordType: !coordT
     Allcoordtype: true
   contextType: !contextT
@@ -55,6 +56,7 @@ inputs:
     Returntypefloat: true
 - !input
   Localalias: phaseField
+  Variableinputs: coordField periodField
   coordType: !coordT
     Allcoordtype: true
   contextType: !contextT
@@ -63,6 +65,7 @@ inputs:
     Returntypefloat: true
 - !input
   Localalias: waveFunc
+  Variableinputs: coordField periodField phaseField
   coordType: !coordT
     Coordtypefloat: true
   contextType: !contextT
@@ -72,6 +75,7 @@ inputs:
     Returntypevec4: true
 - !input
   Localalias: ampField
+  Variableinputs: coordField periodField phaseField waveFunc
   coordType: !coordT
     Allcoordtype: true
   contextType: !contextT
