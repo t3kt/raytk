@@ -1,0 +1,3 @@
+names	source	handling	readOnlyHandling	conversion	enable
+Count[1-3]	param	runtime	constant		1
+Center[xyz] Size[xyz]	param	runtime	macro		1
