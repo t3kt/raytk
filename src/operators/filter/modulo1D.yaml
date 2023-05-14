@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.filter.modulo1D
-  opVersion: '31'
+  opVersion: '32'
   opStatus: default
 paramPages:
 - !page
@@ -188,9 +188,8 @@ inputs:
   returnType: !returnT
     Returntypefloat: true
 - !input
-  Localalias: offsetField
-  Variables: cellcoord normcoord
-  Variableinputs: sizeField shiftField
+  Localalias: shiftField
+  Variableinputs: sizeField
   coordType: !coordT
     Coordtypefloat: true
     Coordtypevec2: true
@@ -200,8 +199,9 @@ inputs:
   returnType: !returnT
     Returntypefloat: true
 - !input
-  Localalias: shiftField
-  Variableinputs: sizeField
+  Localalias: offsetField
+  Variables: cellcoord normcoord
+  Variableinputs: sizeField shiftField
   coordType: !coordT
     Coordtypefloat: true
     Coordtypevec2: true

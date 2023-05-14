@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.filter.modulo3D
-  opVersion: '25'
+  opVersion: '26'
   opStatus: default
 opDef: !def
   enable: !expr
@@ -54,9 +54,8 @@ inputs:
     Returntypefloat: true
     Returntypevec4: true
 - !input
-  Localalias: offsetField
-  Variables: cellcoord normcoord
-  Variableinputs: sizeField shiftField
+  Localalias: shiftField
+  Variableinputs: sizeField
   coordType: !coordT
     Coordtypevec3: true
   contextType: !contextT
@@ -65,8 +64,9 @@ inputs:
     Returntypefloat: true
     Returntypevec4: true
 - !input
-  Localalias: shiftField
-  Variableinputs: sizeField
+  Localalias: offsetField
+  Variables: cellcoord normcoord
+  Variableinputs: sizeField shiftField
   coordType: !coordT
     Coordtypevec3: true
   contextType: !contextT
