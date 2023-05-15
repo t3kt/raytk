@@ -1,0 +1,1 @@
+'1'	'THIS_TEX_TYPE_' + parent().par.Outputtype.eval()	

@@ -90,11 +90,26 @@ void main() {
 	#endif
 	initOutputs();
 	vec2 resolution = uTDOutputInfo.res.zw;
+	vec4 posAndExists;
+
+	#if defined(THIS_TEX_TYPE_texture2d)
 	vec2 fragCoord = vUV.st;
+	exposeDataPosition(resolution, fragCoord.xy);
+	posAndExists = texture(sTD2DInputs[0], fragCoord);
+	#elif defined(THIS_TEX_TYPE_texture3d)
+	// The center of the first slice is not located at 0, but rather halfway between 0 (the start of the first slice)
+	// and 1.0 / depth (the end of the first slice)
+	float firstSlice = uTD3DInfos[0].depth.x * 0.5;
 
-	exposeDataPosition(resolution, fragCoord);
+	// now add the offset
+	firstSlice += uTD3DInfos[0].depth.z;
 
-	vec4 posAndExists = texture(sTD2DInputs[0], fragCoord);
+	vec3 pos = vec3(vUV.st, firstSlice);
+	exposeDataPosition(resolution, pos.xy);
+	posAndExists = texture(sTD3DInputs[0], pos);
+	#else
+	#error invalidOutputTextureType
+	#endif
 
 	if (posAndExists.a == 0) {
 		return;
