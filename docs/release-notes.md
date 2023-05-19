@@ -1,5 +1,34 @@
 # Release Notes
 
+## v0.34
+
+### Highlights
+
+* ...
+
+### Details
+
+* Improvements / additions
+  * New OPs
+    * gridClone - mergeable cloning on a grid
+    * nearHitMap - convenience accessor for near hit render output (#289)
+    * rescaleFloatField - simplified version of rescaleField
+    * truncatedPyramidSdf
+  * New OP features
+    * crossSection - offset field input
+    * nearestRingPointField - index variables and rotate parameter
+    * pointMapRender - 3d texture output (#1072)
+    * rimContrib - angle variable
+  * Snippets
+    * ...
+* Fixes
+  * Fix input variable settings and reorder inputs to match availability - addFields, adjustColor, axisRotate, bandField, constantField, elongate, extend, hsvColorField, fold, kink, limitField, lookAtRotate, magnet, magnetField, metaballField, mobiusTransform, modifyNormals, modulo1D, modulo2D, modulo3D, pointDistanceField, stepField, waveField
+  * Fix default settings for 2D render in inspector (#1073)
+  * Fix scaling for angle variable in nearestRingPointField (#1074)
+  * Fix crashes caused by textureField issue with nvidia error for branched calls to texture() (#1034)
+* Changes (potentially breaking)
+* Infrastructure / internals
+
 ## v0.33
 
 ### Highlights
