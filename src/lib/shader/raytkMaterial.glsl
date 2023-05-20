@@ -23,24 +23,6 @@ bool resultUsesShadow(Sdf res)
 	#endif
 }
 
-// http://iquilezles.org/www/articles/checkerfiltering/checkerfiltering.htm
-float checkersGradBox(in vec2 p)
-{
-	// filter kernel
-	vec2 w = fwidth(p) + 0.001;
-	// analytical integral (box filter)
-	vec2 i = 2.0*(abs(fract((p-0.5*w)*0.5)-0.5)-abs(fract((p+0.5*w)*0.5)-0.5))/w;
-
-	// xor pattern
-	// return 0.5 - 0.5*i.x*i.y+smoothstep(fract(p.x), 0.0, 0.1)-smoothstep(fract(p.x), 0.2, 1);
-	p*= 1.;
-	float coarse = step(fract(p.x), 0.55)-step(fract(p.x), 0.5)+step(fract(p.y), 0.55)-step(fract(p.y), 0.5);
-	p*= 3;
-	float fine = step(fract(p.x), 0.55)-step(fract(p.x), 0.5)+step(fract(p.y), 0.55)-step(fract(p.y), 0.5);
-
-	return coarse+fine*0.5;//step(fract(p.x), 0.55)-step(fract(p.x), 0.5)+step(fract(p.y), 0.55)-step(fract(p.y), 0.5);
-}
-
 // https://github.com/castano/qshaderedit/blob/d4cb6db3a966e129a3b35f1da5b99c0de1b0ec0f/data/shaders/gooch.glsl
 vec3 goochShading(
 	vec3 lightDirection,
