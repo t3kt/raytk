@@ -8,19 +8,19 @@ Sdf map(vec3 p) {
 	return res;
 }
 
-vec3 accumColor = vec3(0.);
+bool inside = false;
 Sdf castRay(Ray ray, float maxDist, float surfDist) {
 	int priorStage = pushStage(RAYTK_STAGE_PRIMARY);
 	float dist = 0.;
 	Sdf res = createNonHitSdf();
 	int i;
-	accumColor = vec3(0.);
 	for (i = 0; i < RAYTK_MAX_STEPS; i++) {
 		if (!checkLimit(ray.pos)) {
 			popStage(priorStage);
 			return createNonHitSdf();
 		}
 		res = map(ray.pos);
+		if (inside) res.x *= -1.;
 		dist += res.x;
 		if (res.x < surfDist) break;
 		// TODO: transparency
@@ -284,11 +284,18 @@ vec4 renderSurfaceHit(Sdf res, vec3 p, MaterialContext matCtx) {
 
 	matCtx.reflectColor = renderSurfaceReflection(p, matCtx);
 
-	matCtx.refractColor = renderSurfaceRefraction(p, matCtx);
+//	matCtx.refractColor = renderSurfaceRefraction(p, matCtx);
 
 	vec3 col = getSurfaceColorAllLights(p, matCtx);
 
 	return vec4(col, 1.);
+}
+
+// from refractive raymarching course
+float refractiveSchlick(Ray ray, vec3 n, vec2 ior) {
+	float r0 = (ior.x-ior.y)/(ior.x+ior.y);
+	r0 *= r0;
+	return r0 + (1.-r0) * pow(1. -abs(dot(n, ray.dir)), 5.);
 }
 
 void main() {
@@ -299,6 +306,7 @@ void main() {
 
 	pushStage(RAYTK_STAGE_PRIMARY);
 
+	inside = false;
 	#if THIS_Antialias > 1
 	vec2 shiftStart = vec2(-float(THIS_Antialias) / 2.0);
 	vec2 shiftStep = vec2(1.0 / float(THIS_Antialias));
@@ -307,13 +315,10 @@ void main() {
 	{
 		vec2 shift = shiftStart + shiftStep * vec2(i, j);
 		bool isMainPass = j == 0 && i == 0;
-	#else
+		#else
 		vec2 shift = vec2(0);
 		bool isMainPass = true;
-	#endif
-		float renderDepth = IS_TRUE(THIS_Userenderdepth) ?
-			min(texture(sTD2DInputs[0], vUV.st).r, RAYTK_MAX_DIST) :
-			RAYTK_MAX_DIST;
+		#endif
 
 		// Camera
 		Ray ray = getViewRay(shift);
@@ -323,6 +328,20 @@ void main() {
 		#ifdef OUTPUT_RAYORIGIN
 		rayOriginOut += vec4(ray.pos, 0);
 		#endif
+
+		vec2 ior = vec2(1.);
+	// TODO: energy decay (from refractive raymarching course)?
+		#if defined(RAYTK_USE_REFRACTION) && defined(THIS_Enablerefraction)
+		for (int r = 0; r < THIS_Refractionpasses; r++) {
+		#else
+		for (int r = 0; r < 1; r++) {
+		#endif
+
+		float renderDepth;
+
+		renderDepth = IS_TRUE(THIS_Userenderdepth) && r == 0 ?
+			min(texture(sTD2DInputs[0], vUV.st).r, RAYTK_MAX_DIST) :
+			RAYTK_MAX_DIST;
 
 		// Raymarch
 		Sdf res = castRay(ray, renderDepth, THIS_Surfdist);
@@ -339,6 +358,7 @@ void main() {
 			}
 			// TODO: secondary ray stuff
 			#endif
+			break;
 		} else if (res.x > 0.0 && res.x < renderDepth) {
 			// If result was a hit and didn't exceed render depth...
 			MaterialContext matCtx = createMaterialContext();
@@ -364,15 +384,62 @@ void main() {
 
 			#ifdef OUTPUT_COLOR
 			vec4 stepColor = renderSurfaceHit(res, p, matCtx);
-			stepColor.rgb += accumColor;
 			// TODO: color summing and output
 			colorOut += stepColor;
 			#endif
+			float surfaceIor;
+			if (resultCheckRefraction(res, surfaceIor)) {
+				ior = vec2(ior.y, surfaceIor);
+				ray = Ray(p, refract(ray.dir, matCtx.normal, ior.x/ior.y));
+				ray.pos += ray.dir * 0.001;
+				inside = !inside;
+				ior = ior.yx;
+				setDebugOut(vec4(1., 0., r / 2., 1.));
+			} else {
+				break;
+			}
 		}
-
+	}
 
 	#if THIS_Antialias > 1
 	}
+	#endif
+	float aa = 1.0 / float(THIS_Antialias*THIS_Antialias);
+	#ifdef OUTPUT_DEPTH
+	depthOut *= aa;
+	#endif
+	#ifdef OUTPUT_RAYDIR
+	rayDirOut *= aa;
+	#endif
+	#ifdef OUTPUT_RAYORIGIN
+	rayOriginOut *= aa;
+	#endif
+	#ifdef OUTPUT_OBJECTID
+	objectIdOut *= aa;
+	#endif
+	#ifdef OUTPUT_WORLDPOS
+	worldPosOut *= aa;
+	#endif
+	#ifdef OUTPUT_NORMAL
+	normalOut *= aa;
+	#endif
+	#ifdef OUTPUT_ORBIT
+	orbitOut *= aa;
+	#endif
+	#if defined(OUTPUT_NEARHIT)
+	nearHitOut *= aa;
+	#endif
+	#ifdef OUTPUT_ITERATION
+	iterationOut *= aa;
+	#endif
+	#ifdef OUTPUT_SDF
+	sdfOut *= aa;
+	#endif
+	#ifdef OUTPUT_COLOR
+	colorOut *= aa;
+	#endif
+	#ifdef OUTPUT_STEPS
+	stepsOut *= aa;
 	#endif
 }
 
