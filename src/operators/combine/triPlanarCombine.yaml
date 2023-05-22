@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.combine.triPlanarCombine
-  opVersion: '0'
+  opVersion: '1'
   opStatus: alpha
 opDef: !def
   enable: true
@@ -12,9 +12,9 @@ opDef: !def
       Allcontexttype: true
     returnType: !returnT
       Returntypefloat: !expr
-        expr: parent().par.Returntype == 'float' or parent().par.Returntype == 'auto'
+        expr: op('determineReturnType')[0,0] == 'float'
       Returntypevec4: !expr
-        expr: parent().par.Returntype == 'vec4' or parent().par.Returntype == 'auto'
+        expr: op('determineReturnType')[0,0] == 'vec4'
   function: !text
     file: src/operators/combine/triPlanarCombine.glsl
     name: function
@@ -25,9 +25,8 @@ multiInput: !multiInput
   Coordtypereductionscope: '*'
   Contexttypereductionmode: common
   Contexttypereductionscope: '*'
-  Returntypereductionmode: bestcommon
+  Returntypereductionmode: none
   Returntypereductionscope: '*'
-  Returntypepreference: vec4 float
   inputs:
   - !input
     Localalias: xyField
@@ -36,8 +35,10 @@ multiInput: !multiInput
     contextType: !contextT
       Allcontexttype: true
     returnType: !returnT
-      Returntypefloat: true
-      Returntypevec4: true
+      Returntypefloat: !expr
+        expr: parent().par.Returntype in ('auto','float')
+      Returntypevec4: !expr
+        expr: parent().par.Returntype in ('auto','vec4')
   - !input
     Localalias: yzField
     coordType: !coordT
@@ -45,8 +46,10 @@ multiInput: !multiInput
     contextType: !contextT
       Allcontexttype: true
     returnType: !returnT
-      Returntypefloat: true
-      Returntypevec4: true
+      Returntypefloat: !expr
+        expr: parent().par.Returntype in ('auto','float')
+      Returntypevec4: !expr
+        expr: parent().par.Returntype in ('auto','vec4')
   - !input
     Localalias: zxField
     coordType: !coordT
@@ -54,8 +57,10 @@ multiInput: !multiInput
     contextType: !contextT
       Allcontexttype: true
     returnType: !returnT
-      Returntypefloat: true
-      Returntypevec4: true
+      Returntypefloat: !expr
+        expr: parent().par.Returntype in ('auto','float')
+      Returntypevec4: !expr
+        expr: parent().par.Returntype in ('auto','vec4')
 inputs:
 - !input
   Localalias: uvField
