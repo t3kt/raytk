@@ -21,7 +21,6 @@ if False:
 		Includemode: StrParamT
 
 	class _OwnerCompPar(_ConfigPar):
-		Globalprefix: DatParamT
 		Predeclarations: DatParamT
 		Textureindexoffset: IntParamT
 		Texture3dindexoffset: IntParamT
@@ -707,7 +706,6 @@ class _Writer:
 		if self.defTable.numRows < 2:
 			self._writeLine('#error No input definition')
 			return
-		self._writeCodeDat('globalPrefix', self.ownerComp.par.Globalprefix.eval())
 		self._writeGlobalDecls()
 		self._writeOpDataTypedefs()
 		self._writeMacroBlock()
