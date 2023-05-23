@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.material.goochShadingContrib
-  opVersion: '12'
+  opVersion: '13'
   opStatus: default
 opDef: !def
   enable: true
@@ -39,6 +39,7 @@ inputs:
     Returntypevec4: true
 - !input
   Localalias: warmColorField
+  Variableinputs: baseColorField
   coordType: !coordT
     Coordtypevec3: true
   contextType: !contextT
@@ -48,6 +49,7 @@ inputs:
     Returntypevec4: true
 - !input
   Localalias: coolColorField
+  Variableinputs: baseColorField warmColorField
   coordType: !coordT
     Coordtypevec3: true
   contextType: !contextT
