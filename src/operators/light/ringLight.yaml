@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.light.ringLight
-  opVersion: '0'
+  opVersion: '1'
   opStatus: beta
 opDef: !def
   enable: true
@@ -16,3 +16,13 @@ opDef: !def
     file: src/operators/light/ringLight.glsl
     name: function
   paramGroupTable: eval_params
+inputs:
+- !input
+  Localalias: colorField
+  coordType: !coordT
+    Coordtypevec3: true
+  contextType: !contextT
+    Contexttypelightcontext: true
+  returnType: !returnT
+    Returntypefloat: true
+    Returntypevec4: true
