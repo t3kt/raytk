@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.filter.slice
-  opVersion: '17'
+  opVersion: '18'
   opStatus: default
 paramPages:
 - !page
@@ -104,6 +104,7 @@ inputs:
     Returntypesdf: true
 - !input
   Localalias: offsetField
+  Variableinputs: inputOp1
   coordType: !coordT
     Coordtypevec2: true
     Coordtypevec3: true
@@ -113,6 +114,7 @@ inputs:
     Returntypefloat: true
 - !input
   Localalias: thicknessField
+  Variableinputs: inputOp1 offsetField
   coordType: !coordT
     Coordtypevec2: true
     Coordtypevec3: true
