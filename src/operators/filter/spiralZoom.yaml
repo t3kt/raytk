@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.filter.spiralZoom
-  opVersion: '12'
+  opVersion: '13'
   opStatus: default
 paramPages:
 - !page
@@ -91,6 +91,7 @@ opDef: !def
   displayCategory: Transform
 inputs:
 - !input
+  Variableinputs: '*'
   Required: true
   coordType: !coordT
     Coordtypevec2: true
@@ -110,6 +111,7 @@ inputs:
     Returntypevec4: true
 - !input
   Localalias: phaseField
+  Variableinputs: twistField
   coordType: !coordT
     Coordtypevec2: true
     Coordtypevec3: true
