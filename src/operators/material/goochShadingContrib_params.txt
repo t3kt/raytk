@@ -1,3 +1,6 @@
 names	source	handling	readOnlyHandling	conversion	enable
-Enable Level Basecolor[rgb] Warmcolor[rgb] Coolcolor[rgb]	param	runtime	macro		1
+Enable Level	param	runtime	macro		1
+Basecolor[rgb]	param	runtime	macro		op('base_color_definition').numRows < 2
+Warmcolor[rgb]	param	runtime	macro		op('warm_color_definition').numRows < 2
+Coolcolor[rgb]	param	runtime	macro		op('cool_color_definition').numRows < 2
 Enableshadow Uselightcolor	param	macro			1
