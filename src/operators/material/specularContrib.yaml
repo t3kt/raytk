@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.material.specularContrib
-  opVersion: '24'
+  opVersion: '25'
   opStatus: default
 opDef: !def
   enable: true
@@ -57,6 +57,7 @@ inputs:
     Returntypefloat: true
 - !input
   Localalias: roughnessField
+  Variableinputs: shininessField
   coordType: !coordT
     Allcoordtype: true
   contextType: !contextT
@@ -65,6 +66,7 @@ inputs:
     Returntypefloat: true
 - !input
   Localalias: fresnelField
+  Variableinputs: shininessField roughnessField
   coordType: !coordT
     Allcoordtype: true
   contextType: !contextT
@@ -73,6 +75,7 @@ inputs:
     Returntypefloat: true
 - !input
   Localalias: colorField
+  Variableinputs: shininessField roughnessField fresnelField
   coordType: !coordT
     Allcoordtype: true
   contextType: !contextT

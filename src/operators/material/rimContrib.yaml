@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.material.rimContrib
-  opVersion: '2'
+  opVersion: '3'
   opStatus: beta
 opDef: !def
   enable: !expr
@@ -49,6 +49,7 @@ inputs:
 - !input
   Localalias: blendingField
   Variables: '*'
+  Variableinputs: thicknessField
   coordType: !coordT
     Allcoordtype: true
   contextType: !contextT
@@ -58,6 +59,7 @@ inputs:
 - !input
   Localalias: colorField
   Variables: '*'
+  Variableinputs: thicknessField blendingField
   coordType: !coordT
     Allcoordtype: true
   contextType: !contextT
