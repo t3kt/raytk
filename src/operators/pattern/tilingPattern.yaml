@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.pattern.tilingPattern
-  opVersion: '4'
+  opVersion: '5'
   opStatus: beta
 opDef: !def
   enable: true
@@ -31,6 +31,7 @@ inputs:
     Returntypevec4: true
 - !input
   Localalias: vertexRadiusField
+  Variableinputs: coordField
   coordType: !coordT
     Coordtypevec2: true
     Coordtypevec3: true
@@ -40,6 +41,7 @@ inputs:
     Returntypefloat: true
 - !input
   Localalias: outlineThicknessField
+  Variableinputs: coordField vertexRadiusField
   coordType: !coordT
     Coordtypevec2: true
     Coordtypevec3: true
@@ -49,6 +51,7 @@ inputs:
     Returntypefloat: true
 - !input
   Localalias: polyColor1Field
+  Variableinputs: coordField vertexRadiusField outlineThicknessField
   coordType: !coordT
     Coordtypevec2: true
     Coordtypevec3: true
@@ -59,6 +62,7 @@ inputs:
     Returntypevec4: true
 - !input
   Localalias: polyColor2Field
+  Variableinputs: coordField vertexRadiusField outlineThicknessField polyColor1Field
   coordType: !coordT
     Coordtypevec2: true
     Coordtypevec3: true
@@ -69,6 +73,8 @@ inputs:
     Returntypevec4: true
 - !input
   Localalias: polyColor3Field
+  Variableinputs: coordField vertexRadiusField outlineThicknessField polyColor1Field
+    polyColor2Field
   coordType: !coordT
     Coordtypevec2: true
     Coordtypevec3: true
@@ -79,6 +85,8 @@ inputs:
     Returntypevec4: true
 - !input
   Localalias: outlineColorField
+  Variableinputs: coordField vertexRadiusField outlineThicknessField polyColor1Field
+    polyColor2Field polyColor3Field
   coordType: !coordT
     Coordtypevec2: true
     Coordtypevec3: true
@@ -89,6 +97,8 @@ inputs:
     Returntypevec4: true
 - !input
   Localalias: dualOutlineColorField
+  Variableinputs: coordField vertexRadiusField outlineThicknessField polyColor1Field
+    polyColor2Field polyColor3Field outlineColorField
   coordType: !coordT
     Coordtypevec2: true
     Coordtypevec3: true
