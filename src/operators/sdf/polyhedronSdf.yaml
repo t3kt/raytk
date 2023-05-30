@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.sdf.polyhedronSdf
-  opVersion: '12'
+  opVersion: '13'
   opStatus: default
 opDef: !def
   enable: true
@@ -25,70 +25,7 @@ opDef: !def
   libraryNames: raytkCombine
 inputs:
 - !input
-  Localalias: vertexShape
-  coordType: !coordT
-    Coordtypevec3: true
-  contextType: !contextT
-    Allcontexttype: true
-  returnType: !returnT
-    Returntypesdf: true
-- !input
   Localalias: radiusField
-  coordType: !coordT
-    Coordtypevec3: true
-  contextType: !contextT
-    Allcontexttype: true
-  returnType: !returnT
-    Returntypefloat: true
-- !input
-  Source: !expr
-    expr: parent().par.Faceradiusfield or ''
-  Label: Face Radius Field
-  Localalias: faceRadiusField
-  coordType: !coordT
-    Coordtypevec3: true
-  contextType: !contextT
-    Allcontexttype: true
-  returnType: !returnT
-    Returntypefloat: true
-- !input
-  Source: !expr
-    expr: parent().par.Segmentradiusfield or ''
-  Label: Segment Radius Field
-  Localalias: segmentRadiusField
-  coordType: !coordT
-    Coordtypevec3: true
-  contextType: !contextT
-    Allcontexttype: true
-  returnType: !returnT
-    Returntypefloat: true
-- !input
-  Source: !expr
-    expr: parent().par.Segmentsizefield or ''
-  Label: Segment Size Field
-  Localalias: segmentSizeField
-  coordType: !coordT
-    Coordtypevec3: true
-  contextType: !contextT
-    Allcontexttype: true
-  returnType: !returnT
-    Returntypefloat: true
-- !input
-  Source: !expr
-    expr: parent().par.Vertexradiusfield or ''
-  Label: Vertex Radius Field
-  Localalias: vertexRadiusField
-  coordType: !coordT
-    Coordtypevec3: true
-  contextType: !contextT
-    Allcontexttype: true
-  returnType: !returnT
-    Returntypefloat: true
-- !input
-  Source: !expr
-    expr: parent().par.Vertexsizefield or ''
-  Label: Vertex Size Field
-  Localalias: vertexSizeField
   coordType: !coordT
     Coordtypevec3: true
   contextType: !contextT
@@ -100,12 +37,84 @@ inputs:
     expr: parent().par.Uvwfield or ''
   Label: UVW Field
   Localalias: uvwField
+  Variableinputs: radiusField
   coordType: !coordT
     Coordtypevec3: true
   contextType: !contextT
     Allcontexttype: true
   returnType: !returnT
     Returntypevec4: true
+- !input
+  Source: !expr
+    expr: parent().par.Faceradiusfield or ''
+  Label: Face Radius Field
+  Localalias: faceRadiusField
+  Variableinputs: radiusField uvwField
+  coordType: !coordT
+    Coordtypevec3: true
+  contextType: !contextT
+    Allcontexttype: true
+  returnType: !returnT
+    Returntypefloat: true
+- !input
+  Source: !expr
+    expr: parent().par.Segmentradiusfield or ''
+  Label: Segment Radius Field
+  Localalias: segmentRadiusField
+  Variableinputs: radiusField uvwField faceRadiusField
+  coordType: !coordT
+    Coordtypevec3: true
+  contextType: !contextT
+    Allcontexttype: true
+  returnType: !returnT
+    Returntypefloat: true
+- !input
+  Source: !expr
+    expr: parent().par.Segmentsizefield or ''
+  Label: Segment Size Field
+  Localalias: segmentSizeField
+  Variableinputs: radiusField uvwField faceRadiusField segmentRadiusField
+  coordType: !coordT
+    Coordtypevec3: true
+  contextType: !contextT
+    Allcontexttype: true
+  returnType: !returnT
+    Returntypefloat: true
+- !input
+  Source: !expr
+    expr: parent().par.Vertexradiusfield or ''
+  Label: Vertex Radius Field
+  Localalias: vertexRadiusField
+  Variableinputs: radiusField uvwField faceRadiusField segmentRadiusField segmentSizeField
+  coordType: !coordT
+    Coordtypevec3: true
+  contextType: !contextT
+    Allcontexttype: true
+  returnType: !returnT
+    Returntypefloat: true
+- !input
+  Source: !expr
+    expr: parent().par.Vertexsizefield or ''
+  Label: Vertex Size Field
+  Localalias: vertexSizeField
+  Variableinputs: radiusField uvwField faceRadiusField segmentRadiusField segmentSizeField
+    vertexRadiusField
+  coordType: !coordT
+    Coordtypevec3: true
+  contextType: !contextT
+    Allcontexttype: true
+  returnType: !returnT
+    Returntypefloat: true
+- !input
+  Localalias: vertexShape
+  Variableinputs: radiusField uvwField faceRadiusField segmentRadiusField segmentSizeField
+    vertexRadiusField vertexSizeField
+  coordType: !coordT
+    Coordtypevec3: true
+  contextType: !contextT
+    Allcontexttype: true
+  returnType: !returnT
+    Returntypesdf: true
 elements:
 - !opElement
   name: combiner

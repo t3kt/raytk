@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.sdf.ringsSdf
-  opVersion: '2'
+  opVersion: '3'
   opStatus: default
 opDef: !def
   enable: true
@@ -25,17 +25,6 @@ opDef: !def
       cols: enable
 inputs:
 - !input
-  Localalias: crossSection
-  Variables: normangle angle axispos ring
-  Variableinputs: spacingField shiftField
-  coordType: !coordT
-    Coordtypevec2: true
-  contextType: !contextT
-    Allcontexttype: true
-  returnType: !returnT
-    Returntypesdf: true
-    Returntypefloat: true
-- !input
   Localalias: spacingField
   Variables: normangle angle axispos
   coordType: !coordT
@@ -53,6 +42,17 @@ inputs:
   contextType: !contextT
     Allcontexttype: true
   returnType: !returnT
+    Returntypefloat: true
+- !input
+  Localalias: crossSection
+  Variables: normangle angle axispos ring
+  Variableinputs: spacingField shiftField
+  coordType: !coordT
+    Coordtypevec2: true
+  contextType: !contextT
+    Allcontexttype: true
+  returnType: !returnT
+    Returntypesdf: true
     Returntypefloat: true
 - !input
   Localalias: thicknessField

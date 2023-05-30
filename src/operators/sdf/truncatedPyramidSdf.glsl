@@ -15,11 +15,11 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 	#ifdef THIS_HAS_INPUT_heightField
 	h *= inputOp_heightField(p0, ctx);
 	#endif
-	#ifdef THIS_HAS_INPUT_bottomSizeField
-	bottomSize *= fillToVec2(inputOp_bottomSizeField(p0, ctx));
-	#endif
 	#ifdef THIS_HAS_INPUT_topSizeField
 	topSize *= fillToVec2(inputOp_topSizeField(p0, ctx));
+	#endif
+	#ifdef THIS_HAS_INPUT_bottomSizeField
+	bottomSize *= fillToVec2(inputOp_bottomSizeField(p0, ctx));
 	#endif
 	float d = sdTruncatedPyramid(p, bottomSize, topSize, h);
 	return createSdf(d);
