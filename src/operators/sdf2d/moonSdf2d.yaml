@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.sdf2d.moonSdf2d
-  opVersion: '3'
+  opVersion: '4'
   opStatus: default
 opDef: !def
   enable: true
@@ -27,6 +27,7 @@ inputs:
     Returntypefloat: true
 - !input
   Localalias: ratioField
+  Variableinputs: radiusField
   coordType: !coordT
     Coordtypevec2: true
   contextType: !contextT
@@ -35,6 +36,7 @@ inputs:
     Returntypefloat: true
 - !input
   Localalias: offsetField
+  Variableinputs: radiusField ratioField
   coordType: !coordT
     Coordtypevec2: true
   contextType: !contextT
@@ -43,6 +45,7 @@ inputs:
     Returntypefloat: true
 - !input
   Localalias: rotateField
+  Variableinputs: radiusField ratioField offsetField
   coordType: !coordT
     Coordtypevec2: true
   contextType: !contextT

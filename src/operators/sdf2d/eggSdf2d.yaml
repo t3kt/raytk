@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.sdf2d.eggSdf2d
-  opVersion: '1'
+  opVersion: '2'
   opStatus: default
 opDef: !def
   enable: true
@@ -27,6 +27,7 @@ inputs:
     Returntypefloat: true
 - !input
   Localalias: roundingField
+  Variableinputs: radiusField
   coordType: !coordT
     Coordtypevec2: true
   contextType: !contextT

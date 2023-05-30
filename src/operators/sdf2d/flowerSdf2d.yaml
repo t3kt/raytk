@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.sdf2d.flowerSdf2d
-  opVersion: '4'
+  opVersion: '5'
   opStatus: default
 opDef: !def
   enable: true
@@ -28,7 +28,6 @@ inputs:
 - !input
   Localalias: radiusField
   Variables: normangle
-  Variableinputs: petalsField
   coordType: !coordT
     Coordtypevec2: true
   contextType: !contextT
@@ -38,7 +37,7 @@ inputs:
 - !input
   Localalias: amplitudeField
   Variables: normangle
-  Variableinputs: petalsField radiusField
+  Variableinputs: radiusField
   coordType: !coordT
     Coordtypevec2: true
   contextType: !contextT
@@ -48,6 +47,7 @@ inputs:
 - !input
   Localalias: petalsField
   Variables: normangle
+  Variableinputs: radiusField amplitudeField
   coordType: !coordT
     Coordtypevec2: true
   contextType: !contextT

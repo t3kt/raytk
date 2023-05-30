@@ -1,24 +1,24 @@
 // https://www.shadertoy.com/view/WtdBRS
 ReturnT thismap(CoordT p, ContextT ctx) {
-	#ifdef THIS_HAS_INPUT_rotateField
-	float rot = radians(inputOp_rotateField(p, ctx));
-	#else
-	float rot = THIS_Rotate;
-	#endif
 	#ifdef THIS_HAS_INPUT_radiusField
 	float ra = inputOp_radiusField(p, ctx);
 	#else
 	float ra = THIS_Radius;
+	#endif
+	#ifdef THIS_HAS_INPUT_ratioField
+	float ratio = inputOp_ratioField(p, ctx);
+	#else
+	float ratio = THIS_Innerratio;
 	#endif
 	#ifdef THIS_HAS_INPUT_offsetField
 	float offset = inputOp_offsetField(p, ctx);
 	#else
 	float offset = THIS_Offset;
 	#endif
-	#ifdef THIS_HAS_INPUT_ratioField
-	float ratio = inputOp_ratioField(p, ctx);
+	#ifdef THIS_HAS_INPUT_rotateField
+	float rot = radians(inputOp_rotateField(p, ctx));
 	#else
-	float ratio = THIS_Innerratio;
+	float rot = THIS_Rotate;
 	#endif
 
 	offset *= ra;
