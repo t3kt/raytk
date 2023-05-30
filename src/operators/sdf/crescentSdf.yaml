@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.sdf.crescentSdf
-  opVersion: '1'
+  opVersion: '2'
   opStatus: default
 opDef: !def
   enable: true
@@ -27,6 +27,7 @@ inputs:
     Returntypefloat: true
 - !input
   Localalias: thicknessField
+  Variableinputs: radiusField
   coordType: !coordT
     Coordtypevec3: true
   contextType: !contextT

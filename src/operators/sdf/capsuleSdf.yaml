@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.sdf.capsuleSdf
-  opVersion: '13'
+  opVersion: '14'
   opStatus: default
 opDef: !def
   enable: true
@@ -51,7 +51,7 @@ inputs:
 - !input
   Localalias: radiusField
   Variables: normoffset
-  Variableinputs: endpoint1
+  Variableinputs: endpoint1 endpoint2
   coordType: !coordT
     Coordtypevec3: true
   contextType: !contextT
