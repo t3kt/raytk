@@ -23,6 +23,10 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 		#ifdef THIS_EXPOSE_normoffset
 		THIS_normoffset = map01(q.y, -h*.5, h*.5);
 		#endif
+	} else {
+		#ifdef THIS_EXPOSE_normoffset
+		THIS_normoffset = 0.;
+		#endif
 	}
 
 	#if defined(THIS_HAS_INPUT_radiusField)

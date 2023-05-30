@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.sdf.linkSdf
-  opVersion: '11'
+  opVersion: '12'
   opStatus: default
 opDef: !def
   enable: true
@@ -33,6 +33,7 @@ inputs:
     Returntypefloat: true
 - !input
   Localalias: radiusField
+  Variableinputs: lengthField
   coordType: !coordT
     Coordtypevec3: true
   contextType: !contextT
@@ -41,6 +42,7 @@ inputs:
     Returntypefloat: true
 - !input
   Localalias: thicknessField
+  Variableinputs: lengthField radiusField
   coordType: !coordT
     Coordtypevec3: true
   contextType: !contextT

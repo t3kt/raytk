@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.sdf.crossSdf
-  opVersion: '12'
+  opVersion: '13'
   opStatus: default
 opDef: !def
   enable: true
@@ -31,6 +31,7 @@ inputs:
     Returntypevec4: true
 - !input
   Localalias: smoothRadiusField
+  Variableinputs: sizeField
   coordType: !coordT
     Coordtypevec3: true
   contextType: !contextT

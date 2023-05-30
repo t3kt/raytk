@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.sdf.geodesicSdf
-  opVersion: '16'
+  opVersion: '17'
   opStatus: default
 opDef: !def
   enable: !expr
@@ -31,14 +31,6 @@ opDef: !def
   - spikes
 inputs:
 - !input
-  Localalias: spikeSdf
-  coordType: !coordT
-    Coordtypevec3: true
-  contextType: !contextT
-    Contexttypecontext: true
-  returnType: !returnT
-    Returntypesdf: true
-- !input
   Localalias: faceOffset
   coordType: !coordT
     Coordtypevec3: true
@@ -46,3 +38,12 @@ inputs:
     Allcontexttype: true
   returnType: !returnT
     Returntypefloat: true
+- !input
+  Localalias: spikeSdf
+  Variableinputs: faceOffsetField
+  coordType: !coordT
+    Coordtypevec3: true
+  contextType: !contextT
+    Contexttypecontext: true
+  returnType: !returnT
+    Returntypesdf: true

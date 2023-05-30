@@ -13,15 +13,15 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 		#ifdef THIS_EXPOSE_normstep
 		THIS_normstep = float(i) / float(n - 1);
 		#endif
-		#ifdef THIS_HAS_INPUT_crossScaleField
-		float crossScale = inputOp_crossScaleField(p0, ctx);
-		#else
-		float crossScale = THIS_Crossscale;
-		#endif
 		#ifdef THIS_HAS_INPUT_boxScaleField
 		float boxScale = inputOp_boxScaleField(p0, ctx);
 		#else
 		float boxScale = THIS_Boxscale;
+		#endif
+		#ifdef THIS_HAS_INPUT_crossScaleField
+		float crossScale = inputOp_crossScaleField(p0, ctx);
+		#else
+		float crossScale = THIS_Crossscale;
 		#endif
 		dist = max(dist, mengerCrossDist(p, crossScale, boxScale)*scale);
 		p = fract((p-1.0)*0.5) * 6.0 - 3.0;
