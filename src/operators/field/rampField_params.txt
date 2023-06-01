@@ -1,3 +1,7 @@
 names	source	handling	readOnlyHandling	conversion	enable
-Value1[xyzw] Value2[xyzw] Range1 Range2	param	runtime	macro		1
-Extendmode Axis	param	constant			1
+Value1[xyzw] Value2[xyzw]	param	runtime	macro		1
+Extendmode	param	constant			1
+Axis	param	constant			parent().par.Coordmode == 'axis'
+Range1 Range2	param	runtime	macro		parent().par.Coordmode == 'axis'
+Point1[xyz]	param	runtime	macro		parent().par.Coordmode == 'points' and op('point1_definition').numRows < 2
+Point2[xyz]	param	runtime	macro		parent().par.Coordmode == 'points' and op('point2_definition').numRows < 2
