@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.light.multiLight
-  opVersion: '5'
+  opVersion: '6'
   opStatus: beta
 opDef: !def
   enable: true
@@ -34,6 +34,7 @@ multiInput: !multiInput
   Returntypereductionscope: '*'
   inputs:
   - !input
+    Variableinputs: bounds1
     coordType: !coordT
       Allcoordtype: true
     contextType: !contextT
@@ -41,6 +42,7 @@ multiInput: !multiInput
     returnType: !returnT
       Returntypelight: true
   - !input
+    Variableinputs: bounds[1-2] inputOp1
     coordType: !coordT
       Allcoordtype: true
     contextType: !contextT
@@ -48,6 +50,7 @@ multiInput: !multiInput
     returnType: !returnT
       Returntypelight: true
   - !input
+    Variableinputs: bounds[1-3] inputOp[1-2]
     coordType: !coordT
       Allcoordtype: true
     contextType: !contextT
@@ -55,6 +58,7 @@ multiInput: !multiInput
     returnType: !returnT
       Returntypelight: true
   - !input
+    Variableinputs: bounds[1-4] inputOp[1-3]
     coordType: !coordT
       Allcoordtype: true
     contextType: !contextT
@@ -62,6 +66,7 @@ multiInput: !multiInput
     returnType: !returnT
       Returntypelight: true
   - !input
+    Variableinputs: bounds[1-5] inputOp[1-4]
     coordType: !coordT
       Allcoordtype: true
     contextType: !contextT
@@ -69,6 +74,7 @@ multiInput: !multiInput
     returnType: !returnT
       Returntypelight: true
   - !input
+    Variableinputs: bounds[1-6] inputOp[1-5]
     coordType: !coordT
       Allcoordtype: true
     contextType: !contextT
@@ -76,6 +82,7 @@ multiInput: !multiInput
     returnType: !returnT
       Returntypelight: true
   - !input
+    Variableinputs: bounds[1-7] inputOp[1-6]
     coordType: !coordT
       Allcoordtype: true
     contextType: !contextT
@@ -83,6 +90,7 @@ multiInput: !multiInput
     returnType: !returnT
       Returntypelight: true
   - !input
+    Variableinputs: bounds[1-8] inputOp[1-7]
     coordType: !coordT
       Allcoordtype: true
     contextType: !contextT
@@ -106,6 +114,7 @@ inputs:
     expr: parent().par.Bounds2 or ''
   Label: Bounds 2
   Localalias: bounds2
+  Variableinputs: bounds1 inputOp1
   coordType: !coordT
     Allcoordtype: true
   contextType: !contextT
@@ -117,6 +126,7 @@ inputs:
     expr: parent().par.Bounds3 or ''
   Label: Bounds 3
   Localalias: bounds3
+  Variableinputs: bounds[1-2] inputOp[1-2]
   coordType: !coordT
     Allcoordtype: true
   contextType: !contextT
@@ -128,6 +138,7 @@ inputs:
     expr: parent().par.Bounds4 or ''
   Label: Bounds 4
   Localalias: bounds4
+  Variableinputs: bounds[1-3] inputOp[1-3]
   coordType: !coordT
     Allcoordtype: true
   contextType: !contextT
@@ -139,6 +150,7 @@ inputs:
     expr: parent().par.Bounds5 or ''
   Label: Bounds 5
   Localalias: bounds5
+  Variableinputs: bounds[1-4] inputOp[1-4]
   coordType: !coordT
     Allcoordtype: true
   contextType: !contextT
@@ -150,6 +162,7 @@ inputs:
     expr: parent().par.Bounds6 or ''
   Label: Bounds 6
   Localalias: bounds6
+  Variableinputs: bounds[1-5] inputOp[1-5]
   coordType: !coordT
     Allcoordtype: true
   contextType: !contextT
@@ -161,6 +174,7 @@ inputs:
     expr: parent().par.Bounds7 or ''
   Label: Bounds 7
   Localalias: bounds7
+  Variableinputs: bounds[1-6] inputOp[1-6]
   coordType: !coordT
     Allcoordtype: true
   contextType: !contextT
@@ -172,6 +186,7 @@ inputs:
     expr: parent().par.Bounds8 or ''
   Label: Bounds 8
   Localalias: bounds8
+  Variableinputs: bounds[1-7] inputOp[1-7]
   coordType: !coordT
     Allcoordtype: true
   contextType: !contextT
