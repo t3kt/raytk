@@ -188,14 +188,56 @@ def _createRenderSelGroup(text: str):
 		table = ctx.primaryRopState.info.outputBufferTable
 		if not table:
 			return []
-		return [
-			_createRenderSelAction(
-				str(table[i, 'label']),
-				str(table[i, 'name']),
-				str(table[i, 'enablePar'] or ''))
-			for i in range(1, table.numRows)
-			if table[i, 'available'] != 'False'
+		actions = [
+			_ActionImpl(
+				'Depth Map',
+				ropType='raytk.operators.post.depthMap',
+				select=_OpSelect(ropTypes=[_RopTypes.raymarchRender3d]),
+				attach=_AttachOutFromExisting(inputIndex=0, outputIndex=2),
+			),
+			_ActionImpl(
+				'Object Id Mask',
+				ropType='raytk.operators.post.objectIdMask',
+				select=_OpSelect(ropTypes=[_RopTypes.raymarchRender3d]),
+				attach=_AttachOutputSelector(),
+				inits=[
+					_LinkPrimaryToParam('Outputop'),
+					_SetParamOnPrimaryRop('Enableobjectidoutput', True),
+				]
+			),
+			_ActionImpl(
+				'Near Hit Map',
+				ropType='raytk.operators.post.nearHitMap',
+				select=_OpSelect(ropTypes=[_RopTypes.raymarchRender3d]),
+				attach=_AttachOutputSelector(),
+				inits=[
+					_LinkPrimaryToParam('Outputop'),
+					_SetParamOnPrimaryRop('Enablenearhitoutput', True),
+				]
+			),
+			_ActionImpl(
+				'Step Count Map',
+				ropType='raytk.operators.post.stepMap',
+				select=_OpSelect(ropTypes=[_RopTypes.raymarchRender3d]),
+				attach=_AttachOutputSelector(),
+				inits=[
+					_LinkPrimaryToParam('Outputop'),
+					_SetParamOnPrimaryRop('Enablestepoutput', True),
+				]
+			),
 		]
+		for i in range(1, table.numRows):
+			if table[i, 'available'] == 'False':
+				continue
+			name = str(table[i, 'name'])
+			label = str(table[i, 'label'])
+			if name in ('depthOut', 'objectIdOut', 'nearHitOut', 'stepsOut'):
+				label += ' (Raw)'
+			actions.append(
+				_createRenderSelAction(label, name, str(table[i, 'enablePar'] or ''))
+			)
+		actions.sort(key=lambda a: a.text)
+		return actions
 	return _SimpleGroup(text, isValid, getActions)
 
 def _createAnimateParamAction(
@@ -621,42 +663,6 @@ def createActionManager():
 			attach=_AttachOutFromExisting()),
 		_createVarRefGroup('Reference Variable'),
 		_createRenderSelGroup('Select Output Buffer'),
-		_ActionImpl(
-			'Select Depth Map',
-			ropType='raytk.operators.post.depthMap',
-			select=_OpSelect(ropTypes=[_RopTypes.raymarchRender3d]),
-			attach=_AttachOutFromExisting(inputIndex=0, outputIndex=2),
-		),
-		_ActionImpl(
-			'Select Object Id Mask',
-			ropType='raytk.operators.post.objectIdMask',
-			select=_OpSelect(ropTypes=[_RopTypes.raymarchRender3d]),
-			attach=_AttachOutputSelector(),
-			inits=[
-				_LinkPrimaryToParam('Outputop'),
-				_SetParamOnPrimaryRop('Enableobjectidoutput', True),
-			]
-		),
-		_ActionImpl(
-			'Select Near Hit Map',
-			ropType='raytk.operators.post.nearHitMap',
-			select=_OpSelect(ropTypes=[_RopTypes.raymarchRender3d]),
-			attach=_AttachOutputSelector(),
-			inits=[
-				_LinkPrimaryToParam('Outputop'),
-				_SetParamOnPrimaryRop('Enablenearhitoutput', True),
-			]
-		),
-		_ActionImpl(
-			'Select Step Count Map',
-			ropType='raytk.operators.post.stepMap',
-			select=_OpSelect(ropTypes=[_RopTypes.raymarchRender3d]),
-			attach=_AttachOutputSelector(),
-			inits=[
-				_LinkPrimaryToParam('Outputop'),
-				_SetParamOnPrimaryRop('Enablestepoutput', True),
-			]
-		),
 		_createAnimateParamsGroup(
 			'Animate With Speed', _RopTypes.speedGenerator, 'speedGen'),
 		_createAnimateParamsGroup(
