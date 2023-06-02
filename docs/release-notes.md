@@ -19,6 +19,7 @@
   * New OP features
     * axisRotate - default to Z axis
     * crossSection - offset field input
+    * fieldRender - pixel format parameter
     * goochShadingContrib - color field inputs
     * nearestRingPointField - index variables and rotate parameter
     * pointMapRender - 3d texture output (#1072)
