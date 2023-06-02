@@ -647,6 +647,16 @@ def createActionManager():
 				_SetParamOnPrimaryRop('Enablenearhitoutput', True),
 			]
 		),
+		_ActionImpl(
+			'Select Step Count Map',
+			ropType='raytk.operators.post.stepMap',
+			select=_OpSelect(ropTypes=[_RopTypes.raymarchRender3d]),
+			attach=_AttachOutputSelector(),
+			inits=[
+				_LinkPrimaryToParam('Outputop'),
+				_SetParamOnPrimaryRop('Enablestepoutput', True),
+			]
+		),
 		_createAnimateParamsGroup(
 			'Animate With Speed', _RopTypes.speedGenerator, 'speedGen'),
 		_createAnimateParamsGroup(

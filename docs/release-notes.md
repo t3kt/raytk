@@ -13,6 +13,7 @@
     * gridClone - mergeable cloning on a grid
     * nearHitMap - convenience accessor for near hit render output (#289)
     * rescaleFloatField - simplified version of rescaleField (#1071)
+    * stepMap - helper for accessing step count output buffer (#289)
     * truncatedPyramidSdf
     * triPlanarCombine - combine fields based on surface normals, similar to triPlanarTextureField (#1079)
   * New OP features

@@ -10,3 +10,4 @@ ringLight	updated
 triPlanarCombine	new
 goochShadingContrib	updated
 rampField	updated
+stepMap	new
