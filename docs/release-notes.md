@@ -23,6 +23,7 @@
     * goochShadingContrib - color field inputs
     * nearestRingPointField - index variables and rotate parameter
     * pointMapRender - 3d texture output (#1072)
+    * radialClone - radial and angle offset field inputs
     * rampField - added endpoint mode as an alternative to axis (#752)
     * rimContrib - angle variable
     * ringLight - color field input
