@@ -5,3 +5,8 @@ pointMapRender	updated
 truncatedPyramidSdf	new
 gridClone	new
 crossSection	updated
+transform	updated
+ringLight	updated
+triPlanarCombine	new
+goochShadingContrib	updated
+rampField	updated
