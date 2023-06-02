@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.function.crossFn
-  opVersion: '8'
+  opVersion: '9'
   opStatus: default
 opDef: !def
   enable: !expr
@@ -41,6 +41,7 @@ multiInput: !multiInput
       Returntypefloat: true
       Returntypevec4: true
   - !input
+    Variableinputs: inputOp1
     Required: true
     coordType: !coordT
       Allcoordtype: true
@@ -50,6 +51,7 @@ multiInput: !multiInput
       Returntypefloat: true
       Returntypevec4: true
   - !input
+    Variableinputs: inputOp[1-2]
     coordType: !coordT
       Allcoordtype: true
     contextType: !contextT

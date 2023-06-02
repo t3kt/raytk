@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.function.addFn
-  opVersion: '9'
+  opVersion: '10'
   opStatus: default
 opDef: !def
   enable: !expr
@@ -37,6 +37,7 @@ multiInput: !multiInput
     returnType: !returnT
       Returntypefloat: true
   - !input
+    Variableinputs: inputOp1
     coordType: !coordT
       Allcoordtype: true
     contextType: !contextT
@@ -44,6 +45,7 @@ multiInput: !multiInput
     returnType: !returnT
       Returntypefloat: true
   - !input
+    Variableinputs: inputOp[1-2]
     coordType: !coordT
       Allcoordtype: true
     contextType: !contextT
@@ -51,6 +53,7 @@ multiInput: !multiInput
     returnType: !returnT
       Returntypefloat: true
   - !input
+    Variableinputs: inputOp[1-3]
     coordType: !coordT
       Allcoordtype: true
     contextType: !contextT
