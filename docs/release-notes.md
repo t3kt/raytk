@@ -29,7 +29,7 @@
     * ringLight - color field input
     * transform - field inputs (#720)
   * Snippets
-    * ...
+    * rimContrib
 * Fixes
   * Fix input variable settings and reorder inputs to match availability in many operators
   * Fix default settings for 2D render in inspector (#1073)
