@@ -37,6 +37,7 @@
   * Fix crashes caused by textureField issue with nvidia error for branched calls to texture() (#1034)
   * Fix input label in waveField
 * Changes (potentially breaking)
+  * Some inputs have been reordered, so updating OPs may cause inputs to become disconnected
 * Infrastructure / internals
   * Documentation for internals (ROP structure, shaderBuilder)
   * Remove unused global prefix code feature in shaderBuilder
