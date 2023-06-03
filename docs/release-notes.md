@@ -4,7 +4,9 @@
 
 ### Highlights
 
-* ...
+* Cloning improvements including gridClone and enhancements to radialClone
+* Helpers for simplified access to data from renderers including nearHitMap and stepMap
+* Bug fixes and lots of internal cleanup
 
 ### Details
 
