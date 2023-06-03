@@ -1,2 +1,2 @@
 names	source	handling	readOnlyHandling	conversion	enable
-Enablerotate Enabletranslate Enablescale Scaletype	param	macro			1
+Enablerotate Enabletranslate Enablescale Enablepivot Scaletype	param	macro			1

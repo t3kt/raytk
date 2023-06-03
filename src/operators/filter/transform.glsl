@@ -25,6 +25,15 @@ void THIS_transform(inout vec4 q, in CoordT p, inout ContextT ctx) {
 	scale *= fillToVec3(inputOp_scaleField(p, ctx));
 	#endif
 	#endif
+	#ifdef THIS_Enablepivot
+	#ifdef THIS_HAS_INPUT_pivotField
+	vec3 pivot = adaptAsVec3(inputOp_pivotField(p, ctx));
+	#else
+	vec3 pivot = THIS_Pivot;
+	#endif
+	#else
+	vec3 pivot = vec3(0.);
+	#endif
 
 	TRANSFORM_CODE();
 	THIS_adjust = valueAdjust;
