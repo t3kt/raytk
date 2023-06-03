@@ -31,8 +31,8 @@ op:
     - ParticleContext
     coordTypes:
     - vec3
-    label: Thickness Field
-    name: thicknessField
+    label: Angle Field
+    name: angleField
     returnTypes:
     - float
   - contextTypes:
@@ -44,8 +44,8 @@ op:
     - ParticleContext
     coordTypes:
     - vec3
-    label: Angle Field
-    name: angleField
+    label: Thickness Field
+    name: thicknessField
     returnTypes:
     - float
   name: jointSdf

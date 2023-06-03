@@ -58,8 +58,8 @@ op:
     coordTypes:
     - vec2
     - vec3
-    label: Offset Field
-    name: offsetField
+    label: Shift Field
+    name: shiftField
     returnTypes:
     - float
     - vec4
@@ -73,8 +73,8 @@ op:
     coordTypes:
     - vec2
     - vec3
-    label: Shift Field
-    name: shiftField
+    label: Offset Field
+    name: offsetField
     returnTypes:
     - float
     - vec4

@@ -21,32 +21,6 @@ op:
     - ParticleContext
     coordTypes:
     - vec3
-    label: Bias Field
-    name: biasField
-    returnTypes:
-    - float
-  - contextTypes:
-    - Context
-    - MaterialContext
-    - CameraContext
-    - LightContext
-    - RayContext
-    - ParticleContext
-    coordTypes:
-    - vec3
-    label: Thickness Field
-    name: thicknessField
-    returnTypes:
-    - float
-  - contextTypes:
-    - Context
-    - MaterialContext
-    - CameraContext
-    - LightContext
-    - RayContext
-    - ParticleContext
-    coordTypes:
-    - vec3
     label: Phase 1 Field
     name: phase1Field
     returnTypes:
@@ -66,6 +40,32 @@ op:
     returnTypes:
     - float
     - vec4
+  - contextTypes:
+    - Context
+    - MaterialContext
+    - CameraContext
+    - LightContext
+    - RayContext
+    - ParticleContext
+    coordTypes:
+    - vec3
+    label: Bias Field
+    name: biasField
+    returnTypes:
+    - float
+  - contextTypes:
+    - Context
+    - MaterialContext
+    - CameraContext
+    - LightContext
+    - RayContext
+    - ParticleContext
+    coordTypes:
+    - vec3
+    label: Thickness Field
+    name: thicknessField
+    returnTypes:
+    - float
   keywords:
   - gyroid
   - sine

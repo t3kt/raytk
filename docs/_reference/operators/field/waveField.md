@@ -94,7 +94,7 @@ op:
     - vec2
     - vec3
     - vec4
-    label: Wave Function
+    label: Amplitude Field
     name: amplitudeField
     returnTypes:
     - float

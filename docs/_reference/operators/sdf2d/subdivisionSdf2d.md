@@ -18,32 +18,6 @@ op:
     - ParticleContext
     coordTypes:
     - vec2
-    label: Shape SDF
-    name: shape
-    returnTypes:
-    - Sdf
-  - contextTypes:
-    - Context
-    - MaterialContext
-    - CameraContext
-    - LightContext
-    - RayContext
-    - ParticleContext
-    coordTypes:
-    - vec2
-    label: Pattern Shift Field
-    name: patternShiftField
-    returnTypes:
-    - float
-  - contextTypes:
-    - Context
-    - MaterialContext
-    - CameraContext
-    - LightContext
-    - RayContext
-    - ParticleContext
-    coordTypes:
-    - vec2
     label: Seed Field
     name: seedField
     returnTypes:
@@ -75,6 +49,32 @@ op:
     name: minSizeField
     returnTypes:
     - float
+  - contextTypes:
+    - Context
+    - MaterialContext
+    - CameraContext
+    - LightContext
+    - RayContext
+    - ParticleContext
+    coordTypes:
+    - vec2
+    label: Pattern Shift Field
+    name: patternShiftField
+    returnTypes:
+    - float
+  - contextTypes:
+    - Context
+    - MaterialContext
+    - CameraContext
+    - LightContext
+    - RayContext
+    - ParticleContext
+    coordTypes:
+    - vec2
+    label: Shape SDF
+    name: shape
+    returnTypes:
+    - Sdf
   name: subdivisionSdf2d
   opType: raytk.operators.sdf2d.subdivisionSdf2d
   parameters:

@@ -21,7 +21,7 @@ op:
     - vec2
     - vec3
     - vec4
-    label: 1D / 2D Input
+    label: Input
     name: definition_in
     required: true
     returnTypes:
@@ -31,6 +31,22 @@ op:
     - Ray
     - Light
     - Particle
+  - contextTypes:
+    - Context
+    - MaterialContext
+    - CameraContext
+    - LightContext
+    - RayContext
+    - ParticleContext
+    coordTypes:
+    - float
+    - vec2
+    - vec3
+    - vec4
+    label: Offset Field
+    name: offsetField
+    returnTypes:
+    - vec4
   name: crossSection
   opType: raytk.operators.convert.crossSection
   parameters:

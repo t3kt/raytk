@@ -44,6 +44,8 @@ op:
     name: Points
   - label: Center
     name: Center
+  - label: Rotate
+    name: Rotate
   - label: Format
     menuOptions:
     - label: Distance
@@ -64,5 +66,9 @@ op:
     name: dist
   - label: vector
     name: vector
+  - label: step
+    name: step
+  - label: normstep
+    name: normstep
 
 ---

@@ -18,10 +18,10 @@ op:
     - ParticleContext
     coordTypes:
     - vec3
-    label: Vertex Shape
-    name: vertexShape
+    label: Radius Field
+    name: radiusField
     returnTypes:
-    - Sdf
+    - float
   - contextTypes:
     - Context
     - MaterialContext
@@ -31,10 +31,10 @@ op:
     - ParticleContext
     coordTypes:
     - vec3
-    label: Radius Field
-    name: radiusField
+    label: UVW Field
+    name: uvwField
     returnTypes:
-    - float
+    - vec4
   - contextTypes:
     - Context
     - MaterialContext
@@ -109,10 +109,10 @@ op:
     - ParticleContext
     coordTypes:
     - vec3
-    label: UVW Field
-    name: uvwField
+    label: Vertex Shape
+    name: vertexShape
     returnTypes:
-    - vec4
+    - Sdf
   name: polyhedronSdf
   opType: raytk.operators.sdf.polyhedronSdf
   parameters:

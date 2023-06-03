@@ -19,10 +19,11 @@ op:
     coordTypes:
     - vec2
     - vec3
-    label: Thickness Field
-    name: thicknessField
+    label: Spacing Field
+    name: spacingField
     returnTypes:
     - float
+    - vec4
   - contextTypes:
     - Context
     - MaterialContext
@@ -33,11 +34,10 @@ op:
     coordTypes:
     - vec2
     - vec3
-    label: Spacing Field
-    name: spacingField
+    label: Thickness Field
+    name: thicknessField
     returnTypes:
     - float
-    - vec4
   keywords:
   - bars
   - grid

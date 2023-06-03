@@ -34,7 +34,7 @@ op:
     - vec2
     - vec3
     label: Size Field
-    name: tilingShiftField
+    name: sizeField
     returnTypes:
     - float
   - contextTypes:

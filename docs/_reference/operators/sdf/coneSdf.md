@@ -18,10 +18,10 @@ op:
     - ParticleContext
     coordTypes:
     - vec3
-    label: Height Field
-    name: heightField
+    label: Base Position Field
+    name: baseField
     returnTypes:
-    - float
+    - vec4
     summary: Value field that can be used to vary the height of the cone.
   - contextTypes:
     - Context
@@ -32,8 +32,8 @@ op:
     - ParticleContext
     coordTypes:
     - vec3
-    label: Radius Field
-    name: radiusField
+    label: Height Field
+    name: heightField
     returnTypes:
     - float
     summary: Value field that can be used to vary the radius (both base and top) of
@@ -47,8 +47,8 @@ op:
     - ParticleContext
     coordTypes:
     - vec3
-    label: Base Position Field
-    name: baseField
+    label: Top Position Field
+    name: topField
     returnTypes:
     - vec4
   - contextTypes:
@@ -60,10 +60,10 @@ op:
     - ParticleContext
     coordTypes:
     - vec3
-    label: Top Position Field
-    name: topField
+    label: Radius Field
+    name: radiusField
     returnTypes:
-    - vec4
+    - float
   name: coneSdf
   opType: raytk.operators.sdf.coneSdf
   parameters:

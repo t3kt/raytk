@@ -18,8 +18,8 @@ op:
     - ParticleContext
     coordTypes:
     - vec2
-    label: Radius Field
-    name: radiusField
+    label: Angle Field
+    name: angleField
     returnTypes:
     - float
   - contextTypes:
@@ -31,8 +31,8 @@ op:
     - ParticleContext
     coordTypes:
     - vec2
-    label: Thickness Field
-    name: thicknessField
+    label: Radius Field
+    name: radiusField
     returnTypes:
     - float
   - contextTypes:
@@ -57,8 +57,8 @@ op:
     - ParticleContext
     coordTypes:
     - vec2
-    label: Angle Field
-    name: angleField
+    label: Thickness Field
+    name: thicknessField
     returnTypes:
     - float
   name: horseshoeSdf2d

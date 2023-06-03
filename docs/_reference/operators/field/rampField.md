@@ -21,32 +21,60 @@ op:
     - vec2
     - vec3
     - vec4
-    label: definition_in
-    name: definition_in
+    label: Coordinate Field
+    name: coordField
     required: true
     returnTypes:
     - float
     - vec4
-    - Sdf
-    - Ray
-    - Light
-    - Particle
+  - contextTypes:
+    - Context
+    - MaterialContext
+    - CameraContext
+    - LightContext
+    - RayContext
+    - ParticleContext
+    coordTypes:
+    - float
+    - vec2
+    - vec3
+    - vec4
+    label: Point 1 Field
+    name: point1Field
+    required: true
+    returnTypes:
+    - float
+    - vec4
+  - contextTypes:
+    - Context
+    - MaterialContext
+    - CameraContext
+    - LightContext
+    - RayContext
+    - ParticleContext
+    coordTypes:
+    - float
+    - vec2
+    - vec3
+    - vec4
+    label: Point 2 Field
+    name: point2Field
+    required: true
+    returnTypes:
+    - float
+    - vec4
   name: rampField
   opType: raytk.operators.field.rampField
   parameters:
   - label: Enable
     name: Enable
-  - label: Coord Type
+  - label: Coordinate Mode
     menuOptions:
-    - label: Auto
-      name: auto
-    - label: 1D
-      name: float
-    - label: 2D
-      name: vec2
-    - label: 3D
-      name: vec3
-    name: Coordtype
+    - label: Axis
+      name: axis
+    - label: Endpoints
+      name: points
+    name: Coordmode
   - label: Axis
     menuOptions:
     - label: X
@@ -58,19 +86,12 @@ op:
     - label: Distance From Origin
       name: dist
     name: Axis
-  - label: Return Type
-    menuOptions:
-    - label: Float
-      name: float
-    - label: Vector
-      name: vec4
-    name: Returntype
-  - label: Value 1
-    name: Value1
-  - label: Value 2
-    name: Value2
   - label: Coordinate Range
     name: Range
+  - label: Point 1
+    name: Point1
+  - label: Point 2
+    name: Point2
   - label: Extend Mode
     menuOptions:
     - label: Hold
@@ -82,6 +103,28 @@ op:
     - label: Mirror
       name: mirror
     name: Extendmode
+  - label: Return Type
+    menuOptions:
+    - label: Float
+      name: float
+    - label: Vector
+      name: vec4
+    name: Returntype
+  - label: Value 1
+    name: Value1
+  - label: Value 2
+    name: Value2
+  - label: Coord Type
+    menuOptions:
+    - label: Auto
+      name: auto
+    - label: 1D
+      name: float
+    - label: 2D
+      name: vec2
+    - label: 3D
+      name: vec3
+    name: Coordtype
   status: beta
   thumb: assets/images/reference/operators/field/rampField_thumb.png
 

@@ -41,8 +41,8 @@ op:
     coordTypes:
     - vec2
     - vec3
-    label: Center Field
-    name: centerField
+    label: Size Field
+    name: sizeField
     returnTypes:
     - vec4
   - contextTypes:
@@ -55,8 +55,8 @@ op:
     coordTypes:
     - vec2
     - vec3
-    label: Size Field
-    name: sizeField
+    label: Center Field
+    name: centerField
     returnTypes:
     - vec4
   keywords:

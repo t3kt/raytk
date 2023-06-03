@@ -63,6 +63,8 @@ cat:
     name: switch
     summary: Switches between several inputs, without the need to rebuild the shader,
       allowing for fast switching.
+  - name: triPlanarCombine
+    status: beta
   summary: 'Operators that take two or more inputs and combine them into a single
 
     output.'
