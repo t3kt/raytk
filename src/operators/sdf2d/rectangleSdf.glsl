@@ -1,11 +1,11 @@
 ReturnT thismap(CoordT p, ContextT ctx) {
-	CoordT t = THIS_Translate;
-	CoordT s = THIS_Scale;
+	vec2 t = THIS_Translate;
+	vec2 s = THIS_Scale;
 	#ifdef THIS_HAS_INPUT_scaleField
-	s *= THIS_asCoordT(inputOp_scaleField(p, ctx));
+	s *= fillToVec2(inputOp_scaleField(p, ctx));
 	#endif
 	#ifdef THIS_HAS_INPUT_translateField
-	t += THIS_asCoordT(inputOp_translateField(p, ctx));
+	t += adaptAsVec2(inputOp_translateField(p, ctx));
 	#endif
 	p -= t;
 	vec2 d = abs(p)-s;
