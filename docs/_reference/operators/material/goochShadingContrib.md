@@ -17,6 +17,34 @@ op:
 
 
     This is equivalent to the `goochMat`, for use in a modular material.'
+  inputs:
+  - contextTypes:
+    - MaterialContext
+    coordTypes:
+    - vec3
+    label: Base Color Field
+    name: baseColorField
+    returnTypes:
+    - float
+    - vec4
+  - contextTypes:
+    - MaterialContext
+    coordTypes:
+    - vec3
+    label: Warm Color Field
+    name: warmColorField
+    returnTypes:
+    - float
+    - vec4
+  - contextTypes:
+    - MaterialContext
+    coordTypes:
+    - vec3
+    label: Cool Color Field
+    name: coolColorField
+    returnTypes:
+    - float
+    - vec4
   name: goochShadingContrib
   opType: raytk.operators.material.goochShadingContrib
   parameters:

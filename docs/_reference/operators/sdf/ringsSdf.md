@@ -17,8 +17,34 @@ op:
     - RayContext
     - ParticleContext
     coordTypes:
+    - vec3
+    label: Spacing Field
+    name: spacingField
+    returnTypes:
+    - float
+  - contextTypes:
+    - Context
+    - MaterialContext
+    - CameraContext
+    - LightContext
+    - RayContext
+    - ParticleContext
+    coordTypes:
+    - vec3
+    label: Shift Field
+    name: shiftField
+    returnTypes:
+    - float
+  - contextTypes:
+    - Context
+    - MaterialContext
+    - CameraContext
+    - LightContext
+    - RayContext
+    - ParticleContext
+    coordTypes:
     - vec2
-    label: Cross Section Shape
+    label: Cross Section Shape SDF
     name: crossSection
     returnTypes:
     - float
@@ -32,33 +58,7 @@ op:
     - ParticleContext
     coordTypes:
     - vec3
-    label: Spacing
-    name: spacingField
-    returnTypes:
-    - float
-  - contextTypes:
-    - Context
-    - MaterialContext
-    - CameraContext
-    - LightContext
-    - RayContext
-    - ParticleContext
-    coordTypes:
-    - vec3
-    label: Shift
-    name: shiftField
-    returnTypes:
-    - float
-  - contextTypes:
-    - Context
-    - MaterialContext
-    - CameraContext
-    - LightContext
-    - RayContext
-    - ParticleContext
-    coordTypes:
-    - vec3
-    label: Thickness
+    label: Thickness Field
     name: thicknessField
     returnTypes:
     - float

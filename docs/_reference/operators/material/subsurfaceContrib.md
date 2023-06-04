@@ -8,28 +8,6 @@ redirect_from:
   - /reference/opType/raytk.operators.material.subsurfaceContrib/
 op:
   category: material
-  inputs:
-  - contextTypes:
-    - Context
-    - MaterialContext
-    - CameraContext
-    - LightContext
-    - RayContext
-    - ParticleContext
-    coordTypes:
-    - float
-    - vec2
-    - vec3
-    - vec4
-    label: definition_in
-    name: definition_in
-    returnTypes:
-    - float
-    - vec4
-    - Sdf
-    - Ray
-    - Light
-    - Particle
   name: subsurfaceContrib
   opType: raytk.operators.material.subsurfaceContrib
   parameters:

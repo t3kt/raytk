@@ -18,8 +18,8 @@ op:
     - ParticleContext
     coordTypes:
     - vec3
-    label: Radius Field
-    name: radiusField
+    label: Height Field
+    name: heightField
     returnTypes:
     - float
     summary: Optional field used to control the radius of the cylinder. If it uses
@@ -34,8 +34,8 @@ op:
     - ParticleContext
     coordTypes:
     - vec3
-    label: Height Field
-    name: heightField
+    label: Radius Field
+    name: radiusField
     returnTypes:
     - float
   - contextTypes:

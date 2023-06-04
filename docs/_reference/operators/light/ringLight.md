@@ -8,6 +8,16 @@ redirect_from:
   - /reference/opType/raytk.operators.light.ringLight/
 op:
   category: light
+  inputs:
+  - contextTypes:
+    - LightContext
+    coordTypes:
+    - vec3
+    label: Color Field
+    name: colorField
+    returnTypes:
+    - float
+    - vec4
   name: ringLight
   opType: raytk.operators.light.ringLight
   parameters:

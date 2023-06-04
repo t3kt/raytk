@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.light.lightVolume
-  opVersion: '7'
+  opVersion: '8'
   opStatus: beta
 opDef: !def
   enable: true
@@ -32,6 +32,7 @@ inputs:
     Returntypesdf: true
 - !input
   Localalias: colorField
+  Variableinputs: boundVolume
   coordType: !coordT
     Coordtypevec3: true
   contextType: !contextT

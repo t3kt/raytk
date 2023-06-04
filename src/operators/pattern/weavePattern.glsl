@@ -7,15 +7,15 @@ float THIS_s(float x, float y, float th) {
 }
 
 ReturnT thismap(CoordT p, ContextT ctx) {
-	#ifdef THIS_HAS_INPUT_thicknessField
-	float th = adaptAsFloat(inputOp_thicknessField(p, ctx));
-	#else
-	float th = THIS_Thickness;
-	#endif
 	#ifdef THIS_HAS_INPUT_coordField
 	vec2 q = adaptAsVec2(inputOp_coordField(p, ctx));
 	#else
 	vec2 q = adaptAsVec2(p);
+	#endif
+	#ifdef THIS_HAS_INPUT_thicknessField
+	float th = adaptAsFloat(inputOp_thicknessField(p, ctx));
+	#else
+	float th = THIS_Thickness;
 	#endif
 	q -= THIS_Translate;
 	q /= THIS_Size;

@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.sdf.boxFrameSdf
-  opVersion: '16'
+  opVersion: '17'
   opStatus: default
 opDef: !def
   enable: true
@@ -38,6 +38,7 @@ inputs:
     Returntypevec4: true
 - !input
   Localalias: thicknessField
+  Variableinputs: scaleField
   coordType: !coordT
     Coordtypevec3: true
   contextType: !contextT

@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.sdf.pyramidSdf
-  opVersion: '11'
+  opVersion: '12'
   opStatus: default
 opDef: !def
   enable: true
@@ -16,6 +16,8 @@ opDef: !def
     file: src/operators/sdf/pyramidSdf.glsl
     name: functionTemplate
   paramGroupTable: eval_params
+  libraryNames: !expr
+    expr: op('pyramidSdf_lib')
   help: !text
     file: src/operators/sdf/pyramidSdf.md
     name: help
@@ -30,6 +32,7 @@ inputs:
     Returntypefloat: true
 - !input
   Localalias: widthField
+  Variableinputs: heightField
   coordType: !coordT
     Coordtypevec3: true
   contextType: !contextT

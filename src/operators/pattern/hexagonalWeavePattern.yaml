@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.pattern.hexagonalWeavePattern
-  opVersion: '9'
+  opVersion: '10'
   opStatus: default
 opDef: !def
   enable: true
@@ -36,6 +36,7 @@ inputs:
     Returntypevec4: true
 - !input
   Localalias: thicknessField
+  Variableinputs: coordField
   coordType: !coordT
     Coordtypevec2: true
     Coordtypevec3: true
@@ -45,7 +46,7 @@ inputs:
     Returntypefloat: true
 - !input
   Localalias: blendingField
-  Variableinputs: thicknessField
+  Variableinputs: coordField thicknessField
   coordType: !coordT
     Coordtypevec2: true
     Coordtypevec3: true
@@ -56,7 +57,7 @@ inputs:
 - !input
   Localalias: color1Field
   Variables: '*'
-  Variableinputs: thicknessField blendingField coordField
+  Variableinputs: coordField thicknessField blendingField
   coordType: !coordT
     Coordtypevec2: true
     Coordtypevec3: true
@@ -68,7 +69,7 @@ inputs:
 - !input
   Localalias: color2Field
   Variables: '*'
-  Variableinputs: thicknessField blendingField coordField color1Field
+  Variableinputs: coordField thicknessField blendingField color1Field
   coordType: !coordT
     Coordtypevec2: true
     Coordtypevec3: true
@@ -80,7 +81,7 @@ inputs:
 - !input
   Localalias: bgColorField
   Variables: '*'
-  Variableinputs: thicknessField blendingField coordField color1Field bgColorField
+  Variableinputs: coordField thicknessField blendingField color1Field color2Field
   coordType: !coordT
     Coordtypevec2: true
     Coordtypevec3: true

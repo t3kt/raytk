@@ -17,20 +17,6 @@ op:
     - RayContext
     - ParticleContext
     coordTypes:
-    - float
-    - vec3
-    label: Radius Field
-    name: radiusField
-    returnTypes:
-    - float
-  - contextTypes:
-    - Context
-    - MaterialContext
-    - CameraContext
-    - LightContext
-    - RayContext
-    - ParticleContext
-    coordTypes:
     - vec3
     label: Point 1 Field
     name: point1Field
@@ -62,6 +48,20 @@ op:
     name: point3Field
     returnTypes:
     - vec4
+  - contextTypes:
+    - Context
+    - MaterialContext
+    - CameraContext
+    - LightContext
+    - RayContext
+    - ParticleContext
+    coordTypes:
+    - float
+    - vec3
+    label: Radius Field
+    name: radiusField
+    returnTypes:
+    - float
   keywords:
   - bezier
   - curve

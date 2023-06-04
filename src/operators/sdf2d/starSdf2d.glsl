@@ -4,17 +4,17 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 	THIS_normangle = atan(p.y, p.x) / TAU + 0.5;
 	#endif
 	float r = THIS_Radius;
+	#ifdef THIS_HAS_INPUT_radiusField
+	r *= inputOp_radiusField(p, ctx);
+	#endif
+	float t = THIS_Tightness;
+	#ifdef THIS_HAS_INPUT_tightnessField
+	t *= inputOp_tightnessField(p, ctx);
+	#endif
 	#ifdef THIS_HAS_INPUT_pointsField
 	float n = inputOp_pointsField(p, ctx);
 	#else
 	float n = THIS_Points;
-	#endif
-	float t = THIS_Tightness;
-	#ifdef THIS_HAS_INPUT_radiusField
-	r *= inputOp_radiusField(p, ctx);
-	#endif
-	#ifdef THIS_HAS_INPUT_tightnessField
-	t *= inputOp_tightnessField(p, ctx);
 	#endif
 	float m = mapRange(t, 0., 1., 2., n);
 	// next 4 lines can be precomputed for a given shape

@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.sdf2d.subdivisionSdf2d
-  opVersion: '4'
+  opVersion: '5'
   opStatus: beta
 opDef: !def
   enable: true
@@ -25,24 +25,6 @@ opDef: !def
       cols: enable
 inputs:
 - !input
-  Localalias: shape
-  Variables: '*'
-  coordType: !coordT
-    Coordtypevec2: true
-  contextType: !contextT
-    Allcontexttype: true
-  returnType: !returnT
-    Returntypesdf: true
-- !input
-  Localalias: patternShiftField
-  Variables: '*'
-  coordType: !coordT
-    Coordtypevec2: true
-  contextType: !contextT
-    Allcontexttype: true
-  returnType: !returnT
-    Returntypefloat: true
-- !input
   Localalias: seedField
   Variables: '*'
   coordType: !coordT
@@ -54,6 +36,7 @@ inputs:
 - !input
   Localalias: sizeField
   Variables: '*'
+  Variableinputs: seedField
   coordType: !coordT
     Coordtypevec2: true
   contextType: !contextT
@@ -64,9 +47,30 @@ inputs:
 - !input
   Localalias: minSizeField
   Variables: '*'
+  Variableinputs: seedField sizeField
   coordType: !coordT
     Coordtypevec2: true
   contextType: !contextT
     Allcontexttype: true
   returnType: !returnT
     Returntypefloat: true
+- !input
+  Localalias: patternShiftField
+  Variables: '*'
+  Variableinputs: seedField sizeField minSizeField
+  coordType: !coordT
+    Coordtypevec2: true
+  contextType: !contextT
+    Allcontexttype: true
+  returnType: !returnT
+    Returntypefloat: true
+- !input
+  Localalias: shape
+  Variables: '*'
+  Variableinputs: seedField sizeField minSizeField patternShiftField
+  coordType: !coordT
+    Coordtypevec2: true
+  contextType: !contextT
+    Allcontexttype: true
+  returnType: !returnT
+    Returntypesdf: true

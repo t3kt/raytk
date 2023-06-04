@@ -87,6 +87,16 @@ int resultMaterial1(Sdf res) { return int(res.mat.x); }
 int resultMaterial2(Sdf res) { return int(res.mat.y); }
 float resultMaterialInterp(Sdf res) { return res.mat.z; }
 bool resultHasMaterial(Sdf res) { return res.mat.x >= 0. || res.mat.y >= 0.; }
+bool resultCheckRefraction(Sdf res, out float ior) {
+	#ifdef RAYTK_REFRACT_IN_SDF
+	if (res.refract) {
+		ior = res.ior;
+		return true;
+	}
+	#endif
+	ior = 1.0;
+	return false;
+}
 
 Sdf createSdf(float dist) {
 	Sdf res;

@@ -61,6 +61,20 @@ op:
     coordTypes:
     - vec2
     - vec3
+    label: Curve Field
+    name: curveField
+    returnTypes:
+    - float
+  - contextTypes:
+    - Context
+    - MaterialContext
+    - CameraContext
+    - LightContext
+    - RayContext
+    - ParticleContext
+    coordTypes:
+    - vec2
+    - vec3
     label: Path Color Field / Custom Color Field
     name: pathColorField
     returnTypes:
@@ -81,20 +95,6 @@ op:
     returnTypes:
     - float
     - vec4
-  - contextTypes:
-    - Context
-    - MaterialContext
-    - CameraContext
-    - LightContext
-    - RayContext
-    - ParticleContext
-    coordTypes:
-    - vec2
-    - vec3
-    label: Curve Field
-    name: curveField
-    returnTypes:
-    - float
   name: truchetPattern
   opType: raytk.operators.pattern.truchetPattern
   parameters:

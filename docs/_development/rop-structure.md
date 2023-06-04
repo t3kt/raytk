@@ -54,28 +54,44 @@ It includes settings that define the properties of the ROP.
 
 ## Generated Definition tables
 
-Inside each ROP, an `opDefinition` COMP is used to construct the definition.
+The `opDefinition` component produces a definition table row with the main properties of the ROP, added to the combined rows of the attached inputs of the ROP.
 
-A definition contains:
+There are several categories of information about a ROP, produced by the `opDefinition`:
 
-* `name`: globally unique name for the ROP, based on the path.
-* `path`: path to the ROP.
-* `opType`: identifies the type of ROP, and is derived from the path of the clone master used to create a ROP.
-* `opVersion`: version of that particular type of ROP.
-* `functionPath`: path to a text DAT containing the main chunk of code.
-* `paramSource`: path to a CHOP containing the values of the parameters for the ROP.
-* `paramTable`: path to a table listing the globally unique names of the ROP's individual parameters.
-* `paramTupletTable`: path to a table with details about the parameters, organized into tuplets.
-* `materialTable`: path to a table listing out the material identifiers used by the ROP.
-* `macroTable`: path to a table with preprocessor macros used by the ROP's code.
-* `textureTable`: path to a table listing out texture sources used by the ROP.
-* `libraryNames`: names or paths of shared libraries that the ROP depends on.
-* `initPath`: path to a text DAT with initialization code that the ROP needs to run before its other code is used.
-* `opGlobalsPath`: path to a text DAT with declarations of global variables used by the ROP (generally initialized using the code from the `initPath`).
-* `coordType`: the type of coordinates that the ROP's function accepts.
-* `returnType`: the type of value the that the ROP's function returns.
-* `contextType`: the type of context that the ROP's function expects along with the coordinates.
-* `inputNames`: the names of other ROPs that this ROP's function calls.
+* Inline definition table fields
+  * These are included in the row that's output by the ROP.
+  * They're also included in the full definition table within the `opDefinition`, along with additional fields.
+  * They are the core propreties of the ROP, along with paths to other OPs that contain other categories of information.
+  * `name`: globally unique name for the ROP, based on the path.
+  * `path`: path to the ROP.
+  * `opType`: identifies the type of ROP, and is derived from the path of the clone master used to create a ROP.
+  * `coordType`: the type of coordinates that the ROP's function accepts.
+  * `returnType`: the type of value the that the ROP's function returns.
+  * `contextType`: the type of context that the ROP's function expects along with the coordinates.
+  * `tags`: indicators that the OP uses certain features like shadows or surface colors.
+  * `definitionPath`: path to the DAT that contains the full table of ROP properties.
+  * `statePath`: path to the DAT that contains the JSON-serialized `RopState`.
+* Local definition table fields
+  * These are only included within a single-ROP table inside the `opDefinition`.
+  * `opVersion`: version of that particular type of ROP.
+  * `toolkitVersion`: version of the toolkit. This is used for validation.
+  * `paramSource`: path to the CHOP that holds the values of runtime parameters.
+  * `constantParamSource`: path to the CHOP that holds the values of specialization constant parameters. These are processed separately from runtime parameters to avoid unnecessary cooking.
+  * `paramVectors`: path to a CHOP with the runtime parameters, rearranged into 4 vector channels. This will eventually be used to avoid having to reorder all the parameters in `shaderBuilder`.
+  * `paramTable`: path to a DAT that contains definitions of all the ROP's parameters.
+  * `paramTupletTable`: path to a DAT that contains the definitions of the ROP's parameters, organized into 4-part tuplets.
+  * `libraryNames`: names of common shared GLSL libraries and/or paths to ROP-local libraries.
+  * `elementTable`: path to the DAT that holds information about the ROP's [elements](/raytk/developer/rop-elements/).
+  * `inputNames`: the names of other ROPs that this ROP's function calls.
+* `RopState`
+  * This is a structured object stored as JSON in a DAT inside the `opDefinition`.
+  * It holds prepared blocks of code.
+  * It also holds more complex data like lists.
+  * The `shaderBuilder` loads the object from the JSON while generating shader code and supporting tables.
+* Value CHOPs
+  * These hold the current values of the ROP's parameters.
+  * The `shaderBuilder` combines the channels from these for all ROPs in the scene to pass in as uniforms and/or specialization constants.
+  * The values for specialization constants are stored in a separate CHOP than those used as runtime parameters, so that changes to runtime parameters don't cause things related to specialization constants to cook.
 
 ## ROP Functions and GLSL Types
 

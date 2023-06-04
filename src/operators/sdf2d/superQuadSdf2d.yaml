@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.sdf2d.superQuadSdf2d
-  opVersion: '6'
+  opVersion: '7'
   opStatus: default
 opDef: !def
   enable: true
@@ -27,6 +27,7 @@ inputs:
     Returntypefloat: true
 - !input
   Localalias: exponentField
+  Variableinputs: radiusField
   coordType: !coordT
     Coordtypevec2: true
   contextType: !contextT

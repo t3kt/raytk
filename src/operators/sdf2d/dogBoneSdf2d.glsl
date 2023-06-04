@@ -2,15 +2,15 @@
 // https://www.shadertoy.com/view/wld3D4
 
 ReturnT thismap(CoordT p, ContextT ctx) {
-	#ifdef THIS_HAS_INPUT_lengthField
-	float w = inputOp_lengthField(p, ctx) * 0.5;
-	#else
-	float w = THIS_Length * 0.5;
-	#endif
 	#ifdef THIS_HAS_INPUT_radiusField
 	float r = inputOp_radiusField(p, ctx);
 	#else
 	float r = THIS_Radius;
+	#endif
+	#ifdef THIS_HAS_INPUT_lengthField
+	float w = inputOp_lengthField(p, ctx) * 0.5;
+	#else
+	float w = THIS_Length * 0.5;
 	#endif
 	#ifdef THIS_HAS_INPUT_bulgeField
 	float b = -inputOp_bulgeField(p, ctx);

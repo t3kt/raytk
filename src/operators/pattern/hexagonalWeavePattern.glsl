@@ -24,6 +24,11 @@ float THIS_getMask( vec2 p, float thickness) {
 }
 
 ReturnT thismap(CoordT p, ContextT ctx) {
+	#ifdef THIS_HAS_INPUT_coordField
+	vec2 q = adaptAsVec2(inputOp_coordField(p, ctx));
+	#else
+	vec2 q = adaptAsVec2(p);
+	#endif
 	#ifdef THIS_HAS_INPUT_thicknessField
 	float thickness = adaptAsFloat(inputOp_thicknessField(p, ctx));
 	#else
@@ -33,11 +38,6 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 	float b = adaptAsFloat(inputOp_blendingField(p, ctx));
 	#else
 	float b = THIS_Blending;
-	#endif
-	#ifdef THIS_HAS_INPUT_coordField
-	vec2 q = adaptAsVec2(inputOp_coordField(p, ctx));
-	#else
-	vec2 q = adaptAsVec2(p);
 	#endif
 	q -= THIS_Translate;
 	q /= THIS_Size;

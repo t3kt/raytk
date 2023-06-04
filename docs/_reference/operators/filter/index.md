@@ -76,6 +76,8 @@ cat:
   - name: geometricSeriesSquareTile
     status: beta
     summary: Repeats space in a square arrangement that gets smaller in the center.
+  - name: gridClone
+    status: beta
   - name: hilbertCurveTransform
     status: beta
   - keywords:
@@ -231,6 +233,8 @@ cat:
     shortcuts:
     - rf
     summary: Rescales the values produced by a field.
+  - name: rescaleFloatField
+    status: beta
   - name: reshapeValues
     status: beta
     summary: Reshapes the values produced by a field by applying a function.

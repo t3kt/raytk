@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.field.rampField
-  opVersion: '1'
+  opVersion: '2'
   opStatus: beta
 opDef: !def
   enable: !expr
@@ -34,10 +34,48 @@ opDef: !def
   displayCategory: Spatial Field
 inputs:
 - !input
+  Localalias: coordField
   Required: true
   coordType: !coordT
     Allcoordtype: true
   contextType: !contextT
     Allcontexttype: true
   returnType: !returnT
-    Allreturntype: true
+    Returntypefloat: true
+    Returntypevec4: true
+- !input
+  Localalias: point1Field
+  Required: true
+  coordType: !coordT
+    Allcoordtype: true
+  contextType: !contextT
+    Allcontexttype: true
+  returnType: !returnT
+    Returntypefloat: true
+    Returntypevec4: true
+- !input
+  Localalias: point2Field
+  Required: true
+  coordType: !coordT
+    Allcoordtype: true
+  contextType: !contextT
+    Allcontexttype: true
+  returnType: !returnT
+    Returntypefloat: true
+    Returntypevec4: true
+elements:
+- !opElement
+  name: codeSwitcher_Coordmode
+  elementType: codeSwitcher
+  params:
+    Elementroot: ''
+    Table: !table
+      file: src/operators/field/rampField_coordModes.txt
+      name: coordModes
+    Param: Coordmode
+    Autoupdateparams: true
+    Manageparamstates: false
+    Alwaysincludeallparams: false
+    Switchmode: none
+    Indexexpr: ''
+    Placeholder: ''

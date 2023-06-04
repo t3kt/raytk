@@ -18,19 +18,6 @@ op:
     - ParticleContext
     coordTypes:
     - vec3
-    label: Step Offset Field
-    name: stepOffsetField
-    returnTypes:
-    - vec4
-  - contextTypes:
-    - Context
-    - MaterialContext
-    - CameraContext
-    - LightContext
-    - RayContext
-    - ParticleContext
-    coordTypes:
-    - vec3
     label: Box Scale Field
     name: boxScaleField
     returnTypes:
@@ -48,6 +35,19 @@ op:
     name: crossScaleField
     returnTypes:
     - float
+  - contextTypes:
+    - Context
+    - MaterialContext
+    - CameraContext
+    - LightContext
+    - RayContext
+    - ParticleContext
+    coordTypes:
+    - vec3
+    label: Step Offset Field
+    name: stepOffsetField
+    returnTypes:
+    - vec4
   name: mengerSpongeSdf
   opType: raytk.operators.sdf.mengerSpongeSdf
   parameters:

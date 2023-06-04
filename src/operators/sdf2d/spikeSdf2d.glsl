@@ -6,12 +6,12 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 	CONVERSION();
 
 	q -= vec2(THIS_Center, THIS_Offset);
-	#ifdef THIS_HAS_INPUT_offsetField
-	q.y -= inputOp_offsetField(p, ctx);
-	#endif
 	float h = THIS_Height;
 	#ifdef THIS_HAS_INPUT_heightField
 	h *= inputOp_heightField(p, ctx);
+	#endif
+	#ifdef THIS_HAS_INPUT_offsetField
+	q.y -= inputOp_offsetField(p, ctx);
 	#endif
 	float d = q.y - (h*0.1)/(abs(q.x)+0.1);
 	d = min(d, length(q - vec2(0., min(h, q.y))));

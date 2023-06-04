@@ -1,0 +1,4 @@
+name	label	code
+add	Add Axes	res = valXY + valYZ + valZX;
+max	Maximum Axes	res = max(valXY, max(valYZ, valZX));
+avg	Average Axes	res = (valXY + valYZ + valZX) / 3.;

@@ -1,0 +1,5 @@
+!rcomp
+meta: !meta
+  opType: raytk.operators.post.stepMap
+  opVersion: '0'
+  opStatus: default

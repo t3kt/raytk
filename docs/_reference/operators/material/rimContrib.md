@@ -66,5 +66,8 @@ op:
     name: Blending
   status: beta
   thumb: assets/images/reference/operators/material/rimContrib_thumb.png
+  variables:
+  - label: normangle
+    name: normangle
 
 ---

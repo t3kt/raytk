@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.convert.crossSection
-  opVersion: '6'
+  opVersion: '8'
   opStatus: default
 opDef: !def
   enable: !expr
@@ -32,6 +32,14 @@ inputs:
     Allcontexttype: true
   returnType: !returnT
     Allreturntype: true
+- !input
+  Localalias: offsetField
+  coordType: !coordT
+    Allcoordtype: true
+  contextType: !contextT
+    Allcontexttype: true
+  returnType: !returnT
+    Returntypevec4: true
 elements:
 - !opElement
   name: codeSwitcher_Axes

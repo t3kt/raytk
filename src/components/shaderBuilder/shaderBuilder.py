@@ -21,9 +21,10 @@ if False:
 		Includemode: StrParamT
 
 	class _OwnerCompPar(_ConfigPar):
-		Globalprefix: DatParamT
 		Predeclarations: DatParamT
 		Textureindexoffset: IntParamT
+		Texture3dindexoffset: IntParamT
+		Texture2darrayindexoffset: IntParamT
 		Libraries: StrParamT
 		Bodytemplate: DatParamT
 		Outputbuffertable: DatParamT
@@ -705,7 +706,6 @@ class _Writer:
 		if self.defTable.numRows < 2:
 			self._writeLine('#error No input definition')
 			return
-		self._writeCodeDat('globalPrefix', self.ownerComp.par.Globalprefix.eval())
 		self._writeGlobalDecls()
 		self._writeOpDataTypedefs()
 		self._writeMacroBlock()
@@ -795,12 +795,11 @@ class _Writer:
 	def _writeTextureDeclarations(self):
 		if not self.textures:
 			return
-		offset = int(self.ownerComp.par.Textureindexoffset)
 		indexByType: 'Dict[str, int]' = {
-			'2d': offset,
-			'3d': 0,
+			'2d': int(self.ownerComp.par.Textureindexoffset),
+			'3d': int(self.ownerComp.par.Texture3dindexoffset),
 			'cube': 0,
-			'2darray': 0,
+			'2darray': int(self.ownerComp.par.Texture2darrayindexoffset),
 		}
 		arrayByType = {
 			'2d': 'sTD2DInputs',

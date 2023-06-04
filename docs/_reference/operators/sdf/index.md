@@ -223,6 +223,7 @@ cat:
     - torus
     name: torusSdf
     summary: SDF for a torus.
+  - name: truncatedPyramidSdf
   summary: 'Signed distances functions which define geometry in 3D space, by calculating
 
     the distance from the surface of the shape at any given point.'

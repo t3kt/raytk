@@ -10,20 +10,20 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 	q -= THIS_Translate;
 	q /= THIS_Size;
 
-	#ifdef THIS_HAS_INPUT_spreadField
-	vec2 spr = fillToVec2(inputOp_spreadField(p, ctx))*0.01;
+	#ifdef THIS_HAS_INPUT_glowField
+	float g = adaptAsFloat(inputOp_glowField(p, ctx))* 0.01;
 	#else
-	vec2 spr = THIS_Spread;
+	float g = THIS_Glow;
 	#endif
 	#ifdef THIS_HAS_INPUT_radiusField
 	float r = adaptAsFloat(inputOp_radiusField(p, ctx));
 	#else
 	float r = THIS_Radius;
 	#endif
-	#ifdef THIS_HAS_INPUT_glowField
-	float g = adaptAsFloat(inputOp_glowField(p, ctx))* 0.01;
+	#ifdef THIS_HAS_INPUT_spreadField
+	vec2 spr = fillToVec2(inputOp_spreadField(p, ctx))*0.01;
 	#else
-	float g = THIS_Glow;
+	vec2 spr = THIS_Spread;
 	#endif
 	g = max(g, 0);
 

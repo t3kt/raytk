@@ -9,11 +9,6 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 	#else
 	vec3 c = THIS_Center;
 	#endif
-	#ifdef THIS_HAS_INPUT_exponentField
-	vec3 e = fillToVec3(inputOp_exponentField(p, ctx));
-	#else
-	vec3 e = THIS_Exponent;
-	#endif
 	#ifdef THIS_HAS_INPUT_radiusField
 	vec3 r = fillToVec3(inputOp_radiusField(p, ctx));
 	#else
@@ -23,6 +18,11 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 	float w = inputOp_weightField(p, ctx);
 	#else
 	float w = THIS_Weight;
+	#endif
+	#ifdef THIS_HAS_INPUT_exponentField
+	vec3 e = fillToVec3(inputOp_exponentField(p, ctx));
+	#else
+	vec3 e = THIS_Exponent;
 	#endif
 	float d = length(pow(abs(q - c), e) / r);
 	return 1 / (d*d) * w;

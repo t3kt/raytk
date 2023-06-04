@@ -1,2 +1,0 @@
-names	source	handling	readOnlyHandling	conversion	enable
-Diffusecolor[rgb] Specularcolor[rgb]	param	runtime	macro		1

@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.material.subsurfaceContrib
-  opVersion: '3'
+  opVersion: '4'
   opStatus: beta
 opDef: !def
   enable: !expr
@@ -22,11 +22,3 @@ opDef: !def
     name: function
   paramGroupTable: eval_params
   displayCategory: Material Element
-inputs:
-- !input
-  coordType: !coordT
-    Allcoordtype: true
-  contextType: !contextT
-    Allcontexttype: true
-  returnType: !returnT
-    Allreturntype: true

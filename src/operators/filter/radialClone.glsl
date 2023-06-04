@@ -20,34 +20,51 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 	THIS_exposeIndex(ctx, 0, n);
 	if (IS_FALSE(THIS_Enable)) { return inputOp1(p, ctx); }
 	Sdf res;
-	float rot = THIS_Angleoffset;
+	float rotBase = THIS_Angleoffset;
+	float rot = rotBase;
+	#ifdef THIS_HAS_INPUT_angleOffsetField
+	rot += radians(inputOp_angleOffsetField(p, ctx));
+	#endif
 	float angleStep = THIS_Anglerange / THIS_Count;
 	CoordT q = p;
+	float roBase = THIS_Radiusoffset;
+	float ro = roBase;
+	#ifdef THIS_HAS_INPUT_radialOffsetField
+	ro += inputOp_radialOffsetField(p, ctx);
+	#endif
 #ifdef THIS_COORD_TYPE_vec2
 	pR(q, rot);
-	q.y -= THIS_Radiusoffset;
+	q.y -= ro;
 #else
 	switch (THIS_Axis) {
-		case THISTYPE_Axis_x: pR(q.yz, rot); q.y -= THIS_Radiusoffset; break;
-		case THISTYPE_Axis_y: pR(q.zx, rot); q.z -= THIS_Radiusoffset; break;
-		case THISTYPE_Axis_z: pR(q.xy, rot); q.x -= THIS_Radiusoffset; break;
+		case THISTYPE_Axis_x: pR(q.yz, rot); q.y -= ro; break;
+		case THISTYPE_Axis_y: pR(q.zx, rot); q.z -= ro; break;
+		case THISTYPE_Axis_z: pR(q.xy, rot); q.x -= ro; break;
 	}
 #endif
 	res = inputOp1(q, ctx);
 	for (int i = 1; i < n; i++) {
-		rot += angleStep;
+		THIS_exposeIndex(ctx, i, n);
+		rotBase += angleStep;
+		rot = rotBase;
+		#ifdef THIS_HAS_INPUT_angleOffsetField
+		rot += radians(inputOp_angleOffsetField(p, ctx));
+		#endif
 		q = p;
+		ro = roBase;
+		#ifdef THIS_HAS_INPUT_radialOffsetField
+		ro += inputOp_radialOffsetField(p, ctx);
+		#endif
 		#ifdef THIS_COORD_TYPE_vec2
 			pR(q, rot);
-			q.y -= THIS_Radiusoffset;
+			q.y -= ro;
 		#else
 			switch (THIS_Axis) {
-				case THISTYPE_Axis_x: pR(q.yz, rot); q.y -= THIS_Radiusoffset; break;
-				case THISTYPE_Axis_y: pR(q.zx, rot); q.z -= THIS_Radiusoffset; break;
-				case THISTYPE_Axis_z: pR(q.xy, rot); q.x -= THIS_Radiusoffset; break;
+				case THISTYPE_Axis_x: pR(q.yz, rot); q.y -= ro; break;
+				case THISTYPE_Axis_y: pR(q.zx, rot); q.z -= ro; break;
+				case THISTYPE_Axis_z: pR(q.xy, rot); q.x -= ro; break;
 			}
 		#endif
-		THIS_exposeIndex(ctx, i, n);
 		Sdf res2 = inputOp1(q, ctx);
 		THIS_combine(res, res2, q, ctx);
 	}

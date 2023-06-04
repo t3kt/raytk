@@ -2,7 +2,7 @@ vec3 THIS_sampleTexture(sampler2D tex, vec2 uv, ContextT ctx) {
 	#if defined(RAYTK_LOD_IN_MATERIAL_CONTEXT)
 	return textureLod(tex, uv + 0.5, ctx.lod).rgb;
 	#else
-	return texture(tex, uv + 0.5).rgb;
+	return textureLod(tex, uv + 0.5, 0).rgb;
 	#endif
 }
 
@@ -42,13 +42,13 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 	vec3 n = abs(ctx.normal);
 	n *= n;
 	#ifdef THIS_Useseparatetextures
-	vec3 colXY = texture(THIS_textureX, uv.xy + 0.5).rgb;
-	vec3 colYZ = texture(THIS_textureY, uv.yz + 0.5).rgb;
-	vec3 colZX = texture(THIS_textureZ, uv.zx + 0.5).rgb;
+	vec3 colXY = THIS_sampleTexture(THIS_textureX, uv.xy, ctx).rgb;
+	vec3 colYZ = THIS_sampleTexture(THIS_textureY, uv.yz, ctx).rgb;
+	vec3 colZX = THIS_sampleTexture(THIS_textureZ, uv.zx, ctx).rgb;
 	#else
-	vec3 colXY = texture(THIS_texture, uv.xy + 0.5).rgb;
-	vec3 colYZ = texture(THIS_texture, uv.yz + 0.5).rgb;
-	vec3 colZX = texture(THIS_texture, uv.zx + 0.5).rgb;
+	vec3 colXY = THIS_sampleTexture(THIS_texture, uv.xy, ctx).rgb;
+	vec3 colYZ = THIS_sampleTexture(THIS_texture, uv.yz, ctx).rgb;
+	vec3 colZX = THIS_sampleTexture(THIS_texture, uv.zx, ctx).rgb;
 	#endif
 
 	vec3 col;

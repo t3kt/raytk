@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.convert.floatToVector
-  opVersion: '12'
+  opVersion: '13'
   opStatus: default
 opDef: !def
   enable: !expr
@@ -10,18 +10,7 @@ opDef: !def
     coordType: !coordT
       Allcoordtype: true
     contextType: !contextT
-      Allcontexttype: !expr
-        expr: parent().par.Contexttype == 'auto'
-      Contexttypecontext: !expr
-        expr: parent().par.Contexttype == 'Context'
-      Contexttypematerialcontext: !expr
-        expr: parent().par.Contexttype == 'MaterialContext'
-      Contexttypecameracontext: !expr
-        expr: parent().par.Contexttype == 'CameraContext'
-      Contexttypelightcontext: !expr
-        expr: parent().par.Contexttype == 'LightContext'
-      Contexttyperaycontext: !expr
-        expr: parent().par.Contexttype == 'RayContext'
+      Allcontexttype: true
     returnType: !returnT
       Returntypevec4: true
   function: !text

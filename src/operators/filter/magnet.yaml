@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.filter.magnet
-  opVersion: '12'
+  opVersion: '13'
   opStatus: default
 opDef: !def
   enable: !expr
@@ -25,6 +25,7 @@ opDef: !def
   displayCategory: Transform
 inputs:
 - !input
+  Variableinputs: '*'
   Required: true
   coordType: !coordT
     Coordtypefloat: true
@@ -48,6 +49,7 @@ inputs:
     Returntypevec4: true
 - !input
   Localalias: easing
+  Variableinputs: magnet
   coordType: !coordT
     Coordtypefloat: true
   contextType: !contextT

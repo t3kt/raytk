@@ -1,0 +1,3 @@
+name	label	chan
+count	Step Count	red
+normcount	Normalized Step Count	green

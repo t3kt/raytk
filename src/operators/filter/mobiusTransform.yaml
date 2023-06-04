@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.filter.mobiusTransform
-  opVersion: '10'
+  opVersion: '11'
   opStatus: default
 opDef: !def
   enable: !expr
@@ -28,6 +28,7 @@ multiInput: !multiInput
   Returntypereductionmode: none
   inputs:
   - !input
+    Variableinputs: '*'
     Required: true
     coordType: !coordT
       Coordtypevec2: true
@@ -37,7 +38,7 @@ multiInput: !multiInput
     returnType: !returnT
       Allreturntype: true
   - !input
-    Localalias: centerField
+    Localalias: pointField
     coordType: !coordT
       Coordtypevec2: true
       Coordtypevec3: true
@@ -46,7 +47,8 @@ multiInput: !multiInput
     returnType: !returnT
       Returntypevec4: true
   - !input
-    Localalias: pointField
+    Localalias: centerField
+    Variableinputs: pointField
     coordType: !coordT
       Coordtypevec2: true
       Coordtypevec3: true

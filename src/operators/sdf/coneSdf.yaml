@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.sdf.coneSdf
-  opVersion: '18'
+  opVersion: '19'
   opStatus: default
 opDef: !def
   enable: true
@@ -28,22 +28,6 @@ opDef: !def
     name: help
 inputs:
 - !input
-  Localalias: heightField
-  coordType: !coordT
-    Coordtypevec3: true
-  contextType: !contextT
-    Allcontexttype: true
-  returnType: !returnT
-    Returntypefloat: true
-- !input
-  Localalias: radiusField
-  coordType: !coordT
-    Coordtypevec3: true
-  contextType: !contextT
-    Allcontexttype: true
-  returnType: !returnT
-    Returntypefloat: true
-- !input
   Localalias: baseField
   coordType: !coordT
     Coordtypevec3: true
@@ -52,13 +36,32 @@ inputs:
   returnType: !returnT
     Returntypevec4: true
 - !input
+  Localalias: heightField
+  Variableinputs: baseField
+  coordType: !coordT
+    Coordtypevec3: true
+  contextType: !contextT
+    Allcontexttype: true
+  returnType: !returnT
+    Returntypefloat: true
+- !input
   Localalias: topField
+  Variableinputs: baseField
   coordType: !coordT
     Coordtypevec3: true
   contextType: !contextT
     Allcontexttype: true
   returnType: !returnT
     Returntypevec4: true
+- !input
+  Localalias: radiusField
+  Variableinputs: baseField heightField topField
+  coordType: !coordT
+    Coordtypevec3: true
+  contextType: !contextT
+    Allcontexttype: true
+  returnType: !returnT
+    Returntypefloat: true
 elements:
 - !opElement
   name: codeSwitcher_Shape

@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.sdf.gyroidSdf
-  opVersion: '10'
+  opVersion: '11'
   opStatus: default
 opDef: !def
   enable: true
@@ -28,28 +28,6 @@ opDef: !def
   - wave
 inputs:
 - !input
-  Localalias: biasField
-  coordType: !coordT
-    Coordtypevec2: !expr
-      expr: parent().par.Coordtype == 'vec2'
-    Coordtypevec3: !expr
-      expr: parent().par.Coordtype == 'vec3'
-  contextType: !contextT
-    Allcontexttype: true
-  returnType: !returnT
-    Returntypefloat: true
-- !input
-  Localalias: thicknessField
-  coordType: !coordT
-    Coordtypevec2: !expr
-      expr: parent().par.Coordtype == 'vec2'
-    Coordtypevec3: !expr
-      expr: parent().par.Coordtype == 'vec3'
-  contextType: !contextT
-    Allcontexttype: true
-  returnType: !returnT
-    Returntypefloat: true
-- !input
   Localalias: phase1Field
   coordType: !coordT
     Coordtypevec2: !expr
@@ -63,6 +41,7 @@ inputs:
     Returntypevec4: true
 - !input
   Localalias: phase2Field
+  Variableinputs: phase1Field
   coordType: !coordT
     Coordtypevec2: !expr
       expr: parent().par.Coordtype == 'vec2'
@@ -73,3 +52,27 @@ inputs:
   returnType: !returnT
     Returntypefloat: true
     Returntypevec4: true
+- !input
+  Localalias: biasField
+  Variableinputs: phase1Field phase2Field
+  coordType: !coordT
+    Coordtypevec2: !expr
+      expr: parent().par.Coordtype == 'vec2'
+    Coordtypevec3: !expr
+      expr: parent().par.Coordtype == 'vec3'
+  contextType: !contextT
+    Allcontexttype: true
+  returnType: !returnT
+    Returntypefloat: true
+- !input
+  Localalias: thicknessField
+  Variableinputs: phase1Field phase2Field biasField
+  coordType: !coordT
+    Coordtypevec2: !expr
+      expr: parent().par.Coordtype == 'vec2'
+    Coordtypevec3: !expr
+      expr: parent().par.Coordtype == 'vec3'
+  contextType: !contextT
+    Allcontexttype: true
+  returnType: !returnT
+    Returntypefloat: true

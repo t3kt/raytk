@@ -21,11 +21,41 @@ op:
     coordTypes:
     - vec2
     - vec3
-    label: definition_in
+    label: SDF
     name: definition_in
     required: true
     returnTypes:
     - Sdf
+  - contextTypes:
+    - Context
+    - MaterialContext
+    - CameraContext
+    - LightContext
+    - RayContext
+    - ParticleContext
+    coordTypes:
+    - vec2
+    - vec3
+    label: Radial Offset Field
+    name: radialOffsetField
+    required: true
+    returnTypes:
+    - float
+  - contextTypes:
+    - Context
+    - MaterialContext
+    - CameraContext
+    - LightContext
+    - RayContext
+    - ParticleContext
+    coordTypes:
+    - vec2
+    - vec3
+    label: Angle Offset Field
+    name: angleOffsetField
+    required: true
+    returnTypes:
+    - float
   keywords:
   - clone
   - copy

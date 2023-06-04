@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.sdf.mengerSpongeSdf
-  opVersion: '10'
+  opVersion: '11'
   opStatus: default
 opDef: !def
   enable: true
@@ -30,19 +30,8 @@ opDef: !def
     name: help
 inputs:
 - !input
-  Localalias: stepOffsetField
-  Variables: '*'
-  Variableinputs: crossScaleField boxScaleField
-  coordType: !coordT
-    Coordtypevec3: true
-  contextType: !contextT
-    Allcontexttype: true
-  returnType: !returnT
-    Returntypevec4: true
-- !input
   Localalias: boxScaleField
   Variables: '*'
-  Variableinputs: crossScaleField
   coordType: !coordT
     Coordtypevec3: true
   contextType: !contextT
@@ -52,9 +41,20 @@ inputs:
 - !input
   Localalias: crossScaleField
   Variables: '*'
+  Variableinputs: boxScaleField
   coordType: !coordT
     Coordtypevec3: true
   contextType: !contextT
     Allcontexttype: true
   returnType: !returnT
     Returntypefloat: true
+- !input
+  Localalias: stepOffsetField
+  Variables: '*'
+  Variableinputs: boxScaleField crossScaleField
+  coordType: !coordT
+    Coordtypevec3: true
+  contextType: !contextT
+    Allcontexttype: true
+  returnType: !returnT
+    Returntypevec4: true

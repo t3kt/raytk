@@ -1,5 +1,50 @@
 # Release Notes
 
+## v0.34
+
+### Highlights
+
+* Cloning improvements including gridClone and enhancements to radialClone
+* Helpers for simplified access to data from renderers including nearHitMap and stepMap
+* Bug fixes and lots of internal cleanup
+* Fixed major crash related to textureField
+
+### Details
+
+* Improvements / additions
+  * New OPs
+    * gridClone - mergeable cloning on a grid
+    * nearHitMap - convenience accessor for near hit render output (#289)
+    * rescaleFloatField - simplified version of rescaleField (#1071)
+    * stepMap - helper for accessing step count output buffer (#289)
+    * truncatedPyramidSdf
+    * triPlanarCombine - combine fields based on surface normals, similar to triPlanarTextureField (#1079)
+  * New OP features
+    * axisRotate - default to Z axis
+    * crossSection - offset field input
+    * fieldRender - pixel format parameter
+    * goochShadingContrib - color field inputs
+    * nearestRingPointField - index variables and rotate parameter
+    * pointMapRender - 3d texture output (#1072)
+    * radialClone - radial and angle offset field inputs
+    * rampField - added endpoint mode as an alternative to axis (#752)
+    * rimContrib - angle variable
+    * ringLight - color field input
+    * transform - field inputs (#720)
+  * Snippets
+    * rimContrib
+* Fixes
+  * Fix input variable settings and reorder inputs to match availability in many operators
+  * Fix default settings for 2D render in inspector (#1073)
+  * Fix scaling for angle variable in nearestRingPointField (#1074)
+  * Fix crashes caused by textureField issue with nvidia error for branched calls to texture() (#1034)
+  * Fix input label in waveField
+* Changes (potentially breaking)
+  * Some inputs have been reordered, so updating OPs may cause inputs to become disconnected
+* Infrastructure / internals
+  * Documentation for internals (ROP structure, shaderBuilder)
+  * Remove unused global prefix code feature in shaderBuilder
+
 ## v0.33
 
 ### Highlights

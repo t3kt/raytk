@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.sdf.solidAngleSdf
-  opVersion: '7'
+  opVersion: '8'
   opStatus: default
 opDef: !def
   enable: true
@@ -35,6 +35,7 @@ inputs:
     Returntypefloat: true
 - !input
   Localalias: angleField
+  Variableinputs: radiusField
   coordType: !coordT
     Coordtypevec3: true
   contextType: !contextT

@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.filter.limitField
-  opVersion: '17'
+  opVersion: '18'
   opStatus: default
 paramPages:
 - !page
@@ -80,6 +80,7 @@ inputs:
     Returntypevec4: true
 - !input
   Localalias: lowField
+  Variableinputs: inputOp1
   Required: true
   coordType: !coordT
     Allcoordtype: true
@@ -90,6 +91,7 @@ inputs:
     Returntypevec4: true
 - !input
   Localalias: highField
+  Variableinputs: inputOp1 lowField
   Required: true
   coordType: !coordT
     Allcoordtype: true

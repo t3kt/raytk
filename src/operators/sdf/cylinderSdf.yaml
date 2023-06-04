@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.sdf.cylinderSdf
-  opVersion: '25'
+  opVersion: '26'
   opStatus: default
 opDef: !def
   enable: true
@@ -32,9 +32,8 @@ opDef: !def
   - pipe
 inputs:
 - !input
-  Localalias: radiusField
-  Variables: axispos normangle normoffset
-  Variableinputs: heightField
+  Localalias: heightField
+  Variables: axispos normangle
   coordType: !coordT
     Coordtypevec3: true
   contextType: !contextT
@@ -42,8 +41,9 @@ inputs:
   returnType: !returnT
     Returntypefloat: true
 - !input
-  Localalias: heightField
-  Variables: axispos normangle
+  Localalias: radiusField
+  Variables: axispos normangle normoffset
+  Variableinputs: heightField
   coordType: !coordT
     Coordtypevec3: true
   contextType: !contextT

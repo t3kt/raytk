@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.pattern.brickPattern
-  opVersion: '6'
+  opVersion: '7'
   opStatus: default
 opDef: !def
   enable: true
@@ -29,6 +29,7 @@ inputs:
     Returntypevec4: true
 - !input
   Localalias: thicknessField
+  Variableinputs: coordField
   coordType: !coordT
     Coordtypevec2: true
     Coordtypevec3: true
@@ -38,6 +39,7 @@ inputs:
     Returntypefloat: true
 - !input
   Localalias: blendingField
+  Variableinputs: coordField thicknessField
   coordType: !coordT
     Coordtypevec2: true
     Coordtypevec3: true
@@ -47,6 +49,7 @@ inputs:
     Returntypefloat: true
 - !input
   Localalias: shiftField
+  Variableinputs: coordField thicknessField shiftField
   coordType: !coordT
     Coordtypevec2: true
     Coordtypevec3: true

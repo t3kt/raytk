@@ -31,19 +31,6 @@ op:
     - ParticleContext
     coordTypes:
     - vec2
-    label: Thickness Field
-    name: thicknessField
-    returnTypes:
-    - float
-  - contextTypes:
-    - Context
-    - MaterialContext
-    - CameraContext
-    - LightContext
-    - RayContext
-    - ParticleContext
-    coordTypes:
-    - vec2
     label: Rotate Field
     name: rotateField
     returnTypes:
@@ -59,6 +46,19 @@ op:
     - vec2
     label: Radius Limit Field
     name: radiusLimitField
+    returnTypes:
+    - float
+  - contextTypes:
+    - Context
+    - MaterialContext
+    - CameraContext
+    - LightContext
+    - RayContext
+    - ParticleContext
+    coordTypes:
+    - vec2
+    label: Thickness Field
+    name: thicknessField
     returnTypes:
     - float
   name: spiralSdf2d

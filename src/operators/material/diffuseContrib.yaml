@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.material.diffuseContrib
-  opVersion: '25'
+  opVersion: '26'
   opStatus: default
 opDef: !def
   enable: true
@@ -58,6 +58,7 @@ inputs:
     Returntypefloat: true
 - !input
   Localalias: albedoField
+  Variableinputs: roughnessField
   coordType: !coordT
     Allcoordtype: true
   contextType: !contextT
@@ -66,6 +67,7 @@ inputs:
     Returntypefloat: true
 - !input
   Localalias: colorField
+  Variableinputs: roughnessField albedoField
   coordType: !coordT
     Allcoordtype: true
   contextType: !contextT

@@ -39,8 +39,8 @@ op:
     coordTypes:
     - vec2
     - vec3
-    label: Center Field
-    name: centerField
+    label: Point Field
+    name: pointField
     returnTypes:
     - vec4
   - contextTypes:
@@ -53,8 +53,8 @@ op:
     coordTypes:
     - vec2
     - vec3
-    label: Point Field
-    name: pointField
+    label: Center Field
+    name: centerField
     returnTypes:
     - vec4
   name: mobiusTransform

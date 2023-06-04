@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.pattern.weavePattern
-  opVersion: '6'
+  opVersion: '7'
   opStatus: default
 opDef: !def
   enable: true
@@ -28,6 +28,7 @@ inputs:
     Returntypevec4: true
 - !input
   Localalias: thicknessField
+  Variableinputs: coordField
   coordType: !coordT
     Coordtypevec2: true
     Coordtypevec3: true

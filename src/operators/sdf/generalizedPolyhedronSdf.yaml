@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.sdf.generalizedPolyhedronSdf
-  opVersion: '13'
+  opVersion: '14'
   opStatus: default
 opDef: !def
   enable: true
@@ -37,6 +37,7 @@ inputs:
     Returntypefloat: true
 - !input
   Localalias: beginEndField
+  Variableinputs: radiusField
   coordType: !coordT
     Coordtypevec3: true
   contextType: !contextT
@@ -45,6 +46,7 @@ inputs:
     Returntypevec4: true
 - !input
   Localalias: exponentField
+  Variableinputs: radiusField beginEndField
   coordType: !coordT
     Coordtypevec3: true
   contextType: !contextT

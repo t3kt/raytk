@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.pattern.waveGreekFriezePattern
-  opVersion: '1'
+  opVersion: '2'
   opStatus: beta
 opDef: !def
   enable: true
@@ -28,6 +28,7 @@ inputs:
     Returntypevec4: true
 - !input
   Localalias: twistField
+  Variableinputs: coordField
   coordType: !coordT
     Coordtypevec2: true
     Coordtypevec3: true
@@ -37,6 +38,7 @@ inputs:
     Returntypefloat: true
 - !input
   Localalias: blendingField
+  Variableinputs: coordField twistField
   coordType: !coordT
     Coordtypevec2: true
     Coordtypevec3: true

@@ -18,32 +18,6 @@ op:
     - ParticleContext
     coordTypes:
     - vec2
-    label: Radius Field
-    name: radiusField
-    returnTypes:
-    - float
-  - contextTypes:
-    - Context
-    - MaterialContext
-    - CameraContext
-    - LightContext
-    - RayContext
-    - ParticleContext
-    coordTypes:
-    - vec2
-    label: Thickness Field
-    name: thicknessField
-    returnTypes:
-    - float
-  - contextTypes:
-    - Context
-    - MaterialContext
-    - CameraContext
-    - LightContext
-    - RayContext
-    - ParticleContext
-    coordTypes:
-    - vec2
     label: Orientation Field
     name: orientationField
     returnTypes:
@@ -61,11 +35,35 @@ op:
     name: apertureField
     returnTypes:
     - float
+  - contextTypes:
+    - Context
+    - MaterialContext
+    - CameraContext
+    - LightContext
+    - RayContext
+    - ParticleContext
+    coordTypes:
+    - vec2
+    label: Radius Field
+    name: radiusField
+    returnTypes:
+    - float
+  - contextTypes:
+    - Context
+    - MaterialContext
+    - CameraContext
+    - LightContext
+    - RayContext
+    - ParticleContext
+    coordTypes:
+    - vec2
+    label: Thickness Field
+    name: thicknessField
+    returnTypes:
+    - float
   name: arcSdf2d
   opType: raytk.operators.sdf2d.arcSdf2d
   parameters:
-  - label: Enable
-    name: Enable
   - label: Orientation
     name: Orientation
   - label: Aperture

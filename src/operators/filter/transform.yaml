@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.filter.transform
-  opVersion: '18'
+  opVersion: '20'
   opStatus: default
 paramPages:
 - !page
@@ -156,6 +156,7 @@ opDef: !def
   function: !text
     file: src/operators/filter/transform.glsl
     name: function_template
+  paramGroupTable: eval_params
   help: !text
     file: src/operators/filter/transform.md
     name: help
@@ -188,6 +189,37 @@ inputs:
       expr: op('targetInfo')[1, 'returnType'] == '*'
     Returntypevec4: !expr
       expr: op('targetInfo')[1, 'returnType'] in ('*', 'vec4')
+- !input
+  Localalias: rotateField
+  Variables: '*'
+  coordType: !coordT
+    Coordtypevec2: true
+    Coordtypevec3: true
+  contextType: !contextT
+    Allcontexttype: true
+  returnType: !returnT
+    Returntypevec4: true
+- !input
+  Localalias: translateField
+  Variables: '*'
+  coordType: !coordT
+    Coordtypevec2: true
+    Coordtypevec3: true
+  contextType: !contextT
+    Allcontexttype: true
+  returnType: !returnT
+    Returntypevec4: true
+- !input
+  Localalias: scaleField
+  Variables: '*'
+  coordType: !coordT
+    Coordtypevec2: true
+    Coordtypevec3: true
+  contextType: !contextT
+    Allcontexttype: true
+  returnType: !returnT
+    Returntypefloat: true
+    Returntypevec4: true
 elements:
 - !opElement
   name: transformTarget
@@ -215,7 +247,7 @@ elements:
     Scaletype: !expr
       expr: parent().par.Scaletype.eval()
     Varname: q
-    Useparamvars: false
+    Useparamvars: true
     Force3d: false
     Prepcodeplaceholder: ''
     Bodycodeplaceholder: TRANSFORM_CODE();

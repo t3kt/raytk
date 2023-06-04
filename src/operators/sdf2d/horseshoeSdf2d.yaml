@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.sdf2d.horseshoeSdf2d
-  opVersion: '4'
+  opVersion: '5'
   opStatus: default
 opDef: !def
   enable: true
@@ -18,7 +18,7 @@ opDef: !def
   paramGroupTable: eval_params
 inputs:
 - !input
-  Localalias: radiusField
+  Localalias: angleField
   coordType: !coordT
     Coordtypevec2: true
   contextType: !contextT
@@ -26,7 +26,8 @@ inputs:
   returnType: !returnT
     Returntypefloat: true
 - !input
-  Localalias: thicknessField
+  Localalias: radiusField
+  Variableinputs: angleField
   coordType: !coordT
     Coordtypevec2: true
   contextType: !contextT
@@ -35,6 +36,7 @@ inputs:
     Returntypefloat: true
 - !input
   Localalias: lengthField
+  Variableinputs: angleField radiusField
   coordType: !coordT
     Coordtypevec2: true
   contextType: !contextT
@@ -42,7 +44,8 @@ inputs:
   returnType: !returnT
     Returntypefloat: true
 - !input
-  Localalias: angleField
+  Localalias: thicknessField
+  Variableinputs: angleField radiusField lengthField
   coordType: !coordT
     Coordtypevec2: true
   contextType: !contextT

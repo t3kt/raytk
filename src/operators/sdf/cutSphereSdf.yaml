@@ -1,23 +1,8 @@
 !rop
 meta: !meta
   opType: raytk.operators.sdf.cutSphereSdf
-  opVersion: '5'
+  opVersion: '6'
   opStatus: default
-opDef: !def
-  enable: true
-  typeSpec: !ropTypes
-    coordType: !coordT
-      Coordtypevec3: true
-    contextType: !contextT
-      Allcontexttype: true
-    returnType: !returnT
-      Returntypesdf: true
-  function: !text
-    file: src/operators/sdf/cutSphereSdf.glsl
-    name: function
-  paramGroupTable: eval_params
-  libraryNames: !expr
-    expr: op('cutSphereSdf_lib')
 paramPages:
 - !page
   name: SDF
@@ -69,6 +54,21 @@ paramPages:
       enableExpr: op('./rotate_definition').numRows < 2
       normMin: 0.0
       normMax: 1.0
+opDef: !def
+  enable: true
+  typeSpec: !ropTypes
+    coordType: !coordT
+      Coordtypevec3: true
+    contextType: !contextT
+      Allcontexttype: true
+    returnType: !returnT
+      Returntypesdf: true
+  function: !text
+    file: src/operators/sdf/cutSphereSdf.glsl
+    name: function
+  paramGroupTable: eval_params
+  libraryNames: !expr
+    expr: op('cutSphereSdf_lib')
 inputs:
 - !input
   Localalias: radiusField
@@ -80,6 +80,7 @@ inputs:
     Returntypefloat: true
 - !input
   Localalias: thicknessField
+  Variableinputs: radiusField
   coordType: !coordT
     Coordtypevec3: true
   contextType: !contextT
@@ -88,6 +89,7 @@ inputs:
     Returntypefloat: true
 - !input
   Localalias: offsetField
+  Variableinputs: radiusField thicknessField
   coordType: !coordT
     Coordtypevec3: true
   contextType: !contextT
@@ -96,6 +98,7 @@ inputs:
     Returntypefloat: true
 - !input
   Localalias: rotateField
+  Variableinputs: radiusField thicknessField offsetField
   coordType: !coordT
     Coordtypevec3: true
   contextType: !contextT

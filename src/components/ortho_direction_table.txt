@@ -1,7 +1,0 @@
-name	label	axis	dir
-xpos	Left (X+)	x	1
-xneg	Right (X-)	x	-1
-ypos	Bottom (Y+)	y	1
-yneg	Top (Y-)	y	-1
-zpos	Back (Z+)	z	1
-zneg	Front (Z-)	z	-1

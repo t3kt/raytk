@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.output.pointMapRender
-  opVersion: '65'
+  opVersion: '66'
   opStatus: default
 opDef: !def
   enable: true
@@ -19,6 +19,11 @@ opDef: !def
     file: src/operators/output/pointMapRender_func.glsl
     name: functionTemplate
   paramGroupTable: eval_params
+  macroTable: !table
+    file: src/operators/output/pointMapRender_macros.txt
+    name: macro_exprs
+    evaluate: true
+    evalOpts: !evalOpts {}
   variableTable: !table
     file: src/operators/output/pointMapRender_variables.txt
     name: variable_exprs

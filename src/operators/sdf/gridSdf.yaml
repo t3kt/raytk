@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.sdf.gridSdf
-  opVersion: '15'
+  opVersion: '16'
   opStatus: default
 opDef: !def
   enable: true
@@ -27,15 +27,6 @@ opDef: !def
   - bars
 inputs:
 - !input
-  Localalias: thicknessField
-  coordType: !coordT
-    Coordtypevec2: true
-    Coordtypevec3: true
-  contextType: !contextT
-    Allcontexttype: true
-  returnType: !returnT
-    Returntypefloat: true
-- !input
   Localalias: spacingField
   coordType: !coordT
     Coordtypevec2: true
@@ -45,3 +36,12 @@ inputs:
   returnType: !returnT
     Returntypefloat: true
     Returntypevec4: true
+- !input
+  Localalias: thicknessField
+  coordType: !coordT
+    Coordtypevec2: true
+    Coordtypevec3: true
+  contextType: !contextT
+    Allcontexttype: true
+  returnType: !returnT
+    Returntypefloat: true

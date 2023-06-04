@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.field.hsvColorField
-  opVersion: '8'
+  opVersion: '9'
   opStatus: beta
 opDef: !def
   enable: true
@@ -38,6 +38,7 @@ inputs:
     Returntypefloat: true
 - !input
   Localalias: saturationField
+  Variableinputs: hueField
   coordType: !coordT
     Allcoordtype: true
   contextType: !contextT
@@ -46,6 +47,7 @@ inputs:
     Returntypefloat: true
 - !input
   Localalias: valueField
+  Variableinputs: hueField saturationField
   coordType: !coordT
     Allcoordtype: true
   contextType: !contextT

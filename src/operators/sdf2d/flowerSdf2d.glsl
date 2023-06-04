@@ -4,12 +4,6 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 	#ifdef THIS_EXPOSE_normangle
 	THIS_normangle = ang / TAU + 0.5;
 	#endif
-	#ifdef THIS_HAS_INPUT_petalsField
-	float f = inputOp_petalsField(p, ctx);
-	#else
-	float f = THIS_Petals;
-	#endif
-	ang = mod(ang + PI / f, 2.0 * PI / f) - PI / f;
 	float c = THIS_Radius;
 	#ifdef THIS_HAS_INPUT_radiusField
 	c *= inputOp_radiusField(p, ctx);
@@ -18,6 +12,12 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 	#ifdef THIS_HAS_INPUT_amplitudeField
 	a *= inputOp_amplitudeField(p, ctx);
 	#endif
+	#ifdef THIS_HAS_INPUT_petalsField
+	float f = inputOp_petalsField(p, ctx);
+	#else
+	float f = THIS_Petals;
+	#endif
+	ang = mod(ang + PI / f, 2.0 * PI / f) - PI / f;
 	p = vec2(cos(ang), sin(ang)) * length(p);
 	p.y = abs(p.y);
 

@@ -1,0 +1,99 @@
+!rop
+meta: !meta
+  opType: raytk.operators.combine.triPlanarCombine
+  opVersion: '2'
+  opStatus: beta
+opDef: !def
+  enable: true
+  typeSpec: !ropTypes
+    coordType: !coordT
+      Coordtypevec3: true
+    contextType: !contextT
+      Allcontexttype: true
+    returnType: !returnT
+      Returntypefloat: !expr
+        expr: op('determineReturnType')[0,0] == 'float'
+      Returntypevec4: !expr
+        expr: op('determineReturnType')[0,0] == 'vec4'
+  function: !text
+    file: src/operators/combine/triPlanarCombine.glsl
+    name: function
+  paramGroupTable: eval_params
+multiInput: !multiInput
+  Minimuminputs: 0
+  Coordtypereductionmode: none
+  Coordtypereductionscope: '*'
+  Contexttypereductionmode: common
+  Contexttypereductionscope: '*'
+  Returntypereductionmode: none
+  Returntypereductionscope: '*'
+  inputs:
+  - !input
+    Localalias: xyField
+    coordType: !coordT
+      Coordtypevec2: true
+    contextType: !contextT
+      Allcontexttype: true
+    returnType: !returnT
+      Returntypefloat: !expr
+        expr: parent().par.Returntype in ('auto','float')
+      Returntypevec4: !expr
+        expr: parent().par.Returntype in ('auto','vec4')
+  - !input
+    Localalias: yzField
+    coordType: !coordT
+      Coordtypevec2: true
+    contextType: !contextT
+      Allcontexttype: true
+    returnType: !returnT
+      Returntypefloat: !expr
+        expr: parent().par.Returntype in ('auto','float')
+      Returntypevec4: !expr
+        expr: parent().par.Returntype in ('auto','vec4')
+  - !input
+    Localalias: zxField
+    coordType: !coordT
+      Coordtypevec2: true
+    contextType: !contextT
+      Allcontexttype: true
+    returnType: !returnT
+      Returntypefloat: !expr
+        expr: parent().par.Returntype in ('auto','float')
+      Returntypevec4: !expr
+        expr: parent().par.Returntype in ('auto','vec4')
+inputs:
+- !input
+  Localalias: uvField
+  Required: true
+  coordType: !coordT
+    Coordtypevec3: true
+  contextType: !contextT
+    Allcontexttype: true
+  returnType: !returnT
+    Returntypevec4: true
+- !input
+  Localalias: normalField
+  Required: !expr
+    expr: parent().par.Usenormals
+  coordType: !coordT
+    Coordtypevec3: true
+  contextType: !contextT
+    Allcontexttype: true
+  returnType: !returnT
+    Returntypevec4: true
+elements:
+- !opElement
+  name: codeSwitcher_Blendmode
+  elementType: codeSwitcher
+  params:
+    Elementroot: ''
+    Table: !table
+      file: src/operators/combine/triPlanarCombine_blendModes.txt
+      name: blendModes
+    Param: Blendmode
+    Autoupdateparams: true
+    Manageparamstates: false
+    Alwaysincludeallparams: false
+    Switchmode: auto
+    Indexexpr: ''
+    Placeholder: BLEND_BODY();

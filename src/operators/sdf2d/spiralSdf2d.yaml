@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.sdf2d.spiralSdf2d
-  opVersion: '5'
+  opVersion: '6'
   opStatus: beta
 opDef: !def
   enable: true
@@ -26,15 +26,8 @@ inputs:
   returnType: !returnT
     Returntypefloat: true
 - !input
-  Localalias: thicknessField
-  coordType: !coordT
-    Coordtypevec2: true
-  contextType: !contextT
-    Allcontexttype: true
-  returnType: !returnT
-    Returntypefloat: true
-- !input
   Localalias: rotateField
+  Variableinputs: spreadField
   coordType: !coordT
     Coordtypevec2: true
   contextType: !contextT
@@ -43,6 +36,16 @@ inputs:
     Returntypefloat: true
 - !input
   Localalias: radiusLimitField
+  Variableinputs: spreadField rotateField
+  coordType: !coordT
+    Coordtypevec2: true
+  contextType: !contextT
+    Allcontexttype: true
+  returnType: !returnT
+    Returntypefloat: true
+- !input
+  Localalias: thicknessField
+  Variableinputs: spreadField rotateField radiusLimitField
   coordType: !coordT
     Coordtypevec2: true
   contextType: !contextT

@@ -160,6 +160,15 @@ op:
     - label: 3D
       name: vec3
     name: Coordtype
+  - label: Output Type
+    menuOptions:
+    - label: 2D Texture
+      name: texture2d
+    - label: 2D Texture Array
+      name: texture2darray
+    - label: 3D Texture
+      name: texture3d
+    name: Outputtype
   - label: Enable Debug Output
     name: Enabledebugoutput
   - label: Enable Custom Output 1

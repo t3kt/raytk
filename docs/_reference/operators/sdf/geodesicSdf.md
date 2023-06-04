@@ -13,15 +13,6 @@ op:
   inputs:
   - contextTypes:
     - Context
-    coordTypes:
-    - vec3
-    label: Spike Tip Shape
-    name: spikeSdf
-    returnTypes:
-    - Sdf
-    summary: Optional SDF that is placed at the tip of each spike.
-  - contextTypes:
-    - Context
     - MaterialContext
     - CameraContext
     - LightContext
@@ -33,6 +24,15 @@ op:
     name: faceOffset
     returnTypes:
     - float
+    summary: Optional SDF that is placed at the tip of each spike.
+  - contextTypes:
+    - Context
+    coordTypes:
+    - vec3
+    label: Spike Tip Shape
+    name: spikeSdf
+    returnTypes:
+    - Sdf
   keywords:
   - geodesic
   - polyhedron

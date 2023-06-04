@@ -26,6 +26,11 @@ vec3 THIS_colorize(float v, CoordT p, ContextT ctx) {
 #endif
 
 ReturnT thismap(CoordT p, ContextT ctx) {
+	#ifdef THIS_HAS_INPUT_coordField
+	vec2 q = adaptAsVec2(inputOp_coordField(p, ctx));
+	#else
+	vec2 q = adaptAsVec2(p);
+	#endif
 	#ifdef THIS_USE_THICKNESS
 	#ifdef THIS_HAS_INPUT_thicknessField
 	float t = adaptAsFloat(inputOp_thicknessField(p, ctx));
@@ -40,11 +45,6 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 	float b = THIS_Blending;
 	#endif
 	b = max(0., b);
-	#endif
-	#ifdef THIS_HAS_INPUT_coordField
-	vec2 q = adaptAsVec2(inputOp_coordField(p, ctx));
-	#else
-	vec2 q = adaptAsVec2(p);
 	#endif
 	q -= THIS_Translate;
 	q /= THIS_Size;

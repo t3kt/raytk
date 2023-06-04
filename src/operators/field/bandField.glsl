@@ -12,6 +12,16 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 		case THISTYPE_Axis_z: q = q0.z; break;
 		case THISTYPE_Axis_dist: q = length(q0); break;
 	}
+	#ifdef THIS_HAS_INPUT_insideValue
+	ReturnT inVal = THIS_asReturnT(inputOp_insideValue(p, ctx));
+	#else
+	ReturnT inVal = THIS_asReturnT(THIS_Insidevalue);
+	#endif
+	#ifdef THIS_HAS_INPUT_outsideValue
+	ReturnT outVal = THIS_asReturnT(inputOp_outsideValue(p, ctx));
+	#else
+	ReturnT outVal = THIS_asReturnT(THIS_Outsidevalue);
+	#endif
 	if (IS_TRUE(THIS_Enablerepeat)) {
 		q = mod(q + THIS_Repeatshift, THIS_Repeatsize);
 	}
@@ -27,15 +37,5 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 	} else {
 		amt = step(w, q);
 	}
-	#ifdef THIS_HAS_INPUT_insideValue
-	ReturnT inVal = THIS_asReturnT(inputOp_insideValue(p, ctx));
-	#else
-	ReturnT inVal = THIS_asReturnT(THIS_Insidevalue);
-	#endif
-	#ifdef THIS_HAS_INPUT_outsideValue
-	ReturnT outVal = THIS_asReturnT(inputOp_outsideValue(p, ctx));
-	#else
-	ReturnT outVal = THIS_asReturnT(THIS_Outsidevalue);
-	#endif
 	return mix(inVal, outVal, amt);
 }

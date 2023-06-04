@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.filter.lookAtRotate
-  opVersion: '2'
+  opVersion: '3'
   opStatus: beta
 opDef: !def
   enable: !expr
@@ -21,6 +21,7 @@ opDef: !def
   displayCategory: Transform
 inputs:
 - !input
+  Variableinputs: '*'
   Required: true
   coordType: !coordT
     Allcoordtype: true
@@ -38,6 +39,7 @@ inputs:
     Returntypevec4: true
 - !input
   Localalias: targetPointField
+  Variableinputs: sourcePointField
   coordType: !coordT
     Allcoordtype: true
   contextType: !contextT
@@ -46,6 +48,7 @@ inputs:
     Returntypevec4: true
 - !input
   Localalias: rollField
+  Variableinputs: sourcePointField targetPointField
   coordType: !coordT
     Allcoordtype: true
   contextType: !contextT

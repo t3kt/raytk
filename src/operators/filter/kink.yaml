@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.filter.kink
-  opVersion: '9'
+  opVersion: '10'
   opStatus: default
 paramPages:
 - !page
@@ -87,6 +87,7 @@ opDef: !def
   displayCategory: Transform
 inputs:
 - !input
+  Variableinputs: '*'
   coordType: !coordT
     Allcoordtype: true
   contextType: !contextT
@@ -103,6 +104,7 @@ inputs:
     Returntypefloat: true
 - !input
   Localalias: offsetField
+  Variableinputs: amountField
   coordType: !coordT
     Allcoordtype: true
   contextType: !contextT
@@ -111,6 +113,7 @@ inputs:
     Returntypefloat: true
 - !input
   Localalias: spreadField
+  Variableinputs: amountField offsetField
   coordType: !coordT
     Allcoordtype: true
   contextType: !contextT
