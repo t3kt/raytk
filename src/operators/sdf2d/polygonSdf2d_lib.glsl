@@ -24,3 +24,9 @@ float sdOctogon(in vec2 p, in float r)
 	p -= vec2(clamp(p.x, -k.z*r, k.z*r), r);
 	return length(p)*sign(p.y);
 }
+
+float sdArbitraryPolygon(vec2 p, float r, float n) {
+	pR(p.xy, PI/2.); // flat side on top like other functions
+	pModPolar(p.xy, n);
+	return p.x - r;
+}

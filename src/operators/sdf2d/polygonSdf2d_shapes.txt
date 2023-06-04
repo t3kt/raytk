@@ -2,3 +2,4 @@ name	label	code
 pentagon	Pentagon	d = sdPentagon(p, r)
 hexagon	Hexagon	d = sdHexagon(p, r)
 octogon	Octogon	d = sdOctogon(p, r)
+custom	Custom	d = sdArbitraryPolygon(p, r, n);

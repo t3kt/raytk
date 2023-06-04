@@ -1,2 +1,3 @@
 names	source	handling	readOnlyHandling	conversion	enable
 Radius	param	runtime	macro		1
+Sides	param	runtime	macro		parent().par.Shape == 'custom' and op('sides_definition').numRows < 2
