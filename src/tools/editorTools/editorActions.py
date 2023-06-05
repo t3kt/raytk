@@ -420,6 +420,48 @@ def _createTypeListGroup(
 		]
 	)
 
+def _createSimplifyRescaleFloatAction(text):
+	def _getOrigMultiplyPar(origRescale: 'OP'):
+		p1 = origRescale.par.Multiply
+		if p1.mode == ParMode.CONSTANT and p1.val == 1:
+			p1 = None
+		p2 = origRescale.par.Mult1
+		if p2.mode == ParMode.CONSTANT and p2.val == 1:
+			p2 = None
+		if p1 and p2:
+			# both can't be set
+			return None
+		return p1 if p1 is not None else p2
+	def _isValid(origRescale: 'ROPState'):
+		p = _getOrigMultiplyPar(origRescale.rop)
+		return p is not None
+	class _InitRescale(_OpInit):
+		def init(self, rop: 'COMP', ctx: ActionContext):
+			newRescale = rop
+			origRescale = ctx.primaryRop
+			_copyParState(origRescale.par.Inputlow1, newRescale.par.Inputrange1)
+			_copyParState(origRescale.par.Inputhigh1, newRescale.par.Inputrange2)
+			_copyParState(origRescale.par.Outputlow1, newRescale.par.Outputrange1)
+			_copyParState(origRescale.par.Outputhigh1, newRescale.par.Outputrange2)
+			_copyParState(origRescale.par.Postadd1, newRescale.par.Postadd)
+			_copyParState(_getOrigMultiplyPar(origRescale), newRescale.par.Multiply)
+			origRescale.destroy()
+
+	return _ActionImpl(
+		text,
+		ropType='raytk.operators.filter.rescaleFloatField',
+		select=_OpSelect(ropTypes=[_RopTypes.rescaleField], returnTypes=['float'], test=_isValid),
+		attach=_AttachReplacement(),
+		inits=[_InitRescale()],
+	)
+
+def _copyParState(fromPar: 'Par', toPar: 'Par'):
+	toPar.val = fromPar.val
+	toPar.expr = fromPar.expr or ''
+	toPar.bindExpr = fromPar.bindExpr or ''
+	toPar.mode = fromPar.mode
+	toPar.readOnly = fromPar.readOnly
+
 def _createGoToAction(text: str, getTargets: Callable[[ActionContext], List[OP]]):
 	def isValid(ctx: ActionContext):
 		return bool(getTargets(ctx))
@@ -543,6 +585,7 @@ def createActionManager():
 			attach=_AttachOutFromExisting(),
 			params={'Returntype': 'vec4'},
 		),
+		_createSimplifyRescaleFloatAction('Simplify Rescale Float'),
 		_createTableBasedGroup(
 			'Project Plane', op('projectPlanes'), _RopTypes.projectPlane, 'Plane',
 			select=_OpSelect(coordTypes=['vec2']),
@@ -772,6 +815,25 @@ class _AttachOutputSelector(_OpAttach):
 	def placeAndAttach(self, newOp: 'COMP', fromOps: 'List[COMP]'):
 		newOp.nodeX = fromOps[0].nodeX + newOp.nodeWidth + 100
 		newOp.nodeCenterY = fromOps[0].nodeCenterY - 200
+
+@dataclass
+class _AttachReplacement(_OpAttach):
+	def placeAndAttach(self, newOp: 'COMP', fromOps: 'List[COMP]'):
+		origOp = fromOps[0]
+		newOp.nodeX = origOp.nodeX
+		newOp.nodeY = origOp.nodeY
+		newInputCount = len(newOp.inputConnectors)
+		for i, origConn in enumerate(origOp.inputConnectors):
+			if i >= newInputCount:
+				break
+			if origConn.connections:
+				newOp.inputConnectors[i].connect(origConn.connections[0])
+		newOutputCount = len(newOp.outputConnectors)
+		for i, origConn in enumerate(origOp.outputConnectors):
+			if i >= newOutputCount:
+				break
+			for targetConn in origConn.connections:
+				newOp.outputConnectors[i].connect(targetConn)
 
 class _OpInit:
 	def init(self, rop: 'COMP', ctx: ActionContext):
