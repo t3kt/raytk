@@ -59,7 +59,7 @@ class UI:
 
 	def copyOPs(self, listOfOPs: _T.List['_AnyOpT']): pass
 	# noinspection PyShadowingNames
-	def pasteOPs(self, COMP, x: _T.Optional[int] = None, y: _T.Optional[int] = None): pass
+	def pasteOPs(self, comp: 'COMP', x: _T.Optional[int] = None, y: _T.Optional[int] = None): pass
 	# noinspection PyDefaultArgument
 	def messageBox(self, title: str, message: str, buttons: _T.List[str] = ['Ok']) -> int: pass
 	def refresh(self): pass
@@ -319,14 +319,17 @@ class Par:
 	exportSource: _T.Optional[_T.Union['Cell', 'Channel']]
 	bindExpr: str
 	bindMaster: _T.Optional[_T.Union['Channel', 'Cell', 'Par']]
+	bindRange: bool
 	bindReferences: list
 	index: int
 	vecIndex: int
 	name: str
 	label: str
+	subLabel: str
 
 	startSection: bool
 	readOnly: bool
+	displayOnly: bool
 	tuplet: 'ParTupletT'
 	tupletName: str
 	min: _ValueT
@@ -352,6 +355,12 @@ class Par:
 	menuIndex: int
 	menuSource: str
 	owner: '_AnyOpT'
+	styleCloneImmune: bool
+	lastScriptChange: _T.Optional['SetInfo']
+
+	collapser: bool
+	collapsable: bool
+	sequence: _T.Set
 
 	isDefault: bool
 	isCustom: bool
@@ -383,6 +392,26 @@ class Par:
 	def __int__(self) -> int: pass
 	def __float__(self) -> float: pass
 	def __str__(self) -> str: pass
+
+class ParGroup(tuple):
+	bindExpr: tuple
+	bindMaster: tuple
+	bindRange: bool
+	bindReferences: _T.List[tuple]
+	clampMin: tuple
+	clampMax: tuple
+	collapser: bool
+	collapsable: bool
+	default: tuple
+	defaultExpr: tuple
+
+class SetInfo(tuple):
+	dat: _T.Optional['DAT']
+	path: str
+	function: _T.Optional[str]
+	line: _T.Optional[int]
+	frame: int
+	timeStamp: int
 
 class Sequence:
 	owner: 'OP'
@@ -443,6 +472,14 @@ class ParTupleCollection:
 	def __getattr__(self, item) -> ParTuple: pass
 	def __setattr__(self, key, value: _T.Any): pass
 	def __getitem__(self, item) -> ParTuple: pass
+	def __setitem__(self, key, value: _T.Any): pass
+
+class ParGroupCollection:
+	owner: 'OP'
+
+	def __getattr__(self, item) -> ParGroup: pass
+	def __setattr__(self, key, value: _T.Any): pass
+	def __getitem__(self, item) -> ParGroup: pass
 	def __setitem__(self, key, value: _T.Any): pass
 
 class Page:
@@ -508,10 +545,13 @@ class OP:
 	mod: _T.Any
 	par: ParCollection
 	parTuple: ParTupleCollection
+	parGroup: ParGroupCollection
 	pages: _T.List['Page']
+	customParGroups: _T.List['ParGroup']
 	customPars: _T.List['Par']
 	customPages: _T.List['Page']
 	customTuplets: _T.List[ParTupletT]
+	builtinPars: _T.List['Par']
 	replicator: _T.Optional['OP']
 	storage: _T.Dict[str, _T.Any]
 	tags: _T.Set[str]
@@ -521,6 +561,7 @@ class OP:
 	parent: '_Parent'
 	iop: _T.Any
 	ipar: _T.Any
+	currentPage: 'Page'
 
 	activeViewer: bool
 	allowCooking: bool
@@ -860,12 +901,17 @@ class _FileInfo(str):
 	# noinspection PyMissingConstructor,PyUnusedLocal
 	def __init__(self, path: str = None): pass
 
+_PathInfo = _FileInfo
 
 class _Dependency:
 	def __init__(self, _=None):
 		self.val = None
 
 	def modified(self): pass
+
+	callbacks: _T.List[_T.Callable[[dict], None]]
+	ops: _T.List['_AnyOpT']
+	listAttributes: '_ListAttributesList'
 
 class tdu:
 	@staticmethod
@@ -914,6 +960,12 @@ class tdu:
 
 	@staticmethod
 	def expandPath(path: str) -> str: pass
+
+	@staticmethod
+	def tryExcept(func1: _T.Callable[[], _T.Any], func2OrValue: _T.Union[_T.Callable[[], _T.Any], _T.Any]) -> _T.Any: pass
+
+	@staticmethod
+	def forceCrash(): pass
 
 	fileTypes = {
 		'audio': ['aif', 'aiff', 'flac', 'm4a', 'mp3', 'ogg', 'wav'],
@@ -1042,18 +1094,27 @@ class oscoutDAT(DAT):
 oscinDAT = oscoutDAT
 
 class webclientDAT(DAT):
-	connections: _T.List[int]
-
 	def request(
-			self, url: str, method: str, header: dict = None, data=None, pars: dict = None, authType: str = None,
-			username: str = None, password: str = None, appKey: str = None, appSecret: str = None,
-			oauth1Token: str = None, oauth1Secret: str = None, oauth2Token: str = None,
-			uploadFile=None, timeout: int = 60000) -> int:
-		pass
+			self,
+			url: str,
+			method: str,
+			header: dict = None,
+			data=None,
+			pars: dict = None,
+			authType: str = None,
+			username: str = None,
+			password: str = None,
+			appKey: str = None,
+			appSecret: str = None,
+			oauth1Token: str = None,
+			oauth1Secret: str = None,
+			oauth2Token: str = None,
+			uploadFile: str = None,
+	) -> None: pass
 
 	def closeConnection(self, id: int): pass
 
-_AnyDatT = _T.Union[DAT, scriptDAT, evaluateDAT, oscoutDAT, oscinDAT, webclientDAT, tcpipDAT]
+_AnyDatT = _T.Union[DAT, scriptDAT, evaluateDAT, oscoutDAT, oscinDAT, webclientDAT, tcpipDAT, udpinDAT]
 
 class CHOP(OP):
 	numChans: int
@@ -1138,6 +1199,25 @@ class COMP(OP):
 	def setVar(self, name: str, value): pass
 	def unsetVar(self, name: str): pass
 	def vars(self, *patterns: str) -> list: pass
+
+class annotateCOMP(COMP):
+	enclosedOPs: _T.List['_AnyOpT']
+	height: float
+	utility: bool
+	width: float
+	x: float
+	y: float
+
+class textCOMP(COMP):
+	editText: str
+	selectedText: str
+	textHeight: float
+	textWidth: float
+
+	def evalTextSize(self) -> _T.Tuple[float, float]: pass
+	def formatText(self, text: str, editing=False) -> str: pass
+	def setCursorPosUV(self, u: float, v: float): pass
+	def setKeyboardFocus(self, selectAll=False): pass
 
 class PanelValue(_T.SupportsFloat, _T.SupportsInt, _ABC):
 	name: str
@@ -1276,14 +1356,6 @@ class containerCOMP(PanelCOMP):
 	def clickChild(self, childIndex, clickCount=1, force=False, left=False, middle=False, right=False, group=None): pass
 
 widgetCOMP = containerCOMP
-
-class annotateCOMP(COMP):
-	enclosedOPs: _T.List['_AnyOpT']
-	height: float
-	utility: bool
-	width: float
-	x: float
-	y: float
 
 class listCOMP(PanelCOMP):
 	attribs: 'ListAttributes'
@@ -1720,6 +1792,8 @@ class objectCOMP(COMP):
 class cameraCOMP(objectCOMP):
 	def projectionInverse(self, x, y) -> _Matrix: pass
 	def projection(self, x, y) -> _Matrix: pass
+
+geotextCOMP = objectCOMP
 
 class scriptCHOP(CHOP):
 	def destroyCustomPars(self): pass
