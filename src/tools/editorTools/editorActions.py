@@ -393,13 +393,22 @@ def _createSimplifyRescaleFloatAction(text):
 		p2 = origRescale.par.Mult1
 		if p2.mode == ParMode.CONSTANT and p2.val == 1:
 			p2 = None
-		if p1 and p2:
+		# valid combos: neither is set, only one is set
+		# invalid: both are set
+		# second return value is whether it's valid
+		if p1 is not None and p2 is not None:
 			# both can't be set
-			return None
-		return p1 if p1 is not None else p2
+			return None, False
+		if p1 is None and p2 is None:
+			return None, True
+		if p1 is not None:
+			return p1, True
+		if p2 is not None:
+			return p2, True
+		return None, False
 	def _isValid(origRescale: 'ROPState'):
-		p = _getOrigMultiplyPar(origRescale.rop)
-		return p is not None
+		p, valid = _getOrigMultiplyPar(origRescale.rop)
+		return valid
 	class _InitRescale(OpInit):
 		def init(self, rop: 'COMP', ctx: ActionContext):
 			newRescale = rop
@@ -409,7 +418,9 @@ def _createSimplifyRescaleFloatAction(text):
 			_copyParState(origRescale.par.Outputlow1, newRescale.par.Outputrange1)
 			_copyParState(origRescale.par.Outputhigh1, newRescale.par.Outputrange2)
 			_copyParState(origRescale.par.Postadd1, newRescale.par.Postadd)
-			_copyParState(_getOrigMultiplyPar(origRescale), newRescale.par.Multiply)
+			multP, valid = _getOrigMultiplyPar(origRescale)
+			if valid and multP is not None:
+				_copyParState(multP, newRescale.par.Multiply)
 			origRescale.destroy()
 
 	return ActionImpl(
