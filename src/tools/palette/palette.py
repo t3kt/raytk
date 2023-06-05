@@ -137,6 +137,7 @@ class Palette:
 		newOp = self._createROP(
 			template=template,
 			dest=dest,
+			pane=pane,
 			nodeX=pane.x,
 			nodeY=pane.y,
 			name=template.name + ('1' if tdu.digits(template.name) is None else ''),
@@ -146,6 +147,7 @@ class Palette:
 		ui.undo.addCallback(self._createItemDoHandler, {
 			'template': template,
 			'dest': dest,
+			'pane': pane,
 			'nodeX': pane.x,
 			'nodeY': pane.y,
 			'name': newOp.name,
@@ -158,11 +160,15 @@ class Palette:
 
 	def _createROP(
 			self,
-			template: 'COMP', dest: 'COMP',
+			template: 'COMP', dest: 'COMP', pane: 'NetworkEditor',
 			nodeX: int, nodeY: int, name: str,
 			postSetup: 'Optional[Callable[[COMP], None]]' = None,
 	):
-		newOp = dest.copy(
+		if op('/sys/quiet'):
+			bufferArea = op('/sys/quiet').create(baseCOMP)
+		else:
+			bufferArea = dest
+		newOp = bufferArea.copy(
 			template,
 			name=name,
 		)  # type: COMP
@@ -196,6 +202,7 @@ class Palette:
 			if _isNonCommercial():
 				newOp.par.Resx = 1280
 				newOp.par.Resy = 720
+		pane.placeOPs([newOp], delOP=bufferArea if bufferArea is not dest else None)
 		if postSetup:
 			postSetup(newOp)
 		ropInfo = ROPInfo(newOp)
@@ -225,6 +232,7 @@ class Palette:
 			self._createROP(
 				template=info['template'],
 				dest=dest,
+				pane=info['pane'],
 				nodeX=info['nodeX'],
 				nodeY=info['nodeY'],
 				name=name,
@@ -236,7 +244,8 @@ class Palette:
 			fromOp: 'COMP', variable: str, dataType: str,
 			postSetup: 'Optional[Callable[[COMP], None]]' = None):
 		def initRef(refOp: 'COMP'):
-			refOp.par.Source.val = fromOp
+			# assume that they're in the same parent
+			refOp.par.Source.val = fromOp.name
 			refOp.par.Source.readOnly = True
 			refOp.par.Variable = variable
 			refOp.par.Variable.readOnly = True
@@ -257,7 +266,8 @@ class Palette:
 			self, fromOp: 'COMP', outputName: str,
 			postSetup: 'Optional[Callable[[COMP], None]]' = None):
 		def initSel(refOp: 'COMP'):
-			refOp.par.Outputop.val = fromOp
+			# assume that they're in the same parent
+			refOp.par.Outputop.val = fromOp.name
 			refOp.par.Outputop.readOnly = True
 			refOp.par.Outputbuffer.val = outputName
 			refOp.par.Outputbuffer.readOnly = True
