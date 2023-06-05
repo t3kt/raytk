@@ -27,6 +27,9 @@ if False:
 
 	ipar.uiState = _UIStatePar()
 
+
+USE_PLACE_OPS = False
+
 # columns:
 #  name
 #  status icon
@@ -164,7 +167,7 @@ class Palette:
 			nodeX: int, nodeY: int, name: str,
 			postSetup: 'Optional[Callable[[COMP], None]]' = None,
 	):
-		if op('/sys/quiet'):
+		if USE_PLACE_OPS and op('/sys/quiet'):
 			bufferArea = op('/sys/quiet').create(baseCOMP)
 		else:
 			bufferArea = dest
@@ -202,7 +205,8 @@ class Palette:
 			if _isNonCommercial():
 				newOp.par.Resx = 1280
 				newOp.par.Resy = 720
-		pane.placeOPs([newOp], delOP=bufferArea if bufferArea is not dest else None)
+		if USE_PLACE_OPS:
+			pane.placeOPs([newOp], delOP=bufferArea if bufferArea is not dest else None)
 		if postSetup:
 			postSetup(newOp)
 		ropInfo = ROPInfo(newOp)
