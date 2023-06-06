@@ -535,6 +535,8 @@ class OpDocManager:
 			dat.nodeY = self.info.opDef.nodeY + 500
 			dat.nodeWidth = 350
 			dat.nodeHeight = 175
+			dat.par.language = 'text'
+			dat.par.extension = 'md'
 			self.info.helpDAT = dat
 			if not dat.par.file and self.rop.par.externaltox:
 				dat.par.file = self.rop.par.externaltox.eval().replace('.tox', '.md')
