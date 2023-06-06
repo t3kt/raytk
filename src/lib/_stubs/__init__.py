@@ -1929,6 +1929,8 @@ class Licenses(_T.List[License]):
 	machine: str
 	systemCode: str
 	type: str
+	isPro: bool
+	isNonCommercial: bool
 
 	def install(self, key: str) -> bool: pass
 
