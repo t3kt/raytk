@@ -222,6 +222,14 @@ bool hasColor(in Sdf res) {
 	return false;
 }
 
+vec3 getColor(in Sdf res) {
+	#ifdef RAYTK_USE_SURFACE_COLOR
+	return res.color.a > 0. ? res.color.rgb : vec3(0.);
+	#else
+	return vec3(0.);
+	#endif
+}
+
 void assignMaterial(inout Sdf res, int materialId) {
 	res.mat = vec3(float(materialId), 0., 0.);
 }

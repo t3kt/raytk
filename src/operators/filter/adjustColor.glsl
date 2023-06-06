@@ -1,5 +1,12 @@
 ReturnT thismap(CoordT p, ContextT ctx) {
-	ReturnT col = inputOp1(p, ctx);
+	vec4 col;
+	#ifdef THIS_RETURN_TYPE_Sdf
+	Sdf surface = inputOp1(p, ctx);
+	if (!hasColor(surface)) { return surface; }
+	col = vec4(getColor(surface), 1.);
+	#else
+	col = inputOp1(p, ctx);
+	#endif
 	if (IS_TRUE(THIS_Enable)) {
 		#ifdef THIS_HAS_INPUT_brightnessField
 		float br = inputOp_brightnessField(p, ctx);
@@ -27,5 +34,11 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 		col.rgb = ((col.rgb - 0.5) * cn) + 0.5;
 		col.rgb = pow(col.rgb, vec3(1.0 / THIS_Gamma));
 	}
-	return col;
+	#ifdef THIS_RETURN_TYPE_Sdf
+	assignColor(surface, col.rgb);
+	ReturnT res = surface;
+	#else
+	ReturnT res = col;
+	#endif
+	return res;
 }
