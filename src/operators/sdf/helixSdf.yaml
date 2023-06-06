@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.sdf.helixSdf
-  opVersion: '16'
+  opVersion: '17'
   opStatus: default
 opDef: !def
   enable: true
@@ -53,9 +53,20 @@ inputs:
   returnType: !returnT
     Returntypefloat: true
 - !input
-  Localalias: crossSection
+  Localalias: spreadField
   Variables: axisoffset angle normangle
   Variableinputs: thicknessField radiusField
+  coordType: !coordT
+    Coordtypefloat: true
+    Coordtypevec3: true
+  contextType: !contextT
+    Allcontexttype: true
+  returnType: !returnT
+    Returntypefloat: true
+- !input
+  Localalias: crossSection
+  Variables: axisoffset angle normangle
+  Variableinputs: thicknessField radiusField spreadField
   coordType: !coordT
     Coordtypevec2: true
   contextType: !contextT

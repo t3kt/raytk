@@ -1,3 +1,4 @@
 names	source	handling	readOnlyHandling	conversion	enable
-Translate[xyz] Radius Thickness Spread Dualspread	param	runtime	macro		1
+Translate[xyz] Radius Thickness Dualspread	param	runtime	macro		1
 Axis Reverse	param	runtime	constant		1
+Spread	param	runtime	macro		op('spread_definition').numRows < 2
