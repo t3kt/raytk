@@ -28,7 +28,7 @@ if False:
 	ipar.uiState = _UIStatePar()
 
 
-USE_PLACE_OPS = False
+USE_PLACE_OPS = True
 
 # columns:
 #  name
@@ -167,7 +167,8 @@ class Palette:
 			nodeX: int, nodeY: int, name: str,
 			postSetup: 'Optional[Callable[[COMP], None]]' = None,
 	):
-		if USE_PLACE_OPS and op('/sys/quiet'):
+		# when using postSetup, placeOPs won't work so don't use it
+		if not postSetup and op('/sys/quiet'):
 			bufferArea = op('/sys/quiet').create(baseCOMP)
 		else:
 			bufferArea = dest
@@ -175,8 +176,6 @@ class Palette:
 			template,
 			name=name,
 		)  # type: COMP
-		newOp.nodeCenterX = nodeX
-		newOp.nodeCenterY = nodeY
 		detachTox(newOp)
 		img = newOp.op('*Definition/opImage')
 		if img:
@@ -205,9 +204,11 @@ class Palette:
 			if _isNonCommercial():
 				newOp.par.Resx = 1280
 				newOp.par.Resy = 720
-		if USE_PLACE_OPS:
+		if not postSetup:
 			pane.placeOPs([newOp], delOP=bufferArea if bufferArea is not dest else None)
-		if postSetup:
+		else:
+			newOp.nodeCenterX = nodeX
+			newOp.nodeCenterY = nodeY
 			postSetup(newOp)
 		ropInfo = ROPInfo(newOp)
 		ropInfo.invokeCallback('onCreate', master=template)
