@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.field.rampField
-  opVersion: '2'
+  opVersion: '3'
   opStatus: beta
 opDef: !def
   enable: !expr
@@ -45,7 +45,6 @@ inputs:
     Returntypevec4: true
 - !input
   Localalias: point1Field
-  Required: true
   coordType: !coordT
     Allcoordtype: true
   contextType: !contextT
@@ -55,7 +54,6 @@ inputs:
     Returntypevec4: true
 - !input
   Localalias: point2Field
-  Required: true
   coordType: !coordT
     Allcoordtype: true
   contextType: !contextT
