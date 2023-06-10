@@ -501,6 +501,54 @@ def _primaryRopHasParam(ctx: ActionContext, par: str):
 def _anySelectedRopHasParam(ctx: ActionContext, par: str):
 	return any(rop.par[par] is not None for rop in ctx.selectedRops)
 
+# Can't just use == or `as` since it seems that different objects are instantiated when access vs referring to the same instances
+def _connsEqual(c1: 'Connector', c2: 'Connector'):
+	if not c1 or not c2:
+		return False
+	return c1.owner == c2.owner and c1.index == c2.index and c1.isInput == c2.isInput
+
+def _connIsIn(cFind: 'Connector', cList: 'List[Connector]'):
+	for c in cList:
+		if _connsEqual(cFind, c):
+			return True
+	return False
+
+def _createSwapOrderAction(text):
+	def processPair(fromOp: 'OP', toOp: 'OP', testOnly: bool):
+		if not fromOp or not toOp or not fromOp.outputConnectors or not toOp.inputConnectors:
+			return False
+		if not _connIsIn(toOp.inputConnectors[0], fromOp.outputConnectors[0].connections):
+			return False
+		if testOnly:
+			return True
+		externalIn = fromOp.inputConnectors[0] if fromOp.inputConnectors else None
+		externalOuts = toOp.outputConnectors[0].connections
+		if externalIn and externalIn.connections:
+			toOp.inputConnectors[0].connect(externalIn.connections[0])
+		else:
+			toOp.inputConnectors[0].disconnect()
+		fromOp.inputConnectors[0].connect(toOp.outputConnectors[0])
+		for conn in externalOuts:
+			fromOp.outputConnectors[0].connect(conn)
+		pos1 = fromOp.nodeX, fromOp.nodeY
+		pos2 = toOp.nodeX, toOp.nodeY
+		fromOp.nodeX, fromOp.nodeY = pos2
+		toOp.nodeX, toOp.nodeY = pos1
+		return True
+	def processSelection(rops: 'List[OP]', testOnly: bool):
+		if len(rops) != 2:
+			return False
+		result = processPair(rops[0], rops[1], testOnly)
+		if result:
+			return result
+		return processPair(rops[1], rops[0], testOnly)
+
+	def isValid(ctx: ActionContext):
+		return processSelection(ctx.selectedRops, True)
+	def execute(ctx: ActionContext):
+		processSelection(ctx.selectedRops, False)
+	return SimpleAction(text, isValid, execute)
+
 class _RopTypes:
 	crossSection = 'raytk.operators.convert.crossSection'
 	modularMat = 'raytk.operators.material.modularMat'
@@ -701,5 +749,6 @@ def createActionManager():
 			attach=AttachOutFromExisting(),
 		),
 		_createGoToGroup('Go to'),
+		_createSwapOrderAction('Swap Chain Order'),
 	)
 	return manager
