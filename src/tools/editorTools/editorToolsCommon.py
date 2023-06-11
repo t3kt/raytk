@@ -478,11 +478,35 @@ class InitSetParamOnPrimaryRop(OpInit):
 			par.val = self.val
 
 @dataclass
+class InitAddToParamOnPrimaryRop(OpInit):
+	name: str
+
+	def init(self, rop: 'COMP', ctx: ActionContext):
+		par = ctx.primaryRop.par[self.name]
+		if par is not None:
+			if par.val:
+				par.val += ' '
+			par.val += ctx.primaryRop.relativePath(rop)
+
+@dataclass
 class InitLinkPrimaryToParam(OpInit):
 	paramName: str
 
 	def init(self, rop: 'COMP', ctx: ActionContext):
 		rop.par[self.paramName] = ctx.primaryRop
+
+@dataclass
+class InitBindParamsToPrimary(OpInit):
+	paramNames: Dict[str, str]
+
+	def init(self, rop: 'COMP', ctx: ActionContext):
+		primary = ctx.primaryOp
+		exprBase = f"op('{rop.relativePath(primary)}').par."
+		for srcName, destName in self.paramNames.items():
+			srcPar = primary.par[srcName]
+			destPar = rop.par[destName]
+			if srcPar is not None and destPar is not None:
+				destPar.bindExpr = exprBase + srcName
 
 @dataclass
 class ActionImpl(Action):

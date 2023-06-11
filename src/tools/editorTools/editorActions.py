@@ -561,6 +561,7 @@ class _RopTypes:
 	lfoGenerator = 'raytk.operators.utility.lfoGenerator'
 	vectorToFloat = 'raytk.operators.convert.vectorToFloat'
 	variableReference = 'raytk.operators.utility.variableReference'
+	defineAttribute = 'raytk.operators.utility.defineAttribute'
 
 def createActionManager():
 	manager = ActionManager(
@@ -750,5 +751,27 @@ def createActionManager():
 		),
 		_createGoToGroup('Go to'),
 		_createSwapOrderAction('Swap Chain Order'),
+		ActionImpl(
+			'Assign Attribute',
+			ropType='raytk.operators.filter.assignAttribute',
+			select=OpSelect(ropTypes=[_RopTypes.defineAttribute]),
+			inits=[
+				InitBindParamsToPrimary({'Attributename': 'Attributename', 'Datatype': 'Datatype'}),
+			]),
+		ActionImpl(
+			'Reference Attribute',
+			ropType='raytk.operators.utility.getAttribute',
+			select=OpSelect(ropTypes=[_RopTypes.defineAttribute]),
+			inits=[
+				InitBindParamsToPrimary({'Attributename': 'Attributename', 'Datatype': 'Datatype'}),
+			]),
+		ActionImpl(
+			'Add Attribute',
+			ropType=_RopTypes.defineAttribute,
+			select=OpSelect(ropTypes=[_RopTypes.raymarchRender3d]),
+			inits=[
+				InitAddToParamOnPrimaryRop('Attributedefinitions'),
+			],
+			params={'Attributename': 'attr1'}),
 	)
 	return manager
