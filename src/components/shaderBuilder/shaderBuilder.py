@@ -31,6 +31,7 @@ if False:
 		Supportmaterials: BoolParamT
 		Shaderbuilderconfig: CompParamT
 		Shadertype: StrParamT
+		Attributedefinitions: StrParamT
 
 	class _OwnerComp(COMP):
 		par: '_OwnerCompPar'
@@ -678,6 +679,7 @@ class _Writer:
 	dispatchBlocks: 'Optional[List[Dispatch]]' = None
 	textures: 'Optional[List[Texture]]' = None
 	buffers: 'Optional[List[Buffer]]' = None
+	attributes: 'Optional[List[_AttributeDef]]' = None
 	out: 'Optional[StringIO]' = None
 
 	def __post_init__(self):
@@ -694,6 +696,23 @@ class _Writer:
 		self.textures = []
 		self.buffers = []
 		self.dispatchBlocks = []
+		self.attributes = []
+		attrNames = set()
+		for defComp in self.ownerComp.par.Attributedefinitions.evalOPs():
+			attr = _AttributeDef(
+				name=defComp.par.Attributename.eval(),
+				dataType=defComp.par.Datatype.eval(),
+				defaultValue=(
+					defComp.par.Defaultvaluex.eval(),
+					defComp.par.Defaultvaluey.eval(),
+					defComp.par.Defaultvaluez.eval(),
+					defComp.par.Defaultvaluew.eval(),
+				)
+			)
+			if not attr.name or attr.name in attrNames:
+				continue
+			self.attributes.append(attr)
+			attrNames.add(attr.name)
 		for state in self.opStates:
 			if state.dispatchBlocks:
 				self.dispatchBlocks += state.dispatchBlocks
@@ -709,6 +728,7 @@ class _Writer:
 		self._writeGlobalDecls()
 		self._writeOpDataTypedefs()
 		self._writeMacroBlock()
+		self._writeAttributesBlock()
 		self._writeLibraryIncludes()
 		self._writeCodeDat('predeclarations', self.ownerComp.par.Predeclarations.eval())
 		self._writeParameterAliases()
@@ -769,6 +789,26 @@ class _Writer:
 			decls.add(nameVal)
 			self._writeMacro(name, val)
 		self._endBlock('macros')
+
+	def _writeAttributesBlock(self):
+		self._startBlock('attributes')
+		if self.attributes:
+			self._writeMacro('RAYTK_HAS_ATTRS')
+			for attr in self.attributes:
+				self._writeMacro(f'RAYTK_ATTR_EXISTS_{attr.name}')
+			self._writeLine('struct Attrs {')
+			for attr in self.attributes:
+				self._writeLine(f'  {attr.field()}')
+			self._writeLine('};')
+			self._writeLine('void initAttrs(inout Attrs a) {')
+			for attr in self.attributes:
+				self._writeLine(f'  a.{attr.name} = {attr.defaultExpr()};')
+			self._writeLine('}')
+			self._writeLine('void mixAttrs(inout Attrs a, in Attrs b, float amt) {')
+			for attr in self.attributes:
+				self._writeLine(f'  a.{attr.name} = mix(a.{attr.name}, b.{attr.name}, amt);')
+			self._writeLine('}')
+		self._endBlock('attributes')
 
 	def _writeLibraryIncludes(self):
 		if not self.libraryDats:
@@ -1010,6 +1050,20 @@ class _Writer:
 
 	def _processCode(self, code: str):
 		return self._inlineTypedefs(code)
+
+@dataclass
+class _AttributeDef:
+	name: str
+	dataType: str
+	defaultValue: Tuple[float, float, float, float]
+
+	def field(self):
+		return f'{self.dataType} {self.name};'
+
+	def defaultExpr(self):
+		if self.dataType == 'float':
+			return str(self.defaultValue[0])
+		return f'vec4({self.defaultValue[0]}, {self.defaultValue[1]}, {self.defaultValue[2]}, {self.defaultValue[3]})'
 
 @dataclass
 class _ParamTupletSpec:

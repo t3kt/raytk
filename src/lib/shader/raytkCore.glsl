@@ -81,6 +81,10 @@ struct Sdf {
 	// x: 0/1 is transparent, y: (1 - alpha) inverted so defaults are better
 	vec2 transparent;
 	#endif
+
+	#ifdef RAYTK_HAS_ATTRS
+	Attrs attrs;
+	#endif
 };
 
 int resultMaterial1(Sdf res) { return int(res.mat.x); }
@@ -142,6 +146,9 @@ Sdf createSdf(float dist) {
 	#ifdef RAYTK_USE_TRANSPARENCY
 	res.transparent = vec2(0.);
 	#endif
+	#ifdef RAYTK_HAS_ATTRS
+	initAttrs(res.attrs);
+	#endif
 	return res;
 }
 
@@ -200,6 +207,10 @@ void blendInSdf(inout Sdf res1, in Sdf res2, in float amt) {
 	#ifdef RAYTK_USE_TRANSPARENCY
 	res1.transparent.x = max(res1.transparent.x, res2.transparent.x);
 	res1.transparent.y = mix(res1.transparent.y, res2.transparent.y, amt);
+	#endif
+
+	#ifdef RAYTK_HAS_ATTRS
+	mixAttrs(res1.attrs, res2.attrs, amt);
 	#endif
 }
 
