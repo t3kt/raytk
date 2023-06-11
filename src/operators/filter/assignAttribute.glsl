@@ -5,7 +5,13 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 	THIS_sdf = res;
 	#endif
 	#ifdef THIS_ATTR_EXISTS
-	res.attrs.THIS_NAME = inputOp_valueField(p, ctx);
+	{
+		#ifdef THIS_HAS_INPUT_valueField
+		res.attrs.THIS_NAME = inputOp_valueField(p, ctx);
+		#else
+		res.attrs.THIS_NAME = THIS_asValueT(THIS_Value);
+		#endif
+	}
 	#endif
 	return res;
 }

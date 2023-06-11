@@ -10,7 +10,7 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 		#else
 		sdf = ctx.result;
 		#endif
-		res = sdf.THIS_NAME;
+		res = sdf.attrs.THIS_NAME;
 	}
 	#endif
 	return res;
