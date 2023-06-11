@@ -1,0 +1,38 @@
+!rop
+meta: !meta
+  opType: raytk.operators.utility.getAttribute
+  opVersion: '0'
+  opStatus: alpha
+opDef: !def
+  enable: true
+  typeSpec: !ropTypes
+    coordType: !coordT
+      Allcoordtype: true
+    contextType: !contextT
+      Allcontexttype: !expr
+        expr: op('sdf_definition').numRows >= 2
+      Contexttypematerialcontext: true
+      Contexttypelightcontext: true
+      Contexttyperaycontext: true
+    returnType: !returnT
+      Returntypefloat: !expr
+        expr: parent().par.Datatype == 'float'
+      Returntypevec4: !expr
+        expr: parent().par.Datatype == 'vec4'
+  function: !text
+    file: src/operators/utility/getAttribute.glsl
+    name: functionTemplate
+  macroTable: !table
+    file: src/operators/utility/getAttribute_macros.txt
+    name: macro_exprs
+    evaluate: true
+    evalOpts: !evalOpts {}
+inputs:
+- !input
+  Localalias: sdf
+  coordType: !coordT
+    Allcoordtype: true
+  contextType: !contextT
+    Allcontexttype: true
+  returnType: !returnT
+    Returntypesdf: true
