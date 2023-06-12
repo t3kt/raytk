@@ -1,4 +1,4 @@
 names	source	handling	readOnlyHandling	conversion	enable
-Translate[xyz] Radius Height Infiniteheight Hollow	param	runtime	macro		1
+Translate[xyz] Radius Height	param	runtime	macro		1
 Thickness	param	runtime	macro		op('thickness_definition').numRows < 2
-Axis	param	runtime	constant		1
+Axis Infiniteheight Hollow	param	runtime	constant		1
