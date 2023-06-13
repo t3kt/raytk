@@ -19,3 +19,6 @@ hue	Hue	res = TDRGBToHSV(val.xyz).x;
 sat	Saturation	res = TDRGBToHSV(val.xyz).y;
 val	Value	res = TDRGBToHSV(val.xyz).z;
 luma	Luminance	res = czm_luminance(val.xyz);
+sumxy	Sum(XY)	res = val.x + val.y;
+sumxyz	Sum(XYZ)	res = val.x + val.y + val.z;
+sumxyzw	Sum(XYZW)	res = val.x + val.y + val.z + val.w;
