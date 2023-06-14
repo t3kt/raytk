@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.sdf.archSdf
-  opVersion: '6'
+  opVersion: '7'
   opStatus: beta
 opDef: !def
   enable: true
@@ -16,3 +16,57 @@ opDef: !def
     file: src/operators/sdf/archSdf.glsl
     name: function
   paramGroupTable: eval_params
+inputs:
+- !input
+  Localalias: heightField
+  coordType: !coordT
+    Coordtypevec3: true
+  contextType: !contextT
+    Allcontexttype: true
+  returnType: !returnT
+    Returntypefloat: true
+- !input
+  Localalias: widthField
+  Variableinputs: heightField
+  coordType: !coordT
+    Coordtypevec3: true
+  contextType: !contextT
+    Allcontexttype: true
+  returnType: !returnT
+    Returntypefloat: true
+- !input
+  Localalias: roundingField
+  Variableinputs: heightField widthField
+  coordType: !coordT
+    Coordtypevec3: true
+  contextType: !contextT
+    Allcontexttype: true
+  returnType: !returnT
+    Returntypefloat: true
+- !input
+  Localalias: frameThicknessField
+  Variableinputs: heightField widthField roundingField
+  coordType: !coordT
+    Coordtypevec3: true
+  contextType: !contextT
+    Allcontexttype: true
+  returnType: !returnT
+    Returntypefloat: true
+- !input
+  Localalias: frameDepthField
+  Variableinputs: heightField widthField roundingField frameThicknessField
+  coordType: !coordT
+    Coordtypevec3: true
+  contextType: !contextT
+    Allcontexttype: true
+  returnType: !returnT
+    Returntypefloat: true
+- !input
+  Localalias: panelDepthField
+  Variableinputs: heightField widthField roundingField frameThicknessField frameDepthField
+  coordType: !coordT
+    Coordtypevec3: true
+  contextType: !contextT
+    Allcontexttype: true
+  returnType: !returnT
+    Returntypefloat: true

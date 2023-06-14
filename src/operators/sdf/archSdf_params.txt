@@ -1,5 +1,8 @@
 names	source	handling	readOnlyHandling	conversion	enable
-Height Width Rounding	param	runtime	macro		1
+Height	param	runtime	macro		op('height_definition').numRows < 2
+Width	param	runtime	macro		op('width_definition').numRows < 2
+Rounding	param	runtime	macro		op('rounding_definition').numRows < 2
 Enableframe Enablepanel Hideframebottom	param	constant			1
-Framethickness Framedepth	param	runtime	macro		1
-Paneldepth	param	runtime	macro		1
+Framethickness	param	runtime	macro		op('frameThickness_definition').numRows < 2
+Framedepth	param	runtime	macro		op('frameDepth_definition').numRows < 2
+Paneldepth	param	runtime	macro		op('panelDepth_definition').numRows < 2
