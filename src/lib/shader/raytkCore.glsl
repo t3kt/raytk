@@ -361,6 +361,7 @@ struct LightContext {
 	#if defined(RAYTK_TIME_IN_CONTEXT) || defined(RAYTK_USE_TIME)
 	Time time;
 	#endif
+	vec4 iteration;
 };
 
 LightContext createLightContext(Sdf res, vec3 norm) {
@@ -371,7 +372,20 @@ LightContext createLightContext(Sdf res, vec3 norm) {
 	#if defined(RAYTK_TIME_IN_CONTEXT) || defined(RAYTK_USE_TIME)
 	, getGlobalTime()
 	#endif
+	, vec4(0.)
 	);
+}
+
+void setIterationIndex(inout LightContext ctx, float index) {
+	ctx.iteration = vec4(index, 0., 0., 0.);
+}
+
+void setIterationCell(inout LightContext ctx, vec2 cell) {
+	ctx.iteration = vec4(cell, 0., 0.);
+}
+
+void setIterationCell(inout LightContext ctx, vec3 cell) {
+	ctx.iteration = vec4(cell, 0.);
 }
 
 struct MaterialContext {
