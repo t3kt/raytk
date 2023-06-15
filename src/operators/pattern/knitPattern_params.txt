@@ -1,0 +1,4 @@
+names	source	handling	readOnlyHandling	conversion	enable
+Translate[xy] Size[xy]	param	runtime	macro		1
+Texamount	param	runtime	macro		1
+Texdensity	param	runtime	macro		1
