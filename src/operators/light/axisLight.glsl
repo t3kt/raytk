@@ -1,5 +1,10 @@
 ReturnT thismap(CoordT p, ContextT ctx) {
-	Light light = createLight(THIS_Position, THIS_Color * THIS_Intensity);
+	#ifdef THIS_HAS_INPUT_positionField
+	vec3 pos = adaptAsVec3(inputOp_positionField(p, ctx));
+	#else
+	vec3 pos = THIS_Position;
+	#endif
+	Light light = createLight(pos, THIS_Color * THIS_Intensity);
 	switch (int(THIS_Axis)) {
 		case 0: light.pos.x = p.x; break;
 		case 1: light.pos.y = p.y; break;

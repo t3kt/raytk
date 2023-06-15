@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.light.axisLight
-  opVersion: '9'
+  opVersion: '10'
   opStatus: default
 opDef: !def
   enable: true
@@ -28,8 +28,17 @@ opDef: !def
     name: help
 inputs:
 - !input
+  Localalias: positionField
+  coordType: !coordT
+    Coordtypevec3: true
+  contextType: !contextT
+    Contexttypelightcontext: true
+  returnType: !returnT
+    Returntypevec4: true
+- !input
   Localalias: colorField
   Variables: lightdir
+  Variableinputs: positionField
   coordType: !coordT
     Coordtypevec3: true
   contextType: !contextT
@@ -40,7 +49,7 @@ inputs:
 - !input
   Localalias: attenuationField
   Variables: lightdir
-  Variableinputs: colorField
+  Variableinputs: positionField colorField
   coordType: !coordT
     Coordtypefloat: true
   contextType: !contextT
