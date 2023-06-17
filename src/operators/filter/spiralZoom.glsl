@@ -13,6 +13,15 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 		q -= THIS_Center;
 		float a = atan(q.y, q.x)/TAU;
 		float r = log(length(q));
+
+		#ifdef THIS_EXPOSE_logdist
+		THIS_logdist = r;
+		#endif
+
+		#ifdef THIS_EXPOSE_dist
+		THIS_dist = length(q);
+		#endif
+
 		float n = THIS_Branches;
 		#ifdef THIS_HAS_INPUT_twistField
 		vec2 twist = inputOp_twistField(p, ctx).xy;
