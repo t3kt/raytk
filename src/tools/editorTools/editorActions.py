@@ -284,7 +284,7 @@ def _createAnimateParamsGroup(text: str, ropType: str, nameSuffix: str):
 			if len(t) > 1:
 				for p in t:
 					actions.append(_createAnimateParamAction(
-						f'{t[0].label} ({p.name[-1]})', p, ropType, nameSuffix))
+						f'  {t[0].label} ({p.name[-1]})', p, ropType, nameSuffix))
 		return actions
 	return SimpleGroup(text, lambda _: True, getActions)
 
