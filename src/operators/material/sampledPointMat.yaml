@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.material.sampledPointMat
-  opVersion: '24'
+  opVersion: '25'
   opStatus: beta
 opDef: !def
   enable: !expr

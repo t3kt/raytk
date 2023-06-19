@@ -2,5 +2,5 @@ names	source	handling	readOnlyHandling	conversion	enable
 Size	param	runtime	macro		op('size_definition').numRows < 2
 Tilingshift[xy]	param	runtime	macro		op('tilingShift_definition').numRows < 2
 Polycolor[1-4][rgb] Outlinecolor[rgb] Dualoutlinecolor[rgb]	param	runtime	macro		1
-Enableoutline Enabledualoutline	param	runtime	macro		1
+Enableoutline Enabledualoutline	param	runtime	constant		1
 Outlinethickness Outlineblending Dualoutlinethickness Dualoutlineblending	param	runtime	macro		1

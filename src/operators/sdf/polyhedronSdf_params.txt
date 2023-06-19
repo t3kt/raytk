@@ -1,5 +1,6 @@
 names	source	handling	readOnlyHandling	conversion	enable
-Type Enablefaces Enablesegments Enablevertices	param	runtime	macro		1
+Type	param	runtime	macro		1
+Enablefaces Enablesegments Enablevertices	param	runtime	constant		1
 Radius	param	runtime	macro		op('radius_definition').numRows < 2
 Faceradius	param	runtime	macro		op('faceRadius_definition').numRows < 2
 Segmentradius	param	runtime	macro		op('segmentRadius_definition').numRows < 2

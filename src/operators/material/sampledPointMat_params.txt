@@ -1,4 +1,4 @@
 names	source	handling	readOnlyHandling	conversion	enable
 Uselocalpos	param	macro			1
-Enablefill Enableedge Usesurfacecolor	param	runtime	macro		1
+Enablefill Enableedge Usesurfacecolor	param	runtime	constant		1
 Fillcolor[rgb] Blending Edgecolor[rgb] Edgethickness Offset	param	runtime	macro		1
