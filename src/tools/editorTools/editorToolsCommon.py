@@ -16,23 +16,10 @@ class ActionContext:
 	parentComp: 'COMP'
 	selectedOps: List['OP']
 	primaryOp: Optional['OP']
-	allRops: List['OP']
 
 	@property
-	def selectedRops(self):
-		return [o for o in self.selectedOps if _isRopOrComp(o)]
-
-	@property
-	def selectedRopStates(self):
-		return [ROPState(o) for o in self.selectedOps if _isRopOrComp(o)]
-
-	@property
-	def allRopStates(self):
-		return [ROPState(o) for o in self.allRops]
-
-	@property
-	def primaryRop(self):
-		return self.primaryOp if _isRopOrComp(self.primaryOp) else None
+	def primaryComp(self) -> Optional['COMP']:
+		return self.primaryOp if self.primaryOp and self.primaryOp.isCOMP else None
 
 	def hasSelectedOps(
 			self,
@@ -118,7 +105,6 @@ class ActionManager:
 			pane, comp,
 			selectedOps=comp.selectedChildren,
 			primaryOp=comp.currentChild,
-			allRops=RaytkContext().ropChildrenOf(comp),
 		)
 
 	def openMenu(self, popMenu: 'PopMenuExt'):
@@ -476,7 +462,7 @@ class AttachReplacement(OpAttach):
 				newOp.outputConnectors[i].connect(targetConn)
 
 class OpInit:
-	def init(self, rop: 'COMP', ctx: ActionContext):
+	def init(self, o: 'COMP', ctx: ActionContext):
 		raise NotImplementedError()
 
 @dataclass
@@ -484,8 +470,8 @@ class InitSetParamOnPrimaryRop(OpInit):
 	name: str
 	val: Any
 
-	def init(self, rop: 'COMP', ctx: ActionContext):
-		par = ctx.primaryRop.par[self.name]
+	def init(self, o: 'COMP', ctx: ActionContext):
+		par = ctx.primaryOp.par[self.name]
 		if par is not None:
 			par.val = self.val
 
@@ -493,30 +479,30 @@ class InitSetParamOnPrimaryRop(OpInit):
 class InitAddToParamOnPrimaryRop(OpInit):
 	name: str
 
-	def init(self, rop: 'COMP', ctx: ActionContext):
-		par = ctx.primaryRop.par[self.name]
+	def init(self, o: 'COMP', ctx: ActionContext):
+		par = ctx.primaryOp.par[self.name]
 		if par is not None:
 			if par.val:
 				par.val += ' '
-			par.val += ctx.primaryRop.relativePath(rop)
+			par.val += ctx.primaryOp.relativePath(o)
 
 @dataclass
 class InitLinkPrimaryToParam(OpInit):
 	paramName: str
 
-	def init(self, rop: 'COMP', ctx: ActionContext):
-		rop.par[self.paramName] = ctx.primaryRop
+	def init(self, o: 'COMP', ctx: ActionContext):
+		o.par[self.paramName] = ctx.primaryOp
 
 @dataclass
 class InitBindParamsToPrimary(OpInit):
 	paramNames: Dict[str, str]
 
-	def init(self, rop: 'COMP', ctx: ActionContext):
+	def init(self, o: 'COMP', ctx: ActionContext):
 		primary = ctx.primaryOp
-		exprBase = f"op('{rop.relativePath(primary)}').par."
+		exprBase = f"op('{o.relativePath(primary)}').par."
 		for srcName, destName in self.paramNames.items():
 			srcPar = primary.par[srcName]
-			destPar = rop.par[destName]
+			destPar = o.par[destName]
 			if srcPar is not None and destPar is not None:
 				destPar.bindExpr = exprBase + srcName
 
@@ -558,3 +544,19 @@ class GroupImpl(ActionGroup):
 			return self.actions
 		else:
 			return self.actions(ctx)
+
+class RopActionUtils:
+	@staticmethod
+	def getSelectedRops(ctx: ActionContext):
+		return [
+			o
+			for o in ctx.selectedOps
+			if _isRopOrComp(o)
+		]
+
+	@staticmethod
+	def getAllRopStates(ctx: ActionContext):
+		return [
+			ROPState(o)
+			for o in RaytkContext().ropChildrenOf(ctx.parentComp)
+		]

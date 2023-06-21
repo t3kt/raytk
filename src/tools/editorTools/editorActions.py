@@ -58,11 +58,11 @@ def _createVarRefAction(label: str, variable: str, dataType: str, fieldName: Opt
 		def init(refOp: 'COMP'):
 			if fieldName:
 				refOp.par.Field = fieldName
-			fromOp = ctx.primaryRop
+			fromOp = ctx.primaryComp
 			refOp.nodeCenterY = fromOp.nodeCenterY - 100
 			refOp.nodeX = fromOp.nodeX - refOp.nodeWidth - 150
 		ActionUtils.palette().CreateVariableReference(
-			ctx.primaryRop,
+			ctx.primaryComp,
 			variable=variable,
 			dataType=dataType,
 			postSetup=init)
@@ -131,13 +131,13 @@ def _createVarRefGroup(text: str):
 def _createRenderSelAction(label: str, name: str, enablePar: str):
 	def execute(ctx: ActionContext):
 		def init(refOp: 'COMP'):
-			fromOp = ctx.primaryRop
+			fromOp = ctx.primaryComp
 			refOp.nodeCenterY = fromOp.nodeCenterY - 200
 			refOp.nodeX = fromOp.nodeX + refOp.nodeWidth + 100
 			if enablePar:
 				fromOp.par[enablePar] = True
 		ActionUtils.palette().CreateRenderSelect(
-			ctx.primaryRop,
+			ctx.primaryComp,
 			outputName=name,
 			postSetup=init,
 		)
@@ -338,7 +338,7 @@ def _createExposeParamOrTupletAction(parOrTuplet: 'Union[Par, ParTupletT]'):
 def _createCustomizeShaderConfigAction(text: str):
 	def getTriggerPars(ctx: ActionContext):
 		pars = []
-		for rop in ctx.selectedRops:
+		for rop in RopActionUtils.getSelectedRops(ctx):
 			if rop.par['Shaderbuilderconfig']:
 				continue
 			builder = rop.op('shaderBuilder')
@@ -419,9 +419,9 @@ def _createSimplifyRescaleFloatAction(text):
 		p, valid = _getOrigMultiplyPar(origRescale)
 		return valid
 	class _InitRescale(OpInit):
-		def init(self, rop: 'COMP', ctx: ActionContext):
-			newRescale = rop
-			origRescale = ctx.primaryRop
+		def init(self, o: 'COMP', ctx: ActionContext):
+			newRescale = o
+			origRescale = ctx.primaryComp
 			_copyParState(origRescale.par.Inputlow1, newRescale.par.Inputrange1)
 			_copyParState(origRescale.par.Inputhigh1, newRescale.par.Inputrange2)
 			_copyParState(origRescale.par.Outputlow1, newRescale.par.Outputrange1)
@@ -471,13 +471,13 @@ def _createGoToGroup(text: str):
 		opState = ROPState(ctx.primaryOp)
 		if not opState or opState.info.opType != _RopTypes.variableReference:
 			return []
-		source = ctx.primaryRop.par.Source.eval()
+		source = ctx.primaryComp.par.Source.eval()
 		return [source] if source else []
 	def _getVariableReferences(ctx: ActionContext):
-		sources = ctx.selectedRops
+		sources = RopActionUtils.getSelectedRops(ctx)
 		return [
 			ropState.rop
-			for ropState in ctx.allRopStates
+			for ropState in RopActionUtils.getAllRopStates(ctx)
 			if ropState.info.opType == _RopTypes.variableReference and ropState.rop.par.Source.eval() in sources
 		]
 	actions = [
@@ -493,23 +493,23 @@ def _createGoToGroup(text: str):
 	)
 
 def _pulsePrimaryRopParam(ctx: ActionContext, par: str):
-	rop = ctx.primaryRop
+	rop = ctx.primaryOp
 	p = rop.par[par] if rop else None
 	if p is not None:
 		p.pulse()
 
 def _pulseSelectedRopParams(ctx: ActionContext, par: str):
-	for rop in ctx.selectedRops:
+	for rop in RopActionUtils.getSelectedRops(ctx):
 		p = rop.par[par]
 		if p is not None:
 			p.pulse()
 
 def _primaryRopHasParam(ctx: ActionContext, par: str):
-	rop = ctx.primaryRop
+	rop = ctx.primaryOp
 	return rop and rop.par[par] is not None
 
 def _anySelectedRopHasParam(ctx: ActionContext, par: str):
-	return any(rop.par[par] is not None for rop in ctx.selectedRops)
+	return any(rop.par[par] is not None for rop in RopActionUtils.getSelectedRops(ctx))
 
 # Can't just use == or `as` since it seems that different objects are instantiated when access vs referring to the same instances
 def _connsEqual(c1: 'Connector', c2: 'Connector'):
@@ -554,9 +554,9 @@ def _createSwapOrderAction(text):
 		return processPair(rops[1], rops[0], testOnly)
 
 	def isValid(ctx: ActionContext):
-		return processSelection(ctx.selectedRops, True)
+		return processSelection(RopActionUtils.getSelectedRops(ctx), True)
 	def execute(ctx: ActionContext):
-		processSelection(ctx.selectedRops, False)
+		processSelection(RopActionUtils.getSelectedRops(ctx), False)
 	return SimpleAction(text, isValid, execute)
 
 class _RopTypes:
