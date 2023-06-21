@@ -34,9 +34,6 @@ class ActionContext:
 	def primaryRop(self):
 		return self.primaryOp if _isRopOrComp(self.primaryOp) else None
 
-	@property
-	def primaryRopState(self): return ROPState(self.primaryRop)
-
 	def hasSelectedOps(
 			self,
 			minCount: int = 1, maxCount: Optional[int] = None,
@@ -358,44 +355,59 @@ class SimpleGroup(ActionGroup):
 
 @dataclass
 class OpSelect:
-	ropTypes: Optional[List[str]] = None
-	coordTypes: Optional[List[str]] = None
-	returnTypes: Optional[List[str]] = None
+	test: Optional[Callable[['OP'], bool]] = None
 	multi: bool = False
-	test: Optional[Callable[[ROPState], bool]] = None
 	minCount: int = 1
 	maxCount: Optional[int] = None
 	all: bool = False
 
-	def _matches(self, opState: ROPState) -> bool:
-		if not opState:
+	def matches(self, o: 'OP') -> bool:
+		if not o:
 			return False
 		if self.all:
 			return True
+		if self.test and not self.test(o):
+			return False
+		return True
+
+	def getOps(self, ctx: ActionContext) -> 'Optional[List[OP]]':
+		matches = []
+		primary = ctx.primaryOp
+		if primary and self.matches(primary):
+			matches.append(primary)
+		if self.multi:
+			for o in ctx.selectedOps:
+				if o not in matches and self.matches(o):
+					matches.append(o)
+		if len(matches) < self.minCount:
+			return None
+		if self.maxCount is not None and len(matches) > self.maxCount:
+			return None
+		return matches
+
+@dataclass
+class RopSelect(OpSelect):
+	ropTypes: Optional[List[str]] = None
+	coordTypes: Optional[List[str]] = None
+	returnTypes: Optional[List[str]] = None
+
+	def matches(self, o: 'OP') -> bool:
+		if not o:
+			return False
+		if self.all:
+			return True
+		opState = ROPState(o)
+		if not opState:
+			return False
 		if self.ropTypes and opState.info.opType not in self.ropTypes:
 			return False
 		if self.coordTypes and not opState.hasCoordType(*self.coordTypes):
 			return False
 		if self.returnTypes and not opState.hasReturnType(*self.returnTypes):
 			return False
-		if self.test and not self.test(opState):
+		if self.test and not self.test(o):
 			return False
 		return True
-
-	def getOps(self, ctx: ActionContext) -> 'Optional[List[OP]]':
-		matches = []
-		primaryRopState = ctx.primaryRopState
-		if primaryRopState and self._matches(primaryRopState):
-			matches.append(ctx.primaryRopState.rop)
-		if self.multi:
-			for opState in ctx.selectedRopStates:
-				if opState.rop not in matches and self._matches(opState):
-					matches.append(opState.rop)
-		if len(matches) < self.minCount:
-			return None
-		if self.maxCount is not None and len(matches) > self.maxCount:
-			return None
-		return matches
 
 @dataclass
 class OpAttach:
@@ -535,7 +547,7 @@ class ActionImpl(Action):
 
 @dataclass
 class GroupImpl(ActionGroup):
-	select: OpSelect
+	select: RopSelect
 	actions: Union[GetActionsFunc, List[Action]]
 
 	def isValid(self, ctx: ActionContext) -> bool:
