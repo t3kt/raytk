@@ -18,16 +18,6 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 	#else
 	float edge = THIS_Edge;
 	#endif
-	float x;
-	if (IS_TRUE(THIS_Enableblend)) {
-		x = smoothstep(0, THIS_Blend, q - edge);
-	} else {
-		x = step(edge, q);
-	}
-
-	if (IS_TRUE(THIS_Reverse)) {
-		x = 1.0 - x;
-	}
 
 	#ifdef THIS_HAS_INPUT_lowValue
 	ReturnT low = THIS_asReturnT(inputOp_lowValue(p, ctx));
@@ -40,6 +30,21 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 	#else
 	ReturnT high = THIS_asReturnT(THIS_Value2);
 	#endif
+
+	float x;
+	if (IS_TRUE(THIS_Enableblend)) {
+		#ifdef THIS_HAS_INPUT_blendFunction
+		x = clamp(inputOp_blendFunction(clamp(map01(q - edge, 0., THIS_Blend), 0., 1.), ctx), 0., 1.);
+		#else
+		x = smoothstep(0, THIS_Blend, q - edge);
+		#endif
+	} else {
+		x = step(edge, q);
+	}
+
+	if (IS_TRUE(THIS_Reverse)) {
+		x = 1.0 - x;
+	}
 
 	return mix(low, high, x);
 }

@@ -1,0 +1,3 @@
+name	label	code
+infinite	Infinite	
+limitxyz	Limited XYZ	d = max(d, fBox(p, l));

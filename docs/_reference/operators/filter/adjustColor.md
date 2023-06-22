@@ -27,6 +27,7 @@ op:
     required: true
     returnTypes:
     - vec4
+    - Sdf
   - contextTypes:
     - Context
     - MaterialContext
@@ -114,12 +115,13 @@ op:
     name: Hueoffset
   - label: Gamma
     name: Gamma
-  summary: Adjust properties of color values.
+  summary: Adjust properties of color values, either directly on a field, or on the
+    assigned surface color of an Sdf result.
   thumb: assets/images/reference/operators/filter/adjustColor_thumb.png
 
 ---
 
 
-Adjust properties of color values.
+Adjust properties of color values, either directly on a field, or on the assigned surface color of an Sdf result.
 
 This is similar to Level TOP and HSV Adjust TOP.

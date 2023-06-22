@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.sdf.crossSdf
-  opVersion: '13'
+  opVersion: '14'
   opStatus: default
 opDef: !def
   enable: true
@@ -38,6 +38,16 @@ inputs:
     Allcontexttype: true
   returnType: !returnT
     Returntypefloat: true
+- !input
+  Localalias: lengthField
+  Variableinputs: sizeField smoothRadiusField
+  coordType: !coordT
+    Coordtypevec3: true
+  contextType: !contextT
+    Allcontexttype: true
+  returnType: !returnT
+    Returntypefloat: true
+    Returntypevec4: true
 elements:
 - !opElement
   name: codeSwitcher_Axes
@@ -54,3 +64,18 @@ elements:
     Switchmode: autoconst
     Indexexpr: ''
     Placeholder: BODY();
+- !opElement
+  name: codeSwitcher_Shape
+  elementType: codeSwitcher
+  params:
+    Elementroot: ''
+    Table: !table
+      file: src/operators/sdf/crossSdf_shapes.txt
+      name: shapes
+    Param: Shape
+    Autoupdateparams: true
+    Manageparamstates: false
+    Alwaysincludeallparams: false
+    Switchmode: autoconst
+    Indexexpr: ''
+    Placeholder: SHAPE();

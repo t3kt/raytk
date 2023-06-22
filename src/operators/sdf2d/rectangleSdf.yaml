@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.sdf2d.rectangleSdf
-  opVersion: '11'
+  opVersion: '12'
   opStatus: default
 opDef: !def
   enable: true
@@ -37,7 +37,6 @@ inputs:
   contextType: !contextT
     Allcontexttype: true
   returnType: !returnT
-    Returntypefloat: true
     Returntypevec4: true
 elements:
 - !opElement

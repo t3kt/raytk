@@ -75,6 +75,12 @@ op:
       name: val
     - label: Luminance
       name: luma
+    - label: Sum(XY)
+      name: sumxy
+    - label: Sum(XYZ)
+      name: sumxyz
+    - label: Sum(XYZW)
+      name: sumxyzw
     name: Usepart
     summary: Which part of the vector to use for the float field.
   summary: Converts a vector value field to a float field using one part of the vector.

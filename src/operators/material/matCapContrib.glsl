@@ -1,5 +1,5 @@
 ReturnT thismap(CoordT p, ContextT ctx) {
-	float level = THIS_Level * THIS_Enable;
+	float level = THIS_Level * float(THIS_Enable);
 	vec3 reflected = reflect(ctx.ray.dir, ctx.normal);
 	float m = 2.8284271247461903 * sqrt( reflected.z+1.0 );
 	vec2 uv = reflected.xy / m;

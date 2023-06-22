@@ -1,6 +1,6 @@
 from abc import ABC
-from dataclasses import dataclass
-from typing import List, Optional, Callable
+from dataclasses import dataclass, field
+from typing import Any, Callable, Dict, List, Optional, Union
 from raytkUtil import isROP, isRComp, RaytkContext, ROPInfo
 
 # noinspection PyUnreachableCode
@@ -16,26 +16,10 @@ class ActionContext:
 	parentComp: 'COMP'
 	selectedOps: List['OP']
 	primaryOp: Optional['OP']
-	allRops: List['OP']
 
 	@property
-	def selectedRops(self):
-		return [o for o in self.selectedOps if _isRopOrComp(o)]
-
-	@property
-	def selectedRopStates(self):
-		return [ROPState(o) for o in self.selectedOps if _isRopOrComp(o)]
-
-	@property
-	def allRopStates(self):
-		return [ROPState(o) for o in self.allRops]
-
-	@property
-	def primaryRop(self):
-		return self.primaryOp if _isRopOrComp(self.primaryOp) else None
-
-	@property
-	def primaryRopState(self): return ROPState(self.primaryRop)
+	def primaryComp(self) -> Optional['COMP']:
+		return self.primaryOp if self.primaryOp and self.primaryOp.isCOMP else None
 
 	def hasSelectedOps(
 			self,
@@ -121,7 +105,6 @@ class ActionManager:
 			pane, comp,
 			selectedOps=comp.selectedChildren,
 			primaryOp=comp.currentChild,
-			allRops=RaytkContext().ropChildrenOf(comp),
 		)
 
 	def openMenu(self, popMenu: 'PopMenuExt'):
@@ -322,3 +305,258 @@ class ActionUtils:
 	@staticmethod
 	def isKnownRopType(pathOrOpType: str):
 		return ActionUtils.palette().IsKnownType(pathOrOpType)
+
+IsValidFunc = Callable[[ActionContext], bool]
+ExecuteFunc = Callable[[ActionContext], None]
+GetActionsFunc = Callable[[ActionContext], List[Action]]
+
+class SimpleAction(Action):
+	def __init__(
+			self, text: str,
+			isValid: Optional[IsValidFunc],
+			execute: ExecuteFunc,
+	):
+		super().__init__(text)
+		self._isValid = isValid
+		self._execute = execute
+
+	def isValid(self, ctx: ActionContext) -> bool: return self._isValid is None or self._isValid(ctx)
+	def execute(self, ctx: ActionContext): self._execute(ctx)
+
+class SimpleGroup(ActionGroup):
+	def __init__(
+			self, text: str,
+			isValid: Optional[IsValidFunc],
+			getActions: Union[GetActionsFunc, List[Action]],
+	):
+		super().__init__(text)
+		self._isValid = isValid
+		if isinstance(getActions, list):
+			self._getActions = lambda _: getActions
+		else:
+			self._getActions = getActions
+
+	def isValid(self, ctx: ActionContext) -> bool: return self._isValid is None or self._isValid(ctx)
+	def getActions(self, ctx: ActionContext) -> List[Action]: return self._getActions(ctx)
+
+@dataclass
+class OpSelect:
+	test: Optional[Callable[['OP'], bool]] = None
+	multi: bool = False
+	minCount: int = 1
+	maxCount: Optional[int] = None
+	all: bool = False
+
+	def matches(self, o: 'OP') -> bool:
+		if not o:
+			return False
+		if self.all:
+			return True
+		if self.test and not self.test(o):
+			return False
+		return True
+
+	def getOps(self, ctx: ActionContext) -> 'Optional[List[OP]]':
+		matches = []
+		primary = ctx.primaryOp
+		if primary and self.matches(primary):
+			matches.append(primary)
+		if self.multi:
+			for o in ctx.selectedOps:
+				if o not in matches and self.matches(o):
+					matches.append(o)
+		if len(matches) < self.minCount:
+			return None
+		if self.maxCount is not None and len(matches) > self.maxCount:
+			return None
+		return matches
+
+@dataclass
+class RopSelect(OpSelect):
+	ropTypes: Optional[List[str]] = None
+	coordTypes: Optional[List[str]] = None
+	returnTypes: Optional[List[str]] = None
+
+	def matches(self, o: 'OP') -> bool:
+		if not o:
+			return False
+		if self.all:
+			return True
+		opState = ROPState(o)
+		if not opState:
+			return False
+		if self.ropTypes and opState.info.opType not in self.ropTypes:
+			return False
+		if self.coordTypes and not opState.hasCoordType(*self.coordTypes):
+			return False
+		if self.returnTypes and not opState.hasReturnType(*self.returnTypes):
+			return False
+		if self.test and not self.test(o):
+			return False
+		return True
+
+@dataclass
+class OpAttach:
+	def placeAndAttach(self, newOp: 'COMP', fromOps: 'List[COMP]'):
+		raise NotImplementedError()
+
+@dataclass
+class AttachIntoExisting(OpAttach):
+	inputIndex: int = 0
+	outputIndex: int = 0
+	useNextInput: bool = False
+
+	def _nextInput(self, fromOp: 'COMP'):
+		inIndex = self.inputIndex
+		if not self.useNextInput:
+			return inIndex
+		for conn in fromOp.inputConnectors[inIndex:]:
+			if not conn.connections:
+				return conn.index
+
+	def placeAndAttach(self, newOp: 'COMP', fromOps: 'List[COMP]'):
+		for fromOp in fromOps:
+			i = self._nextInput(fromOp)
+			if i is None:
+				raise Exception('No input connector available')
+			newOp.nodeCenterY = fromOp.nodeCenterY - (150 * i)
+			newOp.nodeX = fromOp.nodeX - newOp.nodeWidth - 150
+			newOp.outputConnectors[self.outputIndex].connect(fromOp.inputConnectors[i])
+
+@dataclass
+class AttachOutFromExisting(OpAttach):
+	inputIndex: int = 0
+	outputIndex: int = 0
+
+	def placeAndAttach(self, newOp: 'COMP', fromOps: 'List[COMP]'):
+		newOp.nodeX = max(o.nodeX + o.nodeWidth for o in fromOps) + 100
+		newOp.nodeCenterY = sum(o.nodeCenterY for o in fromOps) / len(fromOps)
+		inputIndex = self.inputIndex
+		for i, fromOp in enumerate(sorted(fromOps, key=lambda r: r.nodeCenterY, reverse=True)):
+			newOp.inputConnectors[inputIndex].connect(fromOp.outputConnectors[self.outputIndex])
+			inputIndex += 1
+
+@dataclass
+class AttachOutputSelector(OpAttach):
+	def placeAndAttach(self, newOp: 'COMP', fromOps: 'List[COMP]'):
+		newOp.nodeX = fromOps[0].nodeX + newOp.nodeWidth + 100
+		newOp.nodeCenterY = fromOps[0].nodeCenterY - 200
+
+@dataclass
+class AttachReplacement(OpAttach):
+	def placeAndAttach(self, newOp: 'COMP', fromOps: 'List[COMP]'):
+		origOp = fromOps[0]
+		newOp.nodeX = origOp.nodeX
+		newOp.nodeY = origOp.nodeY
+		newInputCount = len(newOp.inputConnectors)
+		for i, origConn in enumerate(origOp.inputConnectors):
+			if i >= newInputCount:
+				break
+			if origConn.connections:
+				newOp.inputConnectors[i].connect(origConn.connections[0])
+		newOutputCount = len(newOp.outputConnectors)
+		for i, origConn in enumerate(origOp.outputConnectors):
+			if i >= newOutputCount:
+				break
+			for targetConn in origConn.connections:
+				newOp.outputConnectors[i].connect(targetConn)
+
+class OpInit:
+	def init(self, o: 'COMP', ctx: ActionContext):
+		raise NotImplementedError()
+
+@dataclass
+class InitSetParamOnPrimaryRop(OpInit):
+	name: str
+	val: Any
+
+	def init(self, o: 'COMP', ctx: ActionContext):
+		par = ctx.primaryOp.par[self.name]
+		if par is not None:
+			par.val = self.val
+
+@dataclass
+class InitAddToParamOnPrimaryRop(OpInit):
+	name: str
+
+	def init(self, o: 'COMP', ctx: ActionContext):
+		par = ctx.primaryOp.par[self.name]
+		if par is not None:
+			if par.val:
+				par.val += ' '
+			par.val += ctx.primaryOp.relativePath(o)
+
+@dataclass
+class InitLinkPrimaryToParam(OpInit):
+	paramName: str
+
+	def init(self, o: 'COMP', ctx: ActionContext):
+		o.par[self.paramName] = ctx.primaryOp
+
+@dataclass
+class InitBindParamsToPrimary(OpInit):
+	paramNames: Dict[str, str]
+
+	def init(self, o: 'COMP', ctx: ActionContext):
+		primary = ctx.primaryOp
+		exprBase = f"op('{o.relativePath(primary)}').par."
+		for srcName, destName in self.paramNames.items():
+			srcPar = primary.par[srcName]
+			destPar = o.par[destName]
+			if srcPar is not None and destPar is not None:
+				destPar.bindExpr = exprBase + srcName
+
+@dataclass
+class ActionImpl(Action):
+	ropType: str
+	select: OpSelect
+	attach: Optional[OpAttach] = None
+	params: Dict[str, Any] = field(default_factory=dict)
+	inits: List[Union[InitFunc, OpInit]] = field(default_factory=list)
+
+	def isValid(self, ctx: ActionContext) -> bool:
+		return ActionUtils.isKnownRopType(self.ropType) and bool(self.select.getOps(ctx))
+
+	def execute(self, ctx: ActionContext):
+		fromOps = self.select.getOps(ctx)
+		def init(o: 'COMP'):
+			if self.attach:
+				self.attach.placeAndAttach(o, fromOps or [])
+			for name, val in self.params.items():
+				o.par[name] = val
+			for initFn in self.inits:
+				if isinstance(initFn, OpInit):
+					initFn.init(o, ctx)
+				else:
+					initFn(o)
+		ActionUtils.createROP(self.ropType, init)
+
+@dataclass
+class GroupImpl(ActionGroup):
+	select: RopSelect
+	actions: Union[GetActionsFunc, List[Action]]
+
+	def isValid(self, ctx: ActionContext) -> bool:
+		return bool(self.select.getOps(ctx))
+
+	def getActions(self, ctx: ActionContext) -> List[Action]:
+		if isinstance(self.actions, list):
+			return self.actions
+		else:
+			return self.actions(ctx)
+
+class RopActionUtils:
+	@staticmethod
+	def getSelectedRops(ctx: ActionContext):
+		return [
+			o
+			for o in ctx.selectedOps
+			if _isRopOrComp(o)
+		]
+
+	@staticmethod
+	def getAllRopStates(ctx: ActionContext):
+		return [
+			ROPState(o)
+			for o in RaytkContext().ropChildrenOf(ctx.parentComp)
+		]

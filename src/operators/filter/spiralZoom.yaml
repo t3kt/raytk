@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.filter.spiralZoom
-  opVersion: '13'
+  opVersion: '14'
   opStatus: default
 paramPages:
 - !page
@@ -81,6 +81,13 @@ opDef: !def
     file: src/operators/filter/spiralZoom.glsl
     name: function
   paramGroupTable: eval_params
+  variableTable: !table
+    file: src/operators/filter/spiralZoom_variables.txt
+    name: variable_exprs
+    evaluate: true
+    evalOpts: !evalOpts
+      excludeFirstRow: true
+      cols: enable
   help: !text
     file: src/operators/filter/spiralZoom.md
     name: help
@@ -102,6 +109,7 @@ inputs:
     Allreturntype: true
 - !input
   Localalias: twistField
+  Variables: logdist
   coordType: !coordT
     Coordtypevec2: true
     Coordtypevec3: true
@@ -111,6 +119,7 @@ inputs:
     Returntypevec4: true
 - !input
   Localalias: phaseField
+  Variables: logdist
   Variableinputs: twistField
   coordType: !coordT
     Coordtypevec2: true

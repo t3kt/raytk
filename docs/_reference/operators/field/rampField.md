@@ -41,7 +41,6 @@ op:
     - vec4
     label: Point 1 Field
     name: point1Field
-    required: true
     returnTypes:
     - float
     - vec4
@@ -59,10 +58,22 @@ op:
     - vec4
     label: Point 2 Field
     name: point2Field
-    required: true
     returnTypes:
     - float
     - vec4
+  - contextTypes:
+    - Context
+    - MaterialContext
+    - CameraContext
+    - LightContext
+    - RayContext
+    - ParticleContext
+    coordTypes:
+    - float
+    label: Easing Function
+    name: easingFunc
+    returnTypes:
+    - float
   name: rampField
   opType: raytk.operators.field.rampField
   parameters:

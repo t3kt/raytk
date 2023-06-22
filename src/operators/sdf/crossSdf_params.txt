@@ -1,2 +1,2 @@
 names	source	handling	readOnlyHandling	conversion	enable
-Translate[xyz] Size[xyz] Smoothradius	param	runtime	macro		1
+Translate[xyz] Size[xyz] Smoothradius Length[xyz]	param	runtime	macro		1

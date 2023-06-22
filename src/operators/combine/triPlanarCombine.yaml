@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.combine.triPlanarCombine
-  opVersion: '2'
+  opVersion: '3'
   opStatus: beta
 opDef: !def
   enable: true
@@ -19,6 +19,9 @@ opDef: !def
     file: src/operators/combine/triPlanarCombine.glsl
     name: function
   paramGroupTable: eval_params
+  help: !text
+    file: src/operators/combine/triPlanarCombine.md
+    name: help
 multiInput: !multiInput
   Minimuminputs: 0
   Coordtypereductionmode: none
@@ -50,17 +53,6 @@ multiInput: !multiInput
         expr: parent().par.Returntype in ('auto','float')
       Returntypevec4: !expr
         expr: parent().par.Returntype in ('auto','vec4')
-  - !input
-    Localalias: zxField
-    coordType: !coordT
-      Coordtypevec2: true
-    contextType: !contextT
-      Allcontexttype: true
-    returnType: !returnT
-      Returntypefloat: !expr
-        expr: parent().par.Returntype in ('auto','float')
-      Returntypevec4: !expr
-        expr: parent().par.Returntype in ('auto','vec4')
 inputs:
 - !input
   Localalias: uvField
@@ -81,6 +73,17 @@ inputs:
     Allcontexttype: true
   returnType: !returnT
     Returntypevec4: true
+- !input
+  Localalias: zxField
+  coordType: !coordT
+    Coordtypevec2: true
+  contextType: !contextT
+    Allcontexttype: true
+  returnType: !returnT
+    Returntypefloat: !expr
+      expr: parent().par.Returntype in ('auto','float')
+    Returntypevec4: !expr
+      expr: parent().par.Returntype in ('auto','vec4')
 elements:
 - !opElement
   name: codeSwitcher_Blendmode

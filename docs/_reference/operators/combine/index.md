@@ -65,6 +65,7 @@ cat:
       allowing for fast switching.
   - name: triPlanarCombine
     status: beta
+    summary: Combines three 2D fields based on vectors like surface normals.
   summary: 'Operators that take two or more inputs and combine them into a single
 
     output.'

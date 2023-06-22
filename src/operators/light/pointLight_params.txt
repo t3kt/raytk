@@ -1,2 +1,4 @@
 names	source	handling	readOnlyHandling	conversion	enable
-Position[xyz] Color[rgb] Intensity Attenuationstart Attenuationend Enableattenuation Enableshadow	param	runtime	macro		1
+Position[xyz]	param	runtime	macro		op('position_definition').numRows < 2
+Color[rgb] Intensity Attenuationstart Attenuationend	param	runtime	macro		1
+Enableattenuation Enableshadow	param	runtime	constant		1

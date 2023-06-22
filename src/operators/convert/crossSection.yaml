@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.convert.crossSection
-  opVersion: '8'
+  opVersion: '9'
   opStatus: default
 opDef: !def
   enable: !expr
@@ -25,6 +25,7 @@ opDef: !def
     name: help
 inputs:
 - !input
+  Variableinputs: offsetField
   Required: true
   coordType: !coordT
     Allcoordtype: true

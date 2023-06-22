@@ -1,5 +1,49 @@
 # Release Notes
 
+## v0.35
+
+### Highlights
+
+* Palette usability improvements including placing new operators with the mouse!
+* Holographic materials!
+* Cool S SDF!!!
+
+### Details
+
+* Improvements / additions
+  * New OPs
+    * archSdf2d
+    * coolSSdf2d!
+    * hologramContrib - for depth-based hologram materials (#463)
+    * knitPattern
+  * New OP features
+    * axisLight/pointLight - position field input
+    * archSdf - field inputs
+    * arrange/combine/etc - improve handling of offsets for stair/column combine modes when offset is not driven by a field (#692)
+    * adjustColor - support use on Sdf surface color
+    * colorRampField - endpoint mode and easing function (#1094)
+    * crossSdf - limited length option (#1091)
+    * helixSdf - spread input (#1088)
+    * polygonSdf2d - option arbitrary number of sides (#1083)
+    * rampField - easing functions
+    * spiralZoom - variables
+    * stepField - easing functions
+    * vectorToFloat - sum modes
+  * Editor tools
+    * simplify rescaleField when possible (#1086)
+    * swap chain order
+    * indent parameter part names in animate menus
+  * Use placeOPs in the palette! (#22, #23)
+  * Documentation for various ops
+* Fixes
+  * Fix input variable settings and reorder inputs to match availability in many operators
+  * Fix rectangleSdf handling of float input for scale (#1085)
+  * Fix accidental required input in rampField
+  * Fix errors for optimization on parameters on many operators (#993)
+* Changes (potentially breaking)
+* Infrastructure / internals
+  * Infrastructure to support arbitrary suface attributes (#1046)
+
 ## v0.34
 
 ### Highlights

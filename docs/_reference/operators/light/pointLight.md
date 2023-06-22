@@ -13,14 +13,25 @@ op:
     - LightContext
     coordTypes:
     - vec3
+    label: Position Field
+    name: positionField
+    returnTypes:
+    - vec4
+    summary: Optional field that can control the color of the light based on the position
+      of surface hits where it is being applied. The resulting color is multiplied
+      by the `Color` parameter and `Intensity`.
+  - contextTypes:
+    - LightContext
+    coordTypes:
+    - vec3
     label: Color Field
     name: colorField
     returnTypes:
     - float
     - vec4
-    summary: Optional field that can control the color of the light based on the position
-      of surface hits where it is being applied. The resulting color is multiplied
-      by the `Color` parameter and `Intensity`.
+    summary: Optional field/function that controls the slope and coloration of the
+      attentuation rolloff is shaped. It can be used to make the light shift from
+      one color to another, or to control the sharpness of the rolloff.
   - contextTypes:
     - LightContext
     coordTypes:
@@ -30,9 +41,6 @@ op:
     returnTypes:
     - float
     - vec4
-    summary: Optional field/function that controls the slope and coloration of the
-      attentuation rolloff is shaped. It can be used to make the light shift from
-      one color to another, or to control the sharpness of the rolloff.
   name: pointLight
   opType: raytk.operators.light.pointLight
   parameters:

@@ -1,3 +1,4 @@
 names	source	handling	readOnlyHandling	conversion	enable
-Period[xyz] Phase Step	param	runtime	macro		1
-Iterations	param	macro			1
+Step	param	runtime	macro		1
+Period[xyz] Phase	param	runtime	macro		op('color_definition').numRows < 2
+Iterations	param	runtime	macro		1

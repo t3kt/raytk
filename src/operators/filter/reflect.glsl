@@ -44,7 +44,7 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 			float q0 = getAxis(q, axis) * dir;
 			THIS_exposeSide(ctx, sgn(q0));
 
-			float b = THIS_Blend * THIS_Enableblend;
+			float b = THIS_Blend * float(THIS_Enableblend);
 			q0 = sabs(q0, b);
 
 			setAxis(q, axis, q0 * dir);

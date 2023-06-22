@@ -1,0 +1,3 @@
+name	label	dataType	enable
+logdist	Log Distance	float	1
+dist	Distance	float	1

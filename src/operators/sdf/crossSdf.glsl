@@ -1,16 +1,19 @@
 ReturnT thismap(CoordT p, ContextT ctx) {
-	#ifdef THIS_HAS_INPUT_sizeField
-	vec3 s = THIS_Size * fillToVec3(inputOp_sizeField(p, ctx));
-	#else
 	vec3 s = THIS_Size;
+	#ifdef THIS_HAS_INPUT_sizeField
+	s *= fillToVec3(inputOp_sizeField(p, ctx));
 	#endif
-	#ifdef THIS_HAS_INPUT_smoothRadiusField
-	float r = THIS_Smoothradius * inputOp_smoothRadiusField(p, ctx);
-	#else
 	float r = THIS_Smoothradius;
+	#ifdef THIS_HAS_INPUT_smoothRadiusField
+	r *= inputOp_smoothRadiusField(p, ctx);
+	#endif
+	vec3 l = THIS_Length;
+	#ifdef THIS_HAS_INPUT_lengthField
+	l *= fillToVec3(inputOp_lengthField(p, ctx));
 	#endif
 	p -= THIS_Translate;
 	float d;
 	BODY();
+	SHAPE();
 	return createSdf(d);
 }

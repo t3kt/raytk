@@ -81,6 +81,10 @@ struct Sdf {
 	// x: 0/1 is transparent, y: (1 - alpha) inverted so defaults are better
 	vec2 transparent;
 	#endif
+
+	#ifdef RAYTK_HAS_ATTRS
+	Attrs attrs;
+	#endif
 };
 
 int resultMaterial1(Sdf res) { return int(res.mat.x); }
@@ -142,6 +146,9 @@ Sdf createSdf(float dist) {
 	#ifdef RAYTK_USE_TRANSPARENCY
 	res.transparent = vec2(0.);
 	#endif
+	#ifdef RAYTK_HAS_ATTRS
+	initAttrs(res.attrs);
+	#endif
 	return res;
 }
 
@@ -201,6 +208,10 @@ void blendInSdf(inout Sdf res1, in Sdf res2, in float amt) {
 	res1.transparent.x = max(res1.transparent.x, res2.transparent.x);
 	res1.transparent.y = mix(res1.transparent.y, res2.transparent.y, amt);
 	#endif
+
+	#ifdef RAYTK_HAS_ATTRS
+	mixAttrs(res1.attrs, res2.attrs, amt);
+	#endif
 }
 
 Sdf mixVals(in Sdf res1, in Sdf res2, float amt) {
@@ -220,6 +231,14 @@ bool hasColor(in Sdf res) {
 	return res.color.a > 0.;
 	#endif
 	return false;
+}
+
+vec3 getColor(in Sdf res) {
+	#ifdef RAYTK_USE_SURFACE_COLOR
+	return res.color.a > 0. ? res.color.rgb : vec3(0.);
+	#else
+	return vec3(0.);
+	#endif
 }
 
 void assignMaterial(inout Sdf res, int materialId) {
@@ -342,6 +361,7 @@ struct LightContext {
 	#if defined(RAYTK_TIME_IN_CONTEXT) || defined(RAYTK_USE_TIME)
 	Time time;
 	#endif
+	vec4 iteration;
 };
 
 LightContext createLightContext(Sdf res, vec3 norm) {
@@ -352,7 +372,20 @@ LightContext createLightContext(Sdf res, vec3 norm) {
 	#if defined(RAYTK_TIME_IN_CONTEXT) || defined(RAYTK_USE_TIME)
 	, getGlobalTime()
 	#endif
+	, vec4(0.)
 	);
+}
+
+void setIterationIndex(inout LightContext ctx, float index) {
+	ctx.iteration = vec4(index, 0., 0., 0.);
+}
+
+void setIterationCell(inout LightContext ctx, vec2 cell) {
+	ctx.iteration = vec4(cell, 0., 0.);
+}
+
+void setIterationCell(inout LightContext ctx, vec3 cell) {
+	ctx.iteration = vec4(cell, 0.);
 }
 
 struct MaterialContext {

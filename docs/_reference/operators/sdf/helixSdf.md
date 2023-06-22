@@ -52,6 +52,20 @@ op:
     - RayContext
     - ParticleContext
     coordTypes:
+    - float
+    - vec3
+    label: Spread Field
+    name: spreadField
+    returnTypes:
+    - float
+  - contextTypes:
+    - Context
+    - MaterialContext
+    - CameraContext
+    - LightContext
+    - RayContext
+    - ParticleContext
+    coordTypes:
     - vec2
     label: Cross Section Shape
     name: crossSection

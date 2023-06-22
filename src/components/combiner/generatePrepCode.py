@@ -57,7 +57,7 @@ def onCook(dat: 'DAT'):
 			]
 	if needOffset:
 		lines += [
-			f'float o = THIS_{offsetParam};',
+			f'float o = THIS_{offsetParam};'
 		]
 		if offsetField:
 			lines += [
@@ -65,5 +65,8 @@ def onCook(dat: 'DAT'):
 				f'o += inputOp_{offsetField}(p, ctx);',
 				'#endif',
 			]
+		else:
+			# this causes problems with offset fields, so only do it when not using a field
+			lines += ['o = mod(o, r / n * 2.);']
 
 	dat.write('\n'.join('\t' + line for line in lines))

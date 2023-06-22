@@ -1,0 +1,2 @@
+names	source	handling	readOnlyHandling	conversion	enable
+Scale[xy]	param	runtime	macro		op('scale_definition').numRows < 2

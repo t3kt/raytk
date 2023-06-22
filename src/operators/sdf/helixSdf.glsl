@@ -45,7 +45,11 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 		#endif
 	}
 	#endif
+	#ifdef THIS_HAS_INPUT_spreadField
+	float m = inputOp_spreadField(p0, ctx);
+	#else
 	float m = THIS_Spread;
+	#endif
 	float dualSpread = THIS_Dualspread * radius;
 	float halfm = m*.5,
 	b = mod(p.y, PI*m) - PI*halfm,

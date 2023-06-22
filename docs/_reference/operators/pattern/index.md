@@ -19,6 +19,8 @@ cat:
   - name: hexagonalGridPattern
   - name: hexagonalTruchetPattern
   - name: hexagonalWeavePattern
+  - name: knitPattern
+    status: beta
   - name: rosettePattern
   - name: snubQuadrilePattern
     status: beta
