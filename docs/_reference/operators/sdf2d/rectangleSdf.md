@@ -35,7 +35,6 @@ op:
     label: Translate Field
     name: translateField
     returnTypes:
-    - float
     - vec4
   name: rectangleSdf
   opType: raytk.operators.sdf2d.rectangleSdf

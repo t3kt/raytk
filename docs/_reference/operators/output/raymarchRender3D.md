@@ -277,6 +277,10 @@ op:
     name: Enablesecondaryraycast
   - label: Secondary Ray Cast
     name: Secondaryraycast
+  - label: Attributes
+    name: Headerattrs
+  - label: Attribute Definitions
+    name: Attributedefinitions
   - label: Customize Shader Config
     name: Customizeshaderconfig
   - label: Enable UV Output

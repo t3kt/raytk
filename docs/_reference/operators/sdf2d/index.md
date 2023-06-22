@@ -15,6 +15,8 @@ cat:
   - name: arbitraryPolygonSdf2d
     status: beta
   - name: arcSdf2d
+  - name: archSdf2d
+    status: beta
   - name: arrowSdf2d
   - keywords:
     - bezier
@@ -28,6 +30,7 @@ cat:
     summary: 2D circle SDF.
   - name: circleWaveSdf2d
     status: beta
+  - name: coolSSdf2d
   - name: cornerSdf2d
     summary: 2D SDF for an infinite corner, like an infinite square positioned by
       one corner.

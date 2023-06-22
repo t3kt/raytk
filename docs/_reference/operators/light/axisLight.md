@@ -13,6 +13,14 @@ op:
     - LightContext
     coordTypes:
     - vec3
+    label: Position Field
+    name: positionField
+    returnTypes:
+    - vec4
+  - contextTypes:
+    - LightContext
+    coordTypes:
+    - vec3
     label: Color Field
     name: colorField
     returnTypes:

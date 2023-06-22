@@ -125,6 +125,11 @@ op:
       that if this is not a whole integer, there will be a break in the spiral.
   summary: Transforms space using a logarithmic spiral.
   thumb: assets/images/reference/operators/filter/spiralZoom_thumb.png
+  variables:
+  - label: logdist
+    name: logdist
+  - label: dist
+    name: dist
 
 ---
 

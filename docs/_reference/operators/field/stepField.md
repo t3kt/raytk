@@ -82,6 +82,19 @@ op:
     returnTypes:
     - float
     - vec4
+  - contextTypes:
+    - Context
+    - MaterialContext
+    - CameraContext
+    - LightContext
+    - RayContext
+    - ParticleContext
+    coordTypes:
+    - float
+    label: Blend Function
+    name: blendFunction
+    returnTypes:
+    - float
   name: stepField
   opType: raytk.operators.field.stepField
   parameters:

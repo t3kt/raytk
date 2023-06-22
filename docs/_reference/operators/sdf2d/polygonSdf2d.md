@@ -22,6 +22,19 @@ op:
     name: radiusField
     returnTypes:
     - float
+  - contextTypes:
+    - Context
+    - MaterialContext
+    - CameraContext
+    - LightContext
+    - RayContext
+    - ParticleContext
+    coordTypes:
+    - vec2
+    label: Sides Field
+    name: sidesField
+    returnTypes:
+    - float
   name: polygonSdf2d
   opType: raytk.operators.sdf2d.polygonSdf2d
   parameters:
@@ -33,10 +46,14 @@ op:
       name: hexagon
     - label: Octogon
       name: octogon
+    - label: Custom
+      name: custom
     name: Shape
   - label: Radius
     name: Radius
     summary: The distance from the center to each edge.
+  - label: Sides
+    name: Sides
   summary: SDF for several types of 2D polygons.
   thumb: assets/images/reference/operators/sdf2d/polygonSdf2d_thumb.png
 

@@ -36,6 +36,20 @@ op:
     name: smoothRadiusField
     returnTypes:
     - float
+  - contextTypes:
+    - Context
+    - MaterialContext
+    - CameraContext
+    - LightContext
+    - RayContext
+    - ParticleContext
+    coordTypes:
+    - vec3
+    label: Length Field
+    name: lengthField
+    returnTypes:
+    - float
+    - vec4
   name: crossSdf
   opType: raytk.operators.sdf.crossSdf
   parameters:
@@ -59,6 +73,15 @@ op:
     - label: ZX
       name: zx
     name: Axes
+  - label: Shape
+    menuOptions:
+    - label: Infinite
+      name: infinite
+    - label: Limited XYZ
+      name: limitxyz
+    name: Shape
+  - label: Length
+    name: Length
   summary: An SDF for a 3D cross of infinite length along each axis.
   thumb: assets/images/reference/operators/sdf/crossSdf_thumb.png
 

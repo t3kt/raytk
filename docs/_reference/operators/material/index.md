@@ -37,6 +37,8 @@ cat:
       the color.'
   - name: goochShadingContrib
     summary: A material element that uses the Gooch shading model.
+  - name: hologramContrib
+    status: beta
   - name: iridescenceContrib
     status: beta
     summary: Shading element that produces a rainbow pattern around the edges of shapes,
