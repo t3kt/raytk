@@ -331,6 +331,8 @@ def _createExposeParamOrTupletAction(parOrTuplet: 'Union[Par, ParTupletT]'):
 	if isinstance(parOrTuplet, Par):
 		suffix = parOrTuplet.name.replace(parOrTuplet.tupletName, '').upper()
 		text = f'{parOrTuplet.label} ({suffix})'
+		if len(parOrTuplet.tuplet) > 1:
+			text = '  ' + text
 	else:
 		text = parOrTuplet[0].label
 	return SimpleAction(text, execute=execute, isValid=None)
