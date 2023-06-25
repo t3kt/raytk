@@ -12,7 +12,12 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 	// Calculate ray direction
 	vec3 up = THIS_Camup;
 	vec3 lookAt = THIS_Lookatpos;
-	vec3 camForward = normalize(lookAt - ray.pos);
+	vec3 camForward;
+	if (IS_TRUE(THIS_Enablelookat)) {
+		camForward = normalize(lookAt - ray.pos);
+	} else {
+		camForward = vec3(0., 0., 1.);
+	}
 	vec3 camRight = normalize(cross(camForward, up));
 	vec3 camUp = cross(camForward, camRight);
 	mat3 camOrient = mat3(camRight, camUp, camForward);
