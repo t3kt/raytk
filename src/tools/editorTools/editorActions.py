@@ -199,13 +199,23 @@ def _createRenderSelGroup(text: str):
 					InitSetParamOnPrimaryRop('Enablestepoutput', True),
 				]
 			),
+			ActionImpl(
+				'World Position Map',
+				ropType='raytk.operators.post.worldPosMap',
+				select=RopSelect(ropTypes=[_RopTypes.raymarchRender3d]),
+				attach=AttachOutputSelector(),
+				inits=[
+					InitLinkPrimaryToParam('Outputop'),
+					InitSetParamOnPrimaryRop('Enableworldposoutput', True),
+				]
+			),
 		]
 		for i in range(1, table.numRows):
 			if table[i, 'available'] == 'False':
 				continue
 			name = str(table[i, 'name'])
 			label = str(table[i, 'label'])
-			if name in ('depthOut', 'objectIdOut', 'nearHitOut', 'stepsOut'):
+			if name in ('depthOut', 'objectIdOut', 'nearHitOut', 'stepsOut', 'worldPosOut'):
 				label += ' (Raw)'
 			actions.append(
 				_createRenderSelAction(label, name, str(table[i, 'enablePar'] or ''))
