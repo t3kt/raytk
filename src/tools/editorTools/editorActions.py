@@ -434,6 +434,7 @@ def _createSimplifyRescaleFloatAction(text):
 		def init(self, o: 'COMP', ctx: ActionContext):
 			newRescale = o
 			origRescale = ctx.primaryComp
+			_copyParState(origRescale.par.Enable, newRescale.par.Enable)
 			_copyParState(origRescale.par.Inputlow1, newRescale.par.Inputrange1)
 			_copyParState(origRescale.par.Inputhigh1, newRescale.par.Inputrange2)
 			_copyParState(origRescale.par.Outputlow1, newRescale.par.Outputrange1)
@@ -450,6 +451,38 @@ def _createSimplifyRescaleFloatAction(text):
 		select=RopSelect(ropTypes=[_RopTypes.rescaleField], returnTypes=['float'], test=_isValid),
 		attach=AttachReplacement(),
 		inits=[_InitRescale()],
+	)
+
+def _createSimplifyRotateAction(text):
+	def _validateAndGetAxis(origRotate: 'OP'):
+		if origRotate.par['Rotatemode'] != 'axis':
+			return None
+		if origRotate.par['Usepivot']:
+			return None
+		axisParts = float(origRotate.par['Axisx'] or 0), float(origRotate.par['Axisy'] or 0), float(origRotate.par['Axisz'] or 0)
+		if axisParts == (1, 0, 0):
+			return 'x'
+		if axisParts == (0, 1, 0):
+			return 'y'
+		if axisParts == (0, 0, 1):
+			return 'z'
+	def _isValid(origRotate: 'OP'):
+		return _validateAndGetAxis(origRotate) is not None
+	class _InitRotate(OpInit):
+		def init(self, o: 'COMP', ctx: ActionContext):
+			newRotate = o
+			origRotate = ctx.primaryComp
+			axis = _validateAndGetAxis(origRotate)
+			_copyParState(origRotate.par.Enable, newRotate.par.Enable)
+			newRotate.par.Axis = axis
+			_copyParState(origRotate.par.Rotate, newRotate.par.Rotate)
+			origRotate.destroy()
+	return ActionImpl(
+		text,
+		ropType='raytk.operators.filter.axisRotate',
+		select=RopSelect(ropTypes=['raytk.operators.filter.rotate'], test=_isValid),
+		attach=AttachReplacement(),
+		inits=[_InitRotate()],
 	)
 
 def _copyParState(fromPar: 'Par', toPar: 'Par'):
@@ -795,5 +828,6 @@ def createActionManager():
 				InitAddToParamOnPrimaryRop('Attributedefinitions'),
 			],
 			params={'Attributename': 'attr1'}),
+		_createSimplifyRotateAction('Simplify Rotate'),
 	)
 	return manager
