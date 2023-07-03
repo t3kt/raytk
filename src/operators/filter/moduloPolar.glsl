@@ -60,7 +60,7 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 		#ifdef THIS_EXPOSE_centerdist
 		THIS_centerdist = length(q);
 		#endif
-		float r = THIS_Rotate;
+		float r = THIS_Rotate - radians(90.0);
 		#ifdef THIS_HAS_INPUT_rotateField
 		r += radians(inputOp_rotateField(p, ctx));
 		#endif
