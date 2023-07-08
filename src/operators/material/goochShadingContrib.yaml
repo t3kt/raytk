@@ -1,10 +1,11 @@
 !rop
 meta: !meta
   opType: raytk.operators.material.goochShadingContrib
-  opVersion: '13'
+  opVersion: '14'
   opStatus: default
 opDef: !def
   enable: true
+  useRuntimeBypass: true
   typeSpec: !ropTypes
     coordType: !coordT
       Coordtypevec3: true
