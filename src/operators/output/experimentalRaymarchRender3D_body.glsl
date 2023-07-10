@@ -284,10 +284,9 @@ vec4 renderSurfaceHit(Sdf res, vec3 p, MaterialContext matCtx) {
 
 	matCtx.reflectColor = renderSurfaceReflection(p, matCtx);
 
-//	matCtx.refractColor = renderSurfaceRefraction(p, matCtx);
+	matCtx.refractColor = renderSurfaceRefraction(p, matCtx);
 
 	vec3 col = getSurfaceColorAllLights(p, matCtx);
-
 	return vec4(col, 1.);
 }
 
