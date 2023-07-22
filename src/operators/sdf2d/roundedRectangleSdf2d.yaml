@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.sdf2d.roundedRectangleSdf2d
-  opVersion: '8'
+  opVersion: '9'
   opStatus: default
 opDef: !def
   enable: true
@@ -39,3 +39,19 @@ inputs:
   returnType: !returnT
     Returntypefloat: true
     Returntypevec4: true
+elements:
+- !opElement
+  name: codeSwitcher_Roundnessunit
+  elementType: codeSwitcher
+  params:
+    Elementroot: ''
+    Table: !table
+      file: src/operators/sdf2d/roundedRectangleSdf2d_roundnessUnits.txt
+      name: roundnessUnits
+    Param: Roundnessunit
+    Autoupdateparams: true
+    Manageparamstates: false
+    Alwaysincludeallparams: false
+    Switchmode: inline
+    Indexexpr: ''
+    Placeholder: ROUNDNESS_UNIT_BODY();
