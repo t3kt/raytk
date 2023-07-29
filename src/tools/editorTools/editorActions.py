@@ -784,6 +784,11 @@ def createActionManager():
 				returnTypes=['Light'],
 				multi=True, minCount=True, maxCount=None),
 			attach=AttachOutFromExisting()),
+		ActionImpl(
+			'Start custom transform',
+			ropType='raytk.operators.field.positionField',
+			select=RopSelect(ropTypes=['raytk.operators.filter.iteratedTransform']),
+			attach=AttachIntoExisting(inputIndex=4)),
 		_createVarRefGroup('Reference Variable'),
 		_createRenderSelGroup('Select Output Buffer'),
 		_createAnimateParamsGroup(
