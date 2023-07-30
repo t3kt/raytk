@@ -403,23 +403,13 @@ def buildParamChopNamesTable(dat: 'DAT', paramSpecTable: 'DAT'):
 	dat.appendRow(['angle', ' '.join(angleNames)])
 	dat.appendRow(['constant', ' '.join(constantNames)])
 
-def validateReferences(dat: 'scriptDAT'):
-	dat.clear()
-	dat.appendRow(['path', 'level', 'message'])
+def validateReferences(errorDat: 'scriptDAT'):
+	errorDat.clear()
+	errorDat.appendRow(['path', 'level', 'message'])
 	path = parent().path
-	def onError(err):
-		dat.appendRow([path, 'error', err])
-	_prepareReferences(onError=onError)
-
-def _prepareReferences(
-		dat: 'Optional[scriptDAT]' = None,
-		onError: 'Optional[Callable[[str], None]]' = None,
-):
 	table = parentPar().Referencetable.eval()
 	if not table or table.numRows < 2:
 		return []
-	hostName = parentPar().Name.eval()
-	namePrefix = hostName + '_'
 	for i in range(1, table.numRows):
 		localName = str(table[1, 'name'])
 		if localName == 'none' or not localName:
@@ -429,20 +419,7 @@ def _prepareReferences(
 			continue
 		sourceOp = op(sourcePath)
 		if not sourceOp:
-			if onError:
-				onError(f'Invalid source path for reference {localName}')
-			continue
-		dataType = table[i, 'dataType']
-		if dat:
-			globalName = namePrefix + localName
-			dat.appendRow([
-				globalName,
-				localName,
-				sourcePath,
-				table[i, 'sourceName'],
-				dataType,
-				hostName,
-			])
+			errorDat.appendRow([path, 'error', f'Invalid source path for reference {localName}'])
 
 def validateInputs(dat: 'scriptDAT', inputDefinitions: 'DAT'):
 	dat.clear()
