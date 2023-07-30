@@ -303,7 +303,7 @@ class ShaderBuilder:
 
 	def processReferenceTable(self, dat: 'scriptDAT'):
 		dat.clear()
-		dat.appendRow(['name', 'owner', 'localName', 'source', 'dataType'])
+		dat.appendRow(['name', 'owner', 'localName', 'source', 'dataType', 'category'])
 		defTable = self._definitionTable()
 		varNames = {}
 		states = self._parseOpStates()
@@ -331,6 +331,7 @@ class ShaderBuilder:
 					reference.localName,
 					sourceName,
 					reference.dataType,
+					reference.category or 'variable',
 				])
 
 	def processVariableTable(
@@ -565,6 +566,8 @@ class _VarRefChecker:
 		# print(f'Checking references from {node.state.name}')
 		# for each outgoing reference, check the graph along the ROPs outputs for a source
 		for reference in node.state.references:
+			if reference.category != 'category':
+				continue
 			# print(f' Checking reference {reference.name}')
 			refSourceNode = self.nodesByPath.get(reference.sourcePath)
 			if not refSourceNode:
@@ -1341,7 +1344,7 @@ def _parseOpStateJson(text: str):
 	arr = obj.get('references')
 	if arr:
 		state.references = [
-			# Reference(o['name'], o['localName'], o['sourcePath'], o['sourceName'], o['dataType'], o['owner'])
+			# Reference(o['name'], o['localName'], o['sourcePath'], o['sourceName'], o['dataType'], o['owner'], o['category'])
 			Reference(**o)
 			for o in arr
 		]

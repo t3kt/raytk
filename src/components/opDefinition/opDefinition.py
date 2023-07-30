@@ -751,6 +751,7 @@ class _Builder:
 				sourceName=str(table[i, 'sourceName']),
 				dataType=str(table[i, 'dataType']),
 				owner=self.opName,
+				category=str(table[i, 'category'] or 'variable'),
 			))
 
 	def loadVariables(self):

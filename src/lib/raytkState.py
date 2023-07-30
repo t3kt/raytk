@@ -98,6 +98,7 @@ class Reference(_StateObject):
 	sourceName: str
 	dataType: str
 	owner: str
+	category: Optional[str] = None
 
 @dataclass
 class Variable(_StateObject):
