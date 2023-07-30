@@ -29,7 +29,7 @@ opDef: !def
     evaluate: true
     evalOpts: !evalOpts
       excludeFirstRow: true
-      cols: enable
+      cols: enable dataType
 inputs:
 - !input
   Required: true

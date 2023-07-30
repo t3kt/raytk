@@ -6,6 +6,9 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 	#endif
 	#ifdef THIS_ATTR_EXISTS
 	{
+		#ifdef THIS_EXPOSE_previous
+		THIS_previous = res.attrs.THIS_NAME;
+		#endif
 		#ifdef THIS_HAS_INPUT_valueField
 		res.attrs.THIS_NAME = inputOp_valueField(p, ctx);
 		#else

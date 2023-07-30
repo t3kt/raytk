@@ -1,2 +1,3 @@
 name	label	dataType	enable	macros
-sdf	SDF Surface	Sdf	1
+previous	Previous Value	parent().par.Datatype	1	
+sdf	SDF Surface	'Sdf'	1	
