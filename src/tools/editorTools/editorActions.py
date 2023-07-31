@@ -617,6 +617,8 @@ class _RopTypes:
 	vectorToFloat = 'raytk.operators.convert.vectorToFloat'
 	variableReference = 'raytk.operators.utility.variableReference'
 	defineAttribute = 'raytk.operators.utility.defineAttribute'
+	assignAttribute = 'raytk.operators.filter.assignAttribute'
+	getAttribute = 'raytk.operators.utility.getAttribute'
 
 def createActionManager():
 	manager = ActionManager(
@@ -813,26 +815,18 @@ def createActionManager():
 		_createSwapOrderAction('Swap Chain Order'),
 		ActionImpl(
 			'Assign Attribute',
-			ropType='raytk.operators.filter.assignAttribute',
-			select=RopSelect(ropTypes=[_RopTypes.defineAttribute]),
+			ropType=_RopTypes.assignAttribute,
+			select=RopSelect(ropTypes=[_RopTypes.getAttribute]),
 			inits=[
 				InitBindParamsToPrimary({'Attributename': 'Attributename', 'Datatype': 'Datatype'}),
 			]),
 		ActionImpl(
 			'Reference Attribute',
-			ropType='raytk.operators.utility.getAttribute',
-			select=RopSelect(ropTypes=[_RopTypes.defineAttribute]),
+			ropType=_RopTypes.getAttribute,
+			select=RopSelect(ropTypes=[_RopTypes.assignAttribute]),
 			inits=[
 				InitBindParamsToPrimary({'Attributename': 'Attributename', 'Datatype': 'Datatype'}),
 			]),
-		ActionImpl(
-			'Add Attribute',
-			ropType=_RopTypes.defineAttribute,
-			select=RopSelect(ropTypes=[_RopTypes.raymarchRender3d]),
-			inits=[
-				InitAddToParamOnPrimaryRop('Attributedefinitions'),
-			],
-			params={'Attributename': 'attr1'}),
 		_createSimplifyRotateAction('Simplify Rotate'),
 	)
 	return manager
