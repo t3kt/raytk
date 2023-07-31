@@ -89,18 +89,19 @@ def _loadTypeFields():
 
 _typeFields = _loadTypeFields()
 
+def _getStateField(primaryOp: 'OP', fieldName: str):
+	opState = ROPState(primaryOp)
+	if not opState:
+		return None
+	stateText = opState.info.opStateText
+	if not stateText:
+		return None
+	stateObj = json.loads(stateText)
+	return stateObj.get(fieldName)
+
 def _createVarRefGroup(text: str):
 	def getVariableObjs(ctx: ActionContext) -> List[dict]:
-		opState = ROPState(ctx.primaryOp)
-		if not opState:
-			return []
-		stateText = opState.info.opStateText
-		if not stateText:
-			return []
-		stateObj = json.loads(stateText)
-		if not stateObj.get('variables'):
-			return []
-		return stateObj.get('variables')
+		return _getStateField(ctx.primaryOp, 'variables') or []
 	def isValid(ctx: ActionContext) -> bool:
 		return bool(getVariableObjs(ctx))
 
@@ -127,6 +128,34 @@ def _createVarRefGroup(text: str):
 				)
 		return actions
 	return SimpleGroup(text, isValid, getActions)
+
+def _createAttrRefGroup(text: str):
+	def test(o: 'OP'):
+		info = ROPInfo(o)
+		if not info or info.opType == _RopTypes.assignAttribute:
+			return False
+		return bool(_getStateField(o, 'attributes'))
+	class _LockPars(OpInit):
+		def init(self, o: 'COMP', ctx: ActionContext):
+			o.par.Attributename.readOnly = True
+			o.par.Datatype.readOnly = True
+	select = RopSelect(test=test)
+	def getActions(ctx: ActionContext) -> List[Action]:
+		return [
+			ActionImpl(
+				attributeObj.get('label') or attributeObj.get('name'),
+				ropType=_RopTypes.getAttribute,
+				select=select,
+				params={'Attributename': attributeObj['name'], 'Datatype': attributeObj['dataType']},
+				inits=[_LockPars()]
+			)
+			for attributeObj in _getStateField(ctx.primaryOp, 'attributes') or []
+		]
+	return GroupImpl(
+		text,
+		select=select,
+		actions=getActions
+	)
 
 def _createRenderSelAction(label: str, name: str, enablePar: str):
 	def execute(ctx: ActionContext):
@@ -827,6 +856,7 @@ def createActionManager():
 			inits=[
 				InitBindParamsToPrimary({'Attributename': 'Attributename', 'Datatype': 'Datatype'}),
 			]),
+		_createAttrRefGroup('Reference Attribute'),
 		_createSimplifyRotateAction('Simplify Rotate'),
 	)
 	return manager

@@ -779,6 +779,7 @@ class _Builder:
 			if table[i, 'category'] == 'attribute':
 				self.opState.attributes.append(SurfaceAttribute(
 					name=table[i, 'name'].val,
+					label=table[i, 'label'].val or table[i, 'name'].val,
 					dataType=table[i, 'dataType'].val,
 					macros=str(table[i, 'macros'] or ''),
 				))

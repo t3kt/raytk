@@ -113,6 +113,7 @@ class Variable(_StateObject):
 @dataclass
 class SurfaceAttribute(_StateObject):
 	name: str
+	label: str
 	dataType: str
 	macros: Optional[str] = None
 
