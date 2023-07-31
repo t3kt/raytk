@@ -44,6 +44,7 @@ class RopState(_StateObject):
 	buffers: Optional[List['Buffer']] = None
 	references: Optional[List['Reference']] = None
 	variables: Optional[List['Variable']] = None
+	attributes: Optional[List['SurfaceAttribute']] = None
 	dispatchBlocks: Optional[List['Dispatch']] = None
 
 	materialId: Optional[str] = None
@@ -94,10 +95,10 @@ class Texture(_StateObject):
 class Reference(_StateObject):
 	name: str
 	localName: str
-	sourcePath: str
-	sourceName: str
+	sourceName: Optional[str]
 	dataType: str
-	owner: str
+	owner: Optional[str]
+	sourcePath: Optional[str] = None
 	category: Optional[str] = None
 
 @dataclass
@@ -107,6 +108,12 @@ class Variable(_StateObject):
 	label: str
 	dataType: str
 	owner: str
+	macros: Optional[str] = None
+
+@dataclass
+class SurfaceAttribute(_StateObject):
+	name: str
+	dataType: str
 	macros: Optional[str] = None
 
 @dataclass

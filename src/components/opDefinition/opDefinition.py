@@ -1,7 +1,7 @@
 import json
 import math
 from raytkState import RopState, Macro, Texture, Reference, Variable, Dispatch, Buffer, ValidationError, Constant, \
-	InputState
+	InputState, SurfaceAttribute
 import re
 
 # noinspection PyUnreachableCode
@@ -492,7 +492,7 @@ def buildOpState():
 	builder.loadTextures()
 	builder.loadBuffers()
 	builder.loadReferences()
-	builder.loadVariables()
+	builder.loadVariablesAndAttributes()
 	builder.loadDispatchBlocks()
 
 	return builder.opState
@@ -737,40 +737,61 @@ class _Builder:
 			return
 		for i in range(1, table.numRows):
 			localName = str(table[1, 'name'])
-			sourcePath = str(table[1, 'sourcePath'])
-			if localName == 'none' or not localName or not sourcePath:
+			if localName == 'none':
 				continue
-			sourceOp = op(sourcePath)
-			if not sourceOp:
-				self.addError(f'Invalid source path for reference {localName}')
-				continue
-			self.opState.references.append(Reference(
-				name=self.namePrefix + localName,
-				localName=localName,
-				sourcePath=sourcePath,
-				sourceName=str(table[i, 'sourceName']),
-				dataType=str(table[i, 'dataType']),
-				owner=self.opName,
-				category=str(table[i, 'category'] or 'variable'),
-			))
+			if table[i, 'category'] == 'attribute':
+				self.opState.references.append(Reference(
+					name=self.namePrefix + localName,
+					localName=localName,
+					sourcePath=None,
+					sourceName=str(table[i, 'sourceName']),
+					dataType=str(table[i, 'dataType']),
+					owner=self.opName,
+					category='attribute',
+				))
+			else:
+				sourcePath = str(table[1, 'sourcePath'])
+				if not localName or not sourcePath:
+					continue
+				sourceOp = op(sourcePath)
+				if not sourceOp:
+					self.addError(f'Invalid source path for reference {localName}')
+					continue
+				self.opState.references.append(Reference(
+					name=self.namePrefix + localName,
+					localName=localName,
+					sourcePath=sourcePath,
+					sourceName=str(table[i, 'sourceName']),
+					dataType=str(table[i, 'dataType']),
+					owner=self.opName,
+					category='variable',
+				))
 
-	def loadVariables(self):
+	def loadVariablesAndAttributes(self):
 		self.opState.variables = []
+		self.opState.attributes = []
 		table = self.defPar.Variabletable.eval()
 		if not table or table.numRows < 2:
 			return
 		for i in range(1, table.numRows):
 			if _isFalseStr(table[i, 'enable']):
 				continue
-			localName = table[i, 'name'].val
-			self.opState.variables.append(Variable(
-				name=self.namePrefix + localName,
-				localName=localName,
-				label=table[i, 'label'].val or localName,
-				dataType=table[i, 'dataType'].val,
-				owner=self.opName,
-				macros=str(table[i, 'macros'] or ''),
-			))
+			if table[i, 'category'] == 'attribute':
+				self.opState.attributes.append(SurfaceAttribute(
+					name=table[i, 'name'].val,
+					dataType=table[i, 'dataType'].val,
+					macros=str(table[i, 'macros'] or ''),
+				))
+			else:
+				localName = table[i, 'name'].val
+				self.opState.variables.append(Variable(
+					name=self.namePrefix + localName,
+					localName=localName,
+					label=table[i, 'label'].val or localName,
+					dataType=table[i, 'dataType'].val,
+					owner=self.opName,
+					macros=str(table[i, 'macros'] or ''),
+				))
 
 	def loadDispatchBlocks(self):
 		self.opState.dispatchBlocks = []

@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.filter.assignAttribute
-  opVersion: '0'
+  opVersion: '1'
   opStatus: alpha
 opDef: !def
   enable: !expr
@@ -29,7 +29,7 @@ opDef: !def
     evaluate: true
     evalOpts: !evalOpts
       excludeFirstRow: true
-      cols: enable dataType
+      cols: name enable dataType
 inputs:
 - !input
   Required: true

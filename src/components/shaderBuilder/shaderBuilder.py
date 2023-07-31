@@ -2,7 +2,7 @@ from dataclasses import dataclass
 import json
 from raytkShader import simplifyNames
 from raytkState import RopState, Dispatch, Texture, Buffer, Macro, Reference, Variable, ValidationError, Constant, \
-	InputState
+	InputState, SurfaceAttribute
 import re
 from io import StringIO
 from typing import Callable, Dict, List, Tuple, Union, Optional
@@ -31,7 +31,6 @@ if False:
 		Supportmaterials: BoolParamT
 		Shaderbuilderconfig: CompParamT
 		Shadertype: StrParamT
-		Attributedefinitions: StrParamT
 
 	class _OwnerComp(COMP):
 		par: '_OwnerCompPar'
@@ -306,33 +305,50 @@ class ShaderBuilder:
 		dat.appendRow(['name', 'owner', 'localName', 'source', 'dataType', 'category'])
 		defTable = self._definitionTable()
 		varNames = {}
+		attrNames = set()
 		states = self._parseOpStates()
 		for state in states:
-			if not state.variables:
-				continue
-			for variable in state.variables:
-				varOwnerName = variable.owner
-				varOwnerPath = defTable[varOwnerName, 'path'].val
-				varNames[(varOwnerPath, variable.localName)] = variable.name
+			if state.variables:
+				for variable in state.variables:
+					varOwnerName = variable.owner
+					varOwnerPath = defTable[varOwnerName, 'path'].val
+					varNames[(varOwnerPath, variable.localName)] = variable.name
+			if state.attributes:
+				for attribute in state.attributes:
+					attrNames.add(attribute.name)
 		for state in states:
 			if not state.references:
 				continue
 			for reference in state.references:
-				if not reference.sourcePath or not reference.sourceName:
-					continue
-				sourceName = varNames.get((reference.sourcePath, reference.sourceName), None)
-				if not sourceName:
-					# TODO: report invalid ref
-					continue
-				# TODO: validate dataType match
-				dat.appendRow([
-					reference.name,
-					reference.owner,
-					reference.localName,
-					sourceName,
-					reference.dataType,
-					reference.category or 'variable',
-				])
+				if reference.category == 'attribute':
+					if not reference.name or reference.sourceName not in attrNames:
+						# TODO: report invalid ref
+						continue
+					# TODO: validate dataType match
+					dat.appendRow([
+						reference.name,
+						reference.owner,
+						reference.localName,
+						reference.sourceName,
+						reference.dataType,
+						'attribute',
+					])
+				else:
+					if not reference.sourcePath or not reference.sourceName:
+						continue
+					sourceName = varNames.get((reference.sourcePath, reference.sourceName), None)
+					if not sourceName:
+						# TODO: report invalid ref
+						continue
+					# TODO: validate dataType match
+					dat.appendRow([
+						reference.name,
+						reference.owner,
+						reference.localName,
+						sourceName,
+						reference.dataType,
+						'variable',
+					])
 
 	def processVariableTable(
 			self,
@@ -341,7 +357,11 @@ class ShaderBuilder:
 	):
 		dat.clear()
 		dat.appendRow(['name', 'owner', 'localName', 'dataType', 'macros'])
-		refNames = set(c.val for c in procRefTable.col('source')[1:])
+		refNames = set(
+			procRefTable[i, 'source'].val
+			for i in range(1, procRefTable.numRows)
+			if procRefTable[i, 'category'] == 'variable'
+		)
 		states = self._parseOpStates()
 		for state in states:
 			if not state.variables:
@@ -458,6 +478,7 @@ class ShaderBuilder:
 			typeDefMacroTable: 'DAT',
 			outputBufferTable: 'DAT',
 			variableTable: 'DAT',
+			referenceTable: 'DAT',
 	):
 		dat.clear()
 		dat.write(' ')
@@ -471,6 +492,7 @@ class ShaderBuilder:
 			libraryDats=self._getLibraryDats(),
 			outputBufferTable=outputBufferTable,
 			variableTable=variableTable,
+			referenceTable=referenceTable,
 		)
 		# import cProfile
 		# cProfile.runctx('writer.run(dat)', globals(), locals())
@@ -676,13 +698,14 @@ class _Writer:
 	libraryDats: 'List[DAT]'
 	outputBufferTable: 'DAT'
 	variableTable: 'DAT'
+	referenceTable: 'DAT'
 
 	inlineTypedefRepls: 'Optional[Dict[str, str]]' = None
 	inlineTypedefPattern: 'Optional[re.Pattern]' = None
 	dispatchBlocks: 'Optional[List[Dispatch]]' = None
 	textures: 'Optional[List[Texture]]' = None
 	buffers: 'Optional[List[Buffer]]' = None
-	attributes: 'Optional[List[_AttributeDef]]' = None
+	attributes: 'Optional[List[SurfaceAttribute]]' = None
 	out: 'Optional[StringIO]' = None
 
 	def __post_init__(self):
@@ -699,23 +722,13 @@ class _Writer:
 		self.textures = []
 		self.buffers = []
 		self.dispatchBlocks = []
-		self.attributes = []
 		attrNames = set()
-		for defComp in self.ownerComp.par.Attributedefinitions.evalOPs():
-			attr = _AttributeDef(
-				name=defComp.par.Attributename.eval(),
-				dataType=defComp.par.Datatype.eval(),
-				defaultValue=(
-					defComp.par.Defaultvaluex.eval(),
-					defComp.par.Defaultvaluey.eval(),
-					defComp.par.Defaultvaluez.eval(),
-					defComp.par.Defaultvaluew.eval(),
-				)
-			)
-			if not attr.name or attr.name in attrNames:
-				continue
-			self.attributes.append(attr)
-			attrNames.add(attr.name)
+		attrRefNames = [
+			self.referenceTable[i, 'source'].val
+			for i in range(1, self.referenceTable.numRows)
+			if self.referenceTable[i, 'category'] == 'attribute'
+		]
+		self.attributes = []
 		for state in self.opStates:
 			if state.dispatchBlocks:
 				self.dispatchBlocks += state.dispatchBlocks
@@ -723,6 +736,12 @@ class _Writer:
 				self.textures += state.textures
 			if state.buffers:
 				self.buffers += state.buffers
+			if state.attributes:
+				for attribute in state.attributes:
+					if attribute.name not in attrRefNames or attribute.name in attrNames:
+						continue
+					attrNames.add(attribute.name)
+					self.attributes.append(attribute)
 
 	def run(self, dat: 'scriptDAT'):
 		if self.defTable.numRows < 2:
@@ -801,11 +820,11 @@ class _Writer:
 				self._writeMacro(f'RAYTK_ATTR_EXISTS_{attr.name}')
 			self._writeLine('struct Attrs {')
 			for attr in self.attributes:
-				self._writeLine(f'  {attr.field()}')
+				self._writeLine(f'  {attr.dataType} {attr.name};')
 			self._writeLine('};')
 			self._writeLine('void initAttrs(inout Attrs a) {')
 			for attr in self.attributes:
-				self._writeLine(f'  a.{attr.name} = {attr.defaultExpr()};')
+				self._writeLine(f'  a.{attr.name} = {attr.dataType}(0.);')
 			self._writeLine('}')
 			self._writeLine('void mixAttrs(inout Attrs a, in Attrs b, float amt) {')
 			for attr in self.attributes:
@@ -1053,20 +1072,6 @@ class _Writer:
 
 	def _processCode(self, code: str):
 		return self._inlineTypedefs(code)
-
-@dataclass
-class _AttributeDef:
-	name: str
-	dataType: str
-	defaultValue: Tuple[float, float, float, float]
-
-	def field(self):
-		return f'{self.dataType} {self.name};'
-
-	def defaultExpr(self):
-		if self.dataType == 'float':
-			return str(self.defaultValue[0])
-		return f'vec4({self.defaultValue[0]}, {self.defaultValue[1]}, {self.defaultValue[2]}, {self.defaultValue[3]})'
 
 @dataclass
 class _ParamTupletSpec:
@@ -1348,10 +1353,16 @@ def _parseOpStateJson(text: str):
 			Reference(**o)
 			for o in arr
 		]
+	arr = obj.get('attributes')
+	if arr:
+		state.attributes = [
+			SurfaceAttribute(**o)
+			for o in arr
+		]
 	arr = obj.get('variables')
 	if arr:
 		state.variables = [
-			# Variable(o['name'], o['localName'], o.get('label'), o['dataType'], o['owner'], o.get('macros'))
+			# Variable(o['name'], o['localName'], o.get('label'), o['dataType'], o['owner'], o.get('macros'), o.get('category'))
 			Variable(**o)
 			for o in arr
 		]

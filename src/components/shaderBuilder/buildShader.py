@@ -12,4 +12,5 @@ def onCook(dat):
 		typeDefMacroTable=dat.inputs[1],
 		outputBufferTable=dat.inputs[2],
 		variableTable=dat.inputs[3],
+		referenceTable=dat.inputs[4],
 	)
