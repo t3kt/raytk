@@ -87,6 +87,9 @@ void THIS_apply(inout CoordT p, inout ContextT ctx) {
 		}
 	}
 	#endif
+	#ifdef THIS_EXPOSE_shiftedcellcoord
+	THIS_shiftedcellcoord = c - sh;
+	#endif
 	// offset field can use iteration
 	vec2 o = THIS_Offset;
 	#ifdef THIS_HAS_INPUT_offsetField

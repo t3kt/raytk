@@ -73,7 +73,7 @@ void THIS_apply(inout CoordT p, inout ContextT ctx) {
 	}
 	#endif
 	#ifdef THIS_EXPOSE_shiftedcellcoord
-	THIS_shiftedcellcoord = c - sh * 0.5;
+	THIS_shiftedcellcoord = c - sh;
 	#endif
 
 	// offset field can use iteration
