@@ -2,7 +2,7 @@
 meta: !meta
   opType: raytk.operators.utility.variableReference
   opVersion: '19'
-  opStatus: default
+  opStatus: alpha
 opDef: !def
   enable: !expr
     expr: op('..').par.Enable

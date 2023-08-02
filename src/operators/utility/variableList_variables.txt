@@ -1,0 +1,8 @@
+name	label	dataType	enable
+parent().par.Name1 or 'var1'	parent().par.Name1 or 'var1'	op('variable1_definition')[1, 'returnType'] or ''	int(op('variable1_definition').numRows > 1)
+parent().par.Name2 or 'var2'	parent().par.Name2 or 'var2'	op('variable2_definition')[1, 'returnType'] or ''	int(op('variable2_definition').numRows > 1)
+parent().par.Name3 or 'var3'	parent().par.Name3 or 'var3'	op('variable3_definition')[1, 'returnType'] or ''	int(op('variable3_definition').numRows > 1)
+parent().par.Name4 or 'var4'	parent().par.Name4 or 'var4'	op('variable4_definition')[1, 'returnType'] or ''	int(op('variable4_definition').numRows > 1)
+parent().par.Name5 or 'var5'	parent().par.Name5 or 'var5'	op('variable5_definition')[1, 'returnType'] or ''	int(op('variable5_definition').numRows > 1)
+parent().par.Name6 or 'var6'	parent().par.Name6 or 'var6'	op('variable6_definition')[1, 'returnType'] or ''	int(op('variable6_definition').numRows > 1)
+parent().par.Name7 or 'var7'	parent().par.Name7 or 'var7'	op('variable7_definition')[1, 'returnType'] or ''	int(op('variable7_definition').numRows > 1)
