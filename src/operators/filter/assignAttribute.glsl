@@ -4,7 +4,7 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 	#ifdef THIS_EXPOSE_sdf
 	THIS_sdf = res;
 	#endif
-	#ifdef THIS_ATTR_EXISTS
+	#ifdef THIS_HAS_ATTR
 	{
 		#ifdef THIS_EXPOSE_previous
 		THIS_previous = res.attrs.THIS_NAME;

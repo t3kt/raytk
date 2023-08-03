@@ -817,7 +817,7 @@ class _Writer:
 		if self.attributes:
 			self._writeMacro('RAYTK_HAS_ATTRS')
 			for attr in self.attributes:
-				self._writeMacro(f'RAYTK_ATTR_EXISTS_{attr.name}')
+				self._writeMacro(f'RAYTK_HAS_ATTR_{attr.name}')
 			self._writeLine('struct Attrs {')
 			for attr in self.attributes:
 				self._writeLine(f'  {attr.dataType} {attr.name};')
