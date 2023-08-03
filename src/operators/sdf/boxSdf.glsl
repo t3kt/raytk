@@ -7,7 +7,7 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 	Sdf res;
 	int infAxis = int(THIS_Infiniteaxis);
 	if (infAxis == 0) {
-		res = createSdf(THIS_BOX_FUNC_3D(p, scale));
+		res = createSdf(fBox(p, scale));
 		switch (int(THIS_Uvmode)) {
 			case THISTYPE_Uvmode_bounds:
 				assignUV(res, map01(p, -scale/2., scale/2.));
@@ -72,7 +72,7 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 				}
 			break;
 		}
-		res = createSdf(THIS_BOX_FUNC_2D(q, s));
+		res = createSdf(fBox2(q, s));
 		switch (THIS_Uvmode) {
 			case THISTYPE_Uvmode_bounds:
 			case THISTYPE_Uvmode_faces:

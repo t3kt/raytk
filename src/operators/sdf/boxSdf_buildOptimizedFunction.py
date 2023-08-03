@@ -19,10 +19,8 @@ def buildCode():
 	p = parent().par
 	axis = p.Infiniteaxis.eval()
 	uvMode = p.Uvmode.eval()
-	boxType = p.Boxtype.eval()
 	if axis == 'none':
-		fn = 'fBoxCheap' if boxType == 'boxcheap' else 'fBox'
-		out.write(f'Sdf res = createSdf({fn}(p, scale));\n')
+		out.write(f'Sdf res = createSdf(fBox(p, scale));\n')
 		if uvMode == 'bounds':
 			out.write('assignUV(res, map01(p, -scale/2., scale/2.));\n')
 		elif uvMode == 'faces':
@@ -32,9 +30,8 @@ def buildCode():
 			out.write('else if (boxFaces.y != 0.) assignUV(res, vec3(pNorm.z * boxFaces.y, pNorm.x, 0.));')
 			out.write('else if (boxFaces.z != 0.) assignUV(res, vec3(pNorm.x * boxFaces.z, pNorm.y, 0.));')
 	else:
-		fn = 'fBox2Cheap' if boxType == 'boxcheap' else 'fBox2'
 		swiz = {'x': 'yz', 'y': 'zx', 'z': 'xy'}[axis]
-		out.write(f'Sdf res = createSdf({fn}(p.{swiz}, scale.{swiz}));\n')
+		out.write(f'Sdf res = createSdf(fBox2(p.{swiz}, scale.{swiz}));\n')
 		if uvMode == 'bounds':
 			out.write('vec3 uv = map01(p, -scale/2., scale/2.);\n')
 			out.write(f'uv.{axis} = p.{axis};\n')

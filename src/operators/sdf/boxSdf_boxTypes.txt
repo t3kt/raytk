@@ -1,3 +1,0 @@
-type	func3d	func2d
-boxcheap	fBoxCheap	fBox2Cheap
-box	fBox	fBox2
