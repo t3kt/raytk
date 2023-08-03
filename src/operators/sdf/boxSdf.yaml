@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.sdf.boxSdf
-  opVersion: '22'
+  opVersion: '23'
   opStatus: default
 opDef: !def
   enable: true
@@ -14,6 +14,13 @@ opDef: !def
       Returntypesdf: true
   function: function
   paramGroupTable: eval_params
+  variableTable: !table
+    file: src/operators/sdf/boxSdf_variables.txt
+    name: variable_exprs
+    evaluate: true
+    evalOpts: !evalOpts
+      excludeFirstRow: true
+      cols: enable
   help: !text
     file: src/operators/sdf/boxSdf.md
     name: help

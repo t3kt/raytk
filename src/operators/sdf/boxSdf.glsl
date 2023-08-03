@@ -24,6 +24,9 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 				}
 				break;
 		}
+		#ifdef RAYTK_HAS_ATTR_edgedist
+			res.attrs.edgedist = min(distance(abs(p.xy), scale.xy), min(distance(abs(p.zx), scale.zx), distance(abs(p.yz), scale.yz)));
+		#endif
 	} else {
 		vec2 q;
 		vec2 s;
@@ -79,6 +82,9 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 				assignUV(res, uv);
 				break;
 		}
+		#ifdef RAYTK_HAS_ATTR_edgedist
+			res.attrs.edgedist = distance(abs(q), s);
+		#endif
 	}
 	return res;
 }
