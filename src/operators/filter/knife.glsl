@@ -20,7 +20,13 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 		#if defined(THIS_RETURN_TYPE_float)
 		res = max(plane, res);
 		#elif defined(THIS_RETURN_TYPE_Sdf)
-		res.x = max(plane, res.x);
+		{
+			if (IS_TRUE(THIS_Enablesmoothing)) {
+				res.x = fOpIntersectionRound(res.x, plane, THIS_Smoothradius);
+			} else {
+				res.x = max(plane, res.x);
+			}
+		}
 		#else
 		#error invalidReturnType
 		#endif
