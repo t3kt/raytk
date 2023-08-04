@@ -1,5 +1,46 @@
 # Release Notes
 
+## v0.36
+
+### Highlights
+
+* x
+
+### Details
+
+* Improvements / additions
+  * New OPs
+    * isoscelesTriangleSdf2d - specialized version of triangleSdf2d with more field inputs
+    * texture1dField - specialized TOP input for things like color ramps (#1112)
+    * variableList - define a sequence of variables for use in upstream operators, similar to provideVariable but designed for more complex scenarios (#1116)
+    * vesicaSegmentSdf, vesicaSegmentSdf2d - similar to line segments but with tapering (#1104)
+  * New OP features
+    * assignAttribute - previous value variable to allow modifying existing attributes (#1046)
+    * assignAttribute/getAttribute - got rid of the defineAttribute operator to treat attributes more like variables (#1046)
+    * boxSdf - automatically produce an "edge distance" attribute, as a test case for this type of feature (#1113)
+    * fisheyeCamera - toggle for look at position
+    * modularMat - expose sdf surface as a variable
+    * modulo1D, modulo2D, modulo3D - shifted cell index variables that counteract the shift parameter
+    * multiLight - automatically disable lights when level is zero
+    * pausingWaveFn - field inputs for low and high width
+    * petalSdf - field inputs for width and wrap
+    * roundedRectangleSdf2d - option to scale rounding based on size (#1107)
+  * Editor tools
+    * Indent names for param parts in expose param menu
+    * New action to create a worldPosMap
+    * New action to simplify rotate to axisRotate (when possible)
+    * New action to set up positionField input for custom transform on iteratedTransform
+    * New action to create attribute references from ops that produce them (#1046)
+* Fixes
+  * goochShadingContrib - fix shader error (#1105)
+  * lfoGenerator - fix channel names not updating when changed
+  * moduloPolar - fix angle conversion when using optimized mode (#1101)
+  * moduloPolar - fix variable input validation settings
+* Changes (potentially breaking)
+  * boxSdf - remove the "box type" option since the "cheap" mode wasn't useful or beneficial
+* Infrastructure / internals
+  * Change to implicit definition of attributes, with declarations in `variables` tables and references in the `references` tables. Effectively this treats attributes like a type of variable but without explicit references to a source operator.
+
 ## v0.35
 
 ### Highlights
