@@ -4,3 +4,6 @@ loop	Loop	val = wrapRange(val, low, high);	Low[1-4] High[1-4]
 zigzag	Zig-Zag	val = modZigZag(val, low, high);	Low[1-4] High[1-4]
 clamplow	Clamp Low	val = max(val, low);	Low[1-4]
 clamphigh	Clamp High	val = min(val, high);	High[1-4]
+smoothclamp	Smooth Clamp	val = smin(smax(val, low, b), high, b);	Low[1-4] High[1-4] Blending
+smoothclamplow	Smooth Clamp Low	val = smax(val, low, b);	Low[1-4] Blending
+smoothclamphigh	Smooth Clamp High	val = smin(val, high, b);	High[1-4] Blending
