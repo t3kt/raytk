@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.filter.radialClone
-  opVersion: '24'
+  opVersion: '25'
   opStatus: default
 opDef: !def
   enable: !expr
@@ -68,6 +68,17 @@ inputs:
     Allcontexttype: true
   returnType: !returnT
     Returntypefloat: true
+- !input
+  Localalias: blendRadiusField
+  Variables: '*'
+  Required: true
+  coordType: !coordT
+    Coordtypevec2: true
+    Coordtypevec3: true
+  contextType: !contextT
+    Allcontexttype: true
+  returnType: !returnT
+    Returntypefloat: true
 elements:
 - !opElement
   name: combiner
@@ -79,7 +90,7 @@ elements:
     Radiusparam: Mergeradius
     Numberparam: Mergenumber
     Offsetparam: Mergeoffset
-    Radiusfield: ''
+    Radiusfield: blendRadiusField
     Offsetfield: ''
     Numberfield: ''
     Manageparamstates: true
