@@ -19,6 +19,9 @@
     * assignAttribute/getAttribute - got rid of the defineAttribute operator to treat attributes more like variables (#1046)
     * boxSdf - automatically produce an "edge distance" attribute, as a test case for this type of feature (#1113)
     * fisheyeCamera - toggle for look at position
+    * gridClone/linearClone/radialClone - blend radius field inputs (#1119)
+    * knife - smoothing like in slice (#1108)
+    * limitField - smooth clamping
     * modularMat - expose sdf surface as a variable
     * modulo1D, modulo2D, modulo3D - shifted cell index variables that counteract the shift parameter
     * multiLight - automatically disable lights when level is zero
