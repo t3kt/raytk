@@ -1,8 +1,8 @@
 !rop
 meta: !meta
   opType: raytk.operators.filter.assignAttribute
-  opVersion: '2'
-  opStatus: alpha
+  opVersion: '3'
+  opStatus: beta
 opDef: !def
   enable: !expr
     expr: op('..').par.Enable
