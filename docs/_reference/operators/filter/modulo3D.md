@@ -136,6 +136,8 @@ op:
     name: cellcoord
   - label: normcoord
     name: normcoord
+  - label: shiftedcellcoord
+    name: shiftedcellcoord
 
 ---
 

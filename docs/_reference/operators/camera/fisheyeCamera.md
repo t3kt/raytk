@@ -45,6 +45,8 @@ op:
     summary: Coordinates that the camera should face.
   - label: Up Vector
     name: Camup
+  - label: Enable Look At
+    name: Enablelookat
   summary: A 360 fisheye camera, that shows all directions from a specific point in
     space.
   thumb: assets/images/reference/operators/camera/fisheyeCamera_thumb.png

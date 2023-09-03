@@ -175,6 +175,8 @@ op:
     name: tiledquad
   - label: normcoord
     name: normcoord
+  - label: shiftedcellcoord
+    name: shiftedcellcoord
 
 ---
 

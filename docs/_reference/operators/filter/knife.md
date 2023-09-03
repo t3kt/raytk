@@ -72,6 +72,13 @@ op:
     - label: Z
       name: z
     name: Axis
+  - label: Enable Smoothing
+    name: Enablesmoothing
+    summary: Whether to smooth the transition on each side of the slice down to a
+      size of zero.
+  - label: Smooth Radius
+    name: Smoothradius
+    summary: The amount of smoothing distance.
   summary: Cuts off an SDF along a plane.
   thumb: assets/images/reference/operators/filter/knife_thumb.png
 

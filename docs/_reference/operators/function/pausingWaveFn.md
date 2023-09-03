@@ -8,6 +8,33 @@ redirect_from:
   - /reference/opType/raytk.operators.function.pausingWaveFn/
 op:
   category: function
+  inputs:
+  - contextTypes:
+    - Context
+    - MaterialContext
+    - CameraContext
+    - LightContext
+    - RayContext
+    - ParticleContext
+    coordTypes:
+    - float
+    label: Low Width Field
+    name: lowWidthField
+    returnTypes:
+    - float
+  - contextTypes:
+    - Context
+    - MaterialContext
+    - CameraContext
+    - LightContext
+    - RayContext
+    - ParticleContext
+    coordTypes:
+    - float
+    label: High Width Field
+    name: highWidthField
+    returnTypes:
+    - float
   keywords:
   - toggle
   - wave

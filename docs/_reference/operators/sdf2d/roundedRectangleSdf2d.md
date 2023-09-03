@@ -53,6 +53,13 @@ op:
     summary: The distance of rounding for each of the four corners. When the roundness
       exceeds half the `Scale`, the rectangle will have discontinuities along the
       axes.
+  - label: Roundness Unit
+    menuOptions:
+    - label: Distance
+      name: dist
+    - label: Ratio of Scale
+      name: ratio
+    name: Roundnessunit
   summary: SDF for a 2D rectangle with optionally rounded corners.
   thumb: assets/images/reference/operators/sdf2d/roundedRectangleSdf2d_thumb.png
 

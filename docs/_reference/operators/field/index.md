@@ -96,6 +96,8 @@ cat:
     status: beta
   - name: stepField
     summary: A field that switches between two values at a threshold point.
+  - name: texture1dField
+    status: beta
   - name: texture3dField
   - name: textureField
     summary: A float or vector field that looks up values from a texture.
