@@ -31,13 +31,10 @@ op:
   name: boxSdf
   opType: raytk.operators.sdf.boxSdf
   parameters:
-  - label: Box Type
-    menuOptions:
+  - menuOptions:
     - description: A bit more efficient but slightly less accurate.
-      label: Box Cheap
       name: boxcheap
     - description: More accurate but slightly less efficient.
-      label: Box
       name: box
     name: Boxtype
     summary: The type of box function.

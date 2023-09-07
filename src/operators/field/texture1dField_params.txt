@@ -1,0 +1,4 @@
+names	source	handling	readOnlyHandling	conversion	enable
+Extendmode	param	macro			1
+Length	special	runtime	macro		1
+Axis	param	runtime	constant		1

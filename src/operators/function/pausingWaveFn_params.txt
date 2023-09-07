@@ -1,2 +1,3 @@
 names	source	handling	readOnlyHandling	conversion	enable
-Lowwidth Highwidth	param	runtime	macro		1
+Lowwidth	param	runtime	macro		op('lowWidth_definition').numRows < 2
+Highwidth	param	runtime	macro		op('highWidth_definition').numRows < 2

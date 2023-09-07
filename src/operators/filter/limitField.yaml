@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.filter.limitField
-  opVersion: '18'
+  opVersion: '19'
   opStatus: default
 paramPages:
 - !page
@@ -56,6 +56,7 @@ opDef: !def
   function: !text
     file: src/operators/filter/limitField.glsl
     name: functionTemplate
+  paramGroupTable: eval_params
   libraryNames: !expr
     expr: op('modZigZag')
   help: !text
@@ -100,6 +101,16 @@ inputs:
   returnType: !returnT
     Returntypefloat: true
     Returntypevec4: true
+- !input
+  Localalias: blendingField
+  Variableinputs: inputOp1 lowField highField
+  Required: true
+  coordType: !coordT
+    Allcoordtype: true
+  contextType: !contextT
+    Allcontexttype: true
+  returnType: !returnT
+    Returntypefloat: true
 elements:
 - !opElement
   name: codeSwitcher_Limittype

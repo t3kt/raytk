@@ -160,6 +160,8 @@ op:
     name: normal
   - label: reflectcolor
     name: reflectcolor
+  - label: sdf
+    name: sdf
 
 ---
 

@@ -60,6 +60,9 @@ vec3 THIS_getColor(CoordT p, MaterialContext matCtx) {
 	#ifdef THIS_EXPOSE_lightpos
 	THIS_lightpos = matCtx.light.pos;
 	#endif
+	#ifdef THIS_EXPOSE_sdf
+	THIS_sdf = matCtx.result;
+	#endif
 	#ifdef THIS_EXPOSE_surfacecolor
 	{
 		#ifdef RAYTK_USE_SURFACE_COLOR

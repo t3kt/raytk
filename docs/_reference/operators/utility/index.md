@@ -10,6 +10,8 @@ cat:
   operators:
   - name: exposeValue
     status: beta
+  - name: getAttribute
+    status: beta
   - name: injectGlobalPosition
     summary: Calls its input using the untransformed global position.
   - name: injectObjectId
@@ -27,6 +29,8 @@ cat:
   - name: sceneState
     status: beta
   - name: speedGenerator
+    status: beta
+  - name: variableList
     status: beta
   - name: variableReference
     summary: Accesses the value of a variable provided by another operator.

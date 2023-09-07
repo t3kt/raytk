@@ -1,0 +1,3 @@
+name	label	code
+dist	Distance	
+ratio	Ratio of Scale	r *= vmin(s);

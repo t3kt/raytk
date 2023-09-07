@@ -1,0 +1,3 @@
+names	source	handling	readOnlyHandling	conversion	enable
+Height	param	runtime	macro		op('height_definition').numRows < 2
+Width	param	runtime	macro		op('width_definition').numRows < 2

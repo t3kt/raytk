@@ -1,6 +1,6 @@
 ReturnT thismap(CoordT p, ContextT ctx) {
 	ReturnT res;
-	#ifndef THIS_ATTR_EXISTS
+	#ifndef THIS_HAS_ATTR
 	res = ReturnT(0.);
 	#else
 	{

@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.filter.moduloPolar
-  opVersion: '27'
+  opVersion: '29'
   opStatus: default
 opDef: !def
   enable: !expr
@@ -49,7 +49,7 @@ inputs:
     Allreturntype: true
 - !input
   Localalias: preRotateField
-  Variables: step normstep
+  Variables: step normstep centerdist globalangle normglobalangle normlocalangle
   coordType: !coordT
     Coordtypevec2: true
     Coordtypevec3: true
@@ -59,7 +59,7 @@ inputs:
     Returntypefloat: true
 - !input
   Localalias: offsetField
-  Variables: step normstep
+  Variables: step normstep centerdist globalangle normglobalangle normlocalangle
   Variableinputs: preRotateField
   coordType: !coordT
     Coordtypevec2: true
@@ -71,6 +71,7 @@ inputs:
     Returntypevec4: true
 - !input
   Localalias: rotateField
+  Variables: centerdist
   coordType: !coordT
     Coordtypevec2: true
     Coordtypevec3: true

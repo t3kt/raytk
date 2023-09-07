@@ -1,0 +1,144 @@
+!rop
+meta: !meta
+  opType: raytk.operators.utility.variableList
+  opVersion: '0'
+  opStatus: beta
+opDef: !def
+  enable: true
+  typeSpec: !ropTypes
+    coordType: !coordT
+      Allcoordtype: true
+    contextType: !contextT
+      Allcontexttype: true
+    returnType: !returnT
+      Allreturntype: true
+  function: function
+  variableTable: !table
+    file: src/operators/utility/variableList_variables.txt
+    name: variable_exprs
+    evaluate: true
+    evalOpts: !evalOpts
+      excludeFirstRow: true
+  displayCategory: Variable
+multiInput: !multiInput
+  Minimuminputs: 1
+  Coordtypereductionmode: common
+  Coordtypereductionscope: '*'
+  Contexttypereductionmode: common
+  Contexttypereductionscope: '*'
+  Returntypereductionmode: none
+  Returntypereductionscope: '*'
+  inputs:
+  - !input
+    Localalias: output
+    Variables: '*'
+    Variableinputs: '*'
+    Required: true
+    coordType: !coordT
+      Allcoordtype: true
+    contextType: !contextT
+      Allcontexttype: true
+    returnType: !returnT
+      Allreturntype: true
+  - !input
+    Localalias: variable1
+    coordType: !coordT
+      Allcoordtype: true
+    contextType: !contextT
+      Allcontexttype: true
+    returnType: !returnT
+      Allreturntype: !expr
+        expr: parent().par.Datatype1 == 'auto'
+      Returntypesdf: true
+      Returntypefloat: true
+      Returntypevec4: true
+  - !input
+    Localalias: variable2
+    Variables: !expr
+      expr: parent().par.Name1
+    Variableinputs: variable1
+    coordType: !coordT
+      Allcoordtype: true
+    contextType: !contextT
+      Allcontexttype: true
+    returnType: !returnT
+      Allreturntype: !expr
+        expr: parent().par.Datatype2 == 'auto'
+      Returntypesdf: true
+      Returntypefloat: true
+      Returntypevec4: true
+  - !input
+    Localalias: variable3
+    Variables: !expr
+      expr: parent().pars('Name[1-2]')
+    Variableinputs: variable1 variable2
+    coordType: !coordT
+      Allcoordtype: true
+    contextType: !contextT
+      Allcontexttype: true
+    returnType: !returnT
+      Allreturntype: !expr
+        expr: parent().par.Datatype3 == 'auto'
+      Returntypesdf: true
+      Returntypefloat: true
+      Returntypevec4: true
+  - !input
+    Localalias: variable4
+    Variables: !expr
+      expr: parent().pars('Name[1-3]')
+    Variableinputs: variable1 variable2 variable3
+    coordType: !coordT
+      Allcoordtype: true
+    contextType: !contextT
+      Allcontexttype: true
+    returnType: !returnT
+      Allreturntype: !expr
+        expr: parent().par.Datatype4 == 'auto'
+      Returntypesdf: true
+      Returntypefloat: true
+      Returntypevec4: true
+  - !input
+    Localalias: variable5
+    Variables: !expr
+      expr: parent().pars('Name[1-4]')
+    Variableinputs: variable1 variable2 variable3 variable4
+    coordType: !coordT
+      Allcoordtype: true
+    contextType: !contextT
+      Allcontexttype: true
+    returnType: !returnT
+      Allreturntype: !expr
+        expr: parent().par.Datatype5 == 'auto'
+      Returntypesdf: true
+      Returntypefloat: true
+      Returntypevec4: true
+  - !input
+    Localalias: variable6
+    Variables: !expr
+      expr: parent().pars('Name[1-5]')
+    Variableinputs: variable1 variable2 variable3 variable4 variable5
+    coordType: !coordT
+      Allcoordtype: true
+    contextType: !contextT
+      Allcontexttype: true
+    returnType: !returnT
+      Allreturntype: !expr
+        expr: parent().par.Datatype6 == 'auto'
+      Returntypesdf: true
+      Returntypefloat: true
+      Returntypevec4: true
+  - !input
+    Localalias: variable7
+    Variables: !expr
+      expr: parent().pars('Name[1-6]')
+    Variableinputs: variable1 variable2 variable3 variable4 variable5 variable6
+    coordType: !coordT
+      Allcoordtype: true
+    contextType: !contextT
+      Allcontexttype: true
+    returnType: !returnT
+      Allreturntype: !expr
+        expr: parent().par.Datatype7 == 'auto'
+      Returntypesdf: true
+      Returntypefloat: true
+      Returntypevec4: true

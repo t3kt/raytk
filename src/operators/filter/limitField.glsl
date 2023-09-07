@@ -11,6 +11,11 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 		#else
 		ReturnT high = THIS_asReturnT(THIS_High);
 		#endif
+		#ifdef THIS_HAS_INPUT_blendingField
+		float b = inputOp_blendingField(p, ctx);
+		#else
+		float b = THIS_Blending;
+		#endif
 		BODY();
 	}
 	return val;

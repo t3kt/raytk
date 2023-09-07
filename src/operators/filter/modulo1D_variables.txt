@@ -1,3 +1,4 @@
 name	label	dataType	enable
 cellcoord	Cell Index	int	1
 normcoord	Normalized Cell Index	float	1
+shiftedcellcoord	Shifted Cell Index	float	1

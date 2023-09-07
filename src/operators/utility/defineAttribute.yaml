@@ -1,5 +1,0 @@
-!rcomp
-meta: !meta
-  opType: raytk.operators.utility.defineAttribute
-  opVersion: '0'
-  opStatus: alpha

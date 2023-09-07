@@ -2,3 +2,4 @@ name	label	dataType	enable
 cellcoord	Cell Coord	ivec2	1
 tiledquad	Tiled Quadrant	int	1
 normcoord	Normalized Cell Coord	vec2	1
+shiftedcellcoord	Shifted Cell Coord	vec2	1

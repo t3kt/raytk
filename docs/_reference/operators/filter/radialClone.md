@@ -56,6 +56,21 @@ op:
     required: true
     returnTypes:
     - float
+  - contextTypes:
+    - Context
+    - MaterialContext
+    - CameraContext
+    - LightContext
+    - RayContext
+    - ParticleContext
+    coordTypes:
+    - vec2
+    - vec3
+    label: Blend Radius Field
+    name: blendRadiusField
+    required: true
+    returnTypes:
+    - float
   keywords:
   - clone
   - copy

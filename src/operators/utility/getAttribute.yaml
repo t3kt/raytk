@@ -1,8 +1,8 @@
 !rop
 meta: !meta
   opType: raytk.operators.utility.getAttribute
-  opVersion: '1'
-  opStatus: alpha
+  opVersion: '4'
+  opStatus: beta
 opDef: !def
   enable: true
   typeSpec: !ropTypes
@@ -27,6 +27,13 @@ opDef: !def
     name: macro_exprs
     evaluate: true
     evalOpts: !evalOpts {}
+  referenceTable: !table
+    file: src/operators/utility/getAttribute_references.txt
+    name: reference_exprs
+    evaluate: true
+    evalOpts: !evalOpts
+      excludeFirstRow: true
+      cols: dataType sourceName
 inputs:
 - !input
   Localalias: sdf

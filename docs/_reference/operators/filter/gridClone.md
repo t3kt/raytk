@@ -24,6 +24,21 @@ op:
     required: true
     returnTypes:
     - Sdf
+  - contextTypes:
+    - Context
+    - MaterialContext
+    - CameraContext
+    - LightContext
+    - RayContext
+    - ParticleContext
+    coordTypes:
+    - vec2
+    - vec3
+    label: Blend Radius Field
+    name: blendRadiusField
+    required: true
+    returnTypes:
+    - float
   name: gridClone
   opType: raytk.operators.filter.gridClone
   parameters:

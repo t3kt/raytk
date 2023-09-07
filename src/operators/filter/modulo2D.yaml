@@ -69,7 +69,7 @@ inputs:
     Returntypevec4: true
 - !input
   Localalias: offsetField
-  Variables: cellcoord tiledquad normcoord
+  Variables: cellcoord tiledquad normcoord shiftedcellcoord
   Variableinputs: sizeField shiftField
   coordType: !coordT
     Coordtypevec2: true

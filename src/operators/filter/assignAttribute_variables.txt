@@ -1,2 +1,4 @@
-name	label	dataType	enable	macros
-sdf	SDF Surface	Sdf	1
+name	label	dataType	enable	macros	category
+'previous'	Previous Value	parent().par.Datatype	1		variable
+'sdf'	SDF Surface	'Sdf'	1		variable
+parent().par.Attributename		parent().par.Datatype	1		attribute

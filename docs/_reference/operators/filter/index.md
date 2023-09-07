@@ -27,6 +27,8 @@ cat:
     name: adjustColor
     summary: Adjust properties of color values, either directly on a field, or on
       the assigned surface color of an Sdf result.
+  - name: assignAttribute
+    status: beta
   - keywords:
     - color
     - material

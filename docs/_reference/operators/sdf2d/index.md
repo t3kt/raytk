@@ -49,6 +49,7 @@ cat:
   - name: heartSdf2d
   - name: hexagonalGridSdf2d
   - name: horseshoeSdf2d
+  - name: isoscelesTriangleSdf2d
   - name: jointSdf2d
   - name: kochSnowflakeSdf2d
     status: beta
@@ -92,6 +93,7 @@ cat:
   - name: vesicaSdf2d
     summary: SDF for a 2d vesica, which is a shape based on the overlap between two
       circles.
+  - name: vesicaSegmentSdf2d
   - name: wedgeSdf2d
     status: beta
   summary: 'Signed distances functions which define geometry in 2D space, by calculating

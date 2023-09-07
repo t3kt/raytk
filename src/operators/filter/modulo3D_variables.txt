@@ -1,3 +1,4 @@
 name	label	dataType	enable
 cellcoord	Cell Coord	ivec3	1
 normcoord	Normalized Cell Coord	vec3	1
+shiftedcellcoord	Shifted Cell Coord	vec3	1

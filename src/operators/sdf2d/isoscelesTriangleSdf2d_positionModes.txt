@@ -1,0 +1,3 @@
+name	label	code
+base	Base Centered	p.y += h;
+tip	Tip Centered	

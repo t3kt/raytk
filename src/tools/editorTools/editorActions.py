@@ -89,18 +89,19 @@ def _loadTypeFields():
 
 _typeFields = _loadTypeFields()
 
+def _getStateField(primaryOp: 'OP', fieldName: str):
+	opState = ROPState(primaryOp)
+	if not opState:
+		return None
+	stateText = opState.info.opStateText
+	if not stateText:
+		return None
+	stateObj = json.loads(stateText)
+	return stateObj.get(fieldName)
+
 def _createVarRefGroup(text: str):
 	def getVariableObjs(ctx: ActionContext) -> List[dict]:
-		opState = ROPState(ctx.primaryOp)
-		if not opState:
-			return []
-		stateText = opState.info.opStateText
-		if not stateText:
-			return []
-		stateObj = json.loads(stateText)
-		if not stateObj.get('variables'):
-			return []
-		return stateObj.get('variables')
+		return _getStateField(ctx.primaryOp, 'variables') or []
 	def isValid(ctx: ActionContext) -> bool:
 		return bool(getVariableObjs(ctx))
 
@@ -127,6 +128,34 @@ def _createVarRefGroup(text: str):
 				)
 		return actions
 	return SimpleGroup(text, isValid, getActions)
+
+def _createAttrRefGroup(text: str):
+	def test(o: 'OP'):
+		info = ROPInfo(o)
+		if not info or info.opType == _RopTypes.assignAttribute:
+			return False
+		return bool(_getStateField(o, 'attributes'))
+	class _LockPars(OpInit):
+		def init(self, o: 'COMP', ctx: ActionContext):
+			o.par.Attributename.readOnly = True
+			o.par.Datatype.readOnly = True
+	select = RopSelect(test=test)
+	def getActions(ctx: ActionContext) -> List[Action]:
+		return [
+			ActionImpl(
+				attributeObj.get('label') or attributeObj.get('name'),
+				ropType=_RopTypes.getAttribute,
+				select=select,
+				params={'Attributename': attributeObj['name'], 'Datatype': attributeObj['dataType']},
+				inits=[_LockPars()]
+			)
+			for attributeObj in _getStateField(ctx.primaryOp, 'attributes') or []
+		]
+	return GroupImpl(
+		text,
+		select=select,
+		actions=getActions
+	)
 
 def _createRenderSelAction(label: str, name: str, enablePar: str):
 	def execute(ctx: ActionContext):
@@ -199,13 +228,23 @@ def _createRenderSelGroup(text: str):
 					InitSetParamOnPrimaryRop('Enablestepoutput', True),
 				]
 			),
+			ActionImpl(
+				'World Position Map',
+				ropType='raytk.operators.post.worldPosMap',
+				select=RopSelect(ropTypes=[_RopTypes.raymarchRender3d]),
+				attach=AttachOutputSelector(),
+				inits=[
+					InitLinkPrimaryToParam('Outputop'),
+					InitSetParamOnPrimaryRop('Enableworldposoutput', True),
+				]
+			),
 		]
 		for i in range(1, table.numRows):
 			if table[i, 'available'] == 'False':
 				continue
 			name = str(table[i, 'name'])
 			label = str(table[i, 'label'])
-			if name in ('depthOut', 'objectIdOut', 'nearHitOut', 'stepsOut'):
+			if name in ('depthOut', 'objectIdOut', 'nearHitOut', 'stepsOut', 'worldPosOut'):
 				label += ' (Raw)'
 			actions.append(
 				_createRenderSelAction(label, name, str(table[i, 'enablePar'] or ''))
@@ -331,6 +370,8 @@ def _createExposeParamOrTupletAction(parOrTuplet: 'Union[Par, ParTupletT]'):
 	if isinstance(parOrTuplet, Par):
 		suffix = parOrTuplet.name.replace(parOrTuplet.tupletName, '').upper()
 		text = f'{parOrTuplet.label} ({suffix})'
+		if len(parOrTuplet.tuplet) > 1:
+			text = '  ' + text
 	else:
 		text = parOrTuplet[0].label
 	return SimpleAction(text, execute=execute, isValid=None)
@@ -422,6 +463,7 @@ def _createSimplifyRescaleFloatAction(text):
 		def init(self, o: 'COMP', ctx: ActionContext):
 			newRescale = o
 			origRescale = ctx.primaryComp
+			_copyParState(origRescale.par.Enable, newRescale.par.Enable)
 			_copyParState(origRescale.par.Inputlow1, newRescale.par.Inputrange1)
 			_copyParState(origRescale.par.Inputhigh1, newRescale.par.Inputrange2)
 			_copyParState(origRescale.par.Outputlow1, newRescale.par.Outputrange1)
@@ -438,6 +480,38 @@ def _createSimplifyRescaleFloatAction(text):
 		select=RopSelect(ropTypes=[_RopTypes.rescaleField], returnTypes=['float'], test=_isValid),
 		attach=AttachReplacement(),
 		inits=[_InitRescale()],
+	)
+
+def _createSimplifyRotateAction(text):
+	def _validateAndGetAxis(origRotate: 'OP'):
+		if origRotate.par['Rotatemode'] != 'axis':
+			return None
+		if origRotate.par['Usepivot']:
+			return None
+		axisParts = float(origRotate.par['Axisx'] or 0), float(origRotate.par['Axisy'] or 0), float(origRotate.par['Axisz'] or 0)
+		if axisParts == (1, 0, 0):
+			return 'x'
+		if axisParts == (0, 1, 0):
+			return 'y'
+		if axisParts == (0, 0, 1):
+			return 'z'
+	def _isValid(origRotate: 'OP'):
+		return _validateAndGetAxis(origRotate) is not None
+	class _InitRotate(OpInit):
+		def init(self, o: 'COMP', ctx: ActionContext):
+			newRotate = o
+			origRotate = ctx.primaryComp
+			axis = _validateAndGetAxis(origRotate)
+			_copyParState(origRotate.par.Enable, newRotate.par.Enable)
+			newRotate.par.Axis = axis
+			_copyParState(origRotate.par.Rotate, newRotate.par.Rotate)
+			origRotate.destroy()
+	return ActionImpl(
+		text,
+		ropType='raytk.operators.filter.axisRotate',
+		select=RopSelect(ropTypes=['raytk.operators.filter.rotate'], test=_isValid),
+		attach=AttachReplacement(),
+		inits=[_InitRotate()],
 	)
 
 def _copyParState(fromPar: 'Par', toPar: 'Par'):
@@ -572,6 +646,8 @@ class _RopTypes:
 	vectorToFloat = 'raytk.operators.convert.vectorToFloat'
 	variableReference = 'raytk.operators.utility.variableReference'
 	defineAttribute = 'raytk.operators.utility.defineAttribute'
+	assignAttribute = 'raytk.operators.filter.assignAttribute'
+	getAttribute = 'raytk.operators.utility.getAttribute'
 
 def createActionManager():
 	manager = ActionManager(
@@ -739,6 +815,11 @@ def createActionManager():
 				returnTypes=['Light'],
 				multi=True, minCount=True, maxCount=None),
 			attach=AttachOutFromExisting()),
+		ActionImpl(
+			'Start custom transform',
+			ropType='raytk.operators.field.positionField',
+			select=RopSelect(ropTypes=['raytk.operators.filter.iteratedTransform']),
+			attach=AttachIntoExisting(inputIndex=4)),
 		_createVarRefGroup('Reference Variable'),
 		_createRenderSelGroup('Select Output Buffer'),
 		_createAnimateParamsGroup(
@@ -763,25 +844,19 @@ def createActionManager():
 		_createSwapOrderAction('Swap Chain Order'),
 		ActionImpl(
 			'Assign Attribute',
-			ropType='raytk.operators.filter.assignAttribute',
-			select=RopSelect(ropTypes=[_RopTypes.defineAttribute]),
+			ropType=_RopTypes.assignAttribute,
+			select=RopSelect(ropTypes=[_RopTypes.getAttribute]),
 			inits=[
 				InitBindParamsToPrimary({'Attributename': 'Attributename', 'Datatype': 'Datatype'}),
 			]),
 		ActionImpl(
 			'Reference Attribute',
-			ropType='raytk.operators.utility.getAttribute',
-			select=RopSelect(ropTypes=[_RopTypes.defineAttribute]),
+			ropType=_RopTypes.getAttribute,
+			select=RopSelect(ropTypes=[_RopTypes.assignAttribute]),
 			inits=[
 				InitBindParamsToPrimary({'Attributename': 'Attributename', 'Datatype': 'Datatype'}),
 			]),
-		ActionImpl(
-			'Add Attribute',
-			ropType=_RopTypes.defineAttribute,
-			select=RopSelect(ropTypes=[_RopTypes.raymarchRender3d]),
-			inits=[
-				InitAddToParamOnPrimaryRop('Attributedefinitions'),
-			],
-			params={'Attributename': 'attr1'}),
+		_createAttrRefGroup('Reference Attribute'),
+		_createSimplifyRotateAction('Simplify Rotate'),
 	)
 	return manager

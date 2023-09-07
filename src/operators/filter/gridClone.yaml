@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.filter.gridClone
-  opVersion: '0'
+  opVersion: '1'
   opStatus: beta
 opDef: !def
   enable: !expr
@@ -39,6 +39,17 @@ inputs:
     Allcontexttype: true
   returnType: !returnT
     Returntypesdf: true
+- !input
+  Localalias: blendRadiusField
+  Variables: '*'
+  Required: true
+  coordType: !coordT
+    Coordtypevec2: true
+    Coordtypevec3: true
+  contextType: !contextT
+    Allcontexttype: true
+  returnType: !returnT
+    Returntypefloat: true
 elements:
 - !opElement
   name: combiner
@@ -50,7 +61,7 @@ elements:
     Radiusparam: Mergeradius
     Numberparam: Mergenumber
     Offsetparam: Mergeoffset
-    Radiusfield: ''
+    Radiusfield: blendRadiusField
     Offsetfield: ''
     Numberfield: ''
     Manageparamstates: true

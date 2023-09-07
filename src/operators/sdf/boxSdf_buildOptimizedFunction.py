@@ -19,22 +19,22 @@ def buildCode():
 	p = parent().par
 	axis = p.Infiniteaxis.eval()
 	uvMode = p.Uvmode.eval()
-	boxType = p.Boxtype.eval()
 	if axis == 'none':
-		fn = 'fBoxCheap' if boxType == 'boxcheap' else 'fBox'
-		out.write(f'Sdf res = createSdf({fn}(p, scale));\n')
+		out.write(f'Sdf res = createSdf(fBox(p, scale));\n')
 		if uvMode == 'bounds':
 			out.write('assignUV(res, map01(p, -scale/2., scale/2.));\n')
 		elif uvMode == 'faces':
 			out.write('vec3 pNorm = p / scale;\n')
 			out.write('vec3 boxFaces = nearestFace(pNorm);\n')
-			out.write('if (boxFaces.x != 0.) assignUV(res, vec3(pNorm.y * boxFaces.x, pNorm.z, 0.));')
-			out.write('else if (boxFaces.y != 0.) assignUV(res, vec3(pNorm.z * boxFaces.y, pNorm.x, 0.));')
-			out.write('else if (boxFaces.z != 0.) assignUV(res, vec3(pNorm.x * boxFaces.z, pNorm.y, 0.));')
+			out.write('if (boxFaces.x != 0.) assignUV(res, vec3(pNorm.y * boxFaces.x, pNorm.z, 0.));\n')
+			out.write('else if (boxFaces.y != 0.) assignUV(res, vec3(pNorm.z * boxFaces.y, pNorm.x, 0.));\n')
+			out.write('else if (boxFaces.z != 0.) assignUV(res, vec3(pNorm.x * boxFaces.z, pNorm.y, 0.));\n')
+		out.write('#ifdef RAYTK_HAS_ATTR_edgedist\n')
+		out.write('res.attrs.edgedist = min(distance(abs(p.xy), scale.xy), min(distance(abs(p.zx), scale.zx), distance(abs(p.yz), scale.yz)));\n')
+		out.write('#endif\n')
 	else:
-		fn = 'fBox2Cheap' if boxType == 'boxcheap' else 'fBox2'
 		swiz = {'x': 'yz', 'y': 'zx', 'z': 'xy'}[axis]
-		out.write(f'Sdf res = createSdf({fn}(p.{swiz}, scale.{swiz}));\n')
+		out.write(f'Sdf res = createSdf(fBox2(p.{swiz}, scale.{swiz}));\n')
 		if uvMode == 'bounds':
 			out.write('vec3 uv = map01(p, -scale/2., scale/2.);\n')
 			out.write(f'uv.{axis} = p.{axis};\n')
@@ -46,6 +46,9 @@ def buildCode():
 			out.write(f'if (edge.x != 0.) uv.x = pNorm.y * edge.x;\n')
 			out.write(f'else uv.x = pNorm.x * edge.y;\n')
 			out.write('assignUV(res, uv);\n')
+		out.write('#ifdef RAYTK_HAS_ATTR_edgedist\n')
+		out.write(f'res.attrs.edgedist = distance(abs(p.{swiz}), scale.{swiz});\n')
+		out.write('#endif\n')
 	out.write('return res;\n')
 	out.write('}\n')
 	return out.getvalue()

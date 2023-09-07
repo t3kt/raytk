@@ -64,6 +64,23 @@ op:
     returnTypes:
     - float
     - vec4
+  - contextTypes:
+    - Context
+    - MaterialContext
+    - CameraContext
+    - LightContext
+    - RayContext
+    - ParticleContext
+    coordTypes:
+    - float
+    - vec2
+    - vec3
+    - vec4
+    label: Blending Field
+    name: blendingField
+    required: true
+    returnTypes:
+    - float
   keywords:
   - clamp
   - limit
@@ -87,11 +104,19 @@ op:
       name: clamplow
     - label: Clamp High
       name: clamphigh
+    - label: Smooth Clamp
+      name: smoothclamp
+    - label: Smooth Clamp Low
+      name: smoothclamplow
+    - label: Smooth Clamp High
+      name: smoothclamphigh
     name: Limittype
   - label: Low Bound
     name: Low
   - label: High Bound
     name: High
+  - label: Blending
+    name: Blending
   summary: Limits the values produced by a float or vector field.
   thumb: assets/images/reference/operators/filter/limitField_thumb.png
 

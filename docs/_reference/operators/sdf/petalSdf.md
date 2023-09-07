@@ -36,6 +36,32 @@ op:
     name: radiusField
     returnTypes:
     - float
+  - contextTypes:
+    - Context
+    - MaterialContext
+    - CameraContext
+    - LightContext
+    - RayContext
+    - ParticleContext
+    coordTypes:
+    - vec3
+    label: Width Field
+    name: widthField
+    returnTypes:
+    - float
+  - contextTypes:
+    - Context
+    - MaterialContext
+    - CameraContext
+    - LightContext
+    - RayContext
+    - ParticleContext
+    coordTypes:
+    - vec3
+    label: Wrap Field
+    name: wrapField
+    returnTypes:
+    - float
   name: petalSdf
   opType: raytk.operators.sdf.petalSdf
   parameters:
