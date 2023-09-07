@@ -4,7 +4,9 @@
 
 ### Highlights
 
-* x
+* New SDFs: isoscelesTriangleSdf2d, vesicaSegmentSdf
+* Improvements and customization in modulo and cloning operators
+* New editor actions
 
 ### Details
 
