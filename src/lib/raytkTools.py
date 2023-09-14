@@ -188,8 +188,12 @@ class RaytkTools(RaytkContext):
 		focusFirstCustomParameterPage(rop)
 		tox = info.toxFile
 		rop.par.savebackup = False
-		rop.par.reloadtoxonstart.expr = ''
-		rop.par.reloadtoxonstart.val = True
+		if rop.par['reloadtoxonstart'] is not None:
+			rop.par.reloadtoxonstart.expr = ''
+			rop.par.reloadtoxonstart.val = True
+		else:
+			rop.par.enableexternaltox.expr = ''
+			rop.par.enableexternaltox.val = True
 		rop.par.reloadcustom.expr = ''
 		rop.par.reloadcustom.val = True
 		rop.par.reloadbuiltin.expr = ''

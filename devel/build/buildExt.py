@@ -186,7 +186,10 @@ class _BuilderBase:
 		comp.par.externaltox = ''
 		comp.par.enablecloning = False
 		comp.par.savebackup = True
-		comp.par.reloadtoxonstart = True
+		if comp.par['reloadtoxonstart'] is not None:
+			comp.par.reloadtoxonstart = True
+		else:
+			comp.par.enableexternaltox = True
 		comp.par.reloadcustom = True
 		comp.par.reloadbuiltin = True
 		focusFirstCustomParameterPage(comp)
