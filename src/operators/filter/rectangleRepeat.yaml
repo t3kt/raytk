@@ -1,0 +1,33 @@
+!rop
+meta: !meta
+  opType: raytk.operators.filter.rectangleRepeat
+  opVersion: '0'
+  opStatus: beta
+opDef: !def
+  enable: !expr
+    expr: op('..').par.Enable
+  useRuntimeBypass: true
+  typeSpec: !ropTypes
+    coordType: !coordT
+      Coordtypevec2: true
+      Coordtypevec3: true
+    contextType: !contextT
+      Allcontexttype: true
+    returnType: !returnT
+      Allreturntype: true
+  function: !text
+    file: src/operators/filter/rectangleRepeat.glsl
+    name: function
+  paramGroupTable: eval_params
+  displayCategory: Repeat
+inputs:
+- !input
+  Variables: '*'
+  Required: true
+  coordType: !coordT
+    Coordtypevec2: true
+    Coordtypevec3: true
+  contextType: !contextT
+    Allcontexttype: true
+  returnType: !returnT
+    Allreturntype: true
