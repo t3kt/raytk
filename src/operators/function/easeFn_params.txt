@@ -1,2 +1,2 @@
 names	source	handling	readOnlyHandling	conversion	enable
-Exponent	param	runtime	macro		1
+Exponent	param	runtime	macro		op('exponent_definition').numRows < 2

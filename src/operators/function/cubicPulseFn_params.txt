@@ -1,2 +1,3 @@
 names	source	handling	readOnlyHandling	conversion	enable
-Width Phase	param	runtime	macro		1
+Width	param	runtime	macro		op('width_definition').numRows < 2
+Phase	param	runtime	macro		op('phase_definition').numRows < 2

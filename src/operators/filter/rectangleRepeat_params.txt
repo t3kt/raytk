@@ -1,0 +1,4 @@
+names	source	handling	readOnlyHandling	conversion	enable
+Gridsize[1-2]	param	runtime	macro		1
+Spacing	param	runtime	macro		1
+Plane	param	constant			1
