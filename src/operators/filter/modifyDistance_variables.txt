@@ -1,0 +1,3 @@
+name	label	dataType	enable	macros
+sdf	SDF Surface	Sdf	1	
+dist	SDF Distance	float	1	
