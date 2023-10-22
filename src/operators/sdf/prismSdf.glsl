@@ -1,6 +1,12 @@
-float THIS_shape(CoordT p, float h, float r, inout float n) {
+float THIS_shape(CoordT p, float h, float r, inout float n, float rnd) {
 	float d;
 	BODY();
+	if (rnd != 0.) {
+		// try to avoid strange stuff at ends by making the cylinder "infinite" height
+		// and then cutting it after mixing
+		d = mix(d, fCylinder(p.yzx * vec3(1., 0., 1.), r, 999.), rnd);
+		d = max(d, abs(p.z) - h);
+	}
 	return d;
 }
 
@@ -44,12 +50,17 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 	#else
 	float n = THIS_Sides;
 	#endif
+	#ifdef THIS_HAS_INPUT_roundingField
+	float rnd = inputOp_roundingField(p, ctx);
+	#else
+	float rnd = THIS_Rounding;
+	#endif
 	if (IS_TRUE(THIS_Infiniteheight)) {
 		q.z = 0.;
 	}
-	float d = THIS_shape(q, h, r, n);
+	float d = THIS_shape(q, h, r, n, rnd);
 	if (IS_TRUE(THIS_Hollow)) {
-		d = max(-THIS_shape(q * vec3(1., 1., 0.), 1., r - th, n), d);
+		d = max(-THIS_shape(q * vec3(1., 1., 0.), 1., r - th, n, rnd), d);
 	}
 	Sdf res = createSdf(d);
 	#ifdef RAYTK_USE_UV
