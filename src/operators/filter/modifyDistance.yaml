@@ -1,8 +1,8 @@
 !rop
 meta: !meta
   opType: raytk.operators.filter.modifyDistance
-  opVersion: '0'
-  opStatus: alpha
+  opVersion: '1'
+  opStatus: beta
 opDef: !def
   enable: !expr
     expr: op('..').par.Enable
