@@ -100,11 +100,9 @@ class Palette:
 	def _resetCloseTimer(self):
 		timer = self._closeTimer
 		timer.par.initialize.pulse()
-		timer.par.active = False
 
 	def _startCloseTimer(self):
 		timer = self._closeTimer
-		timer.par.active = True
 		timer.par.start.pulse()
 
 	def onPanelInsideChange(self, val: bool):
