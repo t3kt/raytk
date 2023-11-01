@@ -1,0 +1,57 @@
+!rop
+meta: !meta
+  opType: raytk.operators.filter.applyTransform
+  opVersion: '0'
+  opStatus: beta
+opDef: !def
+  enable: !expr
+    expr: op('..').par.Enable
+  useRuntimeBypass: true
+  typeSpec: !ropTypes
+    coordType: !coordT
+      Allcoordtype: true
+    contextType: !contextT
+      Allcontexttype: true
+    returnType: !returnT
+      Allreturntype: true
+  function: !text
+    file: src/operators/filter/applyTransform.glsl
+    name: function
+  displayCategory: Transform
+inputs:
+- !input
+  Variables: '*'
+  Variableinputs: '*'
+  Required: true
+  coordType: !coordT
+    Allcoordtype: true
+  contextType: !contextT
+    Allcontexttype: !expr
+      expr: op('targetInfo')[1, 'contextType'] == '*'
+    Contexttypematerialcontext: !expr
+      expr: op('targetInfo')[1, 'contextType'] == 'MaterialContext'
+  returnType: !returnT
+    Allreturntype: !expr
+      expr: op('targetInfo')[1, 'returnType'] == '*'
+    Returntypesdf: !expr
+      expr: op('targetInfo')[1, 'returnType'] == 'Sdf'
+    Returntypevec4: !expr
+      expr: op('targetInfo')[1, 'returnType'] == 'vec4'
+- !input
+  Localalias: transform
+  Variables: '*'
+  Required: true
+  coordType: !coordT
+    Allcoordtype: true
+  contextType: !contextT
+    Allcontexttype: true
+  returnType: !returnT
+    Returntypevec4: true
+elements:
+- !opElement
+  name: transformTarget
+  elementType: transformTarget
+  params:
+    Targetparam: Target
+    Applyfunction: THIS_transform
+    Bodycodeplaceholder: APPLY_TO_TARGET();
