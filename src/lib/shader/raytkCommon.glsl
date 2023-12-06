@@ -377,10 +377,14 @@ float getAxis(float p, int axis) {
 }
 
 float getAxis(vec2 p, int axis) {
-	return (axis >= 0 && axis <= 2) ? p[axis] : 0.;
+	return (axis >= 0 && axis <= 1) ? p[axis] : 0.;
 }
 
 float getAxis(vec3 p, int axis) {
+	return (axis >= 0 && axis <= 2) ? p[axis] : 0.;
+}
+
+float getAxis(vec4 p, int axis) {
 	return (axis >= 0 && axis <= 3) ? p[axis] : 0.;
 }
 
