@@ -1,5 +1,36 @@
 # Release Notes
 
+## v0.37
+
+### Highlights
+
+### Details
+
+* Improvements / additions
+  * New OPs
+    * applyTransform - to apply a transform filter to field values, uv coordinates, etc (#1019)
+    * modifyDistance - use a field to modify the distance values from an SDF (#1139)
+    * rectangleRepeat - repeat space in tiles arranged on the sides of a rectangle (#1126)
+  * New OP features
+    * almostIdentityFn - threshold, base value field inputs (#1124)
+    * bandField - reverse parameter
+    * cubicPulseFn - phase, width field inputs (#1124)
+    * easeFn - exponent field input (#1124)
+    * extrude - 2D height / offset field inputs (#1134)
+    * flipFn - flip 0..1 modes as well as positive/negative (#1127)
+    * gainFn = exponent field input (#1124)
+    * parabolaFn - exponent field input (#1124)
+    * positionField - pixel uv mode
+    * prismSdf - rounding (#1130)
+  * Editor tools
+* Fixes
+  * Fix widget compatibility issues with TD 2023 experimental builds
+  * Fix angle handling in magnet (#1138)
+* Changes (potentially breaking)
+* Infrastructure / internals
+  * Stop syncing files within clones in devel source
+
+
 ## v0.36
 
 ### Highlights
