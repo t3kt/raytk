@@ -20,15 +20,17 @@
     * flipFn - flip 0..1 modes as well as positive/negative (#1127)
     * gainFn = exponent field input (#1124)
     * parabolaFn - exponent field input (#1124)
-    * positionField - pixel uv mode
+    * positionField - pixel uv and pixel coordinate modes
     * prismSdf - rounding (#1130)
   * Editor tools
 * Fixes
   * Fix widget compatibility issues with TD 2023 experimental builds
   * Fix angle handling in magnet (#1138)
+  * Fix return type limiting in circularRepeat
 * Changes (potentially breaking)
 * Infrastructure / internals
   * Stop syncing files within clones in devel source
+  * Use the new input list parameter instead of dynamically wiring up texture inputs in renderers
 
 
 ## v0.36
