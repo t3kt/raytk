@@ -51,6 +51,6 @@ class OutputOp:
 		for i in range(1, table.numRows):
 			if table[i, 'uniformType'] == 'constant':
 				count += 1
-		sequence = renderTop.par.constname0.sequence  # type: Sequence
+		sequence = renderTop.par.const0name.sequence  # type: Sequence
 		if count > sequence.numBlocks:
 			sequence.numBlocks = count
