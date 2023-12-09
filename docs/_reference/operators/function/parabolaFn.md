@@ -8,6 +8,20 @@ redirect_from:
   - /reference/opType/raytk.operators.function.parabolaFn/
 op:
   category: function
+  inputs:
+  - contextTypes:
+    - Context
+    - MaterialContext
+    - CameraContext
+    - LightContext
+    - RayContext
+    - ParticleContext
+    coordTypes:
+    - float
+    label: Exponent Field
+    name: exponentField
+    returnTypes:
+    - float
   name: parabolaFn
   opType: raytk.operators.function.parabolaFn
   parameters:

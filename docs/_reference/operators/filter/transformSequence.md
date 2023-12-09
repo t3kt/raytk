@@ -127,6 +127,8 @@ op:
     name: transform6
     returnTypes:
     - vec4
+  keywords:
+  - apply
   name: transformSequence
   opType: raytk.operators.filter.transformSequence
   parameters:

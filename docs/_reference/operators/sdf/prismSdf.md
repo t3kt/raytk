@@ -63,6 +63,19 @@ op:
     name: sidesField
     returnTypes:
     - float
+  - contextTypes:
+    - Context
+    - MaterialContext
+    - CameraContext
+    - LightContext
+    - RayContext
+    - ParticleContext
+    coordTypes:
+    - vec3
+    label: Rounding Field
+    name: roundingField
+    returnTypes:
+    - float
   keywords:
   - column
   - cylinder
@@ -110,6 +123,8 @@ op:
     name: Axis
   - label: Sides
     name: Sides
+  - label: Rounding
+    name: Rounding
   - label: Infinite Height
     name: Infiniteheight
   - label: Hollow

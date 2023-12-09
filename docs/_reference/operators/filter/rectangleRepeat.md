@@ -1,11 +1,11 @@
 ---
 layout: operator
-title: circularRepeat
+title: rectangleRepeat
 parent: Filter Operators
 grand_parent: Operators
-permalink: /reference/operators/filter/circularRepeat
+permalink: /reference/operators/filter/rectangleRepeat
 redirect_from:
-  - /reference/opType/raytk.operators.filter.circularRepeat/
+  - /reference/opType/raytk.operators.filter.rectangleRepeat/
 op:
   category: filter
   inputs:
@@ -23,9 +23,14 @@ op:
     name: definition_in
     required: true
     returnTypes:
+    - float
+    - vec4
     - Sdf
-  name: circularRepeat
-  opType: raytk.operators.filter.circularRepeat
+    - Ray
+    - Light
+    - Particle
+  name: rectangleRepeat
+  opType: raytk.operators.filter.rectangleRepeat
   parameters:
   - label: Enable
     name: Enable
@@ -38,21 +43,11 @@ op:
     - label: ZX
       name: zx
     name: Plane
-  - label: Radius
-    name: Radius
-    summary: Size of the area to fill.
-  - label: Cell Size
-    name: Cellsize
-    summary: Spacing between copies.
+  - label: Grid Size
+    name: Gridsize
+  - label: Spacing
+    name: Spacing
   status: beta
-  summary: Repeat an SDF to fill a 2D circular area.
-  variables:
-  - label: cellcoord
-    name: cellcoord
-  - label: cellchecker
-    name: cellchecker
+  thumb: assets/images/reference/operators/filter/rectangleRepeat_thumb.png
 
 ---
-
-
-Repeat an SDF to fill a 2D circular area.

@@ -53,6 +53,14 @@ op:
         upside down.
       label: Flip Negative Domain
       name: flipnegdomain
+    - description: Flips the x axis in the 0..1 range so that what used to be x=0
+        is now x=1 and what used to be x=1 is now x=0.
+      label: Flip 0-1 Domain
+      name: flipdomain01
+    - description: Flips the y (value) axis in the 0..1 range so that what used to
+        be y=0 is now y=1 and what used to be y=1 is now y=0.
+      label: Flip 0-1 Range
+      name: fliprange01
     name: Fliptype
     summary: The type of flipping to apply.
   - label: Return Type

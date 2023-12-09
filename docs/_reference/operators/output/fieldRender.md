@@ -66,10 +66,6 @@ op:
       name: rgba16fixed
     - label: 11-bit float (RGB), Positive Values Only
       name: rgba11float
-    - label: 16-bit float (RGB)
-      name: rgb16float
-    - label: 32-bit float (RGB)
-      name: rgb32float
     - label: 8-bit fixed (Mono)
       name: mono8fixed
     - label: 16-bit fixed (Mono)

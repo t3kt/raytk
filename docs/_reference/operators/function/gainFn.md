@@ -13,6 +13,20 @@ op:
 
 
     Based on Inigo Quilez''s [article](https://iquilezles.org/www/articles/functions/functions.htm).'
+  inputs:
+  - contextTypes:
+    - Context
+    - MaterialContext
+    - CameraContext
+    - LightContext
+    - RayContext
+    - ParticleContext
+    coordTypes:
+    - float
+    label: Exponent Field
+    name: exponentField
+    returnTypes:
+    - float
   name: gainFn
   opType: raytk.operators.function.gainFn
   parameters:

@@ -142,6 +142,8 @@ op:
       the first parameter will be used.
   - label: Enable
     name: Enable
+  - label: Reverse
+    name: Reverse
   - label: Enable Repeat
     name: Enablerepeat
   - label: Repeat Size
