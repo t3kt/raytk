@@ -14,6 +14,45 @@ float tdh_ellip(vec2 p, vec2 s) {
 	return length(p) - r;
 }
 
+// IQ https://www.shadertoy.com/view/Xds3zN
+float tdh_sdRoundCone( in vec3 p, in float r1, float r2, float h )
+{
+	vec2 q = vec2( length(p.xz), p.y );
+
+	float b = (r1-r2)/h;
+	float a = sqrt(1.0-b*b);
+	float k = dot(q,vec2(-b,a));
+
+	if( k < 0.0 ) return length(q) - r1;
+	if( k > a*h ) return length(q-vec2(0.0,h)) - r2;
+
+	return dot(q, vec2(a,b) ) - r1;
+}
+
+float tdh_smin2(float a, float b, float r) {
+	vec2 u = max(vec2(r - a,r - b), vec2(0));
+	return max(r, min (a, b)) - length(u);
+}
+
+float tdh_smax2(float a, float b, float r) {
+	vec2 u = max(vec2(r + a,r + b), vec2(0));
+	return min(-r, max (a, b)) + length(u);
+}
+
+float tdh_smin3(float a, float b, float k){
+	return min(
+	smin(a, b, k),
+	tdh_smin2(a, b, k)
+	);
+}
+
+float tdh_smax3(float a, float b, float k){
+	return max(
+	smax(a, b, k),
+	tdh_smax2(a, b, k)
+	);
+}
+
 float tdh_headMain(vec3 p) {
 
 	vec3 pa = p;
@@ -129,12 +168,12 @@ float tdh_headMain(vec3 p) {
 	p = pp;
 	p += vec3(0,.03,-.45);
 	pR(p.yz, 3.);
-	d = smin(d, sdRoundCone(p, .008, .05, .18), .1);
+	d = smin(d, tdh_sdRoundCone(p, .008, .05, .18), .1);
 
 	p = pp;
 	p += vec3(0,.06,-.47);
 	pR(p.yz, 2.77);
-	d = smin(d, sdRoundCone(p, .005, .04, .225), .05);
+	d = smin(d, tdh_sdRoundCone(p, .005, .04, .225), .05);
 
 	// cheek
 
@@ -242,7 +281,7 @@ float tdh_headMain(vec3 p) {
 	p += vec3(-.043,.28,-.48);
 	pR(p.xy, .15);
 	p.z *= .8;
-	nostrils = smin(nostrils, sdRoundCone(p, .042, .0, .12), .02);
+	nostrils = smin(nostrils, tdh_sdRoundCone(p, .042, .0, .12), .02);
 
 	d = smin(d, nostrils, .02);
 
@@ -325,21 +364,21 @@ void tdh_ear(vec3 p, inout float d) {
 	iear = smin(iear, length(p.zy - vec2(.04,-.09)) - .02, .09);
 	float ridge = iear;
 	iear = smin(iear, length(p.zy - vec2(.1,-.03)) - .06, .07);
-	ear = smax2(ear, -iear, .04);
+	ear = tdh_smax2(ear, -iear, .04);
 	earback = smin(earback, iear - .04, .02);
 
 	// ridge
 	p = pe;
 	pR(p.xz, .2);
 	ridge = tdh_ellip(p.zy - vec2(.01,-.03), vec2(.045,.055));
-	ridge = smin3(ridge, -pRi(p.zy, .2).x - .01, .015);
-	ridge = smax3(ridge, -tdh_ellip(p.zy - vec2(-.01,.1), vec2(.12,.08)), .02);
+	ridge = tdh_smin3(ridge, -pRi(p.zy, .2).x - .01, .015);
+	ridge = tdh_smax3(ridge, -tdh_ellip(p.zy - vec2(-.01,.1), vec2(.12,.08)), .02);
 
 	float ridger = .01;
 
 	ridge = max(-ridge, ridge - ridger);
 
-	ridge = smax2(ridge, abs(p.x) - ridger/2., ridger/2.);
+	ridge = tdh_smax2(ridge, abs(p.x) - ridger/2., ridger/2.);
 
 	ear = smin(ear, ridge, .045);
 
@@ -368,14 +407,14 @@ void tdh_ear(vec3 p, inout float d) {
 	ear = smin(ear, eedge, .01);
 	ear = max(ear, earback);
 
-	ear = smax2(ear, outline, .015);
+	ear = tdh_smax2(ear, outline, .015);
 
 	d = smin(d, ear, .015);
 
 	// targus
 	p = pp;
 	p += vec3(-.34,.2,.02);
-	d = smin2(d, tdh_ellip(p, vec3(.015,.025,.015)), .035);
+	d = tdh_smin2(d, tdh_ellip(p, vec3(.015,.025,.015)), .035);
 	p = pp;
 	p += vec3(-.37,.18,.03);
 	pR(p.xz, .5);
