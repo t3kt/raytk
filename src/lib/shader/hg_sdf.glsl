@@ -300,12 +300,14 @@ vec2 pModGrid2(inout vec2 p, vec2 size) {
 	return floor(c/2);
 }
 
+#if 0
 // Repeat in three dimensions
 vec3 pMod3(inout vec3 p, vec3 size) {
 	vec3 c = floor((p + size*0.5)/size);
 	p = mod(p + size*0.5, size) - size*0.5;
 	return c;
 }
+#endif
 
 // Mirror at an axis-aligned plane which is at a specified distance <dist> from the origin.
 float pMirror (inout float p, float dist) {
