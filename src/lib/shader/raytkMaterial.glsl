@@ -69,3 +69,14 @@ float schlick(const in float f0, const in float f90, const in float VoH) {
 	return f0 + (f90 - f0) * pow5(1.0 - VoH);
 }
 
+void captureIterationFromMaterial(inout vec4 store, in Context ctx) {
+	if (_raytkStage == RAYTK_STAGE_PRIMARY) {
+		store = ctx.iteration;
+	}
+}
+
+void restoreIterationFromMaterial(inout MaterialContext matCtx, in vec4 store) {
+	if (_raytkStage == RAYTK_STAGE_MATERIAL) {
+		matCtx.context.iteration = store;
+	}
+}
