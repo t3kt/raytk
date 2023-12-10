@@ -129,23 +129,6 @@ vec4 qsqr(in vec4 a)// square a quaterion
 		2.0*a.x*a.w);
 }
 
-vec3 boxFold(vec3 p, float r) {
-	return clamp(p.xyz, -r, r) * 2.0 - p;
-}
-
-vec3 mengerFold(vec3 p) {
-	float a = min(p.x - p.y, 0.0);
-	p.x -= a;
-	p.y += a;
-	a = min(p.x - p.z, 0.0);
-	p.x -= a;
-	p.z += a;
-	a = min(p.y - p.z, 0.0);
-	p.y -= a;
-	p.z += a;
-	return p;
-}
-
 // Normal for the perpendicular bisector plane of two points
 vec3 bisector(vec3 a, vec3 b) {
 	return normalize(cross(
