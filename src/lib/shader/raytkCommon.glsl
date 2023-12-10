@@ -331,20 +331,6 @@ vec3 fillToVec3(vec4 p) { return p.xyz; }
 vec4 fillToVec4(float p) { return vec4(p); }
 vec4 fillToVec4(vec4 p) { return p; }
 
-float extractOrUseAsX(float p) { return p; }
-float extractOrUseAsX(vec2 p) { return p.x; }
-float extractOrUseAsX(vec3 p) { return p.x; }
-float extractOrUseAsX(vec4 p) { return p.x; }
-
-float extractOrUseAsY(float p) { return p; }
-float extractOrUseAsY(vec4 p) { return p.y; }
-
-float extractOrUseAsZ(float p) { return p; }
-float extractOrUseAsZ(vec4 p) { return p.z; }
-
-float extractOrUseAsW(float p) { return p; }
-float extractOrUseAsW(vec4 p) { return p.w; }
-
 void setFromFloat(inout float x, float val) { x = val; }
 void setFromFloat(inout Sdf x, float val) { x.x = val; }
 
