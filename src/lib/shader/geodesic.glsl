@@ -1,5 +1,13 @@
 // https://www.shadertoy.com/view/4tG3zW
 
+// Normal for the perpendicular bisector plane of two points
+vec3 bisector(vec3 a, vec3 b) {
+	return normalize(cross(
+		mix(a, b, .5),
+		cross(a, b)
+	));
+}
+
 vec3 geo_nc,geo_pab,geo_pbc,geo_pca;
 void geo_init() {//setup folding planes and vertex
 	const int Type=5;

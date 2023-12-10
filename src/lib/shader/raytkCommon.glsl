@@ -97,15 +97,6 @@ mat4 lookAtViewMatrix(vec3 eye, vec3 center, vec3 up) {
 	vec4(0.0, 0.0, 0.0, 1)
 	);
 }
-// https://github.com/glslify/glsl-look-at/
-mat3 calcLookAtMatrix(vec3 origin, vec3 target, float roll) {
-  vec3 rr = vec3(sin(roll), cos(roll), 0.0);
-  vec3 ww = normalize(target - origin);
-  vec3 uu = normalize(cross(ww, rr));
-  vec3 vv = normalize(cross(uu, ww));
-
-  return mat3(uu, vv, ww);
-}
 
 float ndot(vec2 a, vec2 b ) { return a.x*b.x - a.y*b.y; }
 
@@ -127,14 +118,6 @@ vec4 qsqr(in vec4 a)// square a quaterion
 		2.0*a.x*a.y,
 		2.0*a.x*a.z,
 		2.0*a.x*a.w);
-}
-
-// Normal for the perpendicular bisector plane of two points
-vec3 bisector(vec3 a, vec3 b) {
-	return normalize(cross(
-		mix(a, b, .5),
-		cross(a, b)
-	));
 }
 
 float smin(float a, float b, float k){
@@ -441,21 +424,6 @@ vec3 stereographic(vec4 p4) {
 // https://lygia.xyz/math/pow5
 float pow5(const in float x) {
 	float x2 = x * x;
-	return x2 * x2 * x;
-}
-
-vec2 pow5(const in vec2 x) {
-	vec2 x2 = x * x;
-	return x2 * x2 * x;
-}
-
-vec3 pow5(const in vec3 x) {
-	vec3 x2 = x * x;
-	return x2 * x2 * x;
-}
-
-vec4 pow5(const in vec4 x) {
-	vec4 x2 = x * x;
 	return x2 * x2 * x;
 }
 
