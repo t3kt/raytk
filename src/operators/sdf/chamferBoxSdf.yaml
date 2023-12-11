@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.sdf.chamferBoxSdf
-  opVersion: '9'
+  opVersion: '10'
   opStatus: default
 opDef: !def
   enable: true
@@ -16,6 +16,8 @@ opDef: !def
     file: src/operators/sdf/chamferBoxSdf.glsl
     name: function
   paramGroupTable: eval_params
+  libraryNames: !expr
+    expr: op('octahedronSdf_lib')
   help: !text
     file: src/operators/sdf/chamferBoxSdf.md
     name: help
