@@ -12,13 +12,6 @@ float sdTetrahedron(vec3 p) {
 		-1.)/sqrt(3.0);
 }
 
-float sdCappedTorus(in vec3 p, in vec2 sc, in float ra, in float rb)
-{
-	p.x = abs(p.x);
-	float k = (sc.y*p.x>sc.x*p.y) ? dot(p.xy, sc) : length(p.xy);
-	return sqrt(dot(p, p) + ra*ra - 2.0*ra*k) - rb;
-}
-
 float sdRoundedBox( in vec2 p, in vec2 b, in vec4 r )
 {
 	r.xy = (p.x>0.0)?r.xy : r.zw;

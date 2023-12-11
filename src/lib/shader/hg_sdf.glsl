@@ -147,19 +147,6 @@ float fCapsule(vec3 p, vec3 a, vec3 b, float r) {
 	return fLineSegment(p, a, b) - r;
 }
 
-// Torus in the XZ-plane
-float fTorus(vec3 p, float smallRadius, float largeRadius) {
-	return length(vec2(length(p.xz) - largeRadius, p.y)) - smallRadius;
-}
-
-#if 0
-// A circle line. Can also be used to make a torus by subtracting the smaller radius of the torus.
-float fCircle(vec3 p, float r) {
-	float l = length(p.xz) - r;
-	return length(vec2(p.y, l));
-}
-#endif
-
 // A circular disc with no thickness (i.e. a cylinder with no height).
 // Subtract some value to make a flat disc with rounded edge.
 float fDisc(vec3 p, float r) {
