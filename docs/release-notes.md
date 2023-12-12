@@ -4,6 +4,10 @@
 
 ### Highlights
 
+* Compatibility with TD 2023 experimental builds
+* New applyTransform op makes it easier to transform field values, uv coordinates, etc
+* Stability improvements and bug fixes
+
 ### Details
 
 * Improvements / additions
@@ -31,6 +35,7 @@
 * Infrastructure / internals
   * Stop syncing files within clones in devel source
   * Use the new input list parameter instead of dynamically wiring up texture inputs in renderers
+  * Move op-specific code out of shared libraries to improve compile speeds
 
 
 ## v0.36
