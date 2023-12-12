@@ -451,14 +451,15 @@ vec4 noi_grad4(float j, vec4 ip)
 float snoise(vec4 v)
 {
 	// (sqrt(5) - 1)/4 = F4, used once below
-	const float F4 = 0.309016994374947451;
+	// for some reason `F4` as a symbol is causing problems in some test cases?!?!
+	const float F4_asdf = 0.309016994374947451;
 	const vec4  C = vec4( 0.138196601125011,  // (5 - sqrt(5))/20  G4
 	0.276393202250021,  // 2 * G4
 	0.414589803375032,  // 3 * G4
 	-0.447213595499958); // -1 + 4 * G4
 
 	// First corner
-	vec4 i  = floor(v + dot(v, vec4(F4)) );
+	vec4 i  = floor(v + dot(v, vec4(F4_asdf)) );
 	vec4 x0 = v -   i + dot(i, C.xxxx);
 
 	// Other corners
