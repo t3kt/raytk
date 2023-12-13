@@ -94,7 +94,6 @@ class OpDefParsT(_OpMetaPars):
 	Texturetable: 'DatParamT'
 	Variabletable: 'DatParamT'
 	Referencetable: 'DatParamT'
-	Dispatchtable: 'DatParamT'
 	Tagtable: 'DatParamT'
 	Generatedmacrotables: 'StrParamT'
 	Paramgrouptable: 'DatParamT'

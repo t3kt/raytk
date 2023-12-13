@@ -88,7 +88,6 @@ The generated shader is organized into a number of sections. Depending on the co
 * Texture declarations / alias macros
 * Buffer declarations
 * Material ID declarations
-* Dispatch block declarations (not implemented)
 * Output buffer declarations
 * Variable declarations
 * Output buffer initialization function: zero out output buffers in case they are left unassigned.

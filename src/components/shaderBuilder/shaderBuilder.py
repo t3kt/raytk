@@ -1,7 +1,7 @@
 from dataclasses import dataclass
 import json
 from raytkShader import simplifyNames
-from raytkState import RopState, Dispatch, Texture, Buffer, Macro, Reference, Variable, ValidationError, Constant, \
+from raytkState import RopState, Texture, Buffer, Macro, Reference, Variable, ValidationError, Constant, \
 	InputState, SurfaceAttribute
 import re
 from io import StringIO
@@ -702,7 +702,6 @@ class _Writer:
 
 	inlineTypedefRepls: 'Optional[Dict[str, str]]' = None
 	inlineTypedefPattern: 'Optional[re.Pattern]' = None
-	dispatchBlocks: 'Optional[List[Dispatch]]' = None
 	textures: 'Optional[List[Texture]]' = None
 	buffers: 'Optional[List[Buffer]]' = None
 	attributes: 'Optional[List[SurfaceAttribute]]' = None
@@ -721,7 +720,6 @@ class _Writer:
 			self.inlineTypedefPattern = re.compile(r'\b[\w_]+_(as)?(CoordT|ContextT|ReturnT|VarT)\b')
 		self.textures = []
 		self.buffers = []
-		self.dispatchBlocks = []
 		attrNames = set()
 		attrRefNames = [
 			self.referenceTable[i, 'source'].val
@@ -730,8 +728,6 @@ class _Writer:
 		]
 		self.attributes = []
 		for state in self.opStates:
-			if state.dispatchBlocks:
-				self.dispatchBlocks += state.dispatchBlocks
 			if state.textures:
 				self.textures += state.textures
 			if state.buffers:
@@ -757,7 +753,6 @@ class _Writer:
 		self._writeTextureDeclarations()
 		self._writeBufferDeclarations()
 		self._writeMaterialDeclarations()
-		self._writeDispatchDeclarations()
 		self._writeOutputBufferDeclarations()
 		self._writeVariableDeclarations()
 
@@ -913,14 +908,6 @@ class _Writer:
 				i += 1
 		self._endBlock('materials')
 
-	def _writeDispatchDeclarations(self):
-		if not self.dispatchBlocks:
-			return
-		self._startBlock('dispatch')
-		for i, dispatchBlock in enumerate(self.dispatchBlocks):
-			self._writeMacro(dispatchBlock.name, 1001 + i)
-		self._endBlock('dispatch')
-
 	def _writeOutputBufferDeclarations(self):
 		if self.outputBufferTable.numRows < 2:
 			return
@@ -1006,11 +993,7 @@ class _Writer:
 			if line.endswith('// #include <materialParagraph>\n'):
 				self._writeMaterialBody()
 			else:
-				match = re.fullmatch(r'\s*// #include <dispatch/(\w+)>\n', line)
-				if match:
-					self._writeDispatchBody(match.group(1))
-				else:
-					self._write(line)
+				self._write(line)
 		self._endBlock('body')
 
 	def _writeMaterialBody(self):
@@ -1020,15 +1003,6 @@ class _Writer:
 			self._writeLine(f'else if(m == {state.materialId}) {{')
 			# Intentionally skipping typedef inlining for these since no materials need it.
 			self._writeLine(state.materialCode + '\n}')
-
-	def _writeDispatchBody(self, category: str):
-		for dispatchBlock in self.dispatchBlocks:
-			if dispatchBlock.category != category:
-				continue
-			self._writeLine(f'case {dispatchBlock.name}: {{')
-			if dispatchBlock.code:
-				self._writeLine(dispatchBlock.code + ';')
-			self._writeLine('} break;')
 
 	def _write(self, arg):
 		self.out.write(arg)
@@ -1364,13 +1338,6 @@ def _parseOpStateJson(text: str):
 		state.variables = [
 			# Variable(o['name'], o['localName'], o.get('label'), o['dataType'], o['owner'], o.get('macros'), o.get('category'))
 			Variable(**o)
-			for o in arr
-		]
-	arr = obj.get('dispatchBlocks')
-	if arr:
-		state.dispatchBlocks = [
-			# Dispatch(o['name'], o['category'], o['code'])
-			Dispatch(**o)
 			for o in arr
 		]
 	arr = obj.get('validationErrors')

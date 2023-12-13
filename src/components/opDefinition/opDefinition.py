@@ -1,6 +1,6 @@
 import json
 import math
-from raytkState import RopState, Macro, Texture, Reference, Variable, Dispatch, Buffer, ValidationError, Constant, \
+from raytkState import RopState, Macro, Texture, Reference, Variable, Buffer, ValidationError, Constant, \
 	InputState, SurfaceAttribute
 import re
 
@@ -492,7 +492,6 @@ def buildOpState():
 	builder.loadBuffers()
 	builder.loadReferences()
 	builder.loadVariablesAndAttributes()
-	builder.loadDispatchBlocks()
 
 	return builder.opState
 
@@ -792,21 +791,6 @@ class _Builder:
 					owner=self.opName,
 					macros=str(table[i, 'macros'] or ''),
 				))
-
-	def loadDispatchBlocks(self):
-		self.opState.dispatchBlocks = []
-		table = self.defPar.Dispatchtable.eval()
-		if not table or table.numRows < 2:
-			return
-		for i in range(1, table.numRows):
-			name = str(table[i, 'name'] or '')
-			if not name or _isFalseStr(table[i, 'enable']):
-				continue
-			self.opState.dispatchBlocks.append(Dispatch(
-				name=self.namePrefix + name,
-				category=table[i, 'category'].val,
-				code=self.replaceNames(table[i, 'code'].val),
-			))
 
 _typePattern = re.compile(r'\b[CR][a-z]+T\b')
 _typeRepls = {'CoordT': 'THIS_CoordT', 'ContextT': 'THIS_ContextT', 'ReturnT': 'THIS_ReturnT'}

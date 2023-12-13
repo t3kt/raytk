@@ -44,7 +44,6 @@ class RopState(_StateObject):
 	references: list['Reference'] | None = None
 	variables: list['Variable'] | None = None
 	attributes: list['SurfaceAttribute'] | None = None
-	dispatchBlocks: list['Dispatch'] | None = None
 
 	materialId: str | None = None
 
@@ -115,12 +114,6 @@ class SurfaceAttribute(_StateObject):
 	label: str
 	dataType: str
 	macros: str | None = None
-
-@dataclass
-class Dispatch(_StateObject):
-	name: str
-	category: str
-	code: str
 
 @dataclass
 class Buffer(_StateObject):

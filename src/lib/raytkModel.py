@@ -477,7 +477,6 @@ class ROPDef(ModelObject):
 	macroTable: _TableSetting = None
 	variableTable: _TableSetting = None
 	referenceTable: _TableSetting = None
-	dispatchTable: _TableSetting = None
 	tagTable: _TableSetting = None
 
 	generatedMacroTables: ValueOrExprT = None
@@ -519,7 +518,6 @@ class ROPDef(ModelObject):
 		self.macroTable = _extractDatSetting(pars.Macrotable)
 		self.variableTable = _extractDatSetting(pars.Variabletable)
 		self.referenceTable = _extractDatSetting(pars.Referencetable)
-		self.dispatchTable = _extractDatSetting(pars.Dispatchtable)
 		self.tagTable = _extractDatSetting(pars.Tagtable)
 
 		self.generatedMacroTables = _valOrExprFromPar(pars.Generatedmacrotables)

@@ -23,7 +23,6 @@ _opDefParamNames = [
 	'Macrotable',
 	'Variabletable',
 	'Referencetable',
-	'Dispatchtable',
 	'Librarynames',
 	'Help',
 	'Helpurl',

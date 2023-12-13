@@ -10,6 +10,5 @@ Texturetable	Textures	table	table	texture_exprs	eval_textures	_textures.txt	/ray
 Buffertable	Buffers	table	table	buffer_table	eval_buffers	_buffers.txt	/raytk/components/shared/buffer_table_example
 Variabletable	Variables	table	table	variable_exprs	eval_variables	_variables.txt	/raytk/components/shared/variable_table_example
 Referencetable	References	table	table	reference_exprs	eval_references	_references.txt	/raytk/components/shared/reference_table_example
-Dispatchtable	Dispatch Blocks	table	table	dispatch_exprs	eval_dispatch	_dispatch.txt	/raytk/components/shared/dispatch_table_example
 Tagtable	Tags	table	table	tag_exprs	eval_tags	_tags.txt	/raytk/components/shared/tag_table_example
 Help	Help	help	text	help		.md	
