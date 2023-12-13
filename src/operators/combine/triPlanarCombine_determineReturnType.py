@@ -7,7 +7,7 @@ def onCook(dat):
 	dat.clear()
 	dat.appendRow([_getType(dat)])
 
-def _getType(dat: 'DAT'):
+def _getType(dat: DAT):
 	typeSetting = parent().par.Returntype.eval()
 	if typeSetting != 'auto':
 		return typeSetting

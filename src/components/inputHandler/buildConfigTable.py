@@ -13,7 +13,7 @@ if False:
 		Variableinputs: StrParamT
 
 # Everything in this table gets frozen at build time.
-def onCook(dat: 'scriptDAT'):
+def onCook(dat: scriptDAT):
 	dat.clear()
 	host = _parentPar().Hostop.eval()
 	ownIn = _getAttachedInDAT()
@@ -83,9 +83,9 @@ def _parseHandlerName():
 	return name, None
 
 def _determineAutoIndex(
-		host: 'Optional[COMP]',
+		host: COMP | None,
 		ownIn: 'Optional[inDAT]',
-		baseName: 'Optional[str]'):
+		baseName: str | None):
 	if not host:
 		return 0
 	# Look for digits in the first part of the name, with support for:

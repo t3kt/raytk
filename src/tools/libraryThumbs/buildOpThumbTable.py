@@ -3,7 +3,7 @@ if False:
 	# noinspection PyUnresolvedReferences
 	from _stubs import *
 
-def onCook(dat: 'scriptDAT'):
+def onCook(dat: scriptDAT):
 	dat.clear()
 	opThumbFiles = dat.inputs[0]  # type: DAT
 	pathPrefix = 'libraryThumbs/thumbImages/thumb__'

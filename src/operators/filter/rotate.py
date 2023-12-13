@@ -115,10 +115,10 @@ def getParams():
 				params += axis
 	return params
 
-def _isConst(par: 'Par'):
+def _isConst(par: Par):
 	return par.mode == ParMode.CONSTANT
 
-def parCode(par: 'Par'):
+def parCode(par: Par):
 	if _isConst(par):
 		return str(par.eval())
 	return 'THIS_' + par.name

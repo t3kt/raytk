@@ -8,7 +8,7 @@ def onSetupParameters(scriptOp):
 	page = scriptOp.appendCustomPage('Custom')
 	page.appendStr('Elements')
 
-def onCook(dat: 'DAT'):
+def onCook(dat: DAT):
 	dat.clear()
 	dat.appendRow([
 		'relPath',

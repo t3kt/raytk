@@ -19,10 +19,10 @@ class OutputOp:
 	def __init__(self, ownerComp: '_COMP'):
 		self.ownerComp = ownerComp
 
-	def _host(self) -> 'Optional[COMP]':
+	def _host(self) -> COMP | None:
 		return self.ownerComp.par.Hostop.eval()
 
-	def _opDef(self) -> 'Optional[COMP]':
+	def _opDef(self) -> COMP | None:
 		return self.ownerComp.par.Opdef.eval()
 
 	def _renderTop(self) -> 'Optional[glslmultiTOP]':

@@ -19,7 +19,7 @@ if False:
 	iop.specPanel = SpecPanel(COMP())  # type: Union[COMP, SpecPanel]
 
 class ROPEditor:
-	def __init__(self, ownerComp: 'COMP'):
+	def __init__(self, ownerComp: COMP):
 		self.ownerComp = ownerComp
 
 	@property
@@ -41,7 +41,7 @@ class ROPEditor:
 		RaytkTools().setROPStatus(info.rop, status)
 
 	@property
-	def ROP(self) -> 'Optional[COMP]':
+	def ROP(self) -> COMP | None:
 		return iop.inspectorCore.TargetComp
 
 	@property

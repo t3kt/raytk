@@ -35,7 +35,7 @@ _opDefParamNames = [
 	'Raytkopversion',
 ]
 
-def _formatPar(par: 'Optional[Par]'):
+def _formatPar(par: Par | None):
 	if par is None:
 		return ''
 	if par.mode == ParMode.CONSTANT:
@@ -49,7 +49,7 @@ def _formatPar(par: 'Optional[Par]'):
 	else:
 		return '??'
 
-def buildOpInfoTable(dat: 'DAT'):
+def buildOpInfoTable(dat: DAT):
 	dat.clear()
 	dat.appendRow(
 		[
@@ -118,14 +118,14 @@ def _opHasInputVarSettings(info: 'ROPInfo'):
 			return True
 	return False
 
-def _parHasSetting(par: 'Par'):
+def _parHasSetting(par: Par):
 	if par.eval():
 		return True
 	if par.expr or par.bindExpr:
 		return True
 	return False
 
-def buildOpParamsTable(dat: 'DAT'):
+def buildOpParamsTable(dat: DAT):
 	dat.clear()
 	dat.appendRow(['path', 'kind'])
 	for rop in RaytkContext().allMasterOperators():
@@ -150,7 +150,7 @@ def buildOpParamsTable(dat: 'DAT'):
 			else:
 				cell.val = par.style
 
-def buildOpVariablesTable(dat: 'DAT'):
+def buildOpVariablesTable(dat: DAT):
 	dat.clear()
 	dat.appendRow(['path'])
 	for rop in RaytkContext().allMasterOperators():
@@ -172,7 +172,7 @@ def buildOpVariablesTable(dat: 'DAT'):
 				cell = dat[info.path, name]
 			cell.val = dataType
 
-def buildOpInputsTable(dat: 'DAT'):
+def buildOpInputsTable(dat: DAT):
 	dat.clear()
 	parNames = [
 		'Source',
@@ -218,7 +218,7 @@ def buildOpInputsTable(dat: 'DAT'):
 				for parName in parNames
 			])
 
-def buildOpCurrentExpandedParamsTable(dat: 'DAT'):
+def buildOpCurrentExpandedParamsTable(dat: DAT):
 	dat.clear()
 	dat.appendRow(['path', 'expandedParams'])
 	for rop in RaytkContext().allMasterOperators():
@@ -234,7 +234,7 @@ def buildOpCurrentExpandedParamsTable(dat: 'DAT'):
 			expanded,
 		])
 
-def buildOpTestTable(dat: 'DAT', testTable: 'DAT'):
+def buildOpTestTable(dat: DAT, testTable: DAT):
 	dat.clear()
 	dat.appendRow([
 		'path',
@@ -262,9 +262,9 @@ def buildOpTestTable(dat: 'DAT', testTable: 'DAT'):
 	for cell in dat.row(0)[2:]:
 		cell.val = 'test' + str(cell.col - 1)
 
-def buildOpTagTable(dat: 'DAT'):
+def buildOpTagTable(dat: DAT):
 	dat.clear()
-	opPaths = []  # type: List[str]
+	opPaths = []  # type: list[str]
 	opTagExprs = {}  # type: Dict[str, Dict[str, str]]
 	for rop in RaytkContext().allMasterOperators():
 		info = ROPInfo(rop)
@@ -299,6 +299,6 @@ def buildToolkitIndexJson():
 	}
 	return json.dumps(toolkitIndex, indent='  ')
 
-def _buildCategoryIndexObj(cat: 'COMP'):
+def _buildCategoryIndexObj(cat: COMP):
 	catHelp = raytkDocs.CategoryHelp.extractFromComp(cat)
 	return catHelp.toFrontMatterData()

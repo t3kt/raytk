@@ -5,7 +5,7 @@ if False:
 	# noinspection PyUnresolvedReferences
 	from _stubs import *
 
-def onCook(dat: 'scriptDAT'):
+def onCook(dat: scriptDAT):
 	dat.clear()
 	dat.appendRow(['name', 'label'])
 	context = RaytkContext()

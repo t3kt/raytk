@@ -3,10 +3,10 @@ if False:
 	# noinspection PyUnresolvedReferences
 	from _stubs import *
 
-def _typeTable() -> 'DAT':
+def _typeTable() -> DAT:
 	return op('typeTable')
 
-def _getAllTypesInCategory(typeTable: 'DAT', category: str):
+def _getAllTypesInCategory(typeTable: DAT, category: str):
 	filterColumn = 'is' + category[0].upper() + category[1:]
 	return [
 		typeTable[row, 'name'].val
@@ -45,7 +45,7 @@ _categories = [
 	_Category('returnType'),
 ]
 
-def buildSupportedTypeTable(dat: 'scriptDAT', parHost: 'OP'):
+def buildSupportedTypeTable(dat: scriptDAT, parHost: 'OP'):
 	dat.clear()
 	dat.appendRow(['category', 'spec', 'types'])
 	for cat in _categories:

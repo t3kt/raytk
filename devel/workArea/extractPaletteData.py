@@ -7,7 +7,7 @@ if False:
 	from _stubs import *
 	from components.opPicker.opPicker import OpPicker, PickerCategoryItem, PickerOpItem
 
-def onCook(dat: 'DAT'):
+def onCook(dat: DAT):
 	dat.clear()
 
 	picker = op.raytk.op('tools/palette/opPicker').ext.opPicker  # type: OpPicker

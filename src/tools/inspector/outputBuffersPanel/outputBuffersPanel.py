@@ -7,11 +7,11 @@ if False:
 	from _stubs import *
 
 class OutputBuffersPanel:
-	def __init__(self, ownerComp: 'COMP'):
+	def __init__(self, ownerComp: COMP):
 		self.ownerComp = ownerComp
 
 	@staticmethod
-	def buildAllBuffersTable(dat: 'DAT', tableList: 'DAT'):
+	def buildAllBuffersTable(dat: DAT, tableList: DAT):
 		dat.clear()
 		dat.appendRow(['name', 'label', 'opType', 'localName', 'localLabel', 'enablePar', 'shortOpType'])
 		for tablePath in tableList.col('path')[1:]:
@@ -31,7 +31,7 @@ class OutputBuffersPanel:
 				])
 
 	@staticmethod
-	def buildOutputOpTypeTable(dat: 'DAT', tableList: 'DAT'):
+	def buildOutputOpTypeTable(dat: DAT, tableList: DAT):
 		dat.clear()
 		dat.appendRow(['name', 'label'])
 		for tablePath in tableList.col('path')[1:]:
@@ -43,7 +43,7 @@ class OutputBuffersPanel:
 			])
 
 	@staticmethod
-	def onItemReplicate(replicator: 'COMP', allOps: 'List[panelCOMP]', table: 'DAT', master: 'panelCOMP'):
+	def onItemReplicate(replicator: COMP, allOps: 'List[panelCOMP]', table: DAT, master: 'panelCOMP'):
 		prefix = replicator.par.opprefix.eval()
 		for item in allOps:
 			name = item.name.replace(prefix, '')
@@ -61,6 +61,6 @@ class OutputBuffersPanel:
 				item.par.Enable = True
 			item.par.display = True
 
-	def onSelectItem(self, item: 'COMP'):
+	def onSelectItem(self, item: COMP):
 		par = self.ownerComp.par.Selectedbuffer
 		par.val = item.par.Name.eval()

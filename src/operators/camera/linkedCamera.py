@@ -16,7 +16,7 @@ def _findCameraTox():
 			return path, pattern
 		return None, None
 
-def onCreatePulse(par: 'Par'):
+def onCreatePulse(par: Par):
 	ui.undo.startBlock('Create camera')
 	if par.name == 'Createcamera':
 		path, pattern = _findCameraTox()

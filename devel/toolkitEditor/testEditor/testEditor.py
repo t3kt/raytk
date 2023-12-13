@@ -32,7 +32,7 @@ class TestEditor:
 		self.ownerComp = ownerComp
 
 	@property
-	def hostedComponent(self) -> 'Optional[COMP]':
+	def hostedComponent(self) -> COMP | None:
 		return iop.loader.Component
 
 	@property

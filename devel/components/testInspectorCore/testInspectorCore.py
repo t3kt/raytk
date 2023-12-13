@@ -20,7 +20,7 @@ class TestInspectorCore:
 		self.ownerComp = ownerComp
 
 	@property
-	def _scopeRoot(self) -> 'Optional[COMP]':
+	def _scopeRoot(self) -> COMP | None:
 		return self.ownerComp.par.Scope.eval()
 
 	def GetFindings(self,) -> List[TestFinding]:
@@ -87,7 +87,7 @@ class TestInspectorCore:
 
 	def _parseErrorLines(
 			self,
-			scope: 'COMP',
+			scope: COMP,
 			defaultPath: str,
 			text: str,
 			source: 'TestFindingSource',
@@ -117,7 +117,7 @@ class TestInspectorCore:
 
 	def _investigateFinding(
 			self,
-			scope: 'COMP',
+			scope: COMP,
 			finding: 'TestFinding'):
 		o = scope.op(finding.path)
 		if not o:
@@ -149,7 +149,7 @@ class TestInspectorCore:
 				results.append(finding)
 		return results
 
-	def buildFindingTable(self, dat: 'DAT'):
+	def buildFindingTable(self, dat: DAT):
 		dat.clear()
 		dat.appendRow([
 			'path',

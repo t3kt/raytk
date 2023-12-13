@@ -14,11 +14,11 @@ if False:
 	ipar.inspectorState = _StatePar()
 
 class ShaderPanel:
-	def __init__(self, ownerComp: 'COMP'):
+	def __init__(self, ownerComp: COMP):
 		self.ownerComp = ownerComp
 
 	@staticmethod
-	def _processCode(code: str, definition: 'DAT'):
+	def _processCode(code: str, definition: DAT):
 		if not code:
 			return ''
 		if not ipar.inspectorState.Simplifynames or definition.numRows < 2:
@@ -30,7 +30,7 @@ class ShaderPanel:
 		return code
 
 	@staticmethod
-	def buildCodeBlockTable(dat: 'DAT', includes: 'DAT', mainCode: 'DAT', definition: 'DAT'):
+	def buildCodeBlockTable(dat: DAT, includes: DAT, mainCode: DAT, definition: DAT):
 		dat.clear()
 		dat.appendRow(['name', 'label', 'path', 'category'])
 		dat.appendRow(['main', 'main', mainCode, 'main'])
@@ -54,7 +54,7 @@ class ShaderPanel:
 					'opFunction',
 				])
 
-	def fillPreparedCode(self, dat: 'DAT', codeBlocks: 'DAT', selectedName: str, definition: 'DAT'):
+	def fillPreparedCode(self, dat: DAT, codeBlocks: DAT, selectedName: str, definition: DAT):
 		dat.clear()
 		category = codeBlocks[selectedName, 'category']
 		srcDat = op(codeBlocks[selectedName, 'path'])

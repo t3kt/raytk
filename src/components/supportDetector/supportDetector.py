@@ -4,7 +4,7 @@ if False:
 	from _stubs import *
 
 def buildSupportTable(
-		support: 'scriptDAT',
+		support: scriptDAT,
 		top: 'glslTOP'):
 	top.cook(force=True)
 	support.clear()

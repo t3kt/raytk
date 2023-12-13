@@ -33,7 +33,7 @@ def _configColor(name: str) -> 'Tuple[Par, Par, Par, int]':
 	return p[name + 'r'], p[name + 'g'], p[name + 'b'], 1
 
 class OpPicker:
-	def __init__(self, ownerComp: 'COMP'):
+	def __init__(self, ownerComp: COMP):
 		# noinspection PyTypeChecker
 		self.ownerComp = ownerComp  # type: _COMP
 		self.impl = _DefaultPickerImpl(ownerComp)
@@ -96,7 +96,7 @@ class OpPicker:
 	def clearFilterText(self):
 		self.impl.clearFilterText()
 
-	def onUIStateChange(self, par: 'Par'):
+	def onUIStateChange(self, par: Par):
 		if par.name in ('Showalpha', 'Showbeta', 'Showdeprecated'):
 			self.impl.applyFilter()
 		elif par.name in ('Showthumbs', 'Showstatuschips'):
@@ -201,14 +201,14 @@ class _LayoutSettings:
 @dataclass
 class PickerItem:
 	shortName: str
-	helpSummary: Optional[str] = None
-	status: Optional[str] = None
+	helpSummary: str | None = None
+	status: str | None = None
 	isAlpha: bool = False
 	isBeta: bool = False
 	isDeprecated: bool = False
-	path: Optional[str] = None
-	opType: Optional[str] = None
-	categoryName: Optional[str] = None
+	path: str | None = None
+	opType: str | None = None
+	categoryName: str | None = None
 
 	isOP = None
 	isCategory = None
@@ -222,11 +222,11 @@ class PickerCategoryItem(PickerItem):
 
 @dataclass
 class PickerOpItem(PickerItem):
-	words: List[str] = field(default_factory=list)
-	keywords: List[str] = field(default_factory=list)
-	shortcuts: List[str] = field(default_factory=list)
-	chip: Optional[str] = None
-	thumbPath: Optional[str] = None
+	words: list[str] = field(default_factory=list)
+	keywords: list[str] = field(default_factory=list)
+	shortcuts: list[str] = field(default_factory=list)
+	chip: str | None = None
+	thumbPath: str | None = None
 	isOP = True
 	isCategory = False
 
@@ -258,12 +258,12 @@ _AnyItemT = Union[PickerCategoryItem, PickerOpItem]
 
 @dataclass
 class _Filter:
-	text: Optional[str] = None
+	text: str | None = None
 	alpha: bool = False
 	beta: bool = False
 	deprecated: bool = False
 
-def _loadItemCategories(opTable: 'DAT', opHelpTable: 'DAT', useDisplayCategories=False):
+def _loadItemCategories(opTable: DAT, opHelpTable: DAT, useDisplayCategories=False):
 	categories = []
 	categoriesByName = {}  # type: Dict[str, PickerCategoryItem]
 
@@ -341,7 +341,7 @@ class _ItemLibrary:
 			if item.isOP and shortcut in item.shortcuts:
 				return item
 
-	def loadTables(self, opTable: 'DAT', opHelpTable: 'DAT', useDisplayCategories: bool):
+	def loadTables(self, opTable: DAT, opHelpTable: DAT, useDisplayCategories: bool):
 		self.categories = []
 		self.filteredItems = None
 		self.categories = _loadItemCategories(opTable, opHelpTable, useDisplayCategories)
@@ -392,7 +392,7 @@ def _splitCamelCase(s: str):
 	return [s[x:y] for x, y in zip(splits, splits[1:])]
 
 class _PickerImpl:
-	def __init__(self, ownerComp: 'COMP'):
+	def __init__(self, ownerComp: COMP):
 		# noinspection PyTypeChecker
 		self.ownerComp = ownerComp  # type: _COMP
 		self.listComp = ownerComp.op('list')  # type: listCOMP
@@ -430,7 +430,7 @@ class _PickerImpl:
 		self.selectItem(None)
 		self.clearFilterText()
 
-	def loadItems(self, opTable: 'DAT', opHelpTable: 'DAT'):
+	def loadItems(self, opTable: DAT, opHelpTable: DAT):
 		raise NotImplementedError()
 
 	def refreshList(self):
@@ -563,11 +563,11 @@ class _PickerImpl:
 			attribs.top = self.ownerComp.op('chipBackground')
 
 class _DefaultPickerImpl(_PickerImpl):
-	def __init__(self, ownerComp: 'COMP'):
+	def __init__(self, ownerComp: COMP):
 		super().__init__(ownerComp)
 		self.itemLibrary = _ItemLibrary()
 
-	def loadItems(self, opTable: 'DAT', opHelpTable: 'DAT'):
+	def loadItems(self, opTable: DAT, opHelpTable: DAT):
 		self.itemLibrary.loadTables(
 			opTable, opHelpTable,
 			useDisplayCategories=ipar.uiState.Usedisplaycategories.eval())
@@ -778,7 +778,7 @@ class _CategoryColumnLibrary:
 		self.allCategories = []
 		self.filteredColumns = None
 
-	def loadTables(self, opTable: 'DAT', opHelpTable: 'DAT', useDisplayCategories: bool):
+	def loadTables(self, opTable: DAT, opHelpTable: DAT, useDisplayCategories: bool):
 		self.allItems = []
 		self.allColumns = []
 		for category in _loadItemCategories(opTable, opHelpTable, useDisplayCategories):
@@ -837,7 +837,7 @@ class _CategoryColumnLibrary:
 				return item
 
 class _CategoryColumnPickerImpl(_PickerImpl):
-	def __init__(self, ownerComp: 'COMP'):
+	def __init__(self, ownerComp: COMP):
 		super().__init__(ownerComp)
 		self.itemLibrary = _CategoryColumnLibrary()
 
@@ -865,7 +865,7 @@ class _CategoryColumnPickerImpl(_PickerImpl):
 		self.selectItem(item)
 		return item
 
-	def loadItems(self, opTable: 'DAT', opHelpTable: 'DAT'):
+	def loadItems(self, opTable: DAT, opHelpTable: DAT):
 		self.itemLibrary.loadTables(
 			opTable, opHelpTable,
 			useDisplayCategories=ipar.uiState.Usedisplaycategory.eval())

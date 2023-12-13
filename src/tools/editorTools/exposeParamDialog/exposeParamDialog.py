@@ -10,7 +10,7 @@ class _StructureTypes:
 	separate = 1
 
 class ExposeParamDialog:
-	def __init__(self, ownerComp: 'COMP'):
+	def __init__(self, ownerComp: COMP):
 		self.ownerComp = ownerComp
 		self.header = ownerComp.op('header')
 		self.window = ownerComp.op('window')
@@ -21,13 +21,13 @@ class ExposeParamDialog:
 		self.targetPar = None  # type: Optional[Par]
 		self.targetTuplet = None  # type: Optional[ParTupletT]
 
-	def ShowForParam(self, par: 'Par', scene: 'Optional[COMP]'):
+	def ShowForParam(self, par: Par, scene: COMP | None):
 		self.header.par.Headerlabel = f'Expose Parameter: {par.label} ({par.name})'
 		self.targetPar = par
 		self.targetTuplet = None
 		self._initializeAndShow(scene)
 
-	def ShowForTuplet(self, parTuplet: 'ParTupletT', scene: 'Optional[COMP]'):
+	def ShowForTuplet(self, parTuplet: 'ParTupletT', scene: COMP | None):
 		if len(parTuplet) == 1:
 			self.ShowForParam(parTuplet[0], scene)
 			return
@@ -38,7 +38,7 @@ class ExposeParamDialog:
 		self.targetTuplet = parTuplet
 		self._initializeAndShow(scene)
 
-	def _initializeAndShow(self, scene: 'Optional[COMP]'):
+	def _initializeAndShow(self, scene: COMP | None):
 		if self.targetPar is not None:
 			if not scene:
 				scene = self.targetPar.owner.parent()
@@ -67,7 +67,7 @@ class ExposeParamDialog:
 		self.Close()
 
 	def _exposeParams(
-			self, structure: str, scene: 'COMP', prefix: str, pageName: str):
+			self, structure: str, scene: COMP, prefix: str, pageName: str):
 		if not scene:
 			return
 		if self.targetPar is not None:
@@ -113,7 +113,7 @@ class ExposeParamDialog:
 	def Close(self):
 		self.window.par.winclose.pulse()
 
-def _copySettings(newPar: 'Par', srcPar: 'Par'):
+def _copySettings(newPar: Par, srcPar: Par):
 	newPar.default = srcPar.default
 	newPar.min = srcPar.min
 	newPar.max = srcPar.max

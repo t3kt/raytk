@@ -8,7 +8,7 @@ if False:
 	iop.ropEditor = ROPEditor(COMP())
 
 class CreateRopDialog:
-	def __init__(self, ownerComp: 'COMP'):
+	def __init__(self, ownerComp: COMP):
 		self.ownerComp = ownerComp
 
 	def _setMessageText(self, message):

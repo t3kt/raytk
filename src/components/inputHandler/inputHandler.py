@@ -49,15 +49,15 @@ def resolveSourceParDefinition(errorTable: 'Optional[DAT]' = None) -> 'Optional[
 		msg += ' Only ROPs and defintion DATs are allowed.'
 		errorTable.appendRow([parent().path, 'error', msg])
 
-def buildValidationErrors(dat: 'DAT'):
+def buildValidationErrors(dat: DAT):
 	dat.clear()
 	if not hasattr(parent, 'raytk'):
 		resolveSourceParDefinition(dat)
 
-def _restrictExpandedTypes(expandedTypes: str, supportedTypes: 'List[str]') -> str:
+def _restrictExpandedTypes(expandedTypes: str, supportedTypes: 'list[str]') -> str:
 	return ' '.join([t for t in expandedTypes.split(' ') if t in supportedTypes])
 
-def processDefinitions(dat: 'DAT', inputDefs: 'DAT', supportedTypes: 'DAT', config: 'DAT'):
+def processDefinitions(dat: DAT, inputDefs: DAT, supportedTypes: DAT, config: DAT):
 	dat.copy(inputDefs)
 	if dat.numRows < 2 or shouldBypass():
 		return

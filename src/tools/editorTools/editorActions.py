@@ -35,8 +35,8 @@ def _createAddInputActionGroup(
 		text: str,
 		createType: str,
 		paramName: str,
-		matchTypes: List[str],
-		table: 'DAT',
+		matchTypes: list[str],
+		table: DAT,
 ):
 	return GroupImpl(
 		text,
@@ -53,9 +53,9 @@ def _createAddInputActionGroup(
 		],
 	)
 
-def _createVarRefAction(label: str, variable: str, dataType: str, fieldName: Optional[str] = None):
+def _createVarRefAction(label: str, variable: str, dataType: str, fieldName: str | None = None):
 	def execute(ctx: ActionContext):
-		def init(refOp: 'COMP'):
+		def init(refOp: COMP):
 			if fieldName:
 				refOp.par.Field = fieldName
 			fromOp = ctx.primaryComp
@@ -136,7 +136,7 @@ def _createAttrRefGroup(text: str):
 			return False
 		return bool(_getStateField(o, 'attributes'))
 	class _LockPars(OpInit):
-		def init(self, o: 'COMP', ctx: ActionContext):
+		def init(self, o: COMP, ctx: ActionContext):
 			o.par.Attributename.readOnly = True
 			o.par.Datatype.readOnly = True
 	select = RopSelect(test=test)
@@ -159,7 +159,7 @@ def _createAttrRefGroup(text: str):
 
 def _createRenderSelAction(label: str, name: str, enablePar: str):
 	def execute(ctx: ActionContext):
-		def init(refOp: 'COMP'):
+		def init(refOp: COMP):
 			fromOp = ctx.primaryComp
 			refOp.nodeCenterY = fromOp.nodeCenterY - 200
 			refOp.nodeX = fromOp.nodeX + refOp.nodeWidth + 100
@@ -255,7 +255,7 @@ def _createRenderSelGroup(text: str):
 
 def _createAnimateParamAction(
 		text: str,
-		parOrTuplet: Union['Par', 'ParTupletT'],
+		parOrTuplet: Union[Par, 'ParTupletT'],
 		ropType: str, nameSuffix: str):
 	def getPars():
 		if isinstance(parOrTuplet, Par):
@@ -273,7 +273,7 @@ def _createAnimateParamAction(
 		else:
 			parOrTupletName = pars[0].tupletName
 		undoInfo = {}
-		def init(gen: 'COMP'):
+		def init(gen: COMP):
 			gen.name = f'{o.name}_{parOrTupletName}_{nameSuffix}'
 			chop = gen.parent().create(nullCHOP, f'{o.name}_{parOrTupletName}_vals')
 			undoInfo['chop'] = chop
@@ -395,7 +395,7 @@ def _createCustomizeShaderConfigAction(text: str):
 	return SimpleAction(text, isValid, execute)
 
 def _createTableBasedGroup(
-		text: str, table: 'DAT',
+		text: str, table: DAT,
 		ropType: str,
 		paramName: str,
 		select: 'RopSelect',
@@ -460,7 +460,7 @@ def _createSimplifyRescaleFloatAction(text):
 		p, valid = _getOrigMultiplyPar(origRescale)
 		return valid
 	class _InitRescale(OpInit):
-		def init(self, o: 'COMP', ctx: ActionContext):
+		def init(self, o: COMP, ctx: ActionContext):
 			newRescale = o
 			origRescale = ctx.primaryComp
 			_copyParState(origRescale.par.Enable, newRescale.par.Enable)
@@ -498,7 +498,7 @@ def _createSimplifyRotateAction(text):
 	def _isValid(origRotate: 'OP'):
 		return _validateAndGetAxis(origRotate) is not None
 	class _InitRotate(OpInit):
-		def init(self, o: 'COMP', ctx: ActionContext):
+		def init(self, o: COMP, ctx: ActionContext):
 			newRotate = o
 			origRotate = ctx.primaryComp
 			axis = _validateAndGetAxis(origRotate)
@@ -514,7 +514,7 @@ def _createSimplifyRotateAction(text):
 		inits=[_InitRotate()],
 	)
 
-def _copyParState(fromPar: 'Par', toPar: 'Par'):
+def _copyParState(fromPar: Par, toPar: Par):
 	toPar.val = fromPar.val
 	toPar.expr = fromPar.expr or ''
 	toPar.bindExpr = fromPar.bindExpr or ''

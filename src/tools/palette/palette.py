@@ -1,4 +1,3 @@
-from typing import Callable, Optional
 from raytkUtil import RaytkContext, detachTox, focusFirstCustomParameterPage, ROPInfo, IconColors
 
 # noinspection PyUnreachableCode
@@ -7,23 +6,25 @@ if False:
 	from _stubs import *
 	from _typeAliases import *
 	from components.opPicker.opPicker import OpPicker, PickerItem
+	from typing import Callable
 
 	ext.opPicker = OpPicker(COMP())
 
 	class _Par(ParCollection):
-		Devel: 'BoolParamT'
-		Defaultshowalpha: 'BoolParamT'
-		Defaultshowbeta: 'BoolParamT'
-		Defaultshowdeprecated: 'BoolParamT'
+		Devel: BoolParamT
+		Defaultshowalpha: BoolParamT
+		Defaultshowbeta: BoolParamT
+		Defaultshowdeprecated: BoolParamT
+
 	class _COMP(panelCOMP):
 		par: _Par
 
 	class _UIStatePar(ParCollection):
-		Showalpha: 'BoolParamT'
-		Showbeta: 'BoolParamT'
-		Showdeprecated: 'BoolParamT'
-		Showhelp: 'BoolParamT'
-		Pinopen: 'BoolParamT'
+		Showalpha: BoolParamT
+		Showbeta: BoolParamT
+		Showdeprecated: BoolParamT
+		Showhelp: BoolParamT
+		Pinopen: BoolParamT
 
 	ipar.uiState = _UIStatePar()
 
@@ -35,7 +36,7 @@ USE_PLACE_OPS = True
 #  status icon
 
 class Palette:
-	def __init__(self, ownerComp: 'COMP'):
+	def __init__(self, ownerComp: COMP):
 		# noinspection PyTypeChecker
 		self.ownerComp = ownerComp  # type: _COMP
 		self.selItem = tdu.Dependency()  # value type _AnyItemT
@@ -54,7 +55,7 @@ class Palette:
 		ext.opPicker.Resetstate()
 
 	@property
-	def _closeTimer(self) -> 'timerCHOP':
+	def _closeTimer(self) -> timerCHOP:
 		# noinspection PyTypeChecker
 		return self.ownerComp.op('closeTimer')
 
@@ -123,8 +124,8 @@ class Palette:
 
 	def CreateItem(
 			self, templatePath: str,
-			postSetup: 'Optional[Callable[[COMP], None]]' = None,
-			undoSetup: 'Optional[Callable[[], None]]' = None,
+			postSetup: 'Callable[[COMP], None] | None' = None,
+			undoSetup: 'Callable[[], None] | None' = None,
 	):
 		template = self._getTemplate(templatePath)
 		if not template:
@@ -161,9 +162,9 @@ class Palette:
 
 	def _createROP(
 			self,
-			template: 'COMP', dest: 'COMP', pane: 'NetworkEditor',
+			template: COMP, dest: COMP, pane: NetworkEditor,
 			nodeX: int, nodeY: int, name: str,
-			postSetup: 'Optional[Callable[[COMP], None]]' = None,
+			postSetup: 'Callable[[COMP], None] | None' = None,
 	):
 		# when using postSetup, placeOPs won't work so don't use it
 		if not postSetup and op('/sys/quiet'):
@@ -244,9 +245,9 @@ class Palette:
 
 	def CreateVariableReference(
 			self,
-			fromOp: 'COMP', variable: str, dataType: str,
-			postSetup: 'Optional[Callable[[COMP], None]]' = None):
-		def initRef(refOp: 'COMP'):
+			fromOp: COMP, variable: str, dataType: str,
+			postSetup: 'Callable[[COMP], None] | None' = None):
+		def initRef(refOp: COMP):
 			# assume that they're in the same parent
 			refOp.par.Source.val = fromOp.name
 			refOp.par.Source.readOnly = True
@@ -266,9 +267,9 @@ class Palette:
 		)
 
 	def CreateRenderSelect(
-			self, fromOp: 'COMP', outputName: str,
-			postSetup: 'Optional[Callable[[COMP], None]]' = None):
-		def initSel(refOp: 'COMP'):
+			self, fromOp: COMP, outputName: str,
+			postSetup: 'Callable[[COMP], None] | None' = None):
+		def initSel(refOp: COMP):
 			# assume that they're in the same parent
 			refOp.par.Outputop.val = fromOp.name
 			refOp.par.Outputop.readOnly = True
@@ -312,7 +313,7 @@ class Palette:
 			return
 		self.CreateItem(item.path)
 
-	def onRolloverItem(self, item: 'Optional[PickerItem]'):
+	def onRolloverItem(self, item: 'PickerItem | None'):
 		self.ownerComp.op('thumbImage').cook(force=True)
 
 def _isNonCommercial():

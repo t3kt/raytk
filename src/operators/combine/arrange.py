@@ -23,7 +23,7 @@ class Stage:
 			return f'inputOp{self.i}(p, ctx)'
 		return f'inputOp{self.i}(p - THIS_asCoordT(vec3({parCode(self.tra[0])}, {parCode(self.tra[1])}, {parCode(self.tra[2])})), ctx)'
 
-def _isConst(par: 'Par'):
+def _isConst(par: Par):
 	return par.mode == ParMode.CONSTANT
 
 @dataclass
@@ -31,9 +31,9 @@ class State:
 	cmb: str
 	swap: bool
 	stages: 'List[Stage]'
-	rad: 'Optional[Par]' = None
-	num: 'Optional[Par]' = None
-	off: 'Optional[Par]' = None
+	rad: Par | None = None
+	num: Par | None = None
+	off: Par | None = None
 
 def loadState() -> 'State':
 	p = parent().par
@@ -57,7 +57,7 @@ def loadState() -> 'State':
 		))
 	return state
 
-def parCode(par: 'Par'):
+def parCode(par: Par):
 	if _isConst(par):
 		return str(par.eval())
 	return 'THIS_' + par.name

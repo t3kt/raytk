@@ -13,7 +13,7 @@ if False:
 	from _stubs import *
 
 class BuildManager:
-	def __init__(self, ownerComp: 'COMP'):
+	def __init__(self, ownerComp: COMP):
 		self.ownerComp = ownerComp
 		self.logTable = ownerComp.op('log')
 		self.context = None  # type: Optional[BuildContext]
@@ -116,7 +116,7 @@ class BuildManager:
 		builder.runBuild(thenRun=afterToolkitBuild)
 
 	@staticmethod
-	def reloadToolkit(toolkit: 'COMP'):
+	def reloadToolkit(toolkit: COMP):
 		toolkit.par.externaltox = 'src/raytk.tox'
 		toolkit.par.reinitnet.pulse()
 		# Do this early since it switches off things like automatically writing to the opList.txt file.
@@ -124,7 +124,7 @@ class BuildManager:
 		toolkit.par.Devel = False
 
 	@staticmethod
-	def reloadSnippets(snippets: 'COMP'):
+	def reloadSnippets(snippets: COMP):
 		snippets.par.externaltox = 'snippets/raytkSnippets.tox'
 		snippets.par.reinitnet.pulse()
 		# Do this early since it switches off things like automatically writing to the opList.txt file.
@@ -156,7 +156,7 @@ class _BuilderBase:
 		self.afterBuild = thenRun
 		pass
 
-	def removeBuildExcludeOpsIn(self, scope: 'COMP', thenRun: Callable):
+	def removeBuildExcludeOpsIn(self, scope: COMP, thenRun: Callable):
 		self.log(f'Removing buildExclude ops in {scope} (deep)')
 		toRemove = scope.findChildren(tags=[RaytkTags.buildExclude.name])
 		chunks = [list(chunk) for chunk in chunked_iterable(toRemove, 30)]
@@ -180,7 +180,7 @@ class _BuilderBase:
 			suffix = ''
 		return f'build/{baseName}-{version}{suffix}.tox'
 
-	def finalizeRootPars(self, comp: 'COMP'):
+	def finalizeRootPars(self, comp: COMP):
 		self.context.moveNetworkPane(comp)
 		comp.par.Devel.readOnly = True
 		comp.par.externaltox = ''
@@ -309,7 +309,7 @@ class ToolkitBuilder(_BuilderBase):
 			queueCall(self.afterBuild)
 
 	def updateLibraryImage(
-			self, toolkit: 'COMP',
+			self, toolkit: COMP,
 			thenRun: 'Optional[Callable]' = None, runArgs: list = None):
 		self.log('Updating library image')
 		image = RaytkContext().libraryImage()
@@ -328,7 +328,7 @@ class ToolkitBuilder(_BuilderBase):
 			queueCall(thenRun, *(runArgs or []))
 
 	def updateLibraryInfo(
-			self, toolkit: 'COMP',
+			self, toolkit: COMP,
 			thenRun: 'Optional[Callable]' = None, runArgs: list = None):
 		self.log('Updating library info')
 		if toolkit.par['Experimentalbuild'] is not None:
@@ -343,7 +343,7 @@ class ToolkitBuilder(_BuilderBase):
 			runArgs=[])
 
 	def lockLibraryInfo(
-			self, toolkit: 'COMP',
+			self, toolkit: COMP,
 			thenRun: 'Optional[Callable]' = None, runArgs: list = None):
 		self.log('Locking library info')
 		self.context.lockOps(toolkit.ops(
@@ -352,7 +352,7 @@ class ToolkitBuilder(_BuilderBase):
 			queueCall(thenRun, *(runArgs or []))
 
 	def preProcessComponents(
-			self, components: 'COMP',
+			self, components: COMP,
 			thenRun: 'Optional[Callable]' = None, runArgs: list = None):
 		self.log(f'Prepocessing components {components}')
 		self.context.focusInNetworkPane(components)
@@ -388,7 +388,7 @@ class ToolkitBuilder(_BuilderBase):
 		queueCall(nextStage)
 
 	def processComponents(
-			self, components: 'COMP',
+			self, components: COMP,
 			thenRun: 'Optional[Callable]' = None, runArgs: list = None):
 		self.log(f'Processing components {components}')
 		self.context.focusInNetworkPane(components)
@@ -396,7 +396,7 @@ class ToolkitBuilder(_BuilderBase):
 		queueCall(thenRun, *(runArgs or []))
 
 	def processOperators(
-			self, comp: 'COMP',
+			self, comp: COMP,
 			thenRun: 'Optional[Callable]' = None, runArgs: list = None):
 		self.log(f'Processing operators {comp}')
 		self.context.moveNetworkPane(comp)
@@ -408,7 +408,7 @@ class ToolkitBuilder(_BuilderBase):
 		queueCall(self.processOperatorCategories_stage, categories, thenRun, runArgs)
 
 	def processOperatorCategories_stage(
-			self, categories: List['COMP'],
+			self, categories: list[COMP],
 			thenRun: 'Optional[Callable]' = None, runArgs: list = None):
 		if categories:
 			category = categories.pop()
@@ -420,7 +420,7 @@ class ToolkitBuilder(_BuilderBase):
 			queueCall(thenRun, *(runArgs or []))
 
 	def processOperatorCategory(
-			self, category: 'COMP',
+			self, category: COMP,
 			thenRun: 'Optional[Callable]' = None, runArgs: list = None):
 		categoryInfo = CategoryInfo(category)
 		self.log(f'Processing operator category {category.name}')
@@ -436,7 +436,7 @@ class ToolkitBuilder(_BuilderBase):
 		queueCall(self.processOperatorCategory_stage, category, comps, thenRun, runArgs)
 
 	def processOperatorCategory_stage(
-			self, category: 'COMP', components: List['COMP'],
+			self, category: COMP, components: list[COMP],
 			thenRun: 'Optional[Callable]' = None, runArgs: list = None):
 		if components:
 			comp = components.pop()
@@ -450,7 +450,7 @@ class ToolkitBuilder(_BuilderBase):
 			if thenRun:
 				queueCall(thenRun, *(runArgs or []))
 
-	def processOperator(self, comp: 'COMP'):
+	def processOperator(self, comp: COMP):
 		self.log(f'Processing operator {comp}')
 		self.context.focusInNetworkPane(comp)
 		self.context.disableCloning(comp)
@@ -483,7 +483,7 @@ class ToolkitBuilder(_BuilderBase):
 		if self.docProcessor:
 			self.docProcessor.processOp(comp)
 
-	def processOperatorSubCompChildrenOf(self, comp: 'COMP'):
+	def processOperatorSubCompChildrenOf(self, comp: COMP):
 		subComps = comp.findChildren(type=COMP)
 		if not subComps:
 			return
@@ -491,7 +491,7 @@ class ToolkitBuilder(_BuilderBase):
 		for child in subComps:
 			self.processOperatorSubComp_2(child)
 
-	def processOperatorSubComp_2(self, comp: 'COMP'):
+	def processOperatorSubComp_2(self, comp: COMP):
 		self.context.log(f'Processing {comp}', verbose=True)
 		self.context.detachTox(comp)
 		self.context.reclone(comp)
@@ -499,7 +499,7 @@ class ToolkitBuilder(_BuilderBase):
 		self.processOperatorSubCompChildrenOf(comp)
 
 	def processNestedOperators(
-			self, comp: 'COMP',
+			self, comp: COMP,
 			thenRun: 'Optional[Callable]' = None, runArgs: list = None):
 		self.log('Processing nested operators')
 		subOps = comp.findChildren(tags=[RaytkTags.raytkOP.name], depth=3)
@@ -507,7 +507,7 @@ class ToolkitBuilder(_BuilderBase):
 		queueCall(self.processNestedOperators_stage, subOps, thenRun, runArgs)
 
 	def processNestedOperators_stage(
-			self, comps: List['COMP'],
+			self, comps: list[COMP],
 			thenRun: 'Optional[Callable]' = None, runArgs: list = None):
 		if comps:
 			comp = comps.pop()
@@ -518,7 +518,7 @@ class ToolkitBuilder(_BuilderBase):
 		if thenRun:
 			queueCall(thenRun, *(runArgs or []))
 
-	def processNestedOperator(self, rop: 'COMP'):
+	def processNestedOperator(self, rop: COMP):
 		self.log(f'Processing sub-operator {rop.path}')
 		self.context.updateOrReclone(rop)
 		self.context.detachTox(rop)
@@ -533,7 +533,7 @@ class ToolkitBuilder(_BuilderBase):
 		queueCall(thenRun, *(runArgs or []))
 
 	def processTools(
-			self, comp: 'COMP',
+			self, comp: COMP,
 			thenRun: 'Optional[Callable]' = None, runArgs: list = None):
 		self.log(f'Processing tools {comp}')
 		self.context.moveNetworkPane(comp)
@@ -596,7 +596,7 @@ class SnippetsBuilder(_BuilderBase):
 			self.log('Build completed!')
 			self.log(f'Exported tox file: {toxFile}')
 
-	def processSnippetsStructure(self, snippets: 'COMP'):
+	def processSnippetsStructure(self, snippets: COMP):
 		snippetsRoot = snippets.op('snippets')
 		self.context.detachTox(snippetsRoot)
 		operatorsRoot = snippets.op('snippets/operators')
@@ -609,7 +609,7 @@ class SnippetsBuilder(_BuilderBase):
 		operatorsRoot.allowCooking = True
 		snippetsRoot.allowCooking = True
 
-	def processSnippets(self, snippets: 'COMP', thenRun: Callable, runArgs: list):
+	def processSnippets(self, snippets: COMP, thenRun: Callable, runArgs: list):
 		self.log('Processing snippets')
 		snippetsRoot = snippets.op('snippets')
 		snippetTable = snippets.op('navigator/snippetTable')  # type: DAT
@@ -635,7 +635,7 @@ class SnippetsBuilder(_BuilderBase):
 
 		queueCall(processSnippetsStage, 1)
 
-	def processSnippet(self, snippet: 'COMP', theRun: Callable, runArgs: list):
+	def processSnippet(self, snippet: COMP, theRun: Callable, runArgs: list):
 		self.context.detachTox(snippet)
 
 		def processSnippetStage(stage: int):
@@ -657,7 +657,7 @@ class SnippetsBuilder(_BuilderBase):
 
 		queueCall(processSnippetStage, 0)
 
-	def processRop(self, rop: 'COMP'):
+	def processRop(self, rop: COMP):
 		self.log(f'Processing ROP {rop}', verbose=True)
 		rop.par.enablecloningpulse.pulse()
 		# self.context.reclone(rop, verbose=True)
@@ -665,7 +665,7 @@ class SnippetsBuilder(_BuilderBase):
 		if not rop.isPanel and not rop.isObject:
 			rop.showCustomOnly = True
 
-	def finalizeRootPars(self, comp: 'COMP'):
+	def finalizeRootPars(self, comp: COMP):
 		super().finalizeRootPars(comp)
 		version = RaytkContext().toolkitVersion()
 		comp.par.Raytkversion = version

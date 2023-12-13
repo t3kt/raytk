@@ -4,7 +4,7 @@ if False:
 	from _stubs import *
 
 class ImageAssertion:
-	def __init__(self, ownerComp: 'COMP'):
+	def __init__(self, ownerComp: COMP):
 		self.ownerComp = ownerComp
 
 	def Snapshot(self, _=None):

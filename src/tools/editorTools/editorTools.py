@@ -8,7 +8,7 @@ if False:
 	from _stubs import *
 
 class EditorTools:
-	def __init__(self, ownerComp: 'COMP'):
+	def __init__(self, ownerComp: COMP):
 		self.ownerComp = ownerComp
 		self.actions = None # type: Optional[ActionManager]
 
@@ -22,6 +22,6 @@ class EditorTools:
 		# noinspection PyTypeChecker
 		self.actions.openMenu(popMenu)
 
-	def buildActionTable(self, dat: 'scriptDAT'):
+	def buildActionTable(self, dat: scriptDAT):
 		self.init()
 		self.actions.buildTable(dat)

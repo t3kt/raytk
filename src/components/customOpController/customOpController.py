@@ -11,19 +11,19 @@ if False:
 TDJSON = op.TDModules.mod.TDJSON
 
 class CustomOp:
-	def __init__(self, ownerComp: 'COMP'):
+	def __init__(self, ownerComp: COMP):
 		self.ownerComp = ownerComp
 
-	def host(self) -> 'Optional[COMP]':
+	def host(self) -> COMP | None:
 		host = self.ownerComp.par.Hostop.eval()
 		if not host:
 			raise Exception('No host attached to custom op controller')
 		return host
 
-	def opDef(self) -> 'Optional[COMP]':
+	def opDef(self) -> COMP | None:
 		return self.ownerComp.par.Opdef.eval()
 
-	def paramsOp(self) -> 'Optional[COMP]':
+	def paramsOp(self) -> COMP | None:
 		host = self.host()
 		return host and op(host.par['Paramsop'])
 
@@ -138,7 +138,7 @@ class CustomOp:
 					continue
 				parTuplet[0].destroy()
 
-	def buildParamTable(self, dat: 'DAT'):
+	def buildParamTable(self, dat: DAT):
 		dat.clear()
 		referencedNames = self._allReferencedParamNames()
 		names = []
@@ -156,7 +156,7 @@ class CustomOp:
 						names.append(partName)
 		dat.appendRow([' '.join(names)])
 
-	def _allCodeBlocks(self) -> 'List[str]':
+	def _allCodeBlocks(self) -> 'list[str]':
 		return [
 			dat.text
 			for dat in self.codeDats()

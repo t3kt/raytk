@@ -28,7 +28,7 @@ if False:
 class MainMenu:
 	menus: 'Dict[str, List[_MenuItem]]'
 
-	def __init__(self, ownerComp: 'COMP'):
+	def __init__(self, ownerComp: COMP):
 		self.ownerComp = ownerComp
 		self.menus = {
 			'File': [
@@ -150,8 +150,8 @@ class _MenuItem:
 	label: str
 	menuName: str
 	depth: int = 1
-	checked: 'Optional[str]' = None
-	itemValue: 'Optional[str]' = None
+	checked: 'str | None' = None
+	itemValue: 'str | None' = None
 	dividerAfter: bool = False
 	action: 'Callable[[], None]' = None
 

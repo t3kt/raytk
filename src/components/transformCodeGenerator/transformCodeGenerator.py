@@ -64,7 +64,7 @@ def generateCode():
 			f'{v}.xyz += {_param("pivot")};')
 	return '\n'.join(parts)
 
-def _scaleCode() -> 'List[str]':
+def _scaleCode() -> 'list[str]':
 	if not _configPar().Enablescale:
 		return []
 	v = _var()
@@ -77,7 +77,7 @@ def _scaleCode() -> 'List[str]':
 		f'{v}.xy /= {_param("scale")}.xy;',
 		f'{v}.xyz /= {_param("scale")};')
 
-def _rotateCode() -> 'List[str]':
+def _rotateCode() -> 'list[str]':
 	if not _configPar().Enablerotate:
 		return []
 	v = _var()
@@ -88,7 +88,7 @@ def _rotateCode() -> 'List[str]':
 				for part in _configPar().Rotateorder.eval()
 		]))
 
-def _translateCode() -> 'List[str]':
+def _translateCode() -> 'list[str]':
 	if not _configPar().Enabletranslate:
 		return []
 	v = _var()
@@ -107,7 +107,7 @@ def _branchByCoordType(code2d, code3d):
 		'#endif',
 	]
 
-def getParams() -> 'List[str]':
+def getParams() -> 'list[str]':
 	params = []
 	if _configPar().Enablescale:
 		if _configPar().Scaletype == 'uniform':

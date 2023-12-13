@@ -19,10 +19,10 @@ if False:
 	ipar.specPanelState = _StatePar()
 
 class SpecPanel:
-	def __init__(self, ownerComp: 'COMP'):
+	def __init__(self, ownerComp: COMP):
 		self.ownerComp = ownerComp
 
-	def generateSpec(self) -> Optional[str]:
+	def generateSpec(self) -> str | None:
 		spec = RaytkTools().loadROPSpec(ipar.inspectorCore.Targetcomp.eval(), checkExists=False)
 		if not spec:
 			return None

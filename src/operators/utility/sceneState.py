@@ -37,5 +37,5 @@ def _updateLockState(o: 'OP', locked: bool):
 		state['lockPars'] = lockPars
 		o.store('raytkState', state)
 
-def _ignorePar(par: 'Par'):
+def _ignorePar(par: Par):
 	return par.isOP or par.page.name == 'Info'

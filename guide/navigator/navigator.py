@@ -7,11 +7,11 @@ if False:
 	parent.guide = COMP()
 
 class Navigator:
-	def __init__(self, ownerComp: 'COMP'):
+	def __init__(self, ownerComp: COMP):
 		self.ownerComp = ownerComp
 
 	@staticmethod
-	def buildNavItemTable(dat: 'DAT'):
+	def buildNavItemTable(dat: DAT):
 		dat.clear()
 		dat.appendRow(['path', 'relPath', 'label', 'level', 'indentedLabel'])
 		for guide in parent.guide.findChildren(tags=[RaytkTags.guide.name], depth=1, maxDepth=1):

@@ -51,7 +51,7 @@ class BuildContext:
 			self.pane.close()
 			self.pane = None
 
-	def moveNetworkPane(self, comp: 'COMP'):
+	def moveNetworkPane(self, comp: COMP):
 		if self.pane:
 			self.pane.owner = comp
 
@@ -62,10 +62,10 @@ class BuildContext:
 			o.current = True
 
 	@staticmethod
-	def _toolkit() -> 'COMP':
+	def _toolkit() -> COMP:
 		return RaytkContext().toolkit()
 
-	def detachTox(self, comp: 'COMP'):
+	def detachTox(self, comp: COMP):
 		if not comp or comp.par['externaltox'] is None:
 			return
 		if not comp.par.externaltox and comp.par.externaltox.mode == ParMode.CONSTANT:
@@ -73,13 +73,13 @@ class BuildContext:
 		self.log(f'Detaching tox from {comp}')
 		detachTox(comp)
 
-	def reclone(self, comp: 'COMP', verbose=True):
+	def reclone(self, comp: COMP, verbose=True):
 		if not comp or not comp.par['enablecloningpulse'] or not comp.par['clone']:
 			return
 		self.log(f'Recloning {comp}', verbose)
 		comp.par.enablecloningpulse.pulse()
 
-	def updateOrReclone(self, comp: 'COMP'):
+	def updateOrReclone(self, comp: COMP):
 		if not comp:
 			return
 		if comp.par['Updateop'] is not None:
@@ -87,14 +87,14 @@ class BuildContext:
 		else:
 			self.reclone(comp)
 
-	def disableCloning(self, comp: 'COMP', verbose=True):
+	def disableCloning(self, comp: COMP, verbose=True):
 		if not comp or comp.par['enablecloning'] is None:
 			return
 		self.log(f'Disabling cloning on {comp}', verbose)
 		comp.par.enablecloning.expr = ''
 		comp.par.enablecloning = False
 
-	def detachDat(self, dat: 'DAT', reloadFirst=False, verbose=True):
+	def detachDat(self, dat: DAT, reloadFirst=False, verbose=True):
 		if not dat or dat.par['file'] is None:
 			return
 		if not dat.par.file and dat.par.file.mode == ParMode.CONSTANT:
@@ -108,7 +108,7 @@ class BuildContext:
 		dat.par.file.expr = ''
 		dat.par.file.val = ''
 
-	def detachAllFileSyncDatsIn(self, scope: 'COMP', reloadFirst=False, verbose=True):
+	def detachAllFileSyncDatsIn(self, scope: COMP, reloadFirst=False, verbose=True):
 		if not scope:
 			return
 		self.log(f'Detaching all fileSync DATs in {scope}')
@@ -124,7 +124,7 @@ class BuildContext:
 				continue
 			par.val = par.default
 
-	def lockROPPars(self, comp: 'COMP'):
+	def lockROPPars(self, comp: COMP):
 		info = ROPInfo(comp)
 		if not info:
 			return
@@ -143,13 +143,13 @@ class BuildContext:
 			p.enable = False
 			processedTuplets.add(p.tupletName)
 
-	def reloadTox(self, comp: 'COMP'):
+	def reloadTox(self, comp: COMP):
 		if not comp or not comp.par['reinitnet'] or not comp.par['externaltox']:
 			return
 		self.log(f'Reloading {comp.par.externaltox} for {comp}')
 		comp.par.reinitnet.pulse()
 
-	def removeAlphaOps(self, category: 'COMP'):
+	def removeAlphaOps(self, category: COMP):
 		catInfo = CategoryInfo(category)
 		alphaOps = [
 			o
@@ -180,19 +180,19 @@ class BuildContext:
 			self.log(f'Locking {o}')
 			o.lock = True
 
-	def lockBuildLockOps(self, comp: 'COMP'):
+	def lockBuildLockOps(self, comp: COMP):
 		self.log(f'Locking build locked ops in {comp}')
 		toLock = comp.findChildren(tags=[RaytkTags.buildLock.name])
 		self.lockOps(toLock)
 
-	def removeBuildExcludeOps(self, comp: 'COMP', verbose=True):
+	def removeBuildExcludeOps(self, comp: COMP, verbose=True):
 		toRemove = list(comp.findChildren(tags=[RaytkTags.buildExclude.name]))
 		if not toRemove:
 			return
 		self.log(f'Removing build excluded ops from {comp}', verbose)
 		self.safeDestroyOps(toRemove)
 
-	def cleanOpImage(self, img: 'COMP'):
+	def cleanOpImage(self, img: COMP):
 		self.log(f'Cleaning opImage {img}')
 		overlaySwitch = img.op('useOverlaySwitch')
 		overlaySwitch.outputs[0].inputConnectors[0].connect(overlaySwitch.inputs[int(overlaySwitch.par.index)])
@@ -201,19 +201,19 @@ class BuildContext:
 			toRemove += img.ops('var__*')
 		self.safeDestroyOps(toRemove)
 
-	def removeOpHelp(self, comp: 'COMP'):
+	def removeOpHelp(self, comp: COMP):
 		ropInfo = ROPInfo(comp)
 		self.safeDestroyOp(ropInfo.helpDAT)
 		ropInfo.helpDAT = ''
 
-	def removeCatHelp(self, comp: 'COMP'):
+	def removeCatHelp(self, comp: COMP):
 		self.safeDestroyOp(CategoryInfo(comp).helpDAT)
 
-	def applyParamUpdatersIn(self, comp: 'COMP'):
+	def applyParamUpdatersIn(self, comp: COMP):
 		for child in comp.children:
 			self._applyParamUpdater(child)
 
-	def _applyParamUpdater(self, comp: 'COMP'):
+	def _applyParamUpdater(self, comp: COMP):
 		if not comp or not comp.isCOMP:
 			return
 		if comp.name.startswith('parMenuUpdater') and comp.par['Autoupdate'] and comp.par['Update'] is not None:
@@ -229,7 +229,7 @@ class BuildContext:
 	def queueAction(action: Callable, *args):
 		run(f'args[0](*(args[1:]))', action, *args, delayFrames=5, delayRef=root)
 
-	def runBuildScript(self, dat: 'DAT', thenRun: Callable, runArgs: list):
+	def runBuildScript(self, dat: DAT, thenRun: Callable, runArgs: list):
 		self.log(f'Running build script: {dat}')
 
 		def finishTask():
@@ -238,14 +238,14 @@ class BuildContext:
 		subContext = BuildTaskContext(finishTask, self.log, self.experimental)
 		dat.run(subContext)
 
-	def updateROPInstance(self, comp: 'COMP'):
+	def updateROPInstance(self, comp: COMP):
 		self.log(f'Updating OP instance: {comp}')
 		# noinspection PyTypeChecker
 		updater = self._toolkit().op('tools/updater')  # type: Updater
 		updater.UpdateOP(comp)
 		self.log(f'Finished updating OP instance {comp}')
 
-	def removeRedundantPythonModules(self, scopeRoot: 'COMP', scopeChildren: 'List[COMP]'):
+	def removeRedundantPythonModules(self, scopeRoot: COMP, scopeChildren: list[COMP]):
 		if not scopeRoot:
 			return
 		loc = scopeRoot.op('local')
@@ -272,7 +272,7 @@ class BuildContext:
 		self.log(f'Deleting {len(opsToDelete)} redundant python libraries')
 		self.safeDestroyOps(opsToDelete)
 
-def _isPythonLibrary(m: 'OP', modName: 'Optional[str]' = None):
+def _isPythonLibrary(m: 'OP', modName: 'str | None' = None):
 	if not isinstance(m, textDAT) or not RaytkTags.fileSync.isOn(m):
 		return False
 	return modName is None or m.name == modName
@@ -328,7 +328,7 @@ class DocProcessor:
 			self.context.log(f'Clearing {path}')
 			shutil.rmtree(path)
 
-	def processOp(self, rop: 'COMP'):
+	def processOp(self, rop: COMP):
 		self.context.log(f'Processing docs for op {rop}')
 		ropInfo = ROPInfo(rop)
 		if not ropInfo or not ropInfo.isMaster:
@@ -350,7 +350,7 @@ class DocProcessor:
 		with outFile.open('w') as f:
 			f.write(docText)
 
-	def processOpCategory(self, categoryOp: 'COMP'):
+	def processOpCategory(self, categoryOp: COMP):
 		self.context.log(f'Processing docs for category {categoryOp}')
 		categoryInfo = CategoryInfo(categoryOp)
 		catHelp = CategoryHelp.extractFromComp(categoryOp)
@@ -367,7 +367,7 @@ class DocProcessor:
 			Path(self.toolkit.relativePath(categoryOp).replace('./', '') + '/index.md'),
 			docText)
 
-	def writeCategoryListPage(self, categories: 'List[COMP]'):
+	def writeCategoryListPage(self, categories: list[COMP]):
 		self.context.log('Writing category list page')
 		docText = '''---
 layout: page

@@ -22,7 +22,7 @@ if False:
 	ipar.navigatorState = _StatePars()
 
 class Navigator:
-	def __init__(self, ownerComp: 'COMP'):
+	def __init__(self, ownerComp: COMP):
 		# noinspection PyTypeChecker
 		self.ownerComp = ownerComp  # type: _Comp
 		self.currentSnippetTable = ownerComp.op('currentSnippets')  # type: DAT
@@ -34,7 +34,7 @@ class Navigator:
 		ipar.navigatorState.Selectedsnippet = ''
 
 	@staticmethod
-	def buildSnippetTable(dat: 'DAT', snippetTable: 'DAT', opTable: 'DAT'):
+	def buildSnippetTable(dat: DAT, snippetTable: DAT, opTable: DAT):
 		dat.clear()
 		dat.appendRow(['opType', 'name', 'relPath', 'label'])
 		for i in range(1, snippetTable.numRows):
@@ -68,7 +68,7 @@ class Navigator:
 		pane = navigateTo(snippet, name='raytkSnippet', popup=False, goInto=True)
 		self._focusSnippetNetworkBoxes(snippet, pane)
 
-	def _updateSnippetCooking(self, targetSnippet: 'Optional[COMP]'):
+	def _updateSnippetCooking(self, targetSnippet: COMP | None):
 		snippetsRoot = self.ownerComp.par.Snippetsroot.eval()
 		allSnippets = snippetsRoot.ops(*self.fullSnippetTable.col('relPath')[1:])
 		for o in allSnippets:
@@ -78,7 +78,7 @@ class Navigator:
 			targetSnippet.allowCooking = True
 
 	@staticmethod
-	def _focusSnippetNetworkBoxes(snippet: 'COMP', pane: 'NetworkEditor'):
+	def _focusSnippetNetworkBoxes(snippet: COMP, pane: NetworkEditor):
 		if not snippet:
 			return
 		annotations = snippet.findChildren(type=annotateCOMP, depth=1, includeUtility=True)

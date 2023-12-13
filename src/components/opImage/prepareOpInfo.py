@@ -5,7 +5,7 @@ if False:
 	# noinspection PyUnresolvedReferences
 	from _stubs import *
 
-def onCook(dat: 'DAT'):
+def onCook(dat: DAT):
 	dat.clear()
 	info = ROPInfo(parent().par.Definitionop.eval())
 	dat.appendRow(['res', 320, 256])

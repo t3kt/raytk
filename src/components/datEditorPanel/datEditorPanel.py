@@ -23,14 +23,14 @@ class DatEditorPanel:
 		self.ownerComp = ownerComp
 
 	@property
-	def _opDef(self) -> 'Optional[COMP]':
+	def _opDef(self) -> COMP | None:
 		if not hasattr(ext, 'ropEditor'):
 			return
 		info = ext.ropEditor.ROPInfo
 		return info and info.opDef
 
 	@property
-	def _currentItemPar(self) -> 'Optional[Par]':
+	def _currentItemPar(self) -> Par | None:
 		currentTable = self._currentItemTable
 		if currentTable.numRows < 2:
 			return
@@ -39,7 +39,7 @@ class DatEditorPanel:
 		if hostOp and parName:
 			return hostOp.par[parName]
 
-	def prepareItemTable(self, dat: 'scriptDAT'):
+	def prepareItemTable(self, dat: scriptDAT):
 		dat.copy(dat.inputs[0])
 		opDef = self._opDef
 		if not opDef:
@@ -89,14 +89,14 @@ class DatEditorPanel:
 		return graph and graph.file is not None
 
 	@property
-	def _itemTable(self) -> 'DAT':
+	def _itemTable(self) -> DAT:
 		return self.ownerComp.op('itemTable')
 
 	@property
-	def _currentItemTable(self) -> 'DAT':
+	def _currentItemTable(self) -> DAT:
 		return self.ownerComp.op('currentItem')
 
-	def buildItemGraphInfo(self, dat: 'DAT'):
+	def buildItemGraphInfo(self, dat: DAT):
 		dat.clear()
 		dat.appendCol([
 			'endDat',
@@ -189,7 +189,7 @@ class DatEditorPanel:
 		finally:
 			ui.undo.endBlock()
 
-	def _externalize(self, itemGraph: 'EditorItemGraph', dat: 'DAT'):
+	def _externalize(self, itemGraph: 'EditorItemGraph', dat: DAT):
 		info = ext.ropEditor.ROPInfo
 		if not info or not itemGraph or not itemGraph.sourceDat:
 			return

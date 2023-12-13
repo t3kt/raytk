@@ -10,7 +10,7 @@ if False:
 	from devel.toolkitEditor.toolkitEditor import ToolkitEditor
 
 class Tools:
-	def __init__(self, ownerComp: 'COMP'):
+	def __init__(self, ownerComp: COMP):
 		self.ownerComp = ownerComp
 
 	def onInit(self):
@@ -41,7 +41,7 @@ class Tools:
 		self.ownerComp.par.h = height
 
 	@staticmethod
-	def NavigateTo(comp: 'COMP'):
+	def NavigateTo(comp: COMP):
 		navigateTo(comp)
 
 	def GetCurrentROP(self):
@@ -53,7 +53,7 @@ class Tools:
 			primaryOnly=primaryOnly,
 			exclude=lambda c: c is self.ownerComp or c.path.startswith(self.ownerComp.path + '/'))
 
-	def OnOperatorsShortcutRightClick(self, button: 'COMP'):
+	def OnOperatorsShortcutRightClick(self, button: COMP):
 		def goToItem(name, path):
 			return popMenu.Item(
 				name,
@@ -84,7 +84,7 @@ class Tools:
 		self.forEachSelected(recloneComp)
 
 	def setShowCustomOnlyOnSelected(self, state: bool):
-		def _action(o: 'COMP'):
+		def _action(o: COMP):
 			o.showCustomOnly = state
 		self.forEachSelected(_action)
 
@@ -111,7 +111,7 @@ class Tools:
 			self.organizeCategory(cat)
 
 	@staticmethod
-	def organizeCategory(comp: 'COMP'):
+	def organizeCategory(comp: COMP):
 		RaytkTools().organizeCategory(comp)
 
 	@staticmethod

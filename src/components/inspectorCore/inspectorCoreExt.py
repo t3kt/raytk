@@ -36,7 +36,7 @@ def updateStateMenus():
 	p.menuNames = p.menuLabels = VisualizerTypes.values
 
 class InspectorCore:
-	def __init__(self, ownerComp: 'COMP'):
+	def __init__(self, ownerComp: COMP):
 		self.ownerComp = ownerComp
 		# noinspection PyTypeChecker
 		self.state = ownerComp.par   # type: _state
@@ -63,7 +63,7 @@ class InspectorCore:
 			# TODO: better error handling
 			raise Exception(f'Unsupported OP: {o!r}')
 
-	def inspectComp(self, comp: 'COMP'):
+	def inspectComp(self, comp: COMP):
 		self.state.Rawtarget = _pathOrEmpty(comp)
 		self.state.Targetcomp = _pathOrEmpty(comp)
 		ropInfo = ROPInfo(comp)
@@ -96,17 +96,17 @@ class InspectorCore:
 	def ShowTargetInEditor(self, popup=False):
 		navigateTo(self.state.Rawtarget.eval(), popup=popup, goInto=False)
 
-	def AttachOutputComp(self, o: 'COMP'):
+	def AttachOutputComp(self, o: COMP):
 		self.state.Outputcomp = _pathOrEmpty(o)
 		if o and o.par['Shaderbuilder'] is not None:
 			self.state.Shaderbuilder = _pathOrEmpty(o.par.Shaderbuilder.eval())
 
 	@property
-	def TargetComp(self) -> 'Optional[COMP]':
+	def TargetComp(self) -> COMP | None:
 		return self.state.Targetcomp.eval()
 
 	@staticmethod
-	def buildShaderIncludes(dat: 'DAT', shaderCode: str):
+	def buildShaderIncludes(dat: DAT, shaderCode: str):
 		dat.clear()
 		dat.appendRow(['path', 'name'])
 		if not shaderCode:

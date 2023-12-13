@@ -5,7 +5,7 @@ if False:
 	# noinspection PyUnresolvedReferences
 	from _stubs import *
 
-def onCook(dat: 'DAT'):
+def onCook(dat: DAT):
 	dat.clear()
 	context = RaytkContext()
 	dat.appendRow(['toolkitVersion', context.toolkitVersion()])

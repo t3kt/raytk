@@ -28,7 +28,7 @@ def update():
 	except BaseException as e:
 		print(f'Error attempting to update paramMenu in {parent()}: {e}')
 
-def updateParamEnableExprs(host: 'OP', table: 'DAT'):
+def updateParamEnableExprs(host: 'OP', table: DAT):
 	hostPar = host.par[parent().par.Param]
 	if hostPar is None:
 		return
@@ -42,7 +42,7 @@ def updateParamEnableExprs(host: 'OP', table: 'DAT'):
 		else:
 			par.enableExpr = f'me.par.{hostPar.name} in {repr(tuple(vals))}'
 
-def _paramModes(table: 'DAT'):
+def _paramModes(table: DAT):
 	paramModes = {}
 	for i in range(1, table.numRows):
 		params = tdu.expand(table[i, 'params'].val)

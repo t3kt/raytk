@@ -12,10 +12,10 @@ if False:
 			Samplepointv: 'Union[float, Par]'
 
 class BufferInspector:
-	def __init__(self, ownerComp: 'COMP'):
+	def __init__(self, ownerComp: COMP):
 		self.ownerComp = ownerComp
 
-	def buildMaskChanSettings(self, dat: 'DAT'):
+	def buildMaskChanSettings(self, dat: DAT):
 		dat.clear()
 		r = self.ownerComp.par.Showr
 		g = self.ownerComp.par.Showg

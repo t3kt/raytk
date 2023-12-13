@@ -1,7 +1,6 @@
 from dataclasses import dataclass, field
 from enum import Enum
 from raytkUtil import ROPInfo
-from typing import List, Union, Optional
 
 # noinspection PyUnreachableCode
 if False:
@@ -21,12 +20,12 @@ if False:
 	ipar.inspectorCore = InspectorCore(COMP()).state
 
 class CompilerCore:
-	def __init__(self, ownerComp: 'COMP'):
+	def __init__(self, ownerComp: COMP):
 		self.ownerComp = ownerComp
 		# noinspection PyUnreachableCode
 		if False:
 			self.ownerComp.par = _SceneConfigPars()
-		self.inspectorCore = iop.inspectorCore  # type: Union[InspectorCore, COMP]
+		self.inspectorCore = iop.inspectorCore  # type: InspectorCore | COMP
 
 	def Reset(self, _=None):
 		self.inspectorCore.Reset()
@@ -35,14 +34,14 @@ class CompilerCore:
 		self.inspectorCore.Inspect(o)
 
 	@property
-	def OutputOP(self) -> 'Optional[COMP]':
+	def OutputOP(self) -> COMP | None:
 		return self.inspectorCore.TargetComp
 
 	@property
 	def OutputOPInfo(self):
 		return ROPInfo(self.OutputOP)
 
-	def _originalShaderBuilderPar(self, name: str) -> 'Optional[Par]':
+	def _originalShaderBuilderPar(self, name: str) -> Par | None:
 		o = self.OutputOP
 		builder = o and o.op('shaderBuilder')
 		return builder and builder.par[name]
@@ -60,7 +59,7 @@ class CompilerCore:
 		return code
 
 	@staticmethod
-	def _analyzeROP(rop: 'COMP'):
+	def _analyzeROP(rop: COMP):
 		info = ROPInfo(rop)
 		result = _ROPCompileInfo(ropInfo=info)
 
@@ -107,8 +106,8 @@ class CompilerCore:
 @dataclass
 class _ROPCompileInfo:
 	ropInfo: ROPInfo
-	constantPars: List[Par] = field(default_factory=list)
-	menuPars: List[Par] = field(default_factory=list)
-	variablePars: List[Par] = field(default_factory=list)
-	anglePars: List[Par] = field(default_factory=list)
-	errors: List[str] = field(default_factory=list)
+	constantPars: list[Par] = field(default_factory=list)
+	menuPars: list[Par] = field(default_factory=list)
+	variablePars: list[Par] = field(default_factory=list)
+	anglePars: list[Par] = field(default_factory=list)
+	errors: list[str] = field(default_factory=list)

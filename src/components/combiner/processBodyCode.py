@@ -3,7 +3,7 @@ if False:
 	# noinspection PyUnresolvedReferences
 	from _stubs import *
 
-def onCook(dat: 'DAT'):
+def onCook(dat: DAT):
 	code = dat.inputs[0].text
 
 	config = parent()

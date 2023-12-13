@@ -81,7 +81,7 @@ class ShaderBuilder:
 		hostPar.val = config.name
 		ui.undo.endBlock()
 
-	def preprocessDefinitions(self, dat: 'scriptDAT'):
+	def preprocessDefinitions(self, dat: scriptDAT):
 		# BEFORE definitions are reversed, so a def's inputs are always BELOW it in the table
 		knownCols = [c.val for c in dat.row(0)]
 		skipCols = ['name', 'path', 'coordType', 'contextType', 'returnType', 'definitionPath']
@@ -104,7 +104,7 @@ class ShaderBuilder:
 		self._resolveTypes(dat, 'returnType')
 
 	@staticmethod
-	def _resolveTypes(dat: 'scriptDAT', column: str):
+	def _resolveTypes(dat: scriptDAT, column: str):
 		# BEFORE definitions are reversed, so a def's inputs are always BELOW it in the table
 		typesByName = {}  # type: Dict[str, str]
 		cells = dat.col(column)
@@ -119,26 +119,26 @@ class ShaderBuilder:
 				cell.val = typesByName[refName]
 			typesByName[name] = cell.val
 
-	def _definitionTable(self) -> 'DAT':
+	def _definitionTable(self) -> DAT:
 		# in reverse order (aka declaration order)
 		return self.ownerComp.op('definitions')
 
-	def _parameterDetailTable(self) -> 'DAT':
+	def _parameterDetailTable(self) -> DAT:
 		return self.ownerComp.op('param_details')
 
-	def _outputBufferTable(self) -> 'DAT':
+	def _outputBufferTable(self) -> DAT:
 		return self.ownerComp.op('output_buffer_table')
 
-	def _variableTable(self) -> 'DAT':
+	def _variableTable(self) -> DAT:
 		return self.ownerComp.op('variable_table')
 
-	def _referenceTable(self) -> 'DAT':
+	def _referenceTable(self) -> DAT:
 		return self.ownerComp.op('reference_table')
 
 	def _allParamVals(self) -> 'CHOP':
 		return self.ownerComp.op('all_param_vals')
 
-	def buildNameReplacementTable(self, dat: 'scriptDAT'):
+	def buildNameReplacementTable(self, dat: scriptDAT):
 		dat.clear()
 		dat.appendRow(['before', 'after'])
 		if not self.configValid():
@@ -176,7 +176,7 @@ class ShaderBuilder:
 					results.append(o)
 		return results
 
-	def buildMacroTable(self, dat: 'DAT'):
+	def buildMacroTable(self, dat: DAT):
 		dat.clear()
 		states = self._parseOpStates()
 		for state in states:
@@ -212,7 +212,7 @@ class ShaderBuilder:
 						dat.appendRow([f'{state.ropType}_{const.localName}_{opt}', i])
 
 	def _getLibraryDats(self, onWarning: Callable[[str], None] = None) -> 'List[DAT]':
-		requiredLibNames = self.ownerComp.par.Librarynames.eval().strip().split(' ')  # type: List[str]
+		requiredLibNames = self.ownerComp.par.Librarynames.eval().strip().split(' ')  # type: list[str]
 		requiredLibNames = [n for n in requiredLibNames if n]
 		defsTable = self._definitionTable()
 		if defsTable[0, 'libraryNames']:
@@ -263,7 +263,7 @@ class ShaderBuilder:
 		dats = dedupedDats
 		return dats
 
-	def buildTypedefMacroTable(self, dat: 'scriptDAT'):
+	def buildTypedefMacroTable(self, dat: scriptDAT):
 		dat.clear()
 		defsTable = self._definitionTable()
 		typeAdaptFuncs = {
@@ -300,7 +300,7 @@ class ShaderBuilder:
 			if dataType in typeAdaptFuncs:
 				dat.appendRow([name + '_asVarT', typeAdaptFuncs[dataType], 'macro'])
 
-	def processReferenceTable(self, dat: 'scriptDAT'):
+	def processReferenceTable(self, dat: scriptDAT):
 		dat.clear()
 		dat.appendRow(['name', 'owner', 'localName', 'source', 'dataType', 'category'])
 		defTable = self._definitionTable()
@@ -352,8 +352,8 @@ class ShaderBuilder:
 
 	def processVariableTable(
 			self,
-			dat: 'scriptDAT',
-			procRefTable: 'DAT',
+			dat: scriptDAT,
+			procRefTable: DAT,
 	):
 		dat.clear()
 		dat.appendRow(['name', 'owner', 'localName', 'dataType', 'macros'])
@@ -376,7 +376,7 @@ class ShaderBuilder:
 						variable.macros or '',
 					])
 
-	def buildParamUniformTable(self, dat: 'DAT'):
+	def buildParamUniformTable(self, dat: DAT):
 		dat.clear()
 		dat.appendRow(['name', 'type', 'chop', 'uniformType', 'expr1', 'expr2', 'expr3', 'expr4'])
 		paramProcessor = self._createParamProcessor()
@@ -392,7 +392,7 @@ class ShaderBuilder:
 		paramProcessor = self._createParamProcessor()
 		return paramProcessor.processCodeBlock(code)
 
-	def buildBufferUniformTable(self, dat: 'DAT'):
+	def buildBufferUniformTable(self, dat: DAT):
 		dat.clear()
 		dat.appendRow(['name', 'type', 'chop', 'uniformType', 'expr1', 'expr2', 'expr3', 'expr4'])
 		for state in self._parseOpStates():
@@ -404,7 +404,7 @@ class ShaderBuilder:
 					buffer.expr1 or '', buffer.expr2 or '', buffer.expr3 or '', buffer.expr4 or '',
 				])
 
-	def buildValidationErrors(self, dat: 'DAT'):
+	def buildValidationErrors(self, dat: DAT):
 		dat.clear()
 		def addError(path, level, message):
 			if dat.numRows == 0:
@@ -461,7 +461,7 @@ class ShaderBuilder:
 			states.append(state)
 		return states
 
-	def buildTextureTable(self, dat: 'DAT'):
+	def buildTextureTable(self, dat: DAT):
 		dat.clear()
 		dat.appendRow(['name', 'path', 'type'])
 		states = self._parseOpStates()
@@ -473,12 +473,12 @@ class ShaderBuilder:
 
 	def writeShader(
 			self,
-			dat: 'scriptDAT',
-			macroTable: 'DAT',
-			typeDefMacroTable: 'DAT',
-			outputBufferTable: 'DAT',
-			variableTable: 'DAT',
-			referenceTable: 'DAT',
+			dat: scriptDAT,
+			macroTable: DAT,
+			typeDefMacroTable: DAT,
+			outputBufferTable: DAT,
+			variableTable: DAT,
+			referenceTable: DAT,
 	):
 		dat.clear()
 		dat.write(' ')
@@ -502,7 +502,7 @@ class _VarRefChecker:
 	def __init__(
 			self,
 			opStates: List[RopState],
-			definitionTable: 'DAT',
+			definitionTable: DAT,
 			addError: 'Callable[[str, str, str], None]'):
 		self.opStates = opStates
 		self.definitionTable = definitionTable  # used to look up paths by rop name
@@ -683,7 +683,7 @@ class _GraphROP:
 class _GraphROPInput:
 	inputState: InputState
 	owner: '_GraphROP'
-	ownVarGlobalNames: List[str]
+	ownVarGlobalNames: list[str]
 	varInputs: 'List[_GraphROPInput]'
 	source: 'Optional[_GraphROP]' = None
 
@@ -691,14 +691,14 @@ class _GraphROPInput:
 class _Writer:
 	sb: 'ShaderBuilder'
 	opStates: 'List[RopState]'
-	defTable: 'DAT'
+	defTable: DAT
 	paramProc: '_ParameterProcessor'
-	macroTable: 'DAT'
-	typeDefMacroTable: 'DAT'
+	macroTable: DAT
+	typeDefMacroTable: DAT
 	libraryDats: 'List[DAT]'
-	outputBufferTable: 'DAT'
-	variableTable: 'DAT'
-	referenceTable: 'DAT'
+	outputBufferTable: DAT
+	variableTable: DAT
+	referenceTable: DAT
 
 	inlineTypedefRepls: 'Optional[Dict[str, str]]' = None
 	inlineTypedefPattern: 'Optional[re.Pattern]' = None
@@ -743,7 +743,7 @@ class _Writer:
 					attrNames.add(attribute.name)
 					self.attributes.append(attribute)
 
-	def run(self, dat: 'scriptDAT'):
+	def run(self, dat: scriptDAT):
 		if self.defTable.numRows < 2:
 			self._writeLine('#error No input definition')
 			return
@@ -982,8 +982,8 @@ class _Writer:
 		])
 
 	def _writeCodeBlocks(
-			self, section: str, blocks: List[str],
-			prefixes: List[str] = None, suffixes: List[str] = None
+			self, section: str, blocks: list[str],
+			prefixes: list[str] = None, suffixes: list[str] = None
 	):
 		if not blocks:
 			return
@@ -1085,7 +1085,7 @@ class _ParamTupletSpec:
 		return any([chop[part] is not None for part in self.parts])
 
 	@classmethod
-	def fromRow(cls, dat: 'DAT', row: int):
+	def fromRow(cls, dat: DAT, row: int):
 		parts = []
 		for i in range(1, 5):
 			cell = dat[row, 'part' + str(i)]
@@ -1101,7 +1101,7 @@ class _ParamTupletSpec:
 		)
 
 	@classmethod
-	def fromTableRows(cls, dat: 'DAT', handlingTypes: 'List[str]') -> 'List[_ParamTupletSpec]':
+	def fromTableRows(cls, dat: DAT, handlingTypes: 'list[str]') -> 'List[_ParamTupletSpec]':
 		if not dat or dat.numRows < 2:
 			return []
 		return [
@@ -1121,11 +1121,11 @@ class _UniformSpec:
 	dataType: str  # float | vec2 | vec3 | vec4 | int | bool
 	uniformType: str  # vector | uniformarray | constant
 	arrayLength: int = 1
-	chop: Optional[str] = None
-	expr1: Optional[str] = None
-	expr2: Optional[str] = None
-	expr3: Optional[str] = None
-	expr4: Optional[str] = None
+	chop: str | None = None
+	expr1: str | None = None
+	expr2: str | None = None
+	expr3: str | None = None
+	expr4: str | None = None
 	constIndex: int = 0
 
 	def declaration(self):
@@ -1151,7 +1151,7 @@ _paramAliasPattern = re.compile(r'\bRTK_\w+\b')
 class _ParameterProcessor:
 	def __init__(
 			self,
-			paramDetailTable: 'DAT',
+			paramDetailTable: DAT,
 			paramVals: 'CHOP',
 			configPar: 'Optional[_ConfigPar]',
 			opStates: 'List[RopState]'
@@ -1165,13 +1165,13 @@ class _ParameterProcessor:
 		self.paramExprs = None  # type: Optional[Dict[str, _ParamExpr]]
 		self.opStates = opStates
 
-	def globalDeclarations(self) -> List[str]:
+	def globalDeclarations(self) -> list[str]:
 		return [
 			spec.declaration()
 			for spec in self.paramUniforms()
 		]
 
-	def paramAliases(self) -> List[str]:
+	def paramAliases(self) -> list[str]:
 		if not self.hasParams:
 			return []
 		if self.inlineAliases:
