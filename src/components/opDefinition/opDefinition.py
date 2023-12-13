@@ -8,15 +8,14 @@ import re
 if False:
 	# noinspection PyUnresolvedReferences
 	from _stubs import *
-	from typing import Callable, Dict, List, Optional, Union
 	from raytkUtil import OpDefParsT
 	from _stubs.PopDialogExt import PopDialogExt
 
 
-def parentPar() -> 'Union[ParCollection, OpDefParsT]':
+def parentPar() -> 'ParCollection | OpDefParsT':
 	return parent().par
 
-def _host() -> 'Optional[COMP]':
+def _host() -> COMP | None:
 	return parentPar().Hostop.eval()
 
 def buildName():
@@ -49,7 +48,7 @@ def buildName():
 #    `Type1 Type2`
 #    `@some_op_name`
 # These outputs are what appear in the generated definition tables passed between ops.
-def _evalType(category: str, supportedTypes: 'DAT', inputDefs: 'DAT'):
+def _evalType(category: str, supportedTypes: DAT, inputDefs: DAT):
 	spec = supportedTypes[category, 'spec'].val
 	if spec.startswith('@'):
 		return spec
@@ -58,7 +57,7 @@ def _evalType(category: str, supportedTypes: 'DAT', inputDefs: 'DAT'):
 		return inputCell
 	return supportedTypes[category, 'types']
 
-def buildTypeTable(dat: 'scriptDAT', supportedTypes: 'DAT', inputDefs: 'DAT'):
+def buildTypeTable(dat: scriptDAT, supportedTypes: DAT, inputDefs: DAT):
 	dat.clear()
 	dat.appendRows([
 		['coordType', _evalType('coordType', supportedTypes, inputDefs)],
@@ -69,7 +68,7 @@ def buildTypeTable(dat: 'scriptDAT', supportedTypes: 'DAT', inputDefs: 'DAT'):
 def _inputDefsFromPar():
 	return parentPar().Inputdefs.evalOPs()
 
-def buildInputTable(dat: 'DAT', inDats: 'List[DAT]'):
+def buildInputTable(dat: DAT, inDats: list[DAT]):
 	dat.clear()
 	dat.appendRow([
 		'inputFunc', 'name', 'path',
@@ -95,7 +94,7 @@ def buildInputTable(dat: 'DAT', inDats: 'List[DAT]'):
 			inDat[1, 'tags'] or '',
 		])
 
-def getCombinedTags(inputTable: 'DAT'):
+def getCombinedTags(inputTable: DAT):
 	tags = set()
 	for i in range(1, inputTable.numRows):
 		tags.update(tdu.split(inputTable[i, 'tags']))
@@ -108,9 +107,9 @@ def getCombinedTags(inputTable: 'DAT'):
 	return list(sorted(tags))
 
 def combineInputDefinitions(
-		dat: 'DAT',
-		inDats: 'List[DAT]',
-		defFields: 'DAT',
+		dat: DAT,
+		inDats: list[DAT],
+		defFields: DAT,
 ):
 	dat.clear()
 	inDats += _inputDefsFromPar()
@@ -132,12 +131,12 @@ def combineInputDefinitions(
 			dat.appendRow([d[inDatRow, col] or '' for col in cols], insertRow)
 			insertRow += 1
 
-def processInputDefinitionTypes(dat: 'scriptDAT', supportedTypeTable: 'DAT'):
+def processInputDefinitionTypes(dat: scriptDAT, supportedTypeTable: DAT):
 	_processInputDefTypeCategory(dat, supportedTypeTable, 'coordType')
 	_processInputDefTypeCategory(dat, supportedTypeTable, 'contextType')
 	_processInputDefTypeCategory(dat, supportedTypeTable, 'returnType')
 
-def _processInputDefTypeCategory(dat: 'scriptDAT', supportedTypeTable: 'DAT', category: 'str'):
+def _processInputDefTypeCategory(dat: scriptDAT, supportedTypeTable: DAT, category: str):
 	supported = supportedTypeTable[category, 'types'].val.split(' ')
 	cells = dat.col(category)
 	if not cells:
@@ -157,12 +156,12 @@ def _processInputDefTypeCategory(dat: 'scriptDAT', supportedTypeTable: 'DAT', ca
 			# cell.val = ' '.join(supportedInputTypes)
 			cell.val = '@' + ownName
 
-def _getParamsOp() -> 'Optional[COMP]':
+def _getParamsOp() -> COMP | None:
 	return parentPar().Paramsop.eval() or _host()
 
 # Builds the primary table from which all other parameter tables are built.
 # This table contains regular parameters and special parameters, with both runtime and macro handling.
-def buildParamSpecTable(dat: 'scriptDAT', paramGroupTable: 'DAT'):
+def buildParamSpecTable(dat: scriptDAT, paramGroupTable: DAT):
 	dat.clear()
 	dat.appendRow([
 		'localName',
@@ -178,7 +177,7 @@ def buildParamSpecTable(dat: 'scriptDAT', paramGroupTable: 'DAT'):
 	])
 	globalPrefix = parentPar().Name.eval() + '_'
 
-	def addPar(p: 'Par', handling: str, skipExisting=False, conversion=''):
+	def addPar(p: Par, handling: str, skipExisting=False, conversion=''):
 		if skipExisting and dat[p.name, 0] is not None:
 			# skip params that are already loaded
 			return
@@ -202,7 +201,7 @@ def buildParamSpecTable(dat: 'scriptDAT', paramGroupTable: 'DAT'):
 			'special', 'Float', '', '', '0', '', 'runtime', '',
 		])
 
-	def addFromGroupTable(table: 'DAT'):
+	def addFromGroupTable(table: DAT):
 		if not table:
 			return
 		for row in range(1, table.numRows):
@@ -233,11 +232,11 @@ def buildParamSpecTable(dat: 'scriptDAT', paramGroupTable: 'DAT'):
 	# Group special parameters into tuplets
 	_groupSpecialParamsIntoTuplets(dat)
 
-def _getOpElementTable() -> 'DAT':
+def _getOpElementTable() -> DAT:
 	return op('opElements')
 
-def _fillParamStatuses(dat: 'DAT'):
-	parsByTuplet = {}  # type: Dict[str, List[Par]]
+def _fillParamStatuses(dat: DAT):
+	parsByTuplet = {}  # type: dict[str, list[Par]]
 	host = _getParamsOp()
 	if not host:
 		return
@@ -258,7 +257,7 @@ def _fillParamStatuses(dat: 'DAT'):
 			for par in pars:
 				dat[par.name, 'status'] = 'readOnly'
 
-def _groupSpecialParamsIntoTuplets(dat: 'DAT'):
+def _groupSpecialParamsIntoTuplets(dat: DAT):
 	parts = []
 	tupletIndex = 0
 	globalPrefix = parentPar().Name.eval() + '_'
@@ -282,7 +281,7 @@ def _groupSpecialParamsIntoTuplets(dat: 'DAT'):
 	if parts:
 		addTuplet()
 
-def _getRegularParams(specs: 'List[str]') -> 'List[Par]':
+def _getRegularParams(specs: list[str]) -> list[Par]:
 	host = _getParamsOp()
 	if not host:
 		return []
@@ -297,7 +296,7 @@ def _getRegularParams(specs: 'List[str]') -> 'List[Par]':
 	]
 
 # Builds a table that lists global names of runtime-based parameters.
-def buildParamTable(dat: 'DAT', paramSpecTable: 'DAT'):
+def buildParamTable(dat: DAT, paramSpecTable: DAT):
 	dat.clear()
 	foundNames = set()
 	for i in range(1, paramSpecTable.numRows):
@@ -309,7 +308,7 @@ def buildParamTable(dat: 'DAT', paramSpecTable: 'DAT'):
 			foundNames.add(name)
 
 # Builds a table of parameters organized into tuplets.
-def buildParamDetailTable(dat: 'DAT', paramSpecTable: 'DAT'):
+def buildParamDetailTable(dat: DAT, paramSpecTable: DAT):
 	dat.clear()
 	dat.appendRow([
 		'tuplet', 'tupletLocalName',
@@ -317,7 +316,7 @@ def buildParamDetailTable(dat: 'DAT', paramSpecTable: 'DAT'):
 		'part1', 'part2', 'part3', 'part4',
 		'status', 'conversion', 'localNames', 'handling',
 	])
-	namesByTupletName = {}  # type: Dict[str, List[str]]
+	namesByTupletName = {}  # type: dict[str, list[str]]
 	for i in range(1, paramSpecTable.numRows):
 		tupletName = paramSpecTable[i, 'tupletName'].val
 		vecIndex = int(paramSpecTable[i, 'vecIndex'] or 0)
@@ -350,10 +349,10 @@ def buildParamDetailTable(dat: 'DAT', paramSpecTable: 'DAT'):
 		])
 
 
-def _canBeReadOnlyTuplet(pars: 'List[Par]'):
+def _canBeReadOnlyTuplet(pars: list[Par]):
 	return all(p.readOnly and p.mode == ParMode.CONSTANT for p in pars)
 
-def _getTupletName(parts: 'List[str]'):
+def _getTupletName(parts: list[str]):
 	if len(parts) <= 1 or len(parts[0]) <= 1:
 		return None
 	prefix = parts[0][:-1]
@@ -362,7 +361,7 @@ def _getTupletName(parts: 'List[str]'):
 			return None
 	return prefix
 
-def buildParamTupletAliases(dat: 'DAT', paramTable: 'DAT'):
+def buildParamTupletAliases(dat: DAT, paramTable: DAT):
 	dat.clear()
 	for i in range(1, paramTable.numRows):
 		size = int(paramTable[i, 'size'])
@@ -375,7 +374,7 @@ def buildParamTupletAliases(dat: 'DAT', paramTable: 'DAT'):
 			])
 
 # Builds a table with lists of parameter local names, for use in CHOP parameter expressions.
-def buildParamChopNamesTable(dat: 'DAT', paramSpecTable: 'DAT'):
+def buildParamChopNamesTable(dat: DAT, paramSpecTable: DAT):
 	dat.clear()
 	regularNames = []
 	specialNames = []
@@ -403,7 +402,7 @@ def buildParamChopNamesTable(dat: 'DAT', paramSpecTable: 'DAT'):
 	dat.appendRow(['angle', ' '.join(angleNames)])
 	dat.appendRow(['constant', ' '.join(constantNames)])
 
-def validateReferences(errorDat: 'scriptDAT'):
+def validateReferences(errorDat: scriptDAT):
 	errorDat.clear()
 	errorDat.appendRow(['path', 'level', 'message'])
 	path = parent().path
@@ -421,7 +420,7 @@ def validateReferences(errorDat: 'scriptDAT'):
 		if not sourceOp:
 			errorDat.appendRow([path, 'error', f'Invalid source path for reference {localName}'])
 
-def validateInputs(dat: 'scriptDAT', inputDefinitions: 'DAT'):
+def validateInputs(dat: scriptDAT, inputDefinitions: DAT):
 	dat.clear()
 	dat.appendRow(['path', 'level', 'message'])
 	if hasattr(parent, 'raytk'):
@@ -434,7 +433,7 @@ def validateInputs(dat: 'scriptDAT', inputDefinitions: 'DAT'):
 			if error:
 				dat.appendRow([handlerPath, 'error', error])
 
-def _validateInput(handler: 'COMP'):
+def _validateInput(handler: COMP):
 	inputDef = handler.op('inputDefinition')
 	return [
 		_checkInputType(handler, str(inputDef[1, 'coordType'] or ''), 'coordType'),
@@ -443,7 +442,7 @@ def _validateInput(handler: 'COMP'):
 		'Required input is missing' if handler.par.Required and inputDef.numRows < 2 else None,
 	]
 
-def _checkInputType(handler: 'COMP', typeName: str, typeCategory: str):
+def _checkInputType(handler: COMP, typeName: str, typeCategory: str):
 	if not typeName:
 		return
 	supported = tdu.split(handler.op('supportedTypes')[typeCategory, 'types'] or '')
@@ -458,7 +457,7 @@ def _isMaster():
 	host = _host()
 	return host and host.par.clone == host
 
-def onValidationChange(dat: 'DAT'):
+def onValidationChange(dat: DAT):
 	if _isMaster():
 		return
 	host = _host()
@@ -522,7 +521,7 @@ class _Builder:
 			self.replacements['THISMAT'] = self.opState.materialId
 		self.elementReplacements = {}
 
-	def loadInputs(self, inDats: 'List[DAT]'):
+	def loadInputs(self, inDats: list[DAT]):
 		self.opState.inputNames = []
 		self.opState.inputStates = []
 		for i, inDat in enumerate(inDats + self.defPar.Inputdefs.evalOPs()):
@@ -540,7 +539,7 @@ class _Builder:
 				varInputNames=tdu.split(inDat[1, 'input:varInputs']),
 			))
 
-	def loadOpElements(self, elementTable: 'DAT'):
+	def loadOpElements(self, elementTable: DAT):
 		for phCol in elementTable.cells(0, 'placeholder*'):
 			i = tdu.digits(phCol.val)
 			for row in range(1, elementTable.numRows):
@@ -550,12 +549,12 @@ class _Builder:
 				codeDat = op(elementTable[row, f'code{i}'])
 				self.elementReplacements[placeholder] = codeDat.text if codeDat else ''
 
-	def addError(self, message: str, path: 'Optional[str]' = None, level: str = 'error'):
+	def addError(self, message: str, path: str | None = None, level: str = 'error'):
 		self.opState.validationErrors.append(ValidationError(
 			path=path or parent(2).path, level=level, message=message))
 
 	def replaceNames(self, val: str):
-		# TODO: there must be a more efficent way to handle this
+		# TODO: there must be a more efficient way to handle this
 		if not val:
 			return ''
 		for k, v in self.replacements.items():
@@ -568,7 +567,7 @@ class _Builder:
 		self.opState.initCode = self.processCode(self.defPar.Initcode.eval())
 		self.opState.opGlobals = self.processCode(self.defPar.Opglobals.eval())
 
-	def processCode(self, codeDat: 'DAT'):
+	def processCode(self, codeDat: DAT):
 		if not codeDat or not codeDat.text:
 			return ''
 		code = codeDat.text
@@ -577,7 +576,7 @@ class _Builder:
 		code = _typePattern.sub(_typeRepl, code)
 		return self.replaceNames(code)
 
-	def loadMacros(self, paramSpecTable: 'DAT', paramTupletTable: 'DAT', opElementTable: 'DAT', inputTable: 'DAT'):
+	def loadMacros(self, paramSpecTable: DAT, paramTupletTable: DAT, opElementTable: DAT, inputTable: DAT):
 		macros = []
 		def addMacro(m: Macro):
 			if not m.name:
@@ -651,7 +650,7 @@ class _Builder:
 					addMacro(Macro(row[1].val, ' '.join([c.val or '' for c in row[2:]]), not _isFalseStr(row[0])))
 		self.opState.macros = macros
 
-	def loadConstants(self, paramSpecTable: 'DAT'):
+	def loadConstants(self, paramSpecTable: DAT):
 		self.opState.constants = []
 		if paramSpecTable.numRows < 2:
 			return
@@ -827,7 +826,7 @@ def _popDialog() -> 'PopDialogExt':
 	# noinspection PyUnresolvedReferences
 	return op.TDResources.op('popDialog')
 
-def inspect(rop: 'COMP'):
+def inspect(rop: COMP):
 	if hasattr(op, 'raytk'):
 		inspector = op.raytk.op('tools/inspector')
 		if inspector and hasattr(inspector, 'Inspect'):

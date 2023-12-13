@@ -1,5 +1,3 @@
-from typing import Optional, List, Tuple
-
 # noinspection PyUnreachableCode
 if False:
 	# noinspection PyUnresolvedReferences
@@ -73,14 +71,14 @@ class TypeSpec:
 	"""
 	useInput: bool = False
 	supportsAll: bool = False
-	supported: 'Optional[List[str]]' = None
+	supported: list[str] | None = None
 
-	def __init__(self, useInput=False, supportsAll=False, supported: Optional[List[str]] = None):
+	def __init__(self, useInput=False, supportsAll=False, supported: list[str] | None = None):
 		self.useInput = useInput
 		self.supportsAll = supportsAll
 		self.supported = supported
 
-	def expandedTypes(self, allTypes: List[str]) -> List[str]:
+	def expandedTypes(self, allTypes: list[str]) -> list[str]:
 		if self.supportsAll:
 			return list(allTypes)
 		return [
@@ -89,7 +87,7 @@ class TypeSpec:
 			if self.supported and t in self.supported
 		]
 
-	def formatSpec(self, allTypes: List[str]) -> str:
+	def formatSpec(self, allTypes: list[str]) -> str:
 		types = self.expandedTypes(allTypes)
 		if self.supportsAll:
 			spec = '*'
@@ -99,7 +97,7 @@ class TypeSpec:
 			return f'useinput|{spec}'
 		return spec
 
-	def formatTypes(self, allTypes: List[str]) -> str:
+	def formatTypes(self, allTypes: list[str]) -> str:
 		types = self.expandedTypes(allTypes)
 		return ' '.join(types)
 
@@ -114,7 +112,7 @@ class TypeSpec:
 			supported=None if spec == '*' else spec.split(' '),
 		)
 # duplicated in opDefinition - for size savings
-def _parseUseInput(spec: str) -> Tuple[bool, str]:
+def _parseUseInput(spec: str) -> tuple[bool, str]:
 	useInput = spec.startswith('useinput|')
 	if useInput:
 		spec = spec[9:]  # len('useinput|')

@@ -1,11 +1,9 @@
-from typing import List, Union
-
 # noinspection PyUnreachableCode
 if False:
 	# noinspection PyUnresolvedReferences
 	from _stubs import *
 
-def simplifyNames(fullNames: List[Union[str, 'Cell']], sep='_'):
+def simplifyNames(fullNames: list[str | Cell], sep='_'):
 	"""
 	Removes prefixes shared by all the provided names.
 
