@@ -1,5 +1,3 @@
-from typing import Dict, List, Optional
-
 # noinspection PyUnreachableCode
 if False:
 	# noinspection PyUnresolvedReferences
@@ -8,7 +6,7 @@ if False:
 def _table() -> DAT:
 	return op('table')
 
-def _allHostPars() -> 'list[Par]':
+def _allHostPars() -> list[Par]:
 	host = parent().par.Hostop.eval()
 	if not host:
 		return []
@@ -83,7 +81,7 @@ def buildCode():
 	else:  # none
 		return ''
 
-def _prepareItemCode(code: 'Cell'):
+def _prepareItemCode(code: Cell):
 	code = str(code or '')
 	if code.endswith(';'):
 		code = code[:-1]
@@ -107,11 +105,11 @@ def _buildRuntimeSwitch(table: DAT, isConstant=False):
 	code += '}\n'
 	return code
 
-def _paramModes(column: str) -> Dict[str, List[str]]:
+def _paramModes(column: str) -> dict[str, list[str]]:
 	table = _table()
 	if table.numRows < 2:
 		return {}
-	paramModes = {}  # type: Dict[str, List[str]]
+	paramModes = {}  # type: dict[str, list[str]]
 	for i in range(1, table.numRows):
 		params = tdu.expand(table[i, column] or '')
 		val = table[i, 'name'].val

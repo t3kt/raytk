@@ -1,6 +1,5 @@
 from datetime import datetime
 from pathlib import Path
-from typing import Callable, Dict, List, Optional
 from raytkTest import TestCaseResult, TestFindingStatus, processTest
 from raytkUtil import RaytkContext, recloneComp, Version
 
@@ -12,19 +11,19 @@ if False:
 	from devel.components.testInspectorCore.testInspectorCore import TestInspectorCore
 
 	class _Pars(ParCollection):
-		Testcasefolder: 'StrParamT'
-		Buildfolder: 'StrParamT'
+		Testcasefolder: StrParamT
+		Buildfolder: StrParamT
 
 	class _COMP(COMP):
 		par: _Pars
 
 	class _UiStatePars:
-		Resultlevelfilter: 'StrParamT'
-		Includealpha: 'BoolParamT'
-		Includebeta: 'BoolParamT'
-		Includedeprecated: 'BoolParamT'
-		Running: 'BoolParamT'
-		Filtertext: 'StrParamT'
+		Resultlevelfilter: StrParamT
+		Includealpha: BoolParamT
+		Includebeta: BoolParamT
+		Includedeprecated: BoolParamT
+		Running: BoolParamT
+		Filtertext: StrParamT
 	ipar.uiState = _UiStatePars()
 
 	# noinspection PyTypeChecker
@@ -39,7 +38,7 @@ class TestManager:
 		self.successCount = tdu.Dependency(0)
 		self.warningCount = tdu.Dependency(0)
 		self.errorCount = tdu.Dependency(0)
-		self._caseResults = {}  # type: Dict[str, TestCaseResult]
+		self._caseResults = {}  # type: dict[str, TestCaseResult]
 
 	def onInit(self):
 		self.resetAll()
@@ -163,7 +162,7 @@ class TestManager:
 		self.reloadTestTable()
 		self._copyTestsToQueue()
 
-	def _copyTestsToQueue(self, filterNames: 'Optional[List[str]]' = None):
+	def _copyTestsToQueue(self, filterNames: list[str] | None = None):
 		queue = self._testQueue
 		queue.clear()
 		if filterNames is None:
@@ -305,11 +304,11 @@ class TestManager:
 		host.loadTox(toxPath)
 		self.log(f'Finished loading {toxPath}')
 
-	def _processTest(self, thenRun: 'Callable'):
+	def _processTest(self, thenRun: callable):
 		comp = self._testComp
 		processTest(comp, thenRun, log=self.log)
 
-	def _buildTestCaseResult(self) -> 'Optional[TestCaseResult]':
+	def _buildTestCaseResult(self) -> 'TestCaseResult | None':
 		comp = self._testComp
 		if not comp:
 			raise Exception('No test loaded!')
@@ -354,5 +353,5 @@ class TestManager:
 			ipar.uiState.Resultlevelfilter = name
 
 	@staticmethod
-	def _queueCall(method: Callable, *args, delayFrames=5):
+	def _queueCall(method: callable, *args, delayFrames=5):
 		run('args[0](*(args[1:]))', method, *args, delayFrames=delayFrames, delayRef=root)

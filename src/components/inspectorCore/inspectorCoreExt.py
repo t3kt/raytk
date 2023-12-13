@@ -51,7 +51,7 @@ class InspectorCore:
 		self.state.Definitiontable = ''
 		self.state.Visualizertype = VisualizerTypes.none
 
-	def Inspect(self, o: 'Union[OP, DAT, COMP, str]'):
+	def Inspect(self, o: OP | DAT | COMP | str):
 		o = o and op(o)
 		if not o:
 			self.Reset()

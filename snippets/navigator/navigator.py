@@ -1,5 +1,4 @@
 from raytkUtil import navigateTo
-from typing import Optional
 
 # noinspection PyUnreachableCode
 if False:

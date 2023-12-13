@@ -1,5 +1,3 @@
-from pathlib import Path
-from typing import List, Optional
 from raytkTest import TestFinding, TestFindingSource, TestFindingStatus
 
 # noinspection PyUnreachableCode
@@ -23,13 +21,13 @@ class TestInspectorCore:
 	def _scopeRoot(self) -> COMP | None:
 		return self.ownerComp.par.Scope.eval()
 
-	def GetFindings(self,) -> List[TestFinding]:
+	def GetFindings(self,) -> list[TestFinding]:
 		scope = self._scopeRoot
 		if not scope:
 			return []
 		validationErrors = self.ownerComp.op('validationErrors')
 		includeDetail = self.ownerComp.par.Includedetail.eval()
-		findings = []  # type: List[TestFinding]
+		findings = []  # type: list[TestFinding]
 		findings += TestFinding.fromValidationTable(validationErrors)
 		findings += self._parseErrorLines(
 			scope,
@@ -93,7 +91,7 @@ class TestInspectorCore:
 			source: 'TestFindingSource',
 			status: 'TestFindingStatus',
 			includeDetail: bool = False,
-	) -> 'List[TestFinding]':
+	) -> 'list[TestFinding]':
 		if not text:
 			return []
 		findings = []
@@ -125,7 +123,7 @@ class TestInspectorCore:
 		self._investigateShaderInputError(o, finding)
 
 	@staticmethod
-	def _investigateShaderInputError(o: 'OP', finding: 'TestFinding'):
+	def _investigateShaderInputError(o: OP, finding: 'TestFinding'):
 		if not isinstance(o, (glslTOP, glslmultiTOP)):
 			return
 		matched = False
@@ -142,7 +140,7 @@ class TestInspectorCore:
 			finding.detail.append(f'in{conn.index} #: {len(conn.connections)}')
 
 	@staticmethod
-	def _dedupFindings(findings: 'List[TestFinding]') -> 'List[TestFinding]':
+	def _dedupFindings(findings: 'list[TestFinding]') -> 'list[TestFinding]':
 		results = []
 		for finding in findings:
 			if finding not in results:

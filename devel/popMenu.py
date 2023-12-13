@@ -1,5 +1,3 @@
-from typing import List, Union
-
 # noinspection PyUnreachableCode
 if False:
 	from _stubs import *
@@ -50,7 +48,7 @@ def ParEnumItems(par):
 	]
 
 def ViewOpItem(
-		o: 'OP',
+		o: OP,
 		text,
 		unique=True,
 		borders=True,
@@ -63,7 +61,7 @@ def ViewOpItem(
 class Divider:
 	pass
 
-def _PreprocessItems(rawitems: List[Union[Item, Divider]]):
+def _PreprocessItems(rawitems: list[Item | Divider]):
 	if not rawitems:
 		return []
 	processeditems = []
@@ -87,7 +85,7 @@ class _Opener:
 
 	def Show(
 			self,
-			items: List[Union[Item, Divider]],
+			items: list[Item | Divider],
 			callback=None,
 			callbackDetails=None,
 			autoClose=None,

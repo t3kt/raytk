@@ -28,7 +28,7 @@ def update():
 	except BaseException as e:
 		print(f'Error attempting to update paramMenu in {parent()}: {e}')
 
-def updateParamEnableExprs(host: 'OP', table: DAT):
+def updateParamEnableExprs(host: OP, table: DAT):
 	hostPar = host.par[parent().par.Param]
 	if hostPar is None:
 		return

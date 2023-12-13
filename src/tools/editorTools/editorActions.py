@@ -89,7 +89,7 @@ def _loadTypeFields():
 
 _typeFields = _loadTypeFields()
 
-def _getStateField(primaryOp: 'OP', fieldName: str):
+def _getStateField(primaryOp: OP, fieldName: str):
 	opState = ROPState(primaryOp)
 	if not opState:
 		return None
@@ -130,7 +130,7 @@ def _createVarRefGroup(text: str):
 	return SimpleGroup(text, isValid, getActions)
 
 def _createAttrRefGroup(text: str):
-	def test(o: 'OP'):
+	def test(o: OP):
 		info = ROPInfo(o)
 		if not info or info.opType == _RopTypes.assignAttribute:
 			return False
@@ -436,7 +436,7 @@ def _createTypeListGroup(
 	)
 
 def _createSimplifyRescaleFloatAction(text):
-	def _getOrigMultiplyPar(origRescale: 'OP'):
+	def _getOrigMultiplyPar(origRescale: OP):
 		p1 = origRescale.par.Multiply
 		if p1.mode == ParMode.CONSTANT and p1.val == 1:
 			p1 = None
@@ -456,7 +456,7 @@ def _createSimplifyRescaleFloatAction(text):
 		if p2 is not None:
 			return p2, True
 		return None, False
-	def _isValid(origRescale: 'OP'):
+	def _isValid(origRescale: OP):
 		p, valid = _getOrigMultiplyPar(origRescale)
 		return valid
 	class _InitRescale(OpInit):
@@ -483,7 +483,7 @@ def _createSimplifyRescaleFloatAction(text):
 	)
 
 def _createSimplifyRotateAction(text):
-	def _validateAndGetAxis(origRotate: 'OP'):
+	def _validateAndGetAxis(origRotate: OP):
 		if origRotate.par['Rotatemode'] != 'axis':
 			return None
 		if origRotate.par['Usepivot']:
@@ -495,7 +495,7 @@ def _createSimplifyRotateAction(text):
 			return 'y'
 		if axisParts == (0, 0, 1):
 			return 'z'
-	def _isValid(origRotate: 'OP'):
+	def _isValid(origRotate: OP):
 		return _validateAndGetAxis(origRotate) is not None
 	class _InitRotate(OpInit):
 		def init(self, o: COMP, ctx: ActionContext):
@@ -598,7 +598,7 @@ def _connIsIn(cFind: 'Connector', cList: 'List[Connector]'):
 	return False
 
 def _createSwapOrderAction(text):
-	def processPair(fromOp: 'OP', toOp: 'OP', testOnly: bool):
+	def processPair(fromOp: OP, toOp: OP, testOnly: bool):
 		if not fromOp or not toOp or not fromOp.outputConnectors or not toOp.inputConnectors:
 			return False
 		if not _connIsIn(toOp.inputConnectors[0], fromOp.outputConnectors[0].connections):

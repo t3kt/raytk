@@ -1,7 +1,6 @@
 import popMenu
 from raytkTools import RaytkTools
 from raytkUtil import RaytkTags, Tag, navigateTo, recloneComp, RaytkContext, Version
-from typing import Union
 
 # noinspection PyUnreachableCode
 if False:
@@ -89,7 +88,7 @@ class Tools:
 		self.forEachSelected(_action)
 
 	def DestroySelectedCustomPars(self):
-		def _action(o: 'OP'):
+		def _action(o: OP):
 			if hasattr(o, 'destroyCustomPars'):
 				o.destroyCustomPars()
 		self.forEachSelected(_action)
@@ -105,11 +104,6 @@ class Tools:
 		for o in editor.owner.selectedChildren:
 			action(o)
 
-	def organizeCurrentCategory(self):
-		categories = RaytkContext().currentCategories()
-		for cat in categories:
-			self.organizeCategory(cat)
-
 	@staticmethod
 	def organizeCategory(comp: COMP):
 		RaytkTools().organizeCategory(comp)
@@ -122,7 +116,7 @@ class Tools:
 		self.toolkitEditor().par.Open.pulse()
 
 	@staticmethod
-	def toolkitEditor() -> 'Union[ToolkitEditor, COMP]':
+	def toolkitEditor() -> 'ToolkitEditor | COMP':
 		return op('/toolkitEditor')
 
 	def openPrototypeEditor(self):

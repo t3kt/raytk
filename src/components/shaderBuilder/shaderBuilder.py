@@ -1037,7 +1037,7 @@ class _Writer:
 		self.out.write(line)
 		self.out.write('\n')
 
-	def _writeLines(self, lines: 'Optional[List[str]]'):
+	def _writeLines(self, lines: list[str] | None):
 		if lines:
 			for line in lines:
 				self.out.write(line)

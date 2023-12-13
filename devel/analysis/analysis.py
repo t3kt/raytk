@@ -1,7 +1,6 @@
 import json
 
 from raytkUtil import RaytkContext, ROPInfo, InputInfo, CategoryInfo
-from typing import Dict, List, Optional
 import raytkDocs
 
 # noinspection PyUnreachableCode
@@ -241,7 +240,7 @@ def buildOpTestTable(dat: DAT, testTable: DAT):
 		'testCount',
 		'test1',
 	])
-	testsByOpType = {}  # type: Dict[str, List[str]]
+	testsByOpType = {}  # type: dict[str, list[str]]
 	for i in range(1, testTable.numRows):
 		opType = str(testTable[i, 'opType'])
 		name = str(testTable[i, 'filePath']).rsplit('/', maxsplit=1)[1].replace('.tox', '')
@@ -265,7 +264,7 @@ def buildOpTestTable(dat: DAT, testTable: DAT):
 def buildOpTagTable(dat: DAT):
 	dat.clear()
 	opPaths = []  # type: list[str]
-	opTagExprs = {}  # type: Dict[str, Dict[str, str]]
+	opTagExprs = {}  # type: dict[str, dict[str, str]]
 	for rop in RaytkContext().allMasterOperators():
 		info = ROPInfo(rop)
 		if not info or not info.isROP:

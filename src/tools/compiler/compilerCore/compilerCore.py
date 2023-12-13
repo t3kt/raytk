@@ -30,7 +30,7 @@ class CompilerCore:
 	def Reset(self, _=None):
 		self.inspectorCore.Reset()
 
-	def Load(self, o: 'OP'):
+	def Load(self, o: OP):
 		self.inspectorCore.Inspect(o)
 
 	@property

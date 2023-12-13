@@ -16,7 +16,7 @@ def updateLockStates(locked: bool):
 # structure of state data:
 # 'raytkState': {'lockPars': ['Foo', 'Xyz']}
 
-def _updateLockState(o: 'OP', locked: bool):
+def _updateLockState(o: OP, locked: bool):
 	state = o.fetch('raytkState', None, search=False, storeDefault=False) or {}
 	if locked:
 		lockPars = state.get('lockPars') or []

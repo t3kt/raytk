@@ -55,7 +55,7 @@ class BuildContext:
 		if self.pane:
 			self.pane.owner = comp
 
-	def focusInNetworkPane(self, o: 'OP'):
+	def focusInNetworkPane(self, o: OP):
 		if o and self.pane:
 			self.pane.owner = o.parent()
 			self.pane.home(zoom=True, op=o)
@@ -115,7 +115,7 @@ class BuildContext:
 		for o in scope.findChildren(tags=[RaytkTags.fileSync.name], type=DAT):
 			self.detachDat(o, reloadFirst=reloadFirst, verbose=verbose)
 
-	def resetCustomPars(self, o: 'OP'):
+	def resetCustomPars(self, o: OP):
 		if not o:
 			return
 		self.log(f'Resetting pars on {o}')
@@ -160,7 +160,7 @@ class BuildContext:
 			self.log(f'Removing {len(alphaOps)} alpha operators from {category.name}')
 			self.safeDestroyOps(alphaOps)
 
-	def safeDestroyOp(self, o: 'OP', verbose=True):
+	def safeDestroyOp(self, o: OP, verbose=True):
 		if not o or not o.valid:
 			return
 		self.log(f'Removing {o}', verbose)
@@ -272,7 +272,7 @@ class BuildContext:
 		self.log(f'Deleting {len(opsToDelete)} redundant python libraries')
 		self.safeDestroyOps(opsToDelete)
 
-def _isPythonLibrary(m: 'OP', modName: 'str | None' = None):
+def _isPythonLibrary(m: OP, modName: 'str | None' = None):
 	if not isinstance(m, textDAT) or not RaytkTags.fileSync.isOn(m):
 		return False
 	return modName is None or m.name == modName

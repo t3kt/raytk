@@ -1,7 +1,6 @@
 from datetime import datetime
 from pathlib import Path
 
-from raytkDocs import ToolkitInfo
 from raytkTools import RaytkTools
 from raytkUtil import RaytkTags, navigateTo, focusFirstCustomParameterPage, CategoryInfo, RaytkContext, IconColors
 from raytkBuild import BuildContext, DocProcessor, chunked_iterable
@@ -16,10 +15,10 @@ class BuildManager:
 	def __init__(self, ownerComp: COMP):
 		self.ownerComp = ownerComp
 		self.logTable = ownerComp.op('log')
-		self.context = None  # type: Optional[BuildContext]
-		self.docProcessor = None  # type: Optional[DocProcessor]
+		self.context = None  # type: BuildContext | None
+		self.docProcessor = None  # type: DocProcessor | None
 		self.experimentalMode = False
-		self.logFile = None  # type: Optional[TextIO]
+		self.logFile = None  # type: TextIO | None
 		self.enableVerboseLogging = False
 
 	def OnInit(self):
@@ -141,7 +140,7 @@ class BuildManager:
 		self.logTable.appendRow([message])
 
 	@staticmethod
-	def queueMethodCall(method: Callable, *args):
+	def queueMethodCall(method: callable, *args):
 		queueCall(method, *args)
 
 class _BuilderBase:
@@ -150,13 +149,13 @@ class _BuilderBase:
 			context: BuildContext,
 	):
 		self.context = context
-		self.afterBuild = None  # type: Optional[Callable]
+		self.afterBuild = None  # type: callable | None
 
 	def runBuild(self, thenRun: Callable):
 		self.afterBuild = thenRun
 		pass
 
-	def removeBuildExcludeOpsIn(self, scope: COMP, thenRun: Callable):
+	def removeBuildExcludeOpsIn(self, scope: COMP, thenRun: callable):
 		self.log(f'Removing buildExclude ops in {scope} (deep)')
 		toRemove = scope.findChildren(tags=[RaytkTags.buildExclude.name])
 		chunks = [list(chunk) for chunk in chunked_iterable(toRemove, 30)]
@@ -208,7 +207,7 @@ class ToolkitBuilder(_BuilderBase):
 	):
 		super().__init__(context)
 		self.reloadToolkit = reloadToolkit
-		self.docProcessor = None  # type: Optional[DocProcessor]
+		self.docProcessor = None  # type: DocProcessor | None
 		if not self.context.experimental:
 			self.docProcessor = DocProcessor(
 				self.context,
@@ -217,7 +216,7 @@ class ToolkitBuilder(_BuilderBase):
 				imagesFolder='docs/assets/images',
 			)
 
-	def runBuild(self, thenRun: Callable):
+	def runBuild(self, thenRun: callable):
 		super().runBuild(thenRun)
 		version = RaytkContext().toolkitVersion()
 		self.log('Starting build')

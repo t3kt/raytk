@@ -5,9 +5,8 @@ if False:
 	# noinspection PyUnresolvedReferences
 	from _stubs import *
 	from .ropEditor.ropEditor import ROPEditor
-	from typing import Union
 	# noinspection PyTypeHints
-	iop.ropEditor = ROPEditor(COMP())  # type: Union[ROPEditor, COMP]
+	iop.ropEditor = ROPEditor(COMP())  # type: ROPEditor | COMP
 
 
 class ToolkitEditor:

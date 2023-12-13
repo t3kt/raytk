@@ -1,5 +1,4 @@
 from raytkTools import RaytkTools
-from typing import Optional
 import yaml
 
 # noinspection PyUnreachableCode

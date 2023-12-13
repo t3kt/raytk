@@ -174,7 +174,7 @@ class ActionManager:
 				item = action.createMenuItem(ctx)
 				dat.appendRow([item.text, item.text])
 
-def _isRopOrComp(o: 'OP'):
+def _isRopOrComp(o: OP):
 	return isROP(o) or isRComp(o)
 
 class ROPState:
@@ -246,14 +246,14 @@ class ActionUtils:
 		ActionUtils.palette().CreateItem(ropType, postSetup=init, undoSetup=undo)
 
 	@staticmethod
-	def moveAfter(o: 'OP', after: 'OP'):
+	def moveAfter(o: OP, after: OP):
 		if not after:
 			return
 		o.nodeCenterY = after.nodeCenterY
 		o.nodeX = after.nodeX + after.nodeWidth + 100
 
 	@staticmethod
-	def moveAfterMultiple(o: 'OP', after: List['OP']):
+	def moveAfterMultiple(o: OP, after: List['OP']):
 		if not after:
 			return
 		o.nodeCenterY = sum(a.nodeCenterY for a in after) / len(after)
@@ -261,7 +261,7 @@ class ActionUtils:
 
 	@staticmethod
 	def createAndAttachFromOutput(
-			fromRop: 'OP',
+			fromRop: OP,
 			ropType: str,
 			init: InitFunc = None,
 			inputIndex: int = 0,
@@ -274,7 +274,7 @@ class ActionUtils:
 
 	@staticmethod
 	def createAndAttachToInput(
-			fromRop: 'OP',
+			fromRop: OP,
 			ropType: str,
 			inits: List[InitFunc] = None,
 			inputIndex: int = 0,
@@ -347,7 +347,7 @@ class OpSelect:
 	maxCount: Optional[int] = None
 	all: bool = False
 
-	def matches(self, o: 'OP') -> bool:
+	def matches(self, o: OP) -> bool:
 		if not o:
 			return False
 		if self.all:
@@ -377,7 +377,7 @@ class RopSelect(OpSelect):
 	coordTypes: Optional[List[str]] = None
 	returnTypes: Optional[List[str]] = None
 
-	def matches(self, o: 'OP') -> bool:
+	def matches(self, o: OP) -> bool:
 		if not o:
 			return False
 		if self.all:
