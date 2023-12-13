@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.combine.mergeFields
-  opVersion: '9'
+  opVersion: '10'
   opStatus: default
 opDef: !def
   enable: !expr
@@ -17,6 +17,8 @@ opDef: !def
     file: src/operators/combine/mergeFields.glsl
     name: function
   paramGroupTable: eval_params
+  libraryNames: !expr
+    expr: op('mergeFields_lib')
   macroTable: !table
     file: src/operators/combine/mergeFields_macros.txt
     name: macro_exprs

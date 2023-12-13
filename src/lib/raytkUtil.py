@@ -708,11 +708,30 @@ class _OpStatusTag(Tag):
 		opDef = ROPInfo(o).opDef
 		return super().isOn(o) or super().isOn(opDef)
 
+def _getRelPathBehavior(o: 'OP'):
+	p = o.par['relpath']
+	if p == 'project':
+		return 'project'
+	if p == 'externaltox':
+		return 'externaltox'
+	po = o.parent()
+	if not po:
+		return 'project'
+	return _getRelPathBehavior(po)
+
+def _resolveFilePath(o: 'OP', file: str):
+	if not file:
+		return ''
+	rule = _getRelPathBehavior(o)
+	if rule == 'externaltox':
+		return o.parent().fileFolder + '/' + file
+	return file
+
 def _updateFileSyncPars(o: 'Union[OP, DAT]', state: bool):
 	if o.isDAT:
 		filePar = o.par['file']
 		if filePar and state:
-			o.save(filePar.eval())
+			o.save(_resolveFilePath(o, filePar.eval()))
 		if o.par['defaultreadencoding'] is not None:
 			o.par.defaultreadencoding = 'utf8'
 		par = o.par['syncfile']
@@ -996,8 +1015,12 @@ def detachTox(comp: 'COMP'):
 		return
 	if not comp.par.externaltox and comp.par.externaltox.mode == ParMode.CONSTANT:
 		return
-	comp.par.reloadtoxonstart.expr = ''
-	comp.par.reloadtoxonstart.val = False
+	if comp.par['reloadtoxonstart'] is not None:
+		comp.par.reloadtoxonstart.expr = ''
+		comp.par.reloadtoxonstart.val = False
+	else:
+		comp.par.enableexternaltox.expr = ''
+		comp.par.enableexternaltox.val = False
 	comp.par.externaltox.expr = ''
 	comp.par.externaltox.val = ''
 

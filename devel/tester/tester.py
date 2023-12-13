@@ -220,18 +220,21 @@ class TestManager:
 		self.log('Canceling test run...')
 		ipar.uiState.Running = False
 
-	def runQueuedTests(self):
+	def runQueuedTests(self, continueAfter=True):
 		queue = self._testQueue
 		if queue.numRows < 1:
 			raise Exception('No tests queued!')
 		self.clearResults()
 		self.log(f'Running {queue.numRows} queued tests...')
 		ipar.uiState.Running = True
-		self._runNextTest(continueAfter=True)
+		self._runNextTest(continueAfter=continueAfter)
 
 	def runAllTests(self):
 		self.reloadTestQueue()
 		self.runQueuedTests()
+
+	def runFirstQueuedTest(self):
+		self.runQueuedTests(continueAfter=False)
 
 	def _runNextTest(self, continueAfter=True):
 		queue = self._testQueue

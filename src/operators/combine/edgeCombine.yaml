@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.combine.edgeCombine
-  opVersion: '8'
+  opVersion: '9'
   opStatus: default
 opDef: !def
   enable: true
@@ -16,6 +16,8 @@ opDef: !def
     file: src/operators/combine/edgeCombine.glsl
     name: function
   paramGroupTable: eval_params
+  libraryNames: !expr
+    expr: op('edgeCombine_lib')
   generatedMacroTables: multiInputHandler_macros
   help: !text
     file: src/operators/combine/edgeCombine.md

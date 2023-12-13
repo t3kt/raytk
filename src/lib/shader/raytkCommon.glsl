@@ -97,15 +97,6 @@ mat4 lookAtViewMatrix(vec3 eye, vec3 center, vec3 up) {
 	vec4(0.0, 0.0, 0.0, 1)
 	);
 }
-// https://github.com/glslify/glsl-look-at/
-mat3 calcLookAtMatrix(vec3 origin, vec3 target, float roll) {
-  vec3 rr = vec3(sin(roll), cos(roll), 0.0);
-  vec3 ww = normalize(target - origin);
-  vec3 uu = normalize(cross(ww, rr));
-  vec3 vv = normalize(cross(uu, ww));
-
-  return mat3(uu, vv, ww);
-}
 
 float ndot(vec2 a, vec2 b ) { return a.x*b.x - a.y*b.y; }
 
@@ -129,31 +120,6 @@ vec4 qsqr(in vec4 a)// square a quaterion
 		2.0*a.x*a.w);
 }
 
-vec3 boxFold(vec3 p, float r) {
-	return clamp(p.xyz, -r, r) * 2.0 - p;
-}
-
-vec3 mengerFold(vec3 p) {
-	float a = min(p.x - p.y, 0.0);
-	p.x -= a;
-	p.y += a;
-	a = min(p.x - p.z, 0.0);
-	p.x -= a;
-	p.z += a;
-	a = min(p.y - p.z, 0.0);
-	p.y -= a;
-	p.z += a;
-	return p;
-}
-
-// Normal for the perpendicular bisector plane of two points
-vec3 bisector(vec3 a, vec3 b) {
-	return normalize(cross(
-		mix(a, b, .5),
-		cross(a, b)
-	));
-}
-
 float smin(float a, float b, float k){
 	float f = clamp(0.5 + 0.5 * ((a - b) / k), 0., 1.);
 	return (1. - f) * a + f  * b - f * (1. - f) * k;
@@ -161,30 +127,6 @@ float smin(float a, float b, float k){
 
 float smax(float a, float b, float k) {
 	return -smin(-a, -b, k);
-}
-
-float smin2(float a, float b, float r) {
-	vec2 u = max(vec2(r - a,r - b), vec2(0));
-	return max(r, min (a, b)) - length(u);
-}
-
-float smax2(float a, float b, float r) {
-	vec2 u = max(vec2(r + a,r + b), vec2(0));
-	return min(-r, max (a, b)) + length(u);
-}
-
-float smin3(float a, float b, float k){
-	return min(
-	smin(a, b, k),
-	smin2(a, b, k)
-	);
-}
-
-float smax3(float a, float b, float k){
-	return max(
-	smax(a, b, k),
-	smax2(a, b, k)
-	);
 }
 
 float dot2( in vec2 v ) { return dot(v,v); }
@@ -331,23 +273,6 @@ vec3 fillToVec3(vec4 p) { return p.xyz; }
 vec4 fillToVec4(float p) { return vec4(p); }
 vec4 fillToVec4(vec4 p) { return p; }
 
-float extractOrUseAsX(float p) { return p; }
-float extractOrUseAsX(vec2 p) { return p.x; }
-float extractOrUseAsX(vec3 p) { return p.x; }
-float extractOrUseAsX(vec4 p) { return p.x; }
-
-float extractOrUseAsY(float p) { return p; }
-float extractOrUseAsY(vec4 p) { return p.y; }
-
-float extractOrUseAsZ(float p) { return p; }
-float extractOrUseAsZ(vec4 p) { return p.z; }
-
-float extractOrUseAsW(float p) { return p; }
-float extractOrUseAsW(vec4 p) { return p.w; }
-
-void setFromFloat(inout float x, float val) { x = val; }
-void setFromFloat(inout Sdf x, float val) { x.x = val; }
-
 void swap(inout Sdf a, inout Sdf b) {
 	Sdf tmp = a;
 	a = b;
@@ -377,10 +302,14 @@ float getAxis(float p, int axis) {
 }
 
 float getAxis(vec2 p, int axis) {
-	return (axis >= 0 && axis <= 2) ? p[axis] : 0.;
+	return (axis >= 0 && axis <= 1) ? p[axis] : 0.;
 }
 
 float getAxis(vec3 p, int axis) {
+	return (axis >= 0 && axis <= 2) ? p[axis] : 0.;
+}
+
+float getAxis(vec4 p, int axis) {
 	return (axis >= 0 && axis <= 3) ? p[axis] : 0.;
 }
 
@@ -468,53 +397,9 @@ vec3 stereographic(vec4 p4) {
   return k*p4.xyz;
 }
 
-// https://www.shadertoy.com/view/3djBDh
-//the following functions assume that p is inside the cube of radius 1 centered at the origin
-//closest vertex of the cube to p
-vec3 nearestVertex(vec3 p) {
-	return max(sign(p), vec3(0))*2.-1.;
-}
-//closest face of the cube to p
-vec3 nearestFace(vec3 p) {
-	vec3 ap = abs(p);
-	if (ap.x>=max(ap.z, ap.y)) return vec3(sign(p.x), 0., 0.);
-	if (ap.y>=max(ap.z, ap.x)) return vec3(0., sign(p.y), 0.);
-	if (ap.z>=max(ap.x, ap.y)) return vec3(0., 0., sign(p.z));
-	return vec3(0);
-}
-//closest edge of the cube to p
-vec3 nearestEdge(vec3 p) {
-	vec3 mask = vec3(1)-abs(nearestFace(p));
-	vec3 v = nearestVertex(p);
-	vec3 a = v*mask.zxy, b = v*mask.yzx;
-	return distance(p, a)<distance(p, b)?a:b;
-}
-// https://www.shadertoy.com/view/3lcBD2
-// closest edge of 2D square to p
-vec2 nearestEdge(vec2 p) {
-	vec2 p2 = abs(p);
-	if (p2.x > p2.y) return vec2((p.x < 0.) ? -1. : 1., 0.);
-	else return vec2(0., (p.y < 0.) ? -1. : 1.);
-}
-
 // https://lygia.xyz/math/pow5
 float pow5(const in float x) {
 	float x2 = x * x;
-	return x2 * x2 * x;
-}
-
-vec2 pow5(const in vec2 x) {
-	vec2 x2 = x * x;
-	return x2 * x2 * x;
-}
-
-vec3 pow5(const in vec3 x) {
-	vec3 x2 = x * x;
-	return x2 * x2 * x;
-}
-
-vec4 pow5(const in vec4 x) {
-	vec4 x2 = x * x;
 	return x2 * x2 * x;
 }
 

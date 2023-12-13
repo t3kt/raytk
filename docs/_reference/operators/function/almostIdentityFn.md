@@ -13,6 +13,33 @@ op:
 
 
     This is based on Inigo Quilez''s [article](https://iquilezles.org/www/articles/functions/functions.htm).'
+  inputs:
+  - contextTypes:
+    - Context
+    - MaterialContext
+    - CameraContext
+    - LightContext
+    - RayContext
+    - ParticleContext
+    coordTypes:
+    - float
+    label: Threshold Field
+    name: thresholdField
+    returnTypes:
+    - float
+  - contextTypes:
+    - Context
+    - MaterialContext
+    - CameraContext
+    - LightContext
+    - RayContext
+    - ParticleContext
+    coordTypes:
+    - float
+    label: Base Value Field
+    name: baseValueField
+    returnTypes:
+    - float
   name: almostIdentityFn
   opType: raytk.operators.function.almostIdentityFn
   parameters:

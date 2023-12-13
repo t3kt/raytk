@@ -1,30 +1,8 @@
 !rop
 meta: !meta
   opType: raytk.operators.convert.extrude
-  opVersion: '21'
+  opVersion: '22'
   opStatus: default
-opDef: !def
-  enable: true
-  typeSpec: !ropTypes
-    coordType: !coordT
-      Coordtypevec3: true
-    contextType: !contextT
-      Allcontexttype: true
-    returnType: !returnT
-      Returntypesdf: true
-  function: processedFunction
-  lockParams: Uvmode
-  paramGroupTable: eval_params
-  variableTable: !table
-    file: src/operators/convert/extrude_variables.txt
-    name: variable_exprs
-    evaluate: true
-    evalOpts: !evalOpts
-      excludeFirstRow: true
-  help: !text
-    file: src/operators/convert/extrude.md
-    name: help
-  shortcuts: ext
 paramPages:
 - !page
   name: Filter
@@ -87,6 +65,28 @@ paramPages:
       menuLabels:
       - None
       - Ratio
+opDef: !def
+  enable: true
+  typeSpec: !ropTypes
+    coordType: !coordT
+      Coordtypevec3: true
+    contextType: !contextT
+      Allcontexttype: true
+    returnType: !returnT
+      Returntypesdf: true
+  function: processedFunction
+  lockParams: Uvmode
+  paramGroupTable: eval_params
+  variableTable: !table
+    file: src/operators/convert/extrude_variables.txt
+    name: variable_exprs
+    evaluate: true
+    evalOpts: !evalOpts
+      excludeFirstRow: true
+  help: !text
+    file: src/operators/convert/extrude.md
+    name: help
+  shortcuts: ext
 inputs:
 - !input
   Localalias: crossSection
@@ -103,6 +103,7 @@ inputs:
   Localalias: heightField
   Variables: axispos
   coordType: !coordT
+    Coordtypevec2: true
     Coordtypevec3: true
   contextType: !contextT
     Allcontexttype: true
@@ -113,6 +114,7 @@ inputs:
   Variables: axispos
   Variableinputs: heightField
   coordType: !coordT
+    Coordtypevec2: true
     Coordtypevec3: true
   contextType: !contextT
     Allcontexttype: true

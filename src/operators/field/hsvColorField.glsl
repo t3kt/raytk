@@ -3,7 +3,7 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 	#ifdef THIS_HAS_INPUT_hueField
 	hsv.x += inputOp_hueField(p, ctx);
 	#else
-	hsv.x += extractOrUseAsX(p);
+	hsv.x += adaptAsFloat(p);
 	#endif
 	#ifdef THIS_HAS_INPUT_saturationField
 	hsv.y *= inputOp_saturationField(p, ctx);

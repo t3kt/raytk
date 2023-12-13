@@ -539,14 +539,3 @@ bool isDistanceOnlyStage() {
 	_raytkStage == RAYTK_STAGE_SUBSURFACE;
 }
 
-void captureIterationFromMaterial(inout vec4 store, in Context ctx) {
-	if (_raytkStage == RAYTK_STAGE_PRIMARY) {
-		store = ctx.iteration;
-	}
-}
-
-void restoreIterationFromMaterial(inout MaterialContext matCtx, in vec4 store) {
-	if (_raytkStage == RAYTK_STAGE_MATERIAL) {
-		matCtx.context.iteration = store;
-	}
-}

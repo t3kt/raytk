@@ -15,7 +15,7 @@ context.log('Processing inspector')
 inspector = parent()  # type: Union[COMP, Inspector]
 inspector.Reset()
 
-subComps = inspector.findChildren(type=COMP, tags=[RaytkTags.raytkOP.name], maxDepth=1)
+subComps = inspector.findChildren(type=COMP, tags=[RaytkTags.raytkOP.name, RaytkTags.raytkComp.name], maxDepth=1)
 subComps += ops(
 	'fieldVisualizer',
 	'inspectorCore',

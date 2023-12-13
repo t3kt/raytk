@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.sdf.prismSdf
-  opVersion: '26'
+  opVersion: '27'
   opStatus: default
 opDef: !def
   enable: true
@@ -70,6 +70,16 @@ inputs:
   Localalias: sidesField
   Variables: axispos normangle normoffset
   Variableinputs: heightField radiusField thicknessField
+  coordType: !coordT
+    Coordtypevec3: true
+  contextType: !contextT
+    Allcontexttype: true
+  returnType: !returnT
+    Returntypefloat: true
+- !input
+  Localalias: roundingField
+  Variables: axispos normangle normoffset
+  Variableinputs: heightField radiusField thicknessField sidesField
   coordType: !coordT
     Coordtypevec3: true
   contextType: !contextT

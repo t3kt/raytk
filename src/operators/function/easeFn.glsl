@@ -1,6 +1,11 @@
 ReturnT thismap(CoordT p, ContextT ctx) {
 	float x = p;
+	#ifdef THIS_HAS_INPUT_exponentField
+	float a = inputOp_exponentField(p, ctx);
+	#else
 	float a = THIS_Exponent;
+	#endif
+
 	const float epsilon = 0.00001;
 	const float min_param_a = 0.0 + epsilon;
 	const float max_param_a = 1.0 - epsilon;

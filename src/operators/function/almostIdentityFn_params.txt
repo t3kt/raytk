@@ -1,2 +1,3 @@
 names	source	handling	readOnlyHandling	conversion	enable
-Threshold Basevalue	param	runtime	macro		1
+Threshold	param	runtime	macro		op('threshold_definition').numRows < 2
+Basevalue	param	runtime	macro		op('baseValue_definition').numRows < 2

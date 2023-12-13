@@ -1,0 +1,4 @@
+name	label	code
+add	Add	d += val
+mul	Multiply	d *= val
+replace	Replace	d = val

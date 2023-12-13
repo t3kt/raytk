@@ -32,6 +32,7 @@ op:
     - RayContext
     - ParticleContext
     coordTypes:
+    - vec2
     - vec3
     label: Height Field
     name: height_definition_in
@@ -45,6 +46,7 @@ op:
     - RayContext
     - ParticleContext
     coordTypes:
+    - vec2
     - vec3
     label: Offset Field
     name: offset_definition_in

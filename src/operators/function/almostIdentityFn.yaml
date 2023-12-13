@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.function.almostIdentityFn
-  opVersion: '6'
+  opVersion: '7'
   opStatus: default
 opDef: !def
   enable: true
@@ -19,3 +19,20 @@ opDef: !def
   help: !text
     file: src/operators/function/almostIdentityFn.md
     name: help
+inputs:
+- !input
+  Localalias: thresholdField
+  coordType: !coordT
+    Coordtypefloat: true
+  contextType: !contextT
+    Allcontexttype: true
+  returnType: !returnT
+    Returntypefloat: true
+- !input
+  Localalias: baseValueField
+  coordType: !coordT
+    Coordtypefloat: true
+  contextType: !contextT
+    Allcontexttype: true
+  returnType: !returnT
+    Returntypefloat: true

@@ -27,6 +27,8 @@ cat:
     name: adjustColor
     summary: Adjust properties of color values, either directly on a field, or on
       the assigned surface color of an Sdf result.
+  - name: applyTransform
+    status: beta
   - name: assignAttribute
     status: beta
   - keywords:
@@ -135,6 +137,8 @@ cat:
   - name: mirrorQuadrant
     summary: Mirror coordinates across two axes.
   - name: mobiusTransform
+  - name: modifyDistance
+    status: beta
   - keywords:
     - bumpmap
     - material
@@ -215,6 +219,8 @@ cat:
   - name: rangeTransform
     summary: Applies a transform based on a range of settings, mapped with either
       the iteration value or a field input.
+  - name: rectangleRepeat
+    status: beta
   - keywords:
     - flip
     - mirror
@@ -296,7 +302,9 @@ cat:
     shortcuts:
     - tfm
     summary: Transform the coordinates of the input, with rotation, scaling, and translation.
-  - name: transformSequence
+  - keywords:
+    - apply
+    name: transformSequence
     status: beta
   - keywords:
     - move

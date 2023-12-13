@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.sdf.archSdf
-  opVersion: '7'
+  opVersion: '8'
   opStatus: beta
 opDef: !def
   enable: true
@@ -16,6 +16,8 @@ opDef: !def
     file: src/operators/sdf/archSdf.glsl
     name: function
   paramGroupTable: eval_params
+  libraryNames: !expr
+    expr: op('roundedRectangleSdf2d_lib')
 inputs:
 - !input
   Localalias: heightField

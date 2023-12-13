@@ -1,3 +1,5 @@
 name	label	code
-local	Local Position	p0 = adaptAsVec3(p);
-global	Global Position	p0 = adaptAsVec3(ctx.globalPos);
+local	Local Position	p0 = adaptAsVec4(p);
+global	Global Position	p0 = adaptAsVec4(ctx.globalPos);
+pixeluv	Pixel UV Coordinate	p0 = adaptAsVec4(vUV);
+pixelcoord	Pixel Coordinate	p0 = adaptAsVec4(vUV.st * uTDOutputInfo.res.zw);

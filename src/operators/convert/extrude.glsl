@@ -19,15 +19,19 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 		#endif
 		res = inputOp_crossSection(planePos, ctx);
 	} else {
-		#ifdef THIS_HAS_INPUT_heightField
-		float h = inputOp_heightField(p, ctx);
-		#else
+		#if !defined(THIS_HAS_INPUT_heightField)
 		float h = THIS_Height;
-		#endif
-		#ifdef THIS_HAS_INPUT_offsetField
-		float o = inputOp_offsetField(p, ctx);
+		#elif defined(inputOp_heightField_COORD_TYPE_vec2)
+		float h = inputOp_heightField(planePos, ctx);
 		#else
+		float h = inputOp_heightField(p, ctx);
+		#endif
+		#if !defined(THIS_HAS_INPUT_offsetField)
 		float o = THIS_Offset;
+		#elif defined(inputOp_offsetField_COORD_TYPE_vec2)
+		float o = inputOp_offsetField(planePos, ctx);
+		#else
+		float o = inputOp_offsetField(p, ctx);
 		#endif
 		float ratio = map01(axisPos - o, -h/2., h/2.);
 		if (THIS_Iterationtype == THISTYPE_Iterationtype_ratio) {

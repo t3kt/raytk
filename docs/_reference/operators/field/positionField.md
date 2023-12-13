@@ -46,6 +46,10 @@ op:
       name: local
     - label: Global Position
       name: global
+    - label: Pixel UV Coordinate
+      name: pixeluv
+    - label: Pixel Coordinate
+      name: pixelcoord
     name: Positiontype
   shortcuts:
   - pos

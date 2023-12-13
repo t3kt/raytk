@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.sdf.geodesicSdf
-  opVersion: '17'
+  opVersion: '19'
   opStatus: default
 opDef: !def
   enable: !expr
@@ -21,7 +21,7 @@ opDef: !def
     name: functionTemplate
   paramGroupTable: eval_params
   libraryNames: !expr
-    expr: op('geodesic_lib')
+    expr: op('geodesic_lib'), op('coneSdf_lib')
   help: !text
     file: src/operators/sdf/geodesicSdf.md
     name: help

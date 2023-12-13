@@ -25,25 +25,6 @@ vec2 sgn(vec2 v) {
 	return vec2((v.x<0)?-1:1, (v.y<0)?-1:1);
 }
 
-#if 0
-float square (float x) {
-	return x*x;
-}
-
-vec2 square (vec2 x) {
-	return x*x;
-}
-
-vec3 square (vec3 x) {
-	return x*x;
-}
-
-float lengthSqr(vec3 x) {
-	return dot(x, x);
-}
-#endif
-
-
 // Maximum/minumum elements of a vector
 float vmax(vec2 v) {
 	return max(v.x, v.y);
@@ -68,12 +49,6 @@ float vmin(vec3 v) {
 float vmin(vec4 v) {
 	return min(min(v.x, v.y), min(v.z, v.w));
 }
-
-#if 0
-float fSphere(vec3 p, float r) {
-	return length(p) - r;
-}
-#endif
 
 // Plane with normal n (n is normalized) at some distance from the origin
 float fPlane(vec3 p, vec3 n, float distanceFromOrigin) {
@@ -107,22 +82,6 @@ float fCorner (vec2 p) {
 	return length(max(p, vec2(0))) + vmax(min(p, vec2(0)));
 }
 
-#if 0
-// Blobby ball object. You've probably seen it somewhere. This is not a correct distance bound, beware.
-float fBlob(vec3 p) {
-	p = abs(p);
-	if (p.x < max(p.y, p.z)) p = p.yzx;
-	if (p.x < max(p.y, p.z)) p = p.yzx;
-	float b = max(max(max(
-		dot(p, normalize(vec3(1, 1, 1))),
-		dot(p.xz, normalize(vec2(PHI+1, 1)))),
-		dot(p.yx, normalize(vec2(1, PHI)))),
-		dot(p.xz, normalize(vec2(1, PHI))));
-	float l = length(p);
-	return l - 1.5 - 0.2 * (1.5 / 2)* cos(min(sqrt(1.01 - b / l)*(PI / 0.25), PI));
-}
-#endif
-
 // Cylinder standing upright on the xz plane
 float fCylinder(vec3 p, float r, float height) {
 	float d = length(p.xz) - r;
@@ -147,60 +106,11 @@ float fCapsule(vec3 p, vec3 a, vec3 b, float r) {
 	return fLineSegment(p, a, b) - r;
 }
 
-// Torus in the XZ-plane
-float fTorus(vec3 p, float smallRadius, float largeRadius) {
-	return length(vec2(length(p.xz) - largeRadius, p.y)) - smallRadius;
-}
-
-#if 0
-// A circle line. Can also be used to make a torus by subtracting the smaller radius of the torus.
-float fCircle(vec3 p, float r) {
-	float l = length(p.xz) - r;
-	return length(vec2(p.y, l));
-}
-#endif
-
 // A circular disc with no thickness (i.e. a cylinder with no height).
 // Subtract some value to make a flat disc with rounded edge.
 float fDisc(vec3 p, float r) {
 	float l = length(p.xz) - r;
 	return l < 0 ? abs(p.y) : length(vec2(p.y, l));
-}
-
-	#if 0
-// Hexagonal prism, circumcircle variant
-float fHexagonCircumcircle(vec3 p, vec2 h) {
-	vec3 q = abs(p);
-	return max(q.y - h.y, max(q.x*sqrt(3)*0.5 + q.z*0.5, q.z) - h.x);
-	//this is mathematically equivalent to this line, but less efficient:
-	//return max(q.y - h.y, max(dot(vec2(cos(PI/3), sin(PI/3)), q.zx), q.z) - h.x);
-}
-
-// Hexagonal prism, incircle variant
-float fHexagonIncircle(vec3 p, vec2 h) {
-	return fHexagonCircumcircle(p, vec2(h.x*sqrt(3)*0.5, h.y));
-}
-#endif
-
-// Cone with correct distances to tip and base circle. Y is up, 0 is in the middle of the base.
-float fCone(vec3 p, float radius, float height) {
-	vec2 q = vec2(length(p.xz), p.y);
-	vec2 tip = q - vec2(0, height);
-	vec2 mantleDir = normalize(vec2(height, radius));
-	float mantle = dot(tip, mantleDir);
-	float d = max(mantle, -q.y);
-	float projected = dot(tip, vec2(mantleDir.y, -mantleDir.x));
-	
-	// distance to tip
-	if ((q.y > height) && (projected < 0)) {
-		d = max(d, length(tip));
-	}
-	
-	// distance to base ring
-	if ((q.x > radius) && (projected > length(vec2(height, radius)))) {
-		d = max(d, length(q - vec2(radius, 0)));
-	}
-	return d;
 }
 
 // Rotate around a coordinate axis (i.e. in a plane perpendicular to that axis) by angle <a>.
@@ -300,13 +210,6 @@ vec2 pModGrid2(inout vec2 p, vec2 size) {
 	return floor(c/2);
 }
 
-// Repeat in three dimensions
-vec3 pMod3(inout vec3 p, vec3 size) {
-	vec3 c = floor((p + size*0.5)/size);
-	p = mod(p + size*0.5, size) - size*0.5;
-	return c;
-}
-
 // Mirror at an axis-aligned plane which is at a specified distance <dist> from the origin.
 float pMirror (inout float p, float dist) {
 	float s = sgn(p);
@@ -364,108 +267,4 @@ float fOpIntersectionRound(float a, float b, float r) {
 
 float fOpDifferenceRound (float a, float b, float r) {
 	return fOpIntersectionRound(a, -b, r);
-}
-
-#if 0
-// The "Columns" flavour makes n-1 circular columns at a 45 degree angle:
-float fOpUnionColumns(float a, float b, float r, float n) {
-	if ((a < r) && (b < r)) {
-		vec2 p = vec2(a, b);
-		float columnradius = r*sqrt(2)/((n-1)*2+sqrt(2));
-		pR45(p);
-		p.x -= sqrt(2)/2*r;
-		p.x += columnradius*sqrt(2);
-		if (mod(n,2) == 1) {
-			p.y += columnradius;
-		}
-		// At this point, we have turned 45 degrees and moved at a point on the
-		// diagonal that we want to place the columns on.
-		// Now, repeat the domain along this direction and place a circle.
-		pMod1(p.y, columnradius*2);
-		float result = length(p) - columnradius;
-		result = min(result, p.x);
-		result = min(result, a);
-		return min(result, b);
-	} else {
-		return min(a, b);
-	}
-}
-
-float fOpDifferenceColumns(float a, float b, float r, float n) {
-	a = -a;
-	float m = min(a, b);
-	//avoid the expensive computation where not needed (produces discontinuity though)
-	if ((a < r) && (b < r)) {
-		vec2 p = vec2(a, b);
-		float columnradius = r*sqrt(2)/n/2.0;
-		columnradius = r*sqrt(2)/((n-1)*2+sqrt(2));
-
-		pR45(p);
-		p.y += columnradius;
-		p.x -= sqrt(2)/2*r;
-		p.x += -columnradius*sqrt(2)/2;
-
-		if (mod(n,2) == 1) {
-			p.y += columnradius;
-		}
-		pMod1(p.y,columnradius*2);
-
-		float result = -length(p) + columnradius;
-		result = max(result, p.x);
-		result = min(result, a);
-		return -min(result, b);
-	} else {
-		return -m;
-	}
-}
-
-float fOpIntersectionColumns(float a, float b, float r, float n) {
-	return fOpDifferenceColumns(a,-b,r, n);
-}
-
-// The "Stairs" flavour produces n-1 steps of a staircase:
-// much less stupid version by paniq
-float fOpUnionStairs(float a, float b, float r, float n) {
-	float s = r/n;
-	float u = b-r;
-	return min(min(a,b), 0.5 * (u + a + abs ((mod (u - a + s, 2 * s)) - s)));
-}
-
-// We can just call Union since stairs are symmetric.
-float fOpIntersectionStairs(float a, float b, float r, float n) {
-	return -fOpUnionStairs(-a, -b, r, n);
-}
-
-float fOpDifferenceStairs(float a, float b, float r, float n) {
-	return -fOpUnionStairs(-a, b, r, n);
-}
-
-// Similar to fOpUnionRound, but more lipschitz-y at acute angles
-// (and less so at 90 degrees). Useful when fudging around too much
-// by MediaMolecule, from Alex Evans' siggraph slides
-float fOpUnionSoft(float a, float b, float r) {
-	float e = max(r - abs(a - b), 0);
-	return min(a, b) - e*e*0.25/r;
-}
-#endif
-
-// produces a cylindical pipe that runs along the intersection.
-// No objects remain, only the pipe. This is not a boolean operator.
-float fOpPipe(float a, float b, float r) {
-	return length(vec2(a, b)) - r;
-}
-
-// first object gets a v-shaped engraving where it intersect the second
-float fOpEngrave(float a, float b, float r) {
-	return max(a, (a + r - abs(b))*sqrt(0.5));
-}
-
-// first object gets a capenter-style groove cut out
-float fOpGroove(float a, float b, float ra, float rb) {
-	return max(a, min(a + ra, rb - abs(b)));
-}
-
-// first object gets a capenter-style tongue attached
-float fOpTongue(float a, float b, float ra, float rb) {
-	return min(a, max(a - ra, abs(b) - rb));
 }

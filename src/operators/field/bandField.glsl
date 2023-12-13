@@ -37,5 +37,8 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 	} else {
 		amt = step(w, q);
 	}
+	if (IS_TRUE(THIS_Reverse)) {
+		amt = 1.0 - amt;
+	}
 	return mix(inVal, outVal, amt);
 }

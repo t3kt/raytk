@@ -24,6 +24,7 @@ opDef: !def
     evaluate: true
     evalOpts: !evalOpts
       excludeFirstRow: true
+  keywords: apply
   displayCategory: Transform
 multiInput: !multiInput
   Minimuminputs: 1

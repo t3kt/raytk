@@ -23,12 +23,7 @@ op:
     name: definition_in
     required: true
     returnTypes:
-    - float
-    - vec4
     - Sdf
-    - Ray
-    - Light
-    - Particle
   name: circularRepeat
   opType: raytk.operators.filter.circularRepeat
   parameters:

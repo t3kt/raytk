@@ -2,4 +2,4 @@ names	source	handling	readOnlyHandling	conversion	enable
 Width Blending Center Repeatsize Repeatshift	param	runtime	macro		1
 Insidevalue[rgba]	param	runtime	macro		op('insideValue_definition').numRows < 2
 Outsidevalue[rgba]	param	runtime	macro		op('insideValue_definition').numRows < 2
-Axis Enableblending Enablerepeat	param	constant			1
+Axis Enableblending Enablerepeat Reverse	param	constant			1
