@@ -1,5 +1,3 @@
-from typing import List, Optional
-
 # noinspection PyUnreachableCode
 if False:
 	# noinspection PyUnresolvedReferences
@@ -25,7 +23,7 @@ class OutputOp:
 	def _opDef(self) -> COMP | None:
 		return self.ownerComp.par.Opdef.eval()
 
-	def _renderTop(self) -> 'Optional[glslmultiTOP]':
+	def _renderTop(self) -> glslmultiTOP | None:
 		return self.ownerComp.par.Rendertop.eval()
 
 	def onInit(self):

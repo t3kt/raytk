@@ -1,5 +1,4 @@
 from pathlib import Path
-from typing import Optional
 from raytkModel import EditorItemGraph
 from raytkUtil import RaytkTags
 import subprocess
@@ -13,7 +12,7 @@ if False:
 	ext.ropEditor = ROPEditor(COMP())
 
 	class _Pars(ParCollection):
-		Selecteditem: 'StrParamT'
+		Selecteditem: StrParamT
 
 	class _COMP(COMP):
 		par: _Pars
@@ -58,17 +57,17 @@ class DatEditorPanel:
 				dat[i, 'label'] = '* ' + dat[i, 'label'].val + ' *'
 
 	@property
-	def currentSourceDat(self) -> 'Optional[DAT]':
+	def currentSourceDat(self) -> DAT | None:
 		graph = self._currentItemGraph
 		return graph and graph.sourceDat
 
 	@property
-	def currentEvalDat(self) -> 'Optional[evaluateDAT]':
+	def currentEvalDat(self) -> evaluateDAT | None:
 		graph = self._currentItemGraph
 		return graph and graph.evalDat
 
 	@property
-	def _currentItemGraph(self) -> 'Optional[EditorItemGraph]':
+	def _currentItemGraph(self) -> EditorItemGraph | None:
 		par = self._currentItemPar
 		if par is None:
 			return
@@ -189,7 +188,7 @@ class DatEditorPanel:
 		finally:
 			ui.undo.endBlock()
 
-	def _externalize(self, itemGraph: 'EditorItemGraph', dat: DAT):
+	def _externalize(self, itemGraph: EditorItemGraph, dat: DAT):
 		info = ext.ropEditor.ROPInfo
 		if not info or not itemGraph or not itemGraph.sourceDat:
 			return
@@ -225,7 +224,7 @@ class DatEditorPanel:
 			graph.sourceDat.par.edit.pulse()
 
 	@staticmethod
-	def _confirmDelete(itemGraph: 'EditorItemGraph'):
+	def _confirmDelete(itemGraph: EditorItemGraph):
 		info = ext.ropEditor.ROPInfo
 		return ui.messageBox(
 			f'Delete {itemGraph.par.label}?',

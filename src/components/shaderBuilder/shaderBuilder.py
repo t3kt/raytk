@@ -211,7 +211,7 @@ class ShaderBuilder:
 					for i, opt in enumerate(const.menuOptions):
 						dat.appendRow([f'{state.ropType}_{const.localName}_{opt}', i])
 
-	def _getLibraryDats(self, onWarning: Callable[[str], None] = None) -> 'List[DAT]':
+	def _getLibraryDats(self, onWarning: Callable[[str], None] = None) -> list[DAT]:
 		requiredLibNames = self.ownerComp.par.Librarynames.eval().strip().split(' ')  # type: list[str]
 		requiredLibNames = [n for n in requiredLibNames if n]
 		defsTable = self._definitionTable()
@@ -433,7 +433,7 @@ class ShaderBuilder:
 		defsTable = self._definitionTable()
 		if defsTable.numRows < 2 or not defsTable[0, 'toolkitVersion']:
 			return
-		toolkitVersions = {}  # type: Dict[str, int]
+		toolkitVersions = {}  # type: dict[str, int]
 		for i in range(1, defsTable.numRows):
 			version = str(defsTable[i, 'toolkitVersion'] or '')
 			if version != '':
@@ -695,7 +695,7 @@ class _Writer:
 	paramProc: '_ParameterProcessor'
 	macroTable: DAT
 	typeDefMacroTable: DAT
-	libraryDats: 'List[DAT]'
+	libraryDats: list[DAT]
 	outputBufferTable: DAT
 	variableTable: DAT
 	referenceTable: DAT
@@ -852,7 +852,7 @@ class _Writer:
 	def _writeTextureDeclarations(self):
 		if not self.textures:
 			return
-		indexByType: 'Dict[str, int]' = {
+		indexByType: 'dict[str, int]' = {
 			'2d': int(self.ownerComp.par.Textureindexoffset),
 			'3d': int(self.ownerComp.par.Texture3dindexoffset),
 			'cube': 0,
@@ -1029,7 +1029,7 @@ class _Writer:
 	def _endBlock(self, name: str):
 		self._writeLine(f'///----END {name}')
 
-	def _writeCodeDat(self, blockName: str, dat: 'Optional[DAT]'):
+	def _writeCodeDat(self, blockName: str, dat: DAT | None):
 		if not dat or not dat.text:
 			return
 		self._startBlock(blockName)
@@ -1075,7 +1075,7 @@ class _ParamTupletSpec:
 		)
 
 	@classmethod
-	def fromTableRows(cls, dat: DAT, handlingTypes: 'list[str]') -> 'List[_ParamTupletSpec]':
+	def fromTableRows(cls, dat: DAT, handlingTypes: list[str]) -> 'List[_ParamTupletSpec]':
 		if not dat or dat.numRows < 2:
 			return []
 		return [

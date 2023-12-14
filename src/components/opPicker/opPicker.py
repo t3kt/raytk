@@ -1,5 +1,5 @@
 from dataclasses import dataclass, field
-from typing import Dict, List, Union, Optional, Tuple
+from typing import Optional
 
 # noinspection PyUnreachableCode
 if False:
@@ -8,27 +8,27 @@ if False:
 	from _typeAliases import *
 
 	class _Par(ParCollection):
-		Thumbsize: 'IntParamT'
-		Thumbroot: 'OPParamT'
+		Thumbsize: IntParamT
+		Thumbroot: OPParamT
 	class _COMP(panelCOMP):
 		par: _Par
 
 	class _UIStatePar(ParCollection):
-		Showalpha: 'BoolParamT'
-		Showbeta: 'BoolParamT'
-		Showdeprecated: 'BoolParamT'
-		Showhelp: 'BoolParamT'
-		Showthumbs: 'BoolParamT'
-		Showstatuschips: 'BoolParamT'
-		Usedisplaycategories: 'BoolParamT'
-		Pinopen: 'BoolParamT'
+		Showalpha: BoolParamT
+		Showbeta: BoolParamT
+		Showdeprecated: BoolParamT
+		Showhelp: BoolParamT
+		Showthumbs: BoolParamT
+		Showstatuschips: BoolParamT
+		Usedisplaycategories: BoolParamT
+		Pinopen: BoolParamT
 
 	ipar.listConfig = ParCollection()
 	ipar.uiState = _UIStatePar()
 	from _stubs.TDCallbacksExt import CallbacksExt
 	ext.callbacks = CallbacksExt(None)
 
-def _configColor(name: str) -> 'Tuple[Par, Par, Par, int]':
+def _configColor(name: str) -> tuple[Par, Par, Par, int]:
 	p = ipar.listConfig
 	return p[name + 'r'], p[name + 'g'], p[name + 'b'], 1
 
@@ -42,7 +42,7 @@ class OpPicker:
 		self.Loaditems()
 
 	@property
-	def _listComp(self) -> 'listCOMP':
+	def _listComp(self) -> listCOMP:
 		return self.ownerComp.op('list')
 
 	@property
@@ -60,9 +60,9 @@ class OpPicker:
 
 	@staticmethod
 	def SetFilterToggles(
-			alpha: 'Optional[bool]' = None,
-			beta: 'Optional[bool]' = None,
-			deprecated: 'Optional[bool]' = None,
+			alpha: bool | None = None,
+			beta: bool | None = None,
+			deprecated: bool | None = None,
 	):
 		if alpha is not None:
 			ipar.uiState.Showalpha = alpha
@@ -73,8 +73,8 @@ class OpPicker:
 
 	@staticmethod
 	def SetViewOptions(
-			statusChips: 'Optional[bool]' = None,
-			displayCategories: 'Optional[bool]' = None,
+			statusChips: bool | None = None,
+			displayCategories: bool | None = None,
 	):
 		if statusChips is not None:
 			ipar.uiState.Showstatuschips = statusChips
@@ -131,16 +131,16 @@ class OpPicker:
 		print(self.ownerComp, msg)
 		ui.status = msg
 
-	def onInitCell(self, row: int, col: int, attribs: 'ListAttributes'):
+	def onInitCell(self, row: int, col: int, attribs: ListAttributes):
 		self.impl.initCell(row, col, attribs)
 
-	def onInitRow(self, row: int, attribs: 'ListAttributes'):
+	def onInitRow(self, row: int, attribs: ListAttributes):
 		self.impl.initRow(row, attribs)
 
-	def onInitCol(self, col: int, attribs: 'ListAttributes'):
+	def onInitCol(self, col: int, attribs: ListAttributes):
 		self.impl.initCol(col, attribs)
 
-	def onInitTable(self, attribs: 'ListAttributes'):
+	def onInitTable(self, attribs: ListAttributes):
 		self.impl.initTable(attribs)
 
 	def onRollover(
@@ -173,11 +173,11 @@ class OpPicker:
 
 @dataclass
 class _LayoutSettings:
-	toggleCol: Optional[int]
-	labelCol: Optional[int]
-	statusCol: Optional[int]
-	thumbCol: Optional[int]
-	chipCol: Optional[int]
+	toggleCol: int | None
+	labelCol: int | None
+	statusCol: int | None
+	thumbCol: int | None
+	chipCol: int | None
 
 	numCols: int
 
@@ -215,7 +215,7 @@ class PickerItem:
 
 @dataclass
 class PickerCategoryItem(PickerItem):
-	ops: List['PickerOpItem'] = field(default_factory=list)
+	ops: list['PickerOpItem'] = field(default_factory=list)
 	collapsed = False
 	isOP = False
 	isCategory = True
@@ -254,7 +254,7 @@ class PickerOpItem(PickerItem):
 				return False
 		return True
 
-_AnyItemT = Union[PickerCategoryItem, PickerOpItem]
+_AnyItemT = PickerCategoryItem | PickerOpItem
 
 @dataclass
 class _Filter:
@@ -265,7 +265,7 @@ class _Filter:
 
 def _loadItemCategories(opTable: DAT, opHelpTable: DAT, useDisplayCategories=False):
 	categories = []
-	categoriesByName = {}  # type: Dict[str, PickerCategoryItem]
+	categoriesByName = {}  # type: dict[str, PickerCategoryItem]
 
 	for row in range(1, opTable.numRows):
 		shortName = str(opTable[row, 'name'])
@@ -313,9 +313,9 @@ def _loadItemCategories(opTable: DAT, opHelpTable: DAT, useDisplayCategories=Fal
 	return categories
 
 class _ItemLibrary:
-	allItems: List[_AnyItemT]
-	categories: List[PickerCategoryItem]
-	filteredItems: Optional[List[_AnyItemT]]
+	allItems: list[_AnyItemT]
+	categories: list[PickerCategoryItem]
+	filteredItems: list[_AnyItemT] | None
 
 	def __init__(self):
 		self.allItems = []
@@ -331,12 +331,12 @@ class _ItemLibrary:
 		return len(self._currentItemList)
 
 	@property
-	def firstOpItem(self) -> 'Optional[PickerOpItem]':
+	def firstOpItem(self) -> PickerOpItem | None:
 		for item in self._currentItemList:
 			if item.isOP:
 				return item
 
-	def opItemForShortcut(self, shortcut: str) -> 'Optional[PickerOpItem]':
+	def opItemForShortcut(self, shortcut: str) -> PickerOpItem | None:
 		for item in self._currentItemList:
 			if item.isOP and shortcut in item.shortcuts:
 				return item
@@ -347,7 +347,7 @@ class _ItemLibrary:
 		self.categories = _loadItemCategories(opTable, opHelpTable, useDisplayCategories)
 		self.allItems = self._buildFlatList(None)
 
-	def _buildFlatList(self, filt: 'Optional[_Filter]') -> 'List[_AnyItemT]':
+	def _buildFlatList(self, filt: 'Optional[_Filter]') -> list[_AnyItemT]:
 		flatItems = []
 		for category in self.categories:
 			if filt is None:
@@ -364,13 +364,13 @@ class _ItemLibrary:
 					flatItems += matchedOps
 		return flatItems
 
-	def itemForRow(self, row: int) -> 'Optional[_AnyItemT]':
+	def itemForRow(self, row: int) -> _AnyItemT | None:
 		items = self._currentItemList
 		if not items or row < 0 or row >= len(items):
 			return None
 		return items[row]
 
-	def rowForItem(self, item: 'Optional[_AnyItemT]') -> int:
+	def rowForItem(self, item: _AnyItemT | None) -> int:
 		if not item:
 			return -1
 		items = self._currentItemList
@@ -401,13 +401,13 @@ class _PickerImpl:
 		self.selItem = tdu.Dependency()  # value type _AnyItemT
 		self.filterText = ''
 
-	def getSelectedItem(self) -> 'Optional[_AnyItemT]':
+	def getSelectedItem(self) -> _AnyItemT | None:
 		return self.selItem.val
 
-	def selectFilterShortcutItem(self) -> 'Optional[_AnyItemT]':
+	def selectFilterShortcutItem(self) -> _AnyItemT | None:
 		raise NotImplementedError()
 
-	def selectItem(self, item: 'Optional[_AnyItemT]', scroll=False):
+	def selectItem(self, item: _AnyItemT | None, scroll=False):
 		oldItem = self.selItem.val  # type: Optional[_AnyItemT]
 		if oldItem == item:
 			return
@@ -419,7 +419,7 @@ class _PickerImpl:
 			if scroll:
 				self.scrollToItem(item)
 
-	def selectFirstOpItem(self) -> 'Optional[_AnyItemT]':
+	def selectFirstOpItem(self) -> _AnyItemT | None:
 		raise NotImplementedError()
 
 	def focusFilterField(self):
@@ -488,36 +488,36 @@ class _PickerImpl:
 			layout.statusColWidth = thumbSize
 		return layout
 
-	def setItemHighlight(self, item: 'Optional[_AnyItemT]', selected: bool):
+	def setItemHighlight(self, item: _AnyItemT | None, selected: bool):
 		raise NotImplementedError()
 
 	def offsetSelection(self, x: int, y: int):
 		raise NotImplementedError()
 
-	def scrollToItem(self, item: 'Optional[_AnyItemT]'):
+	def scrollToItem(self, item: _AnyItemT | None):
 		raise NotImplementedError()
 
-	def getItemForCell(self, row: int, col: int) -> 'Optional[_AnyItemT]':
+	def getItemForCell(self, row: int, col: int) -> _AnyItemT | None:
 		raise NotImplementedError()
 
 	@staticmethod
-	def initTable(attribs: 'ListAttributes'):
+	def initTable(attribs: ListAttributes):
 		attribs.bgColor = _configColor('Bgcolor')
 		attribs.textColor = _configColor('Textcolor')
 		attribs.fontFace = 'Roboto'
 		attribs.textJustify = JustifyType.CENTERLEFT
 
-	def initCol(self, col: int, attribs: 'ListAttributes'):
+	def initCol(self, col: int, attribs: ListAttributes):
 		raise NotImplementedError()
 
-	def initRow(self, row: int, attribs: 'ListAttributes'):
+	def initRow(self, row: int, attribs: ListAttributes):
 		raise NotImplementedError()
 
-	def initCell(self, row: int, col: int, attribs: 'ListAttributes'):
+	def initCell(self, row: int, col: int, attribs: ListAttributes):
 		raise NotImplementedError()
 
 	@staticmethod
-	def _applyStatusTextColor(attribs: 'ListAttributes', item: '_AnyItemT'):
+	def _applyStatusTextColor(attribs: ListAttributes, item: '_AnyItemT'):
 		if item.isCategory:
 			return
 		if item.isAlpha:
@@ -527,7 +527,7 @@ class _PickerImpl:
 		elif item.isDeprecated:
 			attribs.textColor = _configColor('Deprecatedcolor')
 
-	def _initStatusIconCell(self, attribs: 'ListAttributes', item: '_AnyItemT'):
+	def _initStatusIconCell(self, attribs: ListAttributes, item: '_AnyItemT'):
 		if item.isAlpha:
 			attribs.top = self.ownerComp.op('alphaIcon')
 			attribs.help = 'Alpha (experimental)'
@@ -538,19 +538,19 @@ class _PickerImpl:
 			attribs.top = self.ownerComp.op('deprecatedIcon')
 			attribs.help = 'Deprecated'
 
-	def _initToggleCell(self, attribs: 'ListAttributes', item: 'PickerCategoryItem'):
+	def _initToggleCell(self, attribs: ListAttributes, item: 'PickerCategoryItem'):
 		if item.collapsed:
 			attribs.top = self.ownerComp.op('expandIcon')
 		else:
 			attribs.top = self.ownerComp.op('collapseIcon')
 		attribs.bgColor = _configColor('Buttonbgcolor')
 
-	def _initThumbCell(self, attribs: 'ListAttributes', item: 'PickerOpItem'):
+	def _initThumbCell(self, attribs: ListAttributes, item: PickerOpItem):
 		thumbRoot = self.ownerComp.par.Thumbroot.eval()
 		if thumbRoot and item.thumbPath:
 			attribs.top = thumbRoot.op(item.thumbPath)
 
-	def _initChipCell(self, attribs: 'ListAttributes', item: 'PickerOpItem', layout: '_LayoutSettings'):
+	def _initChipCell(self, attribs: ListAttributes, item: PickerOpItem, layout: '_LayoutSettings'):
 		if not item.chip:
 			attribs.text = ''
 		else:
@@ -608,7 +608,7 @@ class _DefaultPickerImpl(_PickerImpl):
 				self.setItemHighlight(item, True)
 		self.refreshList()
 
-	def selectFilterShortcutItem(self) -> 'Optional[_AnyItemT]':
+	def selectFilterShortcutItem(self) -> _AnyItemT | None:
 		shortcut = self.filterText
 		if not shortcut:
 			return
@@ -618,14 +618,14 @@ class _DefaultPickerImpl(_PickerImpl):
 		self.selectItem(item)
 		return item
 
-	def selectFirstOpItem(self) -> 'Optional[_AnyItemT]':
+	def selectFirstOpItem(self) -> _AnyItemT | None:
 		item = self.itemLibrary.firstOpItem
 		if not item:
 			return
 		self.selectItem(item)
 		return item
 
-	def setItemHighlight(self, item: 'Optional[_AnyItemT]', selected: bool):
+	def setItemHighlight(self, item: _AnyItemT | None, selected: bool):
 		row = self.itemLibrary.rowForItem(item)
 		if row < 0:
 			return
@@ -651,17 +651,17 @@ class _DefaultPickerImpl(_PickerImpl):
 		if cellAttribs:
 			cellAttribs.rightBorderOutColor = sideColor
 
-	def scrollToItem(self, item: 'Optional[_AnyItemT]'):
+	def scrollToItem(self, item: _AnyItemT | None):
 		row = self.itemLibrary.rowForItem(item)
 		if row >= 0:
 			self.listComp.scroll(row, 0)
 
-	def getItemForCell(self, row: int, col: int) -> 'Optional[_AnyItemT]':
+	def getItemForCell(self, row: int, col: int) -> _AnyItemT | None:
 		if row < 0:
 			return None
 		return self.itemLibrary.itemForRow(row)
 
-	def initCol(self, col: int, attribs: 'ListAttributes'):
+	def initCol(self, col: int, attribs: ListAttributes):
 		if col is None:
 			return
 		layout = self.getLayout()
@@ -676,7 +676,7 @@ class _DefaultPickerImpl(_PickerImpl):
 		elif col == layout.chipCol:
 			attribs.colWidth = layout.chipColWidth
 
-	def initRow(self, row: int, attribs: 'ListAttributes'):
+	def initRow(self, row: int, attribs: ListAttributes):
 		item = self.itemLibrary.itemForRow(row)
 		if not item:
 			return
@@ -695,7 +695,7 @@ class _DefaultPickerImpl(_PickerImpl):
 			attribs.fontBold = layout.opFontBold
 		self._applyStatusTextColor(attribs, item)
 
-	def initCell(self, row: int, col: int, attribs: 'ListAttributes'):
+	def initCell(self, row: int, col: int, attribs: ListAttributes):
 		item = self.getItemForCell(row=row, col=col)
 		if not item:
 			return
@@ -724,10 +724,10 @@ class _DefaultPickerImpl(_PickerImpl):
 @dataclass
 class _CategoryColumn:
 	category: PickerCategoryItem
-	allOps: List[PickerOpItem]
-	filteredOps: Optional[List[PickerOpItem]] = None
+	allOps: list[PickerOpItem]
+	filteredOps: list[PickerOpItem] | None = None
 
-	def applyFilter(self, filt: Optional[_Filter]) -> bool:
+	def applyFilter(self, filt: _Filter | None) -> bool:
 		if not filt:
 			self.filteredOps = None
 			return True
@@ -769,9 +769,9 @@ class _CategoryColumn:
 
 
 class _CategoryColumnLibrary:
-	allItems: List[_AnyItemT]
-	allColumns: List[_CategoryColumn]
-	filteredColumns: Optional[List[_CategoryColumn]]
+	allItems: list[_AnyItemT]
+	allColumns: list[_CategoryColumn]
+	filteredColumns: list[_CategoryColumn] | None
 
 	def __init__(self):
 		self.allItems = []
@@ -792,7 +792,7 @@ class _CategoryColumnLibrary:
 	def currentColList(self):
 		return self.filteredColumns if self.filteredColumns is not None else self.allColumns
 
-	def getCurrentSize(self) -> Tuple[int, int]:
+	def getCurrentSize(self) -> tuple[int, int]:
 		cols = self.currentColList
 		if not cols:
 			return 1, 1
@@ -847,7 +847,7 @@ class _CategoryColumnPickerImpl(_PickerImpl):
 		layout.numCols -= 1
 		return layout
 
-	def selectFirstOpItem(self) -> 'Optional[_AnyItemT]':
+	def selectFirstOpItem(self) -> _AnyItemT | None:
 		for col in self.itemLibrary.currentColList:
 			colOps = col.currentOpList
 			if colOps:
@@ -855,7 +855,7 @@ class _CategoryColumnPickerImpl(_PickerImpl):
 				self.selectItem(item)
 				return item
 
-	def selectFilterShortcutItem(self) -> 'Optional[_AnyItemT]':
+	def selectFilterShortcutItem(self) -> _AnyItemT | None:
 		shortcut = self.filterText
 		if not shortcut:
 			return
@@ -889,7 +889,7 @@ class _CategoryColumnPickerImpl(_PickerImpl):
 			pass
 		pass
 
-	def _getCellAttribsForItem(self, item: 'Optional[_AnyItemT]') -> 'List[ListAttributes]':
+	def _getCellAttribsForItem(self, item: _AnyItemT | None) -> list[ListAttributes]:
 		row, col = self.itemLibrary.getPosForItem(item)
 		if row is None:
 			return []
@@ -898,7 +898,7 @@ class _CategoryColumnPickerImpl(_PickerImpl):
 			for i in range(self.getLayout().numCols)
 		]
 
-	def setItemHighlight(self, item: 'Optional[_AnyItemT]', selected: bool):
+	def setItemHighlight(self, item: _AnyItemT | None, selected: bool):
 		cellAttribs = self._getCellAttribsForItem(item)
 		if not cellAttribs:
 			return
@@ -927,13 +927,13 @@ class _CategoryColumnPickerImpl(_PickerImpl):
 		# 	pass
 		raise NotImplementedError()
 
-	def scrollToItem(self, item: 'Optional[_AnyItemT]'):
+	def scrollToItem(self, item: _AnyItemT | None):
 		row, col = self.itemLibrary.getPosForItem(item)
 		if row is None:
 			return
 		self.listComp.scroll(row, col * self.getLayout().numCols)
 
-	def getItemForCell(self, row: int, col: int) -> 'Optional[_AnyItemT]':
+	def getItemForCell(self, row: int, col: int) -> _AnyItemT | None:
 		if row < 0 or col < 0:
 			return None
 		layout = self.getLayout()
@@ -942,7 +942,7 @@ class _CategoryColumnPickerImpl(_PickerImpl):
 			col=int(col / layout.numCols)
 		)
 
-	def initCol(self, col: int, attribs: 'ListAttributes'):
+	def initCol(self, col: int, attribs: ListAttributes):
 		if col is None:
 			return
 		layout = self.getLayout()
@@ -955,7 +955,7 @@ class _CategoryColumnPickerImpl(_PickerImpl):
 		elif col == layout.thumbCol:
 			attribs.colWidth = layout.thumbColWidth
 
-	def initRow(self, row: int, attribs: 'ListAttributes'):
+	def initRow(self, row: int, attribs: ListAttributes):
 		layout = self.getLayout()
 		if row == 0:
 			attribs.rowHeight = layout.catRowHeight
@@ -969,7 +969,7 @@ class _CategoryColumnPickerImpl(_PickerImpl):
 			attribs.fontSizeX = layout.opFontSize
 			attribs.fontBold = layout.opFontBold
 
-	def initCell(self, row: int, col: int, attribs: 'ListAttributes'):
+	def initCell(self, row: int, col: int, attribs: ListAttributes):
 		layout = self.getLayout()
 		colPart = col % layout.numCols
 		colIndex = int(col / layout.numCols)

@@ -5,7 +5,7 @@ if False:
 	# noinspection PyUnresolvedReferences
 	from _stubs import *
 	import _stubs.TDJSON as TDJSON
-	from typing import Any, Dict, List, Optional, Set, Type
+	from typing import Any
 
 # noinspection PyRedeclaration
 TDJSON = op.TDModules.mod.TDJSON
@@ -156,20 +156,20 @@ class CustomOp:
 						names.append(partName)
 		dat.appendRow([' '.join(names)])
 
-	def _allCodeBlocks(self) -> 'list[str]':
+	def _allCodeBlocks(self) -> list[str]:
 		return [
 			dat.text
 			for dat in self.codeDats()
 		]
 
-	def codeDats(self) -> 'List[DAT]':
+	def codeDats(self) -> list[DAT]:
 		return [
 			par.eval()
 			for par in self.host().pars('Opglobals', 'Initcode', 'Function', 'Materialcode')
 			if par.eval()
 		]
 
-	def _allReferencedParamNames(self) -> 'Set[str]':
+	def _allReferencedParamNames(self) -> set[str]:
 		return {
 			name
 			for code in self._allCodeBlocks()
@@ -182,13 +182,13 @@ class CustomOp:
 			specs.update(_extractParamSpecs(code))
 		return specs
 
-	def _hostParamTuplets(self) -> 'List[ParTupletT]':
+	def _hostParamTuplets(self) -> 'list[ParTupletT]':
 		paramsOp = self.paramsOp()
 		return paramsOp.customTuplets if paramsOp else []
 
 	def _createDat(
-			self, opType: 'Type[DAT]',
-			template: 'Optional[DAT]', nameSuffix: str,
+			self, opType: 'type[DAT]',
+			template: DAT | None, nameSuffix: str,
 			offsetX: int, offsetY: int,
 			hostParName: str
 	):
@@ -235,7 +235,7 @@ _paramPattern = re.compile(r'\bTHIS_([A-Z][a-z0-9]*)\b')
 # // @Radius {"default":2.1, "label":"Thing Radius"}
 _paramSpecPattern = re.compile(r'@([A-Z][a-z0-9]*)\s*({.*})')
 
-def _extractParamSpecs(code: str) -> 'Dict[str, Dict[str, Any]]':
+def _extractParamSpecs(code: str) -> 'dict[str, dict[str, Any]]':
 	if not code:
 		return {}
 	matches = _paramSpecPattern.findall(code)

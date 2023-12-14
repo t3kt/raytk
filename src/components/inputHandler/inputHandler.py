@@ -3,7 +3,6 @@ if False:
 	# noinspection PyUnresolvedReferences
 	from _stubs import *
 	from _typeAliases import *
-	from typing import List, Optional, Union
 
 	class _HandlerPar:
 		Hostop: OPParamT
@@ -22,12 +21,12 @@ def shouldBypass() -> bool:
 		return False
 	return not opDef.par.Enable and not opDef.par['Useruntimebypass']
 
-def _isValidDefinitionDat(o: 'Optional[Union[OP, DAT]]'):
+def _isValidDefinitionDat(o: OP | DAT | None):
 	if not o or not o.isDAT:
 		return False
 	return o and o.isDAT and o.isTable and o.numRows > 0 and o[0, 0] == 'name'
 
-def resolveSourceParDefinition(errorTable: 'Optional[DAT]' = None) -> 'Optional[DAT]':
+def resolveSourceParDefinition(errorTable: DAT | None = None) -> DAT | None:
 	p = _parentPar().Source
 	if p.bindMaster is not None:
 		p = p.bindMaster
@@ -54,7 +53,7 @@ def buildValidationErrors(dat: DAT):
 	if not hasattr(parent, 'raytk'):
 		resolveSourceParDefinition(dat)
 
-def _restrictExpandedTypes(expandedTypes: str, supportedTypes: 'list[str]') -> str:
+def _restrictExpandedTypes(expandedTypes: str, supportedTypes: list[str]) -> str:
 	return ' '.join([t for t in expandedTypes.split(' ') if t in supportedTypes])
 
 def processDefinitions(dat: DAT, inputDefs: DAT, supportedTypes: DAT, config: DAT):

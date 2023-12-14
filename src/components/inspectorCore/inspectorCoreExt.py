@@ -1,6 +1,5 @@
-from typing import Optional, Union
 from raytkUtil import InspectorTargetTypes, VisualizerTypes, ReturnTypes, CoordTypes, ContextTypes
-from raytkUtil import isROP, isROPDef, ROPInfo, navigateTo
+from raytkUtil import ROPInfo, navigateTo
 import re
 
 # noinspection PyUnreachableCode
@@ -10,18 +9,18 @@ if False:
 	from _typeAliases import *
 
 	class _state(ParCollection):
-		Hastarget: 'BoolParamT'
-		Hasownviewer: 'BoolParamT'
-		Targettype: 'StrParamT'
-		Rawtarget: 'OPParamT'
-		Definitiontable: 'DatParamT'
-		Targetcomp: 'CompParamT'
-		Outputcomp: 'CompParamT'
-		Shaderbuilder: 'CompParamT'
-		Returntype: 'StrParamT'
-		Coordtype: 'StrParamT'
-		Contexttype: 'StrParamT'
-		Visualizertype: 'StrParamT'
+		Hastarget: BoolParamT
+		Hasownviewer: BoolParamT
+		Targettype: StrParamT
+		Rawtarget: OPParamT
+		Definitiontable: DatParamT
+		Targetcomp: CompParamT
+		Outputcomp: CompParamT
+		Shaderbuilder: CompParamT
+		Returntype: StrParamT
+		Coordtype: StrParamT
+		Contexttype: StrParamT
+		Visualizertype: StrParamT
 
 def updateStateMenus():
 	p = parent().par.Targettype  # type: Par
@@ -121,5 +120,5 @@ class InspectorCore:
 				])
 
 
-def _pathOrEmpty(o: Optional['OP']):
+def _pathOrEmpty(o: OP | None):
 	return o.path if o else ''

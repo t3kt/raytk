@@ -2,7 +2,6 @@
 if False:
 	# noinspection PyUnresolvedReferences
 	from _stubs import *
-	from typing import List
 
 def onSetupParameters(scriptOp):
 	page = scriptOp.appendCustomPage('Custom')
@@ -16,7 +15,7 @@ def onCook(dat: DAT):
 		'paramGroupTable', 'macroTable',
 		'placeholder1', 'code1', 'placeholder2', 'code2', 'placeholder3', 'code3', 'placeholder4', 'code4',
 	])
-	elements = dat.par.Elements.evalOPs()  # type: List[OP]
+	elements = dat.par.Elements.evalOPs()  # type: list[OP]
 	for element in elements:
 		elementRoot = op(element.par['Elementroot'] or element.parent())
 		dat.appendRow([

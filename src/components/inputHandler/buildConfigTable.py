@@ -3,7 +3,6 @@ if False:
 	# noinspection PyUnresolvedReferences
 	from _stubs import *
 	from _typeAliases import *
-	from typing import Optional
 	from inputHandler import _HandlerPar
 
 	class _HandlerParFull(_HandlerPar):
@@ -55,7 +54,7 @@ def _parentPar() -> '_HandlerParFull':
 	# noinspection PyTypeChecker
 	return parent().par
 
-def _getAttachedInDAT() -> 'Optional[inDAT]':
+def _getAttachedInDAT() -> inDAT | None:
 	host = _parentPar().Hostop.eval()
 	if not host:
 		return
@@ -84,7 +83,7 @@ def _parseHandlerName():
 
 def _determineAutoIndex(
 		host: COMP | None,
-		ownIn: 'Optional[inDAT]',
+		ownIn: inDAT | None,
 		baseName: str | None):
 	if not host:
 		return 0

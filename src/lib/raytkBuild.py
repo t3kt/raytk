@@ -399,7 +399,7 @@ permalink: /reference/operators/
 		with outFile.open('w') as f:
 			f.write(text)
 
-def _extractSummary(dat: 'Optional[DAT]'):
+def _extractSummary(dat: DAT | None):
 	if not dat or not dat.text:
 		return ''
 	for block in dat.text.split('\n\n'):

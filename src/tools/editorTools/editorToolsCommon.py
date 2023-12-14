@@ -15,7 +15,7 @@ class ActionContext:
 	pane: NetworkEditor
 	parentComp: COMP
 	selectedOps: List['OP']
-	primaryOp: Optional['OP']
+	primaryOp: OP | None
 
 	@property
 	def primaryComp(self) -> COMP | None:
@@ -178,10 +178,10 @@ def _isRopOrComp(o: OP):
 	return isROP(o) or isRComp(o)
 
 class ROPState:
-	rop: Optional['OP']
+	rop: OP | None
 	info: ROPInfo
 
-	def __init__(self, rop: Optional['OP']):
+	def __init__(self, rop: OP | None):
 		self.rop = rop
 		self.info = ROPInfo(rop)
 
