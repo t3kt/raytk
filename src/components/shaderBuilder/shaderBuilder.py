@@ -153,11 +153,20 @@ class ShaderBuilder:
 		dat.appendCol(['before'] + origNames)
 		dat.appendCol(['after'] + simpleNames)
 
-	def _createParamProcessor(self) -> '_SingleArrayParameterProcessor':
+	def _createParamProcessor(self) -> '_ParameterProcessor':
+		configPar = self.configPar() if self.configValid() else None
+		if configPar and configPar['Parammode'] == 'separateuniformarrays':
+			return _SeparateArrayParameterProcessor(
+				self._parameterDetailTable(),
+				self._allParamVals(),
+				configPar,
+				self._parseOpStates(),
+			)
+			pass
 		return _SingleArrayParameterProcessor(
 			self._parameterDetailTable(),
 			self._allParamVals(),
-			self.configPar() if self.configValid() else None,
+			configPar,
 			self._parseOpStates(),
 		)
 
@@ -1303,7 +1312,7 @@ class _SeparateArrayParameterProcessor(_ParameterProcessor):
 				if size == 1:
 					name = paramTuplet.parts[0]
 					self.paramExprs[name] = _ParamExpr(
-						f'{opTupletSpecs.uniformName}[{paramTuplet.sourceVectorIndex}]',
+						f'{opTupletSpecs.uniformName}[{paramTuplet.sourceVectorIndex}].x',
 						'float')
 				else:
 					parType = f'vec{size}'
@@ -1337,6 +1346,7 @@ class _SeparateArrayParameterProcessor(_ParameterProcessor):
 			opTupletSpecs.arrayLength = 1 + max(pt.sourceVectorIndex for pt in opTupletSpecs.tuplets)
 
 	def paramUniforms(self) -> list[_UniformSpec]:
+		self._initParamExprs()
 		uniforms = []
 		for opState in self.opStates:
 			opTupleSpecs = self.opRuntimeTupletsByName.get(opState.name)
