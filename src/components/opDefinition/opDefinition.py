@@ -315,6 +315,8 @@ def buildParamDetailTable(dat: DAT, paramSpecTable: DAT):
 		'source', 'size',
 		'part1', 'part2', 'part3', 'part4',
 		'status', 'conversion', 'localNames', 'handling',
+		'ownerName',
+		'sourceVectorPath', 'sourceVectorIndex',
 	])
 	namesByTupletName = {}  # type: dict[str, list[str]]
 	for i in range(1, paramSpecTable.numRows):
@@ -326,6 +328,9 @@ def buildParamDetailTable(dat: DAT, paramSpecTable: DAT):
 			namesByTupletName[tupletName] = ['', '', '', '']
 		namesByTupletName[tupletName][vecIndex] = paramSpecTable[i, 'localName'].val
 
+	sourceVectorPath = parent().path + '/param_vector_vals'
+	sourceVectorIndex = 0
+	hostName = parentPar().Name.eval()
 	for tupletName, parts in namesByTupletName.items():
 		size = 0
 		for part in parts:
@@ -333,6 +338,7 @@ def buildParamDetailTable(dat: DAT, paramSpecTable: DAT):
 				size += 1
 			else:
 				break
+		handling = paramSpecTable[parts[0], 'handling']
 		dat.appendRow([
 			paramSpecTable[parts[0], 'tupletGlobalName'],
 			paramSpecTable[parts[0], 'tupletName'],
@@ -345,9 +351,13 @@ def buildParamDetailTable(dat: DAT, paramSpecTable: DAT):
 			paramSpecTable[parts[0], 'status'],
 			paramSpecTable[parts[0], 'conversion'],
 			' '.join(p for p in parts if p),
-			paramSpecTable[parts[0], 'handling'],
+			handling,
+			hostName,
+			sourceVectorPath if handling == 'runtime' else '',
+			sourceVectorIndex if handling == 'runtime' else '',
 		])
-
+		if handling == 'runtime':
+			sourceVectorIndex += 1
 
 def _canBeReadOnlyTuplet(pars: list[Par]):
 	return all(p.readOnly and p.mode == ParMode.CONSTANT for p in pars)
