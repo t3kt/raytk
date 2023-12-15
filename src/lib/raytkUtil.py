@@ -379,7 +379,7 @@ class ROPInfo:
 
 	@property
 	def shortcuts(self) -> set[str]:
-		return set(tdu.split(self.opDefPar.Shortcuts)) if self else set()
+		return set(tdu.split(self.opDefPar['Shortcuts'] or '')) if self else set()
 
 	@shortcuts.setter
 	def shortcuts(self, shortcuts: set[str] | None):
