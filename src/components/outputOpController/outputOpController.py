@@ -28,7 +28,10 @@ class OutputOp:
 
 	def onInit(self):
 		self.resetInfoParams()
-		self.updateConstantParams()
+		self.updateParamSequences()
+
+	def onUniformsChange(self):
+		self.updateParamSequences()
 
 	def resetInfoParams(self):
 		host = self._host()
@@ -38,17 +41,23 @@ class OutputOp:
 			if par.page == 'Info' and not par.readOnly and not par:
 				par.val = par.default
 
-	def updateConstantParams(self):
+	def updateParamSequences(self):
 		renderTop = self._renderTop()
 		if not renderTop:
 			return
 		table = self.ownerComp.op('uniforms')
 		if table.numRows < 2:
 			return
-		count = 0
+		constCount = 0
+		arrayCount = 0
 		for i in range(1, table.numRows):
 			if table[i, 'uniformType'] == 'constant':
-				count += 1
+				constCount += 1
+			elif table[i, 'uniformType'] == 'uniformarray':
+				arrayCount += 1
 		sequence = renderTop.par.const0name.sequence  # type: Sequence
-		if count > sequence.numBlocks:
-			sequence.numBlocks = count
+		if constCount > sequence.numBlocks:
+			sequence.numBlocks = constCount
+		sequence = renderTop.par.chop0uniname.sequence
+		if arrayCount > sequence.numBlocks:
+			sequence.numBlocks = arrayCount

@@ -8,4 +8,4 @@ if False:
 	ext.outputOp = OutputOp(COMP())
 
 def onTableChange(dat):
-	ext.outputOp.updateConstantParams()
+	ext.outputOp.onUniformsChange()
