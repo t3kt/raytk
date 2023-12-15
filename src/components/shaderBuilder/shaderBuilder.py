@@ -153,8 +153,8 @@ class ShaderBuilder:
 		dat.appendCol(['before'] + origNames)
 		dat.appendCol(['after'] + simpleNames)
 
-	def _createParamProcessor(self) -> '_ParameterProcessor':
-		return _ParameterProcessor(
+	def _createParamProcessor(self) -> '_SingleArrayParameterProcessor':
+		return _SingleArrayParameterProcessor(
 			self._parameterDetailTable(),
 			self._allParamVals(),
 			self.configPar() if self.configValid() else None,
@@ -692,7 +692,7 @@ class _Writer:
 	sb: 'ShaderBuilder'
 	opStates: 'List[RopState]'
 	defTable: DAT
-	paramProc: '_ParameterProcessor'
+	paramProc: '_SingleArrayParameterProcessor'
 	macroTable: DAT
 	typeDefMacroTable: DAT
 	libraryDats: list[DAT]
@@ -1051,9 +1051,13 @@ class _Writer:
 class _ParamTupletSpec:
 	tuplet: str
 	parts: Tuple[str]
+	ownerName: str
 	isReadOnly: bool
 	isSpecial: bool = False
 	isSpecializationConstant: bool = False
+	isRuntime: bool = True
+	sourceVectorPath: str | None = None
+	sourceVectorIndex: int | None = None
 
 	def isPresentInChop(self, chop: 'CHOP'):
 		return any([chop[part] is not None for part in self.parts])
@@ -1066,12 +1070,25 @@ class _ParamTupletSpec:
 			if not cell.val:
 				break
 			parts.append(cell.val)
+		handling = dat[row, 'handling']
+		vecPath = dat[row, 'sourceVectorPath']
+		vecIndex = dat[row, 'sourceVectorIndex']
+		if handling == 'runtime' and vecPath != '' and vecIndex != '':
+			vecPath = str(vecPath)
+			vecIndex = int(vecIndex)
+		else:
+			vecPath = None
+			vecIndex = None
 		return cls(
 			tuplet=str(dat[row, 'tuplet']),
 			parts=tuple(parts),
+			ownerName=str(dat[row, 'ownerName']),
 			isReadOnly='readOnly' in str(dat[row, 'status'] or ''),
 			isSpecial=dat[row, 'source'] == 'special',
-			isSpecializationConstant=dat[row, 'handling'] == 'constant',
+			isSpecializationConstant=handling == 'constant',
+			isRuntime=handling == 'runtime',
+			sourceVectorPath=vecPath,
+			sourceVectorIndex=vecIndex,
 		)
 
 	@classmethod
@@ -1132,9 +1149,9 @@ class _ParameterProcessor:
 	):
 		self.paramDetailTable = paramDetailTable
 		self.hasParams = paramDetailTable.numRows > 1
+		self.paramVals = paramVals
 		self.useConstantReadOnly = configPar.Inlinereadonlyparameters if configPar else False
 		self.inlineAliases = configPar.Inlineparameteraliases if configPar else False
-		self.paramVals = paramVals
 		self.aliasMode = str(configPar['Paramaliasmode'] or 'macro') if configPar else 'macro'
 		self.paramExprs = None  # type: Optional[Dict[str, _ParamExpr]]
 		self.opStates = opStates
@@ -1144,6 +1161,21 @@ class _ParameterProcessor:
 			spec.declaration()
 			for spec in self.paramUniforms()
 		]
+
+	def _initParamExprs(self):
+		if self.paramExprs is not None:
+			return
+		paramTuplets = _ParamTupletSpec.fromTableRows(
+			self.paramDetailTable,
+			handlingTypes=['runtime', 'macro'])
+		self.paramExprs = {}
+		self._addParamExprs(paramTuplets)
+
+	def _shouldUseConstant(self, paramTuplet: _ParamTupletSpec):
+		return self.useConstantReadOnly and paramTuplet.isReadOnly and paramTuplet.isPresentInChop(self.paramVals)
+
+	def _addParamExprs(self, paramTuplets: list[_ParamTupletSpec]):
+		raise NotImplementedError()
 
 	def paramAliases(self) -> list[str]:
 		if not self.hasParams:
@@ -1166,56 +1198,19 @@ class _ParameterProcessor:
 		if not self.inlineAliases or not code:
 			return code
 		self._initParamExprs()
+
 		def replace(m: 're.Match'):
 			paramExpr = self.paramExprs.get(m.group(0))
 			return paramExpr.expr if paramExpr else m.group(0)
+
 		code = _paramAliasPattern.sub(replace, code)
 		return code
 
-	def _initParamExprs(self):
-		if self.paramExprs is not None:
-			return
-		self.paramExprs = {}
-		suffixes = 'xyzw'
-		paramTuplets = _ParamTupletSpec.fromTableRows(
-			self.paramDetailTable,
-			handlingTypes=['runtime', 'macro'])
-		for i, paramTuplet in enumerate(paramTuplets):
-			useConstant = self.useConstantReadOnly and paramTuplet.isReadOnly and paramTuplet.isPresentInChop(self.paramVals)
-			size = len(paramTuplet.parts)
-			paramRef = f'vecParams[{i}]'
-			if size == 1:
-				name = paramTuplet.parts[0]
-				self.paramExprs[name] = _ParamExpr(
-					repr(float(self.paramVals[name])) if useConstant else f'{paramRef}.x',
-					'float'
-				)
-			else:
-				if useConstant:
-					partVals = [float(self.paramVals[part]) for part in paramTuplet.parts]
-					valsExpr = ','.join(str(v) for v in partVals)
-					parType = f'vec{size}'
-					self.paramExprs[paramTuplet.tuplet] = _ParamExpr(f'{parType}({valsExpr})', parType)
-				else:
-					if size == 4:
-						self.paramExprs[paramTuplet.tuplet] = _ParamExpr(paramRef, 'vec4')
-					else:
-						parType = f'vec{size}'
-						self.paramExprs[paramTuplet.tuplet] = _ParamExpr(
-							f'{parType}({paramRef}.{suffixes[:size]})',
-							parType
-						)
-				for partI, partName in enumerate(paramTuplet.parts):
-					self.paramExprs[partName] = _ParamExpr(f'{paramRef}.{suffixes[partI]}', 'float')
+	def paramUniforms(self) -> list[_UniformSpec]:
+		raise NotImplementedError()
 
-	def paramUniforms(self) -> 'List[_UniformSpec]':
-		paramCount = max(1, self.paramDetailTable.numRows - 1)
-		uniforms = [
-			_UniformSpec(
-				'vecParams', 'vec4', 'uniformarray', paramCount,
-				parent().path + '/merged_vector_param_vals'
-			)
-		]
+	def _constantParamUniforms(self) -> list[_UniformSpec]:
+		uniforms = []
 		constCount = 0
 		constPath = parent().path + '/constant_param_vals'
 		for opState in self.opStates:
@@ -1230,6 +1225,140 @@ class _ParameterProcessor:
 					))
 					constCount += 1
 		return uniforms
+
+class _SingleArrayParameterProcessor(_ParameterProcessor):
+	def _addParamExprs(self, paramTuplets: list[_ParamTupletSpec]):
+		suffixes = 'xyzw'
+		for paramTupletIndex, paramTuplet in enumerate(paramTuplets):
+			useConstant = self._shouldUseConstant(paramTuplet)
+			size = len(paramTuplet.parts)
+			paramRef = f'vecParams[{paramTupletIndex}]'
+			if size == 1:
+				name = paramTuplet.parts[0]
+				self.paramExprs[name] = _ParamExpr(
+					repr(float(self.paramVals[name])) if useConstant else f'{paramRef}.x',
+					'float'
+				)
+			else:
+				if useConstant:
+					partVals = [float(self.paramVals[part]) for part in paramTuplet.parts]
+					valsExpr = ','.join(str(v) for v in partVals)
+					parType = f'vec{size}'
+					self.paramExprs[paramTuplet.tuplet] = _ParamExpr(f'{parType}({valsExpr})', parType)
+					for partI, partName in enumerate(paramTuplet.parts):
+						self.paramExprs[partName] = _ParamExpr(f'{paramTuplet.tuplet}.{suffixes[partI]}', 'float')
+				else:
+					if size == 4:
+						self.paramExprs[paramTuplet.tuplet] = _ParamExpr(paramRef, 'vec4')
+					else:
+						parType = f'vec{size}'
+						self.paramExprs[paramTuplet.tuplet] = _ParamExpr(
+							f'{parType}({paramRef}.{suffixes[:size]})',
+							parType
+						)
+					for partI, partName in enumerate(paramTuplet.parts):
+						self.paramExprs[partName] = _ParamExpr(f'{paramRef}.{suffixes[partI]}', 'float')
+
+	def paramUniforms(self) -> list[_UniformSpec]:
+		paramCount = max(1, self.paramDetailTable.numRows - 1)
+		uniforms = [
+			_UniformSpec(
+				'vecParams', 'vec4', 'uniformarray', paramCount,
+				parent().path + '/merged_vector_param_vals'
+			)
+		]
+		uniforms += self._constantParamUniforms()
+		return uniforms
+
+class _SeparateArrayParameterProcessor(_ParameterProcessor):
+	opRuntimeTupletsByName: dict[str, '_OpRuntimeTupletSpecs'] | None = None
+
+	def _addParamExprs(self, paramTuplets: list[_ParamTupletSpec]):
+		self._loadRuntimeTuplets(paramTuplets)
+		suffixes = 'xyzw'
+		for paramTuplet in paramTuplets:
+			useConstant = self._shouldUseConstant(paramTuplet)
+			if not useConstant and paramTuplet.isRuntime:
+				# these are handled below with opRuntimeTupletsByName
+				continue
+			size = len(paramTuplet.parts)
+			if size == 1:
+				name = paramTuplet.parts[0]
+				self.paramExprs[name] = _ParamExpr(
+					repr(float(self.paramVals[name])),
+					'float')
+			else:
+				partVals = [float(self.paramVals[part]) for part in paramTuplet.parts]
+				valsExpr = ','.join(str(v) for v in partVals)
+				parType = f'vec{size}'
+				self.paramExprs[paramTuplet.tuplet] = _ParamExpr(f'{parType}({valsExpr})', parType)
+				for partI, partName in enumerate(paramTuplet.parts):
+					self.paramExprs[partName] = _ParamExpr(f'{paramTuplet.tuplet}.{suffixes[partI]}', 'float')
+		for opState in self.opStates:
+			opTupletSpecs = self.opRuntimeTupletsByName.get(opState.name)
+			if opTupletSpecs is None:
+				continue
+			for paramTuplet in opTupletSpecs.tuplets:
+				size = len(paramTuplet.parts)
+				if size == 1:
+					name = paramTuplet.parts[0]
+					self.paramExprs[name] = _ParamExpr(
+						f'{opTupletSpecs.uniformName}[{paramTuplet.sourceVectorIndex}]',
+						'float')
+				else:
+					parType = f'vec{size}'
+					self.paramExprs[paramTuplet.tuplet] = _ParamExpr(
+						f'{parType}({opTupletSpecs.uniformName}[{paramTuplet.sourceVectorIndex}].{suffixes[:size]})',
+						parType)
+					for partI, partName in enumerate(paramTuplet.parts):
+						self.paramExprs[partName] = _ParamExpr(
+							f'{opTupletSpecs.uniformName}[{paramTuplet.sourceVectorIndex}].{suffixes[partI]}',
+							'float')
+
+	def _loadRuntimeTuplets(self, paramTuplets: list[_ParamTupletSpec]):
+		self.opRuntimeTupletsByName = {}
+		for paramTuplet in paramTuplets:
+			if not paramTuplet.isRuntime:
+				continue
+			useConstant = self._shouldUseConstant(paramTuplet)
+			if useConstant:
+				continue
+			opTupletSpecs = self.opRuntimeTupletsByName.get(paramTuplet.ownerName)
+			if not opTupletSpecs:
+				opTupletSpecs = _OpRuntimeTupletSpecs(
+					opName=paramTuplet.ownerName,
+					sourcePath=paramTuplet.sourceVectorPath,
+					uniformName=paramTuplet.ownerName + '_vecParams',
+					tuplets=[],
+				)
+				self.opRuntimeTupletsByName[paramTuplet.ownerName] = opTupletSpecs
+			opTupletSpecs.tuplets.append(paramTuplet)
+		for opTupletSpecs in self.opRuntimeTupletsByName.values():
+			opTupletSpecs.arrayLength = 1 + max(pt.sourceVectorIndex for pt in opTupletSpecs.tuplets)
+
+	def paramUniforms(self) -> list[_UniformSpec]:
+		uniforms = []
+		for opState in self.opStates:
+			opTupleSpecs = self.opRuntimeTupletsByName.get(opState.name)
+			if opTupleSpecs is None:
+				continue
+			uniforms.append(_UniformSpec(
+				name=opTupleSpecs.uniformName,
+				dataType='vec4',
+				uniformType='uniformarray',
+				arrayLength=opTupleSpecs.arrayLength,
+				chop=opTupleSpecs.sourcePath,
+			))
+		uniforms += self._constantParamUniforms()
+		return uniforms
+
+@dataclass
+class _OpRuntimeTupletSpecs:
+	opName: str
+	sourcePath: str
+	tuplets: list[_ParamTupletSpec]
+	uniformName: str | None = None
+	arrayLength: int | None = None
 
 def _stringify(val: 'Union[str, DAT]'):
 	if val is None:
