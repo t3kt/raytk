@@ -58,9 +58,9 @@ class ShaderBuilder:
 		return self._config().par
 
 	def Createcustomconfig(self, _=None):
-		hostPar = self.ownerComp.par.Shaderbuilderconfig.bindMaster
-		if hostPar is None or not isinstance(hostPar, Par):
-			raise Exception('Invalid setup for Shaderbuilderconfig par, must be a parameter binding')
+		hostPar = self.ownerComp.parent().par['Shaderbuilderconfig']
+		if hostPar is None:
+			raise Exception('Unable to locate Shaderbuilderconfig par')
 		if hostPar.eval():
 			msg = f'Operator already has custom Shaderbuilderconfig: {hostPar.owner}'
 			print(msg)
