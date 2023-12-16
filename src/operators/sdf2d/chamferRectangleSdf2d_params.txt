@@ -1,0 +1,3 @@
+names	source	handling	readOnlyHandling	conversion	enable
+Scale[xy]	param	runtime	macro		1
+Chamfer[xy]	param	runtime	macro		op('chamfer_definition').numRows < 2
