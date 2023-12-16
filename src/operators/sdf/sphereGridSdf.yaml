@@ -1,8 +1,8 @@
 !rop
 meta: !meta
   opType: raytk.operators.sdf.sphereGridSdf
-  opVersion: '0'
-  opStatus: alpha
+  opVersion: '1'
+  opStatus: beta
 opDef: !def
   enable: true
   typeSpec: !ropTypes
@@ -18,3 +18,35 @@ opDef: !def
   paramGroupTable: eval_params
   libraryNames: !expr
     expr: op('sphereGridSdf_lib')
+inputs:
+- !input
+  Localalias: radiusField
+  coordType: !coordT
+    Coordtypevec3: true
+  contextType: !contextT
+    Allcontexttype: true
+  returnType: !returnT
+    Returntypefloat: true
+- !input
+  Localalias: thicknessField
+  Variableinputs: radiusField
+  coordType: !coordT
+    Coordtypevec3: true
+  contextType: !contextT
+    Allcontexttype: true
+  returnType: !returnT
+    Returntypefloat: true
+elements:
+- !opElement
+  name: codeSwitcher_Shape
+  elementType: codeSwitcher
+  params:
+    Elementroot: ''
+    Table: parts
+    Param: Parts
+    Autoupdateparams: true
+    Manageparamstates: true
+    Alwaysincludeallparams: false
+    Switchmode: autoconst
+    Indexexpr: ''
+    Placeholder: BODY();

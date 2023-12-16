@@ -1,0 +1,4 @@
+name	label	code	params
+latlon	Both Latitudes & Longitudes	d = min(latitudes(p, rows, radius), longitudes(p, cols, radius));	Rows Cols
+lat	Latitudes Only	d = latitudes(p, rows, radius);	Rows
+lon	Longitudes Only	d = longitudes(p, cols, radius);	Cols
