@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.filter.logPolarRepeat
-  opVersion: '10'
+  opVersion: '11'
   opStatus: beta
 opDef: !def
   enable: !expr
@@ -35,6 +35,7 @@ opDef: !def
 inputs:
 - !input
   Variables: '*'
+  Variableinputs: '*'
   Required: true
   coordType: !coordT
     Coordtypevec2: !expr
@@ -45,15 +46,32 @@ inputs:
     Allcontexttype: true
   returnType: !returnT
     Allreturntype: true
+- !input
+  Localalias: rhoOffsetField
+  coordType: !coordT
+    Coordtypevec2: true
+    Coordtypevec3: true
+  contextType: !contextT
+    Allcontexttype: true
+  returnType: !returnT
+    Returntypefloat: true
+- !input
+  Localalias: thetaOffsetField
+  Variableinputs: rhoOffsetField
+  coordType: !coordT
+    Coordtypevec2: true
+    Coordtypevec3: true
+  contextType: !contextT
+    Allcontexttype: true
+  returnType: !returnT
+    Returntypefloat: true
 elements:
 - !opElement
   name: codeSwitcher_Mode
   elementType: codeSwitcher
   params:
     Elementroot: ''
-    Table: !table
-      file: src/operators/filter/logPolarRepeat_modes.txt
-      name: modes
+    Table: modes
     Param: Mode
     Autoupdateparams: true
     Manageparamstates: false
