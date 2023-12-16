@@ -1,0 +1,20 @@
+!rop
+meta: !meta
+  opType: raytk.operators.sdf.sphereGridSdf
+  opVersion: '0'
+  opStatus: alpha
+opDef: !def
+  enable: true
+  typeSpec: !ropTypes
+    coordType: !coordT
+      Coordtypevec3: true
+    contextType: !contextT
+      Allcontexttype: true
+    returnType: !returnT
+      Returntypesdf: true
+  function: !text
+    file: src/operators/sdf/sphereGridSdf.glsl
+    name: function
+  paramGroupTable: eval_params
+  libraryNames: !expr
+    expr: op('sphereGridSdf_lib')
