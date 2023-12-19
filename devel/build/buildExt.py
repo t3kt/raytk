@@ -157,7 +157,7 @@ class _BuilderBase:
 
 	def removeBuildExcludeOpsIn(self, scope: COMP, thenRun: callable):
 		self.log(f'Removing buildExclude ops in {scope} (deep)')
-		toRemove = scope.findChildren(tags=[RaytkTags.buildExclude.name])
+		toRemove = scope.findChildren(tags=[RaytkTags.buildExclude.name], includeUtility=True)
 		chunks = [list(chunk) for chunk in chunked_iterable(toRemove, 30)]
 		self.log(f'Found {len(toRemove)} ops to remove in {len(chunks)} chunks')
 		total = len(chunks)
