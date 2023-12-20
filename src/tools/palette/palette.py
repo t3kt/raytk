@@ -318,7 +318,4 @@ class Palette:
 
 def _isNonCommercial():
 	import td
-	for license in td.licenses:
-		if license.isEnabled and license.type in ('Pro', 'Commercial'):
-			return False
-	return True
+	return td.licenses.isNonCommercial
