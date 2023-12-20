@@ -1,4 +1,4 @@
-CoordT THIS_transform(CoordT p, int i) {
+CoordT THIS_transform(CoordT p, int i, out float scaleAdjust) {
 	#ifdef THIS_HAS_TRANSLATE
 	p -= THIS_asCoordT(THIS_translates[i]);
 	#endif
@@ -8,6 +8,12 @@ CoordT THIS_transform(CoordT p, int i) {
 	#elif defined(THIS_COORD_TYPE_vec2)
 	pR(p, radians(THIS_rotates[i].z));
 	#endif
+	#endif
+	scaleAdjust = 1.;
+	#ifdef THIS_HAS_SCALE
+	float s = THIS_scales[i];
+	scaleAdjust = s;
+	p /= s;
 	#endif
 	return p;
 }
@@ -46,8 +52,10 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 		for (int i = 0; i < n; i++) {
 			THIS_exposeIndex(ctx, i, n);
 			if (!THIS_checkActive(i)) continue;
-			CoordT q = THIS_transform(p, i);
+			float scaleAdjust = 1.;
+			CoordT q = THIS_transform(p, i, scaleAdjust);
 			ReturnT res1 = inputOp1(q, ctx);
+			res1.x *= scaleAdjust;
 			if (!hasRes) {
 				res = res1;
 				hasRes = true;

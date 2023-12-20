@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.filter.instance
-  opVersion: '24'
+  opVersion: '25'
   opStatus: default
 paramPages:
 - !page
