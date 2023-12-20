@@ -106,11 +106,7 @@ def getCombinedTags(inputTable: DAT):
 			tags.add(table[i, 'name'].val)
 	return list(sorted(tags))
 
-def combineInputDefinitions(
-		dat: DAT,
-		inDats: list[DAT],
-		defFields: DAT,
-):
+def combineInputDefinitions(dat: DAT, inDats: list[DAT], defFields: DAT):
 	dat.clear()
 	inDats += _inputDefsFromPar()
 	if not inDats:
@@ -142,19 +138,15 @@ def _processInputDefTypeCategory(dat: scriptDAT, supportedTypeTable: DAT, catego
 	if not cells:
 		return
 	errors = []
-	ownName = parentPar().Name.eval()
-	# TODO: consolidate this and the typeRestrictor
 	for cell in cells[1:]:
-		inputName = dat[cell.row, 'name']
 		inputTypes = cell.val.split(' ')
 		supportedInputTypes = [t for t in inputTypes if t in supported]
 		if not supportedInputTypes:
-			errors.append(f'No supported {category} for {inputName} ({" ".join(inputTypes)}')
+			errors.append(f'No supported {category} for {dat[cell.row, "name"]} ({" ".join(inputTypes)}')
 		elif len(supportedInputTypes) == 1:
 			cell.val = supportedInputTypes[0]
 		else:
-			# cell.val = ' '.join(supportedInputTypes)
-			cell.val = '@' + ownName
+			cell.val = '@' + parentPar().Name.eval()
 
 def _getParamsOp() -> COMP | None:
 	return parentPar().Paramsop.eval() or _host()
@@ -219,7 +211,7 @@ def buildParamSpecTable(dat: scriptDAT, paramGroupTable: DAT):
 					addPar(par, handling=handling.val, skipExisting=False, conversion=table[row, 'conversion'].val)
 
 	addFromGroupTable(paramGroupTable)
-	for path in _getOpElementTable().col('paramGroupTable')[1:]:
+	for path in op('opElements').col('paramGroupTable')[1:]:
 		addFromGroupTable(op(path))
 
 	# Add runtime bypass
@@ -232,9 +224,6 @@ def buildParamSpecTable(dat: scriptDAT, paramGroupTable: DAT):
 	# Group special parameters into tuplets
 	_groupSpecialParamsIntoTuplets(dat)
 
-def _getOpElementTable() -> DAT:
-	return op('opElements')
-
 def _fillParamStatuses(dat: DAT):
 	parsByTuplet = {}  # type: dict[str, list[Par]]
 	host = _getParamsOp()
@@ -243,9 +232,8 @@ def _fillParamStatuses(dat: DAT):
 	for i in range(1, dat.numRows):
 		if dat[i, 'source'] != 'param':
 			continue
-		name = dat[i, 'localName']
 		tupletName = dat[i, 'tupletName'].val
-		par = host.par[name]
+		par = host.par[dat[i, 'localName']]
 		if par is None:
 			continue
 		if tupletName not in parsByTuplet:
@@ -463,15 +451,9 @@ def _checkInputType(handler: COMP, typeName: str, typeCategory: str):
 		return
 	return f'Input does not support {typeCategory} {typeName}'
 
-def _isMaster():
-	host = _host()
-	return host and host.par.clone == host
-
 def onValidationChange(dat: DAT):
-	if _isMaster():
-		return
 	host = _host()
-	if not host:
+	if not host or host.par.clone == host:
 		return
 	host.clearScriptErrors()
 	if dat.numRows < 2:
