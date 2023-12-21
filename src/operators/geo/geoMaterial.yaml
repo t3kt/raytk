@@ -1,0 +1,53 @@
+!rop
+meta: !meta
+  opType: raytk.operators.geo.geoMaterial
+  opVersion: '0'
+  opStatus: alpha
+opDef: !def
+  enable: true
+  typeSpec: !ropTypes
+    coordType: !coordT
+      Coordtypevec3: true
+    contextType: !contextT
+      Contexttypecontext: true
+    returnType: !returnT
+      Returntypevec4: true
+  function: !text
+    file: src/operators/geo/geoMaterial_func.glsl
+    name: functionTemplate
+inputs:
+- !input
+  Variables: '*'
+  coordType: !coordT
+    Allcoordtype: !expr
+      expr: parent().par.Coordtype == 'auto'
+    Coordtypefloat: !expr
+      expr: parent().par.Coordtype == 'float'
+    Coordtypevec2: !expr
+      expr: parent().par.Coordtype == 'vec2'
+    Coordtypevec3: !expr
+      expr: parent().par.Coordtype == 'vec3'
+  contextType: !contextT
+    Contexttypecontext: true
+  returnType: !returnT
+    Returntypesdf: true
+    Returntypefloat: true
+    Returntypevec4: true
+- !input
+  Localalias: camera
+  Variables: '*'
+  coordType: !coordT
+    Coordtypevec2: true
+  contextType: !contextT
+    Contexttypecameracontext: true
+  returnType: !returnT
+    Returntyperay: true
+- !input
+  Localalias: light
+  Variables: '*'
+  coordType: !coordT
+    Coordtypevec3: true
+  contextType: !contextT
+    Contexttypelightcontext: true
+  returnType: !returnT
+    Returntypelight: true
