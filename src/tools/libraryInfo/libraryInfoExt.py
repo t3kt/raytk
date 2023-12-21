@@ -72,7 +72,7 @@ class LibraryInfoBuilder:
 				' '.join(sorted(ropInfo.shortcuts)),
 				chipTable[rop.name, 'chip'] or '',
 				thumbTable[rop.path, 'thumb'] or '',
-				ropInfo.flags,
+				ropInfo.rawFlags,
 			])
 
 	@staticmethod

@@ -387,8 +387,12 @@ class ROPInfo:
 		self.opDefPar.Shortcuts = ' '.join(sorted(shortcuts)) if shortcuts else ''
 
 	@property
+	def rawFlags(self) -> str:
+		return str(self.opDefPar['Flags'] or '')
+
+	@property
 	def flags(self) -> list[str] | None:
-		val = self.opDefPar['Flags'] or ''
+		val = self.rawFlags
 		if not val:
 			return None
 		return tdu.split(val)

@@ -719,6 +719,8 @@ class _DefaultPickerImpl(_PickerImpl):
 			if col == layout.labelCol:
 				attribs.textOffsetX = 5
 				attribs.text = item.shortName
+				if item.isHidden:
+					attribs.text = '[' + attribs.text + ']'
 				if item.shortcuts:
 					attribs.text += f' ({item.shortcuts[0]})'
 			elif col == layout.statusCol:
