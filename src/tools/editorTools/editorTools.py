@@ -18,9 +18,7 @@ class EditorTools:
 
 	def Open(self, _=None):
 		self.init()
-		popMenu = self.ownerComp.op('popMenu')
-		# noinspection PyTypeChecker
-		self.actions.openMenu(popMenu)
+		self.actions.openMenu(op.TDResources.op('popMenu'))
 
 	def buildActionTable(self, dat: scriptDAT):
 		self.init()
