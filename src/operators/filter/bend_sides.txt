@@ -1,0 +1,4 @@
+name	label
+both	Both
+neg	Negative
+pos	Positive
