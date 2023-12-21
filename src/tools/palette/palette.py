@@ -6,7 +6,6 @@ if False:
 	from _stubs import *
 	from _typeAliases import *
 	from components.opPicker.opPicker import OpPicker, PickerItem
-	from typing import Callable
 
 	ext.opPicker = OpPicker(COMP())
 
@@ -41,6 +40,7 @@ class Palette:
 		self.ownerComp = ownerComp  # type: _COMP
 		self.selItem = tdu.Dependency()  # value type _AnyItemT
 		self.isOpen = tdu.Dependency(False)
+		self._closeTask = None  # type: Run | None
 
 	def Initialize(self):
 		ext.opPicker.SetFilterToggles(
@@ -53,11 +53,6 @@ class Palette:
 			displayCategories=True,
 		)
 		ext.opPicker.Resetstate()
-
-	@property
-	def _closeTimer(self) -> timerCHOP:
-		# noinspection PyTypeChecker
-		return self.ownerComp.op('closeTimer')
 
 	@property
 	def _develMode(self):
@@ -92,19 +87,22 @@ class Palette:
 		self._resetCloseTimer()
 		self._resetState()
 
-	def onCloseTimerComplete(self):
+	def _onCloseTimerComplete(self):
 		if ipar.uiState.Pinopen:
 			self._resetCloseTimer()
 			return
 		self.close()
 
 	def _resetCloseTimer(self):
-		timer = self._closeTimer
-		timer.par.initialize.pulse()
+		if self._closeTask:
+			self._closeTask.kill()
+			self._closeTask = None
 
 	def _startCloseTimer(self):
-		timer = self._closeTimer
-		timer.par.start.pulse()
+		self._resetCloseTimer()
+		self._closeTask = run(
+			'args[0]()', self._onCloseTimerComplete,
+			delayMilliSeconds=1000)
 
 	def onPanelInsideChange(self, val: bool):
 		if val:
