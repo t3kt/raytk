@@ -4,16 +4,15 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 		vec3 q = adaptAsVec3(p);
 		AXIS_BODY();
 		#if defined(THIS_COORD_TYPE_vec3)
-		q *= rotateMatrix(radians(THIS_Rotateplane));
+		q *= rotateMatrix(THIS_Rotateplane);
 		#elif defined(THIS_COORD_TYPE_vec2)
-		pR(q.xy, radians(THIS_Rotateplane.z));
+		pR(q.xy, THIS_Rotateplane.z);
 		#else
 		#error invalidCoordType
 		#endif
-		#ifdef THIS_HAS_INPUT_offsetField
-		float o = inputOp_offsetField(p, ctx);
-		#else
 		float o = THIS_Offset;
+		#ifdef THIS_HAS_INPUT_offsetField
+		o += inputOp_offsetField(p, ctx);
 		#endif
 		float plane = q.y - o;
 		SIDE_BODY();

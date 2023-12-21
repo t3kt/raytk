@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.filter.knife
-  opVersion: '17'
+  opVersion: '18'
   opStatus: default
 paramPages:
 - !page
@@ -91,9 +91,7 @@ elements:
   elementType: codeSwitcher
   params:
     Elementroot: ''
-    Table: !table
-      file: src/operators/filter/knife_axes.txt
-      name: axes
+    Table: axes
     Param: Axis
     Autoupdateparams: true
     Manageparamstates: true
@@ -106,9 +104,7 @@ elements:
   elementType: codeSwitcher
   params:
     Elementroot: ''
-    Table: !table
-      file: src/operators/filter/knife_sides.txt
-      name: sides
+    Table: sides
     Param: Side
     Autoupdateparams: true
     Manageparamstates: true
