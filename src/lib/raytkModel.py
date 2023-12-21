@@ -485,6 +485,7 @@ class ROPDef(ModelObject):
 	keywords: ValueOrListOrExprT = None
 	shortcuts: ValueOrListOrExprT = None
 	displayCategory: ValueOrExprT = None
+	flags: ValueOrListOrExprT = None
 
 	@classmethod
 	def fromComp(cls, opDefComp: COMP):
@@ -526,6 +527,7 @@ class ROPDef(ModelObject):
 		self.keywords = _valOrExprFromPar(pars.Keywords, useList=True)
 		self.shortcuts = _valOrExprFromPar(pars.Shortcuts, useList=True)
 		self.displayCategory = _valOrExprFromPar(pars.Displaycategory)
+		self.flags = _valOrExprFromPar(pars.Flags, useList=True)
 
 	def applyToComp(self, opDefComp: COMP):
 		# noinspection PyTypeChecker
@@ -550,6 +552,7 @@ class ROPDef(ModelObject):
 		_updatePar(pars.Keywords, self.keywords)
 		_updatePar(pars.Shortcuts, self.shortcuts)
 		_updatePar(pars.Displaycategory, self.displayCategory)
+		_updatePar(pars.Flags, self.flags)
 
 		# TODO: DAT-based params
 

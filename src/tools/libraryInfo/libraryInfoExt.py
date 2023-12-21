@@ -49,7 +49,7 @@ class LibraryInfoBuilder:
 		rops = []  # type: list[COMP]
 		if opsRoot:
 			rops = opsRoot.findChildren(type=COMP, tags=['raytk*'], depth=2, maxDepth=2)
-		dat.appendRow(['name', 'path', 'tags', 'category', 'displayCategory', 'opType', 'opVersion', 'status', 'keywords', 'shortcuts', 'chip', 'thumb'])
+		dat.appendRow(['name', 'path', 'tags', 'category', 'displayCategory', 'opType', 'opVersion', 'status', 'keywords', 'shortcuts', 'chip', 'thumb', 'flags'])
 		if not rops:
 			return
 		rops.sort(key=lambda o: o.path.lower())
@@ -72,6 +72,7 @@ class LibraryInfoBuilder:
 				' '.join(sorted(ropInfo.shortcuts)),
 				chipTable[rop.name, 'chip'] or '',
 				thumbTable[rop.path, 'thumb'] or '',
+				ropInfo.flags,
 			])
 
 	@staticmethod

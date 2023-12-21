@@ -107,6 +107,7 @@ class OpDefParsT(_OpMetaPars):
 	Disableinspect: 'BoolParamT'
 	Typespec: 'CompParamT'
 	Inputdefs: 'StrParamT'
+	Flags: 'StrParamT'
 
 class ROPInfo:
 	"""
@@ -384,6 +385,17 @@ class ROPInfo:
 	@shortcuts.setter
 	def shortcuts(self, shortcuts: set[str] | None):
 		self.opDefPar.Shortcuts = ' '.join(sorted(shortcuts)) if shortcuts else ''
+
+	@property
+	def flags(self) -> list[str] | None:
+		val = self.opDefPar['Flags'] or ''
+		if not val:
+			return None
+		return tdu.split(val)
+
+	@flags.setter
+	def flags(self, flags: list[str] | None):
+		self.opDefPar.Flags = ' '.join(flags) if flags else ''
 
 	@property
 	def hasROPInputs(self):

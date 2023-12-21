@@ -206,6 +206,7 @@ class PickerItem:
 	isAlpha: bool = False
 	isBeta: bool = False
 	isDeprecated: bool = False
+	isHidden: bool = False
 	path: str | None = None
 	opType: str | None = None
 	categoryName: str | None = None
@@ -237,6 +238,8 @@ class PickerOpItem(PickerItem):
 			return False
 		if self.isDeprecated and not filt.deprecated:
 			return False
+		if self.isHidden and not filt.hidden:
+			return False
 		if not filt.text:
 			return True
 		filtText = filt.text.lower()
@@ -262,6 +265,7 @@ class _Filter:
 	alpha: bool = False
 	beta: bool = False
 	deprecated: bool = False
+	hidden: bool = False
 
 def _loadItemCategories(opTable: DAT, opHelpTable: DAT, useDisplayCategories=False):
 	categories = []
@@ -278,6 +282,7 @@ def _loadItemCategories(opTable: DAT, opHelpTable: DAT, useDisplayCategories=Fal
 			categoryName = str(opTable[row, 'category']).capitalize()
 		else:
 			categoryName = str(categoryName)
+		flags = tdu.split(opTable[row, 'flags'])
 		opItem = PickerOpItem(
 			shortName=shortName,
 			path=path,
@@ -287,6 +292,7 @@ def _loadItemCategories(opTable: DAT, opHelpTable: DAT, useDisplayCategories=Fal
 			isAlpha=status == 'alpha',
 			isBeta=status == 'beta',
 			isDeprecated=status == 'deprecated',
+			isHidden='hidden' in flags,
 			helpSummary=str(opHelpTable[path, 'summary'] or ''),
 			chip=str(opTable[row, 'chip']),
 			thumbPath=str(opTable[row, 'thumb'] or ''),
@@ -451,6 +457,7 @@ class _PickerImpl:
 			alpha=ipar.uiState.Showalpha.eval(),
 			beta=ipar.uiState.Showbeta.eval(),
 			deprecated=ipar.uiState.Showdeprecated.eval(),
+			hidden=self.ownerComp.par.Showhiddenops.eval(),
 		)
 
 	def toggleCategoryExpansion(self, item: 'PickerCategoryItem'):
