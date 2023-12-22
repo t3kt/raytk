@@ -38,6 +38,20 @@ if False:
 	class _ConfigComp(COMP):
 		par: '_ConfigPar'
 
+# @dataclass
+# class _ShaderTargetConfig:
+# 	hasPrimaryRopFunction: bool
+# 	hasOutputBuffers: bool
+#
+# _topShaderConfig = _ShaderTargetConfig(
+# 	hasPrimaryRopFunction=True,
+# 	hasOutputBuffers=True,
+# )
+# _matShaderConfig = _ShaderTargetConfig(
+# 	hasPrimaryRopFunction=False,
+# 	hasOutputBuffers=False,
+# )
+
 class ShaderBuilder:
 	def __init__(self, ownerComp: 'Union[_OwnerComp, COMP]'):
 		self.ownerComp = ownerComp

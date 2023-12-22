@@ -219,6 +219,16 @@ _allTypes += [
 		fields=[
 			# TODO: context fields
 		]),
+	DataType(
+		'VertexContext', 'Vertex Context', isContext=True, isVariable=False,
+		fields=[
+			# TODO: context fields
+		]),
+	DataType(
+		'PixelContext', 'Pixel Context', isContext=True, isVariable=False,
+		fields=[
+			# TODO: context fields
+		]),
 ]
 
 _typesByName = {
