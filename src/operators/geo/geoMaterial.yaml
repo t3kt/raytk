@@ -1,36 +1,5 @@
-!rop
+!rcomp
 meta: !meta
   opType: raytk.operators.geo.geoMaterial
-  opVersion: '0'
+  opVersion: '1'
   opStatus: alpha
-opDef: !def
-  enable: true
-  typeSpec: !ropTypes
-    coordType: !coordT
-      Coordtypevec3: true
-    contextType: !contextT
-      Contexttypecontext: true
-    returnType: !returnT
-      Returntypevec4: true
-  function: !text
-    file: src/operators/geo/geoMaterial_func.glsl
-    name: functionTemplate
-inputs:
-- !input
-  Localalias: camera
-  Variables: '*'
-  coordType: !coordT
-    Coordtypevec2: true
-  contextType: !contextT
-    Contexttypecameracontext: true
-  returnType: !returnT
-    Returntyperay: true
-- !input
-  Localalias: light
-  Variables: '*'
-  coordType: !coordT
-    Coordtypevec3: true
-  contextType: !contextT
-    Contexttypelightcontext: true
-  returnType: !returnT
-    Returntypelight: true
