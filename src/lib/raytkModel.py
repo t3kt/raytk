@@ -213,6 +213,8 @@ class ContextTypes(ModelObject):
 	Contexttypelightcontext: ValueOrExprT = None
 	Contexttyperaycontext: ValueOrExprT = None
 	Contexttypeparticlecontext: ValueOrExprT = None
+	Contexttypevertexcontext: ValueOrExprT = None
+	Contexttypepixelcontext: ValueOrExprT = None
 
 	@classmethod
 	def fromComp(cls, specComp: COMP):
