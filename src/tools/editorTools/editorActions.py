@@ -696,6 +696,12 @@ def createActionManager():
 			attach=AttachOutFromExisting(),
 			params={'Returntype': 'vec4'},
 		),
+		ActionImpl(
+			'Map to Color Range',
+			'raytk.operators.field.colorRampField',
+			select=RopSelect(returnTypes=['float']),
+			attach=AttachOutFromExisting(),
+		),
 		_createSimplifyRescaleFloatAction('Simplify Rescale Float'),
 		_createTableBasedGroup(
 			'Project Plane', op('projectPlanes'), _RopTypes.projectPlane, 'Plane',
