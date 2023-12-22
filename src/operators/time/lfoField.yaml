@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.time.lfoField
-  opVersion: '17'
+  opVersion: '18'
   opStatus: default
 opDef: !def
   enable: !expr
@@ -46,6 +46,13 @@ opDef: !def
     name: macro_exprs
     evaluate: true
     evalOpts: !evalOpts {}
+  tagTable: !table
+    file: src/operators/time/lfoField_tags.txt
+    name: tag_exprs
+    evaluate: true
+    evalOpts: !evalOpts
+      excludeFirstRow: true
+      excludeFirstCol: true
 inputs:
 - !input
   Localalias: waveFunction
@@ -76,9 +83,7 @@ elements:
   elementType: codeSwitcher
   params:
     Elementroot: ''
-    Table: !table
-      file: src/operators/time/timeSources.txt
-      name: timeSources
+    Table: timeSources
     Param: Timesource
     Autoupdateparams: true
     Manageparamstates: false
@@ -91,9 +96,7 @@ elements:
   elementType: codeSwitcher
   params:
     Elementroot: ''
-    Table: !table
-      file: src/operators/time/lfoField_intervalTypes.txt
-      name: intervalTypes
+    Table: intervalTypes
     Param: Timesource
     Autoupdateparams: true
     Manageparamstates: false
