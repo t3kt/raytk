@@ -5,7 +5,7 @@ from raytkState import RopState, Texture, Buffer, Macro, Reference, Variable, Va
 	InputState, SurfaceAttribute
 import re
 from io import StringIO
-from typing import Callable, Dict, List, Tuple, Union, Optional
+from typing import Callable, Dict, Union, Optional
 
 # noinspection PyUnreachableCode
 if False:
@@ -246,7 +246,7 @@ class ShaderBuilder:
 					if name not in requiredLibNames:
 						requiredLibNames.append(name)
 		libraryOps = self.ownerComp.par.Libraries.evalOPs()
-		dats = []  # type: List[DAT]
+		dats = []  # type: list[DAT]
 		for libraryOp in libraryOps:
 			if libraryOp.isDAT:
 				if libraryOp not in dats:
@@ -524,7 +524,7 @@ class ShaderBuilder:
 class _VarRefChecker:
 	def __init__(
 			self,
-			opStates: List[RopState],
+			opStates: list[RopState],
 			definitionTable: DAT,
 			addError: 'Callable[[str, str, str], None]'):
 		self.opStates = opStates
@@ -649,7 +649,7 @@ class _VarRefChecker:
 			self,
 			refOwnerNode: '_GraphROP', reference: Reference, refSourceGlobalName: str,
 			throughInput: '_GraphROPInput',
-			checkedSourceNodes: 'List[_GraphROP]') -> bool:
+			checkedSourceNodes: 'list[_GraphROP]') -> bool:
 		# print(f'   Walking downstream on {throughInput.source.state.name} looking for {refSourceGlobalName}')
 		sourceNode = throughInput.owner
 		if sourceNode in checkedSourceNodes:
@@ -677,7 +677,7 @@ class _VarRefChecker:
 			self,
 			refOwnerNode: '_GraphROP', reference: Reference, refSourceGlobalName: str,
 			sourceNode: '_GraphROP',
-			checkedSourceNodes: 'List[_GraphROP]') -> bool:
+			checkedSourceNodes: 'list[_GraphROP]') -> bool:
 		# print(f'    Walking upstream on {sourceNode.state.name} looking for {refSourceGlobalName}')
 		if sourceNode in checkedSourceNodes:
 			# print(f'     Already checked node {sourceNode.state.name}')
@@ -699,7 +699,7 @@ class _VarRefChecker:
 class _GraphROP:
 	state: RopState
 	inputs: 'Dict[str, _GraphROPInput]' = None
-	outputs: 'List[_GraphROPInput]' = None
+	outputs: 'list[_GraphROPInput]' = None
 	ownVarGlobalNames: Dict[str, str] = None  # local name -> global name
 
 @dataclass
@@ -707,13 +707,13 @@ class _GraphROPInput:
 	inputState: InputState
 	owner: '_GraphROP'
 	ownVarGlobalNames: list[str]
-	varInputs: 'List[_GraphROPInput]'
+	varInputs: 'list[_GraphROPInput]'
 	source: 'Optional[_GraphROP]' = None
 
 @dataclass
 class _Writer:
 	sb: 'ShaderBuilder'
-	opStates: 'List[RopState]'
+	opStates: 'list[RopState]'
 	defTable: DAT
 	paramProc: '_ParameterProcessor'
 	macroTable: DAT
@@ -725,9 +725,9 @@ class _Writer:
 
 	inlineTypedefRepls: 'Optional[Dict[str, str]]' = None
 	inlineTypedefPattern: 'Optional[re.Pattern]' = None
-	textures: 'Optional[List[Texture]]' = None
-	buffers: 'Optional[List[Buffer]]' = None
-	attributes: 'Optional[List[SurfaceAttribute]]' = None
+	textures: 'Optional[list[Texture]]' = None
+	buffers: 'Optional[list[Buffer]]' = None
+	attributes: 'Optional[list[SurfaceAttribute]]' = None
 	out: 'Optional[StringIO]' = None
 
 	def __post_init__(self):
@@ -788,13 +788,13 @@ class _Writer:
 		dat.clear()
 		dat.write(self.out.getvalue())
 	def _writeGlobalDecls(self):
-		mainName = self.defTable[-1, 'name']
 		self._startBlock('globals')
 		self._writeLines(self.paramProc.globalDeclarations())
 		shaderType = self.ownerComp.par.Shadertype.eval()
 		if shaderType == 'vertexstage' or shaderType == 'pixelstage':
 			pass
 		else:
+			mainName = self.defTable[-1, 'name']
 			self._writeLine(f'#define thismap {mainName}')
 		self._endBlock('globals')
 
@@ -1076,7 +1076,7 @@ class _Writer:
 @dataclass
 class _ParamTupletSpec:
 	tuplet: str
-	parts: Tuple[str]
+	parts: tuple[str]
 	ownerName: str
 	isReadOnly: bool
 	isSpecial: bool = False
@@ -1118,7 +1118,7 @@ class _ParamTupletSpec:
 		)
 
 	@classmethod
-	def fromTableRows(cls, dat: DAT, handlingTypes: list[str]) -> 'List[_ParamTupletSpec]':
+	def fromTableRows(cls, dat: DAT, handlingTypes: list[str]) -> 'list[_ParamTupletSpec]':
 		if not dat or dat.numRows < 2:
 			return []
 		return [
@@ -1171,7 +1171,7 @@ class _ParameterProcessor:
 			paramDetailTable: DAT,
 			paramVals: 'CHOP',
 			configPar: 'Optional[_ConfigPar]',
-			opStates: 'List[RopState]'
+			opStates: 'list[RopState]'
 	):
 		self.paramDetailTable = paramDetailTable
 		self.hasParams = paramDetailTable.numRows > 1
@@ -1394,7 +1394,7 @@ def _stringify(val: 'Union[str, DAT]'):
 		return val.text
 	return str(val)
 
-def _combineCode(code: 'Union[str, DAT, List[Union[str, DAT]]]'):
+def _combineCode(code: str | DAT | list[str | DAT]):
 	if isinstance(code, list):
 		combined = ''
 		for item in code:
@@ -1405,7 +1405,7 @@ def _combineCode(code: 'Union[str, DAT, List[Union[str, DAT]]]'):
 	else:
 		return _stringify(code)
 
-def wrapCodeSection(code: 'Union[str, DAT, List[Union[str, DAT]]]', name: str):
+def wrapCodeSection(code: str | DAT | list[str | DAT], name: str):
 	code = _combineCode(code)
 	if not code:
 		# return a non-empty string in order to force DATs to be text when using dat.write()
