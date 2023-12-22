@@ -773,12 +773,15 @@ class _Writer:
 
 		dat.clear()
 		dat.write(self.out.getvalue())
-
 	def _writeGlobalDecls(self):
 		mainName = self.defTable[-1, 'name']
 		self._startBlock('globals')
 		self._writeLines(self.paramProc.globalDeclarations())
-		self._writeLine(f'#define thismap {mainName}')
+		shaderType = self.ownerComp.par.Shadertype.eval()
+		if shaderType == 'vertexstage' or shaderType == 'pixelstage':
+			pass
+		else:
+			self._writeLine(f'#define thismap {mainName}')
 		self._endBlock('globals')
 
 	def _writeOpDataTypedefs(self):
