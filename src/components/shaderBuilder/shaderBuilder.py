@@ -715,7 +715,7 @@ class _Writer:
 	sb: 'ShaderBuilder'
 	opStates: 'List[RopState]'
 	defTable: DAT
-	paramProc: '_SingleArrayParameterProcessor'
+	paramProc: '_ParameterProcessor'
 	macroTable: DAT
 	typeDefMacroTable: DAT
 	libraryDats: list[DAT]
