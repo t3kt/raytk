@@ -702,6 +702,28 @@ def createActionManager():
 			select=RopSelect(returnTypes=['float']),
 			attach=AttachOutFromExisting(),
 		),
+		# ActionImpl(
+		# 	'Apply Wave',
+		# 	'raytk.operators.field.waveField',
+		# 	select=RopSelect(returnTypes=['float']),
+		# 	attach=AttachOutFromExisting(),
+		# ),
+		# _createTableBasedGroup(
+		# 	'Apply Wave',
+		# 	table=op('waveAxes'),
+		# 	ropType='raytk.operators.field.waveField',
+		# 	paramName='Axis',
+		# 	select=RopSelect(returnTypes=['vec4']),
+		# 	attach=AttachOutFromExisting(),
+		# ),
+		_createTableBasedGroup(
+			'Apply Wave',
+			table=op('waveFunctions'),
+			ropType='raytk.operators.field.waveField',
+			paramName='Function',
+			select=RopSelect(returnTypes=['float', 'vec4']),
+			attach=AttachOutFromExisting(),
+		),
 		_createSimplifyRescaleFloatAction('Simplify Rescale Float'),
 		_createTableBasedGroup(
 			'Project Plane', op('projectPlanes'), _RopTypes.projectPlane, 'Plane',
