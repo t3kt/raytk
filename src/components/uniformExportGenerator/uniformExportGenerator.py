@@ -48,17 +48,17 @@ def buildExportTable(dat: DAT, uniformTable: DAT):
 			raise Exception(f'Invalid uniform type: {uniType}')
 
 def _addArray(dat: DAT, path: str, i: int, name: str, chop: str, unitType: str, mode: str):
-	dat.appendRow([path, f'chop{i}uniname', repr(name)])
-	dat.appendRow([path, f'chop{i}unitype', unitType])
-	dat.appendRow([path, f'chop{i}chop', repr(chop)])
-	dat.appendRow([path, f'chop{i}arraytype', mode])
+	dat.appendRow([path, f'array{i}name', repr(name)])
+	dat.appendRow([path, f'array{i}type', unitType])
+	dat.appendRow([path, f'array{i}chop', repr(chop)])
+	dat.appendRow([path, f'array{i}arraytype', mode])
 
 def _addVector(dat: DAT, path: str, i: int, name: str, expr1: str, expr2: str, expr3: str, expr4: str):
-	dat.appendRow([path, f'uni{i}name', repr(name)])
-	dat.appendRow([path, f'uni{i}valuex', expr1])
-	dat.appendRow([path, f'uni{i}valuey', expr2])
-	dat.appendRow([path, f'uni{i}valuez', expr3])
-	dat.appendRow([path, f'uni{i}valuew', expr4])
+	dat.appendRow([path, f'vec{i}name', repr(name)])
+	dat.appendRow([path, f'vec{i}valuex', expr1])
+	dat.appendRow([path, f'vec{i}valuey', expr2])
+	dat.appendRow([path, f'vec{i}valuez', expr3])
+	dat.appendRow([path, f'vec{i}valuew', expr4])
 
 def _addConstant(dat: DAT, path: str, i: int, name: str, expr: str):
 	dat.appendRow([path, f'const{i}name', repr(name)])

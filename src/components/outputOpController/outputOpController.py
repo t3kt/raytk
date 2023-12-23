@@ -5,10 +5,8 @@ if False:
 	from _typeAliases import *
 
 	class _Par:
-		Hostop: 'OPParamT'
-		Opdef: 'OPParamT'
-		Rendertop: 'OPParamT'
-		Shaderbuilder: 'OPParamT'
+		Hostop: OPParamT
+		Glslop: OPParamT
 
 	class _COMP(COMP):
 		par: _Par
@@ -16,15 +14,6 @@ if False:
 class OutputOp:
 	def __init__(self, ownerComp: '_COMP'):
 		self.ownerComp = ownerComp
-
-	def _host(self) -> COMP | None:
-		return self.ownerComp.par.Hostop.eval()
-
-	def _opDef(self) -> COMP | None:
-		return self.ownerComp.par.Opdef.eval()
-
-	def _renderTop(self) -> glslmultiTOP | None:
-		return self.ownerComp.par.Rendertop.eval()
 
 	def onInit(self):
 		self.resetInfoParams()
@@ -34,7 +23,7 @@ class OutputOp:
 		self.updateParamSequences()
 
 	def resetInfoParams(self):
-		host = self._host()
+		host = self.ownerComp.par.Hostop.eval()
 		if not host:
 			return
 		for par in host.customPars:
@@ -42,8 +31,8 @@ class OutputOp:
 				par.val = par.default
 
 	def updateParamSequences(self):
-		renderTop = self._renderTop()
-		if not renderTop:
+		targetOp = self.ownerComp.par.Glslop.eval()
+		if not targetOp:
 			return
 		table = self.ownerComp.op('uniforms')
 		if table.numRows < 2:
@@ -55,9 +44,12 @@ class OutputOp:
 				constCount += 1
 			elif table[i, 'uniformType'] == 'uniformarray':
 				arrayCount += 1
-		sequence = renderTop.par.const0name.sequence  # type: Sequence
-		if constCount > sequence.numBlocks:
-			sequence.numBlocks = constCount
-		sequence = renderTop.par.chop0uniname.sequence
+		if constCount > 0:
+			if targetOp.isMAT:
+				raise Exception('Specialization constants not yet supported in MATs!')
+			sequence = targetOp.par.const0name.sequence  # type: Sequence
+			if constCount > sequence.numBlocks:
+				sequence.numBlocks = constCount
+		sequence = targetOp.par.array0name.sequence
 		if arrayCount > sequence.numBlocks:
 			sequence.numBlocks = arrayCount
