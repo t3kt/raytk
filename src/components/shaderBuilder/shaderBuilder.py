@@ -31,6 +31,7 @@ if False:
 		Supportmaterials: BoolParamT
 		Shaderbuilderconfig: CompParamT
 		Shadertype: StrParamT
+		Limitcodetonames: StrParamT
 
 	class _OwnerComp(COMP):
 		par: '_OwnerCompPar'
@@ -728,6 +729,7 @@ class _Writer:
 	textures: 'Optional[list[Texture]]' = None
 	buffers: 'Optional[list[Buffer]]' = None
 	attributes: 'Optional[list[SurfaceAttribute]]' = None
+	onlyNames: set[str] | None = None
 	out: 'Optional[StringIO]' = None
 
 	def __post_init__(self):
@@ -743,14 +745,19 @@ class _Writer:
 			self.inlineTypedefPattern = re.compile(r'\b[\w_]+_(as)?(CoordT|ContextT|ReturnT|VarT)\b')
 		self.textures = []
 		self.buffers = []
+		names = tdu.split(self.ownerComp.par.Limitcodetonames)
+		self.onlyNames = set(names) if names else None
 		attrNames = set()
 		attrRefNames = [
 			self.referenceTable[i, 'source'].val
 			for i in range(1, self.referenceTable.numRows)
-			if self.referenceTable[i, 'category'] == 'attribute'
+			if self.referenceTable[i, 'category'] == 'attribute' and
+					self._shouldIncludeOp(self.referenceTable[i, 'owner'].val)
 		]
 		self.attributes = []
 		for state in self.opStates:
+			if not self._shouldIncludeOp(state.name):
+				continue
 			if state.textures:
 				self.textures += state.textures
 			if state.buffers:
@@ -761,6 +768,11 @@ class _Writer:
 						continue
 					attrNames.add(attribute.name)
 					self.attributes.append(attribute)
+
+	def _shouldIncludeOp(self, name: str):
+		if not self.onlyNames:
+			return True
+		return name in self.onlyNames
 
 	def run(self, dat: scriptDAT):
 		if self.defTable.numRows < 2:
@@ -970,7 +982,7 @@ class _Writer:
 		self._writeCodeBlocks('opGlobals', [
 			state.opGlobals
 			for state in self.opStates
-			if state.opGlobals
+			if state.opGlobals and self._shouldIncludeOp(state.name)
 		])
 
 	def _writeInit(self):
@@ -979,7 +991,7 @@ class _Writer:
 			[
 				state.initCode
 				for state in self.opStates
-				if state.initCode
+				if state.initCode and self._shouldIncludeOp(state.name)
 			],
 			prefixes=[
 				'#define RAYTK_HAS_INIT',
@@ -991,7 +1003,7 @@ class _Writer:
 		self._writeCodeBlocks('functions', [
 			state.functionCode
 			for state in self.opStates
-			if state.functionCode
+			if state.functionCode and self._shouldIncludeOp(state.name)
 		])
 
 	def _writeCodeBlocks(
@@ -1024,7 +1036,7 @@ class _Writer:
 
 	def _writeMaterialBody(self):
 		for state in self.opStates:
-			if not state.materialId:
+			if not state.materialId or not self._shouldIncludeOp(state.name):
 				continue
 			self._writeLine(f'else if(m == {state.materialId}) {{')
 			# Intentionally skipping typedef inlining for these since no materials need it.
