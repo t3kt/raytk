@@ -4,6 +4,7 @@
 // @Ratio3 {"default": 0.5}
 
 ReturnT thismap(CoordT p, ContextT ctx) {
+
 	float totalWidth = THIS_Width;
 	int steps = int(3);
 	float ratio1 = THIS_Ratio1;
@@ -22,22 +23,23 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 	ratio = ratio1;
 	width = totalWidth;
 	center = ratio * width;
-	q -= center;
+
 	if (q < 0.) {
 		width = width * ratio;
+		q += width;
 	} else {
 		index += 1 * 2 * 2;
 		width = width * (1. - ratio);
+		q -= width;
 	}
 	ratio = ratio2;
 
-
-	float side1 = sgn(q);
-	if (q < 0.0) {
-
-	} else {
-
-	}
-
-	return createNonHitSdf();
+	#ifdef THIS_EXPOSE_index
+	THIS_index = index;
+	#endif
+	
+	p.x = q;
+	
+	ReturnT res = inputOp1(p, ctx);
+	return res;
 }
