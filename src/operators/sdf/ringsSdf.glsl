@@ -21,9 +21,9 @@ void THIS_prepareSquare(inout vec3 p0, float space, float shift, out float cell)
 ReturnT thismap(CoordT p, ContextT ctx) {
 	vec3 p0;
 	switch (int(THIS_Axis)) {
-		case THISTYPE_Axis_x: p0 = p.yzx;
-		case THISTYPE_Axis_y: p0 = p.zxy;
-		case THISTYPE_Axis_z: p0 = p.xyz;
+		case THISTYPE_Axis_x: p0 = p.yzx; break;
+		case THISTYPE_Axis_y: p0 = p.zxy; break;
+		case THISTYPE_Axis_z: p0 = p.xyz; break;
 	}
 	float a = atan(p0.y, p0.x) / TAU;
 	#ifdef THIS_EXPOSE_normangle
