@@ -477,7 +477,7 @@ def _createSimplifyRescaleFloatAction(text):
 	return ActionImpl(
 		text,
 		ropType='raytk.operators.filter.rescaleFloatField',
-		select=RopSelect(ropTypes=[_RopTypes.rescaleField], returnTypes=['float'], test=_isValid),
+		select=RopSelect(ropTypes=[_RopTypes.rescaleField], returnTypes=['float', 'vec4'], test=_isValid),
 		attach=AttachReplacement(),
 		inits=[_InitRescale()],
 	)
