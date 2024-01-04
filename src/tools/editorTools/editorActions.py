@@ -686,7 +686,7 @@ def createActionManager():
 		ActionImpl(
 			'Rescale Field (Simple)',
 			'raytk.operators.filter.rescaleFloatField',
-			select=RopSelect(returnTypes=['float']),
+			select=RopSelect(returnTypes=['float', 'vec4']),
 			attach=AttachOutFromExisting(),
 		),
 		ActionImpl(
