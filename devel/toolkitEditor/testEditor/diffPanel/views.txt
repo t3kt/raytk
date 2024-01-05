@@ -1,0 +1,5 @@
+name	label
+diff	Difference
+actual	Actual
+expected	Expected
+horz	Side by Side
