@@ -33,10 +33,15 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 
 	float x;
 	if (IS_TRUE(THIS_Enableblend)) {
-		#ifdef THIS_HAS_INPUT_blendFunction
-		x = clamp(inputOp_blendFunction(clamp(map01(q - edge, 0., THIS_Blend), 0., 1.), ctx), 0., 1.);
+		#ifdef THIS_HAS_INPUT_blendingField
+		float b = max(inputOp_blendingField(p, ctx), 0.);
 		#else
-		x = smoothstep(0, THIS_Blend, q - edge);
+		float b = THIS_Blend;
+		#endif
+		#ifdef THIS_HAS_INPUT_blendFunction
+		x = clamp(inputOp_blendFunction(clamp(map01(q - edge, 0., b), 0., 1.), ctx), 0., 1.);
+		#else
+		x = smoothstep(0, b, q - edge);
 		#endif
 	} else {
 		x = step(edge, q);
