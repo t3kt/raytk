@@ -89,8 +89,8 @@ def buildInputTable(dat: DAT, inDats: list[DAT]):
 			inDat[1, 'contextType'],
 			inDat[1, 'returnType'],
 			('inputOp_' + func) if not func.startswith('inputOp') else func,
-			inDat[1, 'input:vars'],
-			inDat[1, 'input:varInputs'],
+			inDat[1, 'input:vars'] or '',
+			inDat[1, 'input:varInputs'] or '',
 			inDat[1, 'tags'] or '',
 		])
 
