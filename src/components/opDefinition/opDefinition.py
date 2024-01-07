@@ -106,7 +106,7 @@ def getCombinedTags(inputTable: DAT):
 			tags.add(table[i, 'name'].val)
 	return list(sorted(tags))
 
-def combineInputDefinitions(dat: DAT, inDats: list[DAT], defFields: DAT):
+def combineInputDefinitions(dat: scriptDAT, inDats: list[DAT], defFields: DAT, supportedTypeTable: DAT):
 	dat.clear()
 	inDats += _inputDefsFromPar()
 	if not inDats:
@@ -126,8 +126,6 @@ def combineInputDefinitions(dat: DAT, inDats: list[DAT], defFields: DAT):
 			usedNames.add(name.val)
 			dat.appendRow([d[inDatRow, col] or '' for col in cols], insertRow)
 			insertRow += 1
-
-def processInputDefinitionTypes(dat: scriptDAT, supportedTypeTable: DAT):
 	_processInputDefTypeCategory(dat, supportedTypeTable, 'coordType')
 	_processInputDefTypeCategory(dat, supportedTypeTable, 'contextType')
 	_processInputDefTypeCategory(dat, supportedTypeTable, 'returnType')

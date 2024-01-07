@@ -3,4 +3,5 @@ def onCook(dat):
 		dat,
 		inDats=dat.inputs,
 		defFields=op('inlineFields'),
+		supportedTypeTable=op('supportedTypes'),
 		)
