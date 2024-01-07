@@ -398,9 +398,18 @@ def buildParamChopNamesTable(dat: DAT, paramSpecTable: DAT):
 	dat.appendRow(['angle', ' '.join(angleNames)])
 	dat.appendRow(['constant', ' '.join(constantNames)])
 
-def validateReferences(errorDat: scriptDAT):
+def buildValidationErrors(
+		errorDat: scriptDAT,
+		inputDefinitions: DAT,
+		elementValidationErrors: list[DAT]):
 	errorDat.clear()
 	errorDat.appendRow(['path', 'level', 'message'])
+	_validateReferences(errorDat)
+	_validateInputs(errorDat, inputDefinitions)
+	for dat in elementValidationErrors:
+		errorDat.appendRows(dat.rows()[1:])
+
+def _validateReferences(errorDat: scriptDAT):
 	path = parent().path
 	table = parentPar().Referencetable.eval()
 	if not table or table.numRows < 2:
@@ -416,9 +425,7 @@ def validateReferences(errorDat: scriptDAT):
 		if not sourceOp:
 			errorDat.appendRow([path, 'error', f'Invalid source path for reference {localName}'])
 
-def validateInputs(dat: scriptDAT, inputDefinitions: DAT):
-	dat.clear()
-	dat.appendRow(['path', 'level', 'message'])
+def _validateInputs(dat: scriptDAT, inputDefinitions: DAT):
 	if hasattr(parent, 'raytk'):
 		return
 	for handlerPath in inputDefinitions.col('input:handler')[1:]:
