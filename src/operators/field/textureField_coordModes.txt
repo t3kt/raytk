@@ -1,0 +1,3 @@
+name	label	params
+uv	UV [0-1]	Translate[uv] Scale[uv] Extendmode
+pixel	Pixel [0-n]	
