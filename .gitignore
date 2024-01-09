@@ -3,6 +3,7 @@ CrashAutoSave.*
 *.dmp
 *.ngfx-proj
 build/**/*.tox
+build/*.zip
 docs/.instagram/access_token
 etc/*unpack*
 build/log/*.txt
