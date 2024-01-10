@@ -260,6 +260,34 @@ def buildOpTestTable(dat: DAT, testTable: DAT):
 	for cell in dat.row(0)[2:]:
 		cell.val = 'test' + str(cell.col - 1)
 
+def buildOpSnippetTable(dat: DAT, testTable: DAT):
+	dat.clear()
+	dat.appendRow([
+		'path',
+		'snippetCount',
+		'snippet1',
+	])
+	testsByOpType = {}  # type: dict[str, list[str]]
+	for i in range(1, testTable.numRows):
+		opType = str(testTable[i, 'opType'])
+		name = str(testTable[i, 'filePath']).rsplit('/', maxsplit=1)[1].replace('.tox', '')
+		if not opType:
+			continue
+		elif opType not in testsByOpType:
+			testsByOpType[opType] = [name]
+		else:
+			testsByOpType[opType].append(name)
+	for rop in RaytkContext().allMasterOperators():
+		opType = ROPInfo(rop).opType
+		tests = testsByOpType.get(opType) or []
+		tests.sort()
+		dat.appendRow([
+			rop.path,
+			len(tests),
+		] + tests)
+	for cell in dat.row(0)[2:]:
+		cell.val = 'snippet' + str(cell.col - 1)
+
 def buildOpTagTable(dat: DAT):
 	dat.clear()
 	opPaths = []  # type: list[str]
