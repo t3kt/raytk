@@ -16,6 +16,8 @@ op:
     - LightContext
     - RayContext
     - ParticleContext
+    - VertexContext
+    - PixelContext
     coordTypes:
     - vec2
     - vec3
@@ -29,6 +31,38 @@ op:
     - Ray
     - Light
     - Particle
+  - contextTypes:
+    - Context
+    - MaterialContext
+    - CameraContext
+    - LightContext
+    - RayContext
+    - ParticleContext
+    - VertexContext
+    - PixelContext
+    coordTypes:
+    - vec2
+    - vec3
+    label: Rho Offset Field
+    name: rhoOffsetField
+    returnTypes:
+    - float
+  - contextTypes:
+    - Context
+    - MaterialContext
+    - CameraContext
+    - LightContext
+    - RayContext
+    - ParticleContext
+    - VertexContext
+    - PixelContext
+    coordTypes:
+    - vec2
+    - vec3
+    label: Theta Offset Field
+    name: thetaOffsetField
+    returnTypes:
+    - float
   keywords:
   - log
   - modulo

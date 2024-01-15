@@ -16,6 +16,8 @@ op:
     - LightContext
     - RayContext
     - ParticleContext
+    - VertexContext
+    - PixelContext
     coordTypes:
     - float
     - vec2
@@ -26,6 +28,7 @@ op:
     required: true
     returnTypes:
     - float
+    - vec4
   name: rescaleFloatField
   opType: raytk.operators.filter.rescaleFloatField
   parameters:
@@ -39,6 +42,5 @@ op:
     name: Multiply
   - label: Post Add
     name: Postadd
-  status: beta
 
 ---

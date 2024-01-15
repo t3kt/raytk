@@ -26,6 +26,7 @@ cat:
   - name: blobbyCrossSdf2d
   - name: branchingTreeSdf2d
     status: beta
+  - name: chamferRectangleSdf2d
   - name: circleSdf
     summary: 2D circle SDF.
   - name: circleWaveSdf2d
@@ -58,7 +59,11 @@ cat:
   - name: moonSdf2d
   - name: parabolaSdf2d
   - name: parallelogramSdf2d
-  - name: pieSdf2d
+  - keywords:
+    - arc
+    - ring
+    - slice
+    name: pieSdf2d
     summary: SDF for a 2D pie-slice shape.
   - name: pistonSdf2d
     status: beta
@@ -86,6 +91,8 @@ cat:
   - name: subdivisionSdf2d
     status: beta
   - name: superQuadSdf2d
+  - name: textSdf2d
+    status: beta
   - name: trapezoidSdf2d
   - name: triangleSdf2d
     summary: SDF for a 2D triangle.

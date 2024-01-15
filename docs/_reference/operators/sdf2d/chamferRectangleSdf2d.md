@@ -1,11 +1,11 @@
 ---
 layout: operator
-title: stairSdf2d
+title: chamferRectangleSdf2d
 parent: Sdf2d Operators
 grand_parent: Operators
-permalink: /reference/operators/sdf2d/stairSdf2d
+permalink: /reference/operators/sdf2d/chamferRectangleSdf2d
 redirect_from:
-  - /reference/opType/raytk.operators.sdf2d.stairSdf2d/
+  - /reference/opType/raytk.operators.sdf2d.chamferRectangleSdf2d/
 op:
   category: sdf2d
   inputs:
@@ -21,7 +21,7 @@ op:
     coordTypes:
     - vec2
     label: Scale Field
-    name: sizeField
+    name: scaleField
     returnTypes:
     - float
     - vec4
@@ -36,19 +36,19 @@ op:
     - PixelContext
     coordTypes:
     - vec2
-    label: Steps Field
-    name: stepsField
+    label: Chamfer Field
+    name: chamferField
     returnTypes:
     - float
     - vec4
-  name: stairSdf2d
-  opType: raytk.operators.sdf2d.stairSdf2d
+  name: chamferRectangleSdf2d
+  opType: raytk.operators.sdf2d.chamferRectangleSdf2d
   parameters:
-  - label: Size
-    name: Size
-  - label: Steps
-    name: Steps
-  status: beta
-  thumb: assets/images/reference/operators/sdf2d/stairSdf2d_thumb.png
+  - label: Scale
+    name: Scale
+    summary: The size of the rectangle on the x and y axes.
+  - label: Chamfer
+    name: Chamfer
+  thumb: assets/images/reference/operators/sdf2d/chamferRectangleSdf2d_thumb.png
 
 ---

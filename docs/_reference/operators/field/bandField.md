@@ -21,6 +21,8 @@ op:
     - LightContext
     - RayContext
     - ParticleContext
+    - VertexContext
+    - PixelContext
     coordTypes:
     - float
     - vec2
@@ -40,6 +42,8 @@ op:
     - LightContext
     - RayContext
     - ParticleContext
+    - VertexContext
+    - PixelContext
     coordTypes:
     - float
     - vec2
@@ -59,6 +63,8 @@ op:
     - LightContext
     - RayContext
     - ParticleContext
+    - VertexContext
+    - PixelContext
     coordTypes:
     - float
     - vec2
@@ -78,13 +84,69 @@ op:
     - LightContext
     - RayContext
     - ParticleContext
+    - VertexContext
+    - PixelContext
+    coordTypes:
+    - float
+    - vec2
+    - vec3
+    - vec4
+    label: Center Field
+    name: centerField
+    returnTypes:
+    - float
+    summary: Optional function used to control how `Blending` is applied.
+  - contextTypes:
+    - Context
+    - MaterialContext
+    - CameraContext
+    - LightContext
+    - RayContext
+    - ParticleContext
+    - VertexContext
+    - PixelContext
+    coordTypes:
+    - float
+    - vec2
+    - vec3
+    - vec4
+    label: Width Field
+    name: widthField
+    returnTypes:
+    - float
+  - contextTypes:
+    - Context
+    - MaterialContext
+    - CameraContext
+    - LightContext
+    - RayContext
+    - ParticleContext
+    - VertexContext
+    - PixelContext
+    coordTypes:
+    - float
+    - vec2
+    - vec3
+    - vec4
+    label: Blend Amount Field
+    name: blendingField
+    returnTypes:
+    - float
+  - contextTypes:
+    - Context
+    - MaterialContext
+    - CameraContext
+    - LightContext
+    - RayContext
+    - ParticleContext
+    - VertexContext
+    - PixelContext
     coordTypes:
     - float
     label: Blend Function
     name: blendFunction
     returnTypes:
     - float
-    summary: Optional function used to control how `Blending` is applied.
   name: bandField
   opType: raytk.operators.field.bandField
   parameters:

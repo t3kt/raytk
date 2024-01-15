@@ -243,7 +243,6 @@ cat:
     - rf
     summary: Rescales the values produced by a field.
   - name: rescaleFloatField
-    status: beta
   - name: reshapeValues
     status: beta
     summary: Reshapes the values produced by a field by applying a function.

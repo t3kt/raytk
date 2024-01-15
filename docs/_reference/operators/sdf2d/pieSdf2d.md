@@ -16,6 +16,8 @@ op:
     - LightContext
     - RayContext
     - ParticleContext
+    - VertexContext
+    - PixelContext
     coordTypes:
     - vec2
     label: Angle Field
@@ -29,6 +31,8 @@ op:
     - LightContext
     - RayContext
     - ParticleContext
+    - VertexContext
+    - PixelContext
     coordTypes:
     - vec2
     label: Radius Field
@@ -37,6 +41,10 @@ op:
     - float
     - vec4
     summary: Radius field, either a float, or a vector with outer and inner radius
+  keywords:
+  - arc
+  - ring
+  - slice
   name: pieSdf2d
   opType: raytk.operators.sdf2d.pieSdf2d
   parameters:

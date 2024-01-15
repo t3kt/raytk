@@ -1,29 +1,14 @@
 ---
 layout: operator
-title: chainSdf
+title: sphereGridSdf
 parent: Sdf Operators
 grand_parent: Operators
-permalink: /reference/operators/sdf/chainSdf
+permalink: /reference/operators/sdf/sphereGridSdf
 redirect_from:
-  - /reference/opType/raytk.operators.sdf.chainSdf/
+  - /reference/opType/raytk.operators.sdf.sphereGridSdf/
 op:
   category: sdf
   inputs:
-  - contextTypes:
-    - Context
-    - MaterialContext
-    - CameraContext
-    - LightContext
-    - RayContext
-    - ParticleContext
-    - VertexContext
-    - PixelContext
-    coordTypes:
-    - vec3
-    label: Length Field
-    name: lengthField
-    returnTypes:
-    - float
   - contextTypes:
     - Context
     - MaterialContext
@@ -54,15 +39,28 @@ op:
     name: thicknessField
     returnTypes:
     - float
-  name: chainSdf
-  opType: raytk.operators.sdf.chainSdf
+  name: sphereGridSdf
+  opType: raytk.operators.sdf.sphereGridSdf
   parameters:
-  - label: Length
-    name: Length
+  - label: Parts
+    menuOptions:
+    - label: Both Latitudes & Longitudes
+      name: latlon
+    - label: Latitudes Only
+      name: lat
+    - label: Longitudes Only
+      name: lon
+    name: Parts
+  - label: Rows
+    name: Rows
+  - label: Columns
+    name: Cols
   - label: Radius
     name: Radius
   - label: Thickness
     name: Thickness
-  thumb: assets/images/reference/operators/sdf/chainSdf_thumb.png
+    summary: the thickness of the bars.
+  status: beta
+  thumb: assets/images/reference/operators/sdf/sphereGridSdf_thumb.png
 
 ---

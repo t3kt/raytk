@@ -21,6 +21,6 @@ op:
     name: Locked
   - label: Update
     name: Update
-  status: beta
+  status: deprecated
 
 ---

@@ -33,6 +33,8 @@ op:
     - LightContext
     - RayContext
     - ParticleContext
+    - VertexContext
+    - PixelContext
     coordTypes:
     - float
     - vec2
@@ -50,6 +52,8 @@ op:
     - LightContext
     - RayContext
     - ParticleContext
+    - VertexContext
+    - PixelContext
     coordTypes:
     - float
     - vec2
@@ -142,6 +146,8 @@ op:
     summary: A CHOP containing a channel named `active`, which is used to selectively
       turn instances off. Any instance with an active value of 0 or less will be excluded
       from the combined result.
+  - label: Enable Uniform Scale
+    name: Enablescale
   summary: Repeats its input some number of times, exposing the index as the iteration
     x value, and combines the results.
   thumb: assets/images/reference/operators/filter/instance_thumb.png

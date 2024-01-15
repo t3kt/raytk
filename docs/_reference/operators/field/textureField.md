@@ -17,6 +17,8 @@ op:
     - LightContext
     - RayContext
     - ParticleContext
+    - VertexContext
+    - PixelContext
     coordTypes:
     - float
     - vec2
@@ -99,6 +101,13 @@ op:
       name: mirror
     name: Extendmode
     summary: How to handle UV coordinates outside the 0..1 range.
+  - label: Coord Mode
+    menuOptions:
+    - label: UV [0-1]
+      name: uv
+    - label: Pixel [0-n]
+      name: pixel
+    name: Coordmode
   summary: A float or vector field that looks up values from a texture.
   thumb: assets/images/reference/operators/field/textureField_thumb.png
   variables:
