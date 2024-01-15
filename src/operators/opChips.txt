@@ -2,8 +2,11 @@ name	chip
 chamferRectangleSdf2d	new
 sphereGridSdf	new
 textSdf2d	new
+bandField	updated
 bend	updated
 instance	updated
 knife	updated
 logPolarRepeat	updated
 rescaleFloatField	updated
+stepField	updated
+textureField	updated
