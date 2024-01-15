@@ -735,6 +735,12 @@ def createActionManager():
 			select=RopSelect(coordTypes=['vec3']),
 			attach=AttachOutFromExisting(),
 		),
+		ActionImpl(
+			'Assign Color',
+			ropType='raytk.operators.filter.assignColor',
+			select=RopSelect(returnTypes=['Sdf']),
+			attach=AttachOutFromExisting(),
+		),
 		_createAddInputActionGroup(
 			'Add Diffuse',
 			'raytk.operators.material.diffuseContrib',
