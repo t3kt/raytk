@@ -4,12 +4,16 @@
 
 ### Highlights
 
+* New snippet format - separate tox files in a zip instead of one massive tox file with all of them. These will load much faster than the old format.
+* New 2D text SDF!
+* Reduced build tox file size.
+
 ### Details
 
 * Improvements / additions
   * New OPs
     * chamferRectangleSdf2d - rectangle with chamfered corners
-    * sphereGridSdf - lattitude/longitude bars around a sphere
+    * sphereGridSdf - latitude/longitude bars around a sphere
     * textSdf2d - basic 2d text SDF
   * New OP features
     * bandField - center, width, blending field inputs
