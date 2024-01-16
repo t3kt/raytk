@@ -19,6 +19,13 @@ float fCone(vec3 p, float radius, float height) {
 	return d;
 }
 
+float fCone(vec3 p, float radius, float height, vec3 direction, float offset) {
+	p -= direction * offset;
+	p = reflect(p, normalize(mix(vec3(0,1,0), -direction, .5)));
+	//p -= vec3(0,height,0);
+	return fCone(p, radius, height);
+}
+
 float sdCappedCone(vec3 p, float h, float r1, float r2)
 {
 	vec2 q = vec2( length(p.xz), p.y );
