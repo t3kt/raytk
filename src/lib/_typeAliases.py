@@ -25,4 +25,4 @@ class BoolParamT(Par, T.Union[Par, bool, int]):
 
 ValT = T.TypeVar('ValT')
 class PythonParamT(T.Generic[ValT], Par, T.Union[Par, None, ValT]):
-	def eval(self) -> T.Optional[ValT]:
+	def eval(self) -> T.Optional[ValT]: pass

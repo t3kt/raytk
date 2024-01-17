@@ -17,6 +17,8 @@ op:
     - LightContext
     - RayContext
     - ParticleContext
+    - VertexContext
+    - PixelContext
     coordTypes:
     - float
     - vec3
@@ -31,6 +33,8 @@ op:
     - LightContext
     - RayContext
     - ParticleContext
+    - VertexContext
+    - PixelContext
     coordTypes:
     - float
     - vec3
@@ -45,6 +49,8 @@ op:
     - LightContext
     - RayContext
     - ParticleContext
+    - VertexContext
+    - PixelContext
     coordTypes:
     - float
     - vec3
@@ -59,6 +65,8 @@ op:
     - LightContext
     - RayContext
     - ParticleContext
+    - VertexContext
+    - PixelContext
     coordTypes:
     - float
     - vec2
@@ -74,6 +82,8 @@ op:
     - LightContext
     - RayContext
     - ParticleContext
+    - VertexContext
+    - PixelContext
     coordTypes:
     - vec2
     label: Cross Section Shape

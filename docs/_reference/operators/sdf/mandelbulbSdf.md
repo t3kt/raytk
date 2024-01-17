@@ -16,6 +16,8 @@ op:
     - LightContext
     - RayContext
     - ParticleContext
+    - VertexContext
+    - PixelContext
     coordTypes:
     - vec3
     label: Shift (Theta, Phi) field

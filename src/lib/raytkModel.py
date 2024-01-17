@@ -9,7 +9,6 @@ import dataclasses
 from io import StringIO
 from pathlib import Path
 import re
-from typing import Dict, Iterable, List, Optional, Union
 import yaml
 
 from raytkUtil import ROPInfo, InputInfo, RaytkTags, OpDefParsT
@@ -29,7 +28,7 @@ class ModelObject(yaml.YAMLObject):
 	yaml_loader = yaml.FullLoader
 
 	@classmethod
-	def to_yaml(cls, dumper: 'yaml.Dumper', data):
+	def to_yaml(cls, dumper: yaml.Dumper, data):
 		return dumper.represent_mapping(cls.yaml_tag, data.toYamlDict())
 
 	@classmethod
@@ -44,7 +43,7 @@ class ModelObject(yaml.YAMLObject):
 				d[f.name] = val
 		return d
 
-	def writeToFile(self, file: 'Union[Path, str]'):
+	def writeToFile(self, file: Path | str):
 		file = Path(file)
 		text = self.toYamlText()
 		file.write_text(text)
@@ -67,16 +66,16 @@ class Expr(ModelObject):
 
 	expr: str
 
-def _exprRepresenter(dumper: 'yaml.Dumper', data: 'Expr'):
+def _exprRepresenter(dumper: yaml.Dumper, data: Expr):
 	return dumper.represent_scalar(Expr.yaml_tag, data.expr, style='')
 
 # yaml.add_representer(Expr, _exprRepresenter)
 yaml.add_implicit_resolver(Expr.yaml_tag, regexp=re.compile(r'^\$.*$'), Loader=ModelObject.yaml_loader)
 
-ValueOrExprT = Union[Expr, str, int, float, bool, None]
-ValueOrListOrExprT = Union[ValueOrExprT, List[str]]
+ValueOrExprT = Expr | str | int | float | bool | None
+ValueOrListOrExprT = ValueOrExprT | list[str]
 
-CellValueT = Union[str, int, float, bool]
+CellValueT = str | int | float | bool
 
 @dataclass
 class EvalDatOptions(ModelObject):
@@ -84,11 +83,11 @@ class EvalDatOptions(ModelObject):
 
 	excludeFirstRow: bool = False
 	excludeFirstCol: bool = False
-	rows: Optional[str] = '*'
-	cols: Optional[str] = '*'
+	rows: str | None = '*'
+	cols: str | None = '*'
 
 	@classmethod
-	def fromDat(cls, dat: 'Optional[evaluateDAT]'):
+	def fromDat(cls, dat: evaluateDAT | None):
 		if not dat:
 			return None
 		return cls(
@@ -103,7 +102,7 @@ class EvalDatOptions(ModelObject):
 			return False
 		return self.rows != '*' or self.cols != '*'
 
-def _extractDatEvalPart(modePar: 'Par', namesPar: 'Par'):
+def _extractDatEvalPart(modePar: Par, namesPar: Par):
 	if modePar.mode != ParMode.CONSTANT:
 		raise Exception(f'Unsupported mode for {modePar!r}')
 	if namesPar.mode != ParMode.CONSTANT:
@@ -129,11 +128,11 @@ class TableData(ModelObject):
 
 	yaml_tag = u'!table'
 
-	file: Optional[str] = None
-	name: Optional[str] = None
-	rows: List[List[CellValueT]] = field(default_factory=list)
-	evaluate: Optional[bool] = None
-	evalOpts: Optional[EvalDatOptions] = None
+	file: str | None = None
+	name: str | None = None
+	rows: list[list[CellValueT]] = field(default_factory=list)
+	evaluate: bool | None = None
+	evalOpts: EvalDatOptions | None = None
 
 	def toYamlDict(self):
 		obj = super().toYamlDict()
@@ -156,9 +155,9 @@ class TextData(ModelObject):
 
 	yaml_tag = u'!text'
 
-	file: Optional[str] = None
-	name: Optional[str] = None
-	text: Optional[str] = None
+	file: str | None = None
+	name: str | None = None
+	text: str | None = None
 
 @dataclass
 class ROPMeta(ModelObject):
@@ -166,7 +165,7 @@ class ROPMeta(ModelObject):
 
 	opType: str = ''
 	opVersion: int = 0
-	opStatus: Optional[str] = None
+	opStatus: str | None = None
 	
 	@classmethod
 	def fromRopInfo(cls, ropInfo: ROPInfo):
@@ -195,7 +194,7 @@ class CoordTypes(ModelObject):
 	Coordtypevec4: ValueOrExprT = None
 
 	@classmethod
-	def fromComp(cls, specComp: 'COMP'):
+	def fromComp(cls, specComp: COMP):
 		return cls(**_valOrExprDictFromPars(specComp.pars('Allcoordtype', 'Coordtype*')))
 
 	def toYamlDict(self):
@@ -214,9 +213,11 @@ class ContextTypes(ModelObject):
 	Contexttypelightcontext: ValueOrExprT = None
 	Contexttyperaycontext: ValueOrExprT = None
 	Contexttypeparticlecontext: ValueOrExprT = None
+	Contexttypevertexcontext: ValueOrExprT = None
+	Contexttypepixelcontext: ValueOrExprT = None
 
 	@classmethod
-	def fromComp(cls, specComp: 'COMP'):
+	def fromComp(cls, specComp: COMP):
 		return cls(**_valOrExprDictFromPars(specComp.pars('Allcontexttype', 'Contexttype*')))
 
 	def toYamlDict(self):
@@ -237,7 +238,7 @@ class ReturnTypes(ModelObject):
 	Returntypeparticle: ValueOrExprT = None
 
 	@classmethod
-	def fromComp(cls, specComp: 'COMP'):
+	def fromComp(cls, specComp: COMP):
 		return ReturnTypes(**_valOrExprDictFromPars(specComp.pars('Allreturntype', 'Returntype*')))
 
 	def toYamlDict(self):
@@ -284,12 +285,12 @@ class InputSpec(ModelObject):
 
 	Required: ValueOrExprT = False
 
-	coordType: Optional[CoordTypes] = None
-	contextType: Optional[ContextTypes] = None
-	returnType: Optional[ReturnTypes] = None
+	coordType: CoordTypes | None = None
+	contextType: ContextTypes | None = None
+	returnType: ReturnTypes | None = None
 
 	@classmethod
-	def fromComp(cls, handler: 'COMP'):
+	def fromComp(cls, handler: COMP):
 		return cls(
 			coordType=CoordTypes.fromComp(handler),
 			contextType=ContextTypes.fromComp(handler),
@@ -298,7 +299,7 @@ class InputSpec(ModelObject):
 				'Source', 'Name', 'Label', 'Localalias', 'Help', 'Required', 'Variables', 'Variableinputs')))
 
 	@classmethod
-	def fromCompList(cls, handlers: 'List[COMP]', forMulti: bool):
+	def fromCompList(cls, handlers: list[COMP], forMulti: bool):
 		return [
 			cls.fromComp(handler)
 			for handler in handlers
@@ -330,10 +331,10 @@ class MultiInputSpec(ModelObject):
 	Returntypereductionscope: ValueOrListOrExprT = None
 	Returntypepreference: ValueOrListOrExprT = None
 
-	inputs: List[InputSpec] = field(default_factory=list)
+	inputs: list[InputSpec] = field(default_factory=list)
 
 	@classmethod
-	def fromComps(cls, multiHandler: 'COMP', inputHandlers: 'List[COMP]'):
+	def fromComps(cls, multiHandler: COMP, inputHandlers: list[COMP]):
 		if not multiHandler:
 			return None
 		return cls(
@@ -341,14 +342,7 @@ class MultiInputSpec(ModelObject):
 			**_valOrExprDictFromPars(multiHandler.pars(
 				'Minimuminputs', 'Coordtype*', 'Contexttype*', 'Returntype*'))
 		)
-
-def _getParValsDict(pars: 'Iterable[Par]'):
-	return {
-		p.name: p.eval()
-		for p in pars
-		if not p.isPulse and not p.isMomentary
-	}
-def _setParValsFromDict(o: 'OP', parVals: dict):
+def _setParValsFromDict(o: OP, parVals: dict):
 	for name, val in parVals.items():
 		o.par[name] = val
 
@@ -360,12 +354,12 @@ class ROPTypeSpec(ModelObject):
 	Useinputcontexttype: ValueOrExprT = True
 	Useinputreturntype: ValueOrExprT = True
 
-	coordType: Optional[CoordTypes] = None
-	contextType: Optional[ContextTypes] = None
-	returnType: Optional[ReturnTypes] = None
+	coordType: CoordTypes | None = None
+	contextType: ContextTypes | None = None
+	returnType: ReturnTypes | None = None
 
 	@classmethod
-	def fromComp(cls, specComp: 'COMP'):
+	def fromComp(cls, specComp: COMP):
 		if not specComp:
 			return None
 		return cls(
@@ -374,7 +368,7 @@ class ROPTypeSpec(ModelObject):
 			returnType=ReturnTypes.fromComp(specComp),
 			**_valOrExprDictFromPars(specComp.pars('Useinput*')))
 
-	def applyTo(self, specComp: 'COMP'):
+	def applyTo(self, specComp: COMP):
 		specComp.par.Useinputcoordtype = self.Useinputcoordtype
 		specComp.par.Useinputcontexttype = self.Useinputcontexttype
 		specComp.par.Useinputreturntype = self.Useinputreturntype
@@ -401,8 +395,8 @@ class ROPTypeSpec(ModelObject):
 				del obj[key]
 		return obj
 
-_TableSetting = Union[TableData, Expr, None]
-_TextSetting = Union[TextData, Expr, None]
+_TableSetting = TableData | Expr | None
+_TextSetting = TextData | Expr | None
 
 @dataclass
 class ExternalSpec(ModelObject):
@@ -466,7 +460,7 @@ class ROPDef(ModelObject):
 	paramsOp: ValueOrExprT = None
 	disableInspect: bool = False
 
-	typeSpec: Union[ROPTypeSpec, ExternalSpec, None] = None
+	typeSpec: ROPTypeSpec | ExternalSpec | None = None
 
 	opGlobals: _TextSetting = None
 	init: _TextSetting = None
@@ -485,7 +479,6 @@ class ROPDef(ModelObject):
 	macroTable: _TableSetting = None
 	variableTable: _TableSetting = None
 	referenceTable: _TableSetting = None
-	dispatchTable: _TableSetting = None
 	tagTable: _TableSetting = None
 
 	generatedMacroTables: ValueOrExprT = None
@@ -494,14 +487,15 @@ class ROPDef(ModelObject):
 	keywords: ValueOrListOrExprT = None
 	shortcuts: ValueOrListOrExprT = None
 	displayCategory: ValueOrExprT = None
+	flags: ValueOrListOrExprT = None
 
 	@classmethod
-	def fromComp(cls, opDefComp: 'COMP'):
+	def fromComp(cls, opDefComp: COMP):
 		obj = cls()
 		obj.updateFromComp(opDefComp)
 		return obj
 
-	def updateFromComp(self, opDefComp: 'COMP'):
+	def updateFromComp(self, opDefComp: COMP):
 		# noinspection PyTypeChecker
 		pars = opDefComp.par  # type: OpDefParsT
 		self.enable = _valOrExprFromPar(pars.Enable)
@@ -527,7 +521,6 @@ class ROPDef(ModelObject):
 		self.macroTable = _extractDatSetting(pars.Macrotable)
 		self.variableTable = _extractDatSetting(pars.Variabletable)
 		self.referenceTable = _extractDatSetting(pars.Referencetable)
-		self.dispatchTable = _extractDatSetting(pars.Dispatchtable)
 		self.tagTable = _extractDatSetting(pars.Tagtable)
 
 		self.generatedMacroTables = _valOrExprFromPar(pars.Generatedmacrotables)
@@ -536,8 +529,9 @@ class ROPDef(ModelObject):
 		self.keywords = _valOrExprFromPar(pars.Keywords, useList=True)
 		self.shortcuts = _valOrExprFromPar(pars.Shortcuts, useList=True)
 		self.displayCategory = _valOrExprFromPar(pars.Displaycategory)
+		self.flags = _valOrExprFromPar(pars.Flags, useList=True)
 
-	def applyToComp(self, opDefComp: 'COMP'):
+	def applyToComp(self, opDefComp: COMP):
 		# noinspection PyTypeChecker
 		pars = opDefComp.par  # type: OpDefParsT
 
@@ -560,6 +554,7 @@ class ROPDef(ModelObject):
 		_updatePar(pars.Keywords, self.keywords)
 		_updatePar(pars.Shortcuts, self.shortcuts)
 		_updatePar(pars.Displaycategory, self.displayCategory)
+		_updatePar(pars.Flags, self.flags)
 
 		# TODO: DAT-based params
 
@@ -577,7 +572,7 @@ class ParamPage(ModelObject):
 	yaml_tag = '!page'
 
 	name: str
-	pars: Dict[str, dict] = field(default_factory=dict)
+	pars: dict[str, dict] = field(default_factory=dict)
 
 	def __post_init__(self):
 		for parObj in self.pars.values():
@@ -593,7 +588,7 @@ class ParamPage(ModelObject):
 		return True
 
 	@classmethod
-	def fromPage(cls, page: 'Page'):
+	def fromPage(cls, page: Page):
 		return cls(
 			name=page.name,
 			pars={
@@ -604,7 +599,7 @@ class ParamPage(ModelObject):
 		)
 
 	@classmethod
-	def fromCustomPages(cls, comp: 'OP'):
+	def fromCustomPages(cls, comp: OP):
 		paramPages = []
 		for page in comp.customPages:
 			paramPage = cls.fromPage(page)
@@ -636,7 +631,7 @@ def _cleanParamSpecObj(obj: dict):
 		if 'menuLabels' in obj:
 			del obj['menuLabels']
 
-_ValueOrExprOrDatT = Union[None, ValueOrExprT, TableData, TextData]
+_ValueOrExprOrDatT = ValueOrExprT | TableData | TextData | None
 
 @dataclass
 class OpElementSpec(ModelObject):
@@ -644,29 +639,29 @@ class OpElementSpec(ModelObject):
 
 	name: str
 	elementType: str
-	params: Dict[str, _ValueOrExprOrDatT] = field(default_factory=dict)
+	params: dict[str, _ValueOrExprOrDatT] = field(default_factory=dict)
 
 	@classmethod
-	def extract(cls, comp: 'COMP'):
+	def extract(cls, comp: COMP):
 		opElement = comp.op('opElement')
 		spec = cls(comp.name, opElement.par.Elementtype.eval())
 		spec.updateFromComp(comp)
 		return spec
 
-	def updateFromComp(self, comp: 'COMP'):
+	def updateFromComp(self, comp: COMP):
 		for par in comp.customPars:
 			if par.isPulse or par.isMomentary:
 				continue
 			if par.name == 'Hostop':
 				continue
-			if par.style == 'DAT':
+			if par.style == DAT:
 				val = _extractDatSetting(par)
 			else:
 				val = _valOrExprFromPar(par)
 			self.params[par.name] = val
 
 	@classmethod
-	def findAndExtract(cls, rop: 'COMP'):
+	def findAndExtract(cls, rop: COMP):
 		return [
 			cls.extract(opElement.parent())
 			for opElement in rop.ops('*/opElement')
@@ -674,16 +669,16 @@ class OpElementSpec(ModelObject):
 
 @dataclass
 class ROPSpecBase(ModelObject):
-	meta: Optional[ROPMeta] = None
-	paramPages: Optional[List[ParamPage]] = field(default_factory=list)
+	meta: ROPMeta | None = None
+	paramPages: list[ParamPage] | None = field(default_factory=list)
 
 	@classmethod
-	def extract(cls, rop: 'COMP', skipParams=False):
+	def extract(cls, rop: COMP, skipParams=False):
 		spec = cls()
 		spec.updateFromRop(rop, skipParams)
 		return spec
 
-	def updateFromRop(self, rop: 'COMP', skipParams=False):
+	def updateFromRop(self, rop: COMP, skipParams=False):
 		ropInfo = ROPInfo(rop)
 		if self.meta:
 			self.meta.updateFromRopInfo(ropInfo)
@@ -698,12 +693,12 @@ class ROPSpec(ROPSpecBase):
 
 	opDef: ROPDef = field(default_factory=ROPDef)
 
-	multiInput: Optional[MultiInputSpec] = None
-	inputs: List[InputSpec] = field(default_factory=list)
+	multiInput: MultiInputSpec | None = None
+	inputs: list[InputSpec] = field(default_factory=list)
 
-	elements: List[OpElementSpec] = field(default_factory=list)
+	elements: list[OpElementSpec] = field(default_factory=list)
 
-	def updateFromRop(self, rop: 'COMP', skipParams=False):
+	def updateFromRop(self, rop: COMP, skipParams=False):
 		ropInfo = ROPInfo(rop)
 		super().updateFromRop(rop, skipParams)
 		self.opDef.updateFromComp(ropInfo.opDef)
@@ -733,19 +728,19 @@ class BuildUnitSpec(ModelObject):
 	compName: str
 	globalShortcut: str
 	unitType: str = BuildUnitTypes.full
-	buildTypes: List[str] = field(default_factory=list)
+	buildTypes: list[str] = field(default_factory=list)
 
 	# e.g. ['filter/*', 'field/foo*']
-	include: List[str] = field(default_factory=list)
-	exclude: List[str] = field(default_factory=list)
+	include: list[str] = field(default_factory=list)
+	exclude: list[str] = field(default_factory=list)
 
 @dataclass
 class BuildUnitList(ModelObject):
 	yaml_tag = u'!buildUnits'
 
-	buildUnits: List[BuildUnitSpec] = field(default_factory=list)
+	buildUnits: list[BuildUnitSpec] = field(default_factory=list)
 
-def _extractDatSetting(par: Optional['Par']) -> Union[TextData, TableData, Expr, None]:
+def _extractDatSetting(par: Par | None) -> TextData | TableData | Expr | None:
 	if par is None:
 		return None
 	if par.mode == ParMode.EXPRESSION:
@@ -792,17 +787,17 @@ def _extractDatSetting(par: Optional['Par']) -> Union[TextData, TableData, Expr,
 
 @dataclass
 class EditorItemGraph:
-	par: 'Par'
-	endDat: 'Optional[DAT]' = None
-	sourceDat: 'Optional[DAT]' = None
-	evalDat: 'Optional[evaluateDAT]' = None
+	par: Par
+	endDat: DAT | None = None
+	sourceDat: DAT | None = None
+	evalDat: evaluateDAT | None = None
 	hasEval: bool = False
 	supported: bool = False
-	file: 'Optional[Par]' = None
+	file: Par | None = None
 
 	@classmethod
-	def fromPar(cls, par: 'Par'):
-		endDat = par.eval()  # type: Optional[DAT]
+	def fromPar(cls, par: Par):
+		endDat = par.eval()  # type: DAT | None
 		if not endDat:
 			return cls(par, supported=True)
 		if isinstance(endDat, (tableDAT, textDAT)):
@@ -844,7 +839,7 @@ class EditorItemGraph:
 			supported=True,
 		)
 
-def _opChain(endOp: 'DAT'):
+def _opChain(endOp: DAT):
 	chain = [endOp]
 	o = endOp
 	while True:
@@ -854,7 +849,7 @@ def _opChain(endOp: 'DAT'):
 		chain.insert(0, o)
 
 class ROPSpecLoader:
-	def __init__(self, rop: 'COMP', spec: ROPSpec):
+	def __init__(self, rop: COMP, spec: ROPSpec):
 		self.rop = rop
 		self.info = ROPInfo(rop)
 		self.spec = spec
@@ -930,8 +925,8 @@ class ROPSpecLoader:
 
 	def _loadTextSetting(
 			self,
-			par: 'Par',
-			val: Optional[TextData],
+			par: Par,
+			val: TextData | None,
 			defaultName: str,
 			x: int, y: int):
 		raise Exception('TODO: support for eval opts')
@@ -952,8 +947,8 @@ class ROPSpecLoader:
 
 	def _loadTableSetting(
 			self,
-			par: 'Par',
-			val: Optional[TableData],
+			par: Par,
+			val: TableData | None,
 			defaultName: str,
 			x: int, y: int):
 		raise Exception('TODO: support for eval opts')
@@ -982,7 +977,7 @@ class ROPSpecLoader:
 			evalDat.inputConnectors[0].connect(srcDat)
 			_setParVal(par, evalDat)
 
-def _updatePar(par: 'Par', val: ValueOrListOrExprT):
+def _updatePar(par: Par, val: ValueOrListOrExprT):
 	if val is None:
 		_setParVal(par, par.default)
 	elif isinstance(val, Expr):
@@ -995,17 +990,17 @@ def _updatePar(par: 'Par', val: ValueOrListOrExprT):
 	else:
 		_setParVal(par, val)
 
-def _setParVal(par: 'Par', val):
+def _setParVal(par: Par, val):
 	par.val = val if val is not None else ''
 	par.expr = ''
 	par.mode = ParMode.CONSTANT
 
-def _setParExpr(par: 'Par', expr: str):
+def _setParExpr(par: Par, expr: str):
 	par.val = ''
 	par.expr = expr
 	par.mode = ParMode.EXPRESSION
 
-def _valOrExprFromPar(par: 'Optional[Par]', useList=False):
+def _valOrExprFromPar(par: Par | None, useList=False):
 	if par is None:
 		return None
 	if par.mode == ParMode.CONSTANT:
@@ -1016,7 +1011,7 @@ def _valOrExprFromPar(par: 'Optional[Par]', useList=False):
 		return Expr(par.expr)
 	raise Exception(f'Parameter mode {par.mode} not supported for {par!r}')
 
-def _valOrExprDictFromPars(pars: 'Iterable[Par]'):
+def _valOrExprDictFromPars(pars: list[Par]):
 	return {
 		p.name: _valOrExprFromPar(p)
 		for p in pars

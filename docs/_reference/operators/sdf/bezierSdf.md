@@ -16,6 +16,8 @@ op:
     - LightContext
     - RayContext
     - ParticleContext
+    - VertexContext
+    - PixelContext
     coordTypes:
     - vec3
     label: Point 1 Field
@@ -29,6 +31,8 @@ op:
     - LightContext
     - RayContext
     - ParticleContext
+    - VertexContext
+    - PixelContext
     coordTypes:
     - vec3
     label: Point 2 Field
@@ -42,6 +46,8 @@ op:
     - LightContext
     - RayContext
     - ParticleContext
+    - VertexContext
+    - PixelContext
     coordTypes:
     - vec3
     label: Point 3 Field
@@ -55,6 +61,8 @@ op:
     - LightContext
     - RayContext
     - ParticleContext
+    - VertexContext
+    - PixelContext
     coordTypes:
     - float
     - vec3

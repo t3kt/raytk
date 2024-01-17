@@ -1,5 +1,53 @@
 # Release Notes
 
+## v0.38
+
+### Highlights
+
+* New snippet format - separate tox files in a zip instead of one massive tox file with all of them. These will load much faster than the old format.
+* New 2D text SDF!
+* Reduced build tox file size.
+
+### Details
+
+* Improvements / additions
+  * New OPs
+    * chamferRectangleSdf2d - rectangle with chamfered corners
+    * sphereGridSdf - latitude/longitude bars around a sphere
+    * textSdf2d - basic 2d text SDF
+  * New OP features
+    * bandField - center, width, blending field inputs
+    * bend - option to only bend one side (#1129)
+    * instance - added scale CHOP support (#1151)
+    * knife - support using both parameter and field input for offset
+    * logPolarRepeat - rho / theta field inputs
+    * rescaleFloatField - support applying to vector fields, where it does the same thing to all vector parts
+    * stepField - blending field input
+    * textureField - texel coordinate mode
+  * Editor tools
+    * New action to map a float field to a color range
+    * New actions to create waveFields
+    * New action to assign color to an SDF
+  * New snippet structure - separate tox files in a zip instead of one massive tox file with all of them (#132, #1082)
+* Fixes
+  * Fix error in Customize Shader Config action (#1147)
+  * Fix error in triangleSdf2d when using read-only parameters (#1148)
+  * Fix removal of annotations during the build process - reduces build size
+  * Fix license check when choosing default resolution for new renderers (#1149)
+  * Fix missing buffer selector that was breaking preview in the inspector (#1153)
+  * Fix broken plane parameter in ringsSdf (#1154)
+* Changes (potentially breaking)
+  * Deprecate the sceneState component
+  * variableReference can no longer be manually created. Use the editor tools menu instead.
+* Infrastructure / internals
+  * Removed unused dispatch table system
+  * Initial infrastructure for MATs
+  * Support for passing separate uniform arrays per ROP for parameters (#907)
+  * Update to TD 2023.11340
+  * Remove annotations in infrastructure components - improves stability in development tools
+  * Avoid using custom instances of popMenu when possible for stability
+  * Support for hidden ROPs, which can be created but are not shown in the palette
+
 ## v0.37
 
 ### Highlights

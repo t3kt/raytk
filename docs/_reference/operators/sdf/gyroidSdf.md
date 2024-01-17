@@ -19,6 +19,8 @@ op:
     - LightContext
     - RayContext
     - ParticleContext
+    - VertexContext
+    - PixelContext
     coordTypes:
     - vec3
     label: Phase 1 Field
@@ -33,6 +35,8 @@ op:
     - LightContext
     - RayContext
     - ParticleContext
+    - VertexContext
+    - PixelContext
     coordTypes:
     - vec3
     label: Phase 2 Field
@@ -47,6 +51,8 @@ op:
     - LightContext
     - RayContext
     - ParticleContext
+    - VertexContext
+    - PixelContext
     coordTypes:
     - vec3
     label: Bias Field
@@ -60,6 +66,8 @@ op:
     - LightContext
     - RayContext
     - ParticleContext
+    - VertexContext
+    - PixelContext
     coordTypes:
     - vec3
     label: Thickness Field

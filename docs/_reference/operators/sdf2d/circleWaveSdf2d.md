@@ -16,6 +16,8 @@ op:
     - LightContext
     - RayContext
     - ParticleContext
+    - VertexContext
+    - PixelContext
     coordTypes:
     - vec2
     label: Curl Field
@@ -29,6 +31,8 @@ op:
     - LightContext
     - RayContext
     - ParticleContext
+    - VertexContext
+    - PixelContext
     coordTypes:
     - vec2
     label: Radius Field
@@ -42,6 +46,8 @@ op:
     - LightContext
     - RayContext
     - ParticleContext
+    - VertexContext
+    - PixelContext
     coordTypes:
     - vec2
     label: Thickness Field
@@ -55,6 +61,8 @@ op:
     - LightContext
     - RayContext
     - ParticleContext
+    - VertexContext
+    - PixelContext
     coordTypes:
     - vec2
     label: Offset Field

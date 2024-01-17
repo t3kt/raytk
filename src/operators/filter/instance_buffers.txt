@@ -1,4 +1,5 @@
 name	enable	type	chop	uniformType	length
 'translates'	parent().par.Enabletransform and parent().par.Enabletranslate	'vec3'	op('translateVals')	'uniformarray'	parent().par.Instancecount
 'rotates'	parent().par.Enabletransform and parent().par.Enablerotate	'vec3'	op('rotateVals')	'uniformarray'	parent().par.Instancecount
+'scales'	parent().par.Enabletransform and parent().par.Enablescale	'float'	op('scaleVals')	'uniformarray'	parent().par.Instancecount
 'actives'	parent().par.Enableactivechop	'float'	op('activeVals')	'uniformarray'	parent().par.Instancecount

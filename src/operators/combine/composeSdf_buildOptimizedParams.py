@@ -6,10 +6,10 @@ if False:
 	from _stubs import *
 	from typing import Optional
 
-def onCook(dat: 'DAT'):
+def onCook(dat: DAT):
 	dat.clear()
 	dat.appendRow(['names', 'source', 'handling', 'readOnlyHandling', 'conversion', 'enable'])
-	def _addPar(par: 'Optional[Par]'):
+	def _addPar(par: Par | None):
 		if par is not None and par.mode != ParMode.CONSTANT:
 			dat.appendRow([par.name, 'param', 'runtime', 'macro', '', '1'])
 	for stage in loadStages():

@@ -13,11 +13,11 @@ if False:
 	ipar.inspectorCore = _InspectorCorePars()
 
 class InputsPanel:
-	def __init__(self, ownerComp: 'COMP'):
+	def __init__(self, ownerComp: COMP):
 		self.ownerComp = ownerComp
 
 	@staticmethod
-	def buildInputTable(dat: 'DAT'):
+	def buildInputTable(dat: DAT):
 		dat.clear()
 		dat.appendRow(['name', 'label', 'handler', 'multi'])
 		info = ROPInfo(ipar.inspectorCore.Targetcomp)

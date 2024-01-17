@@ -11,7 +11,7 @@ def onSetupParameters(scriptOp):
 	page.appendStr('Returnexpr', label='Return Expr')
 	page.appendStr('Paramexpr', label='Param Expr')
 
-def onCook(dat: 'DAT'):
+def onCook(dat: DAT):
 	dat.clear()
 	varType = dat.par.Variabletype.eval()
 	defaultExpr = dat.par.Defaultexpr.eval()

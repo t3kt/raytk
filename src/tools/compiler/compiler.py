@@ -1,6 +1,3 @@
-from raytkUtil import InspectorTargetTypes
-from typing import Union
-
 # noinspection PyUnreachableCode
 if False:
 	# noinspection PyUnresolvedReferences
@@ -19,16 +16,16 @@ if False:
 	ipar.compilerState = _CompilerState()
 
 class Compiler:
-	def __init__(self, ownerComp: 'COMP'):
+	def __init__(self, ownerComp: COMP):
 		self.ownerComp = ownerComp
-		self.inspectorCore = iop.inspectorCore  # type: Union[InspectorCore, COMP]
-		self.compilerCore = iop.compilerCore  # type: Union[CompilerCore, COMP]
+		self.inspectorCore = iop.inspectorCore  # type: InspectorCore | COMP
+		self.compilerCore = iop.compilerCore  # type: CompilerCore | COMP
 		self.state = ipar.compilerState
 
 	def Reset(self, _=None):
 		self.compilerCore.Reset()
 
-	def Load(self, o: 'Union[OP, COMP, str]'):
+	def Load(self, o: OP | COMP | str):
 		self.compilerCore.Load(o)
 		if not self.compilerCore.OutputOP:
 			return

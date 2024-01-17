@@ -3,7 +3,6 @@ if False:
 	# noinspection PyUnresolvedReferences
 	from _stubs import *
 	from _typeAliases import *
-	from typing import Optional
 	from inputHandler import _HandlerPar
 
 	class _HandlerParFull(_HandlerPar):
@@ -13,7 +12,7 @@ if False:
 		Variableinputs: StrParamT
 
 # Everything in this table gets frozen at build time.
-def onCook(dat: 'scriptDAT'):
+def onCook(dat: scriptDAT):
 	dat.clear()
 	host = _parentPar().Hostop.eval()
 	ownIn = _getAttachedInDAT()
@@ -55,7 +54,7 @@ def _parentPar() -> '_HandlerParFull':
 	# noinspection PyTypeChecker
 	return parent().par
 
-def _getAttachedInDAT() -> 'Optional[inDAT]':
+def _getAttachedInDAT() -> inDAT | None:
 	host = _parentPar().Hostop.eval()
 	if not host:
 		return
@@ -83,9 +82,9 @@ def _parseHandlerName():
 	return name, None
 
 def _determineAutoIndex(
-		host: 'Optional[COMP]',
-		ownIn: 'Optional[inDAT]',
-		baseName: 'Optional[str]'):
+		host: COMP | None,
+		ownIn: inDAT | None,
+		baseName: str | None):
 	if not host:
 		return 0
 	# Look for digits in the first part of the name, with support for:

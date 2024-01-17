@@ -1,6 +1,5 @@
-from typing import Optional, Union
 from raytkUtil import InspectorTargetTypes, VisualizerTypes, ReturnTypes, CoordTypes, ContextTypes
-from raytkUtil import isROP, isROPDef, ROPInfo, navigateTo
+from raytkUtil import ROPInfo, navigateTo
 import re
 
 # noinspection PyUnreachableCode
@@ -10,18 +9,18 @@ if False:
 	from _typeAliases import *
 
 	class _state(ParCollection):
-		Hastarget: 'BoolParamT'
-		Hasownviewer: 'BoolParamT'
-		Targettype: 'StrParamT'
-		Rawtarget: 'OPParamT'
-		Definitiontable: 'DatParamT'
-		Targetcomp: 'CompParamT'
-		Outputcomp: 'CompParamT'
-		Shaderbuilder: 'CompParamT'
-		Returntype: 'StrParamT'
-		Coordtype: 'StrParamT'
-		Contexttype: 'StrParamT'
-		Visualizertype: 'StrParamT'
+		Hastarget: BoolParamT
+		Hasownviewer: BoolParamT
+		Targettype: StrParamT
+		Rawtarget: OPParamT
+		Definitiontable: DatParamT
+		Targetcomp: CompParamT
+		Outputcomp: CompParamT
+		Shaderbuilder: CompParamT
+		Returntype: StrParamT
+		Coordtype: StrParamT
+		Contexttype: StrParamT
+		Visualizertype: StrParamT
 
 def updateStateMenus():
 	p = parent().par.Targettype  # type: Par
@@ -36,7 +35,7 @@ def updateStateMenus():
 	p.menuNames = p.menuLabels = VisualizerTypes.values
 
 class InspectorCore:
-	def __init__(self, ownerComp: 'COMP'):
+	def __init__(self, ownerComp: COMP):
 		self.ownerComp = ownerComp
 		# noinspection PyTypeChecker
 		self.state = ownerComp.par   # type: _state
@@ -51,7 +50,7 @@ class InspectorCore:
 		self.state.Definitiontable = ''
 		self.state.Visualizertype = VisualizerTypes.none
 
-	def Inspect(self, o: 'Union[OP, DAT, COMP, str]'):
+	def Inspect(self, o: OP | DAT | COMP | str):
 		o = o and op(o)
 		if not o:
 			self.Reset()
@@ -63,7 +62,7 @@ class InspectorCore:
 			# TODO: better error handling
 			raise Exception(f'Unsupported OP: {o!r}')
 
-	def inspectComp(self, comp: 'COMP'):
+	def inspectComp(self, comp: COMP):
 		self.state.Rawtarget = _pathOrEmpty(comp)
 		self.state.Targetcomp = _pathOrEmpty(comp)
 		ropInfo = ROPInfo(comp)
@@ -96,17 +95,17 @@ class InspectorCore:
 	def ShowTargetInEditor(self, popup=False):
 		navigateTo(self.state.Rawtarget.eval(), popup=popup, goInto=False)
 
-	def AttachOutputComp(self, o: 'COMP'):
+	def AttachOutputComp(self, o: COMP):
 		self.state.Outputcomp = _pathOrEmpty(o)
 		if o and o.par['Shaderbuilder'] is not None:
 			self.state.Shaderbuilder = _pathOrEmpty(o.par.Shaderbuilder.eval())
 
 	@property
-	def TargetComp(self) -> 'Optional[COMP]':
+	def TargetComp(self) -> COMP | None:
 		return self.state.Targetcomp.eval()
 
 	@staticmethod
-	def buildShaderIncludes(dat: 'DAT', shaderCode: str):
+	def buildShaderIncludes(dat: DAT, shaderCode: str):
 		dat.clear()
 		dat.appendRow(['path', 'name'])
 		if not shaderCode:
@@ -121,5 +120,5 @@ class InspectorCore:
 				])
 
 
-def _pathOrEmpty(o: Optional['OP']):
+def _pathOrEmpty(o: OP | None):
 	return o.path if o else ''

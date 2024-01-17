@@ -26,13 +26,18 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 		shift += adaptAsFloat(inputOp_shiftField(inputOp_shiftField_asCoordT(p), ctx));
 		#endif
 		q.x += shift;
-
-		// opCheapBendPos
-		float c = cos(amt*q.x);
-		float s = sin(amt*q.x);
-		mat2 m = mat2(c, -s, s, c);
-		q = vec3(m*q.xy, q.z);
-
+		bool skip = false;
+		switch (int(THIS_Side)) {
+			case THISTYPE_Side_neg: skip = q.x > 0.; break;
+			case THISTYPE_Side_pos: skip = q.x < 0.; break;
+		}
+		if (!skip) {
+			// opCheapBendPos
+			float c = cos(amt*q.x);
+			float s = sin(amt*q.x);
+			mat2 m = mat2(c, -s, s, c);
+			q = vec3(m*q.xy, q.z);
+		}
 		q.x -= shift;
 		#if defined(THIS_COORD_TYPE_vec2)
 		switch (int(THIS_Direction)) {

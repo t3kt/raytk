@@ -10,7 +10,7 @@ from raytkDocs import OpDocManager
 from raytkModel import ROPSpec, RCompSpec, ROPSpecBase
 from raytkUtil import RaytkContext, ROPInfo, focusFirstCustomParameterPage, RaytkTags, CategoryInfo, ContextTypes, \
 	CoordTypes, ReturnTypes, getActiveEditor, IconColors
-from typing import Callable, List, Optional
+from typing import Callable
 
 # noinspection PyUnreachableCode
 if False:
@@ -22,7 +22,7 @@ class RaytkTools(RaytkContext):
 	Utility that provides tools used to modify the toolkit, for use in development tools.
 	"""
 
-	def generateROPType(self, comp: 'COMP'):
+	def generateROPType(self, comp: COMP):
 		info = ROPInfo(comp)
 		if not info.isMaster:
 			raise Exception('ROP is not proper master')
@@ -31,7 +31,7 @@ class RaytkTools(RaytkContext):
 			path = path[2:]
 		return 'raytk.' + path.replace('/', '.')
 
-	def updateROPMetadata(self, rop: 'COMP', incrementVersion=False):
+	def updateROPMetadata(self, rop: COMP, incrementVersion=False):
 		info = ROPInfo(rop)
 		if not info or not info.isMaster:
 			return
@@ -55,7 +55,7 @@ class RaytkTools(RaytkContext):
 			if tag.name in info.opDef.tags:
 				info.opDef.tags.remove(tag.name)
 
-	def updateROPParams(self, rop: 'COMP'):
+	def updateROPParams(self, rop: COMP):
 		info = ROPInfo(rop)
 		if not info or not info.isMaster:
 			return
@@ -103,7 +103,7 @@ class RaytkTools(RaytkContext):
 		self._updateRenderSelectParams(rop)
 
 	@staticmethod
-	def _updateVariableRefParams(rop: 'COMP'):
+	def _updateVariableRefParams(rop: COMP):
 		if rop.name == 'provideVariable':
 			return
 		stateText = ROPInfo(rop).opStateText
@@ -140,7 +140,7 @@ class RaytkTools(RaytkContext):
 				pass
 
 	@staticmethod
-	def _updateRenderSelectParams(rop: 'COMP'):
+	def _updateRenderSelectParams(rop: COMP):
 		table = ROPInfo(rop).outputBufferTable
 		if not table:
 			return
@@ -166,7 +166,7 @@ class RaytkTools(RaytkContext):
 				pass
 
 	@staticmethod
-	def updateOPImage(rop: 'COMP'):
+	def updateOPImage(rop: COMP):
 		img = rop.op('./*Definition/opImage')
 		if not img:
 			return
@@ -174,7 +174,7 @@ class RaytkTools(RaytkContext):
 		rop.viewer = True
 		return img
 
-	def saveROP(self, rop: 'COMP', incrementVersion=False):
+	def saveROP(self, rop: COMP, incrementVersion=False):
 		info = ROPInfo(rop)
 		if not info or not info.isMaster:
 			# TODO: warning?
@@ -203,7 +203,7 @@ class RaytkTools(RaytkContext):
 		ui.status = f'Saved TOX {tox} (version: {info.opVersion})'
 
 	@staticmethod
-	def updateROPDATLanguages(rop: 'COMP'):
+	def updateROPDATLanguages(rop: COMP):
 		info = ROPInfo(rop)
 		if not info.isROP or not info.isMaster:
 			return
@@ -220,7 +220,7 @@ class RaytkTools(RaytkContext):
 					dat.par.language = 'glsl'
 
 	@staticmethod
-	def setUpHelp(rop: 'COMP'):
+	def setUpHelp(rop: COMP):
 		info = ROPInfo(rop)
 		if not info or not info.isMaster:
 			return
@@ -232,7 +232,7 @@ class RaytkTools(RaytkContext):
 			ui.undo.endBlock()
 
 	@staticmethod
-	def reloadHelp(rop: 'COMP'):
+	def reloadHelp(rop: COMP):
 		info = ROPInfo(rop)
 		if not info or not info.isMaster:
 			return
@@ -244,14 +244,14 @@ class RaytkTools(RaytkContext):
 			ui.undo.endBlock()
 
 	@staticmethod
-	def setROPStatus(rop: 'COMP', status: Optional[str]):
+	def setROPStatus(rop: COMP, status: str | None):
 		info = ROPInfo(rop)
 		if not info or not info.isMaster:
 			return
 		info.setOpStatus(status)
 
 	@staticmethod
-	def _getROPRelatedFile(rop: 'COMP', fileSuffix: str, checkExists: bool) -> 'Optional[Path]':
+	def _getROPRelatedFile(rop: COMP, fileSuffix: str, checkExists: bool) -> Path | None:
 		info = ROPInfo(rop)
 		if not info or not info.isMaster:
 			return
@@ -263,7 +263,7 @@ class RaytkTools(RaytkContext):
 			return
 		return file
 
-	def loadROPSpec(self, rop: 'COMP', checkExists: bool) -> Optional[ROPSpecBase]:
+	def loadROPSpec(self, rop: COMP, checkExists: bool) -> ROPSpecBase | None:
 		specFile = self._getROPRelatedFile(rop, '.yaml', checkExists=False)
 		if not specFile.exists():
 			if checkExists:
@@ -277,7 +277,7 @@ class RaytkTools(RaytkContext):
 			spec = ROPSpec.parseFromText(text)
 		return spec
 
-	def applyROPSpec(self, rop: 'COMP'):
+	def applyROPSpec(self, rop: COMP):
 		try:
 			ropInfo = ROPInfo(rop)
 			if not ropInfo:
@@ -295,7 +295,7 @@ class RaytkTools(RaytkContext):
 			ui.status = f'Failed to load ROPSpec for {rop}: {err}'
 			print(f'Failed to load ROPSpec for {rop}:\n{err}')
 
-	def saveROPSpec(self, rop: 'COMP'):
+	def saveROPSpec(self, rop: COMP):
 		try:
 			ropInfo = ROPInfo(rop)
 			if not ropInfo:
@@ -329,7 +329,7 @@ class RaytkTools(RaytkContext):
 			if info:
 				info.toolkitVersion = version
 
-	def _templateForCategory(self, category: str) -> 'Optional[COMP]':
+	def _templateForCategory(self, category: str) -> COMP | None:
 		catInfo = self.categoryInfo(category)
 		template = catInfo and catInfo.templateComp
 		if template:
@@ -337,7 +337,7 @@ class RaytkTools(RaytkContext):
 		catInfo = self.categoryInfo('utility')
 		return catInfo and catInfo.templateComp
 
-	def createNewRopType(self, typeName: str, category: str) -> 'Optional[COMP]':
+	def createNewRopType(self, typeName: str, category: str) -> COMP | None:
 		catInfo = self.categoryInfo(category)
 		if not catInfo:
 			raise Exception(f'Category not found: {category}')
@@ -360,7 +360,7 @@ class RaytkTools(RaytkContext):
 		self.organizeCategory(catInfo.category)
 		return rop
 
-	def organizeCategory(self, comp: 'COMP', saveIndexTox=True):
+	def organizeCategory(self, comp: COMP, saveIndexTox=True):
 		catInfo = CategoryInfo(comp)
 		rops = catInfo.operators
 		if not rops:
@@ -370,7 +370,7 @@ class RaytkTools(RaytkContext):
 			catInfo.category.save(catInfo.category.par.externaltox)
 
 	@staticmethod
-	def _organizeComps(comps: 'List[COMP]'):
+	def _organizeComps(comps: list[COMP]):
 		comps = list(comps)
 		comps.sort(key=lambda c: c.name)
 		for i, o in enumerate(comps):
@@ -388,17 +388,17 @@ class RaytkTools(RaytkContext):
 		for cat in self.allCategories():
 			self.organizeCategory(cat, saveIndexTox=True)
 
-	def updateContextTypeParMenu(self, ropInfo: 'Optional[ROPInfo]'):
+	def updateContextTypeParMenu(self, ropInfo: ROPInfo | None):
 		self._updateTypeParMenu(ropInfo, 'Contexttype', ContextTypes.values)
 
-	def updateCoordTypeParMenu(self, ropInfo: 'Optional[ROPInfo]'):
+	def updateCoordTypeParMenu(self, ropInfo: ROPInfo | None):
 		self._updateTypeParMenu(ropInfo, 'Coordtype', CoordTypes.values)
 
-	def updateReturnTypeParMenu(self, ropInfo: 'Optional[ROPInfo]'):
+	def updateReturnTypeParMenu(self, ropInfo: ROPInfo | None):
 		self._updateTypeParMenu(ropInfo, 'Returntype', ReturnTypes.values)
 
 	@staticmethod
-	def _updateTypeParMenu(ropInfo: 'Optional[ROPInfo]', parName: str, values: List[str]):
+	def _updateTypeParMenu(ropInfo: ROPInfo | None, parName: str, values: list[str]):
 		if not ropInfo:
 			return
 		par = ropInfo.rop.par[parName]
@@ -449,7 +449,7 @@ class RaytkTools(RaytkContext):
 
 class ToolkitLoader(RaytkTools):
 	def __init__(self, log: 'Callable[[str], None]'):
-		self.categoryNameQueue = []  # type: List[str]
+		self.categoryNameQueue = []  # type: list[str]
 		self.log = log
 
 	def loadToolkit(self, thenRun: Callable = None, runArgs: list = None):
@@ -496,14 +496,14 @@ class ToolkitLoader(RaytkTools):
 		]
 		self.log(f'  loaded {len(self.categoryNameQueue)} categories')
 
-	def _loadNextCategory(self, thenRun: Callable, runArgs: list):
+	def _loadNextCategory(self, thenRun: callable, runArgs: list):
 		if not self.categoryNameQueue:
 			self._queueCall(thenRun, *(runArgs or []))
 			return
 		catName = self.categoryNameQueue.pop()
 		self._loadCategory(catName, thenRun=self._loadNextCategory, runArgs=[thenRun, runArgs])
 
-	def _loadCategory(self, categoryName: str, thenRun: Callable, runArgs: list):
+	def _loadCategory(self, categoryName: str, thenRun: callable, runArgs: list):
 		self.log(f'Loading category {categoryName}')
 		catInfo = self.categoryInfo(categoryName)
 		indexTox = Path(catInfo.category.par.externaltox.eval())
@@ -537,7 +537,7 @@ class ToolkitLoader(RaytkTools):
 
 		self._queueCall(thenRun, *(runArgs or []))
 
-	def _loadCategoryHelp(self, catInfo: 'CategoryInfo', catDir: 'Path'):
+	def _loadCategoryHelp(self, catInfo: CategoryInfo, catDir: Path):
 		helpFile = catDir / 'index.md'
 		helpDat = catInfo.helpDAT
 		self.log(f'Attempting to load category help from {helpFile.as_posix()}')
@@ -557,7 +557,7 @@ class ToolkitLoader(RaytkTools):
 		helpDat.nodeHeight = 175
 		self.log(f'  loaded category help from {helpFile.as_posix()} into {helpDat}')
 
-	def _initializeOperator(self, rop: 'COMP'):
+	def _initializeOperator(self, rop: COMP):
 		self.log(f'Initializing operator {rop}')
 		ropInfo = ROPInfo(rop)
 		if ropInfo and ropInfo.opDefPar:

@@ -3,7 +3,6 @@ if False:
 	# noinspection PyUnresolvedReferences
 	from raytkBuild import BuildTaskContext
 	from navigator import Navigator
-	from typing import Union
 	from _stubs import *
 	from components.opPicker.opPicker import OpPicker
 	ext.navigator = Navigator(COMP())
@@ -18,7 +17,7 @@ context.detachTox(comp)
 context.detachAllFileSyncDatsIn(comp, reloadFirst=True)
 context.lockBuildLockOps(comp)
 
-o = op('opPicker')  # type: Union[OpPicker, COMP]
+o = op('opPicker')  # type: OpPicker | COMP
 context.disableCloning(o)
 context.detachTox(o)
 if context.experimental:

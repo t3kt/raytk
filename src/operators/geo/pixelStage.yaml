@@ -1,0 +1,17 @@
+!rop
+meta: !meta
+  opType: raytk.operators.geo.pixelStage
+  opVersion: '0'
+  opStatus: alpha
+opDef: !def
+  enable: true
+  typeSpec: !ropTypes
+    coordType: !coordT
+      Coordtypevec3: true
+    contextType: !contextT
+      Contexttypepixelcontext: true
+    returnType: !returnT
+      Returntypefloat: true
+  function: !text
+    file: src/operators/geo/pixelStage.glsl
+    name: function

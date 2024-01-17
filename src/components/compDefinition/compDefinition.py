@@ -4,11 +4,11 @@ import re
 if False:
 	# noinspection PyUnresolvedReferences
 	from _stubs import *
-	from typing import Union
 	from raytkUtil import CompDefParsT
 	from _stubs.PopDialogExt import PopDialogExt
 
-def parentPar() -> 'Union[ParCollection, CompDefParsT]':
+def parentPar() -> 'CompDefParsT':
+	# noinspection PyTypeChecker
 	return parent().par
 
 def buildName():

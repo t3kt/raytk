@@ -5,14 +5,13 @@ if False:
 	# noinspection PyUnresolvedReferences
 	from raytkBuild import BuildTaskContext
 	from .inspectorExt import Inspector
-	from typing import Union
 	from _stubs import *
 
 context = args[0]  # type: BuildTaskContext
 
 context.log('Processing inspector')
 
-inspector = parent()  # type: Union[COMP, Inspector]
+inspector = parent()  # type: COMP | Inspector
 inspector.Reset()
 
 subComps = inspector.findChildren(type=COMP, tags=[RaytkTags.raytkOP.name, RaytkTags.raytkComp.name], maxDepth=1)

@@ -1,6 +1,5 @@
 from datetime import datetime
 from pathlib import Path
-from typing import Callable, Dict, List, Optional
 from raytkTest import TestCaseResult, TestFindingStatus, processTest
 from raytkUtil import RaytkContext, recloneComp, Version
 
@@ -12,26 +11,26 @@ if False:
 	from devel.components.testInspectorCore.testInspectorCore import TestInspectorCore
 
 	class _Pars(ParCollection):
-		Testcasefolder: 'StrParamT'
-		Buildfolder: 'StrParamT'
+		Testcasefolder: StrParamT
+		Buildfolder: StrParamT
 
 	class _COMP(COMP):
 		par: _Pars
 
 	class _UiStatePars:
-		Resultlevelfilter: 'StrParamT'
-		Includealpha: 'BoolParamT'
-		Includebeta: 'BoolParamT'
-		Includedeprecated: 'BoolParamT'
-		Running: 'BoolParamT'
-		Filtertext: 'StrParamT'
+		Resultlevelfilter: StrParamT
+		Includealpha: BoolParamT
+		Includebeta: BoolParamT
+		Includedeprecated: BoolParamT
+		Running: BoolParamT
+		Filtertext: StrParamT
 	ipar.uiState = _UiStatePars()
 
 	# noinspection PyTypeChecker
 	iop.testInspectorCore = TestInspectorCore(COMP())
 
 class TestManager:
-	def __init__(self, ownerComp: 'COMP'):
+	def __init__(self, ownerComp: COMP):
 		# noinspection PyTypeChecker
 		self.ownerComp = ownerComp  # type: _COMP
 		self.logTable = ownerComp.op('log')  # type: DAT
@@ -39,36 +38,36 @@ class TestManager:
 		self.successCount = tdu.Dependency(0)
 		self.warningCount = tdu.Dependency(0)
 		self.errorCount = tdu.Dependency(0)
-		self._caseResults = {}  # type: Dict[str, TestCaseResult]
+		self._caseResults = {}  # type: dict[str, TestCaseResult]
 
 	def onInit(self):
 		self.resetAll()
 
 	@property
-	def _testHost(self) -> 'COMP':
+	def _testHost(self) -> COMP:
 		return self.ownerComp.op('test_host')
 
 	@property
-	def _testComp(self) -> 'Optional[COMP]':
+	def _testComp(self) -> COMP | None:
 		for o in self._testHost.children:
 			return o
 
 	@property
-	def _testTable(self) -> 'DAT':
+	def _testTable(self) -> DAT:
 		return self.ownerComp.op('testTable')
 
 	@property
-	def _testQueue(self) -> 'DAT':
+	def _testQueue(self) -> DAT:
 		return self.ownerComp.op('testQueue')
 
 	@property
-	def _resultTable(self) -> 'DAT':
+	def _resultTable(self) -> DAT:
 		return self.ownerComp.op('resultTable')
 
 	def reloadTestTable(self):
 		self.ownerComp.op('test_folder').par.refreshpulse.pulse()
 
-	def buildTestTable(self, dat: 'DAT', fileTable: 'DAT', opTable: 'DAT'):
+	def buildTestTable(self, dat: DAT, fileTable: DAT, opTable: DAT):
 		dat.clear()
 		dat.appendRow([
 			'name',
@@ -107,7 +106,7 @@ class TestManager:
 				toxFile.as_posix(),
 			])
 
-	def buildToolkitVersionTable(self, dat: 'DAT', fileTable: 'DAT'):
+	def buildToolkitVersionTable(self, dat: DAT, fileTable: DAT):
 		dat.clear()
 		dat.appendRow(['name', 'label', 'version', 'tox'])
 		dat.appendRow(['src', 'Current Source', '(current)', 'src/raytk.tox'])
@@ -163,7 +162,7 @@ class TestManager:
 		self.reloadTestTable()
 		self._copyTestsToQueue()
 
-	def _copyTestsToQueue(self, filterNames: 'Optional[List[str]]' = None):
+	def _copyTestsToQueue(self, filterNames: list[str] | None = None):
 		queue = self._testQueue
 		queue.clear()
 		if filterNames is None:
@@ -305,11 +304,11 @@ class TestManager:
 		host.loadTox(toxPath)
 		self.log(f'Finished loading {toxPath}')
 
-	def _processTest(self, thenRun: 'Callable'):
+	def _processTest(self, thenRun: callable):
 		comp = self._testComp
 		processTest(comp, thenRun, log=self.log)
 
-	def _buildTestCaseResult(self) -> 'Optional[TestCaseResult]':
+	def _buildTestCaseResult(self) -> 'TestCaseResult | None':
 		comp = self._testComp
 		if not comp:
 			raise Exception('No test loaded!')
@@ -346,7 +345,7 @@ class TestManager:
 		ipar.uiState.Filtertext = ''
 
 	@staticmethod
-	def onCountLabelClick(label: 'COMP'):
+	def onCountLabelClick(label: COMP):
 		name = label.name.split('_')[0]
 		if name == 'success':
 			ipar.uiState.Resultlevelfilter = 'all'
@@ -354,5 +353,5 @@ class TestManager:
 			ipar.uiState.Resultlevelfilter = name
 
 	@staticmethod
-	def _queueCall(method: Callable, *args, delayFrames=5):
+	def _queueCall(method: callable, *args, delayFrames=5):
 		run('args[0](*(args[1:]))', method, *args, delayFrames=delayFrames, delayRef=root)

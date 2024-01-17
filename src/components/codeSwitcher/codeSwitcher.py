@@ -1,14 +1,12 @@
-from typing import Dict, List, Optional
-
 # noinspection PyUnreachableCode
 if False:
 	# noinspection PyUnresolvedReferences
 	from _stubs import *
 
-def _table() -> 'DAT':
+def _table() -> DAT:
 	return op('table')
 
-def _allHostPars() -> 'List[Par]':
+def _allHostPars() -> list[Par]:
 	host = parent().par.Hostop.eval()
 	if not host:
 		return []
@@ -17,7 +15,7 @@ def _allHostPars() -> 'List[Par]':
 		return []
 	return host.pars(*tdu.expand(parName))
 
-def _hostPar() -> 'Optional[Par]':
+def _hostPar() -> Par | None:
 	for p in _allHostPars():
 		return p
 
@@ -31,11 +29,11 @@ def _effectiveMode():
 			mode = 'constswitch' if par is None or par.readOnly else 'switch'
 	return mode
 
-def buildStateTable(dat: 'DAT'):
+def buildStateTable(dat: DAT):
 	dat.clear()
 	dat.appendRow(['effectiveMode', _effectiveMode()])
 
-def buildParameterGroupTable(dat: 'DAT'):
+def buildParameterGroupTable(dat: DAT):
 	dat.clear()
 	dat.appendRow(['names', 'source', 'handling', 'readOnlyHandling', 'conversion', 'enable'])
 	mode = _effectiveMode()
@@ -58,7 +56,7 @@ def buildParameterGroupTable(dat: 'DAT'):
 		if boolParams:
 			dat.appendRow([boolParams, 'param', 'runtime', 'constant', '', '1'])
 
-def buildMacroTable(dat: 'DAT', itemInfo: 'DAT'):
+def buildMacroTable(dat: DAT, itemInfo: DAT):
 	dat.clear()
 	if itemInfo.numRows < 2:
 		return
@@ -83,13 +81,13 @@ def buildCode():
 	else:  # none
 		return ''
 
-def _prepareItemCode(code: 'Cell'):
+def _prepareItemCode(code: Cell):
 	code = str(code or '')
 	if code.endswith(';'):
 		code = code[:-1]
 	return code.replace(';', ';\n')
 
-def _buildRuntimeSwitch(table: 'DAT', isConstant=False):
+def _buildRuntimeSwitch(table: DAT, isConstant=False):
 	paramName = parent().par.Param
 	expr = parent().par.Indexexpr or f'int(THIS_{paramName})'
 	code = f'switch ({expr}) {{\n'
@@ -107,11 +105,11 @@ def _buildRuntimeSwitch(table: 'DAT', isConstant=False):
 	code += '}\n'
 	return code
 
-def _paramModes(column: str) -> Dict[str, List[str]]:
+def _paramModes(column: str) -> dict[str, list[str]]:
 	table = _table()
 	if table.numRows < 2:
 		return {}
-	paramModes = {}  # type: Dict[str, List[str]]
+	paramModes = {}  # type: dict[str, list[str]]
 	for i in range(1, table.numRows):
 		params = tdu.expand(table[i, column] or '')
 		val = table[i, 'name'].val

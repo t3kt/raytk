@@ -1,5 +1,5 @@
 from dataclasses import dataclass
-from typing import Callable, Dict, List, Optional
+from typing import Callable
 
 # noinspection PyUnreachableCode
 if False:
@@ -13,10 +13,10 @@ if False:
 	ext.toolkitEditor = ToolkitEditor(COMP())
 
 	class _UiStatePar(ParCollection):
-		Showroppicker: 'BoolParamT'
-		Showscenepicker: 'BoolParamT'
-		Showsceneeditor: 'BoolParamT'
-		Showropeditor: 'BoolParamT'
+		Showroppicker: BoolParamT
+		Showscenepicker: BoolParamT
+		Showsceneeditor: BoolParamT
+		Showropeditor: BoolParamT
 
 	class _UiStateComp(COMP):
 		par: _UiStatePar
@@ -26,9 +26,9 @@ if False:
 	iop.createRopDialog = CreateRopDialog(COMP())
 
 class MainMenu:
-	menus: 'Dict[str, List[_MenuItem]]'
+	menus: 'dict[str, list[_MenuItem]]'
 
-	def __init__(self, ownerComp: 'COMP'):
+	def __init__(self, ownerComp: COMP):
 		self.ownerComp = ownerComp
 		self.menus = {
 			'File': [
@@ -150,8 +150,8 @@ class _MenuItem:
 	label: str
 	menuName: str
 	depth: int = 1
-	checked: 'Optional[str]' = None
-	itemValue: 'Optional[str]' = None
+	checked: 'str | None' = None
+	itemValue: 'str | None' = None
 	dividerAfter: bool = False
 	action: 'Callable[[], None]' = None
 

@@ -1,5 +1,3 @@
-from typing import List, Optional
-
 # noinspection PyUnreachableCode
 if False:
 	# noinspection PyUnresolvedReferences
@@ -7,10 +5,8 @@ if False:
 	from _typeAliases import *
 
 	class _Par:
-		Hostop: 'OPParamT'
-		Opdef: 'OPParamT'
-		Rendertop: 'OPParamT'
-		Shaderbuilder: 'OPParamT'
+		Hostop: OPParamT
+		Glslop: OPParamT
 
 	class _COMP(COMP):
 		par: _Par
@@ -19,38 +15,41 @@ class OutputOp:
 	def __init__(self, ownerComp: '_COMP'):
 		self.ownerComp = ownerComp
 
-	def _host(self) -> 'Optional[COMP]':
-		return self.ownerComp.par.Hostop.eval()
-
-	def _opDef(self) -> 'Optional[COMP]':
-		return self.ownerComp.par.Opdef.eval()
-
-	def _renderTop(self) -> 'Optional[glslmultiTOP]':
-		return self.ownerComp.par.Rendertop.eval()
-
 	def onInit(self):
 		self.resetInfoParams()
-		self.updateConstantParams()
+		self.updateParamSequences()
+
+	def onUniformsChange(self):
+		self.updateParamSequences()
 
 	def resetInfoParams(self):
-		host = self._host()
+		host = self.ownerComp.par.Hostop.eval()
 		if not host:
 			return
 		for par in host.customPars:
 			if par.page == 'Info' and not par.readOnly and not par:
 				par.val = par.default
 
-	def updateConstantParams(self):
-		renderTop = self._renderTop()
-		if not renderTop:
+	def updateParamSequences(self):
+		targetOp = self.ownerComp.par.Glslop.eval()
+		if not targetOp:
 			return
 		table = self.ownerComp.op('uniforms')
 		if table.numRows < 2:
 			return
-		count = 0
+		constCount = 0
+		arrayCount = 0
 		for i in range(1, table.numRows):
 			if table[i, 'uniformType'] == 'constant':
-				count += 1
-		sequence = renderTop.par.const0name.sequence  # type: Sequence
-		if count > sequence.numBlocks:
-			sequence.numBlocks = count
+				constCount += 1
+			elif table[i, 'uniformType'] == 'uniformarray':
+				arrayCount += 1
+		if constCount > 0:
+			if targetOp.isMAT:
+				raise Exception('Specialization constants not yet supported in MATs!')
+			sequence = targetOp.par.const0name.sequence  # type: Sequence
+			if constCount > sequence.numBlocks:
+				sequence.numBlocks = constCount
+		sequence = targetOp.par.array0name.sequence
+		if arrayCount > sequence.numBlocks:
+			sequence.numBlocks = arrayCount

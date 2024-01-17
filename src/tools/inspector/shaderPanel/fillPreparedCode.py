@@ -5,7 +5,7 @@ if False:
 	from shaderPanel import ShaderPanel
 	ext.shaderPanel = ShaderPanel(COMP())
 
-def onCook(dat: 'DAT'):
+def onCook(dat: DAT):
 	dat.clear()
 	ext.shaderPanel.fillPreparedCode(
 		dat,

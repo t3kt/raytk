@@ -1,4 +1,4 @@
 names	source	handling	readOnlyHandling	conversion	enable
 Radius	param	runtime	constant		op('radius_definition').numRows < 2
 Width Height	param	runtime	constant		op('size_definition').numRows < 2
-Point1[xy] Point2[xy] Point3[xy]	param	runtime	constant		1
+Point1[xy] Point2[xy] Point3[xy]	param	runtime	macro		1

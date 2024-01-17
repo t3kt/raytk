@@ -18,6 +18,7 @@ return types (SDF, float/vector field, etc).
 * [Field](field/) - Float or vector fields, which provide values for the requested coordinates.
 * [Filter](filter/) - Operators that take an input and modify it.
 * [Function](function/) - Function operators are an advanced type of operator used to control the behavior of other types of operators.
+* [Geo](geo/) - 
 * [Light](light/) - Operators that are used in raymarching to define the behavior of light, including
 light sources and shadow behaviors.
 * [Material](material/) - Material operators that are used by renderers to determine the

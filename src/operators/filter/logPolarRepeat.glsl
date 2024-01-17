@@ -21,6 +21,12 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 	float r = length(q);
 	q = vec2(log(r), atan(q.y, q.x));
 	q -= vec2(THIS_Rhooffset, THIS_Thetaoffset);
+	#ifdef THIS_HAS_INPUT_rhoOffsetField
+	q.x -= inputOp_rhoOffsetField(p, ctx);
+	#endif
+	#ifdef THIS_HAS_INPUT_thetaOffsetField
+	q.y -= inputOp_thetaOffsetField(p, ctx);
+	#endif
 	q.y *= scale;
 	scaleAdj = r / scale;
 	#endif

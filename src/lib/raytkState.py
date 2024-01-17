@@ -1,5 +1,4 @@
 from dataclasses import dataclass, field, fields
-from typing import List, Optional, Union
 
 # noinspection PyUnreachableCode
 if False:
@@ -33,38 +32,37 @@ class RopState(_StateObject):
 	path: str
 	ropType: str
 
-	functionCode: Optional[str] = None
-	materialCode: Optional[str] = None
-	initCode: Optional[str] = None
-	opGlobals: Optional[str] = None
+	functionCode: str | None = None
+	materialCode: str | None = None
+	initCode: str | None = None
+	opGlobals: str | None = None
 
-	macros: Optional[List['Macro']] = None
-	constants: Optional[List['Constant']] = None
-	textures: Optional[List['Texture']] = None
-	buffers: Optional[List['Buffer']] = None
-	references: Optional[List['Reference']] = None
-	variables: Optional[List['Variable']] = None
-	attributes: Optional[List['SurfaceAttribute']] = None
-	dispatchBlocks: Optional[List['Dispatch']] = None
+	macros: list['Macro'] | None = None
+	constants: list['Constant'] | None = None
+	textures: list['Texture'] | None = None
+	buffers: list['Buffer'] | None = None
+	references: list['Reference'] | None = None
+	variables: list['Variable'] | None = None
+	attributes: list['SurfaceAttribute'] | None = None
 
-	materialId: Optional[str] = None
+	materialId: str | None = None
 
-	inputNames: Optional[List[str]] = None
-	inputStates: Optional[List['InputState']] = None
+	inputNames: list[str] | None = None
+	inputStates: list['InputState'] | None = None
 
-	libraryNames: Optional[List[str]] = None
+	libraryNames: list[str] | None = None
 
-	paramSource: Optional[str] = None
-	constantSource: Optional[str] = None
+	paramSource: str | None = None
+	constantSource: str | None = None
 
-	validationErrors: Optional[List['ValidationError']] = field(default_factory=list)
+	validationErrors: list['ValidationError'] | None = field(default_factory=list)
 
 @dataclass
 class InputState(_StateObject):
 	functionName: str
-	sourceName: Optional[str] = None
-	varNames: Optional[List[str]] = None
-	varInputNames: Optional[List[str]] = None
+	sourceName: str | None = None
+	varNames: list[str] | None = None
+	varInputNames: list[str] | None = None
 
 @dataclass
 class ValidationError(_StateObject):
@@ -75,7 +73,7 @@ class ValidationError(_StateObject):
 @dataclass
 class Macro(_StateObject):
 	name: str
-	value: Union[None, str, int, bool, float] = None
+	value: str | int | bool | float | None = None
 	enable: bool = True
 
 @dataclass
@@ -83,7 +81,7 @@ class Constant(_StateObject):
 	name: str
 	localName: str
 	type: str
-	menuOptions: Optional[List[str]] = None
+	menuOptions: list[str] | None = None
 
 @dataclass
 class Texture(_StateObject):
@@ -95,11 +93,11 @@ class Texture(_StateObject):
 class Reference(_StateObject):
 	name: str
 	localName: str
-	sourceName: Optional[str]
+	sourceName: str | None
 	dataType: str
-	owner: Optional[str]
-	sourcePath: Optional[str] = None
-	category: Optional[str] = None
+	owner: str | None
+	sourcePath: str | None = None
+	category: str | None = None
 
 @dataclass
 class Variable(_StateObject):
@@ -108,20 +106,14 @@ class Variable(_StateObject):
 	label: str
 	dataType: str
 	owner: str
-	macros: Optional[str] = None
+	macros: str | None = None
 
 @dataclass
 class SurfaceAttribute(_StateObject):
 	name: str
 	label: str
 	dataType: str
-	macros: Optional[str] = None
-
-@dataclass
-class Dispatch(_StateObject):
-	name: str
-	category: str
-	code: str
+	macros: str | None = None
 
 @dataclass
 class Buffer(_StateObject):
@@ -129,11 +121,11 @@ class Buffer(_StateObject):
 	type: str
 	chop: str
 	uniformType: str
-	length: Optional[int]
-	expr1: Optional[str] = None
-	expr2: Optional[str] = None
-	expr3: Optional[str] = None
-	expr4: Optional[str] = None
+	length: int | None
+	expr1: str | None = None
+	expr2: str | None = None
+	expr3: str | None = None
+	expr4: str | None = None
 
 @dataclass
 class ParamTuplet(_StateObject):
@@ -141,11 +133,11 @@ class ParamTuplet(_StateObject):
 	localName: str
 	source: str
 	size: int
-	part1: Optional[str] = None
-	part2: Optional[str] = None
-	part3: Optional[str] = None
-	part4: Optional[str] = None
-	status: Optional[str] = None
-	conversion: Optional[str] = None
+	part1: str | None = None
+	part2: str | None = None
+	part3: str | None = None
+	part4: str | None = None
+	status: str | None = None
+	conversion: str | None = None
 	handling: str = 'runtime'
-	localNames: Optional[List[str]] = None
+	localNames: list[str] | None = None

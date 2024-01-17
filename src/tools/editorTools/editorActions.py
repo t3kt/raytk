@@ -35,8 +35,8 @@ def _createAddInputActionGroup(
 		text: str,
 		createType: str,
 		paramName: str,
-		matchTypes: List[str],
-		table: 'DAT',
+		matchTypes: list[str],
+		table: DAT,
 ):
 	return GroupImpl(
 		text,
@@ -53,9 +53,9 @@ def _createAddInputActionGroup(
 		],
 	)
 
-def _createVarRefAction(label: str, variable: str, dataType: str, fieldName: Optional[str] = None):
+def _createVarRefAction(label: str, variable: str, dataType: str, fieldName: str | None = None):
 	def execute(ctx: ActionContext):
-		def init(refOp: 'COMP'):
+		def init(refOp: COMP):
 			if fieldName:
 				refOp.par.Field = fieldName
 			fromOp = ctx.primaryComp
@@ -89,7 +89,7 @@ def _loadTypeFields():
 
 _typeFields = _loadTypeFields()
 
-def _getStateField(primaryOp: 'OP', fieldName: str):
+def _getStateField(primaryOp: OP, fieldName: str):
 	opState = ROPState(primaryOp)
 	if not opState:
 		return None
@@ -130,13 +130,13 @@ def _createVarRefGroup(text: str):
 	return SimpleGroup(text, isValid, getActions)
 
 def _createAttrRefGroup(text: str):
-	def test(o: 'OP'):
+	def test(o: OP):
 		info = ROPInfo(o)
 		if not info or info.opType == _RopTypes.assignAttribute:
 			return False
 		return bool(_getStateField(o, 'attributes'))
 	class _LockPars(OpInit):
-		def init(self, o: 'COMP', ctx: ActionContext):
+		def init(self, o: COMP, ctx: ActionContext):
 			o.par.Attributename.readOnly = True
 			o.par.Datatype.readOnly = True
 	select = RopSelect(test=test)
@@ -159,7 +159,7 @@ def _createAttrRefGroup(text: str):
 
 def _createRenderSelAction(label: str, name: str, enablePar: str):
 	def execute(ctx: ActionContext):
-		def init(refOp: 'COMP'):
+		def init(refOp: COMP):
 			fromOp = ctx.primaryComp
 			refOp.nodeCenterY = fromOp.nodeCenterY - 200
 			refOp.nodeX = fromOp.nodeX + refOp.nodeWidth + 100
@@ -255,7 +255,7 @@ def _createRenderSelGroup(text: str):
 
 def _createAnimateParamAction(
 		text: str,
-		parOrTuplet: Union['Par', 'ParTupletT'],
+		parOrTuplet: Union[Par, 'ParTupletT'],
 		ropType: str, nameSuffix: str):
 	def getPars():
 		if isinstance(parOrTuplet, Par):
@@ -273,7 +273,7 @@ def _createAnimateParamAction(
 		else:
 			parOrTupletName = pars[0].tupletName
 		undoInfo = {}
-		def init(gen: 'COMP'):
+		def init(gen: COMP):
 			gen.name = f'{o.name}_{parOrTupletName}_{nameSuffix}'
 			chop = gen.parent().create(nullCHOP, f'{o.name}_{parOrTupletName}_vals')
 			undoInfo['chop'] = chop
@@ -395,7 +395,7 @@ def _createCustomizeShaderConfigAction(text: str):
 	return SimpleAction(text, isValid, execute)
 
 def _createTableBasedGroup(
-		text: str, table: 'DAT',
+		text: str, table: DAT,
 		ropType: str,
 		paramName: str,
 		select: 'RopSelect',
@@ -436,7 +436,7 @@ def _createTypeListGroup(
 	)
 
 def _createSimplifyRescaleFloatAction(text):
-	def _getOrigMultiplyPar(origRescale: 'OP'):
+	def _getOrigMultiplyPar(origRescale: OP):
 		p1 = origRescale.par.Multiply
 		if p1.mode == ParMode.CONSTANT and p1.val == 1:
 			p1 = None
@@ -456,11 +456,11 @@ def _createSimplifyRescaleFloatAction(text):
 		if p2 is not None:
 			return p2, True
 		return None, False
-	def _isValid(origRescale: 'OP'):
+	def _isValid(origRescale: OP):
 		p, valid = _getOrigMultiplyPar(origRescale)
 		return valid
 	class _InitRescale(OpInit):
-		def init(self, o: 'COMP', ctx: ActionContext):
+		def init(self, o: COMP, ctx: ActionContext):
 			newRescale = o
 			origRescale = ctx.primaryComp
 			_copyParState(origRescale.par.Enable, newRescale.par.Enable)
@@ -477,13 +477,13 @@ def _createSimplifyRescaleFloatAction(text):
 	return ActionImpl(
 		text,
 		ropType='raytk.operators.filter.rescaleFloatField',
-		select=RopSelect(ropTypes=[_RopTypes.rescaleField], returnTypes=['float'], test=_isValid),
+		select=RopSelect(ropTypes=[_RopTypes.rescaleField], returnTypes=['float', 'vec4'], test=_isValid),
 		attach=AttachReplacement(),
 		inits=[_InitRescale()],
 	)
 
 def _createSimplifyRotateAction(text):
-	def _validateAndGetAxis(origRotate: 'OP'):
+	def _validateAndGetAxis(origRotate: OP):
 		if origRotate.par['Rotatemode'] != 'axis':
 			return None
 		if origRotate.par['Usepivot']:
@@ -495,10 +495,10 @@ def _createSimplifyRotateAction(text):
 			return 'y'
 		if axisParts == (0, 0, 1):
 			return 'z'
-	def _isValid(origRotate: 'OP'):
+	def _isValid(origRotate: OP):
 		return _validateAndGetAxis(origRotate) is not None
 	class _InitRotate(OpInit):
-		def init(self, o: 'COMP', ctx: ActionContext):
+		def init(self, o: COMP, ctx: ActionContext):
 			newRotate = o
 			origRotate = ctx.primaryComp
 			axis = _validateAndGetAxis(origRotate)
@@ -514,7 +514,7 @@ def _createSimplifyRotateAction(text):
 		inits=[_InitRotate()],
 	)
 
-def _copyParState(fromPar: 'Par', toPar: 'Par'):
+def _copyParState(fromPar: Par, toPar: Par):
 	toPar.val = fromPar.val
 	toPar.expr = fromPar.expr or ''
 	toPar.bindExpr = fromPar.bindExpr or ''
@@ -598,7 +598,7 @@ def _connIsIn(cFind: 'Connector', cList: 'List[Connector]'):
 	return False
 
 def _createSwapOrderAction(text):
-	def processPair(fromOp: 'OP', toOp: 'OP', testOnly: bool):
+	def processPair(fromOp: OP, toOp: OP, testOnly: bool):
 		if not fromOp or not toOp or not fromOp.outputConnectors or not toOp.inputConnectors:
 			return False
 		if not _connIsIn(toOp.inputConnectors[0], fromOp.outputConnectors[0].connections):
@@ -686,7 +686,7 @@ def createActionManager():
 		ActionImpl(
 			'Rescale Field (Simple)',
 			'raytk.operators.filter.rescaleFloatField',
-			select=RopSelect(returnTypes=['float']),
+			select=RopSelect(returnTypes=['float', 'vec4']),
 			attach=AttachOutFromExisting(),
 		),
 		ActionImpl(
@@ -695,6 +695,34 @@ def createActionManager():
 			select=RopSelect(returnTypes=['float']),
 			attach=AttachOutFromExisting(),
 			params={'Returntype': 'vec4'},
+		),
+		ActionImpl(
+			'Map to Color Range',
+			'raytk.operators.field.colorRampField',
+			select=RopSelect(returnTypes=['float']),
+			attach=AttachOutFromExisting(),
+		),
+		# ActionImpl(
+		# 	'Apply Wave',
+		# 	'raytk.operators.field.waveField',
+		# 	select=RopSelect(returnTypes=['float']),
+		# 	attach=AttachOutFromExisting(),
+		# ),
+		# _createTableBasedGroup(
+		# 	'Apply Wave',
+		# 	table=op('waveAxes'),
+		# 	ropType='raytk.operators.field.waveField',
+		# 	paramName='Axis',
+		# 	select=RopSelect(returnTypes=['vec4']),
+		# 	attach=AttachOutFromExisting(),
+		# ),
+		_createTableBasedGroup(
+			'Apply Wave',
+			table=op('waveFunctions'),
+			ropType='raytk.operators.field.waveField',
+			paramName='Function',
+			select=RopSelect(returnTypes=['float', 'vec4']),
+			attach=AttachOutFromExisting(),
 		),
 		_createSimplifyRescaleFloatAction('Simplify Rescale Float'),
 		_createTableBasedGroup(
@@ -705,6 +733,12 @@ def createActionManager():
 		_createTableBasedGroup(
 			'Cross Section', op('crossSectionAxes'), _RopTypes.crossSection, 'Axes',
 			select=RopSelect(coordTypes=['vec3']),
+			attach=AttachOutFromExisting(),
+		),
+		ActionImpl(
+			'Assign Color',
+			ropType='raytk.operators.filter.assignColor',
+			select=RopSelect(returnTypes=['Sdf']),
 			attach=AttachOutFromExisting(),
 		),
 		_createAddInputActionGroup(

@@ -33,6 +33,16 @@ Combines multiple SDFs, with a different position for each.
 * `Translate6`: Moves the input SDF 6.
 * `Translate7`: Moves the input SDF 7.
 * `Translate8`: Moves the input SDF 8.
+* `Optimize`: Improves performance by assuming that settings don't change. This will make things much slower when settings do change though.
+* `Enable1`
+* `Enable2`
+* `Enable3`
+* `Enable4`
+* `Enable5`
+* `Enable6`
+* `Enable7`
+* `Enable8`
+* `Enabletranslate`: Whether to use positioning features. Keep this off if you don't need it, to improve performance.
 
 ## Inputs
 
@@ -44,3 +54,7 @@ Combines multiple SDFs, with a different position for each.
 * `definition_in_6`: 
 * `definition_in_7`: 
 * `definition_in_8`: 
+
+## Variables
+
+* `index`: 

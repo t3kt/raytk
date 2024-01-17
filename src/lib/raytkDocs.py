@@ -8,7 +8,6 @@ from dataclasses import dataclass, field
 import json
 from pathlib import Path
 import re
-from typing import Dict, Iterable, List, Optional, Tuple, Union
 import yaml
 
 from raytkUtil import ROPInfo, CategoryInfo, RaytkTags, InputInfo, cleanDict, mergeDicts
@@ -26,9 +25,9 @@ _defaultParamHelp = 'Help not available.'
 
 @dataclass
 class MenuOptionHelp:
-	name: Optional[str] = None
-	label: Optional[str] = None
-	description: Optional[str] = None
+	name: str | None = None
+	label: str | None = None
+	description: str | None = None
 
 	def formatMarkdownListItem(self, includeLabel=False):
 		text = f'* `{self.name}`'
@@ -47,10 +46,10 @@ class MenuOptionHelp:
 
 @dataclass
 class ROPParamHelp:
-	name: Optional[str] = None
-	label: Optional[str] = None
-	summary: Optional[str] = None
-	menuOptions: List[MenuOptionHelp] = field(default_factory=list)
+	name: str | None = None
+	label: str | None = None
+	summary: str | None = None
+	menuOptions: list[MenuOptionHelp] = field(default_factory=list)
 
 	def formatMarkdownListItem(self, includeLabel=False):
 		text = f'* `{self.name}`'
@@ -65,7 +64,7 @@ class ROPParamHelp:
 			])
 		return text
 
-	def pullOptionsFromPar(self, par: 'Par'):
+	def pullOptionsFromPar(self, par: Par):
 		if not par.isMenu:
 			return
 		descriptions = {
@@ -82,7 +81,7 @@ class ROPParamHelp:
 		]
 
 	@classmethod
-	def extractFromPar(cls, par: 'Par'):
+	def extractFromPar(cls, par: Par):
 		parHelp = cls(
 			name=par.tupletName,
 			label=par.label,
@@ -105,9 +104,9 @@ class ROPParamHelp:
 
 @dataclass
 class VariableHelp:
-	name: Optional[str] = None
-	label: Optional[str] = None
-	summary: Optional[str] = None
+	name: str | None = None
+	label: str | None = None
+	summary: str | None = None
 
 	def formatMarkdownListItem(self, forBuild=False):
 		text = f'* `{self.name}`'
@@ -119,7 +118,7 @@ class VariableHelp:
 		return text
 
 	@classmethod
-	def extractFromTable(cls, variableTable: 'DAT'):
+	def extractFromTable(cls, variableTable: DAT):
 		if not variableTable:
 			return []
 		varHelps = []
@@ -160,14 +159,14 @@ class VariableHelp:
 
 @dataclass
 class InputHelp:
-	name: Optional[str] = None
-	label: Optional[str] = None
-	summary: Optional[str] = None
+	name: str | None = None
+	label: str | None = None
+	summary: str | None = None
 	required: bool = False
-	coordTypes: List[str] = field(default_factory=list)
-	contextTypes: List[str] = field(default_factory=list)
-	returnTypes: List[str] = field(default_factory=list)
-	inputHandler: Optional[COMP] = None
+	coordTypes: list[str] = field(default_factory=list)
+	contextTypes: list[str] = field(default_factory=list)
+	returnTypes: list[str] = field(default_factory=list)
+	inputHandler: COMP | None = None
 
 	def formatMarkdownListItem(self, forBuild=False):
 		text = f'* `{self.name}`'
@@ -181,7 +180,7 @@ class InputHelp:
 		return text
 
 	@classmethod
-	def extractFromInputHandler(cls, inputHandler: 'COMP'):
+	def extractFromInputHandler(cls, inputHandler: COMP):
 		info = InputInfo(inputHandler)
 		return cls(
 			name=info.name,
@@ -217,31 +216,31 @@ class InputHelp:
 
 _ignorePars = 'Help', 'Inspect', 'Updateop'
 
-def _shouldIgnorePar(par: 'Par'):
+def _shouldIgnorePar(par: Par):
 	if par.name in _ignorePars:
 		return True
 	return par.style == 'Header' or par.readOnly
 
 @dataclass
 class ROPHelp:
-	name: Optional[str] = None
-	summary: Optional[str] = None
-	detail: Optional[str] = None
-	opType: Optional[str] = None
-	category: Optional[str] = None
-	parameters: List[ROPParamHelp] = field(default_factory=list)
-	inputs: List[InputHelp] = field(default_factory=list)
-	variables: List[VariableHelp] = field(default_factory=list)
+	name: str | None = None
+	summary: str | None = None
+	detail: str | None = None
+	opType: str | None = None
+	category: str | None = None
+	parameters: list[ROPParamHelp] = field(default_factory=list)
+	inputs: list[InputHelp] = field(default_factory=list)
+	variables: list[VariableHelp] = field(default_factory=list)
 	isAlpha: bool = False
 	isBeta: bool = False
 	isDeprecated: bool = False
-	keywords: List[str] = field(default_factory=list)
-	shortcuts: List[str] = field(default_factory=list)
-	images: List[str] = field(default_factory=list)
-	thumb: Optional[str] = None
+	keywords: list[str] = field(default_factory=list)
+	shortcuts: list[str] = field(default_factory=list)
+	images: list[str] = field(default_factory=list)
+	thumb: str | None = None
 
 	@classmethod
-	def extractFromROP(cls, rop: 'COMP'):
+	def extractFromROP(cls, rop: COMP):
 		info = ROPInfo(rop)
 		parTuples = [
 			pt
@@ -261,7 +260,7 @@ class ROPHelp:
 		return ropHelp
 
 	@classmethod
-	def fromInfoOnly(cls, info: 'ROPInfo'):
+	def fromInfoOnly(cls, info: ROPInfo):
 		return cls(
 			name=info.shortName,
 			opType=info.opType,
@@ -305,7 +304,7 @@ class ROPHelp:
 			]
 		return _mergeMarkdownChunks(parts)
 
-	def formatAsFullPage(self, ropInfo: 'ROPInfo'):
+	def formatAsFullPage(self, ropInfo: ROPInfo):
 		frontMatterData = _dumpYaml(cleanDict(self.toFrontMatterData(full=True)))
 		header = f'''---
 layout: operator
@@ -386,7 +385,7 @@ redirect_from:
 			text += ' *deprecated*{: .label .status-deprecated }'
 		return text
 
-	def replaceOrAddParam(self, name: str, paramHelp: 'Optional[ROPParamHelp]'):
+	def replaceOrAddParam(self, name: str, paramHelp: 'ROPParamHelp | None'):
 		for i in range(len(self.parameters)):
 			if self.parameters[i].name == name:
 				if paramHelp:
@@ -398,13 +397,13 @@ redirect_from:
 
 @dataclass
 class CategoryHelp:
-	name: Optional[str] = None
-	summary: Optional[str] = None
-	detail: Optional[str] = None
-	operators: List[ROPHelp] = field(default_factory=list)
+	name: str | None = None
+	summary: str | None = None
+	detail: str | None = None
+	operators: list[ROPHelp] = field(default_factory=list)
 
 	@classmethod
-	def extractFromComp(cls, comp: 'COMP'):
+	def extractFromComp(cls, comp: COMP):
 		info = CategoryInfo(comp)
 		catHelp = cls(
 			name=info.categoryName,
@@ -472,7 +471,7 @@ class ToolkitInfo:
 	def formatAsDataFile(self):
 		return _dumpYaml(self.toData())
 
-def _extractHelpSummaryAndDetail(docText: str) -> 'Tuple[str, str]':
+def _extractHelpSummaryAndDetail(docText: str) -> tuple[str, str]:
 	if not docText:
 		return '', ''
 	docText = docText.strip()
@@ -493,11 +492,11 @@ def _extractHelpSummaryAndDetail(docText: str) -> 'Tuple[str, str]':
 			detail = detail.split('## variables', maxsplit=1)[0]
 	return summary, detail
 
-def _mergeMarkdownChunks(parts: Iterable[str]):
+def _mergeMarkdownChunks(parts: list[str]):
 	return '\n\n'.join([p for p in parts if p])
 
 class OpDocManager:
-	def __init__(self, rop: 'Union[ROPInfo, OP, str]'):
+	def __init__(self, rop: ROPInfo | OP | str):
 		if isinstance(rop, str):
 			rop = op(rop)
 		if isinstance(rop, ROPInfo):
@@ -527,7 +526,7 @@ class OpDocManager:
 			self._parseVariableListInto(ropHelp, sections['Variables'])
 		return ropHelp
 
-	def _writeToDAT(self, ropHelp: 'ROPHelp'):
+	def _writeToDAT(self, ropHelp: ROPHelp):
 		text = ropHelp.formatMainText()
 		dat = self.info.helpDAT
 		if not dat:
@@ -545,7 +544,7 @@ class OpDocManager:
 		dat.text = text
 
 	@staticmethod
-	def _formatMainText(ropHelp: 'ROPHelp'):
+	def _formatMainText(ropHelp: ROPHelp):
 		parts = [
 			ropHelp.summary,
 			ropHelp.detail,
@@ -569,7 +568,7 @@ class OpDocManager:
 		return _mergeMarkdownChunks(parts)
 
 	@staticmethod
-	def _parseParamListInto(ropHelp: 'ROPHelp', text: str):
+	def _parseParamListInto(ropHelp: ROPHelp, text: str):
 		text = text.strip()
 		if not text:
 			return
@@ -605,7 +604,7 @@ class OpDocManager:
 			ropHelp.replaceOrAddParam(name, paramHelp)
 
 	@staticmethod
-	def _parseInputListInto(ropHelp: 'ROPHelp', text: str):
+	def _parseInputListInto(ropHelp: ROPHelp, text: str):
 		text = text.strip()
 		ropHelp.inputs.clear()
 		if not text:
@@ -626,7 +625,7 @@ class OpDocManager:
 			))
 
 	@staticmethod
-	def _parseVariableListInto(ropHelp: 'ROPHelp', text: str):
+	def _parseVariableListInto(ropHelp: ROPHelp, text: str):
 		ropHelp.variables.clear()
 		text = text.strip()
 		if not text:
@@ -640,7 +639,7 @@ class OpDocManager:
 				raise Exception(f'Invalid variable list item: {item!r}')
 			ropHelp.variables.append(VariableHelp(name, label, desc))
 
-	def _pullFromMissingParamsInto(self, ropHelp: 'ROPHelp'):
+	def _pullFromMissingParamsInto(self, ropHelp: ROPHelp):
 		paramHelps = {
 			paramHelp.name: paramHelp
 			for paramHelp in ropHelp.parameters
@@ -661,7 +660,7 @@ class OpDocManager:
 			paramHelps[name] = paramHelp
 		ropHelp.parameters = list(paramHelps.values())
 
-	def _pullFromMissingInputsInto(self, ropHelp: 'ROPHelp'):
+	def _pullFromMissingInputsInto(self, ropHelp: ROPHelp):
 		inHelps = ropHelp.inputs
 		for i, handler in enumerate(self.info.inputHandlers):
 			extractedHelp = InputHelp.extractFromInputHandler(handler)
@@ -670,13 +669,13 @@ class OpDocManager:
 			else:
 				inHelps.append(extractedHelp)
 
-	def _pullFromMissingVariablesInto(self, ropHelp: 'ROPHelp'):
+	def _pullFromMissingVariablesInto(self, ropHelp: ROPHelp):
 		if not self.info.isROP:
 			return
 		varHelps = {
 			varHelp.name: varHelp
 			for varHelp in ropHelp.variables
-		}  # type: Dict[str, VariableHelp]
+		}  # type: dict[str, VariableHelp]
 		stateText = self.info.opStateText
 		stateObj = json.loads(stateText)
 		extractedVars = VariableHelp.extractFromOpStateDict(stateObj)
@@ -696,7 +695,7 @@ class OpDocManager:
 		self._pullFromMissingVariablesInto(ropHelp)
 		self._writeToDAT(ropHelp)
 
-	def _getRopParByTupletName(self, tupletName: str) -> 'Optional[Par]':
+	def _getRopParByTupletName(self, tupletName: str) -> Par | None:
 		for parTuple in self.rop.customTuplets:
 			if parTuple[0].tupletName == tupletName:
 				return parTuple[0]
@@ -716,7 +715,7 @@ class OpDocManager:
 				if par is not None:
 					par.help = parHelp.summary
 
-	def _gatherImages(self, ropHelp: ROPHelp, imagesFolder: 'Path'):
+	def _gatherImages(self, ropHelp: ROPHelp, imagesFolder: Path):
 		folder = imagesFolder / f'reference/operators/{self.info.categoryName}'
 		debug(f'checking images in {folder.absolute()}')
 		images = list(folder.glob(self.info.shortName + '_*.png'))
@@ -731,14 +730,14 @@ class OpDocManager:
 			else:
 				ropHelp.images.append(img)
 
-	def formatForBuild(self, imagesFolder: 'Path') -> str:
+	def formatForBuild(self, imagesFolder: Path) -> str:
 		ropHelp = self._parseDAT()
 		self._pullFromMissingParamsInto(ropHelp)
 		self._pullFromMissingInputsInto(ropHelp)
 		self._gatherImages(ropHelp, imagesFolder)
 		return ropHelp.formatAsFullPage(self.info)
 
-def _parseMarkdownSections(text: str, sectionNames: List[str]) -> 'Dict[str, str]':
+def _parseMarkdownSections(text: str, sectionNames: list[str]) -> dict[str, str]:
 	"""
 	Splits apart markdown into blocks with titles using level 2 headers (`## Foo`)
 	:return: dict of title -> body. There may be an empty title for the first section.
@@ -768,14 +767,14 @@ def _parseMarkdownSections(text: str, sectionNames: List[str]) -> 'Dict[str, str
 
 # https://stackoverflow.com/questions/59515074/z-pcre-equivalent-in-javascript-regex-to-match-all-markdown-list-items
 _listItemsPattern = re.compile(r'^(?:\d+\.|[*+-]) .*(?:\r?\n(?!(?:\d+\.|[*+-]) ).*)*', re.MULTILINE)
-def _parseMarkdownListItems(text: str) -> 'List[str]':
+def _parseMarkdownListItems(text: str) -> list[str]:
 	if not text:
 		return []
 	return _listItemsPattern.findall(text)
 
 _namedListItemPattern = re.compile(
 	r'^\s*\* `(?P<name>[\w ]+)`\s*(\*(?P<label>[\w\s]+)\*)?\s*([:-]\s+(?P<desc>.*)?)?', re.DOTALL)
-def _parseNamedListItem(itemText: str) -> 'Tuple[str, str, str]':
+def _parseNamedListItem(itemText: str) -> tuple[str, str, str]:
 	match = _namedListItemPattern.match(itemText)
 	if not match:
 		return '', '', itemText.lstrip('* ')

@@ -16,6 +16,8 @@ op:
     - LightContext
     - RayContext
     - ParticleContext
+    - VertexContext
+    - PixelContext
     coordTypes:
     - float
     - vec2
@@ -32,6 +34,8 @@ op:
     - LightContext
     - RayContext
     - ParticleContext
+    - VertexContext
+    - PixelContext
     coordTypes:
     - float
     - vec2
@@ -48,6 +52,8 @@ op:
     - LightContext
     - RayContext
     - ParticleContext
+    - VertexContext
+    - PixelContext
     coordTypes:
     - float
     - vec2
@@ -64,6 +70,8 @@ op:
     - LightContext
     - RayContext
     - ParticleContext
+    - VertexContext
+    - PixelContext
     coordTypes:
     - float
     - vec2
@@ -80,6 +88,8 @@ op:
     - LightContext
     - RayContext
     - ParticleContext
+    - VertexContext
+    - PixelContext
     coordTypes:
     - float
     - vec2
@@ -96,6 +106,8 @@ op:
     - LightContext
     - RayContext
     - ParticleContext
+    - VertexContext
+    - PixelContext
     coordTypes:
     - float
     - vec2
@@ -112,6 +124,8 @@ op:
     - LightContext
     - RayContext
     - ParticleContext
+    - VertexContext
+    - PixelContext
     coordTypes:
     - float
     - vec2
@@ -128,6 +142,8 @@ op:
     - LightContext
     - RayContext
     - ParticleContext
+    - VertexContext
+    - PixelContext
     coordTypes:
     - float
     - vec2
@@ -214,6 +230,8 @@ op:
     summary: Moves the input SDF 8.
   - label: Optimize
     name: Optimize
+    summary: Improves performance by assuming that settings don't change. This will
+      make things much slower when settings do change though.
   - label: Enable 1
     name: Enable1
   - label: Enable 2
@@ -232,6 +250,8 @@ op:
     name: Enable8
   - label: Enable Translate
     name: Enabletranslate
+    summary: Whether to use positioning features. Keep this off if you don't need
+      it, to improve performance.
   summary: Combines multiple SDFs, with a different position for each.
   thumb: assets/images/reference/operators/combine/arrange_thumb.png
   variables:

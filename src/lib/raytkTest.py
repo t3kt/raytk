@@ -8,7 +8,7 @@ import dataclasses
 from dataclasses import dataclass
 from enum import Enum
 import re
-from typing import Callable, List, Optional, Union
+from typing import Callable
 from raytkUtil import RaytkContext, recloneComp
 
 # noinspection PyUnreachableCode
@@ -19,8 +19,8 @@ if False:
 
 @dataclass
 class TestCaseResult:
-	name: Optional[str] = None
-	findings: List['TestFinding'] = dataclasses.field(default_factory=list)
+	name: str | None = None
+	findings: list['TestFinding'] = dataclasses.field(default_factory=list)
 
 	@property
 	def hasError(self):
@@ -37,7 +37,7 @@ class TestFindingStatus(Enum):
 	unknown = 'unknown'
 
 	@classmethod
-	def parse(cls, s: 'Union[str, Cell]'):
+	def parse(cls, s: str | Cell):
 		s = str(s or '')
 		if not s:
 			return TestFindingStatus.unknown
@@ -59,9 +59,9 @@ class TestFindingSource(Enum):
 class TestFinding:
 	status: TestFindingStatus
 	source: TestFindingSource
-	path: Optional[str] = None
-	message: Optional[str] = None
-	detail: List[str] = dataclasses.field(default_factory=list)
+	path: str | None = None
+	message: str | None = None
+	detail: list[str] = dataclasses.field(default_factory=list)
 
 	@property
 	def isError(self):
@@ -72,14 +72,14 @@ class TestFinding:
 		return self.status in (TestFindingStatus.warning, TestFindingStatus.unknown)
 
 	@classmethod
-	def fromValidationTable(cls, dat: 'DAT'):
+	def fromValidationTable(cls, dat: DAT):
 		return [
 			cls.fromValidationRow(dat, row)
 			for row in range(1, dat.numRows)
 		]
 
 	@classmethod
-	def fromValidationRow(cls, dat: 'DAT', row: int):
+	def fromValidationRow(cls, dat: DAT, row: int):
 		return TestFinding(
 			path=str(dat[row, 'path']),
 			message=str(dat[row, 'message']),
@@ -137,9 +137,9 @@ class TestFinding:
 
 	def toTableRowVals(
 			self,
-			basePath: 'Optional[str]',
+			basePath: str | None,
 			includeDetail: bool = False,
-	) -> 'List[str]':
+	) -> list[str]:
 		vals = [
 			self.path.replace(basePath, '') if self.path and basePath else (self.path or ''),
 			self.status.name,
@@ -152,7 +152,7 @@ class TestFinding:
 
 _opErrorPattern = re.compile(r'(.*) \((/.*)\)')
 
-def _parseCompileResultDetail(o: 'Union[glslTOP, glslmultiTOP]') -> 'List[str]':
+def _parseCompileResultDetail(o: glslTOP | glslmultiTOP) -> list[str]:
 	text = o.compileResult
 	# print('DEBUG ATTEMPTING to extract COMPILE DETAIL')
 	text = text.strip()
@@ -193,7 +193,7 @@ def _cleanShaderErrorLine(line: str) -> str:
 	message = match.group(1) if match else None
 	return message or line
 
-def processTest(comp: 'COMP', thenRun: 'Callable', log: 'Callable[[str], None]' = None):
+def processTest(comp: COMP, thenRun: 'Callable', log: 'Callable[[str], None]' = None):
 	if not comp:
 		return
 	if not comp.valid:

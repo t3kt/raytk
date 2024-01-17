@@ -1,6 +1,4 @@
-import itertools
 from dataclasses import dataclass
-from typing import List, Optional
 
 # noinspection PyUnreachableCode
 if False:
@@ -9,35 +7,35 @@ if False:
 
 @dataclass
 class Conversion:
-	fromTypes: List[str]
+	fromTypes: list[str]
 	toType: str
 	expr: str
-	name: Optional[str] = None
-	label: Optional[str] = None
+	name: str | None = None
+	label: str | None = None
 
 @dataclass
 class Field:
 	name: str
-	label: Optional[str]
+	label: str | None
 	type: str
-	accessExpr: Optional[str] = None
-	macros: Optional[str] = None
+	accessExpr: str | None = None
+	macros: str | None = None
 
 @dataclass
 class DataType:
 	name: str
 	label: str
-	labelForCoord: Optional[str] = None
+	labelForCoord: str | None = None
 	isCoord: bool = False
 	isContext: bool = False
 	isReturn: bool = False
-	returnConversion: Optional[Conversion] = None
+	returnConversion: Conversion | None = None
 	isVariable: bool = True
-	vectorLength: Optional[int] = None
-	fields: List[Field] = None
-	defaultExpr: Optional[str] = None
-	conversionFromParam: Optional[Conversion] = None
-	macros: Optional[str] = None
+	vectorLength: int | None = None
+	fields: list[Field] = None
+	defaultExpr: str | None = None
+	conversionFromParam: Conversion | None = None
+	macros: str | None = None
 
 	@property
 	def returnAsType(self):
@@ -221,6 +219,16 @@ _allTypes += [
 		fields=[
 			# TODO: context fields
 		]),
+	DataType(
+		'VertexContext', 'Vertex Context', isContext=True, isVariable=False,
+		fields=[
+			# TODO: context fields
+		]),
+	DataType(
+		'PixelContext', 'Pixel Context', isContext=True, isVariable=False,
+		fields=[
+			# TODO: context fields
+		]),
 ]
 
 _typesByName = {
@@ -228,16 +236,16 @@ _typesByName = {
 	for dt in _allTypes
 }
 
-def _getType(name: str) -> Optional[DataType]:
+def _getType(name: str) -> DataType | None:
 	return _typesByName.get(name)
 
-def getAllTypes() -> List[DataType]:
+def getAllTypes() -> list[DataType]:
 	return _allTypes
 
-def buildCoreTypeTable(dat: 'scriptDAT'):
+def buildCoreTypeTable(dat: scriptDAT):
 	dat.clear()
 	dat.appendRow(['name', 'isReturnType', 'isCoordType', 'isContextType'])
-	def addTypes(types: List[DataType]):
+	def addTypes(types: list[DataType]):
 		for dt in types:
 			dat.appendRow([
 				dt.name, int(dt.isReturn), int(dt.isCoord), int(dt.isContext),
@@ -253,7 +261,7 @@ def buildCoreTypeTable(dat: 'scriptDAT'):
 		if dt.isContext
 	])
 
-def buildVariableTypeTable(dat: 'scriptDAT'):
+def buildVariableTypeTable(dat: scriptDAT):
 	dat.clear()
 	dat.appendRow(['name', 'label', 'returnAs', 'defaultExpr', 'paramExpr'])
 	for dt in _allTypes:
@@ -267,7 +275,7 @@ def buildVariableTypeTable(dat: 'scriptDAT'):
 			dt.paramExpr or '',
 		])
 
-def buildVariableTypeFieldTable(dat: 'scriptDAT'):
+def buildVariableTypeFieldTable(dat: scriptDAT):
 	dat.clear()
 	dat.appendRow([
 		'parentType', 'name', 'label', 'type',

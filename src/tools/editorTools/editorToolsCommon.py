@@ -12,13 +12,13 @@ if False:
 
 @dataclass
 class ActionContext:
-	pane: 'NetworkEditor'
-	parentComp: 'COMP'
+	pane: NetworkEditor
+	parentComp: COMP
 	selectedOps: List['OP']
-	primaryOp: Optional['OP']
+	primaryOp: OP | None
 
 	@property
-	def primaryComp(self) -> Optional['COMP']:
+	def primaryComp(self) -> COMP | None:
 		return self.primaryOp if self.primaryOp and self.primaryOp.isCOMP else None
 
 	def hasSelectedOps(
@@ -163,7 +163,7 @@ class ActionManager:
 				autoClose=True,
 			)
 
-	def buildTable(self, dat: 'scriptDAT'):
+	def buildTable(self, dat: scriptDAT):
 		dat.clear()
 		dat.appendRow(['name', 'label'])
 		ctx = self._getContext()
@@ -174,14 +174,14 @@ class ActionManager:
 				item = action.createMenuItem(ctx)
 				dat.appendRow([item.text, item.text])
 
-def _isRopOrComp(o: 'OP'):
+def _isRopOrComp(o: OP):
 	return isROP(o) or isRComp(o)
 
 class ROPState:
-	rop: Optional['OP']
+	rop: OP | None
 	info: ROPInfo
 
-	def __init__(self, rop: Optional['OP']):
+	def __init__(self, rop: OP | None):
 		self.rop = rop
 		self.info = ROPInfo(rop)
 
@@ -189,10 +189,10 @@ class ROPState:
 		return bool(self.rop and self.info)
 
 	@property
-	def currentDefTable(self) -> Optional['DAT']:
+	def currentDefTable(self) -> Optional[DAT]:
 		return self.rop.op('definition') if self.rop and self.info.isROP else None
 
-	def _defTypes(self, col: str) -> List[str]:
+	def _defTypes(self, col: str) -> list[str]:
 		dat = self.currentDefTable
 		cell = dat[1, col] if dat else None
 		return str(cell or '').split()
@@ -231,7 +231,7 @@ class ROPState:
 		if self.rop:
 			return self.rop.par[parName]
 
-InitFunc = Optional[Callable[['COMP'], None]]
+InitFunc = Callable[[COMP], None] | None
 
 class ActionUtils:
 	@staticmethod
@@ -239,21 +239,21 @@ class ActionUtils:
 
 	@staticmethod
 	def createROP(ropType: str, *inits: InitFunc, undo: 'Optional[Callable[[], None]]' = None):
-		def init(rop: 'COMP'):
+		def init(rop: COMP):
 			for fn in inits:
 				if fn:
 					fn(rop)
 		ActionUtils.palette().CreateItem(ropType, postSetup=init, undoSetup=undo)
 
 	@staticmethod
-	def moveAfter(o: 'OP', after: 'OP'):
+	def moveAfter(o: OP, after: OP):
 		if not after:
 			return
 		o.nodeCenterY = after.nodeCenterY
 		o.nodeX = after.nodeX + after.nodeWidth + 100
 
 	@staticmethod
-	def moveAfterMultiple(o: 'OP', after: List['OP']):
+	def moveAfterMultiple(o: OP, after: List['OP']):
 		if not after:
 			return
 		o.nodeCenterY = sum(a.nodeCenterY for a in after) / len(after)
@@ -261,26 +261,26 @@ class ActionUtils:
 
 	@staticmethod
 	def createAndAttachFromOutput(
-			fromRop: 'OP',
+			fromRop: OP,
 			ropType: str,
 			init: InitFunc = None,
 			inputIndex: int = 0,
 			outputIndex: int = 0,
 	):
-		def placeAndAttach(rop: 'COMP'):
+		def placeAndAttach(rop: COMP):
 			ActionUtils.moveAfter(rop, after=fromRop)
 			rop.inputConnectors[inputIndex].connect(fromRop.outputConnectors[outputIndex])
 		ActionUtils.createROP(ropType, placeAndAttach, init)
 
 	@staticmethod
 	def createAndAttachToInput(
-			fromRop: 'OP',
+			fromRop: OP,
 			ropType: str,
 			inits: List[InitFunc] = None,
 			inputIndex: int = 0,
 			outputIndex: int = 0,
 	):
-		def placeAndAttach(rop: 'COMP'):
+		def placeAndAttach(rop: COMP):
 			rop.nodeCenterY = fromRop.nodeCenterY - 100
 			rop.nodeX = fromRop.nodeX - rop.nodeWidth - 150
 			rop.outputConnectors[outputIndex].connect(fromRop.inputConnectors[inputIndex])
@@ -294,7 +294,7 @@ class ActionUtils:
 			outputIndex: int = 0,
 	):
 		fromRops.sort(key=lambda r: r.nodeCenterY, reverse=True)
-		def placeAndAttach(combine: 'COMP'):
+		def placeAndAttach(combine: COMP):
 			ActionUtils.moveAfterMultiple(combine, fromRops)
 			for i, fromRop in enumerate(fromRops):
 				if i >= len(combine.inputConnectors):
@@ -347,7 +347,7 @@ class OpSelect:
 	maxCount: Optional[int] = None
 	all: bool = False
 
-	def matches(self, o: 'OP') -> bool:
+	def matches(self, o: OP) -> bool:
 		if not o:
 			return False
 		if self.all:
@@ -377,7 +377,7 @@ class RopSelect(OpSelect):
 	coordTypes: Optional[List[str]] = None
 	returnTypes: Optional[List[str]] = None
 
-	def matches(self, o: 'OP') -> bool:
+	def matches(self, o: OP) -> bool:
 		if not o:
 			return False
 		if self.all:
@@ -397,7 +397,7 @@ class RopSelect(OpSelect):
 
 @dataclass
 class OpAttach:
-	def placeAndAttach(self, newOp: 'COMP', fromOps: 'List[COMP]'):
+	def placeAndAttach(self, newOp: COMP, fromOps: list[COMP]):
 		raise NotImplementedError()
 
 @dataclass
@@ -406,7 +406,7 @@ class AttachIntoExisting(OpAttach):
 	outputIndex: int = 0
 	useNextInput: bool = False
 
-	def _nextInput(self, fromOp: 'COMP'):
+	def _nextInput(self, fromOp: COMP):
 		inIndex = self.inputIndex
 		if not self.useNextInput:
 			return inIndex
@@ -414,7 +414,7 @@ class AttachIntoExisting(OpAttach):
 			if not conn.connections:
 				return conn.index
 
-	def placeAndAttach(self, newOp: 'COMP', fromOps: 'List[COMP]'):
+	def placeAndAttach(self, newOp: COMP, fromOps: list[COMP]):
 		for fromOp in fromOps:
 			i = self._nextInput(fromOp)
 			if i is None:
@@ -428,7 +428,7 @@ class AttachOutFromExisting(OpAttach):
 	inputIndex: int = 0
 	outputIndex: int = 0
 
-	def placeAndAttach(self, newOp: 'COMP', fromOps: 'List[COMP]'):
+	def placeAndAttach(self, newOp: COMP, fromOps: list[COMP]):
 		newOp.nodeX = max(o.nodeX + o.nodeWidth for o in fromOps) + 100
 		newOp.nodeCenterY = sum(o.nodeCenterY for o in fromOps) / len(fromOps)
 		inputIndex = self.inputIndex
@@ -438,13 +438,13 @@ class AttachOutFromExisting(OpAttach):
 
 @dataclass
 class AttachOutputSelector(OpAttach):
-	def placeAndAttach(self, newOp: 'COMP', fromOps: 'List[COMP]'):
+	def placeAndAttach(self, newOp: COMP, fromOps: list[COMP]):
 		newOp.nodeX = fromOps[0].nodeX + newOp.nodeWidth + 100
 		newOp.nodeCenterY = fromOps[0].nodeCenterY - 200
 
 @dataclass
 class AttachReplacement(OpAttach):
-	def placeAndAttach(self, newOp: 'COMP', fromOps: 'List[COMP]'):
+	def placeAndAttach(self, newOp: COMP, fromOps: list[COMP]):
 		origOp = fromOps[0]
 		newOp.nodeX = origOp.nodeX
 		newOp.nodeY = origOp.nodeY
@@ -462,7 +462,7 @@ class AttachReplacement(OpAttach):
 				newOp.outputConnectors[i].connect(targetConn)
 
 class OpInit:
-	def init(self, o: 'COMP', ctx: ActionContext):
+	def init(self, o: COMP, ctx: ActionContext):
 		raise NotImplementedError()
 
 @dataclass
@@ -470,7 +470,7 @@ class InitSetParamOnPrimaryRop(OpInit):
 	name: str
 	val: Any
 
-	def init(self, o: 'COMP', ctx: ActionContext):
+	def init(self, o: COMP, ctx: ActionContext):
 		par = ctx.primaryOp.par[self.name]
 		if par is not None:
 			par.val = self.val
@@ -479,7 +479,7 @@ class InitSetParamOnPrimaryRop(OpInit):
 class InitAddToParamOnPrimaryRop(OpInit):
 	name: str
 
-	def init(self, o: 'COMP', ctx: ActionContext):
+	def init(self, o: COMP, ctx: ActionContext):
 		par = ctx.primaryOp.par[self.name]
 		if par is not None:
 			if par.val:
@@ -490,14 +490,14 @@ class InitAddToParamOnPrimaryRop(OpInit):
 class InitLinkPrimaryToParam(OpInit):
 	paramName: str
 
-	def init(self, o: 'COMP', ctx: ActionContext):
+	def init(self, o: COMP, ctx: ActionContext):
 		o.par[self.paramName] = ctx.primaryOp
 
 @dataclass
 class InitBindParamsToPrimary(OpInit):
 	paramNames: Dict[str, str]
 
-	def init(self, o: 'COMP', ctx: ActionContext):
+	def init(self, o: COMP, ctx: ActionContext):
 		primary = ctx.primaryOp
 		exprBase = f"op('{o.relativePath(primary)}').par."
 		for srcName, destName in self.paramNames.items():
@@ -519,7 +519,7 @@ class ActionImpl(Action):
 
 	def execute(self, ctx: ActionContext):
 		fromOps = self.select.getOps(ctx)
-		def init(o: 'COMP'):
+		def init(o: COMP):
 			if self.attach:
 				self.attach.placeAndAttach(o, fromOps or [])
 			for name, val in self.params.items():

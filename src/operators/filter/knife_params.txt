@@ -1,5 +1,5 @@
 names	source	handling	readOnlyHandling	conversion	enable
-Rotateplane[xyz]	param	runtime	macro		1
-Offset	param	runtime	macro		op('offset_definition').numRows < 2
+Rotateplane[xyz]	param	runtime	macro	angle	1
+Offset	param	runtime	macro		1
 Smoothradius	param	runtime	macro		1
 Enablesmoothing	param	runtime	constant		1

@@ -200,6 +200,8 @@ cat:
     name: solidAngleSdf
     summary: A conical slice of a sphere.
   - name: sphereFbmSdf
+  - name: sphereGridSdf
+    status: beta
   - name: sphereSdf
     shortcuts:
     - sph

@@ -6,11 +6,11 @@ if False:
 	from _stubs import *
 
 class Updater:
-	def __init__(self, ownerComp: 'COMP'):
+	def __init__(self, ownerComp: COMP):
 		self.ownerComp = ownerComp
 
 	# This MUST remain publicly available since OPs reference it for the `Updateop` par handler.
-	def UpdateOP(self, o: 'COMP'):
+	def UpdateOP(self, o: COMP):
 		self._log(f'Updating {o}')
 		info = ROPInfo(o)
 		if not info:
@@ -42,7 +42,7 @@ class Updater:
 			if info.rop.par['Variabletype'] is not None:
 				origType = info.rop.par.Variabletype.eval()
 				origField = info.rop.par.Field.eval()
-				def _action(rop: 'COMP'):
+				def _action(rop: COMP):
 					self._log(f'Restoring params for variableReference {info.rop} (origType: {origType}, origField: {origField})')
 					rop.par.Variabletype = origType
 					rop.par.Field = origField
@@ -53,7 +53,7 @@ class Updater:
 			elif info.rop.par['Datatype'] is not None:
 				originalType = info.rop.par.Datatype.eval()
 				originalPart = info.rop.par.Part.eval()
-				def _action(rop: 'COMP'):
+				def _action(rop: COMP):
 					self._log(f'Converting params for variableReference {info.rop} (origType: {originalType}, origPart: {originalPart})')
 					rop.par.Variabletype = originalType
 					if originalPart == 'vec':

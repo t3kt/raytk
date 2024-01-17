@@ -1,7 +1,5 @@
-from typing import Union, Optional
-
 from raytkTools import RaytkTools
-from raytkUtil import ROPInfo, navigateTo, RaytkTags
+from raytkUtil import ROPInfo, navigateTo
 
 # noinspection PyUnreachableCode
 if False:
@@ -12,21 +10,21 @@ if False:
 	from ..testEditor.testEditor import TestEditor
 	from .specPanel.specPanel import SpecPanel
 	# noinspection PyTypeHints
-	iop.inspectorCore = InspectorCore(COMP())  # type: Union[COMP, InspectorCore]
+	iop.inspectorCore = InspectorCore(COMP())  # type: COMP | InspectorCore
 	# noinspection PyTypeChecker,PyTypeHints
-	iop.testEditor = TestEditor(COMP())  # type: Union[COMP, TestEditor]
+	iop.testEditor = TestEditor(COMP())  # type: COMP | TestEditor
 	# noinspection PyTypeChecker,PyTypeHints
-	iop.specPanel = SpecPanel(COMP())  # type: Union[COMP, SpecPanel]
+	iop.specPanel = SpecPanel(COMP())  # type: COMP | SpecPanel
 
 class ROPEditor:
-	def __init__(self, ownerComp: 'COMP'):
+	def __init__(self, ownerComp: COMP):
 		self.ownerComp = ownerComp
 
 	@property
-	def _statusDropMenu(self) -> 'widgetCOMP':
+	def _statusDropMenu(self) -> widgetCOMP:
 		return self.ownerComp.op('status_dropmenu')
 
-	def LoadROP(self, o: 'Union[OP, DAT, COMP, str]'):
+	def LoadROP(self, o: OP | DAT | COMP | str):
 		iop.inspectorCore.Inspect(o)
 		info = self.ROPInfo
 		self._statusDropMenu.par.Value0 = info.statusLabel or 'default'
@@ -41,7 +39,7 @@ class ROPEditor:
 		RaytkTools().setROPStatus(info.rop, status)
 
 	@property
-	def ROP(self) -> 'Optional[COMP]':
+	def ROP(self) -> COMP | None:
 		return iop.inspectorCore.TargetComp
 
 	@property

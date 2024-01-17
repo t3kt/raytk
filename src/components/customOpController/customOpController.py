@@ -5,25 +5,25 @@ if False:
 	# noinspection PyUnresolvedReferences
 	from _stubs import *
 	import _stubs.TDJSON as TDJSON
-	from typing import Any, Dict, List, Optional, Set, Type
+	from typing import Any
 
 # noinspection PyRedeclaration
 TDJSON = op.TDModules.mod.TDJSON
 
 class CustomOp:
-	def __init__(self, ownerComp: 'COMP'):
+	def __init__(self, ownerComp: COMP):
 		self.ownerComp = ownerComp
 
-	def host(self) -> 'Optional[COMP]':
+	def host(self) -> COMP | None:
 		host = self.ownerComp.par.Hostop.eval()
 		if not host:
 			raise Exception('No host attached to custom op controller')
 		return host
 
-	def opDef(self) -> 'Optional[COMP]':
+	def opDef(self) -> COMP | None:
 		return self.ownerComp.par.Opdef.eval()
 
-	def paramsOp(self) -> 'Optional[COMP]':
+	def paramsOp(self) -> COMP | None:
 		host = self.host()
 		return host and op(host.par['Paramsop'])
 
@@ -138,7 +138,7 @@ class CustomOp:
 					continue
 				parTuplet[0].destroy()
 
-	def buildParamTable(self, dat: 'DAT'):
+	def buildParamTable(self, dat: DAT):
 		dat.clear()
 		referencedNames = self._allReferencedParamNames()
 		names = []
@@ -156,20 +156,20 @@ class CustomOp:
 						names.append(partName)
 		dat.appendRow([' '.join(names)])
 
-	def _allCodeBlocks(self) -> 'List[str]':
+	def _allCodeBlocks(self) -> list[str]:
 		return [
 			dat.text
 			for dat in self.codeDats()
 		]
 
-	def codeDats(self) -> 'List[DAT]':
+	def codeDats(self) -> list[DAT]:
 		return [
 			par.eval()
 			for par in self.host().pars('Opglobals', 'Initcode', 'Function', 'Materialcode')
 			if par.eval()
 		]
 
-	def _allReferencedParamNames(self) -> 'Set[str]':
+	def _allReferencedParamNames(self) -> set[str]:
 		return {
 			name
 			for code in self._allCodeBlocks()
@@ -182,13 +182,13 @@ class CustomOp:
 			specs.update(_extractParamSpecs(code))
 		return specs
 
-	def _hostParamTuplets(self) -> 'List[ParTupletT]':
+	def _hostParamTuplets(self) -> 'list[ParTupletT]':
 		paramsOp = self.paramsOp()
 		return paramsOp.customTuplets if paramsOp else []
 
 	def _createDat(
-			self, opType: 'Type[DAT]',
-			template: 'Optional[DAT]', nameSuffix: str,
+			self, opType: 'type[DAT]',
+			template: DAT | None, nameSuffix: str,
 			offsetX: int, offsetY: int,
 			hostParName: str
 	):
@@ -235,7 +235,7 @@ _paramPattern = re.compile(r'\bTHIS_([A-Z][a-z0-9]*)\b')
 # // @Radius {"default":2.1, "label":"Thing Radius"}
 _paramSpecPattern = re.compile(r'@([A-Z][a-z0-9]*)\s*({.*})')
 
-def _extractParamSpecs(code: str) -> 'Dict[str, Dict[str, Any]]':
+def _extractParamSpecs(code: str) -> 'dict[str, dict[str, Any]]':
 	if not code:
 		return {}
 	matches = _paramSpecPattern.findall(code)

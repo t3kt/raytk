@@ -5,7 +5,7 @@ if False:
 
 from raytkTypes import getAllTypes
 
-def onCook(dat: 'scriptDAT'):
+def onCook(dat: scriptDAT):
 	dat.clear()
 	dat.appendRow(['outputType', 'returnAs'])
 	for dataType in getAllTypes():

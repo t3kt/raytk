@@ -1,21 +1,21 @@
-from typing import List, Tuple, Union
-
 # noinspection PyUnreachableCode
 if False:
 	# noinspection PyUnresolvedReferences
 	from _stubs import *
+	from _typeAliases import *
 
-	class ipar:
-		class bufInsp:
-			Showpointsampling: 'Union[bool, Par]'
-			Samplepointu: 'Union[float, Par]'
-			Samplepointv: 'Union[float, Par]'
+	class _BufInspPar:
+		Showpointsampling: BoolParamT
+		Samplepointu: FloatParamT
+		Samplepointv: FloatParamT
+
+	ipar.bufInsp = _BufInspPar()
 
 class BufferInspector:
-	def __init__(self, ownerComp: 'COMP'):
+	def __init__(self, ownerComp: COMP):
 		self.ownerComp = ownerComp
 
-	def buildMaskChanSettings(self, dat: 'DAT'):
+	def buildMaskChanSettings(self, dat: DAT):
 		dat.clear()
 		r = self.ownerComp.par.Showr
 		g = self.ownerComp.par.Showg

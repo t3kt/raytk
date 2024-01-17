@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.sdf2d.pieSdf2d
-  opVersion: '11'
+  opVersion: '12'
   opStatus: default
 opDef: !def
   enable: true
@@ -25,6 +25,10 @@ opDef: !def
   help: !text
     file: src/operators/sdf2d/pieSdf2d.md
     name: help
+  keywords:
+  - ring
+  - arc
+  - slice
 inputs:
 - !input
   Localalias: angleField
@@ -51,9 +55,7 @@ elements:
   elementType: codeSwitcher
   params:
     Elementroot: ''
-    Table: !table
-      file: src/operators/sdf2d/pieSdf2d_shapes.txt
-      name: shapes
+    Table: shapes
     Param: Shape
     Autoupdateparams: true
     Manageparamstates: true

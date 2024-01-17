@@ -3,7 +3,7 @@ if False:
 	# noinspection PyUnresolvedReferences
 	from _stubs import *
 
-def buildPartTable(dat: 'DAT'):
+def buildPartTable(dat: DAT):
 	for i in range(1, 5):
 		src = int(parent().par[f'Source{i}'])
 		part = str(parent().par[f'Part{i}'])
@@ -17,7 +17,7 @@ def buildPartTable(dat: 'DAT'):
 				part,
 			])
 
-def buildMacros(dat: 'DAT', partTable: 'DAT'):
+def buildMacros(dat: DAT, partTable: DAT):
 	dat.clear()
 	sources = [int(c) for c in partTable.col(0)]
 	parts = [str(c) for c in partTable.col(1)]

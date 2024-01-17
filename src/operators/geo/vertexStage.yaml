@@ -1,0 +1,17 @@
+!rop
+meta: !meta
+  opType: raytk.operators.geo.vertexStage
+  opVersion: '0'
+  opStatus: alpha
+opDef: !def
+  enable: true
+  typeSpec: !ropTypes
+    coordType: !coordT
+      Coordtypevec3: true
+    contextType: !contextT
+      Contexttypevertexcontext: true
+    returnType: !returnT
+      Returntypefloat: true
+  function: !text
+    file: src/operators/geo/vertexStage.glsl
+    name: function

@@ -12,7 +12,7 @@ if False:
 		Prototypefolder: 'StrParamT'
 
 class ToolkitManager:
-	def __init__(self, ownerComp: 'COMP'):
+	def __init__(self, ownerComp: COMP):
 		self.ownerComp = ownerComp
 		self.context = RaytkContext()
 
@@ -24,7 +24,7 @@ class ToolkitManager:
 	# def ToolkitVersion(self):
 	# 	return self.context.toolkitVersion()
 
-	def prepareSceneTable(self, dat: 'DAT', inDat: 'DAT', opTable: 'DAT'):
+	def prepareSceneTable(self, dat: DAT, inDat: DAT, opTable: DAT):
 		dat.clear()
 		dat.appendRow([
 			'name', 'label', 'filePath', 'opType', 'group', 'baseName', 'shortLabel'

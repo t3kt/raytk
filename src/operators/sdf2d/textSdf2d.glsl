@@ -1,7 +1,7 @@
 void THIS_char(inout float d, vec2 p, int c) {
 	vec2 uv = (p + vec2(float(c%16), float(15-c/16)) + .5) / 16.;
 	float dOuter = max(abs(p.x) - .25, max(p.y - .35, -.38 - p.y));
-	float d1 = max(dOuter, textureLod(THIS_data, uv, 0.).w - 127./255.);
+	float d1 = max(dOuter, textureLod(THIS_data, uv, 0.).x - 127./255.);
 	d = min(d, d1);
 }
 

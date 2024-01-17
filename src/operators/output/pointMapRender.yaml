@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.output.pointMapRender
-  opVersion: '69'
+  opVersion: '70'
   opStatus: default
 opDef: !def
   enable: true
@@ -83,9 +83,7 @@ elements:
   elementType: codeSwitcher
   params:
     Elementroot: ''
-    Table: !table
-      file: src/operators/output/pointMapRender_materialModes.txt
-      name: materialModes
+    Table: materialModes
     Param: Materialmode
     Autoupdateparams: true
     Manageparamstates: true

@@ -11,9 +11,9 @@ class Stage:
 	src: str
 	cmb: str
 	tra: 'Tuple[Par, Par, Par]'
-	rad: 'Optional[Par]'
-	num: 'Optional[Par]'
-	off: 'Optional[Par]'
+	rad: Par | None
+	num: Par | None
+	off: Par | None
 
 	def _hasTranslate(self):
 		if self.tra[0].mode != ParMode.CONSTANT or self.tra[1].mode != ParMode.CONSTANT or self.tra[2].mode != ParMode.CONSTANT:
@@ -51,7 +51,7 @@ def loadStages() -> 'List[Stage]':
 		))
 	return stages
 
-def parCode(par: 'Par'):
+def parCode(par: Par):
 	if par.mode == ParMode.CONSTANT:
 		return par.eval()
 	return 'THIS_' + par.name

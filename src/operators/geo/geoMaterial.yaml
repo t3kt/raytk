@@ -1,0 +1,5 @@
+!rcomp
+meta: !meta
+  opType: raytk.operators.geo.geoMaterial
+  opVersion: '1'
+  opStatus: alpha

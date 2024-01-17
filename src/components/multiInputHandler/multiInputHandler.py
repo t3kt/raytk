@@ -1,5 +1,3 @@
-from typing import Dict, List, Optional
-
 # noinspection PyUnreachableCode
 if False:
 	# noinspection PyUnresolvedReferences
@@ -7,7 +5,7 @@ if False:
 
 _allTypeCategories = ('coordType', 'contextType', 'returnType')
 
-def buildTypeSettings(dat: 'scriptDAT'):
+def buildTypeSettings(dat: scriptDAT):
 	dat.clear()
 	dat.appendRow(['category', 'mode', 'replacement', 'scope'])
 	allInputDefs = ops('definition_in_?')
@@ -38,11 +36,11 @@ def buildTypeSettings(dat: 'scriptDAT'):
 				preferredTypes = tdu.split(parent().par[parPrefix + 'typepreference'])
 				dat[category, 'replacement'] = ' '.join(preferredTypes)
 
-def _getCommonTypesFromCells(cells: List['Cell']) -> List[str]:
+def _getCommonTypesFromCells(cells: list[Cell]) -> list[str]:
 	cells = [cell for cell in cells if cell]
 	if not cells:
 		return []
-	typeCounts = {}  # type: Dict[str, int]
+	typeCounts = {}  # type: dict[str, int]
 	for cell in cells:
 		for part in cell.val.split(' '):
 			if not part:
@@ -60,7 +58,7 @@ def _firstMatch(vals, matchVals):
 		if val in matchVals:
 			return val
 
-def buildValidationErrors(dat: 'DAT', mergedDefs: 'DAT', typeSettings: 'DAT'):
+def buildValidationErrors(dat: DAT, mergedDefs: DAT, typeSettings: DAT):
 	dat.clear()
 	processedInputDefs = [
 		table
@@ -91,13 +89,13 @@ def buildValidationErrors(dat: 'DAT', mergedDefs: 'DAT', typeSettings: 'DAT'):
 			if repl == '':
 				addRow('error', f'Inputs have no matching {typeCategory}')
 
-def _parseInputScope(val: str, maxInputs: int) -> List[int]:
+def _parseInputScope(val: str, maxInputs: int) -> list[int]:
 	val = val.strip()
 	if val == '*':
 		return list(range(1, maxInputs + 1))
 	return [int(p) for p in tdu.expand(val)]
 
-def applyTypeSettings(dat: 'scriptDAT', index: int, typeSettings: 'DAT'):
+def applyTypeSettings(dat: scriptDAT, index: int, typeSettings: DAT):
 	if dat.numRows < 2:
 		return
 	for category in _allTypeCategories:
@@ -107,7 +105,7 @@ def applyTypeSettings(dat: 'scriptDAT', index: int, typeSettings: 'DAT'):
 		if repl is not None:
 			dat[1, category] = repl
 
-def _getTypeReplacement(typeSettings: 'DAT', category: str, current: 'Optional[Cell]'):
+def _getTypeReplacement(typeSettings: DAT, category: str, current: Cell | None):
 	mode = typeSettings[category, 'mode'].val
 	replacement = typeSettings[category, 'replacement'].val
 	if mode == 'besteach':

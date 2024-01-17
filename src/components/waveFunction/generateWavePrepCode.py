@@ -3,7 +3,7 @@ if False:
 	# noinspection PyUnresolvedReferences
 	from _stubs import *
 
-def onCook(dat: 'DAT'):
+def onCook(dat: DAT):
 	effectiveMode = str(dat.inputs[1]['effectiveMode', 1])
 	paramGroupTable = dat.inputs[0]  # type: DAT
 	config = parent()

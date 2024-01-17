@@ -1,4 +1,4 @@
 names	source	handling	readOnlyHandling	conversion	enable
 Amount	param	runtime	macro		op('bend_definition').numRows < 2
 Shift	param	runtime	macro		1
-Direction	param	constant			1
+Direction Side	param	constant			1

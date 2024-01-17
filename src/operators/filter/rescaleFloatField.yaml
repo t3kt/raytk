@@ -1,8 +1,8 @@
 !rop
 meta: !meta
   opType: raytk.operators.filter.rescaleFloatField
-  opVersion: '0'
-  opStatus: beta
+  opVersion: '1'
+  opStatus: default
 opDef: !def
   enable: !expr
     expr: op('..').par.Enable
@@ -14,6 +14,7 @@ opDef: !def
       Allcontexttype: true
     returnType: !returnT
       Returntypefloat: true
+      Returntypevec4: true
   function: !text
     file: src/operators/filter/rescaleFloatField.glsl
     name: function
@@ -28,3 +29,4 @@ inputs:
     Allcontexttype: true
   returnType: !returnT
     Returntypefloat: true
+    Returntypevec4: true

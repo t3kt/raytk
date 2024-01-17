@@ -1,11 +1,12 @@
 from datetime import datetime
 from pathlib import Path
+import shutil
+import zipfile
 
-from raytkDocs import ToolkitInfo
 from raytkTools import RaytkTools
 from raytkUtil import RaytkTags, navigateTo, focusFirstCustomParameterPage, CategoryInfo, RaytkContext, IconColors
 from raytkBuild import BuildContext, DocProcessor, chunked_iterable
-from typing import Callable, List, Optional, TextIO
+from typing import Callable, Optional, TextIO
 
 # noinspection PyUnreachableCode
 if False:
@@ -13,13 +14,13 @@ if False:
 	from _stubs import *
 
 class BuildManager:
-	def __init__(self, ownerComp: 'COMP'):
+	def __init__(self, ownerComp: COMP):
 		self.ownerComp = ownerComp
 		self.logTable = ownerComp.op('log')
-		self.context = None  # type: Optional[BuildContext]
-		self.docProcessor = None  # type: Optional[DocProcessor]
+		self.context = None  # type: BuildContext | None
+		self.docProcessor = None  # type: DocProcessor | None
 		self.experimentalMode = False
-		self.logFile = None  # type: Optional[TextIO]
+		self.logFile = None  # type: TextIO | None
 		self.enableVerboseLogging = False
 
 	def OnInit(self):
@@ -97,6 +98,16 @@ class BuildManager:
 		)
 		builder.runBuild(thenRun=afterBuild)
 
+	def runSeparateSnippetBuildOnly(self):
+		self.prepareForBuild()
+		def afterBuild():
+			self.log('Finished snippets build process')
+			self.closeLogFile()
+		builder = SeparateSnippetsBuilder(
+			self.context,
+		)
+		builder.runBuild(thenRun=afterBuild)
+
 	def runToolkitAndSnippetBuilds(self):
 		self.prepareForBuild()
 		def afterBuild():
@@ -116,7 +127,7 @@ class BuildManager:
 		builder.runBuild(thenRun=afterToolkitBuild)
 
 	@staticmethod
-	def reloadToolkit(toolkit: 'COMP'):
+	def reloadToolkit(toolkit: COMP):
 		toolkit.par.externaltox = 'src/raytk.tox'
 		toolkit.par.reinitnet.pulse()
 		# Do this early since it switches off things like automatically writing to the opList.txt file.
@@ -124,7 +135,7 @@ class BuildManager:
 		toolkit.par.Devel = False
 
 	@staticmethod
-	def reloadSnippets(snippets: 'COMP'):
+	def reloadSnippets(snippets: COMP):
 		snippets.par.externaltox = 'snippets/raytkSnippets.tox'
 		snippets.par.reinitnet.pulse()
 		# Do this early since it switches off things like automatically writing to the opList.txt file.
@@ -141,7 +152,7 @@ class BuildManager:
 		self.logTable.appendRow([message])
 
 	@staticmethod
-	def queueMethodCall(method: Callable, *args):
+	def queueMethodCall(method: callable, *args):
 		queueCall(method, *args)
 
 class _BuilderBase:
@@ -150,15 +161,15 @@ class _BuilderBase:
 			context: BuildContext,
 	):
 		self.context = context
-		self.afterBuild = None  # type: Optional[Callable]
+		self.afterBuild = None  # type: Callable | None
 
 	def runBuild(self, thenRun: Callable):
 		self.afterBuild = thenRun
 		pass
 
-	def removeBuildExcludeOpsIn(self, scope: 'COMP', thenRun: Callable):
+	def removeBuildExcludeOpsIn(self, scope: COMP, thenRun: callable):
 		self.log(f'Removing buildExclude ops in {scope} (deep)')
-		toRemove = scope.findChildren(tags=[RaytkTags.buildExclude.name])
+		toRemove = scope.findChildren(tags=[RaytkTags.buildExclude.name], includeUtility=True)
 		chunks = [list(chunk) for chunk in chunked_iterable(toRemove, 30)]
 		self.log(f'Found {len(toRemove)} ops to remove in {len(chunks)} chunks')
 		total = len(chunks)
@@ -173,14 +184,17 @@ class _BuilderBase:
 		runPart()
 
 	def getOutputToxPath(self, baseName: str):
+		return self.getOutputFilePath(baseName, 'tox')
+
+	def getOutputFilePath(self, baseName: str, extension: str):
 		version = RaytkContext().toolkitVersion()
 		if self.context.experimental:
 			suffix = '-exp'
 		else:
 			suffix = ''
-		return f'build/{baseName}-{version}{suffix}.tox'
+		return f'build/{baseName}-{version}{suffix}.{extension}'
 
-	def finalizeRootPars(self, comp: 'COMP'):
+	def finalizeRootPars(self, comp: COMP):
 		self.context.moveNetworkPane(comp)
 		comp.par.Devel.readOnly = True
 		comp.par.externaltox = ''
@@ -208,7 +222,7 @@ class ToolkitBuilder(_BuilderBase):
 	):
 		super().__init__(context)
 		self.reloadToolkit = reloadToolkit
-		self.docProcessor = None  # type: Optional[DocProcessor]
+		self.docProcessor = None  # type: DocProcessor | None
 		if not self.context.experimental:
 			self.docProcessor = DocProcessor(
 				self.context,
@@ -217,7 +231,7 @@ class ToolkitBuilder(_BuilderBase):
 				imagesFolder='docs/assets/images',
 			)
 
-	def runBuild(self, thenRun: Callable):
+	def runBuild(self, thenRun: callable):
 		super().runBuild(thenRun)
 		version = RaytkContext().toolkitVersion()
 		self.log('Starting build')
@@ -309,7 +323,7 @@ class ToolkitBuilder(_BuilderBase):
 			queueCall(self.afterBuild)
 
 	def updateLibraryImage(
-			self, toolkit: 'COMP',
+			self, toolkit: COMP,
 			thenRun: 'Optional[Callable]' = None, runArgs: list = None):
 		self.log('Updating library image')
 		image = RaytkContext().libraryImage()
@@ -328,7 +342,7 @@ class ToolkitBuilder(_BuilderBase):
 			queueCall(thenRun, *(runArgs or []))
 
 	def updateLibraryInfo(
-			self, toolkit: 'COMP',
+			self, toolkit: COMP,
 			thenRun: 'Optional[Callable]' = None, runArgs: list = None):
 		self.log('Updating library info')
 		if toolkit.par['Experimentalbuild'] is not None:
@@ -343,7 +357,7 @@ class ToolkitBuilder(_BuilderBase):
 			runArgs=[])
 
 	def lockLibraryInfo(
-			self, toolkit: 'COMP',
+			self, toolkit: COMP,
 			thenRun: 'Optional[Callable]' = None, runArgs: list = None):
 		self.log('Locking library info')
 		self.context.lockOps(toolkit.ops(
@@ -352,7 +366,7 @@ class ToolkitBuilder(_BuilderBase):
 			queueCall(thenRun, *(runArgs or []))
 
 	def preProcessComponents(
-			self, components: 'COMP',
+			self, components: COMP,
 			thenRun: 'Optional[Callable]' = None, runArgs: list = None):
 		self.log(f'Prepocessing components {components}')
 		self.context.focusInNetworkPane(components)
@@ -388,7 +402,7 @@ class ToolkitBuilder(_BuilderBase):
 		queueCall(nextStage)
 
 	def processComponents(
-			self, components: 'COMP',
+			self, components: COMP,
 			thenRun: 'Optional[Callable]' = None, runArgs: list = None):
 		self.log(f'Processing components {components}')
 		self.context.focusInNetworkPane(components)
@@ -396,7 +410,7 @@ class ToolkitBuilder(_BuilderBase):
 		queueCall(thenRun, *(runArgs or []))
 
 	def processOperators(
-			self, comp: 'COMP',
+			self, comp: COMP,
 			thenRun: 'Optional[Callable]' = None, runArgs: list = None):
 		self.log(f'Processing operators {comp}')
 		self.context.moveNetworkPane(comp)
@@ -408,7 +422,7 @@ class ToolkitBuilder(_BuilderBase):
 		queueCall(self.processOperatorCategories_stage, categories, thenRun, runArgs)
 
 	def processOperatorCategories_stage(
-			self, categories: List['COMP'],
+			self, categories: list[COMP],
 			thenRun: 'Optional[Callable]' = None, runArgs: list = None):
 		if categories:
 			category = categories.pop()
@@ -420,7 +434,7 @@ class ToolkitBuilder(_BuilderBase):
 			queueCall(thenRun, *(runArgs or []))
 
 	def processOperatorCategory(
-			self, category: 'COMP',
+			self, category: COMP,
 			thenRun: 'Optional[Callable]' = None, runArgs: list = None):
 		categoryInfo = CategoryInfo(category)
 		self.log(f'Processing operator category {category.name}')
@@ -436,7 +450,7 @@ class ToolkitBuilder(_BuilderBase):
 		queueCall(self.processOperatorCategory_stage, category, comps, thenRun, runArgs)
 
 	def processOperatorCategory_stage(
-			self, category: 'COMP', components: List['COMP'],
+			self, category: COMP, components: list[COMP],
 			thenRun: 'Optional[Callable]' = None, runArgs: list = None):
 		if components:
 			comp = components.pop()
@@ -450,7 +464,7 @@ class ToolkitBuilder(_BuilderBase):
 			if thenRun:
 				queueCall(thenRun, *(runArgs or []))
 
-	def processOperator(self, comp: 'COMP'):
+	def processOperator(self, comp: COMP):
 		self.log(f'Processing operator {comp}')
 		self.context.focusInNetworkPane(comp)
 		self.context.disableCloning(comp)
@@ -483,7 +497,7 @@ class ToolkitBuilder(_BuilderBase):
 		if self.docProcessor:
 			self.docProcessor.processOp(comp)
 
-	def processOperatorSubCompChildrenOf(self, comp: 'COMP'):
+	def processOperatorSubCompChildrenOf(self, comp: COMP):
 		subComps = comp.findChildren(type=COMP)
 		if not subComps:
 			return
@@ -491,7 +505,7 @@ class ToolkitBuilder(_BuilderBase):
 		for child in subComps:
 			self.processOperatorSubComp_2(child)
 
-	def processOperatorSubComp_2(self, comp: 'COMP'):
+	def processOperatorSubComp_2(self, comp: COMP):
 		self.context.log(f'Processing {comp}', verbose=True)
 		self.context.detachTox(comp)
 		self.context.reclone(comp)
@@ -499,7 +513,7 @@ class ToolkitBuilder(_BuilderBase):
 		self.processOperatorSubCompChildrenOf(comp)
 
 	def processNestedOperators(
-			self, comp: 'COMP',
+			self, comp: COMP,
 			thenRun: 'Optional[Callable]' = None, runArgs: list = None):
 		self.log('Processing nested operators')
 		subOps = comp.findChildren(tags=[RaytkTags.raytkOP.name], depth=3)
@@ -507,7 +521,7 @@ class ToolkitBuilder(_BuilderBase):
 		queueCall(self.processNestedOperators_stage, subOps, thenRun, runArgs)
 
 	def processNestedOperators_stage(
-			self, comps: List['COMP'],
+			self, comps: list[COMP],
 			thenRun: 'Optional[Callable]' = None, runArgs: list = None):
 		if comps:
 			comp = comps.pop()
@@ -518,7 +532,7 @@ class ToolkitBuilder(_BuilderBase):
 		if thenRun:
 			queueCall(thenRun, *(runArgs or []))
 
-	def processNestedOperator(self, rop: 'COMP'):
+	def processNestedOperator(self, rop: COMP):
 		self.log(f'Processing sub-operator {rop.path}')
 		self.context.updateOrReclone(rop)
 		self.context.detachTox(rop)
@@ -533,7 +547,7 @@ class ToolkitBuilder(_BuilderBase):
 		queueCall(thenRun, *(runArgs or []))
 
 	def processTools(
-			self, comp: 'COMP',
+			self, comp: COMP,
 			thenRun: 'Optional[Callable]' = None, runArgs: list = None):
 		self.log(f'Processing tools {comp}')
 		self.context.moveNetworkPane(comp)
@@ -596,7 +610,7 @@ class SnippetsBuilder(_BuilderBase):
 			self.log('Build completed!')
 			self.log(f'Exported tox file: {toxFile}')
 
-	def processSnippetsStructure(self, snippets: 'COMP'):
+	def processSnippetsStructure(self, snippets: COMP):
 		snippetsRoot = snippets.op('snippets')
 		self.context.detachTox(snippetsRoot)
 		operatorsRoot = snippets.op('snippets/operators')
@@ -609,7 +623,7 @@ class SnippetsBuilder(_BuilderBase):
 		operatorsRoot.allowCooking = True
 		snippetsRoot.allowCooking = True
 
-	def processSnippets(self, snippets: 'COMP', thenRun: Callable, runArgs: list):
+	def processSnippets(self, snippets: COMP, thenRun: Callable, runArgs: list):
 		self.log('Processing snippets')
 		snippetsRoot = snippets.op('snippets')
 		snippetTable = snippets.op('navigator/snippetTable')  # type: DAT
@@ -635,7 +649,7 @@ class SnippetsBuilder(_BuilderBase):
 
 		queueCall(processSnippetsStage, 1)
 
-	def processSnippet(self, snippet: 'COMP', theRun: Callable, runArgs: list):
+	def processSnippet(self, snippet: COMP, theRun: Callable, runArgs: list):
 		self.context.detachTox(snippet)
 
 		def processSnippetStage(stage: int):
@@ -657,7 +671,7 @@ class SnippetsBuilder(_BuilderBase):
 
 		queueCall(processSnippetStage, 0)
 
-	def processRop(self, rop: 'COMP'):
+	def processRop(self, rop: COMP):
 		self.log(f'Processing ROP {rop}', verbose=True)
 		rop.par.enablecloningpulse.pulse()
 		# self.context.reclone(rop, verbose=True)
@@ -665,13 +679,150 @@ class SnippetsBuilder(_BuilderBase):
 		if not rop.isPanel and not rop.isObject:
 			rop.showCustomOnly = True
 
-	def finalizeRootPars(self, comp: 'COMP'):
+	def finalizeRootPars(self, comp: COMP):
 		super().finalizeRootPars(comp)
 		version = RaytkContext().toolkitVersion()
 		comp.par.Raytkversion = version
 		comp.par.Raytkversion.default = version
 		comp.par.Experimentalbuild = self.context.experimental
 		comp.par.Experimentalbuild.default = self.context.experimental
+
+class SeparateSnippetsBuilder(_BuilderBase):
+	def __init__(
+			self,
+			context: BuildContext,
+	):
+		super().__init__(context)
+		self.outputFolder = None  # type: Optional[Path]
+		self.sourceFolder = Path('snippets')
+		self.tempComp = None  # type: Optional[COMP]
+		self.sourceToxFiles = []  # type: list[Path]
+		self.opTypesByLocalName = {}  # type: dict[str, str]
+
+	def runBuild(self, thenRun: Callable):
+		super().runBuild(thenRun)
+		self.log('Starting separated snippets build')
+		queueCall(self.runBuild_stage, 0)
+
+	def runBuild_stage(self, stage: int):
+		if stage == 0:
+			self.logStageStart('Initialization')
+			self.initializeOutput()
+			self.initializeTempComp()
+			queueCall(self.runBuild_stage, stage + 1)
+		elif stage == 1:
+			self.findSourceToxFiles()
+			queueCall(self.runBuild_stage, stage + 1)
+		elif stage == 2:
+			self.processSourceToxFiles(thenRun=lambda: self.runBuild_stage(stage + 1))
+		elif stage == 3:
+			outputFileName = self.buildZip()
+			self.log(f'Exported zip file: {outputFileName}')
+			queueCall(self.runBuild_stage, stage + 1)
+		elif stage == 4:
+			self.cleanOutput()
+			queueCall(self.runBuild_stage, stage + 1)
+		elif stage == 5:
+			self.log('Build completed!')
+			queueCall(self.afterBuild)
+
+	def initializeOutput(self):
+		tempFolder = Path('build/temp')
+		tempFolder.mkdir(parents=True, exist_ok=True)
+		folder = tempFolder / 'snippets'
+		if folder.exists():
+			self.log('Clearing output temp folder ' + folder.as_posix())
+			shutil.rmtree(folder)
+		self.log('Creating output temp folder ' + folder.as_posix())
+		folder.mkdir(parents=True)
+		self.outputFolder = folder
+
+	def initializeTempComp(self):
+		self.tempComp = op('/temp')
+		if self.tempComp:
+			self.log('Removing old temp comp')
+			self.context.safeDestroyOp(self.tempComp)
+		self.log('Creating temp comp')
+		self.tempComp = root.create(baseCOMP, 'temp')
+
+	def parseOpTable(self):
+		self.log('Parsing op table')
+		opTable = RaytkContext().opTable()
+		self.opTypesByLocalName = {}
+		for i in range(1, opTable.numRows):
+			self.opTypesByLocalName[opTable[i, 'name'].val] = opTable[i, 'opType'].val
+
+	def findSourceToxFiles(self):
+		self.logStageStart('Find source tox files')
+
+		def processFiles(files, isOperatorSpecific=False):
+			for file in files:
+				if file.name == 'index.tox':
+					continue
+				if isOperatorSpecific:
+					if file.name.endswith('_snippet') and file.name.split('_', maxsplit=1)[0] not in self.opTypesByLocalName:
+						self.log(f'Skipping operator-specific snippet {file}')
+						continue
+				self.sourceToxFiles.append(file)
+
+		processFiles((self.sourceFolder / 'operators').rglob('*.tox'), isOperatorSpecific=True)
+		# TODO: other root folders?
+		self.log(f'Found {len(self.sourceToxFiles)} source tox files')
+
+	def processSourceToxFiles(self, thenRun: callable):
+		self.logStageStart('Process source tox files')
+		self.processSourceToxFiles_stage(0, thenRun)
+
+	def processSourceToxFiles_stage(self, i: int, thenRun: callable):
+		if i >= len(self.sourceToxFiles):
+			self.log('Finished processing source tox files')
+			queueCall(thenRun)
+		else:
+			tox = self.sourceToxFiles[i]
+			self.log(f'Processing source tox file [{ i + 1 } / {len(self.sourceToxFiles)}] {tox}')
+			self.processSourceToxFile(tox, thenRun=lambda: self.processSourceToxFiles_stage(i + 1, thenRun))
+
+	def processSourceToxFile(self, tox: Path, thenRun: callable):
+		snippet = self.tempComp.loadTox(tox.as_posix())
+		self.log('Processing snippet comp ' + snippet.path)
+		self.context.focusInNetworkPane(snippet)
+		self.context.detachTox(snippet)
+		def processStage1():
+			rops = RaytkContext().ropChildrenOf(snippet)
+			self.log(f'Updating {len(rops)} ROPs')
+			for rop in rops:
+				self.processRop(rop)
+			queueCall(processStage2)
+		def processStage2():
+			relPath = tox.relative_to(self.sourceFolder)
+			outputPath = self.outputFolder / relPath
+			outputPath.parent.mkdir(parents=True, exist_ok=True)
+			self.log(f'Writing tox to {outputPath}')
+			snippet.save(outputPath.as_posix())
+			queueCall(thenRun)
+		queueCall(processStage1)
+
+	def processRop(self, rop: COMP):
+		self.log(f'Processing ROP {rop}', verbose=True)
+		rop.par.enablecloningpulse.pulse()
+		# self.context.reclone(rop, verbose=True)
+		rop.par.enablecloning = False
+		if not rop.isPanel and not rop.isObject:
+			rop.showCustomOnly = True
+
+	def buildZip(self):
+		self.logStageStart('Finish snippets build')
+		toxFiles = list(self.outputFolder.rglob('*.tox'))
+		outputFileName = self.getOutputFilePath('RayTKSnippets', 'zip')
+		self.log(f'Building {outputFileName} with {len(toxFiles)} tox files')
+		with zipfile.ZipFile(outputFileName, 'w') as archive:
+			for file in toxFiles:
+				archive.write(file, arcname=file.relative_to(self.outputFolder))
+		return outputFileName
+
+	def cleanOutput(self):
+		self.logStageStart('Cleaning temporary output')
+		shutil.rmtree(self.outputFolder)
 
 def queueCall(action: Callable, *args):
 	run('args[0](*(args[1:]))', action, *args, delayFrames=10, delayRef=root)

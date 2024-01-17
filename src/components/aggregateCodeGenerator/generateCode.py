@@ -46,7 +46,7 @@ def onCook(dat):
 def _injectIndex(code: str, i: int):
 	return code.replace('$', str(i))
 
-def _prepStatement(stmt: 'Par'):
+def _prepStatement(stmt: Par):
 	stmt = str(stmt)
 	if not stmt:
 		return ''

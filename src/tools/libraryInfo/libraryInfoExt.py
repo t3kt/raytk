@@ -5,11 +5,10 @@ from raytkUtil import ROPInfo, RaytkTags, RaytkContext
 if False:
 	# noinspection PyUnresolvedReferences
 	from _stubs import *
-	from typing import List
 	parent.raytk = COMP()
 
 class LibraryInfoBuilder:
-	def __init__(self, ownerComp: 'COMP'):
+	def __init__(self, ownerComp: COMP):
 		self.ownerComp = ownerComp
 
 	def Forcebuild(self, _=None):
@@ -23,13 +22,13 @@ class LibraryInfoBuilder:
 			o.cook(force=True)
 
 	@staticmethod
-	def buildVersionTable(dat: 'tableDAT'):
+	def buildVersionTable(dat: tableDAT):
 		dat.clear()
 		dat.appendRow(['toolkitVersion', RaytkContext().toolkitVersion()])
 		dat.appendRow(['touchDesignerVersion', app.version])
 		dat.appendRow(['touchDesignerBuild', app.build])
 
-	def buildBuildInfoTable(self, dat: 'tableDAT'):
+	def buildBuildInfoTable(self, dat: tableDAT):
 		self.buildVersionTable(dat)
 		dat.insertRow(['toolkitBuildDate', datetime.now().isoformat(sep=' ')], 'touchDesignerVersion')
 		context = RaytkContext()
@@ -44,13 +43,13 @@ class LibraryInfoBuilder:
 		dat.appendRow(['buildOsVersion', app.osVersion])
 
 	@staticmethod
-	def buildROPTable(dat: 'scriptDAT', thumbTable: 'DAT', chipTable: 'DAT'):
+	def buildROPTable(dat: scriptDAT, thumbTable: DAT, chipTable: DAT):
 		dat.clear()
 		opsRoot = RaytkContext().operatorsRoot()
-		rops = []  # type: List[COMP]
+		rops = []  # type: list[COMP]
 		if opsRoot:
 			rops = opsRoot.findChildren(type=COMP, tags=['raytk*'], depth=2, maxDepth=2)
-		dat.appendRow(['name', 'path', 'tags', 'category', 'displayCategory', 'opType', 'opVersion', 'status', 'keywords', 'shortcuts', 'chip', 'thumb'])
+		dat.appendRow(['name', 'path', 'tags', 'category', 'displayCategory', 'opType', 'opVersion', 'status', 'keywords', 'shortcuts', 'chip', 'thumb', 'flags'])
 		if not rops:
 			return
 		rops.sort(key=lambda o: o.path.lower())
@@ -73,10 +72,11 @@ class LibraryInfoBuilder:
 				' '.join(sorted(ropInfo.shortcuts)),
 				chipTable[rop.name, 'chip'] or '',
 				thumbTable[rop.path, 'thumb'] or '',
+				ropInfo.rawFlags,
 			])
 
 	@staticmethod
-	def buildCategoryTable(dat: 'tableDAT', opTable: 'DAT'):
+	def buildCategoryTable(dat: tableDAT, opTable: DAT):
 		dat.clear()
 		dat.appendRow(['category', 'path'])
 		categoryNames = set(c.val for c in opTable.col('category')[1:] if c)
@@ -84,7 +84,7 @@ class LibraryInfoBuilder:
 			if catComp.name in categoryNames:
 				dat.appendRow([catComp.name, catComp.path])
 
-	def buildROPHelpTable(self, dat: 'tableDAT', opTable: 'DAT'):
+	def buildROPHelpTable(self, dat: tableDAT, opTable: DAT):
 		dat.clear()
 		dat.appendRow(['path', 'summary'])
 		for row in range(1, opTable.numRows):
@@ -97,7 +97,7 @@ class LibraryInfoBuilder:
 			])
 
 	@staticmethod
-	def extractHelpSummary(dat: 'DAT'):
+	def extractHelpSummary(dat: DAT):
 		if not dat or not dat.text:
 			return ''
 		for line in dat.text.splitlines():

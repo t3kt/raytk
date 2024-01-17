@@ -1,0 +1,66 @@
+---
+layout: operator
+title: sphereGridSdf
+parent: Sdf Operators
+grand_parent: Operators
+permalink: /reference/operators/sdf/sphereGridSdf
+redirect_from:
+  - /reference/opType/raytk.operators.sdf.sphereGridSdf/
+op:
+  category: sdf
+  inputs:
+  - contextTypes:
+    - Context
+    - MaterialContext
+    - CameraContext
+    - LightContext
+    - RayContext
+    - ParticleContext
+    - VertexContext
+    - PixelContext
+    coordTypes:
+    - vec3
+    label: Radius Field
+    name: radiusField
+    returnTypes:
+    - float
+  - contextTypes:
+    - Context
+    - MaterialContext
+    - CameraContext
+    - LightContext
+    - RayContext
+    - ParticleContext
+    - VertexContext
+    - PixelContext
+    coordTypes:
+    - vec3
+    label: Thickness Field
+    name: thicknessField
+    returnTypes:
+    - float
+  name: sphereGridSdf
+  opType: raytk.operators.sdf.sphereGridSdf
+  parameters:
+  - label: Parts
+    menuOptions:
+    - label: Both Latitudes & Longitudes
+      name: latlon
+    - label: Latitudes Only
+      name: lat
+    - label: Longitudes Only
+      name: lon
+    name: Parts
+  - label: Rows
+    name: Rows
+  - label: Columns
+    name: Cols
+  - label: Radius
+    name: Radius
+  - label: Thickness
+    name: Thickness
+    summary: the thickness of the bars.
+  status: beta
+  thumb: assets/images/reference/operators/sdf/sphereGridSdf_thumb.png
+
+---

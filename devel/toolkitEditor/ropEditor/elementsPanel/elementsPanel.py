@@ -9,11 +9,11 @@ if False:
 	ipar.elementsPanelState = _StatePar()
 
 class ElementsPanel:
-	def __init__(self, ownerComp: 'COMP'):
+	def __init__(self, ownerComp: COMP):
 		self.ownerComp = ownerComp
 
 	@staticmethod
-	def buildItemTable(dat: 'DAT', elementTable: 'DAT'):
+	def buildItemTable(dat: DAT, elementTable: DAT):
 		dat.clear()
 		dat.appendRow(['name', 'label', 'hostOp', 'parName', 'datName', 'evalDatName', 'fileSuffix'])
 		for row in range(1, elementTable.numRows):
@@ -21,7 +21,7 @@ class ElementsPanel:
 			if not elementRoot:
 				continue
 			for par in elementRoot.customPars:
-				if par.style != 'DAT':
+				if par.style != DAT:
 					continue
 				table = par.eval()
 				if not table:

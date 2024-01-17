@@ -1,7 +1,6 @@
 from pathlib import Path
 from raytkUtil import showPromptDialog, navigateTo
 from raytkTest import processTest
-from typing import Optional
 
 # noinspection PyUnreachableCode
 if False:
@@ -18,11 +17,11 @@ if False:
 	iop.testInspectorCore = TestInspectorCore(COMP())
 
 	class _Par(ParCollection):
-		Selectedrop: 'CompParamT'
-		Selectedoptype: 'StrParamT'
-		Testcasefolder: 'StrParamT'
-		Snapshotsfolder: 'StrParamT'
-		Sourcefolder: 'StrParamT'
+		Selectedrop: CompParamT
+		Selectedoptype: StrParamT
+		Testcasefolder: StrParamT
+		Snapshotsfolder: StrParamT
+		Sourcefolder: StrParamT
 
 	class _COMP(COMP):
 		par: _Par
@@ -32,7 +31,7 @@ class TestEditor:
 		self.ownerComp = ownerComp
 
 	@property
-	def hostedComponent(self) -> 'Optional[COMP]':
+	def hostedComponent(self) -> COMP | None:
 		return iop.loader.Component
 
 	@property
