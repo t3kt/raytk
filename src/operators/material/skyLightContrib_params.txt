@@ -1,2 +1,3 @@
 names	source	handling	readOnlyHandling	conversion	enable
 Color[rgb] Dir[xyz] Level	param	runtime	macro		1
+Rotate[xyz]	param	runtime	macro	angle	1
