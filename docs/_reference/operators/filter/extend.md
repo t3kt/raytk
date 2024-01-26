@@ -33,6 +33,9 @@ op:
     - Ray
     - Light
     - Particle
+    supportedVariableInputs:
+    - sizeField
+    - centerField
   - contextTypes:
     - Context
     - MaterialContext
@@ -65,6 +68,8 @@ op:
     name: centerField
     returnTypes:
     - vec4
+    supportedVariableInputs:
+    - sizeField
   keywords:
   - extend
   - stretch

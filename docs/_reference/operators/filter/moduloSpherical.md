@@ -30,6 +30,13 @@ op:
     - Ray
     - Light
     - Particle
+    supportedVariableInputs:
+    - repetitionsField
+    - offsetField
+    - shiftField
+    supportedVariables:
+    - cell
+    - normcell
   - contextTypes:
     - Context
     - MaterialContext
@@ -46,6 +53,8 @@ op:
     returnTypes:
     - float
     - vec4
+    supportedVariableInputs:
+    - shiftField
   - contextTypes:
     - Context
     - MaterialContext
@@ -61,6 +70,12 @@ op:
     name: offsetField
     returnTypes:
     - vec4
+    supportedVariableInputs:
+    - shiftField
+    - repetitionsField
+    supportedVariables:
+    - cell
+    - normcell
   - contextTypes:
     - Context
     - MaterialContext

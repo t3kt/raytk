@@ -40,6 +40,8 @@ op:
     name: chamferField
     returnTypes:
     - float
+    supportedVariableInputs:
+    - scaleField
   - contextTypes:
     - Context
     - MaterialContext
@@ -55,6 +57,9 @@ op:
     name: roundingField
     returnTypes:
     - float
+    supportedVariableInputs:
+    - scaleField
+    - chamferField
   keywords:
   - box
   - chamfer

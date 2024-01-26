@@ -39,6 +39,8 @@ op:
     name: innerSizeField
     returnTypes:
     - float
+    supportedVariableInputs:
+    - outerSizeField
   - contextTypes:
     - Context
     - MaterialContext
@@ -54,6 +56,9 @@ op:
     name: roundnessField
     returnTypes:
     - float
+    supportedVariableInputs:
+    - outerSizeField
+    - innerSizeField
   name: crossSdf2d
   opType: raytk.operators.sdf2d.crossSdf2d
   parameters:

@@ -41,6 +41,8 @@ op:
     name: thicknessField
     returnTypes:
     - float
+    supportedVariableInputs:
+    - coordField
   - contextTypes:
     - Context
     - MaterialContext
@@ -57,6 +59,9 @@ op:
     name: blendingField
     returnTypes:
     - float
+    supportedVariableInputs:
+    - coordField
+    - thicknessField
   - contextTypes:
     - Context
     - MaterialContext
@@ -74,6 +79,10 @@ op:
     returnTypes:
     - float
     - vec4
+    supportedVariableInputs:
+    - coordField
+    - thicknessField
+    - blendingField
   - contextTypes:
     - Context
     - MaterialContext
@@ -91,6 +100,10 @@ op:
     returnTypes:
     - float
     - vec4
+    supportedVariableInputs:
+    - coordField
+    - thicknessField
+    - blendingField
   - contextTypes:
     - Context
     - MaterialContext
@@ -108,6 +121,10 @@ op:
     returnTypes:
     - float
     - vec4
+    supportedVariableInputs:
+    - coordField
+    - thicknessField
+    - blendingField
   name: hexagonalGridPattern
   opType: raytk.operators.pattern.hexagonalGridPattern
   parameters:

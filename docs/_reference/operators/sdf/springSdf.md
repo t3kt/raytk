@@ -26,6 +26,10 @@ op:
     name: heightField
     returnTypes:
     - float
+    supportedVariables:
+    - axisoffset
+    - angle
+    - normangle
   - contextTypes:
     - Context
     - MaterialContext
@@ -42,6 +46,13 @@ op:
     name: radiusField
     returnTypes:
     - float
+    supportedVariableInputs:
+    - heightField
+    supportedVariables:
+    - axisoffset
+    - normoffset
+    - angle
+    - normangle
   - contextTypes:
     - Context
     - MaterialContext
@@ -58,6 +69,14 @@ op:
     name: coilsField
     returnTypes:
     - float
+    supportedVariableInputs:
+    - heightField
+    - radiusField
+    supportedVariables:
+    - axisoffset
+    - normoffset
+    - angle
+    - normangle
   - contextTypes:
     - Context
     - MaterialContext
@@ -75,6 +94,15 @@ op:
     name: thicknessField
     returnTypes:
     - float
+    supportedVariableInputs:
+    - heightField
+    - radiusField
+    - coilsField
+    supportedVariables:
+    - axisoffset
+    - normoffset
+    - angle
+    - normangle
   - contextTypes:
     - Context
     - MaterialContext
@@ -91,6 +119,15 @@ op:
     returnTypes:
     - Sdf
     summary: Optional 2D SDF used as the cross-section for the shape.
+    supportedVariableInputs:
+    - heightField
+    - radiusField
+    - coilsField
+    supportedVariables:
+    - axisoffset
+    - normoffset
+    - angle
+    - normangle
   name: springSdf
   opType: raytk.operators.sdf.springSdf
   parameters:

@@ -24,6 +24,8 @@ op:
     name: radiusField
     returnTypes:
     - float
+    supportedVariables:
+    - normangle
   - contextTypes:
     - Context
     - MaterialContext
@@ -39,6 +41,10 @@ op:
     name: amplitudeField
     returnTypes:
     - float
+    supportedVariableInputs:
+    - radiusField
+    supportedVariables:
+    - normangle
   - contextTypes:
     - Context
     - MaterialContext
@@ -54,6 +60,11 @@ op:
     name: petalsField
     returnTypes:
     - float
+    supportedVariableInputs:
+    - radiusField
+    - amplitudeField
+    supportedVariables:
+    - normangle
   name: flowerSdf2d
   opType: raytk.operators.sdf2d.flowerSdf2d
   parameters:

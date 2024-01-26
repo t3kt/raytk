@@ -49,6 +49,8 @@ op:
     returnTypes:
     - float
     - Sdf
+    supportedVariableInputs:
+    - inputOp1
   - contextTypes:
     - Context
     - MaterialContext
@@ -66,6 +68,8 @@ op:
     returnTypes:
     - float
     - Sdf
+    supportedVariableInputs:
+    - inputOp[1-2]
   name: shapedCombine
   opType: raytk.operators.combine.shapedCombine
   parameters:

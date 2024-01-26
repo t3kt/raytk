@@ -26,6 +26,12 @@ op:
     returnTypes:
     - Sdf
     summary: The 2D shape that is extruded along the axis.
+    supportedVariableInputs:
+    - height_definition_in
+    - offset_definition_in
+    supportedVariables:
+    - axispos
+    - normoffset
   - contextTypes:
     - Context
     - MaterialContext
@@ -42,6 +48,8 @@ op:
     name: height_definition_in
     returnTypes:
     - float
+    supportedVariables:
+    - axispos
   - contextTypes:
     - Context
     - MaterialContext
@@ -58,6 +66,10 @@ op:
     name: offset_definition_in
     returnTypes:
     - float
+    supportedVariableInputs:
+    - heightField
+    supportedVariables:
+    - axispos
   name: extrude
   opType: raytk.operators.convert.extrude
   parameters:

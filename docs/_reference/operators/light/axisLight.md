@@ -26,6 +26,10 @@ op:
     returnTypes:
     - float
     - vec4
+    supportedVariableInputs:
+    - positionField
+    supportedVariables:
+    - lightdir
   - contextTypes:
     - LightContext
     coordTypes:
@@ -35,6 +39,11 @@ op:
     returnTypes:
     - float
     - vec4
+    supportedVariableInputs:
+    - positionField
+    - colorField
+    supportedVariables:
+    - lightdir
   name: axisLight
   opType: raytk.operators.light.axisLight
   parameters:

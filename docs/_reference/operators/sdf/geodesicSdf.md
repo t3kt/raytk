@@ -35,6 +35,8 @@ op:
     name: spikeSdf
     returnTypes:
     - Sdf
+    supportedVariableInputs:
+    - faceOffsetField
   keywords:
   - geodesic
   - polyhedron

@@ -40,6 +40,8 @@ op:
     name: smoothRadiusField
     returnTypes:
     - float
+    supportedVariableInputs:
+    - sizeField
   - contextTypes:
     - Context
     - MaterialContext
@@ -56,6 +58,9 @@ op:
     returnTypes:
     - float
     - vec4
+    supportedVariableInputs:
+    - sizeField
+    - smoothRadiusField
   name: crossSdf
   opType: raytk.operators.sdf.crossSdf
   parameters:

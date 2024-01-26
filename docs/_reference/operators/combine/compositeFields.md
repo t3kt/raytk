@@ -54,6 +54,8 @@ op:
     returnTypes:
     - float
     - vec4
+    supportedVariableInputs:
+    - inputOp1
   - contextTypes:
     - Context
     - MaterialContext
@@ -73,6 +75,8 @@ op:
     required: true
     returnTypes:
     - float
+    supportedVariableInputs:
+    - inputOp[1-2]
   name: compositeFields
   opType: raytk.operators.combine.compositeFields
   parameters:

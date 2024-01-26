@@ -39,6 +39,8 @@ op:
     name: spacingField
     returnTypes:
     - float
+    supportedVariableInputs:
+    - sizeField
   name: rhombilleTilingSdf2d
   opType: raytk.operators.sdf2d.rhombilleTilingSdf2d
   parameters:

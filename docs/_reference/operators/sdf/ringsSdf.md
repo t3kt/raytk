@@ -24,6 +24,10 @@ op:
     name: spacingField
     returnTypes:
     - float
+    supportedVariables:
+    - normangle
+    - angle
+    - axispos
   - contextTypes:
     - Context
     - MaterialContext
@@ -39,6 +43,12 @@ op:
     name: shiftField
     returnTypes:
     - float
+    supportedVariableInputs:
+    - spacingField
+    supportedVariables:
+    - normangle
+    - angle
+    - axispos
   - contextTypes:
     - Context
     - MaterialContext
@@ -55,6 +65,14 @@ op:
     returnTypes:
     - float
     - Sdf
+    supportedVariableInputs:
+    - spacingField
+    - shiftField
+    supportedVariables:
+    - normangle
+    - angle
+    - axispos
+    - ring
   - contextTypes:
     - Context
     - MaterialContext
@@ -70,6 +88,15 @@ op:
     name: thicknessField
     returnTypes:
     - float
+    supportedVariableInputs:
+    - spacingField
+    - shiftField
+    - crossSection
+    supportedVariables:
+    - normangle
+    - angle
+    - axispos
+    - ring
   name: ringsSdf
   opType: raytk.operators.sdf.ringsSdf
   parameters:

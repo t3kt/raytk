@@ -39,6 +39,8 @@ op:
     name: roundingField
     returnTypes:
     - float
+    supportedVariableInputs:
+    - radiusField
   name: eggSdf2d
   opType: raytk.operators.sdf2d.eggSdf2d
   parameters:

@@ -39,6 +39,8 @@ op:
     name: apertureField
     returnTypes:
     - float
+    supportedVariableInputs:
+    - orientationField
   - contextTypes:
     - Context
     - MaterialContext
@@ -54,6 +56,10 @@ op:
     name: radiusField
     returnTypes:
     - float
+    supportedVariableInputs:
+    - orientationField
+    supportedVariables:
+    - normangle
   - contextTypes:
     - Context
     - MaterialContext
@@ -69,6 +75,11 @@ op:
     name: thicknessField
     returnTypes:
     - float
+    supportedVariableInputs:
+    - orientationField
+    - radiusField
+    supportedVariables:
+    - normangle
   name: arcSdf2d
   opType: raytk.operators.sdf2d.arcSdf2d
   parameters:

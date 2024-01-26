@@ -39,6 +39,8 @@ op:
     name: exponentField
     returnTypes:
     - float
+    supportedVariableInputs:
+    - radiusField
   name: superQuadSdf2d
   opType: raytk.operators.sdf2d.superQuadSdf2d
   parameters:

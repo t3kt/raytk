@@ -37,6 +37,9 @@ op:
     - Ray
     - Light
     - Particle
+    supportedVariableInputs:
+    - magnet
+    - easing
   - contextTypes:
     - Context
     - MaterialContext
@@ -77,6 +80,8 @@ op:
     returnTypes:
     - float
     summary: Easing function used to control how the blending region is smoothed.
+    supportedVariableInputs:
+    - magnet
   name: magnet
   opType: raytk.operators.filter.magnet
   parameters:

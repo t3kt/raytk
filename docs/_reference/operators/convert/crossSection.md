@@ -33,6 +33,8 @@ op:
     - Ray
     - Light
     - Particle
+    supportedVariableInputs:
+    - offsetField
   - contextTypes:
     - Context
     - MaterialContext

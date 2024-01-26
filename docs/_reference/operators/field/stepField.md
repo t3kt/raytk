@@ -52,6 +52,8 @@ op:
     name: edgeField
     returnTypes:
     - float
+    supportedVariableInputs:
+    - coordField
   - contextTypes:
     - Context
     - MaterialContext
@@ -71,6 +73,9 @@ op:
     returnTypes:
     - float
     - vec4
+    supportedVariableInputs:
+    - coordField
+    - edgeField
   - contextTypes:
     - Context
     - MaterialContext
@@ -90,6 +95,10 @@ op:
     returnTypes:
     - float
     - vec4
+    supportedVariableInputs:
+    - coordField
+    - edgeField
+    - lowValue
   - contextTypes:
     - Context
     - MaterialContext
@@ -108,6 +117,11 @@ op:
     name: blendingField
     returnTypes:
     - float
+    supportedVariableInputs:
+    - coordField
+    - edgeField
+    - lowValue
+    - highValue
   - contextTypes:
     - Context
     - MaterialContext
@@ -123,6 +137,12 @@ op:
     name: blendFunction
     returnTypes:
     - float
+    supportedVariableInputs:
+    - coordField
+    - edgeField
+    - lowValue
+    - highValue
+    - blendingField
   name: stepField
   opType: raytk.operators.field.stepField
   parameters:

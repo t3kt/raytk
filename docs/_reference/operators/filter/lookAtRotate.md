@@ -33,6 +33,10 @@ op:
     - Ray
     - Light
     - Particle
+    supportedVariableInputs:
+    - sourcePointField
+    - targetPointField
+    - rollField
   - contextTypes:
     - Context
     - MaterialContext
@@ -69,6 +73,8 @@ op:
     name: targetPointField
     returnTypes:
     - vec4
+    supportedVariableInputs:
+    - sourcePointField
   - contextTypes:
     - Context
     - MaterialContext
@@ -87,6 +93,9 @@ op:
     name: rollField
     returnTypes:
     - float
+    supportedVariableInputs:
+    - sourcePointField
+    - targetPointField
   name: lookAtRotate
   opType: raytk.operators.filter.lookAtRotate
   parameters:

@@ -55,6 +55,8 @@ op:
     - Sdf
     summary: The second SDF, which is removed from the first (unless `Swaporder` is
       used).
+    supportedVariableInputs:
+    - inputOp1
   name: simpleDiff
   opType: raytk.operators.combine.simpleDiff
   parameters:

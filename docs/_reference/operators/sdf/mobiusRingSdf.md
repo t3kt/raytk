@@ -25,6 +25,9 @@ op:
     returnTypes:
     - float
     summary: Value field that can be used to vary the thickness of the ring.
+    supportedVariables:
+    - angle
+    - normangle
   - contextTypes:
     - Context
     - MaterialContext
@@ -41,6 +44,11 @@ op:
     returnTypes:
     - float
     summary: Value field that can be used to vary the radius of the ring.
+    supportedVariableInputs:
+    - thicknessField
+    supportedVariables:
+    - angle
+    - normangle
   keywords:
   - mobius
   - ring

@@ -24,6 +24,10 @@ op:
     name: shape
     returnTypes:
     - Sdf
+    supportedVariables:
+    - index
+    - normindex
+    - size
   name: stackSdf
   opType: raytk.operators.sdf.stackSdf
   parameters:

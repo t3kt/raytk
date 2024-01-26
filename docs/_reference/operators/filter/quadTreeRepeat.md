@@ -31,6 +31,12 @@ op:
     - Ray
     - Light
     - Particle
+    supportedVariableInputs:
+    - offsetField
+    - shiftField
+    supportedVariables:
+    - cell
+    - layer
   - contextTypes:
     - Context
     - MaterialContext
@@ -65,6 +71,11 @@ op:
     required: true
     returnTypes:
     - vec4
+    supportedVariableInputs:
+    - shiftField
+    supportedVariables:
+    - cell
+    - layer
   name: quadTreeRepeat
   opType: raytk.operators.filter.quadTreeRepeat
   parameters:

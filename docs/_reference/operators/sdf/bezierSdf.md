@@ -39,6 +39,8 @@ op:
     name: point2Field
     returnTypes:
     - vec4
+    supportedVariableInputs:
+    - point1Field
   - contextTypes:
     - Context
     - MaterialContext
@@ -54,6 +56,9 @@ op:
     name: point3Field
     returnTypes:
     - vec4
+    supportedVariableInputs:
+    - point1Field
+    - point2Field
   - contextTypes:
     - Context
     - MaterialContext
@@ -70,6 +75,12 @@ op:
     name: radiusField
     returnTypes:
     - float
+    supportedVariableInputs:
+    - point1Field
+    - point2Field
+    - point3Field
+    supportedVariables:
+    - normoffset
   keywords:
   - bezier
   - curve

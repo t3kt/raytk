@@ -31,6 +31,9 @@ op:
     - Ray
     - Light
     - Particle
+    supportedVariableInputs:
+    - pointField
+    - centerField
   - contextTypes:
     - Context
     - MaterialContext
@@ -63,6 +66,8 @@ op:
     name: centerField
     returnTypes:
     - vec4
+    supportedVariableInputs:
+    - pointField
   name: mobiusTransform
   opType: raytk.operators.filter.mobiusTransform
   parameters:

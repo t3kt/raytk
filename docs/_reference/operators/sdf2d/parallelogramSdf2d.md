@@ -40,6 +40,8 @@ op:
     name: skewField
     returnTypes:
     - float
+    supportedVariableInputs:
+    - sizeField
   name: parallelogramSdf2d
   opType: raytk.operators.sdf2d.parallelogramSdf2d
   parameters:

@@ -20,6 +20,8 @@ op:
     returnTypes:
     - float
     - vec4
+    supportedVariables:
+    - lightdir
   name: directionalLight
   opType: raytk.operators.light.directionalLight
   parameters:

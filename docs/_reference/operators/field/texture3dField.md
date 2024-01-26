@@ -27,6 +27,11 @@ op:
     name: coordField
     returnTypes:
     - vec4
+    supportedVariables:
+    - res
+    - aspect
+    - depth
+    - firstslice
   name: texture3dField
   opType: raytk.operators.field.texture3dField
   parameters:

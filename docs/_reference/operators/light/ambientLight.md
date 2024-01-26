@@ -18,6 +18,8 @@ op:
     returnTypes:
     - float
     - vec4
+    supportedVariables:
+    - lightdir
   name: ambientLight
   opType: raytk.operators.light.ambientLight
   parameters:

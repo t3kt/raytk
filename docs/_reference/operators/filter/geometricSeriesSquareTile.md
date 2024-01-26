@@ -33,6 +33,8 @@ op:
     - Ray
     - Light
     - Particle
+    supportedVariables:
+    - scale
   name: geometricSeriesSquareTile
   opType: raytk.operators.filter.geometricSeriesSquareTile
   parameters:

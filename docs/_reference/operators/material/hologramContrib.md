@@ -18,6 +18,9 @@ op:
     returnTypes:
     - float
     - vec4
+    supportedVariables:
+    - step
+    - normstep
   name: hologramContrib
   opType: raytk.operators.material.hologramContrib
   parameters:

@@ -20,6 +20,8 @@ op:
     name: thicknessField
     returnTypes:
     - float
+    supportedVariables:
+    - normangle
   - contextTypes:
     - MaterialContext
     coordTypes:
@@ -31,6 +33,10 @@ op:
     name: blendingField
     returnTypes:
     - float
+    supportedVariableInputs:
+    - thicknessField
+    supportedVariables:
+    - normangle
   - contextTypes:
     - MaterialContext
     coordTypes:
@@ -43,6 +49,11 @@ op:
     returnTypes:
     - float
     - vec4
+    supportedVariableInputs:
+    - thicknessField
+    - blendingField
+    supportedVariables:
+    - normangle
   name: rimContrib
   opType: raytk.operators.material.rimContrib
   parameters:

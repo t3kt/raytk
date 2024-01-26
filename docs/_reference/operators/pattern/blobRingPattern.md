@@ -41,6 +41,8 @@ op:
     name: phaseField
     returnTypes:
     - float
+    supportedVariableInputs:
+    - coordField
   name: blobRingPattern
   opType: raytk.operators.pattern.blobRingPattern
   parameters:

@@ -50,6 +50,10 @@ op:
     returnTypes:
     - vec4
     summary: Optional field used to calculate the UV coordinates.
+    supportedVariableInputs:
+    - inputOp1
+    supportedVariables:
+    - sdf
   keywords:
   - material
   - modularmat

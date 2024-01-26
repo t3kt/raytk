@@ -24,6 +24,10 @@ op:
     name: pointAField
     returnTypes:
     - vec4
+    supportedVariables:
+    - stepindex
+    - normstepindex
+    - normoffset
   - contextTypes:
     - Context
     - MaterialContext
@@ -39,6 +43,10 @@ op:
     name: pointBField
     returnTypes:
     - vec4
+    supportedVariables:
+    - stepindex
+    - normstepindex
+    - normoffset
   - contextTypes:
     - Context
     - MaterialContext
@@ -54,6 +62,10 @@ op:
     name: thicknessField
     returnTypes:
     - float
+    supportedVariables:
+    - stepindex
+    - normstepindex
+    - normoffset
   name: lineSeriesSdf
   opType: raytk.operators.sdf.lineSeriesSdf
   parameters:

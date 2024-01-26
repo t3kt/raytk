@@ -32,6 +32,10 @@ op:
     - Ray
     - Light
     - Particle
+    supportedVariableInputs:
+    - amountField
+    - offsetField
+    - spreadField
   - contextTypes:
     - Context
     - MaterialContext
@@ -68,6 +72,8 @@ op:
     name: offsetField
     returnTypes:
     - float
+    supportedVariableInputs:
+    - amountField
   - contextTypes:
     - Context
     - MaterialContext
@@ -86,6 +92,9 @@ op:
     name: spreadField
     returnTypes:
     - float
+    supportedVariableInputs:
+    - amountField
+    - offsetField
   name: kink
   opType: raytk.operators.filter.kink
   parameters:

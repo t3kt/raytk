@@ -52,6 +52,10 @@ op:
     - float
     - vec4
     summary: Optional field used to calculate the color instead of the `Color` parameter.
+    supportedVariableInputs:
+    - inputOp1
+    supportedVariables:
+    - sdf
   keywords:
   - color
   - material

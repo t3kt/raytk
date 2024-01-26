@@ -41,6 +41,8 @@ op:
     returnTypes:
     - float
     - vec4
+    supportedVariableInputs:
+    - scaleField
   name: chamferRectangleSdf2d
   opType: raytk.operators.sdf2d.chamferRectangleSdf2d
   parameters:

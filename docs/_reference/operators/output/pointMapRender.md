@@ -58,6 +58,10 @@ op:
     - float
     - vec4
     - Sdf
+    supportedVariables:
+    - datapos
+    - datauv
+    - datares
   - contextTypes:
     - CameraContext
     coordTypes:
@@ -66,6 +70,10 @@ op:
     name: camera
     returnTypes:
     - Ray
+    supportedVariables:
+    - datapos
+    - datauv
+    - datares
   - contextTypes:
     - LightContext
     coordTypes:
@@ -74,6 +82,10 @@ op:
     name: light
     returnTypes:
     - Light
+    supportedVariables:
+    - datapos
+    - datauv
+    - datares
   keywords:
   - point
   - render

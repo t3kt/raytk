@@ -36,6 +36,8 @@ op:
     returnTypes:
     - float
     - vec4
+    supportedVariableInputs:
+    - baseColorField
   - contextTypes:
     - MaterialContext
     coordTypes:
@@ -45,6 +47,9 @@ op:
     returnTypes:
     - float
     - vec4
+    supportedVariableInputs:
+    - baseColorField
+    - warmColorField
   name: goochShadingContrib
   opType: raytk.operators.material.goochShadingContrib
   parameters:

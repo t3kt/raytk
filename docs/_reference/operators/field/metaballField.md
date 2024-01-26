@@ -47,6 +47,8 @@ op:
     returnTypes:
     - float
     - vec4
+    supportedVariableInputs:
+    - coordField
   - contextTypes:
     - Context
     - MaterialContext
@@ -66,6 +68,9 @@ op:
     returnTypes:
     - float
     - vec4
+    supportedVariableInputs:
+    - coordField
+    - centerField
   - contextTypes:
     - Context
     - MaterialContext
@@ -84,6 +89,10 @@ op:
     name: weightField
     returnTypes:
     - float
+    supportedVariableInputs:
+    - coordField
+    - centerField
+    - radiusField
   - contextTypes:
     - Context
     - MaterialContext
@@ -103,6 +112,11 @@ op:
     returnTypes:
     - float
     - vec4
+    supportedVariableInputs:
+    - coordField
+    - centerField
+    - radiusField
+    - weightField
   name: metaballField
   opType: raytk.operators.field.metaballField
   parameters:

@@ -41,6 +41,8 @@ op:
     name: vertexRadiusField
     returnTypes:
     - float
+    supportedVariableInputs:
+    - coordField
   - contextTypes:
     - Context
     - MaterialContext
@@ -57,6 +59,9 @@ op:
     name: outlineThicknessField
     returnTypes:
     - float
+    supportedVariableInputs:
+    - coordField
+    - vertexRadiusField
   - contextTypes:
     - Context
     - MaterialContext
@@ -74,6 +79,10 @@ op:
     returnTypes:
     - float
     - vec4
+    supportedVariableInputs:
+    - coordField
+    - vertexRadiusField
+    - outlineThicknessField
   - contextTypes:
     - Context
     - MaterialContext
@@ -91,6 +100,11 @@ op:
     returnTypes:
     - float
     - vec4
+    supportedVariableInputs:
+    - coordField
+    - vertexRadiusField
+    - outlineThicknessField
+    - polyColor1Field
   - contextTypes:
     - Context
     - MaterialContext
@@ -108,6 +122,12 @@ op:
     returnTypes:
     - float
     - vec4
+    supportedVariableInputs:
+    - coordField
+    - vertexRadiusField
+    - outlineThicknessField
+    - polyColor1Field
+    - polyColor2Field
   - contextTypes:
     - Context
     - MaterialContext
@@ -125,6 +145,13 @@ op:
     returnTypes:
     - float
     - vec4
+    supportedVariableInputs:
+    - coordField
+    - vertexRadiusField
+    - outlineThicknessField
+    - polyColor1Field
+    - polyColor2Field
+    - polyColor3Field
   - contextTypes:
     - Context
     - MaterialContext
@@ -142,6 +169,14 @@ op:
     returnTypes:
     - float
     - vec4
+    supportedVariableInputs:
+    - coordField
+    - vertexRadiusField
+    - outlineThicknessField
+    - polyColor1Field
+    - polyColor2Field
+    - polyColor3Field
+    - outlineColorField
   name: tilingPattern
   opType: raytk.operators.pattern.tilingPattern
   parameters:

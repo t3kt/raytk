@@ -26,6 +26,8 @@ op:
     returnTypes:
     - float
     - vec4
+    supportedVariableInputs:
+    - boundVolume
   name: lightVolume
   opType: raytk.operators.light.lightVolume
   parameters:

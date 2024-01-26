@@ -39,6 +39,8 @@ op:
     name: uvwField
     returnTypes:
     - vec4
+    supportedVariableInputs:
+    - radiusField
   - contextTypes:
     - Context
     - MaterialContext
@@ -54,6 +56,9 @@ op:
     name: faceRadiusField
     returnTypes:
     - float
+    supportedVariableInputs:
+    - radiusField
+    - uvwField
   - contextTypes:
     - Context
     - MaterialContext
@@ -69,6 +74,10 @@ op:
     name: segmentRadiusField
     returnTypes:
     - float
+    supportedVariableInputs:
+    - radiusField
+    - uvwField
+    - faceRadiusField
   - contextTypes:
     - Context
     - MaterialContext
@@ -84,6 +93,11 @@ op:
     name: segmentSizeField
     returnTypes:
     - float
+    supportedVariableInputs:
+    - radiusField
+    - uvwField
+    - faceRadiusField
+    - segmentRadiusField
   - contextTypes:
     - Context
     - MaterialContext
@@ -99,6 +113,12 @@ op:
     name: vertexRadiusField
     returnTypes:
     - float
+    supportedVariableInputs:
+    - radiusField
+    - uvwField
+    - faceRadiusField
+    - segmentRadiusField
+    - segmentSizeField
   - contextTypes:
     - Context
     - MaterialContext
@@ -114,6 +134,13 @@ op:
     name: vertexSizeField
     returnTypes:
     - float
+    supportedVariableInputs:
+    - radiusField
+    - uvwField
+    - faceRadiusField
+    - segmentRadiusField
+    - segmentSizeField
+    - vertexRadiusField
   - contextTypes:
     - Context
     - MaterialContext
@@ -129,6 +156,14 @@ op:
     name: vertexShape
     returnTypes:
     - Sdf
+    supportedVariableInputs:
+    - radiusField
+    - uvwField
+    - faceRadiusField
+    - segmentRadiusField
+    - segmentSizeField
+    - vertexRadiusField
+    - vertexSizeField
   name: polyhedronSdf
   opType: raytk.operators.sdf.polyhedronSdf
   parameters:

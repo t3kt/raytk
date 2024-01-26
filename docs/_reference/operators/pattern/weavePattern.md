@@ -41,6 +41,8 @@ op:
     name: thicknessField
     returnTypes:
     - float
+    supportedVariableInputs:
+    - coordField
   name: weavePattern
   opType: raytk.operators.pattern.weavePattern
   parameters:

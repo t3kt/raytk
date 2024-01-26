@@ -44,6 +44,8 @@ op:
     name: offsetField
     returnTypes:
     - float
+    supportedVariableInputs:
+    - inputOp1
   keywords:
   - crop
   - knife

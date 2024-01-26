@@ -52,6 +52,8 @@ op:
     returnTypes:
     - float
     - vec4
+    supportedVariableInputs:
+    - inputOp1
   - contextTypes:
     - Context
     - MaterialContext
@@ -73,6 +75,8 @@ op:
     - vec4
     summary: Function used to get the mix value used to blend between the first two
       inputs.
+    supportedVariableInputs:
+    - inputOp[1-2]
   name: crossFn
   opType: raytk.operators.function.crossFn
   parameters:

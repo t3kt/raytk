@@ -29,6 +29,10 @@ op:
     summary: Field used to multiply the `Radius` parameter. If it uses 1D coordinates,
       it is provided the position along the axis. If it uses 3D coordinates, it uses
       the absolute position.
+    supportedVariables:
+    - axisoffset
+    - angle
+    - normangle
   - contextTypes:
     - Context
     - MaterialContext
@@ -48,6 +52,12 @@ op:
     summary: Field used to multiply the `Thickness` parameter. If it uses 1D coordinates,
       it is provided the position along the axis. If it uses 3D coordinates, it uses
       the absolute position.
+    supportedVariableInputs:
+    - thicknessField
+    supportedVariables:
+    - axisoffset
+    - angle
+    - normangle
   - contextTypes:
     - Context
     - MaterialContext
@@ -64,6 +74,13 @@ op:
     name: spreadField
     returnTypes:
     - float
+    supportedVariableInputs:
+    - thicknessField
+    - radiusField
+    supportedVariables:
+    - axisoffset
+    - angle
+    - normangle
   - contextTypes:
     - Context
     - MaterialContext
@@ -80,6 +97,14 @@ op:
     returnTypes:
     - float
     - Sdf
+    supportedVariableInputs:
+    - thicknessField
+    - radiusField
+    - spreadField
+    supportedVariables:
+    - axisoffset
+    - angle
+    - normangle
   keywords:
   - coil
   - helix

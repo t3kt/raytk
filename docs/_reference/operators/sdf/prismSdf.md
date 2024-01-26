@@ -25,6 +25,9 @@ op:
     returnTypes:
     - float
     summary: Float value field that controls the height of the prism.
+    supportedVariables:
+    - axispos
+    - normangle
   - contextTypes:
     - Context
     - MaterialContext
@@ -41,6 +44,12 @@ op:
     returnTypes:
     - float
     summary: Float value field that controls the radius of the prism.
+    supportedVariableInputs:
+    - heightField
+    supportedVariables:
+    - axispos
+    - normangle
+    - normoffset
   - contextTypes:
     - Context
     - MaterialContext
@@ -56,6 +65,13 @@ op:
     name: thicknessField
     returnTypes:
     - float
+    supportedVariableInputs:
+    - heightField
+    - radiusField
+    supportedVariables:
+    - axispos
+    - normangle
+    - normoffset
   - contextTypes:
     - Context
     - MaterialContext
@@ -71,6 +87,14 @@ op:
     name: sidesField
     returnTypes:
     - float
+    supportedVariableInputs:
+    - heightField
+    - radiusField
+    - thicknessField
+    supportedVariables:
+    - axispos
+    - normangle
+    - normoffset
   - contextTypes:
     - Context
     - MaterialContext
@@ -86,6 +110,15 @@ op:
     name: roundingField
     returnTypes:
     - float
+    supportedVariableInputs:
+    - heightField
+    - radiusField
+    - thicknessField
+    - sidesField
+    supportedVariables:
+    - axispos
+    - normangle
+    - normoffset
   keywords:
   - column
   - cylinder

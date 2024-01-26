@@ -44,6 +44,8 @@ op:
     returnTypes:
     - float
     - vec4
+    supportedVariableInputs:
+    - phase1Field
   - contextTypes:
     - Context
     - MaterialContext
@@ -59,6 +61,9 @@ op:
     name: biasField
     returnTypes:
     - float
+    supportedVariableInputs:
+    - phase1Field
+    - phase2Field
   - contextTypes:
     - Context
     - MaterialContext
@@ -74,6 +79,10 @@ op:
     name: thicknessField
     returnTypes:
     - float
+    supportedVariableInputs:
+    - phase1Field
+    - phase2Field
+    - biasField
   keywords:
   - gyroid
   - sine

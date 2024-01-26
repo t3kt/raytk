@@ -41,6 +41,8 @@ op:
     name: beginEndField
     returnTypes:
     - vec4
+    supportedVariableInputs:
+    - radiusField
   - contextTypes:
     - Context
     - MaterialContext
@@ -56,6 +58,9 @@ op:
     name: exponentField
     returnTypes:
     - float
+    supportedVariableInputs:
+    - radiusField
+    - beginEndField
   keywords:
   - dodecahedron
   - icosahedron

@@ -39,6 +39,8 @@ op:
     name: endpoint2
     returnTypes:
     - vec4
+    supportedVariableInputs:
+    - endpoint1
   - contextTypes:
     - Context
     - MaterialContext
@@ -54,6 +56,11 @@ op:
     name: radiusField
     returnTypes:
     - float
+    supportedVariableInputs:
+    - endpoint1
+    - endpoint2
+    supportedVariables:
+    - normoffset
   name: vesicaSegmentSdf
   opType: raytk.operators.sdf.vesicaSegmentSdf
   parameters:

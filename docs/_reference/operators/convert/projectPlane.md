@@ -38,6 +38,8 @@ op:
     - Ray
     - Light
     - Particle
+    supportedVariables:
+    - axispos
   name: projectPlane
   opType: raytk.operators.convert.projectPlane
   parameters:

@@ -48,6 +48,8 @@ op:
     name: brightnessField
     returnTypes:
     - float
+    supportedVariableInputs:
+    - inputOp1
   - contextTypes:
     - Context
     - MaterialContext
@@ -66,6 +68,9 @@ op:
     name: contrastField
     returnTypes:
     - float
+    supportedVariableInputs:
+    - inputOp1
+    - brightnessField
   - contextTypes:
     - Context
     - MaterialContext
@@ -84,6 +89,10 @@ op:
     name: hueField
     returnTypes:
     - float
+    supportedVariableInputs:
+    - inputOp1
+    - brightnessField
+    - contrastField
   - contextTypes:
     - Context
     - MaterialContext
@@ -102,6 +111,11 @@ op:
     name: saturationField
     returnTypes:
     - float
+    supportedVariableInputs:
+    - inputOp1
+    - brightnessField
+    - contrastField
+    - hueField
   keywords:
   - adjust
   - brightness

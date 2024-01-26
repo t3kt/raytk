@@ -30,6 +30,9 @@ op:
     - float
     - vec4
     - Sdf
+    supportedVariables:
+    - step
+    - normstep
   - contextTypes:
     - Context
     - MaterialContext
@@ -51,6 +54,9 @@ op:
       If the field uses 2D/3D coordinates, the current position is used. If the field
       uses 1D coordinates, it is passed `i / (n-1)`, where `i` is the loop iteration,
       and `n` is the total number of iterations.
+    supportedVariables:
+    - step
+    - normstep
   - contextTypes:
     - Context
     - MaterialContext
@@ -67,6 +73,9 @@ op:
     name: translateField
     returnTypes:
     - vec4
+    supportedVariables:
+    - step
+    - normstep
   - contextTypes:
     - Context
     - MaterialContext
@@ -84,6 +93,9 @@ op:
     returnTypes:
     - float
     - vec4
+    supportedVariables:
+    - step
+    - normstep
   - contextTypes:
     - Context
     - MaterialContext
@@ -101,6 +113,9 @@ op:
     returnTypes:
     - float
     - vec4
+    supportedVariables:
+    - step
+    - normstep
   name: iteratedTransform
   opType: raytk.operators.filter.iteratedTransform
   parameters:

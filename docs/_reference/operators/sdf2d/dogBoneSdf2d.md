@@ -39,6 +39,8 @@ op:
     name: lengthField
     returnTypes:
     - float
+    supportedVariableInputs:
+    - radiusField
   - contextTypes:
     - Context
     - MaterialContext
@@ -54,6 +56,9 @@ op:
     name: bulgeField
     returnTypes:
     - float
+    supportedVariableInputs:
+    - radiusField
+    - lengthField
   name: dogBoneSdf2d
   opType: raytk.operators.sdf2d.dogBoneSdf2d
   parameters:

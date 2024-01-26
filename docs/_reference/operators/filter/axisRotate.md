@@ -31,6 +31,8 @@ op:
     - Ray
     - Light
     - Particle
+    supportedVariableInputs:
+    - rotateField
   - contextTypes:
     - Context
     - MaterialContext

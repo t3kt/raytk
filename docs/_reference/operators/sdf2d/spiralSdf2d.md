@@ -39,6 +39,8 @@ op:
     name: rotateField
     returnTypes:
     - float
+    supportedVariableInputs:
+    - spreadField
   - contextTypes:
     - Context
     - MaterialContext
@@ -54,6 +56,9 @@ op:
     name: radiusLimitField
     returnTypes:
     - float
+    supportedVariableInputs:
+    - spreadField
+    - rotateField
   - contextTypes:
     - Context
     - MaterialContext
@@ -69,6 +74,10 @@ op:
     name: thicknessField
     returnTypes:
     - float
+    supportedVariableInputs:
+    - spreadField
+    - rotateField
+    - radiusLimitField
   name: spiralSdf2d
   opType: raytk.operators.sdf2d.spiralSdf2d
   parameters:

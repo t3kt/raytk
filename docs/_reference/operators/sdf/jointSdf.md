@@ -39,6 +39,8 @@ op:
     name: angleField
     returnTypes:
     - float
+    supportedVariableInputs:
+    - lengthField
   - contextTypes:
     - Context
     - MaterialContext
@@ -54,6 +56,9 @@ op:
     name: thicknessField
     returnTypes:
     - float
+    supportedVariableInputs:
+    - lengthField
+    - angleField
   name: jointSdf
   opType: raytk.operators.sdf.jointSdf
   parameters:

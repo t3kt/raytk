@@ -39,6 +39,8 @@ op:
     name: offsetField
     returnTypes:
     - float
+    supportedVariableInputs:
+    - heightField
   name: spikeSdf2d
   opType: raytk.operators.sdf2d.spikeSdf2d
   parameters:

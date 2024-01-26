@@ -48,6 +48,8 @@ op:
     name: point2
     returnTypes:
     - vec4
+    supportedVariableInputs:
+    - point1Field
   - contextTypes:
     - Context
     - MaterialContext
@@ -63,6 +65,11 @@ op:
     name: thicknessField
     returnTypes:
     - float
+    supportedVariableInputs:
+    - point1Field
+    - point2Field
+    supportedVariables:
+    - normoffset
   name: lineSegmentSdf2d
   opType: raytk.operators.sdf2d.lineSegmentSdf2d
   parameters:

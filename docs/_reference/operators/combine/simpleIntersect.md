@@ -48,6 +48,8 @@ op:
     returnTypes:
     - float
     - Sdf
+    supportedVariableInputs:
+    - inputOp1
   - contextTypes:
     - Context
     - MaterialContext
@@ -67,6 +69,8 @@ op:
     returnTypes:
     - float
     - Sdf
+    supportedVariableInputs:
+    - inputOp[1-2]
   - contextTypes:
     - Context
     - MaterialContext
@@ -86,6 +90,8 @@ op:
     returnTypes:
     - float
     - Sdf
+    supportedVariableInputs:
+    - inputOp[1-3]
   - contextTypes:
     - Context
     - MaterialContext
@@ -105,6 +111,8 @@ op:
     returnTypes:
     - float
     - Sdf
+    supportedVariableInputs:
+    - inputOp[1-4]
   - contextTypes:
     - Context
     - MaterialContext
@@ -124,6 +132,8 @@ op:
     returnTypes:
     - float
     - Sdf
+    supportedVariableInputs:
+    - inputOp[1-5]
   - contextTypes:
     - Context
     - MaterialContext
@@ -143,6 +153,8 @@ op:
     returnTypes:
     - float
     - Sdf
+    supportedVariableInputs:
+    - inputOp[1-6]
   - contextTypes:
     - Context
     - MaterialContext
@@ -162,6 +174,8 @@ op:
     returnTypes:
     - float
     - Sdf
+    supportedVariableInputs:
+    - inputOp[1-7]
   name: simpleIntersect
   opType: raytk.operators.combine.simpleIntersect
   parameters:

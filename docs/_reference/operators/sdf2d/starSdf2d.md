@@ -24,6 +24,10 @@ op:
     name: radiusField
     returnTypes:
     - float
+    supportedVariableInputs:
+    - pointsField
+    supportedVariables:
+    - normangle
   - contextTypes:
     - Context
     - MaterialContext
@@ -39,6 +43,10 @@ op:
     name: tightnessField
     returnTypes:
     - float
+    supportedVariableInputs:
+    - radiusField
+    supportedVariables:
+    - normangle
   - contextTypes:
     - Context
     - MaterialContext
@@ -54,6 +62,11 @@ op:
     name: pointsField
     returnTypes:
     - float
+    supportedVariableInputs:
+    - radiusField
+    - tightnessField
+    supportedVariables:
+    - normangle
   name: starSdf2d
   opType: raytk.operators.sdf2d.starSdf2d
   parameters:

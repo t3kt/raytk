@@ -52,6 +52,9 @@ op:
     - Ray
     - Light
     - Particle
+    supportedVariableInputs:
+    - indexField
+    - easingFunction
   - contextTypes:
     - Context
     - MaterialContext
@@ -85,6 +88,8 @@ op:
     name: easingFunction
     returnTypes:
     - float
+    supportedVariableInputs:
+    - indexField
   name: rangeTransform
   opType: raytk.operators.filter.rangeTransform
   parameters:

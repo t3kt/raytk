@@ -33,6 +33,8 @@ op:
     - Ray
     - Light
     - Particle
+    supportedVariables:
+    - pos
   name: providePosition
   opType: raytk.operators.utility.providePosition
   variables:

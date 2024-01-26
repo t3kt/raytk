@@ -33,6 +33,10 @@ op:
     - Ray
     - Light
     - Particle
+    supportedVariableInputs:
+    - valueField
+    supportedVariables:
+    - var
   - contextTypes:
     - Context
     - MaterialContext

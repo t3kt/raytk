@@ -33,6 +33,9 @@ op:
     - Ray
     - Light
     - Particle
+    supportedVariables:
+    - cellcoord
+    - normcoord
   name: moduloLine
   opType: raytk.operators.filter.moduloLine
   parameters:

@@ -42,6 +42,8 @@ op:
     name: distanceField
     returnTypes:
     - float
+    supportedVariableInputs:
+    - radiusField
   name: vesicaSdf2d
   opType: raytk.operators.sdf2d.vesicaSdf2d
   parameters:

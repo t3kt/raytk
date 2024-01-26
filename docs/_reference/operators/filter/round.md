@@ -52,6 +52,10 @@ op:
     name: amountField
     returnTypes:
     - float
+    supportedVariableInputs:
+    - inputOp1
+    supportedVariables:
+    - sdf
   name: round
   opType: raytk.operators.filter.round
   parameters:

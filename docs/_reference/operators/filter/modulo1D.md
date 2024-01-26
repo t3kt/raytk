@@ -36,6 +36,14 @@ op:
     - Ray
     - Light
     - Particle
+    supportedVariableInputs:
+    - sizeField
+    - shiftField
+    - offsetField
+    supportedVariables:
+    - cellcoord
+    - normcoord
+    - shiftedcellcoord
   - contextTypes:
     - Context
     - MaterialContext
@@ -70,6 +78,8 @@ op:
     name: shiftField
     returnTypes:
     - float
+    supportedVariableInputs:
+    - sizeField
   - contextTypes:
     - Context
     - MaterialContext
@@ -87,6 +97,13 @@ op:
     name: offsetField
     returnTypes:
     - float
+    supportedVariableInputs:
+    - sizeField
+    - shiftField
+    supportedVariables:
+    - cellcoord
+    - normcoord
+    - shiftedcellcoord
   keywords:
   - modulo
   - repeat

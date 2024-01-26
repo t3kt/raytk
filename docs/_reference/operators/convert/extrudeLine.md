@@ -29,6 +29,12 @@ op:
     returnTypes:
     - Sdf
     summary: 2D SDF cross-section to extrude.
+    supportedVariableInputs:
+    - point1Field
+    - point2Field
+    supportedVariables:
+    - axispos
+    - normoffset
   - contextTypes:
     - Context
     - MaterialContext
@@ -59,6 +65,8 @@ op:
     name: point2Field
     returnTypes:
     - vec4
+    supportedVariableInputs:
+    - point1Field
   name: extrudeLine
   opType: raytk.operators.convert.extrudeLine
   parameters:

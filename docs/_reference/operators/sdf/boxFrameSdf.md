@@ -40,6 +40,8 @@ op:
     name: thicknessField
     returnTypes:
     - float
+    supportedVariableInputs:
+    - scaleField
   keywords:
   - box
   - cube

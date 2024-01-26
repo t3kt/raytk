@@ -39,6 +39,8 @@ op:
     name: thicknessField
     returnTypes:
     - float
+    supportedVariableInputs:
+    - offsetField
   name: pistonSdf2d
   opType: raytk.operators.sdf2d.pistonSdf2d
   parameters:

@@ -27,6 +27,8 @@ op:
     name: definition_in_1
     returnTypes:
     - Sdf
+    supportedVariables:
+    - index
   - contextTypes:
     - Context
     - MaterialContext
@@ -45,6 +47,10 @@ op:
     name: definition_in_2
     returnTypes:
     - Sdf
+    supportedVariableInputs:
+    - inputOp1
+    supportedVariables:
+    - index
   - contextTypes:
     - Context
     - MaterialContext
@@ -63,6 +69,10 @@ op:
     name: definition_in_3
     returnTypes:
     - Sdf
+    supportedVariableInputs:
+    - inputOp[1-2]
+    supportedVariables:
+    - index
   - contextTypes:
     - Context
     - MaterialContext
@@ -81,6 +91,10 @@ op:
     name: definition_in_4
     returnTypes:
     - Sdf
+    supportedVariableInputs:
+    - inputOp[1-3]
+    supportedVariables:
+    - index
   - contextTypes:
     - Context
     - MaterialContext
@@ -99,6 +113,10 @@ op:
     name: definition_in_5
     returnTypes:
     - Sdf
+    supportedVariableInputs:
+    - inputOp[1-4]
+    supportedVariables:
+    - index
   - contextTypes:
     - Context
     - MaterialContext
@@ -117,6 +135,10 @@ op:
     name: definition_in_6
     returnTypes:
     - Sdf
+    supportedVariableInputs:
+    - inputOp[1-5]
+    supportedVariables:
+    - index
   - contextTypes:
     - Context
     - MaterialContext
@@ -135,6 +157,10 @@ op:
     name: definition_in_7
     returnTypes:
     - Sdf
+    supportedVariableInputs:
+    - inputOp[1-6]
+    supportedVariables:
+    - index
   - contextTypes:
     - Context
     - MaterialContext
@@ -153,6 +179,10 @@ op:
     name: definition_in_8
     returnTypes:
     - Sdf
+    supportedVariableInputs:
+    - inputOp[1-7]
+    supportedVariables:
+    - index
   name: arrange
   opType: raytk.operators.combine.arrange
   parameters:

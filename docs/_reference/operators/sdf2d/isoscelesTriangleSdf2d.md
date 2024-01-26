@@ -39,6 +39,8 @@ op:
     name: widthField
     returnTypes:
     - float
+    supportedVariableInputs:
+    - heightField
   name: isoscelesTriangleSdf2d
   opType: raytk.operators.sdf2d.isoscelesTriangleSdf2d
   parameters:

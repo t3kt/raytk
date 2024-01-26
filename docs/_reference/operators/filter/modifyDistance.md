@@ -53,6 +53,8 @@ op:
     returnTypes:
     - float
     - Sdf
+    supportedVariableInputs:
+    - sdf_definition_in
   name: modifyDistance
   opType: raytk.operators.filter.modifyDistance
   parameters:

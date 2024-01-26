@@ -39,6 +39,8 @@ op:
     name: radiusField
     returnTypes:
     - float
+    supportedVariableInputs:
+    - angleField
   - contextTypes:
     - Context
     - MaterialContext
@@ -54,6 +56,9 @@ op:
     name: lengthField
     returnTypes:
     - float
+    supportedVariableInputs:
+    - angleField
+    - radiusField
   - contextTypes:
     - Context
     - MaterialContext
@@ -69,6 +74,10 @@ op:
     name: thicknessField
     returnTypes:
     - float
+    supportedVariableInputs:
+    - angleField
+    - radiusField
+    - lengthField
   name: horseshoeSdf2d
   opType: raytk.operators.sdf2d.horseshoeSdf2d
   parameters:

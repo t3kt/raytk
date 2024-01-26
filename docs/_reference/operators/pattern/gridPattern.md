@@ -42,6 +42,8 @@ op:
     returnTypes:
     - float
     - vec4
+    supportedVariableInputs:
+    - coordField
   - contextTypes:
     - Context
     - MaterialContext
@@ -58,6 +60,9 @@ op:
     name: thicknessField
     returnTypes:
     - float
+    supportedVariableInputs:
+    - coordField
+    - spacingField
   - contextTypes:
     - Context
     - MaterialContext
@@ -74,6 +79,10 @@ op:
     name: blendingField
     returnTypes:
     - float
+    supportedVariableInputs:
+    - coordField
+    - spacingField
+    - thicknessField
   - contextTypes:
     - Context
     - MaterialContext
@@ -91,6 +100,11 @@ op:
     returnTypes:
     - float
     - vec4
+    supportedVariableInputs:
+    - coordField
+    - spacingField
+    - thicknessField
+    - blendingField
   - contextTypes:
     - Context
     - MaterialContext
@@ -108,6 +122,12 @@ op:
     returnTypes:
     - float
     - vec4
+    supportedVariableInputs:
+    - coordField
+    - spacingField
+    - thicknessField
+    - blendingField
+    - fillColorField
   name: gridPattern
   opType: raytk.operators.pattern.gridPattern
   parameters:

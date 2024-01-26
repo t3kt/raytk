@@ -39,6 +39,12 @@ op:
     name: thicknessField
     returnTypes:
     - float
+    supportedVariableInputs:
+    - radiusField
+    supportedVariables:
+    - normdist
+    - forkindex
+    - normforkindex
   name: branchingTreeSdf2d
   opType: raytk.operators.sdf2d.branchingTreeSdf2d
   parameters:

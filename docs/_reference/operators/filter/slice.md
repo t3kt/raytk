@@ -42,6 +42,8 @@ op:
     name: offsetField
     returnTypes:
     - float
+    supportedVariableInputs:
+    - inputOp1
   - contextTypes:
     - Context
     - MaterialContext
@@ -58,6 +60,9 @@ op:
     name: thicknessField
     returnTypes:
     - float
+    supportedVariableInputs:
+    - inputOp1
+    - offsetField
   name: slice
   opType: raytk.operators.filter.slice
   parameters:

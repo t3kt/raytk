@@ -32,6 +32,13 @@ op:
     - Ray
     - Light
     - Particle
+    supportedVariableInputs:
+    - offsetField
+    - directionField
+    - flipSideField
+    - blendingField
+    supportedVariables:
+    - sides
   - contextTypes:
     - Context
     - MaterialContext
@@ -51,6 +58,11 @@ op:
     returnTypes:
     - float
     - vec4
+    supportedVariableInputs:
+    - directionField
+    - flipSideField
+    supportedVariables:
+    - sides
   - contextTypes:
     - Context
     - MaterialContext
@@ -70,6 +82,10 @@ op:
     returnTypes:
     - float
     - vec4
+    supportedVariableInputs:
+    - flipSidesField
+    supportedVariables:
+    - sides
   - contextTypes:
     - Context
     - MaterialContext
@@ -89,6 +105,8 @@ op:
     returnTypes:
     - float
     - vec4
+    supportedVariables:
+    - sides
   - contextTypes:
     - Context
     - MaterialContext
@@ -108,6 +126,8 @@ op:
     returnTypes:
     - float
     - vec4
+    supportedVariables:
+    - sides
   name: mirrorAxes
   opType: raytk.operators.filter.mirrorAxes
   parameters:

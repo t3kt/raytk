@@ -39,6 +39,8 @@ op:
     name: spacingField
     returnTypes:
     - float
+    supportedVariableInputs:
+    - sizeField
   name: triangularGridSdf2d
   opType: raytk.operators.sdf2d.triangularGridSdf2d
   parameters:

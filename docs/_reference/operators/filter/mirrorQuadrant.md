@@ -31,6 +31,12 @@ op:
     - Ray
     - Light
     - Particle
+    supportedVariableInputs:
+    - rotateField
+    - offsetField
+    supportedVariables:
+    - index
+    - sign
   - contextTypes:
     - Context
     - MaterialContext
@@ -54,6 +60,9 @@ op:
       position along the mirror axes. If it is a 3D field, it is given the raw position.
       The value is converted to radians and *added* to the `Rotateaxis` parameter.*
       `offset_field_definition_in`:'
+    supportedVariables:
+    - index
+    - sign
   - contextTypes:
     - Context
     - MaterialContext
@@ -71,6 +80,11 @@ op:
     returnTypes:
     - float
     - vec4
+    supportedVariableInputs:
+    - rotateField
+    supportedVariables:
+    - index
+    - sign
   name: mirrorQuadrant
   opType: raytk.operators.filter.mirrorQuadrant
   parameters:

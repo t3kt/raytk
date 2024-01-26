@@ -27,6 +27,12 @@ op:
     name: radiusField
     returnTypes:
     - float
+    supportedVariables:
+    - stepindex
+    - normstepindex
+    - stepinterp
+    - normoffset
+    - offset
   keywords:
   - line
   - path

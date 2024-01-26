@@ -20,6 +20,8 @@ op:
     - vec4
     - Sdf
     summary: SDF definition the shapes in the scene.
+    supportedVariableInputs:
+    - camera
   - contextTypes:
     - CameraContext
     coordTypes:

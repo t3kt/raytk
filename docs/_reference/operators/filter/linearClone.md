@@ -28,6 +28,9 @@ op:
     required: true
     returnTypes:
     - Sdf
+    supportedVariables:
+    - index
+    - normindex
   - contextTypes:
     - Context
     - MaterialContext
@@ -45,6 +48,9 @@ op:
     required: true
     returnTypes:
     - float
+    supportedVariables:
+    - index
+    - normindex
   name: linearClone
   opType: raytk.operators.filter.linearClone
   parameters:

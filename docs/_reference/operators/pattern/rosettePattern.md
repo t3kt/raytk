@@ -41,6 +41,8 @@ op:
     name: glowField
     returnTypes:
     - float
+    supportedVariableInputs:
+    - coordField
   - contextTypes:
     - Context
     - MaterialContext
@@ -57,6 +59,9 @@ op:
     name: radiusField
     returnTypes:
     - float
+    supportedVariableInputs:
+    - coordField
+    - glowField
   - contextTypes:
     - Context
     - MaterialContext
@@ -73,6 +78,10 @@ op:
     name: spreadField
     returnTypes:
     - vec4
+    supportedVariableInputs:
+    - coordField
+    - glowField
+    - radiusField
   name: rosettePattern
   opType: raytk.operators.pattern.rosettePattern
   parameters:

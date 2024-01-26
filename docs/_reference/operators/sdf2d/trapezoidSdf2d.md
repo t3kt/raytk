@@ -40,6 +40,8 @@ op:
     name: pointsField
     returnTypes:
     - vec4
+    supportedVariableInputs:
+    - widthField
   - contextTypes:
     - Context
     - MaterialContext
@@ -55,6 +57,8 @@ op:
     name: heightField
     returnTypes:
     - float
+    supportedVariableInputs:
+    - widthField
   name: trapezoidSdf2d
   opType: raytk.operators.sdf2d.trapezoidSdf2d
   parameters:

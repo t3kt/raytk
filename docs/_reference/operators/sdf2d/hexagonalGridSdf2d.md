@@ -39,6 +39,8 @@ op:
     name: spacingField
     returnTypes:
     - float
+    supportedVariableInputs:
+    - radiusField
   - contextTypes:
     - Context
     - MaterialContext
@@ -54,6 +56,9 @@ op:
     name: roundingField
     returnTypes:
     - float
+    supportedVariableInputs:
+    - radiusField
+    - spacingField
   name: hexagonalGridSdf2d
   opType: raytk.operators.sdf2d.hexagonalGridSdf2d
   parameters:

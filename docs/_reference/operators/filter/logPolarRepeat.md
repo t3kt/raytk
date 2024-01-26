@@ -31,6 +31,11 @@ op:
     - Ray
     - Light
     - Particle
+    supportedVariableInputs:
+    - rhoOffsetField
+    - thetaOffsetField
+    supportedVariables:
+    - cellcoord
   - contextTypes:
     - Context
     - MaterialContext
@@ -63,6 +68,8 @@ op:
     name: thetaOffsetField
     returnTypes:
     - float
+    supportedVariableInputs:
+    - rhoOffsetField
   keywords:
   - log
   - modulo

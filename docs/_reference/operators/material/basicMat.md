@@ -38,6 +38,12 @@ op:
     returnTypes:
     - float
     - vec4
+    supportedVariables:
+    - lightcolor
+    - lightpos
+    - surfacecolor
+    - surfaceuv
+    - normal
   name: basicMat
   opType: raytk.operators.material.basicMat
   parameters:

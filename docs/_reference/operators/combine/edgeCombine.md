@@ -47,6 +47,8 @@ op:
     required: true
     returnTypes:
     - Sdf
+    supportedVariableInputs:
+    - inputOp1
   - contextTypes:
     - Context
     - MaterialContext
@@ -65,6 +67,8 @@ op:
     name: radiusField
     returnTypes:
     - float
+    supportedVariableInputs:
+    - inputOp[1-2]
   - contextTypes:
     - Context
     - MaterialContext
@@ -83,6 +87,9 @@ op:
     name: depthField
     returnTypes:
     - float
+    supportedVariableInputs:
+    - inputOp[1-2]
+    - radiusField
   name: edgeCombine
   opType: raytk.operators.combine.edgeCombine
   parameters:

@@ -30,6 +30,9 @@ op:
     - vec4
     summary: When provided, this field is used to calculate the UV coordinates (in
       the x and y parts of the vec4).
+    supportedVariables:
+    - res
+    - aspect
   name: textureField
   opType: raytk.operators.field.textureField
   parameters:

@@ -30,6 +30,12 @@ op:
     - Ray
     - Light
     - Particle
+    supportedVariableInputs:
+    - offsetField
+    - shiftField
+    supportedVariables:
+    - sign
+    - index
   - contextTypes:
     - Context
     - MaterialContext
@@ -46,6 +52,11 @@ op:
     name: offsetField
     returnTypes:
     - float
+    supportedVariableInputs:
+    - shiftField
+    supportedVariables:
+    - sign
+    - index
   - contextTypes:
     - Context
     - MaterialContext

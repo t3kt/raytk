@@ -31,6 +31,8 @@ op:
     - vec4
     summary: Optional function that controls the color/intensity of the light based
       on the attenuation distance.
+    supportedVariableInputs:
+    - colorField
   name: spotLight
   opType: raytk.operators.light.spotLight
   parameters:

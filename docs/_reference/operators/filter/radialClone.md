@@ -28,6 +28,9 @@ op:
     required: true
     returnTypes:
     - Sdf
+    supportedVariables:
+    - index
+    - normindex
   - contextTypes:
     - Context
     - MaterialContext
@@ -45,6 +48,9 @@ op:
     required: true
     returnTypes:
     - float
+    supportedVariables:
+    - index
+    - normindex
   - contextTypes:
     - Context
     - MaterialContext
@@ -62,6 +68,9 @@ op:
     required: true
     returnTypes:
     - float
+    supportedVariables:
+    - index
+    - normindex
   - contextTypes:
     - Context
     - MaterialContext
@@ -79,6 +88,9 @@ op:
     required: true
     returnTypes:
     - float
+    supportedVariables:
+    - index
+    - normindex
   keywords:
   - clone
   - copy

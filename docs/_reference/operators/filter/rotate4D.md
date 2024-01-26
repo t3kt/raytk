@@ -33,6 +33,11 @@ op:
     - Ray
     - Light
     - Particle
+    supportedVariableInputs:
+    - rotateField
+    - pivotField
+    supportedVariables:
+    - pos4d
   - contextTypes:
     - Context
     - MaterialContext
@@ -51,6 +56,8 @@ op:
     name: rotateField
     returnTypes:
     - float
+    supportedVariables:
+    - pos4d
   - contextTypes:
     - Context
     - MaterialContext
@@ -69,6 +76,10 @@ op:
     name: pivotField
     returnTypes:
     - vec4
+    supportedVariableInputs:
+    - rotateField
+    supportedVariables:
+    - pos4d
   name: rotate4D
   opType: raytk.operators.filter.rotate4D
   parameters:

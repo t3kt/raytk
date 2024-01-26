@@ -40,6 +40,8 @@ op:
     name: radiusField
     returnTypes:
     - float
+    supportedVariableInputs:
+    - thicknessField
   - contextTypes:
     - Context
     - MaterialContext
@@ -55,6 +57,9 @@ op:
     name: widthField
     returnTypes:
     - float
+    supportedVariableInputs:
+    - thicknessField
+    - radiusField
   - contextTypes:
     - Context
     - MaterialContext
@@ -70,6 +75,10 @@ op:
     name: wrapField
     returnTypes:
     - float
+    supportedVariableInputs:
+    - thicknessField
+    - radiusField
+    - widthField
   name: petalSdf
   opType: raytk.operators.sdf.petalSdf
   parameters:

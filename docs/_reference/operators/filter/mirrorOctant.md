@@ -30,6 +30,9 @@ op:
     - Ray
     - Light
     - Particle
+    supportedVariables:
+    - index
+    - sign
   - contextTypes:
     - Context
     - MaterialContext
@@ -52,6 +55,9 @@ op:
       it is given the distance from the center. If it is a 2D field, it is given the
       position along the mirror axes. If it is a 3D field, it is given the raw position.
       The value is converted to radians and *added* to the `Rotateaxis` parameter.
+    supportedVariables:
+    - index
+    - sign
   - contextTypes:
     - Context
     - MaterialContext
@@ -69,6 +75,11 @@ op:
     returnTypes:
     - float
     - vec4
+    supportedVariableInputs:
+    - rotateField
+    supportedVariables:
+    - index
+    - sign
   name: mirrorOctant
   opType: raytk.operators.filter.mirrorOctant
   parameters:

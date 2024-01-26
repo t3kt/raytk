@@ -24,6 +24,9 @@ op:
     name: cField
     returnTypes:
     - vec4
+    supportedVariables:
+    - step
+    - normstep
   keywords:
   - fractal
   - julia

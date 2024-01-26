@@ -43,6 +43,8 @@ op:
     name: easing
     returnTypes:
     - float
+    supportedVariableInputs:
+    - coordField
   name: magnetField
   opType: raytk.operators.field.magnetField
   parameters:

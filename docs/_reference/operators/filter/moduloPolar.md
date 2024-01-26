@@ -42,6 +42,17 @@ op:
     - Ray
     - Light
     - Particle
+    supportedVariableInputs:
+    - preRotateField
+    - offsetField
+    - rotateField
+    supportedVariables:
+    - step
+    - normstep
+    - globalangle
+    - normglobalangle
+    - normlocalangle
+    - centerdist
   - contextTypes:
     - Context
     - MaterialContext
@@ -58,6 +69,13 @@ op:
     name: preRotateField
     returnTypes:
     - float
+    supportedVariables:
+    - step
+    - normstep
+    - centerdist
+    - globalangle
+    - normglobalangle
+    - normlocalangle
   - contextTypes:
     - Context
     - MaterialContext
@@ -75,6 +93,15 @@ op:
     returnTypes:
     - float
     - vec4
+    supportedVariableInputs:
+    - preRotateField
+    supportedVariables:
+    - step
+    - normstep
+    - centerdist
+    - globalangle
+    - normglobalangle
+    - normlocalangle
   - contextTypes:
     - Context
     - MaterialContext
@@ -91,6 +118,8 @@ op:
     name: rotateField
     returnTypes:
     - float
+    supportedVariables:
+    - centerdist
   keywords:
   - kaleidoscope
   - modulo

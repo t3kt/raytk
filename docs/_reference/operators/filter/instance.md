@@ -45,6 +45,9 @@ op:
     required: true
     returnTypes:
     - Sdf
+    supportedVariables:
+    - index
+    - normindex
   - contextTypes:
     - Context
     - MaterialContext
@@ -64,6 +67,9 @@ op:
     returnTypes:
     - float
     - Sdf
+    supportedVariables:
+    - index
+    - normindex
   keywords:
   - copy
   - instance

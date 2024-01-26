@@ -39,6 +39,8 @@ op:
     name: sizeField
     returnTypes:
     - float
+    supportedVariableInputs:
+    - radiusField
   name: triangleSdf2d
   opType: raytk.operators.sdf2d.triangleSdf2d
   parameters:

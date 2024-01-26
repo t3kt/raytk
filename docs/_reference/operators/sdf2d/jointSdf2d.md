@@ -39,6 +39,8 @@ op:
     name: lengthField
     returnTypes:
     - float
+    supportedVariableInputs:
+    - thicknessField
   - contextTypes:
     - Context
     - MaterialContext
@@ -54,6 +56,9 @@ op:
     name: bendField
     returnTypes:
     - float
+    supportedVariableInputs:
+    - thicknessField
+    - lengthField
   name: jointSdf2d
   opType: raytk.operators.sdf2d.jointSdf2d
   parameters:

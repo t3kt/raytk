@@ -39,6 +39,8 @@ op:
     name: point2
     returnTypes:
     - vec4
+    supportedVariableInputs:
+    - point1Field
   - contextTypes:
     - Context
     - MaterialContext
@@ -54,6 +56,11 @@ op:
     name: thickness
     returnTypes:
     - float
+    supportedVariableInputs:
+    - point1Field
+    - point2Field
+    supportedVariables:
+    - normoffset
   name: vesicaSegmentSdf2d
   opType: raytk.operators.sdf2d.vesicaSegmentSdf2d
   parameters:

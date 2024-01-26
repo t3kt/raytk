@@ -41,6 +41,8 @@ op:
     name: sizeField
     returnTypes:
     - float
+    supportedVariableInputs:
+    - coordField
   - contextTypes:
     - Context
     - MaterialContext
@@ -57,6 +59,9 @@ op:
     name: tilingShiftField
     returnTypes:
     - vec4
+    supportedVariableInputs:
+    - coordField
+    - sizeField
   name: snubQuadrilePattern
   opType: raytk.operators.pattern.snubQuadrilePattern
   parameters:

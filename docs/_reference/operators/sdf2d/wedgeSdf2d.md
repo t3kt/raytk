@@ -39,6 +39,8 @@ op:
     name: centerPoint
     returnTypes:
     - vec4
+    supportedVariableInputs:
+    - endPoint1
   - contextTypes:
     - Context
     - MaterialContext
@@ -54,6 +56,9 @@ op:
     name: endPoint2
     returnTypes:
     - vec4
+    supportedVariableInputs:
+    - endPoint1
+    - centerPoint
   name: wedgeSdf2d
   opType: raytk.operators.sdf2d.wedgeSdf2d
   parameters:

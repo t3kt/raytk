@@ -41,6 +41,12 @@ op:
     - Ray
     - Light
     - Particle
+    supportedVariableInputs:
+    - bendField
+    - shiftField
+    supportedVariables:
+    - axispos
+    - bendpos
   - contextTypes:
     - Context
     - MaterialContext
@@ -63,6 +69,9 @@ op:
       it is passed the position along the bend axis. For 2D coords, both the bend
       axis and the bend direction are passed. For 3D coords, the relative XYZ position
       is passed.
+    supportedVariables:
+    - axispos
+    - bendpos
   - contextTypes:
     - Context
     - MaterialContext
@@ -81,6 +90,11 @@ op:
     returnTypes:
     - float
     - Sdf
+    supportedVariableInputs:
+    - bendField
+    supportedVariables:
+    - axispos
+    - bendpos
   name: bend
   opType: raytk.operators.filter.bend
   parameters:

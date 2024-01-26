@@ -41,6 +41,8 @@ op:
     name: thicknessField
     returnTypes:
     - float
+    supportedVariableInputs:
+    - coordField
   - contextTypes:
     - Context
     - MaterialContext
@@ -57,6 +59,9 @@ op:
     name: blendingField
     returnTypes:
     - float
+    supportedVariableInputs:
+    - coordField
+    - thicknessField
   - contextTypes:
     - Context
     - MaterialContext
@@ -73,6 +78,10 @@ op:
     name: shiftField
     returnTypes:
     - float
+    supportedVariableInputs:
+    - coordField
+    - thicknessField
+    - shiftField
   name: brickPattern
   opType: raytk.operators.pattern.brickPattern
   parameters:

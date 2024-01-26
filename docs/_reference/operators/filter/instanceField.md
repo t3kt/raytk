@@ -29,6 +29,9 @@ op:
     returnTypes:
     - float
     - vec4
+    supportedVariables:
+    - index
+    - normindex
   name: instanceField
   opType: raytk.operators.filter.instanceField
   parameters:

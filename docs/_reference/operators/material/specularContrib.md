@@ -38,6 +38,8 @@ op:
     name: roughnessField
     returnTypes:
     - float
+    supportedVariableInputs:
+    - shininessField
   - contextTypes:
     - MaterialContext
     coordTypes:
@@ -49,6 +51,9 @@ op:
     name: fresnelField
     returnTypes:
     - float
+    supportedVariableInputs:
+    - shininessField
+    - roughnessField
   - contextTypes:
     - MaterialContext
     coordTypes:
@@ -60,6 +65,10 @@ op:
     name: colorField
     returnTypes:
     - vec4
+    supportedVariableInputs:
+    - shininessField
+    - roughnessField
+    - fresnelField
   keywords:
   - ggx
   - lighting

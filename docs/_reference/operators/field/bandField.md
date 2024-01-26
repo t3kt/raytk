@@ -56,6 +56,8 @@ op:
     - vec4
     summary: Optional field that is used to produce the values for the "inside" part.
       If used, the `Inside Value` parameter will be ignored.
+    supportedVariableInputs:
+    - coordField
   - contextTypes:
     - Context
     - MaterialContext
@@ -77,6 +79,9 @@ op:
     - vec4
     summary: Optional field that is used to produce the values for the "outside" part.
       If used, the `Outside Value` parameter will be ignored.
+    supportedVariableInputs:
+    - coordField
+    - insideValue
   - contextTypes:
     - Context
     - MaterialContext
@@ -96,6 +101,10 @@ op:
     returnTypes:
     - float
     summary: Optional function used to control how `Blending` is applied.
+    supportedVariableInputs:
+    - coordField
+    - insideValue
+    - outsideValue
   - contextTypes:
     - Context
     - MaterialContext
@@ -114,6 +123,11 @@ op:
     name: widthField
     returnTypes:
     - float
+    supportedVariableInputs:
+    - coordField
+    - insideValue
+    - outsideValue
+    - centerField
   - contextTypes:
     - Context
     - MaterialContext
@@ -132,6 +146,12 @@ op:
     name: blendingField
     returnTypes:
     - float
+    supportedVariableInputs:
+    - coordField
+    - insideValue
+    - outsideValue
+    - centerField
+    - widthField
   - contextTypes:
     - Context
     - MaterialContext
@@ -147,6 +167,13 @@ op:
     name: blendFunction
     returnTypes:
     - float
+    supportedVariableInputs:
+    - coordField
+    - insideValue
+    - outsideValue
+    - centerField
+    - widthField
+    - blendingField
   name: bandField
   opType: raytk.operators.field.bandField
   parameters:

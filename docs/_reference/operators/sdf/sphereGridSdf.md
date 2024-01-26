@@ -39,6 +39,8 @@ op:
     name: thicknessField
     returnTypes:
     - float
+    supportedVariableInputs:
+    - radiusField
   name: sphereGridSdf
   opType: raytk.operators.sdf.sphereGridSdf
   parameters:

@@ -40,6 +40,8 @@ op:
     returnTypes:
     - float
     - vec4
+    supportedVariables:
+    - normoffset
   - contextTypes:
     - Context
     - MaterialContext
@@ -56,6 +58,8 @@ op:
     returnTypes:
     - float
     - vec4
+    supportedVariables:
+    - normoffset
   name: truncatedPyramidSdf
   opType: raytk.operators.sdf.truncatedPyramidSdf
   parameters:

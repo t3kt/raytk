@@ -26,6 +26,9 @@ op:
     name: radiusField
     returnTypes:
     - float
+    supportedVariables:
+    - angle
+    - normangle
   - contextTypes:
     - Context
     - MaterialContext
@@ -41,6 +44,12 @@ op:
     name: thicknessField
     returnTypes:
     - float
+    supportedVariableInputs:
+    - radiusField
+    supportedVariables:
+    - angle
+    - normangle
+    - normaxisdist
   name: discSdf
   opType: raytk.operators.sdf.discSdf
   parameters:

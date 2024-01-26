@@ -39,6 +39,8 @@ op:
     name: sidesField
     returnTypes:
     - float
+    supportedVariableInputs:
+    - radiusField
   name: polygonSdf2d
   opType: raytk.operators.sdf2d.polygonSdf2d
   parameters:

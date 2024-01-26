@@ -25,6 +25,9 @@ op:
     returnTypes:
     - float
     - vec4
+    supportedVariables:
+    - step
+    - normstep
   keywords:
   - fractal
   - mandelbrot

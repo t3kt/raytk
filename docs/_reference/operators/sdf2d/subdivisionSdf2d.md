@@ -24,6 +24,9 @@ op:
     name: seedField
     returnTypes:
     - float
+    supportedVariables:
+    - cellsize
+    - cellid
   - contextTypes:
     - Context
     - MaterialContext
@@ -40,6 +43,11 @@ op:
     returnTypes:
     - float
     - vec4
+    supportedVariableInputs:
+    - seedField
+    supportedVariables:
+    - cellsize
+    - cellid
   - contextTypes:
     - Context
     - MaterialContext
@@ -55,6 +63,12 @@ op:
     name: minSizeField
     returnTypes:
     - float
+    supportedVariableInputs:
+    - seedField
+    - sizeField
+    supportedVariables:
+    - cellsize
+    - cellid
   - contextTypes:
     - Context
     - MaterialContext
@@ -70,6 +84,13 @@ op:
     name: patternShiftField
     returnTypes:
     - float
+    supportedVariableInputs:
+    - seedField
+    - sizeField
+    - minSizeField
+    supportedVariables:
+    - cellsize
+    - cellid
   - contextTypes:
     - Context
     - MaterialContext
@@ -85,6 +106,14 @@ op:
     name: shape
     returnTypes:
     - Sdf
+    supportedVariableInputs:
+    - seedField
+    - sizeField
+    - minSizeField
+    - patternShiftField
+    supportedVariables:
+    - cellsize
+    - cellid
   name: subdivisionSdf2d
   opType: raytk.operators.sdf2d.subdivisionSdf2d
   parameters:

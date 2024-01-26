@@ -26,6 +26,17 @@ op:
     name: irradianceField
     returnTypes:
     - vec4
+    supportedVariableInputs:
+    - metallicField
+    - roughnessField
+    - baseColorField
+    supportedVariables:
+    - lightcolor
+    - lightpos
+    - surfacecolor
+    - surfaceuv
+    - shadedlevel
+    - normal
   - contextTypes:
     - MaterialContext
     coordTypes:
@@ -34,6 +45,18 @@ op:
     name: reflectanceField
     returnTypes:
     - vec4
+    supportedVariableInputs:
+    - metallicField
+    - roughnessField
+    - baseColorField
+    - irradianceField
+    supportedVariables:
+    - lightcolor
+    - lightpos
+    - surfacecolor
+    - surfaceuv
+    - shadedlevel
+    - normal
   - contextTypes:
     - MaterialContext
     coordTypes:
@@ -43,6 +66,16 @@ op:
     returnTypes:
     - float
     - vec4
+    supportedVariableInputs:
+    - metallicField
+    - roughnessField
+    supportedVariables:
+    - lightcolor
+    - lightpos
+    - surfacecolor
+    - surfaceuv
+    - shadedlevel
+    - normal
   - contextTypes:
     - MaterialContext
     coordTypes:
@@ -51,6 +84,13 @@ op:
     name: roughnessField
     returnTypes:
     - float
+    supportedVariables:
+    - lightcolor
+    - lightpos
+    - surfacecolor
+    - surfaceuv
+    - shadedlevel
+    - normal
   - contextTypes:
     - MaterialContext
     coordTypes:
@@ -59,6 +99,15 @@ op:
     name: metallicField
     returnTypes:
     - float
+    supportedVariableInputs:
+    - roughnessField
+    supportedVariables:
+    - lightcolor
+    - lightpos
+    - surfacecolor
+    - surfaceuv
+    - shadedlevel
+    - normal
   name: pbrMat
   opType: raytk.operators.material.pbrMat
   parameters:

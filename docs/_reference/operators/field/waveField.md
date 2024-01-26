@@ -56,6 +56,8 @@ op:
     - float
     summary: If attached, the wave will use this field to multiply the `Period` parameter,
       which can be used for frequency modulation.
+    supportedVariableInputs:
+    - coordField
   - contextTypes:
     - Context
     - MaterialContext
@@ -74,6 +76,9 @@ op:
     name: phaseField
     returnTypes:
     - float
+    supportedVariableInputs:
+    - coordField
+    - periodField
   - contextTypes:
     - Context
     - MaterialContext
@@ -90,6 +95,10 @@ op:
     returnTypes:
     - float
     - vec4
+    supportedVariableInputs:
+    - coordField
+    - periodField
+    - phaseField
   - contextTypes:
     - Context
     - MaterialContext
@@ -108,6 +117,11 @@ op:
     name: amplitudeField
     returnTypes:
     - float
+    supportedVariableInputs:
+    - coordField
+    - periodField
+    - phaseField
+    - waveFunc
   name: waveField
   opType: raytk.operators.field.waveField
   parameters:

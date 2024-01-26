@@ -42,6 +42,8 @@ op:
     - float
     summary: Value field that can be used to vary the radius (both base and top) of
       the cone.
+    supportedVariableInputs:
+    - baseField
   - contextTypes:
     - Context
     - MaterialContext
@@ -57,6 +59,8 @@ op:
     name: topField
     returnTypes:
     - vec4
+    supportedVariableInputs:
+    - baseField
   - contextTypes:
     - Context
     - MaterialContext
@@ -72,6 +76,10 @@ op:
     name: radiusField
     returnTypes:
     - float
+    supportedVariableInputs:
+    - baseField
+    - heightField
+    - topField
   name: coneSdf
   opType: raytk.operators.sdf.coneSdf
   parameters:

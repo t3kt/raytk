@@ -39,6 +39,8 @@ op:
     name: angleOffsetField
     returnTypes:
     - float
+    supportedVariableInputs:
+    - angleWidthField
   - contextTypes:
     - Context
     - MaterialContext
@@ -54,6 +56,12 @@ op:
     name: radiusField
     returnTypes:
     - float
+    supportedVariableInputs:
+    - angleWidthField
+    - angleOffsetField
+    supportedVariables:
+    - angle
+    - normangle
   - contextTypes:
     - Context
     - MaterialContext
@@ -69,6 +77,13 @@ op:
     name: thicknessField
     returnTypes:
     - float
+    supportedVariableInputs:
+    - angleWidthField
+    - angleOffsetField
+    - radiusField
+    supportedVariables:
+    - angle
+    - normangle
   keywords:
   - donut
   - ring

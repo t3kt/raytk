@@ -26,6 +26,9 @@ op:
     required: true
     returnTypes:
     - Sdf
+    supportedVariables:
+    - coord
+    - normcoord
   - contextTypes:
     - Context
     - MaterialContext
@@ -43,6 +46,9 @@ op:
     required: true
     returnTypes:
     - float
+    supportedVariables:
+    - coord
+    - normcoord
   name: gridClone
   opType: raytk.operators.filter.gridClone
   parameters:

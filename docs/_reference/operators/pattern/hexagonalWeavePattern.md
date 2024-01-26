@@ -25,6 +25,9 @@ op:
     name: coordField
     returnTypes:
     - vec4
+    supportedVariableInputs:
+    - thicknessField
+    - blendingField
   - contextTypes:
     - Context
     - MaterialContext
@@ -41,6 +44,8 @@ op:
     name: thicknessField
     returnTypes:
     - float
+    supportedVariableInputs:
+    - coordField
   - contextTypes:
     - Context
     - MaterialContext
@@ -57,6 +62,9 @@ op:
     name: blendingField
     returnTypes:
     - float
+    supportedVariableInputs:
+    - coordField
+    - thicknessField
   - contextTypes:
     - Context
     - MaterialContext
@@ -74,6 +82,13 @@ op:
     returnTypes:
     - float
     - vec4
+    supportedVariableInputs:
+    - coordField
+    - thicknessField
+    - blendingField
+    supportedVariables:
+    - axialdist
+    - mask
   - contextTypes:
     - Context
     - MaterialContext
@@ -91,6 +106,14 @@ op:
     returnTypes:
     - float
     - vec4
+    supportedVariableInputs:
+    - coordField
+    - thicknessField
+    - blendingField
+    - color1Field
+    supportedVariables:
+    - axialdist
+    - mask
   - contextTypes:
     - Context
     - MaterialContext
@@ -108,6 +131,15 @@ op:
     returnTypes:
     - float
     - vec4
+    supportedVariableInputs:
+    - coordField
+    - thicknessField
+    - blendingField
+    - color1Field
+    - color2Field
+    supportedVariables:
+    - axialdist
+    - mask
   name: hexagonalWeavePattern
   opType: raytk.operators.pattern.hexagonalWeavePattern
   parameters:

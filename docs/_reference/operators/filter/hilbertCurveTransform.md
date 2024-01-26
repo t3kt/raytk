@@ -31,6 +31,10 @@ op:
     - Ray
     - Light
     - Particle
+    supportedVariables:
+    - localuv
+    - cell
+    - localcell
   name: hilbertCurveTransform
   opType: raytk.operators.filter.hilbertCurveTransform
   parameters:

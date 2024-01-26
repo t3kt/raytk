@@ -41,6 +41,10 @@ op:
     - float
     - vec4
     summary: Radius field, either a float, or a vector with outer and inner radius
+    supportedVariableInputs:
+    - angleField
+    supportedVariables:
+    - normangle
   keywords:
   - arc
   - ring

@@ -39,6 +39,8 @@ op:
     name: roundingField
     returnTypes:
     - float
+    supportedVariableInputs:
+    - tightnessField
   name: blobbyCrossSdf2d
   opType: raytk.operators.sdf2d.blobbyCrossSdf2d
   parameters:

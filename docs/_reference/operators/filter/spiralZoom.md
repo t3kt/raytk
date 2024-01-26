@@ -52,6 +52,9 @@ op:
     - Ray
     - Light
     - Particle
+    supportedVariableInputs:
+    - twistField
+    - phaseField
   - contextTypes:
     - Context
     - MaterialContext
@@ -68,6 +71,8 @@ op:
     name: twistField
     returnTypes:
     - vec4
+    supportedVariables:
+    - logdist
   - contextTypes:
     - Context
     - MaterialContext
@@ -84,6 +89,10 @@ op:
     name: phaseField
     returnTypes:
     - vec4
+    supportedVariableInputs:
+    - twistField
+    supportedVariables:
+    - logdist
   keywords:
   - log
   - polar

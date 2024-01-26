@@ -41,6 +41,8 @@ op:
     returnTypes:
     - float
     - vec4
+    supportedVariableInputs:
+    - sizeField
   name: stairSdf2d
   opType: raytk.operators.sdf2d.stairSdf2d
   parameters:

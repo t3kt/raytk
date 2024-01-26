@@ -34,6 +34,11 @@ op:
     - float
     - vec4
     summary: Optional field used to control the color within the shape.
+    supportedVariables:
+    - surfacecolor
+    - surfaceuv
+    - normal
+    - sdf
   - contextTypes:
     - MaterialContext
     coordTypes:
@@ -46,6 +51,13 @@ op:
     - float
     - vec4
     summary: Optional field used to control the color at the surface.
+    supportedVariableInputs:
+    - fillColorField
+    supportedVariables:
+    - surfacecolor
+    - surfaceuv
+    - normal
+    - sdf
   name: sampledPointMat
   opType: raytk.operators.material.sampledPointMat
   parameters:

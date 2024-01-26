@@ -34,6 +34,8 @@ op:
     name: albedoField
     returnTypes:
     - float
+    supportedVariableInputs:
+    - roughnessField
   - contextTypes:
     - MaterialContext
     coordTypes:
@@ -46,6 +48,9 @@ op:
     returnTypes:
     - float
     - vec4
+    supportedVariableInputs:
+    - roughnessField
+    - albedoField
   keywords:
   - diffuse
   - lambert

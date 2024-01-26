@@ -30,6 +30,8 @@ op:
     name: definition_in_1
     returnTypes:
     - Light
+    supportedVariableInputs:
+    - bounds1
   - contextTypes:
     - LightContext
     coordTypes:
@@ -41,6 +43,9 @@ op:
     name: definition_in_2
     returnTypes:
     - Light
+    supportedVariableInputs:
+    - bounds[1-2]
+    - inputOp1
   - contextTypes:
     - LightContext
     coordTypes:
@@ -52,6 +57,9 @@ op:
     name: definition_in_3
     returnTypes:
     - Light
+    supportedVariableInputs:
+    - bounds[1-3]
+    - inputOp[1-2]
   - contextTypes:
     - LightContext
     coordTypes:
@@ -63,6 +71,9 @@ op:
     name: definition_in_4
     returnTypes:
     - Light
+    supportedVariableInputs:
+    - bounds[1-4]
+    - inputOp[1-3]
   - contextTypes:
     - LightContext
     coordTypes:
@@ -74,6 +85,9 @@ op:
     name: definition_in_5
     returnTypes:
     - Light
+    supportedVariableInputs:
+    - bounds[1-5]
+    - inputOp[1-4]
   - contextTypes:
     - LightContext
     coordTypes:
@@ -85,6 +99,9 @@ op:
     name: definition_in_6
     returnTypes:
     - Light
+    supportedVariableInputs:
+    - bounds[1-6]
+    - inputOp[1-5]
   - contextTypes:
     - LightContext
     coordTypes:
@@ -96,6 +113,9 @@ op:
     name: definition_in_7
     returnTypes:
     - Light
+    supportedVariableInputs:
+    - bounds[1-7]
+    - inputOp[1-6]
   - contextTypes:
     - LightContext
     coordTypes:
@@ -107,6 +127,9 @@ op:
     name: definition_in_8
     returnTypes:
     - Light
+    supportedVariableInputs:
+    - bounds[1-8]
+    - inputOp[1-7]
   - contextTypes:
     - LightContext
     coordTypes:
@@ -129,6 +152,9 @@ op:
     name: bounds2
     returnTypes:
     - Sdf
+    supportedVariableInputs:
+    - bounds1
+    - inputOp1
   - contextTypes:
     - LightContext
     coordTypes:
@@ -140,6 +166,9 @@ op:
     name: bounds3
     returnTypes:
     - Sdf
+    supportedVariableInputs:
+    - bounds[1-2]
+    - inputOp[1-2]
   - contextTypes:
     - LightContext
     coordTypes:
@@ -151,6 +180,9 @@ op:
     name: bounds4
     returnTypes:
     - Sdf
+    supportedVariableInputs:
+    - bounds[1-3]
+    - inputOp[1-3]
   - contextTypes:
     - LightContext
     coordTypes:
@@ -162,6 +194,9 @@ op:
     name: bounds5
     returnTypes:
     - Sdf
+    supportedVariableInputs:
+    - bounds[1-4]
+    - inputOp[1-4]
   - contextTypes:
     - LightContext
     coordTypes:
@@ -173,6 +208,9 @@ op:
     name: bounds6
     returnTypes:
     - Sdf
+    supportedVariableInputs:
+    - bounds[1-5]
+    - inputOp[1-5]
   - contextTypes:
     - LightContext
     coordTypes:
@@ -184,6 +222,9 @@ op:
     name: bounds7
     returnTypes:
     - Sdf
+    supportedVariableInputs:
+    - bounds[1-6]
+    - inputOp[1-6]
   - contextTypes:
     - LightContext
     coordTypes:
@@ -195,6 +236,9 @@ op:
     name: bounds8
     returnTypes:
     - Sdf
+    supportedVariableInputs:
+    - bounds[1-7]
+    - inputOp[1-7]
   name: multiLight
   opType: raytk.operators.light.multiLight
   parameters:

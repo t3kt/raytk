@@ -40,6 +40,8 @@ op:
     name: angleField
     returnTypes:
     - float
+    supportedVariableInputs:
+    - radiusField
   keywords:
   - cone
   - pie

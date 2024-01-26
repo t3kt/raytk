@@ -28,6 +28,12 @@ op:
     - vec4
     - Sdf
     summary: The SDF that sweeps around the path SDF.
+    supportedVariableInputs:
+    - path
+    supportedVariables:
+    - pathsdf
+    - pathpos
+    - pos3d
   - contextTypes:
     - Context
     - MaterialContext

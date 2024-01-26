@@ -46,6 +46,8 @@ op:
     returnTypes:
     - float
     - vec4
+    supportedVariableInputs:
+    - scaleField
   name: roundedRectangleSdf2d
   opType: raytk.operators.sdf2d.roundedRectangleSdf2d
   parameters:

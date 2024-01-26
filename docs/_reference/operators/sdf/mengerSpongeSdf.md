@@ -24,6 +24,9 @@ op:
     name: boxScaleField
     returnTypes:
     - float
+    supportedVariables:
+    - step
+    - normstep
   - contextTypes:
     - Context
     - MaterialContext
@@ -39,6 +42,11 @@ op:
     name: crossScaleField
     returnTypes:
     - float
+    supportedVariableInputs:
+    - boxScaleField
+    supportedVariables:
+    - step
+    - normstep
   - contextTypes:
     - Context
     - MaterialContext
@@ -54,6 +62,12 @@ op:
     name: stepOffsetField
     returnTypes:
     - vec4
+    supportedVariableInputs:
+    - boxScaleField
+    - crossScaleField
+    supportedVariables:
+    - step
+    - normstep
   name: mengerSpongeSdf
   opType: raytk.operators.sdf.mengerSpongeSdf
   parameters:

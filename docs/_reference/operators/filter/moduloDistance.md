@@ -30,6 +30,8 @@ op:
     - Ray
     - Light
     - Particle
+    supportedVariables:
+    - ring
   keywords:
   - distance
   - modulo

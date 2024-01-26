@@ -26,6 +26,9 @@ op:
     required: true
     returnTypes:
     - Sdf
+    supportedVariables:
+    - cellcoord
+    - cellchecker
   name: circularRepeat
   opType: raytk.operators.filter.circularRepeat
   parameters:

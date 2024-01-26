@@ -51,6 +51,8 @@ op:
     - vec4
     summary: If provided, this is used to produce the center position instead of the
       Center parameter.
+    supportedVariableInputs:
+    - coordField
   name: pointDistanceField
   opType: raytk.operators.field.pointDistanceField
   parameters:

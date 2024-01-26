@@ -42,6 +42,8 @@ op:
     name: centerField
     returnTypes:
     - float
+    supportedVariableInputs:
+    - inputOp1
   - contextTypes:
     - Context
     - MaterialContext
@@ -58,6 +60,9 @@ op:
     name: widthField
     returnTypes:
     - float
+    supportedVariableInputs:
+    - inputOp1
+    - centerField
   - contextTypes:
     - Context
     - MaterialContext
@@ -74,6 +79,8 @@ op:
     name: startField
     returnTypes:
     - float
+    supportedVariableInputs:
+    - inputOp1
   - contextTypes:
     - Context
     - MaterialContext
@@ -90,6 +97,9 @@ op:
     name: endField
     returnTypes:
     - float
+    supportedVariableInputs:
+    - inputOp1
+    - startField
   name: radialSlice
   opType: raytk.operators.filter.radialSlice
   parameters:

@@ -27,6 +27,9 @@ op:
     summary: Optional field used to control the radius of the cylinder. If it uses
       1D coordinates, it is given the position along the axis. For 3D coordinates,
       it is given the raw position.
+    supportedVariables:
+    - axispos
+    - normangle
   - contextTypes:
     - Context
     - MaterialContext
@@ -42,6 +45,12 @@ op:
     name: radiusField
     returnTypes:
     - float
+    supportedVariableInputs:
+    - heightField
+    supportedVariables:
+    - axispos
+    - normangle
+    - normoffset
   - contextTypes:
     - Context
     - MaterialContext
@@ -57,6 +66,13 @@ op:
     name: thicknessField
     returnTypes:
     - float
+    supportedVariableInputs:
+    - heightField
+    - radiusField
+    supportedVariables:
+    - axispos
+    - normangle
+    - normoffset
   keywords:
   - column
   - cylinder

@@ -26,6 +26,15 @@ op:
     returnTypes:
     - Sdf
     summary: The 2D shape that is revolved around the axis.
+    supportedVariableInputs:
+    - rotateField
+    - scaleField
+    - translateField
+    - radialOffsetField
+    - axisOffsetField
+    supportedVariables:
+    - angle
+    - normangle
   - contextTypes:
     - Context
     - MaterialContext
@@ -44,6 +53,12 @@ op:
     - float
     summary: Optional field that controls rotation of the cross-section as it goes
       around the axis.
+    supportedVariableInputs:
+    - radialOffsetField
+    - axisOffsetField
+    supportedVariables:
+    - angle
+    - normangle
   - contextTypes:
     - Context
     - MaterialContext
@@ -62,6 +77,13 @@ op:
     - float
     summary: Optional field that controls scale of the cross-section as it goes around
       the axis.
+    supportedVariableInputs:
+    - rotateField
+    - radialOffsetField
+    - axisOffsetField
+    supportedVariables:
+    - angle
+    - normangle
   - contextTypes:
     - Context
     - MaterialContext
@@ -80,6 +102,14 @@ op:
     - vec4
     summary: Optional field that controls translate of the cross-section as it goes
       around the axis.
+    supportedVariableInputs:
+    - scaleField
+    - rotateField
+    - radialOffsetField
+    - axisOffsetField
+    supportedVariables:
+    - angle
+    - normangle
   - contextTypes:
     - Context
     - MaterialContext
@@ -95,6 +125,9 @@ op:
     name: radialOffsetField
     returnTypes:
     - float
+    supportedVariables:
+    - angle
+    - normangle
   - contextTypes:
     - Context
     - MaterialContext
@@ -110,6 +143,11 @@ op:
     name: axisOffsetField
     returnTypes:
     - float
+    supportedVariableInputs:
+    - radialOffsetField
+    supportedVariables:
+    - angle
+    - normangle
   name: revolve
   opType: raytk.operators.convert.revolve
   parameters:

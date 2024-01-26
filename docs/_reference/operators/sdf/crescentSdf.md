@@ -39,6 +39,8 @@ op:
     name: thicknessField
     returnTypes:
     - float
+    supportedVariableInputs:
+    - radiusField
   name: crescentSdf
   opType: raytk.operators.sdf.crescentSdf
   parameters:

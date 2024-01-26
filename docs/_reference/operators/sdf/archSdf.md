@@ -39,6 +39,8 @@ op:
     name: widthField
     returnTypes:
     - float
+    supportedVariableInputs:
+    - heightField
   - contextTypes:
     - Context
     - MaterialContext
@@ -54,6 +56,9 @@ op:
     name: roundingField
     returnTypes:
     - float
+    supportedVariableInputs:
+    - heightField
+    - widthField
   - contextTypes:
     - Context
     - MaterialContext
@@ -69,6 +74,10 @@ op:
     name: frameThicknessField
     returnTypes:
     - float
+    supportedVariableInputs:
+    - heightField
+    - widthField
+    - roundingField
   - contextTypes:
     - Context
     - MaterialContext
@@ -84,6 +93,11 @@ op:
     name: frameDepthField
     returnTypes:
     - float
+    supportedVariableInputs:
+    - heightField
+    - widthField
+    - roundingField
+    - frameThicknessField
   - contextTypes:
     - Context
     - MaterialContext
@@ -99,6 +113,12 @@ op:
     name: panelDepthField
     returnTypes:
     - float
+    supportedVariableInputs:
+    - heightField
+    - widthField
+    - roundingField
+    - frameThicknessField
+    - frameDepthField
   name: archSdf
   opType: raytk.operators.sdf.archSdf
   parameters:

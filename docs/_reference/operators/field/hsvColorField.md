@@ -50,6 +50,8 @@ op:
     - float
     summary: Optional field that can calculate the saturation setting based on position
       or other attributes.
+    supportedVariableInputs:
+    - hueField
   - contextTypes:
     - Context
     - MaterialContext
@@ -70,6 +72,9 @@ op:
     - float
     summary: Optional field that can calculate the value setting based on position
       or other attributes.
+    supportedVariableInputs:
+    - hueField
+    - saturationField
   name: hsvColorField
   opType: raytk.operators.field.hsvColorField
   parameters:

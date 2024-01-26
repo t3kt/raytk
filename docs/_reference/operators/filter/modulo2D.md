@@ -35,6 +35,15 @@ op:
     - Ray
     - Light
     - Particle
+    supportedVariableInputs:
+    - sizeField
+    - shiftField
+    - offsetField
+    supportedVariables:
+    - cellcoord
+    - tiledquad
+    - normcoord
+    - shiftedcellcoord
   - contextTypes:
     - Context
     - MaterialContext
@@ -69,6 +78,8 @@ op:
     returnTypes:
     - float
     - vec4
+    supportedVariableInputs:
+    - sizeField
   - contextTypes:
     - Context
     - MaterialContext
@@ -86,6 +97,14 @@ op:
     returnTypes:
     - float
     - vec4
+    supportedVariableInputs:
+    - sizeField
+    - shiftField
+    supportedVariables:
+    - cellcoord
+    - tiledquad
+    - normcoord
+    - shiftedcellcoord
   keywords:
   - grid
   - modulo

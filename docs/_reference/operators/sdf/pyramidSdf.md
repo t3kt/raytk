@@ -43,6 +43,8 @@ op:
     - float
     summary: Optional field used to determine the width. When connected, the `Width`
       is multiplied by the value produced by the field.
+    supportedVariableInputs:
+    - heightField
   name: pyramidSdf
   opType: raytk.operators.sdf.pyramidSdf
   parameters:

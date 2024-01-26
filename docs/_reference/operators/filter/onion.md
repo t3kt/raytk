@@ -59,6 +59,8 @@ op:
     name: thicknessField
     returnTypes:
     - float
+    supportedVariableInputs:
+    - inputOp1
   - contextTypes:
     - Context
     - MaterialContext
@@ -77,6 +79,9 @@ op:
     name: iterationsField
     returnTypes:
     - float
+    supportedVariableInputs:
+    - inputOp1
+    - thicknessField
   keywords:
   - hollow
   - onion
