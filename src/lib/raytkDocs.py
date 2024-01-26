@@ -166,6 +166,8 @@ class InputHelp:
 	coordTypes: list[str] = field(default_factory=list)
 	contextTypes: list[str] = field(default_factory=list)
 	returnTypes: list[str] = field(default_factory=list)
+	supportedVariables: list[str] = field(default_factory=list)
+	supportedVariableInputs: list[str] = field(default_factory=list)
 	inputHandler: COMP | None = None
 
 	def formatMarkdownListItem(self, forBuild=False):
@@ -180,8 +182,11 @@ class InputHelp:
 		return text
 
 	@classmethod
-	def extractFromInputHandler(cls, inputHandler: COMP):
+	def extractFromInputHandler(cls, inputHandler: COMP, varHelps: list[VariableHelp]):
 		info = InputInfo(inputHandler)
+		varNames = info.supportedVariables
+		if '*' in varNames:
+			varNames = [varHelp.name for varHelp in varHelps]
 		return cls(
 			name=info.name,
 			label=info.label,
@@ -189,8 +194,18 @@ class InputHelp:
 			coordTypes=info.supportedCoordTypes,
 			contextTypes=info.supportedContextTypes,
 			returnTypes=info.supportedReturnTypes,
+			supportedVariables=varNames,
+			supportedVariableInputs=info.supportedVariableInputs,
 			inputHandler=inputHandler,
 		)
+
+	def updateSupportedVariableInputs(self, inputHelps: list['InputHelp']):
+		if '*' in self.supportedVariableInputs:
+			self.supportedVariableInputs = [
+				inHelp.name
+				for inHelp in inputHelps
+				if inHelp.name != self.name
+			]
 
 	def mergeFrom(self, other: 'InputHelp'):
 		if self.name != other.name:
@@ -202,6 +217,8 @@ class InputHelp:
 		self.contextTypes = other.contextTypes
 		self.returnTypes = other.returnTypes
 		self.inputHandler = self.inputHandler or other.inputHandler
+		self.supportedVariables = other.supportedVariables
+		self.supportedVariableInputs = other.supportedVariableInputs
 
 	def toFrontMatterData(self):
 		return cleanDict({
@@ -211,6 +228,8 @@ class InputHelp:
 			'coordTypes': self.coordTypes,
 			'contextTypes': self.contextTypes,
 			'returnTypes': self.returnTypes,
+			'supportedVariables': self.supportedVariables,
+			'supportedVariableInputs': self.supportedVariableInputs,
 			'summary': self.summary,
 		})
 
@@ -663,7 +682,8 @@ class OpDocManager:
 	def _pullFromMissingInputsInto(self, ropHelp: ROPHelp):
 		inHelps = ropHelp.inputs
 		for i, handler in enumerate(self.info.inputHandlers):
-			extractedHelp = InputHelp.extractFromInputHandler(handler)
+			extractedHelp = InputHelp.extractFromInputHandler(handler, ropHelp.variables)
+			extractedHelp.updateSupportedVariableInputs(inHelps)
 			if i < len(inHelps):
 				inHelps[i].mergeFrom(extractedHelp)
 			else:
@@ -691,8 +711,8 @@ class OpDocManager:
 	def setUpMissingParts(self):
 		ropHelp = self._parseDAT()
 		self._pullFromMissingParamsInto(ropHelp)
-		self._pullFromMissingInputsInto(ropHelp)
 		self._pullFromMissingVariablesInto(ropHelp)
+		self._pullFromMissingInputsInto(ropHelp)
 		self._writeToDAT(ropHelp)
 
 	def _getRopParByTupletName(self, tupletName: str) -> Par | None:
