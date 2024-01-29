@@ -44,10 +44,12 @@ class OutputOp:
 				constCount += 1
 			elif table[i, 'uniformType'] == 'uniformarray':
 				arrayCount += 1
+		print(f'{parent()} found {constCount} constants and {arrayCount} arrays')
 		if constCount > 0:
 			if targetOp.isMAT:
 				raise Exception('Specialization constants not yet supported in MATs!')
 			sequence = targetOp.par.const0name.sequence  # type: Sequence
+			print(f'{parent()} current const seq len: {sequence.numBlocks}, new len should be: {constCount}')
 			if constCount > sequence.numBlocks:
 				sequence.numBlocks = constCount
 		sequence = targetOp.par.array0name.sequence

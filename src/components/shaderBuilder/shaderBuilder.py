@@ -1268,7 +1268,7 @@ class _ParameterProcessor:
 	def _constantParamUniforms(self) -> list[_UniformSpec]:
 		uniforms = []
 		constCount = 0
-		constPath = parent().path + '/constant_param_vals'
+		constPath = 'constant_param_vals'
 		for opState in self.opStates:
 			if opState.constants:
 				for const in opState.constants:
@@ -1320,7 +1320,7 @@ class _SingleArrayParameterProcessor(_ParameterProcessor):
 		uniforms = [
 			_UniformSpec(
 				'vecParams', 'vec4', 'uniformarray', paramCount,
-				parent().path + '/merged_vector_param_vals'
+				'merged_vector_param_vals'
 			)
 		]
 		uniforms += self._constantParamUniforms()
