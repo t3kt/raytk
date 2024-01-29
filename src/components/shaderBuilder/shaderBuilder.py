@@ -416,6 +416,24 @@ class ShaderBuilder:
 		paramProcessor = self._createParamProcessor()
 		return paramProcessor.processCodeBlock(code)
 
+	def processLibraryIncludes(self, code: str):
+		mode = str((self.configPar() and self.configPar()['Includemode']) or 'includelibs')
+		if mode != 'inlineall':
+			return code
+
+		def replacer(m: re.Match):
+			path = m.group(1)
+			dat = op(path)
+			result = f'/// Library: <{path}>\n'
+			if dat:
+				result += dat.text
+			else:
+				# TODO: report missing library
+				result += '/////// MISSING!!!! /////'
+			return result + '\n'
+
+		return re.sub(r'#include\s+<([^>]+)>', replacer, code)
+
 	def buildBufferUniformTable(self, dat: DAT):
 		dat.clear()
 		dat.appendRow(['name', 'type', 'chop', 'uniformType', 'expr1', 'expr2', 'expr3', 'expr4'])
