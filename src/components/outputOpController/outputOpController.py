@@ -16,19 +16,10 @@ class OutputOp:
 		self.ownerComp = ownerComp
 
 	def onInit(self):
-		self.resetInfoParams()
 		self.updateParamSequences()
 
 	def onUniformsChange(self):
 		self.updateParamSequences()
-
-	def resetInfoParams(self):
-		host = self.ownerComp.par.Hostop.eval()
-		if not host:
-			return
-		for par in host.customPars:
-			if par.page == 'Info' and not par.readOnly and not par:
-				par.val = par.default
 
 	def updateParamSequences(self):
 		targetOp = self.ownerComp.par.Glslop.eval()

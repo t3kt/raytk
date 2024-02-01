@@ -8,7 +8,8 @@ def onCook(dat):
 		dat[0,0] = o.path
 		return
 	if o.isCOMP:
-		p = o.par['Outputtable']
+		info = o.op('renderInfo')
+		p = info.par['Outputtable']
 		if p and p.eval():
 			dat[0,0] = op(p).path
 			return
