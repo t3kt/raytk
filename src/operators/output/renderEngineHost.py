@@ -32,6 +32,9 @@ class RenderEngineController:
 		self.engine.par.Resolution1.expr = "parent().par.Renderer.eval().par.Resx if parent().par.Renderer else 256"
 		self.engine.par.Resolution2.expr = "parent().par.Renderer.eval().par.Resy if parent().par.Renderer else 256"
 		self.engine.par.Formatindex.expr = "int(parent().par.Renderer.eval().par.Format) if parent().par.Renderer else 0"
+		self.engine.par.Useinputresolution.expr = "parent().par.Renderer.eval().op('shaderExecutor').par.Useinputresolution if parent().par.Renderer else 0"
+		self.engine.par.Inputfiltertypeindex.expr = "parent().par.Renderer.eval().op('shaderExecutor').par.Inputfiltertype if parent().par.Renderer else 0"
+		self.engine.par.Filtertypeindex.expr = "parent().par.Renderer.eval().op('shaderExecutor').par.Filtertype if parent().par.Renderer else 0"
 
 	def Detach(self):
 		self.engine.par.unload.pulse()
