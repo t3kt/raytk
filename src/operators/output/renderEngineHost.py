@@ -23,7 +23,12 @@ class RenderEngineController:
 
 	def InitializeEngine(self):
 		print(f'Initializing engine: {self.engine}')
-		sourceNames = ('shaderCode', 'uniforms', 'textureSources', 'vectorParamVals', 'constantParamVals', 'primaryImage')
+		sourceNames = (
+			'shaderCode', 'uniforms', 'textureSources',
+			'vectorParamVals', 'constantParamVals',
+			'primaryImage',
+			'testCode',
+		)
 		for conn in self.engine.inputConnectors:
 			name = conn.inOP.name.removesuffix('_in')
 			if name in sourceNames:
