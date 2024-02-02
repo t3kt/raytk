@@ -49,6 +49,8 @@ class ROPParamHelp:
 	name: str | None = None
 	label: str | None = None
 	summary: str | None = None
+	regularHandling: str | None = None
+	readOnlyHandling: str | None = None
 	menuOptions: list[MenuOptionHelp] = field(default_factory=list)
 
 	def formatMarkdownListItem(self, includeLabel=False):
@@ -96,6 +98,8 @@ class ROPParamHelp:
 			'name': self.name,
 			'label': self.label,
 			'summary': self.summary,
+			'regularHandling': self.regularHandling,
+			'readOnlyHandling': self.readOnlyHandling,
 			'menuOptions': [
 				opt.toFrontMatterData()
 				for opt in self.menuOptions
@@ -679,6 +683,38 @@ class OpDocManager:
 			paramHelps[name] = paramHelp
 		ropHelp.parameters = list(paramHelps.values())
 
+	def _pullParamHandlingInto(self, ropHelp: ROPHelp):
+		paramHelps = {
+			paramHelp.name: paramHelp
+			for paramHelp in ropHelp.parameters
+		}
+		paramTable = self.info.opDefPar.Paramgrouptable.eval()
+		if not paramTable:
+			return
+		if paramTable.inputs:
+			paramTable = paramTable.inputs[0]
+		if not isinstance(paramTable, tableDAT):
+			return
+		tupletNamesByPartName = {
+			par.name: par.tupletName
+			for par in self.rop.customPars
+		}
+		processedTupletNames = set()
+		for i in range(1, paramTable.numRows):
+			names = tdu.expand(paramTable[i, 'names'].val)
+			regularVal = str(paramTable[i, 'handling'] or '')
+			readOnlyVal = str(paramTable[i, 'readOnlyHandling'] or '') or regularVal
+			for name in names:
+				tupletName = tupletNamesByPartName.get(name)
+				if not tupletName or tupletName in processedTupletNames:
+					continue
+				processedTupletNames.add(tupletName)
+				paramHelp = paramHelps.get(tupletName)
+				if not paramHelp:
+					continue
+				paramHelp.regularHandling = regularVal
+				paramHelp.readOnlyHandling = readOnlyVal
+
 	def _pullFromMissingInputsInto(self, ropHelp: ROPHelp):
 		inHelps = ropHelp.inputs
 		for i, handler in enumerate(self.info.inputHandlers):
@@ -711,6 +747,7 @@ class OpDocManager:
 	def setUpMissingParts(self):
 		ropHelp = self._parseDAT()
 		self._pullFromMissingParamsInto(ropHelp)
+		self._pullParamHandlingInto(ropHelp)
 		self._pullFromMissingVariablesInto(ropHelp)
 		self._pullFromMissingInputsInto(ropHelp)
 		self._writeToDAT(ropHelp)
@@ -750,11 +787,18 @@ class OpDocManager:
 			else:
 				ropHelp.images.append(img)
 
-	def formatForBuild(self, imagesFolder: Path) -> str:
+	def extractForBuild(self, imagesFolder: Path | None) -> ROPHelp:
 		ropHelp = self._parseDAT()
 		self._pullFromMissingParamsInto(ropHelp)
+		self._pullParamHandlingInto(ropHelp)
 		self._pullFromMissingInputsInto(ropHelp)
-		self._gatherImages(ropHelp, imagesFolder)
+		# this is always present except in debug code
+		if imagesFolder:
+			self._gatherImages(ropHelp, imagesFolder)
+		return ropHelp
+
+	def formatForBuild(self, imagesFolder: Path | None) -> str:
+		ropHelp = self.extractForBuild(imagesFolder)
 		return ropHelp.formatAsFullPage(self.info)
 
 def _parseMarkdownSections(text: str, sectionNames: list[str]) -> dict[str, str]:
