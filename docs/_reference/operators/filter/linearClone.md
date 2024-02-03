@@ -52,12 +52,18 @@ op:
     name: Enable
   - label: Count
     name: Count
+    readOnlyHandling: macro
+    regularHandling: runtime
     summary: The number of copies. The performance cost of the input is multiplied
       by this number.
   - label: Translate 1
     name: Translate1
+    readOnlyHandling: macro
+    regularHandling: runtime
   - label: Translate 2
     name: Translate2
+    readOnlyHandling: macro
+    regularHandling: runtime
   - label: Merge Type
     menuOptions:
     - label: Simple Union
@@ -112,6 +118,8 @@ op:
     - label: Clone Index
       name: index
     name: Iterationtype
+    readOnlyHandling: constant
+    regularHandling: constant
     summary: Whether and how to expose iteration values to upstream operators.
   thumb: assets/images/reference/operators/filter/linearClone_thumb.png
   variables:

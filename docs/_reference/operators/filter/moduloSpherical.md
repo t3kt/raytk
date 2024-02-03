@@ -84,12 +84,20 @@ op:
     name: Enable
   - label: Repetitions
     name: Repetitions
+    readOnlyHandling: macro
+    regularHandling: runtime
   - label: Shift
     name: Shift
+    readOnlyHandling: macro
+    regularHandling: runtime
   - label: Offset
     name: Offset
+    readOnlyHandling: macro
+    regularHandling: runtime
   - label: Pivot
     name: Pivot
+    readOnlyHandling: macro
+    regularHandling: runtime
   - label: Mirror Type
     menuOptions:
     - label: None
@@ -101,6 +109,8 @@ op:
     - label: Grid
       name: grid
     name: Mirrortype
+    readOnlyHandling: constant
+    regularHandling: constant
   variables:
   - label: cell
     name: cell

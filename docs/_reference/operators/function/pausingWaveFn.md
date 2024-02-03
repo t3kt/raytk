@@ -47,8 +47,12 @@ op:
   parameters:
   - label: Low Width
     name: Lowwidth
+    readOnlyHandling: macro
+    regularHandling: runtime
   - label: High Width
     name: Highwidth
+    readOnlyHandling: macro
+    regularHandling: runtime
   thumb: assets/images/reference/operators/function/pausingWaveFn_thumb.png
 
 ---

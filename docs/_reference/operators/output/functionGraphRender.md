@@ -64,21 +64,33 @@ op:
     summary: The rendering resolution.
   - label: Domain Low
     name: Domainlow
+    readOnlyHandling: macro
+    regularHandling: runtime
     summary: The low bound of the domain (x axis).
   - label: Domain High
     name: Domainhigh
+    readOnlyHandling: macro
+    regularHandling: runtime
     summary: The high bound of the domain (x axis).
   - label: Range Low
     name: Rangelow
+    readOnlyHandling: macro
+    regularHandling: runtime
     summary: The low bound of the range (y axis).
   - label: Range High
     name: Rangehigh
+    readOnlyHandling: macro
+    regularHandling: runtime
     summary: The high bound of the range (y axis).
   - label: Line Thickness
     name: Linethickness
+    readOnlyHandling: macro
+    regularHandling: runtime
     summary: Thickness of the graph line.
   - label: Line Blending
     name: Lineblending
+    readOnlyHandling: macro
+    regularHandling: runtime
     summary: Amount of blending applied to the edges of the graph line.
   - label: Show Axis Labels
     name: Showaxislabels

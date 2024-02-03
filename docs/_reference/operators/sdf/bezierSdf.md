@@ -79,14 +79,24 @@ op:
   parameters:
   - label: Point 1
     name: Point1
+    readOnlyHandling: macro
+    regularHandling: runtime
   - label: Point 2
     name: Point2
+    readOnlyHandling: macro
+    regularHandling: runtime
   - label: Point 3
     name: Point3
+    readOnlyHandling: macro
+    regularHandling: runtime
   - label: Radius Start
     name: Radiusstart
+    readOnlyHandling: macro
+    regularHandling: runtime
   - label: Radius End
     name: Radiusend
+    readOnlyHandling: macro
+    regularHandling: runtime
   thumb: assets/images/reference/operators/sdf/bezierSdf_thumb.png
   variables:
   - label: normoffset

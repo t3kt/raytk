@@ -75,10 +75,16 @@ op:
     name: Enable
   - label: Offset
     name: Offset
+    readOnlyHandling: macro
+    regularHandling: runtime
   - label: Blending
     name: Blending
+    readOnlyHandling: macro
+    regularHandling: runtime
   - label: Outside Value
     name: Outsidevalue
+    readOnlyHandling: macro
+    regularHandling: runtime
   status: beta
 
 ---

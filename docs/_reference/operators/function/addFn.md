@@ -88,6 +88,8 @@ op:
     name: Enable
   - label: Add
     name: Add
+    readOnlyHandling: macro
+    regularHandling: runtime
     summary: Adds an additional value to the inputs.
   summary: Adds the returned values produced by all of the connected input functions.
 

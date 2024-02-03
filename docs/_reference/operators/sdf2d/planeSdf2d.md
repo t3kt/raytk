@@ -40,6 +40,8 @@ op:
     name: Direction
   - label: Offset
     name: Offset
+    readOnlyHandling: macro
+    regularHandling: runtime
   thumb: assets/images/reference/operators/sdf2d/planeSdf2d_thumb.png
 
 ---

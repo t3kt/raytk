@@ -21,12 +21,18 @@ op:
   parameters:
   - label: Use Color
     name: Usecolor
+    readOnlyHandling: macro
+    regularHandling: macro
     summary: Whether to multiply the shading level by a color, producing a vector
       field instead of just the shading level.
   - label: Color
     name: Color
+    readOnlyHandling: macro
+    regularHandling: runtime
   - label: Invert
     name: Invert
+    readOnlyHandling: constant
+    regularHandling: runtime
     summary: Inverts the shading level, so that 1 is for full shadow and 0 is for
       no shadow.
   status: beta

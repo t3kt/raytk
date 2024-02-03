@@ -15,6 +15,8 @@ op:
   parameters:
   - label: Shadow Level
     name: Shadowlevel
+    readOnlyHandling: macro
+    regularHandling: runtime
   summary: A simple hard-edged shadow.
   thumb: assets/images/reference/operators/light/hardShadow_thumb.png
 

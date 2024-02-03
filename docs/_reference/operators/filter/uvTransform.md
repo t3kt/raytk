@@ -40,9 +40,13 @@ op:
     name: Enable
   - label: Transform Primary UVs
     name: Transformprimary
+    readOnlyHandling: macro
+    regularHandling: macro
     summary: Whether to transform the primary UV coordinates.
   - label: Transform Secondary UVs
     name: Transformsecondary
+    readOnlyHandling: macro
+    regularHandling: macro
     summary: Whether to transform the secondary UV coordinates, which are used in
       cases where materials are being blended through a combine operator.
   - label: Enable Translate

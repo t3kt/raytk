@@ -79,6 +79,8 @@ op:
     name: Axes
   - label: Offset
     name: Offset
+    readOnlyHandling: macro
+    regularHandling: runtime
     summary: Offsets the plane or axis where the input is sampled.
   summary: Takes a 3D (or 2D) operator and take a cross section of it across a plane
     or a single axis.

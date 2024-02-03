@@ -29,9 +29,13 @@ op:
     summary: Direction that the camera faces.
   - label: Position
     name: Campos
+    readOnlyHandling: macro
+    regularHandling: runtime
     summary: Position of the camera.
   - label: Rotate
     name: Rotate
+    readOnlyHandling: macro
+    regularHandling: runtime
     summary: Rotation of the camera view on the axis facing the camera.
   status: beta
   summary: An orthographic (non-perspective) camera, which can be used for flattened

@@ -34,19 +34,31 @@ op:
     name: Fisheyemode
   - label: Aperture
     name: Aperture
+    readOnlyHandling: macro
+    regularHandling: runtime
   - label: Position
     name: Campos
+    readOnlyHandling: macro
+    regularHandling: runtime
     summary: Position of the camera.
   - label: Rotate
     name: Camrot
+    readOnlyHandling: macro
+    regularHandling: runtime
     summary: Rotates the camera in XYZ.
   - label: Look At Position
     name: Lookatpos
+    readOnlyHandling: macro
+    regularHandling: runtime
     summary: Coordinates that the camera should face.
   - label: Up Vector
     name: Camup
+    readOnlyHandling: macro
+    regularHandling: runtime
   - label: Enable Look At
     name: Enablelookat
+    readOnlyHandling: constant
+    regularHandling: runtime
   summary: A 360 fisheye camera, that shows all directions from a specific point in
     space.
   thumb: assets/images/reference/operators/camera/fisheyeCamera_thumb.png

@@ -33,6 +33,8 @@ op:
   parameters:
   - label: Temperature
     name: Temp
+    readOnlyHandling: macro
+    regularHandling: runtime
   - label: Temperature Unit
     menuOptions:
     - label: Normalized (0..1)
@@ -42,6 +44,8 @@ op:
     name: Tempunit
   - label: Exponent
     name: Exp
+    readOnlyHandling: macro
+    regularHandling: runtime
   thumb: assets/images/reference/operators/field/blackbodyColorField_thumb.png
 
 ---

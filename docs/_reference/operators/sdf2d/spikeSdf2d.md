@@ -55,10 +55,16 @@ op:
     name: Direction
   - label: Height
     name: Height
+    readOnlyHandling: macro
+    regularHandling: runtime
   - label: Offset
     name: Offset
+    readOnlyHandling: macro
+    regularHandling: runtime
   - label: Center
     name: Center
+    readOnlyHandling: macro
+    regularHandling: runtime
   thumb: assets/images/reference/operators/sdf2d/spikeSdf2d_thumb.png
 
 ---

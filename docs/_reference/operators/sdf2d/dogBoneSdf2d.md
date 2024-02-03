@@ -59,15 +59,23 @@ op:
   parameters:
   - label: Translate
     name: Translate
+    readOnlyHandling: macro
+    regularHandling: runtime
     summary: Moves the center of the shape.
   - label: Radius
     name: Radius
+    readOnlyHandling: macro
+    regularHandling: runtime
     summary: Radius of the circles.
   - label: Length
     name: Length
+    readOnlyHandling: macro
+    regularHandling: runtime
     summary: Spacing between the two circles.
   - label: Bulge
     name: Bulge
+    readOnlyHandling: macro
+    regularHandling: runtime
     summary: Negative values pull the connection tighter, positive values bulge out
       perpendicular to the main axis.
   - label: Axis
@@ -77,6 +85,8 @@ op:
     - label: Y
       name: y
     name: Axis
+    readOnlyHandling: constant
+    regularHandling: constant
   summary: 2D SDF for two connected circles.
   thumb: assets/images/reference/operators/sdf2d/dogBoneSdf2d_thumb.png
 

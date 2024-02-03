@@ -118,13 +118,19 @@ op:
     summary: How to specify the amount of translation.
   - label: Translate
     name: Translate
+    readOnlyHandling: macro
+    regularHandling: runtime
     summary: Amount of translation along each axis. For 2D, only X and Y are used.
   - label: Direction
     name: Direction
+    readOnlyHandling: macro
+    regularHandling: runtime
     summary: Vector indicating which direction to move towards. A value of 1,0,0 would
       move to the right on the X axis, and 0,-1,0 would move down on the Y axis.
   - label: Distance
     name: Distance
+    readOnlyHandling: macro
+    regularHandling: runtime
     summary: How far to move in the specified direction.
   - label: Coord Type
     menuOptions:

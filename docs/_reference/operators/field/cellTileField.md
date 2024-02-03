@@ -41,8 +41,12 @@ op:
   parameters:
   - label: Translate
     name: Translate
+    readOnlyHandling: macro
+    regularHandling: runtime
   - label: Scale
     name: Scale
+    readOnlyHandling: macro
+    regularHandling: runtime
   - label: Cell Style
     menuOptions:
     - label: Beveled Voronoi
@@ -52,6 +56,8 @@ op:
     - label: Raw
       name: raw
     name: Cellstyle
+    readOnlyHandling: constant
+    regularHandling: constant
   - label: Coord Type
     menuOptions:
     - label: Auto

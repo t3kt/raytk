@@ -101,11 +101,17 @@ op:
     name: Combine
   - label: Swap Inputs
     name: Swapinputs
+    readOnlyHandling: macro
+    regularHandling: runtime
   - label: Radius
     name: Radius
+    readOnlyHandling: macro
+    regularHandling: runtime
     summary: Width of the edge overlap area.
   - label: Depth
     name: Depth
+    readOnlyHandling: macro
+    regularHandling: runtime
     summary: Depth of the groove / tongue.
   summary: Combines two SDFs in ways that use the intersection areas.
   thumb: assets/images/reference/operators/combine/edgeCombine_thumb.png

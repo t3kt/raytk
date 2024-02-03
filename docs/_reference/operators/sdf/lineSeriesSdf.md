@@ -66,46 +66,84 @@ op:
     - label: Fields
       name: fields
     name: Source
+    readOnlyHandling: macro
+    regularHandling: macro
   - label: Count
     name: Count
+    readOnlyHandling: macro
+    regularHandling: macro
   - label: Thickness
     name: Thickness
+    readOnlyHandling: macro
+    regularHandling: runtime
   - label: Point A CHOP
     name: Pointachop
   - label: Point B CHOP
     name: Pointbchop
   - label: Point A 1
     name: Pointa1
+    readOnlyHandling: macro
+    regularHandling: runtime
   - label: Point B 1
     name: Pointb1
+    readOnlyHandling: macro
+    regularHandling: runtime
   - label: Point A 2
     name: Pointa2
+    readOnlyHandling: macro
+    regularHandling: runtime
   - label: Point B 2
     name: Pointb2
+    readOnlyHandling: macro
+    regularHandling: runtime
   - label: Point A 3
     name: Pointa3
+    readOnlyHandling: macro
+    regularHandling: runtime
   - label: Point B 3
     name: Pointb3
+    readOnlyHandling: macro
+    regularHandling: runtime
   - label: Point A 4
     name: Pointa4
+    readOnlyHandling: macro
+    regularHandling: runtime
   - label: Point B 4
     name: Pointb4
+    readOnlyHandling: macro
+    regularHandling: runtime
   - label: Point A 5
     name: Pointa5
+    readOnlyHandling: macro
+    regularHandling: runtime
   - label: Point B 5
     name: Pointb5
+    readOnlyHandling: macro
+    regularHandling: runtime
   - label: Point A 6
     name: Pointa6
+    readOnlyHandling: macro
+    regularHandling: runtime
   - label: Point B 6
     name: Pointb6
+    readOnlyHandling: macro
+    regularHandling: runtime
   - label: Point A 7
     name: Pointa7
+    readOnlyHandling: macro
+    regularHandling: runtime
   - label: Point B 7
     name: Pointb7
+    readOnlyHandling: macro
+    regularHandling: runtime
   - label: Point A 8
     name: Pointa8
+    readOnlyHandling: macro
+    regularHandling: runtime
   - label: Point B 8
     name: Pointb8
+    readOnlyHandling: macro
+    regularHandling: runtime
   status: beta
   thumb: assets/images/reference/operators/sdf/lineSeriesSdf_thumb.png
   variables:

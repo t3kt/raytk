@@ -102,6 +102,8 @@ op:
       label: Bottom Left
       name: bottomleft
     name: Alignment
+    readOnlyHandling: constant
+    regularHandling: constant
     summary: How coordinates are positioned within the render frame.
   - label: Scaling
     menuOptions:
@@ -118,6 +120,8 @@ op:
       label: Fit Outside
       name: fitoutside
     name: Scaling
+    readOnlyHandling: constant
+    regularHandling: constant
     summary: How coordinates are scaled within the render frame.
   - label: UV Map
     name: Uvmap
@@ -129,8 +133,12 @@ op:
     name: Shaderbuilderconfig
   - label: Zoom
     name: Zoom
+    readOnlyHandling: macro
+    regularHandling: runtime
   - label: Offset
     name: Offset
+    readOnlyHandling: macro
+    regularHandling: runtime
   - label: Customize Shader Config
     name: Customizeshaderconfig
   - label: Enable UV Output

@@ -123,16 +123,26 @@ op:
     name: Enable
   - label: Base Color
     name: Basecolor
+    readOnlyHandling: macro
+    regularHandling: runtime
   - label: Use Light Color
     name: Uselightcolor
+    readOnlyHandling: macro
+    regularHandling: macro
     summary: Whether to apply the light color to the base color. This does not affect
       whether the shading elements use the light color.
   - label: Use Local Position
     name: Uselocalpos
+    readOnlyHandling: macro
+    regularHandling: macro
   - label: Enable Ambient Occlusion
     name: Enableao
+    readOnlyHandling: macro
+    regularHandling: macro
   - label: Enable Reflection
     name: Enablereflection
+    readOnlyHandling: macro
+    regularHandling: macro
   - label: Apply When
     menuOptions:
     - label: Always

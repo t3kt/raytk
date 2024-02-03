@@ -40,38 +40,62 @@ op:
     name: Enable
   - label: Enable Edge
     name: Enableedge
+    readOnlyHandling: macro
+    regularHandling: macro
     summary: Whether to show a border at the suface of the shape.
   - label: Edge Thickness
     name: Edgethickness
+    readOnlyHandling: macro
+    regularHandling: runtime
     summary: Thickness of the shape border.
   - label: Edge Blending
     name: Edgeblending
+    readOnlyHandling: macro
+    regularHandling: runtime
     summary: Amount of blending applied to each side of the shape border.
   - label: Edge Color
     name: Edgecolor
+    readOnlyHandling: macro
+    regularHandling: runtime
     summary: The color for the shape border.
   - label: Inside Period
     name: Insideperiod
+    readOnlyHandling: macro
+    regularHandling: runtime
     summary: The tightness of the stripes inside the shape.
   - label: Inside Color 1
     name: Insidecolor1
+    readOnlyHandling: macro
+    regularHandling: runtime
     summary: The first stripe color inside the shape.
   - label: Inside Color 2
     name: Insidecolor2
+    readOnlyHandling: macro
+    regularHandling: runtime
     summary: The second stripe color inside the shape.
   - label: Outside Period
     name: Outsideperiod
+    readOnlyHandling: macro
+    regularHandling: runtime
     summary: The tightness fo the stripes outside the shape.
   - label: Outside Color 1
     name: Outsidecolor1
+    readOnlyHandling: macro
+    regularHandling: runtime
     summary: The first stripe color outside the shape.
   - label: Outside Color 2
     name: Outsidecolor2
+    readOnlyHandling: macro
+    regularHandling: runtime
     summary: The second stripe color outside the shape.
   - label: Inside Phase
     name: Insidephase
+    readOnlyHandling: macro
+    regularHandling: runtime
   - label: Outside Phase
     name: Outsidephase
+    readOnlyHandling: macro
+    regularHandling: runtime
   summary: Converts a 2D SDF to a striped distance pattern.
 
 ---

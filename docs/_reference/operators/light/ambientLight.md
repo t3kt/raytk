@@ -23,10 +23,16 @@ op:
   parameters:
   - label: Intensity
     name: Intensity
+    readOnlyHandling: macro
+    regularHandling: runtime
   - label: Color
     name: Color
+    readOnlyHandling: macro
+    regularHandling: runtime
   - label: Enable Shadow
     name: Enableshadow
+    readOnlyHandling: macro
+    regularHandling: runtime
   status: beta
   variables:
   - label: lightdir

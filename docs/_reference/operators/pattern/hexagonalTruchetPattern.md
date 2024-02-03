@@ -39,10 +39,16 @@ op:
     name: Pattern
   - label: Seed
     name: Seed
+    readOnlyHandling: macro
+    regularHandling: runtime
   - label: Translate
     name: Translate
+    readOnlyHandling: macro
+    regularHandling: runtime
   - label: Size
     name: Size
+    readOnlyHandling: macro
+    regularHandling: runtime
   thumb: assets/images/reference/operators/pattern/hexagonalTruchetPattern_thumb.png
 
 ---

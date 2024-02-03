@@ -59,10 +59,16 @@ op:
   parameters:
   - label: Radius
     name: Radius
+    readOnlyHandling: macro
+    regularHandling: runtime
   - label: Spacing
     name: Spacing
+    readOnlyHandling: macro
+    regularHandling: runtime
   - label: Rounding
     name: Rounding
+    readOnlyHandling: macro
+    regularHandling: runtime
   thumb: assets/images/reference/operators/sdf2d/hexagonalGridSdf2d_thumb.png
 
 ---

@@ -104,17 +104,25 @@ op:
     - label: Z
       name: z
     name: Axis
+    readOnlyHandling: constant
+    regularHandling: runtime
     summary: The axis to repeat space along.
   - label: Size
     name: Size
+    readOnlyHandling: macro
+    regularHandling: runtime
     summary: The spacing of the repetition. This sets the with of the slice taken
       from the input.
   - label: Offset
     name: Offset
+    readOnlyHandling: macro
+    regularHandling: runtime
     summary: Shifts where the input slice is taken from without moving the position
       of the repetitions.
   - label: Shift
     name: Shift
+    readOnlyHandling: macro
+    regularHandling: runtime
     summary: Shifts the whole repeated space.
   - label: Mirror Type
     menuOptions:
@@ -125,9 +133,13 @@ op:
       label: Mirror
       name: mirror
     name: Mirrortype
+    readOnlyHandling: constant
+    regularHandling: constant
     summary: How to the slices are varied.
   - label: Use Limit
     name: Uselimit
+    readOnlyHandling: constant
+    regularHandling: constant
     summary: Whether to have a limited number of slices instead of an infinite series.
   - label: Limit Start
     name: Limitstart
@@ -154,6 +166,8 @@ op:
       label: Alternating Cell Coordinate (0,1,0,1)
       name: alternatingcoord
     name: Iterationtype
+    readOnlyHandling: constant
+    regularHandling: constant
     summary: Whether and how to expose iteration values to upstream operators.
   - label: Limit Type
     menuOptions:
@@ -164,6 +178,8 @@ op:
     - label: Stop Only
       name: stop
     name: Limittype
+    readOnlyHandling: constant
+    regularHandling: constant
   shortcuts:
   - m1
   summary: Repeats space along one axis.

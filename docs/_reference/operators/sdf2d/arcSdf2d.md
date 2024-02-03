@@ -74,12 +74,20 @@ op:
   parameters:
   - label: Orientation
     name: Orientation
+    readOnlyHandling: macro
+    regularHandling: runtime
   - label: Aperture
     name: Aperture
+    readOnlyHandling: macro
+    regularHandling: runtime
   - label: Radius
     name: Radius
+    readOnlyHandling: macro
+    regularHandling: runtime
   - label: Thickness
     name: Thickness
+    readOnlyHandling: macro
+    regularHandling: runtime
   thumb: assets/images/reference/operators/sdf2d/arcSdf2d_thumb.png
   variables:
   - label: normangle

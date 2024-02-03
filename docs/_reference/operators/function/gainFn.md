@@ -34,6 +34,8 @@ op:
   parameters:
   - label: Exponent
     name: Exponent
+    readOnlyHandling: macro
+    regularHandling: runtime
   summary: A function that expands the sides of the coordinate range and compresses
     the center.
   thumb: assets/images/reference/operators/function/gainFn_thumb.png

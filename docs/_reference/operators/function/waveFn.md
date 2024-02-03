@@ -45,8 +45,12 @@ op:
     name: Phase
   - label: Amplitude
     name: Amplitude
+    readOnlyHandling: macro
+    regularHandling: runtime
   - label: Offset
     name: Offset
+    readOnlyHandling: macro
+    regularHandling: runtime
   summary: A function that uses a periodic wave, with the position as the parameter.
   thumb: assets/images/reference/operators/function/waveFn_thumb.png
 

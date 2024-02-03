@@ -104,6 +104,8 @@ op:
     - label: Z
       name: z
     name: Axis
+    readOnlyHandling: constant
+    regularHandling: runtime
     summary: The axis around which to take the slice.
   - label: Angle Mode
     menuOptions:
@@ -114,20 +116,34 @@ op:
     name: Anglemode
   - label: Center Angle
     name: Center
+    readOnlyHandling: macro
+    regularHandling: runtime
   - label: Angle Width
     name: Width
+    readOnlyHandling: macro
+    regularHandling: runtime
   - label: Start Angle
     name: Start
+    readOnlyHandling: macro
+    regularHandling: runtime
   - label: End Angle
     name: End
+    readOnlyHandling: macro
+    regularHandling: runtime
   - label: Invert
     name: Invert
+    readOnlyHandling: macro
+    regularHandling: runtime
   - label: Enable Smoothing
     name: Enablesmoothing
+    readOnlyHandling: constant
+    regularHandling: runtime
     summary: Whether to smooth the transition on each side of the slice down to a
       size of zero.
   - label: Smooth Radius
     name: Smoothradius
+    readOnlyHandling: macro
+    regularHandling: runtime
     summary: The amount of smoothing distance.
   thumb: assets/images/reference/operators/filter/radialSlice_thumb.png
 

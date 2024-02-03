@@ -57,20 +57,36 @@ op:
     name: Coordtype
   - label: Iterations
     name: Iterations
+    readOnlyHandling: constant
+    regularHandling: constant
   - label: Translate
     name: Translate
+    readOnlyHandling: macro
+    regularHandling: runtime
   - label: Period
     name: Period
+    readOnlyHandling: macro
+    regularHandling: runtime
   - label: Scale Factor
     name: Scalefactor
+    readOnlyHandling: macro
+    regularHandling: runtime
   - label: Phase
     name: Phase
+    readOnlyHandling: macro
+    regularHandling: runtime
   - label: Enable Vorticity
     name: Enablevorticity
+    readOnlyHandling: constant
+    regularHandling: runtime
   - label: Amplitude
     name: Amplitude
+    readOnlyHandling: macro
+    regularHandling: runtime
   - label: Offset
     name: Offset
+    readOnlyHandling: macro
+    regularHandling: runtime
   thumb: assets/images/reference/operators/field/waveletNoiseField_thumb.png
 
 ---

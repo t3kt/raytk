@@ -46,24 +46,38 @@ op:
   parameters:
   - label: Position
     name: Position
+    readOnlyHandling: macro
+    regularHandling: runtime
     summary: The point from which the light eminates.
   - label: Intensity
     name: Intensity
+    readOnlyHandling: macro
+    regularHandling: runtime
     summary: Brightness of the light.
   - label: Color
     name: Color
+    readOnlyHandling: macro
+    regularHandling: runtime
     summary: Color of the light.
   - label: Attenuated
     name: Enableattenuation
+    readOnlyHandling: constant
+    regularHandling: runtime
     summary: Whether to limit the light range.
   - label: Attenuation Start
     name: Attenuationstart
+    readOnlyHandling: macro
+    regularHandling: runtime
     summary: The distance at which the light starts to dim.
   - label: Attenuation End
     name: Attenuationend
+    readOnlyHandling: macro
+    regularHandling: runtime
     summary: The distance at which the light is fully dimmed.
   - label: Enable Shadow
     name: Enableshadow
+    readOnlyHandling: constant
+    regularHandling: runtime
   shortcuts:
   - pl
   summary: Light eminating from a single point in space, with optional distance attentuation.

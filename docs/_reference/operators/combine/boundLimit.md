@@ -50,6 +50,8 @@ op:
     name: Enable
   - label: Margin
     name: Margin
+    readOnlyHandling: macro
+    regularHandling: runtime
   status: beta
 
 ---

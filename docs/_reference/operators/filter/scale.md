@@ -81,6 +81,8 @@ op:
     name: Enable
   - label: Scale
     name: Scale
+    readOnlyHandling: macro
+    regularHandling: runtime
     summary: Scale to apply to each axis. If input is 2D only X and Y are used.
   - label: Scale Type
     menuOptions:
@@ -89,14 +91,22 @@ op:
     - label: Uniform
       name: uniform
     name: Scaletype
+    readOnlyHandling: constant
+    regularHandling: constant
   - label: Uniform Scale
     name: Uniformscale
+    readOnlyHandling: macro
+    regularHandling: runtime
   - label: Use Pivot
     name: Usepivot
+    readOnlyHandling: constant
+    regularHandling: runtime
     summary: Optionally pivot the rotation around a specific point instead of around
       the origin (0, 0, 0).
   - label: Pivot
     name: Pivot
+    readOnlyHandling: macro
+    regularHandling: runtime
     summary: The point around which to apply the rotation. For 2D coordinates, only
       the X and Y parts are used.
   - label: Apply To

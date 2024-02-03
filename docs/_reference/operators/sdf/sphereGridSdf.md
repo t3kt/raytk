@@ -53,12 +53,20 @@ op:
     name: Parts
   - label: Rows
     name: Rows
+    readOnlyHandling: constant
+    regularHandling: runtime
   - label: Columns
     name: Cols
+    readOnlyHandling: constant
+    regularHandling: runtime
   - label: Radius
     name: Radius
+    readOnlyHandling: macro
+    regularHandling: runtime
   - label: Thickness
     name: Thickness
+    readOnlyHandling: macro
+    regularHandling: runtime
     summary: the thickness of the bars.
   status: beta
   thumb: assets/images/reference/operators/sdf/sphereGridSdf_thumb.png

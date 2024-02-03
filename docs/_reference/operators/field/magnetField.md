@@ -70,12 +70,20 @@ op:
     name: Format
   - label: Amount
     name: Amount
+    readOnlyHandling: macro
+    regularHandling: runtime
   - label: Center
     name: Center
+    readOnlyHandling: macro
+    regularHandling: runtime
   - label: Radius
     name: Radius
+    readOnlyHandling: macro
+    regularHandling: runtime
   - label: Fade
     name: Fade
+    readOnlyHandling: macro
+    regularHandling: runtime
   status: beta
   thumb: assets/images/reference/operators/field/magnetField_thumb.png
 

@@ -62,32 +62,60 @@ op:
   parameters:
   - label: Size
     name: Size
+    readOnlyHandling: macro
+    regularHandling: runtime
   - label: Tiling Shift
     name: Tilingshift
+    readOnlyHandling: macro
+    regularHandling: runtime
   - label: Poly Color 1
     name: Polycolor1
+    readOnlyHandling: macro
+    regularHandling: runtime
   - label: Poly Color 2
     name: Polycolor2
+    readOnlyHandling: macro
+    regularHandling: runtime
   - label: Poly Color 3
     name: Polycolor3
+    readOnlyHandling: macro
+    regularHandling: runtime
   - label: Poly Color 4
     name: Polycolor4
+    readOnlyHandling: macro
+    regularHandling: runtime
   - label: Outline Color
     name: Outlinecolor
+    readOnlyHandling: macro
+    regularHandling: runtime
   - label: Dual Outline Color
     name: Dualoutlinecolor
+    readOnlyHandling: macro
+    regularHandling: runtime
   - label: Enable Outline
     name: Enableoutline
+    readOnlyHandling: constant
+    regularHandling: runtime
   - label: Outline Thickness
     name: Outlinethickness
+    readOnlyHandling: macro
+    regularHandling: runtime
   - label: Outline Blending
     name: Outlineblending
+    readOnlyHandling: macro
+    regularHandling: runtime
   - label: Enable Dual Outline
     name: Enabledualoutline
+    readOnlyHandling: constant
+    regularHandling: runtime
   - label: Dual Outline Thickness
     name: Dualoutlinethickness
+    readOnlyHandling: macro
+    regularHandling: runtime
   - label: Dual Outline Blending
     name: Dualoutlineblending
+    readOnlyHandling: macro
+    regularHandling: runtime
   status: beta
   thumb: assets/images/reference/operators/pattern/snubQuadrilePattern_thumb.png
 

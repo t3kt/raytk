@@ -48,15 +48,23 @@ op:
   - name: Contexttype
   - label: Translate
     name: Translate
+    readOnlyHandling: macro
+    regularHandling: runtime
     summary: Coordinate translation.
   - label: Scale
     name: Scale
+    readOnlyHandling: macro
+    regularHandling: runtime
     summary: Coordinate scale.
   - label: Amplitude
     name: Amplitude
+    readOnlyHandling: macro
+    regularHandling: runtime
     summary: Noise value amplitude.
   - label: Offset
     name: Offset
+    readOnlyHandling: macro
+    regularHandling: runtime
     summary: Noise value offset.
   summary: Curl noise field.
   thumb: assets/images/reference/operators/field/curlNoiseField_thumb.png

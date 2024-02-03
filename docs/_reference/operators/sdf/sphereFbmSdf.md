@@ -13,6 +13,8 @@ op:
   parameters:
   - label: Translate
     name: Translate
+    readOnlyHandling: macro
+    regularHandling: runtime
   - label: Noise Type
     menuOptions:
     - label: Lattice
@@ -20,6 +22,8 @@ op:
     - label: Simplex
       name: simplex
     name: Noisetype
+    readOnlyHandling: macro
+    regularHandling: macro
   thumb: assets/images/reference/operators/sdf/sphereFbmSdf_thumb.png
 
 ---

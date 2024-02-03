@@ -62,23 +62,35 @@ op:
       sets of parameters.
   - label: Radius
     name: Radius
+    readOnlyHandling: constant
+    regularHandling: runtime
     summary: The distance from the center to each corner of the triangle. Used for
       equilateral triangles.
   - label: Height
     name: Height
+    readOnlyHandling: constant
+    regularHandling: runtime
     summary: The distance from the base of an iscosceles triangle to the opposite
       tip.
   - label: Width
     name: Width
+    readOnlyHandling: constant
+    regularHandling: runtime
     summary: The width of the base of an isosceles triangle.
   - label: Point 1
     name: Point1
+    readOnlyHandling: macro
+    regularHandling: runtime
     summary: The first corner position, for an arbitrary triangle.
   - label: Point 2
     name: Point2
+    readOnlyHandling: macro
+    regularHandling: runtime
     summary: The second corner position, for an arbitrary triangle.
   - label: Point 3
     name: Point3
+    readOnlyHandling: macro
+    regularHandling: runtime
     summary: The third corner position, for an arbitrary triangle.
   - label: Direction
     menuOptions:

@@ -77,11 +77,17 @@ op:
     - label: XY
       name: z
     name: Axis
+    readOnlyHandling: constant
+    regularHandling: constant
     summary: The plane whose axes will be transformed.
   - label: Center
     name: Center
+    readOnlyHandling: macro
+    regularHandling: runtime
   - label: Point
     name: Point
+    readOnlyHandling: macro
+    regularHandling: runtime
   thumb: assets/images/reference/operators/filter/mobiusTransform_thumb.png
 
 ---

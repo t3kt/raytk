@@ -101,12 +101,18 @@ op:
     - label: Along Z Toward Y
       name: zyx
     name: Direction
+    readOnlyHandling: constant
+    regularHandling: constant
     summary: Chooses the axis to bend along and the axis to bend towards.
   - label: Amount
     name: Amount
+    readOnlyHandling: macro
+    regularHandling: runtime
     summary: Amount of bending.
   - label: Shift
     name: Shift
+    readOnlyHandling: macro
+    regularHandling: runtime
     summary: Shifts the axis to bend along and the axis to bend towards.
   - label: Side
     menuOptions:
@@ -117,6 +123,8 @@ op:
     - label: Positive
       name: pos
     name: Side
+    readOnlyHandling: constant
+    regularHandling: constant
   summary: Bends space, along a main axis, towards a second axis.
   thumb: assets/images/reference/operators/filter/bend_thumb.png
   variables:

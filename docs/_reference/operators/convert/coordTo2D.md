@@ -55,8 +55,12 @@ op:
     - label: ZX Plane
       name: zx
     name: Mode
+    readOnlyHandling: macro
+    regularHandling: macro
   - label: Plane Offset
     name: Planeoffset
+    readOnlyHandling: macro
+    regularHandling: runtime
   - label: Part X
     menuOptions:
     - label: X

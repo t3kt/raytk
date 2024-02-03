@@ -134,30 +134,56 @@ op:
   parameters:
   - label: Type
     name: Type
+    readOnlyHandling: macro
+    regularHandling: runtime
   - label: U
     name: U
+    readOnlyHandling: macro
+    regularHandling: runtime
   - label: V
     name: V
+    readOnlyHandling: macro
+    regularHandling: runtime
   - label: W
     name: W
+    readOnlyHandling: macro
+    regularHandling: runtime
   - label: Radius
     name: Radius
+    readOnlyHandling: macro
+    regularHandling: runtime
   - label: Enable Faces
     name: Enablefaces
+    readOnlyHandling: constant
+    regularHandling: runtime
   - label: Face Radius
     name: Faceradius
+    readOnlyHandling: macro
+    regularHandling: runtime
   - label: Enable Segments
     name: Enablesegments
+    readOnlyHandling: constant
+    regularHandling: runtime
   - label: Segment Radius
     name: Segmentradius
+    readOnlyHandling: macro
+    regularHandling: runtime
   - label: Segment Size
     name: Segmentsize
+    readOnlyHandling: macro
+    regularHandling: runtime
   - label: Enable Vertices
     name: Enablevertices
+    readOnlyHandling: constant
+    regularHandling: runtime
   - label: Vertex Radius
     name: Vertexradius
+    readOnlyHandling: macro
+    regularHandling: runtime
   - label: Vertex Size
     name: Vertexsize
+    readOnlyHandling: macro
+    regularHandling: runtime
   - label: Combine
     menuOptions:
     - label: Simple Union

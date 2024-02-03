@@ -74,21 +74,37 @@ op:
     name: Enable
   - label: Include Primary
     name: Includeprimary
+    readOnlyHandling: macro
+    regularHandling: macro
     summary: 'Whether the operator should '
   - label: Include Shadow
     name: Includeshadow
+    readOnlyHandling: macro
+    regularHandling: macro
   - label: Include Reflect
     name: Includereflect
+    readOnlyHandling: macro
+    regularHandling: macro
   - label: Include Material
     name: Includematerial
+    readOnlyHandling: macro
+    regularHandling: macro
   - label: Include Occlusion
     name: Includeocclusion
+    readOnlyHandling: macro
+    regularHandling: macro
   - label: Include Volumetric
     name: Includevolumetric
+    readOnlyHandling: macro
+    regularHandling: macro
   - label: Include Volumetric Shadow
     name: Includevolumetricshadow
+    readOnlyHandling: macro
+    regularHandling: macro
   - label: Include Normal
     name: Includenormal
+    readOnlyHandling: macro
+    regularHandling: macro
   summary: Restricts which render stages an operator is used in.
 
 ---

@@ -161,12 +161,18 @@ op:
     - label: Field Values
       name: value
     name: Target
+    readOnlyHandling: macro
+    regularHandling: macro
   - label: Reverse Order
     name: Reverseorder
   - label: Enable Loop
     name: Enableloop
+    readOnlyHandling: macro
+    regularHandling: macro
   - label: Iterations
     name: Iterations
+    readOnlyHandling: macro
+    regularHandling: runtime
   status: beta
   variables:
   - label: step

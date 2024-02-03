@@ -73,6 +73,8 @@ op:
     name: Enable
   - label: Radius
     name: Radius
+    readOnlyHandling: macro
+    regularHandling: runtime
   status: beta
   summary: Combine two SDFs, using a 2D SDF to shape the blending region.
 
