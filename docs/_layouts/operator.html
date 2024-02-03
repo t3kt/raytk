@@ -83,24 +83,43 @@ layout: page
 {% if page.op.parameters %}
 	<h2>Parameters</h2>
 
-	<ul>
-		{% for param in page.op.parameters %}
-		<li>
-			<code class="param-name" title="{{ param.name }}">{{ param.label }}</code>:
-			<span class="param-desc">{{ param.summary }}</span>
+	<table class="param-table">
+		<thead>
+		<tr>
+				<th>Name</th>
+				<th>Description</th>
+				<th>Regular Handling</th>
+				<th>Read-Only Handling</th>
+			</tr>
+		</thead>
+		<tbody>
+			{% for param in page.op.parameters %}
+			<tr>
+				<td><code class="param-name" title="{{ param.name }}">{{ param.label | default: param.name }}</code></td>
+				<td class="param-desc">{{ param.summary | markdownify }}</td>
+				<td class="param-handling">
+					{%include paramHandling.html handling=param.regularHandling %}
+				</td>
+				<td class="param-handling">
+					{%include paramHandling.html handling=param.readOnlyHandling %}
+				</td>
+			</tr>
 			{% if param.menuOptions %}
-			<ul>
-				{% for opt in param.menuOptions %}
-				<li>
-					<code class="menu-opt-name" title="{{ opt.name }}">{{ opt.label }}</code>:
-					<span class="menu-opt-summary">{{ opt.description }}</span>
-				</li>
-				{% endfor %}
-			</ul>
+			<tr>
+				<td class="param-menu-opts" colspan="4">
+					<ul>
+						{% for opt in param.menuOptions %}
+						<li>
+							<code class="menu-opt-name" title="{{ opt.name }}">{{ opt.label }}</code>:
+							<span class="menu-opt-summary">{{ opt.description }}</span>
+						</li>
+						{% endfor %}
+					</ul>
+			</tr>
 			{% endif %}
-		</li>
-		{% endfor %}
-	</ul>
+			{% endfor %}
+		</tbody>
+	</table>
 {% endif %}
 
 {% if page.op.inputs %}
