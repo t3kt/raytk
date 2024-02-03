@@ -665,6 +665,8 @@ class OpDocManager:
 		ropHelp.parameters = list(paramHelps.values())
 
 	def _pullParamHandlingInto(self, ropHelp: ROPHelp):
+		if not self.info.isROP:
+			return
 		paramHelps = {
 			paramHelp.name: paramHelp
 			for paramHelp in ropHelp.parameters
