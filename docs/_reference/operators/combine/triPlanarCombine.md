@@ -100,10 +100,16 @@ op:
   parameters:
   - label: Translate
     name: Translate
+    readOnlyHandling: macro
+    regularHandling: runtime
   - label: Scale
     name: Scale
+    readOnlyHandling: macro
+    regularHandling: runtime
   - label: Use Normals
     name: Usenormals
+    readOnlyHandling: constant
+    regularHandling: runtime
     summary: Modifies the amount of each field that's used based on how directly the
       surface normals are facing that plane. For example, the XY field is used most
       on parts that are facing forwards or backwards.

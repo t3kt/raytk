@@ -62,6 +62,8 @@ op:
     name: Enable
   - label: Swap Order
     name: Swaporder
+    readOnlyHandling: macro
+    regularHandling: runtime
     summary: Swaps the two inputs, subtracting the first from the second.
   summary: Combines two SDFs using the difference operator.
   thumb: assets/images/reference/operators/combine/simpleDiff_thumb.png

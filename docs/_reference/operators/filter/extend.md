@@ -75,9 +75,13 @@ op:
     name: Enable
   - label: Center
     name: Center
+    readOnlyHandling: macro
+    regularHandling: runtime
     summary: The center position around which the coordinates are clamped.
   - label: Size
     name: Size
+    readOnlyHandling: macro
+    regularHandling: runtime
     summary: The size of the region outside which the coordinates are clamped. Within
       this area, the SDF will behave as it normally does.
   - label: Axes

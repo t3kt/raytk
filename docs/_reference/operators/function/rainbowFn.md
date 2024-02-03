@@ -13,6 +13,8 @@ op:
   parameters:
   - label: Phase
     name: Phase
+    readOnlyHandling: macro
+    regularHandling: runtime
   thumb: assets/images/reference/operators/function/rainbowFn_thumb.png
 
 ---

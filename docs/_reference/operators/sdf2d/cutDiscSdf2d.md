@@ -59,10 +59,16 @@ op:
   parameters:
   - label: Radius
     name: Radius
+    readOnlyHandling: macro
+    regularHandling: runtime
   - label: Cut Offset
     name: Offset
+    readOnlyHandling: macro
+    regularHandling: runtime
   - label: Rotate
     name: Rotate
+    readOnlyHandling: macro
+    regularHandling: runtime
   thumb: assets/images/reference/operators/sdf2d/cutDiscSdf2d_thumb.png
 
 ---

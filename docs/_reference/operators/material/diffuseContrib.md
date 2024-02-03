@@ -59,8 +59,12 @@ op:
   parameters:
   - label: Color
     name: Color
+    readOnlyHandling: macro
+    regularHandling: runtime
   - label: Level
     name: Level
+    readOnlyHandling: macro
+    regularHandling: runtime
   - label: Method
     menuOptions:
     - label: Lambert
@@ -81,12 +85,18 @@ op:
     summary: Whether to produce color or just a brightness value.
   - label: Use Light Color
     name: Uselightcolor
+    readOnlyHandling: constant
+    regularHandling: constant
     summary: Whether to apply the light color to the color produced by this element.
   - label: Enable Shadow
     name: Enableshadow
+    readOnlyHandling: macro
+    regularHandling: macro
     summary: Whether to apply the shadow to the color/level produced by this element.
   - label: Use Surface Color
     name: Usesurfacecolor
+    readOnlyHandling: constant
+    regularHandling: constant
   shortcuts:
   - dc
   summary: A material element that provides diffuse light contribution.

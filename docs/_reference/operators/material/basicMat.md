@@ -45,28 +45,42 @@ op:
     name: Enable
   - label: Base Color
     name: Basecolor
+    readOnlyHandling: macro
+    regularHandling: runtime
   - label: Sky Color
     name: Skycolor
+    readOnlyHandling: macro
+    regularHandling: runtime
     summary: Color of the "sky" pseudo-light.
   - label: Sky Amount
     name: Skyamount
     summary: Amount of "sky" light to apply.
   - label: Sky Direction
     name: Skydir
+    readOnlyHandling: macro
+    regularHandling: runtime
     summary: Vector of the direction where the "sky" light comes from.
   - label: Specular Amount
     name: Specularamount
+    readOnlyHandling: macro
+    regularHandling: runtime
     summary: Amount of specular light color to apply.
   - label: Specular Exponent
     name: Specularexp
+    readOnlyHandling: macro
+    regularHandling: runtime
     summary: Controls the sharpness of the specular color rolloff.
   - label: Enable Shadow
     name: Enableshadow
+    readOnlyHandling: macro
+    regularHandling: macro
     summary: Whether to use shadows. If this is enabled, and the `Shadow` input is
       connected, that type of shadow is used. If it is enabled but that input is not
       connected, the default shadow is used.
   - label: Use Local Position
     name: Uselocalpos
+    readOnlyHandling: macro
+    regularHandling: macro
     summary: Whether to use the "local" position relative to the input shape when
       looking up colors using the `Base Color Field` input. If enabled, the coordinates
       used for the color field will be "before" any downstream transformations are
@@ -74,6 +88,8 @@ op:
       render is used instead.
   - label: Use Surface Color
     name: Usesurfacecolor
+    readOnlyHandling: macro
+    regularHandling: macro
   - label: Apply When
     menuOptions:
     - label: Always

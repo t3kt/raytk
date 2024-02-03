@@ -44,8 +44,12 @@ op:
   parameters:
   - label: Width
     name: Width
+    readOnlyHandling: macro
+    regularHandling: runtime
   - label: Phase
     name: Phase
+    readOnlyHandling: macro
+    regularHandling: runtime
   thumb: assets/images/reference/operators/function/cubicPulseFn_thumb.png
 
 ---

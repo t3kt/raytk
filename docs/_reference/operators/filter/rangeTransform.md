@@ -92,6 +92,8 @@ op:
     name: Enable
   - label: Index Range
     name: Indexrange
+    readOnlyHandling: macro
+    regularHandling: runtime
     summary: The range of index values that are expected. The first value will use
       `Translate1` and the second will use `Translate2`.
   - label: Extend Mode
@@ -108,31 +110,51 @@ op:
       label: Loop
       name: loop
     name: Extendmode
+    readOnlyHandling: macro
+    regularHandling: macro
     summary: How to handle index values outside of `Indexrange`.
   - label: Enable Translate
     name: Enabletranslate
+    readOnlyHandling: macro
+    regularHandling: macro
     summary: Wheteher to use translation.
   - label: Translate 1
     name: Translate1
+    readOnlyHandling: macro
+    regularHandling: runtime
     summary: Translate setting for the beginning of the range.
   - label: Translate 2
     name: Translate2
+    readOnlyHandling: macro
+    regularHandling: runtime
     summary: Translate setting for the end of the range.
   - label: Enable Rotate
     name: Enablerotate
+    readOnlyHandling: macro
+    regularHandling: macro
     summary: Whether to use rotation.
   - label: Rotate 1
     name: Rotate1
+    readOnlyHandling: macro
+    regularHandling: runtime
     summary: Rotate setting for the beginning of the range.
   - label: Rotate 2
     name: Rotate2
+    readOnlyHandling: macro
+    regularHandling: runtime
     summary: Rotate setting for the end of the range.
   - label: Use Pivot
     name: Usepivot
+    readOnlyHandling: macro
+    regularHandling: macro
   - label: Pivot 1
     name: Pivot1
+    readOnlyHandling: macro
+    regularHandling: runtime
   - label: Pivot 2
     name: Pivot2
+    readOnlyHandling: macro
+    regularHandling: runtime
   summary: Applies a transform based on a range of settings, mapped with either the
     iteration value or a field input.
   thumb: assets/images/reference/operators/filter/rangeTransform_thumb.png

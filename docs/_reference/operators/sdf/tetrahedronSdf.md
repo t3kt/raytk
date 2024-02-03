@@ -29,9 +29,13 @@ op:
   parameters:
   - label: Translate
     name: Translate
+    readOnlyHandling: macro
+    regularHandling: runtime
     summary: Moves the center of the shape.
   - label: Scale
     name: Scale
+    readOnlyHandling: macro
+    regularHandling: runtime
     summary: The size of the shape.
   summary: Tetrahedron shape.
   thumb: assets/images/reference/operators/sdf/tetrahedronSdf_thumb.png

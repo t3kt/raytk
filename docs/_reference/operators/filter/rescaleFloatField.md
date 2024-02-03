@@ -36,11 +36,19 @@ op:
     name: Enable
   - label: Input Range
     name: Inputrange
+    readOnlyHandling: macro
+    regularHandling: runtime
   - label: Output Range
     name: Outputrange
+    readOnlyHandling: macro
+    regularHandling: runtime
   - label: Multiply
     name: Multiply
+    readOnlyHandling: macro
+    regularHandling: runtime
   - label: Post Add
     name: Postadd
+    readOnlyHandling: macro
+    regularHandling: runtime
 
 ---

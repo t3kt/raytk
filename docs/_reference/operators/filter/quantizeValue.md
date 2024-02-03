@@ -37,14 +37,22 @@ op:
     name: Enable
   - label: Size
     name: Size
+    readOnlyHandling: macro
+    regularHandling: runtime
   - label: Size Multiplier
     name: Sizemult
   - label: Offset
     name: Offset
+    readOnlyHandling: macro
+    regularHandling: runtime
   - label: Enable Smoothing
     name: Enablesmoothing
+    readOnlyHandling: constant
+    regularHandling: constant
   - label: Smoothing
     name: Smoothing
+    readOnlyHandling: macro
+    regularHandling: runtime
   - label: Smoothing Multiplier
     name: Smoothingmult
 

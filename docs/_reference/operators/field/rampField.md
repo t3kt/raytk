@@ -105,12 +105,20 @@ op:
     - label: Distance From Origin
       name: dist
     name: Axis
+    readOnlyHandling: constant
+    regularHandling: constant
   - label: Coordinate Range
     name: Range
+    readOnlyHandling: macro
+    regularHandling: runtime
   - label: Point 1
     name: Point1
+    readOnlyHandling: macro
+    regularHandling: runtime
   - label: Point 2
     name: Point2
+    readOnlyHandling: macro
+    regularHandling: runtime
   - label: Extend Mode
     menuOptions:
     - label: Hold
@@ -122,6 +130,8 @@ op:
     - label: Mirror
       name: mirror
     name: Extendmode
+    readOnlyHandling: constant
+    regularHandling: constant
   - label: Return Type
     menuOptions:
     - label: Float
@@ -131,8 +141,12 @@ op:
     name: Returntype
   - label: Value 1
     name: Value1
+    readOnlyHandling: macro
+    regularHandling: runtime
   - label: Value 2
     name: Value2
+    readOnlyHandling: macro
+    regularHandling: runtime
   - label: Coord Type
     menuOptions:
     - label: Auto

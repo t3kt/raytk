@@ -13,6 +13,8 @@ op:
   parameters:
   - label: Bounces
     name: Bounces
+    readOnlyHandling: macro
+    regularHandling: runtime
   thumb: assets/images/reference/operators/function/sincCurveFn_thumb.png
 
 ---

@@ -74,14 +74,24 @@ op:
   parameters:
   - label: Spread
     name: Spread
+    readOnlyHandling: macro
+    regularHandling: runtime
   - label: Thickness
     name: Thickness
+    readOnlyHandling: macro
+    regularHandling: runtime
   - label: Rotate
     name: Rotate
+    readOnlyHandling: macro
+    regularHandling: runtime
   - label: Use Radius Limit
     name: Useradiuslimit
+    readOnlyHandling: constant
+    regularHandling: constant
   - label: Radius Limit
     name: Radiuslimit
+    readOnlyHandling: macro
+    regularHandling: runtime
   status: beta
   thumb: assets/images/reference/operators/sdf2d/spiralSdf2d_thumb.png
 

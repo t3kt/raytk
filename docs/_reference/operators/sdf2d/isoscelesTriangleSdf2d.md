@@ -62,10 +62,14 @@ op:
     name: Positionmode
   - label: Height
     name: Height
+    readOnlyHandling: macro
+    regularHandling: runtime
     summary: The distance from the base of an iscosceles triangle to the opposite
       tip.
   - label: Width
     name: Width
+    readOnlyHandling: macro
+    regularHandling: runtime
     summary: The width of the base of an isosceles triangle.
   thumb: assets/images/reference/operators/sdf2d/isoscelesTriangleSdf2d_thumb.png
 

@@ -44,8 +44,12 @@ op:
   parameters:
   - label: Tightness
     name: Tightness
+    readOnlyHandling: macro
+    regularHandling: runtime
   - label: Rounding
     name: Rounding
+    readOnlyHandling: macro
+    regularHandling: runtime
   thumb: assets/images/reference/operators/sdf2d/blobbyCrossSdf2d_thumb.png
 
 ---

@@ -74,12 +74,20 @@ op:
   parameters:
   - label: Angle
     name: Angle
+    readOnlyHandling: macro
+    regularHandling: runtime
   - label: Radius
     name: Radius
+    readOnlyHandling: macro
+    regularHandling: runtime
   - label: Length
     name: Length
+    readOnlyHandling: macro
+    regularHandling: runtime
   - label: Thickness
     name: Thickness
+    readOnlyHandling: macro
+    regularHandling: runtime
   thumb: assets/images/reference/operators/sdf2d/horseshoeSdf2d_thumb.png
 
 ---

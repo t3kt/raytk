@@ -46,10 +46,16 @@ op:
   parameters:
   - label: Center
     name: Center
+    readOnlyHandling: macro
+    regularHandling: runtime
   - label: Size
     name: Size
+    readOnlyHandling: macro
+    regularHandling: runtime
   - label: Phase
     name: Phase
+    readOnlyHandling: macro
+    regularHandling: runtime
   status: beta
   thumb: assets/images/reference/operators/pattern/blobRingPattern_thumb.png
 

@@ -72,6 +72,8 @@ op:
     - label: Secondary Input / Value Parameter
       name: secondary
     name: Valuesource
+    readOnlyHandling: macro
+    regularHandling: macro
   - label: Data Type
     menuOptions:
     - label: float
@@ -81,6 +83,8 @@ op:
     name: Datatype
   - label: Value
     name: Value
+    readOnlyHandling: macro
+    regularHandling: runtime
   variables:
   - label: var
     name: var

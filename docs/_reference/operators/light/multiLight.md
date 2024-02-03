@@ -200,50 +200,82 @@ op:
   parameters:
   - label: Enable 1
     name: Enable1
+    readOnlyHandling: macro
+    regularHandling: runtime
   - label: Level 1
     name: Level1
+    readOnlyHandling: macro
+    regularHandling: runtime
   - label: Bounds 1
     name: Bounds1
   - label: Enable 2
     name: Enable2
+    readOnlyHandling: macro
+    regularHandling: runtime
   - label: Level 2
     name: Level2
+    readOnlyHandling: macro
+    regularHandling: runtime
   - label: Bounds 2
     name: Bounds2
   - label: Enable 3
     name: Enable3
+    readOnlyHandling: macro
+    regularHandling: runtime
   - label: Level 3
     name: Level3
+    readOnlyHandling: macro
+    regularHandling: runtime
   - label: Bounds 3
     name: Bounds3
   - label: Enable 4
     name: Enable4
+    readOnlyHandling: macro
+    regularHandling: runtime
   - label: Level 4
     name: Level4
+    readOnlyHandling: macro
+    regularHandling: runtime
   - label: Bounds 4
     name: Bounds4
   - label: Enable 5
     name: Enable5
+    readOnlyHandling: macro
+    regularHandling: runtime
   - label: Level 5
     name: Level5
+    readOnlyHandling: macro
+    regularHandling: runtime
   - label: Bounds 5
     name: Bounds5
   - label: Enable 6
     name: Enable6
+    readOnlyHandling: macro
+    regularHandling: runtime
   - label: Level 6
     name: Level6
+    readOnlyHandling: macro
+    regularHandling: runtime
   - label: Bounds 6
     name: Bounds6
   - label: Enable 7
     name: Enable7
+    readOnlyHandling: macro
+    regularHandling: runtime
   - label: Level 7
     name: Level7
+    readOnlyHandling: macro
+    regularHandling: runtime
   - label: Bounds 7
     name: Bounds7
   - label: Enable 8
     name: Enable8
+    readOnlyHandling: macro
+    regularHandling: runtime
   - label: Level 8
     name: Level8
+    readOnlyHandling: macro
+    regularHandling: runtime
   - label: Bounds 8
     name: Bounds8
   status: beta

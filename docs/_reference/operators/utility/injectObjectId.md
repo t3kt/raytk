@@ -56,6 +56,8 @@ op:
     name: Enable
   - label: Object Id
     name: Objectid
+    readOnlyHandling: macro
+    regularHandling: runtime
   status: beta
   summary: 'Assigns an arbitrary value to the objectId field of an SDF, which can
     later

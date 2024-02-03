@@ -60,6 +60,8 @@ op:
     - label: Z
       name: z
     name: Axis
+    readOnlyHandling: constant
+    regularHandling: runtime
     summary: Which axis to use to determine the position in the CHOP to use.
   - label: Translate
     name: Translate
@@ -84,6 +86,8 @@ op:
       label: Mirror
       name: mirror
     name: Extendmode
+    readOnlyHandling: macro
+    regularHandling: macro
     summary: How to handle coordinates outside the 0..1 range.
   - label: Coord Mode
     menuOptions:

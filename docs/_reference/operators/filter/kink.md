@@ -106,6 +106,8 @@ op:
     - label: Along Z Toward Y
       name: zy
     name: Direction
+    readOnlyHandling: constant
+    regularHandling: constant
   - label: Side
     menuOptions:
     - label: Negative
@@ -113,12 +115,20 @@ op:
     - label: Positive
       name: pos
     name: Side
+    readOnlyHandling: constant
+    regularHandling: constant
   - label: Amount
     name: Amount
+    readOnlyHandling: macro
+    regularHandling: runtime
   - label: Offset
     name: Offset
+    readOnlyHandling: macro
+    regularHandling: runtime
   - label: Spread
     name: Spread
+    readOnlyHandling: macro
+    regularHandling: runtime
   thumb: assets/images/reference/operators/filter/kink_thumb.png
 
 ---

@@ -45,15 +45,23 @@ op:
     name: Enable
   - label: Input Low
     name: Inputlow
+    readOnlyHandling: macro
+    regularHandling: runtime
     summary: The low end of the expected input values.
   - label: Input High
     name: Inputhigh
+    readOnlyHandling: macro
+    regularHandling: runtime
     summary: The high end of the expected input values.
   - label: Output Low
     name: Outputlow
+    readOnlyHandling: macro
+    regularHandling: runtime
     summary: The low end of the rescaled value range.
   - label: Output High
     name: Outputhigh
+    readOnlyHandling: macro
+    regularHandling: runtime
     summary: The high end of the rescaled value range.
   - label: Return Type
     menuOptions:
@@ -66,10 +74,16 @@ op:
     name: Returntype
   - label: Multiply
     name: Multiply
+    readOnlyHandling: macro
+    regularHandling: runtime
   - label: Multiply
     name: Mult
+    readOnlyHandling: macro
+    regularHandling: runtime
   - label: Post Add
     name: Postadd
+    readOnlyHandling: macro
+    regularHandling: runtime
   shortcuts:
   - rf
   summary: Rescales the values produced by a field.

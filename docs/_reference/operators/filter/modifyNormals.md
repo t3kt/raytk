@@ -80,6 +80,8 @@ op:
     summary: How the modifier values are applied to the normals.
   - label: Mix
     name: Mix
+    readOnlyHandling: macro
+    regularHandling: runtime
     summary: Mix between the original normals and the modified normals.
   status: beta
   summary: Use a field to modify the normals (bump mapping) used by shading elements

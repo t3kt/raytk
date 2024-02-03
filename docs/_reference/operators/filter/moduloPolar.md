@@ -108,9 +108,13 @@ op:
     - label: Z
       name: z
     name: Axis
+    readOnlyHandling: constant
+    regularHandling: constant
     summary: The axis around which space is sliced.
   - label: Repetitions
     name: Repetitions
+    readOnlyHandling: macro
+    regularHandling: runtime
     summary: The number of angle repetitions. For example, a value of 6 would mean
       6 slices of space, each with a 60 degree width.
   - label: Round To Integer
@@ -119,9 +123,13 @@ op:
       to whole integers.
   - label: Pre Rotate
     name: Prerotate
+    readOnlyHandling: macro
+    regularHandling: runtime
     summary: Rotation applied before slicing.
   - label: Rotate
     name: Rotate
+    readOnlyHandling: macro
+    regularHandling: runtime
     summary: Rotation applied after slicing.
   - label: Mirror Type
     menuOptions:
@@ -130,21 +138,31 @@ op:
     - label: Mirror
       name: mirror
     name: Mirrortype
+    readOnlyHandling: constant
+    regularHandling: constant
     summary: Whether to flip every other slice. This is useful to avoid hard breaks
       at edges. It will result in the appearance of half as many slices, since half
       of them will be flipped.
   - label: Offset
     name: Offset
+    readOnlyHandling: macro
+    regularHandling: runtime
     summary: Distance to shift the shape before slicing it.
   - label: Use Limit
     name: Uselimit
+    readOnlyHandling: constant
+    regularHandling: constant
     summary: Whether to limit the range of repetitions. Space outside that range will
       be left as it is.
   - label: Limit Low
     name: Limitlow
+    readOnlyHandling: macro
+    regularHandling: runtime
     summary: Start or the repetition range, in terms of the number of repetitions.
   - label: Limit High
     name: Limithigh
+    readOnlyHandling: macro
+    regularHandling: runtime
     summary: End or the repetition range, in terms of the number of repetitions.
   - name: Iterateoncells
     summary: Whether to expose the slice number as an "iteration" value for upstream
@@ -153,6 +171,8 @@ op:
     name: Enable
   - label: Pivot
     name: Pivot
+    readOnlyHandling: macro
+    regularHandling: runtime
   - label: Iteration Type
     menuOptions:
     - label: None
@@ -162,6 +182,8 @@ op:
     - label: Cell Ratio
       name: ratio
     name: Iterationtype
+    readOnlyHandling: constant
+    regularHandling: constant
   shortcuts:
   - mp
   summary: Repeats space radially, like a kaleidoscope.

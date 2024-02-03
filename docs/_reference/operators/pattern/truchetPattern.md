@@ -112,14 +112,24 @@ op:
   parameters:
   - label: Translate
     name: Translate
+    readOnlyHandling: macro
+    regularHandling: runtime
   - label: Size
     name: Size
+    readOnlyHandling: macro
+    regularHandling: runtime
   - label: Curve
     name: Curve
+    readOnlyHandling: macro
+    regularHandling: runtime
   - label: Thickness
     name: Thickness
+    readOnlyHandling: macro
+    regularHandling: runtime
   - label: Blending
     name: Blending
+    readOnlyHandling: macro
+    regularHandling: runtime
   - label: Format
     menuOptions:
     - label: Contour
@@ -135,10 +145,16 @@ op:
     name: Format
   - label: Path Color
     name: Pathcolor
+    readOnlyHandling: macro
+    regularHandling: runtime
   - label: Background Color
     name: Bgcolor
+    readOnlyHandling: macro
+    regularHandling: runtime
   - label: Seed
     name: Seed
+    readOnlyHandling: macro
+    regularHandling: runtime
   status: beta
   thumb: assets/images/reference/operators/pattern/truchetPattern_thumb.png
   variables:

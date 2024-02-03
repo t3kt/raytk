@@ -27,20 +27,36 @@ op:
     - label: Custom
       name: custom
     name: Plane
+    readOnlyHandling: macro
+    regularHandling: macro
   - label: Size
     name: Size
+    readOnlyHandling: macro
+    regularHandling: runtime
   - label: Point 1
     name: Point1
+    readOnlyHandling: macro
+    regularHandling: runtime
   - label: Point 2
     name: Point2
+    readOnlyHandling: macro
+    regularHandling: runtime
   - label: Point 3
     name: Point3
+    readOnlyHandling: macro
+    regularHandling: runtime
   - label: Point 4
     name: Point4
+    readOnlyHandling: macro
+    regularHandling: runtime
   - label: Thickness
     name: Thickness
+    readOnlyHandling: macro
+    regularHandling: runtime
   - label: Translate
     name: Translate
+    readOnlyHandling: macro
+    regularHandling: runtime
   status: beta
   thumb: assets/images/reference/operators/sdf/quadSdf_thumb.png
 

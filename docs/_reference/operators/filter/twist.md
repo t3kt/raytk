@@ -43,12 +43,18 @@ op:
     - label: Z
       name: z
     name: Axis
+    readOnlyHandling: constant
+    regularHandling: runtime
     summary: The axis around which to twist.
   - label: Amount
     name: Amount
+    readOnlyHandling: macro
+    regularHandling: runtime
     summary: The amount of twisting to apply.
   - label: Shift
     name: Shift
+    readOnlyHandling: macro
+    regularHandling: runtime
     summary: Offsets the twisting along the axis, effectively rotating everything
       equally around it.
   summary: Twists space around an axis.

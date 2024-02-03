@@ -53,9 +53,13 @@ op:
     summary: The distance from the center to the outer edge.
   - label: Angle
     name: Angle
+    readOnlyHandling: macro
+    regularHandling: runtime
     summary: The width of the slice in degrees.
   - label: Rotate
     name: Rotate
+    readOnlyHandling: macro
+    regularHandling: runtime
     summary: Rotation for the slice in degrees.
   - label: Shape
     menuOptions:

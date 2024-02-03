@@ -64,6 +64,8 @@ op:
     - label: Debug
       name: debugOut
     name: Outputbuffer
+    readOnlyHandling: macro
+    regularHandling: macro
   - label: Value Source
     menuOptions:
     - label: Field Value
@@ -75,6 +77,8 @@ op:
     - label: Primary Value
       name: primaryvalue
     name: Valuesource
+    readOnlyHandling: macro
+    regularHandling: macro
   - label: Render Stage
     menuOptions:
     - label: Any
@@ -100,6 +104,8 @@ op:
     name: Renderstage
   - label: Only On Surface Hit
     name: Onlyonsurfacehit
+    readOnlyHandling: macro
+    regularHandling: macro
   status: beta
 
 ---

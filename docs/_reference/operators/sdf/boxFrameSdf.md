@@ -51,12 +51,18 @@ op:
   parameters:
   - label: Translate
     name: Translate
+    readOnlyHandling: macro
+    regularHandling: runtime
     summary: Move the center of the shape.
   - label: Scale
     name: Scale
+    readOnlyHandling: macro
+    regularHandling: runtime
     summary: The size of the box.
   - label: Thickness
     name: Thickness
+    readOnlyHandling: macro
+    regularHandling: runtime
     summary: The thickness of the bars of the box.
   - label: UV Mode
     menuOptions:
@@ -65,6 +71,8 @@ op:
     - label: Bounds XYZ
       name: bounds
     name: Uvmode
+    readOnlyHandling: constant
+    regularHandling: constant
   shortcuts:
   - bfs
   summary: SDF for the squared frame of the edges of a box.

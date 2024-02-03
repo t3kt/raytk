@@ -87,6 +87,8 @@ op:
     name: Uvmode
   - label: Center
     name: Center
+    readOnlyHandling: macro
+    regularHandling: runtime
   summary: Assigns UV coordinates to an SDF surface.
   thumb: assets/images/reference/operators/filter/assignUV_thumb.png
   variables:

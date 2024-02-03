@@ -40,28 +40,52 @@ op:
   parameters:
   - label: Rotate
     name: Rotate
+    readOnlyHandling: macro
+    regularHandling: runtime
   - label: Sun Position
     name: Sunpos
+    readOnlyHandling: macro
+    regularHandling: runtime
   - label: Sun Level
     name: Sunlevel
+    readOnlyHandling: macro
+    regularHandling: runtime
   - label: Planet Radius
     name: Planetradius
+    readOnlyHandling: macro
+    regularHandling: runtime
   - label: Atmosphere Thickness
     name: Atmosthickness
+    readOnlyHandling: macro
+    regularHandling: runtime
   - label: Rayleigh Scattering Coefficient
     name: Rayleighcoeff
+    readOnlyHandling: macro
+    regularHandling: runtime
   - label: Rayleigh Scale Height
     name: Rayleighscale
+    readOnlyHandling: macro
+    regularHandling: runtime
   - label: Mie Scattering Coefficient
     name: Miecoeff
+    readOnlyHandling: macro
+    regularHandling: runtime
   - label: Mie Scale Height
     name: Miescale
+    readOnlyHandling: macro
+    regularHandling: runtime
   - label: Mie Preferred Scattering Direction
     name: Mieprefdir
+    readOnlyHandling: macro
+    regularHandling: runtime
   - label: Primary Steps
     name: Primarysteps
+    readOnlyHandling: macro
+    regularHandling: runtime
   - label: Secondary Steps
     name: Secondarysteps
+    readOnlyHandling: macro
+    regularHandling: runtime
   summary: Field that simulates a sun and sky.
   thumb: assets/images/reference/operators/field/atmosphereField_thumb.png
 

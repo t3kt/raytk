@@ -34,6 +34,8 @@ op:
   parameters:
   - label: Scale
     name: Scale
+    readOnlyHandling: macro
+    regularHandling: runtime
   - label: UV Mode
     menuOptions:
     - label: None
@@ -41,6 +43,8 @@ op:
     - label: Bounds
       name: bounds
     name: Uvmode
+    readOnlyHandling: constant
+    regularHandling: constant
   thumb: assets/images/reference/operators/sdf2d/ellipseSdf2d_thumb.png
 
 ---

@@ -34,6 +34,8 @@ op:
     - label: Alpha / W
       name: a
     name: Channel
+    readOnlyHandling: constant
+    regularHandling: constant
   status: beta
   summary: Accesses data from a texture with the same layout as the renderer.
 

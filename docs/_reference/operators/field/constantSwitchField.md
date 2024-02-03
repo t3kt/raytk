@@ -49,26 +49,48 @@ op:
     name: Extend
   - label: Blend Indices
     name: Blendindices
+    readOnlyHandling: constant
+    regularHandling: runtime
   - label: Offset
     name: Offset
+    readOnlyHandling: macro
+    regularHandling: runtime
   - label: Count
     name: Count
+    readOnlyHandling: macro
+    regularHandling: runtime
   - label: Value 1
     name: Value1
+    readOnlyHandling: macro
+    regularHandling: runtime
   - label: Value 2
     name: Value2
+    readOnlyHandling: macro
+    regularHandling: runtime
   - label: Value 3
     name: Value3
+    readOnlyHandling: macro
+    regularHandling: runtime
   - label: Value 4
     name: Value4
+    readOnlyHandling: macro
+    regularHandling: runtime
   - label: Value 5
     name: Value5
+    readOnlyHandling: macro
+    regularHandling: runtime
   - label: Value 6
     name: Value6
+    readOnlyHandling: macro
+    regularHandling: runtime
   - label: Value 7
     name: Value7
+    readOnlyHandling: macro
+    regularHandling: runtime
   - label: Value 8
     name: Value8
+    readOnlyHandling: macro
+    regularHandling: runtime
   summary: Switches or blends between constant values based on an index field.
 
 ---

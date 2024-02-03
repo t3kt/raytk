@@ -103,20 +103,32 @@ op:
     - label: Z
       name: z
     name: Axis
+    readOnlyHandling: constant
+    regularHandling: runtime
   - label: Reverse
     name: Reverse
+    readOnlyHandling: constant
+    regularHandling: runtime
   - label: Radius
     name: Radius
+    readOnlyHandling: macro
+    regularHandling: runtime
     summary: The radius of the spring, i.e. the distance of the spring from the center
       axis.
   - label: Height
     name: Height
+    readOnlyHandling: macro
+    regularHandling: runtime
     summary: Height or length of the spring.
   - label: Coils
     name: Coils
+    readOnlyHandling: macro
+    regularHandling: runtime
     summary: The number of rotations in the spring. Larger values mean a tighter coil.
   - label: Thickness
     name: Thickness
+    readOnlyHandling: macro
+    regularHandling: runtime
     summary: Thickness of the spring, used when no cross-section SDF is attached.
   status: beta
   summary: A coiled spring shape.

@@ -196,6 +196,8 @@ op:
     summary: What operation to use to combine the field values.
   - label: Swap Order
     name: Swaporder
+    readOnlyHandling: macro
+    regularHandling: runtime
     summary: Swaps the two inputs. This is only relevant for some of the `Operation`
       values.
   - label: Optimize

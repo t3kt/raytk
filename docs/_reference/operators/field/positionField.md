@@ -40,6 +40,8 @@ op:
     - label: Z
       name: z
     name: Axis
+    readOnlyHandling: constant
+    regularHandling: runtime
   - label: Position Type
     menuOptions:
     - label: Local Position

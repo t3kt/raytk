@@ -94,10 +94,16 @@ op:
     name: Enable
   - label: Source Point
     name: Sourcepoint
+    readOnlyHandling: macro
+    regularHandling: runtime
   - label: Target Point
     name: Targetpoint
+    readOnlyHandling: macro
+    regularHandling: runtime
   - label: Roll
     name: Roll
+    readOnlyHandling: macro
+    regularHandling: runtime
   status: beta
 
 ---

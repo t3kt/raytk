@@ -45,11 +45,17 @@ op:
     - label: XY
       name: z
     name: Axis
+    readOnlyHandling: constant
+    regularHandling: constant
     summary: The axis facing the plane along which space is repeated.
   - label: Steps
     name: Steps
+    readOnlyHandling: macro
+    regularHandling: runtime
   - label: Offset
     name: Offset
+    readOnlyHandling: macro
+    regularHandling: runtime
   status: beta
   thumb: assets/images/reference/operators/filter/hilbertCurveTransform_thumb.png
   variables:

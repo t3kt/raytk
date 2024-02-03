@@ -52,6 +52,8 @@ op:
     - label: Spherical
       name: spherical
     name: Distancemode
+    readOnlyHandling: constant
+    regularHandling: constant
   - label: Mirror Type
     menuOptions:
     - label: None
@@ -59,12 +61,20 @@ op:
     - label: Mirror
       name: mirror
     name: Mirrortype
+    readOnlyHandling: constant
+    regularHandling: constant
   - label: Length
     name: Length
+    readOnlyHandling: macro
+    regularHandling: runtime
   - label: Center
     name: Center
+    readOnlyHandling: macro
+    regularHandling: runtime
   - label: Iterate On Rings
     name: Iterateonrings
+    readOnlyHandling: constant
+    regularHandling: constant
   variables:
   - label: ring
     name: ring

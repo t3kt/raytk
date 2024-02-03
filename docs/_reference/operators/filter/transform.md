@@ -99,12 +99,20 @@ op:
     name: Enable
   - label: Enable Translate
     name: Enabletranslate
+    readOnlyHandling: macro
+    regularHandling: macro
   - label: Enable Rotate
     name: Enablerotate
+    readOnlyHandling: macro
+    regularHandling: macro
   - label: Enable Scale
     name: Enablescale
+    readOnlyHandling: macro
+    regularHandling: macro
   - label: Enable Pivot
     name: Enablepivot
+    readOnlyHandling: macro
+    regularHandling: macro
   - label: Translate
     name: Translate
   - label: Rotate
@@ -152,6 +160,8 @@ op:
     - label: Uniform
       name: uniform
     name: Scaletype
+    readOnlyHandling: macro
+    regularHandling: macro
   - label: Apply To
     menuOptions:
     - label: Coordinates

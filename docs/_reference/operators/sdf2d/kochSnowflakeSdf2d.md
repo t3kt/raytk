@@ -29,6 +29,8 @@ op:
   parameters:
   - label: Steps
     name: Steps
+    readOnlyHandling: macro
+    regularHandling: runtime
   status: beta
   thumb: assets/images/reference/operators/sdf2d/kochSnowflakeSdf2d_thumb.png
 

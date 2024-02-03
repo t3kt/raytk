@@ -29,6 +29,8 @@ op:
   parameters:
   - label: Scale
     name: Scale
+    readOnlyHandling: macro
+    regularHandling: runtime
   status: beta
   thumb: assets/images/reference/operators/sdf2d/archSdf2d_thumb.png
 

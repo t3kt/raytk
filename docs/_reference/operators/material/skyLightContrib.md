@@ -22,10 +22,16 @@ op:
   parameters:
   - label: Color
     name: Color
+    readOnlyHandling: macro
+    regularHandling: runtime
   - label: Level
     name: Level
+    readOnlyHandling: macro
+    regularHandling: runtime
   - label: Direction
     name: Dir
+    readOnlyHandling: macro
+    regularHandling: runtime
     summary: The direction from which the "light" comes from.
   - label: Use Color
     name: Usecolor

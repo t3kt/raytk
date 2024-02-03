@@ -20,6 +20,8 @@ op:
   parameters:
   - label: Default Color
     name: Defaultcolor
+    readOnlyHandling: macro
+    regularHandling: runtime
     summary: Color used if there is no color assigned to the surface.
   summary: A material element that produces the assigned color attribute for the surface.
 

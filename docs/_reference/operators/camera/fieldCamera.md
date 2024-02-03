@@ -31,6 +31,8 @@ op:
   parameters:
   - label: Position
     name: Campos
+    readOnlyHandling: macro
+    regularHandling: runtime
     summary: Position of the camera.
   status: beta
 

@@ -59,10 +59,16 @@ op:
   parameters:
   - label: Length
     name: Length
+    readOnlyHandling: macro
+    regularHandling: runtime
   - label: Radius
     name: Radius
+    readOnlyHandling: macro
+    regularHandling: runtime
   - label: Thickness
     name: Thickness
+    readOnlyHandling: macro
+    regularHandling: runtime
   thumb: assets/images/reference/operators/sdf/chainSdf_thumb.png
 
 ---

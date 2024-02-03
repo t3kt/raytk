@@ -84,23 +84,37 @@ op:
     - label: Distance From Origin
       name: dist
     name: Axis
+    readOnlyHandling: constant
+    regularHandling: constant
     summary: The axis along which the waves are produced.
   - label: Period
     name: Period
+    readOnlyHandling: macro
+    regularHandling: runtime
     summary: The width of the waves for each axis.
   - label: Phase
     name: Phase
+    readOnlyHandling: macro
+    regularHandling: runtime
     summary: The phase of the waves for each axis.
   - label: Amplitude
     name: Amplitude
+    readOnlyHandling: macro
+    regularHandling: runtime
     summary: The scale of the movement for each axis.
   - label: Offset
     name: Offset
+    readOnlyHandling: macro
+    regularHandling: runtime
     summary: Offsets the movement for each axis.
   - label: Phase Offset
     name: Phaseoffset
+    readOnlyHandling: macro
+    regularHandling: runtime
   - label: Amplitude Multiplier
     name: Amplitudemult
+    readOnlyHandling: macro
+    regularHandling: runtime
   status: beta
   summary: Uses repeating waves to offset space.
   thumb: assets/images/reference/operators/filter/waveWarp_thumb.png

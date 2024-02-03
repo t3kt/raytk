@@ -42,12 +42,20 @@ op:
     name: Axis
   - label: Radius
     name: Radius
+    readOnlyHandling: macro
+    regularHandling: runtime
   - label: Points
     name: Points
+    readOnlyHandling: macro
+    regularHandling: runtime
   - label: Center
     name: Center
+    readOnlyHandling: macro
+    regularHandling: runtime
   - label: Rotate
     name: Rotate
+    readOnlyHandling: macro
+    regularHandling: runtime
   - label: Format
     menuOptions:
     - label: Distance

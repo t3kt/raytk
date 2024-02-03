@@ -179,24 +179,44 @@ op:
     name: Format
   - label: Translate
     name: Translate
+    readOnlyHandling: macro
+    regularHandling: runtime
   - label: Size
     name: Size
+    readOnlyHandling: macro
+    regularHandling: runtime
   - label: Vertex Radius
     name: Vertexradius
+    readOnlyHandling: macro
+    regularHandling: runtime
   - label: Outline Thickness
     name: Outlinethickness
+    readOnlyHandling: macro
+    regularHandling: runtime
   - label: Outline Blending
     name: Outlineblending
+    readOnlyHandling: macro
+    regularHandling: runtime
   - label: Poly Color 1
     name: Polycolor1
+    readOnlyHandling: macro
+    regularHandling: runtime
   - label: Poly Color 2
     name: Polycolor2
+    readOnlyHandling: macro
+    regularHandling: runtime
   - label: Poly Color 3
     name: Polycolor3
+    readOnlyHandling: macro
+    regularHandling: runtime
   - label: Outline Color
     name: Outlinecolor
+    readOnlyHandling: macro
+    regularHandling: runtime
   - label: Dual Outline Color
     name: Dualoutlinecolor
+    readOnlyHandling: macro
+    regularHandling: runtime
   status: beta
 
 ---

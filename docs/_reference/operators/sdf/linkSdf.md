@@ -62,15 +62,23 @@ op:
   parameters:
   - label: Translate
     name: Translate
+    readOnlyHandling: macro
+    regularHandling: runtime
     summary: Moves the center of the shape.
   - label: Length
     name: Length
+    readOnlyHandling: macro
+    regularHandling: runtime
     summary: The length of the chain link.
   - label: Radius
     name: Radius
+    readOnlyHandling: macro
+    regularHandling: runtime
     summary: The radius or width of the chain shape as a whole.
   - label: Thickness
     name: Thickness
+    readOnlyHandling: macro
+    regularHandling: runtime
     summary: The thickness of the link.
   summary: SDF for a chain link shape (an elongated loop).
   thumb: assets/images/reference/operators/sdf/linkSdf_thumb.png

@@ -124,8 +124,12 @@ op:
     name: Format
   - label: Translate
     name: Translate
+    readOnlyHandling: macro
+    regularHandling: runtime
   - label: Spacing
     name: Spacing
+    readOnlyHandling: macro
+    regularHandling: runtime
   - label: Thickness
     name: Thickness
   - label: Blending

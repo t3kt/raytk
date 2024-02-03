@@ -33,6 +33,8 @@ op:
     - label: Radians
       name: radians
     name: Angleunit
+    readOnlyHandling: macro
+    regularHandling: macro
   - label: Axis
     menuOptions:
     - label: X
@@ -42,8 +44,12 @@ op:
     - label: Z
       name: z
     name: Axis
+    readOnlyHandling: macro
+    regularHandling: runtime
   - label: Center
     name: Center
+    readOnlyHandling: macro
+    regularHandling: runtime
     summary: The center point of the polar coordinates.
   - label: Coord Type
     menuOptions:

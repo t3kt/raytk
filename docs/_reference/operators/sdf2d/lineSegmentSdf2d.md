@@ -68,10 +68,16 @@ op:
   parameters:
   - label: Point 1
     name: Pointa
+    readOnlyHandling: macro
+    regularHandling: runtime
   - label: Point 2
     name: Pointb
+    readOnlyHandling: macro
+    regularHandling: runtime
   - label: Thickness
     name: Thickness
+    readOnlyHandling: macro
+    regularHandling: runtime
   summary: 2D line segment SDF.
   thumb: assets/images/reference/operators/sdf2d/lineSegmentSdf2d_thumb.png
   variables:

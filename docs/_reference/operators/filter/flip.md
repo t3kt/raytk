@@ -79,11 +79,17 @@ op:
     - label: Z
       name: z
     name: Axis
+    readOnlyHandling: constant
+    regularHandling: constant
   - label: Offset
     name: Offset
+    readOnlyHandling: macro
+    regularHandling: runtime
     summary: Moves the reflection plane along the axis.
   - label: Shift
     name: Shift
+    readOnlyHandling: macro
+    regularHandling: runtime
     summary: Moves the input towards / away from the reflection plane.
   - label: Merge Type
     menuOptions:
@@ -140,6 +146,8 @@ op:
       label: Signed (-1/1)
       name: sign
     name: Iterationtype
+    readOnlyHandling: constant
+    regularHandling: constant
     summary: What kind of iteration values should be provided for upstream ops.
   - label: Merge Number
     name: Mergenumber

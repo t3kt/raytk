@@ -76,6 +76,8 @@ op:
     name: Enable
   - label: Instance Count
     name: Instancecount
+    readOnlyHandling: macro
+    regularHandling: runtime
     summary: The number of copies to produce and merge.
   - label: Combine
     menuOptions:

@@ -74,9 +74,13 @@ op:
       label: Multiply
       name: multiply
     name: Remapmode
+    readOnlyHandling: constant
+    regularHandling: constant
     summary: How the remapped coordinates are applied to the original coordinates.
   - label: Mix
     name: Mix
+    readOnlyHandling: macro
+    regularHandling: runtime
     summary: Cross-fades between the original coordinates and the remapped ones.
   status: beta
   summary: Modifies space using a vector field.

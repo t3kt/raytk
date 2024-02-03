@@ -30,8 +30,12 @@ op:
   parameters:
   - label: Enable Normal Smoothing
     name: Enablenormalsmoothing
+    readOnlyHandling: constant
+    regularHandling: runtime
   - label: Normal Smoothing
     name: Normalsmoothing
+    readOnlyHandling: macro
+    regularHandling: runtime
   status: beta
   thumb: assets/images/reference/operators/field/sdfNormalField_thumb.png
 

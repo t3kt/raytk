@@ -25,12 +25,20 @@ op:
     name: Enable
   - label: Iterations
     name: Iterations
+    readOnlyHandling: macro
+    regularHandling: runtime
   - label: Step Distance
     name: Step
+    readOnlyHandling: macro
+    regularHandling: runtime
   - label: Period
     name: Period
+    readOnlyHandling: macro
+    regularHandling: runtime
   - label: Phase
     name: Phase
+    readOnlyHandling: macro
+    regularHandling: runtime
   status: beta
   variables:
   - label: step

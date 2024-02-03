@@ -65,14 +65,24 @@ op:
     - label: End Points
       name: endpoints
     name: Mode
+    readOnlyHandling: constant
+    regularHandling: constant
   - label: Point 1
     name: Point1
+    readOnlyHandling: macro
+    regularHandling: runtime
   - label: Point 2
     name: Point2
+    readOnlyHandling: macro
+    regularHandling: runtime
   - label: Height
     name: Height
+    readOnlyHandling: macro
+    regularHandling: runtime
   - label: Width
     name: Width
+    readOnlyHandling: macro
+    regularHandling: runtime
   thumb: assets/images/reference/operators/sdf2d/trapezoidSdf2d_thumb.png
 
 ---
