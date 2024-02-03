@@ -130,3 +130,62 @@ From most effective to least:
 - Simplify material
 - Simplify light
 - Simplify camera
+
+## Operators That Repeat Work (or might seem like they do)
+
+### Cheap
+
+- Common
+    - `mirrorAxes`
+    - `mirrorOctant`
+    - `mirrorQuadrant`
+    - `modulo1D`
+    - `modulo2D`
+    - `modulo3D`
+    - `moduloPolar`
+    - `reflect`
+- Unusual
+    - `geometricSeriesSquareTile`
+    - `logPolarRepeat`
+    - `moduloDistance`
+    - `moduloSpherical`
+    - `moduloLine`
+    - `quadTreeRepeat`
+    - `rectangleRepeat`
+
+### Expensive
+
+- Common
+    - `gridClone` → `modulo2D`
+    - `instance`
+    - `linearClone` → `modulo1D`
+    - `radialClone` → `moduloPolar`
+- Unusual
+    - `circularRepeat` but only 4x regardless of spacing/radius
+    - `flip` with merge enabled
+    - `instanceField`
+    - `iteratedTransform` with accumulation enabled
+
+[`mirrorAxes`]: /raytk/reference/operators/filter/mirrorAxes
+[`mirrorOctant`]: /raytk/reference/operators/filter/mirrorOctant
+[`mirrorQuadrant`]: /raytk/reference/operators/filter/mirrorQuadrant
+[`modulo1D`]: /raytk/reference/operators/filter/modulo1D
+[`modulo2D`]: /raytk/reference/operators/filter/modulo2D
+[`modulo3D`]: /raytk/reference/operators/filter/modulo3D
+[`moduloPolar`]: /raytk/reference/operators/filter/moduloPolar
+[`reflect`]: /raytk/reference/operators/filter/reflect
+[`geometricSeriesSquareTile`]: /raytk/reference/operators/filter/geometricSeriesSquareTile
+[`logPolarRepeat`]: /raytk/reference/operators/filter/logPolarRepeat
+[`moduloDistance`]: /raytk/reference/operators/filter/moduloDistance
+[`moduloSpherical`]: /raytk/reference/operators/filter/moduloSpherical
+[`moduloLine`]: /raytk/reference/operators/filter/moduloLine
+[`quadTreeRepeat`]: /raytk/reference/operators/filter/quadTreeRepeat
+[`rectangleRepeat`]: /raytk/reference/operators/filter/rectangleRepeat
+[`gridClone`]: /raytk/reference/operators/filter/gridClone
+[`instance`]: /raytk/reference/operators/filter/instance
+[`linearClone`]: /raytk/reference/operators/filter/linearClone
+[`radialClone`]: /raytk/reference/operators/filter/radialClone
+[`circularRepeat`]: /raytk/reference/operators/filter/circularRepeat
+[`flip`]: /raytk/reference/operators/filter/flip
+[`instanceField`]: /raytk/reference/operators/filter/instanceField
+[`iteratedTransform`]: /raytk/reference/operators/filter/iteratedTransform
