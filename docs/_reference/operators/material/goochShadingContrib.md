@@ -55,16 +55,28 @@ op:
   parameters:
   - label: Level
     name: Level
+    readOnlyHandling: macro
+    regularHandling: runtime
   - label: Use Light Color
     name: Uselightcolor
+    readOnlyHandling: macro
+    regularHandling: macro
   - label: Enable Shadow
     name: Enableshadow
+    readOnlyHandling: macro
+    regularHandling: macro
   - label: Base Color
     name: Basecolor
+    readOnlyHandling: macro
+    regularHandling: runtime
   - label: Warm Color
     name: Warmcolor
+    readOnlyHandling: macro
+    regularHandling: runtime
   - label: Cool Color
     name: Coolcolor
+    readOnlyHandling: macro
+    regularHandling: runtime
   - label: Enable
     name: Enable
   summary: A material element that uses the Gooch shading model.

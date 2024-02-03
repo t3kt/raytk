@@ -13,8 +13,12 @@ op:
   parameters:
   - label: Infinite Size
     name: Infinitesize
+    readOnlyHandling: constant
+    regularHandling: constant
   - label: Size
     name: Size
+    readOnlyHandling: macro
+    regularHandling: runtime
   thumb: assets/images/reference/operators/sdf/hyperbolicParaboloidSdf_thumb.png
 
 ---

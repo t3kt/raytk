@@ -94,12 +94,20 @@ op:
     - label: ZW
       name: zw
     name: Plane
+    readOnlyHandling: constant
+    regularHandling: constant
   - label: Rotate
     name: Rotate
+    readOnlyHandling: macro
+    regularHandling: runtime
   - label: Pivot
     name: Pivot
+    readOnlyHandling: macro
+    regularHandling: runtime
   - label: Pivot 4D
     name: Pivotw
+    readOnlyHandling: macro
+    regularHandling: runtime
   summary: Projects 3D space into 4D space, applies rotation along two axes and then
     projects back into 3D space.
   thumb: assets/images/reference/operators/filter/rotate4D_thumb.png

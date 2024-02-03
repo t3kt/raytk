@@ -123,6 +123,8 @@ op:
     name: Enable
   - label: Iterations
     name: Iterations
+    readOnlyHandling: '''macro'''
+    regularHandling: '''runtime'''
   - label: Reflect Mode
     menuOptions:
     - label: None
@@ -224,8 +226,12 @@ op:
     - label: Step Ratio
       name: ratio
     name: Iterationtype
+    readOnlyHandling: '''constant'''
+    regularHandling: '''constant'''
   - label: Enable Accumulate
     name: Enableaccumulate
+    readOnlyHandling: '''macro'''
+    regularHandling: '''macro'''
   - label: Combine
     menuOptions:
     - label: Simple Union
@@ -265,9 +271,13 @@ op:
     - label: Column Difference
       name: columnDiff
     name: Combine
+    readOnlyHandling: '''constant'''
+    regularHandling: '''runtime'''
     summary: The type of combination operation to perform.
   - label: Swap Inputs
     name: Swapinputs
+    readOnlyHandling: '''constant'''
+    regularHandling: '''runtime'''
     summary: Swaps the order of the inputs. This is only relevant for "diff" modes.
   - label: Blend Radius
     name: Blendradius

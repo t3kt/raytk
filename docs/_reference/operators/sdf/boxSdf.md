@@ -55,15 +55,23 @@ op:
       label: Z
       name: z
     name: Infiniteaxis
+    readOnlyHandling: runtime
+    regularHandling: runtime
     summary: Axis along which the box should stretch infinitely.
   - label: Translate
     name: Translate
+    readOnlyHandling: macro
+    regularHandling: runtime
     summary: Move the center of the box.
   - label: Scale
     name: Scale
+    readOnlyHandling: macro
+    regularHandling: runtime
     summary: The size of the box in each dimension.
   - label: Uniform Scale
     name: Uniformscale
+    readOnlyHandling: macro
+    regularHandling: runtime
     summary: Scaling applied to all dimensions of the `Scale`.
   - label: UV Mode
     menuOptions:
@@ -74,6 +82,8 @@ op:
     - label: Faces
       name: faces
     name: Uvmode
+    readOnlyHandling: constant
+    regularHandling: constant
   - label: Optimize
     name: Optimize
   shortcuts:

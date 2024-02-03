@@ -99,15 +99,23 @@ op:
     - label: XY
       name: z
     name: Axis
+    readOnlyHandling: constant
+    regularHandling: constant
     summary: Axis that faces the plane where coordinates are mirrored.
   - label: Size
     name: Size
+    readOnlyHandling: macro
+    regularHandling: runtime
     summary: Spacing of the reflection planes.
   - label: Offset
     name: Offset
+    readOnlyHandling: macro
+    regularHandling: runtime
     summary: Shifts the input before applying reflection.
   - label: Rotate Axis
     name: Rotateaxis
+    readOnlyHandling: macro
+    regularHandling: runtime
     summary: Rotates the input before applying reflection.
   - label: Iteration Type
     menuOptions:
@@ -121,6 +129,8 @@ op:
       label: Signed Axes (-1/1, -1/1)
       name: sign
     name: Iterationtype
+    readOnlyHandling: constant
+    regularHandling: constant
     summary: Exposes information to upstream operators about which quadrant a point
       is in.
   summary: Mirror coordinates across two axes.

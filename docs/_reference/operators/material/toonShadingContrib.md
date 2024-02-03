@@ -24,14 +24,24 @@ op:
   parameters:
   - label: Level
     name: Level
+    readOnlyHandling: macro
+    regularHandling: runtime
   - label: Color
     name: Color
+    readOnlyHandling: macro
+    regularHandling: runtime
   - label: Use Light Color
     name: Uselightcolor
+    readOnlyHandling: macro
+    regularHandling: macro
   - label: Enable Shadow
     name: Enableshadow
+    readOnlyHandling: macro
+    regularHandling: macro
   - label: Use Surface Color
     name: Usesurfacecolor
+    readOnlyHandling: macro
+    regularHandling: macro
   status: beta
   summary: Modular shading element which uses a cell/toon shading technique with a
     color ramp.

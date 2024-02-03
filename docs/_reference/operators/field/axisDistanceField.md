@@ -40,8 +40,12 @@ op:
     - label: Z
       name: z
     name: Axis
+    readOnlyHandling: constant
+    regularHandling: constant
   - label: Center
     name: Center
+    readOnlyHandling: macro
+    regularHandling: runtime
     summary: The position along the axis from which the distance is calculated.
   - label: Coord Type
     menuOptions:

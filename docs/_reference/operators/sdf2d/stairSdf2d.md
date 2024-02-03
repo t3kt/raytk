@@ -48,8 +48,12 @@ op:
   parameters:
   - label: Size
     name: Size
+    readOnlyHandling: macro
+    regularHandling: runtime
   - label: Steps
     name: Steps
+    readOnlyHandling: macro
+    regularHandling: runtime
   status: beta
   thumb: assets/images/reference/operators/sdf2d/stairSdf2d_thumb.png
 

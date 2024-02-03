@@ -126,17 +126,25 @@ op:
       label: XY
       name: z
     name: Axis
+    readOnlyHandling: constant
+    regularHandling: runtime
     summary: The axis facing the plane along which space is repeated.
   - label: Size
     name: Size
+    readOnlyHandling: macro
+    regularHandling: runtime
     summary: The spacing of the grid along the two axes. This sets the size of the
       cell taken from the input.
   - label: Offset
     name: Offset
+    readOnlyHandling: macro
+    regularHandling: runtime
     summary: Shifts where the input cell is taken from without moving the position
       of the grid.
   - label: Shift
     name: Shift
+    readOnlyHandling: macro
+    regularHandling: runtime
     summary: Shifts the whole grid (and its contents).
   - label: Mirror Type
     menuOptions:
@@ -152,6 +160,8 @@ op:
       label: Grid
       name: grid
     name: Mirrortype
+    readOnlyHandling: constant
+    regularHandling: constant
     summary: How the cells are varied.
   - label: Iteration Type
     menuOptions:
@@ -173,6 +183,8 @@ op:
       label: Alternating Cell Coordinates On Axes (0-1, 0-1)
       name: alternatingcoord
     name: Iterationtype
+    readOnlyHandling: constant
+    regularHandling: constant
     summary: Whether and how to expose iteration values to upstream operators.
   - label: Limit Type
     menuOptions:

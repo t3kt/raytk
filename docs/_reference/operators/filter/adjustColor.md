@@ -131,14 +131,24 @@ op:
     name: Enable
   - label: Brightness
     name: Brightness
+    readOnlyHandling: macro
+    regularHandling: runtime
   - label: Contrast
     name: Contrast
+    readOnlyHandling: macro
+    regularHandling: runtime
   - label: Saturation
     name: Saturation
+    readOnlyHandling: macro
+    regularHandling: runtime
   - label: Hue Offset
     name: Hueoffset
+    readOnlyHandling: macro
+    regularHandling: runtime
   - label: Gamma
     name: Gamma
+    readOnlyHandling: macro
+    regularHandling: runtime
   summary: Adjust properties of color values, either directly on a field, or on the
     assigned surface color of an Sdf result.
   thumb: assets/images/reference/operators/filter/adjustColor_thumb.png

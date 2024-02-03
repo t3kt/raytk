@@ -33,6 +33,8 @@ op:
   parameters:
   - label: Count
     name: Count
+    readOnlyHandling: constant
+    regularHandling: runtime
   - label: Width Mode
     menuOptions:
     - label: Total Input Width
@@ -44,8 +46,12 @@ op:
     name: Totalwidth
   - label: Size Multiplier
     name: Sizemult
+    readOnlyHandling: constant
+    regularHandling: runtime
   - label: Size Offset
     name: Sizeoffset
+    readOnlyHandling: constant
+    regularHandling: runtime
   status: beta
   variables:
   - label: index

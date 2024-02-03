@@ -66,15 +66,23 @@ op:
   parameters:
   - label: Translate
     name: Translate
+    readOnlyHandling: macro
+    regularHandling: runtime
     summary: Moves the center of the capsule.
   - label: End Point 1
     name: Endpoint1
+    readOnlyHandling: macro
+    regularHandling: runtime
     summary: Distance of the first end from the center position.
   - label: End Point 2
     name: Endpoint2
+    readOnlyHandling: macro
+    regularHandling: runtime
     summary: Distance of the second end from the center position.
   - label: Radius
     name: Radius
+    readOnlyHandling: macro
+    regularHandling: runtime
     summary: The thickness of the capsule.
   thumb: assets/images/reference/operators/sdf/vesicaSegmentSdf_thumb.png
   variables:

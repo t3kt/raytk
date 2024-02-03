@@ -53,8 +53,12 @@ op:
     name: Returntype
   - label: Translate
     name: Translate
+    readOnlyHandling: macro
+    regularHandling: runtime
   - label: Scale
     name: Scale
+    readOnlyHandling: macro
+    regularHandling: runtime
   - label: Texture
     name: Texture
   - label: Extend Mode
@@ -68,6 +72,8 @@ op:
     - label: Mirror
       name: mirror
     name: Extendmode
+    readOnlyHandling: constant
+    regularHandling: constant
   - label: Z Coord Mode
     menuOptions:
     - label: Raw

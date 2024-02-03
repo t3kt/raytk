@@ -32,9 +32,13 @@ op:
   parameters:
   - label: Translate
     name: Translate
+    readOnlyHandling: macro
+    regularHandling: runtime
     summary: Shifts the center of the shape.
   - label: Radius
     name: Radius
+    readOnlyHandling: macro
+    regularHandling: runtime
     summary: The size of the shape.
   - label: Function
     menuOptions:

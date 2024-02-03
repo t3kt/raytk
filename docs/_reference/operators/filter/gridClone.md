@@ -56,12 +56,18 @@ op:
     name: Enable
   - label: Count
     name: Count
+    readOnlyHandling: constant
+    regularHandling: runtime
     summary: The number of copies. The performance cost of the input is multiplied
       by this number.
   - label: Center
     name: Center
+    readOnlyHandling: macro
+    regularHandling: runtime
   - label: Size
     name: Size
+    readOnlyHandling: macro
+    regularHandling: runtime
   - label: Merge Type
     menuOptions:
     - label: Simple Union

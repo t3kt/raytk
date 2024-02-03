@@ -124,12 +124,18 @@ op:
     - label: XY
       name: z
     name: Axis
+    readOnlyHandling: constant
+    regularHandling: runtime
     summary: The plane along which to arrange the cells.
   - label: Size
     name: Size
+    readOnlyHandling: macro
+    regularHandling: runtime
     summary: The size of the cells
   - label: Pre Scale
     name: Prescale
+    readOnlyHandling: macro
+    regularHandling: runtime
     summary: Scales the inputs within their cells.
   summary: Slices space into a grid, and places each input in a separate cell.
   thumb: assets/images/reference/operators/combine/layoutGrid_thumb.png

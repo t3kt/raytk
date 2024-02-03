@@ -63,6 +63,8 @@ op:
     - label: Diamond
       name: diamond
     name: Crosssectionshape
+    readOnlyHandling: macro
+    regularHandling: macro
     summary: choose the shape of the bars of the grid. Not available in 2D mode.
   - label: Axis
     menuOptions:
@@ -73,21 +75,31 @@ op:
     - label: Z
       name: z
     name: Axis
+    readOnlyHandling: macro
+    regularHandling: runtime
     summary: choose which axis the grid should face.
   - label: Spacing
     name: Spacing
+    readOnlyHandling: macro
+    regularHandling: runtime
     summary: spacing between the bars of the grid. If this value is very small and
       the `Thickness` is high enough, the bars can merge into a solid surface. But
       if it is set to zero the grid will disappear due to a calculation error.
   - label: Axis Offset
     name: Axisoffset
+    readOnlyHandling: macro
+    regularHandling: runtime
     summary: shifts the grid forwards or backwards along the `Axis` that it is facing.
       Not available in 2D mode.
   - label: Offset
     name: Offset
+    readOnlyHandling: macro
+    regularHandling: runtime
     summary: shifts the grid along its plane.
   - label: Thickness
     name: Thickness
+    readOnlyHandling: macro
+    regularHandling: runtime
     summary: the thickness of the bars.
   - menuOptions:
     - name: none
@@ -106,6 +118,8 @@ op:
     - label: Axis 2 Bars
       name: vbars
     name: Pattern
+    readOnlyHandling: macro
+    regularHandling: macro
   summary: An infinite grid shape, along two axes.
   thumb: assets/images/reference/operators/sdf/gridSdf_thumb.png
 

@@ -80,10 +80,16 @@ op:
   parameters:
   - label: Hue Offset
     name: Hueoffset
+    readOnlyHandling: macro
+    regularHandling: runtime
   - label: Saturation
     name: Saturation
+    readOnlyHandling: macro
+    regularHandling: runtime
   - label: Value
     name: Value
+    readOnlyHandling: macro
+    regularHandling: runtime
   - label: Coord Type
     menuOptions:
     - label: Auto

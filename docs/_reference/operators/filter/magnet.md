@@ -89,25 +89,39 @@ op:
     name: Enable
   - label: Amount
     name: Amount
+    readOnlyHandling: macro
+    regularHandling: runtime
     summary: How much effect to apply overall.
   - label: Center
     name: Center
+    readOnlyHandling: macro
+    regularHandling: runtime
     summary: The center position of the magnet (used if the magnet definition is not
       connected).
   - label: Radius
     name: Radius
+    readOnlyHandling: macro
+    regularHandling: runtime
     summary: The radius of the magnet area.
   - label: Fade
     name: Fade
+    readOnlyHandling: macro
+    regularHandling: runtime
     summary: The width of the blending region between the magnet and the rest of space.
   - label: Scale
     name: Scale
+    readOnlyHandling: macro
+    regularHandling: runtime
     summary: Scaling to be applied within the magnet area.
   - label: Rotate
     name: Rotate
+    readOnlyHandling: macro
+    regularHandling: runtime
     summary: Rotation to be applied within the magnet area.
   - label: Translate
     name: Translate
+    readOnlyHandling: macro
+    regularHandling: runtime
     summary: Amount of translation along each axis. For 2D, only X and Y are used.
   summary: Pulls or twists space within an area.
   thumb: assets/images/reference/operators/filter/magnet_thumb.png

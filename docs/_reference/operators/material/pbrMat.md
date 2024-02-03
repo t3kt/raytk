@@ -115,18 +115,32 @@ op:
     name: Enable
   - label: Base Color
     name: Basecolor
+    readOnlyHandling: macro
+    regularHandling: runtime
   - label: Use Surface Color
     name: Usesurfacecolor
+    readOnlyHandling: macro
+    regularHandling: macro
   - label: Roughness
     name: Roughness
+    readOnlyHandling: macro
+    regularHandling: runtime
   - label: Albedo
     name: Albedo
+    readOnlyHandling: macro
+    regularHandling: runtime
   - label: Metallic
     name: Metallic
+    readOnlyHandling: macro
+    regularHandling: runtime
   - label: Enable Shadow
     name: Enableshadow
+    readOnlyHandling: macro
+    regularHandling: macro
   - label: Use Local Position
     name: Uselocalpos
+    readOnlyHandling: macro
+    regularHandling: macro
   - label: Apply When
     menuOptions:
     - label: Always

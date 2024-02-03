@@ -27,14 +27,24 @@ op:
   parameters:
   - label: Direction
     name: Direction
+    readOnlyHandling: macro
+    regularHandling: runtime
   - label: Intensity
     name: Intensity
+    readOnlyHandling: macro
+    regularHandling: runtime
   - label: Color
     name: Color
+    readOnlyHandling: macro
+    regularHandling: runtime
   - label: Rotate
     name: Rotate
+    readOnlyHandling: macro
+    regularHandling: runtime
   - label: Enable Shadow
     name: Enableshadow
+    readOnlyHandling: constant
+    regularHandling: runtime
   summary: A directional light.
   variables:
   - label: lightdir

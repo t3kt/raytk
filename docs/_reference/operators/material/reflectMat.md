@@ -25,18 +25,30 @@ op:
     name: Enable
   - label: Color
     name: Color
+    readOnlyHandling: macro
+    regularHandling: runtime
     summary: Base color applied to the surface regardless of lights.
   - label: Ks
     name: Ks
+    readOnlyHandling: macro
+    regularHandling: runtime
   - label: Reflection Amount
     name: Reflectionamount
+    readOnlyHandling: macro
+    regularHandling: runtime
   - label: Fresnel
     name: Fresnel
+    readOnlyHandling: macro
+    regularHandling: runtime
   - label: Shine
     name: Shine
+    readOnlyHandling: macro
+    regularHandling: runtime
     summary: Specular exponent, which adjusts the light curve of specular highlights.
   - label: Enable Shadow
     name: Enableshadow
+    readOnlyHandling: macro
+    regularHandling: macro
     summary: Whether to use shadows. When enabled, if the *Shadow Definition* input
       is provided, that will be used. Otherwise a default shadow function will be
       used.

@@ -122,18 +122,32 @@ op:
     - label: Z
       name: z
     name: Axis
+    readOnlyHandling: constant
+    regularHandling: runtime
   - label: Translate
     name: Translate
+    readOnlyHandling: macro
+    regularHandling: runtime
   - label: Radius
     name: Radius
+    readOnlyHandling: macro
+    regularHandling: runtime
   - label: Thickness
     name: Thickness
+    readOnlyHandling: macro
+    regularHandling: runtime
   - label: Spread
     name: Spread
+    readOnlyHandling: macro
+    regularHandling: runtime
   - label: Dual Spread
     name: Dualspread
+    readOnlyHandling: macro
+    regularHandling: runtime
   - label: Reverse
     name: Reverse
+    readOnlyHandling: constant
+    regularHandling: runtime
   summary: SDF for a helix (an elongated spiral).
   thumb: assets/images/reference/operators/sdf/helixSdf_thumb.png
   variables:

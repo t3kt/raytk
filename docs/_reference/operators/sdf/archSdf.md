@@ -124,22 +124,40 @@ op:
   parameters:
   - label: Height
     name: Height
+    readOnlyHandling: macro
+    regularHandling: runtime
   - label: Width
     name: Width
+    readOnlyHandling: macro
+    regularHandling: runtime
   - label: Rounding
     name: Rounding
+    readOnlyHandling: macro
+    regularHandling: runtime
   - label: Enable Panel
     name: Enablepanel
+    readOnlyHandling: constant
+    regularHandling: constant
   - label: Panel Depth
     name: Paneldepth
+    readOnlyHandling: macro
+    regularHandling: runtime
   - label: Enable Frame
     name: Enableframe
+    readOnlyHandling: constant
+    regularHandling: constant
   - label: Frame Thickness
     name: Framethickness
+    readOnlyHandling: macro
+    regularHandling: runtime
   - label: Frame Depth
     name: Framedepth
+    readOnlyHandling: macro
+    regularHandling: runtime
   - label: Hide Frame Bottom
     name: Hideframebottom
+    readOnlyHandling: constant
+    regularHandling: constant
   status: beta
   thumb: assets/images/reference/operators/sdf/archSdf_thumb.png
 

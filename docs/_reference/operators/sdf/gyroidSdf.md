@@ -108,32 +108,52 @@ op:
     summary: Advanced parameter that should usually just be set to `Context`.
   - label: Translate
     name: Translate
+    readOnlyHandling: macro
+    regularHandling: runtime
     summary: Moves the shape as a whole.
   - label: Scale
     name: Scale
+    readOnlyHandling: macro
+    regularHandling: runtime
     summary: Spacing of the shape in each dimension.
   - label: Enable Period
     name: Enableperiod
+    readOnlyHandling: macro
+    regularHandling: macro
     summary: Whether to specify periods for the waves.
   - label: Period 1
     name: Period1
+    readOnlyHandling: macro
+    regularHandling: runtime
     summary: Period of the first waves on each axis.
   - label: Period 2
     name: Period2
+    readOnlyHandling: macro
+    regularHandling: runtime
     summary: Period of the second waves on each axis.
   - label: Enable Phase
     name: Enablephase
+    readOnlyHandling: macro
+    regularHandling: macro
     summary: Whether to specify phase shift for the waves.
   - label: Phase 1
     name: Phase1
+    readOnlyHandling: macro
+    regularHandling: runtime
     summary: Phase shift of the first waves on each axis.
   - label: Phase 2
     name: Phase2
+    readOnlyHandling: macro
+    regularHandling: runtime
     summary: Phase shift of the second waves on each axis.
   - label: Bias
     name: Bias
+    readOnlyHandling: macro
+    regularHandling: runtime
   - label: Thickness
     name: Thickness
+    readOnlyHandling: macro
+    regularHandling: runtime
     summary: Expands the surfaces producing thicker shapes.
   summary: Gyroid shape, which is an infinitely connected periodic surface.
   thumb: assets/images/reference/operators/sdf/gyroidSdf_thumb.png

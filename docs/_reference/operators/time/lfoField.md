@@ -56,6 +56,8 @@ op:
     - label: Frames (Absolute)
       name: frames
     name: Intervaltype
+    readOnlyHandling: macro
+    regularHandling: macro
   - label: Time Source
     menuOptions:
     - label: Global
@@ -65,12 +67,18 @@ op:
     name: Timesource
   - label: Reverse
     name: Reverse
+    readOnlyHandling: constant
+    regularHandling: runtime
   - label: Phase (Fraction)
     name: Phase
   - label: Amplitude
     name: Amplitude
+    readOnlyHandling: macro
+    regularHandling: runtime
   - label: Offset
     name: Offset
+    readOnlyHandling: macro
+    regularHandling: runtime
   - label: Coord Type
     menuOptions:
     - label: Auto

@@ -86,9 +86,13 @@ op:
     name: Enable
   - label: Center
     name: Center
+    readOnlyHandling: macro
+    regularHandling: runtime
     summary: The center point of the stretching.
   - label: Size
     name: Size
+    readOnlyHandling: macro
+    regularHandling: runtime
     summary: The distance that that parts are pushed apart from the origin.
   - label: Axes
     menuOptions:

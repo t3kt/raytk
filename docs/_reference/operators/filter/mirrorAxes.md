@@ -157,6 +157,8 @@ op:
     - label: Negative
       name: neg
     name: Dirx
+    readOnlyHandling: constant
+    regularHandling: constant
   - label: Direction Y
     menuOptions:
     - label: Positive
@@ -164,6 +166,8 @@ op:
     - label: Negative
       name: neg
     name: Diry
+    readOnlyHandling: constant
+    regularHandling: constant
   - label: Direction Z
     menuOptions:
     - label: Positive
@@ -171,6 +175,8 @@ op:
     - label: Negative
       name: neg
     name: Dirz
+    readOnlyHandling: constant
+    regularHandling: constant
   - label: Flip X On Side
     menuOptions:
     - label: None
@@ -188,6 +194,8 @@ op:
     - label: Z-
       name: zneg
     name: Flipsidex
+    readOnlyHandling: constant
+    regularHandling: runtime
   - label: Flip Y On Side
     menuOptions:
     - label: None
@@ -205,6 +213,8 @@ op:
     - label: Z-
       name: zneg
     name: Flipsidey
+    readOnlyHandling: constant
+    regularHandling: runtime
   - label: Flip Z On Side
     menuOptions:
     - label: None
@@ -222,14 +232,24 @@ op:
     - label: Z-
       name: zneg
     name: Flipsidez
+    readOnlyHandling: constant
+    regularHandling: runtime
   - label: Center
     name: Center
+    readOnlyHandling: macro
+    regularHandling: runtime
   - label: Offset
     name: Offset
+    readOnlyHandling: macro
+    regularHandling: runtime
   - label: Enable Blend
     name: Enableblend
+    readOnlyHandling: constant
+    regularHandling: constant
   - label: Blending
     name: Blending
+    readOnlyHandling: macro
+    regularHandling: runtime
   - label: Apply To
     menuOptions:
     - label: Coordinates

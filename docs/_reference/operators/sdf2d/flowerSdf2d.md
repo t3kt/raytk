@@ -70,10 +70,16 @@ op:
   parameters:
   - label: Radius
     name: Radius
+    readOnlyHandling: macro
+    regularHandling: runtime
   - label: Amplitude
     name: Amplitude
+    readOnlyHandling: macro
+    regularHandling: runtime
   - label: Petals
     name: Petals
+    readOnlyHandling: macro
+    regularHandling: runtime
   thumb: assets/images/reference/operators/sdf2d/flowerSdf2d_thumb.png
   variables:
   - label: normangle

@@ -89,21 +89,33 @@ op:
     - label: Z
       name: z
     name: Axis
+    readOnlyHandling: constant
+    regularHandling: runtime
     summary: When the `Noisetype` uses 2D coordinates but `Coordtype` is 3D, this
       is used to choose which plane of the coordinates are used.
   - label: Translate
     name: Translate
+    readOnlyHandling: macro
+    regularHandling: runtime
     summary: Offsets the coordinates used to calculate noise.
   - label: Scale
     name: Scale
+    readOnlyHandling: macro
+    regularHandling: runtime
     summary: Scales the coordinates used to calculate noise.
   - label: Jitter
     name: Jitter
+    readOnlyHandling: macro
+    regularHandling: runtime
   - label: Amplitude
     name: Amplitude
+    readOnlyHandling: macro
+    regularHandling: runtime
     summary: Multiplies the amount produced by the noise.
   - label: Offset
     name: Offset
+    readOnlyHandling: macro
+    regularHandling: runtime
     summary: Offsets (adds to) the amount produced by the noise.
   status: beta
   thumb: assets/images/reference/operators/field/worleyNoiseField_thumb.png

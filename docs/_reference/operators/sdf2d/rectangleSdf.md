@@ -47,9 +47,13 @@ op:
   parameters:
   - label: Translate
     name: Translate
+    readOnlyHandling: macro
+    regularHandling: runtime
     summary: Moves the center of the rectangle.
   - label: Scale
     name: Scale
+    readOnlyHandling: macro
+    regularHandling: runtime
     summary: The size of the rectangle on the x and y axes.
   - label: UV Mode
     menuOptions:
@@ -58,6 +62,8 @@ op:
     - label: XY Fit to Outside
       name: outerxy
     name: Uvmode
+    readOnlyHandling: constant
+    regularHandling: constant
   summary: SDF for a 2D rectangle.
   thumb: assets/images/reference/operators/sdf2d/rectangleSdf_thumb.png
 

@@ -145,8 +145,12 @@ op:
     name: Blendmode
   - label: Blend
     name: Blend
+    readOnlyHandling: macro
+    regularHandling: runtime
   - label: Swap Inputs
     name: Swapinputs
+    readOnlyHandling: macro
+    regularHandling: runtime
   - label: Blend Field
     name: Blendfield
   summary: Combines two vector fields using color compositing.

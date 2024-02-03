@@ -65,12 +65,20 @@ op:
     name: Function
   - label: Period
     name: Period
+    readOnlyHandling: macro
+    regularHandling: runtime
   - label: Phase
     name: Phase
+    readOnlyHandling: macro
+    regularHandling: runtime
   - label: Amplitude
     name: Amplitude
+    readOnlyHandling: macro
+    regularHandling: runtime
   - label: Offset
     name: Offset
+    readOnlyHandling: macro
+    regularHandling: runtime
   status: beta
   thumb: assets/images/reference/operators/field/waveVectorField_thumb.png
 

@@ -141,18 +141,32 @@ op:
     name: Pattern
   - label: Translate
     name: Translate
+    readOnlyHandling: macro
+    regularHandling: runtime
   - label: Size
     name: Size
+    readOnlyHandling: macro
+    regularHandling: runtime
   - label: Thickness
     name: Thickness
+    readOnlyHandling: macro
+    regularHandling: runtime
   - label: Blending
     name: Blending
+    readOnlyHandling: macro
+    regularHandling: runtime
   - label: Poly Color 1
     name: Polycolor1
+    readOnlyHandling: macro
+    regularHandling: runtime
   - label: Poly Color 2
     name: Polycolor2
+    readOnlyHandling: macro
+    regularHandling: runtime
   - label: Poly Color 3
     name: Polycolor3
+    readOnlyHandling: macro
+    regularHandling: runtime
   thumb: assets/images/reference/operators/pattern/hexagonalGridPattern_thumb.png
 
 ---

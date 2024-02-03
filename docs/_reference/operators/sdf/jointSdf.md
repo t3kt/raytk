@@ -86,10 +86,16 @@ op:
     name: Direction
   - label: Length
     name: Length
+    readOnlyHandling: macro
+    regularHandling: runtime
   - label: Thickness
     name: Thickness
+    readOnlyHandling: macro
+    regularHandling: runtime
   - label: Angle
     name: Angle
+    readOnlyHandling: macro
+    regularHandling: runtime
   thumb: assets/images/reference/operators/sdf/jointSdf_thumb.png
 
 ---

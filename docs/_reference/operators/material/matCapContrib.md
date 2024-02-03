@@ -27,14 +27,20 @@ op:
     name: Enable
   - label: Level
     name: Level
+    readOnlyHandling: macro
+    regularHandling: runtime
   - label: Rotate
     name: Rotate
+    readOnlyHandling: macro
+    regularHandling: runtime
   - label: Mat Cap Texture TOP
     name: Texturetop
   - label: Map Cap Texture File
     name: Texturefile
   - label: Enable Shadow
     name: Enableshadow
+    readOnlyHandling: macro
+    regularHandling: macro
   status: beta
 
 ---

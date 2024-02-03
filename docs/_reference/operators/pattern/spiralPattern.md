@@ -30,10 +30,16 @@ op:
   parameters:
   - label: Center
     name: Center
+    readOnlyHandling: macro
+    regularHandling: runtime
   - label: Scale
     name: Scale
+    readOnlyHandling: macro
+    regularHandling: runtime
   - label: Spin
     name: Spin
+    readOnlyHandling: macro
+    regularHandling: runtime
   thumb: assets/images/reference/operators/pattern/spiralPattern_thumb.png
 
 ---

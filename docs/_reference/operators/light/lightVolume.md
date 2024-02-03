@@ -33,18 +33,32 @@ op:
   parameters:
   - label: Level
     name: Level
+    readOnlyHandling: macro
+    regularHandling: runtime
   - label: Color
     name: Color
+    readOnlyHandling: macro
+    regularHandling: runtime
   - label: Use Light Color
     name: Uselightcolor
+    readOnlyHandling: macro
+    regularHandling: macro
   - label: Use Bounds SDF Surface Color
     name: Usesdfcolor
+    readOnlyHandling: macro
+    regularHandling: macro
   - label: Blending
     name: Blending
+    readOnlyHandling: macro
+    regularHandling: runtime
   - label: Offset
     name: Offset
+    readOnlyHandling: macro
+    regularHandling: runtime
   - label: Enable Shadow
     name: Enableshadow
+    readOnlyHandling: macro
+    regularHandling: macro
   status: beta
   thumb: assets/images/reference/operators/light/lightVolume_thumb.png
 

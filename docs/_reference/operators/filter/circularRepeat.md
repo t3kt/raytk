@@ -43,11 +43,17 @@ op:
     - label: ZX
       name: zx
     name: Plane
+    readOnlyHandling: constant
+    regularHandling: constant
   - label: Radius
     name: Radius
+    readOnlyHandling: macro
+    regularHandling: runtime
     summary: Size of the area to fill.
   - label: Cell Size
     name: Cellsize
+    readOnlyHandling: macro
+    regularHandling: runtime
     summary: Spacing between copies.
   status: beta
   summary: Repeat an SDF to fill a 2D circular area.

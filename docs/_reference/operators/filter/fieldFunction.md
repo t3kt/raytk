@@ -113,8 +113,12 @@ op:
     name: Function
   - label: Value 1
     name: Value1
+    readOnlyHandling: macro
+    regularHandling: runtime
   - label: Value 2
     name: Value2
+    readOnlyHandling: macro
+    regularHandling: runtime
   status: beta
 
 ---

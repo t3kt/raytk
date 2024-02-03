@@ -87,14 +87,24 @@ op:
   parameters:
   - label: Shift
     name: Shift
+    readOnlyHandling: macro
+    regularHandling: runtime
   - label: Translate
     name: Translate
+    readOnlyHandling: macro
+    regularHandling: runtime
   - label: Size
     name: Size
+    readOnlyHandling: macro
+    regularHandling: runtime
   - label: Thickness
     name: Thickness
+    readOnlyHandling: macro
+    regularHandling: runtime
   - label: Blending
     name: Blending
+    readOnlyHandling: macro
+    regularHandling: runtime
   thumb: assets/images/reference/operators/pattern/brickPattern_thumb.png
 
 ---

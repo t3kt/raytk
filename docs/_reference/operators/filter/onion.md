@@ -93,9 +93,13 @@ op:
     name: Enable
   - label: Thickness
     name: Thickness
+    readOnlyHandling: macro
+    regularHandling: runtime
     summary: Thickness of the shell, centered on the input surface.
   - label: Iterations
     name: Iterations
+    readOnlyHandling: macro
+    regularHandling: runtime
   - label: Side
     menuOptions:
     - label: Both

@@ -66,12 +66,18 @@ op:
   parameters:
   - label: Translate
     name: Translate
+    readOnlyHandling: macro
+    regularHandling: runtime
     summary: Moves the center of the cross.
   - label: Size
     name: Size
+    readOnlyHandling: macro
+    regularHandling: runtime
     summary: The width of the arms of the cross.
   - label: Smooth Radius
     name: Smoothradius
+    readOnlyHandling: macro
+    regularHandling: runtime
     summary: Smoothing applied to the intersections of the arms.
   - label: Axes
     menuOptions:
@@ -93,6 +99,8 @@ op:
     name: Shape
   - label: Length
     name: Length
+    readOnlyHandling: macro
+    regularHandling: runtime
   summary: An SDF for a 3D cross of infinite length along each axis.
   thumb: assets/images/reference/operators/sdf/crossSdf_thumb.png
 

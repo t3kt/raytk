@@ -68,6 +68,8 @@ op:
     name: Enable
   - label: Color
     name: Color
+    readOnlyHandling: macro
+    regularHandling: runtime
   - label: Assign When
     menuOptions:
     - label: Always

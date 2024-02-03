@@ -49,10 +49,16 @@ op:
     - label: XY
       name: z
     name: Axis
+    readOnlyHandling: constant
+    regularHandling: constant
   - label: Density
     name: Density
+    readOnlyHandling: macro
+    regularHandling: runtime
   - label: Zoom
     name: Zoom
+    readOnlyHandling: macro
+    regularHandling: runtime
   status: beta
   summary: Repeats space in a square arrangement that gets smaller in the center.
   thumb: assets/images/reference/operators/filter/geometricSeriesSquareTile_thumb.png

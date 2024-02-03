@@ -36,14 +36,24 @@ op:
   parameters:
   - label: C 1
     name: C1
+    readOnlyHandling: macro
+    regularHandling: runtime
   - label: C 2
     name: C2
+    readOnlyHandling: macro
+    regularHandling: runtime
   - label: C 3
     name: C3
+    readOnlyHandling: macro
+    regularHandling: runtime
   - label: C 4
     name: C4
+    readOnlyHandling: macro
+    regularHandling: runtime
   - label: Iterations
     name: Iterations
+    readOnlyHandling: constant
+    regularHandling: constant
   status: beta
   thumb: assets/images/reference/operators/sdf/juliaSdf_thumb.png
   variables:

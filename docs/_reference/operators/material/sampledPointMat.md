@@ -65,27 +65,41 @@ op:
     name: Enable
   - label: Enable Fill
     name: Enablefill
+    readOnlyHandling: constant
+    regularHandling: runtime
     summary: Whether to apply a color to points within the shape.
   - label: Fill Color
     name: Fillcolor
+    readOnlyHandling: macro
+    regularHandling: runtime
     summary: The color used within the shape.
   - label: Enable Edge
     name: Enableedge
+    readOnlyHandling: constant
+    regularHandling: runtime
     summary: Whether to apply a color to points that are at/near the surface of the
       shape.
   - label: Edge Color
     name: Edgecolor
+    readOnlyHandling: macro
+    regularHandling: runtime
     summary: The color applied to points at/near the surface.
   - label: Edge Thickness
     name: Edgethickness
+    readOnlyHandling: macro
+    regularHandling: runtime
     summary: The thickness of the area inside/outside the surface where the `Edge
       Color` is applied.
   - label: Blending
     name: Blending
+    readOnlyHandling: macro
+    regularHandling: runtime
     summary: The distance over which to blend between the inside color and the edge
       color.
   - label: Use Local Position
     name: Uselocalpos
+    readOnlyHandling: macro
+    regularHandling: macro
     summary: Whether to use the "local" position relative to the input shape when
       looking up colors using the `Color Field` input. If enabled, the coordinates
       used for the color field will be "before" any downstream transformations are
@@ -93,8 +107,12 @@ op:
       render is used instead.
   - label: Use Surface Color
     name: Usesurfacecolor
+    readOnlyHandling: constant
+    regularHandling: runtime
   - label: Offset
     name: Offset
+    readOnlyHandling: macro
+    regularHandling: runtime
   status: beta
   summary: A material that produces color for volumetric points relative to the input
     shape.

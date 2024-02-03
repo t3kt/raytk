@@ -61,20 +61,32 @@ op:
     name: Enable
   - label: Level
     name: Level
+    readOnlyHandling: macro
+    regularHandling: runtime
   - label: Use Color
     name: Usecolor
     summary: Whether to produce color or just a brightness value.
   - label: Color
     name: Color
+    readOnlyHandling: macro
+    regularHandling: runtime
   - label: Use Surface Color
     name: Usesurfacecolor
+    readOnlyHandling: constant
+    regularHandling: constant
   - label: Enable Shadow
     name: Enableshadow
+    readOnlyHandling: macro
+    regularHandling: macro
     summary: Whether to apply the shadow to the color/level produced by this element.
   - label: Thickness
     name: Thickness
+    readOnlyHandling: macro
+    regularHandling: runtime
   - label: Blending
     name: Blending
+    readOnlyHandling: macro
+    regularHandling: runtime
   status: beta
   thumb: assets/images/reference/operators/material/rimContrib_thumb.png
   variables:

@@ -170,14 +170,24 @@ op:
     - label: Distance From Origin
       name: dist
     name: Axis
+    readOnlyHandling: constant
+    regularHandling: constant
   - label: Edge
     name: Edge
+    readOnlyHandling: macro
+    regularHandling: runtime
   - label: Reverse
     name: Reverse
+    readOnlyHandling: constant
+    regularHandling: constant
   - label: Enable Blend
     name: Enableblend
+    readOnlyHandling: constant
+    regularHandling: constant
   - label: Blend
     name: Blend
+    readOnlyHandling: macro
+    regularHandling: runtime
   - label: Return Type
     menuOptions:
     - label: Float
@@ -187,9 +197,13 @@ op:
     name: Returntype
   - label: Low Value
     name: Value1
+    readOnlyHandling: macro
+    regularHandling: runtime
     summary: Value used when below `Edge`
   - label: High Value
     name: Value2
+    readOnlyHandling: macro
+    regularHandling: runtime
     summary: Value used when above `Edge`
   - name: Contexttype
   summary: A field that switches between two values at a threshold point.

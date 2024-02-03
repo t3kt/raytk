@@ -88,23 +88,35 @@ op:
       which uses the `Begin` and `End` parameters to generate different shapes.
   - label: Begin
     name: Begin
+    readOnlyHandling: macro
+    regularHandling: runtime
     summary: Only used when the `Custom` shape. It's a bit hard to describe, so it's
       best to just experiment with it and see how it behaves.
   - label: End
     name: End
+    readOnlyHandling: macro
+    regularHandling: runtime
     summary: Used along with `Begin`.
   - label: Translate
     name: Translate
+    readOnlyHandling: macro
+    regularHandling: runtime
     summary: Shifts the center of the shape.
   - label: Radius
     name: Radius
+    readOnlyHandling: macro
+    regularHandling: runtime
     summary: The size of the shape.
   - label: Use Exponent
     name: Useexponent
+    readOnlyHandling: constant
+    regularHandling: constant
     summary: Enables the use of the `Exponent`, which controls the sharpness of the
       edges. When this is switched off, the shape will have sharp edges.
   - label: Exponent
     name: Exponent
+    readOnlyHandling: macro
+    regularHandling: runtime
     summary: Controls the sharpness or smoothness of the edges.
   summary: Generates one of several different types of polyhedra.
   thumb: assets/images/reference/operators/sdf/generalizedPolyhedronSdf_thumb.png

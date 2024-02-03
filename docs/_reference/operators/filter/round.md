@@ -61,6 +61,8 @@ op:
   parameters:
   - label: Amount
     name: Amount
+    readOnlyHandling: macro
+    regularHandling: runtime
     summary: positive numbers increase and round out the shape, negative numbers shrink
       it.
   - name: Usefield

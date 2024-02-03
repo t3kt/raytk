@@ -101,21 +101,31 @@ op:
     name: Direction
   - label: Plane Normal
     name: Planenormal
+    readOnlyHandling: macro
+    regularHandling: runtime
     summary: Vector that the cut plane faces. Note that this is only a direction and
       not a position in space.
   - label: Offset
     name: Offset
+    readOnlyHandling: macro
+    regularHandling: runtime
     summary: Moves the reflection plane along the normal that it faces.
   - label: Shift
     name: Shift
+    readOnlyHandling: macro
+    regularHandling: runtime
     summary: Moves the whole resulting shape along the normal.
   - name: Exposeiteration
     summary: Whether to expose which side of the plane a point is on as an iteration
       value for upstream ops.
   - label: Enable Blend
     name: Enableblend
+    readOnlyHandling: constant
+    regularHandling: constant
   - label: Blending
     name: Blend
+    readOnlyHandling: macro
+    regularHandling: runtime
   - label: Iteration Type
     menuOptions:
     - label: None
@@ -125,6 +135,8 @@ op:
     - label: Signed (-1/1)
       name: sign
     name: Iterationtype
+    readOnlyHandling: constant
+    regularHandling: constant
   shortcuts:
   - ref
   summary: Reflects space across a plane.

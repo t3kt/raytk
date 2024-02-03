@@ -146,13 +146,19 @@ op:
     summary: The number of sides of the prism.
   - label: Translate
     name: Translate
+    readOnlyHandling: macro
+    regularHandling: runtime
     summary: Moves the center of the prism.
   - label: Radius
     name: Radius
+    readOnlyHandling: macro
+    regularHandling: runtime
     summary: The radius of the prism. If the radius field input is connected, this
       is not used.
   - label: Height
     name: Height
+    readOnlyHandling: macro
+    regularHandling: runtime
     summary: The height / length of the prism. If the height field input, this is
       not used.
   - label: Axis
@@ -164,16 +170,28 @@ op:
     - label: Z
       name: z
     name: Axis
+    readOnlyHandling: constant
+    regularHandling: runtime
   - label: Sides
     name: Sides
+    readOnlyHandling: macro
+    regularHandling: runtime
   - label: Rounding
     name: Rounding
+    readOnlyHandling: macro
+    regularHandling: runtime
   - label: Infinite Height
     name: Infiniteheight
+    readOnlyHandling: constant
+    regularHandling: runtime
   - label: Hollow
     name: Hollow
+    readOnlyHandling: constant
+    regularHandling: runtime
   - label: Thickness
     name: Thickness
+    readOnlyHandling: macro
+    regularHandling: runtime
   - label: UV Mode
     menuOptions:
     - label: Cylindrical
@@ -183,6 +201,8 @@ op:
     - label: Faces
       name: faces
     name: Uvmode
+    readOnlyHandling: constant
+    regularHandling: constant
   summary: A prism shape, like a cylinder but with flat sides, along the z axis.
   thumb: assets/images/reference/operators/sdf/prismSdf_thumb.png
   variables:

@@ -47,10 +47,16 @@ op:
   parameters:
   - label: Width
     name: Width
+    readOnlyHandling: macro
+    regularHandling: runtime
   - label: Height
     name: Height
+    readOnlyHandling: macro
+    regularHandling: runtime
   - label: Skew
     name: Skew
+    readOnlyHandling: macro
+    regularHandling: runtime
   thumb: assets/images/reference/operators/sdf2d/parallelogramSdf2d_thumb.png
 
 ---

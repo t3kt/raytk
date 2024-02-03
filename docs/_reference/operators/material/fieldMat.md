@@ -39,6 +39,8 @@ op:
     name: Enable
   - label: Use Local Position
     name: Uselocalpos
+    readOnlyHandling: macro
+    regularHandling: macro
     summary: Whether to use the "local" position relative to the input shape when
       looking up colors using the `Color Field` input. If enabled, the coordinates
       used for the color field will be "before" any downstream transformations are
@@ -46,6 +48,8 @@ op:
       render is used instead.
   - label: Use Light Color
     name: Uselightcolor
+    readOnlyHandling: macro
+    regularHandling: macro
   status: deprecated
   summary: 'A material that uses a vector field input to determine
 

@@ -21,13 +21,21 @@ op:
   parameters:
   - label: Level
     name: Level
+    readOnlyHandling: macro
+    regularHandling: runtime
     summary: The general intensity of the color.
   - label: Ks
     name: Ks
+    readOnlyHandling: macro
+    regularHandling: runtime
   - label: Fresnel
     name: Fresnel
+    readOnlyHandling: macro
+    regularHandling: runtime
   - label: Enable Shadow
     name: Enableshadow
+    readOnlyHandling: macro
+    regularHandling: macro
     summary: Whether to apply the shadow to the color/level produced by this element.
   status: beta
   summary: A material element that produces color based on light reflected from other

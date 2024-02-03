@@ -32,8 +32,12 @@ op:
   parameters:
   - label: Translate
     name: Translate
+    readOnlyHandling: macro
+    regularHandling: runtime
   - label: Size
     name: Size
+    readOnlyHandling: macro
+    regularHandling: runtime
   summary: Checkerboard pattern with alternating black and white rectangles.
   thumb: assets/images/reference/operators/pattern/checkerPattern_thumb.png
 

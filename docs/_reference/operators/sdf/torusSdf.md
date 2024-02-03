@@ -100,18 +100,32 @@ op:
     - label: Z
       name: z
     name: Axis
+    readOnlyHandling: constant
+    regularHandling: constant
   - label: Radius
     name: Radius
+    readOnlyHandling: macro
+    regularHandling: runtime
   - label: Thickness
     name: Thickness
+    readOnlyHandling: macro
+    regularHandling: runtime
   - label: Translate
     name: Translate
+    readOnlyHandling: macro
+    regularHandling: runtime
   - label: Enable Caps
     name: Enablecaps
+    readOnlyHandling: constant
+    regularHandling: constant
   - label: Angle Width
     name: Anglewidth
+    readOnlyHandling: macro
+    regularHandling: runtime
   - label: Angle Offset
     name: Angleoffset
+    readOnlyHandling: macro
+    regularHandling: runtime
   - label: UV Mode
     menuOptions:
     - label: None
@@ -119,6 +133,8 @@ op:
     - label: Torus
       name: torus
     name: Uvmode
+    readOnlyHandling: constant
+    regularHandling: constant
   summary: SDF for a torus.
   thumb: assets/images/reference/operators/sdf/torusSdf_thumb.png
   variables:

@@ -185,8 +185,12 @@ op:
     name: Enablecustomoutput2
   - label: Enable Normal Smoothing
     name: Enablenormalsmoothing
+    readOnlyHandling: macro
+    regularHandling: macro
   - label: Normal Smoothing
     name: Normalsmoothing
+    readOnlyHandling: macro
+    regularHandling: runtime
   - label: Material Mode
     menuOptions:
     - label: Only Inside SDF

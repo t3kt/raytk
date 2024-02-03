@@ -110,14 +110,20 @@ op:
     name: Enable
   - label: Size
     name: Size
+    readOnlyHandling: macro
+    regularHandling: runtime
     summary: The spacing of the grid along each axis, which is also the size of the
       cell that is taken from the input.
   - label: Offset
     name: Offset
+    readOnlyHandling: macro
+    regularHandling: runtime
     summary: Shifts where the input cell is taken from without moving the position
       of the grid.
   - label: Shift
     name: Shift
+    readOnlyHandling: macro
+    regularHandling: runtime
     summary: Shifts the whole grid (and its contents).
   - label: Limit Type
     menuOptions:
@@ -143,6 +149,8 @@ op:
     - label: Mirror
       name: mirror
     name: Mirrortype
+    readOnlyHandling: constant
+    regularHandling: constant
   - label: Iteration Type
     menuOptions:
     - label: None
@@ -152,6 +160,8 @@ op:
     - label: Alternating Cell Coordinate (0,1,0,1)
       name: alternatingcoord
     name: Iterationtype
+    readOnlyHandling: constant
+    regularHandling: constant
   shortcuts:
   - m3
   summary: Repeats space along all 3 axes.

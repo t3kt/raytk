@@ -133,19 +133,29 @@ op:
     name: Coordtype
   - label: Center
     name: Center
+    readOnlyHandling: macro
+    regularHandling: runtime
     summary: Center position of the ball.
   - label: Radius
     name: Radius
+    readOnlyHandling: macro
+    regularHandling: runtime
     summary: Radius of the ball on each axis. In 2D mode, only x and y are used. In
       1D only x is used.
   - label: Radius Scale
     name: Radiusscale
+    readOnlyHandling: macro
+    regularHandling: runtime
     summary: Scales the radius on all axes.
   - label: Weight
     name: Weight
+    readOnlyHandling: macro
+    regularHandling: runtime
     summary: The returned values are multiplied by this.
   - label: Exponent
     name: Exponent
+    readOnlyHandling: macro
+    regularHandling: runtime
     summary: Controls the shape of the ball by applying exponential scaling to coordinates.
   summary: Metaball value field.
   thumb: assets/images/reference/operators/field/metaballField_thumb.png

@@ -65,9 +65,13 @@ op:
     summary: Which side of the cut to keep.
   - label: Offset
     name: Offset
+    readOnlyHandling: macro
+    regularHandling: runtime
     summary: Shifts the cut plane along the axis that it faces.
   - label: Rotate Plane
     name: Rotateplane
+    readOnlyHandling: macro
+    regularHandling: runtime
     summary: Rotate the cut plane in XYZ. When in 2D, only the Z rotation is used.
   - label: Direction
     menuOptions:
@@ -80,10 +84,14 @@ op:
     name: Axis
   - label: Enable Smoothing
     name: Enablesmoothing
+    readOnlyHandling: constant
+    regularHandling: runtime
     summary: Whether to smooth the transition on each side of the slice down to a
       size of zero.
   - label: Smooth Radius
     name: Smoothradius
+    readOnlyHandling: macro
+    regularHandling: runtime
     summary: The amount of smoothing distance.
   summary: Cuts off an SDF along a plane.
   thumb: assets/images/reference/operators/filter/knife_thumb.png

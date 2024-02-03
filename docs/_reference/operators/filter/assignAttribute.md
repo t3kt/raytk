@@ -64,6 +64,8 @@ op:
     name: Datatype
   - label: Value
     name: Value
+    readOnlyHandling: macro
+    regularHandling: runtime
   status: beta
   variables:
   - label: previous

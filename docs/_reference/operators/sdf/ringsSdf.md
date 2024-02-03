@@ -109,6 +109,8 @@ op:
     - label: XY
       name: z
     name: Axis
+    readOnlyHandling: constant
+    regularHandling: constant
     summary: Axis that faces the plane where coordinates are mirrored.
   - label: Shape
     menuOptions:
@@ -121,10 +123,16 @@ op:
     name: Shape
   - label: Spacing
     name: Spacing
+    readOnlyHandling: macro
+    regularHandling: runtime
   - label: Offset
     name: Shift
+    readOnlyHandling: macro
+    regularHandling: runtime
   - label: Thickness
     name: Thickness
+    readOnlyHandling: macro
+    regularHandling: runtime
   variables:
   - label: angle
     name: angle

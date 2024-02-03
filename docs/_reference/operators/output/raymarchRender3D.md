@@ -83,10 +83,14 @@ op:
     summary: Rendering resolution
   - label: Anti Alias
     name: Antialias
+    readOnlyHandling: macro
+    regularHandling: macro
     summary: Number of antialiasing steps. Increasing this improves render quality
       but can be costly.
   - label: Use Render Depth
     name: Userenderdepth
+    readOnlyHandling: macro
+    regularHandling: runtime
     summary: Whether to use the provided Render TOP for a base depth.
   - label: Overlay Render
     name: Overlayrender
@@ -96,18 +100,26 @@ op:
     summary: Connect a Render TOP to mix with the scene based on depth.
   - label: Max Steps
     name: Maxsteps
+    readOnlyHandling: constant
+    regularHandling: constant
     summary: Maximum number of marching steps.
   - label: Surface Distance
     name: Surfdist
+    readOnlyHandling: constant
+    regularHandling: constant
     summary: Minimum surface distance. Smaller values increase accuracy at the cost
       of performance.
   - label: Max Distance
     name: Maxdist
+    readOnlyHandling: constant
+    regularHandling: constant
     summary: Maximum distance. Rays that don't hit anything will stop at this distance.
       If this is too high, rays that don't hit anything will continue for a long time,
       causing a performance drain.
   - label: Near Hit Range
     name: Nearhitrange
+    readOnlyHandling: macro
+    regularHandling: runtime
     summary: Advanced feature, not ready for use.
   - label: Time Reference Operator
     name: Timerefop
@@ -117,9 +129,13 @@ op:
     summary: Whether to limit the space of the scene to a box, for performance improvements.
   - label: Limit Box Minimum
     name: Limitboxmin
+    readOnlyHandling: macro
+    regularHandling: runtime
     summary: Minimum bounds of the scene limit box.
   - label: Limit Box Maximum
     name: Limitboxmax
+    readOnlyHandling: macro
+    regularHandling: runtime
     summary: Maximum bounds of the scene limit box.
   - label: Shader Builder Config
     name: Shaderbuilderconfig
@@ -221,16 +237,28 @@ op:
     name: Format
   - label: Enable Reflection
     name: Enablereflection
+    readOnlyHandling: macro
+    regularHandling: macro
   - label: Reflection Passes
     name: Reflectionpasses
+    readOnlyHandling: constant
+    regularHandling: constant
   - label: Enable Shadow
     name: Enableshadow
+    readOnlyHandling: macro
+    regularHandling: macro
   - label: Enable Near Hit Minimum Dist
     name: Enablenearhitmindist
+    readOnlyHandling: constant
+    regularHandling: constant
   - label: Near Hit Minimum Distance
     name: Nearhitmindist
+    readOnlyHandling: macro
+    regularHandling: runtime
   - label: Near Hit Fade
     name: Nearhitfade
+    readOnlyHandling: macro
+    regularHandling: runtime
   - label: Enable Color Output
     name: Enablecoloroutput
   - label: Format
@@ -243,8 +271,12 @@ op:
     name: Headerrefraction
   - label: Enable Refraction
     name: Enablerefraction
+    readOnlyHandling: macro
+    regularHandling: macro
   - label: Refraction Passes
     name: Refractionpasses
+    readOnlyHandling: constant
+    regularHandling: constant
   - label: Refraction Ray Cast
     name: Refractionraycast
   - label: Background
@@ -253,8 +285,12 @@ op:
     name: Backgroundfield
   - label: Use Background Field Alpha
     name: Usebackgroundfieldalpha
+    readOnlyHandling: constant
+    regularHandling: constant
   - label: Show Background
     name: Showbackground
+    readOnlyHandling: macro
+    regularHandling: runtime
   - label: Shadow
     name: Headershadow
   - label: Shadow
@@ -263,6 +299,8 @@ op:
     name: Headerraymarching
   - label: Distance Correction Factor
     name: Distfactor
+    readOnlyHandling: macro
+    regularHandling: runtime
   - label: Limits
     name: Headerlimits
   - label: Near Hit
@@ -271,8 +309,12 @@ op:
     name: Headernormals
   - label: Enable Normal Smoothing
     name: Enablenormalsmoothing
+    readOnlyHandling: macro
+    regularHandling: macro
   - label: Normal Smoothing
     name: Normalsmoothing
+    readOnlyHandling: macro
+    regularHandling: runtime
   - label: Volumetrics
     name: Headervolumetrics
   - label: Enable Secondary Ray Cast

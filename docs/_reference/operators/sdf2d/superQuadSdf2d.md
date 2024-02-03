@@ -46,8 +46,12 @@ op:
   parameters:
   - label: Radius
     name: Radius
+    readOnlyHandling: macro
+    regularHandling: runtime
   - label: Exponent
     name: Exponent
+    readOnlyHandling: macro
+    regularHandling: runtime
   thumb: assets/images/reference/operators/sdf2d/superQuadSdf2d_thumb.png
 
 ---

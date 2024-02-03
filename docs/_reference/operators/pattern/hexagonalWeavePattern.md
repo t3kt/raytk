@@ -148,18 +148,32 @@ op:
     - label: Two Layer
       name: twolayer
     name: Pattern
+    readOnlyHandling: macro
+    regularHandling: macro
   - label: Translate
     name: Translate
+    readOnlyHandling: macro
+    regularHandling: runtime
   - label: Size
     name: Size
+    readOnlyHandling: macro
+    regularHandling: runtime
   - label: Thickness
     name: Thickness
+    readOnlyHandling: macro
+    regularHandling: runtime
   - label: Blending
     name: Blending
+    readOnlyHandling: macro
+    regularHandling: runtime
   - label: Randomize
     name: Randomize
+    readOnlyHandling: macro
+    regularHandling: macro
   - label: Seed
     name: Seed
+    readOnlyHandling: macro
+    regularHandling: runtime
   - label: Format
     menuOptions:
     - label: Color
@@ -167,12 +181,20 @@ op:
     - label: Custom Override Color
       name: customcolor
     name: Format
+    readOnlyHandling: macro
+    regularHandling: macro
   - label: Color 1
     name: Color1
+    readOnlyHandling: macro
+    regularHandling: runtime
   - label: Color 2
     name: Color2
+    readOnlyHandling: macro
+    regularHandling: runtime
   - label: Background Color
     name: Bgcolor
+    readOnlyHandling: macro
+    regularHandling: runtime
   thumb: assets/images/reference/operators/pattern/hexagonalWeavePattern_thumb.png
   variables:
   - label: axialdist

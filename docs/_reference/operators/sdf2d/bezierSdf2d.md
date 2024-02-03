@@ -89,12 +89,20 @@ op:
   parameters:
   - label: Point A
     name: Pointa
+    readOnlyHandling: macro
+    regularHandling: runtime
   - label: Point B
     name: Pointb
+    readOnlyHandling: macro
+    regularHandling: runtime
   - label: Point C
     name: Pointc
+    readOnlyHandling: macro
+    regularHandling: runtime
   - label: Radius
     name: Radius
+    readOnlyHandling: macro
+    regularHandling: runtime
   thumb: assets/images/reference/operators/sdf2d/bezierSdf2d_thumb.png
   variables:
   - label: normoffset

@@ -16,12 +16,20 @@ op:
   parameters:
   - label: Translate
     name: Translate
+    readOnlyHandling: macro
+    regularHandling: runtime
   - label: Scale
     name: Scale
+    readOnlyHandling: macro
+    regularHandling: runtime
   - label: S
     name: S
+    readOnlyHandling: macro
+    regularHandling: runtime
   - label: Iterations
     name: Iterations
+    readOnlyHandling: constant
+    regularHandling: constant
   thumb: assets/images/reference/operators/sdf/apollonianSdf_thumb.png
 
 ---

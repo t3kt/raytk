@@ -110,19 +110,29 @@ op:
     - label: Z
       name: z
     name: Axis
+    readOnlyHandling: constant
+    regularHandling: constant
     summary: The axis around which to rotate the copies.
   - label: Count
     name: Count
+    readOnlyHandling: macro
+    regularHandling: runtime
     summary: The number of copies. The performance cost of the input is multiplied
       by this number.
   - label: Angle Range
     name: Anglerange
+    readOnlyHandling: macro
+    regularHandling: runtime
     summary: The angle spread around the axis, where the copies are distributed.
   - label: Angle Offset
     name: Angleoffset
+    readOnlyHandling: macro
+    regularHandling: runtime
     summary: Shifts the angle of the first copy around the axis.
   - label: Radius Offset
     name: Radiusoffset
+    readOnlyHandling: macro
+    regularHandling: runtime
     summary: Offsets the copies towards/away from the axis. At zero, all copies will
       be centered on the axis.
   - label: Merge Type
@@ -177,6 +187,8 @@ op:
       label: Clone Index
       name: index
     name: Iterationtype
+    readOnlyHandling: constant
+    regularHandling: constant
     summary: Whether and how to expose iteration values to upstream operators.
   - label: Merge Number
     name: Mergenumber

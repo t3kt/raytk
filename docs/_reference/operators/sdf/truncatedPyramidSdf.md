@@ -72,15 +72,25 @@ op:
     - label: Z
       name: z
     name: Axis
+    readOnlyHandling: constant
+    regularHandling: runtime
   - label: Translate
     name: Translate
+    readOnlyHandling: macro
+    regularHandling: runtime
     summary: Moves the center of the base of the pyramid.
   - label: Top Size
     name: Topsize
+    readOnlyHandling: macro
+    regularHandling: runtime
   - label: Bottom Size
     name: Bottomsize
+    readOnlyHandling: macro
+    regularHandling: runtime
   - label: Height
     name: Height
+    readOnlyHandling: macro
+    regularHandling: runtime
   thumb: assets/images/reference/operators/sdf/truncatedPyramidSdf_thumb.png
   variables:
   - label: normoffset

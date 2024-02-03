@@ -13,6 +13,8 @@ op:
   parameters:
   - label: Level
     name: Level
+    readOnlyHandling: macro
+    regularHandling: runtime
   summary: Accesses color from the background field of the renderer, which is based
     on the surface normal, for use in a modularMat.
 

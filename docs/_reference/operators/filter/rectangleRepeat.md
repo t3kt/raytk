@@ -45,10 +45,16 @@ op:
     - label: ZX
       name: zx
     name: Plane
+    readOnlyHandling: constant
+    regularHandling: constant
   - label: Grid Size
     name: Gridsize
+    readOnlyHandling: macro
+    regularHandling: runtime
   - label: Spacing
     name: Spacing
+    readOnlyHandling: macro
+    regularHandling: runtime
   status: beta
   thumb: assets/images/reference/operators/filter/rectangleRepeat_thumb.png
 

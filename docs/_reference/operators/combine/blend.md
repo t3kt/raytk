@@ -125,11 +125,15 @@ op:
     name: Enable
   - label: Blend
     name: Blend
+    readOnlyHandling: macro
+    regularHandling: runtime
     summary: Which input or combination of inputs to use. If this value is 0, the
       first connected input is used. 0.5 is half way between the first and second
       connected inputs, etc.
   - label: Use Last Input As Switch
     name: Usefield
+    readOnlyHandling: macro
+    regularHandling: macro
     summary: Whether to use the 4th input as a field to determine the blending, instead
       of using it as just another input.
   - label: Blend Source

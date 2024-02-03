@@ -32,6 +32,8 @@ op:
   parameters:
   - label: Wavelength
     name: Wavelength
+    readOnlyHandling: macro
+    regularHandling: runtime
   - label: Wavelength Unit
     menuOptions:
     - label: Normalized (0..1)

@@ -49,26 +49,48 @@ op:
     name: Extend
   - label: Blend Indices
     name: Blendindices
+    readOnlyHandling: constant
+    regularHandling: runtime
   - label: Offset
     name: Offset
+    readOnlyHandling: macro
+    regularHandling: runtime
   - label: Count
     name: Count
+    readOnlyHandling: macro
+    regularHandling: runtime
   - label: Color 1
     name: Color1
+    readOnlyHandling: macro
+    regularHandling: runtime
   - label: Color 2
     name: Color2
+    readOnlyHandling: macro
+    regularHandling: runtime
   - label: Color 3
     name: Color3
+    readOnlyHandling: macro
+    regularHandling: runtime
   - label: Color 4
     name: Color4
+    readOnlyHandling: macro
+    regularHandling: runtime
   - label: Color 5
     name: Color5
+    readOnlyHandling: macro
+    regularHandling: runtime
   - label: Color 6
     name: Color6
+    readOnlyHandling: macro
+    regularHandling: runtime
   - label: Color 7
     name: Color7
+    readOnlyHandling: macro
+    regularHandling: runtime
   - label: Color 8
     name: Color8
+    readOnlyHandling: macro
+    regularHandling: runtime
   - label: Index Mode
     menuOptions:
     - label: Index (0 .. N-1)

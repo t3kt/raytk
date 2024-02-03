@@ -15,25 +15,43 @@ op:
     name: Enable
   - label: Level
     name: Level
+    readOnlyHandling: macro
+    regularHandling: runtime
   - label: Density
     name: Density
+    readOnlyHandling: macro
+    regularHandling: runtime
   - label: Exponent
     name: Exponent
+    readOnlyHandling: macro
+    regularHandling: runtime
   - label: Scatter
     name: Scatter
+    readOnlyHandling: macro
+    regularHandling: runtime
   - label: Offset
     name: Offset
+    readOnlyHandling: macro
+    regularHandling: runtime
   - label: Thickness
     name: Thickness
+    readOnlyHandling: macro
+    regularHandling: runtime
   - label: Use Color
     name: Usecolor
     summary: Whether to produce color or just a brightness value.
   - label: Color
     name: Color
+    readOnlyHandling: macro
+    regularHandling: runtime
   - label: Samples
     name: Samples
+    readOnlyHandling: constant
+    regularHandling: constant
   - label: Max Steps
     name: Maxsteps
+    readOnlyHandling: constant
+    regularHandling: constant
   status: beta
 
 ---

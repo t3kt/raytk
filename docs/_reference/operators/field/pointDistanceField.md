@@ -58,6 +58,8 @@ op:
   parameters:
   - label: Center
     name: Center
+    readOnlyHandling: macro
+    regularHandling: runtime
     summary: The point from which distance is measured.
   - label: Coord Type
     menuOptions:

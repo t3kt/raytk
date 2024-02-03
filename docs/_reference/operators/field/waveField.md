@@ -161,6 +161,8 @@ op:
       label: Distance From Origin
       name: dist
     name: Axis
+    readOnlyHandling: constant
+    regularHandling: constant
     summary: Axis used for the wave function phase. If there is a coordinate field,
       this controls which part of the returned value is used. Otherwise it controls
       which part of the position in used.
@@ -183,10 +185,14 @@ op:
     summary: Offset of the wave along the axis / coordinates.
   - label: Amplitude
     name: Amplitude
+    readOnlyHandling: macro
+    regularHandling: runtime
     summary: The height of the wave, which scales the range of output values. If this
       is set to 3 (and `Offset` is 0), a ramp wave will produce values from 0 to 3.
   - label: Offset
     name: Offset
+    readOnlyHandling: macro
+    regularHandling: runtime
     summary: Adds to the values produced by the wave. If this is set to 0.5 (and `Amplitude`
       is set to 1), a ramp wave will produce values from 0.5 to 1.5.
   - name: Contexttype

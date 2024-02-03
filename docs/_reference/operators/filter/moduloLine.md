@@ -43,10 +43,16 @@ op:
     name: Enable
   - label: Point 1
     name: Point1
+    readOnlyHandling: macro
+    regularHandling: runtime
   - label: Point 2
     name: Point2
+    readOnlyHandling: macro
+    regularHandling: runtime
   - label: Divisions
     name: Divisions
+    readOnlyHandling: macro
+    regularHandling: runtime
   - label: Mirror Type
     menuOptions:
     - label: None

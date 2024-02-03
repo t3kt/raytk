@@ -71,6 +71,8 @@ op:
     name: Mode
   - label: Mix
     name: Mix
+    readOnlyHandling: macro
+    regularHandling: runtime
     summary: Mix between the original distance and the original distance.
   status: beta
   variables:

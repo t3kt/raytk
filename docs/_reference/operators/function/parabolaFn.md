@@ -29,6 +29,8 @@ op:
   parameters:
   - label: Exponent
     name: Exponent
+    readOnlyHandling: macro
+    regularHandling: runtime
   thumb: assets/images/reference/operators/function/parabolaFn_thumb.png
 
 ---

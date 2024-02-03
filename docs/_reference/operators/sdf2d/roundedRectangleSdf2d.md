@@ -53,9 +53,13 @@ op:
   parameters:
   - label: Scale
     name: Scale
+    readOnlyHandling: macro
+    regularHandling: runtime
     summary: The size of the rectangle along the X and Y axes.
   - label: Roundness
     name: Roundness
+    readOnlyHandling: macro
+    regularHandling: runtime
     summary: The distance of rounding for each of the four corners. When the roundness
       exceeds half the `Scale`, the rectangle will have discontinuities along the
       axes.

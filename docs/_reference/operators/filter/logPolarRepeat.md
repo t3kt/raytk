@@ -96,14 +96,24 @@ op:
     - label: XY
       name: z
     name: Axis
+    readOnlyHandling: constant
+    regularHandling: constant
   - label: Rho Offset
     name: Rhooffset
+    readOnlyHandling: macro
+    regularHandling: runtime
   - label: Theta Offset
     name: Thetaoffset
+    readOnlyHandling: macro
+    regularHandling: runtime
   - label: Radial Repetitions
     name: Radialreps
+    readOnlyHandling: macro
+    regularHandling: runtime
   - label: Distance Spacing
     name: Distspacing
+    readOnlyHandling: macro
+    regularHandling: runtime
   - label: Mirror Type
     menuOptions:
     - label: None
@@ -113,6 +123,8 @@ op:
     - label: Grid
       name: grid
     name: Mirrortype
+    readOnlyHandling: constant
+    regularHandling: constant
   - label: Iteration Type
     menuOptions:
     - label: None
@@ -124,6 +136,8 @@ op:
     - label: Cell Coordinate for Distance and Ratio for Radial
       name: cellcoordandratio
     name: Iterationtype
+    readOnlyHandling: constant
+    regularHandling: constant
   status: beta
   thumb: assets/images/reference/operators/filter/logPolarRepeat_thumb.png
   variables:

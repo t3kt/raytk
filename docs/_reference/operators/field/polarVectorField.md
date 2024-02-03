@@ -61,10 +61,16 @@ op:
   parameters:
   - label: Theta Offset
     name: Thetaoffset
+    readOnlyHandling: macro
+    regularHandling: runtime
   - label: Phi Offset
     name: Phioffset
+    readOnlyHandling: macro
+    regularHandling: runtime
   - label: Length
     name: Length
+    readOnlyHandling: macro
+    regularHandling: runtime
   thumb: assets/images/reference/operators/field/polarVectorField_thumb.png
 
 ---
