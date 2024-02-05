@@ -714,8 +714,73 @@ class OpDocManager:
 				paramHelp = paramHelps.get(tupletName)
 				if not paramHelp:
 					continue
-				paramHelp.regularHandling = regularVal
-				paramHelp.readOnlyHandling = readOnlyVal
+				paramHelp.regularHandling = self._convertHandlingValue(regularVal)
+				paramHelp.readOnlyHandling = self._convertHandlingValue(readOnlyVal)
+
+	@staticmethod
+	def _convertHandlingValue(val: str):
+		if val == 'macro':
+			return 'baked'
+		elif val == 'constant':
+			return 'semibaked'
+		elif val == 'runtime':
+			return 'runtime'
+		return ''
+
+	def _pullParamHandlingFromOpElementsInto(self, ropHelp: ROPHelp):
+		if not self.info.isROP:
+			return
+		paramHelps = {
+			paramHelp.name: paramHelp
+			for paramHelp in ropHelp.parameters
+		}
+		elementTable = self.info.opDef.op('opElements')
+		if elementTable.numRows < 2:
+			return
+		for i in range(1, elementTable.numRows):
+			elementRoot = op(elementTable[i, 'elementRoot'])
+			self._pullParamHandlingFromOpElement(elementRoot, paramHelps)
+
+	@staticmethod
+	def _pullParamHandlingFromOpElement(elementRoot: COMP, paramHelps: dict[str, ROPParamHelp]):
+		if not elementRoot:
+			return
+		master = elementRoot.par.clone.eval()
+		if not master:
+			return
+		if master.name == 'codeSwitcher':
+			switcher = elementRoot
+		elif master.name in ('waveFunction', 'combiner'):
+			switcher = elementRoot.op('codeSwitcher')
+		elif master.name == 'transformTarget':
+			switcher = elementRoot.op('codeSwitcher_Target')
+		else:
+			return
+		if not switcher:
+			return
+		paramHelp = paramHelps.get(switcher.par.Param.eval())
+		if not paramHelp:
+			return
+		if paramHelp.regularHandling is not None:
+			return
+		mode = switcher.par.Switchmode.eval()
+		if mode == 'none':
+			pass
+		elif mode == 'switch':
+			paramHelp.regularHandling = 'runtime'
+			paramHelp.readOnlyHandling = 'runtime'
+		elif mode == 'constswitch':
+			paramHelp.regularHandling = 'semibaked'
+			paramHelp.readOnlyHandling = 'semibaked'
+		elif mode == 'inline':
+			paramHelp.regularHandling = 'baked'
+			paramHelp.readOnlyHandling = 'baked'
+		elif mode == 'auto':
+			paramHelp.regularHandling = 'runtime'
+			paramHelp.readOnlyHandling = 'baked'
+		elif mode == 'autoconst':
+			paramHelp.regularHandling = 'runtime'
+			paramHelp.readOnlyHandling = 'semibaked'
 
 	def _pullFromMissingInputsInto(self, ropHelp: ROPHelp):
 		inHelps = ropHelp.inputs
@@ -750,6 +815,7 @@ class OpDocManager:
 		ropHelp = self._parseDAT()
 		self._pullFromMissingParamsInto(ropHelp)
 		self._pullParamHandlingInto(ropHelp)
+		self._pullParamHandlingFromOpElementsInto(ropHelp)
 		self._pullFromMissingVariablesInto(ropHelp)
 		self._pullFromMissingInputsInto(ropHelp)
 		self._writeToDAT(ropHelp)
@@ -793,6 +859,7 @@ class OpDocManager:
 		ropHelp = self._parseDAT()
 		self._pullFromMissingParamsInto(ropHelp)
 		self._pullParamHandlingInto(ropHelp)
+		self._pullParamHandlingFromOpElementsInto(ropHelp)
 		self._pullFromMissingInputsInto(ropHelp)
 		# this is always present except in debug code
 		if imagesFolder:
