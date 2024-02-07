@@ -1,5 +1,0 @@
-!rcomp
-meta: !meta
-  opType: raytk.operators.output.renderEngineHost
-  opVersion: '3'
-  opStatus: alpha
