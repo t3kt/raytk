@@ -562,4 +562,20 @@ vec3 curlNoise( vec3 p ) {
 	return normalize( vec3( x , y , z ) * divisor );
 
 }
+
+float curlNoiseSingle( vec3 p) {
+	const float e = .1;
+	vec3 dy = vec3( 0.0 , e   , 0.0 );
+	vec3 dz = vec3( 0.0 , 0.0 , e   );
+
+	vec3 p_y0 = noi_snoiseVec3( p - dy );
+	vec3 p_y1 = noi_snoiseVec3( p + dy );
+	vec3 p_z0 = noi_snoiseVec3( p - dz );
+	vec3 p_z1 = noi_snoiseVec3( p + dz );
+
+	float x = p_y1.z - p_y0.z - p_z1.y + p_z0.y;
+
+	const float divisor = 1.0 / ( 2.0 * e );
+	return normalize( x * divisor );
+}
 #endif // NOISE_USE_CURL
