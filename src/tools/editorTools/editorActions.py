@@ -741,6 +741,12 @@ def createActionManager():
 			select=RopSelect(returnTypes=['Sdf']),
 			attach=AttachOutFromExisting(),
 		),
+		ActionImpl(
+			'Apply Modular Material',
+			ropType=_RopTypes.modularMat,
+			select=RopSelect(returnTypes=['Sdf']),
+			attach=AttachOutFromExisting(),
+		),
 		_createAddInputActionGroup(
 			'Add Diffuse',
 			'raytk.operators.material.diffuseContrib',
