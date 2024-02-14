@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.sdf2d.dogBoneSdf2d
-  opVersion: '8'
+  opVersion: '9'
   opStatus: default
 opDef: !def
   enable: true
@@ -56,6 +56,7 @@ inputs:
     Allcontexttype: true
   returnType: !returnT
     Returntypefloat: true
+    Returntypevec4: true
 - !input
   Localalias: bulgeField
   Variableinputs: point1Field point2Field lengthField radiusField

@@ -34,11 +34,21 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 			break;
 	}
 
-	#ifdef THIS_HAS_INPUT_radiusField
-	float r = inputOp_radiusField(p, ctx);
-	#else
-	float r = THIS_Radius;
+	float r1, r2;
+
+	#if !defined(THIS_HAS_INPUT_radiusField)
+	r1 = THIS_Rad1 * THIS_Radius;
+	r2 = THIS_Rad2 * THIS_Radius;
+	#elif defined(inputOp_radiusField_RETURN_TYPE_vec4)
+	vec2 rad = inputOp_radiusField(p, ctx).xy;
+	r1 = rad.x * THIS_Radius;
+	r2 = rad.y * THIS_Radius;
+	#elif defined(inputOp_radiusField_RETURN_TYPE_float)
+	float rMult = inputOp_radiusField(p, ctx);
+	r1 = rMult * THIS_Rad1;
+	r2 = rMult * THIS_Rad2;
 	#endif
+
 	#ifdef THIS_HAS_INPUT_bulgeField
 	float b = -inputOp_bulgeField(p, ctx);
 	#else
@@ -47,7 +57,7 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 
 	p -= THIS_Translate;
 
-	float d = sdOrientedUnevenDogbone(p, pt1, pt2, r, r, b);
+	float d = sdOrientedUnevenDogbone(p, pt1, pt2, r1, r2, b);
 
 	return createSdf(d);
 }
