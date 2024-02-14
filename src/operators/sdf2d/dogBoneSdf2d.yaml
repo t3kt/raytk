@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.sdf2d.dogBoneSdf2d
-  opVersion: '7'
+  opVersion: '8'
   opStatus: default
 opDef: !def
   enable: true
@@ -16,12 +16,31 @@ opDef: !def
     file: src/operators/sdf2d/dogBoneSdf2d.glsl
     name: functionTemplate
   paramGroupTable: eval_params
+  libraryNames: !expr
+    expr: op('dogBoneSdf2d_lib')
   help: !text
     file: src/operators/sdf2d/dogBoneSdf2d.md
     name: help
 inputs:
 - !input
-  Localalias: radiusField
+  Localalias: point1Field
+  coordType: !coordT
+    Coordtypevec2: true
+  contextType: !contextT
+    Allcontexttype: true
+  returnType: !returnT
+    Returntypevec4: true
+- !input
+  Localalias: point2Field
+  Variableinputs: point1Field
+  coordType: !coordT
+    Coordtypevec2: true
+  contextType: !contextT
+    Allcontexttype: true
+  returnType: !returnT
+    Returntypevec4: true
+- !input
+  Localalias: lengthField
   coordType: !coordT
     Coordtypevec2: true
   contextType: !contextT
@@ -29,8 +48,8 @@ inputs:
   returnType: !returnT
     Returntypefloat: true
 - !input
-  Localalias: lengthField
-  Variableinputs: radiusField
+  Localalias: radiusField
+  Variableinputs: point1Field point2Field lengthField
   coordType: !coordT
     Coordtypevec2: true
   contextType: !contextT
@@ -39,7 +58,7 @@ inputs:
     Returntypefloat: true
 - !input
   Localalias: bulgeField
-  Variableinputs: radiusField lengthField
+  Variableinputs: point1Field point2Field lengthField radiusField
   coordType: !coordT
     Coordtypevec2: true
   contextType: !contextT
