@@ -99,6 +99,13 @@ def processInputs(dat: scriptDAT):
 		i += 1
 		haveIndices.append(i)
 		dat.appendRow([i] + inDef.row(1))
+		# dat.appendRow([
+		# 	i,
+		# 	inDef['name', 1], inDef['path', 1], inDef['opType', 1],
+		# 	inDef['coordType', 1], inDef['contextType', 1], inDef['returnType', 1],
+		# 	inDef['definitionPath', 1], inDef['statePath', 1], inDef['tags', 1],
+		# 	inDef['input:alias', 1], inDef['input:vars', 1], inDef['input:varInputs', 1], inDef['input:handler', 1],
+		# ])
 		for inRow in range(2, inDef.numRows):
 			dat.appendRow([str(i) + '_'] + inDef.row(inRow))
 		_applyTypeSettingsCategory(dat, i, coordSettings, 'coordType')

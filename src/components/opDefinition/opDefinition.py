@@ -842,6 +842,7 @@ def buildDefinitionTable(dat: scriptDAT):
 	defPath = parent().path
 	dat.appendCols([
 		['name', state.name],
+		['path', state.path],
 		['opType', state.ropType],
 		['coordType', typeTable['coordType', 1]],
 		['contextType', typeTable['contextType', 1]],
@@ -854,7 +855,7 @@ def buildDefinitionTable(dat: scriptDAT):
 		['paramTable', defPath + '/params'],
 		['paramTupletTable', defPath + '/param_tuplets'],
 		['libraryNames', parentPar().Librarynames],
-		['inputNames', ' '.join(state.inputNames)],
+		['inputNames', ' '.join([i.sourceName for i in state.inputStates])],
 		['definitionPath', defPath + '/definition'],
 		['elementTable', (defPath + '/opElements') if op('opElements').numRows > 1 else ''],
 		['statePath', defPath + '/opState'],

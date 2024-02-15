@@ -63,10 +63,10 @@ class RopState(_StateObject):
 	@classmethod
 	def fromDict(cls, obj: dict):
 		return cls(
-			name=obj['name'],
-			path=obj['path'],
-			ropType=obj['ropType'],
-			functionCode=obj['functionCode'],
+			name=obj.get('name'),
+			path=obj.get('path'),
+			ropType=obj.get('ropType'),
+			functionCode=obj.get('functionCode'),
 			materialCode=obj.get('materialCode'),
 			initCode=obj.get('initCode'),
 			opGlobals=obj.get('opGlobals'),
