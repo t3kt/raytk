@@ -64,7 +64,7 @@ def _buildTypeSettingsCategory(category: str, parPrefix: str, inputDefs: list[DA
 	return settings
 
 def _applyTypeSettingsCategory(dat: scriptDAT, i: int,  settings: _TypeSettings, category: str):
-	if i not in settings.scope:
+	if not settings.scope or i not in settings.scope:
 		return
 	repl = _getTypeReplacement(settings, dat[i, category].val)
 	if repl is not None:
@@ -81,8 +81,12 @@ def _getTypeReplacement(settings: _TypeSettings, current: str | None):
 
 def processInputs(dat: scriptDAT):
 	dat.clear()
-	dat.copy(op('inlineFields'))
-	dat.insertCol(['head'], 0)
+	dat.appendRow([
+		'head',
+		'name', 'path', 'opType', 'coordType', 'contextType', 'returnType',
+		'definitionPath', 'statePath', 'tags',
+		'input:alias', 'input:vars', 'input:varInputs', 'input:handler',
+	])
 	inputDefs = ops('definition_in_?')
 	coordSettings = _buildTypeSettingsCategory('coordType', 'Coord', inputDefs)
 	contextSettings = _buildTypeSettingsCategory('contextType', 'Context', inputDefs)
