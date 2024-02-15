@@ -835,6 +835,32 @@ class _Builder:
 					macros=str(table[i, 'macros'] or ''),
 				))
 
+def buildDefinitionTable(dat: scriptDAT):
+	dat.clear()
+	state = RopState.fromJson(op('opState').text)
+	typeTable = op('types')
+	defPath = parent().path
+	dat.appendCols([
+		['name', state.name],
+		['opType', state.ropType],
+		['coordType', typeTable['coordType', 1]],
+		['contextType', typeTable['contextType', 1]],
+		['returnType', typeTable['returnType', 1]],
+		['opVersion', parentPar().Raytkopversion or 0],
+		['toolkitVersion', parentPar().Raytkversion or ''],
+		['paramSource', defPath + '/param_vals'],
+		['constantParamSource', defPath + '/constant_params_vals'],
+		['paramVectors', defPath + '/param_vector_vals'],
+		['paramTable', defPath + '/params'],
+		['paramTupletTable', defPath + '/param_tuplets'],
+		['libraryNames', parentPar().Librarynames],
+		['inputNames', ' '.join(state.inputNames)],
+		['definitionPath', defPath + '/definition'],
+		['elementTable', (defPath + '/opElements') if op('opElements').numRows > 1 else ''],
+		['statePath', defPath + '/opState'],
+		['tags', ' '.join(state.tags or [])],
+	])
+
 _typePattern = re.compile(r'\b[CR][a-z]+T\b')
 _typeRepls = {'CoordT': 'THIS_CoordT', 'ContextT': 'THIS_ContextT', 'ReturnT': 'THIS_ReturnT'}
 def _typeRepl(m): return _typeRepls.get(m.group(0), m.group(0))
