@@ -1,4 +1,5 @@
 from dataclasses import dataclass, field, fields
+import json
 
 # noinspection PyUnreachableCode
 if False:
@@ -57,12 +58,50 @@ class RopState(_StateObject):
 
 	validationErrors: list['ValidationError'] | None = field(default_factory=list)
 
+	tags: list[str] | None = None
+
+	@classmethod
+	def fromDict(cls, obj: dict):
+		return cls(
+			name=obj['name'],
+			path=obj['path'],
+			ropType=obj['ropType'],
+			functionCode=obj['functionCode'],
+			materialCode=obj.get('materialCode'),
+			initCode=obj.get('initCode'),
+			opGlobals=obj.get('opGlobals'),
+			materialId=obj.get('materialId'),
+			inputNames=obj.get('inputNames'),
+			libraryNames=obj.get('libraryNames'),
+			paramSource=obj.get('paramSource'),
+			macros=[Macro(**m) for m in obj.get('macros', [])],
+			constants=[Constant(**c) for c in obj.get('constants', [])],
+			inputStates=[InputState(**i) for i in obj.get('inputStates', [])],
+			textures=[Texture(**t) for t in obj.get('textures', [])],
+			buffers=[Buffer(**b) for b in obj.get('buffers', [])],
+			references=[Reference(**r) for r in obj.get('references', [])],
+			attributes=[SurfaceAttribute(**a) for a in obj.get('attributes', [])],
+			variables=[Variable(**v) for v in obj.get('variables', [])],
+			validationErrors=[ValidationError(**e) for e in obj.get('validationErrors', [])],
+		)
+
+	@classmethod
+	def fromJson(cls, text: str):
+		if not text:
+			return
+		return cls.fromDict(json.loads(text))
+
 @dataclass
 class InputState(_StateObject):
 	functionName: str
 	sourceName: str | None = None
 	varNames: list[str] | None = None
 	varInputNames: list[str] | None = None
+	tags: list[str] | None = None
+	placeholder: str | None = None
+	coordType: list[str] | None = None
+	contextType: list[str] | None = None
+	returnType: list[str] | None = None
 
 @dataclass
 class ValidationError(_StateObject):
