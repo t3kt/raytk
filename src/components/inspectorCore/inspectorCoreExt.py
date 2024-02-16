@@ -99,6 +99,8 @@ class InspectorCore:
 		self.state.Outputcomp = _pathOrEmpty(o)
 		if o and o.par['Shaderbuilder'] is not None:
 			self.state.Shaderbuilder = _pathOrEmpty(o.par.Shaderbuilder.eval())
+		else:
+			self.state.Shaderbuilder = _pathOrEmpty(o.op('shaderBuilder'))
 
 	@property
 	def TargetComp(self) -> COMP | None:
