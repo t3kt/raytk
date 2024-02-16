@@ -68,7 +68,7 @@ def _applyTypeSettingsCategory(dat: scriptDAT, i: int,  settings: _TypeSettings,
 		return
 	repl = _getTypeReplacement(settings, dat[i, category].val)
 	if repl is not None:
-		dat[i, category] = repl
+		dat[str(i), category] = repl
 
 def _getTypeReplacement(settings: _TypeSettings, current: str | None):
 	if settings.mode == 'besteach':
