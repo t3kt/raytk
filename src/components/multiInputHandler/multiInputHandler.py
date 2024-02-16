@@ -139,7 +139,7 @@ def processInputs(dat: scriptDAT):
 	dat.appendRow(['info', 'inputCount', len(haveIndices)])
 	effectiveIndex = 1
 	for i in range(1, 9):
-		dat.appendRow(['info', f'haveInput{i}', int(i in haveIndices)])
+		dat.appendRow(['info', f'hasInput{i}', int(i in haveIndices)])
 		if i in haveIndices:
 			dat.appendRow(['macro', f'THIS_INPUT_{effectiveIndex} inputOp{i}'])
 			effectiveIndex += 1
