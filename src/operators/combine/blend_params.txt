@@ -1,3 +1,0 @@
-names	source	handling	readOnlyHandling	conversion	enable
-Blend	param	runtime	macro		1
-Usefield	param	macro			1
