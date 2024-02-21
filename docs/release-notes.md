@@ -1,5 +1,35 @@
 # Release Notes
 
+## v0.39
+
+### Highlights
+
+* 
+
+### Details
+
+* Improvements / additions
+  * New OPs
+    * cameraTransform - transform a camera's position and orientation
+  * New OP features
+    * curlNoiseField - simplified float version (#1184)
+    * dogBoneSdf2d - option to specify endpoints and have different end radii
+    * skyLightContrib - added rotation parameters, field inputs for color, rotation, direction
+  * Editor tools
+    * Action to add a modularMat
+* Fixes
+  * Fix output channels for stepMap (#1164)
+* Changes (potentially breaking)
+  * Remove deprecated blend operator (replaced by switch)
+  * Remove deprecated sceneState component
+  * Selectively detach depth input in raymarchRender3D
+* Infrastructure / internals
+  * Include supported variables / variable sources in generated documentation
+  * Include parameter handling modes in generated documentation
+  * Shader execution encapsulation, related to engine support (#1158)
+  * Consolidate multi-input handling
+  * New logo and branding
+
 ## v0.38
 
 ### Highlights
