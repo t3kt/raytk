@@ -32,7 +32,7 @@ op:
   parameters:
   - label: Wavelength
     name: Wavelength
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
   - label: Wavelength Unit
     menuOptions:
@@ -41,6 +41,8 @@ op:
     - label: Nanometer (400..700)
       name: nm
     name: Wavelengthunit
+    readOnlyHandling: baked
+    regularHandling: runtime
   - label: Spectrum Type
     menuOptions:
     - label: Zucconi
@@ -56,6 +58,8 @@ op:
     - label: Spektre
       name: spektre
     name: Spectrumtype
+    readOnlyHandling: baked
+    regularHandling: runtime
   status: beta
   thumb: assets/images/reference/operators/field/spectralColorField_thumb.png
 

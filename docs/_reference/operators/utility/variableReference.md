@@ -74,7 +74,7 @@ op:
     name: Field
   - label: Default Value
     name: Defaultval
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
   summary: Accesses the value of a variable provided by another operator.
 

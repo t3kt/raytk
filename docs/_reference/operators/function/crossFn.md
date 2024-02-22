@@ -84,7 +84,7 @@ op:
     name: Enable
   - label: Mix
     name: Mix
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
     summary: Cross-fade between the first two inputs. This is not used if the third
       input is connected.

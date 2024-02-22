@@ -23,11 +23,11 @@ op:
   parameters:
   - label: Intensity
     name: Intensity
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
   - label: Color
     name: Color
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
   - label: Axis
     menuOptions:
@@ -38,31 +38,31 @@ op:
     - label: Z
       name: z
     name: Axis
-    readOnlyHandling: constant
-    regularHandling: constant
+    readOnlyHandling: semibaked
+    regularHandling: semibaked
   - label: Position
     name: Position
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
   - label: Radius
     name: Radius
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
   - label: Attenuated
     name: Enableattenuation
-    readOnlyHandling: constant
+    readOnlyHandling: semibaked
     regularHandling: runtime
   - label: Attenuation Start
     name: Attenuationstart
-    readOnlyHandling: constant
+    readOnlyHandling: semibaked
     regularHandling: runtime
   - label: Attenuation End
     name: Attenuationend
-    readOnlyHandling: constant
+    readOnlyHandling: semibaked
     regularHandling: runtime
   - label: Enable Shadow
     name: Enableshadow
-    readOnlyHandling: constant
+    readOnlyHandling: semibaked
     regularHandling: runtime
   status: beta
 

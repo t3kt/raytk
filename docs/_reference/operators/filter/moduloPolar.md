@@ -137,12 +137,12 @@ op:
     - label: Z
       name: z
     name: Axis
-    readOnlyHandling: constant
-    regularHandling: constant
+    readOnlyHandling: semibaked
+    regularHandling: semibaked
     summary: The axis around which space is sliced.
   - label: Repetitions
     name: Repetitions
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
     summary: The number of angle repetitions. For example, a value of 6 would mean
       6 slices of space, each with a 60 degree width.
@@ -152,12 +152,12 @@ op:
       to whole integers.
   - label: Pre Rotate
     name: Prerotate
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
     summary: Rotation applied before slicing.
   - label: Rotate
     name: Rotate
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
     summary: Rotation applied after slicing.
   - label: Mirror Type
@@ -167,30 +167,30 @@ op:
     - label: Mirror
       name: mirror
     name: Mirrortype
-    readOnlyHandling: constant
-    regularHandling: constant
+    readOnlyHandling: semibaked
+    regularHandling: semibaked
     summary: Whether to flip every other slice. This is useful to avoid hard breaks
       at edges. It will result in the appearance of half as many slices, since half
       of them will be flipped.
   - label: Offset
     name: Offset
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
     summary: Distance to shift the shape before slicing it.
   - label: Use Limit
     name: Uselimit
-    readOnlyHandling: constant
-    regularHandling: constant
+    readOnlyHandling: semibaked
+    regularHandling: semibaked
     summary: Whether to limit the range of repetitions. Space outside that range will
       be left as it is.
   - label: Limit Low
     name: Limitlow
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
     summary: Start or the repetition range, in terms of the number of repetitions.
   - label: Limit High
     name: Limithigh
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
     summary: End or the repetition range, in terms of the number of repetitions.
   - name: Iterateoncells
@@ -200,7 +200,7 @@ op:
     name: Enable
   - label: Pivot
     name: Pivot
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
   - label: Iteration Type
     menuOptions:
@@ -211,8 +211,8 @@ op:
     - label: Cell Ratio
       name: ratio
     name: Iterationtype
-    readOnlyHandling: constant
-    regularHandling: constant
+    readOnlyHandling: semibaked
+    regularHandling: semibaked
   shortcuts:
   - mp
   summary: Repeats space radially, like a kaleidoscope.

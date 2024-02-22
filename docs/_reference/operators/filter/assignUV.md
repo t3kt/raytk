@@ -89,9 +89,11 @@ op:
     - label: Spherical
       name: spherical
     name: Uvmode
+    readOnlyHandling: semibaked
+    regularHandling: runtime
   - label: Center
     name: Center
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
   summary: Assigns UV coordinates to an SDF surface.
   thumb: assets/images/reference/operators/filter/assignUV_thumb.png

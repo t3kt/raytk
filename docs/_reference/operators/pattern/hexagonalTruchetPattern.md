@@ -37,17 +37,19 @@ op:
     - label: Variant 2 (Shane)
       name: variant2
     name: Pattern
+    readOnlyHandling: baked
+    regularHandling: baked
   - label: Seed
     name: Seed
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
   - label: Translate
     name: Translate
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
   - label: Size
     name: Size
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
   thumb: assets/images/reference/operators/pattern/hexagonalTruchetPattern_thumb.png
 

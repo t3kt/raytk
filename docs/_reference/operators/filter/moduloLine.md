@@ -43,15 +43,15 @@ op:
     name: Enable
   - label: Point 1
     name: Point1
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
   - label: Point 2
     name: Point2
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
   - label: Divisions
     name: Divisions
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
   - label: Mirror Type
     menuOptions:
@@ -60,6 +60,8 @@ op:
     - label: Mirror
       name: mirror
     name: Mirrortype
+    readOnlyHandling: baked
+    regularHandling: runtime
     summary: How to the slices are varied.
   status: beta
   variables:

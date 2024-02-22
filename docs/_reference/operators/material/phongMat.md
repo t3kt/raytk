@@ -26,28 +26,28 @@ op:
     name: Enable
   - label: Ambient Color
     name: Ambientcolor
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
     summary: Base color applied to the surface regardless of lights.
   - label: Diffuse Color
     name: Diffusecolor
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
     summary: Color reflected by matte surfaces.
   - label: Specular Color
     name: Specularcolor
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
     summary: Color reflected by glossy surfaces.
   - label: Shine
     name: Shine
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
     summary: Specular exponent, which adjusts the light curve of specular highlights.
   - label: Enable Shadow
     name: Enableshadow
-    readOnlyHandling: macro
-    regularHandling: macro
+    readOnlyHandling: baked
+    regularHandling: baked
     summary: Whether to use shadows. When enabled, if the *Shadow Definition* input
       is provided, that will be used. Otherwise a default shadow function will be
       used.

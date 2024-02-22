@@ -32,12 +32,12 @@ op:
   parameters:
   - label: Translate
     name: Translate
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
     summary: Shifts the center of the shape.
   - label: Radius
     name: Radius
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
     summary: The size of the shape.
   - label: Function
@@ -49,6 +49,8 @@ op:
       label: Bound (Not Exact)
       name: bound
     name: Function
+    readOnlyHandling: semibaked
+    regularHandling: runtime
     summary: Advanced parameter that chooses between different types of calculations.
   summary: An octahedron, with its corners facing the axes.
   thumb: assets/images/reference/operators/sdf/octahedronSdf_thumb.png

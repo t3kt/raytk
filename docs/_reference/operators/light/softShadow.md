@@ -15,19 +15,19 @@ op:
   parameters:
   - label: Hardness
     name: Hardness
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
   - label: Override Minimum Distance
     name: Overridemindist
   - label: Minimum Dist
     name: Mindist
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
   - label: Override Maximum Distance
     name: Overridemaxdist
   - label: Maximum Distance
     name: Maxdist
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
   summary: A soft-edged shadow.
   thumb: assets/images/reference/operators/light/softShadow_thumb.png

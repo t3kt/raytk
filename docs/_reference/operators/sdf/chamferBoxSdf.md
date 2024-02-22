@@ -69,23 +69,23 @@ op:
   parameters:
   - label: Translate
     name: Translate
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
   - label: Scale
     name: Scale
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
   - label: Uniform Scale
     name: Uniformscale
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
   - label: Chamfer
     name: Chamfer
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
   - label: Round
     name: Round
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
   summary: A box with cropped corners at 45 degree angles.
   thumb: assets/images/reference/operators/sdf/chamferBoxSdf_thumb.png

@@ -29,7 +29,7 @@ op:
   parameters:
   - label: Width
     name: Width
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
   thumb: assets/images/reference/operators/sdf2d/parabolaSdf2d_thumb.png
 

@@ -64,6 +64,8 @@ op:
       label: Flip 0-1 Range
       name: fliprange01
     name: Fliptype
+    readOnlyHandling: semibaked
+    regularHandling: runtime
     summary: The type of flipping to apply.
   - label: Return Type
     menuOptions:

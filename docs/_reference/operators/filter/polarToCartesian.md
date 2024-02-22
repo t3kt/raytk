@@ -47,6 +47,8 @@ op:
     - label: From Cylindrical Z
       name: cylindricalz
     name: Conversion
+    readOnlyHandling: semibaked
+    regularHandling: runtime
   status: beta
   summary: Converts coordinates from polar to cartesian.
 

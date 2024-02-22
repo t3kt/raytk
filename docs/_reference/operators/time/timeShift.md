@@ -59,7 +59,7 @@ op:
     name: Enable
   - label: Shift
     name: Shift
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
     summary: Fixed offset to apply to contextual time of upstream operators.
   - label: Interval Type

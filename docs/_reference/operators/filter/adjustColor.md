@@ -131,23 +131,23 @@ op:
     name: Enable
   - label: Brightness
     name: Brightness
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
   - label: Contrast
     name: Contrast
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
   - label: Saturation
     name: Saturation
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
   - label: Hue Offset
     name: Hueoffset
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
   - label: Gamma
     name: Gamma
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
   summary: Adjust properties of color values, either directly on a field, or on the
     assigned surface color of an Sdf result.

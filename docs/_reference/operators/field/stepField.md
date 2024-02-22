@@ -170,23 +170,23 @@ op:
     - label: Distance From Origin
       name: dist
     name: Axis
-    readOnlyHandling: constant
-    regularHandling: constant
+    readOnlyHandling: semibaked
+    regularHandling: semibaked
   - label: Edge
     name: Edge
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
   - label: Reverse
     name: Reverse
-    readOnlyHandling: constant
-    regularHandling: constant
+    readOnlyHandling: semibaked
+    regularHandling: semibaked
   - label: Enable Blend
     name: Enableblend
-    readOnlyHandling: constant
-    regularHandling: constant
+    readOnlyHandling: semibaked
+    regularHandling: semibaked
   - label: Blend
     name: Blend
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
   - label: Return Type
     menuOptions:
@@ -197,12 +197,12 @@ op:
     name: Returntype
   - label: Low Value
     name: Value1
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
     summary: Value used when below `Edge`
   - label: High Value
     name: Value2
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
     summary: Value used when above `Edge`
   - name: Contexttype

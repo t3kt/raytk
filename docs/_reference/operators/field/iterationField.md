@@ -24,6 +24,8 @@ op:
     - label: W
       name: w
     name: Format
+    readOnlyHandling: baked
+    regularHandling: baked
   - label: Coord Type
     menuOptions:
     - label: Auto

@@ -73,31 +73,31 @@ op:
   parameters:
   - label: Translate
     name: Translate
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
     summary: Moves the center of the shape.
   - label: Steps
     name: Steps
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
     summary: Number of levels of detail.
   - label: Scale
     name: Scale
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
   - label: Box Scale
     name: Boxscale
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
     summary: The scale of the boxes used at each step.
   - label: Cross Scale
     name: Crossscale
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
     summary: The size of the holes cut through the boxes at each step.
   - label: Step Offset
     name: Stepoffset
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
   summary: Menger sponge fractal, made of boxes with holes cut through each axis.
   thumb: assets/images/reference/operators/sdf/mengerSpongeSdf_thumb.png

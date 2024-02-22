@@ -29,12 +29,12 @@ op:
   parameters:
   - label: Translate
     name: Translate
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
     summary: Moves the center of the sphere.
   - label: Radius
     name: Radius
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
     summary: The radius of the sphere.
   - label: UV Mode
@@ -48,8 +48,8 @@ op:
     - label: Sphere
       name: sphere
     name: Uvmode
-    readOnlyHandling: constant
-    regularHandling: constant
+    readOnlyHandling: semibaked
+    regularHandling: semibaked
   shortcuts:
   - sph
   summary: SDF in 3D space for a uniform sphere.

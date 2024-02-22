@@ -15,9 +15,6 @@ cat:
     summary: Adds the values of multiple fields.
   - name: arrange
     summary: Combines multiple SDFs, with a different position for each.
-  - name: blend
-    status: deprecated
-    summary: Smoothly blends/morphs between up to 4 SDFs.
   - name: boundLimit
     status: beta
   - keywords:

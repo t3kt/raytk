@@ -32,32 +32,34 @@ op:
     - label: Orthographic Fisheye
       name: orthographicfisheye
     name: Fisheyemode
+    readOnlyHandling: baked
+    regularHandling: runtime
   - label: Aperture
     name: Aperture
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
   - label: Position
     name: Campos
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
     summary: Position of the camera.
   - label: Rotate
     name: Camrot
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
     summary: Rotates the camera in XYZ.
   - label: Look At Position
     name: Lookatpos
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
     summary: Coordinates that the camera should face.
   - label: Up Vector
     name: Camup
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
   - label: Enable Look At
     name: Enablelookat
-    readOnlyHandling: constant
+    readOnlyHandling: semibaked
     regularHandling: runtime
   summary: A 360 fisheye camera, that shows all directions from a specific point in
     space.

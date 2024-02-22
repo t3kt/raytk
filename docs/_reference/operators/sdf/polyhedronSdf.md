@@ -169,55 +169,55 @@ op:
   parameters:
   - label: Type
     name: Type
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
   - label: U
     name: U
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
   - label: V
     name: V
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
   - label: W
     name: W
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
   - label: Radius
     name: Radius
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
   - label: Enable Faces
     name: Enablefaces
-    readOnlyHandling: constant
+    readOnlyHandling: semibaked
     regularHandling: runtime
   - label: Face Radius
     name: Faceradius
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
   - label: Enable Segments
     name: Enablesegments
-    readOnlyHandling: constant
+    readOnlyHandling: semibaked
     regularHandling: runtime
   - label: Segment Radius
     name: Segmentradius
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
   - label: Segment Size
     name: Segmentsize
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
   - label: Enable Vertices
     name: Enablevertices
-    readOnlyHandling: constant
+    readOnlyHandling: semibaked
     regularHandling: runtime
   - label: Vertex Radius
     name: Vertexradius
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
   - label: Vertex Size
     name: Vertexsize
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
   - label: Combine
     menuOptions:
@@ -258,6 +258,8 @@ op:
     - label: Column Difference
       name: columnDiff
     name: Combine
+    readOnlyHandling: baked
+    regularHandling: runtime
   - label: Blend Radius
     name: Blendradius
   - label: Blend Number

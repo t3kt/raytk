@@ -53,43 +53,43 @@ op:
     - label: Dodecahedron
       name: dodecahedron
     name: Shape
-    readOnlyHandling: macro
-    regularHandling: macro
+    readOnlyHandling: baked
+    regularHandling: baked
     summary: The type of polyhedron.
   - label: Divisions
     name: Divisions
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
     summary: Number of divisions of the faces. Increasing this will result in more
       sides on the shape.
   - label: Enable Faces
     name: Enablefaces
-    readOnlyHandling: macro
-    regularHandling: macro
+    readOnlyHandling: baked
+    regularHandling: baked
     summary: Whether to include the flat surfaces on each face.
   - label: Face Offset
     name: Faceoffset
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
     summary: Distance of the faces from the center point.
   - label: Enable Spikes
     name: Enablespikes
-    readOnlyHandling: macro
-    regularHandling: macro
+    readOnlyHandling: baked
+    regularHandling: baked
     summary: Whether to include a spike on each face.
   - label: Spike Length
     name: Spikelength
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
     summary: The length of the spikes.
   - label: Spike Offset
     name: Spikeoffset
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
     summary: The distance from the center point of the base of each spike.
   - label: Spike Radius
     name: Spikeradius
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
     summary: The base radius of each spike.
   - label: Face Offset Field Coord Mode
@@ -99,8 +99,8 @@ op:
     - label: Geodesic Position
       name: geopos
     name: Faceoffsetfieldcoordmode
-    readOnlyHandling: macro
-    regularHandling: macro
+    readOnlyHandling: baked
+    regularHandling: baked
   summary: A geodesic polyhedron, optionally with a spike on each face.
   thumb: assets/images/reference/operators/sdf/geodesicSdf_thumb.png
 

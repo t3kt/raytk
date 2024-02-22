@@ -36,7 +36,7 @@ op:
   parameters:
   - label: Scale
     name: Scale
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
   thumb: assets/images/reference/operators/sdf/ellipsoidSdf_thumb.png
 

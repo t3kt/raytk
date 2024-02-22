@@ -207,10 +207,12 @@ op:
       label: Maximum
       name: max
     name: Operation
+    readOnlyHandling: semibaked
+    regularHandling: runtime
     summary: What operation to use to combine the field values.
   - label: Swap Order
     name: Swaporder
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
     summary: Swaps the two inputs. This is only relevant for some of the `Operation`
       values.

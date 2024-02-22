@@ -20,24 +20,24 @@ op:
     - label: Smoothstep Integral
       name: smoothstepIntegral
     name: Function
-    readOnlyHandling: macro
-    regularHandling: macro
+    readOnlyHandling: baked
+    regularHandling: baked
   - label: Edge
     name: Edge
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
     summary: Below this the result will be 0 and above it will produce 1. When using
       blending, the bottom edge will be `Blend/2` lower than this and the upper edge
       will be `Blend/2` higher.
   - label: Blend
     name: Blend
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
     summary: The amount of smoothing to apply on the edge.
   - label: Invert
     name: Invert
-    readOnlyHandling: macro
-    regularHandling: macro
+    readOnlyHandling: baked
+    regularHandling: baked
   summary: A function that changes from zero to one at a cutoff point.
   thumb: assets/images/reference/operators/function/stepFn_thumb.png
 

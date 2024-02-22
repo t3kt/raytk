@@ -203,6 +203,8 @@ op:
     - label: Snub Square
       name: snubsquare
     name: Pattern
+    readOnlyHandling: baked
+    regularHandling: runtime
   - label: Format
     menuOptions:
     - label: Poly Color
@@ -212,45 +214,47 @@ op:
     - label: Poly Number, Refl Side, Outline
       name: polyreflline
     name: Format
+    readOnlyHandling: baked
+    regularHandling: baked
   - label: Translate
     name: Translate
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
   - label: Size
     name: Size
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
   - label: Vertex Radius
     name: Vertexradius
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
   - label: Outline Thickness
     name: Outlinethickness
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
   - label: Outline Blending
     name: Outlineblending
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
   - label: Poly Color 1
     name: Polycolor1
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
   - label: Poly Color 2
     name: Polycolor2
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
   - label: Poly Color 3
     name: Polycolor3
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
   - label: Outline Color
     name: Outlinecolor
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
   - label: Dual Outline Color
     name: Dualoutlinecolor
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
   status: beta
 

@@ -53,12 +53,12 @@ op:
   parameters:
   - label: Scale
     name: Scale
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
     summary: The size of the rectangle along the X and Y axes.
   - label: Roundness
     name: Roundness
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
     summary: The distance of rounding for each of the four corners. When the roundness
       exceeds half the `Scale`, the rectangle will have discontinuities along the
@@ -70,6 +70,8 @@ op:
     - label: Ratio of Scale
       name: ratio
     name: Roundnessunit
+    readOnlyHandling: baked
+    regularHandling: baked
   summary: SDF for a 2D rectangle with optionally rounded corners.
   thumb: assets/images/reference/operators/sdf2d/roundedRectangleSdf2d_thumb.png
 

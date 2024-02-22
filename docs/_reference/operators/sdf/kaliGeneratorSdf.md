@@ -13,23 +13,23 @@ op:
   parameters:
   - label: Steps
     name: Steps
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
   - label: Step Translate
     name: Steptranslate
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
   - label: Fractal Angle
     name: Fractalangle
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
   - label: Box Size
     name: Boxsize
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
   - label: Box Round
     name: Boxround
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
   summary: Fractal SDF based on "Generators" by Kali (https://www.shadertoy.com/view/Xtf3Rn).
   thumb: assets/images/reference/operators/sdf/kaliGeneratorSdf_thumb.png

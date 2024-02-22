@@ -64,7 +64,7 @@ op:
     name: Datatype
   - label: Value
     name: Value
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
   status: beta
   variables:

@@ -47,49 +47,51 @@ op:
     - label: Zig-Zag
       name: zigzag
     name: Extend
+    readOnlyHandling: semibaked
+    regularHandling: runtime
   - label: Blend Indices
     name: Blendindices
-    readOnlyHandling: constant
+    readOnlyHandling: semibaked
     regularHandling: runtime
   - label: Offset
     name: Offset
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
   - label: Count
     name: Count
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
   - label: Color 1
     name: Color1
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
   - label: Color 2
     name: Color2
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
   - label: Color 3
     name: Color3
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
   - label: Color 4
     name: Color4
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
   - label: Color 5
     name: Color5
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
   - label: Color 6
     name: Color6
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
   - label: Color 7
     name: Color7
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
   - label: Color 8
     name: Color8
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
   - label: Index Mode
     menuOptions:
@@ -100,6 +102,8 @@ op:
     - label: Normalized (0 .. 1)
       name: norm
     name: Indexmode
+    readOnlyHandling: semibaked
+    regularHandling: runtime
   summary: Switches or fades between a list of colors based on an index field.
 
 ---

@@ -100,15 +100,15 @@ op:
   parameters:
   - label: Translate
     name: Translate
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
   - label: Scale
     name: Scale
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
   - label: Use Normals
     name: Usenormals
-    readOnlyHandling: constant
+    readOnlyHandling: semibaked
     regularHandling: runtime
     summary: Modifies the amount of each field that's used based on how directly the
       surface normals are facing that plane. For example, the XY field is used most
@@ -122,6 +122,8 @@ op:
     - label: Average Axes
       name: avg
     name: Blendmode
+    readOnlyHandling: baked
+    regularHandling: runtime
     summary: How the values from each field are combined.
   - label: Return Type
     menuOptions:

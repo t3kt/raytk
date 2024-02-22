@@ -23,6 +23,8 @@ op:
     - label: Polynomial Impulse
       name: poly
     name: Function
+    readOnlyHandling: baked
+    regularHandling: baked
   - label: Attack
     name: Attack
   - label: Release

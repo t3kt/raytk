@@ -26,15 +26,17 @@ op:
     - label: Front (Z-)
       name: zneg
     name: Direction
+    readOnlyHandling: baked
+    regularHandling: runtime
     summary: Direction that the camera faces.
   - label: Position
     name: Campos
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
     summary: Position of the camera.
   - label: Rotate
     name: Rotate
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
     summary: Rotation of the camera view on the axis facing the camera.
   status: beta

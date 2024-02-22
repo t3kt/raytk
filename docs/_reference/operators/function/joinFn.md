@@ -86,8 +86,8 @@ op:
     name: Enable
   - label: Fit To Range
     name: Fitrange
-    readOnlyHandling: macro
-    regularHandling: macro
+    readOnlyHandling: baked
+    regularHandling: baked
     summary: When enabled, the combined function is scaled back to a 0..1 range. Otherwise,
       coordinates 0..1 go to the first function, 1..2 to the second, etc.
   summary: Joins functions end on end.

@@ -105,6 +105,8 @@ op:
     - label: Value 4D (wombat)
       name: wbtvalue4d
     name: Noisetype
+    readOnlyHandling: baked
+    regularHandling: baked
     summary: The type of noise function.
   - label: Coord Type
     menuOptions:
@@ -131,28 +133,28 @@ op:
       label: Z
       name: z
     name: Axis
-    readOnlyHandling: constant
+    readOnlyHandling: semibaked
     regularHandling: runtime
     summary: When the `Noisetype` uses 2D coordinates but `Coordtype` is 3D, this
       is used to choose which plane of the coordinates are used.
   - label: Translate
     name: Translate
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
     summary: Offsets the coordinates used to calculate noise.
   - label: Scale
     name: Scale
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
     summary: Scales the coordinates used to calculate noise.
   - label: Amplitude
     name: Amplitude
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
     summary: Multiplies the amount produced by the noise.
   - label: Offset
     name: Offset
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
     summary: Offsets (adds to) the amount produced by the noise.
   summary: A float or vector field that uses one of several noise functions.

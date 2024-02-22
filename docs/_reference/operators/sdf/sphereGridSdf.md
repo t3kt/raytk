@@ -53,21 +53,23 @@ op:
     - label: Longitudes Only
       name: lon
     name: Parts
+    readOnlyHandling: semibaked
+    regularHandling: runtime
   - label: Rows
     name: Rows
-    readOnlyHandling: constant
+    readOnlyHandling: semibaked
     regularHandling: runtime
   - label: Columns
     name: Cols
-    readOnlyHandling: constant
+    readOnlyHandling: semibaked
     regularHandling: runtime
   - label: Radius
     name: Radius
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
   - label: Thickness
     name: Thickness
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
     summary: the thickness of the bars.
   status: beta

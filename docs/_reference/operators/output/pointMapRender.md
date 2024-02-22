@@ -185,11 +185,11 @@ op:
     name: Enablecustomoutput2
   - label: Enable Normal Smoothing
     name: Enablenormalsmoothing
-    readOnlyHandling: macro
-    regularHandling: macro
+    readOnlyHandling: baked
+    regularHandling: baked
   - label: Normal Smoothing
     name: Normalsmoothing
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
   - label: Material Mode
     menuOptions:
@@ -200,6 +200,8 @@ op:
     - label: Fill Everwhere
       name: everywhere
     name: Materialmode
+    readOnlyHandling: semibaked
+    regularHandling: semibaked
   - label: Enable Blending
     name: Enableblending
   - label: Blending

@@ -37,18 +37,18 @@ op:
   parameters:
   - label: Center
     name: Center
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
     summary: Position in 2D/3D space where the center of the line sits. When a position
       of 0 is passed to this operator, it will check its input at the Center location.
   - label: Direction
     name: Direction
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
     summary: Vector indicating which direction the line goes from the center.
   - label: Rotate
     name: Rotate
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
     summary: Rotation for the sampling line.
   status: beta

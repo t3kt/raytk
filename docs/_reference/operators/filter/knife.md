@@ -62,15 +62,17 @@ op:
     - label: Below Plane
       name: below
     name: Side
+    readOnlyHandling: semibaked
+    regularHandling: runtime
     summary: Which side of the cut to keep.
   - label: Offset
     name: Offset
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
     summary: Shifts the cut plane along the axis that it faces.
   - label: Rotate Plane
     name: Rotateplane
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
     summary: Rotate the cut plane in XYZ. When in 2D, only the Z rotation is used.
   - label: Direction
@@ -82,15 +84,17 @@ op:
     - label: Z
       name: z
     name: Axis
+    readOnlyHandling: semibaked
+    regularHandling: runtime
   - label: Enable Smoothing
     name: Enablesmoothing
-    readOnlyHandling: constant
+    readOnlyHandling: semibaked
     regularHandling: runtime
     summary: Whether to smooth the transition on each side of the slice down to a
       size of zero.
   - label: Smooth Radius
     name: Smoothradius
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
     summary: The amount of smoothing distance.
   summary: Cuts off an SDF along a plane.

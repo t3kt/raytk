@@ -69,17 +69,19 @@ op:
     - label: Round
       name: round
     name: Shape
+    readOnlyHandling: semibaked
+    regularHandling: semibaked
   - label: Thickness
     name: Thickness
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
   - label: Length
     name: Length
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
   - label: Bend
     name: Bend
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
   thumb: assets/images/reference/operators/sdf2d/jointSdf2d_thumb.png
 

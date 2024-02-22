@@ -115,32 +115,32 @@ op:
     name: Enable
   - label: Base Color
     name: Basecolor
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
   - label: Use Surface Color
     name: Usesurfacecolor
-    readOnlyHandling: macro
-    regularHandling: macro
+    readOnlyHandling: baked
+    regularHandling: baked
   - label: Roughness
     name: Roughness
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
   - label: Albedo
     name: Albedo
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
   - label: Metallic
     name: Metallic
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
   - label: Enable Shadow
     name: Enableshadow
-    readOnlyHandling: macro
-    regularHandling: macro
+    readOnlyHandling: baked
+    regularHandling: baked
   - label: Use Local Position
     name: Uselocalpos
-    readOnlyHandling: macro
-    regularHandling: macro
+    readOnlyHandling: baked
+    regularHandling: baked
   - label: Apply When
     menuOptions:
     - label: Always
@@ -148,6 +148,8 @@ op:
     - label: Only If Unassigned
       name: missing
     name: Condition
+    readOnlyHandling: baked
+    regularHandling: runtime
   status: beta
   thumb: assets/images/reference/operators/material/pbrMat_thumb.png
   variables:

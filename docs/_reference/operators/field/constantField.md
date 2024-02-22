@@ -31,7 +31,7 @@ op:
     name: Returntype
   - label: Value
     name: Value
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
   summary: A float or vector field that evaluates to a constant value.
   thumb: assets/images/reference/operators/field/constantField_thumb.png

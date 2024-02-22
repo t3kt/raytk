@@ -57,6 +57,8 @@ op:
       label: Absolute Step Seconds
       name: absStepSeconds
     name: Part
+    readOnlyHandling: baked
+    regularHandling: runtime
     summary: Which type of time value to produce.
   - label: Time Source
     menuOptions:
@@ -68,6 +70,8 @@ op:
       label: Context
       name: context
     name: Timesource
+    readOnlyHandling: baked
+    regularHandling: runtime
     summary: Where to pull the time values from.
   summary: Field that produces time-based values, equivalent to a `timeline CHOP`.
 

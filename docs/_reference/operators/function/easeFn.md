@@ -29,7 +29,7 @@ op:
   parameters:
   - label: Exponent
     name: Exponent
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
   thumb: assets/images/reference/operators/function/easeFn_thumb.png
 

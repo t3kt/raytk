@@ -142,13 +142,15 @@ op:
     - label: Grid Color
       name: color
     name: Format
+    readOnlyHandling: baked
+    regularHandling: baked
   - label: Translate
     name: Translate
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
   - label: Spacing
     name: Spacing
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
   - label: Thickness
     name: Thickness

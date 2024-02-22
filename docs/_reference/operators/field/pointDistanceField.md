@@ -58,7 +58,7 @@ op:
   parameters:
   - label: Center
     name: Center
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
     summary: The point from which distance is measured.
   - label: Coord Type
@@ -90,6 +90,8 @@ op:
     - label: Z
       name: z
     name: Axes
+    readOnlyHandling: semibaked
+    regularHandling: semibaked
     summary: Which axes to use when calculating distances.
   summary: A float field that provides the distance from a specific point in space
     from either the current position or from another point.

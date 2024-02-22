@@ -45,22 +45,22 @@ op:
     name: Enable
   - label: Input Low
     name: Inputlow
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
     summary: The low end of the expected input values.
   - label: Input High
     name: Inputhigh
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
     summary: The high end of the expected input values.
   - label: Output Low
     name: Outputlow
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
     summary: The low end of the rescaled value range.
   - label: Output High
     name: Outputhigh
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
     summary: The high end of the rescaled value range.
   - label: Return Type
@@ -74,15 +74,15 @@ op:
     name: Returntype
   - label: Multiply
     name: Multiply
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
   - label: Multiply
     name: Mult
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
   - label: Post Add
     name: Postadd
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
   shortcuts:
   - rf

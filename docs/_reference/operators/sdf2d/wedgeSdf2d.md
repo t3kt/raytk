@@ -64,15 +64,15 @@ op:
   parameters:
   - label: End Point 1
     name: Endpoint1
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
   - label: Center Point
     name: Centerpoint
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
   - label: End Point 2
     name: Endpoint2
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
   status: beta
   thumb: assets/images/reference/operators/sdf2d/wedgeSdf2d_thumb.png

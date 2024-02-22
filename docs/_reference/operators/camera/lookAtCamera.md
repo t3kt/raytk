@@ -13,27 +13,27 @@ op:
   parameters:
   - label: FOV Angle
     name: Camfov
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
     summary: FOV angle.
   - label: Position
     name: Campos
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
     summary: Position of the camera.
   - label: Rotate
     name: Camrot
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
     summary: Rotation of the camera in XYZ.
   - label: Look At Position
     name: Lookatpos
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
     summary: Position that the camera faces.
   - label: Up Vector
     name: Camup
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
     summary: Up vector (used to interpret the `Lookatpos`).
   shortcuts:

@@ -22,10 +22,12 @@ op:
     - label: Top Right
       name: topright
     name: Corner
+    readOnlyHandling: semibaked
+    regularHandling: runtime
     summary: Which corner of the infinite square to place at the origin.
   - label: Translate
     name: Translate
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
     summary: Moves the position of the corner.
   summary: 2D SDF for an infinite corner, like an infinite square positioned by one

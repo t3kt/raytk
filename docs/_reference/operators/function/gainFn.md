@@ -34,7 +34,7 @@ op:
   parameters:
   - label: Exponent
     name: Exponent
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
   summary: A function that expands the sides of the coordinate range and compresses
     the center.

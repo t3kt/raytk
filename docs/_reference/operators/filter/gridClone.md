@@ -56,17 +56,17 @@ op:
     name: Enable
   - label: Count
     name: Count
-    readOnlyHandling: constant
+    readOnlyHandling: semibaked
     regularHandling: runtime
     summary: The number of copies. The performance cost of the input is multiplied
       by this number.
   - label: Center
     name: Center
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
   - label: Size
     name: Size
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
   - label: Merge Type
     menuOptions:
@@ -107,6 +107,8 @@ op:
     - label: Column Difference
       name: columnDiff
     name: Mergetype
+    readOnlyHandling: semibaked
+    regularHandling: semibaked
     summary: How to merge the copies.
   - label: Merge Radius
     name: Mergeradius

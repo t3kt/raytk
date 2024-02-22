@@ -94,22 +94,22 @@ op:
     - label: XY
       name: z
     name: Axis
-    readOnlyHandling: constant
-    regularHandling: constant
+    readOnlyHandling: semibaked
+    regularHandling: semibaked
     summary: Axis that faces the plane where coordinates are mirrored.
   - label: Size
     name: Size
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
     summary: Spacing of the reflection planes.
   - label: Offset
     name: Offset
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
     summary: Shifts the input before applying reflection.
   - label: Rotate Axis
     name: Rotateaxis
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
     summary: Rotates the input before applying reflection.
   - name: Iterateoncells
@@ -124,8 +124,8 @@ op:
     - label: Signed Axes (-1/1, -1/1)
       name: sign
     name: Iterationtype
-    readOnlyHandling: constant
-    regularHandling: constant
+    readOnlyHandling: semibaked
+    regularHandling: semibaked
   summary: Mirror coordinates across two axes and the diagonals.
   thumb: assets/images/reference/operators/filter/mirrorOctant_thumb.png
   variables:

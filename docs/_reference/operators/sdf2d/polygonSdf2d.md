@@ -55,14 +55,16 @@ op:
     - label: Custom
       name: custom
     name: Shape
+    readOnlyHandling: semibaked
+    regularHandling: runtime
   - label: Radius
     name: Radius
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
     summary: The distance from the center to each edge.
   - label: Sides
     name: Sides
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
   summary: SDF for several types of 2D polygons.
   thumb: assets/images/reference/operators/sdf2d/polygonSdf2d_thumb.png

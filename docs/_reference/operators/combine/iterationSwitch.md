@@ -171,8 +171,8 @@ op:
     - label: W
       name: w
     name: Iterationpart
-    readOnlyHandling: constant
-    regularHandling: constant
+    readOnlyHandling: semibaked
+    regularHandling: semibaked
     summary: Which component of the iteration vector to use. In most cases this should
       be X.
   - label: Extend
@@ -187,8 +187,8 @@ op:
       label: Zig-Zag
       name: zigzag
     name: Extend
-    readOnlyHandling: constant
-    regularHandling: constant
+    readOnlyHandling: semibaked
+    regularHandling: semibaked
     summary: 'How to handle iteration values outside the 0..(N-1) range. '
   summary: Switches between inputs based on the iteration value provided by a downstream
     operator.

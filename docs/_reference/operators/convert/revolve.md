@@ -160,16 +160,16 @@ op:
     - label: Z
       name: z
     name: Axis
-    readOnlyHandling: constant
-    regularHandling: constant
+    readOnlyHandling: semibaked
+    regularHandling: semibaked
   - label: Radial Offset
     name: Radialoffset
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
     summary: Moves the cross-section shape closer or further from the axis.
   - label: Axis Offset
     name: Axisoffset
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
     summary: Moves the resulting shape along the axis.
   - label: Iteration Type
@@ -179,8 +179,8 @@ op:
     - label: Ratio
       name: ratio
     name: Iterationtype
-    readOnlyHandling: constant
-    regularHandling: constant
+    readOnlyHandling: semibaked
+    regularHandling: semibaked
   summary: Creates a 3D SDF by revolving a 2D cross-section SDF around an axis.
   thumb: assets/images/reference/operators/convert/revolve_thumb.png
   variables:

@@ -199,27 +199,27 @@ op:
     - label: Distance From Origin
       name: dist
     name: Axis
-    readOnlyHandling: constant
-    regularHandling: constant
+    readOnlyHandling: semibaked
+    regularHandling: semibaked
   - label: Center
     name: Center
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
     summary: The center position along the axis of the "inside" part of the band.
   - label: Width
     name: Width
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
     summary: The width of the "inside" part of the band, along the axis.
   - label: Enable Blending
     name: Enableblending
-    readOnlyHandling: constant
-    regularHandling: constant
+    readOnlyHandling: semibaked
+    regularHandling: semibaked
     summary: Whether to smooth the transition between "inside" and "outside" vs a
       hard cutoff.
   - label: Blending
     name: Blending
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
     summary: 'The blending distance between "inside" and "outside". This applies to
       both borders of the "inside" area. '
@@ -233,13 +233,13 @@ op:
     summary: Whether to produce a single float value or a vector with 4 parts.
   - label: Inside Value
     name: Insidevalue
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
     summary: The value used for the "inside" part. If `Return Type` is `Float`, only
       the first parameter will be used.
   - label: Outside Value
     name: Outsidevalue
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
     summary: The value used for the "outside" part. If `Return Type` is `Float`, only
       the first parameter will be used.
@@ -247,19 +247,19 @@ op:
     name: Enable
   - label: Reverse
     name: Reverse
-    readOnlyHandling: constant
-    regularHandling: constant
+    readOnlyHandling: semibaked
+    regularHandling: semibaked
   - label: Enable Repeat
     name: Enablerepeat
-    readOnlyHandling: constant
-    regularHandling: constant
+    readOnlyHandling: semibaked
+    regularHandling: semibaked
   - label: Repeat Size
     name: Repeatsize
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
   - label: Repeat Shift
     name: Repeatshift
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
   summary: Field that applies values based on a band/slice of an axis.
   thumb: assets/images/reference/operators/field/bandField_thumb.png

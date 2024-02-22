@@ -64,17 +64,17 @@ op:
   parameters:
   - label: Outer Size
     name: Outersize
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
     summary: The length of the arms.
   - label: Inner Size
     name: Innersize
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
     summary: Thickness of the arms.
   - label: Roundness
     name: Roundness
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
     summary: How much to round out the intersection corners.
   summary: 2D cross shape SDF, with 4 arms and option rounding of the intersections.

@@ -56,12 +56,12 @@ op:
     - label: Z
       name: z
     name: Axis
-    readOnlyHandling: constant
+    readOnlyHandling: semibaked
     regularHandling: runtime
     summary: Which axis the plane faces.
   - label: Offset
     name: Offset
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
     summary: Shifts the plane forwards or backwards along the axis that it faces.
   - label: Depth Type
@@ -71,13 +71,15 @@ op:
     - label: Finite
       name: finite
     name: Depthtype
+    readOnlyHandling: baked
+    regularHandling: runtime
   - label: Flip
     name: Flip
-    readOnlyHandling: constant
+    readOnlyHandling: semibaked
     regularHandling: runtime
   - label: Thickness
     name: Thickness
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
   summary: An infinite plane on the x, y, or z axis.
   thumb: assets/images/reference/operators/sdf/planeSdf_thumb.png

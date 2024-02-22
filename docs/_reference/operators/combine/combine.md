@@ -156,6 +156,8 @@ op:
     - label: Column Difference
       name: columnDiff
     name: Combine
+    readOnlyHandling: baked
+    regularHandling: runtime
     summary: The type of combination operation to perform.
   - label: Swap Inputs
     name: Swapinputs

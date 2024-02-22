@@ -73,6 +73,8 @@ op:
     - label: Additive Square (8)
       name: addsquare8
     name: Function
+    readOnlyHandling: runtime
+    regularHandling: runtime
   - label: Wave Axis
     menuOptions:
     - label: X
@@ -84,36 +86,36 @@ op:
     - label: Distance From Origin
       name: dist
     name: Axis
-    readOnlyHandling: constant
-    regularHandling: constant
+    readOnlyHandling: semibaked
+    regularHandling: semibaked
     summary: The axis along which the waves are produced.
   - label: Period
     name: Period
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
     summary: The width of the waves for each axis.
   - label: Phase
     name: Phase
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
     summary: The phase of the waves for each axis.
   - label: Amplitude
     name: Amplitude
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
     summary: The scale of the movement for each axis.
   - label: Offset
     name: Offset
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
     summary: Offsets the movement for each axis.
   - label: Phase Offset
     name: Phaseoffset
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
   - label: Amplitude Multiplier
     name: Amplitudemult
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
   status: beta
   summary: Uses repeating waves to offset space.

@@ -63,21 +63,23 @@ op:
     - label: Additive Square (8)
       name: addsquare8
     name: Function
+    readOnlyHandling: semibaked
+    regularHandling: semibaked
   - label: Period
     name: Period
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
   - label: Phase
     name: Phase
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
   - label: Amplitude
     name: Amplitude
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
   - label: Offset
     name: Offset
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
   status: beta
   thumb: assets/images/reference/operators/field/waveVectorField_thumb.png

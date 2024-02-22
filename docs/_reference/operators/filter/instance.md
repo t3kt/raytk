@@ -82,7 +82,7 @@ op:
     name: Enable
   - label: Instance Count
     name: Instancecount
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
     summary: The number of copies to produce and merge.
   - label: Combine
@@ -129,6 +129,8 @@ op:
     - label: Column Difference
       name: columnDiff
     name: Combine
+    readOnlyHandling: baked
+    regularHandling: runtime
     summary: How to combine the copies. Only the "simple" options are guaranteed to
       work properly. The others may produce unexpected and problematic results.
   - label: Radius

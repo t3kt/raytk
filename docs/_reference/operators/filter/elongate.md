@@ -86,12 +86,12 @@ op:
     name: Enable
   - label: Center
     name: Center
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
     summary: The center point of the stretching.
   - label: Size
     name: Size
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
     summary: The distance that that parts are pushed apart from the origin.
   - label: Axes
@@ -111,6 +111,8 @@ op:
     - label: Z
       name: z
     name: Axes
+    readOnlyHandling: semibaked
+    regularHandling: runtime
   summary: Stretches a shape by splitting it into pieces, moves them apart, and connects
     them.
   thumb: assets/images/reference/operators/filter/elongate_thumb.png

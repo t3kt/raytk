@@ -79,10 +79,12 @@ op:
     - label: Replace
       name: replace
     name: Mode
+    readOnlyHandling: semibaked
+    regularHandling: runtime
     summary: How the modifier values are applied to the normals.
   - label: Mix
     name: Mix
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
     summary: Mix between the original normals and the modified normals.
   status: beta

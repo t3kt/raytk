@@ -106,18 +106,20 @@ op:
     - label: Pipe
       name: pipe
     name: Combine
+    readOnlyHandling: baked
+    regularHandling: runtime
   - label: Swap Inputs
     name: Swapinputs
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
   - label: Radius
     name: Radius
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
     summary: Width of the edge overlap area.
   - label: Depth
     name: Depth
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
     summary: Depth of the groove / tongue.
   summary: Combines two SDFs in ways that use the intersection areas.

@@ -49,12 +49,12 @@ op:
   parameters:
   - label: Radius
     name: Radius
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
     summary: The radius of each circle.
   - label: Distance
     name: Distance
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
     summary: The distance between the circles. Higher values will produce thinner
       shapes since the circles will overlap less. Lower values will produce rounder

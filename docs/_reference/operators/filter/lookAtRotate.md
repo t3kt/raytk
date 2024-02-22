@@ -103,15 +103,15 @@ op:
     name: Enable
   - label: Source Point
     name: Sourcepoint
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
   - label: Target Point
     name: Targetpoint
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
   - label: Roll
     name: Roll
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
   status: beta
 

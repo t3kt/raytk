@@ -29,23 +29,23 @@ op:
   parameters:
   - label: From Point
     name: Pointa
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
   - label: To Point
     name: Pointb
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
   - label: Thickness
     name: Thickness
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
   - label: Head Thickness
     name: Headthickness
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
   - label: Head Ratio
     name: Headratio
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
   thumb: assets/images/reference/operators/sdf2d/arrowSdf2d_thumb.png
 

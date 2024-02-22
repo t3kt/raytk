@@ -91,20 +91,22 @@ op:
     - label: Capped Cone
       name: cappedcone
     name: Shape
+    readOnlyHandling: semibaked
+    regularHandling: runtime
     summary: Choose between a regular cone and a capped cone without a tip.
   - label: Base Position
     name: Translate
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
     summary: Move the center of the shape.
   - label: Height
     name: Height
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
     summary: The height of the cone.
   - label: Radius
     name: Radius
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
     summary: The radius of the base of the cone.
   - label: Top Radius
@@ -119,7 +121,7 @@ op:
     - label: Z
       name: z
     name: Axis
-    readOnlyHandling: constant
+    readOnlyHandling: semibaked
     regularHandling: runtime
   - label: Mode
     menuOptions:
@@ -128,11 +130,11 @@ op:
     - label: Base and Top Points
       name: points
     name: Mode
-    readOnlyHandling: macro
-    regularHandling: macro
+    readOnlyHandling: baked
+    regularHandling: baked
   - label: Top Position
     name: Top
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
   summary: Defines a cone or capped cone shape.
   thumb: assets/images/reference/operators/sdf/coneSdf_thumb.png

@@ -143,13 +143,15 @@ op:
     - label: Xor
       name: xor
     name: Blendmode
+    readOnlyHandling: semibaked
+    regularHandling: runtime
   - label: Blend
     name: Blend
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
   - label: Swap Inputs
     name: Swapinputs
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
   - label: Blend Field
     name: Blendfield

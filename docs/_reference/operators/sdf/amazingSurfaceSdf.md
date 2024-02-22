@@ -15,19 +15,19 @@ op:
   parameters:
   - label: Steps
     name: Steps
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
   - label: Step Translate
     name: Steptranslate
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
   - label: Step Rotate
     name: Steprotate
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
   - label: Step Clamp Range
     name: Stepclamprange
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
   thumb: assets/images/reference/operators/sdf/amazingSurfaceSdf_thumb.png
 

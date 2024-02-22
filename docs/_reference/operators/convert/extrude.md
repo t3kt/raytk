@@ -82,21 +82,21 @@ op:
     - label: Z
       name: z
     name: Axis
-    readOnlyHandling: constant
-    regularHandling: constant
+    readOnlyHandling: semibaked
+    regularHandling: semibaked
   - label: Infinite Height
     name: Infiniteheight
-    readOnlyHandling: constant
-    regularHandling: constant
+    readOnlyHandling: semibaked
+    regularHandling: semibaked
     summary: Whether the shape should be infinitely thick along the axis.
   - label: Height
     name: Height
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
     summary: Height of the extruded shape.
   - label: Offset
     name: Offset
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
     summary: Moves the extruded shape up and down along the axis.
   - label: UV Mode
@@ -106,8 +106,8 @@ op:
     - label: Depth
       name: depth
     name: Uvmode
-    readOnlyHandling: constant
-    regularHandling: constant
+    readOnlyHandling: semibaked
+    regularHandling: semibaked
   - label: Iteration Type
     menuOptions:
     - label: None
@@ -115,8 +115,8 @@ op:
     - label: Ratio
       name: ratio
     name: Iterationtype
-    readOnlyHandling: constant
-    regularHandling: constant
+    readOnlyHandling: semibaked
+    regularHandling: semibaked
   - label: Optimize
     name: Optimize
   shortcuts:

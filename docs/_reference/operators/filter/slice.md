@@ -77,33 +77,33 @@ op:
     - label: Z
       name: z
     name: Axis
-    readOnlyHandling: constant
+    readOnlyHandling: semibaked
     regularHandling: runtime
     summary: The axis along which to take the slice.
   - label: Offset
     name: Offset
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
     summary: Shifts the center position of the slice along the axis.
   - label: Thickness
     name: Thickness
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
     summary: Thickness of the slice.
   - label: Enable Smoothing
     name: Enablesmoothing
-    readOnlyHandling: constant
+    readOnlyHandling: semibaked
     regularHandling: runtime
     summary: Whether to smooth the transition on each side of the slice down to a
       size of zero.
   - label: Smooth Radius
     name: Smoothradius
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
     summary: The amount of smoothing distance.
   - label: Enable Mirror
     name: Enablemirror
-    readOnlyHandling: constant
+    readOnlyHandling: semibaked
     regularHandling: runtime
     summary: When enabled, a second slice is added, mirrored across the origin along
       the axis.
@@ -114,8 +114,8 @@ op:
     - label: Difference
       name: diff
     name: Operation
-    readOnlyHandling: constant
-    regularHandling: constant
+    readOnlyHandling: semibaked
+    regularHandling: semibaked
   summary: Removes all of an SDF except for a slice in space.
 
 ---

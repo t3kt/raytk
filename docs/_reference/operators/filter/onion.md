@@ -93,12 +93,12 @@ op:
     name: Enable
   - label: Thickness
     name: Thickness
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
     summary: Thickness of the shell, centered on the input surface.
   - label: Iterations
     name: Iterations
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
   - label: Side
     menuOptions:
@@ -109,6 +109,8 @@ op:
     - label: Outside
       name: outside
     name: Side
+    readOnlyHandling: baked
+    regularHandling: runtime
   summary: Converts a solid SDF to a thin shell of the surface.
   thumb: assets/images/reference/operators/filter/onion_thumb.png
 

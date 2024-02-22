@@ -39,7 +39,7 @@ op:
     name: Enable
   - label: Instance Count
     name: Instancecount
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
     summary: The number of copies to produce and merge.
   - label: Operation
@@ -59,9 +59,11 @@ op:
     - label: Maximum
       name: max
     name: Operation
+    readOnlyHandling: semibaked
+    regularHandling: runtime
   - label: Swap Order
     name: Swaporder
-    readOnlyHandling: constant
+    readOnlyHandling: semibaked
     regularHandling: runtime
     summary: Swaps the two inputs. This is only relevant for some of the `Operation`
       values.

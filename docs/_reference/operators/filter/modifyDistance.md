@@ -69,9 +69,11 @@ op:
     - label: Replace
       name: replace
     name: Mode
+    readOnlyHandling: semibaked
+    regularHandling: runtime
   - label: Mix
     name: Mix
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
     summary: Mix between the original distance and the original distance.
   status: beta

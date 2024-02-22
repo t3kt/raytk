@@ -50,31 +50,31 @@ op:
   parameters:
   - label: Branches
     name: Branches
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
   - label: Radius
     name: Radius
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
   - label: Forks
     name: Forks
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
   - label: Exponent
     name: Exponent
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
   - label: Thickness Inner
     name: Thicknessinner
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
   - label: Thickness Outer
     name: Thicknessouter
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
   - label: Limit Outside
     name: Limitoutside
-    readOnlyHandling: constant
+    readOnlyHandling: semibaked
     regularHandling: runtime
   status: beta
   thumb: assets/images/reference/operators/sdf2d/branchingTreeSdf2d_thumb.png

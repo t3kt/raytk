@@ -68,7 +68,7 @@ op:
     name: Enable
   - label: Color
     name: Color
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
   - label: Assign When
     menuOptions:
@@ -77,6 +77,8 @@ op:
     - label: Only If Unassigned
       name: missing
     name: Condition
+    readOnlyHandling: baked
+    regularHandling: runtime
   shortcuts:
   - ac
   summary: Assigns a surface color attribute to an SDF surface.

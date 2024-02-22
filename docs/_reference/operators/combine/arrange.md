@@ -225,6 +225,8 @@ op:
     - label: Column Difference
       name: columnDiff
     name: Combine
+    readOnlyHandling: baked
+    regularHandling: runtime
     summary: How the SDFs are combined.
   - label: Swap Inputs
     name: Swapinputs

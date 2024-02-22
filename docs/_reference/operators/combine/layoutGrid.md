@@ -124,17 +124,17 @@ op:
     - label: XY
       name: z
     name: Axis
-    readOnlyHandling: constant
+    readOnlyHandling: semibaked
     regularHandling: runtime
     summary: The plane along which to arrange the cells.
   - label: Size
     name: Size
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
     summary: The size of the cells
   - label: Pre Scale
     name: Prescale
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
     summary: Scales the inputs within their cells.
   summary: Slices space into a grid, and places each input in a separate cell.

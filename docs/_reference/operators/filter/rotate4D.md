@@ -94,19 +94,19 @@ op:
     - label: ZW
       name: zw
     name: Plane
-    readOnlyHandling: constant
-    regularHandling: constant
+    readOnlyHandling: semibaked
+    regularHandling: semibaked
   - label: Rotate
     name: Rotate
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
   - label: Pivot
     name: Pivot
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
   - label: Pivot 4D
     name: Pivotw
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
   summary: Projects 3D space into 4D space, applies rotation along two axes and then
     projects back into 3D space.

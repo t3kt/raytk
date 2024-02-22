@@ -72,18 +72,18 @@ op:
   parameters:
   - label: Radius
     name: Radius
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
     summary: The distance from the center to each outer point on the star.
   - label: Points
     name: Points
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
     summary: The number of points for the star. When this is a non-integer value there
       will be one point that is partially cut off at the bottom.
   - label: Tightness
     name: Tightness
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
     summary: How much the inner points of the start are pulled towards the center.
       At zero this will produce a polygon with two sides for each point. At one it
@@ -97,8 +97,8 @@ op:
     - label: Polar
       name: polar
     name: Uvmode
-    readOnlyHandling: constant
-    regularHandling: constant
+    readOnlyHandling: semibaked
+    regularHandling: semibaked
   summary: SDF for a 2D star shape.
   thumb: assets/images/reference/operators/sdf2d/starSdf2d_thumb.png
   variables:

@@ -23,8 +23,8 @@ op:
     - label: Position
       name: pos
     name: Raypart
-    readOnlyHandling: constant
-    regularHandling: constant
+    readOnlyHandling: semibaked
+    regularHandling: semibaked
   - name: Contexttype
   summary: Field that provides the ray direction or origin.
   thumb: assets/images/reference/operators/field/rayField_thumb.png

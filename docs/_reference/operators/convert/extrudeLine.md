@@ -72,11 +72,11 @@ op:
   parameters:
   - label: Point 1
     name: Point1
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
   - label: Point 2
     name: Point2
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
   status: beta
   summary: Extrudes a 2D SDF cross-section into a 3D volume, like the extrude operator,

@@ -48,12 +48,12 @@ op:
   parameters:
   - label: Scale
     name: Scale
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
     summary: The size of the rectangle on the x and y axes.
   - label: Chamfer
     name: Chamfer
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
   thumb: assets/images/reference/operators/sdf2d/chamferRectangleSdf2d_thumb.png
 

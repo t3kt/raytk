@@ -33,7 +33,7 @@ op:
   parameters:
   - label: Count
     name: Count
-    readOnlyHandling: constant
+    readOnlyHandling: semibaked
     regularHandling: runtime
   - label: Width Mode
     menuOptions:
@@ -46,11 +46,11 @@ op:
     name: Totalwidth
   - label: Size Multiplier
     name: Sizemult
-    readOnlyHandling: constant
+    readOnlyHandling: semibaked
     regularHandling: runtime
   - label: Size Offset
     name: Sizeoffset
-    readOnlyHandling: constant
+    readOnlyHandling: semibaked
     regularHandling: runtime
   status: beta
   variables:

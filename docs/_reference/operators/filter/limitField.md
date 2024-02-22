@@ -128,6 +128,8 @@ op:
     - label: Smooth Clamp High
       name: smoothclamphigh
     name: Limittype
+    readOnlyHandling: semibaked
+    regularHandling: runtime
   - label: Low Bound
     name: Low
   - label: High Bound

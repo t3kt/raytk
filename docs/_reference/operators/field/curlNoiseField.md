@@ -48,24 +48,32 @@ op:
   - name: Contexttype
   - label: Translate
     name: Translate
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
     summary: Coordinate translation.
   - label: Scale
     name: Scale
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
     summary: Coordinate scale.
   - label: Amplitude
     name: Amplitude
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
     summary: Noise value amplitude.
   - label: Offset
     name: Offset
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
     summary: Noise value offset.
+  - label: Return Type
+    menuOptions:
+    - label: Float
+      name: float
+    - label: Vector
+      name: vec4
+    name: Returntype
+    summary: Whether to produce a single float value or a vector with 4 parts.
   summary: Curl noise field.
   thumb: assets/images/reference/operators/field/curlNoiseField_thumb.png
 

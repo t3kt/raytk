@@ -52,6 +52,8 @@ cat:
       around a single axis (x, y, or z).
   - name: bend
     summary: Bends space, along a main axis, towards a second axis.
+  - name: cameraTransform
+    status: beta
   - name: cartesianToPolar
     summary: Convert from cartesian space to various types of polar spaces.
   - name: circularRepeat

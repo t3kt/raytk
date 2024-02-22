@@ -224,13 +224,13 @@ op:
     name: Enable
   - label: Source
     name: Source
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
     summary: When 0, the first source is used, 1 for the second, etc.
   - label: Blend Between Inputs
     name: Blend
-    readOnlyHandling: constant
-    regularHandling: constant
+    readOnlyHandling: semibaked
+    regularHandling: semibaked
   - label: Index Field
     name: Indexfield
   - label: Index Mode
@@ -242,6 +242,8 @@ op:
     - label: Normalized (0 .. 1)
       name: norm
     name: Indexmode
+    readOnlyHandling: baked
+    regularHandling: runtime
   - label: Extend
     menuOptions:
     - label: Clamp
@@ -251,6 +253,8 @@ op:
     - label: Zig-Zag
       name: zigzag
     name: Extend
+    readOnlyHandling: baked
+    regularHandling: runtime
   summary: Switches between several inputs, without the need to rebuild the shader,
     allowing for fast switching.
 

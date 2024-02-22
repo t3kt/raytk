@@ -61,7 +61,7 @@ op:
   parameters:
   - label: Amount
     name: Amount
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
     summary: positive numbers increase and round out the shape, negative numbers shrink
       it.

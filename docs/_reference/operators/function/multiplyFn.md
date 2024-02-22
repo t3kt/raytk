@@ -98,7 +98,7 @@ op:
     name: Enable
   - label: Multiply
     name: Multiply
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
     summary: Multiply the values produced by the functions.
   summary: Multiplies the returned values produced by all of the connected input functions.
