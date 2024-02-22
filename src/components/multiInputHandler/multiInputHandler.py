@@ -66,7 +66,7 @@ def _buildTypeSettingsCategory(category: str, parPrefix: str, inputDefs: list[DA
 def _applyTypeSettingsCategory(dat: scriptDAT, i: int,  settings: _TypeSettings, category: str):
 	if not settings.scope or i not in settings.scope:
 		return
-	repl = _getTypeReplacement(settings, dat[i, category].val)
+	repl = _getTypeReplacement(settings, dat[str(i), category].val)
 	if repl is not None:
 		dat[str(i), category] = repl
 
