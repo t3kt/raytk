@@ -1,6 +1,7 @@
 from pathlib import Path
 from raytkUtil import showPromptDialog, navigateTo
 from raytkTest import processTest
+from typing import Callable
 
 # noinspection PyUnreachableCode
 if False:
@@ -97,6 +98,7 @@ class TestEditor:
 		self._reloadOutputsSoon()
 		self._refreshFindings()
 		self._loadOutputSnapshot()
+		queueCall(self.processTest, delayFrames=30)
 
 	def createTest(self):
 		self._create('test')
@@ -198,3 +200,7 @@ class TestEditor:
 		image = tox.replace('.tox', '.png')
 		top.save(image)
 		self._loadOutputSnapshot()
+
+
+def queueCall(action: Callable, delayFrames=10, *args):
+	run('args[0](*(args[1:]))', action, *args, delayFrames=delayFrames, delayRef=root)
