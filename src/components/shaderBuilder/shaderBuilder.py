@@ -6,6 +6,10 @@ from raytkState import RopState, Texture, Buffer, Macro, Reference, Variable, Va
 import re
 from io import StringIO
 from typing import Callable, Dict, Union, Optional
+try:
+	from opDefinition import OpDefinition
+except ImportError:
+	from components.opDefinition.opDefinition import OpDefinition
 
 # noinspection PyUnreachableCode
 if False:
@@ -175,14 +179,14 @@ class ShaderBuilder:
 				self._parameterDetailTable(),
 				self._allParamVals(),
 				configPar,
-				self._parseOpStates(),
+				self._getOpStates(),
 			)
 			pass
 		return _SingleArrayParameterProcessor(
 			self._parameterDetailTable(),
 			self._allParamVals(),
 			configPar,
-			self._parseOpStates(),
+			self._getOpStates(),
 		)
 
 	def getOpsFromDefinitionColumn(self, column: str):
@@ -202,7 +206,7 @@ class ShaderBuilder:
 
 	def buildMacroTable(self, dat: DAT):
 		dat.clear()
-		states = self._parseOpStates()
+		states = self._getOpStates()
 		for state in states:
 			if not state.macros:
 				continue
@@ -330,7 +334,7 @@ class ShaderBuilder:
 		defTable = self._definitionTable()
 		varNames = {}
 		attrNames = set()
-		states = self._parseOpStates()
+		states = self._getOpStates()
 		for state in states:
 			if state.variables:
 				for variable in state.variables:
@@ -386,7 +390,7 @@ class ShaderBuilder:
 			for i in range(1, procRefTable.numRows)
 			if procRefTable[i, 'category'] == 'variable'
 		)
-		states = self._parseOpStates()
+		states = self._getOpStates()
 		for state in states:
 			if not state.variables:
 				continue
@@ -437,7 +441,7 @@ class ShaderBuilder:
 	def buildBufferUniformTable(self, dat: DAT):
 		dat.clear()
 		dat.appendRow(['name', 'type', 'chop', 'uniformType', 'expr1', 'expr2', 'expr3', 'expr4'])
-		for state in self._parseOpStates():
+		for state in self._getOpStates():
 			if not state.buffers:
 				continue
 			for buffer in state.buffers:
@@ -492,20 +496,26 @@ class ShaderBuilder:
 		defTable = self._definitionTable()
 		if defTable.numRows < 2:
 			return
-		checker = _VarRefChecker(self._parseOpStates(), defTable, addError)
+		checker = _VarRefChecker(self._getOpStates(), defTable, addError)
 		checker.loadGraph()
 		checker.validateRefs()
 
-	def _parseOpStates(self):
-		states = []
-		for dat in self.getOpsFromDefinitionColumn('statePath'):
-			states.append(RopState.fromJson(dat.text))
-		return states
+	def _getOpStates(self):
+		return [
+			opDef.getRopState()
+			for opDef in self._getOpDefinitions()
+		]
+
+	def _getOpDefinitions(self):
+		return [
+			_getOpDefinitionExt(dat.parent())
+			for dat in self.getOpsFromDefinitionColumn('definitionPath')
+		]
 
 	def buildTextureTable(self, dat: DAT):
 		dat.clear()
 		dat.appendRow(['name', 'path', 'type'])
-		states = self._parseOpStates()
+		states = self._getOpStates()
 		for state in states:
 			if not state.textures:
 				continue
@@ -525,7 +535,7 @@ class ShaderBuilder:
 		dat.write(' ')
 		writer = _Writer(
 			sb=self,
-			opStates=self._parseOpStates(),
+			opStates=self._getOpStates(),
 			defTable=self._definitionTable(),
 			paramProc=self._createParamProcessor(),
 			macroTable=macroTable,
@@ -1451,9 +1461,7 @@ def _uniqueList(items: list):
 def _isInDevelMode():
 	return hasattr(op, 'raytk') and bool(op.raytk.par['Devel'])
 
-def _parseOpStateJson(text: str):
-	if not text:
-		return
-	obj = json.loads(text)
-	state = RopState.fromDict(obj)
-	return state
+def _getOpDefinitionExt(opDefComp: COMP):
+	if hasattr(opDefComp.ext, 'opDefinition'):
+		return opDefComp.ext.opDefinition
+	return OpDefinition(opDefComp)
