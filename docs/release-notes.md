@@ -4,7 +4,7 @@
 
 ### Highlights
 
-* 
+* This release is primarily infrastructure and internal improvements, preparing for upcoming features.
 
 ### Details
 
