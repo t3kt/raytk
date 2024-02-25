@@ -61,6 +61,8 @@ class RopState(_StateObject):
 
 	tags: list[str] | None = None
 
+	opElements: list['OpElementState'] | None = None
+
 	@classmethod
 	def fromDict(cls, obj: dict):
 		return cls(
@@ -85,6 +87,7 @@ class RopState(_StateObject):
 			attributes=[SurfaceAttribute(**a) for a in obj.get('attributes', [])],
 			variables=[Variable(**v) for v in obj.get('variables', [])],
 			validationErrors=[ValidationError(**e) for e in obj.get('validationErrors', [])],
+			opElements=[OpElementState(**e) for e in obj.get('opElements', [])],
 		)
 
 	@classmethod
@@ -182,3 +185,11 @@ class ParamTuplet(_StateObject):
 	conversion: str | None = None
 	handling: str = 'runtime'
 	localNames: list[str] | None = None
+
+@dataclass
+class OpElementState(_StateObject):
+	elementRoot: str
+	isNested: bool
+	paramGroupTable: str | None = None
+	macroTable: str | None = None
+	codeReplacements: dict[str, str] | None = None

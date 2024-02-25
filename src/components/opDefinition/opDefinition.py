@@ -1,7 +1,7 @@
 import json
 import math
 from raytkState import RopState, Macro, Texture, Reference, Variable, Buffer, ValidationError, Constant, \
-	InputState, SurfaceAttribute
+	InputState, SurfaceAttribute, OpElementState
 import re
 
 # noinspection PyUnreachableCode
@@ -505,7 +505,7 @@ def buildOpState():
 	builder = _Builder()
 	builder.loadInputs(ops('input_def_[0-9]*'))
 	builder.loadTags()
-	builder.loadOpElements(op('opElements'))
+	builder.loadOpElements()
 	builder.loadCode()
 	builder.loadMacros(
 		paramSpecTable=op('paramSpecTable'),
@@ -584,15 +584,38 @@ class _Builder:
 				tags.add(table[i, 'name'].val)
 		self.opState.tags = list(sorted(tags))
 
-	def loadOpElements(self, elementTable: DAT):
-		for phCol in elementTable.cells(0, 'placeholder*'):
-			i = tdu.digits(phCol.val)
-			for row in range(1, elementTable.numRows):
-				placeholder = elementTable[row, phCol].val
-				if not placeholder:
-					continue
-				codeDat = op(elementTable[row, f'code{i}'])
-				self.elementReplacements[placeholder] = codeDat.text if codeDat else ''
+	def loadOpElements(self):
+		if not self.hostOp:
+			return
+		elements = self.hostOp.ops('*/opElement')
+		if not elements:
+			return
+		self.opState.opElements = []
+		elements.sort(key=lambda e: e.path)
+		for element in elements:
+			elementRoot = op(element.par['Elementroot'] or element.parent())
+			codeReplacements = {}
+			def processCodeReplacement(placeholderPar: Par, codePar: Par):
+				if not placeholderPar:
+					return
+				placeholder = placeholderPar.eval()
+				codeDat = codePar.eval()
+				code = codeDat.text if codeDat else ''
+				codeReplacements[placeholder] = code
+				self.elementReplacements[placeholder] = code
+			processCodeReplacement(element.par['Placeholder1'], element.par['Code1'])
+			processCodeReplacement(element.par['Placeholder2'], element.par['Code2'])
+			processCodeReplacement(element.par['Placeholder3'], element.par['Code3'])
+			processCodeReplacement(element.par['Placeholder4'], element.par['Code4'])
+			elementState = OpElementState(
+				elementRoot=elementRoot.path,
+				isNested=elementRoot is not element.parent(),
+				paramGroupTable=str(element.par['Paramgrouptable'] or ''),
+				macroTable=str(element.par['Macrotable'] or ''),
+				codeReplacements=codeReplacements,
+			)
+
+			self.opState.opElements.append(elementState)
 
 	def addError(self, message: str, path: str | None = None, level: str = 'error'):
 		self.opState.validationErrors.append(ValidationError(
@@ -674,9 +697,11 @@ class _Builder:
 			]
 			partsJoined = ','.join(parts)
 			addMacro(Macro(self.namePrefix + tuplet, f'vec{size}({partsJoined})'))
-		tables = [self.defPar.Macrotable.eval()] + self.defPar.Generatedmacrotables.evalOPs() + [
-			op(c) for c in opElementTable.col('macroTable')[1:]
-		]
+		tables = [self.defPar.Macrotable.eval()] + self.defPar.Generatedmacrotables.evalOPs()
+		if self.opState.opElements:
+			for elementState in self.opState.opElements:
+				if elementState.macroTable:
+					tables.append(op(elementState.macroTable))
 		for table in tables:
 			if not table or not table.numCols or not table.numRows:
 				continue
