@@ -39,6 +39,8 @@ op:
     name: widthField
     returnTypes:
     - float
+    supportedVariableInputs:
+    - heightField
   - contextTypes:
     - Context
     - MaterialContext
@@ -54,6 +56,9 @@ op:
     name: roundingField
     returnTypes:
     - float
+    supportedVariableInputs:
+    - heightField
+    - widthField
   - contextTypes:
     - Context
     - MaterialContext
@@ -69,6 +74,10 @@ op:
     name: frameThicknessField
     returnTypes:
     - float
+    supportedVariableInputs:
+    - heightField
+    - widthField
+    - roundingField
   - contextTypes:
     - Context
     - MaterialContext
@@ -84,6 +93,11 @@ op:
     name: frameDepthField
     returnTypes:
     - float
+    supportedVariableInputs:
+    - heightField
+    - widthField
+    - roundingField
+    - frameThicknessField
   - contextTypes:
     - Context
     - MaterialContext
@@ -99,45 +113,51 @@ op:
     name: panelDepthField
     returnTypes:
     - float
+    supportedVariableInputs:
+    - heightField
+    - widthField
+    - roundingField
+    - frameThicknessField
+    - frameDepthField
   name: archSdf
   opType: raytk.operators.sdf.archSdf
   parameters:
   - label: Height
     name: Height
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
   - label: Width
     name: Width
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
   - label: Rounding
     name: Rounding
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
   - label: Enable Panel
     name: Enablepanel
-    readOnlyHandling: constant
-    regularHandling: constant
+    readOnlyHandling: semibaked
+    regularHandling: semibaked
   - label: Panel Depth
     name: Paneldepth
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
   - label: Enable Frame
     name: Enableframe
-    readOnlyHandling: constant
-    regularHandling: constant
+    readOnlyHandling: semibaked
+    regularHandling: semibaked
   - label: Frame Thickness
     name: Framethickness
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
   - label: Frame Depth
     name: Framedepth
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
   - label: Hide Frame Bottom
     name: Hideframebottom
-    readOnlyHandling: constant
-    regularHandling: constant
+    readOnlyHandling: semibaked
+    regularHandling: semibaked
   status: beta
   thumb: assets/images/reference/operators/sdf/archSdf_thumb.png
 

@@ -28,6 +28,9 @@ op:
     required: true
     returnTypes:
     - Sdf
+    supportedVariables:
+    - index
+    - normindex
   - contextTypes:
     - Context
     - MaterialContext
@@ -45,6 +48,9 @@ op:
     required: true
     returnTypes:
     - float
+    supportedVariables:
+    - index
+    - normindex
   - contextTypes:
     - Context
     - MaterialContext
@@ -62,6 +68,9 @@ op:
     required: true
     returnTypes:
     - float
+    supportedVariables:
+    - index
+    - normindex
   - contextTypes:
     - Context
     - MaterialContext
@@ -79,6 +88,9 @@ op:
     required: true
     returnTypes:
     - float
+    supportedVariables:
+    - index
+    - normindex
   keywords:
   - clone
   - copy
@@ -98,28 +110,28 @@ op:
     - label: Z
       name: z
     name: Axis
-    readOnlyHandling: constant
-    regularHandling: constant
+    readOnlyHandling: semibaked
+    regularHandling: semibaked
     summary: The axis around which to rotate the copies.
   - label: Count
     name: Count
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
     summary: The number of copies. The performance cost of the input is multiplied
       by this number.
   - label: Angle Range
     name: Anglerange
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
     summary: The angle spread around the axis, where the copies are distributed.
   - label: Angle Offset
     name: Angleoffset
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
     summary: Shifts the angle of the first copy around the axis.
   - label: Radius Offset
     name: Radiusoffset
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
     summary: Offsets the copies towards/away from the axis. At zero, all copies will
       be centered on the axis.
@@ -162,6 +174,8 @@ op:
     - label: Column Difference
       name: columnDiff
     name: Mergetype
+    readOnlyHandling: semibaked
+    regularHandling: semibaked
     summary: How to merge the copies.
   - label: Merge Radius
     name: Mergeradius
@@ -175,8 +189,8 @@ op:
       label: Clone Index
       name: index
     name: Iterationtype
-    readOnlyHandling: constant
-    regularHandling: constant
+    readOnlyHandling: semibaked
+    regularHandling: semibaked
     summary: Whether and how to expose iteration values to upstream operators.
   - label: Merge Number
     name: Mergenumber

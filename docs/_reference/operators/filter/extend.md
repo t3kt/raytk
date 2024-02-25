@@ -33,6 +33,9 @@ op:
     - Ray
     - Light
     - Particle
+    supportedVariableInputs:
+    - sizeField
+    - centerField
   - contextTypes:
     - Context
     - MaterialContext
@@ -65,6 +68,8 @@ op:
     name: centerField
     returnTypes:
     - vec4
+    supportedVariableInputs:
+    - sizeField
   keywords:
   - extend
   - stretch
@@ -75,12 +80,12 @@ op:
     name: Enable
   - label: Center
     name: Center
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
     summary: The center position around which the coordinates are clamped.
   - label: Size
     name: Size
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
     summary: The size of the region outside which the coordinates are clamped. Within
       this area, the SDF will behave as it normally does.
@@ -101,6 +106,8 @@ op:
     - label: XYZ
       name: xyz
     name: Axes
+    readOnlyHandling: baked
+    regularHandling: runtime
   summary: Clamps coordinates around an SDF result, which causes their edges to be
     extended infinitely along each axis.
   thumb: assets/images/reference/operators/filter/extend_thumb.png

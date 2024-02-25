@@ -40,20 +40,22 @@ op:
     name: skewField
     returnTypes:
     - float
+    supportedVariableInputs:
+    - sizeField
   name: parallelogramSdf2d
   opType: raytk.operators.sdf2d.parallelogramSdf2d
   parameters:
   - label: Width
     name: Width
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
   - label: Height
     name: Height
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
   - label: Skew
     name: Skew
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
   thumb: assets/images/reference/operators/sdf2d/parallelogramSdf2d_thumb.png
 

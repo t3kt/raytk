@@ -26,37 +26,39 @@ op:
     returnTypes:
     - float
     - vec4
+    supportedVariableInputs:
+    - boundVolume
   name: lightVolume
   opType: raytk.operators.light.lightVolume
   parameters:
   - label: Level
     name: Level
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
   - label: Color
     name: Color
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
   - label: Use Light Color
     name: Uselightcolor
-    readOnlyHandling: macro
-    regularHandling: macro
+    readOnlyHandling: baked
+    regularHandling: baked
   - label: Use Bounds SDF Surface Color
     name: Usesdfcolor
-    readOnlyHandling: macro
-    regularHandling: macro
+    readOnlyHandling: baked
+    regularHandling: baked
   - label: Blending
     name: Blending
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
   - label: Offset
     name: Offset
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
   - label: Enable Shadow
     name: Enableshadow
-    readOnlyHandling: macro
-    regularHandling: macro
+    readOnlyHandling: baked
+    regularHandling: baked
   status: beta
   thumb: assets/images/reference/operators/light/lightVolume_thumb.png
 

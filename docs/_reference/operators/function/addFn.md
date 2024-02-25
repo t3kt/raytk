@@ -45,6 +45,8 @@ op:
     name: definition_in_2
     returnTypes:
     - float
+    supportedVariableInputs:
+    - inputOp1
   - contextTypes:
     - Context
     - MaterialContext
@@ -63,6 +65,8 @@ op:
     name: definition_in_3
     returnTypes:
     - float
+    supportedVariableInputs:
+    - inputOp[1-2]
   - contextTypes:
     - Context
     - MaterialContext
@@ -81,6 +85,8 @@ op:
     name: definition_in_4
     returnTypes:
     - float
+    supportedVariableInputs:
+    - inputOp[1-3]
   name: addFn
   opType: raytk.operators.function.addFn
   parameters:
@@ -88,7 +94,7 @@ op:
     name: Enable
   - label: Add
     name: Add
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
     summary: Adds an additional value to the inputs.
   summary: Adds the returned values produced by all of the connected input functions.

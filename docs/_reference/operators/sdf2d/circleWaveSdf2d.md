@@ -39,6 +39,8 @@ op:
     name: radiusField
     returnTypes:
     - float
+    supportedVariableInputs:
+    - curlField
   - contextTypes:
     - Context
     - MaterialContext
@@ -54,6 +56,9 @@ op:
     name: thicknessField
     returnTypes:
     - float
+    supportedVariableInputs:
+    - curlField
+    - radiusField
   - contextTypes:
     - Context
     - MaterialContext
@@ -69,6 +74,10 @@ op:
     name: offsetField
     returnTypes:
     - float
+    supportedVariableInputs:
+    - curlField
+    - radiusField
+    - thicknessField
   name: circleWaveSdf2d
   opType: raytk.operators.sdf2d.circleWaveSdf2d
   parameters:
@@ -79,21 +88,23 @@ op:
     - label: Y
       name: y
     name: Axis
+    readOnlyHandling: semibaked
+    regularHandling: runtime
   - label: Curl
     name: Curl
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
   - label: Radius
     name: Radius
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
   - label: Thickness
     name: Thickness
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
   - label: Offset
     name: Offset
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
   status: beta
   thumb: assets/images/reference/operators/sdf2d/circleWaveSdf2d_thumb.png

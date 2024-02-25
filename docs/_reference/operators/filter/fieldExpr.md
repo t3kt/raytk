@@ -149,19 +149,19 @@ op:
     name: Expression
   - label: Param 1
     name: Param1
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
   - label: Param 2
     name: Param2
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
   - label: Vector Param 1
     name: Vecparam1
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
   - label: Vector Param 2
     name: Vecparam2
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
   - label: Coord Type
     menuOptions:

@@ -41,6 +41,8 @@ op:
     name: beginEndField
     returnTypes:
     - vec4
+    supportedVariableInputs:
+    - radiusField
   - contextTypes:
     - Context
     - MaterialContext
@@ -56,6 +58,9 @@ op:
     name: exponentField
     returnTypes:
     - float
+    supportedVariableInputs:
+    - radiusField
+    - beginEndField
   keywords:
   - dodecahedron
   - icosahedron
@@ -79,38 +84,40 @@ op:
     - label: Truncated Icosahedron
       name: truncatedicosahedron
     name: Shape
+    readOnlyHandling: semibaked
+    regularHandling: semibaked
     summary: Chooses between several different predefined types of polyhedra, or `Custom`,
       which uses the `Begin` and `End` parameters to generate different shapes.
   - label: Begin
     name: Begin
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
     summary: Only used when the `Custom` shape. It's a bit hard to describe, so it's
       best to just experiment with it and see how it behaves.
   - label: End
     name: End
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
     summary: Used along with `Begin`.
   - label: Translate
     name: Translate
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
     summary: Shifts the center of the shape.
   - label: Radius
     name: Radius
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
     summary: The size of the shape.
   - label: Use Exponent
     name: Useexponent
-    readOnlyHandling: constant
-    regularHandling: constant
+    readOnlyHandling: semibaked
+    regularHandling: semibaked
     summary: Enables the use of the `Exponent`, which controls the sharpness of the
       edges. When this is switched off, the shape will have sharp edges.
   - label: Exponent
     name: Exponent
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
     summary: Controls the sharpness or smoothness of the edges.
   summary: Generates one of several different types of polyhedra.

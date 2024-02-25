@@ -25,30 +25,30 @@ op:
     name: Enable
   - label: Color
     name: Color
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
     summary: Base color applied to the surface regardless of lights.
   - label: Ks
     name: Ks
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
   - label: Reflection Amount
     name: Reflectionamount
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
   - label: Fresnel
     name: Fresnel
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
   - label: Shine
     name: Shine
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
     summary: Specular exponent, which adjusts the light curve of specular highlights.
   - label: Enable Shadow
     name: Enableshadow
-    readOnlyHandling: macro
-    regularHandling: macro
+    readOnlyHandling: baked
+    regularHandling: baked
     summary: Whether to use shadows. When enabled, if the *Shadow Definition* input
       is provided, that will be used. Otherwise a default shadow function will be
       used.
@@ -59,6 +59,8 @@ op:
     - label: Only If Unassigned
       name: missing
     name: Condition
+    readOnlyHandling: baked
+    regularHandling: runtime
   status: beta
   thumb: assets/images/reference/operators/material/reflectMat_thumb.png
 

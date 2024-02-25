@@ -52,6 +52,9 @@ op:
     - Ray
     - Light
     - Particle
+    supportedVariableInputs:
+    - twistField
+    - phaseField
   - contextTypes:
     - Context
     - MaterialContext
@@ -68,6 +71,8 @@ op:
     name: twistField
     returnTypes:
     - vec4
+    supportedVariables:
+    - logdist
   - contextTypes:
     - Context
     - MaterialContext
@@ -84,6 +89,10 @@ op:
     name: phaseField
     returnTypes:
     - vec4
+    supportedVariableInputs:
+    - twistField
+    supportedVariables:
+    - logdist
   keywords:
   - log
   - polar
@@ -108,35 +117,35 @@ op:
       label: Z
       name: z
     name: Axis
-    readOnlyHandling: constant
+    readOnlyHandling: semibaked
     regularHandling: runtime
     summary: The axis around which to spiral. The position on this axis will stay
       the same. The position on the other two axes will be wrapped around this axis.
   - label: Center
     name: Center
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
     summary: The center position along the two spiralled axes. Note that the parts
       of this will control different axes on the selected `Axis`.
   - label: Twist 1
     name: Twist1
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
     summary: The amount of twisting to apply to the first axis.
   - label: Twist 2
     name: Twist2
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
     summary: The amount of twisting to apply to the second axis.
   - label: Phase
     name: Phase
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
     summary: Shifts coordinates along the first and second axes, which has the effect
       of "spinning" different parts of the pattern.
   - label: Branches
     name: Branches
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
     summary: How many "arms" or "branches" of the spiral there should be. This is
       controls how many times the first axis repeats as it goes around the axis. Note

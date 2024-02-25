@@ -39,20 +39,22 @@ op:
     name: thicknessField
     returnTypes:
     - float
+    supportedVariableInputs:
+    - radiusField
   name: crescentSdf
   opType: raytk.operators.sdf.crescentSdf
   parameters:
   - label: Radius
     name: Radius
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
   - label: Thickness
     name: Thickness
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
   - label: Rotate
     name: Rotate
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
   thumb: assets/images/reference/operators/sdf/crescentSdf_thumb.png
 

@@ -39,6 +39,8 @@ op:
     name: radiusField
     returnTypes:
     - float
+    supportedVariableInputs:
+    - lengthField
   - contextTypes:
     - Context
     - MaterialContext
@@ -54,6 +56,9 @@ op:
     name: thicknessField
     returnTypes:
     - float
+    supportedVariableInputs:
+    - lengthField
+    - radiusField
   keywords:
   - chain
   - link
@@ -62,22 +67,22 @@ op:
   parameters:
   - label: Translate
     name: Translate
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
     summary: Moves the center of the shape.
   - label: Length
     name: Length
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
     summary: The length of the chain link.
   - label: Radius
     name: Radius
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
     summary: The radius or width of the chain shape as a whole.
   - label: Thickness
     name: Thickness
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
     summary: The thickness of the link.
   summary: SDF for a chain link shape (an elongated loop).

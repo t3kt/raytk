@@ -50,6 +50,8 @@ op:
     returnTypes:
     - float
     - vec4
+    supportedVariableInputs:
+    - inputOp1
   - contextTypes:
     - Context
     - MaterialContext
@@ -70,6 +72,9 @@ op:
     returnTypes:
     - float
     - vec4
+    supportedVariableInputs:
+    - inputOp1
+    - lowField
   - contextTypes:
     - Context
     - MaterialContext
@@ -89,6 +94,10 @@ op:
     required: true
     returnTypes:
     - float
+    supportedVariableInputs:
+    - inputOp1
+    - lowField
+    - highField
   keywords:
   - clamp
   - limit
@@ -119,6 +128,8 @@ op:
     - label: Smooth Clamp High
       name: smoothclamphigh
     name: Limittype
+    readOnlyHandling: semibaked
+    regularHandling: runtime
   - label: Low Bound
     name: Low
   - label: High Bound

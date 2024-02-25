@@ -15,23 +15,23 @@ op:
     name: Enable
   - label: Grid Spacing
     name: Gridspacing
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
   - label: Saturation
     name: Saturation
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
   - label: Grid Strength
     name: Gridstrength
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
   - label: Mag Strength
     name: Magstrength
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
   - label: Line Power
     name: Linepower
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
   status: beta
   thumb: assets/images/reference/operators/field/domainColorField_thumb.png

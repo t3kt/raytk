@@ -50,6 +50,8 @@ op:
     - label: "H \xB7 N"
       name: hdotn
     name: Property
+    readOnlyHandling: baked
+    regularHandling: baked
   status: beta
 
 ---

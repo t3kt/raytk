@@ -30,6 +30,7 @@ opDef: !def
     evalOpts: !evalOpts
       excludeFirstRow: true
       cols: name enable dataType
+  displayCategory: Surface Attributes
 inputs:
 - !input
   Required: true

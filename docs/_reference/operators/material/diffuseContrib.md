@@ -34,6 +34,8 @@ op:
     name: albedoField
     returnTypes:
     - float
+    supportedVariableInputs:
+    - roughnessField
   - contextTypes:
     - MaterialContext
     coordTypes:
@@ -46,6 +48,9 @@ op:
     returnTypes:
     - float
     - vec4
+    supportedVariableInputs:
+    - roughnessField
+    - albedoField
   keywords:
   - diffuse
   - lambert
@@ -59,11 +64,11 @@ op:
   parameters:
   - label: Color
     name: Color
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
   - label: Level
     name: Level
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
   - label: Method
     menuOptions:
@@ -74,6 +79,8 @@ op:
     - label: Burley
       name: burley
     name: Method
+    readOnlyHandling: baked
+    regularHandling: runtime
     summary: The type of diffuse shading to use. Different methods support different
       combinations of the other parameters.
   - label: Roughness
@@ -85,18 +92,18 @@ op:
     summary: Whether to produce color or just a brightness value.
   - label: Use Light Color
     name: Uselightcolor
-    readOnlyHandling: constant
-    regularHandling: constant
+    readOnlyHandling: semibaked
+    regularHandling: semibaked
     summary: Whether to apply the light color to the color produced by this element.
   - label: Enable Shadow
     name: Enableshadow
-    readOnlyHandling: macro
-    regularHandling: macro
+    readOnlyHandling: baked
+    regularHandling: baked
     summary: Whether to apply the shadow to the color/level produced by this element.
   - label: Use Surface Color
     name: Usesurfacecolor
-    readOnlyHandling: constant
-    regularHandling: constant
+    readOnlyHandling: semibaked
+    regularHandling: semibaked
   shortcuts:
   - dc
   summary: A material element that provides diffuse light contribution.

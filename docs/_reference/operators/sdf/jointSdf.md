@@ -39,6 +39,8 @@ op:
     name: angleField
     returnTypes:
     - float
+    supportedVariableInputs:
+    - lengthField
   - contextTypes:
     - Context
     - MaterialContext
@@ -54,6 +56,9 @@ op:
     name: thicknessField
     returnTypes:
     - float
+    supportedVariableInputs:
+    - lengthField
+    - angleField
   name: jointSdf
   opType: raytk.operators.sdf.jointSdf
   parameters:
@@ -64,6 +69,8 @@ op:
     - label: Round
       name: round
     name: Shape
+    readOnlyHandling: semibaked
+    regularHandling: runtime
   - label: Direction
     menuOptions:
     - label: Along X Toward Y
@@ -79,17 +86,19 @@ op:
     - label: Along Z Toward Y
       name: zy
     name: Direction
+    readOnlyHandling: semibaked
+    regularHandling: runtime
   - label: Length
     name: Length
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
   - label: Thickness
     name: Thickness
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
   - label: Angle
     name: Angle
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
   thumb: assets/images/reference/operators/sdf/jointSdf_thumb.png
 

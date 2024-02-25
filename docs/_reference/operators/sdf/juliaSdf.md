@@ -24,6 +24,9 @@ op:
     name: cField
     returnTypes:
     - vec4
+    supportedVariables:
+    - step
+    - normstep
   keywords:
   - fractal
   - julia
@@ -33,24 +36,24 @@ op:
   parameters:
   - label: C 1
     name: C1
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
   - label: C 2
     name: C2
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
   - label: C 3
     name: C3
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
   - label: C 4
     name: C4
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
   - label: Iterations
     name: Iterations
-    readOnlyHandling: constant
-    regularHandling: constant
+    readOnlyHandling: semibaked
+    regularHandling: semibaked
   status: beta
   thumb: assets/images/reference/operators/sdf/juliaSdf_thumb.png
   variables:

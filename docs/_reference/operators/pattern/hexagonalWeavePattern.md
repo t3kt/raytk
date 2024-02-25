@@ -25,6 +25,9 @@ op:
     name: coordField
     returnTypes:
     - vec4
+    supportedVariableInputs:
+    - thicknessField
+    - blendingField
   - contextTypes:
     - Context
     - MaterialContext
@@ -41,6 +44,8 @@ op:
     name: thicknessField
     returnTypes:
     - float
+    supportedVariableInputs:
+    - coordField
   - contextTypes:
     - Context
     - MaterialContext
@@ -57,6 +62,9 @@ op:
     name: blendingField
     returnTypes:
     - float
+    supportedVariableInputs:
+    - coordField
+    - thicknessField
   - contextTypes:
     - Context
     - MaterialContext
@@ -74,6 +82,13 @@ op:
     returnTypes:
     - float
     - vec4
+    supportedVariableInputs:
+    - coordField
+    - thicknessField
+    - blendingField
+    supportedVariables:
+    - axialdist
+    - mask
   - contextTypes:
     - Context
     - MaterialContext
@@ -91,6 +106,14 @@ op:
     returnTypes:
     - float
     - vec4
+    supportedVariableInputs:
+    - coordField
+    - thicknessField
+    - blendingField
+    - color1Field
+    supportedVariables:
+    - axialdist
+    - mask
   - contextTypes:
     - Context
     - MaterialContext
@@ -108,6 +131,15 @@ op:
     returnTypes:
     - float
     - vec4
+    supportedVariableInputs:
+    - coordField
+    - thicknessField
+    - blendingField
+    - color1Field
+    - color2Field
+    supportedVariables:
+    - axialdist
+    - mask
   name: hexagonalWeavePattern
   opType: raytk.operators.pattern.hexagonalWeavePattern
   parameters:
@@ -116,31 +148,31 @@ op:
     - label: Two Layer
       name: twolayer
     name: Pattern
-    readOnlyHandling: macro
-    regularHandling: macro
+    readOnlyHandling: baked
+    regularHandling: baked
   - label: Translate
     name: Translate
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
   - label: Size
     name: Size
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
   - label: Thickness
     name: Thickness
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
   - label: Blending
     name: Blending
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
   - label: Randomize
     name: Randomize
-    readOnlyHandling: macro
-    regularHandling: macro
+    readOnlyHandling: baked
+    regularHandling: baked
   - label: Seed
     name: Seed
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
   - label: Format
     menuOptions:
@@ -149,19 +181,19 @@ op:
     - label: Custom Override Color
       name: customcolor
     name: Format
-    readOnlyHandling: macro
-    regularHandling: macro
+    readOnlyHandling: baked
+    regularHandling: baked
   - label: Color 1
     name: Color1
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
   - label: Color 2
     name: Color2
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
   - label: Background Color
     name: Bgcolor
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
   thumb: assets/images/reference/operators/pattern/hexagonalWeavePattern_thumb.png
   variables:

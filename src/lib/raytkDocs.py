@@ -170,6 +170,8 @@ class InputHelp:
 	coordTypes: list[str] = field(default_factory=list)
 	contextTypes: list[str] = field(default_factory=list)
 	returnTypes: list[str] = field(default_factory=list)
+	supportedVariables: list[str] = field(default_factory=list)
+	supportedVariableInputs: list[str] = field(default_factory=list)
 	inputHandler: COMP | None = None
 
 	def formatMarkdownListItem(self, forBuild=False):
@@ -184,8 +186,11 @@ class InputHelp:
 		return text
 
 	@classmethod
-	def extractFromInputHandler(cls, inputHandler: COMP):
+	def extractFromInputHandler(cls, inputHandler: COMP, varHelps: list[VariableHelp]):
 		info = InputInfo(inputHandler)
+		varNames = info.supportedVariables
+		if '*' in varNames:
+			varNames = [varHelp.name for varHelp in varHelps]
 		return cls(
 			name=info.name,
 			label=info.label,
@@ -193,8 +198,18 @@ class InputHelp:
 			coordTypes=info.supportedCoordTypes,
 			contextTypes=info.supportedContextTypes,
 			returnTypes=info.supportedReturnTypes,
+			supportedVariables=varNames,
+			supportedVariableInputs=info.supportedVariableInputs,
 			inputHandler=inputHandler,
 		)
+
+	def updateSupportedVariableInputs(self, inputHelps: list['InputHelp']):
+		if '*' in self.supportedVariableInputs:
+			self.supportedVariableInputs = [
+				inHelp.name
+				for inHelp in inputHelps
+				if inHelp.name != self.name
+			]
 
 	def mergeFrom(self, other: 'InputHelp'):
 		if self.name != other.name:
@@ -206,6 +221,8 @@ class InputHelp:
 		self.contextTypes = other.contextTypes
 		self.returnTypes = other.returnTypes
 		self.inputHandler = self.inputHandler or other.inputHandler
+		self.supportedVariables = other.supportedVariables
+		self.supportedVariableInputs = other.supportedVariableInputs
 
 	def toFrontMatterData(self):
 		return cleanDict({
@@ -215,6 +232,8 @@ class InputHelp:
 			'coordTypes': self.coordTypes,
 			'contextTypes': self.contextTypes,
 			'returnTypes': self.returnTypes,
+			'supportedVariables': self.supportedVariables,
+			'supportedVariableInputs': self.supportedVariableInputs,
 			'summary': self.summary,
 		})
 
@@ -695,13 +714,79 @@ class OpDocManager:
 				paramHelp = paramHelps.get(tupletName)
 				if not paramHelp:
 					continue
-				paramHelp.regularHandling = regularVal
-				paramHelp.readOnlyHandling = readOnlyVal
+				paramHelp.regularHandling = self._convertHandlingValue(regularVal)
+				paramHelp.readOnlyHandling = self._convertHandlingValue(readOnlyVal)
+
+	@staticmethod
+	def _convertHandlingValue(val: str):
+		if val == 'macro':
+			return 'baked'
+		elif val == 'constant':
+			return 'semibaked'
+		elif val == 'runtime':
+			return 'runtime'
+		return ''
+
+	def _pullParamHandlingFromOpElementsInto(self, ropHelp: ROPHelp):
+		if not self.info.isROP:
+			return
+		paramHelps = {
+			paramHelp.name: paramHelp
+			for paramHelp in ropHelp.parameters
+		}
+		elementTable = self.info.opDef.op('opElements')
+		if elementTable.numRows < 2:
+			return
+		for i in range(1, elementTable.numRows):
+			elementRoot = op(elementTable[i, 'elementRoot'])
+			self._pullParamHandlingFromOpElement(elementRoot, paramHelps)
+
+	@staticmethod
+	def _pullParamHandlingFromOpElement(elementRoot: COMP, paramHelps: dict[str, ROPParamHelp]):
+		if not elementRoot:
+			return
+		master = elementRoot.par.clone.eval()
+		if not master:
+			return
+		if master.name == 'codeSwitcher':
+			switcher = elementRoot
+		elif master.name in ('waveFunction', 'combiner'):
+			switcher = elementRoot.op('codeSwitcher')
+		elif master.name == 'transformTarget':
+			switcher = elementRoot.op('codeSwitcher_Target')
+		else:
+			return
+		if not switcher:
+			return
+		paramHelp = paramHelps.get(switcher.par.Param.eval())
+		if not paramHelp:
+			return
+		if paramHelp.regularHandling is not None:
+			return
+		mode = switcher.par.Switchmode.eval()
+		if mode == 'none':
+			pass
+		elif mode == 'switch':
+			paramHelp.regularHandling = 'runtime'
+			paramHelp.readOnlyHandling = 'runtime'
+		elif mode == 'constswitch':
+			paramHelp.regularHandling = 'semibaked'
+			paramHelp.readOnlyHandling = 'semibaked'
+		elif mode == 'inline':
+			paramHelp.regularHandling = 'baked'
+			paramHelp.readOnlyHandling = 'baked'
+		elif mode == 'auto':
+			paramHelp.regularHandling = 'runtime'
+			paramHelp.readOnlyHandling = 'baked'
+		elif mode == 'autoconst':
+			paramHelp.regularHandling = 'runtime'
+			paramHelp.readOnlyHandling = 'semibaked'
 
 	def _pullFromMissingInputsInto(self, ropHelp: ROPHelp):
 		inHelps = ropHelp.inputs
 		for i, handler in enumerate(self.info.inputHandlers):
-			extractedHelp = InputHelp.extractFromInputHandler(handler)
+			extractedHelp = InputHelp.extractFromInputHandler(handler, ropHelp.variables)
+			extractedHelp.updateSupportedVariableInputs(inHelps)
 			if i < len(inHelps):
 				inHelps[i].mergeFrom(extractedHelp)
 			else:
@@ -730,8 +815,9 @@ class OpDocManager:
 		ropHelp = self._parseDAT()
 		self._pullFromMissingParamsInto(ropHelp)
 		self._pullParamHandlingInto(ropHelp)
-		self._pullFromMissingInputsInto(ropHelp)
+		self._pullParamHandlingFromOpElementsInto(ropHelp)
 		self._pullFromMissingVariablesInto(ropHelp)
+		self._pullFromMissingInputsInto(ropHelp)
 		self._writeToDAT(ropHelp)
 
 	def _getRopParByTupletName(self, tupletName: str) -> Par | None:
@@ -773,6 +859,7 @@ class OpDocManager:
 		ropHelp = self._parseDAT()
 		self._pullFromMissingParamsInto(ropHelp)
 		self._pullParamHandlingInto(ropHelp)
+		self._pullParamHandlingFromOpElementsInto(ropHelp)
 		self._pullFromMissingInputsInto(ropHelp)
 		# this is always present except in debug code
 		if imagesFolder:

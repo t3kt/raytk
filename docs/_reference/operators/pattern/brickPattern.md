@@ -41,6 +41,8 @@ op:
     name: thicknessField
     returnTypes:
     - float
+    supportedVariableInputs:
+    - coordField
   - contextTypes:
     - Context
     - MaterialContext
@@ -57,6 +59,9 @@ op:
     name: blendingField
     returnTypes:
     - float
+    supportedVariableInputs:
+    - coordField
+    - thicknessField
   - contextTypes:
     - Context
     - MaterialContext
@@ -73,28 +78,32 @@ op:
     name: shiftField
     returnTypes:
     - float
+    supportedVariableInputs:
+    - coordField
+    - thicknessField
+    - shiftField
   name: brickPattern
   opType: raytk.operators.pattern.brickPattern
   parameters:
   - label: Shift
     name: Shift
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
   - label: Translate
     name: Translate
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
   - label: Size
     name: Size
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
   - label: Thickness
     name: Thickness
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
   - label: Blending
     name: Blending
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
   thumb: assets/images/reference/operators/pattern/brickPattern_thumb.png
 

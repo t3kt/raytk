@@ -34,6 +34,14 @@ op:
     - Ray
     - Light
     - Particle
+    supportedVariableInputs:
+    - sizeField
+    - shiftField
+    - offsetField
+    supportedVariables:
+    - cellcoord
+    - normcoord
+    - shiftedcellcoord
   - contextTypes:
     - Context
     - MaterialContext
@@ -66,6 +74,8 @@ op:
     returnTypes:
     - float
     - vec4
+    supportedVariableInputs:
+    - sizeField
   - contextTypes:
     - Context
     - MaterialContext
@@ -82,6 +92,13 @@ op:
     returnTypes:
     - float
     - vec4
+    supportedVariableInputs:
+    - sizeField
+    - shiftField
+    supportedVariables:
+    - cellcoord
+    - normcoord
+    - shiftedcellcoord
   keywords:
   - grid
   - modulo
@@ -93,19 +110,19 @@ op:
     name: Enable
   - label: Size
     name: Size
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
     summary: The spacing of the grid along each axis, which is also the size of the
       cell that is taken from the input.
   - label: Offset
     name: Offset
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
     summary: Shifts where the input cell is taken from without moving the position
       of the grid.
   - label: Shift
     name: Shift
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
     summary: Shifts the whole grid (and its contents).
   - label: Limit Type
@@ -119,6 +136,8 @@ op:
     - label: Stop Only
       name: stop
     name: Limittype
+    readOnlyHandling: semibaked
+    regularHandling: semibaked
   - label: Limit Start
     name: Limitstart
   - label: Limit Stop
@@ -132,8 +151,8 @@ op:
     - label: Mirror
       name: mirror
     name: Mirrortype
-    readOnlyHandling: constant
-    regularHandling: constant
+    readOnlyHandling: semibaked
+    regularHandling: semibaked
   - label: Iteration Type
     menuOptions:
     - label: None
@@ -143,8 +162,8 @@ op:
     - label: Alternating Cell Coordinate (0,1,0,1)
       name: alternatingcoord
     name: Iterationtype
-    readOnlyHandling: constant
-    regularHandling: constant
+    readOnlyHandling: semibaked
+    regularHandling: semibaked
   shortcuts:
   - m3
   summary: Repeats space along all 3 axes.

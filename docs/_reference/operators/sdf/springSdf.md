@@ -26,6 +26,10 @@ op:
     name: heightField
     returnTypes:
     - float
+    supportedVariables:
+    - axisoffset
+    - angle
+    - normangle
   - contextTypes:
     - Context
     - MaterialContext
@@ -42,6 +46,13 @@ op:
     name: radiusField
     returnTypes:
     - float
+    supportedVariableInputs:
+    - heightField
+    supportedVariables:
+    - axisoffset
+    - normoffset
+    - angle
+    - normangle
   - contextTypes:
     - Context
     - MaterialContext
@@ -58,6 +69,14 @@ op:
     name: coilsField
     returnTypes:
     - float
+    supportedVariableInputs:
+    - heightField
+    - radiusField
+    supportedVariables:
+    - axisoffset
+    - normoffset
+    - angle
+    - normangle
   - contextTypes:
     - Context
     - MaterialContext
@@ -75,6 +94,15 @@ op:
     name: thicknessField
     returnTypes:
     - float
+    supportedVariableInputs:
+    - heightField
+    - radiusField
+    - coilsField
+    supportedVariables:
+    - axisoffset
+    - normoffset
+    - angle
+    - normangle
   - contextTypes:
     - Context
     - MaterialContext
@@ -91,6 +119,15 @@ op:
     returnTypes:
     - Sdf
     summary: Optional 2D SDF used as the cross-section for the shape.
+    supportedVariableInputs:
+    - heightField
+    - radiusField
+    - coilsField
+    supportedVariables:
+    - axisoffset
+    - normoffset
+    - angle
+    - normangle
   name: springSdf
   opType: raytk.operators.sdf.springSdf
   parameters:
@@ -103,31 +140,31 @@ op:
     - label: Z
       name: z
     name: Axis
-    readOnlyHandling: constant
+    readOnlyHandling: semibaked
     regularHandling: runtime
   - label: Reverse
     name: Reverse
-    readOnlyHandling: constant
+    readOnlyHandling: semibaked
     regularHandling: runtime
   - label: Radius
     name: Radius
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
     summary: The radius of the spring, i.e. the distance of the spring from the center
       axis.
   - label: Height
     name: Height
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
     summary: Height or length of the spring.
   - label: Coils
     name: Coils
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
     summary: The number of rotations in the spring. Larger values mean a tighter coil.
   - label: Thickness
     name: Thickness
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
     summary: Thickness of the spring, used when no cross-section SDF is attached.
   status: beta

@@ -30,6 +30,9 @@ op:
     - Ray
     - Light
     - Particle
+    supportedVariables:
+    - index
+    - sign
   - contextTypes:
     - Context
     - MaterialContext
@@ -52,6 +55,9 @@ op:
       it is given the distance from the center. If it is a 2D field, it is given the
       position along the mirror axes. If it is a 3D field, it is given the raw position.
       The value is converted to radians and *added* to the `Rotateaxis` parameter.
+    supportedVariables:
+    - index
+    - sign
   - contextTypes:
     - Context
     - MaterialContext
@@ -69,6 +75,11 @@ op:
     returnTypes:
     - float
     - vec4
+    supportedVariableInputs:
+    - rotateField
+    supportedVariables:
+    - index
+    - sign
   name: mirrorOctant
   opType: raytk.operators.filter.mirrorOctant
   parameters:
@@ -83,22 +94,22 @@ op:
     - label: XY
       name: z
     name: Axis
-    readOnlyHandling: constant
-    regularHandling: constant
+    readOnlyHandling: semibaked
+    regularHandling: semibaked
     summary: Axis that faces the plane where coordinates are mirrored.
   - label: Size
     name: Size
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
     summary: Spacing of the reflection planes.
   - label: Offset
     name: Offset
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
     summary: Shifts the input before applying reflection.
   - label: Rotate Axis
     name: Rotateaxis
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
     summary: Rotates the input before applying reflection.
   - name: Iterateoncells
@@ -113,8 +124,8 @@ op:
     - label: Signed Axes (-1/1, -1/1)
       name: sign
     name: Iterationtype
-    readOnlyHandling: constant
-    regularHandling: constant
+    readOnlyHandling: semibaked
+    regularHandling: semibaked
   summary: Mirror coordinates across two axes and the diagonals.
   thumb: assets/images/reference/operators/filter/mirrorOctant_thumb.png
   variables:

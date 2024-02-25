@@ -1,5 +1,5 @@
 !rcomp
 meta: !meta
   opType: raytk.operators.output.raymarchPreviewPanel
-  opVersion: '10'
+  opVersion: '12'
   opStatus: beta

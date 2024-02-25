@@ -33,6 +33,8 @@ op:
     - Ray
     - Light
     - Particle
+    supportedVariables:
+    - scale
   name: geometricSeriesSquareTile
   opType: raytk.operators.filter.geometricSeriesSquareTile
   parameters:
@@ -47,15 +49,15 @@ op:
     - label: XY
       name: z
     name: Axis
-    readOnlyHandling: constant
-    regularHandling: constant
+    readOnlyHandling: semibaked
+    regularHandling: semibaked
   - label: Density
     name: Density
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
   - label: Zoom
     name: Zoom
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
   status: beta
   summary: Repeats space in a square arrangement that gets smaller in the center.

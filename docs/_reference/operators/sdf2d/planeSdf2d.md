@@ -38,9 +38,11 @@ op:
     - label: Y-
       name: yneg
     name: Direction
+    readOnlyHandling: semibaked
+    regularHandling: runtime
   - label: Offset
     name: Offset
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
   thumb: assets/images/reference/operators/sdf2d/planeSdf2d_thumb.png
 

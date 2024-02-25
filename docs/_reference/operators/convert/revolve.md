@@ -26,6 +26,15 @@ op:
     returnTypes:
     - Sdf
     summary: The 2D shape that is revolved around the axis.
+    supportedVariableInputs:
+    - rotateField
+    - scaleField
+    - translateField
+    - radialOffsetField
+    - axisOffsetField
+    supportedVariables:
+    - angle
+    - normangle
   - contextTypes:
     - Context
     - MaterialContext
@@ -44,6 +53,12 @@ op:
     - float
     summary: Optional field that controls rotation of the cross-section as it goes
       around the axis.
+    supportedVariableInputs:
+    - radialOffsetField
+    - axisOffsetField
+    supportedVariables:
+    - angle
+    - normangle
   - contextTypes:
     - Context
     - MaterialContext
@@ -62,6 +77,13 @@ op:
     - float
     summary: Optional field that controls scale of the cross-section as it goes around
       the axis.
+    supportedVariableInputs:
+    - rotateField
+    - radialOffsetField
+    - axisOffsetField
+    supportedVariables:
+    - angle
+    - normangle
   - contextTypes:
     - Context
     - MaterialContext
@@ -80,6 +102,14 @@ op:
     - vec4
     summary: Optional field that controls translate of the cross-section as it goes
       around the axis.
+    supportedVariableInputs:
+    - scaleField
+    - rotateField
+    - radialOffsetField
+    - axisOffsetField
+    supportedVariables:
+    - angle
+    - normangle
   - contextTypes:
     - Context
     - MaterialContext
@@ -95,6 +125,9 @@ op:
     name: radialOffsetField
     returnTypes:
     - float
+    supportedVariables:
+    - angle
+    - normangle
   - contextTypes:
     - Context
     - MaterialContext
@@ -110,6 +143,11 @@ op:
     name: axisOffsetField
     returnTypes:
     - float
+    supportedVariableInputs:
+    - radialOffsetField
+    supportedVariables:
+    - angle
+    - normangle
   name: revolve
   opType: raytk.operators.convert.revolve
   parameters:
@@ -122,16 +160,16 @@ op:
     - label: Z
       name: z
     name: Axis
-    readOnlyHandling: constant
-    regularHandling: constant
+    readOnlyHandling: semibaked
+    regularHandling: semibaked
   - label: Radial Offset
     name: Radialoffset
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
     summary: Moves the cross-section shape closer or further from the axis.
   - label: Axis Offset
     name: Axisoffset
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
     summary: Moves the resulting shape along the axis.
   - label: Iteration Type
@@ -141,8 +179,8 @@ op:
     - label: Ratio
       name: ratio
     name: Iterationtype
-    readOnlyHandling: constant
-    regularHandling: constant
+    readOnlyHandling: semibaked
+    regularHandling: semibaked
   summary: Creates a 3D SDF by revolving a 2D cross-section SDF around an axis.
   thumb: assets/images/reference/operators/convert/revolve_thumb.png
   variables:

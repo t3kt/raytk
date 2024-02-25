@@ -49,6 +49,8 @@ op:
     returnTypes:
     - float
     - vec4
+    supportedVariableInputs:
+    - inputOp1
   - contextTypes:
     - Context
     - MaterialContext
@@ -68,6 +70,8 @@ op:
     returnTypes:
     - float
     - vec4
+    supportedVariableInputs:
+    - inputOp[1-2]
   - contextTypes:
     - Context
     - MaterialContext
@@ -87,6 +91,8 @@ op:
     returnTypes:
     - float
     - vec4
+    supportedVariableInputs:
+    - inputOp[1-3]
   - contextTypes:
     - Context
     - MaterialContext
@@ -106,6 +112,8 @@ op:
     returnTypes:
     - float
     - vec4
+    supportedVariableInputs:
+    - inputOp[1-4]
   - contextTypes:
     - Context
     - MaterialContext
@@ -125,6 +133,8 @@ op:
     returnTypes:
     - float
     - vec4
+    supportedVariableInputs:
+    - inputOp[1-5]
   - contextTypes:
     - Context
     - MaterialContext
@@ -144,6 +154,8 @@ op:
     returnTypes:
     - float
     - vec4
+    supportedVariableInputs:
+    - inputOp[1-6]
   - contextTypes:
     - Context
     - MaterialContext
@@ -163,6 +175,8 @@ op:
     returnTypes:
     - float
     - vec4
+    supportedVariableInputs:
+    - inputOp[1-7]
   name: addFields
   opType: raytk.operators.combine.addFields
   summary: Adds the values of multiple fields.

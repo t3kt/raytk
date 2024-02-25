@@ -47,6 +47,8 @@ op:
     required: true
     returnTypes:
     - Sdf
+    supportedVariableInputs:
+    - inputOp1
   - contextTypes:
     - Context
     - MaterialContext
@@ -65,6 +67,8 @@ op:
     name: radiusField
     returnTypes:
     - float
+    supportedVariableInputs:
+    - inputOp[1-2]
   - contextTypes:
     - Context
     - MaterialContext
@@ -83,6 +87,9 @@ op:
     name: depthField
     returnTypes:
     - float
+    supportedVariableInputs:
+    - inputOp[1-2]
+    - radiusField
   name: edgeCombine
   opType: raytk.operators.combine.edgeCombine
   parameters:
@@ -99,18 +106,20 @@ op:
     - label: Pipe
       name: pipe
     name: Combine
+    readOnlyHandling: baked
+    regularHandling: runtime
   - label: Swap Inputs
     name: Swapinputs
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
   - label: Radius
     name: Radius
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
     summary: Width of the edge overlap area.
   - label: Depth
     name: Depth
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
     summary: Depth of the groove / tongue.
   summary: Combines two SDFs in ways that use the intersection areas.

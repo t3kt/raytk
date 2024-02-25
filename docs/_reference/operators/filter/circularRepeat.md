@@ -26,6 +26,9 @@ op:
     required: true
     returnTypes:
     - Sdf
+    supportedVariables:
+    - cellcoord
+    - cellchecker
   name: circularRepeat
   opType: raytk.operators.filter.circularRepeat
   parameters:
@@ -40,16 +43,16 @@ op:
     - label: ZX
       name: zx
     name: Plane
-    readOnlyHandling: constant
-    regularHandling: constant
+    readOnlyHandling: semibaked
+    regularHandling: semibaked
   - label: Radius
     name: Radius
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
     summary: Size of the area to fill.
   - label: Cell Size
     name: Cellsize
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
     summary: Spacing between copies.
   status: beta

@@ -41,6 +41,10 @@ op:
     - float
     - vec4
     summary: Radius field, either a float, or a vector with outer and inner radius
+    supportedVariableInputs:
+    - angleField
+    supportedVariables:
+    - normangle
   keywords:
   - arc
   - ring
@@ -53,12 +57,12 @@ op:
     summary: The distance from the center to the outer edge.
   - label: Angle
     name: Angle
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
     summary: The width of the slice in degrees.
   - label: Rotate
     name: Rotate
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
     summary: Rotation for the slice in degrees.
   - label: Shape
@@ -70,6 +74,8 @@ op:
     - label: Infinite
       name: infinite
     name: Shape
+    readOnlyHandling: semibaked
+    regularHandling: runtime
   - label: Inner Radius
     name: Innerradius
   summary: SDF for a 2D pie-slice shape.

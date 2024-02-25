@@ -41,11 +41,11 @@ op:
   parameters:
   - label: Translate
     name: Translate
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
   - label: Scale
     name: Scale
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
   - label: Cell Style
     menuOptions:
@@ -56,8 +56,8 @@ op:
     - label: Raw
       name: raw
     name: Cellstyle
-    readOnlyHandling: constant
-    regularHandling: constant
+    readOnlyHandling: semibaked
+    regularHandling: semibaked
   - label: Coord Type
     menuOptions:
     - label: Auto

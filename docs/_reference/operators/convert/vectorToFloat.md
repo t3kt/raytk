@@ -84,6 +84,8 @@ op:
     - label: Sum(XYZW)
       name: sumxyzw
     name: Usepart
+    readOnlyHandling: semibaked
+    regularHandling: semibaked
     summary: Which part of the vector to use for the float field.
   summary: Converts a vector value field to a float field using one part of the vector.
 

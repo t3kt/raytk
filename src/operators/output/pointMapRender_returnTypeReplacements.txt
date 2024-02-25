@@ -1,5 +1,0 @@
-before	after
-float vec4 Sdf	Sdf
-float vec4	vec4
-float Sdf	Sdf
-vec4 Sdf	Sdf

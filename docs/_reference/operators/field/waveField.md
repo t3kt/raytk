@@ -56,6 +56,8 @@ op:
     - float
     summary: If attached, the wave will use this field to multiply the `Period` parameter,
       which can be used for frequency modulation.
+    supportedVariableInputs:
+    - coordField
   - contextTypes:
     - Context
     - MaterialContext
@@ -74,6 +76,9 @@ op:
     name: phaseField
     returnTypes:
     - float
+    supportedVariableInputs:
+    - coordField
+    - periodField
   - contextTypes:
     - Context
     - MaterialContext
@@ -90,6 +95,10 @@ op:
     returnTypes:
     - float
     - vec4
+    supportedVariableInputs:
+    - coordField
+    - periodField
+    - phaseField
   - contextTypes:
     - Context
     - MaterialContext
@@ -108,6 +117,11 @@ op:
     name: amplitudeField
     returnTypes:
     - float
+    supportedVariableInputs:
+    - coordField
+    - periodField
+    - phaseField
+    - waveFunc
   name: waveField
   opType: raytk.operators.field.waveField
   parameters:
@@ -134,6 +148,8 @@ op:
     - label: Additive Square (8)
       name: addsquare8
     name: Function
+    readOnlyHandling: baked
+    regularHandling: runtime
     summary: The type of wave.
   - label: Axis
     menuOptions:
@@ -147,8 +163,8 @@ op:
       label: Distance From Origin
       name: dist
     name: Axis
-    readOnlyHandling: constant
-    regularHandling: constant
+    readOnlyHandling: semibaked
+    regularHandling: semibaked
     summary: Axis used for the wave function phase. If there is a coordinate field,
       this controls which part of the returned value is used. Otherwise it controls
       which part of the position in used.
@@ -171,13 +187,13 @@ op:
     summary: Offset of the wave along the axis / coordinates.
   - label: Amplitude
     name: Amplitude
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
     summary: The height of the wave, which scales the range of output values. If this
       is set to 3 (and `Offset` is 0), a ramp wave will produce values from 0 to 3.
   - label: Offset
     name: Offset
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
     summary: Adds to the values produced by the wave. If this is set to 0.5 (and `Amplitude`
       is set to 1), a ramp wave will produce values from 0.5 to 1.5.

@@ -50,12 +50,12 @@ op:
   - name: Contexttype
   - label: Threshold
     name: Threshold
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
     summary: The value above which things will be unchanged.
   - label: Base Value
     name: Basevalue
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
     summary: The constant value to use when the input is zero.
   summary: A mapping function that can change a value only when it's zero or very

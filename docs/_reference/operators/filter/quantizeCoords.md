@@ -40,17 +40,17 @@ op:
     name: Enable
   - label: Size
     name: Size
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
   - label: Size Multiplier
     name: Sizemult
   - label: Offset
     name: Offset
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
   - label: Smoothing
     name: Smoothing
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
   - label: Smoothing Multiplier
     name: Smoothingmult

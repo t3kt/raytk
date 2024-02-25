@@ -40,6 +40,8 @@ op:
     name: radiusField
     returnTypes:
     - float
+    supportedVariableInputs:
+    - thicknessField
   - contextTypes:
     - Context
     - MaterialContext
@@ -55,6 +57,9 @@ op:
     name: widthField
     returnTypes:
     - float
+    supportedVariableInputs:
+    - thicknessField
+    - radiusField
   - contextTypes:
     - Context
     - MaterialContext
@@ -70,34 +75,38 @@ op:
     name: wrapField
     returnTypes:
     - float
+    supportedVariableInputs:
+    - thicknessField
+    - radiusField
+    - widthField
   name: petalSdf
   opType: raytk.operators.sdf.petalSdf
   parameters:
   - label: Thickness
     name: Thickness
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
     summary: Thickness of the petal. Smaller values also cause the end to flatten
       out.
   - label: Width
     name: Width
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
     summary: Width of the petal.
   - label: Wrap
     name: Wrap
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
     summary: Different vertical slices of the sphere that it is based on. Low values
       keep the petal short at the base. Large values keep the petal short at the top.
   - label: Radius
     name: Radius
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
     summary: The radius of the sphere that the petal is based on.
   - label: Rotate
     name: Rotate
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
     summary: Rotates the petal around the y axis.
   summary: A flower petal or leaf shape.

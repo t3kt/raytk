@@ -25,6 +25,9 @@ op:
     returnTypes:
     - float
     summary: Float value field that controls the height of the prism.
+    supportedVariables:
+    - axispos
+    - normangle
   - contextTypes:
     - Context
     - MaterialContext
@@ -41,6 +44,12 @@ op:
     returnTypes:
     - float
     summary: Float value field that controls the radius of the prism.
+    supportedVariableInputs:
+    - heightField
+    supportedVariables:
+    - axispos
+    - normangle
+    - normoffset
   - contextTypes:
     - Context
     - MaterialContext
@@ -56,6 +65,13 @@ op:
     name: thicknessField
     returnTypes:
     - float
+    supportedVariableInputs:
+    - heightField
+    - radiusField
+    supportedVariables:
+    - axispos
+    - normangle
+    - normoffset
   - contextTypes:
     - Context
     - MaterialContext
@@ -71,6 +87,14 @@ op:
     name: sidesField
     returnTypes:
     - float
+    supportedVariableInputs:
+    - heightField
+    - radiusField
+    - thicknessField
+    supportedVariables:
+    - axispos
+    - normangle
+    - normoffset
   - contextTypes:
     - Context
     - MaterialContext
@@ -86,6 +110,15 @@ op:
     name: roundingField
     returnTypes:
     - float
+    supportedVariableInputs:
+    - heightField
+    - radiusField
+    - thicknessField
+    - sidesField
+    supportedVariables:
+    - axispos
+    - normangle
+    - normoffset
   keywords:
   - column
   - cylinder
@@ -110,21 +143,23 @@ op:
     - label: Custom
       name: custom
     name: Prismtype
+    readOnlyHandling: semibaked
+    regularHandling: runtime
     summary: The number of sides of the prism.
   - label: Translate
     name: Translate
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
     summary: Moves the center of the prism.
   - label: Radius
     name: Radius
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
     summary: The radius of the prism. If the radius field input is connected, this
       is not used.
   - label: Height
     name: Height
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
     summary: The height / length of the prism. If the height field input, this is
       not used.
@@ -137,27 +172,27 @@ op:
     - label: Z
       name: z
     name: Axis
-    readOnlyHandling: constant
+    readOnlyHandling: semibaked
     regularHandling: runtime
   - label: Sides
     name: Sides
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
   - label: Rounding
     name: Rounding
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
   - label: Infinite Height
     name: Infiniteheight
-    readOnlyHandling: constant
+    readOnlyHandling: semibaked
     regularHandling: runtime
   - label: Hollow
     name: Hollow
-    readOnlyHandling: constant
+    readOnlyHandling: semibaked
     regularHandling: runtime
   - label: Thickness
     name: Thickness
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
   - label: UV Mode
     menuOptions:
@@ -168,8 +203,8 @@ op:
     - label: Faces
       name: faces
     name: Uvmode
-    readOnlyHandling: constant
-    regularHandling: constant
+    readOnlyHandling: semibaked
+    regularHandling: semibaked
   summary: A prism shape, like a cylinder but with flat sides, along the z axis.
   thumb: assets/images/reference/operators/sdf/prismSdf_thumb.png
   variables:

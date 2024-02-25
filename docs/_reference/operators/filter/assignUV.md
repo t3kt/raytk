@@ -50,6 +50,10 @@ op:
     returnTypes:
     - vec4
     summary: Optional field used to calculate the UV coordinates.
+    supportedVariableInputs:
+    - inputOp1
+    supportedVariables:
+    - sdf
   keywords:
   - material
   - modularmat
@@ -85,9 +89,11 @@ op:
     - label: Spherical
       name: spherical
     name: Uvmode
+    readOnlyHandling: semibaked
+    regularHandling: runtime
   - label: Center
     name: Center
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
   summary: Assigns UV coordinates to an SDF surface.
   thumb: assets/images/reference/operators/filter/assignUV_thumb.png

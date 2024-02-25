@@ -41,6 +41,12 @@ op:
     - Ray
     - Light
     - Particle
+    supportedVariableInputs:
+    - bendField
+    - shiftField
+    supportedVariables:
+    - axispos
+    - bendpos
   - contextTypes:
     - Context
     - MaterialContext
@@ -63,6 +69,9 @@ op:
       it is passed the position along the bend axis. For 2D coords, both the bend
       axis and the bend direction are passed. For 3D coords, the relative XYZ position
       is passed.
+    supportedVariables:
+    - axispos
+    - bendpos
   - contextTypes:
     - Context
     - MaterialContext
@@ -81,6 +90,11 @@ op:
     returnTypes:
     - float
     - Sdf
+    supportedVariableInputs:
+    - bendField
+    supportedVariables:
+    - axispos
+    - bendpos
   name: bend
   opType: raytk.operators.filter.bend
   parameters:
@@ -101,17 +115,17 @@ op:
     - label: Along Z Toward Y
       name: zyx
     name: Direction
-    readOnlyHandling: constant
-    regularHandling: constant
+    readOnlyHandling: semibaked
+    regularHandling: semibaked
     summary: Chooses the axis to bend along and the axis to bend towards.
   - label: Amount
     name: Amount
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
     summary: Amount of bending.
   - label: Shift
     name: Shift
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
     summary: Shifts the axis to bend along and the axis to bend towards.
   - label: Side
@@ -123,8 +137,8 @@ op:
     - label: Positive
       name: pos
     name: Side
-    readOnlyHandling: constant
-    regularHandling: constant
+    readOnlyHandling: semibaked
+    regularHandling: semibaked
   summary: Bends space, along a main axis, towards a second axis.
   thumb: assets/images/reference/operators/filter/bend_thumb.png
   variables:

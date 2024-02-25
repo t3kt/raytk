@@ -48,6 +48,8 @@ op:
     name: point2
     returnTypes:
     - vec4
+    supportedVariableInputs:
+    - point1Field
   - contextTypes:
     - Context
     - MaterialContext
@@ -63,20 +65,25 @@ op:
     name: thicknessField
     returnTypes:
     - float
+    supportedVariableInputs:
+    - point1Field
+    - point2Field
+    supportedVariables:
+    - normoffset
   name: lineSegmentSdf2d
   opType: raytk.operators.sdf2d.lineSegmentSdf2d
   parameters:
   - label: Point 1
     name: Pointa
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
   - label: Point 2
     name: Pointb
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
   - label: Thickness
     name: Thickness
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
   summary: 2D line segment SDF.
   thumb: assets/images/reference/operators/sdf2d/lineSegmentSdf2d_thumb.png

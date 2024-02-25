@@ -55,6 +55,8 @@ op:
     - Sdf
     summary: The second SDF, which is removed from the first (unless `Swaporder` is
       used).
+    supportedVariableInputs:
+    - inputOp1
   name: simpleDiff
   opType: raytk.operators.combine.simpleDiff
   parameters:
@@ -62,7 +64,7 @@ op:
     name: Enable
   - label: Swap Order
     name: Swaporder
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
     summary: Swaps the two inputs, subtracting the first from the second.
   summary: Combines two SDFs using the difference operator.

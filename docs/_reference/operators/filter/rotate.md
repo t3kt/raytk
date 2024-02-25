@@ -32,6 +32,9 @@ op:
     - Ray
     - Light
     - Particle
+    supportedVariableInputs:
+    - rotateField
+    - pivotField
   - contextTypes:
     - Context
     - MaterialContext
@@ -53,6 +56,8 @@ op:
       to the `Rotate` parameter. If in 3 axis mode, it can either produce a single
       value, which is multiplied with each of the axis rotations. Or it can produce
       vectors which are added to the axis rotations.
+    supportedVariableInputs:
+    - pivotField
   - contextTypes:
     - Context
     - MaterialContext

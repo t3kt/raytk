@@ -65,13 +65,13 @@ op:
       label: Grid
       name: grid
     name: Layout
-    readOnlyHandling: macro
-    regularHandling: macro
+    readOnlyHandling: baked
+    regularHandling: baked
     summary: How to arrange the zones.
   - label: Rescale
     name: Rescale
-    readOnlyHandling: macro
-    regularHandling: macro
+    readOnlyHandling: baked
+    regularHandling: baked
     summary: Whether to rescale each camera to fit each zone. When switched off, if
       using a grid, you will only see the top right corner of the first camera, the
       top left of the second, etc. When switched on, you see the full view that each

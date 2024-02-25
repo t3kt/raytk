@@ -60,7 +60,7 @@ op:
     - label: Z
       name: z
     name: Axis
-    readOnlyHandling: constant
+    readOnlyHandling: semibaked
     regularHandling: runtime
     summary: Which axis to use to determine the position in the TOP to use.
   - label: Coord Mode
@@ -89,8 +89,8 @@ op:
     - label: Mirror
       name: mirror
     name: Extendmode
-    readOnlyHandling: macro
-    regularHandling: macro
+    readOnlyHandling: baked
+    regularHandling: baked
     summary: How to handle coordinates outside the 0..1 range.
   status: beta
 

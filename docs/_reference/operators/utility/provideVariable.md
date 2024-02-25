@@ -33,6 +33,10 @@ op:
     - Ray
     - Light
     - Particle
+    supportedVariableInputs:
+    - valueField
+    supportedVariables:
+    - var
   - contextTypes:
     - Context
     - MaterialContext
@@ -72,8 +76,8 @@ op:
     - label: Secondary Input / Value Parameter
       name: secondary
     name: Valuesource
-    readOnlyHandling: macro
-    regularHandling: macro
+    readOnlyHandling: baked
+    regularHandling: baked
   - label: Data Type
     menuOptions:
     - label: float
@@ -83,7 +87,7 @@ op:
     name: Datatype
   - label: Value
     name: Value
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
   variables:
   - label: var

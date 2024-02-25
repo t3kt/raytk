@@ -40,7 +40,7 @@ op:
     - label: Z
       name: z
     name: Axis
-    readOnlyHandling: constant
+    readOnlyHandling: semibaked
     regularHandling: runtime
   - label: Position Type
     menuOptions:
@@ -53,6 +53,8 @@ op:
     - label: Pixel Coordinate
       name: pixelcoord
     name: Positiontype
+    readOnlyHandling: runtime
+    regularHandling: runtime
   shortcuts:
   - pos
   summary: A vector field that produces the coordinates in space where it is checked.

@@ -80,6 +80,8 @@ op:
     - label: Sine Out
       name: sineOut
     name: Function
+    readOnlyHandling: baked
+    regularHandling: baked
   summary: Robert Penner's collection of easing functions.
   thumb: assets/images/reference/operators/function/pennerEasingFn_thumb.png
 

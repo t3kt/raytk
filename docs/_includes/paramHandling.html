@@ -1,8 +1,8 @@
 {% case include.handling %}
 	{% when "runtime" %}
 		<span title="Can change efficiently">Runtime</span>
-	{% when "macro" %}
+	{% when "baked" %}
 		<span title="Causes a recompile when changed">Baked</span>
-	{% when "constant" %}
+	{% when "semibaked" %}
 		<span title="Might cause a partial recompile when changed">Semi-Baked</span>
 {% endcase %}

@@ -41,6 +41,8 @@ op:
     name: glowField
     returnTypes:
     - float
+    supportedVariableInputs:
+    - coordField
   - contextTypes:
     - Context
     - MaterialContext
@@ -57,6 +59,9 @@ op:
     name: radiusField
     returnTypes:
     - float
+    supportedVariableInputs:
+    - coordField
+    - glowField
   - contextTypes:
     - Context
     - MaterialContext
@@ -73,28 +78,32 @@ op:
     name: spreadField
     returnTypes:
     - vec4
+    supportedVariableInputs:
+    - coordField
+    - glowField
+    - radiusField
   name: rosettePattern
   opType: raytk.operators.pattern.rosettePattern
   parameters:
   - label: Translate
     name: Translate
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
   - label: Size
     name: Size
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
   - label: Glow
     name: Glow
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
   - label: Radius
     name: Radius
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
   - label: Spread
     name: Spread
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
   thumb: assets/images/reference/operators/pattern/rosettePattern_thumb.png
 

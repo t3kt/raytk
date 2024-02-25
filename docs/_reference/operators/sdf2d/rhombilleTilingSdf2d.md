@@ -39,16 +39,18 @@ op:
     name: spacingField
     returnTypes:
     - float
+    supportedVariableInputs:
+    - sizeField
   name: rhombilleTilingSdf2d
   opType: raytk.operators.sdf2d.rhombilleTilingSdf2d
   parameters:
   - label: Size
     name: Size
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
   - label: Spacing
     name: Spacing
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
   thumb: assets/images/reference/operators/sdf2d/rhombilleTilingSdf2d_thumb.png
 

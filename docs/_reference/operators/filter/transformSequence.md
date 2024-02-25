@@ -33,6 +33,16 @@ op:
     - Ray
     - Light
     - Particle
+    supportedVariableInputs:
+    - transform1
+    - transform2
+    - transform3
+    - transform4
+    - transform5
+    - transform6
+    supportedVariables:
+    - step
+    - normstep
   - contextTypes:
     - Context
     - MaterialContext
@@ -51,6 +61,9 @@ op:
     name: transform1
     returnTypes:
     - vec4
+    supportedVariables:
+    - step
+    - normstep
   - contextTypes:
     - Context
     - MaterialContext
@@ -69,6 +82,11 @@ op:
     name: transform2
     returnTypes:
     - vec4
+    supportedVariableInputs:
+    - transform1
+    supportedVariables:
+    - step
+    - normstep
   - contextTypes:
     - Context
     - MaterialContext
@@ -87,6 +105,11 @@ op:
     name: transform3
     returnTypes:
     - vec4
+    supportedVariableInputs:
+    - transform[1-2]
+    supportedVariables:
+    - step
+    - normstep
   - contextTypes:
     - Context
     - MaterialContext
@@ -105,6 +128,11 @@ op:
     name: transform4
     returnTypes:
     - vec4
+    supportedVariableInputs:
+    - transform[1-3]
+    supportedVariables:
+    - step
+    - normstep
   - contextTypes:
     - Context
     - MaterialContext
@@ -123,6 +151,11 @@ op:
     name: transform5
     returnTypes:
     - vec4
+    supportedVariableInputs:
+    - transform[1-4]
+    supportedVariables:
+    - step
+    - normstep
   - contextTypes:
     - Context
     - MaterialContext
@@ -141,6 +174,11 @@ op:
     name: transform6
     returnTypes:
     - vec4
+    supportedVariableInputs:
+    - transform[1-5]
+    supportedVariables:
+    - step
+    - normstep
   keywords:
   - apply
   name: transformSequence
@@ -161,17 +199,17 @@ op:
     - label: Field Values
       name: value
     name: Target
-    readOnlyHandling: macro
-    regularHandling: macro
+    readOnlyHandling: baked
+    regularHandling: baked
   - label: Reverse Order
     name: Reverseorder
   - label: Enable Loop
     name: Enableloop
-    readOnlyHandling: macro
-    regularHandling: macro
+    readOnlyHandling: baked
+    regularHandling: baked
   - label: Iterations
     name: Iterations
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
   status: beta
   variables:

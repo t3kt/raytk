@@ -25,6 +25,9 @@ op:
     returnTypes:
     - float
     - vec4
+    supportedVariables:
+    - step
+    - normstep
   keywords:
   - fractal
   - mandelbrot
@@ -34,28 +37,28 @@ op:
   parameters:
   - label: Translate
     name: Translate
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
     summary: Moves the center of the shape.
   - label: Power
     name: Power
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
     summary: The number of repetitions around the z axis.
   - label: Theta Shift
     name: Thetashift
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
     summary: Offset the theta rotation.
   - label: Phi Shift
     name: Phishift
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
     summary: Offset the phi rotation.
   - label: Iterations
     name: Iterations
-    readOnlyHandling: constant
-    regularHandling: constant
+    readOnlyHandling: semibaked
+    regularHandling: semibaked
     summary: The number of steps used when refining the fractal.
   summary: Mandelbulb fractal.
   thumb: assets/images/reference/operators/sdf/mandelbulbSdf_thumb.png

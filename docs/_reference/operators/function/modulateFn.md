@@ -29,6 +29,8 @@ op:
     returnTypes:
     - float
     - vec4
+    supportedVariableInputs:
+    - inputOp2
   - contextTypes:
     - Context
     - MaterialContext

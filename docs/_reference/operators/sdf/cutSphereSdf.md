@@ -39,6 +39,8 @@ op:
     name: thicknessField
     returnTypes:
     - float
+    supportedVariableInputs:
+    - radiusField
   - contextTypes:
     - Context
     - MaterialContext
@@ -54,6 +56,9 @@ op:
     name: offsetField
     returnTypes:
     - float
+    supportedVariableInputs:
+    - radiusField
+    - thicknessField
   - contextTypes:
     - Context
     - MaterialContext
@@ -69,6 +74,10 @@ op:
     name: rotateField
     returnTypes:
     - vec4
+    supportedVariableInputs:
+    - radiusField
+    - thicknessField
+    - offsetField
   name: cutSphereSdf
   opType: raytk.operators.sdf.cutSphereSdf
   parameters:
@@ -79,19 +88,21 @@ op:
     - label: Hollow
       name: hollow
     name: Shape
+    readOnlyHandling: semibaked
+    regularHandling: runtime
   - label: Radius
     name: Radius
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
   - label: Cut Offset
     name: Offset
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
   - label: Thickness
     name: Thickness
   - label: Rotate
     name: Rotate
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
   thumb: assets/images/reference/operators/sdf/cutSphereSdf_thumb.png
 

@@ -39,6 +39,8 @@ op:
     name: lengthField
     returnTypes:
     - float
+    supportedVariableInputs:
+    - thicknessField
   - contextTypes:
     - Context
     - MaterialContext
@@ -54,6 +56,9 @@ op:
     name: bendField
     returnTypes:
     - float
+    supportedVariableInputs:
+    - thicknessField
+    - lengthField
   name: jointSdf2d
   opType: raytk.operators.sdf2d.jointSdf2d
   parameters:
@@ -64,17 +69,19 @@ op:
     - label: Round
       name: round
     name: Shape
+    readOnlyHandling: semibaked
+    regularHandling: semibaked
   - label: Thickness
     name: Thickness
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
   - label: Length
     name: Length
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
   - label: Bend
     name: Bend
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
   thumb: assets/images/reference/operators/sdf2d/jointSdf2d_thumb.png
 

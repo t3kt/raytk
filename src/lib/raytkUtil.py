@@ -553,6 +553,14 @@ class InputInfo:
 		table = self._supportedTypeTable()
 		return tdu.split(table['returnType', 'types']) if table else []
 
+	@property
+	def supportedVariables(self):
+		return tdu.split(self.handlerPar.Variables) if self.handlerPar.Variables else []
+
+	@property
+	def supportedVariableInputs(self):
+		return tdu.split(self.handlerPar.Variableinputs) if self.handlerPar.Variableinputs else []
+
 class CategoryInfo:
 	"""
 	Information about a category of ROPs.

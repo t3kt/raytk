@@ -33,6 +33,8 @@ op:
     - Ray
     - Light
     - Particle
+    supportedVariableInputs:
+    - offsetField
   - contextTypes:
     - Context
     - MaterialContext
@@ -77,9 +79,11 @@ op:
     - label: ZX
       name: zx
     name: Axes
+    readOnlyHandling: semibaked
+    regularHandling: runtime
   - label: Offset
     name: Offset
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
     summary: Offsets the plane or axis where the input is sampled.
   summary: Takes a 3D (or 2D) operator and take a cross section of it across a plane

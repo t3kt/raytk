@@ -32,6 +32,13 @@ op:
     - Ray
     - Light
     - Particle
+    supportedVariableInputs:
+    - offsetField
+    - directionField
+    - flipSideField
+    - blendingField
+    supportedVariables:
+    - sides
   - contextTypes:
     - Context
     - MaterialContext
@@ -51,6 +58,11 @@ op:
     returnTypes:
     - float
     - vec4
+    supportedVariableInputs:
+    - directionField
+    - flipSideField
+    supportedVariables:
+    - sides
   - contextTypes:
     - Context
     - MaterialContext
@@ -70,6 +82,10 @@ op:
     returnTypes:
     - float
     - vec4
+    supportedVariableInputs:
+    - flipSidesField
+    supportedVariables:
+    - sides
   - contextTypes:
     - Context
     - MaterialContext
@@ -89,6 +105,8 @@ op:
     returnTypes:
     - float
     - vec4
+    supportedVariables:
+    - sides
   - contextTypes:
     - Context
     - MaterialContext
@@ -108,6 +126,8 @@ op:
     returnTypes:
     - float
     - vec4
+    supportedVariables:
+    - sides
   name: mirrorAxes
   opType: raytk.operators.filter.mirrorAxes
   parameters:
@@ -130,6 +150,8 @@ op:
     - label: XYZ
       name: xyz
     name: Axes
+    readOnlyHandling: semibaked
+    regularHandling: semibaked
   - label: Direction X
     menuOptions:
     - label: Positive
@@ -137,8 +159,8 @@ op:
     - label: Negative
       name: neg
     name: Dirx
-    readOnlyHandling: constant
-    regularHandling: constant
+    readOnlyHandling: semibaked
+    regularHandling: semibaked
   - label: Direction Y
     menuOptions:
     - label: Positive
@@ -146,8 +168,8 @@ op:
     - label: Negative
       name: neg
     name: Diry
-    readOnlyHandling: constant
-    regularHandling: constant
+    readOnlyHandling: semibaked
+    regularHandling: semibaked
   - label: Direction Z
     menuOptions:
     - label: Positive
@@ -155,8 +177,8 @@ op:
     - label: Negative
       name: neg
     name: Dirz
-    readOnlyHandling: constant
-    regularHandling: constant
+    readOnlyHandling: semibaked
+    regularHandling: semibaked
   - label: Flip X On Side
     menuOptions:
     - label: None
@@ -174,7 +196,7 @@ op:
     - label: Z-
       name: zneg
     name: Flipsidex
-    readOnlyHandling: constant
+    readOnlyHandling: semibaked
     regularHandling: runtime
   - label: Flip Y On Side
     menuOptions:
@@ -193,7 +215,7 @@ op:
     - label: Z-
       name: zneg
     name: Flipsidey
-    readOnlyHandling: constant
+    readOnlyHandling: semibaked
     regularHandling: runtime
   - label: Flip Z On Side
     menuOptions:
@@ -212,23 +234,23 @@ op:
     - label: Z-
       name: zneg
     name: Flipsidez
-    readOnlyHandling: constant
+    readOnlyHandling: semibaked
     regularHandling: runtime
   - label: Center
     name: Center
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
   - label: Offset
     name: Offset
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
   - label: Enable Blend
     name: Enableblend
-    readOnlyHandling: constant
-    regularHandling: constant
+    readOnlyHandling: semibaked
+    regularHandling: semibaked
   - label: Blending
     name: Blending
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
   - label: Apply To
     menuOptions:

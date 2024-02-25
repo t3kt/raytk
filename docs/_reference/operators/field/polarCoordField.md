@@ -24,6 +24,8 @@ op:
     - label: Spherical Distance
       name: dist
     name: Format
+    readOnlyHandling: baked
+    regularHandling: baked
   - label: Angle Unit
     menuOptions:
     - label: Ratio (0..1)
@@ -33,8 +35,8 @@ op:
     - label: Radians
       name: radians
     name: Angleunit
-    readOnlyHandling: macro
-    regularHandling: macro
+    readOnlyHandling: baked
+    regularHandling: baked
   - label: Axis
     menuOptions:
     - label: X
@@ -44,11 +46,11 @@ op:
     - label: Z
       name: z
     name: Axis
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
   - label: Center
     name: Center
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
     summary: The center point of the polar coordinates.
   - label: Coord Type

@@ -33,7 +33,7 @@ op:
   parameters:
   - label: Temperature
     name: Temp
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
   - label: Temperature Unit
     menuOptions:
@@ -42,9 +42,11 @@ op:
     - label: Degrees Kelvin
       name: deg
     name: Tempunit
+    readOnlyHandling: baked
+    regularHandling: runtime
   - label: Exponent
     name: Exp
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
   thumb: assets/images/reference/operators/field/blackbodyColorField_thumb.png
 

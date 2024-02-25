@@ -43,6 +43,8 @@ op:
     - label: Square
       name: square
     name: Wavetype
+    readOnlyHandling: baked
+    regularHandling: runtime
   - label: Period
     name: Period
   - label: Interval Type
@@ -56,8 +58,8 @@ op:
     - label: Frames (Absolute)
       name: frames
     name: Intervaltype
-    readOnlyHandling: macro
-    regularHandling: macro
+    readOnlyHandling: baked
+    regularHandling: baked
   - label: Time Source
     menuOptions:
     - label: Global
@@ -65,19 +67,21 @@ op:
     - label: Context
       name: context
     name: Timesource
+    readOnlyHandling: baked
+    regularHandling: runtime
   - label: Reverse
     name: Reverse
-    readOnlyHandling: constant
+    readOnlyHandling: semibaked
     regularHandling: runtime
   - label: Phase (Fraction)
     name: Phase
   - label: Amplitude
     name: Amplitude
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
   - label: Offset
     name: Offset
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
   - label: Coord Type
     menuOptions:

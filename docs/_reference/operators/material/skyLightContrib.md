@@ -17,25 +17,71 @@ op:
 
 
     It is equivalent to the sky lighting feature in `basicMat`.'
+  inputs:
+  - contextTypes:
+    - MaterialContext
+    coordTypes:
+    - float
+    - vec2
+    - vec3
+    - vec4
+    label: Direction Field
+    name: directionField
+    returnTypes:
+    - float
+    - vec4
+  - contextTypes:
+    - MaterialContext
+    coordTypes:
+    - float
+    - vec2
+    - vec3
+    - vec4
+    label: Rotate Field
+    name: rotateField
+    returnTypes:
+    - float
+    - vec4
+    supportedVariableInputs:
+    - directionField
+  - contextTypes:
+    - MaterialContext
+    coordTypes:
+    - float
+    - vec2
+    - vec3
+    - vec4
+    label: Color Field
+    name: colorField
+    returnTypes:
+    - float
+    - vec4
+    supportedVariableInputs:
+    - directionField
+    - rotateField
   name: skyLightContrib
   opType: raytk.operators.material.skyLightContrib
   parameters:
   - label: Color
     name: Color
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
   - label: Level
     name: Level
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
   - label: Direction
     name: Dir
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
     summary: The direction from which the "light" comes from.
   - label: Use Color
     name: Usecolor
     summary: Whether to produce color or just a brightness value.
+  - label: Rotate
+    name: Rotate
+    readOnlyHandling: baked
+    regularHandling: runtime
   summary: A material element that acts as a basic pseudo directional light.
   thumb: assets/images/reference/operators/material/skyLightContrib_thumb.png
 

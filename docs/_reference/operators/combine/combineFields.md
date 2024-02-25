@@ -47,6 +47,8 @@ op:
     returnTypes:
     - float
     - vec4
+    supportedVariableInputs:
+    - inputOp1
   - contextTypes:
     - Context
     - MaterialContext
@@ -66,6 +68,8 @@ op:
     returnTypes:
     - float
     - vec4
+    supportedVariableInputs:
+    - inputOp[1-2]
   - contextTypes:
     - Context
     - MaterialContext
@@ -85,6 +89,8 @@ op:
     returnTypes:
     - float
     - vec4
+    supportedVariableInputs:
+    - inputOp[1-3]
   - contextTypes:
     - Context
     - MaterialContext
@@ -104,6 +110,8 @@ op:
     returnTypes:
     - float
     - vec4
+    supportedVariableInputs:
+    - inputOp[1-4]
   - contextTypes:
     - Context
     - MaterialContext
@@ -123,6 +131,8 @@ op:
     returnTypes:
     - float
     - vec4
+    supportedVariableInputs:
+    - inputOp[1-5]
   - contextTypes:
     - Context
     - MaterialContext
@@ -142,6 +152,8 @@ op:
     returnTypes:
     - float
     - vec4
+    supportedVariableInputs:
+    - inputOp[1-6]
   - contextTypes:
     - Context
     - MaterialContext
@@ -161,6 +173,8 @@ op:
     returnTypes:
     - float
     - vec4
+    supportedVariableInputs:
+    - inputOp[1-7]
   name: combineFields
   opType: raytk.operators.combine.combineFields
   parameters:
@@ -193,10 +207,12 @@ op:
       label: Maximum
       name: max
     name: Operation
+    readOnlyHandling: semibaked
+    regularHandling: runtime
     summary: What operation to use to combine the field values.
   - label: Swap Order
     name: Swaporder
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
     summary: Swaps the two inputs. This is only relevant for some of the `Operation`
       values.

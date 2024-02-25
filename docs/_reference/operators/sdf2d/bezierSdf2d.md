@@ -39,6 +39,8 @@ op:
     name: pointB
     returnTypes:
     - vec4
+    supportedVariableInputs:
+    - pointA
   - contextTypes:
     - Context
     - MaterialContext
@@ -54,6 +56,9 @@ op:
     name: pointC
     returnTypes:
     - vec4
+    supportedVariableInputs:
+    - pointA
+    - pointB
   - contextTypes:
     - Context
     - MaterialContext
@@ -69,6 +74,12 @@ op:
     name: radiusField
     returnTypes:
     - float
+    supportedVariableInputs:
+    - pointA
+    - pointB
+    - pointC
+    supportedVariables:
+    - normoffset
   keywords:
   - bezier
   - curve
@@ -78,19 +89,19 @@ op:
   parameters:
   - label: Point A
     name: Pointa
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
   - label: Point B
     name: Pointb
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
   - label: Point C
     name: Pointc
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
   - label: Radius
     name: Radius
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
   thumb: assets/images/reference/operators/sdf2d/bezierSdf2d_thumb.png
   variables:

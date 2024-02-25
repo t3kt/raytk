@@ -29,6 +29,10 @@ op:
     summary: Field used to multiply the `Radius` parameter. If it uses 1D coordinates,
       it is provided the position along the axis. If it uses 3D coordinates, it uses
       the absolute position.
+    supportedVariables:
+    - axisoffset
+    - angle
+    - normangle
   - contextTypes:
     - Context
     - MaterialContext
@@ -48,6 +52,12 @@ op:
     summary: Field used to multiply the `Thickness` parameter. If it uses 1D coordinates,
       it is provided the position along the axis. If it uses 3D coordinates, it uses
       the absolute position.
+    supportedVariableInputs:
+    - thicknessField
+    supportedVariables:
+    - axisoffset
+    - angle
+    - normangle
   - contextTypes:
     - Context
     - MaterialContext
@@ -64,6 +74,13 @@ op:
     name: spreadField
     returnTypes:
     - float
+    supportedVariableInputs:
+    - thicknessField
+    - radiusField
+    supportedVariables:
+    - axisoffset
+    - angle
+    - normangle
   - contextTypes:
     - Context
     - MaterialContext
@@ -80,6 +97,14 @@ op:
     returnTypes:
     - float
     - Sdf
+    supportedVariableInputs:
+    - thicknessField
+    - radiusField
+    - spreadField
+    supportedVariables:
+    - axisoffset
+    - angle
+    - normangle
   keywords:
   - coil
   - helix
@@ -97,31 +122,31 @@ op:
     - label: Z
       name: z
     name: Axis
-    readOnlyHandling: constant
+    readOnlyHandling: semibaked
     regularHandling: runtime
   - label: Translate
     name: Translate
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
   - label: Radius
     name: Radius
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
   - label: Thickness
     name: Thickness
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
   - label: Spread
     name: Spread
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
   - label: Dual Spread
     name: Dualspread
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
   - label: Reverse
     name: Reverse
-    readOnlyHandling: constant
+    readOnlyHandling: semibaked
     regularHandling: runtime
   summary: SDF for a helix (an elongated spiral).
   thumb: assets/images/reference/operators/sdf/helixSdf_thumb.png

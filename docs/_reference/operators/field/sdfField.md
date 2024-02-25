@@ -52,23 +52,23 @@ op:
     - label: Surface Secondary UV
       name: uv2
     name: Fieldtype
-    readOnlyHandling: macro
-    regularHandling: macro
+    readOnlyHandling: baked
+    regularHandling: baked
   - label: Offset
     name: Offset
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
     summary: Offsets the surface of the shape. Positive values expand the shape and
       negative values contract it. This is equivalent to the `round` operator.
   - label: Thickness
     name: Thickness
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
     summary: For surface-based fields, this is the thickness of the area where the
       value is 1.
   - label: Blending
     name: Blending
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
     summary: The distance over which the 1 area transitions to the 0 area.
   summary: Value field based on an SDF shape.

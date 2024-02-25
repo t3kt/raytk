@@ -39,6 +39,8 @@ op:
     name: offsetField
     returnTypes:
     - float
+    supportedVariableInputs:
+    - radiusField
   - contextTypes:
     - Context
     - MaterialContext
@@ -54,20 +56,23 @@ op:
     name: rotateField
     returnTypes:
     - float
+    supportedVariableInputs:
+    - radiusField
+    - offsetField
   name: cutDiscSdf2d
   opType: raytk.operators.sdf2d.cutDiscSdf2d
   parameters:
   - label: Radius
     name: Radius
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
   - label: Cut Offset
     name: Offset
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
   - label: Rotate
     name: Rotate
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
   thumb: assets/images/reference/operators/sdf2d/cutDiscSdf2d_thumb.png
 

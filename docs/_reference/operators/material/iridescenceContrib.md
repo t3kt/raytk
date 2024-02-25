@@ -28,24 +28,24 @@ op:
     name: Enable
   - label: Level
     name: Level
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
     summary: Overall brightness.
   - label: Phase
     name: Phase
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
     summary: Shifts the color pattern around the range of surface angles.
   - label: Period
     name: Period
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
     summary: How wide the rainbow series is spread across the range of angles. A period
       of 0.5 will repeat the pattern twice and a period of 2 will only go through
       half the range before jumping back to the start value.
   - label: Spread
     name: Spread
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
     summary: The range from the edge where the color is applied, as a 0..1 ratio of
       how much the surface is facing the camera. The first number is the start of
@@ -53,8 +53,8 @@ op:
       at full brightness).
   - label: Enable Shadow
     name: Enableshadow
-    readOnlyHandling: macro
-    regularHandling: macro
+    readOnlyHandling: baked
+    regularHandling: baked
     summary: Whether shadows should be applied to the color.
   status: beta
   summary: Shading element that produces a rainbow pattern around the edges of shapes,

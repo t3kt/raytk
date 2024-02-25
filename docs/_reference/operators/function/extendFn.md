@@ -54,15 +54,15 @@ op:
     - label: Default Value
       name: default
     name: Extend
-    readOnlyHandling: macro
-    regularHandling: macro
+    readOnlyHandling: baked
+    regularHandling: baked
   - label: Range
     name: Range
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
   - label: Default Value
     name: Defval
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
   summary: Defines the behavior of a function outside the normal expected range of
     coordinates.

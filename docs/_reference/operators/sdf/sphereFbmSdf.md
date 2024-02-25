@@ -13,7 +13,7 @@ op:
   parameters:
   - label: Translate
     name: Translate
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
   - label: Noise Type
     menuOptions:
@@ -22,8 +22,8 @@ op:
     - label: Simplex
       name: simplex
     name: Noisetype
-    readOnlyHandling: macro
-    regularHandling: macro
+    readOnlyHandling: baked
+    regularHandling: baked
   thumb: assets/images/reference/operators/sdf/sphereFbmSdf_thumb.png
 
 ---

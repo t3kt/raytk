@@ -111,13 +111,15 @@ op:
     - label: radians(x)        Degrees to Radians
       name: radians
     name: Function
+    readOnlyHandling: baked
+    regularHandling: baked
   - label: Value 1
     name: Value1
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
   - label: Value 2
     name: Value2
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
   status: beta
 

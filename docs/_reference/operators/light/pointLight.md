@@ -32,6 +32,10 @@ op:
     summary: Optional field/function that controls the slope and coloration of the
       attentuation rolloff is shaped. It can be used to make the light shift from
       one color to another, or to control the sharpness of the rolloff.
+    supportedVariableInputs:
+    - positionField
+    supportedVariables:
+    - lightdir
   - contextTypes:
     - LightContext
     coordTypes:
@@ -41,42 +45,47 @@ op:
     returnTypes:
     - float
     - vec4
+    supportedVariableInputs:
+    - positionField
+    - colorField
+    supportedVariables:
+    - lightdir
   name: pointLight
   opType: raytk.operators.light.pointLight
   parameters:
   - label: Position
     name: Position
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
     summary: The point from which the light eminates.
   - label: Intensity
     name: Intensity
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
     summary: Brightness of the light.
   - label: Color
     name: Color
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
     summary: Color of the light.
   - label: Attenuated
     name: Enableattenuation
-    readOnlyHandling: constant
+    readOnlyHandling: semibaked
     regularHandling: runtime
     summary: Whether to limit the light range.
   - label: Attenuation Start
     name: Attenuationstart
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
     summary: The distance at which the light starts to dim.
   - label: Attenuation End
     name: Attenuationend
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
     summary: The distance at which the light is fully dimmed.
   - label: Enable Shadow
     name: Enableshadow
-    readOnlyHandling: constant
+    readOnlyHandling: semibaked
     regularHandling: runtime
   shortcuts:
   - pl

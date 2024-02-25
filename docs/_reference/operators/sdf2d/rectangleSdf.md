@@ -40,17 +40,19 @@ op:
     name: translateField
     returnTypes:
     - vec4
+    supportedVariableInputs:
+    - scaleField
   name: rectangleSdf
   opType: raytk.operators.sdf2d.rectangleSdf
   parameters:
   - label: Translate
     name: Translate
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
     summary: Moves the center of the rectangle.
   - label: Scale
     name: Scale
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
     summary: The size of the rectangle on the x and y axes.
   - label: UV Mode
@@ -60,8 +62,8 @@ op:
     - label: XY Fit to Outside
       name: outerxy
     name: Uvmode
-    readOnlyHandling: constant
-    regularHandling: constant
+    readOnlyHandling: semibaked
+    regularHandling: semibaked
   summary: SDF for a 2D rectangle.
   thumb: assets/images/reference/operators/sdf2d/rectangleSdf_thumb.png
 

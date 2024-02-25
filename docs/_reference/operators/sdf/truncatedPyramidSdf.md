@@ -40,6 +40,8 @@ op:
     returnTypes:
     - float
     - vec4
+    supportedVariables:
+    - normoffset
   - contextTypes:
     - Context
     - MaterialContext
@@ -56,6 +58,8 @@ op:
     returnTypes:
     - float
     - vec4
+    supportedVariables:
+    - normoffset
   name: truncatedPyramidSdf
   opType: raytk.operators.sdf.truncatedPyramidSdf
   parameters:
@@ -68,24 +72,24 @@ op:
     - label: Z
       name: z
     name: Axis
-    readOnlyHandling: constant
+    readOnlyHandling: semibaked
     regularHandling: runtime
   - label: Translate
     name: Translate
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
     summary: Moves the center of the base of the pyramid.
   - label: Top Size
     name: Topsize
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
   - label: Bottom Size
     name: Bottomsize
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
   - label: Height
     name: Height
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
   thumb: assets/images/reference/operators/sdf/truncatedPyramidSdf_thumb.png
   variables:

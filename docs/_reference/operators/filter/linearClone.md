@@ -28,6 +28,9 @@ op:
     required: true
     returnTypes:
     - Sdf
+    supportedVariables:
+    - index
+    - normindex
   - contextTypes:
     - Context
     - MaterialContext
@@ -45,6 +48,9 @@ op:
     required: true
     returnTypes:
     - float
+    supportedVariables:
+    - index
+    - normindex
   name: linearClone
   opType: raytk.operators.filter.linearClone
   parameters:
@@ -52,17 +58,17 @@ op:
     name: Enable
   - label: Count
     name: Count
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
     summary: The number of copies. The performance cost of the input is multiplied
       by this number.
   - label: Translate 1
     name: Translate1
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
   - label: Translate 2
     name: Translate2
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
   - label: Merge Type
     menuOptions:
@@ -103,6 +109,8 @@ op:
     - label: Column Difference
       name: columnDiff
     name: Mergetype
+    readOnlyHandling: semibaked
+    regularHandling: semibaked
     summary: How to merge the copies.
   - label: Merge Radius
     name: Mergeradius
@@ -118,8 +126,8 @@ op:
     - label: Clone Index
       name: index
     name: Iterationtype
-    readOnlyHandling: constant
-    regularHandling: constant
+    readOnlyHandling: semibaked
+    regularHandling: semibaked
     summary: Whether and how to expose iteration values to upstream operators.
   thumb: assets/images/reference/operators/filter/linearClone_thumb.png
   variables:

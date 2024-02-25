@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.material.skyLightContrib
-  opVersion: '10'
+  opVersion: '12'
   opStatus: default
 opDef: !def
   enable: true
@@ -23,3 +23,33 @@ opDef: !def
     file: src/operators/material/skyLightContrib.md
     name: help
   displayCategory: Material Element
+inputs:
+- !input
+  Localalias: directionField
+  coordType: !coordT
+    Allcoordtype: true
+  contextType: !contextT
+    Contexttypematerialcontext: true
+  returnType: !returnT
+    Returntypefloat: true
+    Returntypevec4: true
+- !input
+  Localalias: rotateField
+  Variableinputs: directionField
+  coordType: !coordT
+    Allcoordtype: true
+  contextType: !contextT
+    Contexttypematerialcontext: true
+  returnType: !returnT
+    Returntypefloat: true
+    Returntypevec4: true
+- !input
+  Localalias: colorField
+  Variableinputs: directionField rotateField
+  coordType: !coordT
+    Allcoordtype: true
+  contextType: !contextT
+    Contexttypematerialcontext: true
+  returnType: !returnT
+    Returntypefloat: true
+    Returntypevec4: true

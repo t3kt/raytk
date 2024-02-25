@@ -153,6 +153,22 @@ layout: page
 							<span class="input-types-item"><code>{{t}}</code></span>
 						{% endfor %}
 					</li>
+					{% if input.supportedVariables %}
+					<li>
+						<em>Supports Variables:</em>
+						{% for v in input.supportedVariables %}
+							<span class="input-types-item"><code>{{v}}</code></span>
+						{% endfor %}
+					</li>
+					{% endif %}
+					{% if input.supportedVariableInputs %}
+					<li>
+						<em>Supports Variables From Inputs:</em>
+						{% for v in input.supportedVariableInputs %}
+							<span class="input-types-item"><code>{{v}}</code></span>
+						{% endfor %}
+					</li>
+					{% endif %}
 				</ul>
 			</li>
 		{% endfor %}

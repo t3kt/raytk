@@ -39,6 +39,8 @@ op:
     name: offsetField
     returnTypes:
     - float
+    supportedVariableInputs:
+    - heightField
   name: spikeSdf2d
   opType: raytk.operators.sdf2d.spikeSdf2d
   parameters:
@@ -53,17 +55,19 @@ op:
     - label: Y-
       name: yneg
     name: Direction
+    readOnlyHandling: semibaked
+    regularHandling: runtime
   - label: Height
     name: Height
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
   - label: Offset
     name: Offset
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
   - label: Center
     name: Center
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
   thumb: assets/images/reference/operators/sdf2d/spikeSdf2d_thumb.png
 

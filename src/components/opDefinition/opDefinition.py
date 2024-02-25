@@ -504,13 +504,13 @@ def onHostNameChange():
 def buildOpState():
 	builder = _Builder()
 	builder.loadInputs(ops('input_def_[0-9]*'))
+	builder.loadTags()
 	builder.loadOpElements(op('opElements'))
 	builder.loadCode()
 	builder.loadMacros(
 		paramSpecTable=op('paramSpecTable'),
 		paramTupletTable=op('param_tuplets'),
 		opElementTable=op('opElements'),
-		inputTable=op('input_table'),
 	)
 	builder.loadConstants(paramSpecTable=op('paramSpecTable'))
 	builder.loadTextures()
@@ -554,14 +554,33 @@ class _Builder:
 			func = str(inDat[1, 'input:alias'] or f'inputOp{i + 1}')
 			placeholder = f'inputOp_{func}' if not func.startswith('inputOp') else func
 			name = str(inDat[1, 'name'])
-			self.replacements[placeholder] = name
-			self.opState.inputNames.append(name)
-			self.opState.inputStates.append(InputState(
-				func,
-				name,
+			inputState = InputState(
+				functionName=func,
+				sourceName=name,
+				placeholder=placeholder,
 				varNames=tdu.split(inDat[1, 'input:vars']),
 				varInputNames=tdu.split(inDat[1, 'input:varInputs']),
-			))
+				tags=tdu.split(inDat[1, 'tags'] or ''),
+				coordType=tdu.split(inDat[1, 'coordType']),
+				contextType=tdu.split(inDat[1, 'contextType']),
+				returnType=tdu.split(inDat[1, 'returnType']),
+			)
+			self.replacements[placeholder] = name
+			self.opState.inputNames.append(name)
+			self.opState.inputStates.append(inputState)
+
+	def loadTags(self):
+		tags = set()
+		for inputState in self.opState.inputStates:
+			if inputState.tags:
+				tags.update(inputState.tags)
+		table = parentPar().Tagtable.eval()
+		if table and table.numRows > 1:
+			for i in range(1, table.numRows):
+				if _isFalseStr(table[i, 'enable']):
+					continue
+				tags.add(table[i, 'name'].val)
+		self.opState.tags = list(sorted(tags))
 
 	def loadOpElements(self, elementTable: DAT):
 		for phCol in elementTable.cells(0, 'placeholder*'):
@@ -600,7 +619,7 @@ class _Builder:
 		code = _typePattern.sub(_typeRepl, code)
 		return self.replaceNames(code)
 
-	def loadMacros(self, paramSpecTable: DAT, paramTupletTable: DAT, opElementTable: DAT, inputTable: DAT):
+	def loadMacros(self, paramSpecTable: DAT, paramTupletTable: DAT, opElementTable: DAT):
 		macros = []
 		def addMacro(m: Macro):
 			if not m.name:
@@ -611,8 +630,7 @@ class _Builder:
 			macros.append(m)
 		for inputState in self.opState.inputStates:
 			addMacro(Macro(_getHasInputMacroName(inputState.functionName)))
-		tags = getCombinedTags(inputTable)
-		for tag in tags:
+		for tag in self.opState.tags:
 			addMacro(Macro(f'THIS_HAS_TAG_{tag}'))
 		macroParams = []
 		angleParamNames = []
@@ -816,6 +834,33 @@ class _Builder:
 					owner=self.opName,
 					macros=str(table[i, 'macros'] or ''),
 				))
+
+def buildDefinitionTable(dat: scriptDAT):
+	dat.clear()
+	state = RopState.fromJson(op('opState').text)
+	typeTable = op('types')
+	defPath = parent().path
+	dat.appendCols([
+		['name', state.name],
+		['path', state.path],
+		['opType', state.ropType],
+		['coordType', typeTable['coordType', 1]],
+		['contextType', typeTable['contextType', 1]],
+		['returnType', typeTable['returnType', 1]],
+		['opVersion', parentPar().Raytkopversion or 0],
+		['toolkitVersion', parentPar().Raytkversion or ''],
+		['paramSource', defPath + '/param_vals'],
+		['constantParamSource', defPath + '/constant_params_vals'],
+		['paramVectors', defPath + '/param_vector_vals'],
+		['paramTable', defPath + '/params'],
+		['paramTupletTable', defPath + '/param_tuplets'],
+		['libraryNames', parentPar().Librarynames],
+		['inputNames', ' '.join([i.sourceName for i in state.inputStates])],
+		['definitionPath', defPath + '/definition'],
+		['elementTable', (defPath + '/opElements') if op('opElements').numRows > 1 else ''],
+		['statePath', defPath + '/opState'],
+		['tags', ' '.join(state.tags or [])],
+	])
 
 _typePattern = re.compile(r'\b[CR][a-z]+T\b')
 _typeRepls = {'CoordT': 'THIS_CoordT', 'ContextT': 'THIS_ContextT', 'ReturnT': 'THIS_ReturnT'}

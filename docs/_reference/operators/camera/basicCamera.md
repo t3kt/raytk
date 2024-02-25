@@ -13,17 +13,17 @@ op:
   parameters:
   - label: FOV Angle
     name: Camfov
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
     summary: Width of the view angle.
   - label: Position
     name: Campos
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
     summary: Position of the camera.
   - label: Rotate
     name: Camrot
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
     summary: Rotation of the camera view direction.
   summary: Standard camera equivalent to a traditional Camera COMP with default settings.

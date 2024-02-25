@@ -40,21 +40,23 @@ op:
     - label: Z
       name: z
     name: Axis
+    readOnlyHandling: semibaked
+    regularHandling: semibaked
   - label: Radius
     name: Radius
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
   - label: Points
     name: Points
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
   - label: Center
     name: Center
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
   - label: Rotate
     name: Rotate
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
   - label: Format
     menuOptions:
@@ -65,6 +67,8 @@ op:
     - label: Vector
       name: vec
     name: Format
+    readOnlyHandling: baked
+    regularHandling: baked
   status: beta
   thumb: assets/images/reference/operators/field/nearestRingPointField_thumb.png
   variables:

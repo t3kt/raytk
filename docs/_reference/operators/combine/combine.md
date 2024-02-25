@@ -53,6 +53,8 @@ op:
     name: input2
     returnTypes:
     - Sdf
+    supportedVariableInputs:
+    - inputOp1
   - contextTypes:
     - Context
     - MaterialContext
@@ -72,6 +74,8 @@ op:
     returnTypes:
     - float
     - Sdf
+    supportedVariableInputs:
+    - inputOp[1-2]
   - contextTypes:
     - Context
     - MaterialContext
@@ -90,6 +94,8 @@ op:
     name: offsetField
     returnTypes:
     - float
+    supportedVariableInputs:
+    - inputOp[1-2]
   keywords:
   - combine
   - diff
@@ -150,6 +156,8 @@ op:
     - label: Column Difference
       name: columnDiff
     name: Combine
+    readOnlyHandling: baked
+    regularHandling: runtime
     summary: The type of combination operation to perform.
   - label: Swap Inputs
     name: Swapinputs

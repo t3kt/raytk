@@ -39,16 +39,18 @@ op:
     name: roundingField
     returnTypes:
     - float
+    supportedVariableInputs:
+    - radiusField
   name: eggSdf2d
   opType: raytk.operators.sdf2d.eggSdf2d
   parameters:
   - label: Radius
     name: Radius
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
   - label: Rounding
     name: Rounding
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
   thumb: assets/images/reference/operators/sdf2d/eggSdf2d_thumb.png
 

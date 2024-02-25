@@ -45,6 +45,8 @@ op:
     - label: Z
       name: z
     name: Axis
+    readOnlyHandling: semibaked
+    regularHandling: runtime
   - label: Projection
     menuOptions:
     - label: Spherical
@@ -54,6 +56,8 @@ op:
     - label: Toroid
       name: toroid
     name: Projection
+    readOnlyHandling: semibaked
+    regularHandling: runtime
   - label: Radius
     name: Radius
   - label: Thickness

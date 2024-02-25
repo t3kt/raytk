@@ -30,6 +30,12 @@ op:
     - Ray
     - Light
     - Particle
+    supportedVariableInputs:
+    - offsetField
+    - shiftField
+    supportedVariables:
+    - sign
+    - index
   - contextTypes:
     - Context
     - MaterialContext
@@ -46,6 +52,11 @@ op:
     name: offsetField
     returnTypes:
     - float
+    supportedVariableInputs:
+    - shiftField
+    supportedVariables:
+    - sign
+    - index
   - contextTypes:
     - Context
     - MaterialContext
@@ -88,20 +99,22 @@ op:
     - label: Z-
       name: zneg
     name: Direction
+    readOnlyHandling: semibaked
+    regularHandling: runtime
   - label: Plane Normal
     name: Planenormal
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
     summary: Vector that the cut plane faces. Note that this is only a direction and
       not a position in space.
   - label: Offset
     name: Offset
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
     summary: Moves the reflection plane along the normal that it faces.
   - label: Shift
     name: Shift
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
     summary: Moves the whole resulting shape along the normal.
   - name: Exposeiteration
@@ -109,11 +122,11 @@ op:
       value for upstream ops.
   - label: Enable Blend
     name: Enableblend
-    readOnlyHandling: constant
-    regularHandling: constant
+    readOnlyHandling: semibaked
+    regularHandling: semibaked
   - label: Blending
     name: Blend
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
   - label: Iteration Type
     menuOptions:
@@ -124,8 +137,8 @@ op:
     - label: Signed (-1/1)
       name: sign
     name: Iterationtype
-    readOnlyHandling: constant
-    regularHandling: constant
+    readOnlyHandling: semibaked
+    regularHandling: semibaked
   shortcuts:
   - ref
   summary: Reflects space across a plane.

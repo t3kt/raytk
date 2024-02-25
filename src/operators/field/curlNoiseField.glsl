@@ -7,6 +7,16 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 	q -= THIS_Translate;
 	q /= THIS_Scale;
 
+	float a = THIS_Amplitude;
+	float o = THIS_Offset;
+
+	ReturnT res;
+	#ifdef THIS_RETURN_TYPE_float
+	float val = curlNoiseSingle(q);
+	res = (val * a) + o;
+	#else
 	vec3 val = curlNoise(q);
-	return vec4((val * THIS_Amplitude) + THIS_Offset, 0.);
+	res = vec4((val * a) + o, 0.);
+	#endif
+	return res;
 }

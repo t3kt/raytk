@@ -30,6 +30,9 @@ op:
     - vec4
     summary: When provided, this field is used to calculate the UV coordinates (in
       the x and y parts of the vec4).
+    supportedVariables:
+    - res
+    - aspect
   name: textureField
   opType: raytk.operators.field.textureField
   parameters:
@@ -78,18 +81,18 @@ op:
       label: XY
       name: z
     name: Axis
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
     summary: When using 3D coordinates, the axis that faces the plane used for UV.
       This is not used when a UV field input is attached.
   - label: Translate
     name: Translate
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
     summary: Offsets the UV coordinates.
   - label: Scale
     name: Scale
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
     summary: Scales the UV coordinates.
   - label: Texture
@@ -106,8 +109,8 @@ op:
     - label: Mirror
       name: mirror
     name: Extendmode
-    readOnlyHandling: constant
-    regularHandling: constant
+    readOnlyHandling: semibaked
+    regularHandling: semibaked
     summary: How to handle UV coordinates outside the 0..1 range.
   - label: Coord Mode
     menuOptions:
@@ -116,8 +119,8 @@ op:
     - label: Pixel [0-n]
       name: pixel
     name: Coordmode
-    readOnlyHandling: macro
-    regularHandling: macro
+    readOnlyHandling: baked
+    regularHandling: baked
   summary: A float or vector field that looks up values from a texture.
   thumb: assets/images/reference/operators/field/textureField_thumb.png
   variables:

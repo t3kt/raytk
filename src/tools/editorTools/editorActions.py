@@ -280,7 +280,7 @@ def _createAnimateParamAction(
 			gen.par.Name = ' '.join(p.name for p in pars)
 			chop.inputConnectors[0].connect(gen.outputConnectors[0])
 			gen.nodeCenterY = o.nodeCenterY - 100
-			gen.nodeX = o.nodeX - gen.nodeWidth - 300
+			gen.nodeX = o.nodeX - gen.nodeWidth
 			chop.nodeCenterY = gen.nodeCenterY
 			chop.nodeX = gen.nodeX + gen.nodeWidth + 100
 			chop.viewer = True
@@ -738,6 +738,12 @@ def createActionManager():
 		ActionImpl(
 			'Assign Color',
 			ropType='raytk.operators.filter.assignColor',
+			select=RopSelect(returnTypes=['Sdf']),
+			attach=AttachOutFromExisting(),
+		),
+		ActionImpl(
+			'Apply Modular Material',
+			ropType=_RopTypes.modularMat,
 			select=RopSelect(returnTypes=['Sdf']),
 			attach=AttachOutFromExisting(),
 		),

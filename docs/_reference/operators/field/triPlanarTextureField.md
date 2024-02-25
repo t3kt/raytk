@@ -45,16 +45,16 @@ op:
     summary: Type of value to produce.
   - label: Translate
     name: Translate
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
   - label: Scale
     name: Scale
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
   - label: Use Separate Textures
     name: Useseparatetextures
-    readOnlyHandling: macro
-    regularHandling: macro
+    readOnlyHandling: baked
+    regularHandling: baked
     summary: Whether to use a single texture for all axes, or a separate texture for
       each axis.
   - label: Texture
@@ -81,8 +81,8 @@ op:
       label: Mirror
       name: mirror
     name: Extendmode
-    readOnlyHandling: constant
-    regularHandling: constant
+    readOnlyHandling: semibaked
+    regularHandling: semibaked
     summary: How to handle coordinates outside the texture's bounds.
   - label: Blend Mode
     menuOptions:
@@ -100,8 +100,8 @@ op:
       label: Axis Average
       name: avg
     name: Blendmode
-    readOnlyHandling: constant
-    regularHandling: constant
+    readOnlyHandling: semibaked
+    regularHandling: semibaked
     summary: How to combine the colors from each axis.
   summary: Texture field that uses surface normals (or other blending techniques)
     to apply a texture facing each axis.

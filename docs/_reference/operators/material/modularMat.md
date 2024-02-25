@@ -42,6 +42,16 @@ op:
     - float
     - vec4
     summary: First shading element.
+    supportedVariables:
+    - lightcolor
+    - lightpos
+    - surfacecolor
+    - surfaceuv
+    - ao
+    - shadedlevel
+    - normal
+    - reflectcolor
+    - sdf
   - contextTypes:
     - MaterialContext
     coordTypes:
@@ -55,6 +65,18 @@ op:
     - float
     - vec4
     summary: Second shading element.
+    supportedVariableInputs:
+    - shading1
+    supportedVariables:
+    - lightcolor
+    - lightpos
+    - surfacecolor
+    - surfaceuv
+    - ao
+    - shadedlevel
+    - normal
+    - reflectcolor
+    - sdf
   - contextTypes:
     - MaterialContext
     coordTypes:
@@ -68,6 +90,18 @@ op:
     - float
     - vec4
     summary: Third shading element.
+    supportedVariableInputs:
+    - shading[1-2]
+    supportedVariables:
+    - lightcolor
+    - lightpos
+    - surfacecolor
+    - surfaceuv
+    - ao
+    - shadedlevel
+    - normal
+    - reflectcolor
+    - sdf
   - contextTypes:
     - MaterialContext
     coordTypes:
@@ -80,6 +114,18 @@ op:
     returnTypes:
     - float
     - vec4
+    supportedVariableInputs:
+    - shading[1-3]
+    supportedVariables:
+    - lightcolor
+    - lightpos
+    - surfacecolor
+    - surfaceuv
+    - ao
+    - shadedlevel
+    - normal
+    - reflectcolor
+    - sdf
   - contextTypes:
     - MaterialContext
     coordTypes:
@@ -92,6 +138,18 @@ op:
     returnTypes:
     - float
     - vec4
+    supportedVariableInputs:
+    - shading[1-4]
+    supportedVariables:
+    - lightcolor
+    - lightpos
+    - surfacecolor
+    - surfaceuv
+    - ao
+    - shadedlevel
+    - normal
+    - reflectcolor
+    - sdf
   - contextTypes:
     - MaterialContext
     coordTypes:
@@ -104,6 +162,18 @@ op:
     returnTypes:
     - float
     - vec4
+    supportedVariableInputs:
+    - shading[1-5]
+    supportedVariables:
+    - lightcolor
+    - lightpos
+    - surfacecolor
+    - surfaceuv
+    - ao
+    - shadedlevel
+    - normal
+    - reflectcolor
+    - sdf
   - contextTypes:
     - MaterialContext
     coordTypes:
@@ -116,6 +186,18 @@ op:
     returnTypes:
     - float
     - vec4
+    supportedVariableInputs:
+    - shading[1-6]
+    supportedVariables:
+    - lightcolor
+    - lightpos
+    - surfacecolor
+    - surfaceuv
+    - ao
+    - shadedlevel
+    - normal
+    - reflectcolor
+    - sdf
   name: modularMat
   opType: raytk.operators.material.modularMat
   parameters:
@@ -123,26 +205,26 @@ op:
     name: Enable
   - label: Base Color
     name: Basecolor
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
   - label: Use Light Color
     name: Uselightcolor
-    readOnlyHandling: macro
-    regularHandling: macro
+    readOnlyHandling: baked
+    regularHandling: baked
     summary: Whether to apply the light color to the base color. This does not affect
       whether the shading elements use the light color.
   - label: Use Local Position
     name: Uselocalpos
-    readOnlyHandling: macro
-    regularHandling: macro
+    readOnlyHandling: baked
+    regularHandling: baked
   - label: Enable Ambient Occlusion
     name: Enableao
-    readOnlyHandling: macro
-    regularHandling: macro
+    readOnlyHandling: baked
+    regularHandling: baked
   - label: Enable Reflection
     name: Enablereflection
-    readOnlyHandling: macro
-    regularHandling: macro
+    readOnlyHandling: baked
+    regularHandling: baked
   - label: Apply When
     menuOptions:
     - label: Always
@@ -150,6 +232,8 @@ op:
     - label: Only If Unassigned
       name: missing
     name: Condition
+    readOnlyHandling: baked
+    regularHandling: runtime
   shortcuts:
   - mm
   summary: A material that is composed of one or more shading elements.

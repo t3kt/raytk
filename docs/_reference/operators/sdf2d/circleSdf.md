@@ -29,12 +29,12 @@ op:
   parameters:
   - label: Translate
     name: Translate
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
     summary: Moves the center of the circle.
   - label: Radius
     name: Radius
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
     summary: Radius of the circle.
   - label: UV Mode
@@ -50,11 +50,11 @@ op:
     - label: Normalized Extern Parameterization
       name: normextparam
     name: Uvmode
-    readOnlyHandling: constant
-    regularHandling: constant
+    readOnlyHandling: semibaked
+    regularHandling: semibaked
   - label: External Band Size
     name: Externalbandsize
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
   summary: 2D circle SDF.
   thumb: assets/images/reference/operators/sdf2d/circleSdf_thumb.png

@@ -53,6 +53,8 @@ op:
     returnTypes:
     - float
     - Sdf
+    supportedVariableInputs:
+    - sdf_definition_in
   name: modifyDistance
   opType: raytk.operators.filter.modifyDistance
   parameters:
@@ -67,9 +69,11 @@ op:
     - label: Replace
       name: replace
     name: Mode
+    readOnlyHandling: semibaked
+    regularHandling: runtime
   - label: Mix
     name: Mix
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
     summary: Mix between the original distance and the original distance.
   status: beta

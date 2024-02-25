@@ -41,6 +41,10 @@ op:
     name: thicknessField
     returnTypes:
     - float
+    supportedVariableInputs:
+    - coordField
+    supportedVariables:
+    - cell
   - contextTypes:
     - Context
     - MaterialContext
@@ -57,6 +61,11 @@ op:
     name: blendingField
     returnTypes:
     - float
+    supportedVariableInputs:
+    - coordField
+    - thicknessField
+    supportedVariables:
+    - cell
   - contextTypes:
     - Context
     - MaterialContext
@@ -73,6 +82,12 @@ op:
     name: curveField
     returnTypes:
     - float
+    supportedVariableInputs:
+    - coordField
+    - thicknessField
+    - blendingField
+    supportedVariables:
+    - cell
   - contextTypes:
     - Context
     - MaterialContext
@@ -90,6 +105,17 @@ op:
     returnTypes:
     - float
     - vec4
+    supportedVariableInputs:
+    - coordField
+    - thicknessField
+    - blendingField
+    - curveField
+    supportedVariables:
+    - cell
+    - edgedist
+    - contour
+    - depth
+    - normangle
   - contextTypes:
     - Context
     - MaterialContext
@@ -107,28 +133,40 @@ op:
     returnTypes:
     - float
     - vec4
+    supportedVariableInputs:
+    - coordField
+    - thicknessField
+    - blendingField
+    - curveField
+    - pathColorField
+    supportedVariables:
+    - cell
+    - edgedist
+    - contour
+    - depth
+    - normangle
   name: truchetPattern
   opType: raytk.operators.pattern.truchetPattern
   parameters:
   - label: Translate
     name: Translate
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
   - label: Size
     name: Size
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
   - label: Curve
     name: Curve
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
   - label: Thickness
     name: Thickness
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
   - label: Blending
     name: Blending
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
   - label: Format
     menuOptions:
@@ -143,17 +181,19 @@ op:
     - label: Custom Override Color
       name: customcolor
     name: Format
+    readOnlyHandling: baked
+    regularHandling: baked
   - label: Path Color
     name: Pathcolor
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
   - label: Background Color
     name: Bgcolor
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
   - label: Seed
     name: Seed
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
   status: beta
   thumb: assets/images/reference/operators/pattern/truchetPattern_thumb.png

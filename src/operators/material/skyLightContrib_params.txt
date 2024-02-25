@@ -1,2 +1,4 @@
 names	source	handling	readOnlyHandling	conversion	enable
-Color[rgb] Dir[xyz] Level	param	runtime	macro		1
+Color[rgb]  Level	param	runtime	macro		1
+Dir[xyz]	param	runtime	macro		op('direction_definition').numRows < 2
+Rotate[xyz]	param	runtime	macro	angle	1

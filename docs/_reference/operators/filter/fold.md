@@ -30,6 +30,8 @@ op:
     - Ray
     - Light
     - Particle
+    supportedVariableInputs:
+    - distanceField
   - contextTypes:
     - Context
     - MaterialContext
@@ -58,6 +60,8 @@ op:
     - label: Menger Fold
       name: mengerfold
     name: Function
+    readOnlyHandling: semibaked
+    regularHandling: runtime
   - label: Distance
     name: Distance
   thumb: assets/images/reference/operators/filter/fold_thumb.png

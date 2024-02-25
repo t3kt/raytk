@@ -1,6 +1,9 @@
 names	source	handling	readOnlyHandling	conversion	enable
 Translate[xy]	param	runtime	macro		1
-Radius	param	runtime	macro		op('radius_definition').numRows < 2
+Radius	param	runtime	macro		op('radius_definition').numRows < 2 or 'float' not in str(op('radius_definition')[1, 'returnType'] or '')
+Rad[1-2]	param	runtime	macro		op('radius_definition').numRows < 2 or 'vec4' not in str(op('radius_definition')[1, 'returnType'] or '')
 Length	param	runtime	macro		op('length_definition').numRows < 2
 Bulge	param	runtime	macro		op('bulge_definition').numRows < 2
+Pointa[xy]	param	runtime	macro		op('point1_definition').numRows < 2
+Pointb[xy]	param	runtime	macro		op('point2_definition').numRows < 2
 Axis	param	constant			1

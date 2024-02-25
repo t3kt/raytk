@@ -30,6 +30,8 @@ op:
     name: definition_in_1
     returnTypes:
     - Light
+    supportedVariableInputs:
+    - bounds1
   - contextTypes:
     - LightContext
     coordTypes:
@@ -41,6 +43,9 @@ op:
     name: definition_in_2
     returnTypes:
     - Light
+    supportedVariableInputs:
+    - bounds[1-2]
+    - inputOp1
   - contextTypes:
     - LightContext
     coordTypes:
@@ -52,6 +57,9 @@ op:
     name: definition_in_3
     returnTypes:
     - Light
+    supportedVariableInputs:
+    - bounds[1-3]
+    - inputOp[1-2]
   - contextTypes:
     - LightContext
     coordTypes:
@@ -63,6 +71,9 @@ op:
     name: definition_in_4
     returnTypes:
     - Light
+    supportedVariableInputs:
+    - bounds[1-4]
+    - inputOp[1-3]
   - contextTypes:
     - LightContext
     coordTypes:
@@ -74,6 +85,9 @@ op:
     name: definition_in_5
     returnTypes:
     - Light
+    supportedVariableInputs:
+    - bounds[1-5]
+    - inputOp[1-4]
   - contextTypes:
     - LightContext
     coordTypes:
@@ -85,6 +99,9 @@ op:
     name: definition_in_6
     returnTypes:
     - Light
+    supportedVariableInputs:
+    - bounds[1-6]
+    - inputOp[1-5]
   - contextTypes:
     - LightContext
     coordTypes:
@@ -96,6 +113,9 @@ op:
     name: definition_in_7
     returnTypes:
     - Light
+    supportedVariableInputs:
+    - bounds[1-7]
+    - inputOp[1-6]
   - contextTypes:
     - LightContext
     coordTypes:
@@ -107,6 +127,9 @@ op:
     name: definition_in_8
     returnTypes:
     - Light
+    supportedVariableInputs:
+    - bounds[1-8]
+    - inputOp[1-7]
   - contextTypes:
     - LightContext
     coordTypes:
@@ -129,6 +152,9 @@ op:
     name: bounds2
     returnTypes:
     - Sdf
+    supportedVariableInputs:
+    - bounds1
+    - inputOp1
   - contextTypes:
     - LightContext
     coordTypes:
@@ -140,6 +166,9 @@ op:
     name: bounds3
     returnTypes:
     - Sdf
+    supportedVariableInputs:
+    - bounds[1-2]
+    - inputOp[1-2]
   - contextTypes:
     - LightContext
     coordTypes:
@@ -151,6 +180,9 @@ op:
     name: bounds4
     returnTypes:
     - Sdf
+    supportedVariableInputs:
+    - bounds[1-3]
+    - inputOp[1-3]
   - contextTypes:
     - LightContext
     coordTypes:
@@ -162,6 +194,9 @@ op:
     name: bounds5
     returnTypes:
     - Sdf
+    supportedVariableInputs:
+    - bounds[1-4]
+    - inputOp[1-4]
   - contextTypes:
     - LightContext
     coordTypes:
@@ -173,6 +208,9 @@ op:
     name: bounds6
     returnTypes:
     - Sdf
+    supportedVariableInputs:
+    - bounds[1-5]
+    - inputOp[1-5]
   - contextTypes:
     - LightContext
     coordTypes:
@@ -184,6 +222,9 @@ op:
     name: bounds7
     returnTypes:
     - Sdf
+    supportedVariableInputs:
+    - bounds[1-6]
+    - inputOp[1-6]
   - contextTypes:
     - LightContext
     coordTypes:
@@ -195,86 +236,89 @@ op:
     name: bounds8
     returnTypes:
     - Sdf
+    supportedVariableInputs:
+    - bounds[1-7]
+    - inputOp[1-7]
   name: multiLight
   opType: raytk.operators.light.multiLight
   parameters:
   - label: Enable 1
     name: Enable1
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
   - label: Level 1
     name: Level1
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
   - label: Bounds 1
     name: Bounds1
   - label: Enable 2
     name: Enable2
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
   - label: Level 2
     name: Level2
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
   - label: Bounds 2
     name: Bounds2
   - label: Enable 3
     name: Enable3
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
   - label: Level 3
     name: Level3
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
   - label: Bounds 3
     name: Bounds3
   - label: Enable 4
     name: Enable4
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
   - label: Level 4
     name: Level4
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
   - label: Bounds 4
     name: Bounds4
   - label: Enable 5
     name: Enable5
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
   - label: Level 5
     name: Level5
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
   - label: Bounds 5
     name: Bounds5
   - label: Enable 6
     name: Enable6
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
   - label: Level 6
     name: Level6
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
   - label: Bounds 6
     name: Bounds6
   - label: Enable 7
     name: Enable7
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
   - label: Level 7
     name: Level7
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
   - label: Bounds 7
     name: Bounds7
   - label: Enable 8
     name: Enable8
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
   - label: Level 8
     name: Level8
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
   - label: Bounds 8
     name: Bounds8

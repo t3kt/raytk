@@ -39,6 +39,8 @@ op:
     name: angleOffsetField
     returnTypes:
     - float
+    supportedVariableInputs:
+    - angleWidthField
   - contextTypes:
     - Context
     - MaterialContext
@@ -54,6 +56,12 @@ op:
     name: radiusField
     returnTypes:
     - float
+    supportedVariableInputs:
+    - angleWidthField
+    - angleOffsetField
+    supportedVariables:
+    - angle
+    - normangle
   - contextTypes:
     - Context
     - MaterialContext
@@ -69,6 +77,13 @@ op:
     name: thicknessField
     returnTypes:
     - float
+    supportedVariableInputs:
+    - angleWidthField
+    - angleOffsetField
+    - radiusField
+    supportedVariables:
+    - angle
+    - normangle
   keywords:
   - donut
   - ring
@@ -85,31 +100,31 @@ op:
     - label: Z
       name: z
     name: Axis
-    readOnlyHandling: constant
-    regularHandling: constant
+    readOnlyHandling: semibaked
+    regularHandling: semibaked
   - label: Radius
     name: Radius
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
   - label: Thickness
     name: Thickness
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
   - label: Translate
     name: Translate
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
   - label: Enable Caps
     name: Enablecaps
-    readOnlyHandling: constant
-    regularHandling: constant
+    readOnlyHandling: semibaked
+    regularHandling: semibaked
   - label: Angle Width
     name: Anglewidth
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
   - label: Angle Offset
     name: Angleoffset
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
   - label: UV Mode
     menuOptions:
@@ -118,8 +133,8 @@ op:
     - label: Torus
       name: torus
     name: Uvmode
-    readOnlyHandling: constant
-    regularHandling: constant
+    readOnlyHandling: semibaked
+    regularHandling: semibaked
   summary: SDF for a torus.
   thumb: assets/images/reference/operators/sdf/torusSdf_thumb.png
   variables:

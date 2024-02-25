@@ -32,6 +32,10 @@ op:
     - Ray
     - Light
     - Particle
+    supportedVariableInputs:
+    - amountField
+    - offsetField
+    - spreadField
   - contextTypes:
     - Context
     - MaterialContext
@@ -68,6 +72,8 @@ op:
     name: offsetField
     returnTypes:
     - float
+    supportedVariableInputs:
+    - amountField
   - contextTypes:
     - Context
     - MaterialContext
@@ -86,6 +92,9 @@ op:
     name: spreadField
     returnTypes:
     - float
+    supportedVariableInputs:
+    - amountField
+    - offsetField
   name: kink
   opType: raytk.operators.filter.kink
   parameters:
@@ -106,8 +115,8 @@ op:
     - label: Along Z Toward Y
       name: zy
     name: Direction
-    readOnlyHandling: constant
-    regularHandling: constant
+    readOnlyHandling: semibaked
+    regularHandling: semibaked
   - label: Side
     menuOptions:
     - label: Negative
@@ -115,19 +124,19 @@ op:
     - label: Positive
       name: pos
     name: Side
-    readOnlyHandling: constant
-    regularHandling: constant
+    readOnlyHandling: semibaked
+    regularHandling: semibaked
   - label: Amount
     name: Amount
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
   - label: Offset
     name: Offset
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
   - label: Spread
     name: Spread
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
   thumb: assets/images/reference/operators/filter/kink_thumb.png
 

@@ -132,6 +132,8 @@ op:
     - label: 32-bit XX Hash 2:1  (XY[u] -> X[u])
       name: xxhash322
     name: Function
+    readOnlyHandling: baked
+    regularHandling: baked
   - label: Coord Type
     menuOptions:
     - label: Auto

@@ -27,6 +27,11 @@ op:
     name: coordField
     returnTypes:
     - vec4
+    supportedVariables:
+    - res
+    - aspect
+    - depth
+    - firstslice
   name: texture3dField
   opType: raytk.operators.field.texture3dField
   parameters:
@@ -48,11 +53,11 @@ op:
     name: Returntype
   - label: Translate
     name: Translate
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
   - label: Scale
     name: Scale
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
   - label: Texture
     name: Texture
@@ -67,8 +72,8 @@ op:
     - label: Mirror
       name: mirror
     name: Extendmode
-    readOnlyHandling: constant
-    regularHandling: constant
+    readOnlyHandling: semibaked
+    regularHandling: semibaked
   - label: Z Coord Mode
     menuOptions:
     - label: Raw
@@ -78,6 +83,8 @@ op:
     - label: Depth (With Offset)
       name: depthoffset
     name: Zmode
+    readOnlyHandling: semibaked
+    regularHandling: runtime
   thumb: assets/images/reference/operators/field/texture3dField_thumb.png
   variables:
   - label: res

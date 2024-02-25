@@ -31,61 +31,63 @@ op:
     - vec4
     summary: Optional function that controls the color/intensity of the light based
       on the attenuation distance.
+    supportedVariableInputs:
+    - colorField
   name: spotLight
   opType: raytk.operators.light.spotLight
   parameters:
   - label: Intensity
     name: Intensity
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
   - label: Color
     name: Color
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
   - label: Position
     name: Position
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
     summary: The position of the tip of the light cone.
   - label: Direction
     name: Direction
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
     summary: The direction which the cone faces, as a vector.
   - label: Cone Angle
     name: Coneangle
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
     summary: The width of the cone.
   - label: Cone Delta
     name: Conedelta
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
     summary: The amount of blending between the inside and outside of the cone.
   - label: Attenuated
     name: Enableattenuation
-    readOnlyHandling: constant
+    readOnlyHandling: semibaked
     regularHandling: runtime
     summary: Whether to adjust the amount of light depending on distance.
   - label: Attenuation Start
     name: Attenuationstart
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
     summary: The start of the blending range, inside which the light will be at full
       intensity.
   - label: Attenuation End
     name: Attenuationend
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
     summary: The end of the blending range, outside which the light will be at zero
       intensity.
   - label: Rotate
     name: Rotate
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
   - label: Enable Shadow
     name: Enableshadow
-    readOnlyHandling: constant
+    readOnlyHandling: semibaked
     regularHandling: runtime
   summary: Cone-shaped spotlight.
 

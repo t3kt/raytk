@@ -43,22 +43,24 @@ op:
     - float
     summary: Optional field used to determine the width. When connected, the `Width`
       is multiplied by the value produced by the field.
+    supportedVariableInputs:
+    - heightField
   name: pyramidSdf
   opType: raytk.operators.sdf.pyramidSdf
   parameters:
   - label: Translate
     name: Translate
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
     summary: Moves the center of the base of the pyramid.
   - label: Height
     name: Height
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
     summary: The height of the pyramid.
   - label: Width
     name: Width
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
     summary: The width of the base of the pyramid. Note that widths smaller than 0.5
       will produce rendering errors.
@@ -71,7 +73,7 @@ op:
     - label: Z
       name: z
     name: Axis
-    readOnlyHandling: constant
+    readOnlyHandling: semibaked
     regularHandling: runtime
   summary: A pyramid with four sides.
   thumb: assets/images/reference/operators/sdf/pyramidSdf_thumb.png

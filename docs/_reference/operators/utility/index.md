@@ -26,8 +26,6 @@ cat:
     status: beta
   - name: providePosition
   - name: provideVariable
-  - name: sceneState
-    status: deprecated
   - name: speedGenerator
     status: beta
   - name: variableList

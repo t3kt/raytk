@@ -39,6 +39,8 @@ op:
     name: endpoint2
     returnTypes:
     - vec4
+    supportedVariableInputs:
+    - endpoint1
   - contextTypes:
     - Context
     - MaterialContext
@@ -54,27 +56,32 @@ op:
     name: radiusField
     returnTypes:
     - float
+    supportedVariableInputs:
+    - endpoint1
+    - endpoint2
+    supportedVariables:
+    - normoffset
   name: vesicaSegmentSdf
   opType: raytk.operators.sdf.vesicaSegmentSdf
   parameters:
   - label: Translate
     name: Translate
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
     summary: Moves the center of the capsule.
   - label: End Point 1
     name: Endpoint1
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
     summary: Distance of the first end from the center position.
   - label: End Point 2
     name: Endpoint2
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
     summary: Distance of the second end from the center position.
   - label: Radius
     name: Radius
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
     summary: The thickness of the capsule.
   thumb: assets/images/reference/operators/sdf/vesicaSegmentSdf_thumb.png

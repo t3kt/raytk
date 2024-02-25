@@ -26,11 +26,11 @@ op:
     name: Coordtype
   - label: Color
     name: Color
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
   - label: Alpha
     name: Alpha
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
   summary: A vector field that evaluates to a constant color value.
   thumb: assets/images/reference/operators/field/constantColorField_thumb.png

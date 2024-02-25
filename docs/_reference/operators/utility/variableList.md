@@ -33,6 +33,14 @@ op:
     - Ray
     - Light
     - Particle
+    supportedVariableInputs:
+    - variable1
+    - variable2
+    - variable3
+    - variable4
+    - variable5
+    - variable6
+    - variable7
   - contextTypes:
     - Context
     - MaterialContext
@@ -79,6 +87,8 @@ op:
     - Ray
     - Light
     - Particle
+    supportedVariableInputs:
+    - variable1
   - contextTypes:
     - Context
     - MaterialContext
@@ -102,6 +112,9 @@ op:
     - Ray
     - Light
     - Particle
+    supportedVariableInputs:
+    - variable1
+    - variable2
   - contextTypes:
     - Context
     - MaterialContext
@@ -125,6 +138,10 @@ op:
     - Ray
     - Light
     - Particle
+    supportedVariableInputs:
+    - variable1
+    - variable2
+    - variable3
   - contextTypes:
     - Context
     - MaterialContext
@@ -148,6 +165,11 @@ op:
     - Ray
     - Light
     - Particle
+    supportedVariableInputs:
+    - variable1
+    - variable2
+    - variable3
+    - variable4
   - contextTypes:
     - Context
     - MaterialContext
@@ -171,6 +193,12 @@ op:
     - Ray
     - Light
     - Particle
+    supportedVariableInputs:
+    - variable1
+    - variable2
+    - variable3
+    - variable4
+    - variable5
   - contextTypes:
     - Context
     - MaterialContext
@@ -194,6 +222,13 @@ op:
     - Ray
     - Light
     - Particle
+    supportedVariableInputs:
+    - variable1
+    - variable2
+    - variable3
+    - variable4
+    - variable5
+    - variable6
   name: variableList
   opType: raytk.operators.utility.variableList
   parameters:

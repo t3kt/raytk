@@ -42,6 +42,8 @@ op:
     name: centerField
     returnTypes:
     - float
+    supportedVariableInputs:
+    - inputOp1
   - contextTypes:
     - Context
     - MaterialContext
@@ -58,6 +60,9 @@ op:
     name: widthField
     returnTypes:
     - float
+    supportedVariableInputs:
+    - inputOp1
+    - centerField
   - contextTypes:
     - Context
     - MaterialContext
@@ -74,6 +79,8 @@ op:
     name: startField
     returnTypes:
     - float
+    supportedVariableInputs:
+    - inputOp1
   - contextTypes:
     - Context
     - MaterialContext
@@ -90,6 +97,9 @@ op:
     name: endField
     returnTypes:
     - float
+    supportedVariableInputs:
+    - inputOp1
+    - startField
   name: radialSlice
   opType: raytk.operators.filter.radialSlice
   parameters:
@@ -104,7 +114,7 @@ op:
     - label: Z
       name: z
     name: Axis
-    readOnlyHandling: constant
+    readOnlyHandling: semibaked
     regularHandling: runtime
     summary: The axis around which to take the slice.
   - label: Angle Mode
@@ -116,33 +126,33 @@ op:
     name: Anglemode
   - label: Center Angle
     name: Center
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
   - label: Angle Width
     name: Width
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
   - label: Start Angle
     name: Start
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
   - label: End Angle
     name: End
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
   - label: Invert
     name: Invert
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
   - label: Enable Smoothing
     name: Enablesmoothing
-    readOnlyHandling: constant
+    readOnlyHandling: semibaked
     regularHandling: runtime
     summary: Whether to smooth the transition on each side of the slice down to a
       size of zero.
   - label: Smooth Radius
     name: Smoothradius
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
     summary: The amount of smoothing distance.
   thumb: assets/images/reference/operators/filter/radialSlice_thumb.png

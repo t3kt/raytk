@@ -30,6 +30,8 @@ op:
     - Ray
     - Light
     - Particle
+    supportedVariables:
+    - ring
   keywords:
   - distance
   - modulo
@@ -52,8 +54,8 @@ op:
     - label: Spherical
       name: spherical
     name: Distancemode
-    readOnlyHandling: constant
-    regularHandling: constant
+    readOnlyHandling: semibaked
+    regularHandling: semibaked
   - label: Mirror Type
     menuOptions:
     - label: None
@@ -61,20 +63,20 @@ op:
     - label: Mirror
       name: mirror
     name: Mirrortype
-    readOnlyHandling: constant
-    regularHandling: constant
+    readOnlyHandling: semibaked
+    regularHandling: semibaked
   - label: Length
     name: Length
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
   - label: Center
     name: Center
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
   - label: Iterate On Rings
     name: Iterateonrings
-    readOnlyHandling: constant
-    regularHandling: constant
+    readOnlyHandling: semibaked
+    regularHandling: semibaked
   variables:
   - label: ring
     name: ring

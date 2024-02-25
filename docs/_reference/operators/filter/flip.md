@@ -31,6 +31,12 @@ op:
     - Ray
     - Light
     - Particle
+    supportedVariableInputs:
+    - offsetField
+    - shiftField
+    supportedVariables:
+    - sign
+    - index
   - contextTypes:
     - Context
     - MaterialContext
@@ -48,6 +54,8 @@ op:
     name: offsetField
     returnTypes:
     - float
+    supportedVariableInputs:
+    - shiftField
   - contextTypes:
     - Context
     - MaterialContext
@@ -79,16 +87,16 @@ op:
     - label: Z
       name: z
     name: Axis
-    readOnlyHandling: constant
-    regularHandling: constant
+    readOnlyHandling: semibaked
+    regularHandling: semibaked
   - label: Offset
     name: Offset
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
     summary: Moves the reflection plane along the axis.
   - label: Shift
     name: Shift
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
     summary: Moves the input towards / away from the reflection plane.
   - label: Merge Type
@@ -132,6 +140,8 @@ op:
     - label: Column Difference
       name: columnDiff
     name: Mergetype
+    readOnlyHandling: baked
+    regularHandling: runtime
     summary: Whether to just flip the input or flip it and merge that with the original.
   - label: Merge Radius
     name: Mergeradius
@@ -146,8 +156,8 @@ op:
       label: Signed (-1/1)
       name: sign
     name: Iterationtype
-    readOnlyHandling: constant
-    regularHandling: constant
+    readOnlyHandling: semibaked
+    regularHandling: semibaked
     summary: What kind of iteration values should be provided for upstream ops.
   - label: Merge Number
     name: Mergenumber

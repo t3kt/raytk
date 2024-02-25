@@ -18,6 +18,9 @@ op:
     returnTypes:
     - float
     - vec4
+    supportedVariables:
+    - step
+    - normstep
   name: hologramContrib
   opType: raytk.operators.material.hologramContrib
   parameters:
@@ -25,19 +28,19 @@ op:
     name: Enable
   - label: Iterations
     name: Iterations
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
   - label: Step Distance
     name: Step
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
   - label: Period
     name: Period
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
   - label: Phase
     name: Phase
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
   status: beta
   variables:

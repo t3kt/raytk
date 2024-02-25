@@ -30,6 +30,13 @@ op:
     - Ray
     - Light
     - Particle
+    supportedVariableInputs:
+    - repetitionsField
+    - offsetField
+    - shiftField
+    supportedVariables:
+    - cell
+    - normcell
   - contextTypes:
     - Context
     - MaterialContext
@@ -46,6 +53,8 @@ op:
     returnTypes:
     - float
     - vec4
+    supportedVariableInputs:
+    - shiftField
   - contextTypes:
     - Context
     - MaterialContext
@@ -61,6 +70,12 @@ op:
     name: offsetField
     returnTypes:
     - vec4
+    supportedVariableInputs:
+    - shiftField
+    - repetitionsField
+    supportedVariables:
+    - cell
+    - normcell
   - contextTypes:
     - Context
     - MaterialContext
@@ -84,19 +99,19 @@ op:
     name: Enable
   - label: Repetitions
     name: Repetitions
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
   - label: Shift
     name: Shift
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
   - label: Offset
     name: Offset
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
   - label: Pivot
     name: Pivot
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
   - label: Mirror Type
     menuOptions:
@@ -109,8 +124,8 @@ op:
     - label: Grid
       name: grid
     name: Mirrortype
-    readOnlyHandling: constant
-    regularHandling: constant
+    readOnlyHandling: semibaked
+    regularHandling: semibaked
   variables:
   - label: cell
     name: cell

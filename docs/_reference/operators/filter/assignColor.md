@@ -52,6 +52,10 @@ op:
     - float
     - vec4
     summary: Optional field used to calculate the color instead of the `Color` parameter.
+    supportedVariableInputs:
+    - inputOp1
+    supportedVariables:
+    - sdf
   keywords:
   - color
   - material
@@ -64,7 +68,7 @@ op:
     name: Enable
   - label: Color
     name: Color
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
   - label: Assign When
     menuOptions:
@@ -73,6 +77,8 @@ op:
     - label: Only If Unassigned
       name: missing
     name: Condition
+    readOnlyHandling: baked
+    regularHandling: runtime
   shortcuts:
   - ac
   summary: Assigns a surface color attribute to an SDF surface.

@@ -39,6 +39,8 @@ op:
     name: thicknessField
     returnTypes:
     - float
+    supportedVariableInputs:
+    - offsetField
   name: pistonSdf
   opType: raytk.operators.sdf.pistonSdf
   parameters:
@@ -57,13 +59,15 @@ op:
     - label: Z- (Backward)
       name: zneg
     name: Direction
+    readOnlyHandling: baked
+    regularHandling: runtime
   - label: Offset
     name: Offset
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
   - label: Thickness
     name: Thickness
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
   status: beta
   thumb: assets/images/reference/operators/sdf/pistonSdf_thumb.png

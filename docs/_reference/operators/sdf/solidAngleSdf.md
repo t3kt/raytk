@@ -40,6 +40,8 @@ op:
     name: angleField
     returnTypes:
     - float
+    supportedVariableInputs:
+    - radiusField
   keywords:
   - cone
   - pie
@@ -50,17 +52,17 @@ op:
   parameters:
   - label: Translate
     name: Translate
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
     summary: Moves the tip of the shape.
   - label: Angle
     name: Angle
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
     summary: The angle width of the slice.
   - label: Radius
     name: Radius
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
     summary: The radius of the sphere that the shape is based one, equivalent to the
       distance from the tip to the base.

@@ -46,6 +46,8 @@ op:
     name: valueField
     returnTypes:
     - float
+    supportedVariableInputs:
+    - definition_in
   name: assignAttribute
   opType: raytk.operators.filter.assignAttribute
   parameters:
@@ -62,7 +64,7 @@ op:
     name: Datatype
   - label: Value
     name: Value
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
   status: beta
   variables:

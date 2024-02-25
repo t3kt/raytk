@@ -58,6 +58,10 @@ op:
     - float
     - vec4
     - Sdf
+    supportedVariables:
+    - datapos
+    - datauv
+    - datares
   - contextTypes:
     - CameraContext
     coordTypes:
@@ -66,6 +70,10 @@ op:
     name: camera
     returnTypes:
     - Ray
+    supportedVariables:
+    - datapos
+    - datauv
+    - datares
   - contextTypes:
     - LightContext
     coordTypes:
@@ -74,6 +82,10 @@ op:
     name: light
     returnTypes:
     - Light
+    supportedVariables:
+    - datapos
+    - datauv
+    - datares
   keywords:
   - point
   - render
@@ -173,11 +185,11 @@ op:
     name: Enablecustomoutput2
   - label: Enable Normal Smoothing
     name: Enablenormalsmoothing
-    readOnlyHandling: macro
-    regularHandling: macro
+    readOnlyHandling: baked
+    regularHandling: baked
   - label: Normal Smoothing
     name: Normalsmoothing
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
   - label: Material Mode
     menuOptions:
@@ -188,6 +200,8 @@ op:
     - label: Fill Everwhere
       name: everywhere
     name: Materialmode
+    readOnlyHandling: semibaked
+    regularHandling: semibaked
   - label: Enable Blending
     name: Enableblending
   - label: Blending

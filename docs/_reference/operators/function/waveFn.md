@@ -30,6 +30,8 @@ op:
     - label: Additive Square (8)
       name: addsquare8
     name: Function
+    readOnlyHandling: baked
+    regularHandling: runtime
   - label: Coord Type
     menuOptions:
     - label: 1D
@@ -45,11 +47,11 @@ op:
     name: Phase
   - label: Amplitude
     name: Amplitude
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
   - label: Offset
     name: Offset
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
   summary: A function that uses a periodic wave, with the position as the parameter.
   thumb: assets/images/reference/operators/function/waveFn_thumb.png

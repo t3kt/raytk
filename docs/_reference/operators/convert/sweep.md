@@ -28,6 +28,12 @@ op:
     - vec4
     - Sdf
     summary: The SDF that sweeps around the path SDF.
+    supportedVariableInputs:
+    - path
+    supportedVariables:
+    - pathsdf
+    - pathpos
+    - pos3d
   - contextTypes:
     - Context
     - MaterialContext
@@ -64,6 +70,8 @@ op:
     - label: ZX
       name: zx
     name: Plane
+    readOnlyHandling: semibaked
+    regularHandling: runtime
   - label: Enable
     name: Enable
   summary: Creates a 3D SDF by sweeping a 2D SDF along the surface of another 2D SDF.

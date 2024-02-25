@@ -416,6 +416,24 @@ class ShaderBuilder:
 		paramProcessor = self._createParamProcessor()
 		return paramProcessor.processCodeBlock(code)
 
+	def processLibraryIncludes(self, code: str):
+		mode = str((self.configPar() and self.configPar()['Includemode']) or 'includelibs')
+		if mode != 'inlineall':
+			return code
+
+		def replacer(m: re.Match):
+			path = m.group(1)
+			dat = op(path)
+			result = f'/// Library: <{path}>\n'
+			if dat:
+				result += dat.text
+			else:
+				# TODO: report missing library
+				result += '/////// MISSING!!!! /////'
+			return result + '\n'
+
+		return re.sub(r'#include\s+<([^>]+)>', replacer, code)
+
 	def buildBufferUniformTable(self, dat: DAT):
 		dat.clear()
 		dat.appendRow(['name', 'type', 'chop', 'uniformType', 'expr1', 'expr2', 'expr3', 'expr4'])
@@ -481,8 +499,7 @@ class ShaderBuilder:
 	def _parseOpStates(self):
 		states = []
 		for dat in self.getOpsFromDefinitionColumn('statePath'):
-			state = _parseOpStateJson(dat.text)
-			states.append(state)
+			states.append(RopState.fromJson(dat.text))
 		return states
 
 	def buildTextureTable(self, dat: DAT):
@@ -1250,7 +1267,7 @@ class _ParameterProcessor:
 	def _constantParamUniforms(self) -> list[_UniformSpec]:
 		uniforms = []
 		constCount = 0
-		constPath = parent().path + '/constant_param_vals'
+		constPath = 'constant_param_vals'
 		for opState in self.opStates:
 			if opState.constants:
 				for const in opState.constants:
@@ -1302,7 +1319,7 @@ class _SingleArrayParameterProcessor(_ParameterProcessor):
 		uniforms = [
 			_UniformSpec(
 				'vecParams', 'vec4', 'uniformarray', paramCount,
-				parent().path + '/merged_vector_param_vals'
+				'merged_vector_param_vals'
 			)
 		]
 		uniforms += self._constantParamUniforms()
@@ -1438,81 +1455,5 @@ def _parseOpStateJson(text: str):
 	if not text:
 		return
 	obj = json.loads(text)
-
-	state = RopState(
-		name=obj['name'],
-		path=obj['path'],
-		ropType=obj['ropType'],
-		functionCode=obj['functionCode'],
-		materialCode=obj.get('materialCode'),
-		initCode=obj.get('initCode'),
-		opGlobals=obj.get('opGlobals'),
-		materialId=obj.get('materialId'),
-		inputNames=obj.get('inputNames'),
-		libraryNames=obj.get('libraryNames'),
-		paramSource=obj.get('paramSource'),
-	)
-	arr = obj.get('macros')
-	if arr:
-		state.macros = [
-			# Macro(o['name'], o.get('value'), o.get('enable'))
-			Macro(**o)
-			for o in arr
-		]
-	arr = obj.get('constants')
-	if arr:
-		state.constants = [
-			# Constant(o['name'], o['type'], o.get('menuOptions'))
-			Constant(**o)
-			for o in arr
-		]
-	arr = obj.get('inputStates')
-	if arr:
-		state.inputStates = [
-			InputState(**o)
-			for o in arr
-		]
-	arr = obj.get('textures')
-	if arr:
-		state.textures = [
-			# Texture(o['name'], o['path'], o.get('type'))
-			Texture(**o)
-			for o in arr
-		]
-	arr = obj.get('buffers')
-	if arr:
-		state.buffers = [
-			# Buffer(
-			# 	o['name'], o['type'], o['chop'], o['uniformType'],
-			# 	o.get('length'), o.get('expr1'), o.get('expr2'), o.get('expr3'), o.get('expr4'))
-			Buffer(**o)
-			for o in arr
-		]
-	arr = obj.get('references')
-	if arr:
-		state.references = [
-			# Reference(o['name'], o['localName'], o['sourcePath'], o['sourceName'], o['dataType'], o['owner'], o['category'])
-			Reference(**o)
-			for o in arr
-		]
-	arr = obj.get('attributes')
-	if arr:
-		state.attributes = [
-			SurfaceAttribute(**o)
-			for o in arr
-		]
-	arr = obj.get('variables')
-	if arr:
-		state.variables = [
-			# Variable(o['name'], o['localName'], o.get('label'), o['dataType'], o['owner'], o.get('macros'), o.get('category'))
-			Variable(**o)
-			for o in arr
-		]
-	arr = obj.get('validationErrors')
-	if arr:
-		state.validationErrors = [
-			# ValidationError(o['path'], o['level'], o['message'])
-			ValidationError(**o)
-			for o in arr
-		]
+	state = RopState.fromDict(obj)
 	return state

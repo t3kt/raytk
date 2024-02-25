@@ -24,7 +24,7 @@ op:
     summary: Creates and attaches a new Light COMP.
   - label: Enable Shadow
     name: Enableshadow
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
   status: beta
   summary: Light that is based on a standard Light COMP.

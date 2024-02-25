@@ -113,8 +113,8 @@ op:
     - label: Input 4
       name: input4
     name: Sourcex
-    readOnlyHandling: macro
-    regularHandling: macro
+    readOnlyHandling: baked
+    regularHandling: baked
   - label: Y Source
     menuOptions:
     - label: Zero
@@ -130,8 +130,8 @@ op:
     - label: Input 4
       name: input4
     name: Sourcey
-    readOnlyHandling: macro
-    regularHandling: macro
+    readOnlyHandling: baked
+    regularHandling: baked
   - label: Z Source
     menuOptions:
     - label: Zero
@@ -147,8 +147,8 @@ op:
     - label: Input 4
       name: input4
     name: Sourcez
-    readOnlyHandling: macro
-    regularHandling: macro
+    readOnlyHandling: baked
+    regularHandling: baked
   - label: W Source
     menuOptions:
     - label: Zero
@@ -164,8 +164,8 @@ op:
     - label: Input 4
       name: input4
     name: Sourcew
-    readOnlyHandling: macro
-    regularHandling: macro
+    readOnlyHandling: baked
+    regularHandling: baked
   summary: Merges multiple vector fields, using different fields for each vector part.
 
 ---

@@ -38,28 +38,28 @@ op:
   - name: Enable
   - label: Branches
     name: Branches
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
     summary: The number of arms of the spiral. Fractional values will produce a discontinuity.
   - label: Bend
     name: Bend
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
     summary: The tightness and direction of the spiral. Positive values are counterclockwise
       and negative are clockwise.
   - label: Twist
     name: Twist
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
     summary: Twists the arms of the spiral while keeping their path the same.
   - label: Thickness
     name: Thickness
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
     summary: Thickness of the arms of the spiral.
   - label: Exponent
     name: Exponent
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
   - label: Axis
     menuOptions:
@@ -70,7 +70,7 @@ op:
     - label: Z
       name: z
     name: Axis
-    readOnlyHandling: constant
+    readOnlyHandling: semibaked
     regularHandling: runtime
   summary: A tapering spiral squared tube.
   thumb: assets/images/reference/operators/sdf/spiralSdf_thumb.png

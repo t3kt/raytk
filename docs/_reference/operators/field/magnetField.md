@@ -43,6 +43,8 @@ op:
     name: easing
     returnTypes:
     - float
+    supportedVariableInputs:
+    - coordField
   name: magnetField
   opType: raytk.operators.field.magnetField
   parameters:
@@ -68,21 +70,23 @@ op:
     - label: Scaled Vector
       name: scaledvec
     name: Format
+    readOnlyHandling: baked
+    regularHandling: baked
   - label: Amount
     name: Amount
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
   - label: Center
     name: Center
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
   - label: Radius
     name: Radius
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
   - label: Fade
     name: Fade
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
   status: beta
   thumb: assets/images/reference/operators/field/magnetField_thumb.png

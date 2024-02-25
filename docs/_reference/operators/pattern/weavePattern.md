@@ -41,20 +41,22 @@ op:
     name: thicknessField
     returnTypes:
     - float
+    supportedVariableInputs:
+    - coordField
   name: weavePattern
   opType: raytk.operators.pattern.weavePattern
   parameters:
   - label: Translate
     name: Translate
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
   - label: Size
     name: Size
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
   - label: Thickness
     name: Thickness
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
   thumb: assets/images/reference/operators/pattern/weavePattern_thumb.png
 

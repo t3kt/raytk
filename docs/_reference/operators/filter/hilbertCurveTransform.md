@@ -31,6 +31,10 @@ op:
     - Ray
     - Light
     - Particle
+    supportedVariables:
+    - localuv
+    - cell
+    - localcell
   name: hilbertCurveTransform
   opType: raytk.operators.filter.hilbertCurveTransform
   parameters:
@@ -45,16 +49,16 @@ op:
     - label: XY
       name: z
     name: Axis
-    readOnlyHandling: constant
-    regularHandling: constant
+    readOnlyHandling: semibaked
+    regularHandling: semibaked
     summary: The axis facing the plane along which space is repeated.
   - label: Steps
     name: Steps
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
   - label: Offset
     name: Offset
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
   status: beta
   thumb: assets/images/reference/operators/filter/hilbertCurveTransform_thumb.png

@@ -38,6 +38,12 @@ op:
     returnTypes:
     - float
     - vec4
+    supportedVariables:
+    - lightcolor
+    - lightpos
+    - surfacecolor
+    - surfaceuv
+    - normal
   name: basicMat
   opType: raytk.operators.material.basicMat
   parameters:
@@ -45,11 +51,11 @@ op:
     name: Enable
   - label: Base Color
     name: Basecolor
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
   - label: Sky Color
     name: Skycolor
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
     summary: Color of the "sky" pseudo-light.
   - label: Sky Amount
@@ -57,30 +63,30 @@ op:
     summary: Amount of "sky" light to apply.
   - label: Sky Direction
     name: Skydir
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
     summary: Vector of the direction where the "sky" light comes from.
   - label: Specular Amount
     name: Specularamount
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
     summary: Amount of specular light color to apply.
   - label: Specular Exponent
     name: Specularexp
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
     summary: Controls the sharpness of the specular color rolloff.
   - label: Enable Shadow
     name: Enableshadow
-    readOnlyHandling: macro
-    regularHandling: macro
+    readOnlyHandling: baked
+    regularHandling: baked
     summary: Whether to use shadows. If this is enabled, and the `Shadow` input is
       connected, that type of shadow is used. If it is enabled but that input is not
       connected, the default shadow is used.
   - label: Use Local Position
     name: Uselocalpos
-    readOnlyHandling: macro
-    regularHandling: macro
+    readOnlyHandling: baked
+    regularHandling: baked
     summary: Whether to use the "local" position relative to the input shape when
       looking up colors using the `Base Color Field` input. If enabled, the coordinates
       used for the color field will be "before" any downstream transformations are
@@ -88,8 +94,8 @@ op:
       render is used instead.
   - label: Use Surface Color
     name: Usesurfacecolor
-    readOnlyHandling: macro
-    regularHandling: macro
+    readOnlyHandling: baked
+    regularHandling: baked
   - label: Apply When
     menuOptions:
     - label: Always
@@ -97,6 +103,8 @@ op:
     - label: Only If Unassigned
       name: missing
     name: Condition
+    readOnlyHandling: baked
+    regularHandling: runtime
   summary: Material with a basic lighting model.
   thumb: assets/images/reference/operators/material/basicMat_thumb.png
   variables:

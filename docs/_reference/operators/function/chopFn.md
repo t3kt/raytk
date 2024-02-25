@@ -30,12 +30,12 @@ op:
       label: Mirror
       name: mirror
     name: Extendmode
-    readOnlyHandling: macro
-    regularHandling: macro
+    readOnlyHandling: baked
+    regularHandling: baked
     summary: How to handle coordinates outside the range.
   - label: Range
     name: Range
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
     summary: The range of indices to map to the full range of the CHOP.
   summary: Function that looks up values in a CHOP.

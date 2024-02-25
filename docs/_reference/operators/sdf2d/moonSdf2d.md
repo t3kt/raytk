@@ -39,6 +39,8 @@ op:
     name: ratioField
     returnTypes:
     - float
+    supportedVariableInputs:
+    - radiusField
   - contextTypes:
     - Context
     - MaterialContext
@@ -54,6 +56,9 @@ op:
     name: offsetField
     returnTypes:
     - float
+    supportedVariableInputs:
+    - radiusField
+    - ratioField
   - contextTypes:
     - Context
     - MaterialContext
@@ -69,24 +74,28 @@ op:
     name: rotateField
     returnTypes:
     - float
+    supportedVariableInputs:
+    - radiusField
+    - ratioField
+    - offsetField
   name: moonSdf2d
   opType: raytk.operators.sdf2d.moonSdf2d
   parameters:
   - label: Radius
     name: Radius
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
   - label: Inner Ratio
     name: Innerratio
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
   - label: Offset
     name: Offset
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
   - label: Rotate
     name: Rotate
-    readOnlyHandling: macro
+    readOnlyHandling: baked
     regularHandling: runtime
   thumb: assets/images/reference/operators/sdf2d/moonSdf2d_thumb.png
 
