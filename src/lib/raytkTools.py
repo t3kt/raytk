@@ -186,6 +186,13 @@ class RaytkTools(RaytkContext):
 		self.saveROPSpec(rop)
 		OpDocManager(info).pushToParams()
 		focusFirstCustomParameterPage(rop)
+		opDefComp = info.opDef
+		if not opDefComp.par.ext0object:
+			opDefComp.par.ext0object = "op('./opDefinition').module.OpDefinition(me)"
+			opDefComp.par.ext0name = 'opDefinition'
+			opDefComp.par.ext0promote = True
+		opDefComp.par.ext0name.readOnly = True
+		opDefComp.par.ext0promote.readOnly = True
 		tox = info.toxFile
 		rop.par.savebackup = False
 		if rop.par['reloadtoxonstart'] is not None:

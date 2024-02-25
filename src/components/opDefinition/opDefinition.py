@@ -965,3 +965,10 @@ def createRenderSel(name: str):
 				palette.CreateRenderSelect(host, bufTable[i, 'name'].val)
 				return
 	raise Exception(f'Output buffer not found: {name}')
+
+class OpDefinition:
+	def __init__(self, opDefComp: COMP):
+		self.opDefComp = opDefComp
+
+	def getRopState(self) -> RopState:
+		return RopState.fromJson(self.opDefComp.op('opState').text)
