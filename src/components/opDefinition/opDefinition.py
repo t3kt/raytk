@@ -526,13 +526,15 @@ class _Builder:
 		self.defPar = parent().par  # type: OpDefParsT
 		self.hostOp = self.defPar.Hostop.eval()
 		self.paramsOp = self.defPar.Paramsop.eval() or self.hostOp
-		opType = self.defPar.Raytkoptype.eval()
+		fullOpType = self.defPar.Raytkoptype.eval()
+		opType = fullOpType
 		if opType and '.' in opType:
 			opType = opType.rsplit('.', maxsplit=1)[1]
 		self.opState = RopState(
 			name=self.defPar.Name.eval(),
 			path=self.hostOp.path if self.hostOp else None,
 			ropType=opType,
+			ropFullType=fullOpType,
 		)
 		self.opName = self.opState.name
 		self.namePrefix = self.opName + '_'
@@ -843,14 +845,14 @@ def buildDefinitionTable(dat: scriptDAT):
 	dat.appendCols([
 		['name', state.name],
 		['path', state.path],
-		['opType', state.ropType],
+		['opType', state.ropFullType],
 		['coordType', typeTable['coordType', 1]],
 		['contextType', typeTable['contextType', 1]],
 		['returnType', typeTable['returnType', 1]],
 		['opVersion', parentPar().Raytkopversion or 0],
 		['toolkitVersion', parentPar().Raytkversion or ''],
 		['paramSource', defPath + '/param_vals'],
-		['constantParamSource', defPath + '/constant_params_vals'],
+		['constantParamSource', defPath + '/constant_param_vals'],
 		['paramVectors', defPath + '/param_vector_vals'],
 		['paramTable', defPath + '/params'],
 		['paramTupletTable', defPath + '/param_tuplets'],

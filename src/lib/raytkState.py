@@ -32,6 +32,7 @@ class RopState(_StateObject):
 	name: str
 	path: str
 	ropType: str
+	ropFullType: str
 
 	functionCode: str | None = None
 	materialCode: str | None = None
@@ -66,6 +67,7 @@ class RopState(_StateObject):
 			name=obj.get('name'),
 			path=obj.get('path'),
 			ropType=obj.get('ropType'),
+			ropFullType=obj.get('ropFullType'),
 			functionCode=obj.get('functionCode'),
 			materialCode=obj.get('materialCode'),
 			initCode=obj.get('initCode'),
