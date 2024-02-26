@@ -532,7 +532,7 @@ class OpDocManager:
 		self.opState = None
 		stateDat = self.info.opDef.op('opState')
 		if stateDat and stateDat.text:
-			self.opState = RopState.fromDict(TDJSON.jsonDecode(stateDat.text))
+			self.opState = RopState.fromJson(stateDat.text)
 
 	def _parseDAT(self):
 		ropHelp = ROPHelp.fromInfoOnly(self.info)
