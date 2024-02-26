@@ -510,7 +510,6 @@ def buildOpState():
 	builder.loadMacros(
 		paramSpecTable=op('paramSpecTable'),
 		paramTupletTable=op('param_tuplets'),
-		opElementTable=op('opElements'),
 	)
 	builder.loadConstants(paramSpecTable=op('paramSpecTable'))
 	builder.loadTextures()
@@ -644,7 +643,7 @@ class _Builder:
 		code = _typePattern.sub(_typeRepl, code)
 		return self.replaceNames(code)
 
-	def loadMacros(self, paramSpecTable: DAT, paramTupletTable: DAT, opElementTable: DAT):
+	def loadMacros(self, paramSpecTable: DAT, paramTupletTable: DAT):
 		macros = []
 		def addMacro(m: Macro):
 			if not m.name:
