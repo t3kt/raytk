@@ -884,7 +884,6 @@ def buildDefinitionTable(dat: scriptDAT):
 		['libraryNames', parentPar().Librarynames],
 		['inputNames', ' '.join([i.sourceName for i in state.inputStates])],
 		['definitionPath', defPath + '/definition'],
-		['elementTable', (defPath + '/opElements') if op('opElements').numRows > 1 else ''],
 		['statePath', defPath + '/opState'],
 		['tags', ' '.join(state.tags or [])],
 	])

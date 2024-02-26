@@ -80,7 +80,6 @@ There are several categories of information about a ROP, produced by the `opDefi
   * `paramTable`: path to a DAT that contains definitions of all the ROP's parameters.
   * `paramTupletTable`: path to a DAT that contains the definitions of the ROP's parameters, organized into 4-part tuplets.
   * `libraryNames`: names of common shared GLSL libraries and/or paths to ROP-local libraries.
-  * `elementTable`: path to the DAT that holds information about the ROP's [elements](/raytk/developer/rop-elements/).
   * `inputNames`: the names of other ROPs that this ROP's function calls.
 * `RopState`
   * This is a structured object stored as JSON in a DAT inside the `opDefinition`.
