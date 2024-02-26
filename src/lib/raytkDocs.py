@@ -11,6 +11,7 @@ import re
 import yaml
 
 from raytkUtil import ROPInfo, CategoryInfo, RaytkTags, InputInfo, cleanDict, mergeDicts
+from raytkState import RopState
 
 # noinspection PyUnreachableCode
 if False:
@@ -528,6 +529,10 @@ class OpDocManager:
 		else:
 			self.info = ROPInfo(rop)
 			self.rop = self.info.rop
+		self.opState = None
+		stateDat = self.info.opDef.op('opState')
+		if stateDat and stateDat.text:
+			self.opState = RopState.fromDict(TDJSON.jsonDecode(stateDat.text))
 
 	def _parseDAT(self):
 		ropHelp = ROPHelp.fromInfoOnly(self.info)
@@ -734,12 +739,12 @@ class OpDocManager:
 			paramHelp.name: paramHelp
 			for paramHelp in ropHelp.parameters
 		}
-		elementTable = self.info.opDef.op('opElements')
-		if elementTable.numRows < 2:
+		if not self.opState or not self.opState.opElements:
 			return
-		for i in range(1, elementTable.numRows):
-			elementRoot = op(elementTable[i, 'elementRoot'])
-			self._pullParamHandlingFromOpElement(elementRoot, paramHelps)
+		for elementState in self.opState.opElements:
+			elementRoot = op(elementState.elementRoot)
+			if elementRoot:
+				self._pullParamHandlingFromOpElement(elementRoot, paramHelps)
 
 	@staticmethod
 	def _pullParamHandlingFromOpElement(elementRoot: COMP, paramHelps: dict[str, ROPParamHelp]):
