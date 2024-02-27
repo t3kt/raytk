@@ -290,34 +290,6 @@ def onValidationChange(dat: DAT):
 	err = '\n'.join([c.val for c in cells])
 	host.addScriptError(err)
 
-def buildOpElementTable(dat: DAT, elements: list[COMP]):
-	dat.clear()
-	dat.appendRow([
-		'relPath',
-		'elementRoot', 'isNested',
-		'paramGroupTable', 'macroTable',
-		'placeholder1', 'code1', 'placeholder2', 'code2', 'placeholder3', 'code3', 'placeholder4', 'code4',
-	])
-	elements.sort(key=lambda e: e.path)
-	for element in elements:
-		elementRoot = op(element.par['Elementroot'] or element.parent())
-		dat.appendRow([
-			dat.relativePath(element),
-
-			elementRoot,
-			int(elementRoot is not element.parent()),
-			element.par['Paramgrouptable'] or '',
-			element.par['Macrotable'] or '',
-			element.par['Placeholder1'] or '',
-			element.par['Code1'] or '',
-			element.par['Placeholder2'] or '',
-			element.par['Code2'] or '',
-			element.par['Placeholder3'] or '',
-			element.par['Code3'] or '',
-			element.par['Placeholder4'] or '',
-			element.par['Code4'] or '',
-		])
-
 def onHostNameChange():
 	# Workaround for dependency update issue (#295) when the host is renamed.
 	op('sel_funcTemplate').cook(force=True)
