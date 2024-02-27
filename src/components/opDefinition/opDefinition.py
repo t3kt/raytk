@@ -149,124 +149,6 @@ def _processInputDefTypeCategory(dat: scriptDAT, supportedTypeTable: DAT, catego
 def _getParamsOp() -> COMP | None:
 	return parentPar().Paramsop.eval() or _host()
 
-# Builds the primary table from which all other parameter tables are built.
-# This table contains regular parameters and special parameters, with both runtime and macro handling.
-def buildParamSpecTable(dat: scriptDAT, paramGroupTable: DAT):
-	dat.clear()
-	dat.appendRow([
-		'localName',
-		'globalName',
-		'source',
-		'style',
-		'tupletName',
-		'tupletGlobalName',
-		'vecIndex',
-		'status',
-		'handling',
-		'conversion',
-	])
-	globalPrefix = parentPar().Name.eval() + '_'
-
-	def addPar(p: Par, handling: str, skipExisting=False, conversion=''):
-		if skipExisting and dat[p.name, 0] is not None:
-			# skip params that are already loaded
-			return
-		dat.appendRow([
-			p.name,
-			globalPrefix + p.name,
-			'param',
-			p.style,
-			p.tupletName,
-			globalPrefix + p.tupletName,
-			p.vecIndex,
-			'',
-			handling,
-			conversion,
-		])
-
-	def addSpecialPar(name: str):
-		dat.appendRow([
-			name,
-			globalPrefix + name,
-			'special', 'Float', '', '', '0', '', 'runtime', '',
-		])
-
-	def addFromGroupTable(table: DAT):
-		if not table:
-			return
-		for row in range(1, table.numRows):
-			if table[row, 'enable'] in ('0', 'False'):
-				continue
-			source = table[row, 'source'] or 'param'
-			if source == 'special':
-				for name in tdu.expand(table[row, 'names'].val):
-					addSpecialPar(name)
-			else:  # if source == 'param':
-				for par in _getRegularParams([table[row, 'names'].val]):
-					handling = table[row, 'handling']
-					if par.readOnly:
-						handling = table[row, 'readOnlyHandling'] or handling
-					addPar(par, handling=handling.val, skipExisting=False, conversion=table[row, 'conversion'].val)
-
-	addFromGroupTable(paramGroupTable)
-	for path in op('opElements').col('paramGroupTable')[1:]:
-		addFromGroupTable(op(path))
-
-	# Add runtime bypass
-	if parentPar().Useruntimebypass:
-		addPar(parentPar().Enable, handling='runtime', skipExisting=True)
-
-	# Update param statuses based on tuplets
-	_fillParamStatuses(dat)
-
-	# Group special parameters into tuplets
-	_groupSpecialParamsIntoTuplets(dat)
-
-def _fillParamStatuses(dat: DAT):
-	parsByTuplet = {}  # type: dict[str, list[Par]]
-	host = _getParamsOp()
-	if not host:
-		return
-	for i in range(1, dat.numRows):
-		if dat[i, 'source'] != 'param':
-			continue
-		tupletName = dat[i, 'tupletName'].val
-		par = host.par[dat[i, 'localName']]
-		if par is None:
-			continue
-		if tupletName not in parsByTuplet:
-			parsByTuplet[tupletName] = [par]
-		else:
-			parsByTuplet[tupletName].append(par)
-	for tupletName, pars in parsByTuplet.items():
-		if _canBeReadOnlyTuplet(pars):
-			for par in pars:
-				dat[par.name, 'status'] = 'readOnly'
-
-def _groupSpecialParamsIntoTuplets(dat: DAT):
-	parts = []
-	tupletIndex = 0
-	globalPrefix = parentPar().Name.eval() + '_'
-
-	def addTuplet():
-		tupletName = _getTupletName(parts) or f'special{tupletIndex}'
-		for vecIndex, part in enumerate(parts):
-			dat[part, 'tupletName'] = tupletName
-			dat[part, 'tupletGlobalName'] = globalPrefix + tupletName
-			dat[part, 'vecIndex'] = vecIndex
-
-	for i in range(1, dat.numRows):
-		if dat[i, 'source'] != 'special':
-			continue
-		name = dat[i, 'localName'].val
-		parts.append(name)
-		if len(parts) == 4:
-			addTuplet()
-			parts.clear()
-			tupletIndex += 1
-	if parts:
-		addTuplet()
-
 def _getRegularParams(specs: list[str]) -> list[Par]:
 	host = _getParamsOp()
 	if not host:
@@ -281,70 +163,6 @@ def _getRegularParams(specs: list[str]) -> list[Par]:
 		if p.isCustom and p.name != 'Inspect'
 	]
 
-# Builds a table that lists global names of runtime-based parameters.
-def buildParamTable(dat: DAT, paramSpecTable: DAT):
-	dat.clear()
-	foundNames = set()
-	for i in range(1, paramSpecTable.numRows):
-		if paramSpecTable[i, 'handling'] != 'runtime':
-			continue
-		name = paramSpecTable[i, 'globalName'].val
-		if name not in foundNames:
-			dat.appendRow([name])
-			foundNames.add(name)
-
-# Builds a table of parameters organized into tuplets.
-def buildParamDetailTable(dat: DAT, paramSpecTable: DAT):
-	dat.clear()
-	dat.appendRow([
-		'tuplet', 'tupletLocalName',
-		'source', 'size',
-		'part1', 'part2', 'part3', 'part4',
-		'status', 'conversion', 'localNames', 'handling',
-		'ownerName',
-		'sourceVectorPath', 'sourceVectorIndex',
-	])
-	namesByTupletName = {}  # type: dict[str, list[str]]
-	for i in range(1, paramSpecTable.numRows):
-		tupletName = paramSpecTable[i, 'tupletName'].val
-		vecIndex = int(paramSpecTable[i, 'vecIndex'] or 0)
-		if not tupletName:
-			continue
-		if tupletName not in namesByTupletName:
-			namesByTupletName[tupletName] = ['', '', '', '']
-		namesByTupletName[tupletName][vecIndex] = paramSpecTable[i, 'localName'].val
-
-	sourceVectorPath = parent().path + '/param_vector_vals'
-	sourceVectorIndex = 0
-	hostName = parentPar().Name.eval()
-	for tupletName, parts in namesByTupletName.items():
-		size = 0
-		for part in parts:
-			if part:
-				size += 1
-			else:
-				break
-		handling = paramSpecTable[parts[0], 'handling']
-		dat.appendRow([
-			paramSpecTable[parts[0], 'tupletGlobalName'],
-			paramSpecTable[parts[0], 'tupletName'],
-			paramSpecTable[parts[0], 'source'],
-			size,
-			paramSpecTable[parts[0], 'globalName'] or '',
-			paramSpecTable[parts[1], 'globalName'] or '',
-			paramSpecTable[parts[2], 'globalName'] or '',
-			paramSpecTable[parts[3], 'globalName'] or '',
-			paramSpecTable[parts[0], 'status'],
-			paramSpecTable[parts[0], 'conversion'],
-			' '.join(p for p in parts if p),
-			handling,
-			hostName,
-			sourceVectorPath if handling == 'runtime' else '',
-			sourceVectorIndex if handling == 'runtime' else '',
-		])
-		if handling == 'runtime':
-			sourceVectorIndex += 1
-
 def _canBeReadOnlyTuplet(pars: list[Par]):
 	return all(p.readOnly and p.mode == ParMode.CONSTANT for p in pars)
 
@@ -356,18 +174,6 @@ def _getTupletName(parts: list[str]):
 		if not part.startswith(prefix):
 			return None
 	return prefix
-
-def buildParamTupletAliases(dat: DAT, paramTable: DAT):
-	dat.clear()
-	for i in range(1, paramTable.numRows):
-		size = int(paramTable[i, 'size'])
-		if size > 1:
-			dat.appendRow([
-				'#define {} vec{}({})'.format(paramTable[i, 'tuplet'].val, size, ','.join([
-					paramTable[i, f'part{j + 1}'].val
-					for j in range(size)
-				]))
-			])
 
 # Builds a table with lists of parameter local names, for use in CHOP parameter expressions.
 def buildParamChopNamesTable(dat: DAT):
@@ -1055,8 +861,6 @@ def buildDefinitionTable(dat: scriptDAT):
 		['paramSource', defPath + '/param_vals'],
 		['constantParamSource', defPath + '/constant_param_vals'],
 		['paramVectors', defPath + '/param_vector_vals'],
-		['paramTable', defPath + '/params'],
-		['paramTupletTable', defPath + '/param_tuplets'],
 		['libraryNames', parentPar().Librarynames],
 		['inputNames', ' '.join([i.sourceName for i in state.inputStates])],
 		['definitionPath', defPath + '/definition'],

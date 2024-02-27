@@ -140,28 +140,28 @@ class Texture(_StateObject):
 
 @dataclass
 class Reference(_StateObject):
-	name: str
-	localName: str
-	sourceName: str | None
-	dataType: str
-	owner: str | None
+	name: str = ''
+	localName: str = ''
+	sourceName: str | None = None
+	dataType: str = ''
+	owner: str | None = None
 	sourcePath: str | None = None
 	category: str | None = None
 
 @dataclass
 class Variable(_StateObject):
-	name: str
-	localName: str
-	label: str
-	dataType: str
-	owner: str
+	name: str = ''
+	localName: str = ''
+	label: str = ''
+	dataType: str = ''
+	owner: str = ''
 	macros: str | None = None
 
 @dataclass
 class SurfaceAttribute(_StateObject):
-	name: str
-	label: str
-	dataType: str
+	name: str = ''
+	label: str = ''
+	dataType: str = ''
 	macros: str | None = None
 
 @dataclass

@@ -2,6 +2,7 @@ import json
 
 from raytkUtil import RaytkContext, ROPInfo, InputInfo, CategoryInfo
 import raytkDocs
+from raytkState import RopState
 
 # noinspection PyUnreachableCode
 if False:
@@ -223,10 +224,18 @@ def buildOpCurrentExpandedParamsTable(dat: DAT):
 		info = ROPInfo(rop)
 		if not info or not info.isROP:
 			continue
-		expanded = ' '.join([
-			cell.val
-			for cell in info.opDef.op('paramSpecTable').col('localName')[1:]
-		])
+		try:
+			state = RopState.fromJson(rop.op('opDefinition/opState').text)
+		except TypeError as err:
+			print('error loading state for', rop, err)
+			continue
+		if hasattr(state, 'params') and state.params:
+			expanded = [
+				p.localName
+				for p in state.params
+			]
+		else:
+			expanded = []
 		dat.appendRow([
 			info.path,
 			expanded,

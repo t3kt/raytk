@@ -10,8 +10,6 @@ toolkitVersion	0
 paramSource	0
 constantParamSource	0
 paramVectors	0
-paramTable	0
-paramTupletTable	0
 libraryNames	0
 inputNames	0
 definitionPath	1

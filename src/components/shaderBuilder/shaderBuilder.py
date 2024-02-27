@@ -416,6 +416,27 @@ class ShaderBuilder:
 				spec.expr1 or '', spec.expr2 or '', spec.expr3 or '', spec.expr4 or ''
 			])
 
+	def buildRuntimeParamDetailTable(self, dat: DAT):
+		dat.clear()
+		dat.appendRow([
+			'tuplet', 'source', 'size',
+			'part1', 'part2', 'part3', 'part4',
+			'status', 'handling', 'ownerName',
+			'sourceVectorPath', 'sourceVectorIndex'])
+		states = self._getOpStates()
+		for state in states:
+			if not state.paramTuplets:
+				continue
+			for paramTuplet in state.paramTuplets:
+				if paramTuplet.handling != 'runtime':
+					continue
+				dat.appendRow([
+					paramTuplet.name, paramTuplet.source, paramTuplet.size,
+					paramTuplet.part1 or '', paramTuplet.part2 or '', paramTuplet.part3 or '', paramTuplet.part4 or '',
+					paramTuplet.status or '', paramTuplet.handling or '', state.name,
+					paramTuplet.sourceVectorPath or '', paramTuplet.sourceVectorIndex or '',
+				])
+
 	def processParametersInCode(self, code: str):
 		paramProcessor = self._createParamProcessor()
 		return paramProcessor.processCodeBlock(code)

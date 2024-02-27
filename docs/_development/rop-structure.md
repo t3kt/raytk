@@ -77,8 +77,6 @@ There are several categories of information about a ROP, produced by the `opDefi
   * `paramSource`: path to the CHOP that holds the values of runtime parameters.
   * `constantParamSource`: path to the CHOP that holds the values of specialization constant parameters. These are processed separately from runtime parameters to avoid unnecessary cooking.
   * `paramVectors`: path to a CHOP with the runtime parameters, rearranged into 4 vector channels. This will eventually be used to avoid having to reorder all the parameters in `shaderBuilder`.
-  * `paramTable`: path to a DAT that contains definitions of all the ROP's parameters.
-  * `paramTupletTable`: path to a DAT that contains the definitions of the ROP's parameters, organized into 4-part tuplets.
   * `libraryNames`: names of common shared GLSL libraries and/or paths to ROP-local libraries.
   * `inputNames`: the names of other ROPs that this ROP's function calls.
 * `RopState`
