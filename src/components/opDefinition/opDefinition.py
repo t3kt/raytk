@@ -508,11 +508,8 @@ def buildOpState():
 	builder.loadOpElements()
 	builder.loadParams()
 	builder.loadCode()
-	builder.loadMacros(
-		paramSpecTable=op('paramSpecTable'),
-		paramTupletTable=op('param_tuplets'),
-	)
-	builder.loadConstants(paramSpecTable=op('paramSpecTable'))
+	builder.loadMacros()
+	builder.loadConstants()
 	builder.loadTextures()
 	builder.loadBuffers()
 	builder.loadReferences()
@@ -806,7 +803,7 @@ class _Builder:
 		code = _typePattern.sub(_typeRepl, code)
 		return self.replaceNames(code)
 
-	def loadMacros(self, paramSpecTable: DAT, paramTupletTable: DAT):
+	def loadMacros(self):
 		macros = []
 		def addMacro(m: Macro):
 			if not m.name:
@@ -821,14 +818,14 @@ class _Builder:
 			addMacro(Macro(f'THIS_HAS_TAG_{tag}'))
 		macroParams = []
 		angleParamNames = []
-		for i in range(1, paramSpecTable.numRows):
-			if paramSpecTable[i, 'handling'] != 'macro':
+		for paramSpec in self.opState.params:
+			if paramSpec.handling != 'macro':
 				continue
-			par = self.paramsOp.par[paramSpecTable[i, 'localName']]
+			par = self.paramsOp.par[paramSpec.localName]
 			if par is None:
 				continue
 			macroParams.append(par)
-			if paramSpecTable[i, 'conversion'] == 'angle':
+			if paramSpec.conversion == 'angle':
 				angleParamNames.append(par.name)
 		macroParamVals = {}
 		for par in macroParams:
@@ -846,19 +843,17 @@ class _Builder:
 					addMacro(Macro(self.namePrefix + name, 1))
 			else:
 				addMacro(Macro(self.namePrefix + name, val))
-		for i in range(1, paramTupletTable.numRows):
-			if paramTupletTable[i, 'handling'] != 'macro':
+		for paramTupletSpec in self.opState.paramTuplets:
+			if paramTupletSpec.handling != 'macro':
 				continue
-			size = int(paramTupletTable[i, 'size'])
-			if size < 2:
+			if paramTupletSpec.size < 2:
 				continue
-			tuplet = paramTupletTable[i, 'tupletLocalName'].val
 			parts = [
 				repr(macroParamVals[p])
-				for p in paramTupletTable[i, 'localNames'].val.split(' ')
+				for p in paramTupletSpec.localNames
 			]
 			partsJoined = ','.join(parts)
-			addMacro(Macro(self.namePrefix + tuplet, f'vec{size}({partsJoined})'))
+			addMacro(Macro(self.namePrefix + paramTupletSpec.localName, f'vec{paramTupletSpec.size}({partsJoined})'))
 		tables = [self.defPar.Macrotable.eval()] + self.defPar.Generatedmacrotables.evalOPs()
 		if self.opState.opElements:
 			for elementState in self.opState.opElements:
@@ -881,16 +876,14 @@ class _Builder:
 					addMacro(Macro(row[1].val, ' '.join([c.val or '' for c in row[2:]]), not _isFalseStr(row[0])))
 		self.opState.macros = macros
 
-	def loadConstants(self, paramSpecTable: DAT):
+	def loadConstants(self):
 		self.opState.constants = []
-		if paramSpecTable.numRows < 2:
-			return
-		for i in range(1, paramSpecTable.numRows):
-			if paramSpecTable[i, 'handling'] != 'constant':
+		for paramSpec in self.opState.params:
+			if paramSpec.handling != 'constant':
 				continue
-			globalName = paramSpecTable[i, 'globalName'].val
-			localName = paramSpecTable[i, 'localName'].val
-			style = paramSpecTable[i, 'style']
+			globalName = paramSpec.name
+			localName = paramSpec.localName
+			style = paramSpec.style
 			if style == 'Int':
 				self.opState.constants.append(Constant(
 					globalName, localName, 'int'
@@ -904,7 +897,7 @@ class _Builder:
 					globalName, localName, 'bool'
 				))
 			elif style == 'Menu':
-				par = self.paramsOp.par[paramSpecTable[i, 'localName']]
+				par = self.paramsOp.par[paramSpec.localName]
 				self.opState.constants.append(Constant(
 					globalName, localName, 'int',
 					menuOptions=par.menuNames
