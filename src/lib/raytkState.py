@@ -34,6 +34,9 @@ class RopState(_StateObject):
 	ropType: str
 	ropFullType: str
 
+	params: list['ParamSpec'] | None = None
+	paramTuplets: list['ParamTupletSpec'] | None = None
+
 	functionCode: str | None = None
 	materialCode: str | None = None
 	initCode: str | None = None
@@ -70,6 +73,8 @@ class RopState(_StateObject):
 			path=obj.get('path'),
 			ropType=obj.get('ropType'),
 			ropFullType=obj.get('ropFullType'),
+			params=[ParamSpec(**p) for p in obj.get('params', [])],
+			paramTuplets=[ParamTupletSpec(**p) for p in obj.get('paramTuplets', [])],
 			functionCode=obj.get('functionCode'),
 			materialCode=obj.get('materialCode'),
 			initCode=obj.get('initCode'),
@@ -172,11 +177,25 @@ class Buffer(_StateObject):
 	expr4: str | None = None
 
 @dataclass
-class ParamTuplet(_StateObject):
+class ParamSpec(_StateObject):
+	name: str
+	localName: str
+	source: str
+	style: str
+	tupletName: str | None
+	tupletLocalName: str | None
+	vecIndex: int
+	status: str | None = None
+	handling: str | None = None
+	conversion: str | None = None
+
+@dataclass
+class ParamTupletSpec(_StateObject):
 	name: str
 	localName: str
 	source: str
 	size: int
+	style: str | None = None
 	part1: str | None = None
 	part2: str | None = None
 	part3: str | None = None
@@ -185,6 +204,8 @@ class ParamTuplet(_StateObject):
 	conversion: str | None = None
 	handling: str = 'runtime'
 	localNames: list[str] | None = None
+	sourceVectorPath: str | None = None
+	sourceVectorIndex: int | None = None
 
 @dataclass
 class OpElementState(_StateObject):

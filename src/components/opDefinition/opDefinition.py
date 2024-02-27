@@ -1,7 +1,7 @@
 import json
 import math
 from raytkState import RopState, Macro, Texture, Reference, Variable, Buffer, ValidationError, Constant, \
-	InputState, SurfaceAttribute, OpElementState
+	InputState, SurfaceAttribute, OpElementState, ParamTupletSpec, ParamSpec
 import re
 
 # noinspection PyUnreachableCode
@@ -506,6 +506,7 @@ def buildOpState():
 	builder.loadInputs(ops('input_def_[0-9]*'))
 	builder.loadTags()
 	builder.loadOpElements()
+	builder.loadParams()
 	builder.loadCode()
 	builder.loadMacros(
 		paramSpecTable=op('paramSpecTable'),
@@ -615,6 +616,168 @@ class _Builder:
 			)
 
 			self.opState.opElements.append(elementState)
+
+	def loadParams(self):
+		self.opState.paramTuplets = []
+		self.opState.params = []
+		globalPrefix = self.opState.name + '_'
+		knownParNames = set()
+		def addPar(p: Par, handling: str, skipExisting=False, conversion=''):
+			if skipExisting and p.name in knownParNames:
+				return
+			self.opState.params.append(ParamSpec(
+				name=globalPrefix + p.name,
+				localName=p.name,
+				source='param',
+				style=p.style,
+				tupletName=globalPrefix + p.tupletName,
+				tupletLocalName=p.tupletName,
+				vecIndex=p.vecIndex,
+				status=None,
+				handling=handling,
+				conversion=conversion,
+			))
+
+		def addSpecialPar(name: str):
+			self.opState.params.append(ParamSpec(
+				name=globalPrefix + name,
+				localName=name,
+				source='special',
+				style='Float',
+				tupletName=None,
+				tupletLocalName=None,
+				vecIndex=0,
+				status=None,
+				handling='runtime',
+				conversion=None,
+			))
+
+		def addFromGroupTable(table: DAT):
+			if not table:
+				return
+			for row in range(1, table.numRows):
+				if table[row, 'enable'] in ('0', 'False'):
+					continue
+				source = table[row, 'source'] or 'param'
+				if source == 'special':
+					for name in tdu.expand(table[row, 'names'].val):
+						addSpecialPar(name)
+				else:  # if source == 'param':
+					for par in _getRegularParams([table[row, 'names'].val]):
+						handling = table[row, 'handling']
+						if par.readOnly:
+							handling = table[row, 'readOnlyHandling'] or handling
+						addPar(par, handling=handling.val, skipExisting=False, conversion=table[row, 'conversion'].val)
+
+		addFromGroupTable(self.defPar.Paramgrouptable.eval())
+		if self.opState.opElements:
+			for element in self.opState.opElements:
+				addFromGroupTable(op(element.paramGroupTable))
+
+		# Add runtime bypass
+		if self.defPar.Useruntimebypass:
+			addPar(self.defPar.Enable, handling='runtime', skipExisting=True)
+
+		# Update param statuses based on tuplets
+		self._fillParamStatuses()
+
+		# Group special parameters into tuplets
+		self._groupSpecialParamsIntoTuplets()
+
+		self._prepareParamTupletSpecs()
+
+	def _fillParamStatuses(self):
+		parsByTuplet = {}  # type: dict[str, list[Par]]
+		paramSpecsByName = {}  # type: dict[str, ParamSpec]
+		host = _getParamsOp()
+		if not host:
+			return
+		for paramSpec in self.opState.params:
+			if paramSpec.source != 'param':
+				continue
+			par = host.par[paramSpec.localName]
+			if par is None:
+				continue
+			paramSpecsByName[paramSpec.localName] = paramSpec
+			if paramSpec.tupletLocalName not in parsByTuplet:
+				parsByTuplet[paramSpec.tupletLocalName] = [par]
+			else:
+				parsByTuplet[paramSpec.tupletLocalName].append(par)
+		for tupletName, pars in parsByTuplet.items():
+			if _canBeReadOnlyTuplet(pars):
+				for par in pars:
+					paramSpecsByName[par.name].status = 'readOnly'
+
+	def _groupSpecialParamsIntoTuplets(self):
+		parts = []
+		tupletIndex = 0
+		globalPrefix = self.opState.name + '_'
+		paramSpecsByName = {
+			p.localName: p
+			for p in self.opState.params
+		}
+
+		def addTuplet():
+			tupletName = _getTupletName(parts) or f'special{tupletIndex}'
+			for vecIndex, part in enumerate(parts):
+				partSpec = paramSpecsByName[part]
+				partSpec.tupletName = globalPrefix + tupletName
+				partSpec.tupletLocalName = tupletName
+				partSpec.vecIndex = vecIndex
+
+		for paramSpec in self.opState.params:
+			if paramSpec.source != 'special':
+				continue
+			name = paramSpec.localName
+			parts.append(name)
+			if len(parts) == 4:
+				addTuplet()
+				parts.clear()
+				tupletIndex += 1
+		if parts:
+			addTuplet()
+
+	def _prepareParamTupletSpecs(self):
+		self.opState.paramTuplets = []
+		namesByTuplet = {}  # type: dict[str, list[str]]
+		paramSpecsByName = {}  # type: dict[str, ParamSpec]
+		for paramSpec in self.opState.params:
+			if not paramSpec.tupletLocalName:
+				continue
+			paramSpecsByName[paramSpec.localName] = paramSpec
+			vecIndex = paramSpec.vecIndex or 0
+			if paramSpec.tupletLocalName not in namesByTuplet:
+				namesByTuplet[paramSpec.tupletLocalName] = ['', '', '', '']
+			namesByTuplet[paramSpec.tupletLocalName][vecIndex] = paramSpec.localName
+		sourceVectorPath = self.opState.path + '/param_vector_vals'
+		sourceVectorIndex = 0
+		for tupletName, partNames in namesByTuplet.items():
+			localNames = []
+			for partName in partNames:
+				if partName:
+					localNames.append(partName)
+				else:
+					break
+			part0Spec = paramSpecsByName[partNames[0]]
+			self.opState.paramTuplets.append(ParamTupletSpec(
+				name=part0Spec.tupletName,
+				localName=part0Spec.tupletLocalName,
+				source=part0Spec.source,
+				size=len(localNames),
+				style=part0Spec.style,
+				part1=paramSpecsByName[partNames[0]].name,
+				part2=paramSpecsByName[partNames[1]].name if partNames[1] else None,
+				part3=paramSpecsByName[partNames[2]].name if partNames[2] else None,
+				part4=paramSpecsByName[partNames[3]].name if partNames[3] else None,
+				status=part0Spec.status,
+				conversion=part0Spec.conversion,
+				handling=part0Spec.handling,
+				localNames=localNames,
+				sourceVectorPath=sourceVectorPath if part0Spec.handling == 'runtime' else None,
+				sourceVectorIndex=sourceVectorIndex if part0Spec.handling == 'runtime' else None,
+			))
+			if part0Spec.handling == 'runtime':
+				sourceVectorIndex += 1
 
 	def addError(self, message: str, path: str | None = None, level: str = 'error'):
 		self.opState.validationErrors.append(ValidationError(
