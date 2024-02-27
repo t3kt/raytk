@@ -370,19 +370,19 @@ def buildParamTupletAliases(dat: DAT, paramTable: DAT):
 			])
 
 # Builds a table with lists of parameter local names, for use in CHOP parameter expressions.
-def buildParamChopNamesTable(dat: DAT, paramSpecTable: DAT):
+def buildParamChopNamesTable(dat: DAT):
 	dat.clear()
 	regularNames = []
 	specialNames = []
 	angleNames = []
 	constantNames = []
-	for i in range(1, paramSpecTable.numRows):
-		handling = paramSpecTable[i, 'handling']
-		if handling == 'macro':
+	state = _parseOpState()
+	for paramSpec in state.params:
+		if paramSpec.handling == 'macro':
 			continue
-		name = paramSpecTable[i, 'localName'].val
-		source = paramSpecTable[i, 'source']
-		if handling == 'constant':
+		name = paramSpec.localName
+		source = paramSpec.source
+		if paramSpec.handling == 'constant':
 			if source != 'param':
 				raise Exception(f'Constants must come from parameters {name} {source}')
 			else:
@@ -391,12 +391,27 @@ def buildParamChopNamesTable(dat: DAT, paramSpecTable: DAT):
 			regularNames.append(name)
 		elif source == 'special':
 			specialNames.append(name)
-		if paramSpecTable[i, 'conversion'] == 'angle':
+		if paramSpec.conversion == 'angle':
 			angleNames.append(name)
 	dat.appendRow(['regular', ' '.join(regularNames)])
 	dat.appendRow(['special', ' '.join(specialNames)])
 	dat.appendRow(['angle', ' '.join(angleNames)])
 	dat.appendRow(['constant', ' '.join(constantNames)])
+	regularPart1Names = []
+	regularPart2Names = []
+	regularPart3Names = []
+	regularPart4Names = []
+	for paramTuplet in state.paramTuplets:
+		if paramTuplet.handling != 'runtime':
+			continue
+		regularPart1Names.append(paramTuplet.part1 or '_')
+		regularPart2Names.append(paramTuplet.part2 or '_')
+		regularPart3Names.append(paramTuplet.part3 or '_')
+		regularPart4Names.append(paramTuplet.part4 or '_')
+	dat.appendRow(['regularPart1', ' '.join(regularPart1Names)])
+	dat.appendRow(['regularPart2', ' '.join(regularPart2Names)])
+	dat.appendRow(['regularPart3', ' '.join(regularPart3Names)])
+	dat.appendRow(['regularPart4', ' '.join(regularPart4Names)])
 
 def buildValidationErrors(
 		errorDat: scriptDAT,
@@ -746,7 +761,10 @@ class _Builder:
 			if paramSpec.tupletLocalName not in namesByTuplet:
 				namesByTuplet[paramSpec.tupletLocalName] = ['', '', '', '']
 			namesByTuplet[paramSpec.tupletLocalName][vecIndex] = paramSpec.localName
-		sourceVectorPath = self.opState.path + '/param_vector_vals'
+		if self.opState.path:
+			sourceVectorPath = self.opState.path + '/param_vector_vals'
+		else:
+			sourceVectorPath = ''  # this is only for the clone master of opDefinition
 		sourceVectorIndex = 0
 		for tupletName, partNames in namesByTuplet.items():
 			localNames = []
@@ -1017,9 +1035,12 @@ class _Builder:
 					macros=str(table[i, 'macros'] or ''),
 				))
 
+def _parseOpState():
+	return RopState.fromJson(op('opState').text)
+
 def buildDefinitionTable(dat: scriptDAT):
 	dat.clear()
-	state = RopState.fromJson(op('opState').text)
+	state = _parseOpState()
 	typeTable = op('types')
 	defPath = parent().path
 	dat.appendCols([
