@@ -378,6 +378,7 @@ class ToolkitBuilder(_BuilderBase):
 		self.context.lockBuildLockOps(typeSpec)
 		opDef = components.op('opDefinition')
 		self.context.lockBuildLockOps(opDef)
+		opDef.op('buildOpState').par.Pretty = False
 		comps = components.ops(
 			'typeSpec', 'typeResolver', 'typeRestrictor',
 			# 'opImage',  # this has some instance-dependent stuff
