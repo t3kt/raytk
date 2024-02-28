@@ -68,18 +68,6 @@ def buildTypeTable(dat: scriptDAT, supportedTypes: DAT, inputDefs: DAT):
 def _inputDefsFromPar():
 	return parentPar().Inputdefs.evalOPs()
 
-def getCombinedTags(inputTable: DAT):
-	tags = set()
-	for i in range(1, inputTable.numRows):
-		tags.update(tdu.split(inputTable[i, 'tags']))
-	table = parentPar().Tagtable.eval()
-	if table and table.numRows > 1:
-		for i in range(1, table.numRows):
-			if _isFalseStr(table[i, 'enable']):
-				continue
-			tags.add(table[i, 'name'].val)
-	return list(sorted(tags))
-
 def combineInputDefinitions(dat: scriptDAT, inDats: list[DAT], defFields: DAT, supportedTypeTable: DAT):
 	dat.clear()
 	inDats += _inputDefsFromPar()
