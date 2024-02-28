@@ -68,32 +68,6 @@ def buildTypeTable(dat: scriptDAT, supportedTypes: DAT, inputDefs: DAT):
 def _inputDefsFromPar():
 	return parentPar().Inputdefs.evalOPs()
 
-def buildInputTable(dat: DAT, inDats: list[DAT]):
-	dat.clear()
-	dat.appendRow([
-		'inputFunc', 'name', 'path',
-		'coordType', 'contextType', 'returnType',
-		'placeholder',
-		'vars', 'varInputs',
-		'tags',
-	])
-	for i, inDat in enumerate(inDats + _inputDefsFromPar()):
-		if not inDat[1, 'name']:
-			continue
-		func = str(inDat[1, 'input:alias'] or f'inputOp{i + 1}')
-		dat.appendRow([
-			func,
-			inDat[1, 'name'],
-			inDat[1, 'path'],
-			inDat[1, 'coordType'],
-			inDat[1, 'contextType'],
-			inDat[1, 'returnType'],
-			('inputOp_' + func) if not func.startswith('inputOp') else func,
-			inDat[1, 'input:vars'] or '',
-			inDat[1, 'input:varInputs'] or '',
-			inDat[1, 'tags'] or '',
-		])
-
 def getCombinedTags(inputTable: DAT):
 	tags = set()
 	for i in range(1, inputTable.numRows):
