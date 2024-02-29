@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.field.worleyNoiseField
-  opVersion: '1'
+  opVersion: '2'
   opStatus: beta
 opDef: !def
   enable: true
@@ -48,9 +48,7 @@ elements:
   elementType: codeSwitcher
   params:
     Elementroot: ''
-    Table: !table
-      file: src/operators/field/worleyNoiseField_noiseTypes.txt
-      name: noiseTypes
+    Table: noiseTypes
     Param: Noisetype
     Autoupdateparams: true
     Manageparamstates: false
@@ -63,9 +61,7 @@ elements:
   elementType: codeSwitcher
   params:
     Elementroot: ''
-    Table: !table
-      file: src/operators/field/worleyNoiseField_distanceTypes.txt
-      name: distanceTypes
+    Table: distanceTypes
     Param: Distancetype
     Autoupdateparams: true
     Manageparamstates: false

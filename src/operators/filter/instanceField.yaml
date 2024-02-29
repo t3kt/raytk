@@ -44,9 +44,7 @@ elements:
   elementType: codeSwitcher
   params:
     Elementroot: ''
-    Table: !table
-      file: src/operators/filter/instanceField_operations.txt
-      name: operations
+    Table: operations
     Param: Operation
     Autoupdateparams: true
     Manageparamstates: false

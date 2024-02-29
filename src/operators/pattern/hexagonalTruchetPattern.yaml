@@ -34,12 +34,12 @@ elements:
   name: codeSwitcher_Pattern
   elementType: codeSwitcher
   params:
-    Table: !table
-      file: src/operators/pattern/hexagonalTruchetPattern_patterns.txt
-      name: patterns
+    Elementroot: ''
+    Table: patterns
     Param: Pattern
     Autoupdateparams: true
     Manageparamstates: true
     Alwaysincludeallparams: false
     Switchmode: inline
+    Indexexpr: ''
     Placeholder: BODY();

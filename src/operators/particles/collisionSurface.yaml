@@ -31,12 +31,12 @@ elements:
   name: codeSwitcher_Combine
   elementType: codeSwitcher
   params:
-    Table: !table
-      file: src/operators/particles/collisionSurface_behaviors.txt
-      name: behaviors
+    Elementroot: ''
+    Table: behaviors
     Param: Behavior
     Autoupdateparams: true
     Manageparamstates: true
     Alwaysincludeallparams: false
     Switchmode: auto
+    Indexexpr: ''
     Placeholder: ''

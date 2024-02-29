@@ -92,9 +92,7 @@ elements:
   elementType: codeSwitcher
   params:
     Elementroot: ''
-    Table: !table
-      file: src/operators/filter/onion_sides.txt
-      name: sides
+    Table: sides
     Param: Side
     Autoupdateparams: true
     Manageparamstates: false

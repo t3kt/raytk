@@ -26,9 +26,7 @@ elements:
   elementType: codeSwitcher
   params:
     Elementroot: ''
-    Table: !table
-      file: src/operators/material/shadingProperty_properties.txt
-      name: properties
+    Table: properties
     Param: Property
     Autoupdateparams: true
     Manageparamstates: false

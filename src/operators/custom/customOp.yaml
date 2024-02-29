@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.custom.customOp
-  opVersion: '17'
+  opVersion: '18'
   opStatus: beta
 opDef: !def
   enable: !expr

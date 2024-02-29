@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.field.polarCoordField
-  opVersion: '7'
+  opVersion: '8'
   opStatus: beta
 opDef: !def
   enable: true
@@ -36,9 +36,7 @@ elements:
   elementType: codeSwitcher
   params:
     Elementroot: ''
-    Table: !table
-      file: src/operators/field/polarCoordField_formats.txt
-      name: formats
+    Table: formats
     Param: Format
     Autoupdateparams: true
     Manageparamstates: true
@@ -51,9 +49,7 @@ elements:
   elementType: codeSwitcher
   params:
     Elementroot: ''
-    Table: !table
-      file: src/operators/field/polarCoordField_angleUnits.txt
-      name: angleUnits
+    Table: angleUnits
     Param: Angleunit
     Autoupdateparams: true
     Manageparamstates: true

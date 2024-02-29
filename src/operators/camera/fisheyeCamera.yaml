@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.camera.fisheyeCamera
-  opVersion: '9'
+  opVersion: '10'
   opStatus: default
 opDef: !def
   enable: true
@@ -33,9 +33,7 @@ elements:
   elementType: codeSwitcher
   params:
     Elementroot: ''
-    Table: !table
-      file: src/operators/camera/fisheyeCamera_modes.txt
-      name: modes
+    Table: modes
     Param: Fisheyemode
     Autoupdateparams: true
     Manageparamstates: true

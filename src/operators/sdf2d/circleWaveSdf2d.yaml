@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.sdf2d.circleWaveSdf2d
-  opVersion: '3'
+  opVersion: '4'
   opStatus: beta
 opDef: !def
   enable: true
@@ -58,9 +58,7 @@ elements:
   elementType: codeSwitcher
   params:
     Elementroot: ''
-    Table: !table
-      file: src/operators/sdf2d/circleWaveSdf2d_axes.txt
-      name: axes
+    Table: axes
     Param: Axis
     Autoupdateparams: true
     Manageparamstates: false

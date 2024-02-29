@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.sdf.octahedronSdf
-  opVersion: '11'
+  opVersion: '12'
   opStatus: default
 opDef: !def
   enable: true
@@ -39,9 +39,7 @@ elements:
   elementType: codeSwitcher
   params:
     Elementroot: ''
-    Table: !table
-      file: src/operators/sdf/octahedronSdf_functions.txt
-      name: functions
+    Table: functions
     Param: Function
     Autoupdateparams: true
     Manageparamstates: true

@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.time.timeShift
-  opVersion: '9'
+  opVersion: '10'
   opStatus: default
 opDef: !def
   enable: !expr
@@ -44,9 +44,7 @@ elements:
   elementType: codeSwitcher
   params:
     Elementroot: ''
-    Table: !table
-      file: src/operators/time/timeShift_intervalTypes.txt
-      name: intervalTypes
+    Table: intervalTypes
     Param: ''
     Autoupdateparams: true
     Manageparamstates: false

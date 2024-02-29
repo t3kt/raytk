@@ -125,9 +125,7 @@ elements:
   elementType: codeSwitcher
   params:
     Elementroot: ''
-    Table: !table
-      file: src/operators/combine/combineFields_operations.txt
-      name: operations
+    Table: operations
     Param: Operation
     Autoupdateparams: false
     Manageparamstates: false

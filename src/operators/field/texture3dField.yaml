@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.field.texture3dField
-  opVersion: '15'
+  opVersion: '16'
   opStatus: default
 opDef: !def
   enable: !expr
@@ -54,9 +54,7 @@ elements:
   elementType: codeSwitcher
   params:
     Elementroot: ''
-    Table: !table
-      file: src/operators/field/texture3dField_zmodes.txt
-      name: zmodes
+    Table: zmodes
     Param: Zmode
     Autoupdateparams: true
     Manageparamstates: true

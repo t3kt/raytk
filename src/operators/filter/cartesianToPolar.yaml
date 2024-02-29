@@ -38,9 +38,7 @@ elements:
   elementType: codeSwitcher
   params:
     Elementroot: ''
-    Table: !table
-      file: src/operators/filter/cartesianToPolar_angleUnits.txt
-      name: angleUnits
+    Table: angleUnits
     Param: Angleunit
     Autoupdateparams: true
     Manageparamstates: true
@@ -53,9 +51,7 @@ elements:
   elementType: codeSwitcher
   params:
     Elementroot: ''
-    Table: !table
-      file: src/operators/filter/cartesianToPolar_conversions.txt
-      name: conversions
+    Table: conversions
     Param: Conversion
     Autoupdateparams: true
     Manageparamstates: false

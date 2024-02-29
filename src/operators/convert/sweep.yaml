@@ -55,9 +55,7 @@ elements:
   elementType: codeSwitcher
   params:
     Elementroot: ''
-    Table: !table
-      file: src/operators/convert/sweep_planes.txt
-      name: planes
+    Table: planes
     Param: Plane
     Autoupdateparams: true
     Manageparamstates: false

@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.sdf2d.isoscelesTriangleSdf2d
-  opVersion: '0'
+  opVersion: '1'
   opStatus: default
 opDef: !def
   enable: true
@@ -42,9 +42,7 @@ elements:
   elementType: codeSwitcher
   params:
     Elementroot: ''
-    Table: !table
-      file: src/operators/sdf2d/triangleSdf2d_directions.txt
-      name: directions
+    Table: directions
     Param: Direction
     Autoupdateparams: true
     Manageparamstates: false
@@ -57,9 +55,7 @@ elements:
   elementType: codeSwitcher
   params:
     Elementroot: ''
-    Table: !table
-      file: src/operators/sdf2d/isoscelesTriangleSdf2d_positionModes.txt
-      name: positionModes
+    Table: positionModes
     Param: Positionmode
     Autoupdateparams: true
     Manageparamstates: false

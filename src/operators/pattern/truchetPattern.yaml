@@ -100,9 +100,7 @@ elements:
   elementType: codeSwitcher
   params:
     Elementroot: ''
-    Table: !table
-      file: src/operators/pattern/truchetPattern_formats.txt
-      name: formats
+    Table: formats
     Param: Format
     Autoupdateparams: true
     Manageparamstates: false

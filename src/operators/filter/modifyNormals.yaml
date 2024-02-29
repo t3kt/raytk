@@ -59,9 +59,7 @@ elements:
   elementType: codeSwitcher
   params:
     Elementroot: ''
-    Table: !table
-      file: src/operators/filter/modifyNormals_modes.txt
-      name: modes
+    Table: modes
     Param: Mode
     Autoupdateparams: true
     Manageparamstates: false

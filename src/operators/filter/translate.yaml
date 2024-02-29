@@ -135,9 +135,7 @@ elements:
   elementType: codeSwitcher
   params:
     Elementroot: ''
-    Table: !table
-      file: src/operators/filter/translate_modes.txt
-      name: modes
+    Table: modes
     Param: Translatemode
     Autoupdateparams: true
     Manageparamstates: false

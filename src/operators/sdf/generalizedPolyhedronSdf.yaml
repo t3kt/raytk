@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.sdf.generalizedPolyhedronSdf
-  opVersion: '14'
+  opVersion: '15'
   opStatus: default
 opDef: !def
   enable: true
@@ -59,9 +59,7 @@ elements:
   elementType: codeSwitcher
   params:
     Elementroot: ''
-    Table: !table
-      file: src/operators/sdf/generalizedPolyhedronSdf_shapes.txt
-      name: shapes
+    Table: shapes
     Param: Shape
     Autoupdateparams: true
     Manageparamstates: false

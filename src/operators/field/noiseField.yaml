@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.field.noiseField
-  opVersion: '25'
+  opVersion: '26'
   opStatus: default
 opDef: !def
   enable: true
@@ -53,9 +53,7 @@ elements:
   elementType: codeSwitcher
   params:
     Elementroot: ''
-    Table: !table
-      file: src/operators/field/noiseField_functions.txt
-      name: noiseFunctions
+    Table: noiseFunctions
     Param: Noisetype
     Autoupdateparams: true
     Manageparamstates: false

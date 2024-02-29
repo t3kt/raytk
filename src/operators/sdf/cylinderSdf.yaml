@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.sdf.cylinderSdf
-  opVersion: '27'
+  opVersion: '28'
   opStatus: default
 opDef: !def
   enable: true

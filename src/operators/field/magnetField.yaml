@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.field.magnetField
-  opVersion: '6'
+  opVersion: '7'
   opStatus: beta
 opDef: !def
   enable: true
@@ -52,9 +52,7 @@ elements:
   elementType: codeSwitcher
   params:
     Elementroot: ''
-    Table: !table
-      file: src/operators/field/magnetField_formats.txt
-      name: formats
+    Table: formats
     Param: Format
     Autoupdateparams: true
     Manageparamstates: false

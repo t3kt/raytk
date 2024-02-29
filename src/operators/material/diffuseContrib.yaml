@@ -81,9 +81,7 @@ elements:
   elementType: codeSwitcher
   params:
     Elementroot: ''
-    Table: !table
-      file: src/operators/material/diffuseContrib_methods.txt
-      name: methods
+    Table: methods
     Param: Method
     Autoupdateparams: true
     Manageparamstates: true

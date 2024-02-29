@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.sdf.mobiusRingSdf
-  opVersion: '15'
+  opVersion: '16'
   opStatus: default
 opDef: !def
   enable: true
@@ -55,9 +55,7 @@ elements:
   elementType: codeSwitcher
   params:
     Elementroot: ''
-    Table: !table
-      file: src/operators/sdf/mobiusRingSdf_axes.txt
-      name: axes
+    Table: axes
     Param: Axis
     Autoupdateparams: true
     Manageparamstates: false

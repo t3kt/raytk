@@ -85,9 +85,7 @@ elements:
   elementType: codeSwitcher
   params:
     Elementroot: ''
-    Table: !table
-      file: src/operators/filter/modulo2D_limitTypes.txt
-      name: limitTypes
+    Table: limitTypes
     Param: Limittype
     Autoupdateparams: true
     Manageparamstates: true

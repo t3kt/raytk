@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.sdf2d.rectangleSdf
-  opVersion: '12'
+  opVersion: '13'
   opStatus: default
 opDef: !def
   enable: true
@@ -44,9 +44,7 @@ elements:
   elementType: codeSwitcher
   params:
     Elementroot: ''
-    Table: !table
-      file: src/operators/sdf2d/rectangleSdf_uvModes.txt
-      name: uvModes
+    Table: uvModes
     Param: Uvmode
     Autoupdateparams: true
     Manageparamstates: false

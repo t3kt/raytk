@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.sdf.prismSdf
-  opVersion: '27'
+  opVersion: '28'
   opStatus: default
 opDef: !def
   enable: true
@@ -92,9 +92,7 @@ elements:
   elementType: codeSwitcher
   params:
     Elementroot: ''
-    Table: !table
-      file: src/operators/sdf/prismSdf_functions.txt
-      name: prism_funcs
+    Table: prism_funcs
     Param: Prismtype
     Autoupdateparams: true
     Manageparamstates: true

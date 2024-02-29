@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.sdf.pistonSdf
-  opVersion: '1'
+  opVersion: '2'
   opStatus: beta
 opDef: !def
   enable: true
@@ -40,9 +40,7 @@ elements:
   elementType: codeSwitcher
   params:
     Elementroot: ''
-    Table: !table
-      file: src/operators/sdf/pistonSdf_directions.txt
-      name: directions
+    Table: directions
     Param: Direction
     Autoupdateparams: true
     Manageparamstates: false

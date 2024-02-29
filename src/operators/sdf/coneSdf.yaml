@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.sdf.coneSdf
-  opVersion: '20'
+  opVersion: '21'
   opStatus: default
 opDef: !def
   enable: true
@@ -70,9 +70,7 @@ elements:
   elementType: codeSwitcher
   params:
     Elementroot: ''
-    Table: !table
-      file: src/operators/sdf/coneSdf_shapes.txt
-      name: shapes
+    Table: shapes
     Param: Shape
     Autoupdateparams: true
     Manageparamstates: true

@@ -71,9 +71,7 @@ elements:
   elementType: codeSwitcher
   params:
     Elementroot: ''
-    Table: !table
-      file: src/operators/combine/compositeFields_blendModes.txt
-      name: blendModes
+    Table: blendModes
     Param: Blendmode
     Autoupdateparams: true
     Manageparamstates: false

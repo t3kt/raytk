@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.field.voronoiField
-  opVersion: '5'
+  opVersion: '6'
   opStatus: alpha
 opDef: !def
   enable: true
@@ -36,9 +36,7 @@ elements:
   elementType: codeSwitcher
   params:
     Elementroot: ''
-    Table: !table
-      file: src/operators/field/voronoiField_modes.txt
-      name: modes
+    Table: modes
     Param: Mode
     Autoupdateparams: true
     Manageparamstates: false

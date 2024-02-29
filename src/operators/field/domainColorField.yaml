@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.field.domainColorField
-  opVersion: '4'
+  opVersion: '5'
   opStatus: beta
 opDef: !def
   enable: !expr

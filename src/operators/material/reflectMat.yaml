@@ -48,9 +48,7 @@ elements:
   elementType: codeSwitcher
   params:
     Elementroot: ''
-    Table: !table
-      file: src/operators/material/reflectMat_conditions.txt
-      name: conditions
+    Table: conditions
     Param: Condition
     Autoupdateparams: true
     Manageparamstates: false

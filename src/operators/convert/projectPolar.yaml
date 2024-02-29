@@ -33,9 +33,7 @@ elements:
   elementType: codeSwitcher
   params:
     Elementroot: ''
-    Table: !table
-      file: src/operators/convert/projectPolar_axes.txt
-      name: axes
+    Table: axes
     Param: Axis
     Autoupdateparams: true
     Manageparamstates: false
@@ -48,9 +46,7 @@ elements:
   elementType: codeSwitcher
   params:
     Elementroot: ''
-    Table: !table
-      file: src/operators/convert/projectPolar_projections.txt
-      name: projections
+    Table: projections
     Param: Projection
     Autoupdateparams: true
     Manageparamstates: true

@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.field.positionField
-  opVersion: '19'
+  opVersion: '20'
   opStatus: default
 opDef: !def
   enable: true
@@ -43,9 +43,7 @@ elements:
   elementType: codeSwitcher
   params:
     Elementroot: ''
-    Table: !table
-      file: src/operators/field/positionField_positionTypes.txt
-      name: positionTypes
+    Table: positionTypes
     Param: Positiontype
     Autoupdateparams: true
     Manageparamstates: false

@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.field.blackbodyColorField
-  opVersion: '2'
+  opVersion: '3'
   opStatus: default
 opDef: !def
   enable: true
@@ -33,9 +33,7 @@ elements:
   elementType: codeSwitcher
   params:
     Elementroot: ''
-    Table: !table
-      file: src/operators/field/blackbodyColorField_tempUnits.txt
-      name: tempUnits
+    Table: tempUnits
     Param: Tempunit
     Autoupdateparams: true
     Manageparamstates: false

@@ -92,9 +92,7 @@ elements:
   elementType: codeSwitcher
   params:
     Elementroot: ''
-    Table: !table
-      file: src/operators/pattern/gridPattern_formats.txt
-      name: formats
+    Table: formats
     Param: Format
     Autoupdateparams: true
     Manageparamstates: true
