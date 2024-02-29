@@ -29,10 +29,10 @@ def _shouldInclude(val):
 
 @dataclass
 class RopState(_StateObject):
-	name: str
-	path: str
-	ropType: str
-	ropFullType: str
+	name: str = ''
+	path: str = ''
+	ropType: str = ''
+	ropFullType: str = ''
 
 	params: list['ParamSpec'] | None = None
 	paramTuplets: list['ParamTupletSpec'] | None = None
