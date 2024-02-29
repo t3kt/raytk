@@ -329,6 +329,15 @@ class RaytkTools(RaytkContext):
 			print(f'Saving ROP spec for {rop}')
 			self.saveROPSpec(rop)
 
+	def saveAllROPs(self, incrementVersion: bool):
+		rops = self.allMasterOperators()
+		for rop in rops:
+			if not ROPInfo(rop).isROP:
+				continue
+			print(f'Saving ROP {rop}')
+			self.saveROP(rop, incrementVersion=incrementVersion)
+		print('Finished saving all ROPs')
+
 	def updateAllROPToolkitVersions(self):
 		version = self.toolkitVersion()
 		for rop in self.allMasterOperators():
