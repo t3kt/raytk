@@ -78,7 +78,6 @@ There are several categories of information about a ROP, produced by the `opDefi
   * `constantParamSource`: path to the CHOP that holds the values of specialization constant parameters. These are processed separately from runtime parameters to avoid unnecessary cooking.
   * `paramVectors`: path to a CHOP with the runtime parameters, rearranged into 4 vector channels. This will eventually be used to avoid having to reorder all the parameters in `shaderBuilder`.
   * `libraryNames`: names of common shared GLSL libraries and/or paths to ROP-local libraries.
-  * `inputNames`: the names of other ROPs that this ROP's function calls.
 * `RopState`
   * This is a structured object stored as JSON in a DAT inside the `opDefinition`.
   * It holds prepared blocks of code.

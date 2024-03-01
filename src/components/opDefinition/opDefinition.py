@@ -300,7 +300,6 @@ class _Builder:
 		self.elementReplacements = {}
 
 	def loadInputs(self, inDats: list[DAT]):
-		self.opState.inputNames = []
 		self.opState.inputStates = []
 		for i, inDat in enumerate(inDats + self.defPar.Inputdefs.evalOPs()):
 			if not inDat[1, 'name']:
@@ -320,7 +319,6 @@ class _Builder:
 				returnType=tdu.split(inDat[1, 'returnType']),
 			)
 			self.replacements[placeholder] = name
-			self.opState.inputNames.append(name)
 			self.opState.inputStates.append(inputState)
 
 	def loadTags(self):
@@ -796,7 +794,6 @@ def buildDefinitionTable(dat: scriptDAT):
 		['constantParamSource', defPath + '/constant_param_vals'],
 		['paramVectors', defPath + '/param_vector_vals'],
 		['libraryNames', parentPar().Librarynames],
-		['inputNames', ' '.join([i.sourceName for i in state.inputStates])],
 		['definitionPath', defPath + '/definition'],
 		['statePath', defPath + '/opState'],
 		['tags', ' '.join(state.tags or [])],

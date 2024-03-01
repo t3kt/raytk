@@ -52,7 +52,6 @@ class RopState(_StateObject):
 
 	materialId: str | None = None
 
-	inputNames: list[str] | None = None
 	inputStates: list['InputState'] | None = None
 
 	libraryNames: list[str] | None = None
@@ -80,7 +79,6 @@ class RopState(_StateObject):
 			initCode=obj.get('initCode'),
 			opGlobals=obj.get('opGlobals'),
 			materialId=obj.get('materialId'),
-			inputNames=obj.get('inputNames'),
 			libraryNames=obj.get('libraryNames'),
 			paramSource=obj.get('paramSource'),
 			macros=[Macro(**m) for m in obj.get('macros', [])],
