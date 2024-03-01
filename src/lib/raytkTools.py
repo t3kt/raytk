@@ -187,7 +187,7 @@ class RaytkTools(RaytkContext):
 		OpDocManager(info).pushToParams()
 		focusFirstCustomParameterPage(rop)
 		opDefComp = info.opDef
-		if not opDefComp.par.ext0object:
+		if info.isROP and not opDefComp.par.ext0object:
 			opDefComp.par.ext0object = "op('./opDefinition').module.OpDefinition(me)"
 			opDefComp.par.ext0name = 'opDefinition'
 			opDefComp.par.ext0promote = True

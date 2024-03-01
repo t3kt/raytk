@@ -1485,4 +1485,8 @@ def _isInDevelMode():
 def _getOpDefinitionExt(opDefComp: COMP):
 	if hasattr(opDefComp.ext, 'opDefinition'):
 		return opDefComp.ext.opDefinition
+	opDefComp.par.reinitextensions.pulse()
+	if hasattr(opDefComp.ext, 'opDefinition'):
+		return opDefComp.ext.opDefinition
+	debug(f'UNABLE TO ACCESS OPDEF EXT: {opDefComp}')
 	return OpDefinition(opDefComp)
