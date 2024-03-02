@@ -1,3 +1,4 @@
 names	source	handling	readOnlyHandling	conversion	enable
-Translate[xyz] Point[1-4][xyz] Size[1-2] Thickness	param	runtime	macro		1
+Translate[xyz] Point[1-4][xyz] Size[1-2]	param	runtime	macro		1
+Thickness	param	runtime	macro		op('thickness_definition').numRows < 2
 Plane	param	macro			1

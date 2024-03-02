@@ -1,10 +1,19 @@
 ReturnT thismap(CoordT p, ContextT ctx) {
-	p -= THIS_Translate;
 	Sdf res;
+	float th;
+	#ifdef THIS_HAS_INPUT_thicknessField
+	th = inputOp_thicknessField(p, ctx);
+	#else
+	th = THIS_Thickness;
+	#endif
 	#if defined(THIS_Plane_xy) || defined(THIS_Plane_yz) || defined(THIS_Plane_zx)
 	{
-		vec3 size = vec3(THIS_Thickness);
+		vec3 size = vec3(th);
 		size.THIS_Plane = THIS_Size;
+		#ifdef THIS_HAS_INPUT_scaleField
+		size.THIS_Plane *= fillToVec2(inputOp_scaleField(p, ctx));
+		#endif
+		p -= THIS_Translate;
 		float d = fBox(p, size);
 		res = createSdf(d);
 		#ifdef RAYTK_USE_UV
@@ -18,6 +27,7 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 	#elif defined(THIS_Plane_custom)
 	// https://www.shadertoy.com/view/Md2BWW
 	{
+		p -= THIS_Translate;
 		vec3 v1 = THIS_Point1;
 		vec3 v2 = THIS_Point2;
 		vec3 v3 = THIS_Point3;
@@ -50,7 +60,7 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 		dot2(v14*clamp(dot(v14,p4)/dot2(v14),0.0,1.0)-p4) ))
 		:
 		dot(nor,p1)*dot(nor,p1)/dot2(nor) );
-		res = createSdf(d - THIS_Thickness);
+		res = createSdf(d - th);
 
 		// TODO: UV SUPPORT!
 	}
