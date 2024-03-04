@@ -215,19 +215,26 @@ def _validateInputs(dat: scriptDAT, inputDefinitions: DAT):
 		handler = op(handlerPath)
 		if not handler:
 			continue
-		for error in _validateInput(handler):
+		errors, warnings = _validateInput(handler)
+		for error in errors:
 			if error:
 				dat.appendRow([handlerPath, 'error', error])
+		for warning in warnings:
+			if warning:
+				dat.appendRow([handlerPath, 'warning', warning])
 
 def _validateInput(handler: COMP):
 	inputDef = handler.op('inputDefinition')
-	return [
+	errors = [
 		_checkInputType(handler, str(inputDef[1, 'coordType'] or ''), 'coordType'),
 		_checkInputType(handler, str(inputDef[1, 'contextType'] or ''), 'contextType'),
 		_checkInputType(handler, str(inputDef[1, 'returnType'] or ''), 'returnType'),
 		'Required input is missing' if handler.par.Required and inputDef.numRows < 2 else None,
+	]
+	warnings = [
 		'Input is not supported due to current operator settings and/or other connected inputs' if handler.par.Prohibited and inputDef.numRows > 1 else None,
 	]
+	return errors, warnings
 
 def _checkInputType(handler: COMP, typeName: str, typeCategory: str):
 	if not typeName:
