@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.filter.translate
-  opVersion: '22'
+  opVersion: '23'
   opStatus: default
 paramPages:
 - !page
@@ -95,6 +95,8 @@ inputs:
       expr: op('targetInfo')[1, 'returnType'] in ('*', 'vec4')
 - !input
   Localalias: translateField
+  Prohibited: !expr
+    expr: parent().par.Translatemode != 'axes'
   coordType: !coordT
     Coordtypevec2: true
     Coordtypevec3: true
@@ -107,6 +109,8 @@ inputs:
     Returntypevec4: true
 - !input
   Localalias: distanceField
+  Prohibited: !expr
+    expr: parent().par.Translatemode != 'dir'
   coordType: !coordT
     Coordtypevec2: true
     Coordtypevec3: true
@@ -119,6 +123,8 @@ inputs:
     Returntypefloat: true
 - !input
   Localalias: directionField
+  Prohibited: !expr
+    expr: parent().par.Translatemode != 'dir'
   coordType: !coordT
     Coordtypevec2: true
     Coordtypevec3: true

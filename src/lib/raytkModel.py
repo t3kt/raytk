@@ -284,6 +284,7 @@ class InputSpec(ModelObject):
 	Variableinputs: ValueOrExprT = None
 
 	Required: ValueOrExprT = False
+	Prohibited: ValueOrExprT = False
 
 	coordType: CoordTypes | None = None
 	contextType: ContextTypes | None = None
@@ -296,7 +297,7 @@ class InputSpec(ModelObject):
 			contextType=ContextTypes.fromComp(handler),
 			returnType=ReturnTypes.fromComp(handler),
 			**_valOrExprDictFromPars(handler.pars(
-				'Source', 'Name', 'Label', 'Localalias', 'Help', 'Required', 'Variables', 'Variableinputs')))
+				'Source', 'Name', 'Label', 'Localalias', 'Help', 'Required', 'Prohibited', 'Variables', 'Variableinputs')))
 
 	@classmethod
 	def fromCompList(cls, handlers: list[COMP], forMulti: bool):

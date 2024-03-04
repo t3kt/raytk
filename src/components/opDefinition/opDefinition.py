@@ -226,6 +226,7 @@ def _validateInput(handler: COMP):
 		_checkInputType(handler, str(inputDef[1, 'contextType'] or ''), 'contextType'),
 		_checkInputType(handler, str(inputDef[1, 'returnType'] or ''), 'returnType'),
 		'Required input is missing' if handler.par.Required and inputDef.numRows < 2 else None,
+		'Input is not supported due to current operator settings and/or other connected inputs' if handler.par.Prohibited and inputDef.numRows > 1 else None,
 	]
 
 def _checkInputType(handler: COMP, typeName: str, typeCategory: str):
