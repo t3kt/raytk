@@ -15,11 +15,6 @@ def _getAllTypesInCategory(typeTable: DAT, category: str):
 	]
 
 class _Category:
-	name: str
-	togglePrefix: str
-	allToggle: str
-	useInputToggle: str
-
 	def __init__(self, name: str):
 		self.name = name
 		self.togglePrefix = name.capitalize()
