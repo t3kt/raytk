@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.sdf.coneSdf
-  opVersion: '21'
+  opVersion: '22'
   opStatus: default
 opDef: !def
   enable: true
@@ -40,6 +40,8 @@ inputs:
 - !input
   Localalias: heightField
   Variableinputs: baseField
+  Prohibited: !expr
+    expr: parent().par.Mode != 'axis'
   coordType: !coordT
     Coordtypevec3: true
   contextType: !contextT
@@ -49,6 +51,8 @@ inputs:
 - !input
   Localalias: topField
   Variableinputs: baseField
+  Prohibited: !expr
+    expr: parent().par.Mode != 'points'
   coordType: !coordT
     Coordtypevec3: true
   contextType: !contextT
