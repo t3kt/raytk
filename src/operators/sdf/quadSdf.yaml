@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.sdf.quadSdf
-  opVersion: '4'
+  opVersion: '5'
   opStatus: beta
 opDef: !def
   enable: true
@@ -29,6 +29,8 @@ opDef: !def
 inputs:
 - !input
   Localalias: scaleField
+  Prohibited: !expr
+    expr: parent().par.Plane == 'custom'
   coordType: !coordT
     Coordtypevec3: true
   contextType: !contextT
