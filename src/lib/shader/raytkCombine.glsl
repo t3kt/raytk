@@ -175,3 +175,14 @@ Sdf cmb_columnIntersect(Sdf res1, Sdf res2, float r, float n, float o) {
 	blendInSdf(res1, res2, 1.0 - h);
 	return res1;
 }
+
+// https://www.shadertoy.com/view/ssG3WK XOR SDF by jt
+// https://iquilezles.org/articles/sdfxor/ by Inigo Quilez.
+float cmb_simpleXor(float res1, float res2) {
+	return max(min(res1, res2), -max(res1, res2));
+}
+
+Sdf cmb_simpleXor(Sdf res1, Sdf res2) {
+	res1.x = cmb_simpleXor(res1.x, res2.x);
+	return res1;
+}
