@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.utility.getAttribute
-  opVersion: '4'
+  opVersion: '5'
   opStatus: beta
 opDef: !def
   enable: true
@@ -34,6 +34,13 @@ opDef: !def
     evalOpts: !evalOpts
       excludeFirstRow: true
       cols: dataType sourceName
+  tagTable: !table
+    file: src/operators/utility/getAttribute_tags.txt
+    name: tag_exprs
+    evaluate: true
+    evalOpts: !evalOpts
+      excludeFirstRow: true
+      cols: enable
 inputs:
 - !input
   Localalias: sdf
