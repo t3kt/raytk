@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.field.textureField
-  opVersion: '28'
+  opVersion: '29'
   opStatus: default
 opDef: !def
   enable: !expr
@@ -43,6 +43,13 @@ opDef: !def
     evaluate: true
     evalOpts: !evalOpts
       excludeFirstRow: true
+  tagTable: !table
+    file: src/operators/field/textureField_tags.txt
+    name: tag_exprs
+    evaluate: true
+    evalOpts: !evalOpts
+      excludeFirstRow: true
+      cols: enable
   help: !text
     file: src/operators/field/textureField.md
     name: help
