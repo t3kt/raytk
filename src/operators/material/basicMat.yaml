@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.material.basicMat
-  opVersion: '30'
+  opVersion: '31'
   opStatus: default
 opDef: !def
   enable: !expr

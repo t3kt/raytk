@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.material.refractMat
-  opVersion: '5'
+  opVersion: '6'
   opStatus: alpha
 opDef: !def
   enable: !expr
@@ -26,6 +26,13 @@ opDef: !def
     name: macro_exprs
     evaluate: true
     evalOpts: !evalOpts {}
+  tagTable: !table
+    file: src/operators/material/refractMat_tags.txt
+    name: tag_exprs
+    evaluate: true
+    evalOpts: !evalOpts
+      excludeFirstRow: true
+      cols: enable
 inputs:
 - !input
   Required: true

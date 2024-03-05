@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.material.shadingProperty
-  opVersion: '4'
+  opVersion: '5'
   opStatus: beta
 opDef: !def
   enable: true
@@ -19,6 +19,13 @@ opDef: !def
     file: src/operators/material/shadingProperty.glsl
     name: function
   libraryNames: raytkMaterial
+  tagTable: !table
+    file: src/operators/material/shadingProperty_tags.txt
+    name: tag_exprs
+    evaluate: true
+    evalOpts: !evalOpts
+      excludeFirstRow: true
+      cols: enable
   displayCategory: Material Element
 elements:
 - !opElement

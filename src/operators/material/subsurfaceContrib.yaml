@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.material.subsurfaceContrib
-  opVersion: '4'
+  opVersion: '5'
   opStatus: beta
 opDef: !def
   enable: !expr
@@ -21,4 +21,11 @@ opDef: !def
     file: src/operators/material/subsurfaceContrib.glsl
     name: function
   paramGroupTable: eval_params
+  tagTable: !table
+    file: src/operators/material/subsurfaceContrib_tags.txt
+    name: tag_exprs
+    evaluate: true
+    evalOpts: !evalOpts
+      excludeFirstRow: true
+      cols: enable
   displayCategory: Material Element

@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.material.refractContrib
-  opVersion: '3'
+  opVersion: '4'
   opStatus: alpha
 opDef: !def
   enable: true
@@ -21,4 +21,11 @@ opDef: !def
     name: macro_exprs
     evaluate: true
     evalOpts: !evalOpts {}
+  tagTable: !table
+    file: src/operators/material/refractContrib_tags.txt
+    name: tag_exprs
+    evaluate: true
+    evalOpts: !evalOpts
+      excludeFirstRow: true
+      cols: enable
   displayCategory: Material Element
