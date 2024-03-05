@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.field.positionField
-  opVersion: '20'
+  opVersion: '21'
   opStatus: default
 opDef: !def
   enable: true
@@ -32,6 +32,13 @@ opDef: !def
     evaluate: true
     evalOpts: !evalOpts
       excludeFirstRow: true
+  tagTable: !table
+    file: src/operators/field/positionField_tags.txt
+    name: tag_exprs
+    evaluate: true
+    evalOpts: !evalOpts
+      excludeFirstRow: true
+      cols: enable
   help: !text
     file: src/operators/field/positionField.md
     name: help
@@ -48,6 +55,6 @@ elements:
     Autoupdateparams: true
     Manageparamstates: false
     Alwaysincludeallparams: false
-    Switchmode: switch
+    Switchmode: inline
     Indexexpr: ''
     Placeholder: POSITION_TYPE_BODY();

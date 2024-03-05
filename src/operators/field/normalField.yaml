@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.field.normalField
-  opVersion: '4'
+  opVersion: '5'
   opStatus: deprecated
 opDef: !def
   enable: true
@@ -16,6 +16,13 @@ opDef: !def
   function: !text
     file: src/operators/field/normalField.glsl
     name: function
+  tagTable: !table
+    file: src/operators/field/normalField_tags.txt
+    name: tag_exprs
+    evaluate: true
+    evalOpts: !evalOpts
+      excludeFirstRow: true
+      cols: enable
   help: !text
     file: src/operators/field/normalField.md
     name: help

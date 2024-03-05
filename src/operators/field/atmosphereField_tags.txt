@@ -1,0 +1,2 @@
+name	enable
+usectx	op('ray_direction_definition').numRows < 2
