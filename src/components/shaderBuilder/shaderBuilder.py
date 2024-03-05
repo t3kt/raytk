@@ -556,7 +556,10 @@ class ShaderBuilder:
 		dat.write(' ')
 		writer = _Writer(
 			sb=self,
-			opStates=self._getOpStates(),
+			rops=[
+				_RopContent(opDef, opDef.getRopState())
+				for opDef in self._getOpDefinitions()
+			],
 			defTable=self._definitionTable(),
 			paramProc=self._createParamProcessor(),
 			macroTable=macroTable,
@@ -762,7 +765,7 @@ class _GraphROPInput:
 @dataclass
 class _Writer:
 	sb: 'ShaderBuilder'
-	opStates: 'list[RopState]'
+	rops: 'list[_RopContent]'
 	defTable: DAT
 	paramProc: '_ParameterProcessor'
 	macroTable: DAT
@@ -803,9 +806,10 @@ class _Writer:
 					self._shouldIncludeOp(self.referenceTable[i, 'owner'].val)
 		]
 		self.attributes = []
-		for state in self.opStates:
-			if not self._shouldIncludeOp(state.name):
+		for rop in self.rops:
+			if not self._shouldIncludeOp(rop.definition.name):
 				continue
+			state = rop.state
 			if state.textures:
 				self.textures += state.textures
 			if state.buffers:
@@ -988,7 +992,8 @@ class _Writer:
 			return
 		self._startBlock('materials')
 		i = 1001
-		for state in self.opStates:
+		for rop in self.rops:
+			state = rop.state
 			if state.materialId:
 				self._writeMacro(state.materialId, i)
 				i += 1
@@ -1028,18 +1033,18 @@ class _Writer:
 
 	def _writeOpGlobals(self):
 		self._writeCodeBlocks('opGlobals', [
-			state.opGlobals
-			for state in self.opStates
-			if state.opGlobals and self._shouldIncludeOp(state.name)
+			rop.state.opGlobals
+			for rop in self.rops
+			if rop.state.opGlobals and self._shouldIncludeOp(rop.state.name)
 		])
 
 	def _writeInit(self):
 		self._writeCodeBlocks(
 			'init',
 			[
-				state.initCode
-				for state in self.opStates
-				if state.initCode and self._shouldIncludeOp(state.name)
+				rop.definition.getInitCode()
+				for rop in self.rops
+				if self._shouldIncludeOp(rop.state.name)
 			],
 			prefixes=[
 				'#define RAYTK_HAS_INIT',
@@ -1049,9 +1054,9 @@ class _Writer:
 
 	def _writeFunctions(self):
 		self._writeCodeBlocks('functions', [
-			state.functionCode
-			for state in self.opStates
-			if state.functionCode and self._shouldIncludeOp(state.name)
+			rop.definition.getFunctionCode()
+			for rop in self.rops
+			if self._shouldIncludeOp(rop.state.name)
 		])
 
 	def _writeCodeBlocks(
@@ -1064,6 +1069,8 @@ class _Writer:
 		if prefixes:
 			self._writeLines(prefixes)
 		for block in blocks:
+			if not block:
+				continue
 			self._writeLine(self._processCode(block))
 		if suffixes:
 			self._writeLines(suffixes)
@@ -1083,7 +1090,8 @@ class _Writer:
 		self._endBlock('body')
 
 	def _writeMaterialBody(self):
-		for state in self.opStates:
+		for rop in self.rops:
+			state = rop.state
 			if not state.materialId or not self._shouldIncludeOp(state.name):
 				continue
 			self._writeLine(f'else if(m == {state.materialId}) {{')
@@ -1132,6 +1140,11 @@ class _Writer:
 
 	def _processCode(self, code: str):
 		return self._inlineTypedefs(code)
+
+@dataclass
+class _RopContent:
+	definition: 'OpDefinition'
+	state: RopState
 
 @dataclass
 class _ParamTupletSpec:

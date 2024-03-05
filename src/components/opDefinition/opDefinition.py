@@ -914,6 +914,22 @@ def createRenderSel(name: str):
 class OpDefinition:
 	def __init__(self, opDefComp: COMP):
 		self.opDefComp = opDefComp
+	
+	@property
+	def name(self):
+		return self.opDefComp.par.Name.eval()
 
 	def getRopState(self) -> RopState:
 		return RopState.fromJson(self.opDefComp.op('opState').text)
+
+	def getInitCode(self) -> str | None:
+		return self.getRopState().initCode
+
+	def getFunctionCode(self) -> str:
+		return self.getRopState().functionCode
+
+	def getMaterialCode(self) -> str | None:
+		state = self.getRopState()
+		if not state.materialId:
+			return None
+		return state.materialCode
