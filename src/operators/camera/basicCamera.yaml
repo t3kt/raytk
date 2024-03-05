@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.camera.basicCamera
-  opVersion: '8'
+  opVersion: '9'
   opStatus: default
 opDef: !def
   enable: true
@@ -16,6 +16,13 @@ opDef: !def
     file: src/operators/camera/basicCamera.glsl
     name: functionTemplate
   paramGroupTable: eval_params
+  tagTable: !table
+    file: src/operators/camera/basicCamera_tags.txt
+    name: tag_exprs
+    evaluate: true
+    evalOpts: !evalOpts
+      excludeFirstRow: true
+      cols: enable
   help: !text
     file: src/operators/camera/basicCamera.md
     name: help

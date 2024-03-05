@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.camera.splitCamera
-  opVersion: '17'
+  opVersion: '18'
   opStatus: default
 opDef: !def
   enable: !expr
@@ -27,6 +27,13 @@ opDef: !def
   variableTable: !table
     file: src/operators/camera/splitCamera_variables.txt
     name: variable_exprs
+    evaluate: true
+    evalOpts: !evalOpts
+      excludeFirstRow: true
+      cols: enable
+  tagTable: !table
+    file: src/operators/camera/splitCamera_tags.txt
+    name: tag_exprs
     evaluate: true
     evalOpts: !evalOpts
       excludeFirstRow: true

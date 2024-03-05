@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.camera.fieldCamera
-  opVersion: '1'
+  opVersion: '2'
   opStatus: beta
 opDef: !def
   enable: true
@@ -16,6 +16,13 @@ opDef: !def
     file: src/operators/camera/fieldCamera.glsl
     name: function
   paramGroupTable: eval_params
+  tagTable: !table
+    file: src/operators/camera/fieldCamera_tags.txt
+    name: tag_exprs
+    evaluate: true
+    evalOpts: !evalOpts
+      excludeFirstRow: true
+      cols: enable
 inputs:
 - !input
   Localalias: directionField
