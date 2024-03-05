@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.light.ambientLight
-  opVersion: '1'
+  opVersion: '2'
   opStatus: beta
 opDef: !def
   enable: true
@@ -19,6 +19,13 @@ opDef: !def
   variableTable: !table
     file: src/operators/light/ambientLight_variables.txt
     name: variable_exprs
+    evaluate: true
+    evalOpts: !evalOpts
+      excludeFirstRow: true
+      cols: enable
+  tagTable: !table
+    file: src/operators/light/ambientLight_tags.txt
+    name: tag_exprs
     evaluate: true
     evalOpts: !evalOpts
       excludeFirstRow: true

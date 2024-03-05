@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.light.refractionRayCast
-  opVersion: '2'
+  opVersion: '3'
   opStatus: alpha
 opDef: !def
   enable: true
@@ -16,3 +16,10 @@ opDef: !def
     file: src/operators/light/refractionRayCast.glsl
     name: function
   paramGroupTable: eval_params
+  tagTable: !table
+    file: src/operators/light/refractionRayCast_tags.txt
+    name: tag_exprs
+    evaluate: true
+    evalOpts: !evalOpts
+      excludeFirstRow: true
+      cols: enable

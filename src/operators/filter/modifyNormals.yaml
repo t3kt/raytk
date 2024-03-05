@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.filter.modifyNormals
-  opVersion: '9'
+  opVersion: '10'
   opStatus: beta
 opDef: !def
   enable: !expr
@@ -19,6 +19,13 @@ opDef: !def
     file: src/operators/filter/modifyNormals.glsl
     name: functionTemplate
   paramGroupTable: eval_params
+  tagTable: !table
+    file: src/operators/filter/modifyNormals_tags.txt
+    name: tag_exprs
+    evaluate: true
+    evalOpts: !evalOpts
+      excludeFirstRow: true
+      cols: enable
   help: !text
     file: src/operators/filter/modifyNormals.md
     name: help
