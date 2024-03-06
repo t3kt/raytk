@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.sdf.torusGridSdf
-  opVersion: '0'
+  opVersion: '1'
   opStatus: alpha
 opDef: !def
   enable: true
@@ -16,3 +16,5 @@ opDef: !def
     file: src/operators/sdf/torusGridSdf.glsl
     name: function
   paramGroupTable: eval_params
+  libraryNames: !expr
+    expr: op('torusSdf_lib')

@@ -101,11 +101,6 @@ float fLineSegment(vec3 p, vec3 a, vec3 b) {
 	return length((ab*t + a) - p);
 }
 
-// Torus in the XZ-plane
-float fTorus(vec3 p, float smallRadius, float largeRadius) {
-	return length(vec2(length(p.xz) - largeRadius, p.y)) - smallRadius;
-}
-
 // Capsule version 2: between two end points <a> and <b> with radius r
 float fCapsule(vec3 p, vec3 a, vec3 b, float r) {
 	return fLineSegment(p, a, b) - r;
