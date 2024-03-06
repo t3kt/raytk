@@ -1,2 +1,0 @@
-names	source	handling	readOnlyHandling	conversion	enable
-Uselocalpos Uselightcolor	param	macro			1
