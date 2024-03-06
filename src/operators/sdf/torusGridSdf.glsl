@@ -1,29 +1,82 @@
 ReturnT thismap(CoordT p, ContextT ctx) {
 	vec3 p0 = p;
+
+	// Convert to XZ plane expected by fTorus()
+	switch (THIS_Axis) {
+		case THISTYPE_Axis_x: p = p.yxz; break;
+		case THISTYPE_Axis_y: p = p.xyz; break;
+		case THISTYPE_Axis_z: p = p.xzy; break;
+	}
+
+	#ifdef THIS_EXPOSE_angle
+	THIS_angle = degrees(atan(p.x, p.z)) + 180.;
+	#endif
+	#ifdef THIS_EXPOSE_normangle
+	THIS_normangle = atan(p.x, p.z)/TAU + .5;
+	#endif
+
+	#ifdef THIS_HAS_INPUT_radiusField
+	float rOuter = inputOp_radiusField(p0, ctx);
+	#else
 	float rOuter = THIS_Radius;
+	#endif
+	#ifdef THIS_HAS_INPUT_thicknessField
+	float thOuter = inputOp_thicknessField(p0, ctx);
+	#else
 	float thOuter = THIS_Thickness;
+	#endif
+
 	float rows = THIS_Rows;
 	float cols = THIS_Cols;
-	float thBar = THIS_Barthickness;
+
+	float col;
+	float row;
+	vec3 pCol;
+	vec2 qRow;
+	float thCol;
+	float thRow;
 
 	float dCols;
 	{
-		vec3 p1 = p;
-		pModPolar(p1.xz, cols);
-		p1.x -= rOuter;
-		dCols = fTorus(p1.xzy, thBar, thOuter);
+		pCol = p;
+		col = pModPolar(pCol.xz, cols);
+		#ifdef THIS_EXPOSE_col
+		THIS_col = int(col);
+		#endif
+		#ifdef THIS_EXPOSE_normcol
+		THIS_normcol = col / (cols-1.);
+		#endif
+		pCol.x -= rOuter;
 	}
 
-	float dRows = RAYTK_MAX_DIST;
+	float dRows;
 	{
-		vec3 p1 = p;
-		vec2 q = vec2(length(p1.xz) - rOuter, p1.y);
-		pModPolar(q, rows);
-		q.x -= thOuter;
-		dRows = length(q) - thBar;
+		qRow = vec2(length(p.xz) - rOuter, p.y);
+		float cell = pModPolar(qRow, rows);
+		#ifdef THIS_EXPOSE_row
+		THIS_row = int(cell);
+		#endif
+		#ifdef THIS_EXPOSE_normrow
+		THIS_normrow = cell/ (rows-1.);
+		#endif
+		qRow.x -= thOuter;
 	}
+
+	#ifdef THIS_HAS_INPUT_barThicknessField
+	thCol = inputOp_barThicknessField(p0, ctx);
+	#else
+	thCol = THIS_Barthickness;
+	#endif
+	dCols = fTorus(pCol.xzy, thCol, thOuter);
+
+	#ifdef THIS_HAS_INPUT_barThicknessField
+	thRow = inputOp_barThicknessField(p0, ctx);
+	#else
+	thRow = THIS_Barthickness;
+	#endif
+	dRows = length(qRow) - thRow;
 
 	float d = min(dRows, dCols);
 
-	return createSdf(d);
+	return createSdf(min(dRows, dCols));
 }

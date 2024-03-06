@@ -1,8 +1,8 @@
 !rop
 meta: !meta
   opType: raytk.operators.sdf.torusGridSdf
-  opVersion: '1'
-  opStatus: alpha
+  opVersion: '2'
+  opStatus: beta
 opDef: !def
   enable: true
   typeSpec: !ropTypes
@@ -18,3 +18,40 @@ opDef: !def
   paramGroupTable: eval_params
   libraryNames: !expr
     expr: op('torusSdf_lib')
+  variableTable: !table
+    file: src/operators/sdf/torusGridSdf_variables.txt
+    name: variable_exprs
+    evaluate: true
+    evalOpts: !evalOpts
+      excludeFirstRow: true
+      cols: enable
+inputs:
+- !input
+  Localalias: radiusField
+  Variables: angle normangle
+  coordType: !coordT
+    Coordtypevec3: true
+  contextType: !contextT
+    Allcontexttype: true
+  returnType: !returnT
+    Returntypefloat: true
+- !input
+  Localalias: thicknessField
+  Variables: angle normangle
+  Variableinputs: radiusField
+  coordType: !coordT
+    Coordtypevec3: true
+  contextType: !contextT
+    Allcontexttype: true
+  returnType: !returnT
+    Returntypefloat: true
+- !input
+  Localalias: barThicknessField
+  Variables: angle normangle col normcol row normrow
+  Variableinputs: radiusField thicknessField
+  coordType: !coordT
+    Coordtypevec3: true
+  contextType: !contextT
+    Allcontexttype: true
+  returnType: !returnT
+    Returntypefloat: true
