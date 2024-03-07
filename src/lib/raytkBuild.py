@@ -277,7 +277,7 @@ class BuildContext:
 		if not info or not info.isROP:
 			return
 		inputHandlers = info.inputHandlers
-		if len(inputHandlers) < 2:
+		if not inputHandlers:
 			return
 		self.log(f'Consolidating python modules for {rop}, {len(inputHandlers)} input handlers')
 		localComp = rop.op('local')
@@ -288,11 +288,16 @@ class BuildContext:
 		modulesComp = localComp.op('modules')
 		if not modulesComp:
 			modulesComp = localComp.create(baseCOMP, 'modules')
-		inputHandlerDat = inputHandlers[0].op('inputHandler')
-		modulesComp.copy(inputHandlerDat)
+		modulesComp.copy(info.opDef.op('typeTable'))
+		modulesComp.copy(info.opDef.op('typeSpec'))
+		self.safeDestroyOp(info.opDef.op('typeSpec'))
+		self.safeDestroyOp(info.opDef.op('typeTable'))
 		for handler in inputHandlers:
-			inputHandlerDat = handler.op('inputHandler')
-			self.safeDestroyOp(inputHandlerDat)
+			self.safeDestroyOp(handler.op('typeSpec'))
+			self.safeDestroyOp(handler.op('typeTable'))
+		modulesComp.copy(inputHandlers[0].op('inputHandler'))
+		for handler in inputHandlers:
+			self.safeDestroyOp(handler.op('inputHandler'))
 
 def _isPythonLibrary(m: OP, modName: 'str | None' = None):
 	if not isinstance(m, textDAT) or not RaytkTags.fileSync.isOn(m):
