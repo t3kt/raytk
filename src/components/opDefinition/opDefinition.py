@@ -65,12 +65,9 @@ def buildTypeTable(dat: scriptDAT, supportedTypes: DAT, inputDefs: DAT):
 		['contextType', _evalType('contextType', supportedTypes, inputDefs)],
 	])
 
-def _inputDefsFromPar():
-	return parentPar().Inputdefs.evalOPs()
-
 def combineInputDefinitions(dat: scriptDAT, inDats: list[DAT], defFields: DAT, supportedTypeTable: DAT):
 	dat.clear()
-	inDats += _inputDefsFromPar()
+	inDats += parentPar().Inputdefs.evalOPs()
 	if not inDats:
 		return
 	cols = defFields.col(0) + ['input:handler']
