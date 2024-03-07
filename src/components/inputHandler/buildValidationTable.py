@@ -1,2 +1,2 @@
 def onCook(dat):
-	mod.inputHandler.buildValidationErrors(dat)
+	mod.inputHandler.InputHandler(parent()).BuildValidationErrors(dat)
