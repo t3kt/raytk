@@ -4,7 +4,7 @@ import shutil
 import zipfile
 
 from raytkTools import RaytkTools
-from raytkUtil import RaytkTags, navigateTo, focusFirstCustomParameterPage, CategoryInfo, RaytkContext, IconColors
+from raytkUtil import RaytkTags, navigateTo, focusFirstCustomParameterPage, CategoryInfo, RaytkContext, IconColors, ROPInfo
 from raytkBuild import BuildContext, DocProcessor, chunked_iterable
 from typing import Callable, Optional, TextIO
 
@@ -455,8 +455,9 @@ class ToolkitBuilder(_BuilderBase):
 			thenRun: 'Optional[Callable]' = None, runArgs: list = None):
 		if components:
 			comp = components.pop()
-			self.processOperator(comp)
-			queueCall(self.processOperatorCategory_stage, category, components, thenRun, runArgs)
+			def nextStep():
+				queueCall(self.processOperatorCategory_stage, category, components, thenRun, runArgs)
+			self.processOperator(comp, thenRun=nextStep)
 		else:
 			# after finishing the operators in the category, process the category help
 			if self.docProcessor:
@@ -465,7 +466,7 @@ class ToolkitBuilder(_BuilderBase):
 			if thenRun:
 				queueCall(thenRun, *(runArgs or []))
 
-	def processOperator(self, comp: COMP):
+	def processOperator(self, comp: COMP, thenRun: Callable):
 		self.log(f'Processing operator {comp}')
 		self.context.focusInNetworkPane(comp)
 		self.context.disableCloning(comp)
@@ -483,6 +484,7 @@ class ToolkitBuilder(_BuilderBase):
 
 		# self.context.moveNetworkPane(comp)
 		self.processOperatorSubCompChildrenOf(comp)
+		self.context.consolidateOperatorPythonModules(comp)
 		# self.context.moveNetworkPane(comp)
 		if not comp.isPanel:
 			comp.showCustomOnly = True
@@ -497,6 +499,7 @@ class ToolkitBuilder(_BuilderBase):
 		comp.color = IconColors.defaultBgColor
 		if self.docProcessor:
 			self.docProcessor.processOp(comp)
+		queueCall(thenRun)
 
 	def processOperatorSubCompChildrenOf(self, comp: COMP):
 		subComps = comp.findChildren(type=COMP)

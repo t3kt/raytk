@@ -272,6 +272,28 @@ class BuildContext:
 		self.log(f'Deleting {len(opsToDelete)} redundant python libraries')
 		self.safeDestroyOps(opsToDelete)
 
+	def consolidateOperatorPythonModules(self, rop: COMP):
+		info = ROPInfo(rop)
+		if not info or not info.isROP:
+			return
+		inputHandlers = info.inputHandlers
+		if len(inputHandlers) < 2:
+			return
+		self.log(f'Consolidating python modules for {rop}, {len(inputHandlers)} input handlers')
+		localComp = rop.op('local')
+		if not localComp:
+			localComp = rop.create(baseCOMP, 'local')
+			localComp.nodeX = -900
+			localComp.nodeY = 500
+		modulesComp = localComp.op('modules')
+		if not modulesComp:
+			modulesComp = localComp.create(baseCOMP, 'modules')
+		inputHandlerDat = inputHandlers[0].op('inputHandler')
+		modulesComp.copy(inputHandlerDat)
+		for handler in inputHandlers:
+			inputHandlerDat = handler.op('inputHandler')
+			self.safeDestroyOp(inputHandlerDat)
+
 def _isPythonLibrary(m: OP, modName: 'str | None' = None):
 	if not isinstance(m, textDAT) or not RaytkTags.fileSync.isOn(m):
 		return False
