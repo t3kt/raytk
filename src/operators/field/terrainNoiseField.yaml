@@ -1,0 +1,49 @@
+!rop
+meta: !meta
+  opType: raytk.operators.field.terrainNoiseField
+  opVersion: '0'
+  opStatus: beta
+opDef: !def
+  enable: true
+  typeSpec: !ropTypes
+    coordType: !coordT
+      Allcoordtype: true
+    contextType: !contextT
+      Allcontexttype: true
+    returnType: !returnT
+      Returntypefloat: true
+  function: !text
+    file: src/operators/field/terrainNoiseField.glsl
+    name: function
+  paramGroupTable: eval_params
+  libraryNames: !expr
+    expr: op('glslNoise'), op('terrainNoise_lib')
+  macroTable: !table
+    file: src/operators/field/terrainNoiseField_macros.txt
+    name: macro_exprs
+    evaluate: true
+    evalOpts: !evalOpts {}
+inputs:
+- !input
+  Localalias: coordField
+  coordType: !coordT
+    Allcoordtype: true
+  contextType: !contextT
+    Allcontexttype: true
+  returnType: !returnT
+    Returntypefloat: true
+    Returntypevec4: true
+elements:
+- !opElement
+  name: codeSwitcher_Noisetype
+  elementType: codeSwitcher
+  params:
+    Elementroot: ''
+    Table: noiseFunctions
+    Param: Noisetype
+    Autoupdateparams: true
+    Manageparamstates: true
+    Alwaysincludeallparams: true
+    Switchmode: inline
+    Indexexpr: ''
+    Placeholder: BODY();
