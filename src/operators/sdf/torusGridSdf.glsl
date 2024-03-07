@@ -52,12 +52,12 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 	float dRows;
 	{
 		qRow = vec2(length(p.xz) - rOuter, p.y);
-		float cell = pModPolar(qRow, rows);
+		row = pModPolar(qRow, rows);
 		#ifdef THIS_EXPOSE_row
-		THIS_row = int(cell);
+		THIS_row = int(row);
 		#endif
 		#ifdef THIS_EXPOSE_normrow
-		THIS_normrow = cell/ (rows-1.);
+		THIS_normrow = row/ (rows-1.);
 		#endif
 		qRow.x -= thOuter;
 	}
