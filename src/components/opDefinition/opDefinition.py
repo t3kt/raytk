@@ -222,6 +222,12 @@ def _validateInputs(dat: scriptDAT, inputDefinitions: DAT):
 
 def _validateInput(handler: COMP):
 	inputDef = handler.op('inputDefinition')
+	if not inputDef or inputDef.numRows < 2:
+		errors = [
+			'Required input is missing' if handler.par.Required else None,
+		]
+		warnings = []
+		return errors, warnings
 	errors = [
 		_checkInputType(handler, str(inputDef[1, 'coordType'] or ''), 'coordType'),
 		_checkInputType(handler, str(inputDef[1, 'contextType'] or ''), 'contextType'),
