@@ -23,6 +23,10 @@ opDef: !def
     name: macro_exprs
     evaluate: true
     evalOpts: !evalOpts {}
+  keywords:
+  - fbm
+  - landscape
+  displayCategory: Noise Field
 inputs:
 - !input
   Localalias: coordField
