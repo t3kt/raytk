@@ -61,7 +61,7 @@ class InputHandler:
 		dat.appendCol(['input:alias', config['alias', 1]])
 		dat.appendCol(['input:vars', config['vars', 1]])
 		dat.appendCol(['input:varInputs', config['varInputs', 1]])
-		dat.appendCol(['input:handler', parent()])
+		dat.appendCol(['input:handler', self.handlerPar.owner])
 
 def _isValidDefinitionDat(o: OP | DAT | None):
 	if not o or not o.isDAT:
