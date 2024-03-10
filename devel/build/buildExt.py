@@ -499,6 +499,7 @@ class ToolkitBuilder(_BuilderBase):
 		comp.color = IconColors.defaultBgColor
 		if self.docProcessor:
 			self.docProcessor.processOp(comp)
+		self.context.cleanOperatorInputHandlers(comp)
 		queueCall(thenRun)
 
 	def processOperatorSubCompChildrenOf(self, comp: COMP):
