@@ -1,8 +1,8 @@
 !rop
 meta: !meta
   opType: raytk.operators.field.dataTextureField
-  opVersion: '3'
-  opStatus: beta
+  opVersion: '4'
+  opStatus: default
 opDef: !def
   enable: true
   typeSpec: !ropTypes

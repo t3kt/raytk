@@ -1,8 +1,8 @@
 !rop
 meta: !meta
   opType: raytk.operators.filter.rotateNormals
-  opVersion: '11'
-  opStatus: beta
+  opVersion: '12'
+  opStatus: default
 paramPages:
 - !page
   name: Filter

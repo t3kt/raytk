@@ -1,8 +1,8 @@
 !rop
 meta: !meta
   opType: raytk.operators.field.spectralColorField
-  opVersion: '2'
-  opStatus: beta
+  opVersion: '3'
+  opStatus: default
 opDef: !def
   enable: true
   typeSpec: !ropTypes

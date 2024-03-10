@@ -1,8 +1,8 @@
 !rop
 meta: !meta
   opType: raytk.operators.field.hsvColorField
-  opVersion: '10'
-  opStatus: beta
+  opVersion: '11'
+  opStatus: default
 opDef: !def
   enable: true
   typeSpec: !ropTypes

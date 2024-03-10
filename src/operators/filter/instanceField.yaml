@@ -1,8 +1,8 @@
 !rop
 meta: !meta
   opType: raytk.operators.filter.instanceField
-  opVersion: '1'
-  opStatus: beta
+  opVersion: '2'
+  opStatus: default
 opDef: !def
   enable: !expr
     expr: op('..').par.Enable
