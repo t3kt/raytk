@@ -14,6 +14,7 @@ if False:
 
 class InputHandler:
 	def __init__(self, handlerComp: 'COMP'):
+		self.handlerComp = handlerComp
 		self.handlerPar = handlerComp.par
 
 	def ResolveSourceParDefinition(self, errorTable: DAT | None = None):
@@ -30,13 +31,13 @@ class InputHandler:
 			if _isValidDefinitionDat(d):
 				return d
 		if errorTable:
-			mp = parent().par.Source.bindMaster
+			mp = self.handlerPar.Source.bindMaster
 			if mp is None:
 				msg = 'Invalid input source.'
 			else:
 				msg = f'Invalid {mp.label} source.'
 			msg += ' Only ROPs and definition DATs are allowed.'
-			errorTable.appendRow([parent().path, 'error', msg])
+			errorTable.appendRow([self.handlerComp.path, 'error', msg])
 
 	def BuildValidationErrors(self, dat: DAT):
 		dat.clear()
