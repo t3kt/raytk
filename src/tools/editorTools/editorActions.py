@@ -256,7 +256,8 @@ def _createRenderSelGroup(text: str):
 def _createAnimateParamAction(
 		text: str,
 		parOrTuplet: Union[Par, 'ParTupletT'],
-		ropType: str, nameSuffix: str):
+		ropType: str, nameSuffix: str,
+		params: dict | None):
 	def getPars():
 		if isinstance(parOrTuplet, Par):
 			return [parOrTuplet]
@@ -294,6 +295,9 @@ def _createAnimateParamAction(
 					'bindExpr': par.bindExpr,
 				})
 				par.expr = f"op('{chop.name}')['{par.name}']"
+			if params:
+				for name, val in params.items():
+					gen.par[name] = val
 			undoInfo['parStates'] = parStates
 		def undo():
 			chop = undoInfo.get('chop')
@@ -313,7 +317,7 @@ def _createAnimateParamAction(
 		ActionUtils.createROP(ropType, init, undo=undo)
 	return SimpleAction(text, isValid, execute)
 
-def _createAnimateParamsGroup(text: str, ropType: str, nameSuffix: str):
+def _createAnimateParamsGroup(text: str, ropType: str, nameSuffix: str, params: dict | None = None):
 	def getActions(ctx: ActionContext) -> List[Action]:
 		o = ctx.primaryOp
 		if not o:
@@ -328,11 +332,11 @@ def _createAnimateParamsGroup(text: str, ropType: str, nameSuffix: str):
 		for t in tuplets:
 			if not t[0].isNumber:
 				continue
-			actions.append(_createAnimateParamAction(t[0].label, t, ropType, nameSuffix))
+			actions.append(_createAnimateParamAction(t[0].label, t, ropType, nameSuffix, params))
 			if len(t) > 1:
 				for p in t:
 					actions.append(_createAnimateParamAction(
-						f'  {t[0].label} ({p.name[-1]})', p, ropType, nameSuffix))
+						f'  {t[0].label} ({p.name[-1]})', p, ropType, nameSuffix, params))
 		return actions
 	return SimpleGroup(text, lambda _: True, getActions)
 
@@ -863,7 +867,10 @@ def createActionManager():
 		_createVarRefGroup('Reference Variable'),
 		_createRenderSelGroup('Select Output Buffer'),
 		_createAnimateParamsGroup(
-			'Animate With Speed', _RopTypes.speedGenerator, 'speedGen'),
+			'Animate With Speed', _RopTypes.speedGenerator, 'speedGen',
+			{
+				'Partspeed1': 0.1, 'Partspeed2': 0.1, 'Partspeed3': 0.1, 'Partspeed4': 0.1,
+			}),
 		_createAnimateParamsGroup(
 			'Animate With LFO', _RopTypes.lfoGenerator, 'lfoGen'),
 		_createExposeParamGroup('Expose Parameter'),
