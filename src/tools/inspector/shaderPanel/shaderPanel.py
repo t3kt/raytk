@@ -1,4 +1,5 @@
 import json
+import popMenu
 from raytkShader import simplifyNames
 
 # noinspection PyUnreachableCode
@@ -9,9 +10,13 @@ if False:
 	from components.inspectorCore.inspectorCoreExt import InspectorCore
 	ext.inspectorCore = InspectorCore(COMP())
 
-	class _StatePar(ParCollection):
-		Simplifynames: 'BoolParamT'
-	ipar.inspectorState = _StatePar()
+	class _InspectorStatePar:
+		Simplifynames: BoolParamT
+	ipar.inspectorState = _InspectorStatePar()
+
+	class _ShaderPanelPar:
+		Codeblock: StrParamT
+	ipar.shaderPanelState = _ShaderPanelPar()
 
 class ShaderPanel:
 	def __init__(self, ownerComp: COMP):
@@ -72,3 +77,7 @@ class ShaderPanel:
 		if category in ('main', 'opFunction'):
 			code = self._processCode(code, definition)
 		dat.write(code or ' ')
+
+	def showCodeBlockMenu(self):
+		popMenu.fromButton(self.ownerComp.op('codeBlock_drop_button')).Show(
+			popMenu.ParEnumItems(ipar.shaderPanelState.Codeblock, noCheckboxes=True))

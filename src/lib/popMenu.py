@@ -36,11 +36,11 @@ def ParToggleItem(
 		callback=_callback,
 		**kwargs)
 
-def ParEnumItems(par):
+def ParEnumItems(par, noCheckboxes=False):
 	def _valitem(value, label):
 		return Item(
 			label,
-			checked=par == value,
+			checked=None if noCheckboxes else (par == value),
 			callback=lambda: setattr(par, 'val', value))
 	return [
 		_valitem(v, l)

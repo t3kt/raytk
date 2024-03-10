@@ -10,6 +10,6 @@ def onCook(dat: DAT):
 	ext.shaderPanel.fillPreparedCode(
 		dat,
 		codeBlocks=dat.inputs[0],
-		selectedName=op('codeBlock_dropmenu').par.Value0.eval(),
+		selectedName=ipar.shaderPanelState.Codeblock.eval(),
 		definition=dat.inputs[1],
 	)
