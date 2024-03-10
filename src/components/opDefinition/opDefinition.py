@@ -1,7 +1,6 @@
 import json
 import math
-from raytkState import RopState, Macro, Texture, Reference, Variable, Buffer, ValidationError, Constant, \
-	InputState, SurfaceAttribute, OpElementState, ParamTupletSpec, ParamSpec
+from raytkState import *
 import re
 
 # noinspection PyUnreachableCode
@@ -9,8 +8,6 @@ if False:
 	# noinspection PyUnresolvedReferences
 	from _stubs import *
 	from raytkUtil import OpDefParsT
-	from _stubs.PopDialogExt import PopDialogExt
-
 
 def parentPar() -> 'ParCollection | OpDefParsT':
 	return parent().par
@@ -32,22 +29,6 @@ def buildName():
 		name = 'o_' + name
 	return 'RTK_' + name
 
-
-# Evaluates a type spec in an OP, expanding wildcards and inheriting input types or using fallback type.
-# Produces a list of 1 or more concrete type names, or a `@` reference to another op (for reverse inheritance).
-#
-# Formats for spec input:
-#   `Type1 Type2`
-#   `*`
-#   `useinput|Type1 Type2`
-#   `useinput|*`
-#   `@some_op_name`
-#
-# Output formats:
-#    `Type1`
-#    `Type1 Type2`
-#    `@some_op_name`
-# These outputs are what appear in the generated definition tables passed between ops.
 def _evalType(category: str, supportedTypes: DAT, inputDefs: DAT):
 	spec = supportedTypes[category, 'spec'].val
 	if spec.startswith('@'):
@@ -112,7 +93,6 @@ def _getRegularParams(specs: list[str]) -> list[Par]:
 	host = _getParamsOp()
 	if not host:
 		return []
-	# TODO: clean this up. joining and splitting and rejoining, etc.
 	paramNames = tdu.expand(str(' '.join(specs)).strip())
 	if not paramNames:
 		return []
@@ -134,7 +114,7 @@ def _getTupletName(parts: list[str]):
 			return None
 	return prefix
 
-# Builds a table with lists of parameter local names, for use in CHOP parameter expressions.
+# Builds table with parameter local names, for select CHOPs.
 def buildParamChopNamesTable(dat: DAT):
 	dat.clear()
 	regularNames = []
@@ -162,21 +142,21 @@ def buildParamChopNamesTable(dat: DAT):
 	dat.appendRow(['special', ' '.join(specialNames)])
 	dat.appendRow(['angle', ' '.join(angleNames)])
 	dat.appendRow(['constant', ' '.join(constantNames)])
-	regularPart1Names = []
-	regularPart2Names = []
-	regularPart3Names = []
-	regularPart4Names = []
+	part1Names = []
+	part2Names = []
+	part3Names = []
+	part4Names = []
 	for paramTuplet in state.paramTuplets:
 		if paramTuplet.handling != 'runtime':
 			continue
-		regularPart1Names.append(paramTuplet.part1 or '_')
-		regularPart2Names.append(paramTuplet.part2 or '_')
-		regularPart3Names.append(paramTuplet.part3 or '_')
-		regularPart4Names.append(paramTuplet.part4 or '_')
-	dat.appendRow(['regularPart1', ' '.join(regularPart1Names)])
-	dat.appendRow(['regularPart2', ' '.join(regularPart2Names)])
-	dat.appendRow(['regularPart3', ' '.join(regularPart3Names)])
-	dat.appendRow(['regularPart4', ' '.join(regularPart4Names)])
+		part1Names.append(paramTuplet.part1 or '_')
+		part2Names.append(paramTuplet.part2 or '_')
+		part3Names.append(paramTuplet.part3 or '_')
+		part4Names.append(paramTuplet.part4 or '_')
+	dat.appendRow(['regularPart1', ' '.join(part1Names)])
+	dat.appendRow(['regularPart2', ' '.join(part2Names)])
+	dat.appendRow(['regularPart3', ' '.join(part3Names)])
+	dat.appendRow(['regularPart4', ' '.join(part4Names)])
 
 def buildValidationErrors(
 		errorDat: scriptDAT,
@@ -258,7 +238,7 @@ def onValidationChange(dat: DAT):
 	host.addScriptError(err)
 
 def onHostNameChange():
-	# Workaround for dependency update issue (#295) when the host is renamed.
+	# See issue #295
 	op('sel_funcTemplate').cook(force=True)
 
 def buildOpState():
@@ -350,7 +330,7 @@ class _Builder:
 		for element in elements:
 			elementRoot = op(element.par['Elementroot'] or element.parent())
 			codeReplacements = {}
-			def processCodeReplacement(placeholderPar: Par, codePar: Par):
+			def replace(placeholderPar: Par, codePar: Par):
 				if not placeholderPar:
 					return
 				placeholder = placeholderPar.eval()
@@ -358,10 +338,10 @@ class _Builder:
 				code = codeDat.text if codeDat else ''
 				codeReplacements[placeholder] = code
 				self.elementReplacements[placeholder] = code
-			processCodeReplacement(element.par['Placeholder1'], element.par['Code1'])
-			processCodeReplacement(element.par['Placeholder2'], element.par['Code2'])
-			processCodeReplacement(element.par['Placeholder3'], element.par['Code3'])
-			processCodeReplacement(element.par['Placeholder4'], element.par['Code4'])
+			replace(element.par['Placeholder1'], element.par['Code1'])
+			replace(element.par['Placeholder2'], element.par['Code2'])
+			replace(element.par['Placeholder3'], element.par['Code3'])
+			replace(element.par['Placeholder4'], element.par['Code4'])
 			elementState = OpElementState(
 				elementRoot=elementRoot.path,
 				isNested=elementRoot is not element.parent(),
@@ -429,16 +409,11 @@ class _Builder:
 			for element in self.opState.opElements:
 				addFromGroupTable(op(element.paramGroupTable))
 
-		# Add runtime bypass
 		if self.defPar.Useruntimebypass:
 			addPar(self.defPar.Enable, handling='runtime', skipExisting=True)
 
-		# Update param statuses based on tuplets
 		self._fillParamStatuses()
-
-		# Group special parameters into tuplets
 		self._groupSpecialParamsIntoTuplets()
-
 		self._prepareParamTupletSpecs()
 
 	def _fillParamStatuses(self):
@@ -507,7 +482,7 @@ class _Builder:
 		if self.opState.path:
 			sourceVectorPath = self.opState.path + '/param_vector_vals'
 		else:
-			sourceVectorPath = ''  # this is only for the clone master of opDefinition
+			sourceVectorPath = ''  # only for master opDefinition
 		sourceVectorIndex = 0
 		for tupletName, partNames in namesByTuplet.items():
 			localNames = []
@@ -542,7 +517,6 @@ class _Builder:
 			path=path or parent(2).path, level=level, message=message))
 
 	def replaceNames(self, val: str):
-		# TODO: there must be a more efficient way to handle this
 		if not val:
 			return ''
 		for k, v in self.replacements.items():
@@ -818,9 +792,9 @@ def _getHasInputMacroName(inputAlias: str):
 			return f'THIS_HAS_INPUT_{i}'
 	return f'THIS_HAS_INPUT_{inputAlias}'
 
-def _popDialog() -> 'PopDialogExt':
-	# noinspection PyUnresolvedReferences
-	return op.TDResources.op('popDialog')
+def _showWarning(msg: str):
+	dlg = op.TDResources.op('popDialog')
+	dlg.Open(title='Warning', text=msg, escOnClickAway=True)
 
 def inspect(rop: COMP):
 	if hasattr(op, 'raytk'):
@@ -828,11 +802,7 @@ def inspect(rop: COMP):
 		if inspector and hasattr(inspector, 'Inspect'):
 			inspector.Inspect(rop)
 			return
-	_popDialog().Open(
-		title='Warning',
-		text='The RayTK inspector is only available when the main toolkit tox has been loaded.',
-		escOnClickAway=True,
-	)
+	_showWarning('The RayTK inspector is only available when the main toolkit tox has been loaded.')
 
 def launchHelp():
 	url = parentPar().Helpurl.eval()
@@ -843,11 +813,7 @@ def launchHelp():
 
 def updateOP():
 	if not hasattr(op, 'raytk'):
-		_popDialog().Open(
-			title='Warning',
-			text='Unable to update OP because RayTK toolkit is not available.',
-			escOnClickAway=True,
-		)
+		_showWarning('Unable to update OP because RayTK toolkit is not available.')
 		return
 	host = _host()
 	if not host:
@@ -861,22 +827,14 @@ def updateOP():
 		msg = 'Unable to update OP because master is not found in the loaded toolkit.'
 		if parentPar().Raytkopstatus == 'deprecated':
 			msg += '\nNOTE: This OP has been marked as "Deprecated", so it may have been removed from the toolkit.'
-		_popDialog().Open(
-			title='Warning',
-			text=msg,
-			escOnClickAway=True,
-		)
+		_showWarning(msg)
 		return
 	if host and host.par.clone:
 		host.par.enablecloningpulse.pulse()
 
 def _getPalette():
 	if not hasattr(op, 'raytk'):
-		_popDialog().Open(
-			title='Warning',
-			text='Unable to create reference because RayTK toolkit is not available.',
-			escOnClickAway=True,
-		)
+		_showWarning('Unable to create reference because RayTK toolkit is not available.')
 		return
 	return op.raytk.op('tools/palette')
 
