@@ -2,23 +2,13 @@
 if False:
 	# noinspection PyUnresolvedReferences
 	from _stubs import *
-	from _typeAliases import *
-
-	class _HandlerPar:
-		Hostop: OPParamT
-		Source: OPParamT
-		Required: BoolParamT
-
-	class _Comp(COMP):
-		par: _HandlerPar
 
 class InputHandler:
-	def __init__(self, handlerComp: 'COMP'):
+	def __init__(self, handlerComp: COMP):
 		self.handlerComp = handlerComp
-		self.handlerPar = handlerComp.par
 
 	def ResolveSourceParDefinition(self, errorTable: DAT | None = None):
-		p = self.handlerPar.Source
+		p = self.handlerComp.par.Source
 		if p.bindMaster is not None:
 			p = p.bindMaster
 		o = p.eval()
@@ -31,13 +21,10 @@ class InputHandler:
 			if _isValidDefinitionDat(d):
 				return d
 		if errorTable:
-			mp = self.handlerPar.Source.bindMaster
-			if mp is None:
-				msg = 'Invalid input source.'
-			else:
-				msg = f'Invalid {mp.label} source.'
-			msg += ' Only ROPs and definition DATs are allowed.'
-			errorTable.appendRow([self.handlerComp.path, 'error', msg])
+			mp = self.handlerComp.par.Source.bindMaster
+			errorTable.appendRow([
+				self.handlerComp.path, 'error',
+				f'Invalid {"input" if mp is None else mp.label} source. Only ROPs and definition DATs are allowed.'])
 
 	def BuildValidationErrors(self, dat: DAT):
 		dat.clear()
@@ -45,7 +32,7 @@ class InputHandler:
 			self.ResolveSourceParDefinition(dat)
 
 	def _shouldBypass(self):
-		host = self.handlerPar.Hostop.eval()
+		host = self.handlerComp.par.Hostop.eval()
 		opDef = host and host.op('opDefinition')
 		if not opDef or opDef.par['Enable'] is None:
 			return False
@@ -62,7 +49,7 @@ class InputHandler:
 		dat.appendCol(['input:alias', config['alias', 1]])
 		dat.appendCol(['input:vars', config['vars', 1]])
 		dat.appendCol(['input:varInputs', config['varInputs', 1]])
-		dat.appendCol(['input:handler', self.handlerPar.owner])
+		dat.appendCol(['input:handler', self.handlerComp])
 
 def _isValidDefinitionDat(o: OP | DAT | None):
 	if not o or not o.isDAT:
