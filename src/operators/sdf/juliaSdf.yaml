@@ -1,8 +1,8 @@
 !rop
 meta: !meta
   opType: raytk.operators.sdf.juliaSdf
-  opVersion: '9'
-  opStatus: beta
+  opVersion: '10'
+  opStatus: default
 opDef: !def
   enable: true
   typeSpec: !ropTypes

@@ -1,8 +1,8 @@
 !rop
 meta: !meta
   opType: raytk.operators.sdf.quadSdf
-  opVersion: '5'
-  opStatus: beta
+  opVersion: '6'
+  opStatus: default
 opDef: !def
   enable: true
   typeSpec: !ropTypes
