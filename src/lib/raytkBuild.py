@@ -299,28 +299,34 @@ class BuildContext:
 		for handler in inputHandlers:
 			self.safeDestroyOp(handler.op('inputHandler'))
 
-	def cleanOperatorInputHandlers(self, rop: COMP):
+	def cleanOperatorTypeSpecs(self, rop: COMP):
 		info = ROPInfo(rop)
 		if not info or not info.isROP:
 			return
+		self.cleanTypeSpec(info.typeSpec)
 		inputHandlers = info.inputHandlers
 		if not inputHandlers:
 			return
 		self.log(f'Cleaning input handlers for {rop}, {len(inputHandlers)} input handlers')
 		for handler in inputHandlers:
-			self.cleanInputHandler(handler)
+			self.cleanTypeSpec(handler)
 
-	def cleanInputHandler(self, inputHandler: COMP):
-		self.log(f'Cleaning input handler {inputHandler}')
+	def cleanTypeSpec(self, comp: COMP):
+		self.log(f'Cleaning type spec {comp}')
 		removePars = []
-		for par in inputHandler.pars('Coordtype*', 'Contexttype*', 'Returntype*'):
+		for par in comp.pars('Coordtype*', 'Contexttype*', 'Returntype*'):
 			if par.mode == ParMode.CONSTANT and not par:
 				removePars.append(par)
 		if not removePars:
 			return
-		self.log(f'Removing {len(removePars)} unnecessary input handler pars')
+		self.log(f'Removing {len(removePars)} unnecessary type spec pars')
 		for par in removePars:
 			par.destroy()
+
+	def _cleanTypeSpecCategory(self, comp: COMP, prefix: str):
+		removePars = []
+		
+		pass
 
 def _isPythonLibrary(m: OP, modName: 'str | None' = None):
 	if not isinstance(m, textDAT) or not RaytkTags.fileSync.isOn(m):
