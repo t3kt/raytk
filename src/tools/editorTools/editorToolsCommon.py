@@ -177,7 +177,7 @@ class ActionManager:
 def _isRopOrComp(o: OP):
 	return isROP(o) or isRComp(o)
 
-class ROPState:
+class EditorROPState:
 	rop: OP | None
 	info: ROPInfo
 
@@ -382,7 +382,7 @@ class RopSelect(OpSelect):
 			return False
 		if self.all:
 			return True
-		opState = ROPState(o)
+		opState = EditorROPState(o)
 		if not opState:
 			return False
 		if self.ropTypes and opState.info.opType not in self.ropTypes:
@@ -557,6 +557,6 @@ class RopActionUtils:
 	@staticmethod
 	def getAllRopStates(ctx: ActionContext):
 		return [
-			ROPState(o)
+			EditorROPState(o)
 			for o in RaytkContext().ropChildrenOf(ctx.parentComp)
 		]

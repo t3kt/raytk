@@ -90,7 +90,7 @@ def _loadTypeFields():
 _typeFields = _loadTypeFields()
 
 def _getStateField(primaryOp: OP, fieldName: str):
-	opState = ROPState(primaryOp)
+	opState = EditorROPState(primaryOp)
 	if not opState:
 		return None
 	stateText = opState.info.opStateText
@@ -178,14 +178,14 @@ def _createRenderSelAction(label: str, name: str, enablePar: str):
 
 def _createRenderSelGroup(text: str):
 	def isValid(ctx: ActionContext) -> bool:
-		opState = ROPState(ctx.primaryOp)
+		opState = EditorROPState(ctx.primaryOp)
 		if not opState:
 			return False
 		table = opState.info.outputBufferTable
 		return bool(table and table.numRows > 1)
 
 	def getActions(ctx: ActionContext) -> List[Action]:
-		opState = ROPState(ctx.primaryOp)
+		opState = EditorROPState(ctx.primaryOp)
 		if not opState:
 			return []
 		table = opState.info.outputBufferTable
@@ -546,7 +546,7 @@ def _createGoToAction(text: str, getTargets: Callable[[ActionContext], List[OP]]
 
 def _createGoToGroup(text: str):
 	def _getVariableSource(ctx: ActionContext):
-		opState = ROPState(ctx.primaryOp)
+		opState = EditorROPState(ctx.primaryOp)
 		if not opState or opState.info.opType != _RopTypes.variableReference:
 			return []
 		source = ctx.primaryComp.par.Source.eval()
