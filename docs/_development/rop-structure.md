@@ -69,7 +69,6 @@ There are several categories of information about a ROP, produced by the `opDefi
   * `contextType`: the type of context that the ROP's function expects along with the coordinates.
   * `tags`: indicators that the OP uses certain features like shadows or surface colors.
   * `definitionPath`: path to the DAT that contains the full table of ROP properties.
-  * `statePath`: path to the DAT that contains the JSON-serialized `RopState`.
 * Local definition table fields
   * These are only included within a single-ROP table inside the `opDefinition`.
   * `opVersion`: version of that particular type of ROP.

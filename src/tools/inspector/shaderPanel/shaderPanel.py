@@ -1,6 +1,7 @@
 import json
 import popMenu
 from raytkShader import simplifyNames
+from raytkUtil import ROPInfo
 
 # noinspection PyUnreachableCode
 if False:
@@ -49,31 +50,37 @@ class ShaderPanel:
 				'include',
 			])
 		for row in range(1, definition.numRows):
-			stateDat = op(definition[row, 'statePath'])
-			if stateDat and 'functionCode' in stateDat.text:
+			info = ROPInfo(op(definition[row, 'path']))
+			if not info.isROP:
+				continue
+			opDefExt = info.opDefExt
+			if not opDefExt:
+				continue
+			state = opDefExt.getRopState()
+			if state.functionCode:
 				opName = definition[row, 'name'].val
 				dat.appendRow([
 					opName + '_functionCode',
 					f'ROP Function: {opName}',
-					stateDat.path,
+					info.rop.path,
 					'opFunction',
 				])
 
 	def fillPreparedCode(self, dat: DAT, codeBlocks: DAT, selectedName: str, definition: DAT):
 		dat.clear()
 		category = codeBlocks[selectedName, 'category']
-		srcDat = op(codeBlocks[selectedName, 'path'])
-		if not category or not srcDat:
+		srcOp = op(codeBlocks[selectedName, 'path'])
+		if not category or not srcOp:
 			dat.write(' ')
 			return
 		if category == 'opFunction':
-			try:
-				obj = json.loads(srcDat.text)
-			except:
-				obj = None
-			code = obj.get('functionCode') if obj else None
+			info = ROPInfo(srcOp)
+			if not info.isROP:
+				code = None
+			else:
+				code = info.opDefExt.getRopState().functionCode
 		else:
-			code = srcDat.text
+			code = srcOp.text
 		if category in ('main', 'opFunction'):
 			code = self._processCode(code, definition)
 		dat.write(code or ' ')

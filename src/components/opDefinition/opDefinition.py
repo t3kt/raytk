@@ -804,7 +804,6 @@ def buildDefinitionTable(dat: scriptDAT):
 		['paramVectors', defPath + '/param_vector_vals'],
 		['libraryNames', parentPar().Librarynames],
 		['definitionPath', defPath + '/definition'],
-		['statePath', defPath + '/opState'],
 		['tags', ' '.join(state.tags or [])],
 	])
 
@@ -868,37 +867,21 @@ def _getPalette():
 		return
 	return op.raytk.op('tools/palette')
 
-def createVarRef(name: str):
-	palette = _getPalette()
-	if not palette:
-		return
-	host = _host()
-	stateText = op('opState').text
-	stateObj = json.loads(stateText)
-	variableObjs = stateObj.get('variables') or []
-	for variableObj in variableObjs:
-		if variableObj['localName'].lower() == name:
-			palette.CreateVariableReference(host, variableObj['localName'], variableObj['dataType'])
-			return
-	raise Exception(f'Variable not found: {name}')
-
-def createRenderSel(name: str):
-	palette = _getPalette()
-	if not palette:
-		return
-	host = _host()
-	bufTable = op('../output_buffers')
-	if bufTable:
-		name = name.lower()
-		for i in range(1, bufTable.numRows):
-			if bufTable[i, 'name'].val.lower() == name:
-				palette.CreateRenderSelect(host, bufTable[i, 'name'].val)
-				return
-	raise Exception(f'Output buffer not found: {name}')
-
 class OpDefinition:
 	def __init__(self, opDefComp: COMP):
 		self.opDefComp = opDefComp
+		self.hostRop = opDefComp.par.Hostop.eval()
+
+	def createVarRef(self, name: str):
+		palette = _getPalette()
+		if not palette:
+			return
+		state = self.getRopState()
+		for variable in state.variables or []:
+			if variable.localName.lower() == name:
+				palette.CreateVariableReference(self.hostRop, variable.localName, variable.dataType)
+				return
+		raise Exception(f'Variable not found: {name}')
 	
 	@property
 	def name(self):

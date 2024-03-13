@@ -137,7 +137,7 @@ def buildOpParamsTable(dat: DAT):
 		])
 		for tuplet in info.rop.customTuplets:
 			par = tuplet[0]
-			if par.name in ('Inspect', 'Help', 'Updateop') or par.name.startswith('Createref') or par.name.startswith('Creatersel'):
+			if par.name in ('Inspect', 'Help', 'Updateop') or par.name.startswith('Createref'):
 				continue
 			cell = dat[info.path, par.tupletName]
 			if cell is None:

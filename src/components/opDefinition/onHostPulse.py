@@ -3,7 +3,9 @@ if False:
 	# noinspection PyUnresolvedReferences
 	from _stubs import *
 	from . import opDefinition as _opDef
+	from opDefinition import OpDefinition
 	mod.opDefinition = _opDef
+	ext.opDefinition = OpDefinition(COMP())
 
 def onPulse(par):
 	action = par.name
@@ -14,6 +16,4 @@ def onPulse(par):
 	elif action == 'Updateop':
 		mod.opDefinition.updateOP()
 	elif action.startswith('Createref'):
-		mod.opDefinition.createVarRef(action.replace('Createref', ''))
-	elif action.startswith('Creatersel'):
-		mod.opDefinition.createRenderSel(action.replace('Creatersel', ''))
+		ext.opDefinition.createVarRef(action.replace('Createref', ''))

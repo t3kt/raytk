@@ -84,7 +84,7 @@ def processInputs(dat: scriptDAT):
 	dat.appendRow([
 		'head',
 		'name', 'path', 'opType', 'coordType', 'contextType', 'returnType',
-		'definitionPath', 'statePath', 'tags',
+		'definitionPath', 'tags',
 		'input:alias', 'input:vars', 'input:varInputs', 'input:handler',
 	])
 	inputDefs = ops('definition_in_?')
@@ -103,7 +103,7 @@ def processInputs(dat: scriptDAT):
 		# 	i,
 		# 	inDef['name', 1], inDef['path', 1], inDef['opType', 1],
 		# 	inDef['coordType', 1], inDef['contextType', 1], inDef['returnType', 1],
-		# 	inDef['definitionPath', 1], inDef['statePath', 1], inDef['tags', 1],
+		# 	inDef['definitionPath', 1], inDef['tags', 1],
 		# 	inDef['input:alias', 1], inDef['input:vars', 1], inDef['input:varInputs', 1], inDef['input:handler', 1],
 		# ])
 		for inRow in range(2, inDef.numRows):

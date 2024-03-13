@@ -584,7 +584,7 @@ class ParamPage(ModelObject):
 		ignorePars = 'Help', 'Inspect', 'Updateop'
 		if parTuplet[0].tupletName in ignorePars:
 			return False
-		if parTuplet[0].name.startswith('Createref') or  parTuplet[0].name.startswith('Creatersel'):
+		if parTuplet[0].name.startswith('Createref'):
 			return False
 		return True
 
