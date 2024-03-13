@@ -1,4 +1,4 @@
-from raytkState import RopState
+from raytkUtil import ROPInfo
 
 # noinspection PyUnreachableCode
 if False:
@@ -26,12 +26,10 @@ class ElementsPanel:
 		dat.clear()
 		dat.appendRow(['name', 'label', 'hostOp', 'parName', 'datName', 'evalDatName', 'fileSuffix'])
 		rop = ipar.inspectorCore.Targetcomp.eval()
-		if not rop:
+		info = ROPInfo(rop)
+		if not info.isROP:
 			return
-		stateDat = rop.op('opDefinition/opState')
-		if not stateDat:
-			return
-		state = RopState.fromJson(stateDat.text)
+		state = info.opDefExt.getRopState()
 		if not state or not state.opElements:
 			return
 		for element in state.opElements:
