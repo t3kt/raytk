@@ -244,7 +244,7 @@ def onHostNameChange():
 	op('sel_funcTemplate').cook(force=True)
 
 def _createBuilder():
-	return _Builder(parent(), inDats=ops('input_def_[0-9]*'))
+	return _Builder(parent())
 
 def buildOpState():
 	builder = _createBuilder()
@@ -262,12 +262,12 @@ class _Builder:
 	replacements: dict[str, str]
 	elementReplacements: dict[str, str]
 
-	def __init__(self, opDefComp: COMP, inDats: list[DAT]):
+	def __init__(self, opDefComp: COMP):
 		# noinspection PyTypeChecker
 		self.defPar = opDefComp.par  # type: OpDefParsT
 		self.hostOp = self.defPar.Hostop.eval()
 		self.paramsOp = self.defPar.Paramsop.eval() or self.hostOp
-		self.inDats = inDats
+		self.inDats = opDefComp.ops('input_def_[0-9]*')
 		fullOpType = self.defPar.Raytkoptype.eval()
 		opType = fullOpType
 		if opType and '.' in opType:
