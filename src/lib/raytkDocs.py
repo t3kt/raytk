@@ -5,13 +5,11 @@ This should only be used within development tools.
 """
 
 from dataclasses import dataclass, field
-import json
 from pathlib import Path
 import re
 import yaml
 
 from raytkUtil import ROPInfo, CategoryInfo, RaytkTags, InputInfo, cleanDict, mergeDicts
-from raytkState import RopState
 
 # noinspection PyUnreachableCode
 if False:
@@ -134,18 +132,6 @@ class VariableHelp:
 				label=str(variableTable[i, 'label'] or name),
 			))
 		return varHelps
-
-	@classmethod
-	def extractFromOpStateDict(cls, ropStateObj: dict):
-		if not ropStateObj:
-			return []
-		variableObjs = ropStateObj.get('variables')
-		if not variableObjs:
-			return []
-		return [
-			cls(variableObj['localName'], variableObj['label'])
-			for variableObj in variableObjs
-		]
 
 	def mergeFrom(self, other: 'VariableHelp'):
 		if self.name != other.name:
@@ -530,9 +516,10 @@ class OpDocManager:
 			self.info = ROPInfo(rop)
 			self.rop = self.info.rop
 		self.opState = None
-		stateDat = self.info.opDef.op('opState')
-		if stateDat and stateDat.text:
-			self.opState = RopState.fromJson(stateDat.text)
+		if self.info.isROP:
+			opDefExt = self.info.opDefExt
+			if opDefExt:
+				self.opState = opDefExt.getRopState()
 
 	def _parseDAT(self):
 		ropHelp = ROPHelp.fromInfoOnly(self.info)
@@ -804,9 +791,14 @@ class OpDocManager:
 			varHelp.name: varHelp
 			for varHelp in ropHelp.variables
 		}  # type: dict[str, VariableHelp]
-		stateText = self.info.opStateText
-		stateObj = json.loads(stateText)
-		extractedVars = VariableHelp.extractFromOpStateDict(stateObj)
+		opDefExt = self.info.opDefExt
+		extractedVars = None
+		if opDefExt:
+			opState = opDefExt.getRopState()
+			extractedVars = [
+				VariableHelp(v.name, v.label, v.summary)
+				for v in opState.variables
+			]
 		debug('known vars: ', varHelps)
 		debug('extracted vars: ', extractedVars)
 		for extractedVar in extractedVars:

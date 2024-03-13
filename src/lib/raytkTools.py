@@ -106,16 +106,15 @@ class RaytkTools(RaytkContext):
 	def _updateVariableRefParams(rop: COMP):
 		if rop.name == 'provideVariable':
 			return
-		stateText = ROPInfo(rop).opStateText
-		if not stateText:
+		info = ROPInfo(rop)
+		if not info.isROP:
 			return
-		stateObj = json.loads(stateText)
-		variableObjs = stateObj.get('variables')
-		if not variableObjs:
+		opState = info.opDefExt.getRopState()
+		if not opState.variables:
 			return
 		varNamesAndLabels = [
-			(variableObj['localName'], variableObj['label'])
-			for variableObj in variableObjs
+			(variableObj.localName, variableObj.label)
+			for variableObj in opState.variables
 		]
 		if not varNamesAndLabels:
 			return

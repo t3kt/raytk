@@ -224,11 +224,11 @@ def buildOpCurrentExpandedParamsTable(dat: DAT):
 		info = ROPInfo(rop)
 		if not info or not info.isROP:
 			continue
-		try:
-			state = RopState.fromJson(rop.op('opDefinition/opState').text)
-		except TypeError as err:
-			print('error loading state for', rop, err)
+		opDefExt = info.opDefExt
+		if not opDefExt:
+			print('Error loading state for', rop)
 			continue
+		state = opDefExt.getRopState()
 		if hasattr(state, 'params') and state.params:
 			expanded = [
 				p.localName

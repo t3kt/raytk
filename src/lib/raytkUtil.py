@@ -10,7 +10,8 @@ if False:
 	# noinspection PyUnresolvedReferences
 	from _typeAliases import *
 	from _stubs.PopDialogExt import PopDialogExt
-	from typing import Callable
+	from typing import Callable, Optional
+	from components.opDefinition.opDefinition import OpDefinition
 
 	op.raytk = COMP()
 
@@ -159,6 +160,12 @@ class ROPInfo:
 	def path(self):
 		if self:
 			return self.rop.path
+
+	@property
+	def opDefExt(self) -> 'Optional[OpDefinition]':
+		if not self.isROP:
+			return
+		return getattr(self.opDef.ext, 'opDefinition', None)
 
 	@property
 	def opVersion(self):
@@ -336,12 +343,6 @@ class ROPInfo:
 		if not self.isROP:
 			return None
 		return self.opDef.op('supportedTypes')
-
-	@property
-	def opStateText(self):
-		if not self.isROP:
-			return None
-		return self.opDef.op('opState').text
 
 	@property
 	def outputBufferTable(self) -> DAT | None:

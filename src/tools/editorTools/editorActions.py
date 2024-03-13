@@ -1,4 +1,5 @@
 import json
+from raytkUtil import ROPInfo
 from typing import Tuple
 from editorToolsCommon import *
 
@@ -89,30 +90,24 @@ def _loadTypeFields():
 
 _typeFields = _loadTypeFields()
 
-def _getStateField(primaryOp: OP, fieldName: str):
-	opState = EditorROPState(primaryOp)
-	if not opState:
-		return None
-	stateText = opState.info.opStateText
-	if not stateText:
-		return None
-	stateObj = json.loads(stateText)
-	return stateObj.get(fieldName)
-
 def _createVarRefGroup(text: str):
-	def getVariableObjs(ctx: ActionContext) -> List[dict]:
-		return _getStateField(ctx.primaryOp, 'variables') or []
+	def getVariableObjs(ctx: ActionContext):
+		info = ROPInfo(ctx.primaryOp)
+		if not info.isROP:
+			return []
+		opState = info.opDefExt.getRopState()
+		return opState.variables or []
 	def isValid(ctx: ActionContext) -> bool:
 		return bool(getVariableObjs(ctx))
 
 	def getActions(ctx: ActionContext) -> List[Action]:
 		actions = []
 		for variableObj in getVariableObjs(ctx):
-			dataType = variableObj['dataType']
-			varName = variableObj['localName']
+			dataType = variableObj.dataType
+			varName = variableObj.localName
 			actions.append(
 				_createVarRefAction(
-					label=variableObj['label'],
+					label=variableObj.label,
 					variable=varName,
 					dataType=dataType,
 				)
@@ -132,24 +127,28 @@ def _createVarRefGroup(text: str):
 def _createAttrRefGroup(text: str):
 	def test(o: OP):
 		info = ROPInfo(o)
-		if not info or info.opType == _RopTypes.assignAttribute:
+		if not info.isROP or info.opType == _RopTypes.assignAttribute:
 			return False
-		return bool(_getStateField(o, 'attributes'))
+		return bool(info.opDefExt.getRopState().attributes)
 	class _LockPars(OpInit):
 		def init(self, o: COMP, ctx: ActionContext):
 			o.par.Attributename.readOnly = True
 			o.par.Datatype.readOnly = True
 	select = RopSelect(test=test)
 	def getActions(ctx: ActionContext) -> List[Action]:
+		info = ROPInfo(ctx.primaryOp)
+		if not info.isROP:
+			return []
+		opState = info.opDefExt.getRopState()
 		return [
 			ActionImpl(
-				attributeObj.get('label') or attributeObj.get('name'),
+				attributeObj.label or attributeObj.name,
 				ropType=_RopTypes.getAttribute,
 				select=select,
-				params={'Attributename': attributeObj['name'], 'Datatype': attributeObj['dataType']},
+				params={'Attributename': attributeObj.name, 'Datatype': attributeObj.dataType},
 				inits=[_LockPars()]
 			)
-			for attributeObj in _getStateField(ctx.primaryOp, 'attributes') or []
+			for attributeObj in opState.attributes or []
 		]
 	return GroupImpl(
 		text,
