@@ -807,7 +807,8 @@ class _Writer:
 		]
 		self.attributes = []
 		for rop in self.rops:
-			if not self._shouldIncludeOp(rop.definition.name):
+			rop.included = self._shouldIncludeOp(rop.definition.name)
+			if not rop.included:
 				continue
 			state = rop.state
 			if state.textures:
@@ -1033,9 +1034,9 @@ class _Writer:
 
 	def _writeOpGlobals(self):
 		self._writeCodeBlocks('opGlobals', [
-			rop.state.opGlobals
+			rop.definition.getOpGlobals()
 			for rop in self.rops
-			if rop.state.opGlobals and self._shouldIncludeOp(rop.state.name)
+			if rop.included
 		])
 
 	def _writeInit(self):
@@ -1044,7 +1045,7 @@ class _Writer:
 			[
 				rop.definition.getInitCode()
 				for rop in self.rops
-				if self._shouldIncludeOp(rop.state.name)
+				if rop.included
 			],
 			prefixes=[
 				'#define RAYTK_HAS_INIT',
@@ -1056,7 +1057,7 @@ class _Writer:
 		self._writeCodeBlocks('functions', [
 			rop.definition.getFunctionCode()
 			for rop in self.rops
-			if self._shouldIncludeOp(rop.state.name)
+			if rop.included
 		])
 
 	def _writeCodeBlocks(
@@ -1092,11 +1093,11 @@ class _Writer:
 	def _writeMaterialBody(self):
 		for rop in self.rops:
 			state = rop.state
-			if not state.materialId or not self._shouldIncludeOp(state.name):
+			if not state.materialId or not rop.included:
 				continue
 			self._writeLine(f'else if(m == {state.materialId}) {{')
 			# Intentionally skipping typedef inlining for these since no materials need it.
-			self._writeLine(state.materialCode + '\n}')
+			self._writeLine(rop.definition.getMaterialCode() + '\n}')
 
 	def _write(self, arg):
 		self.out.write(arg)
@@ -1145,6 +1146,7 @@ class _Writer:
 class _RopContent:
 	definition: 'OpDefinition'
 	state: RopState
+	included: bool = True
 
 @dataclass
 class _ParamTupletSpec:

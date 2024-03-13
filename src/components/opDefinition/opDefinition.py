@@ -1,3 +1,5 @@
+from typing import Dict, Any
+
 import json
 import math
 from raytkState import *
@@ -241,28 +243,31 @@ def onHostNameChange():
 	# See issue #295
 	op('sel_funcTemplate').cook(force=True)
 
-def buildOpState():
-	builder = _Builder()
-	builder.loadInputs(ops('input_def_[0-9]*'))
-	builder.loadTags()
-	builder.loadOpElements()
-	builder.loadParams()
-	builder.loadCode()
-	builder.loadMacros()
-	builder.loadConstants()
-	builder.loadTextures()
-	builder.loadBuffers()
-	builder.loadReferences()
-	builder.loadVariablesAndAttributes()
+def _createBuilder():
+	return _Builder(parent(), inDats=ops('input_def_[0-9]*'))
 
+def buildOpState():
+	builder = _createBuilder()
+	builder.load()
 	return builder.opState
 
 class _Builder:
-	def __init__(self):
+	defPar: 'OpDefParsT'
+	hostOp: COMP
+	paramsOp: COMP
+	inDats: list[DAT]
+	opName: str
+	namePrefix: str
+	opState: RopState
+	replacements: dict[str, str]
+	elementReplacements: dict[str, str]
+
+	def __init__(self, opDefComp: COMP, inDats: list[DAT]):
 		# noinspection PyTypeChecker
-		self.defPar = parent().par  # type: OpDefParsT
+		self.defPar = opDefComp.par  # type: OpDefParsT
 		self.hostOp = self.defPar.Hostop.eval()
 		self.paramsOp = self.defPar.Paramsop.eval() or self.hostOp
+		self.inDats = inDats
 		fullOpType = self.defPar.Raytkoptype.eval()
 		opType = fullOpType
 		if opType and '.' in opType:
@@ -284,9 +289,22 @@ class _Builder:
 			self.replacements['THISMAT'] = self.opState.materialId
 		self.elementReplacements = {}
 
-	def loadInputs(self, inDats: list[DAT]):
+	def load(self):
+		self.loadInputs()
+		self.loadTags()
+		self.loadOpElements()
+		self.loadParams()
+		self.loadCode()
+		self.loadMacros()
+		self.loadConstants()
+		self.loadTextures()
+		self.loadBuffers()
+		self.loadReferences()
+		self.loadVariablesAndAttributes()
+
+	def loadInputs(self):
 		self.opState.inputStates = []
-		for i, inDat in enumerate(inDats + self.defPar.Inputdefs.evalOPs()):
+		for i, inDat in enumerate(self.inDats + self.defPar.Inputdefs.evalOPs()):
 			if not inDat[1, 'name']:
 				continue
 			func = str(inDat[1, 'input:alias'] or f'inputOp{i + 1}')
@@ -528,6 +546,18 @@ class _Builder:
 		self.opState.materialCode = self.processCode(self.defPar.Materialcode.eval())
 		self.opState.initCode = self.processCode(self.defPar.Initcode.eval())
 		self.opState.opGlobals = self.processCode(self.defPar.Opglobals.eval())
+
+	def getFunctionCode(self):
+		return self.processCode(self.defPar.Functemplate.eval())
+
+	def getMaterialCode(self):
+		return self.processCode(self.defPar.Materialcode.eval())
+
+	def getInitCode(self):
+		return self.processCode(self.defPar.Initcode.eval())
+
+	def getOpGlobalsCode(self):
+		return self.processCode(self.defPar.Opglobals.eval())
 
 	def processCode(self, codeDat: DAT):
 		if not codeDat or not codeDat.text:
@@ -879,6 +909,9 @@ class OpDefinition:
 
 	def getInitCode(self) -> str | None:
 		return self.getRopState().initCode
+
+	def getOpGlobals(self) -> str | None:
+		return self.getRopState().opGlobals
 
 	def getFunctionCode(self) -> str:
 		return self.getRopState().functionCode
