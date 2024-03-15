@@ -879,6 +879,19 @@ class OpDefinition:
 				palette.CreateVariableReference(self.hostRop, variable.localName, variable.dataType)
 				return
 		raise Exception(f'Variable not found: {name}')
+
+	def createRenderSel(self, name: str):
+		palette = _getPalette()
+		if not palette:
+			return
+		bufTable = self.hostRop.op('output_buffers')
+		if bufTable:
+			name = name.lower()
+			for i in range(1, bufTable.numRows):
+				if bufTable[i, 'name'].val.lower() == name:
+					palette.CreateRenderSelect(self.hostRop, bufTable[i, 'name'].val)
+					return
+		raise Exception('Output buffer not found: ' + name)
 	
 	@property
 	def name(self):

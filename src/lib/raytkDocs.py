@@ -660,7 +660,7 @@ class OpDocManager:
 			for paramHelp in ropHelp.parameters
 		}
 		for parTuplet in self.rop.customTuplets:
-			if parTuplet[0].readOnly or parTuplet[0].name.startswith('Createref'):
+			if parTuplet[0].readOnly or parTuplet[0].name.startswith('Createref') or parTuplet[0].name.startswith('Creatersel'):
 				continue
 			name = parTuplet[0].tupletName
 			helpText = parTuplet[0].help

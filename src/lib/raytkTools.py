@@ -100,6 +100,7 @@ class RaytkTools(RaytkContext):
 		updatePar.help = 'Update this OP to a new toolkit version.\nNew toolkit tox must be loaded in the project.'
 
 		self._updateVariableRefParams(rop)
+		self._updateRenderSelectParams(rop)
 
 	@staticmethod
 	def _updateVariableRefParams(rop: COMP):
@@ -136,6 +137,33 @@ class RaytkTools(RaytkContext):
 				par.destroy()
 			except:
 				pass
+
+	@staticmethod
+	def _updateRenderSelectParams(rop: COMP):
+		table = ROPInfo(rop).outputBufferTable
+		if not table:
+			return
+		names = [str(c) for c in table.col('name')[1:]]
+		toDelete = []
+		page = rop.appendCustomPage('Outputs')
+		for par in list(page.pars):
+			if par.valid and par.name.startswith('Creatersel') and par.name.replace('Creatersel', '') not in names:
+				toDelete.append(par)
+		for i in range(1, table.numRows):
+			name = str(table[i, 'name'])
+			label = str(table[i, 'label'])
+			par = page.appendPulse('Creatersel' + name.lower(), label=f'Select {label}')[0]
+			par.help = f'Create renderSelect for output: {label}'
+			par.enableExpr = f"hasattr(op, 'raytk') and op.raytk.op('tools/palette') and '{name}' in op('./output_buffers').col('name')[1:]"
+			par.order = 888 + i
+		for par in toDelete:
+			if not par.valid:
+				continue
+			try:
+				par.destroy()
+			except:
+				pass
+
 	@staticmethod
 	def updateOPImage(rop: COMP):
 		img = rop.op('./*Definition/opImage')
