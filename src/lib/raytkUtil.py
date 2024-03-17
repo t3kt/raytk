@@ -110,6 +110,9 @@ class OpDefParsT(_OpMetaPars):
 	Inputdefs: 'StrParamT'
 	Flags: 'StrParamT'
 
+	def __getitem__(self, item) -> Par | None:
+		return getattr(self, item)
+
 class ROPInfo:
 	"""
 	Information about either a ROP or RComp instance.

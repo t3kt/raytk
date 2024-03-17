@@ -322,10 +322,10 @@ class BuildContext:
 		self.log(f'Cleaning operator def pars for {rop}')
 		opDef = info.opDef
 		self._removeUnusedPars(opDef.pars(
-			'Tagtable',
+			'Tagtable', 'Callbacks',
 			'Librarynames',
 			'Disableinspect',
-			'Shortcuts', 'Keywords', 'Displaycategory',
+			'Shortcuts', 'Keywords', 'Displaycategory', 'Flags', 'Help',
 		))
 
 	def _removeUnusedPars(self, pars: list[Par]):

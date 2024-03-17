@@ -284,35 +284,32 @@ class ToolkitBuilder(_BuilderBase):
 			self.logStageStart('Lock library info')
 			self.lockLibraryInfo(toolkit, thenRun=self.runBuild_stage, runArgs=[stage + 1])
 		elif stage == 10:
-			self.logStageStart('Remove op help')
-			self.removeAllOpHelp(thenRun=self.runBuild_stage, runArgs=[stage + 1])
-		elif stage == 11:
 			self.logStageStart('Process tools')
 			self.processTools(toolkit.op('tools'), thenRun=self.runBuild_stage, runArgs=[stage + 1])
-		elif stage == 12:
+		elif stage == 11:
 			self.logStageStart('Lock buildLock ops')
 			self.context.lockBuildLockOps(toolkit)
 			queueCall(self.runBuild_stage, stage + 1)
-		elif stage == 13:
+		elif stage == 12:
 			self.logStageStart('Process components')
 			self.processComponents(toolkit.op('components'), thenRun=self.runBuild_stage, runArgs=[stage + 1])
-		elif stage == 14:
+		elif stage == 13:
 			self.logStageStart('Remove buildExclude ops')
 			self.removeBuildExcludeOpsIn(toolkit, thenRun=lambda: self.runBuild_stage(stage + 1))
-		elif stage == 15:
+		elif stage == 14:
 			self.logStageStart('Remove redundant python mods')
 			self.context.removeRedundantPythonModules(toolkit, toolkit.ops('tools', 'libraryInfo'))
 			queueCall(self.runBuild_stage, stage + 1)
-		elif stage == 16:
+		elif stage == 15:
 			self.logStageStart('Finalize toolkit pars')
 			self.finalizeRootPars(toolkit)
 			queueCall(self.runBuild_stage, stage + 1)
-		elif stage == 17:
+		elif stage == 16:
 			self.logStageStart('Write toolkit doc data')
 			if self.docProcessor:
 				self.docProcessor.writeToolkitDocData()
 			queueCall(self.runBuild_stage, stage + 1)
-		elif stage == 18:
+		elif stage == 17:
 			self.logStageStart('Finish build')
 			self.context.focusInNetworkPane(toolkit)
 			toxFile = self.getOutputToxPath('RayTK')
@@ -499,6 +496,7 @@ class ToolkitBuilder(_BuilderBase):
 		comp.color = IconColors.defaultBgColor
 		if self.docProcessor:
 			self.docProcessor.processOp(comp)
+		self.context.removeOpHelp(comp)
 		self.context.cleanOperatorTypeSpecs(comp)
 		self.context.cleanOperatorDefPars(comp)
 		queueCall(thenRun)
@@ -543,14 +541,6 @@ class ToolkitBuilder(_BuilderBase):
 		self.context.updateOrReclone(rop)
 		self.context.detachTox(rop)
 		self.context.disableCloning(rop)
-
-	def removeAllOpHelp(
-			self,
-			thenRun: 'Optional[Callable]' = None, runArgs: list = None):
-		operators = RaytkContext().allMasterOperators()
-		for comp in operators:
-			self.context.removeOpHelp(comp)
-		queueCall(thenRun, *(runArgs or []))
 
 	def processTools(
 			self, comp: COMP,

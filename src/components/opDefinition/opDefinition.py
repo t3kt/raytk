@@ -47,7 +47,8 @@ def buildTypeTable(dat: scriptDAT, supportedTypes: DAT, inputDefs: DAT):
 
 def combineInputDefinitions(dat: scriptDAT, inDats: list[DAT], defFields: DAT, supportedTypeTable: DAT):
 	dat.clear()
-	inDats += parentPar().Inputdefs.evalOPs()
+	if parentPar()['Inputdefs'] is not None:
+		inDats += parentPar().Inputdefs.evalOPs()
 	if not inDats:
 		return
 	cols = defFields.col(0) + ['input:handler']
@@ -277,7 +278,7 @@ class _Builder:
 		)
 		self.opName = self.opState.name
 		self.namePrefix = self.opName + '_'
-		if self.defPar.Materialcode:
+		if self.defPar['Materialcode']:
 			self.opState.materialId = 'MAT_' + self.opState.name
 		self.replacements = {'thismap': self.opName, 'THIS_': self.namePrefix}
 		if opType:
@@ -301,7 +302,10 @@ class _Builder:
 
 	def loadInputs(self):
 		self.opState.inputStates = []
-		for i, inDat in enumerate(self.inDats + self.defPar.Inputdefs.evalOPs()):
+		inDats = self.inDats
+		if self.defPar['Inputdefs'] is not None:
+			inDats += self.defPar.Inputdefs.evalOPs()
+		for i, inDat in enumerate(inDats):
 			if not inDat[1, 'name']:
 				continue
 			func = str(inDat[1, 'input:alias'] or f'inputOp{i + 1}')
@@ -541,20 +545,29 @@ class _Builder:
 
 	def loadCode(self):
 		self.opState.functionCode = self.processCode(self.defPar.Functemplate.eval())
-		self.opState.materialCode = self.processCode(self.defPar.Materialcode.eval())
-		self.opState.initCode = self.processCode(self.defPar.Initcode.eval())
-		self.opState.opGlobals = self.processCode(self.defPar.Opglobals.eval())
+		if self.defPar['Materialcode']:
+			self.opState.materialCode = self.processCode(self.defPar.Materialcode.eval())
+		if self.defPar['Initcode']:
+			self.opState.initCode = self.processCode(self.defPar.Initcode.eval())
+		if self.defPar['Opglobals']:
+			self.opState.opGlobals = self.processCode(self.defPar.Opglobals.eval())
 
 	def getFunctionCode(self):
 		return self.processCode(self.defPar.Functemplate.eval())
 
 	def getMaterialCode(self):
+		if not self.defPar['Materialcode']:
+			return ''
 		return self.processCode(self.defPar.Materialcode.eval())
 
 	def getInitCode(self):
+		if not self.defPar['Initcode']:
+			return ''
 		return self.processCode(self.defPar.Initcode.eval())
 
 	def getOpGlobalsCode(self):
+		if not self.defPar['Opglobals']:
+			return ''
 		return self.processCode(self.defPar.Opglobals.eval())
 
 	def processCode(self, codeDat: DAT):
