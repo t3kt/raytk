@@ -326,14 +326,13 @@ class _Builder:
 		for inputState in self.opState.inputStates:
 			if inputState.tags:
 				tags.update(inputState.tags)
-		if parentPar()['Tagtable'] is None:
-			return
-		table = parentPar().Tagtable.eval()
-		if table and table.numRows > 1:
-			for i in range(1, table.numRows):
-				if _isFalseStr(table[i, 'enable']):
-					continue
-				tags.add(table[i, 'name'].val)
+		if parentPar()['Tagtable'] is not None:
+			table = parentPar().Tagtable.eval()
+			if table and table.numRows > 1:
+				for i in range(1, table.numRows):
+					if _isFalseStr(table[i, 'enable']):
+						continue
+					tags.add(table[i, 'name'].val)
 		self.opState.tags = list(sorted(tags))
 
 	def loadOpElements(self):

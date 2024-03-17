@@ -500,6 +500,7 @@ class ToolkitBuilder(_BuilderBase):
 		if self.docProcessor:
 			self.docProcessor.processOp(comp)
 		self.context.cleanOperatorTypeSpecs(comp)
+		self.context.cleanOperatorDefPars(comp)
 		queueCall(thenRun)
 
 	def processOperatorSubCompChildrenOf(self, comp: COMP):
