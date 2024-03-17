@@ -326,6 +326,8 @@ class _Builder:
 		for inputState in self.opState.inputStates:
 			if inputState.tags:
 				tags.update(inputState.tags)
+		if parentPar()['Tagtable'] is None:
+			return
 		table = parentPar().Tagtable.eval()
 		if table and table.numRows > 1:
 			for i in range(1, table.numRows):
@@ -799,7 +801,7 @@ def buildDefinitionTable(dat: scriptDAT):
 		['paramSource', defPath + '/param_vals'],
 		['constantParamSource', defPath + '/constant_param_vals'],
 		['paramVectors', defPath + '/param_vector_vals'],
-		['libraryNames', parentPar().Librarynames],
+		['libraryNames', parentPar()['Librarynames'] or ''],
 		['definitionPath', defPath + '/definition'],
 		['tags', ' '.join(state.tags or [])],
 	])

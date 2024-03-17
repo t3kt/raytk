@@ -313,20 +313,33 @@ class BuildContext:
 
 	def cleanTypeSpec(self, comp: COMP):
 		self.log(f'Cleaning type spec {comp}')
+		self._removeUnusedPars(comp.pars('Coordtype*', 'Contexttype*', 'Returntype*'))
+
+	def cleanOperatorDefPars(self, rop: COMP):
+		info = ROPInfo(rop)
+		if not info.isROP:
+			return
+		self.log(f'Cleaning operator def pars for {rop}')
+		opDef = info.opDef
+		self._removeUnusedPars(opDef.pars(
+			'Tagtable',
+			'Librarynames',
+			'Disableinspect',
+			'Shortcuts', 'Keywords', 'Displaycategory',
+		))
+
+	def _removeUnusedPars(self, pars: list[Par]):
+		if not pars:
+			return
 		removePars = []
-		for par in comp.pars('Coordtype*', 'Contexttype*', 'Returntype*'):
+		for par in pars:
 			if par.mode == ParMode.CONSTANT and not par:
 				removePars.append(par)
 		if not removePars:
 			return
-		self.log(f'Removing {len(removePars)} unnecessary type spec pars')
+		self.log(f'Removing {len(removePars)} unnecessary pars from {pars[0].owner}')
 		for par in removePars:
 			par.destroy()
-
-	def _cleanTypeSpecCategory(self, comp: COMP, prefix: str):
-		removePars = []
-		
-		pass
 
 def _isPythonLibrary(m: OP, modName: 'str | None' = None):
 	if not isinstance(m, textDAT) or not RaytkTags.fileSync.isOn(m):

@@ -303,7 +303,7 @@ def buildOpTagTable(dat: DAT):
 	opTagExprs = {}  # type: dict[str, dict[str, str]]
 	for rop in RaytkContext().allMasterOperators():
 		info = ROPInfo(rop)
-		if not info or not info.isROP:
+		if not info or not info.isROP or not info.opDefPar['Tagtable']:
 			continue
 		tagTable = info.opDefPar.Tagtable.eval()
 		if not tagTable:

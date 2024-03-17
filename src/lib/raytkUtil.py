@@ -436,7 +436,7 @@ class ROPInfo:
 		if not self:
 			return False
 		if self.isROP:
-			return not self.opDefPar.Disableinspect
+			return not self.opDefPar['Disableinspect']
 		for sub in self.subROPs:
 			subInfo = ROPInfo(sub)
 			if subInfo.supportsInspect:
