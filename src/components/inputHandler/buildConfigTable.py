@@ -6,6 +6,7 @@ if False:
 	from inputHandler import _HandlerPar
 
 	class _HandlerParFull(_HandlerPar):
+		Label: StrParamT
 		Localalias: StrParamT
 		Variables: StrParamT
 		Variableinputs: StrParamT
@@ -16,13 +17,33 @@ def onCook(dat: scriptDAT):
 	host = _parentPar().Hostop.eval()
 	ownIn = _getAttachedInDAT()
 	baseName, localName = _parseHandlerName()
+	sourcePar = _parentPar().Source.bindMaster
 
 	index = _determineAutoIndex(host=host, ownIn=ownIn, baseName=baseName)
+	defaultName = f'inputOp{index}'
+	if sourcePar is not None:
+		name = sourcePar.name
+	elif localName:
+		name = localName
+	elif ownIn:
+		name = ownIn.name
+	else:
+		name = defaultName
+	if _parentPar().Label:
+		label = _parentPar().Label
+	elif ownIn and ownIn.par.label:
+		label = ownIn.par.label
+	elif sourcePar is not None:
+		label = sourcePar.label
+	else:
+		label = name.replace('_', ' ')
 	if _parentPar().Localalias:
 		alias = _parentPar().Localalias
 	else:
-		alias = f'inputOp{index}'
+		alias = defaultName
 	dat.appendRows([
+		['name', name],
+		['label', label],
 		['alias', alias],
 		['vars', _parentPar().Variables],
 		['varInputs', _parentPar().Variableinputs],
