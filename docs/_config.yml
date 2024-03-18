@@ -29,12 +29,16 @@ github_username:  t3kt
 
 # Build settings
 #theme: minima
+
+# NOTE: Uncomment this for local testing
 #theme: "just-the-docs"
+
 plugins:
   - jekyll-redirect-from
   - jemoji
 #  - jekyll-feed
 
+# NOTE: Comment this out for local testing
 remote_theme: "pmarsceill/just-the-docs"
 
 # Exclude from processing.
