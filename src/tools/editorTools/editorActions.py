@@ -636,6 +636,13 @@ def _createSwapOrderAction(text):
 		processSelection(RopActionUtils.getSelectedRops(ctx), False)
 	return SimpleAction(text, isValid, execute)
 
+class _InitMergeFloatToVector(OpInit):
+	def init(self, o: COMP, ctx: ActionContext):
+		o.par.Partsourcex = 'input1'
+		o.par.Partsourcey = 'input2' if len(o.inputs) > 1 else 'zero'
+		o.par.Partsourcez = 'input3' if len(o.inputs) > 2 else 'zero'
+		o.par.Partsourcew = 'input4' if len(o.inputs) > 3 else 'zero'
+
 class _RopTypes:
 	crossSection = 'raytk.operators.convert.crossSection'
 	modularMat = 'raytk.operators.material.modularMat'
@@ -851,6 +858,13 @@ def createActionManager():
 				returnTypes=['vec4'],
 				multi=True, minCount=True, maxCount=None),
 			attach=AttachOutFromExisting()),
+		ActionImpl(
+			'Merge to Vector',
+			ropType='raytk.operators.convert.floatToVector',
+			select=RopSelect(returnTypes=['float'], multi=True, minCount=1, maxCount=4),
+			attach=AttachOutFromExisting(),
+			inits=[_InitMergeFloatToVector()],
+		),
 		ActionImpl(
 			'Combine Lights',
 			ropType='raytk.operators.light.multiLight',
