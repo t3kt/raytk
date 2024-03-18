@@ -259,6 +259,14 @@ void assignUV(inout Sdf res, vec3 uv) {
 	#endif
 }
 
+float getMaxDist();
+
+#ifdef RAYTK_OVERRIDES_MAX_DIST
+#define RAYTK_MAX_DIST getMaxDist()
+#else
+#define RAYTK_MAX_DIST 99999
+#endif
+
 #ifndef RAYTK_MAX_DIST
 #define RAYTK_MAX_DIST 99999
 #endif

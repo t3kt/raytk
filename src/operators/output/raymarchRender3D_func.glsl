@@ -6,6 +6,8 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 	#endif
 }
 
+float getMaxDist() { return THIS_Maxdist; }
+
 Ray evaluateCamera(vec2 p, CameraContext ctx) {
 #ifndef THIS_HAS_INPUT_camera
 	mat4 camMat = mat4(
