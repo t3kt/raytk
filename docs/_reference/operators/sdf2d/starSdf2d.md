@@ -102,8 +102,8 @@ op:
   summary: SDF for a 2D star shape.
   thumb: assets/images/reference/operators/sdf2d/starSdf2d_thumb.png
   variables:
-  - label: normangle
-    name: normangle
+  - label: RTK_raytk_operators_sdf2d_starSdf2d_normangle
+    name: RTK_raytk_operators_sdf2d_starSdf2d_normangle
 
 ---
 

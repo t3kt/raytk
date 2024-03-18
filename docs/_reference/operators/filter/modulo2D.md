@@ -40,10 +40,10 @@ op:
     - shiftField
     - offsetField
     supportedVariables:
-    - cellcoord
-    - tiledquad
-    - normcoord
-    - shiftedcellcoord
+    - RTK_raytk_operators_filter_modulo2D_cellcoord
+    - RTK_raytk_operators_filter_modulo2D_tiledquad
+    - RTK_raytk_operators_filter_modulo2D_normcoord
+    - RTK_raytk_operators_filter_modulo2D_shiftedcellcoord
   - contextTypes:
     - Context
     - MaterialContext
@@ -210,14 +210,14 @@ op:
   summary: Repeats space along 2 axes.
   thumb: assets/images/reference/operators/filter/modulo2D_thumb.png
   variables:
-  - label: cellcoord
-    name: cellcoord
-  - label: tiledquad
-    name: tiledquad
-  - label: normcoord
-    name: normcoord
-  - label: shiftedcellcoord
-    name: shiftedcellcoord
+  - label: RTK_raytk_operators_filter_modulo2D_cellcoord
+    name: RTK_raytk_operators_filter_modulo2D_cellcoord
+  - label: RTK_raytk_operators_filter_modulo2D_tiledquad
+    name: RTK_raytk_operators_filter_modulo2D_tiledquad
+  - label: RTK_raytk_operators_filter_modulo2D_normcoord
+    name: RTK_raytk_operators_filter_modulo2D_normcoord
+  - label: RTK_raytk_operators_filter_modulo2D_shiftedcellcoord
+    name: RTK_raytk_operators_filter_modulo2D_shiftedcellcoord
 
 ---
 

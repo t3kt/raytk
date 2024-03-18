@@ -35,6 +35,7 @@ op:
     - Particle
     supportedVariables:
     - scale
+    - RTK_raytk_operators_filter_geometricSeriesSquareTile_scale
   name: geometricSeriesSquareTile
   opType: raytk.operators.filter.geometricSeriesSquareTile
   parameters:
@@ -65,6 +66,8 @@ op:
   variables:
   - label: scale
     name: scale
+  - label: RTK_raytk_operators_filter_geometricSeriesSquareTile_scale
+    name: RTK_raytk_operators_filter_geometricSeriesSquareTile_scale
 
 ---
 

@@ -38,7 +38,7 @@ op:
     - flipSideField
     - blendingField
     supportedVariables:
-    - sides
+    - RTK_raytk_operators_filter_mirrorAxes_sides
   - contextTypes:
     - Context
     - MaterialContext
@@ -62,7 +62,7 @@ op:
     - directionField
     - flipSideField
     supportedVariables:
-    - sides
+    - RTK_raytk_operators_filter_mirrorAxes_sides
   - contextTypes:
     - Context
     - MaterialContext
@@ -85,7 +85,7 @@ op:
     supportedVariableInputs:
     - flipSidesField
     supportedVariables:
-    - sides
+    - RTK_raytk_operators_filter_mirrorAxes_sides
   - contextTypes:
     - Context
     - MaterialContext
@@ -106,7 +106,7 @@ op:
     - float
     - vec4
     supportedVariables:
-    - sides
+    - RTK_raytk_operators_filter_mirrorAxes_sides
   - contextTypes:
     - Context
     - MaterialContext
@@ -127,7 +127,7 @@ op:
     - float
     - vec4
     supportedVariables:
-    - sides
+    - RTK_raytk_operators_filter_mirrorAxes_sides
   name: mirrorAxes
   opType: raytk.operators.filter.mirrorAxes
   parameters:
@@ -267,7 +267,7 @@ op:
     name: Target
   thumb: assets/images/reference/operators/filter/mirrorAxes_thumb.png
   variables:
-  - label: sides
-    name: sides
+  - label: RTK_raytk_operators_filter_mirrorAxes_sides
+    name: RTK_raytk_operators_filter_mirrorAxes_sides
 
 ---

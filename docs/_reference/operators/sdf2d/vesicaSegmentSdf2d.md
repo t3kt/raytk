@@ -78,7 +78,7 @@ op:
     regularHandling: runtime
   thumb: assets/images/reference/operators/sdf2d/vesicaSegmentSdf2d_thumb.png
   variables:
-  - label: normoffset
-    name: normoffset
+  - label: RTK_raytk_operators_sdf2d_vesicaSegmentSdf2d_normoffset
+    name: RTK_raytk_operators_sdf2d_vesicaSegmentSdf2d_normoffset
 
 ---

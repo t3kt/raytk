@@ -34,8 +34,8 @@ op:
     - Light
     - Particle
     supportedVariables:
-    - cellcoord
-    - normcoord
+    - RTK_raytk_operators_filter_moduloLine_cellcoord
+    - RTK_raytk_operators_filter_moduloLine_normcoord
   name: moduloLine
   opType: raytk.operators.filter.moduloLine
   parameters:
@@ -65,9 +65,9 @@ op:
     summary: How to the slices are varied.
   status: beta
   variables:
-  - label: cellcoord
-    name: cellcoord
-  - label: normcoord
-    name: normcoord
+  - label: RTK_raytk_operators_filter_moduloLine_cellcoord
+    name: RTK_raytk_operators_filter_moduloLine_cellcoord
+  - label: RTK_raytk_operators_filter_moduloLine_normcoord
+    name: RTK_raytk_operators_filter_moduloLine_normcoord
 
 ---

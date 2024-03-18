@@ -25,8 +25,8 @@ op:
     returnTypes:
     - vec4
     supportedVariables:
-    - step
-    - normstep
+    - RTK_raytk_operators_sdf_juliaSdf_step
+    - RTK_raytk_operators_sdf_juliaSdf_normstep
   keywords:
   - fractal
   - julia
@@ -54,12 +54,11 @@ op:
     name: Iterations
     readOnlyHandling: semibaked
     regularHandling: semibaked
-  status: beta
   thumb: assets/images/reference/operators/sdf/juliaSdf_thumb.png
   variables:
-  - label: step
-    name: step
-  - label: normstep
-    name: normstep
+  - label: RTK_raytk_operators_sdf_juliaSdf_step
+    name: RTK_raytk_operators_sdf_juliaSdf_step
+  - label: RTK_raytk_operators_sdf_juliaSdf_normstep
+    name: RTK_raytk_operators_sdf_juliaSdf_normstep
 
 ---

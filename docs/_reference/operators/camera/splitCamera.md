@@ -86,8 +86,8 @@ op:
     camera.
   thumb: assets/images/reference/operators/camera/splitCamera_thumb.png
   variables:
-  - label: index
-    name: index
+  - label: RTK_raytk_operators_camera_splitCamera_index
+    name: RTK_raytk_operators_camera_splitCamera_index
 
 ---
 

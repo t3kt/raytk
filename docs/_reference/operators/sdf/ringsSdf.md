@@ -136,13 +136,13 @@ op:
     readOnlyHandling: baked
     regularHandling: runtime
   variables:
-  - label: angle
-    name: angle
-  - label: normangle
-    name: normangle
-  - label: axispos
-    name: axispos
-  - label: ring
-    name: ring
+  - label: RTK_raytk_operators_sdf_ringsSdf_angle
+    name: RTK_raytk_operators_sdf_ringsSdf_angle
+  - label: RTK_raytk_operators_sdf_ringsSdf_normangle
+    name: RTK_raytk_operators_sdf_ringsSdf_normangle
+  - label: RTK_raytk_operators_sdf_ringsSdf_axispos
+    name: RTK_raytk_operators_sdf_ringsSdf_axispos
+  - label: RTK_raytk_operators_sdf_ringsSdf_ring
+    name: RTK_raytk_operators_sdf_ringsSdf_ring
 
 ---

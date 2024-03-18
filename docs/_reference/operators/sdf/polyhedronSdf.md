@@ -39,6 +39,8 @@ op:
     name: uvwField
     returnTypes:
     - vec4
+    sourceParamLabel: UVW Field
+    sourceParamName: Uvwfield
     supportedVariableInputs:
     - radiusField
   - contextTypes:
@@ -56,6 +58,8 @@ op:
     name: faceRadiusField
     returnTypes:
     - float
+    sourceParamLabel: Face Radius Field
+    sourceParamName: Faceradiusfield
     supportedVariableInputs:
     - radiusField
     - uvwField
@@ -74,6 +78,8 @@ op:
     name: segmentRadiusField
     returnTypes:
     - float
+    sourceParamLabel: Segment Radius Field
+    sourceParamName: Segmentradiusfield
     supportedVariableInputs:
     - radiusField
     - uvwField
@@ -93,6 +99,8 @@ op:
     name: segmentSizeField
     returnTypes:
     - float
+    sourceParamLabel: Segment Size Field
+    sourceParamName: Segmentsizefield
     supportedVariableInputs:
     - radiusField
     - uvwField
@@ -113,6 +121,8 @@ op:
     name: vertexRadiusField
     returnTypes:
     - float
+    sourceParamLabel: Vertex Radius Field
+    sourceParamName: Vertexradiusfield
     supportedVariableInputs:
     - radiusField
     - uvwField
@@ -134,6 +144,8 @@ op:
     name: vertexSizeField
     returnTypes:
     - float
+    sourceParamLabel: Vertex Size Field
+    sourceParamName: Vertexsizefield
     supportedVariableInputs:
     - radiusField
     - uvwField

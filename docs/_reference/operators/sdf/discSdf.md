@@ -81,12 +81,12 @@ op:
   summary: A flat disc facing the Y axis.
   thumb: assets/images/reference/operators/sdf/discSdf_thumb.png
   variables:
-  - label: angle
-    name: angle
-  - label: normangle
-    name: normangle
-  - label: normaxisdist
-    name: normaxisdist
+  - label: RTK_raytk_operators_sdf_discSdf_angle
+    name: RTK_raytk_operators_sdf_discSdf_angle
+  - label: RTK_raytk_operators_sdf_discSdf_normangle
+    name: RTK_raytk_operators_sdf_discSdf_normangle
+  - label: RTK_raytk_operators_sdf_discSdf_normaxisdist
+    name: RTK_raytk_operators_sdf_discSdf_normaxisdist
 
 ---
 

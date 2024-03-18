@@ -33,8 +33,8 @@ op:
     - radialOffsetField
     - axisOffsetField
     supportedVariables:
-    - angle
-    - normangle
+    - RTK_raytk_operators_convert_revolve_angle
+    - RTK_raytk_operators_convert_revolve_normangle
   - contextTypes:
     - Context
     - MaterialContext
@@ -57,8 +57,8 @@ op:
     - radialOffsetField
     - axisOffsetField
     supportedVariables:
-    - angle
-    - normangle
+    - RTK_raytk_operators_convert_revolve_angle
+    - RTK_raytk_operators_convert_revolve_normangle
   - contextTypes:
     - Context
     - MaterialContext
@@ -82,8 +82,8 @@ op:
     - radialOffsetField
     - axisOffsetField
     supportedVariables:
-    - angle
-    - normangle
+    - RTK_raytk_operators_convert_revolve_angle
+    - RTK_raytk_operators_convert_revolve_normangle
   - contextTypes:
     - Context
     - MaterialContext
@@ -108,8 +108,8 @@ op:
     - radialOffsetField
     - axisOffsetField
     supportedVariables:
-    - angle
-    - normangle
+    - RTK_raytk_operators_convert_revolve_angle
+    - RTK_raytk_operators_convert_revolve_normangle
   - contextTypes:
     - Context
     - MaterialContext
@@ -126,8 +126,8 @@ op:
     returnTypes:
     - float
     supportedVariables:
-    - angle
-    - normangle
+    - RTK_raytk_operators_convert_revolve_angle
+    - RTK_raytk_operators_convert_revolve_normangle
   - contextTypes:
     - Context
     - MaterialContext
@@ -146,8 +146,8 @@ op:
     supportedVariableInputs:
     - radialOffsetField
     supportedVariables:
-    - angle
-    - normangle
+    - RTK_raytk_operators_convert_revolve_angle
+    - RTK_raytk_operators_convert_revolve_normangle
   name: revolve
   opType: raytk.operators.convert.revolve
   parameters:
@@ -184,10 +184,10 @@ op:
   summary: Creates a 3D SDF by revolving a 2D cross-section SDF around an axis.
   thumb: assets/images/reference/operators/convert/revolve_thumb.png
   variables:
-  - label: angle
-    name: angle
-  - label: normangle
-    name: normangle
+  - label: RTK_raytk_operators_convert_revolve_angle
+    name: RTK_raytk_operators_convert_revolve_angle
+  - label: RTK_raytk_operators_convert_revolve_normangle
+    name: RTK_raytk_operators_convert_revolve_normangle
 
 ---
 

@@ -39,9 +39,9 @@ op:
     - shiftField
     - offsetField
     supportedVariables:
-    - cellcoord
-    - normcoord
-    - shiftedcellcoord
+    - RTK_raytk_operators_filter_modulo3D_cellcoord
+    - RTK_raytk_operators_filter_modulo3D_normcoord
+    - RTK_raytk_operators_filter_modulo3D_shiftedcellcoord
   - contextTypes:
     - Context
     - MaterialContext
@@ -169,12 +169,12 @@ op:
   summary: Repeats space along all 3 axes.
   thumb: assets/images/reference/operators/filter/modulo3D_thumb.png
   variables:
-  - label: cellcoord
-    name: cellcoord
-  - label: normcoord
-    name: normcoord
-  - label: shiftedcellcoord
-    name: shiftedcellcoord
+  - label: RTK_raytk_operators_filter_modulo3D_cellcoord
+    name: RTK_raytk_operators_filter_modulo3D_cellcoord
+  - label: RTK_raytk_operators_filter_modulo3D_normcoord
+    name: RTK_raytk_operators_filter_modulo3D_normcoord
+  - label: RTK_raytk_operators_filter_modulo3D_shiftedcellcoord
+    name: RTK_raytk_operators_filter_modulo3D_shiftedcellcoord
 
 ---
 

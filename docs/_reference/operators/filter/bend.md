@@ -45,8 +45,8 @@ op:
     - bendField
     - shiftField
     supportedVariables:
-    - axispos
-    - bendpos
+    - RTK_raytk_operators_filter_bend_axispos
+    - RTK_raytk_operators_filter_bend_bendpos
   - contextTypes:
     - Context
     - MaterialContext
@@ -70,8 +70,8 @@ op:
       axis and the bend direction are passed. For 3D coords, the relative XYZ position
       is passed.
     supportedVariables:
-    - axispos
-    - bendpos
+    - RTK_raytk_operators_filter_bend_axispos
+    - RTK_raytk_operators_filter_bend_bendpos
   - contextTypes:
     - Context
     - MaterialContext
@@ -93,8 +93,8 @@ op:
     supportedVariableInputs:
     - bendField
     supportedVariables:
-    - axispos
-    - bendpos
+    - RTK_raytk_operators_filter_bend_axispos
+    - RTK_raytk_operators_filter_bend_bendpos
   name: bend
   opType: raytk.operators.filter.bend
   parameters:
@@ -142,10 +142,10 @@ op:
   summary: Bends space, along a main axis, towards a second axis.
   thumb: assets/images/reference/operators/filter/bend_thumb.png
   variables:
-  - label: axispos
-    name: axispos
-  - label: bendpos
-    name: bendpos
+  - label: RTK_raytk_operators_filter_bend_axispos
+    name: RTK_raytk_operators_filter_bend_axispos
+  - label: RTK_raytk_operators_filter_bend_bendpos
+    name: RTK_raytk_operators_filter_bend_bendpos
 
 ---
 

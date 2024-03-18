@@ -28,11 +28,11 @@ op:
     returnTypes:
     - float
     supportedVariables:
-    - stepindex
-    - normstepindex
-    - stepinterp
-    - normoffset
-    - offset
+    - RTK_raytk_operators_sdf_segmentedLineSdf_stepindex
+    - RTK_raytk_operators_sdf_segmentedLineSdf_normstepindex
+    - RTK_raytk_operators_sdf_segmentedLineSdf_stepinterp
+    - RTK_raytk_operators_sdf_segmentedLineSdf_normoffset
+    - RTK_raytk_operators_sdf_segmentedLineSdf_offset
   keywords:
   - line
   - path
@@ -107,16 +107,16 @@ op:
   summary: Multi-segment line SDF.
   thumb: assets/images/reference/operators/sdf/segmentedLineSdf_thumb.png
   variables:
-  - label: stepindex
-    name: stepindex
-  - label: normstepindex
-    name: normstepindex
-  - label: stepinterp
-    name: stepinterp
-  - label: normoffset
-    name: normoffset
-  - label: offset
-    name: offset
+  - label: RTK_raytk_operators_sdf_segmentedLineSdf_stepindex
+    name: RTK_raytk_operators_sdf_segmentedLineSdf_stepindex
+  - label: RTK_raytk_operators_sdf_segmentedLineSdf_normstepindex
+    name: RTK_raytk_operators_sdf_segmentedLineSdf_normstepindex
+  - label: RTK_raytk_operators_sdf_segmentedLineSdf_stepinterp
+    name: RTK_raytk_operators_sdf_segmentedLineSdf_stepinterp
+  - label: RTK_raytk_operators_sdf_segmentedLineSdf_normoffset
+    name: RTK_raytk_operators_sdf_segmentedLineSdf_normoffset
+  - label: RTK_raytk_operators_sdf_segmentedLineSdf_offset
+    name: RTK_raytk_operators_sdf_segmentedLineSdf_offset
 
 ---
 

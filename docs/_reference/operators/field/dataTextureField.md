@@ -36,7 +36,6 @@ op:
     name: Channel
     readOnlyHandling: semibaked
     regularHandling: semibaked
-  status: beta
   summary: Accesses data from a texture with the same layout as the renderer.
 
 ---

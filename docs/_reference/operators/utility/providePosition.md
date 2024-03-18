@@ -38,7 +38,7 @@ op:
   name: providePosition
   opType: raytk.operators.utility.providePosition
   variables:
-  - label: pos
-    name: pos
+  - label: RTK_raytk_operators_utility_providePosition_pos
+    name: RTK_raytk_operators_utility_providePosition_pos
 
 ---

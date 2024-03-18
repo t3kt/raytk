@@ -39,11 +39,11 @@ op:
     - float
     - vec4
     supportedVariables:
-    - lightcolor
-    - lightpos
-    - surfacecolor
-    - surfaceuv
-    - normal
+    - RTK_raytk_operators_material_basicMat_lightcolor
+    - RTK_raytk_operators_material_basicMat_lightpos
+    - RTK_raytk_operators_material_basicMat_surfacecolor
+    - RTK_raytk_operators_material_basicMat_surfaceuv
+    - RTK_raytk_operators_material_basicMat_normal
   name: basicMat
   opType: raytk.operators.material.basicMat
   parameters:
@@ -108,16 +108,16 @@ op:
   summary: Material with a basic lighting model.
   thumb: assets/images/reference/operators/material/basicMat_thumb.png
   variables:
-  - label: lightcolor
-    name: lightcolor
-  - label: lightpos
-    name: lightpos
-  - label: surfacecolor
-    name: surfacecolor
-  - label: surfaceuv
-    name: surfaceuv
-  - label: normal
-    name: normal
+  - label: RTK_raytk_operators_material_basicMat_lightcolor
+    name: RTK_raytk_operators_material_basicMat_lightcolor
+  - label: RTK_raytk_operators_material_basicMat_lightpos
+    name: RTK_raytk_operators_material_basicMat_lightpos
+  - label: RTK_raytk_operators_material_basicMat_surfacecolor
+    name: RTK_raytk_operators_material_basicMat_surfacecolor
+  - label: RTK_raytk_operators_material_basicMat_surfaceuv
+    name: RTK_raytk_operators_material_basicMat_surfaceuv
+  - label: RTK_raytk_operators_material_basicMat_normal
+    name: RTK_raytk_operators_material_basicMat_normal
 
 ---
 

@@ -68,9 +68,9 @@ op:
     regularHandling: runtime
   status: beta
   variables:
-  - label: previous
-    name: previous
-  - label: sdf
-    name: sdf
+  - label: RTK_raytk_operators_filter_assignAttribute_previous
+    name: RTK_raytk_operators_filter_assignAttribute_previous
+  - label: RTK_raytk_operators_filter_assignAttribute_sdf
+    name: RTK_raytk_operators_filter_assignAttribute_sdf
 
 ---

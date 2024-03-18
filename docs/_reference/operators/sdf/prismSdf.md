@@ -208,12 +208,12 @@ op:
   summary: A prism shape, like a cylinder but with flat sides, along the z axis.
   thumb: assets/images/reference/operators/sdf/prismSdf_thumb.png
   variables:
-  - label: axispos
-    name: axispos
-  - label: normoffset
-    name: normoffset
-  - label: normangle
-    name: normangle
+  - label: RTK_raytk_operators_sdf_prismSdf_axispos
+    name: RTK_raytk_operators_sdf_prismSdf_axispos
+  - label: RTK_raytk_operators_sdf_prismSdf_normoffset
+    name: RTK_raytk_operators_sdf_prismSdf_normoffset
+  - label: RTK_raytk_operators_sdf_prismSdf_normangle
+    name: RTK_raytk_operators_sdf_prismSdf_normangle
 
 ---
 

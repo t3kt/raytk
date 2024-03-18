@@ -19,8 +19,8 @@ op:
     - float
     - vec4
     supportedVariables:
-    - step
-    - normstep
+    - RTK_raytk_operators_material_hologramContrib_step
+    - RTK_raytk_operators_material_hologramContrib_normstep
   name: hologramContrib
   opType: raytk.operators.material.hologramContrib
   parameters:
@@ -44,9 +44,9 @@ op:
     regularHandling: runtime
   status: beta
   variables:
-  - label: step
-    name: step
-  - label: normstep
-    name: normstep
+  - label: RTK_raytk_operators_material_hologramContrib_step
+    name: RTK_raytk_operators_material_hologramContrib_step
+  - label: RTK_raytk_operators_material_hologramContrib_normstep
+    name: RTK_raytk_operators_material_hologramContrib_normstep
 
 ---

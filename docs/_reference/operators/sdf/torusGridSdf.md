@@ -1,46 +1,14 @@
 ---
 layout: operator
-title: torusSdf
+title: torusGridSdf
 parent: Sdf Operators
 grand_parent: Operators
-permalink: /reference/operators/sdf/torusSdf
+permalink: /reference/operators/sdf/torusGridSdf
 redirect_from:
-  - /reference/opType/raytk.operators.sdf.torusSdf/
+  - /reference/opType/raytk.operators.sdf.torusGridSdf/
 op:
   category: sdf
   inputs:
-  - contextTypes:
-    - Context
-    - MaterialContext
-    - CameraContext
-    - LightContext
-    - RayContext
-    - ParticleContext
-    - VertexContext
-    - PixelContext
-    coordTypes:
-    - vec3
-    label: Angle Width Field
-    name: angleWidthField
-    returnTypes:
-    - float
-  - contextTypes:
-    - Context
-    - MaterialContext
-    - CameraContext
-    - LightContext
-    - RayContext
-    - ParticleContext
-    - VertexContext
-    - PixelContext
-    coordTypes:
-    - vec3
-    label: Angle Offset Field
-    name: angleOffsetField
-    returnTypes:
-    - float
-    supportedVariableInputs:
-    - angleWidthField
   - contextTypes:
     - Context
     - MaterialContext
@@ -56,9 +24,6 @@ op:
     name: radiusField
     returnTypes:
     - float
-    supportedVariableInputs:
-    - angleWidthField
-    - angleOffsetField
     supportedVariables:
     - angle
     - normangle
@@ -78,18 +43,37 @@ op:
     returnTypes:
     - float
     supportedVariableInputs:
-    - angleWidthField
-    - angleOffsetField
     - radiusField
     supportedVariables:
     - angle
     - normangle
-  keywords:
-  - donut
-  - ring
-  - torus
-  name: torusSdf
-  opType: raytk.operators.sdf.torusSdf
+  - contextTypes:
+    - Context
+    - MaterialContext
+    - CameraContext
+    - LightContext
+    - RayContext
+    - ParticleContext
+    - VertexContext
+    - PixelContext
+    coordTypes:
+    - vec3
+    label: Bar Thickness Field
+    name: barRhicknessField
+    returnTypes:
+    - float
+    supportedVariableInputs:
+    - radiusField
+    - thicknessField
+    supportedVariables:
+    - angle
+    - normangle
+    - col
+    - normcol
+    - row
+    - normrow
+  name: torusGridSdf
+  opType: raytk.operators.sdf.torusGridSdf
   parameters:
   - label: Axis
     menuOptions:
@@ -110,40 +94,33 @@ op:
     name: Thickness
     readOnlyHandling: baked
     regularHandling: runtime
-  - label: Translate
-    name: Translate
+  - label: Rows
+    name: Rows
     readOnlyHandling: baked
     regularHandling: runtime
-  - label: Enable Caps
-    name: Enablecaps
-    readOnlyHandling: semibaked
-    regularHandling: semibaked
-  - label: Angle Width
-    name: Anglewidth
+  - label: Columns
+    name: Cols
     readOnlyHandling: baked
     regularHandling: runtime
-  - label: Angle Offset
-    name: Angleoffset
+  - label: Bar Thickness
+    name: Barthickness
     readOnlyHandling: baked
     regularHandling: runtime
-  - label: UV Mode
-    menuOptions:
-    - label: None
-      name: none
-    - label: Torus
-      name: torus
-    name: Uvmode
-    readOnlyHandling: semibaked
-    regularHandling: semibaked
-  summary: SDF for a torus.
-  thumb: assets/images/reference/operators/sdf/torusSdf_thumb.png
+    summary: the thickness of the bars.
+  status: beta
+  thumb: assets/images/reference/operators/sdf/torusGridSdf_thumb.png
   variables:
-  - label: RTK_raytk_operators_sdf_torusSdf_angle
-    name: RTK_raytk_operators_sdf_torusSdf_angle
-  - label: RTK_raytk_operators_sdf_torusSdf_normangle
-    name: RTK_raytk_operators_sdf_torusSdf_normangle
+  - label: RTK_raytk_operators_sdf_torusGridSdf_angle
+    name: RTK_raytk_operators_sdf_torusGridSdf_angle
+  - label: RTK_raytk_operators_sdf_torusGridSdf_normangle
+    name: RTK_raytk_operators_sdf_torusGridSdf_normangle
+  - label: RTK_raytk_operators_sdf_torusGridSdf_col
+    name: RTK_raytk_operators_sdf_torusGridSdf_col
+  - label: RTK_raytk_operators_sdf_torusGridSdf_normcol
+    name: RTK_raytk_operators_sdf_torusGridSdf_normcol
+  - label: RTK_raytk_operators_sdf_torusGridSdf_row
+    name: RTK_raytk_operators_sdf_torusGridSdf_row
+  - label: RTK_raytk_operators_sdf_torusGridSdf_normrow
+    name: RTK_raytk_operators_sdf_torusGridSdf_normrow
 
 ---
-
-
-SDF for a torus.

@@ -29,8 +29,8 @@ op:
     returnTypes:
     - Sdf
     supportedVariables:
-    - index
-    - normindex
+    - RTK_raytk_operators_filter_radialClone_index
+    - RTK_raytk_operators_filter_radialClone_normindex
   - contextTypes:
     - Context
     - MaterialContext
@@ -49,8 +49,8 @@ op:
     returnTypes:
     - float
     supportedVariables:
-    - index
-    - normindex
+    - RTK_raytk_operators_filter_radialClone_index
+    - RTK_raytk_operators_filter_radialClone_normindex
   - contextTypes:
     - Context
     - MaterialContext
@@ -69,8 +69,8 @@ op:
     returnTypes:
     - float
     supportedVariables:
-    - index
-    - normindex
+    - RTK_raytk_operators_filter_radialClone_index
+    - RTK_raytk_operators_filter_radialClone_normindex
   - contextTypes:
     - Context
     - MaterialContext
@@ -89,8 +89,8 @@ op:
     returnTypes:
     - float
     supportedVariables:
-    - index
-    - normindex
+    - RTK_raytk_operators_filter_radialClone_index
+    - RTK_raytk_operators_filter_radialClone_normindex
   keywords:
   - clone
   - copy
@@ -199,10 +199,10 @@ op:
   summary: Repeats an SDF radially around an axis, combining the resulting shapes.
   thumb: assets/images/reference/operators/filter/radialClone_thumb.png
   variables:
-  - label: index
-    name: index
-  - label: normindex
-    name: normindex
+  - label: RTK_raytk_operators_filter_radialClone_index
+    name: RTK_raytk_operators_filter_radialClone_index
+  - label: RTK_raytk_operators_filter_radialClone_normindex
+    name: RTK_raytk_operators_filter_radialClone_normindex
 
 ---
 

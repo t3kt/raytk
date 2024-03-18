@@ -25,8 +25,8 @@ op:
     returnTypes:
     - float
     supportedVariables:
-    - step
-    - normstep
+    - RTK_raytk_operators_sdf_mengerSpongeSdf_step
+    - RTK_raytk_operators_sdf_mengerSpongeSdf_normstep
   - contextTypes:
     - Context
     - MaterialContext
@@ -45,8 +45,8 @@ op:
     supportedVariableInputs:
     - boxScaleField
     supportedVariables:
-    - step
-    - normstep
+    - RTK_raytk_operators_sdf_mengerSpongeSdf_step
+    - RTK_raytk_operators_sdf_mengerSpongeSdf_normstep
   - contextTypes:
     - Context
     - MaterialContext
@@ -66,8 +66,8 @@ op:
     - boxScaleField
     - crossScaleField
     supportedVariables:
-    - step
-    - normstep
+    - RTK_raytk_operators_sdf_mengerSpongeSdf_step
+    - RTK_raytk_operators_sdf_mengerSpongeSdf_normstep
   name: mengerSpongeSdf
   opType: raytk.operators.sdf.mengerSpongeSdf
   parameters:
@@ -102,10 +102,10 @@ op:
   summary: Menger sponge fractal, made of boxes with holes cut through each axis.
   thumb: assets/images/reference/operators/sdf/mengerSpongeSdf_thumb.png
   variables:
-  - label: step
-    name: step
-  - label: normstep
-    name: normstep
+  - label: RTK_raytk_operators_sdf_mengerSpongeSdf_step
+    name: RTK_raytk_operators_sdf_mengerSpongeSdf_step
+  - label: RTK_raytk_operators_sdf_mengerSpongeSdf_normstep
+    name: RTK_raytk_operators_sdf_mengerSpongeSdf_normstep
 
 ---
 

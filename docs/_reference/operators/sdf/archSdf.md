@@ -158,7 +158,6 @@ op:
     name: Hideframebottom
     readOnlyHandling: semibaked
     regularHandling: semibaked
-  status: beta
   thumb: assets/images/reference/operators/sdf/archSdf_thumb.png
 
 ---

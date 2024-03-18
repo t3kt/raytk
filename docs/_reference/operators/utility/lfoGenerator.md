@@ -83,6 +83,5 @@ op:
     name: Resetonstart
   - label: Reset Value
     name: Resetvalue
-  status: beta
 
 ---

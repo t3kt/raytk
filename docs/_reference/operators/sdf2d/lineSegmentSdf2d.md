@@ -88,8 +88,8 @@ op:
   summary: 2D line segment SDF.
   thumb: assets/images/reference/operators/sdf2d/lineSegmentSdf2d_thumb.png
   variables:
-  - label: normoffset
-    name: normoffset
+  - label: RTK_raytk_operators_sdf2d_lineSegmentSdf2d_normoffset
+    name: RTK_raytk_operators_sdf2d_lineSegmentSdf2d_normoffset
 
 ---
 

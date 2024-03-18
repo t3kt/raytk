@@ -26,8 +26,8 @@ op:
     - float
     summary: Value field that can be used to vary the thickness of the ring.
     supportedVariables:
-    - angle
-    - normangle
+    - RTK_raytk_operators_sdf_mobiusRingSdf_angle
+    - RTK_raytk_operators_sdf_mobiusRingSdf_normangle
   - contextTypes:
     - Context
     - MaterialContext
@@ -47,8 +47,8 @@ op:
     supportedVariableInputs:
     - thicknessField
     supportedVariables:
-    - angle
-    - normangle
+    - RTK_raytk_operators_sdf_mobiusRingSdf_angle
+    - RTK_raytk_operators_sdf_mobiusRingSdf_normangle
   keywords:
   - mobius
   - ring
@@ -102,10 +102,10 @@ op:
     and then bent into a ring.
   thumb: assets/images/reference/operators/sdf/mobiusRingSdf_thumb.png
   variables:
-  - label: angle
-    name: angle
-  - label: normangle
-    name: normangle
+  - label: RTK_raytk_operators_sdf_mobiusRingSdf_angle
+    name: RTK_raytk_operators_sdf_mobiusRingSdf_angle
+  - label: RTK_raytk_operators_sdf_mobiusRingSdf_normangle
+    name: RTK_raytk_operators_sdf_mobiusRingSdf_normangle
 
 ---
 

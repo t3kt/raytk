@@ -106,7 +106,6 @@ op:
     name: Offset
     readOnlyHandling: baked
     regularHandling: runtime
-  status: beta
   thumb: assets/images/reference/operators/sdf2d/circleWaveSdf2d_thumb.png
 
 ---

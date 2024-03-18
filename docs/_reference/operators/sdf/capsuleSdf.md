@@ -93,8 +93,8 @@ op:
   summary: A cylinder with rounded ends, between two points.
   thumb: assets/images/reference/operators/sdf/capsuleSdf_thumb.png
   variables:
-  - label: normoffset
-    name: normoffset
+  - label: RTK_raytk_operators_sdf_capsuleSdf_normoffset
+    name: RTK_raytk_operators_sdf_capsuleSdf_normoffset
 
 ---
 

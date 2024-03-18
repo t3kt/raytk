@@ -35,8 +35,8 @@ op:
     - offsetField
     - shiftField
     supportedVariables:
-    - cell
-    - normcell
+    - RTK_raytk_operators_filter_moduloSpherical_cell
+    - RTK_raytk_operators_filter_moduloSpherical_normcell
   - contextTypes:
     - Context
     - MaterialContext
@@ -127,9 +127,9 @@ op:
     readOnlyHandling: semibaked
     regularHandling: semibaked
   variables:
-  - label: cell
-    name: cell
-  - label: normcell
-    name: normcell
+  - label: RTK_raytk_operators_filter_moduloSpherical_cell
+    name: RTK_raytk_operators_filter_moduloSpherical_cell
+  - label: RTK_raytk_operators_filter_moduloSpherical_normcell
+    name: RTK_raytk_operators_filter_moduloSpherical_normcell
 
 ---

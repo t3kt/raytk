@@ -153,10 +153,10 @@ op:
   summary: Transforms space using a logarithmic spiral.
   thumb: assets/images/reference/operators/filter/spiralZoom_thumb.png
   variables:
-  - label: logdist
-    name: logdist
-  - label: dist
-    name: dist
+  - label: RTK_raytk_operators_filter_spiralZoom_logdist
+    name: RTK_raytk_operators_filter_spiralZoom_logdist
+  - label: RTK_raytk_operators_filter_spiralZoom_dist
+    name: RTK_raytk_operators_filter_spiralZoom_dist
 
 ---
 

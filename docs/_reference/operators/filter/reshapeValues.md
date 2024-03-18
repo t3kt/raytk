@@ -71,7 +71,6 @@ op:
   parameters:
   - label: Enable
     name: Enable
-  status: beta
   summary: Reshapes the values produced by a field by applying a function.
 
 ---

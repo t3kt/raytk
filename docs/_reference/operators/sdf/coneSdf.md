@@ -139,12 +139,12 @@ op:
   summary: Defines a cone or capped cone shape.
   thumb: assets/images/reference/operators/sdf/coneSdf_thumb.png
   variables:
-  - label: axispos
-    name: axispos
-  - label: normoffset
-    name: normoffset
-  - label: normangle
-    name: normangle
+  - label: RTK_raytk_operators_sdf_coneSdf_axispos
+    name: RTK_raytk_operators_sdf_coneSdf_axispos
+  - label: RTK_raytk_operators_sdf_coneSdf_normoffset
+    name: RTK_raytk_operators_sdf_coneSdf_normoffset
+  - label: RTK_raytk_operators_sdf_coneSdf_normangle
+    name: RTK_raytk_operators_sdf_coneSdf_normangle
 
 ---
 

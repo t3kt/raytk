@@ -12,9 +12,8 @@ cat:
   name: combine
   operators:
   - name: addFields
-    summary: Adds the values of multiple fields.
+    status: deprecated
   - name: arrange
-    summary: Combines multiple SDFs, with a different position for each.
   - name: boundLimit
     status: beta
   - keywords:
@@ -25,44 +24,25 @@ cat:
     name: combine
     shortcuts:
     - cmb
-    summary: Combines SDFs in various ways.
   - name: combineFields
-    summary: Combines float or vector fields using one of several mathematical operations.
   - name: composeSdf
     status: beta
-    summary: Combine multiple SDFs using different combination modes into a single
-      SDF.
   - name: compositeFields
-    summary: Combines two vector fields using color compositing.
   - name: edgeCombine
-    summary: Combines two SDFs in ways that use the intersection areas.
   - name: iterationSwitch
-    summary: Switches between inputs based on the iteration value provided by a downstream
-      operator.
   - name: layoutGrid
-    summary: Slices space into a grid, and places each input in a separate cell.
   - name: mergeFields
-    summary: Merges multiple vector fields, using different fields for each vector
-      part.
   - name: shapedCombine
-    status: beta
-    summary: Combine two SDFs, using a 2D SDF to shape the blending region.
   - name: simpleDiff
-    summary: Combines two SDFs using the difference operator.
   - name: simpleIntersect
-    summary: Combines SDFs using the intersect operator.
   - name: simpleUnion
     shortcuts:
     - su
-    summary: Combines several SDFs using the union operator.
   - keywords:
     - blend
     name: switch
-    summary: Switches between several inputs, without the need to rebuild the shader,
-      allowing for fast switching.
   - name: triPlanarCombine
     status: beta
-    summary: Combines three 2D fields based on vectors like surface normals.
   summary: 'Operators that take two or more inputs and combine them into a single
 
     output.'

@@ -47,8 +47,8 @@ op:
     regularHandling: runtime
   summary: A directional light.
   variables:
-  - label: lightdir
-    name: lightdir
+  - label: RTK_raytk_operators_light_directionalLight_lightdir
+    name: RTK_raytk_operators_light_directionalLight_lightdir
 
 ---
 

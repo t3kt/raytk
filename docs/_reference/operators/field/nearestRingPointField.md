@@ -69,20 +69,19 @@ op:
     name: Format
     readOnlyHandling: baked
     regularHandling: baked
-  status: beta
   thumb: assets/images/reference/operators/field/nearestRingPointField_thumb.png
   variables:
-  - label: pos
-    name: pos
-  - label: angle
-    name: angle
-  - label: dist
-    name: dist
-  - label: vector
-    name: vector
-  - label: step
-    name: step
-  - label: normstep
-    name: normstep
+  - label: RTK_raytk_operators_field_nearestRingPointField_pos
+    name: RTK_raytk_operators_field_nearestRingPointField_pos
+  - label: RTK_raytk_operators_field_nearestRingPointField_angle
+    name: RTK_raytk_operators_field_nearestRingPointField_angle
+  - label: RTK_raytk_operators_field_nearestRingPointField_dist
+    name: RTK_raytk_operators_field_nearestRingPointField_dist
+  - label: RTK_raytk_operators_field_nearestRingPointField_vector
+    name: RTK_raytk_operators_field_nearestRingPointField_vector
+  - label: RTK_raytk_operators_field_nearestRingPointField_step
+    name: RTK_raytk_operators_field_nearestRingPointField_step
+  - label: RTK_raytk_operators_field_nearestRingPointField_normstep
+    name: RTK_raytk_operators_field_nearestRingPointField_normstep
 
 ---

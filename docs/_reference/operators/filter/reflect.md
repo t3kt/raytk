@@ -34,8 +34,8 @@ op:
     - offsetField
     - shiftField
     supportedVariables:
-    - sign
-    - index
+    - RTK_raytk_operators_filter_reflect_sign
+    - RTK_raytk_operators_filter_reflect_index
   - contextTypes:
     - Context
     - MaterialContext
@@ -55,8 +55,8 @@ op:
     supportedVariableInputs:
     - shiftField
     supportedVariables:
-    - sign
-    - index
+    - RTK_raytk_operators_filter_reflect_sign
+    - RTK_raytk_operators_filter_reflect_index
   - contextTypes:
     - Context
     - MaterialContext
@@ -144,10 +144,10 @@ op:
   summary: Reflects space across a plane.
   thumb: assets/images/reference/operators/filter/reflect_thumb.png
   variables:
-  - label: sign
-    name: sign
-  - label: index
-    name: index
+  - label: RTK_raytk_operators_filter_reflect_sign
+    name: RTK_raytk_operators_filter_reflect_sign
+  - label: RTK_raytk_operators_filter_reflect_index
+    name: RTK_raytk_operators_filter_reflect_index
 
 ---
 

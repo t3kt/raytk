@@ -64,7 +64,6 @@ op:
     name: Thickness
   - label: Height
     name: Height
-  status: beta
   summary: Projects coordinates into various types of polar spaces.
 
 ---

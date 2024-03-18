@@ -60,7 +60,6 @@ op:
     name: Point8
     readOnlyHandling: baked
     regularHandling: runtime
-  status: beta
   thumb: assets/images/reference/operators/sdf2d/arbitraryPolygonSdf2d_thumb.png
 
 ---

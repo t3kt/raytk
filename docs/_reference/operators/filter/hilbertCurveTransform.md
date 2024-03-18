@@ -32,9 +32,9 @@ op:
     - Light
     - Particle
     supportedVariables:
-    - localuv
-    - cell
-    - localcell
+    - RTK_raytk_operators_filter_hilbertCurveTransform_localuv
+    - RTK_raytk_operators_filter_hilbertCurveTransform_cell
+    - RTK_raytk_operators_filter_hilbertCurveTransform_localcell
   name: hilbertCurveTransform
   opType: raytk.operators.filter.hilbertCurveTransform
   parameters:
@@ -63,11 +63,11 @@ op:
   status: beta
   thumb: assets/images/reference/operators/filter/hilbertCurveTransform_thumb.png
   variables:
-  - label: localuv
-    name: localuv
-  - label: cell
-    name: cell
-  - label: localcell
-    name: localcell
+  - label: RTK_raytk_operators_filter_hilbertCurveTransform_localuv
+    name: RTK_raytk_operators_filter_hilbertCurveTransform_localuv
+  - label: RTK_raytk_operators_filter_hilbertCurveTransform_cell
+    name: RTK_raytk_operators_filter_hilbertCurveTransform_cell
+  - label: RTK_raytk_operators_filter_hilbertCurveTransform_localcell
+    name: RTK_raytk_operators_filter_hilbertCurveTransform_localcell
 
 ---

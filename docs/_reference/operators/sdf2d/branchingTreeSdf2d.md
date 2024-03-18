@@ -42,9 +42,9 @@ op:
     supportedVariableInputs:
     - radiusField
     supportedVariables:
-    - normdist
-    - forkindex
-    - normforkindex
+    - RTK_raytk_operators_sdf2d_branchingTreeSdf2d_normdist
+    - RTK_raytk_operators_sdf2d_branchingTreeSdf2d_forkindex
+    - RTK_raytk_operators_sdf2d_branchingTreeSdf2d_normforkindex
   name: branchingTreeSdf2d
   opType: raytk.operators.sdf2d.branchingTreeSdf2d
   parameters:
@@ -79,11 +79,11 @@ op:
   status: beta
   thumb: assets/images/reference/operators/sdf2d/branchingTreeSdf2d_thumb.png
   variables:
-  - label: normdist
-    name: normdist
-  - label: forkindex
-    name: forkindex
-  - label: normforkindex
-    name: normforkindex
+  - label: RTK_raytk_operators_sdf2d_branchingTreeSdf2d_normdist
+    name: RTK_raytk_operators_sdf2d_branchingTreeSdf2d_normdist
+  - label: RTK_raytk_operators_sdf2d_branchingTreeSdf2d_forkindex
+    name: RTK_raytk_operators_sdf2d_branchingTreeSdf2d_forkindex
+  - label: RTK_raytk_operators_sdf2d_branchingTreeSdf2d_normforkindex
+    name: RTK_raytk_operators_sdf2d_branchingTreeSdf2d_normforkindex
 
 ---

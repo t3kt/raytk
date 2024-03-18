@@ -28,10 +28,10 @@ op:
     returnTypes:
     - vec4
     supportedVariables:
-    - res
-    - aspect
-    - depth
-    - firstslice
+    - RTK_raytk_operators_field_texture3dField_res
+    - RTK_raytk_operators_field_texture3dField_aspect
+    - RTK_raytk_operators_field_texture3dField_depth
+    - RTK_raytk_operators_field_texture3dField_firstslice
   name: texture3dField
   opType: raytk.operators.field.texture3dField
   parameters:
@@ -87,13 +87,13 @@ op:
     regularHandling: runtime
   thumb: assets/images/reference/operators/field/texture3dField_thumb.png
   variables:
-  - label: res
-    name: res
-  - label: aspect
-    name: aspect
-  - label: depth
-    name: depth
-  - label: firstslice
-    name: firstslice
+  - label: RTK_raytk_operators_field_texture3dField_res
+    name: RTK_raytk_operators_field_texture3dField_res
+  - label: RTK_raytk_operators_field_texture3dField_aspect
+    name: RTK_raytk_operators_field_texture3dField_aspect
+  - label: RTK_raytk_operators_field_texture3dField_depth
+    name: RTK_raytk_operators_field_texture3dField_depth
+  - label: RTK_raytk_operators_field_texture3dField_firstslice
+    name: RTK_raytk_operators_field_texture3dField_firstslice
 
 ---

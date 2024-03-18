@@ -15,104 +15,70 @@ cat:
   name: field
   operators:
   - name: atmosphereField
-    summary: Field that simulates a sun and sky.
   - name: axisDistanceField
-    summary: A float field that provides the distance from a specific point along
-      a single axis.
   - name: bandField
-    summary: Field that applies values based on a band/slice of an axis.
   - name: blackbodyColorField
   - keywords:
     - cellular
     - voronoi
     name: cellTileField
-    summary: A value field that provides an approximation of repeating cellular (voronoi)
-      noise.
   - name: chopField
-    summary: Field that provides values from a CHOP.
   - keywords:
     - color
     - gradient
     - ramp
     name: colorRampField
-    summary: A vector field that maps an input field to values from a range of colors.
   - name: colorSwitchField
-    summary: Switches or fades between a list of colors based on an index field.
   - name: constantColorField
-    summary: A vector field that evaluates to a constant color value.
   - name: constantField
-    summary: A float or vector field that evaluates to a constant value.
   - name: constantSwitchField
-    summary: Switches or blends between constant values based on an index field.
   - name: curlNoiseField
-    summary: Curl noise field.
   - name: dataTextureField
-    status: beta
-    summary: Accesses data from a texture with the same layout as the renderer.
   - name: domainColorField
     status: beta
   - name: hashField
     status: beta
   - name: hsvColorField
-    status: beta
-    summary: A field that uses HSV-based parameters to produce colors.
   - name: iterationField
-    summary: Field that returns the current iteration, from a downstream OP.
   - name: magnetField
     status: beta
   - name: metaballField
-    summary: Metaball value field.
   - name: multiPointDistanceField
-    summary: A vector field that provides the distance from 4 specific points in space
-      (one for each part of the vector).
   - name: nearestRingPointField
-    status: beta
   - name: noiseField
-    summary: A float or vector field that uses one of several noise functions.
   - name: normalField
     status: deprecated
-    summary: Vector field that produces the surface normal where it is evaluated.
   - name: pointDistanceField
-    summary: A float field that provides the distance from a specific point in space
-      from either the current position or from another point.
   - name: polarCoordField
-    status: beta
-    summary: A field that produces various types of polar coordinates.
   - name: polarVectorField
   - name: positionField
     shortcuts:
     - pos
-    summary: A vector field that produces the coordinates in space where it is checked.
   - name: rampField
     status: beta
   - name: rayField
-    summary: Field that provides the ray direction or origin.
   - name: reorderField
   - name: sdfField
-    summary: Value field based on an SDF shape.
   - name: sdfNormalField
     status: beta
   - name: spectralColorField
-    status: beta
   - name: stepField
-    summary: A field that switches between two values at a threshold point.
+  - keywords:
+    - fbm
+    - landscape
+    name: terrainNoiseField
+    status: beta
   - name: texture1dField
     status: beta
   - name: texture3dField
   - name: textureField
-    summary: A float or vector field that looks up values from a texture.
   - name: triPlanarTextureField
-    summary: Texture field that uses surface normals (or other blending techniques)
-      to apply a texture facing each axis.
   - name: uvField
-    summary: Field that produces surface UV coordinates, if available.
   - name: waveField
-    summary: A field that uses a periodic wave.
   - name: waveVectorField
     status: beta
   - name: waveletNoiseField
   - name: worleyNoiseField
-    status: beta
   summary: Float or vector fields, which provide values for the requested coordinates.
 
 ---

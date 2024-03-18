@@ -29,8 +29,8 @@ op:
     returnTypes:
     - Sdf
     supportedVariables:
-    - index
-    - normindex
+    - RTK_raytk_operators_filter_linearClone_index
+    - RTK_raytk_operators_filter_linearClone_normindex
   - contextTypes:
     - Context
     - MaterialContext
@@ -49,8 +49,8 @@ op:
     returnTypes:
     - float
     supportedVariables:
-    - index
-    - normindex
+    - RTK_raytk_operators_filter_linearClone_index
+    - RTK_raytk_operators_filter_linearClone_normindex
   name: linearClone
   opType: raytk.operators.filter.linearClone
   parameters:
@@ -131,9 +131,9 @@ op:
     summary: Whether and how to expose iteration values to upstream operators.
   thumb: assets/images/reference/operators/filter/linearClone_thumb.png
   variables:
-  - label: index
-    name: index
-  - label: normindex
-    name: normindex
+  - label: RTK_raytk_operators_filter_linearClone_index
+    name: RTK_raytk_operators_filter_linearClone_index
+  - label: RTK_raytk_operators_filter_linearClone_normindex
+    name: RTK_raytk_operators_filter_linearClone_normindex
 
 ---

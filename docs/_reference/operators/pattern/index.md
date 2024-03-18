@@ -12,10 +12,7 @@ cat:
     status: beta
   - name: brickPattern
   - name: checkerPattern
-    summary: Checkerboard pattern with alternating black and white rectangles.
   - name: gridPattern
-    status: beta
-    summary: Rectangular grid pattern.
   - name: hexagonalGridPattern
   - name: hexagonalTruchetPattern
   - name: hexagonalWeavePattern

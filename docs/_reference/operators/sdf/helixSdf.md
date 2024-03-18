@@ -151,12 +151,12 @@ op:
   summary: SDF for a helix (an elongated spiral).
   thumb: assets/images/reference/operators/sdf/helixSdf_thumb.png
   variables:
-  - label: axisoffset
-    name: axisoffset
-  - label: angle
-    name: angle
-  - label: normangle
-    name: normangle
+  - label: RTK_raytk_operators_sdf_helixSdf_axisoffset
+    name: RTK_raytk_operators_sdf_helixSdf_axisoffset
+  - label: RTK_raytk_operators_sdf_helixSdf_angle
+    name: RTK_raytk_operators_sdf_helixSdf_angle
+  - label: RTK_raytk_operators_sdf_helixSdf_normangle
+    name: RTK_raytk_operators_sdf_helixSdf_normangle
 
 ---
 

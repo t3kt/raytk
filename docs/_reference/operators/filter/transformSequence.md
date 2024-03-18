@@ -41,8 +41,8 @@ op:
     - transform5
     - transform6
     supportedVariables:
-    - step
-    - normstep
+    - RTK_raytk_operators_filter_transformSequence_step
+    - RTK_raytk_operators_filter_transformSequence_normstep
   - contextTypes:
     - Context
     - MaterialContext
@@ -62,8 +62,8 @@ op:
     returnTypes:
     - vec4
     supportedVariables:
-    - step
-    - normstep
+    - RTK_raytk_operators_filter_transformSequence_step
+    - RTK_raytk_operators_filter_transformSequence_normstep
   - contextTypes:
     - Context
     - MaterialContext
@@ -85,8 +85,8 @@ op:
     supportedVariableInputs:
     - transform1
     supportedVariables:
-    - step
-    - normstep
+    - RTK_raytk_operators_filter_transformSequence_step
+    - RTK_raytk_operators_filter_transformSequence_normstep
   - contextTypes:
     - Context
     - MaterialContext
@@ -108,8 +108,8 @@ op:
     supportedVariableInputs:
     - transform[1-2]
     supportedVariables:
-    - step
-    - normstep
+    - RTK_raytk_operators_filter_transformSequence_step
+    - RTK_raytk_operators_filter_transformSequence_normstep
   - contextTypes:
     - Context
     - MaterialContext
@@ -131,8 +131,8 @@ op:
     supportedVariableInputs:
     - transform[1-3]
     supportedVariables:
-    - step
-    - normstep
+    - RTK_raytk_operators_filter_transformSequence_step
+    - RTK_raytk_operators_filter_transformSequence_normstep
   - contextTypes:
     - Context
     - MaterialContext
@@ -154,8 +154,8 @@ op:
     supportedVariableInputs:
     - transform[1-4]
     supportedVariables:
-    - step
-    - normstep
+    - RTK_raytk_operators_filter_transformSequence_step
+    - RTK_raytk_operators_filter_transformSequence_normstep
   - contextTypes:
     - Context
     - MaterialContext
@@ -177,8 +177,8 @@ op:
     supportedVariableInputs:
     - transform[1-5]
     supportedVariables:
-    - step
-    - normstep
+    - RTK_raytk_operators_filter_transformSequence_step
+    - RTK_raytk_operators_filter_transformSequence_normstep
   keywords:
   - apply
   name: transformSequence
@@ -213,9 +213,9 @@ op:
     regularHandling: runtime
   status: beta
   variables:
-  - label: step
-    name: step
-  - label: normstep
-    name: normstep
+  - label: RTK_raytk_operators_filter_transformSequence_step
+    name: RTK_raytk_operators_filter_transformSequence_step
+  - label: RTK_raytk_operators_filter_transformSequence_normstep
+    name: RTK_raytk_operators_filter_transformSequence_normstep
 
 ---

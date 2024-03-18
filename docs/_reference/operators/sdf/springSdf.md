@@ -167,7 +167,6 @@ op:
     readOnlyHandling: baked
     regularHandling: runtime
     summary: Thickness of the spring, used when no cross-section SDF is attached.
-  status: beta
   summary: A coiled spring shape.
   thumb: assets/images/reference/operators/sdf/springSdf_thumb.png
   variables:
@@ -179,6 +178,14 @@ op:
     name: angle
   - label: normangle
     name: normangle
+  - label: RTK_raytk_operators_sdf_springSdf_axisoffset
+    name: RTK_raytk_operators_sdf_springSdf_axisoffset
+  - label: RTK_raytk_operators_sdf_springSdf_normoffset
+    name: RTK_raytk_operators_sdf_springSdf_normoffset
+  - label: RTK_raytk_operators_sdf_springSdf_angle
+    name: RTK_raytk_operators_sdf_springSdf_angle
+  - label: RTK_raytk_operators_sdf_springSdf_normangle
+    name: RTK_raytk_operators_sdf_springSdf_normangle
 
 ---
 

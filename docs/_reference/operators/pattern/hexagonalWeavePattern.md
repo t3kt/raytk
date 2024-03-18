@@ -87,8 +87,8 @@ op:
     - thicknessField
     - blendingField
     supportedVariables:
-    - axialdist
-    - mask
+    - RTK_raytk_operators_pattern_hexagonalWeavePattern_axialdist
+    - RTK_raytk_operators_pattern_hexagonalWeavePattern_mask
   - contextTypes:
     - Context
     - MaterialContext
@@ -112,8 +112,8 @@ op:
     - blendingField
     - color1Field
     supportedVariables:
-    - axialdist
-    - mask
+    - RTK_raytk_operators_pattern_hexagonalWeavePattern_axialdist
+    - RTK_raytk_operators_pattern_hexagonalWeavePattern_mask
   - contextTypes:
     - Context
     - MaterialContext
@@ -138,8 +138,8 @@ op:
     - color1Field
     - color2Field
     supportedVariables:
-    - axialdist
-    - mask
+    - RTK_raytk_operators_pattern_hexagonalWeavePattern_axialdist
+    - RTK_raytk_operators_pattern_hexagonalWeavePattern_mask
   name: hexagonalWeavePattern
   opType: raytk.operators.pattern.hexagonalWeavePattern
   parameters:
@@ -197,9 +197,9 @@ op:
     regularHandling: runtime
   thumb: assets/images/reference/operators/pattern/hexagonalWeavePattern_thumb.png
   variables:
-  - label: axialdist
-    name: axialdist
-  - label: mask
-    name: mask
+  - label: RTK_raytk_operators_pattern_hexagonalWeavePattern_axialdist
+    name: RTK_raytk_operators_pattern_hexagonalWeavePattern_axialdist
+  - label: RTK_raytk_operators_pattern_hexagonalWeavePattern_mask
+    name: RTK_raytk_operators_pattern_hexagonalWeavePattern_mask
 
 ---

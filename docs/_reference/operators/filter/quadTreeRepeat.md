@@ -35,8 +35,8 @@ op:
     - offsetField
     - shiftField
     supportedVariables:
-    - cell
-    - layer
+    - RTK_raytk_operators_filter_quadTreeRepeat_cell
+    - RTK_raytk_operators_filter_quadTreeRepeat_layer
   - contextTypes:
     - Context
     - MaterialContext
@@ -74,8 +74,8 @@ op:
     supportedVariableInputs:
     - shiftField
     supportedVariables:
-    - cell
-    - layer
+    - RTK_raytk_operators_filter_quadTreeRepeat_cell
+    - RTK_raytk_operators_filter_quadTreeRepeat_layer
   name: quadTreeRepeat
   opType: raytk.operators.filter.quadTreeRepeat
   parameters:
@@ -132,9 +132,9 @@ op:
   status: beta
   thumb: assets/images/reference/operators/filter/quadTreeRepeat_thumb.png
   variables:
-  - label: cell
-    name: cell
-  - label: layer
-    name: layer
+  - label: RTK_raytk_operators_filter_quadTreeRepeat_cell
+    name: RTK_raytk_operators_filter_quadTreeRepeat_cell
+  - label: RTK_raytk_operators_filter_quadTreeRepeat_layer
+    name: RTK_raytk_operators_filter_quadTreeRepeat_layer
 
 ---

@@ -101,7 +101,7 @@ op:
     regularHandling: runtime
   thumb: assets/images/reference/operators/sdf2d/arcSdf2d_thumb.png
   variables:
-  - label: normangle
-    name: normangle
+  - label: RTK_raytk_operators_sdf2d_arcSdf2d_normangle
+    name: RTK_raytk_operators_sdf2d_arcSdf2d_normangle
 
 ---

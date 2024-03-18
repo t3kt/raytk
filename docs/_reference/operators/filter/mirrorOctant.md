@@ -31,8 +31,8 @@ op:
     - Light
     - Particle
     supportedVariables:
-    - index
-    - sign
+    - RTK_raytk_operators_filter_mirrorOctant_index
+    - RTK_raytk_operators_filter_mirrorOctant_sign
   - contextTypes:
     - Context
     - MaterialContext
@@ -56,8 +56,8 @@ op:
       position along the mirror axes. If it is a 3D field, it is given the raw position.
       The value is converted to radians and *added* to the `Rotateaxis` parameter.
     supportedVariables:
-    - index
-    - sign
+    - RTK_raytk_operators_filter_mirrorOctant_index
+    - RTK_raytk_operators_filter_mirrorOctant_sign
   - contextTypes:
     - Context
     - MaterialContext
@@ -78,8 +78,8 @@ op:
     supportedVariableInputs:
     - rotateField
     supportedVariables:
-    - index
-    - sign
+    - RTK_raytk_operators_filter_mirrorOctant_index
+    - RTK_raytk_operators_filter_mirrorOctant_sign
   name: mirrorOctant
   opType: raytk.operators.filter.mirrorOctant
   parameters:
@@ -129,10 +129,10 @@ op:
   summary: Mirror coordinates across two axes and the diagonals.
   thumb: assets/images/reference/operators/filter/mirrorOctant_thumb.png
   variables:
-  - label: index
-    name: index
-  - label: sign
-    name: sign
+  - label: RTK_raytk_operators_filter_mirrorOctant_index
+    name: RTK_raytk_operators_filter_mirrorOctant_index
+  - label: RTK_raytk_operators_filter_mirrorOctant_sign
+    name: RTK_raytk_operators_filter_mirrorOctant_sign
 
 ---
 

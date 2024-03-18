@@ -31,12 +31,12 @@ op:
     - roughnessField
     - baseColorField
     supportedVariables:
-    - lightcolor
-    - lightpos
-    - surfacecolor
-    - surfaceuv
-    - shadedlevel
-    - normal
+    - RTK_raytk_operators_material_pbrMat_lightcolor
+    - RTK_raytk_operators_material_pbrMat_lightpos
+    - RTK_raytk_operators_material_pbrMat_surfacecolor
+    - RTK_raytk_operators_material_pbrMat_surfaceuv
+    - RTK_raytk_operators_material_pbrMat_shadedlevel
+    - RTK_raytk_operators_material_pbrMat_normal
   - contextTypes:
     - MaterialContext
     coordTypes:
@@ -51,12 +51,12 @@ op:
     - baseColorField
     - irradianceField
     supportedVariables:
-    - lightcolor
-    - lightpos
-    - surfacecolor
-    - surfaceuv
-    - shadedlevel
-    - normal
+    - RTK_raytk_operators_material_pbrMat_lightcolor
+    - RTK_raytk_operators_material_pbrMat_lightpos
+    - RTK_raytk_operators_material_pbrMat_surfacecolor
+    - RTK_raytk_operators_material_pbrMat_surfaceuv
+    - RTK_raytk_operators_material_pbrMat_shadedlevel
+    - RTK_raytk_operators_material_pbrMat_normal
   - contextTypes:
     - MaterialContext
     coordTypes:
@@ -70,12 +70,12 @@ op:
     - metallicField
     - roughnessField
     supportedVariables:
-    - lightcolor
-    - lightpos
-    - surfacecolor
-    - surfaceuv
-    - shadedlevel
-    - normal
+    - RTK_raytk_operators_material_pbrMat_lightcolor
+    - RTK_raytk_operators_material_pbrMat_lightpos
+    - RTK_raytk_operators_material_pbrMat_surfacecolor
+    - RTK_raytk_operators_material_pbrMat_surfaceuv
+    - RTK_raytk_operators_material_pbrMat_shadedlevel
+    - RTK_raytk_operators_material_pbrMat_normal
   - contextTypes:
     - MaterialContext
     coordTypes:
@@ -85,12 +85,12 @@ op:
     returnTypes:
     - float
     supportedVariables:
-    - lightcolor
-    - lightpos
-    - surfacecolor
-    - surfaceuv
-    - shadedlevel
-    - normal
+    - RTK_raytk_operators_material_pbrMat_lightcolor
+    - RTK_raytk_operators_material_pbrMat_lightpos
+    - RTK_raytk_operators_material_pbrMat_surfacecolor
+    - RTK_raytk_operators_material_pbrMat_surfaceuv
+    - RTK_raytk_operators_material_pbrMat_shadedlevel
+    - RTK_raytk_operators_material_pbrMat_normal
   - contextTypes:
     - MaterialContext
     coordTypes:
@@ -102,12 +102,12 @@ op:
     supportedVariableInputs:
     - roughnessField
     supportedVariables:
-    - lightcolor
-    - lightpos
-    - surfacecolor
-    - surfaceuv
-    - shadedlevel
-    - normal
+    - RTK_raytk_operators_material_pbrMat_lightcolor
+    - RTK_raytk_operators_material_pbrMat_lightpos
+    - RTK_raytk_operators_material_pbrMat_surfacecolor
+    - RTK_raytk_operators_material_pbrMat_surfaceuv
+    - RTK_raytk_operators_material_pbrMat_shadedlevel
+    - RTK_raytk_operators_material_pbrMat_normal
   name: pbrMat
   opType: raytk.operators.material.pbrMat
   parameters:
@@ -153,17 +153,17 @@ op:
   status: beta
   thumb: assets/images/reference/operators/material/pbrMat_thumb.png
   variables:
-  - label: lightcolor
-    name: lightcolor
-  - label: lightpos
-    name: lightpos
-  - label: surfacecolor
-    name: surfacecolor
-  - label: surfaceuv
-    name: surfaceuv
-  - label: shadedlevel
-    name: shadedlevel
-  - label: normal
-    name: normal
+  - label: RTK_raytk_operators_material_pbrMat_lightcolor
+    name: RTK_raytk_operators_material_pbrMat_lightcolor
+  - label: RTK_raytk_operators_material_pbrMat_lightpos
+    name: RTK_raytk_operators_material_pbrMat_lightpos
+  - label: RTK_raytk_operators_material_pbrMat_surfacecolor
+    name: RTK_raytk_operators_material_pbrMat_surfacecolor
+  - label: RTK_raytk_operators_material_pbrMat_surfaceuv
+    name: RTK_raytk_operators_material_pbrMat_surfaceuv
+  - label: RTK_raytk_operators_material_pbrMat_shadedlevel
+    name: RTK_raytk_operators_material_pbrMat_shadedlevel
+  - label: RTK_raytk_operators_material_pbrMat_normal
+    name: RTK_raytk_operators_material_pbrMat_normal
 
 ---

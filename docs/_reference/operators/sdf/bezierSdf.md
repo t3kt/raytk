@@ -110,7 +110,7 @@ op:
     regularHandling: runtime
   thumb: assets/images/reference/operators/sdf/bezierSdf_thumb.png
   variables:
-  - label: normoffset
-    name: normoffset
+  - label: RTK_raytk_operators_sdf_bezierSdf_normoffset
+    name: RTK_raytk_operators_sdf_bezierSdf_normoffset
 
 ---

@@ -74,8 +74,8 @@ op:
     rounding it out or shrinking it.
   thumb: assets/images/reference/operators/filter/round_thumb.png
   variables:
-  - label: sdf
-    name: sdf
+  - label: RTK_raytk_operators_filter_round_sdf
+    name: RTK_raytk_operators_filter_round_sdf
 
 ---
 

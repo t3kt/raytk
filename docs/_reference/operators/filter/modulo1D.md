@@ -41,9 +41,9 @@ op:
     - shiftField
     - offsetField
     supportedVariables:
-    - cellcoord
-    - normcoord
-    - shiftedcellcoord
+    - RTK_raytk_operators_filter_modulo1D_cellcoord
+    - RTK_raytk_operators_filter_modulo1D_normcoord
+    - RTK_raytk_operators_filter_modulo1D_shiftedcellcoord
   - contextTypes:
     - Context
     - MaterialContext
@@ -202,12 +202,12 @@ op:
   summary: Repeats space along one axis.
   thumb: assets/images/reference/operators/filter/modulo1D_thumb.png
   variables:
-  - label: cellcoord
-    name: cellcoord
-  - label: normcoord
-    name: normcoord
-  - label: shiftedcellcoord
-    name: shiftedcellcoord
+  - label: RTK_raytk_operators_filter_modulo1D_cellcoord
+    name: RTK_raytk_operators_filter_modulo1D_cellcoord
+  - label: RTK_raytk_operators_filter_modulo1D_normcoord
+    name: RTK_raytk_operators_filter_modulo1D_normcoord
+  - label: RTK_raytk_operators_filter_modulo1D_shiftedcellcoord
+    name: RTK_raytk_operators_filter_modulo1D_shiftedcellcoord
 
 ---
 

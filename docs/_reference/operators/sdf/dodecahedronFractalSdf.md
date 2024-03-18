@@ -47,7 +47,6 @@ op:
     name: Iterations
     readOnlyHandling: baked
     regularHandling: runtime
-  status: beta
   thumb: assets/images/reference/operators/sdf/dodecahedronFractalSdf_thumb.png
 
 ---

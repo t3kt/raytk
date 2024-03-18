@@ -117,7 +117,6 @@ op:
     name: Amplitudemult
     readOnlyHandling: baked
     regularHandling: runtime
-  status: beta
   summary: Uses repeating waves to offset space.
   thumb: assets/images/reference/operators/filter/waveWarp_thumb.png
 

@@ -98,8 +98,8 @@ op:
   summary: Assigns UV coordinates to an SDF surface.
   thumb: assets/images/reference/operators/filter/assignUV_thumb.png
   variables:
-  - label: sdf
-    name: sdf
+  - label: RTK_raytk_operators_filter_assignUV_sdf
+    name: RTK_raytk_operators_filter_assignUV_sdf
 
 ---
 

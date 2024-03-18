@@ -31,7 +31,6 @@ op:
     name: Scale
     readOnlyHandling: baked
     regularHandling: runtime
-  status: beta
   thumb: assets/images/reference/operators/sdf2d/archSdf2d_thumb.png
 
 ---

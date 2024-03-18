@@ -25,9 +25,9 @@ op:
     returnTypes:
     - Sdf
     supportedVariables:
-    - index
-    - normindex
-    - size
+    - RTK_raytk_operators_sdf_stackSdf_index
+    - RTK_raytk_operators_sdf_stackSdf_normindex
+    - RTK_raytk_operators_sdf_stackSdf_size
   name: stackSdf
   opType: raytk.operators.sdf.stackSdf
   parameters:
@@ -54,11 +54,11 @@ op:
     regularHandling: runtime
   status: beta
   variables:
-  - label: index
-    name: index
-  - label: normindex
-    name: normindex
-  - label: size
-    name: size
+  - label: RTK_raytk_operators_sdf_stackSdf_index
+    name: RTK_raytk_operators_sdf_stackSdf_index
+  - label: RTK_raytk_operators_sdf_stackSdf_normindex
+    name: RTK_raytk_operators_sdf_stackSdf_normindex
+  - label: RTK_raytk_operators_sdf_stackSdf_size
+    name: RTK_raytk_operators_sdf_stackSdf_size
 
 ---

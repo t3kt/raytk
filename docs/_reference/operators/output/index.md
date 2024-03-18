@@ -16,7 +16,6 @@ cat:
   - name: fieldRender
     status: beta
   - name: functionGraphRender
-    summary: Visualizes the graph of a function operator.
   - keywords:
     - point
     - render
@@ -24,8 +23,6 @@ cat:
     name: pointMapRender
     shortcuts:
     - pmr
-    summary: Renderer that takes in a TOP of coordinates and evaluates the scene at
-      each point.
   - keywords:
     - inspect
     - preview
@@ -36,13 +33,10 @@ cat:
   - name: raymarchRender3D
     shortcuts:
     - rr3
-    summary: Renders a scene using 3D raymarching.
   - name: render2D
     shortcuts:
     - r2
-    summary: Renders a 2D image by evaluating the input field for each pixel.
   - name: renderSelect
-    summary: Accesses a color output buffer from a renderer.
   summary: 'Outputs are a special category of operator that takes in one or more
 
     chains of OPs, generate a shader, and run it to produce some sort of

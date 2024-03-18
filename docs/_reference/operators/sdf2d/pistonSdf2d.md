@@ -65,7 +65,6 @@ op:
     name: Thickness
     readOnlyHandling: baked
     regularHandling: runtime
-  status: beta
   thumb: assets/images/reference/operators/sdf2d/pistonSdf2d_thumb.png
 
 ---

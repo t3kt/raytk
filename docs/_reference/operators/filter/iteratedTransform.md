@@ -31,8 +31,8 @@ op:
     - vec4
     - Sdf
     supportedVariables:
-    - step
-    - normstep
+    - RTK_raytk_operators_filter_iteratedTransform_step
+    - RTK_raytk_operators_filter_iteratedTransform_normstep
   - contextTypes:
     - Context
     - MaterialContext
@@ -55,8 +55,8 @@ op:
       uses 1D coordinates, it is passed `i / (n-1)`, where `i` is the loop iteration,
       and `n` is the total number of iterations.
     supportedVariables:
-    - step
-    - normstep
+    - RTK_raytk_operators_filter_iteratedTransform_step
+    - RTK_raytk_operators_filter_iteratedTransform_normstep
   - contextTypes:
     - Context
     - MaterialContext
@@ -74,8 +74,8 @@ op:
     returnTypes:
     - vec4
     supportedVariables:
-    - step
-    - normstep
+    - RTK_raytk_operators_filter_iteratedTransform_step
+    - RTK_raytk_operators_filter_iteratedTransform_normstep
   - contextTypes:
     - Context
     - MaterialContext
@@ -94,8 +94,8 @@ op:
     - float
     - vec4
     supportedVariables:
-    - step
-    - normstep
+    - RTK_raytk_operators_filter_iteratedTransform_step
+    - RTK_raytk_operators_filter_iteratedTransform_normstep
   - contextTypes:
     - Context
     - MaterialContext
@@ -114,8 +114,8 @@ op:
     - float
     - vec4
     supportedVariables:
-    - step
-    - normstep
+    - RTK_raytk_operators_filter_iteratedTransform_step
+    - RTK_raytk_operators_filter_iteratedTransform_normstep
   name: iteratedTransform
   opType: raytk.operators.filter.iteratedTransform
   parameters:
@@ -284,10 +284,10 @@ op:
     in between the steps.
   thumb: assets/images/reference/operators/filter/iteratedTransform_thumb.png
   variables:
-  - label: step
-    name: step
-  - label: normstep
-    name: normstep
+  - label: RTK_raytk_operators_filter_iteratedTransform_step
+    name: RTK_raytk_operators_filter_iteratedTransform_step
+  - label: RTK_raytk_operators_filter_iteratedTransform_normstep
+    name: RTK_raytk_operators_filter_iteratedTransform_normstep
 
 ---
 

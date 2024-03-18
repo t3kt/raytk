@@ -160,7 +160,6 @@ op:
     name: Fillcolor
   - label: Edge Color
     name: Edgecolor
-  status: beta
   summary: Rectangular grid pattern.
   thumb: assets/images/reference/operators/pattern/gridPattern_thumb.png
 

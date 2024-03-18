@@ -78,9 +78,9 @@ op:
     summary: Mix between the original distance and the original distance.
   status: beta
   variables:
-  - label: sdf
-    name: sdf
-  - label: dist
-    name: dist
+  - label: RTK_raytk_operators_filter_modifyDistance_sdf
+    name: RTK_raytk_operators_filter_modifyDistance_sdf
+  - label: RTK_raytk_operators_filter_modifyDistance_dist
+    name: RTK_raytk_operators_filter_modifyDistance_dist
 
 ---

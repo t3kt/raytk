@@ -59,9 +59,9 @@ op:
     - vec4
     - Sdf
     supportedVariables:
-    - datapos
-    - datauv
-    - datares
+    - RTK_raytk_operators_output_pointMapRender_datapos
+    - RTK_raytk_operators_output_pointMapRender_datauv
+    - RTK_raytk_operators_output_pointMapRender_datares
   - contextTypes:
     - CameraContext
     coordTypes:
@@ -71,9 +71,9 @@ op:
     returnTypes:
     - Ray
     supportedVariables:
-    - datapos
-    - datauv
-    - datares
+    - RTK_raytk_operators_output_pointMapRender_datapos
+    - RTK_raytk_operators_output_pointMapRender_datauv
+    - RTK_raytk_operators_output_pointMapRender_datares
   - contextTypes:
     - LightContext
     coordTypes:
@@ -83,9 +83,9 @@ op:
     returnTypes:
     - Light
     supportedVariables:
-    - datapos
-    - datauv
-    - datares
+    - RTK_raytk_operators_output_pointMapRender_datapos
+    - RTK_raytk_operators_output_pointMapRender_datauv
+    - RTK_raytk_operators_output_pointMapRender_datares
   keywords:
   - point
   - render
@@ -216,12 +216,12 @@ op:
     each point.
   thumb: assets/images/reference/operators/output/pointMapRender_thumb.png
   variables:
-  - label: datapos
-    name: datapos
-  - label: datauv
-    name: datauv
-  - label: datares
-    name: datares
+  - label: RTK_raytk_operators_output_pointMapRender_datapos
+    name: RTK_raytk_operators_output_pointMapRender_datapos
+  - label: RTK_raytk_operators_output_pointMapRender_datauv
+    name: RTK_raytk_operators_output_pointMapRender_datauv
+  - label: RTK_raytk_operators_output_pointMapRender_datares
+    name: RTK_raytk_operators_output_pointMapRender_datares
 
 ---
 

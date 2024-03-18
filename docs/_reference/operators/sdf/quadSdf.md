@@ -8,6 +8,38 @@ redirect_from:
   - /reference/opType/raytk.operators.sdf.quadSdf/
 op:
   category: sdf
+  inputs:
+  - contextTypes:
+    - Context
+    - MaterialContext
+    - CameraContext
+    - LightContext
+    - RayContext
+    - ParticleContext
+    - VertexContext
+    - PixelContext
+    coordTypes:
+    - vec3
+    label: Scale Field
+    name: scaleField
+    returnTypes:
+    - float
+    - vec4
+  - contextTypes:
+    - Context
+    - MaterialContext
+    - CameraContext
+    - LightContext
+    - RayContext
+    - ParticleContext
+    - VertexContext
+    - PixelContext
+    coordTypes:
+    - vec3
+    label: Thickness Field
+    name: thicknessField
+    returnTypes:
+    - float
   keywords:
   - plane
   - quad
@@ -57,7 +89,6 @@ op:
     name: Translate
     readOnlyHandling: baked
     regularHandling: runtime
-  status: beta
   thumb: assets/images/reference/operators/sdf/quadSdf_thumb.png
 
 ---
