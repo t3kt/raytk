@@ -376,7 +376,7 @@ class ROPInfo:
 
 	@property
 	def keywords(self) -> set[str]:
-		return set(tdu.split(self.opDefPar.Keywords)) if self else set()
+		return set(tdu.split(self.opDefPar['Keywords'] or '')) if self else set()
 
 	@keywords.setter
 	def keywords(self, keywords: set[str] | None):
