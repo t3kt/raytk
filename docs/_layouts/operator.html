@@ -54,12 +54,21 @@ layout: page
 		{% if page.op.inputs %}
 			<div class="operator-box-input-column">
 				{% for input in page.op.inputs %}
-				<div class="operator-box-input" title="{{input.summary}}">
-					<a class="operator-box-input-label" href="#input-{{input.name}}">
-						{{input.label}}
-					</a>
-					<div class="operator-box-input-marker"></div>
-				</div>
+					{% if input.sourceParamLabel %}
+						<div class="operator-box-input" title="{{input.summary}} (from {{input.sourceParamLabel}} parameter)">
+							<a class="operator-box-input-label" href="#input-{{input.name}}">
+								({{input.label}})
+							</a>
+							<div class="operator-box-input-marker"></div>
+						</div>
+					{% else %}
+						<div class="operator-box-input" title="{{input.summary}}">
+							<a class="operator-box-input-label" href="#input-{{input.name}}">
+								{{input.label}}
+							</a>
+							<div class="operator-box-input-marker"></div>
+						</div>
+					{% endif %}
 				{% endfor %}
 			</div>
 		{% endif %}
@@ -95,7 +104,7 @@ layout: page
 		<tbody>
 			{% for param in page.op.parameters %}
 			<tr>
-				<td><code class="param-name" title="{{ param.name }}">{{ param.label | default: param.name }}</code></td>
+				<td id="param-{{param.name}}"><code class="param-name" title="{{ param.name }}">{{ param.label | default: param.name }}</code></td>
 				<td class="param-desc">{{ param.summary | markdownify }}</td>
 				<td class="param-handling">
 					{%include paramHandling.html handling=param.regularHandling %}
@@ -135,6 +144,12 @@ layout: page
 				{% endif %}
 				<span class="input-summary">{{ input.summary }}</span>
 				<ul class="input-types">
+					{% if input.sourceParamName %}
+					<li>
+						<em>From Parameter</em>:
+						<a href="#param-{{input.sourceParamName}}" class="input-types-item"><code>{{input.sourceParamLabel}}</code></a>
+					</li>
+					{% endif %}
 					<li>
 						<em>Coordinate Types</em>:
 						{% for t in input.coordTypes %}

@@ -498,7 +498,7 @@ class ToolkitBuilder(_BuilderBase):
 			self.docProcessor.processOp(comp)
 		self.context.removeOpHelp(comp)
 		self.context.cleanOperatorTypeSpecs(comp)
-		self.context.cleanOperatorDefPars(comp)
+		# self.context.cleanOperatorDefPars(comp)
 		queueCall(thenRun)
 
 	def processOperatorSubCompChildrenOf(self, comp: COMP):

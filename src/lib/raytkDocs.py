@@ -159,6 +159,8 @@ class InputHelp:
 	returnTypes: list[str] = field(default_factory=list)
 	supportedVariables: list[str] = field(default_factory=list)
 	supportedVariableInputs: list[str] = field(default_factory=list)
+	sourceParamName: str | None = None
+	sourceParamLabel: str | None = None
 	inputHandler: COMP | None = None
 
 	def formatMarkdownListItem(self, forBuild=False):
@@ -178,6 +180,15 @@ class InputHelp:
 		varNames = info.supportedVariables
 		if '*' in varNames:
 			varNames = [varHelp.name for varHelp in varHelps]
+		p = inputHandler.par.Source
+		parName = None
+		parLabel = None
+		if p.mode == ParMode.EXPRESSION:
+			parName = cls._extractSourceParName(p)
+			srcPar = inputHandler.parent().par[parName]
+			if srcPar is not None:
+				parName = srcPar.name
+				parLabel = srcPar.label
 		return cls(
 			name=info.name,
 			label=info.label,
@@ -187,8 +198,15 @@ class InputHelp:
 			returnTypes=info.supportedReturnTypes,
 			supportedVariables=varNames,
 			supportedVariableInputs=info.supportedVariableInputs,
+			sourceParamName=parName,
+			sourceParamLabel=parLabel,
 			inputHandler=inputHandler,
 		)
+
+	@staticmethod
+	def _extractSourceParName(p: Par):
+		m = re.match(r"parent\(\)\.par\.([A-Z][a-z0-9]+)(\.eval\(\))?(\sor\s'')?", p.expr)
+		return m.group(1) if m else None
 
 	def updateSupportedVariableInputs(self, inputHelps: list['InputHelp']):
 		if '*' in self.supportedVariableInputs:
@@ -210,6 +228,8 @@ class InputHelp:
 		self.inputHandler = self.inputHandler or other.inputHandler
 		self.supportedVariables = other.supportedVariables
 		self.supportedVariableInputs = other.supportedVariableInputs
+		self.sourceParamName = self.sourceParamName or other.sourceParamName
+		self.sourceParamLabel = self.sourceParamLabel or other.sourceParamLabel
 
 	def toFrontMatterData(self):
 		return cleanDict({
@@ -221,6 +241,8 @@ class InputHelp:
 			'returnTypes': self.returnTypes,
 			'supportedVariables': self.supportedVariables,
 			'supportedVariableInputs': self.supportedVariableInputs,
+			'sourceParamName': self.sourceParamName,
+			'sourceParamLabel': self.sourceParamLabel,
 			'summary': self.summary,
 		})
 
@@ -796,7 +818,7 @@ class OpDocManager:
 		if opDefExt:
 			opState = opDefExt.getRopState()
 			extractedVars = [
-				VariableHelp(v.name, v.label, v.summary)
+				VariableHelp(v.name, v.label)
 				for v in opState.variables
 			]
 		debug('known vars: ', varHelps)
