@@ -325,7 +325,8 @@ class BuildContext:
 			'Tagtable', 'Callbacks',
 			'Librarynames',
 			'Disableinspect',
-			'Shortcuts', 'Keywords', 'Displaycategory', 'Flags', 'Help',
+			'Shortcuts', 'Keywords', 'Displaycategory', 'Flags',
+			# 'Help',
 		))
 
 	def _removeUnusedPars(self, pars: list[Par]):
@@ -340,6 +341,13 @@ class BuildContext:
 		self.log(f'Removing {len(removePars)} unnecessary pars from {pars[0].owner}')
 		for par in removePars:
 			par.destroy()
+
+	# def stripComments(self, comp: COMP):
+	# 	if not comp:
+	# 		return
+	# 	comp.comment = ''
+	# 	for child in comp.children:
+	# 		self.stripComments(child)
 
 def _isPythonLibrary(m: OP, modName: 'str | None' = None):
 	if not isinstance(m, textDAT) or not RaytkTags.fileSync.isOn(m):
