@@ -1,10 +1,12 @@
 !rop
 meta: !meta
   opType: raytk.operators.material.diffuseContrib
-  opVersion: '27'
+  opVersion: '28'
   opStatus: default
 opDef: !def
-  enable: true
+  enable: !expr
+    expr: parent().par.Enable
+  useRuntimeBypass: true
   typeSpec: !ropTypes
     coordType: !coordT
       Coordtypevec3: true

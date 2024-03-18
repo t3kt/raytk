@@ -1,4 +1,6 @@
 ReturnT thismap(CoordT p, ContextT ctx) {
+	if (IS_FALSE(THIS_Enable)) return ReturnT(0.);
+
 	vec3 lightDir = normalize(p - ctx.light.pos);
 	vec3 viewDir = normalize(-ctx.ray.dir);
 	vec3 norm = normalize(ctx.normal);

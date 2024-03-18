@@ -1,10 +1,12 @@
 !rop
 meta: !meta
   opType: raytk.operators.material.specularContrib
-  opVersion: '25'
+  opVersion: '26'
   opStatus: default
 opDef: !def
-  enable: true
+  enable: !expr
+    expr: parent().par.Enable
+  useRuntimeBypass: true
   typeSpec: !ropTypes
     coordType: !coordT
       Coordtypevec3: true
