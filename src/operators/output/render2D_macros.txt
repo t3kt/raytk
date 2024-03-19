@@ -1,2 +1,1 @@
-parent().par.Enableuvoutput	'RAYTK_USE_UV'	
-	'RAYTK_MAX_DIST'	9999
+parent().par.Enableuvoutput	'RAYTK_USE_UV'

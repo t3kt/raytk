@@ -267,10 +267,6 @@ float getMaxDist();
 #define RAYTK_MAX_DIST 99999
 #endif
 
-#ifndef RAYTK_MAX_DIST
-#define RAYTK_MAX_DIST 99999
-#endif
-
 Sdf createNonHitSdf() {
 	Sdf res = createSdf(RAYTK_MAX_DIST);
 	if (!isDistanceOnlyStage()) {
