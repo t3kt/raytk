@@ -2,7 +2,6 @@ import zipfile
 
 import shutil
 
-import asyncio
 from datetime import datetime
 from pathlib import Path
 from raytkBuild import BuildContext, BuildTaskContext, DocProcessor, chunked_iterable
@@ -447,6 +446,7 @@ class ToolkitBuilderAsync(BuilderAsyncBase):
 
 	async def _runBuildScript(self, dat: DAT):
 		self.log(f'Running build script: {dat}')
+		import asyncio
 		result = asyncio.Future()
 
 		def finishTask():
