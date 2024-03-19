@@ -100,6 +100,8 @@ op:
     readOnlyHandling: baked
     regularHandling: baked
     summary: Whether to apply the shadow to the color/level produced by this element.
+  - label: Enable
+    name: Enable
   - label: Use Surface Color
     name: Usesurfacecolor
     readOnlyHandling: semibaked

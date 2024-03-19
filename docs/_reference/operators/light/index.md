@@ -14,19 +14,29 @@ cat:
   - name: ambientLight
     status: beta
   - name: axisLight
+    summary: Light that emits from along an axis, similar to an infinitely long tube
+      light.
   - name: directionalLight
+    summary: A directional light.
   - name: hardShadow
+    summary: A simple hard-edged shadow.
   - name: lightVolume
     status: beta
   - name: linkedLight
     status: beta
+    summary: Light that is based on a standard Light COMP.
   - name: multiLight
+    summary: Combines multiple light sources.
   - name: pointLight
     shortcuts:
     - pl
+    summary: Light eminating from a single point in space, with optional distance
+      attentuation.
   - name: ringLight
   - name: softShadow
+    summary: A soft-edged shadow.
   - name: spotLight
+    summary: Cone-shaped spotlight.
   - name: volumetricRayCast
     status: beta
   summary: 'Operators that are used in raymarching to define the behavior of light,

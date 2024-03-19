@@ -62,10 +62,14 @@ op:
     regularHandling: baked
   - label: Time Source
     menuOptions:
-    - label: Global
-      name: global
-    - label: Context
-      name: context
+    - label: Seconds (Timeline)
+      name: seconds
+    - label: Frames (Timeline)
+      name: frames
+    - label: Seconds (Absolute)
+      name: absseconds
+    - label: Frames (Absolute)
+      name: absframes
     name: Timesource
     readOnlyHandling: baked
     regularHandling: runtime

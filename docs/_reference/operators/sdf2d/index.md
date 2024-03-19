@@ -26,12 +26,17 @@ cat:
     status: beta
   - name: chamferRectangleSdf2d
   - name: circleSdf
+    summary: 2D circle SDF.
   - name: circleWaveSdf2d
   - name: coolSSdf2d
   - name: cornerSdf2d
+    summary: 2D SDF for an infinite corner, like an infinite square positioned by
+      one corner.
   - name: crossSdf2d
+    summary: 2D cross shape SDF, with 4 arms and option rounding of the intersections.
   - name: cutDiscSdf2d
   - name: dogBoneSdf2d
+    summary: 2D SDF for two connected circles.
   - name: eggSdf2d
   - keywords:
     - circle
@@ -46,6 +51,7 @@ cat:
   - name: jointSdf2d
   - name: kochSnowflakeSdf2d
   - name: lineSegmentSdf2d
+    summary: 2D line segment SDF.
   - name: moonSdf2d
   - name: parabolaSdf2d
   - name: parallelogramSdf2d
@@ -54,20 +60,27 @@ cat:
     - ring
     - slice
     name: pieSdf2d
+    summary: SDF for a 2D pie-slice shape.
   - name: pistonSdf2d
   - name: planeSdf2d
   - name: polySplineSdf2d
   - name: polygonSdf2d
+    summary: SDF for several types of 2D polygons.
   - name: quadSdf2d
+    summary: SDF for a 2D quad with arbitrary corners.
   - name: rectangleSdf
+    summary: SDF for a 2D rectangle.
   - name: rhombilleTilingSdf2d
   - name: rhombusSdf2d
+    summary: SDF for a 2D rhombus (diamond), with its corners aligned to the axes.
   - name: roundedRectangleSdf2d
+    summary: SDF for a 2D rectangle with optionally rounded corners.
   - name: spikeSdf2d
   - name: spiralSdf2d
   - name: stairSdf2d
     status: beta
   - name: starSdf2d
+    summary: SDF for a 2D star shape.
   - name: subdivisionSdf2d
     status: beta
   - name: superQuadSdf2d
@@ -75,8 +88,11 @@ cat:
     status: beta
   - name: trapezoidSdf2d
   - name: triangleSdf2d
+    summary: SDF for a 2D triangle.
   - name: triangularGridSdf2d
   - name: vesicaSdf2d
+    summary: SDF for a 2d vesica, which is a shape based on the overlap between two
+      circles.
   - name: vesicaSegmentSdf2d
   - name: wedgeSdf2d
     status: beta
