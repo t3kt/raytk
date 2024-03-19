@@ -4,7 +4,7 @@ import shutil
 
 from datetime import datetime
 from pathlib import Path
-from raytkBuild import BuildContext, BuildTaskContext, DocProcessor, chunked_iterable
+from raytkBuild import BuildContext, DocProcessor, chunked_iterable
 from raytkTools import RaytkTools
 from raytkUtil import RaytkContext, CategoryInfo, IconColors, RaytkTags, focusFirstCustomParameterPage, navigateTo
 from typing import Optional, TextIO
@@ -170,7 +170,7 @@ class ToolkitBuilderAsync(BuilderAsyncBase):
 			self.docProcessor.clearPreviousDocs()
 
 		await self.logStageStart('Process thumbnails')
-		await self._runBuildScript(self.toolkit.op('libraryThumbs/BUILD'))
+		await self.context.runBuildScript(self.toolkit.op('libraryThumbs/BUILD'))
 
 		await self.logStageStart('Update library info')
 		await self._updateLibraryInfo()
@@ -244,7 +244,7 @@ class ToolkitBuilderAsync(BuilderAsyncBase):
 		libraryInfo = self.toolkit.op('libraryInfo')
 		libraryInfo.par.Forcebuild.pulse()
 		self.context.moveNetworkPane(libraryInfo)
-		await self._runBuildScript(libraryInfo.op('BUILD'))
+		await self.context.runBuildScript(libraryInfo.op('BUILD'))
 
 	async def _updateLibraryImage(self):
 		image = RaytkContext().libraryImage()
@@ -380,7 +380,7 @@ class ToolkitBuilderAsync(BuilderAsyncBase):
 		self.context.moveNetworkPane(tools)
 		self.context.reloadTox(tools)
 		self.context.detachTox(tools)
-		await self._runBuildScript(tools.op('BUILD'))
+		await self.context.runBuildScript(tools.op('BUILD'))
 
 	async def _lockAllBuildLockOps(self):
 		self.context.lockBuildLockOps(self.toolkit)
@@ -443,20 +443,6 @@ class ToolkitBuilderAsync(BuilderAsyncBase):
 		self.log(f'Saving toolkit to {toxFile}')
 		comp.save(toxFile)
 		self.log('Finished build')
-
-	async def _runBuildScript(self, dat: DAT):
-		self.log(f'Running build script: {dat}')
-		import asyncio
-		result = asyncio.Future()
-
-		def finishTask():
-			self.log(f'Finished build script: {dat}')
-			result.set_result(None)
-
-		subContext = BuildTaskContext(finishTask, self.log, self.context.experimental)
-		dat.run(subContext)
-
-		await result
 
 class SnippetsBuilderAsync(BuilderAsyncBase):
 	def __init__(self, context: BuildContext):
