@@ -1,5 +1,5 @@
 !rcomp
 meta: !meta
   opType: raytk.operators.post.nearHitMap
-  opVersion: '0'
+  opVersion: '1'
   opStatus: beta

@@ -1,0 +1,5 @@
+!rcomp
+meta: !meta
+  opType: raytk.operators.post.depthMap
+  opVersion: '5'
+  opStatus: default
