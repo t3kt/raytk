@@ -112,12 +112,7 @@ class TestEditor:
 		if not info:
 			print(self.ownerComp, 'there is no rop')
 			return
-		if group == 'test':
-			folder = Path(self.ownerComp.par.Testcasefolder.eval())
-		elif group == 'snippet':
-			folder = Path(self.ownerComp.par.Snippetfolder.eval())
-		else:
-			raise Exception(f'Invalid group: {group}')
+		folder = self._getGroupFolder(group)
 		showPromptDialog(
 			title='Create ' + group,
 			text=group.upper() + ' name',
@@ -126,7 +121,41 @@ class TestEditor:
 			ok=lambda name: self._doCreate(name, group, folder),
 		)
 
-	def _doCreate(self, name: str, group: str, folder: Path, confirmed=False):
+	def _getGroupFolder(self, group: str):
+		if group == 'test':
+			return Path(self.ownerComp.par.Testcasefolder.eval())
+		elif group == 'snippet':
+			return Path(self.ownerComp.par.Snippetfolder.eval())
+		else:
+			raise Exception(f'Invalid group: {group}')
+
+	def SaveAs(self):
+		print(self.ownerComp, 'save as')
+		info = ext.ropEditor.ROPInfo
+		if not info:
+			print(self.ownerComp, 'there is no rop')
+			return
+		if not self.currentTox:
+			print(self.ownerComp, 'there is no tox')
+			return
+		currentTox = self.currentTox
+		if currentTox.endswith('_test.tox'):
+			group = 'test'
+		elif currentTox.endswith('_snippet.tox'):
+			group = 'snippet'
+		else:
+			print(self.ownerComp, f'invalid tox name: {currentTox}')
+			return
+		folder = self._getGroupFolder(group)
+		showPromptDialog(
+			title='Save as',
+			text='New name',
+			default=self.currentTestName,
+			textEntry=True,
+			ok=lambda name: self._doCreate(name, group, folder, copyExisting=True),
+		)
+
+	def _doCreate(self, name: str, group: str, folder: Path, confirmed=False, copyExisting=False):
 		info = ext.ropEditor.ROPInfo
 		if not info:
 			return
@@ -143,8 +172,13 @@ class TestEditor:
 				text=f'File {toxPath} exists. Replace it?',
 				textEntry=False,
 				ok=lambda _: self._doCreate(
-					name, group, folder, confirmed=True),
+					name, group, folder, confirmed=True, copyExisting=copyExisting),
 			)
+		elif copyExisting:
+			comp = iop.loader.Component
+			if not comp:
+				raise Exception('No test to copy!')
+			iop.loader.SaveComponent(toxPath.as_posix())
 		else:
 			iop.loader.CreateNewComponent(
 				tox=toxPath,
