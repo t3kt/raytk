@@ -42,6 +42,7 @@ class ToolkitBuilderAsync:
 
 		if self.docProcessor:
 			self.logStageStart('Clearing old docs')
+			await _asyncYield()
 			self.docProcessor.clearPreviousDocs()
 
 		self.logStageStart('Process thumbnails')
@@ -90,7 +91,7 @@ class ToolkitBuilderAsync:
 		await self._consolidateSharedPythonMods()
 
 		self.logStageStart('Remove build exclude ops')
-		await self._removeAllBuildExcludeOps()
+		await self._removeAllBuildExcludeOps(self.toolkit)
 
 		self.logStageStart('Finalize toolkit pars')
 		await self._finalizeToolkitPars()
@@ -271,7 +272,7 @@ class ToolkitBuilderAsync:
 			self.context.cleanOperatorTypeSpecs(comp)
 			self.context.cleanOperatorDefPars(comp)
 
-	def _cleanAllCategories(self):
+	async def _cleanAllCategories(self):
 		for comp in RaytkContext().allCategories():
 			self.log('Clean category ' + comp.path)
 			self.context.removeCatHelp(comp)
