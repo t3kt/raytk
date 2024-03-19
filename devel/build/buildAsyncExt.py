@@ -1,27 +1,105 @@
 import asyncio
+from datetime import datetime
+from pathlib import Path
 from raytkBuild import BuildContext, BuildTaskContext, DocProcessor, chunked_iterable
 from raytkTools import RaytkTools
-from raytkUtil import RaytkContext, CategoryInfo, IconColors, RaytkTags, focusFirstCustomParameterPage
+from raytkUtil import RaytkContext, CategoryInfo, IconColors, RaytkTags, focusFirstCustomParameterPage, navigateTo
+from typing import TextIO
 
 # noinspection PyUnreachableCode
 if False:
 	# noinspection PyUnresolvedReferences
 	from _stubs import *
+	from devel.thirdParty.TDAsyncIO import TDAsyncIO
+	op.TDAsyncIO = TDAsyncIO(COMP())
 
 class BuildManagerAsync:
 	def __init__(self, ownerComp: COMP):
 		self.ownerComp = ownerComp
+		self.logTable = ownerComp.op('log')
+		self.context = None  # type: BuildContext | None
+		self.docProcessor = None  # type: DocProcessor | None
+		self.experimentalMode = False
+		self.logFile = None  # type: TextIO | None
+		self.enableVerboseLogging = False
+
+	def OnInit(self):
+		self.ClearLog()
+
+	@staticmethod
+	def GetToolkitVersion():
+		return RaytkContext().toolkitVersion()
+
+	@staticmethod
+	def OpenToolkitNetwork():
+		navigateTo(RaytkContext().toolkit(), name='raytkBuildNetwork', popup=True, goInto=True)
+
+	def OpenLog(self):
+		dat = self.ownerComp.op('full_log_text')
+		dat.openViewer()
+
+	def ClearLog(self):
+		self.logTable.clear()
+		self.closeLogFile()
+
+	def closeLogFile(self):
+		if not self.logFile:
+			return
+		self.logFile.close()
+		self.logFile = None
+
+	def startNewLogFile(self):
+		stamp = datetime.now().strftime('%Y-%m-%d_%H-%M-%S')
+		fileName = f'build/log/build-{stamp}.txt'
+		filePath = Path(fileName)
+		filePath.parent.mkdir(parents=True, exist_ok=True)
+		self.logFile = filePath.open('a')
+
+	def ReloadToolkit(self):
+		self.logTable.clear()
+		self.log('Reloading toolkit')
+		builder = ToolkitBuilderAsync(self.context)
+		op.TDAsyncIO.Run([builder.reloadToolkit()])
+
+	def prepareForBuild(self):
+		self.experimentalMode = bool(self.ownerComp.op('experimental_toggle').par.Value0)
+		self.enableVerboseLogging = bool(self.ownerComp.op('verboseLogging_toggle').par.Value0)
+		self.logTable.clear()
+		self.closeLogFile()
+		if self.ownerComp.op('useLogFile_toggle').par.Value0:
+			self.startNewLogFile()
+		self.context = BuildContext(self.log, self.experimentalMode)
+
+	def runToolkitBuildOnly(self):
+		self.prepareForBuild()
+		builder = ToolkitBuilderAsync(self.context)
+
+		async def _build():
+			await builder.runBuild()
+			self.log('Finished toolkit build process')
+			self.closeLogFile()
+
+		op.TDAsyncIO.Cancel()
+		op.TDAsyncIO.Run([_build()])
+
+	def log(self, message: str, verbose=False):
+		if verbose and not self.enableVerboseLogging:
+			return
+		print(message, flush=True)
+		if self.logFile:
+			stamp = datetime.now().strftime('%Y-%m-%d_%H-%M-%S')
+			print(stamp, message, file=self.logFile, flush=True)
+		self.logTable.appendRow([message])
 
 
 class ToolkitBuilderAsync:
 	def __init__(
 			self,
 			context: BuildContext,
-			includeDocs: bool,
 	):
 		self.context = context
 		self.docProcessor = None
-		if includeDocs:
+		if not self.context.experimental:
 			self.docProcessor = DocProcessor(
 				context,
 				dataFolder='docs/_data',
@@ -32,7 +110,7 @@ class ToolkitBuilderAsync:
 
 	async def runBuild(self):
 		self.log('Starting build')
-		await self._reloadToolkit()
+		await self.reloadToolkit()
 		version = RaytkContext().toolkitVersion()
 		self.log(f'Version: {version}' + (' (experimental)' if self.context.experimental else ''))
 		# NO SNIPPETS RELOAD
@@ -102,7 +180,8 @@ class ToolkitBuilderAsync:
 		self.logStageStart('Finish build')
 		await self._finishBuild()
 
-	async def _reloadToolkit(self):
+	async def reloadToolkit(self):
+		self.toolkit = RaytkContext().toolkit()
 		self.toolkit.par.externaltox = 'src/raytk.tox'
 		self.toolkit.par.reinitnet.pulse()
 		# Do this early since it switches off things like automatically writing to the opList.txt file.

@@ -31,6 +31,7 @@ import asyncio
 # from TDStoreTools import StorageManager
 # TDF = op.TDModules.mod.TDFunctions
 import sys
+from typing import Coroutine
 
 class TDAsyncIO:
 	"""
@@ -55,7 +56,7 @@ class TDAsyncIO:
 			# Pending callbacks will be lost.
 			self.loop.close()
 	
-	def Run(self, coroutines):
+	def Run(self, coroutines: list[Coroutine]):
 		for coroutine in coroutines:
 			self.loop.create_task(coroutine)
 	
