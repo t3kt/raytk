@@ -113,7 +113,6 @@ class ToolkitBuilderAsync:
 		await self.reloadToolkit()
 		version = RaytkContext().toolkitVersion()
 		self.log(f'Version: {version}' + (' (experimental)' if self.context.experimental else ''))
-		# NO SNIPPETS RELOAD
 		self.context.openNetworkPane()
 
 		await self._detachFileSyncOps()

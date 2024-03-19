@@ -94,17 +94,6 @@ class BuildManager:
 			self.closeLogFile()
 		builder = SnippetsBuilder(
 			self.context,
-			reloadSnippets=self.reloadSnippets,
-		)
-		builder.runBuild(thenRun=afterBuild)
-
-	def runSeparateSnippetBuildOnly(self):
-		self.prepareForBuild()
-		def afterBuild():
-			self.log('Finished snippets build process')
-			self.closeLogFile()
-		builder = SeparateSnippetsBuilder(
-			self.context,
 		)
 		builder.runBuild(thenRun=afterBuild)
 
@@ -117,7 +106,6 @@ class BuildManager:
 			self.log('After toolkit has built, Processing snippets...')
 			snippetsBuilder = SnippetsBuilder(
 				self.context,
-				reloadSnippets=self.reloadSnippets,
 			)
 			snippetsBuilder.runBuild(thenRun=afterBuild)
 		builder = ToolkitBuilder(
@@ -551,135 +539,6 @@ class ToolkitBuilder(_BuilderBase):
 			runArgs=[])
 
 class SnippetsBuilder(_BuilderBase):
-	def __init__(
-			self,
-			context: BuildContext,
-			reloadSnippets: Callable,
-	):
-		super().__init__(context)
-		self.reloadSnippets = reloadSnippets
-
-	def runBuild(self, thenRun: Callable):
-		super().runBuild(thenRun)
-		self.log('Starting snippets build')
-		queueCall(self.runBuild_stage, 0)
-
-	def runBuild_stage(self, stage: int):
-		snippets = getattr(op, 'raytkSnippets', None)
-		if not snippets:
-			self.context.log('ERROR: Snippets not found!')
-			raise Exception('Snippets not found!')
-		if stage == 0:
-			self.log('Reloading snippets root')
-			self.reloadSnippets(snippets)
-			if not snippets.allowCooking:
-				self.log('Enabling cooking for snippets root')
-				snippets.allowCooking = True
-			queueCall(self.runBuild_stage, stage + 1)
-		elif stage == 1:
-			self.logStageStart('Process navigator')
-			self.context.runBuildScript(snippets.op('navigator/BUILD'), thenRun=self.runBuild_stage, runArgs=[stage + 1])
-		elif stage == 2:
-			self.logStageStart('Process snippets structure')
-			self.processSnippetsStructure(snippets)
-			queueCall(self.runBuild_stage, stage + 1)
-		elif stage == 3:
-			self.logStageStart('Process snippets')
-			self.processSnippets(snippets, thenRun=self.runBuild_stage, runArgs=[stage + 1])
-		elif stage == 4:
-			self.logStageStart('Remove buildExclude ops')
-			self.removeBuildExcludeOpsIn(snippets, thenRun=lambda: self.runBuild_stage(stage + 1))
-		elif stage == 5:
-			self.logStageStart('Finalize snippets root pars')
-			self.finalizeRootPars(snippets)
-			queueCall(self.runBuild_stage, stage + 1)
-		elif stage == 6:
-			self.logStageStart('Finish snippets build')
-			self.context.focusInNetworkPane(snippets)
-			toxFile = self.getOutputToxPath('RayTKSnippets')
-			self.log(f'Exporting TOX to {toxFile}')
-			snippets.save(toxFile)
-			self.log('Build completed!')
-			self.log(f'Exported tox file: {toxFile}')
-
-	def processSnippetsStructure(self, snippets: COMP):
-		snippetsRoot = snippets.op('snippets')
-		self.context.detachTox(snippetsRoot)
-		operatorsRoot = snippets.op('snippets/operators')
-		self.context.detachTox(operatorsRoot)
-		for comp in operatorsRoot.children:
-			if not comp.isCOMP:
-				continue
-			self.context.detachTox(comp)
-			comp.allowCooking = True
-		operatorsRoot.allowCooking = True
-		snippetsRoot.allowCooking = True
-
-	def processSnippets(self, snippets: COMP, thenRun: Callable, runArgs: list):
-		self.log('Processing snippets')
-		snippetsRoot = snippets.op('snippets')
-		snippetTable = snippets.op('navigator/snippetTable')  # type: DAT
-		opTable = RaytkContext().opTable()
-		knownOpTypes = [c.val for c in opTable.col('opType')[1:]]
-
-		self.log(f'Found {snippetTable.numRows - 1} snippets')
-
-		def processSnippetsStage(row: int):
-			if row >= snippetTable.numRows:
-				queueCall(thenRun, *runArgs)
-			else:
-				snippetOpType = snippetTable[row, 'opType'].val
-				snippet = snippetsRoot.op(snippetTable[row, 'relPath'])
-				self.log(f'Processing snippet {snippet}')
-				self.context.focusInNetworkPane(snippet)
-				if snippetOpType not in knownOpTypes:
-					self.log(f'Removing snippet for missing type {snippetOpType}')
-					self.context.safeDestroyOp(snippet)
-					queueCall(processSnippetsStage, row + 1)
-				else:
-					queueCall(self.processSnippet, snippet, processSnippetsStage, [row + 1])
-
-		queueCall(processSnippetsStage, 1)
-
-	def processSnippet(self, snippet: COMP, theRun: Callable, runArgs: list):
-		self.context.detachTox(snippet)
-
-		def processSnippetStage(stage: int):
-			if stage == 0:
-				self.log('Enabling snippet cooking')
-				snippet.allowCooking = True
-			elif stage == 1:
-				rops = RaytkContext().ropChildrenOf(snippet)
-				self.log(f'Updating {len(rops)} ROPs')
-				for rop in rops:
-					self.processRop(rop)
-			elif stage == 2:
-				self.log('Disabling snippet cooking')
-				snippet.allowCooking = False
-			else:
-				queueCall(theRun, *(runArgs or []))
-				return
-			queueCall(processSnippetStage, stage + 1)
-
-		queueCall(processSnippetStage, 0)
-
-	def processRop(self, rop: COMP):
-		self.log(f'Processing ROP {rop}', verbose=True)
-		rop.par.enablecloningpulse.pulse()
-		# self.context.reclone(rop, verbose=True)
-		rop.par.enablecloning = False
-		if not rop.isPanel and not rop.isObject:
-			rop.showCustomOnly = True
-
-	def finalizeRootPars(self, comp: COMP):
-		super().finalizeRootPars(comp)
-		version = RaytkContext().toolkitVersion()
-		comp.par.Raytkversion = version
-		comp.par.Raytkversion.default = version
-		comp.par.Experimentalbuild = self.context.experimental
-		comp.par.Experimentalbuild.default = self.context.experimental
-
-class SeparateSnippetsBuilder(_BuilderBase):
 	def __init__(
 			self,
 			context: BuildContext,
