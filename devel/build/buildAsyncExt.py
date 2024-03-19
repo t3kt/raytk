@@ -1,10 +1,14 @@
+import zipfile
+
+import shutil
+
 import asyncio
 from datetime import datetime
 from pathlib import Path
 from raytkBuild import BuildContext, BuildTaskContext, DocProcessor, chunked_iterable
 from raytkTools import RaytkTools
 from raytkUtil import RaytkContext, CategoryInfo, IconColors, RaytkTags, focusFirstCustomParameterPage, navigateTo
-from typing import TextIO
+from typing import Optional, TextIO
 
 # noinspection PyUnreachableCode
 if False:
@@ -82,6 +86,33 @@ class BuildManagerAsync:
 		op.TDAsyncIO.Cancel()
 		op.TDAsyncIO.Run([_build()])
 
+	def runSnippetBuildOnly(self):
+		self.prepareForBuild()
+		builder = SnippetsBuilderAsync(self.context)
+
+		async def _build():
+			await builder.runBuild()
+			self.log('Finished snippet build process')
+			self.closeLogFile()
+
+		op.TDAsyncIO.Cancel()
+		op.TDAsyncIO.Run([_build()])
+
+	def runToolkitAndSnippetBuilds(self):
+		self.prepareForBuild()
+
+		async def _build():
+			toolkitBuilder = ToolkitBuilderAsync(self.context)
+			await toolkitBuilder.runBuild()
+			self.log('Finished toolkit build process')
+
+			snippetBuilder = SnippetsBuilderAsync(self.context)
+			await snippetBuilder.runBuild()
+			self.log('Finished snippet build process')
+
+		op.TDAsyncIO.Cancel()
+		op.TDAsyncIO.Run([_build()])
+
 	def log(self, message: str, verbose=False):
 		if verbose and not self.enableVerboseLogging:
 			return
@@ -91,19 +122,37 @@ class BuildManagerAsync:
 			print(stamp, message, file=self.logFile, flush=True)
 		self.logTable.appendRow([message])
 
-
-class ToolkitBuilderAsync:
-	def __init__(
-			self,
-			context: BuildContext,
-	):
+class BuilderAsyncBase:
+	def __init__(self, context: BuildContext):
 		self.context = context
+
+	def _getOutputToxPath(self, baseName: str):
+		return self._getOutputFilePath(baseName, 'tox')
+
+	def _getOutputFilePath(self, baseName: str, extension: str):
+		version = RaytkContext().toolkitVersion()
+		if self.context.experimental:
+			suffix = '-exp'
+		else:
+			suffix = ''
+		return f'build/{baseName}-{version}{suffix}.{extension}'
+
+	def log(self, message: str, verbose=False):
+		self.context.log(message, verbose)
+
+	async def logStageStart(self, desc: str):
+		self.log(f'===[{desc}]===')
+		await _asyncYield()
+
+class ToolkitBuilderAsync(BuilderAsyncBase):
+	def __init__(self, context: BuildContext):
+		super().__init__(context)
 		self.docProcessor = None
 		if not self.context.experimental:
 			self.docProcessor = DocProcessor(
 				context,
 				dataFolder='docs/_data',
-				referenceFolder='docs/reference',
+				referenceFolder='docs/_reference',
 				imagesFolder='docs/assets/images',
 			)
 		self.toolkit = None  # type: COMP | None
@@ -118,65 +167,64 @@ class ToolkitBuilderAsync:
 		await self._detachFileSyncOps()
 
 		if self.docProcessor:
-			self.logStageStart('Clearing old docs')
-			await _asyncYield()
+			await self.logStageStart('Clearing old docs')
 			self.docProcessor.clearPreviousDocs()
 
-		self.logStageStart('Process thumbnails')
+		await self.logStageStart('Process thumbnails')
 		await self._runBuildScript(self.toolkit.op('libraryThumbs/BUILD'))
 
-		self.logStageStart('Update library info')
+		await self.logStageStart('Update library info')
 		await self._updateLibraryInfo()
 
-		self.logStageStart('Update library image')
+		await self.logStageStart('Update library image')
 		await self._updateLibraryImage()
 
-		self.logStageStart('Pre-process components')
+		await self.logStageStart('Pre-process components')
 		await self._preProcessComponents()
 
-		self.logStageStart('Process operators')
+		await self.logStageStart('Process operators')
 		await self._processAllOperators()
 
-		self.logStageStart('Process nested operators')
+		await self.logStageStart('Process nested operators')
 		await self._processAllNestedOperators()
 
-		self.logStageStart('Generate operator docs')
+		await self.logStageStart('Generate operator docs')
 		await self._generateAllOperatorDocs()
 
-		self.logStageStart('Generate category docs')
+		await self.logStageStart('Generate category docs')
 		await self._generateAllCategoryDocs()
 
-		self.logStageStart('Lock library info')
+		await self.logStageStart('Lock library info')
 		await self._lockLibraryInfo()
 
-		self.logStageStart('Process tools')
+		await self.logStageStart('Process tools')
 		await self._processTools()
 
-		self.logStageStart('Lock build lock ops')
+		await self.logStageStart('Lock build lock ops')
 		await self._lockAllBuildLockOps()
 
-		self.logStageStart('Destroy components')
+		await self.logStageStart('Destroy components')
 		await self._destroyComponents()
 
-		self.logStageStart('Clean operators')
+		await self.logStageStart('Clean operators')
 		await self._cleanAllOperators()
 
-		self.logStageStart('Clear operator categories')
+		await self.logStageStart('Clear operator categories')
 		await self._cleanAllCategories()
 
-		self.logStageStart('Consolidate shared python mods')
+		await self.logStageStart('Consolidate shared python mods')
 		await self._consolidateSharedPythonMods()
 
-		self.logStageStart('Remove build exclude ops')
+		await self.logStageStart('Remove build exclude ops')
 		await self._removeAllBuildExcludeOps(self.toolkit)
 
-		self.logStageStart('Finalize toolkit pars')
+		await self.logStageStart('Finalize toolkit pars')
 		await self._finalizeToolkitPars()
 
-		self.logStageStart('Generate toolkit docs')
+		await self.logStageStart('Generate toolkit docs')
 		await self._generateToolkitDocs()
 
-		self.logStageStart('Finish build')
+		await self.logStageStart('Finish build')
 		await self._finishBuild()
 
 	async def reloadToolkit(self):
@@ -410,22 +458,125 @@ class ToolkitBuilderAsync:
 
 		await result
 
-	def _getOutputToxPath(self, baseName: str):
-		return self._getOutputFilePath(baseName, 'tox')
+class SnippetsBuilderAsync(BuilderAsyncBase):
+	def __init__(self, context: BuildContext):
+		super().__init__(context)
+		self.outputFolder = None  # type: Optional[Path]
+		self.sourceFolder = Path('snippets')
+		self.tempComp = None  # type: Optional[COMP]
+		self.sourceToxFiles = []  # type: list[Path]
+		self.opTypesByLocalName = {}  # type: dict[str, str]
 
-	def _getOutputFilePath(self, baseName: str, extension: str):
-		version = RaytkContext().toolkitVersion()
-		if self.context.experimental:
-			suffix = '-exp'
-		else:
-			suffix = ''
-		return f'build/{baseName}-{version}{suffix}.{extension}'
+	async def runBuild(self):
+		self.log('Starting snippets build')
 
-	def log(self, message: str, verbose=False):
-		self.context.log(message, verbose)
+		await self.logStageStart('Initialization')
+		await self._initializeOutput()
+		await self._initializeTempComp()
 
-	def logStageStart(self, desc: str):
-		self.log(f'===[{desc}]===')
+		await self.logStageStart('Load op table')
+		await self._loadOpTable()
+
+		await self.logStageStart('Find source tox files')
+		await self._findSourceToxFiles()
+
+		await self.logStageStart('Process source tox files')
+		await self._processSourceToxFiles()
+
+		await self.logStageStart('Build zip file')
+		await self._buildZipFile()
+
+		await self.logStageStart('Clean output')
+		await self._cleanOutput()
+
+		self.log('Build completed!')
+
+	async def _initializeOutput(self):
+		tempFolder = Path('build/temp')
+		tempFolder.mkdir(parents=True, exist_ok=True)
+		folder = tempFolder / 'snippets'
+		if folder.exists():
+			self.log('Clearing output temp folder ' + folder.as_posix())
+			shutil.rmtree(folder)
+		self.log('Creating output temp folder ' + folder.as_posix())
+		folder.mkdir(parents=True)
+		self.outputFolder = folder
+
+	async def _initializeTempComp(self):
+		self.tempComp = op('/temp')
+		if self.tempComp:
+			self.log('Removing old temp comp')
+			self.context.safeDestroyOp(self.tempComp)
+		self.log('Creating temp comp')
+		self.tempComp = root.create(baseCOMP, 'temp')
+
+	async def _loadOpTable(self):
+		opTable = RaytkContext().opTable()
+		self.opTypesByLocalName = {}
+		for i in range(1, opTable.numRows):
+			self.opTypesByLocalName[opTable[i, 'name'].val] = opTable[i, 'opType'].val
+
+	async def _findSourceToxFiles(self):
+		allFiles = (self.sourceFolder / 'operators').rglob('*.tox')
+
+		for file in allFiles:
+			if file.name == 'index.tox':
+				continue
+			if not file.stem.endswith('_snippet'):
+				continue
+			opLocalName = file.stem.split('_', maxsplit=1)[0]
+			if opLocalName not in self.opTypesByLocalName:
+				self.log('Skipping operator-specific snippet' + file.as_posix())
+				continue
+			self.sourceToxFiles.append(file)
+
+		self.log(f'Found {len(self.sourceToxFiles)} source tox files')
+
+	async def _processSourceToxFiles(self):
+		for i, tox in enumerate(self.sourceToxFiles):
+			self.log(f'Processing source tox file [{i+1}/{len(self.sourceToxFiles)}]: {tox}')
+			await self._processSourceToxFile(tox)
+
+	async def _processSourceToxFile(self, tox: Path):
+		snippet = self.tempComp.loadTox(tox.as_posix())
+		self.log('Processing snippet comp ' + snippet.path)
+		self.context.focusInNetworkPane(snippet)
+		self.context.detachTox(snippet)
+
+		await _asyncYield()
+		rops = RaytkContext().ropChildrenOf(snippet)
+		self.log(f'Updating {len(rops)} ROPs in snippet')
+		await _asyncYield()
+		for rop in rops:
+			await self._processRop(rop)
+
+		await _asyncYield()
+		relPath = tox.relative_to(self.sourceFolder)
+		outputPath = self.outputFolder / relPath
+		outputPath.parent.mkdir(parents=True, exist_ok=True)
+		self.log(f'Saving processed snippet to {outputPath}')
+		snippet.save(outputPath.as_posix())
+
+	async def _processRop(self, rop: COMP):
+		self.log('Processing ROP ' + rop.path, verbose=True)
+		self.context.reclone(rop, verbose=True)
+		self.context.disableCloning(rop, verbose=True)
+		self.context.updateROPInstance(rop)
+		if not rop.isPanel and not rop.isObject:
+			rop.showCustomOnly = True
+
+	async def _buildZipFile(self):
+		toxFiles = list(self.outputFolder.rglob('*.tox'))
+		outputFileName = self._getOutputFilePath('RayTKSnippets', 'zip')
+		self.log(f'Building zip file {outputFileName} with {len(toxFiles)} files')
+		with zipfile.ZipFile(outputFileName, 'w') as archive:
+			for file in toxFiles:
+				archive.write(file, arcname=file.relative_to(self.outputFolder))
+		await _asyncYield()
+		self.log('Wrote zip file ' + outputFileName)
+
+	async def _cleanOutput(self):
+		shutil.rmtree(self.outputFolder)
 
 async def _asyncYield():
 	pass
