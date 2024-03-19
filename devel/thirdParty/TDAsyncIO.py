@@ -48,7 +48,7 @@ class TDAsyncIO:
 			self.loop = asyncio.new_event_loop()
 			asyncio.set_event_loop(self.loop)
 
-	def __del__(self):
+	def __delTD__(self):
 		# Check this component is global OP or not.
 		if me.parent() == op.TDAsyncIO:
 			# Close the event loop. The loop must not be running.
