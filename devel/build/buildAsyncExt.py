@@ -413,7 +413,7 @@ class ToolkitBuilderAsync(BuilderAsyncBase):
 		total = len(chunks)
 		for i in range(total):
 			chunk = chunks[i]
-			self.log(f'Processing chunk {total - i} of {total}')
+			self.log(f'Processing chunk {i + 1} of {total}')
 			self.context.safeDestroyOps(chunk, verbose=True)
 			await _asyncYield()
 
