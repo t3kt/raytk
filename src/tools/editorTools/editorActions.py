@@ -881,6 +881,12 @@ def createActionManager():
 			attach=AttachOutFromExisting(),
 		),
 		ActionImpl(
+			'Add functionGraphRender',
+			ropType='raytk.operators.output.functionGraphRender',
+			select=RopSelect(coordTypes=['float']),
+			attach=AttachOutFromExisting(),
+		),
+		ActionImpl(
 			'Add raymarchRender3d',
 			ropType=_RopTypes.raymarchRender3d,
 			select=RopSelect(coordTypes=['vec3'], returnTypes=['Sdf']),
