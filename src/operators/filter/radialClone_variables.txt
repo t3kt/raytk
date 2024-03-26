@@ -1,3 +1,5 @@
 name	label	dataType	enable
 index	Index	int	1
 normindex	Normalized Index (0..1)	float	1
+rotaccum	Rotation (Accumulated) (0..360)	float	1
+normrotaccum	Normalized Rotation (Accumulated) (0..1)	float	1
