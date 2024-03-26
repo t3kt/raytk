@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.utility.exposeValue
-  opVersion: '6'
+  opVersion: '7'
   opStatus: beta
 opDef: !def
   enable: !expr
@@ -12,7 +12,10 @@ opDef: !def
     contextType: !contextT
       Allcontexttype: true
     returnType: !returnT
-      Allreturntype: true
+      Allreturntype: !expr
+        expr: parent().par.Valuesource != 'primaryvalue'
+      Returntypefloat: true
+      Returntypevec4: true
   function: !text
     file: src/operators/utility/exposeValue.glsl
     name: function

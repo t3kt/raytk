@@ -54,6 +54,10 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 			#error iterationNotSupportedForContextType
 			#endif
 		}
+		#elif defined(THIS_Valuesource_primaryvalue)
+		{
+			val = adaptAsVec4(res);
+		}
 		#else
 		#error invalidValueSource
 		#endif
