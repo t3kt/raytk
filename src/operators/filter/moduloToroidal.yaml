@@ -35,6 +35,16 @@ inputs:
   returnType: !returnT
     Allreturntype: true
 - !input
+  Localalias: repetitionsField
+  Variableinputs: shiftField
+  coordType: !coordT
+    Coordtypevec3: true
+  contextType: !contextT
+    Allcontexttype: true
+  returnType: !returnT
+    Returntypefloat: true
+    Returntypevec4: true
+- !input
   Localalias: radiusField
   Variables: angle normangle
   coordType: !coordT
@@ -53,3 +63,12 @@ inputs:
     Allcontexttype: true
   returnType: !returnT
     Returntypefloat: true
+- !input
+  Localalias: shiftField
+  coordType: !coordT
+    Coordtypevec3: true
+  contextType: !contextT
+    Allcontexttype: true
+  returnType: !returnT
+    Returntypefloat: true
+    Returntypevec4: true
