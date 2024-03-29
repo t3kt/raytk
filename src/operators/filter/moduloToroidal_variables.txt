@@ -1,3 +1,7 @@
 name	label	dataType	enable	macros
-cell	Cell (Row, Col)	vec2	1
-normcell	Normalized Cell (Row, Col) (0..1)	vec2	1
+cell	Cell (Row, Col)	vec2	1	
+normcell	Normalized Cell (Row, Col) (0..1)	vec2	1	
+angle	Angle (0-360)	float	1	
+normangle	Normalized Angle (0-1)	float	1	
+innerangle	Inner Angle (0-360)	float	1	
+norminnerangle	Normalized Inner Angle (0..1)	float	1	

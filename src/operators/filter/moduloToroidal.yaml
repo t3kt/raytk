@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.filter.moduloToroidal
-  opVersion: '0'
+  opVersion: '1'
   opStatus: alpha
 opDef: !def
   enable: !expr
@@ -27,6 +27,8 @@ opDef: !def
       cols: enable
 inputs:
 - !input
+  Variables: '*'
+  Variableinputs: '*'
   Required: true
   coordType: !coordT
     Coordtypevec3: true
@@ -36,7 +38,7 @@ inputs:
     Allreturntype: true
 - !input
   Localalias: repetitionsField
-  Variableinputs: shiftField
+  Variables: angle normangle
   coordType: !coordT
     Coordtypevec3: true
   contextType: !contextT
@@ -46,7 +48,8 @@ inputs:
     Returntypevec4: true
 - !input
   Localalias: radiusField
-  Variables: angle normangle
+  Variables: angle normangle cell normcell
+  Variableinputs: repetitionsField
   coordType: !coordT
     Coordtypevec3: true
   contextType: !contextT
@@ -55,8 +58,8 @@ inputs:
     Returntypefloat: true
 - !input
   Localalias: thicknessField
-  Variables: angle normangle
-  Variableinputs: radiusField
+  Variables: angle normangle cell normcell
+  Variableinputs: repetitionsField radiusField
   coordType: !coordT
     Coordtypevec3: true
   contextType: !contextT
@@ -65,6 +68,8 @@ inputs:
     Returntypefloat: true
 - !input
   Localalias: shiftField
+  Variables: angle normangle cell normcell
+  Variableinputs: repetitionsField radiusField thicknessField
   coordType: !coordT
     Coordtypevec3: true
   contextType: !contextT
