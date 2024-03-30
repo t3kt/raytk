@@ -29,6 +29,11 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 	float rows = THIS_Rows;
 	float cols = THIS_Cols;
 
+	vec2 shift = THIS_Shift;
+	#ifdef THIS_HAS_INPUT_shiftField
+	shift += fillToVec2(inputOp_shiftField(p0, ctx));
+	#endif
+
 	float col;
 	float row;
 	vec3 pCol;
@@ -38,6 +43,7 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 
 	float dCols;
 	{
+		pR(p.xz, shift.x * TAU);
 		pCol = p;
 		col = pModPolar(pCol.xz, cols);
 		#ifdef THIS_EXPOSE_col
@@ -52,6 +58,7 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 	float dRows;
 	{
 		qRow = vec2(length(p.xz) - rOuter, p.y);
+		pR(qRow, shift.y * TAU);
 		row = pModPolar(qRow, rows);
 		#ifdef THIS_EXPOSE_row
 		THIS_row = int(row);

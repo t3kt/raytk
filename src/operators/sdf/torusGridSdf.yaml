@@ -46,9 +46,20 @@ inputs:
   returnType: !returnT
     Returntypefloat: true
 - !input
+  Localalias: shiftField
+  Variables: angle normangle
+  Variableinputs: radiusField thicknessField
+  coordType: !coordT
+    Coordtypevec3: true
+  contextType: !contextT
+    Allcontexttype: true
+  returnType: !returnT
+    Returntypefloat: true
+    Returntypevec4: true
+- !input
   Localalias: barThicknessField
   Variables: angle normangle col normcol row normrow
-  Variableinputs: radiusField thicknessField
+  Variableinputs: radiusField thicknessField shiftField
   coordType: !coordT
     Coordtypevec3: true
   contextType: !contextT

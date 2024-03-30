@@ -4,3 +4,4 @@ Radius	param	runtime	macro		op('radius_definition').numRows < 2
 Thickness	param	runtime	macro		op('thickness_definition').numRows < 2
 Rows Cols	param	runtime	macro		1
 Barthickness	param	runtime	macro		op('bar_thickness_definition').numRows < 2
+Shift[1-2]	param	runtime	macro		
