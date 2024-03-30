@@ -203,24 +203,6 @@ class EditorROPState:
 	@property
 	def coordTypes(self): return self._defTypes('coordType')
 
-	@property
-	def isField(self): return bool({'float', 'vec4'} & set(self.returnTypes))
-
-	@property
-	def isVectorField(self): return bool(self and 'vec4' in self.returnTypes)
-
-	@property
-	def isFloatField(self): return bool(self and 'float' in self.returnTypes)
-
-	@property
-	def isSdf(self): return bool(self and self.returnTypes == ['Sdf'])
-
-	@property
-	def is2d(self): return 'vec2' in self.coordTypes
-
-	@property
-	def is3d(self): return 'vec3' in self.coordTypes
-
 	def hasCoordType(self, *types: str):
 		return any([t in self.coordTypes for t in types])
 
