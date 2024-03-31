@@ -643,6 +643,69 @@ class _InitMergeFloatToVector(OpInit):
 		o.par.Partsourcez = 'input3' if len(o.inputs) > 2 else 'zero'
 		o.par.Partsourcew = 'input4' if len(o.inputs) > 3 else 'zero'
 
+def _getOpElementSwitcherPar(elementRoot: COMP, autoModeOnly: bool):
+	if not elementRoot:
+		return None
+	try:
+		elementType = elementRoot.op('opElement').par.Elementtype.eval()
+		switchMode = str(elementRoot.par['Switchmode'] or '')
+		if autoModeOnly and switchMode not in ('auto', 'autoconst'):
+			return None
+		hostOp = elementRoot.par.Hostop.eval()
+		if elementType == 'codeSwitcher':
+			return hostOp.par[elementRoot.par.Param]
+		elif elementType == 'waveFunction':
+			return hostOp.par[elementRoot.par.Waveparam]
+		elif elementType == 'combiner':
+			return hostOp.par[elementRoot.par.Modeparam]
+	except:
+		return None
+
+def _getSwitcherPars(ctx: ActionContext, optimizableOnly: bool):
+	rop = ctx.primaryOp
+	info = ROPInfo(rop)
+	if not info.isROP:
+		return []
+	pars = []
+	editorOpState = EditorROPState(ctx.primaryOp)
+	opState = editorOpState.tryGetRopState()
+	if opState and opState.opElements:
+		for el in opState.opElements:
+			p = _getOpElementSwitcherPar(op(el.elementRoot), autoModeOnly=optimizableOnly)
+			if p is not None:
+				pars.append(p)
+	# this works but might be confusing if there are too many misc params included
+	# if table := info.opDefPar.Paramgrouptable.eval():
+	# 	for i in range(1, table.numRows):
+	# 		regHandling = table[i, 'handling']
+	# 		optHandling = table[i, 'readOnlyHandling']
+	# 		if regHandling and optHandling and regHandling != optHandling:
+	# 			for name in tdu.split(table[i, 'names']):
+	# 				p = rop.par[name]
+	# 				if p is not None:
+	# 					pars.append(p)
+	return pars
+
+def _createLockUnlockSwitcherAction(text, parName, lock: bool):
+	def isValid(ctx: ActionContext):
+		# assume valid since group wouldn't create it otherwise
+		return True
+	def execute(ctx: ActionContext):
+		par = ctx.primaryOp.par[parName]
+		if par is not None:
+			par.readOnly = lock
+	return SimpleAction(text, isValid, execute)
+
+def _createLockUnlockSwitcherActionGroup(text, lock: bool):
+	def _getActions(ctx: ActionContext):
+		pars = _getSwitcherPars(ctx, optimizableOnly=True)
+		return [
+			_createLockUnlockSwitcherAction(p.label, p.name, lock)
+			for p in pars
+			if p.readOnly != lock
+		]
+	return SimpleGroup(text, lambda ctx: bool(_getActions(ctx)), _getActions)
+
 class _RopTypes:
 	crossSection = 'raytk.operators.convert.crossSection'
 	modularMat = 'raytk.operators.material.modularMat'
@@ -872,6 +935,8 @@ def createActionManager():
 			}),
 		_createAnimateParamsGroup(
 			'Animate With LFO', _RopTypes.lfoGenerator, 'lfoGen'),
+		_createLockUnlockSwitcherActionGroup('Lock Param', lock=True),
+		_createLockUnlockSwitcherActionGroup('Unlock Param', lock=False),
 		_createExposeParamGroup('Expose Parameter'),
 		_createCustomizeShaderConfigAction('Customize Shader Config'),
 		ActionImpl(

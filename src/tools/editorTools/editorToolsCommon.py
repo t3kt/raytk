@@ -9,6 +9,8 @@ if False:
 	from _stubs import *
 	from tools.palette.palette import Palette
 	from _stubs.PopMenuExt import PopMenuExt
+	from raytkState import RopState
+	from components.opDefinition.opDefinition import OpDefinition
 
 @dataclass
 class ActionContext:
@@ -212,6 +214,22 @@ class EditorROPState:
 	def getParam(self, parName: str):
 		if self.rop:
 			return self.rop.par[parName]
+
+	def _getOpDefExt(self) -> 'Optional[OpDefinition]':
+		if not self.info.isROP:
+			return None
+		comp = self.rop.op('opDefinition')
+		if comp and hasattr(comp.ext, 'opDefinition'):
+			return comp.ext.opDefinition
+
+	def tryGetRopState(self) -> 'Optional[RopState]':
+		opDefExt = self._getOpDefExt()
+		if not opDefExt:
+			return None
+		try:
+			return opDefExt.getRopState()
+		except Exception as e:
+			print(f'Failed to get ROP state: {e}')
 
 InitFunc = Callable[[COMP], None] | None
 
