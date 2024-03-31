@@ -44,6 +44,17 @@ op:
   name: sphereGridSdf
   opType: raytk.operators.sdf.sphereGridSdf
   parameters:
+  - label: Axis
+    menuOptions:
+    - label: X
+      name: x
+    - label: Y
+      name: y
+    - label: Z
+      name: z
+    name: Axis
+    readOnlyHandling: semibaked
+    regularHandling: runtime
   - label: Parts
     menuOptions:
     - label: Both Latitudes & Longitudes

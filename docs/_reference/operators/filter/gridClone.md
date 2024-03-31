@@ -106,6 +106,8 @@ op:
       name: columnIntersect
     - label: Column Difference
       name: columnDiff
+    - label: Simple XOR
+      name: simpleXOR
     name: Mergetype
     readOnlyHandling: semibaked
     regularHandling: semibaked

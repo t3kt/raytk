@@ -160,6 +160,30 @@ op:
     name: Pivot2
     readOnlyHandling: baked
     regularHandling: runtime
+  - label: Enable Uniform Scale
+    name: Enableuniformscale
+    readOnlyHandling: baked
+    regularHandling: baked
+  - label: Uniform Scale 1
+    name: Uniformscale1
+    readOnlyHandling: baked
+    regularHandling: runtime
+  - label: Uniform Scale 2
+    name: Uniformscale2
+    readOnlyHandling: baked
+    regularHandling: runtime
+  - label: Enable Scale
+    name: Enablescale
+    readOnlyHandling: baked
+    regularHandling: baked
+  - label: Scale 1
+    name: Scale1
+    readOnlyHandling: baked
+    regularHandling: runtime
+  - label: Scale 2
+    name: Scale2
+    readOnlyHandling: baked
+    regularHandling: runtime
   summary: Applies a transform based on a range of settings, mapped with either the
     iteration value or a field input.
   thumb: assets/images/reference/operators/filter/rangeTransform_thumb.png

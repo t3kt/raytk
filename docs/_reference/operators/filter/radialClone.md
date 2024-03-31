@@ -31,6 +31,8 @@ op:
     supportedVariables:
     - RTK_raytk_operators_filter_radialClone_index
     - RTK_raytk_operators_filter_radialClone_normindex
+    - RTK_raytk_operators_filter_radialClone_rotaccum
+    - RTK_raytk_operators_filter_radialClone_normrotaccum
   - contextTypes:
     - Context
     - MaterialContext
@@ -51,6 +53,8 @@ op:
     supportedVariables:
     - RTK_raytk_operators_filter_radialClone_index
     - RTK_raytk_operators_filter_radialClone_normindex
+    - RTK_raytk_operators_filter_radialClone_rotaccum
+    - RTK_raytk_operators_filter_radialClone_normrotaccum
   - contextTypes:
     - Context
     - MaterialContext
@@ -71,6 +75,8 @@ op:
     supportedVariables:
     - RTK_raytk_operators_filter_radialClone_index
     - RTK_raytk_operators_filter_radialClone_normindex
+    - RTK_raytk_operators_filter_radialClone_rotaccum
+    - RTK_raytk_operators_filter_radialClone_normrotaccum
   - contextTypes:
     - Context
     - MaterialContext
@@ -91,6 +97,8 @@ op:
     supportedVariables:
     - RTK_raytk_operators_filter_radialClone_index
     - RTK_raytk_operators_filter_radialClone_normindex
+    - RTK_raytk_operators_filter_radialClone_rotaccum
+    - RTK_raytk_operators_filter_radialClone_normrotaccum
   keywords:
   - clone
   - copy
@@ -173,6 +181,8 @@ op:
       name: columnIntersect
     - label: Column Difference
       name: columnDiff
+    - label: Simple XOR
+      name: simpleXOR
     name: Mergetype
     readOnlyHandling: semibaked
     regularHandling: semibaked
@@ -203,6 +213,10 @@ op:
     name: RTK_raytk_operators_filter_radialClone_index
   - label: RTK_raytk_operators_filter_radialClone_normindex
     name: RTK_raytk_operators_filter_radialClone_normindex
+  - label: RTK_raytk_operators_filter_radialClone_rotaccum
+    name: RTK_raytk_operators_filter_radialClone_rotaccum
+  - label: RTK_raytk_operators_filter_radialClone_normrotaccum
+    name: RTK_raytk_operators_filter_radialClone_normrotaccum
 
 ---
 
