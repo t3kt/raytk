@@ -1,3 +1,8 @@
+void THIS_combine(inout Sdf res1, inout Sdf res2, in CoordT p, in ContextT ctx) {
+	MERGE_PREP();
+	MERGE_BODY();
+}
+
 ReturnT thismap(CoordT p, ContextT ctx) {
 	vec3 p0 = p;
 
@@ -83,7 +88,9 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 	#endif
 	dRows = length(qRow) - thRow;
 
-	float d = min(dRows, dCols);
+	Sdf res1 = createSdf(dRows);
+	Sdf res2 = createSdf(dCols);
+	THIS_combine(res1, res2, p0, ctx);
 
-	return createSdf(min(dRows, dCols));
+	return res1;
 }

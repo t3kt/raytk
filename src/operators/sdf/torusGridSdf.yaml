@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.sdf.torusGridSdf
-  opVersion: '2'
+  opVersion: '3'
   opStatus: beta
 opDef: !def
   enable: true
@@ -17,7 +17,7 @@ opDef: !def
     name: function
   paramGroupTable: eval_params
   libraryNames: !expr
-    expr: op('torusSdf_lib')
+    expr: op('torusSdf_lib'), 'raytkCombine'
   variableTable: !table
     file: src/operators/sdf/torusGridSdf_variables.txt
     name: variable_exprs
@@ -66,3 +66,24 @@ inputs:
     Allcontexttype: true
   returnType: !returnT
     Returntypefloat: true
+elements:
+- !opElement
+  name: combiner
+  elementType: combiner
+  params:
+    Includenone: false
+    Modeparam: Combine
+    Swapinputsparam: ''
+    Radiusparam: Blendradius
+    Numberparam: Blendnumber
+    Offsetparam: Blendoffset
+    Radiusfield: ''
+    Offsetfield: ''
+    Numberfield: ''
+    Manageparamstates: true
+    Alwaysincludeallparams: false
+    Switchmode: auto
+    Indexexpr: ''
+    Prepcodeplaceholder: MERGE_PREP();
+    Bodycodeplaceholder: MERGE_BODY();
+    Defaultinitcodeplaceholder: ''
