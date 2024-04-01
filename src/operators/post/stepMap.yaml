@@ -1,5 +1,5 @@
 !rcomp
 meta: !meta
   opType: raytk.operators.post.stepMap
-  opVersion: '1'
+  opVersion: '2'
   opStatus: default

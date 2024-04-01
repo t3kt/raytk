@@ -1,5 +1,5 @@
 !rcomp
 meta: !meta
   opType: raytk.operators.post.worldPosMap
-  opVersion: '4'
+  opVersion: '5'
   opStatus: default
