@@ -434,7 +434,8 @@ class ShaderBuilder:
 					paramTuplet.name, paramTuplet.source, paramTuplet.size,
 					paramTuplet.part1 or '', paramTuplet.part2 or '', paramTuplet.part3 or '', paramTuplet.part4 or '',
 					paramTuplet.status or '', paramTuplet.handling or '', state.name,
-					paramTuplet.sourceVectorPath or '', paramTuplet.sourceVectorIndex or '',
+					paramTuplet.sourceVectorPath or '',
+					paramTuplet.sourceVectorIndex if paramTuplet.sourceVectorIndex is not None else '',
 				])
 
 	def processParametersInCode(self, code: str):
