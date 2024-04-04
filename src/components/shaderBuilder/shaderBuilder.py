@@ -18,7 +18,6 @@ if False:
 	from _typeAliases import *
 
 	class _ConfigPar(ParCollection):
-		Inlineparameteraliases: BoolParamT
 		Inlinereadonlyparameters: BoolParamT
 		Simplifynames: BoolParamT
 		Inlinetypedefs: BoolParamT
@@ -437,10 +436,6 @@ class ShaderBuilder:
 					paramTuplet.sourceVectorPath or '',
 					paramTuplet.sourceVectorIndex if paramTuplet.sourceVectorIndex is not None else '',
 				])
-
-	def processParametersInCode(self, code: str):
-		paramProcessor = self._createParamProcessor()
-		return paramProcessor.processCodeBlock(code)
 
 	def processLibraryIncludes(self, code: str):
 		mode = str((self.configPar() and self.configPar()['Includemode']) or 'includelibs')
@@ -1253,7 +1248,6 @@ class _ParameterProcessor:
 		self.hasParams = paramDetailTable.numRows > 1
 		self.paramVals = paramVals
 		self.useConstantReadOnly = configPar.Inlinereadonlyparameters if configPar else False
-		self.inlineAliases = configPar.Inlineparameteraliases if configPar else False
 		self.aliasMode = str(configPar['Paramaliasmode'] or 'macro') if configPar else 'macro'
 		self.paramExprs = None  # type: Optional[Dict[str, _ParamExpr]]
 		self.opStates = opStates
@@ -1282,8 +1276,6 @@ class _ParameterProcessor:
 	def paramAliases(self) -> list[str]:
 		if not self.hasParams:
 			return []
-		if self.inlineAliases:
-			return []
 		self._initParamExprs()
 		if self.aliasMode == 'globalvar':
 			return [
@@ -1295,18 +1287,6 @@ class _ParameterProcessor:
 				f'#define {name} {expr.expr}'
 				for name, expr in self.paramExprs.items()
 			]
-
-	def processCodeBlock(self, code: str) -> str:
-		if not self.inlineAliases or not code:
-			return code
-		self._initParamExprs()
-
-		def replace(m: 're.Match'):
-			paramExpr = self.paramExprs.get(m.group(0))
-			return paramExpr.expr if paramExpr else m.group(0)
-
-		code = _paramAliasPattern.sub(replace, code)
-		return code
 
 	def paramUniforms(self) -> list[_UniformSpec]:
 		raise NotImplementedError()
