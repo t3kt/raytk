@@ -500,7 +500,7 @@ class _Builder:
 				namesByTuplet[paramSpec.tupletLocalName] = ['', '', '', '']
 			namesByTuplet[paramSpec.tupletLocalName][vecIndex] = paramSpec.localName
 		if self.opState.path:
-			sourceVectorPath = self.opState.path + '/param_vector_vals'
+			sourceVectorPath = self.opState.path + '/opDefinition/param_vector_vals'
 		else:
 			sourceVectorPath = ''  # only for master opDefinition
 		sourceVectorIndex = 0
