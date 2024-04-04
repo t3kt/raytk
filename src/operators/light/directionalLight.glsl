@@ -1,7 +1,7 @@
 ReturnT thismap(CoordT p, ContextT ctx) {
-	vec3 pos = p + normalize(THIS_Direction) * RAYTK_MAX_DIST;
 	vec3 dir = normalize(THIS_Direction);
 	pRotateOnXYZ(dir, THIS_Rotate);
+	vec3 pos = p + dir * RAYTK_MAX_DIST;
 	vec3 col = THIS_Color * THIS_Intensity * clamp(dot(ctx.normal, dir), 0., 1.);
 	Light light = createLight(pos, col);
 	#ifdef THIS_EXPOSE_lightdir
