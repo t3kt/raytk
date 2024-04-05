@@ -1,5 +1,60 @@
 # Release Notes
 
+## v0.40
+
+### Highlights
+
+### Details
+
+* Improvements / additions
+  * New OPs
+    * torusGridSdf - torus-shaped grid made from rings
+  * New OP features
+    * diffuseContrib / specularContrib - runtime bypass (enable/disable)
+    * moduloToroidal - new torus shaped modulo to create rings of rings (#1195)
+    * quadSdf - size, thickness field inputs
+    * radialClone - variable for current rotation amount (#1176)
+    * rangeTransform - uniform scale (#1206)
+    * sphereGridSdf - axis parameter (#1178)
+    * XOR combine mode for all OPs that support SDF combination
+  * Editor tools (#1201)
+    * New action to merge float fields into a vector field
+    * New action to add functionGraphRender
+    * New actions for locking/unlocking switcher-based menu parameters
+  * Snippets
+    * New translate snippet
+  * Misc improvements
+    * In documentation, show source parameters for parameter-based inputs
+    * Fix ranges for parameters in pointLight
+* Fixes
+  * Fix incorrect pixel format in renderers related to shaderExecutor
+  * Fix incorrect input validation in moduloPolar
+  * Fix broken limit box handling in raymarchRender3d (#1202)
+  * Fix broken primary value mode in exposeValue (#1205)
+  * Fix runtime bypass in combineFields when in optimized mode
+  * Fix duplicate parameter errors in rectangleSdf, polarCoordField
+  * Fix UV output in render2D
+  * Fix broken parameter processing when using separate uniforms mode
+  * Fix shadow direction handling in directionalLight (#1210)
+  * Fix 3D texture output in pointMapRender
+  * Clarify confusing input label in worldPosMap (#1207)
+* Changes (potentially breaking)
+  * Remove deprecated fieldMat
+  * Remove alpha aexionSdf
+  * Deprecate addFields
+  * Move lots of ROPs from beta to default status (#1200)
+  * Reduce default speed for speedGenerator
+  * Make max dist a runtime parameter in raymarchRender3d (#1202)
+  * Remove support for inlining parameter aliases in generated shaders
+* Infrastructure / internals
+  * Migrate portions of opDefinition into an extension and refactor infrastructure to use it
+  * Move param definitions, op elements into RopState
+  * Consolidate and strip down parts of opDefinition, inputHandler, multiInputHandler, etc. to reduce per-ROP overhead
+  * Support marking inputs as prohibited based on current ROP settings
+  * Migrate build process to use TDAsyncIO
+  * Remove support for combined snippets tox builds
+  * Standardize access to output buffers
+
 ## v0.39
 
 ### Highlights
