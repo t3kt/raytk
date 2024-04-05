@@ -818,7 +818,7 @@ class OpDocManager:
 		if opDefExt:
 			opState = opDefExt.getRopState()
 			extractedVars = [
-				VariableHelp(v.name, v.label)
+				VariableHelp(v.localName, v.label)
 				for v in opState.variables
 			]
 		debug('known vars: ', varHelps)
