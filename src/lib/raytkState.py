@@ -91,6 +91,7 @@ class RopState(_StateObject):
 			variables=[Variable(**v) for v in obj.get('variables', [])],
 			validationErrors=[ValidationError(**e) for e in obj.get('validationErrors', [])],
 			opElements=[OpElementState(**e) for e in obj.get('opElements', [])],
+			tags=obj.get('tags', []),
 		)
 
 	@classmethod
