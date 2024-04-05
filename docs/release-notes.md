@@ -4,18 +4,23 @@
 
 ### Highlights
 
+* New torusGridSdf and moduloToroidal for all your torus-based needs!
+* New terrainNoiseField with fractal brownian motion patterns!
+* Lots of bug fixes and optimizations including a 13% reduction in tox size!
+
 ### Details
 
 * Improvements / additions
   * New OPs
+    * moduloToroidal - new torus shaped modulo to create rings of rings (#1195)
     * torusGridSdf - torus-shaped grid made from rings
   * New OP features
     * diffuseContrib / specularContrib - runtime bypass (enable/disable)
-    * moduloToroidal - new torus shaped modulo to create rings of rings (#1195)
     * quadSdf - size, thickness field inputs
     * radialClone - variable for current rotation amount (#1176)
     * rangeTransform - uniform scale (#1206)
     * sphereGridSdf - axis parameter (#1178)
+    * terrainNoiseField - FBM noise, useful for surface offsetting (#1183)
     * XOR combine mode for all OPs that support SDF combination
   * Editor tools (#1201)
     * New action to merge float fields into a vector field
@@ -26,6 +31,7 @@
   * Misc improvements
     * In documentation, show source parameters for parameter-based inputs
     * Fix ranges for parameters in pointLight
+    * Clarify confusing input label in worldPosMap (#1207)
 * Fixes
   * Fix incorrect pixel format in renderers related to shaderExecutor
   * Fix incorrect input validation in moduloPolar
@@ -37,7 +43,6 @@
   * Fix broken parameter processing when using separate uniforms mode
   * Fix shadow direction handling in directionalLight (#1210)
   * Fix 3D texture output in pointMapRender
-  * Clarify confusing input label in worldPosMap (#1207)
 * Changes (potentially breaking)
   * Remove deprecated fieldMat
   * Remove alpha aexionSdf
