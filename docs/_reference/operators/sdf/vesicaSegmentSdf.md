@@ -86,7 +86,7 @@ op:
     summary: The thickness of the capsule.
   thumb: assets/images/reference/operators/sdf/vesicaSegmentSdf_thumb.png
   variables:
-  - label: RTK_raytk_operators_sdf_vesicaSegmentSdf_normoffset
-    name: RTK_raytk_operators_sdf_vesicaSegmentSdf_normoffset
+  - label: normoffset
+    name: normoffset
 
 ---

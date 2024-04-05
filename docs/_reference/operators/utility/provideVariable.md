@@ -90,7 +90,7 @@ op:
     readOnlyHandling: baked
     regularHandling: runtime
   variables:
-  - label: RTK_raytk_operators_utility_provideVariable_var
-    name: RTK_raytk_operators_utility_provideVariable_var
+  - label: var
+    name: var
 
 ---

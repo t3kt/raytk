@@ -1,11 +1,11 @@
 ---
 layout: operator
-title: moduloSpherical
+title: moduloToroidal
 parent: Filter Operators
 grand_parent: Operators
-permalink: /reference/operators/filter/moduloSpherical
+permalink: /reference/operators/filter/moduloToroidal
 redirect_from:
-  - /reference/opType/raytk.operators.filter.moduloSpherical/
+  - /reference/opType/raytk.operators.filter.moduloToroidal/
 op:
   category: filter
   inputs:
@@ -32,11 +32,16 @@ op:
     - Particle
     supportedVariableInputs:
     - repetitionsField
-    - offsetField
+    - radiusField
+    - thicknessField
     - shiftField
     supportedVariables:
     - cell
     - normcell
+    - angle
+    - normangle
+    - innerangle
+    - norminnerangle
   - contextTypes:
     - Context
     - MaterialContext
@@ -53,8 +58,9 @@ op:
     returnTypes:
     - float
     - vec4
-    supportedVariableInputs:
-    - shiftField
+    supportedVariables:
+    - angle
+    - normangle
   - contextTypes:
     - Context
     - MaterialContext
@@ -66,14 +72,38 @@ op:
     - PixelContext
     coordTypes:
     - vec3
-    label: Offset Field
-    name: offsetField
+    label: Radius Field
+    name: radiusField
     returnTypes:
-    - vec4
+    - float
     supportedVariableInputs:
-    - shiftField
     - repetitionsField
     supportedVariables:
+    - angle
+    - normangle
+    - cell
+    - normcell
+  - contextTypes:
+    - Context
+    - MaterialContext
+    - CameraContext
+    - LightContext
+    - RayContext
+    - ParticleContext
+    - VertexContext
+    - PixelContext
+    coordTypes:
+    - vec3
+    label: Thickness Field
+    name: thicknessField
+    returnTypes:
+    - float
+    supportedVariableInputs:
+    - repetitionsField
+    - radiusField
+    supportedVariables:
+    - angle
+    - normangle
     - cell
     - normcell
   - contextTypes:
@@ -92,11 +122,39 @@ op:
     returnTypes:
     - float
     - vec4
-  name: moduloSpherical
-  opType: raytk.operators.filter.moduloSpherical
+    supportedVariableInputs:
+    - repetitionsField
+    - radiusField
+    - thicknessField
+    supportedVariables:
+    - angle
+    - normangle
+    - cell
+    - normcell
+  name: moduloToroidal
+  opType: raytk.operators.filter.moduloToroidal
   parameters:
   - label: Enable
     name: Enable
+  - label: Axis
+    menuOptions:
+    - label: X
+      name: x
+    - label: Y
+      name: y
+    - label: Z
+      name: z
+    name: Axis
+    readOnlyHandling: semibaked
+    regularHandling: semibaked
+  - label: Radius
+    name: Radius
+    readOnlyHandling: baked
+    regularHandling: runtime
+  - label: Thickness
+    name: Thickness
+    readOnlyHandling: baked
+    regularHandling: runtime
   - label: Repetitions
     name: Repetitions
     readOnlyHandling: baked
@@ -105,31 +163,20 @@ op:
     name: Shift
     readOnlyHandling: baked
     regularHandling: runtime
-  - label: Offset
-    name: Offset
-    readOnlyHandling: baked
-    regularHandling: runtime
-  - label: Pivot
-    name: Pivot
-    readOnlyHandling: baked
-    regularHandling: runtime
-  - label: Mirror Type
-    menuOptions:
-    - label: None
-      name: none
-    - label: Rows
-      name: rows
-    - label: Columns
-      name: cols
-    - label: Grid
-      name: grid
-    name: Mirrortype
-    readOnlyHandling: semibaked
-    regularHandling: semibaked
+  status: beta
+  thumb: assets/images/reference/operators/filter/moduloToroidal_thumb.png
   variables:
   - label: cell
     name: cell
   - label: normcell
     name: normcell
+  - label: angle
+    name: angle
+  - label: normangle
+    name: normangle
+  - label: innerangle
+    name: innerangle
+  - label: norminnerangle
+    name: norminnerangle
 
 ---

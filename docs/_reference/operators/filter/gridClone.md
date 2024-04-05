@@ -27,8 +27,8 @@ op:
     returnTypes:
     - Sdf
     supportedVariables:
-    - RTK_raytk_operators_filter_gridClone_coord
-    - RTK_raytk_operators_filter_gridClone_normcoord
+    - coord
+    - normcoord
   - contextTypes:
     - Context
     - MaterialContext
@@ -47,8 +47,8 @@ op:
     returnTypes:
     - float
     supportedVariables:
-    - RTK_raytk_operators_filter_gridClone_coord
-    - RTK_raytk_operators_filter_gridClone_normcoord
+    - coord
+    - normcoord
   name: gridClone
   opType: raytk.operators.filter.gridClone
   parameters:
@@ -121,9 +121,9 @@ op:
     name: Mergeoffset
   thumb: assets/images/reference/operators/filter/gridClone_thumb.png
   variables:
-  - label: RTK_raytk_operators_filter_gridClone_coord
-    name: RTK_raytk_operators_filter_gridClone_coord
-  - label: RTK_raytk_operators_filter_gridClone_normcoord
-    name: RTK_raytk_operators_filter_gridClone_normcoord
+  - label: coord
+    name: coord
+  - label: normcoord
+    name: normcoord
 
 ---

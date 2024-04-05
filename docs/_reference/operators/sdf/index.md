@@ -106,6 +106,7 @@ cat:
     name: gyroidSdf
     summary: Gyroid shape, which is an infinitely connected periodic surface.
   - name: headSdf
+    summary: Human head SDF created by tdhooper.
   - keywords:
     - coil
     - helix

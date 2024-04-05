@@ -91,8 +91,8 @@ op:
   - pl
   summary: Light eminating from a single point in space, with optional distance attentuation.
   variables:
-  - label: RTK_raytk_operators_light_pointLight_lightdir
-    name: RTK_raytk_operators_light_pointLight_lightdir
+  - label: lightdir
+    name: lightdir
 
 ---
 

@@ -25,9 +25,9 @@ op:
     returnTypes:
     - vec4
     supportedVariables:
-    - RTK_raytk_operators_sdf_lineSeriesSdf_stepindex
-    - RTK_raytk_operators_sdf_lineSeriesSdf_normstepindex
-    - RTK_raytk_operators_sdf_lineSeriesSdf_normoffset
+    - stepindex
+    - normstepindex
+    - normoffset
   - contextTypes:
     - Context
     - MaterialContext
@@ -44,9 +44,9 @@ op:
     returnTypes:
     - vec4
     supportedVariables:
-    - RTK_raytk_operators_sdf_lineSeriesSdf_stepindex
-    - RTK_raytk_operators_sdf_lineSeriesSdf_normstepindex
-    - RTK_raytk_operators_sdf_lineSeriesSdf_normoffset
+    - stepindex
+    - normstepindex
+    - normoffset
   - contextTypes:
     - Context
     - MaterialContext
@@ -63,9 +63,9 @@ op:
     returnTypes:
     - float
     supportedVariables:
-    - RTK_raytk_operators_sdf_lineSeriesSdf_stepindex
-    - RTK_raytk_operators_sdf_lineSeriesSdf_normstepindex
-    - RTK_raytk_operators_sdf_lineSeriesSdf_normoffset
+    - stepindex
+    - normstepindex
+    - normoffset
   name: lineSeriesSdf
   opType: raytk.operators.sdf.lineSeriesSdf
   parameters:
@@ -158,11 +158,11 @@ op:
     regularHandling: runtime
   thumb: assets/images/reference/operators/sdf/lineSeriesSdf_thumb.png
   variables:
-  - label: RTK_raytk_operators_sdf_lineSeriesSdf_stepindex
-    name: RTK_raytk_operators_sdf_lineSeriesSdf_stepindex
-  - label: RTK_raytk_operators_sdf_lineSeriesSdf_normstepindex
-    name: RTK_raytk_operators_sdf_lineSeriesSdf_normstepindex
-  - label: RTK_raytk_operators_sdf_lineSeriesSdf_normoffset
-    name: RTK_raytk_operators_sdf_lineSeriesSdf_normoffset
+  - label: stepindex
+    name: stepindex
+  - label: normstepindex
+    name: normstepindex
+  - label: normoffset
+    name: normoffset
 
 ---

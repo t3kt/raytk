@@ -35,8 +35,8 @@ op:
     - rotateField
     - offsetField
     supportedVariables:
-    - RTK_raytk_operators_filter_mirrorQuadrant_index
-    - RTK_raytk_operators_filter_mirrorQuadrant_sign
+    - index
+    - sign
   - contextTypes:
     - Context
     - MaterialContext
@@ -61,8 +61,8 @@ op:
       The value is converted to radians and *added* to the `Rotateaxis` parameter.*
       `offset_field_definition_in`:'
     supportedVariables:
-    - RTK_raytk_operators_filter_mirrorQuadrant_index
-    - RTK_raytk_operators_filter_mirrorQuadrant_sign
+    - index
+    - sign
   - contextTypes:
     - Context
     - MaterialContext
@@ -83,8 +83,8 @@ op:
     supportedVariableInputs:
     - rotateField
     supportedVariables:
-    - RTK_raytk_operators_filter_mirrorQuadrant_index
-    - RTK_raytk_operators_filter_mirrorQuadrant_sign
+    - index
+    - sign
   name: mirrorQuadrant
   opType: raytk.operators.filter.mirrorQuadrant
   parameters:
@@ -136,10 +136,10 @@ op:
   summary: Mirror coordinates across two axes.
   thumb: assets/images/reference/operators/filter/mirrorQuadrant_thumb.png
   variables:
-  - label: RTK_raytk_operators_filter_mirrorQuadrant_index
-    name: RTK_raytk_operators_filter_mirrorQuadrant_index
-  - label: RTK_raytk_operators_filter_mirrorQuadrant_sign
-    name: RTK_raytk_operators_filter_mirrorQuadrant_sign
+  - label: index
+    name: index
+  - label: sign
+    name: sign
 
 ---
 

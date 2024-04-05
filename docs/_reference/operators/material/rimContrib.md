@@ -21,7 +21,7 @@ op:
     returnTypes:
     - float
     supportedVariables:
-    - RTK_raytk_operators_material_rimContrib_normangle
+    - normangle
   - contextTypes:
     - MaterialContext
     coordTypes:
@@ -36,7 +36,7 @@ op:
     supportedVariableInputs:
     - thicknessField
     supportedVariables:
-    - RTK_raytk_operators_material_rimContrib_normangle
+    - normangle
   - contextTypes:
     - MaterialContext
     coordTypes:
@@ -53,7 +53,7 @@ op:
     - thicknessField
     - blendingField
     supportedVariables:
-    - RTK_raytk_operators_material_rimContrib_normangle
+    - normangle
   name: rimContrib
   opType: raytk.operators.material.rimContrib
   parameters:
@@ -89,7 +89,7 @@ op:
     regularHandling: runtime
   thumb: assets/images/reference/operators/material/rimContrib_thumb.png
   variables:
-  - label: RTK_raytk_operators_material_rimContrib_normangle
-    name: RTK_raytk_operators_material_rimContrib_normangle
+  - label: normangle
+    name: normangle
 
 ---

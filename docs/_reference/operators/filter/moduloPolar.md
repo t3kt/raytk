@@ -47,12 +47,12 @@ op:
     - offsetField
     - rotateField
     supportedVariables:
-    - RTK_raytk_operators_filter_moduloPolar_step
-    - RTK_raytk_operators_filter_moduloPolar_normstep
-    - RTK_raytk_operators_filter_moduloPolar_globalangle
-    - RTK_raytk_operators_filter_moduloPolar_normglobalangle
-    - RTK_raytk_operators_filter_moduloPolar_normlocalangle
-    - RTK_raytk_operators_filter_moduloPolar_centerdist
+    - step
+    - normstep
+    - globalangle
+    - normglobalangle
+    - normlocalangle
+    - centerdist
   - contextTypes:
     - Context
     - MaterialContext
@@ -217,18 +217,18 @@ op:
   summary: Repeats space radially, like a kaleidoscope.
   thumb: assets/images/reference/operators/filter/moduloPolar_thumb.png
   variables:
-  - label: RTK_raytk_operators_filter_moduloPolar_step
-    name: RTK_raytk_operators_filter_moduloPolar_step
-  - label: RTK_raytk_operators_filter_moduloPolar_normstep
-    name: RTK_raytk_operators_filter_moduloPolar_normstep
-  - label: RTK_raytk_operators_filter_moduloPolar_globalangle
-    name: RTK_raytk_operators_filter_moduloPolar_globalangle
-  - label: RTK_raytk_operators_filter_moduloPolar_normglobalangle
-    name: RTK_raytk_operators_filter_moduloPolar_normglobalangle
-  - label: RTK_raytk_operators_filter_moduloPolar_normlocalangle
-    name: RTK_raytk_operators_filter_moduloPolar_normlocalangle
-  - label: RTK_raytk_operators_filter_moduloPolar_centerdist
-    name: RTK_raytk_operators_filter_moduloPolar_centerdist
+  - label: step
+    name: step
+  - label: normstep
+    name: normstep
+  - label: globalangle
+    name: globalangle
+  - label: normglobalangle
+    name: normglobalangle
+  - label: normlocalangle
+    name: normlocalangle
+  - label: centerdist
+    name: centerdist
 
 ---
 

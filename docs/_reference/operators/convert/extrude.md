@@ -30,8 +30,8 @@ op:
     - height_definition_in
     - offset_definition_in
     supportedVariables:
-    - RTK_raytk_operators_convert_extrude_axispos
-    - RTK_raytk_operators_convert_extrude_normoffset
+    - axispos
+    - normoffset
   - contextTypes:
     - Context
     - MaterialContext
@@ -124,10 +124,10 @@ op:
   summary: Creates a 3D SDF by extruding a 2D SDF along along an axis.
   thumb: assets/images/reference/operators/convert/extrude_thumb.png
   variables:
-  - label: RTK_raytk_operators_convert_extrude_axispos
-    name: RTK_raytk_operators_convert_extrude_axispos
-  - label: RTK_raytk_operators_convert_extrude_normoffset
-    name: RTK_raytk_operators_convert_extrude_normoffset
+  - label: axispos
+    name: axispos
+  - label: normoffset
+    name: normoffset
 
 ---
 

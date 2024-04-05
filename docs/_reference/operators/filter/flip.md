@@ -35,8 +35,8 @@ op:
     - offsetField
     - shiftField
     supportedVariables:
-    - RTK_raytk_operators_filter_flip_sign
-    - RTK_raytk_operators_filter_flip_index
+    - sign
+    - index
   - contextTypes:
     - Context
     - MaterialContext
@@ -168,10 +168,10 @@ op:
   summary: Flips the input across an axis, either on its own or merged with the original.
   thumb: assets/images/reference/operators/filter/flip_thumb.png
   variables:
-  - label: RTK_raytk_operators_filter_flip_sign
-    name: RTK_raytk_operators_filter_flip_sign
-  - label: RTK_raytk_operators_filter_flip_index
-    name: RTK_raytk_operators_filter_flip_index
+  - label: sign
+    name: sign
+  - label: index
+    name: index
 
 ---
 

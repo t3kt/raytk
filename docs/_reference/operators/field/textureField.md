@@ -31,8 +31,8 @@ op:
     summary: When provided, this field is used to calculate the UV coordinates (in
       the x and y parts of the vec4).
     supportedVariables:
-    - RTK_raytk_operators_field_textureField_res
-    - RTK_raytk_operators_field_textureField_aspect
+    - res
+    - aspect
   name: textureField
   opType: raytk.operators.field.textureField
   parameters:
@@ -124,10 +124,10 @@ op:
   summary: A float or vector field that looks up values from a texture.
   thumb: assets/images/reference/operators/field/textureField_thumb.png
   variables:
-  - label: RTK_raytk_operators_field_textureField_res
-    name: RTK_raytk_operators_field_textureField_res
-  - label: RTK_raytk_operators_field_textureField_aspect
-    name: RTK_raytk_operators_field_textureField_aspect
+  - label: res
+    name: res
+  - label: aspect
+    name: aspect
 
 ---
 

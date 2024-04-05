@@ -29,7 +29,6 @@ op:
     - Sdf
     supportedVariables:
     - index
-    - RTK_raytk_operators_combine_arrange_index
   - contextTypes:
     - Context
     - MaterialContext
@@ -52,7 +51,6 @@ op:
     - inputOp1
     supportedVariables:
     - index
-    - RTK_raytk_operators_combine_arrange_index
   - contextTypes:
     - Context
     - MaterialContext
@@ -75,7 +73,6 @@ op:
     - inputOp[1-2]
     supportedVariables:
     - index
-    - RTK_raytk_operators_combine_arrange_index
   - contextTypes:
     - Context
     - MaterialContext
@@ -98,7 +95,6 @@ op:
     - inputOp[1-3]
     supportedVariables:
     - index
-    - RTK_raytk_operators_combine_arrange_index
   - contextTypes:
     - Context
     - MaterialContext
@@ -121,7 +117,6 @@ op:
     - inputOp[1-4]
     supportedVariables:
     - index
-    - RTK_raytk_operators_combine_arrange_index
   - contextTypes:
     - Context
     - MaterialContext
@@ -144,7 +139,6 @@ op:
     - inputOp[1-5]
     supportedVariables:
     - index
-    - RTK_raytk_operators_combine_arrange_index
   - contextTypes:
     - Context
     - MaterialContext
@@ -167,7 +161,6 @@ op:
     - inputOp[1-6]
     supportedVariables:
     - index
-    - RTK_raytk_operators_combine_arrange_index
   - contextTypes:
     - Context
     - MaterialContext
@@ -190,7 +183,6 @@ op:
     - inputOp[1-7]
     supportedVariables:
     - index
-    - RTK_raytk_operators_combine_arrange_index
   name: arrange
   opType: raytk.operators.combine.arrange
   parameters:
@@ -299,8 +291,6 @@ op:
   variables:
   - label: index
     name: index
-  - label: RTK_raytk_operators_combine_arrange_index
-    name: RTK_raytk_operators_combine_arrange_index
 
 ---
 

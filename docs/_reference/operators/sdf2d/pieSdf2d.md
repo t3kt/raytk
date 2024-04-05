@@ -83,8 +83,6 @@ op:
   variables:
   - label: normangle
     name: normangle
-  - label: RTK_raytk_operators_sdf2d_pieSdf2d_normangle
-    name: RTK_raytk_operators_sdf2d_pieSdf2d_normangle
 
 ---
 

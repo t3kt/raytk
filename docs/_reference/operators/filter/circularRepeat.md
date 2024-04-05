@@ -29,8 +29,6 @@ op:
     supportedVariables:
     - cellcoord
     - cellchecker
-    - RTK_raytk_operators_filter_circularRepeat_cellcoord
-    - RTK_raytk_operators_filter_circularRepeat_cellchecker
   name: circularRepeat
   opType: raytk.operators.filter.circularRepeat
   parameters:
@@ -64,10 +62,6 @@ op:
     name: cellcoord
   - label: cellchecker
     name: cellchecker
-  - label: RTK_raytk_operators_filter_circularRepeat_cellcoord
-    name: RTK_raytk_operators_filter_circularRepeat_cellcoord
-  - label: RTK_raytk_operators_filter_circularRepeat_cellchecker
-    name: RTK_raytk_operators_filter_circularRepeat_cellchecker
 
 ---
 

@@ -138,10 +138,10 @@ op:
   summary: SDF for a torus.
   thumb: assets/images/reference/operators/sdf/torusSdf_thumb.png
   variables:
-  - label: RTK_raytk_operators_sdf_torusSdf_angle
-    name: RTK_raytk_operators_sdf_torusSdf_angle
-  - label: RTK_raytk_operators_sdf_torusSdf_normangle
-    name: RTK_raytk_operators_sdf_torusSdf_normangle
+  - label: angle
+    name: angle
+  - label: normangle
+    name: normangle
 
 ---
 

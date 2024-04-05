@@ -30,8 +30,8 @@ op:
     - float
     - vec4
     supportedVariables:
-    - RTK_raytk_operators_filter_instanceField_index
-    - RTK_raytk_operators_filter_instanceField_normindex
+    - index
+    - normindex
   name: instanceField
   opType: raytk.operators.filter.instanceField
   parameters:
@@ -68,9 +68,9 @@ op:
     summary: Swaps the two inputs. This is only relevant for some of the `Operation`
       values.
   variables:
-  - label: RTK_raytk_operators_filter_instanceField_index
-    name: RTK_raytk_operators_filter_instanceField_index
-  - label: RTK_raytk_operators_filter_instanceField_normindex
-    name: RTK_raytk_operators_filter_instanceField_normindex
+  - label: index
+    name: index
+  - label: normindex
+    name: normindex
 
 ---

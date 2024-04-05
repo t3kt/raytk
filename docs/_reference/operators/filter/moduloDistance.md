@@ -31,7 +31,7 @@ op:
     - Light
     - Particle
     supportedVariables:
-    - RTK_raytk_operators_filter_moduloDistance_ring
+    - ring
   keywords:
   - distance
   - modulo
@@ -78,7 +78,7 @@ op:
     readOnlyHandling: semibaked
     regularHandling: semibaked
   variables:
-  - label: RTK_raytk_operators_filter_moduloDistance_ring
-    name: RTK_raytk_operators_filter_moduloDistance_ring
+  - label: ring
+    name: ring
 
 ---

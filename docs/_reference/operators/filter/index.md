@@ -192,6 +192,8 @@ cat:
     - mp
     summary: Repeats space radially, like a kaleidoscope.
   - name: moduloSpherical
+  - name: moduloToroidal
+    status: beta
   - keywords:
     - hollow
     - onion

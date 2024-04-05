@@ -29,10 +29,10 @@ op:
     returnTypes:
     - Sdf
     supportedVariables:
-    - RTK_raytk_operators_filter_radialClone_index
-    - RTK_raytk_operators_filter_radialClone_normindex
-    - RTK_raytk_operators_filter_radialClone_rotaccum
-    - RTK_raytk_operators_filter_radialClone_normrotaccum
+    - index
+    - normindex
+    - rotaccum
+    - normrotaccum
   - contextTypes:
     - Context
     - MaterialContext
@@ -51,10 +51,10 @@ op:
     returnTypes:
     - float
     supportedVariables:
-    - RTK_raytk_operators_filter_radialClone_index
-    - RTK_raytk_operators_filter_radialClone_normindex
-    - RTK_raytk_operators_filter_radialClone_rotaccum
-    - RTK_raytk_operators_filter_radialClone_normrotaccum
+    - index
+    - normindex
+    - rotaccum
+    - normrotaccum
   - contextTypes:
     - Context
     - MaterialContext
@@ -73,10 +73,10 @@ op:
     returnTypes:
     - float
     supportedVariables:
-    - RTK_raytk_operators_filter_radialClone_index
-    - RTK_raytk_operators_filter_radialClone_normindex
-    - RTK_raytk_operators_filter_radialClone_rotaccum
-    - RTK_raytk_operators_filter_radialClone_normrotaccum
+    - index
+    - normindex
+    - rotaccum
+    - normrotaccum
   - contextTypes:
     - Context
     - MaterialContext
@@ -95,10 +95,10 @@ op:
     returnTypes:
     - float
     supportedVariables:
-    - RTK_raytk_operators_filter_radialClone_index
-    - RTK_raytk_operators_filter_radialClone_normindex
-    - RTK_raytk_operators_filter_radialClone_rotaccum
-    - RTK_raytk_operators_filter_radialClone_normrotaccum
+    - index
+    - normindex
+    - rotaccum
+    - normrotaccum
   keywords:
   - clone
   - copy
@@ -209,14 +209,14 @@ op:
   summary: Repeats an SDF radially around an axis, combining the resulting shapes.
   thumb: assets/images/reference/operators/filter/radialClone_thumb.png
   variables:
-  - label: RTK_raytk_operators_filter_radialClone_index
-    name: RTK_raytk_operators_filter_radialClone_index
-  - label: RTK_raytk_operators_filter_radialClone_normindex
-    name: RTK_raytk_operators_filter_radialClone_normindex
-  - label: RTK_raytk_operators_filter_radialClone_rotaccum
-    name: RTK_raytk_operators_filter_radialClone_rotaccum
-  - label: RTK_raytk_operators_filter_radialClone_normrotaccum
-    name: RTK_raytk_operators_filter_radialClone_normrotaccum
+  - label: index
+    name: index
+  - label: normindex
+    name: normindex
+  - label: rotaccum
+    name: rotaccum
+  - label: normrotaccum
+    name: normrotaccum
 
 ---
 

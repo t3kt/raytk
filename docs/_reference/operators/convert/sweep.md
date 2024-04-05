@@ -31,9 +31,9 @@ op:
     supportedVariableInputs:
     - path
     supportedVariables:
-    - RTK_raytk_operators_convert_sweep_pathsdf
-    - RTK_raytk_operators_convert_sweep_pathpos
-    - RTK_raytk_operators_convert_sweep_pos3d
+    - pathsdf
+    - pathpos
+    - pos3d
   - contextTypes:
     - Context
     - MaterialContext
@@ -77,12 +77,12 @@ op:
   summary: Creates a 3D SDF by sweeping a 2D SDF along the surface of another 2D SDF.
   thumb: assets/images/reference/operators/convert/sweep_thumb.png
   variables:
-  - label: RTK_raytk_operators_convert_sweep_pathsdf
-    name: RTK_raytk_operators_convert_sweep_pathsdf
-  - label: RTK_raytk_operators_convert_sweep_pathpos
-    name: RTK_raytk_operators_convert_sweep_pathpos
-  - label: RTK_raytk_operators_convert_sweep_pos3d
-    name: RTK_raytk_operators_convert_sweep_pos3d
+  - label: pathsdf
+    name: pathsdf
+  - label: pathpos
+    name: pathpos
+  - label: pos3d
+    name: pos3d
 
 ---
 

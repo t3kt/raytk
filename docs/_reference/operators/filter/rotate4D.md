@@ -38,7 +38,6 @@ op:
     - pivotField
     supportedVariables:
     - pos4d
-    - RTK_raytk_operators_filter_rotate4D_pos4d
   - contextTypes:
     - Context
     - MaterialContext
@@ -59,7 +58,6 @@ op:
     - float
     supportedVariables:
     - pos4d
-    - RTK_raytk_operators_filter_rotate4D_pos4d
   - contextTypes:
     - Context
     - MaterialContext
@@ -82,7 +80,6 @@ op:
     - rotateField
     supportedVariables:
     - pos4d
-    - RTK_raytk_operators_filter_rotate4D_pos4d
   name: rotate4D
   opType: raytk.operators.filter.rotate4D
   parameters:
@@ -117,8 +114,6 @@ op:
   variables:
   - label: pos4d
     name: pos4d
-  - label: RTK_raytk_operators_filter_rotate4D_pos4d
-    name: RTK_raytk_operators_filter_rotate4D_pos4d
 
 ---
 

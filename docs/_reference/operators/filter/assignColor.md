@@ -84,8 +84,8 @@ op:
   summary: Assigns a surface color attribute to an SDF surface.
   thumb: assets/images/reference/operators/filter/assignColor_thumb.png
   variables:
-  - label: RTK_raytk_operators_filter_assignColor_sdf
-    name: RTK_raytk_operators_filter_assignColor_sdf
+  - label: sdf
+    name: sdf
 
 ---
 

@@ -186,17 +186,17 @@ op:
   status: beta
   thumb: assets/images/reference/operators/sdf/torusGridSdf_thumb.png
   variables:
-  - label: RTK_raytk_operators_sdf_torusGridSdf_angle
-    name: RTK_raytk_operators_sdf_torusGridSdf_angle
-  - label: RTK_raytk_operators_sdf_torusGridSdf_normangle
-    name: RTK_raytk_operators_sdf_torusGridSdf_normangle
-  - label: RTK_raytk_operators_sdf_torusGridSdf_col
-    name: RTK_raytk_operators_sdf_torusGridSdf_col
-  - label: RTK_raytk_operators_sdf_torusGridSdf_normcol
-    name: RTK_raytk_operators_sdf_torusGridSdf_normcol
-  - label: RTK_raytk_operators_sdf_torusGridSdf_row
-    name: RTK_raytk_operators_sdf_torusGridSdf_row
-  - label: RTK_raytk_operators_sdf_torusGridSdf_normrow
-    name: RTK_raytk_operators_sdf_torusGridSdf_normrow
+  - label: angle
+    name: angle
+  - label: normangle
+    name: normangle
+  - label: col
+    name: col
+  - label: normcol
+    name: normcol
+  - label: row
+    name: row
+  - label: normrow
+    name: normrow
 
 ---

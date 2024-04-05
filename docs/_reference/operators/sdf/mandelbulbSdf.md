@@ -26,8 +26,8 @@ op:
     - float
     - vec4
     supportedVariables:
-    - RTK_raytk_operators_sdf_mandelbulbSdf_step
-    - RTK_raytk_operators_sdf_mandelbulbSdf_normstep
+    - step
+    - normstep
   keywords:
   - fractal
   - mandelbrot
@@ -63,10 +63,10 @@ op:
   summary: Mandelbulb fractal.
   thumb: assets/images/reference/operators/sdf/mandelbulbSdf_thumb.png
   variables:
-  - label: RTK_raytk_operators_sdf_mandelbulbSdf_step
-    name: RTK_raytk_operators_sdf_mandelbulbSdf_step
-  - label: RTK_raytk_operators_sdf_mandelbulbSdf_normstep
-    name: RTK_raytk_operators_sdf_mandelbulbSdf_normstep
+  - label: step
+    name: step
+  - label: normstep
+    name: normstep
 
 ---
 

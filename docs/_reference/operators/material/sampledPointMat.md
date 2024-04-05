@@ -35,10 +35,10 @@ op:
     - vec4
     summary: Optional field used to control the color within the shape.
     supportedVariables:
-    - RTK_raytk_operators_material_sampledPointMat_surfacecolor
-    - RTK_raytk_operators_material_sampledPointMat_surfaceuv
-    - RTK_raytk_operators_material_sampledPointMat_normal
-    - RTK_raytk_operators_material_sampledPointMat_sdf
+    - surfacecolor
+    - surfaceuv
+    - normal
+    - sdf
   - contextTypes:
     - MaterialContext
     coordTypes:
@@ -54,10 +54,10 @@ op:
     supportedVariableInputs:
     - fillColorField
     supportedVariables:
-    - RTK_raytk_operators_material_sampledPointMat_surfacecolor
-    - RTK_raytk_operators_material_sampledPointMat_surfaceuv
-    - RTK_raytk_operators_material_sampledPointMat_normal
-    - RTK_raytk_operators_material_sampledPointMat_sdf
+    - surfacecolor
+    - surfaceuv
+    - normal
+    - sdf
   name: sampledPointMat
   opType: raytk.operators.material.sampledPointMat
   parameters:
@@ -116,14 +116,14 @@ op:
   summary: A material that produces color for volumetric points relative to the input
     shape.
   variables:
-  - label: RTK_raytk_operators_material_sampledPointMat_surfacecolor
-    name: RTK_raytk_operators_material_sampledPointMat_surfacecolor
-  - label: RTK_raytk_operators_material_sampledPointMat_surfaceuv
-    name: RTK_raytk_operators_material_sampledPointMat_surfaceuv
-  - label: RTK_raytk_operators_material_sampledPointMat_normal
-    name: RTK_raytk_operators_material_sampledPointMat_normal
-  - label: RTK_raytk_operators_material_sampledPointMat_sdf
-    name: RTK_raytk_operators_material_sampledPointMat_sdf
+  - label: surfacecolor
+    name: surfacecolor
+  - label: surfaceuv
+    name: surfaceuv
+  - label: normal
+    name: normal
+  - label: sdf
+    name: sdf
 
 ---
 

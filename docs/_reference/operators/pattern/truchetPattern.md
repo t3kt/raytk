@@ -198,15 +198,15 @@ op:
   status: beta
   thumb: assets/images/reference/operators/pattern/truchetPattern_thumb.png
   variables:
-  - label: RTK_raytk_operators_pattern_truchetPattern_cell
-    name: RTK_raytk_operators_pattern_truchetPattern_cell
-  - label: RTK_raytk_operators_pattern_truchetPattern_contour
-    name: RTK_raytk_operators_pattern_truchetPattern_contour
-  - label: RTK_raytk_operators_pattern_truchetPattern_normangle
-    name: RTK_raytk_operators_pattern_truchetPattern_normangle
-  - label: RTK_raytk_operators_pattern_truchetPattern_depth
-    name: RTK_raytk_operators_pattern_truchetPattern_depth
-  - label: RTK_raytk_operators_pattern_truchetPattern_edgedist
-    name: RTK_raytk_operators_pattern_truchetPattern_edgedist
+  - label: cell
+    name: cell
+  - label: contour
+    name: contour
+  - label: normangle
+    name: normangle
+  - label: depth
+    name: depth
+  - label: edgedist
+    name: edgedist
 
 ---

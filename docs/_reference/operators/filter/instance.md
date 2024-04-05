@@ -48,8 +48,6 @@ op:
     supportedVariables:
     - index
     - normindex
-    - RTK_raytk_operators_filter_instance_index
-    - RTK_raytk_operators_filter_instance_normindex
   - contextTypes:
     - Context
     - MaterialContext
@@ -72,8 +70,6 @@ op:
     supportedVariables:
     - index
     - normindex
-    - RTK_raytk_operators_filter_instance_index
-    - RTK_raytk_operators_filter_instance_normindex
   keywords:
   - copy
   - instance
@@ -172,10 +168,6 @@ op:
     name: index
   - label: normindex
     name: normindex
-  - label: RTK_raytk_operators_filter_instance_index
-    name: RTK_raytk_operators_filter_instance_index
-  - label: RTK_raytk_operators_filter_instance_normindex
-    name: RTK_raytk_operators_filter_instance_normindex
 
 ---
 

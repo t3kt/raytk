@@ -37,7 +37,7 @@ op:
     regularHandling: runtime
   status: beta
   variables:
-  - label: RTK_raytk_operators_light_ambientLight_lightdir
-    name: RTK_raytk_operators_light_ambientLight_lightdir
+  - label: lightdir
+    name: lightdir
 
 ---

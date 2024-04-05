@@ -127,12 +127,6 @@ op:
     name: normoffset
   - label: normangle
     name: normangle
-  - label: RTK_raytk_operators_sdf_cylinderSdf_axispos
-    name: RTK_raytk_operators_sdf_cylinderSdf_axispos
-  - label: RTK_raytk_operators_sdf_cylinderSdf_normoffset
-    name: RTK_raytk_operators_sdf_cylinderSdf_normoffset
-  - label: RTK_raytk_operators_sdf_cylinderSdf_normangle
-    name: RTK_raytk_operators_sdf_cylinderSdf_normangle
 
 ---
 

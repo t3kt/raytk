@@ -8,6 +8,7 @@ redirect_from:
   - /reference/opType/raytk.operators.sdf.headSdf/
 op:
   category: sdf
+  detail: 'Original: https://www.shadertoy.com/view/wlf3WX'
   name: headSdf
   opType: raytk.operators.sdf.headSdf
   parameters:
@@ -35,6 +36,12 @@ op:
     name: Eyecolor
     readOnlyHandling: baked
     regularHandling: runtime
+  summary: Human head SDF created by tdhooper.
   thumb: assets/images/reference/operators/sdf/headSdf_thumb.png
 
 ---
+
+
+Human head SDF created by tdhooper.
+
+Original: https://www.shadertoy.com/view/wlf3WX

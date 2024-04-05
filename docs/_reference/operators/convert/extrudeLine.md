@@ -35,8 +35,6 @@ op:
     supportedVariables:
     - axispos
     - normoffset
-    - RTK_raytk_operators_convert_extrudeLine_axispos
-    - RTK_raytk_operators_convert_extrudeLine_normoffset
   - contextTypes:
     - Context
     - MaterialContext
@@ -88,10 +86,6 @@ op:
     name: axispos
   - label: normoffset
     name: normoffset
-  - label: RTK_raytk_operators_convert_extrudeLine_axispos
-    name: RTK_raytk_operators_convert_extrudeLine_axispos
-  - label: RTK_raytk_operators_convert_extrudeLine_normoffset
-    name: RTK_raytk_operators_convert_extrudeLine_normoffset
 
 ---
 

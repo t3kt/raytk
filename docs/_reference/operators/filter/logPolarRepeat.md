@@ -35,7 +35,7 @@ op:
     - rhoOffsetField
     - thetaOffsetField
     supportedVariables:
-    - RTK_raytk_operators_filter_logPolarRepeat_cellcoord
+    - cellcoord
   - contextTypes:
     - Context
     - MaterialContext
@@ -141,7 +141,7 @@ op:
   status: beta
   thumb: assets/images/reference/operators/filter/logPolarRepeat_thumb.png
   variables:
-  - label: RTK_raytk_operators_filter_logPolarRepeat_cellcoord
-    name: RTK_raytk_operators_filter_logPolarRepeat_cellcoord
+  - label: cellcoord
+    name: cellcoord
 
 ---

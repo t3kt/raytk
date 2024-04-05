@@ -25,8 +25,8 @@ op:
     returnTypes:
     - float
     supportedVariables:
-    - RTK_raytk_operators_sdf2d_subdivisionSdf2d_cellsize
-    - RTK_raytk_operators_sdf2d_subdivisionSdf2d_cellid
+    - cellsize
+    - cellid
   - contextTypes:
     - Context
     - MaterialContext
@@ -46,8 +46,8 @@ op:
     supportedVariableInputs:
     - seedField
     supportedVariables:
-    - RTK_raytk_operators_sdf2d_subdivisionSdf2d_cellsize
-    - RTK_raytk_operators_sdf2d_subdivisionSdf2d_cellid
+    - cellsize
+    - cellid
   - contextTypes:
     - Context
     - MaterialContext
@@ -67,8 +67,8 @@ op:
     - seedField
     - sizeField
     supportedVariables:
-    - RTK_raytk_operators_sdf2d_subdivisionSdf2d_cellsize
-    - RTK_raytk_operators_sdf2d_subdivisionSdf2d_cellid
+    - cellsize
+    - cellid
   - contextTypes:
     - Context
     - MaterialContext
@@ -89,8 +89,8 @@ op:
     - sizeField
     - minSizeField
     supportedVariables:
-    - RTK_raytk_operators_sdf2d_subdivisionSdf2d_cellsize
-    - RTK_raytk_operators_sdf2d_subdivisionSdf2d_cellid
+    - cellsize
+    - cellid
   - contextTypes:
     - Context
     - MaterialContext
@@ -112,8 +112,8 @@ op:
     - minSizeField
     - patternShiftField
     supportedVariables:
-    - RTK_raytk_operators_sdf2d_subdivisionSdf2d_cellsize
-    - RTK_raytk_operators_sdf2d_subdivisionSdf2d_cellid
+    - cellsize
+    - cellid
   name: subdivisionSdf2d
   opType: raytk.operators.sdf2d.subdivisionSdf2d
   parameters:
@@ -140,9 +140,9 @@ op:
   status: beta
   thumb: assets/images/reference/operators/sdf2d/subdivisionSdf2d_thumb.png
   variables:
-  - label: RTK_raytk_operators_sdf2d_subdivisionSdf2d_cellsize
-    name: RTK_raytk_operators_sdf2d_subdivisionSdf2d_cellsize
-  - label: RTK_raytk_operators_sdf2d_subdivisionSdf2d_cellid
-    name: RTK_raytk_operators_sdf2d_subdivisionSdf2d_cellid
+  - label: cellsize
+    name: cellsize
+  - label: cellid
+    name: cellid
 
 ---

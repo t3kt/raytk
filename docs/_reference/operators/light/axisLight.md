@@ -93,8 +93,8 @@ op:
   summary: Light that emits from along an axis, similar to an infinitely long tube
     light.
   variables:
-  - label: RTK_raytk_operators_light_axisLight_lightdir
-    name: RTK_raytk_operators_light_axisLight_lightdir
+  - label: lightdir
+    name: lightdir
 
 ---
 
