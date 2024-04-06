@@ -1,8 +1,8 @@
 !rop
 meta: !meta
   opType: raytk.operators.filter.waveWarp
-  opVersion: '17'
-  opStatus: beta
+  opVersion: '18'
+  opStatus: default
 paramPages:
 - !page
   name: Filter

@@ -3,4 +3,6 @@ Indexrange[1-2]	param	runtime	macro		1
 Translate1[xyz] Translate2[xyz]	param	runtime	macro		parent().par.Enabletranslate
 Rotate1[xyz] Rotate2[xyz]	param	runtime	macro	angle	parent().par.Enablerotate
 Pivot1[xyz] Pivot2[xyz]	param	runtime	macro		parent().par.Enablerotate and parent().par.Usepivot
-Extendmode Enabletranslate Enablerotate Usepivot	param	macro			1
+Uniformscale[1-2]	param	runtime	macro		parent().par.Enableuniformscale
+Scale1[xyz] Scale2[xyz]	param	runtime	macro		parent().par.Enablescale
+Extendmode Enabletranslate Enablerotate Usepivot Enableuniformscale Enablescale	param	macro			1

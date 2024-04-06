@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.field.texture1dField
-  opVersion: '0'
+  opVersion: '1'
   opStatus: beta
 opDef: !def
   enable: true
@@ -45,9 +45,7 @@ elements:
   elementType: codeSwitcher
   params:
     Elementroot: ''
-    Table: !table
-      file: src/operators/field/texture1dField_coordMode.txt
-      name: coordModes
+    Table: coordModes
     Param: Coordmode
     Autoupdateparams: true
     Manageparamstates: true

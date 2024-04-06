@@ -1,13 +1,12 @@
 !rop
 meta: !meta
   opType: raytk.operators.combine.combineFields
-  opVersion: '21'
+  opVersion: '23'
   opStatus: default
 opDef: !def
   enable: !expr
     expr: op('..').par.Enable
-  useRuntimeBypass: !expr
-    expr: not parent().par.Optimize
+  useRuntimeBypass: true
   typeSpec: !ropTypes
     coordType: !coordT
       Allcoordtype: true
@@ -125,9 +124,7 @@ elements:
   elementType: codeSwitcher
   params:
     Elementroot: ''
-    Table: !table
-      file: src/operators/combine/combineFields_operations.txt
-      name: operations
+    Table: operations
     Param: Operation
     Autoupdateparams: false
     Manageparamstates: false

@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.field.nearestGridPointField
-  opVersion: '0'
+  opVersion: '1'
   opStatus: alpha
 opDef: !def
   enable: true
@@ -32,9 +32,7 @@ elements:
   elementType: codeSwitcher
   params:
     Elementroot: ''
-    Table: !table
-      file: src/operators/field/nearestGridPointField_axes.txt
-      name: axes
+    Table: axes
     Param: Axes
     Autoupdateparams: true
     Manageparamstates: false

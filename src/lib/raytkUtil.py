@@ -10,7 +10,8 @@ if False:
 	# noinspection PyUnresolvedReferences
 	from _typeAliases import *
 	from _stubs.PopDialogExt import PopDialogExt
-	from typing import Callable
+	from typing import Callable, Optional
+	from components.opDefinition.opDefinition import OpDefinition
 
 	op.raytk = COMP()
 
@@ -109,6 +110,9 @@ class OpDefParsT(_OpMetaPars):
 	Inputdefs: 'StrParamT'
 	Flags: 'StrParamT'
 
+	def __getitem__(self, item) -> Par | None:
+		return getattr(self, item)
+
 class ROPInfo:
 	"""
 	Information about either a ROP or RComp instance.
@@ -159,6 +163,12 @@ class ROPInfo:
 	def path(self):
 		if self:
 			return self.rop.path
+
+	@property
+	def opDefExt(self) -> 'Optional[OpDefinition]':
+		if not self.isROP:
+			return
+		return getattr(self.opDef.ext, 'opDefinition', None)
 
 	@property
 	def opVersion(self):
@@ -338,12 +348,6 @@ class ROPInfo:
 		return self.opDef.op('supportedTypes')
 
 	@property
-	def opStateText(self):
-		if not self.isROP:
-			return None
-		return self.opDef.op('opState').text
-
-	@property
 	def outputBufferTable(self) -> DAT | None:
 		if not self.isOutput:
 			return None
@@ -372,7 +376,7 @@ class ROPInfo:
 
 	@property
 	def keywords(self) -> set[str]:
-		return set(tdu.split(self.opDefPar.Keywords)) if self else set()
+		return set(tdu.split(self.opDefPar['Keywords'] or '')) if self else set()
 
 	@keywords.setter
 	def keywords(self, keywords: set[str] | None):
@@ -381,25 +385,6 @@ class ROPInfo:
 	@property
 	def shortcuts(self) -> set[str]:
 		return set(tdu.split(self.opDefPar['Shortcuts'] or '')) if self else set()
-
-	@shortcuts.setter
-	def shortcuts(self, shortcuts: set[str] | None):
-		self.opDefPar.Shortcuts = ' '.join(sorted(shortcuts)) if shortcuts else ''
-
-	@property
-	def rawFlags(self) -> str:
-		return str(self.opDefPar['Flags'] or '')
-
-	@property
-	def flags(self) -> list[str] | None:
-		val = self.rawFlags
-		if not val:
-			return None
-		return tdu.split(val)
-
-	@flags.setter
-	def flags(self, flags: list[str] | None):
-		self.opDefPar.Flags = ' '.join(flags) if flags else ''
 
 	@property
 	def hasROPInputs(self):
@@ -435,7 +420,7 @@ class ROPInfo:
 		if not self:
 			return False
 		if self.isROP:
-			return not self.opDefPar.Disableinspect
+			return not self.opDefPar['Disableinspect']
 		for sub in self.subROPs:
 			subInfo = ROPInfo(sub)
 			if subInfo.supportsInspect:

@@ -5,10 +5,12 @@ if False:
 
 def onStartup():
 	_updatePrimaryInput()
+	_fixPixelFormat()
 
 def onParamPulse(par):
 	if par.name == 'Initialize':
 		_updatePrimaryInput()
+		_fixPixelFormat()
 
 def onParamChange(par):
 	if par.name == 'Useprimaryinput':
@@ -23,3 +25,8 @@ def _updatePrimaryInput():
 	else:
 		if primaryInput in render.inputs:
 			render.inputConnectors[0].disconnect()
+
+def _fixPixelFormat():
+	render = op('render_glsl')
+	render.par.format.mode = ParMode.CONSTANT
+	render.par.format.mode = ParMode.BIND

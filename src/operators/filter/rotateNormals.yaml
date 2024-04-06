@@ -1,8 +1,8 @@
 !rop
 meta: !meta
   opType: raytk.operators.filter.rotateNormals
-  opVersion: '10'
-  opStatus: beta
+  opVersion: '12'
+  opStatus: default
 paramPages:
 - !page
   name: Filter
@@ -53,6 +53,13 @@ opDef: !def
   function: !text
     file: src/operators/filter/rotateNormals.glsl
     name: function
+  tagTable: !table
+    file: src/operators/filter/rotateNormals_tags.txt
+    name: tag_exprs
+    evaluate: true
+    evalOpts: !evalOpts
+      excludeFirstRow: true
+      cols: enable
   help: !text
     file: src/operators/filter/rotateNormals.md
     name: help

@@ -141,6 +141,8 @@ op:
     name: bounds1
     returnTypes:
     - Sdf
+    sourceParamLabel: Bounds 1
+    sourceParamName: Bounds1
   - contextTypes:
     - LightContext
     coordTypes:
@@ -152,6 +154,8 @@ op:
     name: bounds2
     returnTypes:
     - Sdf
+    sourceParamLabel: Bounds 2
+    sourceParamName: Bounds2
     supportedVariableInputs:
     - bounds1
     - inputOp1
@@ -166,6 +170,8 @@ op:
     name: bounds3
     returnTypes:
     - Sdf
+    sourceParamLabel: Bounds 3
+    sourceParamName: Bounds3
     supportedVariableInputs:
     - bounds[1-2]
     - inputOp[1-2]
@@ -180,6 +186,8 @@ op:
     name: bounds4
     returnTypes:
     - Sdf
+    sourceParamLabel: Bounds 4
+    sourceParamName: Bounds4
     supportedVariableInputs:
     - bounds[1-3]
     - inputOp[1-3]
@@ -194,6 +202,8 @@ op:
     name: bounds5
     returnTypes:
     - Sdf
+    sourceParamLabel: Bounds 5
+    sourceParamName: Bounds5
     supportedVariableInputs:
     - bounds[1-4]
     - inputOp[1-4]
@@ -208,6 +218,8 @@ op:
     name: bounds6
     returnTypes:
     - Sdf
+    sourceParamLabel: Bounds 6
+    sourceParamName: Bounds6
     supportedVariableInputs:
     - bounds[1-5]
     - inputOp[1-5]
@@ -222,6 +234,8 @@ op:
     name: bounds7
     returnTypes:
     - Sdf
+    sourceParamLabel: Bounds 7
+    sourceParamName: Bounds7
     supportedVariableInputs:
     - bounds[1-6]
     - inputOp[1-6]
@@ -236,6 +250,8 @@ op:
     name: bounds8
     returnTypes:
     - Sdf
+    sourceParamLabel: Bounds 8
+    sourceParamName: Bounds8
     supportedVariableInputs:
     - bounds[1-7]
     - inputOp[1-7]
@@ -322,7 +338,6 @@ op:
     regularHandling: runtime
   - label: Bounds 8
     name: Bounds8
-  status: beta
   summary: Combines multiple light sources.
 
 ---

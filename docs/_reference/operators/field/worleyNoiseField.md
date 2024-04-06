@@ -121,7 +121,6 @@ op:
     readOnlyHandling: baked
     regularHandling: runtime
     summary: Offsets (adds to) the amount produced by the noise.
-  status: beta
   thumb: assets/images/reference/operators/field/worleyNoiseField_thumb.png
 
 ---

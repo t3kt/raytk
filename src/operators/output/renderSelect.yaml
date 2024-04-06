@@ -1,5 +1,5 @@
 !rcomp
 meta: !meta
   opType: raytk.operators.output.renderSelect
-  opVersion: '6'
+  opVersion: '7'
   opStatus: default

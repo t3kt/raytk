@@ -179,6 +179,7 @@ op:
     - inputOp[1-7]
   name: addFields
   opType: raytk.operators.combine.addFields
+  status: deprecated
   summary: Adds the values of multiple fields.
 
 ---

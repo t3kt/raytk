@@ -60,7 +60,6 @@ op:
     name: Spectrumtype
     readOnlyHandling: baked
     regularHandling: runtime
-  status: beta
   thumb: assets/images/reference/operators/field/spectralColorField_thumb.png
 
 ---

@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.combine.combine
-  opVersion: '27'
+  opVersion: '28'
   opStatus: default
 paramPages:
 - !page

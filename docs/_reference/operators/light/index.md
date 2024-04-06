@@ -26,7 +26,6 @@ cat:
     status: beta
     summary: Light that is based on a standard Light COMP.
   - name: multiLight
-    status: beta
     summary: Combines multiple light sources.
   - name: pointLight
     shortcuts:
@@ -34,7 +33,6 @@ cat:
     summary: Light eminating from a single point in space, with optional distance
       attentuation.
   - name: ringLight
-    status: beta
   - name: softShadow
     summary: A soft-edged shadow.
   - name: spotLight

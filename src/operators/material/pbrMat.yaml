@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.material.pbrMat
-  opVersion: '17'
+  opVersion: '18'
   opStatus: beta
 opDef: !def
   enable: !expr
@@ -106,9 +106,7 @@ elements:
   elementType: codeSwitcher
   params:
     Elementroot: ''
-    Table: !table
-      file: src/operators/material/pbrMat_conditions.txt
-      name: conditions
+    Table: conditions
     Param: Condition
     Autoupdateparams: true
     Manageparamstates: false

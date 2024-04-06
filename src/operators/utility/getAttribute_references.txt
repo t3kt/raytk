@@ -1,2 +1,2 @@
 name	dataType	sourcePath	sourceName	enable	category
-attr	parent().par.Datatype		parent().par.Attributename	1	attribute
+attr	parent().par.Datatype		parent().par.Attributename or '_'	1	attribute

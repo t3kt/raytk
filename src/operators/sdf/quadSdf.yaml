@@ -1,8 +1,8 @@
 !rop
 meta: !meta
   opType: raytk.operators.sdf.quadSdf
-  opVersion: '2'
-  opStatus: beta
+  opVersion: '6'
+  opStatus: default
 opDef: !def
   enable: true
   typeSpec: !ropTypes
@@ -26,3 +26,23 @@ opDef: !def
   - rectangle
   - square
   - plane
+inputs:
+- !input
+  Localalias: scaleField
+  Prohibited: !expr
+    expr: parent().par.Plane == 'custom'
+  coordType: !coordT
+    Coordtypevec3: true
+  contextType: !contextT
+    Allcontexttype: true
+  returnType: !returnT
+    Returntypefloat: true
+    Returntypevec4: true
+- !input
+  Localalias: thicknessField
+  coordType: !coordT
+    Coordtypevec3: true
+  contextType: !contextT
+    Allcontexttype: true
+  returnType: !returnT
+    Returntypefloat: true

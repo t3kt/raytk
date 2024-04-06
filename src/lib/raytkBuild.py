@@ -17,6 +17,8 @@ if False:
 	from _stubs import *
 	from typing import List, Optional, Union
 	from tools.updater.updater import Updater
+	from devel.thirdParty.TDAsyncIO import TDAsyncIO
+	op.TDAsyncIO = TDAsyncIO(COMP())
 
 class BuildContext:
 	"""
@@ -229,14 +231,19 @@ class BuildContext:
 	def queueAction(action: Callable, *args):
 		run(f'args[0](*(args[1:]))', action, *args, delayFrames=5, delayRef=root)
 
-	def runBuildScript(self, dat: DAT, thenRun: Callable, runArgs: list):
+	async def runBuildScript(self, dat: DAT):
 		self.log(f'Running build script: {dat}')
+		m = dat.module
+		buildFunc = getattr(m, 'build', None)
+		if buildFunc is None:
+			self.log('No build function found in build script')
+			raise Exception('No build function found in build script')
+		await buildFunc(self)
+		self.log(f'Finished build script: {dat}')
 
-		def finishTask():
-			self.log(f'Finished running build script: {dat}')
-			self.queueAction(thenRun, *runArgs)
-		subContext = BuildTaskContext(finishTask, self.log, self.experimental)
-		dat.run(subContext)
+	async def yieldAsync(self):
+		# do nothing!
+		pass
 
 	def updateROPInstance(self, comp: COMP):
 		self.log(f'Updating OP instance: {comp}')
@@ -272,34 +279,87 @@ class BuildContext:
 		self.log(f'Deleting {len(opsToDelete)} redundant python libraries')
 		self.safeDestroyOps(opsToDelete)
 
+	def consolidateOperatorPythonModules(self, rop: COMP):
+		info = ROPInfo(rop)
+		if not info or not info.isROP:
+			return
+		inputHandlers = info.inputHandlers
+		if not inputHandlers:
+			return
+		self.log(f'Consolidating python modules for {rop}, {len(inputHandlers)} input handlers')
+		localComp = rop.op('local')
+		if not localComp:
+			localComp = rop.create(baseCOMP, 'local')
+			localComp.nodeX = -900
+			localComp.nodeY = 500
+		modulesComp = localComp.op('modules')
+		if not modulesComp:
+			modulesComp = localComp.create(baseCOMP, 'modules')
+		modulesComp.copy(info.opDef.op('typeTable'))
+		modulesComp.copy(info.opDef.op('typeSpec'))
+		self.safeDestroyOp(info.opDef.op('typeSpec'))
+		self.safeDestroyOp(info.opDef.op('typeTable'))
+		for handler in inputHandlers:
+			self.safeDestroyOp(handler.op('typeSpec'))
+			self.safeDestroyOp(handler.op('typeTable'))
+		modulesComp.copy(inputHandlers[0].op('inputHandler'))
+		for handler in inputHandlers:
+			self.safeDestroyOp(handler.op('inputHandler'))
+
+	def cleanOperatorTypeSpecs(self, rop: COMP):
+		info = ROPInfo(rop)
+		if not info or not info.isROP:
+			return
+		self.cleanTypeSpec(info.typeSpec)
+		inputHandlers = info.inputHandlers
+		if not inputHandlers:
+			return
+		self.log(f'Cleaning input handlers for {rop}, {len(inputHandlers)} input handlers')
+		for handler in inputHandlers:
+			self.cleanTypeSpec(handler)
+
+	def cleanTypeSpec(self, comp: COMP):
+		self.log(f'Cleaning type spec {comp}')
+		self._removeUnusedPars(comp.pars('Coordtype*', 'Contexttype*', 'Returntype*'))
+
+	def cleanOperatorDefPars(self, rop: COMP):
+		info = ROPInfo(rop)
+		if not info.isROP:
+			return
+		self.log(f'Cleaning operator def pars for {rop}')
+		opDef = info.opDef
+		self._removeUnusedPars(opDef.pars(
+			'Tagtable', 'Callbacks',
+			'Librarynames',
+			'Disableinspect',
+			'Shortcuts', 'Keywords', 'Displaycategory', 'Flags',
+			# 'Help',
+		))
+
+	def _removeUnusedPars(self, pars: list[Par]):
+		if not pars:
+			return
+		removePars = []
+		for par in pars:
+			if par.mode == ParMode.CONSTANT and not par:
+				removePars.append(par)
+		if not removePars:
+			return
+		self.log(f'Removing {len(removePars)} unnecessary pars from {pars[0].owner}')
+		for par in removePars:
+			par.destroy()
+
+	# def stripComments(self, comp: COMP):
+	# 	if not comp:
+	# 		return
+	# 	comp.comment = ''
+	# 	for child in comp.children:
+	# 		self.stripComments(child)
+
 def _isPythonLibrary(m: OP, modName: 'str | None' = None):
 	if not isinstance(m, textDAT) or not RaytkTags.fileSync.isOn(m):
 		return False
 	return modName is None or m.name == modName
-
-class BuildTaskContext(BuildContext):
-	"""
-	Context passed to build scripts, in order to provide common tools, and to support asynchronously triggering the rest
-	of the build process to continue.
-
-	`
-	context = args[0]  # type: BuildTaskContext
-	doStuff()
-	context.detachTox(foo)
-	# This part is required:
-	context.finishTask()
-	`
-	"""
-	def __init__(
-			self,
-			finish: Callable[[], None],
-			log: Callable,
-			experimental: bool):
-		self.finish = finish
-		super().__init__(log, experimental)
-
-	def finishTask(self):
-		self.finish()
 
 class DocProcessor:
 	"""

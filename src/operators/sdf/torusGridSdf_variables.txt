@@ -1,0 +1,7 @@
+name	label	dataType	enable
+angle	Angle (0-360)	float	1
+normangle	Normalized Angle (0-1)	float	1
+col	Column (0 - N-1)	int	1
+normcol	Normalized Column (0-1)	float	1
+row	Row (0 - N-1)	int	1
+normrow	Normalized Row (0-1)	float	1

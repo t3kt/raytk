@@ -156,7 +156,6 @@ op:
     name: Pointb8
     readOnlyHandling: baked
     regularHandling: runtime
-  status: beta
   thumb: assets/images/reference/operators/sdf/lineSeriesSdf_thumb.png
   variables:
   - label: stepindex

@@ -266,6 +266,8 @@ op:
       name: columnIntersect
     - label: Column Difference
       name: columnDiff
+    - label: Simple XOR
+      name: simpleXOR
     name: Combine
     summary: The type of combination operation to perform.
   - label: Swap Inputs

@@ -90,9 +90,7 @@ elements:
   elementType: codeSwitcher
   params:
     Elementroot: ''
-    Table: !table
-      file: src/operators/pattern/hexagonalGridPattern_patterns.txt
-      name: patterns
+    Table: patterns
     Param: Pattern
     Autoupdateparams: true
     Manageparamstates: false

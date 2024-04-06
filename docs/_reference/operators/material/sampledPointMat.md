@@ -113,7 +113,6 @@ op:
     name: Offset
     readOnlyHandling: baked
     regularHandling: runtime
-  status: beta
   summary: A material that produces color for volumetric points relative to the input
     shape.
   variables:

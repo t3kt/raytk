@@ -1,0 +1,6 @@
+name	label	code	params
+fBm	fBm	res = fBm(q, h, lac, freq, oct);	Increment Lacunarity Frequency Octaves
+multifractal	Multi Fractal	res = multifractal(q, h, lac, freq, oct, stepOff);	Increment Lacunarity Frequency Octaves Stepoffset
+heteroTerrain	Heterogeneous Terrain	res = heteroTerrain(q, h, lac, freq, oct, stepOff);	Increment Lacunarity Frequency Octaves Stepoffset
+hybridMultiFractal	Hybrid Multi Fractal	res = hybridMultiFractal(q, h, lac, freq, oct, stepOff);	Increment Lacunarity Frequency Octaves Stepoffset
+ridgedMultiFractal	Ridged Multi Fractal	res = ridgedMultiFractal(q, h, lac, freq, oct, stepOff, gain);	Increment Lacunarity Frequency Octaves Stepoffset Gain

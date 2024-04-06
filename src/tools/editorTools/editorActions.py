@@ -1,4 +1,5 @@
 import json
+from raytkUtil import ROPInfo
 from typing import Tuple
 from editorToolsCommon import *
 
@@ -89,30 +90,24 @@ def _loadTypeFields():
 
 _typeFields = _loadTypeFields()
 
-def _getStateField(primaryOp: OP, fieldName: str):
-	opState = ROPState(primaryOp)
-	if not opState:
-		return None
-	stateText = opState.info.opStateText
-	if not stateText:
-		return None
-	stateObj = json.loads(stateText)
-	return stateObj.get(fieldName)
-
 def _createVarRefGroup(text: str):
-	def getVariableObjs(ctx: ActionContext) -> List[dict]:
-		return _getStateField(ctx.primaryOp, 'variables') or []
+	def getVariableObjs(ctx: ActionContext):
+		info = ROPInfo(ctx.primaryOp)
+		if not info.isROP:
+			return []
+		opState = info.opDefExt.getRopState()
+		return opState.variables or []
 	def isValid(ctx: ActionContext) -> bool:
 		return bool(getVariableObjs(ctx))
 
 	def getActions(ctx: ActionContext) -> List[Action]:
 		actions = []
 		for variableObj in getVariableObjs(ctx):
-			dataType = variableObj['dataType']
-			varName = variableObj['localName']
+			dataType = variableObj.dataType
+			varName = variableObj.localName
 			actions.append(
 				_createVarRefAction(
-					label=variableObj['label'],
+					label=variableObj.label,
 					variable=varName,
 					dataType=dataType,
 				)
@@ -132,24 +127,28 @@ def _createVarRefGroup(text: str):
 def _createAttrRefGroup(text: str):
 	def test(o: OP):
 		info = ROPInfo(o)
-		if not info or info.opType == _RopTypes.assignAttribute:
+		if not info.isROP or info.opType == _RopTypes.assignAttribute:
 			return False
-		return bool(_getStateField(o, 'attributes'))
+		return bool(info.opDefExt.getRopState().attributes)
 	class _LockPars(OpInit):
 		def init(self, o: COMP, ctx: ActionContext):
 			o.par.Attributename.readOnly = True
 			o.par.Datatype.readOnly = True
 	select = RopSelect(test=test)
 	def getActions(ctx: ActionContext) -> List[Action]:
+		info = ROPInfo(ctx.primaryOp)
+		if not info.isROP:
+			return []
+		opState = info.opDefExt.getRopState()
 		return [
 			ActionImpl(
-				attributeObj.get('label') or attributeObj.get('name'),
+				attributeObj.label or attributeObj.name,
 				ropType=_RopTypes.getAttribute,
 				select=select,
-				params={'Attributename': attributeObj['name'], 'Datatype': attributeObj['dataType']},
+				params={'Attributename': attributeObj.name, 'Datatype': attributeObj.dataType},
 				inits=[_LockPars()]
 			)
-			for attributeObj in _getStateField(ctx.primaryOp, 'attributes') or []
+			for attributeObj in opState.attributes or []
 		]
 	return GroupImpl(
 		text,
@@ -178,14 +177,14 @@ def _createRenderSelAction(label: str, name: str, enablePar: str):
 
 def _createRenderSelGroup(text: str):
 	def isValid(ctx: ActionContext) -> bool:
-		opState = ROPState(ctx.primaryOp)
+		opState = EditorROPState(ctx.primaryOp)
 		if not opState:
 			return False
 		table = opState.info.outputBufferTable
 		return bool(table and table.numRows > 1)
 
 	def getActions(ctx: ActionContext) -> List[Action]:
-		opState = ROPState(ctx.primaryOp)
+		opState = EditorROPState(ctx.primaryOp)
 		if not opState:
 			return []
 		table = opState.info.outputBufferTable
@@ -256,7 +255,8 @@ def _createRenderSelGroup(text: str):
 def _createAnimateParamAction(
 		text: str,
 		parOrTuplet: Union[Par, 'ParTupletT'],
-		ropType: str, nameSuffix: str):
+		ropType: str, nameSuffix: str,
+		params: dict | None):
 	def getPars():
 		if isinstance(parOrTuplet, Par):
 			return [parOrTuplet]
@@ -294,6 +294,9 @@ def _createAnimateParamAction(
 					'bindExpr': par.bindExpr,
 				})
 				par.expr = f"op('{chop.name}')['{par.name}']"
+			if params:
+				for name, val in params.items():
+					gen.par[name] = val
 			undoInfo['parStates'] = parStates
 		def undo():
 			chop = undoInfo.get('chop')
@@ -313,7 +316,7 @@ def _createAnimateParamAction(
 		ActionUtils.createROP(ropType, init, undo=undo)
 	return SimpleAction(text, isValid, execute)
 
-def _createAnimateParamsGroup(text: str, ropType: str, nameSuffix: str):
+def _createAnimateParamsGroup(text: str, ropType: str, nameSuffix: str, params: dict | None = None):
 	def getActions(ctx: ActionContext) -> List[Action]:
 		o = ctx.primaryOp
 		if not o:
@@ -328,11 +331,11 @@ def _createAnimateParamsGroup(text: str, ropType: str, nameSuffix: str):
 		for t in tuplets:
 			if not t[0].isNumber:
 				continue
-			actions.append(_createAnimateParamAction(t[0].label, t, ropType, nameSuffix))
+			actions.append(_createAnimateParamAction(t[0].label, t, ropType, nameSuffix, params))
 			if len(t) > 1:
 				for p in t:
 					actions.append(_createAnimateParamAction(
-						f'  {t[0].label} ({p.name[-1]})', p, ropType, nameSuffix))
+						f'  {t[0].label} ({p.name[-1]})', p, ropType, nameSuffix, params))
 		return actions
 	return SimpleGroup(text, lambda _: True, getActions)
 
@@ -542,7 +545,7 @@ def _createGoToAction(text: str, getTargets: Callable[[ActionContext], List[OP]]
 
 def _createGoToGroup(text: str):
 	def _getVariableSource(ctx: ActionContext):
-		opState = ROPState(ctx.primaryOp)
+		opState = EditorROPState(ctx.primaryOp)
 		if not opState or opState.info.opType != _RopTypes.variableReference:
 			return []
 		source = ctx.primaryComp.par.Source.eval()
@@ -633,6 +636,76 @@ def _createSwapOrderAction(text):
 		processSelection(RopActionUtils.getSelectedRops(ctx), False)
 	return SimpleAction(text, isValid, execute)
 
+class _InitMergeFloatToVector(OpInit):
+	def init(self, o: COMP, ctx: ActionContext):
+		o.par.Partsourcex = 'input1'
+		o.par.Partsourcey = 'input2' if len(o.inputs) > 1 else 'zero'
+		o.par.Partsourcez = 'input3' if len(o.inputs) > 2 else 'zero'
+		o.par.Partsourcew = 'input4' if len(o.inputs) > 3 else 'zero'
+
+def _getOpElementSwitcherPar(elementRoot: COMP, autoModeOnly: bool):
+	if not elementRoot:
+		return None
+	try:
+		elementType = elementRoot.op('opElement').par.Elementtype.eval()
+		switchMode = str(elementRoot.par['Switchmode'] or '')
+		if autoModeOnly and switchMode not in ('auto', 'autoconst'):
+			return None
+		hostOp = elementRoot.par.Hostop.eval()
+		if elementType == 'codeSwitcher':
+			return hostOp.par[elementRoot.par.Param]
+		elif elementType == 'waveFunction':
+			return hostOp.par[elementRoot.par.Waveparam]
+		elif elementType == 'combiner':
+			return hostOp.par[elementRoot.par.Modeparam]
+	except:
+		return None
+
+def _getSwitcherPars(ctx: ActionContext, optimizableOnly: bool):
+	rop = ctx.primaryOp
+	info = ROPInfo(rop)
+	if not info.isROP:
+		return []
+	pars = []
+	editorOpState = EditorROPState(ctx.primaryOp)
+	opState = editorOpState.tryGetRopState()
+	if opState and opState.opElements:
+		for el in opState.opElements:
+			p = _getOpElementSwitcherPar(op(el.elementRoot), autoModeOnly=optimizableOnly)
+			if p is not None:
+				pars.append(p)
+	# this works but might be confusing if there are too many misc params included
+	# if table := info.opDefPar.Paramgrouptable.eval():
+	# 	for i in range(1, table.numRows):
+	# 		regHandling = table[i, 'handling']
+	# 		optHandling = table[i, 'readOnlyHandling']
+	# 		if regHandling and optHandling and regHandling != optHandling:
+	# 			for name in tdu.split(table[i, 'names']):
+	# 				p = rop.par[name]
+	# 				if p is not None:
+	# 					pars.append(p)
+	return pars
+
+def _createLockUnlockSwitcherAction(text, parName, lock: bool):
+	def isValid(ctx: ActionContext):
+		# assume valid since group wouldn't create it otherwise
+		return True
+	def execute(ctx: ActionContext):
+		par = ctx.primaryOp.par[parName]
+		if par is not None:
+			par.readOnly = lock
+	return SimpleAction(text, isValid, execute)
+
+def _createLockUnlockSwitcherActionGroup(text, lock: bool):
+	def _getActions(ctx: ActionContext):
+		pars = _getSwitcherPars(ctx, optimizableOnly=True)
+		return [
+			_createLockUnlockSwitcherAction(p.label, p.name, lock)
+			for p in pars
+			if p.readOnly != lock
+		]
+	return SimpleGroup(text, lambda ctx: bool(_getActions(ctx)), _getActions)
+
 class _RopTypes:
 	crossSection = 'raytk.operators.convert.crossSection'
 	modularMat = 'raytk.operators.material.modularMat'
@@ -702,20 +775,6 @@ def createActionManager():
 			select=RopSelect(returnTypes=['float']),
 			attach=AttachOutFromExisting(),
 		),
-		# ActionImpl(
-		# 	'Apply Wave',
-		# 	'raytk.operators.field.waveField',
-		# 	select=RopSelect(returnTypes=['float']),
-		# 	attach=AttachOutFromExisting(),
-		# ),
-		# _createTableBasedGroup(
-		# 	'Apply Wave',
-		# 	table=op('waveAxes'),
-		# 	ropType='raytk.operators.field.waveField',
-		# 	paramName='Axis',
-		# 	select=RopSelect(returnTypes=['vec4']),
-		# 	attach=AttachOutFromExisting(),
-		# ),
 		_createTableBasedGroup(
 			'Apply Wave',
 			table=op('waveFunctions'),
@@ -849,6 +908,13 @@ def createActionManager():
 				multi=True, minCount=True, maxCount=None),
 			attach=AttachOutFromExisting()),
 		ActionImpl(
+			'Merge to Vector',
+			ropType='raytk.operators.convert.floatToVector',
+			select=RopSelect(returnTypes=['float'], multi=True, minCount=1, maxCount=4),
+			attach=AttachOutFromExisting(),
+			inits=[_InitMergeFloatToVector()],
+		),
+		ActionImpl(
 			'Combine Lights',
 			ropType='raytk.operators.light.multiLight',
 			select=RopSelect(
@@ -863,15 +929,26 @@ def createActionManager():
 		_createVarRefGroup('Reference Variable'),
 		_createRenderSelGroup('Select Output Buffer'),
 		_createAnimateParamsGroup(
-			'Animate With Speed', _RopTypes.speedGenerator, 'speedGen'),
+			'Animate With Speed', _RopTypes.speedGenerator, 'speedGen',
+			{
+				'Partspeed1': 0.1, 'Partspeed2': 0.1, 'Partspeed3': 0.1, 'Partspeed4': 0.1,
+			}),
 		_createAnimateParamsGroup(
 			'Animate With LFO', _RopTypes.lfoGenerator, 'lfoGen'),
+		_createLockUnlockSwitcherActionGroup('Lock Param', lock=True),
+		_createLockUnlockSwitcherActionGroup('Unlock Param', lock=False),
 		_createExposeParamGroup('Expose Parameter'),
 		_createCustomizeShaderConfigAction('Customize Shader Config'),
 		ActionImpl(
 			'Add render2D',
 			ropType=_RopTypes.render2d,
 			select=RopSelect(coordTypes=['vec2']),
+			attach=AttachOutFromExisting(),
+		),
+		ActionImpl(
+			'Add functionGraphRender',
+			ropType='raytk.operators.output.functionGraphRender',
+			select=RopSelect(coordTypes=['float']),
 			attach=AttachOutFromExisting(),
 		),
 		ActionImpl(

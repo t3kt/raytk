@@ -79,7 +79,6 @@ op:
     name: Radius
     readOnlyHandling: baked
     regularHandling: runtime
-  status: beta
   summary: Combine two SDFs, using a 2D SDF to shape the blending region.
 
 ---

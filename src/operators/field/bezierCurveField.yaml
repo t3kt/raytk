@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.field.bezierCurveField
-  opVersion: '1'
+  opVersion: '2'
   opStatus: alpha
 opDef: !def
   enable: true
@@ -53,9 +53,7 @@ elements:
   elementType: codeSwitcher
   params:
     Elementroot: ''
-    Table: !table
-      file: src/operators/field/bezierCurveField_formats.txt
-      name: formats
+    Table: formats
     Param: Format
     Autoupdateparams: true
     Manageparamstates: true

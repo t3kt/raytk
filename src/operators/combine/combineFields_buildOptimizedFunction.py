@@ -19,6 +19,7 @@ def _buildCode():
 	else:
 		returnType = 'float'
 		adaptFunc = ''
+	out.write(f'if (IS_FALSE(THIS_Enable)) {{ return {adaptFunc}(inputOp1(p, ctx)); }}')
 	template = op('operations')[parent().par.Operation.eval(), 'code'].val
 	if parent().par.Swaporder:
 		template = re.sub(r'\ba\b', 'X', re.sub(r'\bb\b', 'res', template))

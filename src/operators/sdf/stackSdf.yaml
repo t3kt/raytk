@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.sdf.stackSdf
-  opVersion: '2'
+  opVersion: '3'
   opStatus: beta
 opDef: !def
   enable: true
@@ -47,9 +47,7 @@ elements:
   elementType: codeSwitcher
   params:
     Elementroot: ''
-    Table: !table
-      file: src/operators/sdf/stackSdf_widthModes.txt
-      name: widthModes
+    Table: widthModes
     Param: Widthmode
     Autoupdateparams: true
     Manageparamstates: true

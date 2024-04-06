@@ -64,6 +64,5 @@ op:
     name: Enableshadow
     readOnlyHandling: semibaked
     regularHandling: runtime
-  status: beta
 
 ---

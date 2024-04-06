@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.material.skyLightContrib
-  opVersion: '12'
+  opVersion: '13'
   opStatus: default
 opDef: !def
   enable: true
@@ -19,6 +19,13 @@ opDef: !def
     file: src/operators/material/skyLightContrib.glsl
     name: function
   paramGroupTable: eval_params
+  tagTable: !table
+    file: src/operators/material/skyLightContrib_tags.txt
+    name: tag_exprs
+    evaluate: true
+    evalOpts: !evalOpts
+      excludeFirstRow: true
+      cols: enable
   help: !text
     file: src/operators/material/skyLightContrib.md
     name: help

@@ -1,8 +1,8 @@
 !rop
 meta: !meta
   opType: raytk.operators.field.spectralColorField
-  opVersion: '1'
-  opStatus: beta
+  opVersion: '3'
+  opStatus: default
 opDef: !def
   enable: true
   typeSpec: !ropTypes
@@ -34,9 +34,7 @@ elements:
   elementType: codeSwitcher
   params:
     Elementroot: ''
-    Table: !table
-      file: src/operators/field/spectralColorField_spectrumTypes.txt
-      name: spectrumTypes
+    Table: spectrumTypes
     Param: Spectrumtype
     Autoupdateparams: true
     Manageparamstates: false
@@ -49,9 +47,7 @@ elements:
   elementType: codeSwitcher
   params:
     Elementroot: ''
-    Table: !table
-      file: src/operators/field/spectralColorField_wavelengthUnits.txt
-      name: wavelengthUnits
+    Table: wavelengthUnits
     Param: Wavelengthunit
     Autoupdateparams: true
     Manageparamstates: false

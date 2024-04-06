@@ -1,3 +1,0 @@
-names	source	handling	readOnlyHandling	conversion	enable
-Maxdist	param	runtime	macro		1
-Iterations	param	macro			1

@@ -47,9 +47,7 @@ elements:
   elementType: codeSwitcher
   params:
     Elementroot: ''
-    Table: !table
-      file: src/operators/convert/crossSection_axes.txt
-      name: axes
+    Table: axes
     Param: Axes
     Autoupdateparams: true
     Manageparamstates: false

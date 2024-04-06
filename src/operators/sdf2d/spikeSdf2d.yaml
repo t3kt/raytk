@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.sdf2d.spikeSdf2d
-  opVersion: '6'
+  opVersion: '7'
   opStatus: default
 opDef: !def
   enable: true
@@ -40,9 +40,7 @@ elements:
   elementType: codeSwitcher
   params:
     Elementroot: ''
-    Table: !table
-      file: src/operators/sdf2d/spikeSdf2d_directions.txt
-      name: directions
+    Table: directions
     Param: Direction
     Autoupdateparams: true
     Manageparamstates: false

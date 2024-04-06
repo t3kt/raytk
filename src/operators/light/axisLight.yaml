@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.light.axisLight
-  opVersion: '11'
+  opVersion: '12'
   opStatus: default
 opDef: !def
   enable: true

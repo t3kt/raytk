@@ -1,8 +1,8 @@
 !rop
 meta: !meta
   opType: raytk.operators.material.sampledPointMat
-  opVersion: '25'
-  opStatus: beta
+  opVersion: '27'
+  opStatus: default
 opDef: !def
   enable: !expr
     expr: op('..').par.Enable
@@ -26,6 +26,13 @@ opDef: !def
   variableTable: !table
     file: src/operators/material/sampledPointMat_variables.txt
     name: variable_exprs
+    evaluate: true
+    evalOpts: !evalOpts
+      excludeFirstRow: true
+      cols: enable
+  tagTable: !table
+    file: src/operators/material/sampledPointMat_tags.txt
+    name: tag_exprs
     evaluate: true
     evalOpts: !evalOpts
       excludeFirstRow: true

@@ -38,9 +38,7 @@ elements:
   elementType: codeSwitcher
   params:
     Elementroot: ''
-    Table: !table
-      file: src/operators/filter/polarToCartesian_conversions.txt
-      name: conversions
+    Table: conversions
     Param: Conversion
     Autoupdateparams: true
     Manageparamstates: false

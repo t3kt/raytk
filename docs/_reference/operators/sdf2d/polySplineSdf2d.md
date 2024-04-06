@@ -63,7 +63,6 @@ op:
     name: Point7
     readOnlyHandling: baked
     regularHandling: runtime
-  status: beta
   thumb: assets/images/reference/operators/sdf2d/polySplineSdf2d_thumb.png
 
 ---

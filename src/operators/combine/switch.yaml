@@ -112,9 +112,7 @@ elements:
   elementType: codeSwitcher
   params:
     Elementroot: ''
-    Table: !table
-      file: src/operators/combine/switch_extendModes.txt
-      name: extendModes
+    Table: extendModes
     Param: Extend
     Autoupdateparams: true
     Manageparamstates: false
@@ -142,9 +140,7 @@ elements:
   elementType: codeSwitcher
   params:
     Elementroot: ''
-    Table: !table
-      file: src/operators/combine/switch_indexModes.txt
-      name: indexModes
+    Table: indexModes
     Param: Indexmode
     Autoupdateparams: true
     Manageparamstates: false

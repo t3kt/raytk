@@ -43,9 +43,7 @@ elements:
   elementType: codeSwitcher
   params:
     Elementroot: ''
-    Table: !table
-      file: src/operators/filter/moduloLine_mirrorTypes.txt
-      name: mirrorTypes
+    Table: mirrorTypes
     Param: Mirrortype
     Autoupdateparams: true
     Manageparamstates: false

@@ -2,6 +2,7 @@ from datetime import datetime
 from pathlib import Path
 from raytkTest import TestCaseResult, TestFindingStatus, processTest
 from raytkUtil import RaytkContext, recloneComp, Version
+import re
 
 # noinspection PyUnreachableCode
 if False:
@@ -111,20 +112,25 @@ class TestManager:
 		dat.appendRow(['name', 'label', 'version', 'tox'])
 		dat.appendRow(['src', 'Current Source', '(current)', 'src/raytk.tox'])
 		buildFolder = Path(self.ownerComp.par.Buildfolder.eval())
+		pattern = re.compile(r'^RayTK-(\d+\.?\d+)(-exp(-\d+)?)?$')
 		for row in range(1, fileTable.numRows):
 			relFile = Path(str(fileTable[row, 'relpath']))
 			toxFile = buildFolder / relFile
-			versionStr = toxFile.stem
-			isExp = versionStr.endswith('-exp')
-			if isExp:
-				versionStr = versionStr.replace('-exp', '')
-			if '-' in versionStr:
-				versionStr = versionStr.split('-', 1)[1]
+			match = pattern.match(toxFile.stem)
+			if not match:
+				debug(f' no match for {toxFile.stem}')
+				continue
+			versionStr = match.group(1)
+			isExp = bool(match.group(2))
+			expIterationSuffix = match.group(3)
 			try:
 				version = Version(versionStr)
 			except ValueError:
 				version = None
-			expSuffix = ' (exp)' if isExp else ''
+			if not isExp:
+				expSuffix = ''
+			else:
+				expSuffix = ' (exp' + (expIterationSuffix or '') + ')'
 			dat.appendRow([
 				toxFile.stem,
 				f'Build {version}{expSuffix}' if version else f'{toxFile.stem}{expSuffix}',

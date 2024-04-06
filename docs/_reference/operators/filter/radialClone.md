@@ -31,6 +31,8 @@ op:
     supportedVariables:
     - index
     - normindex
+    - rotaccum
+    - normrotaccum
   - contextTypes:
     - Context
     - MaterialContext
@@ -51,6 +53,8 @@ op:
     supportedVariables:
     - index
     - normindex
+    - rotaccum
+    - normrotaccum
   - contextTypes:
     - Context
     - MaterialContext
@@ -71,6 +75,8 @@ op:
     supportedVariables:
     - index
     - normindex
+    - rotaccum
+    - normrotaccum
   - contextTypes:
     - Context
     - MaterialContext
@@ -91,6 +97,8 @@ op:
     supportedVariables:
     - index
     - normindex
+    - rotaccum
+    - normrotaccum
   keywords:
   - clone
   - copy
@@ -173,6 +181,8 @@ op:
       name: columnIntersect
     - label: Column Difference
       name: columnDiff
+    - label: Simple XOR
+      name: simpleXOR
     name: Mergetype
     readOnlyHandling: semibaked
     regularHandling: semibaked
@@ -203,6 +213,10 @@ op:
     name: index
   - label: normindex
     name: normindex
+  - label: rotaccum
+    name: rotaccum
+  - label: normrotaccum
+    name: normrotaccum
 
 ---
 

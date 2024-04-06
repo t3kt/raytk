@@ -101,7 +101,6 @@ op:
     name: Radiuslimit
     readOnlyHandling: baked
     regularHandling: runtime
-  status: beta
   thumb: assets/images/reference/operators/sdf2d/spiralSdf2d_thumb.png
 
 ---

@@ -63,26 +63,6 @@ class CompilerCore:
 		info = ROPInfo(rop)
 		result = _ROPCompileInfo(ropInfo=info)
 
-		paramTupletTable = info.opDef.op('param_tuplets')
-		# tuplet,  source (param|special),  size,  part1, part2, part3, part4, status (readOnly|''), conversion (angle|'')
-		name = info.opDefPar.Name.eval()
-		prefix = name + '_'
-		for i in range(1, paramTupletTable.numRows):
-			tupletName = str(paramTupletTable[i, 'tuplet']).replace(prefix, '')
-			if paramTupletTable[i, 'source'] != 'param':
-				result.errors.append(f'Special parameter not supported: {tupletName}')
-			else:
-				par1 = rop.par[paramTupletTable[i, 'part1']]
-				if paramTupletTable[i, 'status'] == 'readOnly':
-					result.constantPars += par1.tuplet
-				else:
-					result.variablePars += par1.tuplet
-				if par1.isMenu:
-					result.menuPars.append(par1)
-				if paramTupletTable[i, 'convesrion'] == 'angle':
-					result.anglePars += par1.tuplet
-			pass
-
 		# TODO: check for CHOP-based parameters
 		# TODO: check for textures
 		# TODO: check for buffer CHOPs

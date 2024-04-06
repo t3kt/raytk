@@ -23,3 +23,6 @@ class ToolkitEditor:
 	@staticmethod
 	def saveAllROPSpecs():
 		RaytkTools().saveAllROPSpecs()
+
+	def saveAllROPs(self, incrementVersion):
+		RaytkTools().saveAllROPs(incrementVersion)

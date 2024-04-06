@@ -65,7 +65,6 @@ op:
       name: vec3
     name: Coordtype
   - name: Contexttype
-  status: beta
   summary: A field that produces various types of polar coordinates.
   thumb: assets/images/reference/operators/field/polarCoordField_thumb.png
 

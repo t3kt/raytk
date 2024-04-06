@@ -29,10 +29,13 @@ op:
     name: Direction
     readOnlyHandling: baked
     regularHandling: runtime
+    summary: Vector pointing which direction the light shines. This vector is automatically
+      normalized.
   - label: Intensity
     name: Intensity
     readOnlyHandling: baked
     regularHandling: runtime
+    summary: Brightness that is applied to the `Color`.
   - label: Color
     name: Color
     readOnlyHandling: baked
@@ -41,12 +44,16 @@ op:
     name: Rotate
     readOnlyHandling: baked
     regularHandling: runtime
+    summary: Rotates the direction of the light on all 3 axes.
   - label: Enable Shadow
     name: Enableshadow
     readOnlyHandling: semibaked
     regularHandling: runtime
+    summary: Whether this light should cast shadows.
   summary: A directional light.
   variables:
+  - label: RTK_raytk_operators_light_directionalLight_lightdir
+    name: RTK_raytk_operators_light_directionalLight_lightdir
   - label: lightdir
     name: lightdir
 

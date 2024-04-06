@@ -117,9 +117,7 @@ elements:
   elementType: codeSwitcher
   params:
     Elementroot: ''
-    Table: !table
-      file: src/operators/filter/limitField_limitTypes.txt
-      name: limitTypes
+    Table: limitTypes
     Param: Limittype
     Autoupdateparams: true
     Manageparamstates: true

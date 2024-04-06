@@ -1,8 +1,8 @@
 !rop
 meta: !meta
   opType: raytk.operators.combine.addFields
-  opVersion: '7'
-  opStatus: default
+  opVersion: '8'
+  opStatus: deprecated
 opDef: !def
   enable: true
   typeSpec: !ropTypes

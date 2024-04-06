@@ -69,7 +69,6 @@ op:
     name: Format
     readOnlyHandling: baked
     regularHandling: baked
-  status: beta
   thumb: assets/images/reference/operators/field/nearestRingPointField_thumb.png
   variables:
   - label: pos

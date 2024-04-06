@@ -6,6 +6,8 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 	#endif
 }
 
+float getMaxDist() { return THIS_Maxdist; }
+
 Ray evaluateCamera(vec2 p, CameraContext ctx) {
 #ifndef THIS_HAS_INPUT_camera
 	mat4 camMat = mat4(
@@ -46,10 +48,10 @@ Light getLight(vec3 p, LightContext ctx) {
 bool checkLimit(vec3 p) {
 	return p.x >= THIS_Limitboxmin.x &&
 		p.x <= THIS_Limitboxmax.x &&
-		p.x >= THIS_Limitboxmin.y &&
-		p.x <= THIS_Limitboxmax.y &&
-		p.x >= THIS_Limitboxmin.z &&
-		p.x <= THIS_Limitboxmax.z;
+		p.y >= THIS_Limitboxmin.y &&
+		p.y <= THIS_Limitboxmax.y &&
+		p.z >= THIS_Limitboxmin.z &&
+		p.z <= THIS_Limitboxmax.z;
 }
 #else
 #define checkLimit(p) (true)

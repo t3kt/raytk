@@ -13,10 +13,8 @@ cat:
   name: sdf2d
   operators:
   - name: arbitraryPolygonSdf2d
-    status: beta
   - name: arcSdf2d
   - name: archSdf2d
-    status: beta
   - name: arrowSdf2d
   - keywords:
     - bezier
@@ -30,7 +28,6 @@ cat:
   - name: circleSdf
     summary: 2D circle SDF.
   - name: circleWaveSdf2d
-    status: beta
   - name: coolSSdf2d
   - name: cornerSdf2d
     summary: 2D SDF for an infinite corner, like an infinite square positioned by
@@ -53,7 +50,6 @@ cat:
   - name: isoscelesTriangleSdf2d
   - name: jointSdf2d
   - name: kochSnowflakeSdf2d
-    status: beta
   - name: lineSegmentSdf2d
     summary: 2D line segment SDF.
   - name: moonSdf2d
@@ -66,10 +62,8 @@ cat:
     name: pieSdf2d
     summary: SDF for a 2D pie-slice shape.
   - name: pistonSdf2d
-    status: beta
   - name: planeSdf2d
   - name: polySplineSdf2d
-    status: beta
   - name: polygonSdf2d
     summary: SDF for several types of 2D polygons.
   - name: quadSdf2d
@@ -83,7 +77,6 @@ cat:
     summary: SDF for a 2D rectangle with optionally rounded corners.
   - name: spikeSdf2d
   - name: spiralSdf2d
-    status: beta
   - name: stairSdf2d
     status: beta
   - name: starSdf2d

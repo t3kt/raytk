@@ -28,12 +28,12 @@ elements:
   name: codeSwitcher_Property
   elementType: codeSwitcher
   params:
-    Table: !table
-      file: src/operators/particles/particlePropertyField_properties.txt
-      name: properties
+    Elementroot: ''
+    Table: properties
     Param: Property
     Autoupdateparams: true
     Manageparamstates: false
     Alwaysincludeallparams: false
     Switchmode: inline
+    Indexexpr: ''
     Placeholder: ''

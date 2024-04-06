@@ -91,7 +91,6 @@ op:
     label: Offset Field
     name: offsetField
     returnTypes:
-    - float
     - vec4
     supportedVariableInputs:
     - preRotateField

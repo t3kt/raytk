@@ -53,8 +53,8 @@ op:
     - label: Pixel Coordinate
       name: pixelcoord
     name: Positiontype
-    readOnlyHandling: runtime
-    regularHandling: runtime
+    readOnlyHandling: baked
+    regularHandling: baked
   shortcuts:
   - pos
   summary: A vector field that produces the coordinates in space where it is checked.

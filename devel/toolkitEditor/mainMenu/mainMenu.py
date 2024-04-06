@@ -88,7 +88,13 @@ class MainMenu:
 					'Save All ROP Specs',
 					menuName='Tools',
 					action=lambda: ext.toolkitEditor.saveAllROPSpecs(),
-				)
+				),
+				_MenuItem(
+					'saveIncrementAllRops',
+					'Save and Increment All ROPs',
+					menuName='Tools',
+					action=lambda: ext.toolkitEditor.saveAllROPs(incrementVersion=True),
+				),
 			],
 		}
 

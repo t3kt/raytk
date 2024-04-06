@@ -47,14 +47,12 @@ cat:
   - name: curlNoiseField
     summary: Curl noise field.
   - name: dataTextureField
-    status: beta
     summary: Accesses data from a texture with the same layout as the renderer.
   - name: domainColorField
     status: beta
   - name: hashField
     status: beta
   - name: hsvColorField
-    status: beta
     summary: A field that uses HSV-based parameters to produce colors.
   - name: iterationField
     summary: Field that returns the current iteration, from a downstream OP.
@@ -66,7 +64,6 @@ cat:
     summary: A vector field that provides the distance from 4 specific points in space
       (one for each part of the vector).
   - name: nearestRingPointField
-    status: beta
   - name: noiseField
     summary: A float or vector field that uses one of several noise functions.
   - name: normalField
@@ -76,7 +73,6 @@ cat:
     summary: A float field that provides the distance from a specific point in space
       from either the current position or from another point.
   - name: polarCoordField
-    status: beta
     summary: A field that produces various types of polar coordinates.
   - name: polarVectorField
   - name: positionField
@@ -93,9 +89,13 @@ cat:
   - name: sdfNormalField
     status: beta
   - name: spectralColorField
-    status: beta
   - name: stepField
     summary: A field that switches between two values at a threshold point.
+  - keywords:
+    - fbm
+    - landscape
+    name: terrainNoiseField
+    status: beta
   - name: texture1dField
     status: beta
   - name: texture3dField
@@ -112,7 +112,6 @@ cat:
     status: beta
   - name: waveletNoiseField
   - name: worleyNoiseField
-    status: beta
   summary: Float or vector fields, which provide values for the requested coordinates.
 
 ---

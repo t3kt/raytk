@@ -175,9 +175,7 @@ elements:
   elementType: codeSwitcher
   params:
     Elementroot: ''
-    Table: !table
-      file: src/operators/filter/reflect_directions.txt
-      name: directions
+    Table: directions
     Param: Direction
     Autoupdateparams: true
     Manageparamstates: true

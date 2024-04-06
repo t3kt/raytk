@@ -30,11 +30,6 @@ cat:
     shortcuts:
     - dc
     summary: A material element that provides diffuse light contribution.
-  - name: fieldMat
-    status: deprecated
-    summary: 'A material that uses a vector field input to determine
-
-      the color.'
   - name: goochShadingContrib
     summary: A material element that uses the Gooch shading model.
   - name: hologramContrib
@@ -67,9 +62,7 @@ cat:
   - name: reflectMat
     status: beta
   - name: rimContrib
-    status: beta
   - name: sampledPointMat
-    status: beta
     summary: A material that produces color for volumetric points relative to the
       input shape.
   - name: shadingProperty

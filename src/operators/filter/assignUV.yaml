@@ -58,9 +58,7 @@ elements:
   elementType: codeSwitcher
   params:
     Elementroot: ''
-    Table: !table
-      file: src/operators/filter/assignUV_uvModes.txt
-      name: uvModes
+    Table: uvModes
     Param: Uvmode
     Autoupdateparams: true
     Manageparamstates: false

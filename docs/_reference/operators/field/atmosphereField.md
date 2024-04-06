@@ -32,7 +32,7 @@ op:
     coordTypes:
     - vec3
     label: Ray Direction Field
-    name: ray_direction_field_in
+    name: rayDirectionField
     returnTypes:
     - vec4
   name: atmosphereField

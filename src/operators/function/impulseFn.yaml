@@ -26,9 +26,7 @@ elements:
   elementType: codeSwitcher
   params:
     Elementroot: ''
-    Table: !table
-      file: src/operators/function/impulseFn_function_table.txt
-      name: function_table
+    Table: function_table
     Param: Function
     Autoupdateparams: true
     Manageparamstates: true

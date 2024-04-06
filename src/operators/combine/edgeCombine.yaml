@@ -71,9 +71,7 @@ elements:
   elementType: codeSwitcher
   params:
     Elementroot: ''
-    Table: !table
-      file: src/operators/combine/edgeCombine_modes.txt
-      name: modes
+    Table: modes
     Param: Combine
     Autoupdateparams: true
     Manageparamstates: false

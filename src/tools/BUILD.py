@@ -1,39 +1,21 @@
 # noinspection PyUnreachableCode
 if False:
 	# noinspection PyUnresolvedReferences
-	from raytkBuild import BuildTaskContext
+	from raytkBuild import BuildContext
 	from _stubs import *
 
-context = args[0]  # type: BuildTaskContext
+async def build(context: 'BuildContext'):
+	await context.runBuildScript(op('inspector/BUILD'))
+	await context.runBuildScript(op('updater/BUILD'))
 
-def runStage(stage: int):
-	if stage == 0:
-		context.runBuildScript(
-			op('inspector/BUILD'),
-			thenRun=runStage,
-			runArgs=[stage + 1])
-	elif stage == 1:
-		context.runBuildScript(
-			op('updater/BUILD'),
-			thenRun=runStage,
-			runArgs=[stage + 1])
-	elif stage == 2:
-		context.log('Stripping out the compiler')
-		context.safeDestroyOp(op('compiler'))
-		context.queueAction(runStage, stage + 1)
-	elif stage == 3:
-		context.log('Stripping out the sceneEditor')
-		context.safeDestroyOp(op('sceneEditor'))
-		context.queueAction(runStage, stage + 1)
-	elif stage == 4:
-		context.runBuildScript(
-			op('editorTools/BUILD'),
-			thenRun=runStage,
-			runArgs=[stage + 1])
-	elif stage == 5:
-		context.runBuildScript(
-			op('palette/BUILD'),
-			thenRun=context.finishTask,
-			runArgs=[])
+	context.log('Stripping out the compiler')
+	await context.yieldAsync()
+	context.safeDestroyOp(op('compiler'))
 
-runStage(0)
+	context.log('Stripping out the sceneEditor')
+	await context.yieldAsync()
+	context.safeDestroyOp(op('sceneEditor'))
+
+	await context.runBuildScript(op('editorTools/BUILD'))
+
+	await context.runBuildScript(op('palette/BUILD'))

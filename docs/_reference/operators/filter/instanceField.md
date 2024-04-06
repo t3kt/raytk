@@ -67,7 +67,6 @@ op:
     regularHandling: runtime
     summary: Swaps the two inputs. This is only relevant for some of the `Operation`
       values.
-  status: beta
   variables:
   - label: index
     name: index

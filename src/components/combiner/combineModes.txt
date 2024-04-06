@@ -18,3 +18,4 @@ stairDiff	Stair Difference	res1 = cmb_stairDiff(res1, res2, r, n, o);	Radius Num
 columnUnion	Column Union	res1 = cmb_columnUnion(res1, res2, r, n, o);	Radius Number Offset	Swapinputs	
 columnIntersect	Column Intersect	res1 = cmb_columnIntersect(res1, res2, r, n, o);	Radius Number Offset	Swapinputs	res1.x *= -1.;
 columnDiff	Column Difference	res1 = cmb_columnDiff(res1, res2, r, n, o);	Radius Number Offset	Swapinputs	res1.x *= -1.;
+simpleXOR	Simple XOR	res1 = cmb_simpleXor(res1, res2);		Swapinputs	

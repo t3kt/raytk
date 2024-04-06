@@ -1,3 +1,4 @@
 name	enable
 useshadow	parent().par.Enableshadow
 useray	1
+usectx	1

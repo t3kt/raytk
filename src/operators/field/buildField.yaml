@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.field.buildField
-  opVersion: '1'
+  opVersion: '2'
   opStatus: alpha
 opDef: !def
   enable: !expr

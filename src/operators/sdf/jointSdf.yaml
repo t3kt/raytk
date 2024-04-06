@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.sdf.jointSdf
-  opVersion: '6'
+  opVersion: '7'
   opStatus: default
 opDef: !def
   enable: true
@@ -51,9 +51,7 @@ elements:
   elementType: codeSwitcher
   params:
     Elementroot: ''
-    Table: !table
-      file: src/operators/sdf/jointSdf_shapes.txt
-      name: shapes
+    Table: shapes
     Param: Shape
     Autoupdateparams: true
     Manageparamstates: false
@@ -66,9 +64,7 @@ elements:
   elementType: codeSwitcher
   params:
     Elementroot: ''
-    Table: !table
-      file: src/operators/sdf/jointSdf_directions.txt
-      name: directions
+    Table: directions
     Param: Direction
     Autoupdateparams: true
     Manageparamstates: false

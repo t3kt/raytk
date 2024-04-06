@@ -54,7 +54,6 @@ op:
     name: Iterations
     readOnlyHandling: semibaked
     regularHandling: semibaked
-  status: beta
   thumb: assets/images/reference/operators/sdf/juliaSdf_thumb.png
   variables:
   - label: step

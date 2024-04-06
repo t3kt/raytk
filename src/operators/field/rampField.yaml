@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.field.rampField
-  opVersion: '4'
+  opVersion: '5'
   opStatus: beta
 opDef: !def
   enable: !expr
@@ -75,9 +75,7 @@ elements:
   elementType: codeSwitcher
   params:
     Elementroot: ''
-    Table: !table
-      file: src/operators/field/rampField_coordModes.txt
-      name: coordModes
+    Table: coordModes
     Param: Coordmode
     Autoupdateparams: true
     Manageparamstates: false

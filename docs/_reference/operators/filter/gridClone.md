@@ -106,6 +106,8 @@ op:
       name: columnIntersect
     - label: Column Difference
       name: columnDiff
+    - label: Simple XOR
+      name: simpleXOR
     name: Mergetype
     readOnlyHandling: semibaked
     regularHandling: semibaked
@@ -117,7 +119,6 @@ op:
     name: Mergenumber
   - label: Merge Offset
     name: Mergeoffset
-  status: beta
   thumb: assets/images/reference/operators/filter/gridClone_thumb.png
   variables:
   - label: coord

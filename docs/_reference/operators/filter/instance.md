@@ -128,6 +128,8 @@ op:
       name: columnIntersect
     - label: Column Difference
       name: columnDiff
+    - label: Simple XOR
+      name: simpleXOR
     name: Combine
     readOnlyHandling: baked
     regularHandling: runtime

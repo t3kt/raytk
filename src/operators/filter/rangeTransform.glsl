@@ -1,4 +1,4 @@
-vec3 THIS_apply(in vec3 p, inout ContextT ctx) {
+vec3 THIS_apply(in vec3 p, inout ContextT ctx, inout float valueAdjust) {
 	#ifdef THIS_HAS_INPUT_indexField
 	float i = inputOp_indexField(p, ctx);
 	#else
@@ -33,18 +33,39 @@ vec3 THIS_apply(in vec3 p, inout ContextT ctx) {
 	p += piv;
 	#endif
 	#endif
+
+	#ifdef THIS_Enableuniformscale
+	float us = mix(THIS_Uniformscale1, THIS_Uniformscale2, i);
+	p /= us;
+	valueAdjust = us;
+	#endif
+
+	#ifdef THIS_Enablescale
+	vec3 s = mix(THIS_Scale1, THIS_Scale2, i);
+	p /= s;
+	#ifdef THIS_COORD_TYPE_float
+		valueAdjust *= s.x;
+	#else
+		valueAdjust *= vmin(s);
+	#endif
+	#endif
+
 	return p;
 }
 
 ReturnT thismap(CoordT p, ContextT ctx) {
+	float valueAdjust = 1.;
 	if (IS_TRUE(THIS_Enable)) {
-		p = THIS_asCoordT(THIS_apply(adaptAsVec3(p), ctx));
+		p = THIS_asCoordT(THIS_apply(adaptAsVec3(p), ctx, valueAdjust));
 	}
 	ReturnT res;
 	#ifdef THIS_HAS_INPUT_1
 	res = inputOp1(p, ctx);
 	#else
 	res = adaptAsVec4(p);
+	#endif
+	#ifdef THIS_RETURN_TYPE_Sdf
+	res = withAdjustedScale(res, valueAdjust);
 	#endif
 	return res;
 }

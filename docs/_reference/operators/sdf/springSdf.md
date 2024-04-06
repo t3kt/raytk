@@ -167,7 +167,6 @@ op:
     readOnlyHandling: baked
     regularHandling: runtime
     summary: Thickness of the spring, used when no cross-section SDF is attached.
-  status: beta
   summary: A coiled spring shape.
   thumb: assets/images/reference/operators/sdf/springSdf_thumb.png
   variables:

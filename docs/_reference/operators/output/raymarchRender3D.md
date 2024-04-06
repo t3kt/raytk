@@ -48,6 +48,8 @@ op:
     name: shadow
     returnTypes:
     - float
+    sourceParamLabel: Shadow
+    sourceParamName: Shadow
   - contextTypes:
     - RayContext
     coordTypes:
@@ -57,6 +59,8 @@ op:
     returnTypes:
     - float
     - vec4
+    sourceParamLabel: Background Field
+    sourceParamName: Backgroundfield
   - contextTypes:
     - MaterialContext
     coordTypes:
@@ -66,6 +70,8 @@ op:
     returnTypes:
     - float
     - vec4
+    sourceParamLabel: Secondary Ray Cast
+    sourceParamName: Secondaryraycast
   - contextTypes:
     - MaterialContext
     coordTypes:
@@ -75,6 +81,8 @@ op:
     returnTypes:
     - float
     - vec4
+    sourceParamLabel: Refraction Ray Cast
+    sourceParamName: Refractionraycast
   name: raymarchRender3D
   opType: raytk.operators.output.raymarchRender3D
   parameters:
@@ -111,8 +119,8 @@ op:
       of performance.
   - label: Max Distance
     name: Maxdist
-    readOnlyHandling: semibaked
-    regularHandling: semibaked
+    readOnlyHandling: baked
+    regularHandling: runtime
     summary: Maximum distance. Rays that don't hit anything will stop at this distance.
       If this is too high, rays that don't hit anything will continue for a long time,
       causing a performance drain.

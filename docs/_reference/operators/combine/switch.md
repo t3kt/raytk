@@ -214,6 +214,8 @@ op:
     name: indexField
     returnTypes:
     - float
+    sourceParamLabel: Index Field
+    sourceParamName: Indexfield
     summary: Field used to choose the source index
   keywords:
   - blend

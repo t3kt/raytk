@@ -1,14 +1,10 @@
 # noinspection PyUnreachableCode
 if False:
 	# noinspection PyUnresolvedReferences
-	from raytkBuild import BuildTaskContext
+	from raytkBuild import BuildContext
 	from _stubs import *
 
-
-context = args[0]  # type: BuildTaskContext
-
-comp = parent()
-
-context.detachTox(comp)
-
-context.finishTask()
+async def build(context: 'BuildContext'):
+	context.log('Updating updater')
+	comp = parent()
+	context.detachTox(comp)

@@ -84,7 +84,6 @@ cat:
     status: beta
     summary: Repeats space in a square arrangement that gets smaller in the center.
   - name: gridClone
-    status: beta
   - name: hilbertCurveTransform
     status: beta
   - keywords:
@@ -96,7 +95,6 @@ cat:
     summary: Repeats its input some number of times, exposing the index as the iteration
       x value, and combines the results.
   - name: instanceField
-    status: beta
   - name: invert
     summary: Invert an SDF, so that the inside is the outside.
   - name: iteratedTransform
@@ -150,7 +148,6 @@ cat:
     - surface
     - texture
     name: modifyNormals
-    status: beta
     summary: Use a field to modify the normals (bump mapping) used by shading elements
       in a modular material.
   - keywords:
@@ -195,6 +192,8 @@ cat:
     - mp
     summary: Repeats space radially, like a kaleidoscope.
   - name: moduloSpherical
+  - name: moduloToroidal
+    status: beta
   - keywords:
     - hollow
     - onion
@@ -246,7 +245,6 @@ cat:
     summary: Rescales the values produced by a field.
   - name: rescaleFloatField
   - name: reshapeValues
-    status: beta
     summary: Reshapes the values produced by a field by applying a function.
   - name: restrictStage
     summary: Restricts which render stages an operator is used in.
@@ -270,7 +268,6 @@ cat:
     - spin
     - transform
     name: rotateNormals
-    status: beta
     summary: Applies rotation to the surface normals used by material elements such
       as `specularContrib`.
   - name: round
@@ -328,7 +325,6 @@ cat:
     - warp
     - wave
     name: waveWarp
-    status: beta
     summary: Uses repeating waves to offset space.
   summary: Operators that take an input and modify it.
 

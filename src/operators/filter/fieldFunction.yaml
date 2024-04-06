@@ -53,9 +53,7 @@ elements:
   elementType: codeSwitcher
   params:
     Elementroot: ''
-    Table: !table
-      file: src/operators/filter/fieldFunction_functions.txt
-      name: functions
+    Table: functions
     Param: Function
     Autoupdateparams: true
     Manageparamstates: false

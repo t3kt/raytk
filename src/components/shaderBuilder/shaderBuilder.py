@@ -6,6 +6,10 @@ from raytkState import RopState, Texture, Buffer, Macro, Reference, Variable, Va
 import re
 from io import StringIO
 from typing import Callable, Dict, Union, Optional
+try:
+	from opDefinition import OpDefinition
+except ImportError:
+	from components.opDefinition.opDefinition import OpDefinition
 
 # noinspection PyUnreachableCode
 if False:
@@ -14,7 +18,6 @@ if False:
 	from _typeAliases import *
 
 	class _ConfigPar(ParCollection):
-		Inlineparameteraliases: BoolParamT
 		Inlinereadonlyparameters: BoolParamT
 		Simplifynames: BoolParamT
 		Inlinetypedefs: BoolParamT
@@ -175,14 +178,14 @@ class ShaderBuilder:
 				self._parameterDetailTable(),
 				self._allParamVals(),
 				configPar,
-				self._parseOpStates(),
+				self._getOpStates(),
 			)
 			pass
 		return _SingleArrayParameterProcessor(
 			self._parameterDetailTable(),
 			self._allParamVals(),
 			configPar,
-			self._parseOpStates(),
+			self._getOpStates(),
 		)
 
 	def getOpsFromDefinitionColumn(self, column: str):
@@ -202,7 +205,7 @@ class ShaderBuilder:
 
 	def buildMacroTable(self, dat: DAT):
 		dat.clear()
-		states = self._parseOpStates()
+		states = self._getOpStates()
 		for state in states:
 			if not state.macros:
 				continue
@@ -330,7 +333,7 @@ class ShaderBuilder:
 		defTable = self._definitionTable()
 		varNames = {}
 		attrNames = set()
-		states = self._parseOpStates()
+		states = self._getOpStates()
 		for state in states:
 			if state.variables:
 				for variable in state.variables:
@@ -386,7 +389,7 @@ class ShaderBuilder:
 			for i in range(1, procRefTable.numRows)
 			if procRefTable[i, 'category'] == 'variable'
 		)
-		states = self._parseOpStates()
+		states = self._getOpStates()
 		for state in states:
 			if not state.variables:
 				continue
@@ -412,9 +415,27 @@ class ShaderBuilder:
 				spec.expr1 or '', spec.expr2 or '', spec.expr3 or '', spec.expr4 or ''
 			])
 
-	def processParametersInCode(self, code: str):
-		paramProcessor = self._createParamProcessor()
-		return paramProcessor.processCodeBlock(code)
+	def buildRuntimeParamDetailTable(self, dat: DAT):
+		dat.clear()
+		dat.appendRow([
+			'tuplet', 'source', 'size',
+			'part1', 'part2', 'part3', 'part4',
+			'status', 'handling', 'ownerName',
+			'sourceVectorPath', 'sourceVectorIndex'])
+		states = self._getOpStates()
+		for state in states:
+			if not state.paramTuplets:
+				continue
+			for paramTuplet in state.paramTuplets:
+				if paramTuplet.handling != 'runtime':
+					continue
+				dat.appendRow([
+					paramTuplet.name, paramTuplet.source, paramTuplet.size,
+					paramTuplet.part1 or '', paramTuplet.part2 or '', paramTuplet.part3 or '', paramTuplet.part4 or '',
+					paramTuplet.status or '', paramTuplet.handling or '', state.name,
+					paramTuplet.sourceVectorPath or '',
+					paramTuplet.sourceVectorIndex if paramTuplet.sourceVectorIndex is not None else '',
+				])
 
 	def processLibraryIncludes(self, code: str):
 		mode = str((self.configPar() and self.configPar()['Includemode']) or 'includelibs')
@@ -437,7 +458,7 @@ class ShaderBuilder:
 	def buildBufferUniformTable(self, dat: DAT):
 		dat.clear()
 		dat.appendRow(['name', 'type', 'chop', 'uniformType', 'expr1', 'expr2', 'expr3', 'expr4'])
-		for state in self._parseOpStates():
+		for state in self._getOpStates():
 			if not state.buffers:
 				continue
 			for buffer in state.buffers:
@@ -492,20 +513,26 @@ class ShaderBuilder:
 		defTable = self._definitionTable()
 		if defTable.numRows < 2:
 			return
-		checker = _VarRefChecker(self._parseOpStates(), defTable, addError)
+		checker = _VarRefChecker(self._getOpStates(), defTable, addError)
 		checker.loadGraph()
 		checker.validateRefs()
 
-	def _parseOpStates(self):
-		states = []
-		for dat in self.getOpsFromDefinitionColumn('statePath'):
-			states.append(RopState.fromJson(dat.text))
-		return states
+	def _getOpStates(self):
+		return [
+			opDef.getRopState()
+			for opDef in self._getOpDefinitions()
+		]
+
+	def _getOpDefinitions(self):
+		return [
+			_getOpDefinitionExt(dat.parent())
+			for dat in self.getOpsFromDefinitionColumn('definitionPath')
+		]
 
 	def buildTextureTable(self, dat: DAT):
 		dat.clear()
 		dat.appendRow(['name', 'path', 'type'])
-		states = self._parseOpStates()
+		states = self._getOpStates()
 		for state in states:
 			if not state.textures:
 				continue
@@ -525,7 +552,10 @@ class ShaderBuilder:
 		dat.write(' ')
 		writer = _Writer(
 			sb=self,
-			opStates=self._parseOpStates(),
+			rops=[
+				_RopContent(opDef, opDef.getRopState())
+				for opDef in self._getOpDefinitions()
+			],
 			defTable=self._definitionTable(),
 			paramProc=self._createParamProcessor(),
 			macroTable=macroTable,
@@ -731,7 +761,7 @@ class _GraphROPInput:
 @dataclass
 class _Writer:
 	sb: 'ShaderBuilder'
-	opStates: 'list[RopState]'
+	rops: 'list[_RopContent]'
 	defTable: DAT
 	paramProc: '_ParameterProcessor'
 	macroTable: DAT
@@ -772,9 +802,11 @@ class _Writer:
 					self._shouldIncludeOp(self.referenceTable[i, 'owner'].val)
 		]
 		self.attributes = []
-		for state in self.opStates:
-			if not self._shouldIncludeOp(state.name):
+		for rop in self.rops:
+			rop.included = self._shouldIncludeOp(rop.definition.name)
+			if not rop.included:
 				continue
+			state = rop.state
 			if state.textures:
 				self.textures += state.textures
 			if state.buffers:
@@ -957,7 +989,8 @@ class _Writer:
 			return
 		self._startBlock('materials')
 		i = 1001
-		for state in self.opStates:
+		for rop in self.rops:
+			state = rop.state
 			if state.materialId:
 				self._writeMacro(state.materialId, i)
 				i += 1
@@ -997,18 +1030,18 @@ class _Writer:
 
 	def _writeOpGlobals(self):
 		self._writeCodeBlocks('opGlobals', [
-			state.opGlobals
-			for state in self.opStates
-			if state.opGlobals and self._shouldIncludeOp(state.name)
+			rop.definition.getOpGlobals()
+			for rop in self.rops
+			if rop.included
 		])
 
 	def _writeInit(self):
 		self._writeCodeBlocks(
 			'init',
 			[
-				state.initCode
-				for state in self.opStates
-				if state.initCode and self._shouldIncludeOp(state.name)
+				rop.definition.getInitCode()
+				for rop in self.rops
+				if rop.included
 			],
 			prefixes=[
 				'#define RAYTK_HAS_INIT',
@@ -1018,9 +1051,9 @@ class _Writer:
 
 	def _writeFunctions(self):
 		self._writeCodeBlocks('functions', [
-			state.functionCode
-			for state in self.opStates
-			if state.functionCode and self._shouldIncludeOp(state.name)
+			rop.definition.getFunctionCode()
+			for rop in self.rops
+			if rop.included
 		])
 
 	def _writeCodeBlocks(
@@ -1033,6 +1066,8 @@ class _Writer:
 		if prefixes:
 			self._writeLines(prefixes)
 		for block in blocks:
+			if not block:
+				continue
 			self._writeLine(self._processCode(block))
 		if suffixes:
 			self._writeLines(suffixes)
@@ -1052,12 +1087,13 @@ class _Writer:
 		self._endBlock('body')
 
 	def _writeMaterialBody(self):
-		for state in self.opStates:
-			if not state.materialId or not self._shouldIncludeOp(state.name):
+		for rop in self.rops:
+			state = rop.state
+			if not state.materialId or not rop.included:
 				continue
 			self._writeLine(f'else if(m == {state.materialId}) {{')
 			# Intentionally skipping typedef inlining for these since no materials need it.
-			self._writeLine(state.materialCode + '\n}')
+			self._writeLine(rop.definition.getMaterialCode() + '\n}')
 
 	def _write(self, arg):
 		self.out.write(arg)
@@ -1101,6 +1137,12 @@ class _Writer:
 
 	def _processCode(self, code: str):
 		return self._inlineTypedefs(code)
+
+@dataclass
+class _RopContent:
+	definition: 'OpDefinition'
+	state: RopState
+	included: bool = True
 
 @dataclass
 class _ParamTupletSpec:
@@ -1206,7 +1248,6 @@ class _ParameterProcessor:
 		self.hasParams = paramDetailTable.numRows > 1
 		self.paramVals = paramVals
 		self.useConstantReadOnly = configPar.Inlinereadonlyparameters if configPar else False
-		self.inlineAliases = configPar.Inlineparameteraliases if configPar else False
 		self.aliasMode = str(configPar['Paramaliasmode'] or 'macro') if configPar else 'macro'
 		self.paramExprs = None  # type: Optional[Dict[str, _ParamExpr]]
 		self.opStates = opStates
@@ -1235,8 +1276,6 @@ class _ParameterProcessor:
 	def paramAliases(self) -> list[str]:
 		if not self.hasParams:
 			return []
-		if self.inlineAliases:
-			return []
 		self._initParamExprs()
 		if self.aliasMode == 'globalvar':
 			return [
@@ -1248,18 +1287,6 @@ class _ParameterProcessor:
 				f'#define {name} {expr.expr}'
 				for name, expr in self.paramExprs.items()
 			]
-
-	def processCodeBlock(self, code: str) -> str:
-		if not self.inlineAliases or not code:
-			return code
-		self._initParamExprs()
-
-		def replace(m: 're.Match'):
-			paramExpr = self.paramExprs.get(m.group(0))
-			return paramExpr.expr if paramExpr else m.group(0)
-
-		code = _paramAliasPattern.sub(replace, code)
-		return code
 
 	def paramUniforms(self) -> list[_UniformSpec]:
 		raise NotImplementedError()
@@ -1451,9 +1478,11 @@ def _uniqueList(items: list):
 def _isInDevelMode():
 	return hasattr(op, 'raytk') and bool(op.raytk.par['Devel'])
 
-def _parseOpStateJson(text: str):
-	if not text:
-		return
-	obj = json.loads(text)
-	state = RopState.fromDict(obj)
-	return state
+def _getOpDefinitionExt(opDefComp: COMP):
+	if hasattr(opDefComp.ext, 'opDefinition'):
+		return opDefComp.ext.opDefinition
+	opDefComp.par.reinitextensions.pulse()
+	if hasattr(opDefComp.ext, 'opDefinition'):
+		return opDefComp.ext.opDefinition
+	debug(f'UNABLE TO ACCESS OPDEF EXT: {opDefComp}')
+	return OpDefinition(opDefComp)

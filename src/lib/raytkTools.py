@@ -106,16 +106,15 @@ class RaytkTools(RaytkContext):
 	def _updateVariableRefParams(rop: COMP):
 		if rop.name == 'provideVariable':
 			return
-		stateText = ROPInfo(rop).opStateText
-		if not stateText:
+		info = ROPInfo(rop)
+		if not info.isROP:
 			return
-		stateObj = json.loads(stateText)
-		variableObjs = stateObj.get('variables')
-		if not variableObjs:
+		opState = info.opDefExt.getRopState()
+		if not opState.variables:
 			return
 		varNamesAndLabels = [
-			(variableObj['localName'], variableObj['label'])
-			for variableObj in variableObjs
+			(variableObj.localName, variableObj.label)
+			for variableObj in opState.variables
 		]
 		if not varNamesAndLabels:
 			return
@@ -186,6 +185,13 @@ class RaytkTools(RaytkContext):
 		self.saveROPSpec(rop)
 		OpDocManager(info).pushToParams()
 		focusFirstCustomParameterPage(rop)
+		opDefComp = info.opDef
+		if info.isROP and not opDefComp.par.ext0object:
+			opDefComp.par.ext0object = "op('./opDefinition').module.OpDefinition(me)"
+			opDefComp.par.ext0name = 'opDefinition'
+			opDefComp.par.ext0promote = True
+		opDefComp.par.ext0name.readOnly = True
+		opDefComp.par.ext0promote.readOnly = True
 		tox = info.toxFile
 		rop.par.savebackup = False
 		if rop.par['reloadtoxonstart'] is not None:
@@ -321,6 +327,15 @@ class RaytkTools(RaytkContext):
 				continue
 			print(f'Saving ROP spec for {rop}')
 			self.saveROPSpec(rop)
+
+	def saveAllROPs(self, incrementVersion: bool):
+		rops = self.allMasterOperators()
+		for rop in rops:
+			if not ROPInfo(rop).isROP:
+				continue
+			print(f'Saving ROP {rop}')
+			self.saveROP(rop, incrementVersion=incrementVersion)
+		print('Finished saving all ROPs')
 
 	def updateAllROPToolkitVersions(self):
 		version = self.toolkitVersion()

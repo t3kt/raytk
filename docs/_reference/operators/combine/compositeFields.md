@@ -75,6 +75,8 @@ op:
     required: true
     returnTypes:
     - float
+    sourceParamLabel: Blend Field
+    sourceParamName: Blendfield
     supportedVariableInputs:
     - inputOp[1-2]
   name: compositeFields

@@ -9,6 +9,8 @@ if False:
 	from _stubs import *
 	from tools.palette.palette import Palette
 	from _stubs.PopMenuExt import PopMenuExt
+	from raytkState import RopState
+	from components.opDefinition.opDefinition import OpDefinition
 
 @dataclass
 class ActionContext:
@@ -177,7 +179,7 @@ class ActionManager:
 def _isRopOrComp(o: OP):
 	return isROP(o) or isRComp(o)
 
-class ROPState:
+class EditorROPState:
 	rop: OP | None
 	info: ROPInfo
 
@@ -203,24 +205,6 @@ class ROPState:
 	@property
 	def coordTypes(self): return self._defTypes('coordType')
 
-	@property
-	def isField(self): return bool({'float', 'vec4'} & set(self.returnTypes))
-
-	@property
-	def isVectorField(self): return bool(self and 'vec4' in self.returnTypes)
-
-	@property
-	def isFloatField(self): return bool(self and 'float' in self.returnTypes)
-
-	@property
-	def isSdf(self): return bool(self and self.returnTypes == ['Sdf'])
-
-	@property
-	def is2d(self): return 'vec2' in self.coordTypes
-
-	@property
-	def is3d(self): return 'vec3' in self.coordTypes
-
 	def hasCoordType(self, *types: str):
 		return any([t in self.coordTypes for t in types])
 
@@ -230,6 +214,22 @@ class ROPState:
 	def getParam(self, parName: str):
 		if self.rop:
 			return self.rop.par[parName]
+
+	def _getOpDefExt(self) -> 'Optional[OpDefinition]':
+		if not self.info.isROP:
+			return None
+		comp = self.rop.op('opDefinition')
+		if comp and hasattr(comp.ext, 'opDefinition'):
+			return comp.ext.opDefinition
+
+	def tryGetRopState(self) -> 'Optional[RopState]':
+		opDefExt = self._getOpDefExt()
+		if not opDefExt:
+			return None
+		try:
+			return opDefExt.getRopState()
+		except Exception as e:
+			print(f'Failed to get ROP state: {e}')
 
 InitFunc = Callable[[COMP], None] | None
 
@@ -382,7 +382,7 @@ class RopSelect(OpSelect):
 			return False
 		if self.all:
 			return True
-		opState = ROPState(o)
+		opState = EditorROPState(o)
 		if not opState:
 			return False
 		if self.ropTypes and opState.info.opType not in self.ropTypes:
@@ -557,6 +557,6 @@ class RopActionUtils:
 	@staticmethod
 	def getAllRopStates(ctx: ActionContext):
 		return [
-			ROPState(o)
+			EditorROPState(o)
 			for o in RaytkContext().ropChildrenOf(ctx.parentComp)
 		]

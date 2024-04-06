@@ -25,6 +25,13 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 	#ifdef THIS_HAS_INPUT_angleOffsetField
 	rot += radians(inputOp_angleOffsetField(p, ctx));
 	#endif
+	float totalRot = rot;
+	#ifdef THIS_EXPOSE_rotaccum
+	THIS_rotaccum = degrees(totalRot);
+	#endif
+	#ifdef THIS_EXPOSE_normrotaccum
+	THIS_normrotaccum = degrees(totalRot) / 360.0;
+	#endif
 	float angleStep = THIS_Anglerange / THIS_Count;
 	CoordT q = p;
 	float roBase = THIS_Radiusoffset;
@@ -49,6 +56,13 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 		rot = rotBase;
 		#ifdef THIS_HAS_INPUT_angleOffsetField
 		rot += radians(inputOp_angleOffsetField(p, ctx));
+		#endif
+		totalRot = rot;
+		#ifdef THIS_EXPOSE_rotaccum
+		THIS_rotaccum = degrees(totalRot);
+		#endif
+		#ifdef THIS_EXPOSE_normrotaccum
+		THIS_normrotaccum = degrees(totalRot) / 360.0;
 		#endif
 		q = p;
 		ro = roBase;

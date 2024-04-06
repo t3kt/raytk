@@ -31,7 +31,6 @@ op:
     name: Steps
     readOnlyHandling: baked
     regularHandling: runtime
-  status: beta
   thumb: assets/images/reference/operators/sdf2d/kochSnowflakeSdf2d_thumb.png
 
 ---

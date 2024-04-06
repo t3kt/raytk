@@ -80,9 +80,7 @@ elements:
   elementType: codeSwitcher
   params:
     Elementroot: ''
-    Table: !table
-      file: src/operators/filter/modulo3D_limitTypes.txt
-      name: limitTypes
+    Table: limitTypes
     Param: Limittype
     Autoupdateparams: true
     Manageparamstates: true

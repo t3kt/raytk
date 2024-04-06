@@ -1,8 +1,8 @@
 !rop
 meta: !meta
   opType: raytk.operators.light.multiLight
-  opVersion: '7'
-  opStatus: beta
+  opVersion: '10'
+  opStatus: default
 opDef: !def
   enable: true
   typeSpec: !ropTypes
@@ -21,6 +21,13 @@ opDef: !def
     name: macro_exprs
     evaluate: true
     evalOpts: !evalOpts {}
+  tagTable: !table
+    file: src/operators/light/multiLight_tags.txt
+    name: tag_exprs
+    evaluate: true
+    evalOpts: !evalOpts
+      excludeFirstRow: true
+      cols: enable
   help: !text
     file: src/operators/light/multiLight.md
     name: help

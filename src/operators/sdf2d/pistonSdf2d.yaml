@@ -1,8 +1,8 @@
 !rop
 meta: !meta
   opType: raytk.operators.sdf2d.pistonSdf2d
-  opVersion: '0'
-  opStatus: beta
+  opVersion: '2'
+  opStatus: default
 opDef: !def
   enable: true
   typeSpec: !ropTypes
@@ -40,9 +40,7 @@ elements:
   elementType: codeSwitcher
   params:
     Elementroot: ''
-    Table: !table
-      file: src/operators/sdf2d/pistonSdf2d_directions.txt
-      name: directions
+    Table: directions
     Param: Direction
     Autoupdateparams: true
     Manageparamstates: false

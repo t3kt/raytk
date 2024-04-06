@@ -36,9 +36,7 @@ elements:
   elementType: codeSwitcher
   params:
     Elementroot: ''
-    Table: !table
-      file: src/operators/function/flipFn_flipTypes.txt
-      name: flipTypes
+    Table: flipTypes
     Param: Fliptype
     Autoupdateparams: true
     Manageparamstates: false

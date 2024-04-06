@@ -19,7 +19,6 @@ cat:
     - fractal
     name: apollonianSdf
   - name: archSdf
-    status: beta
   - keywords:
     - bezier
     - curve
@@ -75,7 +74,6 @@ cat:
   - name: discSdf
     summary: A flat disc facing the Y axis.
   - name: dodecahedronFractalSdf
-    status: beta
   - keywords:
     - circle
     - ellipse
@@ -108,6 +106,7 @@ cat:
     name: gyroidSdf
     summary: Gyroid shape, which is an infinitely connected periodic surface.
   - name: headSdf
+    summary: Human head SDF created by tdhooper.
   - keywords:
     - coil
     - helix
@@ -121,14 +120,12 @@ cat:
     - julia
     - quaternion
     name: juliaSdf
-    status: beta
   - name: kaliGeneratorSdf
     summary: Fractal SDF based on "Generators" by Kali (https://www.shadertoy.com/view/Xtf3Rn).
   - keywords:
     - grid
     name: latticeSdf
   - name: lineSeriesSdf
-    status: beta
   - keywords:
     - chain
     - link
@@ -157,7 +154,6 @@ cat:
   - name: petalSdf
     summary: A flower petal or leaf shape.
   - name: pistonSdf
-    status: beta
   - keywords:
     - floor
     - plane
@@ -183,7 +179,6 @@ cat:
     - rectangle
     - square
     name: quadSdf
-    status: beta
   - name: ringsSdf
   - keywords:
     - line
@@ -213,12 +208,13 @@ cat:
     name: spiralSdf
     summary: A tapering spiral squared tube.
   - name: springSdf
-    status: beta
     summary: A coiled spring shape.
   - name: stackSdf
     status: beta
   - name: tetrahedronSdf
     summary: Tetrahedron shape.
+  - name: torusGridSdf
+    status: beta
   - keywords:
     - donut
     - ring

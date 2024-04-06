@@ -69,7 +69,6 @@ There are several categories of information about a ROP, produced by the `opDefi
   * `contextType`: the type of context that the ROP's function expects along with the coordinates.
   * `tags`: indicators that the OP uses certain features like shadows or surface colors.
   * `definitionPath`: path to the DAT that contains the full table of ROP properties.
-  * `statePath`: path to the DAT that contains the JSON-serialized `RopState`.
 * Local definition table fields
   * These are only included within a single-ROP table inside the `opDefinition`.
   * `opVersion`: version of that particular type of ROP.
@@ -77,11 +76,7 @@ There are several categories of information about a ROP, produced by the `opDefi
   * `paramSource`: path to the CHOP that holds the values of runtime parameters.
   * `constantParamSource`: path to the CHOP that holds the values of specialization constant parameters. These are processed separately from runtime parameters to avoid unnecessary cooking.
   * `paramVectors`: path to a CHOP with the runtime parameters, rearranged into 4 vector channels. This will eventually be used to avoid having to reorder all the parameters in `shaderBuilder`.
-  * `paramTable`: path to a DAT that contains definitions of all the ROP's parameters.
-  * `paramTupletTable`: path to a DAT that contains the definitions of the ROP's parameters, organized into 4-part tuplets.
   * `libraryNames`: names of common shared GLSL libraries and/or paths to ROP-local libraries.
-  * `elementTable`: path to the DAT that holds information about the ROP's [elements](/raytk/developer/rop-elements/).
-  * `inputNames`: the names of other ROPs that this ROP's function calls.
 * `RopState`
   * This is a structured object stored as JSON in a DAT inside the `opDefinition`.
   * It holds prepared blocks of code.

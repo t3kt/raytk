@@ -34,9 +34,7 @@ elements:
   elementType: codeSwitcher
   params:
     Elementroot: ''
-    Table: !table
-      file: src/operators/convert/vectorToFloat_parts.txt
-      name: parts
+    Table: parts
     Param: Usepart
     Autoupdateparams: true
     Manageparamstates: false

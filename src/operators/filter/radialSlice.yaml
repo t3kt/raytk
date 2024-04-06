@@ -76,9 +76,7 @@ elements:
   elementType: codeSwitcher
   params:
     Elementroot: ''
-    Table: !table
-      file: src/operators/filter/radialSlice_angleModes.txt
-      name: angleModes
+    Table: angleModes
     Param: Anglemode
     Autoupdateparams: true
     Manageparamstates: false

@@ -14,6 +14,8 @@ cat:
   - name: objectIdMask
   - name: stepMap
   - name: worldPosMap
+    summary: Access the world position values from a raymarchRender3D, scaled to a
+      normalized range.
 
 ---
 

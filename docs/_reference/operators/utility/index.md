@@ -21,13 +21,11 @@ cat:
 
       be extracted from rendered output.'
   - name: lfoGenerator
-    status: beta
   - name: paramFilter
     status: beta
   - name: providePosition
   - name: provideVariable
   - name: speedGenerator
-    status: beta
   - name: variableList
     status: beta
   - name: variableReference

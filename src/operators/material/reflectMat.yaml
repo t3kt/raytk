@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.material.reflectMat
-  opVersion: '16'
+  opVersion: '17'
   opStatus: beta
 opDef: !def
   enable: !expr
@@ -48,9 +48,7 @@ elements:
   elementType: codeSwitcher
   params:
     Elementroot: ''
-    Table: !table
-      file: src/operators/material/reflectMat_conditions.txt
-      name: conditions
+    Table: conditions
     Param: Condition
     Autoupdateparams: true
     Manageparamstates: false

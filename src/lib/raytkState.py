@@ -29,9 +29,13 @@ def _shouldInclude(val):
 
 @dataclass
 class RopState(_StateObject):
-	name: str
-	path: str
-	ropType: str
+	name: str = ''
+	path: str = ''
+	ropType: str = ''
+	ropFullType: str = ''
+
+	params: list['ParamSpec'] | None = None
+	paramTuplets: list['ParamTupletSpec'] | None = None
 
 	functionCode: str | None = None
 	materialCode: str | None = None
@@ -48,7 +52,6 @@ class RopState(_StateObject):
 
 	materialId: str | None = None
 
-	inputNames: list[str] | None = None
 	inputStates: list['InputState'] | None = None
 
 	libraryNames: list[str] | None = None
@@ -60,18 +63,22 @@ class RopState(_StateObject):
 
 	tags: list[str] | None = None
 
+	opElements: list['OpElementState'] | None = None
+
 	@classmethod
 	def fromDict(cls, obj: dict):
 		return cls(
 			name=obj.get('name'),
 			path=obj.get('path'),
 			ropType=obj.get('ropType'),
+			ropFullType=obj.get('ropFullType'),
+			params=[ParamSpec(**p) for p in obj.get('params', [])],
+			paramTuplets=[ParamTupletSpec(**p) for p in obj.get('paramTuplets', [])],
 			functionCode=obj.get('functionCode'),
 			materialCode=obj.get('materialCode'),
 			initCode=obj.get('initCode'),
 			opGlobals=obj.get('opGlobals'),
 			materialId=obj.get('materialId'),
-			inputNames=obj.get('inputNames'),
 			libraryNames=obj.get('libraryNames'),
 			paramSource=obj.get('paramSource'),
 			macros=[Macro(**m) for m in obj.get('macros', [])],
@@ -83,6 +90,8 @@ class RopState(_StateObject):
 			attributes=[SurfaceAttribute(**a) for a in obj.get('attributes', [])],
 			variables=[Variable(**v) for v in obj.get('variables', [])],
 			validationErrors=[ValidationError(**e) for e in obj.get('validationErrors', [])],
+			opElements=[OpElementState(**e) for e in obj.get('opElements', [])],
+			tags=obj.get('tags', []),
 		)
 
 	@classmethod
@@ -130,28 +139,28 @@ class Texture(_StateObject):
 
 @dataclass
 class Reference(_StateObject):
-	name: str
-	localName: str
-	sourceName: str | None
-	dataType: str
-	owner: str | None
+	name: str = ''
+	localName: str = ''
+	sourceName: str | None = None
+	dataType: str = ''
+	owner: str | None = None
 	sourcePath: str | None = None
 	category: str | None = None
 
 @dataclass
 class Variable(_StateObject):
-	name: str
-	localName: str
-	label: str
-	dataType: str
-	owner: str
+	name: str = ''
+	localName: str = ''
+	label: str = ''
+	dataType: str = ''
+	owner: str = ''
 	macros: str | None = None
 
 @dataclass
 class SurfaceAttribute(_StateObject):
-	name: str
-	label: str
-	dataType: str
+	name: str = ''
+	label: str = ''
+	dataType: str = ''
 	macros: str | None = None
 
 @dataclass
@@ -167,11 +176,25 @@ class Buffer(_StateObject):
 	expr4: str | None = None
 
 @dataclass
-class ParamTuplet(_StateObject):
+class ParamSpec(_StateObject):
+	name: str
+	localName: str
+	source: str
+	style: str
+	tupletName: str | None
+	tupletLocalName: str | None
+	vecIndex: int
+	status: str | None = None
+	handling: str | None = None
+	conversion: str | None = None
+
+@dataclass
+class ParamTupletSpec(_StateObject):
 	name: str
 	localName: str
 	source: str
 	size: int
+	style: str | None = None
 	part1: str | None = None
 	part2: str | None = None
 	part3: str | None = None
@@ -180,3 +203,13 @@ class ParamTuplet(_StateObject):
 	conversion: str | None = None
 	handling: str = 'runtime'
 	localNames: list[str] | None = None
+	sourceVectorPath: str | None = None
+	sourceVectorIndex: int | None = None
+
+@dataclass
+class OpElementState(_StateObject):
+	elementRoot: str
+	isNested: bool
+	paramGroupTable: str | None = None
+	macroTable: str | None = None
+	codeReplacements: dict[str, str] | None = None

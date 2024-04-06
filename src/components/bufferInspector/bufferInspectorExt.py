@@ -1,3 +1,5 @@
+import popMenu
+
 # noinspection PyUnreachableCode
 if False:
 	# noinspection PyUnresolvedReferences
@@ -102,3 +104,7 @@ class BufferInspector:
 		for cell in dat.findCells('*', cols=[1, 2, 3, 4]):
 			if cell.val:
 				cell.val = f'{float(cell):8.2f}'
+
+	def showNormalizationMenu(self):
+		popMenu.fromButton(self.ownerComp.op('normalization_drop_button')).Show(
+			popMenu.ParEnumItems(self.ownerComp.par.Normalization, noCheckboxes=True))

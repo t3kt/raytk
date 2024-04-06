@@ -2,6 +2,7 @@ import json
 
 from raytkUtil import RaytkContext, ROPInfo, InputInfo, CategoryInfo
 import raytkDocs
+from raytkState import RopState
 
 # noinspection PyUnreachableCode
 if False:
@@ -136,7 +137,7 @@ def buildOpParamsTable(dat: DAT):
 		])
 		for tuplet in info.rop.customTuplets:
 			par = tuplet[0]
-			if par.name in ('Inspect', 'Help', 'Updateop') or par.name.startswith('Createref') or par.name.startswith('Creatersel'):
+			if par.name in ('Inspect', 'Help', 'Updateop') or par.name.startswith('Createref'):
 				continue
 			cell = dat[info.path, par.tupletName]
 			if cell is None:
@@ -223,10 +224,18 @@ def buildOpCurrentExpandedParamsTable(dat: DAT):
 		info = ROPInfo(rop)
 		if not info or not info.isROP:
 			continue
-		expanded = ' '.join([
-			cell.val
-			for cell in info.opDef.op('paramSpecTable').col('localName')[1:]
-		])
+		opDefExt = info.opDefExt
+		if not opDefExt:
+			print('Error loading state for', rop)
+			continue
+		state = opDefExt.getRopState()
+		if hasattr(state, 'params') and state.params:
+			expanded = [
+				p.localName
+				for p in state.params
+			]
+		else:
+			expanded = []
 		dat.appendRow([
 			info.path,
 			expanded,
@@ -294,7 +303,7 @@ def buildOpTagTable(dat: DAT):
 	opTagExprs = {}  # type: dict[str, dict[str, str]]
 	for rop in RaytkContext().allMasterOperators():
 		info = ROPInfo(rop)
-		if not info or not info.isROP:
+		if not info or not info.isROP or not info.opDefPar['Tagtable']:
 			continue
 		tagTable = info.opDefPar.Tagtable.eval()
 		if not tagTable:
