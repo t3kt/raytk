@@ -184,6 +184,20 @@ float pModPolar(inout vec2 p, float repetitions) {
 	return c;
 }
 
+float pModPolarMirror(inout vec2 p, float repetitions) {
+	float angle = 2*PI/repetitions;
+	float a = atan(p.y, p.x) + angle/2.;
+	float r = length(p);
+	float c = floor(a/angle);
+	float a1 = mod(a, angle * 2);
+	if (a1 >= angle) {
+		a1 = angle - a1;
+	}
+	a = mod(a1,angle) - angle/2.;
+	p = vec2(cos(a), sin(a))*r;
+	return c;
+}
+
 // Repeat in two dimensions
 vec2 pMod2(inout vec2 p, vec2 size) {
 	vec2 c = floor((p + size*0.5)/size);
