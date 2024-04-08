@@ -51,7 +51,7 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 	float col;
 	float row;
 
-	pR(p.xz, shift.y);
+	pR(p.xz, shift.x);
 	if (THIS_Mirrortype == THISTYPE_Mirrortype_cols || THIS_Mirrortype == THISTYPE_Mirrortype_grid) {
 		col = pModPolarMirror(p.xz, r.x);
 	} else {
@@ -66,7 +66,7 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 	THIS_norminnerangle = atan(p.x, p.z)/TAU + .5;
 	#endif
 
-	pR(p.xy, shift.x);
+	pR(p.xy, shift.y);
 	if (THIS_Mirrortype == THISTYPE_Mirrortype_rows || THIS_Mirrortype == THISTYPE_Mirrortype_grid) {
 		row = pModPolar(p.xy, r.y);
 	} else {
