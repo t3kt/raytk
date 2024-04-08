@@ -36,14 +36,28 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 	CoordT translate = THIS_asCoordT(THIS_Translate) * d;
 	p -= translate;
 
-	CoordT scale = mix(CoordT(1.), THIS_asCoordT(THIS_Scale), d);
-	p /= scale;
+	float adjust = 1.;
+	switch (int(THIS_Scaletype)) {
+		case THISTYPE_Scaletype_uniform:
+		{
+			float scale = mix(1., THIS_Uniformscale, d);
+			p /= scale;
+			adjust = scale;
+		}
+		break;
+		case THISTYPE_Scaletype_separate:
+		{
+			vec3 scale = mix(vec3(1.), THIS_Scale, d);
+			p /= THIS_asCoordT(scale);
+			adjust = vmin(scale);
+		}
+		break;
+	}
+
 	p += center;
 	ReturnT res = inputOp1(p, ctx);
-	#ifdef THIS_RETURN_TYPE_float
-		res /= length(scale);
-	#else
-		res.x /= length(scale);
+	#ifdef THIS_RETURN_TYPE_Sdf
+		res = withAdjustedScale(res, adjust);
 	#endif
 	return res;
 }
