@@ -1,4 +1,7 @@
 ReturnT thismap(CoordT p, ContextT ctx) {
+	if (IS_FALSE(THIS_Enable)) {
+		return THIS_asReturnT(inputOp1(p, ctx));
+	}
 	ReturnT val = ReturnT(0.);
 	#ifdef THIS_UseInput1
 	inputOp1_ReturnT val1 = inputOp1(p, ctx);
