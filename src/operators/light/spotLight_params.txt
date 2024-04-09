@@ -1,4 +1,4 @@
 names	source	handling	readOnlyHandling	conversion	enable
-Position[xyz] Direction[xyz] Color[rgb] Intensity Coneangle Conedelta Attenuationstart Attenuationend	param	runtime	macro		1
-Enableattenuation Enableshadow	param	runtime	constant		1
+Position[xyz] Direction[xyz] Color[rgb] Intensity Coneangle Conedelta Attenuationstart Attenuationend Lookatpos[xyz] Upvec[xyz]	param	runtime	macro		1
+Enableattenuation Enableshadow Enablelookat	param	runtime	constant		1
 Rotate[xyz]	param	runtime	macro	angle	1

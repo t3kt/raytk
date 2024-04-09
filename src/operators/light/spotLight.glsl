@@ -9,6 +9,10 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 	#endif
 	{
 		vec3 spotDir = normalize(THIS_Direction);
+		if (IS_TRUE(THIS_Enablelookat)) {
+			mat4 m = lookAtViewMatrix(light.pos, THIS_Lookatpos, THIS_Upvec);
+			spotDir = (m * vec4(spotDir, 0.0)).xyz;
+		}
 		pRotateOnXYZ(spotDir, THIS_Rotate);
 		float innerCutoffCos = cos(radians(THIS_Coneangle));
 		float outerCutoffCos = cos(radians(THIS_Coneangle + THIS_Conedelta));
