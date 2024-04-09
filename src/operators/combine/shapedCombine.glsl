@@ -1,5 +1,6 @@
 ReturnT thismap(CoordT p, ContextT ctx) {
 	ReturnT res1 = inputOp1(p, ctx);
+	if (IS_FALSE(THIS_Enable)) { return res1; }
 	ReturnT res2 = inputOp2(p, ctx);
 	float r = THIS_Radius;
 	float a = adaptAsFloat(res1);
