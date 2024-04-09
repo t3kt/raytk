@@ -10,8 +10,6 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 	if (IS_TRUE(THIS_Reverse)) {
 		p.x *= -1;
 	}
-	float thickness = THIS_Thickness;
-	float radius = THIS_Radius;
 	#ifdef THIS_EXPOSE_axisoffset
 	THIS_axisoffset = p.y;
 	#endif
@@ -21,29 +19,13 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 	#ifdef THIS_EXPOSE_normangle
 	THIS_normangle = (atan(p.z, p.x) / TAU) + .5;
 	#endif
+	float thickness = THIS_Thickness;
 	#ifdef THIS_HAS_INPUT_thicknessField
-    {
-		#if defined(inputOp_thicknessField_COORD_TYPE_float)
-		thickness *= inputOp_thicknessField(p.y, ctx);
-		#elif defined(inputOp_thicknessField_COORD_TYPE_vec2)
-		thickness *= inputOp_thicknessField(vec2(p.y, atan(p.z, p.x)), ctx);
-		#elif defined(inputOp_thicknessField_COORD_TYPE_vec3)
 		thickness *= inputOp_thicknessField(p0, ctx);
-		#else
-		#error invalidThicknessCoordType
-		#endif
-	}
 	#endif
+	float radius = THIS_Radius;
 	#ifdef THIS_HAS_INPUT_radiusField
-	{
-		#if defined(inputOp_radiusField_COORD_TYPE_float)
-		radius *= inputOp_radiusField(p.y, ctx);
-		#elif defined(inputOp_radiusField_COORD_TYPE_vec3)
 		radius *= inputOp_radiusField(p0, ctx);
-		#else
-		#error invalidRadiusCoordType
-		#endif
-	}
 	#endif
 	#ifdef THIS_HAS_INPUT_spreadField
 	float m = inputOp_spreadField(p0, ctx);
