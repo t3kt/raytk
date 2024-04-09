@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.sdf.springSdf
-  opVersion: '3'
+  opVersion: '4'
   opStatus: default
 opDef: !def
   enable: true
@@ -31,7 +31,6 @@ inputs:
   Localalias: heightField
   Variables: axisoffset angle normangle
   coordType: !coordT
-    Coordtypefloat: true
     Coordtypevec3: true
   contextType: !contextT
     Allcontexttype: true
@@ -42,7 +41,6 @@ inputs:
   Variables: axisoffset normoffset angle normangle
   Variableinputs: heightField
   coordType: !coordT
-    Coordtypefloat: true
     Coordtypevec3: true
   contextType: !contextT
     Allcontexttype: true
@@ -53,7 +51,6 @@ inputs:
   Variables: axisoffset normoffset angle normangle
   Variableinputs: heightField radiusField
   coordType: !coordT
-    Coordtypefloat: true
     Coordtypevec3: true
   contextType: !contextT
     Allcontexttype: true
@@ -64,8 +61,6 @@ inputs:
   Variables: axisoffset normoffset angle normangle
   Variableinputs: heightField radiusField coilsField
   coordType: !coordT
-    Coordtypefloat: true
-    Coordtypevec2: true
     Coordtypevec3: true
   contextType: !contextT
     Allcontexttype: true
