@@ -324,6 +324,7 @@ class ToolkitBuilderAsync(BuilderAsyncBase):
 		self.context.resetCustomPars(comp)
 		self.context.lockROPPars(comp)
 		await self._processOperatorSubCompChildren(comp)
+		self.context.consolidateOperatorPythonModules(comp)
 		if not comp.isPanel:
 			comp.showCustomOnly = True
 			self.log('Updating OP image for ' + comp.path)
