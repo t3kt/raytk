@@ -18,6 +18,9 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 	#if THIS_INPUT_COUNT == 0
 	initDefVal(res);
 	#else
+		if (IS_FALSE(THIS_Enable)) {
+		return inputOp1(p, ctx);
+	}
 		#ifdef THIS_HAS_INPUT_indexField
 		float source = inputOp_indexField(p, ctx);
 		#else
