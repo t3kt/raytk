@@ -95,6 +95,12 @@ class MainMenu:
 					menuName='Tools',
 					action=lambda: ext.toolkitEditor.saveAllROPs(incrementVersion=True),
 				),
+				_MenuItem(
+					'updateAllShaderLibraries',
+					'Update All Shader Libraries',
+					menuName='Tools',
+					action=lambda: ext.toolkitEditor.updateAllShaderLibraries(),
+				),
 			],
 		}
 
