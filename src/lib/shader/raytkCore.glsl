@@ -369,15 +369,18 @@ struct LightContext {
 };
 
 LightContext createLightContext(Sdf res, vec3 norm) {
-	return LightContext(0, res, norm
+	LightContext ctx;
+	ctx.index = 0;
+	ctx.result = res;
+	ctx.normal = norm;
 	#ifdef RAYTK_GLOBAL_POS_IN_CONTEXT
-	, vec3(0.)
+	ctx.globalPos = vec3(0);
 	#endif
 	#if defined(RAYTK_TIME_IN_CONTEXT) || defined(RAYTK_USE_TIME)
-	, getGlobalTime()
+	ctx.time = getGlobalTime();
 	#endif
-	, vec4(0.)
-	);
+	ctx.iteration = vec4(0);
+	return ctx;
 }
 
 void setIterationIndex(inout LightContext ctx, float index) {
