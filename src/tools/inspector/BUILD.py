@@ -19,6 +19,7 @@ async def build(context: 'BuildContext'):
 		'fieldVisualizer',
 		'inspectorCore',
 		'bufferInspector',
+		'outputBuffersPanel',
 		'opBasicInfoPanel',
 		'shaderBuilderConfig',
 		'shaderPanel',
