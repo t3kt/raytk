@@ -197,7 +197,7 @@ vec3 getColorDefault(vec3 p, MaterialContext matCtx) {
 	return col;
 }
 
-vec3 getColorInner(vec3 p, MaterialContext matCtx, int m) {
+vec3 getColorFromSingleMat(vec3 p, MaterialContext matCtx, int m) {
 	vec3 col = vec3(0);
 //	#ifdef OUTPUT_DEBUG
 //	debugOut.x = m;
@@ -212,7 +212,7 @@ vec3 getColorInner(vec3 p, MaterialContext matCtx, int m) {
 	return col;
 }
 
-vec4 getColor(vec3 p, MaterialContext matCtx) {
+vec4 getColorFromMats(vec3 p, MaterialContext matCtx) {
 	vec3 col = vec3(0);
 	float ratio = resultMaterialInterp(matCtx.result);
 	int m1 = resultMaterial1(matCtx.result);
@@ -252,7 +252,7 @@ vec4 getColor(vec3 p, MaterialContext matCtx) {
 		#ifdef RAYTK_USE_UV
 		matCtx.uv = uv1;
 		#endif
-		col = getColorInner(p, matCtx, m1);
+		col = getColorFromSingleMat(p, matCtx, m1);
 	} else if (ratio >= 1) {
 		#ifdef RAYTK_USE_MATERIAL_POS
 		matCtx.materialPos = p2;
@@ -260,7 +260,7 @@ vec4 getColor(vec3 p, MaterialContext matCtx) {
 		#ifdef RAYTK_USE_UV
 		matCtx.uv = uv2;
 		#endif
-		col = getColorInner(p, matCtx, m2);
+		col = getColorFromSingleMat(p, matCtx, m2);
 	} else {
 		#ifdef RAYTK_USE_MATERIAL_POS
 		matCtx.materialPos = p1;
@@ -268,14 +268,14 @@ vec4 getColor(vec3 p, MaterialContext matCtx) {
 		#ifdef RAYTK_USE_UV
 		matCtx.uv = uv1;
 		#endif
-		vec3 col1 = getColorInner(p, matCtx, m1);
+		vec3 col1 = getColorFromSingleMat(p, matCtx, m1);
 		#ifdef RAYTK_USE_MATERIAL_POS
 		matCtx.materialPos = p2;
 		#endif
 		#ifdef RAYTK_USE_UV
 		matCtx.uv = uv2;
 		#endif
-		vec3 col2 = getColorInner(p, matCtx, m2);
+		vec3 col2 = getColorFromSingleMat(p, matCtx, m2);
 		col = mix(col1, col2, ratio);
 	}
 	popStage(priorStage);
@@ -303,7 +303,7 @@ vec3 getReflectionColor(MaterialContext matCtx, vec3 p) {
 		}
 		p = matCtx.ray.pos + matCtx.normal * matCtx.result.x;
 		matCtx.normal = calcNormal(p);
-		matCtx.reflectColor += getColor(p, matCtx).rgb;
+		matCtx.reflectColor += getColorFromMats(p, matCtx).rgb;
 	}
 
 	popStage(priorStage);
@@ -363,7 +363,7 @@ vec3 getReflectionColor(MaterialContext matCtx, vec3 p) {
 //		debugOut.r = 0.2;
 //		debugOut.a = 1.;
 //		#endif
-//		vec3 col = getColor(matCtx.ray.pos, matCtx).rgb;
+//		vec3 col = getColorFromMats(matCtx.ray.pos, matCtx).rgb;
 //		matCtx.refractColor = col;
 //	}
 //
@@ -387,7 +387,7 @@ vec4 getColorWithLight(vec3 p, MaterialContext matCtx) {
 	#else
 	matCtx.refractColor = vec3(0);
 	#endif
-	vec4 col = getColor(p, matCtx);
+	vec4 col = getColorFromMats(p, matCtx);
 	return col;
 }
 
