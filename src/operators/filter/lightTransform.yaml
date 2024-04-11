@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.filter.lightTransform
-  opVersion: '0'
+  opVersion: '1'
   opStatus: beta
 opDef: !def
   enable: !expr
@@ -20,13 +20,40 @@ opDef: !def
   paramGroupTable: eval_params
 inputs:
 - !input
+  Localalias: light
   Required: true
   coordType: !coordT
-    Allcoordtype: true
+    Coordtypevec3: true
   contextType: !contextT
-    Allcontexttype: true
+    Contexttypelightcontext: true
   returnType: !returnT
-    Allreturntype: true
+    Returntypelight: true
+- !input
+  Localalias: posTranslateField
+  coordType: !coordT
+    Coordtypevec3: true
+  contextType: !contextT
+    Contexttypelightcontext: true
+  returnType: !returnT
+    Returntypevec4: true
+- !input
+  Localalias: dirRotateField
+  Variableinputs: posTranslateField
+  coordType: !coordT
+    Coordtypevec3: true
+  contextType: !contextT
+    Contexttypelightcontext: true
+  returnType: !returnT
+    Returntypevec4: true
+- !input
+  Localalias: lookAtTranslateField
+  Variableinputs: posTranslateField dirRotateField
+  coordType: !coordT
+    Coordtypevec3: true
+  contextType: !contextT
+    Contexttypelightcontext: true
+  returnType: !returnT
+    Returntypevec4: true
 elements:
 - !opElement
   name: codeSwitcher_Conversion
