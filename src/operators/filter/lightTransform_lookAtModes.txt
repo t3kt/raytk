@@ -1,0 +1,3 @@
+name	label	code
+includepos	Include Position Translate	ctx.lookAtOffset += posOffset + lookAtOffset;
+separate	Separate Translate Only	ctx.lookAtOffset += lookAtOffset;

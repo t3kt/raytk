@@ -1,7 +1,9 @@
 ReturnT thismap(CoordT p, ContextT ctx) {
 	CoordT p0 = p;
 	CoordT c = THIS_Position;
+	c += ctx.posOffset;
 	p -= c;
+	pRotateOnXYZ(p, ctx.rotation);
 	switch (int(THIS_Axis)) {
 		case THISTYPE_Axis_x: p = p.yxz; break;
 		case THISTYPE_Axis_y: break;

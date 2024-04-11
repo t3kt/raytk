@@ -366,6 +366,9 @@ struct LightContext {
 	Time time;
 	#endif
 	vec4 iteration;
+	vec3 posOffset;
+	vec3 lookAtOffset;
+	vec3 rotation;
 };
 
 LightContext createLightContext(Sdf res, vec3 norm) {
@@ -380,6 +383,9 @@ LightContext createLightContext(Sdf res, vec3 norm) {
 	ctx.time = getGlobalTime();
 	#endif
 	ctx.iteration = vec4(0);
+	ctx.posOffset = vec3(0);
+	ctx.lookAtOffset = vec3(0);
+	ctx.rotation = vec3(0);
 	return ctx;
 }
 

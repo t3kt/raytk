@@ -3,6 +3,7 @@
 
 ReturnT thismap(CoordT p, ContextT ctx) {
 	Light light = createLight(THIS_Position, THIS_Color * THIS_Intensity);
+	light.pos += ctx.posOffset;
 	light.supportShadow = IS_TRUE(THIS_Enableshadow);
 	#ifdef THIS_HAS_INPUT_colorField
 	light.color *= fillToVec3(inputOp_colorField(p, ctx));
@@ -10,10 +11,12 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 	{
 		vec3 spotDir = normalize(THIS_Direction);
 		if (IS_TRUE(THIS_Enablelookat)) {
-			mat4 m = lookAtViewMatrix(light.pos, THIS_Lookatpos, THIS_Upvec);
+			vec3 lookPos = THIS_Lookatpos;
+			lookPos += ctx.lookAtOffset;
+			mat4 m = lookAtViewMatrix(light.pos, lookPos, THIS_Upvec);
 			spotDir = (m * vec4(spotDir, 0.0)).xyz;
 		}
-		pRotateOnXYZ(spotDir, THIS_Rotate);
+		pRotateOnXYZ(spotDir, THIS_Rotate + ctx.rotation);
 		float innerCutoffCos = cos(radians(THIS_Coneangle));
 		float outerCutoffCos = cos(radians(THIS_Coneangle + THIS_Conedelta));
 		vec3 lightDir = light.pos - p;

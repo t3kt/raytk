@@ -4,13 +4,14 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 	#else
 	vec3 pos = THIS_Position;
 	#endif
+	pos += ctx.posOffset;
 	Light light = createLight(pos, THIS_Color * THIS_Intensity);
 	switch (int(THIS_Axis)) {
 		case 0: light.pos.x = p.x; break;
 		case 1: light.pos.y = p.y; break;
 		case 2: light.pos.z = p.z; break;
 	}
-	pRotateOnXYZ(light.pos, THIS_Rotate);
+	pRotateOnXYZ(light.pos, THIS_Rotate + ctx.rotation);
 	#ifdef THIS_EXPOSE_lightdir
 	THIS_lightdir = normalize(light.pos - p);
 	#endif
