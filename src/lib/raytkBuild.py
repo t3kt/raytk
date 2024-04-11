@@ -245,6 +245,12 @@ class BuildContext:
 		# do nothing!
 		pass
 
+	async def waitFrames(self, frames: int):
+		from asyncio import Future
+		future = Future()
+		run('args[0].set_result(None)', future, delayFrames=frames, delayRef=root)
+		await future
+
 	def updateROPInstance(self, comp: COMP):
 		self.log(f'Updating OP instance: {comp}')
 		# noinspection PyTypeChecker
