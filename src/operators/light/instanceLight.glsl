@@ -1,12 +1,13 @@
-bool THIS_checkActive(int i) {
-	bool a = true;
+ReturnT thismap(CoordT p, ContextT ctx) {
+	int n = int(THIS_Instancecount);
+	int i = ctx.index;
+	Light light;
 	#ifdef THIS_HAS_ACTIVE
-	a = THIS_actives[i] > 0.;
+	if (IS_FALSE(THIS_actives[i])) {
+		light.absent = true;
+		return light;
+	}
 	#endif
-	return a;
-}
-
-void THIS_exposeIndex(inout ContextT ctx, int i, int n) {
 	setIterationIndex(ctx, i);
 	#ifdef THIS_EXPOSE_index
 	THIS_index = i;
@@ -14,17 +15,12 @@ void THIS_exposeIndex(inout ContextT ctx, int i, int n) {
 	#ifdef THIS_EXPOSE_normindex
 	THIS_normindex = float(i) / float(n - 1);
 	#endif
-}
-
-ReturnT thismap(CoordT p, ContextT ctx) {
-	int n = int(THIS_Instancecount);
-	int i = ctx.index;
-	Light light;
-	if (THIS_checkActive(i)) {
-		THIS_exposeIndex(ctx, i, n);
-		light = inputOp_light(p, ctx);
-	} else {
-		light.absent = true;
-	}
+	#ifdef THIS_HAS_TRANSLATE
+	ctx.posOffset = adaptAsVec3(THIS_translates[i]);
+	#endif
+	#ifdef THIS_HAS_ROTATE
+	ctx.rotation = radians(THIS_rotates[i]);
+	#endif
+	light = inputOp_light(p, ctx);
 	return light;
 }
