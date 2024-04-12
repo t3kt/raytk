@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.material.sampledPointMat
-  opVersion: '27'
+  opVersion: '28'
   opStatus: default
 opDef: !def
   enable: !expr
@@ -51,8 +51,32 @@ inputs:
   returnType: !returnT
     Returntypesdf: true
 - !input
+  Localalias: offsetField
+  Variables: '*'
+  coordType: !coordT
+    Coordtypefloat: true
+    Coordtypevec2: true
+    Coordtypevec3: true
+  contextType: !contextT
+    Contexttypematerialcontext: true
+  returnType: !returnT
+    Returntypefloat: true
+- !input
+  Localalias: blendingField
+  Variables: '*'
+  Variableinputs: offsetField
+  coordType: !coordT
+    Coordtypefloat: true
+    Coordtypevec2: true
+    Coordtypevec3: true
+  contextType: !contextT
+    Contexttypematerialcontext: true
+  returnType: !returnT
+    Returntypefloat: true
+- !input
   Localalias: fillColorField
   Variables: '*'
+  Variableinputs: offsetField blendingField
   coordType: !coordT
     Coordtypefloat: true
     Coordtypevec2: true
@@ -65,7 +89,7 @@ inputs:
 - !input
   Localalias: edgeColorField
   Variables: '*'
-  Variableinputs: fillColorField
+  Variableinputs: offsetField blendingField fillColorField
   coordType: !coordT
     Coordtypefloat: true
     Coordtypevec2: true

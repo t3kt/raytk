@@ -56,7 +56,17 @@ vec3 THIS_getColor(CoordT p, MaterialContext matCtx) {
 		THIS_sdf = matCtx.result;
 	#endif
 	vec3 col = vec3(0.);
-	float d = matCtx.result.x - THIS_Offset;
+	#ifdef THIS_HAS_INPUT_offsetField
+	float o = inputOp_offsetField(mp, matCtx);
+	#else
+	float o = THIS_Offset;
+	#endif
+	#ifdef THIS_HAS_INPUT_blendingField
+	float b = max(0., inputOp_blendingField(mp, matCtx));
+	#else
+	float b = THIS_Blending;
+	#endif
+	float d = matCtx.result.x - o;
 	if (IS_TRUE(THIS_Enablefill)) {
 		vec3 fillColor = THIS_Fillcolor;
 		#ifdef THIS_HAS_INPUT_fillColorField
@@ -69,7 +79,7 @@ vec3 THIS_getColor(CoordT p, MaterialContext matCtx) {
 			fillColor *= fillToVec3(inputOp_fillColorField(q, matCtx));
 		}
 			#endif
-		col += fillColor * (1.0 - smoothstep(0, THIS_Blending, max(d, 0.)));
+		col += fillColor * (1.0 - smoothstep(0, b, max(d, 0.)));
 	}
 	if (IS_TRUE(THIS_Enableedge)) {
 		vec3 edgeColor = THIS_Edgecolor;
@@ -83,7 +93,7 @@ vec3 THIS_getColor(CoordT p, MaterialContext matCtx) {
 			edgeColor *= fillToVec3(inputOp_edgeColorField(q, matCtx));
 		}
 		#endif
-		col += edgeColor * (1.0 - smoothstep(THIS_Edgethickness - THIS_Blending / 2., THIS_Edgethickness + THIS_Blending/2., abs(d)));
+		col += edgeColor * (1.0 - smoothstep(THIS_Edgethickness - b / 2., THIS_Edgethickness + b/2., abs(d)));
 	}
 	#ifdef RAYTK_USE_SURFACE_COLOR
 	if (IS_TRUE(THIS_Usesurfacecolor) && matCtx.result.color.w > 0.) {
