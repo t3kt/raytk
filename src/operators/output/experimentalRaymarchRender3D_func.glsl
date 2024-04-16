@@ -43,6 +43,7 @@ Light getLight(vec3 p, LightContext ctx) {
 	#else
 	light = createLight(vec3(0.), vec3(5.8, 4., 3.5));
 	#endif
+	light.color = max(light.color, 0);
 	return light;
 }
 
