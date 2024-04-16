@@ -4,6 +4,10 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 	Sdf surface = inputOp1(p, ctx);
 	if (!hasColor(surface)) { return surface; }
 	col = vec4(getColor(surface), 1.);
+	#elif defined(THIS_RETURN_TYPE_Light)
+	Light light = inputOp1(p, ctx);
+	if (light.absent) { return light; }
+	col = vec4(light.color, 1);
 	#else
 	col = inputOp1(p, ctx);
 	#endif
@@ -34,11 +38,15 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 		col.rgb = ((col.rgb - 0.5) * cn) + 0.5;
 		col.rgb = pow(col.rgb, vec3(1.0 / THIS_Gamma));
 	}
+	ReturnT res;
 	#ifdef THIS_RETURN_TYPE_Sdf
 	assignColor(surface, col.rgb);
-	ReturnT res = surface;
+	res = surface;
+	#elif defined(THIS_RETURN_TYPE_Light)
+	light.color = col.rgb;
+	res = light;
 	#else
-	ReturnT res = col;
+	res = col;
 	#endif
 	return res;
 }
