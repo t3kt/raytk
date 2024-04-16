@@ -691,9 +691,10 @@ def _createLockUnlockSwitcherAction(text, parName, lock: bool):
 		# assume valid since group wouldn't create it otherwise
 		return True
 	def execute(ctx: ActionContext):
-		par = ctx.primaryOp.par[parName]
-		if par is not None:
-			par.readOnly = lock
+		for o in ctx.selectedOps:
+			par = o.par[parName]
+			if par is not None:
+				par.readOnly = lock
 	return SimpleAction(text, isValid, execute)
 
 def _createLockUnlockSwitcherActionGroup(text, lock: bool):
