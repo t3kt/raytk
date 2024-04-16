@@ -737,7 +737,7 @@ def createActionManager():
 		ActionImpl(
 			'Convert To Float',
 			'raytk.operators.field.sdfField',
-			select=RopSelect(returnTypes=['Sdf']),
+			select=RopSelect(returnTypes=['Sdf'], excludeOutputOps=True),
 			attach=AttachOutFromExisting(),
 		),
 		ActionImpl(
@@ -787,24 +787,24 @@ def createActionManager():
 		_createSimplifyRescaleFloatAction('Simplify Rescale Float'),
 		_createTableBasedGroup(
 			'Project Plane', op('projectPlanes'), _RopTypes.projectPlane, 'Plane',
-			select=RopSelect(coordTypes=['vec2']),
+			select=RopSelect(coordTypes=['vec2'], excludeOutputOps=True),
 			attach=AttachOutFromExisting(),
 		),
 		_createTableBasedGroup(
 			'Cross Section', op('crossSectionAxes'), _RopTypes.crossSection, 'Axes',
-			select=RopSelect(coordTypes=['vec3']),
+			select=RopSelect(coordTypes=['vec3'], excludeOutputOps=True),
 			attach=AttachOutFromExisting(),
 		),
 		ActionImpl(
 			'Assign Color',
 			ropType='raytk.operators.filter.assignColor',
-			select=RopSelect(returnTypes=['Sdf']),
+			select=RopSelect(returnTypes=['Sdf'], excludeOutputOps=True),
 			attach=AttachOutFromExisting(),
 		),
 		ActionImpl(
 			'Apply Modular Material',
 			ropType=_RopTypes.modularMat,
-			select=RopSelect(returnTypes=['Sdf']),
+			select=RopSelect(returnTypes=['Sdf'], excludeOutputOps=True),
 			attach=AttachOutFromExisting(),
 		),
 		_createAddInputActionGroup(
@@ -846,19 +846,19 @@ def createActionManager():
 		ActionImpl(
 			'Extrude',
 			'raytk.operators.convert.extrude',
-			select=RopSelect(coordTypes=['vec2'], returnTypes=['Sdf']),
+			select=RopSelect(coordTypes=['vec2'], returnTypes=['Sdf'], excludeOutputOps=True),
 			attach=AttachOutFromExisting(),
 		),
 		ActionImpl(
 			'Revolve',
 			'raytk.operators.convert.revolve',
-			select=RopSelect(coordTypes=['vec2'], returnTypes=['Sdf']),
+			select=RopSelect(coordTypes=['vec2'], returnTypes=['Sdf'], excludeOutputOps=True),
 			attach=AttachOutFromExisting(),
 		),
 		ActionImpl(
 			'Colorize 2D SDF',
 			'raytk.operators.material.colorizeSdf2d',
-			select=RopSelect(coordTypes=['vec2'], returnTypes=['Sdf']),
+			select=RopSelect(coordTypes=['vec2'], returnTypes=['Sdf'], excludeOutputOps=True),
 			attach=AttachOutFromExisting(),
 		),
 		_createTableBasedGroup(
@@ -868,7 +868,7 @@ def createActionManager():
 			table=op('sdfCombineModes'),
 			select=RopSelect(
 				returnTypes=['Sdf'],
-				multi=True, minCount=2, maxCount=2),
+				multi=True, minCount=2, maxCount=2, excludeOutputOps=True),
 			attach=AttachOutFromExisting()),
 		_createTableBasedGroup(
 			'Arrange SDFs',
@@ -877,17 +877,17 @@ def createActionManager():
 			table=op('sdfCombineModes'),
 			select=RopSelect(
 				returnTypes=['Sdf'],
-				multi=True, minCount=2, maxCount=None),
+				multi=True, minCount=2, maxCount=None, excludeOutputOps=True),
 			attach=AttachOutFromExisting()),
 		ActionImpl(
 			'Switch OPs',
 			ropType='raytk.operators.combine.switch',
-			select=RopSelect(multi=True, minCount=2, maxCount=None),
+			select=RopSelect(multi=True, minCount=2, maxCount=None, excludeOutputOps=True),
 			attach=AttachOutFromExisting()),
 		ActionImpl(
 			'Blend OPs',
 			ropType='raytk.operators.combine.switch',
-			select=RopSelect(multi=True, minCount=2, maxCount=None),
+			select=RopSelect(multi=True, minCount=2, maxCount=None, excludeOutputOps=True),
 			attach=AttachOutFromExisting(),
 			params={'Blend': True}),
 		_createTableBasedGroup(
@@ -943,19 +943,19 @@ def createActionManager():
 		ActionImpl(
 			'Add render2D',
 			ropType=_RopTypes.render2d,
-			select=RopSelect(coordTypes=['vec2']),
+			select=RopSelect(coordTypes=['vec2'], excludeOutputOps=True),
 			attach=AttachOutFromExisting(),
 		),
 		ActionImpl(
 			'Add functionGraphRender',
 			ropType='raytk.operators.output.functionGraphRender',
-			select=RopSelect(coordTypes=['float']),
+			select=RopSelect(coordTypes=['float'], excludeOutputOps=True),
 			attach=AttachOutFromExisting(),
 		),
 		ActionImpl(
 			'Add raymarchRender3d',
 			ropType=_RopTypes.raymarchRender3d,
-			select=RopSelect(coordTypes=['vec3'], returnTypes=['Sdf']),
+			select=RopSelect(coordTypes=['vec3'], returnTypes=['Sdf'], excludeOutputOps=True),
 			attach=AttachOutFromExisting(),
 		),
 		_createGoToGroup('Go to'),
