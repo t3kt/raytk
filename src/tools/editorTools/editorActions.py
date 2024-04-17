@@ -1,5 +1,5 @@
 import json
-from raytkUtil import ROPInfo
+from raytkUtil import ROPInfo, mergeDicts
 from typing import Tuple
 from editorToolsCommon import *
 
@@ -403,6 +403,7 @@ def _createTableBasedGroup(
 		paramName: str,
 		select: 'RopSelect',
 		attach: 'OpAttach',
+		params: dict | None = None,
 ):
 	return GroupImpl(
 		text,
@@ -413,7 +414,7 @@ def _createTableBasedGroup(
 				ropType=ropType,
 				select=select,
 				attach=attach,
-				params={paramName: str(table[i, 'name'])},
+				params=mergeDicts({paramName: str(table[i, 'name'])}, params),
 			)
 			for i in range(1, table.numRows)
 		])
@@ -906,7 +907,27 @@ def createActionManager():
 			table=op('compositeModes'),
 			select=RopSelect(
 				returnTypes=['vec4'],
-				multi=True, minCount=True, maxCount=None),
+				multi=True, minCount=2, maxCount=None),
+			attach=AttachOutFromExisting()),
+		_createTableBasedGroup(
+			'Mix Fields',
+			ropType='raytk.operators.combine.mixFields',
+			paramName='Combinemode',
+			table=op('mixFieldsCombineModes'),
+			select=RopSelect(
+				returnTypes=['vec4'],
+				multi=True, minCount=2, maxCount=None),
+			params={'Returntype': 'vec4'},
+			attach=AttachOutFromExisting()),
+		_createTableBasedGroup(
+			'Mix Fields',
+			ropType='raytk.operators.combine.mixFields',
+			paramName='Combinemode',
+			table=op('mixFieldsCombineModes'),
+			select=RopSelect(
+				returnTypes=['float'],
+				multi=True, minCount=2, maxCount=None),
+			params={'Returntype': 'float'},
 			attach=AttachOutFromExisting()),
 		ActionImpl(
 			'Merge to Vector',
