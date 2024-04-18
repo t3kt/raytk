@@ -1,5 +1,41 @@
 # Release Notes
 
+## v0.41
+
+### Highlights
+
+### Details
+
+* Improvements / additions
+  * New OPs
+    * instanceLight - use instancing to create multiple lights, with CHOPs for positioning and other settings (#1213)
+    * lightTransform - transform specially designed to be used on lights (#1214)
+    * mixFields - combine multiple fields with quick toggles and level adjustments for each (#696)
+  * New OP features
+    * adjustColor - support using on lights (#1213)
+    * assignUV - support using another SDF to assign UVs (#1218)
+    * cameraTransform - support separate transform for look at position (#841)
+    * magnet - uniform scaling
+    * moduloToroidal - mirroring
+    * sampledPointMat - blending and offset field inputs (#1143)
+    * spotLight - look at support (#834)
+  * Editor tools (#1201)
+    * Support editing multiple operators with the lock/unlock switcher actions
+    * Action to combine fields with mixFields (#696)
+  * Improvements
+    * Faster enable/disable with runtime bypass - mergeFields, shapedCombine, switch
+* Fixes
+  * magnet - fix incorrect SDF scale adjustment (when possible)
+  * moduloToroidal - fix swapped shift parameters
+  * Fix broken previews in inspector related to missing output buffer selector
+  * Fix missing palette thumbnails (#1217)
+  * Prevent negative light levels which cause problems with multiple lights (#1213)
+  * Hide irrelevant editor actions on renderers (#1201)
+* Changes (potentially breaking)
+  * helixSdf - remove alternate coordinate type support for field inputs
+  * raymarchRender3D - make limit box disabled by default
+* Infrastructure / internals
+
 ## v0.40
 
 ### Highlights
