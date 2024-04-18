@@ -183,14 +183,14 @@ opDef: !def
   enable: true
   typeSpec: !ropTypes
     coordType: !coordT
-      Coordtypevec3: true
+      Allcoordtype: true
     contextType: !contextT
-      Contexttypecontext: true
+      Allcontexttype: true
     returnType: !returnT
-      Returntypesdf: true
+      Allreturntype: true
   function: !text
+    file: src/operators/output/customRender_function.glsl
     name: functionTemplate
-    text: '#define thismap inputOp1'
   displayCategory: Render
 inputs:
 - !input
