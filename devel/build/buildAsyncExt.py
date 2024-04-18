@@ -409,7 +409,7 @@ class ToolkitBuilderAsync(BuilderAsyncBase):
 	async def _removeAllBuildExcludeOps(self, scope: COMP):
 		self.log(f'Removing buildExclude ops in {scope}')
 		toRemove = scope.findChildren(tags=[RaytkTags.buildExclude.name], includeUtility=True)
-		chunks = [list(chunk) for chunk in chunked_iterable(toRemove, 30)]
+		chunks = [list(chunk) for chunk in chunked_iterable(toRemove, 100)]
 		self.log(f'Found {len(toRemove)} ops to remove in {len(chunks)} chunks')
 		total = len(chunks)
 		for i in range(total):
