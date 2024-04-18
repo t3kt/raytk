@@ -495,7 +495,24 @@ struct CameraContext {
 	#if defined(RAYTK_TIME_IN_CONTEXT) || defined(RAYTK_USE_TIME)
 	Time time;
 	#endif
+
+	vec3 posOffset;
+	vec3 lookAtOffset;
+	vec3 rotation;
 };
+
+CameraContext createCameraContext(vec2 resolution) {
+	CameraContext ctx;
+	ctx.resolution = resolution;
+	#if defined(RAYTK_TIME_IN_CONTEXT) || defined(RAYTK_USE_TIME)
+	ctx.time = getGlobalTime();
+	#endif
+
+	ctx.posOffset = vec3(0.);
+	ctx.lookAtOffset = vec3(0.);
+	ctx.rotation = vec3(0.);
+	return ctx;
+}
 
 struct RayContext {
 	Sdf result;

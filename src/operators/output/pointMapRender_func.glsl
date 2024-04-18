@@ -11,8 +11,7 @@ Light getLight(vec3 p, LightContext ctx) {
 Ray getViewRay(vec2 shift) {
 	vec2 resolution = uTDOutputInfo.res.zw;
 	vec2 p = vUV.st*resolution + shift;
-	CameraContext ctx;
-	ctx.resolution = resolution;
+	CameraContext ctx = createCameraContext(resolution);
 	Ray res;
 	#if defined(THIS_HAS_INPUT_camera) && defined(THIS_HAS_TAG_useray)
 	res = inputOp_camera(p, ctx);

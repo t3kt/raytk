@@ -28,13 +28,15 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 
 //	dir = normalize(dir);
 
+	pos += ctx.posOffset;
+
 	vec3 dir = vec3(
 		THIS_getDir(int(THIS_Dirx)),
 		THIS_getDir(int(THIS_Diry)),
 		THIS_getDir(int(THIS_Dirz)));
 
 
-	pRotateOnXYZ(dir, THIS_Camrot);
+	pRotateOnXYZ(dir, THIS_Camrot + ctx.rotation);
 
 	Ray ray;
 	ray.pos = pos;

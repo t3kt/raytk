@@ -11,5 +11,7 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 	#else
 	ray.dir = vec3(0., 0., 1.);
 	#endif
+	ray.pos += ctx.posOffset;
+	pRotateOnXYZ(ray.dir, ctx.rotation);
 	return ray;
 }

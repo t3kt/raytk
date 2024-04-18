@@ -31,8 +31,7 @@ Ray evaluateCamera(vec2 p, CameraContext ctx) {
 Ray getViewRay(vec2 shift) {
 	vec2 resolution = uTDOutputInfo.res.zw;
 	vec2 fragCoord = vUV.st*resolution + shift;
-	CameraContext ctx;
-	ctx.resolution = resolution;
+	CameraContext ctx = createCameraContext(resolution);
 	return evaluateCamera(fragCoord, ctx);
 }
 

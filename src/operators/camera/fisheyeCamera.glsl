@@ -8,10 +8,10 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 	screenPos.x *= size.x / size.y;
 
 	Ray ray;
-	ray.pos = THIS_Campos;
+	ray.pos = THIS_Campos + ctx.posOffset;
 	// Calculate ray direction
 	vec3 up = THIS_Camup;
-	vec3 lookAt = THIS_Lookatpos;
+	vec3 lookAt = THIS_Lookatpos + ctx.lookAtOffset;
 	vec3 camForward;
 	if (IS_TRUE(THIS_Enablelookat)) {
 		camForward = normalize(lookAt - ray.pos);
@@ -30,7 +30,7 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 	BODY();
 	vec3 worldDir = camOrient * vec3(sin(theta)*cos(phi), sin(theta)*sin(phi), cos(theta));
     
-	pRotateOnXYZ(worldDir, THIS_Camrot);
+	pRotateOnXYZ(worldDir, THIS_Camrot + ctx.rotation);
 	ray.dir = worldDir;
 	return ray;
 }
