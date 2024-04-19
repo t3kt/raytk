@@ -213,6 +213,15 @@ def _validateInput(handler: COMP):
 	]
 	return errors, warnings
 
+_coordTypeDescs = {'float': '1D', 'vec2': '2D', 'vec3': '3D', 'vec4': '4D'}
+_returnTypeDescs = {
+	'float': 'fields producing float values',
+	'vec4': 'fields producing vector values',
+	'Sdf': 'SDFs',
+	'Light': 'lights',
+	'Ray': 'cameras or ray producers',
+}
+
 def _checkInputType(handler: COMP, typeName: str, typeCategory: str):
 	if not typeName:
 		return
@@ -222,6 +231,14 @@ def _checkInputType(handler: COMP, typeName: str, typeCategory: str):
 			return
 	elif typeName in supported:
 		return
+	if typeCategory == 'coordType':
+		typeDesc = _coordTypeDescs.get(typeName, typeName)
+		return f'Input does not support {typeDesc} coordinates'
+	elif typeCategory == 'returnType':
+		typeDesc = _returnTypeDescs.get(typeName, typeName)
+		return 'Input does not support ' + typeDesc
+	elif typeCategory == 'contextType':
+		return f'Input does not support {typeName} context'
 	return f'Input does not support {typeCategory} {typeName}'
 
 def onValidationChange(dat: DAT):
