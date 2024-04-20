@@ -845,6 +845,18 @@ def createActionManager():
 			attach=AttachIntoExisting(inputIndex=2),
 		),
 		ActionImpl(
+			'Add Camera Transform',
+			'raytk.operators.filter.cameraTransform',
+			select=RopSelect(returnTypes=['Ray']),
+			attach=AttachOutFromExisting(),
+		),
+		ActionImpl(
+			'Add Light Transform',
+			'raytk.operators.filter.lightTransform',
+			select=RopSelect(returnTypes=['Light']),
+			attach=AttachOutFromExisting(),
+		),
+		ActionImpl(
 			'Extrude',
 			'raytk.operators.convert.extrude',
 			select=RopSelect(coordTypes=['vec2'], returnTypes=['Sdf'], excludeOutputOps=True),
