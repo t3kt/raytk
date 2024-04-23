@@ -18,6 +18,7 @@ opDef: !def
     file: src/operators/filter/lightTransform.glsl
     name: function
   paramGroupTable: eval_params
+  displayCategory: Light
 inputs:
 - !input
   Localalias: light

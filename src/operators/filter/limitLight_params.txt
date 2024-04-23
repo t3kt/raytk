@@ -1,0 +1,3 @@
+names	source	handling	readOnlyHandling	conversion	enable
+Enableattenuation Attenuationdistance Attenuationfade	param	runtime	macro		1
+Enablebounds Optimizeoutside Boundsoffset Boundsblending	param	runtime	macro		1
