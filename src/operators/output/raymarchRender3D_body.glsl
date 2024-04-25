@@ -232,13 +232,6 @@ vec4 getColorFromMats(vec3 p, MaterialContext matCtx) {
 	vec4 uv2;
 	resolveUV(matCtx, uv1, uv2);
 	#endif
-	#if defined(THIS_Enableshadow) && defined(RAYTK_USE_SHADOW)
-	if (matCtx.result.useShadow && matCtx.light.supportShadow) {
-		int priorStage = pushStage(RAYTK_STAGE_SHADOW);
-		matCtx.shadedLevel = calcShadedLevel(p, matCtx);
-		popStage(priorStage);
-	}
-	#endif
 	#ifdef RAYTK_USE_AO
 	if (matCtx.result.useAO) {
 		matCtx.ao = calcAO(p, matCtx.normal);
@@ -372,23 +365,53 @@ vec3 getReflectionColor(MaterialContext matCtx, vec3 p) {
 //}
 //#endif
 
-vec4 getColorWithLight(vec3 p, MaterialContext matCtx) {
-	if (matCtx.light.absent) {
-		return vec4(0.);
-	}
-	#if defined(RAYTK_USE_REFLECTION) && defined(THIS_Enablereflection)
-	matCtx.reflectColor = getReflectionColor(matCtx, p);
-	#else
-	matCtx.reflectColor = vec3(0);
+void prepareLights(vec3 p, inout MaterialContext matCtx) {
+	LightContext lightCtx = createLightContext(matCtx.result, matCtx.normal);
+	#ifdef RAYTK_GLOBAL_POS_IN_CONTEXT
+	lightCtx.globalPos = matCtx.globalPos;
 	#endif
 
-	#if defined(RAYTK_USE_REFRACTION) && defined(THIS_Enablerefraction)
-	matCtx.refractColor = getRefractionColor(p, matCtx);
-	#else
-	matCtx.refractColor = vec3(0);
+	bool useShadow = false;
+	#if defined(THIS_Enableshadow) && defined(RAYTK_USE_SHADOW)
+	if (matCtx.result.useShadow) {
+		useShadow = true;
+	}
 	#endif
-	vec4 col = getColorFromMats(p, matCtx);
-	return col;
+
+	#if RAYTK_LIGHT_COUNT > 1
+  {
+		for (int i = 0; i < RAYTK_LIGHT_COUNT; i++) {
+			lightCtx.index = i;
+			Light light = getLight(p, lightCtx);
+			matCtx.allLights[i] = light;
+			matCtx.allShadedLevels[i] = 1.0;
+			#ifdef RAYTK_USE_SHADOW
+			if (useShadow && light.supportShadow && !light.absent) {
+				int priorStage = pushStage(RAYTK_STAGE_SHADOW);
+				matCtx.light = light;
+				matCtx.lightIndex = i;
+				matCtx.allShadedLevels[i] = calcShadedLevel(p, matCtx);
+				popStage(priorStage);
+			}
+			#endif
+		}
+		matCtx.light = matCtx.allLights[0];
+		matCtx.shadedLevel = matCtx.allShadedLevels[0];
+	}
+	#else
+  {
+		lightCtx.index = 0;
+		matCtx.light = getLight(p, lightCtx);
+		matCtx.lightIndex = 0;
+		#ifdef RAYTK_USE_SHADOW
+		if (useShadow && matCtx.light.supportShadow && !matCtx.light.absent) {
+			int priorStage = pushStage(RAYTK_STAGE_SHADOW);
+			matCtx.shadedLevel = calcShadedLevel(p, matCtx);
+			popStage(priorStage);
+		}
+		#endif
+	}
+	#endif
 }
 
 void main()
@@ -474,22 +497,24 @@ void main()
 
 			#ifdef OUTPUT_COLOR
 			{
+				prepareLights(p, matCtx);
 				LightContext lightCtx = createLightContext(res, matCtx.normal);
 				#ifdef RAYTK_GLOBAL_POS_IN_CONTEXT
 				lightCtx.globalPos = matCtx.globalPos;
 				#endif
 				vec4 col;
-				#if !defined(RAYTK_LIGHT_COUNT) || RAYTK_LIGHT_COUNT == 1
-				matCtx.light = getLight(p, lightCtx);
-				col = getColorWithLight(p, matCtx);
+				#if defined(RAYTK_USE_REFLECTION) && defined(THIS_Enablereflection)
+				matCtx.reflectColor = getReflectionColor(matCtx, p);
 				#else
-				col = vec4(0., 0., 0., 1.);
-				for (int i = 0; i < RAYTK_LIGHT_COUNT; i++) {
-					lightCtx.index = i;
-					matCtx.light = getLight(p, lightCtx);
-					col.rgb += getColorWithLight(p, matCtx).rgb;
-				}
+				matCtx.reflectColor = vec3(0);
 				#endif
+
+				#if defined(RAYTK_USE_REFRACTION) && defined(THIS_Enablerefraction)
+				matCtx.refractColor = getRefractionColor(p, matCtx);
+				#else
+				matCtx.refractColor = vec3(0);
+				#endif
+				col = getColorFromMats(p, matCtx);
 
 				vec2 fragCoord = vUV.st*uTDOutputInfo.res.zw;
 				col.rgb += (1.0/255.0)*hash1(fragCoord);

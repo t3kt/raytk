@@ -53,9 +53,7 @@ struct Sdf {
 	vec4 objectId;
 	#endif
 
-	#ifdef RAYTK_USE_SHADOW
 	bool useShadow;
-	#endif
 
 	#ifdef RAYTK_USE_AO
 	bool useAO;
@@ -129,10 +127,8 @@ Sdf createSdf(float dist) {
 	#ifdef RAYTK_OBJECT_ID_IN_SDF
 	res.objectId = vec4(0);
 	#endif
-	#ifdef RAYTK_USE_SHADOW
 	// Switching this on by default since the default material uses shadows.
 	res.useShadow = true;
-	#endif
 	#ifdef RAYTK_USE_AO
 	res.useAO = false;
 	#endif
@@ -406,6 +402,11 @@ struct MaterialContext {
 	Context context;
 	Ray ray;
 	Light light;
+	int lightIndex;
+	#if RAYTK_LIGHT_COUNT > 1
+	Light allLights[RAYTK_LIGHT_COUNT];
+	float allShadedLevels[RAYTK_LIGHT_COUNT];
+	#endif
 	vec3 normal;
 	vec3 reflectColor;
 	vec3 refractColor;
@@ -452,6 +453,7 @@ MaterialContext createMaterialContext() {
 	matCtx.ray = Ray(vec3(0.), vec3(0.));
 	matCtx.normal = vec3(0.);
 	matCtx.reflectColor = vec3(0.);
+	matCtx.lightIndex = 0;
 	#ifdef RAYTK_GLOBAL_POS_IN_CONTEXT
 	matCtx.globalPos = vec3(0);
 	#endif

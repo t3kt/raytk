@@ -21,18 +21,47 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 	return res;
 }
 
+vec3 THIS_getColorForLight(
+	CoordT p, MaterialContext matCtx,
+	Light light, int lightIndex, float shadedLevel,
+	vec3 baseColor) {
+	vec3 col = baseColor;
+
+	if (light.absent) { return vec3(0.); }
+
+	#ifdef THIS_EXPOSE_lightcolor
+	THIS_lightcolor = light.color;
+	#endif
+	#ifdef THIS_EXPOSE_lightpos
+	THIS_lightpos = light.pos;
+	#endif
+
+	matCtx.light = light;
+	matCtx.lightIndex = lightIndex;
+	matCtx.shadedLevel = shadedLevel;
+
+	vec3 sunDir = normalize(light.pos);
+	vec3 mate = baseColor;
+	vec3 sunColor = light.color;
+	vec3 skyColor = THIS_Skycolor;
+	float sunDiffuse = clamp(dot(matCtx.normal, sunDir), 0, 1.);
+	float sunShadow = 1.;
+	#if defined(THIS_Enableshadow) && defined(RAYTK_USE_SHADOW)
+	sunShadow = shadedLevel;
+	#endif
+	float skyDiffuse = clamp(0.5+0.5*dot(matCtx.normal, THIS_Skydir), 0, 1);
+	float sunSpec = pow(max(dot(-matCtx.ray.dir, matCtx.normal), 0.), THIS_Specularexp) * THIS_Specularamount;
+	col = mate * sunColor * sunDiffuse * sunShadow;
+	col += mate * skyColor * skyDiffuse;
+	col += mate * sunColor * sunSpec;
+	return col;
+}
+
 vec3 THIS_getColor(vec3 p, MaterialContext matCtx) {
 	restoreIterationFromMaterial(matCtx, THIS_iterationCapture);
-	vec3 sunDir = normalize(matCtx.light.pos);
 	vec3 baseColor = THIS_Basecolor;
 	#ifdef THIS_EXPOSE_normal
 	THIS_normal = matCtx.normal;
-	#endif
-	#ifdef THIS_EXPOSE_lightcolor
-	THIS_lightcolor = matCtx.light.color;
-	#endif
-	#ifdef THIS_EXPOSE_lightpos
-	THIS_lightpos = matCtx.light.pos;
 	#endif
 	#if defined(THIS_Usesurfacecolor) && defined(RAYTK_USE_SURFACE_COLOR)
 	if (matCtx.result.color.w > 0.) {
@@ -69,19 +98,14 @@ vec3 THIS_getColor(vec3 p, MaterialContext matCtx) {
 		#endif
 	}
 	#endif
-	vec3 mate = baseColor;
-	vec3 sunColor = matCtx.light.color;
-	vec3 skyColor = THIS_Skycolor;
-	float sunDiffuse = clamp(dot(matCtx.normal, sunDir), 0, 1.);
-	float sunShadow = 1.;
-	#if defined(THIS_Enableshadow) && defined(RAYTK_USE_SHADOW)
-	sunShadow = matCtx.shadedLevel;
+	vec3 col = baseColor;
+	#if RAYTK_LIGHT_COUNT > 1
+	for (int i = 0; i < RAYTK_LIGHT_COUNT; i++) {
+		col = THIS_getColorForLight(p, matCtx, lights[i], i, matCtx.shadedLevels[i], col);
+	}
+	#else
+	col = THIS_getColorForLight(p, matCtx, matCtx.light, 0, matCtx.shadedLevel, col);
 	#endif
-	float skyDiffuse = clamp(0.5+0.5*dot(matCtx.normal, THIS_Skydir), 0, 1);
-	float sunSpec = pow(max(dot(-matCtx.ray.dir, matCtx.normal), 0.), THIS_Specularexp) * THIS_Specularamount;
-	vec3 col = mate * sunColor * sunDiffuse * sunShadow;
-	col += mate * skyColor * skyDiffuse;
-	col += mate * sunColor * sunSpec;
 	float occ = matCtx.ao;
 	col *= mix(vec3(0.5), vec3(1.5), occ);
 	return col;

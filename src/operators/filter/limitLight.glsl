@@ -23,12 +23,12 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 	}
 	#endif
 
+	light.color *= amount;
 	if (IS_TRUE(THIS_Optimizeoutside)) {
 		if (amount <= 0.0) {
 			light.absent = true;
 			return light;
 		}
 	}
-	light.color *= amount;
 	return light;
 }

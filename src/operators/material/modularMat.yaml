@@ -137,6 +137,21 @@ multiInput: !multiInput
       Returntypevec4: true
 elements:
 - !opElement
+  name: aggregateCodeGenerator
+  elementType: aggregateCodeGenerator
+  params:
+    Startindex: 0
+    Exprindexoffset: 0
+    Reverseorder: false
+    Initmode: separate
+    Numberingmode: available
+    Startstmt: ''
+    Defaultstmt: ''
+    Firststepstmt: ''
+    Stepstmt: !expr
+      expr: op('stepTemplate').text
+    Bodycodeplaceholder: AGGREGATE_BODY();
+- !opElement
   name: codeSwitcher_Condition
   elementType: codeSwitcher
   params:
