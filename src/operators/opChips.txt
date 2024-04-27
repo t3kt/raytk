@@ -5,7 +5,9 @@ assignUV	updated
 cameraTransform	updated
 instanceLight	new
 lightTransform	new
+limitLight	updated
 magnet	updated
 mixFields	new
 moduloToroidal	updated
+radialClone	updated
 sampledPointMat	updated

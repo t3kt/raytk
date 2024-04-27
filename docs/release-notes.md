@@ -10,6 +10,7 @@
   * New OPs
     * instanceLight - use instancing to create multiple lights, with CHOPs for positioning and other settings (#1213)
     * lightTransform - transform specially designed to be used on lights (#1214)
+    * limitLight - distance and boundary attenuation and optimization (#1224)
     * mixFields - combine multiple fields with quick toggles and level adjustments for each (#696)
   * New OP features
     * adjustColor - support using on lights (#1213)
@@ -17,13 +18,16 @@
     * cameraTransform - support separate transform for look at position (#841)
     * magnet - uniform scaling
     * moduloToroidal - mirroring
+    * radialClone - option to keep rotation while still arranging radially (#1219)
     * sampledPointMat - blending and offset field inputs (#1143)
     * spotLight - look at support (#834)
   * Editor tools (#1201)
     * Support editing multiple operators with the lock/unlock switcher actions
     * Action to combine fields with mixFields (#696)
+    * Actions for cameraTransform/lightTransform (#541)
   * Improvements
     * Faster enable/disable with runtime bypass - mergeFields, shapedCombine, switch
+    * Clarify some input type error messages
 * Fixes
   * magnet - fix incorrect SDF scale adjustment (when possible)
   * moduloToroidal - fix swapped shift parameters
@@ -34,6 +38,7 @@
 * Changes (potentially breaking)
   * helixSdf - remove alternate coordinate type support for field inputs
   * raymarchRender3D - make limit box disabled by default
+  * Restructured how multiple lights are handled. Materials are now responsible for looping through the lights and combining the results, rather than the renderer doing it. This allows modularMat to correctly handle shading elements that aren't based on lighting. There may be some differences in how material shading behaves, but hopefully they should be fairly minor. (#1213)
 * Infrastructure / internals
 
 ## v0.40
