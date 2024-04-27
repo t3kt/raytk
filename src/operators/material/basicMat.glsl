@@ -101,7 +101,7 @@ vec3 THIS_getColor(vec3 p, MaterialContext matCtx) {
 	vec3 col = baseColor;
 	#if RAYTK_LIGHT_COUNT > 1
 	for (int i = 0; i < RAYTK_LIGHT_COUNT; i++) {
-		col = THIS_getColorForLight(p, matCtx, lights[i], i, matCtx.shadedLevels[i], col);
+		col = THIS_getColorForLight(p, matCtx, matCtx.allLights[i], i, matCtx.allShadedLevels[i], col);
 	}
 	#else
 	col = THIS_getColorForLight(p, matCtx, matCtx.light, 0, matCtx.shadedLevel, col);

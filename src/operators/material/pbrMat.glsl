@@ -53,6 +53,23 @@ vec3 THIS_reflectanceMap(vec3 p, MaterialContext matCtx, vec3 refl, float roughn
 	return mix(reflectMap, blurMap, roughness);
 }
 
+vec3 THIS_getColorForLight(
+	CoordT p, MaterialContext matCtx,
+	Light light, int lightIndex, float shadedLevel,
+	float roughness, float metallic,
+	vec3 baseColor
+) {
+	vec3 lightDir = normalize(p - light.pos);
+	vec3 viewDir = normalize(-ray.dir);
+
+	float roughness = THIS_Roughness;
+	float metallic = THIS_Metallic;
+	matCtx.light = light;
+	matCtx.lightIndex = lightIndex;
+	matCtx.shadedLevel = shadedLevel;
+
+}
+
 vec3 THIS_getColor(vec3 p, MaterialContext matCtx) {
 	restoreIterationFromMaterial(matCtx, THIS_iterationCapture);
 	vec3 mp = getPosForMaterial(p, matCtx);
