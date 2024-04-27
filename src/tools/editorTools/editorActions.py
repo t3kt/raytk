@@ -844,6 +844,25 @@ def createActionManager():
 			select=RopSelect(ropTypes=[_RopTypes.raymarchRender3d, _RopTypes.pointMapRender]),
 			attach=AttachIntoExisting(inputIndex=2),
 		),
+		_createTypeListGroup(
+			'Add Light',
+			typesAndLabels=[
+				('raytk.operators.light.ambientLight', 'Ambient Light'),
+				('raytk.operators.light.axisLight', 'Axis Light'),
+				('raytk.operators.light.directionalLight', 'Directional Light'),
+				('raytk.operators.light.linkedLight', 'Linked Light'),
+				('raytk.operators.light.pointLight', 'Point Light'),
+				('raytk.operators.light.spotLight', 'Spot Light'),
+			],
+			select=RopSelect(ropTypes=['raytk.operators.light.multiLight']),
+			attach=AttachIntoExisting(useNextInput=True),
+		),
+		ActionImpl(
+			'Limit Light Range',
+			'raytk.operators.filter.limitLight',
+			select=RopSelect(returnTypes=['Light']),
+			attach=AttachOutFromExisting(),
+		),
 		ActionImpl(
 			'Add Camera Transform',
 			'raytk.operators.filter.cameraTransform',
