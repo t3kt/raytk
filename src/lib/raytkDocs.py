@@ -435,7 +435,7 @@ class CategoryHelp:
 	operators: list[ROPHelp] = field(default_factory=list)
 
 	@classmethod
-	def extractFromComp(cls, comp: COMP):
+	def extractFromComp(cls, comp: COMP, imagesFolder: Path | None):
 		info = CategoryInfo(comp)
 		catHelp = cls(
 			name=info.categoryName,
@@ -445,7 +445,9 @@ class CategoryHelp:
 			docText = dat.text
 			catHelp.summary, catHelp.detail = _extractHelpSummaryAndDetail(docText)
 		for rop in info.operators:
-			catHelp.operators.append(ROPHelp.extractFromROP(rop))
+			docManager = OpDocManager(rop)
+			ropHelp = docManager.extractForBuild(imagesFolder=imagesFolder)
+			catHelp.operators.append(ropHelp)
 		return catHelp
 
 	def formatAsList(self):
