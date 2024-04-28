@@ -1,0 +1,3 @@
+name	label	code	params
+dual	Dual	res = THIS_dualHelix(p, ctx, radius, m, dualSpread, thickness);	Dualspread
+single	Single	res = THIS_singleHelix(p, radius, m, thickness);	

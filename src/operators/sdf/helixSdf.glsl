@@ -1,3 +1,25 @@
+Sdf THIS_dualHelix(CoordT p, ContextT ctx, float radius, float spread, float dualSpread, float thickness) {
+	vec2 q = hx_prepDualHelixCoords(p, radius, spread, dualSpread);
+	Sdf res;
+	#ifdef THIS_HAS_INPUT_crossSection
+	res = adaptAsSdf(inputOp_crossSection(q, ctx));
+	#else
+	res = createSdf(length(q) - thickness);
+	#endif
+	return res;
+}
+
+Sdf THIS_singleHelix(CoordT p, float radius, float spread, float thickness) {
+	p = p.yxz;
+	vec3 helix = hx_closestHelix(p, spread, radius);
+	float d = length(p - helix) - thickness;
+	vec3 hp = hx_helixCoords(p, helix, spread, radius);
+	vec2 uv = vec2(hp.x, atan(hp.y, hp.z) / PI / 2.);
+	Sdf res = createSdf(d);
+	assignUV(res, vec3(uv, 0));
+	return res;
+}
+
 ReturnT thismap(CoordT p, ContextT ctx) {
 	ReturnT res;
 	CoordT p0 = p;
@@ -33,18 +55,6 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 	float m = THIS_Spread;
 	#endif
 	float dualSpread = THIS_Dualspread * radius;
-	float halfm = m*.5,
-	b = mod(p.y, PI*m) - PI*halfm,
-	a = abs(atan(p.x, p.z) * halfm - b);
-	if (a > PI*halfm) a = PI*m - a;
-	//optimisation from Shane
-	p.xy = vec2(length(p.xz) - radius, a);
-	p.x = abs(p.x) - dualSpread;
-	vec2 q = p.xy;
-	#ifdef THIS_HAS_INPUT_crossSection
-	res = adaptAsSdf(inputOp_crossSection(q, ctx));
-	#else
-	res = createSdf(length(q) - thickness);
-	#endif
+	BODY();
 	return res;
 }
