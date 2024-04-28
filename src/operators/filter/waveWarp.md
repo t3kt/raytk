@@ -11,12 +11,16 @@ The `Amplitude` and `Offset` parameters control how much each axis's wave shifts
 ## Parameters
 
 * `Enable`
-* `Function`
+* `Function`: Type of wave used to offset space.
   * `sin`
   * `cos`
   * `tri`
   * `ramp`
+  * `rramp`
   * `square`
+  * `addsquare2`
+  * `addsquare4`
+  * `addsquare8`
 * `Axis`: The axis along which the waves are produced.
   * `x`
   * `y`
@@ -26,6 +30,8 @@ The `Amplitude` and `Offset` parameters control how much each axis's wave shifts
 * `Phase`: The phase of the waves for each axis.
 * `Amplitude`: The scale of the movement for each axis.
 * `Offset`: Offsets the movement for each axis.
+* `Phaseoffset`: Offset applied to the wave phase separately for each axis.
+* `Amplitudemult`: Multiplier applied to the wave amplitude separately for each axis.
 
 ## Inputs
 

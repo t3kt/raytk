@@ -32,6 +32,7 @@ iteration, which can cause a significant drain on resources if the input network
   * `columnUnion`
   * `columnIntersect`
   * `columnDiff`
+  * `simpleXOR`
 * `Radius`
 * `Mergenumber`
 * `Mergeoffset`
@@ -41,6 +42,7 @@ iteration, which can cause a significant drain on resources if the input network
 * `Enablerotate`
 * `Enableactivechop`
 * `Activechop`: A CHOP containing a channel named `active`, which is used to selectively turn instances off. Any instance with an active value of 0 or less will be excluded from the combined result.
+* `Enablescale`
 
 ## Inputs
 

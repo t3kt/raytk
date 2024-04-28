@@ -1,4 +1,4 @@
-Removes all of an SDF except for a slice in space.
+Removes all of an SDF except for a slice along one axis.
 
 ## Parameters
 
