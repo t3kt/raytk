@@ -12,6 +12,7 @@
     * lightTransform - transform specially designed to be used on lights (#1214)
     * limitLight - distance and boundary attenuation and optimization (#1224)
     * mixFields - combine multiple fields with quick toggles and level adjustments for each (#696)
+    * restrictTypes - helper to force operators that support multiple types to use a specific type (#683)
   * New OP features
     * adjustColor - support using on lights (#1213)
     * assignUV - support using another SDF to assign UVs (#1218)
@@ -25,9 +26,12 @@
     * Support editing multiple operators with the lock/unlock switcher actions
     * Action to combine fields with mixFields (#696)
     * Actions for cameraTransform/lightTransform (#541)
+    * Action for adding to multiLight
+    * Action for adding limitLight (#1224)
   * Improvements
     * Faster enable/disable with runtime bypass - mergeFields, shapedCombine, switch
     * Clarify some input type error messages
+    * Fix display of thumbnail images on operator category documentation pages (#643)
 * Fixes
   * magnet - fix incorrect SDF scale adjustment (when possible)
   * moduloToroidal - fix swapped shift parameters

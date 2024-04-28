@@ -10,4 +10,5 @@ magnet	updated
 mixFields	new
 moduloToroidal	updated
 radialClone	updated
+restrictTypes	new
 sampledPointMat	updated
