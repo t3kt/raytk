@@ -131,6 +131,8 @@ op:
     - normangle
     - cell
     - normcell
+  keywords:
+  - torus
   name: moduloToroidal
   opType: raytk.operators.filter.moduloToroidal
   parameters:
@@ -163,6 +165,19 @@ op:
     name: Shift
     readOnlyHandling: baked
     regularHandling: runtime
+  - label: Mirror Type
+    menuOptions:
+    - label: None
+      name: none
+    - label: Rows
+      name: rows
+    - label: Columns
+      name: cols
+    - label: Grid
+      name: grid
+    name: Mirrortype
+    readOnlyHandling: semibaked
+    regularHandling: semibaked
   status: beta
   thumb: assets/images/reference/operators/filter/moduloToroidal_thumb.png
   variables:

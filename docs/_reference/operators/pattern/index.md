@@ -10,28 +10,43 @@ cat:
   operators:
   - name: blobRingPattern
     status: beta
+    thumb: assets/images/reference/operators/pattern/blobRingPattern_thumb.png
   - name: brickPattern
+    thumb: assets/images/reference/operators/pattern/brickPattern_thumb.png
   - name: checkerPattern
     summary: Checkerboard pattern with alternating black and white rectangles.
+    thumb: assets/images/reference/operators/pattern/checkerPattern_thumb.png
   - name: gridPattern
     summary: Rectangular grid pattern.
+    thumb: assets/images/reference/operators/pattern/gridPattern_thumb.png
   - name: hexagonalGridPattern
+    thumb: assets/images/reference/operators/pattern/hexagonalGridPattern_thumb.png
   - name: hexagonalTruchetPattern
+    thumb: assets/images/reference/operators/pattern/hexagonalTruchetPattern_thumb.png
   - name: hexagonalWeavePattern
+    thumb: assets/images/reference/operators/pattern/hexagonalWeavePattern_thumb.png
   - name: knitPattern
     status: beta
+    thumb: assets/images/reference/operators/pattern/knitPattern_thumb.png
   - name: rosettePattern
+    thumb: assets/images/reference/operators/pattern/rosettePattern_thumb.png
   - name: snubQuadrilePattern
     status: beta
+    thumb: assets/images/reference/operators/pattern/snubQuadrilePattern_thumb.png
   - name: spiralPattern
+    thumb: assets/images/reference/operators/pattern/spiralPattern_thumb.png
   - name: tilingPattern
     status: beta
   - name: triangleCheckerPattern
+    thumb: assets/images/reference/operators/pattern/triangleCheckerPattern_thumb.png
   - name: truchetPattern
     status: beta
+    thumb: assets/images/reference/operators/pattern/truchetPattern_thumb.png
   - name: waveGreekFriezePattern
     status: beta
+    thumb: assets/images/reference/operators/pattern/waveGreekFriezePattern_thumb.png
   - name: weavePattern
+    thumb: assets/images/reference/operators/pattern/weavePattern_thumb.png
   summary: '2D pattern generators, which can be used for things like textures.
 
     Pattern operators are essentially a sub-category of field operators that focus

@@ -20,8 +20,11 @@ cat:
     summary: A directional light.
   - name: hardShadow
     summary: A simple hard-edged shadow.
+    thumb: assets/images/reference/operators/light/hardShadow_thumb.png
+  - name: instanceLight
   - name: lightVolume
     status: beta
+    thumb: assets/images/reference/operators/light/lightVolume_thumb.png
   - name: linkedLight
     status: beta
     summary: Light that is based on a standard Light COMP.
@@ -35,6 +38,7 @@ cat:
   - name: ringLight
   - name: softShadow
     summary: A soft-edged shadow.
+    thumb: assets/images/reference/operators/light/softShadow_thumb.png
   - name: spotLight
     summary: Cone-shaped spotlight.
   - name: volumetricRayCast

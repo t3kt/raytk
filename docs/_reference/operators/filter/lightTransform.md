@@ -1,53 +1,59 @@
 ---
 layout: operator
-title: cameraTransform
+title: lightTransform
 parent: Filter Operators
 grand_parent: Operators
-permalink: /reference/operators/filter/cameraTransform
+permalink: /reference/operators/filter/lightTransform
 redirect_from:
-  - /reference/opType/raytk.operators.filter.cameraTransform/
+  - /reference/opType/raytk.operators.filter.lightTransform/
 op:
   category: filter
   inputs:
   - contextTypes:
-    - CameraContext
-    coordTypes:
-    - vec2
-    label: Camera
-    name: camera
-    required: true
-    returnTypes:
-    - Ray
-  - contextTypes:
-    - CameraContext
+    - LightContext
     coordTypes:
     - vec3
-    label: Translate Field
-    name: translateField
+    label: Light
+    name: light
     required: true
     returnTypes:
-    - vec4
-    supportedVariableInputs:
-    - camera
+    - Light
   - contextTypes:
-    - CameraContext
+    - LightContext
+    coordTypes:
+    - vec3
+    label: Position Translate Field
+    name: posTranslateField
+    returnTypes:
+    - vec4
+  - contextTypes:
+    - LightContext
     coordTypes:
     - vec3
     label: Direction Rotate Field
     name: dirRotateField
-    required: true
     returnTypes:
     - vec4
     supportedVariableInputs:
-    - camera
-    - translateField
-  name: cameraTransform
-  opType: raytk.operators.filter.cameraTransform
+    - posTranslateField
+  - contextTypes:
+    - LightContext
+    coordTypes:
+    - vec3
+    label: Look At Translate Field
+    name: lookAtTranslateField
+    returnTypes:
+    - vec4
+    supportedVariableInputs:
+    - posTranslateField
+    - dirRotateField
+  name: lightTransform
+  opType: raytk.operators.filter.lightTransform
   parameters:
   - label: Enable
     name: Enable
   - label: Position Translate
-    name: Translate
+    name: Postranslate
     readOnlyHandling: baked
     regularHandling: runtime
   - label: Direction Rotate

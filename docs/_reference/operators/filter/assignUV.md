@@ -45,10 +45,11 @@ op:
     - vec2
     - vec3
     - vec4
-    label: UV Field
+    label: UV Field or SDF with UVs
     name: uvField
     returnTypes:
     - vec4
+    - Sdf
     summary: Optional field used to calculate the UV coordinates.
     supportedVariableInputs:
     - inputOp1

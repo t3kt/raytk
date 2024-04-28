@@ -9,8 +9,10 @@ cat:
   name: post
   operators:
   - name: depthMap
+    thumb: assets/images/reference/operators/post/depthMap_thumb.png
   - name: nearHitMap
     status: beta
+    thumb: assets/images/reference/operators/post/nearHitMap_thumb.png
   - name: objectIdMask
   - name: stepMap
   - name: worldPosMap

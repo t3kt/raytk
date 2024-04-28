@@ -15,8 +15,10 @@ cat:
   operators:
   - name: fieldRender
     status: beta
+    thumb: assets/images/reference/operators/output/fieldRender_thumb.png
   - name: functionGraphRender
     summary: Visualizes the graph of a function operator.
+    thumb: assets/images/reference/operators/output/functionGraphRender_thumb.png
   - keywords:
     - point
     - render
@@ -26,6 +28,7 @@ cat:
     - pmr
     summary: Renderer that takes in a TOP of coordinates and evaluates the scene at
       each point.
+    thumb: assets/images/reference/operators/output/pointMapRender_thumb.png
   - keywords:
     - inspect
     - preview
@@ -41,6 +44,7 @@ cat:
     shortcuts:
     - r2
     summary: Renders a 2D image by evaluating the input field for each pixel.
+    thumb: assets/images/reference/operators/output/render2D_material_thumb.png
   - name: renderSelect
     summary: Accesses a color output buffer from a renderer.
   summary: 'Outputs are a special category of operator that takes in one or more

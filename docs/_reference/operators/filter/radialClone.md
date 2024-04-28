@@ -202,6 +202,15 @@ op:
     readOnlyHandling: semibaked
     regularHandling: semibaked
     summary: Whether and how to expose iteration values to upstream operators.
+  - label: Rotate Mode
+    menuOptions:
+    - label: Position and Rotation
+      name: both
+    - label: Position Only
+      name: pos
+    name: Rotatemode
+    readOnlyHandling: semibaked
+    regularHandling: semibaked
   - label: Merge Number
     name: Mergenumber
   - label: Merge Offset

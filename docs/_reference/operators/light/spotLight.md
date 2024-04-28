@@ -85,6 +85,19 @@ op:
     name: Rotate
     readOnlyHandling: baked
     regularHandling: runtime
+  - label: Enable Look At
+    name: Enablelookat
+    readOnlyHandling: semibaked
+    regularHandling: runtime
+  - label: Look At Position
+    name: Lookatpos
+    readOnlyHandling: baked
+    regularHandling: runtime
+    summary: Coordinates that the light should face.
+  - label: Up Vector
+    name: Upvec
+    readOnlyHandling: baked
+    regularHandling: runtime
   - label: Enable Shadow
     name: Enableshadow
     readOnlyHandling: semibaked
