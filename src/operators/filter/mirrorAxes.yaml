@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.filter.mirrorAxes
-  opVersion: '14'
+  opVersion: '15'
   opStatus: default
 opDef: !def
   enable: !expr
@@ -39,6 +39,9 @@ opDef: !def
     evaluate: true
     evalOpts: !evalOpts
       excludeFirstRow: true
+  help: !text
+    file: src/operators/filter/mirrorAxes.md
+    name: help
   displayCategory: Repeat
 inputs:
 - !input

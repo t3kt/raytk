@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.filter.cameraTransform
-  opVersion: '3'
+  opVersion: '4'
   opStatus: beta
 opDef: !def
   enable: !expr
@@ -18,6 +18,9 @@ opDef: !def
     file: src/operators/filter/cameraTransform.glsl
     name: function
   paramGroupTable: eval_params
+  help: !text
+    file: src/operators/filter/cameraTransform.md
+    name: help
   displayCategory: Camera
 inputs:
 - !input

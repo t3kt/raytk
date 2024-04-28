@@ -8,9 +8,19 @@ See [example](https://www.shadertoy.com/view/Ml3fWj).
 ## Parameters
 
 * `Enable`
-* `Center` - The center point of the stretching.
-* `Size` - The distance that that parts are pushed apart from the origin.
+* `Center`: The center point of the stretching.
+* `Size`: The distance that that parts are pushed apart from the origin.
+* `Axes`: Which axes should be stretched.
+  * `xyz`
+  * `xy`
+  * `yz`
+  * `xz`
+  * `x`
+  * `y`
+  * `z`
 
 ## Inputs
 
 * `definition_in`: 
+* `sizeField`: 
+* `centerField`: 

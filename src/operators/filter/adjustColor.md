@@ -14,3 +14,7 @@ This is similar to Level TOP and HSV Adjust TOP.
 ## Inputs
 
 * `definition_in`: 
+* `brightnessField`: 
+* `contrastField`: 
+* `hueField`: 
+* `saturationField`: 

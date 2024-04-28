@@ -1,4 +1,4 @@
-Repeat an SDF to fill a 2D circular area.
+Repeat an space to fill a 2D circular area.
 
 ## Parameters
 

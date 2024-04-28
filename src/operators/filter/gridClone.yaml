@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.filter.gridClone
-  opVersion: '3'
+  opVersion: '4'
   opStatus: default
 opDef: !def
   enable: !expr
@@ -27,6 +27,9 @@ opDef: !def
     evalOpts: !evalOpts
       excludeFirstRow: true
       cols: enable
+  help: !text
+    file: src/operators/filter/gridClone.md
+    name: help
   displayCategory: Repeat
 inputs:
 - !input
