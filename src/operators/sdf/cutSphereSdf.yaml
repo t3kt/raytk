@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.sdf.cutSphereSdf
-  opVersion: '7'
+  opVersion: '8'
   opStatus: default
 paramPages:
 - !page
@@ -69,6 +69,9 @@ opDef: !def
   paramGroupTable: eval_params
   libraryNames: !expr
     expr: op('cutSphereSdf_lib')
+  help: !text
+    file: src/operators/sdf/cutSphereSdf.md
+    name: help
 inputs:
 - !input
   Localalias: radiusField
