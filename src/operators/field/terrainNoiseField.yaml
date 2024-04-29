@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.field.terrainNoiseField
-  opVersion: '3'
+  opVersion: '4'
   opStatus: beta
 opDef: !def
   enable: true
@@ -23,6 +23,9 @@ opDef: !def
     name: macro_exprs
     evaluate: true
     evalOpts: !evalOpts {}
+  help: !text
+    file: src/operators/field/terrainNoiseField.md
+    name: help
   keywords:
   - fbm
   - landscape
