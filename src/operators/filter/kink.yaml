@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.filter.kink
-  opVersion: '10'
+  opVersion: '11'
   opStatus: default
 paramPages:
 - !page
@@ -84,6 +84,9 @@ opDef: !def
     file: src/operators/filter/kink.glsl
     name: function
   paramGroupTable: eval_params
+  help: !text
+    file: src/operators/filter/kink.md
+    name: help
   displayCategory: Transform
 inputs:
 - !input
