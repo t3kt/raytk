@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.field.hashField
-  opVersion: '6'
+  opVersion: '7'
   opStatus: beta
 opDef: !def
   enable: true
@@ -34,6 +34,9 @@ opDef: !def
     name: macro_exprs
     evaluate: true
     evalOpts: !evalOpts {}
+  help: !text
+    file: src/operators/field/hashField.md
+    name: help
   displayCategory: Noise Field
 inputs:
 - !input
