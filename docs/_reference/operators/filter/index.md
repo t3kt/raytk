@@ -241,10 +241,13 @@ cat:
     summary: Repeats space radially, like a kaleidoscope.
     thumb: assets/images/reference/operators/filter/moduloPolar_thumb.png
   - name: moduloSpherical
+    summary: Repeats space in a spherical mesh layout with rows and columns.
+    thumb: assets/images/reference/operators/filter/moduloSpherical_thumb.png
   - keywords:
     - torus
     name: moduloToroidal
     status: beta
+    summary: Repeats space as rows and columns of a torus-shaped grid.
     thumb: assets/images/reference/operators/filter/moduloToroidal_thumb.png
   - keywords:
     - hollow
@@ -258,6 +261,8 @@ cat:
     summary: Converts coordinates from polar to cartesian.
   - name: quadTreeRepeat
     status: beta
+    summary: Repeats space in a 2d grid where some cells are subdivided into smaller
+      cells recursively.
     thumb: assets/images/reference/operators/filter/quadTreeRepeat_thumb.png
   - name: quantizeCoords
     summary: Quantize coordinates to a 3D grid, which is sort of like "voxelizing"

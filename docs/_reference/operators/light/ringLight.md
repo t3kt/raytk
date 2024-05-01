@@ -18,6 +18,9 @@ op:
     returnTypes:
     - float
     - vec4
+    summary: Field controls the color of the light based on the position of surface
+      hits where it is being applied. The resulting color is multiplied by the `Color`
+      parameter and `Intensity`.
   name: ringLight
   opType: raytk.operators.light.ringLight
   parameters:
@@ -25,10 +28,12 @@ op:
     name: Intensity
     readOnlyHandling: baked
     regularHandling: runtime
+    summary: Brightness that is applied to the `Color`.
   - label: Color
     name: Color
     readOnlyHandling: baked
     regularHandling: runtime
+    summary: Color of the light.
   - label: Axis
     menuOptions:
     - label: X

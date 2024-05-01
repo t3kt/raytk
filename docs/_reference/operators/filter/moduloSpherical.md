@@ -101,18 +101,23 @@ op:
     name: Repetitions
     readOnlyHandling: baked
     regularHandling: runtime
+    summary: How many rows and columns to have.
   - label: Shift
     name: Shift
     readOnlyHandling: baked
     regularHandling: runtime
+    summary: Shifts the repetitions across the rows and columns.
   - label: Offset
     name: Offset
     readOnlyHandling: baked
     regularHandling: runtime
+    summary: Shifts the contents of each repetition, away from the sphere center or
+      side to side along the columns.
   - label: Pivot
     name: Pivot
     readOnlyHandling: baked
     regularHandling: runtime
+    summary: Center point of the sphere
   - label: Mirror Type
     menuOptions:
     - label: None
@@ -126,10 +131,19 @@ op:
     name: Mirrortype
     readOnlyHandling: semibaked
     regularHandling: semibaked
+    summary: Flips alternating repetitions so they mirror each other.
+  summary: Repeats space in a spherical mesh layout with rows and columns.
+  thumb: assets/images/reference/operators/filter/moduloSpherical_thumb.png
   variables:
   - label: cell
     name: cell
+    summary: Index of the row and column as integers (0..N).
   - label: normcell
     name: normcell
+    summary: Index of the row and column scaled to a 0..1 range based on the number
+      of Repetitions.
 
 ---
+
+
+Repeats space in a spherical mesh layout with rows and columns.

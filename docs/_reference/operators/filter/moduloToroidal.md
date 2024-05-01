@@ -149,22 +149,27 @@ op:
     name: Axis
     readOnlyHandling: semibaked
     regularHandling: semibaked
+    summary: Axis that the torus is around.
   - label: Radius
     name: Radius
     readOnlyHandling: baked
     regularHandling: runtime
+    summary: Primary radius of the torus around the main axis.
   - label: Thickness
     name: Thickness
     readOnlyHandling: baked
     regularHandling: runtime
+    summary: Thickness of the torus.
   - label: Repetitions
     name: Repetitions
     readOnlyHandling: baked
     regularHandling: runtime
+    summary: Number of rows and columns across the torus.
   - label: Shift
     name: Shift
     readOnlyHandling: baked
     regularHandling: runtime
+    summary: Shifts the repetitions across the rows and columns of the torus.
   - label: Mirror Type
     menuOptions:
     - label: None
@@ -178,20 +183,32 @@ op:
     name: Mirrortype
     readOnlyHandling: semibaked
     regularHandling: semibaked
+    summary: Flips alternating repetitions so they mirror each other.
   status: beta
+  summary: Repeats space as rows and columns of a torus-shaped grid.
   thumb: assets/images/reference/operators/filter/moduloToroidal_thumb.png
   variables:
   - label: cell
     name: cell
+    summary: Index of the row and column as integers (0..N).
   - label: normcell
     name: normcell
+    summary: Index of the row and column scaled to a 0..1 range based on the number
+      of Repetitions.
   - label: angle
     name: angle
+    summary: Angle around the main axis as degrees (0..360).
   - label: normangle
     name: normangle
+    summary: Angle around the main axis, scaled to a 0..1 range.
   - label: innerangle
     name: innerangle
+    summary: Angle around the inner body of the torus as degrees (0..360).
   - label: norminnerangle
     name: norminnerangle
+    summary: Angle around the inner body of the torus, scaled to a 0..1 range.
 
 ---
+
+
+Repeats space as rows and columns of a torus-shaped grid.

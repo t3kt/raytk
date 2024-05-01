@@ -17,9 +17,9 @@ op:
     name: positionField
     returnTypes:
     - vec4
-    summary: Optional field that can control the color of the light based on the position
-      of surface hits where it is being applied. The resulting color is multiplied
-      by the `Color` parameter and `Intensity`.
+    summary: Field controls the color of the light based on the position of surface
+      hits where it is being applied. The resulting color is multiplied by the `Color`
+      parameter and `Intensity`.
   - contextTypes:
     - LightContext
     coordTypes:
@@ -29,9 +29,9 @@ op:
     returnTypes:
     - float
     - vec4
-    summary: Optional field/function that controls the slope and coloration of the
-      attentuation rolloff is shaped. It can be used to make the light shift from
-      one color to another, or to control the sharpness of the rolloff.
+    summary: Field/function that controls the slope and coloration of the attenuation
+      rolloff is shaped. It can be used to make the light shift from one color to
+      another, or to control the sharpness of the rolloff.
     supportedVariableInputs:
     - positionField
     supportedVariables:
@@ -57,12 +57,12 @@ op:
     name: Position
     readOnlyHandling: baked
     regularHandling: runtime
-    summary: The point from which the light eminates.
+    summary: The point from which the light emits.
   - label: Intensity
     name: Intensity
     readOnlyHandling: baked
     regularHandling: runtime
-    summary: Brightness of the light.
+    summary: Brightness that is applied to the `Color`.
   - label: Color
     name: Color
     readOnlyHandling: baked
@@ -89,7 +89,7 @@ op:
     regularHandling: runtime
   shortcuts:
   - pl
-  summary: Light eminating from a single point in space, with optional distance attentuation.
+  summary: Light that emits from a single point in space.
   variables:
   - label: lightdir
     name: lightdir
@@ -97,4 +97,4 @@ op:
 ---
 
 
-Light eminating from a single point in space, with optional distance attentuation.
+Light that emits from a single point in space.

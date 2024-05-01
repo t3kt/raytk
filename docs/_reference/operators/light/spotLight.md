@@ -29,10 +29,16 @@ op:
     returnTypes:
     - float
     - vec4
-    summary: Optional function that controls the color/intensity of the light based
-      on the attenuation distance.
+    summary: Field controls the color of the light based on the position of surface
+      hits where it is being applied. The resulting color is multiplied by the `Color`
+      parameter and `Intensity`.
     supportedVariableInputs:
     - colorField
+  - label: attenuationField
+    name: attenuationField
+    summary: Field/function that controls the slope and coloration of the attenuation
+      rolloff is shaped. It can be used to make the light shift from one color to
+      another, or to control the sharpness of the rolloff.
   name: spotLight
   opType: raytk.operators.light.spotLight
   parameters:
@@ -40,10 +46,12 @@ op:
     name: Intensity
     readOnlyHandling: baked
     regularHandling: runtime
+    summary: Brightness that is applied to the `Color`.
   - label: Color
     name: Color
     readOnlyHandling: baked
     regularHandling: runtime
+    summary: Color of the light.
   - label: Position
     name: Position
     readOnlyHandling: baked
@@ -63,32 +71,32 @@ op:
     name: Conedelta
     readOnlyHandling: baked
     regularHandling: runtime
-    summary: The amount of blending between the inside and outside of the cone.
+    summary: The amount of blending between the inside and the outside of the cone.
   - label: Attenuated
     name: Enableattenuation
     readOnlyHandling: semibaked
     regularHandling: runtime
-    summary: Whether to adjust the amount of light depending on distance.
+    summary: Whether to limit the light range.
   - label: Attenuation Start
     name: Attenuationstart
     readOnlyHandling: baked
     regularHandling: runtime
-    summary: The start of the blending range, inside which the light will be at full
-      intensity.
+    summary: The distance at which the light starts to dim.
   - label: Attenuation End
     name: Attenuationend
     readOnlyHandling: baked
     regularHandling: runtime
-    summary: The end of the blending range, outside which the light will be at zero
-      intensity.
+    summary: The distance at which the light is fully dimmed.
   - label: Rotate
     name: Rotate
     readOnlyHandling: baked
     regularHandling: runtime
+    summary: Rotation for the direction that the light faces.
   - label: Enable Look At
     name: Enablelookat
     readOnlyHandling: semibaked
     regularHandling: runtime
+    summary: Whether the light should face a specific position.
   - label: Look At Position
     name: Lookatpos
     readOnlyHandling: baked
@@ -98,10 +106,12 @@ op:
     name: Upvec
     readOnlyHandling: baked
     regularHandling: runtime
+    summary: Up vector used to orient the light.
   - label: Enable Shadow
     name: Enableshadow
     readOnlyHandling: semibaked
     regularHandling: runtime
+    summary: Whether the light should produce shadows.
   summary: Cone-shaped spotlight.
 
 ---

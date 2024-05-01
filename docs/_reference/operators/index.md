@@ -31,7 +31,7 @@ output.
 Pattern operators are essentially a sub-category of field operators that focus
 on producing value or color patterns using 2D coordinates.
 
-* [Post](post/) - 
+* [Post](post/) - Post processing operators are components that take information from a renderer and process it to produce images that can be used for post-processing.
 * [Sdf](sdf/) - Signed distances functions which define geometry in 3D space, by calculating
 the distance from the surface of the shape at any given point.
 * [Sdf2d](sdf2d/) - Signed distances functions which define geometry in 2D space, by calculating

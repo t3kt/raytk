@@ -31,6 +31,7 @@ op:
     - Ray
     - Light
     - Particle
+    summary: Main input which appears within each cell.
     supportedVariableInputs:
     - offsetField
     - shiftField
@@ -54,6 +55,7 @@ op:
     required: true
     returnTypes:
     - vec4
+    summary: Field that controls the shifting of the overall grid layout.
   - contextTypes:
     - Context
     - MaterialContext
@@ -71,6 +73,7 @@ op:
     required: true
     returnTypes:
     - vec4
+    summary: Field that controls the offsetting of the contents within each cell.
     supportedVariableInputs:
     - shiftField
     supportedVariables:
@@ -92,30 +95,38 @@ op:
     name: Axis
     readOnlyHandling: semibaked
     regularHandling: semibaked
+    summary: Axis that the grid plane faces.
   - label: Division
     name: Division
     readOnlyHandling: baked
     regularHandling: runtime
+    summary: Number of steps of subdividing.
   - label: Level 1 Chance
     name: Chance1
     readOnlyHandling: baked
     regularHandling: runtime
+    summary: Likelyhood of a cell getting one level of subdivision.
   - label: Level 2 Chance
     name: Chance2
     readOnlyHandling: baked
     regularHandling: runtime
+    summary: Likelyhood of a sub-divided cell getting another level of subdivision.
   - label: Offset
     name: Offset
     readOnlyHandling: baked
     regularHandling: runtime
+    summary: Moves the contents within each repeated cell.
   - label: Shift
     name: Shift
     readOnlyHandling: baked
     regularHandling: runtime
+    summary: Move the entire arrangement of cells.
   - label: Enable Rescale
     name: Enablerescale
     readOnlyHandling: semibaked
     regularHandling: semibaked
+    summary: Whether to apply uniform scaling within each cell so that the contents
+      fit the size of the cell.
   - label: Iteration Type
     menuOptions:
     - label: None
@@ -125,16 +136,27 @@ op:
     name: Iterationtype
     readOnlyHandling: semibaked
     regularHandling: semibaked
+    summary: How to expose the cell information as iteration values for upstream operators
+      to use.
   - label: Seed
     name: Seed
     readOnlyHandling: baked
     regularHandling: runtime
+    summary: Seed number used as the basis of the randomization.
   status: beta
+  summary: Repeats space in a 2d grid where some cells are subdivided into smaller
+    cells recursively.
   thumb: assets/images/reference/operators/filter/quadTreeRepeat_thumb.png
   variables:
   - label: cell
     name: cell
+    summary: Randomization values different for each cell, but without a predictable
+      layout.
   - label: layer
     name: layer
+    summary: Which layer of subdivision the current cell has.
 
 ---
+
+
+Repeats space in a 2d grid where some cells are subdivided into smaller cells recursively.

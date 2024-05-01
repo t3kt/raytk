@@ -26,6 +26,7 @@ op:
     name: Enableshadow
     readOnlyHandling: baked
     regularHandling: runtime
+    summary: Whether the light should produce shadows.
   status: beta
   summary: Light that is based on a standard Light COMP.
 

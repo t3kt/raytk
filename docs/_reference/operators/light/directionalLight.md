@@ -20,6 +20,9 @@ op:
     returnTypes:
     - float
     - vec4
+    summary: Field controls the color of the light based on the position of surface
+      hits where it is being applied. The resulting color is multiplied by the `Color`
+      parameter and `Intensity`.
     supportedVariables:
     - lightdir
   name: directionalLight
@@ -40,6 +43,7 @@ op:
     name: Color
     readOnlyHandling: baked
     regularHandling: runtime
+    summary: Color of the light.
   - label: Rotate
     name: Rotate
     readOnlyHandling: baked
@@ -49,17 +53,18 @@ op:
     name: Enableshadow
     readOnlyHandling: semibaked
     regularHandling: runtime
-    summary: Whether this light should cast shadows.
-  summary: A directional light.
+    summary: Whether the light should produce shadows.
+  summary: Directional or distant light which always comes from one direction.
+  thumb: assets/images/reference/operators/light/directionalLight_thumb.png
   variables:
-  - label: RTK_raytk_operators_light_directionalLight_lightdir
-    name: RTK_raytk_operators_light_directionalLight_lightdir
   - label: lightdir
     name: lightdir
+    summary: Direction that the light is from the current position on a surface that's
+      being shaded. This will always be the Direction with rotation applied.
 
 ---
 
 
-A directional light.
+Directional or distant light which always comes from one direction.
 
 The light always comes from the specified direction, rather than from a point.
