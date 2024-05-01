@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.pattern.hexagonalTruchetPattern
-  opVersion: '7'
+  opVersion: '8'
   opStatus: default
 opDef: !def
   enable: true
@@ -19,6 +19,9 @@ opDef: !def
     file: src/operators/pattern/hexagonalTruchetPattern.glsl
     name: function
   paramGroupTable: eval_params
+  help: !text
+    file: src/operators/pattern/hexagonalTruchetPattern.md
+    name: help
 inputs:
 - !input
   Localalias: coordField
