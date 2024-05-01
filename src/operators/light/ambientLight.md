@@ -6,14 +6,14 @@ Use cases for this are relatively rare.
 
 ## Parameters
 
-* `Intensity`
-* `Color`
-* `Enableshadow`
+* `Intensity`: Brightness that is applied to the `Color`.
+* `Color`: Color of the light.
+* `Enableshadow`: Whether the light should produce shadows.
 
 ## Inputs
 
-* `colorField`: 
+* `colorField`: Field controls the color of the light based on the position of surface hits where it is being applied. The resulting color is multiplied by the `Color` parameter and `Intensity`.
 
 ## Variables
 
-* `lightdir`: 
+* `lightdir`: Direction that the light is from the current position on a surface that's being shaded. This will always be directly in front of whatever point is being shaded based on the surface normal at that point.
