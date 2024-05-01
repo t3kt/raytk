@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.filter.moduloToroidal
-  opVersion: '4'
+  opVersion: '5'
   opStatus: beta
 opDef: !def
   enable: !expr
@@ -25,6 +25,9 @@ opDef: !def
     evalOpts: !evalOpts
       excludeFirstRow: true
       cols: enable
+  help: !text
+    file: src/operators/filter/moduloToroidal.md
+    name: help
   keywords: torus
 inputs:
 - !input
