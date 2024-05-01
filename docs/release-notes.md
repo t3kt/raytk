@@ -4,6 +4,13 @@
 
 ### Highlights
 
+* New instanceLight, lightTransform, and limitLight operators for more flexible lighting setups.
+* Overhaul of how multiple lights are handled by materials to produce more consistent results.
+* New mixFields operator acts as a mixer to easily combine different fields with level sliders and toggles.
+* Fixed the missing palette thumbnails that disappeared in the last release.
+* Helpful new actions in the editor tools menu.
+* Significant improvements to documentation.
+
 ### Details
 
 * Improvements / additions
@@ -32,6 +39,7 @@
     * Faster enable/disable with runtime bypass - mergeFields, shapedCombine, switch
     * Clarify some input type error messages
     * Fix display of thumbnail images on operator category documentation pages (#643)
+    * Documentation for lots of operators that were missing it, and updated lots of existing docs.
 * Fixes
   * magnet - fix incorrect SDF scale adjustment (when possible)
   * moduloToroidal - fix swapped shift parameters
@@ -43,6 +51,7 @@
   * helixSdf - remove alternate coordinate type support for field inputs
   * raymarchRender3D - make limit box disabled by default
   * Restructured how multiple lights are handled. Materials are now responsible for looping through the lights and combining the results, rather than the renderer doing it. This allows modularMat to correctly handle shading elements that aren't based on lighting. There may be some differences in how material shading behaves, but hopefully they should be fairly minor. (#1213)
+  * Deprecate simpleDiff, simpleIntersect, simpleUnion
 * Infrastructure / internals
 
 ## v0.40
