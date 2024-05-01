@@ -19,8 +19,10 @@ cat:
     - apollonian
     - fractal
     name: apollonianSdf
+    summary: Apollonian gasket fractal.
     thumb: assets/images/reference/operators/sdf/apollonianSdf_thumb.png
   - name: archSdf
+    summary: Arch / doorway.
     thumb: assets/images/reference/operators/sdf/archSdf_thumb.png
   - keywords:
     - bezier
@@ -58,9 +60,10 @@ cat:
     - points
     - segment
     name: capsuleSdf
-    summary: A cylinder with rounded ends, between two points.
+    summary: A line or cylinder with rounded ends, between two points.
     thumb: assets/images/reference/operators/sdf/capsuleSdf_thumb.png
   - name: chainSdf
+    summary: Chain made of links, with infinite length.
     thumb: assets/images/reference/operators/sdf/chainSdf_thumb.png
   - keywords:
     - box
@@ -73,18 +76,21 @@ cat:
     summary: Defines a cone or capped cone shape.
     thumb: assets/images/reference/operators/sdf/coneSdf_thumb.png
   - name: crescentSdf
+    summary: Rounded crescent shape.
     thumb: assets/images/reference/operators/sdf/crescentSdf_thumb.png
   - name: crossSdf
-    summary: An SDF for a 3D cross of infinite length along each axis.
+    summary: An SDF for a 3D cross along each axis, with either infinite or limited
+      length.
     thumb: assets/images/reference/operators/sdf/crossSdf_thumb.png
   - name: cutSphereSdf
+    summary: Sphere with part of it cut off, either solid or hollow.
     thumb: assets/images/reference/operators/sdf/cutSphereSdf_thumb.png
   - keywords:
     - column
     - cylinder
     - pipe
     name: cylinderSdf
-    summary: SDF for a cylinder.
+    summary: Cylinder, either solid or a hollow tube.
     thumb: assets/images/reference/operators/sdf/cylinderSdf_thumb.png
   - name: discSdf
     summary: A flat disc facing the Y axis.
@@ -98,6 +104,7 @@ cat:
     - oval
     - sphere
     name: ellipsoidSdf
+    summary: Ellipsoid (sphere with different sizes on each axis).
     thumb: assets/images/reference/operators/sdf/ellipsoidSdf_thumb.png
   - keywords:
     - dodecahedron

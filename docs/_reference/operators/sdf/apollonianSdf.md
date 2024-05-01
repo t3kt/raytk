@@ -8,6 +8,8 @@ redirect_from:
   - /reference/opType/raytk.operators.sdf.apollonianSdf/
 op:
   category: sdf
+  detail: Based on [Apollonian Statue2](https://www.shadertoy.com/view/XlSfzW) by
+    EvilRyu.
   keywords:
   - apollonian
   - fractal
@@ -30,6 +32,12 @@ op:
     name: Iterations
     readOnlyHandling: semibaked
     regularHandling: semibaked
+  summary: Apollonian gasket fractal.
   thumb: assets/images/reference/operators/sdf/apollonianSdf_thumb.png
 
 ---
+
+
+Apollonian gasket fractal.
+
+Based on [Apollonian Statue2](https://www.shadertoy.com/view/XlSfzW) by EvilRyu.

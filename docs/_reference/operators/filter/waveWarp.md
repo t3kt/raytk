@@ -75,6 +75,7 @@ op:
     name: Function
     readOnlyHandling: runtime
     regularHandling: runtime
+    summary: Type of wave used to offset space.
   - label: Wave Axis
     menuOptions:
     - label: X
@@ -113,10 +114,12 @@ op:
     name: Phaseoffset
     readOnlyHandling: baked
     regularHandling: runtime
+    summary: Offset applied to the wave phase separately for each axis.
   - label: Amplitude Multiplier
     name: Amplitudemult
     readOnlyHandling: baked
     regularHandling: runtime
+    summary: Multiplier applied to the wave amplitude separately for each axis.
   summary: Uses repeating waves to offset space.
   thumb: assets/images/reference/operators/filter/waveWarp_thumb.png
 

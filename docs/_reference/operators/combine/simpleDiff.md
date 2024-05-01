@@ -67,6 +67,7 @@ op:
     readOnlyHandling: baked
     regularHandling: runtime
     summary: Swaps the two inputs, subtracting the first from the second.
+  status: deprecated
   summary: Combines two SDFs using the difference operator.
   thumb: assets/images/reference/operators/combine/simpleDiff_thumb.png
 

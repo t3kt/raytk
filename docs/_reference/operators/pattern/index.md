@@ -12,6 +12,7 @@ cat:
     status: beta
     thumb: assets/images/reference/operators/pattern/blobRingPattern_thumb.png
   - name: brickPattern
+    summary: Pattern of stacked rectangular bricks.
     thumb: assets/images/reference/operators/pattern/brickPattern_thumb.png
   - name: checkerPattern
     summary: Checkerboard pattern with alternating black and white rectangles.
@@ -20,15 +21,20 @@ cat:
     summary: Rectangular grid pattern.
     thumb: assets/images/reference/operators/pattern/gridPattern_thumb.png
   - name: hexagonalGridPattern
+    summary: Hexagonal grid pattern.
     thumb: assets/images/reference/operators/pattern/hexagonalGridPattern_thumb.png
   - name: hexagonalTruchetPattern
+    summary: Pattern using truchet tiling in a hexagonal arrangement.
     thumb: assets/images/reference/operators/pattern/hexagonalTruchetPattern_thumb.png
   - name: hexagonalWeavePattern
+    summary: Pattern with two layers with gaps in a hexagonal layout.
     thumb: assets/images/reference/operators/pattern/hexagonalWeavePattern_thumb.png
   - name: knitPattern
     status: beta
+    summary: Woven yarn pattern.
     thumb: assets/images/reference/operators/pattern/knitPattern_thumb.png
   - name: rosettePattern
+    summary: Pattern with overlapping circles in a hexagonal arrangement.
     thumb: assets/images/reference/operators/pattern/rosettePattern_thumb.png
   - name: snubQuadrilePattern
     status: beta
@@ -38,6 +44,7 @@ cat:
   - name: tilingPattern
     status: beta
   - name: triangleCheckerPattern
+    summary: Triangular grid checkerboard pattern.
     thumb: assets/images/reference/operators/pattern/triangleCheckerPattern_thumb.png
   - name: truchetPattern
     status: beta

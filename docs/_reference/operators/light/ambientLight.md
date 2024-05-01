@@ -8,6 +8,11 @@ redirect_from:
   - /reference/opType/raytk.operators.light.ambientLight/
 op:
   category: light
+  detail: 'As far as a material is concerned, an ambient light is always right in
+    front of any point on a surface.
+
+
+    Use cases for this are relatively rare.'
   inputs:
   - contextTypes:
     - LightContext
@@ -36,8 +41,16 @@ op:
     readOnlyHandling: baked
     regularHandling: runtime
   status: beta
+  summary: Ambient light source that doesn't come from a particular location.
   variables:
   - label: lightdir
     name: lightdir
 
 ---
+
+
+Ambient light source that doesn't come from a particular location.
+
+As far as a material is concerned, an ambient light is always right in front of any point on a surface.
+
+Use cases for this are relatively rare.

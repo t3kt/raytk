@@ -116,9 +116,10 @@ op:
     name: Operation
     readOnlyHandling: semibaked
     regularHandling: semibaked
-  summary: Removes all of an SDF except for a slice in space.
+  summary: Takes a slice of an SDF along an axis, either removing it or everything
+    except it.
 
 ---
 
 
-Removes all of an SDF except for a slice in space.
+Takes a slice of an SDF along an axis, either removing it or everything except it.

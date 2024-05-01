@@ -56,21 +56,24 @@ cat:
   - name: shapedCombine
     summary: Combine two SDFs, using a 2D SDF to shape the blending region.
   - name: simpleDiff
+    status: deprecated
     summary: Combines two SDFs using the difference operator.
     thumb: assets/images/reference/operators/combine/simpleDiff_thumb.png
   - name: simpleIntersect
+    status: deprecated
     summary: Combines SDFs using the intersect operator.
     thumb: assets/images/reference/operators/combine/simpleIntersect_thumb.png
   - name: simpleUnion
     shortcuts:
     - su
+    status: deprecated
     summary: Combines several SDFs using the union operator.
     thumb: assets/images/reference/operators/combine/simpleUnion_thumb.png
   - keywords:
     - blend
     name: switch
-    summary: Switches between several inputs, without the need to rebuild the shader,
-      allowing for fast switching.
+    summary: Switches or blends between several inputs, without the need to rebuild
+      the shader, allowing for fast switching.
   - name: triPlanarCombine
     status: beta
     summary: Combines three 2D fields based on vectors like surface normals.

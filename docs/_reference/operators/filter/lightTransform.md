@@ -8,6 +8,8 @@ redirect_from:
   - /reference/opType/raytk.operators.filter.lightTransform/
 op:
   category: filter
+  detail: Similar to `cameraTransform`, this operator is specificaly designed to work
+    on lights.
   inputs:
   - contextTypes:
     - LightContext
@@ -56,23 +58,39 @@ op:
     name: Postranslate
     readOnlyHandling: baked
     regularHandling: runtime
+    summary: Translation offset applied to the position of the light source.
   - label: Direction Rotate
     name: Dirrotate
     readOnlyHandling: baked
     regularHandling: runtime
+    summary: Rotation applied to the direction which the light source is facing.
   - label: Look At Mode
     menuOptions:
-    - label: Include Position Translate
+    - description: The look at position should be moved by the same amount that the
+        main position is moved.
+      label: Include Position Translate
       name: includepos
-    - label: Separate Translate Only
+    - description: The look at position should remain in place regardless of how the
+        main position moves.
+      label: Separate Translate Only
       name: separate
     name: Lookatmode
     readOnlyHandling: semibaked
     regularHandling: runtime
+    summary: Whether the look at position (if used) should be adjusted with the main
+      position or remain stationary.
   - label: Look At Translate
     name: Lookattranslate
     readOnlyHandling: baked
     regularHandling: runtime
+    summary: Translation offset applied to only the look at position.
   status: beta
+  summary: Specialized transform that can be applied to lights, taking into account
+    things like look at direction.
 
 ---
+
+
+Specialized transform that can be applied to lights, taking into account things like look at direction.
+
+Similar to `cameraTransform`, this operator is specificaly designed to work on lights.

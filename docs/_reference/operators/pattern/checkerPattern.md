@@ -8,6 +8,8 @@ redirect_from:
   - /reference/opType/raytk.operators.pattern.checkerPattern/
 op:
   category: pattern
+  detail: This pattern produces just float values not colors. To apply color to it,
+    pass it into a `colorRampField`.
   inputs:
   - contextTypes:
     - Context
@@ -25,8 +27,8 @@ op:
     name: coordField
     returnTypes:
     - vec4
-    summary: Optional field that can provide alternative coordinates instead of using
-      the raw X/Y position.
+    summary: Field that produces vectors that the pattern uses as coordinates instead
+      of regular spatial position. Only the X and Y parts are used.
   name: checkerPattern
   opType: raytk.operators.pattern.checkerPattern
   parameters:
@@ -34,10 +36,12 @@ op:
     name: Translate
     readOnlyHandling: baked
     regularHandling: runtime
+    summary: Moves the entire pattern.
   - label: Size
     name: Size
     readOnlyHandling: baked
     regularHandling: runtime
+    summary: Scales the pattern.
   summary: Checkerboard pattern with alternating black and white rectangles.
   thumb: assets/images/reference/operators/pattern/checkerPattern_thumb.png
 
@@ -45,3 +49,5 @@ op:
 
 
 Checkerboard pattern with alternating black and white rectangles.
+
+This pattern produces just float values not colors. To apply color to it, pass it into a `colorRampField`.

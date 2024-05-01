@@ -45,8 +45,8 @@ cat:
       SDF.
     thumb: assets/images/reference/operators/convert/sweep_thumb.png
   - name: vectorToFloat
-    summary: Converts a vector value field to a float field using one part of the
-      vector.
+    summary: Converts a vector value field to a float field, e.g. using one part of
+      the vector.
   summary: 'Operators that convert between different types of coordinates and
 
     return types (SDF, float/vector field, etc).'

@@ -58,12 +58,13 @@ cat:
     thumb: assets/images/reference/operators/filter/bend_thumb.png
   - name: cameraTransform
     status: beta
+    summary: Specialized transform that can be applied to cameras.
   - name: cartesianToPolar
     summary: Convert from cartesian space to various types of polar spaces.
     thumb: assets/images/reference/operators/filter/cartesianToPolar_thumb.png
   - name: circularRepeat
     status: beta
-    summary: Repeat an SDF to fill a 2D circular area.
+    summary: Repeat an space to fill a 2D circular area.
   - keywords:
     - elongate
     - extend
@@ -76,13 +77,16 @@ cat:
     - extend
     - stretch
     name: extend
-    summary: Clamps coordinates around an SDF result, which causes their edges to
-      be extended infinitely along each axis.
+    summary: Clamps coordinates around an area, which causes its edges to be extended
+      infinitely along each axis.
     thumb: assets/images/reference/operators/filter/extend_thumb.png
   - name: fieldExpr
     status: beta
+    summary: Modifies field values using a custom expression.
   - name: fieldFunction
     status: beta
+    summary: Modifies the values of a field using various types of math functions,
+      similar to a `Function CHOP`.
   - name: flip
     summary: Flips the input across an axis, either on its own or merged with the
       original.
@@ -94,6 +98,7 @@ cat:
     summary: Repeats space in a square arrangement that gets smaller in the center.
     thumb: assets/images/reference/operators/filter/geometricSeriesSquareTile_thumb.png
   - name: gridClone
+    summary: Repeats an SDF in a grid arrangement, combining the results.
     thumb: assets/images/reference/operators/filter/gridClone_thumb.png
   - name: hilbertCurveTransform
     status: beta
@@ -108,6 +113,7 @@ cat:
       x value, and combines the results.
     thumb: assets/images/reference/operators/filter/instance_thumb.png
   - name: instanceField
+    summary: Repeats an input field multiple times and combines the results.
   - name: invert
     summary: Invert an SDF, so that the inside is the outside.
     thumb: assets/images/reference/operators/filter/invert_thumb.png
@@ -116,6 +122,7 @@ cat:
       in between the steps.
     thumb: assets/images/reference/operators/filter/iteratedTransform_thumb.png
   - name: kink
+    summary: Bends space, similar to the `bend`.
     thumb: assets/images/reference/operators/filter/kink_thumb.png
   - keywords:
     - crop
@@ -126,8 +133,11 @@ cat:
     thumb: assets/images/reference/operators/filter/knife_thumb.png
   - name: lightTransform
     status: beta
+    summary: Specialized transform that can be applied to lights, taking into account
+      things like look at direction.
   - name: limitArea
     status: beta
+    summary: Use an SDF to limit the area where a field produces values.
   - keywords:
     - clamp
     - limit
@@ -139,7 +149,10 @@ cat:
     thumb: assets/images/reference/operators/filter/limitField_thumb.png
   - name: limitLight
     status: beta
+    summary: Limits the brightness of a light using distance attenuation or a bounding
+      SDF (or both).
   - name: linearClone
+    summary: Repeats an SDF along a line, combining the results.
     thumb: assets/images/reference/operators/filter/linearClone_thumb.png
   - keywords:
     - log
@@ -153,10 +166,12 @@ cat:
     thumb: assets/images/reference/operators/filter/logPolarRepeat_thumb.png
   - name: lookAtRotate
     status: beta
+    summary: Rotates space to face towards a point.
   - name: magnet
     summary: Pulls or twists space within an area.
     thumb: assets/images/reference/operators/filter/magnet_thumb.png
   - name: mirrorAxes
+    summary: Mirror space across one or more axes, similar to `reflect`.
     thumb: assets/images/reference/operators/filter/mirrorAxes_thumb.png
   - name: mirrorOctant
     summary: Mirror coordinates across two axes and the diagonals.
@@ -214,6 +229,7 @@ cat:
     name: moduloDistance
   - name: moduloLine
     status: beta
+    summary: Repeats space along a line, similar to `modulo1D`.
   - keywords:
     - kaleidoscope
     - modulo
@@ -256,6 +272,8 @@ cat:
     summary: Repeats an SDF radially around an axis, combining the resulting shapes.
     thumb: assets/images/reference/operators/filter/radialClone_thumb.png
   - name: radialSlice
+    summary: Takes a pie-shaped slice of an SDF around an axis, either removing it
+      or everything except it.
     thumb: assets/images/reference/operators/filter/radialSlice_thumb.png
   - name: rangeTransform
     summary: Applies a transform based on a range of settings, mapped with either
@@ -287,6 +305,8 @@ cat:
     - rf
     summary: Rescales the values produced by a field.
   - name: rescaleFloatField
+    summary: Simplified version of `rescaleField` that only has single settings vs
+      vectors for each.
   - name: reshapeValues
     summary: Reshapes the values produced by a field by applying a function.
   - name: restrictStage
@@ -324,7 +344,8 @@ cat:
     name: scale
     summary: Scales space.
   - name: slice
-    summary: Removes all of an SDF except for a slice in space.
+    summary: Takes a slice of an SDF along an axis, either removing it or everything
+      except it.
   - name: sphericalMobiusTransform
     status: beta
     thumb: assets/images/reference/operators/filter/sphericalMobiusTransform_thumb.png
@@ -351,6 +372,8 @@ cat:
     - apply
     name: transformSequence
     status: beta
+    summary: Applies one or more transform operators sequentially, to coordinates,
+      field values, etc, with support for looping.
   - keywords:
     - move
     - position

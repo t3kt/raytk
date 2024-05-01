@@ -25,6 +25,8 @@ cat:
     summary: Field that applies values based on a band/slice of an axis.
     thumb: assets/images/reference/operators/field/bandField_thumb.png
   - name: blackbodyColorField
+    summary: Field that produces colors using a model of blackbody radiation from
+      physics.
     thumb: assets/images/reference/operators/field/blackbodyColorField_thumb.png
   - keywords:
     - cellular
@@ -62,6 +64,7 @@ cat:
     thumb: assets/images/reference/operators/field/domainColorField_thumb.png
   - name: hashField
     status: beta
+    summary: Advanced field that produces randomized values.
   - name: hsvColorField
     summary: A field that uses HSV-based parameters to produce colors.
     thumb: assets/images/reference/operators/field/hsvColorField_thumb.png
@@ -102,6 +105,8 @@ cat:
     thumb: assets/images/reference/operators/field/positionField_thumb.png
   - name: rampField
     status: beta
+    summary: Field that produces values that fade from one value to another along
+      an axis or line.
     thumb: assets/images/reference/operators/field/rampField_thumb.png
   - name: rayField
     summary: Field that provides the ray direction or origin.
@@ -114,6 +119,7 @@ cat:
     status: beta
     thumb: assets/images/reference/operators/field/sdfNormalField_thumb.png
   - name: spectralColorField
+    summary: Produces colors using rainbow spectrum patterns.
     thumb: assets/images/reference/operators/field/spectralColorField_thumb.png
   - name: stepField
     summary: A field that switches between two values at a threshold point.
@@ -123,6 +129,8 @@ cat:
     - landscape
     name: terrainNoiseField
     status: beta
+    summary: Noise that uses fBm (fractal brownian motion), which can work well for
+      surface offsetting for terrain.
     thumb: assets/images/reference/operators/field/terrainNoiseField_thumb.png
   - name: texture1dField
     status: beta

@@ -8,6 +8,7 @@ redirect_from:
   - /reference/opType/raytk.operators.filter.instanceField/
 op:
   category: filter
+  detail: Note that this multiplies the work of the input once per instance.
   inputs:
   - contextTypes:
     - Context
@@ -61,12 +62,14 @@ op:
     name: Operation
     readOnlyHandling: semibaked
     regularHandling: runtime
+    summary: How the field values should be combined.
   - label: Swap Order
     name: Swaporder
     readOnlyHandling: semibaked
     regularHandling: runtime
     summary: Swaps the two inputs. This is only relevant for some of the `Operation`
-      values.
+      values like subtraction.
+  summary: Repeats an input field multiple times and combines the results.
   variables:
   - label: index
     name: index
@@ -74,3 +77,8 @@ op:
     name: normindex
 
 ---
+
+
+Repeats an input field multiple times and combines the results.
+
+Note that this multiplies the work of the input once per instance.

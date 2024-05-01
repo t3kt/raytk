@@ -181,6 +181,7 @@ op:
   parameters:
   - label: Enable
     name: Enable
+  status: deprecated
   summary: Combines SDFs using the intersect operator.
   thumb: assets/images/reference/operators/combine/simpleIntersect_thumb.png
 

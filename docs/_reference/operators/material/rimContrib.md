@@ -8,6 +8,11 @@ redirect_from:
   - /reference/opType/raytk.operators.material.rimContrib/
 op:
   category: material
+  detail: 'This is similar to the Rim Light feature in a standard Phong MAT.
+
+
+    Using rim shading can result in aliasing issues, since it''s essentially highlighting
+    the areas that are most likely to have aliasing.'
   inputs:
   - contextTypes:
     - MaterialContext
@@ -59,10 +64,13 @@ op:
   parameters:
   - label: Enable
     name: Enable
+    summary: When off, this shading will produce values of 0, meaning no contribution
+      to shading.
   - label: Level
     name: Level
     readOnlyHandling: baked
     regularHandling: runtime
+    summary: Brightness of the shading, which is used as a multiplier for the Color.
   - label: Use Color
     name: Usecolor
     summary: Whether to produce color or just a brightness value.
@@ -70,10 +78,13 @@ op:
     name: Color
     readOnlyHandling: baked
     regularHandling: runtime
+    summary: Color of the shading.
   - label: Use Surface Color
     name: Usesurfacecolor
     readOnlyHandling: semibaked
     regularHandling: semibaked
+    summary: Whether this shading should take into account the surface color attribute
+      on the SDF (if present).
   - label: Enable Shadow
     name: Enableshadow
     readOnlyHandling: baked
@@ -83,13 +94,24 @@ op:
     name: Thickness
     readOnlyHandling: baked
     regularHandling: runtime
+    summary: Width of the highlight area on the sides.
   - label: Blending
     name: Blending
     readOnlyHandling: baked
     regularHandling: runtime
+    summary: Amount of fading between highlighted and not highlighted areas.
+  summary: Shading that is applied to the edges of a surface relative to where it's
+    viewed from.
   thumb: assets/images/reference/operators/material/rimContrib_thumb.png
   variables:
   - label: normangle
     name: normangle
 
 ---
+
+
+Shading that is applied to the edges of a surface relative to where it's viewed from.
+
+This is similar to the Rim Light feature in a standard Phong MAT.
+
+Using rim shading can result in aliasing issues, since it's essentially highlighting the areas that are most likely to have aliasing.

@@ -13,6 +13,7 @@ cat:
   operators:
   - name: ambientLight
     status: beta
+    summary: Ambient light source that doesn't come from a particular location.
   - name: axisLight
     summary: Light that emits from along an axis, similar to an infinitely long tube
       light.
@@ -36,6 +37,7 @@ cat:
     summary: Light eminating from a single point in space, with optional distance
       attentuation.
   - name: ringLight
+    summary: Light that emits from a torus or ring shape.
   - name: softShadow
     summary: A soft-edged shadow.
     thumb: assets/images/reference/operators/light/softShadow_thumb.png

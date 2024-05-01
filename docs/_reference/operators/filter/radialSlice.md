@@ -119,31 +119,39 @@ op:
     summary: The axis around which to take the slice.
   - label: Angle Mode
     menuOptions:
-    - label: Center & Width
+    - description: Choose a center angle and a width.
+      label: Center & Width
       name: width
-    - label: Start & End
+    - description: Choose the start and end angles.
+      label: Start & End
       name: sides
     name: Anglemode
+    summary: How to specify the angles of the slice.
   - label: Center Angle
     name: Center
     readOnlyHandling: baked
     regularHandling: runtime
+    summary: Center angle of the slice in degrees.
   - label: Angle Width
     name: Width
     readOnlyHandling: baked
     regularHandling: runtime
+    summary: Width of the slice in degrees.
   - label: Start Angle
     name: Start
     readOnlyHandling: baked
     regularHandling: runtime
+    summary: Start angle in degrees.
   - label: End Angle
     name: End
     readOnlyHandling: baked
     regularHandling: runtime
+    summary: End angle in degrees.
   - label: Invert
     name: Invert
     readOnlyHandling: baked
     regularHandling: runtime
+    summary: Whether to remove just the slice, or remove everything except the slice.
   - label: Enable Smoothing
     name: Enablesmoothing
     readOnlyHandling: semibaked
@@ -155,6 +163,11 @@ op:
     readOnlyHandling: baked
     regularHandling: runtime
     summary: The amount of smoothing distance.
+  summary: Takes a pie-shaped slice of an SDF around an axis, either removing it or
+    everything except it.
   thumb: assets/images/reference/operators/filter/radialSlice_thumb.png
 
 ---
+
+
+Takes a pie-shaped slice of an SDF around an axis, either removing it or everything except it.

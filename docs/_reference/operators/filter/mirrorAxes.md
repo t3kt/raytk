@@ -152,6 +152,7 @@ op:
     name: Axes
     readOnlyHandling: semibaked
     regularHandling: semibaked
+    summary: Which axes should be reflected.
   - label: Direction X
     menuOptions:
     - label: Positive
@@ -161,6 +162,7 @@ op:
     name: Dirx
     readOnlyHandling: semibaked
     regularHandling: semibaked
+    summary: Which side of the X axis should be reflected.
   - label: Direction Y
     menuOptions:
     - label: Positive
@@ -170,6 +172,7 @@ op:
     name: Diry
     readOnlyHandling: semibaked
     regularHandling: semibaked
+    summary: Which side of the Y axis should be reflected.
   - label: Direction Z
     menuOptions:
     - label: Positive
@@ -179,6 +182,7 @@ op:
     name: Dirz
     readOnlyHandling: semibaked
     regularHandling: semibaked
+    summary: Which side of the Z axis should be reflected.
   - label: Flip X On Side
     menuOptions:
     - label: None
@@ -198,6 +202,7 @@ op:
     name: Flipsidex
     readOnlyHandling: semibaked
     regularHandling: runtime
+    summary: Whether to flip one side of the X axis along either the Y or Z axes.
   - label: Flip Y On Side
     menuOptions:
     - label: None
@@ -217,6 +222,7 @@ op:
     name: Flipsidey
     readOnlyHandling: semibaked
     regularHandling: runtime
+    summary: Whether to flip one side of the Y axis along either the X or Z axes.
   - label: Flip Z On Side
     menuOptions:
     - label: None
@@ -236,22 +242,29 @@ op:
     name: Flipsidez
     readOnlyHandling: semibaked
     regularHandling: runtime
+    summary: Whether to flip one side of the Z axis along either the X or Y axes.
   - label: Center
     name: Center
     readOnlyHandling: baked
     regularHandling: runtime
+    summary: Center position for the reflection planes.
   - label: Offset
     name: Offset
     readOnlyHandling: baked
     regularHandling: runtime
+    summary: Offset applied to each side, pushing them towards / away from the reflection
+      planes.
   - label: Enable Blend
     name: Enableblend
     readOnlyHandling: semibaked
     regularHandling: semibaked
+    summary: Whether to stretch out the area near the reflection plane to soften the
+      transition between the sides.
   - label: Blending
     name: Blending
     readOnlyHandling: baked
     regularHandling: runtime
+    summary: How much area to stretch out near the reflection planes.
   - label: Apply To
     menuOptions:
     - label: Coordinates
@@ -265,9 +278,14 @@ op:
     - label: Field Values
       name: value
     name: Target
+    summary: What the reflection should be applied to.
+  summary: Mirror space across one or more axes, similar to `reflect`.
   thumb: assets/images/reference/operators/filter/mirrorAxes_thumb.png
   variables:
   - label: sides
     name: sides
 
 ---
+
+
+Mirror space across one or more axes, similar to `reflect`.

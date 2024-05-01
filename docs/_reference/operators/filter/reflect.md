@@ -101,6 +101,7 @@ op:
     name: Direction
     readOnlyHandling: semibaked
     regularHandling: runtime
+    summary: Axis and direction across which to reflect.
   - label: Plane Normal
     name: Planenormal
     readOnlyHandling: baked
@@ -124,10 +125,13 @@ op:
     name: Enableblend
     readOnlyHandling: semibaked
     regularHandling: semibaked
+    summary: Whether to stretch out the space near the reflection plane to smooth
+      out the border between the sides.
   - label: Blending
     name: Blend
     readOnlyHandling: baked
     regularHandling: runtime
+    summary: How much to stretch the space near the reflection plane.
   - label: Iteration Type
     menuOptions:
     - label: None
@@ -139,6 +143,7 @@ op:
     name: Iterationtype
     readOnlyHandling: semibaked
     regularHandling: semibaked
+    summary: How to expose information about the current side as iteration values.
   shortcuts:
   - ref
   summary: Reflects space across a plane.
@@ -146,8 +151,10 @@ op:
   variables:
   - label: sign
     name: sign
+    summary: +1, -1 indicating the current side of the reflection.
   - label: index
     name: index
+    summary: 0, 1 indicating the current side of the reflection.
 
 ---
 

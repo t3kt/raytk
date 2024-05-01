@@ -8,6 +8,8 @@ redirect_from:
   - /reference/opType/raytk.operators.sdf.chamferBoxSdf/
 op:
   category: sdf
+  detail: Based on [ChamferBox Super Primitive](https://www.shadertoy.com/view/3lBGzt)
+    by TLC123
   inputs:
   - contextTypes:
     - Context
@@ -83,10 +85,12 @@ op:
     name: Chamfer
     readOnlyHandling: baked
     regularHandling: runtime
+    summary: Width of cropping on edges/corners.
   - label: Round
     name: Round
     readOnlyHandling: baked
     regularHandling: runtime
+    summary: Rounding that smooths out the edges of the crops.
   summary: A box with cropped corners at 45 degree angles.
   thumb: assets/images/reference/operators/sdf/chamferBoxSdf_thumb.png
 
@@ -94,3 +98,5 @@ op:
 
 
 A box with cropped corners at 45 degree angles.
+
+Based on [ChamferBox Super Primitive](https://www.shadertoy.com/view/3lBGzt) by TLC123

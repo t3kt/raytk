@@ -76,14 +76,17 @@ op:
     name: Multiply
     readOnlyHandling: baked
     regularHandling: runtime
+    summary: Multiplier value applied to all parts of the values after range scaling.
   - label: Multiply
     name: Mult
     readOnlyHandling: baked
     regularHandling: runtime
+    summary: Multiplier values applied to each part of the values after range scaling.
   - label: Post Add
     name: Postadd
     readOnlyHandling: baked
     regularHandling: runtime
+    summary: Amounts added to the rescaled values after all other steps.
   shortcuts:
   - rf
   summary: Rescales the values produced by a field.

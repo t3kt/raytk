@@ -43,6 +43,8 @@ cat:
     thumb: assets/images/reference/operators/material/iridescenceContrib_thumb.png
   - name: matCapContrib
     status: beta
+    summary: Shading using a MatCap (Material Capture) image to fake lighting and
+      reflections.
   - name: modularMat
     shortcuts:
     - mm
@@ -67,6 +69,8 @@ cat:
     status: beta
     thumb: assets/images/reference/operators/material/reflectMat_thumb.png
   - name: rimContrib
+    summary: Shading that is applied to the edges of a surface relative to where it's
+      viewed from.
     thumb: assets/images/reference/operators/material/rimContrib_thumb.png
   - name: sampledPointMat
     summary: A material that produces color for volumetric points relative to the
