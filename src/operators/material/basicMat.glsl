@@ -25,8 +25,6 @@ vec3 THIS_getColorForLight(
 	CoordT p, MaterialContext matCtx,
 	Light light, int lightIndex, float shadedLevel,
 	vec3 baseColor) {
-	vec3 col = baseColor;
-
 	if (light.absent) { return vec3(0.); }
 
 	#ifdef THIS_EXPOSE_lightcolor
@@ -51,7 +49,7 @@ vec3 THIS_getColorForLight(
 	#endif
 	float skyDiffuse = clamp(0.5+0.5*dot(matCtx.normal, THIS_Skydir), 0, 1);
 	float sunSpec = pow(max(dot(-matCtx.ray.dir, matCtx.normal), 0.), THIS_Specularexp) * THIS_Specularamount;
-	col = mate * sunColor * sunDiffuse * sunShadow;
+	vec3 col = mate * sunColor * sunDiffuse * sunShadow;
 	col += mate * skyColor * skyDiffuse;
 	col += mate * sunColor * sunSpec;
 	return col;
