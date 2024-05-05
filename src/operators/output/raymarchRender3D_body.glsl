@@ -175,23 +175,45 @@ float calcAO( in vec3 pos, in vec3 nor )
 	return clamp( 1.0 - 3.0*occ, 0.0, 1.0 );
 }
 
-vec3 getColorDefault(vec3 p, MaterialContext matCtx) {
-	vec3 sunDir = normalize(matCtx.light.pos);
-	vec3 mate = vec3(0.28);
-	#ifdef RAYTK_USE_SURFACE_COLOR
-	mate = mix(mate, matCtx.result.color.rgb, matCtx.result.color.w);
-	#endif
-	vec3 sunColor = matCtx.light.color;
+vec3 defaultMatGetColorForLight(
+	vec3 p, MaterialContext matCtx, Light light, int lightIndex, float shadedLevel,
+	vec3 baseColor) {
+	if (light.absent) { return baseColor; }
+
+	matCtx.light = light;
+	matCtx.lightIndex = lightIndex;
+	matCtx.shadedLevel = shadedLevel;
+
+	vec3 sunDir = normalize(light.pos);
+	vec3 mate = baseColor;
+	vec3 sunColor = light.color;
 	vec3 skyColor = vec3(0.5, 0.8, 0.9);
 	float sunDiffuse = clamp(dot(matCtx.normal, sunDir), 0, 1.);
 	float skyDiffuse = clamp(0.5+0.5*dot(matCtx.normal, vec3(0, 1, 0)), 0, 1);
 	float sunSpec = pow(max(dot(-matCtx.ray.dir, matCtx.normal), 0.), 5) * 0.5;
 	vec3 col = mate * sunColor * sunDiffuse;
 	#if defined(THIS_Enableshadow) && defined(RAYTK_USE_SHADOW)
-	col *= matCtx.shadedLevel;
+	col *= shadedLevel;
 	#endif
 	col += mate * skyColor * skyDiffuse;
 	col += mate * sunColor * sunSpec;
+	return col;
+}
+
+vec3 defaultMatGetColor(vec3 p, MaterialContext matCtx) {
+	vec3 col = vec3(0.28);
+	#ifdef RAYTK_USE_SURFACE_COLOR
+	col = mix(col, matCtx.result.color.rgb, matCtx.result.color.w);
+	#endif
+
+	#if RAYTK_LIGHT_COUNT > 1
+	for (int i = 0; i < RAYTK_LIGHT_COUNT; i++) {
+		col = defaultMatGetColorForLight(p, matCtx, matCtx.allLights[i], i, matCtx.allShadedLevels[i], col);
+	}
+	#else
+	col = defaultMatGetColorForLight(p, matCtx, matCtx.light, 0, matCtx.shadedLevel, col);
+	#endif
+
 	float occ = matCtx.ao;
 	col *= mix(vec3(0.5), vec3(1.5), occ);
 	return col;
@@ -199,15 +221,10 @@ vec3 getColorDefault(vec3 p, MaterialContext matCtx) {
 
 vec3 getColorFromSingleMat(vec3 p, MaterialContext matCtx, int m) {
 	vec3 col = vec3(0);
-//	#ifdef OUTPUT_DEBUG
-//	debugOut.x = m;
-//	#endif
-
 	if (false) {}
 	// #include <materialParagraph>
-
 	else {
-		col = getColorDefault(p, matCtx);
+		col = defaultMatGetColor(p, matCtx);
 	}
 	return col;
 }
