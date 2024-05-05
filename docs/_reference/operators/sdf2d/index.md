@@ -13,10 +13,13 @@ cat:
   name: sdf2d
   operators:
   - name: arbitraryPolygonSdf2d
+    summary: Polygonal area with arbitrarily positioned points.
     thumb: assets/images/reference/operators/sdf2d/arbitraryPolygonSdf2d_thumb.png
   - name: arcSdf2d
+    summary: Radial arc, a segment of a circular path, with rounded ends.
     thumb: assets/images/reference/operators/sdf2d/arcSdf2d_thumb.png
   - name: archSdf2d
+    summary: Arched doorway shape with a rounded top and rectangular bottom.
     thumb: assets/images/reference/operators/sdf2d/archSdf2d_thumb.png
   - name: arrowSdf2d
     thumb: assets/images/reference/operators/sdf2d/arrowSdf2d_thumb.png
@@ -32,6 +35,7 @@ cat:
     status: beta
     thumb: assets/images/reference/operators/sdf2d/branchingTreeSdf2d_thumb.png
   - name: chamferRectangleSdf2d
+    summary: Rectangle with corners cut off at angles.
     thumb: assets/images/reference/operators/sdf2d/chamferRectangleSdf2d_thumb.png
   - name: circleSdf
     summary: 2D circle SDF.

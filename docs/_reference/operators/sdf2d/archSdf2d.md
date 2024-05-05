@@ -24,6 +24,7 @@ op:
     name: scaleField
     returnTypes:
     - vec4
+    summary: Field used to multiply the width and height of the shape.
   name: archSdf2d
   opType: raytk.operators.sdf2d.archSdf2d
   parameters:
@@ -31,6 +32,12 @@ op:
     name: Scale
     readOnlyHandling: baked
     regularHandling: runtime
+    summary: Width and height of the shape. The width is also used as the radius of
+      the top curve.
+  summary: Arched doorway shape with a rounded top and rectangular bottom.
   thumb: assets/images/reference/operators/sdf2d/archSdf2d_thumb.png
 
 ---
+
+
+Arched doorway shape with a rounded top and rectangular bottom.
