@@ -92,10 +92,9 @@ _typeFields = _loadTypeFields()
 
 def _createVarRefGroup(text: str):
 	def getVariableObjs(ctx: ActionContext):
-		info = ROPInfo(ctx.primaryOp)
-		if not info.isROP:
+		opState = EditorROPState(ctx.primaryOp).tryGetRopState()
+		if not opState:
 			return []
-		opState = info.opDefExt.getRopState()
 		return opState.variables or []
 	def isValid(ctx: ActionContext) -> bool:
 		return bool(getVariableObjs(ctx))
@@ -129,7 +128,8 @@ def _createAttrRefGroup(text: str):
 		info = ROPInfo(o)
 		if not info.isROP or info.opType == _RopTypes.assignAttribute:
 			return False
-		return bool(info.opDefExt.getRopState().attributes)
+		opState = EditorROPState(o).tryGetRopState()
+		return bool(opState and opState.attributes)
 	class _LockPars(OpInit):
 		def init(self, o: COMP, ctx: ActionContext):
 			o.par.Attributename.readOnly = True
@@ -137,7 +137,7 @@ def _createAttrRefGroup(text: str):
 	select = RopSelect(test=test)
 	def getActions(ctx: ActionContext) -> List[Action]:
 		info = ROPInfo(ctx.primaryOp)
-		if not info.isROP:
+		if not info.isROP or not info.opDefExt:
 			return []
 		opState = info.opDefExt.getRopState()
 		return [
