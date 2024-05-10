@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.material.modularMat
-  opVersion: '29'
+  opVersion: '30'
   opStatus: default
 opDef: !def
   enable: !expr
@@ -136,6 +136,21 @@ multiInput: !multiInput
       Returntypefloat: true
       Returntypevec4: true
 elements:
+- !opElement
+  name: aggregateCodeGenerator
+  elementType: aggregateCodeGenerator
+  params:
+    Startindex: 0
+    Exprindexoffset: 0
+    Reverseorder: false
+    Initmode: separate
+    Numberingmode: available
+    Startstmt: ''
+    Defaultstmt: ''
+    Firststepstmt: ''
+    Stepstmt: !expr
+      expr: op('stepTemplate').text
+    Bodycodeplaceholder: AGGREGATE_BODY();
 - !opElement
   name: codeSwitcher_Condition
   elementType: codeSwitcher

@@ -8,3 +8,4 @@ Not all light types are supported.
 
 * `Light`: The Light COMP to match.
 * `Createlight`: Creates and attaches a new Light COMP.
+* `Enableshadow`: Whether the light should produce shadows.

@@ -17,19 +17,27 @@ layout: page
 
 <h2>Operators</h2>
 
-<ul class="category-ops">
+<table class="category-op-table">
 	{% for op in page.cat.operators %}
-	<li>
-		{% if op.thumb %}
-		<img class="thumb" src="/raytk/{{ op.thumb }}" alt="{{ op.name }}">
-		{% endif %}
-		<code class="op-name">
-			<a href="/raytk/reference/operators/{{page.cat.name}}/{{op.name}}" title="{{ op.name }}">{{ op.name }}</a>
-		</code>:
-		{% if op.status %}
-			<span class="label status-{{ op.status }}">{{ op.status }}</span>
-		{% endif %}
-		<span class="op-desc">{{ op.summary }}</span>
-	</li>
+		<tr>
+			<td class="cat-op-img-cell">
+				{% if op.thumb %}
+					<img class="thumb" src="/raytk/{{ op.thumb }}" alt="{{ op.name }}">
+				{% else %}
+					<span class="thumb-placeholder"> </span>
+				{% endif %}
+			</td>
+			<td class="cat-op-name-cell">
+				<code class="op-name">
+					<a href="/raytk/reference/operators/{{page.cat.name}}/{{op.name}}" title="{{ op.name }}">{{ op.name }}</a>
+				</code>
+				{% if op.status %}
+					<span class="label status-{{ op.status }}">{{ op.status }}</span>
+				{% endif %}
+			</td>
+			<td class="cat-op-desc-cell">
+				<span class="op-desc">{{ op.summary }}</span>
+			</td>
+		</tr>
 	{% endfor %}
-</ul>
+</table>

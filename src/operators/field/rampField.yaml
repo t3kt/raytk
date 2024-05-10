@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.field.rampField
-  opVersion: '5'
+  opVersion: '6'
   opStatus: beta
 opDef: !def
   enable: !expr
@@ -31,6 +31,9 @@ opDef: !def
   paramGroupTable: eval_params
   libraryNames: !expr
     expr: op('modZigZag')
+  help: !text
+    file: src/operators/field/rampField.md
+    name: help
   displayCategory: Spatial Field
 inputs:
 - !input

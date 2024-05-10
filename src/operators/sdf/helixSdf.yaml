@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.sdf.helixSdf
-  opVersion: '18'
+  opVersion: '20'
   opStatus: default
 opDef: !def
   enable: true
@@ -16,6 +16,8 @@ opDef: !def
     file: src/operators/sdf/helixSdf.glsl
     name: functionTemplate
   paramGroupTable: eval_params
+  libraryNames: !expr
+    expr: op('helixSdf_lib')
   variableTable: !table
     file: src/operators/sdf/helixSdf_variables.txt
     name: variable_exprs
@@ -34,8 +36,6 @@ inputs:
   Localalias: thicknessField
   Variables: axisoffset angle normangle
   coordType: !coordT
-    Coordtypefloat: true
-    Coordtypevec2: true
     Coordtypevec3: true
   contextType: !contextT
     Allcontexttype: true
@@ -46,7 +46,6 @@ inputs:
   Variables: axisoffset angle normangle
   Variableinputs: thicknessField
   coordType: !coordT
-    Coordtypefloat: true
     Coordtypevec3: true
   contextType: !contextT
     Allcontexttype: true
@@ -57,7 +56,6 @@ inputs:
   Variables: axisoffset angle normangle
   Variableinputs: thicknessField radiusField
   coordType: !coordT
-    Coordtypefloat: true
     Coordtypevec3: true
   contextType: !contextT
     Allcontexttype: true
@@ -67,6 +65,8 @@ inputs:
   Localalias: crossSection
   Variables: axisoffset angle normangle
   Variableinputs: thicknessField radiusField spreadField
+  Prohibited: !expr
+    expr: parent().par.Helixtype != 'dual'
   coordType: !coordT
     Coordtypevec2: true
   contextType: !contextT
@@ -74,3 +74,17 @@ inputs:
   returnType: !returnT
     Returntypesdf: true
     Returntypefloat: true
+elements:
+- !opElement
+  name: codeSwitcher_Helixtype
+  elementType: codeSwitcher
+  params:
+    Elementroot: ''
+    Table: helixTypes
+    Param: Helixtype
+    Autoupdateparams: true
+    Manageparamstates: true
+    Alwaysincludeallparams: false
+    Switchmode: autoconst
+    Indexexpr: ''
+    Placeholder: BODY();

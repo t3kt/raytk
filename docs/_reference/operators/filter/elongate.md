@@ -113,6 +113,7 @@ op:
     name: Axes
     readOnlyHandling: semibaked
     regularHandling: runtime
+    summary: Which axes should be stretched.
   summary: Stretches a shape by splitting it into pieces, moves them apart, and connects
     them.
   thumb: assets/images/reference/operators/filter/elongate_thumb.png

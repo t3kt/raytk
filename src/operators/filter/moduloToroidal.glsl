@@ -51,8 +51,12 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 	float col;
 	float row;
 
-	pR(p.xz, shift.y);
-	col = pModPolar(p.xz, r.x);
+	pR(p.xz, shift.x);
+	if (THIS_Mirrortype == THISTYPE_Mirrortype_cols || THIS_Mirrortype == THISTYPE_Mirrortype_grid) {
+		col = pModPolarMirror(p.xz, r.x);
+	} else {
+		col = pModPolar(p.xz, r.x);
+	}
 	p.x -= rOuter;
 
 	#ifdef THIS_EXPOSE_innerangle
@@ -62,8 +66,12 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 	THIS_norminnerangle = atan(p.x, p.z)/TAU + .5;
 	#endif
 
-	pR(p.xy, shift.x);
-	row = pModPolar(p.xy, r.y);
+	pR(p.xy, shift.y);
+	if (THIS_Mirrortype == THISTYPE_Mirrortype_rows || THIS_Mirrortype == THISTYPE_Mirrortype_grid) {
+		row = pModPolar(p.xy, r.y);
+	} else {
+		row = pModPolarMirror(p.xy, r.y);
+	}
 	p.x -= thOuter;
 
 	#ifdef THIS_EXPOSE_cell

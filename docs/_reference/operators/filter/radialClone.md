@@ -202,6 +202,17 @@ op:
     readOnlyHandling: semibaked
     regularHandling: semibaked
     summary: Whether and how to expose iteration values to upstream operators.
+  - label: Rotate Mode
+    menuOptions:
+    - label: Position and Rotation
+      name: both
+    - label: Position Only
+      name: pos
+    name: Rotatemode
+    readOnlyHandling: semibaked
+    regularHandling: semibaked
+    summary: Whether the copies should be rotated or just positioned in a ring in
+      their original orientation.
   - label: Merge Number
     name: Mergenumber
   - label: Merge Offset
@@ -211,12 +222,16 @@ op:
   variables:
   - label: index
     name: index
+    summary: Index of the current clone (0..N)
   - label: normindex
     name: normindex
+    summary: Index of the current clone, scaled to a 0..1 range.
   - label: rotaccum
     name: rotaccum
+    summary: Amount of rotation applied for the current clone (0..360).
   - label: normrotaccum
     name: normrotaccum
+    summary: Amount of rotation applied for the current clone, scaled to 0..1 range.
 
 ---
 

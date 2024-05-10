@@ -11,6 +11,13 @@ It works for either float value fields or vector fields. When using a float valu
 * `Inputhigh`: The high end of the expected input values.
 * `Outputlow`: The low end of the rescaled value range.
 * `Outputhigh`: The high end of the rescaled value range.
+* `Returntype`
+  * `auto`
+  * `float`
+  * `vec4`
+* `Multiply`: Multiplier value applied to all parts of the values after range scaling.
+* `Mult`: Multiplier values applied to each part of the values after range scaling.
+* `Postadd`: Amounts added to the rescaled values after all other steps.
 
 ## Inputs
 

@@ -103,7 +103,7 @@ op:
     - label: GGX
       name: ggx
     name: Method
-    readOnlyHandling: semibaked
+    readOnlyHandling: baked
     regularHandling: runtime
     summary: The type of specular shading to use. Different methods support different
       combinations of the other parameters.

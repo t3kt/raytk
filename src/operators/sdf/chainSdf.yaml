@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.sdf.chainSdf
-  opVersion: '5'
+  opVersion: '6'
   opStatus: default
 opDef: !def
   enable: true
@@ -16,6 +16,9 @@ opDef: !def
     file: src/operators/sdf/chainSdf.glsl
     name: function
   paramGroupTable: eval_params
+  help: !text
+    file: src/operators/sdf/chainSdf.md
+    name: help
 inputs:
 - !input
   Localalias: lengthField

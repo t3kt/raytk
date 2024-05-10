@@ -1,5 +1,5 @@
 import json
-from raytkUtil import ROPInfo
+from raytkUtil import ROPInfo, mergeDicts
 from typing import Tuple
 from editorToolsCommon import *
 
@@ -92,10 +92,9 @@ _typeFields = _loadTypeFields()
 
 def _createVarRefGroup(text: str):
 	def getVariableObjs(ctx: ActionContext):
-		info = ROPInfo(ctx.primaryOp)
-		if not info.isROP:
+		opState = EditorROPState(ctx.primaryOp).tryGetRopState()
+		if not opState:
 			return []
-		opState = info.opDefExt.getRopState()
 		return opState.variables or []
 	def isValid(ctx: ActionContext) -> bool:
 		return bool(getVariableObjs(ctx))
@@ -129,7 +128,8 @@ def _createAttrRefGroup(text: str):
 		info = ROPInfo(o)
 		if not info.isROP or info.opType == _RopTypes.assignAttribute:
 			return False
-		return bool(info.opDefExt.getRopState().attributes)
+		opState = EditorROPState(o).tryGetRopState()
+		return bool(opState and opState.attributes)
 	class _LockPars(OpInit):
 		def init(self, o: COMP, ctx: ActionContext):
 			o.par.Attributename.readOnly = True
@@ -137,7 +137,7 @@ def _createAttrRefGroup(text: str):
 	select = RopSelect(test=test)
 	def getActions(ctx: ActionContext) -> List[Action]:
 		info = ROPInfo(ctx.primaryOp)
-		if not info.isROP:
+		if not info.isROP or not info.opDefExt:
 			return []
 		opState = info.opDefExt.getRopState()
 		return [
@@ -403,6 +403,7 @@ def _createTableBasedGroup(
 		paramName: str,
 		select: 'RopSelect',
 		attach: 'OpAttach',
+		params: dict | None = None,
 ):
 	return GroupImpl(
 		text,
@@ -413,7 +414,7 @@ def _createTableBasedGroup(
 				ropType=ropType,
 				select=select,
 				attach=attach,
-				params={paramName: str(table[i, 'name'])},
+				params=mergeDicts({paramName: str(table[i, 'name'])}, params),
 			)
 			for i in range(1, table.numRows)
 		])
@@ -691,9 +692,10 @@ def _createLockUnlockSwitcherAction(text, parName, lock: bool):
 		# assume valid since group wouldn't create it otherwise
 		return True
 	def execute(ctx: ActionContext):
-		par = ctx.primaryOp.par[parName]
-		if par is not None:
-			par.readOnly = lock
+		for o in ctx.selectedOps:
+			par = o.par[parName]
+			if par is not None:
+				par.readOnly = lock
 	return SimpleAction(text, isValid, execute)
 
 def _createLockUnlockSwitcherActionGroup(text, lock: bool):
@@ -736,7 +738,7 @@ def createActionManager():
 		ActionImpl(
 			'Convert To Float',
 			'raytk.operators.field.sdfField',
-			select=RopSelect(returnTypes=['Sdf']),
+			select=RopSelect(returnTypes=['Sdf'], excludeOutputOps=True),
 			attach=AttachOutFromExisting(),
 		),
 		ActionImpl(
@@ -786,24 +788,24 @@ def createActionManager():
 		_createSimplifyRescaleFloatAction('Simplify Rescale Float'),
 		_createTableBasedGroup(
 			'Project Plane', op('projectPlanes'), _RopTypes.projectPlane, 'Plane',
-			select=RopSelect(coordTypes=['vec2']),
+			select=RopSelect(coordTypes=['vec2'], excludeOutputOps=True),
 			attach=AttachOutFromExisting(),
 		),
 		_createTableBasedGroup(
 			'Cross Section', op('crossSectionAxes'), _RopTypes.crossSection, 'Axes',
-			select=RopSelect(coordTypes=['vec3']),
+			select=RopSelect(coordTypes=['vec3'], excludeOutputOps=True),
 			attach=AttachOutFromExisting(),
 		),
 		ActionImpl(
 			'Assign Color',
 			ropType='raytk.operators.filter.assignColor',
-			select=RopSelect(returnTypes=['Sdf']),
+			select=RopSelect(returnTypes=['Sdf'], excludeOutputOps=True),
 			attach=AttachOutFromExisting(),
 		),
 		ActionImpl(
 			'Apply Modular Material',
 			ropType=_RopTypes.modularMat,
-			select=RopSelect(returnTypes=['Sdf']),
+			select=RopSelect(returnTypes=['Sdf'], excludeOutputOps=True),
 			attach=AttachOutFromExisting(),
 		),
 		_createAddInputActionGroup(
@@ -842,22 +844,53 @@ def createActionManager():
 			select=RopSelect(ropTypes=[_RopTypes.raymarchRender3d, _RopTypes.pointMapRender]),
 			attach=AttachIntoExisting(inputIndex=2),
 		),
+		_createTypeListGroup(
+			'Add Light',
+			typesAndLabels=[
+				('raytk.operators.light.ambientLight', 'Ambient Light'),
+				('raytk.operators.light.axisLight', 'Axis Light'),
+				('raytk.operators.light.directionalLight', 'Directional Light'),
+				('raytk.operators.light.linkedLight', 'Linked Light'),
+				('raytk.operators.light.pointLight', 'Point Light'),
+				('raytk.operators.light.spotLight', 'Spot Light'),
+			],
+			select=RopSelect(ropTypes=['raytk.operators.light.multiLight']),
+			attach=AttachIntoExisting(useNextInput=True),
+		),
+		ActionImpl(
+			'Limit Light Range',
+			'raytk.operators.filter.limitLight',
+			select=RopSelect(returnTypes=['Light']),
+			attach=AttachOutFromExisting(),
+		),
+		ActionImpl(
+			'Add Camera Transform',
+			'raytk.operators.filter.cameraTransform',
+			select=RopSelect(returnTypes=['Ray']),
+			attach=AttachOutFromExisting(),
+		),
+		ActionImpl(
+			'Add Light Transform',
+			'raytk.operators.filter.lightTransform',
+			select=RopSelect(returnTypes=['Light']),
+			attach=AttachOutFromExisting(),
+		),
 		ActionImpl(
 			'Extrude',
 			'raytk.operators.convert.extrude',
-			select=RopSelect(coordTypes=['vec2'], returnTypes=['Sdf']),
+			select=RopSelect(coordTypes=['vec2'], returnTypes=['Sdf'], excludeOutputOps=True),
 			attach=AttachOutFromExisting(),
 		),
 		ActionImpl(
 			'Revolve',
 			'raytk.operators.convert.revolve',
-			select=RopSelect(coordTypes=['vec2'], returnTypes=['Sdf']),
+			select=RopSelect(coordTypes=['vec2'], returnTypes=['Sdf'], excludeOutputOps=True),
 			attach=AttachOutFromExisting(),
 		),
 		ActionImpl(
 			'Colorize 2D SDF',
 			'raytk.operators.material.colorizeSdf2d',
-			select=RopSelect(coordTypes=['vec2'], returnTypes=['Sdf']),
+			select=RopSelect(coordTypes=['vec2'], returnTypes=['Sdf'], excludeOutputOps=True),
 			attach=AttachOutFromExisting(),
 		),
 		_createTableBasedGroup(
@@ -867,7 +900,7 @@ def createActionManager():
 			table=op('sdfCombineModes'),
 			select=RopSelect(
 				returnTypes=['Sdf'],
-				multi=True, minCount=2, maxCount=2),
+				multi=True, minCount=2, maxCount=2, excludeOutputOps=True),
 			attach=AttachOutFromExisting()),
 		_createTableBasedGroup(
 			'Arrange SDFs',
@@ -876,17 +909,17 @@ def createActionManager():
 			table=op('sdfCombineModes'),
 			select=RopSelect(
 				returnTypes=['Sdf'],
-				multi=True, minCount=2, maxCount=None),
+				multi=True, minCount=2, maxCount=None, excludeOutputOps=True),
 			attach=AttachOutFromExisting()),
 		ActionImpl(
 			'Switch OPs',
 			ropType='raytk.operators.combine.switch',
-			select=RopSelect(multi=True, minCount=2, maxCount=None),
+			select=RopSelect(multi=True, minCount=2, maxCount=None, excludeOutputOps=True),
 			attach=AttachOutFromExisting()),
 		ActionImpl(
 			'Blend OPs',
 			ropType='raytk.operators.combine.switch',
-			select=RopSelect(multi=True, minCount=2, maxCount=None),
+			select=RopSelect(multi=True, minCount=2, maxCount=None, excludeOutputOps=True),
 			attach=AttachOutFromExisting(),
 			params={'Blend': True}),
 		_createTableBasedGroup(
@@ -905,7 +938,27 @@ def createActionManager():
 			table=op('compositeModes'),
 			select=RopSelect(
 				returnTypes=['vec4'],
-				multi=True, minCount=True, maxCount=None),
+				multi=True, minCount=2, maxCount=None),
+			attach=AttachOutFromExisting()),
+		_createTableBasedGroup(
+			'Mix Fields',
+			ropType='raytk.operators.combine.mixFields',
+			paramName='Combinemode',
+			table=op('mixFieldsCombineModes'),
+			select=RopSelect(
+				returnTypes=['vec4'],
+				multi=True, minCount=2, maxCount=None),
+			params={'Returntype': 'vec4'},
+			attach=AttachOutFromExisting()),
+		_createTableBasedGroup(
+			'Mix Fields',
+			ropType='raytk.operators.combine.mixFields',
+			paramName='Combinemode',
+			table=op('mixFieldsCombineModes'),
+			select=RopSelect(
+				returnTypes=['float'],
+				multi=True, minCount=2, maxCount=None),
+			params={'Returntype': 'float'},
 			attach=AttachOutFromExisting()),
 		ActionImpl(
 			'Merge to Vector',
@@ -942,19 +995,19 @@ def createActionManager():
 		ActionImpl(
 			'Add render2D',
 			ropType=_RopTypes.render2d,
-			select=RopSelect(coordTypes=['vec2']),
+			select=RopSelect(coordTypes=['vec2'], excludeOutputOps=True),
 			attach=AttachOutFromExisting(),
 		),
 		ActionImpl(
 			'Add functionGraphRender',
 			ropType='raytk.operators.output.functionGraphRender',
-			select=RopSelect(coordTypes=['float']),
+			select=RopSelect(coordTypes=['float'], excludeOutputOps=True),
 			attach=AttachOutFromExisting(),
 		),
 		ActionImpl(
 			'Add raymarchRender3d',
 			ropType=_RopTypes.raymarchRender3d,
-			select=RopSelect(coordTypes=['vec3'], returnTypes=['Sdf']),
+			select=RopSelect(coordTypes=['vec3'], returnTypes=['Sdf'], excludeOutputOps=True),
 			attach=AttachOutFromExisting(),
 		),
 		_createGoToGroup('Go to'),

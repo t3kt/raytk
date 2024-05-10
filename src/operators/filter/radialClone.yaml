@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.filter.radialClone
-  opVersion: '26'
+  opVersion: '27'
   opStatus: default
 opDef: !def
   enable: !expr
@@ -100,3 +100,16 @@ elements:
     Prepcodeplaceholder: MERGE_PREP();
     Bodycodeplaceholder: MERGE_BODY();
     Defaultinitcodeplaceholder: ''
+- !opElement
+  name: codeSwitcher_Rotatemode
+  elementType: codeSwitcher
+  params:
+    Elementroot: ''
+    Table: rotateModes
+    Param: Rotatemode
+    Autoupdateparams: true
+    Manageparamstates: false
+    Alwaysincludeallparams: false
+    Switchmode: constswitch
+    Indexexpr: ''
+    Placeholder: ''

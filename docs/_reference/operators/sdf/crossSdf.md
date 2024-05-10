@@ -92,6 +92,7 @@ op:
     name: Axes
     readOnlyHandling: semibaked
     regularHandling: runtime
+    summary: Which axes to include in the cross.
   - label: Shape
     menuOptions:
     - label: Infinite
@@ -101,14 +102,17 @@ op:
     name: Shape
     readOnlyHandling: semibaked
     regularHandling: runtime
+    summary: Whether to make the cross have infinite length or limited lengths.
   - label: Length
     name: Length
     readOnlyHandling: baked
     regularHandling: runtime
-  summary: An SDF for a 3D cross of infinite length along each axis.
+    summary: Length of the cross on each axis.
+  summary: An SDF for a 3D cross along each axis, with either infinite or limited
+    length.
   thumb: assets/images/reference/operators/sdf/crossSdf_thumb.png
 
 ---
 
 
-An SDF for a 3D cross of infinite length along each axis.
+An SDF for a 3D cross along each axis, with either infinite or limited length.

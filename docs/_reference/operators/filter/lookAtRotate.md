@@ -105,14 +105,21 @@ op:
     name: Sourcepoint
     readOnlyHandling: baked
     regularHandling: runtime
+    summary: The position around which to rotate.
   - label: Target Point
     name: Targetpoint
     readOnlyHandling: baked
     regularHandling: runtime
+    summary: The position that the rotation faces towards.
   - label: Roll
     name: Roll
     readOnlyHandling: baked
     regularHandling: runtime
+    summary: Rotation perpendicular to the direction that it's facing.
   status: beta
+  summary: Rotates space to face towards a point.
 
 ---
+
+
+Rotates space to face towards a point.

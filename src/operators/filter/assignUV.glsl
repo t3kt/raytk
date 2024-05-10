@@ -7,7 +7,9 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 		THIS_sdf = res;
 		#endif
 		vec3 uv;
-		#ifdef THIS_HAS_INPUT_uvField
+		#ifdef inputOp_uvField_RETURN_TYPE_Sdf
+		uv = inputOp_uvField(p, ctx).uv.xyz;
+		#elif defined(inputOp_uvField_RETURN_TYPE_vec4)
 		uv = inputOp_uvField(p, ctx).xyz;
 		#else
 		vec3 q = adaptAsVec3(p) - THIS_Center;

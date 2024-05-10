@@ -108,11 +108,12 @@ op:
     name: Axes
     readOnlyHandling: baked
     regularHandling: runtime
-  summary: Clamps coordinates around an SDF result, which causes their edges to be
-    extended infinitely along each axis.
+    summary: Which axes should be extended.
+  summary: Clamps coordinates around an area, which causes its edges to be extended
+    infinitely along each axis.
   thumb: assets/images/reference/operators/filter/extend_thumb.png
 
 ---
 
 
-Clamps coordinates around an SDF result, which causes their edges to be extended infinitely along each axis.
+Clamps coordinates around an area, which causes its edges to be extended infinitely along each axis.

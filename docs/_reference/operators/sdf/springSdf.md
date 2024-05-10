@@ -20,7 +20,6 @@ op:
     - VertexContext
     - PixelContext
     coordTypes:
-    - float
     - vec3
     label: Height Field
     name: heightField
@@ -40,7 +39,6 @@ op:
     - VertexContext
     - PixelContext
     coordTypes:
-    - float
     - vec3
     label: Radius Field
     name: radiusField
@@ -63,7 +61,6 @@ op:
     - VertexContext
     - PixelContext
     coordTypes:
-    - float
     - vec3
     label: Coils Field
     name: coilsField
@@ -87,8 +84,6 @@ op:
     - VertexContext
     - PixelContext
     coordTypes:
-    - float
-    - vec2
     - vec3
     label: Thickness Field
     name: thicknessField

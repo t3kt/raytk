@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.pattern.hexagonalWeavePattern
-  opVersion: '10'
+  opVersion: '11'
   opStatus: default
 opDef: !def
   enable: true
@@ -23,6 +23,9 @@ opDef: !def
     evalOpts: !evalOpts
       excludeFirstRow: true
       cols: enable
+  help: !text
+    file: src/operators/pattern/hexagonalWeavePattern.md
+    name: help
 inputs:
 - !input
   Localalias: coordField

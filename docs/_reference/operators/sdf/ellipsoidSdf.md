@@ -8,6 +8,7 @@ redirect_from:
   - /reference/opType/raytk.operators.sdf.ellipsoidSdf/
 op:
   category: sdf
+  detail: Based on [Ellipsoid bound](https://www.shadertoy.com/view/tdS3DG) by iq.
   inputs:
   - contextTypes:
     - Context
@@ -38,6 +39,13 @@ op:
     name: Scale
     readOnlyHandling: baked
     regularHandling: runtime
+    summary: Size of the ellipsoid on each axis.
+  summary: Ellipsoid (sphere with different sizes on each axis).
   thumb: assets/images/reference/operators/sdf/ellipsoidSdf_thumb.png
 
 ---
+
+
+Ellipsoid (sphere with different sizes on each axis).
+
+Based on [Ellipsoid bound](https://www.shadertoy.com/view/tdS3DG) by iq.

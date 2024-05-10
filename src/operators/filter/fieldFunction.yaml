@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.filter.fieldFunction
-  opVersion: '9'
+  opVersion: '10'
   opStatus: beta
 opDef: !def
   enable: !expr
@@ -22,6 +22,9 @@ opDef: !def
     file: src/operators/filter/fieldFunction.glsl
     name: function
   paramGroupTable: eval_params
+  help: !text
+    file: src/operators/filter/fieldFunction.md
+    name: help
   displayCategory: Field Modifier
 multiInput: !multiInput
   Minimuminputs: 0

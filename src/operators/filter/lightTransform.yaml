@@ -1,0 +1,74 @@
+!rop
+meta: !meta
+  opType: raytk.operators.filter.lightTransform
+  opVersion: '2'
+  opStatus: beta
+opDef: !def
+  enable: !expr
+    expr: op('..').par.Enable
+  useRuntimeBypass: true
+  typeSpec: !ropTypes
+    coordType: !coordT
+      Coordtypevec3: true
+    contextType: !contextT
+      Contexttypelightcontext: true
+    returnType: !returnT
+      Returntypelight: true
+  function: !text
+    file: src/operators/filter/lightTransform.glsl
+    name: function
+  paramGroupTable: eval_params
+  help: !text
+    file: src/operators/filter/lightTransform.md
+    name: help
+  displayCategory: Light
+inputs:
+- !input
+  Localalias: light
+  Required: true
+  coordType: !coordT
+    Coordtypevec3: true
+  contextType: !contextT
+    Contexttypelightcontext: true
+  returnType: !returnT
+    Returntypelight: true
+- !input
+  Localalias: posTranslateField
+  coordType: !coordT
+    Coordtypevec3: true
+  contextType: !contextT
+    Contexttypelightcontext: true
+  returnType: !returnT
+    Returntypevec4: true
+- !input
+  Localalias: dirRotateField
+  Variableinputs: posTranslateField
+  coordType: !coordT
+    Coordtypevec3: true
+  contextType: !contextT
+    Contexttypelightcontext: true
+  returnType: !returnT
+    Returntypevec4: true
+- !input
+  Localalias: lookAtTranslateField
+  Variableinputs: posTranslateField dirRotateField
+  coordType: !coordT
+    Coordtypevec3: true
+  contextType: !contextT
+    Contexttypelightcontext: true
+  returnType: !returnT
+    Returntypevec4: true
+elements:
+- !opElement
+  name: codeSwitcher_Conversion
+  elementType: codeSwitcher
+  params:
+    Elementroot: ''
+    Table: lookAtModes
+    Param: Lookatmode
+    Autoupdateparams: true
+    Manageparamstates: false
+    Alwaysincludeallparams: false
+    Switchmode: autoconst
+    Indexexpr: ''
+    Placeholder: LOOK_AT_BODY();

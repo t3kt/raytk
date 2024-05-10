@@ -1,3 +1,3 @@
-toolkitVersion	0.40
+toolkitVersion	0.41
 touchDesignerVersion	099
 touchDesignerBuild	2023.11600

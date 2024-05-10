@@ -8,6 +8,17 @@ redirect_from:
   - /reference/opType/raytk.operators.sdf.helixSdf/
 op:
   category: sdf
+  detail: 'There are two variations of the helix: dual and single.
+
+    The dual variation can do two parallel rails, and supports using a 2D cross-section
+    SDF, but no UV coordinates.
+
+    The single variation is just one part, and does not support cross-sections, but
+    does have UV coordinates.
+
+
+    The single variation is based on [Helix Distance](https://www.shadertoy.com/view/MstcWs)
+    by tdhooper.'
   inputs:
   - contextTypes:
     - Context
@@ -19,8 +30,6 @@ op:
     - VertexContext
     - PixelContext
     coordTypes:
-    - float
-    - vec2
     - vec3
     label: Thickness Field
     name: thicknessField
@@ -43,7 +52,6 @@ op:
     - VertexContext
     - PixelContext
     coordTypes:
-    - float
     - vec3
     label: Radius Field
     name: radiusField
@@ -68,7 +76,6 @@ op:
     - VertexContext
     - PixelContext
     coordTypes:
-    - float
     - vec3
     label: Spread Field
     name: spreadField
@@ -144,6 +151,15 @@ op:
     name: Dualspread
     readOnlyHandling: baked
     regularHandling: runtime
+  - label: Helix Type
+    menuOptions:
+    - label: Dual
+      name: dual
+    - label: Single
+      name: single
+    name: Helixtype
+    readOnlyHandling: semibaked
+    regularHandling: runtime
   - label: Reverse
     name: Reverse
     readOnlyHandling: semibaked
@@ -162,3 +178,9 @@ op:
 
 
 SDF for a helix (an elongated spiral).
+
+There are two variations of the helix: dual and single.
+The dual variation can do two parallel rails, and supports using a 2D cross-section SDF, but no UV coordinates.
+The single variation is just one part, and does not support cross-sections, but does have UV coordinates.
+
+The single variation is based on [Helix Distance](https://www.shadertoy.com/view/MstcWs) by tdhooper.

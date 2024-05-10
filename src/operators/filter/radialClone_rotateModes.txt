@@ -1,0 +1,3 @@
+name	label
+both	Position and Rotation
+pos	Position Only

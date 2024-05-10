@@ -28,12 +28,48 @@ op:
     - float
     - vec2
     - vec3
+    label: Offset Field
+    name: offsetField
+    returnTypes:
+    - float
+    summary: Optional field used to control the color within the shape.
+    supportedVariables:
+    - surfacecolor
+    - surfaceuv
+    - normal
+    - sdf
+  - contextTypes:
+    - MaterialContext
+    coordTypes:
+    - float
+    - vec2
+    - vec3
+    label: Blending Field
+    name: blendingField
+    returnTypes:
+    - float
+    summary: Optional field used to control the color at the surface.
+    supportedVariableInputs:
+    - offsetField
+    supportedVariables:
+    - surfacecolor
+    - surfaceuv
+    - normal
+    - sdf
+  - contextTypes:
+    - MaterialContext
+    coordTypes:
+    - float
+    - vec2
+    - vec3
     label: Fill Color Field
     name: fillColorField
     returnTypes:
     - float
     - vec4
-    summary: Optional field used to control the color within the shape.
+    supportedVariableInputs:
+    - offsetField
+    - blendingField
     supportedVariables:
     - surfacecolor
     - surfaceuv
@@ -50,8 +86,9 @@ op:
     returnTypes:
     - float
     - vec4
-    summary: Optional field used to control the color at the surface.
     supportedVariableInputs:
+    - offsetField
+    - blendingField
     - fillColorField
     supportedVariables:
     - surfacecolor

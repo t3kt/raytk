@@ -1,11 +1,12 @@
 !rop
 meta: !meta
   opType: raytk.operators.filter.cameraTransform
-  opVersion: '1'
+  opVersion: '4'
   opStatus: beta
 opDef: !def
   enable: !expr
     expr: op('..').par.Enable
+  useRuntimeBypass: true
   typeSpec: !ropTypes
     coordType: !coordT
       Coordtypevec2: true
@@ -17,6 +18,9 @@ opDef: !def
     file: src/operators/filter/cameraTransform.glsl
     name: function
   paramGroupTable: eval_params
+  help: !text
+    file: src/operators/filter/cameraTransform.md
+    name: help
   displayCategory: Camera
 inputs:
 - !input
@@ -48,3 +52,17 @@ inputs:
     Contexttypecameracontext: true
   returnType: !returnT
     Returntypevec4: true
+elements:
+- !opElement
+  name: codeSwitcher_Conversion
+  elementType: codeSwitcher
+  params:
+    Elementroot: ''
+    Table: lookAtModes
+    Param: Lookatmode
+    Autoupdateparams: true
+    Manageparamstates: false
+    Alwaysincludeallparams: false
+    Switchmode: autoconst
+    Indexexpr: ''
+    Placeholder: LOOK_AT_BODY();

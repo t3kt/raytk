@@ -13,15 +13,21 @@ cat:
   operators:
   - name: ambientLight
     status: beta
+    summary: Ambient light source that doesn't come from a particular location.
   - name: axisLight
     summary: Light that emits from along an axis, similar to an infinitely long tube
       light.
+    thumb: assets/images/reference/operators/light/axisLight_thumb.png
   - name: directionalLight
-    summary: A directional light.
+    summary: Directional or distant light which always comes from one direction.
+    thumb: assets/images/reference/operators/light/directionalLight_thumb.png
   - name: hardShadow
     summary: A simple hard-edged shadow.
+    thumb: assets/images/reference/operators/light/hardShadow_thumb.png
+  - name: instanceLight
   - name: lightVolume
     status: beta
+    thumb: assets/images/reference/operators/light/lightVolume_thumb.png
   - name: linkedLight
     status: beta
     summary: Light that is based on a standard Light COMP.
@@ -30,11 +36,12 @@ cat:
   - name: pointLight
     shortcuts:
     - pl
-    summary: Light eminating from a single point in space, with optional distance
-      attentuation.
+    summary: Light that emits from a single point in space.
   - name: ringLight
+    summary: Light that emits from a torus or ring shape.
   - name: softShadow
     summary: A soft-edged shadow.
+    thumb: assets/images/reference/operators/light/softShadow_thumb.png
   - name: spotLight
     summary: Cone-shaped spotlight.
   - name: volumetricRayCast

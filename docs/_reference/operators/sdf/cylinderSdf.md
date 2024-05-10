@@ -110,15 +110,19 @@ op:
     name: Infiniteheight
     readOnlyHandling: semibaked
     regularHandling: runtime
+    summary: Whether to extend infinitely along the chosen axis or have a limited
+      height.
   - label: Hollow
     name: Hollow
     readOnlyHandling: semibaked
     regularHandling: runtime
+    summary: Whether to make the cylinder a hollow tube instead of a solid cylinder.
   - label: Thickness
     name: Thickness
     readOnlyHandling: baked
     regularHandling: runtime
-  summary: SDF for a cylinder.
+    summary: Thickness of the walls of the tube when using hollow mode.
+  summary: Cylinder, either solid or a hollow tube.
   thumb: assets/images/reference/operators/sdf/cylinderSdf_thumb.png
   variables:
   - label: axispos
@@ -131,4 +135,4 @@ op:
 ---
 
 
-SDF for a cylinder.
+Cylinder, either solid or a hollow tube.

@@ -32,6 +32,9 @@ opDef: !def
     evalOpts: !evalOpts
       excludeFirstRow: true
       cols: enable
+  help: !text
+    file: src/operators/material/matCapContrib.md
+    name: help
   displayCategory: Material Element
 inputs:
 - !input

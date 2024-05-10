@@ -76,35 +76,50 @@ op:
     name: Includeprimary
     readOnlyHandling: baked
     regularHandling: baked
-    summary: 'Whether the operator should '
+    summary: Whether the operator should be used in the main raymarching stage where
+      the renderer finds surface hits for rays.
   - label: Include Shadow
     name: Includeshadow
     readOnlyHandling: baked
     regularHandling: baked
+    summary: Whether the operator should be used when the renderer is checking for
+      shadows cast on a surface.
   - label: Include Reflect
     name: Includereflect
     readOnlyHandling: baked
     regularHandling: baked
+    summary: Whether the operator should be used when the renderer is determining
+      colors reflected onto surfaces.
   - label: Include Material
     name: Includematerial
     readOnlyHandling: baked
     regularHandling: baked
+    summary: Whether the operator should be used when the renderer is using a material
+      do determine the color of a point on a surface.
   - label: Include Occlusion
     name: Includeocclusion
     readOnlyHandling: baked
     regularHandling: baked
+    summary: Whether the operator should be used when the renderer is computing ambient
+      occlusion.
   - label: Include Volumetric
     name: Includevolumetric
     readOnlyHandling: baked
     regularHandling: baked
+    summary: Whether the operator should be used when the renderer is accumulating
+      color within a light volume.
   - label: Include Volumetric Shadow
     name: Includevolumetricshadow
     readOnlyHandling: baked
     regularHandling: baked
+    summary: Whether the operator should be used when the renderer is checking for
+      shadows within a light volume.
   - label: Include Normal
     name: Includenormal
     readOnlyHandling: baked
     regularHandling: baked
+    summary: Whether the operator should be used when the renderer is calculating
+      surface normals.
   summary: Restricts which render stages an operator is used in.
 
 ---

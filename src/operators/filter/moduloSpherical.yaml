@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.filter.moduloSpherical
-  opVersion: '8'
+  opVersion: '9'
   opStatus: default
 opDef: !def
   enable: !expr
@@ -25,6 +25,9 @@ opDef: !def
     evalOpts: !evalOpts
       excludeFirstRow: true
       cols: enable
+  help: !text
+    file: src/operators/filter/moduloSpherical.md
+    name: help
   displayCategory: Repeat
 inputs:
 - !input

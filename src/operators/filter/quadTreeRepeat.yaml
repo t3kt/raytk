@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.filter.quadTreeRepeat
-  opVersion: '10'
+  opVersion: '11'
   opStatus: beta
 opDef: !def
   enable: !expr
@@ -25,6 +25,9 @@ opDef: !def
     evaluate: true
     evalOpts: !evalOpts
       excludeFirstRow: true
+  help: !text
+    file: src/operators/filter/quadTreeRepeat.md
+    name: help
   displayCategory: Repeat
 inputs:
 - !input

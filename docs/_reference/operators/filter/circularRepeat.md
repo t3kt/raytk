@@ -56,7 +56,7 @@ op:
     regularHandling: runtime
     summary: Spacing between copies.
   status: beta
-  summary: Repeat an SDF to fill a 2D circular area.
+  summary: Repeat an space to fill a 2D circular area.
   variables:
   - label: cellcoord
     name: cellcoord
@@ -66,4 +66,4 @@ op:
 ---
 
 
-Repeat an SDF to fill a 2D circular area.
+Repeat an space to fill a 2D circular area.

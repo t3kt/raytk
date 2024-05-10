@@ -1,3 +1,25 @@
+Sdf THIS_dualHelix(CoordT p, ContextT ctx, float radius, float spread, float dualSpread, float thickness) {
+	vec2 q = hx_prepDualHelixCoords(p, radius, spread, dualSpread);
+	Sdf res;
+	#ifdef THIS_HAS_INPUT_crossSection
+	res = adaptAsSdf(inputOp_crossSection(q, ctx));
+	#else
+	res = createSdf(length(q) - thickness);
+	#endif
+	return res;
+}
+
+Sdf THIS_singleHelix(CoordT p, float radius, float spread, float thickness) {
+	p = p.yxz;
+	vec3 helix = hx_closestHelix(p, spread, radius);
+	float d = length(p - helix) - thickness;
+	vec3 hp = hx_helixCoords(p, helix, spread, radius);
+	vec2 uv = vec2(hp.x, atan(hp.y, hp.z) / PI / 2.);
+	Sdf res = createSdf(d);
+	assignUV(res, vec3(uv, 0));
+	return res;
+}
+
 ReturnT thismap(CoordT p, ContextT ctx) {
 	ReturnT res;
 	CoordT p0 = p;
@@ -10,8 +32,6 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 	if (IS_TRUE(THIS_Reverse)) {
 		p.x *= -1;
 	}
-	float thickness = THIS_Thickness;
-	float radius = THIS_Radius;
 	#ifdef THIS_EXPOSE_axisoffset
 	THIS_axisoffset = p.y;
 	#endif
@@ -21,29 +41,13 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 	#ifdef THIS_EXPOSE_normangle
 	THIS_normangle = (atan(p.z, p.x) / TAU) + .5;
 	#endif
+	float thickness = THIS_Thickness;
 	#ifdef THIS_HAS_INPUT_thicknessField
-    {
-		#if defined(inputOp_thicknessField_COORD_TYPE_float)
-		thickness *= inputOp_thicknessField(p.y, ctx);
-		#elif defined(inputOp_thicknessField_COORD_TYPE_vec2)
-		thickness *= inputOp_thicknessField(vec2(p.y, atan(p.z, p.x)), ctx);
-		#elif defined(inputOp_thicknessField_COORD_TYPE_vec3)
 		thickness *= inputOp_thicknessField(p0, ctx);
-		#else
-		#error invalidThicknessCoordType
-		#endif
-	}
 	#endif
+	float radius = THIS_Radius;
 	#ifdef THIS_HAS_INPUT_radiusField
-	{
-		#if defined(inputOp_radiusField_COORD_TYPE_float)
-		radius *= inputOp_radiusField(p.y, ctx);
-		#elif defined(inputOp_radiusField_COORD_TYPE_vec3)
 		radius *= inputOp_radiusField(p0, ctx);
-		#else
-		#error invalidRadiusCoordType
-		#endif
-	}
 	#endif
 	#ifdef THIS_HAS_INPUT_spreadField
 	float m = inputOp_spreadField(p0, ctx);
@@ -51,18 +55,6 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 	float m = THIS_Spread;
 	#endif
 	float dualSpread = THIS_Dualspread * radius;
-	float halfm = m*.5,
-	b = mod(p.y, PI*m) - PI*halfm,
-	a = abs(atan(p.x, p.z) * halfm - b);
-	if (a > PI*halfm) a = PI*m - a;
-	//optimisation from Shane
-	p.xy = vec2(length(p.xz) - radius, a);
-	p.x = abs(p.x) - dualSpread;
-	vec2 q = p.xy;
-	#ifdef THIS_HAS_INPUT_crossSection
-	res = adaptAsSdf(inputOp_crossSection(q, ctx));
-	#else
-	res = createSdf(length(q) - thickness);
-	#endif
+	BODY();
 	return res;
 }

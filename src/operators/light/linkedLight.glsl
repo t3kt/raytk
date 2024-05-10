@@ -10,6 +10,7 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 	#if defined(THIS_lighttype_point)
 	{
 		light.pos = lightMat[3].xyz;
+		light.pos += ctx.posOffset;
 		#ifdef THIS_attenuated
 		// Based on TDAttenuateLight()
 		float d = length(p - light.pos);

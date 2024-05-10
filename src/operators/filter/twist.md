@@ -9,8 +9,6 @@ Twists space around an axis.
   * `z`
 * `Amount`: The amount of twisting to apply.
 * `Shift`: Offsets the twisting along the axis, effectively rotating everything equally around it.
-* `Inspect`
-* `Help`
 
 ## Inputs
 

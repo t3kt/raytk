@@ -1,8 +1,8 @@
 !rop
 meta: !meta
   opType: raytk.operators.combine.simpleIntersect
-  opVersion: '16'
-  opStatus: default
+  opVersion: '17'
+  opStatus: deprecated
 paramPages:
 - !page
   name: Combine

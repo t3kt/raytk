@@ -1,5 +1,59 @@
 # Release Notes
 
+## v0.41
+
+### Highlights
+
+* New instanceLight, lightTransform, and limitLight operators for more flexible lighting setups.
+* Overhaul of how multiple lights are handled by materials to produce more consistent results.
+* New mixFields operator acts as a mixer to easily combine different fields with level sliders and toggles.
+* Fixed the missing palette thumbnails that disappeared in the last release.
+* Helpful new actions in the editor tools menu.
+* Significant improvements to documentation.
+
+### Details
+
+* Improvements / additions
+  * New OPs
+    * instanceLight - use instancing to create multiple lights, with CHOPs for positioning and other settings (#1213)
+    * lightTransform - transform specially designed to be used on lights (#1214)
+    * limitLight - distance and boundary attenuation and optimization (#1224)
+    * mixFields - combine multiple fields with quick toggles and level adjustments for each (#696)
+    * restrictTypes - helper to force operators that support multiple types to use a specific type (#683)
+  * New OP features
+    * adjustColor - support using on lights (#1213)
+    * assignUV - support using another SDF to assign UVs (#1218)
+    * cameraTransform - support separate transform for look at position (#841)
+    * magnet - uniform scaling
+    * moduloToroidal - mirroring
+    * radialClone - option to keep rotation while still arranging radially (#1219)
+    * sampledPointMat - blending and offset field inputs (#1143)
+    * spotLight - look at support (#834)
+  * Editor tools (#1201)
+    * Support editing multiple operators with the lock/unlock switcher actions
+    * Action to combine fields with mixFields (#696)
+    * Actions for cameraTransform/lightTransform (#541)
+    * Action for adding to multiLight
+    * Action for adding limitLight (#1224)
+  * Improvements
+    * Faster enable/disable with runtime bypass - mergeFields, shapedCombine, switch
+    * Clarify some input type error messages
+    * Fix display of thumbnail images on operator category documentation pages (#643)
+    * Documentation for lots of operators that were missing it, and updated lots of existing docs.
+* Fixes
+  * magnet - fix incorrect SDF scale adjustment (when possible)
+  * moduloToroidal - fix swapped shift parameters
+  * Fix broken previews in inspector related to missing output buffer selector
+  * Fix missing palette thumbnails (#1217)
+  * Prevent negative light levels which cause problems with multiple lights (#1213)
+  * Hide irrelevant editor actions on renderers (#1201)
+* Changes (potentially breaking)
+  * helixSdf - remove alternate coordinate type support for field inputs
+  * raymarchRender3D - make limit box disabled by default
+  * Restructured how multiple lights are handled. Materials are now responsible for looping through the lights and combining the results, rather than the renderer doing it. This allows modularMat to correctly handle shading elements that aren't based on lighting. There may be some differences in how material shading behaves, but hopefully they should be fairly minor. (#1213)
+  * Deprecate simpleDiff, simpleIntersect, simpleUnion
+* Infrastructure / internals
+
 ## v0.40
 
 ### Highlights

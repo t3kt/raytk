@@ -6,7 +6,6 @@ Produces the area of the first shape minus any areas overlapped by the second (o
 
 * `Enable`
 * `Swaporder`: Swaps the two inputs, subtracting the first from the second.
-* `Inspect`
 
 ## Inputs
 

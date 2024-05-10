@@ -35,5 +35,7 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 		);
 	}
 	#endif
+	ray.pos += ctx.posOffset;
+	pRotateOnXYZ(ray.dir, ctx.rotation);
 	return ray;
 }

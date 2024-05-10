@@ -183,6 +183,7 @@ op:
     name: Enable
   shortcuts:
   - su
+  status: deprecated
   summary: Combines several SDFs using the union operator.
   thumb: assets/images/reference/operators/combine/simpleUnion_thumb.png
 

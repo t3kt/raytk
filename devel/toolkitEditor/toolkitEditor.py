@@ -26,3 +26,13 @@ class ToolkitEditor:
 
 	def saveAllROPs(self, incrementVersion):
 		RaytkTools().saveAllROPs(incrementVersion)
+
+	def updateAllShaderLibraries(self):
+		for area in ops('/raytk', '/devel', '/toolkitEditor'):
+			if not area:
+				continue
+			for comp in area.findChildren(name='shaderLibraries'):
+				for dat in comp.findChildren(type=DAT, depth=1):
+					if dat.par['syncfile'] or dat.par['loadonstartpulse'] is None:
+						continue
+					dat.par.loadonstartpulse.pulse()

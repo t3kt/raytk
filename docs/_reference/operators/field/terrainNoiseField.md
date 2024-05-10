@@ -8,6 +8,11 @@ redirect_from:
   - /reference/opType/raytk.operators.field.terrainNoiseField/
 op:
   category: field
+  detail: 'Based on [Musgrave''s Noises Collection](https://www.shadertoy.com/view/4sXXW2)
+    by xbe.
+
+
+    See also http://www.classes.cs.uchicago.edu/archive/2014/winter/23700-1/project_4_and_5/MusgraveTerrain00.pdf.'
   inputs:
   - contextTypes:
     - Context
@@ -190,10 +195,14 @@ op:
     name: Increment
   - label: Lacunarity
     name: Lacunarity
+    summary: Gap between successive frequencies.
   - label: Frequency
     name: Frequency
+    summary: Density of the pattern (basically another Scale).
   - label: Octaves
     name: Octaves
+    summary: Number of layers of detail (frequencies used in the fBm). Larger values
+      produce more detail. Avoid values below 1.
   - label: Step Offset
     name: Stepoffset
   - label: Gain
@@ -209,6 +218,15 @@ op:
     regularHandling: runtime
     summary: Offsets (adds to) the amount produced by the noise.
   status: beta
+  summary: Noise that uses fBm (fractal brownian motion), which can work well for
+    surface offsetting for terrain.
   thumb: assets/images/reference/operators/field/terrainNoiseField_thumb.png
 
 ---
+
+
+Noise that uses fBm (fractal brownian motion), which can work well for surface offsetting for terrain.
+
+Based on [Musgrave's Noises Collection](https://www.shadertoy.com/view/4sXXW2) by xbe.
+
+See also http://www.classes.cs.uchicago.edu/archive/2014/winter/23700-1/project_4_and_5/MusgraveTerrain00.pdf.

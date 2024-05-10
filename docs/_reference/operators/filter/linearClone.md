@@ -8,6 +8,12 @@ redirect_from:
   - /reference/opType/raytk.operators.filter.linearClone/
 op:
   category: filter
+  detail: 'Note that this multiplies the work of the input for each clone, meaning
+    that 4 clones means 4x the work of whatever is connected to the input.
+
+
+    The `modulo1D` can be a cheaper alternative to `linearClone` though it comes with
+    limitations.'
   inputs:
   - contextTypes:
     - Context
@@ -66,10 +72,12 @@ op:
     name: Translate1
     readOnlyHandling: baked
     regularHandling: runtime
+    summary: Position of the start of the line of clones.
   - label: Translate 2
     name: Translate2
     readOnlyHandling: baked
     regularHandling: runtime
+    summary: Position of the end of the line of clones.
   - label: Merge Type
     menuOptions:
     - label: Simple Union
@@ -131,6 +139,7 @@ op:
     readOnlyHandling: semibaked
     regularHandling: semibaked
     summary: Whether and how to expose iteration values to upstream operators.
+  summary: Repeats an SDF along a line, combining the results.
   thumb: assets/images/reference/operators/filter/linearClone_thumb.png
   variables:
   - label: index
@@ -139,3 +148,10 @@ op:
     name: normindex
 
 ---
+
+
+Repeats an SDF along a line, combining the results.
+
+Note that this multiplies the work of the input for each clone, meaning that 4 clones means 4x the work of whatever is connected to the input.
+
+The `modulo1D` can be a cheaper alternative to `linearClone` though it comes with limitations.

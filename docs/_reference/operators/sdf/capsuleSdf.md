@@ -90,7 +90,7 @@ op:
     readOnlyHandling: baked
     regularHandling: runtime
     summary: The thickness of the capsule.
-  summary: A cylinder with rounded ends, between two points.
+  summary: A line or cylinder with rounded ends, between two points.
   thumb: assets/images/reference/operators/sdf/capsuleSdf_thumb.png
   variables:
   - label: normoffset
@@ -99,6 +99,6 @@ op:
 ---
 
 
-A cylinder with rounded ends, between two points.
+A line or cylinder with rounded ends, between two points.
 
 With a small `Radius`, this can be used to create a line segment.

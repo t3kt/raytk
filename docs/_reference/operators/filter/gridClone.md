@@ -8,6 +8,13 @@ redirect_from:
   - /reference/opType/raytk.operators.filter.gridClone/
 op:
   category: filter
+  detail: 'It''s important to remember that this operator performs the work of its
+    input once *for each clone*. That means that a 3x3 grid does 27 times the work
+    of the input.
+
+
+    The `modulo3D` (or `modulo1D`/`modulo2D`) can be a cheaper alternative to `gridClone`
+    with some limitations.'
   inputs:
   - contextTypes:
     - Context
@@ -64,10 +71,12 @@ op:
     name: Center
     readOnlyHandling: baked
     regularHandling: runtime
+    summary: Center position of the grid.
   - label: Size
     name: Size
     readOnlyHandling: baked
     regularHandling: runtime
+    summary: Size of the grid on each axis.
   - label: Merge Type
     menuOptions:
     - label: Simple Union
@@ -119,11 +128,21 @@ op:
     name: Mergenumber
   - label: Merge Offset
     name: Mergeoffset
+  summary: Repeats an SDF in a grid arrangement, combining the results.
   thumb: assets/images/reference/operators/filter/gridClone_thumb.png
   variables:
   - label: coord
     name: coord
+    summary: grid cell coordinates for each axis, going from 0..N.
   - label: normcoord
     name: normcoord
+    summary: grid cell coordinates scaled to 0..1 range.
 
 ---
+
+
+Repeats an SDF in a grid arrangement, combining the results.
+
+It's important to remember that this operator performs the work of its input once *for each clone*. That means that a 3x3 grid does 27 times the work of the input.
+
+The `modulo3D` (or `modulo1D`/`modulo2D`) can be a cheaper alternative to `gridClone` with some limitations.

@@ -25,6 +25,8 @@ cat:
     status: beta
   - name: providePosition
   - name: provideVariable
+  - name: restrictTypes
+    status: beta
   - name: speedGenerator
   - name: variableList
     status: beta

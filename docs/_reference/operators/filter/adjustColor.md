@@ -30,6 +30,7 @@ op:
     returnTypes:
     - vec4
     - Sdf
+    - Light
   - contextTypes:
     - Context
     - MaterialContext

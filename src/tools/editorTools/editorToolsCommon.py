@@ -376,6 +376,7 @@ class RopSelect(OpSelect):
 	ropTypes: Optional[List[str]] = None
 	coordTypes: Optional[List[str]] = None
 	returnTypes: Optional[List[str]] = None
+	excludeOutputOps: bool = False
 
 	def matches(self, o: OP) -> bool:
 		if not o:
@@ -390,6 +391,8 @@ class RopSelect(OpSelect):
 		if self.coordTypes and not opState.hasCoordType(*self.coordTypes):
 			return False
 		if self.returnTypes and not opState.hasReturnType(*self.returnTypes):
+			return False
+		if self.excludeOutputOps and opState.info.isOutput:
 			return False
 		if self.test and not self.test(o):
 			return False

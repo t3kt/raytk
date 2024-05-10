@@ -1,4 +1,6 @@
 names	source	handling	readOnlyHandling	conversion	enable
 Uselocalpos	param	macro			1
 Enablefill Enableedge Usesurfacecolor	param	runtime	constant		1
-Fillcolor[rgb] Blending Edgecolor[rgb] Edgethickness Offset	param	runtime	macro		1
+Fillcolor[rgb] Edgecolor[rgb] Edgethickness	param	runtime	macro		1
+Offset	param	runtime	macro		op('offset_definition').numRows < 2
+Blending	param	runtime	macro		op('blending_definition').numRows < 2

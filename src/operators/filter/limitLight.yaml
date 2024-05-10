@@ -1,0 +1,42 @@
+!rop
+meta: !meta
+  opType: raytk.operators.filter.limitLight
+  opVersion: '2'
+  opStatus: beta
+opDef: !def
+  enable: !expr
+    expr: op('..').par.Enable
+  useRuntimeBypass: true
+  typeSpec: !ropTypes
+    coordType: !coordT
+      Allcoordtype: true
+    contextType: !contextT
+      Contexttypelightcontext: true
+    returnType: !returnT
+      Returntypelight: true
+  function: !text
+    file: src/operators/filter/limitLight.glsl
+    name: function
+  paramGroupTable: eval_params
+  help: !text
+    file: src/operators/filter/limitLight.md
+    name: help
+  displayCategory: Light
+inputs:
+- !input
+  Localalias: light
+  Required: true
+  coordType: !coordT
+    Allcoordtype: true
+  contextType: !contextT
+    Contexttypelightcontext: true
+  returnType: !returnT
+    Returntypelight: true
+- !input
+  Localalias: bounds
+  coordType: !coordT
+    Allcoordtype: true
+  contextType: !contextT
+    Contexttypelightcontext: true
+  returnType: !returnT
+    Returntypesdf: true

@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.filter.rescaleFloatField
-  opVersion: '1'
+  opVersion: '2'
   opStatus: default
 opDef: !def
   enable: !expr
@@ -19,6 +19,9 @@ opDef: !def
     file: src/operators/filter/rescaleFloatField.glsl
     name: function
   paramGroupTable: eval_params
+  help: !text
+    file: src/operators/filter/rescaleFloatField.md
+    name: help
   displayCategory: Field Modifier
 inputs:
 - !input

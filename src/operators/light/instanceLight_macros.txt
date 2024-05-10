@@ -1,0 +1,4 @@
+1	'RAYTK_LIGHT_COUNT'	parent().par.Instancecount
+parent().par.Enabletransformchop and parent().par.Enabletranslate and bool(parent().par.Transformchop)	'THIS_HAS_TRANSLATE'	
+parent().par.Enabletransformchop and parent().par.Enablerotate and bool(parent().par.Transformchop)	'THIS_HAS_ROTATE'	
+parent().par.Enableactivechop and bool(parent().par.Activechop)	'THIS_HAS_ACTIVE'	

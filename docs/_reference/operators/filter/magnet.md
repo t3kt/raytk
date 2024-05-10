@@ -123,6 +123,19 @@ op:
     readOnlyHandling: baked
     regularHandling: runtime
     summary: Amount of translation along each axis. For 2D, only X and Y are used.
+  - label: Scale Type
+    menuOptions:
+    - label: Separate XYZ
+      name: separate
+    - label: Uniform
+      name: uniform
+    name: Scaletype
+    readOnlyHandling: semibaked
+    regularHandling: semibaked
+  - label: Uniform Scale
+    name: Uniformscale
+    readOnlyHandling: baked
+    regularHandling: runtime
   summary: Pulls or twists space within an area.
   thumb: assets/images/reference/operators/filter/magnet_thumb.png
 

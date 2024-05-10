@@ -25,6 +25,7 @@ op:
     returnTypes:
     - float
     - vec4
+    summary: Field that multiplies the scale of the rectangle.
   - contextTypes:
     - Context
     - MaterialContext
@@ -41,6 +42,7 @@ op:
     returnTypes:
     - float
     - vec4
+    summary: Field that overrides the chamfer distances.
     supportedVariableInputs:
     - scaleField
   name: chamferRectangleSdf2d
@@ -55,6 +57,12 @@ op:
     name: Chamfer
     readOnlyHandling: baked
     regularHandling: runtime
+    summary: The distance of the corner cuts on each axis. Keep these the same to
+      have 45 degree cuts.
+  summary: Rectangle with corners cut off at angles.
   thumb: assets/images/reference/operators/sdf2d/chamferRectangleSdf2d_thumb.png
 
 ---
+
+
+Rectangle with corners cut off at angles.

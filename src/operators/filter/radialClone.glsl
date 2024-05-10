@@ -15,6 +15,38 @@ MERGE_PREP();
 MERGE_BODY();
 }
 
+void THIS_applyCounterRot(inout vec2 q2, float totalRot) {
+	if (int(THIS_Rotatemode) == THISTYPE_Rotatemode_pos) {
+		pR(q2, -totalRot);
+	}
+}
+
+void THIS_prepareForInputCall(inout CoordT q, float rot, float totalRot, float radOffset) {
+#ifdef THIS_COORD_TYPE_vec2
+	pR(q, rot);
+	q.y -= radOffset;
+	THIS_applyCounterRot(q, totalRot);
+#else
+	switch (THIS_Axis) {
+		case THISTYPE_Axis_x:
+			pR(q.yz, rot);
+			q.y -= radOffset;
+			THIS_applyCounterRot(q.yz, totalRot);
+		break;
+		case THISTYPE_Axis_y:
+			pR(q.zx, rot);
+			q.z -= radOffset;
+			THIS_applyCounterRot(q.zx, totalRot);
+			break;
+		case THISTYPE_Axis_z:
+			pR(q.xy, rot);
+			q.x -= radOffset;
+			THIS_applyCounterRot(q.xy, totalRot);
+		break;
+	}
+#endif
+}
+
 ReturnT thismap(CoordT p, ContextT ctx) {
 	int n = int(THIS_Count);
 	THIS_exposeIndex(ctx, 0, n);
@@ -39,16 +71,7 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 	#ifdef THIS_HAS_INPUT_radialOffsetField
 	ro += inputOp_radialOffsetField(p, ctx);
 	#endif
-#ifdef THIS_COORD_TYPE_vec2
-	pR(q, rot);
-	q.y -= ro;
-#else
-	switch (THIS_Axis) {
-		case THISTYPE_Axis_x: pR(q.yz, rot); q.y -= ro; break;
-		case THISTYPE_Axis_y: pR(q.zx, rot); q.z -= ro; break;
-		case THISTYPE_Axis_z: pR(q.xy, rot); q.x -= ro; break;
-	}
-#endif
+	THIS_prepareForInputCall(q, rot, totalRot, ro);
 	res = inputOp1(q, ctx);
 	for (int i = 1; i < n; i++) {
 		THIS_exposeIndex(ctx, i, n);
@@ -69,16 +92,7 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 		#ifdef THIS_HAS_INPUT_radialOffsetField
 		ro += inputOp_radialOffsetField(p, ctx);
 		#endif
-		#ifdef THIS_COORD_TYPE_vec2
-			pR(q, rot);
-			q.y -= ro;
-		#else
-			switch (THIS_Axis) {
-				case THISTYPE_Axis_x: pR(q.yz, rot); q.y -= ro; break;
-				case THISTYPE_Axis_y: pR(q.zx, rot); q.z -= ro; break;
-				case THISTYPE_Axis_z: pR(q.xy, rot); q.x -= ro; break;
-			}
-		#endif
+		THIS_prepareForInputCall(q, rot, totalRot, ro);
 		Sdf res2 = inputOp1(q, ctx);
 		THIS_combine(res, res2, q, ctx);
 	}

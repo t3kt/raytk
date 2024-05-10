@@ -5,5 +5,7 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 	Ray ray;
 	ray.pos = THIS_Campos;
 	BODY();
+	ray.pos += ctx.posOffset;
+	pRotateOnXYZ(ray.dir, ctx.rotation);
 	return ray;
 }

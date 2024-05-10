@@ -24,6 +24,7 @@ op:
     name: orientationField
     returnTypes:
     - float
+    summary: Field used to offset the orientation angle, in degrees.
   - contextTypes:
     - Context
     - MaterialContext
@@ -39,6 +40,7 @@ op:
     name: apertureField
     returnTypes:
     - float
+    summary: Field used to override the aperture angle, in degrees.
     supportedVariableInputs:
     - orientationField
   - contextTypes:
@@ -56,6 +58,7 @@ op:
     name: radiusField
     returnTypes:
     - float
+    summary: Field used to multiply the circle radius.
     supportedVariableInputs:
     - orientationField
     supportedVariables:
@@ -75,6 +78,7 @@ op:
     name: thicknessField
     returnTypes:
     - float
+    summary: Field used to multiply the thickness of the arc.
     supportedVariableInputs:
     - orientationField
     - radiusField
@@ -87,21 +91,30 @@ op:
     name: Orientation
     readOnlyHandling: baked
     regularHandling: runtime
+    summary: Angle of the center of the arc in degrees.
   - label: Aperture
     name: Aperture
     readOnlyHandling: baked
     regularHandling: runtime
+    summary: Range of the arc in degrees.
   - label: Radius
     name: Radius
     readOnlyHandling: baked
     regularHandling: runtime
+    summary: Radius of the circle which the arc is taken from.
   - label: Thickness
     name: Thickness
     readOnlyHandling: baked
     regularHandling: runtime
+    summary: Thickness of the arc.
+  summary: Radial arc, a segment of a circular path, with rounded ends.
   thumb: assets/images/reference/operators/sdf2d/arcSdf2d_thumb.png
   variables:
   - label: normangle
     name: normangle
+    summary: Angle from one end of the arc to the other, normalized to a 0..1 range.
 
 ---
+
+
+Radial arc, a segment of a circular path, with rounded ends.

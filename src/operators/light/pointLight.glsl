@@ -4,6 +4,7 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 	#else
 	vec3 pos = THIS_Position;
 	#endif
+	pos += ctx.posOffset;
 	Light light = createLight(pos, THIS_Color * THIS_Intensity);
 	#ifdef THIS_EXPOSE_lightdir
 	THIS_lightdir = normalize(light.pos - p);

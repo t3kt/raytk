@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.filter.lookAtRotate
-  opVersion: '4'
+  opVersion: '5'
   opStatus: beta
 opDef: !def
   enable: !expr
@@ -20,6 +20,9 @@ opDef: !def
   paramGroupTable: eval_params
   libraryNames: !expr
     expr: op('lookAtRotate_lib')
+  help: !text
+    file: src/operators/filter/lookAtRotate.md
+    name: help
   displayCategory: Transform
 inputs:
 - !input

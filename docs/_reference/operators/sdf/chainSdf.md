@@ -8,6 +8,7 @@ redirect_from:
   - /reference/opType/raytk.operators.sdf.chainSdf/
 op:
   category: sdf
+  detail: Based on [Link - distance](https://www.shadertoy.com/view/wlXSD7) by iq.
   inputs:
   - contextTypes:
     - Context
@@ -61,14 +62,23 @@ op:
     name: Length
     readOnlyHandling: baked
     regularHandling: runtime
+    summary: Length of each chain link.
   - label: Radius
     name: Radius
     readOnlyHandling: baked
     regularHandling: runtime
+    summary: Width / rounding radius of the chain links.
   - label: Thickness
     name: Thickness
     readOnlyHandling: baked
     regularHandling: runtime
+    summary: Thickness of each link.
+  summary: Chain made of links, with infinite length.
   thumb: assets/images/reference/operators/sdf/chainSdf_thumb.png
 
 ---
+
+
+Chain made of links, with infinite length.
+
+Based on [Link - distance](https://www.shadertoy.com/view/wlXSD7) by iq.

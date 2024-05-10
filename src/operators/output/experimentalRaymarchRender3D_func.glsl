@@ -31,8 +31,7 @@ Ray evaluateCamera(vec2 p, CameraContext ctx) {
 Ray getViewRay(vec2 shift) {
 	vec2 resolution = uTDOutputInfo.res.zw;
 	vec2 fragCoord = vUV.st*resolution + shift;
-	CameraContext ctx;
-	ctx.resolution = resolution;
+	CameraContext ctx = createCameraContext(resolution);
 	return evaluateCamera(fragCoord, ctx);
 }
 
@@ -43,6 +42,7 @@ Light getLight(vec3 p, LightContext ctx) {
 	#else
 	light = createLight(vec3(0.), vec3(5.8, 4., 3.5));
 	#endif
+	light.color = max(light.color, 0);
 	return light;
 }
 

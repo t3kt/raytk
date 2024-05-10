@@ -33,6 +33,7 @@ cat:
     name: fisheyeCamera
     summary: A 360 fisheye camera, that shows all directions from a specific point
       in space.
+    thumb: assets/images/reference/operators/camera/fisheyeCamera_thumb.png
   - name: linkedCamera
     summary: A camera that is linked to an existing TD Camera COMP.
   - name: lookAtCamera
@@ -46,6 +47,7 @@ cat:
   - name: splitCamera
     summary: A camera that splits the viewport into several zones, each using a separate
       camera.
+    thumb: assets/images/reference/operators/camera/splitCamera_thumb.png
   summary: 'Operators that are used in raymarching to determine which
 
     direction rays should travel, effectively behaving as cameras.'

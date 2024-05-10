@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.filter.instanceField
-  opVersion: '2'
+  opVersion: '3'
   opStatus: default
 opDef: !def
   enable: !expr
@@ -26,6 +26,9 @@ opDef: !def
     evalOpts: !evalOpts
       excludeFirstRow: true
       cols: enable
+  help: !text
+    file: src/operators/filter/instanceField.md
+    name: help
   displayCategory: Repeat
 inputs:
 - !input

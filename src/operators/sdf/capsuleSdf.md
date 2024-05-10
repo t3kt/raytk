@@ -1,4 +1,4 @@
-A cylinder with rounded ends, between two points.
+A line or cylinder with rounded ends, between two points.
 
 With a small `Radius`, this can be used to create a line segment.
 

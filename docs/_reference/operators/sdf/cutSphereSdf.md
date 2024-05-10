@@ -8,6 +8,8 @@ redirect_from:
   - /reference/opType/raytk.operators.sdf.cutSphereSdf/
 op:
   category: sdf
+  detail: Based on [CutSphere - distance 3D](https://www.shadertoy.com/view/stKSzc)
+    by iq.
   inputs:
   - contextTypes:
     - Context
@@ -90,20 +92,30 @@ op:
     name: Shape
     readOnlyHandling: semibaked
     regularHandling: runtime
+    summary: Whether the sphere should be solid or a hollow shell.
   - label: Radius
     name: Radius
     readOnlyHandling: baked
     regularHandling: runtime
+    summary: Radius of the sphere.
   - label: Cut Offset
     name: Offset
     readOnlyHandling: baked
     regularHandling: runtime
+    summary: How far across the sphere the cut plane should be.
   - label: Thickness
     name: Thickness
+    summary: Thickness of the shape if using hollow mode.
   - label: Rotate
     name: Rotate
     readOnlyHandling: baked
     regularHandling: runtime
+  summary: Sphere with part of it cut off, either solid or hollow.
   thumb: assets/images/reference/operators/sdf/cutSphereSdf_thumb.png
 
 ---
+
+
+Sphere with part of it cut off, either solid or hollow.
+
+Based on [CutSphere - distance 3D](https://www.shadertoy.com/view/stKSzc) by iq.

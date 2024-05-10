@@ -43,53 +43,71 @@ op:
       name: z
     - label: W / Alpha
       name: w
-    - label: Length(XY)
+    - description: Use the length of the XY parts of the vector.
+      label: Length(XY)
       name: lengthxy
-    - description: Use the length of the XYZ part of the vector.
+    - description: Use the length of the XYZ parts of the vector.
       label: Length(XYZ)
       name: lengthxyz
     - description: Use the length of all 4 parts of the vector.
       label: Length(XYZW)
       name: lengthxyzw
-    - label: Minimum(XY)
+    - description: Minimum of the X and Y.
+      label: Minimum(XY)
       name: minxy
-    - label: Minimum(XYZ)
+    - description: Minimum of the X, Y, and Z.
+      label: Minimum(XYZ)
       name: minxyz
-    - label: Minimum(XYZW)
+    - description: Minimum of all 4 parts.
+      label: Minimum(XYZW)
       name: minxyzw
-    - label: Maximum(XY)
+    - description: Maximum of the X and Y.
+      label: Maximum(XY)
       name: maxxy
-    - label: Maximum(XYZ)
+    - description: Maximum of the X, Y, and Z.
+      label: Maximum(XYZ)
       name: maxxyz
-    - label: Maximum(XYZW)
+    - description: Maximum of all 4 parts.
+      label: Maximum(XYZW)
       name: maxxyzw
-    - label: Average(XY)
+    - description: Average of X and Y.
+      label: Average(XY)
       name: avgxy
-    - label: Average(XYZ)
+    - description: Average of X, Y, and Z.
+      label: Average(XYZ)
       name: avgxyz
-    - label: Average(XYZW)
+    - description: Average of all 4 parts.
+      label: Average(XYZW)
       name: avgxyzw
-    - label: Hue
+    - description: Treat the vector as an RGB color and get the hue.
+      label: Hue
       name: hue
-    - label: Saturation
+    - description: Treat the vector as an RGB color and get the saturation.
+      label: Saturation
       name: sat
-    - label: Value
+    - description: Treat the vector as an RGB color and get the value (as in HSV).
+      label: Value
       name: val
-    - label: Luminance
+    - description: Treat the vector as an RGB color and get the luminance.
+      label: Luminance
       name: luma
-    - label: Sum(XY)
+    - description: Add the X and Y parts.
+      label: Sum(XY)
       name: sumxy
-    - label: Sum(XYZ)
+    - description: Add the X, Y, and Z parts.
+      label: Sum(XYZ)
       name: sumxyz
-    - label: Sum(XYZW)
+    - description: Add all 4 parts.
+      label: Sum(XYZW)
       name: sumxyzw
     name: Usepart
     readOnlyHandling: semibaked
     regularHandling: semibaked
     summary: Which part of the vector to use for the float field.
-  summary: Converts a vector value field to a float field using one part of the vector.
+  summary: Converts a vector value field to a float field, e.g. using one part of
+    the vector.
 
 ---
 
 
-Converts a vector value field to a float field using one part of the vector.
+Converts a vector value field to a float field, e.g. using one part of the vector.

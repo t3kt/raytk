@@ -1,8 +1,8 @@
 !rop
 meta: !meta
   opType: raytk.operators.combine.simpleDiff
-  opVersion: '14'
-  opStatus: default
+  opVersion: '15'
+  opStatus: deprecated
 opDef: !def
   enable: !expr
     expr: op('..').par.Enable

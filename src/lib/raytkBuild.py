@@ -245,6 +245,12 @@ class BuildContext:
 		# do nothing!
 		pass
 
+	async def waitFrames(self, frames: int):
+		from asyncio import Future
+		future = Future()
+		run('args[0].set_result(None)', future, delayFrames=frames, delayRef=root)
+		await future
+
 	def updateROPInstance(self, comp: COMP):
 		self.log(f'Updating OP instance: {comp}')
 		# noinspection PyTypeChecker
@@ -413,7 +419,7 @@ class DocProcessor:
 	def processOpCategory(self, categoryOp: COMP):
 		self.context.log(f'Processing docs for category {categoryOp}')
 		categoryInfo = CategoryInfo(categoryOp)
-		catHelp = CategoryHelp.extractFromComp(categoryOp)
+		catHelp = CategoryHelp.extractFromComp(categoryOp, self.imagesFolder)
 		if not catHelp.operators:
 			self.context.log(f'Skipping docs for empty category {categoryOp}')
 			return

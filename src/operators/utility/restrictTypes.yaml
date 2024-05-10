@@ -1,0 +1,61 @@
+!rop
+meta: !meta
+  opType: raytk.operators.utility.restrictTypes
+  opVersion: '0'
+  opStatus: beta
+opDef: !def
+  enable: !expr
+    expr: op('..').par.Enable
+  typeSpec: !ropTypes
+    coordType: !coordT
+      Allcoordtype: true
+    contextType: !contextT
+      Allcontexttype: true
+    returnType: !returnT
+      Allreturntype: true
+  function: !text
+    file: src/operators/utility/restrictTypes.glsl
+    name: function
+  flags: hidden
+inputs:
+- !input
+  Required: true
+  coordType: !coordT
+    Coordtypefloat: !expr
+      expr: parent().par.Coordtype == 'float'
+    Coordtypevec2: !expr
+      expr: parent().par.Coordtype == 'vec2'
+    Coordtypevec3: !expr
+      expr: parent().par.Coordtype == 'vec3'
+    Coordtypevec4: !expr
+      expr: parent().par.Coordtype == 'vec4'
+  contextType: !contextT
+    Contexttypecontext: !expr
+      expr: parent().par.Contexttype == 'Context'
+    Contexttypematerialcontext: !expr
+      expr: parent().par.Contexttype == 'MaterialContext'
+    Contexttypecameracontext: !expr
+      expr: parent().par.Contexttype == 'CameraContext'
+    Contexttypelightcontext: !expr
+      expr: parent().par.Contexttype == 'LightContext'
+    Contexttyperaycontext: !expr
+      expr: parent().par.Contexttype == 'RayContext'
+    Contexttypeparticlecontext: !expr
+      expr: parent().par.Contexttype == 'ParticleContext'
+    Contexttypevertexcontext: !expr
+      expr: parent().par.Contexttype == 'VertexContext'
+    Contexttypepixelcontext: !expr
+      expr: parent().par.Contexttype == 'PixelContext'
+  returnType: !returnT
+    Returntypesdf: !expr
+      expr: parent().par.Returntype == 'Sdf'
+    Returntypefloat: !expr
+      expr: parent().par.Returntype == 'float'
+    Returntypevec4: !expr
+      expr: parent().par.Returntype == 'vec4'
+    Returntyperay: !expr
+      expr: parent().par.Returntype == 'Ray'
+    Returntypelight: !expr
+      expr: parent().par.Returntype == 'Light'
+    Returntypeparticle: !expr
+      expr: parent().par.Returntype == 'Particle'

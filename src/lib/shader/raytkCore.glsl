@@ -53,9 +53,7 @@ struct Sdf {
 	vec4 objectId;
 	#endif
 
-	#ifdef RAYTK_USE_SHADOW
 	bool useShadow;
-	#endif
 
 	#ifdef RAYTK_USE_AO
 	bool useAO;
@@ -129,10 +127,8 @@ Sdf createSdf(float dist) {
 	#ifdef RAYTK_OBJECT_ID_IN_SDF
 	res.objectId = vec4(0);
 	#endif
-	#ifdef RAYTK_USE_SHADOW
 	// Switching this on by default since the default material uses shadows.
 	res.useShadow = true;
-	#endif
 	#ifdef RAYTK_USE_AO
 	res.useAO = false;
 	#endif
@@ -366,18 +362,27 @@ struct LightContext {
 	Time time;
 	#endif
 	vec4 iteration;
+	vec3 posOffset;
+	vec3 lookAtOffset;
+	vec3 rotation;
 };
 
 LightContext createLightContext(Sdf res, vec3 norm) {
-	return LightContext(0, res, norm
+	LightContext ctx;
+	ctx.index = 0;
+	ctx.result = res;
+	ctx.normal = norm;
 	#ifdef RAYTK_GLOBAL_POS_IN_CONTEXT
-	, vec3(0.)
+	ctx.globalPos = vec3(0);
 	#endif
 	#if defined(RAYTK_TIME_IN_CONTEXT) || defined(RAYTK_USE_TIME)
-	, getGlobalTime()
+	ctx.time = getGlobalTime();
 	#endif
-	, vec4(0.)
-	);
+	ctx.iteration = vec4(0);
+	ctx.posOffset = vec3(0);
+	ctx.lookAtOffset = vec3(0);
+	ctx.rotation = vec3(0);
+	return ctx;
 }
 
 void setIterationIndex(inout LightContext ctx, float index) {
@@ -397,6 +402,11 @@ struct MaterialContext {
 	Context context;
 	Ray ray;
 	Light light;
+	int lightIndex;
+	#if RAYTK_LIGHT_COUNT > 1
+	Light allLights[RAYTK_LIGHT_COUNT];
+	float allShadedLevels[RAYTK_LIGHT_COUNT];
+	#endif
 	vec3 normal;
 	vec3 reflectColor;
 	vec3 refractColor;
@@ -443,6 +453,7 @@ MaterialContext createMaterialContext() {
 	matCtx.ray = Ray(vec3(0.), vec3(0.));
 	matCtx.normal = vec3(0.);
 	matCtx.reflectColor = vec3(0.);
+	matCtx.lightIndex = 0;
 	#ifdef RAYTK_GLOBAL_POS_IN_CONTEXT
 	matCtx.globalPos = vec3(0);
 	#endif
@@ -486,7 +497,24 @@ struct CameraContext {
 	#if defined(RAYTK_TIME_IN_CONTEXT) || defined(RAYTK_USE_TIME)
 	Time time;
 	#endif
+
+	vec3 posOffset;
+	vec3 lookAtOffset;
+	vec3 rotation;
 };
+
+CameraContext createCameraContext(vec2 resolution) {
+	CameraContext ctx;
+	ctx.resolution = resolution;
+	#if defined(RAYTK_TIME_IN_CONTEXT) || defined(RAYTK_USE_TIME)
+	ctx.time = getGlobalTime();
+	#endif
+
+	ctx.posOffset = vec3(0.);
+	ctx.lookAtOffset = vec3(0.);
+	ctx.rotation = vec3(0.);
+	return ctx;
+}
 
 struct RayContext {
 	Sdf result;
