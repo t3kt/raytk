@@ -169,6 +169,7 @@ _allTypes += [
 			Field('uv2.y', 'Secondary UV (Y)', 'float', macros='RAYTK_USE_UV'),
 			Field('uv2.z', 'Secondary UV (Z)', 'float', macros='RAYTK_USE_UV'),
 			Field('color', 'Surface Color', 'vec4', macros='RAYTK_USE_SURFACE_COLOR'),
+			Field('density', 'Density', 'float', macros='RAYTK_USE_DENSITY'),
 			# TODO: sdf fields
 		]),
 	DataType(

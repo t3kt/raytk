@@ -6,7 +6,11 @@ float THIS_getLevel(CoordT p, ContextT ctx, out vec4 surfaceColor) {
 		surfaceColor = res.color;
 		#endif
 		float d = res.x - THIS_Offset;
-		return THIS_Level * (1.0 - max(0., smoothstep(-THIS_Blending*0.5, THIS_Blending*0.5, d)));
+		float level = THIS_Level * (1.0 - max(0., smoothstep(-THIS_Blending*0.5, THIS_Blending*0.5, d)));
+		#ifdef THIS_Usedensity
+		level *= (1.0 - res.density);
+		#endif
+		return level;
 	#else
 	return THIS_Level;
 	#endif
@@ -21,6 +25,7 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 		level *= ctx.shadedLevel;
 		#endif
 	}
+
 	if (level > 0.) {
 		col = THIS_Color;
 		#ifdef THIS_Uselightcolor

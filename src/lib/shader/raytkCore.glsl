@@ -75,6 +75,10 @@ struct Sdf {
 	vec4 color;
 	#endif
 
+	#ifdef RAYTK_USE_DENSITY
+	float density;
+	#endif
+
 	#ifdef RAYTK_USE_TRANSPARENCY
 	// x: 0/1 is transparent, y: (1 - alpha) inverted so defaults are better
 	vec2 transparent;
@@ -139,6 +143,9 @@ Sdf createSdf(float dist) {
 	#ifdef RAYTK_USE_SURFACE_COLOR
 	res.color = vec4(0.);
 	#endif
+	#ifdef RAYTK_USE_DENSITY
+	res.density = 1.0;
+	#endif
 	#ifdef RAYTK_USE_TRANSPARENCY
 	res.transparent = vec2(0.);
 	#endif
@@ -198,6 +205,10 @@ void blendInSdf(inout Sdf res1, in Sdf res2, in float amt) {
 	} else if (res1.color.w != 0. && res2.color.w != 0.) {
 		res1.color.rgb = mix(res1.color.rgb, res2.color.rgb, amt);
 	}
+	#endif
+
+	#ifdef RAYTK_USE_DENSITY
+	res1.density = mix(res1.density, res2.density, amt);
 	#endif
 
 	#ifdef RAYTK_USE_TRANSPARENCY
