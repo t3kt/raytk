@@ -15,7 +15,7 @@ float sdHexPrism( vec3 p, vec2 h )
 	return min(max(d.x,d.y),0.0) + length(max(d,0.0));
 }
 
-float sdOctogonPrism( in vec3 p, in float r, float h )
+float sdOctagonPrism( in vec3 p, in float r, float h )
 {
 	const vec3 k = vec3(-0.9238795325,  // sqrt(2+sqrt(2))/2
 	0.3826834323,   // sqrt(2-sqrt(2))/2
