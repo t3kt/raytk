@@ -2,5 +2,5 @@ name	label	code	params
 tri	Triangle	d = sdTriPrism(p, vec2(r, h)); n = 3.;	
 square	Square	d = sdSquarePrism(p, vec2(r, h)); n = 4.;	
 hex	Hexagon	d = sdHexPrism(p, vec2(r, h)); n = 6.;	
-octogon	Octogon	d = sdOctogonPrism(p, r, h); n = 8.;	
+octogon	Octägon	d = sdOctogonPrism(p, r, h); n = 8.;
 custom	Custom	d = sdArbitraryPrism(p, r, h, n);	Sides
