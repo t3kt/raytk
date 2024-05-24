@@ -46,8 +46,10 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 	float thCol;
 	float thRow;
 
+	int parts = int(THIS_Parts);
+
 	float dCols;
-	{
+	if (parts == THISTYPE_Parts_both || parts == THISTYPE_Parts_cols) {
 		pR(p.xz, shift.x * TAU);
 		pCol = p;
 		col = pModPolar(pCol.xz, cols);
@@ -61,7 +63,7 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 	}
 
 	float dRows;
-	{
+	if (parts == THISTYPE_Parts_both || parts == THISTYPE_Parts_rows) {
 		qRow = vec2(length(p.xz) - rOuter, p.y);
 		pR(qRow, shift.y * TAU);
 		row = pModPolar(qRow, rows);
@@ -74,23 +76,38 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 		qRow.x -= thOuter;
 	}
 
-	#ifdef THIS_HAS_INPUT_barThicknessField
-	thCol = inputOp_barThicknessField(p0, ctx);
-	#else
-	thCol = THIS_Barthickness;
-	#endif
-	dCols = fTorus(pCol.xzy, thCol, thOuter);
+	if (parts == THISTYPE_Parts_both || parts == THISTYPE_Parts_cols) {
+		#ifdef THIS_HAS_INPUT_barThicknessField
+    	thCol = inputOp_barThicknessField(p0, ctx);
+		#else
+    	thCol = THIS_Barthickness;
+		#endif
+		dCols = fTorus(pCol.xzy, thCol, thOuter);
+	}
 
-	#ifdef THIS_HAS_INPUT_barThicknessField
-	thRow = inputOp_barThicknessField(p0, ctx);
-	#else
-	thRow = THIS_Barthickness;
-	#endif
-	dRows = length(qRow) - thRow;
+	if (parts == THISTYPE_Parts_both || parts == THISTYPE_Parts_rows) {
+		#ifdef THIS_HAS_INPUT_barThicknessField
+    	thRow = inputOp_barThicknessField(p0, ctx);
+		#else
+    	thRow = THIS_Barthickness;
+		#endif
+    	dRows = length(qRow) - thRow;
+	}
 
-	Sdf res1 = createSdf(dRows);
-	Sdf res2 = createSdf(dCols);
-	THIS_combine(res1, res2, p0, ctx);
+	Sdf res1;
+	switch (parts) {
+		case THISTYPE_Parts_both:
+			res1 = createSdf(dRows);
+			Sdf res2 = createSdf(dCols);
+			THIS_combine(res1, res2, p0, ctx);
+			break;
+		case THISTYPE_Parts_cols:
+			res1 = createSdf(dCols);
+			break;
+		case THISTYPE_Parts_rows:
+			res1 = createSdf(dRows);
+			break;
+	}
 
 	return res1;
 }
