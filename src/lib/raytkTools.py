@@ -462,122 +462,109 @@ class RaytkTools(RaytkContext):
 				cats.append(child)
 		return cats
 
-class ToolkitLoader(RaytkTools):
-	def __init__(self, log: 'Callable[[str], None]'):
-		self.categoryNameQueue = []  # type: list[str]
-		self.log = log
+class _ModuleLoader(RaytkTools):
+	def __init__(
+			self,
+			operatorsComp: COMP,
+			operatorsFolder: Path,
+			log: 'Callable[[str], None]',
+	):
+		self.operatorsComp = operatorsComp
+		self.operatorsFolder = operatorsFolder
+		self._log = log
 
-	def loadToolkit(self, thenRun: Callable = None, runArgs: list = None):
-		self.categoryNameQueue = []
-		self._queueCall(self._loadToolkit_stage, 0, thenRun, runArgs)
+	def log(self, msg):
+		if self._log:
+			self._log(msg)
 
-	def _loadToolkit_stage(self, stage: int, thenRun: Callable = None, runArgs: list = None):
-		if stage == 0:
-			self._loadToolkitMetadata()
-		elif stage == 1:
-			self._loadCategoryComps()
-		elif stage == 2:
-			self._loadNextCategory(thenRun, runArgs)
-			return
+	async def load(self, clearExisting: bool):
+		if clearExisting:
+			await self._clearExisting()
+		categoryFolders = list(self.operatorsFolder.glob('*/'))
+		self.log('Loading category folders: ' + ', '.join(f.name for f in categoryFolders))
+		for catFolder in categoryFolders:
+			await self._loadCategory(catFolder)
+		self.log('Finished loading categories')
+
+	async def _clearExisting(self):
+		self.log('Clearing existing COMPs')
+		for o in self.operatorsComp.children:
+			self.log('Removing ' + o.path)
+			try:
+				o.destroy()
+			except:
+				pass
+
+	async def _loadCategory(self, categoryFolder: Path):
+		catName = categoryFolder.name
+		self.log(f'Loading category {catName} from {categoryFolder.as_posix()}')
+		catComp = self.operatorsComp.op(catName)
+		if catComp:
+			self.log('Using existing COMP ' + catComp.path)
 		else:
-			if thenRun:
-				self._queueCall(thenRun, *(runArgs or []))
-			return
-		self._queueCall(self._loadToolkit_stage, stage + 1, thenRun, runArgs)
+			catComp = self.operatorsComp.create(baseCOMP, catName)
+			compToxFile = categoryFolder / 'index.tox'
+			catComp.par.externaltox = compToxFile.as_posix()
+			catComp.par.savebackup = True
+			catComp.save(compToxFile.as_posix())
+			self.log('Created new COMP ' + catComp.path)
+		opToxFiles = list(sorted([
+			f
+			for f in categoryFolder.glob('*.tox')
+			if f.name != 'index.tox'
+		]))
+		self.log(f'Found {len(opToxFiles)} operator tox files')
+		for toxFile in opToxFiles:
+			await self._loadOperator(catComp, toxFile)
+		helpFile = categoryFolder / 'index.md'
+		await self._loadCategoryHelp(catComp, helpFile)
+		await self._applyCategoryLayout(catComp)
+		self.log(f'Finished loading category {catName}')
 
-	def _loadToolkitMetadata(self):
-		self.log('Loading toolkit metadata ... but that is not yet implemented')
+	async def _loadOperator(self, categoryComp: COMP, toxFile: Path):
+		self.log(f'Loading operator from {toxFile.as_posix()} into {categoryComp}')
+		name = toxFile.stem
+		o = categoryComp.op(name)
+		if o:
+			self.log(f'  Reloading existing operator {o}')
+			o.par.enableexternaltoxpulse.pulse()
+		else:
+			o = categoryComp.loadTox(toxFile.as_posix())
+			self.log(f'Loaded operator {o}')
 
-	def _loadCategoryComps(self):
-		self.log('Loading category comps')
-		opsRoot = self.operatorsRoot()
-		indexTox = Path(opsRoot.par.externaltox.eval())
-		catsDir = indexTox.parent
-		catToxes = list(catsDir.glob('*/index.tox'))
-		self.log(f'  found {len(catToxes)} category toxes')
-		currentCats = list(self.allCategories())
-		for o in currentCats:
-			try:
-				o.destroy()
-			except:
-				pass
-		self.log(f'  cleared out {len(currentCats)} old category comps')
-		for tox in catToxes:
-			self.log(f'f  loading category tox: {tox.as_posix()}')
-			opsRoot.loadTox(tox.as_posix())
-		self.categoryNameQueue = [
-			o.name
-			for o in self.allCategories()
-		]
-		self.log(f'  loaded {len(self.categoryNameQueue)} categories')
-
-	def _loadNextCategory(self, thenRun: callable, runArgs: list):
-		if not self.categoryNameQueue:
-			self._queueCall(thenRun, *(runArgs or []))
-			return
-		catName = self.categoryNameQueue.pop()
-		self._loadCategory(catName, thenRun=self._loadNextCategory, runArgs=[thenRun, runArgs])
-
-	def _loadCategory(self, categoryName: str, thenRun: callable, runArgs: list):
-		self.log(f'Loading category {categoryName}')
-		catInfo = self.categoryInfo(categoryName)
-		indexTox = Path(catInfo.category.par.externaltox.eval())
-		catDir = indexTox.parent
-		foundToxes = [
-			tox
-			for tox in catDir.glob('*.tox')
-			if tox.name != 'index.tox'
-		]
-		foundToxes.sort()
-		self.log(f'  found {len(foundToxes)} toxes in category')
-		currentOps = list(catInfo.operators)
-		self.log(f'  clearing {len(currentOps)} current ops in category')
-		for o in currentOps:
-			try:
-				o.destroy()
-			except:
-				pass
-
-
-		self._loadCategoryHelp(catInfo, catDir)
-
-		self.log('  loading category operators...')
-		for tox in foundToxes:
-			self.log(f'  loading operator tox {tox.as_posix()}')
-			catInfo.category.loadTox(tox.as_posix())
-		self.log(f'  loaded {len(catInfo.operators)} operators in category')
-
-		for o in catInfo.operators:
-			self._initializeOperator(o)
-
-		self._queueCall(thenRun, *(runArgs or []))
-
-	def _loadCategoryHelp(self, catInfo: CategoryInfo, catDir: Path):
-		helpFile = catDir / 'index.md'
-		helpDat = catInfo.helpDAT
-		self.log(f'Attempting to load category help from {helpFile.as_posix()}')
-		if not helpDat or helpDat.par.file != helpFile.as_posix():
+	async def _loadCategoryHelp(self, categoryComp: COMP, helpFile: Path):
+		helpDat = categoryComp.op('help')
+		if not helpFile:
 			if helpDat:
+				self.log(f'Removing help DAT {helpDat}')
 				helpDat.destroy()
-			if not helpFile.exists():
-				self.log('  no help file to load')
-				return
-			helpDat = catInfo.category.create(textDAT, 'help')
+			return
+		self.log(f'Loading help file {helpFile.as_posix()}')
+		if not helpDat:
+			helpDat = categoryComp.create(textDAT, 'help')
 		helpDat.par.file = helpFile.as_posix()
-		helpDat.par.loadonstartpulse.pulse()
+		helpDat.par.syncfile = True
 		RaytkTags.fileSync.apply(helpDat, True)
-		helpDat.nodeX = 1125
-		helpDat.nodeY = 525
-		helpDat.nodeWidth = 350
-		helpDat.nodeHeight = 175
-		self.log(f'  loaded category help from {helpFile.as_posix()} into {helpDat}')
 
-	def _initializeOperator(self, rop: COMP):
-		self.log(f'Initializing operator {rop}')
-		ropInfo = ROPInfo(rop)
-		if ropInfo and ropInfo.opDefPar:
-			ropInfo.toolkitVersion = self.toolkitVersion()
-
-	@staticmethod
-	def _queueCall(method: Callable, *args):
-		run('args[0](*(args[1:]))', method, *args, delayFrames=5, delayRef=root)
+	async def _applyCategoryLayout(self, categoryComp: COMP):
+		self.log(f'Updating layout in {categoryComp}')
+		templateComp = categoryComp.op('__template')
+		helpDat = categoryComp.op('help')
+		operatorComps = [
+			o
+			for o in categoryComp.children
+			if o.isCOMP and o != templateComp
+		]
+		operatorComps.sort(key=lambda o: o.name)
+		for i, o in enumerate(operatorComps):
+			o.nodeX = 200 * (i % 10)
+			o.nodeY = -200 * (i // 10)
+		if templateComp:
+			templateComp.nodeX = -275
+			templateComp.nodeY = 325
+		if helpDat:
+			helpDat.nodeWidth = 350
+			helpDat.nodeHeight = 175
+			helpDat.nodeX = 675
+			helpDat.nodeY = 275
+		self.log('Finished updating layout')
