@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.output.customRender
-  opVersion: '15'
+  opVersion: '16'
   opStatus: alpha
 paramPages:
 - !page
@@ -183,45 +183,15 @@ opDef: !def
   enable: true
   typeSpec: !ropTypes
     coordType: !coordT
-      Allcoordtype: !expr
-        expr: parent().par.Coordtype == 'auto'
-      Coordtypefloat: !expr
-        expr: parent().par.Coordtype == 'float'
-      Coordtypevec2: !expr
-        expr: parent().par.Coordtype == 'vec2'
-      Coordtypevec3: !expr
-        expr: parent().par.Coordtype == 'vec3'
+      Allcoordtype: true
     contextType: !contextT
-      Allcontexttype: !expr
-        expr: parent().par.Contexttype == 'auto'
-      Contexttypecontext: !expr
-        expr: parent().par.Contexttype == 'Context'
-      Contexttypematerialcontext: !expr
-        expr: parent().par.Contexttype == 'MaterialContext'
-      Contexttypecameracontext: !expr
-        expr: parent().par.Contexttype == 'CameraContext'
-      Contexttypelightcontext: !expr
-        expr: parent().par.Contexttype == 'LightContext'
-      Contexttyperaycontext: !expr
-        expr: parent().par.Contexttype == 'RayContext'
+      Allcontexttype: true
     returnType: !returnT
-      Returntypesdf: !expr
-        expr: parent().par.Returntype == 'Sdf'
-      Returntypefloat: !expr
-        expr: parent().par.Returntype == 'float'
-      Returntypevec4: !expr
-        expr: parent().par.Returntype == 'vec4'
-      Returntyperay: !expr
-        expr: parent().par.Returntype == 'Ray'
-      Returntypelight: !expr
-        expr: parent().par.Returntype == 'Light'
-  function: !text
-    file: src/operators/output/customRender_function.glsl
-    name: functionTemplate
+      Allreturntype: true
+  function: functionTemplate
   displayCategory: Render
 inputs:
 - !input
-  Required: true
   coordType: !coordT
     Allcoordtype: true
   contextType: !contextT

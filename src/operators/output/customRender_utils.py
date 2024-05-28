@@ -5,10 +5,10 @@ if False:
 
 def onCreateParPulse(action: str):
 	o = parent()
-	if action == 'Createbodytemplate':
-		par = o.par.Bodytemplate
-		template = op('default_body_template')
-		suffix = '_body'
+	if action == 'Createmaincode':
+		par = o.par.Maincode
+		template = op('defaultMainCode')
+		suffix = '_main'
 		offsetX = 0
 		desc = 'shader body'
 		opType = textDAT
