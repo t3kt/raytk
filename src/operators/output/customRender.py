@@ -33,3 +33,17 @@ def onCreateParPulse(action: str):
 	par.val = dat
 	o.showDocked = True
 	ui.undo.endBlock()
+
+def buildOutputTable(dat: scriptDAT):
+	dat.clear()
+	dat.appendRow(['name', 'label', 'macro', 'special', 'enable', 'path', 'enablePar', 'available'])
+	parSeq = parent().seq.Outputbuf
+	path = op('shaderExecutor/render_glsl').path
+	for i, block in enumerate(parSeq):
+		name: str = block.par.Name.eval()
+		dat.appendRow([
+			name + 'Out',
+			name.capitalize(),
+			'OUTPUT_' + name.upper(),
+			'', '1', path, '', '1',
+		])

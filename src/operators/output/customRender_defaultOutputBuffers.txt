@@ -1,4 +1,0 @@
-name	label	macro	special	enable	path	enablePar	available
-colorOut	Color			1	parent().path + '/shaderExecutor/render_glsl'		
-sdfOut	SDF Result	OUTPUT_SDF		op('definition')[1, 'returnType'] == 'Sdf'	parent().path + '/shaderExecutor/render_glsl'		
-valueOut	Value	OUTPUT_VALUE		op('definition')[1, 'returnType'] in ('float', 'vec3')	parent().path + '/shaderExecutor/render_glsl'		
