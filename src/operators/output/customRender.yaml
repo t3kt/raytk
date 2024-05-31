@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.output.customRender
-  opVersion: '17'
+  opVersion: '18'
   opStatus: alpha
 paramPages:
 - !page
@@ -183,39 +183,414 @@ opDef: !def
   enable: true
   typeSpec: !ropTypes
     coordType: !coordT
-      Allcoordtype: true
+      Coordtypevec2: true
     contextType: !contextT
-      Allcontexttype: true
+      Contexttypecontext: true
     returnType: !returnT
-      Allreturntype: true
+      Returntypefloat: true
   function: functionTemplate
+  callbacks: !text
+    file: src/operators/output/customRender.py
+    name: customRender
   displayCategory: Render
 inputs:
 - !input
+  Localalias: !expr
+    expr: op('inputTable')[1, 'name']
+  Prohibited: !expr
+    expr: op('inputTable')[1, 'exists'] != '1'
   coordType: !coordT
-    Allcoordtype: true
+    Allcoordtype: !expr
+      expr: op('inputTable')[1, 'coordType'].val in ('auto', '')
+    Coordtypefloat: !expr
+      expr: op('inputTable')[1, 'coordType'] == 'float'
+    Coordtypevec2: !expr
+      expr: op('inputTable')[1, 'coordType'] == 'vec2'
+    Coordtypevec3: !expr
+      expr: op('inputTable')[1, 'coordType'] == 'vec3'
+    Coordtypevec4: !expr
+      expr: op('inputTable')[1, 'coordType'] == 'vec4'
   contextType: !contextT
-    Allcontexttype: true
+    Allcontexttype: !expr
+      expr: op('inputTable')[1, 'contextType'].val in ('auto', '')
+    Contexttypecontext: !expr
+      expr: op('inputTable')[1, 'contextType'] == 'Context'
+    Contexttypematerialcontext: !expr
+      expr: op('inputTable')[1, 'contextType'] == 'MaterialContext'
+    Contexttypecameracontext: !expr
+      expr: op('inputTable')[1, 'contextType'] == 'CameraContext'
+    Contexttypelightcontext: !expr
+      expr: op('inputTable')[1, 'contextType'] == 'LightContext'
+    Contexttyperaycontext: !expr
+      expr: op('inputTable')[1, 'contextType'] == 'RayContext'
+    Contexttypeparticlecontext: !expr
+      expr: op('inputTable')[1, 'contextType'] == 'ParticleContext'
+    Contexttypevertexcontext: !expr
+      expr: op('inputTable')[1, 'contextType'] == 'VertexContext'
+    Contexttypepixelcontext: !expr
+      expr: op('inputTable')[1, 'contextType'] == 'PixelContext'
   returnType: !returnT
-    Allreturntype: true
+    Allreturntype: !expr
+      expr: op('inputTable')[1, 'returnType'].val in ('auto', '')
+    Returntypesdf: !expr
+      expr: op('inputTable')[1, 'returnType'] == 'Sdf'
+    Returntypefloat: !expr
+      expr: op('inputTable')[1, 'returnType'] == 'float'
+    Returntypevec4: !expr
+      expr: op('inputTable')[1, 'returnType'] == 'vec4'
+    Returntyperay: !expr
+      expr: op('inputTable')[1, 'returnType'] == 'Ray'
+    Returntypelight: !expr
+      expr: op('inputTable')[1, 'returnType'] == 'Light'
+    Returntypeparticle: !expr
+      expr: op('inputTable')[1, 'returnType'] == 'Particle'
 - !input
+  Localalias: !expr
+    expr: op('inputTable')[2, 'name']
+  Prohibited: !expr
+    expr: op('inputTable')[2, 'exists'] != '1'
   coordType: !coordT
-    Allcoordtype: true
+    Allcoordtype: !expr
+      expr: op('inputTable')[2, 'coordType'].val in ('auto', '')
+    Coordtypefloat: !expr
+      expr: op('inputTable')[2, 'coordType'] == 'float'
+    Coordtypevec2: !expr
+      expr: op('inputTable')[2, 'coordType'] == 'vec2'
+    Coordtypevec3: !expr
+      expr: op('inputTable')[2, 'coordType'] == 'vec3'
+    Coordtypevec4: !expr
+      expr: op('inputTable')[2, 'coordType'] == 'vec4'
   contextType: !contextT
-    Allcontexttype: true
+    Allcontexttype: !expr
+      expr: op('inputTable')[2, 'contextType'].val in ('auto', '')
+    Contexttypecontext: !expr
+      expr: op('inputTable')[2, 'contextType'] == 'Context'
+    Contexttypematerialcontext: !expr
+      expr: op('inputTable')[2, 'contextType'] == 'MaterialContext'
+    Contexttypecameracontext: !expr
+      expr: op('inputTable')[2, 'contextType'] == 'CameraContext'
+    Contexttypelightcontext: !expr
+      expr: op('inputTable')[2, 'contextType'] == 'LightContext'
+    Contexttyperaycontext: !expr
+      expr: op('inputTable')[2, 'contextType'] == 'RayContext'
+    Contexttypeparticlecontext: !expr
+      expr: op('inputTable')[2, 'contextType'] == 'ParticleContext'
+    Contexttypevertexcontext: !expr
+      expr: op('inputTable')[2, 'contextType'] == 'VertexContext'
+    Contexttypepixelcontext: !expr
+      expr: op('inputTable')[2, 'contextType'] == 'PixelContext'
   returnType: !returnT
-    Allreturntype: true
+    Allreturntype: !expr
+      expr: op('inputTable')[2, 'returnType'].val in ('auto', '')
+    Returntypesdf: !expr
+      expr: op('inputTable')[2, 'returnType'] == 'Sdf'
+    Returntypefloat: !expr
+      expr: op('inputTable')[2, 'returnType'] == 'float'
+    Returntypevec4: !expr
+      expr: op('inputTable')[2, 'returnType'] == 'vec4'
+    Returntyperay: !expr
+      expr: op('inputTable')[2, 'returnType'] == 'Ray'
+    Returntypelight: !expr
+      expr: op('inputTable')[2, 'returnType'] == 'Light'
+    Returntypeparticle: !expr
+      expr: op('inputTable')[2, 'returnType'] == 'Particle'
 - !input
+  Localalias: !expr
+    expr: op('inputTable')[3, 'name']
+  Prohibited: !expr
+    expr: op('inputTable')[3, 'exists'] != '1'
   coordType: !coordT
-    Allcoordtype: true
+    Allcoordtype: !expr
+      expr: op('inputTable')[3, 'coordType'].val in ('auto', '')
+    Coordtypefloat: !expr
+      expr: op('inputTable')[3, 'coordType'] == 'float'
+    Coordtypevec2: !expr
+      expr: op('inputTable')[3, 'coordType'] == 'vec2'
+    Coordtypevec3: !expr
+      expr: op('inputTable')[3, 'coordType'] == 'vec3'
+    Coordtypevec4: !expr
+      expr: op('inputTable')[3, 'coordType'] == 'vec4'
   contextType: !contextT
-    Allcontexttype: true
+    Allcontexttype: !expr
+      expr: op('inputTable')[3, 'contextType'].val in ('auto', '')
+    Contexttypecontext: !expr
+      expr: op('inputTable')[3, 'contextType'] == 'Context'
+    Contexttypematerialcontext: !expr
+      expr: op('inputTable')[3, 'contextType'] == 'MaterialContext'
+    Contexttypecameracontext: !expr
+      expr: op('inputTable')[3, 'contextType'] == 'CameraContext'
+    Contexttypelightcontext: !expr
+      expr: op('inputTable')[3, 'contextType'] == 'LightContext'
+    Contexttyperaycontext: !expr
+      expr: op('inputTable')[3, 'contextType'] == 'RayContext'
+    Contexttypeparticlecontext: !expr
+      expr: op('inputTable')[3, 'contextType'] == 'ParticleContext'
+    Contexttypevertexcontext: !expr
+      expr: op('inputTable')[3, 'contextType'] == 'VertexContext'
+    Contexttypepixelcontext: !expr
+      expr: op('inputTable')[3, 'contextType'] == 'PixelContext'
   returnType: !returnT
-    Allreturntype: true
+    Allreturntype: !expr
+      expr: op('inputTable')[3, 'returnType'].val in ('auto', '')
+    Returntypesdf: !expr
+      expr: op('inputTable')[3, 'returnType'] == 'Sdf'
+    Returntypefloat: !expr
+      expr: op('inputTable')[3, 'returnType'] == 'float'
+    Returntypevec4: !expr
+      expr: op('inputTable')[3, 'returnType'] == 'vec4'
+    Returntyperay: !expr
+      expr: op('inputTable')[3, 'returnType'] == 'Ray'
+    Returntypelight: !expr
+      expr: op('inputTable')[3, 'returnType'] == 'Light'
+    Returntypeparticle: !expr
+      expr: op('inputTable')[3, 'returnType'] == 'Particle'
 - !input
+  Localalias: !expr
+    expr: op('inputTable')[4, 'name']
+  Prohibited: !expr
+    expr: op('inputTable')[4, 'exists'] != '1'
   coordType: !coordT
-    Allcoordtype: true
+    Allcoordtype: !expr
+      expr: op('inputTable')[4, 'coordType'].val in ('auto', '')
+    Coordtypefloat: !expr
+      expr: op('inputTable')[4, 'coordType'] == 'float'
+    Coordtypevec2: !expr
+      expr: op('inputTable')[4, 'coordType'] == 'vec2'
+    Coordtypevec3: !expr
+      expr: op('inputTable')[4, 'coordType'] == 'vec3'
+    Coordtypevec4: !expr
+      expr: op('inputTable')[4, 'coordType'] == 'vec4'
   contextType: !contextT
-    Allcontexttype: true
+    Allcontexttype: !expr
+      expr: op('inputTable')[4, 'contextType'].val in ('auto', '')
+    Contexttypecontext: !expr
+      expr: op('inputTable')[4, 'contextType'] == 'Context'
+    Contexttypematerialcontext: !expr
+      expr: op('inputTable')[4, 'contextType'] == 'MaterialContext'
+    Contexttypecameracontext: !expr
+      expr: op('inputTable')[4, 'contextType'] == 'CameraContext'
+    Contexttypelightcontext: !expr
+      expr: op('inputTable')[4, 'contextType'] == 'LightContext'
+    Contexttyperaycontext: !expr
+      expr: op('inputTable')[4, 'contextType'] == 'RayContext'
+    Contexttypeparticlecontext: !expr
+      expr: op('inputTable')[4, 'contextType'] == 'ParticleContext'
+    Contexttypevertexcontext: !expr
+      expr: op('inputTable')[4, 'contextType'] == 'VertexContext'
+    Contexttypepixelcontext: !expr
+      expr: op('inputTable')[4, 'contextType'] == 'PixelContext'
   returnType: !returnT
-    Allreturntype: true
+    Allreturntype: !expr
+      expr: op('inputTable')[4, 'returnType'].val in ('auto', '')
+    Returntypesdf: !expr
+      expr: op('inputTable')[4, 'returnType'] == 'Sdf'
+    Returntypefloat: !expr
+      expr: op('inputTable')[4, 'returnType'] == 'float'
+    Returntypevec4: !expr
+      expr: op('inputTable')[4, 'returnType'] == 'vec4'
+    Returntyperay: !expr
+      expr: op('inputTable')[4, 'returnType'] == 'Ray'
+    Returntypelight: !expr
+      expr: op('inputTable')[4, 'returnType'] == 'Light'
+    Returntypeparticle: !expr
+      expr: op('inputTable')[4, 'returnType'] == 'Particle'
+- !input
+  Localalias: !expr
+    expr: op('inputTable')[5, 'name']
+  Prohibited: !expr
+    expr: op('inputTable')[5, 'exists'] != '1'
+  coordType: !coordT
+    Allcoordtype: !expr
+      expr: op('inputTable')[5, 'coordType'].val in ('auto', '')
+    Coordtypefloat: !expr
+      expr: op('inputTable')[5, 'coordType'] == 'float'
+    Coordtypevec2: !expr
+      expr: op('inputTable')[5, 'coordType'] == 'vec2'
+    Coordtypevec3: !expr
+      expr: op('inputTable')[5, 'coordType'] == 'vec3'
+    Coordtypevec4: !expr
+      expr: op('inputTable')[5, 'coordType'] == 'vec4'
+  contextType: !contextT
+    Allcontexttype: !expr
+      expr: op('inputTable')[5, 'contextType'].val in ('auto', '')
+    Contexttypecontext: !expr
+      expr: op('inputTable')[5, 'contextType'] == 'Context'
+    Contexttypematerialcontext: !expr
+      expr: op('inputTable')[5, 'contextType'] == 'MaterialContext'
+    Contexttypecameracontext: !expr
+      expr: op('inputTable')[5, 'contextType'] == 'CameraContext'
+    Contexttypelightcontext: !expr
+      expr: op('inputTable')[5, 'contextType'] == 'LightContext'
+    Contexttyperaycontext: !expr
+      expr: op('inputTable')[5, 'contextType'] == 'RayContext'
+    Contexttypeparticlecontext: !expr
+      expr: op('inputTable')[5, 'contextType'] == 'ParticleContext'
+    Contexttypevertexcontext: !expr
+      expr: op('inputTable')[5, 'contextType'] == 'VertexContext'
+    Contexttypepixelcontext: !expr
+      expr: op('inputTable')[5, 'contextType'] == 'PixelContext'
+  returnType: !returnT
+    Allreturntype: !expr
+      expr: op('inputTable')[5, 'returnType'].val in ('auto', '')
+    Returntypesdf: !expr
+      expr: op('inputTable')[5, 'returnType'] == 'Sdf'
+    Returntypefloat: !expr
+      expr: op('inputTable')[5, 'returnType'] == 'float'
+    Returntypevec4: !expr
+      expr: op('inputTable')[5, 'returnType'] == 'vec4'
+    Returntyperay: !expr
+      expr: op('inputTable')[5, 'returnType'] == 'Ray'
+    Returntypelight: !expr
+      expr: op('inputTable')[5, 'returnType'] == 'Light'
+    Returntypeparticle: !expr
+      expr: op('inputTable')[5, 'returnType'] == 'Particle'
+- !input
+  Localalias: !expr
+    expr: op('inputTable')[6, 'name']
+  Prohibited: !expr
+    expr: op('inputTable')[6, 'exists'] != '1'
+  coordType: !coordT
+    Allcoordtype: !expr
+      expr: op('inputTable')[6, 'coordType'].val in ('auto', '')
+    Coordtypefloat: !expr
+      expr: op('inputTable')[6, 'coordType'] == 'float'
+    Coordtypevec2: !expr
+      expr: op('inputTable')[6, 'coordType'] == 'vec2'
+    Coordtypevec3: !expr
+      expr: op('inputTable')[6, 'coordType'] == 'vec3'
+    Coordtypevec4: !expr
+      expr: op('inputTable')[6, 'coordType'] == 'vec4'
+  contextType: !contextT
+    Allcontexttype: !expr
+      expr: op('inputTable')[6, 'contextType'].val in ('auto', '')
+    Contexttypecontext: !expr
+      expr: op('inputTable')[6, 'contextType'] == 'Context'
+    Contexttypematerialcontext: !expr
+      expr: op('inputTable')[6, 'contextType'] == 'MaterialContext'
+    Contexttypecameracontext: !expr
+      expr: op('inputTable')[6, 'contextType'] == 'CameraContext'
+    Contexttypelightcontext: !expr
+      expr: op('inputTable')[6, 'contextType'] == 'LightContext'
+    Contexttyperaycontext: !expr
+      expr: op('inputTable')[6, 'contextType'] == 'RayContext'
+    Contexttypeparticlecontext: !expr
+      expr: op('inputTable')[6, 'contextType'] == 'ParticleContext'
+    Contexttypevertexcontext: !expr
+      expr: op('inputTable')[6, 'contextType'] == 'VertexContext'
+    Contexttypepixelcontext: !expr
+      expr: op('inputTable')[6, 'contextType'] == 'PixelContext'
+  returnType: !returnT
+    Allreturntype: !expr
+      expr: op('inputTable')[6, 'returnType'].val in ('auto', '')
+    Returntypesdf: !expr
+      expr: op('inputTable')[6, 'returnType'] == 'Sdf'
+    Returntypefloat: !expr
+      expr: op('inputTable')[6, 'returnType'] == 'float'
+    Returntypevec4: !expr
+      expr: op('inputTable')[6, 'returnType'] == 'vec4'
+    Returntyperay: !expr
+      expr: op('inputTable')[6, 'returnType'] == 'Ray'
+    Returntypelight: !expr
+      expr: op('inputTable')[6, 'returnType'] == 'Light'
+    Returntypeparticle: !expr
+      expr: op('inputTable')[6, 'returnType'] == 'Particle'
+- !input
+  Localalias: !expr
+    expr: op('inputTable')[7, 'name']
+  Prohibited: !expr
+    expr: op('inputTable')[7, 'exists'] != '1'
+  coordType: !coordT
+    Allcoordtype: !expr
+      expr: op('inputTable')[7, 'coordType'].val in ('auto', '')
+    Coordtypefloat: !expr
+      expr: op('inputTable')[7, 'coordType'] == 'float'
+    Coordtypevec2: !expr
+      expr: op('inputTable')[7, 'coordType'] == 'vec2'
+    Coordtypevec3: !expr
+      expr: op('inputTable')[7, 'coordType'] == 'vec3'
+    Coordtypevec4: !expr
+      expr: op('inputTable')[7, 'coordType'] == 'vec4'
+  contextType: !contextT
+    Allcontexttype: !expr
+      expr: op('inputTable')[7, 'contextType'].val in ('auto', '')
+    Contexttypecontext: !expr
+      expr: op('inputTable')[7, 'contextType'] == 'Context'
+    Contexttypematerialcontext: !expr
+      expr: op('inputTable')[7, 'contextType'] == 'MaterialContext'
+    Contexttypecameracontext: !expr
+      expr: op('inputTable')[7, 'contextType'] == 'CameraContext'
+    Contexttypelightcontext: !expr
+      expr: op('inputTable')[7, 'contextType'] == 'LightContext'
+    Contexttyperaycontext: !expr
+      expr: op('inputTable')[7, 'contextType'] == 'RayContext'
+    Contexttypeparticlecontext: !expr
+      expr: op('inputTable')[7, 'contextType'] == 'ParticleContext'
+    Contexttypevertexcontext: !expr
+      expr: op('inputTable')[7, 'contextType'] == 'VertexContext'
+    Contexttypepixelcontext: !expr
+      expr: op('inputTable')[7, 'contextType'] == 'PixelContext'
+  returnType: !returnT
+    Allreturntype: !expr
+      expr: op('inputTable')[7, 'returnType'].val in ('auto', '')
+    Returntypesdf: !expr
+      expr: op('inputTable')[7, 'returnType'] == 'Sdf'
+    Returntypefloat: !expr
+      expr: op('inputTable')[7, 'returnType'] == 'float'
+    Returntypevec4: !expr
+      expr: op('inputTable')[7, 'returnType'] == 'vec4'
+    Returntyperay: !expr
+      expr: op('inputTable')[7, 'returnType'] == 'Ray'
+    Returntypelight: !expr
+      expr: op('inputTable')[7, 'returnType'] == 'Light'
+    Returntypeparticle: !expr
+      expr: op('inputTable')[7, 'returnType'] == 'Particle'
+- !input
+  Localalias: !expr
+    expr: op('inputTable')[8, 'name']
+  Prohibited: !expr
+    expr: op('inputTable')[8, 'exists'] != '1'
+  coordType: !coordT
+    Allcoordtype: !expr
+      expr: op('inputTable')[8, 'coordType'].val in ('auto', '')
+    Coordtypefloat: !expr
+      expr: op('inputTable')[8, 'coordType'] == 'float'
+    Coordtypevec2: !expr
+      expr: op('inputTable')[8, 'coordType'] == 'vec2'
+    Coordtypevec3: !expr
+      expr: op('inputTable')[8, 'coordType'] == 'vec3'
+    Coordtypevec4: !expr
+      expr: op('inputTable')[8, 'coordType'] == 'vec4'
+  contextType: !contextT
+    Allcontexttype: !expr
+      expr: op('inputTable')[8, 'contextType'].val in ('auto', '')
+    Contexttypecontext: !expr
+      expr: op('inputTable')[8, 'contextType'] == 'Context'
+    Contexttypematerialcontext: !expr
+      expr: op('inputTable')[8, 'contextType'] == 'MaterialContext'
+    Contexttypecameracontext: !expr
+      expr: op('inputTable')[8, 'contextType'] == 'CameraContext'
+    Contexttypelightcontext: !expr
+      expr: op('inputTable')[8, 'contextType'] == 'LightContext'
+    Contexttyperaycontext: !expr
+      expr: op('inputTable')[8, 'contextType'] == 'RayContext'
+    Contexttypeparticlecontext: !expr
+      expr: op('inputTable')[8, 'contextType'] == 'ParticleContext'
+    Contexttypevertexcontext: !expr
+      expr: op('inputTable')[8, 'contextType'] == 'VertexContext'
+    Contexttypepixelcontext: !expr
+      expr: op('inputTable')[8, 'contextType'] == 'PixelContext'
+  returnType: !returnT
+    Allreturntype: !expr
+      expr: op('inputTable')[8, 'returnType'].val in ('auto', '')
+    Returntypesdf: !expr
+      expr: op('inputTable')[8, 'returnType'] == 'Sdf'
+    Returntypefloat: !expr
+      expr: op('inputTable')[8, 'returnType'] == 'float'
+    Returntypevec4: !expr
+      expr: op('inputTable')[8, 'returnType'] == 'vec4'
+    Returntyperay: !expr
+      expr: op('inputTable')[8, 'returnType'] == 'Ray'
+    Returntypelight: !expr
+      expr: op('inputTable')[8, 'returnType'] == 'Light'
+    Returntypeparticle: !expr
+      expr: op('inputTable')[8, 'returnType'] == 'Particle'
