@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.output.customRender
-  opVersion: '19'
+  opVersion: '20'
   opStatus: alpha
 paramPages:
 - !page
@@ -183,11 +183,11 @@ opDef: !def
   enable: true
   typeSpec: !ropTypes
     coordType: !coordT
-      Coordtypevec2: true
+      Allcoordtype: true
     contextType: !contextT
-      Contexttypecontext: true
+      Allcontexttype: true
     returnType: !returnT
-      Returntypefloat: true
+      Allreturntype: true
   function: functionTemplate
   callbacks: !text
     file: src/operators/output/customRender.py
