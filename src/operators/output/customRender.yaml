@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.output.customRender
-  opVersion: '18'
+  opVersion: '19'
   opStatus: alpha
 paramPages:
 - !page
@@ -192,6 +192,11 @@ opDef: !def
   callbacks: !text
     file: src/operators/output/customRender.py
     name: customRender
+  macroTable: !table
+    file: src/operators/output/customRender_macros.txt
+    name: macro_exprs
+    evaluate: true
+    evalOpts: !evalOpts {}
   displayCategory: Render
 inputs:
 - !input

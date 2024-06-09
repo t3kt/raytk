@@ -1,0 +1,3 @@
+int(parent().par.Type == 'texture2d')	'RAYTK_OUTPUT_TEXTURE_2D'	''
+int(parent().par.Type == 'texture3d')	'RAYTK_OUTPUT_TEXTURE_3D'	''
+int(parent().par.Type == 'texture2darray')	'RAYTK_OUTPUT_TEXTURE_2D_ARRAY'	''
