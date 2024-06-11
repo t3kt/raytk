@@ -297,6 +297,13 @@ class ROPInfo:
 	def isMaster(self):
 		if not self.rop:
 			return False
+		module = getattr(self.rop.parent, 'raytkModule', None)
+		if module:
+			modDef = module.op('moduleDefinition')
+			operators = modDef and op(modDef.par['Operatorsroot'])
+			if operators and operators.path in self.rop.parent().path:
+				return True
+			return False
 		toolkit = getattr(self.rop.parent, 'raytk', None)
 		if not toolkit:
 			return False

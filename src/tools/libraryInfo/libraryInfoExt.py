@@ -1,5 +1,5 @@
 from datetime import datetime
-from raytkUtil import ROPInfo, RaytkTags, RaytkContext
+from raytkUtil import ROPInfo, RaytkContext
 
 # noinspection PyUnreachableCode
 if False:
@@ -12,8 +12,8 @@ class LibraryInfoBuilder:
 		self.ownerComp = ownerComp
 
 	def Forcebuild(self, _=None):
+		self.ownerComp.op('moduleInfoBuilder').Forcebuild()
 		for o in self.ownerComp.ops(
-				'build_opTable',
 				'build_categoryTable',
 				'build_opHelpTable',
 				'build_versionInfo',
@@ -41,39 +41,6 @@ class LibraryInfoBuilder:
 		dat.insertRow(['toolkitBuildType', buildType], 'toolkitBuildDate')
 		dat.appendRow(['buildOsName', app.osName])
 		dat.appendRow(['buildOsVersion', app.osVersion])
-
-	@staticmethod
-	def buildROPTable(dat: scriptDAT, thumbTable: DAT, chipTable: DAT):
-		dat.clear()
-		opsRoot = RaytkContext().operatorsRoot()
-		rops = []  # type: list[COMP]
-		if opsRoot:
-			rops = opsRoot.findChildren(type=COMP, tags=['raytk*'], depth=2, maxDepth=2)
-		dat.appendRow(['name', 'path', 'tags', 'category', 'displayCategory', 'opType', 'opVersion', 'status', 'keywords', 'shortcuts', 'chip', 'thumb', 'flags'])
-		if not rops:
-			return
-		rops.sort(key=lambda o: o.path.lower())
-		for rop in rops:
-			if RaytkTags.buildExclude.isOn(rop) or rop.name.startswith('_'):
-				continue
-			ropInfo = ROPInfo(rop)
-			if not ropInfo or not ropInfo.isMaster:
-				continue
-			dat.appendRow([
-				rop.name,
-				rop.path,
-				' '.join(sorted(rop.tags)),
-				rop.parent().name,
-				ropInfo.displayCategoryName or '',
-				ropInfo.opType,
-				ropInfo.opVersion,
-				ropInfo.statusLabel,
-				' '.join(sorted(ropInfo.keywords)),
-				' '.join(sorted(ropInfo.shortcuts)),
-				chipTable[rop.name, 'chip'] or '',
-				thumbTable[rop.path, 'thumb'] or '',
-				ropInfo.opDefPar['Flags'] or '',
-			])
 
 	@staticmethod
 	def buildCategoryTable(dat: tableDAT, opTable: DAT):
