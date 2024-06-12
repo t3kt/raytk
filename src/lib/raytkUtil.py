@@ -113,6 +113,12 @@ class OpDefParsT(_OpMetaPars):
 	def __getitem__(self, item) -> Par | None:
 		return getattr(self, item)
 
+class ModuleMetaParsT:
+	Modulename: 'StrParamT'
+	Operatorsroot: 'CompParamT'
+	Raytkopversion: 'IntParamT'
+	Experimentalbuild: 'BoolParamT'
+
 class ROPInfo:
 	"""
 	Information about either a ROP or RComp instance.
@@ -592,6 +598,42 @@ class CategoryInfo:
 	def templateComp(self) -> COMP | None:
 		return self.category.op('__template')
 
+class ModuleInfo:
+	module: COMP
+	modDef: COMP | None
+	modDefPar: 'ParCollection | ModuleMetaParsT | None'
+
+	def __init__(self, o: OP | str | Cell):
+		o = op(o)
+		if not o:
+			return
+		self.module = o
+		self.modDef = o.op('moduleDefinition')
+		self.modDefPar = self.modDef and self.modDef.par
+
+	def __bool__(self):
+		return bool(self.modDef)
+
+	@property
+	def moduleName(self):
+		return self.modDefPar.Modulename.eval() if self else None
+
+	def operatorsRoot(self) -> COMP | None:
+		return self and self.modDefPar.Operatorsroot.eval()
+
+	def allCategories(self):
+		return [
+			child
+			for child in self.operatorsRoot().children
+			if child.isCOMP
+		]
+
+	def categoryInfo(self, category: str) -> 'CategoryInfo | None':
+		comp = self.operatorsRoot().op(category)
+		if comp:
+			return CategoryInfo(comp)
+
+
 def isROP(o: OP):
 	return bool(o) and o.isCOMP and RaytkTags.raytkOP.isOn(o)
 
@@ -1014,7 +1056,7 @@ class RaytkContext:
 		return toolkit and toolkit.op('./libraryImage')
 
 	def categoryInfo(self, category: str) -> 'CategoryInfo | None':
-		comp = self.operatorsRoot().op('./' + category)
+		comp = self.operatorsRoot().op(category)
 		if comp:
 			return CategoryInfo(comp)
 

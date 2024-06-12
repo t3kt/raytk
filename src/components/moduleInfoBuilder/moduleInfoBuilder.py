@@ -1,4 +1,4 @@
-from raytkUtil import RaytkTags, ROPInfo
+from raytkUtil import RaytkTags, ROPInfo, ModuleInfo
 
 # noinspection PyUnreachableCode
 if False:
@@ -17,20 +17,28 @@ class ModuleInfoBuilder:
 	def _moduleDef(self) -> COMP | None:
 		return self.ownerComp.par.Moduledef.eval()
 
+	def _moduleInfo(self):
+		modDef = self._moduleDef()
+		if not modDef:
+			return None
+		return ModuleInfo(modDef.parent())
+
 	def buildROPTable(self, dat: scriptDAT, thumbTable: DAT | None, chipTable: DAT | None):
 		dat.clear()
 		dat.appendRow([
 			'name', 'path', 'tags', 'category', 'displayCategory', 'opType', 'opVersion',
 			'status', 'keywords', 'shortcuts', 'chip', 'thumb', 'flags', 'module',
 		])
-		moduleDef = self._moduleDef()
-		if not moduleDef:
+		moduleInfo = self._moduleInfo()
+		if not moduleInfo:
 			return
-		opsRoot = moduleDef.par.Operatorsroot.eval()
+		opsRoot = moduleInfo.operatorsRoot()
+		if not opsRoot:
+			return
 		rops = opsRoot.findChildren(type=COMP, tags=['raytk*'], depth=2, maxDepth=2)
 		if not rops:
 			return
-		modName = moduleDef.par.Modulename.eval()
+		modName = moduleInfo.moduleName
 		rops.sort(key=lambda o: o.path.lower())
 		for rop in rops:
 			if RaytkTags.buildExclude.isOn(rop) or rop.name.startswith('_'):
