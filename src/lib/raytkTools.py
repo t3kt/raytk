@@ -17,7 +17,10 @@ if False:
 	# noinspection PyUnresolvedReferences
 	from _stubs import *
 
-class RaytkTools(RaytkContext):
+class RaytkTools:
+	def __init__(self, context: RaytkContext | None = None):
+		self.context = context or RaytkContext()
+
 	"""
 	Utility that provides tools used to modify the toolkit, for use in development tools.
 	"""
@@ -26,7 +29,7 @@ class RaytkTools(RaytkContext):
 		info = ROPInfo(comp)
 		if not info.isMaster:
 			raise Exception('ROP is not proper master')
-		path = self.toolkit().relativePath(comp)
+		path = self.context.toolkit().relativePath(comp)
 		if path.startswith('./'):
 			path = path[2:]
 		return 'raytk.' + path.replace('/', '.')
@@ -47,7 +50,7 @@ class RaytkTools(RaytkContext):
 			if incrementVersion:
 				versionVal = int(versionVal) + 1
 		info.opVersion = versionVal
-		info.toolkitVersion = self.toolkitVersion()
+		info.toolkitVersion = self.context.toolkitVersion()
 		info.helpUrl = f'https://t3kt.github.io/raytk/reference/opType/{info.opType}/'
 		# Ensure that status is copied to the opDefinition parameter
 		info.opDefPar.Raytkopstatus = info.statusLabel
@@ -321,7 +324,7 @@ class RaytkTools(RaytkContext):
 			print(f'Failed to generate ROPSpec for {rop}:\n{err}')
 
 	def saveAllROPSpecs(self):
-		rops = self.allMasterOperators()
+		rops = self.context.allMasterOperators()
 		for rop in rops:
 			if not ROPInfo(rop).isROP:
 				continue
@@ -329,7 +332,7 @@ class RaytkTools(RaytkContext):
 			self.saveROPSpec(rop)
 
 	def saveAllROPs(self, incrementVersion: bool):
-		rops = self.allMasterOperators()
+		rops = self.context.allMasterOperators()
 		for rop in rops:
 			if not ROPInfo(rop).isROP:
 				continue
@@ -338,22 +341,22 @@ class RaytkTools(RaytkContext):
 		print('Finished saving all ROPs')
 
 	def updateAllROPToolkitVersions(self):
-		version = self.toolkitVersion()
-		for rop in self.allMasterOperators():
+		version = self.context.toolkitVersion()
+		for rop in self.context.allMasterOperators():
 			info = ROPInfo(rop)
 			if info:
 				info.toolkitVersion = version
 
 	def _templateForCategory(self, category: str) -> COMP | None:
-		catInfo = self.categoryInfo(category)
+		catInfo = self.context.categoryInfo(category)
 		template = catInfo and catInfo.templateComp
 		if template:
 			return template
-		catInfo = self.categoryInfo('utility')
+		catInfo = self.context.categoryInfo('utility')
 		return catInfo and catInfo.templateComp
 
 	def createNewRopType(self, typeName: str, category: str) -> COMP | None:
-		catInfo = self.categoryInfo(category)
+		catInfo = self.context.categoryInfo(category)
 		if not catInfo:
 			raise Exception(f'Category not found: {category}')
 		template = self._templateForCategory(category)
@@ -435,57 +438,15 @@ class RaytkTools(RaytkContext):
 			par.val = defVal
 		ui.status = f'Updated {parName} on {ropInfo.rop}!'
 
-class RaytkTools_2:
-	context: RaytkContext
-
-	def __init__(self, context: RaytkContext):
-		self.context = context
-
-	"""
-	Utility that provides tools used to modify the toolkit, for use in development tools.
-	"""
-
-	def generateROPType(self, comp: COMP):
-		info = ROPInfo(comp)
-		if not info.isMaster:
-			raise Exception('ROP is not proper master')
-		modRoot = self.context.moduleRoot()
-		path = modRoot.relativePath(comp)
-		if path.startswith('./'):
-			path = path[2:]
-		return 'raytk.' + path.replace('/', '.')
-
-	def updateROPMetadata(self, rop: COMP, incrementVersion=False):
-		info = ROPInfo(rop)
-		if not info or not info.isMaster:
-			return
-		info.opDefPar.enablecloningpulse.pulse()
-		currentOpType = info.opType
-		currentOpVersion = info.opVersion
-		newType = self.generateROPType(rop)
-		info.opType = newType
-		if not currentOpVersion or not currentOpType or currentOpType != newType:
-			versionVal = 0
-		else:
-			versionVal = currentOpVersion
-			if incrementVersion:
-				versionVal = int(versionVal) + 1
-		info.opVersion = versionVal
-		info.toolkitVersion = self.context.toolkitVersion()
-		info.helpUrl = f'https://t3kt.github.io/raytk/reference/opType/{info.opType}/'
-		# Ensure that status is copied to the opDefinition parameter
-		info.opDefPar.Raytkopstatus = info.statusLabel
-		for tag in [RaytkTags.alpha, RaytkTags.beta, RaytkTags.deprecated]:
-			if tag.name in info.opDef.tags:
-				info.opDef.tags.remove(tag.name)
-
 class _ModuleLoader(RaytkTools):
 	def __init__(
 			self,
+			context: RaytkContext,
 			operatorsComp: COMP,
 			operatorsFolder: Path,
 			log: 'Callable[[str], None]',
 	):
+		super().__init__(context)
 		self.operatorsComp = operatorsComp
 		self.operatorsFolder = operatorsFolder
 		self._log = log
