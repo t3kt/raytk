@@ -462,6 +462,50 @@ class RaytkTools(RaytkContext):
 				cats.append(child)
 		return cats
 
+class RaytkTools_2:
+	context: RaytkContext
+
+	def __init__(self, context: RaytkContext):
+		self.context = context
+
+	"""
+	Utility that provides tools used to modify the toolkit, for use in development tools.
+	"""
+
+	def generateROPType(self, comp: COMP):
+		info = ROPInfo(comp)
+		if not info.isMaster:
+			raise Exception('ROP is not proper master')
+		modRoot = self.context.moduleRoot()
+		path = modRoot.relativePath(comp)
+		if path.startswith('./'):
+			path = path[2:]
+		return 'raytk.' + path.replace('/', '.')
+
+	def updateROPMetadata(self, rop: COMP, incrementVersion=False):
+		info = ROPInfo(rop)
+		if not info or not info.isMaster:
+			return
+		info.opDefPar.enablecloningpulse.pulse()
+		currentOpType = info.opType
+		currentOpVersion = info.opVersion
+		newType = self.generateROPType(rop)
+		info.opType = newType
+		if not currentOpVersion or not currentOpType or currentOpType != newType:
+			versionVal = 0
+		else:
+			versionVal = currentOpVersion
+			if incrementVersion:
+				versionVal = int(versionVal) + 1
+		info.opVersion = versionVal
+		info.toolkitVersion = self.context.toolkitVersion()
+		info.helpUrl = f'https://t3kt.github.io/raytk/reference/opType/{info.opType}/'
+		# Ensure that status is copied to the opDefinition parameter
+		info.opDefPar.Raytkopstatus = info.statusLabel
+		for tag in [RaytkTags.alpha, RaytkTags.beta, RaytkTags.deprecated]:
+			if tag.name in info.opDef.tags:
+				info.opDef.tags.remove(tag.name)
+
 class _ModuleLoader(RaytkTools):
 	def __init__(
 			self,

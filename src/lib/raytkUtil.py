@@ -115,6 +115,8 @@ class OpDefParsT(_OpMetaPars):
 
 class ModuleMetaParsT:
 	Modulename: 'StrParamT'
+	Optable: 'DatParamT'
+	Ophelptable: 'DatParamT'
 	Operatorsroot: 'CompParamT'
 	Raytkopversion: 'IntParamT'
 	Experimentalbuild: 'BoolParamT'
@@ -599,16 +601,19 @@ class CategoryInfo:
 		return self.category.op('__template')
 
 class ModuleInfo:
-	module: COMP
+	module: COMP | None
 	modDef: COMP | None
 	modDefPar: 'ParCollection | ModuleMetaParsT | None'
 
-	def __init__(self, o: OP | str | Cell):
+	def __init__(self, o: OP | str | Cell, modDef: COMP | None = None):
 		o = op(o)
 		if not o:
+			self.module = None
+			self.modDef = None
+			self.modDefPar = None
 			return
 		self.module = o
-		self.modDef = o.op('moduleDefinition')
+		self.modDef = modDef or o.op('moduleDefinition')
 		self.modDefPar = self.modDef and self.modDef.par
 
 	def __bool__(self):
@@ -619,7 +624,9 @@ class ModuleInfo:
 		return self.modDefPar.Modulename.eval() if self else None
 
 	def operatorsRoot(self) -> COMP | None:
-		return self and self.modDefPar.Operatorsroot.eval()
+		if not self:
+			return None
+		return self.modDefPar.Operatorsroot.eval()
 
 	def allCategories(self):
 		return [
@@ -974,6 +981,9 @@ class RaytkContext:
 		if hasattr(op, 'raytk'):
 			return op.raytk
 
+	def moduleRoot(self):
+		return self.toolkit()
+
 	def toolkitVersion(self):
 		toolkit = self.toolkit()
 		par = toolkit.par['Raytkversion']
@@ -1059,6 +1069,29 @@ class RaytkContext:
 		comp = self.operatorsRoot().op(category)
 		if comp:
 			return CategoryInfo(comp)
+
+class RaytkModuleContext(RaytkContext):
+	module: COMP
+	modInfo: ModuleInfo
+
+	def __init__(self, module: COMP):
+		self.module = module
+		self.modInfo = ModuleInfo(module)
+
+	def moduleRoot(self):
+		return self.module
+
+	def operatorsRoot(self):
+		return self.modInfo.operatorsRoot()
+
+	def experimentalMode(self):
+		return self.modInfo.modDefPar.Experimentalbuild.eval()
+
+	def opTable(self) -> DAT | None:
+		return self.modInfo.modDefPar.Optable.eval()
+
+	def opHelpTable(self) -> DAT | None:
+		return self.modInfo.modDefPar.Ophelptable.eval()
 
 def _isMaster(o: COMP):
 	return o and o.par['clone'] is not None and (o.par.clone.eval() or o.par.clone.expr)
