@@ -392,17 +392,6 @@ class RaytkTools(RaytkContext):
 			o.nodeY = -int(i / 10) * 150
 			o.nodeX = int(i % 10) * 200
 
-	def saveAllOperatorsAndCategories(self):
-		for cat in self.allCategories():
-			catInfo = CategoryInfo(cat)
-			for rop in catInfo.operators:
-				self.saveROP(rop)
-			self.organizeCategory(cat, saveIndexTox=True)
-
-	def organizeAllCategories(self):
-		for cat in self.allCategories():
-			self.organizeCategory(cat, saveIndexTox=True)
-
 	def updateContextTypeParMenu(self, ropInfo: ROPInfo | None):
 		self._updateTypeParMenu(ropInfo, 'Contexttype', ContextTypes.values)
 
@@ -445,22 +434,6 @@ class RaytkTools(RaytkContext):
 		if shouldUpdateVal:
 			par.val = defVal
 		ui.status = f'Updated {parName} on {ropInfo.rop}!'
-
-	def currentCategories(self):
-		pane = getActiveEditor()
-		if not pane:
-			return None
-		comp = pane.owner
-		operators = self.operatorsRoot()
-		if comp.parent() == operators:
-			return [comp]
-		if comp != operators:
-			return []
-		cats = []
-		for child in comp.selectedChildren:
-			if child.isCOMP:
-				cats.append(child)
-		return cats
 
 class RaytkTools_2:
 	context: RaytkContext
