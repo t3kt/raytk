@@ -1,5 +1,5 @@
 from raytkTools import RaytkTools
-from raytkUtil import ROPInfo, navigateTo
+from raytkUtil import ROPInfo, navigateTo, RaytkModuleContext
 
 # noinspection PyUnreachableCode
 if False:
@@ -20,6 +20,13 @@ class ROPEditor:
 	def __init__(self, ownerComp: COMP):
 		self.ownerComp = ownerComp
 
+	def _tools(self):
+		info = self.ROPInfo
+		if not info:
+			return None
+		modRoot = info.moduleRoot()
+		return RaytkTools(RaytkModuleContext(modRoot))
+
 	@property
 	def _statusDropMenu(self) -> widgetCOMP:
 		return self.ownerComp.op('status_dropmenu')
@@ -36,7 +43,7 @@ class ROPEditor:
 		if not info:
 			return
 		status = self._statusDropMenu.par.Value0.eval()
-		RaytkTools().setROPStatus(info.rop, status)
+		self._tools().setROPStatus(info.rop, status)
 
 	@property
 	def ROP(self) -> COMP | None:
@@ -65,17 +72,17 @@ class ROPEditor:
 	def setUpHelp(self):
 		info = self.ROPInfo
 		if info:
-			RaytkTools().setUpHelp(info.rop)
+			self._tools().setUpHelp(info.rop)
 
 	def reloadHelp(self):
 		info = self.ROPInfo
 		if info:
-			RaytkTools().reloadHelp(info.rop)
+			self._tools().reloadHelp(info.rop)
 
 	def saveROP(self, incrementVersion: bool):
 		info = self.ROPInfo
 		if info:
-			RaytkTools().saveROP(info.rop, incrementVersion)
+			self._tools().saveROP(info.rop, incrementVersion)
 
 	def onEditItem(self, item: 'PickerItem'):
 		if not item or not item.isOP:
@@ -86,11 +93,11 @@ class ROPEditor:
 		pass
 
 	def updateCoordTypeParMenu(self):
-		RaytkTools().updateCoordTypeParMenu(self.ROPInfo)
+		self._tools().updateCoordTypeParMenu(self.ROPInfo)
 
 	def updateContextTypeParMenu(self):
-		RaytkTools().updateContextTypeParMenu(self.ROPInfo)
+		self._tools().updateContextTypeParMenu(self.ROPInfo)
 
 	def updateReturnTypeParMenu(self):
-		RaytkTools().updateReturnTypeParMenu(self.ROPInfo)
+		self._tools().updateReturnTypeParMenu(self.ROPInfo)
 		info = self.ROPInfo

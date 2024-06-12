@@ -3,6 +3,7 @@ Common utilities for working with the toolkit and related ops.
 This can be included in runtime tools.
 """
 from functools import total_ordering
+from pathlib import Path
 import re
 
 # noinspection PyUnreachableCode
@@ -470,6 +471,14 @@ class ROPInfo:
 			return RaytkTags.raytkOP.name
 		if self.isRComp:
 			return RaytkTags.raytkComp.name
+
+	def moduleRoot(self):
+		if not self.isMaster:
+			return None
+		module = getattr(self.rop.parent, 'raytkModule', None)
+		if module:
+			return module
+		return getattr(self.rop.parent, 'raytk', None)
 
 class _InputHandlerParsT:
 	Source: 'OPParamT'
@@ -969,6 +978,9 @@ class RaytkContext:
 	def moduleRoot(self):
 		return self.toolkit()
 
+	def moduleName(self):
+		return 'raytk'
+
 	def toolkitVersion(self):
 		toolkit = self.toolkit()
 		par = toolkit.par['Raytkversion']
@@ -984,6 +996,15 @@ class RaytkContext:
 
 	def operatorsRoot(self):
 		return self.toolkit().op('operators')
+
+	def operatorsFolder(self):
+		operatorsRoot = self.operatorsRoot()
+		if not operatorsRoot:
+			return None
+		tox = operatorsRoot.par.externaltox.eval()
+		if not tox:
+			return None
+		return Path(tox).parent.as_posix()
 
 	@staticmethod
 	def activeEditor():
@@ -1037,6 +1058,9 @@ class RaytkModuleContext(RaytkContext):
 
 	def moduleRoot(self):
 		return self.module
+
+	def moduleName(self):
+		return self.modInfo.moduleName
 
 	def operatorsRoot(self):
 		return self.modInfo.operatorsRoot()

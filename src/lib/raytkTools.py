@@ -28,10 +28,10 @@ class RaytkTools:
 		info = ROPInfo(comp)
 		if not info.isMaster:
 			raise Exception('ROP is not proper master')
-		path = self.context.toolkit().relativePath(comp)
+		path = self.context.moduleRoot().relativePath(comp)
 		if path.startswith('./'):
 			path = path[2:]
-		return 'raytk.' + path.replace('/', '.')
+		return self.context.moduleName() + '.' + path.replace('/', '.')
 
 	def updateROPMetadata(self, rop: COMP, incrementVersion=False):
 		info = ROPInfo(rop)
@@ -370,7 +370,10 @@ class RaytkTools:
 		existing = catInfo.category.op('./' + typeName)
 		if existing:
 			raise Exception(f'ROP {typeName} already exists in category {category}')
-		fileDir = f'src/operators/{category}'
+		opsDir = self.context.operatorsFolder()
+		if not opsDir:
+			raise Exception('Operators folder not found')
+		fileDir = opsDir + '/' + category
 		rop = catInfo.category.copy(template, name=typeName)  # type: COMP
 		rop.par.clone = rop.path
 		rop.par.externaltox = f'{fileDir}/{typeName}.tox'
