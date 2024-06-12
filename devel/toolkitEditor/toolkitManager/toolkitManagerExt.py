@@ -1,4 +1,3 @@
-from raytkUtil import RaytkContext
 from pathlib import Path
 
 # noinspection PyUnreachableCode
@@ -14,17 +13,9 @@ if False:
 class ToolkitManager:
 	def __init__(self, ownerComp: COMP):
 		self.ownerComp = ownerComp
-		self.context = RaytkContext()
 
-	# @property
-	# def Toolkit(self):
-	# 	return self.context.toolkit()
-	#
-	# @property
-	# def ToolkitVersion(self):
-	# 	return self.context.toolkitVersion()
-
-	def prepareSceneTable(self, dat: DAT, inDat: DAT, opTable: DAT):
+	@staticmethod
+	def prepareSceneTable(dat: DAT, inDat: DAT, opTable: DAT):
 		dat.clear()
 		dat.appendRow([
 			'name', 'label', 'filePath', 'opType', 'group', 'baseName', 'shortLabel'
@@ -47,4 +38,18 @@ class ToolkitManager:
 				group,
 				baseName,
 				baseName.replace('_', ' '),
+			])
+
+	@staticmethod
+	def prepareModuleTable(dat: DAT, inDat: DAT):
+		dat.clear()
+		dat.appendRow(['name', 'moduleRoot', 'moduleDefinition'])
+		for cell in inDat.col('path')[1:]:
+			modDef = op(cell)
+			if not modDef:
+				continue
+			dat.appendRow([
+				modDef.par.Modulename.eval(),
+				modDef.par.Moduleroot.eval(),
+				modDef.path,
 			])

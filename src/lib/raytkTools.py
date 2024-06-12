@@ -351,7 +351,13 @@ class RaytkTools:
 		template = catInfo and catInfo.templateComp
 		if template:
 			return template
+		catInfo = RaytkContext().categoryInfo(category)
+		template = catInfo and catInfo.templateComp
+		if template:
+			return template
 		catInfo = self.context.categoryInfo('utility')
+		if not catInfo:
+			catInfo = RaytkContext().categoryInfo('utility')
 		return catInfo and catInfo.templateComp
 
 	def createNewRopType(self, typeName: str, category: str) -> COMP | None:
