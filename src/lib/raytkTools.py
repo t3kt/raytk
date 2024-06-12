@@ -4,12 +4,11 @@ Tools for working with the toolkit in a development environment.
 This should only be used within development tools.
 """
 
-import json
 from pathlib import Path
 from raytkDocs import OpDocManager
 from raytkModel import ROPSpec, RCompSpec, ROPSpecBase
 from raytkUtil import RaytkContext, ROPInfo, focusFirstCustomParameterPage, RaytkTags, CategoryInfo, ContextTypes, \
-	CoordTypes, ReturnTypes, getActiveEditor, IconColors
+	CoordTypes, ReturnTypes, IconColors
 from typing import Callable
 
 # noinspection PyUnreachableCode

@@ -1,4 +1,4 @@
-from raytkUtil import InspectorTargetTypes, VisualizerTypes, ReturnTypes, CoordTypes, ContextTypes
+from raytkUtil import InspectorTargetTypes, ReturnTypes, CoordTypes, ContextTypes
 from raytkUtil import ROPInfo, navigateTo
 import re
 
@@ -21,6 +21,21 @@ if False:
 		Coordtype: StrParamT
 		Contexttype: StrParamT
 		Visualizertype: StrParamT
+
+class VisualizerTypes:
+	none = 'none'
+	field = 'field'
+	render2d = 'render2d'
+	render3d = 'render3d'
+	functionGraph = 'functionGraph'
+
+	values = [
+		none,
+		field,
+		render2d,
+		render3d,
+		functionGraph,
+	]
 
 def updateStateMenus():
 	p = parent().par.Targettype  # type: Par

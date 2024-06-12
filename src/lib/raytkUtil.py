@@ -898,21 +898,6 @@ def navigateTo(o: OP | COMP, name: str | None = None, popup=False, goInto=True) 
 		pane.homeSelected(zoom=False)
 	return pane
 
-class VisualizerTypes:
-	none = 'none'
-	field = 'field'
-	render2d = 'render2d'
-	render3d = 'render3d'
-	functionGraph = 'functionGraph'
-
-	values = [
-		none,
-		field,
-		render2d,
-		render3d,
-		functionGraph,
-	]
-
 class ReturnTypes:
 	Sdf = 'Sdf'
 	vec4 = 'vec4'
@@ -1011,34 +996,6 @@ class RaytkContext:
 	def opHelpTable(self) -> DAT | None:
 		toolkit = self.toolkit()
 		return toolkit and toolkit.op('opHelpTable')
-
-	@staticmethod
-	def currentROPs(
-			primaryOnly=False,
-			exclude: 'Callable[[COMP], None]' = None,
-			masterOnly=False,
-	):
-		pane = getActiveEditor()
-		if not pane:
-			return []
-		comp = pane.owner
-		if not comp:
-			return []
-		if exclude and exclude(comp):
-			return []
-		rop = _getROP(comp) or _getROP(comp.currentChild)
-		if masterOnly and not _isMaster(rop):
-			rop = None
-		if rop and primaryOnly:
-			return [rop]
-		rops = [rop] if rop else []
-		for child in comp.selectedChildren:
-			rop = _getROP(child, checkParents=False)
-			if masterOnly and not _isMaster(rop):
-				continue
-			if rop and rop not in rops:
-				rops.append(rop)
-		return rops
 
 	def allCategories(self):
 		return [
