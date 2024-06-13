@@ -530,6 +530,7 @@ CameraContext createCameraContext(vec2 resolution) {
 struct RayContext {
 	Sdf result;
 	Ray ray;
+	vec4 iteration;
 
 	#ifdef RAYTK_GLOBAL_POS_IN_CONTEXT
 	vec3 globalPos;
@@ -543,6 +544,7 @@ RayContext createRayContext(Ray ray, Sdf result) {
 	RayContext rCtx;
 	rCtx.ray = ray;
 	rCtx.result = result;
+	rCtx.iteration = vec4(0.);
 	#ifdef RAYTK_GLOBAL_POS_IN_CONTEXT
 	rCtx.globalPos = vec3(0.);
 	#endif
@@ -550,6 +552,20 @@ RayContext createRayContext(Ray ray, Sdf result) {
 	rCtx.time = getGlobalTime();
 	#endif
 	return rCtx;
+}
+
+vec4 extractIteration(RayContext ctx) { return ctx.iteration; }
+
+void setIterationIndex(inout RayContext ctx, float index) {
+	ctx.iteration = vec4(index, 0., 0., 0.);
+}
+
+void setIterationCell(inout RayContext ctx, vec2 cell) {
+	ctx.iteration = vec4(cell, 0., 0.);
+}
+
+void setIterationCell(inout RayContext ctx, vec3 cell) {
+	ctx.iteration = vec4(cell, 0.);
 }
 
 const int RAYTK_STAGE_PRIMARY = 0;
