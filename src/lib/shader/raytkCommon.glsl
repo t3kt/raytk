@@ -125,7 +125,16 @@ float smin(float a, float b, float k){
 	return (1. - f) * a + f  * b - f * (1. - f) * k;
 }
 
+vec4 smin(vec4 a, vec4 b, float k){
+	vec4 f = clamp(vec4(0.5) + vec4(0.5) * ((a - b) / k), 0., 1.);
+	return (vec4(1.) - f) * a + f  * b - f * (vec4(1.) - f) * k;
+}
+
 float smax(float a, float b, float k) {
+	return -smin(-a, -b, k);
+}
+
+vec4 smax(vec4 a, vec4 b, float k) {
 	return -smin(-a, -b, k);
 }
 
