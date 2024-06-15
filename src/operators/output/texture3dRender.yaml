@@ -1,8 +1,8 @@
 !rop
 meta: !meta
   opType: raytk.operators.output.texture3dRender
-  opVersion: '0'
-  opStatus: alpha
+  opVersion: '1'
+  opStatus: beta
 opDef: !def
   enable: true
   typeSpec: !ropTypes
