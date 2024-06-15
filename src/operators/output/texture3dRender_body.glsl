@@ -125,6 +125,9 @@ void main() {
 				imageStore(sdfOut, pixel, vec4(vec3(res.x), 1.0));
 			}
 		#endif
+		#ifdef OUTPUT_NORMAL
+			imageStore(normalOut, pixel, vec4(calcNormal(p), 1.));
+		#endif
 
 	#elif defined(THIS_RETURN_TYPE_vec4) || defined(THIS_RETURN_TYPE_float)
 
