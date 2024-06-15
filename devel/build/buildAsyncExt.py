@@ -6,7 +6,7 @@ from datetime import datetime
 from pathlib import Path
 from raytkBuild import BuildContext, DocProcessor, chunked_iterable
 from raytkTools import RaytkTools
-from raytkUtil import RaytkContext, CategoryInfo, IconColors, RaytkTags, focusFirstCustomParameterPage, navigateTo
+from raytkUtil import RaytkContext, RaytkModuleContext, CategoryInfo, IconColors, RaytkTags, focusFirstCustomParameterPage, navigateTo
 from typing import Optional, TextIO
 
 # noinspection PyUnreachableCode
@@ -142,6 +142,9 @@ class BuilderAsyncBase:
 	async def logStageStart(self, desc: str):
 		self.log(f'===[{desc}]===')
 		await _asyncYield()
+
+class LibraryBuilderAsyncBase(BuilderAsyncBase):
+	pass
 
 class ToolkitBuilderAsync(BuilderAsyncBase):
 	def __init__(self, context: BuildContext):
@@ -444,6 +447,65 @@ class ToolkitBuilderAsync(BuilderAsyncBase):
 		self.log(f'Saving toolkit to {toxFile}')
 		comp.save(toxFile)
 		self.log('Finished build')
+
+class ModuleBuilderAsync(BuilderAsyncBase):
+	addonsRoot: COMP
+	moduleContext: RaytkModuleContext
+	moduleRoot: COMP
+
+	def __init__(self, context: BuildContext, moduleName: str):
+		super().__init__(context)
+		self.moduleName = moduleName
+
+	async def runBuild(self):
+		self.log('Starting build')
+		await self.reloadAddons()
+		self.log(f'Locating module: {self.moduleName}')
+		await self._locateModule()
+		self.log('Detaching file sync ops')
+		await self._detachFileSyncOps()
+		self.log('Updating module info')
+		await self._updateModuleInfo()
+		self.log('Updating module image')
+		await self._updateModuleImage()
+		self.log('Processing all operators')
+		await self._processAllOperators()
+
+		raise NotImplementedError()
+
+	async def reloadAddons(self):
+		self.log('Reloading addons')
+		self.addonsRoot = getattr(op, 'raytkAddons')
+		if self.addonsRoot:
+			self.context.reloadTox(self.addonsRoot)
+		else:
+			self.log('No addons component found')
+			self.addonsRoot = root.loadTox('addons/src/raytkAddons.tox')
+		self.log('Addons loaded: ' + self.addonsRoot.path)
+
+	async def _locateModule(self):
+		for comp in self.addonsRoot.findChildren(tags=['raytkModule'], depth=1):
+			moduleContext = RaytkModuleContext(comp)
+			if moduleContext and moduleContext.moduleName() == self.moduleName:
+				self.log('Found module: ' + comp.path)
+				self.moduleContext = moduleContext
+				self.moduleRoot = moduleContext.moduleRoot()
+				return
+		self.log('Module not found: ' + self.moduleName)
+		raise Exception('Module not found: ' + self.moduleName)
+
+	async def _detachFileSyncOps(self):
+		self.context.detachAllFileSyncDatsIn(self.moduleRoot, reloadFirst=True)
+
+	async def _updateModuleInfo(self):
+		raise NotImplementedError()
+
+	async def _updateModuleImage(self):
+		raise NotImplementedError()
+
+	async def _processAllOperators(self):
+		raise NotImplementedError()
+
 
 class SnippetsBuilderAsync(BuilderAsyncBase):
 	def __init__(self, context: BuildContext):
