@@ -241,9 +241,15 @@ class ToolkitBuilderAsync(BuilderAsyncBase):
 		self.context.detachAllFileSyncDatsIn(self.toolkit, reloadFirst=True)
 
 	async def _updateLibraryInfo(self):
+		moduleDef = self.toolkit.op('moduleDefinition')
 		if self.toolkit.par['Experimentalbuild'] is not None:
 			self.toolkit.par.Experimentalbuild.val = self.context.experimental
 			self.toolkit.par.Experimentalbuild.readOnly = True
+		moduleDef.par.Experimentalbuild.val = self.context.experimental
+		moduleDef.par.Raytkversion.val = RaytkContext().toolkitVersion()
+		self.context.disableCloning(moduleDef)
+		for p in moduleDef.customPars:
+			p.readOnly = True
 		libraryInfo = self.toolkit.op('libraryInfo')
 		libraryInfo.par.Forcebuild.pulse()
 		self.context.moveNetworkPane(libraryInfo)
