@@ -258,6 +258,7 @@ class ToolkitBuilderAsync(BuilderAsyncBase):
 	async def _updateLibraryImage(self):
 		image = RaytkContext().libraryImage()
 		if image:
+			self.context.disableCloning(image.op('toxImage'))
 			self.context.detachTox(image)
 			self.context.lockBuildLockOps(image)
 			image.par.Showshortcut = True
