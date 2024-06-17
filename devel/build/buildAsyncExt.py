@@ -144,9 +144,108 @@ class BuilderAsyncBase:
 		await _asyncYield()
 
 class LibraryBuilderAsyncBase(BuilderAsyncBase):
-	pass
 
-class ToolkitBuilderAsync(BuilderAsyncBase):
+	def _getRaytkContext(self) -> RaytkContext:
+		raise NotImplementedError()
+
+	def _getRaytkTools(self) -> RaytkTools:
+		return RaytkTools(self._getRaytkContext())
+
+	async def _processAllOperators(self):
+		context = self._getRaytkContext()
+		operatorsComp = context.operatorsRoot()
+		self.context.moveNetworkPane(operatorsComp)
+		self.context.detachTox(operatorsComp)
+		categories = context.allCategories()
+		for category in categories:
+			await self._processOperatorCategory(category)
+
+	async def _processOperatorCategory(self, category: COMP):
+		self.log('Processing category: ' + category.path)
+		categoryInfo = CategoryInfo(category)
+		self.context.moveNetworkPane(category)
+		self.context.detachTox(category)
+		template = category.op('__template')
+		self.context.safeDestroyOp(template)
+		if not self.context.experimental:
+			self.context.removeAlphaOps(category)
+		for comp in categoryInfo.operators:
+			await self._processOperator(comp)
+
+	async def _processOperator(self, comp: COMP):
+		self.log('Processing operator: ' + comp.path)
+		self.context.focusInNetworkPane(comp)
+		self.context.disableCloning(comp)
+		self.context.detachTox(comp)
+		tools = self._getRaytkTools()
+		tools.updateROPMetadata(comp)
+		tools.updateROPParams(comp)
+		self.context.applyParamUpdatersIn(comp)
+		self.context.resetCustomPars(comp)
+		self.context.lockROPPars(comp)
+		await self._processOperatorSubCompChildren(comp)
+		self.context.consolidateOperatorPythonModules(comp)
+		if not comp.isPanel:
+			comp.showCustomOnly = True
+			self.log('Updating OP image for ' + comp.path)
+			img = tools.updateOPImage(comp)
+			if img:
+				self.context.disableCloning(img)
+				self.context.detachTox(img)
+				self.context.lockBuildLockOps(img)
+				self.context.cleanOpImage(img)
+		comp.color = IconColors.defaultBgColor
+
+	async def _processOperatorSubCompChildren(self, comp: COMP):
+		subComps = comp.findChildren(type=COMP)
+		if not subComps:
+			return
+		self.log(f'Processing {len(subComps)} sub-comps of {comp.path}', verbose=True)
+		for child in subComps:
+			self.log('Processing sub-comp: ' + child.path, verbose=True)
+			self.context.detachTox(child)
+			self.context.reclone(child)
+			self.context.disableCloning(child)
+			await self._processOperatorSubCompChildren(child)
+
+	async def _processAllNestedOperators(self):
+		operatorsComp = self._getRaytkContext().operatorsRoot()
+		subOps = operatorsComp.findChildren(tags=[RaytkTags.raytkOP.name], depth=3)
+		self.log(f'Found {len(subOps)} nested operators')
+		for subOp in subOps:
+			self.log('Processing sub-operator: ' + subOp.path)
+			self.context.updateOrReclone(subOp)
+			self.context.detachTox(subOp)
+			self.context.disableCloning(subOp)
+
+	async def _lockAllBuildLockOps(self):
+		self.context.lockBuildLockOps(self._getRaytkContext().moduleRoot())
+
+	async def _cleanAllOperators(self):
+		for comp in self._getRaytkContext().allMasterOperators():
+			self.log('Clean operator ' + comp.path)
+			self.context.removeOpHelp(comp)
+			self.context.cleanOperatorTypeSpecs(comp)
+			self.context.cleanOperatorDefPars(comp)
+
+	async def _cleanAllCategories(self):
+		for comp in self._getRaytkContext().allCategories():
+			self.log('Clean category ' + comp.path)
+			self.context.removeCatHelp(comp)
+
+	async def _removeAllBuildExcludeOps(self, scope: COMP):
+		self.log(f'Removing buildExclude ops in {scope}')
+		toRemove = scope.findChildren(tags=[RaytkTags.buildExclude.name], includeUtility=True)
+		chunks = [list(chunk) for chunk in chunked_iterable(toRemove, 100)]
+		self.log(f'Found {len(toRemove)} ops to remove in {len(chunks)} chunks')
+		total = len(chunks)
+		for i in range(total):
+			chunk = chunks[i]
+			self.log(f'Processing chunk {i + 1} of {total}')
+			self.context.safeDestroyOps(chunk, verbose=True)
+			await _asyncYield()
+
+class ToolkitBuilderAsync(LibraryBuilderAsyncBase):
 	def __init__(self, context: BuildContext):
 		super().__init__(context)
 		self.docProcessor = None
@@ -158,6 +257,9 @@ class ToolkitBuilderAsync(BuilderAsyncBase):
 				imagesFolder='docs/assets/images',
 			)
 		self.toolkit = None  # type: COMP | None
+
+	def _getRaytkContext(self) -> RaytkContext:
+		return RaytkContext()
 
 	async def runBuild(self):
 		self.log('Starting build')
@@ -257,18 +359,13 @@ class ToolkitBuilderAsync(BuilderAsyncBase):
 
 	async def _updateLibraryImage(self):
 		image = RaytkContext().libraryImage()
-		if image:
-			self.context.disableCloning(image.op('toxImage'))
-			self.context.detachTox(image)
-			self.context.lockBuildLockOps(image)
-			image.par.Showshortcut = True
-			self.toolkit.par.opviewer.val = image
-			self.toolkit.par.opviewer.readOnly = True
-			self.toolkit.viewer = True
-		else:
-			self.toolkit.par.opviewer.val = ''
-			self.toolkit.par.opviewer.readOnly = False
-			self.toolkit.viewer = False
+		self.context.disableCloning(image.op('toxImage'))
+		self.context.detachTox(image)
+		self.context.lockBuildLockOps(image)
+		image.par.Showshortcut = True
+		self.toolkit.par.opviewer.val = image
+		self.toolkit.par.opviewer.readOnly = True
+		self.toolkit.viewer = True
 
 	async def _preProcessComponents(self):
 		components = self.toolkit.op('components')
@@ -300,74 +397,6 @@ class ToolkitBuilderAsync(BuilderAsyncBase):
 			self.context.removeBuildExcludeOps(comp)
 			await _asyncYield()
 
-	async def _processAllOperators(self):
-		operatorsComp = self.toolkit.op('operators')
-		self.context.moveNetworkPane(operatorsComp)
-		self.context.detachTox(operatorsComp)
-		categories = RaytkContext().allCategories()
-		if self.docProcessor:
-			self.docProcessor.writeCategoryListPage(categories)
-		for category in categories:
-			await self._processOperatorCategory(category)
-
-	async def _processOperatorCategory(self, category: COMP):
-		self.log('Processing category: ' + category.path)
-		categoryInfo = CategoryInfo(category)
-		self.context.moveNetworkPane(category)
-		self.context.detachTox(category)
-		template = category.op('__template')
-		self.context.safeDestroyOp(template)
-		if not self.context.experimental:
-			self.context.removeAlphaOps(category)
-		for comp in categoryInfo.operators:
-			await self._processOperator(comp)
-
-	async def _processOperator(self, comp: COMP):
-		self.log('Processing operator: ' + comp.path)
-		self.context.focusInNetworkPane(comp)
-		self.context.disableCloning(comp)
-		self.context.detachTox(comp)
-		tools = RaytkTools()
-		tools.updateROPMetadata(comp)
-		tools.updateROPParams(comp)
-		self.context.applyParamUpdatersIn(comp)
-		self.context.resetCustomPars(comp)
-		self.context.lockROPPars(comp)
-		await self._processOperatorSubCompChildren(comp)
-		self.context.consolidateOperatorPythonModules(comp)
-		if not comp.isPanel:
-			comp.showCustomOnly = True
-			self.log('Updating OP image for ' + comp.path)
-			img = tools.updateOPImage(comp)
-			if img:
-				self.context.disableCloning(img)
-				self.context.detachTox(img)
-				self.context.lockBuildLockOps(img)
-				self.context.cleanOpImage(img)
-		comp.color = IconColors.defaultBgColor
-
-	async def _processOperatorSubCompChildren(self, comp: COMP):
-		subComps = comp.findChildren(type=COMP)
-		if not subComps:
-			return
-		self.log(f'Processing {len(subComps)} sub-comps of {comp.path}', verbose=True)
-		for child in subComps:
-			self.log('Processing sub-comp: ' + child.path, verbose=True)
-			self.context.detachTox(child)
-			self.context.reclone(child)
-			self.context.disableCloning(child)
-			await self._processOperatorSubCompChildren(child)
-
-	async def _processAllNestedOperators(self):
-		operatorsComp = self.toolkit.op('operators')
-		subOps = operatorsComp.findChildren(tags=[RaytkTags.raytkOP.name], depth=3)
-		self.log(f'Found {len(subOps)} nested operators')
-		for subOp in subOps:
-			self.log('Processing sub-operator: ' + subOp.path)
-			self.context.updateOrReclone(subOp)
-			self.context.detachTox(subOp)
-			self.context.disableCloning(subOp)
-
 	async def _generateAllOperatorDocs(self):
 		if not self.docProcessor:
 			return
@@ -393,40 +422,13 @@ class ToolkitBuilderAsync(BuilderAsyncBase):
 		self.context.detachTox(tools)
 		await self.context.runBuildScript(tools.op('BUILD'))
 
-	async def _lockAllBuildLockOps(self):
-		self.context.lockBuildLockOps(self.toolkit)
-
 	async def _destroyComponents(self):
 		comp = self.toolkit.op('components')
 		self.context.focusInNetworkPane(comp)
 		self.context.safeDestroyOp(comp)
 
-	async def _cleanAllOperators(self):
-		for comp in RaytkContext().allMasterOperators():
-			self.log('Clean operator ' + comp.path)
-			self.context.removeOpHelp(comp)
-			self.context.cleanOperatorTypeSpecs(comp)
-			self.context.cleanOperatorDefPars(comp)
-
-	async def _cleanAllCategories(self):
-		for comp in RaytkContext().allCategories():
-			self.log('Clean category ' + comp.path)
-			self.context.removeCatHelp(comp)
-
 	async def _consolidateSharedPythonMods(self):
 		self.context.removeRedundantPythonModules(self.toolkit, self.toolkit.ops('tools', 'libraryInfo'))
-
-	async def _removeAllBuildExcludeOps(self, scope: COMP):
-		self.log(f'Removing buildExclude ops in {scope}')
-		toRemove = scope.findChildren(tags=[RaytkTags.buildExclude.name], includeUtility=True)
-		chunks = [list(chunk) for chunk in chunked_iterable(toRemove, 100)]
-		self.log(f'Found {len(toRemove)} ops to remove in {len(chunks)} chunks')
-		total = len(chunks)
-		for i in range(total):
-			chunk = chunks[i]
-			self.log(f'Processing chunk {i + 1} of {total}')
-			self.context.safeDestroyOps(chunk, verbose=True)
-			await _asyncYield()
 
 	async def _finalizeToolkitPars(self):
 		comp = self.toolkit
@@ -455,7 +457,7 @@ class ToolkitBuilderAsync(BuilderAsyncBase):
 		comp.save(toxFile)
 		self.log('Finished build')
 
-class ModuleBuilderAsync(BuilderAsyncBase):
+class ModuleBuilderAsync(LibraryBuilderAsyncBase):
 	addonsRoot: COMP
 	moduleContext: RaytkModuleContext
 	moduleRoot: COMP
@@ -464,24 +466,52 @@ class ModuleBuilderAsync(BuilderAsyncBase):
 		super().__init__(context)
 		self.moduleName = moduleName
 
+	def _getRaytkContext(self) -> RaytkContext:
+		return self.moduleContext
+
 	async def runBuild(self):
 		self.log('Starting build')
+
+		await self.logStageStart('Reloading addons')
 		await self.reloadAddons()
-		self.log(f'Locating module: {self.moduleName}')
+
+		await self.logStageStart(f'Locating module: {self.moduleName}')
 		await self._locateModule()
-		self.log('Detaching file sync ops')
+
+		await self.logStageStart('Detaching file sync ops')
 		await self._detachFileSyncOps()
-		self.log('Updating module info')
+
+		await self.logStageStart('Updating module info')
 		await self._updateModuleInfo()
-		self.log('Updating module image')
+
+		await self.logStageStart('Updating module image')
 		await self._updateModuleImage()
-		self.log('Processing all operators')
+
+		await self.logStageStart('Processing operators')
 		await self._processAllOperators()
 
-		raise NotImplementedError()
+		await self.logStageStart('Process nested operators')
+		await self._processAllNestedOperators()
+
+		await self.logStageStart('Lock build lock ops')
+		await self._lockAllBuildLockOps()
+
+		await self.logStageStart('Clean operators')
+		await self._cleanAllOperators()
+
+		await self.logStageStart('Clear operator categories')
+		await self._cleanAllCategories()
+
+		await self.logStageStart('Remove build exclude ops')
+		await self._removeAllBuildExcludeOps(self.moduleRoot)
+
+		await self.logStageStart('Finalize module pars')
+		await self._finalizeModulePars()
+
+		await self.logStageStart('Finish build')
+		await self._finishBuild()
 
 	async def reloadAddons(self):
-		self.log('Reloading addons')
 		self.addonsRoot = getattr(op, 'raytkAddons')
 		if self.addonsRoot:
 			self.context.reloadTox(self.addonsRoot)
@@ -505,13 +535,46 @@ class ModuleBuilderAsync(BuilderAsyncBase):
 		self.context.detachAllFileSyncDatsIn(self.moduleRoot, reloadFirst=True)
 
 	async def _updateModuleInfo(self):
-		raise NotImplementedError()
+		moduleDef = self.moduleContext.moduleDefinition()
+		moduleDef.par.Experimentalbuild.val = self.context.experimental
+		moduleDef.par.Raytkversion.val = RaytkContext().toolkitVersion()
+		self.context.disableCloning(moduleDef)
+		for p in moduleDef.customPars:
+			p.readOnly = True
 
 	async def _updateModuleImage(self):
-		raise NotImplementedError()
+		image = self.moduleRoot.op('moduleImage')
+		self.context.disableCloning(image)
+		self.context.detachTox(image)
+		self.moduleRoot.par.opviewer.val = image
+		self.moduleRoot.par.opviewer.readOnly = True
+		self.moduleRoot.viewer = True
 
-	async def _processAllOperators(self):
-		raise NotImplementedError()
+	async def _finalizeModulePars(self):
+		comp = self.moduleRoot
+		self.context.moveNetworkPane(comp)
+		if not comp.customPages:
+			comp.appendCustomPage('Module')
+		page = comp.customPages[0]
+		p = page.appendToggle('Experimentalbuild', label='Experimental Build')[0]
+		p.val = self.context.experimental
+		p.readOnly = True
+		p = page.appendToggle('Devel', label='Development Mode')[0]
+		p.val = False
+		p.readOnly = True
+		p = page.appendStr('Raytkversion', label='RayTK Version')[0]
+		p.val = RaytkContext().toolkitVersion()
+		p.readOnly = True
+		self.context.detachTox(comp)
+		focusFirstCustomParameterPage(comp)
+
+	async def _finishBuild(self):
+		comp = self.moduleRoot
+		self.context.focusInNetworkPane(comp)
+		toxFile = self._getOutputToxPath(self.moduleName)
+		self.log(f'Saving module to {toxFile}')
+		comp.save(toxFile)
+		self.log('Finished build')
 
 
 class SnippetsBuilderAsync(BuilderAsyncBase):

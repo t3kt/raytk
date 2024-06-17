@@ -480,6 +480,12 @@ class ROPInfo:
 			return module
 		return getattr(self.rop.parent, 'raytk', None)
 
+	def moduleName(self):
+		moduleRoot = self.moduleRoot()
+		if not moduleRoot:
+			return None
+		return ModuleInfo(moduleRoot).moduleName
+
 class _InputHandlerParsT:
 	Source: 'OPParamT'
 	Required: 'BoolParamT'
@@ -1061,6 +1067,9 @@ class RaytkModuleContext(RaytkContext):
 
 	def moduleName(self):
 		return self.modInfo.moduleName
+
+	def moduleDefinition(self):
+		return self.modInfo.modDef
 
 	def operatorsRoot(self):
 		return self.modInfo.operatorsRoot()
