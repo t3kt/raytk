@@ -59,6 +59,12 @@ class ROPEditor:
 		if info:
 			return info.opType
 
+	@property
+	def ModuleName(self):
+		info = self.ROPInfo
+		if info:
+			return info.moduleName()
+
 	def showInEditor(self, popup=False):
 		rop = self.ROP
 		if rop:

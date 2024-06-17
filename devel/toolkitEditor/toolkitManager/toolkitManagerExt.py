@@ -43,7 +43,7 @@ class ToolkitManager:
 	@staticmethod
 	def prepareModuleTable(dat: DAT, inDat: DAT):
 		dat.clear()
-		dat.appendRow(['name', 'moduleRoot', 'moduleDefinition'])
+		dat.appendRow(['name', 'moduleRoot', 'moduleDefinition', 'opTable'])
 		for cell in inDat.col('path')[1:]:
 			modDef = op(cell)
 			if not modDef:
@@ -52,4 +52,5 @@ class ToolkitManager:
 				modDef.par.Modulename.eval(),
 				modDef.par.Moduleroot.eval(),
 				modDef.path,
+				modDef.par.Optable.eval() or '',
 			])
