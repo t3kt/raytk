@@ -106,4 +106,13 @@ class ROPEditor:
 
 	def updateReturnTypeParMenu(self):
 		self._tools().updateReturnTypeParMenu(self.ROPInfo)
+
+	def buildRopInfoTable(self, dat: scriptDAT):
+		dat.clear()
 		info = self.ROPInfo
+		if info:
+			dat.appendRow(['opType', info.opType])
+			dat.appendRow(['module', info.moduleName()])
+		else:
+			dat.appendRow(['opType', ''])
+			dat.appendRow(['module', ''])
