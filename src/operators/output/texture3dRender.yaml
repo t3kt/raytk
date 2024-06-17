@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.output.texture3dRender
-  opVersion: '3'
+  opVersion: '4'
   opStatus: beta
 opDef: !def
   enable: true
@@ -26,3 +26,35 @@ inputs:
     Allcontexttype: true
   returnType: !returnT
     Allreturntype: true
+- !input
+  Localalias: camera
+  Variables: '*'
+  coordType: !coordT
+    Coordtypevec2: true
+  contextType: !contextT
+    Contexttypecameracontext: true
+  returnType: !returnT
+    Returntyperay: true
+- !input
+  Localalias: light
+  Variables: '*'
+  coordType: !coordT
+    Coordtypevec3: true
+  contextType: !contextT
+    Contexttypelightcontext: true
+  returnType: !returnT
+    Returntypelight: true
+elements:
+- !opElement
+  name: codeSwitcher_Materialmode
+  elementType: codeSwitcher
+  params:
+    Elementroot: ''
+    Table: materialModes
+    Param: Materialmode
+    Autoupdateparams: true
+    Manageparamstates: true
+    Alwaysincludeallparams: false
+    Switchmode: constswitch
+    Indexexpr: ''
+    Placeholder: MATERIAL_MODE_BODY();

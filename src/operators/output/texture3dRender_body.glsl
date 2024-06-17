@@ -107,15 +107,31 @@ void main() {
 		Sdf res = map(p);
 
 
+		MaterialContext matCtx = createMaterialContext();
+		#ifdef RAYTK_GLOBAL_POS_IN_CONTEXT
+			matCtx.globalPos = adaptAsVec3(p);
+		#endif
+		matCtx.ray = getViewRay(p);
+		#if defined(OUTPUT_COLOR) || defined(OUTPUT_NORMAL) || defined(THIS_HAS_TAG_uselight)
+			matCtx.normal = calcNormal(p);
+		#endif
+		#ifdef THIS_HAS_TAG_uselight
+			LightContext lightCtx = createLightContext(res, matCtx.normal);
+			#ifdef RAYTK_GLOBAL_POS_IN_CONTEXT
+			lightCtx.globalPos = adaptAsVec3(p);
+			#endif
+			matCtx.light = getLight(p, lightCtx);
+		#endif
 
 		#ifdef OUTPUT_COLOR
-		vec4 color = vec4(0);
-		if (!isNonHitSdf(res) && res.x <= 0.) {
-			#ifdef RAYTK_USE_SURFACE_COLOR
-			color = res.color;
-			#endif
-		}
-			imageStore(colorOut, pixel, color);
+			matCtx.result = res;
+			float level = getLevel(adaptAsVec3(p), matCtx);
+			if (level <= 0.) {
+				imageStore(colorOut, pixel, vec4(0.));
+			} else {
+				vec3 col = getColor(THIS_asCoordT(p), matCtx);
+				imageStore(colorOut, pixel, vec4(col * level, level));
+			}
 		#endif
 
 		#ifdef OUTPUT_SDF
