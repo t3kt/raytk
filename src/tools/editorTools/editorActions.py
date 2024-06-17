@@ -723,6 +723,7 @@ class _RopTypes:
 	defineAttribute = 'raytk.operators.utility.defineAttribute'
 	assignAttribute = 'raytk.operators.filter.assignAttribute'
 	getAttribute = 'raytk.operators.utility.getAttribute'
+	texture3dRender = 'raytk.operators.output.texture3dRender'
 
 def createActionManager():
 	manager = ActionManager(
@@ -828,7 +829,7 @@ def createActionManager():
 				('raytk.operators.camera.linkedCamera', 'Linked Camera'),
 				('raytk.operators.camera.lookAtCamera', 'Look At Camera'),
 			],
-			select=RopSelect(ropTypes=[_RopTypes.raymarchRender3d, _RopTypes.pointMapRender]),
+			select=RopSelect(ropTypes=[_RopTypes.raymarchRender3d, _RopTypes.pointMapRender, _RopTypes.texture3dRender]),
 			attach=AttachIntoExisting(inputIndex=1),
 		),
 		_createTypeListGroup(
@@ -841,7 +842,7 @@ def createActionManager():
 				('raytk.operators.light.pointLight', 'Point Light'),
 				('raytk.operators.light.spotLight', 'Spot Light'),
 			],
-			select=RopSelect(ropTypes=[_RopTypes.raymarchRender3d, _RopTypes.pointMapRender]),
+			select=RopSelect(ropTypes=[_RopTypes.raymarchRender3d, _RopTypes.pointMapRender, _RopTypes.texture3dRender]),
 			attach=AttachIntoExisting(inputIndex=2),
 		),
 		_createTypeListGroup(
