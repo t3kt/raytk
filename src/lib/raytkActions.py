@@ -15,7 +15,7 @@ if False:
 class ActionContext:
 	pane: NetworkEditor
 	parentComp: COMP
-	selectedOps: list['OP']
+	selectedOps: list[OP]
 	primaryOp: OP | None
 
 	@property
@@ -98,7 +98,9 @@ class EditorROPState:
 
 	@property
 	def currentDefTable(self) -> DAT | None:
-		return self.rop.op('definition') if self.rop and self.info.isROP else None
+		table = self.rop.op('definition')
+		if table and table.numRows > 1:
+			return table
 
 	def _defTypes(self, col: str) -> list[str]:
 		dat = self.currentDefTable
