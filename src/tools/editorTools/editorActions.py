@@ -1,4 +1,4 @@
-import json
+from raytkActions import *
 from raytkUtil import ROPInfo, mergeDicts
 from typing import Tuple
 from editorToolsCommon import *
@@ -99,7 +99,7 @@ def _createVarRefGroup(text: str):
 	def isValid(ctx: ActionContext) -> bool:
 		return bool(getVariableObjs(ctx))
 
-	def getActions(ctx: ActionContext) -> List[Action]:
+	def getActions(ctx: ActionContext) -> list[Action]:
 		actions = []
 		for variableObj in getVariableObjs(ctx):
 			dataType = variableObj.dataType
@@ -135,7 +135,7 @@ def _createAttrRefGroup(text: str):
 			o.par.Attributename.readOnly = True
 			o.par.Datatype.readOnly = True
 	select = RopSelect(test=test)
-	def getActions(ctx: ActionContext) -> List[Action]:
+	def getActions(ctx: ActionContext) -> list[Action]:
 		info = ROPInfo(ctx.primaryOp)
 		if not info.isROP or not info.opDefExt:
 			return []
@@ -183,7 +183,7 @@ def _createRenderSelGroup(text: str):
 		table = opState.info.outputBufferTable
 		return bool(table and table.numRows > 1)
 
-	def getActions(ctx: ActionContext) -> List[Action]:
+	def getActions(ctx: ActionContext) -> list[Action]:
 		opState = EditorROPState(ctx.primaryOp)
 		if not opState:
 			return []
@@ -317,7 +317,7 @@ def _createAnimateParamAction(
 	return SimpleAction(text, isValid, execute)
 
 def _createAnimateParamsGroup(text: str, ropType: str, nameSuffix: str, params: dict | None = None):
-	def getActions(ctx: ActionContext) -> List[Action]:
+	def getActions(ctx: ActionContext) -> list[Action]:
 		o = ctx.primaryOp
 		if not o:
 			return []
@@ -421,9 +421,9 @@ def _createTableBasedGroup(
 
 def _createTypeListGroup(
 		text: str,
-		typesAndLabels: List[Tuple[str, str]],
-		select: 'RopSelect',
-		attach: 'OpAttach',
+		typesAndLabels: list[Tuple[str, str]],
+		select: RopSelect,
+		attach: OpAttach,
 ):
 	return GroupImpl(
 		text,
@@ -525,7 +525,7 @@ def _copyParState(fromPar: Par, toPar: Par):
 	toPar.mode = fromPar.mode
 	toPar.readOnly = fromPar.readOnly
 
-def _createGoToAction(text: str, getTargets: Callable[[ActionContext], List[OP]]):
+def _createGoToAction(text: str, getTargets: Callable[[ActionContext], list[OP]]):
 	def isValid(ctx: ActionContext):
 		return bool(getTargets(ctx))
 	def execute(ctx: ActionContext):
@@ -595,7 +595,7 @@ def _connsEqual(c1: 'Connector', c2: 'Connector'):
 		return False
 	return c1.owner == c2.owner and c1.index == c2.index and c1.isInput == c2.isInput
 
-def _connIsIn(cFind: 'Connector', cList: 'List[Connector]'):
+def _connIsIn(cFind: Connector, cList: list[Connector]):
 	for c in cList:
 		if _connsEqual(cFind, c):
 			return True
@@ -623,7 +623,7 @@ def _createSwapOrderAction(text):
 		fromOp.nodeX, fromOp.nodeY = pos2
 		toOp.nodeX, toOp.nodeY = pos1
 		return True
-	def processSelection(rops: 'List[OP]', testOnly: bool):
+	def processSelection(rops: list[OP], testOnly: bool):
 		if len(rops) != 2:
 			return False
 		result = processPair(rops[0], rops[1], testOnly)
