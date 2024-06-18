@@ -28,10 +28,13 @@ class BuildContext:
 	def __init__(
 			self,
 			log: Callable,
-			experimental=False):
+			experimental=False,
+			includeModules=False,
+	):
 		self._log = log
 		self.pane = None  # type: Optional[NetworkEditor]
 		self.experimental = experimental
+		self.includeModules = includeModules
 
 	def log(self, msg, verbose=False):
 		self._log(msg, verbose=verbose)
@@ -197,9 +200,10 @@ class BuildContext:
 	def cleanOpImage(self, img: COMP):
 		self.log(f'Cleaning opImage {img}')
 		overlaySwitch = img.op('useOverlaySwitch')
-		overlaySwitch.outputs[0].inputConnectors[0].connect(overlaySwitch.inputs[int(overlaySwitch.par.index)])
+		if overlaySwitch:
+			overlaySwitch.outputs[0].inputConnectors[0].connect(overlaySwitch.inputs[int(overlaySwitch.par.index)])
 		toRemove = img.ops('compImage/componentMeta') + [overlaySwitch]
-		if overlaySwitch.par.index == 0:
+		if overlaySwitch and overlaySwitch.par.index == 0:
 			toRemove += img.ops('var__*')
 		self.safeDestroyOps(toRemove)
 

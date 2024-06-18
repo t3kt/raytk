@@ -23,6 +23,7 @@ class BuildManagerAsync:
 		self.context = None  # type: BuildContext | None
 		self.docProcessor = None  # type: DocProcessor | None
 		self.experimentalMode = False
+		self.includeModules = False
 		self.logFile = None  # type: TextIO | None
 		self.enableVerboseLogging = False
 
@@ -32,6 +33,21 @@ class BuildManagerAsync:
 	@staticmethod
 	def GetToolkitVersion():
 		return RaytkContext().toolkitVersion()
+
+	@staticmethod
+	def prepareModuleTable(dat: DAT, inDat: DAT):
+		dat.clear()
+		dat.appendRow(['name', 'moduleRoot', 'moduleDefinition', 'opTable'])
+		for cell in inDat.col('path')[1:]:
+			modDef = op(cell)
+			if not modDef:
+				continue
+			dat.appendRow([
+				modDef.par.Modulename.eval(),
+				modDef.par.Moduleroot.eval(),
+				modDef.path,
+				modDef.par.Optable.eval() or '',
+			])
 
 	@staticmethod
 	def OpenToolkitNetwork():
@@ -67,15 +83,17 @@ class BuildManagerAsync:
 	def prepareForBuild(self):
 		self.experimentalMode = bool(self.ownerComp.op('experimental_toggle').par.Value0)
 		self.enableVerboseLogging = bool(self.ownerComp.op('verboseLogging_toggle').par.Value0)
+		self.includeModules = bool(self.ownerComp.op('modules_toggle').par.Value0)
 		self.logTable.clear()
 		self.closeLogFile()
 		if self.ownerComp.op('useLogFile_toggle').par.Value0:
 			self.startNewLogFile()
-		self.context = BuildContext(self.log, self.experimentalMode)
+		self.context = BuildContext(self.log, self.experimentalMode, self.includeModules)
 
 	def runToolkitBuildOnly(self):
 		self.prepareForBuild()
-		builder = ToolkitBuilderAsync(self.context)
+
+		builder = ToolkitBuilderAsync(self.context, self.ownerComp.op('moduleTable'))
 
 		async def _build():
 			await builder.runBuild()
@@ -185,6 +203,7 @@ class LibraryBuilderAsyncBase(BuilderAsyncBase):
 		self.context.lockROPPars(comp)
 		await self._processOperatorSubCompChildren(comp)
 		self.context.consolidateOperatorPythonModules(comp)
+		self.context.lockBuildLockOps(comp)
 		if not comp.isPanel:
 			comp.showCustomOnly = True
 			self.log('Updating OP image for ' + comp.path)
@@ -246,7 +265,7 @@ class LibraryBuilderAsyncBase(BuilderAsyncBase):
 			await _asyncYield()
 
 class ToolkitBuilderAsync(LibraryBuilderAsyncBase):
-	def __init__(self, context: BuildContext):
+	def __init__(self, context: BuildContext, moduleTable: DAT):
 		super().__init__(context)
 		self.docProcessor = None
 		if not self.context.experimental:
@@ -257,6 +276,7 @@ class ToolkitBuilderAsync(LibraryBuilderAsyncBase):
 				imagesFolder='docs/assets/images',
 			)
 		self.toolkit = None  # type: COMP | None
+		self.moduleTable = moduleTable
 
 	def _getRaytkContext(self) -> RaytkContext:
 		return RaytkContext()
@@ -303,6 +323,10 @@ class ToolkitBuilderAsync(LibraryBuilderAsyncBase):
 
 		await self.logStageStart('Process tools')
 		await self._processTools()
+
+		if self.context.includeModules:
+			await self.logStageStart('Build modules')
+			await self._buildModules()
 
 		await self.logStageStart('Lock build lock ops')
 		await self._lockAllBuildLockOps()
@@ -376,7 +400,7 @@ class ToolkitBuilderAsync(LibraryBuilderAsyncBase):
 		typeSpec = components.op('typeSpec')
 		self.context.lockBuildLockOps(typeSpec)
 		opDef = components.op('opDefinition')
-		self.context.lockBuildLockOps(opDef)
+		# self.context.lockBuildLockOps(opDef)
 		opDef.op('buildOpState').par.Pretty = False
 		comps = components.ops(
 			'typeSpec', 'typeResolver', 'typeRestrictor',
@@ -386,7 +410,7 @@ class ToolkitBuilderAsync(LibraryBuilderAsyncBase):
 			# won't have been locked yet when this stage runs
 			'shaderBuilder',
 			'opElement', 'transformCodeGenerator', 'timeProvider',
-			'supportDetector', 'expresssionSwitcher', 'parMenuUpdater',
+			'supportDetector', 'expressionSwitcher', 'parMenuUpdater',
 			# 'codeSwitcher',
 			'aggregateCodeGenerator',
 			# 'combiner',  # don't process combiner since it has instance-specific buildLock things depending
@@ -421,6 +445,22 @@ class ToolkitBuilderAsync(LibraryBuilderAsyncBase):
 		self.context.reloadTox(tools)
 		self.context.detachTox(tools)
 		await self.context.runBuildScript(tools.op('BUILD'))
+
+	async def _buildModules(self):
+		moduleNames = [
+			c.val
+			for c in self.moduleTable.col('name')[1:]
+			if c.val != 'raytk'
+		]
+		self.log(f'Found {len(moduleNames)} modules')
+		for moduleName in moduleNames:
+			await self._buildModule(moduleName)
+		self.log('Finished building modules')
+
+	async def _buildModule(self, name: str):
+		self.log('Building module: ' + name)
+		builder = ModuleBuilderAsync(self.context, name)
+		await builder.runBuild()
 
 	async def _destroyComponents(self):
 		comp = self.toolkit.op('components')
@@ -544,6 +584,7 @@ class ModuleBuilderAsync(LibraryBuilderAsyncBase):
 
 	async def _updateModuleImage(self):
 		image = self.moduleRoot.op('moduleImage')
+		self.context.disableCloning(image.op('toxImage'))
 		self.context.disableCloning(image)
 		self.context.detachTox(image)
 		self.moduleRoot.par.opviewer.val = image
@@ -571,7 +612,7 @@ class ModuleBuilderAsync(LibraryBuilderAsyncBase):
 	async def _finishBuild(self):
 		comp = self.moduleRoot
 		self.context.focusInNetworkPane(comp)
-		toxFile = self._getOutputToxPath(self.moduleName)
+		toxFile = self._getOutputToxPath(self.moduleName[0].upper() + self.moduleName[1:])
 		self.log(f'Saving module to {toxFile}')
 		comp.save(toxFile)
 		self.log('Finished build')

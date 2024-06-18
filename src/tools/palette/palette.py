@@ -54,6 +54,30 @@ class Palette:
 		)
 		ext.opPicker.Resetstate()
 
+	@staticmethod
+	def buildModuleTable(dat: scriptDAT):
+		dat.clear()
+		dat.appendRow(['name', 'root'])
+		dat.appendRow(['raytk', op.raytk])
+		modules = root.findChildren(type=baseCOMP, tags=['raytkModule'])
+		for module in modules:
+			modDef = module.op('moduleDefinition')
+			name = modDef.par['Modulename'] or ''
+			if name:
+				dat.appendRow([name, module])
+
+	@staticmethod
+	def prepareOpTable(dat: scriptDAT, mergedOpTable: DAT, moduleTable: DAT):
+		dat.copy(mergedOpTable)
+		for i in range(1, dat.numRows):
+			moduleName = dat[i, 'module'].val
+			path = dat[i, 'path'].val
+			prefix = '/raytkAddons/' + moduleName + '/'
+			moduleRoot = moduleTable[moduleName, 'root']
+			if moduleRoot and path.startswith(prefix):
+				path = moduleRoot.val + '/' + path[len(prefix):]
+				dat[i, 'path'] = path
+
 	@property
 	def _develMode(self):
 		return bool(self.ownerComp.par.Devel)
