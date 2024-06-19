@@ -107,7 +107,11 @@ void main() {
 	#if defined(THIS_RETURN_TYPE_Sdf)
 
 		Sdf res = map(p);
+		float level = getLevel(res);
 
+		#if defined(OUTPUT_DENSITY) && defined(RAYTK_USE_DENSITY)
+			imageStore(densityOut, pixel, vec4(res.density * level));
+		#endif
 
 		MaterialContext matCtx = createMaterialContext();
 		#ifdef RAYTK_GLOBAL_POS_IN_CONTEXT
@@ -127,7 +131,6 @@ void main() {
 
 		#ifdef OUTPUT_COLOR
 			matCtx.result = res;
-			float level = getLevel(adaptAsVec3(p), matCtx);
 			if (level <= 0.) {
 				imageStore(colorOut, pixel, vec4(0.));
 			} else {

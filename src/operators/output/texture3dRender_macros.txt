@@ -1,0 +1,1 @@
+op('primary_definition')[1, 'returnType'] == 'Sdf'	'RAYTK_USE_DENSITY'	''

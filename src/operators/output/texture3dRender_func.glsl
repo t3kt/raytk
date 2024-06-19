@@ -28,14 +28,14 @@ Ray getViewRay(vec3 p) {
 	return ray;
 }
 
-float getLevel(vec3 p, MaterialContext matCtx) {
+float getLevel(Sdf res) {
 	float level = 1.0;
 	float b = 0.;
 	float t = THIS_Thickness / 2.;
 	if (IS_TRUE(THIS_Enableblending)) {
 		b = THIS_Blending;
 	}
-	float d = matCtx.result.x;
+	float d = res.x;
 	MATERIAL_MODE_BODY();
 	return level;
 }

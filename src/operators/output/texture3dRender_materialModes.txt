@@ -1,0 +1,4 @@
+name	label	params	code
+inside	Only Inside SDF		level = smoothstep(0., b, -d);
+surface	Only SDF Surface	Thickness	level = 1.0-smoothstep(0., b, abs(d) - t);
+everywhere	Fill Everwhere		level = 1.;
