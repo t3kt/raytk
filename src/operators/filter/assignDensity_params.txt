@@ -1,2 +1,0 @@
-names	source	handling	readOnlyHandling	conversion	enable
-Density	param	runtime	macro		op('density_definition').numRows < 2

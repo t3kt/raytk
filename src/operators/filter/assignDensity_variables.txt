@@ -1,2 +1,0 @@
-name	label	dataType	enable	macros
-sdf	SDF Surface	Sdf	1
