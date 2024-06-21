@@ -1,5 +1,29 @@
 # Release Notes
 
+## v0.42
+
+### Highlights
+
+### Details
+
+* Improvements / additions
+  * New OPs
+    * (raytkVolumes) assignDensity - assign density to a volume for use in 3D textures and volumetric rendering (#1230, #637)
+    * (raytkVolumes) texture3dRender - renderer that produces 3D textures by sampling SDFs or fields (#1237)
+    * customRender - create your own renderer with a custom shader using RayTK operators as functions (#1220)
+  * New OP features
+    * chainSdf - axis setting
+    * magnet - input fields for amount, radius, fade
+    * torusGridSdf - option to only have rows or columns (#1231)
+* Fixes
+  * "Fixed" typo in prismSdf, polygonSdf2d (#1233)
+  * Fix error when using operators that use iteration as background fields (#1235)
+  * Fix limitField handling of vector fields (#1236)
+* Changes (potentially breaking)
+  * Use surface color when no material is assigned to an SDF for pointMapRender, render2d, texture3dRender
+* Infrastructure / internals
+  * Support for addons with non-public source (#1065)
+
 ## v0.41
 
 ### Highlights
@@ -52,7 +76,6 @@
   * raymarchRender3D - make limit box disabled by default
   * Restructured how multiple lights are handled. Materials are now responsible for looping through the lights and combining the results, rather than the renderer doing it. This allows modularMat to correctly handle shading elements that aren't based on lighting. There may be some differences in how material shading behaves, but hopefully they should be fairly minor. (#1213)
   * Deprecate simpleDiff, simpleIntersect, simpleUnion
-* Infrastructure / internals
 
 ## v0.40
 

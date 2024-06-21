@@ -1,14 +1,5 @@
 name	chip
-assignUV	updated
-adjustColor	updated
-assignUV	updated
-cameraTransform	updated
-instanceLight	new
-lightTransform	new
-limitLight	updated
+assignDensity	new
 magnet	updated
-mixFields	new
-moduloToroidal	updated
-radialClone	updated
-restrictTypes	new
-sampledPointMat	updated
+customRender	new
+texture3dRender	new
