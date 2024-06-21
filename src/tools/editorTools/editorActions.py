@@ -723,7 +723,7 @@ class _RopTypes:
 	defineAttribute = 'raytk.operators.utility.defineAttribute'
 	assignAttribute = 'raytk.operators.filter.assignAttribute'
 	getAttribute = 'raytk.operators.utility.getAttribute'
-	texture3dRender = 'raytk.operators.output.texture3dRender'
+	texture3dRender = 'raytkVolumes.operators.output.texture3dRender'
 
 def createActionManager():
 	manager = ActionManager(
