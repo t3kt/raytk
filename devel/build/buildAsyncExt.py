@@ -581,6 +581,8 @@ class ModuleBuilderAsync(LibraryBuilderAsyncBase):
 		self.context.disableCloning(moduleDef)
 		for p in moduleDef.customPars:
 			p.readOnly = True
+		for p in moduleDef.pars('Operatorsfolder', 'Testsfolder'):
+			p.destroy()
 
 	async def _updateModuleImage(self):
 		image = self.moduleRoot.op('moduleImage')

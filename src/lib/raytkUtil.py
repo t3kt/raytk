@@ -119,6 +119,8 @@ class ModuleMetaParsT:
 	Optable: 'DatParamT'
 	Ophelptable: 'DatParamT'
 	Operatorsroot: 'CompParamT'
+	Operatorsfolder: 'StrParamT'
+	Testsfolder: 'StrParamT'
 	Raytkopversion: 'IntParamT'
 	Experimentalbuild: 'BoolParamT'
 
@@ -1073,6 +1075,12 @@ class RaytkModuleContext(RaytkContext):
 
 	def operatorsRoot(self):
 		return self.modInfo.operatorsRoot()
+
+	def operatorsFolder(self):
+		folder = self.modInfo.modDefPar.Operatorsfolder.eval()
+		if folder:
+			return folder
+		return super().operatorsFolder()
 
 	def experimentalMode(self):
 		return self.modInfo.modDefPar.Experimentalbuild.eval()
