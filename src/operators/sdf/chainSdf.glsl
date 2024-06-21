@@ -1,18 +1,25 @@
 // https://www.shadertoy.com/view/wlXSD7
 // build the chain directly, it saves one of four square roots over using sdLinks()
 ReturnT thismap(CoordT p, ContextT ctx) {
+	CoordT p0 = p;
+	switch (int(THIS_Axis)) {
+		case 0: p = p.yxz; break;
+		case 1: p = p.xyz; break;
+		case 2: p = p.yzx; break;
+	}
+
 	#ifdef THIS_HAS_INPUT_lengthField
-	float le = inputOp_lengthField(p, ctx);
+	float le = inputOp_lengthField(p0, ctx);
 	#else
 	float le = THIS_Length;
 	#endif
 	#ifdef THIS_HAS_INPUT_radiusField
-	float r1 = inputOp_radiusField(p, ctx);
+	float r1 = inputOp_radiusField(p0, ctx);
 	#else
 	float r1 = THIS_Radius;
 	#endif
 	#ifdef THIS_HAS_INPUT_thicknessField
-	float r2 = inputOp_thicknessField(p, ctx);
+	float r2 = inputOp_thicknessField(p0, ctx);
 	#else
 	float r2 = THIS_Thickness;
 	#endif
