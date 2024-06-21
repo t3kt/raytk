@@ -1,4 +1,5 @@
 from pathlib import Path
+from raytkUtil import ModuleInfo
 
 # noinspection PyUnreachableCode
 if False:
@@ -43,14 +44,19 @@ class ToolkitManager:
 	@staticmethod
 	def prepareModuleTable(dat: DAT, inDat: DAT):
 		dat.clear()
-		dat.appendRow(['name', 'moduleRoot', 'moduleDefinition', 'opTable'])
+		dat.appendRow(['name', 'moduleRoot', 'moduleDefinition', 'opTable', 'testsFolder'])
 		for cell in inDat.col('path')[1:]:
 			modDef = op(cell)
 			if not modDef:
 				continue
+			modRoot = modDef.par.Moduleroot.eval()
+			modInfo = ModuleInfo(modRoot)
+			if not modInfo:
+				continue
 			dat.appendRow([
-				modDef.par.Modulename.eval(),
-				modDef.par.Moduleroot.eval(),
-				modDef.path,
+				modInfo.moduleName,
+				modRoot,
+				modDef,
 				modDef.par.Optable.eval() or '',
+				modDef.par.Testsfolder,
 			])
