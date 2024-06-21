@@ -1,8 +1,8 @@
 !rop
 meta: !meta
   opType: raytk.operators.output.customRender
-  opVersion: '21'
-  opStatus: alpha
+  opVersion: '22'
+  opStatus: beta
 paramPages:
 - !page
   name: Render
