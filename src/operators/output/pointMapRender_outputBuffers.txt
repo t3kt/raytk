@@ -1,6 +1,7 @@
 name	label	macro	enable	path	enablePar	available
 sdfOut	SDF Result	OUTPUT_SDF	op('definition')[1, 'returnType'].val == 'Sdf'	parent().path + '/shaderExecutor/render_glsl'		op('definition')[1, 'returnType'].val == 'Sdf'
 colorOut	Color	OUTPUT_COLOR	op('definition')[1, 'returnType'].val == 'Sdf'	parent().path + '/shaderExecutor/render_glsl'		op('definition')[1, 'returnType'].val == 'Sdf'
+densityOut	Density	OUTPUT_DENSITY	op('definition')[1, 'returnType'].val == 'Sdf'	parent().path + '/shaderExecutor/render_glsl'		op('definition')[1, 'returnType'].val == 'Sdf'
 valueOut	Value	OUTPUT_VALUE	op('definition')[1, 'returnType'].val in ('float', 'vec4')	parent().path + '/shaderExecutor/render_glsl'		op('definition')[1, 'returnType'].val in ('float', 'vec4')
 normalOut	Normal	OUTPUT_NORMAL	parent().par.Enablenormaloutput and op('definition')[1, 'returnType'].val == 'Sdf'	parent().path + '/shaderExecutor/render_glsl'	Enablenormaloutput	op('definition')[1, 'returnType'].val == 'Sdf'
 objectIdOut	Object Id	OUTPUT_OBJECTID	parent().par.Enableobjectidoutput and op('definition')[1, 'returnType'].val == 'Sdf'	parent().path + '/shaderExecutor/render_glsl'	Enableobjectidoutput	op('definition')[1, 'returnType'].val == 'Sdf'
