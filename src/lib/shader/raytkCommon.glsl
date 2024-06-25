@@ -421,3 +421,14 @@ float czm_luminance(vec3 rgb)
 }
 
 vec3 saturate(vec3 x) { return clamp(x, vec3(0.), vec3(1.)); }
+
+bool intersectRayBox(Ray ray, vec3 boxMin, vec3 boxMax, out float tmin, out float tmax) {
+	vec3 invDir = 1.0 / ray.dir;
+	vec3 t0s = (boxMin - ray.pos) * invDir;
+	vec3 t1s = (boxMax - ray.pos) * invDir;
+	vec3 tsmaller = min(t0s, t1s);
+	vec3 tbigger = max(t0s, t1s);
+	tmin = max(max(tsmaller.x, tsmaller.y), tsmaller.z);
+	tmax = min(min(tbigger.x, tbigger.y), tbigger.z);
+	return tmax > max(tmin, 0.0);
+}

@@ -144,7 +144,7 @@ Sdf createSdf(float dist) {
 	res.color = vec4(0.);
 	#endif
 	#ifdef RAYTK_USE_DENSITY
-	res.density = 1.0;
+	res.density = 1.0 - step(0.0, dist);
 	#endif
 	#ifdef RAYTK_USE_TRANSPARENCY
 	res.transparent = vec2(0.);
