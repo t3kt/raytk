@@ -204,7 +204,7 @@ class BuildContext:
 			overlaySwitch.outputs[0].inputConnectors[0].connect(overlaySwitch.inputs[int(overlaySwitch.par.index)])
 		toRemove = img.ops('compImage/componentMeta') + [overlaySwitch]
 		if overlaySwitch and overlaySwitch.par.index == 0:
-			toRemove += img.ops('var__*')
+			toRemove += img.ops('sel__*')
 		self.safeDestroyOps(toRemove)
 
 	def removeOpHelp(self, comp: COMP):

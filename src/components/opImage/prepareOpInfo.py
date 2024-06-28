@@ -14,19 +14,22 @@ def onCook(dat: DAT):
 	dat.appendRow(['toolkitVersion', ''])
 	dat.appendRow(['statusIcon', ''])
 	dat.appendRow(['useOverlay', '0'])
+	dat.appendRow(['overlayIcon', ''])
 	dat.appendRow(['fg'] + list(IconColors.defaultFgColor))
 	dat.appendRow(['bg'] + list(IconColors.defaultBgColor))
 	if not info:
 		return
 	showStatus = True
 	if info.opStyle == 'variable':
-		dat['category', 1] = 'variable'
 		dat['useOverlay', 1] = '1'
-		# dat.replaceRow('res', ['res', 256, 160])
+		dat['overlayIcon', 1] = chr(0xF02FA)
+		showStatus = False
+	elif info.opStyle == 'select':
+		dat['useOverlay', 1] = '1'
 		showStatus = False
 	else:
 		dat['name', 1] = info.shortName or ''
-		dat['category', 1] = info.categoryName or ''
+	dat['category', 1] = info.categoryName or ''
 	version = info.toolkitVersion
 	if version:
 		version = 'v' + version
