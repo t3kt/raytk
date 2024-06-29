@@ -921,6 +921,7 @@ class ReturnTypes:
 	float = 'float'
 	Ray = 'Ray'
 	Light = 'Light'
+	Volume = 'Volume'
 
 	values = [
 		Sdf,
@@ -928,6 +929,7 @@ class ReturnTypes:
 		float,
 		Ray,
 		Light,
+		Volume,
 	]
 
 class CoordTypes:
