@@ -236,6 +236,7 @@ class ReturnTypes(ModelObject):
 	Returntyperay: ValueOrExprT = None
 	Returntypelight: ValueOrExprT = None
 	Returntypeparticle: ValueOrExprT = None
+	Returntypevolume: ValueOrExprT = None
 
 	@classmethod
 	def fromComp(cls, specComp: COMP):

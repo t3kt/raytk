@@ -89,6 +89,13 @@ struct Sdf {
 	#endif
 };
 
+struct Volume {
+	float density;
+
+	Sdf sdf;  // If this is missing it will be a non-hit SDF.
+	// But other fields in the SDF struct can still be used (mat, materialPos, etc);
+};
+
 int resultMaterial1(Sdf res) { return int(res.mat.x); }
 int resultMaterial2(Sdf res) { return int(res.mat.y); }
 float resultMaterialInterp(Sdf res) { return res.mat.z; }
@@ -152,6 +159,13 @@ Sdf createSdf(float dist) {
 	#ifdef RAYTK_HAS_ATTRS
 	initAttrs(res.attrs);
 	#endif
+	return res;
+}
+
+Volume createVolume(float density) {
+	Volume res;
+	res.density = density;
+	res.sdf = createNonHitSdf();
 	return res;
 }
 
