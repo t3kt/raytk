@@ -162,13 +162,6 @@ Sdf createSdf(float dist) {
 	return res;
 }
 
-Volume createVolume(float density) {
-	Volume res;
-	res.density = density;
-	res.sdf = createNonHitSdf();
-	return res;
-}
-
 void blendInSdf(inout Sdf res1, in Sdf res2, in float amt) {
 	if (isDistanceOnlyStage()) { return; }
 	res1.mat.y = res2.mat.x;
@@ -296,7 +289,15 @@ Sdf createNonHitSdf() {
 	return res;
 }
 
+Volume createVolume(float density) {
+	Volume res;
+	res.density = density;
+	res.sdf = createNonHitSdf();
+	return res;
+}
+
 void initDefVal(out Sdf val) { val = createNonHitSdf(); }
+void initDefVal(out Volume val) { val = createVolume(0.); }
 
 bool isNonHitSdfDist(float d) { return d >= RAYTK_MAX_DIST; }
 bool isNonHitSdf(Sdf res) { return res.x >= RAYTK_MAX_DIST; }
