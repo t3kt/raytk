@@ -1,2 +1,2 @@
 'name'	'path'	'type'
-'texture'	parent().par.Texture.eval() or ''	parent().par.Texturetype.eval()
+'texture'	op('tex')	parent().par.Texturetype.eval()

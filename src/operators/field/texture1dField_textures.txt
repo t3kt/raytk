@@ -1,2 +1,2 @@
 name	path	type
-texture	op(parent().par.Texture) or op('blank')	2d
+texture	op('tex')	2d
