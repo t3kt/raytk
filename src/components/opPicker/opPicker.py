@@ -85,6 +85,9 @@ class OpPicker:
 	def SetThumbToggle(showThumbs: bool):
 		ipar.uiState.Showthumbs = showThumbs
 
+	def SetAllCategoriesExpansion(self, expanded: bool):
+		self.impl.setAllCategoriesExpansion(expanded)
+
 	def Loaditems(self, _=None):
 		self.impl.loadItems(
 			self.ownerComp.op('opTable'),
@@ -468,6 +471,9 @@ class _PickerImpl:
 		elif item.ops:
 			self.selectItem(item.ops[0], scroll=False)
 
+	def setAllCategoriesExpansion(self, expanded: bool):
+		raise NotImplementedError()
+
 	def applyFilter(self):
 		raise NotImplementedError()
 
@@ -614,6 +620,11 @@ class _DefaultPickerImpl(_PickerImpl):
 			else:
 				self.setItemHighlight(item, True)
 		self.refreshList()
+
+	def setAllCategoriesExpansion(self, expanded: bool):
+		for category in self.itemLibrary.categories:
+			category.collapsed = not expanded
+		self.applyFilter()
 
 	def selectFilterShortcutItem(self) -> _AnyItemT | None:
 		shortcut = self.filterText
@@ -897,6 +908,11 @@ class _CategoryColumnPickerImpl(_PickerImpl):
 		if item:
 			pass
 		pass
+
+	def setAllCategoriesExpansion(self, expanded: bool):
+		for category in self.itemLibrary.allCategories:
+			category.collapsed = not expanded
+		self.applyFilter()
 
 	def _getCellAttribsForItem(self, item: _AnyItemT | None) -> list[ListAttributes]:
 		row, col = self.itemLibrary.getPosForItem(item)

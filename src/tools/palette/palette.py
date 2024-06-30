@@ -89,6 +89,10 @@ class Palette:
 	def Show(self, _=None):
 		self.open()
 
+	@staticmethod
+	def SetAllCategoriesExpansion(expanded: bool):
+		ext.opPicker.SetAllCategoriesExpansion(expanded)
+
 	def open(self):
 		self._resetCloseTimer()
 		self.ownerComp.op('window').par.winopen.pulse()
