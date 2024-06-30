@@ -1,7 +1,6 @@
 from raytkActions import *
 from raytkUtil import ROPInfo, mergeDicts
 from typing import Tuple
-from editorToolsCommon import *
 
 # noinspection PyUnreachableCode
 if False:
@@ -725,8 +724,8 @@ class _RopTypes:
 	getAttribute = 'raytk.operators.utility.getAttribute'
 	texture3dRender = 'raytkVolumes.operators.output.texture3dRender'
 
-def createActionManager():
-	manager = ActionManager(
+def getActions():
+	return [
 		_createAppendNull('Append Null'),
 		SimpleAction(
 			'Inspect',
@@ -1029,5 +1028,4 @@ def createActionManager():
 			]),
 		_createAttrRefGroup('Reference Attribute'),
 		_createSimplifyRotateAction('Simplify Rotate'),
-	)
-	return manager
+	]
