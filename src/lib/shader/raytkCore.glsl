@@ -240,11 +240,19 @@ void assignColor(inout Sdf res, vec3 color) {
 	#endif
 }
 
+void assignColor(inout Volume res, vec3 color) {
+	assignColor(res.sdf, color);
+}
+
 bool hasColor(in Sdf res) {
 	#ifdef RAYTK_USE_SURFACE_COLOR
 	return res.color.a > 0.;
 	#endif
 	return false;
+}
+
+bool hasColor(in Volume res) {
+	return hasColor(res.sdf);
 }
 
 vec3 getColor(in Sdf res) {
@@ -253,6 +261,10 @@ vec3 getColor(in Sdf res) {
 	#else
 	return vec3(0.);
 	#endif
+}
+
+vec3 getColor(in Volume res) {
+	return getColor(res.sdf);
 }
 
 void assignMaterial(inout Sdf res, int materialId) {
@@ -301,6 +313,8 @@ void initDefVal(out Volume val) { val = createVolume(0.); }
 
 bool isNonHitSdfDist(float d) { return d >= RAYTK_MAX_DIST; }
 bool isNonHitSdf(Sdf res) { return res.x >= RAYTK_MAX_DIST; }
+
+bool volumeHasSdf(Volume vol) { return !isNonHitSdf(vol.sdf); }
 
 Sdf withAdjustedScale(in Sdf res, float scaleMult) {
 	res.x *= scaleMult;

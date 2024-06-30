@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.filter.assignColor
-  opVersion: '19'
+  opVersion: '20'
   opStatus: default
 opDef: !def
   enable: !expr
@@ -14,6 +14,7 @@ opDef: !def
       Allcontexttype: true
     returnType: !returnT
       Returntypesdf: true
+      Returntypevolume: true
   function: !text
     file: src/operators/filter/assignColor.glsl
     name: function
@@ -48,7 +49,7 @@ inputs:
     Allcontexttype: true
   returnType: !returnT
     Returntypesdf: true
-    Returntypeparticle: true
+    Returntypevolume: true
 - !input
   Localalias: colorField
   Variables: sdf
