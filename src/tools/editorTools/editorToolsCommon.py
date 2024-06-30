@@ -87,14 +87,3 @@ class ActionManager:
 				allowStickySubMenus=False,
 				autoClose=True,
 			)
-
-	def buildTable(self, dat: scriptDAT):
-		dat.clear()
-		dat.appendRow(['name', 'label'])
-		ctx = self._getContext()
-		if not ctx:
-			return
-		for action in self.items:
-			if action.isValid(ctx):
-				item = action.createMenuItem(ctx)
-				dat.appendRow([item.text, item.text])
