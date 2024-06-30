@@ -723,6 +723,7 @@ class _RopTypes:
 	assignAttribute = 'raytk.operators.filter.assignAttribute'
 	getAttribute = 'raytk.operators.utility.getAttribute'
 	texture3dRender = 'raytkVolumes.operators.output.texture3dRender'
+	volumetricRaymarchRender3D = 'raytkVolumes.operators.output.volumetricRaymarchRender3D'
 
 def getActions():
 	return [
@@ -828,7 +829,12 @@ def getActions():
 				('raytk.operators.camera.linkedCamera', 'Linked Camera'),
 				('raytk.operators.camera.lookAtCamera', 'Look At Camera'),
 			],
-			select=RopSelect(ropTypes=[_RopTypes.raymarchRender3d, _RopTypes.pointMapRender, _RopTypes.texture3dRender]),
+			select=RopSelect(ropTypes=[
+				_RopTypes.raymarchRender3d,
+				_RopTypes.pointMapRender,
+				_RopTypes.texture3dRender,
+				_RopTypes.volumetricRaymarchRender3D,
+			]),
 			attach=AttachIntoExisting(inputIndex=1),
 		),
 		_createTypeListGroup(
@@ -841,7 +847,12 @@ def getActions():
 				('raytk.operators.light.pointLight', 'Point Light'),
 				('raytk.operators.light.spotLight', 'Spot Light'),
 			],
-			select=RopSelect(ropTypes=[_RopTypes.raymarchRender3d, _RopTypes.pointMapRender, _RopTypes.texture3dRender]),
+			select=RopSelect(ropTypes=[
+				_RopTypes.raymarchRender3d,
+				_RopTypes.pointMapRender,
+				_RopTypes.texture3dRender,
+				_RopTypes.volumetricRaymarchRender3D,
+			]),
 			attach=AttachIntoExisting(inputIndex=2),
 		),
 		_createTypeListGroup(
