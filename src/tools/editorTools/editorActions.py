@@ -396,28 +396,6 @@ def _createCustomizeShaderConfigAction(text: str):
 			par.pulse()
 	return SimpleAction(text, isValid, execute)
 
-def _createTableBasedGroup(
-		text: str, table: DAT,
-		ropType: str,
-		paramName: str,
-		select: 'RopSelect',
-		attach: 'OpAttach',
-		params: dict | None = None,
-):
-	return GroupImpl(
-		text,
-		select,
-		[
-			ActionImpl(
-				str(table[i, 'label']),
-				ropType=ropType,
-				select=select,
-				attach=attach,
-				params=mergeDicts({paramName: str(table[i, 'name'])}, params),
-			)
-			for i in range(1, table.numRows)
-		])
-
 def _createTypeListGroup(
 		text: str,
 		typesAndLabels: list[Tuple[str, str]],
@@ -748,7 +726,7 @@ def getActions():
 			select=RopSelect(returnTypes=['float']),
 			attach=AttachOutFromExisting(),
 		),
-		_createTableBasedGroup(
+		createTableBasedGroup(
 			'To Vector Part', op('vectorToFloatParts'), _RopTypes.vectorToFloat, 'Usepart',
 			select=RopSelect(returnTypes=['vec4']),
 			attach=AttachOutFromExisting(),
@@ -778,7 +756,7 @@ def getActions():
 			select=RopSelect(returnTypes=['float']),
 			attach=AttachOutFromExisting(),
 		),
-		_createTableBasedGroup(
+		createTableBasedGroup(
 			'Apply Wave',
 			table=op('waveFunctions'),
 			ropType='raytk.operators.field.waveField',
@@ -787,12 +765,12 @@ def getActions():
 			attach=AttachOutFromExisting(),
 		),
 		_createSimplifyRescaleFloatAction('Simplify Rescale Float'),
-		_createTableBasedGroup(
+		createTableBasedGroup(
 			'Project Plane', op('projectPlanes'), _RopTypes.projectPlane, 'Plane',
 			select=RopSelect(coordTypes=['vec2'], excludeOutputOps=True),
 			attach=AttachOutFromExisting(),
 		),
-		_createTableBasedGroup(
+		createTableBasedGroup(
 			'Cross Section', op('crossSectionAxes'), _RopTypes.crossSection, 'Axes',
 			select=RopSelect(coordTypes=['vec3'], excludeOutputOps=True),
 			attach=AttachOutFromExisting(),
@@ -904,7 +882,7 @@ def getActions():
 			select=RopSelect(coordTypes=['vec2'], returnTypes=['Sdf'], excludeOutputOps=True),
 			attach=AttachOutFromExisting(),
 		),
-		_createTableBasedGroup(
+		createTableBasedGroup(
 			'Combine SDFs',
 			ropType='raytk.operators.combine.combine',
 			paramName='Combine',
@@ -913,7 +891,7 @@ def getActions():
 				returnTypes=['Sdf'],
 				multi=True, minCount=2, maxCount=2, excludeOutputOps=True),
 			attach=AttachOutFromExisting()),
-		_createTableBasedGroup(
+		createTableBasedGroup(
 			'Arrange SDFs',
 			ropType='raytk.operators.combine.arrange',
 			paramName='Combine',
@@ -933,7 +911,7 @@ def getActions():
 			select=RopSelect(multi=True, minCount=2, maxCount=None, excludeOutputOps=True),
 			attach=AttachOutFromExisting(),
 			params={'Blend': True}),
-		_createTableBasedGroup(
+		createTableBasedGroup(
 			'Combine Fields',
 			ropType='raytk.operators.combine.combineFields',
 			paramName='Operation',
@@ -942,7 +920,7 @@ def getActions():
 				returnTypes=['float', 'vec4'],
 				multi=True, minCount=True, maxCount=None),
 			attach=AttachOutFromExisting()),
-		_createTableBasedGroup(
+		createTableBasedGroup(
 			'Composite Fields',
 			ropType='raytk.operators.combine.compositeFields',
 			paramName='Blendmode',
@@ -951,7 +929,7 @@ def getActions():
 				returnTypes=['vec4'],
 				multi=True, minCount=2, maxCount=None),
 			attach=AttachOutFromExisting()),
-		_createTableBasedGroup(
+		createTableBasedGroup(
 			'Mix Fields',
 			ropType='raytk.operators.combine.mixFields',
 			paramName='Combinemode',
@@ -961,7 +939,7 @@ def getActions():
 				multi=True, minCount=2, maxCount=None),
 			params={'Returntype': 'vec4'},
 			attach=AttachOutFromExisting()),
-		_createTableBasedGroup(
+		createTableBasedGroup(
 			'Mix Fields',
 			ropType='raytk.operators.combine.mixFields',
 			paramName='Combinemode',

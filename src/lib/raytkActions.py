@@ -1,7 +1,7 @@
 from abc import ABC
 from dataclasses import dataclass, field
 from typing import Any, Callable, Dict, Optional, Union
-from raytkUtil import isROP, isRComp, RaytkContext, ROPInfo
+from raytkUtil import isROP, isRComp, RaytkContext, ROPInfo, mergeDicts
 
 # noinspection PyUnreachableCode
 if False:
@@ -455,6 +455,28 @@ class GroupImpl(ActionGroup):
 			return self.actions
 		else:
 			return self.actions(ctx)
+
+def createTableBasedGroup(
+		text: str, table: DAT,
+		ropType: str,
+		paramName: str,
+		select: RopSelect,
+		attach: OpAttach,
+		params: dict | None = None,
+):
+	return GroupImpl(
+		text,
+		select,
+		[
+			ActionImpl(
+				str(table[i, 'label']),
+				ropType=ropType,
+				select=select,
+				attach=attach,
+				params=mergeDicts({paramName: str(table[i, 'name'])}, params),
+			)
+			for i in range(1, table.numRows)
+		])
 
 class RopActionUtils:
 	@staticmethod
