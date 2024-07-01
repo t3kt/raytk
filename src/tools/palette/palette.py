@@ -312,12 +312,21 @@ class Palette:
 		print(self.ownerComp, msg)
 		ui.status = msg
 
-	@staticmethod
-	def _getTemplate(path: str):
-		if not path:
+	def _getPathForOpType(self, opType: str):
+		cell = self.ownerComp.op('pathsByOpType')[opType, 'path']
+		return cell.val if cell else None
+
+	def _getTemplate(self, pathOrOpType: str):
+		if not pathOrOpType:
 			return
-		if path.startswith('raytk.operators.'):
-			path = '/' + path.replace('.', '/')
+		if '.' in pathOrOpType:
+			path = self._getPathForOpType(pathOrOpType) or pathOrOpType
+		else:
+			path = pathOrOpType
+		o = op(path)
+		if o:
+			return o
+		# TODO: is the rest of this necessary anymore?
 		if not path.startswith('/raytk/'):
 			return op(path)
 		context = RaytkContext()
