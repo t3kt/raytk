@@ -10,12 +10,11 @@ class EditorTools:
 	def __init__(self, ownerComp: COMP):
 		self.ownerComp = ownerComp
 
-	def _createActionManager(self):
-		table = self.ownerComp.op('editorActionModules')
+	@staticmethod
+	def _createActionManager():
 		actions = []
-		for path in table.col('path')[1:]:
-			d = op(path)
-			if not d or not d.isDAT:
+		for d in root.findChildren(tags=['raytkEditorActionModule']):
+			if not d.isDAT:
 				continue
 			try:
 				actions += d.module.getActions()
