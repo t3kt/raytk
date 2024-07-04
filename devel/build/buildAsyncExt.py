@@ -554,10 +554,8 @@ class ModuleBuilderAsync(LibraryBuilderAsyncBase):
 	async def reloadAddons(self):
 		self.addonsRoot = getattr(op, 'raytkAddons')
 		if self.addonsRoot:
-			self.context.reloadTox(self.addonsRoot)
-		else:
-			self.log('No addons component found')
-			self.addonsRoot = root.loadTox('addons/src/raytkAddons.tox')
+			self.context.safeDestroyOp(self.addonsRoot)
+		self.addonsRoot = root.loadTox('addons/src/raytkAddons.tox')
 		self.log('Addons loaded: ' + self.addonsRoot.path)
 
 	async def _locateModule(self):
@@ -567,6 +565,8 @@ class ModuleBuilderAsync(LibraryBuilderAsyncBase):
 				self.log('Found module: ' + comp.path)
 				self.moduleContext = moduleContext
 				self.moduleRoot = moduleContext.moduleRoot()
+				self.log('Reloading module: ' + comp.path)
+				self.context.reloadTox(comp)
 				return
 		self.log('Module not found: ' + self.moduleName)
 		raise Exception('Module not found: ' + self.moduleName)

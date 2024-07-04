@@ -149,10 +149,11 @@ class BuildContext:
 			processedTuplets.add(p.tupletName)
 
 	def reloadTox(self, comp: COMP):
-		if not comp or not comp.par['reinitnet'] or not comp.par['externaltox']:
+		if not comp or not comp.par['enableexternaltoxpulse'] or not comp.par['enableexternaltox']:
+			self.log(f'No tox to reload for {comp}')
 			return
 		self.log(f'Reloading {comp.par.externaltox} for {comp}')
-		comp.par.reinitnet.pulse()
+		comp.par.enableexternaltoxpulse.pulse()
 
 	def removeAlphaOps(self, category: COMP):
 		catInfo = CategoryInfo(category)
