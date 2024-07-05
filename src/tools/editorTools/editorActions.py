@@ -27,7 +27,7 @@ def _createAppendNull(text: str):
 		ui.undo.endBlock()
 
 	def isValid(ctx: ActionContext) -> bool:
-		return bool(ctx.primaryOp and ctx.primaryOp.outputConnectors)
+		return bool(ctx.primaryOp and ctx.primaryOp.outputConnectors and not getattr(ctx.primaryOp, 'isPrivate', False))
 
 	return SimpleAction(text, isValid, execute)
 
