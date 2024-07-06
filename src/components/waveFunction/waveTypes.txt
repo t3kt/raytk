@@ -8,3 +8,5 @@ square	Square	res = wave_square(q)	Period Phase
 addsquare2	Additive Square (2)	res = wave_addSquare(q, 2)	Period Phase
 addsquare4	Additive Square (4)	res = wave_addSquare(q, 4)	Period Phase
 addsquare8	Additive Square (8)	res = wave_addSquare(q, 8)	Period Phase
+smsquare1	Smooth Square (.1)	res = wave_smoothSquare(q, .1)	Period Phase
+smsquare3	Smooth Square (.3)	res = wave_smoothSquare(q, .3)	Period Phase
