@@ -32,6 +32,7 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 	if (IS_TRUE(THIS_Reverse)) {
 		p.x *= -1;
 	}
+	p.y += THIS_Offset;
 	#ifdef THIS_EXPOSE_axisoffset
 	THIS_axisoffset = p.y;
 	#endif
