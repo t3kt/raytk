@@ -10,9 +10,25 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 		case THISTYPE_Axis_z: q = p3.xy; ap = p3.z; break;
 	}
 
+	#ifdef THIS_EXPOSE_axispos
+	THIS_axispos = ap;
+	#endif
+
+	#ifdef THIS_HAS_INPUT_centerField
+	vec2 center = inputOp_centerField(p, ctx).xy;
+	#else
 	vec2 center = THIS_Center;
+	#endif
+	#ifdef THIS_HAS_INPUT_sizeField
+	float size = inputOp_sizeField(p, ctx);
+	#else
 	float size = THIS_Size;
+	#endif
+	#ifdef THIS_HAS_INPUT_amountField
+	float amount = inputOp_amountField(p, ctx);
+	#else
 	float amount = THIS_Amount;
+	#endif
 
 	q += center;
 

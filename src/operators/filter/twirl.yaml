@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.filter.twirl
-  opVersion: '0'
+  opVersion: '1'
   opStatus: beta
 opDef: !def
   enable: !expr
@@ -20,9 +20,18 @@ opDef: !def
     file: src/operators/filter/twirl.glsl
     name: function
   paramGroupTable: eval_params
+  variableTable: !table
+    file: src/operators/filter/twirl_variables.txt
+    name: variable_exprs
+    evaluate: true
+    evalOpts: !evalOpts
+      excludeFirstRow: true
+      cols: enable
   displayCategory: Transform
 inputs:
 - !input
+  Variables: '*'
+  Variableinputs: '*'
   Required: true
   coordType: !coordT
     Allcoordtype: true
@@ -30,3 +39,35 @@ inputs:
     Allcontexttype: true
   returnType: !returnT
     Allreturntype: true
+- !input
+  Localalias: centerField
+  Variables: '*'
+  Required: true
+  coordType: !coordT
+    Allcoordtype: true
+  contextType: !contextT
+    Allcontexttype: true
+  returnType: !returnT
+    Returntypevec4: true
+- !input
+  Localalias: sizeField
+  Variables: '*'
+  Variableinputs: centerField
+  Required: true
+  coordType: !coordT
+    Allcoordtype: true
+  contextType: !contextT
+    Allcontexttype: true
+  returnType: !returnT
+    Returntypefloat: true
+- !input
+  Localalias: amountField
+  Variables: '*'
+  Variableinputs: centerField sizeField
+  Required: true
+  coordType: !coordT
+    Allcoordtype: true
+  contextType: !contextT
+    Allcontexttype: true
+  returnType: !returnT
+    Returntypefloat: true
