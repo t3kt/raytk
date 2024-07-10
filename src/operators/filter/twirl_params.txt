@@ -1,0 +1,5 @@
+names	source	handling	readOnlyHandling	conversion	enable
+Axis	param	constant			1
+Center[xy]	param	runtime	macro		1
+Size	param	runtime	macro		1
+Amount	param	runtime	macro		1
