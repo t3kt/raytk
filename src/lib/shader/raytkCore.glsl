@@ -627,3 +627,10 @@ bool isDistanceOnlyStage() {
 	_raytkStage == RAYTK_STAGE_SUBSURFACE;
 }
 
+void stripVolumeSdf(float x) {}
+void stripVolumeSdf(vec4 x) {}
+void stripVolumeSdf(Sdf x) {}
+void stripVolumeSdf(inout Volume x) {
+	x.sdf.x = RAYTK_MAX_DIST;
+}
+
