@@ -2,7 +2,7 @@
 meta: !meta
   opType: raytk.operators.material.shadingProperty
   opVersion: '5'
-  opStatus: beta
+  opStatus: default
 opDef: !def
   enable: true
   typeSpec: !ropTypes

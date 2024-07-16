@@ -2,7 +2,7 @@
 meta: !meta
   opType: raytk.operators.field.terrainNoiseField
   opVersion: '4'
-  opStatus: beta
+  opStatus: default
 opDef: !def
   enable: true
   typeSpec: !ropTypes

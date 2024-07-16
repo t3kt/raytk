@@ -2,7 +2,7 @@
 meta: !meta
   opType: raytk.operators.material.matCapContrib
   opVersion: '10'
-  opStatus: beta
+  opStatus: default
 opDef: !def
   enable: !expr
     expr: parent().par.Enable

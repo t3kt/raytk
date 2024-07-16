@@ -2,4 +2,4 @@
 meta: !meta
   opType: raytk.operators.output.fieldRender
   opVersion: '17'
-  opStatus: beta
+  opStatus: default
