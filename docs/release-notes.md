@@ -4,6 +4,12 @@
 
 ### Highlights
 
+* Custom renderer lets you create your own shader that uses RayTK operators from your code!
+* Lots of new features and improvements to existing operators.
+* New addons framework for extra packages of functionality that are released separately from the main toolkit.
+  * For now these will be available through [Patreon](https://patreon.com/tekt), though there may be other options in the future.
+  * The first of these is raytkVolumes, which adds operators for working with 3D textures and volumetric rendering.
+
 ### Details
 
 * Improvements / additions
@@ -13,14 +19,27 @@
     * customRender - create your own renderer with a custom shader using RayTK operators as functions (#1220)
   * New OP features
     * chainSdf - axis setting
+    * chopField, chopFn - CHOP inputs as an alternative to using parameters
+    * helixSdf - offset parameter
     * magnet - input fields for amount, radius, fade
+    * noiseField - gabor noise type
+    * pointMapRender / render2D - Use surface color when no material is assigned to an SDF
+    * pointMapRender - density output (requires raytkVolumes)
+    * polarCoordField - coordinate input so it can be used as a converter for fields
+    * renderSelect - show buffer names in opImage (#753)
+    * textSdf2d - option to pass text as a parameter, so it doesn't change the code
+    * texture1dField, texture3dField, textureField, dataTextureField - TOP inputs as an alternative to using parameters
     * torusGridSdf - option to only have rows or columns (#1231)
+    * twirl - variable twisting around an axis
+    * waveField, waveFn, waveWarp - added smooth square wave types
+  * Palette and editor tools
+    * Expand all / collapse all toggle in the palette
 * Fixes
   * "Fixed" typo in prismSdf, polygonSdf2d (#1233)
   * Fix error when using operators that use iteration as background fields (#1235)
   * Fix limitField handling of vector fields (#1236)
+  * Fix bypass toggle on edgeCombine (#1239)
 * Changes (potentially breaking)
-  * Use surface color when no material is assigned to an SDF for pointMapRender, render2d, texture3dRender
 * Infrastructure / internals
   * Support for addons with non-public source (#1065)
 
