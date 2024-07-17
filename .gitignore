@@ -1,4 +1,7 @@
+# editor
 .idea
+
+# build files
 CrashAutoSave.*
 *.dmp
 *.ngfx-proj
@@ -7,3 +10,6 @@ build/*.zip
 docs/.instagram/access_token
 etc/*unpack*
 build/log/*.txt
+
+# macOS
+.DS_Store
