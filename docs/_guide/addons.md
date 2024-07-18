@@ -46,7 +46,7 @@ RayTK addons are available through [Patreon](https://patreon.com/tekt) subscript
 
 **Important Note**: The licensing and policies around the addons will likely be changing, including rules about what you are or are not allowed to share with other people or post publicly.
 
-The policy *as of this release* (and only for this release) is:
+The policy *as of this release* is:
 
 1. You **can** share files that contain operators created from the addon.
 2. You **CANNOT** share files that contain the entire addon package.
