@@ -14,3 +14,7 @@ waveWarp	updated
 magnet	updated
 customRender	new
 texture3dRender	new
+enhancedWaveField	new
+helixWarp	new
+spin	new
+twistedRingsSdf	new
