@@ -8,7 +8,8 @@
 * Lots of new features and improvements to existing operators.
 * New addons framework for extra packages of functionality that are released separately from the main toolkit.
   * For now these will be available through [Patreon](https://patreon.com/tekt), though there may be other options in the future.
-  * The first of these is raytkVolumes, which adds operators for working with 3D textures and volumetric rendering.
+  * The first of these is raytkVolumes
+* The raytkVolumes addon lets you flow between RayTK and 3D textures (like with Josef Pelz's T3D) and supports volumetric raymarching!
 
 ### Details
 
@@ -16,6 +17,10 @@
   * New OPs
     * (raytkVolumes) assignDensity - assign density to a volume for use in 3D textures and volumetric rendering (#1230, #637)
     * (raytkVolumes) texture3dRender - renderer that produces 3D textures by sampling SDFs or fields (#1237)
+    * (raytkVolumes) fieldVolume - constructs a volume using a field to provide the density
+    * (raytkVolumes) sdfVolume - constructs a volume with the filled region defined by an SDF
+    * (raytkVolumes) texture3dVolume - constructs a volume from a 3D texture
+    * (raytkVolumes) volumetricRaymarchRender3D - renderer that uses volumes instead of SDFs and supports cloud-like renders (#1230)
     * customRender - create your own renderer with a custom shader using RayTK operators as functions (#1220)
   * New OP features
     * chainSdf - axis setting
