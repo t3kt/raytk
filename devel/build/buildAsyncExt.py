@@ -424,6 +424,8 @@ class ToolkitBuilderAsync(LibraryBuilderAsyncBase):
 	async def _generateAllOperatorDocs(self):
 		if not self.docProcessor:
 			return
+		self.log('Generate operator category list page')
+		self.docProcessor.writeCategoryListPage(RaytkContext().allCategories())
 		self.log('Generate operator docs')
 		for comp in RaytkContext().allMasterOperators():
 			self.docProcessor.processOp(comp)
