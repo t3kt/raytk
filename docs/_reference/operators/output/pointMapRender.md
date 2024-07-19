@@ -177,6 +177,8 @@ op:
     - label: 3D Texture
       name: texture3d
     name: Outputtype
+  - label: Enable Density Output
+    name: Enabledensityoutput
   - label: Enable Debug Output
     name: Enabledebugoutput
   - label: Enable Custom Output 1

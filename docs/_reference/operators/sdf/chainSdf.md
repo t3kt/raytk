@@ -73,6 +73,17 @@ op:
     readOnlyHandling: baked
     regularHandling: runtime
     summary: Thickness of each link.
+  - label: Axis
+    menuOptions:
+    - label: X
+      name: x
+    - label: Y
+      name: y
+    - label: Z
+      name: z
+    name: Axis
+    readOnlyHandling: semibaked
+    regularHandling: runtime
   summary: Chain made of links, with infinite length.
   thumb: assets/images/reference/operators/sdf/chainSdf_thumb.png
 

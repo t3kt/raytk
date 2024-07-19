@@ -117,14 +117,21 @@ op:
     name: Thickness
     readOnlyHandling: baked
     regularHandling: runtime
+  - label: Parts
+    menuOptions:
+    - label: Both
+      name: both
+    - label: Rows Only
+      name: rows
+    - label: Columns Only
+      name: cols
+    name: Parts
+    readOnlyHandling: semibaked
+    regularHandling: semibaked
   - label: Rows
     name: Rows
-    readOnlyHandling: baked
-    regularHandling: runtime
   - label: Columns
     name: Cols
-    readOnlyHandling: baked
-    regularHandling: runtime
   - label: Shift
     name: Shift
     readOnlyHandling: baked

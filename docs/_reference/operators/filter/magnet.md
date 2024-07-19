@@ -34,12 +34,16 @@ op:
     - float
     - vec4
     - Sdf
+    - Volume
     - Ray
     - Light
     - Particle
     supportedVariableInputs:
     - magnet
+    - radiusField
+    - fadeField
     - easing
+    - amountField
   - contextTypes:
     - Context
     - MaterialContext
@@ -53,7 +57,7 @@ op:
     - float
     - vec2
     - vec3
-    label: Magnet
+    label: Magnet Field
     name: magnet
     returnTypes:
     - float
@@ -75,13 +79,79 @@ op:
     - PixelContext
     coordTypes:
     - float
-    label: Easing
-    name: easing
+    - vec2
+    - vec3
+    - vec4
+    label: Radius Field
+    name: radiusField
     returnTypes:
     - float
     summary: Easing function used to control how the blending region is smoothed.
     supportedVariableInputs:
     - magnet
+  - contextTypes:
+    - Context
+    - MaterialContext
+    - CameraContext
+    - LightContext
+    - RayContext
+    - ParticleContext
+    - VertexContext
+    - PixelContext
+    coordTypes:
+    - float
+    - vec2
+    - vec3
+    - vec4
+    label: Fade Field
+    name: fadeField
+    returnTypes:
+    - float
+    supportedVariableInputs:
+    - magnet
+    - radiusField
+  - contextTypes:
+    - Context
+    - MaterialContext
+    - CameraContext
+    - LightContext
+    - RayContext
+    - ParticleContext
+    - VertexContext
+    - PixelContext
+    coordTypes:
+    - float
+    label: Easing Function
+    name: easing
+    returnTypes:
+    - float
+    supportedVariableInputs:
+    - magnet
+    - radiusField
+    - fadeField
+  - contextTypes:
+    - Context
+    - MaterialContext
+    - CameraContext
+    - LightContext
+    - RayContext
+    - ParticleContext
+    - VertexContext
+    - PixelContext
+    coordTypes:
+    - float
+    - vec2
+    - vec3
+    - vec4
+    label: Amount Field
+    name: amountField
+    returnTypes:
+    - float
+    supportedVariableInputs:
+    - magnet
+    - radiusField
+    - easing
+    - amountField
   name: magnet
   opType: raytk.operators.filter.magnet
   parameters:

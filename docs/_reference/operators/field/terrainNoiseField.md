@@ -217,7 +217,6 @@ op:
     readOnlyHandling: baked
     regularHandling: runtime
     summary: Offsets (adds to) the amount produced by the noise.
-  status: beta
   summary: Noise that uses fBm (fractal brownian motion), which can work well for
     surface offsetting for terrain.
   thumb: assets/images/reference/operators/field/terrainNoiseField_thumb.png

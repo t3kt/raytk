@@ -258,6 +258,5 @@ op:
     name: Level8
     readOnlyHandling: baked
     regularHandling: runtime
-  status: beta
 
 ---

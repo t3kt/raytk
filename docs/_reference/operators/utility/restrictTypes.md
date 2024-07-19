@@ -59,6 +59,8 @@ op:
       name: Ray
     - label: Light
       name: Light
+    - label: Volume
+      name: Volume
     name: Returntype
   status: beta
 

@@ -88,7 +88,6 @@ op:
     name: Fade
     readOnlyHandling: baked
     regularHandling: runtime
-  status: beta
   thumb: assets/images/reference/operators/field/magnetField_thumb.png
 
 ---

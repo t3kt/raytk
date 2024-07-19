@@ -25,12 +25,12 @@ op:
     - vec2
     - vec3
     - vec4
-    label: SDF
+    label: SDF or Volume
     name: definition_in
     required: true
     returnTypes:
     - Sdf
-    - Particle
+    - Volume
     summary: SDF definition to which the color is applied.
   - contextTypes:
     - Context

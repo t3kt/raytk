@@ -84,7 +84,6 @@ cat:
     status: beta
     summary: Modifies field values using a custom expression.
   - name: fieldFunction
-    status: beta
     summary: Modifies the values of a field using various types of math functions,
       similar to a `Function CHOP`.
   - name: flip
@@ -388,6 +387,9 @@ cat:
     shortcuts:
     - tr
     summary: Translates coordinates of the input ROP.
+  - name: twirl
+    status: beta
+    thumb: assets/images/reference/operators/filter/twirl_thumb.png
   - name: twist
     summary: Twists space around an axis.
     thumb: assets/images/reference/operators/filter/twist_thumb.png

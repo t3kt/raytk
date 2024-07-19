@@ -52,6 +52,5 @@ op:
     name: Property
     readOnlyHandling: baked
     regularHandling: baked
-  status: beta
 
 ---

@@ -1,11 +1,11 @@
 ---
 layout: operator
-title: mobiusTransform
+title: twirl
 parent: Filter Operators
 grand_parent: Operators
-permalink: /reference/operators/filter/mobiusTransform
+permalink: /reference/operators/filter/twirl
 redirect_from:
-  - /reference/opType/raytk.operators.filter.mobiusTransform/
+  - /reference/opType/raytk.operators.filter.twirl/
 op:
   category: filter
   inputs:
@@ -19,8 +19,10 @@ op:
     - VertexContext
     - PixelContext
     coordTypes:
+    - float
     - vec2
     - vec3
+    - vec4
     label: definition_in
     name: definition_in
     required: true
@@ -33,8 +35,11 @@ op:
     - Light
     - Particle
     supportedVariableInputs:
-    - pointField
     - centerField
+    - sizeField
+    - amountField
+    supportedVariables:
+    - axispos
   - contextTypes:
     - Context
     - MaterialContext
@@ -45,32 +50,66 @@ op:
     - VertexContext
     - PixelContext
     coordTypes:
+    - float
     - vec2
     - vec3
-    label: Point Field
-    name: pointField
-    returnTypes:
     - vec4
-  - contextTypes:
-    - Context
-    - MaterialContext
-    - CameraContext
-    - LightContext
-    - RayContext
-    - ParticleContext
-    - VertexContext
-    - PixelContext
-    coordTypes:
-    - vec2
-    - vec3
     label: Center Field
     name: centerField
+    required: true
     returnTypes:
     - vec4
+    supportedVariables:
+    - axispos
+  - contextTypes:
+    - Context
+    - MaterialContext
+    - CameraContext
+    - LightContext
+    - RayContext
+    - ParticleContext
+    - VertexContext
+    - PixelContext
+    coordTypes:
+    - float
+    - vec2
+    - vec3
+    - vec4
+    label: Size Field
+    name: sizeField
+    required: true
+    returnTypes:
+    - float
     supportedVariableInputs:
-    - pointField
-  name: mobiusTransform
-  opType: raytk.operators.filter.mobiusTransform
+    - centerField
+    supportedVariables:
+    - axispos
+  - contextTypes:
+    - Context
+    - MaterialContext
+    - CameraContext
+    - LightContext
+    - RayContext
+    - ParticleContext
+    - VertexContext
+    - PixelContext
+    coordTypes:
+    - float
+    - vec2
+    - vec3
+    - vec4
+    label: Amount Field
+    name: amountField
+    required: true
+    returnTypes:
+    - float
+    supportedVariableInputs:
+    - centerField
+    - sizeField
+    supportedVariables:
+    - axispos
+  name: twirl
+  opType: raytk.operators.filter.twirl
   parameters:
   - label: Enable
     name: Enable
@@ -78,22 +117,29 @@ op:
     menuOptions:
     - label: YZ
       name: x
-    - label: XZ
+    - label: ZX
       name: y
     - label: XY
       name: z
     name: Axis
     readOnlyHandling: semibaked
     regularHandling: semibaked
-    summary: The plane whose axes will be transformed.
   - label: Center
     name: Center
     readOnlyHandling: baked
     regularHandling: runtime
-  - label: Point
-    name: Point
+  - label: Size
+    name: Size
     readOnlyHandling: baked
     regularHandling: runtime
-  thumb: assets/images/reference/operators/filter/mobiusTransform_thumb.png
+  - label: Amount
+    name: Amount
+    readOnlyHandling: baked
+    regularHandling: runtime
+  status: beta
+  thumb: assets/images/reference/operators/filter/twirl_thumb.png
+  variables:
+  - label: axispos
+    name: axispos
 
 ---

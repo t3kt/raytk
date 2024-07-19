@@ -38,6 +38,7 @@ op:
     - float
     - vec4
     - Sdf
+    - Volume
     - Ray
     - Light
     - Particle
@@ -61,6 +62,7 @@ op:
     - float
     - vec4
     - Sdf
+    - Volume
     - Ray
     - Light
     - Particle
@@ -84,6 +86,7 @@ op:
     - float
     - vec4
     - Sdf
+    - Volume
     - Ray
     - Light
     - Particle
@@ -107,6 +110,7 @@ op:
     - float
     - vec4
     - Sdf
+    - Volume
     - Ray
     - Light
     - Particle

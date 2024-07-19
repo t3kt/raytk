@@ -21,6 +21,8 @@ op:
       name: tri
     - label: Ramp
       name: ramp
+    - label: Reverse Ramp
+      name: rramp
     - label: Square
       name: square
     - label: Additive Square (2)
@@ -29,6 +31,10 @@ op:
       name: addsquare4
     - label: Additive Square (8)
       name: addsquare8
+    - label: Smooth Square (.1)
+      name: smsquare1
+    - label: Smooth Square (.3)
+      name: smsquare3
     name: Function
     readOnlyHandling: baked
     regularHandling: runtime

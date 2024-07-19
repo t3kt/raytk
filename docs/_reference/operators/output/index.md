@@ -13,8 +13,9 @@ cat:
     image.'
   name: output
   operators:
-  - name: fieldRender
+  - name: customRender
     status: beta
+  - name: fieldRender
     thumb: assets/images/reference/operators/output/fieldRender_thumb.png
   - name: functionGraphRender
     summary: Visualizes the graph of a function operator.

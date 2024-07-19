@@ -71,7 +71,6 @@ cat:
   - name: iterationField
     summary: Field that returns the current iteration, from a downstream OP.
   - name: magnetField
-    status: beta
     thumb: assets/images/reference/operators/field/magnetField_thumb.png
   - name: metaballField
     summary: Metaball value field.
@@ -104,7 +103,6 @@ cat:
     summary: A vector field that produces the coordinates in space where it is checked.
     thumb: assets/images/reference/operators/field/positionField_thumb.png
   - name: rampField
-    status: beta
     summary: Field that produces values that fade from one value to another along
       an axis or line.
     thumb: assets/images/reference/operators/field/rampField_thumb.png
@@ -128,12 +126,10 @@ cat:
     - fbm
     - landscape
     name: terrainNoiseField
-    status: beta
     summary: Noise that uses fBm (fractal brownian motion), which can work well for
       surface offsetting for terrain.
     thumb: assets/images/reference/operators/field/terrainNoiseField_thumb.png
   - name: texture1dField
-    status: beta
   - name: texture3dField
     thumb: assets/images/reference/operators/field/texture3dField_thumb.png
   - name: textureField

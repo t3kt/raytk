@@ -8,6 +8,26 @@ redirect_from:
   - /reference/opType/raytk.operators.field.polarCoordField/
 op:
   category: field
+  inputs:
+  - contextTypes:
+    - Context
+    - MaterialContext
+    - CameraContext
+    - LightContext
+    - RayContext
+    - ParticleContext
+    - VertexContext
+    - PixelContext
+    coordTypes:
+    - float
+    - vec2
+    - vec3
+    - vec4
+    label: Coordinate Field
+    name: coordField
+    returnTypes:
+    - float
+    - vec4
   name: polarCoordField
   opType: raytk.operators.field.polarCoordField
   parameters:

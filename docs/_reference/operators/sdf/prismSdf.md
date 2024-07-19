@@ -138,7 +138,7 @@ op:
       name: square
     - label: Hexagon
       name: hex
-    - label: Octogon
+    - label: "Oct\xE3gon"
       name: octogon
     - label: Custom
       name: custom

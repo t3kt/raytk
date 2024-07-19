@@ -92,6 +92,5 @@ op:
     readOnlyHandling: baked
     regularHandling: baked
     summary: How to handle coordinates outside the 0..1 range.
-  status: beta
 
 ---

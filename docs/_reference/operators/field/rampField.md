@@ -169,7 +169,6 @@ op:
     - label: 3D
       name: vec3
     name: Coordtype
-  status: beta
   summary: Field that produces values that fade from one value to another along an
     axis or line.
   thumb: assets/images/reference/operators/field/rampField_thumb.png
