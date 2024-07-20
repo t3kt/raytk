@@ -1,5 +1,5 @@
 from datetime import datetime
-from raytkUtil import ROPInfo, RaytkContext
+from raytkUtil import RaytkContext
 
 # noinspection PyUnreachableCode
 if False:
@@ -15,7 +15,6 @@ class LibraryInfoBuilder:
 		self.ownerComp.op('moduleInfoBuilder').Forcebuild()
 		for o in self.ownerComp.ops(
 				'build_categoryTable',
-				'build_opHelpTable',
 				'build_versionInfo',
 				'build_buildInfo',
 				'eval_info_text_exprs'):
@@ -50,28 +49,3 @@ class LibraryInfoBuilder:
 		for catComp in sorted(RaytkContext().allCategories(), key=lambda o: o.name):
 			if catComp.name in categoryNames:
 				dat.appendRow([catComp.name, catComp.path])
-
-	def buildROPHelpTable(self, dat: tableDAT, opTable: DAT):
-		dat.clear()
-		dat.appendRow(['path', 'summary'])
-		for row in range(1, opTable.numRows):
-			path = opTable[row, 'path']
-			ropInfo = ROPInfo(path)
-			helpDAT = ropInfo.helpDAT
-			dat.appendRow([
-				path,
-				self.extractHelpSummary(helpDAT),
-			])
-
-	@staticmethod
-	def extractHelpSummary(dat: DAT):
-		if not dat or not dat.text:
-			return ''
-		for line in dat.text.splitlines():
-			line = line.strip()
-			if not line:
-				continue
-			if line.startswith('# '):
-				continue
-			return line
-		return ''

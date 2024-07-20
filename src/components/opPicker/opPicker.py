@@ -90,8 +90,7 @@ class OpPicker:
 
 	def Loaditems(self, _=None):
 		self.impl.loadItems(
-			self.ownerComp.op('opTable'),
-			self.ownerComp.op('opHelpTable'))
+			self.ownerComp.op('opTable'))
 
 	def setFilterText(self, text: str):
 		self.impl.setFilterText(text)
@@ -270,7 +269,7 @@ class _Filter:
 	deprecated: bool = False
 	hidden: bool = False
 
-def _loadItemCategories(opTable: DAT, opHelpTable: DAT, useDisplayCategories=False):
+def _loadItemCategories(opTable: DAT, useDisplayCategories=False):
 	categories = []
 	categoriesByName = {}  # type: dict[str, PickerCategoryItem]
 
@@ -296,7 +295,7 @@ def _loadItemCategories(opTable: DAT, opHelpTable: DAT, useDisplayCategories=Fal
 			isBeta=status == 'beta',
 			isDeprecated=status == 'deprecated',
 			isHidden='hidden' in flags,
-			helpSummary=str(opHelpTable[path, 'summary'] or ''),
+			helpSummary=str(opTable[row, 'help'] or ''),
 			chip=str(opTable[row, 'chip']),
 			thumbPath=str(opTable[row, 'thumb'] or ''),
 		)
@@ -350,10 +349,10 @@ class _ItemLibrary:
 			if item.isOP and shortcut in item.shortcuts:
 				return item
 
-	def loadTables(self, opTable: DAT, opHelpTable: DAT, useDisplayCategories: bool):
+	def loadTables(self, opTable: DAT, useDisplayCategories: bool):
 		self.categories = []
 		self.filteredItems = None
-		self.categories = _loadItemCategories(opTable, opHelpTable, useDisplayCategories)
+		self.categories = _loadItemCategories(opTable, useDisplayCategories)
 		self.allItems = self._buildFlatList(None)
 
 	def _buildFlatList(self, filt: 'Optional[_Filter]') -> list[_AnyItemT]:
@@ -439,7 +438,7 @@ class _PickerImpl:
 		self.selectItem(None)
 		self.clearFilterText()
 
-	def loadItems(self, opTable: DAT, opHelpTable: DAT):
+	def loadItems(self, opTable: DAT):
 		raise NotImplementedError()
 
 	def refreshList(self):
@@ -580,10 +579,9 @@ class _DefaultPickerImpl(_PickerImpl):
 		super().__init__(ownerComp)
 		self.itemLibrary = _ItemLibrary()
 
-	def loadItems(self, opTable: DAT, opHelpTable: DAT):
+	def loadItems(self, opTable: DAT):
 		self.itemLibrary.loadTables(
-			opTable, opHelpTable,
-			useDisplayCategories=ipar.uiState.Usedisplaycategories.eval())
+			opTable, useDisplayCategories=ipar.uiState.Usedisplaycategories.eval())
 		self.refreshList()
 		self.applyFilter()
 		self.selectItem(None)
@@ -798,10 +796,10 @@ class _CategoryColumnLibrary:
 		self.allCategories = []
 		self.filteredColumns = None
 
-	def loadTables(self, opTable: DAT, opHelpTable: DAT, useDisplayCategories: bool):
+	def loadTables(self, opTable: DAT, useDisplayCategories: bool):
 		self.allItems = []
 		self.allColumns = []
-		for category in _loadItemCategories(opTable, opHelpTable, useDisplayCategories):
+		for category in _loadItemCategories(opTable, useDisplayCategories):
 			self.allColumns.append(_CategoryColumn(
 				category,
 				allOps=list(category.ops),
@@ -885,10 +883,9 @@ class _CategoryColumnPickerImpl(_PickerImpl):
 		self.selectItem(item)
 		return item
 
-	def loadItems(self, opTable: DAT, opHelpTable: DAT):
+	def loadItems(self, opTable: DAT):
 		self.itemLibrary.loadTables(
-			opTable, opHelpTable,
-			useDisplayCategories=ipar.uiState.Usedisplaycategory.eval())
+			opTable, useDisplayCategories=ipar.uiState.Usedisplaycategory.eval())
 		self.refreshList()
 		self.applyFilter()
 		self.selectItem(None)

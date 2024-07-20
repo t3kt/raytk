@@ -117,7 +117,6 @@ class OpDefParsT(_OpMetaPars):
 class ModuleMetaParsT:
 	Modulename: 'StrParamT'
 	Optable: 'DatParamT'
-	Ophelptable: 'DatParamT'
 	Operatorsroot: 'CompParamT'
 	Operatorsfolder: 'StrParamT'
 	Testsfolder: 'StrParamT'
@@ -1024,10 +1023,6 @@ class RaytkContext:
 		toolkit = self.toolkit()
 		return toolkit and toolkit.op('opTable')
 
-	def opHelpTable(self) -> DAT | None:
-		toolkit = self.toolkit()
-		return toolkit and toolkit.op('opHelpTable')
-
 	def allCategories(self):
 		return [
 			child
@@ -1089,9 +1084,6 @@ class RaytkModuleContext(RaytkContext):
 
 	def opTable(self) -> DAT | None:
 		return self.modInfo.modDefPar.Optable.eval()
-
-	def opHelpTable(self) -> DAT | None:
-		return self.modInfo.modDefPar.Ophelptable.eval()
 
 def _isMaster(o: COMP):
 	return o and o.par['clone'] is not None and (o.par.clone.eval() or o.par.clone.expr)

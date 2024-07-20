@@ -27,7 +27,7 @@ class ModuleInfoBuilder:
 		dat.clear()
 		dat.appendRow([
 			'name', 'path', 'tags', 'category', 'displayCategory', 'opType', 'opVersion',
-			'status', 'keywords', 'shortcuts', 'chip', 'thumb', 'flags', 'module',
+			'status', 'keywords', 'shortcuts', 'chip', 'thumb', 'flags', 'module', 'help',
 		])
 		moduleInfo = self._moduleInfo()
 		if not moduleInfo:
@@ -61,4 +61,18 @@ class ModuleInfoBuilder:
 				(thumbTable and thumbTable[rop.path, 'thumb']) or '',
 				ropInfo.opDefPar['Flags'] or '',
 				modName,
+				self.extractHelpSummary(ropInfo.helpDAT),
 			])
+
+	@staticmethod
+	def extractHelpSummary(dat: DAT):
+		if not dat or not dat.text:
+			return ''
+		for line in dat.text.splitlines():
+			line = line.strip()
+			if not line:
+				continue
+			if line.startswith('# '):
+				continue
+			return line
+		return ''

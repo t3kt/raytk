@@ -10,4 +10,4 @@ async def build(context: 'BuildContext'):
 	context.log('Updating library info')
 	context.safeDestroyOps(ops('write_*'))
 	ext.libraryInfo.Forcebuild()
-	context.lockOps(ops('opTable', 'opCategoryTable', 'versionInfo', 'opHelpTable', 'info_text'))
+	context.lockOps(ops('opTable', 'opCategoryTable', 'versionInfo', 'info_text'))
