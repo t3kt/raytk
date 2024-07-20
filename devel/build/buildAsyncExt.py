@@ -77,7 +77,7 @@ class BuildManagerAsync:
 	def ReloadToolkit(self):
 		self.logTable.clear()
 		self.log('Reloading toolkit')
-		builder = ToolkitBuilderAsync(self.context)
+		builder = ToolkitBuilderAsync(self.context, self.ownerComp.op('moduleTable'))
 		op.TDAsyncIO.Run([builder.reloadToolkit()])
 
 	def prepareForBuild(self):
@@ -119,7 +119,7 @@ class BuildManagerAsync:
 		self.prepareForBuild()
 
 		async def _build():
-			toolkitBuilder = ToolkitBuilderAsync(self.context)
+			toolkitBuilder = ToolkitBuilderAsync(self.context, self.ownerComp.op('moduleTable'))
 			await toolkitBuilder.runBuild()
 			self.log('Finished toolkit build process')
 
