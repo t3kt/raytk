@@ -414,8 +414,10 @@ cat:
   - moduleName: raytkAbstractions
     name: helixWarp
     status: beta
+    summary: Warps space in a helix pattern around an axis.
   - moduleName: raytkAbstractions
     name: spin
+    summary: Rotation on XYZ with built-in animation.
   summary: Operators that take an input and modify it.
 
 ---

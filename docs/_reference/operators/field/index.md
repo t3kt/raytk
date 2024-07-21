@@ -155,6 +155,7 @@ cat:
   - moduleName: raytkAbstractions
     name: enhancedWaveField
     status: beta
+    summary: Field that produces different types of values based on wave functions.
   summary: Float or vector fields, which provide values for the requested coordinates.
 
 ---
