@@ -37,6 +37,7 @@
     * pointMapRender - density output (requires raytkVolumes)
     * polarCoordField - coordinate input so it can be used as a converter for fields
     * renderSelect - show buffer names in opImage (#753)
+    * shadingProperty - show property name in opImage (#753)
     * textSdf2d - option to pass text as a parameter, so it doesn't change the code
     * texture1dField, texture3dField, textureField, dataTextureField - TOP inputs as an alternative to using parameters
     * torusGridSdf - option to only have rows or columns (#1231)
