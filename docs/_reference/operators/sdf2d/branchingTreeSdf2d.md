@@ -79,11 +79,11 @@ op:
   status: beta
   thumb: assets/images/reference/operators/sdf2d/branchingTreeSdf2d_thumb.png
   variables:
-  - label: normdist
+  - label: Normalized Distance (0..1)
     name: normdist
-  - label: forkindex
+  - label: Fork Index
     name: forkindex
-  - label: normforkindex
+  - label: Normalized Fork Index (0..1)
     name: normforkindex
 
 ---

@@ -220,16 +220,16 @@ op:
   summary: Repeats an SDF radially around an axis, combining the resulting shapes.
   thumb: assets/images/reference/operators/filter/radialClone_thumb.png
   variables:
-  - label: index
+  - label: Index
     name: index
     summary: Index of the current clone (0..N)
-  - label: normindex
+  - label: Normalized Index (0..1)
     name: normindex
     summary: Index of the current clone, scaled to a 0..1 range.
-  - label: rotaccum
+  - label: Rotation (Accumulated) (0..360)
     name: rotaccum
     summary: Amount of rotation applied for the current clone (0..360).
-  - label: normrotaccum
+  - label: Normalized Rotation (Accumulated) (0..1)
     name: normrotaccum
     summary: Amount of rotation applied for the current clone, scaled to 0..1 range.
 

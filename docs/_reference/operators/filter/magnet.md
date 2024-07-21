@@ -39,11 +39,8 @@ op:
     - Light
     - Particle
     supportedVariableInputs:
-    - magnet
-    - radiusField
-    - fadeField
-    - easing
-    - amountField
+    - magnet_definition_in
+    - easing_definition_in
   - contextTypes:
     - Context
     - MaterialContext
@@ -57,7 +54,7 @@ op:
     - float
     - vec2
     - vec3
-    label: Magnet Field
+    label: Magnet
     name: magnet
     returnTypes:
     - float
@@ -82,7 +79,7 @@ op:
     - vec2
     - vec3
     - vec4
-    label: Radius Field
+    label: Easing
     name: radiusField
     returnTypes:
     - float

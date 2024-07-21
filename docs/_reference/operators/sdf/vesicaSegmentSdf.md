@@ -86,7 +86,7 @@ op:
     summary: The thickness of the capsule.
   thumb: assets/images/reference/operators/sdf/vesicaSegmentSdf_thumb.png
   variables:
-  - label: normoffset
+  - label: Normalized Offset (0..1)
     name: normoffset
 
 ---

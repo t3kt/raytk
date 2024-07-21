@@ -74,7 +74,7 @@ op:
     rounding it out or shrinking it.
   thumb: assets/images/reference/operators/filter/round_thumb.png
   variables:
-  - label: sdf
+  - label: SDF Surface
     name: sdf
 
 ---

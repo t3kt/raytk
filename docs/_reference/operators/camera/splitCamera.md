@@ -86,7 +86,7 @@ op:
     camera.
   thumb: assets/images/reference/operators/camera/splitCamera_thumb.png
   variables:
-  - label: index
+  - label: Camera Index
     name: index
 
 ---

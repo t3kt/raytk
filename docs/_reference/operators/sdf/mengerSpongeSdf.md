@@ -102,9 +102,9 @@ op:
   summary: Menger sponge fractal, made of boxes with holes cut through each axis.
   thumb: assets/images/reference/operators/sdf/mengerSpongeSdf_thumb.png
   variables:
-  - label: step
+  - label: Step Index
     name: step
-  - label: normstep
+  - label: Normalized Step (0..1)
     name: normstep
 
 ---

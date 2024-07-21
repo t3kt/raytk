@@ -405,6 +405,17 @@ cat:
     name: waveWarp
     summary: Uses repeating waves to offset space.
     thumb: assets/images/reference/operators/filter/waveWarp_thumb.png
+  - keywords:
+    - volume
+    - volumetric
+    moduleName: raytkVolumes
+    name: assignDensity
+    status: beta
+  - moduleName: raytkAbstractions
+    name: helixWarp
+    status: beta
+  - moduleName: raytkAbstractions
+    name: spin
   summary: Operators that take an input and modify it.
 
 ---

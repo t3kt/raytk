@@ -150,10 +150,10 @@ op:
   summary: Reflects space across a plane.
   thumb: assets/images/reference/operators/filter/reflect_thumb.png
   variables:
-  - label: sign
+  - label: Side Sign (-1/1)
     name: sign
     summary: +1, -1 indicating the current side of the reflection.
-  - label: index
+  - label: Side Index (0/1)
     name: index
     summary: 0, 1 indicating the current side of the reflection.
 

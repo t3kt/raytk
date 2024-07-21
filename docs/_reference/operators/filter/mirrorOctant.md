@@ -130,9 +130,9 @@ op:
   summary: Mirror coordinates across two axes and the diagonals.
   thumb: assets/images/reference/operators/filter/mirrorOctant_thumb.png
   variables:
-  - label: index
+  - label: Quadrant Index (0..3)
     name: index
-  - label: sign
+  - label: Signed XY Axes (-1, 1)
     name: sign
 
 ---

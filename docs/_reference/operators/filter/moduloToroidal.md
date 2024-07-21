@@ -189,23 +189,23 @@ op:
   summary: Repeats space as rows and columns of a torus-shaped grid.
   thumb: assets/images/reference/operators/filter/moduloToroidal_thumb.png
   variables:
-  - label: cell
+  - label: Cell (Row, Col)
     name: cell
     summary: Index of the row and column as integers (0..N).
-  - label: normcell
+  - label: Normalized Cell (Row, Col) (0..1)
     name: normcell
     summary: Index of the row and column scaled to a 0..1 range based on the number
       of Repetitions.
-  - label: angle
+  - label: Angle (0-360)
     name: angle
     summary: Angle around the main axis as degrees (0..360).
-  - label: normangle
+  - label: Normalized Angle (0-1)
     name: normangle
     summary: Angle around the main axis, scaled to a 0..1 range.
-  - label: innerangle
+  - label: Inner Angle (0-360)
     name: innerangle
     summary: Angle around the inner body of the torus as degrees (0..360).
-  - label: norminnerangle
+  - label: Normalized Inner Angle (0..1)
     name: norminnerangle
     summary: Angle around the inner body of the torus, scaled to a 0..1 range.
 

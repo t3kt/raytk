@@ -68,9 +68,9 @@ op:
     regularHandling: runtime
   status: beta
   variables:
-  - label: previous
+  - label: Previous Value
     name: previous
-  - label: sdf
+  - label: SDF Surface
     name: sdf
 
 ---

@@ -165,13 +165,13 @@ op:
   summary: A coiled spring shape.
   thumb: assets/images/reference/operators/sdf/springSdf_thumb.png
   variables:
-  - label: axisoffset
+  - label: Offset Along Axis
     name: axisoffset
-  - label: normoffset
+  - label: Normalized Offset (0..1)
     name: normoffset
-  - label: angle
+  - label: Angle Around Axis (Deg)
     name: angle
-  - label: normangle
+  - label: Normalized Angle (0..1)
     name: normangle
 
 ---

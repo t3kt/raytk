@@ -64,11 +64,11 @@ op:
   status: beta
   thumb: assets/images/reference/operators/filter/hilbertCurveTransform_thumb.png
   variables:
-  - label: localuv
+  - label: Local UV
     name: localuv
-  - label: cell
+  - label: Cell Number
     name: cell
-  - label: localcell
+  - label: Cell Local Number
     name: localcell
 
 ---

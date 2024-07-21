@@ -32,9 +32,6 @@ op:
     - Ray
     - Light
     - Particle
-    supportedVariableInputs:
-    - pointField
-    - centerField
   - contextTypes:
     - Context
     - MaterialContext

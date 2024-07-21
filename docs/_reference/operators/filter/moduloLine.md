@@ -72,10 +72,10 @@ op:
   status: beta
   summary: Repeats space along a line, similar to `modulo1D`.
   variables:
-  - label: cellcoord
+  - label: Cell Index
     name: cellcoord
     summary: Cell index, 0, 1, 2, etc.
-  - label: normcoord
+  - label: Normalized Cell Index
     name: normcoord
     summary: Cell index, scaled to a 0..1 range.
 

@@ -102,9 +102,9 @@ op:
     and then bent into a ring.
   thumb: assets/images/reference/operators/sdf/mobiusRingSdf_thumb.png
   variables:
-  - label: angle
+  - label: Angle (0-360)
     name: angle
-  - label: normangle
+  - label: Normalized Angle (0-1)
     name: normangle
 
 ---

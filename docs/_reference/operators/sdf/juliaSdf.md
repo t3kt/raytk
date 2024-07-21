@@ -56,9 +56,9 @@ op:
     regularHandling: semibaked
   thumb: assets/images/reference/operators/sdf/juliaSdf_thumb.png
   variables:
-  - label: step
+  - label: Step
     name: step
-  - label: normstep
+  - label: Normalized Step (0..1)
     name: normstep
 
 ---

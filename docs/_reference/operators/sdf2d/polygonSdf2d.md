@@ -50,7 +50,7 @@ op:
       name: pentagon
     - label: Hexagon
       name: hexagon
-    - label: Octagon
+    - label: Octogon
       name: octogon
     - label: Custom
       name: custom

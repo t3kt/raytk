@@ -48,6 +48,16 @@ cat:
     thumb: assets/images/reference/operators/output/render2D_material_thumb.png
   - name: renderSelect
     summary: Accesses a color output buffer from a renderer.
+  - keywords:
+    - volume
+    moduleName: raytkVolumes
+    name: texture3dRender
+    status: beta
+    summary: Renderer that produces 3D textures that sample SDFs, Volumes, or fields.
+  - moduleName: raytkVolumes
+    name: volumetricRaymarchRender3D
+    status: beta
+    summary: Renderer that uses raymarching with volumes instead of SDFs.
   summary: 'Outputs are a special category of operator that takes in one or more
 
     chains of OPs, generate a shader, and run it to produce some sort of

@@ -193,17 +193,17 @@ op:
   status: beta
   thumb: assets/images/reference/operators/sdf/torusGridSdf_thumb.png
   variables:
-  - label: angle
+  - label: Angle (0-360)
     name: angle
-  - label: normangle
+  - label: Normalized Angle (0-1)
     name: normangle
-  - label: col
+  - label: Column (0 - N-1)
     name: col
-  - label: normcol
+  - label: Normalized Column (0-1)
     name: normcol
-  - label: row
+  - label: Row (0 - N-1)
     name: row
-  - label: normrow
+  - label: Normalized Row (0-1)
     name: normrow
 
 ---

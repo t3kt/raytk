@@ -164,9 +164,9 @@ op:
     x value, and combines the results.
   thumb: assets/images/reference/operators/filter/instance_thumb.png
   variables:
-  - label: index
+  - label: Index
     name: index
-  - label: normindex
+  - label: Normalized Index (0..1)
     name: normindex
 
 ---

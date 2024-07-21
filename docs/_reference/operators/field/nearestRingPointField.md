@@ -71,17 +71,17 @@ op:
     regularHandling: baked
   thumb: assets/images/reference/operators/field/nearestRingPointField_thumb.png
   variables:
-  - label: pos
+  - label: Nearest Position
     name: pos
-  - label: angle
+  - label: Nearest Angle
     name: angle
-  - label: dist
+  - label: Distance
     name: dist
-  - label: vector
+  - label: Vector
     name: vector
-  - label: step
+  - label: Point Index
     name: step
-  - label: normstep
+  - label: Normalized Point Index (0..1)
     name: normstep
 
 ---

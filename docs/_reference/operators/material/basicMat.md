@@ -108,15 +108,15 @@ op:
   summary: Material with a basic lighting model.
   thumb: assets/images/reference/operators/material/basicMat_thumb.png
   variables:
-  - label: lightcolor
+  - label: Light Color
     name: lightcolor
-  - label: lightpos
+  - label: Light Position
     name: lightpos
-  - label: surfacecolor
+  - label: Surface Color (r, g, b, is set)
     name: surfacecolor
-  - label: surfaceuv
+  - label: Surface UV (u, v, w, is set)
     name: surfaceuv
-  - label: normal
+  - label: Surface Normal
     name: normal
 
 ---

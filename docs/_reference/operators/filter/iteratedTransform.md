@@ -286,9 +286,9 @@ op:
     in between the steps.
   thumb: assets/images/reference/operators/filter/iteratedTransform_thumb.png
   variables:
-  - label: step
+  - label: Step Index
     name: step
-  - label: normstep
+  - label: Normalized Step (0..1)
     name: normstep
 
 ---

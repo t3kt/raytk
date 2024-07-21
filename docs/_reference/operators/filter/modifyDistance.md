@@ -79,9 +79,9 @@ op:
     summary: Mix between the original distance and the original distance.
   status: beta
   variables:
-  - label: sdf
+  - label: SDF Surface
     name: sdf
-  - label: dist
+  - label: SDF Distance
     name: dist
 
 ---

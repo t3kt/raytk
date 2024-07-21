@@ -18,7 +18,6 @@ return types (SDF, float/vector field, etc).
 * [Field](field/) - Float or vector fields, which provide values for the requested coordinates.
 * [Filter](filter/) - Operators that take an input and modify it.
 * [Function](function/) - Function operators are an advanced type of operator used to control the behavior of other types of operators.
-* [Geo](geo/) - 
 * [Light](light/) - Operators that are used in raymarching to define the behavior of light, including
 light sources and shadow behaviors.
 * [Material](material/) - Material operators that are used by renderers to determine the
@@ -26,11 +25,9 @@ color of points on the surface of geometry.
 * [Output](output/) - Outputs are a special category of operator that takes in one or more
 chains of OPs, generate a shader, and run it to produce some sort of
 output.
-* [Particles](particles/) - 
 * [Pattern](pattern/) - 2D pattern generators, which can be used for things like textures.
 Pattern operators are essentially a sub-category of field operators that focus
 on producing value or color patterns using 2D coordinates.
-
 * [Post](post/) - Post processing operators are components that take information from a renderer and process it to produce images that can be used for post-processing.
 * [Sdf](sdf/) - Signed distances functions which define geometry in 3D space, by calculating
 the distance from the surface of the shape at any given point.
@@ -38,3 +35,4 @@ the distance from the surface of the shape at any given point.
 the distance from the edge of the shape at any given point.
 * [Time](time/) - Operators that do time-based calculations.
 * [Utility](utility/) - Advanced operators that change how ROP chains behave.
+* [Volume](volume/) - None

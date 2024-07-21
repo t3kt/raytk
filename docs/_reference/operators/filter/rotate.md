@@ -34,8 +34,8 @@ op:
     - Light
     - Particle
     supportedVariableInputs:
-    - rotateField
-    - pivotField
+    - rotate_definition_in
+    - pivot_definition_in
   - contextTypes:
     - Context
     - MaterialContext

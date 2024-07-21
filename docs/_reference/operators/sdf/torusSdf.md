@@ -138,9 +138,9 @@ op:
   summary: SDF for a torus.
   thumb: assets/images/reference/operators/sdf/torusSdf_thumb.png
   variables:
-  - label: angle
+  - label: Angle (0-360)
     name: angle
-  - label: normangle
+  - label: Normalized Angle (0-1)
     name: normangle
 
 ---

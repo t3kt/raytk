@@ -218,11 +218,11 @@ op:
     each point.
   thumb: assets/images/reference/operators/output/pointMapRender_thumb.png
   variables:
-  - label: datapos
+  - label: Data Coord (Pixels)
     name: datapos
-  - label: datauv
+  - label: Data Coord (0..1)
     name: datauv
-  - label: datares
+  - label: Data Resolution (Pixels)
     name: datares
 
 ---

@@ -124,9 +124,9 @@ op:
   summary: A float or vector field that looks up values from a texture.
   thumb: assets/images/reference/operators/field/textureField_thumb.png
   variables:
-  - label: res
+  - label: Resolution
     name: res
-  - label: aspect
+  - label: Aspect Ratio
     name: aspect
 
 ---

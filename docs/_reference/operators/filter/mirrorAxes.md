@@ -283,7 +283,7 @@ op:
   summary: Mirror space across one or more axes, similar to `reflect`.
   thumb: assets/images/reference/operators/filter/mirrorAxes_thumb.png
   variables:
-  - label: sides
+  - label: Axis Sides (+/- 1)
     name: sides
 
 ---

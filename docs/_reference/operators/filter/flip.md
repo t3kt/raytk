@@ -169,9 +169,9 @@ op:
   summary: Flips the input across an axis, either on its own or merged with the original.
   thumb: assets/images/reference/operators/filter/flip_thumb.png
   variables:
-  - label: sign
+  - label: Side Sign (-1/1)
     name: sign
-  - label: index
+  - label: Side Index (0/1)
     name: index
 
 ---

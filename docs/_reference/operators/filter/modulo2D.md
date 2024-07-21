@@ -36,10 +36,6 @@ op:
     - Ray
     - Light
     - Particle
-    supportedVariableInputs:
-    - sizeField
-    - shiftField
-    - offsetField
     supportedVariables:
     - cellcoord
     - tiledquad
@@ -211,13 +207,13 @@ op:
   summary: Repeats space along 2 axes.
   thumb: assets/images/reference/operators/filter/modulo2D_thumb.png
   variables:
-  - label: cellcoord
+  - label: Cell Coord
     name: cellcoord
-  - label: tiledquad
+  - label: Tiled Quadrant
     name: tiledquad
-  - label: normcoord
+  - label: Normalized Cell Coord
     name: normcoord
-  - label: shiftedcellcoord
+  - label: Shifted Cell Coord
     name: shiftedcellcoord
 
 ---

@@ -284,6 +284,9 @@ cat:
     thumb: assets/images/reference/operators/sdf/truncatedPyramidSdf_thumb.png
   - name: vesicaSegmentSdf
     thumb: assets/images/reference/operators/sdf/vesicaSegmentSdf_thumb.png
+  - moduleName: raytkAbstractions
+    name: twistedRingsSdf
+    status: beta
   summary: 'Signed distances functions which define geometry in 3D space, by calculating
 
     the distance from the surface of the shape at any given point.'

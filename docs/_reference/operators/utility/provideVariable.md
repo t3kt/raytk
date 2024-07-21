@@ -92,7 +92,7 @@ op:
     readOnlyHandling: baked
     regularHandling: runtime
   variables:
-  - label: var
+  - label: Variable
     name: var
 
 ---

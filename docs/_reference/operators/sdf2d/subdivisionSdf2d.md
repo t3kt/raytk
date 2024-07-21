@@ -140,9 +140,9 @@ op:
   status: beta
   thumb: assets/images/reference/operators/sdf2d/subdivisionSdf2d_thumb.png
   variables:
-  - label: cellsize
+  - label: Cell Size
     name: cellsize
-  - label: cellid
+  - label: Cell ID
     name: cellid
 
 ---

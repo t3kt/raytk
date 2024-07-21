@@ -131,10 +131,10 @@ op:
   summary: Repeats an SDF in a grid arrangement, combining the results.
   thumb: assets/images/reference/operators/filter/gridClone_thumb.png
   variables:
-  - label: coord
+  - label: Instance Coord
     name: coord
     summary: grid cell coordinates for each axis, going from 0..N.
-  - label: normcoord
+  - label: Normalized Coord (0..1)
     name: normcoord
     summary: grid cell coordinates scaled to 0..1 range.
 

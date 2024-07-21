@@ -24,14 +24,7 @@ op:
     to the distance specified in the Distance parameter.'
   inputs:
   - contextTypes:
-    - Context
     - MaterialContext
-    - CameraContext
-    - LightContext
-    - RayContext
-    - ParticleContext
-    - VertexContext
-    - PixelContext
     coordTypes:
     - vec2
     - vec3
@@ -46,14 +39,7 @@ op:
     - Light
     - Particle
   - contextTypes:
-    - Context
     - MaterialContext
-    - CameraContext
-    - LightContext
-    - RayContext
-    - ParticleContext
-    - VertexContext
-    - PixelContext
     coordTypes:
     - vec2
     - vec3
@@ -66,14 +52,7 @@ op:
       parameter is *multiplied* by that value. If it returns a vec4, the parts are
       *added* to the `Translate` parameter parts.
   - contextTypes:
-    - Context
     - MaterialContext
-    - CameraContext
-    - LightContext
-    - RayContext
-    - ParticleContext
-    - VertexContext
-    - PixelContext
     coordTypes:
     - vec2
     - vec3
@@ -84,14 +63,7 @@ op:
     summary: If provided, this field is used to add to the distance that space is
       moved.
   - contextTypes:
-    - Context
     - MaterialContext
-    - CameraContext
-    - LightContext
-    - RayContext
-    - ParticleContext
-    - VertexContext
-    - PixelContext
     coordTypes:
     - vec2
     - vec3

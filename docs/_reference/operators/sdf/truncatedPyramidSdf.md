@@ -93,7 +93,7 @@ op:
     regularHandling: runtime
   thumb: assets/images/reference/operators/sdf/truncatedPyramidSdf_thumb.png
   variables:
-  - label: normoffset
+  - label: Normalized Axis Offset
     name: normoffset
 
 ---

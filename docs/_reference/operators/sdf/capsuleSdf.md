@@ -93,7 +93,7 @@ op:
   summary: A line or cylinder with rounded ends, between two points.
   thumb: assets/images/reference/operators/sdf/capsuleSdf_thumb.png
   variables:
-  - label: normoffset
+  - label: Normalized Offset (0..1)
     name: normoffset
 
 ---

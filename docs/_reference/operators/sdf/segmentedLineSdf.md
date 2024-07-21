@@ -107,15 +107,15 @@ op:
   summary: Multi-segment line SDF.
   thumb: assets/images/reference/operators/sdf/segmentedLineSdf_thumb.png
   variables:
-  - label: stepindex
+  - label: Segment Index
     name: stepindex
-  - label: normstepindex
+  - label: Normalized Segment Index
     name: normstepindex
-  - label: stepinterp
+  - label: Interpolated Segment Index
     name: stepinterp
-  - label: normoffset
+  - label: Normalized Distance Offset
     name: normoffset
-  - label: offset
+  - label: Distance Offset
     name: offset
 
 ---

@@ -32,9 +32,6 @@ op:
     - Ray
     - Light
     - Particle
-    supportedVariableInputs:
-    - rhoOffsetField
-    - thetaOffsetField
     supportedVariables:
     - cellcoord
   - contextTypes:
@@ -142,7 +139,7 @@ op:
   status: beta
   thumb: assets/images/reference/operators/filter/logPolarRepeat_thumb.png
   variables:
-  - label: cellcoord
+  - label: Cell Coord
     name: cellcoord
 
 ---

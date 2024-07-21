@@ -31,8 +31,6 @@ op:
     - Ray
     - Light
     - Particle
-    supportedVariableInputs:
-    - distanceField
   - contextTypes:
     - Context
     - MaterialContext

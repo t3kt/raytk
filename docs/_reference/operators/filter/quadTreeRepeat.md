@@ -149,11 +149,11 @@ op:
     cells recursively.
   thumb: assets/images/reference/operators/filter/quadTreeRepeat_thumb.png
   variables:
-  - label: cell
+  - label: Cell ID Hash (XY)
     name: cell
     summary: Randomization values different for each cell, but without a predictable
       layout.
-  - label: layer
+  - label: Layer Index
     name: layer
     summary: Which layer of subdivision the current cell has.
 

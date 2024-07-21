@@ -110,7 +110,7 @@ op:
     regularHandling: runtime
   thumb: assets/images/reference/operators/sdf/bezierSdf_thumb.png
   variables:
-  - label: normoffset
+  - label: Offset Along Curve (0..1)
     name: normoffset
 
 ---

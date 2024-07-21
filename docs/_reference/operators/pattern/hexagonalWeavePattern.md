@@ -222,9 +222,9 @@ op:
   summary: Pattern with two layers with gaps in a hexagonal layout.
   thumb: assets/images/reference/operators/pattern/hexagonalWeavePattern_thumb.png
   variables:
-  - label: axialdist
+  - label: Axial Distances
     name: axialdist
-  - label: mask
+  - label: Masks
     name: mask
 
 ---

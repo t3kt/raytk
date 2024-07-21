@@ -153,13 +153,13 @@ op:
   summary: A material that produces color for volumetric points relative to the input
     shape.
   variables:
-  - label: surfacecolor
+  - label: Surface Color (r, g, b, is set)
     name: surfacecolor
-  - label: surfaceuv
+  - label: Surface UV (u, v, w, is set)
     name: surfaceuv
-  - label: normal
+  - label: Surface Normal
     name: normal
-  - label: sdf
+  - label: SDF Surface
     name: sdf
 
 ---

@@ -152,6 +152,9 @@ cat:
     thumb: assets/images/reference/operators/field/waveletNoiseField_thumb.png
   - name: worleyNoiseField
     thumb: assets/images/reference/operators/field/worleyNoiseField_thumb.png
+  - moduleName: raytkAbstractions
+    name: enhancedWaveField
+    status: beta
   summary: Float or vector fields, which provide values for the requested coordinates.
 
 ---

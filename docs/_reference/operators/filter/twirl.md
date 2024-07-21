@@ -34,10 +34,6 @@ op:
     - Ray
     - Light
     - Particle
-    supportedVariableInputs:
-    - centerField
-    - sizeField
-    - amountField
     supportedVariables:
     - axispos
   - contextTypes:
@@ -139,7 +135,7 @@ op:
   status: beta
   thumb: assets/images/reference/operators/filter/twirl_thumb.png
   variables:
-  - label: axispos
+  - label: Position Along Axis
     name: axispos
 
 ---

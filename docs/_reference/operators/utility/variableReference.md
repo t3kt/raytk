@@ -71,6 +71,30 @@ op:
     menuOptions:
     - label: (value)
       name: this
+    - label: Distance
+      name: x
+    - label: Material
+      name: mat
+    - label: Primary UV
+      name: uv
+    - label: Primary UV (X)
+      name: uv.x
+    - label: Primary UV (Y)
+      name: uv.y
+    - label: Primary UV (Z)
+      name: uv.z
+    - label: Secondary UV
+      name: uv2
+    - label: Secondary UV (X)
+      name: uv2.x
+    - label: Secondary UV (Y)
+      name: uv2.y
+    - label: Secondary UV (Z)
+      name: uv2.z
+    - label: Surface Color
+      name: color
+    - label: Density
+      name: density
     name: Field
   - label: Default Value
     name: Defaultval

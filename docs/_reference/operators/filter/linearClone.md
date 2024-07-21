@@ -142,9 +142,9 @@ op:
   summary: Repeats an SDF along a line, combining the results.
   thumb: assets/images/reference/operators/filter/linearClone_thumb.png
   variables:
-  - label: index
+  - label: Index
     name: index
-  - label: normindex
+  - label: Normalized Index (0..1)
     name: normindex
 
 ---

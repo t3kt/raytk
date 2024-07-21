@@ -54,11 +54,11 @@ op:
     regularHandling: runtime
   status: beta
   variables:
-  - label: index
+  - label: Slice Index
     name: index
-  - label: normindex
+  - label: Normalized Slice Index
     name: normindex
-  - label: size
+  - label: Slice Size
     name: size
 
 ---

@@ -82,7 +82,7 @@ op:
     regularHandling: runtime
   thumb: assets/images/reference/operators/sdf2d/flowerSdf2d_thumb.png
   variables:
-  - label: normangle
+  - label: Normalized Angle (0..1)
     name: normangle
 
 ---

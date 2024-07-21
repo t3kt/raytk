@@ -63,9 +63,9 @@ op:
   summary: Mandelbulb fractal.
   thumb: assets/images/reference/operators/sdf/mandelbulbSdf_thumb.png
   variables:
-  - label: step
+  - label: Step Index
     name: step
-  - label: normstep
+  - label: Normalized Step (0..1)
     name: normstep
 
 ---

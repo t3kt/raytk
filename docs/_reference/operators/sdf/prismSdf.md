@@ -208,11 +208,11 @@ op:
   summary: A prism shape, like a cylinder but with flat sides, along the z axis.
   thumb: assets/images/reference/operators/sdf/prismSdf_thumb.png
   variables:
-  - label: axispos
+  - label: Position Along Axis
     name: axispos
-  - label: normoffset
+  - label: Normalized Axis Position (0..1)
     name: normoffset
-  - label: normangle
+  - label: Normalized Angle (0..1)
     name: normangle
 
 ---

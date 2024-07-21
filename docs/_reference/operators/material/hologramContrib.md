@@ -44,9 +44,9 @@ op:
     regularHandling: runtime
   status: beta
   variables:
-  - label: step
+  - label: Step Index
     name: step
-  - label: normstep
+  - label: Normalized Step (0..1)
     name: normstep
 
 ---
