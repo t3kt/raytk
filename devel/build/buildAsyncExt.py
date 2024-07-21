@@ -4,7 +4,7 @@ import shutil
 
 from datetime import datetime
 from pathlib import Path
-from raytkBuild import BuildContext, DocProcessor, chunked_iterable
+from raytkBuild import BuildContext, chunked_iterable
 from raytkDocs import CategoryHelp, ROPHelp, ToolkitInfo, OpDocManager
 from raytkTools import RaytkTools
 from raytkUtil import RaytkContext, RaytkModuleContext, CategoryInfo, IconColors, RaytkTags, \
@@ -23,7 +23,6 @@ class BuildManagerAsync:
 		self.ownerComp = ownerComp
 		self.logTable = ownerComp.op('log')
 		self.context = None  # type: BuildContext | None
-		self.docProcessor = None  # type: DocProcessor | None
 		self.experimentalMode = False
 		self.includeModules = False
 		self.logFile = None  # type: TextIO | None
@@ -278,14 +277,6 @@ class LibraryBuilderAsyncBase(BuilderAsyncBase):
 class ToolkitBuilderAsync(LibraryBuilderAsyncBase):
 	def __init__(self, context: BuildContext, moduleTable: DAT):
 		super().__init__(context)
-		self.docProcessor = None
-		if not self.context.experimental:
-			self.docProcessor = DocProcessor(
-				context,
-				dataFolder='docs/_data',
-				referenceFolder='docs/_reference',
-				imagesFolder='docs/assets/images',
-			)
 		self.toolkit = None  # type: COMP | None
 		self.moduleTable = moduleTable
 
@@ -304,10 +295,6 @@ class ToolkitBuilderAsync(LibraryBuilderAsyncBase):
 
 		await self._detachFileSyncOps()
 
-		if self.docProcessor:
-			await self.logStageStart('Clearing old docs')
-			self.docProcessor.clearPreviousDocs()
-
 		await self.logStageStart('Process thumbnails')
 		await self.context.runBuildScript(self.toolkit.op('libraryThumbs/BUILD'))
 
@@ -325,12 +312,6 @@ class ToolkitBuilderAsync(LibraryBuilderAsyncBase):
 
 		await self.logStageStart('Process nested operators')
 		await self._processAllNestedOperators()
-
-		await self.logStageStart('Generate operator docs')
-		await self._generateAllOperatorDocs()
-
-		await self.logStageStart('Generate category docs')
-		await self._generateAllCategoryDocs()
 
 		await self.logStageStart('Lock library info')
 		await self._lockLibraryInfo()
@@ -362,9 +343,6 @@ class ToolkitBuilderAsync(LibraryBuilderAsyncBase):
 
 		await self.logStageStart('Finalize toolkit pars')
 		await self._finalizeToolkitPars()
-
-		await self.logStageStart('Generate toolkit docs')
-		await self._generateToolkitDocs()
 
 		await self.logStageStart('Finish build')
 		await self._finishBuild()
@@ -427,22 +405,6 @@ class ToolkitBuilderAsync(LibraryBuilderAsyncBase):
 			self.context.removeBuildExcludeOps(comp)
 			await _asyncYield()
 
-	async def _generateAllOperatorDocs(self):
-		if not self.docProcessor:
-			return
-		self.log('Generate operator category list page')
-		self.docProcessor.writeCategoryListPage(RaytkContext().allCategories())
-		self.log('Generate operator docs')
-		for comp in RaytkContext().allMasterOperators():
-			self.docProcessor.processOp(comp)
-
-	async def _generateAllCategoryDocs(self):
-		if not self.docProcessor:
-			return
-		self.log('Generate category docs')
-		for comp in RaytkContext().allCategories():
-			self.docProcessor.processOpCategory(comp)
-
 	async def _lockLibraryInfo(self):
 		self.context.lockOps(self.toolkit.ops(
 			'info', 'opTable', 'opCategoryTable', 'buildInfo'))
@@ -492,10 +454,6 @@ class ToolkitBuilderAsync(LibraryBuilderAsyncBase):
 		comp.par.reloadcustom = True
 		comp.par.reloadbuiltin = True
 		focusFirstCustomParameterPage(comp)
-
-	async def _generateToolkitDocs(self):
-		if self.docProcessor:
-			self.docProcessor.writeToolkitDocData()
 
 	async def _finishBuild(self):
 		comp = self.toolkit
