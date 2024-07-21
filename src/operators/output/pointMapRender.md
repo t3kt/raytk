@@ -27,8 +27,6 @@ The "SDF or Value" output, when using an SDF scene, will output values where the
   * `rgb10a2fixed`
   * `rgba16fixed`
   * `rgba11float`
-  * `rgb16float`
-  * `rgb32float`
   * `mono8fixed`
   * `mono16fixed`
   * `mono16float`
@@ -49,7 +47,37 @@ The "SDF or Value" output, when using an SDF scene, will output values where the
 * `Enableobjectidoutput`: Enable object ID output, which produces a TOP with values assigned with the `injectObjectId` operator for whichever shape each point is inside.
 * `Timerefop`
 * `Shaderbuilderconfig`
+* `Coordtype`
+  * `auto`
+  * `vec2`
+  * `vec3`
+* `Outputtype`
+  * `texture2d`
+  * `texture2darray`
+  * `texture3d`
+* `Enabledensityoutput`
+* `Enabledebugoutput`
+* `Enablecustomoutput1`
+* `Enablecustomoutput2`
+* `Enablenormalsmoothing`: Whether to smooth out surface normals by sampling at larger distances.
+* `Normalsmoothing`: How far apart to sample to calculate surface normals.
+* `Materialmode`
+  * `inside`
+  * `surface`
+  * `everywhere`
+* `Enableblending`
+* `Blending`
+* `Thickness`
+* `Customizeshaderconfig`
 
 ## Inputs
 
 * `definition_in`: 
+* `camera`: 
+* `light`: 
+
+## Variables
+
+* `datapos`: 
+* `datauv`: 
+* `datares`: 

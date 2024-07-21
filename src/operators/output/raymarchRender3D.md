@@ -63,10 +63,40 @@ Renders a scene using 3D raymarching.
 * `Nearhitmindist`
 * `Nearhitfade`
 * `Enablecoloroutput`
+* `Headerformat`
+* `Headercompositing`
+* `Headerreflection`
+* `Headerrefraction`
+* `Enablerefraction`
+* `Refractionpasses`
+* `Refractionraycast`
+* `Headerbackground`
+* `Backgroundfield`
+* `Usebackgroundfieldalpha`
+* `Showbackground`
+* `Headershadow`
+* `Shadow`
+* `Headerraymarching`
+* `Distfactor`
+* `Headerlimits`
+* `Headernearhit`
+* `Headernormals`
+* `Enablenormalsmoothing`: Whether to smooth out surface normals by sampling at larger distances.
+* `Normalsmoothing`: How far apart to sample to calculate surface normals.
+* `Headervolumetrics`
+* `Enablesecondaryraycast`
+* `Secondaryraycast`
+* `Customizeshaderconfig`
+* `Enableuvoutput`
+* `Enablecustomoutput1`
+* `Enablecustomoutput2`
 
 ## Inputs
 
 * `definition_in`:  SDF definition the shapes in the scene.
-* `camera_definition_in`:  Camera used for render frame.
-* `light_definition_in`:  Light definition that can be used by supporting materials.
-* `shadow_definition_in`: 
+* `camera`:  Camera used for render frame.
+* `light`:  Light definition that can be used by supporting materials.
+* `shadow`: 
+* `backgroundField`: 
+* `secondaryRayCast`: 
+* `refractionRayCast`: 
