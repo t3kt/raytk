@@ -96,9 +96,20 @@ $status-deprecated-fg-color: rgb(64%, 81%, 81%);
   }
 }
 
-.category-op-table .thumb-placeholder {
-  display: block;
-  height: 80px;
+.category-op-table {
+  .op-name {
+    display: block;
+    margin-bottom: 1em;
+    border: none;
+  }
+  .thumb-placeholder {
+    display: block;
+    height: 80px;
+  }
+}
+
+.label.module-name {
+  text-transform: none;
 }
 
 .op-thumb {
