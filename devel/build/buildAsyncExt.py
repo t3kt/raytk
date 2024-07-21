@@ -5,8 +5,10 @@ import shutil
 from datetime import datetime
 from pathlib import Path
 from raytkBuild import BuildContext, DocProcessor, chunked_iterable
+from raytkDocs import CategoryHelp, ROPHelp, ToolkitInfo, OpDocManager
 from raytkTools import RaytkTools
-from raytkUtil import RaytkContext, RaytkModuleContext, CategoryInfo, IconColors, RaytkTags, focusFirstCustomParameterPage, navigateTo
+from raytkUtil import RaytkContext, RaytkModuleContext, CategoryInfo, IconColors, RaytkTags, \
+	focusFirstCustomParameterPage, navigateTo, ROPInfo
 from typing import Optional, TextIO
 
 # noinspection PyUnreachableCode
@@ -77,8 +79,7 @@ class BuildManagerAsync:
 	def ReloadToolkit(self):
 		self.logTable.clear()
 		self.log('Reloading toolkit')
-		builder = ToolkitBuilderAsync(self.context, self.ownerComp.op('moduleTable'))
-		op.TDAsyncIO.Run([builder.reloadToolkit()])
+		op.TDAsyncIO.Run([_reloadToolkit()])
 
 	def prepareForBuild(self):
 		self.experimentalMode = bool(self.ownerComp.op('experimental_toggle').par.Value0)
@@ -127,6 +128,16 @@ class BuildManagerAsync:
 			await snippetBuilder.runBuild()
 			self.log('Finished snippet build process')
 
+		op.TDAsyncIO.Cancel()
+		op.TDAsyncIO.Run([_build()])
+
+	def runDocsBuild(self):
+		self.prepareForBuild()
+		builder = DocBuilderAsync(self.context, self.ownerComp.op('moduleTable'))
+		async def _build():
+			await builder.runBuild()
+			self.log('Finished docs build process')
+			self.closeLogFile()
 		op.TDAsyncIO.Cancel()
 		op.TDAsyncIO.Run([_build()])
 
@@ -283,7 +294,10 @@ class ToolkitBuilderAsync(LibraryBuilderAsyncBase):
 
 	async def runBuild(self):
 		self.log('Starting build')
-		await self.reloadToolkit()
+		self.toolkit = await _reloadToolkit()
+		# Do this early since it switches off things like automatically writing to the opList.txt file.
+		# See https://github.com/t3kt/raytk/issues/95
+		self.toolkit.par.Devel = False
 		version = RaytkContext().toolkitVersion()
 		self.log(f'Version: {version}' + (' (experimental)' if self.context.experimental else ''))
 		self.context.openNetworkPane()
@@ -354,14 +368,6 @@ class ToolkitBuilderAsync(LibraryBuilderAsyncBase):
 
 		await self.logStageStart('Finish build')
 		await self._finishBuild()
-
-	async def reloadToolkit(self):
-		self.toolkit = RaytkContext().toolkit()
-		self.toolkit.par.externaltox = 'src/raytk.tox'
-		self.toolkit.par.reinitnet.pulse()
-		# Do this early since it switches off things like automatically writing to the opList.txt file.
-		# See https://github.com/t3kt/raytk/issues/95
-		self.toolkit.par.Devel = False
 
 	async def _detachFileSyncOps(self):
 		self.context.detachAllFileSyncDatsIn(self.toolkit, reloadFirst=True)
@@ -741,6 +747,193 @@ class SnippetsBuilderAsync(BuilderAsyncBase):
 
 	async def _cleanOutput(self):
 		shutil.rmtree(self.outputFolder)
+
+class DocBuilderAsync(BuilderAsyncBase):
+	def __init__(self, context: BuildContext, moduleTable: DAT):
+		super().__init__(context)
+		self.toolkit = None  # type: COMP | None
+		self.moduleTable = moduleTable
+		self.categoryHelps = {}  # type: dict[str, CategoryHelp]
+		self.addonsRoot = None  # type: COMP | None
+		self.moduleContexts = []  # type: list[RaytkModuleContext]
+		self.imagesFolder = Path('docs/assets/images')
+		self.referenceFolder = Path('docs/_reference')
+		self.dataFolder = Path('docs/_data')
+		self.opsByType = {}  # type: dict[str, COMP]
+
+	async def runBuild(self):
+		self.log('Starting docs build')
+		self.log('Reloading toolkit...')
+		self.toolkit = await _reloadToolkit()
+
+		await self.logStageStart('Reloading addons')
+		await self.reloadAddons()
+
+		await self.logStageStart('Clearing old docs')
+		await self._clearPreviousDocs()
+
+		await self.logStageStart('Load main toolkit categories')
+		await self._loadMainToolkitCategories()
+
+		await self.logStageStart('Load all module categories')
+		await self._loadAllModuleCategories()
+
+		await self.logStageStart('Strip alpha ops')
+		await self._stripAlphaOps()
+
+		await self.logStageStart('Remove empty categories')
+		await self._removeEmptyCategories()
+
+		await self.logStageStart('Write category list page')
+		await self._writeCategoryListPage()
+
+		await self.logStageStart('Write category pages')
+		await self._writeCategoryPages()
+
+		await self.logStageStart('Write operator pages')
+		await self._writeOperatorPages()
+
+		await self.logStageStart('Write toolkit doc data')
+		await self._writeToolkitDocData()
+
+		self.log('Finished build')
+
+	async def reloadAddons(self):
+		self.addonsRoot = getattr(op, 'raytkAddons')
+		if self.addonsRoot:
+			self.context.safeDestroyOp(self.addonsRoot)
+		self.addonsRoot = root.loadTox('addons/src/raytkAddons.tox')
+		self.log('Addons loaded: ' + self.addonsRoot.path)
+		for comp in self.addonsRoot.findChildren(tags=['raytkModule'], depth=1):
+			moduleContext = RaytkModuleContext(comp)
+			if moduleContext:
+				self.log('Reloading module ' + comp.path)
+				self.context.reloadTox(comp)
+				self.moduleContexts.append(moduleContext)
+
+	async def _loadMainToolkitCategories(self):
+		for comp in RaytkContext().allCategories():
+			self.log(f'Loading category {comp}')
+			categoryHelp = CategoryHelp.extractFromComp(comp, self.imagesFolder)
+			self.categoryHelps[categoryHelp.name] = categoryHelp
+			for opHelp in categoryHelp.operators:
+				rop = comp.op(opHelp.name)
+				self.opsByType[opHelp.opType] = rop
+			await _asyncYield()
+
+	async def _loadAllModuleCategories(self):
+		self.log(f'Found {len(self.moduleContexts)} modules')
+		for moduleContext in self.moduleContexts:
+			await self._loadModuleCategories(moduleContext)
+
+	async def _loadModuleCategories(self, moduleContext: RaytkModuleContext):
+		self.log("Loading categories from module: " + moduleContext.moduleName())
+		for categoryComp in moduleContext.allCategories():
+			categoryHelp = CategoryHelp.extractFromComp(categoryComp, self.imagesFolder)
+			if categoryHelp.name in self.categoryHelps:
+				self.log(f'Merging {categoryComp} with existing category')
+				self.categoryHelps[categoryHelp.name].mergeFrom(categoryHelp)
+			else:
+				self.log('Adding new category: ' + categoryComp.path)
+				self.categoryHelps[categoryHelp.name] = categoryHelp
+			for opHelp in categoryHelp.operators:
+				rop = categoryComp.op(opHelp.name)
+				self.opsByType[opHelp.opType] = rop
+			await _asyncYield()
+		self.log('Finished loading categories from module: ' + moduleContext.moduleName())
+
+	async def _stripAlphaOps(self):
+		for categoryHelp in self.categoryHelps.values():
+			toRemove = [
+				opHelp
+				for opHelp in categoryHelp.operators
+				if opHelp.isAlpha
+			]
+			self.log('Removing ' + str(len(toRemove)) + ' alpha ops from ' + categoryHelp.name)
+			for opHelp in toRemove:
+				categoryHelp.operators.remove(opHelp)
+
+	async def _removeEmptyCategories(self):
+		namesToRemove = []
+		for categoryName in self.categoryHelps.keys():
+			if not self.categoryHelps[categoryName].operators:
+				namesToRemove.append(categoryName)
+		for categoryName in namesToRemove:
+			self.log(f'Removing empty category: {categoryName}')
+			del self.categoryHelps[categoryName]
+
+	async def _writeCategoryListPage(self):
+		docText = '''---
+layout: page
+title: Operators
+nav_order: 3
+has_children: true
+has_toc: false
+permalink: /reference/operators/
+---
+
+# Operator Categories
+'''
+		for categoryName in sorted(self.categoryHelps.keys()):
+			categoryHelp = self.categoryHelps[categoryName]
+			docText += f'* [{categoryHelp.name.capitalize()}]({categoryHelp.name}/) - {categoryHelp.summary}\n'
+		self._writeDocs(Path('operators/index.md'), docText)
+
+	async def _writeCategoryPages(self):
+		for categoryHelp in self.categoryHelps.values():
+			await self._writeCategoryPage(categoryHelp)
+
+	async def _writeCategoryPage(self, categoryHelp: CategoryHelp):
+		docText = categoryHelp.formatAsListPage()
+		self._writeDocs(Path(f'operators/{categoryHelp.name}/index.md'), docText)
+
+	async def _writeOperatorPages(self):
+		for categoryHelp in self.categoryHelps.values():
+			for opHelp in categoryHelp.operators:
+				await self._writeOperatorPage(opHelp)
+
+	async def _writeOperatorPage(self, opHelp: ROPHelp):
+		self.log('Writing operator page for ' + opHelp.name)
+		rop = self.opsByType.get(opHelp.opType)
+		if not rop:
+			self.log('ERROR unable to find ROP: ' + opHelp.opType)
+			return
+		docManager = OpDocManager(rop)
+		opHelp = docManager.extractForBuild(self.imagesFolder)
+		docText = opHelp.formatAsFullPage(ROPInfo(rop))
+		self._writeDocs(Path(f'operators/{opHelp.category}/{opHelp.name}.md'), docText)
+
+	def _writeDocs(self, relativePath: Path, docText: str):
+		outFile = self.referenceFolder / relativePath
+		outFile.parent.mkdir(parents=True, exist_ok=True)
+		self.context.log(f'Writing docs to {outFile}')
+		with outFile.open('w') as f:
+			f.write(docText)
+
+	async def _clearPreviousDocs(self):
+		if not self.referenceFolder.exists():
+			self.log(f"No previous docs to clear in {self.referenceFolder}")
+			return
+		self.log(f'Clearing old docs from {self.referenceFolder}')
+		paths = list(sorted(self.referenceFolder.iterdir()))
+		for path in paths:
+			self.context.log(f'Clearing {path}')
+			shutil.rmtree(path)
+
+	async def _writeToolkitDocData(self):
+		info = ToolkitInfo(toolkitVersion=str(RaytkContext().toolkitVersion()))
+		text = info.formatAsDataFile()
+		self.dataFolder.mkdir(parents=True, exist_ok=True)
+		outFile = self.dataFolder / 'toolkit.yaml'
+		with outFile.open('w') as f:
+			f.write(text)
+
+async def _reloadToolkit():
+	toolkit = RaytkContext().toolkit()
+	toolkit.par.externaltox = 'src/raytk.tox'
+	toolkit.par.reinitnet.pulse()
+	return toolkit
+
 
 async def _asyncYield():
 	pass
