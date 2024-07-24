@@ -502,6 +502,9 @@ class ModuleBuilderAsync(LibraryBuilderAsyncBase):
 		await self.logStageStart('Lock build lock ops')
 		await self._lockAllBuildLockOps()
 
+		await self.logStageStart('Run module-specific build')
+		await self._runModuleSpecificBuild()
+
 		await self.logStageStart('Clean operators')
 		await self._cleanAllOperators()
 
@@ -516,6 +519,11 @@ class ModuleBuilderAsync(LibraryBuilderAsyncBase):
 
 		await self.logStageStart('Finish build')
 		await self._finishBuild()
+
+	async def _runModuleSpecificBuild(self):
+		build = self.moduleRoot.op('BUILD')
+		if build:
+			await self.context.runBuildScript(build)
 
 	async def reloadAddons(self):
 		self.addonsRoot = getattr(op, 'raytkAddons')
