@@ -58,6 +58,16 @@ op:
     name: light
     returnTypes:
     - Light
+  - contextTypes:
+    - Context
+    coordTypes:
+    - vec2
+    label: rayOffsetField
+    name: rayOffsetField
+    returnTypes:
+    - float
+    sourceParamLabel: Ray Offset Field
+    sourceParamName: Rayoffsetfield
   moduleName: raytkVolumes
   name: volumetricRaymarchRender3D
   opType: raytkVolumes.operators.output.volumetricRaymarchRender3D
@@ -220,6 +230,12 @@ op:
     name: Shaderbuilderconfig
   - label: Customize Shader Config
     name: Customizeshaderconfig
+  - label: Ray Offset Field
+    name: Rayoffsetfield
+  - label: Ray Offset Amount
+    name: Rayoffsetamount
+    readOnlyHandling: runtime
+    regularHandling: runtime
   status: beta
   summary: Renderer that uses raymarching with volumes instead of SDFs.
 
