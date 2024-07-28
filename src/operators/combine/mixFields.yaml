@@ -2,7 +2,7 @@
 meta: !meta
   opType: raytk.operators.combine.mixFields
   opVersion: '0'
-  opStatus: beta
+  opStatus: default
 opDef: !def
   enable: true
   typeSpec: !ropTypes

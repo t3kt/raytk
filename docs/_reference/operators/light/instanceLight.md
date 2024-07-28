@@ -46,9 +46,9 @@ op:
       turn instances off. Any instance with an active value of 0 or less will be excluded
       from the combined result.
   variables:
-  - label: index
+  - label: Index
     name: index
-  - label: normindex
+  - label: Normalized Index (0..1)
     name: normindex
 
 ---

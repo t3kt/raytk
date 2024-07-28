@@ -11,9 +11,6 @@ cat:
     well as more generic things like switches and cross-fade blending.'
   name: combine
   operators:
-  - name: addFields
-    status: deprecated
-    summary: Adds the values of multiple fields.
   - name: arrange
     summary: Combines multiple SDFs, with a different position for each.
     thumb: assets/images/reference/operators/combine/arrange_thumb.png
@@ -52,7 +49,6 @@ cat:
     summary: Merges multiple vector fields, using different fields for each vector
       part.
   - name: mixFields
-    status: beta
   - name: shapedCombine
     summary: Combine two SDFs, using a 2D SDF to shape the blending region.
   - name: simpleDiff

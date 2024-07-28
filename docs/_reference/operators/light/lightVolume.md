@@ -47,6 +47,10 @@ op:
     name: Usesdfcolor
     readOnlyHandling: baked
     regularHandling: baked
+  - label: Use Density
+    name: Usedensity
+    readOnlyHandling: baked
+    regularHandling: baked
   - label: Blending
     name: Blending
     readOnlyHandling: baked

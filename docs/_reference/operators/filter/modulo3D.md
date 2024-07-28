@@ -31,13 +31,10 @@ op:
     - float
     - vec4
     - Sdf
+    - Volume
     - Ray
     - Light
     - Particle
-    supportedVariableInputs:
-    - sizeField
-    - shiftField
-    - offsetField
     supportedVariables:
     - cellcoord
     - normcoord
@@ -169,11 +166,11 @@ op:
   summary: Repeats space along all 3 axes.
   thumb: assets/images/reference/operators/filter/modulo3D_thumb.png
   variables:
-  - label: cellcoord
+  - label: Cell Coord
     name: cellcoord
-  - label: normcoord
+  - label: Normalized Cell Coord
     name: normcoord
-  - label: shiftedcellcoord
+  - label: Shifted Cell Coord
     name: shiftedcellcoord
 
 ---

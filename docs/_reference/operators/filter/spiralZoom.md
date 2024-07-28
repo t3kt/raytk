@@ -49,12 +49,10 @@ op:
     - float
     - vec4
     - Sdf
+    - Volume
     - Ray
     - Light
     - Particle
-    supportedVariableInputs:
-    - twistField
-    - phaseField
   - contextTypes:
     - Context
     - MaterialContext
@@ -153,9 +151,9 @@ op:
   summary: Transforms space using a logarithmic spiral.
   thumb: assets/images/reference/operators/filter/spiralZoom_thumb.png
   variables:
-  - label: logdist
+  - label: Log Distance
     name: logdist
-  - label: dist
+  - label: Distance
     name: dist
 
 ---

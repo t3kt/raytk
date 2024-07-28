@@ -30,10 +30,6 @@ class Tools:
 	def toolkitVersion(self):
 		return RaytkContext().toolkitVersion()
 
-	@staticmethod
-	def ShowLibraryParams():
-		RaytkContext().toolkit().openParameters()
-
 	def FillMonitorHeight(self, usePrimary=True):
 		height = _getMonitorHeight(usePrimary)
 		height -= 270
@@ -42,15 +38,6 @@ class Tools:
 	@staticmethod
 	def NavigateTo(comp: COMP):
 		navigateTo(comp)
-
-	def GetCurrentROP(self):
-		rops = self.getCurrentROPs(primaryOnly=True)
-		return rops[0] if rops else None
-
-	def getCurrentROPs(self, primaryOnly=False):
-		return RaytkContext().currentROPs(
-			primaryOnly=primaryOnly,
-			exclude=lambda c: c is self.ownerComp or c.path.startswith(self.ownerComp.path + '/'))
 
 	def OnOperatorsShortcutRightClick(self, button: COMP):
 		def goToItem(name, path):

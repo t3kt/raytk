@@ -112,7 +112,7 @@ op:
     light.
   thumb: assets/images/reference/operators/light/axisLight_thumb.png
   variables:
-  - label: lightdir
+  - label: Light Direction
     name: lightdir
     summary: Direction that the light is from the current position on a surface that's
       being shaded. This will be the closet point along the chosen axis.

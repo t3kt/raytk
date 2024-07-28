@@ -75,6 +75,10 @@ struct Sdf {
 	vec4 color;
 	#endif
 
+	#ifdef RAYTK_USE_DENSITY
+	float density;
+	#endif
+
 	#ifdef RAYTK_USE_TRANSPARENCY
 	// x: 0/1 is transparent, y: (1 - alpha) inverted so defaults are better
 	vec2 transparent;
@@ -83,6 +87,13 @@ struct Sdf {
 	#ifdef RAYTK_HAS_ATTRS
 	Attrs attrs;
 	#endif
+};
+
+struct Volume {
+	float density;
+
+	Sdf sdf;  // If this is missing it will be a non-hit SDF.
+	// But other fields in the SDF struct can still be used (mat, materialPos, etc);
 };
 
 int resultMaterial1(Sdf res) { return int(res.mat.x); }
@@ -138,6 +149,9 @@ Sdf createSdf(float dist) {
 	#endif
 	#ifdef RAYTK_USE_SURFACE_COLOR
 	res.color = vec4(0.);
+	#endif
+	#ifdef RAYTK_USE_DENSITY
+	res.density = 1.0 - step(0.0, dist);
 	#endif
 	#ifdef RAYTK_USE_TRANSPARENCY
 	res.transparent = vec2(0.);
@@ -200,6 +214,10 @@ void blendInSdf(inout Sdf res1, in Sdf res2, in float amt) {
 	}
 	#endif
 
+	#ifdef RAYTK_USE_DENSITY
+	res1.density = mix(res1.density, res2.density, amt);
+	#endif
+
 	#ifdef RAYTK_USE_TRANSPARENCY
 	res1.transparent.x = max(res1.transparent.x, res2.transparent.x);
 	res1.transparent.y = mix(res1.transparent.y, res2.transparent.y, amt);
@@ -222,11 +240,19 @@ void assignColor(inout Sdf res, vec3 color) {
 	#endif
 }
 
+void assignColor(inout Volume res, vec3 color) {
+	assignColor(res.sdf, color);
+}
+
 bool hasColor(in Sdf res) {
 	#ifdef RAYTK_USE_SURFACE_COLOR
 	return res.color.a > 0.;
 	#endif
 	return false;
+}
+
+bool hasColor(in Volume res) {
+	return hasColor(res.sdf);
 }
 
 vec3 getColor(in Sdf res) {
@@ -235,6 +261,10 @@ vec3 getColor(in Sdf res) {
 	#else
 	return vec3(0.);
 	#endif
+}
+
+vec3 getColor(in Volume res) {
+	return getColor(res.sdf);
 }
 
 void assignMaterial(inout Sdf res, int materialId) {
@@ -271,10 +301,20 @@ Sdf createNonHitSdf() {
 	return res;
 }
 
+Volume createVolume(float density) {
+	Volume res;
+	res.density = density;
+	res.sdf = createNonHitSdf();
+	return res;
+}
+
 void initDefVal(out Sdf val) { val = createNonHitSdf(); }
+void initDefVal(out Volume val) { val = createVolume(0.); }
 
 bool isNonHitSdfDist(float d) { return d >= RAYTK_MAX_DIST; }
 bool isNonHitSdf(Sdf res) { return res.x >= RAYTK_MAX_DIST; }
+
+bool volumeHasSdf(Volume vol) { return !isNonHitSdf(vol.sdf); }
 
 Sdf withAdjustedScale(in Sdf res, float scaleMult) {
 	res.x *= scaleMult;
@@ -519,6 +559,7 @@ CameraContext createCameraContext(vec2 resolution) {
 struct RayContext {
 	Sdf result;
 	Ray ray;
+	vec4 iteration;
 
 	#ifdef RAYTK_GLOBAL_POS_IN_CONTEXT
 	vec3 globalPos;
@@ -532,6 +573,7 @@ RayContext createRayContext(Ray ray, Sdf result) {
 	RayContext rCtx;
 	rCtx.ray = ray;
 	rCtx.result = result;
+	rCtx.iteration = vec4(0.);
 	#ifdef RAYTK_GLOBAL_POS_IN_CONTEXT
 	rCtx.globalPos = vec3(0.);
 	#endif
@@ -539,6 +581,20 @@ RayContext createRayContext(Ray ray, Sdf result) {
 	rCtx.time = getGlobalTime();
 	#endif
 	return rCtx;
+}
+
+vec4 extractIteration(RayContext ctx) { return ctx.iteration; }
+
+void setIterationIndex(inout RayContext ctx, float index) {
+	ctx.iteration = vec4(index, 0., 0., 0.);
+}
+
+void setIterationCell(inout RayContext ctx, vec2 cell) {
+	ctx.iteration = vec4(cell, 0., 0.);
+}
+
+void setIterationCell(inout RayContext ctx, vec3 cell) {
+	ctx.iteration = vec4(cell, 0.);
 }
 
 const int RAYTK_STAGE_PRIMARY = 0;
@@ -569,5 +625,12 @@ bool isDistanceOnlyStage() {
 	_raytkStage == RAYTK_STAGE_OCCLUSION ||
 	_raytkStage == RAYTK_STAGE_NORMAL ||
 	_raytkStage == RAYTK_STAGE_SUBSURFACE;
+}
+
+void stripVolumeSdf(float x) {}
+void stripVolumeSdf(vec4 x) {}
+void stripVolumeSdf(Sdf x) {}
+void stripVolumeSdf(inout Volume x) {
+	x.sdf.x = RAYTK_MAX_DIST;
 }
 

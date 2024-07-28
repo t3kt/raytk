@@ -158,11 +158,11 @@ op:
     regularHandling: runtime
   thumb: assets/images/reference/operators/sdf/lineSeriesSdf_thumb.png
   variables:
-  - label: stepindex
+  - label: Segment Index
     name: stepindex
-  - label: normstepindex
+  - label: Normalized Segment Index
     name: normstepindex
-  - label: normoffset
+  - label: Normalized Offset Within Segment
     name: normoffset
 
 ---

@@ -169,8 +169,16 @@ _allTypes += [
 			Field('uv2.y', 'Secondary UV (Y)', 'float', macros='RAYTK_USE_UV'),
 			Field('uv2.z', 'Secondary UV (Z)', 'float', macros='RAYTK_USE_UV'),
 			Field('color', 'Surface Color', 'vec4', macros='RAYTK_USE_SURFACE_COLOR'),
+			Field('density', 'Density', 'float', macros='RAYTK_USE_DENSITY'),
 			# TODO: sdf fields
 		]),
+	DataType(
+		'Volume', 'Volume', isReturn=True,
+		fields=[
+			Field('density', 'Density', 'float'),
+			Field('sdf', 'SDF', 'Sdf'),
+		],
+	),
 	DataType(
 		'Ray', 'Ray', isReturn=True,
 		fields=[
@@ -253,7 +261,7 @@ def buildCoreTypeTable(dat: scriptDAT):
 	addTypes([
 		_typesByName['float'],
 		_typesByName['vec2'], _typesByName['vec3'], _typesByName['vec4'],
-		_typesByName['Sdf'], _typesByName['Ray'], _typesByName['Light'], _typesByName['Particle'],
+		_typesByName['Sdf'], _typesByName['Volume'], _typesByName['Ray'], _typesByName['Light'], _typesByName['Particle'],
 	])
 	addTypes([
 		dt

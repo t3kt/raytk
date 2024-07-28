@@ -27,11 +27,10 @@ op:
     - float
     - vec4
     - Sdf
+    - Volume
     - Ray
     - Light
     - Particle
-    supportedVariableInputs:
-    - distanceField
   - contextTypes:
     - Context
     - MaterialContext

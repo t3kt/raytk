@@ -30,6 +30,7 @@ op:
     - float
     - vec4
     - Sdf
+    - Volume
     - Ray
     - Light
     - Particle
@@ -63,7 +64,7 @@ op:
   summary: Repeats space in a square arrangement that gets smaller in the center.
   thumb: assets/images/reference/operators/filter/geometricSeriesSquareTile_thumb.png
   variables:
-  - label: scale
+  - label: Scale
     name: scale
 
 ---

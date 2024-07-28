@@ -29,7 +29,8 @@ op:
     - Sdf
     summary: The SDF that sweeps around the path SDF.
     supportedVariableInputs:
-    - path
+    - cross_section_definition_in
+    - path_definition_in
     supportedVariables:
     - pathsdf
     - pathpos
@@ -72,16 +73,14 @@ op:
     name: Plane
     readOnlyHandling: semibaked
     regularHandling: runtime
-  - label: Enable
-    name: Enable
   summary: Creates a 3D SDF by sweeping a 2D SDF along the surface of another 2D SDF.
   thumb: assets/images/reference/operators/convert/sweep_thumb.png
   variables:
-  - label: pathsdf
+  - label: Path SDF
     name: pathsdf
-  - label: pathpos
+  - label: Path Position
     name: pathpos
-  - label: pos3d
+  - label: 3D Position
     name: pos3d
 
 ---

@@ -121,7 +121,6 @@ op:
     name: Value2
     readOnlyHandling: baked
     regularHandling: runtime
-  status: beta
   summary: Modifies the values of a field using various types of math functions, similar
     to a `Function CHOP`.
 

@@ -4,6 +4,9 @@ float THIS_ang(float a) {
 }
 
 ReturnT thismap(CoordT p, ContextT ctx) {
+	#ifdef THIS_HAS_INPUT_coordField
+	p = THIS_asCoordT(inputOp_coordField(p, ctx));
+	#endif
 	vec3 q = adaptAsVec3(p);
 	q -= THIS_Center;
 	switch (int(THIS_Axis)) {

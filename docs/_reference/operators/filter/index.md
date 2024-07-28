@@ -84,7 +84,6 @@ cat:
     status: beta
     summary: Modifies field values using a custom expression.
   - name: fieldFunction
-    status: beta
     summary: Modifies the values of a field using various types of math functions,
       similar to a `Function CHOP`.
   - name: flip
@@ -388,6 +387,9 @@ cat:
     shortcuts:
     - tr
     summary: Translates coordinates of the input ROP.
+  - name: twirl
+    status: beta
+    thumb: assets/images/reference/operators/filter/twirl_thumb.png
   - name: twist
     summary: Twists space around an axis.
     thumb: assets/images/reference/operators/filter/twist_thumb.png
@@ -403,6 +405,19 @@ cat:
     name: waveWarp
     summary: Uses repeating waves to offset space.
     thumb: assets/images/reference/operators/filter/waveWarp_thumb.png
+  - keywords:
+    - volume
+    - volumetric
+    moduleName: raytkVolumes
+    name: assignDensity
+    status: beta
+  - moduleName: raytkAbstractions
+    name: helixWarp
+    status: beta
+    summary: Warps space in a helix pattern around an axis.
+  - moduleName: raytkAbstractions
+    name: spin
+    summary: Rotation on XYZ with built-in animation.
   summary: Operators that take an input and modify it.
 
 ---

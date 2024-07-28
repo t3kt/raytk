@@ -1,0 +1,4 @@
+[submodule "addons"]
+	path = addons
+	url = https://github.com/t3kt/raytk-addons
+	branch = 0.42

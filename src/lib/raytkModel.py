@@ -236,6 +236,7 @@ class ReturnTypes(ModelObject):
 	Returntyperay: ValueOrExprT = None
 	Returntypelight: ValueOrExprT = None
 	Returntypeparticle: ValueOrExprT = None
+	Returntypevolume: ValueOrExprT = None
 
 	@classmethod
 	def fromComp(cls, specComp: COMP):
@@ -710,36 +711,6 @@ class ROPSpec(ROPSpecBase):
 @dataclass
 class RCompSpec(ROPSpecBase):
 	yaml_tag = u'!rcomp'
-
-class BuildUnitTypes:
-	full = 'full'
-	core = 'core'
-	addon = 'addon'
-
-class BuildTypes:
-	release: 'release'
-	experimental: 'experimental'
-
-@dataclass
-class BuildUnitSpec(ModelObject):
-	yaml_tag = u'!buildUnit'
-
-	name: str
-	fileName: str
-	compName: str
-	globalShortcut: str
-	unitType: str = BuildUnitTypes.full
-	buildTypes: list[str] = field(default_factory=list)
-
-	# e.g. ['filter/*', 'field/foo*']
-	include: list[str] = field(default_factory=list)
-	exclude: list[str] = field(default_factory=list)
-
-@dataclass
-class BuildUnitList(ModelObject):
-	yaml_tag = u'!buildUnits'
-
-	buildUnits: list[BuildUnitSpec] = field(default_factory=list)
 
 def _extractDatSetting(par: Par | None) -> TextData | TableData | Expr | None:
 	if par is None:

@@ -30,6 +30,7 @@ op:
     - float
     - vec4
     - Sdf
+    - Volume
     - Ray
     - Light
     - Particle
@@ -112,7 +113,7 @@ op:
     projects back into 3D space.
   thumb: assets/images/reference/operators/filter/rotate4D_thumb.png
   variables:
-  - label: pos4d
+  - label: 4D Position
     name: pos4d
 
 ---

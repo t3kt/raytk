@@ -26,9 +26,6 @@ op:
     returnTypes:
     - Sdf
     summary: The 2D shape that is extruded along the axis.
-    supportedVariableInputs:
-    - height_definition_in
-    - offset_definition_in
     supportedVariables:
     - axispos
     - normoffset
@@ -124,9 +121,9 @@ op:
   summary: Creates a 3D SDF by extruding a 2D SDF along along an axis.
   thumb: assets/images/reference/operators/convert/extrude_thumb.png
   variables:
-  - label: axispos
+  - label: Position Along Axis
     name: axispos
-  - label: normoffset
+  - label: Normalized Offset
     name: normoffset
 
 ---

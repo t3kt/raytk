@@ -153,17 +153,17 @@ op:
   status: beta
   thumb: assets/images/reference/operators/material/pbrMat_thumb.png
   variables:
-  - label: lightcolor
+  - label: Light Color
     name: lightcolor
-  - label: lightpos
+  - label: Light Position
     name: lightpos
-  - label: surfacecolor
+  - label: Surface Color (r, g, b, is set)
     name: surfacecolor
-  - label: surfaceuv
+  - label: Surface UV (u, v, w, is set)
     name: surfaceuv
-  - label: shadedlevel
+  - label: 'Shaded Level (0: full shadow, 1: none)'
     name: shadedlevel
-  - label: normal
+  - label: Surface Normal
     name: normal
 
 ---

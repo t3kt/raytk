@@ -266,6 +266,7 @@ class ROPHelp:
 	isAlpha: bool = False
 	isBeta: bool = False
 	isDeprecated: bool = False
+	moduleName: str | None = None
 	keywords: list[str] = field(default_factory=list)
 	shortcuts: list[str] = field(default_factory=list)
 	images: list[str] = field(default_factory=list)
@@ -293,6 +294,9 @@ class ROPHelp:
 
 	@classmethod
 	def fromInfoOnly(cls, info: ROPInfo):
+		moduleName = info.moduleName()
+		if moduleName == 'raytk':
+			moduleName = None
 		return cls(
 			name=info.shortName,
 			opType=info.opType,
@@ -302,6 +306,7 @@ class ROPHelp:
 			isDeprecated=info.isDeprecated,
 			keywords=list(sorted(info.keywords)),
 			shortcuts=list(sorted(info.shortcuts)),
+			moduleName=moduleName,
 		)
 
 	def formatMainText(self):
@@ -374,6 +379,7 @@ redirect_from:
 			{
 				'name': self.name,
 				'summary': summary,
+				'moduleName': self.moduleName,
 			},
 			{
 				'detail': self.detail,
@@ -449,6 +455,13 @@ class CategoryHelp:
 			ropHelp = docManager.extractForBuild(imagesFolder=imagesFolder)
 			catHelp.operators.append(ropHelp)
 		return catHelp
+
+	def mergeFrom(self, otherCategory: 'CategoryHelp'):
+		if not self.summary:
+			self.summary = otherCategory.summary
+		if not self.detail:
+			self.detail = otherCategory.detail
+		self.operators += otherCategory.operators
 
 	def formatAsList(self):
 		parts = [
@@ -881,6 +894,7 @@ class OpDocManager:
 		self._pullFromMissingParamsInto(ropHelp)
 		self._pullParamHandlingInto(ropHelp)
 		self._pullParamHandlingFromOpElementsInto(ropHelp)
+		self._pullFromMissingVariablesInto(ropHelp)
 		self._pullFromMissingInputsInto(ropHelp)
 		# this is always present except in debug code
 		if imagesFolder:

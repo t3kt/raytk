@@ -27,6 +27,7 @@ op:
     - float
     - vec4
     - Sdf
+    - Volume
     - Ray
     - Light
     - Particle
@@ -78,7 +79,7 @@ op:
     readOnlyHandling: semibaked
     regularHandling: semibaked
   variables:
-  - label: ring
+  - label: Ring Index
     name: ring
 
 ---

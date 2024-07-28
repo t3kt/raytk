@@ -2,3 +2,4 @@ names	source	handling	readOnlyHandling	conversion	enable
 Length	param	runtime	macro		op('length_definition').numRows < 2
 Radius	param	runtime	macro		op('radius_definition').numRows < 2
 Thickness	param	runtime	macro		op('thickness_definition').numRows < 2
+Axis	param	runtime	constant		1

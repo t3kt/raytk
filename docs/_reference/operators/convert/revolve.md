@@ -27,11 +27,10 @@ op:
     - Sdf
     summary: The 2D shape that is revolved around the axis.
     supportedVariableInputs:
-    - rotateField
-    - scaleField
-    - translateField
-    - radialOffsetField
-    - axisOffsetField
+    - cross_section_definition_in
+    - rotate_field_in
+    - scale_field_in
+    - translate_field_in
     supportedVariables:
     - angle
     - normangle
@@ -184,9 +183,9 @@ op:
   summary: Creates a 3D SDF by revolving a 2D cross-section SDF around an axis.
   thumb: assets/images/reference/operators/convert/revolve_thumb.png
   variables:
-  - label: angle
+  - label: Angle
     name: angle
-  - label: normangle
+  - label: Normalized Angle
     name: normangle
 
 ---

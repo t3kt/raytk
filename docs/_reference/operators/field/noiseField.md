@@ -104,6 +104,10 @@ op:
       name: wbtvalue3dderiv
     - label: Value 4D (wombat)
       name: wbtvalue4d
+    - label: Gabor 2D (iq)
+      name: gabor2d
+    - label: Gabor 2D Deriv (iq)
+      name: gabor2dDeriv
     name: Noisetype
     readOnlyHandling: baked
     regularHandling: baked

@@ -319,10 +319,12 @@ op:
     name: Enablenormalsmoothing
     readOnlyHandling: baked
     regularHandling: baked
+    summary: Whether to smooth out surface normals by sampling at larger distances.
   - label: Normal Smoothing
     name: Normalsmoothing
     readOnlyHandling: baked
     regularHandling: runtime
+    summary: How far apart to sample to calculate surface normals.
   - label: Volumetrics
     name: Headervolumetrics
   - label: Enable Secondary Ray Cast

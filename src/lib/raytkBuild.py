@@ -5,11 +5,8 @@ This should only be used in the build tool, and component BUILD scripts.
 """
 
 import itertools
-from pathlib import Path
-import shutil
 from typing import Callable
 from raytkUtil import detachTox, CategoryInfo, ROPInfo, RaytkTags, RaytkContext
-from raytkDocs import CategoryHelp, OpDocManager, ToolkitInfo
 
 # noinspection PyUnreachableCode
 if False:
@@ -28,10 +25,13 @@ class BuildContext:
 	def __init__(
 			self,
 			log: Callable,
-			experimental=False):
+			experimental=False,
+			includeModules=False,
+	):
 		self._log = log
 		self.pane = None  # type: Optional[NetworkEditor]
 		self.experimental = experimental
+		self.includeModules = includeModules
 
 	def log(self, msg, verbose=False):
 		self._log(msg, verbose=verbose)
@@ -146,10 +146,11 @@ class BuildContext:
 			processedTuplets.add(p.tupletName)
 
 	def reloadTox(self, comp: COMP):
-		if not comp or not comp.par['reinitnet'] or not comp.par['externaltox']:
+		if not comp or not comp.par['enableexternaltoxpulse'] or not comp.par['enableexternaltox']:
+			self.log(f'No tox to reload for {comp}')
 			return
 		self.log(f'Reloading {comp.par.externaltox} for {comp}')
-		comp.par.reinitnet.pulse()
+		comp.par.enableexternaltoxpulse.pulse()
 
 	def removeAlphaOps(self, category: COMP):
 		catInfo = CategoryInfo(category)
@@ -197,10 +198,11 @@ class BuildContext:
 	def cleanOpImage(self, img: COMP):
 		self.log(f'Cleaning opImage {img}')
 		overlaySwitch = img.op('useOverlaySwitch')
-		overlaySwitch.outputs[0].inputConnectors[0].connect(overlaySwitch.inputs[int(overlaySwitch.par.index)])
+		if overlaySwitch:
+			overlaySwitch.outputs[0].inputConnectors[0].connect(overlaySwitch.inputs[int(overlaySwitch.par.index)])
 		toRemove = img.ops('compImage/componentMeta') + [overlaySwitch]
-		if overlaySwitch.par.index == 0:
-			toRemove += img.ops('var__*')
+		if overlaySwitch and overlaySwitch.par.index == 0:
+			toRemove += img.ops('sel__*')
 		self.safeDestroyOps(toRemove)
 
 	def removeOpHelp(self, comp: COMP):
@@ -366,112 +368,6 @@ def _isPythonLibrary(m: OP, modName: 'str | None' = None):
 	if not isinstance(m, textDAT) or not RaytkTags.fileSync.isOn(m):
 		return False
 	return modName is None or m.name == modName
-
-class DocProcessor:
-	"""
-	Tool used to extract and process documentation for ROPs.
-	"""
-	def __init__(
-			self,
-			context: 'BuildContext',
-			dataFolder: 'Union[str, Path]',
-			referenceFolder: 'Union[str, Path]',
-			imagesFolder: 'Union[str, Path]',
-	):
-		self.context = context
-		self.dataFolder = Path(dataFolder)
-		self.referenceFolder = Path(referenceFolder)
-		self.imagesFolder = Path(imagesFolder)
-		self.toolkit = RaytkContext().toolkit()
-
-	def clearPreviousDocs(self):
-		if not self.referenceFolder.exists():
-			self.context.log(f'No previous docs to clear in {self.referenceFolder}')
-			return
-		self.context.log(f'Clearing docs from {self.referenceFolder}')
-		paths = list(sorted(self.referenceFolder.iterdir()))
-		for path in paths:
-			self.context.log(f'Clearing {path}')
-			shutil.rmtree(path)
-
-	def processOp(self, rop: COMP):
-		self.context.log(f'Processing docs for op {rop}')
-		ropInfo = ROPInfo(rop)
-		if not ropInfo or not ropInfo.isMaster:
-			self.context.log(f'Invalid rop for docs {rop}')
-			return
-		docManager = OpDocManager(ropInfo)
-		docManager.setUpMissingParts()
-		docManager.pushToParams()
-		docText = docManager.formatForBuild(
-			imagesFolder=self.imagesFolder)
-		self._writeDocs(
-			Path(self.toolkit.relativePath(rop).replace('./', '') + '.md'),
-			docText)
-
-	def _writeDocs(self, relativePath: 'Path', docText: str):
-		outFile = self.referenceFolder / relativePath
-		outFile.parent.mkdir(parents=True, exist_ok=True)
-		self.context.log(f'Writing docs to {outFile}')
-		with outFile.open('w') as f:
-			f.write(docText)
-
-	def processOpCategory(self, categoryOp: COMP):
-		self.context.log(f'Processing docs for category {categoryOp}')
-		categoryInfo = CategoryInfo(categoryOp)
-		catHelp = CategoryHelp.extractFromComp(categoryOp, self.imagesFolder)
-		if not catHelp.operators:
-			self.context.log(f'Skipping docs for empty category {categoryOp}')
-			return
-		dat = categoryInfo.helpDAT
-		docText = catHelp.formatAsList()
-		if not dat:
-			dat = categoryOp.create(textDAT, 'help')
-		dat.text = docText
-		docText = catHelp.formatAsListPage()
-		self._writeDocs(
-			Path(self.toolkit.relativePath(categoryOp).replace('./', '') + '/index.md'),
-			docText)
-
-	def writeCategoryListPage(self, categories: list[COMP]):
-		self.context.log('Writing category list page')
-		docText = '''---
-layout: page
-title: Operators
-nav_order: 3
-has_children: true
-has_toc: false
-permalink: /reference/operators/
----
-
-# Operator Categories
-'''
-		categoryInfos = [
-			CategoryInfo(o)
-			for o in sorted(categories, key=lambda o: o.name)
-		]
-		docText += '\n'.join([
-			f'* [{categoryInfo.categoryName.capitalize()}]({categoryInfo.categoryName}/) - {_extractSummary(categoryInfo.helpDAT)}'
-			for categoryInfo in categoryInfos
-		])
-		self._writeDocs(Path('operators/index.md'), docText)
-
-	def writeToolkitDocData(self):
-		self.context.log('Write toolkit data file')
-		info = ToolkitInfo(toolkitVersion=str(RaytkContext().toolkitVersion()))
-		text = info.formatAsDataFile()
-		self.dataFolder.mkdir(parents=True, exist_ok=True)
-		outFile = self.dataFolder / 'toolkit.yaml'
-		with outFile.open('w') as f:
-			f.write(text)
-
-def _extractSummary(dat: DAT | None):
-	if not dat or not dat.text:
-		return ''
-	for block in dat.text.split('\n\n'):
-		if block and not block.startswith('#'):
-			return block
-	return ''
 
 def chunked_iterable(iterable, size):
 	it = iter(iterable)

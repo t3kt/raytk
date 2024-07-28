@@ -515,10 +515,6 @@ void main()
 			#ifdef OUTPUT_COLOR
 			{
 				prepareLights(p, matCtx);
-				LightContext lightCtx = createLightContext(res, matCtx.normal);
-				#ifdef RAYTK_GLOBAL_POS_IN_CONTEXT
-				lightCtx.globalPos = matCtx.globalPos;
-				#endif
 				vec4 col;
 				#if defined(RAYTK_USE_REFLECTION) && defined(THIS_Enablereflection)
 				matCtx.reflectColor = getReflectionColor(matCtx, p);

@@ -53,6 +53,7 @@ op:
     - float
     - vec4
     - Sdf
+    - Volume
     - Ray
     - Light
     - Particle
@@ -257,10 +258,10 @@ op:
   summary: Applies one or more transform operators sequentially, to coordinates, field
     values, etc, with support for looping.
   variables:
-  - label: step
+  - label: Step Index
     name: step
     summary: The current loop index, 0, 1, 2, etc.
-  - label: normstep
+  - label: Normalized Step (0..1)
     name: normstep
     summary: The current loop index, scaled to a 0..1 range.
 

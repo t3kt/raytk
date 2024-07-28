@@ -27,6 +27,10 @@ layout: page
 	<div class="label status-{{ page.op.status }}">{{ page.op.status }}</div>
 {% endif %}
 
+{% if page.op.moduleName %}
+<a class="label module-name" href="/raytk/guide/addons/">{{ page.op.moduleName }}</a>
+{% endif %}
+
 {% if page.op.shortcuts %}
 <div class="shortcuts">
 	<div class="shortcuts-label">Shortcuts:</div>

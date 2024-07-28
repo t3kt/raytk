@@ -29,12 +29,13 @@ op:
     - float
     - vec4
     - Sdf
+    - Volume
     - Ray
     - Light
     - Particle
     supportedVariableInputs:
-    - rotateField
-    - pivotField
+    - rotate_definition_in
+    - pivot_definition_in
   - contextTypes:
     - Context
     - MaterialContext

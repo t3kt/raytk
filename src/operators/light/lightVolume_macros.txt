@@ -1,1 +1,2 @@
 parent().par.Enableshadow	'RAYTK_USE_SHADOW'	
+parent().par.Usedensity	'RAYTK_USE_DENSITY'	

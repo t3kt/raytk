@@ -3,6 +3,7 @@ Common utilities for working with the toolkit and related ops.
 This can be included in runtime tools.
 """
 from functools import total_ordering
+from pathlib import Path
 import re
 
 # noinspection PyUnreachableCode
@@ -112,6 +113,15 @@ class OpDefParsT(_OpMetaPars):
 
 	def __getitem__(self, item) -> Par | None:
 		return getattr(self, item)
+
+class ModuleMetaParsT:
+	Modulename: 'StrParamT'
+	Optable: 'DatParamT'
+	Operatorsroot: 'CompParamT'
+	Operatorsfolder: 'StrParamT'
+	Testsfolder: 'StrParamT'
+	Raytkopversion: 'IntParamT'
+	Experimentalbuild: 'BoolParamT'
 
 class ROPInfo:
 	"""
@@ -297,6 +307,13 @@ class ROPInfo:
 	def isMaster(self):
 		if not self.rop:
 			return False
+		module = getattr(self.rop.parent, 'raytkModule', None)
+		if module:
+			modDef = module.op('moduleDefinition')
+			operators = modDef and op(modDef.par['Operatorsroot'])
+			if operators and operators.path in self.rop.parent().path:
+				return True
+			return False
 		toolkit = getattr(self.rop.parent, 'raytk', None)
 		if not toolkit:
 			return False
@@ -456,6 +473,20 @@ class ROPInfo:
 		if self.isRComp:
 			return RaytkTags.raytkComp.name
 
+	def moduleRoot(self):
+		if not self.isMaster:
+			return None
+		module = getattr(self.rop.parent, 'raytkModule', None)
+		if module:
+			return module
+		return getattr(self.rop.parent, 'raytk', None)
+
+	def moduleName(self):
+		moduleRoot = self.moduleRoot()
+		if not moduleRoot:
+			return None
+		return ModuleInfo(moduleRoot).moduleName
+
 class _InputHandlerParsT:
 	Source: 'OPParamT'
 	Required: 'BoolParamT'
@@ -584,6 +615,47 @@ class CategoryInfo:
 	@property
 	def templateComp(self) -> COMP | None:
 		return self.category.op('__template')
+
+class ModuleInfo:
+	module: COMP | None
+	modDef: COMP | None
+	modDefPar: 'ParCollection | ModuleMetaParsT | None'
+
+	def __init__(self, o: OP | str | Cell, modDef: COMP | None = None):
+		o = op(o)
+		if not o:
+			self.module = None
+			self.modDef = None
+			self.modDefPar = None
+			return
+		self.module = o
+		self.modDef = modDef or o.op('moduleDefinition')
+		self.modDefPar = self.modDef and self.modDef.par
+
+	def __bool__(self):
+		return bool(self.modDef)
+
+	@property
+	def moduleName(self):
+		return self.modDefPar.Modulename.eval() if self else None
+
+	def operatorsRoot(self) -> COMP | None:
+		if not self:
+			return None
+		return self.modDefPar.Operatorsroot.eval()
+
+	def allCategories(self):
+		return [
+			child
+			for child in self.operatorsRoot().children
+			if child.isCOMP
+		]
+
+	def categoryInfo(self, category: str) -> 'CategoryInfo | None':
+		comp = self.operatorsRoot().op(category)
+		if comp:
+			return CategoryInfo(comp)
+
 
 def isROP(o: OP):
 	return bool(o) and o.isCOMP and RaytkTags.raytkOP.isOn(o)
@@ -842,27 +914,13 @@ def navigateTo(o: OP | COMP, name: str | None = None, popup=False, goInto=True) 
 		pane.homeSelected(zoom=False)
 	return pane
 
-class VisualizerTypes:
-	none = 'none'
-	field = 'field'
-	render2d = 'render2d'
-	render3d = 'render3d'
-	functionGraph = 'functionGraph'
-
-	values = [
-		none,
-		field,
-		render2d,
-		render3d,
-		functionGraph,
-	]
-
 class ReturnTypes:
 	Sdf = 'Sdf'
 	vec4 = 'vec4'
 	float = 'float'
 	Ray = 'Ray'
 	Light = 'Light'
+	Volume = 'Volume'
 
 	values = [
 		Sdf,
@@ -870,6 +928,7 @@ class ReturnTypes:
 		float,
 		Ray,
 		Light,
+		Volume,
 	]
 
 class CoordTypes:
@@ -925,6 +984,12 @@ class RaytkContext:
 		if hasattr(op, 'raytk'):
 			return op.raytk
 
+	def moduleRoot(self):
+		return self.toolkit()
+
+	def moduleName(self):
+		return 'raytk'
+
 	def toolkitVersion(self):
 		toolkit = self.toolkit()
 		par = toolkit.par['Raytkversion']
@@ -941,6 +1006,15 @@ class RaytkContext:
 	def operatorsRoot(self):
 		return self.toolkit().op('operators')
 
+	def operatorsFolder(self):
+		operatorsRoot = self.operatorsRoot()
+		if not operatorsRoot:
+			return None
+		tox = operatorsRoot.par.externaltox.eval()
+		if not tox:
+			return None
+		return Path(tox).parent.as_posix()
+
 	@staticmethod
 	def activeEditor():
 		return getActiveEditor()
@@ -948,38 +1022,6 @@ class RaytkContext:
 	def opTable(self) -> DAT | None:
 		toolkit = self.toolkit()
 		return toolkit and toolkit.op('opTable')
-
-	def opHelpTable(self) -> DAT | None:
-		toolkit = self.toolkit()
-		return toolkit and toolkit.op('opHelpTable')
-
-	@staticmethod
-	def currentROPs(
-			primaryOnly=False,
-			exclude: 'Callable[[COMP], None]' = None,
-			masterOnly=False,
-	):
-		pane = getActiveEditor()
-		if not pane:
-			return []
-		comp = pane.owner
-		if not comp:
-			return []
-		if exclude and exclude(comp):
-			return []
-		rop = _getROP(comp) or _getROP(comp.currentChild)
-		if masterOnly and not _isMaster(rop):
-			rop = None
-		if rop and primaryOnly:
-			return [rop]
-		rops = [rop] if rop else []
-		for child in comp.selectedChildren:
-			rop = _getROP(child, checkParents=False)
-			if masterOnly and not _isMaster(rop):
-				continue
-			if rop and rop not in rops:
-				rops.append(rop)
-		return rops
 
 	def allCategories(self):
 		return [
@@ -1007,9 +1049,41 @@ class RaytkContext:
 		return toolkit and toolkit.op('./libraryImage')
 
 	def categoryInfo(self, category: str) -> 'CategoryInfo | None':
-		comp = self.operatorsRoot().op('./' + category)
+		comp = self.operatorsRoot().op(category)
 		if comp:
 			return CategoryInfo(comp)
+
+class RaytkModuleContext(RaytkContext):
+	module: COMP
+	modInfo: ModuleInfo
+
+	def __init__(self, module: COMP):
+		self.module = module
+		self.modInfo = ModuleInfo(module)
+
+	def moduleRoot(self):
+		return self.module
+
+	def moduleName(self):
+		return self.modInfo.moduleName
+
+	def moduleDefinition(self):
+		return self.modInfo.modDef
+
+	def operatorsRoot(self):
+		return self.modInfo.operatorsRoot()
+
+	def operatorsFolder(self):
+		folder = self.modInfo.modDefPar.Operatorsfolder.eval()
+		if folder:
+			return folder
+		return super().operatorsFolder()
+
+	def experimentalMode(self):
+		return self.modInfo.modDefPar.Experimentalbuild.eval()
+
+	def opTable(self) -> DAT | None:
+		return self.modInfo.modDefPar.Optable.eval()
 
 def _isMaster(o: COMP):
 	return o and o.par['clone'] is not None and (o.par.clone.eval() or o.par.clone.expr)

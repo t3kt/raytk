@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.field.polarCoordField
-  opVersion: '11'
+  opVersion: '12'
   opStatus: default
 opDef: !def
   enable: true
@@ -30,6 +30,16 @@ opDef: !def
     file: src/operators/field/polarCoordField.md
     name: help
   displayCategory: Spatial Field
+inputs:
+- !input
+  Localalias: coordField
+  coordType: !coordT
+    Allcoordtype: true
+  contextType: !contextT
+    Allcontexttype: true
+  returnType: !returnT
+    Returntypefloat: true
+    Returntypevec4: true
 elements:
 - !opElement
   name: codeSwitcher_Format

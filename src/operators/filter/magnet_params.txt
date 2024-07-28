@@ -1,4 +1,8 @@
 names	source	handling	readOnlyHandling	conversion	enable
-Center[xyz] Translate[xyz] Scale[xyz] Uniformscale Amount Radius Fade	param	runtime	macro		1
+Center[xyz]	param	runtime	macro		op('magnet_definition')[1, 'returnType'] != 'vec4'
+Amount	param	runtime	macro		op('amount_definition').numRows < 2
+Radius	param	runtime	macro		op('radius_definition').numRows < 2
+Fade	param	runtime	macro		op('fade_definition').numRows < 2
+Translate[xyz] Scale[xyz] Uniformscale	param	runtime	macro		1
 Rotate[xyz]	param	runtime	macro	angle	1
 Scaletype	param	constant			1

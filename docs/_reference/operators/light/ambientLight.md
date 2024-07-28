@@ -49,7 +49,7 @@ op:
   status: beta
   summary: Ambient light source that doesn't come from a particular location.
   variables:
-  - label: lightdir
+  - label: Light Direction
     name: lightdir
     summary: Direction that the light is from the current position on a surface that's
       being shaded. This will always be directly in front of whatever point is being

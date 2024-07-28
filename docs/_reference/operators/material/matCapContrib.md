@@ -50,7 +50,6 @@ op:
     name: Enableshadow
     readOnlyHandling: baked
     regularHandling: baked
-  status: beta
   summary: Shading using a MatCap (Material Capture) image to fake lighting and reflections.
 
 ---

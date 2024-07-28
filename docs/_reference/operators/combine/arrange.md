@@ -289,7 +289,7 @@ op:
   summary: Combines multiple SDFs, with a different position for each.
   thumb: assets/images/reference/operators/combine/arrange_thumb.png
   variables:
-  - label: index
+  - label: Index
     name: index
 
 ---

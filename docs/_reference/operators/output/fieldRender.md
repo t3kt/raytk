@@ -109,7 +109,6 @@ op:
     name: Shaderbuilderconfig
   - label: Customize Shader Config
     name: Customizeshaderconfig
-  status: beta
   thumb: assets/images/reference/operators/output/fieldRender_thumb.png
 
 ---

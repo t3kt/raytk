@@ -87,13 +87,13 @@ op:
     regularHandling: runtime
   thumb: assets/images/reference/operators/field/texture3dField_thumb.png
   variables:
-  - label: res
+  - label: Resolution
     name: res
-  - label: aspect
+  - label: Aspect Ratio
     name: aspect
-  - label: depth
+  - label: Depth
     name: depth
-  - label: firstslice
+  - label: First Slice
     name: firstslice
 
 ---

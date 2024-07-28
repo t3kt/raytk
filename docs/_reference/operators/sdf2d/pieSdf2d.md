@@ -81,7 +81,7 @@ op:
   summary: SDF for a 2D pie-slice shape.
   thumb: assets/images/reference/operators/sdf2d/pieSdf2d_thumb.png
   variables:
-  - label: normangle
+  - label: Normalized Angle (0..1)
     name: normangle
 
 ---

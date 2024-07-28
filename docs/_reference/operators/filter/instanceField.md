@@ -71,9 +71,9 @@ op:
       values like subtraction.
   summary: Repeats an input field multiple times and combines the results.
   variables:
-  - label: index
+  - label: Index
     name: index
-  - label: normindex
+  - label: Normalized Index (0..1)
     name: normindex
 
 ---

@@ -238,23 +238,23 @@ op:
   - mm
   summary: A material that is composed of one or more shading elements.
   variables:
-  - label: lightcolor
+  - label: Light Color
     name: lightcolor
-  - label: lightpos
+  - label: Light Position
     name: lightpos
-  - label: surfacecolor
+  - label: Surface Color (r, g, b, is set)
     name: surfacecolor
-  - label: surfaceuv
+  - label: Surface UV (u, v, w, is set)
     name: surfaceuv
-  - label: ao
+  - label: Ambient Occlusion
     name: ao
-  - label: shadedlevel
+  - label: 'Shaded Level (0: full shadow, 1: none)'
     name: shadedlevel
-  - label: normal
+  - label: Surface Normal
     name: normal
-  - label: reflectcolor
+  - label: Reflection Color
     name: reflectcolor
-  - label: sdf
+  - label: SDF Surface
     name: sdf
 
 ---

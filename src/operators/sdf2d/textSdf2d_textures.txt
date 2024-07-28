@@ -1,2 +1,3 @@
 name	path	type
 'data'	op('dataTexture')	'2d'
+'chars'	op('charTexture') if not parent().par.Optimize else ''	'2d'

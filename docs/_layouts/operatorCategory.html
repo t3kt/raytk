@@ -34,6 +34,9 @@ layout: page
 				{% if op.status %}
 					<span class="label status-{{ op.status }}">{{ op.status }}</span>
 				{% endif %}
+				{% if op.moduleName %}
+					<a href="/raytk/guide/addons/" class="label module-name">{{ op.moduleName }}</a>
+				{% endif %}
 			</td>
 			<td class="cat-op-desc-cell">
 				<span class="op-desc">{{ op.summary }}</span>

@@ -198,15 +198,15 @@ op:
   status: beta
   thumb: assets/images/reference/operators/pattern/truchetPattern_thumb.png
   variables:
-  - label: cell
+  - label: Cell ID
     name: cell
-  - label: contour
+  - label: Contour
     name: contour
-  - label: normangle
+  - label: Normalized Angle (0..1)
     name: normangle
-  - label: depth
+  - label: Depth
     name: depth
-  - label: edgedist
+  - label: Edge Distance
     name: edgedist
 
 ---

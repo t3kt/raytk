@@ -78,7 +78,7 @@ op:
     regularHandling: runtime
   thumb: assets/images/reference/operators/sdf2d/vesicaSegmentSdf2d_thumb.png
   variables:
-  - label: normoffset
+  - label: Normalized Offset (0..1)
     name: normoffset
 
 ---

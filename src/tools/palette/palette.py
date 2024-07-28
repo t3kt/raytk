@@ -54,6 +54,30 @@ class Palette:
 		)
 		ext.opPicker.Resetstate()
 
+	@staticmethod
+	def buildModuleTable(dat: scriptDAT):
+		dat.clear()
+		dat.appendRow(['name', 'root'])
+		dat.appendRow(['raytk', op.raytk])
+		modules = root.findChildren(type=baseCOMP, tags=['raytkModule'])
+		for module in modules:
+			modDef = module.op('moduleDefinition')
+			name = modDef.par['Modulename'] or ''
+			if name:
+				dat.appendRow([name, module])
+
+	@staticmethod
+	def prepareOpTable(dat: scriptDAT, mergedOpTable: DAT, moduleTable: DAT):
+		dat.copy(mergedOpTable)
+		for i in range(1, dat.numRows):
+			moduleName = dat[i, 'module'].val
+			path = dat[i, 'path'].val
+			prefix = '/raytkAddons/' + moduleName + '/'
+			moduleRoot = moduleTable[moduleName, 'root']
+			if moduleRoot and path.startswith(prefix):
+				path = moduleRoot.val + '/' + path[len(prefix):]
+				dat[i, 'path'] = path
+
 	@property
 	def _develMode(self):
 		return bool(self.ownerComp.par.Devel)
@@ -64,6 +88,10 @@ class Palette:
 
 	def Show(self, _=None):
 		self.open()
+
+	@staticmethod
+	def SetAllCategoriesExpansion(expanded: bool):
+		ext.opPicker.SetAllCategoriesExpansion(expanded)
 
 	def open(self):
 		self._resetCloseTimer()
@@ -111,7 +139,7 @@ class Palette:
 			self._startCloseTimer()
 
 	def _resetState(self):
-		for finder in self.ownerComp.ops('findOpTables', 'findOpHelpTables'):
+		for finder in self.ownerComp.ops('findOpTables'):
 			finder.par.cookpulse.pulse()
 		ext.opPicker.Resetstate()
 		self.isOpen.val = False
@@ -284,12 +312,21 @@ class Palette:
 		print(self.ownerComp, msg)
 		ui.status = msg
 
-	@staticmethod
-	def _getTemplate(path: str):
-		if not path:
+	def _getPathForOpType(self, opType: str):
+		cell = self.ownerComp.op('pathsByOpType')[opType, 'path']
+		return cell.val if cell else None
+
+	def _getTemplate(self, pathOrOpType: str):
+		if not pathOrOpType:
 			return
-		if path.startswith('raytk.operators.'):
-			path = '/' + path.replace('.', '/')
+		if '.' in pathOrOpType:
+			path = self._getPathForOpType(pathOrOpType) or pathOrOpType
+		else:
+			path = pathOrOpType
+		o = op(path)
+		if o:
+			return o
+		# TODO: is the rest of this necessary anymore?
 		if not path.startswith('/raytk/'):
 			return op(path)
 		context = RaytkContext()

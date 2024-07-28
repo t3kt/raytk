@@ -56,7 +56,6 @@ op:
     readOnlyHandling: baked
     regularHandling: baked
     summary: Whether shadows should be applied to the color.
-  status: beta
   summary: Shading element that produces a rainbow pattern around the edges of shapes,
     depending on which direction the surface is facing (the surface normal).
   thumb: assets/images/reference/operators/material/iridescenceContrib_thumb.png

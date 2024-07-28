@@ -21,3 +21,5 @@ wbtvalue2dderiv	Value 2D Deriv (wombat)	Value2D_Deriv	res = vec4(Value2D_Deriv(q
 wbtvalue3d	Value 3D (wombat)	Value3D	res = Value3D(q);	vec3	3	float	wombat_Value3D	
 wbtvalue3dderiv	Value 3D Deriv (wombat)	Value3D_Deriv	res = Value3D_Deriv(q);	vec3	3	vec4	wombat_Value3D_Deriv	
 wbtvalue4d	Value 4D (wombat)	Value4D	res = Value4D(q);	vec4	4	float	wombat_Value4D	
+gabor2d	Gabor 2D (iq)		res = gabor_wave(q).x;	vec2	2	float	gabor	
+gabor2dDeriv	Gabor 2D Deriv (iq)		res = vec4(gabor_wave(q), 1);	vec2	2	vec4	gabor	

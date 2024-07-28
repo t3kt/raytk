@@ -1,7 +1,6 @@
-import json
+from raytkActions import *
 from raytkUtil import ROPInfo, mergeDicts
 from typing import Tuple
-from editorToolsCommon import *
 
 # noinspection PyUnreachableCode
 if False:
@@ -28,7 +27,7 @@ def _createAppendNull(text: str):
 		ui.undo.endBlock()
 
 	def isValid(ctx: ActionContext) -> bool:
-		return bool(ctx.primaryOp and ctx.primaryOp.outputConnectors)
+		return bool(ctx.primaryOp and ctx.primaryOp.outputConnectors and not getattr(ctx.primaryOp, 'isPrivate', False))
 
 	return SimpleAction(text, isValid, execute)
 
@@ -99,7 +98,7 @@ def _createVarRefGroup(text: str):
 	def isValid(ctx: ActionContext) -> bool:
 		return bool(getVariableObjs(ctx))
 
-	def getActions(ctx: ActionContext) -> List[Action]:
+	def getActions(ctx: ActionContext) -> list[Action]:
 		actions = []
 		for variableObj in getVariableObjs(ctx):
 			dataType = variableObj.dataType
@@ -135,7 +134,7 @@ def _createAttrRefGroup(text: str):
 			o.par.Attributename.readOnly = True
 			o.par.Datatype.readOnly = True
 	select = RopSelect(test=test)
-	def getActions(ctx: ActionContext) -> List[Action]:
+	def getActions(ctx: ActionContext) -> list[Action]:
 		info = ROPInfo(ctx.primaryOp)
 		if not info.isROP or not info.opDefExt:
 			return []
@@ -183,7 +182,7 @@ def _createRenderSelGroup(text: str):
 		table = opState.info.outputBufferTable
 		return bool(table and table.numRows > 1)
 
-	def getActions(ctx: ActionContext) -> List[Action]:
+	def getActions(ctx: ActionContext) -> list[Action]:
 		opState = EditorROPState(ctx.primaryOp)
 		if not opState:
 			return []
@@ -317,7 +316,7 @@ def _createAnimateParamAction(
 	return SimpleAction(text, isValid, execute)
 
 def _createAnimateParamsGroup(text: str, ropType: str, nameSuffix: str, params: dict | None = None):
-	def getActions(ctx: ActionContext) -> List[Action]:
+	def getActions(ctx: ActionContext) -> list[Action]:
 		o = ctx.primaryOp
 		if not o:
 			return []
@@ -397,33 +396,11 @@ def _createCustomizeShaderConfigAction(text: str):
 			par.pulse()
 	return SimpleAction(text, isValid, execute)
 
-def _createTableBasedGroup(
-		text: str, table: DAT,
-		ropType: str,
-		paramName: str,
-		select: 'RopSelect',
-		attach: 'OpAttach',
-		params: dict | None = None,
-):
-	return GroupImpl(
-		text,
-		select,
-		[
-			ActionImpl(
-				str(table[i, 'label']),
-				ropType=ropType,
-				select=select,
-				attach=attach,
-				params=mergeDicts({paramName: str(table[i, 'name'])}, params),
-			)
-			for i in range(1, table.numRows)
-		])
-
 def _createTypeListGroup(
 		text: str,
-		typesAndLabels: List[Tuple[str, str]],
-		select: 'RopSelect',
-		attach: 'OpAttach',
+		typesAndLabels: list[Tuple[str, str]],
+		select: RopSelect,
+		attach: OpAttach,
 ):
 	return GroupImpl(
 		text,
@@ -525,7 +502,7 @@ def _copyParState(fromPar: Par, toPar: Par):
 	toPar.mode = fromPar.mode
 	toPar.readOnly = fromPar.readOnly
 
-def _createGoToAction(text: str, getTargets: Callable[[ActionContext], List[OP]]):
+def _createGoToAction(text: str, getTargets: Callable[[ActionContext], list[OP]]):
 	def isValid(ctx: ActionContext):
 		return bool(getTargets(ctx))
 	def execute(ctx: ActionContext):
@@ -595,7 +572,7 @@ def _connsEqual(c1: 'Connector', c2: 'Connector'):
 		return False
 	return c1.owner == c2.owner and c1.index == c2.index and c1.isInput == c2.isInput
 
-def _connIsIn(cFind: 'Connector', cList: 'List[Connector]'):
+def _connIsIn(cFind: Connector, cList: list[Connector]):
 	for c in cList:
 		if _connsEqual(cFind, c):
 			return True
@@ -623,7 +600,7 @@ def _createSwapOrderAction(text):
 		fromOp.nodeX, fromOp.nodeY = pos2
 		toOp.nodeX, toOp.nodeY = pos1
 		return True
-	def processSelection(rops: 'List[OP]', testOnly: bool):
+	def processSelection(rops: list[OP], testOnly: bool):
 		if len(rops) != 2:
 			return False
 		result = processPair(rops[0], rops[1], testOnly)
@@ -723,9 +700,11 @@ class _RopTypes:
 	defineAttribute = 'raytk.operators.utility.defineAttribute'
 	assignAttribute = 'raytk.operators.filter.assignAttribute'
 	getAttribute = 'raytk.operators.utility.getAttribute'
+	texture3dRender = 'raytkVolumes.operators.output.texture3dRender'
+	volumetricRaymarchRender3D = 'raytkVolumes.operators.output.volumetricRaymarchRender3D'
 
-def createActionManager():
-	manager = ActionManager(
+def getActions():
+	return [
 		_createAppendNull('Append Null'),
 		SimpleAction(
 			'Inspect',
@@ -747,7 +726,7 @@ def createActionManager():
 			select=RopSelect(returnTypes=['float']),
 			attach=AttachOutFromExisting(),
 		),
-		_createTableBasedGroup(
+		createTableBasedGroup(
 			'To Vector Part', op('vectorToFloatParts'), _RopTypes.vectorToFloat, 'Usepart',
 			select=RopSelect(returnTypes=['vec4']),
 			attach=AttachOutFromExisting(),
@@ -777,7 +756,7 @@ def createActionManager():
 			select=RopSelect(returnTypes=['float']),
 			attach=AttachOutFromExisting(),
 		),
-		_createTableBasedGroup(
+		createTableBasedGroup(
 			'Apply Wave',
 			table=op('waveFunctions'),
 			ropType='raytk.operators.field.waveField',
@@ -786,12 +765,12 @@ def createActionManager():
 			attach=AttachOutFromExisting(),
 		),
 		_createSimplifyRescaleFloatAction('Simplify Rescale Float'),
-		_createTableBasedGroup(
+		createTableBasedGroup(
 			'Project Plane', op('projectPlanes'), _RopTypes.projectPlane, 'Plane',
 			select=RopSelect(coordTypes=['vec2'], excludeOutputOps=True),
 			attach=AttachOutFromExisting(),
 		),
-		_createTableBasedGroup(
+		createTableBasedGroup(
 			'Cross Section', op('crossSectionAxes'), _RopTypes.crossSection, 'Axes',
 			select=RopSelect(coordTypes=['vec3'], excludeOutputOps=True),
 			attach=AttachOutFromExisting(),
@@ -828,7 +807,12 @@ def createActionManager():
 				('raytk.operators.camera.linkedCamera', 'Linked Camera'),
 				('raytk.operators.camera.lookAtCamera', 'Look At Camera'),
 			],
-			select=RopSelect(ropTypes=[_RopTypes.raymarchRender3d, _RopTypes.pointMapRender]),
+			select=RopSelect(ropTypes=[
+				_RopTypes.raymarchRender3d,
+				_RopTypes.pointMapRender,
+				_RopTypes.texture3dRender,
+				_RopTypes.volumetricRaymarchRender3D,
+			]),
 			attach=AttachIntoExisting(inputIndex=1),
 		),
 		_createTypeListGroup(
@@ -841,7 +825,12 @@ def createActionManager():
 				('raytk.operators.light.pointLight', 'Point Light'),
 				('raytk.operators.light.spotLight', 'Spot Light'),
 			],
-			select=RopSelect(ropTypes=[_RopTypes.raymarchRender3d, _RopTypes.pointMapRender]),
+			select=RopSelect(ropTypes=[
+				_RopTypes.raymarchRender3d,
+				_RopTypes.pointMapRender,
+				_RopTypes.texture3dRender,
+				_RopTypes.volumetricRaymarchRender3D,
+			]),
 			attach=AttachIntoExisting(inputIndex=2),
 		),
 		_createTypeListGroup(
@@ -893,7 +882,7 @@ def createActionManager():
 			select=RopSelect(coordTypes=['vec2'], returnTypes=['Sdf'], excludeOutputOps=True),
 			attach=AttachOutFromExisting(),
 		),
-		_createTableBasedGroup(
+		createTableBasedGroup(
 			'Combine SDFs',
 			ropType='raytk.operators.combine.combine',
 			paramName='Combine',
@@ -902,7 +891,7 @@ def createActionManager():
 				returnTypes=['Sdf'],
 				multi=True, minCount=2, maxCount=2, excludeOutputOps=True),
 			attach=AttachOutFromExisting()),
-		_createTableBasedGroup(
+		createTableBasedGroup(
 			'Arrange SDFs',
 			ropType='raytk.operators.combine.arrange',
 			paramName='Combine',
@@ -922,7 +911,7 @@ def createActionManager():
 			select=RopSelect(multi=True, minCount=2, maxCount=None, excludeOutputOps=True),
 			attach=AttachOutFromExisting(),
 			params={'Blend': True}),
-		_createTableBasedGroup(
+		createTableBasedGroup(
 			'Combine Fields',
 			ropType='raytk.operators.combine.combineFields',
 			paramName='Operation',
@@ -931,7 +920,7 @@ def createActionManager():
 				returnTypes=['float', 'vec4'],
 				multi=True, minCount=True, maxCount=None),
 			attach=AttachOutFromExisting()),
-		_createTableBasedGroup(
+		createTableBasedGroup(
 			'Composite Fields',
 			ropType='raytk.operators.combine.compositeFields',
 			paramName='Blendmode',
@@ -940,7 +929,7 @@ def createActionManager():
 				returnTypes=['vec4'],
 				multi=True, minCount=2, maxCount=None),
 			attach=AttachOutFromExisting()),
-		_createTableBasedGroup(
+		createTableBasedGroup(
 			'Mix Fields',
 			ropType='raytk.operators.combine.mixFields',
 			paramName='Combinemode',
@@ -950,7 +939,7 @@ def createActionManager():
 				multi=True, minCount=2, maxCount=None),
 			params={'Returntype': 'vec4'},
 			attach=AttachOutFromExisting()),
-		_createTableBasedGroup(
+		createTableBasedGroup(
 			'Mix Fields',
 			ropType='raytk.operators.combine.mixFields',
 			paramName='Combinemode',
@@ -1028,5 +1017,4 @@ def createActionManager():
 			]),
 		_createAttrRefGroup('Reference Attribute'),
 		_createSimplifyRotateAction('Simplify Rotate'),
-	)
-	return manager
+	]

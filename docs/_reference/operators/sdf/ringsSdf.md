@@ -136,13 +136,13 @@ op:
     readOnlyHandling: baked
     regularHandling: runtime
   variables:
-  - label: angle
+  - label: Angle
     name: angle
-  - label: normangle
+  - label: Normalized Angle
     name: normangle
-  - label: axispos
+  - label: Position Along Axis
     name: axispos
-  - label: ring
+  - label: Ring Index
     name: ring
 
 ---

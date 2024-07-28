@@ -77,8 +77,6 @@ op:
     name: Coolcolor
     readOnlyHandling: baked
     regularHandling: runtime
-  - label: Enable
-    name: Enable
   summary: A material element that uses the Gooch shading model.
 
 ---

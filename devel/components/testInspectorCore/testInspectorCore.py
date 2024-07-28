@@ -190,7 +190,7 @@ class TestInspectorCore:
 		if not sourceFolder.endswith('/'):
 			sourceFolder += '/'
 		tox = str(scope.par.externaltox)
-		if not tox.startswith(caseRootFolder) or not tox.endswith('_test.tox'):
+		if not tox.endswith('_test.tox'):
 			print(self.ownerComp, f'Tox does not support snapshots: {tox!r}')
 			return
 		for o in scope.children:

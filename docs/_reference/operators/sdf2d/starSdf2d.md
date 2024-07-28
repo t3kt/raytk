@@ -102,7 +102,7 @@ op:
   summary: SDF for a 2D star shape.
   thumb: assets/images/reference/operators/sdf2d/starSdf2d_thumb.png
   variables:
-  - label: normangle
+  - label: Normalized Angle (0..1)
     name: normangle
 
 ---

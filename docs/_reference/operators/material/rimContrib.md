@@ -104,7 +104,7 @@ op:
     viewed from.
   thumb: assets/images/reference/operators/material/rimContrib_thumb.png
   variables:
-  - label: normangle
+  - label: Normalized Surface Angle (0..1)
     name: normangle
 
 ---

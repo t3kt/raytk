@@ -25,6 +25,12 @@ vec2 wave_rramp(vec2 x) { return vec2(1.) - fract(x); }
 vec3 wave_rramp(vec3 x) { return vec3(1.) - fract(x); }
 vec4 wave_rramp(vec4 x) { return vec4(1.) - fract(x); }
 
+// https://www.shadertoy.com/view/lXKXDw
+float wave_smoothSquare(float x, float e) { x*=2; return sin(x*PI)/sqrt(pow(sin(x*PI),2.)+e); }
+vec2 wave_smoothSquare(vec2 x, float e) { x*=2; return sin(x*PI)/sqrt(pow(sin(x*PI),vec2(2.))+vec2(e)); }
+vec3 wave_smoothSquare(vec3 x, float e) { x*=2; return sin(x*PI)/sqrt(pow(sin(x*PI),vec3(2.))+vec3(e)); }
+vec4 wave_smoothSquare(vec4 x, float e) { x*=2; return sin(x*PI)/sqrt(pow(sin(x*PI),vec4(2.))+vec4(e)); }
+
 // https://www.shadertoy.com/view/wl3cDM
 const int wave_maxN = 8;
 float wave_addSquare(float x, int n) {

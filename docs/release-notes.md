@@ -1,5 +1,59 @@
 # Release Notes
 
+## v0.42
+
+### Highlights
+
+* Custom renderer lets you create your own shader that uses RayTK operators from your code!
+* Lots of new features and improvements to existing operators.
+* New addons framework for extra packages of functionality that are released separately from the main toolkit.
+  * For now these will be available through [Patreon](https://patreon.com/tekt), though there may be other options in the future.
+  * The first of these are raytkVolumes and raytkAbstractions
+* The raytkVolumes addon lets you flow between RayTK and 3D textures (like with Josef Pelz's T3D) and supports volumetric raymarching!
+* The raytkAbstractions addon provides a bunch of new operators that make common workflows easier and more user-friendly.
+
+### Details
+
+* Improvements / additions
+  * New OPs
+    * customRender - create your own renderer with a custom shader using RayTK operators as functions (#1220)
+    * (raytkAbstractions) enhancedWaveField - adds features to the waveField operator to make it easier to use, including animation, more wave types, and value scaling.
+    * (raytkAbstractions) helixWarp - applies offsets to warp space in a helix pattern
+    * (raytkAbstractions) spin - rotate with built-in animation
+    * (raytkAbstractions) twistedRingsSdf - similar to mobiusRingSdf but with multiple interwoven rings
+    * (raytkVolumes) assignDensity - assign density to a volume for use in 3D textures and volumetric rendering (#1230, #637)
+    * (raytkVolumes) texture3dRender - renderer that produces 3D textures by sampling SDFs or fields (#1237)
+    * (raytkVolumes) fieldVolume - constructs a volume using a field to provide the density
+    * (raytkVolumes) sdfVolume - constructs a volume with the filled region defined by an SDF
+    * (raytkVolumes) texture3dVolume - constructs a volume from a 3D texture
+    * (raytkVolumes) volumetricRaymarchRender3D - renderer that uses volumes instead of SDFs and supports cloud-like renders (#1230)
+  * New OP features
+    * chainSdf - axis setting
+    * chopField, chopFn - CHOP inputs as an alternative to using parameters
+    * helixSdf - offset parameter
+    * magnet - input fields for amount, radius, fade
+    * noiseField - gabor noise type
+    * pointMapRender / render2D - Use surface color when no material is assigned to an SDF
+    * pointMapRender - density output (requires raytkVolumes)
+    * polarCoordField - coordinate input so it can be used as a converter for fields
+    * renderSelect - show buffer names in opImage (#753)
+    * shadingProperty - show property name in opImage (#753)
+    * textSdf2d - option to pass text as a parameter, so it doesn't change the code
+    * texture1dField, texture3dField, textureField, dataTextureField - TOP inputs as an alternative to using parameters
+    * torusGridSdf - option to only have rows or columns (#1231)
+    * twirl - variable twisting around an axis
+    * waveField, waveFn, waveWarp - added smooth square wave types
+  * Palette and editor tools
+    * Expand all / collapse all toggle in the palette
+* Fixes
+  * "Fixed" typo in prismSdf, polygonSdf2d (#1233)
+  * Fix error when using operators that use iteration as background fields (#1235)
+  * Fix limitField handling of vector fields (#1236)
+  * Fix bypass toggle on edgeCombine (#1239)
+* Changes (potentially breaking)
+* Infrastructure / internals
+  * Support for addons with non-public source (#1065)
+
 ## v0.41
 
 ### Highlights
@@ -52,7 +106,6 @@
   * raymarchRender3D - make limit box disabled by default
   * Restructured how multiple lights are handled. Materials are now responsible for looping through the lights and combining the results, rather than the renderer doing it. This allows modularMat to correctly handle shading elements that aren't based on lighting. There may be some differences in how material shading behaves, but hopefully they should be fairly minor. (#1213)
   * Deprecate simpleDiff, simpleIntersect, simpleUnion
-* Infrastructure / internals
 
 ## v0.40
 

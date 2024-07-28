@@ -62,6 +62,10 @@ op:
       name: addsquare4
     - label: Additive Square (8)
       name: addsquare8
+    - label: Smooth Square (.1)
+      name: smsquare1
+    - label: Smooth Square (.3)
+      name: smsquare3
     name: Function
     readOnlyHandling: semibaked
     regularHandling: semibaked

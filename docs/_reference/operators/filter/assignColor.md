@@ -25,12 +25,12 @@ op:
     - vec2
     - vec3
     - vec4
-    label: SDF
+    label: SDF or Volume
     name: definition_in
     required: true
     returnTypes:
     - Sdf
-    - Particle
+    - Volume
     summary: SDF definition to which the color is applied.
   - contextTypes:
     - Context
@@ -84,7 +84,7 @@ op:
   summary: Assigns a surface color attribute to an SDF surface.
   thumb: assets/images/reference/operators/filter/assignColor_thumb.png
   variables:
-  - label: sdf
+  - label: SDF Surface
     name: sdf
 
 ---

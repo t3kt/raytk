@@ -105,7 +105,7 @@ op:
     regularHandling: runtime
   thumb: assets/images/reference/operators/sdf2d/bezierSdf2d_thumb.png
   variables:
-  - label: normoffset
+  - label: Offset Along Curve (0..1)
     name: normoffset
 
 ---

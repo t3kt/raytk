@@ -28,12 +28,12 @@ op:
     - float
     - vec4
     - Sdf
+    - Volume
     - Ray
     - Light
     - Particle
     supportedVariableInputs:
-    - rotateField
-    - offsetField
+    - rotate_axis_field_definition_in
     supportedVariables:
     - index
     - sign
@@ -136,9 +136,9 @@ op:
   summary: Mirror coordinates across two axes.
   thumb: assets/images/reference/operators/filter/mirrorQuadrant_thumb.png
   variables:
-  - label: index
+  - label: Quadrant Index (0..3)
     name: index
-  - label: sign
+  - label: Signed XY Axes (-1, 1)
     name: sign
 
 ---

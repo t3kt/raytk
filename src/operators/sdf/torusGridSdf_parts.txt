@@ -1,0 +1,4 @@
+name	label	code	params
+both	Both		Rows Cols Combine
+rows	Rows Only		Rows
+cols	Columns Only		Cols

@@ -96,9 +96,20 @@ $status-deprecated-fg-color: rgb(64%, 81%, 81%);
   }
 }
 
-.category-op-table .thumb-placeholder {
-  display: block;
-  height: 80px;
+.category-op-table {
+  .op-name {
+    display: block;
+    margin-bottom: 1em;
+    border: none;
+  }
+  .thumb-placeholder {
+    display: block;
+    height: 80px;
+  }
+}
+
+.label.module-name {
+  text-transform: none;
 }
 
 .op-thumb {
@@ -169,10 +180,10 @@ $status-deprecated-fg-color: rgb(64%, 81%, 81%);
   border-color: #666666;
 }
 
-/*div.highlighter-rouge div.highlight.highlight,
-div.highlighter-rouge pre.highlight.highlight {
+div.highlighter-rouge.language-glsl div.highlight.highlight,
+div.highlighter-rouge.language-glsl pre.highlight.highlight {
   background: #f5f6fa;
-}*/
+}
 
 .param-menu-opts {
   padding-left: 3em;

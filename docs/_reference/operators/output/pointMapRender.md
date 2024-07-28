@@ -177,6 +177,8 @@ op:
     - label: 3D Texture
       name: texture3d
     name: Outputtype
+  - label: Enable Density Output
+    name: Enabledensityoutput
   - label: Enable Debug Output
     name: Enabledebugoutput
   - label: Enable Custom Output 1
@@ -187,10 +189,12 @@ op:
     name: Enablenormalsmoothing
     readOnlyHandling: baked
     regularHandling: baked
+    summary: Whether to smooth out surface normals by sampling at larger distances.
   - label: Normal Smoothing
     name: Normalsmoothing
     readOnlyHandling: baked
     regularHandling: runtime
+    summary: How far apart to sample to calculate surface normals.
   - label: Material Mode
     menuOptions:
     - label: Only Inside SDF
@@ -216,11 +220,11 @@ op:
     each point.
   thumb: assets/images/reference/operators/output/pointMapRender_thumb.png
   variables:
-  - label: datapos
+  - label: Data Coord (Pixels)
     name: datapos
-  - label: datauv
+  - label: Data Coord (0..1)
     name: datauv
-  - label: datares
+  - label: Data Resolution (Pixels)
     name: datares
 
 ---

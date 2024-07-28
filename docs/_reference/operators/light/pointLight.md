@@ -91,7 +91,7 @@ op:
   - pl
   summary: Light that emits from a single point in space.
   variables:
-  - label: lightdir
+  - label: Light Direction
     name: lightdir
 
 ---

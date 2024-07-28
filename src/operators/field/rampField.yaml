@@ -2,7 +2,7 @@
 meta: !meta
   opType: raytk.operators.field.rampField
   opVersion: '6'
-  opStatus: beta
+  opStatus: default
 opDef: !def
   enable: !expr
     expr: op('..').par.Enable

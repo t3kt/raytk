@@ -164,14 +164,18 @@ op:
     name: Reverse
     readOnlyHandling: semibaked
     regularHandling: runtime
+  - label: Offset
+    name: Offset
+    readOnlyHandling: baked
+    regularHandling: runtime
   summary: SDF for a helix (an elongated spiral).
   thumb: assets/images/reference/operators/sdf/helixSdf_thumb.png
   variables:
-  - label: axisoffset
+  - label: Offset Along Axis
     name: axisoffset
-  - label: angle
+  - label: Angle Around Axis (Deg)
     name: angle
-  - label: normangle
+  - label: Normalized Angle (0..1)
     name: normangle
 
 ---

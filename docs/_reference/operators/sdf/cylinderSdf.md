@@ -125,11 +125,11 @@ op:
   summary: Cylinder, either solid or a hollow tube.
   thumb: assets/images/reference/operators/sdf/cylinderSdf_thumb.png
   variables:
-  - label: axispos
+  - label: Position Along Axis
     name: axispos
-  - label: normoffset
+  - label: Normalized Axis Position (0..1)
     name: normoffset
-  - label: normangle
+  - label: Normalized Angle (0..1)
     name: normangle
 
 ---

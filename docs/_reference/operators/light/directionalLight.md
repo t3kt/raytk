@@ -57,7 +57,7 @@ op:
   summary: Directional or distant light which always comes from one direction.
   thumb: assets/images/reference/operators/light/directionalLight_thumb.png
   variables:
-  - label: lightdir
+  - label: Light Direction
     name: lightdir
     summary: Direction that the light is from the current position on a surface that's
       being shaded. This will always be the Direction with rotation applied.

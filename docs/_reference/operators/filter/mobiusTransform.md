@@ -28,12 +28,10 @@ op:
     - float
     - vec4
     - Sdf
+    - Volume
     - Ray
     - Light
     - Particle
-    supportedVariableInputs:
-    - pointField
-    - centerField
   - contextTypes:
     - Context
     - MaterialContext

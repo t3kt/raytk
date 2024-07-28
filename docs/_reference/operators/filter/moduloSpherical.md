@@ -27,6 +27,7 @@ op:
     - float
     - vec4
     - Sdf
+    - Volume
     - Ray
     - Light
     - Particle
@@ -135,10 +136,10 @@ op:
   summary: Repeats space in a spherical mesh layout with rows and columns.
   thumb: assets/images/reference/operators/filter/moduloSpherical_thumb.png
   variables:
-  - label: cell
+  - label: Cell (Row, Col)
     name: cell
     summary: Index of the row and column as integers (0..N).
-  - label: normcell
+  - label: Normalized Cell (Row, Col) (0..1)
     name: normcell
     summary: Index of the row and column scaled to a 0..1 range based on the number
       of Repetitions.

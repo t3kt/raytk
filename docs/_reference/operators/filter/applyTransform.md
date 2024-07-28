@@ -27,14 +27,7 @@ op:
     name: definition_in
     required: true
     returnTypes:
-    - float
     - vec4
-    - Sdf
-    - Ray
-    - Light
-    - Particle
-    supportedVariableInputs:
-    - transform
   - contextTypes:
     - Context
     - MaterialContext

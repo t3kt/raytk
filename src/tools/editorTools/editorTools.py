@@ -1,6 +1,5 @@
-from typing import Optional
 from editorToolsCommon import ActionManager
-from editorActions import createActionManager
+import editorActions
 
 # noinspection PyUnreachableCode
 if False:
@@ -10,16 +9,19 @@ if False:
 class EditorTools:
 	def __init__(self, ownerComp: COMP):
 		self.ownerComp = ownerComp
-		self.actions = None # type: Optional[ActionManager]
 
-	def init(self):
-		if not self.actions:
-			self.actions = createActionManager()
+	@staticmethod
+	def _createActionManager():
+		actions = []
+		for d in root.findChildren(tags=['raytkEditorActionModule']):
+			if not d.isDAT:
+				continue
+			try:
+				actions += d.module.getActions()
+			except Exception as e:
+				debug(e)
+		return ActionManager(*actions)
 
 	def Open(self, _=None):
-		self.init()
-		self.actions.openMenu(op.TDResources.op('popMenu'))
-
-	def buildActionTable(self, dat: scriptDAT):
-		self.init()
-		self.actions.buildTable(dat)
+		actions = self._createActionManager()
+		actions.openMenu(op.TDResources.op('popMenu'))

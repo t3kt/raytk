@@ -24,6 +24,10 @@ op:
     name: Align
     readOnlyHandling: baked
     regularHandling: runtime
+  - label: Optimize for Static Text
+    name: Optimize
+    readOnlyHandling: baked
+    regularHandling: baked
   status: beta
   thumb: assets/images/reference/operators/sdf2d/textSdf2d_thumb.png
 

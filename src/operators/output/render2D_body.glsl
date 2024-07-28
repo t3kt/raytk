@@ -14,7 +14,9 @@ vec3 getColorInner(vec2 p, MaterialContext matCtx, int m) {
 	vec3 col = vec3(0.);
 	if (false) {}
 	// #include <materialParagraph>
-	else {}
+	else {
+		return getColor(matCtx.result);
+	}
 	return col;
 }
 

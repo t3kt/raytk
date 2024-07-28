@@ -30,6 +30,7 @@ op:
     - float
     - vec4
     - Sdf
+    - Volume
     - Ray
     - Light
     - Particle
@@ -38,7 +39,7 @@ op:
   name: providePosition
   opType: raytk.operators.utility.providePosition
   variables:
-  - label: pos
+  - label: Position
     name: pos
 
 ---

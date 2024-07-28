@@ -110,7 +110,7 @@ op:
   summary: Radial arc, a segment of a circular path, with rounded ends.
   thumb: assets/images/reference/operators/sdf2d/arcSdf2d_thumb.png
   variables:
-  - label: normangle
+  - label: Normalized Angle (0..1)
     name: normangle
     summary: Angle from one end of the arc to the other, normalized to a 0..1 range.
 

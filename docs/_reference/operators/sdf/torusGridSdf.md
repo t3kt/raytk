@@ -117,14 +117,21 @@ op:
     name: Thickness
     readOnlyHandling: baked
     regularHandling: runtime
+  - label: Parts
+    menuOptions:
+    - label: Both
+      name: both
+    - label: Rows Only
+      name: rows
+    - label: Columns Only
+      name: cols
+    name: Parts
+    readOnlyHandling: semibaked
+    regularHandling: semibaked
   - label: Rows
     name: Rows
-    readOnlyHandling: baked
-    regularHandling: runtime
   - label: Columns
     name: Cols
-    readOnlyHandling: baked
-    regularHandling: runtime
   - label: Shift
     name: Shift
     readOnlyHandling: baked
@@ -186,17 +193,17 @@ op:
   status: beta
   thumb: assets/images/reference/operators/sdf/torusGridSdf_thumb.png
   variables:
-  - label: angle
+  - label: Angle (0-360)
     name: angle
-  - label: normangle
+  - label: Normalized Angle (0-1)
     name: normangle
-  - label: col
+  - label: Column (0 - N-1)
     name: col
-  - label: normcol
+  - label: Normalized Column (0-1)
     name: normcol
-  - label: row
+  - label: Row (0 - N-1)
     name: row
-  - label: normrow
+  - label: Normalized Row (0-1)
     name: normrow
 
 ---

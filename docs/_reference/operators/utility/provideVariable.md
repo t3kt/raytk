@@ -30,6 +30,7 @@ op:
     - float
     - vec4
     - Sdf
+    - Volume
     - Ray
     - Light
     - Particle
@@ -57,6 +58,7 @@ op:
     - float
     - vec4
     - Sdf
+    - Volume
     - Ray
     - Light
     - Particle
@@ -90,7 +92,7 @@ op:
     readOnlyHandling: baked
     regularHandling: runtime
   variables:
-  - label: var
+  - label: Variable
     name: var
 
 ---

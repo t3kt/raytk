@@ -81,11 +81,11 @@ op:
   summary: A flat disc facing the Y axis.
   thumb: assets/images/reference/operators/sdf/discSdf_thumb.png
   variables:
-  - label: angle
+  - label: Angle Around Axis (Deg)
     name: angle
-  - label: normangle
+  - label: Normalized Angle (0..1)
     name: normangle
-  - label: normaxisdist
+  - label: Normalized Distance From Axis (0..1)
     name: normaxisdist
 
 ---

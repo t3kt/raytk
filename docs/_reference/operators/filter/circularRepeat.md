@@ -58,9 +58,9 @@ op:
   status: beta
   summary: Repeat an space to fill a 2D circular area.
   variables:
-  - label: cellcoord
+  - label: Cell Coord
     name: cellcoord
-  - label: cellchecker
+  - label: Cell Checkerboard
     name: cellchecker
 
 ---

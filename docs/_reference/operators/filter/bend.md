@@ -38,12 +38,12 @@ op:
     - float
     - vec4
     - Sdf
+    - Volume
     - Ray
     - Light
     - Particle
     supportedVariableInputs:
-    - bendField
-    - shiftField
+    - definition_in_2
     supportedVariables:
     - axispos
     - bendpos
@@ -142,9 +142,9 @@ op:
   summary: Bends space, along a main axis, towards a second axis.
   thumb: assets/images/reference/operators/filter/bend_thumb.png
   variables:
-  - label: axispos
+  - label: Position Along Axis
     name: axispos
-  - label: bendpos
+  - label: Position On Bend Axis
     name: bendpos
 
 ---

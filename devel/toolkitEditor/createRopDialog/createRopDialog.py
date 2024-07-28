@@ -1,4 +1,5 @@
 from raytkTools import RaytkTools
+from raytkUtil import RaytkModuleContext
 
 # noinspection PyUnreachableCode
 if False:
@@ -29,8 +30,14 @@ class CreateRopDialog:
 		self._setMessageText('')
 		category = self.ownerComp.op('category_dropmenu').par.Value0.eval()
 		name = self.ownerComp.op('typeName_field').par.Value0.eval()
+		moduleName = self.ownerComp.op('module_dropmenu').par.Value0.eval()
+		moduleRoot = op(self.ownerComp.op('moduleTable')[moduleName, 'moduleRoot'])
+		if not moduleRoot:
+			self._setMessageText(f'Invalid module: {moduleName}')
+			return
+		context = RaytkModuleContext(moduleRoot)
 		try:
-			rop = RaytkTools().createNewRopType(typeName=name, category=category)
+			rop = RaytkTools(context).createNewRopType(typeName=name, category=category)
 		except Exception as err:
 			self._setMessageText(str(err))
 			return

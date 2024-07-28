@@ -37,12 +37,10 @@ cat:
   - name: hologramContrib
     status: beta
   - name: iridescenceContrib
-    status: beta
     summary: Shading element that produces a rainbow pattern around the edges of shapes,
       depending on which direction the surface is facing (the surface normal).
     thumb: assets/images/reference/operators/material/iridescenceContrib_thumb.png
   - name: matCapContrib
-    status: beta
     summary: Shading using a MatCap (Material Capture) image to fake lighting and
       reflections.
   - name: modularMat
@@ -76,7 +74,6 @@ cat:
     summary: A material that produces color for volumetric points relative to the
       input shape.
   - name: shadingProperty
-    status: beta
   - keywords:
     - lighting
     - material

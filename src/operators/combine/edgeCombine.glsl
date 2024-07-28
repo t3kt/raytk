@@ -5,6 +5,9 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 	ReturnT res = inputOp1(p, ctx);
 	#else
 	ReturnT res1 = inputOp1(p, ctx);
+	if (IS_FALSE(THIS_Enable)) {
+		return res1;
+	}
 	ReturnT res2 = inputOp2(p, ctx);
 	if (IS_TRUE(THIS_Swapinputs)) {
 		swap(res1, res2);

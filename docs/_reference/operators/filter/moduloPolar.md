@@ -39,13 +39,10 @@ op:
     - float
     - vec4
     - Sdf
+    - Volume
     - Ray
     - Light
     - Particle
-    supportedVariableInputs:
-    - preRotateField
-    - offsetField
-    - rotateField
     supportedVariables:
     - step
     - normstep
@@ -217,17 +214,17 @@ op:
   summary: Repeats space radially, like a kaleidoscope.
   thumb: assets/images/reference/operators/filter/moduloPolar_thumb.png
   variables:
-  - label: step
+  - label: Step Index
     name: step
-  - label: normstep
+  - label: Normalized Step (0..1)
     name: normstep
-  - label: globalangle
+  - label: Global Angle (0..360)
     name: globalangle
-  - label: normglobalangle
+  - label: Normalized Global Angle (0..1)
     name: normglobalangle
-  - label: normlocalangle
+  - label: Normalized Local Angle (0..1)
     name: normlocalangle
-  - label: centerdist
+  - label: Center Distance
     name: centerdist
 
 ---

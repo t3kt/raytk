@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.sdf.torusGridSdf
-  opVersion: '3'
+  opVersion: '4'
   opStatus: beta
 opDef: !def
   enable: true
@@ -87,3 +87,16 @@ elements:
     Prepcodeplaceholder: MERGE_PREP();
     Bodycodeplaceholder: MERGE_BODY();
     Defaultinitcodeplaceholder: ''
+- !opElement
+  name: codeSwitcher_Parts
+  elementType: codeSwitcher
+  params:
+    Elementroot: ''
+    Table: parts
+    Param: Parts
+    Autoupdateparams: true
+    Manageparamstates: true
+    Alwaysincludeallparams: false
+    Switchmode: constswitch
+    Indexexpr: ''
+    Placeholder: ''
