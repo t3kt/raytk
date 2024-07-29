@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.filter.moduloToroidal
-  opVersion: '5'
+  opVersion: '6'
   opStatus: beta
 opDef: !def
   enable: !expr
@@ -29,6 +29,7 @@ opDef: !def
     file: src/operators/filter/moduloToroidal.md
     name: help
   keywords: torus
+  displayCategory: Repeat
 inputs:
 - !input
   Variables: '*'
