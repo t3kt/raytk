@@ -8,7 +8,7 @@ if False:
 def onCook(dat: DAT):
 	dat.clear()
 	info = ROPInfo(parent().par.Definitionop.eval())
-	dat.appendRow(['res', 320, 256])
+	dat.appendRow(['res', 160, 128])
 	dat.appendRow(['name', ''])
 	dat.appendRow(['category', ''])
 	dat.appendRow(['toolkitVersion', ''])
