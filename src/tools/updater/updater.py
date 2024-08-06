@@ -16,16 +16,12 @@ class Updater:
 		if not info:
 			self._showError(f'Unable to update {o}, it must be a ROP or RComp')
 			return
-		master = o.par.clone.eval()
-		if not master and o.par.clone.val.startswith('/raytk/'):
-			path = o.par.clone.val  # type: str
-			if path.startswith('/raytk/'):
-				path = path.replace('/raytk/', '')
-			master = parent.raytk.op(path)
-			if not master:
-				self._showError(f'Unable to update {o}, no clone master found')
-				return
-			o.par.clone = master
+		path = str(self.ownerComp.op('pathsByType')[info.opType, 'path'] or '')
+		master = op(path)
+		if not master:
+			self._showError(f'Unable to update {o}, no clone master found')
+			return
+		o.par.clone = master
 		self._log(f'Updating {o} using master {master}')
 		postAction = self._getPostUpdateAction(info)
 		o.par.enablecloningpulse.pulse()

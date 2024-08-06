@@ -339,13 +339,6 @@ class RaytkTools:
 			self.saveROP(rop, incrementVersion=incrementVersion)
 		print('Finished saving all ROPs')
 
-	def updateAllROPToolkitVersions(self):
-		version = self.context.toolkitVersion()
-		for rop in self.context.allMasterOperators():
-			info = ROPInfo(rop)
-			if info:
-				info.toolkitVersion = version
-
 	def _templateForCategory(self, category: str) -> COMP | None:
 		catInfo = self.context.categoryInfo(category)
 		template = catInfo and catInfo.templateComp
