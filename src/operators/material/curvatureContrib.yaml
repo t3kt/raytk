@@ -1,0 +1,23 @@
+!rop
+meta: !meta
+  opType: raytk.operators.material.curvatureContrib
+  opVersion: '0'
+  opStatus: alpha
+opDef: !def
+  enable: !expr
+    expr: op('..').par.Enable
+  useRuntimeBypass: true
+  typeSpec: !ropTypes
+    coordType: !coordT
+      Coordtypevec3: true
+    contextType: !contextT
+      Contexttypematerialcontext: true
+    returnType: !returnT
+      Returntypefloat: !expr
+        expr: not parent().par.Usecolor
+      Returntypevec4: !expr
+        expr: parent().par.Usecolor
+  function: !text
+    file: src/operators/material/curvatureContrib.glsl
+    name: function
+  paramGroupTable: eval_params
