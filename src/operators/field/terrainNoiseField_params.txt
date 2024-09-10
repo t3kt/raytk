@@ -1,3 +1,9 @@
 names	source	handling	readOnlyHandling	conversion	enable
 Amplitude Offset Translate[xy] Scale[xy]	param	runtime	macro		1
 Axis	param	runtime	constant		1
+Increment	param	runtime	macro		op('increment_definition').numRows < 2
+Lacunarity	param	runtime	macro		op('lacunarity_definition').numRows < 2
+Frequency	param	runtime	macro		op('frequency_definition').numRows < 2
+Octaves	param	runtime	macro		op('octaves_definition').numRows < 2
+Stepoffset	param	runtime	macro		op('stepOffset_definition').numRows < 2
+Gain	param	runtime	macro		op('gain_definition').numRows < 2
