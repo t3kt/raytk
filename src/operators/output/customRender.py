@@ -47,7 +47,7 @@ def onCreate(master=None, **kwargs):
 
 def _getConfigParSeq(name):
 	config = parent().par.Customrenderconfig.eval() or op('defaultCustomRenderConfig')
-	parSeq = config.seq['Input']
+	parSeq = config.seq[name]
 	return parSeq if parSeq is not None else []
 
 def buildOutputTable(dat: scriptDAT):
