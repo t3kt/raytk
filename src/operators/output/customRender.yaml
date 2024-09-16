@@ -181,6 +181,8 @@ paramPages:
       readOnly: true
 opDef: !def
   enable: true
+  paramsOp: !expr
+    expr: parent().par.Paramsop.eval() or ''
   typeSpec: !ropTypes
     coordType: !coordT
       Allcoordtype: true
@@ -192,6 +194,7 @@ opDef: !def
   callbacks: !text
     file: src/operators/output/customRender.py
     name: customRender
+  paramGroupTable: eval_params
   macroTable: !table
     file: src/operators/output/customRender_macros.txt
     name: macro_exprs

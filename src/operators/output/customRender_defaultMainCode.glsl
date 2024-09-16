@@ -4,6 +4,13 @@ void customMain(CustomRenderInputs inputs, Context ctx) {
 
 	// "position" is uv scaled to [-1, 1]
 	vec2 p = uv * vec2(2.) - vec2(1.);
+	
+	// This is how you would get the value of a float parameter named `Stuff` from the docked "params" COMP:
+	// float s = THIS_Stuff;
+	// This gets a 3-part vector parameter named `Color`:
+	// vec3 c = THIS_Color;
+	// Or you could do this to just get the second part:
+	// float g = THIS_Colorg;
 
 	// Use an input operator named `valueField` to get a float value based on the position.
 	// In this example, your custom render config should have an input with the name `valueField`.
