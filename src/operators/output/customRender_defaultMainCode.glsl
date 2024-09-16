@@ -19,13 +19,13 @@ void customMain(CustomRenderInputs inputs, Context ctx) {
 	// The first argument is some sort of position value.
 	// This needs to be of the coordinate type that the input operator expects. (e.g. vec2 for 2D inputs)
 	// This function's return value will have the type that the input operator outputs.
-	float value1 = inputOp_valueField(p, ctx);
+	//float value1 = inputOp_valueField(p, ctx);
 
 	// In this case we're using a vector input operator named `someVectorField`.
 	// This operator produces a vector value. These are always vec4 (not vec2 or vec3).
 	// The "position" that we pass to this operator doesn't have to actually be a coordinate and doesn't have to match
 	// the coordinate types used by other input operators. In this case, this operator expects 3D coordinates.
-	vec4 value2 = inputOp_someVectorField(vec3(p.x, value1, sin(p.y)), ctx);
+	//vec4 value2 = inputOp_someVectorField(vec3(p.x, value1, sin(p.y)), ctx);
 
 	// The ultimate goal of a renderer is to produce at least one image buffer output, possibly multiple.
 
@@ -34,9 +34,9 @@ void customMain(CustomRenderInputs inputs, Context ctx) {
 	// This variable is defined elsewhere, don't redefine it like `vec4 colorOut;`.
 	// It is generally good practice to use the `TDOutputSwizzle` function to ensure that the output is in the correct
 	// format for certain GPUs / OSes
-	colorOut = TDOutputSwizzle(value2);
+	//colorOut = TDOutputSwizzle(value2);
 
 	// If you have another output buffer named `whatever`, you can output to it like this:
 	// The output must be a vec4, even if you only care about one channel of that.
-	whateverOut = TDOutputSwizzle(vec4(value1, 0, 0, 1));
+	//whateverOut = TDOutputSwizzle(vec4(value1, 0, 0, 1));
 }
