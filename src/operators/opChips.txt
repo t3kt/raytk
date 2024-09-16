@@ -1,5 +1,6 @@
 name	chip
 customRender	updated
+combineVolumes	updated
 iteratedTransform	updated
 texture3dVolume	updated
 volumetricRaymarchRender3D	updated

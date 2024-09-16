@@ -8,7 +8,7 @@
 
 * Improvements / additions
   * New OPs
-    * x
+    * (raytkVolume) combineVolumes - combine two volumes with different blending modes
   * New OP features
     * customRender - more detailed explanations in the default shader
     * iteratedTransform - support volumes (requires raytkVolumes)
