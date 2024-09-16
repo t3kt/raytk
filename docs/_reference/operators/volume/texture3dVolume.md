@@ -30,6 +30,9 @@ op:
   - label: Distance Texture
     name: Distancetexture
     summary: Optional 3D texture that contains SDF distance values in the red channel.
+  - label: Color Texture
+    name: Colortexture
+    summary: Optional 3D texture that contains color values.
   status: beta
   summary: Creates a Volume based on a 3D texture that contains density values.
 

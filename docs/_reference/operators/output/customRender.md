@@ -196,8 +196,6 @@ op:
   parameters:
   - label: Main Code
     name: Maincode
-  - label: Output Buffer Table
-    name: Outputbuffertable
   - label: Library Names
     menuOptions:
     - label: hg_sdf
@@ -211,6 +209,9 @@ op:
     - label: Label 5
       name: ' raytkCore'
     name: Librarynames
+  - label: Params OP
+    name: Paramsop
+    summary: The COMP that contains any custom parameters used by the op.
   - label: Pixel Format
     menuOptions:
     - label: Use Input
@@ -268,6 +269,8 @@ op:
     - label: 32-bit float (Mono+Alpha)
       name: monoalpha32float
     name: Format
+  - label: Use Input Resolution
+    name: Useinputresolution
   - label: Resolution
     name: Res
   - label: Output Type
@@ -296,8 +299,11 @@ op:
     name: Customrenderconfig
   - label: Create Main Code
     name: Createmaincode
-  - label: Create Output Buffer Table
-    name: Createoutputbuffertable
+  - label: Create Params OP
+    name: Createparamsop
+    summary: Creates and attaches a new COMP for `Paramsop`, if there is none.
+  - label: Create Custom Render Config
+    name: Createcustomrenderconfig
   status: beta
 
 ---

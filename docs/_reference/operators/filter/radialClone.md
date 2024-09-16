@@ -184,8 +184,8 @@ op:
     - label: Simple XOR
       name: simpleXOR
     name: Mergetype
-    readOnlyHandling: semibaked
-    regularHandling: semibaked
+    readOnlyHandling: baked
+    regularHandling: runtime
     summary: How to merge the copies.
   - label: Merge Radius
     name: Mergeradius
