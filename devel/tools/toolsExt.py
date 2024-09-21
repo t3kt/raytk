@@ -1,6 +1,6 @@
 import popMenu
 from raytkTools import RaytkTools
-from raytkUtil import RaytkTags, Tag, navigateTo, recloneComp, RaytkContext, Version
+from raytkUtil import RaytkTags, Tag, navigateTo, recloneComp, RaytkContext, Version, ROPInfo
 
 # noinspection PyUnreachableCode
 if False:
@@ -95,9 +95,14 @@ class Tools:
 	def organizeCategory(comp: COMP):
 		RaytkTools().organizeCategory(comp)
 
-	@staticmethod
-	def updateAllROPToolkitVersions():
-		RaytkTools().updateAllROPToolkitVersions()
+	def updateAllROPToolkitVersions(self):
+		table = self.ownerComp.op('mergedOpTable')
+		version = RaytkContext().toolkitVersion()
+		for path in table.col('path')[1:]:
+			rop = op(path)
+			info = ROPInfo(rop)
+			if info:
+				info.toolkitVersion = version
 
 	def openToolkitEditor(self):
 		self.toolkitEditor().par.Open.pulse()

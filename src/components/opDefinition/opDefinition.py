@@ -37,14 +37,6 @@ def _evalType(category: str, supportedTypes: DAT, inputDefs: DAT):
 		return inputCell
 	return supportedTypes[category, 'types']
 
-def buildTypeTable(dat: scriptDAT, supportedTypes: DAT, inputDefs: DAT):
-	dat.clear()
-	dat.appendRows([
-		['coordType', _evalType('coordType', supportedTypes, inputDefs)],
-		['returnType', _evalType('returnType', supportedTypes, inputDefs)],
-		['contextType', _evalType('contextType', supportedTypes, inputDefs)],
-	])
-
 def combineInputDefinitions(dat: scriptDAT, inDats: list[DAT], defFields: DAT, supportedTypeTable: DAT):
 	dat.clear()
 	if parentPar()['Inputdefs'] is not None:
@@ -813,18 +805,17 @@ class _Builder:
 def _parseOpState():
 	return RopState.fromJson(op('opState').text)
 
-def buildDefinitionTable(dat: scriptDAT):
+def buildDefinitionTable(dat: scriptDAT, supportedTypes: DAT, inputDefs: DAT):
 	dat.clear()
 	state = _parseOpState()
-	typeTable = op('types')
 	defPath = parent().path
 	dat.appendCols([
 		['name', state.name],
 		['path', state.path],
 		['opType', state.ropFullType],
-		['coordType', typeTable['coordType', 1]],
-		['contextType', typeTable['contextType', 1]],
-		['returnType', typeTable['returnType', 1]],
+		['coordType', _evalType('coordType', supportedTypes, inputDefs)],
+		['contextType', _evalType('contextType', supportedTypes, inputDefs)],
+		['returnType', _evalType('returnType', supportedTypes, inputDefs)],
 		['opVersion', parentPar().Raytkopversion or 0],
 		['toolkitVersion', parentPar().Raytkversion or ''],
 		['paramSource', defPath + '/param_vals'],

@@ -2,6 +2,11 @@
 if False:
 	# noinspection PyUnresolvedReferences
 	from _stubs import *
+	from components.customOpController.customOpController import CustomOp
+
+def _customController() -> 'CustomOp':
+	# noinspection PyTypeChecker
+	return op('customOpController')
 
 def onCreateParPulse(action: str):
 	if action == 'Createmaincode':
@@ -11,6 +16,10 @@ def onCreateParPulse(action: str):
 	elif action == 'Createcustomrenderconfig':
 		ui.undo.startBlock('Create custom render config')
 		createCustomRenderConfig()
+		ui.undo.endBlock()
+	elif action == 'Createparamsop':
+		ui.undo.startBlock('Create params op')
+		createParamsOp()
 		ui.undo.endBlock()
 
 def createMainCode():
@@ -41,13 +50,28 @@ def createCustomRenderConfig():
 	comp.dock = o
 	o.showDocked = True
 
+def createParamsOp():
+	o = parent()
+	parOp = o.par.Paramsop.eval()
+	if parOp:
+		return
+	parOp = o.parent().create(baseCOMP, parent().name + '_params')
+	parOp.nodeX = o.nodeX
+	parOp.nodeY = o.nodeY + 175
+	parOp.dock = o
+	parOp.comment = 'Add parameters here to use in your shader'
+	o.showDocked = True
+	parOp.appendCustomPage('Parameters')
+	o.par.Paramsop = parOp
+
 def onCreate(master=None, **kwargs):
 	createMainCode()
 	createCustomRenderConfig()
+	createParamsOp()
 
 def _getConfigParSeq(name):
 	config = parent().par.Customrenderconfig.eval() or op('defaultCustomRenderConfig')
-	parSeq = config.seq['Input']
+	parSeq = config.seq[name]
 	return parSeq if parSeq is not None else []
 
 def buildOutputTable(dat: scriptDAT):

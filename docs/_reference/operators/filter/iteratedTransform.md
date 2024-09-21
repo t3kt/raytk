@@ -30,6 +30,10 @@ op:
     - float
     - vec4
     - Sdf
+    - Volume
+    - Ray
+    - Light
+    - Particle
     supportedVariables:
     - step
     - normstep

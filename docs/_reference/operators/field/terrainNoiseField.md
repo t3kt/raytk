@@ -193,20 +193,32 @@ op:
     regularHandling: runtime
   - label: Fractal Increment
     name: Increment
+    readOnlyHandling: baked
+    regularHandling: runtime
   - label: Lacunarity
     name: Lacunarity
+    readOnlyHandling: baked
+    regularHandling: runtime
     summary: Gap between successive frequencies.
   - label: Frequency
     name: Frequency
+    readOnlyHandling: baked
+    regularHandling: runtime
     summary: Density of the pattern (basically another Scale).
   - label: Octaves
     name: Octaves
+    readOnlyHandling: baked
+    regularHandling: runtime
     summary: Number of layers of detail (frequencies used in the fBm). Larger values
       produce more detail. Avoid values below 1.
   - label: Step Offset
     name: Stepoffset
+    readOnlyHandling: baked
+    regularHandling: runtime
   - label: Gain
     name: Gain
+    readOnlyHandling: baked
+    regularHandling: runtime
   - label: Amplitude
     name: Amplitude
     readOnlyHandling: baked

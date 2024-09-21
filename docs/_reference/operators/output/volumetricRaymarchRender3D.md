@@ -236,6 +236,16 @@ op:
     name: Rayoffsetamount
     readOnlyHandling: runtime
     regularHandling: runtime
+  - label: Use Render Depth
+    name: Userenderdepth
+    readOnlyHandling: semibaked
+    regularHandling: semibaked
+  - label: Overlay Render
+    name: Overlayrender
+  - label: Render TOP
+    name: Rendertop
+  - label: Depth TOP
+    name: Depthtop
   status: beta
   summary: Renderer that uses raymarching with volumes instead of SDFs.
 

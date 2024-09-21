@@ -73,6 +73,9 @@ cat:
   - name: triPlanarCombine
     status: beta
     summary: Combines three 2D fields based on vectors like surface normals.
+  - moduleName: raytkVolumes
+    name: combineVolumes
+    status: beta
   summary: 'Operators that take two or more inputs and combine them into a single
 
     output.'

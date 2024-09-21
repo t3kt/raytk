@@ -1,5 +1,43 @@
 # Release Notes
 
+## v0.43
+
+### Highlights
+
+* Optimizations to improve performance in scenes with many operators and reduce GPU memory usage.
+* Usability improvements in customRender make it easier to use RayTK operators in your own shaders.
+* (raytkVolumes) New combineVolumes operator to combine two volumes with different blending modes.
+* (raytkVolumes) Depth compositing support in volumetricRaymarchRender3d to combine with other types of rendering.
+* Assorted smaller bug fixes.
+
+### Details
+
+* Improvements / additions
+  * New OPs
+    * (raytkVolume) combineVolumes - combine two volumes with different blending modes
+  * New OP features
+    * customRender - more detailed explanations in the default shader, custom parameter support, primary input TOP support (#1258)
+    * iteratedTransform - support volumes (requires raytkVolumes)
+    * radialClone - support baking in the combine mode to improve performance
+    * (raytkVolumes) texture3dVolume - support assigning color from a 3D texture
+    * (raytkVolumes) volumetricRaymarchRender3d - support depth compositing to combine with other types of rendering.
+  * Snippets
+    * customRender
+* Fixes
+  * customRender - fix errors related to output buffers (#1258)
+  * terrainNoiseField - fix parameters not disabling when inputs are attached to replace them (#1255)
+  * torusGridSdf - fix broken combine mode baking optimization (#1246)
+  * triangleSdf2d - fix scaling for equilateral mode (#1260)
+  * Fix UI tooltips in palette (#1253)
+* Changes (potentially breaking)
+  * All renderers now default to using separate uniform arrays per ROP for parameters, which should improve internal CHOP performance in scenes with a lot of operators/parameters. (#907)
+* Infrastructure / internals
+  * Reduce OP image resolution to reduce tox size and GPU memory usage
+
+### Compatibility
+
+* This version requires TouchDesigner 2023.11880 or later.
+
 ## v0.42
 
 ### Highlights

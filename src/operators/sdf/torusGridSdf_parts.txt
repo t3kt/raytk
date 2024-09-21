@@ -1,4 +1,4 @@
 name	label	code	params
-both	Both		Rows Cols Combine
+both	Both		Rows Cols
 rows	Rows Only		Rows
 cols	Columns Only		Cols
