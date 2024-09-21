@@ -5,6 +5,7 @@
 ### Highlights
 
 * Optimizations to improve performance in scenes with many operators and reduce GPU memory usage.
+* Usability improvements in customRender make it easier to use RayTK operators in your own shaders.
 * (raytkVolumes) New combineVolumes operator to combine two volumes with different blending modes.
 * (raytkVolumes) Depth compositing support in volumetricRaymarchRender3d to combine with other types of rendering.
 * Assorted smaller bug fixes.
