@@ -212,7 +212,6 @@ class ContextTypes(ModelObject):
 	Contexttypecameracontext: ValueOrExprT = None
 	Contexttypelightcontext: ValueOrExprT = None
 	Contexttyperaycontext: ValueOrExprT = None
-	Contexttypeparticlecontext: ValueOrExprT = None
 	Contexttypevertexcontext: ValueOrExprT = None
 	Contexttypepixelcontext: ValueOrExprT = None
 
@@ -235,7 +234,6 @@ class ReturnTypes(ModelObject):
 	Returntypevec4: ValueOrExprT = None
 	Returntyperay: ValueOrExprT = None
 	Returntypelight: ValueOrExprT = None
-	Returntypeparticle: ValueOrExprT = None
 	Returntypevolume: ValueOrExprT = None
 
 	@classmethod

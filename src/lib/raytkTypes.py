@@ -192,12 +192,6 @@ _allTypes += [
 			Field('color', 'Color', 'vec3'),
 		]),
 	DataType(
-		'Particle', 'Particle', isReturn=True,
-		fields=[
-			Field('pos', 'Position', 'vec3'),
-			# TODO: particle fields
-		]),
-	DataType(
 		'Context', 'Context', isContext=True, isVariable=False,
 		fields=[
 			# TODO: context fields
@@ -219,11 +213,6 @@ _allTypes += [
 		]),
 	DataType(
 		'RayContext', 'Ray Context', isContext=True, isVariable=False,
-		fields=[
-			# TODO: context fields
-		]),
-	DataType(
-		'ParticleContext', 'Particle Context', isContext=True, isVariable=False,
 		fields=[
 			# TODO: context fields
 		]),
@@ -261,7 +250,7 @@ def buildCoreTypeTable(dat: scriptDAT):
 	addTypes([
 		_typesByName['float'],
 		_typesByName['vec2'], _typesByName['vec3'], _typesByName['vec4'],
-		_typesByName['Sdf'], _typesByName['Volume'], _typesByName['Ray'], _typesByName['Light'], _typesByName['Particle'],
+		_typesByName['Sdf'], _typesByName['Volume'], _typesByName['Ray'], _typesByName['Light'],
 	])
 	addTypes([
 		dt
