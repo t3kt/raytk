@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.time.lfoField
-  opVersion: '19'
+  opVersion: '20'
   opStatus: default
 opDef: !def
   enable: !expr
@@ -29,8 +29,6 @@ opDef: !def
         expr: parent().par.Contexttype == 'LightContext'
       Contexttyperaycontext: !expr
         expr: parent().par.Contexttype == 'RayContext'
-      Contexttypeparticlecontext: !expr
-        expr: parent().par.Contexttype == 'ParticleContext'
     returnType: !returnT
       Returntypefloat: true
       Returntypevec4: !expr
