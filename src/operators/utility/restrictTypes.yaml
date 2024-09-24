@@ -40,8 +40,6 @@ inputs:
       expr: parent().par.Contexttype == 'LightContext'
     Contexttyperaycontext: !expr
       expr: parent().par.Contexttype == 'RayContext'
-    Contexttypeparticlecontext: !expr
-      expr: parent().par.Contexttype == 'ParticleContext'
     Contexttypevertexcontext: !expr
       expr: parent().par.Contexttype == 'VertexContext'
     Contexttypepixelcontext: !expr
@@ -57,7 +55,5 @@ inputs:
       expr: parent().par.Returntype == 'Ray'
     Returntypelight: !expr
       expr: parent().par.Returntype == 'Light'
-    Returntypeparticle: !expr
-      expr: parent().par.Returntype == 'Particle'
     Returntypevolume: !expr
       expr: parent().par.Returntype == 'Volume'

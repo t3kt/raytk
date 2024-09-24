@@ -22,8 +22,6 @@ opDef: !def
         expr: op('currentField')[1, 'returnAs'] == 'Ray'
       Returntypelight: !expr
         expr: op('currentField')[1, 'returnAs'] == 'Light'
-      Returntypeparticle: !expr
-        expr: op('currentField')[1, 'returnAs'] == 'Particle'
   function: !text
     file: src/operators/utility/variableReference.glsl
     name: functionTemplate

@@ -231,8 +231,6 @@ inputs:
       expr: op('inputTable')[1, 'contextType'] == 'LightContext'
     Contexttyperaycontext: !expr
       expr: op('inputTable')[1, 'contextType'] == 'RayContext'
-    Contexttypeparticlecontext: !expr
-      expr: op('inputTable')[1, 'contextType'] == 'ParticleContext'
     Contexttypevertexcontext: !expr
       expr: op('inputTable')[1, 'contextType'] == 'VertexContext'
     Contexttypepixelcontext: !expr
@@ -250,8 +248,6 @@ inputs:
       expr: op('inputTable')[1, 'returnType'] == 'Ray'
     Returntypelight: !expr
       expr: op('inputTable')[1, 'returnType'] == 'Light'
-    Returntypeparticle: !expr
-      expr: op('inputTable')[1, 'returnType'] == 'Particle'
 - !input
   Localalias: !expr
     expr: op('inputTable')[2, 'name']
@@ -281,8 +277,6 @@ inputs:
       expr: op('inputTable')[2, 'contextType'] == 'LightContext'
     Contexttyperaycontext: !expr
       expr: op('inputTable')[2, 'contextType'] == 'RayContext'
-    Contexttypeparticlecontext: !expr
-      expr: op('inputTable')[2, 'contextType'] == 'ParticleContext'
     Contexttypevertexcontext: !expr
       expr: op('inputTable')[2, 'contextType'] == 'VertexContext'
     Contexttypepixelcontext: !expr
@@ -300,8 +294,6 @@ inputs:
       expr: op('inputTable')[2, 'returnType'] == 'Ray'
     Returntypelight: !expr
       expr: op('inputTable')[2, 'returnType'] == 'Light'
-    Returntypeparticle: !expr
-      expr: op('inputTable')[2, 'returnType'] == 'Particle'
 - !input
   Localalias: !expr
     expr: op('inputTable')[3, 'name']
@@ -331,8 +323,6 @@ inputs:
       expr: op('inputTable')[3, 'contextType'] == 'LightContext'
     Contexttyperaycontext: !expr
       expr: op('inputTable')[3, 'contextType'] == 'RayContext'
-    Contexttypeparticlecontext: !expr
-      expr: op('inputTable')[3, 'contextType'] == 'ParticleContext'
     Contexttypevertexcontext: !expr
       expr: op('inputTable')[3, 'contextType'] == 'VertexContext'
     Contexttypepixelcontext: !expr
@@ -350,8 +340,6 @@ inputs:
       expr: op('inputTable')[3, 'returnType'] == 'Ray'
     Returntypelight: !expr
       expr: op('inputTable')[3, 'returnType'] == 'Light'
-    Returntypeparticle: !expr
-      expr: op('inputTable')[3, 'returnType'] == 'Particle'
 - !input
   Localalias: !expr
     expr: op('inputTable')[4, 'name']
@@ -381,8 +369,6 @@ inputs:
       expr: op('inputTable')[4, 'contextType'] == 'LightContext'
     Contexttyperaycontext: !expr
       expr: op('inputTable')[4, 'contextType'] == 'RayContext'
-    Contexttypeparticlecontext: !expr
-      expr: op('inputTable')[4, 'contextType'] == 'ParticleContext'
     Contexttypevertexcontext: !expr
       expr: op('inputTable')[4, 'contextType'] == 'VertexContext'
     Contexttypepixelcontext: !expr
@@ -400,8 +386,6 @@ inputs:
       expr: op('inputTable')[4, 'returnType'] == 'Ray'
     Returntypelight: !expr
       expr: op('inputTable')[4, 'returnType'] == 'Light'
-    Returntypeparticle: !expr
-      expr: op('inputTable')[4, 'returnType'] == 'Particle'
 - !input
   Localalias: !expr
     expr: op('inputTable')[5, 'name']
@@ -431,8 +415,6 @@ inputs:
       expr: op('inputTable')[5, 'contextType'] == 'LightContext'
     Contexttyperaycontext: !expr
       expr: op('inputTable')[5, 'contextType'] == 'RayContext'
-    Contexttypeparticlecontext: !expr
-      expr: op('inputTable')[5, 'contextType'] == 'ParticleContext'
     Contexttypevertexcontext: !expr
       expr: op('inputTable')[5, 'contextType'] == 'VertexContext'
     Contexttypepixelcontext: !expr
@@ -450,8 +432,6 @@ inputs:
       expr: op('inputTable')[5, 'returnType'] == 'Ray'
     Returntypelight: !expr
       expr: op('inputTable')[5, 'returnType'] == 'Light'
-    Returntypeparticle: !expr
-      expr: op('inputTable')[5, 'returnType'] == 'Particle'
 - !input
   Localalias: !expr
     expr: op('inputTable')[6, 'name']
@@ -481,8 +461,6 @@ inputs:
       expr: op('inputTable')[6, 'contextType'] == 'LightContext'
     Contexttyperaycontext: !expr
       expr: op('inputTable')[6, 'contextType'] == 'RayContext'
-    Contexttypeparticlecontext: !expr
-      expr: op('inputTable')[6, 'contextType'] == 'ParticleContext'
     Contexttypevertexcontext: !expr
       expr: op('inputTable')[6, 'contextType'] == 'VertexContext'
     Contexttypepixelcontext: !expr
@@ -500,8 +478,6 @@ inputs:
       expr: op('inputTable')[6, 'returnType'] == 'Ray'
     Returntypelight: !expr
       expr: op('inputTable')[6, 'returnType'] == 'Light'
-    Returntypeparticle: !expr
-      expr: op('inputTable')[6, 'returnType'] == 'Particle'
 - !input
   Localalias: !expr
     expr: op('inputTable')[7, 'name']
@@ -531,8 +507,6 @@ inputs:
       expr: op('inputTable')[7, 'contextType'] == 'LightContext'
     Contexttyperaycontext: !expr
       expr: op('inputTable')[7, 'contextType'] == 'RayContext'
-    Contexttypeparticlecontext: !expr
-      expr: op('inputTable')[7, 'contextType'] == 'ParticleContext'
     Contexttypevertexcontext: !expr
       expr: op('inputTable')[7, 'contextType'] == 'VertexContext'
     Contexttypepixelcontext: !expr
@@ -550,8 +524,6 @@ inputs:
       expr: op('inputTable')[7, 'returnType'] == 'Ray'
     Returntypelight: !expr
       expr: op('inputTable')[7, 'returnType'] == 'Light'
-    Returntypeparticle: !expr
-      expr: op('inputTable')[7, 'returnType'] == 'Particle'
 - !input
   Localalias: !expr
     expr: op('inputTable')[8, 'name']
@@ -581,8 +553,6 @@ inputs:
       expr: op('inputTable')[8, 'contextType'] == 'LightContext'
     Contexttyperaycontext: !expr
       expr: op('inputTable')[8, 'contextType'] == 'RayContext'
-    Contexttypeparticlecontext: !expr
-      expr: op('inputTable')[8, 'contextType'] == 'ParticleContext'
     Contexttypevertexcontext: !expr
       expr: op('inputTable')[8, 'contextType'] == 'VertexContext'
     Contexttypepixelcontext: !expr
@@ -600,5 +570,3 @@ inputs:
       expr: op('inputTable')[8, 'returnType'] == 'Ray'
     Returntypelight: !expr
       expr: op('inputTable')[8, 'returnType'] == 'Light'
-    Returntypeparticle: !expr
-      expr: op('inputTable')[8, 'returnType'] == 'Particle'
