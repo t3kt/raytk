@@ -225,6 +225,8 @@ class Palette:
 				par.val = par.default
 		newOp.allowCooking = True
 		newOp.color = IconColors.defaultBgColor
+		if newOp.par['Updateop'] is not None:
+			newOp.par.Updateop.pulse()
 		if ROPInfo(newOp).isOutput and newOp.par['Resx'] is not None:
 			if _isNonCommercial():
 				newOp.par.Resx = 1280
