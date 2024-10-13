@@ -714,9 +714,11 @@ def getActions():
 			'Update OPs',
 			isValid=lambda ctx: _anySelectedRopHasParam(ctx, 'Updateop'),
 			execute=lambda ctx: _pulseSelectedRopParams(ctx, 'Updateop')),
-		ActionImpl(
+		createTableBasedGroup(
 			'Convert To Float',
+			op('sdfFieldTypes'),
 			'raytk.operators.field.sdfField',
+			'Fieldtype',
 			select=RopSelect(returnTypes=['Sdf'], excludeOutputOps=True),
 			attach=AttachOutFromExisting(),
 		),
