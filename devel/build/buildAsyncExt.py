@@ -407,7 +407,7 @@ class ToolkitBuilderAsync(LibraryBuilderAsyncBase):
 
 	async def _lockLibraryInfo(self):
 		self.context.lockOps(self.toolkit.ops(
-			'info', 'opTable', 'opCategoryTable', 'buildInfo'))
+			'info', 'opCategoryTable', 'buildInfo'))
 
 	async def _processTools(self):
 		tools = self.toolkit.op('tools')
