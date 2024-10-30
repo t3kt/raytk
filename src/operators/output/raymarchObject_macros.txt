@@ -1,0 +1,3 @@
+parent().par.Uselimitbox	'THIS_USE_LIMIT_BOX'	''
+	'RAYTK_MAX_STEPS'	'THIS_Maxsteps'
+	'RAYTK_SURF_DIST'	'THIS_Surfdist'

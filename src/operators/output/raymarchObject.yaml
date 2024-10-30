@@ -1,11 +1,10 @@
 !rop
 meta: !meta
   opType: raytk.operators.output.raymarchObject
-  opVersion: '0'
+  opVersion: '1'
   opStatus: alpha
 opDef: !def
-  enable: !expr
-    expr: op('..').par.Enable
+  enable: true
   typeSpec: !ropTypes
     coordType: !coordT
       Coordtypevec3: true
@@ -14,10 +13,17 @@ opDef: !def
     returnType: !returnT
       Returntypesdf: true
   function: !text
-    file: src/operators/output/raymarchObject.glsl
+    file: src/operators/output/raymarchObject_func.glsl
     name: function
+  paramGroupTable: eval_params
+  macroTable: !table
+    file: src/operators/output/raymarchObject_macros.txt
+    name: macro_exprs
+    evaluate: true
+    evalOpts: !evalOpts {}
 inputs:
 - !input
+  Localalias: sdf
   Required: true
   coordType: !coordT
     Coordtypevec3: true

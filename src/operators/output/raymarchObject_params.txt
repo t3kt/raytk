@@ -1,0 +1,3 @@
+names	source	handling	readOnlyHandling	conversion	enable
+Limitboxmin[xyz] Limitboxmax[xyz] Distfactor Maxdist	param	runtime	macro		1
+Maxsteps Surfdist	param	constant			1

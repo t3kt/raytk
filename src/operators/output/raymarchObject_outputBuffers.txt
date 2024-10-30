@@ -1,0 +1,2 @@
+name	label	macro	special	enable	path	enablePar	available
+colorOut	Color						
