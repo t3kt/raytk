@@ -29,7 +29,6 @@ Sdf castRay(Ray ray, float maxDist) {
 	float dist = 0;
 	Sdf res = createNonHitSdf();
 	int i;
-	float closestDist = maxDist;
 	for (i = 0; i < RAYTK_MAX_STEPS; i++) {
 		if (!checkLimit(ray.pos)) {
 			popStage(priorStage);
@@ -237,6 +236,7 @@ Ray getViewRay(vec2 shift) {
 
 void main()
 {
+	TDCheckDiscard();
 	#ifdef RAYTK_HAS_INIT
 	init();
 	#endif
@@ -280,5 +280,7 @@ void main()
 		vec2 uv = gl_FragCoord.xy * uTDGeneral.viewport.zw;
 		col.rgb += (1.0/255.0)*hash1(uv);
 		colorOut = col;
+	} else {
 	}
+		colorOut = vec4(res.x, 0, 0, 1);
 }
