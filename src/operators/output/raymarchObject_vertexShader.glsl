@@ -7,8 +7,7 @@ void main()
 {
 	vec3 pos = TDPos();
 	vec4 worldSpacePos = TDDeform(pos);
-	vec3 uvUnwrapCoord = TDInstanceTexCoord(TDUVUnwrapCoord());
-	gl_Position = TDWorldToProj(worldSpacePos, uvUnwrapCoord);
+	gl_Position = TDWorldToProj(worldSpacePos);
 	#ifndef TD_PICKING_ACTIVE
 	int cameraIndex = TDCameraIndex();
 	oVert.cameraIndex = cameraIndex;

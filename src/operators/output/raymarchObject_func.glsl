@@ -1,5 +1,5 @@
 ReturnT thismap(CoordT p, ContextT ctx) {
-	#ifdef THIS_HAS_INPUT_1
+	#ifdef THIS_HAS_INPUT_sdf
 	return inputOp_sdf(p, ctx);
 	#else
 	return createNonHitSdf();

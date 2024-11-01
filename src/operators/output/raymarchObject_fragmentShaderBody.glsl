@@ -282,5 +282,7 @@ void main()
 		colorOut = col;
 	} else {
 	}
-		colorOut = vec4(res.x, 0, 0, 1);
+//	colorOut.g = res.x;
+//		colorOut = vec4(ray.pos, 1);
+//	colorOut = vec4(map(ray.pos).x, 0, 0, 1);
 }
