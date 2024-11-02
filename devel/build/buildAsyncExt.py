@@ -416,7 +416,15 @@ class ToolkitBuilderAsync(LibraryBuilderAsyncBase):
 		self.context.detachTox(tools)
 		await self.context.runBuildScript(tools.op('BUILD'))
 
+	async def reloadAddons(self):
+		self.addonsRoot = getattr(op, 'raytkAddons', None)
+		if self.addonsRoot:
+			self.context.safeDestroyOp(self.addonsRoot)
+		self.addonsRoot = root.loadTox('addons/src/raytkAddons.tox')
+		self.log('Addons loaded: ' + self.addonsRoot.path)
+
 	async def _buildModules(self):
+		await self.reloadAddons()
 		moduleNames = [
 			c.val
 			for c in self.moduleTable.col('name')[1:]
@@ -526,7 +534,7 @@ class ModuleBuilderAsync(LibraryBuilderAsyncBase):
 			await self.context.runBuildScript(build)
 
 	async def reloadAddons(self):
-		self.addonsRoot = getattr(op, 'raytkAddons')
+		self.addonsRoot = getattr(op, 'raytkAddons', None)
 		if self.addonsRoot:
 			self.context.safeDestroyOp(self.addonsRoot)
 		self.addonsRoot = root.loadTox('addons/src/raytkAddons.tox')
