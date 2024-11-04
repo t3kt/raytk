@@ -35,6 +35,7 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 	#else
 	float oct = THIS_Octaves;
 	#endif
+	oct = max(1., oct); // values < 1 cause infinite loop
 
 	#ifdef THIS_HAS_INPUT_stepOffsetField
 	float stepOff = inputOp_stepOffsetField(p0, ctx);
