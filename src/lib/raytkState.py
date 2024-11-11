@@ -7,18 +7,22 @@ if False:
 	from _stubs import *
 
 @dataclass
-class _StateObject:
+class StateObject:
 	def toDict(self):
 		d = {}
 		for f in fields(self):
 			val = getattr(self, f.name, None)
 			if _shouldInclude(val) and val != f.default:
-				if isinstance(val, list) and isinstance(val[0], _StateObject):
+				if isinstance(val, list) and isinstance(val[0], StateObject):
 					val = [v.toDict() for v in val]
-				elif isinstance(val, _StateObject):
+				elif isinstance(val, StateObject):
 					val = val.toDict()
 				d[f.name] = val
 		return d
+
+	@classmethod
+	def fromObj(cls, obj: dict):
+		return cls(**obj)
 
 def _shouldInclude(val):
 	if val is None or val == '':
@@ -28,7 +32,7 @@ def _shouldInclude(val):
 	return True
 
 @dataclass
-class RopState(_StateObject):
+class RopState(StateObject):
 	name: str = ''
 	path: str = ''
 	ropType: str = ''
@@ -101,7 +105,7 @@ class RopState(_StateObject):
 		return cls.fromDict(json.loads(text))
 
 @dataclass
-class InputState(_StateObject):
+class InputState(StateObject):
 	functionName: str
 	sourceName: str | None = None
 	varNames: list[str] | None = None
@@ -113,32 +117,32 @@ class InputState(_StateObject):
 	returnType: list[str] | None = None
 
 @dataclass
-class ValidationError(_StateObject):
+class ValidationError(StateObject):
 	path: str
 	level: str
 	message: str
 
 @dataclass
-class Macro(_StateObject):
+class Macro(StateObject):
 	name: str
 	value: str | int | bool | float | None = None
 	enable: bool = True
 
 @dataclass
-class Constant(_StateObject):
+class Constant(StateObject):
 	name: str
 	localName: str
 	type: str
 	menuOptions: list[str] | None = None
 
 @dataclass
-class Texture(_StateObject):
+class Texture(StateObject):
 	name: str
 	path: str
 	type: str
 
 @dataclass
-class Reference(_StateObject):
+class Reference(StateObject):
 	name: str = ''
 	localName: str = ''
 	sourceName: str | None = None
@@ -148,7 +152,7 @@ class Reference(_StateObject):
 	category: str | None = None
 
 @dataclass
-class Variable(_StateObject):
+class Variable(StateObject):
 	name: str = ''
 	localName: str = ''
 	label: str = ''
@@ -157,14 +161,14 @@ class Variable(_StateObject):
 	macros: str | None = None
 
 @dataclass
-class SurfaceAttribute(_StateObject):
+class SurfaceAttribute(StateObject):
 	name: str = ''
 	label: str = ''
 	dataType: str = ''
 	macros: str | None = None
 
 @dataclass
-class Buffer(_StateObject):
+class Buffer(StateObject):
 	name: str
 	type: str
 	chop: str
@@ -176,7 +180,7 @@ class Buffer(_StateObject):
 	expr4: str | None = None
 
 @dataclass
-class ParamSpec(_StateObject):
+class ParamSpec(StateObject):
 	name: str
 	localName: str
 	source: str
@@ -189,7 +193,7 @@ class ParamSpec(_StateObject):
 	conversion: str | None = None
 
 @dataclass
-class ParamTupletSpec(_StateObject):
+class ParamTupletSpec(StateObject):
 	name: str
 	localName: str
 	source: str
@@ -207,7 +211,7 @@ class ParamTupletSpec(_StateObject):
 	sourceVectorIndex: int | None = None
 
 @dataclass
-class OpElementState(_StateObject):
+class OpElementState(StateObject):
 	elementRoot: str
 	isNested: bool
 	paramGroupTable: str | None = None
