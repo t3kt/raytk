@@ -1,0 +1,2 @@
+name	label	dataType	enable	macros	category
+normoffset	Normalized Spline Offset (0..1)	float	1		variable
