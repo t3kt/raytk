@@ -234,6 +234,36 @@ Ray getViewRay(vec2 shift) {
 	return ray;
 }
 
+void prepareLights(vec3 p, inout MaterialContext matCtx) {
+	LightContext lightCtx = createLightContext(matCtx.result, matCtx.normal);
+	#ifdef RAYTK_GLOBAL_POS_IN_CONTEXT
+	lightCtx.globalPos = matCtx.globalPos;
+	#endif
+
+	// TODO: shadow
+	#if RAYTK_LIGHT_COUNT > 1
+	{
+		for (int i = 0; i < RAYTK_LIGHT_COUNT; i++) {
+			Light light = createLight(uTDLights[i].position.xyz, uTDLights[i].diffuse.xyz);
+			matCtx.allLights[i] = light;
+//			matCtx.allShadedLevels[i] = calcShadedLevel(p, matCtx);
+			// TODO: shadow
+			matCtx.allShadedLevels[i] = 1;
+		}
+		matCtx.light = matCtx.allLights[0];
+		matCtx.shadedLevel = matCtx.allShadedLevels[0];
+	}
+	#else
+	{
+		lightCtx.index = 0;
+		Light light = createLight(uTDLights[0].position.xyz, uTDLights[0].diffuse.xyz);
+		matCtx.light = light;
+		matCtx.lightIndex = 0;
+		// TODO: shadow
+	}
+	#endif
+}
+
 void main()
 {
 	TDCheckDiscard();
@@ -274,6 +304,7 @@ void main()
 		#endif
 
 		matCtx.normal = calcNormal(p);
+		prepareLights(p, matCtx);
 
 		vec4 col = getColorFromMats(p, matCtx);
 
@@ -281,8 +312,6 @@ void main()
 		col.rgb += (1.0/255.0)*hash1(uv);
 		colorOut = col;
 	} else {
+		discard;
 	}
-//	colorOut.g = res.x;
-//		colorOut = vec4(ray.pos, 1);
-//	colorOut = vec4(map(ray.pos).x, 0, 0, 1);
 }
