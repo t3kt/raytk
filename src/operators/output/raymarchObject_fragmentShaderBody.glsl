@@ -234,21 +234,48 @@ Ray getViewRay(vec2 shift) {
 	return ray;
 }
 
+float calcShadedLevel(vec3 p, MaterialContext matCtx) {
+	float sdfLevel = 1.0;
+	float geoLevel = 1.0;
+	int priorStage = pushStage(RAYTK_STAGE_SHADOW);
+	#ifdef THIS_Enablesdfshadow
+	{
+		vec3 lightVec = normalize(matCtx.light.pos - p);
+		Ray shadowRay = Ray(p+matCtx.normal * RAYTK_SURF_DIST*2., lightVec);
+		Sdf shadowRes = castRay(shadowRay, RAYTK_MAX_DIST);
+		if (!isNonHitSdf(shadowRes) && shadowRes.x < length(matCtx.light.pos - p)) {
+			sdfLevel = 0.0;
+		}
+	}
+	#endif
+	#ifdef THIS_Enablegeoshadow
+	{
+		geoLevel = 1.0 - TDHardShadow(matCtx.lightIndex, p);
+	}
+	#endif
+	popStage(priorStage);
+	return min(sdfLevel, geoLevel);
+}
+
 void prepareLights(vec3 p, inout MaterialContext matCtx) {
 	LightContext lightCtx = createLightContext(matCtx.result, matCtx.normal);
 	#ifdef RAYTK_GLOBAL_POS_IN_CONTEXT
 	lightCtx.globalPos = matCtx.globalPos;
 	#endif
 
-	// TODO: shadow
+	bool useShadow = false;
+	#if defined(THIS_Enablesdfshadow) && defined(RAYTK_USE_SHADOW)
+	if (matCtx.result.useShadow) {
+		useShadow = true;
+	}
+	#endif
+
 	#if RAYTK_LIGHT_COUNT > 1
 	{
 		for (int i = 0; i < RAYTK_LIGHT_COUNT; i++) {
 			Light light = createLight(uTDLights[i].position.xyz, uTDLights[i].diffuse.xyz);
 			matCtx.allLights[i] = light;
-//			matCtx.allShadedLevels[i] = calcShadedLevel(p, matCtx);
-			// TODO: shadow
-			matCtx.allShadedLevels[i] = 1;
+			matCtx.allShadedLevels[i] = calcShadedLevel(p, matCtx);
 		}
 		matCtx.light = matCtx.allLights[0];
 		matCtx.shadedLevel = matCtx.allShadedLevels[0];
@@ -259,7 +286,11 @@ void prepareLights(vec3 p, inout MaterialContext matCtx) {
 		Light light = createLight(uTDLights[0].position.xyz, uTDLights[0].diffuse.xyz);
 		matCtx.light = light;
 		matCtx.lightIndex = 0;
-		// TODO: shadow
+		#ifdef RAYTK_USE_SHADOW
+		if (useShadow) {
+			matCtx.shadedLevel = calcShadedLevel(p, matCtx);
+		}
+		#endif
 	}
 	#endif
 }
@@ -285,6 +316,9 @@ void main()
 	//-----------------------------------------------------
 
 	Ray ray = getViewRay(shift);
+	vec4 p4 = vec4(ray.pos, 1);
+	p4 *= uTDMats[iVert.cameraIndex].world;
+	ray.pos *= p4.xyz;
 	//-----------------------------------------------------
 	// render
 	//-----------------------------------------------------
