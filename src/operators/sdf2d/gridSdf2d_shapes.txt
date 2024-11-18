@@ -1,0 +1,7 @@
+name	label	code
+square	Square	result = gr_SquareGrid(p, id);
+hexagon	Hexagon	result = gr_HexGrid(p, id);
+triangle	Triangle	result = gr_TriGrid(p, id);
+diamond	Diamond	result = gr_DiamondGrid(p, id);
+brick	Brick	result = gr_BrickGrid(p, id);
+octagon	Octagon	result = gr_OctagonalGrid(p, id);
