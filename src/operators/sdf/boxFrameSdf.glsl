@@ -10,6 +10,7 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 	thickness *= inputOp_thicknessField(p, ctx);
 	#endif
 	vec3 b = scale;
+	THICKNESS_BODY();
 	float e = thickness;
 	p = abs(p)-b;
 	vec3 q = abs(p+e)-e;
