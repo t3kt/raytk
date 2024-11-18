@@ -1,0 +1,73 @@
+!rop
+meta: !meta
+  opType: raytk.operators.sdf.polytopeSdf
+  opVersion: '0'
+  opStatus: beta
+opDef: !def
+  enable: true
+  typeSpec: !ropTypes
+    coordType: !coordT
+      Coordtypevec3: true
+    contextType: !contextT
+      Allcontexttype: true
+    returnType: !returnT
+      Returntypesdf: true
+  opGlobals: !text
+    file: src/operators/sdf/polytopeSdf_globals.glsl
+    name: globals
+  init: !text
+    file: src/operators/sdf/polytopeSdf_init.glsl
+    name: init
+  function: !text
+    file: src/operators/sdf/polytopeSdf.glsl
+    name: function
+  paramGroupTable: eval_params
+  libraryNames: !expr
+    expr: '[op(''polytopeSdf_lib''), ''raytkCombine'']'
+  help: !text
+    file: src/operators/sdf/polytopeSdf.md
+    name: help
+inputs:
+- !input
+  Source: !expr
+    expr: parent().par.Segmentsizefield or ''
+  Label: Segment Size Field
+  Localalias: segmentSizeField
+  coordType: !coordT
+    Coordtypevec3: true
+  contextType: !contextT
+    Allcontexttype: true
+  returnType: !returnT
+    Returntypefloat: true
+- !input
+  Source: !expr
+    expr: parent().par.Vertexsizefield or ''
+  Label: Vertex Size Field
+  Localalias: vertexSizeField
+  coordType: !coordT
+    Coordtypevec3: true
+  contextType: !contextT
+    Allcontexttype: true
+  returnType: !returnT
+    Returntypefloat: true
+elements:
+- !opElement
+  name: combiner
+  elementType: combiner
+  params:
+    Includenone: false
+    Modeparam: Combine
+    Swapinputsparam: ''
+    Radiusparam: Blendradius
+    Numberparam: Blendnumber
+    Offsetparam: Blendoffset
+    Radiusfield: ''
+    Offsetfield: ''
+    Numberfield: ''
+    Manageparamstates: true
+    Alwaysincludeallparams: false
+    Switchmode: auto
+    Indexexpr: ''
+    Prepcodeplaceholder: MERGE_PREP();
+    Bodycodeplaceholder: MERGE_BODY();
+    Defaultinitcodeplaceholder: ''

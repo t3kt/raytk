@@ -1,0 +1,1 @@
+THIS_init();
