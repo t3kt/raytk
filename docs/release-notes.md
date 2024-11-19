@@ -1,5 +1,35 @@
 # Release Notes
 
+## v0.44
+
+### Highlights
+
+### Details
+
+* Improvements / additions
+  * New OPs
+    * extrudeBezier - extrude a 3D shape along a bezier curve
+    * gridSdf2d - combines several types of 2D grids into a single operator
+    * polytopeSdf - 4D polychora / polytopes, stereographically projected to 3D
+  * New OP features
+    * boxFrameSdf - added setting to control how the thickness is applied relative to the size
+  * Editor tools
+    * SDF to field added sub-menu to select field mode.
+  * (Addons) show version mismatch when addon package doesn't match the main toolkit (#1269)
+* Fixes
+  * Fix warnings when creating from the palette if the toolkit isn't at the root (#1270)
+  * Fix Update OP for ROPs from addons (#1266)
+  * (raytkAbstractions) Fix version error in abstractions by applying update after creation with the palette (#1265)
+  * Fix crash in terrainNoiseFields when octaves are below 1 (#1264)
+* Changes (potentially breaking)
+  *
+* Infrastructure / internals
+  *
+
+### Compatibility
+
+* This version requires TouchDesigner 2023.12000 or later.
+
 ## v0.43
 
 ### Highlights

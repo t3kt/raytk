@@ -1,6 +1,5 @@
 name	chip
-customRender	updated
-combineVolumes	updated
-iteratedTransform	updated
-texture3dVolume	updated
-volumetricRaymarchRender3D	updated
+extrudeBezier	new
+gridSdf2d	new
+polytopeSdf	new
+boxFrameSdf	updated
