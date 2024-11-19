@@ -18,6 +18,9 @@ opDef: !def
   paramGroupTable: eval_params
   libraryNames: !expr
     expr: op('gridSdf2d_lib')
+  help: !text
+    file: src/operators/sdf2d/gridSdf2d.md
+    name: help
 inputs:
 - !input
   Localalias: sizeField
