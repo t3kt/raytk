@@ -12,9 +12,11 @@ def onCook(dat: DAT):
 	radiusParam = config.par.Radiusparam
 	numberParam = config.par.Numberparam
 	offsetParam = config.par.Offsetparam
+	gutterParam = config.par.Gutterparam
 	radiusField = config.par.Radiusfield
 	numberField = config.par.Numberfield
 	offsetField = config.par.Offsetfield
+	gutterField = config.par.Gutterfield
 	isInline = effectiveMode == 'inline'
 
 	if isInline:
@@ -25,10 +27,12 @@ def onCook(dat: DAT):
 		needRadius = radiusParam in usedParams
 		needNumber = numberParam in usedParams
 		needOffset = offsetParam in usedParams
+		needGutter = gutterParam in usedParams
 	else:
 		needRadius = True
 		needNumber = True
 		needOffset = True
+		needGutter = True
 
 	lines = []
 
@@ -68,5 +72,18 @@ def onCook(dat: DAT):
 		else:
 			# this causes problems with offset fields, so only do it when not using a field
 			lines += ['o = mod(o, r / n * 2.);']
+	if needGutter:
+		if gutterField:
+			lines += [
+				f'#ifdef THIS_HAS_INPUT_{gutterField}',
+				f'float g = inputOp_{gutterField}(p, ctx);',
+				'#else',
+				f'float g = THIS_{gutterParam};',
+				'#endif',
+			]
+		else:
+			lines += [
+				f'float g = THIS_{gutterParam};'
+			]
 
 	dat.write('\n'.join('\t' + line for line in lines))

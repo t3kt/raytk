@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.combine.arrange
-  opVersion: '20'
+  opVersion: '21'
   opStatus: default
 opDef: !def
   enable: true
@@ -115,9 +115,11 @@ elements:
     Radiusparam: Radius
     Numberparam: Number
     Offsetparam: Offset
+    Gutterparam: Gutter
     Radiusfield: ''
     Offsetfield: ''
     Numberfield: ''
+    Gutterfield: ''
     Manageparamstates: true
     Alwaysincludeallparams: true
     Switchmode: auto

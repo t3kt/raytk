@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.combine.combine
-  opVersion: '28'
+  opVersion: '29'
   opStatus: default
 paramPages:
 - !page
@@ -165,6 +165,15 @@ multiInput: !multiInput
       Allcontexttype: true
     returnType: !returnT
       Returntypefloat: true
+  - !input
+    Localalias: gutterField
+    Variableinputs: inputOp[1-2]
+    coordType: !coordT
+      Allcoordtype: true
+    contextType: !contextT
+      Allcontexttype: true
+    returnType: !returnT
+      Returntypefloat: true
 elements:
 - !opElement
   name: combiner
@@ -176,9 +185,11 @@ elements:
     Radiusparam: Radius
     Numberparam: Number
     Offsetparam: Offset
+    Gutterparam: Gutter
     Radiusfield: radiusField
     Offsetfield: offsetField
     Numberfield: ''
+    Gutterfield: gutterField
     Manageparamstates: true
     Alwaysincludeallparams: false
     Switchmode: auto

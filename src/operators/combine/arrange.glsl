@@ -1,4 +1,4 @@
-void THIS_merge(inout ReturnT res1, in ReturnT res2, float r, float n, float o) {
+void THIS_merge(inout ReturnT res1, in ReturnT res2, float r, float n, float o, float g) {
 MERGE_BODY();
 }
 

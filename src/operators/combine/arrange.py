@@ -34,6 +34,7 @@ class State:
 	rad: Par | None = None
 	num: Par | None = None
 	off: Par | None = None
+	gut: Par | None = None
 
 def loadState() -> 'State':
 	p = parent().par
@@ -45,6 +46,8 @@ def loadState() -> 'State':
 	if cmb.startswith('stair') or cmb.startswith('column'):
 		state.num = p.Number
 		state.off = p.Offset
+	if cmb == 'smoothAvoid':
+		state.gut = p.Gutter
 	for i in range(1, 9):
 		suffix = str(i)
 		if op('definition_' + suffix).numRows < 2:

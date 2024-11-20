@@ -5,7 +5,7 @@ if (THIS_Enable$ > 0.5) {
   #endif
   res2 = inputOp$(p1, ctx);
   if (initialized) {
-    THIS_merge(res1, res2, r, n, o);
+    THIS_merge(res1, res2, r, n, o, g);
   } else {
     res1 = res2;
     initialized = true;
