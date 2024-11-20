@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.sdf2d.eggSdf2d
-  opVersion: '3'
+  opVersion: '4'
   opStatus: default
 opDef: !def
   enable: true
@@ -16,6 +16,8 @@ opDef: !def
     file: src/operators/sdf2d/eggSdf2d.glsl
     name: function
   paramGroupTable: eval_params
+  libraryNames: !expr
+    expr: op('eggSdf2d_lib')
 inputs:
 - !input
   Localalias: radiusField
@@ -34,3 +36,44 @@ inputs:
     Allcontexttype: true
   returnType: !returnT
     Returntypefloat: true
+- !input
+  Localalias: point1Field
+  Variableinputs: radiusField roundingField
+  coordType: !coordT
+    Coordtypevec2: true
+  contextType: !contextT
+    Allcontexttype: true
+  returnType: !returnT
+    Returntypevec4: true
+- !input
+  Localalias: point2Field
+  Variableinputs: radiusField roundingField point1Field
+  coordType: !coordT
+    Coordtypevec2: true
+  contextType: !contextT
+    Allcontexttype: true
+  returnType: !returnT
+    Returntypevec4: true
+- !input
+  Localalias: bulgeField
+  Variableinputs: radiusField roundingField point1Field point2Field
+  coordType: !coordT
+    Coordtypevec2: true
+  contextType: !contextT
+    Allcontexttype: true
+  returnType: !returnT
+    Returntypefloat: true
+elements:
+- !opElement
+  name: codeSwitcher_Shape
+  elementType: codeSwitcher
+  params:
+    Elementroot: ..
+    Table: shapes
+    Param: Shape
+    Autoupdateparams: true
+    Manageparamstates: false
+    Alwaysincludeallparams: false
+    Switchmode: auto
+    Indexexpr: ''
+    Placeholder: BODY();
