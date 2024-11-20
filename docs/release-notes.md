@@ -12,7 +12,10 @@
     * gridSdf2d - combines several types of 2D grids into a single operator
     * polytopeSdf - 4D polychora / polytopes, stereographically projected to 3D
   * New OP features
+    * arrange / combine / etc - added smooth avoid mode (#1272)
     * boxFrameSdf - added setting to control how the thickness is applied relative to the size
+    * cutSphereSdf - added segment mode
+    * eggSdf2d - added uneven mode
   * Editor tools
     * SDF to field added sub-menu to select field mode.
   * (Addons) show version mismatch when addon package doesn't match the main toolkit (#1269)

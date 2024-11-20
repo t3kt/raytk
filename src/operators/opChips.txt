@@ -1,5 +1,8 @@
 name	chip
+arrange	updated
+boxFrameSdf	updated
+combine	updated
+composeSdf	updated
 extrudeBezier	new
 gridSdf2d	new
 polytopeSdf	new
-boxFrameSdf	updated
