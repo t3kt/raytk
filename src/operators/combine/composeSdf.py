@@ -14,6 +14,7 @@ class Stage:
 	rad: Par | None
 	num: Par | None
 	off: Par | None
+	gut: Par | None
 
 	def _hasTranslate(self):
 		if self.tra[0].mode != ParMode.CONSTANT or self.tra[1].mode != ParMode.CONSTANT or self.tra[2].mode != ParMode.CONSTANT:
@@ -43,11 +44,15 @@ def loadStages() -> 'List[Stage]':
 		else:
 			num = None
 			off = None
+		if cmb == 'smoothAvoid':
+			gut = p['Blendgutter' + suffix]
+		else:
+			gut = None
 		stages.append(Stage(
 			src='inputOp' + p['Input' + suffix].eval()[-1],
 			cmb=cmb,
 			tra=(p[f'Translate{suffix}x'], p[f'Translate{suffix}y'], p[f'Translate{suffix}z']),
-			rad=rad, num=num, off=off
+			rad=rad, num=num, off=off, gut=gut,
 		))
 	return stages
 

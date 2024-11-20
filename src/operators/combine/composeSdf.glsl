@@ -1,6 +1,6 @@
 void THIS_merge(
 	int mode, inout ReturnT res1, in ReturnT res2,
-	float r, float n, float o) {
+	float r, float n, float o, float g) {
 	MERGE_BODY();
 }
 
@@ -47,7 +47,7 @@ void THIS_exposeIndex(int i) {
 
 void THIS_processStep(
 	int step, inout ReturnT res, inout bool initialized,
-	int mode, float r, float n,  float o, int inNum,
+	int mode, float r, float n,  float o, float g, int inNum,
 	CoordT p, ContextT ctx) {
 	THIS_exposeIndex(step);
 	ReturnT res2 = THIS_getInput(inNum, p, ctx);
@@ -55,7 +55,7 @@ void THIS_processStep(
 		res = res2;
 		initialized = true;
 	} else {
-		THIS_merge(mode, res, res2, r, n, o);
+		THIS_merge(mode, res, res2, r, n, o, g);
 	}
 }
 

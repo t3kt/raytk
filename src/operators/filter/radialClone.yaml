@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.filter.radialClone
-  opVersion: '28'
+  opVersion: '29'
   opStatus: default
 opDef: !def
   enable: !expr
@@ -90,9 +90,11 @@ elements:
     Radiusparam: Mergeradius
     Numberparam: Mergenumber
     Offsetparam: Mergeoffset
+    Gutterparam: Mergegutter
     Radiusfield: blendRadiusField
     Offsetfield: ''
     Numberfield: ''
+    Gutterfield: ''
     Manageparamstates: true
     Alwaysincludeallparams: false
     Switchmode: auto

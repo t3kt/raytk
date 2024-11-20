@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.sdf.polytopeSdf
-  opVersion: '0'
+  opVersion: '1'
   opStatus: beta
 opDef: !def
   enable: true
@@ -61,9 +61,11 @@ elements:
     Radiusparam: Blendradius
     Numberparam: Blendnumber
     Offsetparam: Blendoffset
+    Gutterparam: Blendgutter
     Radiusfield: ''
     Offsetfield: ''
     Numberfield: ''
+    Gutterfield: ''
     Manageparamstates: true
     Alwaysincludeallparams: false
     Switchmode: auto
