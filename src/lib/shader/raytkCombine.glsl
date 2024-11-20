@@ -33,6 +33,22 @@ Sdf cmb_smoothDiff(Sdf res1, Sdf res2, float r) {
 	return cmb_smoothIntersect(res1, res2, r);
 }
 
+float _cmb_smoothSubtract( float d1, float d2, float r, out float h )
+{
+	h = clamp(0.5 - 0.5*(d2+d1)/r, 0.0, 1.0);
+	return mix( d2, -d1, h ) + r*h*(1.0-h);
+}
+
+Sdf cmb_smoothAvoid(Sdf res1, Sdf res2, float r, float gutter)
+{
+	Sdf res = res1;
+	float h;
+	res.x = _cmb_smoothSubtract(-res1.x, -res2.x+gutter, r, h);
+	blendInSdf(res, res1, h);
+	res = cmb_simpleUnion(res, res2);
+	return res;
+}
+
 Sdf cmb_roundUnion(Sdf res1, Sdf res2, float r) {
 	float h = smoothBlendRatio(res1.x, res2.x, r);
 	res1.x = fOpUnionRound(res1.x, res2.x, r);
