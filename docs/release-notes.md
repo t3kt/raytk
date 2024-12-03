@@ -16,6 +16,7 @@
     * boxFrameSdf - added setting to control how the thickness is applied relative to the size
     * cutSphereSdf - added segment mode
     * eggSdf2d - added uneven mode
+    * (raytkVolumes) sdfVolume - field inputs for offset, blending, thickness
   * Editor tools
     * SDF to field added sub-menu to select field mode.
   * (Addons) show version mismatch when addon package doesn't match the main toolkit (#1269)
