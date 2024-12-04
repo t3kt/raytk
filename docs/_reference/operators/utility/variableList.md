@@ -15,7 +15,6 @@ op:
     - CameraContext
     - LightContext
     - RayContext
-    - ParticleContext
     - VertexContext
     - PixelContext
     coordTypes:
@@ -33,14 +32,12 @@ op:
     - Volume
     - Ray
     - Light
-    - Particle
   - contextTypes:
     - Context
     - MaterialContext
     - CameraContext
     - LightContext
     - RayContext
-    - ParticleContext
     - VertexContext
     - PixelContext
     coordTypes:
@@ -57,14 +54,12 @@ op:
     - Volume
     - Ray
     - Light
-    - Particle
   - contextTypes:
     - Context
     - MaterialContext
     - CameraContext
     - LightContext
     - RayContext
-    - ParticleContext
     - VertexContext
     - PixelContext
     coordTypes:
@@ -81,7 +76,6 @@ op:
     - Volume
     - Ray
     - Light
-    - Particle
     supportedVariableInputs:
     - variable1
   - contextTypes:
@@ -90,7 +84,6 @@ op:
     - CameraContext
     - LightContext
     - RayContext
-    - ParticleContext
     - VertexContext
     - PixelContext
     coordTypes:
@@ -107,7 +100,6 @@ op:
     - Volume
     - Ray
     - Light
-    - Particle
     supportedVariableInputs:
     - variable1
     - variable2
@@ -117,7 +109,6 @@ op:
     - CameraContext
     - LightContext
     - RayContext
-    - ParticleContext
     - VertexContext
     - PixelContext
     coordTypes:
@@ -134,7 +125,6 @@ op:
     - Volume
     - Ray
     - Light
-    - Particle
     supportedVariableInputs:
     - variable1
     - variable2
@@ -145,7 +135,6 @@ op:
     - CameraContext
     - LightContext
     - RayContext
-    - ParticleContext
     - VertexContext
     - PixelContext
     coordTypes:
@@ -162,7 +151,6 @@ op:
     - Volume
     - Ray
     - Light
-    - Particle
     supportedVariableInputs:
     - variable1
     - variable2
@@ -174,7 +162,6 @@ op:
     - CameraContext
     - LightContext
     - RayContext
-    - ParticleContext
     - VertexContext
     - PixelContext
     coordTypes:
@@ -191,7 +178,6 @@ op:
     - Volume
     - Ray
     - Light
-    - Particle
     supportedVariableInputs:
     - variable1
     - variable2
@@ -204,7 +190,6 @@ op:
     - CameraContext
     - LightContext
     - RayContext
-    - ParticleContext
     - VertexContext
     - PixelContext
     coordTypes:
@@ -221,7 +206,6 @@ op:
     - Volume
     - Ray
     - Light
-    - Particle
     supportedVariableInputs:
     - variable1
     - variable2

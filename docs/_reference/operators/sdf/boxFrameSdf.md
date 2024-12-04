@@ -15,7 +15,6 @@ op:
     - CameraContext
     - LightContext
     - RayContext
-    - ParticleContext
     - VertexContext
     - PixelContext
     coordTypes:
@@ -31,7 +30,6 @@ op:
     - CameraContext
     - LightContext
     - RayContext
-    - ParticleContext
     - VertexContext
     - PixelContext
     coordTypes:
@@ -66,6 +64,15 @@ op:
     readOnlyHandling: baked
     regularHandling: runtime
     summary: The thickness of the bars of the box.
+  - label: Thickness Mode
+    menuOptions:
+    - label: Inset
+      name: inset
+    - label: Centered
+      name: centered
+    - label: Outset
+      name: outset
+    name: Thicknessmode
   - label: UV Mode
     menuOptions:
     - label: None

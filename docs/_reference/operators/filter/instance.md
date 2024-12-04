@@ -32,7 +32,6 @@ op:
     - CameraContext
     - LightContext
     - RayContext
-    - ParticleContext
     - VertexContext
     - PixelContext
     coordTypes:
@@ -54,7 +53,6 @@ op:
     - CameraContext
     - LightContext
     - RayContext
-    - ParticleContext
     - VertexContext
     - PixelContext
     coordTypes:
@@ -130,6 +128,8 @@ op:
       name: columnDiff
     - label: Simple XOR
       name: simpleXOR
+    - label: Smooth Avoid
+      name: smoothAvoid
     name: Combine
     readOnlyHandling: baked
     regularHandling: runtime
@@ -160,6 +160,8 @@ op:
       from the combined result.
   - label: Enable Uniform Scale
     name: Enablescale
+  - label: Merge Gutter
+    name: Mergegutter
   summary: Repeats its input some number of times, exposing the index as the iteration
     x value, and combines the results.
   thumb: assets/images/reference/operators/filter/instance_thumb.png

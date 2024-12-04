@@ -15,7 +15,6 @@ op:
     - CameraContext
     - LightContext
     - RayContext
-    - ParticleContext
     - VertexContext
     - PixelContext
     coordTypes:
@@ -31,7 +30,6 @@ op:
     - Volume
     - Ray
     - Light
-    - Particle
   name: polarToCartesian
   opType: raytk.operators.filter.polarToCartesian
   parameters:

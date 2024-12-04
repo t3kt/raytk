@@ -22,7 +22,6 @@ op:
     - CameraContext
     - LightContext
     - RayContext
-    - ParticleContext
     - VertexContext
     - PixelContext
     coordTypes:
@@ -41,7 +40,6 @@ op:
     - CameraContext
     - LightContext
     - RayContext
-    - ParticleContext
     - VertexContext
     - PixelContext
     coordTypes:
@@ -61,7 +59,6 @@ op:
     - CameraContext
     - LightContext
     - RayContext
-    - ParticleContext
     - VertexContext
     - PixelContext
     coordTypes:
@@ -82,7 +79,6 @@ op:
     - CameraContext
     - LightContext
     - RayContext
-    - ParticleContext
     - VertexContext
     - PixelContext
     coordTypes:
@@ -92,6 +88,25 @@ op:
     - vec4
     label: Offset Field
     name: offsetField
+    returnTypes:
+    - float
+    supportedVariableInputs:
+    - inputOp[1-2]
+  - contextTypes:
+    - Context
+    - MaterialContext
+    - CameraContext
+    - LightContext
+    - RayContext
+    - VertexContext
+    - PixelContext
+    coordTypes:
+    - float
+    - vec2
+    - vec3
+    - vec4
+    label: Gutter Field
+    name: gutterField
     returnTypes:
     - float
     supportedVariableInputs:
@@ -157,6 +172,8 @@ op:
       name: columnDiff
     - label: Simple XOR
       name: simpleXOR
+    - label: Smooth Avoid
+      name: smoothAvoid
     name: Combine
     readOnlyHandling: baked
     regularHandling: runtime
@@ -173,6 +190,8 @@ op:
       the blending regions.
   - label: Offset
     name: Offset
+  - label: Gutter
+    name: Gutter
   shortcuts:
   - cmb
   summary: Combines SDFs in various ways.

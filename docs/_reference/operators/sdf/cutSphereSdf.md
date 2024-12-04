@@ -9,7 +9,7 @@ redirect_from:
 op:
   category: sdf
   detail: Based on [CutSphere - distance 3D](https://www.shadertoy.com/view/stKSzc)
-    by iq.
+    by iq, and [Segment on Sphere SDF](https://www.shadertoy.com/view/lfcyDM) by SnoopethDuckDuck.
   inputs:
   - contextTypes:
     - Context
@@ -17,7 +17,6 @@ op:
     - CameraContext
     - LightContext
     - RayContext
-    - ParticleContext
     - VertexContext
     - PixelContext
     coordTypes:
@@ -32,7 +31,6 @@ op:
     - CameraContext
     - LightContext
     - RayContext
-    - ParticleContext
     - VertexContext
     - PixelContext
     coordTypes:
@@ -49,7 +47,6 @@ op:
     - CameraContext
     - LightContext
     - RayContext
-    - ParticleContext
     - VertexContext
     - PixelContext
     coordTypes:
@@ -67,7 +64,24 @@ op:
     - CameraContext
     - LightContext
     - RayContext
-    - ParticleContext
+    - VertexContext
+    - PixelContext
+    coordTypes:
+    - vec3
+    label: Max Angle Field
+    name: maxAngleField
+    returnTypes:
+    - float
+    supportedVariableInputs:
+    - radiusField
+    - thicknessField
+    - offsetField
+  - contextTypes:
+    - Context
+    - MaterialContext
+    - CameraContext
+    - LightContext
+    - RayContext
     - VertexContext
     - PixelContext
     coordTypes:
@@ -80,6 +94,7 @@ op:
     - radiusField
     - thicknessField
     - offsetField
+    - maxAngleField
   name: cutSphereSdf
   opType: raytk.operators.sdf.cutSphereSdf
   parameters:
@@ -89,6 +104,8 @@ op:
       name: solid
     - label: Hollow
       name: hollow
+    - label: Segment
+      name: segment
     name: Shape
     readOnlyHandling: semibaked
     regularHandling: runtime
@@ -110,6 +127,8 @@ op:
     name: Rotate
     readOnlyHandling: baked
     regularHandling: runtime
+  - label: Max Angle
+    name: Maxangle
   summary: Sphere with part of it cut off, either solid or hollow.
   thumb: assets/images/reference/operators/sdf/cutSphereSdf_thumb.png
 
@@ -118,4 +137,4 @@ op:
 
 Sphere with part of it cut off, either solid or hollow.
 
-Based on [CutSphere - distance 3D](https://www.shadertoy.com/view/stKSzc) by iq.
+Based on [CutSphere - distance 3D](https://www.shadertoy.com/view/stKSzc) by iq, and [Segment on Sphere SDF](https://www.shadertoy.com/view/lfcyDM) by SnoopethDuckDuck.

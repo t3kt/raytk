@@ -16,7 +16,6 @@ op:
     - CameraContext
     - LightContext
     - RayContext
-    - ParticleContext
     - VertexContext
     - PixelContext
     coordTypes:
@@ -32,7 +31,6 @@ op:
     - Volume
     - Ray
     - Light
-    - Particle
   name: sampleAlongLine
   opType: raytk.operators.convert.sampleAlongLine
   parameters:

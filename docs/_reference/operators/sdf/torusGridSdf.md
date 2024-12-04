@@ -15,7 +15,6 @@ op:
     - CameraContext
     - LightContext
     - RayContext
-    - ParticleContext
     - VertexContext
     - PixelContext
     coordTypes:
@@ -33,7 +32,6 @@ op:
     - CameraContext
     - LightContext
     - RayContext
-    - ParticleContext
     - VertexContext
     - PixelContext
     coordTypes:
@@ -53,7 +51,6 @@ op:
     - CameraContext
     - LightContext
     - RayContext
-    - ParticleContext
     - VertexContext
     - PixelContext
     coordTypes:
@@ -75,7 +72,6 @@ op:
     - CameraContext
     - LightContext
     - RayContext
-    - ParticleContext
     - VertexContext
     - PixelContext
     coordTypes:
@@ -181,6 +177,8 @@ op:
       name: columnDiff
     - label: Simple XOR
       name: simpleXOR
+    - label: Smooth Avoid
+      name: smoothAvoid
     name: Combine
     readOnlyHandling: baked
     regularHandling: runtime
@@ -190,6 +188,8 @@ op:
     name: Blendnumber
   - label: Blend Offset
     name: Blendoffset
+  - label: Blend Gutter
+    name: Blendgutter
   status: beta
   thumb: assets/images/reference/operators/sdf/torusGridSdf_thumb.png
   variables:

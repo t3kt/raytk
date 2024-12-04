@@ -207,6 +207,10 @@ cat:
     thumb: assets/images/reference/operators/sdf/planeSdf_thumb.png
   - name: polyhedronSdf
     thumb: assets/images/reference/operators/sdf/polyhedronSdf_thumb.png
+  - name: polytopeSdf
+    status: beta
+    summary: 4D polytope SDF.
+    thumb: assets/images/reference/operators/sdf/polytopeSdf_thumb.png
   - keywords:
     - column
     - cylinder

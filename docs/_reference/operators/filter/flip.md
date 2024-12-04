@@ -15,7 +15,6 @@ op:
     - CameraContext
     - LightContext
     - RayContext
-    - ParticleContext
     - VertexContext
     - PixelContext
     coordTypes:
@@ -31,7 +30,6 @@ op:
     - Volume
     - Ray
     - Light
-    - Particle
     supportedVariableInputs:
     - offsetField
     - shiftField
@@ -44,7 +42,6 @@ op:
     - CameraContext
     - LightContext
     - RayContext
-    - ParticleContext
     - VertexContext
     - PixelContext
     coordTypes:
@@ -63,7 +60,6 @@ op:
     - CameraContext
     - LightContext
     - RayContext
-    - ParticleContext
     - VertexContext
     - PixelContext
     coordTypes:
@@ -142,6 +138,8 @@ op:
       name: columnDiff
     - label: Simple XOR
       name: simpleXOR
+    - label: Smooth Avoid
+      name: smoothAvoid
     name: Mergetype
     readOnlyHandling: baked
     regularHandling: runtime
@@ -166,6 +164,8 @@ op:
     name: Mergenumber
   - label: Merge Offset
     name: Mergeoffset
+  - label: Merge Gutter
+    name: Mergegutter
   summary: Flips the input across an axis, either on its own or merged with the original.
   thumb: assets/images/reference/operators/filter/flip_thumb.png
   variables:
