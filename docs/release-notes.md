@@ -4,6 +4,9 @@
 
 ### Highlights
 
+* Some new SDFs and bezier curve extrusion!
+* Helpful bugfixes (including the issue with cloning warnings when using the palette).
+
 ### Details
 
 * Improvements / additions
