@@ -37,6 +37,17 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 	} else {
 		res.x = max(res.x, -d + th/2);
 	}
+	#elif defined(THIS_RETURN_TYPE_Volume)
+	if (IS_TRUE(THIS_Enablesmoothing)) {
+		if (volumeHasSdf(res)) {
+			res.sdf.x = fOpIntersectionRound(res.sdf.x, -d + th/2, bl);
+		}
+	} else {
+		if (volumeHasSdf(res)) {
+			res.sdf.x = max(res.sdf.x, -d + th/2);
+		}
+	}
+	res.density = mixVals(0, res.density, amt);
 	#else
 	ReturnT fillRes;
 	initDefVal(fillRes);
