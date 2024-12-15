@@ -7,3 +7,4 @@ extrudeBezier	new
 gridSdf2d	new
 polytopeSdf	new
 sdfVolume	new
+split	new

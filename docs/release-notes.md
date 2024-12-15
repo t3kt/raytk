@@ -14,6 +14,7 @@
     * extrudeBezier - extrude a 3D shape along a bezier curve
     * gridSdf2d - combines several types of 2D grids into a single operator
     * polytopeSdf - 4D polychora / polytopes, stereographically projected to 3D
+    * split - cuts through a field, SDF, or volume and spreads it apart
   * New OP features
     * arrange / combine / etc - added smooth avoid mode (#1272)
     * boxFrameSdf - added setting to control how the thickness is applied relative to the size
