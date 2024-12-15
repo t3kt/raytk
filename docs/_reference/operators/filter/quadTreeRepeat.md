@@ -15,7 +15,6 @@ op:
     - CameraContext
     - LightContext
     - RayContext
-    - ParticleContext
     - VertexContext
     - PixelContext
     coordTypes:
@@ -31,7 +30,6 @@ op:
     - Volume
     - Ray
     - Light
-    - Particle
     summary: Main input which appears within each cell.
     supportedVariableInputs:
     - offsetField
@@ -45,7 +43,6 @@ op:
     - CameraContext
     - LightContext
     - RayContext
-    - ParticleContext
     - VertexContext
     - PixelContext
     coordTypes:
@@ -63,7 +60,6 @@ op:
     - CameraContext
     - LightContext
     - RayContext
-    - ParticleContext
     - VertexContext
     - PixelContext
     coordTypes:

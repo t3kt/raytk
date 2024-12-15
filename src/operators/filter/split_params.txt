@@ -1,0 +1,7 @@
+names	source	handling	readOnlyHandling	conversion	enable
+Axis	param	runtime	constant		1
+Offset	param	runtime	macro		op('offset_definition').numRows < 2
+Thickness	param	runtime	macro		op('thickness_definition').numRows < 2
+Enablesmoothing	param	runtime	constant		1
+Smoothradius	param	runtime	macro		1
+Rotateaxis[xyz]	param	runtime	macro		op('rotateAxis_definition').numRows < 2

@@ -19,6 +19,11 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 	#else
 	vec3 rot = THIS_Rotate;
 	#endif
+	#ifdef THIS_HAS_INPUT_maxAngleField
+	float m = radians(inputOp_maxAngleField(p, ctx));
+	#else
+	float m = radians(THIS_Maxangle);
+	#endif
 	h = mapRange(saturate(h), 0., 1., -r, r);
 	pRotateOnXYZ(p, rot);
 	float d;

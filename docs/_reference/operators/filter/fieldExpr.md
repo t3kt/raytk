@@ -24,7 +24,6 @@ op:
     - CameraContext
     - LightContext
     - RayContext
-    - ParticleContext
     - VertexContext
     - PixelContext
     coordTypes:
@@ -41,14 +40,12 @@ op:
     - Volume
     - Ray
     - Light
-    - Particle
   - contextTypes:
     - Context
     - MaterialContext
     - CameraContext
     - LightContext
     - RayContext
-    - ParticleContext
     - VertexContext
     - PixelContext
     coordTypes:
@@ -65,14 +62,12 @@ op:
     - Volume
     - Ray
     - Light
-    - Particle
   - contextTypes:
     - Context
     - MaterialContext
     - CameraContext
     - LightContext
     - RayContext
-    - ParticleContext
     - VertexContext
     - PixelContext
     coordTypes:
@@ -89,14 +84,12 @@ op:
     - Volume
     - Ray
     - Light
-    - Particle
   - contextTypes:
     - Context
     - MaterialContext
     - CameraContext
     - LightContext
     - RayContext
-    - ParticleContext
     - VertexContext
     - PixelContext
     coordTypes:
@@ -113,7 +106,6 @@ op:
     - Volume
     - Ray
     - Light
-    - Particle
   name: fieldExpr
   opType: raytk.operators.filter.fieldExpr
   parameters:

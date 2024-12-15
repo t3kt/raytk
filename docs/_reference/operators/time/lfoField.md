@@ -15,7 +15,6 @@ op:
     - CameraContext
     - LightContext
     - RayContext
-    - ParticleContext
     - VertexContext
     - PixelContext
     coordTypes:
@@ -108,8 +107,6 @@ op:
       name: LightContext
     - label: Ray Context
       name: RayContext
-    - label: Particle Context
-      name: ParticleContext
     name: Contexttype
 
 ---

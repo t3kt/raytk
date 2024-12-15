@@ -1,3 +1,6 @@
 names	source	handling	readOnlyHandling	conversion	enable
 Radius	param	runtime	macro		op('radius_definition').numRows < 2
 Rounding	param	runtime	macro		op('rounding_definition').numRows < 2
+Point1[xy]	param	runtime	macro		op('point1_definition').numRows < 2
+Point2[xy]	param	runtime	macro		op('point2_definition').numRows < 2
+Bulge	param	runtime	macro		op('bulge_definition').numRows < 2

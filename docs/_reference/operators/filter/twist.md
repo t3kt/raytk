@@ -15,7 +15,6 @@ op:
     - CameraContext
     - LightContext
     - RayContext
-    - ParticleContext
     - VertexContext
     - PixelContext
     coordTypes:
@@ -29,7 +28,6 @@ op:
     - Volume
     - Ray
     - Light
-    - Particle
   name: twist
   opType: raytk.operators.filter.twist
   parameters:

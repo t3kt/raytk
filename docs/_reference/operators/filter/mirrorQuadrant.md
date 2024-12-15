@@ -16,7 +16,6 @@ op:
     - CameraContext
     - LightContext
     - RayContext
-    - ParticleContext
     - VertexContext
     - PixelContext
     coordTypes:
@@ -31,7 +30,6 @@ op:
     - Volume
     - Ray
     - Light
-    - Particle
     supportedVariableInputs:
     - rotate_axis_field_definition_in
     supportedVariables:
@@ -43,7 +41,6 @@ op:
     - CameraContext
     - LightContext
     - RayContext
-    - ParticleContext
     - VertexContext
     - PixelContext
     coordTypes:
@@ -69,7 +66,6 @@ op:
     - CameraContext
     - LightContext
     - RayContext
-    - ParticleContext
     - VertexContext
     - PixelContext
     coordTypes:

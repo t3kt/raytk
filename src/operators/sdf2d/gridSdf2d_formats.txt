@@ -1,0 +1,4 @@
+name	label	code
+interior	Cell Interiors	d = -distBorder + sp;
+edge	Cell Edges	d = distBorder - sp;
+center	Cell Centers	d = distCenter - r;

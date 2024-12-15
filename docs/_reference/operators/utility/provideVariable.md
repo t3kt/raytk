@@ -15,7 +15,6 @@ op:
     - CameraContext
     - LightContext
     - RayContext
-    - ParticleContext
     - VertexContext
     - PixelContext
     coordTypes:
@@ -33,7 +32,6 @@ op:
     - Volume
     - Ray
     - Light
-    - Particle
     supportedVariableInputs:
     - valueField
     supportedVariables:
@@ -44,7 +42,6 @@ op:
     - CameraContext
     - LightContext
     - RayContext
-    - ParticleContext
     - VertexContext
     - PixelContext
     coordTypes:
@@ -61,7 +58,6 @@ op:
     - Volume
     - Ray
     - Light
-    - Particle
   name: provideVariable
   opType: raytk.operators.utility.provideVariable
   parameters:

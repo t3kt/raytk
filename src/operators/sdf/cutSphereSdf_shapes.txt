@@ -1,3 +1,4 @@
 name	label	code	params
 solid	Solid	d = sdCutSphere(p, r, h);	
 hollow	Hollow	d = sdCutHollowSphere(p, r, h, t);	Thickness
+segment	Segment	d = sdSegmentSphere(p, m, r, h, t);	Thickness Maxangle

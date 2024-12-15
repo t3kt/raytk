@@ -22,7 +22,6 @@ op:
     - CameraContext
     - LightContext
     - RayContext
-    - ParticleContext
     - VertexContext
     - PixelContext
     coordTypes:
@@ -42,7 +41,6 @@ op:
     - CameraContext
     - LightContext
     - RayContext
-    - ParticleContext
     - VertexContext
     - PixelContext
     coordTypes:
@@ -117,6 +115,8 @@ op:
       name: columnDiff
     - label: Simple XOR
       name: simpleXOR
+    - label: Smooth Avoid
+      name: smoothAvoid
     name: Mergetype
     readOnlyHandling: semibaked
     regularHandling: semibaked
@@ -128,6 +128,8 @@ op:
     name: Mergenumber
   - label: Merge Offset
     name: Mergeoffset
+  - label: Merge Gutter
+    name: Mergegutter
   summary: Repeats an SDF in a grid arrangement, combining the results.
   thumb: assets/images/reference/operators/filter/gridClone_thumb.png
   variables:

@@ -37,7 +37,6 @@ op:
     - Volume
     - Ray
     - Light
-    - Particle
     summary: Shading element that will use the modified normals. This should be something
       like `diffuseContrib` or `specularContrib`.
     supportedVariableInputs:

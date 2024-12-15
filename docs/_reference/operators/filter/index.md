@@ -80,6 +80,10 @@ cat:
     summary: Clamps coordinates around an area, which causes its edges to be extended
       infinitely along each axis.
     thumb: assets/images/reference/operators/filter/extend_thumb.png
+  - name: extrudeBezier
+    status: beta
+    summary: Extrudes 3D space along the path of a bezier curve.
+    thumb: assets/images/reference/operators/filter/extrudeBezier_thumb.png
   - name: fieldExpr
     status: beta
     summary: Modifies field values using a custom expression.
@@ -360,6 +364,11 @@ cat:
     name: spiralZoom
     summary: Transforms space using a logarithmic spiral.
     thumb: assets/images/reference/operators/filter/spiralZoom_thumb.png
+  - keywords:
+    - separate
+    - slice
+    name: split
+    thumb: assets/images/reference/operators/filter/split_thumb.png
   - keywords:
     - move
     - pivot

@@ -1,0 +1,6 @@
+names	source	handling	readOnlyHandling	conversion	enable
+Type	param	runtime	macro		1
+Enablesegments Enablevertices	param	runtime	constant		1
+U V W	param	runtime	macro		1
+Segmentsize	param	runtime	macro		op('segmentSize_definition').numRows < 2
+Vertexsize	param	runtime	macro		op('vertexSize_definition').numRows < 2

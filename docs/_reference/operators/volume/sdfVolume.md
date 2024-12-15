@@ -15,7 +15,6 @@ op:
     - CameraContext
     - LightContext
     - RayContext
-    - ParticleContext
     - VertexContext
     - PixelContext
     coordTypes:
@@ -34,7 +33,6 @@ op:
     - CameraContext
     - LightContext
     - RayContext
-    - ParticleContext
     - VertexContext
     - PixelContext
     coordTypes:
@@ -48,6 +46,75 @@ op:
     - float
     supportedVariableInputs:
     - sdf
+    supportedVariables:
+    - sdf
+  - contextTypes:
+    - Context
+    - MaterialContext
+    - CameraContext
+    - LightContext
+    - RayContext
+    - VertexContext
+    - PixelContext
+    coordTypes:
+    - float
+    - vec2
+    - vec3
+    - vec4
+    label: Offset Field
+    name: offset
+    returnTypes:
+    - float
+    supportedVariableInputs:
+    - sdf
+    - densityField
+    supportedVariables:
+    - sdf
+  - contextTypes:
+    - Context
+    - MaterialContext
+    - CameraContext
+    - LightContext
+    - RayContext
+    - VertexContext
+    - PixelContext
+    coordTypes:
+    - float
+    - vec2
+    - vec3
+    - vec4
+    label: Blending Field
+    name: blending
+    returnTypes:
+    - float
+    supportedVariableInputs:
+    - sdf
+    - densityField
+    - offsetField
+    supportedVariables:
+    - sdf
+  - contextTypes:
+    - Context
+    - MaterialContext
+    - CameraContext
+    - LightContext
+    - RayContext
+    - VertexContext
+    - PixelContext
+    coordTypes:
+    - float
+    - vec2
+    - vec3
+    - vec4
+    label: Thickness Field
+    name: thickness
+    returnTypes:
+    - float
+    supportedVariableInputs:
+    - sdf
+    - densityField
+    - offsetField
+    - blendingField
     supportedVariables:
     - sdf
   moduleName: raytkVolumes

@@ -66,6 +66,10 @@ cat:
     thumb: assets/images/reference/operators/sdf2d/ellipseSdf2d_thumb.png
   - name: flowerSdf2d
     thumb: assets/images/reference/operators/sdf2d/flowerSdf2d_thumb.png
+  - name: gridSdf2d
+    status: beta
+    summary: Various types of grid SDFs.
+    thumb: assets/images/reference/operators/sdf2d/gridSdf2d_thumb.png
   - name: heartSdf2d
     thumb: assets/images/reference/operators/sdf2d/heartSdf2d_thumb.png
   - name: hexagonalGridSdf2d

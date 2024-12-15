@@ -19,3 +19,4 @@ def onCook(dat: DAT):
 		_addPar(stage.rad)
 		_addPar(stage.num)
 		_addPar(stage.off)
+		_addPar(stage.gut)

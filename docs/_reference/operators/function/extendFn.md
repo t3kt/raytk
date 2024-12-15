@@ -20,7 +20,6 @@ op:
     - CameraContext
     - LightContext
     - RayContext
-    - ParticleContext
     - VertexContext
     - PixelContext
     coordTypes:
@@ -38,7 +37,6 @@ op:
     - Volume
     - Ray
     - Light
-    - Particle
   name: extendFn
   opType: raytk.operators.function.extendFn
   parameters:

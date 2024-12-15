@@ -15,7 +15,6 @@ op:
     - CameraContext
     - LightContext
     - RayContext
-    - ParticleContext
     - VertexContext
     - PixelContext
     coordTypes:
@@ -33,7 +32,6 @@ op:
     - Volume
     - Ray
     - Light
-    - Particle
   name: coordTo2D
   opType: raytk.operators.convert.coordTo2D
   parameters:

@@ -26,6 +26,8 @@ def _buildCode(stages: 'List[Stage]'):
 				out.write(f', {parCode(stage.rad)}')
 			if stage.num is not None:
 				out.write(f', {parCode(stage.num)}, {parCode(stage.off)}')
+			if stage.gut is not None:
+				out.write(f', {parCode(stage.gut)}')
 			out.write(');\n')
 	out.write('return res;\n}\n')
 	return out.getvalue()

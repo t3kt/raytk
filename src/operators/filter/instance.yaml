@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.filter.instance
-  opVersion: '26'
+  opVersion: '27'
   opStatus: default
 paramPages:
 - !page
@@ -213,9 +213,11 @@ elements:
     Radiusparam: Radius
     Numberparam: Mergenumber
     Offsetparam: Mergeoffset
+    Gutterparam: Mergegutter
     Radiusfield: radiusField
     Offsetfield: ''
     Numberfield: ''
+    Gutterfield: ''
     Manageparamstates: true
     Alwaysincludeallparams: false
     Switchmode: auto

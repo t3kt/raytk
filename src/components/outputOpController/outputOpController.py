@@ -36,8 +36,6 @@ class OutputOp:
 			elif table[i, 'uniformType'] == 'uniformarray':
 				arrayCount += 1
 		if constCount > 0:
-			if targetOp.isMAT:
-				raise Exception('Specialization constants not yet supported in MATs!')
 			sequence = targetOp.par.const0name.sequence  # type: Sequence
 			if constCount > sequence.numBlocks:
 				sequence.numBlocks = constCount

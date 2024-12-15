@@ -28,4 +28,3 @@ A field that produces various types of polar coordinates.
   * `CameraContext`
   * `LightContext`
   * `RayContext`
-  * `ParticleContext`

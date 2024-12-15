@@ -23,7 +23,6 @@ op:
     - CameraContext
     - LightContext
     - RayContext
-    - ParticleContext
     - VertexContext
     - PixelContext
     coordTypes:
@@ -41,7 +40,6 @@ op:
     - Volume
     - Ray
     - Light
-    - Particle
     summary: The field or SDF whose results will be reshaped.
   - contextTypes:
     - Context
@@ -49,7 +47,6 @@ op:
     - CameraContext
     - LightContext
     - RayContext
-    - ParticleContext
     - VertexContext
     - PixelContext
     coordTypes:
@@ -63,7 +60,6 @@ op:
     - Volume
     - Ray
     - Light
-    - Particle
     summary: The function that is applied to the results of the source field. In cases
       where the source field produces vectors but the function only works of single
       values, the function will be called 4 times. That can end up costly if the function

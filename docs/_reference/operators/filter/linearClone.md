@@ -21,7 +21,6 @@ op:
     - CameraContext
     - LightContext
     - RayContext
-    - ParticleContext
     - VertexContext
     - PixelContext
     coordTypes:
@@ -43,7 +42,6 @@ op:
     - CameraContext
     - LightContext
     - RayContext
-    - ParticleContext
     - VertexContext
     - PixelContext
     coordTypes:
@@ -118,6 +116,8 @@ op:
       name: columnDiff
     - label: Simple XOR
       name: simpleXOR
+    - label: Smooth Avoid
+      name: smoothAvoid
     name: Mergetype
     readOnlyHandling: semibaked
     regularHandling: semibaked
@@ -139,6 +139,8 @@ op:
     readOnlyHandling: semibaked
     regularHandling: semibaked
     summary: Whether and how to expose iteration values to upstream operators.
+  - label: Merge Gutter
+    name: Mergegutter
   summary: Repeats an SDF along a line, combining the results.
   thumb: assets/images/reference/operators/filter/linearClone_thumb.png
   variables:

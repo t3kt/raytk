@@ -16,6 +16,7 @@ def onCook(dat: DAT):
 	_addPar(state.rad)
 	_addPar(state.num)
 	_addPar(state.off)
+	_addPar(state.gut)
 	for stage in state.stages:
 		if stage.hasTranslate():
 			_addPar(stage.tra[0])

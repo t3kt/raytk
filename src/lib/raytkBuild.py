@@ -233,14 +233,14 @@ class BuildContext:
 	def queueAction(action: Callable, *args):
 		run(f'args[0](*(args[1:]))', action, *args, delayFrames=5, delayRef=root)
 
-	async def runBuildScript(self, dat: DAT):
+	async def runBuildScript(self, dat: DAT, *args):
 		self.log(f'Running build script: {dat}')
 		m = dat.module
 		buildFunc = getattr(m, 'build', None)
 		if buildFunc is None:
 			self.log('No build function found in build script')
 			raise Exception('No build function found in build script')
-		await buildFunc(self)
+		await buildFunc(self, *args)
 		self.log(f'Finished build script: {dat}')
 
 	async def yieldAsync(self):

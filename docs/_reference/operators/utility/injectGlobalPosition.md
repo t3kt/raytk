@@ -29,7 +29,6 @@ op:
     - Volume
     - Ray
     - Light
-    - Particle
   name: injectGlobalPosition
   opType: raytk.operators.utility.injectGlobalPosition
   parameters:

@@ -22,14 +22,12 @@ op:
     - Volume
     - Ray
     - Light
-    - Particle
   - contextTypes:
     - Context
     - MaterialContext
     - CameraContext
     - LightContext
     - RayContext
-    - ParticleContext
     - VertexContext
     - PixelContext
     coordTypes:
@@ -46,14 +44,12 @@ op:
     - Volume
     - Ray
     - Light
-    - Particle
   - contextTypes:
     - Context
     - MaterialContext
     - CameraContext
     - LightContext
     - RayContext
-    - ParticleContext
     - VertexContext
     - PixelContext
     coordTypes:
@@ -70,14 +66,12 @@ op:
     - Volume
     - Ray
     - Light
-    - Particle
   - contextTypes:
     - Context
     - MaterialContext
     - CameraContext
     - LightContext
     - RayContext
-    - ParticleContext
     - VertexContext
     - PixelContext
     coordTypes:
@@ -94,14 +88,12 @@ op:
     - Volume
     - Ray
     - Light
-    - Particle
   - contextTypes:
     - Context
     - MaterialContext
     - CameraContext
     - LightContext
     - RayContext
-    - ParticleContext
     - VertexContext
     - PixelContext
     coordTypes:
@@ -118,14 +110,12 @@ op:
     - Volume
     - Ray
     - Light
-    - Particle
   - contextTypes:
     - Context
     - MaterialContext
     - CameraContext
     - LightContext
     - RayContext
-    - ParticleContext
     - VertexContext
     - PixelContext
     coordTypes:
@@ -142,14 +132,12 @@ op:
     - Volume
     - Ray
     - Light
-    - Particle
   - contextTypes:
     - Context
     - MaterialContext
     - CameraContext
     - LightContext
     - RayContext
-    - ParticleContext
     - VertexContext
     - PixelContext
     coordTypes:
@@ -166,14 +154,12 @@ op:
     - Volume
     - Ray
     - Light
-    - Particle
   - contextTypes:
     - Context
     - MaterialContext
     - CameraContext
     - LightContext
     - RayContext
-    - ParticleContext
     - VertexContext
     - PixelContext
     coordTypes:
@@ -190,7 +176,6 @@ op:
     - Volume
     - Ray
     - Light
-    - Particle
   name: customRender
   opType: raytk.operators.output.customRender
   parameters:

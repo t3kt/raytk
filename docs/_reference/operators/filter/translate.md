@@ -37,7 +37,6 @@ op:
     - Volume
     - Ray
     - Light
-    - Particle
   - contextTypes:
     - MaterialContext
     coordTypes:

@@ -20,7 +20,6 @@ op:
     - CameraContext
     - LightContext
     - RayContext
-    - ParticleContext
     - VertexContext
     - PixelContext
     coordTypes:
@@ -38,7 +37,6 @@ op:
     - CameraContext
     - LightContext
     - RayContext
-    - ParticleContext
     - VertexContext
     - PixelContext
     coordTypes:
@@ -56,7 +54,6 @@ op:
     - CameraContext
     - LightContext
     - RayContext
-    - ParticleContext
     - VertexContext
     - PixelContext
     coordTypes:
@@ -74,7 +71,6 @@ op:
     - CameraContext
     - LightContext
     - RayContext
-    - ParticleContext
     - VertexContext
     - PixelContext
     coordTypes:
@@ -92,7 +88,6 @@ op:
     - CameraContext
     - LightContext
     - RayContext
-    - ParticleContext
     - VertexContext
     - PixelContext
     coordTypes:
@@ -110,7 +105,6 @@ op:
     - CameraContext
     - LightContext
     - RayContext
-    - ParticleContext
     - VertexContext
     - PixelContext
     coordTypes:
@@ -128,7 +122,6 @@ op:
     - CameraContext
     - LightContext
     - RayContext
-    - ParticleContext
     - VertexContext
     - PixelContext
     coordTypes:
@@ -146,7 +139,6 @@ op:
     - CameraContext
     - LightContext
     - RayContext
-    - ParticleContext
     - VertexContext
     - PixelContext
     coordTypes:
@@ -224,6 +216,10 @@ op:
       name: columnIntersect
     - label: Column Difference
       name: columnDiff
+    - label: Simple XOR
+      name: simpleXOR
+    - label: Smooth Avoid
+      name: smoothAvoid
     name: Combine1
   - label: Radius 1
     name: Blendradius1
@@ -292,6 +288,10 @@ op:
       name: columnIntersect
     - label: Column Difference
       name: columnDiff
+    - label: Simple XOR
+      name: simpleXOR
+    - label: Smooth Avoid
+      name: smoothAvoid
     name: Combine2
   - label: Radius 2
     name: Blendradius2
@@ -360,6 +360,10 @@ op:
       name: columnIntersect
     - label: Column Difference
       name: columnDiff
+    - label: Simple XOR
+      name: simpleXOR
+    - label: Smooth Avoid
+      name: smoothAvoid
     name: Combine3
   - label: Radius 3
     name: Blendradius3
@@ -428,6 +432,10 @@ op:
       name: columnIntersect
     - label: Column Difference
       name: columnDiff
+    - label: Simple XOR
+      name: simpleXOR
+    - label: Smooth Avoid
+      name: smoothAvoid
     name: Combine4
   - label: Radius 4
     name: Blendradius4
@@ -496,6 +504,10 @@ op:
       name: columnIntersect
     - label: Column Difference
       name: columnDiff
+    - label: Simple XOR
+      name: simpleXOR
+    - label: Smooth Avoid
+      name: smoothAvoid
     name: Combine5
   - label: Radius 5
     name: Blendradius5
@@ -564,6 +576,10 @@ op:
       name: columnIntersect
     - label: Column Difference
       name: columnDiff
+    - label: Simple XOR
+      name: simpleXOR
+    - label: Smooth Avoid
+      name: smoothAvoid
     name: Combine6
   - label: Radius 6
     name: Blendradius6
@@ -632,6 +648,10 @@ op:
       name: columnIntersect
     - label: Column Difference
       name: columnDiff
+    - label: Simple XOR
+      name: simpleXOR
+    - label: Smooth Avoid
+      name: smoothAvoid
     name: Combine7
   - label: Radius 7
     name: Blendradius7
@@ -700,6 +720,10 @@ op:
       name: columnIntersect
     - label: Column Difference
       name: columnDiff
+    - label: Simple XOR
+      name: simpleXOR
+    - label: Smooth Avoid
+      name: smoothAvoid
     name: Combine8
   - label: Radius 8
     name: Blendradius8
@@ -707,6 +731,22 @@ op:
     name: Blendnumber8
   - label: Offset 8
     name: Blendoffset8
+  - label: Gutter 1
+    name: Blendgutter1
+  - label: Gutter 2
+    name: Blendgutter2
+  - label: Gutter 3
+    name: Blendgutter3
+  - label: Gutter 4
+    name: Blendgutter4
+  - label: Gutter 5
+    name: Blendgutter5
+  - label: Gutter 6
+    name: Blendgutter6
+  - label: Gutter 7
+    name: Blendgutter7
+  - label: Gutter 8
+    name: Blendgutter8
   status: beta
   summary: Combine multiple SDFs using different combination modes into a single SDF.
 

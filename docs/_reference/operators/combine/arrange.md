@@ -15,7 +15,6 @@ op:
     - CameraContext
     - LightContext
     - RayContext
-    - ParticleContext
     - VertexContext
     - PixelContext
     coordTypes:
@@ -35,7 +34,6 @@ op:
     - CameraContext
     - LightContext
     - RayContext
-    - ParticleContext
     - VertexContext
     - PixelContext
     coordTypes:
@@ -57,7 +55,6 @@ op:
     - CameraContext
     - LightContext
     - RayContext
-    - ParticleContext
     - VertexContext
     - PixelContext
     coordTypes:
@@ -79,7 +76,6 @@ op:
     - CameraContext
     - LightContext
     - RayContext
-    - ParticleContext
     - VertexContext
     - PixelContext
     coordTypes:
@@ -101,7 +97,6 @@ op:
     - CameraContext
     - LightContext
     - RayContext
-    - ParticleContext
     - VertexContext
     - PixelContext
     coordTypes:
@@ -123,7 +118,6 @@ op:
     - CameraContext
     - LightContext
     - RayContext
-    - ParticleContext
     - VertexContext
     - PixelContext
     coordTypes:
@@ -145,7 +139,6 @@ op:
     - CameraContext
     - LightContext
     - RayContext
-    - ParticleContext
     - VertexContext
     - PixelContext
     coordTypes:
@@ -167,7 +160,6 @@ op:
     - CameraContext
     - LightContext
     - RayContext
-    - ParticleContext
     - VertexContext
     - PixelContext
     coordTypes:
@@ -226,6 +218,8 @@ op:
       name: columnDiff
     - label: Simple XOR
       name: simpleXOR
+    - label: Smooth Avoid
+      name: smoothAvoid
     name: Combine
     readOnlyHandling: baked
     regularHandling: runtime
@@ -286,6 +280,8 @@ op:
     name: Enabletranslate
     summary: Whether to use positioning features. Keep this off if you don't need
       it, to improve performance.
+  - label: Gutter
+    name: Gutter
   summary: Combines multiple SDFs, with a different position for each.
   thumb: assets/images/reference/operators/combine/arrange_thumb.png
   variables:

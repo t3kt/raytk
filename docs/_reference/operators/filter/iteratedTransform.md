@@ -17,7 +17,6 @@ op:
     - CameraContext
     - LightContext
     - RayContext
-    - ParticleContext
     - VertexContext
     - PixelContext
     coordTypes:
@@ -33,7 +32,6 @@ op:
     - Volume
     - Ray
     - Light
-    - Particle
     supportedVariables:
     - step
     - normstep
@@ -43,7 +41,6 @@ op:
     - CameraContext
     - LightContext
     - RayContext
-    - ParticleContext
     - VertexContext
     - PixelContext
     coordTypes:
@@ -67,7 +64,6 @@ op:
     - CameraContext
     - LightContext
     - RayContext
-    - ParticleContext
     - VertexContext
     - PixelContext
     coordTypes:
@@ -86,7 +82,6 @@ op:
     - CameraContext
     - LightContext
     - RayContext
-    - ParticleContext
     - VertexContext
     - PixelContext
     coordTypes:
@@ -106,7 +101,6 @@ op:
     - CameraContext
     - LightContext
     - RayContext
-    - ParticleContext
     - VertexContext
     - PixelContext
     coordTypes:
@@ -272,6 +266,8 @@ op:
       name: columnDiff
     - label: Simple XOR
       name: simpleXOR
+    - label: Smooth Avoid
+      name: smoothAvoid
     name: Combine
     summary: The type of combination operation to perform.
   - label: Swap Inputs
@@ -286,6 +282,8 @@ op:
       the blending regions.
   - label: Blend Offset
     name: Blendoffset
+  - label: Blend Gutter
+    name: Blendgutter
   summary: Performs a transform multiple times, optionally reflecting across axes
     in between the steps.
   thumb: assets/images/reference/operators/filter/iteratedTransform_thumb.png

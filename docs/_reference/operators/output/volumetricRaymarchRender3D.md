@@ -242,7 +242,7 @@ op:
     regularHandling: semibaked
   - label: Overlay Render
     name: Overlayrender
-  - label: Render TOP
+  - label: Render TOP / RaymarchRender3D
     name: Rendertop
   - label: Depth TOP
     name: Depthtop

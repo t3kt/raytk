@@ -17,7 +17,6 @@ op:
     - CameraContext
     - LightContext
     - RayContext
-    - ParticleContext
     - VertexContext
     - PixelContext
     coordTypes:
@@ -39,7 +38,6 @@ op:
     - CameraContext
     - LightContext
     - RayContext
-    - ParticleContext
     - VertexContext
     - PixelContext
     coordTypes:
@@ -61,7 +59,6 @@ op:
     - CameraContext
     - LightContext
     - RayContext
-    - ParticleContext
     - VertexContext
     - PixelContext
     coordTypes:
@@ -83,7 +80,6 @@ op:
     - CameraContext
     - LightContext
     - RayContext
-    - ParticleContext
     - VertexContext
     - PixelContext
     coordTypes:
@@ -183,6 +179,8 @@ op:
       name: columnDiff
     - label: Simple XOR
       name: simpleXOR
+    - label: Smooth Avoid
+      name: smoothAvoid
     name: Mergetype
     readOnlyHandling: baked
     regularHandling: runtime
@@ -217,6 +215,8 @@ op:
     name: Mergenumber
   - label: Merge Offset
     name: Mergeoffset
+  - label: Merge Gutter
+    name: Mergegutter
   summary: Repeats an SDF radially around an axis, combining the resulting shapes.
   thumb: assets/images/reference/operators/filter/radialClone_thumb.png
   variables:
