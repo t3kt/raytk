@@ -311,23 +311,49 @@ float getAxis(float p, int axis) {
 }
 
 float getAxis(vec2 p, int axis) {
-	return (axis >= 0 && axis <= 1) ? p[axis] : 0.;
+	switch (axis) {
+		case 0: return p.x;
+		case 1: return p.y;
+		default: return 0.;
+	}
 }
 
 float getAxis(vec3 p, int axis) {
-	return (axis >= 0 && axis <= 2) ? p[axis] : 0.;
+	switch (axis) {
+		case 0: return p.x;
+		case 1: return p.y;
+		case 2: return p.z;
+		default: return 0.;
+	}
 }
 
 float getAxis(vec4 p, int axis) {
-	return (axis >= 0 && axis <= 3) ? p[axis] : 0.;
+	switch(axis) {
+		case 0: return p.x;
+		case 1: return p.y;
+		case 2: return p.z;
+		case 3: return p.w;
+		default: return 0.;
+	}
+}
+
+void setAxis(inout float p, int axis, float val) {
+	if (axis == 0) p = val;
 }
 
 void setAxis(inout vec2 p, int axis, float val) {
-	p[axis] = val;
+	switch (axis) {
+		case 0: p.x = val; break;
+		case 1: p.y = val; break;
+	}
 }
 
 void setAxis(inout vec3 p, int axis, float val) {
-	p[axis] = val;
+	switch (axis) {
+		case 0: p.x = val; break;
+		case 1: p.y = val; break;
+		case 2: p.z = val; break;
+	}
 }
 
 vec2 getAxisPlane(vec2 p, int axis) {

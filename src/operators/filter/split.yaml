@@ -1,0 +1,36 @@
+!rop
+meta: !meta
+  opType: raytk.operators.filter.split
+  opVersion: '0'
+  opStatus: alpha
+opDef: !def
+  enable: !expr
+    expr: op('..').par.Enable
+  useRuntimeBypass: true
+  typeSpec: !ropTypes
+    coordType: !coordT
+      Allcoordtype: true
+    contextType: !contextT
+      Allcontexttype: true
+    returnType: !returnT
+      Returntypesdf: true
+      Returntypefloat: true
+      Returntypevec4: true
+      Returntypevolume: true
+  function: !text
+    file: src/operators/filter/split.glsl
+    name: function
+  paramGroupTable: eval_params
+  keywords:
+  - separate
+  - slice
+  displayCategory: Transform
+inputs:
+- !input
+  Required: true
+  coordType: !coordT
+    Allcoordtype: true
+  contextType: !contextT
+    Allcontexttype: true
+  returnType: !returnT
+    Allreturntype: true

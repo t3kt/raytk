@@ -1,0 +1,7 @@
+names	source	handling	readOnlyHandling	conversion	enable
+Axis	param	runtime	constant		1
+Offset	param	runtime	macro		1
+Thickness	param	runtime	macro		1
+Enablesmoothing	param	runtime	constant		1
+Smoothradius	param	runtime	macro		1
+Rotateaxis[xyz]	param	runtime	macro		1
