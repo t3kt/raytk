@@ -1,8 +1,8 @@
 !rop
 meta: !meta
   opType: raytk.operators.filter.split
-  opVersion: '0'
-  opStatus: alpha
+  opVersion: '1'
+  opStatus: default
 opDef: !def
   enable: !expr
     expr: op('..').par.Enable
@@ -34,3 +34,30 @@ inputs:
     Allcontexttype: true
   returnType: !returnT
     Allreturntype: true
+- !input
+  Localalias: offsetField
+  Variableinputs: inputOp1
+  coordType: !coordT
+    Allcoordtype: true
+  contextType: !contextT
+    Allcontexttype: true
+  returnType: !returnT
+    Returntypefloat: true
+- !input
+  Localalias: thicknessField
+  Variableinputs: inputOp1 offsetField
+  coordType: !coordT
+    Allcoordtype: true
+  contextType: !contextT
+    Allcontexttype: true
+  returnType: !returnT
+    Returntypefloat: true
+- !input
+  Localalias: rotateAxisField
+  Variableinputs: inputOp1 offsetField thicknessField
+  coordType: !coordT
+    Allcoordtype: true
+  contextType: !contextT
+    Allcontexttype: true
+  returnType: !returnT
+    Returntypevec4: true

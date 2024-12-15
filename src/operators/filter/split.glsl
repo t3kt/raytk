@@ -31,8 +31,16 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 	pRotateOnXYZ(p3, r);
 	p = THIS_asCoordT(p3);
 	ReturnT res = inputOp1(p, ctx);
+	#if defined(THIS_RETURN_TYPE_Sdf)
+	if (IS_TRUE(THIS_Enablesmoothing)) {
+		res.x = fOpIntersectionRound(res.x, -d + th/2, bl);
+	} else {
+		res.x = max(res.x, -d + th/2);
+	}
+	#else
 	ReturnT fillRes;
 	initDefVal(fillRes);
 	res = mixVals(fillRes, res, amt);
+	#endif
 	return res;
 }
