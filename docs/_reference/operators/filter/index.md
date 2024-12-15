@@ -365,6 +365,11 @@ cat:
     summary: Transforms space using a logarithmic spiral.
     thumb: assets/images/reference/operators/filter/spiralZoom_thumb.png
   - keywords:
+    - separate
+    - slice
+    name: split
+    thumb: assets/images/reference/operators/filter/split_thumb.png
+  - keywords:
     - move
     - pivot
     - position
