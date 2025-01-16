@@ -12,12 +12,23 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 	vec3 b = scale;
 	THICKNESS_BODY();
 	float e = thickness;
-	p = abs(p)-b;
-	vec3 q = abs(p+e)-e;
-	Sdf res = createSdf(min(min(
+	vec3 q;
+	if (THIS_Barshape == THISTYPE_Barshape_round) {
+		p = abs(p)-b+e;
+		q = abs(p);
+	} else {
+		p = abs(p)-b;
+		q = abs(p+e)-e;
+	}
+	float d = min(min(
 		length(max(vec3(p.x,q.y,q.z),0.0))+min(max(p.x,max(q.y,q.z)),0.0),
 		length(max(vec3(q.x,p.y,q.z),0.0))+min(max(q.x,max(p.y,q.z)),0.0)),
-		length(max(vec3(q.x,q.y,p.z),0.0))+min(max(q.x,max(q.y,p.z)),0.0)));
+		length(max(vec3(q.x,q.y,p.z),0.0))+min(max(q.x,max(q.y,p.z)),0.0));
+	if (THIS_Barshape == THISTYPE_Barshape_round) {
+		d -= e;
+	}
+	Sdf res = createSdf(d);
+
 	if (THIS_Uvmode == THISTYPE_Uvmode_bounds) {
 		assignUV(res, map01(p0, -b/2., b/2.));
 	}
