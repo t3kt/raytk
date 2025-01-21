@@ -250,13 +250,14 @@ def onHostNameChange():
 	# See issue #295
 	op('sel_funcTemplate').cook(force=True)
 
-def _createBuilder():
-	return _Builder(parent())
-
 def buildOpState():
-	builder = _createBuilder()
+	builder = _Builder(parent())
 	builder.load()
 	return builder.opState
+
+def ensureExt():
+	if not getattr(ext, 'opDefinition', None):
+		parent().par.reinitextensions.pulse()
 
 class _Builder:
 	defPar: 'OpDefParsT'
@@ -844,6 +845,10 @@ def _showWarning(msg: str):
 	dlg = op.TDResources.op('popDialog')
 	dlg.Open(title='Warning', text=msg, escOnClickAway=True)
 
+def updateOP():
+	ensureExt()
+	ext.opDefinition.updateOP()
+
 def _getPalette():
 	if not hasattr(op, 'raytk'):
 		_showWarning('Unable to create reference because RayTK toolkit is not available.')
@@ -920,16 +925,17 @@ class OpDefinition:
 		if not hasattr(op, 'raytk'):
 			_showWarning('Unable to update OP because RayTK toolkit is not available.')
 			return
+		host = self.hostRop
 		toolkit = op.raytk
 		updater = toolkit.op('tools/updater')
 		if updater and hasattr(updater, 'UpdateOP'):
-			updater.UpdateOP(self.hostRop)
+			updater.UpdateOP(host)
 			return
-		if not self.hostRop.par.clone:
+		if not host.par.clone:
 			msg = 'Unable to update OP because master is not found in the loaded toolkit.'
-			if self.opDefComp.par.Raytkopstatus == 'deprecated':
+			if parentPar().Raytkopstatus == 'deprecated':
 				msg += '\nNOTE: This OP has been marked as "Deprecated", so it may have been removed from the toolkit.'
 			_showWarning(msg)
 			return
-		if self.hostRop.par.clone:
-			self.hostRop.par.enablecloningpulse.pulse()
+		if host and host.par.clone:
+			host.par.enablecloningpulse.pulse()
