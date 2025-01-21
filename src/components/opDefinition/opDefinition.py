@@ -246,10 +246,6 @@ def onValidationChange(dat: DAT):
 	err = '\n'.join([c.val for c in cells])
 	host.addScriptError(err)
 
-def onHostNameChange():
-	# See issue #295
-	op('sel_funcTemplate').cook(force=True)
-
 def buildOpState():
 	builder = _Builder(parent())
 	builder.load()
