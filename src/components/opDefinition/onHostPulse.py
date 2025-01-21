@@ -10,11 +10,11 @@ if False:
 def onPulse(par):
 	action = par.name
 	if action == 'Inspect':
-		mod.opDefinition.inspect(par.owner)
+		ext.opDefinition.inspect()
 	elif action == 'Help':
-		mod.opDefinition.launchHelp()
+		ext.opDefinition.launchHelp()
 	elif action == 'Updateop':
-		mod.opDefinition.updateOP()
+		ext.opDefinition.updateOP()
 	elif action.startswith('Createref'):
 		ext.opDefinition.createVarRef(action.replace('Createref', ''))
 	elif action.startswith('Creatersel'):

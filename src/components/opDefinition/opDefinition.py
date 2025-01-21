@@ -844,42 +844,6 @@ def _showWarning(msg: str):
 	dlg = op.TDResources.op('popDialog')
 	dlg.Open(title='Warning', text=msg, escOnClickAway=True)
 
-def inspect(rop: COMP):
-	if hasattr(op, 'raytk'):
-		inspector = op.raytk.op('tools/inspector')
-		if inspector and hasattr(inspector, 'Inspect'):
-			inspector.Inspect(rop)
-			return
-	_showWarning('The RayTK inspector is only available when the main toolkit tox has been loaded.')
-
-def launchHelp():
-	url = parentPar().Helpurl.eval()
-	if not url:
-		return
-	url += '?utm_source=raytkLaunch'
-	ui.viewFile(url)
-
-def updateOP():
-	if not hasattr(op, 'raytk'):
-		_showWarning('Unable to update OP because RayTK toolkit is not available.')
-		return
-	host = _host()
-	if not host:
-		return
-	toolkit = op.raytk
-	updater = toolkit.op('tools/updater')
-	if updater and hasattr(updater, 'UpdateOP'):
-		updater.UpdateOP(host)
-		return
-	if not host.par.clone:
-		msg = 'Unable to update OP because master is not found in the loaded toolkit.'
-		if parentPar().Raytkopstatus == 'deprecated':
-			msg += '\nNOTE: This OP has been marked as "Deprecated", so it may have been removed from the toolkit.'
-		_showWarning(msg)
-		return
-	if host and host.par.clone:
-		host.par.enablecloningpulse.pulse()
-
 def _getPalette():
 	if not hasattr(op, 'raytk'):
 		_showWarning('Unable to create reference because RayTK toolkit is not available.')
@@ -936,3 +900,36 @@ class OpDefinition:
 		if not state.materialId:
 			return None
 		return state.materialCode
+
+	def inspect(self):
+		if hasattr(op, 'raytk'):
+			inspector = op.raytk.op('tools/inspector')
+			if inspector and hasattr(inspector, 'Inspect'):
+				inspector.Inspect(self.hostRop)
+				return
+		_showWarning('The RayTK inspector is only available when the main toolkit tox has been loaded.')
+
+	def launchHelp(self):
+		url = self.opDefComp.par.Helpurl.eval()
+		if not url:
+			return
+		url += '?utm_source=raytkLaunch'
+		ui.viewFile(url)
+
+	def updateOP(self):
+		if not hasattr(op, 'raytk'):
+			_showWarning('Unable to update OP because RayTK toolkit is not available.')
+			return
+		toolkit = op.raytk
+		updater = toolkit.op('tools/updater')
+		if updater and hasattr(updater, 'UpdateOP'):
+			updater.UpdateOP(self.hostRop)
+			return
+		if not self.hostRop.par.clone:
+			msg = 'Unable to update OP because master is not found in the loaded toolkit.'
+			if self.opDefComp.par.Raytkopstatus == 'deprecated':
+				msg += '\nNOTE: This OP has been marked as "Deprecated", so it may have been removed from the toolkit.'
+			_showWarning(msg)
+			return
+		if self.hostRop.par.clone:
+			self.hostRop.par.enablecloningpulse.pulse()
