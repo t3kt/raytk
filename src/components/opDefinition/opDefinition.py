@@ -106,64 +106,19 @@ def _getTupletName(parts: list[str]):
 			return None
 	return prefix
 
-# Builds table with parameter local names, for select CHOPs.
-def buildParamChopNamesTable(dat: DAT):
-	dat.clear()
-	regularNames = []
-	specialNames = []
-	angleNames = []
-	constantNames = []
-	state = _parseOpState()
-	for paramSpec in state.params:
-		if paramSpec.handling == 'macro':
-			continue
-		name = paramSpec.localName
-		source = paramSpec.source
-		if paramSpec.handling == 'constant':
-			if source != 'param':
-				raise Exception(f'Constants must come from parameters {name} {source}')
-			else:
-				constantNames.append(name)
-		elif source == 'param':
-			regularNames.append(name)
-		elif source == 'special':
-			specialNames.append(name)
-		if paramSpec.conversion == 'angle':
-			angleNames.append(name)
-	dat.appendRow(['regular', ' '.join(regularNames)])
-	dat.appendRow(['special', ' '.join(specialNames)])
-	dat.appendRow(['angle', ' '.join(angleNames)])
-	dat.appendRow(['constant', ' '.join(constantNames)])
-	part1Names = []
-	part2Names = []
-	part3Names = []
-	part4Names = []
-	for paramTuplet in state.paramTuplets:
-		if paramTuplet.handling != 'runtime':
-			continue
-		part1Names.append(paramTuplet.part1 or '_')
-		part2Names.append(paramTuplet.part2 or '_')
-		part3Names.append(paramTuplet.part3 or '_')
-		part4Names.append(paramTuplet.part4 or '_')
-	dat.appendRow(['regularPart1', ' '.join(part1Names)])
-	dat.appendRow(['regularPart2', ' '.join(part2Names)])
-	dat.appendRow(['regularPart3', ' '.join(part3Names)])
-	dat.appendRow(['regularPart4', ' '.join(part4Names)])
-
 def buildValidationErrors(
 		errorDat: scriptDAT,
 		inputDefinitions: DAT,
 		elementValidationErrors: list[DAT]):
 	errorDat.clear()
 	errorDat.appendRow(['path', 'level', 'message'])
-	_validateReferences(errorDat)
+	_validateReferences(errorDat, parent().path, parentPar().Referencetable.eval())
 	_validateInputs(errorDat, inputDefinitions)
 	for dat in elementValidationErrors:
 		errorDat.appendRows(dat.rows()[1:])
 
-def _validateReferences(errorDat: scriptDAT):
-	path = parent().path
-	table = parentPar().Referencetable.eval()
+def _validateReferences(errorDat: scriptDAT, path: str, refTable: DAT):
+	table = refTable
 	if not table or table.numRows < 2:
 		return []
 	for i in range(1, table.numRows):
@@ -232,19 +187,6 @@ def _checkInputType(handler: COMP, typeName: str, typeCategory: str):
 	elif typeCategory == 'contextType':
 		return f'Input does not support {typeName} context'
 	return f'Input does not support {typeCategory} {typeName}'
-
-def onValidationChange(dat: DAT):
-	host = _host()
-	if not host or host.par.clone == host:
-		return
-	host.clearScriptErrors()
-	if dat.numRows < 2:
-		return
-	cells = dat.col('message')
-	if not cells:
-		return
-	err = '\n'.join([c.val for c in cells])
-	host.addScriptError(err)
 
 def buildOpState():
 	builder = _Builder(parent())
@@ -802,27 +744,6 @@ class _Builder:
 def _parseOpState():
 	return RopState.fromJson(op('opState').text)
 
-def buildDefinitionTable(dat: scriptDAT, supportedTypes: DAT, inputDefs: DAT):
-	dat.clear()
-	state = _parseOpState()
-	defPath = parent().path
-	dat.appendCols([
-		['name', state.name],
-		['path', state.path],
-		['opType', state.ropFullType],
-		['coordType', _evalType('coordType', supportedTypes, inputDefs)],
-		['contextType', _evalType('contextType', supportedTypes, inputDefs)],
-		['returnType', _evalType('returnType', supportedTypes, inputDefs)],
-		['opVersion', parentPar().Raytkopversion or 0],
-		['toolkitVersion', parentPar().Raytkversion or ''],
-		['paramSource', defPath + '/param_vals'],
-		['constantParamSource', defPath + '/constant_param_vals'],
-		['paramVectors', defPath + '/param_vector_vals'],
-		['libraryNames', parentPar()['Librarynames'] or ''],
-		['definitionPath', defPath + '/definition'],
-		['tags', ' '.join(state.tags or [])],
-	])
-
 _typePattern = re.compile(r'\b[CR][a-z]+T\b')
 _typeRepls = {'CoordT': 'THIS_CoordT', 'ContextT': 'THIS_ContextT', 'ReturnT': 'THIS_ReturnT'}
 def _typeRepl(m): return _typeRepls.get(m.group(0), m.group(0))
@@ -901,6 +822,87 @@ class OpDefinition:
 		if not state.materialId:
 			return None
 		return state.materialCode
+
+	def _parseOpState(self):
+		return RopState.fromJson(self.opDefComp.op('opState').text)
+
+	# Builds table with parameter local names, for select CHOPs.
+	def buildParamChopNamesTable(self, dat: DAT):
+		dat.clear()
+		regularNames = []
+		specialNames = []
+		angleNames = []
+		constantNames = []
+		state = self._parseOpState()
+		for paramSpec in state.params:
+			if paramSpec.handling == 'macro':
+				continue
+			name = paramSpec.localName
+			source = paramSpec.source
+			if paramSpec.handling == 'constant':
+				if source != 'param':
+					raise Exception(f'Constants must come from parameters {name} {source}')
+				else:
+					constantNames.append(name)
+			elif source == 'param':
+				regularNames.append(name)
+			elif source == 'special':
+				specialNames.append(name)
+			if paramSpec.conversion == 'angle':
+				angleNames.append(name)
+		dat.appendRow(['regular', ' '.join(regularNames)])
+		dat.appendRow(['special', ' '.join(specialNames)])
+		dat.appendRow(['angle', ' '.join(angleNames)])
+		dat.appendRow(['constant', ' '.join(constantNames)])
+		part1Names = []
+		part2Names = []
+		part3Names = []
+		part4Names = []
+		for paramTuplet in state.paramTuplets:
+			if paramTuplet.handling != 'runtime':
+				continue
+			part1Names.append(paramTuplet.part1 or '_')
+			part2Names.append(paramTuplet.part2 or '_')
+			part3Names.append(paramTuplet.part3 or '_')
+			part4Names.append(paramTuplet.part4 or '_')
+		dat.appendRow(['regularPart1', ' '.join(part1Names)])
+		dat.appendRow(['regularPart2', ' '.join(part2Names)])
+		dat.appendRow(['regularPart3', ' '.join(part3Names)])
+		dat.appendRow(['regularPart4', ' '.join(part4Names)])
+
+	def buildDefinitionTable(self, dat: scriptDAT, supportedTypes: DAT, inputDefs: DAT):
+		dat.clear()
+		state = self._parseOpState()
+		defPath = self.opDefComp.path
+		dat.appendCols([
+			['name', state.name],
+			['path', state.path],
+			['opType', state.ropFullType],
+			['coordType', _evalType('coordType', supportedTypes, inputDefs)],
+			['contextType', _evalType('contextType', supportedTypes, inputDefs)],
+			['returnType', _evalType('returnType', supportedTypes, inputDefs)],
+			['opVersion', parentPar().Raytkopversion or 0],
+			['toolkitVersion', parentPar().Raytkversion or ''],
+			['paramSource', defPath + '/param_vals'],
+			['constantParamSource', defPath + '/constant_param_vals'],
+			['paramVectors', defPath + '/param_vector_vals'],
+			['libraryNames', parentPar()['Librarynames'] or ''],
+			['definitionPath', defPath + '/definition'],
+			['tags', ' '.join(state.tags or [])],
+		])
+
+	def onValidationChange(self, dat: DAT):
+		host = self.hostRop
+		if not host or host.par.clone == host:
+			return
+		host.clearScriptErrors()
+		if dat.numRows < 2:
+			return
+		cells = dat.col('message')
+		if not cells:
+			return
+		err = '\n'.join([c.val for c in cells])
+		host.addScriptError(err)
 
 	def inspect(self):
 		if hasattr(op, 'raytk'):

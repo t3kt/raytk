@@ -2,8 +2,8 @@
 if False:
 	# noinspection PyUnresolvedReferences
 	from _stubs import *
-	from . import opDefinition as _opDef
-	mod.opDefinition = _opDef
+	from opDefinition import OpDefinition
+	ext.opDefinition = OpDefinition(COMP())
 
 def onTableChange(dat):
-	mod.opDefinition.onValidationChange(dat)
+	ext.opDefinition.onValidationChange(dat)
