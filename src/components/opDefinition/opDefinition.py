@@ -8,14 +8,7 @@ if False:
 	from _stubs import *
 	from raytkUtil import OpDefParsT
 
-def parentPar() -> 'ParCollection | OpDefParsT':
-	return parent().par
-
-def _host() -> COMP | None:
-	return parentPar().Hostop.eval()
-
-def buildName():
-	host = _host()
+def buildName(host):
 	if not host:
 		return ''
 	pathParts = host.path[1:].split('/')
@@ -37,7 +30,7 @@ def _evalType(category: str, supportedTypes: DAT, inputDefs: DAT):
 		return inputCell
 	return supportedTypes[category, 'types']
 
-def _processInputDefTypeCategory(dat: scriptDAT, supportedTypeTable: DAT, category: str):
+def _processInputDefTypeCategory(dat: scriptDAT, supportedTypeTable: DAT, category: str, hostName: str):
 	supported = supportedTypeTable[category, 'types'].val.split(' ')
 	cells = dat.col(category)
 	if not cells:
@@ -51,7 +44,7 @@ def _processInputDefTypeCategory(dat: scriptDAT, supportedTypeTable: DAT, catego
 		elif len(supportedInputTypes) == 1:
 			cell.val = supportedInputTypes[0]
 		else:
-			cell.val = '@' + parentPar().Name.eval()
+			cell.val = '@' + hostName
 
 def _canBeReadOnlyTuplet(pars: list[Par]):
 	return all(p.readOnly and p.mode == ParMode.CONSTANT for p in pars)
@@ -228,8 +221,8 @@ class _Builder:
 		for inputState in self.opState.inputStates:
 			if inputState.tags:
 				tags.update(inputState.tags)
-		if parentPar()['Tagtable'] is not None:
-			table = parentPar().Tagtable.eval()
+		if self.defPar['Tagtable'] is not None:
+			table = self.defPar.Tagtable.eval()
 			if table and table.numRows > 1:
 				for i in range(1, table.numRows):
 					if _isFalseStr(table[i, 'enable']):
@@ -803,6 +796,7 @@ class OpDefinition:
 		if not inDats:
 			return
 		usedNames = set()
+		hostName = self.name
 		for d in reversed(inDats):
 			insertRow = 0
 			for inDatRow in range(1, d.numRows):
@@ -812,9 +806,9 @@ class OpDefinition:
 				usedNames.add(name.val)
 				dat.appendRow([d[inDatRow, col] or '' for col in cols], insertRow)
 				insertRow += 1
-		_processInputDefTypeCategory(dat, supportedTypeTable, 'coordType')
-		_processInputDefTypeCategory(dat, supportedTypeTable, 'contextType')
-		_processInputDefTypeCategory(dat, supportedTypeTable, 'returnType')
+		_processInputDefTypeCategory(dat, supportedTypeTable, 'coordType', hostName)
+		_processInputDefTypeCategory(dat, supportedTypeTable, 'contextType', hostName)
+		_processInputDefTypeCategory(dat, supportedTypeTable, 'returnType', hostName)
 
 	# Builds table with parameter local names, for select CHOPs.
 	def buildParamChopNamesTable(self, dat: DAT):
@@ -871,12 +865,12 @@ class OpDefinition:
 			['coordType', _evalType('coordType', supportedTypes, inputDefs)],
 			['contextType', _evalType('contextType', supportedTypes, inputDefs)],
 			['returnType', _evalType('returnType', supportedTypes, inputDefs)],
-			['opVersion', parentPar().Raytkopversion or 0],
-			['toolkitVersion', parentPar().Raytkversion or ''],
+			['opVersion', self.opDefComp.par.Raytkopversion or 0],
+			['toolkitVersion', self.opDefComp.par.Raytkversion or ''],
 			['paramSource', defPath + '/param_vals'],
 			['constantParamSource', defPath + '/constant_param_vals'],
 			['paramVectors', defPath + '/param_vector_vals'],
-			['libraryNames', parentPar()['Librarynames'] or ''],
+			['libraryNames', self.opDefComp.par['Librarynames'] or ''],
 			['definitionPath', defPath + '/definition'],
 			['tags', ' '.join(state.tags or [])],
 		])
@@ -929,7 +923,7 @@ class OpDefinition:
 			return
 		if not host.par.clone:
 			msg = 'Unable to update OP because master is not found in the loaded toolkit.'
-			if parentPar().Raytkopstatus == 'deprecated':
+			if self.opDefComp.par.Raytkopstatus == 'deprecated':
 				msg += '\nNOTE: This OP has been marked as "Deprecated", so it may have been removed from the toolkit.'
 			_showWarning(msg)
 			return
