@@ -81,17 +81,6 @@ def _getTupletName(parts: list[str]):
 			return None
 	return prefix
 
-def buildValidationErrors(
-		errorDat: scriptDAT,
-		inputDefinitions: DAT,
-		elementValidationErrors: list[DAT]):
-	errorDat.clear()
-	errorDat.appendRow(['path', 'level', 'message'])
-	_validateReferences(errorDat, parent().path, parentPar().Referencetable.eval())
-	_validateInputs(errorDat, inputDefinitions)
-	for dat in elementValidationErrors:
-		errorDat.appendRows(dat.rows()[1:])
-
 def _validateReferences(errorDat: scriptDAT, path: str, refTable: DAT):
 	table = refTable
 	if not table or table.numRows < 2:
@@ -889,6 +878,14 @@ class OpDefinition:
 			['definitionPath', defPath + '/definition'],
 			['tags', ' '.join(state.tags or [])],
 		])
+
+	def buildValidationErrors(self, errorDat: scriptDAT, inputDefinitions: DAT, elementValidationErrors: list[DAT]):
+		errorDat.clear()
+		errorDat.appendRow(['path', 'level', 'message'])
+		_validateReferences(errorDat, self.opDefComp.path, self.opDefComp.par.Referencetable.eval())
+		_validateInputs(errorDat, inputDefinitions)
+		for dat in elementValidationErrors:
+			errorDat.appendRows(dat.rows()[1:])
 
 	def onValidationChange(self, dat: DAT):
 		host = self.hostRop
