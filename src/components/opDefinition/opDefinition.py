@@ -53,22 +53,6 @@ def _processInputDefTypeCategory(dat: scriptDAT, supportedTypeTable: DAT, catego
 		else:
 			cell.val = '@' + parentPar().Name.eval()
 
-def _getParamsOp() -> COMP | None:
-	return parentPar().Paramsop.eval() or _host()
-
-def _getRegularParams(specs: list[str]) -> list[Par]:
-	host = _getParamsOp()
-	if not host:
-		return []
-	paramNames = tdu.expand(str(' '.join(specs)).strip())
-	if not paramNames:
-		return []
-	return [
-		p
-		for p in host.pars(*[pn.strip() for pn in paramNames])
-		if p.isCustom and p.name != 'Inspect'
-	]
-
 def _canBeReadOnlyTuplet(pars: list[Par]):
 	return all(p.readOnly and p.mode == ParMode.CONSTANT for p in pars)
 
@@ -163,6 +147,7 @@ def ensureExt():
 
 class _Builder:
 	defPar: 'OpDefParsT'
+	defExt: 'OpDefinition'
 	hostOp: COMP
 	paramsOp: COMP
 	inDats: list[DAT]
@@ -175,6 +160,7 @@ class _Builder:
 	def __init__(self, opDefComp: COMP):
 		# noinspection PyTypeChecker
 		self.defPar = opDefComp.par  # type: OpDefParsT
+		self.defExt = ext.opDefinition
 		self.hostOp = self.defPar.Hostop.eval()
 		self.paramsOp = self.defPar.Paramsop.eval() or self.hostOp
 		self.inDats = opDefComp.ops('input_def_[0-9]*')
@@ -330,7 +316,7 @@ class _Builder:
 					for name in tdu.expand(table[row, 'names'].val):
 						addSpecialPar(name)
 				else:  # if source == 'param':
-					for par in _getRegularParams([table[row, 'names'].val]):
+					for par in self.defExt._getRegularParams([table[row, 'names'].val]):
 						handling = table[row, 'handling']
 						if par.readOnly:
 							handling = table[row, 'readOnlyHandling'] or handling
@@ -351,7 +337,7 @@ class _Builder:
 	def _fillParamStatuses(self):
 		parsByTuplet = {}  # type: dict[str, list[Par]]
 		paramSpecsByName = {}  # type: dict[str, ParamSpec]
-		host = _getParamsOp()
+		host = self.defExt._getParamsOp()
 		if not host:
 			return
 		for paramSpec in self.opState.params:
@@ -789,6 +775,22 @@ class OpDefinition:
 
 	def _parseOpState(self):
 		return RopState.fromJson(self.opDefComp.op('opState').text)
+
+	def _getParamsOp(self) -> COMP | None:
+		return self.opDefComp.par.Paramsop.eval() or self.hostRop
+
+	def _getRegularParams(self, specs: list[str]) -> list[Par]:
+		host = self._getParamsOp()
+		if not host:
+			return []
+		paramNames = tdu.expand(str(' '.join(specs)).strip())
+		if not paramNames:
+			return []
+		return [
+			p
+			for p in host.pars(*[pn.strip() for pn in paramNames])
+			if p.isCustom and p.name != 'Inspect'
+		]
 
 	def combineInputDefinitions(self, dat: scriptDAT, inDats: list[DAT], defFields: DAT, supportedTypeTable: DAT):
 		dat.clear()
