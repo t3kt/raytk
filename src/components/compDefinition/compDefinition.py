@@ -76,3 +76,8 @@ def updateOP():
 		return
 	if host and host.par.clone:
 		host.par.enablecloningpulse.pulse()
+
+class CompDefinition:
+	def __init__(self, opDefComp: COMP):
+		self.opDefComp = opDefComp
+		self.hostRop = opDefComp.par.Hostop.eval()
