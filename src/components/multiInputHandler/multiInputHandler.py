@@ -39,30 +39,6 @@ class _TypeSettings:
 	replacement: str | None = None
 	scope: list[int] | None = None
 
-def _buildTypeSettingsCategory(category: str, parPrefix: str, inputDefs: list[DAT]):
-	mode = parent().par[parPrefix + 'typereductionmode'].eval()
-	settings = _TypeSettings(mode=mode)
-	if mode in ('common', 'bestcommon', 'besteach'):
-		scopeIndices = _parseInputScope(
-			parent().par[parPrefix + 'typereductionscope'].eval(),
-			maxInputs=len(inputDefs))
-		inScopeCells = [
-			table[1, category]
-			for table in inputDefs
-			if table.digits in scopeIndices
-		]
-		settings.scope = scopeIndices
-		commonTypes = _getCommonTypesFromCells(inScopeCells)
-		if mode == 'common':
-			settings.replacement = ' '.join(commonTypes)
-		elif mode == 'bestcommon':
-			preferredTypes = tdu.split(parent().par[parPrefix + 'typepreference'])
-			settings.replacement = _firstMatch(preferredTypes, commonTypes) or ''
-		elif mode == 'besteach':
-			preferredTypes = tdu.split(parent().par[parPrefix + 'typepreference'])
-			settings.replacement = ' '.join(preferredTypes)
-	return settings
-
 def _applyTypeSettingsCategory(dat: scriptDAT, i: int,  settings: _TypeSettings, category: str):
 	if not settings.scope or i not in settings.scope:
 		return
@@ -79,68 +55,96 @@ def _getTypeReplacement(settings: _TypeSettings, current: str | None):
 		return None
 	return settings.replacement
 
-def processInputs(dat: scriptDAT):
-	dat.clear()
-	dat.appendRow([
-		'head',
-		'name', 'path', 'opType', 'coordType', 'contextType', 'returnType',
-		'definitionPath', 'tags',
-		'input:alias', 'input:vars', 'input:varInputs', 'input:handler',
-	])
-	inputDefs = ops('definition_in_?')
-	coordSettings = _buildTypeSettingsCategory('coordType', 'Coord', inputDefs)
-	contextSettings = _buildTypeSettingsCategory('contextType', 'Context', inputDefs)
-	returnSettings = _buildTypeSettingsCategory('returnType', 'Return', inputDefs)
-	haveIndices = []
+class MultiInputHandler:
+	def __init__(self, ownerComp: 'COMP'):
+		self.ownerComp = ownerComp
 
-	for i, inDef in enumerate(inputDefs):
-		if inDef.numRows < 2:
-			continue
-		i += 1
-		haveIndices.append(i)
-		dat.appendRow([i] + inDef.row(1))
-		# dat.appendRow([
-		# 	i,
-		# 	inDef['name', 1], inDef['path', 1], inDef['opType', 1],
-		# 	inDef['coordType', 1], inDef['contextType', 1], inDef['returnType', 1],
-		# 	inDef['definitionPath', 1], inDef['tags', 1],
-		# 	inDef['input:alias', 1], inDef['input:vars', 1], inDef['input:varInputs', 1], inDef['input:handler', 1],
-		# ])
-		for inRow in range(2, inDef.numRows):
-			dat.appendRow([str(i) + '_'] + inDef.row(inRow))
-		_applyTypeSettingsCategory(dat, i, coordSettings, 'coordType')
-		_applyTypeSettingsCategory(dat, i, contextSettings, 'contextType')
-		_applyTypeSettingsCategory(dat, i, returnSettings, 'returnType')
+	def _buildTypeSettingsCategory(self, category: str, parPrefix: str, inputDefs: list[DAT]):
+		mode = self.ownerComp.par[parPrefix + 'typereductionmode'].eval()
+		settings = _TypeSettings(mode=mode)
+		if mode in ('common', 'bestcommon', 'besteach'):
+			scopeIndices = _parseInputScope(
+				self.ownerComp.par[parPrefix + 'typereductionscope'].eval(),
+				maxInputs=len(inputDefs))
+			inScopeCells = [
+				table[1, category]
+				for table in inputDefs
+				if table.digits in scopeIndices
+			]
+			settings.scope = scopeIndices
+			commonTypes = _getCommonTypesFromCells(inScopeCells)
+			if mode == 'common':
+				settings.replacement = ' '.join(commonTypes)
+			elif mode == 'bestcommon':
+				preferredTypes = tdu.split(self.ownerComp.par[parPrefix + 'typepreference'])
+				settings.replacement = _firstMatch(preferredTypes, commonTypes) or ''
+			elif mode == 'besteach':
+				preferredTypes = tdu.split(self.ownerComp.par[parPrefix + 'typepreference'])
+				settings.replacement = ' '.join(preferredTypes)
+		return settings
 
-	def addValidation(level, msg):
-		if dat['validation', 0] is None:
-			dat.appendRow(['validation', 'path', 'level', 'message'])
-		dat.appendRow(['validation', parent().path, level, msg])
+	def processInputs(self, dat: scriptDAT):
+		dat.clear()
+		dat.appendRow([
+			'head',
+			'name', 'path', 'opType', 'coordType', 'contextType', 'returnType',
+			'definitionPath', 'tags',
+			'input:alias', 'input:vars', 'input:varInputs', 'input:handler',
+		])
+		inputDefs = ops('definition_in_?')
+		coordSettings = self._buildTypeSettingsCategory('coordType', 'Coord', inputDefs)
+		contextSettings = self._buildTypeSettingsCategory('contextType', 'Context', inputDefs)
+		returnSettings = self._buildTypeSettingsCategory('returnType', 'Return', inputDefs)
+		haveIndices = []
 
-	def validateCategory(category, settings: _TypeSettings):
-		if settings.mode == 'besteach':
-			for i in haveIndices:
-				current = dat[str(i), category]
-				if not current:
-					addValidation('error', f'No matching {category} for input {i}')
-		else:
-			repl = _getTypeReplacement(settings, None)
-			if repl == '':
-				addValidation('error', f'Inputs have no matching {category}')
+		for i, inDef in enumerate(inputDefs):
+			if inDef.numRows < 2:
+				continue
+			i += 1
+			haveIndices.append(i)
+			dat.appendRow([i] + inDef.row(1))
+			# dat.appendRow([
+			# 	i,
+			# 	inDef['name', 1], inDef['path', 1], inDef['opType', 1],
+			# 	inDef['coordType', 1], inDef['contextType', 1], inDef['returnType', 1],
+			# 	inDef['definitionPath', 1], inDef['tags', 1],
+			# 	inDef['input:alias', 1], inDef['input:vars', 1], inDef['input:varInputs', 1], inDef['input:handler', 1],
+			# ])
+			for inRow in range(2, inDef.numRows):
+				dat.appendRow([str(i) + '_'] + inDef.row(inRow))
+			_applyTypeSettingsCategory(dat, i, coordSettings, 'coordType')
+			_applyTypeSettingsCategory(dat, i, contextSettings, 'contextType')
+			_applyTypeSettingsCategory(dat, i, returnSettings, 'returnType')
 
-	minCount = int(parent().par.Minimuminputs)
-	if len(haveIndices) < minCount:
-		addValidation('error', f'Only {len(haveIndices)} provided, {minCount} required')
-	if len(haveIndices) >= 2:
-		validateCategory('coordType', coordSettings)
-		validateCategory('contextType', contextSettings)
-		validateCategory('returnType', returnSettings)
+		def addValidation(level, msg):
+			if dat['validation', 0] is None:
+				dat.appendRow(['validation', 'path', 'level', 'message'])
+			dat.appendRow(['validation', self.ownerComp.path, level, msg])
 
-	dat.appendRow(['info', 'inputCount', len(haveIndices)])
-	effectiveIndex = 1
-	for i in range(1, 9):
-		dat.appendRow(['info', f'hasInput{i}', int(i in haveIndices)])
-		if i in haveIndices:
-			dat.appendRow(['macro', f'THIS_INPUT_{effectiveIndex} inputOp{i}'])
-			effectiveIndex += 1
-	dat.appendRow(['macro', 'THIS_INPUT_COUNT ' + str(len(haveIndices))])
+		def validateCategory(category, settings: _TypeSettings):
+			if settings.mode == 'besteach':
+				for i in haveIndices:
+					current = dat[str(i), category]
+					if not current:
+						addValidation('error', f'No matching {category} for input {i}')
+			else:
+				repl = _getTypeReplacement(settings, None)
+				if repl == '':
+					addValidation('error', f'Inputs have no matching {category}')
+
+		minCount = int(self.ownerComp.par.Minimuminputs)
+		if len(haveIndices) < minCount:
+			addValidation('error', f'Only {len(haveIndices)} provided, {minCount} required')
+		if len(haveIndices) >= 2:
+			validateCategory('coordType', coordSettings)
+			validateCategory('contextType', contextSettings)
+			validateCategory('returnType', returnSettings)
+
+		dat.appendRow(['info', 'inputCount', len(haveIndices)])
+		effectiveIndex = 1
+		for i in range(1, 9):
+			dat.appendRow(['info', f'hasInput{i}', int(i in haveIndices)])
+			if i in haveIndices:
+				dat.appendRow(['macro', f'THIS_INPUT_{effectiveIndex} inputOp{i}'])
+				effectiveIndex += 1
+		dat.appendRow(['macro', 'THIS_INPUT_COUNT ' + str(len(haveIndices))])
