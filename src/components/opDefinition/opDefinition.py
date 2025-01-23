@@ -37,31 +37,6 @@ def _evalType(category: str, supportedTypes: DAT, inputDefs: DAT):
 		return inputCell
 	return supportedTypes[category, 'types']
 
-def combineInputDefinitions(dat: scriptDAT, inDats: list[DAT], defFields: DAT, supportedTypeTable: DAT):
-	dat.clear()
-	if parentPar()['Inputdefs'] is not None:
-		inDats += parentPar().Inputdefs.evalOPs()
-	if not inDats:
-		return
-	cols = defFields.col(0) + ['input:handler']
-	dat.appendRow(cols)
-	inDats = [d for d in inDats if d.numRows > 1]
-	if not inDats:
-		return
-	usedNames = set()
-	for d in reversed(inDats):
-		insertRow = 0
-		for inDatRow in range(1, d.numRows):
-			name = d[inDatRow, 'name']
-			if not name or name.val in usedNames:
-				continue
-			usedNames.add(name.val)
-			dat.appendRow([d[inDatRow, col] or '' for col in cols], insertRow)
-			insertRow += 1
-	_processInputDefTypeCategory(dat, supportedTypeTable, 'coordType')
-	_processInputDefTypeCategory(dat, supportedTypeTable, 'contextType')
-	_processInputDefTypeCategory(dat, supportedTypeTable, 'returnType')
-
 def _processInputDefTypeCategory(dat: scriptDAT, supportedTypeTable: DAT, category: str):
 	supported = supportedTypeTable[category, 'types'].val.split(' ')
 	cells = dat.col(category)
@@ -825,6 +800,30 @@ class OpDefinition:
 
 	def _parseOpState(self):
 		return RopState.fromJson(self.opDefComp.op('opState').text)
+
+	def combineInputDefinitions(self, dat: scriptDAT, inDats: list[DAT], defFields: DAT, supportedTypeTable: DAT):
+		dat.clear()
+		inDats += self.opDefComp.par.Inputdefs.evalOPs()
+		if not inDats:
+			return
+		cols = defFields.col(0) + ['input:handler']
+		dat.appendRow(cols)
+		inDats = [d for d in inDats if d.numRows > 1]
+		if not inDats:
+			return
+		usedNames = set()
+		for d in reversed(inDats):
+			insertRow = 0
+			for inDatRow in range(1, d.numRows):
+				name = d[inDatRow, 'name']
+				if not name or name.val in usedNames:
+					continue
+				usedNames.add(name.val)
+				dat.appendRow([d[inDatRow, col] or '' for col in cols], insertRow)
+				insertRow += 1
+		_processInputDefTypeCategory(dat, supportedTypeTable, 'coordType')
+		_processInputDefTypeCategory(dat, supportedTypeTable, 'contextType')
+		_processInputDefTypeCategory(dat, supportedTypeTable, 'returnType')
 
 	# Builds table with parameter local names, for select CHOPs.
 	def buildParamChopNamesTable(self, dat: DAT):

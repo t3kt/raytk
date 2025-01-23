@@ -1,5 +1,5 @@
 def onCook(dat):
-	mod.opDefinition.combineInputDefinitions(
+	ext.opDefinition.combineInputDefinitions(
 		dat,
 		inDats=dat.inputs,
 		defFields=op('inlineFields'),
