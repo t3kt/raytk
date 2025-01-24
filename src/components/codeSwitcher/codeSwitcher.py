@@ -3,36 +3,6 @@ if False:
 	# noinspection PyUnresolvedReferences
 	from _stubs import *
 
-def buildStateTable(dat: DAT):
-	_ensureExt()
-	ext.codeSwitcher.buildStateTable(dat)
-
-def buildParameterGroupTable(dat: DAT):
-	_ensureExt()
-	ext.codeSwitcher.buildParameterGroupTable(dat)
-
-def buildMacroTable(dat: DAT, itemInfo: DAT):
-	_ensureExt()
-	ext.codeSwitcher.buildMacroTable(dat, itemInfo)
-
-def buildCode():
-	_ensureExt()
-	return ext.codeSwitcher.buildCode()
-
-def updateParams():
-	_ensureExt()
-	ext.codeSwitcher.updateParams()
-
-def _ensureExt():
-	if not hasattr(ext, 'codeSwitcher'):
-		parent().par.ext0object = "op('./codeSwitcher').module.CodeSwitcher(me)"
-		parent().par.ext0object.readOnly = True
-		parent().par.ext0name = 'codeSwitcher'
-		parent().par.ext0name.readOnly = True
-		parent().par.ext0promote = True
-		parent().par.ext0promote.readOnly = True
-		parent().par.reinitextensions.pulse()
-
 class CodeSwitcher:
 	def __init__(self, ownerComp: COMP):
 		self.ownerComp = ownerComp
