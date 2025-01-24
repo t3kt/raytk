@@ -1,3 +1,3 @@
 def onTableChange(dat):
-	mod.codeSwitcher.updateParams()
+	mod.codeSwitcher.CodeSwitcher(parent()).updateParams()
 	
