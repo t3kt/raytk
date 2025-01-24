@@ -338,7 +338,10 @@ class ShaderBuilder:
 			if state.variables:
 				for variable in state.variables:
 					varOwnerName = variable.owner
-					varOwnerPath = defTable[varOwnerName, 'path'].val
+					pathCell = defTable[varOwnerName, 'path']
+					if not pathCell:
+						continue
+					varOwnerPath = pathCell.val
 					varNames[(varOwnerPath, variable.localName)] = variable.name
 			if state.attributes:
 				for attribute in state.attributes:
