@@ -6,4 +6,5 @@ if False:
 	ext.opDefinition = OpDefinition(COMP())
 
 def onTableChange(dat):
+	mod.opDefinition.ensureExt(parent())
 	ext.opDefinition.onValidationChange(dat)

@@ -10,6 +10,7 @@ def onSetupParameters(dat: scriptDAT):
 	page.appendToggle('Pretty')
 
 def onCook(dat: DAT):
+	mod.opDefinition.ensureExt(parent())
 	dat.clear()
 	state = ext.opDefinition.buildRopState()
 	obj = state.toDict()
