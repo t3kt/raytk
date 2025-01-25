@@ -131,6 +131,9 @@ def _checkInputType(handler: COMP, typeName: str, typeCategory: str):
 
 def ensureExt(comp):
 	if not getattr(ext, 'opDefinition', None):
+		comp.par.ext0name = 'opDefinition'
+		comp.par.ext0object = "op('./opDefinition').module.OpDefinition(me)"
+		comp.par.ext0promote = True
 		comp.par.reinitextensions.pulse()
 
 class _Builder:

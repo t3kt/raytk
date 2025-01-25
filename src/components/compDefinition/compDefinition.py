@@ -28,6 +28,9 @@ def _popDialog() -> 'PopDialogExt':
 
 def ensureExt(comp):
 	if not getattr(comp.ext, 'compDefinition', None):
+		comp.par.ext0name = 'compDefinition'
+		comp.par.ext0object = "op('./compDefinition').module.CompDefinition(me)"
+		comp.par.ext0promote = True
 		comp.par.reinitextensions.pulse()
 
 class CompDefinition:

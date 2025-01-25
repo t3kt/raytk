@@ -188,10 +188,13 @@ class RaytkTools:
 		OpDocManager(info).pushToParams()
 		focusFirstCustomParameterPage(rop)
 		opDefComp = info.opDef
-		if info.isROP and not opDefComp.par.ext0object:
+		if info.isROP:
 			opDefComp.par.ext0object = "op('./opDefinition').module.OpDefinition(me)"
 			opDefComp.par.ext0name = 'opDefinition'
-			opDefComp.par.ext0promote = True
+		if info.isRComp:
+			opDefComp.par.ext0object = "op('./compDefinition').module.CompDefinition(me)"
+			opDefComp.par.ext0name = 'compDefinition'
+		opDefComp.par.ext0object.readOnly = True
 		opDefComp.par.ext0name.readOnly = True
 		opDefComp.par.ext0promote.readOnly = True
 		tox = info.toxFile
