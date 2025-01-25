@@ -7,6 +7,7 @@ if False:
 
 def onPulse(par):
 	action = par.name
+	mod.compDefinition.ensureExt(parent())
 	if action == 'Inspect':
 		ext.compDefinition.inspect()
 	elif action == 'Help':

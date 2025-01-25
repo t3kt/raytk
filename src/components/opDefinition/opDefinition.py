@@ -129,14 +129,9 @@ def _checkInputType(handler: COMP, typeName: str, typeCategory: str):
 		return f'Input does not support {typeName} context'
 	return f'Input does not support {typeCategory} {typeName}'
 
-def buildOpState():
-	builder = _Builder(parent())
-	builder.load()
-	return builder.opState
-
-def ensureExt():
+def ensureExt(comp):
 	if not getattr(ext, 'opDefinition', None):
-		parent().par.reinitextensions.pulse()
+		comp.par.reinitextensions.pulse()
 
 class _Builder:
 	defPar: 'OpDefParsT'
@@ -705,10 +700,6 @@ def _showWarning(msg: str):
 	dlg = op.TDResources.op('popDialog')
 	dlg.Open(title='Warning', text=msg, escOnClickAway=True)
 
-def updateOP():
-	ensureExt()
-	ext.opDefinition.updateOP()
-
 def _getPalette():
 	if not hasattr(op, 'raytk'):
 		_showWarning('Unable to create reference because RayTK toolkit is not available.')
@@ -719,6 +710,11 @@ class OpDefinition:
 	def __init__(self, opDefComp: COMP):
 		self.opDefComp = opDefComp
 		self.hostRop = opDefComp.par.Hostop.eval()
+
+	def buildRopState(self):
+		builder = _Builder(self.opDefComp)
+		builder.load()
+		return builder.opState
 
 	def createVarRef(self, name: str):
 		palette = _getPalette()

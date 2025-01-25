@@ -26,13 +26,9 @@ def _popDialog() -> 'PopDialogExt':
 	# noinspection PyUnresolvedReferences
 	return op.TDResources.op('popDialog')
 
-def ensureExt():
-	if not getattr(ext, 'compDefinition', None):
-		parent().par.reinitextensions.pulse()
-
-def updateOP():
-	ensureExt()
-	ext.compDefinition.updateOP()
+def ensureExt(comp):
+	if not getattr(comp.ext, 'compDefinition', None):
+		comp.par.reinitextensions.pulse()
 
 class CompDefinition:
 	def __init__(self, opDefComp: COMP):

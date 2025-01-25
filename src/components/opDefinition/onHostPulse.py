@@ -6,6 +6,7 @@ if False:
 	ext.opDefinition = OpDefinition(COMP())
 
 def onPulse(par):
+	mod.opDefinition.ensureExt(parent())
 	action = par.name
 	if action == 'Inspect':
 		ext.opDefinition.inspect()
