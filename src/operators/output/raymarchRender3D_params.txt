@@ -1,7 +1,7 @@
 names	source	handling	readOnlyHandling	conversion	enable
 Limitboxmin[xyz] Limitboxmax[xyz] Normalsmoothing Distfactor Maxdist	param	runtime	macro		1
 Nearhitrange Nearhitfade Nearhitmindist	param	runtime	macro		1
-Showbackground	param	runtime	macro		1
+Showbackground Enabledithering	param	runtime	macro		1
 Enablereflection Enableshadow	param	macro			1
 Enablerefraction Antialias	param	macro			1
 Enablenormalsmoothing	param	macro			1

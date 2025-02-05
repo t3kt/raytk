@@ -529,8 +529,10 @@ void main()
 				#endif
 				col = getColorFromMats(p, matCtx);
 
-				vec2 fragCoord = vUV.st*uTDOutputInfo.res.zw;
-				col.rgb += (1.0/255.0)*hash1(fragCoord);
+				if (IS_TRUE(THIS_Enabledithering)) {
+					vec2 fragCoord = vUV.st * uTDOutputInfo.res.zw;
+					col.rgb += (1.0 / 255.0) * hash1(fragCoord);
+				}
 				colorOut += col;
 
 				vec4 color2 = castSecondaryRay(matCtx);
