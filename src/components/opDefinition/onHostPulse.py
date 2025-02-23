@@ -13,7 +13,7 @@ def onPulse(par):
 	elif action == 'Help':
 		ext.opDefinition.launchHelp()
 	elif action == 'Updateop':
-		mod.opDefinition.updateOP()
+		ext.opDefinition.updateOP()
 	elif action.startswith('Createref'):
 		ext.opDefinition.createVarRef(action.replace('Createref', ''))
 	elif action.startswith('Creatersel'):
