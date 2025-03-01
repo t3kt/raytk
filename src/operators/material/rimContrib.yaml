@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.material.rimContrib
-  opVersion: '5'
+  opVersion: '6'
   opStatus: default
 opDef: !def
   enable: !expr
@@ -40,6 +40,15 @@ opDef: !def
     name: help
   displayCategory: Material Element
 inputs:
+- !input
+  Localalias: rotateField
+  coordType: !coordT
+    Coordtypevec2: true
+    Coordtypevec3: true
+  contextType: !contextT
+    Contexttypematerialcontext: true
+  returnType: !returnT
+    Returntypevec4: true
 - !input
   Localalias: thicknessField
   Variables: '*'
