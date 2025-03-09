@@ -458,3 +458,5 @@ bool intersectRayBox(Ray ray, vec3 boxMin, vec3 boxMax, out float tmin, out floa
 	tmax = min(min(tbigger.x, tbigger.y), tbigger.z);
 	return tmax > max(tmin, 0.0);
 }
+
+#define GOLDEN_RATIO 1.6180339887498948482
