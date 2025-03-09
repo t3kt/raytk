@@ -35,5 +35,5 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 	THIS_p=normalize((uvw.x*THIS_pab+uvw.y*THIS_pbc+uvw.z*THIS_pca));//U,V and W are the 'barycentric' coordinates (coted barycentric word because I'm not sure if they are really barycentric... have to check)
 	#endif
 	p = THIS_fold(p);
-	return inputOp1(p, ctx);
+	return inputOp1(p - THIS_p * rad, ctx);
 }
