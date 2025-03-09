@@ -1,0 +1,57 @@
+!rop
+meta: !meta
+  opType: raytk.operators.filter.moduloPolyhedral
+  opVersion: '1'
+  opStatus: alpha
+opDef: !def
+  enable: !expr
+    expr: op('..').par.Enable
+  useRuntimeBypass: true
+  typeSpec: !ropTypes
+    coordType: !coordT
+      Coordtypevec3: true
+    contextType: !contextT
+      Allcontexttype: true
+    returnType: !returnT
+      Allreturntype: true
+  opGlobals: !text
+    file: src/operators/sdf/polyhedronSdf_globals.glsl
+    name: globals
+  init: !text
+    file: src/operators/sdf/polyhedronSdf_init.glsl
+    name: init
+  function: !text
+    file: src/operators/filter/moduloPolyhedral.glsl
+    name: function
+  paramGroupTable: eval_params
+inputs:
+- !input
+  Variables: '*'
+  Variableinputs: '*'
+  Required: true
+  coordType: !coordT
+    Coordtypevec3: true
+  contextType: !contextT
+    Allcontexttype: true
+  returnType: !returnT
+    Allreturntype: true
+- !input
+  Localalias: radiusField
+  coordType: !coordT
+    Coordtypevec3: true
+  contextType: !contextT
+    Allcontexttype: true
+  returnType: !returnT
+    Returntypefloat: true
+- !input
+  Source: !expr
+    expr: parent().par.Uvwfield or ''
+  Label: UVW Field
+  Localalias: uvwField
+  Variableinputs: radiusField
+  coordType: !coordT
+    Coordtypevec3: true
+  contextType: !contextT
+    Allcontexttype: true
+  returnType: !returnT
+    Returntypevec4: true
