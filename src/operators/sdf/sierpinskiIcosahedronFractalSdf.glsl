@@ -2,13 +2,11 @@
 // 3D Sierpinski Icosahedron - SDF by TheArchCoder
 
 ReturnT thismap(CoordT p, ContextT ctx) {
+	CoordT p0 = p;
 	int iterations = int(THIS_Iterations);
-	float power = THIS_Power;
-	float scale = power;
 	vec3 n1 = normalize(vec3(-GOLDEN_RATIO, GOLDEN_RATIO - 1.0, 1.0));
 	vec3 n2 = normalize(vec3(1.0, -GOLDEN_RATIO, GOLDEN_RATIO + 1.0));
 	vec3 n3 = normalize(vec3(0.0, 0.0, -1.0));
-	vec3 offset = THIS_Offset;
 	float orbit_trap = 100000.0;
 	float r;
 	float t;
@@ -19,9 +17,37 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 	t = dot(p, n3); if (t > 0.0) p -= 2.0 * t * n3;
 	t = dot(p, n2); if (t > 0.0) p -= 2.0 * t * n2;
 
+	#ifdef THIS_EXPOSE_step
+	THIS_step = 0;
+	#endif
+	#ifdef THIS_EXPOSE_normstep
+	THIS_normstep = 0.0;
+	#endif
+
+	#ifdef THIS_HAS_INPUT_scaleField
+	float scale = inputOp_scaleField(p, ctx);
+	#else
+	float scale = THIS_Scale;
+	#endif
+
 	for (; n < iterations; n++) {
 		p = abs(p);
 		t = dot(p, n1); if (t > 0.0) p -= 2.0 * t * n1;
+		#ifdef THIS_EXPOSE_step
+		THIS_step = n;
+		#endif
+		#ifdef THIS_EXPOSE_normstep
+		THIS_normstep = float(n) / float(iterations - 1);
+		#endif
+		#ifdef THIS_HAS_INPUT_scaleField
+		scale = inputOp_scaleField(p0, ctx);
+		#else
+		scale = THIS_Scale;
+		#endif
+		vec3 offset = THIS_Offset;
+		#ifdef THIS_HAS_INPUT_offsetField
+		offset += inputOp_offsetField(p0, ctx).xyz;
+		#endif
 		p = scale * p - offset * (scale - 1.0);
 
 		r = dot(p, p);
