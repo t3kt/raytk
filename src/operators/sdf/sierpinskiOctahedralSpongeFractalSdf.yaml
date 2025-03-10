@@ -1,0 +1,58 @@
+!rop
+meta: !meta
+  opType: raytk.operators.sdf.sierpinskiOctahedralSpongeFractalSdf
+  opVersion: '0'
+  opStatus: alpha
+opDef: !def
+  enable: true
+  typeSpec: !ropTypes
+    coordType: !coordT
+      Coordtypevec3: true
+    contextType: !contextT
+      Allcontexttype: true
+    returnType: !returnT
+      Returntypesdf: true
+  function: !text
+    file: src/operators/sdf/sierpinskiOctahedralSpongeFractalSdf.glsl
+    name: function
+  paramGroupTable: eval_params
+  variableTable: !table
+    file: src/operators/sdf/sierpinskiOctahedralSpongeFractalSdf_variables.txt
+    name: variable_exprs
+    evaluate: true
+    evalOpts: !evalOpts
+      excludeFirstRow: true
+      cols: enable
+  help: !text
+    file: src/operators/sdf/sierpinskiOctahedralSpongeFractalSdf.md
+    name: help
+inputs:
+- !input
+  Localalias: rotateField
+  Variables: '*'
+  coordType: !coordT
+    Coordtypevec3: true
+  contextType: !contextT
+    Allcontexttype: true
+  returnType: !returnT
+    Returntypevec4: true
+- !input
+  Localalias: scaleField
+  Variables: '*'
+  Variableinputs: rotateField
+  coordType: !coordT
+    Coordtypevec3: true
+  contextType: !contextT
+    Allcontexttype: true
+  returnType: !returnT
+    Returntypefloat: true
+- !input
+  Localalias: offsetField
+  Variables: '*'
+  Variableinputs: rotateField scaleField
+  coordType: !coordT
+    Coordtypevec3: true
+  contextType: !contextT
+    Allcontexttype: true
+  returnType: !returnT
+    Returntypevec4: true
