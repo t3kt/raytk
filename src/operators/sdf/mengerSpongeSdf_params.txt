@@ -4,3 +4,4 @@ Crossscale	param	runtime	macro		op('crossScale_definition').numRows < 2
 Boxscale	param	runtime	macro		op('boxScale_definition').numRows < 2
 Stepoffset[xyz]	param	runtime	macro		op('stepOffset_definition').numRows < 2
 Steps	param	runtime	macro		1
+Rotate[xyzw]	param	runtime	macro	angle	1
