@@ -33,6 +33,10 @@ def ensureExt(comp):
 		comp.par.ext0promote = True
 		comp.par.reinitextensions.pulse()
 
+def updateOP():
+	ensureExt(parent())
+	ext.compDefinition.updateOP()
+
 class CompDefinition:
 	def __init__(self, opDefComp: COMP):
 		self.opDefComp = opDefComp
