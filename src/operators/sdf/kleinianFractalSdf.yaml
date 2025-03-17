@@ -1,0 +1,21 @@
+!rop
+meta: !meta
+  opType: raytk.operators.sdf.kleinianFractalSdf
+  opVersion: '0'
+  opStatus: beta
+opDef: !def
+  enable: true
+  typeSpec: !ropTypes
+    coordType: !coordT
+      Coordtypevec3: true
+    contextType: !contextT
+      Allcontexttype: true
+    returnType: !returnT
+      Returntypesdf: true
+  function: !text
+    file: src/operators/sdf/kleinianFractalSdf.glsl
+    name: function
+  paramGroupTable: eval_params
+  help: !text
+    file: src/operators/sdf/kleinianFractalSdf.md
+    name: help

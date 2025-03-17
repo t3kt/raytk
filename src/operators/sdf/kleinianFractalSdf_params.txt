@@ -1,0 +1,7 @@
+names	source	handling	readOnlyHandling	conversion	enable
+Klein[ri]	param	runtime	macro		1
+Boxsize[xy]	param	runtime	macro		1
+Slicerange[1-2]	param	runtime	macro		1
+Scale	param	runtime	macro		1
+Sphereinversion	param	constant			1
+Iterations	param	runtime	constant		1
