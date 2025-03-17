@@ -8,13 +8,32 @@ vec2 THIS_wrap(vec2 x, vec2 a, vec2 s){
 }
 
 ReturnT thismap(CoordT p, ContextT ctx) {
+	CoordT p0 = p;
+
+	#ifdef THIS_EXPOSE_step
+	THIS_step = 0;
+	#endif
+	#ifdef THIS_EXPOSE_normstep
+	THIS_normstep = 0.0;
+	#endif
+
+	#ifdef THIS_HAS_INPUT_kleinRField
+	float kleinR = inputOp_kleinRField(p0, ctx);
+	#else
 	float kleinR = THIS_Kleinr;
+	#endif
+	#ifdef THIS_HAS_INPUT_kleinIField
+	float kleinI = inputOp_kleinIField(p0, ctx);
+	#else
 	float kleinI = THIS_Kleini;
-	vec2 boxSize = THIS_Boxsize;
-	vec2 sliceRange = THIS_Slicerange;
+	#endif
+	#ifdef THIS_HAS_INPUT_scaleField
+	float fractalSize = inputOp_scaleField(p0, ctx);
+	#else
 	float fractalSize = THIS_Scale;
-	bool sphereInversion = bool(THIS_Sphereinversion);
-	vec4 inversionSphere = vec4(1.0, 0.96, 0.0, 0.8);
+	#endif
+	bool sphereInversion = bool(THIS_Enableinversion);
+	vec4 inversionSphere = vec4(THIS_Inversioncenter, THIS_Inversionradius);
 	int iterations = int(THIS_Iterations);
 
 	p /= fractalSize;
@@ -43,6 +62,24 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 	float orbitTrap = 10000.0;
 
 	for (int i = 0; i < iterations; i++) {
+		#ifdef THIS_EXPOSE_step
+		THIS_step = i;
+		#endif
+		#ifdef THIS_EXPOSE_normstep
+		THIS_normstep = float(i) / float(iterations - 1);
+		#endif
+
+		#ifdef THIS_HAS_INPUT_boxSizeField
+		vec2 boxSize = fillToVec2(inputOp_boxSizeField(p0, ctx));
+		#else
+		vec2 boxSize = THIS_Boxsize;
+		#endif
+
+		vec3 offset = THIS_Offset;
+		#ifdef THIS_HAS_INPUT_offsetField
+		offset += inputOp_offsetField(p0, ctx).xyz;
+		#endif
+
 		p.x += b / a * p.y;
 		p.xz = THIS_wrap(p.xz, vec2(2.0 * boxSize.x, 2.0 * boxSize.y), vec2(-boxSize.x, -boxSize.y));
 		p.x = p.x - b / a * p.y;
@@ -50,6 +87,8 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 		if (p.y >= a * 0.5 + f *(2.*a-1.95)/4. * sign(p.x + b * 0.5)* (1. - exp(-(7.2-(1.95-a)*15.)* abs(p.x + b * 0.5))))	{
 			p = vec3(-b, a, 0.) - p;
 		}
+
+		p += offset * (fractalSize - 1.0);
 
 		// Mobius
 		float ir = 1.0 / dot(p,p);

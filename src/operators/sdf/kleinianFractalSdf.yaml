@@ -16,6 +16,61 @@ opDef: !def
     file: src/operators/sdf/kleinianFractalSdf.glsl
     name: function
   paramGroupTable: eval_params
+  variableTable: !table
+    file: src/operators/sdf/kleinianFractalSdf_variables.txt
+    name: variable_exprs
+    evaluate: true
+    evalOpts: !evalOpts
+      excludeFirstRow: true
+      cols: enable
   help: !text
     file: src/operators/sdf/kleinianFractalSdf.md
     name: help
+inputs:
+- !input
+  Localalias: kleinRField
+  coordType: !coordT
+    Coordtypevec3: true
+  contextType: !contextT
+    Allcontexttype: true
+  returnType: !returnT
+    Returntypefloat: true
+- !input
+  Localalias: kleinIField
+  Variableinputs: kleinRField
+  coordType: !coordT
+    Coordtypevec3: true
+  contextType: !contextT
+    Allcontexttype: true
+  returnType: !returnT
+    Returntypefloat: true
+- !input
+  Localalias: scaleField
+  Variableinputs: kleinRField kleinIField
+  coordType: !coordT
+    Coordtypevec3: true
+  contextType: !contextT
+    Allcontexttype: true
+  returnType: !returnT
+    Returntypefloat: true
+- !input
+  Localalias: boxSizeField
+  Variables: '*'
+  Variableinputs: kleinRField kleinIField scaleField
+  coordType: !coordT
+    Coordtypevec3: true
+  contextType: !contextT
+    Allcontexttype: true
+  returnType: !returnT
+    Returntypefloat: true
+    Returntypevec4: true
+- !input
+  Localalias: offsetField
+  Variables: '*'
+  Variableinputs: kleinRField kleinIField scaleField boxSizeField
+  coordType: !coordT
+    Coordtypevec3: true
+  contextType: !contextT
+    Allcontexttype: true
+  returnType: !returnT
+    Returntypevec4: true
