@@ -1,5 +1,41 @@
 # Release Notes
 
+## v0.45
+
+### Highlights
+
+### Details
+
+* Improvements / additions
+  * New OPs
+    * mixColorFields - for combining color fields with centralized controls (#1279)
+    * moduloPolyhedral - uses polyhedron patterns to slice and repeat space similar to the polyhedronSdf (#714)
+    * trefoilKnotSdf - a 3D trefoil knot SDF (#1285)
+    * 3D fractal SDFs from TheArchCoder (Muhammad Ahmad) (#1286)
+      * kleinianFractalSdf
+      * mandelettuceFractalSdf
+      * sierpinskiIcosahedronFractalSdf
+      * sierpinskiOctahedralSpongeFractalSdf
+  * New OP features
+    * boxFrameSdf - option for round bars
+    * mengerSpongeSdf - added alternate formula from TheArchCoder (#1286)
+    * raymarchRender3d - added dithering toggle (#1278)
+    * rimContrib - added rotation parameter / field input (#1280)
+* Fixes
+  * Fix handling of zero thickness in split
+  * Fix multiLight issues with pbrMat (#1277)
+  * Fix validation for required inputs in floatToVector
+  * Fix thumnnails not showing if toolkit isn't at the root (#1281)
+  * Fix opDefinition error for TD alpha builds
+* Changes (potentially breaking)
+* Infrastructure / internals
+  * Consolidate functionality into opDefinition, codeSwitcher, etc extensions
+
+### Compatibility
+
+* This version requires TouchDesigner 2023.12120 or later.
+* It may have issues on the TD Alpha builds. If so, please report bugs.
+
 ## v0.44
 
 ### Highlights

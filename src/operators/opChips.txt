@@ -1,10 +1,9 @@
 name	chip
-arrange	updated
 boxFrameSdf	updated
-combine	updated
-composeSdf	updated
-extrudeBezier	new
-gridSdf2d	new
-polytopeSdf	new
-sdfVolume	new
-split	new
+mixColorFields	new
+moduloPolyhedral	new
+trefoilKnotSdf	new
+sierpinskiIcosahedronFractalSdf	new
+sierpinskiOctahedralSpongeFractalSdf	new
+mandelettuceFractalSdf	new
+klienianFractalSdf	new
