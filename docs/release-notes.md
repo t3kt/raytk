@@ -12,7 +12,7 @@
     * moduloPolyhedral - uses polyhedron patterns to slice and repeat space similar to the polyhedronSdf (#714)
     * trefoilKnotSdf - a 3D trefoil knot SDF (#1285)
     * 3D fractal SDFs from TheArchCoder (Muhammad Ahmad) (#1286)
-      * kleinianFractalSdf
+      * kleinianSdf
       * mandelettuceFractalSdf
       * sierpinskiIcosahedronFractalSdf
       * sierpinskiOctahedralSpongeFractalSdf

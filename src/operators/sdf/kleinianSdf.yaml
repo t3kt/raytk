@@ -1,6 +1,6 @@
 !rop
 meta: !meta
-  opType: raytk.operators.sdf.kleinianFractalSdf
+  opType: raytk.operators.sdf.kleinianSdf
   opVersion: '0'
   opStatus: beta
 opDef: !def
@@ -13,19 +13,17 @@ opDef: !def
     returnType: !returnT
       Returntypesdf: true
   function: !text
-    file: src/operators/sdf/kleinianFractalSdf.glsl
+    file: src/operators/sdf/kleinianSdf.glsl
     name: function
   paramGroupTable: eval_params
   variableTable: !table
-    file: src/operators/sdf/kleinianFractalSdf_variables.txt
+    file: src/operators/sdf/kleinianSdf_variables.txt
     name: variable_exprs
     evaluate: true
     evalOpts: !evalOpts
       excludeFirstRow: true
       cols: enable
-  help: !text
-    file: src/operators/sdf/kleinianFractalSdf.md
-    name: help
+  keywords: fractal
 inputs:
 - !input
   Localalias: kleinRField

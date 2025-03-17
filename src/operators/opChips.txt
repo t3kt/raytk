@@ -6,4 +6,4 @@ trefoilKnotSdf	new
 sierpinskiIcosahedronFractalSdf	new
 sierpinskiOctahedralSpongeFractalSdf	new
 mandelettuceFractalSdf	new
-klienianFractalSdf	new
+klienianSdf	new
