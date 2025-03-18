@@ -460,3 +460,27 @@ bool intersectRayBox(Ray ray, vec3 boxMin, vec3 boxMax, out float tmin, out floa
 }
 
 #define GOLDEN_RATIO 1.6180339887498948482
+
+// https://www.shadertoy.com/view/tcj3zV
+
+vec3 triplexMul(vec3 n1, vec3 n2, float r1, float theta1, float phi1) {
+	float r2 = length(n2);
+	float theta2 = atan(n2.y, n2.x);
+	float phi2 = asin(n2.z / r2);
+
+	float r = r1 * r2;
+	float theta = theta1 + theta2;
+	float phi = phi1 + phi2;
+
+	return vec3(r * cos(theta) * cos(phi), r * sin(theta) * cos(phi), r * sin(phi));
+}
+
+vec3 triplexPow(vec3 z, float phase, float power) {
+	float r = length(z);
+	float theta = atan(z.y, z.x);
+	float phi = acos(z.z / r);
+	r = r * r * r * r;
+	theta *= power;
+	phi = phi * power + phase;
+	return vec3(r * sin(phi) * cos(theta), r * sin(phi) * sin(theta), r * cos(phi));
+}
