@@ -1,7 +1,7 @@
 !rop
 meta: !meta
-  opType: raytk.operators.sdf.sierpinskiIcosahedronFractalSdf
-  opVersion: '1'
+  opType: raytk.operators.sdf.sierpinskiIcosahedronSdf
+  opVersion: '0'
   opStatus: beta
 opDef: !def
   enable: true
@@ -13,19 +13,20 @@ opDef: !def
     returnType: !returnT
       Returntypesdf: true
   function: !text
-    file: src/operators/sdf/sierpinskiIcosahedronFractalSdf.glsl
+    file: src/operators/sdf/sierpinskiIcosahedronSdf.glsl
     name: function
   paramGroupTable: eval_params
   variableTable: !table
-    file: src/operators/sdf/sierpinskiIcosahedronFractalSdf_variables.txt
+    file: src/operators/sdf/sierpinskiIcosahedronSdf_variables.txt
     name: variable_exprs
     evaluate: true
     evalOpts: !evalOpts
       excludeFirstRow: true
       cols: enable
   help: !text
-    file: src/operators/sdf/sierpinskiIcosahedronFractalSdf.md
+    file: src/operators/sdf/sierpinskiIcosahedronSdf.md
     name: help
+  keywords: fractal
 inputs:
 - !input
   Localalias: scaleField

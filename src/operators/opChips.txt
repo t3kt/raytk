@@ -3,7 +3,7 @@ boxFrameSdf	updated
 mixColorFields	new
 moduloPolyhedral	new
 trefoilKnotSdf	new
-sierpinskiIcosahedronFractalSdf	new
+sierpinskiIcosahedronSdf	new
 sierpinskiOctahedralSpongeFractalSdf	new
 mandelettuceSdf	new
 klienianSdf	new

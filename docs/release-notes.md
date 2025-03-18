@@ -14,7 +14,7 @@
     * 3D fractal SDFs from TheArchCoder (Muhammad Ahmad) (#1286)
       * kleinianSdf
       * mandelettuceSdf
-      * sierpinskiIcosahedronFractalSdf
+      * sierpinskiIcosahedronSdf
       * sierpinskiOctahedralSpongeFractalSdf
   * New OP features
     * boxFrameSdf - option for round bars
