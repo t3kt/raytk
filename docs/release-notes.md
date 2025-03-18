@@ -13,6 +13,7 @@
     * trefoilKnotSdf - a 3D trefoil knot SDF (#1285)
     * 3D fractal SDFs from TheArchCoder (Muhammad Ahmad) (#1286)
       * kleinianSdf
+      * lambdabulbSdf
       * mandelettuceSdf
       * sierpinskiIcosahedronSdf
       * sierpinskiOctahedralSpongeSdf

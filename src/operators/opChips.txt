@@ -7,3 +7,4 @@ sierpinskiIcosahedronSdf	new
 sierpinskiOctahedralSpongeSdf	new
 mandelettuceSdf	new
 klienianSdf	new
+lambdabulbSdf	new
