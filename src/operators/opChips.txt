@@ -4,6 +4,6 @@ mixColorFields	new
 moduloPolyhedral	new
 trefoilKnotSdf	new
 sierpinskiIcosahedronSdf	new
-sierpinskiOctahedralSpongeFractalSdf	new
+sierpinskiOctahedralSpongeSdf	new
 mandelettuceSdf	new
 klienianSdf	new

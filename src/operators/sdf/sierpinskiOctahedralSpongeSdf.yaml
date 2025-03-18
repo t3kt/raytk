@@ -1,7 +1,7 @@
 !rop
 meta: !meta
-  opType: raytk.operators.sdf.sierpinskiOctahedralSpongeFractalSdf
-  opVersion: '1'
+  opType: raytk.operators.sdf.sierpinskiOctahedralSpongeSdf
+  opVersion: '0'
   opStatus: beta
 opDef: !def
   enable: true
@@ -13,19 +13,20 @@ opDef: !def
     returnType: !returnT
       Returntypesdf: true
   function: !text
-    file: src/operators/sdf/sierpinskiOctahedralSpongeFractalSdf.glsl
+    file: src/operators/sdf/sierpinskiOctahedralSpongeSdf.glsl
     name: function
   paramGroupTable: eval_params
   variableTable: !table
-    file: src/operators/sdf/sierpinskiOctahedralSpongeFractalSdf_variables.txt
+    file: src/operators/sdf/sierpinskiOctahedralSpongeSdf_variables.txt
     name: variable_exprs
     evaluate: true
     evalOpts: !evalOpts
       excludeFirstRow: true
       cols: enable
   help: !text
-    file: src/operators/sdf/sierpinskiOctahedralSpongeFractalSdf.md
+    file: src/operators/sdf/sierpinskiOctahedralSpongeSdf.md
     name: help
+  keywords: fractal
 inputs:
 - !input
   Localalias: rotateField

@@ -15,7 +15,7 @@
       * kleinianSdf
       * mandelettuceSdf
       * sierpinskiIcosahedronSdf
-      * sierpinskiOctahedralSpongeFractalSdf
+      * sierpinskiOctahedralSpongeSdf
   * New OP features
     * boxFrameSdf - option for round bars
     * mengerSpongeSdf - added alternate formula from TheArchCoder (#1286)
