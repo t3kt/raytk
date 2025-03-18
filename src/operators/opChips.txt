@@ -5,5 +5,5 @@ moduloPolyhedral	new
 trefoilKnotSdf	new
 sierpinskiIcosahedronFractalSdf	new
 sierpinskiOctahedralSpongeFractalSdf	new
-mandelettuceFractalSdf	new
+mandelettuceSdf	new
 klienianSdf	new

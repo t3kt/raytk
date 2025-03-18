@@ -1,6 +1,6 @@
 !rop
 meta: !meta
-  opType: raytk.operators.sdf.mandelettuceFractalSdf
+  opType: raytk.operators.sdf.mandelettuceSdf
   opVersion: '0'
   opStatus: beta
 opDef: !def
@@ -13,16 +13,17 @@ opDef: !def
     returnType: !returnT
       Returntypesdf: true
   function: !text
-    file: src/operators/sdf/mandelettuceFractalSdf.glsl
+    file: src/operators/sdf/mandelettuceSdf.glsl
     name: function
   paramGroupTable: eval_params
   variableTable: !table
-    file: src/operators/sdf/mandelettuceFractalSdf_variables.txt
+    file: src/operators/sdf/mandelettuceSdf_variables.txt
     name: variable_exprs
     evaluate: true
     evalOpts: !evalOpts
       excludeFirstRow: true
       cols: enable
+  keywords: fractal
 inputs:
 - !input
   Localalias: offsetField
