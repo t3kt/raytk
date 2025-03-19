@@ -13,4 +13,4 @@ def onPulse(par):
 	elif action == 'Help':
 		ext.compDefinition.launchHelp()
 	elif action == 'Updateop':
-		mod.compDefinition.updateOP()
+		ext.compDefinition.updateOP()
