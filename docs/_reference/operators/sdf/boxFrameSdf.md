@@ -73,6 +73,15 @@ op:
     - label: Outset
       name: outset
     name: Thicknessmode
+  - label: Bar Shape
+    menuOptions:
+    - label: Square
+      name: square
+    - label: Round
+      name: round
+    name: Barshape
+    readOnlyHandling: semibaked
+    regularHandling: semibaked
   - label: UV Mode
     menuOptions:
     - label: None

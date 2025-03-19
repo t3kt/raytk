@@ -1,11 +1,11 @@
 ---
 layout: operator
-title: mengerSpongeSdf
+title: kleinianSdf
 parent: Sdf Operators
 grand_parent: Operators
-permalink: /reference/operators/sdf/mengerSpongeSdf
+permalink: /reference/operators/sdf/kleinianSdf
 redirect_from:
-  - /reference/opType/raytk.operators.sdf.mengerSpongeSdf/
+  - /reference/opType/raytk.operators.sdf.kleinianSdf/
 op:
   category: sdf
   inputs:
@@ -19,13 +19,10 @@ op:
     - PixelContext
     coordTypes:
     - vec3
-    label: Box Scale Field
-    name: boxScaleField
+    label: KleinR Field
+    name: kleinRField
     returnTypes:
     - float
-    supportedVariables:
-    - step
-    - normstep
   - contextTypes:
     - Context
     - MaterialContext
@@ -36,12 +33,48 @@ op:
     - PixelContext
     coordTypes:
     - vec3
-    label: Cross Scale Field
-    name: crossScaleField
+    label: KleinI Field
+    name: kleinIField
     returnTypes:
     - float
     supportedVariableInputs:
-    - boxScaleField
+    - kleinRField
+  - contextTypes:
+    - Context
+    - MaterialContext
+    - CameraContext
+    - LightContext
+    - RayContext
+    - VertexContext
+    - PixelContext
+    coordTypes:
+    - vec3
+    label: Scale Field
+    name: scaleField
+    returnTypes:
+    - float
+    supportedVariableInputs:
+    - kleinRField
+    - kleinIField
+  - contextTypes:
+    - Context
+    - MaterialContext
+    - CameraContext
+    - LightContext
+    - RayContext
+    - VertexContext
+    - PixelContext
+    coordTypes:
+    - vec3
+    label: Box Size Field
+    name: boxSizeField
+    returnTypes:
+    - float
+    - vec4
+    supportedVariableInputs:
+    - kleinRField
+    - kleinIField
+    - scaleField
     supportedVariables:
     - step
     - normstep
@@ -55,83 +88,61 @@ op:
     - PixelContext
     coordTypes:
     - vec3
-    label: Step Offset Field
-    name: stepOffsetField
+    label: Offset Field
+    name: offsetField
     returnTypes:
     - vec4
     supportedVariableInputs:
-    - boxScaleField
-    - crossScaleField
+    - kleinRField
+    - kleinIField
+    - scaleField
+    - boxSizeField
     supportedVariables:
     - step
     - normstep
-  - contextTypes:
-    - Context
-    - MaterialContext
-    - CameraContext
-    - LightContext
-    - RayContext
-    - VertexContext
-    - PixelContext
-    coordTypes:
-    - vec3
-    label: Rotate Field
-    name: rotateField
-    returnTypes:
-    - vec4
-    supportedVariableInputs:
-    - boxScaleField
-    - crossScaleField
-    - stepOffsetField
-    supportedVariables:
-    - step
-    - normstep
-  name: mengerSpongeSdf
-  opType: raytk.operators.sdf.mengerSpongeSdf
+  keywords:
+  - fractal
+  name: kleinianSdf
+  opType: raytk.operators.sdf.kleinianSdf
   parameters:
-  - label: Translate
-    name: Translate
+  - label: Iterations
+    name: Iterations
+    readOnlyHandling: semibaked
+    regularHandling: runtime
+  - label: Klein R
+    name: Kleinr
     readOnlyHandling: baked
     regularHandling: runtime
-    summary: Moves the center of the shape.
-  - label: Steps
-    name: Steps
+  - label: Klein I
+    name: Kleini
     readOnlyHandling: baked
     regularHandling: runtime
-    summary: Number of levels of detail.
   - label: Scale
     name: Scale
     readOnlyHandling: baked
     regularHandling: runtime
-  - label: Box Scale
-    name: Boxscale
+  - label: Box Size
+    name: Boxsize
     readOnlyHandling: baked
     regularHandling: runtime
-    summary: The scale of the boxes used at each step.
-  - label: Cross Scale
-    name: Crossscale
+  - label: Offset
+    name: Offset
     readOnlyHandling: baked
     regularHandling: runtime
-    summary: The size of the holes cut through the boxes at each step.
-  - label: Variant
-    menuOptions:
-    - label: Klems
-      name: klems
-    - label: TheArchCoder
-      name: thearchcoder
-    name: Variant
+  - label: Enable Sphere Inversion
+    name: Enableinversion
     readOnlyHandling: semibaked
     regularHandling: semibaked
-  - label: Step Offset
-    name: Stepoffset
+  - label: Inversion Center
+    name: Inversioncenter
     readOnlyHandling: baked
     regularHandling: runtime
-  - label: Rotate
-    name: Rotate
+  - label: Inversion Radius
+    name: Inversionradius
     readOnlyHandling: baked
     regularHandling: runtime
-  summary: Menger sponge fractal, made of boxes with holes cut through each axis.
-  thumb: assets/images/reference/operators/sdf/mengerSpongeSdf_thumb.png
+  status: beta
+  thumb: assets/images/reference/operators/sdf/kleinianSdf_thumb.png
   variables:
   - label: Step Index
     name: step
@@ -139,6 +150,3 @@ op:
     name: normstep
 
 ---
-
-
-Menger sponge fractal, made of boxes with holes cut through each axis.

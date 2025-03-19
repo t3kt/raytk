@@ -158,6 +158,11 @@ cat:
     summary: Fractal SDF based on "Generators" by Kali (https://www.shadertoy.com/view/Xtf3Rn).
     thumb: assets/images/reference/operators/sdf/kaliGeneratorSdf_thumb.png
   - keywords:
+    - fractal
+    name: kleinianSdf
+    status: beta
+    thumb: assets/images/reference/operators/sdf/kleinianSdf_thumb.png
+  - keywords:
     - grid
     name: latticeSdf
     thumb: assets/images/reference/operators/sdf/latticeSdf_thumb.png
@@ -176,6 +181,11 @@ cat:
     name: mandelbulbSdf
     summary: Mandelbulb fractal.
     thumb: assets/images/reference/operators/sdf/mandelbulbSdf_thumb.png
+  - keywords:
+    - fractal
+    name: mandelettuceSdf
+    status: beta
+    thumb: assets/images/reference/operators/sdf/mandelettuceSdf_thumb.png
   - name: mengerSpongeSdf
     summary: Menger sponge fractal, made of boxes with holes cut through each axis.
     thumb: assets/images/reference/operators/sdf/mengerSpongeSdf_thumb.png
@@ -242,6 +252,18 @@ cat:
     summary: Multi-segment line SDF.
     thumb: assets/images/reference/operators/sdf/segmentedLineSdf_thumb.png
   - keywords:
+    - fractal
+    name: sierpinskiIcosahedronSdf
+    status: beta
+    summary: Sierpinski Icosahedron Fractal SDF
+    thumb: assets/images/reference/operators/sdf/sierpinskiIcosahedronSdf_thumb.png
+  - keywords:
+    - fractal
+    name: sierpinskiOctahedralSpongeSdf
+    status: beta
+    summary: Sierpinski Octahedral Sponge Fractal SDF
+    thumb: assets/images/reference/operators/sdf/sierpinskiOctahedralSpongeSdf_thumb.png
+  - keywords:
     - cone
     - pie
     - slice
@@ -284,6 +306,10 @@ cat:
     name: torusSdf
     summary: SDF for a torus.
     thumb: assets/images/reference/operators/sdf/torusSdf_thumb.png
+  - name: trefoilKnotSdf
+    status: beta
+    summary: Trefoil knot SDF.
+    thumb: assets/images/reference/operators/sdf/trefoilKnotSdf_thumb.png
   - name: truncatedPyramidSdf
     thumb: assets/images/reference/operators/sdf/truncatedPyramidSdf_thumb.png
   - name: vesicaSegmentSdf
