@@ -4,6 +4,10 @@
 
 ### Highlights
 
+* New fractal SDFs from TheArchCoder (Muhammad Ahmad)!
+* Create complex spatial transforms with moduloPolyhedral!
+* Convenient color mixing with mixColorFields!
+
 ### Details
 
 * Improvements / additions
@@ -26,7 +30,7 @@
   * Fix handling of zero thickness in split
   * Fix multiLight issues with pbrMat (#1277)
   * Fix validation for required inputs in floatToVector
-  * Fix thumnnails not showing if toolkit isn't at the root (#1281)
+  * Fix thumbnails not showing if toolkit isn't at the root (#1281)
   * Fix opDefinition error for TD alpha builds
 * Changes (potentially breaking)
 * Infrastructure / internals
