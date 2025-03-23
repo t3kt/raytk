@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.sdf.mengerSpongeSdf
-  opVersion: '13'
+  opVersion: '14'
   opStatus: default
 opDef: !def
   enable: true
@@ -28,6 +28,7 @@ opDef: !def
   help: !text
     file: src/operators/sdf/mengerSpongeSdf.md
     name: help
+  keywords: fractal
 inputs:
 - !input
   Localalias: boxScaleField

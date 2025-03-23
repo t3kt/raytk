@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.sdf.lambdabulbSdf
-  opVersion: '0'
+  opVersion: '1'
   opStatus: alpha
 opDef: !def
   enable: true
@@ -16,3 +16,4 @@ opDef: !def
     file: src/operators/sdf/lambdabulbSdf.glsl
     name: function
   paramGroupTable: eval_params
+  keywords: fractal

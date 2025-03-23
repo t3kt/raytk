@@ -30,7 +30,8 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 	float scale = THIS_Scale;
 	#endif
 
-	for (; n < iterations; n++) {
+	for(; n < 30; n++) {
+		if (n >= iterations) break;
 		p = abs(p);
 		t = dot(p, n1); if (t > 0.0) p -= 2.0 * t * n1;
 		#ifdef THIS_EXPOSE_step

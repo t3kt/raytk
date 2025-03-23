@@ -1,5 +1,5 @@
 names	source	handling	readOnlyHandling	conversion	enable
-Iterations	param	constant			1
+Iterations	param	runtime	macro		1
 Scale	param	runtime	macro		op('scale_definition').numRows < 2
 Offset[xyz]	param	runtime	macro		1
 Rotate[xyzw]	param	runtime	macro	angle	1

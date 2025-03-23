@@ -22,7 +22,8 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 	float scale = THIS_Scale;
 	#endif
 
-	for(; n < iterations; n++) {
+	for(; n < 30; n++) {
+		if (n >= iterations) break;
 		#ifdef THIS_EXPOSE_step
 		THIS_step = n;
 		#endif

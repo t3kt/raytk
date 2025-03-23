@@ -14,7 +14,9 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 	float dz = 1.0;
 	float powercache1 = (power - 1.0) * 0.5;
 
-	for (int i = 0; i < iterations; i++) {
+	int i = 0;
+	for(; i < 30; i++) {
+		if (i >= iterations) break;
 		dz = power * pow(r, powercache1) * dz + 2.0;
 		p = triplexMul(c, p - triplexPow(p, 1.815142, power), r1, theta1, phi1);
 		r = length(p);

@@ -6,7 +6,7 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 	vec2 shift0 = vec2(THIS_Thetashift, THIS_Phishift);
 	vec2 shift = shift0;
 
-	int n = THIS_Iterations;
+	int n = int(THIS_Iterations);
 	float d;
 	p = p.xzy;
 	vec3 w = p;
@@ -14,8 +14,10 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 
 	orb = vec4(abs(w), m);
 	float dz = 1.0;
-	for (int i=0; i<n; i++)
+	int i = 0;
+	for (; i<30; i++)
 	{
+		if (i >= n) break;
 		dz = power*pow(sqrt(m), power-1.0)*dz + 1.0;
 		//dz = 8.0*pow(m,3.5)*dz + 1.0;
 
