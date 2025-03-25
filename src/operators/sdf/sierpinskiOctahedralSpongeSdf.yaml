@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.sdf.sierpinskiOctahedralSpongeSdf
-  opVersion: '1'
+  opVersion: '2'
   opStatus: beta
 opDef: !def
   enable: true
@@ -29,8 +29,18 @@ opDef: !def
   keywords: fractal
 inputs:
 - !input
-  Localalias: rotateField
+  Localalias: preRotateField
   Variables: '*'
+  coordType: !coordT
+    Coordtypevec3: true
+  contextType: !contextT
+    Allcontexttype: true
+  returnType: !returnT
+    Returntypevec4: true
+- !input
+  Localalias: postRotateField
+  Variables: '*'
+  Variableinputs: preRotateField
   coordType: !coordT
     Coordtypevec3: true
   contextType: !contextT
@@ -40,7 +50,7 @@ inputs:
 - !input
   Localalias: scaleField
   Variables: '*'
-  Variableinputs: rotateField
+  Variableinputs: preRotateField postRotateField
   coordType: !coordT
     Coordtypevec3: true
   contextType: !contextT
@@ -50,7 +60,7 @@ inputs:
 - !input
   Localalias: offsetField
   Variables: '*'
-  Variableinputs: rotateField scaleField
+  Variableinputs: preRotateField postRotateField scaleField
   coordType: !coordT
     Coordtypevec3: true
   contextType: !contextT
@@ -59,7 +69,7 @@ inputs:
     Returntypevec4: true
 - !input
   Localalias: vertexShape
-  Variableinputs: rotateField scaleField offsetField
+  Variableinputs: preRotateField postRotateField scaleField offsetField
   coordType: !coordT
     Coordtypevec3: true
   contextType: !contextT

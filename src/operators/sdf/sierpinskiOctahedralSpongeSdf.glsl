@@ -35,13 +35,17 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 		#else
 		scale = THIS_Scale;
 		#endif
-		vec4 rotation = THIS_Rotate;
-		#ifdef THIS_HAS_INPUT_rotateField
-		rotation += radians(inputOp_rotateField(p0, ctx));
+		vec2 preRotate = THIS_Prerotate;
+		#ifdef THIS_HAS_INPUT_preRotateField
+		preRotate += radians(inputOp_preRotateField(p0, ctx).xy);
+		#endif
+		vec2 postRotate = THIS_Postrotate;
+		#ifdef THIS_HAS_INPUT_postRotateField
+		postRotate += radians(inputOp_postRotateField(p0, ctx).xy);
 		#endif
 
-		p.xz = vec2(cos(rotation.x) * p.x - sin(rotation.x) * p.z, sin(rotation.x) * p.x + cos(rotation.x) * p.z);
-		p.yz = vec2(cos(rotation.y) * p.y - sin(rotation.y) * p.z, sin(rotation.y) * p.y + cos(rotation.y) * p.z);
+		p.xz = vec2(cos(postRotate.x) * p.x - sin(postRotate.x) * p.z, sin(postRotate.x) * p.x + cos(postRotate.x) * p.z);
+		p.yz = vec2(cos(postRotate.y) * p.y - sin(postRotate.y) * p.z, sin(postRotate.y) * p.y + cos(postRotate.y) * p.z);
 
 		p = abs(p);
 		if (p.x + p.y < 0.0) p.xy = -p.yx;
@@ -57,8 +61,8 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 
 		p = 2.0 * clamp(p, vec3(1.0), vec3(1.0)) - p;
 
-		p.xz = vec2(cos(rotation.z) * p.x - sin(rotation.z) * p.z, sin(rotation.z) * p.x + cos(rotation.z) * p.z);
-		p.yz = vec2(cos(rotation.w) * p.y - sin(rotation.w) * p.z, sin(rotation.w) * p.y + cos(rotation.w) * p.z);
+		p.xz = vec2(cos(preRotate.x) * p.x - sin(preRotate.x) * p.z, sin(preRotate.x) * p.x + cos(preRotate.x) * p.z);
+		p.yz = vec2(cos(preRotate.y) * p.y - sin(preRotate.y) * p.z, sin(preRotate.y) * p.y + cos(preRotate.y) * p.z);
 
 		r = dot(p, p);
 		orbit_trap = min(orbit_trap, abs(r));
