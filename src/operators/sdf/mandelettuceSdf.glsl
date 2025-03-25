@@ -1,26 +1,4 @@
 // Based on 3D Mandelettuce Fractal by TheArchCoder https://www.shadertoy.com/view/tflSzn
-/*vec2 mandelettuce_sdf(vec3 p){
-    vec3 C = iMouse.z >= 0.0001 ? vec3(3.0 * (iMouse.xy / iResolution.xy) - 1.5, -0.1) : vec3(-0.5, -0.1, -0.1);
-    float orbit_trap = 1000.0;
-
-    // This isnt my code. I hate to say it but its genuinely the worst looking code i have ever seen.
-	float dr=1.0,r=length(p);
-	for(int i=0;i<iterations;i++){
-		if(r>20.0)break;
-		dr=dr*2.0*r;
-		float psi = abs(mod(atan(p.z,p.y)+PI/8.0,PI/4.0)-PI/8.0);
-		p.yz=vec2(cos(psi),sin(psi))*length(p.yz);
-		vec3 p2=p*p;
-		p=vec3(vec2(p2.x-p2.y,2.0*p.x*p.y)*(1.0-p2.z/(p2.x+p2.y+p2.z)),
-          2.0*p.z*sqrt(p2.x+p2.y))+C;
-		r=length(p);
-
-        orbit_trap = min(orbit_trap, dot(p, p));
-	}
-
-	return vec2(min(0.5 * log(r) * r / max(dr, 1.0), 1.0), orbit_trap).yx;
-}*/
-
 
 ReturnT thismap(CoordT p, ContextT ctx) {
 	CoordT p0 = p;
