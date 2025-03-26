@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.sdf.mengerSpongeSdf
-  opVersion: '14'
+  opVersion: '15'
   opStatus: default
 opDef: !def
   enable: true
@@ -60,9 +60,19 @@ inputs:
   returnType: !returnT
     Returntypevec4: true
 - !input
-  Localalias: rotateField
+  Localalias: preRotateField
   Variables: '*'
   Variableinputs: boxScaleField crossScaleField stepOffsetField
+  coordType: !coordT
+    Coordtypevec3: true
+  contextType: !contextT
+    Allcontexttype: true
+  returnType: !returnT
+    Returntypevec4: true
+- !input
+  Localalias: postRotateField
+  Variables: '*'
+  Variableinputs: boxScaleField crossScaleField stepOffsetField preRotateField
   coordType: !coordT
     Coordtypevec3: true
   contextType: !contextT
