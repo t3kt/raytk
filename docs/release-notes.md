@@ -26,6 +26,7 @@
     * mengerSpongeSdf - added alternate formula from TheArchCoder (#1286)
     * raymarchRender3d - added dithering toggle (#1278)
     * rimContrib - added rotation parameter / field input (#1280)
+    * variableReference - access to orbit trap from SDFs
 * Fixes
   * Fix handling of zero thickness in split
   * Fix multiLight issues with pbrMat (#1277)
