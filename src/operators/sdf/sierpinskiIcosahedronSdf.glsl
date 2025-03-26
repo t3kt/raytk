@@ -7,6 +7,7 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 	vec3 n1 = normalize(vec3(-GOLDEN_RATIO, GOLDEN_RATIO - 1.0, 1.0));
 	vec3 n2 = normalize(vec3(1.0, -GOLDEN_RATIO, GOLDEN_RATIO + 1.0));
 	vec3 n3 = normalize(vec3(0.0, 0.0, -1.0));
+	float scale;
 	float orbit_trap = 100000.0;
 	float r;
 	float t;
@@ -16,19 +17,6 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 	t = dot(p, n2); if (t > 0.0) p -= 2.0 * t * n2;
 	t = dot(p, n3); if (t > 0.0) p -= 2.0 * t * n3;
 	t = dot(p, n2); if (t > 0.0) p -= 2.0 * t * n2;
-
-	#ifdef THIS_EXPOSE_step
-	THIS_step = 0;
-	#endif
-	#ifdef THIS_EXPOSE_normstep
-	THIS_normstep = 0.0;
-	#endif
-
-	#ifdef THIS_HAS_INPUT_scaleField
-	float scale = inputOp_scaleField(p, ctx);
-	#else
-	float scale = THIS_Scale;
-	#endif
 
 	for(; n < 30; n++) {
 		if (n >= iterations) break;
