@@ -27,6 +27,8 @@
     * raymarchRender3d - added dithering toggle (#1278)
     * rimContrib - added rotation parameter / field input (#1280)
     * variableReference - access to orbit trap from SDFs
+  * Editor tools
+    * Use exports instead of reference expressions for the "Animate with..." actions
 * Fixes
   * Fix handling of zero thickness in split
   * Fix multiLight issues with pbrMat (#1277)

@@ -283,6 +283,8 @@ def _createAnimateParamAction(
 			chop.nodeCenterY = gen.nodeCenterY
 			chop.nodeX = gen.nodeX + gen.nodeWidth + 100
 			chop.viewer = True
+			chop.par.exportmethod = 'autoname'
+			chop.par.autoexportroot = o
 			parStates = []
 			for par in pars:
 				parStates.append({
@@ -292,11 +294,11 @@ def _createAnimateParamAction(
 					'expr': par.expr,
 					'bindExpr': par.bindExpr,
 				})
-				par.expr = f"op('{chop.name}')['{par.name}']"
 			if params:
 				for name, val in params.items():
 					gen.par[name] = val
 			undoInfo['parStates'] = parStates
+			chop.export = True
 		def undo():
 			chop = undoInfo.get('chop')
 			if chop:
