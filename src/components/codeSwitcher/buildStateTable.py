@@ -1,2 +1,2 @@
 def onCook(dat):
-	mod.codeSwitcher.buildStateTable(dat)
+	mod.codeSwitcher.CodeSwitcher(parent()).buildStateTable(dat)

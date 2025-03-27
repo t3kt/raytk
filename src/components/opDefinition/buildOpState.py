@@ -1,4 +1,3 @@
-from opDefinition import buildOpState
 import json
 
 # noinspection PyUnreachableCode
@@ -11,7 +10,8 @@ def onSetupParameters(dat: scriptDAT):
 	page.appendToggle('Pretty')
 
 def onCook(dat: DAT):
+	mod.opDefinition.ensureExt(parent())
 	dat.clear()
-	state = buildOpState()
+	state = ext.opDefinition.buildRopState()
 	obj = state.toDict()
 	dat.write(json.dumps(obj, indent='  ' if dat.par.Pretty.eval() else None))

@@ -65,6 +65,27 @@ op:
     supportedVariables:
     - step
     - normstep
+  - contextTypes:
+    - Context
+    - MaterialContext
+    - CameraContext
+    - LightContext
+    - RayContext
+    - VertexContext
+    - PixelContext
+    coordTypes:
+    - vec3
+    label: Rotate Field
+    name: rotateField
+    returnTypes:
+    - vec4
+    supportedVariableInputs:
+    - boxScaleField
+    - crossScaleField
+    - stepOffsetField
+    supportedVariables:
+    - step
+    - normstep
   name: mengerSpongeSdf
   opType: raytk.operators.sdf.mengerSpongeSdf
   parameters:
@@ -92,8 +113,21 @@ op:
     readOnlyHandling: baked
     regularHandling: runtime
     summary: The size of the holes cut through the boxes at each step.
+  - label: Variant
+    menuOptions:
+    - label: Klems
+      name: klems
+    - label: TheArchCoder
+      name: thearchcoder
+    name: Variant
+    readOnlyHandling: semibaked
+    regularHandling: semibaked
   - label: Step Offset
     name: Stepoffset
+    readOnlyHandling: baked
+    regularHandling: runtime
+  - label: Rotate
+    name: Rotate
     readOnlyHandling: baked
     regularHandling: runtime
   summary: Menger sponge fractal, made of boxes with holes cut through each axis.

@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.convert.floatToVector
-  opVersion: '13'
+  opVersion: '14'
   opStatus: default
 opDef: !def
   enable: !expr
@@ -22,6 +22,8 @@ opDef: !def
     name: help
 inputs:
 - !input
+  Required: !expr
+    expr: '''THIS_USE_INPUT_1'' in op(''macros'').col(1)'
   coordType: !coordT
     Allcoordtype: true
   contextType: !contextT
@@ -29,6 +31,8 @@ inputs:
   returnType: !returnT
     Returntypefloat: true
 - !input
+  Required: !expr
+    expr: '''THIS_USE_INPUT_2'' in op(''macros'').col(1)'
   coordType: !coordT
     Allcoordtype: true
   contextType: !contextT
@@ -36,6 +40,8 @@ inputs:
   returnType: !returnT
     Returntypefloat: true
 - !input
+  Required: !expr
+    expr: '''THIS_USE_INPUT_3'' in op(''macros'').col(1)'
   coordType: !coordT
     Allcoordtype: true
   contextType: !contextT
@@ -43,6 +49,8 @@ inputs:
   returnType: !returnT
     Returntypefloat: true
 - !input
+  Required: !expr
+    expr: '''THIS_USE_INPUT_4'' in op(''macros'').col(1)'
   coordType: !coordT
     Allcoordtype: true
   contextType: !contextT

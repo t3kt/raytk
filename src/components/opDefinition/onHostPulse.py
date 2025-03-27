@@ -2,19 +2,18 @@
 if False:
 	# noinspection PyUnresolvedReferences
 	from _stubs import *
-	from . import opDefinition as _opDef
 	from opDefinition import OpDefinition
-	mod.opDefinition = _opDef
 	ext.opDefinition = OpDefinition(COMP())
 
 def onPulse(par):
+	mod.opDefinition.ensureExt(parent())
 	action = par.name
 	if action == 'Inspect':
-		mod.opDefinition.inspect(par.owner)
+		ext.opDefinition.inspect()
 	elif action == 'Help':
-		mod.opDefinition.launchHelp()
+		ext.opDefinition.launchHelp()
 	elif action == 'Updateop':
-		mod.opDefinition.updateOP()
+		ext.opDefinition.updateOP()
 	elif action.startswith('Createref'):
 		ext.opDefinition.createVarRef(action.replace('Createref', ''))
 	elif action.startswith('Creatersel'):

@@ -2,6 +2,16 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 	if (IS_FALSE(THIS_Enable)) return ReturnT(0.);
 
 	vec3 n = ctx.normal;
+
+	vec3 rotate = THIS_Rotate;
+	#ifdef THIS_HAS_INPUT_rotateField
+	rotate += radians(fillToVec3(inputOp_rotateField(p, ctx)));
+	#else
+	#endif
+	n *= TDRotateX(rotate.x);
+	n *= TDRotateY(rotate.y);
+	n *= TDRotateZ(rotate.z);
+
 	vec3 v = normalize(-ctx.ray.dir);
 	n *= TDRotateToVector(v, vec3(0., 1., 0.));
 	#ifdef THIS_EXPOSE_normangle

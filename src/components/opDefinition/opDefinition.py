@@ -8,14 +8,7 @@ if False:
 	from _stubs import *
 	from raytkUtil import OpDefParsT
 
-def parentPar() -> 'ParCollection | OpDefParsT':
-	return parent().par
-
-def _host() -> COMP | None:
-	return parentPar().Hostop.eval()
-
-def buildName():
-	host = _host()
+def buildName(host):
 	if not host:
 		return ''
 	pathParts = host.path[1:].split('/')
@@ -37,32 +30,7 @@ def _evalType(category: str, supportedTypes: DAT, inputDefs: DAT):
 		return inputCell
 	return supportedTypes[category, 'types']
 
-def combineInputDefinitions(dat: scriptDAT, inDats: list[DAT], defFields: DAT, supportedTypeTable: DAT):
-	dat.clear()
-	if parentPar()['Inputdefs'] is not None:
-		inDats += parentPar().Inputdefs.evalOPs()
-	if not inDats:
-		return
-	cols = defFields.col(0) + ['input:handler']
-	dat.appendRow(cols)
-	inDats = [d for d in inDats if d.numRows > 1]
-	if not inDats:
-		return
-	usedNames = set()
-	for d in reversed(inDats):
-		insertRow = 0
-		for inDatRow in range(1, d.numRows):
-			name = d[inDatRow, 'name']
-			if not name or name.val in usedNames:
-				continue
-			usedNames.add(name.val)
-			dat.appendRow([d[inDatRow, col] or '' for col in cols], insertRow)
-			insertRow += 1
-	_processInputDefTypeCategory(dat, supportedTypeTable, 'coordType')
-	_processInputDefTypeCategory(dat, supportedTypeTable, 'contextType')
-	_processInputDefTypeCategory(dat, supportedTypeTable, 'returnType')
-
-def _processInputDefTypeCategory(dat: scriptDAT, supportedTypeTable: DAT, category: str):
+def _processInputDefTypeCategory(dat: scriptDAT, supportedTypeTable: DAT, category: str, hostName: str):
 	supported = supportedTypeTable[category, 'types'].val.split(' ')
 	cells = dat.col(category)
 	if not cells:
@@ -76,23 +44,7 @@ def _processInputDefTypeCategory(dat: scriptDAT, supportedTypeTable: DAT, catego
 		elif len(supportedInputTypes) == 1:
 			cell.val = supportedInputTypes[0]
 		else:
-			cell.val = '@' + parentPar().Name.eval()
-
-def _getParamsOp() -> COMP | None:
-	return parentPar().Paramsop.eval() or _host()
-
-def _getRegularParams(specs: list[str]) -> list[Par]:
-	host = _getParamsOp()
-	if not host:
-		return []
-	paramNames = tdu.expand(str(' '.join(specs)).strip())
-	if not paramNames:
-		return []
-	return [
-		p
-		for p in host.pars(*[pn.strip() for pn in paramNames])
-		if p.isCustom and p.name != 'Inspect'
-	]
+			cell.val = '@' + hostName
 
 def _canBeReadOnlyTuplet(pars: list[Par]):
 	return all(p.readOnly and p.mode == ParMode.CONSTANT for p in pars)
@@ -106,64 +58,8 @@ def _getTupletName(parts: list[str]):
 			return None
 	return prefix
 
-# Builds table with parameter local names, for select CHOPs.
-def buildParamChopNamesTable(dat: DAT):
-	dat.clear()
-	regularNames = []
-	specialNames = []
-	angleNames = []
-	constantNames = []
-	state = _parseOpState()
-	for paramSpec in state.params:
-		if paramSpec.handling == 'macro':
-			continue
-		name = paramSpec.localName
-		source = paramSpec.source
-		if paramSpec.handling == 'constant':
-			if source != 'param':
-				raise Exception(f'Constants must come from parameters {name} {source}')
-			else:
-				constantNames.append(name)
-		elif source == 'param':
-			regularNames.append(name)
-		elif source == 'special':
-			specialNames.append(name)
-		if paramSpec.conversion == 'angle':
-			angleNames.append(name)
-	dat.appendRow(['regular', ' '.join(regularNames)])
-	dat.appendRow(['special', ' '.join(specialNames)])
-	dat.appendRow(['angle', ' '.join(angleNames)])
-	dat.appendRow(['constant', ' '.join(constantNames)])
-	part1Names = []
-	part2Names = []
-	part3Names = []
-	part4Names = []
-	for paramTuplet in state.paramTuplets:
-		if paramTuplet.handling != 'runtime':
-			continue
-		part1Names.append(paramTuplet.part1 or '_')
-		part2Names.append(paramTuplet.part2 or '_')
-		part3Names.append(paramTuplet.part3 or '_')
-		part4Names.append(paramTuplet.part4 or '_')
-	dat.appendRow(['regularPart1', ' '.join(part1Names)])
-	dat.appendRow(['regularPart2', ' '.join(part2Names)])
-	dat.appendRow(['regularPart3', ' '.join(part3Names)])
-	dat.appendRow(['regularPart4', ' '.join(part4Names)])
-
-def buildValidationErrors(
-		errorDat: scriptDAT,
-		inputDefinitions: DAT,
-		elementValidationErrors: list[DAT]):
-	errorDat.clear()
-	errorDat.appendRow(['path', 'level', 'message'])
-	_validateReferences(errorDat)
-	_validateInputs(errorDat, inputDefinitions)
-	for dat in elementValidationErrors:
-		errorDat.appendRows(dat.rows()[1:])
-
-def _validateReferences(errorDat: scriptDAT):
-	path = parent().path
-	table = parentPar().Referencetable.eval()
+def _validateReferences(errorDat: scriptDAT, path: str, refTable: DAT):
+	table = refTable
 	if not table or table.numRows < 2:
 		return []
 	for i in range(1, table.numRows):
@@ -233,33 +129,16 @@ def _checkInputType(handler: COMP, typeName: str, typeCategory: str):
 		return f'Input does not support {typeName} context'
 	return f'Input does not support {typeCategory} {typeName}'
 
-def onValidationChange(dat: DAT):
-	host = _host()
-	if not host or host.par.clone == host:
-		return
-	host.clearScriptErrors()
-	if dat.numRows < 2:
-		return
-	cells = dat.col('message')
-	if not cells:
-		return
-	err = '\n'.join([c.val for c in cells])
-	host.addScriptError(err)
-
-def onHostNameChange():
-	# See issue #295
-	op('sel_funcTemplate').cook(force=True)
-
-def _createBuilder():
-	return _Builder(parent())
-
-def buildOpState():
-	builder = _createBuilder()
-	builder.load()
-	return builder.opState
+def ensureExt(comp):
+	if not getattr(ext, 'opDefinition', None):
+		comp.par.ext0name = 'opDefinition'
+		comp.par.ext0object = "op('./opDefinition').module.OpDefinition(me)"
+		comp.par.ext0promote = True
+		comp.par.reinitextensions.pulse()
 
 class _Builder:
 	defPar: 'OpDefParsT'
+	defExt: 'OpDefinition'
 	hostOp: COMP
 	paramsOp: COMP
 	inDats: list[DAT]
@@ -272,6 +151,7 @@ class _Builder:
 	def __init__(self, opDefComp: COMP):
 		# noinspection PyTypeChecker
 		self.defPar = opDefComp.par  # type: OpDefParsT
+		self.defExt = ext.opDefinition
 		self.hostOp = self.defPar.Hostop.eval()
 		self.paramsOp = self.defPar.Paramsop.eval() or self.hostOp
 		self.inDats = opDefComp.ops('input_def_[0-9]*')
@@ -339,8 +219,8 @@ class _Builder:
 		for inputState in self.opState.inputStates:
 			if inputState.tags:
 				tags.update(inputState.tags)
-		if parentPar()['Tagtable'] is not None:
-			table = parentPar().Tagtable.eval()
+		if self.defPar['Tagtable'] is not None:
+			table = self.defPar.Tagtable.eval()
 			if table and table.numRows > 1:
 				for i in range(1, table.numRows):
 					if _isFalseStr(table[i, 'enable']):
@@ -427,7 +307,7 @@ class _Builder:
 					for name in tdu.expand(table[row, 'names'].val):
 						addSpecialPar(name)
 				else:  # if source == 'param':
-					for par in _getRegularParams([table[row, 'names'].val]):
+					for par in self.defExt._getRegularParams([table[row, 'names'].val]):
 						handling = table[row, 'handling']
 						if par.readOnly:
 							handling = table[row, 'readOnlyHandling'] or handling
@@ -448,7 +328,7 @@ class _Builder:
 	def _fillParamStatuses(self):
 		parsByTuplet = {}  # type: dict[str, list[Par]]
 		paramSpecsByName = {}  # type: dict[str, ParamSpec]
-		host = _getParamsOp()
+		host = self.defExt._getParamsOp()
 		if not host:
 			return
 		for paramSpec in self.opState.params:
@@ -805,27 +685,6 @@ class _Builder:
 def _parseOpState():
 	return RopState.fromJson(op('opState').text)
 
-def buildDefinitionTable(dat: scriptDAT, supportedTypes: DAT, inputDefs: DAT):
-	dat.clear()
-	state = _parseOpState()
-	defPath = parent().path
-	dat.appendCols([
-		['name', state.name],
-		['path', state.path],
-		['opType', state.ropFullType],
-		['coordType', _evalType('coordType', supportedTypes, inputDefs)],
-		['contextType', _evalType('contextType', supportedTypes, inputDefs)],
-		['returnType', _evalType('returnType', supportedTypes, inputDefs)],
-		['opVersion', parentPar().Raytkopversion or 0],
-		['toolkitVersion', parentPar().Raytkversion or ''],
-		['paramSource', defPath + '/param_vals'],
-		['constantParamSource', defPath + '/constant_param_vals'],
-		['paramVectors', defPath + '/param_vector_vals'],
-		['libraryNames', parentPar()['Librarynames'] or ''],
-		['definitionPath', defPath + '/definition'],
-		['tags', ' '.join(state.tags or [])],
-	])
-
 _typePattern = re.compile(r'\b[CR][a-z]+T\b')
 _typeRepls = {'CoordT': 'THIS_CoordT', 'ContextT': 'THIS_ContextT', 'ReturnT': 'THIS_ReturnT'}
 def _typeRepl(m): return _typeRepls.get(m.group(0), m.group(0))
@@ -844,42 +703,6 @@ def _showWarning(msg: str):
 	dlg = op.TDResources.op('popDialog')
 	dlg.Open(title='Warning', text=msg, escOnClickAway=True)
 
-def inspect(rop: COMP):
-	if hasattr(op, 'raytk'):
-		inspector = op.raytk.op('tools/inspector')
-		if inspector and hasattr(inspector, 'Inspect'):
-			inspector.Inspect(rop)
-			return
-	_showWarning('The RayTK inspector is only available when the main toolkit tox has been loaded.')
-
-def launchHelp():
-	url = parentPar().Helpurl.eval()
-	if not url:
-		return
-	url += '?utm_source=raytkLaunch'
-	ui.viewFile(url)
-
-def updateOP():
-	if not hasattr(op, 'raytk'):
-		_showWarning('Unable to update OP because RayTK toolkit is not available.')
-		return
-	host = _host()
-	if not host:
-		return
-	toolkit = op.raytk
-	updater = toolkit.op('tools/updater')
-	if updater and hasattr(updater, 'UpdateOP'):
-		updater.UpdateOP(host)
-		return
-	if not host.par.clone:
-		msg = 'Unable to update OP because master is not found in the loaded toolkit.'
-		if parentPar().Raytkopstatus == 'deprecated':
-			msg += '\nNOTE: This OP has been marked as "Deprecated", so it may have been removed from the toolkit.'
-		_showWarning(msg)
-		return
-	if host and host.par.clone:
-		host.par.enablecloningpulse.pulse()
-
 def _getPalette():
 	if not hasattr(op, 'raytk'):
 		_showWarning('Unable to create reference because RayTK toolkit is not available.')
@@ -890,6 +713,11 @@ class OpDefinition:
 	def __init__(self, opDefComp: COMP):
 		self.opDefComp = opDefComp
 		self.hostRop = opDefComp.par.Hostop.eval()
+
+	def buildRopState(self):
+		builder = _Builder(self.opDefComp)
+		builder.load()
+		return builder.opState
 
 	def createVarRef(self, name: str):
 		palette = _getPalette()
@@ -936,3 +764,167 @@ class OpDefinition:
 		if not state.materialId:
 			return None
 		return state.materialCode
+
+	def _parseOpState(self):
+		return RopState.fromJson(self.opDefComp.op('opState').text)
+
+	def _getParamsOp(self) -> COMP | None:
+		return self.opDefComp.par.Paramsop.eval() or self.hostRop
+
+	def _getRegularParams(self, specs: list[str]) -> list[Par]:
+		host = self._getParamsOp()
+		if not host:
+			return []
+		paramNames = tdu.expand(str(' '.join(specs)).strip())
+		if not paramNames:
+			return []
+		return [
+			p
+			for p in host.pars(*[pn.strip() for pn in paramNames])
+			if p.isCustom and p.name != 'Inspect'
+		]
+
+	def combineInputDefinitions(self, dat: scriptDAT, inDats: list[DAT], defFields: DAT, supportedTypeTable: DAT):
+		dat.clear()
+		inDats += self.opDefComp.par.Inputdefs.evalOPs()
+		if not inDats:
+			return
+		cols = defFields.col(0) + ['input:handler']
+		dat.appendRow(cols)
+		inDats = [d for d in inDats if d.numRows > 1]
+		if not inDats:
+			return
+		usedNames = set()
+		hostName = self.name
+		for d in reversed(inDats):
+			insertRow = 0
+			for inDatRow in range(1, d.numRows):
+				name = d[inDatRow, 'name']
+				if not name or name.val in usedNames:
+					continue
+				usedNames.add(name.val)
+				dat.appendRow([d[inDatRow, col] or '' for col in cols], insertRow)
+				insertRow += 1
+		_processInputDefTypeCategory(dat, supportedTypeTable, 'coordType', hostName)
+		_processInputDefTypeCategory(dat, supportedTypeTable, 'contextType', hostName)
+		_processInputDefTypeCategory(dat, supportedTypeTable, 'returnType', hostName)
+
+	# Builds table with parameter local names, for select CHOPs.
+	def buildParamChopNamesTable(self, dat: DAT):
+		dat.clear()
+		regularNames = []
+		specialNames = []
+		angleNames = []
+		constantNames = []
+		state = self._parseOpState()
+		for paramSpec in state.params:
+			if paramSpec.handling == 'macro':
+				continue
+			name = paramSpec.localName
+			source = paramSpec.source
+			if paramSpec.handling == 'constant':
+				if source != 'param':
+					raise Exception(f'Constants must come from parameters {name} {source}')
+				else:
+					constantNames.append(name)
+			elif source == 'param':
+				regularNames.append(name)
+			elif source == 'special':
+				specialNames.append(name)
+			if paramSpec.conversion == 'angle':
+				angleNames.append(name)
+		dat.appendRow(['regular', ' '.join(regularNames)])
+		dat.appendRow(['special', ' '.join(specialNames)])
+		dat.appendRow(['angle', ' '.join(angleNames)])
+		dat.appendRow(['constant', ' '.join(constantNames)])
+		part1Names = []
+		part2Names = []
+		part3Names = []
+		part4Names = []
+		for paramTuplet in state.paramTuplets:
+			if paramTuplet.handling != 'runtime':
+				continue
+			part1Names.append(paramTuplet.part1 or '_')
+			part2Names.append(paramTuplet.part2 or '_')
+			part3Names.append(paramTuplet.part3 or '_')
+			part4Names.append(paramTuplet.part4 or '_')
+		dat.appendRow(['regularPart1', ' '.join(part1Names)])
+		dat.appendRow(['regularPart2', ' '.join(part2Names)])
+		dat.appendRow(['regularPart3', ' '.join(part3Names)])
+		dat.appendRow(['regularPart4', ' '.join(part4Names)])
+
+	def buildDefinitionTable(self, dat: scriptDAT, supportedTypes: DAT, inputDefs: DAT):
+		dat.clear()
+		state = self._parseOpState()
+		defPath = self.opDefComp.path
+		dat.appendCols([
+			['name', state.name],
+			['path', state.path],
+			['opType', state.ropFullType],
+			['coordType', _evalType('coordType', supportedTypes, inputDefs)],
+			['contextType', _evalType('contextType', supportedTypes, inputDefs)],
+			['returnType', _evalType('returnType', supportedTypes, inputDefs)],
+			['opVersion', self.opDefComp.par.Raytkopversion or 0],
+			['toolkitVersion', self.opDefComp.par.Raytkversion or ''],
+			['paramSource', defPath + '/param_vals'],
+			['constantParamSource', defPath + '/constant_param_vals'],
+			['paramVectors', defPath + '/param_vector_vals'],
+			['libraryNames', self.opDefComp.par['Librarynames'] or ''],
+			['definitionPath', defPath + '/definition'],
+			['tags', ' '.join(state.tags or [])],
+		])
+
+	def buildValidationErrors(self, errorDat: scriptDAT, inputDefinitions: DAT, elementValidationErrors: list[DAT]):
+		errorDat.clear()
+		errorDat.appendRow(['path', 'level', 'message'])
+		_validateReferences(errorDat, self.opDefComp.path, self.opDefComp.par.Referencetable.eval())
+		_validateInputs(errorDat, inputDefinitions)
+		for dat in elementValidationErrors:
+			errorDat.appendRows(dat.rows()[1:])
+
+	def onValidationChange(self, dat: DAT):
+		host = self.hostRop
+		if not host or host.par.clone == host:
+			return
+		host.clearScriptErrors()
+		if dat.numRows < 2:
+			return
+		cells = dat.col('message')
+		if not cells:
+			return
+		err = '\n'.join([c.val for c in cells])
+		host.addScriptError(err)
+
+	def inspect(self):
+		if hasattr(op, 'raytk'):
+			inspector = op.raytk.op('tools/inspector')
+			if inspector and hasattr(inspector, 'Inspect'):
+				inspector.Inspect(self.hostRop)
+				return
+		_showWarning('The RayTK inspector is only available when the main toolkit tox has been loaded.')
+
+	def launchHelp(self):
+		url = self.opDefComp.par.Helpurl.eval()
+		if not url:
+			return
+		url += '?utm_source=raytkLaunch'
+		ui.viewFile(url)
+
+	def updateOP(self):
+		if not hasattr(op, 'raytk'):
+			_showWarning('Unable to update OP because RayTK toolkit is not available.')
+			return
+		host = self.hostRop
+		toolkit = op.raytk
+		updater = toolkit.op('tools/updater')
+		if updater and hasattr(updater, 'UpdateOP'):
+			updater.UpdateOP(host)
+			return
+		if not host.par.clone:
+			msg = 'Unable to update OP because master is not found in the loaded toolkit.'
+			if self.opDefComp.par.Raytkopstatus == 'deprecated':
+				msg += '\nNOTE: This OP has been marked as "Deprecated", so it may have been removed from the toolkit.'
+			_showWarning(msg)
+			return
+		if host and host.par.clone:
+			host.par.enablecloningpulse.pulse()

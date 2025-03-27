@@ -4,3 +4,4 @@ Blending	param	runtime	macro		op('blending_definition').numRows < 2
 Color[rgb] Level	param	runtime	macro		1
 Usesurfacecolor	param	constant			1
 Enableshadow	param	macro			1
+Rotate[xyz]	param	runtime	macro	angle	1

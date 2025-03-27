@@ -48,6 +48,8 @@ cat:
   - name: mergeFields
     summary: Merges multiple vector fields, using different fields for each vector
       part.
+  - name: mixColorFields
+    status: beta
   - name: mixFields
   - name: shapedCombine
     summary: Combine two SDFs, using a 2D SDF to shape the blending region.

@@ -1,0 +1,10 @@
+names	source	handling	readOnlyHandling	conversion	enable
+Kleinr	param	runtime	macro		int(parent().par.Kleinr.enable)
+Kleini	param	runtime	macro		int(parent().par.Kleini.enable)
+Boxsize[xy]	param	runtime	macro		int(parent().par.Boxsizex.enable)
+Scale	param	runtime	macro		int(parent().par.Scale.enable)
+Offset[xyz]	param	runtime	macro		1
+Enableinversion	param	constant			1
+Iterations	param	runtime	macro		1
+Inversioncenter[xyz]	param	runtime	macro		1
+Inversionradius	param	runtime	macro		1

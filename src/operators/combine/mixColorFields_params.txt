@@ -1,0 +1,4 @@
+names	source	handling	readOnlyHandling	conversion	enable
+Basecolor[rgb] Baselevel	param	runtime	macro		1
+Enable[1-8]	param	runtime	constant		1
+Level[1-8] Color[1-8][rgb]	param	runtime	macro		1

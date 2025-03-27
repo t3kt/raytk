@@ -17,6 +17,15 @@ op:
   - contextTypes:
     - MaterialContext
     coordTypes:
+    - vec2
+    - vec3
+    label: Rotate Field
+    name: rotateField
+    returnTypes:
+    - vec4
+  - contextTypes:
+    - MaterialContext
+    coordTypes:
     - float
     - vec2
     - vec3
@@ -100,6 +109,10 @@ op:
     readOnlyHandling: baked
     regularHandling: runtime
     summary: Amount of fading between highlighted and not highlighted areas.
+  - label: Rotate
+    name: Rotate
+    readOnlyHandling: baked
+    regularHandling: runtime
   summary: Shading that is applied to the edges of a surface relative to where it's
     viewed from.
   thumb: assets/images/reference/operators/material/rimContrib_thumb.png

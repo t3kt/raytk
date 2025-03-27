@@ -58,7 +58,7 @@ class ModuleInfoBuilder:
 				' '.join(sorted(ropInfo.keywords)),
 				' '.join(sorted(ropInfo.shortcuts)),
 				(chipTable and chipTable[rop.name, 'chip']) or '',
-				(thumbTable and thumbTable[rop.path, 'thumb']) or '',
+				(thumbTable and thumbTable[ropInfo.opType.rsplit('.', maxsplit=1)[1], 'thumb']) or '',
 				ropInfo.opDefPar['Flags'] or '',
 				modName,
 				self.extractHelpSummary(ropInfo.helpDAT),

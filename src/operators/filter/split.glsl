@@ -33,9 +33,13 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 	ReturnT res = inputOp1(p, ctx);
 	#if defined(THIS_RETURN_TYPE_Sdf)
 	if (IS_TRUE(THIS_Enablesmoothing)) {
-		res.x = fOpIntersectionRound(res.x, -d + th/2, bl);
+		if (th!=0.||bl!=0.) {
+			res.x = fOpIntersectionRound(res.x, -d + th/2, bl);
+		}
 	} else {
-		res.x = max(res.x, -d + th/2);
+		if (th!=0.) {
+			res.x = max(res.x, -d + th/2);
+		}
 	}
 	#elif defined(THIS_RETURN_TYPE_Volume)
 	if (IS_TRUE(THIS_Enablesmoothing)) {

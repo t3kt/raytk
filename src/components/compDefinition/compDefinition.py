@@ -4,15 +4,9 @@ import re
 if False:
 	# noinspection PyUnresolvedReferences
 	from _stubs import *
-	from raytkUtil import CompDefParsT
 	from _stubs.PopDialogExt import PopDialogExt
 
-def parentPar() -> 'CompDefParsT':
-	# noinspection PyTypeChecker
-	return parent().par
-
-def buildName():
-	host = parent().par.Hostop.eval()
+def buildName(host):
 	if not host:
 		return ''
 	pathParts = host.path[1:].split('/')
@@ -25,54 +19,68 @@ def buildName():
 		name = 'o_' + name
 	return 'RTK_' + name
 
-def inspect():
-	for o in parentPar().Rops.evalOPs():
-		par = o.par['Inspect']
-		if par is not None:
-			par.pulse()
-			return
-
 def _useLocalHelp():
 	return hasattr(op, 'raytk') and bool(op.raytk.par['Devel'])
-
-def launchHelp():
-	url = parentPar().Helpurl.eval()
-	if not url:
-		return
-	if _useLocalHelp():
-		url = url.replace('https://t3kt.github.io/raytk/', 'http://localhost:4000/raytk/')
-	if url:
-		ui.viewFile(url)
 
 def _popDialog() -> 'PopDialogExt':
 	# noinspection PyUnresolvedReferences
 	return op.TDResources.op('popDialog')
 
+def ensureExt(comp):
+	if not getattr(comp.ext, 'compDefinition', None):
+		comp.par.ext0name = 'compDefinition'
+		comp.par.ext0object = "op('./compDefinition').module.CompDefinition(me)"
+		comp.par.ext0promote = True
+		comp.par.reinitextensions.pulse()
+
 def updateOP():
-	if not hasattr(op, 'raytk'):
-		_popDialog().Open(
-			title='Warning',
-			text='Unable to update OP because RayTK toolkit is not available.',
-			escOnClickAway=True,
-		)
-		return
-	host = parentPar().Hostop.eval()
-	if not host:
-		return
-	toolkit = op.raytk
-	updater = toolkit.op('tools/updater')
-	if updater and hasattr(updater, 'UpdateOP'):
-		updater.UpdateOP(host)
-		return
-	if not host.par.clone:
-		msg = 'Unable to update OP because master is not found in the loaded toolkit.'
-		if parentPar().Raytkopstatus == 'deprecated':
-			msg += '\nNOTE: This OP has been marked as "Deprecated", so it may have been removed from the toolkit.'
-		_popDialog().Open(
-			title='Warning',
-			text=msg,
-			escOnClickAway=True,
-		)
-		return
-	if host and host.par.clone:
-		host.par.enablecloningpulse.pulse()
+	ensureExt(parent())
+	ext.compDefinition.updateOP()
+
+class CompDefinition:
+	def __init__(self, opDefComp: COMP):
+		self.opDefComp = opDefComp
+		self.hostRop = opDefComp.par.Hostop.eval()
+
+	def inspect(self):
+		for o in self.opDefComp.par.Rops.evalOPs():
+			par = o.par['Inspect']
+			if par is not None:
+				par.pulse()
+				return
+
+	def launchHelp(self):
+		url = self.opDefComp.par.Helpurl.eval()
+		if not url:
+			return
+		if _useLocalHelp():
+			url = url.replace('https://t3kt.github.io/raytk/', 'http://localhost:4000/raytk/')
+		if url:
+			ui.viewFile(url)
+
+	def updateOP(self):
+		if not hasattr(op, 'raytk'):
+			_popDialog().Open(
+				title='Warning',
+				text='Unable to update OP because RayTK toolkit is not available.',
+				escOnClickAway=True,
+			)
+			return
+		host = self.hostRop
+		toolkit = op.raytk
+		updater = toolkit.op('tools/updater')
+		if updater and hasattr(updater, 'UpdateOP'):
+			updater.UpdateOP(host)
+			return
+		if not host.par.clone:
+			msg = 'Unable to update OP because master is not found in the loaded toolkit.'
+			if self.opDefComp.par.Raytkopstatus == 'deprecated':
+				msg += '\nNOTE: This OP has been marked as "Deprecated", so it may have been removed from the toolkit.'
+			_popDialog().Open(
+				title='Warning',
+				text=msg,
+				escOnClickAway=True,
+			)
+			return
+		if host and host.par.clone:
+			host.par.enablecloningpulse.pulse()

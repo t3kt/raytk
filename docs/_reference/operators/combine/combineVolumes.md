@@ -37,6 +37,90 @@ op:
     name: definition_in_2
     returnTypes:
     - Volume
+  - contextTypes:
+    - Context
+    - MaterialContext
+    - CameraContext
+    - LightContext
+    - RayContext
+    - VertexContext
+    - PixelContext
+    coordTypes:
+    - vec3
+    label: Volume 2
+    name: definition_in_3
+    returnTypes:
+    - Volume
+  - contextTypes:
+    - Context
+    - MaterialContext
+    - CameraContext
+    - LightContext
+    - RayContext
+    - VertexContext
+    - PixelContext
+    coordTypes:
+    - vec3
+    label: Volume 2
+    name: definition_in_4
+    returnTypes:
+    - Volume
+  - contextTypes:
+    - Context
+    - MaterialContext
+    - CameraContext
+    - LightContext
+    - RayContext
+    - VertexContext
+    - PixelContext
+    coordTypes:
+    - vec3
+    label: Volume 1
+    name: definition_in_5
+    returnTypes:
+    - Volume
+  - contextTypes:
+    - Context
+    - MaterialContext
+    - CameraContext
+    - LightContext
+    - RayContext
+    - VertexContext
+    - PixelContext
+    coordTypes:
+    - vec3
+    label: Volume 2
+    name: definition_in_6
+    returnTypes:
+    - Volume
+  - contextTypes:
+    - Context
+    - MaterialContext
+    - CameraContext
+    - LightContext
+    - RayContext
+    - VertexContext
+    - PixelContext
+    coordTypes:
+    - vec3
+    label: Volume 2
+    name: definition_in_7
+    returnTypes:
+    - Volume
+  - contextTypes:
+    - Context
+    - MaterialContext
+    - CameraContext
+    - LightContext
+    - RayContext
+    - VertexContext
+    - PixelContext
+    coordTypes:
+    - vec3
+    label: Volume 2
+    name: definition_in_8
+    returnTypes:
+    - Volume
   moduleName: raytkVolumes
   name: combineVolumes
   opType: raytkVolumes.operators.combine.combineVolumes

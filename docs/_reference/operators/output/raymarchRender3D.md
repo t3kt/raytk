@@ -339,6 +339,10 @@ op:
     name: Enablecustomoutput1
   - label: Enable Custom Output 2
     name: Enablecustomoutput2
+  - label: Enable Dithering
+    name: Enabledithering
+    readOnlyHandling: baked
+    regularHandling: runtime
   shortcuts:
   - rr3
   summary: Renders a scene using 3D raymarching.

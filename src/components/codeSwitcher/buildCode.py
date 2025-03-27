@@ -5,4 +5,4 @@ if False:
 
 def onCook(dat):
 	dat.clear()
-	dat.write(mod.codeSwitcher.buildCode())
+	dat.write(mod.codeSwitcher.CodeSwitcher(parent()).buildCode())

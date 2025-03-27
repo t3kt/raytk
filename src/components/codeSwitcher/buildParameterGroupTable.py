@@ -1,2 +1,2 @@
 def onCook(dat):
-	mod.codeSwitcher.buildParameterGroupTable(dat)
+	mod.codeSwitcher.CodeSwitcher(parent()).buildParameterGroupTable(dat)

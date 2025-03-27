@@ -170,6 +170,7 @@ _allTypes += [
 			Field('uv2.z', 'Secondary UV (Z)', 'float', macros='RAYTK_USE_UV'),
 			Field('color', 'Surface Color', 'vec4', macros='RAYTK_USE_SURFACE_COLOR'),
 			Field('density', 'Density', 'float', macros='RAYTK_USE_DENSITY'),
+			Field('orbit', 'Orbit Trap', 'vec4', macros='RAYTK_ORBIT_IN_SDF'),
 			# TODO: sdf fields
 		]),
 	DataType(

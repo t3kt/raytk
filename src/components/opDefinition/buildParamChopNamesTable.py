@@ -1,3 +1,4 @@
 def onCook(dat):
+	mod.opDefinition.ensureExt(parent())
 	dat.clear()
-	mod.opDefinition.buildParamChopNamesTable(dat)
+	ext.opDefinition.buildParamChopNamesTable(dat)

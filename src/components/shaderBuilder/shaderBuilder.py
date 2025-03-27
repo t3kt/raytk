@@ -338,7 +338,10 @@ class ShaderBuilder:
 			if state.variables:
 				for variable in state.variables:
 					varOwnerName = variable.owner
-					varOwnerPath = defTable[varOwnerName, 'path'].val
+					pathCell = defTable[varOwnerName, 'path']
+					if not pathCell:
+						continue
+					varOwnerPath = pathCell.val
 					varNames[(varOwnerPath, variable.localName)] = variable.name
 			if state.attributes:
 				for attribute in state.attributes:
@@ -503,7 +506,7 @@ class ShaderBuilder:
 				toolkitVersions[version] = 1 + toolkitVersions.get(version, 0)
 		if len(toolkitVersions) > 1:
 			error = f'Toolkit version mismatch ({", ".join(list(toolkitVersions.keys()))})'
-			addError(parent().path, 'warning', error)
+			addError(self.ownerComp.path, 'warning', error)
 
 	def _validateVariableReferences(self, addError: 'Callable[[str, str, str], None]'):
 		#  addError params (path, level, message)

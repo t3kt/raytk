@@ -1,4 +1,4 @@
 name	label	code
-inset	Inset
+inset	Inset	
 centered	Centered	b += thickness;
 outset	Outset	b += thickness*2.;

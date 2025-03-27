@@ -243,6 +243,9 @@ cat:
     - mp
     summary: Repeats space radially, like a kaleidoscope.
     thumb: assets/images/reference/operators/filter/moduloPolar_thumb.png
+  - name: moduloPolyhedral
+    status: beta
+    thumb: assets/images/reference/operators/filter/moduloPolyhedral_thumb.png
   - name: moduloSpherical
     summary: Repeats space in a spherical mesh layout with rows and columns.
     thumb: assets/images/reference/operators/filter/moduloSpherical_thumb.png
