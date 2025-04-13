@@ -25,6 +25,7 @@ _opDefParamNames = [
 	'Variabletable',
 	'Referencetable',
 	'Librarynames',
+	'Inputdefs',
 	'Help',
 	'Helpurl',
 	'Keywords',
