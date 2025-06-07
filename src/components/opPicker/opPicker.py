@@ -152,13 +152,13 @@ class OpPicker:
 		# note for performance: this gets called frequently as the mouse moves even within a single cell
 		if row == prevRow and col == prevCol:
 			return
-		item = self.impl.getItemForCell(row, col)
+		item = self.impl.itemLibrary.itemForRow(row)
 		if item:
 			self.impl.selectItem(item)
 		ext.callbacks.DoCallback('onRolloverItem', {'item': item})
 
 	def onSelect(self, endRow: int, endCol: int, end: bool):
-		item = self.impl.getItemForCell(row=endRow, col=endCol)
+		item = self.impl.itemLibrary.itemForRow(endRow)
 		self.impl.selectItem(item)
 		if not end:
 			return
@@ -576,10 +576,14 @@ class _PickerImpl:
 		if row >= 0:
 			self.listComp.scroll(row, 0)
 
-	def getItemForCell(self, row: int, col: int) -> _AnyItemT | None:
+	def getItemForCell(self, row: int) -> _AnyItemT | None:
 		if row < 0:
 			return None
-		return self.itemLibrary.itemForRow(row)
+		try:
+			return self.itemLibrary.itemForRow(row)
+		except RecursionError:
+			# print(self.ownerComp, 'getItemForCell: RecursionError for some reason')
+			return None
 
 	@staticmethod
 	def initTable(attribs: ListAttributes):
@@ -589,7 +593,14 @@ class _PickerImpl:
 		attribs.textJustify = JustifyType.CENTERLEFT
 
 	def initCol(self, col: int, attribs: ListAttributes):
-		if col is None:
+		pass
+
+	def initRow(self, row: int, attribs: ListAttributes):
+		pass
+
+	def initCell(self, row: int, col: int, attribs: ListAttributes):
+		item = self.getItemForCell(row=row)
+		if not item:
 			return
 		layout = self.getLayout()
 		if col == layout.toggleCol:
@@ -602,12 +613,6 @@ class _PickerImpl:
 			attribs.colWidth = layout.thumbColWidth
 		elif col == layout.chipCol:
 			attribs.colWidth = layout.chipColWidth
-
-	def initRow(self, row: int, attribs: ListAttributes):
-		item = self.itemLibrary.itemForRow(row)
-		if not item:
-			return
-		layout = self.getLayout()
 		if item.isOP and (item.isAlpha or item.isBeta or item.isDeprecated):
 			attribs.fontItalic = True
 		if isinstance(item, PickerCategoryItem):
@@ -621,12 +626,6 @@ class _PickerImpl:
 			attribs.fontSizeX = layout.opFontSize
 			attribs.fontBold = layout.opFontBold
 		self._applyStatusTextColor(attribs, item)
-
-	def initCell(self, row: int, col: int, attribs: ListAttributes):
-		item = self.getItemForCell(row=row, col=col)
-		if not item:
-			return
-		layout = self.getLayout()
 		if isinstance(item, PickerCategoryItem):
 			if col == layout.toggleCol:
 				self._initToggleCell(attribs, item)
