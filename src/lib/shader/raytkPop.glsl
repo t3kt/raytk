@@ -1,3 +1,11 @@
+struct PopResult {
+	vec4 P;
+
+	#ifdef RAYTK_HAS_ATTRS
+	Attrs attrs;
+	#endif
+};
+
 struct PopContext {
 	vec4 iteration;
 
