@@ -91,7 +91,7 @@ class MultiInputHandler:
 			'definitionPath', 'tags',
 			'input:alias', 'input:vars', 'input:varInputs', 'input:handler',
 		])
-		inputDefs = ops('definition_in_?')
+		inputDefs = self.ownerComp.ops('definition_in_?')
 		coordSettings = self._buildTypeSettingsCategory('coordType', 'Coord', inputDefs)
 		contextSettings = self._buildTypeSettingsCategory('contextType', 'Context', inputDefs)
 		returnSettings = self._buildTypeSettingsCategory('returnType', 'Return', inputDefs)

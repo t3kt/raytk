@@ -227,6 +227,9 @@ _allTypes += [
 		fields=[
 			# TODO: context fields
 		]),
+	DataType(
+		'PopContext', 'Pop Context', isContext=True, isVariable=False,
+	),
 ]
 
 _typesByName = {
