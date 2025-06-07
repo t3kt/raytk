@@ -950,6 +950,7 @@ class ContextTypes:
 	CameraContext = 'CameraContext'
 	LightContext = 'LightContext'
 	RayContext = 'RayContext'
+	PopContext = 'PopContext'
 
 	values = [
 		Context,
@@ -957,6 +958,7 @@ class ContextTypes:
 		CameraContext,
 		LightContext,
 		RayContext,
+		PopContext,
 	]
 
 class InspectorTargetTypes:
