@@ -18,9 +18,15 @@ opDef: !def
   function: !text
     file: src/operators/pop/popRender_func.glsl
     name: functionTemplate
+  macroTable: !table
+    file: src/operators/pop/popRender_macros.txt
+    name: macro_exprs
+    evaluate: true
+    evalOpts: !evalOpts {}
   displayCategory: POP
 inputs:
 - !input
+  Localalias: sdf
   Variables: '*'
   coordType: !coordT
     Allcoordtype: !expr
@@ -35,14 +41,12 @@ inputs:
     Contexttypecontext: true
   returnType: !returnT
     Returntypesdf: true
-    Returntypefloat: true
-    Returntypevec4: true
 - !input
-  Localalias: camera
+  Localalias: light
   Variables: '*'
   coordType: !coordT
-    Coordtypevec2: true
+    Coordtypevec3: true
   contextType: !contextT
-    Contexttypecameracontext: true
+    Contexttypelightcontext: true
   returnType: !returnT
-    Returntyperay: true
+    Returntypelight: true

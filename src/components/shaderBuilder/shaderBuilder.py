@@ -853,8 +853,9 @@ class _Writer:
 		dat.write(self.out.getvalue())
 	def _writeGlobalDecls(self):
 		self._startBlock('globals')
-		self._writeLines(self.paramProc.globalDeclarations())
 		shaderType = self.ownerComp.par.Shadertype.eval()
+		if shaderType != 'glslpop':
+			self._writeLines(self.paramProc.globalDeclarations())
 		if shaderType == 'vertexstage' or shaderType == 'pixelstage':
 			pass
 		else:
