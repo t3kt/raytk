@@ -1,4 +1,5 @@
 from dataclasses import dataclass, field
+import json
 from typing import Optional
 
 # noinspection PyUnreachableCode
@@ -173,6 +174,12 @@ class OpPicker:
 	def onFocus(self, row: int, col: int, prevRow: int, prevCol: int):
 		pass
 
+	def buildTreeListStructure(self, dat: scriptDAT):
+		items = self.impl.buildTreeListStructure()
+		dat.clear()
+		text = json.dumps(items, indent=2)
+		dat.write(text)
+
 @dataclass
 class _LayoutSettings:
 	toggleCol: int | None
@@ -337,6 +344,34 @@ class _ItemLibrary:
 	@property
 	def currentItemCount(self):
 		return len(self._currentItemList)
+
+	def buildTreeListStructure(self, filt: 'Optional[_Filter]') -> dict:
+		items = []
+		for category in self.categories:
+			catObj = {
+				'key': category.shortName, 'type': 'category',
+				'id': (category.shortName,),
+				'value': {},
+			}
+			if filt is None:
+				matchedOps = category.ops
+			else:
+				matchedOps = [
+					o
+					for o in category.ops
+					if o.matches(filt)
+				]
+			if matchedOps:
+				catObj['children'] = [
+					{
+						'key': o.opType, 'type': 'op',
+						'id': (category.shortName, o.opType),
+						'value': {},
+					}
+					for o in matchedOps
+				]
+				items.append(catObj)
+		return {'items': items}
 
 	@property
 	def firstOpItem(self) -> PickerOpItem | None:
@@ -694,3 +729,7 @@ class _PickerImpl:
 			attribs.textJustify = JustifyType.CENTER
 			attribs.textColor = _configColor('Textcolor')
 			attribs.top = self.ownerComp.op('chipBackground')
+
+	def buildTreeListStructure(self) -> dict:
+		filt = self._getFilterSettings()
+		return self.itemLibrary.buildTreeListStructure(filt)
