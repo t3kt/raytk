@@ -1,7 +1,7 @@
 !rop
 meta: !meta
   opType: raytk.operators.material.modularMat
-  opVersion: '30'
+  opVersion: '31'
   opStatus: default
 opDef: !def
   enable: !expr
@@ -14,6 +14,7 @@ opDef: !def
       Contexttypecontext: true
     returnType: !returnT
       Returntypesdf: true
+      Returntypevolume: true
   function: !text
     file: src/operators/material/modularMat.glsl
     name: function
@@ -59,6 +60,7 @@ multiInput: !multiInput
       Contexttypecontext: true
     returnType: !returnT
       Returntypesdf: true
+      Returntypevolume: true
   - !input
     Localalias: shading1
     Variables: '*'

@@ -1,7 +1,7 @@
 vec4 THIS_iterationCapture = vec4(0.);
 
 ReturnT thismap(CoordT p, ContextT ctx) {
-	Sdf res = inputOp_sdf(p, ctx);
+	ReturnT res = inputOp_sdf(p, ctx);
 	bool use = true;
 	CONDITION();
 	if (!use || IS_FALSE(THIS_Enable) || isDistanceOnlyStage()) { return res; }
@@ -11,20 +11,20 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 	assignMaterial(res, THISMAT);
 	#endif
 	captureIterationFromMaterial(THIS_iterationCapture, ctx);
-	#if defined(RAYTK_REFLECT_IN_SDF) && (defined(THIS_Enablereflection) || defined(THIS_HAS_TAG_usereflect))
-	res.reflect = true;
-	#endif
-	#ifdef RAYTK_USE_SHADOW
+	#ifdef THIS_RETURN_TYPE_Sdf
 	{
-		#ifdef THIS_HAS_TAG_useshadow
-		res.useShadow = true;
+		#if defined(RAYTK_REFLECT_IN_SDF) && (defined(THIS_Enablereflection) || defined(THIS_HAS_TAG_usereflect))
+		res.reflect = true;
+		#endif
+		#if defined(THIS_Enableao) || defined(THIS_EXPOSE_ao) || defined(THIS_HAS_TAG_useao)
+			res.useAO = true;
+		#else
+			res.useAO = false;
 		#endif
 	}
 	#endif
-	#if defined(THIS_Enableao) || defined(THIS_EXPOSE_ao) || defined(THIS_HAS_TAG_useao)
-		res.useAO = true;
-	#else
-		res.useAO = false;
+	#ifdef THIS_HAS_TAG_useshadow
+	assignUseShadow(res);
 	#endif
 	return res;
 }

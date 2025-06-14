@@ -100,6 +100,7 @@ int resultMaterial1(Sdf res) { return int(res.mat.x); }
 int resultMaterial2(Sdf res) { return int(res.mat.y); }
 float resultMaterialInterp(Sdf res) { return res.mat.z; }
 bool resultHasMaterial(Sdf res) { return res.mat.x >= 0. || res.mat.y >= 0.; }
+bool resultHasMaterial(Volume res) { return resultHasMaterial(res.sdf); }
 bool resultCheckRefraction(Sdf res, out float ior) {
 	#ifdef RAYTK_REFRACT_IN_SDF
 	if (res.refract) {
@@ -270,13 +271,29 @@ vec3 getColor(in Volume res) {
 void assignMaterial(inout Sdf res, int materialId) {
 	res.mat = vec3(float(materialId), 0., 0.);
 }
+void assignMaterial(inout Volume res, int materialId) {
+	assignMaterial(res.sdf, materialId);
+}
 #ifdef RAYTK_USE_MATERIAL_POS
 void assignMaterialWithPos(inout Sdf res, int materialId, vec3 materialPos) {
 	res.mat = vec3(float(materialId), 0., 0.);
 	res.materialPos = vec4(materialPos, 1.);
 	res.materialPos2 = vec4(0.);
 }
+void assignMaterialWithPos(inout Volume res, int materialId, vec3 materialPos) {
+	assignMaterialWithPos(res.sdf, materialId, materialPos);
+}
 #endif
+void assignUseShadow(inout Sdf res) {
+	#ifdef RAYTK_USE_SHADOW
+	res.useShadow = true;
+	#endif
+}
+void assignUseShadow(inout Volume res) {
+	#ifdef RAYTK_USE_SHADOW
+	res.sdf.useShadow = true;
+	#endif
+}
 
 void assignUV(inout Sdf res, vec3 uv) {
 	#ifdef RAYTK_USE_UV
