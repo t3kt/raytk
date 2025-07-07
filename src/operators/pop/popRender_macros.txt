@@ -1,2 +1,0 @@
-int(parent().par.Distattrout != '')	'OUTPUT_ATTR_DIST'	parent().par.Distattrout
-int(parent().par.Colorattrout != '')	'OUTPUT_ATTR_COLOR'	parent().par.Colorattrout
