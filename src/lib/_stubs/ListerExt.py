@@ -15,14 +15,9 @@
 #
 # _END_HEADER_
 
-
 #from operator import dataRowgetter
-import functools
 import copy
-import re
-import collections
 import collections.abc
-import sys
 import traceback
 import ast
 from itertools import groupby
@@ -46,20 +41,32 @@ NONCELL = (-1, None) # values that indicate a non-cell value from callback
 
 SYNCABLEDATAMODES = ['int', 'float', 'string', 'version', 'blank', 'color']
 LOOKATTRS = {'bgColor', 'textColor', 'rowHeight', 'textOffsetX',
-					'textOffsetY', 'fontSizeX', 'fontFace', 'fontBold',
-					'fontItalic','leftBorderInColor', 'rightBorderInColor',
-					'topBorderInColor', 'bottomBorderInColor',
-					'leftBorderOutColor', 'rightBorderOutColor',
-					'topBorderOutColor', 'bottomBorderOutColor',
-					'sizeInPoints'}
+					'textOffsetY', 'fontSizeX', 'fontFace', 'fontFile',
+					'fontBold',	'fontItalic', 'leftBorderInColor', 
+					'rightBorderInColor', 'topBorderInColor', 
+					'bottomBorderInColor', 'leftBorderOutColor', 
+					'rightBorderOutColor', 'topBorderOutColor', 
+					'bottomBorderOutColor', 'sizeInPoints',
+					'wordWrap'}
+LOOKPARS = { #convert textTOP pars to textCOMP for look conversion
+	'fontsizex': 'fontsize',
+	'fontsizexunit': 'fontsizeunits',
+	'positionx': 'textoffsetx',
+	'positiony': 'textoffsety',
+	'positionunit': 'textoffsetunits',
+	'resolutionw': 'w',
+	'resolutionh': 'h',
+}
 
-class ListerExt (CallbacksExt):
+MOUSECHOP : mouseinCHOP = op.TDResources.MouseCHOP
+
+class ListerExt(CallbacksExt):
 
 	# region main
 
 	def __init__(self, ownerComp):
 		# config stuff
-		self.ownerComp = ownerComp
+		self.ownerComp : listCOMP = ownerComp
 		self.configComp = ownerComp.par.Configcomp.eval()
 		if self.configComp is None:
 			raise Exception("Invalid Config Comp (see Advanced parameter page)")
@@ -69,7 +76,9 @@ class ListerExt (CallbacksExt):
 		self.defaultConfig = ownerComp.op('configDefault')
 		self.inputTable = self.ownerComp.op('inputTableFinal')
 		self.autoColDefine = self.ownerComp.op('autoColDefine')
+		self.autoColDefineDefaults = ownerComp.op('autoColDefineDefaults')	
 		self.outLinked = self.ownerComp.op('outLinked')
+		self.outLinkedCon = self.ownerComp.outputConnectors[0]
 		self.outLinkRun = None # run object for once-per-frame update
 		self.linkedTable = None # chosen in parameter. Set in Refresh
 		self.settings = self.configComp.op('settings')
@@ -85,12 +94,13 @@ class ListerExt (CallbacksExt):
 					  					and self.ownerComp.par.Header.enable
 		self.AutoFilter = True  # do automated filtering behavior of Data
 		self.AutoSort = True  # built in sorting behavior
-		self.selectedCol = None
-
+		self.setupSelectedCol()
+		
 		# Data
+		self.inputHasHeader = None # True if input table has header row
 		self.rawData = []  # all Data available
 		self.workingData = []  # post filter, post sort Data
-		self.Data = ()  # final Data, laid out in an OrderedDictionary
+		self.Data = []  # final Data, laid out in an dict
 		self.columnDict = {}  # column: colnum... helper for callbacks
 		self.colNumDict = {} # colnum: column... another helper
 		self.loadLooks()
@@ -112,12 +122,30 @@ class ListerExt (CallbacksExt):
 								# is dropped into
 		self.autoHeader = False # header created from colDefine
 		self.holdRun = None  # delayed command for mouse hold
+		self.refreshRun = None # delayed command for refresh
+		self.resetRun = None # delayed command for reset
+		self.sizeColInfo = {'active': False, 'leftCol': None, 'rightCol': None,
+				'startPos': None, 'stretchy': None, 'leftStretch': None,
+				'rightStretch': None, 'leftMin': None, 'rightMin': None,
+		      	'startLeftWidth': None, 'startRightWidth': None, 'run': None, 
+				'lastMouseX': None, 'ownerWidth':None} # info for sizing cols 
 		self._SelectedRows = tdu.Dependency()
-		self._SelectedRows.val = []
+		self.sizedColWidths = {}
+		if not self.ownerComp.par.Saveselectedrows:
+			self._SelectedRows.val = oldSelected = []
+		else:
+			self._SelectedRows.val = oldSelected = [int(r) \
+						for r in self.ownerComp.par.Selectedrows.eval().split()]
 		self.dropHighlightInfo = None # current dropHighlight info
 		self.dragToRow = None # the row we are dragging to
 		self.dragRowColors = None # stores previous color info
 		self.doAdvancedCallbacks = self.ownerComp.par.Advancedcallbacks.eval()
+		if not self.ownerComp.par.Savesort:
+			self.ownerComp.par.Sortcols = ''
+			self.ownerComp.par.Sortreverse = False
+		if not self.ownerComp.par.Savefilter:
+			self.ownerComp.par.Filtercols = ''
+		
 		# mouse-down trackers
 		self.lastCellSelect = None # last cell rolled over with mouse done
 		self.holdCell = None # cell to test for mouse hold
@@ -155,7 +183,7 @@ class ListerExt (CallbacksExt):
 		except:
 			self.ownerComp.addScriptError(traceback.format_exc() + \
 					"Error setting up auto column define. See textport.")
-			print(traceback.format_exc())
+			print(traceback.format_exc())			
 		try:
 			self.Refresh()
 		except:
@@ -163,35 +191,57 @@ class ListerExt (CallbacksExt):
 			self.ownerComp.addScriptError(traceback.format_exc() +
 								   "Error in initial Refresh. See textport.")
 			print(traceback.format_exc())
-		self.SelectedRows = []
+		if not self.ownerComp.par.Saveselectedrows:
+			self.SelectedRows = []
+		else:
+			self.SelectedRows = oldSelected
 		run("op(" + str(ownerComp.id) + ").PostInit() "
 				"if op(" + str(ownerComp.id) + ") and "
 				"hasattr(op(" + str(ownerComp.id) + "), 'PostInit') else None",
-				delayFrames=1, delayRef=op.TDResources) # scrollbar reset
+				endFrame=True, delayRef=op.TDResources) # scrollbar reset
 		# version hack
 		self.ownerComp.par.Editcoldefine.enable = True
-
 		# DEBUG print('Lister init done')
 		# import traceback; traceback.print_stack()
 
 	def PostInit(self):
 		# cheap version update
 		if self.ownerComp.par.enablecloning.eval() and \
-							self.ownerComp.par.clone.eval():
+					self.ownerComp.par.clone.eval() and \
+					not self.ownerComp.par.clone.eval() == self.ownerComp and\
+					self.ownerComp.par.clone.eval().par.enablecloning.eval():
 			self.ownerComp.par.Version = \
 							self.ownerComp.par.clone.eval().par.Version.eval()
+			self.ownerComp.par.Toxsavebuild = \
+					self.ownerComp.par.clone.eval().par.Toxsavebuild.eval()
 		self.initialized = True
-		self.ownerComp.par.reset.pulse()
+		self.setupAutoColDefine()
+		self.checkLegacyDragDrop()
 		#self.ownerComp.scroll(0,0)
 		self.DoCallback('onPostInit', {'listerExt': self})
+		self.doReset()
 
-	def Refresh(self, immediate=False):
+	def FrameRefresh(self):
+		"""
+		Re-init table at end of frame, refreshing all Data and formatting all 
+		cells. Using this function will only cause one refresh per frame. To
+		immediately refresh, use Refresh()
+		"""
+		#debug('======================FrameRefresh', absTime.frame)
+		if self.refreshRun is None:
+			self.refreshRun = run('args[0]()', self.Refresh, endFrame=True,
+											delayRef=op.TDResources)
+
+	def Refresh(self, pulseReset=True):
 		"""
 		Re-init table, refreshing all Data and formatting all cells
 		"""
-		# if self.ownerComp.parent() == root:
-		# 	print(project.pythonStack())
-		# 	debug('**************************Refresh', me, absTime.frame)
+		#debug('**************************Refresh', absTime.frame)
+		try:
+			self.refreshRun.kill()
+		except:
+			pass
+		self.refreshRun = None
 
 		# parameters
 		self.header = self.ownerComp.par.Header.eval() \
@@ -223,16 +273,26 @@ class ListerExt (CallbacksExt):
 		self.GetRawData()
 		# set up coldefine
 		if self.ownerComp.par.Autodefinecols.eval():
-			self.colDefine = self._colDefine.val = \
-											self.autoColDefine
+			self.colDefine = self._colDefine.val = self.autoColDefine
 			self.setupAutoColDefine()
 			columns = [c.val for c in self.colDefine.row('column')[1:]]
 			self.columnDict = dict((columns[i], i) for i in range(len(columns)))
 			self.colNumDict = {v: k for k, v in self.columnDict.items()}
 
+		# check for valid column names
+		if len(columns) != len(set(columns)):
+			dupes = set()
+			for colName in columns:
+				if columns.count(colName) > 1:
+					dupes.add(colName)
+			raise Exception(
+					f'Duplicate column name{"" if len(dupes) == 1 else "s"}: '\
+							f'{", ".join(dupes)}')
+
 		# process workingData
 		self.ConvertData()
-		self.Filter()
+		for i, workingDataRow in enumerate(self.workingData):
+			workingDataRow.insert(-1, i + self.inputHasHeader)
 
 		if self.header and self.autoHeader:
 			defaultHeaders = []
@@ -246,24 +306,30 @@ class ListerExt (CallbacksExt):
 					# other types use 'column'
 					headerText = self.colDefine['column', i].val
 				defaultHeaders.append(headerText)
-			defaultHeaders.append(None)
+			defaultHeaders += ['Auto-Header', None] # sourceIndex, rowObject
 			self.workingData.insert(0, defaultHeaders)
 
-		# create Data as list of OrderedDicts
+		# create Data as list of Dicts
 		self.Data = []
 		for i, d in enumerate(self.workingData):
-			formattedData = self.WorkingDataToDataRow(d)
+			formattedData = self.WorkingDataToDataRow(d, d[-2])
 			self.Data.append(formattedData)
 
-		self.nRows = len(self.Data)
+		self.Filter()
+		
 		self.nCols = self.colDefine.numCols - 1
+		if self.nCols < 1:
+			self.nRows = 0
+		else:
+			self.nRows = len(self.Data)
 		self.Sort(False)
 		self._SelectedRows.val = []
 		self.restorePreviousSelection(oldData, oldSelectedRows)
+		self.testAllowEmptySelection()
 		self.ownerComp.par.Selectedrows.val = listToParString(
 														self._SelectedRows.val)
 
-		self.DataChanged()
+		self.DataChanged(pulseReset=pulseReset)
 		# callback
 		self.DoCallback('onRefresh', {'listerExt': self})
 		# debug('refresh', self.ownerComp)
@@ -278,6 +344,12 @@ class ListerExt (CallbacksExt):
 					newRowNum = oldRow
 				else:
 					newRowNum = self.GetObjectRowNum(oldRowObject)
+				if newRowNum is None and \
+									self.ownerComp.par.Saveseloninputchange:
+					newRowNum = oldRow
+				if newRowNum == 0 and self.header:
+					# if header was just turned on this can happen
+					newRowNum = None
 				if newRowNum is not None:
 					self._SelectedRows.val.append(newRowNum)
 					self._SelectedRows.modified()
@@ -295,7 +367,7 @@ class ListerExt (CallbacksExt):
 	###########################################################################
 	# region table manipulation
 
-	def MoveRows(self, rowList, destination):
+	def MoveRows(self, rowList, destination, outTableSync=True):
 		"""
 		Move Data rows in rowList to the destination index, preserving order.
 		Rows must be contiguous and dest cannot be in rows.
@@ -311,6 +383,14 @@ class ListerExt (CallbacksExt):
 		dest = destination
 		for rownum in rowList:
 			self.Data.insert(dest, self.Data.pop(rownum + offset))
+			# deal with sync'd table info
+			if outTableSync and self.SyncTable:
+				syncTable = self.SyncTable
+				sourceRowNum = rownum + offset + int(not self.header)
+				destRowNum = dest + int(not self.header)
+				rowData = [c.val for c in syncTable.row(sourceRowNum)]
+				syncTable.deleteRow(sourceRowNum)
+				syncTable.insertRow(rowData, destRowNum)
 			if destination > rownum:
 				dest -= 1
 			else:
@@ -362,6 +442,10 @@ class ListerExt (CallbacksExt):
 		for row in reversed(sorted(rows)):
 			if row >= self.nRows:
 				continue
+			if self.rolledCell and self.rolledCell[0] == row:
+				self.rolledCell = None
+			if self.rolledRow == row:
+				self.rolledRow = None
 			rowData.append(self.Data.pop(row))
 
 		selectedRows = self.SelectedRows
@@ -417,7 +501,7 @@ class ListerExt (CallbacksExt):
 														+ self.ownerComp.path)
 		callbackInfo = {'rowObject': None, 'rowDict': None}
 		if rowData is not None:
-			formattedData = collections.OrderedDict()
+			formattedData = dict()
 			for c in range(self.nCols):
 				colName = self.colNumDict[c]
 				formattedData[colName] = rowData[colName]
@@ -427,7 +511,7 @@ class ListerExt (CallbacksExt):
 		else:
 			if rowDict is None:
 				rowDict = {}
-			formattedData = collections.OrderedDict()
+			formattedData = dict()
 			for c in range(self.nCols):
 				colName = self.colNumDict[c]
 				formattedData[colName] = rowDict.get(colName, '')
@@ -452,26 +536,27 @@ class ListerExt (CallbacksExt):
 		else:
 			self.AddRow(*info, False)
 
-	def DataChanged(self, selectionObjects=None):
+	def DataChanged(self, selectionObjects=None, pulseReset=True):
 		"""
 		Call this when you change the Lister's Data. Refreshes text and size.
 		Does not get raw Data, convert Data, sort or filter.
 		selectionObjects will be selected if present in rowObjects
 		"""
 		# DEBUG print ('DataChanged', len(self.Data), self.Data)
-		self.nRows = len(self.Data)
 		self.nCols = self.colDefine.numCols - 1
+		if self.nCols < 1:
+			self.nRows = 0
+		else:
+			self.nRows = len(self.Data)
 		self.doClick = False
-		self.rolledCell = None
+		#self.rolledCell = None
 		if selectionObjects is not None:
 			self.SelectObjects(selectionObjects)
 		self.DoCallback('onDataChanged')
-		self.resetOwner()
+		self.resetOwner(pulseReset)
 
-	def resetOwner(self):
+	def resetOwner(self, pulseReset=True):
 		# debug ("resetOwner")
-		if self.initialized:
-			self.ownerComp.par.reset.pulse()
 		self._clickedOnce = False
 		nRows = self.nRows - self.AutoHeaderRows
 		if self.ownerComp.par.Inputtablehasheaders:
@@ -481,7 +566,16 @@ class ListerExt (CallbacksExt):
 		syncTable = self.SyncTable
 		if syncTable:
 			syncTable.setSize(nRows, syncTable.numCols)
+		if self.initialized and pulseReset:
+			self.doReset()
 
+	def doReset(self):
+		"""
+		Run the listCOMP reset once per frame only
+		"""
+		if self.resetRun is None:
+			self.resetRun = run('args[0]()', self.ownerComp.reset, 
+								endFrame=True, delayRef=op.TDResources)
 
 	def onEdit(self, row, col, val, addUndo=True):
 		# DEBUG print ("onEdit", row, col, val, me.time.frame)
@@ -547,20 +641,22 @@ class ListerExt (CallbacksExt):
 	###########################################################################
 	# region Data processing
 
-	def RowObjectToDataRow(self, rowObject):
+	def RowObjectToDataRow(self, rowObject, sourceIndex=None):
 		"""
-		Convert a rowObject into an OrderedDict in the proper format for the 
+		Convert a rowObject into a dict in the proper format for the 
 		lister's Data dictionary.
 
 		Args:
 			rowObject: any valid row object (list, dict, or Python object), 
+			sourceIndex: used to reference back to original data order. 
+				Probably unnecessary if rows are being added manually.
 		"""
 		workingDataRow = self.rowObjectToWorkingData( rowObject)
-		return self.WorkingDataToDataRow(workingDataRow)
+		return self.WorkingDataToDataRow(workingDataRow, sourceIndex)
 
-	def WorkingDataToDataRow(self, workingData):
+	def WorkingDataToDataRow(self, workingData, sourceIndex=None):
 		"""
-		Convert a list of data to an OrderedDict keyed by column names from
+		Convert a list of data to a dict keyed by column names from
 		colDefine. The final item will be the rowObject.
 
 		If you don't need to alter the data in the columns, use 
@@ -568,13 +664,18 @@ class ListerExt (CallbacksExt):
 
 		Args:
 			workingData: a list of data corresponding to each column of the 
-			lister, followed by the original row object.
+				lister, followed by the original row object.
+			sourceIndex: used to reference back to original data order. 
+				Default is to add to the end.				
 		"""
 		stringData = workingData[:-1]
+		if sourceIndex is None:
+			sourceIndex = len(self.Data) + self.AutoHeaderRows
 		try:
-			return collections.OrderedDict(
+			return dict(
 						[(self.colNumDict[i], stringData[i]) \
 										for i in range(len(self.colNumDict))]
+					+ [('sourceIndex', sourceIndex)]
 					+ [('rowObject', workingData[-1])]) # add rowObject
 		except Exception as e:
 			raise ValueError("Data doesn't match column definitions in row.\n"\
@@ -590,6 +691,7 @@ class ListerExt (CallbacksExt):
 		"""
 		self.rawData = []
 		# op input
+		self.inputHasHeader = False
 		if self.inputTable.text:
 			self.rawData = self.datPathToStringList(self.inputTable.path)
 			if self.ownerComp.par.Inputtablehasheaders.eval():
@@ -601,7 +703,9 @@ class ListerExt (CallbacksExt):
 					elif header in headers:
 						raise Exception('Duplicate header in col ' + str(i))
 					headers.append(header)
-				self.rawData = self.stringListToDictList(self.rawData)
+				if len(self.rawData) > 1:
+					self.rawData = self.stringListToDictList(self.rawData)
+				self.inputHasHeader = True
 		else:
 			parData = self.ownerComp.par.Rawdata.eval()
 			if isinstance(parData, Par):
@@ -613,7 +717,14 @@ class ListerExt (CallbacksExt):
 				self.rawData = self.datPathToStringList(
 									self.ownerComp.par.Linkedtable.eval().path)
 				if self.ownerComp.par.Inputtablehasheaders.eval():
-					self.rawData = self.stringListToDictList(self.rawData)
+					if len(self.rawData) > 1:
+						self.rawData = self.stringListToDictList(self.rawData)
+					self.inputHasHeader = True
+		if self.inputHasHeader and self.rawData \
+				and not isinstance(self.rawData[0], dict) \
+				and (not self.ownerComp.par.Autodefinecols \
+		  				or not self.ownerComp.par.Header):
+			self.rawData = self.rawData[1:]
 		self.workingData = None
 		returnDict = self.DoCallback('onGetRawData', { 'listerExt': self,
 											 'data': self.rawData, 'about':
@@ -624,8 +735,6 @@ class ListerExt (CallbacksExt):
 			self.rawData = returnDict['returnValue']
 
 	def datPathToStringList(self, path, testOnly=False):
-		if type(path) == DAT:
-			path = path.path
 		if type(path) == str:
 			if path == tdu.legalName(path):
 				dat = self.ownerComp.evalExpression("op('" + path + "')")
@@ -652,14 +761,15 @@ class ListerExt (CallbacksExt):
 
 	def stringListToDictList(self, stringList):
 		"""
-		Convert a list of lists of strings into a list of ordered dictionaries.
-		Used to convert tableDATs with headers into ordered dicts.
+		Convert a list of lists of strings into a list of dictionaries.
+		Used to convert tableDATs with headers into dicts. Does not output 
+		header row!
 
 		Args:
 			stringList: a list of lists of strings, first item is expected to be
 			used as dict keys. Must have 2 items to return anything.
 
-		Returns: a list of ordered Dicts
+		Returns: a list of dicts
 
 		"""
 		dictList = []
@@ -667,7 +777,7 @@ class ListerExt (CallbacksExt):
 			return dictList
 		keys = stringList[0]
 		for data in stringList[1:]:
-			entry = collections.OrderedDict()
+			entry = dict()
 			for i, d in enumerate(data):
 				entry[keys[i]] = d
 			dictList.append(entry)
@@ -735,9 +845,11 @@ class ListerExt (CallbacksExt):
 				sourceData = self.colDefine['sourceData', dataCell.col].val
 				if sourceData.strip():
 					convertedCell = eval(sourceData, {'object':rowObject,
-													'rowObject':object})
+													'rowObject':rowObject})
 				else:
 					convertedCell = ''
+			elif dataCell.val == 'rowNum':
+				convertedCell = ''
 			elif not(dataCell.val.strip()):
 				convertedCell = None
 			else:
@@ -757,15 +869,11 @@ class ListerExt (CallbacksExt):
 					try:
 						key = self.colDefine['sourceData', dataCell.col].val
 						if not key:
-							column = self.colDefine['column', dataCell.col].val
-							if column in rowObject:
-								key = column
-							else:
-								key = dataKeys[dataIndex]
-								dataIndex += 1
+							key = self.colDefine['column', dataCell.col].val
 						convertedCell = rowObject[key]
 					except:
 						convertedCell = None
+					#debug(key, column, dataIndex, convertedCell)
 				else:
 					try:
 						convertedCell = getattr(rowObject,
@@ -799,39 +907,38 @@ class ListerExt (CallbacksExt):
 
 	def Filter(self):
 		"""
-		Filter workingData
+		Filter Data
 		"""
 		badFilters = [col for col in self.FilterCols
-					  						if col < 0 or col >= self.nCols]
+					  			if col < 0 or col >= self.colDefine.numCols - 1]
 		if badFilters:
 			filterCols = list(self.FilterCols)
 			for c in badFilters:
 				filterCols.remove(c)
 			self.FilterCols = filterCols
 			#raise ValueError("Invalid filter column:", badFilters)
-		if not self.workingData:
+		if not self.Data:
 			return
 		if self.AutoFilter and self.FilterCols:
 			if self.FilterString:
-				if self.header and not self.autoHeader:
-					headerRow = self.workingData.pop(0)
-				else:
-					headerRow = None
 				filteredList = []
-				for dataRow in self.workingData:
+				if self.header:
+					filteredList.append(self.Data[0])
+				for rowNum, dataRow in enumerate(self.Data):
+					if self.header and rowNum == 0:
+						continue
 					filterout = True
 					for col in self.FilterCols:
-						if self.FilterString.lower() in dataRow[col].lower():
+						outputText = self.textFromData(rowNum, col)
+						if self.FilterString.lower() in outputText.lower():
 							filterout = False
 							break
 					if not filterout:
 						filteredList.append(dataRow)
-				if headerRow:
-					filteredList.insert(0, headerRow)
-				self.workingData = filteredList
+				self.Data = filteredList
 		# user callback
 		returnDict = self.DoCallback('onFilter', {'listerExt': self,
-					'data': self.workingData, 'about':'Return filtered Data'})
+					'data': self.Data, 'about':'Return filtered Data'})
 		if returnDict is not None and \
 						returnDict.get('returnValue', None) is not None:
 			self.workingData = returnDict['returnValue']
@@ -903,6 +1010,9 @@ class ListerExt (CallbacksExt):
 			return t
 		self.fixBadSorts()
 		indexType = int if type(dataRows[0]) == list else str
+		if indexType == str:
+			dataRows.sort(key=lambda x:x['sourceIndex'], 
+							reverse=self.SortReverse)
 		for col in self.SortCols:
 			if indexType == str:
 				index = self.colNumDict[col]
@@ -950,61 +1060,92 @@ class ListerExt (CallbacksExt):
 			# copy any missing rows in colDefine tables
 			if defaultOp.name == 'colDefine':
 				for colDefine in [self.configComp.op('colDefine'),
-								  self.autoColDefine]:
+								  self.autoColDefine, 
+								  self.configComp.op('autoColDefineDefaults')]:
 					if colDefine:
-						for row in defaultOp.rows():
+						for i, row in enumerate(defaultOp.rows()):
 							rowName = row[0].val
 							try:
 								colDefine[rowName, 0].val
-							except:
-								colDefine.appendRow([rowName] +
+							except: 
+								colDefine.insertRow([rowName] +
 										[defaultOp[rowName, 1]]
-													* (colDefine.numCols - 1))
-								print('Added row', rowName, 'to',
-									  colDefine.path)
+												* (colDefine.numCols - 1), i)
+								# debug('Updated', colDefine.path,'to include '
+								# 		'"' + rowName +'" row. No further'
+								# 		' action required. ')
 			# copy any missing rows in define table
 			elif defaultOp.name == 'define':
 				defineTable = self.configComp.op('define')
 				if defineTable:
-					for row in defaultOp.rows():
+					for i,row in enumerate(defaultOp.rows()):
 						rowName = row[0].val
 						try:
 							defineTable[rowName, 0].val
 						except:
-							defineTable.appendRow(row)
-							print('Added row', rowName, 'to', defineTable.path)
+							defineTable.insertRow(row, i)
+							# debug('Added row', rowName, 'to', defineTable.path)
+
+	def checkLegacyDragDrop(self):
+		if self.CallbackDat:
+			for callback in dir(self.CallbackDat.module):
+				if callback.startswith('onDrop') \
+						or callback.startswith('onDropHover'):
+					self.ownerComp.store('legacyDragDrop', True)
+					return
+		self.ownerComp.unstore('legacyDragDrop')
+
+	def RecreateAutoColumns(self):
+		self.setupAutoColDefine(True)
+		self.Refresh()
 
 	def setupAutoColDefine(self, clear=False):
+		# width utilities
+		masterLookOp = self.configComp.op('master')
+		headerSelectOp = (self.ownerComp.par.Clickableheader != 'Off' and
+							self.configComp.op('headerSelect')) or \
+							self.configComp.op('header') or \
+							masterLookOp
+		textOffsetX = masterLookOp.par.position1 \
+				if isinstance(masterLookOp, textTOP) else \
+					masterLookOp.par.textoffsetx
+		if self.header and self.ownerComp.par.Usesortindicatorchars \
+					and self.ownerComp.par.Clickableheader != 'Off':
+			sortWidth = headerSelectOp.evalTextSize(
+							' ' + self.ownerComp.par.Sortchar.eval())[0]
+			sortReverseWidth = headerSelectOp.evalTextSize(
+						' ' + self.ownerComp.par.Sortreversechar.eval())[0]
+			sortCharWidth = max(sortWidth, sortReverseWidth)
+		else:
+			sortCharWidth = 0
 		def colWidth(tList):
-			textDAT = self.configComp.op('master')
-			startText = textDAT.par.text
 			maxWidth = 10
-			for t in tList:
-				textDAT.par.text = t
-				textWidth = textDAT.textWidth
+			for i,t in enumerate(tList):
+				if i == 0 and self.header:
+					textWidth = headerSelectOp.evalTextSize(t)[0] + \
+							sortCharWidth
+				else:
+					textWidth = masterLookOp.evalTextSize(t)[0]
 				if textWidth > maxWidth:
 					maxWidth = textWidth
-			textDAT.par.text = startText
-			maxWidth += textDAT.par.position1 * 2
-			return maxWidth
+			maxWidth += max(textOffsetX * 2, 10) + 1
+			return math.ceil(maxWidth)
+		# setup columns
 		self.autoHeader = True
 		colDefine = self.autoColDefine
 		if clear:
-			for c in range(1, colDefine.numCols):
-				colDefine.deleteCol(1)
-			return
+			colDefine.clear(keepFirstCol=True)
 		else:
 			if not self.rawData:
 				return
 			Data = copy.copy(self.rawData)
-			if type(Data) == str:
-				Data = self.datPathToStringList(Data)
+			if isinstance(Data, DAT):
+				Data = self.datPathToStringList(Data.path)
 			# column info
 			rowNames = [c.val for c in colDefine.col(0)]
 			rowDefaults = {}
-			for row in self.ownerComp.op('configDefault/colDefine').rows():
+			for row in self.autoColDefineDefaults.rows():
 				rowDefaults[row[0].val] = row[1].val
-			rowDefaults.update({'sourceDataMode':'string'})
 			# set up default column info
 			colInfo = [rowDefaults.get(rowNames[i], '')
 					   							for i in range(len(rowNames))]
@@ -1023,49 +1164,53 @@ class ListerExt (CallbacksExt):
 					while column in colNames:
 						column = TDF.incrementStringDigits(column, 2)
 					colNames.append(column)
-					textList = [str(r) if isinstance(r,str)
+					textList = [r if isinstance(r,str)
 											else str(r[col]) for r in Data]
-					width = colWidth(textList)
-					# width = str(max([len(str(r[col])) for r in Data]+[2]) *
-					# 							self.DefaultWidthMultiplier)
 					if column:
 						colInfo[rowNames.index('column')] = column
 					else:
 						colInfo[rowNames.index('column')] = 'col' + str(col)
-					colInfo[rowNames.index('width')] = width
+					width = colWidth(textList) if rowDefaults['width'] \
+							== 'auto' else int(rowDefaults['width'])
+					colInfo[rowNames.index('width')] = width if col != 0 else ''
+					colInfo[rowNames.index('stretch')] = 1 if col == 0 else 0
 					colDefine.appendCol(colInfo)
+					# debug(colInfo)
 
 			elif isinstance(row, dict):
 				currentCols = [c.val for c in colDefine.row('column')[1:]]
-				for column in row.keys():
+				for colNum, column in enumerate(row.keys()):
 					if column in currentCols:
 						continue
-					textList = [str(r[column]) for r in Data] + [column]
-					width = colWidth(textList)
+					textList = [column] + [str(r[column]) for r in Data] 
+					width = colWidth(textList) if rowDefaults['width'] \
+							== 'auto' else int(rowDefaults['width'])
 					# width = str(max([len(str(r[column])) for r in Data]+[2]) *
 					# 							self.DefaultWidthMultiplier)
 					colInfo[rowNames.index('sourceData')] = column
 					colInfo[rowNames.index('column')] = column
-					colInfo[rowNames.index('width')] = width
+					colInfo[rowNames.index('width')] = \
+												width if colNum != 0 else ''
+					colInfo[rowNames.index('stretch')] = 1 if colNum == 0 else 0
 					colDefine.appendCol(colInfo)
 			else: # objects don't do defaults
 				if colDefine.numCols == 1:
 					column = 'objects'
 					textList = [str(r) for r in Data]
-					width = colWidth(textList)
+					width = colWidth(textList) if rowDefaults['width'] \
+							== 'auto' else int(rowDefaults['width'])
 					# width = str(max([len(str(r)) for r in Data]+[2]) *
 					# 							self.DefaultWidthMultiplier)
 					colInfo[rowNames.index('column')] = column
-					colInfo[rowNames.index('width')] = width
+					colInfo[rowNames.index('width')] = ''
 					colInfo[rowNames.index('stretch')] = 1
-					colDefine.appendCol(colInfo)
 
-		try:
-			self.DoCallback('onSetupAutoColDefine', {'autoColDefine':
-												 self.autoColDefine})
-		except:
-			traceback.print_exc()
-			print("Error in onSetupAutoColDefine callback")
+			try:
+				self.DoCallback('onSetupAutoColDefine', {'autoColDefine':
+													self.autoColDefine})
+			except:
+				traceback.print_exc()
+				print("Error in onSetupAutoColDefine callback")
 
 	def InitCell(self, row, col):
 		# DEBUG print('InitCell',row,col, self)
@@ -1112,12 +1257,15 @@ class ListerExt (CallbacksExt):
 		if self.doAdvancedCallbacks:
 			self.DoCallback('onInitHeader')
 
-	def InitRow(self, row, doSelect=True):
+	def InitRow(self, row, stripingOnly=False):
 		#debug('InitRow', row)
-		if self.header and row == 0:
-			self.InitHeader()
+		if self.ownerComp.rowAttribs[row] is None:
 			return
-		self.SetRowLook(row, None)
+		if not stripingOnly:
+			if self.header and row == 0:
+				self.InitHeader()
+				return
+			self.SetRowLook(row, None)
 		# striping
 		if self.ownerComp.par.Rowstriping == 'Striping' and row % 2 == 0:
 			rowStripeColor = \
@@ -1125,24 +1273,31 @@ class ListerExt (CallbacksExt):
 										['rowStripeOverlayColor',1].val.split()]
 			self.SetRangeOverlay(row, 0, 1, self.nCols,
 					rowStripeColor+[ROWSTRIPELAYER,])
-		elif self.ownerComp.par.Rowstriping == 'Dividing_Line':
+		elif self.ownerComp.par.Rowstriping == 'Dividing_Line' and not stripingOnly:
 			dividingLineColor = \
 					[float(c) for c in self.configComp.op('define')
 										['dividingLineColor',1].val.split()]
-			self.ownerComp.rowAttribs[row].bottomBorderOutColor = \
+			try:
+				self.ownerComp.rowAttribs[row].bottomBorderOutColor = \
 					dividingLineColor
+			except:
+				debug('Init Row Error:', row, self.nRows, 
+						self.ownerComp.par.rows.eval())
 
-		if self.doAdvancedCallbacks:
+		if self.doAdvancedCallbacks and not stripingOnly:
 			self.DoCallback('onInitRow', {'row': row})
 
-	def InitCol(self, col):
+	def InitCol(self, col, cellLookName=None):
 		"""
 		set columns attributes
+
+		cellLookName: override the look in colDefine
 		"""
 		# DEBUG print('InitCol', col)
 		colDefine = self.colDefine
 
 		infoTypes = {'stretch': int, 'width': int, 'justify': str,
+			   		'topFill': str,
 				   'cellLook': str, 'help': str, 'draggable': int,
 					 'fontBold': int, 'fontItalic': int}
 		info = {}
@@ -1164,64 +1319,77 @@ class ListerExt (CallbacksExt):
 				attribs.help = info['help']
 			# find cellLook
 			#if isinstance(self.configComp.op(info['cellLook']), textTOP):
-			look = self.looks.get(info['cellLook'])
-			if look is not None:
-				#for row in range(self.nRows):
-				#	self.SetCellLook(row, col, look['name'])
-				pass
-				#self.setLook(look, attribs)
-			# # 	#textOffset
-			#stretch
+
+			look = self.looks.get(info['cellLook']) if cellLookName is None \
+								else self.looks.get(cellLookName)
+			if look:
+				attribs.textOffsetX = look['textOffsetX']
+			else:
+				attribs.textOffsetX = self.looks['master']['textOffsetX']
+			#stretch and width
 			if info['stretch']:
 				attribs.colStretch = True
+				attribs.colWidth = info['width']
 			else:
 				attribs.colStretch = False
+				attribs.colWidth = self.sizedColWidths.get(col, info['width'])
+
 			#fontBold
-			if colDefine['fontBold', col + 1] and \
+
+			if 'fontBold' in info and colDefine['fontBold', col + 1] and \
 										colDefine['fontBold', col + 1].val:
 				if info['fontBold']:
 					attribs.fontBold = True
 				else:
 					attribs.fontBold = False
 			#fontItalic
-			if colDefine['fontItalic', col + 1] and \
+			if 'fontItalic' in info and colDefine['fontItalic', col + 1] and\
 										colDefine['fontItalic', col + 1].val:
 				if info['fontItalic']:
 					attribs.fontItalic = True
 				else:
 					attribs.fontItalic = False
-			# width
-			attribs.colWidth = info['width']
 			# justify
 			try:
 				attribs.textJustify = getattr(JustifyType, info['justify'])
 			except:
-				attribs.textJustify = JustifyType.CENTERLEFT
+				if look:
+					attribs.textJustify = look['textJustify']
+				else:
+					attribs.textJustify = self.looks['master']['textJustify']
+			# topFill
+			try:
+				attribs.topFill = getattr(FillMode, info['topFill'])
+			except:
+				if look:
+					attribs.topFill = look['topFill']
+				else:
+					attribs.topFill = self.looks['master']['topFill']					
 			#draggable
 			attribs.draggable = info['draggable']
-
-	def loadLooks(self, top=None):
-		# table looks found in configComp textTOPs
-		self.looks = {}
-		if top is None:
-			tops = self.configComp.findChildren(type=textTOP, depth=1)
-		else:
-			tops = [top]
-		for top in tops:
-			if not top.lock:
-				self.looks[top.name] = self.LoadLook(top)
 
 	def onInitTable(self, attribs):
 		"""
 		Initialize table attribs in this order: table, cols, header row,
 		 header cells, rows, cells
 		"""
-		# debug('onInitTable')
 		if not self.initialized:
 			# this avoids some strange timing bugs...
 			run("args[0].par.reset.pulse() if args[0] else None",
-				self.ownerComp, delayFrames=1)
+				self.ownerComp, endFrame=True)
 			return
+		if self.refreshRun is not None:
+			try:
+				self.refreshRun
+			except:
+				pass
+			else:
+				self.FrameRefresh()
+				return
+		self.resetRun = None				
+		if self.autoColDefine \
+					and self.ownerComp.par.cols != self.colDefine.numCols - 1:
+			self.RecreateAutoColumns()
 		# self.nRows = self.ownerComp.par.rows.eval()
 		# self.nCols = self.ownerComp.par.cols
 		self.dragToRow = None  # the row we are dragging to
@@ -1236,25 +1404,25 @@ class ListerExt (CallbacksExt):
 		rolledCell = self.rolledCell
 
 		# table
-		self.setLook(self.looks['master'], attribs)
+		self.setLook(self.looks['master'], attribs, None)
 		# cols
 		for c in range(self.nCols):
 			self.InitCol(c)
 		# rows (header, if it exists, is row 0)
 		for r in range(self.nRows):
-			self.InitRow(r)
+			self.InitRow(r)	
 			for c in range(self.nCols):
 				self.InitCell(r, c)
-		if self.rolledRow:
-			try:
-				self.setRollOverlay(self.rolledRow, True)
-			except:
-				pass
-		if rolledCell:
-			try:
-				self.RollCell(rolledCell[0], rolledCell[1])
-			except:
-				pass
+		# if self.rolledRow:
+		# 	try:
+		# 		self.setRollOverlay(self.rolledRow, True)
+		# 	except:
+		# 		pass
+		# if rolledCell:
+		# 	try:
+		# 		self.RollCell(rolledCell[0], rolledCell[1])
+		# 	except:
+		# 		pass
 		# restore looks
 		for r in self._SelectedRows.peekVal:
 			self.SetRowLook(r, 'rowSelect', True, SELECTOVERLAYER)
@@ -1266,15 +1434,14 @@ class ListerExt (CallbacksExt):
 	###########################################################################
 	# region text and sourceDataMode text interpreters
 
-	def SetCellText(self, row, col, text, outTableSync=True):
+	def SetCellText(self, row, col, data, outTableSync=True):
 		"""
 		Use this to set a cell's text field.
-		Only sends callback if text is different (onChangeCellText).
 		Sends change to Linked DAT and Synced Input DAT if outTableSync is true.
 		This will use sourceDataMode effects, e.g. color will be updated.
 		Returns old text.
 		"""
-		# DEBUG print ("SetCellText", row, col, text)
+		# DEBUG print ("SetCellText", row, col, data)
 		attribs = self.ownerComp.cellAttribs[row, col]
 
 		try:
@@ -1284,41 +1451,45 @@ class ListerExt (CallbacksExt):
 			#tdu.printStack()
 			for i in range(0,row):
 				print(self.ownerComp.cellAttribs[row,0].text)
-			raise Exception("Badattribs", row, col, text,
+			raise Exception("Badattribs", row, col, data,
 							self.ownercomp.par.rows, self.ownercomp.par.cols)
 			return
 		# sourceDataMode processing
-		sourceDataMode = self.colDefine["sourceDataMode", col+1].val
+		
+		try:
+			sourceDataMode = self.colDefine["sourceDataMode", col+1].val
+		except:
+			debug('SetCellText error:', row, col, data)
+			raise
+		rowData = self.Data[row]
+		rowObject = rowData['rowObject']
+		sourceCol = self.colNumDict[col]
 		if sourceDataMode == 'color':
-			color, newText = self.ProcessColorModeText(text)
+			color, ctext = self.ProcessColorModeText(data)
 			if color:
 				color.append(COLORDATALAYER)
 				self.SetCellOverlay(row, col, color)
-		elif sourceDataMode == 'rowNum' and not (self.header and row==0):
-			newText = str(row)
-		elif sourceDataMode == 'blank' and not (self.header and row==0):
-			newText = ''
-		else:
-			newText = text
-		# actual displayed text
-		attribs.text = newText
+		newText = self.textFromData(row, col, data)				
 		# help
 		help = self.colDefine['help', col + 1].val.strip()
+		rowObject = self.Data[row]['rowObject']
 		if help.startswith('*'):
 			if not self.header or row > 0:
 				if help == '*':
-					attribs.help = attribs.text
+					attribs.help = newText
 				else:
-					rowObject = self.Data[row]['rowObject']
-					attribs.help = eval(help[1:],
-										{'object': rowObject,
-										 'text': attribs.text,
-										 'rowObject': rowObject})
+				# "object" left in for backwards compatibility, use "rowObject"
+					attribs.help = eval(help[1:],{'object': rowObject,
+													'rowObject': rowObject,
+													'text': newText,
+													'rowData': rowData})
 			else:
-				attribs.help = ''
-
+				attribs.help = ''					
+		# actual displayed text
+		attribs.text = newText
 		# Data
-		self.Data[row][self.colNumDict[col]] = text
+		# 	to actually change Data, set "text" above
+		self.Data[row][sourceCol] = data
 		# output tables...
 		self.cookOutLinked()
 		if outTableSync:
@@ -1329,32 +1500,109 @@ class ListerExt (CallbacksExt):
 			if syncTable and tableRow > 0:
 				mode = self.colDefine['sourceDataMode', col+1]
 				if mode in SYNCABLEDATAMODES:
-					sourceCol = self.colDefine['sourceData', col+1]
 					if syncTable.col(sourceCol):
 						if mode == 'blank':
-							cellText = text
+							cellText = data
 						else:
 							cellText = newText
 						syncTable[tableRow, sourceCol] = \
 										cellText if cellText is not None else ''
 			for table in self.OutTables:
 				if 0 <= tableRow < table.numRows and col < table.numCols:
-					if text is None:
+					if data is None:
 						table[tableRow, col].val = ''
 					else:
-						table[tableRow, col].val = text
+						table[tableRow, col].val = data
 		if self.doAdvancedCallbacks:
-			self.DoCellCallback('onSetCellText', row, col, {'text': text,
-															'oldText': oldText})
+			self.DoCellCallback('onSetCellText', row, col, {'text': data,
+														'displayText': newText,
+														'oldText': oldText})
 		return oldText
+
+	def textFromData(self, row, col, data=None):
+		"""
+		Returns the actual displayed text after formatting etc.
+
+		Args:
+			row (int): destination row (for header calculations)
+			col (int): destination col 
+			data (str): text before formatting. If None, use current lister data
+
+		Returns:
+			newText (str): the actual text that would display in the cell
+		"""
+		# sourceDataMode processing
+		if data is None:
+			data = self.Data[row][self.colNumDict[col]]
+		try:
+			sourceDataMode = self.colDefine["sourceDataMode", col+1].val
+		except:
+			debug('SetCellText error:', row, col, data)
+			raise
+		rowData = self.Data[row]
+		rowObject = rowData['rowObject']
+		sourceCol = self.colNumDict[col]
+		headerCell = self.header and row==0
+		if sourceDataMode == 'color':
+			color, newText = self.ProcessColorModeText(data)
+		elif sourceDataMode == 'rowNum' and not headerCell:
+			newText = data = str(row)
+			self.Data[row][sourceCol] = str(row)
+		elif sourceDataMode == 'sourceIndex' and not headerCell:
+			newText = data = str(rowData['sourceIndex'])
+		elif sourceDataMode == 'blank' and not (self.header and row==0):
+			newText = ''
+		else:
+			newText = data
+		if headerCell and col in self.SortCols \
+					and self.ownerComp.par.Usesortindicatorchars:
+			sortChar = self.ownerComp.par.Sortreversechar.eval() \
+					if self.ownerComp.par.Sortreverse \
+						else self.ownerComp.par.Sortchar.eval()
+			if sortChar:
+				newText += ' ' + sortChar
+		# format
+		if not headerCell:
+			try:
+				format = self.colDefine['textFormat', col+1].val.strip()
+			except:
+				format = ''
+			if format:
+				if skipError := format.startswith('*'):
+					format = format[1:]
+				if sourceDataMode == 'float':
+					val = makefloat(newText)
+				elif sourceDataMode == 'int':
+					val = makeint(newText)
+				else:
+					val = data
+				try:
+					newText = TDF.formatString(format, 
+											{'rowObject': rowObject,
+					 						'text': newText,
+											'val': val,
+											'rowData': self.Data[row]})
+				except Exception as e:
+					if skipError:
+						pass
+					else:
+						e.args = (e.args[0] +
+							f'\nLister context: cell ({row}, {col})\n\t'
+							f'Documentation: See "format" in'
+							    f' https://docs.derivative.ca/'
+								f'Experimental:Palette:lister#colDefine_table',)
+						raise		
+		return newText
 
 	def cookOutLinked(self):
 		def doCookOutLinked():
+			# debug(self.Data[1])
 			self.outLinkRun = None
 			self.outLinked.cook(force=True)
-		if self.outLinkRun is None:
-			self.outLinkRun = run('args[0]', doCookOutLinked, endFrame=True)
-
+		if self.outLinkedCon.connections:
+			if self.outLinkRun is None:
+				self.outLinkRun = run('args[0]()', doCookOutLinked, 
+						endFrame=True, delayRef=op.TDResources)
 
 	def ProcessColorModeText(self, text):
 		"""
@@ -1457,13 +1705,15 @@ class ListerExt (CallbacksExt):
 		if row is not None and ((self.header and row == 0)
 										or row >= len(self.Data) or row < 0):
 			return
+		newSelected = []
 		if row is None and not addRow:
-			self.SelectedRows = []
-			return
-		if addRow is False:
-			self.SelectedRows = [row]
+			pass
+		elif addRow is False:
+			newSelected = [row]
 		elif row not in self.SelectedRows:
-			self.SelectedRows += [row]
+			newSelected = self.SelectedRows + [row]
+		if self.SelectedRows != newSelected:
+			self.SelectedRows = newSelected
 
 	def doSelectRowCallback(self, row):
 		# needed for multiple places where we have to call this
@@ -1523,36 +1773,73 @@ class ListerExt (CallbacksExt):
 			row = col = None
 		self.selectedCell = self.DropInfo = (row, col)
 
-	# a column was selected.
-	def SelectColumn(self, col):
+	def setupSelectedCol(self):
 		"""
-		Unlike other selects, this is called on mouse click, not mouse down
+		Just takes best guess at selectedCol based on data
+		"""
+		clickable = self.ownerComp.par.Clickableheader.eval()
+		sortCols = set(self.SortCols)
+		filterCols = set(self.FilterCols)
+		if 'Filter' in clickable and 'Sort' in clickable:
+			cols = sortCols.intersection(filterCols)
+		elif 'Filter' in clickable:
+			cols = filterCols
+		elif 'Sort' in clickable:
+			cols = sortCols		
+		else:
+			cols = None	
+		if cols:
+			self.selectedCol = cols.pop()
+		else:
+			self.selectedCol = None
+
+
+	# a column was selected.
+	def SelectColumn(self, col, asClick=False):
+		"""
+		Select a column for filters and sorts
 		"""
 		# debug('Select Column', col)
 		oldSelected = self.selectedCol
-		self.selectedCol = col
-		if oldSelected == col and self.SortReverse:
-			col = None
-			self.SortReverse = False
-			self.selectedCol = None
-			self.SetCellLook(0, oldSelected, None)
-		elif oldSelected != col and oldSelected is not None:
-			self.SetCellLook(0, oldSelected, None)
-		if col is None:
-			self.FilterCols = []
-			self.SortCols = []
-		else:
-			if col == oldSelected:
-				self.SortReverse ^= True
+		if asClick:
+			setFilter = 'Filter' in self.ownerComp.par.Clickableheader.eval()	
+			setSort = 'Sort' in self.ownerComp.par.Clickableheader.eval()
+			if setSort:
+				if col == oldSelected:
+					if col is not None:
+						if self.SortReverse:
+							self.SortReverse = False
+							col = None
+						else:
+							self.SortReverse = True
+				else:
+					self.SortReverse = False
 			else:
-				self.SortReverse = False
+				if col == oldSelected:
+					col = None
+			if col is None:
+				if setFilter:
+					self.FilterCols = []
+				if setSort:
+					self.SortCols = []
+			else:
+				if setFilter:
+					self.FilterCols = [col]
+				if setSort:
+					self.SortCols = [col]
+		self.selectedCol = col
+		if oldSelected != col and oldSelected is not None:
+			self.SetCellLook(0, oldSelected, None)					
+		if col is not None:
+			# set look except textOffsetX
+			attribs = self.ownerComp.cellAttribs[0, col]
+			offsetX = attribs.textOffsetX	
 			self.SetCellLook(0, col, 'headerSelect', True, COLOVERLAYER)
-			self.FilterCols = [col]
-			self.SortCols = [col]
+			attribs.textOffsetX = offsetX
+		self.Refresh()
 		self.DoCallback('onSelectColumn', {'col': col,
 							'colName': list(self.columnDict.keys())[col]
 											if col is not None else None})
-		self.Sort()
 
 	# endregion
 
@@ -1560,6 +1847,12 @@ class ListerExt (CallbacksExt):
 	# region user interaction
 
 	def onRollover(self, row, col, coords, prevrow, prevcol, prevcoords):
+		if row == 0 and col not in NONCELL and self.header \
+				and self.ownerComp.par.Sizablecols.eval() \
+				and self.startSizeCol(col, coords, testOnly=True):
+			self.ownerComp.par.cursor = 'arrowLeftRight'
+		else:
+			self.ownerComp.par.cursor = 'pointer'
 		if row is None and prevrow in NONCELL:
 			return
 		if row is None:
@@ -1590,7 +1883,6 @@ class ListerExt (CallbacksExt):
 				else:
 					self.rolledRow = None
 		# cell changes
-
 		if col != prevcol or row != prevrow:
 			# if there was a previous cell
 			if prevrow not in NONCELL and prevcol not in NONCELL:
@@ -1614,7 +1906,7 @@ class ListerExt (CallbacksExt):
 		doCallbacks = self.doAdvancedCallbacks
 		# header
 		if row == 0 and self.header:
-			if self.ownerComp.par.Clickableheader.eval():
+			if self.ownerComp.par.Clickableheader.menuIndex:
 				if list(self.Data[0].values())[col]:
 					look = 'headerRoll'
 					if col == self.selectedCol:
@@ -1626,10 +1918,13 @@ class ListerExt (CallbacksExt):
 						else:
 							self.RemoveOverlay(row, col, ROLLOVERLAYER)
 					else:
-						# set look
+						# set look, except textOffsetX
 						if on:
+							attribs = self.ownerComp.cellAttribs[row, col]
+							offsetX = attribs.textOffsetX
 							self.SetCellLook(row, col, look, True,
 									ROLLOVERLAYER, doCallback=doCallbacks)
+							attribs.textOffsetX = offsetX
 						else:
 							self.RemoveOverlay(row, col, ROLLOVERLAYER)
 							self.SetCellLook(row, col, None, look,
@@ -1653,25 +1948,28 @@ class ListerExt (CallbacksExt):
 				if topPath:
 					top = self.configComp.op(topPath + 'Roll')
 					attribs = self.ownerComp.cellAttribs[row, col]
-					if top and attribs:
+					if isinstance(top, TOP) and attribs:
 						attribs.top = top
 			else:
 				if topPath:
 					top = self.configComp.op(topPath)
 					attribs = self.ownerComp.cellAttribs[row, col]
-					if top and attribs:
+					if isinstance(top, TOP) and attribs:
 						attribs.top = top
 
 	def ClickHeader(self, col):
 		"""
 		Perform a click on the given header cell.
 		"""
-		if self.ownerComp.par.Clickableheader.eval():
+		if self.ownerComp.par.Clickableheader.menuIndex:
+			selectCol = col
+			# select None if ctrl down
 			if list(self.Data[0].values())[col]:
 				if self.ownerComp.panel.ctrl.val:
-					self.SelectColumn(None)
-				else:
-					self.SelectColumn(col)
+					selectCol = None
+			# select none if click on selected and already reversed			
+			self.SelectColumn(selectCol, asClick=True)
+			self.RollCell(0, col)
 		self.DoCellCallback('onClickHeader', 0, col)
 
 	def DoubleClickHeader(self, col):
@@ -1733,7 +2031,6 @@ class ListerExt (CallbacksExt):
 		# start and end are both false while mouse is held and dragged
 
 		# debug('onSelect', startrow, startcol, endrow, endcol, start,end)
-
 		if endrow not in NONCELL and endrow >= self.nRows:
 			# table must have changed under us. This can happen when filter is
 			# typed but click on table causes focus change
@@ -1799,7 +2096,12 @@ class ListerExt (CallbacksExt):
 			#self.PressCell(startrow, startcol)
 			self.ButtonDown = "Left"
 			# row select
-			if not ((self.header and startrow == 0) or startrow == -1):
+			if startrow == -1:
+				self.SelectRow(None)
+			elif self.header and startrow == 0:
+				if self.ownerComp.par.Sizablecols.eval():
+					self.startSizeCol(startcol, startcoords)
+			else:
 				if self.ownerComp.par.Selectablerows.eval() and \
 								int('0' + self.colDefine['selectRow',
 														 startcol+1].val):
@@ -1807,7 +2109,9 @@ class ListerExt (CallbacksExt):
 						# ctrl - add row
 						if self.ownerComp.panel.ctrl.val:
 							if startrow in self.SelectedRows:
-								self.DeselectRow(startrow)
+								if self.ownerComp.par.Allowemptyselection\
+										or len(self.SelectedRows) > 1:
+									self.DeselectRow(startrow)
 							else:
 								self.SelectRow(startrow, True)
 							self.doClick = False
@@ -1823,7 +2127,12 @@ class ListerExt (CallbacksExt):
 						elif startrow not in self.SelectedRows:
 							self.SelectRow(startrow)
 					else:
-						self.SelectRow(startrow)
+						if self.ownerComp.panel.ctrl.val \
+								and startrow in self.SelectedRows\
+								and self.ownerComp.par.Allowemptyselection:
+							self.DeselectRow(startrow)
+						else:
+							self.SelectRow(startrow)
 				# drag rows must be initiated here
 				if self.ownerComp.par.Dragtoreorderrows.eval() and \
 									not (self.ownerComp.panel.ctrl.val
@@ -1833,8 +2142,9 @@ class ListerExt (CallbacksExt):
 				# this makes select and rollover play nice
 				self.setRollOverlay(startrow, False)
 				self.setRollOverlay(startrow, True)
-				self.PressCell(endrow, endcol)
+			self.PressCell(endrow, endcol)
 		elif end:
+			self.stopSizeCol()
 			self.ButtonDown = None
 			# end hold testing
 			try:
@@ -1916,6 +2226,151 @@ class ListerExt (CallbacksExt):
 			if not start:
 				self.DoCallback('onMouseDrag', infoDict)
 
+	def startSizeCol(self, col, coords, testOnly=False):
+		# SET this up later!
+		# if not self.colDefine['sizable', col]:
+		# 	return
+		# if not self.ownerComp.par.Sizablecols:
+		# 	return
+		info = self.sizeColInfo
+		if info['active']:
+			self.stopSizeCol()
+		width = self.ownerComp.displayColWidth(col)
+		leftCol = None
+		rightCol = None
+		stretchy = any([self.ownerComp.displayAttribs[0, c].colStretch 
+				  								for c in range(self.nCols)])
+		# figure out the two columns the border is between and if they are 
+		# valid for width changing
+		if coords.x > width - 5 and (col + 1 < self.nCols 
+				or (self.ownerComp.par.hscrollbar and not stretchy)):
+			leftCol = col
+			if col + 1 < self.nCols:
+				rightCol = col + 1
+		elif coords.x < 5 and col > 0:
+			if stretchy:
+				rightCol = col 
+				leftCol = col - 1
+		# make sure cols are sizable
+		if stretchy:
+			if (leftCol is not None and \
+					not makebool(self.colDefine['sizable', leftCol + 1].val)) \
+				or (rightCol is not None and \
+					not makebool(self.colDefine['sizable', rightCol + 1].val)):
+				leftCol = rightCol = None
+		else:
+			rightCol = None
+			if leftCol is not None and \
+					not makebool(self.colDefine['sizable', leftCol + 1].val):
+				leftCol = None
+		doSize = not(leftCol is None and rightCol is None)
+		if testOnly:
+			return doSize
+		if not doSize:
+			return
+
+		info['active'] = True
+		info['stretchy'] = stretchy
+		info['leftCol'] = leftCol
+		info['rightCol'] = rightCol
+		if leftCol is not None:
+			info['startLeftWidth'] = self.ownerComp.displayColWidth(leftCol)
+			info['leftStretch'] = \
+					self.ownerComp.displayAttribs[0, leftCol].colStretch
+			if info['leftStretch']:
+				try:
+					info['leftMin'] = \
+							int(self.colDefine['width', leftCol + 1].val)
+				except:
+					info['leftMin'] = 20				
+			else:
+				info['leftMin'] = 20
+		else:
+			info['startLeftWidth'] = None
+			info['leftStretch'] = None
+			info['leftMin'] = None
+		if rightCol is not None:
+			info['startRightWidth'] = self.ownerComp.displayColWidth(rightCol)
+			info['rightStretch'] = \
+					self.ownerComp.displayAttribs[0, rightCol].colStretch
+			if info['rightStretch']:
+				try:
+					info['rightMin'] = \
+							int(self.colDefine['width', rightCol + 1].val)
+				except:
+					info['rightMin'] = 20				
+			else:
+				info['rightMin'] = 20
+		else:
+			info['startRightWidth'] = None
+			info['rightStretch'] = None
+			info['rightMin'] = None
+		info['startPos'] = MOUSECHOP['abs_mouse_x'].eval()
+		info['ownerWidth'] = self.ownerComp.width \
+			 					 - 14 if self.ownerComp.par.hscrollbar else 0
+		info['run'] = run(self.whileSizeCol, 
+										delayFrames=1, delayRef=op.TDResources)
+		
+	def stopSizeCol(self):
+		info = self.sizeColInfo
+		try:
+			info['run'].kill()
+		except:
+			pass
+		info['active'] = False
+		info['lastMouseX'] = None
+		# save new widths to column definitions
+		leftCol = info['leftCol']
+		rightCol = info['rightCol']
+		if self.ownerComp.par.Savecolresizes:
+			if leftCol is not None and not info['leftStretch']:
+				self.colDefine['width', leftCol + 1] = \
+						self.sizedColWidths[leftCol]
+			if rightCol is not None and not info['rightStretch']:
+				self.colDefine['width', rightCol + 1] = \
+						self.sizedColWidths[rightCol]
+
+	def whileSizeCol(self):
+		# debug(self.sizeColInfo)
+		info = self.sizeColInfo
+		if info['lastMouseX'] != MOUSECHOP['abs_mouse_x'].eval():
+			info['lastMouseX'] = MOUSECHOP['abs_mouse_x'].eval()
+			offset = int(MOUSECHOP['abs_mouse_x'] - info['startPos'])
+			leftCol = info['leftCol']
+			rightCol = info['rightCol']
+			newLeftWidth = info['startLeftWidth']
+			newRightWidth = info['startRightWidth']
+			leftMin = info['leftMin']
+			rightMin = info['rightMin']
+			if leftCol is not None:
+				newLeftWidth = info['startLeftWidth'] + offset
+			if info['stretchy'] or not self.ownerComp.par.hscrollbar:
+				if rightCol is not None:
+					newRightWidth = info['startRightWidth'] - offset
+				if newRightWidth is not None \
+						and newRightWidth < rightMin:
+					if newLeftWidth is not None:
+						newLeftWidth = newLeftWidth - (rightMin - newRightWidth)
+					newRightWidth = rightMin
+				elif newLeftWidth is not None \
+						and newLeftWidth < leftMin:
+					if newRightWidth is not None:
+						newRightWidth = newRightWidth - (leftMin - newLeftWidth)
+					newLeftWidth = leftMin
+			else:
+				if leftCol is not None and newLeftWidth < 20:
+					newLeftWidth = 20
+				rightCol = None
+			# set new widths
+			if leftCol is not None:
+				self.ownerComp.colAttribs[leftCol].colWidth = \
+						self.sizedColWidths[leftCol] = newLeftWidth
+			if rightCol is not None:
+				self.ownerComp.colAttribs[rightCol].colWidth = \
+						self.sizedColWidths[rightCol] = newRightWidth
+		info['run'] = run(self.whileSizeCol,
+										delayFrames=1, delayRef=op.TDResources)
+
 	def testStartDragRows(self, startrow):
 		# DEBUG print('testStartDragRows', startrow)
 		if startrow not in self.SelectedRows:
@@ -1974,9 +2429,13 @@ class ListerExt (CallbacksExt):
 		if row in NONCELL:
 			return
 		if row == 0 and self.header:
-			if self.ownerComp.par.Clickableheader.eval() and \
+			if self.ownerComp.par.Clickableheader.menuIndex and \
 									list(self.Data[0].values())[col]:
+				# set look except textOffsetX
+				attribs = self.ownerComp.cellAttribs[0, col]
+				offsetX = attribs.textOffsetX					
 				self.SetCellLook(0, col, 'headerPress', True, ROLLOVERLAYER)
+				attribs.textOffsetX = offsetX
 		else:
 			lookName = self.getCellLookName(row, col)
 			if lookName:
@@ -2257,13 +2716,23 @@ class ListerExt (CallbacksExt):
 			look = self.looks['header']
 		if look:
 			# don't use justify
-			self.setLook(look, attribs, ['textOffsetX', 'textOffsetY'])
-			# attribs.textJustify = look['textJustify']
+			self.setLook(look, attribs, ['textOffsetX'])
+			if isinstance(self.configComp.op('header'), textCOMP):
+				attribs.textJustify = look['textJustify']  
+			attribs.fontFace = look['fontFace']
+			attribs.fontFile = look['fontFile']
 			attribs.fontItalic = look['fontItalic']
 			attribs.bgColor = look['bgColor']
 			attribs.textColor = look['textColor']
 			attribs.fontBold = look['fontBold']
+			attribs.wordWrap = look['wordWrap']
 		attribs.draggable = False
+
+		for col in range(self.nCols):
+			if self.colDefine['justify', col + 1]:
+				attribs = self.ownerComp.cellAttribs[0, col]
+				attribs.textJustify = getattr(JustifyType, 
+									self.colDefine['justify', col + 1].val)
 
 		if self.selectedCol is not None and self.selectedCol >= 0:
 			self.SetCellLook(0, self.selectedCol, 'headerSelect', True,
@@ -2292,6 +2761,7 @@ class ListerExt (CallbacksExt):
 		self.cellLookNames[(row, col)] = lookName
 		self.SetCellLook(row, col, None, True)
 		self.SetCellLook(row, col, lookName)
+		self.InitRow(row, stripingOnly=True)
 
 	def SetCellTopPath(self, row, col, topPath):
 		"""
@@ -2344,7 +2814,7 @@ class ListerExt (CallbacksExt):
 		attribs = self.ownerComp.cellAttribs[row, col]
 		if attribs is None:
 			return
-		setAttribs = LOOKATTRS - {'bgColor'}
+		setAttribs = LOOKATTRS - {'bgColor', 'rowHeight'}
 		if look:
 			if overlay:
 				self.SetCellOverlay(row, col, look['bgColor'] +	(overlayOrder,))
@@ -2451,7 +2921,7 @@ class ListerExt (CallbacksExt):
 					self.looks['rowRoll']['bgColor'] + (ROLLOVERLAYER,), on)
 
 	@staticmethod
-	def setLook(look, attrs, skipAttrs=None):
+	def setLook(look, attrs, skipAttrs='rowHeight'):
 		if not attrs:
 			return
 		if skipAttrs is None:
@@ -2463,48 +2933,85 @@ class ListerExt (CallbacksExt):
 			if attrName in look:
 				setattr(attrs, attrName, look[attrName])
 
+	def loadLooks(self, top=None):
+		# table looks found in configComp textTOPs
+		self.looks = {}
+		if top is None:
+			tops = self.configComp.findChildren(
+					type=(textTOP, textCOMP), depth=1)
+		else:
+			tops = [top]
+		for top in tops:
+			if not top.lock:
+				self.looks[top.name] = self.LoadLook(top)
+
 	@staticmethod
-	def LoadLook(textTop):
+	def LoadLook(lookOp):
+		# lookOP is the operator in config defining the look
+		isTOP = isinstance(lookOp, textTOP)
 		lookDict = dict()
-		lookDict['name'] = textTop.name
-		lookDict['textOffsetX'] = textTop.par.position1.eval()
-		lookDict['textOffsetY'] = textTop.par.position2.eval()
-		lookDict['rowHeight'] = textTop.par.resolution2.eval()
-		lookDict['fontBold'] = textTop.par.bold.eval()
-		lookDict['fontItalic'] = textTop.par.italic.eval()
-		lookDict['fontSizeX'] = textTop.par.fontsizex.eval()
-		lookDict['sizeInPoints'] = textTop.par.fontsizexunit.eval() == 'points'
-		if textTop.par.font.eval() in textTop.par.font.menuNames:
-			lookDict['fontFace'] = textTop.par.font.menuLabels[
-					textTop.par.font.menuNames.index(textTop.par.font.eval())]
-		lookDict['wordWrap'] = textTop.par.wordwrap.eval()
+		lookDict['name'] = lookOp.name
+		lookDict['rowHeight'] = lookOp.par.resolution2.eval() \
+				if isTOP else lookOp.par.h.eval()
+		lookDict['fontBold'] = lookOp.par.bold.eval()
+		lookDict['fontItalic'] = lookOp.par.italic.eval()
+		lookDict['fontSizeX'] = lookOp.par.fontsizex.eval() \
+				if isTOP else lookOp.par.fontsize.eval()
+		lookDict['sizeInPoints'] = (lookOp.par.fontsizexunit.eval() \
+				if isTOP else lookOp.par.fontsizeunits.eval()) == 'points'
+		if lookOp.par.font.eval() in lookOp.par.font.menuNames:
+			lookDict['fontFace'] = lookOp.par.font.menuLabels[
+					lookOp.par.font.menuNames.index(lookOp.par.font.eval())]
+		else:
+			lookDict['fontFace'] = ''
+		if (ff:=lookOp.par.fontfile.eval()):
+			lookDict['fontFile'] = ff
+		else:
+			lookDict['fontFile'] = ''
+		lookDict['wordWrap'] = lookOp.par.wordwrap.eval()
 		textColor = ('fontcolorr', 'fontcolorg', 'fontcolorb', 'fontalpha')
 		lookDict['textColor'] = \
-					tuple(getattr(textTop.par, i).eval() for i in textColor)
+					tuple(getattr(lookOp.par, i).eval() for i in textColor)
 		# textjustify
-		justifyString = textTop.par.aligny.eval().upper() \
-						+ textTop.par.alignx.eval().upper()
+		justifyString = lookOp.par.aligny.eval().upper() \
+						+ lookOp.par.alignx.eval().upper()
 		if justifyString == 'CENTERCENTER':
 			justifyString = 'CENTER'
 		lookDict['textJustify'] = getattr(JustifyType, justifyString)
+		#topFill
+		try:
+			topFillString = lookOp.par.topfill.eval().upper()
+			if topFillString == 'OFF':
+				topFillString = 'STRETCH'
+		except:
+			topFillString = 'STRETCH'
+		lookDict['topFill'] = getattr(FillMode, topFillString)
+		# textOffset x/y
+		if lookDict['name'].startswith('header'):
+			lookDict['textOffsetX'] = None
+		else:
+			lookDict['textOffsetX'] = (lookOp.par.positionx.eval() \
+					if isTOP else lookOp.par.textoffsetx.eval())
+		lookDict['textOffsetY'] = (lookOp.par.positiony.eval() \
+				if isTOP else lookOp.par.textoffsety.eval()) 				
 		# bgcolor
 		bgColor = ('bgcolorr', 'bgcolorg', 'bgcolorb', 'bgalpha')
 		lookDict['bgColor'] = \
-					tuple(getattr(textTop.par, i).eval() for i in bgColor)
+					tuple(getattr(lookOp.par, i).eval() for i in bgColor)
 		# borders
 		borderAPars = ['borderar', 'borderag', 'borderab', 'borderaalpha']
 		borderBPars = ['borderbr', 'borderbg', 'borderbb', 'borderbalpha']
 		borderAColor = \
-					tuple(getattr(textTop.par, i).eval() for i in borderAPars)
+					tuple(getattr(lookOp.par, i).eval() for i in borderAPars)
 		borderBColor = \
-					tuple(getattr(textTop.par, i).eval() for i in borderBPars)
+					tuple(getattr(lookOp.par, i).eval() for i in borderBPars)
 		borderStatePars = []
 		for side in ('left', 'right', 'top', 'bottom'):
 			for location in (('In','i'), ('Out','')):
 				lookKey = side + 'Border' + location[0] + 'Color'
 				stateParName = side + 'border' + location[1]
 				borderStatePars.append(stateParName)
-				borderType = getattr(textTop.par, stateParName).eval()
+				borderType = getattr(lookOp.par, stateParName).eval()
 				if borderType == 'off':
 					lookDict[lookKey] = None
 				elif borderType == 'bordera':
@@ -2533,6 +3040,13 @@ class ListerExt (CallbacksExt):
 
 	def onDropOrHover(self, isHover, comp, row, col, coords, prevRow, prevCol,
 					  prevCoords, dragItems):
+		"""
+		Deals with drop highights and legacy ondrop and hover callbacks. 
+		If new drag/drop callbacks are being used, this will only do relevant 
+		highlighting.
+		"""
+		legacyMode = parent.Lister.fetch('legacyDragDrop', 0)
+
 		if isHover:
 			about = "Return True if interested in the drop"
 			callback = "onDropHover"
@@ -2544,6 +3058,7 @@ class ListerExt (CallbacksExt):
 		dropHighlightMenu = self.ownerComp.par.Drophighlight.eval()
 		cellAttribs = self.ownerComp.cellAttribs
 		dropPos = None
+		dropHighlightPos = None
 		if row is not None:
 			define = self.configComp.op('define')
 			if dropHighlightMenu == 'Off':
@@ -2598,7 +3113,7 @@ class ListerExt (CallbacksExt):
 
 		# remove old highlight
 		if self.dropHighlightInfo:
-			if dropHighlightMenu == 'Cell':
+			if dropHighlightMenu in ['Cell']:
 				setattr(cellAttribs[self.dropHighlightInfo['pos'][0],
 									self.dropHighlightInfo['pos'][1]],
 						self.dropHighlightInfo['attr'],
@@ -2611,19 +3126,22 @@ class ListerExt (CallbacksExt):
 			self.dropHighlightInfo = None
 
 		# callback
-		if not dragItems:
-			return
-		info = {'prevRow':prevRow, 'prevCol': prevCol, 'dragItems': dragItems,
-				'about': about, 'dropPos': dropPos}
-		dragItem = dragItems[0]
-		# special info from other listers
-		if isinstance(dragItem, listCOMP) and \
+		if legacyMode:
+			if not dragItems:
+				return
+			info = {'prevRow':prevRow, 'prevCol': prevCol, 
+					'dragItems': dragItems,'about': about, 'dropPos': dropPos}
+			dragItem = dragItems[0]
+			# special info from other listers
+			if isinstance(dragItem, listCOMP) and \
 											hasattr(dragItem.ext, "ListerExt"):
-			info['fromListerInfo'] = dragItem.DropInfo
+				info['fromListerInfo'] = dragItem.DropInfo
+			else:
+				info['fromListerInfo'] = None
+			retVal = self.DoCellCallback(callback, row, col, info)
 		else:
-			info['fromListerInfo'] = None
-		retVal = self.DoCellCallback(callback, row, col, info)
-		if retVal:
+			retVal = {'returnValue': True}
+		if retVal or (not legacyMode and self.ownerComp.panel.dropready):
 			# add highlight if hover
 			if isHover and retVal['returnValue'] and dropHighlightMenu != 'Off'\
 						and dropHighlightPos is not None and row is not None:
@@ -2667,30 +3185,50 @@ class ListerExt (CallbacksExt):
 	# region parameters
 
 	def OnParValueChange(self, par, val, prev):
-		if par.name in ['Header', 'Inputtablehasheaders']:
-			self.SelectColumn(None)
-			if self.ownerComp.par.Autodefinecols:
-				self.SelectedRows = []
-				self.setupAutoColDefine(clear=True)
-			self.Refresh()
+		if par.name in ['Header', 'Inputtablehasheaders', 
+						'Usesortindicatorchars', 'Sortchar', 'Sortreversechar',
+						'Clickableheader']:
+			# self.SelectColumn(None)
+			if par.name == 'Header' and par.eval():
+				self.ownerComp.par.Inputtablehasheaders = True
+			def delayChange():
+				if self.ownerComp.par.Autodefinecols:
+					self.SelectedRows = []
+					self.setupAutoColDefine(clear=True)
+				self.FrameRefresh()
+			run('args[0]()', delayChange, delayFrames=1)
 		elif par.name in ['Rowstriping', 'Autodefinecols', 
 						'Linkedtable', 'Filtercols', 'Filterstring', 'Rawdata',
-						'Advancedcallbacks']:
-			self.Refresh()
+						'Advancedcallbacks', 'Sourceindexinoutput']:
+			if par.name == 'Filtercols':
+				self.setupSelectedCol()
+			self.FrameRefresh()
+			if par.name == 'Advancedcallbacks':
+				self.doAdvancedCallbacks = par.eval()
 		elif par.name in ['Sortcols', 'Sortreverse']:
-			if par.eval():
-				self.Sort()
-			else:
-				self.Refresh() 
+			self.setupSelectedCol()
+			self.Sort()
+			# else:
+			# 	self.FrameRefresh() 
 		elif par.name in ['Selectedrows']:
 			self.onParSelectrowsChange(val, prev)
 		elif par.name == 'Clickableheader':
-			self.SelectColumn(None)
+			self.setupSelectedCol()
+			self.FrameRefresh()
 		elif par.name == 'Selectablerows':
 			if not par.eval():
 				self.SelectedRows = []
-		elif par.name == 'Advancedcallbacks':
-			self.doAdvancedCallbacks = par.eval()
+		elif par.name == 'Drophighlight':
+			self.dropHighlightInfo = None
+		elif par.name in ['Callbackdat', 'Configcomp']:
+			self.__init__(self.ownerComp)
+		elif par.name == 'Allowemptyselection':
+			self.testAllowEmptySelection()
+
+	def testAllowEmptySelection(self):
+		if not self.ownerComp.par.Allowemptyselection and not self.SelectedRows\
+							and self.nRows > self.header:
+				self.SelectedRows = [int(self.header)]
 
 	# par callback
 	def onParSelectrowsChange(self, val, prev):
@@ -2707,7 +3245,7 @@ class ListerExt (CallbacksExt):
 		if par.name == 'Refresh':
 			self.Refresh()
 		elif par.name == 'Recreateautocolumns':
-			self.setupAutoColDefine(clear=True)
+			self.RecreateAutoColumns()
 		elif par.name == 'Editcallbacks':
 			dat = self.ownerComp.par.Callbackdat.eval()
 			if dat:
@@ -2718,9 +3256,9 @@ class ListerExt (CallbacksExt):
 		elif par.name == 'Editconfigcomp':
 			TDF.showInPane(self.ownerComp.par.Configcomp.eval(), 'Floating',
 						   True)
-		elif par.name == 'Helppage':
-			ui.viewFile('https://docs.derivative.ca/index.php?'
-						'title=Palette:lister')
+		# elif par.name == 'Helppage':
+		# 	ui.viewFile('https://docs.derivative.ca/index.php?'
+		# 				'title=Palette:lister')
 		elif par.name == 'Copyautocolstoconfig':
 			colDefine = self.ownerComp.par.Configcomp.eval().op('colDefine')
 			colDefine.text = self.autoColDefine.text
@@ -2735,7 +3273,7 @@ class ListerExt (CallbacksExt):
 					self.ownerComp.par.Autodefinecols = False
 					self.OnParPulse(par)
 				popDialog.OpenDefault(
-					'Currently using automatically defined columns.\n\n'\
+					'You are currently using automatically defined columns.\n\n'
 					'Manual: Switch to manual cols.\n'\
 					'Copy: Copy current Auto-cols and switch to manual.',
 					'Edit Column Definitions',
@@ -2839,6 +3377,8 @@ class ListerExt (CallbacksExt):
 						newRows.append(i)
 				else:
 					raise TypeError('SelectedRows entry must be int', i)
+			if not self.ownerComp.par.Allowemptyselection and not newRows:
+				newRows = [1 if self.header else 0]
 			oldRows = self._SelectedRows.val
 			self._SelectedRows.val = newRows
 			# DEBUG print("SelectedRows setter:",oldRows, newRows)
@@ -2874,9 +3414,7 @@ class ListerExt (CallbacksExt):
 		return self.selectedCol
 	@SelectedCol.setter
 	def SelectedCol(self, value):
-		self.selectedCol = value
-		self.FilterCols = [value]
-		self.SortCols = [value]
+		self.SelectColumn(value)
 
 	@property
 	def OutTables(self):
@@ -2932,6 +3470,8 @@ def makeint(s):
 	except:
 		return 0
 
+def makebool(s):
+	return s not in ['', '0', 'False']
 
 def makefloat(s):
 	try:
