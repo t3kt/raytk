@@ -6,6 +6,7 @@ from typing import Optional
 if False:
 	# noinspection PyUnresolvedReferences
 	from _stubs import *
+	from _stubs.TreeListerExt import TreeListerExt
 	from _typeAliases import *
 
 	class _Par(ParCollection):
@@ -168,6 +169,20 @@ class OpPicker:
 		else:
 			self.onPickItem()
 
+	def onTreeListSelectRow(self, info: dict):
+		rowData = info.get('rowData')
+		rowObject = rowData and rowData.get('rowObject')
+		if not rowObject:
+			return
+		if rowObject['type'] == 'category':
+			return
+		item = self.impl.itemLibrary.itemForOpType(rowObject['opType'])
+		if not item:
+			return
+		self.impl.selectItem(item)
+		if item.isOP:
+			self.onPickItem()
+
 	def onRadio(self, row: int, col: int, prevRow: int, prevCol: int):
 		pass
 
@@ -179,6 +194,9 @@ class OpPicker:
 		dat.clear()
 		text = json.dumps(items, indent=2)
 		dat.write(text)
+
+	def buildTreeTable(self, dat: DAT):
+		self.impl.buildTreeTable(dat)
 
 @dataclass
 class _LayoutSettings:
@@ -373,6 +391,15 @@ class _ItemLibrary:
 				items.append(catObj)
 		return {'items': items}
 
+	def buildTreeTable(self, dat: DAT):
+		dat.clear()
+		dat.appendRow(['name', 'path', 'type', 'category', 'opType', 'status'])
+		for item in self._currentItemList:
+			if item.isCategory:
+				dat.appendRow([item.shortName, item.shortName, 'category', item.shortName, '', ''])
+			if item.isOP:
+				dat.appendRow([item.shortName, item.categoryName + '/' + item.shortName, 'op', item.categoryName, item.opType, item.status])
+
 	@property
 	def firstOpItem(self) -> PickerOpItem | None:
 		for item in self._currentItemList:
@@ -424,6 +451,12 @@ class _ItemLibrary:
 		except ValueError:
 			return -1
 
+	def itemForOpType(self, opType: str):
+		for item in self.allItems:
+			if item.isOP and item.opType == opType:
+				return item
+		return None
+
 	def applyFilter(self, filt: 'Optional[_Filter]'):
 		self.filteredItems = self._buildFlatList(filt)
 
@@ -439,6 +472,7 @@ class _PickerImpl:
 		# noinspection PyTypeChecker
 		self.ownerComp = ownerComp  # type: _COMP
 		self.listComp = ownerComp.op('list')  # type: listCOMP
+		self.treeListComp = ownerComp.op('treeLister') # type: COMP | TreeListerExt
 		self.filterTextWidget = ownerComp.op('filterText_textfield')  # type: widgetCOMP
 		self.filterTextField = op(self.filterTextWidget.par.Stringfield0).op('./field')  # type: fieldCOMP
 		self.selItem = tdu.Dependency()  # value type _AnyItemT
@@ -459,6 +493,7 @@ class _PickerImpl:
 		return item
 
 	def selectItem(self, item: _AnyItemT | None, scroll=False):
+		print(self.ownerComp, f'selectItem(item: {item!r}, scroll: {scroll!r})')
 		oldItem = self.selItem.val  # type: Optional[_AnyItemT]
 		if oldItem == item:
 			return
@@ -493,11 +528,14 @@ class _PickerImpl:
 		self.selectItem(None)
 
 	def refreshList(self):
+		print(self.ownerComp, f'refreshList()')
 		listComp = self.listComp
 		listComp.par.rows = self.itemLibrary.currentItemCount
 		layout = self.getLayout()
 		listComp.par.cols = layout.numCols
 		listComp.par.reset.pulse()
+		# self.treeListComp.Refresh()
+		self.ownerComp.op('buildTreeTable').cook(force=True)
 
 	def setFilterText(self, text: str):
 		self.filterText = (text or '').strip()
@@ -733,3 +771,8 @@ class _PickerImpl:
 	def buildTreeListStructure(self) -> dict:
 		filt = self._getFilterSettings()
 		return self.itemLibrary.buildTreeListStructure(filt)
+
+	def buildTreeTable(self, dat: DAT):
+		filt = self._getFilterSettings()
+		self.itemLibrary.applyFilter(filt)
+		self.itemLibrary.buildTreeTable(dat)
