@@ -360,7 +360,7 @@ class _ItemLibrary:
 	def buildTreeTable(self, dat: DAT):
 		dat.clear()
 		dat.appendRow(['name', 'path', 'type', 'category', 'opType', 'status'])
-		for item in self.allItems:
+		for item in self.filteredItems:
 			if item.isCategory:
 				dat.appendRow([item.shortName, item.shortName, 'category', item.shortName, '', ''])
 			if item.isOP:
@@ -545,6 +545,8 @@ class _PickerImpl:
 			else:
 				self.setItemHighlight(item, True)
 		self.refreshList()
+		if settings.text:
+			self.treeListComp.ExpandAll()
 
 	def getLayout(self):
 		layout = _LayoutSettings(

@@ -37,7 +37,7 @@ class OpPicker2:
 
 	def buildTreeTable(self, dat: DAT):
 		dat.clear()
-		dat.appendRow(['name', 'itemPath', 'compPath', 'type', 'category', 'opType', 'status'])
+		dat.appendRow(['name', 'path', 'compPath', 'type', 'category', 'opType', 'status', 'thumb'])
 		categoriesByName: dict[str, _CategoryItem] = {}
 		useDisplayCategories = ipar.uiState.Usedisplaycategories
 		showAlpha = ipar.uiState.Showalpha
@@ -54,6 +54,23 @@ class OpPicker2:
 				isBeta=self.opTable[row, 'status'] == 'beta',
 				isDeprecated=self.opTable[row, 'status'] == 'deprecated',
 			)
+			thumb = self.opTable[row, 'thumb'].val
+			if thumb:
+				opItem.thumbPath = op.raytk.op(thumb).path
+			if opItem.isAlpha:
+				opItem.status = 'alpha'
+				if not showAlpha:
+					continue
+			elif opItem.isBeta:
+				opItem.status = 'beta'
+				if not showBeta:
+					continue
+			elif opItem.isDeprecated:
+				opItem.status = 'deprecated'
+				if not showDeprecated:
+					continue
+			else:
+				opItem.status = ''
 			if useDisplayCategories:
 				catName = opItem.displayCategory or opItem.category
 			else:
@@ -61,7 +78,20 @@ class OpPicker2:
 			if catName not in categoriesByName:
 				categoriesByName[catName] = _CategoryItem(name=catName)
 			categoriesByName[catName].ops.append(opItem)
-		pass
+		for catName in sorted(categoriesByName.keys()):
+			catItem = categoriesByName[catName]
+			dat.appendRow([catItem.name, catItem.name, '', 'category', '', '', ''])
+			for opItem in sorted(catItem.ops, key=lambda x: x.shortName):
+				dat.appendRow([
+					opItem.shortName,
+					f"{catItem.name}/{opItem.shortName}",
+					opItem.compPath,
+					'op',
+					catItem.name,
+					opItem.opType,
+					opItem.status,
+					opItem.thumbPath,
+				])
 
 @dataclass
 class _OpItem:
@@ -73,6 +103,8 @@ class _OpItem:
 	isAlpha: bool = False
 	isBeta: bool = False
 	isDeprecated: bool = False
+	status: str = ''
+	thumbPath: str | None = None
 
 @dataclass
 class _CategoryItem:
