@@ -172,9 +172,9 @@ class OpPicker:
 	def onTreeListSelectRow(self, info: dict):
 		rowData = info.get('rowData')
 		rowObject = rowData and rowData.get('rowObject')
-		if not rowObject:
+		if not rowObject or not rowObject.get('opType'):
 			return
-		if rowObject['type'] == 'category':
+		if rowObject.get('type') == 'category':
 			return
 		item = self.impl.itemLibrary.itemForOpType(rowObject['opType'])
 		if not item:
@@ -188,12 +188,6 @@ class OpPicker:
 
 	def onFocus(self, row: int, col: int, prevRow: int, prevCol: int):
 		pass
-
-	def buildTreeListStructure(self, dat: scriptDAT):
-		items = self.impl.buildTreeListStructure()
-		dat.clear()
-		text = json.dumps(items, indent=2)
-		dat.write(text)
 
 	def buildTreeTable(self, dat: DAT):
 		self.impl.buildTreeTable(dat)
@@ -363,38 +357,10 @@ class _ItemLibrary:
 	def currentItemCount(self):
 		return len(self._currentItemList)
 
-	def buildTreeListStructure(self, filt: 'Optional[_Filter]') -> dict:
-		items = []
-		for category in self.categories:
-			catObj = {
-				'key': category.shortName, 'type': 'category',
-				'id': (category.shortName,),
-				'value': {},
-			}
-			if filt is None:
-				matchedOps = category.ops
-			else:
-				matchedOps = [
-					o
-					for o in category.ops
-					if o.matches(filt)
-				]
-			if matchedOps:
-				catObj['children'] = [
-					{
-						'key': o.opType, 'type': 'op',
-						'id': (category.shortName, o.opType),
-						'value': {},
-					}
-					for o in matchedOps
-				]
-				items.append(catObj)
-		return {'items': items}
-
 	def buildTreeTable(self, dat: DAT):
 		dat.clear()
 		dat.appendRow(['name', 'path', 'type', 'category', 'opType', 'status'])
-		for item in self._currentItemList:
+		for item in self.allItems:
 			if item.isCategory:
 				dat.appendRow([item.shortName, item.shortName, 'category', item.shortName, '', ''])
 			if item.isOP:
@@ -767,10 +733,6 @@ class _PickerImpl:
 			attribs.textJustify = JustifyType.CENTER
 			attribs.textColor = _configColor('Textcolor')
 			attribs.top = self.ownerComp.op('chipBackground')
-
-	def buildTreeListStructure(self) -> dict:
-		filt = self._getFilterSettings()
-		return self.itemLibrary.buildTreeListStructure(filt)
 
 	def buildTreeTable(self, dat: DAT):
 		filt = self._getFilterSettings()
