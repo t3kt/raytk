@@ -32,6 +32,7 @@ class ROPEditor:
 		return self.ownerComp.op('status_dropmenu')
 
 	def LoadROP(self, o: OP | DAT | COMP | str):
+		print('Loading ROP:', o)
 		iop.inspectorCore.Inspect(o)
 		info = self.ROPInfo
 		self._statusDropMenu.par.Value0 = info.statusLabel or 'default'
@@ -90,10 +91,10 @@ class ROPEditor:
 		if info:
 			self._tools().saveROP(info.rop, incrementVersion)
 
-	def onEditItem(self, item: 'PickerItem'):
-		if not item or not item.isOP:
+	def onEditItem(self, path: str):
+		if not path:
 			return
-		self.LoadROP(item.path)
+		self.LoadROP(path)
 
 	def onKeyboardShortcut(self, shorcutName: str):
 		pass

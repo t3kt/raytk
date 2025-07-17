@@ -10,4 +10,4 @@ def onKeyboardShortcut(info: dict):
 	ext.ropEditor.onKeyboardShortcut(info.get('shortcutName'))
 
 def onPickItem(info: dict):
-	ext.ropEditor.onEditItem(info.get('item'))
+	ext.ropEditor.onEditItem(info.get('path'))
