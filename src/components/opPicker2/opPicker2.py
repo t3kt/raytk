@@ -162,6 +162,41 @@ class OpPicker2:
 		if item:
 			ext.callbacks.DoCallback('onPickItem', {'path': item.path, 'opType': opType})
 
+	@staticmethod
+	def SetFilterToggles(
+			alpha: bool | None = None,
+			beta: bool | None = None,
+			deprecated: bool | None = None,
+	):
+		if alpha is not None:
+			ipar.uiState.Showalpha.val = alpha
+		if beta is not None:
+			ipar.uiState.Showbeta.val = beta
+		if deprecated is not None:
+			ipar.uiState.Showdeprecated.val = deprecated
+
+	@staticmethod
+	def SetViewOptions(
+			statusChips: bool | None = None,
+			displayCategories: bool | None = None,
+	):
+		if statusChips is not None:
+			ipar.uiState.Showstatuschips.val = statusChips
+		if displayCategories is not None:
+			ipar.uiState.Usedisplaycategories.val = displayCategories
+
+	def Resetstate(self, _=None):
+		ipar.uiState.Flatmode.val = ''
+
+	def FocusFilterField(self):
+		def _focus():
+			self.ownerComp.op('filterTextField').setKeyboardFocus()
+		run('args[0]()', _focus, delayFrames=10)
+
+	def onKeyboardShortcut(self, shortcutName: str):
+		print(self.ownerComp, f'onKeyboardShortcut: {shortcutName}')
+		ext.callbacks.DoCallback('onKeyboardShortcut', {'shortcut': shortcutName})
+
 @dataclass
 class _OpItem:
 	shortName: str
