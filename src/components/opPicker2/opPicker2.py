@@ -71,7 +71,9 @@ class OpPicker2:
 		)
 		thumb = self.opTable[row, 'thumb'].val
 		if thumb and thumbRoot:
-			opItem.thumbPath = thumbRoot.op(thumb).path
+			top = thumbRoot.op(thumb)
+			if top:
+				opItem.thumbPath = top.path
 		if opItem.isAlpha:
 			opItem.status = 'alpha'
 			if not ipar.uiState.Showalpha:
@@ -193,9 +195,40 @@ class OpPicker2:
 			self.ownerComp.op('filterTextField').setKeyboardFocus()
 		run('args[0]()', _focus, delayFrames=10)
 
+	def ExpandAll(self):
+		self.treeLister.par.Expandall.pulse()
+
+	def CollapseAll(self):
+		self.treeLister.par.Collapseall.pulse()
+
 	def onKeyboardShortcut(self, shortcutName: str):
 		print(self.ownerComp, f'onKeyboardShortcut: {shortcutName}')
 		ext.callbacks.DoCallback('onKeyboardShortcut', {'shortcut': shortcutName})
+
+	def onListRollover(self, info: dict):
+		# print(self.ownerComp, f'onListRollover: {info}')
+		opType, path = self._resolveRow(info)
+		ext.callbacks.DoCallback('onRolloverItem', {'path': path, 'opType': opType})
+
+	@staticmethod
+	def _resolveRow(info: dict) -> tuple[str | None, str | None]:
+		comp = info.get('ownerComp')  # type: COMP | ListerExt | None
+		data = getattr(comp, 'Data', None)
+		if not data:
+			return None, None
+		row = info.get('row')
+		if row is None or row < 0 or row >= len(data):
+			return None, None
+		rowData = data[row]
+		rowObject = rowData.get('rowObject')
+		if not rowObject:
+			return None, None
+		opType = rowObject.get('opType')
+		if not opType:
+			return None, None
+		path = rowObject.get('compPath')
+		return opType, path
+
 
 @dataclass
 class _OpItem:

@@ -10,7 +10,7 @@ def onKeyboardShortcut(info: dict):
 	ext.palette.onKeyboardShortcut(info.get('shortcutName'))
 
 def onPickItem(info: dict):
-	ext.palette.onPickItem(info.get('item'))
+	ext.palette.onPickItem(info.get('path'))
 
 def onRolloverItem(info: dict):
-	ext.palette.onRolloverItem(info.get('item'))
+	ext.palette.onRolloverItem(info.get('path'))

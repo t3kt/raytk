@@ -26,7 +26,7 @@ async def build(context: 'BuildContext'):
 
 	context.log('Updating opPicker')
 	await context.yieldAsync()
-	o = op('opPicker')  # type: Union[OpPicker, COMP]
+	o = op('opPicker2')  # type: Union[OpPicker, COMP]
 	context.disableCloning(o)
 	context.detachTox(o)
 	if context.experimental:

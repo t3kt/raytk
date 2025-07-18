@@ -5,9 +5,9 @@ if False:
 	# noinspection PyUnresolvedReferences
 	from _stubs import *
 	from _typeAliases import *
-	from components.opPicker.opPicker import OpPicker, PickerItem
+	from components.opPicker2.opPicker2 import OpPicker2
 
-	ext.opPicker = OpPicker(COMP())
+	ext.opPicker = OpPicker2(COMP())
 
 	class _Par(ParCollection):
 		Devel: BoolParamT
@@ -82,16 +82,8 @@ class Palette:
 	def _develMode(self):
 		return bool(self.ownerComp.par.Devel)
 
-	@property
-	def SelectedItem(self):
-		return ext.opPicker.SelectedItem
-
 	def Show(self, _=None):
 		self.open()
-
-	@staticmethod
-	def SetAllCategoriesExpansion(expanded: bool):
-		ext.opPicker.SetAllCategoriesExpansion(expanded)
 
 	def open(self):
 		self._resetCloseTimer()
@@ -99,7 +91,7 @@ class Palette:
 		self._resetState()
 		self.isOpen.val = True
 		ipar.uiState.Pinopen = False
-		ext.opPicker.Loaditems()
+		# ext.opPicker.Loaditems()
 		ext.opPicker.FocusFilterField()
 		image = RaytkContext().libraryImage()
 		if image and image.par['Showshortcut'] is not None:
@@ -342,16 +334,27 @@ class Palette:
 	def IsKnownType(self, pathOrOpType: str):
 		return bool(self._getTemplate(pathOrOpType))
 
-	def onPickItem(self, item: 'PickerItem'):
-		if not item:
-			return
-		if item.isCategory:
-			# TODO: maybe expand/collapse?
-			return
-		self.CreateItem(item.path)
+	def onPickItem(self, path: str):
+		if path:
+			self.CreateItem(path)
 
-	def onRolloverItem(self, item: 'PickerItem | None'):
-		self.ownerComp.op('thumbImage').cook(force=True)
+	def onRolloverItem(self, opPath: str | None):
+		thumbTable = self.ownerComp.op('opThumbTable')
+		thumbPath = None
+		if opPath:
+			thumbPath = str(thumbTable[opPath, 'thumb'] or '')
+		if thumbPath:
+			thumbOp = parent.raytk.op(thumbPath)
+			thumbPath = thumbOp.path if thumbOp else None
+		self.ownerComp.op('sel_thumbImage').par.top = thumbPath or ''
+		helpText = ''
+		helpTable = self.ownerComp.op('helpByPath')
+		if opPath:
+			cell = helpTable[opPath, 'help']
+			if cell:
+				helpText = cell.val
+		self.ownerComp.op('help_textarea').par.Value0 = helpText or ''
+
 
 def _isNonCommercial():
 	import td
