@@ -187,6 +187,10 @@ class OpPicker2:
 		if displayCategories is not None:
 			ipar.uiState.Usedisplaycategories.val = displayCategories
 
+	@staticmethod
+	def SetThumbToggle(showThumbs: bool):
+		ipar.uiState.Showthumbs.val = showThumbs
+
 	def Resetstate(self, _=None):
 		ipar.uiState.Flatmode.val = ''
 
