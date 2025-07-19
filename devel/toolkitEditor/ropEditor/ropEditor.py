@@ -20,6 +20,12 @@ class ROPEditor:
 	def __init__(self, ownerComp: COMP):
 		self.ownerComp = ownerComp
 
+		# why is this needed?
+		def _fix():
+			self.ownerComp.op('opPicker2').allowCooking = False
+			self.ownerComp.op('opPicker2').allowCooking = True
+		run(_fix, delayFrames=5)
+
 	def _tools(self):
 		info = self.ROPInfo
 		if not info:
