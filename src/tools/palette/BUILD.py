@@ -32,3 +32,6 @@ async def build(context: 'BuildContext'):
 	if context.experimental:
 		o.SetFilterToggles(alpha=True, beta=True, deprecated=True)
 	o.SetThumbToggle(True)
+	o = op('toolkitIndex')
+	context.disableCloning(o)
+	context.detachTox(o)
