@@ -197,8 +197,8 @@ class OpPicker2:
 
 	def FocusFilterField(self):
 		def _focus():
-			self.ownerComp.op('filterTextField').setKeyboardFocus()
-		run('args[0]()', _focus, delayFrames=10)
+			self.ownerComp.op('filterTextField/stringField0/text').setKeyboardFocus()
+		run(_focus, delayFrames=10)
 
 	def ExpandAll(self):
 		self.treeLister.par.Expandall.pulse()
