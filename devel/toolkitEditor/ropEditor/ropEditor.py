@@ -6,7 +6,6 @@ if False:
 	# noinspection PyUnresolvedReferences
 	from _stubs import *
 	from components.inspectorCore.inspectorCoreExt import InspectorCore
-	from components.opPicker.opPicker import PickerItem
 	from ..testEditor.testEditor import TestEditor
 	from .specPanel.specPanel import SpecPanel
 	# noinspection PyTypeHints
@@ -19,11 +18,12 @@ if False:
 class ROPEditor:
 	def __init__(self, ownerComp: COMP):
 		self.ownerComp = ownerComp
-
+		picker = self.ownerComp.op('opPicker2')
+		picker.ExpandAll()
 		# why is this needed?
 		def _fix():
-			self.ownerComp.op('opPicker2').allowCooking = False
-			self.ownerComp.op('opPicker2').allowCooking = True
+			picker.allowCooking = False
+			picker.allowCooking = True
 		run(_fix, delayFrames=5)
 
 	def _tools(self):
