@@ -193,6 +193,7 @@ class OpPicker2:
 
 	def Resetstate(self, _=None):
 		ipar.uiState.Flatmode.val = ''
+		ipar.uiState.Filtertext.val = ''
 
 	def FocusFilterField(self):
 		def _focus():
