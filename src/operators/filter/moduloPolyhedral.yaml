@@ -24,6 +24,7 @@ opDef: !def
     file: src/operators/filter/moduloPolyhedral.glsl
     name: function
   paramGroupTable: eval_params
+  displayCategory: Repeat
 inputs:
 - !input
   Variables: '*'
