@@ -62,7 +62,7 @@ class OpPicker2:
 			shortName=table[row, 'name'].val,
 			opType=table[row, 'opType'].val,
 			path=table[row, 'path'].val,
-			category=table[row, 'category'].val,
+			category=table[row, 'category'].val.capitalize(),
 			displayCategory=table[row, 'displayCategory'].val or table[row, 'category'].val.capitalize(),
 			isAlpha=table[row, 'status'] == 'alpha',
 			isBeta=table[row, 'status'] == 'beta',
