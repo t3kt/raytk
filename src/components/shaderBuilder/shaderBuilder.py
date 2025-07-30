@@ -179,13 +179,14 @@ class ShaderBuilder:
 				self._allParamVals(),
 				configPar,
 				self._getOpStates(),
+				self.ownerComp.par.Shadertype.eval(),
 			)
-			pass
 		return _SingleArrayParameterProcessor(
 			self._parameterDetailTable(),
 			self._allParamVals(),
 			configPar,
 			self._getOpStates(),
+			self.ownerComp.par.Shadertype.eval(),
 		)
 
 	def getOpsFromDefinitionColumn(self, column: str):
@@ -1246,7 +1247,8 @@ class _ParameterProcessor:
 			paramDetailTable: DAT,
 			paramVals: 'CHOP',
 			configPar: 'Optional[_ConfigPar]',
-			opStates: 'list[RopState]'
+			opStates: 'list[RopState]',
+			shaderType: str,
 	):
 		self.paramDetailTable = paramDetailTable
 		self.hasParams = paramDetailTable.numRows > 1
@@ -1255,6 +1257,7 @@ class _ParameterProcessor:
 		self.aliasMode = str(configPar['Paramaliasmode'] or 'macro') if configPar else 'macro'
 		self.paramExprs = None  # type: Optional[Dict[str, _ParamExpr]]
 		self.opStates = opStates
+		self.shaderType = shaderType
 
 	def globalDeclarations(self) -> list[str]:
 		return [
@@ -1318,7 +1321,10 @@ class _SingleArrayParameterProcessor(_ParameterProcessor):
 		for paramTupletIndex, paramTuplet in enumerate(paramTuplets):
 			useConstant = self._shouldUseConstant(paramTuplet)
 			size = len(paramTuplet.parts)
-			paramRef = f'vecParams[{paramTupletIndex}]'
+			if self.shaderType == 'glslpop':
+				paramRef = f'texelFetch(vecParams, {paramTupletIndex})'
+			else:
+				paramRef = f'vecParams[{paramTupletIndex}]'
 			if size == 1:
 				name = paramTuplet.parts[0]
 				self.paramExprs[name] = _ParamExpr(
@@ -1388,18 +1394,29 @@ class _SeparateArrayParameterProcessor(_ParameterProcessor):
 				size = len(paramTuplet.parts)
 				if size == 1:
 					name = paramTuplet.parts[0]
-					self.paramExprs[name] = _ParamExpr(
-						f'{opTupletSpecs.uniformName}[{paramTuplet.sourceVectorIndex}].x',
-						'float')
+					if self.shaderType == 'glslpop':
+						self.paramExprs[name] = _ParamExpr(
+							f'texelFetch({opTupletSpecs.uniformName}, {paramTuplet.sourceVectorIndex}).x',
+							'float')
+					else:
+						self.paramExprs[name] = _ParamExpr(
+							f'{opTupletSpecs.uniformName}[{paramTuplet.sourceVectorIndex}].x',
+							'float')
 				else:
 					parType = f'vec{size}'
-					self.paramExprs[paramTuplet.tuplet] = _ParamExpr(
-						f'{parType}({opTupletSpecs.uniformName}[{paramTuplet.sourceVectorIndex}].{suffixes[:size]})',
-						parType)
-					for partI, partName in enumerate(paramTuplet.parts):
-						self.paramExprs[partName] = _ParamExpr(
-							f'{opTupletSpecs.uniformName}[{paramTuplet.sourceVectorIndex}].{suffixes[partI]}',
-							'float')
+					if self.shaderType == 'glslpop':
+						self.paramExprs[paramTuplet.tuplet] = _ParamExpr(
+							f'{parType}(texelFetch({opTupletSpecs.uniformName}, {paramTuplet.sourceVectorIndex}).{suffixes[:size]})',
+							parType)
+
+					else:
+						self.paramExprs[paramTuplet.tuplet] = _ParamExpr(
+							f'{parType}({opTupletSpecs.uniformName}[{paramTuplet.sourceVectorIndex}].{suffixes[:size]})',
+							parType)
+						for partI, partName in enumerate(paramTuplet.parts):
+							self.paramExprs[partName] = _ParamExpr(
+								f'{opTupletSpecs.uniformName}[{paramTuplet.sourceVectorIndex}].{suffixes[partI]}',
+								'float')
 
 	def _loadRuntimeTuplets(self, paramTuplets: list[_ParamTupletSpec]):
 		self.opRuntimeTupletsByName = {}
