@@ -21,7 +21,7 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 		vec2 cell = vec2(0.);
 		float a = atan(p.z, p.x) + ha.x;
 		cell.y = floor(a / angle.x);
-		if (THIS_Mirrortype == THISTYPE_Mirrortype_cols || THIS_Mirrortype == THISTYPE_Mirrortype_grid) {
+		if (int(THIS_Mirrortype) == THISTYPE_Mirrortype_cols || int(THIS_Mirrortype) == THISTYPE_Mirrortype_grid) {
 			float a1 = mod(a, angle.x * 2);
 			if (a1 >= angle.x) {
 				a1 = angle.x - a1;
@@ -34,7 +34,7 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 		pR(p.xy, sh.y);
 		a = atan(p.y, p.x) + ha.y;
 		cell.x = floor(a / angle.y);
-		if (THIS_Mirrortype == THISTYPE_Mirrortype_rows || THIS_Mirrortype == THISTYPE_Mirrortype_grid) {
+		if (int(THIS_Mirrortype) == THISTYPE_Mirrortype_rows || int(THIS_Mirrortype) == THISTYPE_Mirrortype_grid) {
 			float a1 = mod(a, angle.y * 2);
 			if (a1 >= angle.y) {
 				a1 = angle.y - a1;

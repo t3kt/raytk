@@ -8,7 +8,7 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 	#endif
 	uv = (uv - THIS_Translate) / THIS_Scale;
 	ZMODE();
-	switch (THIS_Extendmode) {
+	switch (int(THIS_Extendmode)) {
 		case THISTYPE_Extendmode_hold:
 			uv = clamp(uv, -0.5, 0.5);
 			break;

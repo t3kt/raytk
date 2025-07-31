@@ -35,10 +35,10 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 			case 0:
 				q = p.yz;
 				s = scale.yz;
-				if (THIS_Uvmode == THISTYPE_Uvmode_bounds) {
+				if (int(THIS_Uvmode) == THISTYPE_Uvmode_bounds) {
 					uv.yz = map01(q, -s/2., s/2.);
 					uv.x = p.x;
-				} else if (THIS_Uvmode == THISTYPE_Uvmode_faces) {
+				} else if (int(THIS_Uvmode) == THISTYPE_Uvmode_faces) {
 					vec2 pNorm = q / s;
 					vec2 edge = nearestEdge(pNorm);
 					uv.y = p.x;
@@ -49,10 +49,10 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 			case 1:
 				q = p.zx;
 				s = scale.zx;
-				if (THIS_Uvmode == THISTYPE_Uvmode_bounds) {
+				if (int(THIS_Uvmode) == THISTYPE_Uvmode_bounds) {
 					uv.zx = map01(q, -s/2., s/2.);
 					uv.y = p.y;
-				} else if (THIS_Uvmode == THISTYPE_Uvmode_faces) {
+				} else if (int(THIS_Uvmode) == THISTYPE_Uvmode_faces) {
 					vec2 pNorm = q / s;
 					vec2 edge = nearestEdge(pNorm);
 					uv.y = p.y;
@@ -63,10 +63,10 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 			case 2:
 				q = p.xy;
 				s = scale.xy;
-				if (THIS_Uvmode == THISTYPE_Uvmode_bounds) {
+				if (int(THIS_Uvmode) == THISTYPE_Uvmode_bounds) {
 					uv.xy = map01(q, -s/2., s/2.);
 					uv.z = p.z;
-				} else if (THIS_Uvmode == THISTYPE_Uvmode_faces) {
+				} else if (int(THIS_Uvmode) == THISTYPE_Uvmode_faces) {
 					vec2 pNorm = q / s;
 					vec2 edge = nearestEdge(pNorm);
 					uv.y = p.z;
@@ -76,7 +76,7 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 			break;
 		}
 		res = createSdf(fBox2(q, s));
-		switch (THIS_Uvmode) {
+		switch (int(THIS_Uvmode)) {
 			case THISTYPE_Uvmode_bounds:
 			case THISTYPE_Uvmode_faces:
 				assignUV(res, uv);

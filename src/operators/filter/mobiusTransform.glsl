@@ -5,7 +5,7 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 	if (IS_TRUE(THIS_Enable)) {
 		vec3 p3 = adaptAsVec3(p);
 		vec2 q;
-		switch (THIS_Axis) {
+		switch (int(THIS_Axis)) {
 			case THISTYPE_Axis_x: q = p3.yz; break;
 			case THISTYPE_Axis_y: q = p3.zx; break;
 			case THISTYPE_Axis_z: q = p3.xy; break;
@@ -26,7 +26,7 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 		vec2 q1 = q - center;
 		q = vec2(dot(point, q1), point.y*q1.x - point.x*q1.y) / dot(q1, q1);
 
-		switch (THIS_Axis) {
+		switch (int(THIS_Axis)) {
 			case THISTYPE_Axis_x: p3.yz = q; break;
 			case THISTYPE_Axis_y: p3.zx = q; break;
 			case THISTYPE_Axis_z: p3.xy = q; break;

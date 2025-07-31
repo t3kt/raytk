@@ -28,7 +28,8 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 	p -= r*acs;
 	p += ecs*clamp( -dot(p,ecs), 0.0, r*acs.y/ecs.y);
 	ReturnT res = createSdf(length(p)*sign(p.x));
-	switch (THIS_Uvmode) {
+	switch (
+	) {
 		case THISTYPE_Uvmode_cartesian:
 			assignUV(res, vec3(map01(p0, -vec2(THIS_Radius/2.), vec2(THIS_Radius/2.)), 0.));
 			break;

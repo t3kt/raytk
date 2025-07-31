@@ -11,7 +11,7 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 	#endif
 	ReturnT res;
 	if (IS_TRUE(THIS_Infiniteheight)) {
-		if (THIS_Iterationtype == THISTYPE_Iterationtype_ratio) {
+		if (int(THIS_Iterationtype) == THISTYPE_Iterationtype_ratio) {
 			setIterationIndex(ctx, axisPos);
 		}
 		#ifdef THIS_EXPOSE_normoffset
@@ -34,7 +34,7 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 		float o = inputOp_offsetField(p, ctx);
 		#endif
 		float ratio = map01(axisPos - o, -h/2., h/2.);
-		if (THIS_Iterationtype == THISTYPE_Iterationtype_ratio) {
+		if (int(THIS_Iterationtype) == THISTYPE_Iterationtype_ratio) {
 			setIterationIndex(ctx, ratio);
 		}
 		#ifdef THIS_EXPOSE_normoffset
@@ -43,7 +43,7 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 		res = inputOp_crossSection(planePos, ctx);
 		vec2 w = vec2(res.x, abs(axisPos - o) - h);
 		res.x = min(max(w.x, w.y), 0.) + length(max(w, 0.));
-		if (THIS_Uvmode == THISTYPE_Uvmode_depth) {
+		if (int(THIS_Uvmode) == THISTYPE_Uvmode_depth) {
 			#ifdef RAYTK_USE_UV
 			res.uv.y = mix(res.uv.y, w.y, ratio);
 			#endif

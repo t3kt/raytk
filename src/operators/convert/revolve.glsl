@@ -1,6 +1,6 @@
 ReturnT thismap(CoordT p, ContextT ctx) {
 	vec3 p0;
-	switch (THIS_Axis) {
+	switch (int(THIS_Axis)) {
 		case THISTYPE_Axis_x: p0 = p.zyx; break;
 		case THISTYPE_Axis_y: p0 = p.xzy; break;
 		case THISTYPE_Axis_z: p0 = p; break;
@@ -17,7 +17,7 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 	#endif
 	vec2 q = vec2(length(p0.xy) - rOffset, p0.z - aOffset);
 	float a = atan(p0.y, p0.x) / TAU;
-	if (THIS_Iterationtype == THISTYPE_Iterationtype_ratio) {
+	if (int(THIS_Iterationtype) == THISTYPE_Iterationtype_ratio) {
 		setIterationIndex(ctx, a);
 	}
 	#ifdef THIS_EXPOSE_normangle

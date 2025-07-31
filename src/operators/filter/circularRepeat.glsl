@@ -12,7 +12,7 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 	#ifdef THIS_COORD_TYPE_vec2
 	q = p;
 	#else
-	switch (THIS_Plane) {
+	switch (int(THIS_Plane)) {
 		case THISTYPE_Plane_xy: q = p.xy; break;
 		case THISTYPE_Plane_yz: q = p.yz; break;
 		case THISTYPE_Plane_zx: q = p.zx; break;
@@ -46,7 +46,7 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 			vec2 localP = q1;
 			#else
 			CoordT localP = p;
-			switch (THIS_Plane) {
+			switch (int(THIS_Plane)) {
 				case THISTYPE_Plane_xy: localP.xy = q1; break;
 				case THISTYPE_Plane_yz: localP.yz = q1; break;
 				case THISTYPE_Plane_zx: localP.zx = q1; break;

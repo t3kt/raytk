@@ -15,24 +15,24 @@ void THIS_apply(inout CoordT p, inout ContextT ctx) {
 	q = mod(q + halfsize, size) - halfsize;
 
 	vec3 start, stop;
-	if (THIS_Limittype == THISTYPE_Limittype_start || THIS_Limittype == THISTYPE_Limittype_both) {
+	if (int(THIS_Limittype) == THISTYPE_Limittype_start || int(THIS_Limittype) == THISTYPE_Limittype_both) {
 		start = THIS_Limitstart + THIS_Limitoffset;
 		if (c.x < start.x) applyModLimit(q.x, c.x, size.x, start.x);
 		if (c.y < start.y) applyModLimit(q.y, c.y, size.y, start.y);
 		if (c.z < start.z) applyModLimit(q.z, c.z, size.z, start.z);
 	}
-	if (THIS_Limittype == THISTYPE_Limittype_stop || THIS_Limittype == THISTYPE_Limittype_both) {
+	if (int(THIS_Limittype) == THISTYPE_Limittype_stop || int(THIS_Limittype) == THISTYPE_Limittype_both) {
 		stop = THIS_Limitstop + THIS_Limitoffset;
 		if (c.x > stop.x) applyModLimit(q.x, c.x, size.x, stop.x);
 		if (c.y > stop.y) applyModLimit(q.y, c.y, size.y, stop.y);
 		if (c.z > stop.z) applyModLimit(q.z, c.z, size.z, stop.z);
 	}
 
-	if (THIS_Mirrortype == THISTYPE_Mirrortype_mirror) {
+	if (int(THIS_Mirrortype) == THISTYPE_Mirrortype_mirror) {
 		q *= mod(c, vec3(2.))*2. - vec3(1.);
 	}
 
-	switch (THIS_Iterationtype) {
+	switch (int(THIS_Iterationtype)) {
 		case THISTYPE_Iterationtype_cellcoord:
 			setIterationCell(ctx, c);
 			break;

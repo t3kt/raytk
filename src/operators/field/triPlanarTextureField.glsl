@@ -16,7 +16,7 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 	#endif
 	vec3 valMult = vec3(1.0);
 	uv = (uv - THIS_Translate) / THIS_Scale;
-	switch (THIS_Extendmode) {
+	switch (int(THIS_Extendmode)) {
 		case THISTYPE_Extendmode_hold:
 			uv = clamp(uv, -0.5, 0.5);
 			break;
@@ -52,7 +52,7 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 	#endif
 
 	vec3 col;
-	switch (THIS_Blendmode) {
+	switch (int(THIS_Blendmode)) {
 		case THISTYPE_Blendmode_normals:
 			col = colXY * n.z * valMult.z + colYZ * n.x * valMult.x + colZX * n.y * valMult.y;
 			break;
@@ -67,7 +67,7 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 			break;
 	}
 
-	#ifdef THISTYPE_RETURN_TYPE_float
+	#ifdef THIS_RETURN_TYPE_float
 	return col.x;
 	#else
 	return vec4(col, 1);

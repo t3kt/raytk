@@ -35,7 +35,7 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 	#ifdef THIS_HAS_INPUT_easingFunc
 		q = inputOp_easingFunc(q, ctx);
 	#endif
-	switch (THIS_Extendmode) {
+	switch (int(THIS_Extendmode)) {
 		case THISTYPE_Extendmode_hold:
 			q = clamp(q, 0, 1);
 			break;

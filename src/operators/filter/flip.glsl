@@ -18,7 +18,7 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 		#ifdef THIS_HAS_INPUT_offsetField
 		o += inputOp_offsetField(p, ctx);
 		#endif
-		switch (THIS_Axis) {
+		switch (int(THIS_Axis)) {
 			case THISTYPE_Axis_x:
 				q.x = (q.x + s) * -1. - o;
 				p3.x += o - s;
@@ -33,7 +33,7 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 				break;
 		}
 		int iterB;
-		switch (THIS_Iterationtype) {
+		switch (int(THIS_Iterationtype)) {
 			case THISTYPE_Iterationtype_sign:
 				setIterationIndex(ctx, 1);
 				iterB = -1;
@@ -56,7 +56,7 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 			res = inputOp1(THIS_asCoordT(q), ctx);
 		} else {
 			res = inputOp1(THIS_asCoordT(p3), ctx);
-			if (THIS_Iterationtype != THISTYPE_Iterationtype_none) {
+			if (int(THIS_Iterationtype) != THISTYPE_Iterationtype_none) {
 				setIterationIndex(ctx, iterB);
 			}
 			#ifdef THIS_EXPOSE_sign

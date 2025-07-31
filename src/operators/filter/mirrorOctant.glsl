@@ -3,13 +3,13 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 		vec3 p3 = adaptAsVec3(p);
 		vec2 q;
 		float ap;
-		switch (THIS_Axis) {
+		switch (int(THIS_Axis)) {
 			case THISTYPE_Axis_x: q = p3.yz; ap = p3.x; break;
 			case THISTYPE_Axis_y: q = p3.zx; ap = p3.y; break;
 			case THISTYPE_Axis_z: q = p3.xy; ap = p3.z; break;
 		}
 		vec2 cell = pMirrorOctant(q, THIS_Size);
-		switch (THIS_Iterationtype) {
+		switch (int(THIS_Iterationtype)) {
 			case THISTYPE_Iterationtype_sign:
 				setIterationCell(ctx, cell);
 				break;
@@ -57,7 +57,7 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 		}
 		#endif
 
-		switch (THIS_Axis) {
+		switch (int(THIS_Axis)) {
 			case THISTYPE_Axis_x: p3.yz = q - offset; break;
 			case THISTYPE_Axis_y: p3.zx = q - offset; break;
 			case THISTYPE_Axis_z: p3.xy = q - offset; break;

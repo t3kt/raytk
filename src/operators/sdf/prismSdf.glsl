@@ -68,7 +68,7 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 		map01(atan(q.x, q.y)*2., -TAU, TAU),
 		q.z,
 		length(q.xy));
-	switch (THIS_Uvmode) {
+	switch (int(THIS_Uvmode)) {
 		case THISTYPE_Uvmode_cylindrical:
 			uv.x = fract(uv.x);
 			break;

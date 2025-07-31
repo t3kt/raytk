@@ -3,7 +3,7 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 	p -= THIS_Translate;
 
 	// Convert to XZ plane expected by fTorus()
-	switch (THIS_Axis) {
+	switch (int(THIS_Axis)) {
 		case THISTYPE_Axis_x: p = p.yxz; break;
 		case THISTYPE_Axis_y: p = p.zyx; break;
 		case THISTYPE_Axis_z: p = p.xzy; break;
@@ -54,7 +54,7 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 	} else {
 		res = createSdf(fTorus(p, t, r));
 	}
-	if (THIS_Uvmode == THISTYPE_Uvmode_torus) {
+	if (int(THIS_Uvmode) == THISTYPE_Uvmode_torus) {
 		float d0 = length(p.xz) - r;
 		assignUV(
 			res,

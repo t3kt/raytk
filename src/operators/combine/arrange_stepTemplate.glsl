@@ -1,4 +1,4 @@
-if (THIS_Enable$ > 0.5) {
+if (IS_TRUE(THIS_Enable$)) {
   THIS_exposeIndex($);
   #ifdef THIS_Enabletranslate
   p1 = p - THIS_asCoordT(THIS_Translate$);

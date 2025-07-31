@@ -5,7 +5,7 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 	vec2 q = p;
 	#else
 		vec2 q;
-		switch (THIS_Axis) {
+		switch (int(THIS_Axis)) {
 			case THISTYPE_Axis_x: q = p.yz; break;
 			case THISTYPE_Axis_y: q = p.zx; break;
 			case THISTYPE_Axis_z: q = p.xy; break;
@@ -30,7 +30,7 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 	q.y *= scale;
 	scaleAdj = r / scale;
 	#endif
-	switch (THIS_Mirrortype) {
+	switch (int(THIS_Mirrortype)) {
 		case THISTYPE_Mirrortype_none:
 			cell = pMod2(q, size);
 			break;
@@ -42,7 +42,7 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 			break;
 	}
 
-	if (THIS_Iterationtype == THISTYPE_Iterationtype_cellcoord) {
+	if (int(THIS_Iterationtype) == THISTYPE_Iterationtype_cellcoord) {
 		setIterationCell(ctx, cell);
 	}
 
@@ -53,7 +53,7 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 	#ifdef THIS_COORD_TYPE_vec2
 	p = q;
 	#else
-	switch (THIS_Axis) {
+	switch (int(THIS_Axis)) {
 		case THISTYPE_Axis_x: p.yz = q; p.x /= scaleAdj; break;
 		case THISTYPE_Axis_y: p.zx = q; p.y /= scaleAdj; break;
 		case THISTYPE_Axis_z: p.xy = q; p.z /= scaleAdj; break;

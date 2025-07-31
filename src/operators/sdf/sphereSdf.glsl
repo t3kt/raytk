@@ -5,7 +5,7 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 	#endif
 	p -= THIS_Translate;
 	ReturnT res = createSdf(length(p)-r);
-	switch (THIS_Uvmode) {
+	switch (int(THIS_Uvmode)) {
 		case THISTYPE_Uvmode_bounds:
 			assignUV(res, map01(p, vec3(-r), vec3(r)));
 			break;

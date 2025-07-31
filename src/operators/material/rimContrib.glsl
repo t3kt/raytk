@@ -43,7 +43,7 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 		res.rgb *= fillToVec3(inputOp_colorField(p, ctx));
 		#endif
 		#ifdef RAYTK_USE_SURFACE_COLOR
-		if (THIS_Usesurfacecolor) {
+		if (IS_TRUE(THIS_Usesurfacecolor)) {
 			res.rgb *= mix(vec3(1.), ctx.result.color.rgb, ctx.result.color.a);
 		}
 		#endif
