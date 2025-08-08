@@ -11,15 +11,16 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 	uv = (uv - THIS_Translate) / THIS_Scale;
 	vec4 range = vec4(-0.5, -0.5, 0.5, 0.5);
 	ReturnT res;
+	float adj = THIS_resAdjust;
+	float d;
 	if (uv.x < range.x || uv.x > range.z || uv.y < range.y || uv.y > range.w) {
 		vec2 rectD = abs(uv) - vec2(0.5);
-		res = createSdf((length(max(rectD, 0.0)) + min(max(rectD.x, rectD.y), 0.0))*2.);
+		d = texture(THIS_distTex, clamp(uv + 0.5, vec2(0.), vec2(1.))).r*adj;
+		d += (length(max(rectD, 0.0)) + min(max(rectD.x, rectD.y), 0.0));
 	} else {
-		float d = texture(THIS_distTex, uv + 0.5).r/4.;
-		res = createSdf(d);
+		d = texture(THIS_distTex, uv + 0.5).r*adj;
 	}
-	#if defined(RAYTK_USE_UV)
-	assignUV(res, vec3(texture(THIS_uvTex, uv + 0.5).xy, 0.));
-	#endif
+	d *= THIS_Scale;
+	res = createSdf(d);
 	return res;
 }
