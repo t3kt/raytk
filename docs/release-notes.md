@@ -1,5 +1,29 @@
 # Release Notes
 
+## v0.46
+
+### Highlights
+
+* x
+
+### Details
+
+* Improvements / additions
+  * New OPs
+    * exponentialSeriesTile - repeats shapes in a series of rows with exponential spacing
+    * imageSdf2d - creates an SDF from a TOP image
+  * New OP features
+    * Threaded shader compilation to avoid stalled processes (#569)
+  * Editor tools
+    * Action to add mixColorFields
+* Fixes
+  * Fix error for "Update OP" for non-ROPs
+  * Fix error in mixColorFields (#1293)
+* Changes (potentially breaking)
+* Infrastructure / internals
+  * Update to TD 2025.30280 experimental build
+  * Replaced the opPicker used in the palette (#1290)
+
 ## v0.45
 
 ### Highlights

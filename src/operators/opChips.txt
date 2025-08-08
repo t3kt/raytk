@@ -1,10 +1,2 @@
 name	chip
-boxFrameSdf	updated
-mixColorFields	new
-moduloPolyhedral	new
-trefoilKnotSdf	new
-sierpinskiIcosahedronSdf	new
-sierpinskiOctahedralSpongeSdf	new
-mandelettuceSdf	new
-klienianSdf	new
-lambdabulbSdf	new
+exponentialSeriesTile	new
