@@ -1,0 +1,3 @@
+name	path	type
+distTex	op('dist_tex')	'2d'
+uvTex	op('uv_tex')	'2d'

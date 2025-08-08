@@ -1,0 +1,4 @@
+names	source	handling	readOnlyHandling	conversion	enable
+Translateu Translatev Scaleu Scalev	param	runtime	macro		parent().par.Coordmode == 'uv'
+Axis	param	runtime	macro		1
+Extendmode	param	constant			1
