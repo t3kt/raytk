@@ -1,4 +1,5 @@
 ReturnT thismap(CoordT p, ContextT ctx) {
+	if (IS_FALSE(THIS_Enable)) return ReturnT(0.);
 	vec3 norm = normalize(ctx.normal);
 	#ifdef THIS_HAS_INPUT_directionField
 	vec3 dir = normalize(inputOp_directionField(p, ctx).xyz);
