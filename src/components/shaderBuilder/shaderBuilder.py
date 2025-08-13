@@ -1355,7 +1355,9 @@ class _SingleArrayParameterProcessor(_ParameterProcessor):
 		paramCount = max(1, self.paramDetailTable.numRows - 1)
 		uniforms = [
 			_UniformSpec(
-				'vecParams', 'vec4', 'uniformarray', paramCount,
+				'vecParams', 'vec4',
+				'uniformarray' if self.shaderType != 'glslpop' else 'texturebuffer',
+				paramCount,
 				'merged_vector_param_vals'
 			)
 		]
@@ -1449,7 +1451,7 @@ class _SeparateArrayParameterProcessor(_ParameterProcessor):
 			uniforms.append(_UniformSpec(
 				name=opTupleSpecs.uniformName,
 				dataType='vec4',
-				uniformType='uniformarray',
+				uniformType='uniformarray' if self.shaderType != 'glslpop' else 'texturebuffer',
 				arrayLength=opTupleSpecs.arrayLength,
 				chop=opTupleSpecs.sourcePath,
 			))
