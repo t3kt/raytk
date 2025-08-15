@@ -4,7 +4,9 @@
 
 ### Highlights
 
-* x
+* Compatibility with TD 2025.30770 experimental build. In particular, the palette had been broken due to changes in the List COMP. The palette has been reimplemented and works again!
+* Threaded shader compilation means you can continue working while shaders are compiling, avoiding stalled processes. But unfortunately if you rewire things and cause a second recompile, it will still stall the process. This is a limitation of the current TD implementation.
+* New imageSdf2d lets you bring in images that get converted into 2D signed distance fields (SDFs)!
 
 ### Details
 
@@ -14,6 +16,8 @@
     * imageSdf2d - creates an SDF from a TOP image
   * New OP features
     * Threaded shader compilation to avoid stalled processes (#569)
+    * multiLight - color and translate parameters
+    * skyLightContrib - enable toggle
   * Editor tools
     * Action to add mixColorFields
 * Fixes
@@ -21,7 +25,7 @@
   * Fix error in mixColorFields (#1293)
 * Changes (potentially breaking)
 * Infrastructure / internals
-  * Update to TD 2025.30280 experimental build
+  * Update to TD 2025.30770 experimental build
   * Replaced the opPicker used in the palette (#1290)
 
 ## v0.45
