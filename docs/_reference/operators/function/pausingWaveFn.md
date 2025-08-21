@@ -17,6 +17,7 @@ op:
     - RayContext
     - VertexContext
     - PixelContext
+    - PopContext
     coordTypes:
     - float
     label: Low Width Field
@@ -31,6 +32,7 @@ op:
     - RayContext
     - VertexContext
     - PixelContext
+    - PopContext
     coordTypes:
     - float
     label: High Width Field

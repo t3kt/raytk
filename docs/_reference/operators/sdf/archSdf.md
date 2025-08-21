@@ -23,6 +23,7 @@ op:
     - RayContext
     - VertexContext
     - PixelContext
+    - PopContext
     coordTypes:
     - vec3
     label: Height Field
@@ -37,6 +38,7 @@ op:
     - RayContext
     - VertexContext
     - PixelContext
+    - PopContext
     coordTypes:
     - vec3
     label: Width Field
@@ -53,6 +55,7 @@ op:
     - RayContext
     - VertexContext
     - PixelContext
+    - PopContext
     coordTypes:
     - vec3
     label: Rounding Field
@@ -70,6 +73,7 @@ op:
     - RayContext
     - VertexContext
     - PixelContext
+    - PopContext
     coordTypes:
     - vec3
     label: Frame Thickness Field
@@ -88,6 +92,7 @@ op:
     - RayContext
     - VertexContext
     - PixelContext
+    - PopContext
     coordTypes:
     - vec3
     label: Frame Depth Field
@@ -107,6 +112,7 @@ op:
     - RayContext
     - VertexContext
     - PixelContext
+    - PopContext
     coordTypes:
     - vec3
     label: Panel Depth Field

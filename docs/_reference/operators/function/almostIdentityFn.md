@@ -22,6 +22,7 @@ op:
     - RayContext
     - VertexContext
     - PixelContext
+    - PopContext
     coordTypes:
     - float
     label: Threshold Field
@@ -36,6 +37,7 @@ op:
     - RayContext
     - VertexContext
     - PixelContext
+    - PopContext
     coordTypes:
     - float
     label: Base Value Field

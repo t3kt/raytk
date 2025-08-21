@@ -73,6 +73,9 @@ cat:
     summary: Stretches a shape by splitting it into pieces, moves them apart, and
       connects them.
     thumb: assets/images/reference/operators/filter/elongate_thumb.png
+  - name: exponentialSeriesTile
+    status: beta
+    summary: Exponential series tiling
   - keywords:
     - extend
     - stretch

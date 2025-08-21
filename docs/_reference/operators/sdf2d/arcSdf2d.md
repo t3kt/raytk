@@ -17,6 +17,7 @@ op:
     - RayContext
     - VertexContext
     - PixelContext
+    - PopContext
     coordTypes:
     - vec2
     label: Orientation Field
@@ -32,6 +33,7 @@ op:
     - RayContext
     - VertexContext
     - PixelContext
+    - PopContext
     coordTypes:
     - vec2
     label: Aperture Field
@@ -49,6 +51,7 @@ op:
     - RayContext
     - VertexContext
     - PixelContext
+    - PopContext
     coordTypes:
     - vec2
     label: Radius Field
@@ -68,6 +71,7 @@ op:
     - RayContext
     - VertexContext
     - PixelContext
+    - PopContext
     coordTypes:
     - vec2
     label: Thickness Field

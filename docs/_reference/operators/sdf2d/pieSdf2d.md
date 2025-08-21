@@ -17,6 +17,7 @@ op:
     - RayContext
     - VertexContext
     - PixelContext
+    - PopContext
     coordTypes:
     - vec2
     label: Angle Field
@@ -31,6 +32,7 @@ op:
     - RayContext
     - VertexContext
     - PixelContext
+    - PopContext
     coordTypes:
     - vec2
     label: Radius Field

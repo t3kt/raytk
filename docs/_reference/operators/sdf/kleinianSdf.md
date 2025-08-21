@@ -17,6 +17,7 @@ op:
     - RayContext
     - VertexContext
     - PixelContext
+    - PopContext
     coordTypes:
     - vec3
     label: KleinR Field
@@ -31,6 +32,7 @@ op:
     - RayContext
     - VertexContext
     - PixelContext
+    - PopContext
     coordTypes:
     - vec3
     label: KleinI Field
@@ -47,6 +49,7 @@ op:
     - RayContext
     - VertexContext
     - PixelContext
+    - PopContext
     coordTypes:
     - vec3
     label: Scale Field
@@ -64,6 +67,7 @@ op:
     - RayContext
     - VertexContext
     - PixelContext
+    - PopContext
     coordTypes:
     - vec3
     label: Box Size Field
@@ -86,6 +90,7 @@ op:
     - RayContext
     - VertexContext
     - PixelContext
+    - PopContext
     coordTypes:
     - vec3
     label: Offset Field
@@ -107,7 +112,7 @@ op:
   parameters:
   - label: Iterations
     name: Iterations
-    readOnlyHandling: semibaked
+    readOnlyHandling: baked
     regularHandling: runtime
   - label: Klein R
     name: Kleinr

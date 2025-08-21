@@ -78,6 +78,8 @@ op:
   - label: Use Color
     name: Usecolor
     summary: Whether to produce color or just a brightness value.
+  - label: Enable
+    name: Enable
   - label: Rotate
     name: Rotate
     readOnlyHandling: baked

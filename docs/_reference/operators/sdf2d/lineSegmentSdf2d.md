@@ -23,6 +23,7 @@ op:
     - RayContext
     - VertexContext
     - PixelContext
+    - PopContext
     coordTypes:
     - vec2
     label: Point 1 Field
@@ -40,6 +41,7 @@ op:
     - RayContext
     - VertexContext
     - PixelContext
+    - PopContext
     coordTypes:
     - vec2
     label: Point 2 Field
@@ -56,6 +58,7 @@ op:
     - RayContext
     - VertexContext
     - PixelContext
+    - PopContext
     coordTypes:
     - vec2
     label: Thickness Field

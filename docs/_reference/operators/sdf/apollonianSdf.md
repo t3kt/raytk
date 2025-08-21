@@ -11,7 +11,6 @@ op:
   detail: Based on [Apollonian Statue2](https://www.shadertoy.com/view/XlSfzW) by
     EvilRyu.
   keywords:
-  - apollonian
   - fractal
   name: apollonianSdf
   opType: raytk.operators.sdf.apollonianSdf
@@ -30,8 +29,8 @@ op:
     regularHandling: runtime
   - label: Iterations
     name: Iterations
-    readOnlyHandling: semibaked
-    regularHandling: semibaked
+    readOnlyHandling: baked
+    regularHandling: runtime
   summary: Apollonian gasket fractal.
   thumb: assets/images/reference/operators/sdf/apollonianSdf_thumb.png
 

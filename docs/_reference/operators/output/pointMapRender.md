@@ -99,14 +99,10 @@ op:
       name: useinput
     - label: 8-bit fixed (RGBA)
       name: rgba8fixed
-    - label: sRGB 8-bit fixed (RGBA)
-      name: srgba8fixed
     - label: 16-bit float (RGBA)
       name: rgba16float
     - label: 32-bit float (RGBA)
       name: rgba32float
-    - label: _separator_
-      name: _separator_
     - label: 10-bit RGB, 2-bit Alpha, fixed (RGBA)
       name: rgb10a2fixed
     - label: 16-bit fixed (RGBA)
@@ -214,6 +210,17 @@ op:
     name: Thickness
   - label: Customize Shader Config
     name: Customizeshaderconfig
+  - label: Compile Behavior
+    menuOptions:
+    - label: Stall Until Done
+      name: stalluntildone
+    - label: Threaded, Show Checkerboard Until Done
+      name: threadedcheckerboard
+    - label: Threaded, Show Black Until Done
+      name: threadedblack
+    - label: Threaded, Show Previous Shader Until Done
+      name: threadedprevious
+    name: Compilebehavior
   shortcuts:
   - pmr
   summary: Renderer that takes in a TOP of coordinates and evaluates the scene at

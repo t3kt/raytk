@@ -17,6 +17,7 @@ op:
     - RayContext
     - VertexContext
     - PixelContext
+    - PopContext
     coordTypes:
     - vec2
     label: Radius Field
@@ -31,6 +32,7 @@ op:
     - RayContext
     - VertexContext
     - PixelContext
+    - PopContext
     coordTypes:
     - vec2
     label: Inner Ratio Field
@@ -47,6 +49,7 @@ op:
     - RayContext
     - VertexContext
     - PixelContext
+    - PopContext
     coordTypes:
     - vec2
     label: Offset Field
@@ -64,6 +67,7 @@ op:
     - RayContext
     - VertexContext
     - PixelContext
+    - PopContext
     coordTypes:
     - vec2
     label: Rotate Field

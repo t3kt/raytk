@@ -246,6 +246,17 @@ op:
     name: Rendertop
   - label: Depth TOP
     name: Depthtop
+  - label: Compile Behavior
+    menuOptions:
+    - label: Stall Until Done
+      name: stalluntildone
+    - label: Threaded, Show Checkerboard Until Done
+      name: threadedcheckerboard
+    - label: Threaded, Show Black Until Done
+      name: threadedblack
+    - label: Threaded, Show Previous Shader Until Done
+      name: threadedprevious
+    name: Compilebehavior
   status: beta
   summary: Renderer that uses raymarching with volumes instead of SDFs.
 

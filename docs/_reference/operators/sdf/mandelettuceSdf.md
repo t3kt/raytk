@@ -17,6 +17,7 @@ op:
     - RayContext
     - VertexContext
     - PixelContext
+    - PopContext
     coordTypes:
     - vec3
     label: Offset Field
@@ -33,8 +34,8 @@ op:
   parameters:
   - label: Iterations
     name: Iterations
-    readOnlyHandling: semibaked
-    regularHandling: semibaked
+    readOnlyHandling: baked
+    regularHandling: runtime
   - label: Offset
     name: Offset
     readOnlyHandling: baked

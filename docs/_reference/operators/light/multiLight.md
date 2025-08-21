@@ -338,6 +338,70 @@ op:
     regularHandling: runtime
   - label: Bounds 8
     name: Bounds8
+  - label: Color 1
+    name: Color1
+    readOnlyHandling: baked
+    regularHandling: runtime
+  - label: Translate 1
+    name: Translate1
+    readOnlyHandling: baked
+    regularHandling: runtime
+  - label: Color 2
+    name: Color2
+    readOnlyHandling: baked
+    regularHandling: runtime
+  - label: Translate 2
+    name: Translate2
+    readOnlyHandling: baked
+    regularHandling: runtime
+  - label: Color 3
+    name: Color3
+    readOnlyHandling: baked
+    regularHandling: runtime
+  - label: Translate 3
+    name: Translate3
+    readOnlyHandling: baked
+    regularHandling: runtime
+  - label: Color 4
+    name: Color4
+    readOnlyHandling: baked
+    regularHandling: runtime
+  - label: Translate 4
+    name: Translate4
+    readOnlyHandling: baked
+    regularHandling: runtime
+  - label: Color 5
+    name: Color5
+    readOnlyHandling: baked
+    regularHandling: runtime
+  - label: Translate 5
+    name: Translate5
+    readOnlyHandling: baked
+    regularHandling: runtime
+  - label: Color 6
+    name: Color6
+    readOnlyHandling: baked
+    regularHandling: runtime
+  - label: Translate 6
+    name: Translate6
+    readOnlyHandling: baked
+    regularHandling: runtime
+  - label: Color 7
+    name: Color7
+    readOnlyHandling: baked
+    regularHandling: runtime
+  - label: Translate 7
+    name: Translate7
+    readOnlyHandling: baked
+    regularHandling: runtime
+  - label: Color 8
+    name: Color8
+    readOnlyHandling: baked
+    regularHandling: runtime
+  - label: Translate 8
+    name: Translate8
+    readOnlyHandling: baked
+    regularHandling: runtime
   summary: Combines multiple light sources.
 
 ---

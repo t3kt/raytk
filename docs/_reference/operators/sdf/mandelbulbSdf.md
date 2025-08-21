@@ -17,6 +17,7 @@ op:
     - RayContext
     - VertexContext
     - PixelContext
+    - PopContext
     coordTypes:
     - vec3
     label: Shift (Theta, Phi) field
@@ -56,8 +57,8 @@ op:
     summary: Offset the phi rotation.
   - label: Iterations
     name: Iterations
-    readOnlyHandling: semibaked
-    regularHandling: semibaked
+    readOnlyHandling: baked
+    regularHandling: runtime
     summary: The number of steps used when refining the fractal.
   summary: Mandelbulb fractal.
   thumb: assets/images/reference/operators/sdf/mandelbulbSdf_thumb.png

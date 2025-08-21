@@ -19,10 +19,11 @@ op:
     - RayContext
     - VertexContext
     - PixelContext
+    - PopContext
     coordTypes:
     - vec3
-    label: Rotate Field
-    name: rotateField
+    label: Pre Rotate Field
+    name: preRotateField
     returnTypes:
     - vec4
     supportedVariables:
@@ -36,6 +37,27 @@ op:
     - RayContext
     - VertexContext
     - PixelContext
+    - PopContext
+    coordTypes:
+    - vec3
+    label: Post Rotate Field
+    name: postRotateField
+    returnTypes:
+    - vec4
+    supportedVariableInputs:
+    - preRotateField
+    supportedVariables:
+    - step
+    - normstep
+  - contextTypes:
+    - Context
+    - MaterialContext
+    - CameraContext
+    - LightContext
+    - RayContext
+    - VertexContext
+    - PixelContext
+    - PopContext
     coordTypes:
     - vec3
     label: Scale Field
@@ -43,7 +65,8 @@ op:
     returnTypes:
     - float
     supportedVariableInputs:
-    - rotateField
+    - preRotateField
+    - postRotateField
     supportedVariables:
     - step
     - normstep
@@ -55,6 +78,7 @@ op:
     - RayContext
     - VertexContext
     - PixelContext
+    - PopContext
     coordTypes:
     - vec3
     label: Offset Field
@@ -62,11 +86,32 @@ op:
     returnTypes:
     - vec4
     supportedVariableInputs:
-    - rotateField
+    - preRotateField
+    - postRotateField
     - scaleField
     supportedVariables:
     - step
     - normstep
+  - contextTypes:
+    - Context
+    - MaterialContext
+    - CameraContext
+    - LightContext
+    - RayContext
+    - VertexContext
+    - PixelContext
+    - PopContext
+    coordTypes:
+    - vec3
+    label: Vertex Shape
+    name: vertexShape
+    returnTypes:
+    - Sdf
+    supportedVariableInputs:
+    - preRotateField
+    - postRotateField
+    - scaleField
+    - offsetField
   keywords:
   - fractal
   name: sierpinskiOctahedralSpongeSdf
@@ -74,8 +119,8 @@ op:
   parameters:
   - label: Iterations
     name: Iterations
-    readOnlyHandling: semibaked
-    regularHandling: semibaked
+    readOnlyHandling: baked
+    regularHandling: runtime
   - label: Scale
     name: Scale
     readOnlyHandling: baked
@@ -84,8 +129,13 @@ op:
     name: Offset
     readOnlyHandling: baked
     regularHandling: runtime
-  - label: Rotate
-    name: Rotate
+  - name: Rotate
+  - label: Pre Rotate
+    name: Prerotate
+    readOnlyHandling: baked
+    regularHandling: runtime
+  - label: Post Rotate
+    name: Postrotate
     readOnlyHandling: baked
     regularHandling: runtime
   status: beta
