@@ -95,6 +95,8 @@ op:
       name: color
     - label: Density
       name: density
+    - label: Orbit Trap
+      name: orbit
     name: Field
   - label: Default Value
     name: Defaultval

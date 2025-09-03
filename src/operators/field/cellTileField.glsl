@@ -22,7 +22,7 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 
 	v.xy = min(d.xz, d.yw), v.z = min(max(d.x, d.y), max(d.z, d.w)), v.w = max(v.x, v.y);
 
-	switch (THIS_Cellstyle) {
+	switch (int(THIS_Cellstyle)) {
 		case THISTYPE_Cellstyle_beveledvoronoi:
 			d.x =  min(v.z, v.w) - min(v.x, v.y);// First minus second order, for that beveled Voronoi look. Range [0, 1].
 			break;

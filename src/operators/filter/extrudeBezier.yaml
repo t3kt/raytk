@@ -30,6 +30,7 @@ opDef: !def
   help: !text
     file: src/operators/filter/extrudeBezier.md
     name: help
+  displayCategory: Convert
 inputs:
 - !input
   Variables: '*'

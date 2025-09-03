@@ -6,7 +6,7 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 	#error invalidContextType
 	#endif
 	vec3 val;
-	switch (THIS_Raypart) {
+	switch (int(THIS_Raypart)) {
 		case THISTYPE_Raypart_dir:
 			val = ray.dir;
 			break;

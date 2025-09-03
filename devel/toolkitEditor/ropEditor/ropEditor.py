@@ -6,7 +6,6 @@ if False:
 	# noinspection PyUnresolvedReferences
 	from _stubs import *
 	from components.inspectorCore.inspectorCoreExt import InspectorCore
-	from components.opPicker.opPicker import PickerItem
 	from ..testEditor.testEditor import TestEditor
 	from .specPanel.specPanel import SpecPanel
 	# noinspection PyTypeHints
@@ -19,6 +18,13 @@ if False:
 class ROPEditor:
 	def __init__(self, ownerComp: COMP):
 		self.ownerComp = ownerComp
+		picker = self.ownerComp.op('opPicker2')
+		picker.ExpandAll()
+		# why is this needed?
+		def _fix():
+			picker.allowCooking = False
+			picker.allowCooking = True
+		run(_fix, delayFrames=5)
 
 	def _tools(self):
 		info = self.ROPInfo
@@ -32,6 +38,7 @@ class ROPEditor:
 		return self.ownerComp.op('status_dropmenu')
 
 	def LoadROP(self, o: OP | DAT | COMP | str):
+		print('Loading ROP:', o)
 		iop.inspectorCore.Inspect(o)
 		info = self.ROPInfo
 		self._statusDropMenu.par.Value0 = info.statusLabel or 'default'
@@ -90,10 +97,10 @@ class ROPEditor:
 		if info:
 			self._tools().saveROP(info.rop, incrementVersion)
 
-	def onEditItem(self, item: 'PickerItem'):
-		if not item or not item.isOP:
+	def onEditItem(self, path: str):
+		if not path:
 			return
-		self.LoadROP(item.path)
+		self.LoadROP(path)
 
 	def onKeyboardShortcut(self, shorcutName: str):
 		pass

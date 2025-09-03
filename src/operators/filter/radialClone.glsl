@@ -1,5 +1,5 @@
 void THIS_exposeIndex(inout ContextT ctx, int i, int n) {
-	if (THIS_Iterationtype == THISTYPE_Iterationtype_index) {
+	if (int(THIS_Iterationtype) == THISTYPE_Iterationtype_index) {
 		setIterationIndex(ctx, i);
 	}
 	#ifdef THIS_EXPOSE_index
@@ -27,7 +27,7 @@ void THIS_prepareForInputCall(inout CoordT q, float rot, float totalRot, float r
 	q.y -= radOffset;
 	THIS_applyCounterRot(q, totalRot);
 #else
-	switch (THIS_Axis) {
+	switch (int(THIS_Axis)) {
 		case THISTYPE_Axis_x:
 			pR(q.yz, rot);
 			q.y -= radOffset;

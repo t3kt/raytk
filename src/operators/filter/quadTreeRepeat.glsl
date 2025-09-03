@@ -71,7 +71,7 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 //			const float lwg = .015;
 //			d.y = abs(max(abs(locP.x), abs(locP.y)) - .5/dim) - lwg/2.;
 
-			if (THIS_Iterationtype == THISTYPE_Iterationtype_cell) {
+			if (int(THIS_Iterationtype) == THISTYPE_Iterationtype_cell) {
 				setIterationCell(ctx, vec3(rnd, float(k) / 3.));
 			}
 			#ifdef THIS_EXPOSE_cell

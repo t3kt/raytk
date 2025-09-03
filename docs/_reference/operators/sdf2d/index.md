@@ -76,6 +76,9 @@ cat:
     thumb: assets/images/reference/operators/sdf2d/hexagonalGridSdf2d_thumb.png
   - name: horseshoeSdf2d
     thumb: assets/images/reference/operators/sdf2d/horseshoeSdf2d_thumb.png
+  - name: imageSdf2d
+    status: beta
+    thumb: assets/images/reference/operators/sdf2d/imageSdf2d_thumb.png
   - name: isoscelesTriangleSdf2d
     thumb: assets/images/reference/operators/sdf2d/isoscelesTriangleSdf2d_thumb.png
   - name: jointSdf2d

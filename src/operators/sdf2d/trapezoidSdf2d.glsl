@@ -4,7 +4,7 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 	#ifdef THIS_HAS_INPUT_widthField
 	w *= fillToVec2(inputOp_widthField(p, ctx));
 	#endif
-	switch (THIS_Mode) {
+	switch (int(THIS_Mode)) {
 		case THISTYPE_Mode_centered:
 			{
 				float h = THIS_Height;

@@ -7,13 +7,13 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 	{
 		vec4 ival = extractIteration(ctx);
 		float i;
-		switch (THIS_Iterationpart) {
+		switch (int(THIS_Iterationpart)) {
 			case THISTYPE_Iterationpart_x: i = ival.x; break;
 			case THISTYPE_Iterationpart_y: i = ival.y; break;
 			case THISTYPE_Iterationpart_z: i = ival.z; break;
 			case THISTYPE_Iterationpart_w: i = ival.w; break;
 		}
-		switch (THIS_Extend) {
+		switch (int(THIS_Extend)) {
 			case THISTYPE_Extend_clamp:
 				i = clamp(i, 0., THIS_INPUT_COUNT - 1);
 				break;

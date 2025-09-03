@@ -16,7 +16,6 @@ cat:
     name: amazingSurfaceSdf
     thumb: assets/images/reference/operators/sdf/amazingSurfaceSdf_thumb.png
   - keywords:
-    - apollonian
     - fractal
     name: apollonianSdf
     summary: Apollonian gasket fractal.
@@ -186,7 +185,9 @@ cat:
     name: mandelettuceSdf
     status: beta
     thumb: assets/images/reference/operators/sdf/mandelettuceSdf_thumb.png
-  - name: mengerSpongeSdf
+  - keywords:
+    - fractal
+    name: mengerSpongeSdf
     summary: Menger sponge fractal, made of boxes with holes cut through each axis.
     thumb: assets/images/reference/operators/sdf/mengerSpongeSdf_thumb.png
   - keywords:

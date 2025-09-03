@@ -116,15 +116,15 @@ vec2 getCoord() {
 	}
 	#else
 	{
-		if (THIS_Alignment == THISTYPE_Alignment_legacy) {
+		if (int(THIS_Alignment) == THISTYPE_Alignment_legacy) {
 			fragCoord.x *= uTDOutputInfo.res.z/uTDOutputInfo.res.w;
 			p = fragCoord*2. - vec2(1.);
 		} else  {
 			p = fragCoord;
-			if (THIS_Alignment == THISTYPE_Alignment_center) {
+			if (int(THIS_Alignment) == THISTYPE_Alignment_center) {
 				p -= vec2(0.5);
 			}
-			switch (THIS_Scaling) {
+			switch (int(THIS_Scaling)) {
 				case THISTYPE_Scaling_fill:
 					break;
 				case THISTYPE_Scaling_fitinside:

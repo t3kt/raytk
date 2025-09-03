@@ -10,14 +10,14 @@ async def build(context: 'BuildContext'):
 	thumbs = ops('thumbImages/thumb_*')
 	context.log(f'Before replicating, found {len(thumbs)} images')
 
-	context.log('Replicating thumbnail TOPs')
-	await context.yieldAsync()
+	context.log('NOTTTTTTTTT   Replicating thumbnail TOPs')
+	# await context.yieldAsync()
 	repl = op('thumbFileReplicator')
-	repl.par.recreateall.pulse()
-	thumbs = ops('thumbImages/thumb_*')
-	context.log(f'After replicating, found {len(thumbs)} images')
+	# repl.par.recreateall.pulse()
+	# thumbs = ops('thumbImages/thumb_*')
+	# context.log(f'After replicating, found {len(thumbs)} images')
 
-	await context.waitFrames(10)
+	# await context.waitFrames(10)
 
 	thumbs = ops('thumbImages/thumb_*')
 	context.log(f'After wait, found {len(thumbs)} images')

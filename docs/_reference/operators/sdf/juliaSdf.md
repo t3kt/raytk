@@ -17,6 +17,7 @@ op:
     - RayContext
     - VertexContext
     - PixelContext
+    - PopContext
     coordTypes:
     - vec3
     label: C Field
@@ -51,8 +52,8 @@ op:
     regularHandling: runtime
   - label: Iterations
     name: Iterations
-    readOnlyHandling: semibaked
-    regularHandling: semibaked
+    readOnlyHandling: baked
+    regularHandling: runtime
   thumb: assets/images/reference/operators/sdf/juliaSdf_thumb.png
   variables:
   - label: Step

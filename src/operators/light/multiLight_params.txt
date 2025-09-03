@@ -7,11 +7,11 @@ Enable5	param	runtime	macro		op('definition_5').numRows > 1
 Enable6	param	runtime	macro		op('definition_6').numRows > 1
 Enable7	param	runtime	macro		op('definition_7').numRows > 1
 Enable8	param	runtime	macro		op('definition_8').numRows > 1
-Level1	param	runtime	macro		op('definition_1').numRows > 1
-Level2	param	runtime	macro		op('definition_2').numRows > 1
-Level3	param	runtime	macro		op('definition_3').numRows > 1
-Level4	param	runtime	macro		op('definition_4').numRows > 1
-Level5	param	runtime	macro		op('definition_5').numRows > 1
-Level6	param	runtime	macro		op('definition_6').numRows > 1
-Level7	param	runtime	macro		op('definition_7').numRows > 1
-Level8	param	runtime	macro		op('definition_8').numRows > 1
+Level1 Color1[rgb] Translate1[xyz]	param	runtime	macro		op('definition_1').numRows > 1
+Level2 Color2[rgb] Translate2[xyz]	param	runtime	macro		op('definition_2').numRows > 1
+Level3 Color3[rgb] Translate3[xyz]	param	runtime	macro		op('definition_3').numRows > 1
+Level4 Color4[rgb] Translate4[xyz]	param	runtime	macro		op('definition_4').numRows > 1
+Level5 Color5[rgb] Translate5[xyz]	param	runtime	macro		op('definition_5').numRows > 1
+Level6 Color6[rgb] Translate6[xyz]	param	runtime	macro		op('definition_6').numRows > 1
+Level7 Color7[rgb] Translate7[xyz]	param	runtime	macro		op('definition_7').numRows > 1
+Level8 Color8[rgb] Translate8[xyz]	param	runtime	macro		op('definition_8').numRows > 1

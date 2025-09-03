@@ -1,5 +1,5 @@
 void THIS_exposeSide(inout ContextT ctx, float i) {
-	switch (THIS_Iterationtype) {
+	switch (int(THIS_Iterationtype)) {
 		case THISTYPE_Iterationtype_sign:
 			setIterationIndex(ctx, i);
 			break;

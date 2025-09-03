@@ -1,7 +1,7 @@
 from dataclasses import dataclass
+from typing import Callable, TYPE_CHECKING
 
-# noinspection PyUnreachableCode
-if False:
+if TYPE_CHECKING:
 	# noinspection PyUnresolvedReferences
 	from _stubs import *
 
@@ -36,6 +36,7 @@ class DataType:
 	defaultExpr: str | None = None
 	conversionFromParam: Conversion | None = None
 	macros: str | None = None
+	supportsPops: bool = False
 
 	@property
 	def returnAsType(self):
@@ -102,13 +103,14 @@ _allConversions = [
 	_Conversions.adaptAsSdf,
 ]
 
-def _createScalarAndVector(scalarName: str, vectorPrefix: str, label: str, defaultVal: str):
+def _createScalarAndVector(scalarName: str, vectorPrefix: str, label: str, defaultVal: str, supportsPops: bool = False):
 	return [
 		DataType.scalar(
 			scalarName, label,
 			returnConversion=_Conversions.adaptAsFloat,
 			defaultExpr=defaultVal,
 			conversionFromParam=Conversion(fromTypes=['vec4'], toType=scalarName, expr=f'{scalarName}(val.x)'),
+			supportsPops=supportsPops,
 		)
 	] + [
 		DataType.vector(
@@ -119,6 +121,7 @@ def _createScalarAndVector(scalarName: str, vectorPrefix: str, label: str, defau
 				fromTypes=['vec4'], toType=f'{vectorPrefix}{i}',
 				expr=f'{vectorPrefix}{i}(val.{"xyzw"[:i]})' if i < 4 else f'{vectorPrefix}4(val)',
 			),
+			supportsPops=supportsPops,
 		)
 		for i in range(2, 5)
 	]
@@ -127,6 +130,7 @@ _allTypes = [
 	DataType.scalar(
 		'float', 'Float', labelForCoord='1D', isCoord=True, isReturn=True, defaultExpr='0.',
 		conversionFromParam=Conversion(fromTypes=['vec4'], toType='float', expr='val.x'),
+		supportsPops=True,
 	),
 	DataType.vector(
 		'vec2', 'Vector2', labelForCoord='2D', isCoord=True,
@@ -134,6 +138,7 @@ _allTypes = [
 		returnConversion=_Conversions.adaptAsVec4,
 		defaultExpr='vec2(0.)',
 		conversionFromParam=Conversion(fromTypes=['vec4'], toType='vec2', expr='val.xy'),
+		supportsPops=True,
 	),
 	DataType.vector(
 		'vec3', 'Vector3', labelForCoord='3D', isCoord=True,
@@ -141,18 +146,29 @@ _allTypes = [
 		returnConversion=_Conversions.adaptAsVec4,
 		defaultExpr='vec3(0.)',
 		conversionFromParam=Conversion(fromTypes=['vec4'], toType='vec3', expr='val.xyz'),
+		supportsPops=True,
 	),
 	DataType.vector(
 		'vec4', 'Vector', isReturn=True, isCoord=True,
 		partType='float', parts='xyzw',
 		defaultExpr='vec4(0.)',
 		conversionFromParam=Conversion(fromTypes=['vec4'], toType='vec4', expr='val'),
+		supportsPops=True,
 	),
 ]
 
-_allTypes += _createScalarAndVector('bool', 'bvec', 'Bool', 'false')
-_allTypes += _createScalarAndVector('int', 'ivec', 'Int', '0')
-_allTypes += _createScalarAndVector('uint', 'uvec', 'UInt', '0')
+_allTypes += _createScalarAndVector(
+	'bool', 'bvec', 'Bool', 'false',
+	supportsPops=True,
+)
+_allTypes += _createScalarAndVector(
+	'int', 'ivec', 'Int', '0',
+	supportsPops=True,
+)
+_allTypes += _createScalarAndVector(
+	'uint', 'uvec', 'UInt', '0',
+	supportsPops=True,
+)
 
 _allTypes += [
 	DataType(
@@ -227,6 +243,9 @@ _allTypes += [
 		fields=[
 			# TODO: context fields
 		]),
+	DataType(
+		'PopContext', 'Pop Context', isContext=True, isVariable=False,
+	),
 ]
 
 _typesByName = {
@@ -260,10 +279,13 @@ def buildCoreTypeTable(dat: scriptDAT):
 	])
 
 def buildVariableTypeTable(dat: scriptDAT):
+	buildTypeTable(dat, lambda dt: dt.isVariable)
+
+def buildTypeTable(dat: scriptDAT, typeFilter: Callable[[DataType], bool] = None):
 	dat.clear()
 	dat.appendRow(['name', 'label', 'returnAs', 'defaultExpr', 'paramExpr'])
 	for dt in _allTypes:
-		if not dt.isVariable:
+		if not typeFilter or not typeFilter(dt):
 			continue
 		dat.appendRow([
 			dt.name,
@@ -274,6 +296,9 @@ def buildVariableTypeTable(dat: scriptDAT):
 		])
 
 def buildVariableTypeFieldTable(dat: scriptDAT):
+	buildTypeFieldTable(dat, lambda dt: dt.isVariable)
+
+def buildTypeFieldTable(dat: scriptDAT, typeFilter: Callable[[DataType], bool] = None):
 	dat.clear()
 	dat.appendRow([
 		'parentType', 'name', 'label', 'type',
@@ -281,7 +306,7 @@ def buildVariableTypeFieldTable(dat: scriptDAT):
 		'macros',
 	])
 	for dt in _allTypes:
-		if not dt.isVariable:
+		if not typeFilter or not typeFilter(dt):
 			continue
 		dat.appendRow([
 			dt.name, 'this', '(value)',

@@ -28,18 +28,18 @@ void THIS_apply(inout CoordT p, inout ContextT ctx) {
 	vec2 c = floor((q + halfsize)/size);
 	q = mod(q + halfsize, size) - halfsize;
 	vec2 start, stop;
-	if (THIS_Limittype == THISTYPE_Limittype_start || THIS_Limittype == THISTYPE_Limittype_both) {
+	if (int(THIS_Limittype) == THISTYPE_Limittype_start || int(THIS_Limittype) == THISTYPE_Limittype_both) {
 		start = THIS_Limitstart + THIS_Limitoffset;
 		if (c.x < start.x) applyModLimit(q.x, c.x, size.x, start.x);
 		if (c.y < start.y) applyModLimit(q.y, c.y, size.y, start.y);
 	}
-	if (THIS_Limittype == THISTYPE_Limittype_stop || THIS_Limittype == THISTYPE_Limittype_both) {
+	if (int(THIS_Limittype) == THISTYPE_Limittype_stop || int(THIS_Limittype) == THISTYPE_Limittype_both) {
 		stop = THIS_Limitstop + THIS_Limitoffset;
 		if (c.x > stop.x) applyModLimit(q.x, c.x, size.x, stop.x);
 		if (c.y > stop.y) applyModLimit(q.y, c.y, size.y, stop.y);
 	}
 
-	switch (THIS_Mirrortype) {
+	switch (int(THIS_Mirrortype)) {
 		case THISTYPE_Mirrortype_mirror:
 			q *= mod(c,vec2(2))*2 - vec2(1);
 			break;
@@ -52,7 +52,7 @@ void THIS_apply(inout CoordT p, inout ContextT ctx) {
 	}
 
 	int quad = quadrantIndex(ivec2(mod(ivec2(c), 2)));
-	switch (THIS_Iterationtype) {
+	switch (int(THIS_Iterationtype)) {
 		case THISTYPE_Iterationtype_cellcoord:
 			setIterationCell(ctx, c);
 			break;

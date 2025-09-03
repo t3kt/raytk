@@ -139,6 +139,17 @@ op:
     name: Offset
     readOnlyHandling: baked
     regularHandling: runtime
+  - label: Compile Behavior
+    menuOptions:
+    - label: Stall Until Done
+      name: stalluntildone
+    - label: Threaded, Show Checkerboard Until Done
+      name: threadedcheckerboard
+    - label: Threaded, Show Black Until Done
+      name: threadedblack
+    - label: Threaded, Show Previous Shader Until Done
+      name: threadedprevious
+    name: Compilebehavior
   - label: Customize Shader Config
     name: Customizeshaderconfig
   - label: Enable UV Output

@@ -7,7 +7,7 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 	vec3 p0 = p;
 
 	// Convert to XZ plane expected by fTorus()
-	switch (THIS_Axis) {
+	switch (int(THIS_Axis)) {
 		case THISTYPE_Axis_x: p = p.yxz; break;
 		case THISTYPE_Axis_y: p = p.xyz; break;
 		case THISTYPE_Axis_z: p = p.xzy; break;

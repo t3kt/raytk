@@ -1,6 +1,6 @@
 ReturnT thismap(CoordT p, ContextT ctx) {
 	CoordT p0 = p;
-	switch (THIS_Axis) {
+	switch (int(THIS_Axis)) {
 		case THISTYPE_Axis_x: p = p.zyx; break;
 		case THISTYPE_Axis_y: p = p.xzy; break;
 		case THISTYPE_Axis_z: p = p.yxz; break;

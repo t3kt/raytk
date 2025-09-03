@@ -10,7 +10,7 @@ void THIS_transform(inout vec4 q, in CoordT p, inout ContextT ctx) {
 		#endif
 	}
 	q.xyz -= pivot;
-	switch (THIS_Scaletype) {
+	switch (int(THIS_Scaletype)) {
 		case THISTYPE_Scaletype_uniform:
 			{
 				float scale = THIS_Uniformscale;

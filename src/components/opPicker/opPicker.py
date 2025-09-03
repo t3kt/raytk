@@ -1,10 +1,12 @@
 from dataclasses import dataclass, field
+import json
 from typing import Optional
 
 # noinspection PyUnreachableCode
 if False:
 	# noinspection PyUnresolvedReferences
 	from _stubs import *
+	from _stubs.TreeListerExt import TreeListerExt
 	from _typeAliases import *
 
 	class _Par(ParCollection):
@@ -36,7 +38,7 @@ class OpPicker:
 	def __init__(self, ownerComp: COMP):
 		# noinspection PyTypeChecker
 		self.ownerComp = ownerComp  # type: _COMP
-		self.impl = _DefaultPickerImpl(ownerComp)
+		self.impl = _PickerImpl(ownerComp)
 		# self.impl = _CategoryColumnPickerImpl(ownerComp)
 		self.isOpen = tdu.Dependency(False)
 		self.Loaditems()
@@ -152,13 +154,13 @@ class OpPicker:
 		# note for performance: this gets called frequently as the mouse moves even within a single cell
 		if row == prevRow and col == prevCol:
 			return
-		item = self.impl.getItemForCell(row, col)
+		item = self.impl.itemLibrary.itemForRow(row)
 		if item:
 			self.impl.selectItem(item)
 		ext.callbacks.DoCallback('onRolloverItem', {'item': item})
 
 	def onSelect(self, endRow: int, endCol: int, end: bool):
-		item = self.impl.getItemForCell(row=endRow, col=endCol)
+		item = self.impl.itemLibrary.itemForRow(endRow)
 		self.impl.selectItem(item)
 		if not end:
 			return
@@ -167,11 +169,28 @@ class OpPicker:
 		else:
 			self.onPickItem()
 
+	def onTreeListSelectRow(self, info: dict):
+		rowData = info.get('rowData')
+		rowObject = rowData and rowData.get('rowObject')
+		if not rowObject or not rowObject.get('opType'):
+			return
+		if rowObject.get('type') == 'category':
+			return
+		item = self.impl.itemLibrary.itemForOpType(rowObject['opType'])
+		if not item:
+			return
+		self.impl.selectItem(item)
+		if item.isOP:
+			self.onPickItem()
+
 	def onRadio(self, row: int, col: int, prevRow: int, prevCol: int):
 		pass
 
 	def onFocus(self, row: int, col: int, prevRow: int, prevCol: int):
 		pass
+
+	def buildTreeTable(self, dat: DAT):
+		self.impl.buildTreeTable(dat)
 
 @dataclass
 class _LayoutSettings:
@@ -338,6 +357,15 @@ class _ItemLibrary:
 	def currentItemCount(self):
 		return len(self._currentItemList)
 
+	def buildTreeTable(self, dat: DAT):
+		dat.clear()
+		dat.appendRow(['name', 'path', 'type', 'category', 'opType', 'status'])
+		for item in self.filteredItems:
+			if item.isCategory:
+				dat.appendRow([item.shortName, item.shortName, 'category', item.shortName, '', ''])
+			if item.isOP:
+				dat.appendRow([item.shortName, item.categoryName + '/' + item.shortName, 'op', item.categoryName, item.opType, item.status])
+
 	@property
 	def firstOpItem(self) -> PickerOpItem | None:
 		for item in self._currentItemList:
@@ -389,6 +417,12 @@ class _ItemLibrary:
 		except ValueError:
 			return -1
 
+	def itemForOpType(self, opType: str):
+		for item in self.allItems:
+			if item.isOP and item.opType == opType:
+				return item
+		return None
+
 	def applyFilter(self, filt: 'Optional[_Filter]'):
 		self.filteredItems = self._buildFlatList(filt)
 
@@ -404,18 +438,28 @@ class _PickerImpl:
 		# noinspection PyTypeChecker
 		self.ownerComp = ownerComp  # type: _COMP
 		self.listComp = ownerComp.op('list')  # type: listCOMP
+		self.treeListComp = ownerComp.op('treeLister') # type: COMP | TreeListerExt
 		self.filterTextWidget = ownerComp.op('filterText_textfield')  # type: widgetCOMP
 		self.filterTextField = op(self.filterTextWidget.par.Stringfield0).op('./field')  # type: fieldCOMP
 		self.selItem = tdu.Dependency()  # value type _AnyItemT
 		self.filterText = ''
+		self.itemLibrary = _ItemLibrary()
 
 	def getSelectedItem(self) -> _AnyItemT | None:
 		return self.selItem.val
 
 	def selectFilterShortcutItem(self) -> _AnyItemT | None:
-		raise NotImplementedError()
+		shortcut = self.filterText
+		if not shortcut:
+			return
+		item = self.itemLibrary.opItemForShortcut(shortcut)
+		if not item:
+			return
+		self.selectItem(item)
+		return item
 
 	def selectItem(self, item: _AnyItemT | None, scroll=False):
+		print(self.ownerComp, f'selectItem(item: {item!r}, scroll: {scroll!r})')
 		oldItem = self.selItem.val  # type: Optional[_AnyItemT]
 		if oldItem == item:
 			return
@@ -428,7 +472,11 @@ class _PickerImpl:
 				self.scrollToItem(item)
 
 	def selectFirstOpItem(self) -> _AnyItemT | None:
-		raise NotImplementedError()
+		item = self.itemLibrary.firstOpItem
+		if not item:
+			return
+		self.selectItem(item)
+		return item
 
 	def focusFilterField(self):
 		self.filterTextField.setKeyboardFocus()
@@ -439,10 +487,21 @@ class _PickerImpl:
 		self.clearFilterText()
 
 	def loadItems(self, opTable: DAT):
-		raise NotImplementedError()
+		self.itemLibrary.loadTables(
+			opTable, useDisplayCategories=ipar.uiState.Usedisplaycategories.eval())
+		self.refreshList()
+		self.applyFilter()
+		self.selectItem(None)
 
 	def refreshList(self):
-		raise NotImplementedError()
+		print(self.ownerComp, f'refreshList()')
+		listComp = self.listComp
+		listComp.par.rows = self.itemLibrary.currentItemCount
+		layout = self.getLayout()
+		listComp.par.cols = layout.numCols
+		listComp.par.reset.pulse()
+		# self.treeListComp.Refresh()
+		self.ownerComp.op('buildTreeTable').cook(force=True)
 
 	def setFilterText(self, text: str):
 		self.filterText = (text or '').strip()
@@ -471,10 +530,23 @@ class _PickerImpl:
 			self.selectItem(item.ops[0], scroll=False)
 
 	def setAllCategoriesExpansion(self, expanded: bool):
-		raise NotImplementedError()
+		for category in self.itemLibrary.categories:
+			category.collapsed = not expanded
+		self.applyFilter()
 
 	def applyFilter(self):
-		raise NotImplementedError()
+		item = self.getSelectedItem()
+		settings = self._getFilterSettings()
+		self.itemLibrary.applyFilter(settings)
+		if item:
+			row = self.itemLibrary.rowForItem(item)
+			if row < 0:
+				self.selectItem(None)
+			else:
+				self.setItemHighlight(item, True)
+		self.refreshList()
+		if settings.text:
+			self.treeListComp.ExpandAll()
 
 	def getLayout(self):
 		layout = _LayoutSettings(
@@ -501,16 +573,58 @@ class _PickerImpl:
 		return layout
 
 	def setItemHighlight(self, item: _AnyItemT | None, selected: bool):
-		raise NotImplementedError()
+		row = self.itemLibrary.rowForItem(item)
+		if row < 0:
+			return
+		# print(self.ownerComp, f'setRowHighlight(row: {row!r}, sel: {selected!r})')
+		if selected:
+			bottomColor = _configColor('Rolloverhighlightcolor')
+			topColor = bottomColor
+			sideColor = bottomColor
+		else:
+			bottomColor = _configColor('Bordercolor')
+			topColor = 0, 0, 0, 0
+			sideColor = topColor
+		listComp = self.listComp
+		layout = self.getLayout()
+		rowAttribs = listComp.rowAttribs[row]
+		if rowAttribs:
+			rowAttribs.topBorderOutColor = topColor
+			rowAttribs.bottomBorderOutColor = bottomColor
+		cellAttribs = listComp.cellAttribs[row, 0]
+		if cellAttribs:
+			cellAttribs.leftBorderInColor = sideColor
+		cellAttribs = listComp.cellAttribs[row, layout.numCols - 1]
+		if cellAttribs:
+			cellAttribs.rightBorderOutColor = sideColor
 
 	def offsetSelection(self, x: int, y: int):
-		raise NotImplementedError()
+		if not self.itemLibrary or y == 0:
+			return
+		item = self.getSelectedItem()
+		if item:
+			row = self.itemLibrary.rowForItem(item)
+			if row == -1:
+				row = y
+			else:
+				row += y
+		else:
+			row = y
+		self.selectItem(self.itemLibrary.itemForRow(row % self.itemLibrary.currentItemCount), scroll=True)
 
 	def scrollToItem(self, item: _AnyItemT | None):
-		raise NotImplementedError()
+		row = self.itemLibrary.rowForItem(item)
+		if row >= 0:
+			self.listComp.scroll(row, 0)
 
-	def getItemForCell(self, row: int, col: int) -> _AnyItemT | None:
-		raise NotImplementedError()
+	def getItemForCell(self, row: int) -> _AnyItemT | None:
+		if row < 0:
+			return None
+		try:
+			return self.itemLibrary.itemForRow(row)
+		except RecursionError:
+			# print(self.ownerComp, 'getItemForCell: RecursionError for some reason')
+			return None
 
 	@staticmethod
 	def initTable(attribs: ListAttributes):
@@ -520,13 +634,61 @@ class _PickerImpl:
 		attribs.textJustify = JustifyType.CENTERLEFT
 
 	def initCol(self, col: int, attribs: ListAttributes):
-		raise NotImplementedError()
+		pass
 
 	def initRow(self, row: int, attribs: ListAttributes):
-		raise NotImplementedError()
+		pass
 
 	def initCell(self, row: int, col: int, attribs: ListAttributes):
-		raise NotImplementedError()
+		item = self.getItemForCell(row=row)
+		if not item:
+			return
+		layout = self.getLayout()
+		if col == layout.toggleCol:
+			attribs.colWidth = layout.toggleColWidth
+		elif col == layout.labelCol:
+			attribs.colStretch = True
+		elif col == layout.statusCol:
+			attribs.colWidth = layout.statusColWidth
+		elif col == layout.thumbCol:
+			attribs.colWidth = layout.thumbColWidth
+		elif col == layout.chipCol:
+			attribs.colWidth = layout.chipColWidth
+		if item.isOP and (item.isAlpha or item.isBeta or item.isDeprecated):
+			attribs.fontItalic = True
+		if isinstance(item, PickerCategoryItem):
+			attribs.rowHeight = layout.catRowHeight
+			attribs.fontSizeX = layout.catFontSize
+			attribs.fontBold = layout.catFontBold
+			attribs.textColor = _configColor('Categorytextcolor')
+			attribs.bgColor = _configColor('Categorybgcolor')
+		elif isinstance(item, PickerOpItem):
+			attribs.rowHeight = layout.opRowHeight
+			attribs.fontSizeX = layout.opFontSize
+			attribs.fontBold = layout.opFontBold
+		self._applyStatusTextColor(attribs, item)
+		if isinstance(item, PickerCategoryItem):
+			if col == layout.toggleCol:
+				self._initToggleCell(attribs, item)
+			elif col == layout.labelCol:
+				attribs.textOffsetX = 5
+				attribs.text = item.shortName
+		elif isinstance(item, PickerOpItem):
+			attribs.help = item.helpSummary or ''
+			attribs.bottomBorderInColor = _configColor('Bordercolor')
+			if col == layout.labelCol:
+				attribs.textOffsetX = 5
+				attribs.text = item.shortName
+				if item.isHidden:
+					attribs.text = '[' + attribs.text + ']'
+				if item.shortcuts:
+					attribs.text += f' ({item.shortcuts[0]})'
+			elif col == layout.statusCol:
+				self._initStatusIconCell(attribs, item)
+			elif col == layout.thumbCol:
+				self._initThumbCell(attribs, item)
+			elif col == layout.chipCol:
+				self._initChipCell(attribs, item, layout)
 
 	@staticmethod
 	def _applyStatusTextColor(attribs: ListAttributes, item: '_AnyItemT'):
@@ -574,446 +736,7 @@ class _PickerImpl:
 			attribs.textColor = _configColor('Textcolor')
 			attribs.top = self.ownerComp.op('chipBackground')
 
-class _DefaultPickerImpl(_PickerImpl):
-	def __init__(self, ownerComp: COMP):
-		super().__init__(ownerComp)
-		self.itemLibrary = _ItemLibrary()
-
-	def loadItems(self, opTable: DAT):
-		self.itemLibrary.loadTables(
-			opTable, useDisplayCategories=ipar.uiState.Usedisplaycategories.eval())
-		self.refreshList()
-		self.applyFilter()
-		self.selectItem(None)
-
-	def refreshList(self):
-		listComp = self.listComp
-		listComp.par.rows = self.itemLibrary.currentItemCount
-		layout = self.getLayout()
-		listComp.par.cols = layout.numCols
-		listComp.par.reset.pulse()
-
-	def offsetSelection(self, x: int, y: int):
-		if not self.itemLibrary or y == 0:
-			return
-		item = self.getSelectedItem()
-		if item:
-			row = self.itemLibrary.rowForItem(item)
-			if row == -1:
-				row = y
-			else:
-				row += y
-		else:
-			row = y
-		self.selectItem(self.itemLibrary.itemForRow(row % self.itemLibrary.currentItemCount), scroll=True)
-
-	def applyFilter(self):
-		item = self.getSelectedItem()
-		settings = self._getFilterSettings()
-		self.itemLibrary.applyFilter(settings)
-		if item:
-			row = self.itemLibrary.rowForItem(item)
-			if row < 0:
-				self.selectItem(None)
-			else:
-				self.setItemHighlight(item, True)
-		self.refreshList()
-
-	def setAllCategoriesExpansion(self, expanded: bool):
-		for category in self.itemLibrary.categories:
-			category.collapsed = not expanded
-		self.applyFilter()
-
-	def selectFilterShortcutItem(self) -> _AnyItemT | None:
-		shortcut = self.filterText
-		if not shortcut:
-			return
-		item = self.itemLibrary.opItemForShortcut(shortcut)
-		if not item:
-			return
-		self.selectItem(item)
-		return item
-
-	def selectFirstOpItem(self) -> _AnyItemT | None:
-		item = self.itemLibrary.firstOpItem
-		if not item:
-			return
-		self.selectItem(item)
-		return item
-
-	def setItemHighlight(self, item: _AnyItemT | None, selected: bool):
-		row = self.itemLibrary.rowForItem(item)
-		if row < 0:
-			return
-		# print(self.ownerComp, f'setRowHighlight(row: {row!r}, sel: {selected!r})')
-		if selected:
-			bottomColor = _configColor('Rolloverhighlightcolor')
-			topColor = bottomColor
-			sideColor = bottomColor
-		else:
-			bottomColor = _configColor('Bordercolor')
-			topColor = 0, 0, 0, 0
-			sideColor = topColor
-		listComp = self.listComp
-		layout = self.getLayout()
-		rowAttribs = listComp.rowAttribs[row]
-		if rowAttribs:
-			rowAttribs.topBorderOutColor = topColor
-			rowAttribs.bottomBorderOutColor = bottomColor
-		cellAttribs = listComp.cellAttribs[row, 0]
-		if cellAttribs:
-			cellAttribs.leftBorderInColor = sideColor
-		cellAttribs = listComp.cellAttribs[row, layout.numCols - 1]
-		if cellAttribs:
-			cellAttribs.rightBorderOutColor = sideColor
-
-	def scrollToItem(self, item: _AnyItemT | None):
-		row = self.itemLibrary.rowForItem(item)
-		if row >= 0:
-			self.listComp.scroll(row, 0)
-
-	def getItemForCell(self, row: int, col: int) -> _AnyItemT | None:
-		if row < 0:
-			return None
-		return self.itemLibrary.itemForRow(row)
-
-	def initCol(self, col: int, attribs: ListAttributes):
-		if col is None:
-			return
-		layout = self.getLayout()
-		if col == layout.toggleCol:
-			attribs.colWidth = layout.toggleColWidth
-		elif col == layout.labelCol:
-			attribs.colStretch = True
-		elif col == layout.statusCol:
-			attribs.colWidth = layout.statusColWidth
-		elif col == layout.thumbCol:
-			attribs.colWidth = layout.thumbColWidth
-		elif col == layout.chipCol:
-			attribs.colWidth = layout.chipColWidth
-
-	def initRow(self, row: int, attribs: ListAttributes):
-		item = self.itemLibrary.itemForRow(row)
-		if not item:
-			return
-		layout = self.getLayout()
-		if item.isOP and (item.isAlpha or item.isBeta or item.isDeprecated):
-			attribs.fontItalic = True
-		if isinstance(item, PickerCategoryItem):
-			attribs.rowHeight = layout.catRowHeight
-			attribs.fontSizeX = layout.catFontSize
-			attribs.fontBold = layout.catFontBold
-			attribs.textColor = _configColor('Categorytextcolor')
-			attribs.bgColor = _configColor('Categorybgcolor')
-		elif isinstance(item, PickerOpItem):
-			attribs.rowHeight = layout.opRowHeight
-			attribs.fontSizeX = layout.opFontSize
-			attribs.fontBold = layout.opFontBold
-		self._applyStatusTextColor(attribs, item)
-
-	def initCell(self, row: int, col: int, attribs: ListAttributes):
-		item = self.getItemForCell(row=row, col=col)
-		if not item:
-			return
-		layout = self.getLayout()
-		if isinstance(item, PickerCategoryItem):
-			if col == layout.toggleCol:
-				self._initToggleCell(attribs, item)
-			elif col == layout.labelCol:
-				attribs.textOffsetX = 5
-				attribs.text = item.shortName
-		elif isinstance(item, PickerOpItem):
-			attribs.help = item.helpSummary or ''
-			attribs.bottomBorderInColor = _configColor('Bordercolor')
-			if col == layout.labelCol:
-				attribs.textOffsetX = 5
-				attribs.text = item.shortName
-				if item.isHidden:
-					attribs.text = '[' + attribs.text + ']'
-				if item.shortcuts:
-					attribs.text += f' ({item.shortcuts[0]})'
-			elif col == layout.statusCol:
-				self._initStatusIconCell(attribs, item)
-			elif col == layout.thumbCol:
-				self._initThumbCell(attribs, item)
-			elif col == layout.chipCol:
-				self._initChipCell(attribs, item, layout)
-
-@dataclass
-class _CategoryColumn:
-	category: PickerCategoryItem
-	allOps: list[PickerOpItem]
-	filteredOps: list[PickerOpItem] | None = None
-
-	def applyFilter(self, filt: _Filter | None) -> bool:
-		if not filt:
-			self.filteredOps = None
-			return True
-		else:
-			self.filteredOps = [o for o in self.allOps if o.matches(filt)]
-			return bool(self.filteredOps)
-
-	@property
-	def currentOpList(self):
-		return self.filteredOps if self.filteredOps is not None else self.allOps
-
-	@property
-	def currentItemCount(self):
-		return 1 + len(self.currentOpList)
-
-	def getItemByRow(self, i: int) -> Optional[_AnyItemT]:
-		if i < 0:
-			return None
-		if i == 0:
-			return self.category
-		i -= 1
-		curOps = self.currentOpList
-		return curOps[i] if i < len(curOps) else None
-
-	def getRowByItem(self, item: Optional[_AnyItemT]):
-		if not item:
-			return -1
-		if item == self.category:
-			return 0
-		try:
-			return 1 + self.currentOpList.index(item)
-		except ValueError:
-			return -1
-
-	def opItemForShortcut(self, shortcut: str) -> 'Optional[PickerOpItem]':
-		for item in self.currentOpList:
-			if item.isOP and shortcut in item.shortcuts:
-				return item
-
-
-class _CategoryColumnLibrary:
-	allItems: list[_AnyItemT]
-	allColumns: list[_CategoryColumn]
-	filteredColumns: list[_CategoryColumn] | None
-
-	def __init__(self):
-		self.allItems = []
-		self.allCategories = []
-		self.filteredColumns = None
-
-	def loadTables(self, opTable: DAT, useDisplayCategories: bool):
-		self.allItems = []
-		self.allColumns = []
-		for category in _loadItemCategories(opTable, useDisplayCategories):
-			self.allColumns.append(_CategoryColumn(
-				category,
-				allOps=list(category.ops),
-			))
-		self.applyFilter(None)
-
-	@property
-	def currentColList(self):
-		return self.filteredColumns if self.filteredColumns is not None else self.allColumns
-
-	def getCurrentSize(self) -> tuple[int, int]:
-		cols = self.currentColList
-		if not cols:
-			return 1, 1
-		maxOps = max([col.currentItemCount for col in cols])
-		return maxOps, len(cols)
-
-	def applyFilter(self, filt: Optional[_Filter] = None):
-		if not filt:
-			self.filteredColumns = None
-			for col in self.allColumns:
-				col.applyFilter(None)
-		else:
-			self.filteredColumns = []
-			for col in self.allColumns:
-				if col.applyFilter(filt):
-					self.filteredColumns.append(col)
-
-	def getCol(self, col: int) -> Optional[_CategoryColumn]:
-		cols = self.currentColList
-		return cols[col] if 0 <= col < len(cols) else None
-
-	def getPosForItem(self, item: Optional[_AnyItemT]):
-		if not item:
-			return None, None
-		for colI, col in enumerate(self.currentColList):
-			row = col.getRowByItem(item)
-			if row != -1:
-				return row, colI
-		return None, None
-
-	def getItemByPos(self, row: int, col: int) -> Optional[_AnyItemT]:
-		if col < 0:
-			return None
-		cols = self.currentColList
-		if 0 <= col < len(cols):
-			return cols[col].getItemByRow(row)
-
-	def opItemForShortcut(self, shortcut: str) -> 'Optional[PickerOpItem]':
-		for col in self.currentColList:
-			item = col.opItemForShortcut(shortcut)
-			if item:
-				return item
-
-class _CategoryColumnPickerImpl(_PickerImpl):
-	def __init__(self, ownerComp: COMP):
-		super().__init__(ownerComp)
-		self.itemLibrary = _CategoryColumnLibrary()
-
-	def getLayout(self):
-		layout = super().getLayout()
-		layout.toggleCol = None
-		layout.numCols -= 1
-		return layout
-
-	def selectFirstOpItem(self) -> _AnyItemT | None:
-		for col in self.itemLibrary.currentColList:
-			colOps = col.currentOpList
-			if colOps:
-				item = colOps[0]
-				self.selectItem(item)
-				return item
-
-	def selectFilterShortcutItem(self) -> _AnyItemT | None:
-		shortcut = self.filterText
-		if not shortcut:
-			return
-		item = self.itemLibrary.opItemForShortcut(shortcut)
-		if not item:
-			return
-		self.selectItem(item)
-		return item
-
-	def loadItems(self, opTable: DAT):
-		self.itemLibrary.loadTables(
-			opTable, useDisplayCategories=ipar.uiState.Usedisplaycategory.eval())
-		self.refreshList()
-		self.applyFilter()
-		self.selectItem(None)
-
-	def refreshList(self):
-		listComp = self.listComp
-		rows, cols = self.itemLibrary.getCurrentSize()
-		layout = self.getLayout()
-		listComp.par.rows = rows
-		listComp.par.cols = cols * layout.numCols
-		listComp.par.reset.pulse()
-
-	def applyFilter(self):
-		item = self.getSelectedItem()
-		settings = self._getFilterSettings()
-		self.itemLibrary.applyFilter(settings)
-		if item:
-			pass
-		pass
-
-	def setAllCategoriesExpansion(self, expanded: bool):
-		for category in self.itemLibrary.allCategories:
-			category.collapsed = not expanded
-		self.applyFilter()
-
-	def _getCellAttribsForItem(self, item: _AnyItemT | None) -> list[ListAttributes]:
-		row, col = self.itemLibrary.getPosForItem(item)
-		if row is None:
-			return []
-		return [
-			self.listComp.cellAttribs[row, col + i]
-			for i in range(self.getLayout().numCols)
-		]
-
-	def setItemHighlight(self, item: _AnyItemT | None, selected: bool):
-		cellAttribs = self._getCellAttribsForItem(item)
-		if not cellAttribs:
-			return
-		if selected:
-			bottomColor = _configColor('Rolloverhighlightcolor')
-			topColor = bottomColor
-			sideColor = bottomColor
-		else:
-			bottomColor = _configColor('Bordercolor')
-			topColor = 0, 0, 0, 0
-			sideColor = topColor
-		for ca in cellAttribs:
-			ca.topBorderOutColor = topColor
-			ca.bottomBorderOutColor = bottomColor
-		cellAttribs[0].leftBorderInColor = sideColor
-		cellAttribs[len(cellAttribs) - 1].rightBorderOutColor = sideColor
-
-	def offsetSelection(self, x: int, y: int):
-		if not self.itemLibrary or (x == 0 and y == 0):
-			return
-		# item = self.getSelectedItem()
-		# if item:
-		# 	row, col = self.itemLibrary.getPosForItem(item)
-		# 	if row is None:
-		# 		pass
-		# 	pass
-		raise NotImplementedError()
-
-	def scrollToItem(self, item: _AnyItemT | None):
-		row, col = self.itemLibrary.getPosForItem(item)
-		if row is None:
-			return
-		self.listComp.scroll(row, col * self.getLayout().numCols)
-
-	def getItemForCell(self, row: int, col: int) -> _AnyItemT | None:
-		if row < 0 or col < 0:
-			return None
-		layout = self.getLayout()
-		return self.itemLibrary.getItemByPos(
-			row=row,
-			col=int(col / layout.numCols)
-		)
-
-	def initCol(self, col: int, attribs: ListAttributes):
-		if col is None:
-			return
-		layout = self.getLayout()
-		col = col % layout.numCols
-		if col == layout.labelCol:
-			# attribs.colStretch = True
-			attribs.colWidth = 200
-		elif col == layout.statusCol:
-			attribs.colWidth = layout.statusColWidth
-		elif col == layout.thumbCol:
-			attribs.colWidth = layout.thumbColWidth
-
-	def initRow(self, row: int, attribs: ListAttributes):
-		layout = self.getLayout()
-		if row == 0:
-			attribs.rowHeight = layout.catRowHeight
-			attribs.fontSizeX = layout.catFontSize
-			attribs.fontBold = layout.catFontBold
-			attribs.textJustify = JustifyType.CENTER
-			attribs.textColor = _configColor('Categorytextcolor')
-			attribs.bgColor = _configColor('Categorybgcolor')
-		else:
-			attribs.rowHeight = layout.opRowHeight
-			attribs.fontSizeX = layout.opFontSize
-			attribs.fontBold = layout.opFontBold
-
-	def initCell(self, row: int, col: int, attribs: ListAttributes):
-		layout = self.getLayout()
-		colPart = col % layout.numCols
-		colIndex = int(col / layout.numCols)
-		catCol = self.itemLibrary.getCol(colIndex)
-		if not catCol:
-			return
-		item = catCol.getItemByRow(row)
-		if not item:
-			return
-		if colPart == layout.labelCol:
-			attribs.text = item.shortName
-		if isinstance(item, PickerOpItem):
-			attribs.help = item.helpSummary or ''
-			attribs.bottomBorderInColor = _configColor('Bordercolor')
-			self._applyStatusTextColor(attribs, item)
-			if colPart == layout.labelCol:
-				if item.isAlpha or item.isBeta or item.isDeprecated:
-					attribs.fontItalic = True
-				attribs.textOffsetX = 5
-			elif colPart == layout.statusCol:
-				self._initStatusIconCell(attribs, item)
-			elif colPart == layout.thumbCol:
-				self._initThumbCell(attribs, item)
-			elif colPart == layout.chipCol:
-				self._initChipCell(attribs, item, layout)
+	def buildTreeTable(self, dat: DAT):
+		filt = self._getFilterSettings()
+		self.itemLibrary.applyFilter(filt)
+		self.itemLibrary.buildTreeTable(dat)

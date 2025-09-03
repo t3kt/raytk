@@ -953,6 +953,16 @@ def getActions():
 				multi=True, minCount=2, maxCount=None),
 			params={'Returntype': 'float'},
 			attach=AttachOutFromExisting()),
+		createTableBasedGroup(
+			'Mix Color Fields',
+			ropType='raytk.operators.combine.mixColorFields',
+			paramName='Combinemode',
+			table=op('mixColorFieldModes'),
+			select=RopSelect(
+				returnTypes=['vec4'],
+				multi=True, minCount=2, maxCount=None),
+			params={'Returntype': 'vec4'},
+			attach=AttachOutFromExisting()),
 		ActionImpl(
 			'Merge to Vector',
 			ropType='raytk.operators.convert.floatToVector',

@@ -52,7 +52,7 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 	float row;
 
 	pR(p.xz, shift.x);
-	if (THIS_Mirrortype == THISTYPE_Mirrortype_cols || THIS_Mirrortype == THISTYPE_Mirrortype_grid) {
+	if (int(THIS_Mirrortype) == THISTYPE_Mirrortype_cols || int(THIS_Mirrortype) == THISTYPE_Mirrortype_grid) {
 		col = pModPolarMirror(p.xz, r.x);
 	} else {
 		col = pModPolar(p.xz, r.x);
@@ -67,7 +67,7 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 	#endif
 
 	pR(p.xy, shift.y);
-	if (THIS_Mirrortype == THISTYPE_Mirrortype_rows || THIS_Mirrortype == THISTYPE_Mirrortype_grid) {
+	if (int(THIS_Mirrortype) == THISTYPE_Mirrortype_rows || int(THIS_Mirrortype) == THISTYPE_Mirrortype_grid) {
 		row = pModPolar(p.xy, r.y);
 	} else {
 		row = pModPolarMirror(p.xy, r.y);

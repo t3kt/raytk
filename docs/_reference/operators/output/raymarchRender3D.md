@@ -343,6 +343,17 @@ op:
     name: Enabledithering
     readOnlyHandling: baked
     regularHandling: runtime
+  - label: Compile Behavior
+    menuOptions:
+    - label: Stall Until Done
+      name: stalluntildone
+    - label: Threaded, Show Checkerboard Until Done
+      name: threadedcheckerboard
+    - label: Threaded, Show Black Until Done
+      name: threadedblack
+    - label: Threaded, Show Previous Shader Until Done
+      name: threadedprevious
+    name: Compilebehavior
   shortcuts:
   - rr3
   summary: Renders a scene using 3D raymarching.

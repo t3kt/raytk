@@ -17,6 +17,7 @@ op:
     - RayContext
     - VertexContext
     - PixelContext
+    - PopContext
     coordTypes:
     - vec3
     label: Box Scale Field
@@ -34,6 +35,7 @@ op:
     - RayContext
     - VertexContext
     - PixelContext
+    - PopContext
     coordTypes:
     - vec3
     label: Cross Scale Field
@@ -53,6 +55,7 @@ op:
     - RayContext
     - VertexContext
     - PixelContext
+    - PopContext
     coordTypes:
     - vec3
     label: Step Offset Field
@@ -73,10 +76,11 @@ op:
     - RayContext
     - VertexContext
     - PixelContext
+    - PopContext
     coordTypes:
     - vec3
-    label: Rotate Field
-    name: rotateField
+    label: Pre Rotate Field
+    name: preRotateField
     returnTypes:
     - vec4
     supportedVariableInputs:
@@ -86,6 +90,31 @@ op:
     supportedVariables:
     - step
     - normstep
+  - contextTypes:
+    - Context
+    - MaterialContext
+    - CameraContext
+    - LightContext
+    - RayContext
+    - VertexContext
+    - PixelContext
+    - PopContext
+    coordTypes:
+    - vec3
+    label: Post Rotate Field
+    name: postRotateField
+    returnTypes:
+    - vec4
+    supportedVariableInputs:
+    - boxScaleField
+    - crossScaleField
+    - stepOffsetField
+    - preRotateField
+    supportedVariables:
+    - step
+    - normstep
+  keywords:
+  - fractal
   name: mengerSpongeSdf
   opType: raytk.operators.sdf.mengerSpongeSdf
   parameters:
@@ -126,8 +155,12 @@ op:
     name: Stepoffset
     readOnlyHandling: baked
     regularHandling: runtime
-  - label: Rotate
-    name: Rotate
+  - label: Pre Rotate
+    name: Prerotate
+    readOnlyHandling: baked
+    regularHandling: runtime
+  - label: Post Rotate
+    name: Postrotate
     readOnlyHandling: baked
     regularHandling: runtime
   summary: Menger sponge fractal, made of boxes with holes cut through each axis.

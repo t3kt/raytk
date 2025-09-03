@@ -24,7 +24,7 @@ def buildExportTable(dat: DAT, uniformTable: DAT):
 				expr4=uniformTable[row, 'expr4'] or '0',
 			)
 			vectorIndex += 1
-		elif uniType == 'uniformarray':
+		elif uniType in ('uniformarray', 'texturebuffer'):
 			_addArray(
 				dat,
 				path=path,

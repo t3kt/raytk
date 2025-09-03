@@ -22,12 +22,12 @@ import reprlib
 
 #short form repr for print callbacks
 shortRepr = reprlib.Repr()
-shortRepr.maxlevel = 1
-shortRepr.maxlist = 10
-shortRepr.maxdict = 10
-shortRepr.maxtuple = 10
-shortRepr.maxset = 10
-shortRepr.maxfrozenset = 10
+shortRepr.maxlevel = 3
+shortRepr.maxlist = 100
+shortRepr.maxdict = 100
+shortRepr.maxtuple = 100
+shortRepr.maxset = 100
+shortRepr.maxfrozenset = 100
 shortRepr.maxdeque = 3
 shortRepr.maxlong = 20
 shortRepr.maxstring = 200
@@ -201,8 +201,10 @@ class CallbacksExt:
 				notfound = 'NOT FOUND -'
 			else:
 				notfound = '-'
-			print(callbackName, notfound,'callbackInfo: ',
-				  self.shortRepr.repr(callbackInfo), '\n')
+			# print(callbackName, notfound,'callbackInfo: ',
+			# 	  self.shortRepr.repr(callbackInfo), '\n')
+			debug(callbackName, notfound,'callbackInfo:\n',
+				  callbackInfo, '\n')
 		return retvalue
 
 	def PassCallbacksTo(self, passTarget):

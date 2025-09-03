@@ -168,6 +168,17 @@ op:
     name: Timerefop
   - label: Customize Shader Config
     name: Customizeshaderconfig
+  - label: Compile Behavior
+    menuOptions:
+    - label: Stall Until Done
+      name: stalluntildone
+    - label: Threaded, Show Checkerboard Until Done
+      name: threadedcheckerboard
+    - label: Threaded, Show Black Until Done
+      name: threadedblack
+    - label: Threaded, Show Previous Shader Until Done
+      name: threadedprevious
+    name: Compilebehavior
   summary: Visualizes the graph of a function operator.
   thumb: assets/images/reference/operators/output/functionGraphRender_thumb.png
 

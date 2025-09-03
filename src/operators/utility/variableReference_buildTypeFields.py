@@ -1,4 +1,4 @@
-from raytkTypes import *
+import raytkTypes
 
 def onCook(dat):
-	buildVariableTypeFieldTable(dat)
+	raytkTypes.buildTypeFieldTable(dat, lambda dt: dt.isVariable)

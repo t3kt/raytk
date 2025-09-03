@@ -1,0 +1,7 @@
+name	label
+xy	Along X Towards Y
+yx	Along Y Towards X
+zy	Along Z Towards X
+yz	Along Y Towards Z
+zx	Along Z Towards X
+xz	Along X Towards Z

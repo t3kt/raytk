@@ -1,0 +1,2 @@
+name	path	type
+distTex	op('dist_tex')	'2d'

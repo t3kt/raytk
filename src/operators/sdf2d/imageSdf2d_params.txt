@@ -1,0 +1,4 @@
+names	source	handling	readOnlyHandling	conversion	enable
+Translate[xy] Scale	param	runtime	macro		1
+Axis	param	runtime	macro		1
+resAdjust	special	runtime			1

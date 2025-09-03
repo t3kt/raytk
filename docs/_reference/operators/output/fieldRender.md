@@ -52,14 +52,10 @@ op:
       name: useinput
     - label: 8-bit fixed (RGBA)
       name: rgba8fixed
-    - label: sRGB 8-bit fixed (RGBA)
-      name: srgba8fixed
     - label: 16-bit float (RGBA)
       name: rgba16float
     - label: 32-bit float (RGBA)
       name: rgba32float
-    - label: _separator_
-      name: _separator_
     - label: 10-bit RGB, 2-bit Alpha, fixed (RGBA)
       name: rgb10a2fixed
     - label: 16-bit fixed (RGBA)

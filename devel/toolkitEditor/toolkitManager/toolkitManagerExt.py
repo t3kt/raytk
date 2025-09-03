@@ -45,7 +45,7 @@ class ToolkitManager:
 	def prepareModuleTable(dat: DAT, inDat: DAT):
 		dat.clear()
 		dat.appendRow(['name', 'moduleRoot', 'moduleDefinition', 'opTable', 'testsFolder'])
-		for cell in inDat.col('path')[1:]:
+		for cell in inDat.col('moduleDefinition')[1:]:
 			modDef = op(cell)
 			if not modDef:
 				continue

@@ -23,8 +23,6 @@ def buildName(host):
 
 def _evalType(category: str, supportedTypes: DAT, inputDefs: DAT):
 	spec = supportedTypes[category, 'spec'].val
-	if spec.startswith('@'):
-		return spec
 	inputCell = inputDefs[1, category]
 	if spec.startswith('useinput|') and inputCell:
 		return inputCell

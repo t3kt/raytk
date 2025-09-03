@@ -15,7 +15,7 @@ ReturnT THIS_calc(
 	res = ReturnT(amount);
 	#elif defined(THIS_RETURN_TYPE_vec4)
 	res = vec4(vec3(amount), 0.0);
-	if (THIS_Uselightcolor) {
+	if (IS_TRUE(THIS_Uselightcolor)) {
 		res.rgb *= ctx.light.color;
 	}
 	#else
@@ -58,7 +58,7 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 		res.rgb *= fillToVec3(inputOp_colorField(p, ctx));
 		#endif
 		#ifdef RAYTK_USE_SURFACE_COLOR
-		if (THIS_Usesurfacecolor) {
+		if (IS_TRUE(THIS_Usesurfacecolor)) {
 			res.rgb *= mix(vec3(1.), ctx.result.color.rgb, ctx.result.color.a);
 		}
 		#endif

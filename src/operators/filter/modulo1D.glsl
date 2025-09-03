@@ -34,21 +34,21 @@ void THIS_apply(inout CoordT p, inout ContextT ctx) {
 	q = mod(q+halfsize, size) - halfsize;
 	float start, stop;
 	if (IS_TRUE(THIS_Uselimit)) {
-		if (THIS_Limittype == THISTYPE_Limittype_start || THIS_Limittype == THISTYPE_Limittype_both) {
+		if (int(THIS_Limittype) == THISTYPE_Limittype_start || int(THIS_Limittype) == THISTYPE_Limittype_both) {
 			start = THIS_Limitstart + THIS_Limitoffset;
 			if (c < start) applyModLimit(q, c, size, start);
 		}
-		if (THIS_Limittype == THISTYPE_Limittype_stop || THIS_Limittype == THISTYPE_Limittype_both) {
+		if (int(THIS_Limittype) == THISTYPE_Limittype_stop || int(THIS_Limittype) == THISTYPE_Limittype_both) {
 			stop = THIS_Limitstop + THIS_Limitoffset;
 			if (c > stop) applyModLimit(q, c, size, stop);
 		}
 	}
 
-	if (THIS_Mirrortype == THISTYPE_Mirrortype_mirror) {
+	if (int(THIS_Mirrortype) == THISTYPE_Mirrortype_mirror) {
 		q *= mod(c, 2.0)*2 - 1;
 	}
 
-	switch (THIS_Iterationtype) {
+	switch (int(THIS_Iterationtype)) {
 		case THISTYPE_Iterationtype_cellcoord:
 			setIterationIndex(ctx, c);
 			break;
@@ -63,11 +63,11 @@ void THIS_apply(inout CoordT p, inout ContextT ctx) {
 	{
 		if (IS_FALSE(THIS_Uselimit)) {
 			THIS_normcoord = c;
-		} else if (THIS_Limittype == THISTYPE_Limittype_start) {
+		} else if (int(THIS_Limittype) == THISTYPE_Limittype_start) {
 			THIS_normcoord = c - start;
-		} else if (THIS_Limittype == THISTYPE_Limittype_stop) {
+		} else if (int(THIS_Limittype) == THISTYPE_Limittype_stop) {
 			THIS_normcoord = -c + stop;
-		} else if (THIS_Limittype == THISTYPE_Limittype_both) {
+		} else if (int(THIS_Limittype) == THISTYPE_Limittype_both) {
 			THIS_normcoord = map01(c, start, stop);
 		}
 	}

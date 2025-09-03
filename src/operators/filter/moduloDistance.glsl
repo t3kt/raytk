@@ -26,7 +26,7 @@ void THIS_apply(inout CoordT p, inout ContextT ctx) {
 	#endif
 
 	float cell;
-	if (THIS_Mirrortype == THISTYPE_Mirrortype_mirror) {
+	if (int(THIS_Mirrortype) == THISTYPE_Mirrortype_mirror) {
 		cell = pModMirror1(d, THIS_Length);
 	} else {
 		cell = pMod1(d, THIS_Length*.5);
