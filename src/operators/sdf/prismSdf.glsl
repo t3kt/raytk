@@ -82,12 +82,12 @@ ReturnT thismap(CoordT p, ContextT ctx) {
 	if (IS_FALSE(THIS_Infiniteheight)) {
 		uv.y = map01(uv.y, -h, h);
 	}
-	assignUV(res, uv);
 	if (IS_TRUE(THIS_Hollow)) {
 		uv.z = map01(uv.z, r-th, r);
 	} else {
 		uv.z /= r;
 	}
+	assignUV(res, uv);
 	#endif
 	return res;
 }
