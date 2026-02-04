@@ -15,27 +15,15 @@ void THIS_apply(inout vec2 p, out float cell) {
 			cell = repetitions + 1.;
 			return;
 		}
-		if (int(THIS_Mirrortype) == THISTYPE_Mirrortype_mirror) {
-			float a1 = mod(a, angle * 2);
-			if (a1 >= angle) {
-				a1 = angle - a1;
-			}
-			a = mod(a1, angle) - angle/2.;
-		} else {
-			a = mod(a, angle) - angle/2.;
+	}
+	if (int(THIS_Mirrortype) == THISTYPE_Mirrortype_mirror) {
+		float a1 = mod(a, angle * 2);
+		if (a1 >= angle) {
+			a1 = angle - a1;
 		}
+		a = mod(a1, angle) - angle/2.;
 	} else {
-		if (int(THIS_Mirrortype) == THISTYPE_Mirrortype_mirror) {
-			// no limit + mirror
-			float a1 = mod(a, angle * 2);
-			if (a1 >= angle) {
-				a1 = angle - a1;
-			}
-			a = mod(a1, angle) - angle/2.;
-		} else {
-			// no limit no mirror
-			a = mod(a, angle) - angle/2.;
-		}
+		a = mod(a, angle) - angle/2.;
 	}
 	#ifdef THIS_EXPOSE_normlocalangle
 	THIS_normlocalangle = a + .5;
